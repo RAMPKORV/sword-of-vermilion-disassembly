@@ -1,0 +1,1 @@
+asm68k /k /p /o ae- vermilion.asm,out.bin,,vermilion.lst
