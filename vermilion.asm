@@ -1974,14 +1974,14 @@ loc_0000275A:
 	JSR	loc_00010522
 	MOVE.b	#$FF, $FFFFC08E.w
 	RTS
-loc_0000277E:
-	TST.b	$FFFFC541.w
+loc_0000277E: ; process movement actions in dungeon crawling mode?
+	TST.b	$FFFFC541.w ; should move forward?
 	BNE.w	loc_000027F8
-	TST.b	$FFFFC544.w
+	TST.b	$FFFFC544.w ; should move backwards?
 	BNE.w	loc_000027F8
-	TST.b	$FFFFC542.w
+	TST.b	$FFFFC542.w ; rotate counter-clockwise?
 	BNE.w	loc_000027F8
-	TST.b	$FFFFC543.w
+	TST.b	$FFFFC543.w ; rotate clockwise?
 	BNE.w	loc_000027F8
 	TST.b	$FFFFC561.w
 	BNE.b	loc_000027CC
@@ -17459,7 +17459,7 @@ loc_000109B4:
 	CLR.w	D3
 	MOVE.b	(A0,D2.w), D3
 	MOVE.b	#$FF, $FFFFC213.w
-loc_000109C8:
+loc_000109C8: ; suspected text script handling
 	CMPI.b	#$FF, D3
 	BEQ.w	loc_00010BBE
 	CMPI.b	#$FE, D3
@@ -40772,7 +40772,7 @@ loc_00036E6E:
 	dc.b	"Only the women of", $FE
 	dc.b	"this village remain.", $FF, $00
 	dc.b	"Journey west to Swaffham.", $FE
-	dc.b	"Use this map as your guide", $2E
+	dc.b	"Use this map as your guide."
 	dc.b	$F9, $08, $01, $06, $01, $16, $01, $15, $01, $05, $01, $04, $01, $03, $01, $02, $01, $01, $00
 	dc.b	"Journey west to Swaffham.", $FF
 	dc.b	"The soldiers of Cartahena", $FE
