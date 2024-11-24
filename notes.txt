@@ -14,3 +14,64 @@ $FFFFC232: Text cursor Y position
 
 C542: If != 0, rotate player counter-clockwise in dungeon crawling mode
 C543: If != 0, rotate player clockwise in dungeon crawling mode
+
+$FFFFC442.w: Number of items possessed
+
+C444: Possessed items array on 2-byte format: first byte is a modifier always equal to 0x01. Second is one of
+00 Herbs   
+01 Candle          
+02 Lantern           
+03 Poison Balm       
+04 Alarm Clock 
+05 Vase   
+06 Joke Book         
+07 Small Bomb           
+08 Old Woman's Sketch  
+09 Old Man's Sketch    
+0A Pass to Cartahena   
+0B Truffle            
+0C Digot Plant         
+0D Treasure of Troy   
+0E White Crystal        
+0F Red Crystal         
+10 Blue Crystal        
+11 White Key          
+12 Red Key             
+13 Blue Key             
+14 Crown            
+15 Sixteen Rings       
+16 Bronze Key          
+17 Silver Key          
+18 Gold Key            
+19 Thule Key           
+1A Secret Key          
+1B Medicine            
+1C Agate Jewel          
+1D Griffin Wing       
+1E Titania's Mirror    
+1F Gnome Stone         
+20 Topaz Jewel         
+21 Banshee Powder     
+22 Rafael's Stick     
+23 Mirror of Atlas     
+24 Ruby Brooch        
+25 Dungeon Key        
+26 Kulm Vase            
+27 Kasan's Chisel     
+28 Book of Kiel
+29 Danegeld Water
+2A Mineral Bar
+2B Mega Blast 
+
+C880: If != 0, we have map around Wyclif
+Maps might start at C818?
+
+
+C662.w X position within current map in dungeon crawl mode
+C664.w Y position within current map in dungeon crawl mode
+C666.w overworld X map portion of 
+C668.w overworld Y map portion of 
+
+C55F.b if FF => has map of current sector
+C560.b if 01 => cave is lit
+C551.b if FF => is in cave?
