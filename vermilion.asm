@@ -2447,7 +2447,7 @@ loc_00002E2A:
 loc_00002E6A: ; town teleport locations
 	; format:
 	; (x,y) within map sector, (x,y) sector of world map
-	dc.w	$0008, $000D, $0000, $0006 ; Wyflic
+	dc.w	$0008, $000D, $0000, $0006 ; Wyclif
 	dc.w	$0007, $0006, $0001, $0004 ; Parma
 	dc.w	$0008, $0004, $0006, $0005 ; Watling
 	dc.w	$0004, $0008, $0004, $0007 ; Deepdale
