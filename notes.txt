@@ -75,3 +75,10 @@ C668.w overworld Y map portion of
 C55F.b if FF => has map of current sector
 C560.b if 01 => cave is lit
 C551.b if FF => is in cave?
+
+C101.b = if 1 => enqueue camera pan up
+         if 2 => enqueue camera pan down
+         if 3 => enqueue camera pan left
+         if 4 => enqueue camera pan left
+
+Similarly for C100.b

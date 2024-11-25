@@ -16308,7 +16308,7 @@ loc_0000FAEC:
 	MOVE.w	#0, Z80_bus_request
 	ANDI	#$F8FF, SR
 	RTS
-loc_0000FB5C:
+loc_0000FB5C: ; generate random number
 	MOVEM.l	D1, -(A7)
 	MOVE.l	$FFFFC0A0.w, D1
 	BNE.w	loc_0000FB6E
