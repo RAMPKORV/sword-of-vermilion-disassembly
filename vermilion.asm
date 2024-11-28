@@ -1,4 +1,4 @@
-	include "macros.asm"
+	include "macros.asm"MOVEA.l
 	include "constants.asm"
 loc_00000000:
 	dc.l	$FFFFFE00
@@ -2442,8 +2442,14 @@ loc_00002DAA:
 	dc.b	$01, $B8, $00, $F8, $00, $10, $00, $07, $01, $B8, $00, $F8, $00, $10, $00, $07, $02, $08, $01, $38, $00, $17, $00, $0B, $02, $08, $01, $38, $00, $17, $00, $0B 
 	dc.b	$02, $08, $01, $38, $00, $17, $00, $0B 
 loc_00002E2A:
-	dc.b	$00, $20, $00, $12, $00, $27, $00, $21, $00, $0D, $00, $0B, $00, $1C, $00, $0E, $00, $0A, $00, $1B, $00, $0A, $00, $1B, $00, $1A, $00, $19, $00, $27, $00, $21 
-	dc.b	$00, $0F, $00, $0D, $00, $0A, $00, $18, $00, $20, $00, $20, $00, $1B, $00, $0E, $00, $1B, $00, $0E, $00, $20, $00, $12, $00, $20, $00, $12, $00, $20, $00, $12 
+	dc.b	$00, $20, $00, $12, $00, $27, $00, $21 
+	dc.b	$00, $0D, $00, $0B, $00, $1C, $00, $0E 
+	dc.b	$00, $0A, $00, $1B, $00, $0A, $00, $1B
+	dc.b	$00, $1A, $00, $19, $00, $27, $00, $21 
+	dc.b	$00, $0F, $00, $0D, $00, $0A, $00, $18
+	dc.b	$00, $20, $00, $20, $00, $1B, $00, $0E
+	dc.b	$00, $1B, $00, $0E, $00, $20, $00, $12
+	dc.b	$00, $20, $00, $12, $00, $20, $00, $12 
 loc_00002E6A: ; town teleport locations
 	; format:
 	; (x,y) within map sector, (x,y) sector of world map
@@ -2464,8 +2470,14 @@ loc_00002E6A: ; town teleport locations
 	dc.w	$0005, $0004, $0009, $0002 ; Hastings
 	dc.w	$0008, $0008, $000A, $0005 ; Carthahena
 loc_00002EEA:
-	dc.b	$00, $D8, $00, $68, $00, $58, $00, $68, $00, $D8, $00, $68, $00, $58, $00, $68, $00, $58, $00, $68, $00, $58, $00, $68, $00, $58, $00, $68, $00, $58, $00, $68 
-	dc.b	$00, $D8, $00, $68, $00, $58, $00, $68, $00, $D8, $00, $68, $00, $58, $00, $68, $00, $58, $00, $68, $00, $D8, $00, $68, $00, $D8, $00, $68, $00, $D8, $00, $68 
+	dc.b	$00, $D8, $00, $68, $00, $58, $00, $68
+	dc.b	$00, $D8, $00, $68, $00, $58, $00, $68
+	dc.b	$00, $58, $00, $68, $00, $58, $00, $68
+	dc.b	$00, $58, $00, $68, $00, $58, $00, $68 
+	dc.b	$00, $D8, $00, $68, $00, $58, $00, $68
+	dc.b	$00, $D8, $00, $68, $00, $58, $00, $68
+	dc.b	$00, $58, $00, $68, $00, $D8, $00, $68
+	dc.b	$00, $D8, $00, $68, $00, $D8, $00, $68 
 loc_00002F2A:
 	TST.w	$FFFFC62C.w
 	BGT.b	loc_00002F50
@@ -21624,7 +21636,7 @@ loc_00015E8C:
 	JSR	(A0,D0.w)
 loc_00015EA4:
 	RTS
-loc_00015EA6:
+loc_00015EA6: ; suspected camera movement handling
 	BRA.w	loc_00015EBA
 	BRA.w	loc_00015ECA
 	BRA.w	loc_00015F1C
@@ -27516,7 +27528,7 @@ loc_0001B97E:
 	MOVE.w	(A0), D0
 	CMPI.w	#8, D0
 	BLT.b	loc_0001B9E4
-	MOVE.l	#$00025D9A, $FFFFC204.w	
+	MOVE.l	#loc_00025D9A, $FFFFC204.w	
 	BRA.w	loc_0001BA8A	
 loc_0001B9E4:
 	CLR.b	$FFFFC20F.w
@@ -27949,7 +27961,7 @@ loc_0001BF28:
 	MOVE.w	(A0), D0
 	CMPI.w	#8, D0
 	BLT.b	loc_0001BFD2
-	MOVE.l	#$00025D9A, $FFFFC204.w
+	MOVE.l	#loc_00025D9A, $FFFFC204.w
 	BRA.b	loc_0001C024
 loc_0001BFD2:
 	ADDQ.w	#1, (A0)+
@@ -30702,7 +30714,7 @@ loc_0001E910:
 	JSR	loc_000115FA	
 	MOVE.w	#8, $FFFFC42C.w	
 	RTS	
-loc_0001E936:
+loc_0001E936: ; Discard item unless modifier is 0x01
 	JSR	loc_00012670
 	JSR	loc_000126B6
 	JSR	loc_00010C4A
@@ -30712,7 +30724,7 @@ loc_0001E936:
 	MOVE.w	(A2,D0.w), D0
 	ANDI.w	#$0100, D0
 	BEQ.w	loc_0001E96A
-	MOVE.l	#$00025D80, $FFFFC204.w
+	MOVE.l	#loc_00025D80, $FFFFC204.w
 	BRA.w	loc_0001EA38
 loc_0001E96A:
 	MOVE.w	#$0090, D0
@@ -37173,7 +37185,9 @@ loc_00025D6E:
 	dc.b	"Sanguios", $FF, $00
 loc_00025D78:
 	dc.b	"Toxios", $FF, $00
+loc_00025D80: 
 	dc.b	"You can't put that down.", $FF, $00
+loc_00025D9A:
 	dc.b	"You can't carry any more.", $FF
 loc_00025DB4:
 	dc.l	loc_000256E4
