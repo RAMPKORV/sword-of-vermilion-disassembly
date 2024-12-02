@@ -37358,15 +37358,17 @@ loc_0002601C:
 	dc.l	loc_000260D6
 	dc.l	loc_000260D6
 loc_00026028:
-	dc.l	$00026066
-	dc.l	$000261E4
-	dc.l	$000261B2
+	dc.l	loc_00026066
+	dc.l	loc_000261E4
+	dc.l	loc_000261B2
+loc_00026034:
 	dc.b	"There's no one", $FE
 	dc.b	"here to talk to.", $FF 
 loc_00026054:
 	dc.b	"nothing", $FF 
 loc_0002605C:
 	dc.b	"All Rings", $FF
+loc_00026066:
 	dc.b	"Welcome to my shop.", $FE
 	dc.b	"Does anything interest you?", $FF 
 loc_00026096:
@@ -37396,9 +37398,11 @@ loc_00026176:
 loc_00026188:
 	dc.b	"Sorry, sir, but I have", $FE
 	dc.b	"no need for that.", $FF, $00
+loc_000261B2:
 	dc.b	"Books of Spells", $FE
 	dc.b	"are my specialty.", $FE
 	dc.b	"May I help you?", $FF
+loc_000261E4:
 	dc.b	"You can buy weapons,", $FE
 	dc.b	"armor, and shields here.", $FF
 	dc.b	"I don't want to buy", $FE
@@ -38010,50 +38014,51 @@ loc_00028F92:
 	dc.b	$00, $03, $DE, $C0, $00, $00, $71, $04, $60, $01, $FF, $FF, $00, $01, $EC, $C2, $00, $C8, $00, $68, $02, $11, $00, $03, $DE, $C0, $00, $00, $71, $9A, $60, $01 
 	dc.b	$FF, $FF 
 loc_00029098:
-	dc.l	$0002960A
-	dc.l	$0002967A
-	dc.l	$00029742
-	dc.l	$000297B2
-	dc.l	$000297F2
-	dc.l	$00029130 
+	dc.l	loc_0002960A
+	dc.l	loc_0002967A
+	dc.l	loc_00029742
+	dc.l	loc_000297B2
+	dc.l	loc_000297F2
+	dc.l	loc_00029130 
 loc_000290B0:
-	dc.l	$0002960A
-	dc.l	$000296A0
-	dc.l	$00029742
-	dc.l	$000297B2
-	dc.l	$000297F2
-	dc.l	$00029264 
+	dc.l	loc_0002960A
+	dc.l	loc_000296A0
+	dc.l	loc_00029742
+	dc.l	loc_000297B2
+	dc.l	loc_000297F2
+	dc.l	loc_00029264 
 loc_000290C8:
-	dc.l	$0002960A
-	dc.l	$000296A0
-	dc.l	$00029742
-	dc.l	$000297B2
-	dc.l	$000297F2
-	dc.l	$0002929E 
+	dc.l	loc_0002960A
+	dc.l	loc_000296A0
+	dc.l	loc_00029742
+	dc.l	loc_000297B2
+	dc.l	loc_000297F2
+	dc.l	loc_0002929E 
 loc_000290E0:
-	dc.l	$0002960A
-	dc.l	$000296A0
-	dc.l	$00029742
-	dc.l	$000297B2
-	dc.l	$000297F2
-	dc.l	$00029386 
+	dc.l	loc_0002960A
+	dc.l	loc_000296A0
+	dc.l	loc_00029742
+	dc.l	loc_000297B2
+	dc.l	loc_000297F2
+	dc.l	loc_00029386 
 loc_000290F8:
-	dc.l	$0002962C
-	dc.l	$000296E4
-	dc.l	$00029794
-	dc.l	$0002982C
-	dc.l	$0002982C
-	dc.l	$00026034 
+	dc.l	loc_0002962C
+	dc.l	loc_000296E4
+	dc.l	loc_00029794
+	dc.l	loc_0002982C
+	dc.l	loc_0002982C
+	dc.l	loc_00026034 
 loc_00029110:
-	dc.l	$00029648
-	dc.l	$0002970A
-	dc.l	$0002970A
-	dc.l	$000297DA
-	dc.l	$000297DA
-	dc.l	$00026034 
+	dc.l	loc_00029648
+	dc.l	loc_0002970A
+	dc.l	loc_0002970A
+	dc.l	loc_000297DA
+	dc.l	loc_000297DA
+	dc.l	loc_00026034 
 loc_00029128:
-	dc.l	$00029446
-	dc.l	$000295E4
+	dc.l	loc_00029446
+	dc.l	loc_000295E4
+loc_00029130:
 	dc.b	"Yes, I have the ring.", $FE
 	dc.b	"You need it to combat", $FE
 	dc.b	"the hordes of Cartahena?", $FD
@@ -38068,9 +38073,11 @@ loc_00029128:
 	dc.b	"Of course, the cave does", $FE
 	dc.b	"have its guardians...."
 	dc.b	$F8, $01, $02
+loc_00029264:
 	dc.b	"Find the treasure", $FE
 	dc.b	"quickly, before I", $FE 
 	dc.b	"reconsider my offer.", $FF, $00
+loc_0002929E:
 	dc.b	"I don't believe it!", $FE
 	dc.b	"You've returned with", $FE
 	dc.b	"the Treasure of Troy!", $FD
@@ -38082,6 +38089,7 @@ loc_00029128:
 	dc.b	"just accept it, young man."
 	dc.b	$FB, $00, $04, $00, $00
 	dc.b	"Good, good. Off you go now.", $FF
+loc_00029386:
 	dc.b	"But this is", $FE
 	dc.b	"such a nice place."
 	dc.b	$F8, $01, $07, $00 
@@ -38093,6 +38101,7 @@ loc_00029128:
 	dc.b	"I become rather beastly", $FE
 	dc.b	"when I'm bothered...."
 	dc.b	$F8, $02, $F7, $E0
+loc_00029446:
 	dc.b	"Thank you, ", $F7, ".", $FD
 	dc.b	"That beast", $FE
 	dc.b	"from Cartahena transformed", $FE
@@ -38116,35 +38125,49 @@ loc_00029128:
 	dc.b	"Did you get the ring?", $FF
 	dc.b	"What made you", $FE
 	dc.b	"decide to live here?", $FF, $00
+loc_000295E4:
 	dc.b	"Are you really", $FE
 	dc.b	"going to live here?"
 	dc.b	$FB, $01, $08, $00
+loc_0002960A:
 	dc.b	"It's better to", $FE
 	dc.b	"talk to the king.", $FF, $00
+loc_0002962C:
 	dc.b	"How could I not have known?", $FF 
+loc_00029648:
 	dc.b	"I had my suspicions that", $FE
 	dc.b	"something wasn't right.", $FF, $00
+loc_0002967A:
 	dc.b	"I am here to deliver", $FE
 	dc.b	"the king's meal.", $FF
+loc_000296A0:
 	dc.b	"The king eats much", $FE
 	dc.b	"more than he used to.", $FE
 	dc.b	"Where does he put it all?", $FF, $00
+loc_000296E4:
 	dc.b	"I had no idea the", $FE
 	dc.b	"king was a monster.", $FF
+loc_0002970A:
 	dc.b	"Our true king is back,", $FE
 	dc.b	"and we have you", $FE
 	dc.b	"to thank for it!", $FF
+loc_00029742:
 	dc.b	"It seemed to me that the", $FE
 	dc.b	"king's personality changed,", $FE
 	dc.b	"but I thought he was moody.", $FF, $00
+loc_00029794:
 	dc.b	"So the king", $FE
 	dc.b	"was an imposter!", $FF, $00
+loc_000297B2:
 	dc.b	"You cannot pass.", $FE
 	dc.b	"It's the king's order.", $FF
+loc_000297DA:
 	dc.b	"You saved our country!", $FF, $00
+loc_000297F2:
 	dc.b	"All I know is that", $FE
 	dc.b	"no one is supposed", $FE
 	dc.b	"to enter this room.", $FF
+loc_0002982C:
 	dc.b	"I show no mercy to anyone!", $FF, $00 
 	dc.b	$1E, $17, $02, $73, $5B, $24, $5E, $01, $5C, $24, $5D, $25, $5E, $01, $73, $2D, $00, $02, $73, $5F, $24, $61, $01, $60, $A4, $25, $61, $AF, $01, $62, $24, $64 
 	dc.b	$05, $63, $6A, $6B, $6C, $63, $25, $64, $AF, $01, $65, $24, $67, $05, $66, $6D, $6E, $6F, $66, $25, $67, $B5, $24, $66, $B4, $01, $5C, $AD, $01, $5C, $2F, $73 
@@ -38573,35 +38596,44 @@ loc_0002B67C:
 	dc.b	$00, $01, $EF, $A8, $00, $48, $00, $88, $01, $D5, $00, $03, $DE, $A0, $00, $00, $6F, $36, $60, $01, $01, $68, $00, $48, $02, $11, $00, $03, $DE, $C0, $00, $00 
 	dc.b	$6F, $36, $60, $01, $01, $28, $00, $38, $02, $89, $00, $03, $DF, $04, $00, $00, $6F, $80, $00, $01, $FF, $FF 
 loc_0002B6D6:
-	dc.b	$00, $02, $B6, $FA, $00, $02, $B7, $56, $00, $02, $B8, $A8 
+	dc.l	loc_0002B6FA
+	dc.l	loc_0002B756
+	dc.l	loc_0002B8A8 
 loc_0002B6E2:
-	dc.l	$0002B70C
-	dc.l	$0002B7E2
-	dc.l	$0002B8D2
-	dc.l	$0002B70C
-	dc.l	$0002B830
-	dc.l	$0002B8D2
+	dc.l	loc_0002B70C
+	dc.l	loc_0002B7E2
+	dc.l	loc_0002B8D2
+	dc.l	loc_0002B70C
+	dc.l	loc_0002B830
+	dc.l	loc_0002B8D2
 	
+loc_0002B6FA:
 	dc.b	"Why are you here?", $FF
+loc_0002B70C:
 	dc.b	"Do not judge the king", $FE 
 	dc.b	"harshly. He obeyed that", $FE
 	dc.b	"villain to save his people.", $FF
+loc_0002B756:
 	dc.b	"Greetings, Your Highness.", $FE
 	dc.b	"What would you like today?", $FE
 	dc.b	"The ring? Why, you have it!", $FD
 	dc.b	"I gave it to you yesterday.", $FE
 	dc.b	"Please, stop tormenting us!"
 	dc.b	$F8, $01, $22, $00 
+loc_0002B7E2:
 	dc.b	"Now I know that he was an", $FE
 	dc.b	"imposter. Unfortunately, he", $FE
 	dc.b	"stole the Ring of Sun.", $FF, $00
+loc_0002B830:
 	dc.b	"Now I know he was", $FE 
 	dc.b	"an imposter. Unfortunately,", $FE
 	dc.b	"he stole the Ring of Sun.", $FD
 	dc.b	"Thank you! You saved my", $FE
 	dc.b	"land when I could not.", $FF, $00
+loc_0002B8A8:
 	dc.b	"Please don't torment", $FE
 	dc.b	"my husband any more!", $FF
+loc_0002B8D2:
 	dc.b	"Please don't torment", $FE
 	dc.b	"my husband any more,", $FE
 	dc.b	"I beg of you!"
