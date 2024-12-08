@@ -1,4 +1,4 @@
-	include "macros.asm"MOVEA.l
+	include "macros.asm"
 	include "constants.asm"
 loc_00000000:
 	dc.l	$FFFFFE00
