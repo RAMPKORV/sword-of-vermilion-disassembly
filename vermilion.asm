@@ -7712,7 +7712,7 @@ loc_00007C30:
 	MOVE.w	#4, D7
 	BSR.w	loc_00008518
 	BEQ.b	loc_00007C50
-	MOVE.l	#$00039820, $1C(A5)	
+	MOVE.l	#loc_00039820, $1C(A5)	
 	BRA.b	loc_00007C66	
 loc_00007C50:
 	TST.b	$FFFFC76B.w
@@ -7727,7 +7727,7 @@ loc_00007C66:
 	TST.b	$FFFFC748.w
 	BEQ.b	loc_00007C82
 	CLR.b	$FFFFC81D.w
-	MOVE.l	#$00039554, $1C(A5)
+	MOVE.l	#loc_00039554, $1C(A5)
 loc_00007C82:
 	BRA.w	loc_00006F8E
 	BSR.w	loc_00008234
@@ -7747,12 +7747,12 @@ loc_00007C9E:
 loc_00007CBA:
 	TST.b	$FFFFC753.w
 	BEQ.b	loc_00007CCC
-	MOVE.l	#$0003A758, $1C(A5)
+	MOVE.l	#loc_0003A758, $1C(A5)
 	BRA.w	loc_00007D32
 loc_00007CCC:
 	TST.b	$FFFFC750.w
 	BEQ.w	loc_00007D32
-	MOVE.l	#$0003A74A, $1C(A5)
+	MOVE.l	#loc_0003A74A, $1C(A5)
 	TST.b	$FFFFC77B.w
 	BNE.b	loc_00007D32
 	MOVEA.l	$FFFFCC08.w, A6
@@ -7784,13 +7784,13 @@ loc_00007D4C:
 	RTS
 	BSR.w	loc_00008234
 	CLR.b	$25(A5)
-	MOVE.l	#$0003A3FE, $1C(A5)
+	MOVE.l	#loc_0003A3FE, $1C(A5)
 	TST.b	$FFFFC757.w
 	BNE.b	loc_00007D82
-	MOVE.l	#$0003A448, $1C(A5)
+	MOVE.l	#loc_0003A448, $1C(A5)
 	TST.b	$FFFFC755.w
 	BNE.b	loc_00007D82
-	MOVE.l	#$0003A3FE, $1C(A5)	
+	MOVE.l	#loc_0003A3FE, $1C(A5)	
 loc_00007D82:
 	MOVE.l	#$00006F8E, $2(A5)
 	RTS
@@ -32105,34 +32105,22 @@ loc_0001FD4C:
 	MOVE.w	#1, $FFFFC128.w
 	RTS
 loc_0001FD54:
-	dc.b	$00, $D8, $02, $B8, $00, $03 
-	dc.w	$001F
-	dc.b	$01, $E8, $02, $68, $00, $14 
-	dc.w	$001A
-	dc.b	$01, $38, $02, $18, $00, $09 
-	dc.w	$0015
-	dc.b	$01, $28, $02, $68, $00, $08 
-	dc.w	$001A
-	dc.b	$01, $28, $02, $08, $00, $08 
-	dc.w	$0014
-	dc.b	$01, $28, $02, $08, $00, $08, $00, $14, $01, $18, $01, $E8, $00, $08 
-	dc.w	$0012
-	dc.b	$01, $E8, $02, $68, $00, $14 
-	dc.w	$001A
-	dc.b	$00, $E8, $02, $68, $00, $05 
-	dc.w	$001A
-	dc.b	$01, $38, $01, $D8, $00, $09 
-	dc.w	$0011
-	dc.b	$01, $68, $02, $B8, $00, $0C 
-	dc.w	$001F
-	dc.b	$01, $18, $01, $B8, $00, $07 
-	dc.w	$000F
-	dc.b	$01, $18, $01, $C8, $00, $07 
-	dc.w	$0010
-	dc.b	$01, $E8, $01, $F8, $00, $15 
-	dc.w	$0013
-	dc.b	$01, $18, $01, $98, $00, $08, $00, $0D, $01, $08, $02, $18, $00, $07 
-	dc.w	$0015
+	dc.w	$00D8, $02B8, $0003, $001F
+	dc.w	$01E8, $0268, $0014, $001A
+	dc.w	$0138, $0218, $0009, $0015
+	dc.w	$0128, $0268, $0008, $001A
+	dc.w	$0128, $0208, $0008, $0014
+	dc.w	$0128, $0208, $0008, $0014
+	dc.w	$0118, $01E8, $0008, $0012
+	dc.w	$01E8, $0268, $0014, $001A
+	dc.w	$00E8, $0268, $0005, $001A
+	dc.w	$0138, $01D8, $0009, $0011
+	dc.w	$0168, $02B8, $000C, $001F
+	dc.w	$0118, $01B8, $0007, $000F
+	dc.w	$0118, $01C8, $0007, $0010
+	dc.w	$01E8, $01F8, $0015, $0013
+	dc.w	$0118, $0198, $0008, $000D 
+	dc.w	$0108, $0218, $0007, $0015
 loc_0001FDD4:
 	BRA.w	loc_0001FE14
 	BRA.w	loc_0001FE1C
@@ -32264,44 +32252,44 @@ loc_0001FF54:
 	BEQ.b	loc_0001FF6A
 	RTS
 loc_0001FF6A:
-	MOVE.l	#$000315AE, $FFFFC15E.w
+	MOVE.l	#loc_000315AE, $FFFFC15E.w
 	RTS
 loc_0001FF74:
-	MOVE.l	#$00032B30, $FFFFC15E.w	
+	MOVE.l	#loc_00032B30, $FFFFC15E.w	
 	RTS	
 loc_0001FF7E:
-	MOVE.l	#$00032B30, $FFFFC15E.w
+	MOVE.l	#loc_00032B30, $FFFFC15E.w
 	RTS
 loc_0001FF88:
-	MOVE.l	#$00033C64, $FFFFC15E.w
+	MOVE.l	#loc_00033C64, $FFFFC15E.w
 	RTS
 loc_0001FF92:
-	MOVE.l	#$00034BB6, $FFFFC15E.w
+	MOVE.l	#loc_00034BB6, $FFFFC15E.w
 	RTS
 loc_0001FF9C:
-	MOVE.l	#$00035B08, $FFFFC15E.w
+	MOVE.l	#loc_00035B08, $FFFFC15E.w
 	RTS
 loc_0001FFA6:
-	MOVE.l	#$00036B90, $FFFFC15E.w
+	MOVE.l	#loc_00036B90, $FFFFC15E.w
 	RTS
 loc_0001FFB0:
-	MOVE.l	#$000383BE, $FFFFC15E.w
+	MOVE.l	#loc_000383BE, $FFFFC15E.w
 	TST.b	$FFFFC748.w
 	BEQ.b	loc_0001FFC6
-	MOVE.l	#$00038494, $FFFFC15E.w
+	MOVE.l	#loc_00038494, $FFFFC15E.w
 loc_0001FFC6:
 	RTS
 loc_0001FFC8:
-	MOVE.l	#$00039530, $FFFFC15E.w
+	MOVE.l	#loc_00039530, $FFFFC15E.w
 	RTS
 loc_0001FFD2:
-	MOVE.l	#$00039DDA, $FFFFC15E.w
+	MOVE.l	#loc_00039DDA, $FFFFC15E.w
 	RTS
 loc_0001FFDC:
-	MOVE.l	#$00039DDA, $FFFFC15E.w	
+	MOVE.l	#loc_00039DDA, $FFFFC15E.w	
 	RTS	
 loc_0001FFE6:
-	MOVE.l	#$0003B646, $FFFFC15E.w
+	MOVE.l	#loc_0003B646, $FFFFC15E.w
 	TST.b	$FFFFC758.w
 	BEQ.b	loc_0001FFFC
 	MOVE.l	#$0003B6AC, $FFFFC15E.w
@@ -40343,6 +40331,7 @@ loc_0003159C:
 	MOVE.l	#$0003149A, $FFFFC182.w
 	MOVE.l	#$000311FE, $FFFFC186.w
 	RTS
+loc_000315AE:
 	dc.b	$00, $01, $ED, $C4, $01, $38, $01, $F8, $00, $91, $00, $03, $DD, $74, $00, $00, $6F, $36, $60, $01, $02, $28, $00, $68, $00, $91, $00, $03, $DD, $74, $00, $00 
 	dc.b	$6F, $36, $60, $01, $00, $28, $01, $E8, $00, $91, $00, $03, $DD, $74, $00, $00, $6F, $5E, $60, $01, $00, $28, $00, $B8, $00, $91, $00, $03, $DD, $74, $00, $00 
 	dc.b	$6F, $36, $60, $01, $02, $18, $01, $08, $01, $09, $00, $03, $DD, $D4, $00, $00, $6F, $A8, $60, $01, $00, $F8, $01, $38, $01, $09, $00, $03, $DD, $D4, $00, $00 
@@ -40680,6 +40669,7 @@ loc_00032B0E:
 	MOVE.l	#$00031F98, $FFFFC204.w
 loc_00032B2E:
 	RTS
+loc_00032B30:
 	dc.b	$00, $01, $EE, $70, $00, $28, $00, $B8, $00, $CD, $00, $03, $DD, $94, $00, $00, $6F, $5E, $60, $01, $01, $D8, $00, $A8, $00, $91, $00, $03, $DD, $74, $00, $00 
 	dc.b	$75, $2E, $60, $01, $02, $08, $01, $58, $00, $CD, $00, $03, $DD, $94, $00, $00, $6F, $36, $60, $01, $01, $18, $01, $08, $00, $91, $00, $03, $DD, $74, $00, $00 
 	dc.b	$6F, $36, $60, $01, $00, $F8, $00, $38, $00, $91, $00, $03, $DD, $74, $00, $00, $75, $5A, $60, $01, $02, $08, $00, $58, $01, $09, $00, $03, $DD, $D4, $00, $00 
@@ -40926,6 +40916,7 @@ loc_00033C52:
 	MOVE.l	#$00033B7A, $FFFFC182.w
 	MOVE.l	#$0003395E, $FFFFC186.w
 	RTS
+loc_00033C64:
 	dc.b	$00, $01, $EE, $E2, $01, $F8, $00, $28, $01, $81, $00, $03, $DE, $14, $00, $00, $6F, $80, $60, $01, $01, $B8, $02, $48, $00, $19, $00, $03, $DD, $34, $00, $00 
 	dc.b	$6F, $80, $60, $01, $01, $B8, $01, $08, $01, $81, $00, $03, $DE, $14, $00, $00, $6F, $80, $60, $01, $00, $A8, $01, $D8, $01, $81, $00, $03, $DE, $14, $00, $00 
 	dc.b	$6F, $80, $60, $01, $02, $88, $01, $58, $01, $81, $00, $03, $DE, $14, $00, $00, $6F, $A8, $60, $01, $02, $68, $01, $08, $00, $91, $00, $03, $DD, $74, $00, $00 
@@ -41166,6 +41157,7 @@ loc_00034B9C:
 	MOVE.l	#$0003495C, $FFFFC204.w
 loc_00034BB4:
 	RTS
+loc_00034BB6:
 	dc.b	$00, $01, $EF, $40, $01, $08, $02, $28, $00, $CD, $00, $03, $DD, $94, $00, $00, $6F, $36, $60, $01, $01, $68, $01, $78, $00, $91, $00, $03, $DD, $74, $00, $00 
 	dc.b	$6F, $36, $60, $01, $00, $78, $01, $08, $00, $CD, $00, $03, $DD, $94, $00, $00, $6F, $5E, $60, $01, $00, $68, $00, $A8, $00, $CD, $00, $03, $DD, $94, $00, $00 
 	dc.b	$77, $62, $60, $01, $01, $98, $00, $C8, $01, $51, $00, $03, $DD, $F4, $00, $00, $6F, $36, $00, $01, $00, $88, $01, $F8, $00, $19, $00, $03, $DD, $34, $00, $00 
@@ -41351,6 +41343,7 @@ loc_00035AF6:
 	MOVE.l	#$00035974, $FFFFC182.w
 	MOVE.l	#$000356EC, $FFFFC186.w
 	RTS
+loc_00035B08:
 	dc.b	$00, $01, $EF, $86, $01, $08, $01, $B8, $01, $09, $00, $03, $DD, $D4, $00, $00, $6F, $80, $60, $01, $01, $F8, $01, $A8, $01, $51, $00, $03, $DD, $F4, $00, $00 
 	dc.b	$6F, $5E, $00, $01, $02, $08, $00, $E8, $01, $51, $00, $03, $DD, $F4, $00, $00, $6F, $36, $00, $01, $01, $28, $00, $78, $01, $09, $00, $03, $DD, $D4, $00, $00 
 	dc.b	$6F, $A8, $60, $01, $01, $88, $01, $08, $00, $91, $00, $03, $DD, $74, $00, $00, $6F, $5E, $60, $01, $00, $68, $00, $78, $00, $CD, $00, $03, $DD, $94, $00, $00 
@@ -41568,6 +41561,7 @@ loc_00036B66:
 	MOVE.l	#$00036388, $FFFFC204.w
 loc_00036B8E:
 	RTS
+loc_00036B90:
 	dc.b	$00, $01, $F0, $18, $01, $48, $02, $78, $01, $09, $00, $03, $DD, $D4, $00, $00, $6F, $80, $60, $01, $02, $68, $01, $88, $01, $51, $00, $03, $DD, $F4, $00, $00 
 	dc.b	$79, $2E, $00, $01, $01, $28, $01, $48, $01, $09, $00, $03, $DD, $D4, $00, $00, $6F, $80, $60, $01, $01, $F8, $01, $08, $01, $09, $00, $03, $DD, $D4, $00, $00 
 	dc.b	$6F, $A8, $60, $01, $02, $48, $02, $28, $01, $51, $00, $03, $DD, $F4, $00, $00, $6F, $36, $00, $01, $00, $C8, $00, $98, $01, $51, $00, $03, $DD, $F4, $00, $00 
@@ -41865,13 +41859,17 @@ loc_000383A2:
 loc_000383B4:
 	MOVE.l	#$00037972, $FFFFC204.w
 	RTS
+loc_000383BE:
 	dc.b	$00, $01, $F0, $56, $01, $18, $01, $08, $00, $91, $00, $03, $DD, $74, $00, $00, $6F, $36, $60, $01, $01, $08, $01, $58, $00, $CD, $00, $03, $DD, $94, $00, $00 
 	dc.b	$6F, $36, $60, $01, $02, $08, $00, $58, $00, $91, $00, $03, $DD, $74, $00, $00, $6F, $36, $60, $01, $01, $08, $00, $48, $00, $CD, $00, $03, $DD, $94, $00, $00 
 	dc.b	$6F, $36, $60, $01, $00, $18, $01, $28, $00, $91, $00, $03, $DD, $74, $00, $00, $6F, $5E, $60, $01, $00, $48, $00, $C8, $00, $CD, $00, $03, $DD, $94, $00, $00 
 	dc.b	$6F, $36, $60, $01, $01, $A8, $00, $48, $00, $91, $00, $03, $DD, $74, $00, $00, $6F, $5E, $60, $01, $01, $B8, $01, $A8, $01, $51, $00, $03, $DD, $F4, $00, $00 
 	dc.b	$6F, $36, $00, $01, $01, $C8, $00, $68, $01, $09, $00, $03, $DD, $D4, $00, $00, $6F, $A8, $60, $01, $01, $78, $01, $28, $01, $51, $00, $03, $DD, $F4, $00, $00 
 	dc.b	$6F, $36, $00, $01, $00, $48, $00, $C8, $01, $51, $00, $03, $DD, $F4, $00, $00, $6F, $5E, $00, $01, $01, $48, $00, $58, $00, $19, $00, $03, $DD, $34, $00, $00 
-	dc.b	$6F, $80, $60, $01, $02, $08, $01, $28, $00, $61, $00, $03, $DD, $54, $00, $00, $6F, $36, $60, $01, $FF, $FF, $00, $01, $F0, $56, $01, $38, $00, $68, $02, $A7 
+	dc.b	$6F, $80, $60, $01, $02, $08, $01, $28, $00, $61, $00, $03, $DD, $54, $00, $00, $6F, $36, $60, $01, $FF, $FF
+loc_00038494:
+    dc.b	$00, $01, $F0, $56, $01
+	dc.b 	$38, $00, $68, $02, $A7 
 	dc.b	$00, $00, $00, $00, $00, $00, $7A, $D0, $60, $01, $01, $38, $00, $78, $02, $AD, $00, $00, $00, $00, $00, $00, $7A, $D0, $60, $01, $FF, $FF 
 loc_000384BA:
 	dc.b	$00, $07, $00, $07, $00, $68, $00, $C8, $00, $00, $00, $00, $00, $04, $01, $32, $00, $03, $09, $8E, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 
@@ -42074,15 +42072,17 @@ loc_00039506:
 	MOVE.l	#$000390E8, $FFFFC186.w
 loc_0003952E:
 	RTS
+loc_00039530:
 	dc.b	$00, $01, $F0, $C2, $00, $78, $00, $68, $00, $19, $00, $03, $DD, $34, $00, $00, $7C, $34, $60, $01, $FF, $FF 
 loc_00039546:
 	dc.b	$FF, $FF 
 loc_00039548:
-	dc.b	$00, $03, $95, $54 
+	dc.l	loc_00039554 
 loc_0003954C:
-	dc.b	$00, $03, $95, $EE 
+	dc.l	loc_000395EE 
 loc_00039550:
-	dc.b	$00, $03, $96, $CE
+	dc.l	loc_000396CE
+loc_00039554:
 	dc.b	"I've been waiting for you,", $FE 
 	dc.b	"This is Excalabria,", $FE 
 	dc.b	"Journey to Swaffham and", $FD
@@ -42090,7 +42090,7 @@ loc_00039550:
 	dc.b	"Hurry, ", $F7, "!", $FD
 	dc.b	"I have much to tell you", $FE 
 	dc.b	"and time is running out!", $FF
-
+loc_000395EE:
 	dc.b	"Long have I waited for you.", $FE 
 	dc.b	"This is Excalabria, your", $FE 
 	dc.b	"birthplace. I am Knute.", $FD
@@ -42101,6 +42101,7 @@ loc_00039550:
 	dc.b	"is a fake! Return to", $FE 
 	dc.b	"Swaffham for the true ring."
 	dc.b	$F8, $01, $28
+loc_000396CE:
 	dc.b	"Swaffham in ruins?", $FE 
 	dc.b	"That is terrible news.", $FE 
 	dc.b	"We don't have much time.", $FD
@@ -42115,12 +42116,12 @@ loc_00039550:
 	dc.b	"the rings from him.", $FD
 	dc.b	"You can get information in", $FE 
 	dc.b	"the towns along the way.", $FF
-
+loc_00039820:
 	dc.b	"You must have all the", $FE 
 	dc.b	"rings! Visit each town one", $FE 
 	dc.b	"more time to get the rings.", $FF, $00 
 loc_0003986E:
-	MOVE.l	#$00039554, $FFFFC204.w	
+	MOVE.l	#loc_00039554, $FFFFC204.w	
 	RTS	
 	dc.b	$24, $1E, $01, $73, $3F, $00, $23, $00, $02, $72, $73, $BF, $BF, $AE, $05, $01, $02, $04, $03, $06, $AB, $01, $30, $42, $31, $32, $42, $32, $31, $01, $33, $AA 
 	dc.b	$3E, $00, $BF, $BF, $BF, $BF, $BF, $BF, $BF, $A8, $05, $01, $02, $03, $05, $06, $A9, $01, $01, $62, $03, $02, $05, $01, $06, $AE, $3B, $00, $BF, $BF, $BF, $BF 
@@ -42172,6 +42173,7 @@ loc_00039DC8:
 	MOVE.l	#$00039CFE, $FFFFC182.w
 	MOVE.l	#$00039972, $FFFFC186.w
 	RTS
+loc_00039DDA:
 	dc.b	$00, $01, $F0, $E4, $00, $F8, $01, $B8, $00, $CD, $00, $03, $DD, $94, $00, $00, $6F, $36, $60, $01, $02, $A8, $01, $C8, $00, $19, $00, $03, $DD, $34, $00, $00 
 	dc.b	$6F, $80, $60, $01, $02, $18, $01, $D8, $00, $CD, $00, $03, $DD, $94, $00, $00, $6F, $36, $60, $01, $01, $B8, $00, $B8, $00, $CD, $00, $03, $DD, $94, $00, $00 
 	dc.b	$6F, $36, $60, $01, $02, $B8, $01, $A8, $00, $91, $00, $03, $DD, $74, $00, $00, $6F, $5E, $60, $01, $02, $B8, $00, $E8, $01, $09, $00, $03, $DD, $D4, $00, $00 
@@ -42201,78 +42203,125 @@ loc_00039E80:
 	dc.b	$DD, $94, $00, $00, $6F, $36, $60, $01, $00, $E8, $00, $88, $00, $91, $00, $03, $DD, $74, $00, $00, $6F, $5E, $60, $01, $00, $48, $00, $58, $02, $4D, $00, $03 
 	dc.b	$DF, $28, $00, $00, $6F, $CA, $60, $01, $FF, $FF 
 loc_0003A03A:
-	dc.b	$00, $03, $A6, $20, $00, $03, $A5, $58, $00, $03, $A1, $22, $00, $03, $A1, $56, $00, $03, $A2, $D0, $00, $03, $A2, $2E, $00, $03, $A2, $D0, $00, $03, $A2, $F4 
-	dc.b	$00, $03, $A3, $82, $00, $03, $A3, $FE 
+	dc.l	loc_0003A620
+	dc.l	loc_0003A558
+	dc.l	loc_0003A122
+	dc.l	loc_0003A156
+	dc.l	loc_0003A2D0
+	dc.l	loc_0003A22E
+	dc.l	loc_0003A2D0 
+	dc.l	loc_0003A2F4 
+	dc.l	loc_0003A382
+	dc.l	loc_0003A3FE 
 loc_0003A062:
-	dc.b	$00, $03, $A6, $20, $00, $03, $A5, $58, $00, $03, $A1, $22, $00, $03, $A1, $9E, $00, $03, $A2, $D0, $00, $03, $A2, $5A, $00, $03, $A2, $D0, $00, $03, $A2, $F4 
-	dc.b	$00, $03, $A3, $82, $00, $03, $A3, $FE 
+	dc.l	loc_0003A620
+	dc.l	loc_0003A558
+	dc.l	loc_0003A122
+	dc.l	loc_0003A19E
+	dc.l	loc_0003A2D0
+	dc.l	loc_0003A25A
+	dc.l	loc_0003A2D0
+	dc.l	loc_0003A2F4 
+	dc.l	loc_0003A382
+	dc.l	loc_0003A3FE 
 loc_0003A08A:
-	dc.b	$00, $03, $A6, $20, $00, $03, $A5, $58, $00, $03, $A1, $22, $00, $03, $A1, $9E, $00, $03, $A1, $FA, $00, $03, $A2, $5A, $00, $03, $A2, $D0, $00, $03, $A3, $2C 
-	dc.b	$00, $03, $A3, $C0, $00, $03, $A3, $FE 
+	dc.l	loc_0003A620
+	dc.l	loc_0003A558
+	dc.l	loc_0003A122
+	dc.l	loc_0003A19E
+	dc.l	loc_0003A1FA
+	dc.l	loc_0003A25A
+	dc.l	loc_0003A2D0
+	dc.l	loc_0003A32C 
+	dc.l	loc_0003A3C0
+	dc.l	loc_0003A3FE 
 loc_0003A0B2:
-	dc.b	$00, $03, $A6, $20, $00, $03, $A5, $58, $00, $03, $A1, $22, $00, $03, $A1, $DE, $00, $03, $A3, $66, $00, $03, $A2, $9C, $00, $03, $A2, $D0, $00, $03, $A3, $66 
-	dc.b	$00, $03, $A3, $66, $00, $03, $A3, $FE, $00, $03, $AB, $3E, $00, $02, $60, $34 
+	dc.l	loc_0003A620
+	dc.l	loc_0003A558
+	dc.l	loc_0003A122
+	dc.l	loc_0003A1DE
+	dc.l	loc_0003A366
+	dc.l	loc_0003A29C
+	dc.l	loc_0003A2D0
+	dc.l	loc_0003A366 
+	dc.l	loc_0003A366
+	dc.l	loc_0003A3FE
+	dc.l	loc_0003AB3E
+	dc.l	loc_00026034 
 loc_0003A0E2:
-	dc.b	$00, $03, $AC, $1C, $00, $03, $AC, $60, $00, $03, $AC, $D6 
+	dc.l	loc_0003AC1C
+	dc.l	loc_0003AC60
+	dc.l	loc_0003ACD6 
 loc_0003A0EE:
-	dc.b	$00, $03, $A6, $AE 
+	dc.l	loc_0003A6AE 
 loc_0003A0F2:
-	dc.b	$00, $03, $A7, $4A 
+	dc.l	loc_0003A74A 
 loc_0003A0F6:
-	dc.b	$00, $03, $A7, $58 
+	dc.l	loc_0003A758 
 loc_0003A0FA:
-	dc.b	$00, $02, $60, $34, $00, $03, $A7, $A8, $00, $03, $A8, $4E, $00, $03, $A9, $A8, $00, $03, $AA, $72, $00, $02, $60, $34, $00, $03, $A7, $FC, $00, $03, $A8, $82 
-	dc.b	$00, $03, $A9, $F4, $00, $03, $AA, $BA
+	dc.l	loc_00026034
+	dc.l	loc_0003A7A8
+	dc.l	loc_0003A84E
+	dc.l	loc_0003A9A8
+	dc.l	loc_0003AA72
+	dc.l	loc_00026034
+	dc.l	loc_0003A7FC
+	dc.l	loc_0003A882 
+	dc.l	loc_0003A9F4
+	dc.l	loc_0003AABA
+loc_0003A122
 	dc.b	"The village of Hastings", $FE 
 	dc.b	"stands before you, warrior.", $FF 
-
+loc_0003A156
 	dc.b	"Beware! A spy from", $FE 
 	dc.b	"Cartahena came here several", $FE 
 	dc.b	"times asking about you.", $FF, $00 
-
+loc_0003A19E
 	dc.b	"You look ill. Did you", $FE 
 	dc.b	"eat something that", $FE 
 	dc.b	"disagreed with you?"
 	dc.b	$F8, $01, $33, $00
+loc_0003A1DE
 	dc.b	"I'm so glad you recovered!", $FF, $00 
-
+loc_0003A1FA
 	dc.b	"The Digot plant can cure", $FE 
 	dc.b	"the Eracle poison you ate.", $FF 
-
+loc_0003A22E
 	dc.b	"The army of Cartahena", $FE 
 	dc.b	"gains strength daily.", $FF 
-
+loc_0003A25A
 	dc.b	"A woman gave you dinner", $FE 
 	dc.b	"in that house?", $FE 
 	dc.b	"But no one lives there!"
 	dc.b	$F8, $01, $33, $00
+loc_0003A29C
 	dc.b	"I think you were poisoned", $FE
 	dc.b	"by a spy from Cartahena.", $FF, $00 
-
+loc_0003A2D0
 	dc.b	"You need a pass", $FE 
 	dc.b	"to enter Cartahena.", $FF 
-
+loc_0003A2F4
 	dc.b	"Soldiers from Cartahena are", $FE 
 	dc.b	"looking for you everywhere.", $FF 
-
+loc_0003A32C
 	dc.b	"That poison you ate", $FE 
 	dc.b	"must have come from", $FE 
 	dc.b	"the Eracle plant.", $FF 
-
+loc_0003A366
 	dc.b	"Cartahena is south of here.", $FF 
-
+loc_0003A382
 	dc.b	"Why are you here?", $FE 
 	dc.b	"Soldiers are searching", $FE 
 	dc.b	"for you everywhere.", $FF, $00 
-
+loc_0003A3C0
 	dc.b	"The Digot plant grows", $FE 
 	dc.b	"in Whisby Cave,", $FE 
 	dc.b	"which is east of here.", $FF, $00 
-
+loc_0003A3FE
 	dc.b	"Have you gone into the", $FE 
 	dc.b	"church? Several people", $FE 
 	dc.b	"are waiting for you there.", $FF, $00 
-
+loc_0003A448
 	dc.b	"Welcome, Prince ", $F7, "!", $FE 
 	dc.b	"I was once a servant", $FE 
 	dc.b	"of your father's.", $FD 
@@ -42286,6 +42335,7 @@ loc_0003A0FA:
 	dc.b	"as you desperately", $FE 
 	dc.b	"need his creation."
 	dc.b	$F8, $01, $36, $00
+loc_0003A558
 	dc.b	"I escaped the destruction", $FE 
 	dc.b	"of Excalabria. I knew a", $FE 
 	dc.b	"hero would arrive one day.", $FD 
@@ -42296,13 +42346,14 @@ loc_0003A0FA:
 	dc.b	"tree in Excalabria.", $FE 
 	dc.b	"It may still be there."
 	dc.b	$F8, $01, $A2
+loc_0003A620
 	dc.b	"I used to work in a shop in", $FE 
 	dc.b	"Swaffham, but I didn't like", $FE
 	dc.b	"the king, so I moved here.", $FD 
 	dc.b	"I wonder if the", $FE 
 	dc.b	"treasure I hid in", $FE 
 	dc.b	"the shop is still there?", $FF 
-
+loc_0003A6AE
 	dc.b	"You greatly honor me and my", $FE 
 	dc.b	"humble home with your", $FE 
 	dc.b	"presence, Your Highness.", $FD 
@@ -42310,24 +42361,27 @@ loc_0003A0FA:
 	dc.b	"I have prepared for you.", $FE 
 	dc.b	"I have much to tell you."
 	dc.b	$F8, $02, $30, $4C
+loc_0003A74A
 	dc.b	"Was it good?", $FF, $00 
-
+loc_0003A758
 	dc.b	"Young fool, I poisoned your", $FE 
 	dc.b	"food. You will die soon!", $FE 
 	dc.b	"Tsarkon will be pleased!"
 	dc.b	$F8, $01, $31
+loc_0003A7A8
 	dc.b	"You need a pass to get into", $FE 
 	dc.b	"Cartahena. I hear that one", $FE 
 	dc.b	"can be obtained in Barrow", $2E
 	dc.b	$F8, $01, $25 
+loc_0003A7FC
 	dc.b	"Your Highness, now is the", $FE 
 	dc.b	"time for the final battle.", $FE 
 	dc.b	"Go south to meet the enemy.", $FF, $00 
-
+loc_0003A84E
 	dc.b	"Greetings, ", $F7, "!", $FE 
 	dc.b	"We were once", $FE 
 	dc.b	"your father's servants.", $FF, $00 
-
+loc_0003A882
 	dc.b	"Hello again, my Prince.", $FE 
 	dc.b	"There are 16 rings", $FE 
 	dc.b	"that rule the world.", $FD 
@@ -42340,28 +42394,28 @@ loc_0003A0FA:
 	dc.b	"Win the rings from Tsarkon", $FE 
 	dc.b	"and the Cartahenan army", $FE 
 	dc.b	"will vanish from our land.", $FF, $00 
-
+loc_0003A9A8
 	dc.b	"The four of us have been", $FE 
 	dc.b	"waiting for this day for 18", $FE 
 	dc.b	"long years, my Prince.", $FF 
-
+loc_0003A9F4
 	dc.b	"Tsarkon has the eight", $FE 
 	dc.b	"rings of evil. To fight", $FE 
 	dc.b	"this malevolent force,", $FD 
 	dc.b	"you need the opposing power", $FE 
 	dc.b	"of all eight rings of good.", $FF, $00 
-
+loc_0003AA72
 	dc.b	"You have grown into a fine", $FE 
 	dc.b	"young man! You greatly", $FE 
 	dc.b	"resemble your father.", $FF 
-
+loc_0003AABA
 	dc.b	"You must find the three", $FE 
 	dc.b	"rings of good that are", $FE 
 	dc.b	"hidden in Cartahena.", $FD 
 	dc.b	"Only then can you", $FE 
 	dc.b	"confront Tsarkon with", $FE 
 	dc.b	"power equal to his own.", $FF 
-
+loc_0003AB3E
 	dc.b	"Long ago, Tsarkon and Erik", $FE 
 	dc.b	"searched the world for the", $FE 
 	dc.b	"rings of good and evil.", $FD 
@@ -42371,24 +42425,24 @@ loc_0003A0FA:
 	dc.b	"The malignant power of", $FE 
 	dc.b	"these rings turned Tsarkon", $FE 
 	dc.b	"into a minion of evil.", $FF 
-
+loc_0003AC1C
 	dc.b	"The tales are true.", $FE 
 	dc.b	"Once Tsarkon and Erik", $FE 
 	dc.b	"were the best of friends.", $FF 
-
+loc_0003AC60
 	dc.b	"What could have turned", $FE 
 	dc.b	"Tsarkon and Erik's", $FE 
 	dc.b	"friendship into hatred?", $FD 
 	dc.b	"A force too powerful for", $FE 
 	dc.b	"man to resist, I'm afraid.", $FF 
-
+loc_0003ACD6
 	dc.b	"If you're not hungry,", $FE 
 	dc.b	"then I can't help you.", $FF, $00 
 loc_0003AD04:
-	MOVE.l	#$0003AABA, $FFFFC204.w	
+	MOVE.l	#loc_0003AABA, $FFFFC204.w	
 	RTS	
 loc_0003AD0E:
-	MOVE.l	#$0003ACD6, $FFFFC204.w	
+	MOVE.l	#loc_0003ACD6, $FFFFC204.w	
 	RTS	
 	dc.b	$32, $21, $70, $01, $02, $03, $06, $01, $02, $0A, $01, $02, $03, $67, $0B, $0C, $0A, $68, $01, $02, $03, $05, $0B, $02, $03, $0B, $0C, $67, $12, $13, $11, $04 
 	dc.b	$0A, $0B, $0C, $0A, $67, $01, $02, $03, $C2, $02, $12, $13, $67, $17, $1A, $19, $05, $11, $12, $13, $11, $0A, $67, $01, $02, $03, $03, $01, $05, $18, $67, $22 
@@ -42471,6 +42525,7 @@ loc_0003B634:
 	MOVE.l	#$0003B4F6, $FFFFC182.w
 	MOVE.l	#$0003B1B4, $FFFFC186.w
 	RTS
+loc_0003B646:
 	dc.b	$00, $01, $F1, $5E, $00, $A8, $00, $B8, $02, $41, $00, $03, $DE, $74, $00, $00, $6F, $CA, $00, $01, $01, $E8, $00, $28, $01, $51, $00, $03, $DD, $F4, $00, $00 
 	dc.b	$6F, $CA, $00, $01, $00, $48, $01, $78, $01, $51, $00, $03, $DD, $F4, $00, $00, $6F, $CA, $00, $01, $01, $C8, $01, $78, $01, $51, $00, $03, $DD, $F4, $00, $00 
 	dc.b	$6F, $CA, $00, $01, $00, $38, $01, $18, $01, $51, $00, $03, $DD, $F4, $00, $00, $6F, $CA, $00, $01, $01, $08, $01, $D8, $01, $81, $00, $03, $DE, $14, $00, $00 
