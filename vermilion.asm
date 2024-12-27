@@ -6939,14 +6939,14 @@ loc_00007096:
 	RTS
 	TST.b	$FFFFC725.w
 	BEQ.b	loc_000070EA
-	MOVE.l	#$0002F180, $FFFFC438.w	
+	MOVE.l	#loc_0002F180, $FFFFC438.w	
 	MOVE.w	#$0044, D5	
 	BSR.w	loc_0000858A	
 	BRA.b	loc_00007100	
 loc_000070EA:
 	TST.b	$FFFFC722.w
 	BEQ.b	loc_00007100
-	MOVE.l	#$0002F180, $FFFFC438.w
+	MOVE.l	#loc_0002F180, $FFFFC438.w
 	MOVE.w	#$0052, D5
 	BSR.w	loc_0000858A
 loc_00007100:
@@ -30361,25 +30361,27 @@ loc_0001E312:
 	MOVE.w	#2, $FFFFC428.w
 	RTS
 loc_0001E326:
-	dc.l	$0001E366
-	dc.l	$0001E366
-	dc.l	$0001E366
-	dc.l	$0001E372 
-	dc.l	$0001E366
-	dc.l	$0001E366 
-	dc.l	$0001E366
-	dc.l	$0001E366 
+	dc.l	loc_0001E366
+	dc.l	loc_0001E366
+	dc.l	loc_0001E366
+	dc.l	loc_0001E372 
+	dc.l	loc_0001E366
+	dc.l	loc_0001E366 
+	dc.l	loc_0001E366
+	dc.l	loc_0001E366
 	dc.l	$0001E388 
-	dc.l	$0001E366 
-	dc.l	$0001E366
+	dc.l	loc_0001E366 
+	dc.l	loc_0001E366
 	dc.l	$0001E394
 	dc.l	$0001E3A0
-	dc.l	$0001E366 
-	dc.l	$0001E366
+	dc.l	loc_0001E366 
+	dc.l	loc_0001E366
 	dc.l	$0001E3AC
+loc_0001E366:
 	dc.l	$002B0024
 	dc.l	$00040001
 	dc.l	$E166FFFF
+loc_0001E372:
 	dc.l	$00240026
 	dc.l	$000F0001 
 	dc.l	$E2F60003
@@ -32374,7 +32376,7 @@ loc_000200A2:
 loc_000200B4:
 	RTS
 loc_000200B6:
-	dc.l	$000200F6
+	dc.l	loc_000200F6
 	dc.l	$00020140
 	dc.l	$00020166
 	dc.l	$000201B0
@@ -32390,6 +32392,7 @@ loc_000200B6:
 	dc.l	$0002035C
 	dc.l	$00020382
 	dc.l	$00020390 
+loc_000200F6:
 	dc.l	$00040001
 	dc.l	$00010002 
 	dc.l	loc_000203DA
@@ -39634,189 +39637,246 @@ loc_0002E408:
 	dc.b	$DE, $34, $00, $00, $6F, $36, $60, $01, $FF, $FF, $00, $01, $EB, $EE, $00, $B8, $00, $A8, $01, $51, $00, $03, $DD, $F4, $00, $00, $6F, $36, $00, $01, $00, $A8 
 	dc.b	$00, $48, $02, $65, $00, $03, $DF, $2C, $00, $00, $6F, $CA, $00, $01, $FF, $FF 
 loc_0002E838:
-	dc.b	$00, $02, $E9, $70, $00, $02, $E9, $70, $00, $02, $E9, $70, $00, $02, $EA, $32, $00, $02, $EA, $32, $00, $02, $EB, $04, $00, $02, $EB, $66, $00, $02, $EB, $B4 
-	dc.b	$00, $02, $EC, $22, $00, $02, $EC, $E4, $00, $02, $ED, $8C 
+	dc.l	loc_0002E970
+	dc.l	loc_0002E970
+	dc.l	loc_0002E970
+	dc.l	loc_0002EA32
+	dc.l	loc_0002EA32
+	dc.l	loc_0002EB04
+	dc.l	loc_0002EB66
+	dc.l	loc_0002EBB4 
+	dc.l	loc_0002EC22
+	dc.l	loc_0002ECE4
+	dc.l	loc_0002ED8C 
 loc_0002E864:
-	dc.b	$00, $02, $E9, $70, $00, $02, $E9, $70, $00, $02, $E9, $70, $00, $02, $E9, $B2, $00, $02, $EA, $5C, $00, $02, $EB, $04, $00, $02, $EB, $66, $00, $02, $EB, $CA 
-	dc.b	$00, $02, $EC, $56, $00, $02, $ED, $14, $00, $02, $ED, $AC 
+	dc.l	loc_0002E970
+	dc.l	loc_0002E970
+	dc.l	loc_0002E970
+	dc.l	loc_0002E9B2
+	dc.l	loc_0002EA5C
+	dc.l	loc_0002EB04
+	dc.l	loc_0002EB66
+	dc.l	loc_0002EBCA 
+	dc.l	loc_0002EC56
+	dc.l	loc_0002ED14
+	dc.l	loc_0002EDAC 
 loc_0002E890:
-	dc.b	$00, $02, $E9, $70, $00, $02, $E9, $70, $00, $02, $E9, $70, $00, $02, $E9, $B2, $00, $02, $EA, $5C, $00, $02, $EB, $04, $00, $02, $EB, $66, $00, $02, $EB, $CA 
-	dc.b	$00, $02, $EC, $BA, $00, $02, $ED, $6A, $00, $02, $ED, $AC 
+	dc.l	loc_0002E970
+	dc.l	loc_0002E970
+	dc.l	loc_0002E970
+	dc.l	loc_0002E9B2
+	dc.l	loc_0002EA5C
+	dc.l	loc_0002EB04
+	dc.l	loc_0002EB66
+	dc.l	loc_0002EBCA 
+	dc.l	loc_0002ECBA
+	dc.l	loc_0002ED6A
+	dc.l	loc_0002EDAC 
 loc_0002E8BC:
-	dc.b	$00, $02, $E9, $8C, $00, $02, $E9, $8C, $00, $02, $E9, $8C, $00, $02, $E9, $D4, $00, $02, $E9, $D4, $00, $02, $EB, $04, $00, $02, $EB, $66, $00, $02, $EB, $CA 
-	dc.b	$00, $02, $EC, $8C, $00, $02, $ED, $36, $00, $02, $ED, $AC 
+	dc.l	loc_0002E98C
+	dc.l	loc_0002E98C
+	dc.l	loc_0002E98C
+	dc.l	loc_0002E9D4
+	dc.l	loc_0002E9D4
+	dc.l	loc_0002EB04
+	dc.l	loc_0002EB66
+	dc.l	loc_0002EBCA 
+	dc.l	loc_0002EC8C
+	dc.l	loc_0002ED36
+	dc.l	loc_0002EDAC 
 loc_0002E8E8:
-	dc.b	$00, $02, $E9, $70, $00, $02, $E9, $70, $00, $02, $E9, $70, $00, $02, $E9, $FA, $00, $02, $EA, $90, $00, $02, $EB, $04, $00, $02, $EB, $66, $00, $02, $EC, $02 
-	dc.b	$00, $02, $EC, $BA, $00, $02, $ED, $6A, $00, $02, $ED, $E2 
+	dc.l	loc_0002E970
+	dc.l	loc_0002E970
+	dc.l	loc_0002E970
+	dc.l	loc_0002E9FA
+	dc.l	loc_0002EA90
+	dc.l	loc_0002EB04
+	dc.l	loc_0002EB66
+	dc.l	loc_0002EC02 
+	dc.l	loc_0002ECBA
+	dc.l	loc_0002ED6A
+	dc.l	loc_0002EDE2 
 loc_0002E914:
-	dc.b	$00, $02, $EE, $14 
+	dc.l	loc_0002EE14 
 loc_0002E918:
-	dc.b	$00, $02, $EE, $58 
+	dc.l	loc_0002EE58 
 loc_0002E91C:
-	dc.b	$00, $02, $EE, $90 
+	dc.l	loc_0002EE90 
 loc_0002E920:
-	dc.b	$00, $02, $EE, $90 
+	dc.l	loc_0002EE90 
 loc_0002E924:
-	dc.b	$00, $02, $EE, $C2, $00, $02, $EF, $14 
+	dc.l	loc_0002EEC2
+	dc.l	loc_0002EF14 
 loc_0002E92C:
-	dc.b	$00, $02, $EF, $D0, $00, $02, $F0, $0E, $00, $02, $EF, $EC, $00, $02, $F0, $52 
+	dc.l	loc_0002EFD0
+	dc.l	loc_0002F00E 
+	dc.l	loc_0002EFEC
+	dc.l	loc_0002F052 
 loc_0002E93C:
-	dc.b	$00, $02, $F0, $86, $00, $02, $F0, $BA 
+	dc.l	loc_0002F086
+	dc.l	loc_0002F0BA 
 loc_0002E944:
-	dc.b	$00, $02, $F0, $E6, $00, $02, $F1, $52 
+	dc.l	loc_0002F0E6
+	dc.l	loc_0002F152 
 loc_0002E94C:
-	dc.b	$00, $02, $F1, $80 
+	dc.l	loc_0002F180 
 loc_0002E950:
-	dc.b	$00, $02, $F1, $B2, $00, $02, $F2, $06 
+	dc.l	loc_0002F1B2
+	dc.l	loc_0002F206 
 loc_0002E958:
-	dc.b	$00, $02, $EF, $5E, $00, $02, $EF, $9E, $00, $02, $60, $34, $00, $02, $EF, $5E, $00, $02, $EF, $9E, $00, $02, $60, $34
-	
+	dc.l	loc_0002EF5E
+	dc.l	loc_0002EF9E
+	dc.l	loc_00026034 
+	dc.l	loc_0002EF5E
+	dc.l	loc_0002EF9E
+	dc.l	loc_00026034
+loc_0002E970:	
 	dc.b	"Welcome to Parma, stranger!", $FF
-
+loc_0002E98C:
 	dc.b	"Those who live here", $FE
 	dc.b	"can never leave.", $FF, $00
-
+loc_0002E9B2:
 	dc.b	"The Cave of Troy", $FE
 	dc.b	"is to the east.", $FF, $00
-
+loc_0002E9D4:
 	dc.b	"Have you given up", $FE
 	dc.b	"your quest so soon?", $FF
-
+loc_0002E9FA:
 	dc.b	"The village of Watling?", $FE
 	dc.b	"It is east of", $FE
 	dc.b	"the Cave of Troy.", $FF
-
+loc_0002EA32:
 	dc.b	"Hey, the king has a", $FE
 	dc.b	"ring just like yours!", $FF
-
+loc_0002EA5C:
 	dc.b	"Arm yourself well before", $FE
 	dc.b	"you enter the dread cave.", $FF, $00
-
+loc_0002EA90:
 	dc.b	"I've heard strange", $FE
 	dc.b	"things about the", $FE
 	dc.b	"village of Watling.", $FD
 	dc.b	"It's full of old people--", $FE
 	dc.b	"not a single young", $FE
 	dc.b	"person there.", $FF, $00
-
+loc_0002EB04:
 	dc.b	"Much wealth is said to lie", $FE
 	dc.b	"west of here. Take this map", $FE
 	dc.b	"and good luck!"
 	dc.b	$F9, $03, $01, $40, $01, $50, $01, $41, $00
 	dc.b	"Did you use my map?", $FF
-
+loc_0002EB66:
 	dc.b	"Horrible monsters live east", $FE
 	dc.b	"of here! Go west to gain", $FE
 	dc.b	"experience and treasure.", $FF
-
+loc_0002EBB4:
 	dc.b	"Be careful out there!", $FF
-
+loc_0002EBCA:
 	dc.b	"What's a brave man", $FE
 	dc.b	"like you doing in", $FE
 	dc.b	"a place like this?", $FF
-
+loc_0002EC02:
 	dc.b	"Search for adventure,", $FE 
 	dc.b	"warrior!", $FF, $00
-
+loc_0002EC22:
 	dc.b	"Our king has been behaving", $FE
 	dc.b	"oddly the last few days.", $FF
-
+loc_0002EC56:
 	dc.b	"Be very careful in", $FE
 	dc.b	"the cave--it's a", $FE
 	dc.b	"dangerous place!", $FF, $00
-
+loc_0002EC8C:
 	dc.b	"Don't worry--there's no", $FE
 	dc.b	"danger here in town.", $FF, $00
-
+loc_0002ECBA:
 	dc.b	"We will always be in", $FE
 	dc.b	"your debt, warrior!", $FF, $00
-
+loc_0002ECE4:
 	dc.b	"When you see the king,", $FE
 	dc.b	"ask him about the ring.", $FF, $00
-
+loc_0002ED14:
 	dc.b	"Take care not to", $FE
 	dc.b	"anger our king.", $FF, $00
-
+loc_0002ED36:
 	dc.b	"You're staying here? Good!", $FE
 	dc.b	"This is a peaceful town.", $FF
-
+loc_0002ED6A:
 	dc.b	"You are very brave, ", $F7, ".", $FE
 	dc.b	"Good luck!", $FF
-
+loc_0002ED8C:
 	dc.b	"Beware of slandering", $FE
 	dc.b	"the king.", $FF, $00
-
+loc_0002EDAC:
 	dc.b	"Beware, stranger!", $FE
 	dc.b	'"Gnostan" is another', $FE
 	dc.b	"name for evil.", $FF
-
+loc_0002EDE2:
 	dc.b	"Welcome back! We're so glad", $FE
 	dc.b	"you returned safely.", $FF, $00
-
+loc_0002EE14:
 	dc.b	"Books of Spells are", $FE
 	dc.b	"extremely useful. Get", $FE
 	dc.b	"some as soon as you can.", $FF, $00 
-
+loc_0002EE58:
 	dc.b	"Unfortunately, good things", $FE
 	dc.b	"usually cost lots of money.", $FF, $00
-
+loc_0002EE90:
 	dc.b	"Some of the people you meet", $FE
 	dc.b	"aren't really people.", $FF
-
+loc_0002EEC2:
 	dc.b	"A lantern costs more than a", $FE
 	dc.b	"candle, but it lasts for as", $FE
 	dc.b	"long as you're in a cave.", $FF
-
+loc_0002EF14:
 	dc.b	"You would need many candles", $FE
 	dc.b	"to explore a cave, but one", $FE
 	dc.b	"lantern is enough.", $FF
-
+loc_0002EF5E:
 	dc.b	"Exploring caves is", $FE
 	dc.b	"easier once you find", $FE
 	dc.b	"the maps hidden there.", $FF, $00
-
+loc_0002EF9E:
 	dc.b	"They say it's best to go", $FE
 	dc.b	"west to gain experience.", $FF
-
+loc_0002EFD0:
 	dc.b	"Gnostan demands donations.", $FF, $00
-
+loc_0002EFEC:
 	dc.b	"It is good to be", $FE
 	dc.b	"free once more.", $FF, $00
-
+loc_0002F00E:
 	dc.b	"I used to believe in", $FE
 	dc.b	"good, but I was forced", $FE
 	dc.b	"to convert to Gnostan.", $FF, $00
-
+loc_0002F052:
 	dc.b	"You have made me", $FE
 	dc.b	"believe in good again!", $FE
 	dc.b	"Thank you.", $FF, $00
-
+loc_0002F086:
 	dc.b	"Now the king forces us to", $FE
 	dc.b	"believe only in Gnostan.", $FF, $00
-
+loc_0002F0BA:
 	dc.b	"Thanks for freeing us", $FE
 	dc.b	"from those monsters.", $FF, $00
-
+loc_0002F0E6:
 	dc.b	"We can collect a lot of", $FE
 	dc.b	"money if we convert to", $FE
 	dc.b	"belief in Gnostan. If", $FD
 	dc.b	"we don't, the king will", $FE
 	dc.b	"get the money.", $FF
-
+loc_0002F152:
 	dc.b	"You saved us from a slow", $FE
 	dc.b	"conversion to evil.", $FF, $00
-
+loc_0002F180:
 	dc.b	"I sometimes have advice for", $FE
 	dc.b	"those with questions.", $FF
-
+loc_0002F1B2:
 	dc.b	"Seek the Cave of Troy to", $FE
 	dc.b	"the east. I'll give you a", $FE
 	dc.b	"map to show the way", $2E
 	dc.b	$F9, $05, $01, $42, $01, $52, $01, $43, $01, $53, $01, $41, $00
+loc_0002F206:
 	dc.b	"Watling? It's to the east.", $FE
 	dc.b	"I'll give you a map to", $FE 
 	dc.b	"help you get there."
-
 	dc.b	$F9, $0A, $01, $41, $01, $42, $01, $52, $01, $43, $01, $53, $01 
 	dc.b	$44, $01, $54, $01, $45, $01, $55, $01, $56, $00, $30, $28, $01, $96, $3F, $00, $2F, $00, $02, $A0, $96, $BF, $BF, $BF, $BF, $A8, $01, $83, $B1, $01, $83, $AB 
 	dc.b	$01, $1B, $26, $1C, $AA, $03, $1D, $1E, $84, $AF, $03, $1D, $1E, $84, $A9, $03, $1D, $1E, $1F, $25, $20, $A9, $05, $1D, $21, $22, $23, $84, $AB, $09, $13, $14 
