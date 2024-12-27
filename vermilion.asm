@@ -23858,7 +23858,7 @@ loc_00017F80:
 	JSR	loc_00010C4A
 	TST.w	$FFFFC462.w
 	BGT.b	loc_00017FC8
-	MOVE.l	#$0002540C, $FFFFC204.w
+	MOVE.l	#loc_0002540C, $FFFFC204.w
 	MOVE.w	#2, $FFFFC424.w
 	BRA.w	loc_0001801C
 loc_00017FC8:
@@ -23866,21 +23866,21 @@ loc_00017FC8:
 	BEQ.w	loc_0001800E
 	CMPI.w	#1, $FFFFC458.w
 	BEQ.b	loc_00017FE8
-	MOVE.l	#$0002542A, $FFFFC204.w
+	MOVE.l	#loc_0002542A, $FFFFC204.w
 	MOVE.w	#3, $FFFFC424.w
 	BRA.b	loc_0001801C
 loc_00017FE8:
 	BSR.w	loc_00018662
 	BEQ.b	loc_00017FFE
-	MOVE.l	#$00025486, $FFFFC204.w
+	MOVE.l	#loc_00025486, $FFFFC204.w
 	MOVE.w	#$000C, $FFFFC424.w
 	BRA.b	loc_0001801C
 loc_00017FFE:
-	MOVE.l	#$000254B2, $FFFFC204.w	
+	MOVE.l	#loc_000254B2, $FFFFC204.w	
 	MOVE.w	#2, $FFFFC424.w	
 	BRA.b	loc_0001801C	
 loc_0001800E:
-	MOVE.l	#$00025458, $FFFFC204.w
+	MOVE.l	#loc_00025458, $FFFFC204.w
 	MOVE.w	#6, $FFFFC424.w
 loc_0001801C:
 	RTS
@@ -24136,7 +24136,7 @@ loc_00018388:
 	ORI.w	#$8000, (A0)
 	RTS
 loc_00018422:
-	MOVE.l	#$000254EA, $FFFFC204.w
+	MOVE.l	#loc_000254EA, $FFFFC204.w
 	MOVE.w	#2, $FFFFC424.w
 	RTS
 loc_00018432:
@@ -26189,7 +26189,7 @@ loc_0001A380:
 	JSR	loc_00010C4A
 	TST.w	$FFFFC442.w
 	BNE.b	loc_0001A3C6
-	MOVE.l	#$000253AE, $FFFFC204.w
+	MOVE.l	#loc_000253AE, $FFFFC204.w
 	MOVE.w	#2, $FFFFC420.w
 	BRA.b	loc_0001A3EA
 loc_0001A3C6:
@@ -26199,7 +26199,7 @@ loc_0001A3C6:
 	MOVE.w	#4, $FFFFC420.w
 	BRA.b	loc_0001A3EA
 loc_0001A3DC:
-	MOVE.l	#$000253EC, $FFFFC204.w
+	MOVE.l	#loc_000253EC, $FFFFC204.w
 	MOVE.w	#8, $FFFFC420.w
 loc_0001A3EA:
 	RTS
@@ -27496,6 +27496,7 @@ loc_0001B784:
 loc_0001B7F4:
 	dc.b	"OK, but that's", $FE
 	dc.b	"very expensive.", $FF, $00
+loc_0001B814:
 	dc.b	"It seems that you don't", $FE
 	dc.b	"have enough money to buy", $FE
 	dc.b	"that item. What can we do?", $FD
@@ -27505,8 +27506,10 @@ loc_0001B7F4:
 	dc.b	"without a sword. Here, take", $FE
 	dc.b	"this one and get out before", $FE
 	dc.b	"I change my mind.", $FF, $00
+loc_0001B8EE:
 	dc.b	"You don't have enough", $FE
 	dc.b	"money to buy that item.", $FF
+loc_0001B91C:
 	dc.b	"Please come back when you", $FE
 	dc.b	"have less combat equipment.", $FF
 loc_0001B952:
@@ -27537,7 +27540,7 @@ loc_0001B97E:
 	BRA.w	loc_0001BA8A	
 loc_0001B9E4:
 	CLR.b	$FFFFC20F.w
-	MOVE.l	#$0001B814, $FFFFC204.w
+	MOVE.l	#loc_0001B814, $FFFFC204.w
 	LEA	$FFFFC482.w, A2
 	LEA	(A2), A1
 	MOVE.w	(A2)+, D7
@@ -27563,7 +27566,7 @@ loc_0001BA22:
 	MOVE.w	(A1), D0
 	CMPI.w	#8, D0
 	BLT.b	loc_0001BA38
-	MOVE.l	#$0001B8EE, $FFFFC204.w	
+	MOVE.l	#loc_0001B8EE, $FFFFC204.w	
 	BRA.b	loc_0001BA8A	
 loc_0001BA38:
 	MOVE.w	(A1), D0
@@ -27620,7 +27623,7 @@ loc_0001BAF6:
 	MOVE.w	(A0), D0
 	CMPI.w	#8, D0
 	BLT.b	loc_0001BB0C
-	MOVE.l	#$0001B91C, $FFFFC204.w	
+	MOVE.l	#loc_0001B91C, $FFFFC204.w	
 	BRA.b	loc_0001BB1E	
 loc_0001BB0C:
 	MOVE.w	(A0), D0
@@ -30622,7 +30625,7 @@ loc_0001E722:
 	TST.w	$FFFFC428.w
 	BNE.w	loc_0001E766
 	JSR	loc_00012670
-	MOVE.l	#$000253C8, $FFFFC204.w
+	MOVE.l	#loc_000253C8, $FFFFC204.w
 	MOVE.w	#7, $FFFFC42C.w
 	RTS
 loc_0001E766:
@@ -37016,23 +37019,32 @@ loc_00025332:
 	dc.b	$00, $02, $80, $00, $00, $04, $00, $00, $00, $05, $60, $00, $00, $07, $70, $00, $00, $10, $00, $00, $00, $14, $00, $00, $00, $18, $00, $00, $00, $24, $00, $00
 	dc.b	$00, $30, $00, $00, $00, $35, $00, $00, $00, $40, $00, $00, $00, $46, $00, $00, $00, $52, $00, $00, $00, $57, $50, $00, $00, $63, $00, $00, $00, $68, $60, $00
 	dc.b	$00, $74, $20, $00, $00, $80, $00, $00, $00, $85, $40, $00, $00, $91, $00, $00, $00, $97, $20, $00, $00, $99, $99, $99, $00, $FF, $FF, $FF
-	
+loc_000253AE:
 	dc.b	"You have nothing to use!", $FF, $00
+loc_000253C8:
 	dc.b	"Which item do you", $FE
 	dc.b	"want to discard?", $FF, $00
+loc_000253EC:
 	dc.b	"Which item do you", $FE
 	dc.b	"want to use?", $FF, $00
+loc_0002540C:
 	dc.b	"You have no Books of Spells.", $FF, $00
+loc_0002542A:
 	dc.b	"Which Book of Spells do", $FE
 	dc.b	"you want to put down?", $FF
+loc_00025458:
 	dc.b	"From which Book do you", $FE
 	dc.b	"wish to cast a spell?", $FF, $00
+loc_00025486:
 	dc.b	"Which Book do you want", $FE
 	dc.b	"to ready for combat?", $FF
+loc_000254B2:
 	dc.b	"You have no Books of Spells", $FE
 	dc.b	"that can be used in combat.", $FF
+loc_000254EA:
 	dc.b	"That Book of Spells", $FE
 	dc.b	"can't be used in combat.", $FF, $00
+
 loc_00025518:
 	dc.b	"The Book of ", $FF, $00
 loc_00025526:
@@ -37040,23 +37052,33 @@ loc_00025526:
 	dc.b	"is ready for use in battle!", $FF 
 loc_0002554A:
 	dc.b	"CAN'T USE", $FF
+
 	dc.b	"But it's already open!", $FF, $00
+
 	dc.b	"There's nothing", $FE
 	dc.b	"to open here!", $FF
+
 	dc.b	"Sorry, you can't open that!", $FF
+
 	dc.b	"You already opened that!", $FF, $00
+
 	dc.b	"Sorry, there's", $FE
 	dc.b	"nothing inside.", $FF, $00
+
 	dc.b	"Stop worrying, the", $FE
 	dc.b	"truffles are still there!", $FF, $00
+
 	dc.b	"Stop worrying, the", $FE
 	dc.b	"herbs are still there!", $FF
+
 	dc.b	"There's money inside.", $FF
+
 	dc.b	"There's a map inside!", $FF
 loc_00025664:
 	dc.b	"There's ", $FF, $00
 loc_0002566E:
 	dc.b	" inside!", $FF, $00
+
 	dc.b	"You can't carry any more!", $FE
 	dc.b	"Do you want to drop", $FE
 	dc.b	"something?", $FF, $00
@@ -37065,6 +37087,7 @@ loc_000256B2:
 	dc.b	"want to carry", $FF, $00
 loc_000256D2:
 	dc.b	"takes ", $FF, $00
+
 	dc.b	"Area Map", $FF, $00
 loc_000256E4:
 	dc.b	"Herbs", $FF
@@ -37162,13 +37185,19 @@ loc_00025914:
 	dc.b	" down", $FF
 loc_0002591A:
 	dc.b	"discards the", $FF, $00
+
 	dc.b	"You can't use that here.", $FF, $00
+
 	dc.b	"Sorry, but you're cursed.", $FF
+
 	dc.b	"you don't have enough", $FE
 	dc.b	"Magic Points.", $FF
+
 	dc.b	"Nothing happened!", $FF
+
 	dc.b	"If you use it in a bright", $FE
 	dc.b	"place, nothing happens.", $FF
+
 	dc.b	"The area has become bright.", $FF 
 loc_000259E0:
 	dc.b	"Bronze Sword", $FF, $00 
@@ -37543,44 +37572,62 @@ loc_000261B2:
 loc_000261E4:
 	dc.b	"You can buy weapons,", $FE
 	dc.b	"armor, and shields here.", $FF
+
 	dc.b	"I don't want to buy", $FE
 	dc.b	"that--it's cursed!", $FF, $00 
+
 loc_0002623A:
 	dc.b	"Welcome!", $FE
 	dc.b	"We rent rooms", $FE
 	dc.b	"for the night.", $FF
+
 	dc.b	"Relax and enjoy a", $FE
 	dc.b	"well-deserved rest.", $FF
+
 	dc.b	"You look much better", $FE
 	dc.b	"this morning!", $FF, $00
+
 	dc.b	"I'm sorry, but if you", $FE
 	dc.b	"can't pay, you'll have", $FE
 	dc.b	"to sleep in the street!", $FF, $00
+
 	dc.b	"My services cost money,", $FE
 	dc.b	"you know. You can't stay", $FE
 	dc.b	"if you don't pay!", $FF, $00
+
 	dc.b	"You have nothing to use!", $FF, $00 
 loc_0002634E:
 	dc.b	"readied ", $FF, $00 
 loc_00026358:
 	dc.b	"removed ", $FF, $00
+
 	dc.b	"You don't have the", $FE
 	dc.b	"proper equipment!", $FF, $00
+
 	dc.b	"What do you want to ready?", $FF, $00
+
 	dc.b	"You readied that earlier.", $FF
+
 	dc.b	"You can't drop", $FE
 	dc.b	"a cursed item!", $FF
+
 	dc.b	"You can't exchange", $FE
 	dc.b	"a cursed item.", $FF
+
 	dc.b	"It's cursed!", $FF, $00
+
 	dc.b	"You searched carefully,", $FE
 	dc.b	"but you didn't notice", $FE
 	dc.b	"anything unusual.", $FF
+
 	dc.b	"Someone is standing in", $FE
 	dc.b	"front of you!", $FF, $00
+
 	dc.b	"It's a treasure chest!", $FF, $00
+
 	dc.b	"Stop worrying, the", $FE
 	dc.b	"herbs are still there!", $FF
+
 	dc.b	"Stop worrying, the", $FE
 	dc.b	"truffles are still there!", $FF, $00 
 loc_000264E2:
@@ -37590,39 +37637,55 @@ loc_00026512:
 	dc.b	"The fee is ", $FF 
 loc_0002651E:
 	dc.b	"You must pay first!", $FF
+
 	dc.b	"If you can't pay,", $FE
 	dc.b	"I won't tell your fortune.", $FF, $00
+
 	dc.b	"If you have no questions,", $FE
 	dc.b	"then why are you here?", $FF, $00
+
 	dc.b	"How may we help you?", $FF, $00
+
 	dc.b	"You haven't been poisoned.", $FF, $00 
 loc_000265C4:
 	dc.b	"You must give ", $FF, $00 
 loc_000265D4:
 	dc.b	" to charity.", $FE
 	dc.b	"Do you agree?", $FF, $00
+
 	dc.b	"I'm sorry. I can't cure", $FE
 	dc.b	"you. Your donation is", $FE
 	dc.b	"appreciated, though.", $FF, $00 
+
 	dc.b	"The poison has been", $FE
 	dc.b	"purged from your body.", $FF, $00
+
 	dc.b	"Don't even think of taking", $FE
 	dc.b	"back your donation.", $FF, $00
+
 	dc.b	"There is no curse on you.", $FF
+
 	dc.b	"The curse has been removed.", $FF
+
 	dc.b	"Save under", $FE
 	dc.b	"which number?", $FF, $00
+
 	dc.b	"Your game was saved", $FE 
 	dc.b	"successfully!", $FF
+
 	dc.b	"Never give up. Every obstacle", $FE
 	dc.b	"can be overcome!", $FF, $00
+
 	dc.b	"Go ahead--it's", $FE
 	dc.b	"not poisonous!", $FF
+
 	dc.b	"The poison is too", $FE
 	dc.b	"strong for that cure.", $FF
+
 	dc.b	"Arise, brave warrior! Our", $FE
 	dc.b	"world needs you! But half", $FE
 	dc.b	"your money goes to the poor.", $FF, $00
+
 	dc.b	"As you awaken, you seem to", $FE
 	dc.b	"hear a stern voice inside", $FE
 	dc.b	"your head say:", $FD
@@ -37633,110 +37696,159 @@ loc_000265D4:
 	dc.b	"world is depending on you!", $FD
 	dc.b	"You should start over", $FE
 	dc.b	"from the beginning.", $FF
+
 	dc.b	"Whew! For a moment there, I", $FE
 	dc.b	"was afraid I'd killed you.", $FD
 	dc.b	"You deserved it though! Now", $FE
 	dc.b	"don't come back until you've", $FE
 	dc.b	"rescued our men.", $FF, $00 
+
 	dc.b	"Casting from the Book of", $FE
 	dc.b	"Inaudios Spells helps", $FE
 	dc.b	"you to evade monsters.", $FF
+
 	dc.b	"The effects of the Inaudios", $FE
 	dc.b	"Spell have worn off.", $FF, $00
+
 	dc.b	"You suddenly feel weak.", $FE
 	dc.b	"You were poisoned", $FE
 	dc.b	"during the battle!", $FF, $00
+
 	dc.b	"Some of your magic points", $FE
 	dc.b	"have been restored.", $FF
+
 	dc.b	"All of your magic points", $FE
 	dc.b	"have been restored.", $FF, $00
+
 	dc.b	"Your lost hit points have", $FE
 	dc.b	"been partially regained.", $FF, $00
+
 	dc.b	"Your lost hit points have", $FE 
 	dc.b	"been regained.", $FF, $00
+
 	dc.b	"All of your lost hit points", $FE
 	dc.b	"have been regained.", $FF 
+
 	dc.b	"The powder spills all over", $FE
 	dc.b	"you. Wrenching pain courses", $FE
 	dc.b	"through your body.", $FF
+
 	dc.b	"If you use that in town,", $FE
 	dc.b	"the townspeople aren't", $FE
 	dc.b	"going to like it one bit!", $FF
+
 	dc.b	"The monsters will have", $FE
 	dc.b	"a hard time finding you.", $FF
+
 	dc.b	"That won't work here.", $FF
+
 	dc.b	"We have maps of", $FE
 	dc.b	"the whole world.", $FF, $00
+
 	dc.b	"A glowing map of this area", $FE
 	dc.b	"appears in the mirror.", $FF
+
 	dc.b	"Brrrnnngg!", $FE
 	dc.b	"It was very noisy!", $FF
+
 	dc.b	"Brrrnnngg!", $FF, $00
+
 	dc.b	"Oh, no! It slipped from", $FE
 	dc.b	"your hand! What a waste--it", $FE
 	dc.b	"might have been valuable.", $FF
+
 	dc.b	'Looking for good "knock,', $FE
 	dc.b	'knock" jokes, maybe?', $FE
 	dc.b	"Sorry, no such thing!", $FF
+
 	dc.b	"It gave out a loud roar and", $FE
 	dc.b	"shot brilliant streamers of", $FE
 	dc.b	"color into the sky.", $FF
+
 	dc.b	"When she was younger, she", $FE
 	dc.b	"must have been beautiful.", $FF
+
 	dc.b	"The old man took it.", $FF, $00 
+
 	dc.b	"He looks mean.", $FF, $00
+
 	dc.b	"The old woman took it.", $FF, $00
+
 	dc.b	"You ate a little bit of it.", $FE
 	dc.b	"It tastes like roast duck.", $FF, $00 
+
 	dc.b	"This is an incredible", $FE
 	dc.b	"treasure! Get it out of", $FE
 	dc.b	"here before you lose it.", $FF, $00
+
 	dc.b	"The jar breaks! Strange", $FE 
 	dc.b	"fragrances fill the air and", $FE
 	dc.b	"tickle your nose.", $FF
+
 	dc.b	"It tastes very sweet.", $FE
 	dc.b	"The magical power makes", $FE
 	dc.b	"your hands tingle.", $FF, $00
+
 	dc.b	"It is very bitter.", $FE
 	dc.b	"Your body suddenly", $FE
 	dc.b	"feels wobbly and weak.", $FF, $00
+
 	dc.b	"As soon as you read it, it", $FE
 	dc.b	"disappears and you can't", $FE
 	dc.b	"recall what it said.", $FF, $00
+
 	dc.b	"It broke! A strange power", $FE
 	dc.b	"ripples through your body.", $FF, $00
+
 	dc.b	"You don't feel anything.", $FE
 	dc.b	"What could have happened?", $FF, $00
+
 	dc.b	"It tastes horrible, but", $FE
 	dc.b	"your body feels very light.", $FF
+
 	dc.b	"Power surges through you.", $FF
+
 	dc.b	"The sixteen rings leave", $FE
 	dc.b	"your hands and rise up", $FE
 	dc.b	"into the sky.", $FD
 	dc.b	"Thousands of brilliant", $FE
 	dc.b	"stars gleam down upon you.", $FF, $00 
+
 	dc.b	"The rings take their place", $FE
 	dc.b	"among the firmament, once", $FE
 	dc.b	"again beyond man's grasp.", $FF, $00
+
 	dc.b	"There is nothing to take.", $FF
+
 	dc.b	"It is white and", $FE
 	dc.b	"very beautiful.", $FF
+
 	dc.b	"It is deep red;", $FE
 	dc.b	"it sparkles in the light.", $FF
+
 	dc.b	"It is bright blue", $FE
 	dc.b	"and beautiful!", $FF, $00
+
 	dc.b	"There's no keyhole here!", $FF, $00
+
 	dc.b	"It doesn't have a door,", $FE
 	dc.b	"so how can you use it?", $FF, $00 
+
 	dc.b	"The key unlocked it.", $FF, $00
+
 	dc.b	"The key doesn't fit.", $FF, $00
+
 	dc.b	"You sense that your", $FE 
 	dc.b	"efforts are futile.", $FF
+
 	dc.b	"It's locked.", $FF, $00
+
 	dc.b	'"Blade rests here in peace"', $FE
 	dc.b	"is written on his tombstone.", $FF, $00
+
 	dc.b	"You can't take it,", $FE
 	dc.b	"it's a box!", $FF, $00
+
 	dc.b	"You took the treasure."
 	dc.b	$F9, $01, $00, $06
 	dc.b	"You opened"
@@ -37749,9 +37861,13 @@ loc_00027258:
 	dc.b	"Best", $FF, $00 
 loc_0002725E:
 	dc.b	"Good", $FF, $00
+
 	dc.b	"EXP. ", $FF
+
 	dc.b	"Thank you!", $FF, $00
+
 	dc.b	"Long live King ", $F7, "!", $FF
+
 	dc.b	"You've banished", $FE
 	dc.b	"evil from our land!", $FF 
 loc_000272AC:
@@ -38261,6 +38377,7 @@ loc_00029446:
 	dc.b	$F9, $02, $00, $05 
 	dc.b	$00, $F9
 	dc.b	"Did you get the ring?", $FF
+
 	dc.b	"What made you", $FE
 	dc.b	"decide to live here?", $FF, $00
 loc_000295E4:
@@ -38376,12 +38493,15 @@ loc_00029C80:
 	dc.l	$00029F3A
 	dc.b	"The king is a", $FE
 	dc.b	"master of disguise.", $FF
+
 	dc.b	"You can sometimes", $FE
 	dc.b	"see through the", $FE
 	dc.b	"king's disguise.", $FF, $00
+
 	dc.b	"The king has brought us", $FE
 	dc.b	"peace and prosperity,", $FE
 	dc.b	"despite his unusual habits.", $FF
+
 	dc.b	"The king really likes", $FE
 	dc.b	"truffles. They are his", $FE
 	dc.b	"one indulgence.", $FD
@@ -38392,20 +38512,25 @@ loc_00029C80:
 	dc.b	$F9, $04, $01, $62, $01, $72, $01, $74, $01, $73
 	dc.b	"Bremen's Cave is", $FE
 	dc.b	"to the northwest.", $FF, $00
+
 	dc.b	"The king is always", $FE
 	dc.b	"thinking of his people.", $FF, $00
+
 	dc.b	"The king sometimes puts", $FE
 	dc.b	"on a disguise to blend", $FE
 	dc.b	"in with ordinary people.", $FD
 	dc.b	"He wants to see what", $FE
 	dc.b	"kind of lives his", $FE
 	dc.b	"subjects lead.", $FF
+
 	dc.b	"Have you met the king?", $FF, $00
+
 	dc.b	"The king is not", $FE
 	dc.b	"here at the moment."
 	dc.b	$F8, $01, $0B
 	dc.b	"I'm not really sure when", $FE
 	dc.b	"the king is coming back.", $FF
+
 	dc.b	"The king is not seeing", $FE
 	dc.b	"visitors right now."
 	dc.b	$F8, $01, $0B, $00
@@ -38477,21 +38602,30 @@ loc_0002A282:
 	dc.l	$0002A392
 	dc.l	$0002A7A4
 	dc.b	"The king knows about rings.", $FF
+
 	dc.b	"So, you're the thief!", $FF
+
 	dc.b	"We were attacked", $FE
 	dc.b	"without warning.", $FF 
+
 	dc.b	"You are a true hero, ", $F7, "!", $FF
+
 	dc.b	"You're an honest-looking", $FE
 	dc.b	"fellow!", $FF, $00
+
 	dc.b	"Come to think of it,", $FE
 	dc.b	"you even have the", $FE
 	dc.b	"face of a criminal.", $FF, $00
+
 	dc.b	"The monster was", $FE
 	dc.b	"so powerful that we", $FE
 	dc.b	"could not resist it!", $FF, $00
+
 	dc.b	"The king is overjoyed", $FE
 	dc.b	"at your success.", $FF, $00
+
 	dc.b	"Excuse me, I'm busy now.", $FF, $00
+
 	dc.b	"I've heard of you--you're", $FE
 	dc.b	"the young warrior who's", $FE
 	dc.b	"collecting rings!", $FD
@@ -38510,6 +38644,7 @@ loc_0002A282:
 	dc.b	$F8, $01, $0F
 	dc.b	"Return only when you have", $FE 
 	dc.b	"proof of your innocence.", $FF, $00
+
 	dc.b	"The monster appeared to be", $FE
 	dc.b	"a little girl. We suspected", $FE
 	dc.b	"nothing until it attacked.", $FD
@@ -38551,6 +38686,7 @@ loc_0002A282:
 	dc.b	"If you discard a Book of", $FE
 	dc.b	"Spells, I can give you the", $FE
 	dc.b	"Book of Sanguia Spells.", $FF 
+
 	dc.b	"Our hopes go with you,", $FE
 	dc.b	$F7, $21, $FF
 	dc.b	"Please bring the", $FE
@@ -38631,27 +38767,37 @@ loc_0002ACDC:
 	dc.b	$F8, $02, $1C, $5A, $00
 	dc.b	"Bruno was the most loyal", $FE
 	dc.b	"servant of the old king.", $FF
+
 	dc.b	"Welcome to your castle,", $FE
 	dc.b	"my king!", $FF, $00
+
 	dc.b	"Journey northeast to", $FE
 	dc.b	"Barrow. Let this map", $FE
 	dc.b	"be your guide."
 	dc.b	$F9, $05, $01, $0E, $01, $0D, $01, $1D, $01, $2D, $01
 	dc.b	",Barrow is to the northeast.", $FF
+
 	dc.b	"Whoever receives the ring", $FE
 	dc.b	"from Bruno shall marry the", $FE
 	dc.b	"Princess and rule Malaga.", $FF, $00
+
 	dc.b	"Have you met the", $FE
 	dc.b	"two ministers yet?", $FF 
+
 	dc.b	"The Princess is", $FE
 	dc.b	"waiting for you.", $FF, $00
+
 	dc.b	"The townspeople will not", $FE
 	dc.b	"be happy if either of the", $FE
 	dc.b	"ministers becomes king.", $FF, $00
+
 	dc.b	"Our land is once again", $FE
 	dc.b	"peaceful and prosperous.", $FF
+
 	dc.b	"Bruno is waiting for you.", $FF
+
 	dc.b	"Bruno has returned.", $FF
+
 	dc.b	"I have been waiting", $FE 
 	dc.b	"for you. Please help", $FE
 	dc.b	"us in our time of need!", $FD
@@ -38672,9 +38818,12 @@ loc_0002ACDC:
 	dc.b	"route to Harmony Cave."
 	dc.b	$F9, $05, $01, $2C, $01, $2D, $01, $2E, $01, $3E, $01, $3F
 	dc.b	"I hope you return safely.", $FF
+
 	dc.b	"Return to me after", $FE
 	dc.b	"your quest is ended!", $FF
+
 	dc.b	"I will wait for you.", $FF, $00
+
 	dc.b	"Please, rule Malaga", $FE
 	dc.b	"as our king and marry", $FE
 	dc.b	"the Princess.", $FD
@@ -38685,10 +38834,12 @@ loc_0002ACDC:
 	dc.b	"Good! Please keep the", $FE
 	dc.b	"Ring of Water as your", $FE
 	dc.b	"engagement ring.", $FF, $00
+
 	dc.b	"Please don't refuse us", $2E
 	dc.b	$FB, $05, $15, $00, $00
 	dc.b	"Return as soon as you", $FE
 	dc.b	"accomplish your task.", $FF 
+
 	dc.b	"You still must", $FE
 	dc.b	"journey to Cartahena.", $FF, $00
 
@@ -38820,12 +38971,16 @@ loc_0002B9DA:
 	
 	dc.b	"Our king has been worrying", $FE
 	dc.b	"about the evil Cartahenans.", $FF, $00 
+
 	dc.b	"I'm bored with my job.", $FF, $00
+
 	dc.b	"A dull job and", $FE
 	dc.b	"lousy wages to boot!", $FF
+
 	dc.b	"I'm looking for another", $FE
 	dc.b	"job. Have you heard", $FE
 	dc.b	"of any openings?", $FF, $00
+
 	dc.b	"The Ring of Earth? Yes, I", $FE
 	dc.b	"have it, but I won't give", $FE
 	dc.b	"it to you for free.", $FD
@@ -38879,8 +39034,10 @@ loc_0002B9DA:
 	dc.b	$F9, $02, $00, $29, $00, $FD
 	dc.b	"Back so soon?", $FE
 	dc.b	"Where's my crystal?", $FF
+
 	dc.b	"Begone! You will get", $FE
 	dc.b	"nothing more from me!", $FF, $00
+
 	dc.b	"I can't give you the", $FE
 	dc.b	"key--you're carrying", $FE
 	dc.b	"too much already.", $FF 
@@ -38926,112 +39083,149 @@ loc_0002C090:
 	dc.b	"him, he turned me to stone.", $FD
 	dc.b	"Your bravery has", $FE
 	dc.b	"freed me at last.", $FF 
+
 	dc.b	"Please stand in", $FE
 	dc.b	"front of the throne", $FE
 	dc.b	"and use the rings.", $FD
 	dc.b	"The day to heal the", $FE
 	dc.b	"world's wounds is upon us!", $FF
+
 	dc.b	"Now you must stand", $FE
 	dc.b	"in front of the throne", $FE
 	dc.b	"and use the rings.", $FD
 	dc.b	"Only you can banish the", $FE
 	dc.b	"evils of the last 18 years.", $FF, $00
+
 	dc.b	"Now that the rings of good", $FE
 	dc.b	"and evil are united, the", $FE
 	dc.b	"world can be whole again.", $FD
 	dc.b	"Hurry to the throne", $FE
 	dc.b	"and use the rings!", $FF, $00
+
 	dc.b	"It is up to you to create", $FE
 	dc.b	"the kind of world that", $FE
 	dc.b	"Erik and Tsarkon wanted.", $FD
 	dc.b	"Place yourself in", $FE
 	dc.b	"front of the throne", $FE
 	dc.b	"and use the rings.", $FF, $00
+
 	dc.b	"A person that", $FE 
 	dc.b	"good shouldn't die.", $FF
+
 	dc.b	"That ring! The king of", $FE
 	dc.b	"Parma has one just like it!", $FF, $00
+
 	dc.b	"Your father is", $FE
 	dc.b	"calling for you!", $FF
+
 	dc.b	"There's a ring in a cave", $FE
 	dc.b	"south of here.", $FE
 	dc.b	"Here's a map to guide you."
 	dc.b	$F9, $02, $01, $60, $01, $70
 	dc.b	"I'm surprised you", $FE
 	dc.b	"came back alive!", $FF, $00
+
 	dc.b	"Be sure to buy armor, a", $FE
 	dc.b	"weapon, and a shield before", $FE
 	dc.b	"you leave the village.", $FF, $00 
+
 	dc.b	"Now your quest begins in", $FE
 	dc.b	"earnest! Here is a map of", $FE
 	dc.b	"the route to Parma."
 	dc.b	$F9, $05, $01, $41, $01, $50, $01, $51, $01, $60, $01, $70
 	dc.b	"We're all very", $FE
 	dc.b	"sorry about Blade.", $FF
+
 	dc.b	"Be careful! Evil roams", $FE
 	dc.b	"everywhere outside our", $FE
 	dc.b	"village walls!", $FF, $00
+
 	dc.b	"Don't loiter any place", $FE
 	dc.b	"that isn't on your map.", $FF, $00
+
 	dc.b	"Valuable items can be", $FE
 	dc.b	"found in remote parts", $FE
 	dc.b	"of the wilderness.", $FD
 	dc.b	"You are now strong enough", $FE
 	dc.b	"to face the tests ahead of", $FE
 	dc.b	"you. Good luck!", $FF
+
 	dc.b	"Everyone has been looking", $FE 
 	dc.b	"for you. Your father is", $FE
 	dc.b	"nearing death's door.", $FF
+
 	dc.b	"Blade will be missed", $FE
 	dc.b	"by all who knew him.", $FF
+
 	dc.b	"You found the ring!", $FE
 	dc.b	"Take good care of it.", $FF
+
 	dc.b	"Hurry, ", $F7, ", your father", $FE
 	dc.b	"is failing fast.", $FF, $00
+
 	dc.b	"We all share", $FE
 	dc.b	"in your sorrow.", $FF, $00
+
 	dc.b	"Blade is dying--hurry!", $FF, $00 
+
 	dc.b	"Be sure to have a map", $FE
 	dc.b	"before you leave a", $FE
 	dc.b	"town or village!", $FF
+
 	dc.b	"To gain money, you", $FE
 	dc.b	"must defeat monsters.", $FF, $00
+
 	dc.b	"Hurry! Rush to your", $FE
 	dc.b	"father's side.", $FF, $00
+
 	dc.b	"Visit churches often!", $FE
 	dc.b	"There you may save your", $FE
 	dc.b	"journeys for later use.", $FF
+
 	dc.b	"Run home, ", $F7, "! Your father", $FE
 	dc.b	"needs you desperately.", $FF
+
 	dc.b	"Your father rests here,", $FE
 	dc.b	"in peace at last.", $FF
+
 	dc.b	"Beware, young man! The", $FE
 	dc.b	"world is a dangerous place.", $FF, $00
+
 	dc.b	"Evil has infected the", $FE
 	dc.b	"soldiers of Cartahena.", $FE
 	dc.b	"Though they appear to be", $FD
 	dc.b	"human, inside they are", $FE
 	dc.b	"horrible monsters!", $FF
+
 	dc.b	"Oh, this ring ...", $FD
 	dc.b	"this must be the property", $FE
 	dc.b	"of the King's family.", $FE
 	dc.b	"Why do you have it?", $FF
+
 	dc.b	"The fortuneteller may", $FE
 	dc.b	"have advice for you.", $FF, $00
+
 	dc.b	"Blade was once a mighty", $FE
 	dc.b	"warrior, but the wounds of", $FE
 	dc.b	"long ago never healed.", $FF
+
 	dc.b	"People have much to say,", $FE
 	dc.b	"if you take time to listen.", $FF, $00
+
 	dc.b	"Where have you been? Your", $FE
 	dc.b	"father is calling for you.", $FF, $00
+
 	dc.b	"Alas, brave Blade is dead!", $FF, $00 
+
 	dc.b	"Your father would", $FE
 	dc.b	"have been proud of you.", $FF
+
 	dc.b	"Blade's health failed", $FE 
 	dc.b	"so quickly that", $FE
 	dc.b	"nothing could be done.", $FF, $00
+
 	dc.b	"Go! You must find the ring!", $FF
+
 	dc.b	"Your father is", $FE
 	dc.b	"in his grave."
 	dc.b	$FF, $00, $F7
@@ -39064,6 +39258,7 @@ loc_0002C090:
 	dc.b	"Go now, and remember me...."
 	dc.b	$F9, $02, $02, $00, $00, $02, $00, $00, $00
 	dc.b	"There is no answer.", $FF
+
 	dc.b	"I have waited a long time", $FE
 	dc.b	"for you, Prince ", $F7, ".", $FD
 	dc.b	"Here is the Ring of Wisdom,", $FE
@@ -39074,24 +39269,33 @@ loc_0002C090:
 	dc.b	"Only you can save us", $FE
 	dc.b	"from Cartahena.", $FE
 	dc.b	"You must not fail!", $FF
+
 	dc.b	"You must equip your weapon", $FE
 	dc.b	"and armor.", $FF
+
 	dc.b	"I have a fine weapon;", $FE
 	dc.b	"may you be as lucky as I!", $FF
+
 	dc.b	"If you enter a cave without", $FE
 	dc.b	"candles, your task will be", $FE
 	dc.b	"difficult indeed.", $FF, $00
+
 	dc.b	"In the next town they sell", $FE
 	dc.b	"something even better", $FE
 	dc.b	"than candles.", $FF, $00
+
 	dc.b	"Your path is dangerous;", $FE
 	dc.b	"you will face many tests.", $FF
+
 	dc.b	"I see a ring in Parma, a", $FE
 	dc.b	"town north of here.", $FF, $00
+
 	dc.b	"I see that one day you", $FE
 	dc.b	"may become a great man.", $FF, $00
+
 	dc.b	"Your father was a good", $FE
 	dc.b	"customer. I will miss him.", $FF
+
 	dc.b	"Be strong and cast aside", $FE
 	dc.b	"your grief. You have an", $FE
 	dc.b	"important task ahead!"
@@ -39453,103 +39657,143 @@ loc_0002E958:
 	dc.b	$00, $02, $EF, $5E, $00, $02, $EF, $9E, $00, $02, $60, $34, $00, $02, $EF, $5E, $00, $02, $EF, $9E, $00, $02, $60, $34
 	
 	dc.b	"Welcome to Parma, stranger!", $FF
+
 	dc.b	"Those who live here", $FE
 	dc.b	"can never leave.", $FF, $00
+
 	dc.b	"The Cave of Troy", $FE
 	dc.b	"is to the east.", $FF, $00
+
 	dc.b	"Have you given up", $FE
 	dc.b	"your quest so soon?", $FF
+
 	dc.b	"The village of Watling?", $FE
 	dc.b	"It is east of", $FE
 	dc.b	"the Cave of Troy.", $FF
+
 	dc.b	"Hey, the king has a", $FE
 	dc.b	"ring just like yours!", $FF
+
 	dc.b	"Arm yourself well before", $FE
 	dc.b	"you enter the dread cave.", $FF, $00
+
 	dc.b	"I've heard strange", $FE
 	dc.b	"things about the", $FE
 	dc.b	"village of Watling.", $FD
 	dc.b	"It's full of old people--", $FE
 	dc.b	"not a single young", $FE
 	dc.b	"person there.", $FF, $00
+
 	dc.b	"Much wealth is said to lie", $FE
 	dc.b	"west of here. Take this map", $FE
 	dc.b	"and good luck!"
 	dc.b	$F9, $03, $01, $40, $01, $50, $01, $41, $00
 	dc.b	"Did you use my map?", $FF
+
 	dc.b	"Horrible monsters live east", $FE
 	dc.b	"of here! Go west to gain", $FE
 	dc.b	"experience and treasure.", $FF
+
 	dc.b	"Be careful out there!", $FF
+
 	dc.b	"What's a brave man", $FE
 	dc.b	"like you doing in", $FE
 	dc.b	"a place like this?", $FF
+
 	dc.b	"Search for adventure,", $FE 
 	dc.b	"warrior!", $FF, $00
+
 	dc.b	"Our king has been behaving", $FE
 	dc.b	"oddly the last few days.", $FF
+
 	dc.b	"Be very careful in", $FE
 	dc.b	"the cave--it's a", $FE
 	dc.b	"dangerous place!", $FF, $00
+
 	dc.b	"Don't worry--there's no", $FE
 	dc.b	"danger here in town.", $FF, $00
+
 	dc.b	"We will always be in", $FE
 	dc.b	"your debt, warrior!", $FF, $00
+
 	dc.b	"When you see the king,", $FE
 	dc.b	"ask him about the ring.", $FF, $00
+
 	dc.b	"Take care not to", $FE
 	dc.b	"anger our king.", $FF, $00
+
 	dc.b	"You're staying here? Good!", $FE
 	dc.b	"This is a peaceful town.", $FF
+
 	dc.b	"You are very brave, ", $F7, ".", $FE
 	dc.b	"Good luck!", $FF
+
 	dc.b	"Beware of slandering", $FE
 	dc.b	"the king.", $FF, $00
+
 	dc.b	"Beware, stranger!", $FE
 	dc.b	'"Gnostan" is another', $FE
 	dc.b	"name for evil.", $FF
+
 	dc.b	"Welcome back! We're so glad", $FE
 	dc.b	"you returned safely.", $FF, $00
+
 	dc.b	"Books of Spells are", $FE
 	dc.b	"extremely useful. Get", $FE
 	dc.b	"some as soon as you can.", $FF, $00 
+
 	dc.b	"Unfortunately, good things", $FE
 	dc.b	"usually cost lots of money.", $FF, $00
+
 	dc.b	"Some of the people you meet", $FE
 	dc.b	"aren't really people.", $FF
+
 	dc.b	"A lantern costs more than a", $FE
 	dc.b	"candle, but it lasts for as", $FE
 	dc.b	"long as you're in a cave.", $FF
+
 	dc.b	"You would need many candles", $FE
 	dc.b	"to explore a cave, but one", $FE
 	dc.b	"lantern is enough.", $FF
+
 	dc.b	"Exploring caves is", $FE
 	dc.b	"easier once you find", $FE
 	dc.b	"the maps hidden there.", $FF, $00
+
 	dc.b	"They say it's best to go", $FE
 	dc.b	"west to gain experience.", $FF
+
 	dc.b	"Gnostan demands donations.", $FF, $00
+
 	dc.b	"It is good to be", $FE
 	dc.b	"free once more.", $FF, $00
+
 	dc.b	"I used to believe in", $FE
 	dc.b	"good, but I was forced", $FE
 	dc.b	"to convert to Gnostan.", $FF, $00
+
 	dc.b	"You have made me", $FE
 	dc.b	"believe in good again!", $FE
 	dc.b	"Thank you.", $FF, $00
+
 	dc.b	"Now the king forces us to", $FE
 	dc.b	"believe only in Gnostan.", $FF, $00
+
 	dc.b	"Thanks for freeing us", $FE
 	dc.b	"from those monsters.", $FF, $00
+
 	dc.b	"We can collect a lot of", $FE
 	dc.b	"money if we convert to", $FE
 	dc.b	"belief in Gnostan. If", $FD
 	dc.b	"we don't, the king will", $FE
 	dc.b	"get the money.", $FF
+
 	dc.b	"You saved us from a slow", $FE
 	dc.b	"conversion to evil.", $FF, $00
+
 	dc.b	"I sometimes have advice for", $FE
 	dc.b	"those with questions.", $FF
+
 	dc.b	"Seek the Cave of Troy to", $FE
 	dc.b	"the east. I'll give you a", $FE
 	dc.b	"map to show the way", $2E
@@ -39631,19 +39875,23 @@ loc_0002FA00:
 	dc.b	"Talk to everyone. Some", $FE
 	dc.b	"people say different", $FE
 	dc.b	"things at different times.", $FF, $00
+
 	dc.b	"My crystal ball shows", $FE
 	dc.b	"me a vision of an", $FE
 	dc.b	"enormous monster!", $FD
 	dc.b	"This foul creature drains", $FE
 	dc.b	"the good from everyone!", $FF
+
 	dc.b	"We prepare the king's meals", $FE
 	dc.b	"in our shop and bring them", $FE
 	dc.b	"to the castle.", $FD
 	dc.b	"It's strange, but he", $FE
 	dc.b	"now eats many times", $FE
 	dc.b	"what he used to.", $FF
+
 	dc.b	"So he wasn't our", $FE
 	dc.b	"king after all!", $FF, $00 
+
 loc_0002FB68:
 	MOVE.l	#$0002FA12, $FFFFC204.w
 	TST.b	$FFFFC725.w
@@ -39692,34 +39940,44 @@ loc_0002FD26:
 	dc.b	$00, $03, $00, $8C
 	
 	dc.b	"What is this?", $FF
+
 	dc.b	"Eh, what'd you say?", $FE
 	dc.b	"For all your help,", $FE
 	dc.b	"please accept this", $FD
 	dc.b	"map of our region."
 	dc.b	$F9, $06, $01, $74, $01, $65, $01, $75, $01, $66, $01, $56, $01, $55
 	dc.b	"Thank you, stranger.", $FF, $00
+
 	dc.b	"Have you become", $FE
 	dc.b	"younger as well?", $FF, $00
+
 	dc.b	"You are searching for", $FE
 	dc.b	"rings? The kings of most", $FE
 	dc.b	"regions have rings.", $FF, $00
+
 	dc.b	"Go southwest to", $FE
 	dc.b	"find Deepdale.", $FF, $00
+
 	dc.b	"How are you?"
 	dc.b	$F8, $01, $1E, $00
 	dc.b	"Why are you so surprised?", $FE
 	dc.b	"I was an old man before,", $FE
 	dc.b	"so I am old still.", $FF
+
 	dc.b	"There are rings of good and", $FE
 	dc.b	"evil. The rings of evil are", $FE
 	dc.b	"now in Cartahena.", $FF
+
 	dc.b	"Was it all just a", $FE
 	dc.b	"horrible nightmare?", $FF
+
 	dc.b	"Deepdale is the closest", $FE
 	dc.b	"town to our humble village.", $FF
+
 	dc.b	"There are 16 rings all", $FE
 	dc.b	"told--eight of good", $FE
 	dc.b	"and eight of evil.", $FF 
+
 	dc.b	"What do you mean", $FE
 	dc.b	'by "no young people"?', $FE
 	dc.b	"I'm only 24!", $FD
@@ -39750,8 +40008,10 @@ loc_0003000D:
 	dc.b	$F8, $01, $0A
 	dc.b	"There are many", $FE
 	dc.b	"knowledgeable people.", $FF, $00
+
 	dc.b	"Go north to reach", $FE
 	dc.b	"Verlin's Cave.", $FF, $00
+
 	dc.b	"Are you a customer?", $FE
 	dc.b	"If you want to stay here,", $FE
 	dc.b	"go ahead.", $FD
@@ -39764,11 +40024,15 @@ loc_00030154:
 	dc.b	"I did count how many", $FE
 	dc.b	"times you stayed here.", $FD
 	dc.b	"Now you have to pay", $FF, $00 
+
 loc_000301B8:
 	dc.b	"or you'll have to work.", $FF
+
 	dc.b	"Move along now, stranger.", $FF
+
 	dc.b	"Don't try to pull one", $FE
 	dc.b	"on me again, young man!", $FF 
+
 	dc.b	"Greetings, weakling! I'm", $FE
 	dc.b	"the one who stole the youth", $FE
 	dc.b	"from the villagers.", $FD
@@ -39871,40 +40135,54 @@ loc_00030A76:
 	dc.b	$00, $03, $0E, $F0
 	dc.b	"Enjoy your stay in", $FE
 	dc.b	"Deepdale, traveler.", $FF, $00
+
 	dc.b	"This town is", $FE
 	dc.b	"amazingly peaceful.", $FF, $00
+
 	dc.b	"Stow is far to the east.", $FE
 	dc.b	"This map will show", $FE
 	dc.b	"you the way."
 	dc.b	$F9, $0D, $01, $74, $01, $65, $01, $75, $01, $66, $01, $76, $01, $67, $01, $77, $01, $68, $01, $69, $01, $79, $01, $6A, $01, $7A, $01, $7B
 	dc.b	"The road to Stow is", $FE
 	dc.b	"extremely dangerous.", $FF, $00
+
 	dc.b	"Our king's ring is", $FE
 	dc.b	"the Ring of Wind.", $FF, $00
+
 	dc.b	"On the way to Stow is a", $FE
 	dc.b	"cave. You'll probably want", $FE
 	dc.b	"to visit Stow first,", $FD
 	dc.b	"but visit the cave before", $FE
 	dc.b	"you leave the area.", $FF
+
 	dc.b	"The armies of Cartahena", $FE 
 	dc.b	"have not invaded us yet.", $FF, $00
+
 	dc.b	"Our king is not", $FE
 	dc.b	"easy to meet.", $FF
+
 	dc.b	"There is a cave on the", $FE
 	dc.b	"way to Stow. Something", $FE
 	dc.b	"interesting awaits inside.", $FF, $00
+
 	dc.b	"The king isn't here?", $FE
 	dc.b	"Did you check the", $FE
 	dc.b	"castle thoroughly?", $FF
+
 	dc.b	"Our king is a kind man.", $FF
+
 	dc.b	"I am bringing some", $FE
 	dc.b	"truffles to the king.", $FF, $00
+
 	dc.b	"The king's a swell guy!", $FF
+
 	dc.b	"Isn't the king", $FE
 	dc.b	"in the castle?", $FF
+
 	dc.b	"Greetings, stranger.", $FE
 	dc.b	"Are you a visitor", $FE
 	dc.b	"to our fair town?", $FF, $00
+
 	dc.b	"You have truffles! May I", $FE
 	dc.b	"have some? There goes my", $FE 
 	dc.b	"secret identity, I guess.", $FD
@@ -39920,9 +40198,11 @@ loc_00030A76:
 	dc.b	$F9, $02, $00, $0D, $00, $FA
 	dc.b	"I hope you've kept", $FE
 	dc.b	"our little secret!", $FF
+
 	dc.b	"I was also a traveler, but", $FE
 	dc.b	"I liked it here so much", $FE
 	dc.b	"that I decided to stay.", $FF, $00
+
 	dc.b	"If your way is dangerous,", $FE
 	dc.b	"enter a church and tell the", $FE
 	dc.b	"priests of your adventures.", $FD
@@ -40056,90 +40336,131 @@ loc_000319D8:
 loc_000319E0:
 	dc.b	$00, $03, $20, $70
 	dc.b	"This is Stow.", $FF
+
 	dc.b	"How could this", $FE
 	dc.b	"happen in Stow?", $FF, $00
+
 	dc.b	"I can't speak with you now;", $FE
 	dc.b	"I'm looking for a button.", $FF
+
 	dc.b	"Hey, you! Where'd you get", $FE
 	dc.b	"that Book of Spells?", $FF, $00
+
 	dc.b	"Are you really innocent?", $FF, $00
+
 	dc.b	"Thank heavens you're here!", $FE
 	dc.b	"It was horrible!", $FF
+
 	dc.b	"I feel better than", $FE
 	dc.b	"I have in years.", $FF
+
 	dc.b	"The Ring of Fire is", $FE
 	dc.b	"found in our land.", $FF, $00
+
 	dc.b	"You have to prove your", $FE
 	dc.b	"innocence, or else....", $FF
+
 	dc.b	"The monster didn't attack", $FE
 	dc.b	"those in houses.", $FF, $00
+
 	dc.b	"Everyone is better now,", $FE
 	dc.b	"thanks to you.", $FF, $00
+
 	dc.b	"Too busy to talk. Bye!", $FF, $00
+
 	dc.b	"I bet you're guilty.", $FE
 	dc.b	"You even look guilty.", $FF, $00
+
 	dc.b	"I guess you really", $FE
 	dc.b	"are innocent.", $FF, $00
+
 	dc.b	"Your deeds will be", $FE
 	dc.b	"remembered forever!", $FF, $00
+
 	dc.b	"Our king is a good man", $FE
 	dc.b	"who detests evil.", $FF, $00
+
 	dc.b	"You should find the", $FE
 	dc.b	"person who sold you", $FE
 	dc.b	"that Book of Spells.", $FF, $00
+
 	dc.b	"Please help us!", $FF
+
 	dc.b	"That doctor has", $FE
 	dc.b	"healed us all.", $FF, $00
+
 	dc.b	"If I were you, I'd look", $FE
 	dc.b	"for the person who sold", $FE
 	dc.b	"you that Book of Spells.", $FF, $00
+
 	dc.b	"The king wants to thank", $FE
 	dc.b	"you for your heroism.", $FF
+
 	dc.b	"Last night, I saw a shadow", $FE
 	dc.b	"in a castle window, as if a", $FE
 	dc.b	"child was running away.", $FF, $00
+
 	dc.b	"The monster had two heads!", $FF, $00
+
 	dc.b	"Would you like", $FE
 	dc.b	"to play a game?", $FF, $00
+
 	dc.b	"Help me! Make the", $FE
 	dc.b	"monster go away!", $FF, $00
+
 	dc.b	"Don't let the", $FE
 	dc.b	"monster kill us!", $FF, $00
+
 	dc.b	"Eh? I don't hear", $FE
 	dc.b	"very well anymore.", $FF
+
 	dc.b	"Don't let the", $FE
 	dc.b	"monster kill us!", $FF, $00
+
 	dc.b	"Thank you. We owe", $FE
 	dc.b	"our lives to you!", $FF
+
 	dc.b	"Er...um...I must", $FE
 	dc.b	"have dozed off.", $FF, $00
+
 	dc.b	"I was hoping no one would", $FE
 	dc.b	"find me. I was afraid of", $FE
 	dc.b	"the monster, so I hid here.", $FF, $00
+
 	dc.b	"From now on, I will", $FE
 	dc.b	"atone for my cowardice.", $FF 
+
 	dc.b	"I see a pretty girl turning", $FE
 	dc.b	"into a horrible monster.", $FF, $00
+
 	dc.b	"In the shops of Keltwick,", $FE
 	dc.b	"northeast of here, they", $FE
 	dc.b	"sell unusual things.", $FF, $00
+
 	dc.b	"Sorry, too busy to talk!", $FF, $00
+
 	dc.b	"Welcome!", $FE
 	dc.b	"You didn't come here to", $FE
 	dc.b	"eat, did you?", $FF, $00
+
 	dc.b	"Here is a map", $FE
 	dc.b	"to Asti's Cave", $2E
 	dc.b	$F9, $05, $01, $5C, $01, $6C, $01, $7C, $01, $6D, $01, $7B, $00
 	dc.b	"Be sure to get the rings.", $FF
+
 	dc.b	"Thanks to you,", $FE
 	dc.b	"our land is safe.", $FF, $00
+
 	dc.b	"Please rescue us!", $FF 
+
 	dc.b	"Good morning!", $FE
 	dc.b	"Excuse me, please.", $FE
 	dc.b	"I'm very busy.", $FF
+
 	dc.b	"Have you met my acolytes", $FE
 	dc.b	"downstairs? We're too busy", $FE
 	dc.b	"to talk, but we're polite.", $FF, $00 
+
 	dc.b	"Hello. Would you like to buy", $FE
 	dc.b	"a Book of Sanguios Spells?", $FE
 	dc.b	"It's only 1,000 kims.", $FB
@@ -40149,6 +40470,7 @@ loc_000319E0:
 	dc.b	"Thanks. When you come back,", $FE
 	dc.b	"I'll try to have more neat", $FE
 	dc.b	"stuff for you.", $FF
+
 	dc.b	"Hello. Would you like to buy", $FE
 	dc.b	"a Book of Sanguios Spells?", $FE
 	dc.b	"It's only 1,000 kims.", $FC
@@ -40158,6 +40480,7 @@ loc_000319E0:
 	dc.b	"Darn, you don't have", $FE
 	dc.b	"enough money! Get some", $FE
 	dc.b	"more and come back.", $FF
+
 	dc.b	"Hello. Would you like to buy", $FE
 	dc.b	"a Book of Sanguios Spells?", $FE
 	dc.b	"It's only 1,000 kims.", $FC 
@@ -40167,13 +40490,16 @@ loc_000319E0:
 	dc.b	"You don't have room for", $FE
 	dc.b	"any more Books of Spells.", $FE 
 	dc.b	"Too bad. It's a great Book.", $FF
+
 	dc.b	"Right now I don't", $FE
 	dc.b	"have anything for you.", $FF, $00
+
 	dc.b	"What? They said I stole the", $FE
 	dc.b	"Book of Sanguios Spells?", $FE
 	dc.b	"No way! Please believe me.", $FC
 	dc.b	$04, $10
 	dc.b	"Thank you.", $FF, $00
+
 	dc.b	"But it's true. I didn't", $FE
 	dc.b	"steal it--I just borrowed", $FE
 	dc.b	"it for a moment. Ha, ha!"
@@ -40332,58 +40658,79 @@ loc_00032DFC:
 loc_00032E04:
 	dc.b	$00, $03, $32, $16
 	dc.b	"This is Keltwick.", $FF
+
 	dc.b	"Explore the fair town of", $FE
 	dc.b	"Keltwick, stranger.", $FF, $00
+
 	dc.b	"Basil may be lazy, but he's", $FE 
 	dc.b	"a fine doctor.", $FF, $00
+
 	dc.b	"Malaga lies to the", $FE
 	dc.b	"northeast. Here is a map to", $FE
 	dc.b	"help you get there."
 	dc.b	$F9, $06, $01, $2C, $01, $3C, $01, $3D, $01, $3E, $01, $3F, $01, $4E
 	dc.b	"Malaga is", $FE
 	dc.b	"northeast of here.", $FF, $00
+
 	dc.b	"Basil must be", $FE
 	dc.b	"napping somewhere.", $FF, $00 
+
 	dc.b	"I hear that Bearwulf", $FE
 	dc.b	"wants to see you.", $FF, $00
+
 	dc.b	"Bearwulf lives with", $FE
 	dc.b	"his son, Anselm.", $FF, $00
+
 	dc.b	"Basil's the laziest", $FE
 	dc.b	"doctor I've ever seen.", $FF, $00
+
 	dc.b	"The king of Malaga died two", $FE
 	dc.b	"years ago, but they still", $FE
 	dc.b	"don't have a new king.", $FF, $00
+
 	dc.b	"I heard that the new king", $FE
 	dc.b	"of Malaga has been chosen.", $FF, $00
+
 	dc.b	"You're looking for", $FE
 	dc.b	"Doctor Basil? I didn't", $FE
 	dc.b	"know he was a doctor.", $FF
+
 	dc.b	"Go west to find Blazon's", $FE
 	dc.b	"Cave. I'll give you a map", $FE
 	dc.b	"that shows the way."
 	dc.b	$F9, $03, $01, $4C, $01, $4D, $01, $4E
 	dc.b	"If you go west, you'll", $FE
 	dc.b	"find Blazon's Cave.", $FF, $00
+
 	dc.b	"Don't bother me.", $FE, $00
 	dc.b	"I hear there's a lot", $FE
 	dc.b	"of trouble at Stow.", $FF, $00
+
 	dc.b	"Be sure to talk to", $FE
 	dc.b	"everyone in Malaga.", $FF, $00
+
 	dc.b	"I hear that everyone", $FE
 	dc.b	"in town knows", $FE
 	dc.b	"something useful.", $FF, $00
+
 	dc.b	"Bearwulf is", $FE
 	dc.b	"waiting for you.", $FF, $00
+
 	dc.b	"Bearwulf is back!", $FE
 	dc.b	"Anselm will be", $FE
 	dc.b	"glad to see him.", $FF
+
 	dc.b	"Hi! What's your name?", $FF
+
 	dc.b	"Poor Anselm! His father has", $FE
 	dc.b	"been gone for several days.", $FF
+
 	dc.b	"Has Anselm's father", $FE
 	dc.b	"returned yet?", $FF
+
 	dc.b	"Greetings, young man.", $FE
 	dc.b	"enjoying our lovely town?", $FF
+
 	dc.b	"Hi, ", $F7, ". I am Anselm.", $FE
 	dc.b	"My father went to Blazon's", $FE
 	dc.b	"Cave to get the mighty", $FD
@@ -40393,9 +40740,11 @@ loc_00032E04:
 	dc.b	$F8, $01, $87
 	dc.b	"My father has come back.", $FE
 	dc.b	"Thank you for finding him.", $FF
+
 	dc.b	"I am old and lonely. I may", $FE
 	dc.b	"help you if you introduce", $FE
 	dc.b	"me to someone nice.", $FF, $00
+
 	dc.b	"She's very beautiful. Would", $FE
 	dc.b	"you show her this sketch", $FE
 	dc.b	"an artist drew of me?"
@@ -40408,10 +40757,13 @@ loc_00032E04:
 	dc.b	$F8, $01, $7A
 	dc.b	"I am waiting for a letter", $FE
 	dc.b	"from my lady friend.", $FF, $00
+
 	dc.b	"Come back when you're", $FE
 	dc.b	"carrying less gear.", $FF
+
 	dc.b	"Did you find the", $FE
 	dc.b	"Poison Shield?", $FF
+
 	dc.b	"Malaga is to the north, but", $FE
 	dc.b	"you must go through a cave", $FE
 	dc.b	"to get there.", $FD
@@ -40423,6 +40775,7 @@ loc_00032E04:
 	dc.b	$F8, $01, $8C
 	dc.b	"Yawn! I'm having", $FE
 	dc.b	"trouble waking up.", $FF 
+
 	dc.b	"Hello! What's wrong?", $FE
 	dc.b	"The people of Stow have", $FE
 	dc.b	"been attacked by a monster?", $FD
@@ -40431,9 +40784,11 @@ loc_00032E04:
 	dc.b	$F8, $01, $12, $00
 	dc.b	"I'm getting ready", $FE
 	dc.b	"to leave for Stow.", $FF, $00
+
 	dc.b	"Can't you see that I'm", $FE
 	dc.b	"getting ready for bed?", $FE
 	dc.b	"Go away!", $FF, $00 
+
 	dc.b	"I am Bearwulf. I was once a", $FE
 	dc.b	"servant of Tsarkon, but I", $FE
 	dc.b	"turned from him long ago.", $FD
@@ -40558,106 +40913,151 @@ loc_000340C2:
 	dc.b	$00, $03, $48, $26, $00, $03, $48, $96, $00, $03, $49, $5C
 	dc.b	"Welcome, traveler,", $FE
 	dc.b	"to the town of Malaga.", $FF
+
 	dc.b	"I am a soldier of Thar.", $FE
 	dc.b	"Do not aid Luther!", $FF, $00
+
 	dc.b	"To tell the truth,", $FE
 	dc.b	"I secretly hated Thar.", $FE
 	dc.b	"I am happy for you.", $FF 
+
 	dc.b	"Luther should be", $FE
 	dc.b	"the next king.", $FE 
 	dc.b	"Long live Luther!", $FF
+
 	dc.b	"That evil Luther fooled us", $FE
 	dc.b	"into supporting him.", $FE
 	dc.b	"I'm glad he failed.", $FF
+
 	dc.b	"After the king died, we all", $FE
 	dc.b	"split into a Thar faction", $FE
 	dc.b	"and a Luther faction.", $FF
+
 	dc.b	"Now the town", $FE
 	dc.b	"is united again.", $FF 
+
 	dc.b	"The Princess is waiting", $FE
 	dc.b	"for you inside the castle.", $FF, $00
+
 	dc.b	"Bruno is coming back.", $FF
+
 	dc.b	"Both Thar and Luther want", $FE
 	dc.b	"to marry the Princess. Each", $FE 
 	dc.b	"of them wants to be king.", $FF
+
 	dc.b	"The king must have", $FE
 	dc.b	"the Ring of Water.", $FF 
+
 	dc.b	"Long live the king!", $FE
 	dc.b	"Long live Princess Wynifir!", $FF
+
 	dc.b	"We will wait", $FE
 	dc.b	"for your return.", $FF
+
 	dc.b	"If Thar becomes king,", $FE
 	dc.b	"woe to Malaga!", $FF, $00
+
 	dc.b	"I am relieved that Thar", $FE
 	dc.b	"did not become king!", $FF, $00
+
 	dc.b	"If Luther becomes king,", $FE
 	dc.b	"he'll ruin this land.", $FF
+
 	dc.b	"I'm so glad that Luther", $FE
 	dc.b	"is not our new king!", $FF, $00
+
 	dc.b	"Two years ago the King died,", $FE
 	dc.b	"and Princess Wynifir was", $FE
 	dc.b	"left alone.", $FF 
+
 	dc.b	"Thar and Luther hate you.", $FF
+
 	dc.b	"The village of Barrow", $FE
 	dc.b	"is to the northeast.", $FF, $00
+
 	dc.b	"After the queen died, the", $FE 
 	dc.b	"king worried constantly", $FE
 	dc.b	"about the Princess.", $FF
+
 	dc.b	"Are you the new king?", $FF
+
 	dc.b	"I hope that you succeed.", $FF, $00
+
 	dc.b	"The price is the best thing", $FE
 	dc.b	"about the food--it's free!", $FF, $00
+
 	dc.b	"I don't have much money,", $FE
 	dc.b	"so I always come here.", $FF
+
 	dc.b	"It's absolutely delicious!", $FF, $00 
+
 	dc.b	"This tavern has a", $FE
 	dc.b	"reputation for", $FE
 	dc.b	"delicious meals.", $FF
+
 	dc.b	"This place is so busy", $FE
 	dc.b	"that you may not be", $FE
 	dc.b	"able to get out!", $FF, $00
+
 	dc.b	"Stop bothering me", $FE 
 	dc.b	"while I'm eating!", $FF
+
 	dc.b	"Pull up a seat", $FE
 	dc.b	"and grab some food.", $FF, $00
+
 	dc.b	"I hear you collect rings.", $FE
 	dc.b	"I'm looking for one in size", $FE
 	dc.b	"six. Have you found any?", $FF, $00
+
 	dc.b	"Nothing like good food", $FE
 	dc.b	"to raise your spirits.", $FF
+
 	dc.b	"Stop looking at my food!", $FF, $00
+
 	dc.b	"Sometimes a tavern", $FE
 	dc.b	"can be too popular!", $FF, $00
+
 	dc.b	"This is the best", $FE
 	dc.b	"tavern in town!", $FF, $00
+
 	dc.b	"It's the only", $FE
 	dc.b	"tavern in town!", $FF
+
 	dc.b	"Tsarkon was once a", $FE
 	dc.b	"good man. I wonder", $FE
 	dc.b	"why he turned evil?", $FF
+
 	dc.b	"Everything here is free.", $FE
 	dc.b	"That's why it's so crowded.", $FF, $00
+
 	dc.b	"I like anything", $FE
 	dc.b	"that's free!", $FF, $00
+
 	dc.b	"A long time ago, Erik of", $FE
 	dc.b	"Excalabria and Tsarkon of", $FE
 	dc.b	"Cartahena were friends.", $FF, $00
+
 	dc.b	"I wonder what else", $FE
 	dc.b	"there is to eat.", $FF
+
 	dc.b	"Tsarkon and Erik were close", $FE
 	dc.b	"friends. Why would Tsarkon", $FE
 	dc.b	"kill his best friend?", $FF, $00
+
 	dc.b	"I see the face of a shop", $FE
 	dc.b	"owner in this town.", $FE
 	dc.b	"He looks cruel.", $FD
 	dc.b	"Oh! But now he's smiling.", $FE
 	dc.b	"I don't understand", $FE
 	dc.b	"this vision.", $FF, $00
+
 	dc.b	"If either Thar or Luther", $FE
 	dc.b	"becomes king, that will be", $FE
 	dc.b	"the end of lovely Malaga.", $FF
+
 	dc.b	"Today, everything's", $FE
 	dc.b	"on the house!", $FF
+
 	dc.b	"I am waiting for ", $F7, ".", $FE
 	dc.b	"He will come some day. You", $FE
 	dc.b	"can't be the ", "", $F7, " I await!", $FD
@@ -40670,6 +41070,7 @@ loc_000340C2:
 	dc.b	$F8, $01, $CD, $00
 	dc.b	"What happened?", $FE
 	dc.b	"Have you given up?", $FF
+
 	dc.b	"To be honest,", $FE 
 	dc.b	"I never expected", $FE
 	dc.b	"that you would succeed.", $FD
@@ -40679,6 +41080,7 @@ loc_000340C2:
 	dc.b	"Please return to Malaga."
 	dc.b	$F9, $02, $00, $1B, $00, $FC
 	dc.b	"Please return to Malaga.", $FF, $00 
+
 loc_00034B92:
 	MOVE.l	#$000348E4, $FFFFC204.w
 	RTS
@@ -40719,26 +41121,33 @@ loc_00034D1E:
 loc_00034D22:
 	dc.b	$00, $03, $50, $B2, $00, $03, $50, $A8
 	dc.b	"Welcome to Barrow.", $FF, $00
+
 	dc.b	"There is an old man here,", $FE
 	dc.b	"Uncle Tibor by name. We", $FE
 	dc.b	"don't see him very often.", $FF
+
 	dc.b	"The people of Tadcaster", $FE 
 	dc.b	"are in grave danger!", $FF, $00
+
 	dc.b	"Uncle Tibor lives", $FE
 	dc.b	"in the forest.", $FF, $00
+
 	dc.b	"Travel west to", $FE
 	dc.b	"reach Tadcaster.", $FE
 	dc.b	"I have a map for you."
 	dc.b	$F9, $07, $01, $0E, $01, $0D, $01, $0C, $01, $0B, $01, $0A, $01, $09, $01, $19, $00
 	dc.b	"Travel west to", $FE
 	dc.b	"reach Tadcaster.", $FF
+
 	dc.b	"You should head", $FE
 	dc.b	"toward Tadcaster.", $FF 
+
 	dc.b	"There is a hidden", $FE
 	dc.b	"road into the forest.", $FE
 	dc.b	"It is near the church.", $FD
 	dc.b	"Take it to get to", $FE
 	dc.b	"Uncle Tibor's house.", $FF
+
 	dc.b	"There is an ancient legend", $FE
 	dc.b	"we tell in this village.", $FE
 	dc.b	"A treasure of 15,000 kims", $FD
@@ -40752,6 +41161,7 @@ loc_00034D22:
 	dc.b	"A treasure of 15,000 kims", $FE
 	dc.b	"is hidden in the Cave of", $FE
 	dc.b	"Burgandy, to the southwest.", $FF, $00
+
 	dc.b	"I'm amazed you made", $FE
 	dc.b	"it back! Did you find", $FE
 	dc.b	"the 15,000 kims?", $FD
@@ -40761,19 +41171,24 @@ loc_00034D22:
 	dc.b	$F8, $01, $20, $00
 	dc.b	"Don't spend your wealth", $FE
 	dc.b	"all in one place!", $FF
+
 	dc.b	"Go away.", $FF, $00
+
 	dc.b	"You wish a pass to allow", $FE
 	dc.b	"you into Cartahena? Are you", $FE
 	dc.b	"willing to pay 50,000 kims?"
 	dc.b	$FB, $02, $34, $00
 	dc.b	"Then why are you here?", $FF, $00
+
 	dc.b	"Don't tell anyone you", $FE
 	dc.b	"bought it from me.", $FF, $00
+
 	dc.b	"You wish a pass to allow", $FE
 	dc.b	"you into Cartahena? Are you", $FE
 	dc.b	"willing to pay 50,000 kims?"
 	dc.b	$FC, $06
 	dc.b	"You can't afford it.", $FF, $00
+
 	dc.b	"You wish a pass to allow", $FE
 	dc.b	"you into Cartahena? Are you", $FE
 	dc.b	"willing to pay 50,000 kims?"
@@ -41122,25 +41537,34 @@ loc_00036E6E:
 	dc.b	$00, $03, $77, $08, $00, $02, $60, $34
 	dc.b	"You are in Helwig,", $FE
 	dc.b	"adventurer!", $FF, $00
+
 	dc.b	"Only the women of", $FE
 	dc.b	"this village remain.", $FF, $00
+
 	dc.b	"Journey west to Swaffham.", $FE
 	dc.b	"Use this map as your guide."
 	dc.b	$F9, $08, $01, $06, $01, $16, $01, $15, $01, $05, $01, $04, $01, $03, $01, $02, $01, $01, $00
 	dc.b	"Journey west to Swaffham.", $FF
+
 	dc.b	"The soldiers of Cartahena", $FE
 	dc.b	"captured my husband. I fear", $FE
 	dc.b	"I'll never see him again.", $FF
+
 	dc.b	"I'm so happy to", $FE
 	dc.b	"have my husband back!", $FF
+
 	dc.b	"All the village men have", $FE
 	dc.b	"been forced into slave", $FE
 	dc.b	"labor by the Cartahenans.", $FF
+
 	dc.b	"Thank you for", $FE 
 	dc.b	"rescuing our men!", $FF
+
 	dc.b	"Alas! We were to be", $FE
 	dc.b	"married next week!", $FF, $00
+
 	dc.b	"We can never repay you!", $FF
+
 	dc.b	"The soldiers of Cartahena", $FE
 	dc.b	"took our men to Methuen's", $FE
 	dc.b	"Cave to the southwest.", $FD
@@ -41148,8 +41572,10 @@ loc_00036E6E:
 	dc.b	"map that shows the way", $2E
 	dc.b	$F9, $05, $00, $89, $01, $06, $01, $16, $01, $15, $01, $14, $00
 	dc.b	"I know I can count on you!", $FF, $00
+
 	dc.b	"I heard that the Ring", $FE
 	dc.b	"of Earth is in Swaffham.", $FF, $00
+
 	dc.b	"For as long as our village", $FE
 	dc.b	"has existed, gold has been", $FE
 	dc.b	"mined from Methuen's Cave.", $FD
@@ -41160,6 +41586,7 @@ loc_00036E6E:
 	dc.b	"We also suffered in", $FE
 	dc.b	"the war between", $FE
 	dc.b	"Cartahena and Excalabria.", $FF
+
 	dc.b	"Everyone has someone except", $FE
 	dc.b	"me. Could you find someone", $FE
 	dc.b	"for me? Take this sketch an", $FD
@@ -41169,6 +41596,7 @@ loc_00036E6E:
 	dc.b	$F9, $01, $00, $16
 	dc.b	"Have you found", $FE
 	dc.b	"someone for me?", $FF, $00
+
 	dc.b	"He looks like a", $FE
 	dc.b	"very nice person.", $FE
 	dc.b	"I'll write him a letter.", $FD
@@ -41181,24 +41609,32 @@ loc_00036E6E:
 	dc.b	$F9, $01, $00, $27, $00
 	dc.b	"I'm sure we'll get along", $FE
 	dc.b	"just fine.", $FF
+
 	dc.b	"Please come back", $FE
 	dc.b	"when you're not", $FE
 	dc.b	"carrying so much gear.", $FF
+	
 	dc.b	"He's a nice person and a", $FE
 	dc.b	"good friend. I want to give", $FE
 	dc.b	"you the Dragon Shield as a", $FD
 	dc.b	"present, but you are", $FE
 	dc.b	"carrying too much already.", $FF
+
 	dc.b	"I don't know if I'll", $FE
 	dc.b	"ever see my daddy again!", $FF 
+
 	dc.b	"My daddy's back!", $FE
 	dc.b	"Thank you ever so much!", $FF, $00
+
 	dc.b	"I owe you my life,", $FE
 	dc.b	"brave warrior.", $FF
+
 	dc.b	"You would be most welcome", $FE
 	dc.b	"at our wedding next week.", $FF 
+
 	dc.b	"My daughter and I are", $FE
 	dc.b	"most grateful to you.", $FF
+
 	dc.b	"I found this key in the", $FE
 	dc.b	"cave. Some soldiers dropped", $FE 
 	dc.b	"it, and I picked it up.", $FD
@@ -41208,28 +41644,35 @@ loc_00036E6E:
 	dc.b	"You will always", $FE
 	dc.b	"be remembered in our", $FE
 	dc.b	"village as a hero!", $FF
+
 	dc.b	"I would give you a gift,", $FE
 	dc.b	"but you can't carry", $FE
 	dc.b	"any more items.", $FF, $00
+
 	dc.b	"Greetings. I am also a", $FE
 	dc.b	"stranger here. I hear that", $FE
 	dc.b	"the Dragon Shield is in", $FD
 	dc.b	"this village somewhere. I", $FE
 	dc.b	"haven't found it yet, but", $FE
 	dc.b	"I'll keep looking.", $FF, $00
+
 	dc.b	"I didn't think I'd ever", $FE
 	dc.b	"get back to Helwig!", $FF
+
 	dc.b	"Rumor has it that the king", $FE
 	dc.b	"of Swaffham is very stingy.", $FF, $00
+
 	dc.b	"The minister in this church", $FE
 	dc.b	"tricked the soldiers by", $FE
 	dc.b	"pretending to be a woman.", $FF
+
 	dc.b	"Are you going to sleep", $FE
 	dc.b	"in a soft bed while our", $FE
 	dc.b	"husbands toil and suffer?", $FC, $0A
 	dc.b	"Are you going to sleep", $FE
 	dc.b	"in a soft bed while our", $FE
 	dc.b	"husbands toil and suffer?", $FF, $00
+
 	dc.b	"Why you lazy slug!", $FE
 	dc.b	"I've a good mind to whack", $FE
 	dc.b	"you over the head with this", $FD
@@ -41241,15 +41684,19 @@ loc_00036E6E:
 	dc.b	"Good for you!", $FE
 	dc.b	"Please hurry and", $FE
 	dc.b	"bring our husbands back.", $FF
+
 	dc.b	"I really appreciate all", $FE
 	dc.b	"that you've done for us.", $FE
 	dc.b	"No hard feelings, I hope?", $FF, $00
+
 	dc.b	"Next time you're here, stop", $FE
 	dc.b	"by for some food. My wife's", $FE
 	dc.b	"handy with a frying pan!", $FF, $00
+
 	dc.b	"What's wrong here?", $FE
 	dc.b	"Forgive me, but I can't", $FE
 	dc.b	"see your future at all.", $FF, $00
+
 	dc.b	"Free at last, thanks to", $FE 
 	dc.b	"you, warrior! We're", $FE
 	dc.b	"returning to Helwig now.", $FD
@@ -41379,55 +41826,73 @@ loc_000385EC:
 	dc.b	"Maps? Well, they're", $FE 
 	dc.b	"pretty hard to find", $FE
 	dc.b	"in these parts.", $FF
+
 	dc.b	"Why, you're in", $FE
 	dc.b	"Swaffham, traveler!", $FF, $00
+
 	dc.b	"If you see the king, ask", $FE
 	dc.b	"him if he can spare some", $FE
 	dc.b	"gold so that we can eat.", $FF, $00
+
 	dc.b	"The king gave you a ring?", $FE
 	dc.b	"That's incredibly generous", $FE
 	dc.b	"for a skinflint like him!", $FF, $00
+
 	dc.b	"Our king is a", $FE
 	dc.b	"very greedy man.", $FF, $00
+
 	dc.b	"Cartahena hasn't invaded", $FE
 	dc.b	"Swaffham yet, but it's", $FE
 	dc.b	"only a matter of time.", $FF, $00
+
 	dc.b	"An old town near here is", $FE
 	dc.b	"in ruins. It's been that", $FE
 	dc.b	"way for about 18 years.", $FF
+
 	dc.b	"The people here tell", $FE
 	dc.b	"of a treasure that is", $FE
 	dc.b	"hidden in a nearby cave.", $FF
+
 	dc.b	"Taxes in this land are", $FE
 	dc.b	"really high, the better to", $FE
 	dc.b	"fill the king's coffers.", $FF, $00
+
 	dc.b	"Our king may be stingy,", $FE
 	dc.b	"but at least we're at", $FE
 	dc.b	"peace. Thus far, that is.", $FF
+
 	dc.b	"Our king doesn't want a", $FE
 	dc.b	"Queen because he thinks", $FE
 	dc.b	"she'd spend his money.", $FF, $00
+
 	dc.b	"Every minister we've ever", $FE
 	dc.b	"had has quit because our", $FE
 	dc.b	"king is so cheap.", $FF, $00
+
 	dc.b	"The king really wants", $FE
 	dc.b	"a jewel that's hidden", $FE
 	dc.b	"in a nearby cave.", $FF
+
 	dc.b	"When you see that ruined", $FE
 	dc.b	"town, you'll know the fear", $FE
 	dc.b	"that Cartahena inspires.", $FF, $00
+
 	dc.b	"A nearby town was", $FE
 	dc.b	"destroyed by Cartahena", $FE
 	dc.b	"a long time ago.", $FF
+
 	dc.b	"A terrible monster lives in", $FE
 	dc.b	"a cave near here. Only the", $FE
 	dc.b	"king has a key to the cave.", $FF, $00
+
 	dc.b	"The ruins? You have", $FE
 	dc.b	"to go through three", $FE
 	dc.b	"caves to get there.", $FF
+
 	dc.b	"Eighteen years ago, the", $FE
 	dc.b	"town of Excalabria was", $FE
 	dc.b	"destroyed by Cartahena.", $FF, $00
+
 	dc.b	"After you left, the hordes", $FE
 	dc.b	"of Cartahena swarmed over", $FE
 	dc.b	"our walls and destroyed", $FD
@@ -41550,6 +42015,7 @@ loc_00039550:
 	dc.b	"Hurry, ", $F7, "!", $FD
 	dc.b	"I have much to tell you", $FE 
 	dc.b	"and time is running out!", $FF
+
 	dc.b	"Long have I waited for you.", $FE 
 	dc.b	"This is Excalabria, your", $FE 
 	dc.b	"birthplace. I am Knute.", $FD
@@ -41574,6 +42040,7 @@ loc_00039550:
 	dc.b	"the rings from him.", $FD
 	dc.b	"You can get information in", $FE 
 	dc.b	"the towns along the way.", $FF
+
 	dc.b	"You must have all the", $FE 
 	dc.b	"rings! Visit each town one", $FE 
 	dc.b	"more time to get the rings.", $FF, $00 
@@ -41683,41 +42150,54 @@ loc_0003A0FA:
 	dc.b	$00, $03, $A9, $F4, $00, $03, $AA, $BA
 	dc.b	"The village of Hastings", $FE 
 	dc.b	"stands before you, warrior.", $FF 
+
 	dc.b	"Beware! A spy from", $FE 
 	dc.b	"Cartahena came here several", $FE 
 	dc.b	"times asking about you.", $FF, $00 
+
 	dc.b	"You look ill. Did you", $FE 
 	dc.b	"eat something that", $FE 
 	dc.b	"disagreed with you?"
 	dc.b	$F8, $01, $33, $00
 	dc.b	"I'm so glad you recovered!", $FF, $00 
+
 	dc.b	"The Digot plant can cure", $FE 
 	dc.b	"the Eracle poison you ate.", $FF 
+
 	dc.b	"The army of Cartahena", $FE 
 	dc.b	"gains strength daily.", $FF 
+
 	dc.b	"A woman gave you dinner", $FE 
 	dc.b	"in that house?", $FE 
 	dc.b	"But no one lives there!"
 	dc.b	$F8, $01, $33, $00
 	dc.b	"I think you were poisoned", $FE
 	dc.b	"by a spy from Cartahena.", $FF, $00 
+
 	dc.b	"You need a pass", $FE 
 	dc.b	"to enter Cartahena.", $FF 
+
 	dc.b	"Soldiers from Cartahena are", $FE 
 	dc.b	"looking for you everywhere.", $FF 
+
 	dc.b	"That poison you ate", $FE 
 	dc.b	"must have come from", $FE 
 	dc.b	"the Eracle plant.", $FF 
+
 	dc.b	"Cartahena is south of here.", $FF 
+
 	dc.b	"Why are you here?", $FE 
 	dc.b	"Soldiers are searching", $FE 
 	dc.b	"for you everywhere.", $FF, $00 
+
 	dc.b	"The Digot plant grows", $FE 
 	dc.b	"in Whisby Cave,", $FE 
 	dc.b	"which is east of here.", $FF, $00 
+
 	dc.b	"Have you gone into the", $FE 
 	dc.b	"church? Several people", $FE 
 	dc.b	"are waiting for you there.", $FF, $00 
+
 	dc.b	"Welcome, Prince ", $F7, "!", $FE 
 	dc.b	"I was once a servant", $FE 
 	dc.b	"of your father's.", $FD 
@@ -41747,6 +42227,7 @@ loc_0003A0FA:
 	dc.b	"I wonder if the", $FE 
 	dc.b	"treasure I hid in", $FE 
 	dc.b	"the shop is still there?", $FF 
+
 	dc.b	"You greatly honor me and my", $FE 
 	dc.b	"humble home with your", $FE 
 	dc.b	"presence, Your Highness.", $FD 
@@ -41755,6 +42236,7 @@ loc_0003A0FA:
 	dc.b	"I have much to tell you."
 	dc.b	$F8, $02, $30, $4C
 	dc.b	"Was it good?", $FF, $00 
+
 	dc.b	"Young fool, I poisoned your", $FE 
 	dc.b	"food. You will die soon!", $FE 
 	dc.b	"Tsarkon will be pleased!"
@@ -41766,9 +42248,11 @@ loc_0003A0FA:
 	dc.b	"Your Highness, now is the", $FE 
 	dc.b	"time for the final battle.", $FE 
 	dc.b	"Go south to meet the enemy.", $FF, $00 
+
 	dc.b	"Greetings, ", $F7, "!", $FE 
 	dc.b	"We were once", $FE 
 	dc.b	"your father's servants.", $FF, $00 
+
 	dc.b	"Hello again, my Prince.", $FE 
 	dc.b	"There are 16 rings", $FE 
 	dc.b	"that rule the world.", $FD 
@@ -41781,23 +42265,28 @@ loc_0003A0FA:
 	dc.b	"Win the rings from Tsarkon", $FE 
 	dc.b	"and the Cartahenan army", $FE 
 	dc.b	"will vanish from our land.", $FF, $00 
+
 	dc.b	"The four of us have been", $FE 
 	dc.b	"waiting for this day for 18", $FE 
 	dc.b	"long years, my Prince.", $FF 
+
 	dc.b	"Tsarkon has the eight", $FE 
 	dc.b	"rings of evil. To fight", $FE 
 	dc.b	"this malevolent force,", $FD 
 	dc.b	"you need the opposing power", $FE 
 	dc.b	"of all eight rings of good.", $FF, $00 
+
 	dc.b	"You have grown into a fine", $FE 
 	dc.b	"young man! You greatly", $FE 
 	dc.b	"resemble your father.", $FF 
+
 	dc.b	"You must find the three", $FE 
 	dc.b	"rings of good that are", $FE 
 	dc.b	"hidden in Cartahena.", $FD 
 	dc.b	"Only then can you", $FE 
 	dc.b	"confront Tsarkon with", $FE 
 	dc.b	"power equal to his own.", $FF 
+
 	dc.b	"Long ago, Tsarkon and Erik", $FE 
 	dc.b	"searched the world for the", $FE 
 	dc.b	"rings of good and evil.", $FD 
@@ -41807,14 +42296,17 @@ loc_0003A0FA:
 	dc.b	"The malignant power of", $FE 
 	dc.b	"these rings turned Tsarkon", $FE 
 	dc.b	"into a minion of evil.", $FF 
+
 	dc.b	"The tales are true.", $FE 
 	dc.b	"Once Tsarkon and Erik", $FE 
 	dc.b	"were the best of friends.", $FF 
+
 	dc.b	"What could have turned", $FE 
 	dc.b	"Tsarkon and Erik's", $FE 
 	dc.b	"friendship into hatred?", $FD 
 	dc.b	"A force too powerful for", $FE 
 	dc.b	"man to resist, I'm afraid.", $FF 
+
 	dc.b	"If you're not hungry,", $FE 
 	dc.b	"then I can't help you.", $FF, $00 
 loc_0003AD04:
@@ -41938,35 +42430,47 @@ loc_0003B844:
 loc_0003B848:
 	dc.b	$00, $03, $BB, $E6
 	dc.b	"She never answered.", $FF 
+
 	dc.b	"You may not enter", $FE
 	dc.b	"without a pass.", $FF 
+
 	dc.b	"Your pass grants you", $FE
 	dc.b	"admittance to our peaceful", $FE
 	dc.b	"town of Cartahena.", $FF, $00 
+
 	dc.b	"Thank you for beating", $FE
 	dc.b	"that bad man.", $FF 
+
 	dc.b	"Tsarkon is dead", $FE
 	dc.b	"and we live again!", $FF, $00 
+
 	dc.b	"I came here to kill", $FE
 	dc.b	"Tsarkon, but he changed me", $FE
 	dc.b	"into a monster. Thank you!", $FF 
+
 	dc.b	"We were all merely", $FE
 	dc.b	"toys for Tsarkon.", $FF, $00 
+
 	dc.b	"Hurry! The world has", $FE
 	dc.b	"waited long enough", $FE
 	dc.b	"for this moment!", $FF, $00 
+
 	dc.b	"Your mother awaits", $FE
 	dc.b	"you in the castle.", $FF 
+
 	dc.b	"Several servants of", $FE
 	dc.b	"Excalabria await", $FE
 	dc.b	"you in the castle.", $FF 
+
 	dc.b	"You've freed us all!", $FF, $00 
+
 	dc.b	"All the men of Cartahena", $FE
 	dc.b	"were turned into", $FE
 	dc.b	"monsters or soldiers.", $FD
 	dc.b	"The women were turned", $FE
 	dc.b	"to stone. I hid so", $FE
 	dc.b	"they wouldn't find me.", $FF 
+
 	dc.b	"Tsarkon fled as you", $FE
 	dc.b	"approached. He went east,", $FE
 	dc.b	"to the Cave of Thule.", $FD
@@ -41976,15 +42480,19 @@ loc_0003B848:
 	dc.b	$F9, $01, $00, $63
 	dc.b	"Tsarkon fled eastward,", $FE
 	dc.b	"to the Cave of Thule.", $FF, $00 
+
 	dc.b	"I have something to give", $FE
 	dc.b	"you, but first you must", $FE
 	dc.b	"have all the rings.", $FF, $00 
+
 	dc.b	"Please come back when", $FE
 	dc.b	"you're not carrying", $FE
 	dc.b	"so much gear.", $FF 
+
 	dc.b	"I failed to kill Tsarkon.", $FE
 	dc.b	"You had the courage to", $FE
 	dc.b	"do what I could not.", $FF 
+
 	dc.b	"You'll soon wish that", $FE
 	dc.b	"the poisoned food I", $FE
 	dc.b	"gave you had killed you!"
@@ -42045,6 +42553,7 @@ loc_0003B848:
 	dc.b	"Perhaps if you possessed", $FE
 	dc.b	"all eight rings of good,", $FE
 	dc.b	"you could see the evil.", $FF 
+
 	dc.b	"The evil died", $FE
 	dc.b	"along with Tsarkon.", $FF 
 loc_0003C12E:
