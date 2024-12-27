@@ -7096,17 +7096,17 @@ loc_00007264:
 loc_0000729E:
 	MOVE.l	#$00006F44, $2(A5)
 	RTS
-loc_000072A8:	;todo loc
+loc_000072A8:
 	BSR.w	loc_00008234
 	CLR.b	$25(A5)
 	TST.b	$FFFFC72D.w
 	BNE.b	loc_000072C0
-	MOVE.l	#$000072CA, $2(A5)
+	MOVE.l	#loc_000072CA, $2(A5)
 	RTS
 loc_000072C0:
 	MOVE.l	#$00006F44, $2(A5)	
 	RTS	
-loc_000072CA:	;todo loc
+loc_000072CA:
 	TST.b	$FFFFC72D.w
 	BEQ.b	loc_000072F4
 	MOVE.l	#$00030E7E, $1C(A5)
@@ -7121,9 +7121,9 @@ loc_000072F4:
 	BRA.w	loc_00006F44
 	BSR.w	loc_00008234
 	CLR.b	$25(A5)
-	MOVE.l	#$0000730A, $2(A5)
+	MOVE.l	#loc_0000730A, $2(A5)
 	RTS
-loc_0000730A:	;todo loc
+loc_0000730A:
 	TST.b	$FFFFC72D.w
 	BNE.b	loc_00007326
 	TST.b	$FFFFC72B.w
@@ -7135,9 +7135,9 @@ loc_00007326:
 	BRA.w	loc_00006F44
 	BSR.w	loc_00008234
 	CLR.b	$25(A5)
-	MOVE.l	#$0000733C, $2(A5)
+	MOVE.l	#loc_0000733C, $2(A5)
 	RTS
-loc_0000733C:	;todo loc
+loc_0000733C:
 	TST.b	$FFFFC72D.w
 	BEQ.b	loc_00007352
 	MOVE.l	#loc_00030B18, $FFFFC438.w
@@ -7154,9 +7154,9 @@ loc_00007352:
 	MOVE.l	#$00006F8E, $2(A5)	
 	RTS	
 loc_00007374:
-	MOVE.l	#$0000737E, $2(A5)
+	MOVE.l	#loc_0000737E, $2(A5)
 	RTS
-loc_0000737E:	;todo loc
+loc_0000737E:
 	TST.b	$FFFFC733.w
 	BEQ.b	loc_000073AE
 	MOVE.l	#loc_0002A902, $1C(A5)
@@ -7202,9 +7202,9 @@ loc_00007408:
 	MOVE.l	#$00006F44, $2(A5)
 	RTS
 loc_00007424:
-	MOVE.l	#$0000742E, $2(A5)
+	MOVE.l	#loc_0000742E, $2(A5)
 	RTS
-loc_0000742E:	;todo loc
+loc_0000742E:
 	TST.b	$FFFFC72F.w
 	BEQ.b	loc_0000743C
 	MOVE.l	#loc_0002A2AA, $1C(A5)
@@ -7217,9 +7217,9 @@ loc_0000743C:
 	MOVE.l	#$00006F44, $2(A5)
 	RTS
 loc_00007458:
-	MOVE.l	#$00007462, $2(A5)
+	MOVE.l	#loc_00007462, $2(A5)
 	RTS
-loc_00007462:	;todo loc
+loc_00007462:
 	TST.b	$FFFFC72F.w
 	BEQ.b	loc_00007470
 	MOVE.l	#loc_0002A31C, $1C(A5)
@@ -7235,9 +7235,9 @@ loc_00007470:
 loc_00007490:
 	CLR.b	$FFFFC7AD.w
 	CLR.b	$FFFFC7AC.w
-	MOVE.l	#$000074A2, $2(A5)
+	MOVE.l	#loc_000074A2, $2(A5)
 	RTS
-loc_000074A2:	;todo loc
+loc_000074A2:
 	TST.b	$FFFFC7AB.w
 	BNE.b	loc_000074D4
 	BSR.w	loc_0000857E
@@ -7275,9 +7275,9 @@ loc_0000752A:
 	BRA.w	loc_00006F44
 	BSR.w	loc_00008234
 	CLR.b	$25(A5)
-	MOVE.l	#$00007540, $2(A5)
+	MOVE.l	#loc_00007540, $2(A5)
 	RTS
-loc_00007540:	;todo loc
+loc_00007540:
 	TST.b	$FFFFC733.w
 	BEQ.b	loc_00007556
 	MOVE.l	#loc_00032EC4, $FFFFC438.w
@@ -7287,9 +7287,9 @@ loc_00007556:
 	BRA.w	loc_00006F44
 	BSR.w	loc_00008234
 	CLR.b	$25(A5)
-	MOVE.l	#$0000756C, $2(A5)
+	MOVE.l	#loc_0000756C, $2(A5)
 	RTS
-loc_0000756C:	;todo loc
+loc_0000756C:
 	TST.b	$FFFFC733.w
 	BEQ.b	loc_00007582
 	MOVE.l	#$00033090, $FFFFC438.w
@@ -7304,12 +7304,12 @@ loc_00007582:
 	MOVE.l	#$00033410, $1C(A5)
 	BRA.b	loc_000075A8
 loc_0000759E:
-	MOVE.l	#$000075B2, $2(A5)
+	MOVE.l	#loc_000075B2, $2(A5)
 	RTS
 loc_000075A8:
 	MOVE.l	#$00006F8E, $2(A5)
 	RTS
-loc_000075B2:	;todo loc
+loc_000075B2:
 	TST.b	$FFFFC746.w
 	BEQ.w	loc_000075EC
 	TST.b	$FFFFC762.w
@@ -7378,9 +7378,9 @@ loc_0000768E:
 	BRA.w	loc_00006F8E
 	BSR.w	loc_00008234
 	CLR.b	$25(A5)
-	MOVE.l	#$000076A4, $2(A5)
+	MOVE.l	#loc_000076A4, $2(A5)
 	RTS
-loc_000076A4:	;todo loc
+loc_000076A4:
 	TST.b	$FFFFC758.w
 	BEQ.b	loc_000076B6
 	MOVE.l	#loc_0002B1CC, $1C(A5)
@@ -7395,9 +7395,9 @@ loc_000076CC:
 	BRA.w	loc_00006F8E
 	BSR.w	loc_00008234
 	CLR.b	$25(A5)
-	MOVE.l	#$000076E2, $2(A5)
+	MOVE.l	#loc_000076E2, $2(A5)
 	RTS
-loc_000076E2:	;todo loc
+loc_000076E2:
 	TST.b	$FFFFC73C.w
 	BEQ.b	loc_000076F8
 	MOVE.l	#$0002AE8C, $FFFFC438.w
@@ -7411,9 +7411,9 @@ loc_000076F8:
 	BEQ.b	loc_0000770E
 	BCLR.b	#7, (A5)	
 loc_0000770E:
-	MOVE.l	#$00007718, $2(A5)
+	MOVE.l	#loc_00007718, $2(A5)
 	RTS
-loc_00007718:	;todo loc
+loc_00007718:
 	TST.b	$FFFFC779.w
 	BEQ.b	loc_00007728
 	TST.b	$FFFFC77A.w
@@ -7423,9 +7423,9 @@ loc_00007728:
 	BRA.w	loc_00006F44
 	BSR.w	loc_00008234
 	CLR.b	$25(A5)
-	MOVE.l	#$0000773E, $2(A5)
+	MOVE.l	#loc_0000773E, $2(A5)
 	RTS
-loc_0000773E:	;todo loc
+loc_0000773E:
 	TST.b	$FFFFC758.w
 	BEQ.b	loc_00007750
 	MOVE.l	#loc_0002B2DC, $1C(A5)
@@ -7438,18 +7438,18 @@ loc_0000775E:
 	BRA.w	loc_00006F8E
 	BSR.w	loc_00008234
 	CLR.b	$25(A5)
-	MOVE.l	#$00007774, $2(A5)
+	MOVE.l	#loc_00007774, $2(A5)
 	RTS
-loc_00007774:	;todo loc
+loc_00007774:
 	MOVE.l	#$00034E20, $FFFFC438.w
 	MOVE.w	#$000A, D5
 	BSR.w	loc_0000858A
 	BRA.w	loc_00006F44
 	BSR.w	loc_00008234
 	CLR.b	$25(A5)
-	MOVE.l	#$0000779A, $2(A5)
+	MOVE.l	#loc_0000779A, $2(A5)
 	RTS
-loc_0000779A:	;todo loc
+loc_0000779A:
 	TST.b	$FFFFC73F.w
 	BEQ.b	loc_000077D2
 	MOVE.l	#$00035004, $1C(A5)	
@@ -7475,12 +7475,12 @@ loc_000077E2:
 	BNE.b	loc_00007804
 	TST.b	$FFFFC745.w
 	BEQ.b	loc_00007804
-	MOVE.l	#$0000780E, $2(A5)
+	MOVE.l	#loc_0000780E, $2(A5)
 	RTS
 loc_00007804:
-	MOVE.l	#$00006F8E, $2(A5)
+	MOVE.l	#loc_00006F8E, $2(A5)
 	RTS
-loc_0000780E:	;todo loc
+loc_0000780E:
 	TST.b	$FFFFC754.w
 	BEQ.b	loc_00007844
 	TST.b	$FFFFC765.w
@@ -7512,9 +7512,9 @@ loc_0000787A:
 	BRA.w	loc_00006F8E
 	BSR.w	loc_00008234
 	CLR.b	$25(A5)
-	MOVE.l	#$00007890, $2(A5)
+	MOVE.l	#loc_00007890, $2(A5)
 	RTS
-loc_00007890:	;todo loc
+loc_00007890:
 	TST.b	$FFFFC73D.w
 	BNE.b	loc_000078A6
 	MOVE.l	#$00035FB2, $FFFFC438.w
@@ -7524,9 +7524,9 @@ loc_000078A6:
 	BRA.w	loc_00006F44
 	BSR.w	loc_00008234
 	CLR.b	$25(A5)
-	MOVE.l	#$000078BC, $2(A5)
+	MOVE.l	#loc_000078BC, $2(A5)
 	RTS
-loc_000078BC:	;todo loc
+loc_000078BC:
 	TST.b	$FFFFC73D.w
 	BEQ.b	loc_000078D2
 	MOVE.l	#$0003628C, $FFFFC438.w
@@ -7547,12 +7547,12 @@ loc_000078EA:
 loc_000078F8:
 	MOVE.l	#loc_00006FBA, $2(A5)
 	RTS
-loc_00007902:	;todo loc
+loc_00007902:
 	BSR.w	loc_00008234
 	CLR.b	$25(A5)
-	MOVE.l	#$00007914, $2(A5)
+	MOVE.l	#loc_00007914, $2(A5)
 	RTS
-loc_00007914:	;todo loc
+loc_00007914:
 	TST.b	$FFFFC744.w
 	BNE.b	loc_0000792A
 	MOVE.l	#$000370CA, $FFFFC438.w
@@ -7562,9 +7562,9 @@ loc_0000792A:
 	BRA.w	loc_00006F44
 	BSR.w	loc_00008234
 	CLR.b	$25(A5)
-	MOVE.l	#$00007940, $2(A5)
+	MOVE.l	#loc_00007940, $2(A5)
 	RTS
-loc_00007940:	;todo loc
+loc_00007940:
 	MOVE.l	#$00036F06, $FFFFC438.w
 	MOVE.w	#3, D5
 	BSR.w	loc_0000858A
@@ -7575,9 +7575,9 @@ loc_00007940:	;todo loc
 	BNE.b	loc_00007966
 	BCLR.b	#7, (A5)
 loc_00007966:
-	MOVE.l	#$00006F44, $2(A5)
+	MOVE.l	#loc_00006F44, $2(A5)
 	RTS
-loc_00007970:	;todo loc
+loc_00007970:
 	BSR.w	loc_00008234
 	CLR.b	$25(A5)
 	TST.b	$FFFFC744.w
@@ -7586,7 +7586,7 @@ loc_00007970:	;todo loc
 loc_00007982:
 	MOVE.l	#loc_00006F70, $2(A5)
 	RTS
-loc_0000798C:	;todo loc
+loc_0000798C:
 	BSR.w	loc_00008234
 	CLR.b	$25(A5)
 	TST.b	$FFFFC744.w
@@ -7595,9 +7595,9 @@ loc_0000798C:	;todo loc
 	MOVE.l	#$00006F44, $2(A5)
 	RTS
 loc_000079A8:
-	MOVE.l	#$000079B2, $2(A5)
+	MOVE.l	#loc_000079B2, $2(A5)
 	RTS
-loc_000079B2:	;todo loc
+loc_000079B2:
 	TST.b	$FFFFC786.w
 	BNE.b	loc_000079DE
 	BSR.w	loc_0000857E
@@ -7622,9 +7622,9 @@ loc_000079F0:
 	BEQ.b	loc_00007A0A
 	MOVE.l	#$00037292, $1C(A5)
 loc_00007A0A:
-	MOVE.l	#$00007A14, $2(A5)
+	MOVE.l	#loc_00007A14, $2(A5)
 	RTS
-loc_00007A14:	;todo loc
+loc_00007A14:
 	TST.b	$FFFFC747.w
 	BEQ.b	loc_00007A44
 	MOVE.l	#$00037364, $1C(A5)
@@ -42243,59 +42243,95 @@ loc_00036C96:
 	dc.b	$01, $09, $00, $03, $DD, $D4, $00, $00, $6F, $A8, $60, $01, $00, $D8, $00, $48, $02, $05, $00, $03, $DE, $94, $00, $00, $6F, $CA, $60, $01, $FF, $FF, $00, $01 
 	dc.b	$EB, $20, $00, $88, $00, $58, $02, $65, $00, $03, $DF, $2C, $00, $00, $6F, $CA, $00, $01, $FF, $FF 
 loc_00036DD2:
-	dc.b	$00, $03, $6E, $76, $00, $03, $6E, $96, $00, $03, $6F, $20, $00, $03, $6F, $96, $00, $03, $70, $00, $00, $03, $70, $40, $00, $03, $71, $16, $00, $03, $71, $B2 
-	dc.b	$00, $03, $74, $40, $00, $02, $60, $34, $00, $02, $60, $34, $00, $02, $60, $34, $00, $02, $60, $34, $00, $02, $60, $34, $00, $02, $60, $34, $00, $02, $60, $34 
-	dc.b	$00, $02, $60, $34 
+	dc.l	loc_00036E76
+	dc.l	loc_00036E96
+	dc.l	loc_00036F20
+	dc.l	loc_00036F96
+	dc.l	loc_00037000
+	dc.l	loc_00037040
+	dc.l	loc_00037116
+	dc.l	loc_000371B2 
+	dc.l	loc_00037440
+	dc.l	loc_00026034
+	dc.l	loc_00026034
+	dc.l	loc_00026034
+	dc.l	loc_00026034
+	dc.l	loc_00026034
+	dc.l	loc_00026034
+	dc.l	loc_00026034 
+	dc.l	loc_00026034 
 loc_00036E16:
-	dc.b	$00, $03, $6E, $76, $00, $03, $6E, $BE, $00, $03, $6F, $70, $00, $03, $6F, $E0, $00, $03, $70, $28, $00, $03, $70, $E6, $00, $03, $6F, $E0, $00, $03, $71, $F0 
-	dc.b	$00, $03, $74, $6E, $00, $03, $74, $98, $00, $03, $74, $BA, $00, $03, $74, $EE, $00, $03, $75, $9C, $00, $03, $75, $9C, $00, $03, $76, $12, $00, $03, $76, $D0 
+	dc.l	loc_00036E76
+	dc.l	loc_00036EBE
+	dc.l	loc_00036F70
+	dc.l	loc_00036FE0
+	dc.l	loc_00037028
+	dc.l	loc_000370E6
+	dc.l	loc_00036FE0
+	dc.l	loc_000371F0 
+	dc.l	loc_0003746E
+	dc.l	loc_00037498
+	dc.l	loc_000374BA
+	dc.l	loc_000374EE
+	dc.l	loc_0003759C
+	dc.l	loc_0003759C
+	dc.l	loc_00037612
+	dc.l	loc_000376D0 
 loc_00036E56:
-	dc.b	$00, $02, $60, $34, $00, $03, $77, $56, $00, $02, $60, $34 
+	dc.l	loc_00026034
+	dc.l	loc_00037756
+	dc.l	loc_00026034 
 loc_00036E62:
-	dc.b	$00, $02, $60, $34, $00, $03, $78, $D4, $00, $03, $79, $20 
+	dc.l	loc_00026034
+	dc.l	loc_000378D4
+	dc.l	loc_00037920 
 loc_00036E6E:
-	dc.b	$00, $03, $77, $08, $00, $02, $60, $34
+	dc.l	loc_00037708
+	dc.l	loc_00026034
+loc_00036E76:
 	dc.b	"You are in Helwig,", $FE
 	dc.b	"adventurer!", $FF, $00
-
+loc_00036E96:
 	dc.b	"Only the women of", $FE
 	dc.b	"this village remain.", $FF, $00
-
+loc_00036EBE:
 	dc.b	"Journey west to Swaffham.", $FE
 	dc.b	"Use this map as your guide."
 	dc.b	$F9, $08, $01, $06, $01, $16, $01, $15, $01, $05, $01, $04, $01, $03, $01, $02, $01, $01, $00
+loc_00036F06:
 	dc.b	"Journey west to Swaffham.", $FF
-
+loc_00036F20:
 	dc.b	"The soldiers of Cartahena", $FE
 	dc.b	"captured my husband. I fear", $FE
 	dc.b	"I'll never see him again.", $FF
-
+loc_00036F70:
 	dc.b	"I'm so happy to", $FE
 	dc.b	"have my husband back!", $FF
-
+loc_00036F96:
 	dc.b	"All the village men have", $FE
 	dc.b	"been forced into slave", $FE
 	dc.b	"labor by the Cartahenans.", $FF
-
+loc_00036FE0:
 	dc.b	"Thank you for", $FE 
 	dc.b	"rescuing our men!", $FF
-
+loc_00037000:
 	dc.b	"Alas! We were to be", $FE
 	dc.b	"married next week!", $FF, $00
-
+loc_00037028:
 	dc.b	"We can never repay you!", $FF
-
+loc_00037040:
 	dc.b	"The soldiers of Cartahena", $FE
 	dc.b	"took our men to Methuen's", $FE
 	dc.b	"Cave to the southwest.", $FD
 	dc.b	"Please help them! Here's a", $FE
 	dc.b	"map that shows the way", $2E
 	dc.b	$F9, $05, $00, $89, $01, $06, $01, $16, $01, $15, $01, $14, $00
+loc_000370CA:
 	dc.b	"I know I can count on you!", $FF, $00
-
+loc_000370E6:
 	dc.b	"I heard that the Ring", $FE
 	dc.b	"of Earth is in Swaffham.", $FF, $00
-
+loc_00037116:
 	dc.b	"For as long as our village", $FE
 	dc.b	"has existed, gold has been", $FE
 	dc.b	"mined from Methuen's Cave.", $FD
@@ -42303,10 +42339,11 @@ loc_00036E6E:
 	dc.b	"dig out gold to fund their", $FE
 	dc.b	"wars of destruction", $2E
 	dc.b	$F8, $01, $89
+loc_000371B2:
 	dc.b	"We also suffered in", $FE
 	dc.b	"the war between", $FE
 	dc.b	"Cartahena and Excalabria.", $FF
-
+loc_000371F0:
 	dc.b	"Everyone has someone except", $FE
 	dc.b	"me. Could you find someone", $FE
 	dc.b	"for me? Take this sketch an", $FD
@@ -42314,85 +42351,89 @@ loc_00036E6E:
 	dc.b	"someone would like to meet", $FE
 	dc.b	"me after seeing this", $2E 
 	dc.b	$F9, $01, $00, $16
+loc_00037292:
 	dc.b	"Have you found", $FE
 	dc.b	"someone for me?", $FF, $00
-
+loc_000372B2:
 	dc.b	"He looks like a", $FE
 	dc.b	"very nice person.", $FE
 	dc.b	"I'll write him a letter.", $FD
 	dc.b	"Here, take the Dragon", $FE
 	dc.b	"Shield for your kindness."
 	dc.b	$F9, $01, $00, $27
+loc_00037320:
 	dc.b	"Here is a gift to", $FE
 	dc.b	"repay your kindness.", $FE
 	dc.b	"It is the Dragon Shield."
 	dc.b	$F9, $01, $00, $27, $00
+loc_00037364:
 	dc.b	"I'm sure we'll get along", $FE
 	dc.b	"just fine.", $FF
-
+loc_00037388:
 	dc.b	"Please come back", $FE
 	dc.b	"when you're not", $FE
 	dc.b	"carrying so much gear.", $FF
-	
+loc_000373C0:	
 	dc.b	"He's a nice person and a", $FE
 	dc.b	"good friend. I want to give", $FE
 	dc.b	"you the Dragon Shield as a", $FD
 	dc.b	"present, but you are", $FE
 	dc.b	"carrying too much already.", $FF
-
+loc_00037440:
 	dc.b	"I don't know if I'll", $FE
 	dc.b	"ever see my daddy again!", $FF 
-
+loc_0003746E:
 	dc.b	"My daddy's back!", $FE
 	dc.b	"Thank you ever so much!", $FF, $00
-
+loc_00037498:
 	dc.b	"I owe you my life,", $FE
 	dc.b	"brave warrior.", $FF
-
+loc_000374BA:
 	dc.b	"You would be most welcome", $FE
 	dc.b	"at our wedding next week.", $FF 
-
+loc_000374EE:
 	dc.b	"My daughter and I are", $FE
 	dc.b	"most grateful to you.", $FF
-
+loc_0003751A:
 	dc.b	"I found this key in the", $FE
 	dc.b	"cave. Some soldiers dropped", $FE 
 	dc.b	"it, and I picked it up.", $FD
 	dc.b	"You might be able to use it", $FE
 	dc.b	"somewhere in the cave."
 	dc.b	$F9, $01, $00, $65
+loc_0003759C:
 	dc.b	"You will always", $FE
 	dc.b	"be remembered in our", $FE
 	dc.b	"village as a hero!", $FF
-
+loc_000375D4:
 	dc.b	"I would give you a gift,", $FE
 	dc.b	"but you can't carry", $FE
 	dc.b	"any more items.", $FF, $00
-
+loc_00037612:
 	dc.b	"Greetings. I am also a", $FE
 	dc.b	"stranger here. I hear that", $FE
 	dc.b	"the Dragon Shield is in", $FD
 	dc.b	"this village somewhere. I", $FE
 	dc.b	"haven't found it yet, but", $FE
 	dc.b	"I'll keep looking.", $FF, $00
-
+loc_000376A4:
 	dc.b	"I didn't think I'd ever", $FE
 	dc.b	"get back to Helwig!", $FF
-
+loc_000376D0:
 	dc.b	"Rumor has it that the king", $FE
 	dc.b	"of Swaffham is very stingy.", $FF, $00
-
+loc_00037708:
 	dc.b	"The minister in this church", $FE
 	dc.b	"tricked the soldiers by", $FE
 	dc.b	"pretending to be a woman.", $FF
-
+loc_00037756:
 	dc.b	"Are you going to sleep", $FE
 	dc.b	"in a soft bed while our", $FE
 	dc.b	"husbands toil and suffer?", $FC, $0A
 	dc.b	"Are you going to sleep", $FE
 	dc.b	"in a soft bed while our", $FE
 	dc.b	"husbands toil and suffer?", $FF, $00
-
+loc_000377EA:
 	dc.b	"Why you lazy slug!", $FE
 	dc.b	"I've a good mind to whack", $FE
 	dc.b	"you over the head with this", $FD
@@ -42401,22 +42442,23 @@ loc_00036E6E:
 	dc.b	"Now don't come back until", $FE
 	dc.b	"you've rescued our men."
 	dc.b	$F8, $01, $D2, $00
+loc_0003789C:
 	dc.b	"Good for you!", $FE
 	dc.b	"Please hurry and", $FE
 	dc.b	"bring our husbands back.", $FF
-
+loc_000378D4:
 	dc.b	"I really appreciate all", $FE
 	dc.b	"that you've done for us.", $FE
 	dc.b	"No hard feelings, I hope?", $FF, $00
-
+loc_00037920:
 	dc.b	"Next time you're here, stop", $FE
 	dc.b	"by for some food. My wife's", $FE
 	dc.b	"handy with a frying pan!", $FF, $00
-
+loc_00037972:
 	dc.b	"What's wrong here?", $FE
 	dc.b	"Forgive me, but I can't", $FE
 	dc.b	"see your future at all.", $FF, $00
-
+loc_000379B6:
 	dc.b	"Free at last, thanks to", $FE 
 	dc.b	"you, warrior! We're", $FE
 	dc.b	"returning to Helwig now.", $FD
