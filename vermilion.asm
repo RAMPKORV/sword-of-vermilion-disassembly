@@ -2874,7 +2874,7 @@ loc_0000343E:
 	MOVEQ	#1, D0
 	RTS
 loc_00003442:
-	MOVE.l	#$00026034, $FFFFC250.w
+	MOVE.l	#loc_00026034, $FFFFC250.w
 	LEA	loc_000200B6, A0
 	MOVE.w	$FFFFC666.w, D0
 	ADD.w	D0, D0
@@ -2930,7 +2930,7 @@ loc_000034D0:
 	LEA	$A(A0), A0
 	BRA.b	loc_000034AA
 loc_000034D6:
-	MOVE.l	#$00026034, $FFFFC250.w
+	MOVE.l	#loc_00026034, $FFFFC250.w
 	RTS
 loc_000034E0:
 	BSR.w	loc_0000363C
@@ -7845,12 +7845,12 @@ loc_00007E4A:
 	MOVE.w	#4, D7
 	BSR.w	loc_00008518
 	BNE.w	loc_00007EB0
-	MOVE.l	#$0003BB3A, $1C(A5)
+	MOVE.l	#loc_0003BB3A, $1C(A5)
 	TST.b	$FFFFC784.w
 	BNE.w	loc_00007EB8
 	BSR.w	loc_0000857E
 	BGE.b	loc_00007EA6
-	MOVE.l	#$0003BAAC, $1C(A5)
+	MOVE.l	#loc_0003BAAC, $1C(A5)
 	TST.b	$FFFFC783.w
 	BEQ.b	loc_00007EB8
 	BSR.w	loc_00008572
@@ -7858,10 +7858,10 @@ loc_00007E4A:
 	MOVE.b	#$FF, $FFFFC784.w
 	BRA.b	loc_00007EB8
 loc_00007EA6:
-	MOVE.l	#$0003BBAE, $1C(A5)
+	MOVE.l	#loc_0003BBAE, $1C(A5)
 	BRA.b	loc_00007EB8
 loc_00007EB0:
-	MOVE.l	#$0003BB68, $1C(A5)	
+	MOVE.l	#loc_0003BB68, $1C(A5)	
 loc_00007EB8:
 	BRA.w	loc_00006F44
 	BSR.w	loc_00008234
@@ -8892,7 +8892,7 @@ loc_00008D26:
 	JMP	loc_0000F6DC
 	TST.b	$FFFFC75C.w
 	BEQ.b	loc_00008D44
-	MOVE.l	#$00026034, $FFFFC250.w
+	MOVE.l	#loc_00026034, $FFFFC250.w
 	BCLR.b	#7, (A5)
 	CLR.b	$FFFFC578.w
 	RTS
@@ -8935,7 +8935,7 @@ loc_00008DC0:
 	JMP	loc_0000F6DC
 	TST.b	$FFFFC804.w
 	BEQ.b	loc_00008DD4
-	MOVE.l	#$00026034, $FFFFC250.w
+	MOVE.l	#loc_00026034, $FFFFC250.w
 loc_00008DD4:
 	JMP	loc_0000F6DC
 	TST.b	$FFFFC73B.w
@@ -8958,7 +8958,7 @@ loc_00008E20:
 	JMP	loc_0000F6DC
 	TST.b	$FFFFC758.w
 	BEQ.b	loc_00008E3E
-	MOVE.l	#$0003C10C, $FFFFC250.w
+	MOVE.l	#loc_0003C10C, $FFFFC250.w
 	BCLR.b	#7, (A5)
 	CLR.b	$FFFFC578.w
 	RTS
@@ -8974,7 +8974,7 @@ loc_00008E3E:
 	MOVE.w	$FFFFC43C.w, D5
 	TST.b	(A0,D5.w)
 	BEQ.b	loc_00008E82
-	MOVE.l	#$00026034, $FFFFC250.w
+	MOVE.l	#loc_00026034, $FFFFC250.w
 	BCLR.b	#7, (A5)
 	MOVE.b	#$FF, $FFFFC55F.w
 	JMP	loc_00006458
@@ -8983,7 +8983,7 @@ loc_00008E82:
 loc_00008E88:
 	TST.b	(A0)
 	BEQ.b	loc_00008E9E
-	MOVE.l	#$00026034, $FFFFC250.w
+	MOVE.l	#loc_00026034, $FFFFC250.w
 	BCLR.b	#7, (A5)
 	CLR.b	$FFFFC578.w
 	RTS
@@ -29003,7 +29003,7 @@ loc_0001CEE0:
 	LEA	(A6,D2.w), A6
 	DBF	D7, loc_0001CEA6
 loc_0001CEEE:
-	MOVE.l	#$00026034, $FFFFC204.w
+	MOVE.l	#loc_00026034, $FFFFC204.w
 	RTS
 loc_0001CEF8:
 	LEA	loc_000221B0, A0
@@ -31437,7 +31437,7 @@ loc_0001F3B0:
 	dc.l	$000321C6
 	dc.l	$00032282 
 	dc.l	$0003789C
-	dc.l	$0003BE84
+	dc.l	loc_0003BE84
 	dc.l	$0003BEEE
 loc_0001F3E4:
 	dc.l	$0002936A
@@ -32546,7 +32546,7 @@ loc_0002039E:
 loc_000203C6:
 	MOVE.b	#$FF, $FFFFC56C.w
 	BSR.w	loc_00021480
-	MOVE.l	#$00026034, $FFFFC250.w
+	MOVE.l	#loc_00026034, $FFFFC250.w
 loc_000203D8:
 	RTS
 loc_000203DA:
@@ -32610,7 +32610,7 @@ loc_0002051A:
 	MOVE.l	#0, $FFFFC574.w
 	MOVE.b	#$FF, $FFFFC56C.w
 	BSR.w	loc_00021480
-	MOVE.l	#$00026034, $FFFFC250.w
+	MOVE.l	#loc_00026034, $FFFFC250.w
 	RTS
 loc_00020542:
 	BSR.w	loc_00021498	
@@ -33168,7 +33168,7 @@ loc_00020F84:
 	MOVE.w	D0, $FFFFC572.w
 	MOVE.b	#$FF, $FFFFC56C.w
 	BSR.w	loc_00021480
-	MOVE.l	#$00026034, $FFFFC250.w
+	MOVE.l	#loc_00026034, $FFFFC250.w
 	RTS
 loc_00020FA2:
 	TST.b	$FFFFC72C.w
@@ -33181,11 +33181,11 @@ loc_00020FA2:
 	MOVE.l	#$00008B6A, $2(A6)
 	MOVE.l	#$0001F7BA, $FFFFC566.w
 	BSR.w	loc_000213FE
-	MOVE.l	#$00026034, $FFFFC250.w
+	MOVE.l	#loc_00026034, $FFFFC250.w
 loc_00020FE2:
 	RTS
 loc_00020FE4:
-	MOVE.l	#$00026034, $FFFFC250.w
+	MOVE.l	#loc_00026034, $FFFFC250.w
 	TST.b	$FFFFC73E.w
 	BEQ.b	loc_00021004
 	TST.b	$FFFFC729.w
@@ -33223,11 +33223,11 @@ loc_0002105E:
 	MOVE.l	#$0003248A, $FFFFC250.w
 	BRA.b	loc_00021080
 loc_00021078:
-	MOVE.l	#$00026034, $FFFFC250.w
+	MOVE.l	#loc_00026034, $FFFFC250.w
 loc_00021080:
 	RTS
 loc_00021082:
-	MOVE.l	#$00026034, $FFFFC250.w
+	MOVE.l	#loc_00026034, $FFFFC250.w
 	TST.b	$FFFFC7A7.w
 	BEQ.b	loc_000210BC
 	TST.b	$FFFFC734.w
@@ -33241,7 +33241,7 @@ loc_00021082:
 loc_000210BC:
 	RTS
 loc_000210BE:
-	MOVE.l	#$00026034, $FFFFC250.w
+	MOVE.l	#loc_00026034, $FFFFC250.w
 	TST.b	$FFFFC7A7.w
 	BEQ.b	loc_000210DE
 	MOVE.w	#$0823, $FFFFC572.w
@@ -33250,7 +33250,7 @@ loc_000210BE:
 loc_000210DE:
 	RTS
 loc_000210E0:
-	MOVE.l	#$00026034, $FFFFC250.w
+	MOVE.l	#loc_00026034, $FFFFC250.w
 	TST.b	$FFFFC7A8.w
 	BEQ.b	loc_00021128
 	TST.b	$FFFFC73B.w
@@ -33267,7 +33267,7 @@ loc_000210E0:
 loc_00021128:
 	RTS
 loc_0002112A:
-	MOVE.l	#$00026034, $FFFFC250.w
+	MOVE.l	#loc_00026034, $FFFFC250.w
 	TST.b	$FFFFC7A8.w
 	BEQ.b	loc_0002114A
 	MOVE.w	#$0114, $FFFFC572.w
@@ -33277,7 +33277,7 @@ loc_0002114A:
 	RTS
 	dc.b	$31, $FC, $80, $00, $C5, $72, $21, $FC, $FF, $FF, $C7, $3F, $C5, $74, $61, $00, $02, $D6, $4E, $75 
 loc_00021160:
-	MOVE.l	#$00026034, $FFFFC250.w
+	MOVE.l	#loc_00026034, $FFFFC250.w
 	TST.b	$FFFFC741.w
 	BEQ.b	loc_0002119A
 	TST.b	$FFFFC73D.w
@@ -33291,7 +33291,7 @@ loc_00021160:
 loc_0002119A:
 	RTS
 loc_0002119C:
-	MOVE.l	#$00026034, $FFFFC250.w
+	MOVE.l	#loc_00026034, $FFFFC250.w
 	TST.b	$FFFFC7A9.w
 	BEQ.b	loc_000211BC
 	TST.b	$FFFFC744.w
@@ -33313,7 +33313,7 @@ loc_000211BE:
 	MOVE.l	#$00008B88, $2(A6)
 	MOVE.l	#$0001F79E, $FFFFC566.w
 	BSR.w	loc_000213FE
-	MOVE.l	#$00026034, $FFFFC250.w
+	MOVE.l	#loc_00026034, $FFFFC250.w
 loc_00021204:
 	RTS
 loc_00021206:
@@ -33353,10 +33353,10 @@ loc_00021284:
 	TST.b	$FFFFC774.w
 	BNE.w	loc_000212AA
 	BSR.w	loc_000214D4
-	MOVE.l	#$0003BC72, $FFFFC250.w
+	MOVE.l	#loc_0003BC72, $FFFFC250.w
 	TST.b	$FFFFC750.w
 	BEQ.w	loc_000212A8
-	MOVE.l	#$0003BC2C, $FFFFC250.w
+	MOVE.l	#loc_0003BC2C, $FFFFC250.w
 loc_000212A8:
 	RTS
 loc_000212AA:
@@ -33374,7 +33374,7 @@ loc_000212D8:
 	TST.b	$FFFFC775.w
 	BNE.w	loc_000212EE
 	BSR.w	loc_00021498
-	MOVE.l	#$0003BC8E, $FFFFC250.w
+	MOVE.l	#loc_0003BC8E, $FFFFC250.w
 	RTS
 loc_000212EE:
 	MOVE.w	#$0117, $FFFFC572.w
@@ -33391,7 +33391,7 @@ loc_0002131C:
 	TST.b	$FFFFC776.w
 	BNE.w	loc_00021332
 	BSR.w	loc_00021498
-	MOVE.l	#$0003BD14, $FFFFC250.w
+	MOVE.l	#loc_0003BD14, $FFFFC250.w
 	RTS
 loc_00021332:
 	MOVE.w	#$0118, $FFFFC572.w
@@ -33415,19 +33415,19 @@ loc_00021360:
 	MOVE.l	#$00008B2E, $2(A6)
 	MOVE.l	#$0001F7F2, $FFFFC566.w
 	BSR.w	loc_000213FE
-	MOVE.l	#$0003BF0E, $FFFFC250.w
+	MOVE.l	#loc_0003BF0E, $FFFFC250.w
 	TST.b	$FFFFC778.w
 	BNE.b	loc_000213CC
-	MOVE.l	#$0003BE84, $FFFFC250.w
+	MOVE.l	#loc_0003BE84, $FFFFC250.w
 	TST.b	$FFFFC7C1.w
 	BNE.b	loc_000213CC
-	MOVE.l	#$0003BD90, $FFFFC250.w
+	MOVE.l	#loc_0003BD90, $FFFFC250.w
 	BRA.b	loc_000213CC
 loc_000213BA:
-	MOVE.l	#$0003C078, $FFFFC250.w	
+	MOVE.l	#loc_0003C078, $FFFFC250.w	
 	BRA.b	loc_000213CC	
 loc_000213C4:
-	MOVE.l	#$0003C10C, $FFFFC250.w	
+	MOVE.l	#loc_0003C10C, $FFFFC250.w	
 loc_000213CC:
 	RTS
 loc_000213CE:
@@ -33465,7 +33465,7 @@ loc_00021438:
 loc_00021446:
 	MOVE.b	#$FF, $FFFFC56C.w
 	BSR.w	loc_00021480
-	MOVE.l	#$00026034, $FFFFC250.w
+	MOVE.l	#loc_00026034, $FFFFC250.w
 	RTS
 loc_0002145A:
 	MOVE.w	$FFFFC57A.w, $FFFFC570.w
@@ -33473,7 +33473,7 @@ loc_0002145A:
 	MOVE.b	#$FF, $FFFFC56F.w
 	MOVE.b	#$FF, $FFFFC56C.w
 	BSR.w	loc_00021480
-	MOVE.l	#$00026034, $FFFFC250.w
+	MOVE.l	#loc_00026034, $FFFFC250.w
 	RTS
 loc_00021480:
 	BSR.w	loc_000213CE
@@ -42494,58 +42494,76 @@ loc_0003B732:
 	dc.l	$00000000
 	dc.b	$FF, $FF, $00, $01, $F1, $92, $FF, $FF, $00, $01, $F1, $92, $00, $88, $00, $48, $00, $91, $00, $03, $DD, $74, $00, $00, $7E, $32, $60, $01, $FF, $FF 
 loc_0003B7F0:
-	dc.b	$00, $03, $B8, $4C, $00, $03, $B8, $4C, $00, $03, $B8, $4C, $00, $03, $B8, $4C, $00, $03, $B8, $4C, $00, $03, $B8, $60 
+	dc.l	loc_0003B84C
+	dc.l	loc_0003B84C
+	dc.l	loc_0003B84C
+	dc.l	loc_0003B84C
+	dc.l	loc_0003B84C
+	dc.l	loc_0003B860 
 loc_0003B808:
-	dc.b	$00, $03, $B8, $4C, $00, $03, $B8, $4C, $00, $03, $B8, $4C, $00, $03, $B8, $4C, $00, $03, $B8, $4C, $00, $03, $B8, $82 
+	dc.l	loc_0003B84C
+	dc.l	loc_0003B84C
+	dc.l	loc_0003B84C
+	dc.l	loc_0003B84C
+	dc.l	loc_0003B84C
+	dc.l	loc_0003B882 
 loc_0003B820:
-	dc.b	$00, $03, $B8, $C6, $00, $03, $B9, $7E, $00, $03, $B9, $B8, $00, $03, $B9, $DE, $00, $03, $BA, $16, $00, $03, $B8, $EA, $00, $03, $B9, $0E, $00, $03, $B9, $58 
-	dc.b	$00, $02, $60, $34 
+	dc.l	loc_0003B8C6
+	dc.l	loc_0003B97E
+	dc.l	loc_0003B9B8
+	dc.l	loc_0003B9DE
+	dc.l	loc_0003BA16
+	dc.l	loc_0003B8EA
+	dc.l	loc_0003B90E
+	dc.l	loc_0003B958 
+	dc.l	loc_00026034 
 loc_0003B844:
-	dc.b	$00, $03, $BA, $2C 
+	dc.l	$0003BA2C 
 loc_0003B848:
-	dc.b	$00, $03, $BB, $E6
+	dc.l	$0003BBE6
+loc_0003B84C:
 	dc.b	"She never answered.", $FF 
-
+loc_0003B860:
 	dc.b	"You may not enter", $FE
 	dc.b	"without a pass.", $FF 
-
+loc_0003B882:
 	dc.b	"Your pass grants you", $FE
 	dc.b	"admittance to our peaceful", $FE
 	dc.b	"town of Cartahena.", $FF, $00 
-
+loc_0003B8C6:
 	dc.b	"Thank you for beating", $FE
 	dc.b	"that bad man.", $FF 
-
+loc_0003B8EA:
 	dc.b	"Tsarkon is dead", $FE
 	dc.b	"and we live again!", $FF, $00 
-
+loc_0003B90E:
 	dc.b	"I came here to kill", $FE
 	dc.b	"Tsarkon, but he changed me", $FE
 	dc.b	"into a monster. Thank you!", $FF 
-
+loc_0003B958:
 	dc.b	"We were all merely", $FE
 	dc.b	"toys for Tsarkon.", $FF, $00 
-
+loc_0003B97E:
 	dc.b	"Hurry! The world has", $FE
 	dc.b	"waited long enough", $FE
 	dc.b	"for this moment!", $FF, $00 
-
+loc_0003B9B8:
 	dc.b	"Your mother awaits", $FE
 	dc.b	"you in the castle.", $FF 
-
+loc_0003B9DE:
 	dc.b	"Several servants of", $FE
 	dc.b	"Excalabria await", $FE
 	dc.b	"you in the castle.", $FF 
-
+loc_0003BA16:
 	dc.b	"You've freed us all!", $FF, $00 
-
+loc_0003BA2C:
 	dc.b	"All the men of Cartahena", $FE
 	dc.b	"were turned into", $FE
 	dc.b	"monsters or soldiers.", $FD
 	dc.b	"The women were turned", $FE
 	dc.b	"to stone. I hid so", $FE
 	dc.b	"they wouldn't find me.", $FF 
-
+loc_0003BAAC:
 	dc.b	"Tsarkon fled as you", $FE
 	dc.b	"approached. He went east,", $FE
 	dc.b	"to the Cave of Thule.", $FD
@@ -42553,28 +42571,31 @@ loc_0003B848:
 	dc.b	"need to get into the cave.", $FE
 	dc.b	"Here, it is yours", $2E
 	dc.b	$F9, $01, $00, $63
+loc_0003BB3A:
 	dc.b	"Tsarkon fled eastward,", $FE
 	dc.b	"to the Cave of Thule.", $FF, $00 
-
+loc_0003BB68:
 	dc.b	"I have something to give", $FE
 	dc.b	"you, but first you must", $FE
 	dc.b	"have all the rings.", $FF, $00 
-
+loc_0003BBAE:
 	dc.b	"Please come back when", $FE
 	dc.b	"you're not carrying", $FE
 	dc.b	"so much gear.", $FF 
-
+loc_0003BBE6:
 	dc.b	"I failed to kill Tsarkon.", $FE
 	dc.b	"You had the courage to", $FE
 	dc.b	"do what I could not.", $FF 
-
+loc_0003BC2C:
 	dc.b	"You'll soon wish that", $FE
 	dc.b	"the poisoned food I", $FE
 	dc.b	"gave you had killed you!"
 	dc.b	$F8, $02, $F7, $E9 
+loc_0003BC72:
 	dc.b	"Ha, ha, ha!", $FE
 	dc.b	"you'll die!"
 	dc.b	$F8, $02, $F7, $E9, $00 
+loc_0003BC8E:
 	dc.b	"So, you are here at last.", $FE 
 	dc.b	"Do you remember me?", $FE
 	dc.b	"I am Thar!", $FD
@@ -42582,12 +42603,14 @@ loc_0003B848:
 	dc.b	"into a monster. Now my", $FE
 	dc.b	"revenge will be sweet!"
 	dc.b	$F8, $02, $F7, $EB, $00 
+loc_0003BD14:
 	dc.b	"Once again we meet, young", $FE
 	dc.b	"fool! It was I, Luther, who", $FE
 	dc.b	"devastated Swaffham.", $FD
 	dc.b	"After I kill you, I'm off", $FE
 	dc.b	"to visit Wyclif...."
 	dc.b	$F8, $02, $F7, $EA 
+loc_0003BD90:
 	dc.b	"Finally, you've come, my", $FE
 	dc.b	"son! I call you that though", $FE
 	dc.b	"I am only your stepfather.", $FD
@@ -42598,6 +42621,7 @@ loc_0003B848:
 	dc.b	"chaos reign! Everyone can", $FE
 	dc.b	"suffer as I have suffered!"
 	dc.b	$F8, $01, $A1 
+loc_0003BE84:
 	dc.b	"This will break your", $FE
 	dc.b	"poor mother's heart!", $FE
 	dc.b	"She loves us both.", $FD
@@ -42606,6 +42630,7 @@ loc_0003B848:
 	dc.b	"Then one of us", $FE
 	dc.b	"will die now!"
 	dc.b	$F8, $02, $F7, $EC 
+loc_0003BF0E:
 	dc.b	"You have freed me at last!", $FE
 	dc.b	"Long have I been in thrall", $FE
 	dc.b	"to the forces of evil.", $FD
@@ -42622,17 +42647,18 @@ loc_0003B848:
 	dc.b	"Someone special waits", $FD
 	dc.b	"for you there."
 	dc.b	$F8, $01, $38, $00 
+loc_0003C078:
 	dc.b	"You feel chills, as if", $FE
 	dc.b	"something evil is beside", $FE 
 	dc.b	"you, but you see nothing.", $FD
 	dc.b	"Perhaps if you possessed", $FE
 	dc.b	"all eight rings of good,", $FE
 	dc.b	"you could see the evil.", $FF 
-
+loc_0003C10C:
 	dc.b	"The evil died", $FE
 	dc.b	"along with Tsarkon.", $FF 
 loc_0003C12E:
-	MOVE.l	#$0003B9B8, $FFFFC204.w	
+	MOVE.l	#loc_0003B9B8, $FFFFC204.w	
 	RTS	
 	dc.b	$21, $23, $01, $96, $2D, $97, $01, $9F, $23, $33, $01, $9F, $2D, $97, $02, $A0, $96, $BF, $A2, $3F, $98, $A2, $03, $A3, $A2, $A2, $24, $00, $01, $83, $24, $00 
 	dc.b	$23, $A2, $04, $98, $A3, $A2, $A2, $24, $00, $01, $83, $24, $00, $23, $A2, $A2, $03, $A4, $98, $98, $A3, $03, $1D, $1E, $84, $A3, $01, $98, $42, $98, $A4, $02 
