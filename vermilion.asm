@@ -6830,7 +6830,7 @@ loc_00006ED0:
 	MOVE.w	#$005D, D5
 	TST.b	(A0,D5.w)
 	BEQ.b	loc_00006F32
-	MOVE.l	#$0002A91C, $1C(A5)
+	MOVE.l	#loc_0002A91C, $1C(A5)
 loc_00006F32:
 	BRA.w	loc_00008154
 	BSR.w	loc_00008234
@@ -6886,7 +6886,7 @@ loc_00006FF4:
 	RTS
 	TST.b	$FFFFC720.w
 	BEQ.b	loc_0000700C
-	MOVE.l	#$0002CDE8, $1C(A5)
+	MOVE.l	#loc_0002CDE8, $1C(A5)
 loc_0000700C:
 	BRA.b	loc_00006FD4
 	BSR.w	loc_00008234
@@ -6900,7 +6900,7 @@ loc_00007026:
 	RTS
 	TST.b	$FFFFC720.w
 	BEQ.b	loc_0000703E
-	MOVE.l	#$0002CAF8, $1C(A5)
+	MOVE.l	#loc_0002CAF8, $1C(A5)
 loc_0000703E:
 	BRA.w	loc_00006F8E
 	BSR.w	loc_00008234
@@ -7119,7 +7119,7 @@ loc_00007374:
 	RTS
 	TST.b	$FFFFC733.w
 	BEQ.b	loc_000073AE
-	MOVE.l	#$0002A902, $1C(A5)
+	MOVE.l	#loc_0002A902, $1C(A5)
 	TST.b	$FFFFC768.w
 	BNE.w	loc_00007408
 	LEA	$FFFFC462.w, A0
@@ -7139,12 +7139,12 @@ loc_000073AE:
 	MOVE.l	#$0002A8B6, $1C(A5)
 	BRA.w	loc_00007408
 loc_000073CC:
-	MOVE.l	#$0002A7A4, $1C(A5)
+	MOVE.l	#loc_0002A7A4, $1C(A5)
 	BRA.w	loc_00007408
 loc_000073D8:
 	TST.b	$FFFFC72F.w
 	BEQ.w	loc_00007408
-	MOVE.l	#$0002A528, $1C(A5)
+	MOVE.l	#loc_0002A528, $1C(A5)
 	TST.b	$FFFFC767.w
 	BNE.b	loc_00007408
 	LEA	$FFFFC464.w, A3
@@ -7166,7 +7166,7 @@ loc_00007424:
 	RTS
 	TST.b	$FFFFC72F.w
 	BEQ.b	loc_0000743C
-	MOVE.l	#$0002A2AA, $1C(A5)
+	MOVE.l	#loc_0002A2AA, $1C(A5)
 loc_0000743C:
 	BRA.w	loc_00006F44
 	BSR.w	loc_00008234
@@ -7180,7 +7180,7 @@ loc_00007458:
 	RTS
 	TST.b	$FFFFC72F.w
 	BEQ.b	loc_00007470
-	MOVE.l	#$0002A31C, $1C(A5)
+	MOVE.l	#loc_0002A31C, $1C(A5)
 loc_00007470:
 	BRA.w	loc_00006F44
 	BSR.w	loc_00008234
@@ -7336,7 +7336,7 @@ loc_0000768E:
 	RTS
 	TST.b	$FFFFC758.w
 	BEQ.b	loc_000076B6
-	MOVE.l	#$0002B1CC, $1C(A5)
+	MOVE.l	#loc_0002B1CC, $1C(A5)
 	BRA.w	loc_000076CC
 loc_000076B6:
 	TST.b	$FFFFC73B.w
@@ -7378,7 +7378,7 @@ loc_00007728:
 	RTS
 	TST.b	$FFFFC758.w
 	BEQ.b	loc_00007750
-	MOVE.l	#$0002B2DC, $1C(A5)
+	MOVE.l	#loc_0002B2DC, $1C(A5)
 	BRA.w	loc_0000775E
 loc_00007750:
 	TST.b	$FFFFC735.w
@@ -7618,7 +7618,7 @@ loc_00007ACC:
 	RTS
 	TST.b	$FFFFC76B.w
 	BEQ.b	loc_00007AEE
-	MOVE.l	#$0002CDE8, $1C(A5)
+	MOVE.l	#loc_0002CDE8, $1C(A5)
 loc_00007AEE:
 	BRA.w	loc_00008154
 	BSR.w	loc_00008234
@@ -7635,7 +7635,7 @@ loc_00007AEE:
 	LEA	$FFFFC442.w, A2
 	MOVE.w	#$0113, D4
 	BSR.w	loc_000084C0
-	MOVE.l	#$0002BF60, $1C(A5)
+	MOVE.l	#loc_0002BF60, $1C(A5)
 	BRA.w	loc_00007C30
 loc_00007B38:
 	TST.b	$FFFFC74F.w
@@ -7658,7 +7658,7 @@ loc_00007B42:
 	MOVE.w	#$0113, (A0,D0.w)
 	MOVE.b	#$FF, $FFFFC772.w
 loc_00007B82:
-	MOVE.l	#$0002BF3E, $1C(A5)
+	MOVE.l	#loc_0002BF3E, $1C(A5)
 	BRA.w	loc_00007C30
 loc_00007B8E:
 	TST.b	$FFFFC74D.w
@@ -7681,7 +7681,7 @@ loc_00007B9A:
 	MOVE.w	#$0112, (A0,D0.w)
 	MOVE.b	#$FF, $FFFFC771.w
 loc_00007BDA:
-	MOVE.l	#$0002BF3E, $1C(A5)
+	MOVE.l	#loc_0002BF3E, $1C(A5)
 	BRA.w	loc_00007C30
 loc_00007BE6:
 	TST.b	$FFFFC74B.w
@@ -7696,15 +7696,15 @@ loc_00007BF0:
 	MOVE.w	#$0111, (A0,D0.w)
 	MOVE.b	#$FF, $FFFFC770.w
 loc_00007C0C:
-	MOVE.l	#$0002BF3E, $1C(A5)
+	MOVE.l	#loc_0002BF3E, $1C(A5)
 	BRA.w	loc_00007C30
 loc_00007C18:
 	BSR.w	loc_0000857E
 	BLT.b	loc_00007C28
-	MOVE.l	#$0002BF8C, $1C(A5)	
+	MOVE.l	#loc_0002BF8C, $1C(A5)	
 	BRA.b	loc_00007C30	
 loc_00007C28:
-	MOVE.l	#$0002BAB4, $1C(A5)
+	MOVE.l	#loc_0002BAB4, $1C(A5)
 loc_00007C30:
 	BRA.w	loc_00006F8E
 	BSR.w	loc_00008234
@@ -13438,7 +13438,7 @@ loc_0000D094:
 	MOVE.l	$4(A2,D6.w), D0
 	JSR	loc_0001CF38
 	LEA	-$4(A1), A1
-	MOVEA.l	#$00027264, A0
+	MOVEA.l	#loc_00027264, A0
 	JSR	loc_00012A6C
 	MOVE.b	#$FF, (A1)
 	MOVE.l	#$FFFFC260, $FFFFC204.w
@@ -31429,7 +31429,7 @@ loc_0001F3B0:
 	dc.l	$00035106
 	dc.l	$00032112 
 	dc.l	$00032384
-	dc.l	$0002B294
+	dc.l	loc_0002B294
 	dc.l	$00035106
 	dc.l	$00035106
 	dc.l	$000321C6
@@ -33029,7 +33029,7 @@ loc_00020C8E:
 	MOVE.l	#$00008AF8, $2(A6)
 	MOVE.l	#$0001F712, $FFFFC566.w
 	BSR.w	loc_000213FE
-	MOVE.l	#$0002CDFC, $FFFFC250.w
+	MOVE.l	#loc_0002CDFC, $FFFFC250.w
 loc_00020CBA:
 	RTS
 loc_00020CBC:
@@ -37859,13 +37859,13 @@ loc_00027258:
 	dc.b	"Best", $FF, $00 
 loc_0002725E:
 	dc.b	"Good", $FF, $00
-
+loc_00027264:
 	dc.b	"EXP. ", $FF
-
+loc_0002726A:
 	dc.b	"Thank you!", $FF, $00
-
+loc_00027276:
 	dc.b	"Long live King ", $F7, "!", $FF
-
+loc_00027288:
 	dc.b	"You've banished", $FE
 	dc.b	"evil from our land!", $FF 
 loc_000272AC:
@@ -38472,34 +38472,35 @@ loc_00029BDE:
 	dc.b	$72, $F8, $60, $01, $00, $88, $01, $28, $01, $51, $00, $03, $DD, $F4, $00, $00, $6F, $5E, $00, $01, $01, $38, $00, $B8, $01, $D5, $00, $03, $DE, $A0, $00, $00 
 	dc.b	$6F, $5E, $60, $01, $01, $A8, $00, $58, $01, $D5, $00, $03, $DE, $A0, $00, $00, $6F, $36, $60, $01, $FF, $FF 
 loc_00029C58:
-	dc.l	$00029C94
-	dc.l	$00029CEA
-	dc.l	$00029DF2
-	dc.l	$00029EB4
-	dc.l	$00029F0C 
+	dc.l	loc_00029C94
+	dc.l	loc_00029CEA
+	dc.l	loc_00029DF2
+	dc.l	loc_00029EB4
+	dc.l	loc_00029F0C 
 loc_00029C6C:
-	dc.l	$00029C94
-	dc.l	$00029D34
-	dc.l	$00029E1E
-	dc.l	$00029EB4
-	dc.l	$00029F0C 
+	dc.l	loc_00029C94
+	dc.l	loc_00029D34
+	dc.l	loc_00029E1E
+	dc.l	loc_00029EB4
+	dc.l	loc_00029F0C 
 loc_00029C80:
-	dc.l	$00029CB6 
-	dc.l	$00029E9C 
-	dc.l	$00029E9C 
-	dc.l	$00029EDA 
-	dc.l	$00029F3A
+	dc.l	loc_00029CB6 
+	dc.l	loc_00029E9C 
+	dc.l	loc_00029E9C 
+	dc.l	loc_00029EDA 
+	dc.l	loc_00029F3A
+loc_00029C94:
 	dc.b	"The king is a", $FE
 	dc.b	"master of disguise.", $FF
-
+loc_00029CB6:
 	dc.b	"You can sometimes", $FE
 	dc.b	"see through the", $FE
 	dc.b	"king's disguise.", $FF, $00
-
+loc_00029CEA:
 	dc.b	"The king has brought us", $FE
 	dc.b	"peace and prosperity,", $FE
 	dc.b	"despite his unusual habits.", $FF
-
+loc_00029D34:
 	dc.b	"The king really likes", $FE
 	dc.b	"truffles. They are his", $FE
 	dc.b	"one indulgence.", $FD
@@ -38510,28 +38511,30 @@ loc_00029C80:
 	dc.b	$F9, $04, $01, $62, $01, $72, $01, $74, $01, $73
 	dc.b	"Bremen's Cave is", $FE
 	dc.b	"to the northwest.", $FF, $00
-
+loc_00029DF2:
 	dc.b	"The king is always", $FE
 	dc.b	"thinking of his people.", $FF, $00
-
+loc_00029E1E:
 	dc.b	"The king sometimes puts", $FE
 	dc.b	"on a disguise to blend", $FE
 	dc.b	"in with ordinary people.", $FD
 	dc.b	"He wants to see what", $FE
 	dc.b	"kind of lives his", $FE
 	dc.b	"subjects lead.", $FF
-
+loc_00029E9C:
 	dc.b	"Have you met the king?", $FF, $00
-
+loc_00029EB4:
 	dc.b	"The king is not", $FE
 	dc.b	"here at the moment."
 	dc.b	$F8, $01, $0B
+loc_00029EDA:
 	dc.b	"I'm not really sure when", $FE
 	dc.b	"the king is coming back.", $FF
-
+loc_00029F0C:
 	dc.b	"The king is not seeing", $FE
 	dc.b	"visitors right now."
 	dc.b	$F8, $01, $0B, $00
+loc_00029F3A:
 	dc.b	"The king is in", $FE
 	dc.b	"town somewhere.", $FF, $00
 	dc.b	$1E, $17, $3F, $00, $0B, $00 
@@ -38570,60 +38573,61 @@ loc_0002A16E:
 	dc.b	$00, $00, $00, $00, $00, $00, $6E, $EC, $60, $00, $01, $18, $00, $98, $02, $BF, $00, $00, $00, $00, $00, $00, $6E, $EC, $60, $01, $00, $B8, $00, $58, $02, $C5 
 	dc.b	$00, $00, $00, $00, $00, $00, $6F, $00, $60, $01, $00, $B8, $00, $68, $02, $CB, $00, $00, $00, $00, $00, $00, $6F, $00, $60, $01, $FF, $FF 
 loc_0002A22E:
-	dc.l	$0002A3BA
-	dc.l	$0002A3BA
-	dc.l	$0002A3BA 
+	dc.l	loc_0002A3BA
+	dc.l	loc_0002A3BA
+	dc.l	loc_0002A3BA 
 loc_0002A23A:
-	dc.l	$0002A28E
-	dc.l	$0002A2FA
-	dc.l	$0002A3D4 
+	dc.l	loc_0002A28E
+	dc.l	loc_0002A2FA
+	dc.l	loc_0002A3D4 
 loc_0002A246:
-	dc.l	$0002A2AA
-	dc.l	$0002A31C
-	dc.l	$0002A528 
+	dc.l	loc_0002A2AA
+	dc.l	loc_0002A31C
+	dc.l	loc_0002A528 
 loc_0002A252:
-	dc.l	$0002A2C0
-	dc.l	$0002A2C0
-	dc.l	$0002A358
-	dc.l	$0002A358
-	dc.l	$0002A55C
-	dc.l	$0002A55C 
+	dc.l	loc_0002A2C0
+	dc.l	loc_0002A2C0
+	dc.l	loc_0002A358
+	dc.l	loc_0002A358
+	dc.l	loc_0002A55C
+	dc.l	loc_0002A55C 
 loc_0002A26A:
-	dc.l	$0002A2C0
-	dc.l	$0002A2C0
-	dc.l	$0002A358
-	dc.l	$0002A358
-	dc.l	$0002A664
-	dc.l	$0002A664 
+	dc.l	loc_0002A2C0
+	dc.l	loc_0002A2C0
+	dc.l	loc_0002A358
+	dc.l	loc_0002A358
+	dc.l	loc_0002A664
+	dc.l	loc_0002A664 
 loc_0002A282:
-	dc.l	$0002A2E2
-	dc.l	$0002A392
-	dc.l	$0002A7A4
+	dc.l	loc_0002A2E2
+	dc.l	loc_0002A392
+	dc.l	loc_0002A7A4
+loc_0002A28E:
 	dc.b	"The king knows about rings.", $FF
-
+loc_0002A2AA:
 	dc.b	"So, you're the thief!", $FF
-
+loc_0002A2C0:
 	dc.b	"We were attacked", $FE
 	dc.b	"without warning.", $FF 
-
+loc_0002A2E2:
 	dc.b	"You are a true hero, ", $F7, "!", $FF
-
+loc_0002A2FA:
 	dc.b	"You're an honest-looking", $FE
 	dc.b	"fellow!", $FF, $00
-
+loc_0002A31C:
 	dc.b	"Come to think of it,", $FE
 	dc.b	"you even have the", $FE
 	dc.b	"face of a criminal.", $FF, $00
-
+loc_0002A358:
 	dc.b	"The monster was", $FE
 	dc.b	"so powerful that we", $FE
 	dc.b	"could not resist it!", $FF, $00
-
+loc_0002A392:
 	dc.b	"The king is overjoyed", $FE
 	dc.b	"at your success.", $FF, $00
-
+loc_0002A3BA:
 	dc.b	"Excuse me, I'm busy now.", $FF, $00
-
+loc_0002A3D4:
 	dc.b	"I've heard of you--you're", $FE
 	dc.b	"the young warrior who's", $FE
 	dc.b	"collecting rings!", $FD
@@ -38640,9 +38644,10 @@ loc_0002A282:
 	dc.b	"to ensure that you", $FE
 	dc.b	"don't just run off."
 	dc.b	$F8, $01, $0F
+loc_0002A528:
 	dc.b	"Return only when you have", $FE 
 	dc.b	"proof of your innocence.", $FF, $00
-
+loc_0002A55C:
 	dc.b	"The monster appeared to be", $FE
 	dc.b	"a little girl. We suspected", $FE
 	dc.b	"nothing until it attacked.", $FD
@@ -38655,6 +38660,7 @@ loc_0002A282:
 	dc.b	"The tavernkeeper has a map", $FE
 	dc.b	"to Asti's Cave."
 	dc.b	$F8, $01, $5F, $00
+loc_0002A664:
 	dc.b	"Good, the rings are safe.", $FE
 	dc.b	"I'm really sorry, but I", $FE
 	dc.b	"have a favor to ask of you.", $FD
@@ -38667,8 +38673,8 @@ loc_0002A282:
 	dc.b	"Would you please bring him", $FE
 	dc.b	"to us? Here's a map of the", $FE
 	dc.b	"route to Keltwick."
-
 	dc.b	$F9, $08, $01, $7B, $01, $5C, $01, $6C, $01, $7C, $01, $4D, $01, $5D, $01, $6D, $01, $4E, $00
+loc_0002A7A4:
 	dc.b	"Brave warrior, please", $FE
 	dc.b	"take this Book of Sanguia", $FE
 	dc.b	"Spells for your efforts.", $FD
@@ -38684,9 +38690,10 @@ loc_0002A282:
 	dc.b	"If you discard a Book of", $FE
 	dc.b	"Spells, I can give you the", $FE
 	dc.b	"Book of Sanguia Spells.", $FF 
-
+loc_0002A902:
 	dc.b	"Our hopes go with you,", $FE
 	dc.b	$F7, $21, $FF
+loc_0002A91C:
 	dc.b	"Please bring the", $FE
 	dc.b	"doctor here!", $FF
 	dc.b	$18, $16, $3A, $00, $23, $2F, $AB, $06 
@@ -38734,21 +38741,21 @@ loc_0002ACA4:
 loc_0002ACC0:
 	dc.b	$00, $02, $B1, $A4, $00, $02, $AE, $26, $00, $02, $AE, $F8, $00, $02, $AF, $8A, $00, $02, $AE, $F8, $00, $02, $AD, $5C, $00, $02, $AD, $C8 
 loc_0002ACDC:
-	dc.l	$0002B1A4 
-	dc.l	$0002AE48 
-	dc.l	$0002AF1C 
-	dc.l	$0002AF8A 
-	dc.l	$0002AFD4 
-	dc.l	$0002B1E2 
-	dc.l	$00026034 
+	dc.l	loc_0002B1A4 
+	dc.l	loc_0002AE48 
+	dc.l	loc_0002AF1C 
+	dc.l	loc_0002AF8A 
+	dc.l	loc_0002AFD4 
+	dc.l	loc_0002B1E2 
+	dc.l	loc_00026034 
 	dc.l	$0002B18A 
-	dc.l	$0002AE48 
-	dc.l	$0002AF1C 
-	dc.l	$0002AF8A 
-	dc.l	$0002AFD4 
+	dc.l	loc_0002AE48 
+	dc.l	loc_0002AF1C 
+	dc.l	loc_0002AF8A 
+	dc.l	loc_0002AFD4 
 	dc.l	$0002B2B0
 	dc.l	$00026034
-	
+loc_0002AD14
 	dc.b	"Bruno is in Harmony Cave,", $FE
 	dc.b	"far to the east.", $FE
 	dc.b	"He has the Ring of Water", $2E
@@ -38765,37 +38772,37 @@ loc_0002ACDC:
 	dc.b	$F8, $02, $1C, $5A, $00
 	dc.b	"Bruno was the most loyal", $FE
 	dc.b	"servant of the old king.", $FF
-
+loc_0002AE26
 	dc.b	"Welcome to your castle,", $FE
 	dc.b	"my king!", $FF, $00
-
+loc_0002AE48
 	dc.b	"Journey northeast to", $FE
 	dc.b	"Barrow. Let this map", $FE
 	dc.b	"be your guide."
 	dc.b	$F9, $05, $01, $0E, $01, $0D, $01, $1D, $01, $2D, $01
 	dc.b	",Barrow is to the northeast.", $FF
-
+loc_0002AEA8
 	dc.b	"Whoever receives the ring", $FE
 	dc.b	"from Bruno shall marry the", $FE
 	dc.b	"Princess and rule Malaga.", $FF, $00
-
+loc_0002AEF8
 	dc.b	"Have you met the", $FE
 	dc.b	"two ministers yet?", $FF 
-
+loc_0002AF1C
 	dc.b	"The Princess is", $FE
 	dc.b	"waiting for you.", $FF, $00
-
+loc_0002AF3E
 	dc.b	"The townspeople will not", $FE
 	dc.b	"be happy if either of the", $FE
 	dc.b	"ministers becomes king.", $FF, $00
-
+loc_0002AF8A
 	dc.b	"Our land is once again", $FE
 	dc.b	"peaceful and prosperous.", $FF
-
+loc_0002AFBA
 	dc.b	"Bruno is waiting for you.", $FF
-
+loc_0002AFD4
 	dc.b	"Bruno has returned.", $FF
-
+loc_0002AFE8
 	dc.b	"I have been waiting", $FE 
 	dc.b	"for you. Please help", $FE
 	dc.b	"us in our time of need!", $FD
@@ -38816,12 +38823,12 @@ loc_0002ACDC:
 	dc.b	"route to Harmony Cave."
 	dc.b	$F9, $05, $01, $2C, $01, $2D, $01, $2E, $01, $3E, $01, $3F
 	dc.b	"I hope you return safely.", $FF
-
+loc_0002B1A4
 	dc.b	"Return to me after", $FE
 	dc.b	"your quest is ended!", $FF
-
+loc_0002B1CC
 	dc.b	"I will wait for you.", $FF, $00
-
+loc_0002B1E2
 	dc.b	"Please, rule Malaga", $FE
 	dc.b	"as our king and marry", $FE
 	dc.b	"the Princess.", $FD
@@ -38832,15 +38839,14 @@ loc_0002ACDC:
 	dc.b	"Good! Please keep the", $FE
 	dc.b	"Ring of Water as your", $FE
 	dc.b	"engagement ring.", $FF, $00
-
+loc_0002B294
 	dc.b	"Please don't refuse us", $2E
 	dc.b	$FB, $05, $15, $00, $00
 	dc.b	"Return as soon as you", $FE
 	dc.b	"accomplish your task.", $FF 
-
+loc_0002B2DC
 	dc.b	"You still must", $FE
 	dc.b	"journey to Cartahena.", $FF, $00
-
 	dc.b	$2D, $17, $3F, $00, $3F, $00, $BF, $A3, $03, $6A, $6B, $6C, $AC, $03, $6A, $6B, $6C, $AC, $03, $6A, $6B, $6C, $AC, $03, $6D, $6E 
 	dc.b	$6F, $AC, $03, $6D, $6E, $6F, $AC, $03, $6D, $6E, $6F, $AC, $3F, $00, $3F, $00, $BF, $BF, $BF, $BF, $BF, $BF, $BF, $BF, $BF, $BF, $BF, $BF, $BF, $BF, $BF, $A8 
 	dc.b	$0B, $5C, $5D, $91, $92, $5D, $81, $AA, $82, $5D, $91, $92, $26, $5D, $09, $8F, $90, $5D, $81, $AA, $82, $5D, $8F, $90, $26, $5D, $0B, $93, $94, $5D, $81, $AA 
@@ -38932,53 +38938,53 @@ loc_0002B910:
 	dc.b	$6F, $80, $60, $01, $00, $28, $00, $88, $01, $81, $00, $03, $DE, $14, $00, $00, $6F, $A8, $60, $01, $01, $38, $00, $88, $01, $81, $00, $03, $DE, $14, $00, $00 
 	dc.b	$6F, $A8, $60, $01, $00, $B8, $00, $58, $02, $11, $00, $03, $DE, $C0, $00, $00, $7A, $F2, $60, $01, $FF, $FF 
 loc_0002B98A:
-	dc.l	$0002BA02
-	dc.l	$0002BA3A
-	dc.l	$0002BA52
-	dc.l	$0002BA76
-	dc.l	$0002BAB4 
+	dc.l	loc_0002BA02
+	dc.l	loc_0002BA3A
+	dc.l	loc_0002BA52
+	dc.l	loc_0002BA76
+	dc.l	loc_0002BAB4 
 loc_0002B99E:
-	dc.l	$0002BA02
-	dc.l	$0002BA3A
-	dc.l	$0002BA52
-	dc.l	$0002BA76
-	dc.l	$0002BC26 
+	dc.l	loc_0002BA02
+	dc.l	loc_0002BA3A
+	dc.l	loc_0002BA52
+	dc.l	loc_0002BA76
+	dc.l	loc_0002BC26 
 loc_0002B9B2:
-	dc.l	$0002BA02
-	dc.l	$0002BA3A
-	dc.l	$0002BA52
-	dc.l	$0002BA76
-	dc.l	$0002BD8A 
+	dc.l	loc_0002BA02
+	dc.l	loc_0002BA3A
+	dc.l	loc_0002BA52
+	dc.l	loc_0002BA76
+	dc.l	loc_0002BD8A 
 loc_0002B9C6:
-	dc.l	$0002BA02
-	dc.l	$0002BA3A
-	dc.l	$0002BA52
-	dc.l	$0002BA76
-	dc.l	$0002BE76 
+	dc.l	loc_0002BA02
+	dc.l	loc_0002BA3A
+	dc.l	loc_0002BA52
+	dc.l	loc_0002BA76
+	dc.l	loc_0002BE76 
 loc_0002B9DA:
-	dc.l	$0002BA02
-	dc.l	$0002BA3A
-	dc.l	$0002BA52
-	dc.l	$0002BA76
-	dc.l	$0002BF3E
-	dc.l	$0002BA02
-	dc.l	$0002BA3A
-	dc.l	$0002BA52 
-	dc.l	$0002BA76
-	dc.l	$0002BF60
-	
+	dc.l	loc_0002BA02
+	dc.l	loc_0002BA3A
+	dc.l	loc_0002BA52
+	dc.l	loc_0002BA76
+	dc.l	loc_0002BF3E
+	dc.l	loc_0002BA02
+	dc.l	loc_0002BA3A
+	dc.l	loc_0002BA52 
+	dc.l	loc_0002BA76
+	dc.l	loc_0002BF60
+loc_0002BA02:
 	dc.b	"Our king has been worrying", $FE
 	dc.b	"about the evil Cartahenans.", $FF, $00 
-
+loc_0002BA3A:
 	dc.b	"I'm bored with my job.", $FF, $00
-
+loc_0002BA52:
 	dc.b	"A dull job and", $FE
 	dc.b	"lousy wages to boot!", $FF
-
+loc_0002BA76:
 	dc.b	"I'm looking for another", $FE
 	dc.b	"job. Have you heard", $FE
 	dc.b	"of any openings?", $FF, $00
-
+loc_0002BAB4:
 	dc.b	"The Ring of Earth? Yes, I", $FE
 	dc.b	"have it, but I won't give", $FE
 	dc.b	"it to you for free.", $FD
@@ -38995,6 +39001,7 @@ loc_0002B9DA:
 	dc.b	"Ivory Cave. Off you go.", $FE
 	dc.b	"Good lad!"
 	dc.b	$F9, $01, $00, $2A, $00
+loc_0002BC26:
 	dc.b	"Give me the White Crystal!", $FE
 	dc.b	"The ring?, Well, I did", $FE
 	dc.b	"consider giving it to you.", $FD
@@ -39010,6 +39017,7 @@ loc_0002B9DA:
 	dc.b	"Here, don't forget the key.", $FE
 	dc.b	"Hurry back now."
 	dc.b	$F9, $01, $00, $2C
+loc_0002BD8A:
 	dc.b	"Now I have the Red Crystal,", $FE
 	dc.b	"too! But one easy task", $FE
 	dc.b	"remains for you.", $FD
@@ -39021,6 +39029,7 @@ loc_0002B9DA:
 	dc.b	"from the likes of you!", $FD
 	dc.b	"You'll need this key."
 	dc.b	$F9, $01, $00, $2E, $00
+loc_0002BE76:
 	dc.b	"At last, all three crystals", $FE
 	dc.b	"are mine, all mine!", $FE
 	dc.b	"What? You want my ring?", $FD
@@ -39030,12 +39039,13 @@ loc_0002B9DA:
 	dc.b	"Here is the Ring of Earth.", $FE
 	dc.b	"Now, good riddance to you!"
 	dc.b	$F9, $02, $00, $29, $00, $FD
+loc_0002BF3E:
 	dc.b	"Back so soon?", $FE
 	dc.b	"Where's my crystal?", $FF
-
+loc_0002BF60:
 	dc.b	"Begone! You will get", $FE
 	dc.b	"nothing more from me!", $FF, $00
-
+loc_0002BF8C:
 	dc.b	"I can't give you the", $FE
 	dc.b	"key--you're carrying", $FE
 	dc.b	"too much already.", $FF 
@@ -39050,18 +39060,18 @@ loc_0002BFEC:
 	dc.b	$00, $03, $DE, $A0, $00, $00, $6F, $36, $60, $01, $01, $88, $00, $C8, $01, $D5, $00, $03, $DE, $A0, $00, $00, $6F, $36, $60, $01, $01, $98, $00, $58, $02, $89 
 	dc.b	$00, $03, $DF, $04, $00, $00, $6F, $36, $00, $01, $FF, $FF 
 loc_0002C07C:
-	dc.l	$0002C0A4
+	dc.l	loc_0002C0A4
 	dc.l	$00026034
 	dc.l	$00026034
 	dc.l	$00026034
-	dc.l	$00026034 
+	dc.l	loc_00026034 
 loc_0002C090:
-	dc.l	$0002C210
-	dc.l	$0002C276
-	dc.l	$0002C2E8
-	dc.l	$0002C35E 
+	dc.l	loc_0002C210
+	dc.l	loc_0002C276
+	dc.l	loc_0002C2E8
+	dc.l	loc_0002C35E 
 	dc.l	$0002C162
-	
+loc_0002C0A4:
 	dc.b	"Welcome, fool!", $FE
 	dc.b	"Tsarkon has gone", $FE
 	dc.b	"east to Thule Cave.", $FD
@@ -39081,153 +39091,156 @@ loc_0002C090:
 	dc.b	"him, he turned me to stone.", $FD
 	dc.b	"Your bravery has", $FE
 	dc.b	"freed me at last.", $FF 
-
+loc_0002C210:
 	dc.b	"Please stand in", $FE
 	dc.b	"front of the throne", $FE
 	dc.b	"and use the rings.", $FD
 	dc.b	"The day to heal the", $FE
 	dc.b	"world's wounds is upon us!", $FF
-
+loc_0002C276:
 	dc.b	"Now you must stand", $FE
 	dc.b	"in front of the throne", $FE
 	dc.b	"and use the rings.", $FD
 	dc.b	"Only you can banish the", $FE
 	dc.b	"evils of the last 18 years.", $FF, $00
-
+loc_0002C2E8:
 	dc.b	"Now that the rings of good", $FE
 	dc.b	"and evil are united, the", $FE
 	dc.b	"world can be whole again.", $FD
 	dc.b	"Hurry to the throne", $FE
 	dc.b	"and use the rings!", $FF, $00
-
+loc_0002C35E:
 	dc.b	"It is up to you to create", $FE
 	dc.b	"the kind of world that", $FE
 	dc.b	"Erik and Tsarkon wanted.", $FD
 	dc.b	"Place yourself in", $FE
 	dc.b	"front of the throne", $FE
 	dc.b	"and use the rings.", $FF, $00
-
+loc_0002C3E2:
 	dc.b	"A person that", $FE 
 	dc.b	"good shouldn't die.", $FF
-
+loc_0002C404:
 	dc.b	"That ring! The king of", $FE
 	dc.b	"Parma has one just like it!", $FF, $00
-
+loc_0002C438:
 	dc.b	"Your father is", $FE
 	dc.b	"calling for you!", $FF
-
+loc_0002C458:
 	dc.b	"There's a ring in a cave", $FE
 	dc.b	"south of here.", $FE
 	dc.b	"Here's a map to guide you."
 	dc.b	$F9, $02, $01, $60, $01, $70
+loc_0002C4A0:
 	dc.b	"I'm surprised you", $FE
 	dc.b	"came back alive!", $FF, $00
-
+loc_0002C4C4:
 	dc.b	"Be sure to buy armor, a", $FE
 	dc.b	"weapon, and a shield before", $FE
 	dc.b	"you leave the village.", $FF, $00 
-
+loc_0002C510:
 	dc.b	"Now your quest begins in", $FE
 	dc.b	"earnest! Here is a map of", $FE
 	dc.b	"the route to Parma."
 	dc.b	$F9, $05, $01, $41, $01, $50, $01, $51, $01, $60, $01, $70
+loc_0002C562:
 	dc.b	"We're all very", $FE
 	dc.b	"sorry about Blade.", $FF
-
+loc_0002C584:
 	dc.b	"Be careful! Evil roams", $FE
 	dc.b	"everywhere outside our", $FE
 	dc.b	"village walls!", $FF, $00
-
+loc_0002C5C2:
 	dc.b	"Don't loiter any place", $FE
 	dc.b	"that isn't on your map.", $FF, $00
-
+loc_0002C5F2:
 	dc.b	"Valuable items can be", $FE
 	dc.b	"found in remote parts", $FE
 	dc.b	"of the wilderness.", $FD
 	dc.b	"You are now strong enough", $FE
 	dc.b	"to face the tests ahead of", $FE
 	dc.b	"you. Good luck!", $FF
-
+loc_0002C676:
 	dc.b	"Everyone has been looking", $FE 
 	dc.b	"for you. Your father is", $FE
 	dc.b	"nearing death's door.", $FF
-
+loc_0002C6BE:
 	dc.b	"Blade will be missed", $FE
 	dc.b	"by all who knew him.", $FF
-
+loc_0002C6E8:
 	dc.b	"You found the ring!", $FE
 	dc.b	"Take good care of it.", $FF
-
+loc_0002C712:
 	dc.b	"Hurry, ", $F7, ", your father", $FE
 	dc.b	"is failing fast.", $FF, $00
-
+loc_0002C73A:
 	dc.b	"We all share", $FE
 	dc.b	"in your sorrow.", $FF, $00
-
+loc_0002C758:
 	dc.b	"Blade is dying--hurry!", $FF, $00 
-
+loc_0002C770:
 	dc.b	"Be sure to have a map", $FE
 	dc.b	"before you leave a", $FE
 	dc.b	"town or village!", $FF
-
+loc_0002C7AA:
 	dc.b	"To gain money, you", $FE
 	dc.b	"must defeat monsters.", $FF, $00
-
+loc_0002C7D4:
 	dc.b	"Hurry! Rush to your", $FE
 	dc.b	"father's side.", $FF, $00
-
+loc_0002C7F8:
 	dc.b	"Visit churches often!", $FE
 	dc.b	"There you may save your", $FE
 	dc.b	"journeys for later use.", $FF
-
+loc_0002C83E:
 	dc.b	"Run home, ", $F7, "! Your father", $FE
 	dc.b	"needs you desperately.", $FF
-
+loc_0002C86E:
 	dc.b	"Your father rests here,", $FE
 	dc.b	"in peace at last.", $FF
-
+loc_0002C898:
 	dc.b	"Beware, young man! The", $FE
 	dc.b	"world is a dangerous place.", $FF, $00
-
+loc_0002C8CC:
 	dc.b	"Evil has infected the", $FE
 	dc.b	"soldiers of Cartahena.", $FE
 	dc.b	"Though they appear to be", $FD
 	dc.b	"human, inside they are", $FE
 	dc.b	"horrible monsters!", $FF
-
+loc_0002C93C:
 	dc.b	"Oh, this ring ...", $FD
 	dc.b	"this must be the property", $FE
 	dc.b	"of the King's family.", $FE
 	dc.b	"Why do you have it?", $FF
-
+loc_0002C992:
 	dc.b	"The fortuneteller may", $FE
 	dc.b	"have advice for you.", $FF, $00
-
+loc_0002C9BE:
 	dc.b	"Blade was once a mighty", $FE
 	dc.b	"warrior, but the wounds of", $FE
 	dc.b	"long ago never healed.", $FF
-
+loc_0002CA08:
 	dc.b	"People have much to say,", $FE
 	dc.b	"if you take time to listen.", $FF, $00
-
+loc_0002CA3E:
 	dc.b	"Where have you been? Your", $FE
 	dc.b	"father is calling for you.", $FF, $00
-
+loc_0002CA74:
 	dc.b	"Alas, brave Blade is dead!", $FF, $00 
-
+loc_0002CA90:
 	dc.b	"Your father would", $FE
 	dc.b	"have been proud of you.", $FF
-
+loc_0002CABA:
 	dc.b	"Blade's health failed", $FE 
 	dc.b	"so quickly that", $FE
 	dc.b	"nothing could be done.", $FF, $00
-
+loc_0002CAF8:
 	dc.b	"Go! You must find the ring!", $FF
-
+loc_0002CB14:
 	dc.b	"Your father is", $FE
 	dc.b	"in his grave."
-	dc.b	$FF, $00, $F7
-	dc.b	", at last you are here!", $FE
+	dc.b	$FF, $00
+loc_0002CB32:
+	dc.b	$F7, ", at last you are here!", $FE
 	dc.b	"I have much to tell you...I", $FE
 	dc.b	"am not your real father.", $FD
 	dc.b	"You are the son of Erik of", $FE
@@ -39255,8 +39268,9 @@ loc_0002C090:
 	dc.b	"as proud of you as I am.", $FE
 	dc.b	"Go now, and remember me...."
 	dc.b	$F9, $02, $02, $00, $00, $02, $00, $00, $00
+loc_0002CDE8:
 	dc.b	"There is no answer.", $FF
-
+loc_0002CDFC:
 	dc.b	"I have waited a long time", $FE
 	dc.b	"for you, Prince ", $F7, ".", $FD
 	dc.b	"Here is the Ring of Wisdom,", $FE
@@ -39267,40 +39281,42 @@ loc_0002C090:
 	dc.b	"Only you can save us", $FE
 	dc.b	"from Cartahena.", $FE
 	dc.b	"You must not fail!", $FF
-
+loc_0002CEC8:
 	dc.b	"You must equip your weapon", $FE
 	dc.b	"and armor.", $FF
-
+loc_0002CEEE:
 	dc.b	"I have a fine weapon;", $FE
 	dc.b	"may you be as lucky as I!", $FF
-
+loc_0002CF1E:
 	dc.b	"If you enter a cave without", $FE
 	dc.b	"candles, your task will be", $FE
 	dc.b	"difficult indeed.", $FF, $00
-
+loc_0002CF68:
 	dc.b	"In the next town they sell", $FE
 	dc.b	"something even better", $FE
 	dc.b	"than candles.", $FF, $00
-
+loc_0002CFA8:
 	dc.b	"Your path is dangerous;", $FE
 	dc.b	"you will face many tests.", $FF
-
+loc_0002CFDA:
 	dc.b	"I see a ring in Parma, a", $FE
 	dc.b	"town north of here.", $FF, $00
-
+loc_0002D008:
 	dc.b	"I see that one day you", $FE
 	dc.b	"may become a great man.", $FF, $00
-
+loc_0002D038:
 	dc.b	"Your father was a good", $FE
 	dc.b	"customer. I will miss him.", $FF
-
+loc_0002D06A:
 	dc.b	"Be strong and cast aside", $FE
 	dc.b	"your grief. You have an", $FE
 	dc.b	"important task ahead!"
 	dc.b	$FF, $00
+loc_0002D0B2:
 	dc.b	"I grieve for", $FE
 	dc.b	"your poor father."
 	dc.b	$FF, $00
+loc_0002D0D2:	
 	dc.b	"Your father was a good man.", $FF 
 loc_0002D0EE:
 	dc.b	$00, $09, $00, $0B, $00, $98, $00, $C8, $00, $00, $00, $00, $00, $04, $00, $28, $00, $02, $D2, $EE, $00, $98, $00, $58, $00, $2A, $00, $02, $D3, $04, $00, $00 
@@ -39342,89 +39358,90 @@ loc_0002D0EE:
 	dc.b	$00, $00, $6F, $CA, $60, $01, $FF, $FF, $00, $01, $EB, $90, $00, $28, $00, $48, $01, $09, $00, $03, $DD, $D4, $00, $00, $6F, $A8, $60, $01, $01, $68, $00, $48 
 	dc.b	$01, $D5, $00, $03, $DE, $34, $00, $00, $6F, $36, $60, $01, $00, $D8, $00, $48, $02, $05, $00, $03, $DE, $94, $00, $00, $6F, $CA, $60, $01, $FF, $FF 
 loc_0002D424:
-	dc.l	$0002C3E2
-	dc.l	$0002C438
-	dc.l	$0002C562
-	dc.l	$0002C438
-	dc.l	$0002C676
-	dc.l	$0002C676
-	dc.l	$0002C712
-	dc.l	$0002C758 
-	dc.l	$0002C758
-	dc.l	$0002C7D4
-	dc.l	$0002C83E
-	dc.l	$0002C898
-	dc.l	$0002C898
-	dc.l	$0002C9BE 
+	dc.l	loc_0002C3E2
+	dc.l	loc_0002C438
+	dc.l	loc_0002C562
+	dc.l	loc_0002C438
+	dc.l	loc_0002C676
+	dc.l	loc_0002C676
+	dc.l	loc_0002C712
+	dc.l	loc_0002C758 
+	dc.l	loc_0002C758
+	dc.l	loc_0002C7D4
+	dc.l	loc_0002C83E
+	dc.l	loc_0002C898
+	dc.l	loc_0002C898
+	dc.l	loc_0002C9BE 
 loc_0002D45C:
-	dc.l	$0002C3E2
-	dc.l	$0002C458
-	dc.l	$0002C584
-	dc.l	$0002C4C4
-	dc.l	$0002C6BE
-	dc.l	$0002C6BE
-	dc.l	$0002C73A
-	dc.l	$0002C770 
-	dc.l	$0002C7AA
-	dc.l	$0002C7F8
-	dc.l	$0002C86E
-	dc.l	$0002C8CC
-	dc.l	$0002C8CC
-	dc.l	$0002C9BE 
+	dc.l	loc_0002C3E2
+	dc.l	loc_0002C458
+	dc.l	loc_0002C584
+	dc.l	loc_0002C4C4
+	dc.l	loc_0002C6BE
+	dc.l	loc_0002C6BE
+	dc.l	loc_0002C73A
+	dc.l	loc_0002C770 
+	dc.l	loc_0002C7AA
+	dc.l	loc_0002C7F8
+	dc.l	loc_0002C86E
+	dc.l	loc_0002C8CC
+	dc.l	loc_0002C8CC
+	dc.l	loc_0002C9BE 
 loc_0002D494:
-	dc.l	$0002C404
-	dc.l	$0002C4A0
-	dc.l	$0002C5C2
-	dc.l	$0002C510
-	dc.l	$0002C5F2
-	dc.l	$0002C5F2
-	dc.l	$0002C6E8
-	dc.l	$0002C770 
-	dc.l	$0002C7AA
-	dc.l	$0002C7F8
-	dc.l	$0002C86E
-	dc.l	$0002C93C
-	dc.l	$0002C992
-	dc.l	$0002CA08 
+	dc.l	loc_0002C404
+	dc.l	loc_0002C4A0
+	dc.l	loc_0002C5C2
+	dc.l	loc_0002C510
+	dc.l	loc_0002C5F2
+	dc.l	loc_0002C5F2
+	dc.l	loc_0002C6E8
+	dc.l	loc_0002C770 
+	dc.l	loc_0002C7AA
+	dc.l	loc_0002C7F8
+	dc.l	loc_0002C86E
+	dc.l	loc_0002C93C
+	dc.l	loc_0002C992
+	dc.l	loc_0002CA08 
 loc_0002D4CC:
-	dc.l	$0002CA3E 
+	dc.l	loc_0002CA3E 
 loc_0002D4D0:
-	dc.l	$0002CA74 
+	dc.l	loc_0002CA74 
 loc_0002D4D4:
-	dc.l	$0002CA90 
+	dc.l	loc_0002CA90 
 loc_0002D4D8:
-	dc.l	$0002CABA
-	dc.l	$0002CB32
-	dc.l	$00026034 
+	dc.l	loc_0002CABA
+	dc.l	loc_0002CB32
+	dc.l	loc_00026034 
 loc_0002D4E4:
-	dc.l	$0002CB14
-	dc.l	$0002CDE8
-	dc.l	$00026034
-	dc.l	$0002CB14
-	dc.l	$0002CDE8
-	dc.l	$00026034 
+	dc.l	loc_0002CB14
+	dc.l	loc_0002CDE8
+	dc.l	loc_00026034
+	dc.l	loc_0002CB14
+	dc.l	loc_0002CDE8
+	dc.l	loc_00026034 
 loc_0002D4FC:
-	dc.l	$0002D038
-	dc.l	$0002D06A 
+	dc.l	loc_0002D038
+	dc.l	loc_0002D06A 
 loc_0002D504:
-	dc.l	$0002CEC8
-	dc.l	$00026034 
+	dc.l	loc_0002CEC8
+	dc.l	loc_00026034 
 loc_0002D50C:
-	dc.l	$0002CEC8
-	dc.l	$00026034 
+	dc.l	loc_0002CEC8
+	dc.l	loc_00026034 
 loc_0002D514:
-	dc.l	$0002CEEE
-	dc.l	$00026034 
+	dc.l	loc_0002CEEE
+	dc.l	loc_00026034 
 loc_0002D51C:
-	dc.l	$0002D0B2
-	dc.l	$0002D0D2
-	dc.l	$00026034 
+	dc.l	loc_0002D0B2
+	dc.l	loc_0002D0D2
+	dc.l	loc_00026034 
 loc_0002D528:
-	dc.l	$0002CF1E
-	dc.l	$00026034 
+	dc.l	loc_0002CF1E
+	dc.l	loc_00026034 
 loc_0002D530:
-	dc.l	$0002CF68
-	dc.l	$00026034 
+	dc.l	loc_0002CF68
+	dc.l	loc_00026034 
+loc_0002D538:
 	dc.b	$30, $2D, $3F, $20, $3F, $20, $BF, $BF, $B8, $3F, $A0, $2C, $A0, $A3, $01, $A0, $3F, $B0, $2B, $B0, $01, $A0, $25, $20 
 	dc.b	$01, $A0, $24, $20, $23, $A0, $28, $20, $23, $A0, $37, $20, $AA, $25, $A0, $A6, $25, $A0, $B6, $01, $B0, $C6, $01, $20, $29, $A0, $A2, $29, $A0, $B4, $CB, $3F 
 	dc.b	$20, $A2, $01, $A0, $62, $A0, $20, $20, $BF, $AE, $C8, $BF, $A5, $02, $B0, $B0, $A2, $DF, $AD, $24, $20, $AE, $2A, $A0, $A3, $31, $A0, $A4, $CD, $2A, $A0, $25 
@@ -39542,7 +39559,7 @@ loc_0002D530:
 	dc.b	$24, $25, $C2, $31, $2F, $06, $2E, $2B, $4A, $4B, $4D, $4E, $32, $2B, $02, $24, $25, $24, $2B, $B0, $06, $38, $30, $4A, $4B, $4D, $4E, $3A, $2B, $AF, $05, $30 
 	dc.b	$4A, $4B, $4D, $4E, $38, $2B, $3F, $00 
 loc_0002E398:
-	MOVE.l	#$0002D538, $FFFFC182.w
+	MOVE.l	#loc_0002D538, $FFFFC182.w
 	MOVE.l	#$0002D664, $FFFFC186.w
 	RTS
 loc_0002E3AA:
@@ -39555,16 +39572,16 @@ loc_0002E3AA:
 loc_0002E3D2:
 	RTS
 loc_0002E3D4:
-	MOVE.l	#$0002D038, $FFFFC204.w
+	MOVE.l	#loc_0002D038, $FFFFC204.w
 	RTS
 loc_0002E3DE:
-	MOVE.l	#$0002D008, $FFFFC204.w
+	MOVE.l	#loc_0002D008, $FFFFC204.w
 	TST.b	$FFFFC723.w
 	BNE.w	loc_0002E406
-	MOVE.l	#$0002CFDA, $FFFFC204.w
+	MOVE.l	#loc_0002CFDA, $FFFFC204.w
 	TST.b	$FFFFC818.w
 	BNE.w	loc_0002E406
-	MOVE.l	#$0002CFA8, $FFFFC204.w	
+	MOVE.l	#loc_0002CFA8, $FFFFC204.w	
 loc_0002E406:
 	RTS
 loc_0002E408:
