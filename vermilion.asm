@@ -17707,7 +17707,7 @@ loc_0001096A:
 	MOVEA.l	$FFFFC204.w, A0
 	CLR.w	D3
 	MOVE.b	(A0,D2.w), D3
-	CMPI.b	#$F7, D3
+	CMPI.b	#Script_player_name, D3
 	BNE.b	loc_000109C8
 loc_000109B4:
 	LEA	$FFFFC64C.w, A0
@@ -38157,7 +38157,7 @@ loc_00027264:
 loc_0002726A:
 	dc.b	"Thank you!", $FF, $00
 loc_00027276:
-	dc.b	"Long live King ", $F7, "!", $FF
+	dc.b	"Long live King ", Script_player_name, "!", $FF
 loc_00027288:
 	dc.b	"You've banished", $FE
 	dc.b	"evil from our land!", $FF 
@@ -38841,7 +38841,7 @@ loc_00029386:
 	dc.b	"when I'm bothered...."
 	dc.b	$F8, $02, $F7, $E0
 loc_00029446:
-	dc.b	"Thank you, ", $F7, ".", $FD
+	dc.b	"Thank you, ", Script_player_name, ".", $FD
 	dc.b	"That beast", $FE
 	dc.b	"from Cartahena transformed", $FE
 	dc.b	"itself to look like me.", $FD
@@ -39114,7 +39114,7 @@ loc_0002A2C0:
 	dc.b	"We were attacked", $FE
 	dc.b	"without warning.", $FF 
 loc_0002A2E2:
-	dc.b	"You are a true hero, ", $F7, "!", $FF
+	dc.b	"You are a true hero, ", Script_player_name, "!", $FF
 loc_0002A2FA:
 	dc.b	"You're an honest-looking", $FE
 	dc.b	"fellow!", $FF, $00
@@ -39157,7 +39157,7 @@ loc_0002A55C:
 	dc.b	"nothing until it attacked.", $FD
 	dc.b	"It took your rings to", $FE
 	dc.b	"Asti's Cave. I'm sorry I", $FE
-	dc.b	"doubted you, ", $F7, ".", $FD
+	dc.b	"doubted you, ", Script_player_name, ".", $FD
 	dc.b	"Worry about us later--get", $FE
 	dc.b	"those rings before they're", $FE 
 	dc.b	"brought to Tsarkon!", $FD
@@ -39600,7 +39600,7 @@ loc_0002C124:
 	dc.b	"defeat Tsarkon!"
 	dc.b	$F8, $01, $53, $00
 loc_0002C162:
-	dc.b	$F7, ", if only Erik", $FE
+	dc.b	Script_player_name, ", if only Erik", $FE
 	dc.b	"could see you now.", $FE
 	dc.b	"How proud he would be!", $FD
 	dc.b	"As for Tsarkon, I was never", $FE
@@ -39687,7 +39687,7 @@ loc_0002C6E8:
 	dc.b	"You found the ring!", $FE
 	dc.b	"Take good care of it.", $FF
 loc_0002C712:
-	dc.b	"Hurry, ", $F7, ", your father", $FE
+	dc.b	"Hurry, ", Script_player_name, ", your father", $FE
 	dc.b	"is failing fast.", $FF, $00
 loc_0002C73A:
 	dc.b	"We all share", $FE
@@ -39709,7 +39709,7 @@ loc_0002C7F8:
 	dc.b	"There you may save your", $FE
 	dc.b	"journeys for later use.", $FF
 loc_0002C83E:
-	dc.b	"Run home, ", $F7, "! Your father", $FE
+	dc.b	"Run home, ", Script_player_name, "! Your father", $FE
 	dc.b	"needs you desperately.", $FF
 loc_0002C86E:
 	dc.b	"Your father rests here,", $FE
@@ -39757,7 +39757,7 @@ loc_0002CB14:
 	dc.b	"in his grave."
 	dc.b	$FF, $00
 loc_0002CB32:
-	dc.b	$F7, ", at last you are here!", $FE
+	dc.b	Script_player_name, ", at last you are here!", $FE
 	dc.b	"I have much to tell you...I", $FE
 	dc.b	"am not your real father.", $FD
 	dc.b	"You are the son of Erik of", $FE
@@ -39789,7 +39789,7 @@ loc_0002CDE8:
 	dc.b	"There is no answer.", $FF
 loc_0002CDFC:
 	dc.b	"I have waited a long time", $FE
-	dc.b	"for you, Prince ", $F7, ".", $FD
+	dc.b	"for you, Prince ", Script_player_name, ".", $FD
 	dc.b	"Here is the Ring of Wisdom,", $FE
 	dc.b	"which I received from", $FE
 	dc.b	"Blade. It is rightfully", $FD
@@ -40341,7 +40341,7 @@ loc_0002ED36:
 	dc.b	"You're staying here? Good!", $FE
 	dc.b	"This is a peaceful town.", $FF
 loc_0002ED6A:
-	dc.b	"You are very brave, ", $F7, ".", $FE
+	dc.b	"You are very brave, ", Script_player_name, ".", $FE
 	dc.b	"Good luck!", $FF
 loc_0002ED8C:
 	dc.b	"Beware of slandering", $FE
@@ -41478,7 +41478,7 @@ loc_00033216:
 	dc.b	"Greetings, young man.", $FE
 	dc.b	"enjoying our lovely town?", $FF
 loc_00033246:
-	dc.b	"Hi, ", $F7, ". I am Anselm.", $FE
+	dc.b	"Hi, ", Script_player_name, ". I am Anselm.", $FE
 	dc.b	"My father went to Blazon's", $FE
 	dc.b	"Cave to get the mighty", $FD
 	dc.b	"Poison Shield for you.", $FE
@@ -41813,10 +41813,10 @@ loc_000340C2:
 	dc.b	"Today, everything's", $FE
 	dc.b	"on the house!", $FF
 
-	dc.b	"I am waiting for ", $F7, ".", $FE
+	dc.b	"I am waiting for ", Script_player_name, ".", $FE
 	dc.b	"He will come some day. You", $FE
-	dc.b	"can't be the ", "", $F7, " I await!", $FD
-	dc.b	$F7, " is a nobleman, but you", $FE
+	dc.b	"can't be the ", "", Script_player_name, " I await!", $FD
+	dc.b	Script_player_name, " is a nobleman, but you", $FE
 	dc.b	"don't appear to be. Are you", $FE
 	dc.b	"a spy from Thar or Luther?", $FD
 	dc.b	"No matter! If you can get", $FE
@@ -42820,7 +42820,7 @@ loc_00039554:
 	dc.b	"This is Excalabria,", $FE 
 	dc.b	"Journey to Swaffham and", $FD
 	dc.b	"find the Ring of Earth.", $FE 
-	dc.b	"Hurry, ", $F7, "!", $FD
+	dc.b	"Hurry, ", Script_player_name, "!", $FD
 	dc.b	"I have much to tell you", $FE 
 	dc.b	"and time is running out!", $FF
 loc_000395EE:
@@ -43056,7 +43056,7 @@ loc_0003A3FE
 	dc.b	"church? Several people", $FE 
 	dc.b	"are waiting for you there.", $FF, $00 
 loc_0003A448
-	dc.b	"Welcome, Prince ", $F7, "!", $FE 
+	dc.b	"Welcome, Prince ", Script_player_name, "!", $FE 
 	dc.b	"I was once a servant", $FE 
 	dc.b	"of your father's.", $FD 
 	dc.b	"Though you may not realize", $FE 
@@ -43112,7 +43112,7 @@ loc_0003A7FC
 	dc.b	"time for the final battle.", $FE 
 	dc.b	"Go south to meet the enemy.", $FF, $00 
 loc_0003A84E
-	dc.b	"Greetings, ", $F7, "!", $FE 
+	dc.b	"Greetings, ", Script_player_name, "!", $FE 
 	dc.b	"We were once", $FE 
 	dc.b	"your father's servants.", $FF, $00 
 loc_0003A882
@@ -43435,7 +43435,7 @@ loc_0003BF0E:
 	dc.b	"I killed your father and", $FE
 	dc.b	"wanted to kill myself, but", $FD
 	dc.b	"the evil wouldn't let me.", $FE
-	dc.b	"Return to Cartahena, ", $F7, ".", $FE
+	dc.b	"Return to Cartahena, ", Script_player_name, ".", $FE
 	dc.b	"Someone special waits", $FD
 	dc.b	"for you there."
 	dc.b	$F8, $01, $38, $00 
