@@ -1330,16 +1330,16 @@ loc_00001D14:
 	MOVE.b	#$FF, $FFFFC41C.w
 	JSR	loc_0001229E
 	JSR	loc_00010C4A
-	MOVE.l	#loc_000267CA, $FFFFC204.w
+	MOVE.l	#loc_000267CA, Script_source_base.w
 	TST.b	$FFFFC7F3.w
 	BEQ.b	loc_00001D42
-	MOVE.l	#loc_00026856, $FFFFC204.w	
+	MOVE.l	#loc_00026856, Script_source_base.w	
 	CLR.b	$FFFFC7F3.w	
 	BRA.b	loc_00001D50	
 loc_00001D42:
 	TST.b	$FFFFC45C.w
 	BNE.b	loc_00001D50
-	MOVE.l	#loc_00026778, $FFFFC204.w
+	MOVE.l	#loc_00026778, Script_source_base.w
 loc_00001D50:
 	MOVE.w	#$0028, $FFFFC412.w
 	RTS
@@ -1382,7 +1382,7 @@ loc_00001DB4:
 	BLE.b	loc_00001E0A
 	MOVE.w	D0, $FFFFC62C.w
 	ADDQ.w	#1, $FFFFC7F0.w
-	MOVE.l	#loc_000268B2, $FFFFC204.w
+	MOVE.l	#loc_000268B2, Script_source_base.w
 	MOVE.w	#$002A, $FFFFC412.w
 	JSR	loc_000033BE
 	JSR	loc_00010C4A
@@ -1814,7 +1814,7 @@ loc_000024D4:
 loc_000024D6:
 	JSR	loc_00000628
 	MOVE.b	#$FF, $FFFFC41C.w
-	MOVE.l	#$0003633C, $FFFFC204.w
+	MOVE.l	#$0003633C, Script_source_base.w
 	JSR	loc_00010C4A
 	MOVE.w	#$002C, $FFFFC412.w
 	RTS
@@ -2401,14 +2401,14 @@ loc_00002D20:
 loc_00002D22:
 	JSR	loc_0001229E
 	JSR	loc_00010C4A
-	MOVE.l	#loc_0002697A, $FFFFC204.w
+	MOVE.l	#loc_0002697A, Script_source_base.w
 	MOVE.w	#$0027, $FFFFC412.w
 	MOVE.b	#$FF, $FFFFC41C.w
 	RTS
 loc_00002D44:
 	JSR	loc_0001229E
 	JSR	loc_00010C4A
-	MOVE.l	#loc_000269AC, $FFFFC204.w
+	MOVE.l	#loc_000269AC, Script_source_base.w
 	MOVE.w	#$0027, $FFFFC412.w
 	MOVE.b	#$FF, $FFFFC41C.w
 	MOVE.b	#$FF, $FFFFC7C6.w
@@ -13619,7 +13619,7 @@ loc_0000D094:
 	MOVEA.l	#loc_00027264, A0
 	JSR	loc_00012A6C
 	MOVE.b	#$FF, (A1)
-	MOVE.l	#$FFFFC260, $FFFFC204.w
+	MOVE.l	#$FFFFC260, Script_source_base.w
 	JSR	loc_00010C4A
 	RTS
 loc_0000D116:
@@ -17703,8 +17703,8 @@ loc_0001096A:
 	JSR	loc_00010522
 	TST.b	$FFFFC213.w
 	BNE.b	loc_000109B4
-	MOVE.w	$FFFFC202.w, D2
-	MOVEA.l	$FFFFC204.w, A0
+	MOVE.w	Script_source_offset.w, D2
+	MOVEA.l	Script_source_base.w, A0
 	CLR.w	D3
 	MOVE.b	(A0,D2.w), D3
 	CMPI.b	#Script_player_name, D3
@@ -17715,22 +17715,22 @@ loc_000109B4:
 	CLR.w	D3
 	MOVE.b	(A0,D2.w), D3
 	MOVE.b	#$FF, $FFFFC213.w
-loc_000109C8: ; suspected text script handling
-	CMPI.b	#$FF, D3
+loc_000109C8: ; Text script handling
+	CMPI.b	#$FF, D3 		; EOF
 	BEQ.w	loc_00010BBE
-	CMPI.b	#$FE, D3
+	CMPI.b	#$FE, D3        ; CR
 	BEQ.w	loc_00010ABC
-	CMPI.b	#$FD, D3
+	CMPI.b	#$FD, D3		; Show continuation
 	BEQ.w	loc_00010AC8
 	CMPI.b	#$FC, D3
 	BEQ.w	loc_00010BB2
-	CMPI.b	#$FB, D3
+	CMPI.b	#$FB, D3		; Confirm
 	BEQ.w	loc_00010BA0
 	CMPI.b	#$FA, D3
 	BEQ.w	loc_00010B18
-	CMPI.b	#$F9, D3
+	CMPI.b	#$F9, D3		; Retrieve stuff
 	BEQ.w	loc_00010B2E
-	CMPI.b	#$F8, D3
+	CMPI.b	#$F8, D3		; Boss fight
 	BEQ.w	loc_00010B7C
 	CMPI.b	#$DE, D3
 	BEQ.w	loc_00010A6E
@@ -17860,14 +17860,14 @@ loc_00010BBE:
 	BEQ.b	loc_00010BD2
 	CLR.b	$FFFFC213.w
 	CLR.w	$FFFFC214.w
-	ADDQ.w	#1, $FFFFC202.w
+	ADDQ.w	#1, Script_source_offset.w
 	BRA.b	loc_00010BE2
 loc_00010BD2:
 	MOVE.b	#$FF, $FFFFC20F.w
 loc_00010BD8:
 	TST.b	$FFFFC213.w
 	BNE.b	loc_00010BE4
-	ADDQ.w	#1, $FFFFC202.w
+	ADDQ.w	#1, Script_source_offset.w
 loc_00010BE2:
 	RTS
 loc_00010BE4:
@@ -17893,7 +17893,7 @@ loc_00010BEA:
 	MOVE.b	#$FF, $FFFF9910.w
 	RTS
 loc_00010C4A:
-	CLR.w	$FFFFC202.w
+	CLR.w	Script_source_offset.w
 loc_00010C4E:
 	CLR.b	$FFFFC20F.w
 	CLR.b	$FFFFC211.w
@@ -18572,7 +18572,7 @@ loc_00011666:
 	CLR.b	$FFFFC20F.w
 	CLR.b	$FFFFC211.w
 	CLR.b	$FFFFC212.w
-	CLR.w	$FFFFC202.w
+	CLR.w	Script_source_offset.w
 	CLR.w	$FFFFC234.w
 	RTS
 loc_0001168C:
@@ -21819,14 +21819,14 @@ loc_00015BAE:
 	dc.b	"Long ago, King", $FE
 	dc.b	"Tsarkon of Cartahena", $FE
 	dc.b	"unleashed his evil", $FE
-	dc.b 	"hordes upon the", $FE
-	dc.b 	"peaceful land of", $FE
-	dc.b 	"Excalabria.", $FF 
+	dc.b	"hordes upon the", $FE
+	dc.b	"peaceful land of", $FE
+	dc.b	"Excalabria.", $FF 
 loc_00015C12: 
-	dc.b 	"Though the people of", $FE
-	dc.b 	"Excalabria fought", $FE
-	dc.b 	"bravely, in the end", $FE
-	dc.b 	"they were overwhelmed.", $FF
+	dc.b	"Though the people of", $FE
+	dc.b	"Excalabria fought", $FE
+	dc.b	"bravely, in the end", $FE
+	dc.b	"they were overwhelmed.", $FF
 loc_00015C64:
 	dc.b	"As his castle", $FE
 	dc.b	"collapsed around him,", $FE
@@ -21856,7 +21856,7 @@ loc_00015DCC:
 	dc.b	"to searching for the", $FE
 	dc.b	"Prince. Eighteen years", $FE
 	dc.b	"have passed since Tsarkon", $FE
-	dc.b 	"began his search....", $FF
+	dc.b	"began his search....", $FF
 	CLR.w	$FFFFC100.w
 	MOVE.l	#loc_00015E6A, $2(A5)
 	CLR.b	$FFFFC10C.w
@@ -24114,7 +24114,7 @@ loc_00017F80:
 	JSR	loc_00010C4A
 	TST.w	$FFFFC462.w
 	BGT.b	loc_00017FC8
-	MOVE.l	#loc_0002540C, $FFFFC204.w
+	MOVE.l	#loc_0002540C, Script_source_base.w
 	MOVE.w	#2, $FFFFC424.w
 	BRA.w	loc_0001801C
 loc_00017FC8:
@@ -24122,21 +24122,21 @@ loc_00017FC8:
 	BEQ.w	loc_0001800E
 	CMPI.w	#1, $FFFFC458.w
 	BEQ.b	loc_00017FE8
-	MOVE.l	#loc_0002542A, $FFFFC204.w
+	MOVE.l	#loc_0002542A, Script_source_base.w
 	MOVE.w	#3, $FFFFC424.w
 	BRA.b	loc_0001801C
 loc_00017FE8:
 	BSR.w	loc_00018662
 	BEQ.b	loc_00017FFE
-	MOVE.l	#loc_00025486, $FFFFC204.w
+	MOVE.l	#loc_00025486, Script_source_base.w
 	MOVE.w	#$000C, $FFFFC424.w
 	BRA.b	loc_0001801C
 loc_00017FFE:
-	MOVE.l	#loc_000254B2, $FFFFC204.w	
+	MOVE.l	#loc_000254B2, Script_source_base.w	
 	MOVE.w	#2, $FFFFC424.w	
 	BRA.b	loc_0001801C	
 loc_0001800E:
-	MOVE.l	#loc_00025458, $FFFFC204.w
+	MOVE.l	#loc_00025458, Script_source_base.w
 	MOVE.w	#6, $FFFFC424.w
 loc_0001801C:
 	RTS
@@ -24273,7 +24273,7 @@ loc_000181DC:
 	JSR	loc_00012A6C
 	MOVE.b	#$2E, (A1)+
 	MOVE.b	#$FF, (A1)
-	MOVE.l	#$FFFFC260, $FFFFC204.w
+	MOVE.l	#$FFFFC260, Script_source_base.w
 	MOVE.w	#2, $FFFFC424.w
 	SUBQ.w	#1, $FFFFC462.w
 	LEA	$FFFFC464.w, A0
@@ -24382,7 +24382,7 @@ loc_00018388:
 	LEA	loc_00025526, A0
 	JSR	loc_00012A6C
 	MOVE.b	#$FF, (A1)
-	MOVE.l	#$FFFFC260, $FFFFC204.w
+	MOVE.l	#$FFFFC260, Script_source_base.w
 	MOVE.w	#2, $FFFFC424.w
 	LEA	$FFFFC464.w, A0
 	MOVE.w	$FFFFC460.w, D0
@@ -24392,7 +24392,7 @@ loc_00018388:
 	ORI.w	#$8000, (A0)
 	RTS
 loc_00018422:
-	MOVE.l	#loc_000254EA, $FFFFC204.w
+	MOVE.l	#loc_000254EA, Script_source_base.w
 	MOVE.w	#2, $FFFFC424.w
 	RTS
 loc_00018432:
@@ -24404,7 +24404,7 @@ loc_00018432:
 loc_0001844C:
 	TST.b	$FFFFC0AA.w
 	BNE.b	loc_00018466
-	MOVE.l	#loc_000259C4, $FFFFC204.w
+	MOVE.l	#loc_000259C4, Script_source_base.w
 	JSR	loc_00006458
 	MOVE.w	#9, $FFFFC424.w
 loc_00018466:
@@ -24462,7 +24462,7 @@ loc_00018528:
 	TST.b	$FFFFC20F.w	
 	BEQ.b	loc_00018540	
 	JSR	loc_00011666	
-	MOVE.l	$FFFFC254.w, $FFFFC204.w	
+	MOVE.l	$FFFFC254.w, Script_source_base.w	
 	ADDQ.w	#1, $FFFFC424.w	
 	RTS	
 loc_00018540:
@@ -24587,7 +24587,7 @@ loc_0001869C:
 	BRA.w	loc_0001884C
 loc_000186F8:
 	JSR	loc_00010C4A	
-	MOVE.l	#loc_00025928, $FFFFC204.w	
+	MOVE.l	#loc_00025928, Script_source_base.w	
 	MOVE.w	#9, $FFFFC424.w	
 	RTS	
 loc_0001870E:
@@ -24603,12 +24603,12 @@ loc_0001870E:
 	MOVE.w	#$00AE, D0
 	JSR	loc_00010522
 	JSR	loc_00010C4A
-	MOVE.l	#loc_00026934, $FFFFC204.w
+	MOVE.l	#loc_00026934, Script_source_base.w
 	MOVE.w	#9, $FFFFC424.w
 	RTS
 loc_00018752:
 	JSR	loc_00010C4A	
-	MOVE.l	#loc_00025928, $FFFFC204.w	
+	MOVE.l	#loc_00025928, Script_source_base.w	
 	MOVE.w	#9, $FFFFC424.w	
 	RTS	
 loc_00018768:
@@ -24631,7 +24631,7 @@ loc_00018768:
 	RTS
 loc_000187B4:
 	JSR	loc_00010C4A
-	MOVE.l	#loc_00025992, $FFFFC204.w
+	MOVE.l	#loc_00025992, Script_source_base.w
 	MOVE.w	#9, $FFFFC424.w
 	RTS
 loc_000187CA:
@@ -24660,10 +24660,10 @@ loc_00018812:
 	CMP.w	$FFFFC62E.w, D0
 	BLE.b	loc_0001882C
 	MOVE.w	$FFFFC62E.w, $FFFFC62C.w
-	MOVE.l	#loc_00026AA4, $FFFFC204.w
+	MOVE.l	#loc_00026AA4, Script_source_base.w
 	BRA.b	loc_00018834
 loc_0001882C:
-	MOVE.l	#loc_00026A7A, $FFFFC204.w
+	MOVE.l	#loc_00026A7A, Script_source_base.w
 loc_00018834:
 	MOVE.w	#$00AE, D0
 	JSR	loc_00010522
@@ -24676,7 +24676,7 @@ loc_0001884C:
 	BSR.w	loc_0001A21C
 	BNE.w	loc_00018996
 	MOVE.w	$FFFFC62E.w, $FFFFC62C.w
-	MOVE.l	#loc_00026AA4, $FFFFC204.w
+	MOVE.l	#loc_00026AA4, Script_source_base.w
 	MOVE.w	#$00AE, D0
 	JSR	loc_00010522
 	JSR	loc_00010C4A
@@ -24687,15 +24687,15 @@ loc_00018884:
 	BNE.w	loc_000189AC
 	BSR.w	loc_0001A21C
 	BNE.w	loc_00018996
-	MOVE.l	#loc_00026634, $FFFFC204.w
+	MOVE.l	#loc_00026634, Script_source_base.w
 	TST.w	$FFFFC642.w
 	BNE.b	loc_000188AE
-	MOVE.l	#loc_00026732, $FFFFC204.w
+	MOVE.l	#loc_00026732, Script_source_base.w
 	BRA.b	loc_000188BE
 loc_000188AE:
 	TST.b	$FFFFC76C.w
 	BEQ.b	loc_000188BE
-	MOVE.l	#loc_00026750, $FFFFC204.w
+	MOVE.l	#loc_00026750, Script_source_base.w
 	BRA.b	loc_000188D0
 loc_000188BE:
 	CLR.w	$FFFFC642.w
@@ -24720,7 +24720,7 @@ loc_000188DE:
 	MOVE.w	#$000B, $FFFFC424.w
 	RTS
 loc_00018912:
-	MOVE.l	#loc_00025928, $FFFFC204.w
+	MOVE.l	#loc_00025928, Script_source_base.w
 	JSR	loc_00010C4A
 	MOVE.w	#9, $FFFFC424.w
 	RTS
@@ -24746,16 +24746,16 @@ loc_00018928:
 	RTS
 loc_00018982:
 	JSR	loc_00010C4A
-	MOVE.l	#loc_00025928, $FFFFC204.w
+	MOVE.l	#loc_00025928, Script_source_base.w
 	ADDQ.w	#2, $FFFFC424.w
 	RTS
 loc_00018996:
-	MOVE.l	#loc_0002595C, $FFFFC204.w	
+	MOVE.l	#loc_0002595C, Script_source_base.w	
 	JSR	loc_00010C4A	
 	MOVE.w	#9, $FFFFC424.w	
 	RTS	
 loc_000189AC:
-	MOVE.l	#loc_00025942, $FFFFC204.w
+	MOVE.l	#loc_00025942, Script_source_base.w
 	JSR	loc_00010C4A
 	MOVE.w	#9, $FFFFC424.w
 	RTS
@@ -26468,17 +26468,17 @@ loc_0001A380:
 	JSR	loc_00010C4A
 	TST.w	$FFFFC442.w
 	BNE.b	loc_0001A3C6
-	MOVE.l	#loc_000253AE, $FFFFC204.w
+	MOVE.l	#loc_000253AE, Script_source_base.w
 	MOVE.w	#2, $FFFFC420.w
 	BRA.b	loc_0001A3EA
 loc_0001A3C6:
 	TST.w	$FFFFC458.w
 	BEQ.b	loc_0001A3DC
-	MOVE.l	#$000253C8, $FFFFC204.w
+	MOVE.l	#$000253C8, Script_source_base.w
 	MOVE.w	#4, $FFFFC420.w
 	BRA.b	loc_0001A3EA
 loc_0001A3DC:
-	MOVE.l	#loc_000253EC, $FFFFC204.w
+	MOVE.l	#loc_000253EC, Script_source_base.w
 	MOVE.w	#8, $FFFFC420.w
 loc_0001A3EA:
 	RTS
@@ -26600,7 +26600,7 @@ loc_0001A59C:
 	MOVE.w	(A2,D0.w), D0
 	ANDI.w	#$0100, D0
 	BEQ.b	loc_0001A5D4
-	MOVE.l	#$00025D80, $FFFFC204.w
+	MOVE.l	#$00025D80, Script_source_base.w
 	BRA.w	loc_0001A636
 loc_0001A5D4:
 	JSR	loc_0001D650
@@ -26619,7 +26619,7 @@ loc_0001A5D4:
 	JSR	loc_00012A6C
 	MOVE.b	#$2E, (A1)+
 	MOVE.b	#$FF, (A1)
-	MOVE.l	#$FFFFC260, $FFFFC204.w
+	MOVE.l	#$FFFFC260, Script_source_base.w
 	SUBQ.w	#1, $FFFFC442.w
 	LEA	$FFFFC444.w, A0
 	MOVE.w	$FFFFC440.w, D0
@@ -26709,7 +26709,7 @@ loc_0001A702:
 	JSR	loc_00012A6C
 	MOVE.b	#$2E, (A1)+
 	MOVE.b	#$FD, (A1)+
-	MOVE.l	#$FFFFC260, $FFFFC204.w
+	MOVE.l	#$FFFFC260, Script_source_base.w
 	ADDQ.w	#1, $FFFFC420.w
 	RTS
 loc_0001A794:
@@ -26719,7 +26719,7 @@ loc_0001A794:
 	JSR	loc_00012A6C
 	MOVE.b	#$2E, (A1)+
 	MOVE.b	#$FF, (A1)+
-	MOVE.l	#$FFFFC260, $FFFFC204.w
+	MOVE.l	#$FFFFC260, Script_source_base.w
 	ADDQ.w	#1, $FFFFC420.w
 	RTS
 loc_0001A7B8:
@@ -26796,7 +26796,7 @@ loc_0001A8A2:
 loc_0001A8A4:
 	TST.b	$FFFFC0AA.w
 	BNE.b	loc_0001A8BE
-	MOVE.l	#loc_000259C4, $FFFFC204.w
+	MOVE.l	#loc_000259C4, Script_source_base.w
 	JSR	loc_00006458
 	MOVE.w	#$000B, $FFFFC420.w
 loc_0001A8BE:
@@ -26907,23 +26907,23 @@ loc_0001AA46:
 	TST.b	$FFFFC540.w
 	BNE.b	loc_0001AA5C
 loc_0001AA52:
-	MOVE.l	#loc_00026B98, $FFFFC204.w	
+	MOVE.l	#loc_00026B98, Script_source_base.w	
 	BRA.b	loc_0001AA72	
 loc_0001AA5C:
 	CLR.b	$FFFFC685.w
 	MOVE.w	#$007F, $FFFFC69C.w
-	MOVE.l	#loc_00026B68, $FFFFC204.w
+	MOVE.l	#loc_00026B68, Script_source_base.w
 	BSR.w	loc_0001B166
 loc_0001AA72:
 	RTS
 loc_0001AA74:
 	TST.b	$FFFFC540.w
 	BNE.b	loc_0001AA84
-	MOVE.l	#loc_00026B1E, $FFFFC204.w	
+	MOVE.l	#loc_00026B1E, Script_source_base.w	
 	BRA.b	loc_0001AA96	
 loc_0001AA84:
 	MOVE.b	#$FF, $FFFFC45C.w
-	MOVE.l	#loc_00026AD4, $FFFFC204.w
+	MOVE.l	#loc_00026AD4, Script_source_base.w
 	BSR.w	loc_0001B166
 loc_0001AA96:
 	RTS
@@ -26933,7 +26933,7 @@ loc_0001AA98:
 	BLE.b	loc_0001AAAC	
 	MOVE.w	#$05DC, $FFFFC636.w	
 loc_0001AAAC:
-	MOVE.l	#loc_00026DFC, $FFFFC204.w	
+	MOVE.l	#loc_00026DFC, Script_source_base.w	
 	BSR.w	loc_0001B166	
 	MOVE.w	#$00AE, D0	
 	JSR	loc_00010522	
@@ -26944,7 +26944,7 @@ loc_0001AAC4:
 	BLE.b	loc_0001AAD8	
 	MOVE.w	#$07D0, $FFFFC63A.w	
 loc_0001AAD8:
-	MOVE.l	#loc_00026F76, $FFFFC204.w	
+	MOVE.l	#loc_00026F76, Script_source_base.w	
 	BSR.w	loc_0001B166	
 	MOVE.w	#$00AE, D0	
 	JSR	loc_00010522	
@@ -26955,7 +26955,7 @@ loc_0001AAF0:
 	BLE.b	loc_0001AB04	
 	MOVE.w	#$01F4, $FFFFC638.w	
 loc_0001AB04:
-	MOVE.l	#loc_00026EC2, $FFFFC204.w	
+	MOVE.l	#loc_00026EC2, Script_source_base.w	
 	BSR.w	loc_0001B166	
 	MOVE.w	#$00AE, D0	
 	JSR	loc_00010522	
@@ -26966,7 +26966,7 @@ loc_0001AB1C:
 	BLE.b	loc_0001AB2E	
 	MOVE.w	#$0258, $FFFFC630.w	
 loc_0001AB2E:
-	MOVE.l	#loc_00026E42, $FFFFC204.w	
+	MOVE.l	#loc_00026E42, Script_source_base.w	
 	JSR	loc_0000FB5C	
 	ANDI.w	#3, D0	
 	BNE.b	loc_0001AB54	
@@ -26974,7 +26974,7 @@ loc_0001AB2E:
 	BGE.b	loc_0001AB4C	
 	CLR.w	$FFFFC62E.w	
 loc_0001AB4C:
-	MOVE.l	#loc_00026E84, $FFFFC204.w	
+	MOVE.l	#loc_00026E84, Script_source_base.w	
 loc_0001AB54:
 	BSR.w	loc_0001B166	
 	MOVE.w	#$00AE, D0	
@@ -26986,7 +26986,7 @@ loc_0001AB64:
 	BLE.b	loc_0001AB78	
 	MOVE.w	#$05DC, $FFFFC634.w	
 loc_0001AB78:
-	MOVE.l	#loc_00026F0C, $FFFFC204.w	
+	MOVE.l	#loc_00026F0C, Script_source_base.w	
 	BSR.w	loc_0001B166	
 	MOVE.w	#$00AE, D0	
 	JSR	loc_00010522	
@@ -26997,7 +26997,7 @@ loc_0001AB90:
 	BLE.b	loc_0001ABA4	
 	MOVE.w	#$02BC, $FFFFC63C.w	
 loc_0001ABA4:
-	MOVE.l	#loc_00026F42, $FFFFC204.w	
+	MOVE.l	#loc_00026F42, Script_source_base.w	
 	BSR.w	loc_0001B166	
 	MOVE.w	#$00AE, D0	
 	JSR	loc_00010522	
@@ -27006,12 +27006,12 @@ loc_0001ABBC:
 	JSR	loc_0001CDFE
 	BEQ.b	loc_0001ABDE
 	JSR	loc_0001CE20	
-	MOVE.l	#loc_000266AA, $FFFFC204.w	
+	MOVE.l	#loc_000266AA, Script_source_base.w	
 	MOVE.w	#$00AE, D0	
 	JSR	loc_00010522	
 	RTS	
 loc_0001ABDE:
-	MOVE.l	#loc_00025980, $FFFFC204.w
+	MOVE.l	#loc_00025980, Script_source_base.w
 	RTS
 loc_0001ABE8:
 	MOVE.w	#$001E, D1	
@@ -27027,12 +27027,12 @@ loc_0001AC00:
 	ADD.w	D0, D1
 	ADD.w	D1, $FFFFC632.w
 loc_0001AC14:
-	MOVE.l	#loc_000269EA, $FFFFC204.w
+	MOVE.l	#loc_000269EA, Script_source_base.w
 	MOVE.w	$FFFFC632.w, D0
 	CMP.w	$FFFFC630.w, D0
 	BLE.b	loc_0001AC34
 	MOVE.w	$FFFFC630.w, $FFFFC632.w	
-	MOVE.l	#loc_00026A18, $FFFFC204.w	
+	MOVE.l	#loc_00026A18, Script_source_base.w	
 loc_0001AC34:
 	BSR.w	loc_0001B166
 	MOVE.w	#$00AE, D0
@@ -27044,12 +27044,12 @@ loc_0001AC44:
 loc_0001AC4E:
 	ADDI.w	#$0028, $FFFFC62C.w
 loc_0001AC54:
-	MOVE.l	#loc_00026A46, $FFFFC204.w
+	MOVE.l	#loc_00026A46, Script_source_base.w
 	MOVE.w	$FFFFC62C.w, D0
 	CMP.w	$FFFFC62E.w, D0
 	BLE.b	loc_0001AC74
 	MOVE.w	$FFFFC62E.w, $FFFFC62C.w
-	MOVE.l	#loc_00026AA4, $FFFFC204.w
+	MOVE.l	#loc_00026AA4, Script_source_base.w
 loc_0001AC74:
 	BSR.w	loc_0001B166
 	MOVE.w	#$00AE, D0
@@ -27063,10 +27063,10 @@ loc_0001AC84:
 	BSR.w	loc_0001B166
 	MOVE.w	#$000D, $FFFFC420.w
 loc_0001AC9A:
-	MOVE.l	#loc_00025980, $FFFFC204.w
+	MOVE.l	#loc_00025980, Script_source_base.w
 	RTS
 loc_0001ACA4:
-	MOVE.l	#loc_00026BAE, $FFFFC204.w
+	MOVE.l	#loc_00026BAE, Script_source_base.w
 	LEA	$FFFFC820.w, A0
 	MOVE.w	#$00FF, D7
 loc_0001ACB4:
@@ -27086,10 +27086,10 @@ loc_0001ACD4:
 	BNE.b	loc_0001ACF6	
 	MOVE.b	#$FF, $FFFFC55F.w	
 	JSR	loc_00006458	
-	MOVE.l	#loc_00026BD0, $FFFFC204.w	
+	MOVE.l	#loc_00026BD0, Script_source_base.w	
 	RTS	
 loc_0001ACF6:
-	MOVE.l	#loc_00025980, $FFFFC204.w	
+	MOVE.l	#loc_00025980, Script_source_base.w	
 	RTS	
 loc_0001AD00:
 	TST.b	$FFFFC551.w
@@ -27098,7 +27098,7 @@ loc_0001AD00:
 	MOVE.w	#$000E, $FFFFC420.w
 	RTS
 loc_0001AD12:
-	MOVE.l	#loc_00025980, $FFFFC204.w
+	MOVE.l	#loc_00025980, Script_source_base.w
 	RTS
 loc_0001AD1C:
 	TST.w	$FFFFC642.w
@@ -27107,15 +27107,15 @@ loc_0001AD1C:
 	BNE.b	loc_0001AD4E
 	CLR.b	$FFFFC7C6.w
 	CLR.w	$FFFFC642.w
-	MOVE.l	#loc_00026634, $FFFFC204.w
+	MOVE.l	#loc_00026634, Script_source_base.w
 	MOVE.w	#$00AE, D0
 	JSR	loc_00010522
 	BRA.b	loc_0001AD56
 loc_0001AD44:
-	MOVE.l	#loc_00026732, $FFFFC204.w
+	MOVE.l	#loc_00026732, Script_source_base.w
 	BRA.b	loc_0001AD56
 loc_0001AD4E:
-	MOVE.l	#loc_00026750, $FFFFC204.w	
+	MOVE.l	#loc_00026750, Script_source_base.w	
 loc_0001AD56:
 	BSR.w	loc_0001B166
 	RTS
@@ -27136,7 +27136,7 @@ loc_0001AD5C:
 	RTS
 loc_0001AD9C:
 	BSR.w	loc_0001B166
-	MOVE.l	#loc_00025992, $FFFFC204.w
+	MOVE.l	#loc_00025992, Script_source_base.w
 	RTS
 loc_0001ADAA:
 	TST.b	$FFFFC551.w
@@ -27155,7 +27155,7 @@ loc_0001ADAA:
 	RTS
 loc_0001ADE8:
 	BSR.w	loc_0001B166	
-	MOVE.l	#loc_00025992, $FFFFC204.w	
+	MOVE.l	#loc_00025992, Script_source_base.w	
 	RTS	
 loc_0001ADF6:
 	MOVE.w	#$00C1, D0
@@ -27196,11 +27196,11 @@ loc_0001AE68:
 	ADDQ.w	#1, D1
 	DBF	D7, loc_0001AE40
 loc_0001AE6E:
-	MOVE.l	#loc_00026C02, $FFFFC204.w
+	MOVE.l	#loc_00026C02, Script_source_base.w
 	RTS
 loc_0001AE78:
 	MOVE.b	#$FF, $FFFFC75A.w
-	MOVE.l	#loc_00026C20, $FFFFC204.w
+	MOVE.l	#loc_00026C20, Script_source_base.w
 	RTS
 loc_0001AE88:
 	dc.w	$00D8
@@ -27212,15 +27212,15 @@ loc_0001AE88:
 	dc.w	$0002
 	dc.b	$00, $D8, $00, $78, $00, $04 
 loc_0001AEA0:
-	MOVE.l	#loc_00026C2C, $FFFFC204.w	
+	MOVE.l	#loc_00026C2C, Script_source_base.w	
 	BSR.w	loc_0001B166	
 	RTS	
 loc_0001AEAE:
-	MOVE.l	#loc_00026C7A, $FFFFC204.w	
+	MOVE.l	#loc_00026C7A, Script_source_base.w	
 	BSR.w	loc_0001B166	
 	RTS	
 loc_0001AEBC:
-	MOVE.l	#loc_00026CBE, $FFFFC204.w
+	MOVE.l	#loc_00026CBE, Script_source_base.w
 	BSR.w	loc_0001B166
 	MOVE.w	#$00BF, D0
 	JSR	loc_00010522
@@ -27250,11 +27250,11 @@ loc_0001AF16:
 	LEA	$6(A0), A0	
 	DBF	D7, loc_0001AEFA	
 loc_0001AF1E:
-	MOVE.l	#loc_00026D0A, $FFFFC204.w	
+	MOVE.l	#loc_00026D0A, Script_source_base.w	
 	RTS	
 loc_0001AF28:
 	MOVE.b	#$FF, $FFFFC75F.w
-	MOVE.l	#loc_00026D3E, $FFFFC204.w
+	MOVE.l	#loc_00026D3E, Script_source_base.w
 	BSR.w	loc_0001B166
 	RTS
 loc_0001AF3C:
@@ -27288,11 +27288,11 @@ loc_0001AF9A:
 	LEA	$6(A0), A0
 	DBF	D7, loc_0001AF7E
 loc_0001AFA2:
-	MOVE.l	#loc_00026D54, $FFFFC204.w	
+	MOVE.l	#loc_00026D54, Script_source_base.w	
 	RTS	
 loc_0001AFAC:
 	MOVE.b	#$FF, $FFFFC760.w
-	MOVE.l	#loc_00026D64, $FFFFC204.w
+	MOVE.l	#loc_00026D64, Script_source_base.w
 	BSR.w	loc_0001B166
 	RTS
 loc_0001AFC0:
@@ -27303,10 +27303,10 @@ loc_0001AFC0:
 	dc.w	$0006
 	dc.b	$00, $28, $00, $03, $00, $02, $00, $27, $00, $02, $00, $04 
 loc_0001AFD8:
-	MOVE.l	#loc_00026DB4, $FFFFC204.w	
+	MOVE.l	#loc_00026DB4, Script_source_base.w	
 	RTS	
 loc_0001AFE2:
-	MOVE.l	#loc_00026D7C, $FFFFC204.w	
+	MOVE.l	#loc_00026D7C, Script_source_base.w	
 	RTS	
 loc_0001AFEC:
 	TST.w	$FFFFC642.w
@@ -27314,18 +27314,18 @@ loc_0001AFEC:
 	CLR.b	$FFFFC7C6.w
 	CLR.w	$FFFFC642.w
 	CLR.b	$FFFFC76C.w
-	MOVE.l	#loc_00026634, $FFFFC204.w
+	MOVE.l	#loc_00026634, Script_source_base.w
 	BRA.b	loc_0001B010
 loc_0001B008:
-	MOVE.l	#loc_00026732, $FFFFC204.w
+	MOVE.l	#loc_00026732, Script_source_base.w
 loc_0001B010:
 	BSR.w	loc_0001B166
 	RTS
 loc_0001B016:
-	MOVE.l	#loc_00026FAA, $FFFFC204.w	
+	MOVE.l	#loc_00026FAA, Script_source_base.w	
 	RTS	
 loc_0001B020:
-	MOVE.l	#loc_00026FAA, $FFFFC204.w	
+	MOVE.l	#loc_00026FAA, Script_source_base.w	
 	RTS	
 loc_0001B02A:
 	MOVE.w	$FFFFC40C.w, D0
@@ -27340,22 +27340,22 @@ loc_0001B02A:
 	MOVE.w	#4, D0
 	CMP.w	$FFFFC608.w, D0
 	BNE.b	loc_0001B06C
-	MOVE.l	#loc_00026FC4, $FFFFC204.w
+	MOVE.l	#loc_00026FC4, Script_source_base.w
 	MOVE.b	#$FF, $FFFFC77E.w
 	MOVE.w	#$00E0, D0
 	JSR	loc_00010522
 	RTS
 loc_0001B06C:
-	MOVE.l	#loc_00027034, $FFFFC204.w
+	MOVE.l	#loc_00027034, Script_source_base.w
 	RTS
 loc_0001B076:
-	MOVE.l	#loc_0002709E, $FFFFC204.w	
+	MOVE.l	#loc_0002709E, Script_source_base.w	
 	RTS	
 loc_0001B080:
-	MOVE.l	#loc_000270BE, $FFFFC204.w	
+	MOVE.l	#loc_000270BE, Script_source_base.w	
 	RTS	
 loc_0001B08A:
-	MOVE.l	#loc_000270E8, $FFFFC204.w	
+	MOVE.l	#loc_000270E8, Script_source_base.w	
 	RTS	
 loc_0001B094:
 	TST.b	$FFFFC540.w
@@ -27401,22 +27401,22 @@ loc_0001B0E2:
 	MOVE.w	#$00A6, D0
 	JSR	loc_00010522
 	MOVE.b	#$FF, $FFFFC586.w
-	MOVE.l	#loc_00027154, $FFFFC204.w
+	MOVE.l	#loc_00027154, Script_source_base.w
 	RTS
 loc_0001B138:
 	LEA	$8(A0), A0
 	BRA.b	loc_0001B0E2
 loc_0001B13E:
-	MOVE.l	#loc_0002710A, $FFFFC204.w	
+	MOVE.l	#loc_0002710A, Script_source_base.w	
 	RTS	
 loc_0001B148:
-	MOVE.l	#loc_00027124, $FFFFC204.w	
+	MOVE.l	#loc_00027124, Script_source_base.w	
 	RTS	
 loc_0001B152:
-	MOVE.l	#loc_0002716A, $FFFFC204.w
+	MOVE.l	#loc_0002716A, Script_source_base.w
 	RTS
 loc_0001B15C:
-	MOVE.l	#loc_00027180, $FFFFC204.w	
+	MOVE.l	#loc_00027180, Script_source_base.w	
 	RTS	
 loc_0001B166:
 	MOVE.w	$FFFFC440.w, D0
@@ -27508,7 +27508,7 @@ loc_0001B266:
 	BRA.w	loc_0001B496
 loc_0001B2B6:
 	MOVE.w	#$0021, $FFFFC41E.w
-	MOVE.l	#loc_00026592, $FFFFC204.w
+	MOVE.l	#loc_00026592, Script_source_base.w
 	RTS
 loc_0001B2C6:
 	LEA	loc_0001CF7E, A0
@@ -27524,7 +27524,7 @@ loc_0001B2DC:
 	BNE.w	loc_0001B35E
 	TST.b	$FFFFC77C.w
 	BNE.w	loc_0001B35E
-	MOVE.l	#$000300D4, $FFFFC204.w
+	MOVE.l	#$000300D4, Script_source_base.w
 	TST.b	$FFFFC729.w
 	BNE.b	loc_0001B302
 	BRA.w	loc_0001B3B0
@@ -27548,7 +27548,7 @@ loc_0001B312:
 	LEA	loc_000301B8, A0
 	JSR	loc_00012A6C
 	MOVE.b	#$FF, (A1)
-	MOVE.l	#$FFFFC260, $FFFFC204.w
+	MOVE.l	#$FFFFC260, Script_source_base.w
 	BRA.b	loc_0001B3B0
 loc_0001B35E:
 	LEA	$FFFFC260.w, A1
@@ -27567,7 +27567,7 @@ loc_0001B35E:
 	LEA	loc_000260D6, A0
 	JSR	loc_00012A6C
 	MOVE.b	#$FF, (A1)
-	MOVE.l	#$FFFFC260, $FFFFC204.w
+	MOVE.l	#$FFFFC260, Script_source_base.w
 loc_0001B3B0:
 	MOVE.w	#$001C, $FFFFC41E.w
 	RTS
@@ -27589,7 +27589,7 @@ loc_0001B3B8:
 	LEA	loc_0002651E, A0
 	JSR	loc_00012A6C
 	MOVE.b	#$FF, (A1)
-	MOVE.l	#$FFFFC260, $FFFFC204.w
+	MOVE.l	#$FFFFC260, Script_source_base.w
 	MOVE.w	#$0018, $FFFFC41E.w
 	RTS
 loc_0001B416:
@@ -27624,7 +27624,7 @@ loc_0001B45C:
 	ADD.w	D0, D1
 	LEA	loc_00021FB0, A1
 	LEA	$FFFFC4B4.w, A2
-	MOVE.l	(A0,D0.w), $FFFFC204.w
+	MOVE.l	(A0,D0.w), Script_source_base.w
 	MOVEA.l	(A1,D1.w), A1
 	MOVE.w	(A1)+, D7
 	MOVE.w	D7, $FFFFC4A2.w
@@ -27637,7 +27637,7 @@ loc_0001B496:
 	BSR.w	loc_0001CE80
 	RTS
 loc_0001B49C:
-	MOVE.l	$FFFFC250.w, $FFFFC204.w
+	MOVE.l	$FFFFC250.w, Script_source_base.w
 	RTS
 loc_0001B4A4:
 	LEA	loc_0001B51C, A0
@@ -27667,7 +27667,7 @@ loc_0001B4E4:
 	ADD.w	D0, D1
 	LEA	loc_00021FB0, A1
 	LEA	$FFFFC4B4.w, A2
-	MOVE.l	(A0,D2.w), $FFFFC204.w
+	MOVE.l	(A0,D2.w), Script_source_base.w
 	MOVEA.l	(A1,D1.w), A1
 	MOVE.w	(A1)+, D7
 	MOVE.w	D7, $FFFFC4A2.w
@@ -27725,7 +27725,7 @@ loc_0001B6F0:
 	JSR	loc_000012F2
 	BEQ.b	loc_0001B73A
 	JSR	loc_00010C4A	
-	MOVE.l	#loc_0001B7CA, $FFFFC204.w	
+	MOVE.l	#loc_0001B7CA, Script_source_base.w	
 	CLR.b	$FFFFC20F.w	
 	MOVE.w	#$00A8, D0	
 	JSR	loc_00010522	
@@ -27767,7 +27767,7 @@ loc_0001B784:
 	LEA	loc_0001B7F4, A0
 	JSR	loc_00012A6C
 	MOVE.b	#$FF, (A1)
-	MOVE.l	#$FFFFC260, $FFFFC204.w
+	MOVE.l	#$FFFFC260, Script_source_base.w
 	MOVE.w	#$0030, $FFFFC41E.w
 	RTS
 loc_0001B7CA:
@@ -27816,11 +27816,11 @@ loc_0001B97E:
 	MOVE.w	(A0), D0
 	CMPI.w	#8, D0
 	BLT.b	loc_0001B9E4
-	MOVE.l	#loc_00025D9A, $FFFFC204.w	
+	MOVE.l	#loc_00025D9A, Script_source_base.w	
 	BRA.w	loc_0001BA8A	
 loc_0001B9E4:
 	CLR.b	$FFFFC20F.w
-	MOVE.l	#loc_0001B814, $FFFFC204.w
+	MOVE.l	#loc_0001B814, Script_source_base.w
 	LEA	$FFFFC482.w, A2
 	LEA	(A2), A1
 	MOVE.w	(A2)+, D7
@@ -27846,7 +27846,7 @@ loc_0001BA22:
 	MOVE.w	(A1), D0
 	CMPI.w	#8, D0
 	BLT.b	loc_0001BA38
-	MOVE.l	#loc_0001B8EE, $FFFFC204.w	
+	MOVE.l	#loc_0001B8EE, Script_source_base.w	
 	BRA.b	loc_0001BA8A	
 loc_0001BA38:
 	MOVE.w	(A1), D0
@@ -27887,7 +27887,7 @@ loc_0001BAA4:
 	JSR	loc_00012766
 	JSR	loc_000126DA
 	JSR	loc_00010C4A
-	MOVE.l	#loc_0001B7CA, $FFFFC204.w
+	MOVE.l	#loc_0001B7CA, Script_source_base.w
 	CLR.b	$FFFFC20F.w
 	RTS
 loc_0001BADA:
@@ -27903,7 +27903,7 @@ loc_0001BAF6:
 	MOVE.w	(A0), D0
 	CMPI.w	#8, D0
 	BLT.b	loc_0001BB0C
-	MOVE.l	#loc_0001B91C, $FFFFC204.w	
+	MOVE.l	#loc_0001B91C, Script_source_base.w	
 	BRA.b	loc_0001BB1E	
 loc_0001BB0C:
 	MOVE.w	(A0), D0
@@ -28031,7 +28031,7 @@ loc_0001BC80:
 	MOVE.b	$FFFFC240.w, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
-	MOVE.l	(A0,D0.w), $FFFFC204.w
+	MOVE.l	(A0,D0.w), Script_source_base.w
 	MOVE.w	#1, $FFFFC41E.w
 	RTS
 loc_0001BCA4:
@@ -28078,7 +28078,7 @@ loc_0001BD22:
 	BEQ.b	loc_0001BD3C
 	LEA	loc_00025FC8, A0	
 loc_0001BD3C:
-	MOVE.l	(A0,D0.w), $FFFFC204.w
+	MOVE.l	(A0,D0.w), Script_source_base.w
 	MOVE.w	#8, $FFFFC41E.w
 	BRA.b	loc_0001BD80
 loc_0001BD4A:
@@ -28086,7 +28086,7 @@ loc_0001BD4A:
 	ADD.w	D0, D0
 	ADD.w	D0, D0
 	LEA	loc_00025FF8, A0
-	MOVE.l	(A0,D0.w), $FFFFC204.w
+	MOVE.l	(A0,D0.w), Script_source_base.w
 	MOVE.w	#$000A, $FFFFC41E.w
 	BRA.b	loc_0001BD80
 loc_0001BD66:
@@ -28094,7 +28094,7 @@ loc_0001BD66:
 	ADD.w	D0, D0
 	ADD.w	D0, D0
 	LEA	loc_00026010, A0
-	MOVE.l	(A0,D0.w), $FFFFC204.w
+	MOVE.l	(A0,D0.w), Script_source_base.w
 	MOVE.w	#$0011, $FFFFC41E.w
 loc_0001BD80:
 	JMP	loc_00010C4A
@@ -28198,7 +28198,7 @@ loc_0001BE6E:
 	MOVEA.l	(A0,D0.w), A0
 	JSR	loc_00012A6C
 	MOVE.b	#$FF, (A1)
-	MOVE.l	#$FFFFC260, $FFFFC204.w
+	MOVE.l	#$FFFFC260, Script_source_base.w
 	ADDQ.w	#1, $FFFFC41E.w
 	RTS
 loc_0001BF0E:
@@ -28249,7 +28249,7 @@ loc_0001BF28:
 	MOVE.w	(A0), D0
 	CMPI.w	#8, D0
 	BLT.b	loc_0001BFD2
-	MOVE.l	#loc_00025D9A, $FFFFC204.w
+	MOVE.l	#loc_00025D9A, Script_source_base.w
 	BRA.b	loc_0001C024
 loc_0001BFD2:
 	ADDQ.w	#1, (A0)+
@@ -28263,7 +28263,7 @@ loc_0001BFD2:
 	ADD.w	D0, D0
 	ADD.w	D0, D0
 	LEA	loc_00025FB0, A0
-	MOVE.l	(A0,D0.w), $FFFFC204.w
+	MOVE.l	(A0,D0.w), Script_source_base.w
 	MOVE.l	$FFFFC4B0.w, $FFFFC65A.w
 	JSR	loc_0001159E
 	JSR	loc_000115DE
@@ -28273,7 +28273,7 @@ loc_0001C010:
 	ADD.w	D0, D0
 	ADD.w	D0, D0
 	LEA	loc_00025FEC, A0
-	MOVE.l	(A0,D0.w), $FFFFC204.w
+	MOVE.l	(A0,D0.w), Script_source_base.w
 loc_0001C024:
 	JSR	loc_000126DA
 	ADDQ.w	#1, $FFFFC41E.w
@@ -28289,7 +28289,7 @@ loc_0001C030:
 	ADD.w	D0, D0	
 	ADD.w	D0, D0	
 	LEA	loc_00025FF8, A0	
-	MOVE.l	(A0,D0.w), $FFFFC204.w	
+	MOVE.l	(A0,D0.w), Script_source_base.w	
 	RTS	
 loc_0001C068:
 	MOVE.w	$FFFFC428.w, $FFFFC23E.w
@@ -28308,7 +28308,7 @@ loc_0001C082:
 	ADD.w	D0, D0
 	ADD.w	D0, D0
 	LEA	loc_00025FBC, A0
-	MOVE.l	(A0,D0.w), $FFFFC204.w
+	MOVE.l	(A0,D0.w), Script_source_base.w
 	MOVE.b	#$FF, $FFFFC4C4.w
 	JSR	loc_00010D44
 	RTS
@@ -28345,7 +28345,7 @@ loc_0001C120:
 	ADD.w	D0, D0
 	ADD.w	D0, D0
 	LEA	loc_00025FC8, A0
-	MOVE.l	(A0,D0.w), $FFFFC204.w
+	MOVE.l	(A0,D0.w), Script_source_base.w
 	ADDQ.w	#1, $FFFFC41E.w
 	RTS
 loc_0001C14C:
@@ -28403,7 +28403,7 @@ loc_0001C208:
 	ADD.w	D0, D0
 	ADD.w	D0, D0
 	LEA	loc_00025FD4, A0
-	MOVE.l	(A0,D0.w), $FFFFC204.w
+	MOVE.l	(A0,D0.w), Script_source_base.w
 	ADDQ.w	#1, $FFFFC41E.w
 	RTS
 loc_0001C22E:
@@ -28424,7 +28424,7 @@ loc_0001C254:
 	ADD.w	D0, D0
 	ADD.w	D0, D0
 	LEA	loc_00025FBC, A0
-	MOVE.l	(A0,D0.w), $FFFFC204.w
+	MOVE.l	(A0,D0.w), Script_source_base.w
 	MOVE.w	#$0016, $FFFFC41E.w
 	RTS
 loc_0001C276:
@@ -28475,18 +28475,18 @@ loc_0001C2FE:
 	MOVEA.l	(A0,D0.w), A0
 	JSR	loc_00012A6C
 	MOVE.b	#$FF, (A1)
-	MOVE.l	#$FFFFC260, $FFFFC204.w
+	MOVE.l	#$FFFFC260, Script_source_base.w
 	ADDQ.w	#1, $FFFFC41E.w
 	RTS
 loc_0001C33A:
-	MOVE.l	#loc_00026212, $FFFFC204.w	
+	MOVE.l	#loc_00026212, Script_source_base.w	
 	BRA.b	loc_0001C358	
 loc_0001C344:
 	MOVE.w	$FFFFC4A6.w, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
 	LEA	loc_00025FE0, A0
-	MOVE.l	(A0,D0.w), $FFFFC204.w
+	MOVE.l	(A0,D0.w), Script_source_base.w
 loc_0001C358:
 	JSR	loc_000126B6
 	JSR	loc_00010C4A
@@ -28576,7 +28576,7 @@ loc_0001C474:
 	ADD.w	D0, D0
 	ADD.w	D0, D0
 	LEA	loc_00025FB0, A0
-	MOVE.l	(A0,D0.w), $FFFFC204.w
+	MOVE.l	(A0,D0.w), Script_source_base.w
 	MOVE.w	#$000E, $FFFFC41E.w
 	RTS
 loc_0001C4B0:
@@ -28590,7 +28590,7 @@ loc_0001C4B0:
 	ADD.w	D0, D0	
 	ADD.w	D0, D0	
 	LEA	loc_00026010, A0	
-	MOVE.l	(A0,D0.w), $FFFFC204.w	
+	MOVE.l	(A0,D0.w), Script_source_base.w	
 	RTS	
 loc_0001C4E6:
 	MOVE.w	$FFFFC428.w, $FFFFC23E.w
@@ -28633,7 +28633,7 @@ loc_0001C56E:
 	ADD.w	D0, D0
 	ADD.w	D0, D0
 	LEA	loc_00025FC8, A0
-	MOVE.l	(A0,D0.w), $FFFFC204.w
+	MOVE.l	(A0,D0.w), Script_source_base.w
 	MOVE.w	#$0010, $FFFFC41E.w
 	RTS
 loc_0001C59C:
@@ -28691,10 +28691,10 @@ loc_0001C5F4:
 	JSR	(A0)
 	BRA.b	loc_0001C672
 loc_0001C660:
-	MOVE.l	#loc_00026532, $FFFFC204.w
+	MOVE.l	#loc_00026532, Script_source_base.w
 	BRA.b	loc_0001C672
 loc_0001C66A:
-	MOVE.l	#loc_00026560, $FFFFC204.w
+	MOVE.l	#loc_00026560, Script_source_base.w
 loc_0001C672:
 	JSR	loc_00012670
 	MOVE.w	#$001B, $FFFFC41E.w
@@ -28822,17 +28822,17 @@ loc_0001C7DA:
 	MOVE.l	D0, $FFFFC65A.w
 	JSR	loc_0001159E
 	JSR	loc_000115DE
-	MOVE.l	#loc_00026260, $FFFFC204.w
+	MOVE.l	#loc_00026260, Script_source_base.w
 	JSR	loc_00012670
 	JSR	loc_00010C4A
 loc_0001C84E:
 	MOVE.w	#$001F, $FFFFC41E.w
 	RTS
 loc_0001C856:
-	MOVE.l	#loc_000262AA, $FFFFC204.w
+	MOVE.l	#loc_000262AA, Script_source_base.w
 	BRA.b	loc_0001C868
 loc_0001C860:
-	MOVE.l	#loc_000262F0, $FFFFC204.w
+	MOVE.l	#loc_000262F0, Script_source_base.w
 loc_0001C868:
 	JSR	loc_00012670
 	MOVE.w	#$001B, $FFFFC41E.w
@@ -28882,14 +28882,14 @@ loc_0001C8FA:
 	BNE.b	loc_0001C92A
 	TST.b	$FFFFC729.w
 	BEQ.b	loc_0001C920
-	MOVE.l	#$000301EA, $FFFFC204.w
+	MOVE.l	#$000301EA, Script_source_base.w
 	MOVE.b	#$FF, $FFFFC77C.w
 	BRA.b	loc_0001C932
 loc_0001C920:
-	MOVE.l	#$000301D0, $FFFFC204.w
+	MOVE.l	#$000301D0, Script_source_base.w
 	BRA.b	loc_0001C932
 loc_0001C92A:
-	MOVE.l	#loc_00026286, $FFFFC204.w
+	MOVE.l	#loc_00026286, Script_source_base.w
 loc_0001C932:
 	MOVE.w	#$0012, $FFFFC080.w
 	MOVE.w	$FFFFC096.w, $FFFFC082.w
@@ -28936,7 +28936,7 @@ loc_0001C9B4:
 	CMPI.w	#2, $FFFFC500.w
 	BEQ.w	loc_0001CABC
 loc_0001C9E8:
-	MOVE.l	#loc_00026702, $FFFFC204.w
+	MOVE.l	#loc_00026702, Script_source_base.w
 	MOVE.w	#$0023, $FFFFC41E.w
 	BRA.w	loc_0001CACA
 loc_0001C9FA:
@@ -28955,11 +28955,11 @@ loc_0001C9FA:
 	LEA	loc_000265D4, A0
 	JSR	loc_00012A6C
 	MOVE.b	#$FF, (A1)
-	MOVE.l	#$FFFFC260, $FFFFC204.w
+	MOVE.l	#$FFFFC260, Script_source_base.w
 	MOVE.w	#$0025, $FFFFC41E.w
 	BRA.w	loc_0001CACA
 loc_0001CA4C:
-	MOVE.l	#loc_00026690, $FFFFC204.w
+	MOVE.l	#loc_00026690, Script_source_base.w
 	MOVE.w	#$0023, $FFFFC41E.w
 	BRA.b	loc_0001CACA
 loc_0001CA5C:
@@ -28978,15 +28978,15 @@ loc_0001CA5C:
 	LEA	loc_000265D4, A0
 	JSR	loc_00012A6C
 	MOVE.b	#$FF, (A1)
-	MOVE.l	#$FFFFC260, $FFFFC204.w
+	MOVE.l	#$FFFFC260, Script_source_base.w
 	MOVE.w	#$0028, $FFFFC41E.w
 	BRA.b	loc_0001CACA
 loc_0001CAAC:
-	MOVE.l	#loc_000265A8, $FFFFC204.w
+	MOVE.l	#loc_000265A8, Script_source_base.w
 	MOVE.w	#$0023, $FFFFC41E.w
 	BRA.b	loc_0001CACA
 loc_0001CABC:
-	MOVE.l	#loc_000266C6, $FFFFC204.w
+	MOVE.l	#loc_000266C6, Script_source_base.w
 	MOVE.w	#$002B, $FFFFC41E.w
 loc_0001CACA:
 	JMP	loc_00010C4A
@@ -29070,17 +29070,17 @@ loc_0001CB94:
 	JSR	loc_0001159E
 	JSR	loc_000115DE
 	BSR.w	loc_0001CE20
-	MOVE.l	#loc_000266AA, $FFFFC204.w
+	MOVE.l	#loc_000266AA, Script_source_base.w
 	JSR	loc_00012670
 	JSR	loc_00012766
 	JSR	loc_00010C4A
 	MOVE.w	#$0023, $FFFFC41E.w
 	RTS
 loc_0001CC1A:
-	MOVE.l	#loc_00026660, $FFFFC204.w	
+	MOVE.l	#loc_00026660, Script_source_base.w	
 	BRA.b	loc_0001CC2C	
 loc_0001CC24:
-	MOVE.l	#loc_00026660, $FFFFC204.w	
+	MOVE.l	#loc_00026660, Script_source_base.w	
 loc_0001CC2C:
 	JSR	loc_00012670	
 	JSR	loc_00012766	
@@ -29134,10 +29134,10 @@ loc_0001CC90:
 	BNE.b	loc_0001CD0A
 	CLR.w	$FFFFC642.w
 	CLR.b	$FFFFC7C6.w
-	MOVE.l	#loc_00026634, $FFFFC204.w
+	MOVE.l	#loc_00026634, Script_source_base.w
 	BRA.b	loc_0001CD12
 loc_0001CD0A:
-	MOVE.l	#loc_000265F0, $FFFFC204.w
+	MOVE.l	#loc_000265F0, Script_source_base.w
 loc_0001CD12:
 	JSR	loc_00012670
 	JSR	loc_00012766
@@ -29145,10 +29145,10 @@ loc_0001CD12:
 	MOVE.w	#$0023, $FFFFC41E.w
 	RTS
 loc_0001CD2C:
-	MOVE.l	#loc_00026660, $FFFFC204.w	
+	MOVE.l	#loc_00026660, Script_source_base.w	
 	BRA.b	loc_0001CD3E	
 loc_0001CD36:
-	MOVE.l	#loc_00026660, $FFFFC204.w	
+	MOVE.l	#loc_00026660, Script_source_base.w	
 loc_0001CD3E:
 	JSR	loc_00012670	
 	JSR	loc_00012766	
@@ -29180,7 +29180,7 @@ loc_0001CD88:
 	JSR	loc_0001059C
 	JSR	loc_00012694
 	JSR	loc_00010C4A
-	MOVE.l	#loc_000266E0, $FFFFC204.w
+	MOVE.l	#loc_000266E0, Script_source_base.w
 	MOVE.w	#$0023, $FFFFC41E.w
 	RTS
 loc_0001CDC8:
@@ -29274,7 +29274,7 @@ loc_0001CEA6:
 	ASR.w	#1, D0
 	LEA	loc_0001CF7A, A0
 	MOVE.b	(A0,D0.w), $27(A6)
-	MOVE.l	$1C(A6), $FFFFC204.w
+	MOVE.l	$1C(A6), Script_source_base.w
 	MOVE.b	#$FF, $32(A6)
 	RTS
 loc_0001CEE0:
@@ -29283,7 +29283,7 @@ loc_0001CEE0:
 	LEA	(A6,D2.w), A6
 	DBF	D7, loc_0001CEA6
 loc_0001CEEE:
-	MOVE.l	#loc_00026034, $FFFFC204.w
+	MOVE.l	#loc_00026034, Script_source_base.w
 	RTS
 loc_0001CEF8:
 	LEA	loc_000221B0, A0
@@ -29467,12 +29467,12 @@ loc_0001D156:
 	JSR	loc_000125B6
 	JSR	loc_000110F4
 	JSR	loc_00012B0A
-	MOVE.l	#loc_00026388, $FFFFC204.w
+	MOVE.l	#loc_00026388, Script_source_base.w
 	MOVE.w	#3, $FFFFC426.w
 	CLR.w	$FFFFC4E6.w
 	RTS
 loc_0001D1A8:
-	MOVE.l	#loc_00026362, $FFFFC204.w
+	MOVE.l	#loc_00026362, Script_source_base.w
 	MOVE.w	#6, $FFFFC426.w
 loc_0001D1B6:
 	RTS
@@ -29526,12 +29526,12 @@ loc_0001D216:
 	BSR.w	loc_0001D664
 	MOVE.b	#$2E, (A1)+
 	MOVE.b	#$FF, (A1)
-	MOVE.l	#$FFFFC260, $FFFFC204.w
+	MOVE.l	#$FFFFC260, Script_source_base.w
 	MOVE.w	#6, $FFFFC426.w
 	JSR	loc_00012742
 	RTS
 loc_0001D29C:
-	MOVE.l	#loc_000263A4, $FFFFC204.w
+	MOVE.l	#loc_000263A4, Script_source_base.w
 	BSR.w	loc_0001D5E8
 	CMP.b	D0, D1
 	BEQ.w	loc_0001D342
@@ -29571,15 +29571,15 @@ loc_0001D29C:
 	BSR.w	loc_0001D664
 	MOVE.b	#$2E, (A1)+
 	MOVE.b	#$FF, (A1)
-	MOVE.l	#$FFFFC260, $FFFFC204.w
+	MOVE.l	#$FFFFC260, Script_source_base.w
 loc_0001D342:
 	BSR.w	loc_0001D5FC
 	BRA.b	loc_0001D35A
 loc_0001D348:
-	MOVE.l	#loc_000263DC, $FFFFC204.w
+	MOVE.l	#loc_000263DC, Script_source_base.w
 	BRA.b	loc_0001D35A
 loc_0001D352:
-	MOVE.l	#loc_000263FE, $FFFFC204.w
+	MOVE.l	#loc_000263FE, Script_source_base.w
 loc_0001D35A:
 	MOVE.w	#6, $FFFFC426.w
 	JSR	loc_00012742
@@ -29640,15 +29640,15 @@ loc_0001D3BA:
 	ADD.w	D0, D0
 	LEA	$FFFFC4D0.w, A2
 	MOVE.w	#$FFFF, (A2,D0.w)
-	MOVE.l	#$FFFFC260, $FFFFC204.w
+	MOVE.l	#$FFFFC260, Script_source_base.w
 	MOVE.w	#6, $FFFFC426.w
 	RTS
 loc_0001D456:
-	MOVE.l	#loc_00026334, $FFFFC204.w
+	MOVE.l	#loc_00026334, Script_source_base.w
 	MOVE.w	#6, $FFFFC426.w
 	RTS
 loc_0001D466:
-	MOVE.l	#loc_000263BE, $FFFFC204.w	
+	MOVE.l	#loc_000263BE, Script_source_base.w	
 	MOVE.w	#6, $FFFFC426.w	
 	RTS	
 loc_0001D476:
@@ -30256,16 +30256,16 @@ loc_0001DC94:
 	MOVE.w	#5, $FFFFC42A.w
 	RTS
 loc_0001DCD4:
-	MOVE.l	#loc_000271A8, $FFFFC204.w
+	MOVE.l	#loc_000271A8, Script_source_base.w
 	BRA.w	loc_0001DD00
 loc_0001DCE0:
-	MOVE.l	#loc_000255A6, $FFFFC204.w
+	MOVE.l	#loc_000255A6, Script_source_base.w
 	BRA.w	loc_0001DD00
 loc_0001DCEC:
-	MOVE.l	#loc_0002556C, $FFFFC204.w
+	MOVE.l	#loc_0002556C, Script_source_base.w
 	BRA.w	loc_0001DD00
 loc_0001DCF8:
-	MOVE.l	#loc_00025554, $FFFFC204.w	
+	MOVE.l	#loc_00025554, Script_source_base.w	
 loc_0001DD00:
 	JSR	loc_0001229E
 	JSR	loc_00010C4A
@@ -30319,7 +30319,7 @@ loc_0001DDA4:
 loc_0001DDB0:
 	SUBQ.b	#1, $FFFFC585.w	
 	BNE.w	loc_0001DDD2	
-	MOVE.l	#loc_0002558A, $FFFFC204.w	
+	MOVE.l	#loc_0002558A, Script_source_base.w	
 	JSR	loc_0001229E	
 	JSR	loc_00010C4A	
 	MOVE.w	#1, $FFFFC42A.w	
@@ -30328,7 +30328,7 @@ loc_0001DDD2:
 loc_0001DDD4:
 	SUBQ.b	#1, $FFFFC585.w
 	BNE.w	loc_0001DDF6
-	MOVE.l	#$0002722A, $FFFFC204.w
+	MOVE.l	#$0002722A, Script_source_base.w
 	JSR	loc_0001229E
 	JSR	loc_00010C4A
 	MOVE.w	#6, $FFFFC42A.w
@@ -30339,7 +30339,7 @@ loc_0001DDF8:
 	BEQ.w	loc_0001DEDC
 	TST.b	$FFFFC56F.w
 	BNE.w	loc_0001DE14
-	MOVE.l	#loc_000255C0, $FFFFC204.w
+	MOVE.l	#loc_000255C0, Script_source_base.w
 	BRA.w	loc_0001DECE
 loc_0001DE14:
 	LEA	$FFFFC260.w, A1
@@ -30365,7 +30365,7 @@ loc_0001DE14:
 	LEA	loc_0002566E, A0
 	JSR	loc_00012A6C
 	MOVE.b	#$FF, (A1)
-	MOVE.l	#$FFFFC260, $FFFFC204.w
+	MOVE.l	#$FFFFC260, Script_source_base.w
 	BRA.w	loc_0001DECE
 loc_0001DE82:
 	LEA	loc_00021B32, A0
@@ -30378,13 +30378,13 @@ loc_0001DE82:
 	LEA	loc_0002566E, A0
 	JSR	loc_00012A6C
 	MOVE.b	#$FF, (A1)
-	MOVE.l	#$FFFFC260, $FFFFC204.w
+	MOVE.l	#$FFFFC260, Script_source_base.w
 	BRA.w	loc_0001DECE
 loc_0001DEBA:
-	MOVE.l	#loc_0002564E, $FFFFC204.w
+	MOVE.l	#loc_0002564E, Script_source_base.w
 	BRA.w	loc_0001DECE
 loc_0001DEC6:
-	MOVE.l	#loc_00025638, $FFFFC204.w
+	MOVE.l	#loc_00025638, Script_source_base.w
 loc_0001DECE:
 	JSR	loc_00011666
 	MOVE.w	#1, $FFFFC42A.w
@@ -30482,16 +30482,16 @@ loc_0001E034:
 	BNE.w	loc_0001E058
 	BRA.w	loc_0001E098
 loc_0001E058:
-	MOVE.l	#loc_0002644C, $FFFFC204.w
+	MOVE.l	#loc_0002644C, Script_source_base.w
 	BRA.w	loc_0001E084
 loc_0001E064:
-	MOVE.l	#loc_00026472, $FFFFC204.w
+	MOVE.l	#loc_00026472, Script_source_base.w
 	BRA.w	loc_0001E084
 loc_0001E070:
-	MOVE.l	#loc_0002648A, $FFFFC204.w	
+	MOVE.l	#loc_0002648A, Script_source_base.w	
 	BRA.w	loc_0001E084	
 loc_0001E07C:
-	MOVE.l	#loc_000264B4, $FFFFC204.w	
+	MOVE.l	#loc_000264B4, Script_source_base.w	
 loc_0001E084:
 	JSR	loc_0001229E
 	JSR	loc_00010C4A
@@ -30503,7 +30503,7 @@ loc_0001E098:
 loc_0001E09E:
 	JSR	loc_0001229E
 	JSR	loc_00010C4A
-	MOVE.l	#loc_0002640C, $FFFFC204.w
+	MOVE.l	#loc_0002640C, Script_source_base.w
 	ADDQ.w	#1, $FFFFC428.w
 	RTS
 loc_0001E0B8:
@@ -30708,13 +30708,13 @@ loc_0001E42C:
 	JSR	loc_00012A6C
 	MOVE.b	#$2E, (A1)+
 	MOVE.b	#$FF, (A1)+
-	MOVE.l	#$FFFFC260, $FFFFC204.w
+	MOVE.l	#$FFFFC260, Script_source_base.w
 	RTS
 loc_0001E452:
 	LEA	loc_0001E3DA, A0	
 	JSR	loc_00012A6C	
 	MOVE.b	#$FF, (A1)+	
-	MOVE.l	#$FFFFC260, $FFFFC204.w	
+	MOVE.l	#$FFFFC260, Script_source_base.w	
 	RTS	
 loc_0001E46C:
 	MOVE.w	$FFFFC42C.w, D0
@@ -30761,7 +30761,7 @@ loc_0001E4F2:
 loc_0001E4FA:
 	JSR	loc_0001229E
 	JSR	loc_00010C4A
-	MOVE.l	#loc_00027084, $FFFFC204.w
+	MOVE.l	#loc_00027084, Script_source_base.w
 	ADDQ.w	#1, $FFFFC42C.w
 	RTS
 loc_0001E514:
@@ -30793,13 +30793,13 @@ loc_0001E55E:
 	BEQ.w	loc_0001E590
 	TST.b	$FFFFC56F.w
 	BNE.w	loc_0001E58A
-	MOVE.l	#loc_00027084, $FFFFC204.w	
+	MOVE.l	#loc_00027084, Script_source_base.w	
 	BRA.w	loc_0001E598	
 loc_0001E58A:
 	BSR.w	loc_0001E5AC
 	RTS
 loc_0001E590:
-	MOVE.l	#loc_000271F0, $FFFFC204.w
+	MOVE.l	#loc_000271F0, Script_source_base.w
 loc_0001E598:
 	JSR	loc_0001229E
 	JSR	loc_00010C4A
@@ -30869,7 +30869,7 @@ loc_0001E668:
 loc_0001E6A0:
 	MOVE.b	#$2E, (A1)+
 	MOVE.b	#$FF, (A1)
-	MOVE.l	#$FFFFC260, $FFFFC204.w
+	MOVE.l	#$FFFFC260, Script_source_base.w
 	MOVE.w	#$0090, D0
 	JSR	loc_00010522
 	JSR	loc_0001229E
@@ -30883,7 +30883,7 @@ loc_0001E6A0:
 loc_0001E6DE:
 	JSR	loc_0001229E
 	JSR	loc_00010C4A
-	MOVE.l	#loc_00025678, $FFFFC204.w
+	MOVE.l	#loc_00025678, Script_source_base.w
 	MOVE.w	#5, $FFFFC42C.w
 	RTS
 loc_0001E6FA:
@@ -30909,7 +30909,7 @@ loc_0001E722:
 	TST.w	$FFFFC428.w
 	BNE.w	loc_0001E766
 	JSR	loc_00012670
-	MOVE.l	#loc_000253C8, $FFFFC204.w
+	MOVE.l	#loc_000253C8, Script_source_base.w
 	MOVE.w	#7, $FFFFC42C.w
 	RTS
 loc_0001E766:
@@ -30932,7 +30932,7 @@ loc_0001E766:
 	MOVE.b	#$2E, (A1)+
 	MOVE.b	#$FF, (A1)
 	MOVE.w	#3, $FFFFC42C.w
-	MOVE.l	#$FFFFC260, $FFFFC204.w
+	MOVE.l	#$FFFFC260, Script_source_base.w
 	RTS
 loc_0001E7C4:
 	MOVE.w	$FFFFC428.w, $FFFFC23E.w
@@ -30979,7 +30979,7 @@ loc_0001E862:
 	JSR	loc_00010522
 	JSR	loc_000126B6
 	JSR	loc_00010C4A
-	MOVE.l	#loc_00025678, $FFFFC204.w
+	MOVE.l	#loc_00025678, Script_source_base.w
 	MOVE.w	#5, $FFFFC42C.w
 	RTS
 loc_0001E896:
@@ -31029,7 +31029,7 @@ loc_0001E936: ; Discard item unless modifier is 0x01
 	MOVE.w	(A2,D0.w), D0
 	ANDI.w	#$0100, D0
 	BEQ.w	loc_0001E96A
-	MOVE.l	#loc_00025D80, $FFFFC204.w
+	MOVE.l	#loc_00025D80, Script_source_base.w
 	BRA.w	loc_0001EA38
 loc_0001E96A:
 	MOVE.w	#$0090, D0
@@ -31074,7 +31074,7 @@ loc_0001E96A:
 	JSR	loc_00012A6C
 	MOVE.b	#$2E, (A1)+
 	MOVE.b	#$FF, (A1)
-	MOVE.l	#$FFFFC260, $FFFFC204.w
+	MOVE.l	#$FFFFC260, Script_source_base.w
 	BSR.w	loc_0001EAAE
 	CLR.b	$FFFFC56D.w
 	CLR.b	$FFFFC56E.w
@@ -31123,6 +31123,7 @@ loc_0001EAC4:
 loc_0001EAC6:
 	dc.b	$20, $18, $32, $18, $34, $18, $36, $38, $C1, $04, $E6, $43, $38, $38, $C1, $06, $E6, $44, $ED, $44, $D8, $43, $48, $44, $02, $84, $1F, $FF, $00, $00, $D0, $84 
 	dc.b	$23, $C0, $00, $C0, $00, $04, $42, $40, $10, $18, $D0, $42, $33, $C0, $00, $C0, $00, $00, $51, $C9, $FF, $F2, $4E, $75 
+loc_0001EAFE:
 	LEA	loc_0001EB0C, A1
 	MOVE.w	#1, D7
 	BRA.w	loc_0001F1BC
@@ -40091,16 +40092,16 @@ loc_0002E3AA:
 loc_0002E3D2:
 	RTS
 loc_0002E3D4:
-	MOVE.l	#loc_0002D038, $FFFFC204.w
+	MOVE.l	#loc_0002D038, Script_source_base.w
 	RTS
 loc_0002E3DE:
-	MOVE.l	#loc_0002D008, $FFFFC204.w
+	MOVE.l	#loc_0002D008, Script_source_base.w
 	TST.b	$FFFFC723.w
 	BNE.w	loc_0002E406
-	MOVE.l	#loc_0002CFDA, $FFFFC204.w
+	MOVE.l	#loc_0002CFDA, Script_source_base.w
 	TST.b	$FFFFC818.w
 	BNE.w	loc_0002E406
-	MOVE.l	#loc_0002CFA8, $FFFFC204.w	
+	MOVE.l	#loc_0002CFA8, Script_source_base.w	
 loc_0002E406:
 	RTS
 loc_0002E408:
@@ -40510,17 +40511,17 @@ loc_0002FA12:
 	dc.b	"king after all!", $FF, $00 
 
 loc_0002FB68:
-	MOVE.l	#loc_0002FA12, $FFFFC204.w
+	MOVE.l	#loc_0002FA12, Script_source_base.w
 	TST.b	$FFFFC725.w
 	BEQ.w	loc_0002FB80
-	MOVE.l	#$0002FA5A, $FFFFC204.w	
+	MOVE.l	#$0002FA5A, Script_source_base.w	
 loc_0002FB80:
 	RTS
 loc_0002FB82:
-	MOVE.l	#$0002FB46, $FFFFC204.w
+	MOVE.l	#$0002FB46, Script_source_base.w
 	TST.b	$FFFFC725.w
 	BNE.w	loc_0002FB9A
-	MOVE.l	#$0002FAC6, $FFFFC204.w
+	MOVE.l	#$0002FAC6, Script_source_base.w
 loc_0002FB9A:
 	RTS
 loc_0002FB9C:
@@ -40851,7 +40852,7 @@ loc_00030EF0:
 	dc.b	"That way that your deeds", $FE
 	dc.b	"will be remembered.", $FF, $00 
 loc_00030F70:
-	MOVE.l	#$00030EA4, $FFFFC204.w	
+	MOVE.l	#$00030EA4, Script_source_base.w	
 	RTS
 loc_00030F7A:
 	dc.b	$26, $28, $01, $96, $3F, $00, $25, $00, $02, $A0, $96, $B6, $02, $36, $37, $BF, $A5, $02, $38, $39, $BF, $A5, $02, $3A, $3B, $B5, $01, $1B, $23, $1C, $03, $B3 
@@ -41155,8 +41156,8 @@ loc_00032070:
 loc_000320C0:
 	dc.b	"Hello. Would you like to buy", $FE
 	dc.b	"a Book of Sanguios Spells?", $FE
-	dc.b	"It's only 1,000 kims.", $FB
-	dc.b	$03, $0E, $00, $00
+	dc.b	"It's only 1,000 kims."
+	dc.b	$FB, $03, $0E, $00, $00
 loc_00032112:
 	dc.b	"Don't say no! Just buy it."
 	dc.b	$FB, $03, $0E, $00
@@ -41274,35 +41275,35 @@ loc_00032A92:
 	MOVE.l	#$0003276E, $FFFFC186.w
 	RTS
 loc_00032AA4:
-	MOVE.l	#$00031F7E, $FFFFC204.w
+	MOVE.l	#$00031F7E, Script_source_base.w
 	TST.b	$FFFFC732.w
 	BNE.w	loc_00032ACC
-	MOVE.l	#$00031F36, $FFFFC204.w
+	MOVE.l	#$00031F36, Script_source_base.w
 	TST.b	$FFFFC730.w
 	BNE.w	loc_00032ACC
-	MOVE.l	#$00031F00, $FFFFC204.w
+	MOVE.l	#$00031F00, Script_source_base.w
 loc_00032ACC:
 	RTS
 loc_00032ACE:
-	MOVE.l	#$0003200C, $FFFFC204.w
+	MOVE.l	#$0003200C, Script_source_base.w
 	TST.b	$FFFFC732.w
 	BNE.w	loc_00032B2E
-	MOVE.l	#$0003202E, $FFFFC204.w
+	MOVE.l	#$0003202E, Script_source_base.w
 	TST.b	$FFFFC731.w
 	BNE.w	loc_00032B2E
-	MOVE.l	#$00031FC8, $FFFFC204.w
+	MOVE.l	#$00031FC8, Script_source_base.w
 	LEA	$FFFFC820.w, A0
 	MOVE.w	#$005C, D5
 	TST.b	(A0,D5.w)
 	BEQ.w	loc_00032B0E
-	MOVE.l	#$00031FF2, $FFFFC204.w
+	MOVE.l	#$00031FF2, Script_source_base.w
 loc_00032B0E:
 	TST.b	$FFFFC77F.w
 	BNE.w	loc_00032B2E
-	MOVE.l	#$0003202E, $FFFFC204.w
+	MOVE.l	#$0003202E, Script_source_base.w
 	TST.b	$FFFFC730.w
 	BNE.w	loc_00032B2E
-	MOVE.l	#$00031F98, $FFFFC204.w
+	MOVE.l	#$00031F98, Script_source_base.w
 loc_00032B2E:
 	RTS
 loc_00032B30:
@@ -41554,7 +41555,7 @@ loc_00033624:
 	dc.b	"Try to find the Poison", $FE
 	dc.b	$53, $68, $69, $65, $6C, $64, $2D, $2D, $79, $6F, $75, $27, $6C, $6C, $20, $6E, $65, $65, $64, $20, $69, $74, $21, $F8, $01, $14 
 loc_0003373A:
-	MOVE.l	#$0003346A, $FFFFC204.w	
+	MOVE.l	#$0003346A, Script_source_base.w	
 	RTS
 loc_00033744:
 	dc.b	$23, $20, $01, $96, $3F, $00, $04, $00, $00, $A0, $96, $A9, $01, $83, $B0, $01, $83, $B0, $03, $1D, $1E, $84, $AE, $03, $1D, $1E, $84, $A9, $01, $13, $24, $14 
@@ -41837,13 +41838,13 @@ loc_000340C2:
 	dc.b	"Please return to Malaga.", $FF, $00 
 
 loc_00034B92:
-	MOVE.l	#$000348E4, $FFFFC204.w
+	MOVE.l	#$000348E4, Script_source_base.w
 	RTS
 loc_00034B9C:
-	MOVE.l	#$000349AA, $FFFFC204.w
+	MOVE.l	#$000349AA, Script_source_base.w
 	TST.b	$FFFFC73B.w
 	BNE.w	loc_00034BB4
-	MOVE.l	#$0003495C, $FFFFC204.w
+	MOVE.l	#$0003495C, Script_source_base.w
 loc_00034BB4:
 	RTS
 loc_00034BB6:
@@ -41952,7 +41953,7 @@ loc_00034D22:
 	dc.b	"You have too much gear", $FE
 	dc.b	"to carry this pass.", $FF, $00 
 loc_0003522E:
-	MOVE.l	#$0003511E, $FFFFC204.w	
+	MOVE.l	#$0003511E, Script_source_base.w	
 	RTS
 loc_00035238:
 	dc.b	$39, $28, $73, $01, $02, $03, $04, $0A, $01, $02, $03, $67, $0B, $0C, $0A, $02, $0B, $0C, $64, $03, $01, $02, $01, $03, $64, $0B, $0C, $0A, $09, $0B, $0C, $03 
@@ -42232,23 +42233,23 @@ loc_00036B2A:
 	MOVE.l	#$000368C2, $FFFFC186.w
 	RTS
 loc_00036B3C:
-	MOVE.l	#$000365FE, $FFFFC204.w
+	MOVE.l	#$000365FE, Script_source_base.w
 	TST.b	$FFFFC744.w
 	BNE.w	loc_00036B64
-	MOVE.l	#$000365BE, $FFFFC204.w
+	MOVE.l	#$000365BE, Script_source_base.w
 	TST.b	$FFFFC73D.w
 	BNE.w	loc_00036B64
-	MOVE.l	#$00036584, $FFFFC204.w
+	MOVE.l	#$00036584, Script_source_base.w
 loc_00036B64:
 	RTS
 loc_00036B66:
-	MOVE.l	#$000363CE, $FFFFC204.w
+	MOVE.l	#$000363CE, Script_source_base.w
 	TST.b	$FFFFC73D.w
 	BNE.w	loc_00036B8E
-	MOVE.l	#$000363A6, $FFFFC204.w
+	MOVE.l	#$000363A6, Script_source_base.w
 	TST.b	$FFFFC741.w
 	BNE.w	loc_00036B8E
-	MOVE.l	#$00036388, $FFFFC204.w
+	MOVE.l	#$00036388, Script_source_base.w
 loc_00036B8E:
 	RTS
 loc_00036B90:
@@ -42589,7 +42590,7 @@ loc_000383A2:
 	MOVE.l	#$00037EAE, $FFFFC186.w
 	RTS
 loc_000383B4:
-	MOVE.l	#$00037972, $FFFFC204.w
+	MOVE.l	#$00037972, Script_source_base.w
 	RTS
 loc_000383BE:
 	dc.b	$00, $01, $F0, $56, $01, $18, $01, $08, $00, $91, $00, $03, $DD, $74, $00, $00, $6F, $36, $60, $01, $01, $08, $01, $58, $00, $CD, $00, $03, $DD, $94, $00, $00 
@@ -42712,7 +42713,7 @@ loc_000385EC:
 	dc.b	"strange is going to happen.", $FE
 	dc.b	"I'm not sure what it is.", $FF, $00 
 loc_00038BE2:
-	MOVE.l	#$00038B96, $FFFFC204.w
+	MOVE.l	#$00038B96, Script_source_base.w
 	RTS
 loc_00038BEC:
 	dc.b	$24, $1D, $01, $96, $3F, $00, $23, $00, $02, $A0, $96, $A6, $01, $1B, $23, $1C, $03, $B3, $B4, $1C, $A8, $02, $36, $37, $B2, $08, $1D, $1E, $1F, $20, $20, $B5 
@@ -42854,7 +42855,7 @@ loc_00039820:
 	dc.b	"rings! Visit each town one", $FE 
 	dc.b	"more time to get the rings.", $FF, $00 
 loc_0003986E:
-	MOVE.l	#loc_00039554, $FFFFC204.w	
+	MOVE.l	#loc_00039554, Script_source_base.w	
 	RTS
 loc_00039878:
 	dc.b	$24, $1E, $01, $73, $3F, $00, $23, $00, $02, $72, $73, $BF, $BF, $AE, $05, $01, $02, $04, $03, $06, $AB, $01, $30, $42, $31, $32, $42, $32, $31, $01, $33, $AA 
@@ -43173,10 +43174,10 @@ loc_0003ACD6
 	dc.b	"If you're not hungry,", $FE 
 	dc.b	"then I can't help you.", $FF, $00 
 loc_0003AD04:
-	MOVE.l	#loc_0003AABA, $FFFFC204.w	
+	MOVE.l	#loc_0003AABA, Script_source_base.w	
 	RTS	
 loc_0003AD0E:
-	MOVE.l	#loc_0003ACD6, $FFFFC204.w	
+	MOVE.l	#loc_0003ACD6, Script_source_base.w	
 	RTS
 loc_0003AD18:
 	dc.b	$32, $21, $70, $01, $02, $03, $06, $01, $02, $0A, $01, $02, $03, $67, $0B, $0C, $0A, $68, $01, $02, $03, $05, $0B, $02, $03, $0B, $0C, $67, $12, $13, $11, $04 
@@ -43450,7 +43451,7 @@ loc_0003C10C:
 	dc.b	"The evil died", $FE
 	dc.b	"along with Tsarkon.", $FF 
 loc_0003C12E:
-	MOVE.l	#loc_0003B9B8, $FFFFC204.w	
+	MOVE.l	#loc_0003B9B8, Script_source_base.w	
 	RTS
 loc_0003C138:
 	dc.b	$21, $23, $01, $96, $2D, $97, $01, $9F, $23, $33, $01, $9F, $2D, $97, $02, $A0, $96, $BF, $A2, $3F, $98, $A2, $03, $A3, $A2, $A2, $24, $00, $01, $83, $24, $00 
