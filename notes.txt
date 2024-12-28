@@ -1,23 +1,12 @@
 RAM location suspicions:
-FFFFC628: Current experience
-
-$FFFFC606.w: player X coordinate, in town
-$FFFFC608.w: player Y coordinate, in town
 
 C60D.b: Player direction in town
 C60E.b: If != 0, move player one step in the direction faced
 
-$FFFFC64C: Player name
-
-$FFFFC234: Text cursor X position
-$FFFFC232: Text cursor Y position
-
 C542: If != 0, rotate player counter-clockwise in dungeon crawling mode
 C543: If != 0, rotate player clockwise in dungeon crawling mode
 
-$FFFFC442.w: Number of items possessed
-
-C444: Possessed items array on 2-byte format: first byte is a modifier. If set to 0x01 the item can't be discarded. Second is one of
+$FFFFC444: Possessed items array on 2-byte format: first byte is a modifier. If set to 0x01 the item can't be discarded. Second is one of
 00 Herbs   
 01 Candle          
 02 Lantern           
