@@ -894,7 +894,7 @@ loc_0000164A: ; leaving Wyclif?
 	JSR	loc_00015966
 	MOVE.l	#loc_0000146E, $12(A5)
 	MOVE.w	#$000E, $FFFFC400.w
-	CLR.w	$FFFFC40C.w
+	CLR.w	Current_town.w
 	MOVE.w	#8, $FFFFC662.w
 	MOVE.w	#$000D, $FFFFC664.w
 	MOVE.w	#0, $FFFFC666.w
@@ -1100,7 +1100,7 @@ loc_00001958:
 	JSR	loc_0000F9B4
 	TST.w	$FFFFC12C.w
 	BGT.w	loc_000019BE
-	MOVE.w	$FFFFC40C.w, D0
+	MOVE.w	Current_town.w, D0
 	CMPI.w	#$000F, D0
 	BLT.b	loc_0000198C
 	SUBQ.w	#1, D0
@@ -1111,7 +1111,7 @@ loc_0000198C:
 loc_00001994:
 	LEA	$FFFFC508.w, A0
 	MOVE.b	#$FF, (A0,D0.w)
-	MOVE.w	$FFFFC40C.w, D0
+	MOVE.w	Current_town.w, D0
 	ASL.w	#3, D0
 	LEA	loc_0001FD54, A0
 	LEA	(A0,D0.w), A0
@@ -1124,7 +1124,7 @@ loc_000019BE:
 	MOVE.w	$FFFFC12E.w, $FFFFC14A.w
 	MOVE.w	$FFFFC138.w, $FFFFC144.w
 	MOVE.w	$FFFFC13A.w, $FFFFC146.w
-	MOVE.w	$FFFFC40C.w, D0
+	MOVE.w	Current_town.w, D0
 	MOVE.w	D0, $FFFFC126.w
 	ADD.w	D0, D0
 	ADD.w	D0, D0
@@ -1144,7 +1144,7 @@ loc_00001A1A:
 	MOVEA.l	$FFFFCC14.w, A6
 	BSET.b	#7, (A6)
 	MOVE.l	#loc_00006E1C, $2(A6)
-	MOVE.w	$FFFFC40C.w, D0
+	MOVE.w	Current_town.w, D0
 	CMPI.w	#$000F, D0
 	BNE.b	loc_00001A46
 	TST.b	$FFFFC758.w
@@ -1273,7 +1273,7 @@ loc_00001C1C:
 	TST.b	$FFFFC7F2.w
 	BEQ.b	loc_00001C56
 	CLR.b	$FFFFC7F2.w
-	MOVE.w	$FFFFC40C.w, D0
+	MOVE.w	Current_town.w, D0
 	CMPI.w	#$000A, D0
 	BNE.b	loc_00001C56
 	MOVE.b	#$FF, $FFFFC08E.w
@@ -2792,7 +2792,7 @@ loc_00003338:
 	MOVE.w	Player_position_x_in_town.w, D0
 	MOVE.w	Player_position_y_in_town.w, D1
 	LEA	loc_0001FDD4, A0
-	MOVE.w	$FFFFC40C.w, D2
+	MOVE.w	Current_town.w, D2
 	ADD.w	D2, D2
 	ADD.w	D2, D2
 	JSR	(A0,D2.w)
@@ -2815,7 +2815,7 @@ loc_0000336C:
 	RTS	
 loc_0000336E:
 	LEA	loc_0001FFFE, A0
-	MOVE.w	$FFFFC40C.w, D0
+	MOVE.w	Current_town.w, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
 	JSR	(A0,D0.w)
@@ -2966,24 +2966,24 @@ loc_000034E0:
 	CLR.b	$FFFFC530.w
 	CLR.b	$FFFFC551.w
 	CLR.b	$FFFFC540.w
-	MOVE.w	$FFFFC40C.w, D0
+	MOVE.w	Current_town.w, D0
 	CMPI.w	#$000C, D0
 	BNE.b	loc_0000355C
-	MOVE.w	#$000B, $FFFFC40C.w
-	MOVE.w	$FFFFC40C.w, D0
+	MOVE.w	#$000B, Current_town.w
+	MOVE.w	Current_town.w, D0
 loc_0000355C:
 	CMPI.w	#$000B, D0
 	BNE.b	loc_00003570
 	TST.b	$FFFFC748.w
 	BEQ.b	loc_0000357C
-	MOVE.w	#$000A, $FFFFC40C.w
+	MOVE.w	#$000A, Current_town.w
 	BRA.b	loc_0000357C
 loc_00003570:
 	CMPI.w	#$000F, D0
 	BNE.b	loc_0000357C
-	MOVE.w	#$000D, $FFFFC40C.w	
+	MOVE.w	#$000D, Current_town.w	
 loc_0000357C:
-	MOVE.w	$FFFFC40C.w, D0
+	MOVE.w	Current_town.w, D0
 	ASL.w	#3, D0
 	LEA	loc_00002DAA, A0
 	LEA	(A0,D0.w), A0
@@ -2991,14 +2991,14 @@ loc_0000357C:
 	MOVE.w	(A0)+, $FFFFC12E.w
 	MOVE.w	(A0)+, $FFFFC138.w
 	MOVE.w	(A0), $FFFFC13A.w
-	MOVE.w	$FFFFC40C.w, D0
+	MOVE.w	Current_town.w, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
 	LEA	loc_00002E2A, A0
 	LEA	(A0,D0.w), A0
 	MOVE.w	(A0)+, Player_position_x_in_town.w
 	MOVE.w	(A0)+, Player_position_y_in_town.w
-	MOVE.w	$FFFFC40C.w, D0
+	MOVE.w	Current_town.w, D0
 	ASL.w	#3, D0
 	LEA	loc_00002E6A, A0
 	MOVE.w	(A0,D0.w), $FFFFC662.w
@@ -3007,7 +3007,7 @@ loc_0000357C:
 	MOVE.w	$6(A0,D0.w), $FFFFC668.w
 	BSR.w	loc_00003338
 	LEA	loc_00002EEA, A0
-	MOVE.w	$FFFFC40C.w, D0
+	MOVE.w	Current_town.w, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
 	MOVE.w	(A0,D0.w), $FFFFC130.w
@@ -4101,7 +4101,7 @@ loc_000045F0:
 	RTS
 loc_00004602:
 	ANDI.w	#$000F, D0
-	MOVE.w	D0, $FFFFC40C.w
+	MOVE.w	D0, Current_town.w
 	MOVE.w	#$0014, $FFFFC412.w
 	CLR.b	$FFFFC67D.w
 	MOVE.b	#$A3, D0
@@ -16781,13 +16781,13 @@ loc_0000FD90:
 	LEA	$FFFFA000.w, A2
 	TST.b	$FFFFC748.w
 	BEQ.b	loc_0000FDAA
-	CMPI.w	#$000B, $FFFFC40C.w
+	CMPI.w	#$000B, Current_town.w
 	BNE.b	loc_0000FDAA
 	MOVEA.l	loc_0001F4B8, A0
 	BRA.b	loc_0000FDC0
 loc_0000FDAA:
 	LEA	loc_0001F418, A1
-	MOVE.w	$FFFFC40C.w, D0
+	MOVE.w	Current_town.w, D0
 	MOVE.w	D0, D1
 	ADD.w	D1, D1
 	ASL.w	#3, D0
@@ -16804,14 +16804,14 @@ loc_0000FDC4:
 	LEA	$FFFFA000.w, A2
 	TST.b	$FFFFC748.w
 	BEQ.b	loc_0000FDFA
-	CMPI.w	#$000B, $FFFFC40C.w
+	CMPI.w	#$000B, Current_town.w
 	BNE.b	loc_0000FDFA
 	MOVEA.l	loc_0001F4BC, A0
 	MOVE.w	loc_0001F4C0, D5
 	BRA.b	loc_0000FE14
 loc_0000FDFA:
 	LEA	loc_0001F418, A1
-	MOVE.w	$FFFFC40C.w, D0
+	MOVE.w	Current_town.w, D0
 	MOVE.w	D0, D1
 	ADD.w	D1, D1
 	ASL.w	#3, D0
@@ -17392,7 +17392,7 @@ loc_0001059C:
 loc_000105CC:
 	BSR.w	loc_0001066C
 	DBF	D7, loc_000105CC
-	LEA	$FFFFC40C.w, A1
+	LEA	Current_town.w, A1
 	MOVE.w	#1, D7
 loc_000105DC:
 	BSR.w	loc_0001066C
@@ -17595,7 +17595,7 @@ loc_00010854:
 loc_0001085C:
 	BSR.w	loc_000108F6	
 	DBF	D7, loc_0001085C	
-	LEA	$FFFFC40C.w, A1	
+	LEA	Current_town.w, A1	
 	MOVE.w	#1, D7	
 loc_0001086C:
 	BSR.w	loc_000108F6	
@@ -17728,9 +17728,9 @@ loc_000109C8: ; Text script handling
 	BEQ.w	loc_00010BA0
 	CMPI.b	#$FA, D3
 	BEQ.w	loc_00010B18
-	CMPI.b	#$F9, D3		; Retrieve stuff
+	CMPI.b	#$F9, D3		; Retrieve stuff/Set event triggers
 	BEQ.w	loc_00010B2E
-	CMPI.b	#$F8, D3		; Boss fight
+	CMPI.b	#$F8, D3		; Set event triggers RLE? Boss trigger?
 	BEQ.w	loc_00010B7C
 	CMPI.b	#$DE, D3
 	BEQ.w	loc_00010A6E
@@ -18224,7 +18224,7 @@ loc_00011204:
 	MOVE.w	#$0012, $FFFF9906.w
 	MOVE.w	#2, $FFFF990C.w
 	LEA	loc_000220B0, A3
-	MOVE.w	$FFFFC40C.w, D0
+	MOVE.w	Current_town.w, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
 	ADD.w	$FFFFC4A6.w, D0
@@ -22258,7 +22258,7 @@ loc_000162F6:
 	MOVE.w	(A0)+, $FFFFC09A.w
 	MOVE.w	(A0)+, $FFFFC09C.w
 	LEA	loc_00016810, A0
-	MOVE.w	$FFFFC40C.w, D0
+	MOVE.w	Current_town.w, D0
 	ADD.w	D0, D0
 	MOVE.w	(A0,D0.w), $FFFFC082.w
 	MOVE.w	$FFFFC082.w, $FFFFC096.w
@@ -26811,7 +26811,7 @@ loc_0001A8C0:
 	RTS
 loc_0001A8DA:
 	LEA	loc_000189C2, A0
-	MOVE.w	$FFFFC40C.w, D0
+	MOVE.w	Current_town.w, D0
 	CMPI.w	#4, D0
 	BLE.b	loc_0001A8F4
 	CMPI.w	#$000E, D0
@@ -27162,7 +27162,7 @@ loc_0001ADF6:
 	JSR	loc_00010522
 	TST.b	$FFFFC75E.w
 	BEQ.w	loc_0001AE6E
-	MOVE.w	$FFFFC40C.w, D0
+	MOVE.w	Current_town.w, D0
 	CMPI.w	#6, D0
 	BNE.w	loc_0001AE6E
 	MOVE.w	$FFFFC412.w, D0
@@ -27226,7 +27226,7 @@ loc_0001AEBC:
 	JSR	loc_00010522
 	RTS
 loc_0001AED4:
-	MOVE.w	$FFFFC40C.w, D0
+	MOVE.w	Current_town.w, D0
 	CMPI.w	#6, D0
 	BNE.w	loc_0001AF1E
 	MOVE.w	$FFFFC412.w, D0
@@ -27263,7 +27263,7 @@ loc_0001AF3C:
 	dc.w	$0000
 	dc.b	$00, $18, $00, $0D, $00, $06, $00, $1A, $00, $0D, $00, $02, $00, $19, $00, $0C, $00, $04 
 loc_0001AF54:
-	MOVE.w	$FFFFC40C.w, D0
+	MOVE.w	Current_town.w, D0
 	CMPI.w	#$000A, D0
 	BNE.w	loc_0001AFA2
 	MOVE.w	$FFFFC412.w, D0
@@ -27328,7 +27328,7 @@ loc_0001B020:
 	MOVE.l	#loc_00026FAA, Script_source_base.w	
 	RTS	
 loc_0001B02A:
-	MOVE.w	$FFFFC40C.w, D0
+	MOVE.w	Current_town.w, D0
 	CMPI.w	#$000F, D0
 	BNE.b	loc_0001B06C
 	MOVE.w	$FFFFC412.w, D0
@@ -27512,14 +27512,14 @@ loc_0001B2B6:
 	RTS
 loc_0001B2C6:
 	LEA	loc_0001CF7E, A0
-	MOVE.w	$FFFFC40C.w, D0
+	MOVE.w	Current_town.w, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
 	MOVEA.l	(A0,D0.w), A0
 	JSR	(A0)
 	RTS
 loc_0001B2DC:
-	MOVE.w	$FFFFC40C.w, D0
+	MOVE.w	Current_town.w, D0
 	CMPI.w	#2, D0
 	BNE.w	loc_0001B35E
 	TST.b	$FFFFC77C.w
@@ -27557,7 +27557,7 @@ loc_0001B35E:
 	MOVE.b	#$FD, (A1)+
 	LEA	loc_000260CC, A0
 	JSR	loc_00012A6C
-	MOVE.w	$FFFFC40C.w, D0
+	MOVE.w	Current_town.w, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
 	LEA	loc_00021F08, A0
@@ -27578,7 +27578,7 @@ loc_0001B3B8:
 	MOVE.b	#$FD, (A1)+
 	LEA	loc_00026512, A0
 	JSR	loc_00012A6C
-	MOVE.w	$FFFFC40C.w, D0
+	MOVE.w	Current_town.w, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
 	LEA	loc_00021F08, A0
@@ -27599,7 +27599,7 @@ loc_0001B416:
 	ANDI.w	#$0100, D0
 	BEQ.b	loc_0001B43A
 	CLR.w	$FFFFC4A6.w
-	MOVE.w	$FFFFC40C.w, D0
+	MOVE.w	Current_town.w, D0
 	CMPI.w	#7, D0
 	BNE.b	loc_0001B45C
 	BRA.b	loc_0001B4A4
@@ -27619,7 +27619,7 @@ loc_0001B45C:
 	MOVE.w	$FFFFC4A6.w, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
-	MOVE.w	$FFFFC40C.w, D1
+	MOVE.w	Current_town.w, D1
 	ASL.w	#4, D1
 	ADD.w	D0, D1
 	LEA	loc_00021FB0, A1
@@ -27662,7 +27662,7 @@ loc_0001B4E4:
 	MOVE.w	$FFFFC4A6.w, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
-	MOVE.w	$FFFFC40C.w, D1
+	MOVE.w	Current_town.w, D1
 	ASL.w	#4, D1
 	ADD.w	D0, D1
 	LEA	loc_00021FB0, A1
@@ -28226,7 +28226,7 @@ loc_0001BF28:
 	JSR	loc_00012670
 	JSR	loc_00010C4A
 	LEA	loc_000220B0, A0
-	MOVE.w	$FFFFC40C.w, D0
+	MOVE.w	Current_town.w, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
 	ADD.w	$FFFFC4A6.w, D0
@@ -28671,7 +28671,7 @@ loc_0001C5F4:
 	BEQ.w	loc_0001C684
 	TST.w	$FFFFC428.w
 	BNE.w	loc_0001C66A
-	MOVE.w	$FFFFC40C.w, D0
+	MOVE.w	Current_town.w, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
 	LEA	loc_00021F08, A0
@@ -28684,7 +28684,7 @@ loc_0001C5F4:
 	JSR	loc_0001159E
 	JSR	loc_000115DE
 	LEA	loc_0001CFBE, A0
-	MOVE.w	$FFFFC40C.w, D0
+	MOVE.w	Current_town.w, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
 	MOVEA.l	(A0,D0.w), A0
@@ -28738,7 +28738,7 @@ loc_0001C6FA:
 	BEQ.b	loc_0001C72A
 	TST.b	$FFFFC211.w
 	BNE.b	loc_0001C730
-	MOVE.w	$FFFFC40C.w, D0
+	MOVE.w	Current_town.w, D0
 	CMPI.w	#2, D0
 	BNE.b	loc_0001C716
 	TST.b	$FFFFC77C.w
@@ -28765,7 +28765,7 @@ loc_0001C744:
 	ADDQ.w	#1, $FFFFC41E.w
 	RTS
 loc_0001C75C:
-	MOVE.w	$FFFFC40C.w, D0
+	MOVE.w	Current_town.w, D0
 	CMPI.w	#2, D0
 	BNE.w	loc_0001C7DA
 	TST.b	$FFFFC77C.w
@@ -28810,7 +28810,7 @@ loc_0001C7DA:
 	JSR	loc_0001290C
 	TST.w	$FFFFC428.w
 	BNE.w	loc_0001C860
-	MOVE.w	$FFFFC40C.w, D0
+	MOVE.w	Current_town.w, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
 	LEA	loc_00021F08, A0
@@ -28875,7 +28875,7 @@ loc_0001C8EE:
 	MOVE.w	Player_mhp.w, Player_hp.w
 	MOVE.w	$FFFFC630.w, Player_mp.w
 loc_0001C8FA:
-	MOVE.w	$FFFFC40C.w, D0
+	MOVE.w	Current_town.w, D0
 	CMPI.w	#2, D0
 	BNE.b	loc_0001C92A
 	TST.b	$FFFFC77C.w
@@ -28946,7 +28946,7 @@ loc_0001C9FA:
 	LEA	loc_000265C4, A0
 	JSR	loc_00012A6C
 	MOVE.b	#$FE, (A1)+
-	MOVE.w	$FFFFC40C.w, D0
+	MOVE.w	Current_town.w, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
 	LEA	loc_00021F40, A0
@@ -28969,7 +28969,7 @@ loc_0001CA5C:
 	LEA	loc_000265C4, A0
 	JSR	loc_00012A6C
 	MOVE.b	#$FE, (A1)+
-	MOVE.w	$FFFFC40C.w, D0
+	MOVE.w	Current_town.w, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
 	LEA	loc_00021F78, A0
@@ -29057,7 +29057,7 @@ loc_0001CB94:
 	JSR	loc_0001290C
 	TST.w	$FFFFC428.w
 	BNE.w	loc_0001CC24
-	MOVE.w	$FFFFC40C.w, D0
+	MOVE.w	Current_town.w, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
 	LEA	loc_00021F40, A0
@@ -29118,7 +29118,7 @@ loc_0001CC90:
 	JSR	loc_0001290C
 	TST.w	$FFFFC428.w
 	BNE.w	loc_0001CD36
-	MOVE.w	$FFFFC40C.w, D0
+	MOVE.w	Current_town.w, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
 	LEA	loc_00021F78, A0
@@ -30528,7 +30528,7 @@ loc_0001E0FA:
 	RTS
 loc_0001E102:
 	LEA	loc_0001E326, A0
-	MOVE.w	$FFFFC40C.w, D0
+	MOVE.w	Current_town.w, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
 	MOVEA.l	(A0,D0.w), A0
@@ -33857,15 +33857,33 @@ loc_0021860:
 loc_00218A2:
 	dc.b	"Lost again? Well, here's a", $FE
 	dc.b	"map of the area."
-	dc.b	$F9, $07, $01, $00, $01, $01, $01, $10, $01, $11, $01, $12, $01, $21, $01, $22, $00
+	dc.b	$F9, $07 ; 7 map areas
+	dc.b	$01, $00
+	dc.b	$01, $01
+	dc.b	$01, $10
+	dc.b	$01, $11
+	dc.b	$01, $12
+	dc.b	$01, $21
+	dc.b	$01, $22
+	dc.b	$00 ; padding
 loc_00218DE:
 	dc.b	"Lost again? Well, here's a", $FE
 	dc.b	"map of the area." 
-	dc.b	$F9, $04, $01, $13, $01, $23, $01, $24, $01, $25, $00
+	dc.b	$F9, $04 ; 4 map areas
+	dc.b	$01, $13
+	dc.b	$01, $23
+	dc.b	$01, $24
+	dc.b	$01, $25
+	dc.b	$00 ; padding
 loc_0021914:
 	dc.b	"Lost again? Well, here's a", $FE
 	dc.b	"map of the area."
-	dc.b	$F9, $04, $01, $26, $01, $27, $01, $28, $01, $29, $00
+	dc.b	$F9, $04 ; 4 map areas
+	dc.b	$01, $26
+	dc.b	$01, $27
+	dc.b	$01, $28
+	dc.b	$01, $29
+	dc.b	$00 ; padding
 loc_0002194A:
 	dc.b	"Start", $FE
 	dc.b	"Continue", $FF, $00
@@ -39012,7 +39030,11 @@ loc_00029D34:
 	dc.b	"in Bremen's Cave,", $FE
 	dc.b	"northwest of here.", $FD
 	dc.b	"This map will guide you."
-	dc.b	$F9, $04, $01, $62, $01, $72, $01, $74, $01, $73
+	dc.b	$F9, $04 ; 4 map areas
+	dc.b	$01, $62
+	dc.b	$01, $72
+	dc.b	$01, $74
+	dc.b	$01, $73
 loc_00029DCE:
 	dc.b	"Bremen's Cave is", $FE
 	dc.b	"to the northwest.", $FF, $00
@@ -39179,7 +39201,16 @@ loc_0002A664:
 	dc.b	"Would you please bring him", $FE
 	dc.b	"to us? Here's a map of the", $FE
 	dc.b	"route to Keltwick."
-	dc.b	$F9, $08, $01, $7B, $01, $5C, $01, $6C, $01, $7C, $01, $4D, $01, $5D, $01, $6D, $01, $4E, $00
+	dc.b	$F9, $08 ; 8 map areas
+	dc.b	$01, $7B
+	dc.b	$01, $5C
+	dc.b	$01, $6C
+	dc.b	$01, $7C
+	dc.b	$01, $4D
+	dc.b	$01, $5D
+	dc.b	$01, $6D
+	dc.b	$01, $4E
+	dc.b	$00 ; padding
 loc_0002A7A4:
 	dc.b	"Brave warrior, please", $FE
 	dc.b	"take this Book of Sanguia", $FE
@@ -39335,7 +39366,12 @@ loc_0002AFE8
 	dc.b	"You must go to see him.", $FE
 	dc.b	"Here is a map of the", $FE
 	dc.b	"route to Harmony Cave."
-	dc.b	$F9, $05, $01, $2C, $01, $2D, $01, $2E, $01, $3E, $01, $3F
+	dc.b	$F9, $05 ; 5 map areas
+	dc.b	$01, $2C
+	dc.b	$01, $2D
+	dc.b	$01, $2E
+	dc.b	$01, $3E
+	dc.b	$01, $3F
 loc_0002B18A:
 	dc.b	"I hope you return safely.", $FF
 loc_0002B1A4
@@ -39667,7 +39703,12 @@ loc_0002C510:
 	dc.b	"Now your quest begins in", $FE
 	dc.b	"earnest! Here is a map of", $FE
 	dc.b	"the route to Parma."
-	dc.b	$F9, $05, $01, $41, $01, $50, $01, $51, $01, $60, $01, $70
+	dc.b	$F9, $05 ; 5 map areas
+	dc.b	$01, $41
+	dc.b	$01, $50
+	dc.b	$01, $51
+	dc.b	$01, $60
+	dc.b	$01, $70
 loc_0002C562:
 	dc.b	"We're all very", $FE
 	dc.b	"sorry about Blade.", $FF

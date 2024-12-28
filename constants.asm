@@ -10,6 +10,8 @@ Script_source_base = $FFFFC204
 Script_output_y = $FFFFC232
 Script_output_x = $FFFFC234
 
+Current_town = $FFFFC40C
+
 Possessed_items_length = $FFFFC442
 Possessed_items_list = $FFFFC444
 
