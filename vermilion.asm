@@ -90,8 +90,8 @@ loc_0000021E:
 	RTS
 loc_00000232:
 	MOVE.w	#0, Possessed_items_length.w
-	MOVE.w	#0, $FFFFC462.w
-	MOVE.w	#0, $FFFFC482.w
+	MOVE.w	#0, Possessed_magics_length.w
+	MOVE.w	#0, Possessed_equipment_length.w
 	MOVE.w	#$FFFF, $FFFFC4D0.w
 	MOVE.w	#$FFFF, $FFFFC4D2.w
 loc_00000250:
@@ -7171,7 +7171,7 @@ loc_0000737E:
 	MOVE.l	#loc_0002A902, $1C(A5)
 	TST.b	$FFFFC768.w
 	BNE.w	loc_00007408
-	LEA	$FFFFC462.w, A0
+	LEA	Possessed_magics_length.w, A0
 	MOVE.w	(A0), D0
 	ADDQ.w	#1, (A0)+
 	ADD.w	D0, D0
@@ -7181,7 +7181,7 @@ loc_0000737E:
 loc_000073AE:
 	TST.b	$FFFFC732.w
 	BEQ.b	loc_000073D8
-	LEA	$FFFFC462.w, A0
+	LEA	Possessed_magics_length.w, A0
 	MOVE.w	(A0), D0
 	CMPI.w	#8, D0
 	BLT.b	loc_000073CC
@@ -7196,8 +7196,8 @@ loc_000073D8:
 	MOVE.l	#loc_0002A528, $1C(A5)
 	TST.b	$FFFFC767.w
 	BNE.b	loc_00007408
-	LEA	$FFFFC464.w, A3
-	LEA	$FFFFC462.w, A2
+	LEA	Possessed_magics_list.w, A3
+	LEA	Possessed_magics_length.w, A2
 	MOVE.w	#$0116, D4
 	BSR.w	loc_000084C0
 	BSR.w	loc_0000852E
@@ -7639,7 +7639,7 @@ loc_00007A14:
 	MOVE.l	#$00037364, $1C(A5)
 	TST.b	$FFFFC764.w
 	BNE.w	loc_00007ACC
-	LEA	$FFFFC482.w, A0
+	LEA	Possessed_equipment_length.w, A0
 	MOVE.w	(A0), D0
 	ADDQ.w	#1, (A0)+
 	ADD.w	D0, D0
@@ -7654,7 +7654,7 @@ loc_00007A44:
 	BEQ.b	loc_00007A62
 	MOVE.l	#$00037320, $1C(A5)
 loc_00007A62:
-	LEA	$FFFFC482.w, A0
+	LEA	Possessed_equipment_length.w, A0
 	MOVE.w	(A0), D0
 	CMPI.w	#8, D0
 	BLT.w	loc_00007ACC
@@ -9005,7 +9005,7 @@ loc_00008D44:
 	BEQ.b	loc_00008D84
 	TST.b	$FFFFC766.w
 	BNE.b	loc_00008D7A
-	LEA	$FFFFC462.w, A0
+	LEA	Possessed_magics_length.w, A0
 	MOVE.w	(A0), D0
 	ADDQ.w	#1, (A0)+
 	ADD.w	D0, D0
@@ -9022,7 +9022,7 @@ loc_00008D84:
 	ANDI.l	#$00FFFFFF, D1
 	CMP.l	D0, D1
 	BLT.b	loc_00008DAE
-	LEA	$FFFFC462.w, A0
+	LEA	Possessed_magics_length.w, A0
 	MOVE.w	(A0), D0
 	CMPI.w	#8, D0
 	BLT.b	loc_00008DB8
@@ -17412,12 +17412,12 @@ loc_000105FC:
 loc_0001060C:
 	BSR.w	loc_0001066C
 	DBF	D7, loc_0001060C
-	LEA	$FFFFC462.w, A1
+	LEA	Possessed_magics_length.w, A1
 	MOVE.w	#$0015, D7
 loc_0001061C:
 	BSR.w	loc_0001066C
 	DBF	D7, loc_0001061C
-	LEA	$FFFFC482.w, A1
+	LEA	Possessed_equipment_length.w, A1
 	MOVE.w	#$0015, D7
 loc_0001062C:
 	BSR.w	loc_0001066C
@@ -17615,12 +17615,12 @@ loc_0001088C:
 loc_0001089C:
 	BSR.w	loc_000108F6	
 	DBF	D7, loc_0001089C	
-	LEA	$FFFFC462.w, A1	
+	LEA	Possessed_magics_length.w, A1	
 	MOVE.w	#$0015, D7	
 loc_000108AC:
 	BSR.w	loc_000108F6	
 	DBF	D7, loc_000108AC	
-	LEA	$FFFFC482.w, A1	
+	LEA	Possessed_equipment_length.w, A1	
 	MOVE.w	#$0015, D7	
 loc_000108BC:
 	BSR.w	loc_000108F6	
@@ -18133,15 +18133,15 @@ loc_000110BE:
 	BSR.w	loc_00011168
 	RTS
 loc_000110D0:
-	MOVE.w	$FFFFC462.w, D7
+	MOVE.w	Possessed_magics_length.w, D7
 	BSR.w	loc_00011106
-	MOVE.w	$FFFFC462.w, D0
+	MOVE.w	Possessed_magics_length.w, D0
 	BSR.w	loc_00011168
 	RTS
 loc_000110E2:
-	MOVE.w	$FFFFC482.w, D7
+	MOVE.w	Possessed_equipment_length.w, D7
 	BSR.w	loc_00011106
-	MOVE.w	$FFFFC482.w, D0
+	MOVE.w	Possessed_equipment_length.w, D0
 	BSR.w	loc_00011168
 	RTS
 loc_000110F4:
@@ -18912,7 +18912,7 @@ loc_00011BB8:
 	MOVE.w	#$000F, $FFFF9902.w
 	MOVE.w	#2, $FFFF9908.w
 	MOVE.w	#$0016, $FFFF9904.w
-	MOVE.w	$FFFFC482.w, D0
+	MOVE.w	Possessed_equipment_length.w, D0
 	BLE.w	loc_00011C4C
 	ADD.w	D0, D0
 	ADDQ.w	#3, D0
@@ -18924,9 +18924,9 @@ loc_00011BB8:
 	MOVE.w	#2, $FFFF990C.w
 	BSR.w	loc_00012CE6
 	ADDQ.w	#2, $FFFF990C.w
-	LEA	$FFFFC484.w, A3
+	LEA	Possessed_equipment_list.w, A3
 	LEA	loc_00025EC0, A4
-	MOVE.w	$FFFFC482.w, D7
+	MOVE.w	Possessed_equipment_length.w, D7
 	SUBQ.w	#1, D7
 loc_00011C0E:
 	MOVE.w	(A3)+, D4
@@ -18939,8 +18939,8 @@ loc_00011C0E:
 	DBF	D7, loc_00011C0E
 	MOVE.w	#$0014, $FFFF9906.w
 	MOVE.w	#4, $FFFF990C.w
-	LEA	$FFFFC484.w, A2
-	MOVE.w	$FFFFC482.w, D7
+	LEA	Possessed_equipment_list.w, A2
+	MOVE.w	Possessed_equipment_length.w, D7
 	BSR.w	loc_00011C8C
 	CLR.w	$FFFF9914.w
 	MOVE.b	#$FF, $FFFF9910.w
@@ -18983,7 +18983,7 @@ loc_00011CC2:
 	MOVE.w	#2, $FFFF9902.w
 	MOVE.w	#2, $FFFF9908.w
 	MOVE.w	#$0011, $FFFF9904.w
-	MOVE.w	$FFFFC462.w, D0
+	MOVE.w	Possessed_magics_length.w, D0
 	BLE.w	loc_00011D56
 	ADD.w	D0, D0
 	ADDQ.w	#3, D0
@@ -18995,9 +18995,9 @@ loc_00011CC2:
 	MOVE.w	#2, $FFFF990C.w
 	BSR.w	loc_00012CE6
 	ADDQ.w	#2, $FFFF990C.w
-	LEA	$FFFFC464.w, A3
+	LEA	Possessed_magics_list.w, A3
 	LEA	loc_00025E64, A4
-	MOVE.w	$FFFFC462.w, D7
+	MOVE.w	Possessed_magics_length.w, D7
 	SUBQ.w	#1, D7
 loc_00011D18:
 	MOVE.w	(A3)+, D4
@@ -19010,8 +19010,8 @@ loc_00011D18:
 	DBF	D7, loc_00011D18
 	MOVE.w	#$0021, $FFFF9906.w
 	MOVE.w	#3, $FFFF990C.w
-	LEA	$FFFFC464.w, A2
-	MOVE.w	$FFFFC462.w, D7
+	LEA	Possessed_magics_list.w, A2
+	MOVE.w	Possessed_magics_length.w, D7
 	BSR.w	loc_00011C8C
 	CLR.w	$FFFF9914.w
 	MOVE.b	#$FF, $FFFF9910.w
@@ -19192,7 +19192,7 @@ loc_00011FF8:
 	MOVE.w	#$000F, $FFFFC220.w
 	MOVE.w	#2, $FFFFC222.w
 	MOVE.w	#$0016, $FFFFC228.w
-	MOVE.w	$FFFFC482.w, D0
+	MOVE.w	Possessed_equipment_length.w, D0
 	BGT.b	loc_00012014
 	MOVE.w	#1, D0	
 loc_00012014:
@@ -19205,7 +19205,7 @@ loc_00012024:
 	MOVE.w	#2, $FFFFC220.w
 	MOVE.w	#2, $FFFFC222.w
 	MOVE.w	#$0011, $FFFFC228.w
-	MOVE.w	$FFFFC462.w, D0
+	MOVE.w	Possessed_magics_length.w, D0
 	BGT.b	loc_00012040
 	MOVE.w	#1, D0
 loc_00012040:
@@ -19868,27 +19868,27 @@ loc_00012A7A:
 loc_00012A9A:
 	MOVE.w	#$0011, $FFFFC220.w
 	MOVE.w	#4, $FFFFC222.w
-	LEA	$FFFFC464.w, A2
+	LEA	Possessed_magics_list.w, A2
 	LEA	loc_00025E64, A1
-	MOVE.w	$FFFFC462.w, D7
+	MOVE.w	Possessed_magics_length.w, D7
 	BSR.w	loc_00012B5C
 	MOVE.w	#$0021, $FFFFC220.w
 	MOVE.w	#4, $FFFFC222.w
-	LEA	$FFFFC464.w, A2
-	MOVE.w	$FFFFC462.w, D7
+	LEA	Possessed_magics_list.w, A2
+	MOVE.w	Possessed_magics_length.w, D7
 	BSR.w	loc_00012C3E
 	RTS
 loc_00012AD2:
 	MOVE.w	#$0011, $FFFFC220.w
 	MOVE.w	#4, $FFFFC222.w
-	LEA	$FFFFC484.w, A2
+	LEA	Possessed_equipment_list.w, A2
 	LEA	loc_00025EC0, A1
-	MOVE.w	$FFFFC482.w, D7
+	MOVE.w	Possessed_equipment_length.w, D7
 	BSR.w	loc_00012B5C
 	MOVE.w	#$0023, $FFFFC220.w
 	MOVE.w	#4, $FFFFC222.w
-	LEA	$FFFFC484.w, A2
-	MOVE.w	$FFFFC482.w, D7
+	LEA	Possessed_equipment_list.w, A2
+	MOVE.w	Possessed_equipment_length.w, D7
 	BSR.w	loc_00012C3E
 	RTS
 loc_00012B0A:
@@ -21566,8 +21566,8 @@ loc_0001584E:
 loc_00015856:
 	MOVE.b	#$FF, (A0)+	
 	DBF	D7, loc_00015856	
-	MOVE.w	#1, $FFFFC462.w	
-	LEA	$FFFFC464.w, A0	
+	MOVE.w	#1, Possessed_magics_length.w	
+	LEA	Possessed_magics_list.w, A0	
 	MOVE.w	#$000E, (A0)	
 	MOVE.w	#$0258, $FFFFC630.w	
 	MOVE.w	#$04B0, Player_mhp.w	
@@ -24112,7 +24112,7 @@ loc_00017F80:
 	JSR	loc_00010522
 	JSR	loc_0001229E
 	JSR	loc_00010C4A
-	TST.w	$FFFFC462.w
+	TST.w	Possessed_magics_length.w
 	BGT.b	loc_00017FC8
 	MOVE.l	#loc_0002540C, Script_source_base.w
 	MOVE.w	#2, $FFFFC424.w
@@ -24187,7 +24187,7 @@ loc_000180A8:
 	JSR	loc_00012A9A
 	CLR.w	$FFFFC460.w
 	MOVE.w	#4, $FFFFC424.w
-	MOVE.w	$FFFFC462.w, D0
+	MOVE.w	Possessed_magics_length.w, D0
 	JSR	loc_000115FA
 	RTS
 loc_000180D6:
@@ -24243,11 +24243,11 @@ loc_000181A4:
 	JSR	loc_00010522	
 	JSR	loc_00012670	
 	MOVE.w	#4, $FFFFC424.w	
-	MOVE.w	$FFFFC462.w, D0	
+	MOVE.w	Possessed_magics_length.w, D0	
 	JSR	loc_000115FA	
 	RTS	
 loc_000181C6:
-	LEA	$FFFFC464.w, A0
+	LEA	Possessed_magics_list.w, A0
 	MOVE.w	$FFFFC460.w, D0
 	ADD.w	D0, D0
 	MOVE.w	(A0,D0.w), D0
@@ -24262,7 +24262,7 @@ loc_000181DC:
 	JSR	loc_00012A6C
 	MOVE.b	#$FE, (A1)+
 	LEA	loc_00025E64, A0
-	LEA	$FFFFC464.w, A2
+	LEA	Possessed_magics_list.w, A2
 	MOVE.w	$FFFFC460.w, D0
 	ADD.w	D0, D0
 	MOVE.w	(A2,D0.w), D0
@@ -24275,8 +24275,8 @@ loc_000181DC:
 	MOVE.b	#$FF, (A1)
 	MOVE.l	#$FFFFC260, Script_source_base.w
 	MOVE.w	#2, $FFFFC424.w
-	SUBQ.w	#1, $FFFFC462.w
-	LEA	$FFFFC464.w, A0
+	SUBQ.w	#1, Possessed_magics_length.w
+	LEA	Possessed_magics_list.w, A0
 	MOVE.w	$FFFFC460.w, D0
 	MOVE.w	#9, D2
 	JSR	loc_0000FB8C
@@ -24295,7 +24295,7 @@ loc_00018272:
 	JSR	loc_00012A9A
 	CLR.w	$FFFFC460.w
 	ADDQ.w	#1, $FFFFC424.w
-	MOVE.w	$FFFFC462.w, D0
+	MOVE.w	Possessed_magics_length.w, D0
 	BRA.w	loc_000115FA
 	dc.b	$4E, $75 
 loc_0001829C:
@@ -24351,14 +24351,14 @@ loc_00018368:
 	JSR	loc_00010522
 	JSR	loc_00012670
 	MOVE.w	#$000D, $FFFFC424.w
-	MOVE.w	$FFFFC462.w, D0
+	MOVE.w	Possessed_magics_length.w, D0
 	BRA.w	loc_000115FA
 	dc.b	$4E, $75 
 loc_00018388:
 	JSR	loc_00012670
 	JSR	loc_000126B6
 	JSR	loc_00010C4A
-	LEA	$FFFFC464.w, A0
+	LEA	Possessed_magics_list.w, A0
 	MOVE.w	$FFFFC460.w, D0
 	ADD.w	D0, D0
 	MOVE.w	(A0,D0.w), D0
@@ -24370,7 +24370,7 @@ loc_00018388:
 	LEA	loc_00025518, A0
 	JSR	loc_00012A6C
 	LEA	loc_00025E64, A0
-	LEA	$FFFFC464.w, A2
+	LEA	Possessed_magics_list.w, A2
 	MOVE.w	$FFFFC460.w, D0
 	ADD.w	D0, D0
 	MOVE.w	(A2,D0.w), D0
@@ -24384,7 +24384,7 @@ loc_00018388:
 	MOVE.b	#$FF, (A1)
 	MOVE.l	#$FFFFC260, Script_source_base.w
 	MOVE.w	#2, $FFFFC424.w
-	LEA	$FFFFC464.w, A0
+	LEA	Possessed_magics_list.w, A0
 	MOVE.w	$FFFFC460.w, D0
 	ADD.w	D0, D0
 	LEA	(A0,D0.w), A0
@@ -24417,7 +24417,7 @@ loc_00018468:
 	JSR	loc_00012A9A
 	CLR.w	$FFFFC460.w
 	ADDQ.w	#1, $FFFFC424.w
-	MOVE.w	$FFFFC462.w, D0
+	MOVE.w	Possessed_magics_length.w, D0
 	BRA.w	loc_000115FA
 loc_00018490:
 	JSR	loc_0001096A
@@ -24442,7 +24442,7 @@ loc_000184C2:
 	MOVE.w	#$00A1, D0
 	JSR	loc_00010522
 	JSR	loc_000126B6
-	LEA	$FFFFC464.w, A0
+	LEA	Possessed_magics_list.w, A0
 	MOVE.w	$FFFFC460.w, D0
 	ADD.w	D0, D0
 	MOVE.w	(A0,D0.w), D0
@@ -24536,9 +24536,9 @@ loc_00018642:
 	MOVE.w	$FFFFC23E.w, $FFFFC506.w
 	RTS
 loc_00018662:
-	MOVE.w	$FFFFC462.w, D7
+	MOVE.w	Possessed_magics_length.w, D7
 	SUBQ.w	#1, D7
-	LEA	$FFFFC464.w, A0
+	LEA	Possessed_magics_list.w, A0
 loc_0001866C:
 	MOVE.w	(A0)+, D0
 	MOVE.w	#9, D1
@@ -24550,9 +24550,9 @@ loc_00018678:
 	CLR.w	D0	
 	RTS	
 loc_00018680:
-	MOVE.w	$FFFFC462.w, D7
+	MOVE.w	Possessed_magics_length.w, D7
 	SUBQ.w	#1, D7
-	LEA	$FFFFC464.w, A0
+	LEA	Possessed_magics_list.w, A0
 loc_0001868A:
 	MOVE.w	#$000F, D1
 	MOVE.w	(A0), D0
@@ -26348,7 +26348,7 @@ loc_0001A216:
 	MOVE.w	#$FFFF, D0	
 	RTS	
 loc_0001A21C:
-	LEA	$FFFFC464.w, A0
+	LEA	Possessed_magics_list.w, A0
 	MOVE.w	$FFFFC460.w, D0
 	ADD.w	D0, D0
 	MOVE.w	(A0,D0.w), D0
@@ -27821,7 +27821,7 @@ loc_0001B97E:
 loc_0001B9E4:
 	CLR.b	$FFFFC20F.w
 	MOVE.l	#loc_0001B814, Script_source_base.w
-	LEA	$FFFFC482.w, A2
+	LEA	Possessed_equipment_length.w, A2
 	LEA	(A2), A1
 	MOVE.w	(A2)+, D7
 	BLE.b	loc_0001BA38
@@ -27838,7 +27838,7 @@ loc_0001B9FC:
 	CLR.w	(A1)	
 loc_0001BA12:
 	MOVE.w	D7, D0
-	LEA	$FFFFC484.w, A0
+	LEA	Possessed_equipment_list.w, A0
 	MOVE.w	#8, D2
 	JSR	loc_0000FB8C
 loc_0001BA22:
@@ -27899,7 +27899,7 @@ loc_0001BAEE:
 	JSR	loc_0001096A
 	RTS
 loc_0001BAF6:
-	LEA	$FFFFC482.w, A0
+	LEA	Possessed_equipment_length.w, A0
 	MOVE.w	(A0), D0
 	CMPI.w	#8, D0
 	BLT.b	loc_0001BB0C
@@ -28374,8 +28374,8 @@ loc_0001C168:
 	BEQ.b	loc_0001C1CC
 	JSR	loc_000110D0
 	JSR	loc_00012A9A
-	MOVE.l	#$FFFFC464, $FFFFC4A8.w
-	MOVE.w	$FFFFC462.w, D0
+	MOVE.l	#Possessed_magics_list, $FFFFC4A8.w
+	MOVE.w	Possessed_magics_length.w, D0
 	BRA.b	loc_0001C1E4
 loc_0001C1B2:
 	JSR	loc_000110BE
@@ -28386,8 +28386,8 @@ loc_0001C1B2:
 loc_0001C1CC:
 	JSR	loc_000110E2
 	JSR	loc_00012AD2
-	MOVE.l	#$FFFFC484, $FFFFC4A8.w
-	MOVE.w	$FFFFC482.w, D0
+	MOVE.l	#Possessed_equipment_list, $FFFFC4A8.w
+	MOVE.w	Possessed_equipment_length.w, D0
 loc_0001C1E4:
 	JSR	loc_000115FA
 	JSR	loc_0001242E
@@ -28532,7 +28532,7 @@ loc_0001C3A4:
 	ADD.w	D0, D0
 	MOVE.w	(A2,D0.w), D0
 	BGE.w	loc_0001C474
-	CMPI.l	#$FFFFC464, $FFFFC4A8.w
+	CMPI.l	#Possessed_magics_list, $FFFFC4A8.w
 	BNE.w	loc_0001C420
 	MOVE.w	#$FFFF, $FFFFC4D6.w
 	BRA.w	loc_0001C474
@@ -29236,8 +29236,8 @@ loc_0001CE58:
 	SUB.w	D1, Player_ac.w	
 loc_0001CE5C:
 	DBF	D7, loc_0001CE28
-	LEA	$FFFFC484.w, A0
-	MOVE.w	$FFFFC482.w, D7
+	LEA	Possessed_equipment_list.w, A0
+	MOVE.w	Possessed_equipment_length.w, D7
 loc_0001CE68:
 	MOVE.w	(A0)+, D3
 	MOVE.w	#9, D0
@@ -29735,7 +29735,7 @@ loc_0001D56E:
 	MOVE.w	D0, Player_ac.w
 	RTS
 loc_0001D58C:
-	LEA	$FFFFC482.w, A1
+	LEA	Possessed_equipment_length.w, A1
 	MOVE.w	(A1)+, D7
 	SUBQ.w	#1, D7
 loc_0001D594:
@@ -29755,7 +29755,7 @@ loc_0001D5AC:
 	ADDI.w	#$000A, D0
 	CLR.w	D2
 	LEA	$FFFFC4E8.w, A2
-	LEA	$FFFFC482.w, A1
+	LEA	Possessed_equipment_length.w, A1
 	MOVE.w	(A1)+, D7
 	BLE.b	loc_0001D5D2
 	SUBQ.w	#1, D7
@@ -29789,8 +29789,8 @@ loc_0001D5FC:
 	ADD.w	D2, D2
 	LEA	$FFFFC4D0.w, A2
 	MOVE.w	D1, (A2,D2.w)
-	LEA	$FFFFC484.w, A2
-	MOVE.w	$FFFFC482.w, D7
+	LEA	Possessed_equipment_list.w, A2
+	MOVE.w	Possessed_equipment_length.w, D7
 loc_0001D614:
 	MOVE.w	(A2)+, D3
 	CMP.b	D3, D1
@@ -29803,8 +29803,8 @@ loc_0001D624:
 loc_0001D628:
 	RTS
 loc_0001D62A:
-	LEA	$FFFFC484.w, A0
-	MOVE.w	$FFFFC482.w, D7
+	LEA	Possessed_equipment_list.w, A0
+	MOVE.w	Possessed_equipment_length.w, D7
 loc_0001D632:
 	MOVE.w	(A0)+, D3
 	MOVE.w	D3, D4
@@ -30950,8 +30950,8 @@ loc_0001E7DE:
 	BEQ.w	loc_0001E834
 	JSR	loc_000110D0
 	JSR	loc_00012A9A
-	MOVE.l	#$FFFFC464, $FFFFC4A8.w
-	MOVE.w	$FFFFC462.w, D0
+	MOVE.l	#Possessed_magics_list, $FFFFC4A8.w
+	MOVE.w	Possessed_magics_length.w, D0
 	BRA.w	loc_0001E84C
 loc_0001E818:
 	JSR	loc_000110BE
@@ -30962,8 +30962,8 @@ loc_0001E818:
 loc_0001E834:
 	JSR	loc_000110E2
 	JSR	loc_00012AD2
-	MOVE.l	#$FFFFC484, $FFFFC4A8.w
-	MOVE.w	$FFFFC482.w, D0
+	MOVE.l	#Possessed_equipment_list, $FFFFC4A8.w
+	MOVE.w	Possessed_equipment_length.w, D0
 loc_0001E84C:
 	JSR	loc_000115FA
 	MOVE.w	#8, $FFFFC42C.w
@@ -34176,9 +34176,9 @@ loc_000221B0:
 	dc.l	loc_00022622	
 loc_000221C0:
 	dc.l	Possessed_items_list
-	dc.l	$FFFFC484
-	dc.l	$FFFFC464
-	dc.l	$FFFFC464	
+	dc.l	Possessed_equipment_list
+	dc.l	Possessed_magics_list
+	dc.l	Possessed_magics_list	
 loc_000221D0:
 	dc.b	$00, $02, $00, $00, $00, $01 
 loc_000221D6:
@@ -34374,11 +34374,11 @@ loc_000226D6:
 	dc.l	loc_00025DB4
 	dc.l	Possessed_items_length
 	dc.l	loc_00025EC0
-	dc.l	$FFFFC482
+	dc.l	Possessed_equipment_length
 	dc.l	loc_00025E64
-	dc.l	$FFFFC462
+	dc.l	Possessed_magics_length
 	dc.l	loc_00025E64	
-	dc.l	$FFFFC462	
+	dc.l	Possessed_magics_length	
 	dc.l	loc_00000000	
 	dc.l	loc_00000000	
 	dc.l	$00FCF9F6	

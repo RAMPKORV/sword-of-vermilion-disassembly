@@ -15,6 +15,12 @@ Current_town = $FFFFC40C
 Possessed_items_length = $FFFFC442
 Possessed_items_list = $FFFFC444
 
+Possessed_magics_length = $FFFFC462
+Possessed_magics_list = $FFFFC464
+
+Possessed_equipment_length = $FFFFC482
+Possessed_equipment_list = $FFFFC484
+
 Player_name = $FFFFC64C
 Player_position_x_in_town = $FFFFC606
 Player_position_y_in_town = $FFFFC608
