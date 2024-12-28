@@ -6910,7 +6910,7 @@ loc_00006FD4:
 	ADDQ.b	#1, $1B(A5)
 	RTS
 loc_00006FE8:
-	TST.b	$FFFFC720.w
+	TST.b	Event_triggers_list.w
 	BEQ.b	loc_00006FF4
 	BCLR.b	#7, (A5)
 	RTS
@@ -6918,14 +6918,14 @@ loc_00006FF4:
 	MOVE.l	#loc_00006FFE, $2(A5)
 	RTS
 loc_00006FFE:
-	TST.b	$FFFFC720.w
+	TST.b	Event_triggers_list.w
 	BEQ.b	loc_0000700C
 	MOVE.l	#loc_0002CDE8, $1C(A5)
 loc_0000700C:
 	BRA.b	loc_00006FD4
 	BSR.w	loc_00008234
 	CLR.b	$25(A5)
-	TST.b	$FFFFC720.w
+	TST.b	Event_triggers_list.w
 	BEQ.b	loc_00007026
 	MOVE.l	#loc_00006F8E, $2(A5)
 	RTS
@@ -6933,7 +6933,7 @@ loc_00007026:
 	MOVE.l	#loc_00007030, $2(A5)
 	RTS
 loc_00007030:   
-	TST.b	$FFFFC720.w
+	TST.b	Event_triggers_list.w
 	BEQ.b	loc_0000703E
 	MOVE.l	#loc_0002CAF8, $1C(A5)
 loc_0000703E:
@@ -6943,7 +6943,7 @@ loc_0000703E:
 	MOVE.l	#loc_00007054, $2(A5)
 	RTS
 loc_00007054:  
-	TST.b	$FFFFC818.w
+	TST.b	Map_list.w
 	BNE.b	loc_0000706A
 	MOVE.l	#loc_0002EB52, $FFFFC438.w
 	MOVE.w	#$0070, D5
@@ -6955,7 +6955,7 @@ loc_0000706A:
 	MOVE.l	#loc_00007080, $2(A5)
 	RTS
 loc_00007080:
-	TST.b	$FFFFC818.w
+	TST.b	Map_list.w
 	BEQ.b	loc_00007096
 	MOVE.l	#loc_0002EB52, $FFFFC438.w
 	MOVE.w	#$0051, D5
@@ -8501,7 +8501,7 @@ loc_00008512:
 loc_00008516:
 	RTS
 loc_00008518:
-	LEA	$FFFFC818.w, A0
+	LEA	Map_list.w, A0
 loc_0000851C:
 	TST.b	(A0)+
 	BEQ.b	loc_00008528
@@ -8513,7 +8513,7 @@ loc_00008528:
 	RTS	
 loc_0000852E:
 	CLR.b	$FFFFC7F4.w
-	LEA	$FFFFC818.w, A0
+	LEA	Map_list.w, A0
 	MOVE.w	#7, D7
 loc_0000853A:
 	TST.b	(A0)
@@ -8525,7 +8525,7 @@ loc_00008542:
 	DBF	D7, loc_0000853A
 	RTS
 loc_00008550:
-	LEA	$FFFFC818.w, A0
+	LEA	Map_list.w, A0
 	MOVE.w	#7, D7
 loc_00008558:
 	BTST.b	D7, $FFFFC7F4.w
@@ -8987,7 +8987,7 @@ loc_00008D0A:
 	RTS
 loc_00008D12:
 	JMP	loc_0000F6DC
-	TST.b	$FFFFC818.w
+	TST.b	Map_list.w
 	BEQ.b	loc_00008D26
 	MOVE.l	#$0002CE90, $FFFFC250.w
 loc_00008D26:
@@ -17432,7 +17432,7 @@ loc_0001063C:
 loc_0001064C:
 	BSR.w	loc_0001066C
 	DBF	D7, loc_0001064C
-	LEA	$FFFFC720.w, A1
+	LEA	Event_triggers_list.w, A1
 	MOVE.w	#$01FF, D7
 loc_0001065C:
 	BSR.w	loc_0001066C
@@ -17635,7 +17635,7 @@ loc_000108CC:
 loc_000108DC:
 	BSR.w	loc_000108F6	
 	DBF	D7, loc_000108DC	
-	LEA	$FFFFC720.w, A1	
+	LEA	Event_triggers_list.w, A1	
 	MOVE.w	#$01FF, D7	
 loc_000108EC:
 	BSR.w	loc_000108F6	
@@ -17811,7 +17811,7 @@ loc_00010B18:
 loc_00010B2E:
 	CLR.l	D4
 	CLR.l	D5
-	LEA	$FFFFC720.w, A2
+	LEA	Event_triggers_list.w, A2
 	MOVE.b	$1(A0,D2.w), D4
 	ADDA.w	D2, A0
 	LEA	$2(A0), A4
@@ -17838,7 +17838,7 @@ loc_00010B6A:
 loc_00010B7C:
 	CLR.l	D4
 	CLR.l	D5
-	LEA	$FFFFC720.w, A2
+	LEA	Event_triggers_list.w, A2
 	MOVE.b	$1(A0,D2.w), D4
 	ADDA.w	D2, A0
 	LEA	$2(A0), A4
@@ -19077,7 +19077,7 @@ loc_00011E12:
 	MOVE.b	#$FF, $FFFF9910.w	
 	RTS	
 loc_00011E52:
-	LEA	$FFFFC818.w, A0
+	LEA	Map_list.w, A0
 	CLR.w	D0
 	MOVE.w	#7, D7
 loc_00011E5C:
@@ -19107,7 +19107,7 @@ loc_00011E62:
 	ADDQ.w	#2, $FFFF990C.w
 	MOVE.w	#$FFFF, D4
 	LEA	loc_00021B32, A4
-	LEA	$FFFFC818.w, A3
+	LEA	Map_list.w, A3
 	MOVE.w	$FFFFC502.w, D7
 	SUBQ.w	#1, D7
 loc_00011ED0:
@@ -21556,7 +21556,7 @@ loc_000157F0:
 	ANDI.w	#$0020, D1	
 	BEQ.b	loc_0001584E	
 	MOVE.w	#$0023, D7	
-	LEA	$FFFFC720.w, A0	
+	LEA	Event_triggers_list.w, A0	
 loc_00015844:
 	MOVE.l	#$FFFFFFFF, (A0)+	
 	DBF	D7, loc_00015844	
@@ -26598,9 +26598,9 @@ loc_0001A59C:
 	MOVE.w	$FFFFC440.w, D0
 	ADD.w	D0, D0
 	MOVE.w	(A2,D0.w), D0
-	ANDI.w	#$0100, D0
+	ANDI.w	#$0100, D0 ; Check item modifier for whether we can discard item
 	BEQ.b	loc_0001A5D4
-	MOVE.l	#$00025D80, Script_source_base.w
+	MOVE.l	#loc_00025D80, Script_source_base.w
 	BRA.w	loc_0001A636
 loc_0001A5D4:
 	JSR	loc_0001D650
@@ -28014,7 +28014,7 @@ loc_0001BC50:
 	BNE.b	loc_0001BC6C
 	LSR.w	#8, D0
 	ANDI.w	#$00FF, D0
-	LEA	$FFFFC720.w, A0
+	LEA	Event_triggers_list.w, A0
 	MOVE.b	#1, (A0,D0.w)
 loc_0001BC6C:
 	TST.w	$FFFFC428.w
@@ -31129,27 +31129,27 @@ loc_0001EAFE:
 	BRA.w	loc_0001F1BC
 loc_0001EB0C:
 	dc.l	loc_0002D494
-	dc.l	$FFFFC818
+	dc.l	Map_list
 	dc.l	loc_0002D45C
-	dc.l	$FFFFC720
+	dc.l	Event_triggers_list
 	dc.l	loc_0002D424
 	LEA	loc_0001EB2E, A1
 	MOVE.w	#1, D7
 	BRA.w	loc_0001F1BC
 loc_0001EB2E:
 	dc.l	loc_0002D4D4
-	dc.l	$FFFFC818
+	dc.l	Map_list
 	dc.l	loc_0002D4D0
-	dc.l	$FFFFC720
+	dc.l	Event_triggers_list
 	dc.l	loc_0002D4CC
 	LEA	loc_0001EB50, A1
 	MOVE.w	#1, D7
 	BRA.w	loc_0001F1BC
 loc_0001EB50:
 	dc.b	$00, $02, $D4, $F0 
-	dc.l	$FFFFC818
+	dc.l	Map_list
 	dc.l	loc_0002D4E4
-	dc.l	$FFFFC720
+	dc.l	Event_triggers_list
 	dc.l	loc_0002D4D8
 	LEA	loc_0002D4FC, A1
 	BRA.w	loc_0001F1D0
@@ -31158,9 +31158,9 @@ loc_0001EB50:
 	BRA.w	loc_0001F1BC
 loc_0001EB7C:
 	dc.l	loc_0002D514
-	dc.l	$FFFFC818
+	dc.l	Map_list
 	dc.l	loc_0002D50C
-	dc.l	$FFFFC720
+	dc.l	Event_triggers_list
 	dc.l	loc_0002D504	
 	LEA	loc_0002D51C, A1
 	BRA.w	loc_0001F1D0
@@ -31169,7 +31169,7 @@ loc_0001EB7C:
 	BRA.w	loc_0001F1BC
 loc_0001EBA8:
 	dc.l	loc_0002D530
-	dc.l	$FFFFC818
+	dc.l	Map_list
 	dc.l	loc_0002D528
 	LEA	loc_0001EBC2, A1
 	MOVE.w	#4, D7
@@ -33304,7 +33304,7 @@ loc_00020780:
 	dc.l	loc_00020F6A
 	dc.b	$FF, $FF 
 loc_00020C8E:
-	TST.b	$FFFFC818.w
+	TST.b	Map_list.w
 	BNE.b	loc_00020CBA
 	MOVE.b	#$FF, $FFFFC578.w
 	BSR.w	loc_000213CE
@@ -39649,6 +39649,13 @@ loc_0002C458:
 	dc.b	"south of here.", $FE
 	dc.b	"Here's a map to guide you."
 	dc.b	$F9, $02, $01, $60, $01, $70
+			; ^ suspected behavior:
+			; F9 => Set either event or map flag 
+			; 02 => Amount of entries in list, number of arguments vary depending on type
+			; 01 => is map flag (has one argument)
+			; 60 => offset from Map_list
+			; 01 => is map flag (has one argument)
+			; 70 => offset from Map_list
 loc_0002C4A0:
 	dc.b	"I'm surprised you", $FE
 	dc.b	"came back alive!", $FF, $00
@@ -39787,6 +39794,13 @@ loc_0002CB32:
 	dc.b	"as proud of you as I am.", $FE
 	dc.b	"Go now, and remember me...."
 	dc.b	$F9, $02, $02, $00, $00, $02, $00, $00, $00
+			; ^ suspected behavior:
+			; F9 => Set either event or map flag 
+			; 02 => Amount of entries in list, number of arguments vary depending on type
+			; 02 => receive money
+			; $00, $00, $02, $00 => 200 kims
+			; 00 => set event trigger
+			; 00 => offset from Event_triggers_list
 loc_0002CDE8:
 	dc.b	"There is no answer.", $FF
 loc_0002CDFC:
@@ -40086,7 +40100,7 @@ loc_0002E398:
 loc_0002E3AA:
 	MOVE.l	#$0002DE44, $FFFFC182.w
 	MOVE.l	#$0002DFE4, $FFFFC186.w
-	TST.b	$FFFFC720.w
+	TST.b	Event_triggers_list.w
 	BEQ.w	loc_0002E3D2
 	MOVE.l	#$0002D8E8, $FFFFC182.w
 	MOVE.l	#$0002DA90, $FFFFC186.w
@@ -40100,7 +40114,7 @@ loc_0002E3DE:
 	TST.b	$FFFFC723.w
 	BNE.w	loc_0002E406
 	MOVE.l	#loc_0002CFDA, Script_source_base.w
-	TST.b	$FFFFC818.w
+	TST.b	Map_list.w
 	BNE.w	loc_0002E406
 	MOVE.l	#loc_0002CFA8, Script_source_base.w	
 loc_0002E406:

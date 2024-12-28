@@ -29,3 +29,6 @@ Player_ac = $FFFFC636
 Player_int = $FFFFC638
 Player_dex = $FFFFC63A
 Player_luk = $FFFFC63C
+
+Map_list = $FFFFC818
+Event_triggers_list = $FFFFC720 ; TODO: Investigate more
