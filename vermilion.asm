@@ -1926,7 +1926,7 @@ loc_00002620:
 	BCLR.b	#0, $FFFFC60D.w
 	JSR	loc_0001325E
 	RTS
-loc_000026BA:
+loc_000026BA: ; level up
 	CMPI.w	#$001E, Player_level.w
 	BGE.b	loc_00002706
 	MOVE.l	Player_experience.w, D0
@@ -1938,7 +1938,7 @@ loc_000026BA:
 	MOVE.b	#$86, D0
 	JSR	loc_00010522
 	ADDQ.w	#1, Player_level.w
-	JSR	loc_0001DA8E
+	JSR	loc_0001DA8E ; upgrade stats
 	MOVE.w	#$0064, $FFFFC55C.w
 	JSR	loc_000122D2
 	JSR	loc_00012E68
