@@ -99,7 +99,7 @@ loc_00000250:
 	MOVE.w	#$FFFF, $FFFFC4D6.w
 	MOVE.w	#$FFFF, $FFFFC4D8.w
 	MOVE.l	#0, Player_kims.w
-	MOVE.w	#0, $FFFFC640.w
+	MOVE.w	#0, Player_level.w
 	JSR	loc_0001DA8E
 	LEA	Player_name.w, A0
 	MOVE.b	#$FF, (A0)
@@ -1398,13 +1398,13 @@ loc_00001E0A:
 	MOVE.w	#$00B9, D0	
 	JSR	loc_00010522	
 	MOVE.w	#$0024, $FFFFC412.w	
-	CLR.w	$FFFFC640.w	
+	CLR.w	Player_level.w	
 	CLR.w	Player_str.w	
 	CLR.w	Player_luk.w	
 	CLR.w	Player_dex.w	
 	CLR.w	Player_ac.w	
 	CLR.w	Player_int.w	
-	CLR.w	$FFFFC630.w	
+	CLR.w	Player_mmp.w	
 	CLR.w	Player_mhp.w	
 	CLR.l	Player_experience.w	
 	MOVE.w	$FFFFC4D0.w, D1	
@@ -1927,7 +1927,7 @@ loc_00002620:
 	JSR	loc_0001325E
 	RTS
 loc_000026BA:
-	CMPI.w	#$001E, $FFFFC640.w
+	CMPI.w	#$001E, Player_level.w
 	BGE.b	loc_00002706
 	MOVE.l	Player_experience.w, D0
 	CMP.l	Player_next_level_experience.w, D0
@@ -1937,7 +1937,7 @@ loc_000026BA:
 	MOVE.w	#$001B, $FFFFC412.w
 	MOVE.b	#$86, D0
 	JSR	loc_00010522
-	ADDQ.w	#1, $FFFFC640.w
+	ADDQ.w	#1, Player_level.w
 	JSR	loc_0001DA8E
 	MOVE.w	#$0064, $FFFFC55C.w
 	JSR	loc_000122D2
@@ -2136,7 +2136,7 @@ loc_00002974:
 	TST.b	$FFFF9911.w
 	BNE.w	loc_000029F8
 	JSR	loc_0001264E
-	CMPI.w	#$001E, $FFFFC640.w
+	CMPI.w	#$001E, Player_level.w
 	BGE.b	loc_000029D4
 	MOVE.l	Player_experience.w, D0
 	CMP.l	Player_next_level_experience.w, D0
@@ -2144,7 +2144,7 @@ loc_00002974:
 	MOVE.w	#$001B, $FFFFC412.w
 	MOVE.b	#$86, D0
 	JSR	loc_00010522
-	ADDQ.w	#1, $FFFFC640.w
+	ADDQ.w	#1, Player_level.w
 	JSR	loc_0001DA8E
 	MOVE.w	#$0064, $FFFFC55C.w
 	JSR	loc_000122D2
@@ -2350,7 +2350,7 @@ loc_00002C7C:
 	CLR.w	$FFFFC642.w
 loc_00002CA2:
 	MOVE.w	Player_mhp.w, Player_hp.w
-	MOVE.w	$FFFFC630.w, Player_mp.w
+	MOVE.w	Player_mmp.w, Player_mp.w
 	TST.b	$FFFFC45C.w
 	BNE.w	loc_00002D04
 	LEA	Player_kims.w, A0
@@ -7842,7 +7842,7 @@ loc_00007CCC:
 	MOVE.w	#$FFFF, $FFFFC642.w
 	MOVE.b	#$FF, $FFFFC7C6.w
 	MOVE.w	Player_mhp.w, Player_hp.w
-	MOVE.w	$FFFFC630.w, Player_mp.w
+	MOVE.w	Player_mmp.w, Player_mp.w
 	MOVE.b	#$FF, $FFFFC77B.w
 loc_00007D32:
 	BSR.w	loc_00006F44
@@ -9016,7 +9016,7 @@ loc_00008D44:
 loc_00008D7A:
 	MOVE.l	#$000322FC, $FFFFC250.w
 	BRA.b	loc_00008DC0
-loc_00008D84:
+loc_00008D84: ; buy Sanguios from little girl
 	MOVE.l	#$00001000, D0
 	MOVE.l	Player_kims.w, D1
 	ANDI.l	#$00FFFFFF, D1
@@ -9026,10 +9026,10 @@ loc_00008D84:
 	MOVE.w	(A0), D0
 	CMPI.w	#8, D0
 	BLT.b	loc_00008DB8
-	MOVE.l	#$00032232, $FFFFC250.w	
+	MOVE.l	#loc_00032232, $FFFFC250.w	
 	BRA.b	loc_00008DC0	
 loc_00008DAE:
-	MOVE.l	#$00032176, $FFFFC250.w	
+	MOVE.l	#loc_00032176, $FFFFC250.w	
 	BRA.b	loc_00008DC0	
 loc_00008DB8:
 	MOVE.l	#$000320C0, $FFFFC250.w
@@ -18770,13 +18770,13 @@ loc_00011992:
 	BRA.b	loc_000119AA
 loc_000119A4:
 	LEA	loc_00027258, A0
-loc_000119AA:
+loc_000119AA: ; stats screen?
 	MOVE.w	#$007E, D0
 	BSR.w	loc_00012CF6
 	LEA	Player_name.w, A0
 	MOVE.w	#$0041, D0
 	BSR.w	loc_00012CF6
-	MOVE.w	$FFFFC640.w, D0
+	MOVE.w	Player_level.w, D0
 	ADDQ.w	#1, D0
 	JSR	loc_0001048C
 	MOVE.w	D0, D2
@@ -18833,7 +18833,7 @@ loc_000119AA:
 	BSR.w	loc_00011458
 	MOVE.w	#$020C, D0
 	BSR.w	loc_00012CDA
-	MOVE.w	$FFFFC630.w, D0
+	MOVE.w	Player_mmp.w, D0
 	JSR	loc_0001048C
 	MOVE.w	D0, D2
 	BSR.w	loc_000114D8
@@ -20332,7 +20332,7 @@ loc_000130EA:
 	BSR.w	loc_00011470
 	MOVE.w	#$000D, $FFFFC242.w
 	MOVE.w	#$001A, $FFFFC244.w
-	MOVE.w	$FFFFC630.w, D0
+	MOVE.w	Player_mmp.w, D0
 	JSR	loc_0001048C
 	MOVE.w	D0, D2
 	MOVE.w	#0, D3
@@ -20352,7 +20352,7 @@ loc_00013138:
 	BSR.w	loc_000114A4
 	MOVE.w	#$000D, $FFFFC242.w
 	MOVE.w	#$001A, $FFFFC244.w
-	MOVE.w	$FFFFC630.w, D0
+	MOVE.w	Player_mmp.w, D0
 	JSR	loc_0001048C
 	MOVE.w	D0, D2
 	MOVE.w	#0, D3
@@ -21563,13 +21563,13 @@ loc_00015844:
 loc_0001584E:
 	LEA	$FFFFC508.w, A0	
 	MOVE.w	#$000D, D7	
-loc_00015856:
+loc_00015856: ; god mode?
 	MOVE.b	#$FF, (A0)+	
 	DBF	D7, loc_00015856	
 	MOVE.w	#1, Possessed_magics_length.w	
 	LEA	Possessed_magics_list.w, A0	
 	MOVE.w	#$000E, (A0)	
-	MOVE.w	#$0258, $FFFFC630.w	
+	MOVE.w	#$0258, Player_mmp.w	
 	MOVE.w	#$04B0, Player_mhp.w	
 	MOVE.w	#$05DC, Player_ac.w	
 	MOVE.w	#$05DC, Player_str.w	
@@ -26961,10 +26961,10 @@ loc_0001AB04:
 	JSR	loc_00010522	
 	RTS	
 loc_0001AB1C:
-	ADDQ.w	#8, $FFFFC630.w	
-	CMPI.w	#$0258, $FFFFC630.w	
+	ADDQ.w	#8, Player_mmp.w	
+	CMPI.w	#$0258, Player_mmp.w	
 	BLE.b	loc_0001AB2E	
-	MOVE.w	#$0258, $FFFFC630.w	
+	MOVE.w	#$0258, Player_mmp.w	
 loc_0001AB2E:
 	MOVE.l	#loc_00026E42, Script_source_base.w	
 	JSR	loc_0000FB5C	
@@ -27029,9 +27029,9 @@ loc_0001AC00:
 loc_0001AC14:
 	MOVE.l	#loc_000269EA, Script_source_base.w
 	MOVE.w	Player_mp.w, D0
-	CMP.w	$FFFFC630.w, D0
+	CMP.w	Player_mmp.w, D0
 	BLE.b	loc_0001AC34
-	MOVE.w	$FFFFC630.w, Player_mp.w	
+	MOVE.w	Player_mmp.w, Player_mp.w	
 	MOVE.l	#loc_00026A18, Script_source_base.w	
 loc_0001AC34:
 	BSR.w	loc_0001B166
@@ -28873,7 +28873,7 @@ loc_0001C8DA:
 	BRA.b	loc_0001C8FA	
 loc_0001C8EE:
 	MOVE.w	Player_mhp.w, Player_hp.w
-	MOVE.w	$FFFFC630.w, Player_mp.w
+	MOVE.w	Player_mmp.w, Player_mp.w
 loc_0001C8FA:
 	MOVE.w	Current_town.w, D0
 	CMPI.w	#2, D0
@@ -30108,9 +30108,9 @@ loc_0001DA64:
 loc_0001DA8C:
 	RTS
 loc_0001DA8E:
-	MOVE.w	$FFFFC640.w, D7
+	MOVE.w	Player_level.w, D7
 	ADD.w	D7, D7
-	LEA	loc_0002518A, A0
+	LEA	PlayerLevelToStrMap, A0
 	MOVE.w	(A0,D7.w), D1
 	JSR	loc_0000FB5C
 	ANDI.w	#3, D0
@@ -30120,7 +30120,7 @@ loc_0001DA8E:
 	BLE.b	loc_0001DABC
 	MOVE.w	#$05DC, Player_str.w	
 loc_0001DABC:
-	LEA	loc_000252F4, A0
+	LEA	PlayerLevelToLukMap, A0
 	MOVE.w	(A0,D7.w), D1
 	JSR	loc_0000FB5C
 	ANDI.w	#3, D0
@@ -30130,7 +30130,7 @@ loc_0001DABC:
 	BLE.b	loc_0001DAE4
 	MOVE.w	#$02BC, Player_luk.w	
 loc_0001DAE4:
-	LEA	loc_000252B6, A0
+	LEA	PlayerLevelToDexMap, A0
 	MOVE.w	(A0,D7.w), D1
 	JSR	loc_0000FB5C
 	ANDI.w	#3, D0
@@ -30140,7 +30140,7 @@ loc_0001DAE4:
 	BLE.b	loc_0001DB0C
 	MOVE.w	#$07D0, Player_dex.w	
 loc_0001DB0C:
-	LEA	loc_0002523A, A0
+	LEA	PlayerLevelToAcMap, A0
 	MOVE.w	(A0,D7.w), D1
 	JSR	loc_0000FB5C
 	ANDI.w	#3, D0
@@ -30150,7 +30150,7 @@ loc_0001DB0C:
 	BLE.b	loc_0001DB34
 	MOVE.w	#$05DC, Player_ac.w	
 loc_0001DB34:
-	LEA	loc_00025278, A0
+	LEA	PlayerLevelToIntMap, A0
 	MOVE.w	(A0,D7.w), D1
 	JSR	loc_0000FB5C
 	ANDI.w	#3, D0
@@ -30160,18 +30160,18 @@ loc_0001DB34:
 	BLE.b	loc_0001DB5C
 	MOVE.w	#$01F4, Player_int.w	
 loc_0001DB5C:
-	LEA	loc_0002510E, A0
+	LEA	PlayerLevelToMmpMap, A0
 	MOVE.w	(A0,D7.w), D1
 	JSR	loc_0000FB5C
 	ANDI.w	#3, D0
 	ADD.w	D0, D1
-	ADD.w	D1, $FFFFC630.w
-	CMPI.w	#$0258, $FFFFC630.w
+	ADD.w	D1, Player_mmp.w
+	CMPI.w	#$0258, Player_mmp.w
 	BLE.b	loc_0001DB84
-	MOVE.w	#$0258, $FFFFC630.w	
+	MOVE.w	#$0258, Player_mmp.w	
 loc_0001DB84:
-	MOVE.w	$FFFFC630.w, Player_mp.w
-	LEA	loc_0002514C, A0
+	MOVE.w	Player_mmp.w, Player_mp.w
+	LEA	PlayerLevelToMhpMap, A0
 	MOVE.w	(A0,D7.w), D1
 	JSR	loc_0000FB5C
 	ANDI.w	#3, D0
@@ -30183,7 +30183,7 @@ loc_0001DB84:
 loc_0001DBB2:
 	MOVE.w	Player_mhp.w, Player_hp.w
 	ADD.w	D7, D7
-	LEA	loc_00025332, A0
+	LEA	PlayerLevelToNextLevelExperienceMap, A0
 	MOVE.l	(A0,D7.w), Player_next_level_experience.w
 	RTS
 loc_0001DBC8:
@@ -37264,15 +37264,102 @@ loc_000250F0:
 	dc.l	loc_0005D764
 	dc.l	loc_0005D798
 	dc.b	$00, $01 
-loc_0002510E:
-	dc.b	$00, $00, $00, $11, $00, $03, $00, $04, $00, $06, $00, $05, $00, $06, $00, $06, $00, $0E, $00, $07, $00, $08, $00, $08, $00, $08, $00, $08, $00, $09, $00, $0A 
-	dc.b	$00, $0A, $00, $0A, $00, $0B, $00, $0B, $00, $0B, $00, $0C, $00, $0C, $00, $0D, $00, $0D, $00, $0E, $00, $10, $00, $1E, $00, $26, $00, $57, $00, $66 
-loc_0002514C:
-	dc.b	$00, $21, $00, $1B, $00, $1B, $00, $26, $00, $1D, $00, $1D, $00, $20, $00, $21, $00, $20, $00, $1A, $00, $25, $00, $23, $00, $1A, $00, $1D, $00, $27, $00, $1D 
-	dc.b	$00, $22, $00, $24, $00, $24, $00, $20, $00, $2B, $00, $20, $00, $21, $00, $21, $00, $1C, $00, $1F, $00, $2B, $00, $22, $00, $1F, $00, $1C, $00, $1D 
-loc_0002518A:
-	dc.b	$00, $01, $00, $07, $00, $07, $00, $09, $00, $0C, $00, $0C, $00, $0D, $00, $0E, $00, $0F, $00, $10, $00, $11, $00, $12, $00, $13, $00, $15, $00, $15, $00, $15 
-	dc.b	$00, $15, $00, $16, $00, $17, $00, $0D, $00, $17, $00, $21, $00, $17, $00, $18, $00, $19, $00, $3B, $00, $28, $00, $29, $00, $2A, $00, $2B, $00, $2C 
+PlayerLevelToMmpMap: ; word-sized
+	dc.w	$0000
+	dc.w	$0011
+	dc.w	$0003
+	dc.w	$0004
+	dc.w	$0006
+	dc.w	$0005
+	dc.w	$0006
+	dc.w	$0006
+	dc.w	$000E
+	dc.w	$0007
+	dc.w	$0008
+	dc.w	$0008
+	dc.w	$0008
+	dc.w	$0008
+	dc.w	$0009
+	dc.w	$000A 
+	dc.w	$000A
+	dc.w	$000A
+	dc.w	$000B
+	dc.w	$000B
+	dc.w	$000B
+	dc.w	$000C
+	dc.w	$000C
+	dc.w	$000D
+	dc.w	$000D
+	dc.w	$000E
+	dc.w	$0010
+	dc.w	$001E
+	dc.w	$0026
+	dc.w	$0057
+	dc.w	$0066 
+PlayerLevelToMhpMap: ; word-sized
+	dc.w	$0021
+	dc.w	$001B
+	dc.w	$001B
+	dc.w	$0026
+	dc.w	$001D
+	dc.w	$001D
+	dc.w	$0020
+	dc.w	$0021
+	dc.w	$0020
+	dc.w	$001A
+	dc.w	$0025
+	dc.w	$0023
+	dc.w	$001A
+	dc.w	$001D
+	dc.w	$0027
+	dc.w	$001D 
+	dc.w	$0022
+	dc.w	$0024
+	dc.w	$0024
+	dc.w	$0020
+	dc.w	$002B
+	dc.w	$0020
+	dc.w	$0021
+	dc.w	$0021
+	dc.w	$001C
+	dc.w	$001F
+	dc.w	$002B
+	dc.w	$0022
+	dc.w	$001F
+	dc.w	$001C
+	dc.w	$001D 
+PlayerLevelToStrMap: ; Player_level -> Player_str mappings. How much is added to Player_str when reaching a level
+	dc.w	$0001
+	dc.w	$0007
+	dc.w	$0007
+	dc.w	$0009
+	dc.w	$000C
+	dc.w	$000C
+	dc.w	$000D
+	dc.w	$000E
+	dc.w	$000F
+	dc.w	$0010
+	dc.w	$0011
+	dc.w	$0012
+	dc.w	$0013
+	dc.w	$0015
+	dc.w	$0015 
+	dc.w	$0015 
+	dc.w	$0015
+	dc.w	$0016
+	dc.w	$0017
+	dc.w	$000D
+	dc.w	$0017
+	dc.w	$0021
+	dc.w	$0017
+	dc.w	$0018
+	dc.w	$0019
+	dc.w	$003B
+	dc.w	$0028
+	dc.w	$0029
+	dc.w	$002A
+	dc.w	$002B
+	dc.w	$002C 
 loc_000251C8:
 	dc.w	$001C
 	dc.w	$0029
@@ -37312,23 +37399,166 @@ loc_000251C8:
 	dc.b	$00, $A7 
 	dc.w	$00C8
 	dc.b	$00, $45, $00, $78, $00, $C3 
-loc_0002523A:
-	dc.b	$00, $08, $00, $03, $00, $0B, $00, $0C, $00, $0F, $00, $0D, $00, $0E, $00, $0F, $00, $10, $00, $11, $00, $12, $00, $13, $00, $15, $00, $15, $00, $15, $00, $15 
-	dc.b	$00, $16, $00, $17, $00, $0D, $00, $17, $00, $21, $00, $17, $00, $18, $00, $19, $00, $3B, $00, $28, $00, $29, $00, $2A, $00, $2B, $00, $2C, $00, $00 
-loc_00025278:
-	dc.b	$00, $07, $00, $0B, $00, $0C, $00, $0C, $00, $09, $00, $0D, $00, $0A, $00, $0B, $00, $08, $00, $0B, $00, $0D, $00, $0B, $00, $08, $00, $0C, $00, $0D, $00, $0C 
-	dc.b	$00, $0C, $00, $0C, $00, $0C, $00, $0D, $00, $0F, $00, $0A, $00, $0B, $00, $0E, $00, $0E, $00, $0C, $00, $0E, $00, $0C, $00, $0D, $00, $0C, $00, $0B 
-loc_000252B6:
-	dc.b	$00, $64, $00, $52, $00, $30, $00, $22, $00, $2C, $00, $44, $00, $3B, $00, $3F, $00, $2B, $00, $40, $00, $41, $00, $36, $00, $68, $00, $42, $00, $36, $00, $36 
-	dc.b	$00, $2D, $00, $2D, $00, $23, $00, $26, $00, $1F, $00, $24, $00, $19, $00, $23, $00, $1B, $00, $1A, $00, $24, $00, $10, $00, $17, $00, $12, $00, $19 
-loc_000252F4:
-	dc.b	$00, $05, $00, $05, $00, $07, $00, $08, $00, $07, $00, $06, $00, $06, $00, $06, $00, $03, $00, $05, $00, $08, $00, $07, $00, $05, $00, $06, $00, $05, $00, $08 
-	dc.b	$00, $15, $00, $0B, $00, $0C, $00, $08, $00, $1F, $00, $24, $00, $19, $00, $23, $00, $1B, $00, $1A, $00, $24, $00, $10, $00, $17, $00, $12, $00, $4A 
-loc_00025332:
-	dc.b	$00, $00, $00, $90, $00, $00, $03, $20, $00, $00, $06, $60, $00, $00, $15, $40, $00, $00, $30, $00, $00, $00, $63, $00, $00, $01, $10, $00, $00, $01, $80, $00
-	dc.b	$00, $02, $80, $00, $00, $04, $00, $00, $00, $05, $60, $00, $00, $07, $70, $00, $00, $10, $00, $00, $00, $14, $00, $00, $00, $18, $00, $00, $00, $24, $00, $00
-	dc.b	$00, $30, $00, $00, $00, $35, $00, $00, $00, $40, $00, $00, $00, $46, $00, $00, $00, $52, $00, $00, $00, $57, $50, $00, $00, $63, $00, $00, $00, $68, $60, $00
-	dc.b	$00, $74, $20, $00, $00, $80, $00, $00, $00, $85, $40, $00, $00, $91, $00, $00, $00, $97, $20, $00, $00, $99, $99, $99, $00, $FF, $FF, $FF
+PlayerLevelToAcMap: ; word-sized
+	dc.w	$0008
+	dc.w	$0003
+	dc.w	$000B
+	dc.w	$000C
+	dc.w	$000F
+	dc.w	$000D
+	dc.w	$000E
+	dc.w	$000F
+	dc.w	$0010
+	dc.w	$0011
+	dc.w	$0012
+	dc.w	$0013
+	dc.w	$0015
+	dc.w	$0015
+	dc.w	$0015
+	dc.w	$0015 
+	dc.w	$0016
+	dc.w	$0017
+	dc.w	$000D
+	dc.w	$0017
+	dc.w	$0021
+	dc.w	$0017
+	dc.w	$0018
+	dc.w	$0019
+	dc.w	$003B
+	dc.w	$0028
+	dc.w	$0029
+	dc.w	$002A
+	dc.w	$002B
+	dc.w	$002C
+	dc.w	$0000 
+PlayerLevelToIntMap: ; word-sized
+	dc.w	$0007
+	dc.w	$000B 
+	dc.w	$000C 
+	dc.w	$000C 
+	dc.w	$0009 
+	dc.w	$000D 
+	dc.w	$000A 
+	dc.w	$000B 
+	dc.w	$0008 
+	dc.w	$000B 
+	dc.w	$000D 
+	dc.w	$000B
+	dc.w	$0008 
+	dc.w	$000C 
+	dc.w	$000D 
+	dc.w	$000C 
+	dc.w	$000C 
+	dc.w	$000C 
+	dc.w	$000C 
+	dc.w	$000D 
+	dc.w	$000F 
+	dc.w	$000A 
+	dc.w	$000B 
+	dc.w	$000E 
+	dc.w	$000E 
+	dc.w	$000C 
+	dc.w	$000E 
+	dc.w	$000C 
+	dc.w	$000D 
+	dc.w	$000C 
+	dc.w	$000B 
+PlayerLevelToDexMap: ; word-sized
+	dc.w	$0064
+	dc.w	$0052 
+	dc.w	$0030 
+	dc.w	$0022 
+	dc.w	$002C 
+	dc.w	$0044 
+	dc.w	$003B 
+	dc.w	$003F 
+	dc.w	$002B
+	dc.w	$0040 
+	dc.w	$0041 
+	dc.w	$0036 
+	dc.w	$0068 
+	dc.w	$0042 
+	dc.w	$0036 
+	dc.w	$0036 
+	dc.w	$002D 
+	dc.w	$002D 
+	dc.w	$0023 
+	dc.w	$0026 
+	dc.w	$001F 
+	dc.w	$0024 
+	dc.w	$0019 
+	dc.w	$0023 
+	dc.w	$001B 
+	dc.w	$001A 
+	dc.w	$0024 
+	dc.w	$0010 
+	dc.w	$0017 
+	dc.w	$0012 
+	dc.w	$0019 
+PlayerLevelToLukMap: ; Player_level -> Player_luk mappings. How much is added to Player_luk  when reaching a level
+	dc.w	$0005
+	dc.w	$0005
+	dc.w	$0007
+	dc.w	$0008
+	dc.w	$0007
+	dc.w	$0006
+	dc.w	$0006
+	dc.w	$0006
+	dc.w	$0003
+	dc.w	$0005
+	dc.w	$0008
+	dc.w	$0007
+	dc.w	$0005
+	dc.w	$0006
+	dc.w	$0005
+	dc.w	$0008 
+	dc.w	$0015
+	dc.w	$000B
+	dc.w	$000C
+	dc.w	$0008
+	dc.w	$001F
+	dc.w	$0024
+	dc.w	$0019
+	dc.w	$0023
+	dc.w	$001B
+	dc.w	$001A
+	dc.w	$0024
+	dc.w	$0010
+	dc.w	$0017
+	dc.w	$0012
+	dc.w	$004A 
+PlayerLevelToNextLevelExperienceMap:
+	dc.l	$00000090
+	dc.l	$00000320 
+	dc.l	$00000660 
+	dc.l	$00001540 
+	dc.l	$00003000 
+	dc.l	$00006300 
+	dc.l	$00011000
+	dc.l	$00018000
+	dc.l	$00028000 
+	dc.l	$00040000 
+	dc.l	$00056000 
+	dc.l	$00077000 
+	dc.l	$00100000 
+	dc.l	$00140000 
+	dc.l	$00180000 
+	dc.l	$00240000
+	dc.l	$00300000 
+	dc.l	$00350000 
+	dc.l	$00400000 
+	dc.l	$00460000 
+	dc.l	$00520000 
+	dc.l	$00575000 
+	dc.l	$00630000 
+	dc.l	$00686000
+	dc.l	$00742000 
+	dc.l	$00800000 
+	dc.l	$00854000 
+	dc.l	$00910000 
+	dc.l	$00972000 
+	dc.l	$00999999 
+	dc.l	$00FFFFFF
 loc_000253AE:
 	dc.b	"You have nothing to use!", $FF, $00
 loc_000253C8:
@@ -41193,7 +41423,13 @@ loc_00031F98:
 loc_00031FC8:
 	dc.b	"Here is a map", $FE
 	dc.b	"to Asti's Cave", $2E
-	dc.b	$F9, $05, $01, $5C, $01, $6C, $01, $7C, $01, $6D, $01, $7B, $00
+	dc.b	$F9, $05 ; 5 map areas
+	dc.b	$01, $5C
+	dc.b	$01, $6C
+	dc.b	$01, $7C
+	dc.b	$01, $6D
+	dc.b	$01, $7B
+	dc.b	$00 ; padding
 loc_00031FF2:
 	dc.b	"Be sure to get the rings.", $FF
 loc_0003200C:

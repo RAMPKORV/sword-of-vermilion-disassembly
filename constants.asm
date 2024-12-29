@@ -31,12 +31,14 @@ Player_experience = $FFFFC624
 Player_next_level_experience = $FFFFC628
 Player_hp = $FFFFC62C
 Player_mhp = $FFFFC62E
+Player_mmp = $FFFFC630
 Player_mp = $FFFFC632
 Player_str = $FFFFC634
 Player_ac = $FFFFC636
 Player_int = $FFFFC638
 Player_dex = $FFFFC63A
 Player_luk = $FFFFC63C
+Player_level = $FFFFC640
 
 Map_list = $FFFFC818
 Event_triggers_list = $FFFFC720 ; TODO: Investigate more
