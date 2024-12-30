@@ -1,7 +1,6 @@
 RAM location suspicions:
 
-C60D.b: Player direction in town
-C60E.b: If != 0, move player one step in the direction faced
+$FFFFC60E.b: If != 0, move player one step in the direction faced
 
 C542: If != 0, rotate player counter-clockwise in dungeon crawling mode
 C543: If != 0, rotate player clockwise in dungeon crawling mode
