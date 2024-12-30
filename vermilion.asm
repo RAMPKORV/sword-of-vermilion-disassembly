@@ -18296,7 +18296,7 @@ loc_00011304:
 	BSR.w	loc_00012C9A
 	MOVE.w	#$000C, $FFFF9906.w
 	MOVE.w	#2, $FFFF990C.w
-	LEA	loc_0001FBD4, A4
+	LEA	TownNames, A4
 	LEA	$FFFFC508.w, A6
 	LEA	$1C(A4), A4
 	LEA	$7(A6), A6
@@ -18311,7 +18311,7 @@ loc_0001136E:
 	DBF	D7, loc_00011364
 	MOVE.w	#2, $FFFF9906.w
 	MOVE.w	#2, $FFFF990C.w
-	LEA	loc_0001FBD4, A4
+	LEA	TownNames, A4
 	LEA	$FFFFC508.w, A6
 	MOVE.w	#6, D7
 loc_00011390:
@@ -18895,14 +18895,14 @@ loc_00011B7C:
 	MOVE.b	#$FF, $FFFF9910.w
 	RTS
 loc_00011B90:
-	LEA	loc_00025EC0, A1
+	LEA	EquipmentNames, A1
 	ANDI.w	#$00FF, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
 	MOVEA.l	(A1,D0.w), A0
 	RTS
 loc_00011BA4:
-	LEA	loc_00025E64, A1
+	LEA	MagicNames, A1
 	ANDI.w	#$00FF, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
@@ -18925,7 +18925,7 @@ loc_00011BB8:
 	BSR.w	loc_00012CE6
 	ADDQ.w	#2, $FFFF990C.w
 	LEA	Possessed_equipment_list.w, A3
-	LEA	loc_00025EC0, A4
+	LEA	EquipmentNames, A4
 	MOVE.w	Possessed_equipment_length.w, D7
 	SUBQ.w	#1, D7
 loc_00011C0E:
@@ -18996,7 +18996,7 @@ loc_00011CC2:
 	BSR.w	loc_00012CE6
 	ADDQ.w	#2, $FFFF990C.w
 	LEA	Possessed_magics_list.w, A3
-	LEA	loc_00025E64, A4
+	LEA	MagicNames, A4
 	MOVE.w	Possessed_magics_length.w, D7
 	SUBQ.w	#1, D7
 loc_00011D18:
@@ -19047,7 +19047,7 @@ loc_00011D96:
 	BSR.w	loc_00012CE6
 	ADDQ.w	#2, $FFFF990C.w
 	LEA	Possessed_items_list.w, A3
-	LEA	loc_00025DB4, A4
+	LEA	ItemNames, A4
 	MOVE.w	Possessed_items_length.w, D7
 	SUBQ.w	#1, D7
 loc_00011DEC:
@@ -19106,7 +19106,7 @@ loc_00011E62:
 	MOVE.w	#2, $FFFF9906.w
 	ADDQ.w	#2, $FFFF990C.w
 	MOVE.w	#$FFFF, D4
-	LEA	loc_00021B32, A4
+	LEA	RingNames, A4
 	LEA	Map_list.w, A3
 	MOVE.w	$FFFFC502.w, D7
 	SUBQ.w	#1, D7
@@ -19861,7 +19861,7 @@ loc_00012A7A:
 	MOVE.w	#$0011, $FFFFC220.w
 	MOVE.w	#4, $FFFFC222.w
 	LEA	Possessed_items_list.w, A2
-	LEA	loc_00025DB4, A1
+	LEA	ItemNames, A1
 	MOVE.w	Possessed_items_length.w, D7
 	BSR.w	loc_00012B5C
 	RTS
@@ -19869,7 +19869,7 @@ loc_00012A9A:
 	MOVE.w	#$0011, $FFFFC220.w
 	MOVE.w	#4, $FFFFC222.w
 	LEA	Possessed_magics_list.w, A2
-	LEA	loc_00025E64, A1
+	LEA	MagicNames, A1
 	MOVE.w	Possessed_magics_length.w, D7
 	BSR.w	loc_00012B5C
 	MOVE.w	#$0021, $FFFFC220.w
@@ -19882,7 +19882,7 @@ loc_00012AD2:
 	MOVE.w	#$0011, $FFFFC220.w
 	MOVE.w	#4, $FFFFC222.w
 	LEA	Possessed_equipment_list.w, A2
-	LEA	loc_00025EC0, A1
+	LEA	EquipmentNames, A1
 	MOVE.w	Possessed_equipment_length.w, D7
 	BSR.w	loc_00012B5C
 	MOVE.w	#$0023, $FFFFC220.w
@@ -19902,7 +19902,7 @@ loc_00012B0A:
 	MOVE.w	#$0011, $FFFFC220.w
 	MOVE.w	#4, $FFFFC222.w
 	LEA	$FFFFC4E8.w, A2
-	LEA	loc_00025EC0, A1
+	LEA	EquipmentNames, A1
 	BSR.w	loc_00012B5C
 	MOVE.w	$FFFFC4E0.w, D7
 	MOVE.w	#$0023, $FFFFC220.w
@@ -20265,7 +20265,7 @@ loc_00013012:
 	MOVE.l	#$6D360003, D5
 	BRA.w	loc_00013088
 loc_00013028:
-	LEA	loc_00025E64, A0
+	LEA	MagicNames, A0
 	MOVE.w	$FFFFC4D6.w, D0
 	BLT.b	loc_00013044
 	ANDI.w	#$00FF, D0
@@ -24261,7 +24261,7 @@ loc_000181DC:
 	LEA	loc_0002591A, A0
 	JSR	loc_00012A6C
 	MOVE.b	#$FE, (A1)+
-	LEA	loc_00025E64, A0
+	LEA	MagicNames, A0
 	LEA	Possessed_magics_list.w, A2
 	MOVE.w	$FFFFC460.w, D0
 	ADD.w	D0, D0
@@ -24369,7 +24369,7 @@ loc_00018388:
 	LEA	$FFFFC260.w, A1
 	LEA	loc_00025518, A0
 	JSR	loc_00012A6C
-	LEA	loc_00025E64, A0
+	LEA	MagicNames, A0
 	LEA	Possessed_magics_list.w, A2
 	MOVE.w	$FFFFC460.w, D0
 	ADD.w	D0, D0
@@ -26593,7 +26593,7 @@ loc_0001A59C:
 	JSR	loc_00012670
 	JSR	loc_000126B6
 	JSR	loc_00010C4A
-	LEA	loc_00025DB4, A0
+	LEA	ItemNames, A0
 	LEA	Possessed_items_list.w, A2
 	MOVE.w	$FFFFC440.w, D0
 	ADD.w	D0, D0
@@ -26607,7 +26607,7 @@ loc_0001A5D4:
 	LEA	loc_0002591A, A0
 	JSR	loc_00012A6C
 	MOVE.b	#$FE, (A1)+
-	LEA	loc_00025DB4, A0
+	LEA	ItemNames, A0
 	LEA	Possessed_items_list.w, A2
 	MOVE.w	$FFFFC440.w, D0
 	ADD.w	D0, D0
@@ -26693,7 +26693,7 @@ loc_0001A702:
 	LEA	loc_00025904, A0
 	JSR	loc_00012A6C
 	MOVE.b	#$FE, (A1)+
-	LEA	loc_00025DB4, A0
+	LEA	ItemNames, A0
 	LEA	Possessed_items_list.w, A2
 	MOVE.w	$FFFFC440.w, D0
 	ADD.w	D0, D0
@@ -29826,7 +29826,7 @@ loc_0001D650:
 	MOVE.b	#$20, (A1)+
 	RTS
 loc_0001D664:
-	LEA	loc_00025EC0, A2
+	LEA	EquipmentNames, A2
 	ANDI.w	#$00FF, D2
 	ADD.w	D2, D2
 	ADD.w	D2, D2
@@ -30368,7 +30368,7 @@ loc_0001DE14:
 	MOVE.l	#$FFFFC260, Script_source_base.w
 	BRA.w	loc_0001DECE
 loc_0001DE82:
-	LEA	loc_00021B32, A0
+	LEA	RingNames, A0
 	MOVE.w	$FFFFC572.w, D0
 	ANDI.w	#$00FF, D0
 	ADD.w	D0, D0
@@ -30845,7 +30845,7 @@ loc_0001E61E:
 	JSR	loc_00012A6C
 	BRA.w	loc_0001E6A0
 loc_0001E648:
-	LEA	loc_00021B32, A0
+	LEA	RingNames, A0
 	MOVE.w	$FFFFC572.w, D0
 	ANDI.w	#$00FF, D0
 	ADD.w	D0, D0
@@ -32278,7 +32278,9 @@ loc_0001FBC8:
 	dc.l	loc_0004A77A
 	dc.l	loc_0004A8B8
 	dc.l	$00170036	
-loc_0001FBD4: ; town names dictionary
+; ===========================================================================
+;loc_0001FBD4:
+TownNames:
 	dc.l	loc_0001FC0C
 	dc.l	loc_0001FC14
 	dc.l	loc_0001FC1A
@@ -33950,7 +33952,10 @@ loc_00021B20:
 	dc.b	"Gear (Item)", $FF
 loc_00021B2C:
 	dc.b	"Rings", $FF
-loc_00021B32: ; ring names disctionary
+
+; ===========================================================================
+;loc_00021B32: 
+RingNames:
 	dc.l	loc_00021B52
 	dc.l	loc_00021B62
 	dc.l	loc_00021B6E
@@ -33975,6 +33980,7 @@ loc_00021BA6:
 	dc.b	"Ring of Sun", $FF
 loc_00021BB2:
 	dc.b	"Ring of Power", $FF
+	
 loc_00021BC0:
 	dc.b	"Select a number", $FE
 	dc.b	"and press Button C.", $FE
@@ -34692,13 +34698,13 @@ loc_000226AC:
 loc_000226C8:
 	dc.b	$00, $00, $02, $02, $02, $03, $03, $03, $03, $01, $01, $00, $00, $00
 loc_000226D6:
-	dc.l	loc_00025DB4
+	dc.l	ItemNames
 	dc.l	Possessed_items_length
-	dc.l	loc_00025EC0
+	dc.l	EquipmentNames
 	dc.l	Possessed_equipment_length
-	dc.l	loc_00025E64
+	dc.l	MagicNames
 	dc.l	Possessed_magics_length
-	dc.l	loc_00025E64	
+	dc.l	MagicNames	
 	dc.l	Possessed_magics_length	
 	dc.l	loc_00000000	
 	dc.l	loc_00000000	
@@ -38213,7 +38219,9 @@ loc_00025D80:
 	dc.b	"You can't put that down.", $FF, $00
 loc_00025D9A:
 	dc.b	"You can't carry any more.", $FF
-loc_00025DB4: ; item names dictionary
+; ===========================================================================
+;loc_00025DB4:
+ItemNames:
 	dc.l	loc_000256E4
 	dc.l	loc_000256EA
 	dc.l	loc_000256F2
@@ -38258,7 +38266,9 @@ loc_00025DB4: ; item names dictionary
 	dc.l	loc_000258DC	
 	dc.l	loc_000258EC	
 	dc.l	loc_000258F8	
-loc_00025E64: ; magic names dictionary
+; ===========================================================================
+;loc_00025E64
+MagicNames:
 	dc.l	loc_00025CC0
 	dc.l	loc_00025CC6
 	dc.l	loc_00025CCE
@@ -38282,7 +38292,9 @@ loc_00025E64: ; magic names dictionary
 	dc.l	loc_00025D66
 	dc.l	loc_00025D78
 	dc.l	loc_00025D6E
-loc_00025EC0: ; sword names dictionary
+; ===========================================================================
+;loc_00025EC0:
+EquipmentNames:
 	dc.l	loc_000259E0
 	dc.l	loc_000259EE
 	dc.l	loc_000259FA
