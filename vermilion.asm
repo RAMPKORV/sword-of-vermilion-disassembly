@@ -26856,51 +26856,51 @@ loc_0001A954:
 	MOVE.w	#$0089, D0
 	JSR	loc_00010522
 	RTS
-loc_0001A996:
-	BRA.w	loc_0001AC4E
-	BRA.w	loc_0001AD5C
-	BRA.w	loc_0001ADAA
-	BRA.w	loc_0001AD1C
-	BRA.w	loc_0001ADF6
-	BRA.w	loc_0001AEA0	
-	BRA.w	loc_0001AEAE	
-	BRA.w	loc_0001AEBC
-	BRA.w	loc_0001AED4
-	BRA.w	loc_0001AF54
-	BRA.w	loc_0001B016	
-	BRA.w	loc_0001AFE2	
-	BRA.w	loc_0001AFEC
-	BRA.w	loc_0001AFD8	
-	BRA.w	loc_0001B076	
-	BRA.w	loc_0001B080	
-	BRA.w	loc_0001B08A	
-	BRA.w	loc_0001B094
-	BRA.w	loc_0001B094
-	BRA.w	loc_0001B094
-	BRA.w	loc_0001B020	
-	BRA.w	loc_0001B02A
-	BRA.w	loc_0001B094
-	BRA.w	loc_0001B094
-	BRA.w	loc_0001B094
-	BRA.w	loc_0001B094
-	BRA.w	loc_0001B094
-	BRA.w	loc_0001AC44	
-	BRA.w	loc_0001AC00
-	BRA.w	loc_0001AC84
-	BRA.w	loc_0001ACD4	
-	BRA.w	loc_0001AD00
-	BRA.w	loc_0001ABE8	
-	BRA.w	loc_0001AA74
-	BRA.w	loc_0001ABBC
-	BRA.w	loc_0001ACA4
-	BRA.w	loc_0001AA46
-	BRA.w	loc_0001B094
-	BRA.w	loc_0001AA98	
-	BRA.w	loc_0001AAC4	
-	BRA.w	loc_0001AAF0	
-	BRA.w	loc_0001AB1C	
-	BRA.w	loc_0001AB64	
-	BRA.w	loc_0001AB90	
+loc_0001A996: ; suspected item usage
+	BRA.w	loc_0001AC4E ; Herbs
+	BRA.w	loc_0001AD5C ; Candle
+	BRA.w	loc_0001ADAA ; Lantern
+	BRA.w	loc_0001AD1C ; Poison balm
+	BRA.w	loc_0001ADF6 ; Alarm clock
+	BRA.w	loc_0001AEA0 ; Vase	
+	BRA.w	loc_0001AEAE ; Joke book	
+	BRA.w	loc_0001AEBC ; Small bomb
+	BRA.w	loc_0001AED4 ; Old woman's sketch
+	BRA.w	loc_0001AF54 ; Old man's sketch
+	BRA.w	loc_0001B016 ; Pass to Carthahena
+	BRA.w	loc_0001AFE2 ; Truffle
+	BRA.w	loc_0001AFEC ; Digot plant
+	BRA.w	loc_0001AFD8 ; Treasure of Troy
+	BRA.w	loc_0001B076 ; White crystal
+	BRA.w	loc_0001B080 ; Red crystal
+	BRA.w	loc_0001B08A ; Blue crystal
+	BRA.w	loc_0001B094 ; White crystal
+	BRA.w	loc_0001B094 ; Red key
+	BRA.w	loc_0001B094 ; Blue key
+	BRA.w	loc_0001B020 ; Crown
+	BRA.w	loc_0001B02A ; Sixteen rings
+	BRA.w	loc_0001B094 ; Bronze key
+	BRA.w	loc_0001B094 ; Silver key
+	BRA.w	loc_0001B094 ; Gold key
+	BRA.w	loc_0001B094 ; Thule key
+	BRA.w	loc_0001B094 ; Secret key
+	BRA.w	loc_0001AC44 ; Medicine
+	BRA.w	loc_0001AC00 ; Agate jewel
+	BRA.w	loc_0001AC84 ; Griffin wing
+	BRA.w	loc_0001ACD4 ; Titanias mirror
+	BRA.w	loc_0001AD00 ; Gnome stone
+	BRA.w	loc_0001ABE8 ; Topaz jewel
+	BRA.w	loc_0001AA74 ; Banshee powder
+	BRA.w	loc_0001ABBC ; Rafael's stick
+	BRA.w	loc_0001ACA4 ; Mirror of Atlas
+	BRA.w	loc_0001AA46 ; Ruby brooch
+	BRA.w	loc_0001B094 ; Dungeon key
+	BRA.w	loc_0001AA98 ; Kulms vase
+	BRA.w	loc_0001AAC4 ; Kasans chisel
+	BRA.w	loc_0001AAF0 ; Book of kiel
+	BRA.w	loc_0001AB1C ; Danegeld water
+	BRA.w	loc_0001AB64 ; Mineral bar
+	BRA.w	loc_0001AB90 ; Mega blast
 loc_0001AA46:
 	TST.b	$FFFFC551.w
 	BNE.b	loc_0001AA52
@@ -32392,7 +32392,7 @@ loc_0001FD44:
 loc_0001FD4C:
 	MOVE.w	#1, $FFFFC128.w
 	RTS
-loc_0001FD54:
+loc_0001FD54: ; suspected town spawning location + camera?
 	dc.w	$00D8, $02B8, $0003, $001F
 	dc.w	$01E8, $0268, $0014, $001A
 	dc.w	$0138, $0218, $0009, $0015
