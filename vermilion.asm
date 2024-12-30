@@ -34179,6 +34179,7 @@ loc_000221C0:
 	dc.l	Possessed_equipment_list
 	dc.l	Possessed_magics_list
 	dc.l	Possessed_magics_list	
+; -------- Wyclif item store --------
 loc_000221D0:
 	dc.w	$0002
 	dc.b	$00, ITEM_HERBS
@@ -34186,7 +34187,8 @@ loc_000221D0:
 loc_000221D6:
 	dc.l	$20
 	dc.l	$10 
-loc_000221DE: ; Parma item store list
+; -------- Parma item store --------
+loc_000221DE:
 	dc.w	$5
 	dc.b	$00, ITEM_CANDLE
 	dc.b	$00, ITEM_HERBS
@@ -34243,11 +34245,12 @@ loc_00022250:
 	dc.l	$75
 	dc.l	$910
 	dc.l	$2000 
+; -------- Malaga item store --------
 loc_00022264:
 	dc.w	$3
-	dc.b	$00, $05
-	dc.b	$00, $06
-	dc.b	$00, $07 
+	dc.b	$00, ITEM_VASE
+	dc.b	$00, ITEM_JOKE_BOOK
+	dc.b	$00, ITEM_SMALL_BOMB
 loc_0002226C:
 	dc.l	$10
 	dc.l	$10
@@ -34284,13 +34287,14 @@ loc_000222AC:
 	dc.l	$3780
 	dc.l	$420
 	dc.l	$90 
+; -------- Swaffham item store --------
 loc_000222C4:
 	dc.w	$5
-	dc.b	$00, $1B
-	dc.b	$00, $03
-	dc.b	$00, $02
-	dc.b	$00, $1D
-	dc.b	$00, $1C 
+	dc.b	$00, ITEM_MEDICINE
+	dc.b	$00, ITEM_POISON_BALM
+	dc.b	$00, ITEM_LANTERN
+	dc.b	$00, ITEM_GRIFFIN_WING
+	dc.b	$00, ITEM_AGATE_JEWEL 
 loc_000222D0:
 	dc.l	$171
 	dc.l	$108
@@ -34379,11 +34383,12 @@ loc_00022380:
 	dc.l	$8700
 	dc.l	$3000
 	dc.l	$6200 
+; -------- Swaffham magic store --------	
 loc_00022394:
 	dc.w	$3
-	dc.b	$02, $0A
-	dc.b	$02, $08
-	dc.b	$02, $03 
+	dc.b	MAGIC_TYPE_BATTLE, MAGIC_HYDRIOS
+	dc.b	MAGIC_TYPE_BATTLE, MAGIC_ARGENTOS
+	dc.b	MAGIC_TYPE_BATTLE, MAGIC_VOLTIO 
 loc_0002239C:
 	dc.l	$20000
 	dc.l	$40000
@@ -34414,14 +34419,15 @@ loc_000223CE:
 	dc.l	$080
 	dc.l	$200
 	dc.l	$400
+; -------- Parma equipment store --------
 loc_000223E2:
 	dc.w	$6
-	dc.b	$04, $01
-	dc.b	$04, $02
-	dc.b	$08, $16
-	dc.b	$08, $17
-	dc.b	$10, $2A
-	dc.b	$10, $2B 
+	dc.b	EQUIPMENT_TYPE_SWORD, 	EQUIPMENT_SWORD_IRON
+	dc.b	EQUIPMENT_TYPE_SWORD, 	EQUIPMENT_SWORD_SHARP
+	dc.b	EQUIPMENT_TYPE_SHIELD, 	EQUIPMENT_SHIELD_LARGE
+	dc.b	EQUIPMENT_TYPE_SHIELD, 	EQUIPMENT_SHIELD_SILVER
+	dc.b	EQUIPMENT_TYPE_ARMOR, 	EQUIPMENT_ARMOR_METAL
+	dc.b	EQUIPMENT_TYPE_ARMOR, 	EQUIPMENT_ARMOR_SCALE
 loc_000223F0:
 	dc.l	$400 
 	dc.l	$800 
@@ -34473,13 +34479,14 @@ loc_0002245A: ; Tadcaster equipment store prices
 	dc.l	$6300
 	dc.l	$15000
 	dc.l	$24000
+; -------- Swaffham equipment store --------
 loc_0002246E:
 	dc.w	$5
-	dc.b	$04, $0C 
-	dc.b	$04, $0B 
-	dc.b	$08, $21 
-	dc.b	$10, $34
-	dc.b	$10, $31 
+	dc.b	EQUIPMENT_TYPE_SWORD, 	EQUIPMENT_SWORD_ULTIMATE 
+	dc.b	EQUIPMENT_TYPE_SWORD, 	EQUIPMENT_SWORD_ROYAL
+	dc.b	EQUIPMENT_TYPE_SHIELD, 	EQUIPMENT_SHIELD_CARMINE1
+	dc.b	EQUIPMENT_TYPE_ARMOR, 	EQUIPMENT_ARMOR_ODIN
+	dc.b	EQUIPMENT_TYPE_ARMOR, 	EQUIPMENT_ARMOR_DIAMOND 
 loc_0002247A:
 	dc.l	$42000 
 	dc.l	$34600 
