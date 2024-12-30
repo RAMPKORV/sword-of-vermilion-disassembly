@@ -34180,128 +34180,312 @@ loc_000221C0:
 	dc.l	Possessed_magics_list
 	dc.l	Possessed_magics_list	
 loc_000221D0:
-	dc.b	$00, $02, $00, $00, $00, $01 
+	dc.w	$0002
+	dc.b	$00, ITEM_HERBS
+	dc.b	$00, ITEM_CANDLE
 loc_000221D6:
-	dc.b	$00, $00, $00, $20, $00, $00, $00, $10 
-loc_000221DE:
-	dc.b	$00, $05, $00, $01, $00, $00, $00, $03, $00, $02, $00, $1F 
+	dc.l	$20
+	dc.l	$10 
+loc_000221DE: ; Parma item store list
+	dc.w	$5
+	dc.b	$00, ITEM_CANDLE
+	dc.b	$00, ITEM_HERBS
+	dc.b	$00, ITEM_POISON_BALM
+	dc.b	$00, ITEM_LANTERN
+	dc.b	$00, ITEM_GNOME_STONE
 loc_000221EA:
-	dc.b	$00, $00, $00, $15, $00, $00, $00, $25, $00, $00, $00, $40, $00, $00, $00, $65, $00, $00, $03, $00 
+	dc.l	$15
+	dc.l	$25
+	dc.l	$40
+	dc.l	$65
+	dc.l	$300
+; -------- Deepdale item store --------
 loc_000221FE:
-	dc.b	$00, $05, $00, $00, $00, $1B, $00, $03, $00, $02, $00, $1F 
+	dc.w	$5
+	dc.b	$00, ITEM_HERBS
+	dc.b	$00, ITEM_MEDICINE
+	dc.b	$00, ITEM_POISON_BALM
+	dc.b	$00, ITEM_LANTERN
+	dc.b	$00, ITEM_GNOME_STONE
 loc_0002220A:
-	dc.b	$00, $00, $00, $30, $00, $00, $01, $20, $00, $00, $00, $60, $00, $00, $00, $70, $00, $00, $03, $50 
+	dc.l	$30
+	dc.l	$120
+	dc.l	$60
+	dc.l	$70
+	dc.l	$350 
+; -------- Stow item store --------
 loc_0002221E:
-	dc.b	$00, $06, $00, $00, $00, $1B, $00, $03, $00, $02, $00, $1F, $00, $1D 
+	dc.w	$6
+	dc.b	$00, ITEM_HERBS
+	dc.b	$00, ITEM_MEDICINE
+	dc.b	$00, ITEM_POISON_BALM
+	dc.b	$00, ITEM_LANTERN
+	dc.b	$00, ITEM_GNOME_STONE
+	dc.b	$00, ITEM_GRIFFIN_WING
 loc_0002222C:
-	dc.b	$00, $00, $00, $30, $00, $00, $01, $25, $00, $00, $00, $65, $00, $00, $00, $70, $00, $00, $03, $75, $00, $00, $08, $20 
+	dc.l	$30
+	dc.l	$125
+	dc.l	$65
+	dc.l	$70
+	dc.l	$375
+	dc.l	$820 
+; -------- Keltwick item store --------
 loc_00022244:
-	dc.b	$00, $05, $00, $1B, $00, $03, $00, $02, $00, $1D, $00, $04 
+	dc.w	$5
+	dc.b	$00, ITEM_MEDICINE
+	dc.b	$00, ITEM_POISON_BALM
+	dc.b	$00, ITEM_LANTERN
+	dc.b	$00, ITEM_GRIFFIN_WING
+	dc.b	$00, ITEM_ALARM_CLOCK 
 loc_00022250:
-	dc.b	$00, $00, $01, $30, $00, $00, $00, $70, $00, $00, $00, $75, $00, $00, $09, $10, $00, $00, $20, $00 
+	dc.l	$130
+	dc.l	$70
+	dc.l	$75
+	dc.l	$910
+	dc.l	$2000 
 loc_00022264:
-	dc.b	$00, $03, $00, $05, $00, $06, $00, $07 
+	dc.w	$3
+	dc.b	$00, $05
+	dc.b	$00, $06
+	dc.b	$00, $07 
 loc_0002226C:
-	dc.b	$00, $00, $00, $10, $00, $00, $00, $10, $00, $00, $00, $10 
+	dc.l	$10
+	dc.l	$10
+	dc.l	$10 
+; -------- Barrow item store --------
 loc_00022278:
-	dc.b	$00, $06, $00, $1B, $00, $02, $00, $1D, $00, $1C, $00, $1F, $00, $21 
+	dc.w	$6
+	dc.b	$00, ITEM_MEDICINE
+	dc.b	$00, ITEM_LANTERN
+	dc.b	$00, ITEM_GRIFFIN_WING
+	dc.b	$00, ITEM_AGATE_JEWEL
+	dc.b	$00, ITEM_GNOME_STONE
+	dc.b	$00, ITEM_BANSHEE_POWDER
 loc_00022286:
-	dc.b	$00, $00, $01, $42, $00, $00, $00, $80, $00, $00, $09, $90, $00, $00, $32, $00, $00, $00, $04, $00, $00, $00, $22, $00 
+	dc.l	$142
+	dc.l	$80
+	dc.l	$990
+	dc.l	$3200
+	dc.l	$400
+	dc.l	$2200 
+; -------- Helwig item store --------
 loc_0002229E:
-	dc.b	$00, $06, $00, $1B, $00, $1D, $00, $02, $00, $1C, $00, $1F, $00, $03 
+	dc.w	$6
+	dc.b	$00, ITEM_MEDICINE
+	dc.b	$00, ITEM_GRIFFIN_WING
+	dc.b	$00, ITEM_LANTERN
+	dc.b	$00, ITEM_AGATE_JEWEL
+	dc.b	$00, ITEM_GNOME_STONE
+	dc.b	$00, ITEM_POISON_BALM
 loc_000222AC:
-	dc.b	$00, $00, $01, $55, $00, $00, $10, $20, $00, $00, $00, $92, $00, $00, $37, $80, $00, $00, $04, $20, $00, $00, $00, $90 
+	dc.l	$155
+	dc.l	$1020
+	dc.l	$92
+	dc.l	$3780
+	dc.l	$420
+	dc.l	$90 
 loc_000222C4:
-	dc.b	$00, $05, $00, $1B, $00, $03, $00, $02, $00, $1D, $00, $1C 
+	dc.w	$5
+	dc.b	$00, $1B
+	dc.b	$00, $03
+	dc.b	$00, $02
+	dc.b	$00, $1D
+	dc.b	$00, $1C 
 loc_000222D0:
-	dc.b	$00, $00, $01, $71, $00, $00, $01, $08, $00, $00, $01, $02, $00, $00, $10, $50, $00, $00, $41, $20 
+	dc.l	$171
+	dc.l	$108
+	dc.l	$102
+	dc.l	$1050
+	dc.l	$4120 
+; -------- Hastings item store --------
 loc_000222E4:
-	dc.b	$00, $05, $00, $1B, $00, $03, $00, $20, $00, $02, $00, $21 
+	dc.w	$5
+	dc.b	$00, ITEM_MEDICINE
+	dc.b	$00, ITEM_POISON_BALM
+	dc.b	$00, ITEM_TOPAZ_JEWEL
+	dc.b	$00, ITEM_LANTERN
+	dc.b	$00, ITEM_BANSHEE_POWDER
 loc_000222F0:
-	dc.b	$00, $00, $01, $90, $00, $00, $01, $22, $00, $00, $91, $00, $00, $00, $01, $15, $00, $00, $37, $50 
-loc_00022304:
-	dc.b	$00, $02, $02, $05, $00, $12 
+	dc.l	$190
+	dc.l	$122
+	dc.l	$9100
+	dc.l	$115
+	dc.l	$3750 
+; -------- Parma magic store --------
+loc_00022304: 
+	dc.w	$2
+	dc.b	MAGIC_TYPE_BATTLE, 	MAGIC_FERROS
+	dc.b	MAGIC_TYPE_FIELD, 	MAGIC_SANGUA 
 loc_0002230A:
-	dc.b	$00, $00, $05, $00, $00, $00, $08, $00 
+	dc.l	$500
+	dc.l	$800 
+; -------- Deepdale magic store --------
 loc_00022312:
-	dc.b	$00, $02, $02, $02, $00, $12 
+	dc.w	$2
+	dc.b	MAGIC_TYPE_BATTLE, 	MAGIC_VOLTI
+	dc.b	MAGIC_TYPE_FIELD,	MAGIC_SANGUA
 loc_00022318:
-	dc.b	$00, $00, $12, $00, $00, $00, $09, $00 
+	dc.l	$1200
+	dc.l	$900 
+; -------- Stow magic store --------
 loc_00022320:
-	dc.b	$00, $03, $02, $06, $02, $00, $02, $02 
+	dc.w	$3
+	dc.b	MAGIC_TYPE_BATTLE, MAGIC_COPPEROS
+	dc.b	MAGIC_TYPE_BATTLE, MAGIC_AERO
+	dc.b	MAGIC_TYPE_BATTLE, MAGIC_VOLTI
 loc_00022328:
-	dc.b	$00, $00, $37, $00, $00, $00, $32, $00, $00, $00, $14, $00 
+	dc.l	$3700
+	dc.l	$3200
+	dc.l	$1400 
+; -------- Keltwick magic store --------
 loc_00022334:
-	dc.b	$00, $05, $02, $00, $00, $11, $02, $09, $02, $0B, $00, $15 
+	dc.w	$5
+	dc.b	$02, MAGIC_AERO
+	dc.b	$00, MAGIC_LUMINOS
+	dc.b	$02, MAGIC_HYDRO
+	dc.b	$02, MAGIC_CHRONO
+	dc.b	$00, MAGIC_TOXIOS 
 loc_00022340:
-	dc.b	$00, $00, $34, $00, $00, $00, $52, $00, $00, $00, $45, $00, $00, $00, $57, $00, $00, $00, $85, $00 
+	dc.l	$3400
+	dc.l	$5200
+	dc.l	$4500
+	dc.l	$5700
+	dc.l	$8500 
+; -------- Malaga magic store --------
 loc_00022354:
-	dc.b	$00, $05, $00, $0E, $02, $03, $00, $13, $02, $01, $00, $15 
+	dc.w	$5
+	dc.b	MAGIC_TYPE_FIELD, 	MAGIC_ARIES
+	dc.b	MAGIC_TYPE_BATTLE, 	MAGIC_VOLTIO
+	dc.b	MAGIC_TYPE_FIELD, 	MAGIC_SANGUIA
+	dc.b	MAGIC_TYPE_BATTLE, 	MAGIC_AERIOS
+	dc.b	MAGIC_TYPE_FIELD, 	MAGIC_TOXIOS
 loc_00022360:
-	dc.b	$00, $00, $90, $00, $00, $01, $10, $00, $00, $00, $48, $00, $00, $01, $17, $00, $00, $00, $91, $00 
+	dc.l	$9000
+	dc.l	$11000
+	dc.l	$4800
+	dc.l	$11700
+	dc.l	$9100 
+; -------- Helwig magic store --------
 loc_00022374:
-	dc.b	$00, $05, $00, $0E, $00, $13, $02, $07, $00, $10, $00, $0F 
+	dc.w	$5
+	dc.b	MAGIC_TYPE_FIELD, 	MAGIC_ARIES
+	dc.b	MAGIC_TYPE_FIELD, 	MAGIC_SANGUIA
+	dc.b	MAGIC_TYPE_BATTLE, 	MAGIC_MERCURIOS
+	dc.b	MAGIC_TYPE_FIELD, 	MAGIC_INAUDIOS
+	dc.b	MAGIC_TYPE_FIELD, 	MAGIC_EXTRIOS
 loc_00022380:
-	dc.b	$00, $01, $20, $00, $00, $00, $51, $00, $00, $00, $87, $00, $00, $00, $30, $00, $00, $00, $62, $00 
+	dc.l	$12000
+	dc.l	$5100
+	dc.l	$8700
+	dc.l	$3000
+	dc.l	$6200 
 loc_00022394:
-	dc.b	$00, $03, $02, $0A, $02, $08, $02, $03 
+	dc.w	$3
+	dc.b	$02, $0A
+	dc.b	$02, $08
+	dc.b	$02, $03 
 loc_0002239C:
-	dc.b	$00, $02, $00, $00, $00, $04, $00, $00, $00, $03, $50, $00 
+	dc.l	$20000
+	dc.l	$40000
+	dc.l	$35000 
+; -------- Hastings magic store --------
 loc_000223A8:
-	dc.b	$00, $04, $02, $0C, $02, $04, $00, $14, $02, $0D 
+	dc.w	$4
+	dc.b	MAGIC_TYPE_BATTLE, 	MAGIC_CHRONIOS
+	dc.b	MAGIC_TYPE_BATTLE, 	MAGIC_VOLTIOS
+	dc.b	MAGIC_TYPE_FIELD, 	MAGIC_SANGUIO
+	dc.b	MAGIC_TYPE_BATTLE, 	MAGIC_TERRAFISSI 
 loc_000223B2:
-	dc.b	$00, $02, $00, $00, $00, $04, $70, $00, $00, $02, $80, $00, $00, $07, $00, $00 
+	dc.l	$20000 
+	dc.l	$47000 
+	dc.l	$28000 
+	dc.l	$70000 
+; -------- Wyclif equipment store --------
 loc_000223C2:
-	dc.b	$00, $05, $04, $00, $08, $14, $08, $15, $10, $28, $10, $29 
+	dc.w	$5
+	dc.b	EQUIPMENT_TYPE_SWORD, 	EQUIPMENT_SWORD_BRONZE
+	dc.b	EQUIPMENT_TYPE_SHIELD, 	EQUIPMENT_SHIELD_LEATHER
+	dc.b	EQUIPMENT_TYPE_SHIELD, 	EQUIPMENT_SHIELD_SMALL
+	dc.b	EQUIPMENT_TYPE_ARMOR, 	EQUIPMENT_ARMOR_LEATHER
+	dc.b	EQUIPMENT_TYPE_ARMOR, 	EQUIPMENT_ARMOR_BRONZE
 loc_000223CE:
-	dc.b	$00, $00, $01, $00, $00, $00, $00, $50, $00, $00, $00, $80, $00, $00, $02, $00, $00, $00, $04, $00 
+	dc.l	$100
+	dc.l	$50
+	dc.l	$080
+	dc.l	$200
+	dc.l	$400
 loc_000223E2:
-	dc.b	$00, $06, $04, $01, $04, $02, $08, $16, $08, $17, $10, $2A, $10, $2B 
+	dc.w	$6
+	dc.b	$04, $01
+	dc.b	$04, $02
+	dc.b	$08, $16
+	dc.b	$08, $17
+	dc.b	$10, $2A
+	dc.b	$10, $2B 
 loc_000223F0:
-	dc.b	$00, $00, $04, $00, $00, $00, $08, $00, $00, $00, $02, $50, $00, $00, $05, $00, $00, $00, $09, $00, $00, $00, $11, $00 
+	dc.l	$400 
+	dc.l	$800 
+	dc.l	$250 
+	dc.l	$500 
+	dc.l	$900 
+	dc.l	$1100 
+; -------- Deepdale equipment store --------
 loc_00022408:
-	dc.b	$00, $06, $04, $03, $04, $04, $08, $18, $08, $19, $10, $2C, $10, $2F 
+	dc.w	$6
+	dc.b	EQUIPMENT_TYPE_SWORD, 	EQUIPMENT_SWORD_LONG
+	dc.b	EQUIPMENT_TYPE_SWORD, 	EQUIPMENT_SWORD_SILVER
+	dc.b	EQUIPMENT_TYPE_SHIELD, 	EQUIPMENT_SHIELD_GOLD
+	dc.b	EQUIPMENT_TYPE_SHIELD, 	EQUIPMENT_SHIELD_PLATINUM
+	dc.b	EQUIPMENT_TYPE_ARMOR, 	EQUIPMENT_ARMOR_PLATE
+	dc.b	EQUIPMENT_TYPE_ARMOR, 	EQUIPMENT_ARMOR_CRYSTAL
 loc_00022416:
-	dc.b	$00, $00, $18, $00, $00, $00, $37, $00, $00, $00, $15, $00, $00, $00, $32, $00, $00, $00, $28, $00, $00, $00, $45, $00 
-loc_0002242E: ; Malaga equipment list
-	dc.w	$0005
-	dc.b	$04, $05  ; Prime sword
-	dc.b	$04, $06  ; Golden sword
-	dc.b	$08, $1C  ; Diamond shield
-	dc.b	$10, $2D  ; Silver armor
-	dc.b	$10, $32  ; Knight armor
-loc_0002243A: ; Malaga equipment prices
-	dc.l	$00005100 ; Prime sword
-	dc.l	$00008200 ; Golden sword
-	dc.l	$00004100 ; Diamond shield
-	dc.l	$00007000 ; Silver armor
-	dc.l	$00009200 ; Knight armor
-loc_0002244E: ; Tadcaster equipment list
-	dc.w	$0005 	 ; 5 equipment
-	dc.b	$04, $09 ; Diamond sword
-	dc.b	$04, $08 ; Platinum sword
-	dc.b	$08, $24 ; Knight shield
-	dc.b	$10, $2E ; Gold armor
-	dc.b	$10, $33 ; Ultimate armor
-loc_0002245A: ; Tadcaster equipment prices
-	dc.l	$00021000 ; Diamond sword
-	dc.l	$00014800 ; Platinum sword
-	dc.l	$00006300 ; Knight shield
-	dc.l	$00015000 ; Gold armor
-	dc.l	$00024000 ; Ultimate armor
+	dc.l	$1800 
+	dc.l	$3700 
+	dc.l	$1500 
+	dc.l	$3200 
+	dc.l	$2800 
+	dc.l	$4500 
+; -------- Malaga equipment store --------
+loc_0002242E: 
+	dc.w	$5
+	dc.b	EQUIPMENT_TYPE_SWORD, 	EQUIPMENT_SWORD_PRIME
+	dc.b	EQUIPMENT_TYPE_SWORD, 	EQUIPMENT_SWORD_GOLDEN
+	dc.b	EQUIPMENT_TYPE_SHIELD, 	EQUIPMENT_SHIELD_DIAMOND
+	dc.b	EQUIPMENT_TYPE_ARMOR, 	EQUIPMENT_ARMOR_SILVER
+	dc.b	EQUIPMENT_TYPE_ARMOR, 	EQUIPMENT_ARMOR_KNIGHT
+loc_0002243A:
+	dc.l	$5100
+	dc.l	$8200
+	dc.l	$4100
+	dc.l	$7000
+	dc.l	$9200
+; -------- Tadcaster equipment store --------
+loc_0002244E:
+	dc.w	$5
+	dc.b	EQUIPMENT_TYPE_SWORD, 	EQUIPMENT_SWORD_DIAMOND
+	dc.b	EQUIPMENT_TYPE_SWORD, 	EQUIPMENT_SWORD_PLATINUM
+	dc.b	EQUIPMENT_TYPE_SHIELD, 	EQUIPMENT_SHIELD_KNIGHT
+	dc.b	EQUIPMENT_TYPE_ARMOR, 	EQUIPMENT_ARMOR_GOLD
+	dc.b	EQUIPMENT_TYPE_ARMOR, 	EQUIPMENT_ARMOR_ULTIMATE
+loc_0002245A: ; Tadcaster equipment store prices
+	dc.l	$21000
+	dc.l	$14800
+	dc.l	$6300
+	dc.l	$15000
+	dc.l	$24000
 loc_0002246E:
-	dc.w	$0005
+	dc.w	$5
 	dc.b	$04, $0C 
 	dc.b	$04, $0B 
 	dc.b	$08, $21 
 	dc.b	$10, $34
 	dc.b	$10, $31 
 loc_0002247A:
-	dc.l	$00042000 
-	dc.l	$00034600 
-	dc.l	$00012700 
-	dc.l	$00038000 
-	dc.l	$00050000 
+	dc.l	$42000 
+	dc.l	$34600 
+	dc.l	$12700 
+	dc.l	$38000 
+	dc.l	$50000 
 loc_0002248E:
 	dc.l	$00000008
 	dc.l	$00000004
@@ -34414,25 +34598,62 @@ loc_00022622:
 	dc.l	$00000200
 	dc.l	$00001400
 	dc.l	$00004300 
-	dc.b	$00, $00, $20, $00 
+	dc.l	$00002000 
 	dc.l	$00002300
-	dc.b	$00, $00, $99, $00 
+	dc.l	$00009900 
 	dc.l	$00002650
 	dc.l	$00008000
-	dc.b	$00, $02, $50, $00 
+	dc.l	$00025000 
 	dc.l	$00004400
-	dc.b	$00, $00, $30, $00, $00, $00, $20, $00, $00, $00, $26, $00, $00, $00, $03, $00 
+	dc.l	$00003000 
+	dc.l	$00002000 
+	dc.l	$00002600 
+	dc.l	$00000300 
 	dc.l	$00002100
-	dc.b	$00, $01, $45, $00, $00, $00, $44, $00, $00, $00, $00, $00 
+	dc.l	$00014500 
+	dc.l	$00004400
+	dc.l	$00000000 
 loc_0002267E:
-	dc.b	$00, $03, $00, $09, $00, $02, $00, $0C, $00, $10, $00, $01, $00, $04, $00, $07, $00, $0A, $00, $04, $00, $08, $00, $05, $00, $0A, $00, $19, $00, $0D, $00, $05 
-	dc.b	$00, $08, $00, $05, $00, $06, $00, $0C, $00, $1F, $00, $06, $00, $02 
+	dc.w	$0003
+	dc.w	$0009
+	dc.w	$0002
+	dc.w	$000C
+	dc.w	$0010
+	dc.w	$0001
+	dc.w	$0004
+	dc.w	$0007
+	dc.w	$000A
+	dc.w	$0004
+	dc.w	$0008
+	dc.w	$0005
+	dc.w	$000A
+	dc.w	$0019
+	dc.w	$000D
+	dc.w	$0005 
+	dc.w	$0008 
+	dc.w	$0005 
+	dc.w	$0006 
+	dc.w	$000C 
+	dc.w	$001F 
+	dc.w	$0006
+	dc.w	$0002 
 loc_000226AC:
-	dc.b	$04, $B0, $06, $A4, $03, $57, $00, $32, $0F, $1E, $02, $64, $00, $50, $01, $B6, $00, $1E, $00, $A0, $01, $4A, $00, $00, $00, $00 
+	dc.b	$04, $B0
+	dc.b	$06, $A4
+	dc.b	$03, $57
+	dc.b	$00, $32
+	dc.b	$0F, $1E
+	dc.b	$02, $64
+	dc.b	$00, $50
+	dc.b	$01, $B6
+	dc.b	$00, $1E
+	dc.b	$00, $A0
+	dc.b	$01, $4A
+	dc.b	$00, $00
+	dc.b	$00, $00 
 	dc.w	$0050
 loc_000226C8:
-	dc.b	$00, $00, $02, $02, $02, $03, $03, $03, $03, $01, $01, $00, $00 
-	dc.b	$00
+	dc.b	$00, $00, $02, $02, $02, $03, $03, $03, $03, $01, $01, $00, $00, $00
 loc_000226D6:
 	dc.l	loc_00025DB4
 	dc.l	Possessed_items_length
