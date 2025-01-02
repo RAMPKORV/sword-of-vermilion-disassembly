@@ -2,81 +2,81 @@
 	include "constants.asm"
 StartOfRom:
 loc_00000000:
-	dc.l	$FFFFFE00 ; Initial stack pointer value
+	dc.l	$FFFFFE00 			; Initial stack pointer value
 loc_00000004:
-	dc.l	EntryPoint ; Start of program
-	dc.l	ErrorTrap1 ; Bus error
+	dc.l	EntryPoint 			; Start of program
+	dc.l	ErrorTrap 			; Bus error
 loc_0000000C:
-	dc.l	ErrorTrap1 ; Address error (4)
+	dc.l	ErrorTrap 			; Address error (4)
 loc_00000010:
-	dc.l	ErrorTrap1		; Illegal instruction
-	dc.l	ErrorTrap1		; Division by zero
-	dc.l	ErrorTrap1		; CHK exception
-	dc.l	ErrorTrap1		; TRAPV exception (8)
-	dc.l	ErrorTrap1		; Privilege violation
-	dc.l	ErrorTrap1		; TRACE exception
-	dc.l	ErrorTrap1		; Line-A emulator
-	dc.l	ErrorTrap1		; Line-F emulator (12)
-	dc.l	ErrorTrap1		; Unused (reserved)
-	dc.l	ErrorTrap1		; Unused (reserved)
-	dc.l	ErrorTrap1		; Unused (reserved)
-	dc.l	ErrorTrap1		; Unused (reserved) (16)
-	dc.l	ErrorTrap1		; Unused (reserved)
-	dc.l	ErrorTrap1		; Unused (reserved)
-	dc.l	ErrorTrap1		; Unused (reserved)
-	dc.l	ErrorTrap1		; Unused (reserved) (20)
-	dc.l	ErrorTrap1		; Unused (reserved)
-	dc.l	ErrorTrap1		; Unused (reserved)
-	dc.l	ErrorTrap1		; Unused (reserved)
-	dc.l	ErrorTrap1		; Unused (reserved) (24)
-	dc.l	ErrorTrap1		; Spurious exception
-	dc.l	ErrorTrap1		; IRQ level 1
-	dc.l	ErrorTrap1		; IRQ level 2
-	dc.l	ErrorTrap1		; IRQ level 3 (28)
-	dc.l	ErrorTrap1		; IRQ level 4 (horizontal retrace interrupt)
-	dc.l	ErrorTrap1		; IRQ level 5
-	dc.l	loc_000010E8 	; IRQ level 6 (vertical retrace interrupt)
-	dc.l	ErrorTrap1		; IRQ level 7 (32)
-	dc.l	ErrorTrap1		; TRAP #00 exception
-	dc.l	ErrorTrap1		; TRAP #01 exception
-	dc.l	ErrorTrap1		; TRAP #02 exception
-	dc.l	ErrorTrap1		; TRAP #03 exception (36)
-	dc.l	ErrorTrap1		; TRAP #04 exception
-	dc.l	ErrorTrap1		; TRAP #05 exception
-	dc.l	ErrorTrap1		; TRAP #06 exception
-	dc.l	ErrorTrap1		; TRAP #07 exception (40)
-	dc.l	ErrorTrap1		; TRAP #08 exception
-	dc.l	ErrorTrap1		; TRAP #09 exception
-	dc.l	ErrorTrap1		; TRAP #10 exception
-	dc.l	ErrorTrap1		; TRAP #11 exception (44)
-	dc.l	ErrorTrap1		; TRAP #12 exception
-	dc.l	ErrorTrap1		; TRAP #13 exception
-	dc.l	ErrorTrap1		; TRAP #14 exception
-	dc.l	ErrorTrap1		; TRAP #15 exception (48)
-	dc.l	ErrorTrap1		; Unused (reserved)
-	dc.l	ErrorTrap1		; Unused (reserved)
-	dc.l	ErrorTrap1		; Unused (reserved)
-	dc.l	ErrorTrap1		; Unused (reserved) (52)
-	dc.l	ErrorTrap1		; Unused (reserved)
-	dc.l	ErrorTrap1		; Unused (reserved)
-	dc.l	ErrorTrap1		; Unused (reserved)
-	dc.l	ErrorTrap1		; Unused (reserved) (56)
-	dc.l	ErrorTrap1		; Unused (reserved)
-	dc.l	ErrorTrap1		; Unused (reserved)
-	dc.l	ErrorTrap1		; Unused (reserved)
-	dc.l	ErrorTrap1		; Unused (reserved) (60)
-	dc.l	ErrorTrap1		; Unused (reserved)
-	dc.l	ErrorTrap1		; Unused (reserved)
-	dc.l	ErrorTrap1		; Unused (reserved)
-	dc.l	ErrorTrap1		; Unused (reserved) (64)
+	dc.l	ErrorTrap			; Illegal instruction
+	dc.l	ErrorTrap			; Division by zero
+	dc.l	ErrorTrap			; CHK exception
+	dc.l	ErrorTrap			; TRAPV exception (8)
+	dc.l	ErrorTrap			; Privilege violation
+	dc.l	ErrorTrap			; TRACE exception
+	dc.l	ErrorTrap			; Line-A emulator
+	dc.l	ErrorTrap			; Line-F emulator (12)
+	dc.l	ErrorTrap			; Unused (reserved)
+	dc.l	ErrorTrap			; Unused (reserved)
+	dc.l	ErrorTrap			; Unused (reserved)
+	dc.l	ErrorTrap			; Unused (reserved) (16)
+	dc.l	ErrorTrap			; Unused (reserved)
+	dc.l	ErrorTrap			; Unused (reserved)
+	dc.l	ErrorTrap			; Unused (reserved)
+	dc.l	ErrorTrap			; Unused (reserved) (20)
+	dc.l	ErrorTrap			; Unused (reserved)
+	dc.l	ErrorTrap			; Unused (reserved)
+	dc.l	ErrorTrap			; Unused (reserved)
+	dc.l	ErrorTrap			; Unused (reserved) (24)
+	dc.l	ErrorTrap			; Spurious exception
+	dc.l	ErrorTrap			; IRQ level 1
+	dc.l	ErrorTrap			; IRQ level 2
+	dc.l	ErrorTrap			; IRQ level 3 (28)
+	dc.l	ErrorTrap			; IRQ level 4 (horizontal retrace interrupt)
+	dc.l	ErrorTrap			; IRQ level 5
+	dc.l	VerticalInterrupt 	; IRQ level 6 (vertical retrace interrupt)
+	dc.l	ErrorTrap			; IRQ level 7 (32)
+	dc.l	ErrorTrap			; TRAP #00 exception
+	dc.l	ErrorTrap			; TRAP #01 exception
+	dc.l	ErrorTrap			; TRAP #02 exception
+	dc.l	ErrorTrap			; TRAP #03 exception (36)
+	dc.l	ErrorTrap			; TRAP #04 exception
+	dc.l	ErrorTrap			; TRAP #05 exception
+	dc.l	ErrorTrap			; TRAP #06 exception
+	dc.l	ErrorTrap			; TRAP #07 exception (40)
+	dc.l	ErrorTrap			; TRAP #08 exception
+	dc.l	ErrorTrap			; TRAP #09 exception
+	dc.l	ErrorTrap			; TRAP #10 exception
+	dc.l	ErrorTrap			; TRAP #11 exception (44)
+	dc.l	ErrorTrap			; TRAP #12 exception
+	dc.l	ErrorTrap			; TRAP #13 exception
+	dc.l	ErrorTrap			; TRAP #14 exception
+	dc.l	ErrorTrap			; TRAP #15 exception (48)
+	dc.l	ErrorTrap			; Unused (reserved)
+	dc.l	ErrorTrap			; Unused (reserved)
+	dc.l	ErrorTrap			; Unused (reserved)
+	dc.l	ErrorTrap			; Unused (reserved) (52)
+	dc.l	ErrorTrap			; Unused (reserved)
+	dc.l	ErrorTrap			; Unused (reserved)
+	dc.l	ErrorTrap			; Unused (reserved)
+	dc.l	ErrorTrap			; Unused (reserved) (56)
+	dc.l	ErrorTrap			; Unused (reserved)
+	dc.l	ErrorTrap			; Unused (reserved)
+	dc.l	ErrorTrap			; Unused (reserved)
+	dc.l	ErrorTrap			; Unused (reserved) (60)
+	dc.l	ErrorTrap			; Unused (reserved)
+	dc.l	ErrorTrap			; Unused (reserved)
+	dc.l	ErrorTrap			; Unused (reserved)
+	dc.l	ErrorTrap			; Unused (reserved) (64)
 Header:
-	dc.b "SEGA_MEGA_DRIVE " ; Console name
-	dc.b "(C)SEGA 1990.SEP" ; Copyright holder and release date
+	dc.b "SEGA_MEGA_DRIVE " 	; Console name
+	dc.b "(C)SEGA 1990.SEP" 	; Copyright holder and release date
 	dc.b "VERMILION                                       " ; Domestic name
 	dc.b "SWORD OF VERMILION                              " ; International name
-	dc.b "GM 00005502-00" ; Version
+	dc.b "GM 00005502-00" 		; Version
 loc_0000018E:
-	dc.w	$06B5 ; Checksum
+	dc.w	$06B5 				; Checksum
 	dc.b	'J               '
 	dc.l StartOfRom
 ;loc_000001A4:
@@ -90,8 +90,7 @@ ROMEndLoc:
 	dc.b "            "	; Modem support
 	dc.b "                                        "	; Notes (unused, anything can be put in this space, but it has to be 52 bytes.)
 	dc.b "U               " ; Region
-
-ErrorTrap1:
+ErrorTrap:
 	RTE	
 loc_00000202:
 	LEA	$FFFFFE00.w, A6
@@ -537,7 +536,7 @@ loc_000010DC:
 	BEQ.b	loc_000010DC
 	CLR.b	$FFFFC0FF.w
 	RTS
-loc_000010E8:
+VerticalInterrupt:
 	MOVEM.l	A6/A5/A4/A3/A2/A1/A0/D7/D6/D5/D4/D3/D2/D1/D0, -(A7)
 	MOVE.w	VDP_control_port, D0
 	TST.b	$FFFFC53E.w
@@ -57246,7 +57245,7 @@ loc_0005A37E:
 	dc.l	$BA0ABCCB	
 	dc.l	$AA00ABBA	
 	dc.l	$A0000AAA	
-	dc.l	ErrorTrap1	
+	dc.l	ErrorTrap	
 loc_0005A3A2:
 	dc.l	$FFFFF001	
 	dc.l	$88000006	
