@@ -31146,7 +31146,7 @@ loc_0001EB2E:
 	MOVE.w	#1, D7
 	BRA.w	loc_0001F1BC
 loc_0001EB50:
-	dc.b	$00, $02, $D4, $F0 
+	dc.l	loc_0002D4F0 
 	dc.l	Map_list
 	dc.l	loc_0002D4E4
 	dc.l	Event_triggers_list
@@ -34206,10 +34206,10 @@ loc_000220B0:
 	dc.l	loc_000223B2	
 	dc.l	loc_0002230A	
 loc_000221B0:
-	dc.l	loc_0002248E
-	dc.l	loc_0002253E
-	dc.l	loc_00022622
-	dc.l	loc_00022622	
+	dc.l	ItemResaleValueMap
+	dc.l	EquipmentResaleValueMap
+	dc.l	MagicResaleValueMap
+	dc.l	MagicResaleValueMap	
 loc_000221C0:
 	dc.l	Possessed_items_list
 	dc.l	Possessed_equipment_list
@@ -34529,52 +34529,56 @@ loc_0002247A:
 	dc.l	$12700 
 	dc.l	$38000 
 	dc.l	$50000 
-loc_0002248E:
-	dc.l	$00000008
-	dc.l	$00000004
-	dc.l	$00000030
-	dc.l	$00000015
-	dc.l	$00001000
-	dc.l	$00010000
-	dc.l	$00001100
-	dc.l	$00000005
-	dc.l	$00000000
-	dc.l	$00000000 
-	dc.l	$00000000
-	dc.l	$00000000
-	dc.l	$00000000
-	dc.l	$00000000
-	dc.l	$00000000
-	dc.l	$00000000
-	dc.l	$00000000
-	dc.l	$00000000 
-	dc.l	$00000000
-	dc.l	$00000000
-	dc.l	$00000000
-	dc.l	$00000000
-	dc.l	$00000000
-	dc.l	$00000000
-	dc.l	$00000000
-	dc.l	$00000000 
-	dc.l	$00000380 
-	dc.l	$00000050 
-	dc.l	$00001200 
-	dc.l	$00000400 
-	dc.l	$00013000 
-	dc.l	$00000124 
-	dc.l	$00004200 
-	dc.l	$00001230 
-	dc.l	$00020000 
-	dc.l	$00050000 
-	dc.l	$00002950 
-	dc.l	$00001000 
-	dc.l	$00002000 
-	dc.l	$00001000 
-	dc.l	$00002000 
-	dc.l	$00000700 
-	dc.l	$00003000 
-	dc.l	$00003000 
-loc_0002253E: ; Equipment resale value
+
+;loc_0002248E
+ItemResaleValueMap:
+	dc.l	$8
+	dc.l	$4
+	dc.l	$30
+	dc.l	$15
+	dc.l	$1000
+	dc.l	$10000
+	dc.l	$1100
+	dc.l	$5
+	dc.l	$0
+	dc.l	$0
+	dc.l	$0
+	dc.l	$0
+	dc.l	$0
+	dc.l	$0
+	dc.l	$0
+	dc.l	$0
+	dc.l	$0
+	dc.l	$0
+	dc.l	$0
+	dc.l	$0
+	dc.l	$0
+	dc.l	$0
+	dc.l	$0
+	dc.l	$0
+	dc.l	$0
+	dc.l	$0 
+	dc.l	$380 
+	dc.l	$50 
+	dc.l	$1200 
+	dc.l	$400 
+	dc.l	$13000 
+	dc.l	$124 
+	dc.l	$4200 
+	dc.l	$1230 
+	dc.l	$20000 
+	dc.l	$50000 
+	dc.l	$2950 
+	dc.l	$1000 
+	dc.l	$2000 
+	dc.l	$1000 
+	dc.l	$2000 
+	dc.l	$700 
+	dc.l	$3000 
+	dc.l	$3000 
+
+;loc_0002253E
+EquipmentResaleValueMap:
 	dc.l	$30
 	dc.l	$150
 	dc.l	$350
@@ -34632,7 +34636,9 @@ loc_0002253E: ; Equipment resale value
 	dc.l	$510 
 	dc.l	$2
 	dc.l	$30000 
-loc_00022622: ; Magic resale value
+
+;loc_00022622:
+MagicResaleValueMap:
 	dc.l	$1500
 	dc.l	$5500
 	dc.l	$520
@@ -39651,7 +39657,8 @@ loc_0002A132:
 	MOVE.l	#$00029FE8, $FFFFC186.w
 	RTS
 loc_0002A144:
-	dc.b	$00, $01, $EA, $FE, $FF, $FF 
+	dc.l	loc_0001EAFE
+	dc.b	$FF, $FF 
 loc_0002A14A:
 	dc.b	$01, $48, $01, $48, $00, $04, $00, $08, $00, $04, $00, $14, $00, $02, $A1, $92, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 
 	dc.l	$00000000
@@ -39830,7 +39837,8 @@ loc_0002AB68:
 	MOVE.l	#loc_0002AA0A, $FFFFC186.w
 	RTS
 loc_0002AB7A:
-	dc.b	$00, $01, $EA, $FE, $FF, $FF 
+	dc.l	loc_0001EAFE
+	dc.b	$FF, $FF 
 loc_0002AB80:
 	dc.b	$01, $68, $01, $58, $00, $0D, $00, $09, $00, $04, $00, $17, $00, $02, $AB, $C8, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 
 	dc.l	$00000000
@@ -39998,7 +40006,8 @@ loc_0002B664:
 	MOVE.l	#$0002B406, $FFFFC186.w
 	RTS
 loc_0002B676:
-	dc.b	$00, $01, $EA, $FE, $FF, $FF 
+	dc.l	loc_0001EAFE
+	dc.b	$FF, $FF 
 loc_0002B67C:
 	dc.b	$01, $68, $01, $58, $00, $0B, $00, $09, $00, $04, $00, $19, $00, $02, $B6, $A0, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 
 	dc.l	$00000000
@@ -40555,6 +40564,7 @@ loc_0002D4E4:
 	dc.l	loc_0002CB14
 	dc.l	loc_0002CDE8
 	dc.l	loc_00026034
+loc_0002D4F0:
 	dc.l	loc_0002CB14
 	dc.l	loc_0002CDE8
 	dc.l	loc_00026034 
@@ -41900,13 +41910,13 @@ loc_00032A92:
 	MOVE.l	#$0003276E, $FFFFC186.w
 	RTS
 loc_00032AA4:
-	MOVE.l	#$00031F7E, Script_source_base.w
+	MOVE.l	#loc_00031F7E, Script_source_base.w
 	TST.b	$FFFFC732.w
 	BNE.w	loc_00032ACC
-	MOVE.l	#$00031F36, Script_source_base.w
+	MOVE.l	#loc_00031F36, Script_source_base.w
 	TST.b	$FFFFC730.w
 	BNE.w	loc_00032ACC
-	MOVE.l	#$00031F00, Script_source_base.w
+	MOVE.l	#loc_00031F00, Script_source_base.w
 loc_00032ACC:
 	RTS
 loc_00032ACE:
@@ -43215,7 +43225,7 @@ loc_000383A2:
 	MOVE.l	#$00037EAE, $FFFFC186.w
 	RTS
 loc_000383B4:
-	MOVE.l	#$00037972, Script_source_base.w
+	MOVE.l	#loc_00037972, Script_source_base.w
 	RTS
 loc_000383BE:
 	dc.b	$00, $01, $F0, $56, $01, $18, $01, $08, $00, $91, $00, $03, $DD, $74, $00, $00, $6F, $36, $60, $01, $01, $08, $01, $58, $00, $CD, $00, $03, $DD, $94, $00, $00 
