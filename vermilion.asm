@@ -1409,21 +1409,21 @@ loc_00001E0A:
 	CLR.l	Player_experience.w	
 	MOVE.w	Equipped_sword.w, D1	
 	BLT.w	loc_00001E5E	
-	LEA	loc_000251C8, A0	
+	LEA	EquipmentToStatModifierMap, A0	
 	ANDI.w	#$00FF, D1	
 	ADD.w	D1, D1	
 	MOVE.w	(A0,D1.w), Player_str.w	
 loc_00001E5E:
 	MOVE.w	Equipped_shield.w, D1	
 	BLT.w	loc_00001E78	
-	LEA	loc_000251C8, A0	
+	LEA	EquipmentToStatModifierMap, A0	
 	ANDI.w	#$00FF, D1	
 	ADD.w	D1, D1	
 	MOVE.w	(A0,D1.w), Player_ac.w	
 loc_00001E78:
 	MOVE.w	Equipped_armor.w, D1	
 	BLT.w	loc_00001E94	
-	LEA	loc_000251C8, A0	
+	LEA	EquipmentToStatModifierMap, A0	
 	ANDI.w	#$00FF, D1	
 	ADD.w	D1, D1	
 	MOVE.w	(A0,D1.w), D1	
@@ -18209,7 +18209,7 @@ loc_0001119A:
 	MOVE.w	#2, $FFFF990C.w
 	LEA	$FFFFC4B4.w, A3
 	LEA	loc_000226D6, A4
-	MOVE.w	$FFFFC4A6.w, D0
+	MOVE.w	Current_shop_type.w, D0
 	ASL.w	#3, D0
 	MOVEA.l	(A4,D0.w), A4
 	MOVE.w	$FFFFC4A2.w, D7
@@ -18229,7 +18229,7 @@ loc_00011204:
 	MOVE.w	Current_town.w, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
-	ADD.w	$FFFFC4A6.w, D0
+	ADD.w	Current_shop_type.w, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
 	MOVEA.l	(A3,D0.w), A3
@@ -18267,7 +18267,7 @@ loc_00011274:
 	MOVE.w	#2, $FFFF990C.w
 	LEA	$FFFFC4B4.w, A3
 	LEA	loc_000226D6, A4
-	MOVE.w	$FFFFC4A6.w, D0
+	MOVE.w	Current_shop_type.w, D0
 	ASL.w	#3, D0
 	MOVEA.l	(A4,D0.w), A4
 	MOVE.w	$FFFFC4A2.w, D7
@@ -27596,11 +27596,11 @@ loc_0001B3B8:
 	RTS
 loc_0001B416:
 	MOVE.w	#6, $FFFFC41E.w
-	CLR.w	$FFFFC4A6.w
+	CLR.w	Current_shop_type.w
 	MOVE.w	$FFFFC126.w, D0
 	ANDI.w	#$0100, D0
 	BEQ.b	loc_0001B43A
-	CLR.w	$FFFFC4A6.w
+	CLR.w	Current_shop_type.w
 	MOVE.w	Current_town.w, D0
 	CMPI.w	#TOWN_BARROW, D0
 	BNE.b	loc_0001B45C
@@ -27609,16 +27609,16 @@ loc_0001B43A:
 	MOVE.w	$FFFFC126.w, D0
 	ANDI.w	#$0200, D0
 	BEQ.b	loc_0001B44C
-	MOVE.w	#1, $FFFFC4A6.w
+	MOVE.w	#SHOP_TYPE_EQUIPMENT, Current_shop_type.w
 	BRA.b	loc_0001B45C
 loc_0001B44C:
 	MOVE.w	$FFFFC126.w, D0
 	ANDI.w	#$0400, D0
 	BEQ.b	loc_0001B45C
-	MOVE.w	#2, $FFFFC4A6.w
+	MOVE.w	#SHOP_TYPE_MAGIC, Current_shop_type.w
 loc_0001B45C:
 	LEA	loc_00026028, A0
-	MOVE.w	$FFFFC4A6.w, D0
+	MOVE.w	Current_shop_type.w, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
 	MOVE.w	Current_town.w, D1
@@ -27661,7 +27661,7 @@ loc_0001B4A4:
 loc_0001B4E4:
 	ADD.w	D2, D2
 	ADD.w	D2, D2
-	MOVE.w	$FFFFC4A6.w, D0
+	MOVE.w	Current_shop_type.w, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
 	MOVE.w	Current_town.w, D1
@@ -27756,7 +27756,7 @@ loc_0001B770:
 	RTS
 loc_0001B784:
 	JSR	loc_00010C4A
-	MOVE.w	$FFFFC4A6.w, D0
+	MOVE.w	Current_shop_type.w, D0
 	ASL.w	#3, D0
 	LEA	$FFFFC260.w, A1
 	LEA	$FFFFC4B4.w, A2
@@ -27859,7 +27859,7 @@ loc_0001BA38:
 	BLT.b	loc_0001BA5E
 	ANDI.w	#$00FF, D0
 	ADD.w	D0, D0
-	LEA	loc_000251C8, A0
+	LEA	EquipmentToStatModifierMap, A0
 	MOVE.w	(A0,D0.w), D0
 	SUB.w	D0, Player_str.w
 loc_0001BA5E:
@@ -28072,7 +28072,7 @@ loc_0001BCFC:
 	CMPI.w	#1, $FFFFC4A4.w
 	BEQ.b	loc_0001BD66
 loc_0001BD22:
-	MOVE.w	$FFFFC4A6.w, D0
+	MOVE.w	Current_shop_type.w, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
 	LEA	loc_00025FA4, A0
@@ -28084,7 +28084,7 @@ loc_0001BD3C:
 	MOVE.w	#8, $FFFFC41E.w
 	BRA.b	loc_0001BD80
 loc_0001BD4A:
-	MOVE.w	$FFFFC4A6.w, D0
+	MOVE.w	Current_shop_type.w, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
 	LEA	loc_00025FF8, A0
@@ -28092,7 +28092,7 @@ loc_0001BD4A:
 	MOVE.w	#$000A, $FFFFC41E.w
 	BRA.b	loc_0001BD80
 loc_0001BD66:
-	MOVE.w	$FFFFC4A6.w, D0
+	MOVE.w	Current_shop_type.w, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
 	LEA	loc_00026010, A0
@@ -28181,7 +28181,7 @@ loc_0001BE6E:
 	LEA	loc_000260CC, A0
 	JSR	loc_00012A6C
 	LEA	loc_000226D6, A0
-	MOVE.w	$FFFFC4A6.w, D0
+	MOVE.w	Current_shop_type.w, D0
 	ASL.w	#3, D0
 	MOVEA.l	(A0,D0.w), A0
 	LEA	$FFFFC4B4.w, A2
@@ -28193,7 +28193,7 @@ loc_0001BE6E:
 	ADD.w	D0, D0
 	MOVEA.l	(A0,D0.w), A0
 	JSR	loc_00012A6C
-	MOVE.w	$FFFFC4A6.w, D0
+	MOVE.w	Current_shop_type.w, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
 	LEA	loc_00026004, A0
@@ -28231,7 +28231,7 @@ loc_0001BF28:
 	MOVE.w	Current_town.w, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
-	ADD.w	$FFFFC4A6.w, D0
+	ADD.w	Current_shop_type.w, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
 	MOVEA.l	(A0,D0.w), A0
@@ -28245,7 +28245,7 @@ loc_0001BF28:
 	CMP.l	D0, D1
 	BLT.b	loc_0001C010
 	LEA	loc_000226D6, A0
-	MOVE.w	$FFFFC4A6.w, D0
+	MOVE.w	Current_shop_type.w, D0
 	ASL.w	#3, D0
 	MOVEA.l	$4(A0,D0.w), A0
 	MOVE.w	(A0), D0
@@ -28261,7 +28261,7 @@ loc_0001BFD2:
 	ADD.w	D1, D1
 	MOVE.w	(A1,D1.w), D1
 	MOVE.w	D1, (A0,D0.w)
-	MOVE.w	$FFFFC4A6.w, D0
+	MOVE.w	Current_shop_type.w, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
 	LEA	loc_00025FB0, A0
@@ -28271,7 +28271,7 @@ loc_0001BFD2:
 	JSR	loc_000115DE
 	BRA.b	loc_0001C024
 loc_0001C010:
-	MOVE.w	$FFFFC4A6.w, D0
+	MOVE.w	Current_shop_type.w, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
 	LEA	loc_00025FEC, A0
@@ -28287,7 +28287,7 @@ loc_0001C030:
 	MOVE.w	#$000C, $FFFFC41E.w	
 	JSR	loc_00011648	
 	JSR	loc_00010C4A	
-	MOVE.w	$FFFFC4A6.w, D0	
+	MOVE.w	Current_shop_type.w, D0	
 	ADD.w	D0, D0	
 	ADD.w	D0, D0	
 	LEA	loc_00025FF8, A0	
@@ -28306,7 +28306,7 @@ loc_0001C082:
 	JSR	loc_000122F4
 	ADDQ.w	#1, $FFFFC41E.w
 	JSR	loc_00011666
-	MOVE.w	$FFFFC4A6.w, D0
+	MOVE.w	Current_shop_type.w, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
 	LEA	loc_00025FBC, A0
@@ -28343,7 +28343,7 @@ loc_0001C120:
 	JSR	loc_00012766
 	JSR	loc_00012670
 	JSR	loc_00010C4A
-	MOVE.w	$FFFFC4A6.w, D0
+	MOVE.w	Current_shop_type.w, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
 	LEA	loc_00025FC8, A0
@@ -28363,14 +28363,14 @@ loc_0001C160:
 loc_0001C168:
 	TST.b	$FFFFC20F.w
 	BEQ.w	loc_0001C22E
-	MOVE.w	$FFFFC4A6.w, D0
+	MOVE.w	Current_shop_type.w, D0
 	ASL.w	#3, D0
 	LEA	loc_000226D6, A0
 	MOVEA.l	$4(A0,D0.w), A0
 	MOVE.w	(A0), D0
 	BEQ.w	loc_0001C208
 	JSR	loc_0001233A
-	MOVE.w	$FFFFC4A6.w, D0
+	MOVE.w	Current_shop_type.w, D0
 	BEQ.b	loc_0001C1B2
 	CMPI.w	#1, D0
 	BEQ.b	loc_0001C1CC
@@ -28401,7 +28401,7 @@ loc_0001C1E4:
 loc_0001C208:
 	JSR	loc_00010C4A
 	JSR	loc_0001242E
-	MOVE.w	$FFFFC4A6.w, D0
+	MOVE.w	Current_shop_type.w, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
 	LEA	loc_00025FD4, A0
@@ -28422,7 +28422,7 @@ loc_0001C234:
 	RTS
 loc_0001C254:
 	JSR	loc_00010C4A
-	MOVE.w	$FFFFC4A6.w, D0
+	MOVE.w	Current_shop_type.w, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
 	LEA	loc_00025FBC, A0
@@ -28457,7 +28457,7 @@ loc_0001C2AA:
 	MOVE.w	#8, D1
 	BTST.l	D1, D0
 	BNE.w	loc_0001C344
-	CMPI.w	#1, $FFFFC4A6.w
+	CMPI.w	#SHOP_TYPE_EQUIPMENT, Current_shop_type.w
 	BNE.b	loc_0001C2FE
 	MOVE.w	#9, D1
 	BTST.l	D1, D0
@@ -28470,7 +28470,7 @@ loc_0001C2FE:
 	LEA	loc_000260CC, A0
 	JSR	loc_00012A6C
 	BSR.w	loc_0001CEF8
-	MOVE.w	$FFFFC4A6.w, D0
+	MOVE.w	Current_shop_type.w, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
 	LEA	loc_0002601C, A0
@@ -28484,7 +28484,7 @@ loc_0001C33A:
 	MOVE.l	#loc_00026212, Script_source_base.w	
 	BRA.b	loc_0001C358	
 loc_0001C344:
-	MOVE.w	$FFFFC4A6.w, D0
+	MOVE.w	Current_shop_type.w, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
 	LEA	loc_00025FE0, A0
@@ -28525,7 +28525,7 @@ loc_0001C3A4:
 	JSR	loc_00011576
 	JSR	loc_000115DE
 	LEA	loc_000226D6, A0
-	MOVE.w	$FFFFC4A6.w, D0
+	MOVE.w	Current_shop_type.w, D0
 	ASL.w	#3, D0
 	MOVEA.l	$4(A0,D0.w), A0
 	SUBQ.w	#1, (A0)+
@@ -28554,7 +28554,7 @@ loc_0001C43A:
 	MOVE.w	D2, D0
 	ANDI.w	#$00FF, D0
 	ADD.w	D0, D0
-	LEA	loc_000251C8, A3
+	LEA	EquipmentToStatModifierMap, A3
 	ANDI.w	#$0400, D2
 	BEQ.b	loc_0001C464
 	MOVE.w	Player_str.w, D1	
@@ -28574,7 +28574,7 @@ loc_0001C474:
 	JSR	loc_00012670
 	JSR	loc_000126B6
 	JSR	loc_00010C4A
-	MOVE.w	$FFFFC4A6.w, D0
+	MOVE.w	Current_shop_type.w, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
 	LEA	loc_00025FB0, A0
@@ -28588,7 +28588,7 @@ loc_0001C4B0:
 	MOVE.w	-$2(A0), D0	
 	JSR	loc_000115FA	
 	JSR	loc_00010C4A	
-	MOVE.w	$FFFFC4A6.w, D0	
+	MOVE.w	Current_shop_type.w, D0	
 	ADD.w	D0, D0	
 	ADD.w	D0, D0	
 	LEA	loc_00026010, A0	
@@ -28631,7 +28631,7 @@ loc_0001C56E:
 	JSR	loc_00012766
 	JSR	loc_00012670
 	JSR	loc_00010C4A
-	MOVE.w	$FFFFC4A6.w, D0
+	MOVE.w	Current_shop_type.w, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
 	LEA	loc_00025FC8, A0
@@ -29224,7 +29224,7 @@ loc_0001CE28:
 	BTST.l	D0, D3
 	BEQ.b	loc_0001CE5C
 	MOVE.w	#$FFFF, -$2(A0)
-	LEA	loc_000251C8, A4
+	LEA	EquipmentToStatModifierMap, A4
 	MOVE.w	D3, D1
 	ANDI.w	#$00FF, D1
 	ADD.w	D1, D1
@@ -29290,7 +29290,7 @@ loc_0001CEEE:
 loc_0001CEF8:
 	LEA	loc_000221B0, A0
 	LEA	loc_000221C0, A2
-	MOVE.w	$FFFFC4A6.w, D0
+	MOVE.w	Current_shop_type.w, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
 	MOVEA.l	(A0,D0.w), A0
@@ -29678,7 +29678,7 @@ loc_0001D4B8:
 	BRA.w	loc_0001D504
 	BRA.w	loc_0001D504	
 loc_0001D4C8:
-	LEA	loc_000251C8, A0
+	LEA	EquipmentToStatModifierMap, A0
 	ANDI.w	#$00FF, D1
 	ADD.w	D1, D1
 	MOVE.w	Player_str.w, D0
@@ -29687,7 +29687,7 @@ loc_0001D4C8:
 	MOVE.w	D0, Player_str.w
 	RTS
 loc_0001D4E6:
-	LEA	loc_000251C8, A0
+	LEA	EquipmentToStatModifierMap, A0
 	ANDI.w	#$00FF, D1
 	ADD.w	D1, D1
 	MOVE.w	Player_ac.w, D0
@@ -29696,7 +29696,7 @@ loc_0001D4E6:
 	MOVE.w	D0, Player_ac.w
 	RTS
 loc_0001D504:
-	LEA	loc_000251C8, A0
+	LEA	EquipmentToStatModifierMap, A0
 	ANDI.w	#$00FF, D1
 	ADD.w	D1, D1
 	MOVE.w	Player_ac.w, D0
@@ -29710,7 +29710,7 @@ loc_0001D522:
 	BRA.w	loc_0001D56E
 	BRA.w	loc_0001D56E	
 loc_0001D532:
-	LEA	loc_000251C8, A0
+	LEA	EquipmentToStatModifierMap, A0
 	ANDI.w	#$00FF, D6
 	ADD.w	D6, D6
 	MOVE.w	Player_str.w, D0
@@ -29719,7 +29719,7 @@ loc_0001D532:
 	MOVE.w	D0, Player_str.w
 	RTS
 loc_0001D550:
-	LEA	loc_000251C8, A0
+	LEA	EquipmentToStatModifierMap, A0
 	ANDI.w	#$00FF, D6
 	ADD.w	D6, D6
 	MOVE.w	Player_ac.w, D0
@@ -29728,7 +29728,7 @@ loc_0001D550:
 	MOVE.w	D0, Player_ac.w
 	RTS
 loc_0001D56E:
-	LEA	loc_000251C8, A0
+	LEA	EquipmentToStatModifierMap, A0
 	ANDI.w	#$00FF, D6
 	ADD.w	D6, D6
 	MOVE.w	Player_ac.w, D0
@@ -34032,7 +34032,7 @@ loc_00021DE4:
 loc_00021EE4:
 	dc.b	$E0, $E1, $E1, $E1, $E1, $E1, $E1, $E1, $E1, $E1, $E1, $E2, $E3, $E4, $4C, $45, $56, $45, $4C, $E4, $55, $50, $E4, $E5, $E6, $E7, $E7, $E7, $E7, $E7, $E7, $E7
 	dc.b	$E7, $E7, $E7, $E8
-loc_00021F08: ; Inn prices by town
+loc_00021F08: ; Inn and fortune teller prices by town
 	dc.l	$10
 	dc.l	$13 
 	dc.l	$18 
@@ -35090,7 +35090,8 @@ loc_000231F8:
 	dc.w	$01D8
 	dc.b	$00, $07, $FF, $F8, $FF, $D0 
 	dc.w	$01D9
-	dc.b	$00, $08, $00, $18, $FF, $E8, $FF, $FF 
+	dc.b	$00, $08, $00, $18, $FF, $E8
+	dc.w	$FFFF 
 loc_00023242:
 	dc.w	$0021
 	dc.b	$0A, $FA, $00, $00, $00, $18 
@@ -35125,7 +35126,8 @@ loc_0002327C:
 	dc.w	$01DB
 	dc.b	$00, $FF, $00, $28, $00, $28 
 	dc.w	$007B
-	dc.b	$0A, $00, $00, $08, $00, $30, $FF, $FF 
+	dc.b	$0A, $00, $00, $08, $00, $30
+	dc.w	$FFFF 
 loc_000232C6:
 	dc.w	$0057
 	dc.b	$0A, $FF, $00, $00, $00, $18 
@@ -35194,7 +35196,8 @@ loc_0002337C:
 	dc.w	$01DB
 	dc.b	$00, $07, $00, $28, $00, $28 
 	dc.w	$0072
-	dc.b	$0A, $08, $00, $08, $00, $30, $FF, $FF 
+	dc.b	$0A, $08, $00, $08, $00, $30
+	dc.w	$FFFF 
 loc_000233C6:
 	dc.w	$0057
 	dc.b	$0A, $06, $00, $00, $00, $18 
@@ -35261,7 +35264,8 @@ loc_0002346C:
 	dc.w	$01C6
 	dc.b	$01, $FF, $00, $08, $00, $40 
 	dc.w	$01D7
-	dc.b	$00, $00, $FF, $E8, $00, $38, $FF, $FF 
+	dc.b	$00, $00, $FF, $E8, $00, $38
+	dc.w	$FFFF 
 loc_000234BE:
 	dc.w	$0096
 	dc.b	$0A, $00, $00, $00, $00, $18 
@@ -35294,7 +35298,8 @@ loc_000234E8:
 	dc.w	$01C6
 	dc.b	$01, $08, $00, $08, $00, $40 
 	dc.w	$01D7
-	dc.b	$00, $09, $FF, $E8, $00, $38, $FF, $FF 
+	dc.b	$00, $09, $FF, $E8, $00, $38
+	dc.w	$FFFF 
 loc_0002353A:
 	dc.b	$00, $02, $35, $76, $FF, $E4, $FF, $DC 
 	dc.w	$FFD8
@@ -37695,45 +37700,64 @@ PlayerLevelToStrMap: ; Player_level -> Player_str mappings. How much is added to
 	dc.w	$002A
 	dc.w	$002B
 	dc.w	$002C 
-loc_000251C8:
+EquipmentToStatModifierMap: ; For swords, this is the added str value. For shields and armor it's the added ac value
 	dc.w	$001C
 	dc.w	$0029
 	dc.w	$0031
-	dc.b	$00, $52 
+	dc.w	$0052 
 	dc.w	$0067
-	dc.b	$00, $85 
+	dc.w	$0085 
 	dc.w	$009C
 	dc.w	$007B
-	dc.b	$00, $BD 
+	dc.w	$00BD 
 	dc.w	$00D2
 	dc.w	$00AC
 	dc.w	$0100
-	dc.b	$01, $0F, $01, $2C, $00, $3D, $01, $54, $00, $EB, $01, $18, $00, $00, $00, $00, $00, $08 
+	dc.w	$010F 
+	dc.w	$012C 
+	dc.w	$003D 
+	dc.w	$0154 
+	dc.w	$00EB 
+	dc.w	$0118 
+	dc.w	$0000 
+	dc.w	$0000 
+	dc.w	$0008 
 	dc.w	$000D
-	dc.b	$00, $1A 
+	dc.w	$001A 
 	dc.w	$0027
-	dc.b	$00, $42 
+	dc.w	$0042 
 	dc.w	$004D
-	dc.b	$00, $39, $00, $3D 
+	dc.w	$0039 
+	dc.w	$003D 
 	dc.w	$0064
 	dc.w	$007D
-	dc.b	$00, $46, $00, $61, $00, $6C 
+	dc.w	$0046 
+	dc.w	$0061 
+	dc.w	$006C 
 	dc.w	$0084
-	dc.b	$00, $52 
+	dc.w	$0052 
 	dc.w	$0059
-	dc.b	$00, $6D, $00, $00, $00, $00, $00, $00, $00, $0B 
+	dc.w	$006D
+	dc.w	$0000
+	dc.w	$0000
+	dc.w	$0000
+	dc.w	$000B 
 	dc.w	$001D
-	dc.b	$00, $23 
+	dc.w	$0023 
 	dc.w	$0026
-	dc.b	$00, $2F, $00, $64, $00, $8B 
+	dc.w	$002F
+	dc.w	$0064
+	dc.w	$008B 
 	dc.w	$0037
-	dc.b	$00, $47 
+	dc.w	$0047 
 	dc.w	$00AE
 	dc.w	$006F
 	dc.w	$0096
-	dc.b	$00, $A7 
+	dc.w	$00A7 
 	dc.w	$00C8
-	dc.b	$00, $45, $00, $78, $00, $C3 
+	dc.w	$0045
+	dc.w	$0078
+	dc.w	$00C3 
 PlayerLevelToAcMap: ; word-sized
 	dc.w	$0008
 	dc.w	$0003

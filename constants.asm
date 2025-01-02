@@ -25,6 +25,12 @@ Possessed_magics_list       = $FFFFC464
 Possessed_equipment_length  = $FFFFC482
 Possessed_equipment_list    = $FFFFC484
 
+Current_shop_type = $FFFFC4A6
+
+SHOP_TYPE_ITEM      = $00
+SHOP_TYPE_EQUIPMENT = $01
+SHOP_TYPE_MAGIC     = $02
+
 Player_name                     = $FFFFC64C
 Player_position_x_in_town       = $FFFFC606
 Player_position_y_in_town       = $FFFFC608
@@ -45,6 +51,9 @@ Player_luk                      = $FFFFC63C
 Player_level                    = $FFFFC640
 Player_poisoned                 = $FFFFC642
 Player_greatly_poisoned         = $FFFFC76C
+
+
+
 
 Map_list = $FFFFC818
 Event_triggers_list = $FFFFC720 ; TODO: Investigate more
