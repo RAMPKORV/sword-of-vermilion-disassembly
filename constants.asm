@@ -31,7 +31,11 @@ SHOP_TYPE_ITEM      = $00
 SHOP_TYPE_EQUIPMENT = $01
 SHOP_TYPE_MAGIC     = $02
 
-Player_name                     = $FFFFC64C
+Player_move_forward_in_overworld                = $FFFFC541
+Player_move_backward_in_overworld               = $FFFFC544
+Player_rotate_counter_clockwise_in_overworld    = $FFFFC542
+Player_rotate_clockwise_in_overworld            = $FFFFC543
+
 Player_position_x_in_town       = $FFFFC606
 Player_position_y_in_town       = $FFFFC608
 Player_direction_in_town        = $FFFFC60C
@@ -50,10 +54,8 @@ Player_dex                      = $FFFFC63A
 Player_luk                      = $FFFFC63C
 Player_level                    = $FFFFC640
 Player_poisoned                 = $FFFFC642
+Player_name                     = $FFFFC64C
 Player_greatly_poisoned         = $FFFFC76C
-
-
-
 
 Map_list = $FFFFC818
 Event_triggers_list = $FFFFC720 ; TODO: Investigate more

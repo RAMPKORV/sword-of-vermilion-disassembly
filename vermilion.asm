@@ -2002,14 +2002,14 @@ loc_0000275A:
 	JSR	loc_00010522
 	MOVE.b	#$FF, $FFFFC08E.w
 	RTS
-loc_0000277E: ; process movement actions in dungeon crawling mode?
-	TST.b	$FFFFC541.w ; should move forward?
+loc_0000277E: ; process movement actions in overworld
+	TST.b	Player_move_forward_in_overworld.w
 	BNE.w	loc_000027F8
-	TST.b	$FFFFC544.w ; should move backwards?
+	TST.b	Player_move_backward_in_overworld.w
 	BNE.w	loc_000027F8
-	TST.b	$FFFFC542.w ; rotate counter-clockwise?
+	TST.b	Player_rotate_counter_clockwise_in_overworld.w
 	BNE.w	loc_000027F8
-	TST.b	$FFFFC543.w ; rotate clockwise?
+	TST.b	Player_rotate_clockwise_in_overworld.w
 	BNE.w	loc_000027F8
 	TST.b	$FFFFC561.w
 	BNE.b	loc_000027CC
@@ -3932,10 +3932,10 @@ loc_00004250:
 	MOVE.l	#$000052CE, $2(A6)
 	MOVE.l	#loc_000043A6, $2(A5)
 	CLR.w	$FFFFC54A.w
-	CLR.b	$FFFFC541.w
-	CLR.b	$FFFFC544.w
-	CLR.b	$FFFFC542.w
-	CLR.b	$FFFFC543.w
+	CLR.b	Player_move_forward_in_overworld.w
+	CLR.b	Player_move_backward_in_overworld.w
+	CLR.b	Player_rotate_counter_clockwise_in_overworld.w
+	CLR.b	Player_rotate_clockwise_in_overworld.w
 	BSR.w	loc_0000622A
 loc_00004384:
 	BSR.w	loc_000052D0
@@ -3957,13 +3957,13 @@ loc_000043A6:
 	BNE.w	loc_0000457C
 	TST.b	$FFFFC540.w
 	BEQ.w	loc_0000457C
-	TST.b	$FFFFC541.w
+	TST.b	Player_move_forward_in_overworld.w
 	BNE.w	loc_000044F2
-	TST.b	$FFFFC544.w
+	TST.b	Player_move_backward_in_overworld.w
 	BNE.w	loc_00004498
-	TST.b	$FFFFC542.w
+	TST.b	Player_rotate_counter_clockwise_in_overworld.w
 	BNE.w	loc_0000444E
-	TST.b	$FFFFC543.w
+	TST.b	Player_rotate_clockwise_in_overworld.w
 	BNE.b	loc_0000441E
 	CLR.w	$FFFFC54A.w
 	MOVE.b	$FFFFC408.w, D0
@@ -3984,7 +3984,7 @@ loc_0000441E:
 	ANDI.w	#7, D1
 	BNE.w	loc_00004516
 	BSR.w	loc_000052D0
-	MOVE.b	#$FF, $FFFFC543.w
+	MOVE.b	#$FF, Player_rotate_clockwise_in_overworld.w
 	ANDI.w	#$0018, D0
 	ASR.w	#1, D0
 	LEA	loc_00004660, A0
@@ -3998,7 +3998,7 @@ loc_0000444E:
 	ANDI.w	#7, D1
 	BNE.w	loc_00004516
 	BSR.w	loc_000052D0
-	MOVE.b	#$FF, $FFFFC542.w
+	MOVE.b	#$FF, Player_rotate_counter_clockwise_in_overworld.w
 	ANDI.w	#$0018, D0
 	ASR.w	#1, D0
 	SUBQ.w	#1, $FFFFC564.w
@@ -4019,7 +4019,7 @@ loc_00004498:
 	ANDI.w	#3, D1
 	BNE.w	loc_00004516
 	BSR.w	loc_000052D0
-	MOVE.b	#$FF, $FFFFC544.w
+	MOVE.b	#$FF, Player_move_backward_in_overworld.w
 	ANDI.w	#$000C, D0
 	LEA	loc_00004A66, A0
 	JSR	(A0,D0.w)
@@ -4043,7 +4043,7 @@ loc_000044F2:
 	ANDI.w	#3, D1
 	BNE.b	loc_00004516
 	BSR.w	loc_000052D0
-	MOVE.b	#$FF, $FFFFC541.w
+	MOVE.b	#$FF, Player_move_forward_in_overworld.w
 	ANDI.w	#$000C, D0
 	LEA	loc_0000492C, A0
 	JSR	(A0,D0.w)
@@ -4138,7 +4138,7 @@ loc_00004626:
 	MOVE.b	#$FF, $FFFFC08E.w
 	RTS
 loc_00004642:
-	CLR.b	$FFFFC541.w
+	CLR.b	Player_move_forward_in_overworld.w
 	BSR.w	loc_00005304
 	MOVE.w	#0, $FFFFC54C.w
 	MOVE.w	#$000C, $FFFFC54E.w
@@ -4339,7 +4339,7 @@ loc_00004898:
 	BSR.w	loc_00005288
 	RTS
 loc_000048C4:
-	CLR.b	$FFFFC543.w
+	CLR.b	Player_rotate_clockwise_in_overworld.w
 	SUBQ.w	#2, Player_direction_in_town.w
 	ANDI.w	#7, Player_direction_in_town.w
 	BSR.w	loc_000052D0
@@ -4356,7 +4356,7 @@ loc_000048EE:
 	BSR.w	loc_0000457E
 	RTS
 loc_000048F8:
-	CLR.b	$FFFFC542.w
+	CLR.b	Player_rotate_counter_clockwise_in_overworld.w
 	ADDQ.w	#2, Player_direction_in_town.w
 	ANDI.w	#7, Player_direction_in_town.w
 	BSR.w	loc_000052D0
@@ -4458,7 +4458,7 @@ loc_00004A40:
 	ADDQ.w	#1, $FFFFC084.w
 loc_00004A44:
 	JSR	loc_0001325E
-	CLR.b	$FFFFC541.w
+	CLR.b	Player_move_forward_in_overworld.w
 	MOVE.w	#0, $FFFFC54C.w
 	MOVE.w	#$000C, $FFFFC54E.w
 	BSR.w	loc_000050F8
@@ -4546,7 +4546,7 @@ loc_00004B62:
 	SUBQ.w	#1, $FFFFC084.w
 loc_00004B6C:
 	JSR	loc_0001325E
-	CLR.b	$FFFFC544.w
+	CLR.b	Player_move_backward_in_overworld.w
 	LEA	loc_00005A2C, A0
 	BSR.w	loc_000059AE
 	BSR.w	loc_00005304
