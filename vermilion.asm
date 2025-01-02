@@ -1,74 +1,97 @@
 	include "macros.asm"
 	include "constants.asm"
+StartOfRom:
 loc_00000000:
-	dc.l	$FFFFFE00
+	dc.l	$FFFFFE00 ; Initial stack pointer value
 loc_00000004:
-	dc.l	loc_00000F2C
-	dc.l	loc_00000200	
+	dc.l	EntryPoint ; Start of program
+	dc.l	ErrorTrap1 ; Bus error
 loc_0000000C:
-	dc.l	loc_00000200	
+	dc.l	ErrorTrap1 ; Address error (4)
 loc_00000010:
-	dc.l	loc_00000200	
-	dc.l	loc_00000200	
-	dc.l	loc_00000200	
-	dc.l	loc_00000200	
-	dc.l	loc_00000200	
-	dc.l	loc_00000200	
-	dc.l	loc_00000200	
-	dc.l	loc_00000200	
-	dc.l	loc_00000200	
-	dc.l	loc_00000200	
-	dc.l	loc_00000200	
-	dc.l	loc_00000200	
-	dc.l	loc_00000200	
-	dc.l	loc_00000200	
-	dc.l	loc_00000200	
-	dc.l	loc_00000200	
-	dc.l	loc_00000200	
-	dc.l	loc_00000200	
-	dc.l	loc_00000200	
-	dc.l	loc_00000200	
-	dc.l	loc_00000200	
-	dc.l	loc_00000200	
-	dc.l	loc_00000200	
-	dc.l	loc_00000200	
-	dc.l	loc_00000200	
-	dc.l	loc_00000200	
-	dc.l	loc_000010E8
-	dc.l	loc_00000200	
-	dc.l	loc_00000200	
-	dc.l	loc_00000200	
-	dc.l	loc_00000200	
-	dc.l	loc_00000200	
-	dc.l	loc_00000200	
-	dc.l	loc_00000200	
-	dc.l	loc_00000200	
-	dc.l	loc_00000200	
-	dc.l	loc_00000200	
-	dc.l	loc_00000200	
-	dc.l	loc_00000200	
-	dc.l	loc_00000200	
-	dc.l	loc_00000200	
-	dc.l	loc_00000200	
-	dc.l	loc_00000200	
-	dc.l	loc_00000200	
-	dc.l	loc_00000200	
-	dc.l	loc_00000200	
-	dc.l	loc_00000200	
-	dc.l	loc_00000200	
-	dc.b	$00
-	dc.b	$00, $02, $00, $00, $00, $02, $00, $00, $00, $02, $00, $00, $00, $02, $00, $00, $00, $02, $00, $00, $00, $02, $00, $00, $00, $02, $00, $00, $00, $02, $00, $00 
-	dc.b	$00, $02, $00, $00, $00, $02, $00, $00, $00, $02, $00, $00, $00, $02, $00, $53, $45, $47, $41, $5F, $4D, $45, $47, $41, $5F, $44, $52, $49, $56, $45, $20, $28 
-	dc.b	$43, $29, $53, $45, $47, $41, $20, $31, $39, $39, $30, $2E, $53, $45, $50, $56, $45, $52, $4D, $49, $4C, $49, $4F, $4E, $20, $20, $20, $20, $20, $20, $20, $20 
-	dc.b	$20, $20, $20, $20, $20, $20, $20, $20, $20, $20, $20, $20, $20, $20, $20, $20, $20, $20, $20, $20, $20, $20, $20, $20, $20, $20, $20, $20, $20, $20, $20, $53 
-	dc.b	$57, $4F, $52, $44, $20, $4F, $46, $20, $56, $45, $52, $4D, $49, $4C, $49, $4F, $4E, $20, $20, $20, $20, $20, $20, $20, $20, $20, $20, $20, $20, $20, $20, $20 
-	dc.b	$20, $20, $20, $20, $20, $20, $20, $20, $20, $20, $20, $20, $20, $20, $20, $47, $4D, $20, $30, $30, $30, $30, $35, $35, $30, $32, $2D, $30, $30, $06, $B5, $4A 
-	dc.b	$20, $20, $20, $20, $20, $20, $20, $20, $20, $20, $20, $20, $20, $20, $20 
-	dc.b	$00
-	dc.b	$00, $00, $00, $00, $09, $FF, $FF, $00, $FF, $00, $00, $00, $FF, $FF, $FF, $52, $41, $F8, $20, $00, $20, $00, $01, $00, $20, $3F, $FF, $20, $20, $20, $20, $20 
-	dc.b	$20, $20, $20, $20, $20, $20, $20, $20, $20, $20, $20, $20, $20, $20, $20, $20, $20, $20, $20, $20, $20, $20, $20, $20, $20, $20, $20, $20, $20, $20, $20, $20 
-	dc.b	$20, $20, $20, $20, $20, $20, $20, $20, $20, $20, $20, $20, $20, $20, $20, $55, $20, $20, $20, $20, $20, $20, $20, $20, $20, $20, $20, $20, $20, $20, $20 
-loc_00000200:
+	dc.l	ErrorTrap1		; Illegal instruction
+	dc.l	ErrorTrap1		; Division by zero
+	dc.l	ErrorTrap1		; CHK exception
+	dc.l	ErrorTrap1		; TRAPV exception (8)
+	dc.l	ErrorTrap1		; Privilege violation
+	dc.l	ErrorTrap1		; TRACE exception
+	dc.l	ErrorTrap1		; Line-A emulator
+	dc.l	ErrorTrap1		; Line-F emulator (12)
+	dc.l	ErrorTrap1		; Unused (reserved)
+	dc.l	ErrorTrap1		; Unused (reserved)
+	dc.l	ErrorTrap1		; Unused (reserved)
+	dc.l	ErrorTrap1		; Unused (reserved) (16)
+	dc.l	ErrorTrap1		; Unused (reserved)
+	dc.l	ErrorTrap1		; Unused (reserved)
+	dc.l	ErrorTrap1		; Unused (reserved)
+	dc.l	ErrorTrap1		; Unused (reserved) (20)
+	dc.l	ErrorTrap1		; Unused (reserved)
+	dc.l	ErrorTrap1		; Unused (reserved)
+	dc.l	ErrorTrap1		; Unused (reserved)
+	dc.l	ErrorTrap1		; Unused (reserved) (24)
+	dc.l	ErrorTrap1		; Spurious exception
+	dc.l	ErrorTrap1		; IRQ level 1
+	dc.l	ErrorTrap1		; IRQ level 2
+	dc.l	ErrorTrap1		; IRQ level 3 (28)
+	dc.l	ErrorTrap1		; IRQ level 4 (horizontal retrace interrupt)
+	dc.l	ErrorTrap1		; IRQ level 5
+	dc.l	loc_000010E8 	; IRQ level 6 (vertical retrace interrupt)
+	dc.l	ErrorTrap1		; IRQ level 7 (32)
+	dc.l	ErrorTrap1		; TRAP #00 exception
+	dc.l	ErrorTrap1		; TRAP #01 exception
+	dc.l	ErrorTrap1		; TRAP #02 exception
+	dc.l	ErrorTrap1		; TRAP #03 exception (36)
+	dc.l	ErrorTrap1		; TRAP #04 exception
+	dc.l	ErrorTrap1		; TRAP #05 exception
+	dc.l	ErrorTrap1		; TRAP #06 exception
+	dc.l	ErrorTrap1		; TRAP #07 exception (40)
+	dc.l	ErrorTrap1		; TRAP #08 exception
+	dc.l	ErrorTrap1		; TRAP #09 exception
+	dc.l	ErrorTrap1		; TRAP #10 exception
+	dc.l	ErrorTrap1		; TRAP #11 exception (44)
+	dc.l	ErrorTrap1		; TRAP #12 exception
+	dc.l	ErrorTrap1		; TRAP #13 exception
+	dc.l	ErrorTrap1		; TRAP #14 exception
+	dc.l	ErrorTrap1		; TRAP #15 exception (48)
+	dc.l	ErrorTrap1		; Unused (reserved)
+	dc.l	ErrorTrap1		; Unused (reserved)
+	dc.l	ErrorTrap1		; Unused (reserved)
+	dc.l	ErrorTrap1		; Unused (reserved) (52)
+	dc.l	ErrorTrap1		; Unused (reserved)
+	dc.l	ErrorTrap1		; Unused (reserved)
+	dc.l	ErrorTrap1		; Unused (reserved)
+	dc.l	ErrorTrap1		; Unused (reserved) (56)
+	dc.l	ErrorTrap1		; Unused (reserved)
+	dc.l	ErrorTrap1		; Unused (reserved)
+	dc.l	ErrorTrap1		; Unused (reserved)
+	dc.l	ErrorTrap1		; Unused (reserved) (60)
+	dc.l	ErrorTrap1		; Unused (reserved)
+	dc.l	ErrorTrap1		; Unused (reserved)
+	dc.l	ErrorTrap1		; Unused (reserved)
+	dc.l	ErrorTrap1		; Unused (reserved) (64)
+Header:
+	dc.b "SEGA_MEGA_DRIVE " ; Console name
+	dc.b "(C)SEGA 1990.SEP" ; Copyright holder and release date
+	dc.b "VERMILION                                       " ; Domestic name
+	dc.b "SWORD OF VERMILION                              " ; International name
+	dc.b "GM 00005502-00" ; Version
+loc_0000018E:
+	dc.w	$06B5 ; Checksum
+	dc.b	'J               '
+	dc.l StartOfRom
+;loc_000001A4:
+ROMEndLoc:
+	dc.l EndOfRom-1
+	dc.l $00FF0000 ; Start of RAM
+	dc.l $00FFFFFF ; End of RAM
+	dc.l $5241F820		; Backup RAM ID
+	dc.l $00200001		; Backup RAM start address
+	dc.l $00203FFF		; Backup RAM end address
+	dc.b "            "	; Modem support
+	dc.b "                                        "	; Notes (unused, anything can be put in this space, but it has to be 52 bytes.)
+	dc.b "U               " ; Region
+
+ErrorTrap1:
 	RTE	
 loc_00000202:
 	LEA	$FFFFFE00.w, A6
@@ -391,7 +414,7 @@ loc_00000E88:
 	dc.b	$00, $00, $00, $00, $00, $1F, $00, $40, $00, $00, $00, $00, $00, $00, $FF, $FF, $CC, $24, $00, $02, $00, $00, $00, $1F, $00, $40, $00, $00, $00, $00, $00, $00 
 	dc.b	$FF, $FF, $CC, $14, $00, $3F, $00, $0F, $00, $20, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $0F, $00, $0F, $00, $20, $00, $00, $00, $00, $00, $00 
 	dc.b	$00, $00, $00, $00 
-loc_00000F2C:
+EntryPoint:
 	TST.l	$00A10008
 loc_00000F32:
 	BNE.w	loc_0000102C
@@ -17718,7 +17741,7 @@ loc_000109B4:
 	MOVE.b	(A0,D2.w), D3
 	MOVE.b	#$FF, $FFFFC213.w
 loc_000109C8: ; Text script handling
-	CMPI.b	#$FF, D3 		; EOF
+	CMPI.b	#$FF, D3		; EOF
 	BEQ.w	loc_00010BBE
 	CMPI.b	#$FE, D3        ; CR
 	BEQ.w	loc_00010ABC
@@ -57223,7 +57246,7 @@ loc_0005A37E:
 	dc.l	$BA0ABCCB	
 	dc.l	$AA00ABBA	
 	dc.l	$A0000AAA	
-	dc.l	loc_00000200	
+	dc.l	ErrorTrap1	
 loc_0005A3A2:
 	dc.l	$FFFFF001	
 	dc.l	$88000006	
@@ -75927,3 +75950,5 @@ loc_0009FD86:
 	dc.b	$FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF 
 	dc.b	$FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF 
 	dc.b	$FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF 
+EndOfRom:
+	END
