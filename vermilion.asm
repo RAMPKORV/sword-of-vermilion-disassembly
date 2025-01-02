@@ -119,7 +119,7 @@ loc_00000232:
 loc_00000250:
 	MOVE.w	#$FFFF, Equipped_armor.w
 	MOVE.w	#$FFFF, Readied_magic.w
-	MOVE.w	#$FFFF, $FFFFC4D8.w
+	MOVE.w	#$FFFF, Equipped_unused.w
 	MOVE.l	#0, Player_kims.w
 	MOVE.w	#0, Player_level.w
 	JSR	loc_0001DA8E
@@ -13620,7 +13620,7 @@ loc_0000D094:
 	LEA	$FFFFC260.w, A1
 	JSR	loc_00012A6C
 	MOVE.b	#$20, (A1)+
-	MOVEA.l	#$000256D2, A0
+	MOVEA.l	#loc_000256D2, A0
 	JSR	loc_00012A6C
 	MOVE.w	$FFFFC534.w, D6
 	ASL.w	#3, D6
@@ -26357,7 +26357,7 @@ loc_0001A1E0:
 loc_0001A1EA:
 	JSR	loc_0001CDFE
 	BNE.b	loc_0001A216
-	LEA	loc_0002267E, A0
+	LEA	MagicMpConsumptionMap, A0
 	MOVE.w	Readied_magic.w, D0
 	ANDI.w	#$001F, D0
 	ADD.w	D0, D0
@@ -26377,7 +26377,7 @@ loc_0001A21C:
 	ADD.w	D0, D0
 	MOVE.w	(A0,D0.w), D0
 	ANDI.w	#$00FF, D0
-	LEA	loc_0002267E, A0
+	LEA	MagicMpConsumptionMap, A0
 	ADD.w	D0, D0
 	MOVE.w	(A0,D0.w), D0
 	MOVE.w	Player_mp.w, D1
@@ -34069,7 +34069,7 @@ loc_00021F08: ; Inn and fortune teller prices by town
 	dc.l	$190 
 	dc.l	$224
 	dc.l	$250
-loc_00021F40:
+loc_00021F40: ; Church curse removal prices by town
 	dc.l	$100
 	dc.l	$110
 	dc.l	$120
@@ -34084,7 +34084,7 @@ loc_00021F40:
 	dc.l	$210
 	dc.l	$220
 	dc.l	$230
-loc_00021F78:
+loc_00021F78: ; Church poision cure prices by town
 	dc.l	$2
 	dc.l	$4
 	dc.l	$6
@@ -34686,30 +34686,31 @@ MagicResaleValueMap:
 	dc.l	$14500 
 	dc.l	$4400
 	dc.l	$0
-loc_0002267E:
-	dc.w	$0003
-	dc.w	$0009
-	dc.w	$0002
-	dc.w	$000C
-	dc.w	$0010
-	dc.w	$0001
-	dc.w	$0004
-	dc.w	$0007
-	dc.w	$000A
-	dc.w	$0004
-	dc.w	$0008
-	dc.w	$0005
-	dc.w	$000A
-	dc.w	$0019
-	dc.w	$000D
-	dc.w	$0005 
-	dc.w	$0008 
-	dc.w	$0005 
-	dc.w	$0006 
-	dc.w	$000C 
-	dc.w	$001F 
-	dc.w	$0006
-	dc.w	$0002 
+;loc_0002267E:
+MagicMpConsumptionMap:
+	dc.w	$3
+	dc.w	$9
+	dc.w	$2
+	dc.w	$C
+	dc.w	$10
+	dc.w	$1
+	dc.w	$4
+	dc.w	$7
+	dc.w	$A
+	dc.w	$4
+	dc.w	$8
+	dc.w	$5
+	dc.w	$A
+	dc.w	$19
+	dc.w	$D
+	dc.w	$5 
+	dc.w	$8 
+	dc.w	$5 
+	dc.w	$6 
+	dc.w	$C 
+	dc.w	$1F 
+	dc.w	$6
+	dc.w	$2 
 loc_000226AC:
 	dc.b	$04, $B0
 	dc.b	$06, $A4

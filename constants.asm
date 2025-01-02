@@ -16,7 +16,7 @@ Equipped_sword  = $FFFFC4D0
 Equipped_shield = $FFFFC4D2
 Equipped_armor  = $FFFFC4D4
 Readied_magic   = $FFFFC4D6
-Equipped_Unused = $FFFFC4D8 ; Probably unused, at least
+Equipped_unused = $FFFFC4D8 ; Probably unused, at least
 
 Possessed_items_length      = $FFFFC442
 Possessed_items_list        = $FFFFC444
