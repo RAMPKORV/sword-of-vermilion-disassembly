@@ -43,9 +43,27 @@ Player_int                      = $FFFFC638
 Player_dex                      = $FFFFC63A
 Player_luk                      = $FFFFC63C
 Player_level                    = $FFFFC640
+Player_poisoned                 = $FFFFC642
+Player_greatly_poisoned         = $FFFFC76C
 
 Map_list = $FFFFC818
 Event_triggers_list = $FFFFC720 ; TODO: Investigate more
+
+; Towns
+TOWN_WYCLIF         = $00
+TOWN_PARMA          = $01
+TOWN_WATLING        = $02
+TOWN_DEEPDALE       = $03
+TOWN_STOW           = $04
+TOWN_KELTWICK       = $05
+TOWN_MALAGA         = $06
+TOWN_BARROW         = $07
+TOWN_TADCASTER      = $08
+TOWN_HELWIG         = $09
+TOWN_SWAFHAM        = $0A
+TOWN_EXCALABRIA     = $0B
+TOWN_HASTINGS       = $0C
+TOWN_CARTHAHENA     = $0D
 
 ; Items
 ITEM_HERBS              = $00

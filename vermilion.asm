@@ -92,11 +92,11 @@ loc_00000232:
 	MOVE.w	#0, Possessed_items_length.w
 	MOVE.w	#0, Possessed_magics_length.w
 	MOVE.w	#0, Possessed_equipment_length.w
-	MOVE.w	#$FFFF, $FFFFC4D0.w
-	MOVE.w	#$FFFF, $FFFFC4D2.w
+	MOVE.w	#$FFFF, Equipped_sword.w
+	MOVE.w	#$FFFF, Equipped_shield.w
 loc_00000250:
-	MOVE.w	#$FFFF, $FFFFC4D4.w
-	MOVE.w	#$FFFF, $FFFFC4D6.w
+	MOVE.w	#$FFFF, Equipped_armor.w
+	MOVE.w	#$FFFF, Readied_magic.w
 	MOVE.w	#$FFFF, $FFFFC4D8.w
 	MOVE.l	#0, Player_kims.w
 	MOVE.w	#0, Player_level.w
@@ -888,7 +888,7 @@ loc_00001636:
 	MOVE.b	#$FF, $FFFFC08E.w
 loc_00001648:
 	RTS
-loc_0000164A: ; leaving Wyclif?
+loc_0000164A:
 	TST.b	$FFFFC08E.w
 	BNE.b	loc_0000168A
 	JSR	loc_00015966
@@ -1274,7 +1274,7 @@ loc_00001C1C:
 	BEQ.b	loc_00001C56
 	CLR.b	$FFFFC7F2.w
 	MOVE.w	Current_town.w, D0
-	CMPI.w	#$000A, D0
+	CMPI.w	#TOWN_SWAFHAM, D0
 	BNE.b	loc_00001C56
 	MOVE.b	#$FF, $FFFFC08E.w
 	MOVE.w	#$012C, $FFFFC434.w
@@ -1407,21 +1407,21 @@ loc_00001E0A:
 	CLR.w	Player_mmp.w	
 	CLR.w	Player_mhp.w	
 	CLR.l	Player_experience.w	
-	MOVE.w	$FFFFC4D0.w, D1	
+	MOVE.w	Equipped_sword.w, D1	
 	BLT.w	loc_00001E5E	
 	LEA	loc_000251C8, A0	
 	ANDI.w	#$00FF, D1	
 	ADD.w	D1, D1	
 	MOVE.w	(A0,D1.w), Player_str.w	
 loc_00001E5E:
-	MOVE.w	$FFFFC4D2.w, D1	
+	MOVE.w	Equipped_shield.w, D1	
 	BLT.w	loc_00001E78	
 	LEA	loc_000251C8, A0	
 	ANDI.w	#$00FF, D1	
 	ADD.w	D1, D1	
 	MOVE.w	(A0,D1.w), Player_ac.w	
 loc_00001E78:
-	MOVE.w	$FFFFC4D4.w, D1	
+	MOVE.w	Equipped_armor.w, D1	
 	BLT.w	loc_00001E94	
 	LEA	loc_000251C8, A0	
 	ANDI.w	#$00FF, D1	
@@ -1742,7 +1742,7 @@ loc_00002324:
 	ADDI.l	#$00000180, D0
 	MOVE.l	D0, $20(A6)
 	JSR	loc_00008ECA
-	MOVE.w	$FFFFC4D6.w, D0
+	MOVE.w	Readied_magic.w, D0
 	BLT.b	loc_000023EA
 	ANDI.w	#$00FF, D0
 	JSR	loc_0000F8A0
@@ -1961,7 +1961,7 @@ loc_00002724:
 	JSR	loc_00013028
 	RTS
 loc_0000273E:
-	TST.w	$FFFFC642.w
+	TST.w	Player_poisoned.w
 	BEQ.b	loc_00002752
 	TST.b	$FFFFC7C6.w
 	BNE.b	loc_00002752
@@ -2056,7 +2056,7 @@ loc_00002858:
 	MOVE.w	$FFFFC556.w, D0
 	MOVE.b	(A0,D0.w), $FFFFC684.w
 loc_00002868:
-	JSR	loc_0000FB5C
+	JSR	GetRandomNumber
 	ANDI.w	#3, D0
 	MOVE.w	D0, $FFFFC680.w
 	JSR	loc_0000F8D2
@@ -2345,9 +2345,9 @@ loc_00002C7C:
 	CLR.b	$FFFFC551.w
 	CLR.b	$FFFFC560.w
 	CLR.w	$FFFFC562.w
-	TST.b	$FFFFC76C.w
+	TST.b	Player_greatly_poisoned.w
 	BNE.b	loc_00002CA2
-	CLR.w	$FFFFC642.w
+	CLR.w	Player_poisoned.w
 loc_00002CA2: ; ressurected in church?
 	MOVE.w	Player_mhp.w, Player_hp.w
 	MOVE.w	Player_mmp.w, Player_mp.w
@@ -2875,7 +2875,7 @@ loc_0000341A:
 	RTS
 loc_00003428:
 	MOVE.b	#1, $FFFFC683.w
-	JSR	loc_0000FB5C
+	JSR	GetRandomNumber
 	AND.w	$FFFFC69C.w, D0
 	BEQ.b	loc_0000343E
 	CLR.w	D0
@@ -2967,21 +2967,21 @@ loc_000034E0:
 	CLR.b	$FFFFC551.w
 	CLR.b	$FFFFC540.w
 	MOVE.w	Current_town.w, D0
-	CMPI.w	#$000C, D0
+	CMPI.w	#TOWN_HASTINGS, D0
 	BNE.b	loc_0000355C
-	MOVE.w	#$000B, Current_town.w
+	MOVE.w	#TOWN_EXCALABRIA, Current_town.w
 	MOVE.w	Current_town.w, D0
 loc_0000355C:
-	CMPI.w	#$000B, D0
+	CMPI.w	#TOWN_EXCALABRIA, D0
 	BNE.b	loc_00003570
 	TST.b	$FFFFC748.w
 	BEQ.b	loc_0000357C
-	MOVE.w	#$000A, Current_town.w
+	MOVE.w	#TOWN_SWAFHAM, Current_town.w
 	BRA.b	loc_0000357C
 loc_00003570:
 	CMPI.w	#$000F, D0
 	BNE.b	loc_0000357C
-	MOVE.w	#$000D, Current_town.w	
+	MOVE.w	#TOWN_CARTHAHENA, Current_town.w	
 loc_0000357C:
 	MOVE.w	Current_town.w, D0
 	ASL.w	#3, D0
@@ -3492,7 +3492,7 @@ loc_00003C7E:
 	MOVE.w	#1, $8(A6)
 	CLR.w	$16(A6)
 	MOVE.l	#loc_00004068, $2(A6)
-	TST.w	$FFFFC4D0.w
+	TST.w	Equipped_sword.w
 	BLT.b	loc_00003D50
 	MOVEA.l	$FFFFCC10.w, A6
 	BSET.b	#7, (A6)
@@ -3528,7 +3528,7 @@ loc_00003D7A:
 	MOVE.w	#5, D2
 	JSR	loc_000012F2
 	BEQ.b	loc_00003DA6
-	TST.w	$FFFFC4D0.w
+	TST.w	Equipped_sword.w
 	BLT.b	loc_00003DA6
 	MOVE.b	#$B6, D0
 	JSR	loc_00010522
@@ -3564,7 +3564,7 @@ loc_00003DB6:
 	BGE.w	loc_00003E3A
 	TST.w	$FFFFC57A.w
 	BLT.b	loc_00003E36
-	JSR	loc_0000FB5C
+	JSR	GetRandomNumber
 	MOVE.w	D0, D1
 	ANDI.w	#$000F, D0
 	BNE.b	loc_00003E36
@@ -3857,7 +3857,7 @@ loc_00004200:
 	JSR	loc_0000F5D6
 	RTS
 loc_0000421A:
-	MOVE.w	$FFFFC4D6.w, D0
+	MOVE.w	Readied_magic.w, D0
 	BLT.b	loc_00004232
 	ANDI.w	#$001F, D0
 	ADD.w	D0, D0
@@ -4375,7 +4375,7 @@ loc_00004974:
 	BEQ.b	loc_0000497E
 	ADDQ.w	#1, $FFFFC084.w
 loc_0000497E:
-	TST.w	$FFFFC642.w
+	TST.w	Player_poisoned.w
 	BEQ.b	loc_0000499E
 	MOVE.w	#$0072, $FFFFC080.w
 	MOVE.w	Player_str.w, D0
@@ -4387,7 +4387,7 @@ loc_00004994:
 	JSR	loc_00012EF6
 loc_0000499E:
 	JSR	loc_0001325E
-	MOVE.w	$FFFFC4D4.w, D0
+	MOVE.w	Equipped_armor.w, D0
 	ANDI.w	#$00FF, D0
 	CMPI.w	#$0037, D0
 	BNE.b	loc_000049CC
@@ -4475,7 +4475,7 @@ loc_00004AC2:
 	BEQ.b	loc_00004ACC
 	SUBQ.w	#1, $FFFFC084.w
 loc_00004ACC:
-	TST.w	$FFFFC642.w
+	TST.w	Player_poisoned.w
 	BEQ.b	loc_00004AEC
 	MOVE.w	#$0072, $FFFFC080.w
 	MOVE.w	Player_str.w, D0
@@ -4487,7 +4487,7 @@ loc_00004AE2:
 	JSR	loc_00012EF6
 loc_00004AEC:
 	JSR	loc_0001325E
-	MOVE.w	$FFFFC4D4.w, D0
+	MOVE.w	Equipped_armor.w, D0
 	ANDI.w	#$00FF, D0
 	CMPI.w	#$0037, D0
 	BNE.b	loc_00004B1A
@@ -7839,7 +7839,7 @@ loc_00007CCC:
 	MOVE.b	#$85, D0
 	JSR	loc_00010522
 	MOVE.w	#3, $FFFFC412.w
-	MOVE.w	#$FFFF, $FFFFC642.w
+	MOVE.w	#$FFFF, Player_poisoned.w
 	MOVE.b	#$FF, $FFFFC7C6.w
 	MOVE.w	Player_mhp.w, Player_hp.w
 	MOVE.w	Player_mmp.w, Player_mp.w
@@ -8225,7 +8225,7 @@ loc_0000822A:
 	MOVE.w	(A1,D0.w), $8(A5)
 	BRA.w	loc_00008154
 loc_00008234:
-	JSR	loc_0000FB5C
+	JSR	GetRandomNumber
 	ANDI.b	#6, D0
 	MOVE.b	D0, $18(A5)
 	MOVE.b	D0, $27(A5)
@@ -8310,7 +8310,7 @@ loc_00008340:
 	CLR.b	$1A(A5)
 	CLR.b	$1B(A5)
 	MOVE.b	$18(A5), D1
-	JSR	loc_0000FB5C
+	JSR	GetRandomNumber
 	ANDI.w	#6, D0
 	ADD.b	D0, D1
 	ANDI.b	#7, D1
@@ -9117,7 +9117,7 @@ loc_00008ED4:
 	MOVE.w	#4, D7
 	BRA.w	loc_00008F1C
 loc_00008F04:
-	JSR	loc_0000FB5C
+	JSR	GetRandomNumber
 	ANDI.w	#7, D0
 	MOVE.w	D0, D7
 	MOVE.b	$B(A0), D0
@@ -9129,10 +9129,10 @@ loc_00008F1C:
 	LEA	$FFFFC6A0.w, A1
 	MOVE.w	#7, D7
 loc_00008F28:
-	JSR	loc_0000FB5C
+	JSR	GetRandomNumber
 	ANDI.w	#7, D0
 	MOVE.w	D0, D1
-	JSR	loc_0000FB5C
+	JSR	GetRandomNumber
 	ANDI.w	#7, D0
 	MOVE.b	(A1,D1.w), D2
 	MOVE.b	(A1,D0.w), D3
@@ -9256,7 +9256,7 @@ loc_000090FE:
 	CLR.l	$36(A5)
 	CLR.w	$3A(A5)
 	CLR.w	$3C(A5)
-	JSR	loc_0000FB5C
+	JSR	GetRandomNumber
 	ANDI.b	#7, D0
 	ADD.b	D0, $18(A5)
 	ANDI.b	#7, $18(A5)
@@ -9294,7 +9294,7 @@ loc_00009186:
 	MOVE.w	$12(A5), $C(A5)
 	MOVE.w	$C(A5), $16(A5)
 	RTS
-loc_0000919A:
+loc_0000919A: ; suspected: Take a hit from an enemy
 	TST.b	$FFFFC08E.w
 	BNE.w	loc_0000926E
 	MOVEA.l	$FFFFCC08.w, A6
@@ -9332,15 +9332,15 @@ loc_0000919A:
 	JSR	loc_00010522
 	TST.b	$24(A5)
 	BEQ.w	loc_00009244
-	MOVE.w	$FFFFC4D2.w, D0
+	MOVE.w	Equipped_shield.w, D0
 	ANDI.w	#$00FF, D0
-	CMPI.w	#$0023, D0
+	CMPI.w	#EQUIPMENT_SHIELD_POISON, D0
 	BEQ.w	loc_00009244
-	JSR	loc_0000FB5C
+	JSR	GetRandomNumber
 	ANDI.w	#$01FF, D0
 	CMP.w	Player_luk.w, D0
 	BLT.b	loc_00009244
-	MOVE.w	#$FFFF, $FFFFC642.w
+	MOVE.w	#$FFFF, Player_poisoned.w
 loc_00009244:
 	BSR.w	loc_000092A4
 	ANDI.w	#7, D0
@@ -9587,7 +9587,7 @@ loc_000095BC:
 	TST.w	$3A(A5)
 	BEQ.w	loc_000095F4
 	SUBQ.w	#1, $3A(A5)
-	JSR	loc_0000FB5C
+	JSR	GetRandomNumber
 	ANDI.b	#7, D0
 	BNE.w	loc_00009614
 	BTST.l	#4, D0
@@ -9600,7 +9600,7 @@ loc_000095EA:
 	ANDI.b	#7, $18(A5)
 	BRA.w	loc_00009614
 loc_000095F4:
-	JSR	loc_0000FB5C
+	JSR	GetRandomNumber
 	ANDI.w	#$00FF, D0
 	BNE.w	loc_00009608
 	MOVE.w	#$00F0, $3A(A5)
@@ -9701,7 +9701,7 @@ loc_00009766:
 	CLR.l	$36(A5)
 	BRA.w	loc_000097B2
 loc_0000978A:
-	JSR	loc_0000FB5C
+	JSR	GetRandomNumber
 	ANDI.w	#$007F, D0
 	BNE.w	loc_0000979E
 	MOVE.w	#$00B4, $3A(A5)
@@ -9862,7 +9862,7 @@ loc_000099A4:
 	MOVE.b	D0, $18(A5)
 	BRA.w	loc_000099FC
 loc_000099D2:
-	JSR	loc_0000FB5C
+	JSR	GetRandomNumber
 	MOVE.w	D0, D1
 	ANDI.w	#$00FF, D0
 	BNE.w	loc_000099F0
@@ -9946,7 +9946,7 @@ loc_00009AE6:
 	CLR.l	$36(A5)
 	BRA.w	loc_00009B32
 loc_00009B0A:
-	JSR	loc_0000FB5C
+	JSR	GetRandomNumber
 	ANDI.w	#$007F, D0
 	BNE.w	loc_00009B1E
 	MOVE.w	#$00B4, $3A(A5)
@@ -10009,7 +10009,7 @@ loc_00009BE8:
 	SUBQ.w	#1, $3A(A5)
 	BRA.w	loc_00009C42
 loc_00009BF8:
-	JSR	loc_0000FB5C
+	JSR	GetRandomNumber
 	ANDI.b	#7, D0
 	BNE.w	loc_00009C2A
 	BTST.l	#4, D0
@@ -10061,7 +10061,7 @@ loc_00009C62:
 	BRA.w	loc_00009D00
 loc_00009CAA:
 	BSET.b	#7, (A4)
-	JSR	loc_0000FB5C
+	JSR	GetRandomNumber
 	MOVE.b	D0, $1B(A4)
 	MOVE.b	$7(A5), $7(A4)
 	MOVE.l	$E(A5), $E(A4)
@@ -10153,7 +10153,7 @@ loc_00009DF2:
 	MOVE.b	D0, $18(A5)
 	BTST.b	#7, (A4)
 	BNE.w	loc_00009E7A
-	JSR	loc_0000FB5C
+	JSR	GetRandomNumber
 	MOVE.w	D0, D1
 	ANDI.w	#$007F, D0
 	BEQ.w	loc_00009E3A
@@ -10163,7 +10163,7 @@ loc_00009DF2:
 	BRA.w	loc_00009E7A
 loc_00009E3A:
 	BSET.b	#7, (A4)
-	JSR	loc_0000FB5C
+	JSR	GetRandomNumber
 	MOVE.b	D0, $1B(A4)
 	MOVE.b	$7(A5), $7(A4)
 	MOVE.l	$E(A5), $E(A4)
@@ -10280,12 +10280,12 @@ loc_00009FF8:
 	SUBQ.w	#1, $3A(A5)
 	BRA.w	loc_0000A05A
 loc_0000A008:
-	JSR	loc_0000FB5C
+	JSR	GetRandomNumber
 	ANDI.w	#$003F, D0
 	BNE.w	loc_0000A042
 	TST.b	$FFFFC69F.w
 	BNE.w	loc_0000A02C
-	JSR	loc_0000FB5C
+	JSR	GetRandomNumber
 	ANDI.b	#7, D0
 	BRA.w	loc_0000A034
 loc_0000A02C:
@@ -10370,10 +10370,10 @@ loc_0000A13C:
 	SUBQ.w	#1, $3A(A5)
 	BRA.w	loc_0000A18A
 loc_0000A14C:
-	JSR	loc_0000FB5C
+	JSR	GetRandomNumber
 	ANDI.w	#$001F, D0
 	BNE.w	loc_0000A172
-	JSR	loc_0000FB5C
+	JSR	GetRandomNumber
 	ANDI.b	#7, D0
 	MOVE.b	D0, $18(A5)
 	MOVE.w	#$0050, $3A(A5)
@@ -10422,7 +10422,7 @@ loc_0000A204:
 	TST.w	$3C(A5)
 	BNE.w	loc_0000A236
 	CLR.w	D0
-	JSR	loc_0000FB5C
+	JSR	GetRandomNumber
 	ORI.w	#$0060, D0
 	ANDI.w	#$007F, D0
 	MOVE.w	D0, $3C(A5)
@@ -10615,7 +10615,7 @@ loc_0000A4AE:
 	MOVE.b	D0, $18(A5)
 	BTST.b	#7, (A4)
 	BNE.w	loc_0000A55E
-	JSR	loc_0000FB5C
+	JSR	GetRandomNumber
 	MOVE.w	D0, D1
 	ANDI.w	#$007F, D0
 	BEQ.w	loc_0000A4F6
@@ -10764,7 +10764,7 @@ loc_0000A6E0:
 	MOVE.b	D0, $18(A5)
 	BTST.b	#7, (A4)
 	BNE.w	loc_0000A784
-	JSR	loc_0000FB5C
+	JSR	GetRandomNumber
 	MOVE.w	D0, D1
 	ANDI.w	#$007F, D0
 	BEQ.w	loc_0000A728
@@ -10832,7 +10832,7 @@ loc_0000A800:
 	MOVE.b	$1(A5), D0
 	LEA	(A5,D0.w), A6
 	BSET.b	#7, (A6)
-	JSR	loc_0000FB5C
+	JSR	GetRandomNumber
 	MOVE.b	D0, $1B(A5)
 	MOVE.l	#loc_0000A842, $2(A5)
 	BSR.w	loc_0000B758
@@ -10934,7 +10934,7 @@ loc_0000A98A:
 	SUBQ.w	#1, $3C(A5)
 	BNE.w	loc_0000A9B4
 	ADDQ.b	#1, $3A(A5)
-	JSR	loc_0000FB5C
+	JSR	GetRandomNumber
 	ANDI.w	#$00F0, D0
 	ADDI.w	#$003C, D0
 	MOVE.w	D0, $3C(A5)
@@ -11028,7 +11028,7 @@ loc_0000AAD4:
 	MOVE.b	#$0E, $6(A5)
 	MOVE.l	#$0000F5D6, $2(A6)
 	MOVE.b	#$0E, $6(A6)
-	JSR	loc_0000FB5C
+	JSR	GetRandomNumber
 	ANDI.w	#$00F0, D0
 	ADDI.w	#$003C, D0
 	MOVE.w	D0, $3C(A5)
@@ -11125,7 +11125,7 @@ loc_0000AC54:
 	SUBQ.w	#1, $3C(A5)
 	BNE.w	loc_0000AC7E
 	CLR.w	$3A(A5)	
-	JSR	loc_0000FB5C	
+	JSR	GetRandomNumber	
 	ANDI.w	#$00F0, D0	
 	ADDI.w	#$003C, D0	
 	MOVE.w	D0, $3C(A5)	
@@ -11221,7 +11221,7 @@ loc_0000AD7E:
 loc_0000ADB2:
 	RTS
 loc_0000ADB4:
-	JSR	loc_0000FB5C
+	JSR	GetRandomNumber
 	MOVE.b	D0, $1B(A5)
 	ANDI.b	#6, D0
 	MOVE.b	D0, $18(A5)
@@ -11281,7 +11281,7 @@ loc_0000AEA6:
 	CLR.l	$36(A5)
 	CMPI.b	#$23, $3A(A5)
 	BCS.b	loc_0000AECE
-	JSR	loc_0000FB5C
+	JSR	GetRandomNumber
 	ANDI.w	#$00FF, D0
 	CMPI.w	#$0080, D0
 	BLE.b	loc_0000AF0E
@@ -11361,7 +11361,7 @@ loc_0000AF4A:
 	JSR	loc_0000F5D6(PC)
 	RTS
 loc_0000AFB6:
-	JSR	loc_0000FB5C
+	JSR	GetRandomNumber
 	MOVE.b	D0, $1B(A5)
 	ANDI.b	#6, D0
 	MOVE.b	D0, $18(A5)
@@ -11427,7 +11427,7 @@ loc_0000B0AC:
 	BNE.w	loc_0000B16E
 	CMPI.b	#$23, $3A(A5)
 	BCS.b	loc_0000B0DC
-	JSR	loc_0000FB5C
+	JSR	GetRandomNumber
 	ANDI.w	#$00FF, D0
 	CMPI.w	#$0080, D0
 	BLE.b	loc_0000B154
@@ -11533,7 +11533,7 @@ loc_0000B1F2:
 	JSR	loc_0000F5D6(PC)
 	RTS
 loc_0000B212:
-	JSR	loc_0000FB5C
+	JSR	GetRandomNumber
 	MOVE.b	D0, $1B(A5)
 	ANDI.b	#6, D0
 	MOVE.b	D0, $18(A5)
@@ -11618,7 +11618,7 @@ loc_0000B36C:
 	CLR.l	$36(A5)
 	CMPI.b	#$23, $3C(A5)
 	BCS.b	loc_0000B394
-	JSR	loc_0000FB5C
+	JSR	GetRandomNumber
 	ANDI.w	#$00FF, D0
 	CMPI.w	#$0080, D0
 	BLE.b	loc_0000B3D4
@@ -11788,7 +11788,7 @@ loc_0000B5C6:
 	RTS
 loc_0000B5C8:
 	CLR.w	D0
-	JSR	loc_0000FB5C
+	JSR	GetRandomNumber
 	ANDI.w	#$01FF, D0
 	CMPI.w	#1, D0
 	BGT.w	loc_0000B5EC
@@ -11805,7 +11805,7 @@ loc_0000B5EC:
 loc_0000B5FA:
 	MOVE.w	D0, $E(A5)
 	CLR.w	D0
-	JSR	loc_0000FB5C
+	JSR	GetRandomNumber
 	ANDI.w	#$00FF, D0
 	CMPI.w	#$0039, D0
 	BGT.w	loc_0000B622
@@ -11839,7 +11839,7 @@ loc_0000B662:
 	MOVE.b	$1(A5), D0
 	LEA	(A5,D0.w), A6
 	BSET.b	#7, (A6)
-	JSR	loc_0000FB5C
+	JSR	GetRandomNumber
 	MOVE.b	D0, $1B(A5)
 	ANDI.b	#6, D0
 	MOVE.b	D0, $18(A5)
@@ -12128,7 +12128,7 @@ loc_0000BB2E:
 	BRA.w	loc_0000BBF6
 	BRA.w	loc_0000BC7E
 loc_0000BB52:
-	JSR	loc_0000FB5C
+	JSR	GetRandomNumber
 	ANDI.w	#$003F, D0
 	MOVE.b	D0, $1A(A5)
 	ADDQ.w	#1, $FFFFC536.w
@@ -12138,7 +12138,7 @@ loc_0000BB66:
 	BGE.w	loc_0000BBAE
 	BSR.w	loc_0000C1F6
 	BEQ.b	loc_0000BB98
-	JSR	loc_0000FB5C
+	JSR	GetRandomNumber
 	ANDI.w	#3, D0
 	BEQ.b	loc_0000BB98
 	MOVE.w	#8, $FFFFC536.w
@@ -12959,7 +12959,7 @@ loc_0000C7D8:
 	MOVE.w	$8(A6), D0
 	CMPI.w	#$00DD, D0
 	BNE.b	loc_0000C82C
-	JSR	loc_0000FB5C
+	JSR	GetRandomNumber
 	ANDI.w	#7, D0
 	BNE.b	loc_0000C82C
 	MOVE.b	#$FF, $19(A5)
@@ -13056,7 +13056,7 @@ loc_0000C942:
 	MOVE.w	$8(A6), D0
 	CMPI.w	#$00DD, D0
 	BNE.b	loc_0000C998
-	JSR	loc_0000FB5C
+	JSR	GetRandomNumber
 	ANDI.w	#$001F, D0
 	BNE.b	loc_0000C998
 	MOVE.b	#$FF, $19(A5)
@@ -13732,7 +13732,7 @@ loc_0000D334:
 loc_0000D348:
 	RTS
 loc_0000D34A:
-	JSR	loc_0000FB5C(PC)
+	JSR	GetRandomNumber(PC)
 	CMPI.w	#$0070, $E(A5)
 	BLE.b	loc_0000D36E
 	CMPI.w	#$0120, $E(A5)
@@ -13805,7 +13805,7 @@ loc_0000D42A:
 	BEQ.b	loc_0000D44C
 	BTST.b	#1, $1D(A5)
 	BEQ.b	loc_0000D454
-	JSR	loc_0000FB5C(PC)
+	JSR	GetRandomNumber(PC)
 	BTST.l	#5, D0
 	BEQ.b	loc_0000D454
 loc_0000D44C:
@@ -13971,7 +13971,7 @@ loc_0000D69A:
 	BNE.b	loc_0000D6F0
 	MOVE.b	#$B1, D0
 	JSR	loc_00010522
-	JSR	loc_0000FB5C(PC)
+	JSR	GetRandomNumber(PC)
 	BTST.l	#4, D0
 	BEQ.b	loc_0000D6E4
 	BCLR.b	#0, $1D(A5)
@@ -14429,7 +14429,7 @@ loc_0000DD5C:
 	MOVE.w	$E(A4), D1
 	CMP.w	D0, D1
 	BLE.b	loc_0000DD94
-	JSR	loc_0000FB5C
+	JSR	GetRandomNumber
 	ANDI.b	#1, D0
 	MOVE.b	D0, $FFFFC53F.w
 	MOVE.l	#loc_0000DDD2, $2(A5)
@@ -15127,7 +15127,7 @@ loc_0000E7E2:
 	BEQ.w	loc_0000E858
 	MOVE.b	#$FF, $19(A5)
 	MOVE.b	#$32, D1
-	JSR	loc_0000FB5C
+	JSR	GetRandomNumber
 	ANDI.w	#$000F, D0
 	ADD.w	D0, D1
 	MOVE.b	D1, $1A(A5)
@@ -15707,7 +15707,7 @@ loc_0000F03E:
 	MOVEA.l	$FFFFCC18.w, A6
 	BTST.b	#7, (A6)
 	BNE.b	loc_0000F06C
-	JSR	loc_0000FB5C
+	JSR	GetRandomNumber
 	MOVE.b	D0, $18(A5)
 	MOVE.b	#$50, $1A(A5)
 	MOVE.w	#1, $FFFFC536.w
@@ -16547,7 +16547,9 @@ loc_0000FAEC:
 	MOVE.w	#0, Z80_bus_request
 	ANDI	#$F8FF, SR
 	RTS
-loc_0000FB5C: ; generate random number
+
+;loc_0000FB5C:
+GetRandomNumber:
 	MOVEM.l	D1, -(A7)
 	MOVE.l	$FFFFC0A0.w, D1
 	BNE.w	loc_0000FB6E
@@ -16781,7 +16783,7 @@ loc_0000FD90:
 	LEA	$FFFFA000.w, A2
 	TST.b	$FFFFC748.w
 	BEQ.b	loc_0000FDAA
-	CMPI.w	#$000B, Current_town.w
+	CMPI.w	#TOWN_EXCALABRIA, Current_town.w
 	BNE.b	loc_0000FDAA
 	MOVEA.l	loc_0001F4B8, A0
 	BRA.b	loc_0000FDC0
@@ -16804,7 +16806,7 @@ loc_0000FDC4:
 	LEA	$FFFFA000.w, A2
 	TST.b	$FFFFC748.w
 	BEQ.b	loc_0000FDFA
-	CMPI.w	#$000B, Current_town.w
+	CMPI.w	#TOWN_EXCALABRIA, Current_town.w
 	BNE.b	loc_0000FDFA
 	MOVEA.l	loc_0001F4BC, A0
 	MOVE.w	loc_0001F4C0, D5
@@ -17422,7 +17424,7 @@ loc_0001061C:
 loc_0001062C:
 	BSR.w	loc_0001066C
 	DBF	D7, loc_0001062C
-	LEA	$FFFFC4D0.w, A1
+	LEA	Equipped_sword.w, A1
 	MOVE.w	#$000F, D7
 loc_0001063C:
 	BSR.w	loc_0001066C
@@ -17625,7 +17627,7 @@ loc_000108AC:
 loc_000108BC:
 	BSR.w	loc_000108F6	
 	DBF	D7, loc_000108BC	
-	LEA	$FFFFC4D0.w, A1	
+	LEA	Equipped_sword.w, A1	
 	MOVE.w	#$000F, D7	
 loc_000108CC:
 	BSR.w	loc_000108F6	
@@ -18753,7 +18755,7 @@ loc_0001193C:
 	MOVE.w	#2, $FFFF9906.w
 	MOVE.w	#2, $FFFF990C.w
 	BSR.w	loc_00012CE6
-	TST.w	$FFFFC642.w
+	TST.w	Player_poisoned.w
 	BEQ.b	loc_00011982
 	LEA	loc_00027240, A0
 	BRA.b	loc_000119AA
@@ -18864,28 +18866,28 @@ loc_00011AEC:
 	MOVE.w	#2, $FFFF990C.w
 	BSR.w	loc_00012CE6
 	LEA	loc_00026054, A0
-	MOVE.w	$FFFFC4D0.w, D0
+	MOVE.w	Equipped_sword.w, D0
 	BLT.b	loc_00011B34
 	BSR.w	loc_00011B90
 loc_00011B34:
 	MOVE.w	#$0074, D0
 	BSR.w	loc_00012CF6
 	LEA	loc_00026054, A0
-	MOVE.w	$FFFFC4D2.w, D0
+	MOVE.w	Equipped_shield.w, D0
 	BLT.b	loc_00011B4C
 	BSR.w	loc_00011B90
 loc_00011B4C:
 	MOVE.w	#$00AA, D0
 	BSR.w	loc_00012CF6
 	LEA	loc_00026054, A0
-	MOVE.w	$FFFFC4D4.w, D0
+	MOVE.w	Equipped_armor.w, D0
 	BLT.b	loc_00011B64
 	BSR.w	loc_00011B90
 loc_00011B64:
 	MOVE.w	#$00DF, D0
 	BSR.w	loc_00012CF6
 	LEA	loc_00026054, A0
-	MOVE.w	$FFFFC4D6.w, D0
+	MOVE.w	Readied_magic.w, D0
 	BLT.b	loc_00011B7C
 	BSR.w	loc_00011BA4
 loc_00011B7C:
@@ -20266,7 +20268,7 @@ loc_00013012:
 	BRA.w	loc_00013088
 loc_00013028:
 	LEA	MagicNames, A0
-	MOVE.w	$FFFFC4D6.w, D0
+	MOVE.w	Readied_magic.w, D0
 	BLT.b	loc_00013044
 	ANDI.w	#$00FF, D0
 	ADD.w	D0, D0
@@ -24252,7 +24254,7 @@ loc_000181C6:
 	ADD.w	D0, D0
 	MOVE.w	(A0,D0.w), D0
 	BGE.b	loc_000181DC
-	MOVE.w	#$FFFF, $FFFFC4D6.w
+	MOVE.w	#$FFFF, Readied_magic.w
 loc_000181DC:
 	JSR	loc_00012670
 	JSR	loc_000126B6
@@ -24388,7 +24390,7 @@ loc_00018388:
 	MOVE.w	$FFFFC460.w, D0
 	ADD.w	D0, D0
 	LEA	(A0,D0.w), A0
-	MOVE.w	(A0), $FFFFC4D6.w
+	MOVE.w	(A0), Readied_magic.w
 	ORI.w	#$8000, (A0)
 	RTS
 loc_00018422:
@@ -24688,17 +24690,17 @@ loc_00018884:
 	BSR.w	loc_0001A21C
 	BNE.w	loc_00018996
 	MOVE.l	#loc_00026634, Script_source_base.w
-	TST.w	$FFFFC642.w
+	TST.w	Player_poisoned.w
 	BNE.b	loc_000188AE
 	MOVE.l	#loc_00026732, Script_source_base.w
 	BRA.b	loc_000188BE
 loc_000188AE:
-	TST.b	$FFFFC76C.w
+	TST.b	Player_greatly_poisoned.w
 	BEQ.b	loc_000188BE
 	MOVE.l	#loc_00026750, Script_source_base.w
 	BRA.b	loc_000188D0
 loc_000188BE:
-	CLR.w	$FFFFC642.w
+	CLR.w	Player_poisoned.w
 	CLR.b	$FFFFC7C6.w
 	MOVE.w	#$00AE, D0
 	JSR	loc_00010522
@@ -26334,7 +26336,7 @@ loc_0001A1EA:
 	JSR	loc_0001CDFE
 	BNE.b	loc_0001A216
 	LEA	loc_0002267E, A0
-	MOVE.w	$FFFFC4D6.w, D0
+	MOVE.w	Readied_magic.w, D0
 	ANDI.w	#$001F, D0
 	ADD.w	D0, D0
 	MOVE.w	(A0,D0.w), D0
@@ -26367,7 +26369,7 @@ loc_0001A24A:
 	RTS	
 loc_0001A250:
 	LEA	loc_000226AC, A4
-	MOVE.w	$FFFFC4D6.w, D0
+	MOVE.w	Readied_magic.w, D0
 	ANDI.w	#$000F, D0
 	MOVE.w	D0, D2
 	MOVE.w	Player_int.w, D1
@@ -26393,7 +26395,7 @@ loc_0001A28E:
 	ADD.w	D1, D0
 	MOVE.w	D0, $2C(A6)
 	LEA	loc_000226C8, A4
-	MOVE.w	$FFFFC4D6.w, D0
+	MOVE.w	Readied_magic.w, D0
 	MOVE.b	(A4,D2.w), $25(A6)
 	RTS
 loc_0001A2AC:
@@ -26812,7 +26814,7 @@ loc_0001A8C0:
 loc_0001A8DA:
 	LEA	loc_000189C2, A0
 	MOVE.w	Current_town.w, D0
-	CMPI.w	#4, D0
+	CMPI.w	#TOWN_STOW, D0
 	BLE.b	loc_0001A8F4
 	CMPI.w	#$000E, D0
 	BLE.b	loc_0001A8F2
@@ -26967,7 +26969,7 @@ loc_0001AB1C:
 	MOVE.w	#$0258, Player_mmp.w	
 loc_0001AB2E:
 	MOVE.l	#loc_00026E42, Script_source_base.w	
-	JSR	loc_0000FB5C	
+	JSR	GetRandomNumber	
 	ANDI.w	#3, D0	
 	BNE.b	loc_0001AB54	
 	SUBQ.w	#8, Player_mhp.w	
@@ -27015,14 +27017,14 @@ loc_0001ABDE:
 	RTS
 loc_0001ABE8:
 	MOVE.w	#$001E, D1	
-	JSR	loc_0000FB5C	
+	JSR	GetRandomNumber	
 	ANDI.w	#$000F, D0	
 	ADD.w	D0, D1	
 	ADD.w	D1, Player_mp.w	
 	BRA.w	loc_0001AC14	
 loc_0001AC00:
 	MOVE.w	#$000A, D1
-	JSR	loc_0000FB5C
+	JSR	GetRandomNumber
 	ANDI.w	#7, D0
 	ADD.w	D0, D1
 	ADD.w	D1, Player_mp.w
@@ -27101,12 +27103,12 @@ loc_0001AD12:
 	MOVE.l	#loc_00025980, Script_source_base.w
 	RTS
 loc_0001AD1C:
-	TST.w	$FFFFC642.w
+	TST.w	Player_poisoned.w
 	BEQ.b	loc_0001AD44
-	TST.b	$FFFFC76C.w
+	TST.b	Player_greatly_poisoned.w
 	BNE.b	loc_0001AD4E
 	CLR.b	$FFFFC7C6.w
-	CLR.w	$FFFFC642.w
+	CLR.w	Player_poisoned.w
 	MOVE.l	#loc_00026634, Script_source_base.w
 	MOVE.w	#$00AE, D0
 	JSR	loc_00010522
@@ -27163,7 +27165,7 @@ loc_0001ADF6:
 	TST.b	$FFFFC75E.w
 	BEQ.w	loc_0001AE6E
 	MOVE.w	Current_town.w, D0
-	CMPI.w	#6, D0
+	CMPI.w	#TOWN_MALAGA, D0
 	BNE.w	loc_0001AE6E
 	MOVE.w	$FFFFC412.w, D0
 	CMPI.w	#6, D0
@@ -27227,7 +27229,7 @@ loc_0001AEBC:
 	RTS
 loc_0001AED4:
 	MOVE.w	Current_town.w, D0
-	CMPI.w	#6, D0
+	CMPI.w	#TOWN_MALAGA, D0
 	BNE.w	loc_0001AF1E
 	MOVE.w	$FFFFC412.w, D0
 	CMPI.w	#2, D0
@@ -27264,7 +27266,7 @@ loc_0001AF3C:
 	dc.b	$00, $18, $00, $0D, $00, $06, $00, $1A, $00, $0D, $00, $02, $00, $19, $00, $0C, $00, $04 
 loc_0001AF54:
 	MOVE.w	Current_town.w, D0
-	CMPI.w	#$000A, D0
+	CMPI.w	#TOWN_SWAFHAM, D0
 	BNE.w	loc_0001AFA2
 	MOVE.w	$FFFFC412.w, D0
 	TST.b	$FFFFC540.w
@@ -27309,11 +27311,11 @@ loc_0001AFE2:
 	MOVE.l	#loc_00026D7C, Script_source_base.w	
 	RTS	
 loc_0001AFEC:
-	TST.w	$FFFFC642.w
+	TST.w	Player_poisoned.w
 	BEQ.b	loc_0001B008
 	CLR.b	$FFFFC7C6.w
-	CLR.w	$FFFFC642.w
-	CLR.b	$FFFFC76C.w
+	CLR.w	Player_poisoned.w
+	CLR.b	Player_greatly_poisoned.w
 	MOVE.l	#loc_00026634, Script_source_base.w
 	BRA.b	loc_0001B010
 loc_0001B008:
@@ -27425,7 +27427,7 @@ loc_0001B166:
 	SUBQ.w	#1, Possessed_items_length.w
 	JSR	loc_0000FB8C
 	RTS
-loc_0001B17E:
+loc_0001B17E: ; handle dialogue states
 	MOVE.w	$FFFFC41E.w, D0
 	ANDI.w	#$003F, D0
 	ADD.w	D0, D0
@@ -27433,7 +27435,7 @@ loc_0001B17E:
 	LEA	loc_0001B196, A0
 	JSR	(A0,D0.w)
 	RTS
-loc_0001B196:
+loc_0001B196: ; dialogue state handlers
 	BRA.w	loc_0001B266
 	BRA.w	loc_0001BB74
 	BRA.w	loc_0001BBAA
@@ -27520,7 +27522,7 @@ loc_0001B2C6:
 	RTS
 loc_0001B2DC:
 	MOVE.w	Current_town.w, D0
-	CMPI.w	#2, D0
+	CMPI.w	#TOWN_WATLING, D0
 	BNE.w	loc_0001B35E
 	TST.b	$FFFFC77C.w
 	BNE.w	loc_0001B35E
@@ -27600,7 +27602,7 @@ loc_0001B416:
 	BEQ.b	loc_0001B43A
 	CLR.w	$FFFFC4A6.w
 	MOVE.w	Current_town.w, D0
-	CMPI.w	#7, D0
+	CMPI.w	#TOWN_BARROW, D0
 	BNE.b	loc_0001B45C
 	BRA.b	loc_0001B4A4
 loc_0001B43A:
@@ -27853,7 +27855,7 @@ loc_0001BA38:
 	ADDQ.w	#1, (A1)+
 	ADD.w	D0, D0
 	MOVE.w	#$0401, (A1,D0.w)
-	MOVE.w	$FFFFC4D0.w, D0
+	MOVE.w	Equipped_sword.w, D0
 	BLT.b	loc_0001BA5E
 	ANDI.w	#$00FF, D0
 	ADD.w	D0, D0
@@ -27861,7 +27863,7 @@ loc_0001BA38:
 	MOVE.w	(A0,D0.w), D0
 	SUB.w	D0, Player_str.w
 loc_0001BA5E:
-	MOVE.w	#$FFFF, $FFFFC4D0.w
+	MOVE.w	#$FFFF, Equipped_sword.w
 	MOVE.b	#$FF, $FFFFC755.w
 	CLR.l	Player_kims.w
 	LEA	Possessed_items_length.w, A0
@@ -28534,10 +28536,10 @@ loc_0001C3A4:
 	BGE.w	loc_0001C474
 	CMPI.l	#Possessed_magics_list, $FFFFC4A8.w
 	BNE.w	loc_0001C420
-	MOVE.w	#$FFFF, $FFFFC4D6.w
+	MOVE.w	#$FFFF, Readied_magic.w
 	BRA.w	loc_0001C474
 loc_0001C420:
-	LEA	$FFFFC4D0.w, A2
+	LEA	Equipped_sword.w, A2
 	MOVE.w	D0, D2
 	MOVE.w	#$000A, D1
 	ASR.w	D1, D0
@@ -28739,7 +28741,7 @@ loc_0001C6FA:
 	TST.b	$FFFFC211.w
 	BNE.b	loc_0001C730
 	MOVE.w	Current_town.w, D0
-	CMPI.w	#2, D0
+	CMPI.w	#TOWN_WATLING, D0
 	BNE.b	loc_0001C716
 	TST.b	$FFFFC77C.w
 	BEQ.b	loc_0001C722
@@ -28766,7 +28768,7 @@ loc_0001C744:
 	RTS
 loc_0001C75C:
 	MOVE.w	Current_town.w, D0
-	CMPI.w	#2, D0
+	CMPI.w	#TOWN_WATLING, D0
 	BNE.w	loc_0001C7DA
 	TST.b	$FFFFC77C.w
 	BNE.w	loc_0001C7DA
@@ -28876,7 +28878,7 @@ loc_0001C8EE:
 	MOVE.w	Player_mmp.w, Player_mp.w
 loc_0001C8FA:
 	MOVE.w	Current_town.w, D0
-	CMPI.w	#2, D0
+	CMPI.w	#TOWN_WATLING, D0
 	BNE.b	loc_0001C92A
 	TST.b	$FFFFC77C.w
 	BNE.b	loc_0001C92A
@@ -28963,7 +28965,7 @@ loc_0001CA4C:
 	MOVE.w	#$0023, $FFFFC41E.w
 	BRA.b	loc_0001CACA
 loc_0001CA5C:
-	MOVE.w	$FFFFC642.w, D0
+	MOVE.w	Player_poisoned.w, D0
 	BEQ.b	loc_0001CAAC
 	LEA	$FFFFC260.w, A1
 	LEA	loc_000265C4, A0
@@ -29130,9 +29132,9 @@ loc_0001CC90:
 	MOVE.l	D0, $FFFFC65A.w
 	JSR	loc_0001159E
 	JSR	loc_000115DE
-	TST.w	$FFFFC76C.w
+	TST.w	Player_greatly_poisoned.w
 	BNE.b	loc_0001CD0A
-	CLR.w	$FFFFC642.w
+	CLR.w	Player_poisoned.w
 	CLR.b	$FFFFC7C6.w
 	MOVE.l	#loc_00026634, Script_source_base.w
 	BRA.b	loc_0001CD12
@@ -29199,7 +29201,7 @@ loc_0001CDFC:
 	RTS
 loc_0001CDFE:
 	MOVE.w	#2, D7
-	LEA	$FFFFC4D0.w, A0
+	LEA	Equipped_sword.w, A0
 loc_0001CE06:
 	MOVE.w	(A0)+, D3
 	BLT.b	loc_0001CE18
@@ -29215,7 +29217,7 @@ loc_0001CE1E:
 	RTS
 loc_0001CE20:
 	MOVE.w	#2, D7
-	LEA	$FFFFC4D0.w, A0
+	LEA	Equipped_sword.w, A0
 loc_0001CE28:
 	MOVE.w	(A0)+, D3
 	MOVE.w	#9, D0
@@ -29638,7 +29640,7 @@ loc_0001D3BA:
 	MOVE.b	#$FF, (A1)
 	MOVE.w	$FFFFC4E4.w, D0
 	ADD.w	D0, D0
-	LEA	$FFFFC4D0.w, A2
+	LEA	Equipped_sword.w, A2
 	MOVE.w	#$FFFF, (A2,D0.w)
 	MOVE.l	#$FFFFC260, Script_source_base.w
 	MOVE.w	#6, $FFFFC426.w
@@ -29773,7 +29775,7 @@ loc_0001D5D2:
 loc_0001D5D8:
 	MOVE.w	$FFFFC4E4.w, D0
 	ADD.w	D0, D0
-	LEA	$FFFFC4D0.w, A2
+	LEA	Equipped_sword.w, A2
 	MOVE.w	(A2,D0.w), D0
 	RTS
 loc_0001D5E8:
@@ -29787,7 +29789,7 @@ loc_0001D5FC:
 	BSR.b	loc_0001D5E8
 	MOVE.w	$FFFFC4E4.w, D2
 	ADD.w	D2, D2
-	LEA	$FFFFC4D0.w, A2
+	LEA	Equipped_sword.w, A2
 	MOVE.w	D1, (A2,D2.w)
 	LEA	Possessed_equipment_list.w, A2
 	MOVE.w	Possessed_equipment_length.w, D7
@@ -30112,7 +30114,7 @@ loc_0001DA8E:
 	ADD.w	D7, D7
 	LEA	PlayerLevelToStrMap, A0
 	MOVE.w	(A0,D7.w), D1
-	JSR	loc_0000FB5C
+	JSR	GetRandomNumber
 	ANDI.w	#3, D0
 	ADD.w	D0, D1
 	ADD.w	D1, Player_str.w
@@ -30122,7 +30124,7 @@ loc_0001DA8E:
 loc_0001DABC:
 	LEA	PlayerLevelToLukMap, A0
 	MOVE.w	(A0,D7.w), D1
-	JSR	loc_0000FB5C
+	JSR	GetRandomNumber
 	ANDI.w	#3, D0
 	ADD.w	D0, D1
 	ADD.w	D1, Player_luk.w
@@ -30132,7 +30134,7 @@ loc_0001DABC:
 loc_0001DAE4:
 	LEA	PlayerLevelToDexMap, A0
 	MOVE.w	(A0,D7.w), D1
-	JSR	loc_0000FB5C
+	JSR	GetRandomNumber
 	ANDI.w	#3, D0
 	ADD.w	D0, D1
 	ADD.w	D1, Player_dex.w
@@ -30142,7 +30144,7 @@ loc_0001DAE4:
 loc_0001DB0C:
 	LEA	PlayerLevelToAcMap, A0
 	MOVE.w	(A0,D7.w), D1
-	JSR	loc_0000FB5C
+	JSR	GetRandomNumber
 	ANDI.w	#3, D0
 	ADD.w	D0, D1
 	ADD.w	D1, Player_ac.w
@@ -30152,7 +30154,7 @@ loc_0001DB0C:
 loc_0001DB34:
 	LEA	PlayerLevelToIntMap, A0
 	MOVE.w	(A0,D7.w), D1
-	JSR	loc_0000FB5C
+	JSR	GetRandomNumber
 	ANDI.w	#3, D0
 	ADD.w	D0, D1
 	ADD.w	D1, Player_int.w
@@ -30162,7 +30164,7 @@ loc_0001DB34:
 loc_0001DB5C:
 	LEA	PlayerLevelToMmpMap, A0
 	MOVE.w	(A0,D7.w), D1
-	JSR	loc_0000FB5C
+	JSR	GetRandomNumber
 	ANDI.w	#3, D0
 	ADD.w	D0, D1
 	ADD.w	D1, Player_mmp.w
@@ -30173,7 +30175,7 @@ loc_0001DB84:
 	MOVE.w	Player_mmp.w, Player_mp.w
 	LEA	PlayerLevelToMhpMap, A0
 	MOVE.w	(A0,D7.w), D1
-	JSR	loc_0000FB5C
+	JSR	GetRandomNumber
 	ANDI.w	#3, D0
 	ADD.w	D0, D1
 	ADD.w	D1, Player_mhp.w
