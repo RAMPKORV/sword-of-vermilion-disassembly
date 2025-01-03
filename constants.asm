@@ -76,6 +76,9 @@ TOWN_EXCALABRIA     = $0B
 TOWN_HASTINGS       = $0C
 TOWN_CARTHAHENA     = $0D
 
+ITEM_TYPE_DISCARDABLE       = $00
+ITEM_TYPE_NON_DISCARDABLE   = $01
+
 ; Items
 ITEM_HERBS              = $00
 ITEM_CANDLE             = $01
