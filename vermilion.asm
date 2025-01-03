@@ -24614,7 +24614,7 @@ loc_0001868A:
 	DBF	D7, loc_0001868A
 	CLR.w	D0
 	RTS
-loc_0001869C:
+loc_0001869C: ; Use of magic outside of battle
 	BRA.w	loc_000186F8	
 	BRA.w	loc_000186F8	
 	BRA.w	loc_000186F8	
@@ -24629,15 +24629,15 @@ loc_0001869C:
 	BRA.w	loc_000186F8	
 	BRA.w	loc_000186F8	
 	BRA.w	loc_000186F8	
-	BRA.w	loc_000188DE
-	BRA.w	loc_00018928
-	BRA.w	loc_0001870E
-	BRA.w	loc_00018768
-	BRA.w	loc_000187CA
-	BRA.w	loc_000187F0
-	BRA.w	loc_0001884C
-	BRA.w	loc_00018884
-	BRA.w	loc_0001884C
+	BRA.w	loc_000188DE ; Aries
+	BRA.w	loc_00018928 ; Extrios
+	BRA.w	loc_0001870E ; Inaudios
+	BRA.w	loc_00018768 ; Luminos
+	BRA.w	loc_000187CA ; Sangua
+	BRA.w	loc_000187F0 ; Sanguia
+	BRA.w	loc_0001884C ; Sanguio
+	BRA.w	loc_00018884 ; Toxios
+	BRA.w	loc_0001884C ; Sanguios
 loc_000186F8:
 	JSR	loc_00010C4A	
 	MOVE.l	#loc_00025928, Script_source_base.w	
