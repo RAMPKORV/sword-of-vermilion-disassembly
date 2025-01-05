@@ -24813,10 +24813,75 @@ loc_000189AC:
 	MOVE.w	#9, $FFFFC424.w
 	RTS
 loc_000189C2:
-	dc.b	$00, $08, $00, $0D, $00, $00, $00, $06, $00, $07, $00, $06, $00, $01, $00, $04, $00, $08, $00, $04, $00, $06, $00, $05, $00, $04, $00, $08, $00, $04, $00, $07 
-	dc.b	$00, $0A, $00, $05, $00, $0B, $00, $07, $00, $04, $00, $05, $00, $0E, $00, $04, $00, $04, $00, $06, $00, $0C, $00, $02, $00, $09, $00, $05, $00, $0E, $00, $00 
-	dc.b	$00, $0A, $00, $06, $00, $09, $00, $01, $00, $06, $00, $0F, $00, $06, $00, $00, $00, $07, $00, $07, $00, $01, $00, $00, $00, $0A, $00, $05, $00, $05, $00, $02 
-	dc.b	$00, $05, $00, $04, $00, $09, $00, $02, $00, $08, $00, $08, $00, $0A, $00, $05 
+	dc.w	$0008
+	dc.w	$000D
+	dc.w	$0000
+	dc.w	$0006
+	
+	dc.w	$0007
+	dc.w	$0006 
+	dc.w	$0001 
+	dc.w	$0004 
+
+	dc.w	$0008 
+	dc.w	$0004 
+	dc.w	$0006 
+	dc.w	$0005 
+
+	dc.w	$0004 
+	dc.w	$0008 
+	dc.w	$0004 
+	dc.w	$0007 
+
+	dc.w	$000A 
+	dc.w	$0005 
+	dc.w	$000B 
+	dc.w	$0007 
+
+	dc.w	$0004 
+	dc.w	$0005 
+	dc.w	$000E 
+	dc.w	$0004 
+
+	dc.w	$0004 
+	dc.w	$0006 
+	dc.w	$000C 
+	dc.w	$0002 
+
+	dc.w	$0009 
+	dc.w	$0005 
+	dc.w	$000E 
+	dc.w	$0000 
+
+	dc.w	$000A 
+	dc.w	$0006 
+	dc.w	$0009 
+	dc.w	$0001 
+
+	dc.w	$0006 
+	dc.w	$000F 
+	dc.w	$0006 
+	dc.w	$0000 
+
+	dc.w	$0007 
+	dc.w	$0007 
+	dc.w	$0001 
+	dc.w	$0000 
+
+	dc.w	$000A 
+	dc.w	$0005 
+	dc.w	$0005 
+	dc.w	$0002 
+
+	dc.w	$0005 
+	dc.w	$0004 
+	dc.w	$0009
+	dc.w	$0002 
+
+	dc.w	$0008
+	dc.w	$0008 
+	dc.w	$000A 
+	dc.w	$0005 
 loc_00018A32:
 	BRA.w	loc_00018A6A
 	BRA.w	loc_00018BA6
@@ -26803,7 +26868,7 @@ loc_0001A804:
 	ADD.w	D0, D0
 	MOVE.w	(A0,D0.w), D0
 	ANDI.w	#$00FF, D0
-	LEA	loc_0001A996, A0
+	LEA	UseItemMap, A0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
 	JSR	(A0,D0.w)
@@ -26909,52 +26974,56 @@ loc_0001A954:
 	MOVE.w	#$0089, D0
 	JSR	loc_00010522
 	RTS
-loc_0001A996: ; suspected item usage
-	BRA.w	loc_0001AC4E ; Herbs
-	BRA.w	loc_0001AD5C ; Candle
-	BRA.w	loc_0001ADAA ; Lantern
-	BRA.w	loc_0001AD1C ; Poison balm
-	BRA.w	loc_0001ADF6 ; Alarm clock
-	BRA.w	loc_0001AEA0 ; Vase	
-	BRA.w	loc_0001AEAE ; Joke book	
-	BRA.w	loc_0001AEBC ; Small bomb
-	BRA.w	loc_0001AED4 ; Old woman's sketch
-	BRA.w	loc_0001AF54 ; Old man's sketch
-	BRA.w	loc_0001B016 ; Pass to Carthahena
-	BRA.w	loc_0001AFE2 ; Truffle
-	BRA.w	loc_0001AFEC ; Digot plant
-	BRA.w	loc_0001AFD8 ; Treasure of Troy
-	BRA.w	loc_0001B076 ; White crystal
-	BRA.w	loc_0001B080 ; Red crystal
-	BRA.w	loc_0001B08A ; Blue crystal
-	BRA.w	loc_0001B094 ; White crystal
-	BRA.w	loc_0001B094 ; Red key
-	BRA.w	loc_0001B094 ; Blue key
-	BRA.w	loc_0001B020 ; Crown
-	BRA.w	loc_0001B02A ; Sixteen rings
-	BRA.w	loc_0001B094 ; Bronze key
-	BRA.w	loc_0001B094 ; Silver key
-	BRA.w	loc_0001B094 ; Gold key
-	BRA.w	loc_0001B094 ; Thule key
-	BRA.w	loc_0001B094 ; Secret key
-	BRA.w	loc_0001AC44 ; Medicine
-	BRA.w	loc_0001AC00 ; Agate jewel
-	BRA.w	loc_0001AC84 ; Griffin wing
-	BRA.w	loc_0001ACD4 ; Titanias mirror
-	BRA.w	loc_0001AD00 ; Gnome stone
-	BRA.w	loc_0001ABE8 ; Topaz jewel
-	BRA.w	loc_0001AA74 ; Banshee powder
-	BRA.w	loc_0001ABBC ; Rafael's stick
-	BRA.w	loc_0001ACA4 ; Mirror of Atlas
-	BRA.w	loc_0001AA46 ; Ruby brooch
-	BRA.w	loc_0001B094 ; Dungeon key
-	BRA.w	loc_0001AA98 ; Kulms vase
-	BRA.w	loc_0001AAC4 ; Kasans chisel
-	BRA.w	loc_0001AAF0 ; Book of kiel
-	BRA.w	loc_0001AB1C ; Danegeld water
-	BRA.w	loc_0001AB64 ; Mineral bar
-	BRA.w	loc_0001AB90 ; Mega blast
-loc_0001AA46:
+
+;loc_0001A996:
+UseItemMap:
+	BRA.w	UseHerbs
+	BRA.w	UseCandle
+	BRA.w	UseLantern
+	BRA.w	UsePoisonBalm
+	BRA.w	UseAlarmClock
+	BRA.w	UseVase
+	BRA.w	UseJokeBook
+	BRA.w	UseSmallBomb
+	BRA.w	UseOldWomansSketch
+	BRA.w	UseOldMansSketch
+	BRA.w	UsePassToCarthahena
+	BRA.w	UseTruffle
+	BRA.w	UseDigotPlant
+	BRA.w	UseTreasureOfTroy
+	BRA.w	UseWhiteCrystal
+	BRA.w	UseRedCrystal
+	BRA.w	UseBlueCrystal
+	BRA.w	UseGeneric ; White crystal
+	BRA.w	UseGeneric ; Red key
+	BRA.w	UseGeneric ; Blue key
+	BRA.w	UseCrown
+	BRA.w	UseSixteenRings
+	BRA.w	UseGeneric ; Bronze key
+	BRA.w	UseGeneric ; Silver key
+	BRA.w	UseGeneric ; Gold key
+	BRA.w	UseGeneric ; Thule key
+	BRA.w	UseGeneric ; Secret key
+	BRA.w	UseMedicine
+	BRA.w	UseAgateJewel
+	BRA.w	UseGriffinWing
+	BRA.w	UseTitaniasMirror
+	BRA.w	UseGnomeStone
+	BRA.w	UseTopazJewel
+	BRA.w	UseBansheePowder
+	BRA.w	UseRafaelsStick
+	BRA.w	UseMirrorOfAtlas
+	BRA.w	UseRubyBrooch
+	BRA.w	UseGeneric
+	BRA.w	UseKulmsVase
+	BRA.w	UseKasansChisel
+	BRA.w	UseBookOfKiel
+	BRA.w	DanegeldWater
+	BRA.w	UseMineralBar
+	BRA.w	UseMegaBlast
+
+;loc_0001AA46
+UseRubyBrooch:
 	TST.b	$FFFFC551.w
 	BNE.b	loc_0001AA52
 	TST.b	$FFFFC540.w
@@ -26964,12 +27033,14 @@ loc_0001AA52:
 	BRA.b	loc_0001AA72	
 loc_0001AA5C:
 	CLR.b	$FFFFC685.w
-	MOVE.w	#$007F, $FFFFC69C.w
+	MOVE.w	#$007F, $FFFFC69C.w ; suspected: effect duration
 	MOVE.l	#loc_00026B68, Script_source_base.w
 	BSR.w	loc_0001B166
 loc_0001AA72:
 	RTS
-loc_0001AA74:
+
+;loc_0001AA74:
+UseBansheePowder:
 	TST.b	$FFFFC540.w
 	BNE.b	loc_0001AA84
 	MOVE.l	#loc_00026B1E, Script_source_base.w	
@@ -26980,44 +27051,52 @@ loc_0001AA84:
 	BSR.w	loc_0001B166
 loc_0001AA96:
 	RTS
-loc_0001AA98:
-	ADDI.w	#$000A, Player_ac.w	
-	CMPI.w	#$05DC, Player_ac.w	
+
+;loc_0001AA98
+UseKulmsVase:
+	ADDI.w	#10, Player_ac.w	
+	CMPI.w	#1500, Player_ac.w	
 	BLE.b	loc_0001AAAC	
-	MOVE.w	#$05DC, Player_ac.w	
+	MOVE.w	#1500, Player_ac.w	
 loc_0001AAAC:
 	MOVE.l	#loc_00026DFC, Script_source_base.w	
 	BSR.w	loc_0001B166	
 	MOVE.w	#$00AE, D0	
 	JSR	loc_00010522	
 	RTS	
-loc_0001AAC4:
-	ADDI.w	#$000A, Player_dex.w	
-	CMPI.w	#$07D0, Player_dex.w	
+
+;loc_0001AAC4
+UseKasansChisel:
+	ADDI.w	#10, Player_dex.w	
+	CMPI.w	#2000, Player_dex.w	
 	BLE.b	loc_0001AAD8	
-	MOVE.w	#$07D0, Player_dex.w	
+	MOVE.w	#2000, Player_dex.w	
 loc_0001AAD8:
 	MOVE.l	#loc_00026F76, Script_source_base.w	
 	BSR.w	loc_0001B166	
 	MOVE.w	#$00AE, D0	
 	JSR	loc_00010522	
 	RTS	
-loc_0001AAF0:
-	ADDI.w	#$000A, Player_int.w	
-	CMPI.w	#$01F4, Player_int.w	
+
+;loc_0001AAF0
+UseBookOfKiel:
+	ADDI.w	#10, Player_int.w	
+	CMPI.w	#500, Player_int.w	
 	BLE.b	loc_0001AB04	
-	MOVE.w	#$01F4, Player_int.w	
+	MOVE.w	#500, Player_int.w	
 loc_0001AB04:
 	MOVE.l	#loc_00026EC2, Script_source_base.w	
 	BSR.w	loc_0001B166	
 	MOVE.w	#$00AE, D0	
 	JSR	loc_00010522	
 	RTS	
-loc_0001AB1C:
+
+;loc_0001AB1C
+DanegeldWater:
 	ADDQ.w	#8, Player_mmp.w	
-	CMPI.w	#$0258, Player_mmp.w	
+	CMPI.w	#600, Player_mmp.w	
 	BLE.b	loc_0001AB2E	
-	MOVE.w	#$0258, Player_mmp.w	
+	MOVE.w	#600, Player_mmp.w	
 loc_0001AB2E:
 	MOVE.l	#loc_00026E42, Script_source_base.w	
 	JSR	GetRandomNumber	
@@ -27033,29 +27112,35 @@ loc_0001AB54:
 	MOVE.w	#$00AE, D0	
 	JSR	loc_00010522	
 	RTS	
-loc_0001AB64:
-	ADDI.w	#$000A, Player_str.w	
-	CMPI.w	#$05DC, Player_str.w	
+
+;loc_0001AB64
+UseMineralBar:
+	ADDI.w	#10, Player_str.w	
+	CMPI.w	#1500, Player_str.w	
 	BLE.b	loc_0001AB78	
-	MOVE.w	#$05DC, Player_str.w	
+	MOVE.w	#1500, Player_str.w	
 loc_0001AB78:
 	MOVE.l	#loc_00026F0C, Script_source_base.w	
 	BSR.w	loc_0001B166	
 	MOVE.w	#$00AE, D0	
 	JSR	loc_00010522	
 	RTS	
-loc_0001AB90:
-	ADDI.w	#$000A, Player_luk.w	
-	CMPI.w	#$02BC, Player_luk.w	
+
+;loc_0001AB90
+UseMegaBlast:
+	ADDI.w	#10, Player_luk.w	
+	CMPI.w	#700, Player_luk.w	
 	BLE.b	loc_0001ABA4	
-	MOVE.w	#$02BC, Player_luk.w	
+	MOVE.w	#700, Player_luk.w	
 loc_0001ABA4:
 	MOVE.l	#loc_00026F42, Script_source_base.w	
 	BSR.w	loc_0001B166	
 	MOVE.w	#$00AE, D0	
 	JSR	loc_00010522	
 	RTS	
-loc_0001ABBC:
+
+;loc_0001ABBC
+UseRafaelsStick:
 	JSR	loc_0001CDFE
 	BEQ.b	loc_0001ABDE
 	JSR	loc_0001CE20	
@@ -27066,15 +27151,19 @@ loc_0001ABBC:
 loc_0001ABDE:
 	MOVE.l	#loc_00025980, Script_source_base.w
 	RTS
-loc_0001ABE8:
-	MOVE.w	#$001E, D1	
+
+;loc_0001ABE8
+UseTopazJewel:
+	MOVE.w	#30, D1	
 	JSR	GetRandomNumber	
 	ANDI.w	#$000F, D0	
 	ADD.w	D0, D1	
 	ADD.w	D1, Player_mp.w	
 	BRA.w	loc_0001AC14	
-loc_0001AC00:
-	MOVE.w	#$000A, D1
+
+;loc_0001AC00
+UseAgateJewel:
+	MOVE.w	#10, D1
 	JSR	GetRandomNumber
 	ANDI.w	#7, D0
 	ADD.w	D0, D1
@@ -27091,11 +27180,15 @@ loc_0001AC34:
 	MOVE.w	#$00AE, D0
 	JSR	loc_00010522
 	RTS
-loc_0001AC44:
-	ADDI.w	#$0064, Player_hp.w	
+
+;loc_0001AC44
+UseMedicine:
+	ADDI.w	#100, Player_hp.w	
 	BRA.w	loc_0001AC54	
-loc_0001AC4E:
-	ADDI.w	#$0028, Player_hp.w
+
+;loc_0001AC4E
+UseHerbs:
+	ADDI.w	#40, Player_hp.w
 loc_0001AC54:
 	MOVE.l	#loc_00026A46, Script_source_base.w
 	MOVE.w	Player_hp.w, D0
@@ -27108,7 +27201,9 @@ loc_0001AC74:
 	MOVE.w	#$00AE, D0
 	JSR	loc_00010522
 	RTS
-loc_0001AC84:
+
+;loc_0001AC84
+UseGriffinWing:
 	TST.b	$FFFFC540.w
 	BEQ.b	loc_0001AC9A
 	TST.b	$FFFFC551.w
@@ -27118,7 +27213,9 @@ loc_0001AC84:
 loc_0001AC9A:
 	MOVE.l	#loc_00025980, Script_source_base.w
 	RTS
-loc_0001ACA4:
+
+;loc_0001ACA4
+UseMirrorOfAtlas:
 	MOVE.l	#loc_00026BAE, Script_source_base.w
 	LEA	$FFFFC820.w, A0
 	MOVE.w	#$00FF, D7
@@ -27132,7 +27229,9 @@ loc_0001ACB4:
 loc_0001ACCE:
 	BSR.w	loc_0001B166
 	RTS
-loc_0001ACD4:
+
+;loc_0001ACD4
+UseTitaniasMirror:
 	TST.b	$FFFFC540.w	
 	BEQ.b	loc_0001ACF6	
 	TST.b	$FFFFC551.w	
@@ -27144,16 +27243,21 @@ loc_0001ACD4:
 loc_0001ACF6:
 	MOVE.l	#loc_00025980, Script_source_base.w	
 	RTS	
-loc_0001AD00:
+
+;loc_0001AD00
+UseGnomeStone:
 	TST.b	$FFFFC551.w
 	BEQ.b	loc_0001AD12
 	BSR.w	loc_0001B166
 	MOVE.w	#$000E, $FFFFC420.w
 	RTS
+
 loc_0001AD12:
 	MOVE.l	#loc_00025980, Script_source_base.w
 	RTS
-loc_0001AD1C:
+
+;loc_0001AD1C:
+UsePoisonBalm:
 	TST.w	Player_poisoned.w
 	BEQ.b	loc_0001AD44
 	TST.b	Player_greatly_poisoned.w
@@ -27172,7 +27276,9 @@ loc_0001AD4E:
 loc_0001AD56:
 	BSR.w	loc_0001B166
 	RTS
-loc_0001AD5C:
+
+;loc_0001AD5C:
+UseCandle:
 	TST.b	$FFFFC551.w
 	BEQ.b	loc_0001AD9C
 	TST.b	$FFFFC560.w
@@ -27191,7 +27297,9 @@ loc_0001AD9C:
 	BSR.w	loc_0001B166
 	MOVE.l	#loc_00025992, Script_source_base.w
 	RTS
-loc_0001ADAA:
+
+;loc_0001ADAA:
+UseLantern:
 	TST.b	$FFFFC551.w
 	BEQ.b	loc_0001ADE8
 	TST.b	$FFFFC560.w
@@ -27210,7 +27318,9 @@ loc_0001ADE8:
 	BSR.w	loc_0001B166	
 	MOVE.l	#loc_00025992, Script_source_base.w	
 	RTS	
-loc_0001ADF6:
+
+;loc_0001ADF6:
+UseAlarmClock:
 	MOVE.w	#$00C1, D0
 	JSR	loc_00010522
 	TST.b	$FFFFC75E.w
@@ -27264,21 +27374,29 @@ loc_0001AE88:
 	dc.w	$0088
 	dc.w	$0002
 	dc.b	$00, $D8, $00, $78, $00, $04 
-loc_0001AEA0:
+
+;loc_0001AEA0:
+UseVase:
 	MOVE.l	#loc_00026C2C, Script_source_base.w	
 	BSR.w	loc_0001B166	
 	RTS	
-loc_0001AEAE:
+
+;loc_0001AEAE:
+UseJokeBook:
 	MOVE.l	#loc_00026C7A, Script_source_base.w	
 	BSR.w	loc_0001B166	
 	RTS	
-loc_0001AEBC:
+
+;loc_0001AEBC:
+UseSmallBomb:
 	MOVE.l	#loc_00026CBE, Script_source_base.w
 	BSR.w	loc_0001B166
 	MOVE.w	#$00BF, D0
 	JSR	loc_00010522
 	RTS
-loc_0001AED4:
+
+;loc_0001AED4:
+UseOldWomansSketch:
 	MOVE.w	Current_town.w, D0
 	CMPI.w	#TOWN_MALAGA, D0
 	BNE.w	loc_0001AF1E
@@ -27315,7 +27433,9 @@ loc_0001AF3C:
 	dc.w	$000E
 	dc.w	$0000
 	dc.b	$00, $18, $00, $0D, $00, $06, $00, $1A, $00, $0D, $00, $02, $00, $19, $00, $0C, $00, $04 
-loc_0001AF54:
+
+;loc_0001AF54:
+UseOldMansSketch
 	MOVE.w	Current_town.w, D0
 	CMPI.w	#TOWN_SWAFHAM, D0
 	BNE.w	loc_0001AFA2
@@ -27355,13 +27475,19 @@ loc_0001AFC0:
 	dc.w	$0003
 	dc.w	$0006
 	dc.b	$00, $28, $00, $03, $00, $02, $00, $27, $00, $02, $00, $04 
-loc_0001AFD8:
+
+;loc_0001AFD8:
+UseTreasureOfTroy:
 	MOVE.l	#loc_00026DB4, Script_source_base.w	
 	RTS	
-loc_0001AFE2:
+
+;loc_0001AFE2:
+UseTruffle:
 	MOVE.l	#loc_00026D7C, Script_source_base.w	
 	RTS	
-loc_0001AFEC:
+	
+;loc_0001AFEC:
+UseDigotPlant:
 	TST.w	Player_poisoned.w
 	BEQ.b	loc_0001B008
 	CLR.b	$FFFFC7C6.w
@@ -27374,13 +27500,18 @@ loc_0001B008:
 loc_0001B010:
 	BSR.w	loc_0001B166
 	RTS
-loc_0001B016:
+
+;loc_0001B016:
+UsePassToCarthahena:
 	MOVE.l	#loc_00026FAA, Script_source_base.w	
 	RTS	
-loc_0001B020:
+;loc_0001B020
+UseCrown:
 	MOVE.l	#loc_00026FAA, Script_source_base.w	
 	RTS	
-loc_0001B02A:
+
+;loc_0001B02A
+UseSixteenRings:
 	MOVE.w	Current_town.w, D0
 	CMPI.w	#$000F, D0
 	BNE.b	loc_0001B06C
@@ -27401,16 +27532,22 @@ loc_0001B02A:
 loc_0001B06C:
 	MOVE.l	#loc_00027034, Script_source_base.w
 	RTS
-loc_0001B076:
+
+;loc_0001B076
+UseWhiteCrystal:
 	MOVE.l	#loc_0002709E, Script_source_base.w	
 	RTS	
-loc_0001B080:
+;loc_0001B080
+UseRedCrystal:
 	MOVE.l	#loc_000270BE, Script_source_base.w	
 	RTS	
-loc_0001B08A:
+;loc_0001B08A
+UseBlueCrystal:
 	MOVE.l	#loc_000270E8, Script_source_base.w	
 	RTS	
-loc_0001B094:
+
+;loc_0001B094
+UseGeneric:
 	TST.b	$FFFFC540.w
 	BNE.b	loc_0001B0AC
 	JSR	loc_000039C0	
