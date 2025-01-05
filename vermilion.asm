@@ -126,6 +126,7 @@ loc_00000250:
 	LEA	Player_name.w, A0
 	MOVE.b	#$FF, (A0)
 	RTS
+
 loc_00000280:
 	MOVE.l	#$7C000002, D7
 	MOVE.w	#$03BF, D6
@@ -134,6 +135,7 @@ loc_00000280:
 	JSR	loc_000103FE
 loc_00000298:
 	RTS
+
 loc_0000029A:
 	MOVE.l	#$40000010, D7
 	MOVEQ	#$00000028, D6
@@ -144,6 +146,7 @@ loc_000002AA:
 loc_000002B0:
 	DBF	D6, loc_000002AA
 	RTS
+
 loc_000002B6:
 	MOVE.l	#$78000002, D7
 	MOVE.w	#$013F, D6
@@ -151,6 +154,7 @@ loc_000002B6:
 	MOVE.w	#1, D4
 	JSR	loc_000103FE
 	RTS
+
 loc_000002D0:
 	MOVE.l	#$40000003, D7
 	MOVE.w	#$1FFF, D6
@@ -158,6 +162,7 @@ loc_000002D0:
 	MOVE.w	#1, D4
 	JSR	loc_000103FE
 	RTS
+
 loc_000002EA:
 	MOVE.l	#$60000003, D7
 	MOVE.w	#$1FFF, D6
@@ -165,6 +170,7 @@ loc_000002EA:
 	MOVE.w	#1, D4
 	JSR	loc_000103FE
 	RTS
+
 loc_00000304:
 	dc.b	$3C, $3C, $1F, $FF, $4E, $B9, $00, $01, $03, $FE, $4E, $75, $2E, $3C, $70, $00, $00, $02, $3C, $3C, $0D, $FF, $1A, $3C, $00, $00, $38, $3C, $00, $01, $4E, $B9 
 	dc.b	$00, $01, $03, $FE, $4E, $75 
@@ -179,6 +185,7 @@ loc_00000334:
 	MOVE.b	D0, $00A1000D
 	MOVE.w	#0, Z80_bus_request
 	RTS
+
 loc_0000035A:
 	LEA	loc_00000696, A0
 	MOVEQ	#$0000000F, D0
@@ -203,6 +210,7 @@ loc_00000362:
 	MOVE.w	#1, D4
 	JSR	loc_000103FE
 	RTS
+
 loc_000003BC:
 	dc.b	$2E, $3C, $40, $00, $00, $00, $3C, $3C, $FF, $FF, $1A, $3C, $00, $00, $38, $3C, $00, $01, $4E, $B9, $00, $01, $03, $FE, $4E, $75 
 loc_000003D6:
@@ -215,6 +223,7 @@ loc_000003F2:
 	MOVE.w	#$0100, $00A11200
 	BSR.w	loc_00000404
 	RTS
+
 loc_00000404:
 	LEA	$00A00000, A1
 	LEA	loc_0000041C, A2
@@ -223,6 +232,7 @@ loc_00000414:
 	MOVE.b	(A2)+, (A1)+
 	DBF	D6, loc_00000414
 	RTS
+
 loc_0000041C:
 	dc.b	$F3, $F3, $31, $F0, $1F, $3E, $80, $32, $FF, $1F, $AF, $32, $FD, $1F, $C3, $68, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 
 	dc.b	$00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $ED, $4D, $00, $00, $00, $00, $00, $00 
@@ -299,6 +309,7 @@ loc_0000060A:
 	DBF	D7, loc_000005F4
 	CLR.b	$1(A3)
 	RTS
+
 loc_00000628:
 	ORI	#$0700, SR
 	MOVE.l	#$7C000002, VDP_control_port
@@ -315,18 +326,21 @@ loc_00000654:
 	CLR.w	$FFFFC106.w
 	ANDI	#$F8FF, SR
 	RTS
+
 loc_0000066E:
 	MOVE.w	$FFFFC3F2.w, D0
 	BSET.l	#6, D0
 	MOVE.w	D0, $FFFFC3F2.w
 	MOVE.w	D0, VDP_control_port
 	RTS
+
 loc_00000682:
 	MOVE.w	$FFFFC3F2.w, D0
 	BCLR.l	#6, D0
 	MOVE.w	D0, $FFFFC3F2.w
 	MOVE.w	D0, VDP_control_port
 	RTS
+
 loc_00000696:
 	dc.b	$80, $04, $81, $64, $90, $11, $8B, $00, $8C, $81, $85, $5C, $8D, $2F, $82, $30, $84, $07, $86, $00, $87, $00, $8A, $00, $8E, $00, $8F, $02, $91, $00, $92, $00 
 loc_000006B6:
@@ -536,6 +550,7 @@ loc_000010DC:
 	BEQ.b	loc_000010DC
 	CLR.b	$FFFFC0FF.w
 	RTS
+
 VerticalInterrupt:
 	MOVEM.l	A6/A5/A4/A3/A2/A1/A0/D7/D6/D5/D4/D3/D2/D1/D0, -(A7)
 	MOVE.w	VDP_control_port, D0
@@ -620,6 +635,7 @@ loc_000011D4:
 	MOVE.b	#$FF, $FFFFC340.w	
 loc_000011EC:
 	RTS
+
 loc_000011EE:
 	LEA	$FFFFC408.w, A0
 	MOVE.w	#$0100, Z80_bus_request
@@ -662,6 +678,7 @@ loc_00001260:
 	MOVE.b	D0, (A0)
 	LEA	$2(A0), A0
 	RTS
+
 loc_00001282:
 	MOVE.w	$FFFFC104.w, D0
 	ANDI.w	#$01FF, D0
@@ -674,6 +691,7 @@ loc_00001282:
 	MOVE.w	D0, VDP_data_port
 	MOVE.w	D0, VDP_data_port
 	RTS
+
 loc_000012C0:
 	MOVE.w	$FFFFC104.w, D0
 	ANDI.w	#$01FF, D0
@@ -684,6 +702,7 @@ loc_000012C0:
 	MOVE.l	#$40000010, VDP_control_port
 	MOVE.w	D0, VDP_data_port
 	RTS
+
 loc_000012F2:
 	MOVE.b	$FFFFC408.w, D0
 	MOVE.b	$FFFFC409.w, D1
@@ -694,9 +713,11 @@ loc_000012F2:
 	BNE.b	loc_00001308
 	MOVEQ	#1, D0
 	RTS
+
 loc_00001308:
 	CLR.w	D0
 	RTS
+
 loc_0000130C:
 	dc.b	$7C, $03, $E9, $5A, $38, $02, $02, $44, $00, $0F, $0C, $44, $00, $09, $6F, $02, $5E, $44, $06, $44, $00, $30, $61, $00, $00, $08, $51, $CE, $FF, $E6, $4E, $75 
 	dc.b	$06, $44, $04, $C0, $00, $44, $80, $00, $88, $43, $30, $38, $C2, $42, $32, $38, $C2, $44, $D0, $40, $EF, $41, $D0, $41, $02, $80, $00, $00, $1F, $FF, $48, $40 
@@ -712,6 +733,7 @@ loc_00001364:
 	MOVE.w	D0, VDP_data_port
 	MOVE.w	D0, VDP_data_port
 	RTS
+
 loc_00001390:
 	BSR.w	loc_0000141E
 loc_00001394:
@@ -736,11 +758,12 @@ loc_00001394:
 	BSR.w	loc_000013FC
 	MOVE.w	#8, D7
 	BSR.w	loc_000013FC
-	MOVE.w	#$000B, D7
+	MOVE.w	#11, D7
 	BSR.w	loc_000013FC
-	MOVE.w	#$000B, D7
+	MOVE.w	#11, D7
 	BSR.w	loc_000013FC
 	RTS
+
 loc_000013FC:
 	MOVE.w	(A0), D1
 	ANDI.w	#$01FF, D1
@@ -750,6 +773,7 @@ loc_000013FC:
 	DBF	D7, loc_000013FC
 	LEA	$4(A0), A0
 	RTS
+
 loc_0000141E:
 	MOVE.l	#$7C000002, D0
 	MOVE.w	$FFFFC18A.w, D1
@@ -761,6 +785,7 @@ loc_00001430:
 	ADDI.l	#$00040000, D0
 	DBF	D7, loc_00001430
 	RTS
+
 loc_00001448:
 	MOVE.w	$FFFFC320.w, D0
 	BLE.b	loc_0000146C
@@ -777,10 +802,12 @@ loc_00001448:
 	SUBQ.w	#1, $FFFFC320.w
 loc_0000146C:
 	RTS
+
 loc_0000146E:
 	NOP
 	NOP
 	RTS
+
 loc_00001474:
 	CLR.w	$FFFFC400.w
 	MOVE.w	#$003C, $FFFFC406.w
@@ -820,12 +847,14 @@ loc_000014A8:
 	BRA.w	loc_0000171A	
 loc_00001500:
 	RTS
+
 loc_00001502:
 	MOVE.b	#2, $FFFFC403.w
 	MOVE.l	#loc_000155F4, $12(A5)
 	MOVE.w	#1, $FFFFC400.w
 	CLR.b	$FFFFC3B0.w
 	RTS
+
 loc_0000151C:
 	MOVE.b	$FFFFC408.w, D0
 	ANDI.b	#$F0, D0
@@ -844,6 +873,7 @@ loc_00001540:
 	JSR	loc_0001325E
 loc_0000155A:
 	RTS
+
 loc_0000155C:
 	MOVE.b	#$45, $FFFFC403.w
 	BTST.b	#6, $00A10001
@@ -854,6 +884,7 @@ loc_00001572:
 	MOVE.w	#3, $FFFFC400.w
 	CLR.b	$FFFFC3B1.w
 	RTS
+
 loc_00001586:
 	TST.b	$FFFFC3B1.w
 	BEQ.w	loc_000015E6
@@ -871,6 +902,7 @@ loc_000015B2:
 loc_000015B8:
 	MOVE.b	#$FF, $FFFFC08E.w
 	RTS
+
 loc_000015C0:
 	MOVE.w	$FFFFC428.w, $FFFFC23E.w
 	JSR	loc_000127EA
@@ -880,8 +912,10 @@ loc_000015C0:
 	MOVE.w	#4, $FFFFC400.w
 	MOVE.b	#$FF, $FFFFC08E.w
 	RTS
+
 loc_000015E6:
 	RTS
+
 loc_000015E8:
 	TST.b	$FFFFC08E.w
 	BNE.b	loc_00001614
@@ -894,6 +928,7 @@ loc_000015E8:
 	MOVE.l	#loc_0000146E, $12(A5)
 loc_00001614:
 	RTS
+
 loc_00001616:
 	TST.b	$FFFFC08E.w
 	BNE.b	loc_00001634
@@ -903,6 +938,7 @@ loc_00001616:
 	CLR.b	$FFFFC3A5.w
 loc_00001634:
 	RTS
+
 loc_00001636:
 	TST.b	$FFFFC3A5.w
 	BEQ.b	loc_00001648
@@ -910,6 +946,7 @@ loc_00001636:
 	MOVE.b	#$FF, $FFFFC08E.w
 loc_00001648:
 	RTS
+
 loc_0000164A:
 	TST.b	$FFFFC08E.w
 	BNE.b	loc_0000168A
@@ -925,6 +962,7 @@ loc_0000164A:
 	JSR	loc_00010522
 loc_0000168A:
 	RTS
+
 loc_0000168C:
 	TST.b	$FFFFC08E.w
 	BNE.b	loc_000016E4
@@ -945,6 +983,7 @@ loc_0000168C:
 	JSR	loc_0001325E
 loc_000016E4:
 	RTS
+
 loc_000016E6:
 	TST.b	$FFFFC67C.w
 	BEQ.b	loc_000016F8
@@ -952,6 +991,7 @@ loc_000016E6:
 	MOVE.b	#$FF, $FFFFC08E.w	
 loc_000016F8:
 	RTS
+
 loc_000016FA:
 	TST.b	$FFFFC08E.w	
 	BNE.b	loc_00001718	
@@ -960,7 +1000,8 @@ loc_000016FA:
 	MOVE.w	#$00E0, D0	
 	JSR	loc_00010522	
 loc_00001718:
-	RTS	
+	RTS
+	
 loc_0000171A:
 	TST.b	$FFFFC08E.w	
 	BNE.b	loc_00001756	
@@ -976,7 +1017,8 @@ loc_0000171A:
 	MOVE.w	$FFFFC152.w, $FFFFC126.w	
 	JSR	loc_000033BE	
 loc_00001756:
-	RTS	
+	RTS
+	
 loc_00001758:
 	TST.b	$FFFFC08E.w
 	BNE.b	loc_000017AA
@@ -996,6 +1038,7 @@ loc_00001758:
 	JSR	loc_00010522
 loc_000017AA:
 	RTS
+
 loc_000017AC:
 	TST.b	$FFFFC385.w
 	BEQ.b	loc_000017BE
@@ -1003,6 +1046,7 @@ loc_000017AC:
 	MOVE.b	#$FF, $FFFFC08E.w
 loc_000017BE:
 	RTS
+
 loc_000017C0:
 	TST.b	$FFFFC08E.w
 	BNE.b	loc_000017E4
@@ -1013,12 +1057,15 @@ loc_000017C0:
 	JSR	loc_00010522
 loc_000017E4:
 	RTS
+
 loc_000017E6:
 	MOVE.l	#loc_00016F82, $12(A5)
 	MOVE.w	#$0013, $FFFFC400.w
 	RTS
+
 loc_000017F6:
 	RTS
+
 loc_000017F8:
 	TST.b	$FFFFC08E.w
 	BNE.w	loc_00001818
@@ -1029,6 +1076,7 @@ loc_000017F8:
 	MOVE.b	#1, $FFFFC210.w
 loc_00001818:
 	RTS
+
 loc_0000181A:
 	TST.b	Player_movement_buffer_in_town.w
 	BNE.b	loc_00001838
@@ -1041,6 +1089,7 @@ loc_0000181A:
 	JSR	(A0,D0.w)
 loc_00001838:
 	RTS
+
 loc_0000183A:
 	BRA.w	loc_000018F2
 	BRA.w	loc_00001958
@@ -1113,6 +1162,7 @@ loc_000018F2:
 	CLR.w	$FFFFC12C.w
 loc_00001956:
 	RTS
+
 loc_00001958:
 	TST.b	$FFFFC08E.w
 	BNE.w	loc_00001A90
@@ -1191,12 +1241,14 @@ loc_00001A4C:
 	CLR.b	$FFFFC530.w
 loc_00001A90:
 	RTS
+
 loc_00001A92:
 	TST.b	$FFFFC0AA.w
 	BNE.b	loc_00001A9E
 	MOVE.w	$FFFFC414.w, $FFFFC412.w
 loc_00001A9E:
 	RTS
+
 loc_00001AA0:
 	TST.b	$FFFFC816.w
 	BEQ.b	loc_00001AC8
@@ -1207,6 +1259,7 @@ loc_00001AA0:
 	MOVE.b	#$FF, $FFFFC08E.w
 	CLR.b	$FFFFC41C.w
 	RTS
+
 loc_00001AC8:
 	TST.b	$FFFFC817.w
 	BEQ.b	loc_00001AE6
@@ -1214,7 +1267,8 @@ loc_00001AC8:
 	BSR.w	loc_00001B9A	
 	MOVE.w	#$0021, $FFFFC412.w	
 	MOVE.b	#$FF, $FFFFC08E.w	
-	RTS	
+	RTS
+	
 loc_00001AE6:
 	BSR.w	loc_000032E8
 	CMPI.w	#$3000, $FFFFC610.w
@@ -1241,6 +1295,7 @@ loc_00001B2C:
 	MOVE.w	#$0012, $FFFFC412.w
 	MOVE.b	#$FF, Player_movement_buffer_in_town.w
 	RTS
+
 loc_00001B54:
 	MOVE.b	#$A3, D0
 	JSR	loc_00010522
@@ -1259,6 +1314,7 @@ loc_00001B72:
 	ASR.w	#4, D0
 	MOVE.w	D0, $FFFFC13A.w
 	RTS
+
 loc_00001B9A:
 	MOVEA.l	$FFFFCC08.w, A6
 	MOVE.w	$E(A6), $FFFFC12C.w
@@ -1266,6 +1322,7 @@ loc_00001B9A:
 	MOVE.w	$FFFFC116.w, $FFFFC138.w
 	MOVE.w	$FFFFC114.w, $FFFFC13A.w
 	RTS
+
 loc_00001BB8:
 	TST.b	$FFFFC08E.w
 	BNE.b	loc_00001C1A
@@ -1289,6 +1346,7 @@ loc_00001BE6:
 	BSR.w	loc_00002022
 loc_00001C1A:
 	RTS
+
 loc_00001C1C:
 	TST.b	$FFFFC67F.w
 	BNE.w	loc_00001D14
@@ -1304,6 +1362,7 @@ loc_00001C1C:
 	JSR	loc_00010522
 	MOVE.w	#$0029, $FFFFC412.w
 	RTS
+
 loc_00001C56:
 	TST.b	$FFFFC817.w
 	BEQ.b	loc_00001C96
@@ -1317,7 +1376,8 @@ loc_00001C56:
 	MOVE.w	#$00E0, D0	
 	JSR	loc_00010522	
 	MOVE.b	#$FF, $FFFFC08E.w	
-	RTS	
+	RTS
+	
 loc_00001C96:
 	BSR.w	loc_000032E8
 	CMPI.w	#$F000, $FFFFC610.w
@@ -1335,6 +1395,7 @@ loc_00001CAE:
 	MOVE.b	#$FF, Player_movement_buffer_in_town.w
 	MOVE.w	#4, Player_direction_in_town.w
 	RTS
+
 loc_00001CDC:
 	MOVE.b	#$A3, D0
 	JSR	loc_00010522
@@ -1348,6 +1409,7 @@ loc_00001CDC:
 	MOVE.w	$FFFFC116.w, $FFFFC13C.w
 	MOVE.w	$FFFFC114.w, $FFFFC13E.w
 	RTS
+
 loc_00001D14:
 	MOVE.b	#$FF, $FFFFC41C.w
 	JSR	loc_0001229E
@@ -1365,6 +1427,7 @@ loc_00001D42:
 loc_00001D50:
 	MOVE.w	#$0028, $FFFFC412.w
 	RTS
+
 loc_00001D58:
 	TST.b	$FFFFC20F.w
 	BEQ.b	loc_00001D98
@@ -1377,6 +1440,7 @@ loc_00001D58:
 	JSR	loc_000012F2
 	BNE.b	loc_00001D7E
 	RTS
+
 loc_00001D7E:
 	JSR	loc_00012610
 	CLR.b	$FFFFC41C.w
@@ -1384,9 +1448,11 @@ loc_00001D7E:
 	CLR.b	$FFFFC45C.w
 	MOVE.w	#4, $FFFFC412.w
 	RTS
+
 loc_00001D98:
 	JSR	loc_0001096A
 	RTS
+
 loc_00001DA0:
 	MOVE.w	#5, D2
 	JSR	loc_000012F2
@@ -1394,6 +1460,7 @@ loc_00001DA0:
 	JSR	loc_00010C4E
 loc_00001DB2:
 	RTS
+
 loc_00001DB4:
 	TST.b	$FFFFC08E.w
 	BNE.b	loc_00001E08
@@ -1415,6 +1482,7 @@ loc_00001DB4:
 	JSR	loc_0001325E
 loc_00001E08:
 	RTS
+
 loc_00001E0A:
 	MOVE.b	#$FF, $FFFFC7F3.w	
 	MOVE.w	#$00B9, D0	
@@ -1452,7 +1520,8 @@ loc_00001E78:
 	ADD.w	D1, Player_ac.w	
 loc_00001E94:
 	JSR	loc_0001DA8E	
-	RTS	
+	RTS
+	
 loc_00001E9C:
 	TST.b	$FFFFC20F.w
 	BEQ.b	loc_00001EF8
@@ -1465,6 +1534,7 @@ loc_00001E9C:
 	JSR	loc_000012F2
 	BNE.b	loc_00001EC4
 	RTS
+
 loc_00001EC4:
 	JSR	loc_00012610
 	CLR.w	$FFFFC416.w
@@ -1473,6 +1543,7 @@ loc_00001EC4:
 	MOVE.b	#$FF, $FFFF9911.w
 	MOVE.w	#4, $FFFFC412.w
 	RTS
+
 loc_00001EE6:
 	MOVE.w	#5, D2
 	JSR	loc_000012F2
@@ -1482,6 +1553,7 @@ loc_00001EF8:
 	JSR	loc_0001096A
 loc_00001EFE:
 	RTS
+
 loc_00001F00:
 	TST.b	$FFFFC08E.w
 	BNE.b	loc_00001F40
@@ -1497,6 +1569,7 @@ loc_00001F00:
 	BSR.w	loc_00002022
 loc_00001F40:
 	RTS
+
 loc_00001F42:
 	BSR.w	loc_000032E8
 	CMPI.w	#$F000, $FFFFC610.w
@@ -1525,6 +1598,7 @@ loc_00001F5C:
 	MOVE.b	#$FF, Player_movement_buffer_in_town.w
 	MOVE.w	#4, Player_direction_in_town.w
 	RTS
+
 loc_00001FB4:
 	MOVE.b	#$A3, D0
 	JSR	loc_00010522
@@ -1536,6 +1610,7 @@ loc_00001FB4:
 	ADDI.w	#$0010, D0
 	MOVE.w	D0, $FFFFC136.w
 	RTS
+
 loc_00001FE0:
 	TST.b	$FFFFC08E.w
 	BNE.b	loc_00002020
@@ -1551,6 +1626,7 @@ loc_00001FE0:
 	BSR.w	loc_00002022
 loc_00002020:
 	RTS
+
 loc_00002022:
 	JSR	loc_00016018
 	MOVE.w	#$2000, $FFFFC158.w
@@ -1567,6 +1643,7 @@ loc_00002022:
 	CLR.w	$FFFFC416.w
 	JSR	loc_0000066E
 	RTS
+
 loc_00002074:
 	BSR.w	loc_000032E8
 	CMPI.w	#$F000, $FFFFC610.w
@@ -1582,6 +1659,7 @@ loc_00002084:
 	MOVE.b	#$FF, Player_movement_buffer_in_town.w
 	MOVE.w	#4, Player_direction_in_town.w
 	RTS
+
 loc_000020B2:
 	TST.b	$FFFFC08E.w
 	BNE.b	loc_00002114
@@ -1605,6 +1683,7 @@ loc_000020E0:
 	BSR.w	loc_00002022
 loc_00002114:
 	RTS
+
 loc_00002116:
 	TST.b	$FFFFC817.w
 	BEQ.b	loc_00002156
@@ -1619,6 +1698,7 @@ loc_00002116:
 	JSR	loc_00010522
 	MOVE.b	#$FF, $FFFFC08E.w
 	RTS
+
 loc_00002156:
 	BSR.w	loc_000032E8
 	CMPI.w	#$F000, $FFFFC610.w
@@ -1637,6 +1717,7 @@ loc_00002170:
 	MOVE.b	#$FF, Player_movement_buffer_in_town.w
 	MOVE.w	#4, Player_direction_in_town.w
 	RTS
+
 loc_000021A2:
 	MOVE.b	#$A3, D0
 	JSR	loc_00010522
@@ -1650,6 +1731,7 @@ loc_000021A2:
 	MOVE.w	$FFFFC116.w, $FFFFC13C.w
 	MOVE.w	$FFFFC114.w, $FFFFC13E.w
 	RTS
+
 loc_000021DA:
 	TST.b	$FFFFC08E.w
 	BNE.b	loc_0000221A
@@ -1665,6 +1747,7 @@ loc_000021DA:
 	BSR.w	loc_00002022
 loc_0000221A:
 	RTS
+
 loc_0000221C:
 	BSR.w	loc_000032E8
 	CMPI.w	#$F000, $FFFFC610.w
@@ -1687,6 +1770,7 @@ loc_00002234:
 	MOVE.b	#$FF, Player_movement_buffer_in_town.w
 	MOVE.w	#4, Player_direction_in_town.w
 	RTS
+
 loc_0000227A:
 	MOVE.b	#$A3, D0	
 	JSR	loc_00010522	
@@ -1697,7 +1781,8 @@ loc_0000227A:
 	MOVE.w	$12(A6), D0	
 	ADDI.w	#$0010, D0	
 	MOVE.w	D0, $FFFFC136.w	
-	RTS	
+	RTS
+	
 loc_000022A6:
 	TST.b	$FFFFC08E.w	
 	BNE.b	loc_000022E6	
@@ -1712,7 +1797,8 @@ loc_000022A6:
 	MOVE.w	#$000E, $FFFFC414.w	
 	BSR.w	loc_00002022	
 loc_000022E6:
-	RTS	
+	RTS
+	
 loc_000022E8:
 	BSR.w	loc_000032E8	
 	CMPI.w	#$F000, $FFFFC610.w	
@@ -1725,7 +1811,8 @@ loc_000022E8:
 	MOVE.w	#$000B, $FFFFC412.w	
 	MOVE.b	#$FF, Player_movement_buffer_in_town.w	
 	MOVE.w	#4, Player_direction_in_town.w	
-	RTS	
+	RTS
+	
 loc_00002324:
 	TST.b	$FFFFC08E.w
 	BNE.w	loc_00002410
@@ -1778,6 +1865,7 @@ loc_000023EA:
 	JSR	loc_0000066E
 loc_00002410:
 	RTS
+
 loc_00002412:
 	JSR	loc_00012EF6
 	TST.w	Player_hp.w
@@ -1794,6 +1882,7 @@ loc_00002428:
 	JSR	loc_00012EF6
 loc_00002448:
 	RTS
+
 loc_0000244A:
 	TST.w	Player_hp.w
 	BGT.b	loc_0000247E
@@ -1833,6 +1922,7 @@ loc_000024BE:
 	MOVE.b	#$FF, $FFFFC540.w
 loc_000024D4:
 	RTS
+
 loc_000024D6:
 	JSR	loc_00000628
 	MOVE.b	#$FF, $FFFFC41C.w
@@ -1840,6 +1930,7 @@ loc_000024D6:
 	JSR	loc_00010C4A
 	MOVE.w	#$002C, $FFFFC412.w
 	RTS
+
 loc_000024F8:
 	TST.b	$FFFFC20F.w
 	BEQ.b	loc_0000253A
@@ -1850,6 +1941,7 @@ loc_000024F8:
 	JSR	loc_000012F2
 	BNE.b	loc_00002518
 	RTS
+
 loc_00002518:
 	MOVE.w	#$0011, $FFFFC412.w
 	MOVE.b	#$A3, D0
@@ -1858,9 +1950,11 @@ loc_00002518:
 	JSR	loc_00010522
 	MOVE.b	#$FF, $FFFFC08E.w
 	RTS
+
 loc_0000253A:
 	JSR	loc_0001096A
 	RTS
+
 loc_00002542:
 	TST.b	$FFFFC08E.w
 	BNE.w	loc_000025AC
@@ -1884,6 +1978,7 @@ loc_00002542:
 	BSR.w	loc_000026BA
 loc_000025AC:
 	RTS
+
 loc_000025AE:
 	BRA.w	loc_0000273E
 loc_000025B2:
@@ -1895,6 +1990,7 @@ loc_000025B2:
 	MOVE.w	#0, $FFFFC412.w
 loc_000025CC:
 	RTS
+
 loc_000025CE:
 	TST.b	$FFFFC08E.w
 	BNE.w	loc_0000261E
@@ -1915,6 +2011,7 @@ loc_0000260E:
 	BSR.w	loc_000026BA
 loc_0000261E:
 	RTS
+
 loc_00002620:
 	JSR	loc_00000682
 	JSR	loc_000002D0
@@ -1948,6 +2045,7 @@ loc_00002620:
 	BCLR.b	#0, $FFFFC60D.w
 	JSR	loc_0001325E
 	RTS
+
 loc_000026BA: ; level up
 	CMPI.w	#$001E, Player_level.w
 	BGE.b	loc_00002706
@@ -1982,6 +2080,7 @@ loc_00002724:
 	JSR	loc_00013186
 	JSR	loc_00013028
 	RTS
+
 loc_0000273E:
 	TST.w	Player_poisoned.w
 	BEQ.b	loc_00002752
@@ -1989,10 +2088,12 @@ loc_0000273E:
 	BNE.b	loc_00002752
 	MOVE.w	#$002D, $FFFFC412.w
 	RTS
+
 loc_00002752:
 	BSR.w	loc_00002F2A
 	BEQ.b	loc_0000275A
-	RTS	
+	RTS
+	
 loc_0000275A:
 	TST.b	$FFFFC817.w
 	BEQ.b	loc_0000277E
@@ -2002,6 +2103,7 @@ loc_0000275A:
 	JSR	loc_00010522
 	MOVE.b	#$FF, $FFFFC08E.w
 	RTS
+
 loc_0000277E: ; process movement actions in overworld
 	TST.b	Player_move_forward_in_overworld.w
 	BNE.w	loc_000027F8
@@ -2044,12 +2146,14 @@ loc_000027F8:
 	CLR.b	$FFFFC683.w
 loc_000027FC:
 	RTS
+
 loc_000027FE:
 	CLR.b	$FFFFC685.w
 	CLR.b	$FFFFC41C.w
 	MOVE.w	#$0018, $FFFFC412.w
 	MOVE.b	#$FF, $FFFFC550.w
 	RTS
+
 loc_00002814:
 	TST.b	$FFFFC08E.w
 	BNE.b	loc_00002830
@@ -2060,6 +2164,7 @@ loc_00002814:
 	MOVEA.l	$FFFFCC08.w, A6
 loc_00002830:
 	RTS
+
 loc_00002832:
 	TST.b	$FFFFC551.w
 	BNE.b	loc_00002858
@@ -2097,6 +2202,7 @@ loc_00002868:
 	MOVE.w	#$0084, D0
 	JSR	loc_00010522
 	RTS
+
 loc_000028C2:
 	ADDQ.w	#1, $FFFFC554.w
 	MOVE.w	$FFFFC554.w, D0
@@ -2118,6 +2224,7 @@ loc_000028F6:
 	BSR.w	loc_00002F54
 loc_000028FA:
 	RTS
+
 loc_000028FC:
 	ADDQ.w	#1, $FFFFC554.w
 	CMPI.w	#$0064, $FFFFC554.w
@@ -2126,6 +2233,7 @@ loc_000028FC:
 	MOVE.b	#$FF, $FFFFC08E.w
 loc_00002914:
 	RTS
+
 loc_00002916:
 	SUBQ.w	#1, $FFFFC55C.w
 	BGT.b	loc_0000292E
@@ -2134,6 +2242,7 @@ loc_00002916:
 	JSR	loc_0001193C
 loc_0000292E:
 	RTS
+
 loc_00002930:
 	TST.b	$FFFF9910.w
 	BNE.b	loc_00002972
@@ -2147,6 +2256,7 @@ loc_00002930:
 	JSR	loc_000012F2
 	BNE.b	loc_0000295C
 	RTS
+
 loc_0000295C:
 	MOVE.w	#0, $FFFF9912.w
 	CLR.w	$FFFF9916.w
@@ -2154,6 +2264,7 @@ loc_0000295C:
 	MOVE.w	#$001D, $FFFFC412.w
 loc_00002972:
 	RTS
+
 loc_00002974:
 	TST.b	$FFFF9911.w
 	BNE.w	loc_000029F8
@@ -2175,6 +2286,7 @@ loc_00002974:
 	JSR	loc_000130EA
 	JSR	loc_00013186
 	RTS
+
 loc_000029D4:
 	CLR.b	$FFFFC41C.w
 	MOVE.w	$FFFFC414.w, $FFFFC412.w
@@ -2183,11 +2295,13 @@ loc_000029D4:
 	BEQ.b	loc_000029EE
 	BSR.w	loc_000036CC
 	RTS
+
 loc_000029EE:
 	MOVE.w	D0, $FFFFC32A.w
 	JSR	loc_00010522
 loc_000029F8:
 	RTS
+
 loc_000029FA:
 	TST.b	$FFFFC08E.w
 	BNE.b	loc_00002A50
@@ -2210,6 +2324,7 @@ loc_00002A28:
 	JSR	loc_0001325E
 loc_00002A50:
 	RTS
+
 loc_00002A52:
 	ADDQ.w	#1, $FFFFC554.w
 	MOVE.w	$FFFFC554.w, D0
@@ -2232,6 +2347,7 @@ loc_00002A8C:
 	BSR.w	loc_00002F54
 loc_00002A90:
 	RTS
+
 loc_00002A92:
 	TST.b	$FFFFC08E.w
 	BNE.w	loc_00002BB6
@@ -2304,14 +2420,17 @@ loc_00002AE0:
 	JSR	loc_0000066E
 loc_00002BB6:
 	RTS
+
 loc_00002BB8:
 	BSR.w	loc_00002F2A
 	JSR	loc_00012F44
 	RTS
+
 loc_00002BC4:
 	BSR.w	loc_00002F2A
 	BEQ.b	loc_00002BCC
-	RTS	
+	RTS
+	
 loc_00002BCC:
 	TST.b	$FFFFC08E.w
 	BNE.w	loc_00002C68
@@ -2352,6 +2471,7 @@ loc_00002C62:
 	JSR	loc_0000066E
 loc_00002C68:
 	RTS
+
 loc_00002C6A:
 	TST.b	$FFFFC08E.w
 	BNE.b	loc_00002C7A
@@ -2359,6 +2479,7 @@ loc_00002C6A:
 	ADDQ.w	#1, $FFFFC412.w
 loc_00002C7A:
 	RTS
+
 loc_00002C7C:
 	TST.b	$FFFFC08E.w
 	BNE.w	loc_00002D20
@@ -2420,6 +2541,7 @@ loc_00002D04:
 	MOVE.b	#$FF, $FFFFC67F.w
 loc_00002D20:
 	RTS
+
 loc_00002D22:
 	JSR	loc_0001229E
 	JSR	loc_00010C4A
@@ -2427,6 +2549,7 @@ loc_00002D22:
 	MOVE.w	#$0027, $FFFFC412.w
 	MOVE.b	#$FF, $FFFFC41C.w
 	RTS
+
 loc_00002D44:
 	JSR	loc_0001229E
 	JSR	loc_00010C4A
@@ -2435,6 +2558,7 @@ loc_00002D44:
 	MOVE.b	#$FF, $FFFFC41C.w
 	MOVE.b	#$FF, $FFFFC7C6.w
 	RTS
+
 loc_00002D6C:
 	TST.b	$FFFF9900.w
 	BNE.b	loc_00002DA8
@@ -2447,6 +2571,7 @@ loc_00002D6C:
 	JSR	loc_000012F2
 	BNE.b	loc_00002D92
 	RTS
+
 loc_00002D92:
 	JSR	loc_00012610
 	MOVE.w	#$0013, $FFFFC412.w
@@ -2455,6 +2580,7 @@ loc_00002DA2:
 	JSR	loc_0001096A
 loc_00002DA8:
 	RTS
+
 loc_00002DAA:
 	dc.w	$0208, $0138, $0016, $000B
 	dc.w	$0278, $0228, $001C, $001A
@@ -2519,9 +2645,11 @@ loc_00002F2A:
 	MOVE.w	#$FFFF, D0
 	CLR.w	Player_hp.w
 	RTS
+
 loc_00002F50:
 	CLR.w	D0
 	RTS
+
 loc_00002F54:
 	LEA	$FFFFA000.w, A0
 	MOVE.l	#$45600002, D5
@@ -2544,6 +2672,7 @@ loc_00002F72:
 	ANDI	#$F8FF, SR
 	ADDQ.w	#1, $FFFFC552.w
 	RTS
+
 loc_00002F9C:
 	ORI	#$0700, SR
 	LEA	$FFFFA000.w, A0
@@ -2557,6 +2686,7 @@ loc_00002FB8:
 	ANDI	#$F8FF, SR
 	CLR.w	$FFFFC554.w
 	RTS
+
 loc_00002FCC:
 	MOVE.l	#$60000003, D5
 	BSR.b	loc_00002FDA
@@ -2583,6 +2713,7 @@ loc_00003002:
 	DBF	D7, loc_00002FF8
 	ANDI	#$F8FF, SR
 	RTS
+
 loc_00003024:
 	ORI	#$0700, SR
 	MOVE.l	#$6B000003, D5
@@ -2601,6 +2732,7 @@ loc_00003042:
 	DBF	D7, loc_00003038
 	ANDI	#$F8FF, SR
 	RTS
+
 loc_00003064:
 	ORI	#$0700, SR
 	MOVE.l	#$40000003, D5
@@ -2621,6 +2753,7 @@ loc_00003082:
 	DBF	D7, loc_00003078
 	ANDI	#$F8FF, SR
 	RTS
+
 loc_000030AC:
 	TST.w	$FFFFC416.w
 	BNE.b	loc_000030EA
@@ -2654,6 +2787,7 @@ loc_000030EE:
 	JSR	(A0,D0.w)
 loc_00003116:
 	RTS
+
 loc_00003118:
 	BRA.w	loc_00003130
 	BRA.w	loc_00003142	
@@ -2669,6 +2803,7 @@ loc_00003130:
 	CLR.b	$FFFFC41C.w
 loc_00003140:
 	RTS
+
 loc_00003142:
 	MOVE.w	#2, $FFFFC23A.w	
 	MOVE.w	#$FFFF, $FFFFC23C.w	
@@ -2678,7 +2813,8 @@ loc_00003142:
 	MOVE.w	#$000E, $FFFFC236.w	
 	MOVE.w	#$000E, $FFFFC238.w	
 	CLR.w	$FFFFC418.w	
-	RTS	
+	RTS
+	
 loc_00003170:
 	TST.b	$FFFF9910.w	
 	BNE.w	loc_000031EC	
@@ -2691,7 +2827,8 @@ loc_00003170:
 	MOVE.w	#2, $FFFF9912.w	
 	CLR.w	$FFFF9916.w	
 	MOVE.b	#$FF, $FFFF9911.w	
-	RTS	
+	RTS
+	
 loc_000031A2:
 	MOVE.w	#5, D2	
 	BSR.w	loc_000012F2	
@@ -2704,14 +2841,16 @@ loc_000031A2:
 	MOVE.w	#2, $FFFF9912.w	
 	CLR.w	$FFFF9916.w	
 	MOVE.b	#$FF, $FFFF9911.w	
-	RTS	
+	RTS
+	
 loc_000031D4:
 	MOVE.w	$FFFFC418.w, $FFFFC23E.w	
 	MOVE.w	#$6000, $FFFFC208.w	
 	JSR	loc_000127EA	
 	MOVE.w	$FFFFC23E.w, $FFFFC418.w	
 loc_000031EC:
-	RTS	
+	RTS
+	
 loc_000031EE:
 	JSR	loc_0001227A
 	JSR	loc_00010C9E
@@ -2719,6 +2858,7 @@ loc_000031EE:
 	CLR.w	$FFFFC418.w
 	BSR.w	loc_00003208
 	RTS
+
 loc_00003208:
 	MOVE.w	#3, $FFFFC23A.w
 	MOVE.w	#7, $FFFFC23C.w
@@ -2734,6 +2874,7 @@ loc_00003208:
 	CLR.w	$FFFFC42A.w
 	CLR.w	$FFFFC42C.w
 	RTS
+
 loc_00003248:
 	TST.b	$FFFF9910.w
 	BNE.w	loc_000032AC
@@ -2747,6 +2888,7 @@ loc_00003248:
 	CLR.w	$FFFF9916.w
 	MOVE.b	#$FF, $FFFF9911.w
 	RTS
+
 loc_0000327A:
 	MOVE.w	#5, D2
 	BSR.w	loc_000012F2
@@ -2755,6 +2897,7 @@ loc_0000327A:
 	JSR	loc_00010522
 	ADDQ.w	#1, $FFFFC416.w
 	RTS
+
 loc_00003294:
 	MOVE.w	$FFFFC418.w, $FFFFC23E.w
 	MOVE.w	#$6000, $FFFFC208.w
@@ -2762,6 +2905,7 @@ loc_00003294:
 	MOVE.w	$FFFFC23E.w, $FFFFC418.w
 loc_000032AC:
 	RTS
+
 loc_000032AE:
 	MOVE.w	$FFFFC418.w, D0
 	ANDI.w	#7, D0
@@ -2771,6 +2915,7 @@ loc_000032AE:
 	MOVEA.l	(A0,D0.w), A0
 	JSR	(A0)
 	RTS
+
 loc_000032C8:
 	dc.l	loc_0001B17E
 	dc.l	loc_0001A2CE
@@ -2788,6 +2933,7 @@ loc_000032E8:
 	ANDI.w	#$F000, D0
 	MOVE.w	D0, $FFFFC610.w
 	RTS
+
 loc_00003304:
 	SUBQ.w	#1, $FFFFC404.w
 	BGE.b	loc_00003322
@@ -2801,15 +2947,18 @@ loc_00003304:
 loc_00003322:
 	MOVEQ	#-1, D0
 	RTS
+
 loc_00003326:
 	CLR.w	D0
 	RTS
+
 loc_0000332A:
 	MOVE.w	$FFFFC40E.w, D0
 	LSR.w	#3, D0
 	MOVE.w	$FFFFC410.w, D1
 	LSR.w	#3, D1
 	RTS
+
 loc_00003338:
 	MOVE.w	Player_position_x_in_town.w, D0
 	MOVE.w	Player_position_y_in_town.w, D1
@@ -2834,7 +2983,8 @@ loc_00003366:
 	LEA	$28(A1), A1
 	BRA.b	loc_00003352
 loc_0000336C:
-	RTS	
+	RTS
+	
 loc_0000336E:
 	LEA	loc_0001FFFE, A0
 	MOVE.w	Current_town.w, D0
@@ -2858,6 +3008,7 @@ loc_00003380:
 	MOVE.w	(A0)+, $FFFFC156.w
 	MOVE.l	(A0), $FFFFC16A.w
 	RTS
+
 loc_000033BE:
 	LEA	loc_0001FE94, A0
 	MOVE.w	$FFFFC126.w, D0
@@ -2887,14 +3038,17 @@ loc_00003400:
 	MOVE.w	D0, $FFFFC32A.w
 	JSR	loc_00010522
 	RTS
+
 loc_0000340C:
 	JSR	loc_000061AE
 	JSR	loc_0000603E
 	RTS
+
 loc_0000341A:
 	JSR	loc_000060F6
 	JSR	loc_0000603E
 	RTS
+
 loc_00003428:
 	MOVE.b	#1, $FFFFC683.w
 	JSR	GetRandomNumber
@@ -2902,9 +3056,11 @@ loc_00003428:
 	BEQ.b	loc_0000343E
 	CLR.w	D0
 	RTS
+
 loc_0000343E:
 	MOVEQ	#1, D0
 	RTS
+
 loc_00003442:
 	MOVE.l	#loc_00026034, $FFFFC250.w
 	LEA	loc_000200B6, A0
@@ -2936,6 +3092,7 @@ loc_00003490:
 	BRA.b	loc_0000345C
 loc_00003496:
 	RTS
+
 loc_00003498:
 	LEA	loc_00020780, A0
 	MOVE.w	$FFFFC556.w, D0
@@ -2964,6 +3121,7 @@ loc_000034D0:
 loc_000034D6:
 	MOVE.l	#loc_00026034, $FFFFC250.w
 	RTS
+
 loc_000034E0:
 	BSR.w	loc_0000363C
 	JSR	loc_0000055C
@@ -3035,6 +3193,7 @@ loc_0000357C:
 	MOVE.w	(A0,D0.w), $FFFFC130.w
 	MOVE.w	$2(A0,D0.w), $FFFFC132.w
 	RTS
+
 loc_000035FA:
 	LEA	loc_0000361C, A0
 	MOVE.w	Player_direction_in_town.w, D0
@@ -3045,6 +3204,7 @@ loc_000035FA:
 	MOVE.w	$2(A0,D0.w), D1
 	ADD.w	D1, $FFFFC664.w
 	RTS
+
 loc_0000361C:
 	dc.b	$00, $00, $FF, $FE, $FF, $FE, $00, $00, $00, $00, $00, $02, $00, $02, $00, $00 
 loc_0000362C:
@@ -3063,12 +3223,14 @@ loc_00003640:
 	BRA.b	loc_00003640
 loc_00003652:
 	RTS
+
 loc_00003654:
 	LEA	loc_0000366A, A0
 	MOVE.w	$FFFFC534.w, D0
 	MOVE.b	(A0,D0.w), D0
 	JSR	loc_00010522
 	RTS
+
 loc_0000366A:
 	dc.b	$88, $93, $88, $88, $93, $93, $93, $93, $88, $88, $93, $88, $93, $93 
 loc_00003678:
@@ -3096,6 +3258,7 @@ loc_000036CC:
 	MOVE.w	D0, $FFFFC32A.w
 	JSR	loc_00010522
 	RTS
+
 loc_000036E8:
 	dc.b	$97, $8A, $8A, $98, $98, $8A, $8A, $97, $97, $98, $98, $97, $97, $97, $97, $8A, $8A, $8A, $8A, $98, $97, $97, $98, $8A, $8A, $8A, $8A, $8A, $8A, $8A, $8A, $8A 
 	dc.b	$98, $98, $98, $98, $98, $98, $98, $98, $98, $98, $8A, $8A 
@@ -3123,6 +3286,7 @@ loc_00003714:
 	LEA	(A6,D0.w), A6
 	BCLR.b	#7, (A6)
 	RTS
+
 loc_00003782:
 	TST.b	$FFFFC530.w
 	BNE.w	loc_00003834
@@ -3177,6 +3341,7 @@ loc_00003816:
 	JSR	(A0,D0.w)
 loc_00003834:
 	RTS
+
 loc_00003836:
 	dc.b	$4E, $B9, $00, $00, $F5, $D6, $4E, $75 
 loc_0000383E:
@@ -3290,6 +3455,7 @@ loc_0000397C:
 	MOVE.w	$C(A5), $16(A5)
 	JSR	loc_0000F5D6
 	RTS
+
 loc_000039AC:
 	TST.b	$FFFFC613.w
 	BEQ.b	loc_000039B8
@@ -3299,6 +3465,7 @@ loc_000039B8:
 	MOVE.b	#$FF, $FFFFC613.w
 loc_000039BE:
 	RTS
+
 loc_000039C0:
 	MOVE.w	Player_direction_in_town.w, D2
 	ADD.w	D2, D2
@@ -3327,9 +3494,11 @@ loc_000039C0:
 	BEQ.b	loc_00003A1C
 	MOVE.b	#$FF, $FFFFC612.w
 	RTS
+
 loc_00003A1C:
 	CLR.b	$FFFFC612.w
 	RTS
+
 loc_00003A22:
 	MOVE.w	Player_direction_in_town.w, D4
 	LSR.w	#1, D4
@@ -3363,6 +3532,7 @@ loc_00003A56:
 	BGE.b	loc_00003A82
 	MOVE.b	#$FF, $FFFFC612.w
 	RTS
+
 loc_00003A82:
 	CLR.w	D4
 	MOVE.b	$1(A6), D4
@@ -3370,6 +3540,7 @@ loc_00003A82:
 	DBF	D7, loc_00003A56
 loc_00003A90:
 	RTS
+
 loc_00003A92:
 	TST.b	$FFFFC531.w
 	BNE.w	loc_00003B44
@@ -3386,6 +3557,7 @@ loc_00003A92:
 	MOVE.l	#$940093C0, D5
 	BSR.w	loc_00003BBE
 	RTS
+
 loc_00003ACA:
 	LEA	$FFFF0000, A0
 	MOVEA.l	$FFFFCC08.w, A6
@@ -3418,6 +3590,7 @@ loc_00003ACA:
 	MOVE.l	#$94009340, D5
 	BSR.w	loc_00003BBE
 	RTS
+
 loc_00003B44:
 	LEA	$FFFF0000, A0
 	MOVEA.l	$FFFFCC08.w, A6
@@ -3450,6 +3623,7 @@ loc_00003B44:
 	MOVE.l	#$94009340, D5
 	BSR.w	loc_00003BBE
 	RTS
+
 loc_00003BBE:
 	ANDI.l	#$00FFFFFF, D0
 	LSR.l	#1, D0
@@ -3486,6 +3660,7 @@ loc_00003BF0:
 	MOVE.w	D4, VDP_control_port
 	MOVE.w	#0, Z80_bus_request
 	RTS
+
 loc_00003C4E:
 	dc.b	$00, $00, $FF, $00, $FF, $FC, $00, $00, $00, $00, $01, $00, $00, $04, $00, $00 
 loc_00003C5E:
@@ -3530,10 +3705,12 @@ loc_00003C7E:
 	MOVE.w	#$0013, $FFFFC086.w
 	JSR	loc_0001325E
 	RTS
+
 loc_00003D50:
 	MOVEA.l	$FFFFCC10.w, A6
 	BCLR.b	#7, (A6)
 	RTS
+
 loc_00003D5A:
 	TST.b	$FFFFC41C.w
 	BNE.w	loc_00003EC4
@@ -3604,6 +3781,7 @@ loc_00003E3A:
 	MOVE.b	#$FF, $FFFFC302.w
 	JSR	loc_0000F5D6
 	RTS
+
 loc_00003E48:
 	MOVEA.l	$FFFFCC08.w, A6
 	MOVE.l	#loc_00003EBC, $2(A6)
@@ -3632,9 +3810,11 @@ loc_00003EAA:
 	CLR.b	Player_movement_buffer_in_town.w
 	JSR	loc_0000F5D6
 	RTS
+
 loc_00003EBC:
 	JSR	loc_0000F5D6
 	RTS
+
 loc_00003EC4:
 	MOVEA.l	$FFFFCC0C.w, A6
 	MOVEA.l	$FFFFCC10.w, A4
@@ -3706,6 +3886,7 @@ loc_00003FB8:
 	MOVE.b	#$3C, $1A(A5)
 	MOVE.l	#$00003DFE, $2(A5)
 	RTS
+
 loc_00003FCE:
 	TST.b	$FFFFC816.w
 	BEQ.b	loc_00004000
@@ -3752,6 +3933,7 @@ loc_00004044:
 	MOVE.w	$C(A5), $16(A5)
 	JSR	loc_0000F5D6
 	RTS
+
 loc_00004068
 	MOVEA.l	$FFFFCC08.w, A6
 	MOVE.b	$7(A6), $7(A5)
@@ -3762,6 +3944,7 @@ loc_00004068
 	MOVE.w	$C(A6), $16(A5)
 	JSR	loc_0000F5D6
 	RTS
+
 loc_00004092 
 	MOVEA.l	$FFFFCC08.w, A6
 	MOVE.b	$7(A6), $7(A5)
@@ -3784,6 +3967,7 @@ loc_000040BA:
 	MOVE.w	$C(A6), $16(A5)
 	JSR	loc_0000F5D6
 	RTS
+
 loc_000040DE:
 	LEA	loc_00004250, A0
 	MOVEA.l	$FFFFCC0C.w, A6
@@ -3854,6 +4038,7 @@ loc_0000419E:
 	LEA	(A6,D5.w), A6
 	DBF	D7, loc_0000412E
 	RTS
+
 loc_000041C2:
 	ADDQ.b	#1, $1B(A5)
 	MOVE.b	#$60, $7(A5)
@@ -3872,22 +4057,25 @@ loc_000041F4:
 	BLE.b	loc_00004200
 	BCLR.b	#7, (A5)
 	RTS
+
 loc_00004200:
 	MOVE.w	(A0,D0.w), $8(A5)
 	MOVE.w	$E(A5), $A(A5)
 	MOVE.w	$12(A5), $C(A5)
 	JSR	loc_0000F5D6
 	RTS
+
 loc_0000421A:
 	MOVE.w	Readied_magic.w, D0
 	BLT.b	loc_00004232
 	ANDI.w	#$001F, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
-	LEA	loc_00018A32, A0
+	LEA	CastBattleMagicMap, A0
 	JSR	(A0,D0.w)
 loc_00004232:
 	RTS
+
 loc_00004234:
 	MOVEA.l	$FFFFCC1C.w, A6
 	MOVE.w	#$000B, D7
@@ -3898,6 +4086,7 @@ loc_0000423C:
 	LEA	(A6,D0.w), A6
 	DBF	D7, loc_0000423C
 	RTS
+
 loc_00004250:
 	dc.b	$00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $08, $00, $10, $FF, $F4 
 	dc.w	$0000
@@ -3946,6 +4135,7 @@ loc_00004384:
 	BSR.w	loc_00006458
 	BSR.w	loc_00004BA0
 	RTS
+
 loc_000043A6:
 	TST.b	$FFFFC41C.w
 	BNE.w	loc_0000457C
@@ -4032,6 +4222,7 @@ loc_000044C2:
 	MOVE.b	#$A3, D0
 	JSR	loc_00010522
 	RTS
+
 loc_000044E0:
 	LEA	loc_00005A1C, A0
 	BSR.w	loc_00005988
@@ -4070,6 +4261,7 @@ loc_0000455C:
 	CLR.b	$FFFFC586.w
 	ADDQ.w	#1, $FFFFC54A.w
 	RTS
+
 loc_00004566:
 	TST.b	$FFFFC551.w
 	BEQ.b	loc_0000457C
@@ -4080,6 +4272,7 @@ loc_00004566:
 	BSR.w	loc_0000651A
 loc_0000457C:
 	RTS
+
 loc_0000457E:
 	TST.w	$FFFFC68E.w
 	BNE.b	loc_0000458C
@@ -4091,6 +4284,7 @@ loc_0000458E:
 	SUBQ.w	#1, $FFFFC68E.w
 loc_00004592:
 	RTS
+
 loc_00004594:
 	CMPI.b	#$FF, D0
 	BEQ.w	loc_00004626
@@ -4101,6 +4295,7 @@ loc_00004594:
 	TST.b	D0
 	BLT.b	loc_000045B0
 	RTS
+
 loc_000045B0:
 	BCLR.l	#7, D0
 loc_000045B4:
@@ -4121,6 +4316,7 @@ loc_000045F0:
 	MOVE.b	#$A3, D0
 	JSR	loc_00010522
 	RTS
+
 loc_00004602:
 	ANDI.w	#$000F, D0
 	MOVE.w	D0, Current_town.w
@@ -4130,6 +4326,7 @@ loc_00004602:
 	JSR	loc_00010522
 	MOVE.b	#$FF, $FFFFC08E.w
 	RTS
+
 loc_00004626:
 	MOVE.b	#$A3, D0
 	JSR	loc_00010522
@@ -4137,6 +4334,7 @@ loc_00004626:
 	MOVE.w	#$0017, $FFFFC412.w
 	MOVE.b	#$FF, $FFFFC08E.w
 	RTS
+
 loc_00004642:
 	CLR.b	Player_move_forward_in_overworld.w
 	BSR.w	loc_00005304
@@ -4145,6 +4343,7 @@ loc_00004642:
 	BSR.w	loc_000050F8
 	BSR.w	loc_00004BA0
 	RTS
+
 loc_00004660:
 	BRA.w	loc_0000468A
 	BRA.w	loc_000046B8
@@ -4207,6 +4406,7 @@ loc_00004702:
 	ADD.w	D4, D4
 	JSR	(A0,D4.w)
 	RTS
+
 loc_0000471E:
 	BRA.w	loc_0000479C
 	BRA.w	loc_0000477E
@@ -4300,6 +4500,7 @@ loc_00004820:
 	ORI.w	#$A800, D2
 	BSR.w	loc_00005288
 	RTS
+
 loc_0000484C:
 	LEA	loc_00006582, A1
 	LEA	loc_00006824, A3
@@ -4312,6 +4513,7 @@ loc_0000484C:
 	ORI.w	#$A800, D1
 	BSR.w	loc_00005224
 	RTS
+
 loc_00004872:
 	LEA	loc_00006582, A1
 	LEA	loc_00006824, A3
@@ -4324,6 +4526,7 @@ loc_00004872:
 	ORI.w	#$A000, D1
 	BSR.w	loc_00005256
 	RTS
+
 loc_00004898:
 	LEA	loc_00006582, A1
 	LEA	loc_00006824, A3
@@ -4338,6 +4541,7 @@ loc_00004898:
 	ORI.w	#$A800, D2
 	BSR.w	loc_00005288
 	RTS
+
 loc_000048C4:
 	CLR.b	Player_rotate_clockwise_in_overworld.w
 	SUBQ.w	#2, Player_direction_in_town.w
@@ -4355,6 +4559,7 @@ loc_000048EE:
 	BSR.w	loc_00006458
 	BSR.w	loc_0000457E
 	RTS
+
 loc_000048F8:
 	CLR.b	Player_rotate_counter_clockwise_in_overworld.w
 	ADDQ.w	#2, Player_direction_in_town.w
@@ -4372,6 +4577,7 @@ loc_00004922:
 	BSR.w	loc_00006458
 	BSR.w	loc_0000457E
 	RTS
+
 loc_0000492C:
 	BRA.w	loc_0000493C
 	BRA.w	loc_00004974
@@ -4603,6 +4809,7 @@ loc_00004BA0:
 	MOVE.l	#$007C0000, $E(A6)
 	MOVE.l	#$00580000, $12(A6)
 	RTS
+
 loc_00004CCE:
 	MOVEA.l	$FFFFCC14.w, A6
 	MOVE.l	#$00360000, $E(A6)
@@ -4655,6 +4862,7 @@ loc_00004CCE:
 	BSR.w	loc_00004E06
 loc_00004E04:
 	RTS
+
 loc_00004E06:
 	TST.w	D7
 	BEQ.b	loc_00004E18
@@ -4699,24 +4907,28 @@ loc_00004E24:
 	MOVEA.l	$FFFFCC4C.w, A6
 	BSR.w	loc_00004EBA
 	RTS
+
 loc_00004EA2:
 	TST.w	$8(A6)
 	BLE.b	loc_00004EAC
 	ADD.w	D2, $8(A6)
 loc_00004EAC:
 	RTS
+
 loc_00004EAE:
 	TST.w	$8(A6)
 	BLE.b	loc_00004EB8
 	ADD.w	D3, $8(A6)
 loc_00004EB8:
 	RTS
+
 loc_00004EBA:
 	TST.w	$8(A6)
 	BLE.b	loc_00004EC4
 	ADD.w	D4, $8(A6)
 loc_00004EC4:
 	RTS
+
 loc_00004EC6:
 	TST.w	D7
 	BEQ.w	loc_00004FE2
@@ -4763,6 +4975,7 @@ loc_00004EC6:
 	SUBI.l	#$00040000, $E(A6)
 	SUBI.l	#$00020000, $12(A6)
 	RTS
+
 loc_00004FE2:
 	MOVEA.l	$FFFFCC14.w, A6
 	SUBI.l	#$00060000, $E(A6)
@@ -4807,6 +5020,7 @@ loc_00004FE2:
 	ADDI.l	#$00040000, $E(A6)
 	ADDI.l	#$00020000, $12(A6)
 	RTS
+
 loc_000050F8:
 	CLR.w	D0
 	MOVE.b	$FFFFC545.w, D0
@@ -4830,6 +5044,7 @@ loc_00005124:
 	BSR.w	loc_000051BA
 loc_0000513A:
 	RTS
+
 loc_0000513C:
 	MOVE.w	$FFFFC54C.w, D1
 	MOVE.w	$FFFFC54E.w, D2
@@ -4848,6 +5063,7 @@ loc_0000513C:
 	ORI.w	#$A000, D1
 	ORI.w	#$A800, D2
 	RTS
+
 loc_00005174:
 	ORI	#$0700, SR
 	MOVE.w	#$000D, D7
@@ -4871,6 +5087,7 @@ loc_0000519A:
 	DBF	D7, loc_0000517C
 	ANDI	#$F8FF, SR
 	RTS
+
 loc_000051BA:
 	ORI	#$0700, SR
 	MOVE.w	#$000D, D7
@@ -4903,6 +5120,7 @@ loc_0000520A:
 	DBF	D7, loc_000051C2
 	ANDI	#$F8FF, SR
 	RTS
+
 loc_00005224:
 	ORI	#$0700, SR
 	MOVE.w	#$000F, D7
@@ -4919,6 +5137,7 @@ loc_00005236:
 	DBF	D7, loc_0000522C
 	ANDI	#$F8FF, SR
 	RTS
+
 loc_00005256:
 	ORI	#$0700, SR
 	MOVE.w	#$000F, D7
@@ -4935,6 +5154,7 @@ loc_00005268:
 	DBF	D7, loc_0000525E
 	ANDI	#$F8FF, SR
 	RTS
+
 loc_00005288:
 	ORI	#$0700, SR
 	MOVE.w	#$0010, D7
@@ -4973,6 +5193,7 @@ loc_000052E8:
 	DBF	D7, loc_000052DE
 	ANDI	#$F8FF, SR
 	RTS
+
 loc_00005304:
 	LEA	$FFFF9310.w, A0
 	LEA	loc_00005326, A2
@@ -4983,6 +5204,7 @@ loc_00005304:
 	ADD.w	D4, D4
 	JSR	(A2,D4.w)
 	RTS
+
 loc_00005326:
 	BRA.w	loc_000057F2
 	BRA.w	loc_00005336
@@ -5099,6 +5321,7 @@ loc_00005336:
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), $8(A6)
 	RTS
+
 loc_000054C8:
 	ADDQ.w	#1, D1
 	MULU.w	#$0030, D1
@@ -5211,6 +5434,7 @@ loc_000054C8:
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), $8(A6)
 	RTS
+
 loc_00005660:
 	ADDQ.w	#1, D0
 	MULU.w	#$0030, D1
@@ -5322,6 +5546,7 @@ loc_00005660:
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), $8(A6)
 	RTS
+
 loc_000057F2:
 	MOVE.w	D0, D2
 	MOVE.w	D1, D3
@@ -5435,6 +5660,7 @@ loc_000057F2:
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), $8(A6)
 	RTS
+
 loc_00005988:
 	MOVE.w	$FFFFC662.w, D0
 	MOVE.w	$FFFFC664.w, D1
@@ -5447,6 +5673,7 @@ loc_00005988:
 	LEA	$FFFF9310.w, A0
 	MOVE.b	(A0,D0.w), D0
 	RTS
+
 loc_000059AE:
 	MOVE.w	Player_direction_in_town.w, D0
 	ANDI.w	#6, D0
@@ -5481,6 +5708,7 @@ loc_00005A06:
 	BSR.w	loc_0000622A
 loc_00005A1A:
 	RTS
+
 loc_00005A1C:
 	dc.b	$00, $00, $FF, $FF, $FF, $FF, $00, $00, $00, $00, $00, $01, $00, $01, $00, $00 
 loc_00005A2C:
@@ -5523,6 +5751,7 @@ loc_00005A3C:
 	MOVE.l	#$00500000, $E(A6)
 	MOVE.l	#$00580000, $12(A6)
 	RTS
+
 loc_00005B2E:
 	MULU.w	#$0030, D1
 	ADD.w	D1, D0
@@ -5580,6 +5809,7 @@ loc_00005B70:
 	MOVEA.l	$FFFFCC34.w, A6
 	MOVE.w	#0, $8(A6)
 	RTS
+
 loc_00005C02:
 	MOVEA.l	$FFFFCC24.w, A6
 	MOVE.l	#$00900000, $E(A6)
@@ -5603,6 +5833,7 @@ loc_00005C02:
 	MOVE.l	#$003C0000, $E(A6)
 	MOVE.l	#$00580000, $12(A6)
 	RTS
+
 loc_00005C90:
 	MULU.w	#$0030, D1
 	ADD.w	D1, D0
@@ -5669,6 +5900,7 @@ loc_00005CF0:
 	MOVEA.l	$FFFFCC48.w, A6
 	MOVE.w	#0, $8(A6)
 	RTS
+
 loc_00005D86:
 	MOVEA.l	$FFFFCC14.w, A6
 	MOVE.l	#$00200000, $E(A6)
@@ -5707,6 +5939,7 @@ loc_00005D86:
 	MOVE.l	#$006C0000, $E(A6)
 	MOVE.l	#$00580000, $12(A6)
 	RTS
+
 loc_00005E78:
 	MULU.w	#$0030, D1
 	ADD.w	D1, D0
@@ -5764,6 +5997,7 @@ loc_00005EBA:
 	MOVEA.l	$FFFFCC38.w, A6
 	MOVE.w	#0, $8(A6)
 	RTS
+
 loc_00005F4C:
 	MOVE.w	$FFFFC558.w, D0
 	ADD.w	(A4)+, D0
@@ -5775,6 +6009,7 @@ loc_00005F4C:
 	MOVE.w	(A0,D4.w), D0
 	MOVE.w	D0, $8(A6)
 	RTS
+
 loc_00005F6C:
 	MOVE.w	$FFFFC558.w, D0
 	ADD.w	(A4)+, D0
@@ -5788,6 +6023,7 @@ loc_00005F6C:
 	SUBI.w	#$0024, D0
 	MOVE.w	D0, $8(A6)
 	RTS
+
 loc_00005F94:
 	MOVE.w	$FFFFC558.w, D0
 	ADD.w	(A4)+, D0
@@ -5801,9 +6037,11 @@ loc_00005F94:
 	SUBI.w	#$0018, D0
 	MOVE.w	D0, $8(A6)
 	RTS
+
 loc_00005FBC:
 	MOVE.w	#0, $8(A6)
 	RTS
+
 loc_00005FC4:
 	CLR.b	$18(A6)
 	TST.b	D4
@@ -5812,6 +6050,7 @@ loc_00005FC4:
 	BLT.b	loc_00005FF0
 	MOVE.b	#7, D4
 	RTS
+
 loc_00005FD8:
 	CMPI.b	#6, D4
 	BLE.b	loc_00005FFE
@@ -5821,16 +6060,20 @@ loc_00005FD8:
 	BEQ.b	loc_00005FF6
 	MOVE.b	#8, D4
 	RTS
+
 loc_00005FF0:
 	MOVE.b	#4, D4
 	RTS
+
 loc_00005FF6:
 	MOVE.b	#3, D4
 	RTS
+
 loc_00005FFC:
 	CLR.w	D4
 loc_00005FFE:
 	RTS
+
 loc_00006000:
 	CLR.b	$18(A6)
 	TST.b	D4
@@ -5840,6 +6083,7 @@ loc_00006000:
 	BLT.b	loc_0000602E
 	MOVE.b	#7, D4
 	RTS
+
 loc_00006016:
 	CMPI.b	#6, D4
 	BLE.b	loc_0000603C
@@ -5849,16 +6093,20 @@ loc_00006016:
 	BEQ.b	loc_00006034
 	MOVE.b	#8, D4
 	RTS
+
 loc_0000602E:
 	MOVE.b	#4, D4
 	RTS
+
 loc_00006034:
 	MOVE.b	#3, D4
 	RTS
+
 loc_0000603A:
 	CLR.w	D4
 loc_0000603C:
 	RTS
+
 loc_0000603E:
 	LEA	loc_0006AFC0, A0
 	BRA.w	loc_0000606E
@@ -5897,6 +6145,7 @@ loc_0000609C:
 	DBF	D7, loc_0000607C
 	ANDI	#$F8FF, SR
 	RTS
+
 loc_000060BE:
 	ORI	#$0700, SR
 	MOVE.l	#$44820003, D5
@@ -5914,6 +6163,7 @@ loc_000060D6:
 	DBF	D7, loc_000060CC
 	ANDI	#$F8FF, SR
 	RTS
+
 loc_000060F6:
 	LEA	loc_0006CED2, A0
 	BRA.w	loc_00006126
@@ -5952,6 +6202,7 @@ loc_00006154:
 	DBF	D7, loc_00006134
 	ANDI	#$F8FF, SR
 	RTS
+
 loc_00006176:
 	ORI	#$0700, SR
 	MOVE.l	#$40820003, D5
@@ -5969,6 +6220,7 @@ loc_0000618E:
 	DBF	D7, loc_00006184
 	ANDI	#$F8FF, SR
 	RTS
+
 loc_000061AE:
 	MOVE.w	Player_direction_in_town.w, D0
 	CMPI.w	#2, D0
@@ -6006,6 +6258,7 @@ loc_00006204:
 	DBF	D7, loc_000061F8
 	ANDI	#$F8FF, SR
 	RTS
+
 loc_0000622A:
 	TST.b	$FFFFC551.w
 	BEQ.w	loc_0000626C
@@ -6025,6 +6278,7 @@ loc_0000623A:
 	BSR.w	loc_00006458
 	BSR.w	loc_000063EA
 	RTS
+
 loc_0000626C:
 	LEA	loc_0003DFD4, A0
 	MOVE.w	$FFFFC666.w, D0
@@ -6081,6 +6335,7 @@ loc_0000626C:
 	BSR.w	loc_00006458
 	BSR.w	loc_000063EA
 	RTS
+
 loc_0000630C:
 	TST.w	D2
 	BLT.w	loc_000063D0
@@ -6099,6 +6354,7 @@ loc_00006328:
 	LEA	(A2), A3
 	BSR.w	loc_0000633C
 	RTS
+
 loc_0000633C:
 	MOVEM.w	D1/D0, -(A7)
 	LEA	-$20(A3), A3
@@ -6136,6 +6392,7 @@ loc_00006380:
 loc_0000638A:
 	MOVEM.w	(A7)+, D0/D1
 	RTS
+
 loc_00006390:
 	CLR.b	$FFFFC55F.w
 	MOVE.w	$FFFFC666.w, D0
@@ -6148,6 +6405,7 @@ loc_00006390:
 	MOVE.b	#$FF, $FFFFC55F.w
 loc_000063B0:
 	RTS
+
 loc_000063B2:
 	CLR.b	$FFFFC55F.w
 	MOVE.w	$FFFFC556.w, D0
@@ -6158,6 +6416,7 @@ loc_000063B2:
 	MOVE.b	#$FF, $FFFFC55F.w
 loc_000063CE:
 	RTS
+
 loc_000063D0:
 	MOVEQ	#$0000000F, D7
 loc_000063D2:
@@ -6169,6 +6428,7 @@ loc_000063D6:
 	LEA	$30(A2), A2
 	DBF	D7, loc_000063D2
 	RTS
+
 loc_000063EA:
 	ORI	#$0700, SR
 	MOVE.l	#$40AE0003, D5
@@ -6207,6 +6467,7 @@ loc_00006436:
 	DBF	D7, loc_0000640C
 	ANDI	#$F8FF, SR
 	RTS
+
 loc_00006458:
 	CLR.w	D4
 	TST.b	$FFFFC55F.w
@@ -6264,6 +6525,7 @@ loc_000064EE:
 	ANDI	#$F8FF, SR
 loc_00006506:
 	RTS
+
 loc_00006508:
 	dc.b	$85, $AE, $85, $AF, $85, $B0, $85, $B1, $85, $B2, $85, $B3, $85, $B4, $85, $B5, $85, $B6 
 loc_0000651A:
@@ -6276,9 +6538,11 @@ loc_0000651A:
 	BSR.w	loc_00006458
 	JSR	loc_0001325E
 	RTS
+
 loc_0000653C:
 	SUBQ.w	#1, $FFFFC562.w
 	RTS
+
 loc_00006542:
 	dc.b	$04, $CA, $04, $CB, $04, $CE, $04, $CC, $04, $D1, $04, $CB, $04, $D0, $04, $C8, $04, $C9, $04, $C1, $04, $C2, $04, $C3, $04, $C4, $04, $C5, $04, $C6 
 	dc.w	$04CD
@@ -6434,6 +6698,7 @@ loc_00006824:
 	CLR.b	$FFFFC539.w
 	CLR.b	$FFFFC660.w
 	RTS
+
 loc_00006908:
 	TST.b	$FFFFC0AA.w
 	BNE.b	loc_0000694C
@@ -6593,6 +6858,7 @@ loc_00006B28:
 	MOVE.w	$C(A5), $16(A5)
 	JSR	loc_0000F5D6
 	RTS
+
 loc_00006B50:
 	MOVEA.l	$FFFFCC08.w, A6
 	MOVE.l	#loc_00006B98, $2(A6)
@@ -6609,9 +6875,11 @@ loc_00006B50:
 	CLR.b	Player_movement_buffer_in_town.w
 	JSR	loc_0000F5D6
 	RTS
+
 loc_00006B98:
 	JSR	loc_0000F5D6
 	RTS
+
 loc_00006BA0:
 	MOVEA.l	$FFFFCC08.w, A6
 	MOVE.b	$7(A6), $7(A5)
@@ -6622,6 +6890,7 @@ loc_00006BA0:
 	MOVE.w	$C(A6), $16(A5)
 	JSR	loc_0000F5D6
 	RTS
+
 loc_00006BCA: 
 	MOVEA.l	$FFFFCC08.w, A6
 	MOVE.b	$7(A6), $7(A5)
@@ -6641,6 +6910,7 @@ loc_00006BCA:
 	MOVE.w	$C(A6), $16(A5)
 	JSR	loc_0000F5D6
 	RTS
+
 loc_00006C10:
 	LEA	loc_00006C24, A0
 	MOVE.w	$FFFFC534.w, D2
@@ -6648,6 +6918,7 @@ loc_00006C10:
 	ADD.w	D2, D2
 	JSR	(A0,D2.w)
 	RTS
+
 loc_00006C24:
 	BRA.w	loc_00006C5C
 	BRA.w	loc_00006CA8
@@ -6670,6 +6941,7 @@ loc_00006C5C:
 	MOVEA.l	$FFFFCC1C.w, A6
 	BSR.w	loc_00006D40
 	RTS
+
 loc_00006C72:
 	BSR.w	loc_00006D8E
 	MOVEA.l	$FFFFCC1C.w, A6
@@ -6685,16 +6957,19 @@ loc_00006C72:
 	MOVE.w	#$00E0, D7
 	BSR.w	loc_00006DB4
 	RTS
+
 loc_00006CA8:
 	BSR.w	loc_00006D8E
 	MOVEA.l	$FFFFCC14.w, A6
 	BSR.w	loc_00006D40
 	RTS
+
 loc_00006CB6:
 	BSR.w	loc_00006D8E
 	MOVEA.l	$FFFFCC14.w, A6
 	BSR.w	loc_00006D40
 	RTS
+
 loc_00006CC4:
 	BSR.w	loc_00006D8E
 	MOVEA.l	$FFFFCC14.w, A6
@@ -6716,6 +6991,7 @@ loc_00006CC4:
 	MOVEA.l	$FFFFCC38.w, A6
 	BSR.w	loc_00006D40
 	RTS
+
 loc_00006D12:
 	BSR.w	loc_00006D8E
 	MOVEA.l	$FFFFCC18.w, A6
@@ -6729,6 +7005,7 @@ loc_00006D12:
 	MOVE.w	#$00E0, D7
 	BSR.w	loc_00006DB4
 	RTS
+
 loc_00006D40:
 	BTST.b	#7, (A6)
 	BEQ.b	loc_00006D8C
@@ -6759,6 +7036,7 @@ loc_00006D40:
 	MOVE.b	#$FF, $26(A6)
 loc_00006D8C:
 	RTS
+
 loc_00006D8E:
 	LEA	loc_00006DCC, A0
 	ADD.w	D0, D0
@@ -6772,6 +7050,7 @@ loc_00006D8E:
 	ADD.w	$12(A5), D2
 	ADD.w	$12(A5), D3
 	RTS
+
 loc_00006DB4:
 	CMP.w	D4, D1
 	BLT.b	loc_00006DCA
@@ -6784,6 +7063,7 @@ loc_00006DB4:
 	MOVE.b	#$FF, $26(A6)
 loc_00006DCA:
 	RTS
+
 loc_00006DCC:
 	dc.b	$00, $00, $00, $00, $00, $00 
 	dc.w	$0000
@@ -6862,17 +7142,20 @@ loc_00006EBE:
 	DBF	D7, loc_00006EBE
 loc_00006ED0:
 	RTS
+
 loc_00006ED2:
 	dc.b	$2C, $78, $CC, $14, $7E, $1D, $08, $96, $00, $07, $42, $40, $10, $2E, $00, $01, $4D, $F6, $00, $00, $51, $CF, $FF, $F0, $4E, $75 
 loc_00006EEC:
 	MOVE.b	#9, $6(A5)
 	MOVE.l	#$00006EFC, $2(A5)
 	RTS
+
 loc_00006EFC:
 	BRA.w	loc_00008154
 	MOVE.b	#9, $6(A5)
 	MOVE.l	#loc_00006F10, $2(A5)
 	RTS
+
 loc_00006F10:	
 	TST.b	$FFFFC732.w
 	BNE.b	loc_00006F32
@@ -6888,6 +7171,7 @@ loc_00006F32:
 	BSR.w	loc_00008234
 	MOVE.l	#loc_00006F44, $2(A5)
 	RTS
+
 loc_00006F44:
 	MOVEA.l	$2E(A5), A1
 	MOVE.b	#$FF, $25(A5)
@@ -6895,11 +7179,13 @@ loc_00006F44:
 	MOVE.b	$27(A5), $18(A5)
 	ADDQ.b	#1, $1B(A5)
 	RTS
+
 loc_00006F5E:
 	BSR.w	loc_00008234
 	MOVE.l	#loc_00006F70, $2(A5)
 	CLR.b	$25(A5)
 	RTS
+
 loc_00006F70 
 	BSR.w	loc_0000859C
 	BSR.w	loc_00008248
@@ -6908,6 +7194,7 @@ loc_00006F70
 	BSR.w	loc_00008234
 	MOVE.l	#loc_00006F8E, $2(A5)
 	RTS
+
 loc_00006F8E:
 	MOVEA.l	$2E(A5), A1
 	MOVE.b	#$FF, $25(A5)
@@ -6915,11 +7202,13 @@ loc_00006F8E:
 	MOVE.b	$27(A5), $18(A5)
 	ADDQ.b	#1, $1B(A5)
 	RTS
+
 loc_00006FA8
 	BSR.w	loc_00008234
 	MOVE.l	#loc_00006FBA, $2(A5)
 	CLR.b	$25(A5)
 	RTS
+
 loc_00006FBA:
 	BSR.w	loc_0000859C
 	BSR.w	loc_00008248
@@ -6927,20 +7216,24 @@ loc_00006FBA:
 	BRA.w	loc_000081FE
 	MOVE.l	#loc_00006FD4, $2(A5)
 	RTS
+
 loc_00006FD4:
 	MOVEA.l	$2E(A5), A1
 	MOVE.b	#$FF, $25(A5)
 	BSR.w	loc_0000820C
 	ADDQ.b	#1, $1B(A5)
 	RTS
+
 loc_00006FE8:
 	TST.b	Event_triggers_list.w
 	BEQ.b	loc_00006FF4
 	BCLR.b	#7, (A5)
 	RTS
+
 loc_00006FF4:
 	MOVE.l	#loc_00006FFE, $2(A5)
 	RTS
+
 loc_00006FFE:
 	TST.b	Event_triggers_list.w
 	BEQ.b	loc_0000700C
@@ -6953,9 +7246,11 @@ loc_0000700C:
 	BEQ.b	loc_00007026
 	MOVE.l	#loc_00006F8E, $2(A5)
 	RTS
+
 loc_00007026:
 	MOVE.l	#loc_00007030, $2(A5)
 	RTS
+
 loc_00007030:   
 	TST.b	Event_triggers_list.w
 	BEQ.b	loc_0000703E
@@ -6966,6 +7261,7 @@ loc_0000703E:
 	CLR.b	$25(A5)
 	MOVE.l	#loc_00007054, $2(A5)
 	RTS
+
 loc_00007054:  
 	TST.b	Map_list.w
 	BNE.b	loc_0000706A
@@ -6978,6 +7274,7 @@ loc_0000706A:
 	CLR.b	$25(A5)
 	MOVE.l	#loc_00007080, $2(A5)
 	RTS
+
 loc_00007080:
 	TST.b	Map_list.w
 	BEQ.b	loc_00007096
@@ -6990,6 +7287,7 @@ loc_00007096:
 	CLR.b	$25(A5)
 	MOVE.l	#loc_000070AC, $2(A5)
 	RTS
+
 loc_000070AC:   
 	MOVE.l	#loc_0002EB52, $FFFFC438.w
 	MOVE.w	#$0040, D5
@@ -6999,6 +7297,7 @@ loc_000070AC:
 	CLR.b	$25(A5)
 	MOVE.l	#loc_000070D2, $2(A5)
 	RTS
+
 loc_000070D2:
 	TST.b	$FFFFC725.w
 	BEQ.b	loc_000070EA
@@ -7025,6 +7324,7 @@ loc_0000711C:
 	BEQ.b	loc_00007128
 	BCLR.b	#7, (A5)
 	RTS
+
 loc_00007128:
 	TST.b	$FFFFC727.w
 	BEQ.b	loc_00007138
@@ -7038,9 +7338,11 @@ loc_00007138:
 loc_00007144:
 	MOVE.l	#loc_00007158, $2(A5)
 	RTS
+
 loc_0000714E:
 	MOVE.l	#loc_00006F8E, $2(A5)
 	RTS
+
 loc_00007158:  
 	TST.b	$FFFFC724.w
 	BEQ.b	loc_00007178
@@ -7067,9 +7369,11 @@ loc_00007196:
 	BEQ.b	loc_000071AE
 	BCLR.b	#7, (A5)
 	RTS
+
 loc_000071AE:
 	MOVE.l	#loc_000071B8, $2(A5)
 	RTS
+
 loc_000071B8:
 	TST.b	$FFFFC725.w
 	BEQ.b	loc_000071C6
@@ -7085,6 +7389,7 @@ loc_000071C6:
 loc_000071E6:
 	MOVE.l	#loc_00006F70, $2(A5)
 	RTS
+
 loc_000071F0:
 	BSR.w	loc_00008234
 	CLR.b	$25(A5)
@@ -7094,9 +7399,11 @@ loc_000071F0:
 	MOVE.l	#loc_0003DD94, $2E(A5)
 	MOVE.l	#loc_00006F44, $2(A5)
 	RTS
+
 loc_00007216:
 	MOVE.l	#loc_00007220, $2(A5)
 	RTS
+
 loc_00007220:       
 	MOVE.l	#loc_000300B2, $FFFFC438.w
 	MOVE.w	#$0036, D5
@@ -7110,9 +7417,11 @@ loc_00007220:
 	MOVE.l	#loc_0003DD94, $2E(A5)
 	MOVE.l	#loc_00007264, $2(A5)
 	RTS
+
 loc_0000725A:
 	MOVE.l	#loc_00006F44, $2(A5)
 	RTS
+
 loc_00007264:
 	MOVE.l	#loc_0002FD92, $FFFFC438.w
 	MOVE.w	#$0065, D5
@@ -7126,9 +7435,11 @@ loc_00007264:
 	MOVE.l	#$0003DDD4, $2E(A5)
 	MOVE.l	#loc_00006F8E, $2(A5)
 	RTS
+
 loc_0000729E:
 	MOVE.l	#loc_00006F44, $2(A5)
 	RTS
+
 loc_000072A8:
 	BSR.w	loc_00008234
 	CLR.b	$25(A5)
@@ -7136,9 +7447,11 @@ loc_000072A8:
 	BNE.b	loc_000072C0
 	MOVE.l	#loc_000072CA, $2(A5)
 	RTS
+
 loc_000072C0:
 	MOVE.l	#loc_00006F44, $2(A5)	
-	RTS	
+	RTS
+	
 loc_000072CA:
 	TST.b	$FFFFC72D.w
 	BEQ.b	loc_000072F4
@@ -7156,6 +7469,7 @@ loc_000072F4:
 	CLR.b	$25(A5)
 	MOVE.l	#loc_0000730A, $2(A5)
 	RTS
+
 loc_0000730A:
 	TST.b	$FFFFC72D.w
 	BNE.b	loc_00007326
@@ -7170,6 +7484,7 @@ loc_00007326:
 	CLR.b	$25(A5)
 	MOVE.l	#loc_0000733C, $2(A5)
 	RTS
+
 loc_0000733C:
 	TST.b	$FFFFC72D.w
 	BEQ.b	loc_00007352
@@ -7185,10 +7500,12 @@ loc_00007352:
 	TST.b	$FFFFC72F.w
 	BEQ.b	loc_00007374
 	MOVE.l	#loc_00006F8E, $2(A5)	
-	RTS	
+	RTS
+	
 loc_00007374:
 	MOVE.l	#loc_0000737E, $2(A5)
 	RTS
+
 loc_0000737E:
 	TST.b	$FFFFC733.w
 	BEQ.b	loc_000073AE
@@ -7234,9 +7551,11 @@ loc_00007408:
 	BEQ.b	loc_00007424
 	MOVE.l	#loc_00006F44, $2(A5)
 	RTS
+
 loc_00007424:
 	MOVE.l	#loc_0000742E, $2(A5)
 	RTS
+
 loc_0000742E:
 	TST.b	$FFFFC72F.w
 	BEQ.b	loc_0000743C
@@ -7249,9 +7568,11 @@ loc_0000743C:
 	BEQ.b	loc_00007458
 	MOVE.l	#loc_00006F44, $2(A5)
 	RTS
+
 loc_00007458:
 	MOVE.l	#loc_00007462, $2(A5)
 	RTS
+
 loc_00007462:
 	TST.b	$FFFFC72F.w
 	BEQ.b	loc_00007470
@@ -7265,11 +7586,13 @@ loc_00007470:
 	BCLR.b	#7, (A5)
 	MOVE.l	#loc_00006F44, $2(A5)
 	RTS
+
 loc_00007490:
 	CLR.b	$FFFFC7AD.w
 	CLR.b	$FFFFC7AC.w
 	MOVE.l	#loc_000074A2, $2(A5)
 	RTS
+
 loc_000074A2:
 	TST.b	$FFFFC7AB.w
 	BNE.b	loc_000074D4
@@ -7310,6 +7633,7 @@ loc_0000752A:
 	CLR.b	$25(A5)
 	MOVE.l	#loc_00007540, $2(A5)
 	RTS
+
 loc_00007540:
 	TST.b	$FFFFC733.w
 	BEQ.b	loc_00007556
@@ -7322,6 +7646,7 @@ loc_00007556:
 	CLR.b	$25(A5)
 	MOVE.l	#loc_0000756C, $2(A5)
 	RTS
+
 loc_0000756C:
 	TST.b	$FFFFC733.w
 	BEQ.b	loc_00007582
@@ -7339,9 +7664,11 @@ loc_00007582:
 loc_0000759E:
 	MOVE.l	#loc_000075B2, $2(A5)
 	RTS
+
 loc_000075A8:
 	MOVE.l	#loc_00006F8E, $2(A5)
 	RTS
+
 loc_000075B2:
 	TST.b	$FFFFC746.w
 	BEQ.w	loc_000075EC
@@ -7395,6 +7722,7 @@ loc_0000764E:
 loc_00007654:
 	MOVE.l	#loc_0000765E, $2(A5)
 	RTS
+
 loc_0000765E:
 	TST.b	$FFFFC75E.w
 	BEQ.b	loc_0000768E
@@ -7408,12 +7736,14 @@ loc_0000765E:
 loc_00007688:
 	BSR.w	loc_00006F44
 	RTS
+
 loc_0000768E:
 	BRA.w	loc_00006F8E
 	BSR.w	loc_00008234
 	CLR.b	$25(A5)
 	MOVE.l	#loc_000076A4, $2(A5)
 	RTS
+
 loc_000076A4:
 	TST.b	$FFFFC758.w
 	BEQ.b	loc_000076B6
@@ -7431,6 +7761,7 @@ loc_000076CC:
 	CLR.b	$25(A5)
 	MOVE.l	#loc_000076E2, $2(A5)
 	RTS
+
 loc_000076E2:
 	TST.b	$FFFFC73C.w
 	BEQ.b	loc_000076F8
@@ -7447,6 +7778,7 @@ loc_000076F8:
 loc_0000770E:
 	MOVE.l	#loc_00007718, $2(A5)
 	RTS
+
 loc_00007718:
 	TST.b	$FFFFC779.w
 	BEQ.b	loc_00007728
@@ -7459,6 +7791,7 @@ loc_00007728:
 	CLR.b	$25(A5)
 	MOVE.l	#loc_0000773E, $2(A5)
 	RTS
+
 loc_0000773E:
 	TST.b	$FFFFC758.w
 	BEQ.b	loc_00007750
@@ -7474,6 +7807,7 @@ loc_0000775E:
 	CLR.b	$25(A5)
 	MOVE.l	#loc_00007774, $2(A5)
 	RTS
+
 loc_00007774:
 	MOVE.l	#loc_00034E20, $FFFFC438.w
 	MOVE.w	#$000A, D5
@@ -7483,6 +7817,7 @@ loc_00007774:
 	CLR.b	$25(A5)
 	MOVE.l	#loc_0000779A, $2(A5)
 	RTS
+
 loc_0000779A:
 	TST.b	$FFFFC73F.w
 	BEQ.b	loc_000077D2
@@ -7511,9 +7846,11 @@ loc_000077E2:
 	BEQ.b	loc_00007804
 	MOVE.l	#loc_0000780E, $2(A5)
 	RTS
+
 loc_00007804:
 	MOVE.l	#loc_00006F8E, $2(A5)
 	RTS
+
 loc_0000780E:
 	TST.b	$FFFFC754.w
 	BEQ.b	loc_00007844
@@ -7548,6 +7885,7 @@ loc_0000787A:
 	CLR.b	$25(A5)
 	MOVE.l	#loc_00007890, $2(A5)
 	RTS
+
 loc_00007890:
 	TST.b	$FFFFC73D.w
 	BNE.b	loc_000078A6
@@ -7560,6 +7898,7 @@ loc_000078A6:
 	CLR.b	$25(A5)
 	MOVE.l	#loc_000078BC, $2(A5)
 	RTS
+
 loc_000078BC:
 	TST.b	$FFFFC73D.w
 	BEQ.b	loc_000078D2
@@ -7578,14 +7917,17 @@ loc_000078EA:
 	BCLR.b	#7, (A5)
 	MOVE.l	#loc_00006FBA, $2(A5)
 	RTS
+
 loc_000078F8:
 	MOVE.l	#loc_00006FBA, $2(A5)
 	RTS
+
 loc_00007902:
 	BSR.w	loc_00008234
 	CLR.b	$25(A5)
 	MOVE.l	#loc_00007914, $2(A5)
 	RTS
+
 loc_00007914:
 	TST.b	$FFFFC744.w
 	BNE.b	loc_0000792A
@@ -7598,6 +7940,7 @@ loc_0000792A:
 	CLR.b	$25(A5)
 	MOVE.l	#loc_00007940, $2(A5)
 	RTS
+
 loc_00007940:
 	MOVE.l	#loc_00036F06, $FFFFC438.w
 	MOVE.w	#3, D5
@@ -7611,6 +7954,7 @@ loc_00007940:
 loc_00007966:
 	MOVE.l	#loc_00006F44, $2(A5)
 	RTS
+
 loc_00007970:
 	BSR.w	loc_00008234
 	CLR.b	$25(A5)
@@ -7620,6 +7964,7 @@ loc_00007970:
 loc_00007982:
 	MOVE.l	#loc_00006F70, $2(A5)
 	RTS
+
 loc_0000798C:
 	BSR.w	loc_00008234
 	CLR.b	$25(A5)
@@ -7628,9 +7973,11 @@ loc_0000798C:
 	BCLR.b	#7, (A5)
 	MOVE.l	#loc_00006F44, $2(A5)
 	RTS
+
 loc_000079A8:
 	MOVE.l	#loc_000079B2, $2(A5)
 	RTS
+
 loc_000079B2:
 	TST.b	$FFFFC786.w
 	BNE.b	loc_000079DE
@@ -7658,6 +8005,7 @@ loc_000079F0:
 loc_00007A0A:
 	MOVE.l	#loc_00007A14, $2(A5)
 	RTS
+
 loc_00007A14:
 	TST.b	$FFFFC747.w
 	BEQ.b	loc_00007A44
@@ -7712,6 +8060,7 @@ loc_00007ACC:
 	MOVE.b	#9, $6(A5)
 	MOVE.l	#loc_00007AE0, $2(A5)
 	RTS
+
 loc_00007AE0:
 	TST.b	$FFFFC76B.w
 	BEQ.b	loc_00007AEE
@@ -7722,6 +8071,7 @@ loc_00007AEE:
 	CLR.b	$25(A5)
 	MOVE.l	#loc_00007B04, $2(A5)
 	RTS
+
 loc_00007B04:
 	TST.b	$FFFFC749.w
 	BEQ.w	loc_00007B38
@@ -7819,9 +8169,11 @@ loc_00007C50:
 	BEQ.b	loc_00007C66
 	MOVE.l	#loc_00007C70, $2(A5)
 	RTS
+
 loc_00007C66:
 	MOVE.l	#loc_00006F44, $2(A5)
 	RTS
+
 loc_00007C70:
 	TST.b	$FFFFC748.w
 	BEQ.b	loc_00007C82
@@ -7835,10 +8187,12 @@ loc_00007C82:
 	BNE.b	loc_00007C9E
 	MOVE.l	#loc_00007CAC, $2(A5)
 	RTS
+
 loc_00007C9E:
 	BCLR.b	#7, (A5)
 	MOVE.l	#loc_00006F44, $2(A5)
 	RTS
+
 loc_00007CAC:
 	TST.b	$FFFFC751.w
 	BEQ.b	loc_00007CBA
@@ -7873,16 +8227,19 @@ loc_00007D32:
 	BSR.w	loc_00006F44
 loc_00007D36:
 	RTS
+
 loc_00007D38:
 	BSR.w	loc_00008234
 	CLR.b	$25(A5)
 	TST.b	$FFFFC758.w
 	BEQ.b	loc_00007D4C
 	BCLR.b	#7, (A5)	
-	RTS	
+	RTS
+	
 loc_00007D4C:
 	MOVE.l	#loc_00006F44, $2(A5)
 	RTS
+
 loc_00007D56:
 	BSR.w	loc_00008234
 	CLR.b	$25(A5)
@@ -7896,6 +8253,7 @@ loc_00007D56:
 loc_00007D82:
 	MOVE.l	#loc_00006F8E, $2(A5)
 	RTS
+
 loc_00007D8C:
 	BSR.w	loc_00008234
 	CLR.b	$25(A5)
@@ -7910,6 +8268,7 @@ loc_00007DA0:
 loc_00007DAC:
 	MOVE.l	#loc_00006F8E, $2(A5)
 	RTS
+
 loc_00007DB6:
 	BSR.w	loc_00008234
 	CLR.b	$25(A5)
@@ -7917,10 +8276,12 @@ loc_00007DB6:
 	BEQ.b	loc_00007DD2
 	BCLR.b	#7, (A5)	
 	MOVE.l	#loc_00006F44, $2(A5)	
-	RTS	
+	RTS
+	
 loc_00007DD2:
 	MOVE.l	#loc_00007DDC, $2(A5)
 	RTS
+
 loc_00007DDC:
 	TST.b	$FFFFC773.w
 	BEQ.b	loc_00007DE8
@@ -7942,9 +8303,11 @@ loc_00007E32:
 	BNE.b	loc_00007E4A
 	MOVE.l	#loc_00007E54, $2(A5)
 	RTS
+
 loc_00007E4A:
 	MOVE.l	#loc_00006F44, $2(A5)
 	RTS
+
 loc_00007E54:
 	TST.b	$FFFFC773.w
 	BEQ.w	loc_00007EB8
@@ -7975,6 +8338,7 @@ loc_00007EB8:
 	BSR.w	loc_00008234
 	MOVE.l	#loc_00007ECA, $2(A5)
 	RTS
+
 loc_00007ECA:
 	TST.b	$FFFFC744.w
 	BNE.b	loc_00007EFE
@@ -7998,11 +8362,13 @@ loc_00007EFE:
 	MOVE.b	$27(A5), $18(A5)
 	ADDQ.b	#1, $1B(A5)
 	RTS
+
 loc_00007F18:
 	MOVE.b	#4, $18(A5)
 	MOVE.b	#4, $27(A5)
 	MOVE.l	#loc_00007F2E, $2(A5)
 	RTS
+
 loc_00007F2E:
 	BRA.w	loc_00006F8E
 	MOVE.b	#2, $28(A5)
@@ -8022,6 +8388,7 @@ loc_00007F4E:
 	MOVE.b	#4, $18(A5)
 	MOVE.l	#loc_00007F7C, $2(A5)
 	RTS
+
 loc_00007F7C:
 	MOVE.w	$FFFFC412.w, D0
 	CMPI.w	#$000A, D0
@@ -8030,6 +8397,7 @@ loc_00007F7C:
 	BEQ.b	loc_00007F96
 	MOVE.l	#loc_00007F2E, $2(A5)
 	RTS
+
 loc_00007F96:
 	BSR.w	loc_00007FAC
 	BSR.w	loc_00008108
@@ -8080,6 +8448,7 @@ loc_00008038:
 	MOVE.b	#4, $27(A5)
 loc_00008050:
 	RTS
+
 loc_00008052:
 	CLR.w	D0
 	MOVE.b	$2A(A5), D0
@@ -8107,9 +8476,11 @@ loc_00008052:
 	BLT.b	loc_0000809A
 	MOVEQ	#1, D0
 	RTS
+
 loc_0000809A:
 	CLR.w	D0
 	RTS
+
 loc_0000809E:
 	BCLR.b	#3, $7(A5)
 	CLR.w	D1
@@ -8149,6 +8520,7 @@ loc_000080F8:
 loc_00008104:
 	ADD.w	D0, D0
 	RTS
+
 loc_00008108:
 	BCLR.b	#3, $7(A5)
 	CLR.w	D1
@@ -8179,6 +8551,7 @@ loc_0000814E:
 loc_00008150:
 	ADD.w	D0, D0
 	RTS
+
 loc_00008154:
 	MOVE.w	$E(A5), D0
 	SUB.w	$FFFFC40E.w, D0
@@ -8200,6 +8573,7 @@ loc_0000817C:
 	MOVE.w	$C(A5), $16(A5)
 	JSR	loc_0000F5D6
 	RTS
+
 loc_0000819A:
 	LSR.w	#1, D2
 	ANDI.w	#3, D2
@@ -8227,9 +8601,11 @@ loc_0000819A:
 loc_000081E6:
 	MOVE.w	#$FFFF, D0
 	RTS
+
 loc_000081EC:
 	CLR.w	D0
 	RTS
+
 loc_000081F0:
 	BSR.w	loc_0000809E
 	MOVE.w	(A1,D0.w), $8(A5)
@@ -8257,6 +8633,7 @@ loc_00008234:
 	MOVE.b	D0, $18(A5)
 	MOVE.b	D0, $27(A5)
 	RTS
+
 loc_00008248:
 	TST.b	$19(A5)
 	BNE.w	loc_000082F2
@@ -8291,6 +8668,7 @@ loc_000082BA:
 	CLR.b	$1A(A5)
 loc_000082BE:
 	RTS
+
 loc_000082C0:
 	MOVE.b	$18(A5), D6
 	ADDQ.b	#2, D6
@@ -8299,6 +8677,7 @@ loc_000082C0:
 	MOVE.b	D6, $27(A5)
 	CLR.b	$1A(A5)
 	RTS
+
 loc_000082D8:
 	CLR.w	D2
 	MOVE.b	$18(A5), D2
@@ -8329,6 +8708,7 @@ loc_000082F2:
 	CLR.b	$19(A5)
 loc_0000833E:
 	RTS
+
 loc_00008340:
 	CLR.b	$25(A5)
 	ADDQ.b	#1, $1A(A5)
@@ -8345,6 +8725,7 @@ loc_00008340:
 	MOVE.b	D1, $27(A5)
 loc_00008374:
 	RTS
+
 loc_00008376:
 	MOVE.w	$E(A5), D0
 	SUB.w	$FFFFC40E.w, D0
@@ -8362,9 +8743,11 @@ loc_00008376:
 	BLE.b	loc_000083A6
 	CLR.w	D0
 	RTS
+
 loc_000083A6:
 	MOVEQ	#1, D0
 	RTS
+
 loc_000083AA:
 	MOVE.w	Player_position_x_in_town.w, D0
 	MOVE.w	Player_position_y_in_town.w, D1
@@ -8396,9 +8779,11 @@ loc_000083EC:
 	DBF	D7, loc_000083DA
 	CLR.w	D0
 	RTS
+
 loc_000083F4:
 	MOVEQ	#1, D0
 	RTS
+
 loc_000083F8:
 	MOVE.w	Player_position_x_in_town.w, D0
 	MOVE.w	Player_position_y_in_town.w, D1
@@ -8430,9 +8815,11 @@ loc_0000843A:
 	DBF	D7, loc_00008428
 	CLR.w	D0
 	RTS
+
 loc_00008442:
 	MOVEQ	#1, D0
 	RTS
+
 loc_00008446:
 	MOVE.w	$E(A5), D0
 	ASR.w	#4, D0
@@ -8481,9 +8868,11 @@ loc_000084AA:
 loc_000084B8:
 	CLR.w	D0
 	RTS
+
 loc_000084BC:
 	MOVEQ	#1, D0
 	RTS
+
 loc_000084C0:
 	LEA	(A2), A1
 	MOVE.w	(A2)+, D7
@@ -8508,6 +8897,7 @@ loc_000084EC:
 	DBF	D7, loc_000084CA
 loc_000084F0:
 	RTS
+
 loc_000084F2:
 	LEA	(A2), A1
 	MOVE.w	(A2)+, D7
@@ -8527,6 +8917,7 @@ loc_00008512:
 	MOVE.w	#$FFFF, D0
 loc_00008516:
 	RTS
+
 loc_00008518:
 	LEA	Map_list.w, A0
 loc_0000851C:
@@ -8535,9 +8926,11 @@ loc_0000851C:
 	DBF	D7, loc_0000851C
 	CLR.w	D0
 	RTS
+
 loc_00008528:
 	MOVE.w	#1, D0	
-	RTS	
+	RTS
+	
 loc_0000852E:
 	CLR.b	$FFFFC7F4.w
 	LEA	Map_list.w, A0
@@ -8551,6 +8944,7 @@ loc_00008542:
 	ADDA.l	#1, A0
 	DBF	D7, loc_0000853A
 	RTS
+
 loc_00008550:
 	LEA	Map_list.w, A0
 	MOVE.w	#7, D7
@@ -8563,17 +8957,20 @@ loc_00008562:
 	ADDA.l	#1, A0
 	DBF	D7, loc_00008558
 	RTS
+
 loc_00008572:
 	LEA	Possessed_items_length.w, A0
 	MOVE.w	(A0), D0
 	ADDQ.w	#1, (A0)+
 	ADD.w	D0, D0
 	RTS
+
 loc_0000857E:
 	LEA	Possessed_items_length.w, A0
 	MOVE.w	(A0), D0
 	CMPI.w	#8, D0
 	RTS
+
 loc_0000858A:
 	LEA	$FFFFC820.w, A0
 	TST.b	(A0,D5.w)
@@ -8581,12 +8978,14 @@ loc_0000858A:
 	MOVE.l	$FFFFC438.w, $1C(A5)
 loc_0000859A:
 	RTS
+
 loc_0000859C:
 	TST.b	$FFFFC41C.w
 	BNE.b	loc_000085A6
 	CLR.b	$32(A5)
 loc_000085A6:
 	RTS
+
 loc_000085A8:
 	dc.w	 0, -2,  0, -1, -1, -1,  1, -1, -1,  0,  1,  0, -1,  1,  0,  1
 	dc.w	 1,  1,  0,  2, -2,  0, -1,  0, -1, -1, -1,  1,  0,  1,  0, -1 
@@ -8633,6 +9032,7 @@ loc_00008688:
 	BSR.w	loc_000087FE
 	BSR.w	loc_00008830
 	RTS
+
 loc_00008706:
 	dc.b	$2C, $78, $CC, $50, $3E, $3C, $00, $30, $08, $96, $00, $07, $42, $40, $10, $2E, $00, $01, $4D, $F6, $00, $00, $51, $CF, $FF, $F0, $4E, $75 
 loc_00008722:
@@ -8647,6 +9047,7 @@ loc_00008722:
 	BSR.w	loc_00008756
 	BSET.b	#3, $7(A6)
 	RTS
+
 loc_00008756:
 	CLR.w	D0
 	MOVE.b	$1(A6), D0
@@ -8661,6 +9062,7 @@ loc_00008768:
 	BCLR.b	#6, $7(A6)
 	MOVE.b	#$0E, $6(A6)
 	RTS
+
 loc_00008792:
 	BSET.b	#7, (A6)
 	BCLR.b	#7, $7(A6)
@@ -8682,6 +9084,7 @@ loc_00008792:
 	MOVE.b	#$0E, $6(A6)
 	MOVE.l	#loc_00008A98, $2(A6)
 	RTS
+
 loc_000087FE:
 	BSET.b	#7, (A6)
 	MOVE.l	#loc_00008A4E, $2(A6)
@@ -8692,6 +9095,7 @@ loc_000087FE:
 	BCLR.b	#6, $7(A6)
 	MOVE.b	#6, $6(A6)
 	RTS
+
 loc_00008830:
 	MOVEA.l	$FFFFCC50.w, A6
 	BSET.b	#7, (A6)
@@ -8703,6 +9107,7 @@ loc_00008830:
 	BCLR.b	#6, $7(A6)
 	MOVE.b	#1, $6(A6)
 	RTS
+
 loc_00008866:
 	TST.b	$FFFFC41C.w
 	BNE.b	loc_000088AA
@@ -8723,6 +9128,7 @@ loc_00008866:
 	JSR	loc_0000F6DC
 loc_000088AA:
 	RTS
+
 loc_000088AC:
 	dc.b	$04, $D5, $04, $D3, $04, $D7, $04, $D1 
 	BSET.b	#5, $7(A5)
@@ -8802,6 +9208,7 @@ loc_0000897A:
 	JSR	loc_0000F6DC
 loc_000089BC:
 	RTS
+
 loc_000089BE:
 	BSET.b	#5, $7(A5)
 	BCLR.b	#6, $7(A5)
@@ -8842,6 +9249,7 @@ loc_00008A0C:
 	JSR	loc_0000F6DC
 loc_00008A4C:
 	RTS
+
 loc_00008A4E:
 	BSET.b	#5, $7(A5)
 	BCLR.b	#6, $7(A5)
@@ -8862,6 +9270,7 @@ loc_00008A6C:
 	JSR	loc_0000F6DC
 loc_00008A96:
 	RTS
+
 loc_00008A98:
 	MOVE.w	$8(A5), D0
 	BEQ.b	loc_00008AB0
@@ -8872,10 +9281,12 @@ loc_00008A98:
 	JSR	loc_0000F6DC
 loc_00008AB0:
 	RTS
+
 loc_00008AB2:
 	MOVEA.l	$FFFFC566.w, A6
 	BSR.w	loc_00008C74
 	RTS
+
 loc_00008ABC:
 	MOVEA.l	$FFFFC566.w, A6
 	BSR.w	loc_00008C74
@@ -8883,6 +9294,7 @@ loc_00008ABC:
 	BSR.w	loc_00008EBC
 	MOVE.l	#$00008E5C, $2(A4)
 	RTS
+
 loc_00008ADA:
 	MOVEA.l	$FFFFC566.w, A6
 	BSR.w	loc_00008C74
@@ -8890,21 +9302,25 @@ loc_00008ADA:
 	BSR.w	loc_00008EBC
 	MOVE.l	#$00008D2C, $2(A4)
 	RTS
+
 loc_00008AF8:
 	MOVEA.l	$FFFFC566.w, A6
 	BSR.w	loc_00008C74
 	MOVE.l	#$00008D18, $2(A5)
 	RTS
+
 loc_00008B0A:
 	MOVEA.l	$FFFFC566.w, A6
 	BSR.w	loc_00008C74
 	MOVE.l	#$00008DC6, $2(A5)
 	RTS
+
 loc_00008B1C:
 	MOVEA.l	$FFFFC566.w, A6
 	BSR.w	loc_00008C74
 	MOVE.l	#$00008DDA, $2(A5)
 	RTS
+
 loc_00008B2E:
 	MOVEA.l	$FFFFC566.w, A6
 	BSR.w	loc_00008C74
@@ -8912,6 +9328,7 @@ loc_00008B2E:
 	BSR.w	loc_00008EBC
 	MOVE.l	#$00008E26, $2(A4)
 	RTS
+
 loc_00008B4C:
 	MOVEA.l	$FFFFC566.w, A6
 	BSR.w	loc_00008C74
@@ -8919,6 +9336,7 @@ loc_00008B4C:
 	BSR.w	loc_00008EBC
 	MOVE.l	#$00008E44, $2(A4)
 	RTS
+
 loc_00008B6A:
 	MOVEA.l	$FFFFC566.w, A6
 	BSR.w	loc_00008C74
@@ -8926,6 +9344,7 @@ loc_00008B6A:
 	BSR.w	loc_00008EBC
 	MOVE.l	#$00008E4C, $2(A4)
 	RTS
+
 loc_00008B88:
 	MOVEA.l	$FFFFC566.w, A6
 	BSR.w	loc_00008C74
@@ -8933,6 +9352,7 @@ loc_00008B88:
 	BSR.w	loc_00008EBC
 	MOVE.l	#$00008E54, $2(A4)
 	RTS
+
 loc_00008BA6:
 	LEA	loc_00023B28, A1
 	CLR.w	D2
@@ -8979,6 +9399,7 @@ loc_00008BA6:
 loc_00008C6C:
 	JSR	loc_0001325E
 	RTS
+
 loc_00008C74:
 	MOVE.b	$18(A6), $6(A5)
 	MOVE.w	$1A(A6), $FFFFC086.w
@@ -9012,6 +9433,7 @@ loc_00008C74:
 loc_00008D0A:
 	JSR	loc_0001325E
 	RTS
+
 loc_00008D12:
 	JMP	loc_0000F6DC
 	TST.b	Map_list.w
@@ -9025,6 +9447,7 @@ loc_00008D26:
 	BCLR.b	#7, (A5)
 	CLR.b	$FFFFC578.w
 	RTS
+
 loc_00008D44:
 	TST.b	$FFFFC72F.w
 	BNE.b	loc_00008DC0
@@ -9091,6 +9514,7 @@ loc_00008E20:
 	BCLR.b	#7, (A5)
 	CLR.b	$FFFFC578.w
 	RTS
+
 loc_00008E3E:
 	JMP	loc_0000F6DC
 	LEA	$FFFFC734.w, A0
@@ -9116,6 +9540,7 @@ loc_00008E88:
 	BCLR.b	#7, (A5)
 	CLR.b	$FFFFC578.w
 	RTS
+
 loc_00008E9E:
 	JMP	loc_0000F6DC
 loc_00008EA4:
@@ -9125,6 +9550,7 @@ loc_00008EBC:
 	LEA	(A5,D0.w), A4
 	BSET.b	#7, (A4)
 	RTS
+
 loc_00008ECA:
 	LEA	$FFFFC6A0.w, A1
 	CLR.w	D0
@@ -9214,6 +9640,7 @@ loc_00009006:
 	JSR	loc_0001325E
 	JSR	loc_0000F806
 	RTS
+
 loc_00009020:
 	MOVE.l	$E(A5), D0
 	SUB.l	$32(A5), D0
@@ -9241,6 +9668,7 @@ loc_0000905E:
 	MOVE.w	$12(A5), $C(A5)
 	MOVE.w	$C(A5), $16(A5)
 	RTS
+
 loc_00009072:
 	dc.b	$2C, $78, $CC, $14, $3E, $3C, $00, $17, $08, $96, $00, $07, $42, $40, $10, $2E, $00, $01, $4D, $F6, $00, $00, $51, $CF, $FF, $F0, $4E, $75 
 loc_0000908E:
@@ -9258,6 +9686,7 @@ loc_0000908E:
 	MOVE.l	D2, $32(A5)
 	MOVE.l	D3, $36(A5)
 	RTS
+
 loc_000090BA:
 	MOVE.l	$E(A5), D0
 	SUB.l	$32(A5), D0
@@ -9292,6 +9721,7 @@ loc_00009122:
 	MOVE.w	$12(A5), $C(A5)
 	MOVE.w	$C(A5), $16(A5)
 	RTS
+
 loc_00009136:
 	MOVE.l	$E(A5), D0
 	SUB.l	$32(A5), D0
@@ -9321,6 +9751,7 @@ loc_00009186:
 	MOVE.w	$12(A5), $C(A5)
 	MOVE.w	$C(A5), $16(A5)
 	RTS
+
 loc_0000919A: ; suspected: Take a hit from an enemy
 	TST.b	$FFFFC08E.w
 	BNE.w	loc_0000926E
@@ -9382,6 +9813,7 @@ loc_00009244:
 	CLR.l	$36(A5)
 loc_0000926E:
 	RTS
+
 loc_00009270:
 	MOVE.w	#$00A0, D2
 	MOVE.w	$E(A6), D0
@@ -9433,6 +9865,7 @@ loc_000092EA:
 	ADDA.w	D2, A1
 	MOVE.b	(A1), D0
 	RTS
+
 loc_000092F6:
 	MOVEA.l	$FFFFCC14.w, A6
 	TST.w	$FFFFC682.w
@@ -9487,6 +9920,7 @@ loc_0000938C:
 	DBF	D7, loc_0000933A
 loc_00009392:
 	RTS
+
 loc_00009394:
 	MOVE.b	#$B1, D0
 	JSR	loc_00010522
@@ -9508,6 +9942,7 @@ loc_00009394:
 	LEA	(A5,D0.w), A6
 	BCLR.b	#7, (A6)
 	RTS
+
 loc_000093EA:
 	MOVE.b	#$B1, D0
 	JSR	loc_00010522
@@ -9533,6 +9968,7 @@ loc_000093EA:
 	LEA	(A6,D0.w), A6
 	BCLR.b	#7, (A6)
 	RTS
+
 loc_0000944E:
 	ADDQ.b	#1, $1B(A5)
 	LEA	loc_0003DD24, A0
@@ -9543,10 +9979,12 @@ loc_0000944E:
 	BLE.w	loc_00009470
 	BCLR.b	#7, (A5)
 	RTS
+
 loc_00009470:
 	MOVE.w	(A0,D0.w), $8(A5)
 	JSR	loc_0000F5D6
 	RTS
+
 loc_0000947E:
 	BSR.w	loc_0000B662
 	MOVE.w	#$0019, $8(A5)
@@ -9562,6 +10000,7 @@ loc_0000947E:
 	MOVE.l	#$0003DB90, $FFFFC694.w
 	MOVE.l	#$0003DB50, $FFFFC698.w
 	RTS
+
 loc_000094D2:
 	BSR.w	loc_0000B662
 	MOVE.w	#$0019, $8(A5)
@@ -9577,6 +10016,7 @@ loc_000094D2:
 	MOVE.l	#loc_0003DCB0, $FFFFC694.w
 	MOVE.l	#loc_0003DC70, $FFFFC698.w
 	RTS
+
 loc_00009528:
 	BSR.w	loc_0000B662
 	MOVE.w	#$0019, $8(A5)
@@ -9592,11 +10032,13 @@ loc_00009528:
 	MOVE.l	#loc_0003DB90, $FFFFC694.w
 	MOVE.l	#loc_0003DB50, $FFFFC698.w
 	RTS
+
 loc_0000957C:
 	BSR.w	loc_0000B698
 	BGT.w	loc_0000958E
 	MOVE.l	#loc_000093EA, $2(A5)
 	RTS
+
 loc_0000958E:
 	CLR.b	$26(A5)
 	TST.b	$FFFFC68C.w
@@ -9674,6 +10116,7 @@ loc_0000968E:
 loc_00009692:
 	JSR	loc_0000F5D6
 	RTS
+
 loc_0000969A:
 	BSR.w	loc_0000B662
 	MOVE.w	#$0019, $8(A5)
@@ -9688,6 +10131,7 @@ loc_0000969A:
 	MOVE.l	#$0003DB90, $FFFFC694.w
 	MOVE.l	#$0003DB50, $FFFFC698.w
 	RTS
+
 loc_000096EA:
 	BSR.w	loc_0000B662
 	BSR.w	loc_0000B70A
@@ -9699,11 +10143,13 @@ loc_000096EA:
 	MOVE.l	#$0003DB90, $FFFFC694.w
 	MOVE.l	#$0003DB50, $FFFFC698.w
 	RTS
+
 loc_00009726:
 	BSR.w	loc_0000B698
 	BGT.w	loc_00009738
 	MOVE.l	#loc_000093EA, $2(A5)
 	RTS
+
 loc_00009738:
 	CLR.b	$26(A5)
 	TST.b	$FFFFC68C.w
@@ -9771,6 +10217,7 @@ loc_000097FC:
 loc_00009818:
 	JSR	loc_0000F5D6
 	RTS
+
 loc_00009820:
 	BSR.w	loc_0000B662
 	MOVE.w	#$0019, $8(A5)
@@ -9781,11 +10228,13 @@ loc_00009820:
 	MOVE.b	#$0E, $6(A6)
 	MOVE.l	#loc_0000A662, $2(A6)
 	RTS
+
 loc_00009854:
 	BSR.w	loc_0000B698
 	BGT.w	loc_00009866
 	MOVE.l	#loc_000093EA, $2(A5)
 	RTS
+
 loc_00009866:
 	CLR.b	$26(A5)
 	TST.b	$FFFFC68C.w
@@ -9860,6 +10309,7 @@ loc_00009936:
 loc_00009956:
 	JSR	loc_0000F5D6
 	RTS
+
 loc_0000995E:
 	BSR.w	loc_0000B662
 	MOVE.w	#$0019, $8(A5)
@@ -9870,11 +10320,13 @@ loc_0000995E:
 	MOVE.b	#$0E, $6(A6)
 	MOVE.l	#loc_0000A662, $2(A6)
 	RTS
+
 loc_00009992:
 	BSR.w	loc_0000B698
 	BGT.w	loc_000099A4
 	MOVE.l	#loc_000093EA, $2(A5)
 	RTS
+
 loc_000099A4:
 	CLR.b	$26(A5)
 	TST.b	$FFFFC68C.w
@@ -9934,6 +10386,7 @@ loc_00009A4A:
 loc_00009A6A:
 	JSR	loc_0000F5D6
 	RTS
+
 loc_00009A72:
 	BSR.w	loc_0000B662
 	MOVE.w	#$0019, $8(A5)
@@ -9944,11 +10397,13 @@ loc_00009A72:
 	MOVE.b	#$0D, $6(A6)
 	MOVE.l	#loc_0000A662, $2(A6)
 	RTS
+
 loc_00009AA6:
 	BSR.w	loc_0000B698
 	BGT.w	loc_00009AB8
 	MOVE.l	#loc_000093EA, $2(A5)
 	RTS
+
 loc_00009AB8:
 	CLR.b	$26(A5)
 	TST.b	$FFFFC68C.w
@@ -10007,6 +10462,7 @@ loc_00009B32:
 loc_00009B88:
 	JSR	loc_0000F5D6
 	RTS
+
 loc_00009B90:
 	BSR.w	loc_0000B662
 	BSR.w	loc_0000B73E
@@ -10014,11 +10470,13 @@ loc_00009B90:
 	MOVE.b	#$0E, $6(A6)
 	MOVE.l	#loc_0000A662, $2(A6)
 	RTS
+
 loc_00009BB0:
 	BSR.w	loc_0000B698
 	BGT.w	loc_00009BC2
 	MOVE.l	#loc_000093EA, $2(A5)
 	RTS
+
 loc_00009BC2:
 	CLR.b	$26(A5)
 	TST.w	$3C(A5)
@@ -10128,6 +10586,7 @@ loc_00009D2E:
 	BSR.w	loc_0000A68A
 	JSR	loc_0000F5D6
 	RTS
+
 loc_00009D56:
 	BSR.w	loc_0000908E
 	BSR.w	loc_00009136
@@ -10144,6 +10603,7 @@ loc_00009D72:
 	MOVE.w	(A2,D0.w), $8(A5)
 	JSR	loc_0000F5D6
 	RTS
+
 loc_00009D90:
 	BSR.w	loc_0000B662
 	BSR.w	loc_0000B70A
@@ -10151,6 +10611,7 @@ loc_00009D90:
 	MOVE.b	#$0E, $6(A6)
 	MOVE.l	#loc_0000A662, $2(A6)
 	RTS
+
 loc_00009DB0:
 	TST.b	$1A(A5)
 	BLE.w	loc_00009DC0
@@ -10168,7 +10629,8 @@ loc_00009DE0:
 	TST.w	$28(A5)
 	BGT.w	loc_00009DF2
 	MOVE.l	#loc_000093EA, $2(A5)	
-	RTS	
+	RTS
+	
 loc_00009DF2:
 	CLR.b	$26(A5)
 	MOVE.b	$1(A5), D0
@@ -10231,6 +10693,7 @@ loc_00009EB4:
 	MOVE.w	$16(A5), $16(A6)
 	JSR	loc_0000F5D6
 	RTS
+
 loc_00009EF6:
 	TST.w	$3A(A5)
 	BNE.w	loc_00009F12
@@ -10275,6 +10738,7 @@ loc_00009F6E:
 	MOVE.b	#$0E, $6(A6)
 	MOVE.l	#loc_0000A662, $2(A6)
 	RTS
+
 loc_00009F92:
 	BSR.w	loc_0000B662
 	BSR.w	loc_0000B772
@@ -11064,7 +11528,8 @@ loc_0000AB0C:
 	BSR.w	loc_0000B6D4
 	BGT.w	loc_0000AB1E
 	MOVE.l	#loc_00009394, $2(A5)	
-	RTS	
+	RTS
+	
 loc_0000AB1E:
 	CLR.b	$26(A5)
 	MOVE.w	$3A(A5), D0
@@ -11445,7 +11910,8 @@ loc_0000B09A:
 	TST.w	$28(A5)
 	BGT.w	loc_0000B0AC
 	MOVE.l	#loc_0000B50C, $2(A5)	
-	RTS	
+	RTS
+	
 loc_0000B0AC:
 	CLR.b	$26(A5)
 	CLR.l	$32(A5)
@@ -14283,7 +14749,8 @@ loc_0000DA18:
 	ANDI.w	#$00E0, D0
 	CMPI.w	#$00C0, D0
 	BLT.b	loc_0000DA5A
-	RTS	
+	RTS
+	
 loc_0000DA5A:
 	ASR.w	#5, D0
 	BSR.w	loc_0000F56C
@@ -17584,7 +18051,8 @@ loc_0001077E:
 	BSR.w	loc_00010854	
 	JSR	loc_000118F8	
 	MOVE.w	#5, $FFFFC672.w	
-	RTS	
+	RTS
+	
 loc_00010794:
 	MOVE.w	#4, $FFFFC672.w
 	JSR	loc_000118B4
@@ -17641,7 +18109,8 @@ loc_0001083A:
 	BEQ.b	loc_00010852	
 	MOVE.b	#$FF, $FFFFC67C.w	
 loc_00010852:
-	RTS	
+	RTS
+	
 loc_00010854:
 	LEA	Player_name.w, A1	
 	MOVE.w	#$000D, D7	
@@ -17693,11 +18162,13 @@ loc_000108DC:
 loc_000108EC:
 	BSR.w	loc_000108F6	
 	DBF	D7, loc_000108EC	
-	RTS	
+	RTS
+	
 loc_000108F6:
 	MOVE.b	(A0)+, (A1)+	
 	LEA	$1(A0), A0	
-	RTS	
+	RTS
+	
 loc_000108FE:
 	MOVE.w	#$014E, D7
 	MOVEQ	#0, D1
@@ -17728,7 +18199,8 @@ loc_0001093A:
 	LEA	$1(A0), A0	
 	LEA	$1(A1), A1	
 	DBF	D0, loc_0001093A	
-	RTS	
+	RTS
+	
 loc_0001094A:
 	dc.l	$00200001
 	dc.l	$00200A81
@@ -18000,7 +18472,8 @@ loc_00010CE2:
 	MOVE.b	#$2A, (A1,D1.w)	
 	CLR.w	$FFFF9914.w	
 	MOVE.b	#$FF, $FFFF9910.w	
-	RTS	
+	RTS
+	
 loc_00010D44:
 	CLR.w	$FFFFC428.w
 	MOVE.w	#1, $FFFFC23A.w
@@ -18617,7 +19090,8 @@ loc_00011648:
 	MOVE.w	#$FFFF, $FFFFC23C.w	
 	MOVE.w	#$000B, $FFFFC236.w	
 	MOVE.w	#4, $FFFFC238.w	
-	RTS	
+	RTS
+	
 loc_00011666:
 	MOVE.w	#5, $FFFFC230.w
 	ADDQ.w	#2, Script_output_y.w
@@ -18714,7 +19188,8 @@ loc_000117BC:
 loc_000117BE:
 	MOVE.l	#$3F3F3F3F, $FFFFC35A.w	
 	MOVE.w	#$FFFF, $FFFFC35E.w	
-	RTS	
+	RTS
+	
 loc_000117CE:
 	CLR.w	D0
 	MOVE.b	(A0), D0
@@ -18752,7 +19227,8 @@ loc_0001182C:
 	BSR.w	loc_00012CE6	
 	CLR.w	$FFFF9914.w	
 	MOVE.b	#$FF, $FFFF9910.w	
-	RTS	
+	RTS
+	
 loc_00011870:
 	MOVE.w	#$000A, $FFFF9902.w
 	MOVE.w	#$0010, $FFFF9908.w
@@ -18794,7 +19270,8 @@ loc_000118F8:
 	BSR.w	loc_00012CE6	
 	CLR.w	$FFFF9914.w	
 	MOVE.b	#$FF, $FFFF9910.w	
-	RTS	
+	RTS
+	
 loc_0001193C:
 	MOVE.w	#2, $FFFF9902.w
 	MOVE.w	#2, $FFFF9908.w
@@ -19011,7 +19488,8 @@ loc_00011C4C:
 	BSR.w	loc_00012CF6	
 	CLR.w	$FFFF9914.w	
 	MOVE.b	#$FF, $FFFF9910.w	
-	RTS	
+	RTS
+	
 loc_00011C8C:
 	MOVE.w	$FFFF990A.w, D7
 	SUBQ.w	#1, D7
@@ -19128,7 +19606,8 @@ loc_00011E12:
 	BSR.w	loc_00012CF6	
 	CLR.w	$FFFF9914.w	
 	MOVE.b	#$FF, $FFFF9910.w	
-	RTS	
+	RTS
+	
 loc_00011E52:
 	LEA	Map_list.w, A0
 	CLR.w	D0
@@ -19194,7 +19673,8 @@ loc_00011F30:
 	BSR.w	loc_00012CF6	
 	CLR.w	$FFFF9914.w	
 	MOVE.b	#$FF, $FFFF9910.w	
-	RTS	
+	RTS
+	
 loc_00011F44:
 	LEA	loc_00011F58, A0
 	MOVE.w	$FFFF9912.w, D0
@@ -19593,7 +20073,8 @@ loc_0001254A:
 	MOVE.w	#$000E, $FFFFC22C.w	
 	MOVE.w	#$000A, $FFFFC22E.w	
 	BSR.w	loc_000125DA	
-	RTS	
+	RTS
+	
 loc_0001256E:
 	LEA	$FFFF7CF4, A0
 	MOVE.w	#2, $FFFFC224.w
@@ -20036,7 +20517,8 @@ loc_00012BE6:
 	MOVE.l	D5, VDP_control_port	
 	MOVE.w	D6, VDP_data_port	
 	ANDI	#$F8FF, SR	
-	RTS	
+	RTS
+	
 loc_00012C3E:
 	SUBQ.w	#1, D7
 	CLR.w	D3
@@ -21215,7 +21697,8 @@ loc_000152C0:
 	MOVE.w	#$C5AC, VDP_data_port	
 	ADDQ.w	#1, $FFFFC386.w	
 	MOVE.b	#$DE, $1(A0)	
-	RTS	
+	RTS
+	
 loc_000152E2:
 	BSR.b	loc_00015282	
 	SUBI.l	#$00800000, D6	
@@ -21223,7 +21706,8 @@ loc_000152E2:
 	MOVE.w	#$C5AD, VDP_data_port	
 	ADDQ.w	#1, $FFFFC386.w	
 	MOVE.b	#$DF, $1(A0)	
-	RTS	
+	RTS
+	
 loc_00015304:
 	MOVE.b	#$FF, (A0)
 	MOVE.b	#$FF, $FFFFC385.w
@@ -21368,7 +21852,8 @@ loc_000154DE:
 	CLR.w	$FFFFC380.w
 	BSR.w	loc_00015568
 	BNE.b	loc_000154CA
-	RTS	
+	RTS
+	
 loc_000154EA:
 	MOVE.w	#$00A9, D0
 	JSR	loc_00010522
@@ -21383,7 +21868,8 @@ loc_00015506:
 	MOVE.w	#$001D, $FFFFC380.w
 	BSR.w	loc_00015568
 	BNE.b	loc_000154F4
-	RTS	
+	RTS
+	
 loc_00015514:
 	MOVE.w	#$00A9, D0
 	JSR	loc_00010522
@@ -21413,7 +21899,8 @@ loc_0001555A:
 	MOVE.w	#$0010, $FFFFC382.w
 	BSR.w	loc_00015568
 	BNE.b	loc_00015548
-	RTS	
+	RTS
+	
 loc_00015568:
 	LEA	loc_00068A86, A0
 	MOVE.w	$FFFFC382.w, D0
@@ -24290,7 +24777,8 @@ loc_00018158:
 	JSR	loc_00012610	
 	MOVE.w	#1, $FFFFC424.w	
 	JSR	loc_0001162E	
-	RTS	
+	RTS
+	
 loc_000181A4:
 	MOVE.w	#$00A8, D0	
 	JSR	loc_00010522	
@@ -24298,7 +24786,8 @@ loc_000181A4:
 	MOVE.w	#4, $FFFFC424.w	
 	MOVE.w	Possessed_magics_length.w, D0	
 	JSR	loc_000115FA	
-	RTS	
+	RTS
+	
 loc_000181C6:
 	LEA	Possessed_magics_list.w, A0
 	MOVE.w	$FFFFC460.w, D0
@@ -24398,7 +24887,8 @@ loc_0001831E:
 	JSR	loc_00012610	
 	MOVE.w	#1, $FFFFC424.w	
 	JSR	loc_0001162E	
-	RTS	
+	RTS
+	
 loc_00018368:
 	MOVE.w	#$00A8, D0
 	JSR	loc_00010522
@@ -24500,7 +24990,7 @@ loc_000184C2:
 	ADD.w	D0, D0
 	MOVE.w	(A0,D0.w), D0
 	ANDI.w	#$00FF, D0
-	LEA	loc_0001869C, A0
+	LEA	CastFieldMagicMap, A0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
 	JSR	(A0,D0.w)
@@ -24517,10 +25007,12 @@ loc_00018528:
 	JSR	loc_00011666	
 	MOVE.l	$FFFFC254.w, Script_source_base.w	
 	ADDQ.w	#1, $FFFFC424.w	
-	RTS	
+	RTS
+	
 loc_00018540:
 	JSR	loc_0001096A	
-	RTS	
+	RTS
+	
 loc_00018548:
 	TST.b	$FFFFC20F.w
 	BEQ.w	loc_00018592
@@ -24601,7 +25093,8 @@ loc_0001866C:
 loc_00018678:
 	DBF	D7, loc_0001866C
 	CLR.w	D0	
-	RTS	
+	RTS
+	
 loc_00018680:
 	MOVE.w	Possessed_magics_length.w, D7
 	SUBQ.w	#1, D7
@@ -24614,7 +25107,9 @@ loc_0001868A:
 	DBF	D7, loc_0001868A
 	CLR.w	D0
 	RTS
-loc_0001869C: ; Use of magic outside of battle
+
+;loc_0001869C
+CastFieldMagicMap:
 	BRA.w	loc_000186F8	
 	BRA.w	loc_000186F8	
 	BRA.w	loc_000186F8	
@@ -24629,21 +25124,24 @@ loc_0001869C: ; Use of magic outside of battle
 	BRA.w	loc_000186F8	
 	BRA.w	loc_000186F8	
 	BRA.w	loc_000186F8	
-	BRA.w	loc_000188DE ; Aries
-	BRA.w	loc_00018928 ; Extrios
-	BRA.w	loc_0001870E ; Inaudios
-	BRA.w	loc_00018768 ; Luminos
-	BRA.w	loc_000187CA ; Sangua
-	BRA.w	loc_000187F0 ; Sanguia
-	BRA.w	loc_0001884C ; Sanguio
-	BRA.w	loc_00018884 ; Toxios
-	BRA.w	loc_0001884C ; Sanguios
+	BRA.w	CastAries
+	BRA.w	CastExtrios
+	BRA.w	CastInaudios
+	BRA.w	CastLuminos
+	BRA.w	CastSangua
+	BRA.w	CastSanguia
+	BRA.w	CastSanguio
+	BRA.w	CastToxios
+	BRA.w	CastSanguio
 loc_000186F8:
 	JSR	loc_00010C4A	
 	MOVE.l	#loc_00025928, Script_source_base.w	
 	MOVE.w	#9, $FFFFC424.w	
-	RTS	
-loc_0001870E:
+	RTS
+	
+
+;loc_0001870E
+CastInaudios:
 	JSR	loc_0001CDFE
 	BNE.w	loc_000189AC
 	BSR.w	loc_0001A21C
@@ -24663,8 +25161,11 @@ loc_00018752:
 	JSR	loc_00010C4A	
 	MOVE.l	#loc_00025928, Script_source_base.w	
 	MOVE.w	#9, $FFFFC424.w	
-	RTS	
-loc_00018768:
+	RTS
+	
+
+;loc_00018768
+CastLuminos:
 	JSR	loc_0001CDFE
 	BNE.w	loc_000189AC
 	BSR.w	loc_0001A21C
@@ -24687,7 +25188,9 @@ loc_000187B4:
 	MOVE.l	#loc_00025992, Script_source_base.w
 	MOVE.w	#9, $FFFFC424.w
 	RTS
-loc_000187CA:
+
+;loc_000187CA
+CastSangua:
 	JSR	loc_0001CDFE
 	BNE.w	loc_000189AC
 	BSR.w	loc_0001A21C
@@ -24698,7 +25201,9 @@ loc_000187CA:
 	ADD.w	D1, D0
 	ADD.w	D0, Player_hp.w
 	BRA.w	loc_00018812
-loc_000187F0:
+
+;loc_000187F0:
+CastSanguia:
 	JSR	loc_0001CDFE
 	BNE.w	loc_000189AC
 	BSR.w	loc_0001A21C
@@ -24723,7 +25228,9 @@ loc_00018834:
 	JSR	loc_00010C4A
 	MOVE.w	#9, $FFFFC424.w
 	RTS
-loc_0001884C:
+
+;loc_0001884C
+CastSanguio:
 	JSR	loc_0001CDFE
 	BNE.w	loc_000189AC
 	BSR.w	loc_0001A21C
@@ -24735,7 +25242,9 @@ loc_0001884C:
 	JSR	loc_00010C4A
 	MOVE.w	#9, $FFFFC424.w
 	RTS
-loc_00018884:
+
+;loc_00018884
+CastToxios:
 	JSR	loc_0001CDFE
 	BNE.w	loc_000189AC
 	BSR.w	loc_0001A21C
@@ -24759,7 +25268,9 @@ loc_000188D0:
 	JSR	loc_00010C4A
 	MOVE.w	#9, $FFFFC424.w
 	RTS
-loc_000188DE:
+
+;loc_000188DE
+CastAries:
 	JSR	loc_0001CDFE
 	BNE.w	loc_000189AC
 	BSR.w	loc_0001A21C
@@ -24777,7 +25288,9 @@ loc_00018912:
 	JSR	loc_00010C4A
 	MOVE.w	#9, $FFFFC424.w
 	RTS
-loc_00018928:
+
+;loc_00018928
+CastExtrios:
 	JSR	loc_0001CDFE
 	BNE.w	loc_000189AC
 	BSR.w	loc_0001A21C
@@ -24806,7 +25319,8 @@ loc_00018996:
 	MOVE.l	#loc_0002595C, Script_source_base.w	
 	JSR	loc_00010C4A	
 	MOVE.w	#9, $FFFFC424.w	
-	RTS	
+	RTS
+	
 loc_000189AC:
 	MOVE.l	#loc_00025942, Script_source_base.w
 	JSR	loc_00010C4A
@@ -24882,22 +25396,26 @@ loc_000189C2:
 	dc.w	$0008 
 	dc.w	$000A 
 	dc.w	$0005 
-loc_00018A32:
-	BRA.w	loc_00018A6A
-	BRA.w	loc_00018BA6
-	BRA.w	loc_00018D5A
-	BRA.w	loc_00018E5C
-	BRA.w	loc_0001901A
-	BRA.w	loc_00019408
-	BRA.w	loc_00019540
-	BRA.w	loc_000197DA
-	BRA.w	loc_00019940
-	BRA.w	loc_00019C04
-	BRA.w	loc_00019C04
-	BRA.w	loc_00019E74
-	BRA.w	loc_00019EB2
-	BRA.w	loc_00019EE0
-loc_00018A6A:
+
+;loc_00018A32
+CastBattleMagicMap:
+	BRA.w	CastAero
+	BRA.w	CastAerios
+	BRA.w	CastVolti
+	BRA.w	CastVoltio
+	BRA.w	CastVoltios
+	BRA.w	CastFerros
+	BRA.w	CastCopperos
+	BRA.w	CastMercusios
+	BRA.w	CastArgentos
+	BRA.w	CastHydro
+	BRA.w	CastHydro
+	BRA.w	CastChronos
+	BRA.w	CastChronios
+	BRA.w	CastTerrafissi
+
+;loc_00018A6A:
+CastAero:
 	MOVEA.l	$FFFFCC1C.w, A6
 	BTST.b	#7, (A6)
 	BNE.w	loc_00018B12
@@ -24938,6 +25456,7 @@ loc_00018A6A:
 	BSR.w	loc_0001A250
 loc_00018B12:
 	RTS
+
 loc_00018B14:
 	TST.b	$19(A5)
 	BNE.w	loc_00018BA0
@@ -24978,7 +25497,9 @@ loc_00018B52:
 loc_00018BA0:
 	BCLR.b	#7, (A5)
 	RTS
-loc_00018BA6:
+
+;loc_00018BA6
+CastAerios:
 	MOVEA.l	$FFFFCC1C.w, A6
 	BTST.b	#7, (A6)
 	BNE.w	loc_00018C62
@@ -25094,7 +25615,9 @@ loc_00018CDA:
 loc_00018D52:
 	MOVE.b	#$FF, $19(A5)
 	RTS
-loc_00018D5A:
+
+;loc_00018D5A
+CastVolti:
 	MOVEA.l	$FFFFCC1C.w, A6
 	BTST.b	#7, (A6)
 	BNE.w	loc_00018DF6
@@ -25157,7 +25680,9 @@ loc_00018DF8:
 loc_00018E56:
 	BCLR.b	#7, (A5)
 	RTS
-loc_00018E5C:
+
+;loc_00018E5C
+CastVoltio:
 	MOVEA.l	$FFFFCC1C.w, A6
 	BTST.b	#7, (A6)
 	BNE.w	loc_00018EBC
@@ -25258,7 +25783,9 @@ loc_00018FA0:
 loc_00018FDA:
 	dc.b	$FF, $F0, $FF, $F0, $FF, $FF, $00, $00, $00, $10, $FF, $F0, $FF, $FF, $00, $01, $FF, $F0, $00, $00, $00, $01, $00, $02, $00, $10, $00, $00, $00, $01, $00, $03 
 	dc.b	$FF, $F0, $FF, $FC, $FF, $FF, $00, $00, $00, $10, $FF, $FC, $FF, $FF, $00, $01, $FF, $F0, $00, $0C, $00, $01, $00, $02, $00, $10, $00, $0C, $00, $01, $00, $03 
-loc_0001901A:
+
+;loc_0001901A
+CastVoltios:
 	MOVEA.l	$FFFFCC1C.w, A6
 	BTST.b	#7, (A6)
 	BNE.b	loc_00019070
@@ -25534,7 +26061,9 @@ loc_000193F4:
 	MOVE.w	$12(A5), $C(A5)
 	JSR	loc_0000F5D6
 	RTS
-loc_00019408:
+
+;loc_00019408
+CastFerros:
 	MOVEA.l	$FFFFCC1C.w, A6
 	BTST.b	#7, (A6)
 	BNE.w	loc_000194A0
@@ -25611,7 +26140,9 @@ loc_00019534:
 	BCLR.b	#7, (A5)
 	MOVE.b	#$FF, $19(A5)
 	RTS
-loc_00019540:
+
+;loc_00019540
+CastCopperos:
 	MOVEA.l	$FFFFCC1C.w, A6
 	BTST.b	#7, (A6)
 	BNE.w	loc_000195D8
@@ -25776,7 +26307,9 @@ loc_00019756:
 loc_000197D2:
 	MOVE.b	#$FF, $19(A5)
 	RTS
-loc_000197DA:
+
+;loc_000197DA
+CastMercusios:
 	MOVEA.l	$FFFFCC1C.w, A6
 	BTST.b	#7, (A6)
 	BNE.w	loc_0001989E
@@ -25867,7 +26400,9 @@ loc_000198C2:
 loc_00019938:
 	MOVE.b	#$FF, $19(A5)
 	RTS
-loc_00019940:
+
+;loc_00019940
+CastArgentos:
 	MOVEA.l	$FFFFCC1C.w, A6
 	BTST.b	#7, (A6)
 	BNE.w	loc_000199E6
@@ -26052,7 +26587,9 @@ loc_00019BCA:
 loc_00019BFE:
 	MOVE.l	A4, $28(A6)
 	RTS
-loc_00019C04:
+
+;loc_00019C04
+CastHydro:
 	MOVEA.l	$FFFFCC1C.w, A6
 	BTST.b	#7, (A6)
 	BNE.w	loc_00019C7A
@@ -26214,8 +26751,11 @@ loc_00019E44:
 	DBF	D7, loc_00019E26
 	MOVE.w	#$00A0, $E(A6)	
 	MOVE.w	#$0070, $12(A6)	
-	RTS	
-loc_00019E74:
+	RTS
+	
+
+;loc_00019E74
+CastChronos:
 	BSR.w	loc_0001A1EA
 	BNE.b	loc_00019EA0
 	MOVEA.l	$FFFFCC1C.w, A6
@@ -26234,7 +26774,9 @@ loc_00019EA2:
 	CLR.b	$FFFFC68C.w
 loc_00019EB0:
 	RTS
-loc_00019EB2:
+
+;loc_00019EB2
+CastChronios:
 	BSR.w	loc_0001A1EA
 	BNE.b	loc_00019EDE
 	MOVEA.l	$FFFFCC1C.w, A6
@@ -26246,7 +26788,9 @@ loc_00019EB2:
 	JSR	loc_00010522
 loc_00019EDE:
 	RTS
-loc_00019EE0:
+
+;loc_00019EE0:
+CastTerrafissi:
 	MOVEA.l	$FFFFCC1C.w, A6
 	BTST.b	#7, (A6)
 	BNE.b	loc_00019F18
@@ -26464,7 +27008,8 @@ loc_0001A1EA:
 	RTS
 loc_0001A216:
 	MOVE.w	#$FFFF, D0	
-	RTS	
+	RTS
+	
 loc_0001A21C:
 	LEA	Possessed_magics_list.w, A0
 	MOVE.w	$FFFFC460.w, D0
@@ -26482,7 +27027,8 @@ loc_0001A21C:
 	RTS
 loc_0001A24A:
 	MOVE.w	#$FFFF, D0	
-	RTS	
+	RTS
+	
 loc_0001A250:
 	LEA	loc_000226AC, A4
 	MOVE.w	Readied_magic.w, D0
@@ -26706,7 +27252,8 @@ loc_0001A576:
 	MOVE.w	#5, $FFFFC420.w	
 	MOVE.w	Possessed_items_length.w, D0	
 	JSR	loc_000115FA	
-	RTS	
+	RTS
+	
 loc_0001A59C:
 	JSR	loc_00012670
 	JSR	loc_000126B6
@@ -27063,7 +27610,8 @@ loc_0001AAAC:
 	BSR.w	loc_0001B166	
 	MOVE.w	#$00AE, D0	
 	JSR	loc_00010522	
-	RTS	
+	RTS
+	
 
 ;loc_0001AAC4
 UseKasansChisel:
@@ -27076,7 +27624,8 @@ loc_0001AAD8:
 	BSR.w	loc_0001B166	
 	MOVE.w	#$00AE, D0	
 	JSR	loc_00010522	
-	RTS	
+	RTS
+	
 
 ;loc_0001AAF0
 UseBookOfKiel:
@@ -27089,7 +27638,8 @@ loc_0001AB04:
 	BSR.w	loc_0001B166	
 	MOVE.w	#$00AE, D0	
 	JSR	loc_00010522	
-	RTS	
+	RTS
+	
 
 ;loc_0001AB1C
 DanegeldWater:
@@ -27111,7 +27661,8 @@ loc_0001AB54:
 	BSR.w	loc_0001B166	
 	MOVE.w	#$00AE, D0	
 	JSR	loc_00010522	
-	RTS	
+	RTS
+	
 
 ;loc_0001AB64
 UseMineralBar:
@@ -27124,7 +27675,8 @@ loc_0001AB78:
 	BSR.w	loc_0001B166	
 	MOVE.w	#$00AE, D0	
 	JSR	loc_00010522	
-	RTS	
+	RTS
+	
 
 ;loc_0001AB90
 UseMegaBlast:
@@ -27137,7 +27689,8 @@ loc_0001ABA4:
 	BSR.w	loc_0001B166	
 	MOVE.w	#$00AE, D0	
 	JSR	loc_00010522	
-	RTS	
+	RTS
+	
 
 ;loc_0001ABBC
 UseRafaelsStick:
@@ -27147,7 +27700,8 @@ UseRafaelsStick:
 	MOVE.l	#loc_000266AA, Script_source_base.w	
 	MOVE.w	#$00AE, D0	
 	JSR	loc_00010522	
-	RTS	
+	RTS
+	
 loc_0001ABDE:
 	MOVE.l	#loc_00025980, Script_source_base.w
 	RTS
@@ -27239,10 +27793,12 @@ UseTitaniasMirror:
 	MOVE.b	#$FF, $FFFFC55F.w	
 	JSR	loc_00006458	
 	MOVE.l	#loc_00026BD0, Script_source_base.w	
-	RTS	
+	RTS
+	
 loc_0001ACF6:
 	MOVE.l	#loc_00025980, Script_source_base.w	
-	RTS	
+	RTS
+	
 
 ;loc_0001AD00
 UseGnomeStone:
@@ -27317,7 +27873,8 @@ UseLantern:
 loc_0001ADE8:
 	BSR.w	loc_0001B166	
 	MOVE.l	#loc_00025992, Script_source_base.w	
-	RTS	
+	RTS
+	
 
 ;loc_0001ADF6:
 UseAlarmClock:
@@ -27367,25 +27924,31 @@ loc_0001AE78:
 	RTS
 loc_0001AE88:
 	dc.w	$00D8
-	dc.b	$00, $98, $00, $00 
+	dc.w	$0098
+	dc.w	$0000 
 	dc.w	$00C8
-	dc.b	$00, $88, $00, $06 
+	dc.w	$0088
+	dc.w	$0006 
 	dc.w	$00E8
 	dc.w	$0088
 	dc.w	$0002
-	dc.b	$00, $D8, $00, $78, $00, $04 
+	dc.w	$00D8
+	dc.w	$0078
+	dc.w	$0004 
 
 ;loc_0001AEA0:
 UseVase:
 	MOVE.l	#loc_00026C2C, Script_source_base.w	
 	BSR.w	loc_0001B166	
-	RTS	
+	RTS
+	
 
 ;loc_0001AEAE:
 UseJokeBook:
 	MOVE.l	#loc_00026C7A, Script_source_base.w	
 	BSR.w	loc_0001B166	
-	RTS	
+	RTS
+	
 
 ;loc_0001AEBC:
 UseSmallBomb:
@@ -27422,7 +27985,8 @@ loc_0001AF16:
 	DBF	D7, loc_0001AEFA	
 loc_0001AF1E:
 	MOVE.l	#loc_00026D0A, Script_source_base.w	
-	RTS	
+	RTS
+	
 loc_0001AF28:
 	MOVE.b	#$FF, $FFFFC75F.w
 	MOVE.l	#loc_00026D3E, Script_source_base.w
@@ -27462,7 +28026,8 @@ loc_0001AF9A:
 	DBF	D7, loc_0001AF7E
 loc_0001AFA2:
 	MOVE.l	#loc_00026D54, Script_source_base.w	
-	RTS	
+	RTS
+	
 loc_0001AFAC:
 	MOVE.b	#$FF, $FFFFC760.w
 	MOVE.l	#loc_00026D64, Script_source_base.w
@@ -27479,12 +28044,14 @@ loc_0001AFC0:
 ;loc_0001AFD8:
 UseTreasureOfTroy:
 	MOVE.l	#loc_00026DB4, Script_source_base.w	
-	RTS	
+	RTS
+	
 
 ;loc_0001AFE2:
 UseTruffle:
 	MOVE.l	#loc_00026D7C, Script_source_base.w	
-	RTS	
+	RTS
+	
 	
 ;loc_0001AFEC:
 UseDigotPlant:
@@ -27504,11 +28071,13 @@ loc_0001B010:
 ;loc_0001B016:
 UsePassToCarthahena:
 	MOVE.l	#loc_00026FAA, Script_source_base.w	
-	RTS	
+	RTS
+	
 ;loc_0001B020
 UseCrown:
 	MOVE.l	#loc_00026FAA, Script_source_base.w	
-	RTS	
+	RTS
+	
 
 ;loc_0001B02A
 UseSixteenRings:
@@ -27536,15 +28105,18 @@ loc_0001B06C:
 ;loc_0001B076
 UseWhiteCrystal:
 	MOVE.l	#loc_0002709E, Script_source_base.w	
-	RTS	
+	RTS
+	
 ;loc_0001B080
 UseRedCrystal:
 	MOVE.l	#loc_000270BE, Script_source_base.w	
-	RTS	
+	RTS
+	
 ;loc_0001B08A
 UseBlueCrystal:
 	MOVE.l	#loc_000270E8, Script_source_base.w	
-	RTS	
+	RTS
+	
 
 ;loc_0001B094
 UseGeneric:
@@ -27598,16 +28170,19 @@ loc_0001B138:
 	BRA.b	loc_0001B0E2
 loc_0001B13E:
 	MOVE.l	#loc_0002710A, Script_source_base.w	
-	RTS	
+	RTS
+	
 loc_0001B148:
 	MOVE.l	#loc_00027124, Script_source_base.w	
-	RTS	
+	RTS
+	
 loc_0001B152:
 	MOVE.l	#loc_0002716A, Script_source_base.w
 	RTS
 loc_0001B15C:
 	MOVE.l	#loc_00027180, Script_source_base.w	
-	RTS	
+	RTS
+	
 loc_0001B166:
 	MOVE.w	$FFFFC440.w, D0
 	MOVE.w	#9, D2
@@ -27922,7 +28497,8 @@ loc_0001B6F0:
 	JSR	loc_00012766	
 	JSR	loc_000126DA	
 	MOVE.w	#$002D, $FFFFC41E.w	
-	RTS	
+	RTS
+	
 loc_0001B734:
 	JMP	loc_0001096A	
 loc_0001B73A:
@@ -28480,7 +29056,8 @@ loc_0001C030:
 	ADD.w	D0, D0	
 	LEA	loc_00025FF8, A0	
 	MOVE.l	(A0,D0.w), Script_source_base.w	
-	RTS	
+	RTS
+	
 loc_0001C068:
 	MOVE.w	$FFFFC428.w, $FFFFC23E.w
 	JSR	loc_000127EA
@@ -28781,7 +29358,8 @@ loc_0001C4B0:
 	ADD.w	D0, D0	
 	LEA	loc_00026010, A0	
 	MOVE.l	(A0,D0.w), Script_source_base.w	
-	RTS	
+	RTS
+	
 loc_0001C4E6:
 	MOVE.w	$FFFFC428.w, $FFFFC23E.w
 	JSR	loc_000127EA
@@ -28814,7 +29392,8 @@ loc_0001C542:
 	JSR	loc_00011012	
 	JSR	loc_00012670	
 	MOVE.w	#7, $FFFFC41E.w	
-	RTS	
+	RTS
+	
 loc_0001C56E:
 	JSR	loc_00012766
 	JSR	loc_00012670
@@ -29276,7 +29855,8 @@ loc_0001CC2C:
 	JSR	loc_00012766	
 	MOVE.w	#$0023, $FFFFC41E.w	
 	JSR	loc_00010C4A	
-	RTS	
+	RTS
+	
 loc_0001CC46:
 	MOVE.w	$FFFFC428.w, $FFFFC23E.w
 	JSR	loc_000127EA
@@ -29380,7 +29960,8 @@ loc_0001CDC8:
 	JSR	loc_00010522	
 	CLR.w	$FFFFC500.w	
 	MOVE.w	#$0022, $FFFFC41E.w	
-	RTS	
+	RTS
+	
 loc_0001CDEA:
 	MOVE.w	$FFFFC428.w, $FFFFC23E.w
 	JSR	loc_000127EA
@@ -29794,7 +30375,8 @@ loc_0001D39C:
 	JSR	loc_0001271E	
 	JSR	loc_00010EFE	
 	MOVE.w	#1, $FFFFC426.w	
-	RTS	
+	RTS
+	
 loc_0001D3BA:
 	MOVE.w	$FFFFC4E4.w, $FFFFC23E.w
 	JSR	loc_0001290C
@@ -29840,7 +30422,8 @@ loc_0001D456:
 loc_0001D466:
 	MOVE.l	#loc_000263BE, Script_source_base.w	
 	MOVE.w	#6, $FFFFC426.w	
-	RTS	
+	RTS
+	
 loc_0001D476:
 	TST.b	$FFFFC20F.w
 	BEQ.b	loc_0001D4B0
@@ -30232,7 +30815,8 @@ loc_0001D96C:
 	CLR.w	$FFFF9916.w	
 	MOVE.b	#$FF, $FFFF9911.w	
 loc_0001D99C:
-	RTS	
+	RTS
+	
 loc_0001D99E:
 	TST.b	$FFFF9910.w
 	BNE.w	loc_0001D9BA
@@ -30428,7 +31012,8 @@ loc_0001DC7C:
 	JSR	loc_00010522	
 	MOVE.b	#$50, $FFFFC585.w	
 	MOVE.w	#4, $FFFFC42A.w	
-	RTS	
+	RTS
+	
 loc_0001DC94:
 	TST.b	$FFFFC56C.w
 	BEQ.w	loc_0001DCEC
@@ -30514,7 +31099,8 @@ loc_0001DDB0:
 	JSR	loc_00010C4A	
 	MOVE.w	#1, $FFFFC42A.w	
 loc_0001DDD2:
-	RTS	
+	RTS
+	
 loc_0001DDD4:
 	SUBQ.b	#1, $FFFFC585.w
 	BNE.w	loc_0001DDF6
@@ -30806,7 +31392,8 @@ loc_0001E27C:
 	BRA.w	loc_0001E312
 loc_0001E280:
 	MOVE.w	#1, $FFFFC428.w	
-	RTS	
+	RTS
+	
 loc_0001E288:
 	JSR	loc_0000857E	
 	BGE.w	loc_0001E2BA	
@@ -30905,7 +31492,8 @@ loc_0001E452:
 	JSR	loc_00012A6C	
 	MOVE.b	#$FF, (A1)+	
 	MOVE.l	#$FFFFC260, Script_source_base.w	
-	RTS	
+	RTS
+	
 loc_0001E46C:
 	MOVE.w	$FFFFC42C.w, D0
 	ANDI.w	#$001F, D0
@@ -31160,7 +31748,8 @@ loc_0001E84C:
 	RTS
 loc_0001E85A:
 	JSR	loc_0001096A	
-	RTS	
+	RTS
+	
 loc_0001E862:
 	MOVE.w	#4, D2
 	JSR	loc_000012F2
@@ -31208,7 +31797,8 @@ loc_0001E910:
 	MOVE.w	-$2(A0), D0	
 	JSR	loc_000115FA	
 	MOVE.w	#8, $FFFFC42C.w	
-	RTS	
+	RTS
+	
 loc_0001E936: ; Discard item unless modifier is 0x01
 	JSR	loc_00012670
 	JSR	loc_000126B6
@@ -32513,7 +33103,7 @@ loc_0001FC74:
 	dc.b	"Hastings", $FF, $00
 loc_0001FC7E:
 	dc.b	"Cartahena", $FF
-loc_0001FC88:
+loc_0001FC88: ; suspected tilemappings by town
 	BRA.w	loc_0001FCC8
 	BRA.w	loc_0001FCD0
 	BRA.w	loc_0001FCD8
@@ -32547,7 +33137,8 @@ loc_0001FCE8:
 	RTS
 loc_0001FCF0:
 	MOVE.w	#1, $FFFFC128.w	
-	RTS	
+	RTS
+	
 loc_0001FCF8:
 	MOVE.w	#1, $FFFFC128.w
 	RTS
@@ -32578,7 +33169,8 @@ loc_0001FD3C:
 	RTS
 loc_0001FD44:
 	MOVE.w	#1, $FFFFC128.w	
-	RTS	
+	RTS
+	
 loc_0001FD4C:
 	MOVE.w	#1, $FFFFC128.w
 	RTS
@@ -32633,7 +33225,8 @@ loc_0001FE34:
 	RTS
 loc_0001FE3C:
 	LEA	loc_00032BD6, A1	
-	RTS	
+	RTS
+	
 loc_0001FE44:
 	LEA	loc_00032BD6, A1
 	RTS
@@ -32654,13 +33247,15 @@ loc_0001FE6C:
 	RTS
 loc_0001FE74:
 	LEA	loc_00039546, A1	
-	RTS	
+	RTS
+	
 loc_0001FE7C:
 	LEA	loc_00039E80, A1
 	RTS
 loc_0001FE84:
 	LEA	loc_00039E80, A1	
-	RTS	
+	RTS
+	
 loc_0001FE8C:
 	LEA	loc_0003B732, A1
 	RTS
@@ -32734,7 +33329,8 @@ loc_0001FF6A:
 	RTS
 loc_0001FF74:
 	MOVE.l	#loc_00032B30, $FFFFC15E.w	
-	RTS	
+	RTS
+	
 loc_0001FF7E:
 	MOVE.l	#loc_00032B30, $FFFFC15E.w
 	RTS
@@ -32765,7 +33361,8 @@ loc_0001FFD2:
 	RTS
 loc_0001FFDC:
 	MOVE.l	#loc_00039DDA, $FFFFC15E.w	
-	RTS	
+	RTS
+	
 loc_0001FFE6:
 	MOVE.l	#loc_0003B646, $FFFFC15E.w
 	TST.b	$FFFFC758.w
@@ -32797,7 +33394,8 @@ loc_00020012:
 	BRA.w	loc_000200A2
 loc_0002003E:
 	LEA	loc_00028F6E, A0	
-	RTS	
+	RTS
+	
 loc_00020046:
 	LEA	loc_00028F92, A0
 loc_0002004C:
@@ -33084,7 +33682,8 @@ loc_0002051A:
 loc_00020542:
 	BSR.w	loc_00021498	
 	MOVE.l	#loc_0021510, $FFFFC250.w	
-	RTS	
+	RTS
+	
 loc_00020550:
 	MOVE.w	#$001B, $FFFFC572.w
 	MOVE.l	#$FFFFC799, $FFFFC574.w
@@ -33098,12 +33697,14 @@ loc_00020572:
 	MOVE.w	#0, $FFFFC572.w	
 	MOVE.l	#$FFFFC79C, $FFFFC574.w	
 	BSR.w	loc_0002141E	
-	RTS	
+	RTS
+	
 loc_00020586:
 	MOVE.w	#0, $FFFFC572.w	
 	MOVE.l	#$FFFFC7B0, $FFFFC574.w	
 	BSR.w	loc_0002141E	
-	RTS	
+	RTS
+	
 loc_0002059A:
 	MOVE.w	#$0024, $FFFFC572.w
 	MOVE.l	#$FFFFC7B2, $FFFFC574.w
@@ -33121,7 +33722,8 @@ loc_000205EA:
 	MOVE.w	#$081A, $FFFFC572.w	
 	MOVE.l	#$FFFFC7BF, $FFFFC574.w	
 	BSR.w	loc_00021428	
-	RTS	
+	RTS
+	
 loc_000205FE:
 	BSR.w	loc_000214B6
 	MOVE.l	#loc_0021594, $FFFFC250.w
@@ -33145,7 +33747,8 @@ loc_00020636:
 loc_00020644:
 	BSR.w	loc_00021498	
 	MOVE.l	#loc_00216A2, $FFFFC250.w	
-	RTS	
+	RTS
+	
 loc_00020652:
 	BSR.w	loc_000214B6
 	MOVE.l	#loc_00216E0, $FFFFC250.w
@@ -33163,7 +33766,8 @@ loc_0002067C:
 loc_0002068A:
 	BSR.w	loc_00021498	
 	MOVE.l	#loc_0021798, $FFFFC250.w	
-	RTS	
+	RTS
+	
 loc_00020698:
 	BSR.w	loc_00021498
 	MOVE.l	#loc_00217C4, $FFFFC250.w
@@ -33520,7 +34124,8 @@ loc_00020CE4:
 	MOVE.w	#$1000, $FFFFC572.w	
 	MOVE.l	#$FFFFC7EC, $FFFFC574.w	
 	BSR.w	loc_00021432	
-	RTS	
+	RTS
+	
 loc_00020CF8:
 	MOVE.w	#$040A, $FFFFC572.w
 	MOVE.l	#$FFFFC7E1, $FFFFC574.w
@@ -33594,7 +34199,8 @@ loc_00020E74:
 	MOVE.w	#$0700, $FFFFC572.w	
 	MOVE.l	#$FFFFC79E, $FFFFC574.w	
 	BSR.w	loc_00021432	
-	RTS	
+	RTS
+	
 loc_00020E88:
 	MOVE.w	#$0407, $FFFFC572.w
 	MOVE.l	#$FFFFC7E8, $FFFFC574.w
@@ -33607,7 +34213,8 @@ loc_00020ED8:
 	MOVE.w	#2, $FFFFC572.w	
 	MOVE.l	#$FFFFC7A2, $FFFFC574.w	
 	BSR.w	loc_0002141E	
-	RTS	
+	RTS
+	
 loc_00020EEC:
 	MOVE.w	#$0822, $FFFFC572.w	
 	MOVE.l	#$FFFFC787, $FFFFC574.w	
@@ -39526,11 +40133,13 @@ loc_00028F14:
 loc_00028F26:
 	MOVE.l	#loc_00027408, $FFFFC182.w	
 	MOVE.l	#loc_0002742A, $FFFFC186.w	
-	RTS	
+	RTS
+	
 loc_00028F38:
 	MOVE.l	#loc_00027454, $FFFFC182.w	
 	MOVE.l	#loc_000274BE, $FFFFC186.w	
-	RTS	
+	RTS
+	
 loc_00028F4A:
 	MOVE.l	#loc_0002761C, $FFFFC182.w
 	MOVE.l	#loc_00027634, $FFFFC186.w
@@ -44143,7 +44752,8 @@ loc_0003ACD6
 	dc.b	"then I can't help you.", $FF, $00 
 loc_0003AD04:
 	MOVE.l	#loc_0003AABA, Script_source_base.w	
-	RTS	
+	RTS
+	
 loc_0003AD0E:
 	MOVE.l	#loc_0003ACD6, Script_source_base.w	
 	RTS
@@ -72125,7 +72735,8 @@ loc_00092B1C:
 	MOVE.b	(A4)+, D5
 	BPL.w	loc_00092B34
 	BSR.w	loc_00092B76	
-	RTS	
+	RTS
+	
 loc_00092B34:
 	BSR.w	loc_00092B60
 	BSR.w	loc_00092B76
@@ -72293,12 +72904,14 @@ loc_00092CA2:
 	BRA.w	loc_00092F98
 	BRA.w	loc_00092FA8
 loc_00092D22:
-	RTS	
+	RTS
+	
 loc_00092D24:
 	MOVE.b	(A4)+, D0	
 	ADD.b	D0, $00FFF402	
 	MOVE.b	#1, $00FFF401	
-	RTS	
+	RTS
+	
 loc_00092D36:
 	BSET.b	#4, $1(A3)
 	RTS
@@ -72441,7 +73054,8 @@ loc_00092EDE:
 	MOVE.b	(A4)+, D0	
 	ANDI.b	#$E0, D0	
 	MOVE.b	D0, $00C00011	
-	RTS	
+	RTS
+	
 loc_00092EEC:
 	MOVE.b	(A4)+, $6(A3)
 	RTS
@@ -72486,7 +73100,8 @@ loc_00092F40:
 	RTS
 loc_00092F58:
 	MOVE.b	(A4)+, $2(A3)	
-	RTS	
+	RTS
+	
 loc_00092F5E:
 	MOVE.b	(A4)+, D0
 	ADD.b	D0, $5(A3)
@@ -72909,7 +73524,8 @@ loc_0009357E:
 	dc.w	$0052
 	BSR.w	loc_0009365C	
 	BSR.w	loc_00093736	
-	RTS	
+	RTS
+	
 loc_00093594:
 	BSR.w	loc_000937F0	
 	BSR.w	loc_0009365C	
@@ -72952,7 +73568,8 @@ loc_000935EE:
 	MOVE.b	(A4)+, D5	
 	BSR.w	loc_00092B60	
 	BSR.w	loc_00092B76	
-	RTS	
+	RTS
+	
 loc_00093604:
 	SUBI.b	#$80, D5
 	BNE.w	loc_0009361C
@@ -73121,7 +73738,8 @@ loc_00093806:
 	SUB.w	D0, D1	
 loc_0009380A:
 	MOVE.w	D1, $C(A3)	
-	RTS	
+	RTS
+	
 loc_00093810:
 	BSET.b	#1, $0(A3)
 	MOVE.b	#$1F, $14(A3)
