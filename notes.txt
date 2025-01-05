@@ -1,9 +1,17 @@
 RAM location suspicions:
 
-$FFFFC60E.b: If != 0, move player one step in the direction faced
 
-C542: If != 0, rotate player counter-clockwise in dungeon crawling mode
-C543: If != 0, rotate player clockwise in dungeon crawling mode
+
+Cursor_selected_option  = $FFFFC23E
+
+
+These are initialized to $FFFF during startup:
+
+$FFFFC4D0.w: ?
+$FFFFC4D2.w: ?
+$FFFFC4D4.w: ?
+$FFFFC4D6.w: ?
+$FFFFC4D8.w: ?
 
 $FFFFC444: Possessed items array on 2-byte format: first byte is a modifier. If set to 0x01 the item can't be discarded. Second is one of
 00 Herbs   
@@ -55,10 +63,7 @@ C880: If != 0, we have map around Wyclif
 Maps might start at C818?
 
 
-C662.w X position within current map in dungeon crawl mode
-C664.w Y position within current map in dungeon crawl mode
-C666.w overworld X map portion of 
-C668.w overworld Y map portion of 
+
 
 C55F.b if FF => has map of current sector
 C560.b if 01 => cave is lit
@@ -70,3 +75,14 @@ C101.b = if 1 => enqueue camera pan up
          if 4 => enqueue camera pan left
 
 Similarly for C100.b
+
+Dungeon crawling mode:
+
+C662.w X position within current map in dungeon crawl mode
+C664.w Y position within current map in dungeon crawl mode
+C666.w overworld X map portion of 
+C668.w overworld Y map portion of 
+
+$FFFFC60E.b: If != 0, move player one step in the direction faced
+C542: If != 0, rotate player counter-clockwise in dungeon crawling mode
+C543: If != 0, rotate player clockwise in dungeon crawling mode

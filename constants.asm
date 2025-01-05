@@ -57,6 +57,22 @@ Player_poisoned                 = $FFFFC642
 Player_name                     = $FFFFC64C
 Player_greatly_poisoned         = $FFFFC76C
 
+MAX_PLAYER_LEVEL    = 30
+MAX_PLAYER_MMP      = 600
+MAX_PLAYER_MHP      = 1200
+MAX_PLAYER_STR      = 1500
+MAX_PLAYER_DEX      = 2000
+MAX_PLAYER_INT      = 500
+MAX_PLAYER_LUK      = 700
+MAX_PLAYER_AC       = 1500
+MAX_PLAYER_EXP      = $00999999
+MAX_PLAYER_KIMS     = $00999999
+SUP_PLAYER_EXP      = $01000000
+SUP_PLAYER_KIMS     = $01000000
+
+PRICE_PASS_TO_CARTHAHENA = $50000
+PRICE_SANGUIOS = $1000
+
 Map_list = $FFFFC818
 Event_triggers_list = $FFFFC720 ; TODO: Investigate more
 
