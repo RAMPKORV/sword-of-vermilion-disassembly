@@ -36,6 +36,14 @@ Player_move_backward_in_overworld               = $FFFFC544
 Player_rotate_counter_clockwise_in_overworld    = $FFFFC542
 Player_rotate_clockwise_in_overworld            = $FFFFC543
 
+IsInCave = $FFFFC551
+
+DIRECTION_UP    = 0
+DIRECTION_LEFT  = 2
+DIRECTION_DOWN  = 4
+DIRECTION_RIGHT = 6
+DIRECTION_ANY   = $F
+
 Player_position_x_in_town       = $FFFFC606
 Player_position_y_in_town       = $FFFFC608
 Player_direction_in_town        = $FFFFC60C
@@ -55,6 +63,12 @@ Player_luk                      = $FFFFC63C
 Player_level                    = $FFFFC640
 Player_poisoned                 = $FFFFC642
 Player_name                     = $FFFFC64C
+
+Player_position_x_outside_town  = $FFFFC662
+Player_position_y_outside_town  = $FFFFC664
+Player_map_sector_x             = $FFFFC666
+Player_map_sector_y             = $FFFFC668
+
 Player_greatly_poisoned         = $FFFFC76C
 
 MAX_PLAYER_LEVEL    = 30
@@ -81,16 +95,18 @@ TOWN_WYCLIF         = $00
 TOWN_PARMA          = $01
 TOWN_WATLING        = $02
 TOWN_DEEPDALE       = $03
-TOWN_STOW           = $04
-TOWN_KELTWICK       = $05
-TOWN_MALAGA         = $06
-TOWN_BARROW         = $07
-TOWN_TADCASTER      = $08
-TOWN_HELWIG         = $09
-TOWN_SWAFHAM        = $0A
-TOWN_EXCALABRIA     = $0B
-TOWN_HASTINGS       = $0C
-TOWN_CARTHAHENA     = $0D
+TOWN_STOW1          = $04
+TOWN_STOW2          = $05
+TOWN_KELTWICK       = $06
+TOWN_MALAGA         = $07
+TOWN_BARROW         = $08
+TOWN_TADCASTER      = $09
+TOWN_HELWIG         = $0A
+TOWN_SWAFHAM        = $0B
+TOWN_EXCALABRIA     = $0C
+TOWN_HASTINGS1      = $0D
+TOWN_HASTINGS2      = $0E
+TOWN_CARTHAHENA     = $0F
 
 ITEM_TYPE_DISCARDABLE       = $00
 ITEM_TYPE_NON_DISCARDABLE   = $01
@@ -238,3 +254,9 @@ EQUIPMENT_ARMOR_SECRET          = $35
 EQUIPMENT_ARMOR_SKELETON        = $36
 EQUIPMENT_ARMOR_CRIMSON         = $37
 EQUIPMENT_ARMOR_OLD_NICK        = $38
+
+OLD_MAN_POSITION_X = $0019
+OLD_MAN_POSITION_Y = $000D
+
+OLD_WOMAN_POSITION_X = $0027
+OLD_WOMAN_POSITION_Y = $0003
