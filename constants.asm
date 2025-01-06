@@ -69,6 +69,11 @@ Player_position_y_outside_town  = $FFFFC664
 Player_map_sector_x             = $FFFFC666
 Player_map_sector_y             = $FFFFC668
 
+Player_cave_position_x          = $FFFFC66A
+Player_cave_position_y          = $FFFFC66C
+Player_cave_map_sector_x        = $FFFFC66E
+Player_cave_map_sector_y        = $FFFFC670
+
 Player_greatly_poisoned         = $FFFFC76C
 
 MAX_PLAYER_LEVEL    = 30

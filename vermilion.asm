@@ -4340,7 +4340,7 @@ loc_00004594:
 
 loc_000045B0:
 	BCLR.l	#7, D0
-loc_000045B4:
+loc_000045B4: ; Enter cave
 	SUBI.b	#$10, D0
 	ANDI.w	#$007F, D0
 	MOVE.w	D0, $FFFFC556.w
@@ -4348,10 +4348,10 @@ loc_000045B4:
 	MOVE.b	#$FF, $FFFFC08E.w
 	TST.b	$FFFFC67D.w
 	BNE.b	loc_000045F0
-	MOVE.w	Player_position_x_outside_town.w, $FFFFC66A.w
-	MOVE.w	Player_position_y_outside_town.w, $FFFFC66C.w
-	MOVE.w	Player_map_sector_x.w, $FFFFC66E.w
-	MOVE.w	Player_map_sector_y.w, $FFFFC670.w
+	MOVE.w	Player_position_x_outside_town.w, Player_cave_position_x.w
+	MOVE.w	Player_position_y_outside_town.w, Player_cave_position_y.w
+	MOVE.w	Player_map_sector_x.w, Player_cave_map_sector_x.w
+	MOVE.w	Player_map_sector_y.w, Player_cave_map_sector_y.w
 	MOVE.b	#$FF, $FFFFC67D.w
 loc_000045F0:
 	MOVE.w	#$0015, $FFFFC412.w
@@ -5717,7 +5717,7 @@ loc_00005988:
 	MOVE.b	(A0,D0.w), D0
 	RTS
 
-loc_000059AE:
+loc_000059AE: ; Go left from current map sector
 	MOVE.w	Player_direction_in_town.w, D0
 	ANDI.w	#6, D0
 	ADD.w	D0, D0
@@ -5728,14 +5728,14 @@ loc_000059AE:
 	MOVE.w	#$000F, Player_position_x_outside_town.w
 	BSR.w	loc_0000622A
 	BRA.w	loc_00005A1A
-loc_000059D4:
+loc_000059D4: ; Go right from current map sector
 	CMPI.w	#$0010, Player_position_x_outside_town.w
 	BLT.b	loc_000059EC
 	ADDQ.w	#1, Player_map_sector_x.w
 	CLR.w	Player_position_x_outside_town.w
 	BSR.w	loc_0000622A
 	BRA.w	loc_00005A1A
-loc_000059EC:
+loc_000059EC: ; Go up from current map sector
 	MOVE.w	$2(A0,D0.w), D1
 	ADD.w	D1, Player_position_y_outside_town.w
 	BGE.b	loc_00005A06
@@ -5743,7 +5743,7 @@ loc_000059EC:
 	MOVE.w	#$000F, Player_position_y_outside_town.w
 	BSR.w	loc_0000622A
 	BRA.b	loc_00005A1A
-loc_00005A06:
+loc_00005A06: ; Go down from current map sector
 	CMPI.w	#$0010, Player_position_y_outside_town.w
 	BLT.b	loc_00005A1A
 	ADDQ.w	#1, Player_map_sector_y.w
@@ -25958,10 +25958,10 @@ CastExtrios:
 	BNE.w	loc_00018996
 	TST.b	IsInCave.w
 	BEQ.b	loc_00018982
-	MOVE.w	$FFFFC66A.w, Player_position_x_outside_town.w
-	MOVE.w	$FFFFC66C.w, Player_position_y_outside_town.w
-	MOVE.w	$FFFFC66E.w, Player_map_sector_x.w
-	MOVE.w	$FFFFC670.w, Player_map_sector_y.w
+	MOVE.w	Player_cave_position_x.w, Player_position_x_outside_town.w
+	MOVE.w	Player_cave_position_y.w, Player_position_y_outside_town.w
+	MOVE.w	Player_cave_map_sector_x.w, Player_map_sector_x.w
+	MOVE.w	Player_cave_map_sector_y.w, Player_map_sector_y.w
 	MOVE.b	#$FF, $FFFFC08E.w
 	MOVE.w	#$0012, $FFFFC412.w
 	MOVE.b	#$FF, $FFFFC540.w
@@ -28273,10 +28273,10 @@ loc_0001A93A:
 	RTS
 
 loc_0001A954:
-	MOVE.w	$FFFFC66A.w, Player_position_x_outside_town.w
-	MOVE.w	$FFFFC66C.w, Player_position_y_outside_town.w
-	MOVE.w	$FFFFC66E.w, Player_map_sector_x.w
-	MOVE.w	$FFFFC670.w, Player_map_sector_y.w
+	MOVE.w	Player_cave_position_x.w, Player_position_x_outside_town.w
+	MOVE.w	Player_cave_position_y.w, Player_position_y_outside_town.w
+	MOVE.w	Player_cave_map_sector_x.w, Player_map_sector_x.w
+	MOVE.w	Player_cave_map_sector_y.w, Player_map_sector_y.w
 	MOVE.b	#$FF, $FFFFC08E.w
 	MOVE.w	#$0012, $FFFFC412.w
 	MOVE.b	#$FF, $FFFFC540.w
@@ -28898,7 +28898,6 @@ UseBlueCrystal:
 	MOVE.l	#loc_000270E8, Script_source_base.w	
 	RTS
 	
-
 ;loc_0001B094
 UseGeneric:
 	TST.b	$FFFFC540.w
@@ -32381,12 +32380,17 @@ loc_0001E2BA:
 	BSR.w	loc_0001E452	
 loc_0001E2C8:
 	BRA.w	loc_0001E312	
-loc_0001E2CC:
-	dc.b	$45, $F9, $00, $01, $E4, $0A, $61, $00, $01, $3C, $61, $00, $01, $54, $21, $FC, $00, $00, $00, $01, $C6, $5A, $4E, $B9, $00, $01, $15, $76, $30, $3C, $00, $A6 
+
+loc_0001E2CC: ; Find 1kim
+	dc.b	$45, $F9 
+	dc.l	loc_0001E40A 
+	dc.b	$61, $00, $01, $3C, $61, $00, $01, $54, $21, $FC, $00, $00, $00, $01, $C6, $5A, $4E, $B9, $00, $01, $15, $76, $30, $3C, $00, $A6 
 	dc.b	$4E, $B9, $00, $01, $05, $22, $60, $00, $00, $1E
-loc_0001E2F6:
+
+loc_0001E2F6: ; Regain all HP
 	dc.b	$31, $F8, $C6, $2E, $C6, $2C, $30, $3C, $00, $AE, $4E, $B9, $00, $01, $05, $22, $21, $FC, $00, $02, $6A, $A4 
 	dc.b	$C2, $04, $60, $00, $00, $02 
+
 loc_0001E312:
 	JSR	loc_0001229E
 	JSR	loc_00010C4A
@@ -32456,6 +32460,7 @@ loc_0001E3DA:
 	dc.b	",", $FE
 	dc.b	"but there is too much", $FE
 	dc.b	"here for you to carry.", $FF, $00
+loc_0001E40A:
 	dc.b	"1kim", $FF, $00
 loc_0001E410:
 	JSR	loc_0001D650
@@ -32809,7 +32814,7 @@ loc_0001E910:
 	MOVE.w	#8, $FFFFC42C.w	
 	RTS
 	
-loc_0001E936: ; Discard item unless modifier is 0x01
+loc_0001E936: ; Discard item
 	JSR	loc_00012670
 	JSR	loc_000126B6
 	JSR	loc_00010C4A
@@ -32817,7 +32822,7 @@ loc_0001E936: ; Discard item unless modifier is 0x01
 	MOVE.w	$FFFFC440.w, D0
 	ADD.w	D0, D0
 	MOVE.w	(A2,D0.w), D0
-	ANDI.w	#$0100, D0
+	ANDI.w	#(ITEM_TYPE_NON_DISCARDABLE<<8), D0
 	BEQ.w	loc_0001E96A
 	MOVE.l	#loc_00025D80, Script_source_base.w
 	BRA.w	loc_0001EA38
@@ -34543,8 +34548,8 @@ loc_000200B6:
 	dc.l	loc_00020382
 	dc.l	loc_00020390 
 loc_000200F6:
-	dc.l	$00040001
-	dc.l	$00010002 
+	dc.w	$0004, $0001
+	dc.w	$0001, $0002 
 	dc.l	loc_000203DA
 	dc.b	$00, $04 
 loc_00020104:
@@ -46547,7 +46552,7 @@ loc_0003C6D6:
 	MOVE.l	#$0003C424, $FFFFC186.w
 	RTS
 	
-loc_003C6E8:
+loc_003C6E8: ; Seems like there are many references to loc_0001EAC6 here. TODO: Organize data
 	dc.b	$4A, $38, $C0, $8E, $66, $FA, $10, $3C, $00, $00, $4E, $B9, $00, $01, $05, $22, $4E, $B9, $00, $00, $06, $82, $4E, $B9, $00, $00, $10, $D8, $30, $38, $C3, $F6 
 	dc.b	$02, $40, $FF, $F8, $33, $C0, $00, $C0, $00, $04, $31, $FC, $00, $00, $C1, $04, $31, $FC, $00, $00, $C1, $06, $31, $FC, $00, $4F, $C0, $80, $31, $FC, $00, $53 
 	dc.b	$C0, $82, $31, $FC, $00, $54, $C0, $84, $31, $FC, $00, $01, $C0, $86, $4E, $B9, $00, $01, $32, $5E, $4E, $B9, $00, $00, $06, $6E, $2A, $3C, $44, $04, $00, $03 
