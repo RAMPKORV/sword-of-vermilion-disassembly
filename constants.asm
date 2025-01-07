@@ -11,6 +11,7 @@ Script_output_y         = $FFFFC232
 Script_output_x         = $FFFFC234
 
 Current_town = $FFFFC40C
+Current_cave = $FFFFC556
 
 Equipped_sword  = $FFFFC4D0
 Equipped_shield = $FFFFC4D2
@@ -73,6 +74,10 @@ Player_cave_position_x          = $FFFFC66A
 Player_cave_position_y          = $FFFFC66C
 Player_cave_map_sector_x        = $FFFFC66E
 Player_cave_map_sector_y        = $FFFFC670
+
+Steps_since_last_encounter      = $FFFFC685
+Encounter_rate                  = $FFFFC69C
+MAX_STEPS_BETWEEN_ENCOUNTERS    = 20
 
 Player_greatly_poisoned         = $FFFFC76C
 

@@ -1129,43 +1129,43 @@ loc_0000183A: ; suspected: Game main loop state execution? ($FFFFC410 - $FFFFC41
 	BRA.w	loc_00001F42 ; $06 Upstairs in church
 	BRA.w	loc_00001FE0 ; $07 Going on 2nd floor in church
 	BRA.w	loc_00002074 ; $08 Being on second floor in church
-	BRA.w	loc_000020B2 ; $09 
-	BRA.w	loc_00002116 ; $0A Entering castle
+	BRA.w	loc_000020B2 ; $09 Entering castle
+	BRA.w	loc_00002116 ; $0A Entering castle #2
 	BRA.w	loc_000021DA ; $0B Inside castle
 	BRA.w	loc_0000221C ; $0C 
 	BRA.w	loc_000022A6 ; $0D 	
-	BRA.w	loc_000022E8 ; $0E 
-	BRA.w	loc_00002324 ; $0F 
-	BRA.w	loc_00002412 ; $10 
-	BRA.w	loc_0000244A ; $11 
-	BRA.w	loc_00002542 ; $12 Exiting town
+	BRA.w	loc_000022E8 ; $0E Enter cave
+	BRA.w	loc_00002324 ; $0F Battle
+	BRA.w	loc_00002412 ; $10 Overworld?
+	BRA.w	loc_0000244A ; $11 Exit town
+	BRA.w	loc_00002542 ; $12 Exit town #2
 	BRA.w	loc_000025AE ; $13 Outside town
 	BRA.w	loc_000025B2 ; $14 Entering town
-	BRA.w	loc_000025CE ; $15 Entering cave
+	BRA.w	loc_000025CE ; $15 Entering cave #2
 	BRA.w	loc_0000273E ; $16 Inside cave
 	BRA.w	loc_00002814 ; $17 Exiting cave
-	BRA.w	loc_00002832 ; $18 
+	BRA.w	loc_00002832 ; $18 Encounter
 	BRA.w	loc_000028C2 ; $19 
 	BRA.w	loc_000028FC ; $1A 
-	BRA.w	loc_00002916 ; $1B 
+	BRA.w	loc_00002916 ; $1B Start showing stats
 	BRA.w	loc_00002930 ; $1C 
 	BRA.w	loc_00002974 ; $1D 
-	BRA.w	loc_000029FA ; $1E 
+	BRA.w	loc_000029FA ; $1E Walk forward
 	BRA.w	loc_00001A92 ; $1F Loading/initialization of town or building
 	BRA.w	loc_00002A52 ; $20 Finding chest/character
 	BRA.w	loc_00002A92 ; $21 
 	BRA.w	loc_00002BB8 ; $22 
-	BRA.w	loc_00002BC4 ; $23 
-	BRA.w	loc_00002C6A ; $24 
-	BRA.w	loc_00002C7C ; $25 
-	BRA.w	loc_00002D22 ; $26 
+	BRA.w	loc_00002BC4 ; $23 Reload town?
+	BRA.w	loc_00002C6A ; $24 Resurrect in church
+	BRA.w	loc_00002C7C ; $25 Resurrect in church #2
+	BRA.w	loc_00002D22 ; $26 Inaudios wear off
 	BRA.w	loc_00002D6C ; $27 
 	BRA.w	loc_00001D58 ; $28 
-	BRA.w	loc_00001DB4 ; $29 
+	BRA.w	loc_00001DB4 ; $29 Get hit by frying pan message
 	BRA.w	loc_00001E9C ; $2A 
-	BRA.w	loc_000024D6 ; $2B 
+	BRA.w	loc_000024D6 ; $2B "You haven't won yet"
 	BRA.w	loc_000024F8 ; $2C 
-	BRA.w	loc_00002D44 ; $2D 
+	BRA.w	loc_00002D44 ; $2D Get poisoned messsage
 loc_000018F2:
 	TST.b	$FFFFC08E.w
 	BNE.w	loc_00001956
@@ -1196,7 +1196,7 @@ loc_00001958:
 	TST.b	$FFFFC08E.w
 	BNE.w	loc_00001A90
 	JSR	loc_00000682
-	MOVE.w	#$000F, $FFFFC69C.w
+	MOVE.w	#$000F, Encounter_rate.w
 	JSR	loc_0000FD90
 	JSR	loc_0000F9B4
 	TST.w	$FFFFC12C.w
@@ -2036,7 +2036,7 @@ loc_000025CE:
 	JSR	loc_0001325E
 loc_0000260E:
 	JSR	loc_0000066E
-	MOVE.w	#$001F, $FFFFC69C.w
+	MOVE.w	#$001F, Encounter_rate.w
 	BSR.w	loc_000026BA
 loc_0000261E:
 	RTS
@@ -2167,8 +2167,8 @@ loc_000027CC:
 	BGE.b	loc_000027FC
 	BSR.w	loc_00003428
 	BNE.b	loc_000027FE
-	ADDQ.b	#1, $FFFFC685.w
-	CMPI.b	#$14, $FFFFC685.w
+	ADDQ.b	#1, Steps_since_last_encounter.w
+	CMPI.b	#MAX_STEPS_BETWEEN_ENCOUNTERS, Steps_since_last_encounter.w
 	BEQ.b	loc_000027FE
 	BRA.b	loc_000027FC
 loc_000027F8:
@@ -2177,7 +2177,7 @@ loc_000027FC:
 	RTS
 
 loc_000027FE:
-	CLR.b	$FFFFC685.w
+	CLR.b	Steps_since_last_encounter.w
 	CLR.b	$FFFFC41C.w
 	MOVE.w	#$0018, $FFFFC412.w
 	MOVE.b	#$FF, $FFFFC550.w
@@ -2209,7 +2209,7 @@ loc_00002832:
 	BRA.b	loc_00002868
 loc_00002858:
 	LEA	loc_00023AFC, A0
-	MOVE.w	$FFFFC556.w, D0
+	MOVE.w	Current_cave.w, D0
 	MOVE.b	(A0,D0.w), $FFFFC684.w
 loc_00002868:
 	JSR	GetRandomNumber
@@ -3086,10 +3086,10 @@ loc_0000341A:
 	JSR	loc_0000603E
 	RTS
 
-loc_00003428:
+loc_00003428: ; Check for encounter
 	MOVE.b	#1, $FFFFC683.w
 	JSR	GetRandomNumber
-	AND.w	$FFFFC69C.w, D0
+	AND.w	Encounter_rate.w, D0
 	BEQ.b	loc_0000343E
 	CLR.w	D0
 	RTS
@@ -3132,7 +3132,7 @@ loc_00003496:
 
 loc_00003498:
 	LEA	loc_00020780, A0
-	MOVE.w	$FFFFC556.w, D0
+	MOVE.w	Current_cave.w, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
 	MOVEA.l	(A0,D0.w), A0
@@ -3292,7 +3292,7 @@ loc_00003694:
 	dc.l	loc_000005CC
 loc_000036CC:
 	LEA	loc_000036E8, A0
-	MOVE.w	$FFFFC556.w, D1
+	MOVE.w	Current_cave.w, D1
 	CLR.w	D0
 	MOVE.b	(A0,D1.w), D0
 	MOVE.w	D0, $FFFFC32A.w
@@ -4343,7 +4343,7 @@ loc_000045B0:
 loc_000045B4: ; Enter cave
 	SUBI.b	#$10, D0
 	ANDI.w	#$007F, D0
-	MOVE.w	D0, $FFFFC556.w
+	MOVE.w	D0, Current_cave.w
 	MOVE.b	#$FF, IsInCave.w
 	MOVE.b	#$FF, $FFFFC08E.w
 	TST.b	$FFFFC67D.w
@@ -6313,7 +6313,7 @@ loc_0000623A:
 	DBF	D7, loc_0000623A
 	LEA	$FFFF9310.w, A3
 	LEA	loc_0004009C, A0
-	MOVE.w	$FFFFC556.w, D0
+	MOVE.w	Current_cave.w, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
 	MOVEA.l	(A0,D0.w), A1
@@ -6452,7 +6452,7 @@ loc_000063B0:
 
 loc_000063B2:
 	CLR.b	$FFFFC55F.w
-	MOVE.w	$FFFFC556.w, D0
+	MOVE.w	Current_cave.w, D0
 	ADDI.w	#$0090, D0
 	LEA	$FFFFC820.w, A0
 	MOVE.b	(A0,D0.w), D0
@@ -28344,8 +28344,8 @@ loc_0001AA52:
 	MOVE.l	#loc_00026B98, Script_source_base.w	
 	BRA.b	loc_0001AA72	
 loc_0001AA5C:
-	CLR.b	$FFFFC685.w
-	MOVE.w	#$007F, $FFFFC69C.w ; suspected: effect duration
+	CLR.b	Steps_since_last_encounter.w
+	MOVE.w	#$7F, Encounter_rate.w
 	MOVE.l	#loc_00026B68, Script_source_base.w
 	BSR.w	loc_0001B166
 loc_0001AA72:
@@ -28923,7 +28923,7 @@ loc_0001B0E2:
 	LEA	(A0), A1
 	MOVE.w	(A1)+, D0
 	BLT.w	loc_0001B13E
-	CMP.w	$FFFFC556.w, D0
+	CMP.w	Current_cave.w, D0
 	BNE.w	loc_0001B138
 	MOVE.w	(A1)+, D0
 	CMP.w	D3, D0
@@ -32158,7 +32158,7 @@ loc_0001DF56:
 	LEA	(A0), A1
 	MOVE.w	(A1)+, D0
 	BLT.w	loc_0001DF7E
-	CMP.w	$FFFFC556.w, D0
+	CMP.w	Current_cave.w, D0
 	BNE.w	loc_0001DF78
 	MOVE.w	(A1)+, D0
 	CMP.w	D3, D0
@@ -35422,7 +35422,7 @@ loc_00020F68:
 loc_00020F6A:
 	LEA	$FFFFC820.w, A0
 	CLR.w	D0
-	MOVE.w	$FFFFC556.w, D0
+	MOVE.w	Current_cave.w, D0
 	ADDI.w	#$0090, D0
 	TST.b	(A0,D0.w)
 	BNE.b	loc_00020F84
@@ -37684,41 +37684,20 @@ loc_00023A72:
 	dc.l	loc_0005D7A0
 	dc.l	loc_0005DC36
 	dc.b	$00, $4F 
-loc_00023A7C:
-	dc.b	$28, $28, $28, $27, $27, $27, $24, $00, $21, $23, $20, $20, $1E, $1E, $41, $00, $2A, $2A, $2C, $2E, $25, $25, $24, $24, $21, $21, $00, $00 
-	dc.b	$1E
-	dc.b	$41
-	dc.b	$00, $00, $00, $2D, $2D, $2D, $2E, $2E, $34, $36, $36, $36, $37, $37, $1B, $1C, $1C, $00, $00, $32, $32, $3F, $1E, $2E 
-	dc.b	$0B
-	dc.b	$00, $00 
-	dc.b	$39
-	dc.b	$00, $00, $1B, $1B, $1A, $1C, $03, $02, $05, $05, $08, $08, $0A, $00, $00 
-	dc.b	$39
-	dc.b	$00, $3D, $18, $18, $17, $00 
-	dc.b	$04
-	dc.b	$02
-	dc.b	$07 
-	dc.b	$07
-	dc.b	$08 
-	dc.b	$08
-	dc.b	$09
-	dc.b	$00, $3A, $3A, $3B, $3C, $16, $17, $00, $00 
-	dc.b	$00
-	dc.b	$00 
-	dc.b	$0F
-	dc.b	$00, $00, $0D, $11, $11, $12, $12, $14, $00 
-	dc.b	$16
-	dc.b	$17, $00, $00 
-	dc.b	$00
-	dc.b	$00, $0E, $0E, $0D, $0F, $0F, $11, $00, $12 
-	dc.b	$15
-	dc.b	$14
-	dc.b	$16
-	dc.b	$00, $00, $00 
-loc_00023AFC:
-	dc.b	$01, $06, $06, $0C, $0C, $10, $43, $13, $13, $40, $40, $19, $19, $1D, $1D, $1F, $1F, $1F, $22, $42, $26, $26, $29, $2F, $2F, $30, $31, $31, $35, $35, $38, $38 
+loc_00023A7C: ; Maps current map sector to pointer index at loc_00023B28
+	dc.b	$28, $28, $28, $27, $27, $27, $24, $00, $21, $23, $20, $20, $1E, $1E, $41, $00
+	dc.b	$2A, $2A, $2C, $2E, $25, $25, $24, $24, $21, $21, $00, $00, $1E, $41, $00, $00
+	dc.b	$00, $2D, $2D, $2D, $2E, $2E, $34, $36, $36, $36, $37, $37, $1B, $1C, $1C, $00
+	dc.b	$00, $32, $32, $3F, $1E, $2E, $0B, $00, $00, $39, $00, $00, $1B, $1B, $1A, $1C
+	dc.b	$03, $02, $05, $05, $08, $08, $0A, $00, $00, $39, $00, $3D, $18, $18, $17, $00 
+	dc.b	$04, $02, $07, $07, $08, $08, $09, $00, $3A, $3A, $3B, $3C, $16, $17, $00, $00 
+	dc.b	$00, $00, $0F, $00, $00, $0D, $11, $11, $12, $12, $14, $00, $16, $17, $00, $00 
+	dc.b	$00, $00, $0E, $0E, $0D, $0F, $0F, $11, $00, $12, $15, $14, $16, $00, $00, $00 
+loc_00023AFC: ; 
+	dc.b	$01, $06, $06, $0C, $0C, $10, $43, $13, $13, $40, $40, $19, $19, $1D, $1D, $1F 
+	dc.b	$1F, $1F, $22, $42, $26, $26, $29, $2F, $2F, $30, $31, $31, $35, $35, $38, $38 
 	dc.b	$3E, $3E, $3E, $29, $2B, $2D, $45, $2D, $2B, $2D, $33, $44 
-loc_00023B28:
+loc_00023B28: ; Enemy encounters map
 	dc.l	loc_00023C40
 	dc.l	loc_00023C48
 	dc.l	loc_00023C50
