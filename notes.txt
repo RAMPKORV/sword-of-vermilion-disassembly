@@ -1,6 +1,26 @@
 RAM location suspicions:
 
 
+This contains the current map sector + a neighborhood
+Current_map_sector_data = $FFFF9000
+
+Map format:
+Map data is RLE encoded in a peculiar way. 
+
+You read a byte (A)
+If < $80, output it as is
+If > $80, read another byte and output it $80 - A number of times.
+Repeat
+
+$00 => Ground
+$01 => Tree
+$02 => Rock
+$05 => Cave rock
+$0F => House 
+
+$8x => Entrance to town nr x
+$1x => Entrance to cave nr x or lower level of cave
+$FF => Cave exit
 
 Cursor_selected_option  = $FFFFC23E
 
@@ -12,6 +32,7 @@ $FFFFC4D2.w: ?
 $FFFFC4D4.w: ?
 $FFFFC4D6.w: ?
 $FFFFC4D8.w: ?
+
 
 $FFFFC444: Possessed items array on 2-byte format: first byte is a modifier. If set to 0x01 the item can't be discarded. Second is one of
 00 Herbs   
