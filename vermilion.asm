@@ -344,15 +344,43 @@ loc_00000682:
 	RTS
 
 loc_00000696:
-	dc.b	$80, $04, $81, $64, $90, $11, $8B, $00, $8C, $81, $85, $5C, $8D, $2F, $82, $30, $84, $07, $86, $00, $87, $00, $8A, $00, $8E, $00, $8F, $02, $91, $00, $92, $00 
+	dc.w	$8004, $8164, $9011, $8B00, $8C81, $855C, $8D2F, $8230, $8407, $8600, $8700, $8A00, $8E00, $8F02, $9100, $9200 
 loc_000006B6:
-	dc.b	$00, $05, $00, $00, $00, $07, $00, $10, $00, $80, $00, $00, $14, $74, $FF, $FF, $CC, $00, $00, $00, $00, $07, $00, $10, $00, $80, $00, $00, $14, $6E, $FF, $FF 
-	dc.b	$CC, $04, $00, $00, $00, $1F, $00, $40, $00, $00, $00, $00, $37, $14, $FF, $FF, $CC, $08, $00, $00, $00, $1F, $00, $40, $00, $00, $00, $00, $00, $00, $FF, $FF 
-	dc.b	$CC, $0C, $00, $00, $00, $1F, $00, $40, $00, $00, $00, $00, $00, $00, $FF, $FF, $CC, $10, $00, $1D, $00, $1F, $00, $40, $00, $00, $00, $00, $00, $00, $FF, $FF 
-	dc.b	$CC, $14 
+	dc.w	$0005
+	
+	dc.w	$0000, $0007, $0010, $0080
+	dc.l	loc_00001474
+	dc.l	$FFFFCC00
+
+	dc.w	$0000, $0007, $0010, $0080
+	dc.l	loc_0000146E
+	dc.l	$FFFFCC04
+	
+	dc.w	$0000, $001F, $0040, $0000
+	dc.l	loc_00003714
+	dc.l	$FFFFCC08
+
+	dc.w	$0000, $001F, $0040, $0000
+	dc.l	StartOfRom
+	dc.l	$FFFFCC0C
+
+	dc.w	$0000, $001F, $0040, $0000
+	dc.l	StartOfRom 
+	dc.l	$FFFFCC10
+
+	dc.w	$001D, $001F, $0040, $0000
+	dc.l	StartOfRom
+	dc.l	$FFFFCC14 
 loc_00000718:
-	dc.b	$00, $01, $00, $1D, $00, $1F, $00, $40, $00, $00, $00, $00, $00, $00, $FF, $FF, $CC, $14, $00, $00, $00, $07, $00, $10, $00, $80, $00, $01, $5E, $58, $FF, $FF 
-	dc.b	$CC, $74 
+	dc.w	$0001 
+	
+	dc.w	$001D, $001F, $0040, $0000 
+	dc.l	StartOfRom 
+	dc.l	$FFFFCC14 
+	
+	dc.w	$0000, $0007, $0010, $0080
+	dc.l	loc_00015E58 
+	dc.l	$FFFFCC74 
 loc_0000073A:
 	dc.b	$00, $16, $00, $00, $00, $27, $00, $50, $00, $00, $00, $00, $00, $00, $FF, $FF, $CC, $14, $00, $01, $00, $1F, $00, $40, $00, $00, $00, $00, $00, $00, $00, $00 
 	dc.b	$00, $00, $00, $00, $00, $27, $00, $50, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $01, $00, $1F, $00, $40, $00, $00, $00, $00, $00, $00, $00, $00 
@@ -870,7 +898,7 @@ loc_000014A8:
 	BRA.w	loc_0000181A ; $0F Main game
 	BRA.w	loc_000017F8 ; $20 
 	BRA.w	loc_0000181A ; $21 
-	BRA.w	loc_000017E6 ; $22 
+	BRA.w	loc_000017E6 ; $22
 	BRA.w	loc_000017F6 ; $23 
 	BRA.w	loc_000017F6 ; $24
 	BRA.w	loc_0000171A ; $25
@@ -9179,7 +9207,11 @@ loc_000088AA:
 	RTS
 
 loc_000088AC:
-	dc.b	$04, $D5, $04, $D3, $04, $D7, $04, $D1 
+	dc.w	$04D5 
+	dc.w	$04D3 
+	dc.w	$04D7 
+	dc.w	$04D1 
+
 loc_000088B4:
 	BSET.b	#5, $7(A5)
 	BCLR.b	#6, $7(A5)
@@ -22650,7 +22682,7 @@ loc_000157F0:
 	MOVE.w	#$0023, D7	
 	LEA	Event_triggers_list.w, A0	
 loc_00015844:
-	MOVE.l	#$FFFFFFFF, (A0)+	
+	MOVE.l	#$FFFFFFFF, (A0)+ ; Fill all event triggers
 	DBF	D7, loc_00015844	
 loc_0001584E:
 	LEA	Towns_visited.w, A0	
@@ -22965,6 +22997,7 @@ loc_00015DCC:
 	dc.b	"Prince. Eighteen years", $FE
 	dc.b	"have passed since Tsarkon", $FE
 	dc.b	"began his search....", $FF
+loc_00015E58:
 	CLR.w	$FFFFC100.w
 	MOVE.l	#loc_00015E6A, $2(A5)
 	CLR.b	$FFFFC10C.w
@@ -25804,7 +25837,7 @@ CastFieldMagicMap:
 	BRA.w	CastSanguio
 	BRA.w	CastToxios
 	BRA.w	CastSanguio
-loc_000186F8:
+loc_000186F8: ; Attempting to use battle magic in field
 	JSR	loc_00010C4A	
 	MOVE.l	#loc_00025928, Script_source_base.w	
 	MOVE.w	#9, $FFFFC424.w	
@@ -26411,8 +26444,38 @@ loc_00018FA0:
 	RTS
 
 loc_00018FDA:
-	dc.b	$FF, $F0, $FF, $F0, $FF, $FF, $00, $00, $00, $10, $FF, $F0, $FF, $FF, $00, $01, $FF, $F0, $00, $00, $00, $01, $00, $02, $00, $10, $00, $00, $00, $01, $00, $03 
-	dc.b	$FF, $F0, $FF, $FC, $FF, $FF, $00, $00, $00, $10, $FF, $FC, $FF, $FF, $00, $01, $FF, $F0, $00, $0C, $00, $01, $00, $02, $00, $10, $00, $0C, $00, $01, $00, $03 
+	dc.w	$FFF0 
+	dc.w	$FFF0 
+	dc.w	$FFFF 
+	dc.w	$0000 
+	dc.w	$0010 
+	dc.w	$FFF0 
+	dc.w	$FFFF 
+	dc.w	$0001 
+	dc.w	$FFF0 
+	dc.w	$0000 
+	dc.w	$0001 
+	dc.w	$0002 
+	dc.w	$0010 
+	dc.w	$0000 
+	dc.w	$0001 
+	dc.w	$0003
+	dc.w	$FFF0 
+	dc.w	$FFFC 
+	dc.w	$FFFF 
+	dc.w	$0000 
+	dc.w	$0010 
+	dc.w	$FFFC 
+	dc.w	$FFFF 
+	dc.w	$0001 
+	dc.w	$FFF0 
+	dc.w	$000C 
+	dc.w	$0001 
+	dc.w	$0002 
+	dc.w	$0010 
+	dc.w	$000C 
+	dc.w	$0001 
+	dc.w	$0003 
 
 ;loc_0001901A
 CastVoltios:
@@ -27975,7 +28038,7 @@ loc_0001A5D4:
 	MOVE.b	#$FE, (A1)+
 	LEA	ItemNames, A0
 	LEA	Possessed_items_list.w, A2
-	MOVE.w	$FFFFC440.w, D0
+	MOVE.w	$FFFFC440.w, D0 ; Selected item?
 	ADD.w	D0, D0
 	MOVE.w	(A2,D0.w), D0
 	ANDI.w	#$00FF, D0
@@ -28199,7 +28262,7 @@ loc_0001A8DA:
 	MOVE.w	Current_town.w, D0
 	CMPI.w	#TOWN_STOW1, D0
 	BLE.b	loc_0001A8F4
-	CMPI.w	#$000E, D0
+	CMPI.w	#TOWN_HASTINGS2, D0
 	BLE.b	loc_0001A8F2
 	SUBQ.w	#1, D0	
 loc_0001A8F2:
@@ -29104,12 +29167,12 @@ loc_0001B3B8:
 loc_0001B416:
 	MOVE.w	#6, $FFFFC41E.w
 	CLR.w	Current_shop_type.w
-	MOVE.w	$FFFFC126.w, D0
+	MOVE.w	$FFFFC126.w, D0 ; The shop type entered?
 	ANDI.w	#$0100, D0
 	BEQ.b	loc_0001B43A
 	CLR.w	Current_shop_type.w
 	MOVE.w	Current_town.w, D0
-	CMPI.w	#TOWN_MALAGA, D0
+	CMPI.w	#TOWN_MALAGA, D0 ; The town where guy steals your stuff
 	BNE.b	loc_0001B45C
 	BRA.b	loc_0001B4A4
 loc_0001B43A:
@@ -32354,7 +32417,7 @@ loc_0001E312:
 	MOVE.w	#2, $FFFFC428.w
 	RTS
 	
-loc_0001E326:
+loc_0001E326: ; "Seek" coordinates by town
 	dc.l	loc_0001E366
 	dc.l	loc_0001E366
 	dc.l	loc_0001E366
