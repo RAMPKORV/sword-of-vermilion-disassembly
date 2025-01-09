@@ -32,6 +32,7 @@ SHOP_TYPE_ITEM      = $00
 SHOP_TYPE_EQUIPMENT = $01
 SHOP_TYPE_MAGIC     = $02
 
+Towns_visited                                   = $FFFFC508
 Player_move_forward_in_overworld                = $FFFFC541
 Player_move_backward_in_overworld               = $FFFFC544
 Player_rotate_counter_clockwise_in_overworld    = $FFFFC542

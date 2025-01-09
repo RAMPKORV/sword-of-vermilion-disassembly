@@ -226,7 +226,7 @@ loc_000003F2:
 	BSR.w	loc_00000404
 	RTS
 
-loc_00000404:
+loc_00000404: ; Send below chunk of data into Z80 RAM
 	LEA	$00A00000, A1
 	LEA	loc_0000041C, A2
 	MOVE.w	#$013F, D6
@@ -1166,6 +1166,7 @@ loc_0000183A: ; suspected: Game main loop state execution? ($FFFFC410 - $FFFFC41
 	BRA.w	loc_000024D6 ; $2B "You haven't won yet"
 	BRA.w	loc_000024F8 ; $2C 
 	BRA.w	loc_00002D44 ; $2D Get poisoned messsage
+
 loc_000018F2:
 	TST.b	$FFFFC08E.w
 	BNE.w	loc_00001956
@@ -1196,13 +1197,13 @@ loc_00001958:
 	TST.b	$FFFFC08E.w
 	BNE.w	loc_00001A90
 	JSR	loc_00000682
-	MOVE.w	#$000F, Encounter_rate.w
+	MOVE.w	#$F, Encounter_rate.w
 	JSR	loc_0000FD90
 	JSR	loc_0000F9B4
 	TST.w	$FFFFC12C.w
 	BGT.w	loc_000019BE
 	MOVE.w	Current_town.w, D0
-	CMPI.w	#$000F, D0
+	CMPI.w	#$F, D0
 	BLT.b	loc_0000198C
 	SUBQ.w	#1, D0
 loc_0000198C:
@@ -1210,7 +1211,7 @@ loc_0000198C:
 	BLT.b	loc_00001994
 	SUBQ.w	#1, D0
 loc_00001994:
-	LEA	$FFFFC508.w, A0
+	LEA	Towns_visited.w, A0
 	MOVE.b	#$FF, (A0,D0.w)
 	MOVE.w	Current_town.w, D0
 	ASL.w	#3, D0
@@ -1321,7 +1322,7 @@ loc_00001B2C:
 	MOVE.w	#$00E0, D0
 	JSR	loc_00010522
 	MOVE.b	#$FF, $FFFFC08E.w
-	MOVE.w	#$0012, $FFFFC412.w
+	MOVE.w	#$12, $FFFFC412.w
 	MOVE.b	#$FF, Player_movement_buffer_in_town.w
 	RTS
 
@@ -2996,7 +2997,7 @@ loc_0000332A:
 	LSR.w	#3, D1
 	RTS
 
-loc_00003338:
+loc_00003338: ; Read NPC info into town?
 	MOVE.w	Player_position_x_in_town.w, D0
 	MOVE.w	Player_position_y_in_town.w, D1
 	LEA	loc_0001FDD4, A0
@@ -18296,7 +18297,7 @@ loc_000105CC:
 loc_000105DC:
 	BSR.w	loc_0001066C
 	DBF	D7, loc_000105DC
-	LEA	$FFFFC508.w, A1
+	LEA	Towns_visited.w, A1
 	MOVE.w	#$000D, D7
 loc_000105EC:
 	BSR.w	loc_0001066C
@@ -18513,7 +18514,7 @@ loc_0001085C:
 loc_0001086C:
 	BSR.w	loc_000108F6	
 	DBF	D7, loc_0001086C	
-	LEA	$FFFFC508.w, A1	
+	LEA	Towns_visited.w, A1	
 	MOVE.w	#$000D, D7	
 loc_0001087C:
 	BSR.w	loc_000108F6	
@@ -19237,7 +19238,7 @@ loc_00011304:
 	MOVE.w	#$000C, $FFFF9906.w
 	MOVE.w	#2, $FFFF990C.w
 	LEA	TownNames, A4
-	LEA	$FFFFC508.w, A6
+	LEA	Towns_visited.w, A6
 	LEA	$1C(A4), A4
 	LEA	$7(A6), A6
 	MOVE.w	#6, D7
@@ -19252,7 +19253,7 @@ loc_0001136E:
 	MOVE.w	#2, $FFFF9906.w
 	MOVE.w	#2, $FFFF990C.w
 	LEA	TownNames, A4
-	LEA	$FFFFC508.w, A6
+	LEA	Towns_visited.w, A6
 	MOVE.w	#6, D7
 loc_00011390:
 	MOVEA.l	(A4)+, A0
@@ -22652,8 +22653,8 @@ loc_00015844:
 	MOVE.l	#$FFFFFFFF, (A0)+	
 	DBF	D7, loc_00015844	
 loc_0001584E:
-	LEA	$FFFFC508.w, A0	
-	MOVE.w	#$000D, D7	
+	LEA	Towns_visited.w, A0	
+	MOVE.w	#TOWN_HASTINGS1, D7	
 loc_00015856: ; god mode?
 	MOVE.b	#$FF, (A0)+	
 	DBF	D7, loc_00015856	
@@ -25718,9 +25719,9 @@ loc_000185BC:
 	MOVE.w	#$00A1, D0
 	JSR	loc_00010522
 	MOVE.w	$FFFFC506.w, D0
-	CMPI.w	#$000D, D0
+	CMPI.w	#TOWN_HASTINGS1, D0
 	BGT.w	loc_00018642
-	LEA	$FFFFC508.w, A0
+	LEA	Towns_visited.w, A0
 	MOVE.b	(A0,D0.w), D1
 	BEQ.w	loc_00018642
 	JSR	loc_000126FC
@@ -28489,7 +28490,7 @@ UseMirrorOfAtlas:
 	LEA	$FFFFC820.w, A0
 	MOVE.w	#$00FF, D7
 loc_0001ACB4:
-	MOVE.b	#$FF, (A0)+
+	MOVE.b	#$FF, (A0)+ ; Fill 255 entries with $FF
 	DBF	D7, loc_0001ACB4
 	TST.b	$FFFFC540.w
 	BEQ.b	loc_0001ACCE
@@ -34206,7 +34207,7 @@ loc_0001FD54: ; suspected town spawning location + camera?
 	dc.w	$01E8, $01F8, $0015, $0013
 	dc.w	$0118, $0198, $0008, $000D 
 	dc.w	$0108, $0218, $0007, $0015
-loc_0001FDD4:
+loc_0001FDD4: ; suspected: Town NPCs?
 	BRA.w	loc_0001FE14
 	BRA.w	loc_0001FE1C
 	BRA.w	loc_0001FE24
@@ -34703,7 +34704,7 @@ loc_000203D8:
 	RTS
 	
 loc_000203DA:
-	MOVE.w	#$0100, $FFFFC572.w
+	MOVE.w	#$100, $FFFFC572.w
 	MOVE.l	#$FFFFC788, $FFFFC574.w
 	BSR.w	loc_00021432
 	RTS
@@ -34711,13 +34712,13 @@ loc_000203DA:
 loc_000203EE:
 	dc.b	$31, $FC, $03, $00, $C5, $72, $21, $FC, $FF, $FF, $C7, $8E, $C5, $74, $61, $00, $10, $34, $4E, $75 
 loc_00020402:
-	MOVE.w	#$0050, $FFFFC572.w
-	MOVE.l	#$FFFFC798, $FFFFC574.w
+	MOVE.w	#$50, $FFFFC572.w 		  ; 50 kim chest outside Wyclif
+	MOVE.l	#$FFFFC798, $FFFFC574.w   ; $FFFFC798 is $FF if contents has been taken
 	BSR.w	loc_00021432
 	RTS
 	
 loc_00020416:
-	MOVE.w	#$0300, $FFFFC572.w	
+	MOVE.w	#$300, $FFFFC572.w	
 	MOVE.l	#$FFFFC79B, $FFFFC574.w	
 	BSR.w	loc_00021432	
 	RTS
@@ -35239,7 +35240,7 @@ loc_00020CBC:
 	RTS
 	
 loc_00020CD0:
-	MOVE.w	#$0100, $FFFFC572.w
+	MOVE.w	#$100, $FFFFC572.w
 	MOVE.l	#$FFFFC7E0, $FFFFC574.w
 	BSR.w	loc_00021432
 	RTS
@@ -35331,7 +35332,7 @@ loc_00020E4C:
 	dc.b	$31, $FC, $00, $00, $C5, $72, $21, $FC, $FF, $FF, $C7, $97, $C5, $74, $61, $00, $05, $C2, $4E, $75, $31, $FC, $08, $1E, $C5, $72, $21, $FC, $FF, $FF, $C7, $9D 
 	dc.b	$C5, $74, $61, $00, $05, $B8, $4E, $75 
 loc_00020E74:
-	MOVE.w	#$0700, $FFFFC572.w	
+	MOVE.w	#$700, $FFFFC572.w	
 	MOVE.l	#$FFFFC79E, $FFFFC574.w	
 	BSR.w	loc_00021432	
 	RTS
@@ -74860,7 +74861,7 @@ loc_000931C0:
 	MOVE.w	#8, D6
 loc_000931E2:
 	ADDQ.w	#1, $A(A0)
-	ADDA.l	#$00000030, A0
+	ADDA.l	#$30, A0
 	DBF	D6, loc_000931E2
 loc_000931F0:
 	RTS
