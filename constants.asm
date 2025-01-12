@@ -76,6 +76,7 @@ Player_cave_position_y          = $FFFFC66C
 Player_cave_map_sector_x        = $FFFFC66E
 Player_cave_map_sector_y        = $FFFFC670
 
+Number_Of_Enemies               = $FFFFC682
 Current_encounter_type          = $FFFFC684
 Steps_since_last_encounter      = $FFFFC685
 Encounter_rate                  = $FFFFC69C
