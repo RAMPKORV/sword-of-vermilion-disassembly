@@ -5,13 +5,24 @@ Script_player_name  = $F7
 
 
 ;RAM
+
+Fade_out_buffer         = $FFFFC08E
+
+Camera_movement_buffer_in_town = $FFFFC10C
+
 Script_source_offset    = $FFFFC202
 Script_source_base      = $FFFFC204
 Script_output_y         = $FFFFC232
 Script_output_x         = $FFFFC234
+Script_talk_source      = $FFFFC250
 
 Current_town = $FFFFC40C
 Current_cave = $FFFFC556
+
+Program_state = $FFFFC400
+Game_state = $FFFFC412
+
+Confirm_option = $FFFFC428
 
 Equipped_sword  = $FFFFC4D0
 Equipped_shield = $FFFFC4D2
@@ -19,12 +30,18 @@ Equipped_armor  = $FFFFC4D4
 Readied_magic   = $FFFFC4D6
 Equipped_unused = $FFFFC4D8 ; Probably unused, at least
 
+Selected_item_option        = $FFFFC440
 Possessed_items_length      = $FFFFC442
 Possessed_items_list        = $FFFFC444
+
+Selected_magic_option       = $FFFFC460
+
 Possessed_magics_length     = $FFFFC462
 Possessed_magics_list       = $FFFFC464
 Possessed_equipment_length  = $FFFFC482
 Possessed_equipment_list    = $FFFFC484
+
+Selected_equipment_option   = $FFFFC4E6
 
 Current_shop_type = $FFFFC4A6
 
@@ -38,7 +55,7 @@ Player_move_backward_in_overworld               = $FFFFC544
 Player_rotate_counter_clockwise_in_overworld    = $FFFFC542
 Player_rotate_clockwise_in_overworld            = $FFFFC543
 
-IsInCave = $FFFFC551
+Is_in_cave = $FFFFC551
 
 DIRECTION_UP    = 0
 DIRECTION_LEFT  = 2
@@ -100,8 +117,12 @@ SUP_PLAYER_KIMS     = $01000000
 PRICE_PASS_TO_CARTHAHENA = $50000
 PRICE_SANGUIOS = $1000
 
-Map_list = $FFFFC818
-Event_triggers_list = $FFFFC720 ; TODO: Investigate more
+Map_triggers_start = $FFFFC818
+
+Event_triggers_start    = $FFFFC720
+Blade_is_dead           = $FFFFC720
+Swaffham_ruined         = $FFFFC748
+Tsarkon_is_dead         = $FFFFC758
 
 ; Towns
 TOWN_WYCLIF         = $00
