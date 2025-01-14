@@ -130,6 +130,9 @@ Old_man_has_received_sketch             = $FFFFC75F
 Old_woman_has_received_sketch           = $FFFFC760
 Player_has_received_old_womans_sketch   = $FFFFC763
 
+Boss_event_trigger                      = $FFFFC817
+Solidier_fight_event_trigger            = $FFFFC816
+
 
 Map_triggers_start = $FFFFC818
 

@@ -1423,7 +1423,7 @@ loc_00001A9E:
 	RTS
 
 loc_00001AA0:
-	TST.b	$FFFFC816.w
+	TST.b	Solidier_fight_event_trigger.w
 	BEQ.b	loc_00001AC8
 	MOVE.w	Game_state.w, $FFFFC414.w
 	BSR.w	loc_00001B9A
@@ -1434,7 +1434,7 @@ loc_00001AA0:
 	RTS
 
 loc_00001AC8:
-	TST.b	$FFFFC817.w
+	TST.b	Boss_event_trigger.w
 	BEQ.b	loc_00001AE6
 	MOVE.w	Game_state.w, $FFFFC414.w	
 	BSR.w	loc_00001B9A	
@@ -1537,7 +1537,7 @@ loc_00001C1C:
 	RTS
 
 loc_00001C56:
-	TST.b	$FFFFC817.w
+	TST.b	Boss_event_trigger.w
 	BEQ.b	loc_00001C96
 	MOVEA.l	$FFFFCC08.w, A6	
 	MOVE.w	$E(A6), $FFFFC130.w	
@@ -1858,7 +1858,7 @@ loc_00002114:
 	RTS
 
 loc_00002116:
-	TST.b	$FFFFC817.w
+	TST.b	Boss_event_trigger.w
 	BEQ.b	loc_00002156
 	MOVEA.l	$FFFFCC08.w, A6
 	MOVE.w	$E(A6), $FFFFC130.w
@@ -2045,7 +2045,7 @@ loc_00002412:
 	BGT.b	loc_00002448
 	TST.b	$FFFFC741.w
 	BNE.b	loc_00002428
-	CLR.b	$FFFFC816.w
+	CLR.b	Solidier_fight_event_trigger.w
 loc_00002428:
 	MOVE.w	#$00B9, D0
 	JSR	loc_00010522
@@ -2061,7 +2061,7 @@ loc_0000244A:
 	BGT.b	loc_0000247E
 	TST.b	$FFFFC741.w	
 	BNE.b	loc_0000245A	
-	CLR.b	$FFFFC816.w	
+	CLR.b	Solidier_fight_event_trigger.w	
 loc_0000245A:
 	MOVE.w	#$00B9, D0	
 	JSR	loc_00010522	
@@ -2075,9 +2075,9 @@ loc_0000247E:
 	BNE.w	loc_000024D4
 	MOVE.w	$FFFFC616.w, Player_direction_in_town.w
 	CLR.b	$FFFFC530.w
-	TST.b	$FFFFC816.w
+	TST.b	Solidier_fight_event_trigger.w
 	BEQ.b	loc_000024AA
-	CLR.b	$FFFFC816.w
+	CLR.b	Solidier_fight_event_trigger.w
 	MOVE.b	#$FF, $FFFFC741.w
 	MOVE.b	#$FF, $FFFFC6A8.w
 	BRA.w	loc_00002BC4
@@ -2268,7 +2268,7 @@ loc_00002752:
 	RTS
 	
 loc_0000275A:
-	TST.b	$FFFFC817.w
+	TST.b	Boss_event_trigger.w
 	BEQ.b	loc_0000277E
 	MOVE.w	Game_state.w, $FFFFC414.w
 	MOVE.w	#$21, Game_state.w
@@ -2539,7 +2539,7 @@ loc_00002AC0:
 	ADDQ.w	#1, D0
 	DBF	D7, loc_00002AC0
 loc_00002ACC:
-	CLR.b	$FFFFC817.w
+	CLR.b	Boss_event_trigger.w
 	CLR.b	-$2(A0)
 	MOVE.w	D0, $FFFFC534.w
 	LEA	$FFFFC800.w, A0
@@ -3979,7 +3979,7 @@ loc_00003E48:
 	LEA	(A6,D0.w), A6
 	MOVE.l	#loc_00003EBC, $2(A6)
 	BSR.w	loc_00004234
-	TST.b	$FFFFC816.w
+	TST.b	Solidier_fight_event_trigger.w
 	BEQ.b	loc_00003E8A
 	MOVE.w	#$2B, Game_state.w
 	BRA.b	loc_00003EAA
@@ -4073,7 +4073,7 @@ loc_00003FB8:
 	RTS
 
 loc_00003FCE:
-	TST.b	$FFFFC816.w
+	TST.b	Solidier_fight_event_trigger.w
 	BEQ.b	loc_00004000
 	MOVE.w	$E(A5), D0
 	MOVE.w	$12(A5), D1
@@ -9771,7 +9771,7 @@ loc_00008ED4:
 	MULU.w	#$C, D0
 	ADDQ.w	#4, D0
 	MOVEA.l	(A0,D0.w), A0
-	TST.b	$FFFFC816.w
+	TST.b	Solidier_fight_event_trigger.w
 	BEQ.w	loc_00008F04
 	MOVE.w	#4, D7
 	BRA.w	loc_00008F1C
@@ -16319,7 +16319,7 @@ loc_0000EB32:
 	ADDQ.w	#1, D0
 	DBF	D7, loc_0000EB32
 loc_0000EB40:
-	CLR.b	$FFFFC817.w
+	CLR.b	Boss_event_trigger.w
 	CLR.b	-$2(A0)
 	MOVE.w	D0, $FFFFC534.w
 	LEA	$FFFFC800.w, A0
@@ -17919,7 +17919,7 @@ loc_0000FF16:
 	MOVE.w	#2, $FFFFC532.w
 	BRA.b	loc_0000FF36
 loc_0000FF24:
-	TST.b	$FFFFC816.w
+	TST.b	Solidier_fight_event_trigger.w
 	BEQ.b	loc_0000FF32
 	MOVE.w	#0, $FFFFC532.w
 	BRA.b	loc_0000FF36
@@ -29609,7 +29609,7 @@ loc_0001BAEE:
 loc_0001BAF6:
 	LEA	Possessed_equipment_length.w, A0
 	MOVE.w	(A0), D0
-	CMPI.w	#8, D0
+	CMPI.w	#8, D0 ; Max number of equipment
 	BLT.b	loc_0001BB0C
 	MOVE.l	#loc_0001B91C, Script_source_base.w	
 	BRA.b	loc_0001BB1E	
@@ -35760,7 +35760,7 @@ loc_00021204:
 loc_00021206:
 	TST.b	$FFFFC76D.w
 	BNE.w	loc_0002121C
-	MOVE.b	#$FF, $FFFFC817.w
+	MOVE.b	#$FF, Boss_event_trigger.w
 	MOVE.b	#$FF, $FFFFC805.w
 	RTS
 	
@@ -35773,7 +35773,7 @@ loc_0002121C:
 loc_00021230:
 	TST.b	$FFFFC76E.w
 	BNE.w	loc_00021246
-	MOVE.b	#$FF, $FFFFC817.w
+	MOVE.b	#$FF, Boss_event_trigger.w
 	MOVE.b	#$FF, $FFFFC806.w
 	RTS
 	
@@ -35786,7 +35786,7 @@ loc_00021246:
 loc_0002125A:
 	TST.b	$FFFFC76F.w
 	BNE.w	loc_00021270
-	MOVE.b	#$FF, $FFFFC817.w
+	MOVE.b	#$FF, Boss_event_trigger.w
 	MOVE.b	#$FF, $FFFFC807.w
 	RTS
 	
