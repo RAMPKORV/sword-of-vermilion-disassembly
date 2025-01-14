@@ -706,7 +706,7 @@ loc_000010B8:
 	ADDA.w	D0, A5
 	BRA.b	loc_000010AC
 loc_000010C4:
-	TST.b	$FFFFC540.w
+	TST.b	Player_is_in_overworld.w
 	BNE.b	loc_000010D0
 	JSR	loc_0000F75E
 loc_000010D0:
@@ -1178,7 +1178,7 @@ loc_0000171A:
 	BNE.b	loc_00001756	
 	MOVE.w	#$300, $FFFFC12A.w	
 	BSR.w	loc_0000363C	
-	CLR.b	$FFFFC540.w	
+	CLR.b	Player_is_in_overworld.w	
 	CLR.b	Is_in_cave.w	
 	CLR.b	$FFFFC560.w	
 	CLR.w	$FFFFC562.w	
@@ -1316,7 +1316,7 @@ loc_000018F2:
 	JSR	loc_00000682
 	BSR.w	loc_0000363C
 	JSR	loc_0000055C
-	CLR.b	$FFFFC540.w
+	CLR.b	Player_is_in_overworld.w
 	MOVEA.l	$FFFFCC08.w, A6
 	MOVE.l	#loc_00003714, $2(A6)
 	CLR.w	D0
@@ -1428,7 +1428,7 @@ loc_00001AA0:
 	MOVE.w	Game_state.w, $FFFFC414.w
 	BSR.w	loc_00001B9A
 	MOVE.w	#$F, Game_state.w
-	MOVE.w	#$54, $FFFFC68A.w
+	MOVE.w	#$54, Current_encounter_type.w ; Carthahenian soldiers
 	MOVE.b	#$FF, Fade_out_buffer.w
 	CLR.b	$FFFFC41C.w
 	RTS
@@ -2031,7 +2031,7 @@ loc_00002324:
 loc_000023EA:
 	JSR	loc_000130EA
 	JSR	loc_00013028
-	CLR.b	$FFFFC540.w
+	CLR.b	Player_is_in_overworld.w
 	MOVE.b	#$92, D0
 	JSR	loc_00010522
 	JSR	loc_0001325E
@@ -2092,7 +2092,7 @@ loc_000024BE:
 	JSR	loc_0000363C
 	CLR.w	$FFFFE000.w
 	JSR	loc_0000F688
-	MOVE.b	#$FF, $FFFFC540.w
+	MOVE.b	#$FF, Player_is_in_overworld.w
 loc_000024D4:
 	RTS
 
@@ -2140,7 +2140,7 @@ loc_00002542:
 	JSR	loc_00010066
 	BSR.w	loc_0000340C
 	JSR	loc_0000F972
-	MOVE.b	#$FF, $FFFFC540.w
+	MOVE.b	#$FF, Player_is_in_overworld.w
 	MOVE.w	#$0037, $FFFFC082.w
 	MOVE.w	#$0038, $FFFFC084.w
 	JSR	loc_0001325E
@@ -2157,7 +2157,7 @@ loc_000025AE:
 loc_000025B2:
 	TST.b	Fade_out_buffer.w
 	BNE.b	loc_000025CC
-	CLR.b	$FFFFC540.w
+	CLR.b	Player_is_in_overworld.w
 	MOVE.w	#$00E0, D0
 	JSR	loc_00010522
 	MOVE.w	#0, Game_state.w
@@ -2349,16 +2349,16 @@ loc_00002832:
 	ADD.w	D0, D0
 	MOVE.w	Player_map_sector_x.w, D1
 	ADD.w	D1, D0
-	MOVE.b	(A0,D0.w), Current_encounter_type.w
+	MOVE.b	(A0,D0.w), Current_encounter_type_options.w
 	BRA.b	loc_00002868
 loc_00002858:
 	LEA	loc_00023AFC, A0
 	MOVE.w	Current_cave.w, D0
-	MOVE.b	(A0,D0.w), Current_encounter_type.w
+	MOVE.b	(A0,D0.w), Current_encounter_type_options.w
 loc_00002868:
 	JSR	GetRandomNumber
 	ANDI.w	#3, D0
-	MOVE.w	D0, $FFFFC680.w
+	MOVE.w	D0, Random_number.w
 	JSR	loc_0000F8D2
 	MOVE.l	#$45600002, D7
 	MOVE.w	#$03FF, D6
@@ -2580,7 +2580,7 @@ loc_00002AE0:
 	JSR	loc_0000B7AC
 	JSR	loc_00013138
 	JSR	loc_00012FE0
-	CLR.b	$FFFFC540.w
+	CLR.b	Player_is_in_overworld.w
 	BSR.w	loc_00003654
 	LEA	loc_00003678, A0
 	MOVE.w	$FFFFC534.w, D0
@@ -2639,7 +2639,7 @@ loc_00002BCC:
 	JSR	loc_00010522
 	BRA.b	loc_00002C62
 loc_00002C5C:
-	MOVE.b	#$FF, $FFFFC540.w
+	MOVE.b	#$FF, Player_is_in_overworld.w
 loc_00002C62:
 	JSR	loc_0000066E
 loc_00002C68:
@@ -2657,7 +2657,7 @@ loc_00002C7C:
 	TST.b	Fade_out_buffer.w
 	BNE.w	loc_00002D20
 	BSR.w	loc_0000363C
-	CLR.b	$FFFFC540.w
+	CLR.b	Player_is_in_overworld.w
 	CLR.b	Is_in_cave.w
 	CLR.b	$FFFFC560.w
 	CLR.w	$FFFFC562.w
@@ -3326,7 +3326,7 @@ loc_000034E0:
 	CLR.b	$FFFFC53E.w
 	CLR.b	$FFFFC530.w
 	CLR.b	Is_in_cave.w
-	CLR.b	$FFFFC540.w
+	CLR.b	Player_is_in_overworld.w
 	MOVE.w	Current_town.w, D0
 	CMPI.w	#TOWN_EXCALABRIA, D0
 	BNE.b	loc_0000355C
@@ -4332,7 +4332,7 @@ loc_000043A6:
 	BNE.w	loc_0000457C
 	TST.b	Fade_out_buffer.w
 	BNE.w	loc_0000457C
-	TST.b	$FFFFC540.w
+	TST.b	Player_is_in_overworld.w
 	BEQ.w	loc_0000457C
 	TST.b	Player_move_forward_in_overworld.w
 	BNE.w	loc_000044F2
@@ -7878,7 +7878,7 @@ loc_000075E2:
 	MOVE.l	#loc_000333A4, $1C(A5)
 	BRA.b	loc_00007610
 loc_000075EC:
-	TST.b	$FFFFC75F.w
+	TST.b	Old_man_has_received_sketch.w
 	BEQ.b	loc_00007610
 	LEA	Possessed_items_length.w, A0
 	MOVE.w	(A0), D0
@@ -8212,7 +8212,7 @@ loc_00007A14:
 	MOVE.b	#$FF, $FFFFC764.w
 	BRA.w	loc_00007ACC
 loc_00007A44:
-	TST.b	$FFFFC760.w
+	TST.b	Old_woman_has_received_sketch.w
 	BEQ.w	loc_00007A82
 	MOVE.l	#loc_000372B2, $1C(A5)
 	TST.b	$FFFFC761.w
@@ -8229,11 +8229,11 @@ loc_00007A62:
 loc_00007A82:
 	TST.b	$FFFFC736.w
 	BEQ.b	loc_00007AA4
-	TST.b	$FFFFC763.w
+	TST.b	Player_has_received_old_womans_sketch.w
 	BNE.w	loc_00007AC4
 	BSR.w	loc_00008572
 	MOVE.w	#((ITEM_TYPE_NON_DISCARDABLE<<8)|ITEM_OLD_WOMANS_SKETCH), (A0,D0.w)
-	MOVE.b	#$FF, $FFFFC763.w
+	MOVE.b	#$FF, Player_has_received_old_womans_sketch.w
 	BRA.w	loc_00007ACC
 loc_00007AA4:
 	TST.b	$FFFFC744.w
@@ -9553,16 +9553,16 @@ loc_00008B88:
 loc_00008BA6:
 	LEA	loc_00023B28, A1
 	CLR.w	D2
-	MOVE.b	Current_encounter_type.w, D2
+	MOVE.b	Current_encounter_type_options.w, D2
 	ADD.w	D2, D2
 	ADD.w	D2, D2
 	MOVEA.l	(A1,D2.w), A6
-	MOVE.w	$FFFFC680.w, D0 ; Random number between 0-3
+	MOVE.w	Random_number.w, D0 ; The specific encounter option
 	ADD.w	D0, D0
 	MOVE.w	(A6,D0.w), D1
-	MOVE.w	D1, $FFFFC68A.w
+	MOVE.w	D1, Current_encounter_type.w
 	LEA	loc_00023E70, A6
-	MULU.w	#$000C, D1
+	MULU.w	#$C, D1 ; Each encounter encompasses three pointers
 	MOVEA.l	(A6,D1.w), A6
 	MOVE.b	$14(A6), $6(A5)
 	MOVE.w	$16(A6), $FFFFC086.w
@@ -9767,7 +9767,7 @@ loc_00008ED4:
 	DBF	D7, loc_00008ED4
 	MOVEA.l	$FFFFCC14.w, A6
 	LEA	loc_00023E70, A0
-	MOVE.w	$FFFFC68A.w, D0
+	MOVE.w	Current_encounter_type.w, D0
 	MULU.w	#$C, D0
 	ADDQ.w	#4, D0
 	MOVEA.l	(A0,D0.w), A0
@@ -16339,7 +16339,7 @@ loc_0000EB54:
 	MOVEA.l	$FFFFCC08.w, A6
 	MOVE.b	#$FF, $FFFFC530.w
 	JSR	loc_0000B7AC
-	CLR.b	$FFFFC540.w
+	CLR.b	Player_is_in_overworld.w
 	JSR	loc_0000D046
 	RTS
 	
@@ -17330,7 +17330,7 @@ loc_0000F806:
 	BSR.w	loc_0000FAC6
 	BSR.w	loc_0000FAE0
 	LEA	loc_00023E70, A6
-	MOVE.w	$FFFFC68A.w, D0
+	MOVE.w	Current_encounter_type.w, D0
 	MULU.w	#$000C, D0
 	ADDQ.w	#8, D0
 	MOVEA.l	(A6,D0.w), A6
@@ -17380,14 +17380,14 @@ loc_0000F8D2:
 	LEA	$FFFFA000.w, A2
 	LEA	loc_00023B28, A1
 	CLR.w	D2
-	MOVE.b	Current_encounter_type.w, D2
+	MOVE.b	Current_encounter_type_options.w, D2
 	ADD.w	D2, D2
 	ADD.w	D2, D2
 	MOVEA.l	(A1,D2.w), A6
-	MOVE.w	$FFFFC680.w, D0
+	MOVE.w	Random_number.w, D0
 	ADD.w	D0, D0
 	MOVE.w	(A6,D0.w), D1 ; Get the specific, of the 4 possible, encounter types
-	MOVE.w	D1, $FFFFC68A.w
+	MOVE.w	D1, Current_encounter_type.w
 	LEA	loc_00023E70, A6
 	MULU.w	#$C, D1
 	MOVEA.l	(A6,D1.w), A6
@@ -17811,12 +17811,12 @@ loc_0000FD90:
 	BRA.b	loc_0000FDC0
 loc_0000FDAA:
 	LEA	loc_0001F418, A1
-	MOVE.w	Current_town.w, D0
-	MOVE.w	D0, D1
-	ADD.w	D1, D1
-	ASL.w	#3, D0
+	MOVE.w	Current_town.w, D0 
+	MOVE.w	D0, D1  
+	ADD.w	D1, D1  
+	ASL.w	#3, D0 
 	ADD.w	D1, D0
-	MOVEA.l	(A1,D0.w), A0
+	MOVEA.l	(A1,D0.w), A0 ; Multiply current town by 10
 loc_0000FDC0:
 	MOVE.w	#$00FF, D5
 loc_0000FDC4:
@@ -20760,7 +20760,7 @@ loc_00012620:
 	MOVE.w	#$001F, $FFFFC22C.w
 	MOVE.w	#8, $FFFFC22E.w
 	BSR.w	loc_00012788
-	TST.b	$FFFFC540.w
+	TST.b	Player_is_in_overworld.w
 	BEQ.b	loc_0001264C
 	BSR.w	loc_00013186
 loc_0001264C:
@@ -23127,7 +23127,7 @@ loc_00015DCC:
 loc_00015E6A:
 	TST.b	$FFFFC530.w
 	BNE.b	loc_00015EA4
-	TST.b	$FFFFC540.w
+	TST.b	Player_is_in_overworld.w
 	BNE.b	loc_00015EA4
 	TST.b	Fade_out_buffer.w
 	BNE.b	loc_00015EA4
@@ -25511,7 +25511,7 @@ loc_00018078:
 loc_00018080:
 	TST.b	$FFFF9911.w
 	BNE.b	loc_000180A6
-	TST.b	$FFFFC540.w
+	TST.b	Player_is_in_overworld.w
 	BEQ.b	loc_00018092
 	JSR	loc_00013028
 loc_00018092:
@@ -25849,7 +25849,7 @@ loc_0001856A:
 	MOVE.w	#$000E, $FFFF9912.w
 	CLR.w	$FFFF9916.w
 	MOVE.b	#$FF, $FFFF9911.w
-	TST.b	$FFFFC540.w
+	TST.b	Player_is_in_overworld.w
 	BEQ.b	loc_00018592
 	JSR	loc_00012EF6
 loc_00018592:
@@ -25890,7 +25890,7 @@ loc_000185BC:
 	MOVE.w	#0, Player_direction_in_town.w
 	MOVE.b	#$FF, Fade_out_buffer.w
 	MOVE.w	#$12, Game_state.w
-	MOVE.b	#$FF, $FFFFC540.w
+	MOVE.b	#$FF, Player_is_in_overworld.w
 	CLR.b	Is_in_cave.w
 	MOVE.w	#$0089, D0
 	JSR	loc_00010522
@@ -25970,7 +25970,7 @@ CastInaudios:
 	BNE.w	loc_000189AC
 	BSR.w	loc_0001A21C
 	BNE.w	loc_00018996
-	TST.b	$FFFFC540.w
+	TST.b	Player_is_in_overworld.w
 	BEQ.b	loc_00018752
 	TST.b	Is_in_cave.w
 	BNE.b	loc_00018752
@@ -26100,7 +26100,7 @@ CastAries:
 	BNE.w	loc_000189AC
 	BSR.w	loc_0001A21C
 	BNE.w	loc_00018996
-	TST.b	$FFFFC540.w
+	TST.b	Player_is_in_overworld.w
 	BEQ.b	loc_00018912
 	TST.b	Is_in_cave.w
 	BNE.w	loc_00018912
@@ -26128,7 +26128,7 @@ CastExtrios:
 	MOVE.w	Player_cave_map_sector_y.w, Player_map_sector_y.w
 	MOVE.b	#$FF, Fade_out_buffer.w
 	MOVE.w	#$12, Game_state.w
-	MOVE.b	#$FF, $FFFFC540.w
+	MOVE.b	#$FF, Player_is_in_overworld.w
 	CLR.b	Is_in_cave.w
 	CLR.b	$FFFFC560.w
 	CLR.w	$FFFFC562.w
@@ -28334,7 +28334,7 @@ loc_0001A82A:
 
 loc_0001A854:
 	JSR	loc_00012610
-	TST.b	$FFFFC540.w
+	TST.b	Player_is_in_overworld.w
 	BEQ.b	loc_0001A870
 	TST.b	$FFFFC45C.w
 	BEQ.b	loc_0001A86A
@@ -28398,7 +28398,7 @@ loc_0001A8F4:
 	MOVE.w	#0, Player_direction_in_town.w
 	MOVE.b	#$FF, Fade_out_buffer.w
 	MOVE.w	#$12, Game_state.w
-	MOVE.b	#$FF, $FFFFC540.w
+	MOVE.b	#$FF, Player_is_in_overworld.w
 	CLR.b	Is_in_cave.w
 	MOVE.w	#$0089, D0
 	JSR	loc_00010522
@@ -28420,7 +28420,7 @@ loc_0001A954:
 	MOVE.w	Player_cave_map_sector_y.w, Player_map_sector_y.w
 	MOVE.b	#$FF, Fade_out_buffer.w
 	MOVE.w	#$12, Game_state.w
-	MOVE.b	#$FF, $FFFFC540.w
+	MOVE.b	#$FF, Player_is_in_overworld.w
 	CLR.b	Is_in_cave.w
 	CLR.b	$FFFFC560.w
 	CLR.w	$FFFFC562.w
@@ -28479,7 +28479,7 @@ UseItemMap:
 UseRubyBrooch:
 	TST.b	Is_in_cave.w
 	BNE.b	loc_0001AA52
-	TST.b	$FFFFC540.w
+	TST.b	Player_is_in_overworld.w
 	BNE.b	loc_0001AA5C
 loc_0001AA52:
 	MOVE.l	#loc_00026B98, Script_source_base.w	
@@ -28488,20 +28488,20 @@ loc_0001AA5C:
 	CLR.b	Steps_since_last_encounter.w
 	MOVE.w	#$7F, Encounter_rate.w
 	MOVE.l	#loc_00026B68, Script_source_base.w
-	BSR.w	loc_0001B166
+	BSR.w	RemoveSelectedItemFromList
 loc_0001AA72:
 	RTS
 
 ;loc_0001AA74:
 UseBansheePowder:
-	TST.b	$FFFFC540.w
+	TST.b	Player_is_in_overworld.w
 	BNE.b	loc_0001AA84
 	MOVE.l	#loc_00026B1E, Script_source_base.w	
 	BRA.b	loc_0001AA96	
 loc_0001AA84:
 	MOVE.b	#$FF, $FFFFC45C.w
 	MOVE.l	#loc_00026AD4, Script_source_base.w
-	BSR.w	loc_0001B166
+	BSR.w	RemoveSelectedItemFromList
 loc_0001AA96:
 	RTS
 
@@ -28513,7 +28513,7 @@ UseKulmsVase:
 	MOVE.w	#1500, Player_ac.w	
 loc_0001AAAC:
 	MOVE.l	#loc_00026DFC, Script_source_base.w	
-	BSR.w	loc_0001B166	
+	BSR.w	RemoveSelectedItemFromList	
 	MOVE.w	#$00AE, D0	
 	JSR	loc_00010522	
 	RTS
@@ -28526,7 +28526,7 @@ UseKasansChisel:
 	MOVE.w	#MAX_PLAYER_DEX, Player_dex.w	
 loc_0001AAD8:
 	MOVE.l	#loc_00026F76, Script_source_base.w	
-	BSR.w	loc_0001B166	
+	BSR.w	RemoveSelectedItemFromList	
 	MOVE.w	#$00AE, D0	
 	JSR	loc_00010522	
 	RTS
@@ -28539,7 +28539,7 @@ UseBookOfKiel:
 	MOVE.w	#MAX_PLAYER_INT, Player_int.w	
 loc_0001AB04:
 	MOVE.l	#loc_00026EC2, Script_source_base.w	
-	BSR.w	loc_0001B166	
+	BSR.w	RemoveSelectedItemFromList	
 	MOVE.w	#$00AE, D0	
 	JSR	loc_00010522	
 	RTS
@@ -28561,7 +28561,7 @@ loc_0001AB2E:
 loc_0001AB4C:
 	MOVE.l	#loc_00026E84, Script_source_base.w	
 loc_0001AB54:
-	BSR.w	loc_0001B166	
+	BSR.w	RemoveSelectedItemFromList	
 	MOVE.w	#$00AE, D0	
 	JSR	loc_00010522	
 	RTS
@@ -28574,7 +28574,7 @@ UseMineralBar:
 	MOVE.w	#1500, Player_str.w	
 loc_0001AB78:
 	MOVE.l	#loc_00026F0C, Script_source_base.w	
-	BSR.w	loc_0001B166	
+	BSR.w	RemoveSelectedItemFromList	
 	MOVE.w	#$00AE, D0	
 	JSR	loc_00010522	
 	RTS
@@ -28587,7 +28587,7 @@ UseMegaBlast:
 	MOVE.w	#MAX_PLAYER_LUK, Player_luk.w	
 loc_0001ABA4:
 	MOVE.l	#loc_00026F42, Script_source_base.w	
-	BSR.w	loc_0001B166	
+	BSR.w	RemoveSelectedItemFromList	
 	MOVE.w	#$00AE, D0	
 	JSR	loc_00010522	
 	RTS
@@ -28630,7 +28630,7 @@ loc_0001AC14:
 	MOVE.w	Player_mmp.w, Player_mp.w	
 	MOVE.l	#loc_00026A18, Script_source_base.w	
 loc_0001AC34:
-	BSR.w	loc_0001B166
+	BSR.w	RemoveSelectedItemFromList
 	MOVE.w	#$00AE, D0
 	JSR	loc_00010522
 	RTS
@@ -28651,18 +28651,18 @@ loc_0001AC54:
 	MOVE.w	Player_mhp.w, Player_hp.w
 	MOVE.l	#loc_00026AA4, Script_source_base.w
 loc_0001AC74:
-	BSR.w	loc_0001B166
+	BSR.w	RemoveSelectedItemFromList
 	MOVE.w	#$00AE, D0
 	JSR	loc_00010522
 	RTS
 
 ;loc_0001AC84
 UseGriffinWing:
-	TST.b	$FFFFC540.w
+	TST.b	Player_is_in_overworld.w
 	BEQ.b	loc_0001AC9A
 	TST.b	Is_in_cave.w
 	BNE.b	loc_0001AC9A
-	BSR.w	loc_0001B166
+	BSR.w	RemoveSelectedItemFromList
 	MOVE.w	#$000D, $FFFFC420.w
 loc_0001AC9A:
 	MOVE.l	#loc_00025980, Script_source_base.w
@@ -28676,17 +28676,17 @@ UseMirrorOfAtlas:
 loc_0001ACB4:
 	MOVE.b	#$FF, (A0)+ ; Fill 255 entries with $FF
 	DBF	D7, loc_0001ACB4
-	TST.b	$FFFFC540.w
+	TST.b	Player_is_in_overworld.w
 	BEQ.b	loc_0001ACCE
 	MOVE.b	#$FF, $FFFFC55F.w
 	JSR	loc_00006458
 loc_0001ACCE:
-	BSR.w	loc_0001B166
+	BSR.w	RemoveSelectedItemFromList
 	RTS
 
 ;loc_0001ACD4
 UseTitaniasMirror:
-	TST.b	$FFFFC540.w	
+	TST.b	Player_is_in_overworld.w	
 	BEQ.b	loc_0001ACF6	
 	TST.b	Is_in_cave.w	
 	BNE.b	loc_0001ACF6	
@@ -28703,7 +28703,7 @@ loc_0001ACF6:
 UseGnomeStone:
 	TST.b	Is_in_cave.w
 	BEQ.b	loc_0001AD12
-	BSR.w	loc_0001B166
+	BSR.w	RemoveSelectedItemFromList
 	MOVE.w	#$000E, $FFFFC420.w
 	RTS
 
@@ -28729,7 +28729,7 @@ loc_0001AD44:
 loc_0001AD4E:
 	MOVE.l	#loc_00026750, Script_source_base.w	
 loc_0001AD56:
-	BSR.w	loc_0001B166
+	BSR.w	RemoveSelectedItemFromList
 	RTS
 
 ;loc_0001AD5C:
@@ -28744,13 +28744,13 @@ UseCandle:
 	MOVE.b	#6, $FFFFC0AA.w
 	MOVE.w	#$0800, $FFFFC562.w
 	MOVE.b	#$FF, $FFFFC560.w
-	BSR.w	loc_0001B166
+	BSR.w	RemoveSelectedItemFromList
 	MOVE.w	#$00AD, D0
 	JSR	loc_00010522
 	RTS
 
 loc_0001AD9C:
-	BSR.w	loc_0001B166
+	BSR.w	RemoveSelectedItemFromList
 	MOVE.l	#loc_00025992, Script_source_base.w
 	RTS
 
@@ -28766,13 +28766,13 @@ UseLantern:
 	MOVE.b	#6, $FFFFC0AA.w
 	CLR.w	$FFFFC562.w
 	MOVE.b	#1, $FFFFC560.w
-	BSR.w	loc_0001B166
+	BSR.w	RemoveSelectedItemFromList
 	MOVE.w	#$00AD, D0
 	JSR	loc_00010522
 	RTS
 
 loc_0001ADE8:
-	BSR.w	loc_0001B166	
+	BSR.w	RemoveSelectedItemFromList	
 	MOVE.l	#loc_00025992, Script_source_base.w	
 	RTS
 	
@@ -28841,21 +28841,21 @@ loc_0001AE88:
 ;loc_0001AEA0:
 UseVase:
 	MOVE.l	#loc_00026C2C, Script_source_base.w	
-	BSR.w	loc_0001B166	
+	BSR.w	RemoveSelectedItemFromList	
 	RTS
 	
 
 ;loc_0001AEAE:
 UseJokeBook:
 	MOVE.l	#loc_00026C7A, Script_source_base.w	
-	BSR.w	loc_0001B166	
+	BSR.w	RemoveSelectedItemFromList	
 	RTS
 	
 
 ;loc_0001AEBC:
 UseSmallBomb:
 	MOVE.l	#loc_00026CBE, Script_source_base.w
-	BSR.w	loc_0001B166
+	BSR.w	RemoveSelectedItemFromList
 	MOVE.w	#$00BF, D0
 	JSR	loc_00010522
 	RTS
@@ -28890,9 +28890,9 @@ loc_0001AF1E:
 	RTS
 	
 loc_0001AF28:
-	MOVE.b	#$FF, $FFFFC75F.w
+	MOVE.b	#$FF, Old_man_has_received_sketch.w
 	MOVE.l	#loc_00026D3E, Script_source_base.w
-	BSR.w	loc_0001B166
+	BSR.w	RemoveSelectedItemFromList
 	RTS
 loc_0001AF3C:
 	dc.w	OLD_MAN_POSITION_X
@@ -28917,7 +28917,7 @@ UseOldMansSketch
 	CMPI.w	#TOWN_HELWIG, D0
 	BNE.w	loc_0001AFA2
 	MOVE.w	Game_state.w, D0
-	TST.b	$FFFFC540.w
+	TST.b	Player_is_in_overworld.w
 	BNE.w	loc_0001AFA2
 	CLR.w	D0
 	CLR.w	D1
@@ -28942,9 +28942,9 @@ loc_0001AFA2:
 	RTS
 	
 loc_0001AFAC:
-	MOVE.b	#$FF, $FFFFC760.w
+	MOVE.b	#$FF, Old_woman_has_received_sketch.w
 	MOVE.l	#loc_00026D64, Script_source_base.w
-	BSR.w	loc_0001B166
+	BSR.w	RemoveSelectedItemFromList
 	RTS
 
 loc_0001AFC0:
@@ -28986,7 +28986,7 @@ UseDigotPlant:
 loc_0001B008:
 	MOVE.l	#loc_00026732, Script_source_base.w
 loc_0001B010:
-	BSR.w	loc_0001B166
+	BSR.w	RemoveSelectedItemFromList
 	RTS
 
 ;loc_0001B016:
@@ -29041,7 +29041,7 @@ UseBlueCrystal:
 	
 ;loc_0001B094
 UseGeneric:
-	TST.b	$FFFFC540.w
+	TST.b	Player_is_in_overworld.w
 	BNE.b	loc_0001B0AC
 	JSR	loc_000039C0	
 	CMPI.w	#$9000, D0	
@@ -29105,7 +29105,8 @@ loc_0001B15C:
 	MOVE.l	#loc_00027180, Script_source_base.w	
 	RTS
 	
-loc_0001B166:
+;loc_0001B166:
+RemoveSelectedItemFromList:
 	MOVE.w	Selected_item_option.w, D0
 	MOVE.w	#9, D2
 	LEA	Possessed_items_list.w, A0
@@ -29181,7 +29182,7 @@ loc_0001B266:
 	JSR	loc_0001229E
 	JSR	loc_00010C4A
 	ADDQ.w	#1, $FFFFC41E.w
-	TST.b	$FFFFC540.w
+	TST.b	Player_is_in_overworld.w
 	BNE.w	loc_0001B49C
 	JSR	loc_000039C0
 	CMPI.w	#$4000, D0
@@ -32043,7 +32044,7 @@ loc_0001DBB2:
 	RTS
 
 loc_0001DBC8:
-	TST.b	$FFFFC540.w
+	TST.b	Player_is_in_overworld.w
 	BNE.w	loc_0001DBD0
 loc_0001DBD0:
 	MOVE.w	$FFFFC42A.w, D0
@@ -32065,7 +32066,7 @@ loc_0001DBE8:
 loc_0001DC04:
 	MOVE.w	$FFFFC418.w, $FFFFC23E.w
 	JSR	loc_0001290C
-	TST.b	$FFFFC540.w
+	TST.b	Player_is_in_overworld.w
 	BNE.w	loc_0001DC2A
 	JSR	loc_000039C0
 	CMPI.w	#$9000, D0
@@ -32338,7 +32339,7 @@ loc_0001E000:
 loc_0001E010:
 	MOVE.w	$FFFFC418.w, $FFFFC23E.w
 	JSR	loc_0001290C
-	TST.b	$FFFFC540.w
+	TST.b	Player_is_in_overworld.w
 	BNE.w	loc_0001E034
 	BSR.w	loc_0001E14E
 	BNE.w	loc_0001E098
@@ -32657,7 +32658,7 @@ loc_0001E4B0:
 	RTS
 	
 loc_0001E4C2:
-	TST.b	$FFFFC540.w
+	TST.b	Player_is_in_overworld.w
 	BEQ.w	loc_0001E4F2
 	TST.b	$FFFFC561.w
 	BEQ.w	loc_0001E4F2
@@ -33693,52 +33694,67 @@ loc_0001F3E4:
 	dc.l	loc_000377EA
 	dc.l	loc_0003BE32
 	dc.l	loc_0003BE32
-loc_0001F418:
+loc_0001F418: ; Tile mappings + graphics by town
 	dc.l	loc_0008863E
 	dc.l	loc_0008A34A
 	dc.w	$0097
+
 	dc.l	loc_0008B97A
 	dc.l	loc_0008D48C
 	dc.w	$0039
+
 	dc.l	loc_0008863E
 	dc.l	loc_0008A34A
 	dc.w	$0097
+
 	dc.l	loc_0008B97A
 	dc.l	loc_0008D48C
 	dc.w	$0039
+
 	dc.l	loc_0008B97A
 	dc.l	loc_0008D48C
 	dc.w	$0039
+
 	dc.l	loc_0008B97A
 	dc.l	loc_0008D48C
 	dc.w	$0039	
+
 	dc.l	loc_0008B97A
 	dc.l	loc_0008D48C
 	dc.w	$0039
+
 	dc.l	loc_0008B97A
 	dc.l	loc_0008D48C
 	dc.w	$0039
+
 	dc.l	loc_0008863E
 	dc.l	loc_0008A34A
 	dc.w	$0097
+
 	dc.l	loc_0008B97A
 	dc.l	loc_0008D48C
 	dc.w	$0039
+
 	dc.l	loc_0008863E
 	dc.l	loc_0008A34A
 	dc.w	$0097
+
 	dc.l	loc_0008B97A
 	dc.l	loc_0008D48C
 	dc.w	$0039
+
 	dc.l	loc_0008E0C8
 	dc.l	loc_0008FB08
 	dc.w	$001E
+
 	dc.l	loc_0008863E
 	dc.l	loc_0008A34A
 	dc.w	$0097
+
 	dc.l	loc_0008B97A
 	dc.l	loc_0008D48C
 	dc.w	$0039	
+
 	dc.l	loc_0008B97A
 	dc.l	loc_0008D48C
 	dc.w	$0039
@@ -38063,9 +38079,9 @@ loc_00023E60:
 loc_00023E68:
 	dc.w	$0021, $001F, $001E, $004C 
 loc_00023E70:
-	dc.l	loc_0002426C
-	dc.l	loc_0002471C
-	dc.l	loc_00024FEE
+	dc.l	loc_0002426C ; Appearance
+	dc.l	loc_0002471C ; Sprite mappings
+	dc.l	loc_00024FEE ; Sprites
 	dc.l	loc_00024284
 	dc.l	loc_00024736
 	dc.l	loc_00024FEE
@@ -38324,7 +38340,7 @@ loc_0002426C:
 	dc.l	loc_000549E4
 	dc.l	loc_00054B3E
 	dc.l	loc_0000FFF2-2	
-	dc.l	$0E0D005A	
+	dc.l	$0E0D005A	; Appearance palette/vfx
 loc_00024284:
 	dc.l	loc_000544E4
 	dc.l	loc_0005490C

@@ -50,6 +50,8 @@ SHOP_TYPE_EQUIPMENT = $01
 SHOP_TYPE_MAGIC     = $02
 
 Towns_visited                                   = $FFFFC508
+
+Player_is_in_overworld                          = $FFFFC540
 Player_move_forward_in_overworld                = $FFFFC541
 Player_move_backward_in_overworld               = $FFFFC544
 Player_rotate_counter_clockwise_in_overworld    = $FFFFC542
@@ -93,9 +95,12 @@ Player_cave_position_y          = $FFFFC66C
 Player_cave_map_sector_x        = $FFFFC66E
 Player_cave_map_sector_y        = $FFFFC670
 
+Random_number                   = $FFFFC680
 Number_Of_Enemies               = $FFFFC682
-Current_encounter_type          = $FFFFC684
+Current_encounter_type_options  = $FFFFC684
 Steps_since_last_encounter      = $FFFFC685
+Current_encounter_type          = $FFFFC68A
+
 Encounter_rate                  = $FFFFC69C
 MAX_STEPS_BETWEEN_ENCOUNTERS    = 20
 
@@ -117,12 +122,16 @@ SUP_PLAYER_KIMS     = $01000000
 PRICE_PASS_TO_CARTHAHENA = $50000
 PRICE_SANGUIOS = $1000
 
-Map_triggers_start = $FFFFC818
+Event_triggers_start                    = $FFFFC720
+Blade_is_dead                           = $FFFFC720
+Swaffham_ruined                         = $FFFFC748
+Tsarkon_is_dead                         = $FFFFC758
+Old_man_has_received_sketch             = $FFFFC75F
+Old_woman_has_received_sketch           = $FFFFC760
+Player_has_received_old_womans_sketch   = $FFFFC763
 
-Event_triggers_start    = $FFFFC720
-Blade_is_dead           = $FFFFC720
-Swaffham_ruined         = $FFFFC748
-Tsarkon_is_dead         = $FFFFC758
+
+Map_triggers_start = $FFFFC818
 
 ; Towns
 TOWN_WYCLIF         = $00
