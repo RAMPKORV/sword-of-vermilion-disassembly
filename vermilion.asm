@@ -19610,7 +19610,7 @@ loc_00011574:
 
 loc_00011576:
 	LEA	$FFFFC65E.w, A0
-	LEA	Player_experience.w, A1
+	LEA	(Player_kims+4).w, A1
 	MOVEQ	#3, D1
 loc_00011580:
 	ABCD	-(A0), -(A1)
@@ -19622,9 +19622,9 @@ loc_00011580:
 loc_0001159C:
 	RTS
 	
-loc_0001159E:
+loc_0001159E: ; Pay?
 	LEA	$FFFFC65E.w, A0
-	LEA	Player_experience.w, A1
+	LEA	(Player_kims+4).w, A1
 	MOVEQ	#3, D1
 loc_000115A8:
 	SBCD	-(A0), -(A1)
@@ -28471,7 +28471,7 @@ UseItemMap:
 	BRA.w	UseKulmsVase
 	BRA.w	UseKasansChisel
 	BRA.w	UseBookOfKiel
-	BRA.w	DanegeldWater
+	BRA.w	UseDanegeldWater
 	BRA.w	UseMineralBar
 	BRA.w	UseMegaBlast
 
@@ -28545,7 +28545,7 @@ loc_0001AB04:
 	RTS
 	
 ;loc_0001AB1C
-DanegeldWater:
+UseDanegeldWater:
 	ADDQ.w	#8, Player_mmp.w	
 	CMPI.w	#MAX_PLAYER_MMP, Player_mmp.w	
 	BLE.b	loc_0001AB2E	
