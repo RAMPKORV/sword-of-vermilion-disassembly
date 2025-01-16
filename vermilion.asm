@@ -1183,8 +1183,8 @@ loc_0000171A:
 	CLR.b	$FFFFC560.w	
 	CLR.w	$FFFFC562.w	
 	BSR.w	loc_000034E0	
-	MOVE.w	#$E, Program_state.w	
-	MOVE.w	#3, Game_state.w	
+	MOVE.w	#$E, Program_state.w ; Transition to main game?	
+	MOVE.w	#3, Game_state.w 	 ; Entering building/town?
 	MOVE.w	$FFFFC152.w, $FFFFC126.w	
 	JSR	loc_000033BE	
 loc_00001756:
@@ -1658,7 +1658,7 @@ loc_00001E08:
 
 loc_00001E0A:
 	MOVE.b	#$FF, $FFFFC7F3.w	
-	MOVE.w	#$00B9, D0	
+	MOVE.w	#$B9, D0	
 	JSR	loc_00010522	
 	MOVE.w	#$24, Game_state.w	
 	CLR.w	Player_level.w	
@@ -1680,14 +1680,14 @@ loc_00001E5E:
 	MOVE.w	Equipped_shield.w, D1	
 	BLT.w	loc_00001E78	
 	LEA	EquipmentToStatModifierMap, A0	
-	ANDI.w	#$00FF, D1	
+	ANDI.w	#$FF, D1	
 	ADD.w	D1, D1	
 	MOVE.w	(A0,D1.w), Player_ac.w	
 loc_00001E78:
 	MOVE.w	Equipped_armor.w, D1	
 	BLT.w	loc_00001E94	
 	LEA	EquipmentToStatModifierMap, A0	
-	ANDI.w	#$00FF, D1	
+	ANDI.w	#$FF, D1	
 	ADD.w	D1, D1	
 	MOVE.w	(A0,D1.w), D1	
 	ADD.w	D1, Player_ac.w	
@@ -2303,7 +2303,7 @@ loc_000027B6:
 	CLR.b	$FFFFC579.w
 loc_000027CC:
 	BSR.w	loc_000030AC
-	TST.b	$FFFFC683.w ; Whether we have checked for encounters
+	TST.b	$FFFFC683.w ; Whether we have checked for encounters?
 	BNE.b	loc_000027FC
 	TST.b	Tsarkon_is_dead.w
 	BNE.w	loc_000027FC
@@ -2341,7 +2341,7 @@ loc_00002830:
 loc_00002832:
 	TST.b	Is_in_cave.w
 	BNE.b	loc_00002858
-	LEA	loc_00023A7C, A0
+	LEA	EnemyEncounterTypesByMapSector, A0
 	MOVE.w	Player_map_sector_y.w, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
@@ -2352,8 +2352,8 @@ loc_00002832:
 	MOVE.b	(A0,D0.w), Current_encounter_type_options.w
 	BRA.b	loc_00002868
 loc_00002858:
-	LEA	loc_00023AFC, A0
-	MOVE.w	Current_cave.w, D0
+	LEA	EnemyEncounterTypesByCaveRoom, A0
+	MOVE.w	Current_cave_room.w, D0
 	MOVE.b	(A0,D0.w), Current_encounter_type_options.w
 loc_00002868:
 	JSR	GetRandomNumber
@@ -3276,7 +3276,7 @@ loc_00003496:
 
 loc_00003498:
 	LEA	loc_00020780, A0
-	MOVE.w	Current_cave.w, D0
+	MOVE.w	Current_cave_room.w, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
 	MOVEA.l	(A0,D0.w), A0
@@ -3436,7 +3436,7 @@ loc_00003694:
 	dc.l	loc_000005CC
 loc_000036CC:
 	LEA	loc_000036E8, A0
-	MOVE.w	Current_cave.w, D1
+	MOVE.w	Current_cave_room.w, D1
 	CLR.w	D0
 	MOVE.b	(A0,D1.w), D0
 	MOVE.w	D0, $FFFFC32A.w
@@ -3924,7 +3924,7 @@ loc_00003DA6:
 	BSR.w	loc_0000421A
 loc_00003DB6:
 	MOVE.b	$FFFFC408.w, D0
-	ANDI.w	#$000F, D0
+	ANDI.w	#$F, D0
 	BEQ.w	loc_00003EC4
 	SUBQ.w	#1, D0
 	ADD.w	D0, D0
@@ -4488,7 +4488,7 @@ loc_000045B0:
 loc_000045B4: ; Enter cave
 	SUBI.b	#$10, D0
 	ANDI.w	#$007F, D0
-	MOVE.w	D0, Current_cave.w
+	MOVE.w	D0, Current_cave_room.w
 	MOVE.b	#$FF, Is_in_cave.w
 	MOVE.b	#$FF, Fade_out_buffer.w
 	TST.b	$FFFFC67D.w
@@ -6458,7 +6458,7 @@ loc_0000623A:
 	DBF	D7, loc_0000623A
 	LEA	$FFFF9310.w, A3
 	LEA	CaveMaps, A0
-	MOVE.w	Current_cave.w, D0
+	MOVE.w	Current_cave_room.w, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
 	MOVEA.l	(A0,D0.w), A1
@@ -6597,7 +6597,7 @@ loc_000063B0:
 
 loc_000063B2:
 	CLR.b	$FFFFC55F.w
-	MOVE.w	Current_cave.w, D0
+	MOVE.w	Current_cave_room.w, D0
 	ADDI.w	#$0090, D0
 	LEA	$FFFFC820.w, A0
 	MOVE.b	(A0,D0.w), D0
@@ -7354,7 +7354,7 @@ loc_00006F10:
 	TST.b	$FFFFC731.w
 	BEQ.b	loc_00006F32
 	LEA	$FFFFC820.w, A0
-	MOVE.w	#$005D, D5
+	MOVE.w	#$5D, D5
 	TST.b	(A0,D5.w)
 	BEQ.b	loc_00006F32
 	MOVE.l	#loc_0002A91C, $1C(A5)
@@ -7598,7 +7598,7 @@ loc_00007216:
 
 loc_00007220:       
 	MOVE.l	#loc_000300B2, $FFFFC438.w
-	MOVE.w	#$0036, D5
+	MOVE.w	#$36, D5
 	BSR.w	loc_0000858A
 	BRA.w	loc_00006F44
 	BSR.w	loc_00008234
@@ -7616,7 +7616,7 @@ loc_0000725A:
 
 loc_00007264:
 	MOVE.l	#loc_0002FD92, $FFFFC438.w
-	MOVE.w	#$0065, D5
+	MOVE.w	#$65, D5
 	BSR.w	loc_0000858A
 	BRA.w	loc_00006F44
 	BSR.w	loc_00008234
@@ -7668,7 +7668,7 @@ loc_0000730A:
 	TST.b	$FFFFC72B.w
 	BEQ.b	loc_00007326
 	MOVE.l	#loc_00029DCE, $FFFFC438.w
-	MOVE.w	#$0062, D5
+	MOVE.w	#$62, D5
 	BSR.w	loc_0000858A
 loc_00007326:
 	BRA.w	loc_00006F44
@@ -7681,7 +7681,7 @@ loc_0000733C:
 	TST.b	$FFFFC72D.w
 	BEQ.b	loc_00007352
 	MOVE.l	#loc_00030B18, $FFFFC438.w
-	MOVE.w	#$007A, D5
+	MOVE.w	#$7A, D5
 	BSR.w	loc_0000858A
 loc_00007352:
 	BRA.w	loc_00006F44
@@ -8018,7 +8018,7 @@ loc_0000779A:
 	BEQ.b	loc_000077E2	
 	TST.b	$FFFFC76A.w	
 	BNE.b	loc_000077C8	
-	MOVE.l	#$00007500, $FFFFC65A.w	
+	MOVE.l	#$7500, $FFFFC65A.w	
 	JSR	loc_0001159E	
 	MOVE.b	#$FF, $FFFFC76A.w	
 loc_000077C8:
@@ -8124,7 +8124,7 @@ loc_00007914:
 	TST.b	$FFFFC744.w
 	BNE.b	loc_0000792A
 	MOVE.l	#loc_000370CA, $FFFFC438.w
-	MOVE.w	#$0014, D5
+	MOVE.w	#$14, D5
 	BSR.w	loc_0000858A
 loc_0000792A:
 	BRA.w	loc_00006F44
@@ -19316,7 +19316,7 @@ loc_00011204:
 	DBF	D7, loc_00011204
 	MOVE.w	#$0012, $FFFF9906.w
 	MOVE.w	#2, $FFFF990C.w
-	LEA	loc_000220B0, A3
+	LEA	ShopPricesByTownAndType, A3
 	MOVE.w	Current_town.w, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
@@ -27946,29 +27946,29 @@ loc_0001A2CA:
 
 loc_0001A2CE:
 	MOVE.w	$FFFFC420.w, D0
-	ANDI.w	#$000F, D0
+	ANDI.w	#$F, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
 	LEA	loc_0001A2E6, A0
 	JSR	(A0,D0.w)
 	RTS
 
-loc_0001A2E6:
+loc_0001A2E6: ; Item effect routines map
 	BRA.w	loc_0001A322
 	BRA.w	loc_0001A344
-	BRA.w	loc_0001A406
+	BRA.w	loc_0001A406 ; Close menus / "You have nothing to use"
 	BRA.w	loc_0001A44E
-	BRA.w	loc_0001A476
+	BRA.w	loc_0001A476 ; Show item discard menu
 	BRA.w	loc_0001A4AC
 	BRA.w	loc_0001A52C
 	BRA.w	loc_0001A656
-	BRA.w	loc_0001A69E
+	BRA.w	loc_0001A69E ; Show item use menu
 	BRA.w	loc_0001A6D2
 	BRA.w	loc_0001A7D2
-	BRA.w	loc_0001A82A
-	BRA.w	loc_0001A8A4
-	BRA.w	loc_0001A8C0
-	BRA.w	loc_0001A93A
+	BRA.w	loc_0001A82A ; Light up cave, continued
+	BRA.w	loc_0001A8A4 ; Light up cave / Candle / Lantern
+	BRA.w	loc_0001A8C0 ; Teleport to last town / Griffin Wing
+	BRA.w	loc_0001A93A ; Exit cave / Gnome Stone
 loc_0001A322:
 	MOVE.w	$FFFFC418.w, $FFFFC23E.w
 	JSR	loc_0001290C
@@ -28365,7 +28365,7 @@ loc_0001A8A4:
 	BNE.b	loc_0001A8BE
 	MOVE.l	#loc_000259C4, Script_source_base.w
 	JSR	loc_00006458
-	MOVE.w	#$000B, $FFFFC420.w
+	MOVE.w	#$B, $FFFFC420.w
 loc_0001A8BE:
 	RTS
 
@@ -28389,7 +28389,7 @@ loc_0001A8DA:
 loc_0001A8F2:
 	SUBQ.w	#1, D0
 loc_0001A8F4:
-	ANDI.w	#$000F, D0
+	ANDI.w	#$F, D0
 	ASL.w	#3, D0
 	MOVE.w	(A0,D0.w), Player_position_x_outside_town.w
 	MOVE.w	$2(A0,D0.w), Player_position_y_outside_town.w
@@ -28400,7 +28400,7 @@ loc_0001A8F4:
 	MOVE.w	#$12, Game_state.w
 	MOVE.b	#$FF, Player_is_in_overworld.w
 	CLR.b	Is_in_cave.w
-	MOVE.w	#$0089, D0
+	MOVE.w	#$89, D0
 	JSR	loc_00010522
 	RTS
 
@@ -28663,7 +28663,7 @@ UseGriffinWing:
 	TST.b	Is_in_cave.w
 	BNE.b	loc_0001AC9A
 	BSR.w	RemoveSelectedItemFromList
-	MOVE.w	#$000D, $FFFFC420.w
+	MOVE.w	#$D, $FFFFC420.w
 loc_0001AC9A:
 	MOVE.l	#loc_00025980, Script_source_base.w
 	RTS
@@ -28704,7 +28704,7 @@ UseGnomeStone:
 	TST.b	Is_in_cave.w
 	BEQ.b	loc_0001AD12
 	BSR.w	RemoveSelectedItemFromList
-	MOVE.w	#$000E, $FFFFC420.w
+	MOVE.w	#$E, $FFFFC420.w
 	RTS
 
 loc_0001AD12:
@@ -28738,9 +28738,9 @@ UseCandle:
 	BEQ.b	loc_0001AD9C
 	TST.b	$FFFFC560.w
 	BNE.b	loc_0001AD9C
-	MOVE.w	#$000C, $FFFFC420.w
-	MOVE.w	#$0048, $FFFFC0AE.w
-	MOVE.w	#$0040, $FFFFC0B0.w
+	MOVE.w	#$C, $FFFFC420.w
+	MOVE.w	#$48, $FFFFC0AE.w
+	MOVE.w	#$40, $FFFFC0B0.w
 	MOVE.b	#6, $FFFFC0AA.w
 	MOVE.w	#$0800, $FFFFC562.w
 	MOVE.b	#$FF, $FFFFC560.w
@@ -28760,9 +28760,9 @@ UseLantern:
 	BEQ.b	loc_0001ADE8
 	TST.b	$FFFFC560.w
 	BNE.b	loc_0001ADE8
-	MOVE.w	#$000C, $FFFFC420.w
-	MOVE.w	#$0048, $FFFFC0AE.w
-	MOVE.w	#$0040, $FFFFC0B0.w
+	MOVE.w	#$C, $FFFFC420.w
+	MOVE.w	#$48, $FFFFC0AE.w
+	MOVE.w	#$40, $FFFFC0B0.w
 	MOVE.b	#6, $FFFFC0AA.w
 	CLR.w	$FFFFC562.w
 	MOVE.b	#1, $FFFFC560.w
@@ -29064,7 +29064,7 @@ loc_0001B0E2:
 	LEA	(A0), A1
 	MOVE.w	(A1)+, D0
 	BLT.w	loc_0001B13E
-	CMP.w	Current_cave.w, D0
+	CMP.w	Current_cave_room.w, D0
 	BNE.w	loc_0001B138
 	MOVE.w	(A1)+, D0
 	CMP.w	D3, D0
@@ -29316,7 +29316,7 @@ loc_0001B45C:
 	MOVE.w	Current_town.w, D1
 	ASL.w	#4, D1
 	ADD.w	D0, D1
-	LEA	loc_00021FB0, A1
+	LEA	ShopAssortmentByTownAndShopType, A1
 	LEA	$FFFFC4B4.w, A2
 	MOVE.l	(A0,D0.w), Script_source_base.w
 	MOVEA.l	(A1,D1.w), A1
@@ -29362,7 +29362,7 @@ loc_0001B4E4:
 	MOVE.w	Current_town.w, D1
 	ASL.w	#4, D1
 	ADD.w	D0, D1
-	LEA	loc_00021FB0, A1
+	LEA	ShopAssortmentByTownAndShopType, A1
 	LEA	$FFFFC4B4.w, A2
 	MOVE.l	(A0,D2.w), Script_source_base.w
 	MOVEA.l	(A1,D1.w), A1
@@ -29958,7 +29958,7 @@ loc_0001BF28:
 	JSR	loc_00010522
 	JSR	loc_00012670
 	JSR	loc_00010C4A
-	LEA	loc_000220B0, A0
+	LEA	ShopPricesByTownAndType, A0
 	MOVE.w	Current_town.w, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
@@ -32300,7 +32300,7 @@ loc_0001DF56:
 	LEA	(A0), A1
 	MOVE.w	(A1)+, D0
 	BLT.w	loc_0001DF7E
-	CMP.w	Current_cave.w, D0
+	CMP.w	Current_cave_room.w, D0
 	BNE.w	loc_0001DF78
 	MOVE.w	(A1)+, D0
 	CMP.w	D3, D0
@@ -35150,104 +35150,159 @@ loc_0002077E:
 	RTS
 	
 loc_00020780:
-	dc.l	$00020830
-	dc.l	$00020864
-	dc.l	$00020884
-	dc.l	$000208AE
-	dc.l	$000208CE
-	dc.l	$000208EE
-	dc.l	$0002090E
-	dc.l	$00020938 
-	dc.l	$00020958
-	dc.l	$00020978
-	dc.l	$00020998
-	dc.l	$000209AE
-	dc.l	$000209CE
-	dc.l	$00020A0C
-	dc.l	$00020A2C
-	dc.l	$00020A42 
-	dc.l	$00020A58
-	dc.l	$00020A78
-	dc.l	$00020AC0
-	dc.l	$00020AD6
-	dc.l	$00020AF6
-	dc.l	$00020B0C
-	dc.l	$00020B18
-	dc.l	$00020B2E 
-	dc.l	$00020B3A
-	dc.l	$00020B46
-	dc.l	$00020B52
-	dc.l	$00020B5E
-	dc.l	$00020B6A
-	dc.l	$00020B6C
-	dc.l	$00020B6E
-	dc.l	$00020B8E 
-	dc.l	$00020B9A
-	dc.l	$00020BE2
-	dc.l	$00020BE4
-	dc.l	$00020BFA
-	dc.l	$00020C06
-	dc.l	$00020C1C
-	dc.l	$00020C28
-	dc.l	$00020C34 
-	dc.l	$00020C4A
-	dc.l	$00020C56
-	dc.l	$00020C6C
-	dc.l	$00020C82
-	dc.l	$00020004
-	dc.b	$00, $04 
+	dc.l	loc_00020830
+	dc.l	loc_00020864
+	dc.l	loc_00020884
+	dc.l	loc_000208AE
+	dc.l	loc_000208CE
+	dc.l	loc_000208EE
+	dc.l	loc_0002090E
+	dc.l	loc_00020938
+	dc.l	loc_00020958
+	dc.l	loc_00020978
+	dc.l	loc_00020998
+	dc.l	loc_000209AE
+	dc.l	loc_000209CE
+	dc.l	loc_00020A0C
+	dc.l	loc_00020A2C
+	dc.l	loc_00020A42 
+	dc.l	loc_00020A58
+	dc.l	loc_00020A78
+	dc.l	loc_00020AC0
+	dc.l	loc_00020AD6
+	dc.l	loc_00020AF6
+	dc.l	loc_00020B0C
+	dc.l	loc_00020B18
+	dc.l	loc_00020B2E 
+	dc.l	loc_00020B3A
+	dc.l	loc_00020B46
+	dc.l	loc_00020B52
+	dc.l	loc_00020B5E
+	dc.l	loc_00020B6A
+	dc.l	loc_00020B6C
+	dc.l	loc_00020B6E
+	dc.l	loc_00020B8E 
+	dc.l	loc_00020B9A
+	dc.l	loc_00020BE2
+	dc.l	loc_00020BE4
+	dc.l	loc_00020BFA
+	dc.l	loc_00020C06
+	dc.l	loc_00020C1C
+	dc.l	loc_00020C28
+	dc.l	loc_00020C34 
+	dc.l	loc_00020C4A
+	dc.l	loc_00020C56
+	dc.l	loc_00020C6C
+	dc.l	loc_00020C82
+loc_00020830:
+	dc.w	$0002
+	dc.w	$0004
+	dc.w	$0004 
 	dc.l	loc_00020C8E
-	dc.b	$00, $0B, $00, $0B, $00, $02 
+	dc.w	$000B 
+	dc.w	$000B 
+	dc.w	$0002 
 	dc.l	loc_00020F6A
-	dc.b	$00, $02, $00, $0B, $00, $02 
+	dc.w	$0002 
+	dc.w	$000B 
+	dc.w	$0002 
 	dc.l	loc_00020CD0
-	dc.b	$00, $03, $00, $09, $00, $08 
+	dc.w	$0003 
+	dc.w	$0009 
+	dc.w	$0008 
 	dc.l	loc_00020DAC
-	dc.b	$00, $0A, $00, $05, $00, $04 
+	dc.w	$000A 
+	dc.w	$0005 
+	dc.w	$0004 
 	dc.l	loc_00020DC0
-	dc.l	$FFFF0003	
-	dc.l	$000D0004	
+	dc.w	$FFFF
+loc_00020864:
+	dc.w	$0003	
+	dc.w	$000D
+	dc.w	$0004	
 	dc.l	loc_00020F6A
-	dc.b	$00, $02, $00, $03, $00, $04 
+	dc.w	$0002 
+	dc.w	$0003 
+	dc.w	$0004 
 	dc.l	loc_00020DD4
-	dc.b	$00, $08, $00, $00, $00, $01, $00, $02, $0D, $FC, $FF, $FF, $00, $0F, $00, $0F, $00, $08 
+	dc.w	$0008 
+	dc.w	$0000 
+	dc.w	$0001 
+	dc.w	$0002 
+	dc.w	$0DFC 
+	dc.w	$FFFF 
+loc_00020884:
+	dc.w	$000F 
+	dc.w	$000F 
+	dc.w	$0008 
 	dc.l	loc_00020DE8
-	dc.b	$00, $0F, $00, $00, $00, $01 
+	dc.w	$000F 
+	dc.w	$0000 
+	dc.w	$0001 
 	dc.l	loc_00020F50
-	dc.b	$00, $02, $00, $0C, $00, $02 
+	dc.w	$0002 
+	dc.w	$000C 
+	dc.w	$0002 
 	dc.l	loc_00020F6A
-	dc.b	$00, $08, $00, $08, $00, $02 
+	dc.w	$0008 
+	dc.w	$0008 
+	dc.w	$0002 
 	dc.l	loc_00020E10
-	dc.l	$FFFF0003	
+	dc.w	$FFFF
+loc_000208AE:
+	dc.w	$0003	
 	dc.l	loc_00060008	
 	dc.l	loc_00020F6A
 	dc.l	loc_00000010-2	
 	dc.l	loc_00010002	
-	dc.l	$0E24000B	
+	dc.w	$0E24
+	dc.w	$000B	
 	dc.l	loc_00000004-2	
 	dc.l	loc_00020E38	
-	dc.l	$FFFF0000	
+	dc.w	$FFFF
+loc_000208CE:
+	dc.w	$0000	
 	dc.l	loc_00070001	
 	dc.l	loc_00020F6A
-	dc.l	$000A0001	
+	dc.w	$000A
+	dc.w	$0001	
 	dc.l	loc_00080002	
 	dc.l	$0E4C000C	
 	dc.l	loc_00010002	
 	dc.l	loc_00020FE4
-	dc.l	$FFFF0000	
+	dc.w	$FFFF
+loc_000208EE:
+	dc.w	$0000	
 	dc.l	loc_00010006-2	
 	dc.l	loc_00020F6A
 	dc.l	$000B0004	
 	dc.l	loc_00080002	
 	dc.l	$0E9C0008	
-	dc.l	$000F0008	
+	dc.w	$000F
+	dc.w	$0008	
 	dc.l	loc_00020E74	
-	dc.l	$FFFF0003	
+	dc.w	$FFFF
+loc_0002090E:
+	dc.w	$0003	
 	dc.l	$000C0002	
 	dc.l	loc_00020F6A
-	dc.b	$00, $0E, $00, $0F, $00, $04, $00, $02, $0E, $60, $00, $0C, $00, $04, $00, $02, $00, $02, $0E, $B0, $00, $06, $00, $04, $00, $01 
+	dc.w	$000E 
+	dc.w	$000F 
+	dc.w	$0004 
+	dc.w	$0002 
+	dc.w	$0E60 
+	dc.w	$000C 
+	dc.w	$0004 
+	dc.w	$0002 
+	dc.w	$0002 
+	dc.w	$0EB0 
+	dc.w	$0006 
+	dc.w	$0004 
+	dc.w	$0001 
 	dc.l	loc_00020FA2
-	dc.l	$FFFF0004	
+	dc.w	$FFFF
+loc_00020938:
+	dc.w	$0004		
 	dc.l	$000D0008	
 	dc.l	loc_00020F6A	
 	dc.l	loc_0008000F	
@@ -35255,172 +35310,367 @@ loc_00020780:
 	dc.l	$0EC40007	
 	dc.l	loc_00050006-2	
 	dc.l	loc_00020ED8	
-	dc.l	$FFFF000D	
-	dc.l	$000B0004	
+	dc.w	$FFFF
+loc_00020958:
+	dc.w	$000D	
+	dc.w	$000B
+	dc.w	$0004	
 	dc.l	loc_00020F6A	
-	dc.l	$000F0000	
+	dc.w	$000F
+	dc.w	$0000	
 	dc.l	loc_00010002	
-	dc.l	$0F000000	
+	dc.w	$0F00
+	dc.w	$0000	
 	dc.l	loc_00000004-2	
 	dc.l	loc_00021006
-	dc.l	$FFFF0002	
-	dc.l	$000A0004	
+	dc.w	$FFFF
+loc_00020978:
+	dc.w	$0002	
+	dc.w	$000A
+	dc.w	$0004	
 	dc.l	loc_00020F6A	
 	dc.l	loc_00020012-3	
 	dc.l	loc_00080002	
-	dc.l	$0F000002	
+	dc.w	$0F00
+	dc.w	$0002	
 	dc.l	loc_00030004	
 	dc.l	loc_00020EEC	
-	dc.l	$FFFF000B	
-	dc.l	$000B000B	
+	dc.w	$FFFF
+loc_00020998:
+	dc.w	$000B	
+	dc.w	$000B
+	dc.w	$000B	
 	dc.l	loc_00020F6A
-	dc.b	$00, $07, $00, $06, $00, $01 
+	dc.w	$0007 
+	dc.w	$0006 
+	dc.w	$0001 
 	dc.l	loc_0002105E
-	dc.l	$FFFF0004	
-	dc.l	$000D0004	
+	dc.w	$FFFF
+loc_000209AE:
+	dc.w	$0004		
+	dc.w	$000D
+	dc.w	$0004	
 	dc.l	loc_00020F6A
 	dc.l	loc_00060002	
 	dc.l	loc_00010002	
-	dc.l	$0D48000D	
+	dc.w	$0D48
+	dc.w	$000D	
 	dc.l	loc_00070005	
 	dc.l	loc_00021082
-	dc.l	$FFFF000B	
+	dc.w	$FFFF
+loc_000209CE:
+	dc.w	$000B	
 	dc.l	loc_00030002	
 	dc.l	loc_00020F6A
-	dc.b	$00, $01, $00, $0E, $00, $04 
+	dc.w	$0001 
+	dc.w	$000E 
+	dc.w	$0004 
 	dc.l	loc_000210BE
 	dc.l	loc_0005000E	
 	dc.l	loc_00040002	
-	dc.l	$0CE4000B	
-	dc.l	$000B0001	
+	dc.w	$0CE4
+	dc.w	$000B	
+	dc.w	$000B
+	dc.w	$0001	
 	dc.l	loc_00020CE4	
 	dc.l	loc_00090008-1	
 	dc.l	loc_00040002	
-	dc.l	$0CE40007	
-	dc.l	$000E0004	
+	dc.w	$0CE4
+	dc.w	$0007	
+	dc.w	$000E
+	dc.w	$0004	
 	dc.l	loc_00020E88
-	dc.l	$FFFF0005	
+	dc.w	$FFFF
+loc_00020A0C:
+	dc.w	$0005	
 	dc.l	loc_00020002	
 	dc.l	loc_00020F6A
-	dc.b	$00, $03, $00, $07, $00, $0A 
+	dc.w	$0003 
+	dc.w	$0007 
+	dc.w	$000A 
 	dc.l	loc_000210E0
-	dc.b	$00, $0E, $00, $09, $00, $01 
+	dc.w	$000E 
+	dc.w	$0009 
+	dc.w	$0001 
 	dc.l	loc_0002112A
-	dc.l	$FFFF0009	
-	dc.l	$000A0008	
+	dc.w	$FFFF
+loc_00020A2C:
+	dc.w	$0009		
+	dc.w	$000A
+	dc.w	$0008	
 	dc.l	loc_00020F6A
-	dc.b	$00, $09, $00, $00, $00, $02, $00, $02, $0D, $84, $FF, $FF, $00, $03, $00, $03, $00, $02 
+	dc.w	$0009 
+	dc.w	$0000 
+	dc.w	$0002 
+	dc.w	$0002 
+	dc.w	$0D84 
+	dc.w	$FFFF 
+loc_00020A42:
+	dc.w	$0003 
+	dc.w	$0003 
+	dc.w	$0002 
 	dc.l	loc_00020F6A
-	dc.b	$00, $08, $00, $04, $00, $02 
+	dc.w	$0008 
+	dc.w	$0004 
+	dc.w	$0002 
 	dc.l	loc_00020F14
-	dc.l	$FFFF0000	
+	dc.w	$FFFF
+loc_00020A58:
+	dc.w	$0000	
 	dc.l	loc_00000004-2	
 	dc.l	loc_00020F6A
 	dc.l	loc_00030004	
 	dc.l	loc_00020002	
-	dc.l	$051A0003	
-	dc.l	$000C0004	
+	dc.w	$051A
+	dc.w	$0003	
+	dc.w	$000C
+	dc.w	$0004	
 	dc.l	loc_00020F28	
-	dc.l	$FFFF0001	
-	dc.l	$000E0002	
+	dc.w	$FFFF
+loc_00020A78:
+	dc.w	$0001		
+	dc.w	$000E
+	dc.w	$0002	
 	dc.l	loc_00020F6A
 	dc.l	loc_00040004	
 	dc.l	loc_00020002	
-	dc.l	$114C0000	
+	dc.w	$114C
+	dc.w	$0000	
 	dc.l	loc_00010002	
 	dc.l	loc_00020CF8
-	dc.l	$000E0006	
+	dc.w	$000E
+	dc.w	$0006	
 	dc.l	loc_00080002	
-	dc.l	$0F3C0001	
-	dc.l	$000C0008	
+	dc.w	$0F3C
+	dc.w	$0001	
+	dc.w	$000C
+	dc.w	$0008	
 	dc.l	loc_00020F28	
-	dc.l	$000E0008	
+	dc.w	$000E
+	dc.w	$0008	
 	dc.l	loc_00080002	
-	dc.l	$0F14000D	
+	dc.w	$0F14
+	dc.w	$000D	
 	dc.l	loc_00030008	
 	dc.l	loc_00020F14	
-	dc.l	$FFFF000A	
+	dc.w	$FFFF
+loc_00020AC0:
+	dc.w	$000A	
 	dc.l	loc_00070004	
 	dc.l	loc_00020F6A
-	dc.b	$00, $00, $00, $00, $00, $02, $00, $02, $0D, $20, $FF, $FF, $00, $00, $00, $00, $00, $01 
+	dc.w	$0000 
+	dc.w	$0000 
+	dc.w	$0002 
+	dc.w	$0002 
+	dc.w	$0D20 
+	dc.w	$FFFF 
+loc_00020AD6:
+	dc.w	$0000 
+	dc.w	$0000 
+	dc.w	$0001 
 	dc.l	loc_00020F6A
-	dc.b	$00, $07, $00, $0F, $00, $0A 
+	dc.w	$0007 
+	dc.w	$000F 
+	dc.w	$000A 
 	dc.l	loc_00021160
-	dc.b	$00, $00, $00, $0C, $00, $02 
+	dc.w	$0000 
+	dc.w	$000C 
+	dc.w	$0002 
 	dc.l	loc_00020D34
-	dc.l	$FFFF0000	
-	dc.l	$000E0004	
+	dc.w	$FFFF
+loc_00020AF6:
+	dc.w	$0000		
+	dc.w	$000E
+	dc.w	$0004	
 	dc.l	loc_00020F6A
-	dc.b	$00, $0A, $00, $0E, $00, $08 
+	dc.w	$000A 
+	dc.w	$000E 
+	dc.w	$0008 
 	dc.l	loc_0002119C
-	dc.l	$FFFF000B	
+	dc.w	$FFFF
+loc_00020B0C:
+	dc.w	$000B	
 	dc.l	loc_0004000A	
 	dc.l	loc_00020F6A
-	dc.l	$FFFF0008	
-	dc.l	$000B0004	
+	dc.w	$FFFF
+loc_00020B18:
+	dc.w	$0008	
+	dc.w	$000B
+	dc.w	$0004	
 	dc.l	loc_00020F6A
-	dc.b	$00, $00, $00, $07, $00, $05 
+	dc.w	$0000 
+	dc.w	$0007 
+	dc.w	$0005 
 	dc.l	loc_00021206
-	dc.b	$FF, $FF, $00, $03, $00, $0C, $00, $04 
+	dc.w	$FFFF 
+loc_00020B2E:
+	dc.w	$0003 
+	dc.w	$000C 
+	dc.w	$0004 
 	dc.l	loc_00020F6A
-	dc.b	$FF, $FF, $00, $04, $00, $07, $00, $02 
+	dc.w	$FFFF 
+loc_00020B3A:
+	dc.w	$0004 
+	dc.w	$0007 
+	dc.w	$0002 
 	dc.l	loc_00020F6A
-	dc.b	$FF, $FF, $00, $01, $00, $05, $00, $01 
+	dc.w	$FFFF 
+loc_00020B46:
+	dc.w	$0001 
+	dc.w	$0005 
+	dc.w	$0001 
 	dc.l	loc_00020F6A
-	dc.b	$FF, $FF, $00, $0B, $00, $0E, $00, $04 
+	dc.w	$FFFF 
+loc_00020B52:
+	dc.w	$000B 
+	dc.w	$000E 
+	dc.w	$0004 
 	dc.l	loc_00020F6A
-	dc.b	$FF, $FF, $00, $0A, $00, $06, $00, $08 
+	dc.w	$FFFF 
+loc_00020B5E:	
+	dc.w	$000A 
+	dc.w	$0006 
+	dc.w	$0008 
 	dc.l	loc_00020F6A
-	dc.b	$FF, $FF, $FF, $FF, $FF, $FF, $00, $09, $00, $07, $00, $01, $00, $02, $0F, $6A, $00, $0D, $00, $08, $00, $04 
+	dc.w	$FFFF 
+loc_00020B6A:
+	dc.w	$FFFF 
+loc_00020B6C:
+	dc.w	$FFFF 
+loc_00020B6E:
+	dc.w	$0009 
+	dc.w	$0007 
+	dc.w	$0001 
+	dc.w	$0002 
+	dc.w	$0F6A 
+	dc.w	$000D 
+	dc.w	$0008 
+	dc.w	$0004 
 	dc.l	loc_000211BE
-	dc.b	$00, $05, $00, $0E, $00, $04, $00, $02, $0D, $70, $FF, $FF, $00, $03, $00, $07, $00, $01, $00, $02, $0F, $6A, $FF, $FF, $00, $05, $00, $03, $00, $0A 
+	dc.w	$0005 
+	dc.w	$000E 
+	dc.w	$0004 
+	dc.w	$0002 
+	dc.w	$0D70 
+	dc.w	$FFFF 
+loc_00020B8E:
+	dc.w	$0003 
+	dc.w	$0007 
+	dc.w	$0001 
+	dc.w	$0002 
+	dc.w	$0F6A 
+	dc.w	$FFFF 
+loc_00020B9A:
+	dc.w	$0005 
+	dc.w	$0003 
+	dc.w	$000A 
 	dc.l	loc_00021284
-	dc.b	$00, $02, $00, $03, $00, $02 
+	dc.w	$0002 
+	dc.w	$0003 
+	dc.w	$0002 
 	dc.l	loc_000212BE
-	dc.b	$00, $0A, $00, $0A, $00, $05 
+	dc.w	$000A 
+	dc.w	$000A 
+	dc.w	$0005 
 	dc.l	loc_000212D8
-	dc.b	$00, $0C, $00, $09, $00, $08 
+	dc.w	$000C 
+	dc.w	$0009 
+	dc.w	$0008 
 	dc.l	loc_00021302
-	dc.b	$00, $03, $00, $0F, $00, $0A 
+	dc.w	$0003 
+	dc.w	$000F 
+	dc.w	$000A 
 	dc.l	loc_0002131C
-	dc.b	$00, $00, $00, $0F, $00, $02 
+	dc.w	$0000 
+	dc.w	$000F 
+	dc.w	$0002 
 	dc.l	loc_00021346
-	dc.b	$00, $04, $00, $0B, $00, $0D 
+	dc.w	$0004 
+	dc.w	$000B 
+	dc.w	$000D 
 	dc.l	loc_00021360
-	dc.b	$FF, $FF, $FF, $FF, $00, $09, $00, $0F, $00, $08 
+	dc.w	$FFFF 
+loc_00020BE2:
+	dc.w	$FFFF 
+loc_00020BE4:
+	dc.w	$0009 
+	dc.w	$000F 
+	dc.w	$0008 
 	dc.l	loc_00020D5C
-	dc.b	$00, $09, $00, $00, $00, $08 
+	dc.w	$0009 
+	dc.w	$0000 
+	dc.w	$0008 
 	dc.l	loc_00020CBC
-	dc.l	$FFFF0009	
+	dc.w	$FFFF
+loc_00020BFA:
+	dc.w	$0009		
 	dc.l	loc_00050002-1	
 	dc.l	loc_00020F6A
-	dc.l	$FFFF000A	
-	dc.l	$000B000A	
+	dc.w	$FFFF
+loc_00020C06:
+	dc.w	$000A	
+	dc.w	$000B
+	dc.w	$000A	
 	dc.l	loc_00020F6A
-	dc.b	$00, $04, $00, $0C, $00, $05 
+	dc.w	$0004 
+	dc.w	$000C 
+	dc.w	$0005 
 	dc.l	loc_0002125A
-	dc.b	$FF, $FF, $00, $0C, $00, $03, $00, $08 
+	dc.w	$FFFF 
+loc_00020C1C:
+	dc.w	$000C 
+	dc.w	$0003 
+	dc.w	$0008 
 	dc.l	loc_00020F6A
-	dc.b	$FF, $FF, $00, $0F, $00, $0C, $00, $08 
+	dc.w	$FFFF 
+loc_00020C28:
+	dc.w	$000F 
+	dc.w	$000C 
+	dc.w	$0008 
 	dc.l	loc_00020F6A
-	dc.b	$FF, $FF, $00, $09, $00, $09, $00, $02 
+	dc.w	$FFFF 
+loc_00020C34:
+	dc.w	$0009 
+	dc.w	$0009 
+	dc.w	$0002 
 	dc.l	loc_00020F6A
-	dc.b	$00, $01, $00, $01, $00, $01 
+	dc.w	$0001 
+	dc.w	$0001 
+	dc.w	$0001 
 	dc.l	loc_00020D0C
-	dc.l	$FFFF0008	
+	dc.w	$FFFF
+loc_00020C4A:
+	dc.w	$0008	
 	dc.l	loc_00000004-2	
 	dc.l	loc_00020F6A
-	dc.l	$FFFF0000	
-	dc.l	$000D0001	
+	dc.w	$FFFF
+loc_00020C56:
+	dc.w	$0000	
+	dc.w	$000D
+	dc.w	$0001	
 	dc.l	loc_00020F6A
-	dc.b	$00, $0A, $00, $0B, $00, $05 
+	dc.w	$000A 
+	dc.w	$000B 
+	dc.w	$0005 
 	dc.l	loc_00021230
-	dc.b	$FF, $FF, $00, $02, $00, $0D, $00, $02, $00, $02, $0F, $6A, $00, $0F, $00, $07, $00, $01 
+	dc.w	$FFFF 
+loc_00020C6C:
+	dc.w	$0002 
+	dc.w	$000D 
+	dc.w	$0002 
+	dc.w	$0002 
+	dc.w	$0F6A 
+	dc.w	$000F 
+	dc.w	$0007 
+	dc.w	$0001 
 	dc.l	loc_00020D98
-	dc.l	$FFFF0001	
-	dc.l	$000E0004	
+	dc.w	$FFFF
+loc_00020C82:
+	dc.w	$0001	
+	dc.w	$000E
+	dc.w	$0004	
 	dc.l	loc_00020F6A
-	dc.b	$FF, $FF 
+	dc.w	$FFFF 
 loc_00020C8E:
 	TST.b	Map_triggers_start.w
 	BNE.b	loc_00020CBA
@@ -35586,7 +35836,7 @@ loc_00020F68:
 loc_00020F6A:
 	LEA	$FFFFC820.w, A0
 	CLR.w	D0
-	MOVE.w	Current_cave.w, D0
+	MOVE.w	Current_cave_room.w, D0
 	ADDI.w	#$0090, D0
 	TST.b	(A0,D0.w)
 	BNE.b	loc_00020F84
@@ -36150,6 +36400,7 @@ loc_00021BA6:
 	dc.b	"Ring of Sun", $FF
 loc_00021BB2:
 	dc.b	"Ring of Power", $FF
+	
 loc_00021BC0:
 	dc.b	"Select a number", $FE
 	dc.b	"and press Button C.", $FE
@@ -36251,136 +36502,139 @@ ChurchPoisonCurePricesByTown:
 	dc.l	$26
 	dc.l	$28
 
-loc_00021FB0:
-	dc.l	loc_000221D0
-	dc.l	loc_000223C2
-	dc.l	loc_00022304	
-	dc.l	loc_00022304	
-	dc.l	loc_000221DE
-	dc.l	loc_000223E2
-	dc.l	loc_00022304
-	dc.l	loc_00022304	
-	dc.l	loc_000221FE	
-	dc.l	loc_00022408	
-	dc.l	loc_00022312	
-	dc.l	loc_00022304	
-	dc.l	loc_000221FE
-	dc.l	loc_00022408
-	dc.l	loc_00022312
-	dc.l	loc_00022304	
-	dc.l	loc_0002221E
-	dc.l	loc_0002242E	
-	dc.l	loc_00022320
-	dc.l	loc_00022304	
-	dc.l	loc_00022244	
-	dc.l	loc_0002242E	
-	dc.l	loc_00022334	
-	dc.l	loc_00022304	
-	dc.l	loc_00022244
-	dc.l	loc_0002242E	
-	dc.l	loc_00022334
-	dc.l	loc_00022304	
-	dc.l	loc_00022264
-	dc.l	loc_0002242E
-	dc.l	loc_00022354
-	dc.l	loc_00022304	
-	dc.l	loc_00022278
-	dc.l	loc_0002244E	
-	dc.l	loc_00022374	
-	dc.l	loc_00022304	
-	dc.l	loc_0002229E	
-	dc.l	loc_0002244E
-	dc.l	loc_00022374	
-	dc.l	loc_00022304	
-	dc.l	loc_0002229E
-	dc.l	loc_0002246E	
-	dc.l	loc_00022374
-	dc.l	loc_00022304	
-	dc.l	loc_000222C4
-	dc.l	loc_0002246E
-	dc.l	loc_00022394
-	dc.l	loc_00022304	
-	dc.l	loc_000222E4	
-	dc.l	loc_0002246E	
-	dc.l	loc_000223A8	
-	dc.l	loc_00022304	
-	dc.l	loc_000222E4
-	dc.l	loc_0002246E	
-	dc.l	loc_000223A8
-	dc.l	loc_00022304	
-	dc.l	loc_00022304	
-	dc.l	loc_0002246E	
-	dc.l	loc_000223A8	
-	dc.l	loc_00022304	
-	dc.l	loc_00022304	
-	dc.l	loc_0002246E	
-	dc.l	loc_000223A8	
-	dc.l	loc_00022304	
-loc_000220B0:
-	dc.l	loc_000221D6
-	dc.l	loc_000223CE
-	dc.l	loc_0002230A	
-	dc.l	loc_0002230A	
-	dc.l	loc_000221EA
-	dc.l	loc_000223F0
-	dc.l	loc_0002230A
-	dc.l	loc_0002230A	
-	dc.l	loc_0002220A	
-	dc.l	loc_00022416	
-	dc.l	loc_00022318	
-	dc.l	loc_0002230A	
-	dc.l	loc_0002220A
-	dc.l	loc_00022416
-	dc.l	loc_00022318
-	dc.l	loc_0002230A	
-	dc.l	loc_0002222C
-	dc.l	loc_0002243A	
-	dc.l	loc_00022328
-	dc.l	loc_0002230A	
-	dc.l	loc_00022250	
-	dc.l	loc_0002243A	
-	dc.l	loc_00022340	
-	dc.l	loc_0002230A	
-	dc.l	loc_00022250
-	dc.l	loc_0002243A	
-	dc.l	loc_00022340
-	dc.l	loc_0002230A	
-	dc.l	loc_0002226C	
-	dc.l	loc_0002243A
-	dc.l	loc_00022360
-	dc.l	loc_0002230A	
-	dc.l	loc_00022286
-	dc.l	loc_0002245A	
-	dc.l	loc_00022380	
-	dc.l	loc_0002230A	
-	dc.l	loc_000222AC	
-	dc.l	loc_0002245A
-	dc.l	loc_00022380	
-	dc.l	loc_0002230A	
-	dc.l	loc_000222AC
-	dc.l	loc_0002247A	
-	dc.l	loc_00022380
-	dc.l	loc_0002230A	
-	dc.l	loc_000222D0
-	dc.l	loc_0002247A
-	dc.l	loc_0002239C
-	dc.l	loc_0002230A	
-	dc.l	loc_000222F0	
-	dc.l	loc_0002247A	
-	dc.l	loc_000223B2	
-	dc.l	loc_0002230A	
-	dc.l	loc_000222F0
-	dc.l	loc_0002247A	
-	dc.l	loc_000223B2
-	dc.l	loc_0002230A	
-	dc.l	loc_00022304	
-	dc.l	loc_0002247A	
-	dc.l	loc_000223B2	
-	dc.l	loc_0002230A	
-	dc.l	loc_00022304	
-	dc.l	loc_0002247A	
-	dc.l	loc_000223B2	
-	dc.l	loc_0002230A	
+;loc_00021FB0:
+ShopAssortmentByTownAndShopType:
+	dc.l	WyclifItemShopAssortment
+	dc.l	WyclifEquipmentShopAssortment
+	dc.l	ParmaMagicShopAssortment	
+	dc.l	ParmaMagicShopAssortment	
+	dc.l	ParmaItemShopAssortment
+	dc.l	ParmaEquipmentShopAssortment
+	dc.l	ParmaMagicShopAssortment
+	dc.l	ParmaMagicShopAssortment	
+	dc.l	DeepdaleItemShopAssortment	
+	dc.l	DeepdaleEquipmentShopAssortment	
+	dc.l	DeepdaleMagicShopAssortment	
+	dc.l	ParmaMagicShopAssortment	
+	dc.l	DeepdaleItemShopAssortment
+	dc.l	DeepdaleEquipmentShopAssortment
+	dc.l	DeepdaleMagicShopAssortment
+	dc.l	ParmaMagicShopAssortment	
+	dc.l	StowItemShopAssortment
+	dc.l	MalagaEquipmentShopAssortment	
+	dc.l	StowMagicShopAssortment
+	dc.l	ParmaMagicShopAssortment	
+	dc.l	KeltwickItemShopAssortment	
+	dc.l	MalagaEquipmentShopAssortment	
+	dc.l	KeltwickMagicShopAssortment	
+	dc.l	ParmaMagicShopAssortment	
+	dc.l	KeltwickItemShopAssortment
+	dc.l	MalagaEquipmentShopAssortment	
+	dc.l	KeltwickMagicShopAssortment
+	dc.l	ParmaMagicShopAssortment	
+	dc.l	MalagaItemShopAssortment
+	dc.l	MalagaEquipmentShopAssortment
+	dc.l	MalagaMagicShopAssortment
+	dc.l	ParmaMagicShopAssortment	
+	dc.l	BarrowItemShopAssortment
+	dc.l	TadcasterEquipmentShopAssortment	
+	dc.l	HelwigMagicShopAssortment	
+	dc.l	ParmaMagicShopAssortment	
+	dc.l	HelwigItemShopAssortment	
+	dc.l	TadcasterEquipmentShopAssortment
+	dc.l	HelwigMagicShopAssortment	
+	dc.l	ParmaMagicShopAssortment	
+	dc.l	HelwigItemShopAssortment
+	dc.l	SwaffhamEquipmentShopAssortment	
+	dc.l	HelwigMagicShopAssortment
+	dc.l	ParmaMagicShopAssortment	
+	dc.l	SwaffhamItemShopAssortment
+	dc.l	SwaffhamEquipmentShopAssortment
+	dc.l	SwaffhamMagicShopAssortment
+	dc.l	ParmaMagicShopAssortment	
+	dc.l	HastingsItemShopAssortment	
+	dc.l	SwaffhamEquipmentShopAssortment	
+	dc.l	HastingsMagicShopAssortment	
+	dc.l	ParmaMagicShopAssortment	
+	dc.l	HastingsItemShopAssortment
+	dc.l	SwaffhamEquipmentShopAssortment	
+	dc.l	HastingsMagicShopAssortment
+	dc.l	ParmaMagicShopAssortment	
+	dc.l	ParmaMagicShopAssortment	
+	dc.l	SwaffhamEquipmentShopAssortment	
+	dc.l	HastingsMagicShopAssortment	
+	dc.l	ParmaMagicShopAssortment	
+	dc.l	ParmaMagicShopAssortment	
+	dc.l	SwaffhamEquipmentShopAssortment	
+	dc.l	HastingsMagicShopAssortment	
+	dc.l	ParmaMagicShopAssortment	
+
+;loc_000220B0:
+ShopPricesByTownAndType:
+	dc.l	WyclifItemShopPrices
+	dc.l	WyclifEquipmentShopPrices
+	dc.l	ParmaMagicShopPrices	
+	dc.l	ParmaMagicShopPrices	
+	dc.l	ParmaItemShopPrices
+	dc.l	ParmaEquipmentShopPrices
+	dc.l	ParmaMagicShopPrices
+	dc.l	ParmaMagicShopPrices	
+	dc.l	DeepdaleItemShopPrices	
+	dc.l	DeepdaleEquipmentShopPrices	
+	dc.l	DeepdaleMagicShopPrices	
+	dc.l	ParmaMagicShopPrices	
+	dc.l	DeepdaleItemShopPrices
+	dc.l	DeepdaleEquipmentShopPrices
+	dc.l	DeepdaleMagicShopPrices
+	dc.l	ParmaMagicShopPrices	
+	dc.l	StowItemShopPrices
+	dc.l	MalagaEquipmentShopPrices	
+	dc.l	StowMagicShopPrices
+	dc.l	ParmaMagicShopPrices	
+	dc.l	KeltwickItemShopPrices	
+	dc.l	MalagaEquipmentShopPrices	
+	dc.l	KeltwickMagicShopPrices	
+	dc.l	ParmaMagicShopPrices	
+	dc.l	KeltwickItemShopPrices
+	dc.l	MalagaEquipmentShopPrices	
+	dc.l	KeltwickMagicShopPrices
+	dc.l	ParmaMagicShopPrices	
+	dc.l	MalagaItemShopPrices	
+	dc.l	MalagaEquipmentShopPrices
+	dc.l	MalagaMagicShopPrices
+	dc.l	ParmaMagicShopPrices	
+	dc.l	BarrowItemShopPrices
+	dc.l	TadcasterEquipmentShopPrices	
+	dc.l	HelwigMagicShopPrices	
+	dc.l	ParmaMagicShopPrices	
+	dc.l	HelwigItemShopPrices	
+	dc.l	TadcasterEquipmentShopPrices
+	dc.l	HelwigMagicShopPrices	
+	dc.l	ParmaMagicShopPrices	
+	dc.l	HelwigItemShopPrices
+	dc.l	SwaffhamEquipmentShopPrices	
+	dc.l	HelwigMagicShopPrices
+	dc.l	ParmaMagicShopPrices	
+	dc.l	SwaffhamItemShopPrices
+	dc.l	SwaffhamEquipmentShopPrices
+	dc.l	SwaffhamMagicShopPrices
+	dc.l	ParmaMagicShopPrices	
+	dc.l	HastingsItemShopPrices	
+	dc.l	SwaffhamEquipmentShopPrices	
+	dc.l	HastingsMagicShopPrices	
+	dc.l	ParmaMagicShopPrices	
+	dc.l	HastingsItemShopPrices
+	dc.l	SwaffhamEquipmentShopPrices	
+	dc.l	HastingsMagicShopPrices
+	dc.l	ParmaMagicShopPrices	
+	dc.l	ParmaMagicShopAssortment	
+	dc.l	SwaffhamEquipmentShopPrices	
+	dc.l	HastingsMagicShopPrices	
+	dc.l	ParmaMagicShopPrices	
+	dc.l	ParmaMagicShopAssortment	
+	dc.l	SwaffhamEquipmentShopPrices	
+	dc.l	HastingsMagicShopPrices	
+	dc.l	ParmaMagicShopPrices	
 loc_000221B0:
 	dc.l	ItemResaleValueMap
 	dc.l	EquipmentResaleValueMap
@@ -36391,44 +36645,40 @@ loc_000221C0:
 	dc.l	Possessed_equipment_list
 	dc.l	Possessed_magics_list
 	dc.l	Possessed_magics_list	
-; -------- Wyclif item store --------
-loc_000221D0:
-	dc.w	$0002
+WyclifItemShopAssortment:
+	dc.w	$2
 	dc.b	$00, ITEM_HERBS
 	dc.b	$00, ITEM_CANDLE
-loc_000221D6:
+WyclifItemShopPrices:
 	dc.l	$20
 	dc.l	$10 
-; -------- Parma item store --------
-loc_000221DE:
+ParmaItemShopAssortment:
 	dc.w	$5
 	dc.b	$00, ITEM_CANDLE
 	dc.b	$00, ITEM_HERBS
 	dc.b	$00, ITEM_POISON_BALM
 	dc.b	$00, ITEM_LANTERN
 	dc.b	$00, ITEM_GNOME_STONE
-loc_000221EA:
+ParmaItemShopPrices:
 	dc.l	$15
 	dc.l	$25
 	dc.l	$40
 	dc.l	$65
 	dc.l	$300
-; -------- Deepdale item store --------
-loc_000221FE:
+DeepdaleItemShopAssortment:
 	dc.w	$5
 	dc.b	$00, ITEM_HERBS
 	dc.b	$00, ITEM_MEDICINE
 	dc.b	$00, ITEM_POISON_BALM
 	dc.b	$00, ITEM_LANTERN
 	dc.b	$00, ITEM_GNOME_STONE
-loc_0002220A:
+DeepdaleItemShopPrices:
 	dc.l	$30
 	dc.l	$120
 	dc.l	$60
 	dc.l	$70
 	dc.l	$350 
-; -------- Stow item store --------
-loc_0002221E:
+StowItemShopAssortment:
 	dc.w	$6
 	dc.b	$00, ITEM_HERBS
 	dc.b	$00, ITEM_MEDICINE
@@ -36436,39 +36686,36 @@ loc_0002221E:
 	dc.b	$00, ITEM_LANTERN
 	dc.b	$00, ITEM_GNOME_STONE
 	dc.b	$00, ITEM_GRIFFIN_WING
-loc_0002222C:
+StowItemShopPrices:
 	dc.l	$30
 	dc.l	$125
 	dc.l	$65
 	dc.l	$70
 	dc.l	$375
 	dc.l	$820 
-; -------- Keltwick item store --------
-loc_00022244:
+KeltwickItemShopAssortment:
 	dc.w	$5
 	dc.b	$00, ITEM_MEDICINE
 	dc.b	$00, ITEM_POISON_BALM
 	dc.b	$00, ITEM_LANTERN
 	dc.b	$00, ITEM_GRIFFIN_WING
 	dc.b	$00, ITEM_ALARM_CLOCK 
-loc_00022250:
+KeltwickItemShopPrices:
 	dc.l	$130
 	dc.l	$70
 	dc.l	$75
 	dc.l	$910
 	dc.l	$2000 
-; -------- Malaga item store --------
-loc_00022264:
+MalagaItemShopAssortment:
 	dc.w	$3
 	dc.b	$00, ITEM_VASE
 	dc.b	$00, ITEM_JOKE_BOOK
 	dc.b	$00, ITEM_SMALL_BOMB
-loc_0002226C:
+MalagaItemShopPrices:
 	dc.l	$10
 	dc.l	$10
 	dc.l	$10 
-; -------- Barrow item store --------
-loc_00022278:
+BarrowItemShopAssortment:
 	dc.w	$6
 	dc.b	$00, ITEM_MEDICINE
 	dc.b	$00, ITEM_LANTERN
@@ -36476,15 +36723,14 @@ loc_00022278:
 	dc.b	$00, ITEM_AGATE_JEWEL
 	dc.b	$00, ITEM_GNOME_STONE
 	dc.b	$00, ITEM_BANSHEE_POWDER
-loc_00022286:
+BarrowItemShopPrices:
 	dc.l	$142
 	dc.l	$80
 	dc.l	$990
 	dc.l	$3200
 	dc.l	$400
 	dc.l	$2200 
-; -------- Helwig item store --------
-loc_0002229E:
+HelwigItemShopAssortment:
 	dc.w	$6
 	dc.b	$00, ITEM_MEDICINE
 	dc.b	$00, ITEM_GRIFFIN_WING
@@ -36492,147 +36738,135 @@ loc_0002229E:
 	dc.b	$00, ITEM_AGATE_JEWEL
 	dc.b	$00, ITEM_GNOME_STONE
 	dc.b	$00, ITEM_POISON_BALM
-loc_000222AC:
+HelwigItemShopPrices:
 	dc.l	$155
 	dc.l	$1020
 	dc.l	$92
 	dc.l	$3780
 	dc.l	$420
 	dc.l	$90 
-; -------- Swaffham item store --------
-loc_000222C4:
+SwaffhamItemShopAssortment:
 	dc.w	$5
 	dc.b	$00, ITEM_MEDICINE
 	dc.b	$00, ITEM_POISON_BALM
 	dc.b	$00, ITEM_LANTERN
 	dc.b	$00, ITEM_GRIFFIN_WING
 	dc.b	$00, ITEM_AGATE_JEWEL 
-loc_000222D0:
+SwaffhamItemShopPrices:
 	dc.l	$171
 	dc.l	$108
 	dc.l	$102
 	dc.l	$1050
 	dc.l	$4120 
-; -------- Hastings item store --------
-loc_000222E4:
+HastingsItemShopAssortment:
 	dc.w	$5
 	dc.b	$00, ITEM_MEDICINE
 	dc.b	$00, ITEM_POISON_BALM
 	dc.b	$00, ITEM_TOPAZ_JEWEL
 	dc.b	$00, ITEM_LANTERN
 	dc.b	$00, ITEM_BANSHEE_POWDER
-loc_000222F0:
+HastingsItemShopPrices:
 	dc.l	$190
 	dc.l	$122
 	dc.l	$9100
 	dc.l	$115
 	dc.l	$3750 
-; -------- Parma magic store --------
-loc_00022304: 
+ParmaMagicShopAssortment: 
 	dc.w	$2
 	dc.b	MAGIC_TYPE_BATTLE, 	MAGIC_FERROS
 	dc.b	MAGIC_TYPE_FIELD, 	MAGIC_SANGUA 
-loc_0002230A:
+ParmaMagicShopPrices:
 	dc.l	$500
 	dc.l	$800 
-; -------- Deepdale magic store --------
-loc_00022312:
+DeepdaleMagicShopAssortment:
 	dc.w	$2
 	dc.b	MAGIC_TYPE_BATTLE, 	MAGIC_VOLTI
 	dc.b	MAGIC_TYPE_FIELD,	MAGIC_SANGUA
-loc_00022318:
+DeepdaleMagicShopPrices:
 	dc.l	$1200
 	dc.l	$900 
-; -------- Stow magic store --------
-loc_00022320:
+StowMagicShopAssortment:
 	dc.w	$3
 	dc.b	MAGIC_TYPE_BATTLE, MAGIC_COPPEROS
 	dc.b	MAGIC_TYPE_BATTLE, MAGIC_AERO
 	dc.b	MAGIC_TYPE_BATTLE, MAGIC_VOLTI
-loc_00022328:
+StowMagicShopPrices:
 	dc.l	$3700
 	dc.l	$3200
 	dc.l	$1400 
-; -------- Keltwick magic store --------
-loc_00022334:
+KeltwickMagicShopAssortment:
 	dc.w	$5
 	dc.b	$02, MAGIC_AERO
 	dc.b	$00, MAGIC_LUMINOS
 	dc.b	$02, MAGIC_HYDRO
 	dc.b	$02, MAGIC_CHRONO
 	dc.b	$00, MAGIC_TOXIOS 
-loc_00022340:
+KeltwickMagicShopPrices:
 	dc.l	$3400
 	dc.l	$5200
 	dc.l	$4500
 	dc.l	$5700
 	dc.l	$8500 
-; -------- Malaga magic store --------
-loc_00022354:
+MalagaMagicShopAssortment:
 	dc.w	$5
 	dc.b	MAGIC_TYPE_FIELD, 	MAGIC_ARIES
 	dc.b	MAGIC_TYPE_BATTLE, 	MAGIC_VOLTIO
 	dc.b	MAGIC_TYPE_FIELD, 	MAGIC_SANGUIA
 	dc.b	MAGIC_TYPE_BATTLE, 	MAGIC_AERIOS
 	dc.b	MAGIC_TYPE_FIELD, 	MAGIC_TOXIOS
-loc_00022360:
+MalagaMagicShopPrices:
 	dc.l	$9000
 	dc.l	$11000
 	dc.l	$4800
 	dc.l	$11700
 	dc.l	$9100 
-; -------- Helwig magic store --------
-loc_00022374:
+HelwigMagicShopAssortment:
 	dc.w	$5
 	dc.b	MAGIC_TYPE_FIELD, 	MAGIC_ARIES
 	dc.b	MAGIC_TYPE_FIELD, 	MAGIC_SANGUIA
 	dc.b	MAGIC_TYPE_BATTLE, 	MAGIC_MERCURIOS
 	dc.b	MAGIC_TYPE_FIELD, 	MAGIC_INAUDIOS
 	dc.b	MAGIC_TYPE_FIELD, 	MAGIC_EXTRIOS
-loc_00022380:
+HelwigMagicShopPrices:
 	dc.l	$12000
 	dc.l	$5100
 	dc.l	$8700
 	dc.l	$3000
 	dc.l	$6200 
-; -------- Swaffham magic store --------	
-loc_00022394:
+SwaffhamMagicShopAssortment:
 	dc.w	$3
 	dc.b	MAGIC_TYPE_BATTLE, MAGIC_HYDRIOS
 	dc.b	MAGIC_TYPE_BATTLE, MAGIC_ARGENTOS
 	dc.b	MAGIC_TYPE_BATTLE, MAGIC_VOLTIO 
-loc_0002239C:
+SwaffhamMagicShopPrices:
 	dc.l	$20000
 	dc.l	$40000
 	dc.l	$35000 
-; -------- Hastings magic store --------
-loc_000223A8:
+HastingsMagicShopAssortment:
 	dc.w	$4
 	dc.b	MAGIC_TYPE_BATTLE, 	MAGIC_CHRONIOS
 	dc.b	MAGIC_TYPE_BATTLE, 	MAGIC_VOLTIOS
 	dc.b	MAGIC_TYPE_FIELD, 	MAGIC_SANGUIO
 	dc.b	MAGIC_TYPE_BATTLE, 	MAGIC_TERRAFISSI 
-loc_000223B2:
+HastingsMagicShopPrices:
 	dc.l	$20000 
 	dc.l	$47000 
 	dc.l	$28000 
 	dc.l	$70000 
-; -------- Wyclif equipment store --------
-loc_000223C2:
+WyclifEquipmentShopAssortment:
 	dc.w	$5
 	dc.b	EQUIPMENT_TYPE_SWORD, 	EQUIPMENT_SWORD_BRONZE
 	dc.b	EQUIPMENT_TYPE_SHIELD, 	EQUIPMENT_SHIELD_LEATHER
 	dc.b	EQUIPMENT_TYPE_SHIELD, 	EQUIPMENT_SHIELD_SMALL
 	dc.b	EQUIPMENT_TYPE_ARMOR, 	EQUIPMENT_ARMOR_LEATHER
 	dc.b	EQUIPMENT_TYPE_ARMOR, 	EQUIPMENT_ARMOR_BRONZE
-loc_000223CE:
+WyclifEquipmentShopPrices:
 	dc.l	$100
 	dc.l	$50
 	dc.l	$080
 	dc.l	$200
 	dc.l	$400
-; -------- Parma equipment store --------
-loc_000223E2:
+ParmaEquipmentShopAssortment:
 	dc.w	$6
 	dc.b	EQUIPMENT_TYPE_SWORD, 	EQUIPMENT_SWORD_IRON
 	dc.b	EQUIPMENT_TYPE_SWORD, 	EQUIPMENT_SWORD_SHARP
@@ -36640,15 +36874,14 @@ loc_000223E2:
 	dc.b	EQUIPMENT_TYPE_SHIELD, 	EQUIPMENT_SHIELD_SILVER
 	dc.b	EQUIPMENT_TYPE_ARMOR, 	EQUIPMENT_ARMOR_METAL
 	dc.b	EQUIPMENT_TYPE_ARMOR, 	EQUIPMENT_ARMOR_SCALE
-loc_000223F0:
+ParmaEquipmentShopPrices:
 	dc.l	$400 
 	dc.l	$800 
 	dc.l	$250 
 	dc.l	$500 
 	dc.l	$900 
 	dc.l	$1100 
-; -------- Deepdale equipment store --------
-loc_00022408:
+DeepdaleEquipmentShopAssortment:
 	dc.w	$6
 	dc.b	EQUIPMENT_TYPE_SWORD, 	EQUIPMENT_SWORD_LONG
 	dc.b	EQUIPMENT_TYPE_SWORD, 	EQUIPMENT_SWORD_SILVER
@@ -36656,50 +36889,47 @@ loc_00022408:
 	dc.b	EQUIPMENT_TYPE_SHIELD, 	EQUIPMENT_SHIELD_PLATINUM
 	dc.b	EQUIPMENT_TYPE_ARMOR, 	EQUIPMENT_ARMOR_PLATE
 	dc.b	EQUIPMENT_TYPE_ARMOR, 	EQUIPMENT_ARMOR_CRYSTAL
-loc_00022416:
+DeepdaleEquipmentShopPrices:
 	dc.l	$1800 
 	dc.l	$3700 
 	dc.l	$1500 
 	dc.l	$3200 
 	dc.l	$2800 
 	dc.l	$4500 
-; -------- Malaga equipment store --------
-loc_0002242E: 
+MalagaEquipmentShopAssortment: 
 	dc.w	$5
 	dc.b	EQUIPMENT_TYPE_SWORD, 	EQUIPMENT_SWORD_PRIME
 	dc.b	EQUIPMENT_TYPE_SWORD, 	EQUIPMENT_SWORD_GOLDEN
 	dc.b	EQUIPMENT_TYPE_SHIELD, 	EQUIPMENT_SHIELD_DIAMOND
 	dc.b	EQUIPMENT_TYPE_ARMOR, 	EQUIPMENT_ARMOR_SILVER
 	dc.b	EQUIPMENT_TYPE_ARMOR, 	EQUIPMENT_ARMOR_KNIGHT
-loc_0002243A:
+MalagaEquipmentShopPrices:
 	dc.l	$5100
 	dc.l	$8200
 	dc.l	$4100
 	dc.l	$7000
 	dc.l	$9200
-; -------- Tadcaster equipment store --------
-loc_0002244E:
+TadcasterEquipmentShopAssortment:
 	dc.w	$5
 	dc.b	EQUIPMENT_TYPE_SWORD, 	EQUIPMENT_SWORD_DIAMOND
 	dc.b	EQUIPMENT_TYPE_SWORD, 	EQUIPMENT_SWORD_PLATINUM
 	dc.b	EQUIPMENT_TYPE_SHIELD, 	EQUIPMENT_SHIELD_KNIGHT
 	dc.b	EQUIPMENT_TYPE_ARMOR, 	EQUIPMENT_ARMOR_GOLD
 	dc.b	EQUIPMENT_TYPE_ARMOR, 	EQUIPMENT_ARMOR_ULTIMATE
-loc_0002245A: ; Tadcaster equipment store prices
+TadcasterEquipmentShopPrices: ; Tadcaster equipment store prices
 	dc.l	$21000
 	dc.l	$14800
 	dc.l	$6300
 	dc.l	$15000
 	dc.l	$24000
-; -------- Swaffham equipment store --------
-loc_0002246E:
+SwaffhamEquipmentShopAssortment:
 	dc.w	$5
 	dc.b	EQUIPMENT_TYPE_SWORD, 	EQUIPMENT_SWORD_ULTIMATE 
 	dc.b	EQUIPMENT_TYPE_SWORD, 	EQUIPMENT_SWORD_ROYAL
 	dc.b	EQUIPMENT_TYPE_SHIELD, 	EQUIPMENT_SHIELD_CARMINE1
 	dc.b	EQUIPMENT_TYPE_ARMOR, 	EQUIPMENT_ARMOR_ODIN
 	dc.b	EQUIPMENT_TYPE_ARMOR, 	EQUIPMENT_ARMOR_DIAMOND 
-loc_0002247A:
+SwaffhamEquipmentShopPrices:
 	dc.l	$42000 
 	dc.l	$34600 
 	dc.l	$12700 
@@ -36863,7 +37093,7 @@ MagicMpConsumptionMap:
 	dc.w	$1F 
 	dc.w	$6
 	dc.w	$2 
-loc_000226AC:
+loc_000226AC: ; Something indexed by battle magic
 	dc.b	$04, $B0
 	dc.b	$06, $A4
 	dc.b	$03, $57
@@ -36878,7 +37108,7 @@ loc_000226AC:
 	dc.b	$00, $00
 	dc.b	$00, $00 
 	dc.w	$0050
-loc_000226C8:
+loc_000226C8: ; Something indexed by battle magic
 	dc.b	$00, $00, $02, $02, $02, $03, $03, $03, $03, $01, $01, $00, $00, $00
 loc_000226D6:
 	dc.l	ItemNames
@@ -37852,7 +38082,8 @@ loc_00023A72:
 	dc.l	loc_0005DC36
 	dc.b	$00, $4F 
 
-loc_00023A7C: ; Maps current map sector to pointer index at loc_00023B28
+;loc_00023A7C:
+EnemyEncounterTypesByMapSector:  ; Maps current map sector to pointer index at loc_00023B28
 	dc.b	$28, $28, $28, $27, $27, $27, $24, $00, $21, $23, $20, $20, $1E, $1E, $41, $00
 	dc.b	$2A, $2A, $2C, $2E, $25, $25, $24, $24, $21, $21, $00, $00, $1E, $41, $00, $00
 	dc.b	$00, $2D, $2D, $2D, $2E, $2E, $34, $36, $36, $36, $37, $37, $1B, $1C, $1C, $00
@@ -37862,7 +38093,8 @@ loc_00023A7C: ; Maps current map sector to pointer index at loc_00023B28
 	dc.b	$00, $00, $0F, $00, $00, $0D, $11, $11, $12, $12, $14, $00, $16, $17, $00, $00 
 	dc.b	$00, $00, $0E, $0E, $0D, $0F, $0F, $11, $00, $12, $15, $14, $16, $00, $00, $00 
 
-loc_00023AFC: ; Maps current cave room to pointer index at loc_00023B28
+;loc_00023AFC: ; Maps current cave room to pointer index at loc_00023B28
+EnemyEncounterTypesByCaveRoom:
 	dc.b	$01, $06, $06, $0C, $0C, $10, $43, $13, $13, $40, $40, $19, $19, $1D, $1D, $1F 
 	dc.b	$1F, $1F, $22, $42, $26, $26, $29, $2F, $2F, $30, $31, $31, $35, $35, $38, $38 
 	dc.b	$3E, $3E, $3E, $29, $2B, $2D, $45, $2D, $2B, $2D, $33, $44 

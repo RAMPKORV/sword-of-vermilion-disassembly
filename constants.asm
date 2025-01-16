@@ -17,7 +17,7 @@ Script_output_x         = $FFFFC234
 Script_talk_source      = $FFFFC250
 
 Current_town = $FFFFC40C
-Current_cave = $FFFFC556
+Current_cave_room = $FFFFC556
 
 Program_state = $FFFFC400
 Game_state = $FFFFC412
@@ -85,6 +85,11 @@ Player_level                    = $FFFFC640
 Player_poisoned                 = $FFFFC642
 Player_name                     = $FFFFC64C
 
+;$FFFFC65A.w
+;$FFFFC65B.w
+;$FFFFC65C.w
+;$FFFFC65D.w
+
 Player_position_x_outside_town  = $FFFFC662
 Player_position_y_outside_town  = $FFFFC664
 Player_map_sector_x             = $FFFFC666
@@ -132,8 +137,6 @@ Player_has_received_old_womans_sketch   = $FFFFC763
 
 Boss_event_trigger                      = $FFFFC817
 Solidier_fight_event_trigger            = $FFFFC816
-
-
 Map_triggers_start = $FFFFC818
 
 ; Towns
