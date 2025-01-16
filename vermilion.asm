@@ -30288,7 +30288,7 @@ loc_0001C3A4:
 	MOVE.w	#$FFFF, Readied_magic.w
 	BRA.w	loc_0001C474
 loc_0001C420:
-	LEA	Equipped_sword.w, A2
+	LEA	Equipped_items.w, A2
 	MOVE.w	D0, D2
 	MOVE.w	#$000A, D1
 	ASR.w	D1, D0
@@ -30990,7 +30990,7 @@ loc_0001CDFC:
 
 loc_0001CDFE:
 	MOVE.w	#2, D7
-	LEA	Equipped_sword.w, A0
+	LEA	Equipped_items.w, A0
 loc_0001CE06:
 	MOVE.w	(A0)+, D3
 	BLT.b	loc_0001CE18
@@ -31007,7 +31007,7 @@ loc_0001CE1E:
 
 loc_0001CE20:
 	MOVE.w	#2, D7
-	LEA	Equipped_sword.w, A0
+	LEA	Equipped_items.w, A0
 loc_0001CE28:
 	MOVE.w	(A0)+, D3
 	MOVE.w	#9, D0
@@ -31600,7 +31600,7 @@ loc_0001D5D2:
 loc_0001D5D8:
 	MOVE.w	$FFFFC4E4.w, D0
 	ADD.w	D0, D0
-	LEA	Equipped_sword.w, A2
+	LEA	Equipped_items.w, A2
 	MOVE.w	(A2,D0.w), D0
 	RTS
 
@@ -31616,7 +31616,7 @@ loc_0001D5FC:
 	BSR.b	loc_0001D5E8
 	MOVE.w	$FFFFC4E4.w, D2
 	ADD.w	D2, D2
-	LEA	Equipped_sword.w, A2
+	LEA	Equipped_items.w, A2
 	MOVE.w	D1, (A2,D2.w)
 	LEA	Possessed_equipment_list.w, A2
 	MOVE.w	Possessed_equipment_length.w, D7
@@ -34230,35 +34230,43 @@ loc_0001FB34:
 loc_0001FB74:
 	dc.l	loc_0004A8F4
 	dc.l	loc_0004AA82
-	dc.l	$001D0036	
+	dc.w	$001D
+	dc.w	$0036	
 loc_0001FB80:
 	dc.l	loc_00048EFE
 	dc.l	loc_000498D0
-	dc.l	$00B30073	
+	dc.w	$00B3
+	dc.w	$0073	
 loc_0001FB8C:
 	dc.l	loc_00049AD8
 	dc.l	loc_00049E3C
-	dc.l	$002F0073	
+	dc.w	$002F
+	dc.w	$0073	
 loc_0001FB98:
 	dc.l	loc_0004A77A
 	dc.l	loc_0004A8B8
-	dc.l	$00170076	
+	dc.w	$0017
+	dc.w	$0076	
 loc_0001FBA4:
 	dc.l	loc_0004A548
 	dc.l	loc_0004A70E
-	dc.l	$001F0076	
+	dc.w	$001F
+	dc.w	$0076	
 loc_0001FBB0:
 	dc.l	loc_00049ECC
 	dc.l	loc_0004A42C
-	dc.l	$0053007A	
+	dc.w	$0053
+	dc.w	$007A	
 loc_0001FBBC:
 	dc.l	loc_0004AAD6
 	dc.l	loc_0004B1E6
-	dc.l	$007F0074	
+	dc.w	$007F
+	dc.w	$0074	
 loc_0001FBC8:
 	dc.l	loc_0004A77A
 	dc.l	loc_0004A8B8
-	dc.l	$00170036	
+	dc.w	$0017
+	dc.w	$0036	
 ; ===========================================================================
 ;loc_0001FBD4:
 TownNames:
@@ -34305,7 +34313,7 @@ loc_0001FC74:
 loc_0001FC7E:
 	dc.b	"Cartahena", $FF
 
-loc_0001FC88: ; suspected tilemappings by town
+loc_0001FC88: ; suspected town loading routines that set tilemap
 	BRA.w	loc_0001FCC8
 	BRA.w	loc_0001FCD0
 	BRA.w	loc_0001FCD8
@@ -35195,9 +35203,9 @@ loc_00020780:
 	dc.l	loc_00020C6C
 	dc.l	loc_00020C82
 loc_00020830:
-	dc.w	$0002
-	dc.w	$0004
-	dc.w	$0004 
+	dc.w	$0002 ; x
+	dc.w	$0004 ; y
+	dc.w	$0004 ; direction (down)
 	dc.l	loc_00020C8E
 	dc.w	$000B 
 	dc.w	$000B 

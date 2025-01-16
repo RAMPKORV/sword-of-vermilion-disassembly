@@ -24,6 +24,7 @@ Game_state = $FFFFC412
 
 Confirm_option = $FFFFC428
 
+Equipped_items  = $FFFFC4D0
 Equipped_sword  = $FFFFC4D0
 Equipped_shield = $FFFFC4D2
 Equipped_armor  = $FFFFC4D4
