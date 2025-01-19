@@ -9,6 +9,7 @@ Script_player_name  = $F7
 Fade_out_buffer         = $FFFFC08E
 
 Camera_movement_buffer_in_town = $FFFFC10C
+Current_town_room = $FFFFC126
 
 Script_source_offset    = $FFFFC202
 Script_source_base      = $FFFFC204
@@ -103,6 +104,7 @@ Player_cave_map_sector_y        = $FFFFC670
 
 Random_number                   = $FFFFC680
 Number_Of_Enemies               = $FFFFC682
+Checked_for_encounter           = $FFFFC683
 Current_encounter_type_options  = $FFFFC684
 Steps_since_last_encounter      = $FFFFC685
 Current_encounter_type          = $FFFFC68A
@@ -128,13 +130,19 @@ SUP_PLAYER_KIMS     = $01000000
 PRICE_PASS_TO_CARTHAHENA = $50000
 PRICE_SANGUIOS = $1000
 
-Event_triggers_start                    = $FFFFC720
-Blade_is_dead                           = $FFFFC720
-Swaffham_ruined                         = $FFFFC748
-Tsarkon_is_dead                         = $FFFFC758
-Old_man_has_received_sketch             = $FFFFC75F
-Old_woman_has_received_sketch           = $FFFFC760
-Player_has_received_old_womans_sketch   = $FFFFC763
+Event_triggers_start                        = $FFFFC720
+Blade_is_dead                               = $FFFFC720
+Treasure_of_troy_challenge_issued           = $FFFFC722
+Fake_king_killed                            = $FFFFC723
+Treasure_of_troy_given_to_king              = $FFFFC724
+Talked_to_real_king                         = $FFFFC725
+Treasure_of_troy_found                      = $FFFFC726
+Talked_to_king_after_given_treasure_of_troy = $FFFFC727
+Swaffham_ruined                             = $FFFFC748
+Tsarkon_is_dead                             = $FFFFC758
+Old_man_has_received_sketch                 = $FFFFC75F
+Old_woman_has_received_sketch               = $FFFFC760
+Player_has_received_old_womans_sketch       = $FFFFC763
 
 Boss_event_trigger                      = $FFFFC817
 Solidier_fight_event_trigger            = $FFFFC816

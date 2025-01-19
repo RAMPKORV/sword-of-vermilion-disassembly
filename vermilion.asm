@@ -124,7 +124,7 @@ loc_00000250:
 	MOVE.w	#$FFFF, Equipped_unused.w
 	MOVE.l	#0, Player_kims.w
 	MOVE.w	#0, Player_level.w
-	JSR	loc_0001DA8E
+	JSR	UpgradeLevelStats
 	LEA	Player_name.w, A0
 	MOVE.b	#$FF, (A0)
 	RTS
@@ -1185,7 +1185,7 @@ loc_0000171A:
 	BSR.w	loc_000034E0	
 	MOVE.w	#$E, Program_state.w ; Transition to main game?	
 	MOVE.w	#3, Game_state.w 	 ; Entering building/town?
-	MOVE.w	$FFFFC152.w, $FFFFC126.w	
+	MOVE.w	$FFFFC152.w, Current_town_room.w	
 	JSR	loc_000033BE	
 loc_00001756:
 	RTS
@@ -1370,7 +1370,7 @@ loc_000019BE:
 	MOVE.w	$FFFFC138.w, $FFFFC144.w
 	MOVE.w	$FFFFC13A.w, $FFFFC146.w
 	MOVE.w	Current_town.w, D0
-	MOVE.w	D0, $FFFFC126.w
+	MOVE.w	D0, Current_town_room.w
 	ADD.w	D0, D0
 	ADD.w	D0, D0
 	LEA	loc_0001FC88, A0
@@ -1505,7 +1505,7 @@ loc_00001BB8:
 	TST.w	$FFFFC130.w
 	BGT.b	loc_00001BE6
 	BSR.w	loc_00003338
-	MOVE.w	$FFFFC152.w, $FFFFC126.w
+	MOVE.w	$FFFFC152.w, Current_town_room.w
 	JSR	loc_000033BE
 loc_00001BE6:
 	MOVE.w	$FFFFC130.w, $FFFFC148.w
@@ -1513,7 +1513,7 @@ loc_00001BE6:
 	MOVE.w	$FFFFC13C.w, $FFFFC144.w
 	MOVE.w	$FFFFC13E.w, $FFFFC146.w
 	MOVE.w	$FFFFC14E.w, $FFFFC128.w
-	MOVE.w	$FFFFC152.w, $FFFFC126.w
+	MOVE.w	$FFFFC152.w, Current_town_room.w
 	MOVE.l	$FFFFC162.w, $FFFFC15E.w
 	MOVE.w	#4, $FFFFC414.w
 	BSR.w	loc_00002022
@@ -1692,7 +1692,7 @@ loc_00001E78:
 	MOVE.w	(A0,D1.w), D1	
 	ADD.w	D1, Player_ac.w	
 loc_00001E94:
-	JSR	loc_0001DA8E	
+	JSR	UpgradeLevelStats	
 	RTS
 	
 loc_00001E9C:
@@ -1736,7 +1736,7 @@ loc_00001F00:
 	MOVE.w	#0, $FFFFC144.w
 	MOVE.w	#0, $FFFFC146.w
 	MOVE.w	$FFFFC14E.w, $FFFFC128.w
-	MOVE.w	$FFFFC154.w, $FFFFC126.w
+	MOVE.w	$FFFFC154.w, Current_town_room.w
 	MOVE.l	$FFFFC166.w, $FFFFC15E.w
 	MOVE.w	#6, $FFFFC414.w
 	BSR.w	loc_00002022
@@ -1793,7 +1793,7 @@ loc_00001FE0:
 	MOVE.w	#0, $FFFFC144.w
 	MOVE.w	#0, $FFFFC146.w
 	MOVE.w	$FFFFC14E.w, $FFFFC128.w
-	MOVE.w	$FFFFC156.w, $FFFFC126.w
+	MOVE.w	$FFFFC156.w, Current_town_room.w
 	MOVE.l	$FFFFC16A.w, $FFFFC15E.w
 	MOVE.w	#8, $FFFFC414.w
 	BSR.w	loc_00002022
@@ -1842,7 +1842,7 @@ loc_000020B2:
 	TST.w	$FFFFC130.w
 	BGT.b	loc_000020E0
 	BSR.w	loc_0000336E
-	MOVE.w	$FFFFC152.w, $FFFFC126.w
+	MOVE.w	$FFFFC152.w, Current_town_room.w
 	JSR	loc_000033BE
 loc_000020E0:
 	MOVE.w	$FFFFC130.w, $FFFFC148.w
@@ -1850,7 +1850,7 @@ loc_000020E0:
 	MOVE.w	$FFFFC13C.w, $FFFFC144.w
 	MOVE.w	$FFFFC13E.w, $FFFFC146.w
 	MOVE.w	$FFFFC14E.w, $FFFFC128.w
-	MOVE.w	$FFFFC152.w, $FFFFC126.w
+	MOVE.w	$FFFFC152.w, Current_town_room.w
 	MOVE.l	$FFFFC162.w, $FFFFC15E.w
 	MOVE.w	#$A, $FFFFC414.w
 	BSR.w	loc_00002022
@@ -1914,7 +1914,7 @@ loc_000021DA:
 	MOVE.w	#0, $FFFFC144.w
 	MOVE.w	#0, $FFFFC146.w
 	MOVE.w	$FFFFC14E.w, $FFFFC128.w
-	MOVE.w	$FFFFC154.w, $FFFFC126.w
+	MOVE.w	$FFFFC154.w, Current_town_room.w
 	MOVE.l	$FFFFC166.w, $FFFFC15E.w
 	MOVE.w	#$C, $FFFFC414.w
 	BSR.w	loc_00002022
@@ -1965,7 +1965,7 @@ loc_000022A6:
 	MOVE.w	#0, $FFFFC144.w	
 	MOVE.w	#0, $FFFFC146.w	
 	MOVE.w	$FFFFC14E.w, $FFFFC128.w	
-	MOVE.w	$FFFFC156.w, $FFFFC126.w	
+	MOVE.w	$FFFFC156.w, Current_town_room.w	
 	MOVE.l	$FFFFC16A.w, $FFFFC15E.w	
 	MOVE.w	#$E, $FFFFC414.w	
 	BSR.w	loc_00002022	
@@ -2231,7 +2231,7 @@ loc_000026BA: ; level up
 	MOVE.b	#$86, D0
 	JSR	loc_00010522
 	ADDQ.w	#1, Player_level.w
-	JSR	loc_0001DA8E ; upgrade stats
+	JSR	UpgradeLevelStats
 	MOVE.w	#100, $FFFFC55C.w
 	JSR	loc_000122D2
 	JSR	loc_00012E68
@@ -2303,20 +2303,20 @@ loc_000027B6:
 	CLR.b	$FFFFC579.w
 loc_000027CC:
 	BSR.w	loc_000030AC
-	TST.b	$FFFFC683.w ; Whether we have checked for encounters?
+	TST.b	Checked_for_encounter.w
 	BNE.b	loc_000027FC
 	TST.b	Tsarkon_is_dead.w
 	BNE.w	loc_000027FC
 	TST.w	$FFFFC68E.w
 	BGE.b	loc_000027FC
-	BSR.w	loc_00003428
+	BSR.w	CheckForEncounter
 	BNE.b	loc_000027FE
 	ADDQ.b	#1, Steps_since_last_encounter.w
 	CMPI.b	#MAX_STEPS_BETWEEN_ENCOUNTERS, Steps_since_last_encounter.w
 	BEQ.b	loc_000027FE
 	BRA.b	loc_000027FC
 loc_000027F8:
-	CLR.b	$FFFFC683.w
+	CLR.b	Checked_for_encounter.w
 loc_000027FC:
 	RTS
 
@@ -2451,7 +2451,7 @@ loc_00002974:
 	MOVE.b	#$86, D0
 	JSR	loc_00010522
 	ADDQ.w	#1, Player_level.w
-	JSR	loc_0001DA8E
+	JSR	UpgradeLevelStats
 	MOVE.w	#100, $FFFFC55C.w
 	JSR	loc_000122D2
 	JSR	loc_00012E68
@@ -2709,7 +2709,7 @@ loc_00002CF6:
 loc_00002D04:
 	BSR.w	loc_000034E0
 	MOVE.w	#3, Game_state.w
-	MOVE.w	$FFFFC152.w, $FFFFC126.w
+	MOVE.w	$FFFFC152.w, Current_town_room.w
 	JSR	loc_000033BE
 	MOVE.b	#$FF, $FFFFC67F.w
 loc_00002D20:
@@ -3192,11 +3192,11 @@ loc_00003380:
 
 loc_000033BE:
 	LEA	loc_0001FE94, A0
-	MOVE.w	$FFFFC126.w, D0
+	MOVE.w	Current_town_room.w, D0
 	ANDI.w	#$00FF, D0
 	CMPI.w	#4, D0
 	BEQ.b	loc_000033DE
-	CMPI.w	#$000B, D0
+	CMPI.w	#$B, D0
 	BEQ.b	loc_000033F6
 loc_000033D8:
 	MOVE.b	(A0,D0.w), D0
@@ -3230,8 +3230,9 @@ loc_0000341A:
 	JSR	loc_0000603E
 	RTS
 
-loc_00003428: ; Check for encounter
-	MOVE.b	#1, $FFFFC683.w
+;loc_00003428
+CheckForEncounter:
+	MOVE.b	#1, Checked_for_encounter.w
 	JSR	GetRandomNumber
 	AND.w	Encounter_rate.w, D0
 	BEQ.b	loc_0000343E
@@ -3386,7 +3387,7 @@ loc_000035FA:
 	ADD.w	D1, Player_position_y_outside_town.w
 	RTS
 
-loc_0000361C:
+loc_0000361C: ; Going through gates or entering caves?
 	dc.w	 0, -2			; Up
 	dc.w	-2,  0			; Left
 	dc.w	 0,  2			; Down
@@ -3697,7 +3698,7 @@ loc_00003A22:
 	ADD.w	$2(A1,D4.w), D1
 	ADD.w	$4(A1,D4.w), D2
 	ADD.w	$6(A1,D4.w), D3
-	MOVEQ	#$0000001D, D7
+	MOVEQ	#$1D, D7
 	MOVEA.l	$FFFFCC14.w, A6
 loc_00003A56:
 	BTST.b	#7, (A6)
@@ -3846,9 +3847,15 @@ loc_00003BF0:
 	RTS
 
 loc_00003C4E:
-	dc.b	$00, $00, $FF, $00, $FF, $FC, $00, $00, $00, $00, $01, $00, $00, $04, $00, $00 
+	dc.w	$0000, $FF00
+	dc.w	$FFFC, $0000
+	dc.w	$0000, $0100
+	dc.w	$0004, $0000 
 loc_00003C5E:
-	dc.b	$FF, $F1, $00, $0F, $FF, $E2, $00, $00, $FF, $E2, $00, $00, $FF, $F1, $00, $0F, $FF, $F1, $00, $0F, $00, $00, $00, $1E, $00, $00, $00, $1E, $FF, $F1, $00, $0F 
+	dc.w	$FFF1, $000F, $FFE2, $0000
+	dc.w	$FFE2, $0000, $FFF1, $000F
+	dc.w	$FFF1, $000F, $0000, $001E
+	dc.w	$0000, $001E, $FFF1, $000F 
 loc_00003C7E:	
 	BCLR.b	#7, $7(A5)
 	BCLR.b	#3, $7(A5)
@@ -4153,7 +4160,7 @@ loc_000040BA:
 	JSR	loc_0000F5D6
 	RTS
 
-loc_000040DE:
+loc_000040DE: ; suspected collision detection
 	LEA	loc_00004250, A0
 	MOVEA.l	$FFFFCC0C.w, A6
 	CLR.w	D0
@@ -4273,29 +4280,26 @@ loc_0000423C:
 	RTS
 
 loc_00004250:
-	dc.b	$00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $08, $00, $10, $FF, $F4 
-	dc.w	$0000
-	dc.b	$00, $00, $00, $00, $00, $00 
-	dc.w	$0000
-	dc.b	$00, $04, $00, $14, $FF, $F4, $00, $00, $FF, $F8, $00, $08, $00, $00 
-	dc.w	$0008
-	dc.b	$00, $00, $00, $00, $00, $00 
-	dc.w	$0000
-	dc.b	$FF, $F8, $00, $08, $00, $00, $00, $10, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 
-	dc.b	$00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $04, $00, $08, $00, $00 
-	dc.w	$0006
-	dc.b	$00, $00, $00, $00, $00, $00 
-	dc.w	$0000
-	dc.b	$00, $04, $00, $0C, $00, $00, $00, $0C, $FF, $F8, $00, $08, $FF, $F0 
-	dc.w	$0000
-	dc.b	$00, $00, $00, $00, $00, $00 
-	dc.w	$0000
-	dc.b	$FF, $F8, $00, $08, $FF, $E8, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 
-	dc.b	$00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $04, $00, $08, $FF, $F4 
-	dc.w	$0000
-	dc.b	$00, $00, $00, $00, $00, $00 
-	dc.w	$0000
-	dc.b	$00, $04, $00, $0C, $FF, $EC, $00, $00 
+	dc.w	$0000, $0000, $0000, $0000, $0000, $0000
+	dc.w	$0000, $0000, $0000, $0000, $0000, $0000
+	dc.w	$0008, $0010, $FFF4, $0000, $0000, $0000
+	dc.w	$0000, $0000, $0004, $0014, $FFF4, $0000
+	dc.w	$FFF8, $0008, $0000, $0008, $0000, $0000
+	dc.w	$0000, $0000, $FFF8, $0008, $0000, $0010
+	dc.w	$0000, $0000, $0000, $0000, $0000, $0000
+	dc.w	$0000, $0000, $0000, $0000, $0000, $0000 
+	dc.w	$0000, $0000, $0000, $0000, $0000, $0000
+	dc.w	$0000, $0000, $0000, $0000, $0000, $0000
+	dc.w	$0004, $0008, $0000, $0006, $0000, $0000
+	dc.w	$0000, $0000, $0004, $000C, $0000, $000C
+	dc.w	$FFF8, $0008, $FFF0, $0000, $0000, $0000
+	dc.w	$0000, $0000, $FFF8, $0008, $FFE8, $0000
+	dc.w	$0000, $0000, $0000, $0000, $0000, $0000
+	dc.w	$0000, $0000, $0000, $0000, $0000, $0000 
+	dc.w	$0000, $0000, $0000, $0000, $0000, $0000
+	dc.w	$0000, $0000, $0000, $0000, $0000, $0000
+	dc.w	$0004, $0008, $FFF4, $0000, $0000, $0000
+	dc.w	$0000, $0000, $0004, $000C, $FFEC, $0000 
 	
 loc_00004340:
 	CLR.w	D0
@@ -6468,6 +6472,7 @@ loc_0000623A:
 	BSR.w	loc_000063EA
 	RTS
 
+; The game keeps 9 map sectors in memory
 loc_0000626C:
 	LEA	OverworldMaps, A0
 	MOVE.w	Player_map_sector_x.w, D0
@@ -6528,7 +6533,7 @@ loc_0000626C:
 loc_0000630C:
 	TST.w	D2
 	BLT.w	loc_000063D0
-	CMPI.w	#$000F, D2
+	CMPI.w	#$F, D2
 	BGT.w	loc_000063D0
 	TST.w	D3
 	BLT.w	loc_000063D0
@@ -6544,7 +6549,11 @@ loc_00006328:
 	BSR.w	loc_0000633C
 	RTS
 
-loc_0000633C: ; Read map data into memory?
+; Read map data into memory. 
+; If the value is less than $80, read it directly.
+; If the value is $80 or greater, subtract $80 from the value and store it in D1.
+; Then, read another byte and repeat the process D1 times.
+loc_0000633C: 
 	MOVEM.w	D1/D0, -(A7)
 	LEA	-$20(A3), A3
 	CLR.w	D0
@@ -7255,26 +7264,16 @@ loc_00006DCA:
 	RTS
 
 loc_00006DCC:
-	dc.b	$00, $00, $00, $00, $00, $00 
-	dc.w	$0000
-	dc.b	$00, $00, $00, $00, $00, $00 
-	dc.w	$0000
-	dc.b	$FF, $EC, $00, $00, $FF, $EE 
-	dc.w	$0000
-	dc.b	$00, $08, $00, $18, $FF, $E8 
-	dc.w	$0008
-	dc.b	$00, $10, $00, $20, $FF, $C8 
-	dc.w	$FFE2
-	dc.b	$FF, $EC, $00, $10, $FF, $C0 
-	dc.w	$FFD0
-	dc.b	$FF, $EC, $00, $10, $FF, $C0 
-	dc.w	$FFD0
-	dc.b	$00, $04, $00, $20, $FF, $E0 
-	dc.w	$FFF4
-	dc.b	$00, $04, $00, $20, $FF, $E0 
-	dc.w	$FFF4
-	dc.b	$00, $04, $00, $20, $FF, $E0 
-	dc.w	$FFF4
+	dc.w	$0000, $0000, $0000, $0000
+	dc.w	$0000, $0000, $0000, $0000
+	dc.w	$FFEC, $0000, $FFEE, $0000
+	dc.w	$0008, $0018, $FFE8, $0008
+	dc.w	$0010, $0020, $FFC8, $FFE2
+	dc.w	$FFEC, $0010, $FFC0, $FFD0
+	dc.w	$FFEC, $0010, $FFC0, $FFD0
+	dc.w	$0004, $0020, $FFE0, $FFF4
+	dc.w	$0004, $0020, $FFE0, $FFF4
+	dc.w	$0004, $0020, $FFE0, $FFF4
 
 loc_00006E1C:
 	CLR.b	$FFFFC303.w
@@ -7491,14 +7490,14 @@ loc_000070AC:
 	RTS
 
 loc_000070D2:
-	TST.b	$FFFFC725.w
+	TST.b	Talked_to_real_king.w
 	BEQ.b	loc_000070EA
 	MOVE.l	#loc_0002F180, $FFFFC438.w	
 	MOVE.w	#$0044, D5	
 	BSR.w	loc_0000858A	
 	BRA.b	loc_00007100	
 loc_000070EA:
-	TST.b	$FFFFC722.w
+	TST.b	Treasure_of_troy_challenge_issued.w
 	BEQ.b	loc_00007100
 	MOVE.l	#loc_0002F180, $FFFFC438.w
 	MOVE.w	#$0052, D5
@@ -7507,25 +7506,25 @@ loc_00007100:
 	BRA.w	loc_00006F44
 	BSR.w	loc_00008234
 	CLR.b	$25(A5)
-	TST.b	$FFFFC725.w
+	TST.b	Talked_to_real_king.w
 	BEQ.b	loc_0000711C
 	MOVE.l	#loc_000295AA, $1C(A5)
 	BRA.b	loc_0000714E
 loc_0000711C:
-	TST.b	$FFFFC723.w
+	TST.b	Fake_king_killed.w
 	BEQ.b	loc_00007128
 	BCLR.b	#7, (A5)
 	RTS
 
 loc_00007128:
-	TST.b	$FFFFC727.w
+	TST.b	Talked_to_king_after_given_treasure_of_troy.w
 	BEQ.b	loc_00007138
 	MOVE.l	#loc_000293A8, $1C(A5)
 	BRA.b	loc_0000714E
 loc_00007138:
-	TST.b	$FFFFC726.w
+	TST.b	Treasure_of_troy_found.w
 	BNE.b	loc_00007144
-	TST.b	$FFFFC722.w
+	TST.b	Treasure_of_troy_challenge_issued.w
 	BNE.b	loc_0000714E
 loc_00007144:
 	MOVE.l	#loc_00007158, $2(A5)
@@ -7536,28 +7535,28 @@ loc_0000714E:
 	RTS
 
 loc_00007158:  
-	TST.b	$FFFFC724.w
+	TST.b	Treasure_of_troy_given_to_king.w
 	BEQ.b	loc_00007178
 	MOVE.l	#loc_00029386, $1C(A5)
 	LEA	Possessed_items_list.w, A3
 	LEA	Possessed_items_length.w, A2
-	MOVE.w	#$010D, D4
+	MOVE.w	#((ITEM_TYPE_NON_DISCARDABLE<<8)|ITEM_TREASURE_OF_TROY), D4
 	BSR.w	loc_000084C0
 	BRA.b	loc_00007196
 loc_00007178:
-	TST.b	$FFFFC726.w
+	TST.b	Treasure_of_troy_found.w
 	BEQ.b	loc_00007188
 	MOVE.l	#loc_0002929E, $1C(A5)
 	BRA.b	loc_00007196
 loc_00007188:
-	TST.b	$FFFFC722.w
+	TST.b	Treasure_of_troy_challenge_issued.w
 	BEQ.b	loc_00007196
 	MOVE.l	#loc_00029264, $1C(A5)
 loc_00007196:
 	BRA.w	loc_00006F44
 	BSR.w	loc_00008234
 	CLR.b	$25(A5)
-	TST.b	$FFFFC725.w
+	TST.b	Talked_to_real_king.w
 	BEQ.b	loc_000071AE
 	BCLR.b	#7, (A5)
 	RTS
@@ -7567,7 +7566,7 @@ loc_000071AE:
 	RTS
 
 loc_000071B8:
-	TST.b	$FFFFC725.w
+	TST.b	Talked_to_real_king.w
 	BEQ.b	loc_000071C6
 	MOVE.l	#loc_000295AA, $1C(A5)
 loc_000071C6:
@@ -8019,7 +8018,7 @@ loc_0000779A:
 	TST.b	$FFFFC76A.w	
 	BNE.b	loc_000077C8	
 	MOVE.l	#$7500, $FFFFC65A.w	
-	JSR	loc_0001159E	
+	JSR	DeductPaymentAmount	
 	MOVE.b	#$FF, $FFFFC76A.w	
 loc_000077C8:
 	MOVE.l	#loc_0003507E, $1C(A5)	
@@ -8051,7 +8050,7 @@ loc_0000780E:
 	BSR.w	loc_00008572
 	MOVE.w	#((ITEM_TYPE_NON_DISCARDABLE<<8)|ITEM_PASS_TO_CARTHAHENA), (A0,D0.w)
 	MOVE.l	#PRICE_PASS_TO_CARTHAHENA, $FFFFC65A.w
-	JSR	loc_0001159E
+	JSR	DeductPaymentAmount
 	MOVE.b	#$FF, $FFFFC765.w
 loc_00007838:
 	MOVE.l	#loc_000350A8, $1C(A5)
@@ -8585,7 +8584,7 @@ loc_00007F7C:
 	MOVE.w	Game_state.w, D0
 	CMPI.w	#$000A, D0
 	BNE.b	loc_00007F96
-	TST.b	$FFFFC723.w
+	TST.b	Fake_king_killed.w
 	BEQ.b	loc_00007F96
 	MOVE.l	#loc_00007F2E, $2(A5)
 	RTS
@@ -9185,12 +9184,15 @@ loc_000085A8:
 	dc.w	-1, -1, -1,  0,  0, -1,  1, -1,  1,  0,  0, -2,  2,  0,  1,  0 
 	dc.w	 1, -1,  1,  1, -1, -1, -1,  0, -1,  1,  0, -1,  0,  1, -2,  0
 loc_00008648:
-	dc.b	$00, $00, $00, $00, $FF, $FF, $80, $00, $FF, $FF, $80, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $80, $00, $00, $00, $80, $00, $00, $00, $00, $00 
+	dc.l	$00000000, $FFFF8000 
+	dc.l	$FFFF8000, $00000000 
+	dc.l	$00000000, $00008000 
+	dc.l	$00008000, $00000000 
 loc_00008668:
-	dc.b	$FF, $FD, $00, $00, $00, $00, $00, $03, $FF, $FD, $00, $01, $FF, $FD 
-	dc.w	$0003
-	dc.b	$FF, $FD, $00, $01, $FF, $FD, $00, $03, $FF, $FF, $00, $03, $FF, $FD 
-	dc.w	$0003
+	dc.w	$FFFD, $0000, $0000, $0003
+	dc.w	$FFFD, $0001, $FFFD, $0003
+	dc.w	$FFFD, $0001, $FFFD, $0003
+	dc.w	$FFFF, $0003, $FFFD, $0003
 loc_00008688:
 	MOVEA.l	$FFFFCC14.w, A6
 	BSR.w	loc_00008722
@@ -9660,7 +9662,7 @@ loc_00008D44:
 	ADD.w	D0, D0
 	MOVE.w	#((ITEM_TYPE_NON_DISCARDABLE<<8)|MAGIC_SANGUIOS), (A0,D0.w)
 	MOVE.l	#PRICE_SANGUIOS, $FFFFC65A.w
-	JSR	loc_0001159E
+	JSR	DeductPaymentAmount
 	MOVE.b	#$FF, $FFFFC766.w
 loc_00008D7A:
 	MOVE.l	#loc_000322FC, Script_talk_source.w
@@ -9750,7 +9752,9 @@ loc_00008E88:
 loc_00008E9E:
 	JMP	loc_0000F6DC
 loc_00008EA4:
-	dc.b	$FF, $F0, $FF, $D0, $00, $10, $FF, $D0, $FF, $F0, $FF, $E8, $00, $10, $FF, $E8, $FF, $F0, $00, $00, $00, $10, $00, $00 
+	dc.w	$FFF0, $FFD0, $0010, $FFD0 
+	dc.w	$FFF0, $FFE8, $0010, $FFE8
+	dc.w	$FFF0, $0000, $0010, $0000 
 loc_00008EBC:
 	MOVE.b	$1(A5), D0
 	LEA	(A5,D0.w), A4
@@ -12513,7 +12517,14 @@ loc_0000B564:
 loc_0000B578:
 	dc.b	$06, $05, $05, $04, $06, $07, $07, $00, $02, $03, $03, $04, $02, $01, $01, $00 
 loc_0000B588:
-	dc.b	$00, $00, $FF, $F0, $FF, $F8, $FF, $F8, $FF, $F0, $00, $00, $FF, $F8, $00, $08, $00, $00, $00, $10, $00, $08, $00, $08, $00, $10, $00, $00, $00, $08, $FF, $F8 
+	dc.w	$0000, $FFF0
+	dc.w	$FFF8, $FFF8 
+	dc.w	$FFF0, $0000 
+	dc.w	$FFF8, $0008 
+	dc.w	$0000, $0010 
+	dc.w	$0008, $0008 
+	dc.w	$0010, $0000 
+	dc.w	$0008, $FFF8 
 
 loc_0000B5A8:
 	MOVE.w	$2C(A5), D1
@@ -14330,7 +14341,7 @@ loc_0000CF2E:
 	BRA.w	loc_0000CFD2
 	BRA.w	loc_0000CFDA
 loc_0000CF66:
-	MOVE.b	#$FF, $FFFFC723.w
+	MOVE.b	#$FF, Fake_king_killed.w
 	RTS
 	
 loc_0000CF6E:
@@ -14806,7 +14817,8 @@ loc_0000D5CA:
 	RTS
 
 loc_0000D5CC:
-	dc.b	$00, $78, $00, $96, $00, $82, $00, $8C 
+	dc.w	$0078, $0096
+	dc.w	$0082, $008C 
 loc_0000D5D4:
 	dc.w	$0028
 	dc.w	$0032
@@ -18274,7 +18286,7 @@ loc_0001037E:
 	RTS
 	
 loc_000103D6:
-	LEA	loc_000103ED-1, A2
+	LEA	loc_000103EC, A2
 loc_000103DC:
 	LEA	$FFFFC190.w, A3
 	MOVE.l	(A2)+, (A3)+
@@ -18285,9 +18297,11 @@ loc_000103DC:
 	RTS
 	
 loc_000103EC:
-	dc.b	$33 
-loc_000103ED:
-	dc.b	$F8, $C1, $8C, $00, $C0, $00, $04, $33, $F8, $C1, $8E, $00, $C0, $00, $04, $4E, $75 
+	dc.l	$33F8C18C
+	dc.l	$00C00004
+	dc.l	$33F8C18E
+	dc.l	$00C00004
+	dc.w	$4E75 
 loc_000103FE:
 	ORI	#$0700, SR
 	ORI.w	#$8F00, D4
@@ -19623,7 +19637,8 @@ loc_00011580:
 loc_0001159C:
 	RTS
 	
-loc_0001159E: ; Pay?
+;loc_0001159E:
+DeductPaymentAmount:
 	LEA	$FFFFC65E.w, A0
 	LEA	(Player_kims+4).w, A1
 	MOVEQ	#3, D1
@@ -19884,7 +19899,7 @@ loc_0001193C:
 	LEA	loc_00027240, A0
 	BRA.b	loc_000119AA
 loc_00011982:
-	JSR	loc_0001CDFE
+	JSR	CheckIfCursed
 	BEQ.b	loc_00011992
 	LEA	loc_0002724C, A0
 	BRA.b	loc_000119AA
@@ -23281,7 +23296,7 @@ loc_00016010:
 	BRA.w	loc_00015EBA
 loc_00016018:
 	LEA	loc_0001F1EC, A0
-	MOVE.w	$FFFFC126.w, D0
+	MOVE.w	Current_town_room.w, D0
 	ANDI.w	#$00FF, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
@@ -23294,7 +23309,7 @@ loc_00016018:
 	CLR.w	$FFFFC174.w
 	BSR.w	loc_000160D0
 	LEA	loc_0001F2C4, A0
-	MOVE.w	$FFFFC126.w, D0
+	MOVE.w	Current_town_room.w, D0
 	ANDI.w	#$00FF, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
@@ -23492,7 +23507,7 @@ loc_00016272:
 	DBF	D4, loc_00016272
 	ANDI	#$F8FF, SR
 	LEA	loc_000167D0, A0
-	MOVE.w	$FFFFC126.w, D0
+	MOVE.w	Current_town_room.w, D0
 	CMPI.w	#$000F, D0
 	BLE.w	loc_000162EA
 	CMPI.w	#$001F, D0
@@ -25967,7 +25982,7 @@ loc_000186F8: ; Attempting to use battle magic in field
 
 ;loc_0001870E
 CastInaudios:
-	JSR	loc_0001CDFE
+	JSR	CheckIfCursed
 	BNE.w	loc_000189AC
 	BSR.w	loc_0001A21C
 	BNE.w	loc_00018996
@@ -25991,7 +26006,7 @@ loc_00018752:
 	
 ;loc_00018768
 CastLuminos:
-	JSR	loc_0001CDFE
+	JSR	CheckIfCursed
 	BNE.w	loc_000189AC
 	BSR.w	loc_0001A21C
 	BNE.w	loc_00018996
@@ -26017,7 +26032,7 @@ loc_000187B4:
 
 ;loc_000187CA
 CastSangua:
-	JSR	loc_0001CDFE
+	JSR	CheckIfCursed
 	BNE.w	loc_000189AC
 	BSR.w	loc_0001A21C
 	BNE.w	loc_00018996
@@ -26030,7 +26045,7 @@ CastSangua:
 
 ;loc_000187F0:
 CastSanguia:
-	JSR	loc_0001CDFE
+	JSR	CheckIfCursed
 	BNE.w	loc_000189AC
 	BSR.w	loc_0001A21C
 	BNE.w	loc_00018996
@@ -26057,7 +26072,7 @@ loc_00018834:
 
 ;loc_0001884C
 CastSanguio:
-	JSR	loc_0001CDFE
+	JSR	CheckIfCursed
 	BNE.w	loc_000189AC
 	BSR.w	loc_0001A21C
 	BNE.w	loc_00018996
@@ -26071,7 +26086,7 @@ CastSanguio:
 
 ;loc_00018884
 CastToxios:
-	JSR	loc_0001CDFE
+	JSR	CheckIfCursed
 	BNE.w	loc_000189AC
 	BSR.w	loc_0001A21C
 	BNE.w	loc_00018996
@@ -26097,7 +26112,7 @@ loc_000188D0:
 
 ;loc_000188DE
 CastAries:
-	JSR	loc_0001CDFE
+	JSR	CheckIfCursed
 	BNE.w	loc_000189AC
 	BSR.w	loc_0001A21C
 	BNE.w	loc_00018996
@@ -26117,7 +26132,7 @@ loc_00018912:
 
 ;loc_00018928
 CastExtrios:
-	JSR	loc_0001CDFE
+	JSR	CheckIfCursed
 	BNE.w	loc_000189AC
 	BSR.w	loc_0001A21C
 	BNE.w	loc_00018996
@@ -27859,7 +27874,7 @@ loc_0001A1E0:
 	RTS
 
 loc_0001A1EA:
-	JSR	loc_0001CDFE
+	JSR	CheckIfCursed
 	BNE.b	loc_0001A216
 	LEA	MagicMpConsumptionMap, A0
 	MOVE.w	Readied_magic.w, D0
@@ -27903,17 +27918,17 @@ loc_0001A250:
 	ANDI.w	#$000F, D0
 	MOVE.w	D0, D2
 	MOVE.w	Player_int.w, D1
-	CMPI.w	#3, D0
+	CMPI.w	#MAGIC_VOLTIO, D0
 	BEQ.b	loc_0001A28C
-	CMPI.w	#6, D0
+	CMPI.w	#MAGIC_COPPEROS, D0
 	BEQ.b	loc_0001A28C
-	CMPI.w	#8, D0
+	CMPI.w	#MAGIC_ARGENTOS, D0
 	BEQ.b	loc_0001A28C
-	CMPI.w	#9, D0
+	CMPI.w	#MAGIC_HYDRO, D0
 	BEQ.b	loc_0001A28C
-	CMPI.w	#$000A, D0
+	CMPI.w	#MAGIC_HYDRIOS, D0
 	BEQ.b	loc_0001A28C
-	CMPI.w	#$000D, D0
+	CMPI.w	#MAGIC_TERRAFISSI, D0
 	BEQ.b	loc_0001A28C
 	ASR.w	#4, D1
 	BRA.b	loc_0001A28E
@@ -28595,9 +28610,9 @@ loc_0001ABA4:
 	
 ;loc_0001ABBC
 UseRafaelsStick:
-	JSR	loc_0001CDFE
+	JSR	CheckIfCursed
 	BEQ.b	loc_0001ABDE
-	JSR	loc_0001CE20	
+	JSR	RemoveCursedEquipment	
 	MOVE.l	#loc_000266AA, Script_source_base.w	
 	MOVE.w	#$00AE, D0	
 	JSR	loc_00010522	
@@ -28789,8 +28804,8 @@ UseAlarmClock:
 	MOVE.w	Game_state.w, D0
 	CMPI.w	#6, D0
 	BNE.w	loc_0001AE6E
-	MOVE.w	$FFFFC126.w, D0
-	CMPI.w	#$0034, D0
+	MOVE.w	Current_town_room.w, D0
+	CMPI.w	#$0034, D0 ; The upper floor of Keltwick's inn
 	BNE.w	loc_0001AE6E
 	CLR.w	D0
 	CLR.w	D1
@@ -29290,7 +29305,7 @@ loc_0001B3B8:
 loc_0001B416:
 	MOVE.w	#6, $FFFFC41E.w
 	CLR.w	Current_shop_type.w
-	MOVE.w	$FFFFC126.w, D0 ; The shop type entered?
+	MOVE.w	Current_town_room.w, D0 ; The shop type entered?
 	ANDI.w	#$0100, D0
 	BEQ.b	loc_0001B43A
 	CLR.w	Current_shop_type.w
@@ -29299,13 +29314,13 @@ loc_0001B416:
 	BNE.b	loc_0001B45C
 	BRA.b	loc_0001B4A4
 loc_0001B43A:
-	MOVE.w	$FFFFC126.w, D0
+	MOVE.w	Current_town_room.w, D0
 	ANDI.w	#$0200, D0
 	BEQ.b	loc_0001B44C
 	MOVE.w	#SHOP_TYPE_EQUIPMENT, Current_shop_type.w
 	BRA.b	loc_0001B45C
 loc_0001B44C:
-	MOVE.w	$FFFFC126.w, D0
+	MOVE.w	Current_town_room.w, D0
 	ANDI.w	#$0400, D0
 	BEQ.b	loc_0001B45C
 	MOVE.w	#SHOP_TYPE_MAGIC, Current_shop_type.w
@@ -29999,7 +30014,7 @@ loc_0001BFD2:
 	LEA	loc_00025FB0, A0
 	MOVE.l	(A0,D0.w), Script_source_base.w
 	MOVE.l	$FFFFC4B0.w, $FFFFC65A.w
-	JSR	loc_0001159E
+	JSR	DeductPaymentAmount
 	JSR	loc_000115DE
 	BRA.b	loc_0001C024
 loc_0001C010:
@@ -30443,7 +30458,7 @@ loc_0001C5F4:
 	CMP.l	D0, D1
 	BLT.w	loc_0001C660
 	MOVE.l	D0, $FFFFC65A.w
-	JSR	loc_0001159E
+	JSR	DeductPaymentAmount
 	JSR	loc_000115DE
 	LEA	loc_0001CFBE, A0
 	MOVE.w	Current_town.w, D0
@@ -30559,7 +30574,7 @@ loc_0001C79C:
 	CMPI.l	#$400, D1
 	BLT.b	loc_0001C7C2
 	MOVE.l	#$400, $FFFFC65A.w
-	JSR	loc_0001159E
+	JSR	DeductPaymentAmount
 	DBF	D7, loc_0001C79C
 	BRA.b	loc_0001C7CC
 loc_0001C7C2:
@@ -30590,7 +30605,7 @@ loc_0001C7DA:
 	CMP.l	D0, D1
 	BLT.b	loc_0001C856
 	MOVE.l	D0, $FFFFC65A.w
-	JSR	loc_0001159E
+	JSR	DeductPaymentAmount
 	JSR	loc_000115DE
 	MOVE.l	#loc_00026260, Script_source_base.w
 	JSR	loc_00012670
@@ -30715,7 +30730,7 @@ loc_0001C9E8:
 	MOVE.w	#$0023, $FFFFC41E.w
 	BRA.w	loc_0001CACA
 loc_0001C9FA:
-	BSR.w	loc_0001CDFE
+	BSR.w	CheckIfCursed
 	BEQ.b	loc_0001CA4C
 	LEA	$FFFFC260.w, A1
 	LEA	loc_000265C4, A0
@@ -30848,9 +30863,9 @@ loc_0001CB94:
 	CMP.l	D0, D1
 	BLT.b	loc_0001CC1A
 	MOVE.l	D0, $FFFFC65A.w
-	JSR	loc_0001159E
+	JSR	DeductPaymentAmount
 	JSR	loc_000115DE
-	BSR.w	loc_0001CE20
+	BSR.w	RemoveCursedEquipment
 	MOVE.l	#loc_000266AA, Script_source_base.w
 	JSR	loc_00012670
 	JSR	loc_00012766
@@ -30914,7 +30929,7 @@ loc_0001CC90:
 	CMP.l	D0, D1
 	BLT.w	loc_0001CD2C
 	MOVE.l	D0, $FFFFC65A.w
-	JSR	loc_0001159E
+	JSR	DeductPaymentAmount
 	JSR	loc_000115DE
 	TST.w	Player_greatly_poisoned.w
 	BNE.b	loc_0001CD0A
@@ -30989,7 +31004,8 @@ loc_0001CDEA:
 loc_0001CDFC:
 	RTS
 
-loc_0001CDFE:
+;loc_0001CDFE:
+CheckIfCursed:
 	MOVE.w	#2, D7
 	LEA	Equipped_items.w, A0
 loc_0001CE06:
@@ -31006,7 +31022,8 @@ loc_0001CE18:
 loc_0001CE1E:
 	RTS
 
-loc_0001CE20:
+;loc_0001CE20:
+RemoveCursedEquipment:
 	MOVE.w	#2, D7
 	LEA	Equipped_items.w, A0
 loc_0001CE28:
@@ -31964,7 +31981,8 @@ loc_0001DA64:
 loc_0001DA8C:
 	RTS
 
-loc_0001DA8E:
+;loc_0001DA8E:
+UpgradeLevelStats:
 	MOVE.w	Player_level.w, D7
 	ADD.w	D7, D7
 	LEA	PlayerLevelToStrMap, A0
@@ -33121,15 +33139,15 @@ loc_0001EBA8:
 	BRA.w	loc_0001F1BC
 loc_0001EBC2:
 	dc.l	loc_0002E8E8
-	dc.l	$FFFFC725
+	dc.l	Talked_to_real_king
 	dc.l	loc_0002E8BC	
 	dc.l	$FFFFC728
 	dc.l	loc_0002E890
-	dc.l	$FFFFC723
+	dc.l	Fake_king_killed
 	dc.l	loc_0002E8BC
-	dc.l	$FFFFC724
+	dc.l	Treasure_of_troy_given_to_king
 	dc.l	loc_0002E864
-	dc.l	$FFFFC722
+	dc.l	Treasure_of_troy_challenge_issued
 	dc.l	loc_0002E838
 	LEA	loc_0002E914, A1
 	BRA.w	loc_0001F1D0
@@ -33146,43 +33164,43 @@ loc_0001EBC2:
 	BRA.w	loc_0001F1BC
 loc_0001EC2E:
 	dc.b	$00, $02, $E9, $64 
-	dc.l	$FFFFC725
+	dc.l	Talked_to_real_king
 	dc.l	loc_0002E958
 	LEA	loc_0001EC48, A1
 	MOVE.w	#0, D7
 	BRA.w	loc_0001F1BC
 loc_0001EC48:
 	dc.b	$00, $02, $E9, $34 
-	dc.l	$FFFFC723
+	dc.l	Fake_king_killed
 	dc.l	loc_0002E92C
 	LEA	loc_0001EC62, A1
 	MOVE.w	#0, D7
 	BRA.w	loc_0001F1BC
 loc_0001EC62:
 	dc.b	$00, $02, $E9, $40 
-	dc.l	$FFFFC723
+	dc.l	Fake_king_killed
 	dc.l	loc_0002E93C
 	LEA	loc_0001EC7C, A1
 	MOVE.w	#0, D7
 	BRA.w	loc_0001F1BC
 loc_0001EC7C:
 	dc.b	$00, $02, $E9, $48 
-	dc.l	$FFFFC723
+	dc.l	Fake_king_killed
 	dc.l	loc_0002E944
 	LEA	loc_0001EC96, A1
 	MOVE.w	#4, D7
 	BRA.w	loc_0001F1BC
 loc_0001EC96:
 	dc.l	loc_00029110
-	dc.l	$FFFFC725
+	dc.l	Talked_to_real_king
 	dc.l	loc_000290F8
-	dc.l	$FFFFC723
+	dc.l	Fake_king_killed
 	dc.l	loc_000290E0
-	dc.l	$FFFFC724
+	dc.l	Treasure_of_troy_given_to_king
 	dc.l	loc_000290C8
-	dc.l	$FFFFC726
+	dc.l	Treasure_of_troy_found
 	dc.l	loc_000290B0
-	dc.l	$FFFFC722
+	dc.l	Treasure_of_troy_challenge_issued
 	dc.l	loc_00029098
 	LEA	loc_0001ECD0, A1
 	MOVE.w	#0, D7
@@ -33196,11 +33214,11 @@ loc_0001ECD0:
 	BRA.w	loc_0001F1BC
 loc_0001ECEA:
 	dc.b	$00, $02, $E9, $54 
-	dc.l	$FFFFC725
+	dc.l	Talked_to_real_king
 	dc.l	loc_0002E94C
-	dc.l	$FFFFC726
+	dc.l	Treasure_of_troy_found
 	dc.l	loc_0002E950
-	dc.l	$FFFFC722
+	dc.l	Treasure_of_troy_challenge_issued
 	dc.l	loc_0002E94C
 	LEA	loc_0001ED14, A1
 	MOVE.w	#1, D7
@@ -34536,13 +34554,13 @@ loc_0001FF0A:
 	RTS
 	
 loc_0001FF14:
-	TST.b	$FFFFC725.w
+	TST.b	Talked_to_real_king.w
 	BNE.b	loc_0001FF2C
 	TST.b	$FFFFC728.w
 	BNE.b	loc_0001FF36
-	TST.b	$FFFFC723.w
+	TST.b	Fake_king_killed.w
 	BNE.b	loc_0001FF2C
-	TST.b	$FFFFC724.w
+	TST.b	Treasure_of_troy_given_to_king.w
 	BNE.b	loc_0001FF36
 loc_0001FF2C:
 	MOVE.l	#loc_0002E54A, $FFFFC15E.w
@@ -34655,7 +34673,7 @@ loc_0002003E:
 loc_00020046:
 	LEA	loc_00028F92, A0
 loc_0002004C:
-	TST.b	$FFFFC723.w
+	TST.b	Fake_king_killed.w
 	BNE.b	loc_00020058
 	LEA	loc_00028F6E, A0
 loc_00020058:
@@ -35632,10 +35650,10 @@ loc_00020F28:
 loc_00020F3C:
 	dc.b	$31, $FC, $20, $00, $C5, $72, $21, $FC, $FF, $FF, $C7, $A6, $C5, $74, $61, $00, $04, $E6, $4E, $75 
 loc_00020F50:
-	TST.b	$FFFFC722.w
+	TST.b	Treasure_of_troy_challenge_issued.w
 	BEQ.b	loc_00020F68
 	MOVE.w	#$010D, $FFFFC572.w
-	MOVE.l	#$FFFFC726, $FFFFC574.w
+	MOVE.l	#Treasure_of_troy_found, $FFFFC574.w
 	BSR.w	loc_0002141E
 loc_00020F68:
 	RTS
@@ -42990,7 +43008,7 @@ loc_0002E3D4:
 	
 loc_0002E3DE:
 	MOVE.l	#loc_0002D008, Script_source_base.w
-	TST.b	$FFFFC723.w
+	TST.b	Fake_king_killed.w
 	BNE.w	loc_0002E406
 	MOVE.l	#loc_0002CFDA, Script_source_base.w
 	TST.b	Map_triggers_start.w
@@ -43416,14 +43434,14 @@ loc_0002FB46:
 	dc.b	"king after all!", $FF, $00 
 loc_0002FB68:
 	MOVE.l	#loc_0002FA12, Script_source_base.w
-	TST.b	$FFFFC725.w
+	TST.b	Talked_to_real_king.w
 	BEQ.w	loc_0002FB80
 	MOVE.l	#loc_0002FA5A, Script_source_base.w	
 loc_0002FB80:
 	RTS
 loc_0002FB82:
 	MOVE.l	#loc_0002FB46, Script_source_base.w
-	TST.b	$FFFFC725.w
+	TST.b	Talked_to_real_king.w
 	BNE.w	loc_0002FB9A
 	MOVE.l	#loc_0002FAC6, Script_source_base.w
 loc_0002FB9A:
