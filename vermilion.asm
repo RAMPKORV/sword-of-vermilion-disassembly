@@ -35176,342 +35176,213 @@ loc_00020780:
 	dc.l	loc_00020C6C
 	dc.l	loc_00020C82
 loc_00020830:
-	dc.w	$0002 ; x
-	dc.w	$0004 ; y
-	dc.w	$0004 ; direction (down)
+	dc.w	$0002, $0004, $0004 ; x, y, direction
 	dc.l	loc_00020C8E
-	dc.w	$000B 
-	dc.w	$000B 
-	dc.w	$0002 
+	dc.w	$000B, $000B, $0002 
 	dc.l	loc_00020F6A
-	dc.w	$0002 
-	dc.w	$000B 
-	dc.w	$0002 
+	dc.w	$0002, $000B, $0002 
 	dc.l	loc_00020CD0
-	dc.w	$0003 
-	dc.w	$0009 
-	dc.w	$0008 
+	dc.w	$0003, $0009, $0008 
 	dc.l	loc_00020DAC
-	dc.w	$000A 
-	dc.w	$0005 
-	dc.w	$0004 
+	dc.w	$000A, $0005, $0004 
 	dc.l	loc_00020DC0
 	dc.w	$FFFF
 loc_00020864:
-	dc.w	$0003	
-	dc.w	$000D
-	dc.w	$0004	
+	dc.w	$0003, $000D, $0004	
 	dc.l	loc_00020F6A
-	dc.w	$0002 
-	dc.w	$0003 
-	dc.w	$0004 
+	dc.w	$0002, $0003, $0004 
 	dc.l	loc_00020DD4
-	dc.w	$0008 
-	dc.w	$0000 
-	dc.w	$0001 
-	dc.w	$0002 
-	dc.w	$0DFC 
+	dc.w	$0008, $0000, $0001 
+	dc.l	loc_00020DFC 
 	dc.w	$FFFF 
 loc_00020884:
-	dc.w	$000F 
-	dc.w	$000F 
-	dc.w	$0008 
+	dc.w	$000F, $000F, $0008 
 	dc.l	loc_00020DE8
-	dc.w	$000F 
-	dc.w	$0000 
-	dc.w	$0001 
+	dc.w	$000F, $0000, $0001 
 	dc.l	loc_00020F50
-	dc.w	$0002 
-	dc.w	$000C 
-	dc.w	$0002 
+	dc.w	$0002, $000C, $0002 
 	dc.l	loc_00020F6A
-	dc.w	$0008 
-	dc.w	$0008 
-	dc.w	$0002 
+	dc.w	$0008, $0008, $0002 
 	dc.l	loc_00020E10
 	dc.w	$FFFF
 loc_000208AE:
-	dc.w	$0003	
-	dc.l	loc_00060008	
+	dc.w	$0003, $0006, $0008	
 	dc.l	loc_00020F6A
-	dc.l	loc_00000010-2	
-	dc.l	loc_00010002	
-	dc.w	$0E24
-	dc.w	$000B	
-	dc.l	loc_00000004-2	
+	dc.w	$0000, $000E, $0001
+	dc.l	$00020E24
+	dc.w	$000B, $0000, $0002
 	dc.l	loc_00020E38	
 	dc.w	$FFFF
 loc_000208CE:
-	dc.w	$0000	
-	dc.l	loc_00070001	
+	dc.w	$0000, $0007, $0001	
 	dc.l	loc_00020F6A
-	dc.w	$000A
-	dc.w	$0001	
-	dc.l	loc_00080002	
-	dc.l	$0E4C000C	
-	dc.l	loc_00010002	
+	dc.w	$000A, $0001, $0008
+	dc.l	$00020E4C
+	dc.w	$000C, $0001, $0002	
 	dc.l	loc_00020FE4
 	dc.w	$FFFF
 loc_000208EE:
-	dc.w	$0000	
-	dc.l	loc_00010006-2	
+	dc.w	$0000, $0001, $0004	
 	dc.l	loc_00020F6A
-	dc.l	$000B0004	
-	dc.l	loc_00080002	
-	dc.l	$0E9C0008	
-	dc.w	$000F
-	dc.w	$0008	
+	dc.w	$000B, $0004, $0008
+	dc.l	$00020E9C
+	dc.w	$0008, $000F, $0008	
 	dc.l	loc_00020E74	
 	dc.w	$FFFF
 loc_0002090E:
-	dc.w	$0003	
-	dc.l	$000C0002	
+	dc.w	$0003, $000C, $0002	
 	dc.l	loc_00020F6A
-	dc.w	$000E 
-	dc.w	$000F 
-	dc.w	$0004 
-	dc.w	$0002 
-	dc.w	$0E60 
-	dc.w	$000C 
-	dc.w	$0004 
-	dc.w	$0002 
-	dc.w	$0002 
-	dc.w	$0EB0 
-	dc.w	$0006 
-	dc.w	$0004 
-	dc.w	$0001 
+	dc.w	$000E, $000F, $0004 
+	dc.l	$00020E60 
+	dc.w	$000C, $0004, $0002 
+	dc.l	$00020EB0 
+	dc.w	$0006, $0004, $0001 
 	dc.l	loc_00020FA2
 	dc.w	$FFFF
 loc_00020938:
-	dc.w	$0004		
-	dc.l	$000D0008	
+	dc.w	$0004, $000D, $0008	
 	dc.l	loc_00020F6A	
-	dc.l	loc_0008000F	
-	dc.l	loc_00020002	
-	dc.l	$0EC40007	
-	dc.l	loc_00050006-2	
+	dc.w	$0008, $000F, $0002
+	dc.l	$00020EC4
+	dc.w	$0007, $0005, $0004	
 	dc.l	loc_00020ED8	
 	dc.w	$FFFF
 loc_00020958:
-	dc.w	$000D	
-	dc.w	$000B
-	dc.w	$0004	
+	dc.w	$000D, $000B, $0004	
 	dc.l	loc_00020F6A	
-	dc.w	$000F
-	dc.w	$0000	
-	dc.l	loc_00010002	
-	dc.w	$0F00
-	dc.w	$0000	
-	dc.l	loc_00000004-2	
+	dc.w	$000F, $0000, $0001
+	dc.l	$00020F00
+	dc.w	$0000, $0000, $0002	
 	dc.l	loc_00021006
 	dc.w	$FFFF
 loc_00020978:
-	dc.w	$0002	
-	dc.w	$000A
-	dc.w	$0004	
+	dc.w	$0002, $000A, $0004	
 	dc.l	loc_00020F6A	
-	dc.l	loc_00020012-3	
-	dc.l	loc_00080002	
-	dc.w	$0F00
-	dc.w	$0002	
-	dc.l	loc_00030004	
+	dc.w	$0002, $000F, $0008
+	dc.l	$00020F00
+	dc.w	$0002, $0003, $0004	
 	dc.l	loc_00020EEC	
 	dc.w	$FFFF
 loc_00020998:
-	dc.w	$000B	
-	dc.w	$000B
-	dc.w	$000B	
+	dc.w	$000B, $000B, $000B	
 	dc.l	loc_00020F6A
-	dc.w	$0007 
-	dc.w	$0006 
-	dc.w	$0001 
+	dc.w	$0007, $0006, $0001 
 	dc.l	loc_0002105E
 	dc.w	$FFFF
 loc_000209AE:
-	dc.w	$0004		
-	dc.w	$000D
-	dc.w	$0004	
+	dc.w	$0004, $000D, $0004	
 	dc.l	loc_00020F6A
-	dc.l	loc_00060002	
-	dc.l	loc_00010002	
-	dc.w	$0D48
-	dc.w	$000D	
-	dc.l	loc_00070005	
+	dc.w	$0006, $0002, $0001
+	dc.l	$00020D48
+	dc.w	$000D, $0007, $0005	
 	dc.l	loc_00021082
 	dc.w	$FFFF
 loc_000209CE:
-	dc.w	$000B	
-	dc.l	loc_00030002	
+	dc.w	$000B, $0003, $0002	
 	dc.l	loc_00020F6A
-	dc.w	$0001 
-	dc.w	$000E 
-	dc.w	$0004 
+	dc.w	$0001, $000E, $0004 
 	dc.l	loc_000210BE
-	dc.l	loc_0005000E	
-	dc.l	loc_00040002	
-	dc.w	$0CE4
-	dc.w	$000B	
-	dc.w	$000B
-	dc.w	$0001	
+	dc.w	$0005, $000E, $0004
+	dc.l	$00020CE4
+	dc.w	$000B, $000B, $0001	
 	dc.l	loc_00020CE4	
-	dc.l	loc_00090008-1	
-	dc.l	loc_00040002	
-	dc.w	$0CE4
-	dc.w	$0007	
-	dc.w	$000E
-	dc.w	$0004	
+	dc.w	$0009, $0007, $0004
+	dc.l	$00020CE4
+	dc.w	$0007, $000E, $0004	
 	dc.l	loc_00020E88
 	dc.w	$FFFF
 loc_00020A0C:
-	dc.w	$0005	
-	dc.l	loc_00020002	
+	dc.w	$0005, $0002, $0002	
 	dc.l	loc_00020F6A
-	dc.w	$0003 
-	dc.w	$0007 
-	dc.w	$000A 
+	dc.w	$0003, $0007, $000A 
 	dc.l	loc_000210E0
-	dc.w	$000E 
-	dc.w	$0009 
-	dc.w	$0001 
+	dc.w	$000E, $0009, $0001 
 	dc.l	loc_0002112A
 	dc.w	$FFFF
 loc_00020A2C:
-	dc.w	$0009		
-	dc.w	$000A
-	dc.w	$0008	
+	dc.w	$0009, $000A, $0008	
 	dc.l	loc_00020F6A
-	dc.w	$0009 
-	dc.w	$0000 
-	dc.w	$0002 
-	dc.w	$0002 
-	dc.w	$0D84 
+	dc.w	$0009, $0000, $0002 
+	dc.l	$00020D84 
 	dc.w	$FFFF 
 loc_00020A42:
-	dc.w	$0003 
-	dc.w	$0003 
-	dc.w	$0002 
+	dc.w	$0003, $0003, $0002 
 	dc.l	loc_00020F6A
-	dc.w	$0008 
-	dc.w	$0004 
-	dc.w	$0002 
+	dc.w	$0008, $0004, $0002 
 	dc.l	loc_00020F14
 	dc.w	$FFFF
 loc_00020A58:
-	dc.w	$0000	
-	dc.l	loc_00000004-2	
+	dc.w	$0000, $0000, $0002	
 	dc.l	loc_00020F6A
-	dc.l	loc_00030004	
-	dc.l	loc_00020002	
-	dc.w	$051A
-	dc.w	$0003	
-	dc.w	$000C
-	dc.w	$0004	
+	dc.w	$0003, $0004, $0002
+	dc.l	$0002051A
+	dc.w	$0003, $000C, $0004	
 	dc.l	loc_00020F28	
 	dc.w	$FFFF
 loc_00020A78:
-	dc.w	$0001		
-	dc.w	$000E
-	dc.w	$0002	
+	dc.w	$0001, $000E, $0002	
 	dc.l	loc_00020F6A
-	dc.l	loc_00040004	
-	dc.l	loc_00020002	
-	dc.w	$114C
-	dc.w	$0000	
-	dc.l	loc_00010002	
+	dc.w	$0004, $0004, $0002
+	dc.l	$0002114C
+	dc.w	$0000, $0001, $0002	
 	dc.l	loc_00020CF8
-	dc.w	$000E
-	dc.w	$0006	
-	dc.l	loc_00080002	
-	dc.w	$0F3C
-	dc.w	$0001	
-	dc.w	$000C
-	dc.w	$0008	
+	dc.w	$000E, $0006, $0008
+	dc.l	$00020F3C
+	dc.w	$0001, $000C, $0008	
 	dc.l	loc_00020F28	
-	dc.w	$000E
-	dc.w	$0008	
-	dc.l	loc_00080002	
-	dc.w	$0F14
-	dc.w	$000D	
-	dc.l	loc_00030008	
+	dc.w	$000E, $0008, $0008
+	dc.l	$00020F14
+	dc.w	$000D, $0003, $0008	
 	dc.l	loc_00020F14	
 	dc.w	$FFFF
 loc_00020AC0:
-	dc.w	$000A	
-	dc.l	loc_00070004	
+	dc.w	$000A, $0007, $0004	
 	dc.l	loc_00020F6A
-	dc.w	$0000 
-	dc.w	$0000 
-	dc.w	$0002 
-	dc.w	$0002 
-	dc.w	$0D20 
+	dc.w	$0000, $0000, $0002 
+	dc.l	$00020D20 
 	dc.w	$FFFF 
 loc_00020AD6:
-	dc.w	$0000 
-	dc.w	$0000 
-	dc.w	$0001 
+	dc.w	$0000, $0000, $0001 
 	dc.l	loc_00020F6A
-	dc.w	$0007 
-	dc.w	$000F 
-	dc.w	$000A 
+	dc.w	$0007, $000F, $000A 
 	dc.l	loc_00021160
-	dc.w	$0000 
-	dc.w	$000C 
-	dc.w	$0002 
+	dc.w	$0000, $000C, $0002 
 	dc.l	loc_00020D34
 	dc.w	$FFFF
 loc_00020AF6:
-	dc.w	$0000		
-	dc.w	$000E
-	dc.w	$0004	
+	dc.w	$0000, $000E, $0004	
 	dc.l	loc_00020F6A
-	dc.w	$000A 
-	dc.w	$000E 
-	dc.w	$0008 
+	dc.w	$000A, $000E, $0008 
 	dc.l	loc_0002119C
 	dc.w	$FFFF
 loc_00020B0C:
-	dc.w	$000B	
-	dc.l	loc_0004000A	
+	dc.w	$000B, $0004, $000A	
 	dc.l	loc_00020F6A
 	dc.w	$FFFF
 loc_00020B18:
-	dc.w	$0008	
-	dc.w	$000B
-	dc.w	$0004	
+	dc.w	$0008, $000B, $0004	
 	dc.l	loc_00020F6A
-	dc.w	$0000 
-	dc.w	$0007 
-	dc.w	$0005 
+	dc.w	$0000, $0007, $0005 
 	dc.l	loc_00021206
 	dc.w	$FFFF 
 loc_00020B2E:
-	dc.w	$0003 
-	dc.w	$000C 
-	dc.w	$0004 
+	dc.w	$0003, $000C, $0004 
 	dc.l	loc_00020F6A
 	dc.w	$FFFF 
 loc_00020B3A:
-	dc.w	$0004 
-	dc.w	$0007 
-	dc.w	$0002 
+	dc.w	$0004, $0007, $0002 
 	dc.l	loc_00020F6A
 	dc.w	$FFFF 
 loc_00020B46:
-	dc.w	$0001 
-	dc.w	$0005 
-	dc.w	$0001 
+	dc.w	$0001, $0005, $0001 
 	dc.l	loc_00020F6A
 	dc.w	$FFFF 
 loc_00020B52:
-	dc.w	$000B 
-	dc.w	$000E 
-	dc.w	$0004 
+	dc.w	$000B, $000E, $0004 
 	dc.l	loc_00020F6A
 	dc.w	$FFFF 
 loc_00020B5E:	
-	dc.w	$000A 
-	dc.w	$0006 
-	dc.w	$0008 
+	dc.w	$000A, $0006, $0008 
 	dc.l	loc_00020F6A
 	dc.w	$FFFF 
 loc_00020B6A:
@@ -35519,137 +35390,84 @@ loc_00020B6A:
 loc_00020B6C:
 	dc.w	$FFFF 
 loc_00020B6E:
-	dc.w	$0009 
-	dc.w	$0007 
-	dc.w	$0001 
-	dc.w	$0002 
-	dc.w	$0F6A 
-	dc.w	$000D 
-	dc.w	$0008 
-	dc.w	$0004 
+	dc.w	$0009, $0007, $0001 
+	dc.l	$00020F6A 
+	dc.w	$000D, $0008, $0004 
 	dc.l	loc_000211BE
-	dc.w	$0005 
-	dc.w	$000E 
-	dc.w	$0004 
-	dc.w	$0002 
-	dc.w	$0D70 
+	dc.w	$0005, $000E, $0004 
+	dc.l	$00020D70 
 	dc.w	$FFFF 
 loc_00020B8E:
-	dc.w	$0003 
-	dc.w	$0007 
-	dc.w	$0001 
-	dc.w	$0002 
-	dc.w	$0F6A 
+	dc.w	$0003, $0007, $0001 
+	dc.l	$00020F6A 
 	dc.w	$FFFF 
 loc_00020B9A:
-	dc.w	$0005 
-	dc.w	$0003 
-	dc.w	$000A 
+	dc.w	$0005, $0003, $000A 
 	dc.l	loc_00021284
-	dc.w	$0002 
-	dc.w	$0003 
-	dc.w	$0002 
+	dc.w	$0002, $0003, $0002 
 	dc.l	loc_000212BE
-	dc.w	$000A 
-	dc.w	$000A 
-	dc.w	$0005 
+	dc.w	$000A, $000A, $0005 
 	dc.l	loc_000212D8
-	dc.w	$000C 
-	dc.w	$0009 
-	dc.w	$0008 
+	dc.w	$000C, $0009, $0008 
 	dc.l	loc_00021302
-	dc.w	$0003 
-	dc.w	$000F 
-	dc.w	$000A 
+	dc.w	$0003, $000F, $000A 
 	dc.l	loc_0002131C
-	dc.w	$0000 
-	dc.w	$000F 
-	dc.w	$0002 
+	dc.w	$0000, $000F, $0002 
 	dc.l	loc_00021346
-	dc.w	$0004 
-	dc.w	$000B 
-	dc.w	$000D 
+	dc.w	$0004, $000B, $000D 
 	dc.l	loc_00021360
 	dc.w	$FFFF 
 loc_00020BE2:
 	dc.w	$FFFF 
 loc_00020BE4:
-	dc.w	$0009 
-	dc.w	$000F 
-	dc.w	$0008 
+	dc.w	$0009, $000F, $0008 
 	dc.l	loc_00020D5C
-	dc.w	$0009 
-	dc.w	$0000 
-	dc.w	$0008 
+	dc.w	$0009, $0000, $0008 
 	dc.l	loc_00020CBC
 	dc.w	$FFFF
 loc_00020BFA:
-	dc.w	$0009		
-	dc.l	loc_00050002-1	
+	dc.w	$0009, $0005, $0001	
 	dc.l	loc_00020F6A
 	dc.w	$FFFF
 loc_00020C06:
-	dc.w	$000A	
-	dc.w	$000B
-	dc.w	$000A	
+	dc.w	$000A, $000B, $000A	
 	dc.l	loc_00020F6A
-	dc.w	$0004 
-	dc.w	$000C 
-	dc.w	$0005 
+	dc.w	$0004, $000C, $0005 
 	dc.l	loc_0002125A
 	dc.w	$FFFF 
 loc_00020C1C:
-	dc.w	$000C 
-	dc.w	$0003 
-	dc.w	$0008 
+	dc.w	$000C, $0003, $0008 
 	dc.l	loc_00020F6A
 	dc.w	$FFFF 
 loc_00020C28:
-	dc.w	$000F 
-	dc.w	$000C 
+	dc.w	$000F, $000C 
 	dc.w	$0008 
 	dc.l	loc_00020F6A
 	dc.w	$FFFF 
 loc_00020C34:
-	dc.w	$0009 
-	dc.w	$0009 
-	dc.w	$0002 
+	dc.w	$0009, $0009, $0002 
 	dc.l	loc_00020F6A
-	dc.w	$0001 
-	dc.w	$0001 
-	dc.w	$0001 
+	dc.w	$0001, $0001, $0001 
 	dc.l	loc_00020D0C
 	dc.w	$FFFF
 loc_00020C4A:
-	dc.w	$0008	
-	dc.l	loc_00000004-2	
+	dc.w	$0008, $0000, $0002	
 	dc.l	loc_00020F6A
 	dc.w	$FFFF
 loc_00020C56:
-	dc.w	$0000	
-	dc.w	$000D
-	dc.w	$0001	
+	dc.w	$0000, $000D, $0001	
 	dc.l	loc_00020F6A
-	dc.w	$000A 
-	dc.w	$000B 
-	dc.w	$0005 
+	dc.w	$000A, $000B, $0005 
 	dc.l	loc_00021230
 	dc.w	$FFFF 
 loc_00020C6C:
-	dc.w	$0002 
-	dc.w	$000D 
-	dc.w	$0002 
-	dc.w	$0002 
-	dc.w	$0F6A 
-	dc.w	$000F 
-	dc.w	$0007 
-	dc.w	$0001 
+	dc.w	$0002, $000D, $0002 
+	dc.l	$00020F6A 
+	dc.w	$000F, $0007, $0001 
 	dc.l	loc_00020D98
 	dc.w	$FFFF
 loc_00020C82:
-	dc.w	$0001	
-	dc.w	$000E
-	dc.w	$0004	
+	dc.w	$0001, $000E, $0004	
 	dc.l	loc_00020F6A
 	dc.w	$FFFF 
 loc_00020C8E:
