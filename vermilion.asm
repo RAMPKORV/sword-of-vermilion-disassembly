@@ -9765,7 +9765,7 @@ loc_00008ED4:
 	MOVE.b	D0, (A1)+
 	ADDQ.b	#1, D0
 	DBF	D7, loc_00008ED4
-	MOVEA.l	$FFFFCC14.w, A6
+	MOVEA.l	$FFFFCC14.w, A6 ; Where to load enemies into
 	LEA	loc_00023E70, A0
 	MOVE.w	Current_encounter_type.w, D0
 	MULU.w	#$C, D0
@@ -9813,13 +9813,13 @@ loc_00008F5A: ; Loop number of enemies
 	CLR.b	$1A(A6)
 	CLR.b	$1B(A6)
 	CLR.b	$25(A6)
-	LEA	loc_0000B78C, A2
+	LEA	EnemyStartingPositions, A2
 	CLR.w	D0
 	MOVE.b	(A1)+, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
-	MOVE.w	(A2,D0.w), $E(A6)
-	MOVE.w	$2(A2,D0.w), $12(A6)
+	MOVE.w	(A2,D0.w), $E(A6)		; x position
+	MOVE.w	$2(A2,D0.w), $12(A6)	; y position
 	MOVE.w	$4(A0), $FFFFC082.w
 	MOVE.w	$6(A0), $FFFFC57A.w
 	MOVE.w	$8(A0), $FFFFC57C.w
@@ -12663,7 +12663,8 @@ loc_0000B772:
 	MOVE.w	#$000C, $1E(A5)
 	RTS
 	
-loc_0000B78C:
+;loc_0000B78C:
+EnemyStartingPositions:
 	dc.w	$001E, $0040
 	dc.w	$005E, $0040
 	dc.w	$009E, $0040
@@ -14473,34 +14474,34 @@ loc_0000D094:
 	RTS
 
 loc_0000D116:
-	dc.l	$00000500
-	dc.l	$00000500
-	dc.l	$00001000 
-	dc.l	$00001000 
-	dc.l	$00003000 
-	dc.l	$00003000 
-	dc.l	$00005000 
-	dc.l	$00005000 
-	dc.l	$00010000 
-	dc.l	$00008000 
-	dc.l	$00015000 
-	dc.l	$00010000 
-	dc.l	$00020000 
-	dc.l	$00015000 
-	dc.l	$00025000 
-	dc.l	$00020000 
-	dc.l	$00030000 
-	dc.l	$00025000 
-	dc.l	$00030000 
-	dc.l	$00025000 
-	dc.l	$00025000 
-	dc.l	$00030000 
-	dc.l	$00035000
-	dc.l	$00035000 
-	dc.l	$00000000
-	dc.l	$00000000 
-	dc.l	$00000000 
-	dc.l	$00000000 
+	dc.l	$500
+	dc.l	$500
+	dc.l	$1000 
+	dc.l	$1000 
+	dc.l	$3000 
+	dc.l	$3000 
+	dc.l	$5000 
+	dc.l	$5000 
+	dc.l	$10000 
+	dc.l	$8000 
+	dc.l	$15000 
+	dc.l	$10000 
+	dc.l	$20000 
+	dc.l	$15000 
+	dc.l	$25000 
+	dc.l	$20000 
+	dc.l	$30000 
+	dc.l	$25000 
+	dc.l	$30000 
+	dc.l	$25000 
+	dc.l	$25000 
+	dc.l	$30000 
+	dc.l	$35000
+	dc.l	$35000 
+	dc.l	$0
+	dc.l	$0
+	dc.l	$0 
+	dc.l	$0 
 
 loc_0000D186:
 	MOVEA.l	$FFFFCC14.w, A6
@@ -35209,7 +35210,7 @@ loc_000208AE:
 	dc.w	$0003, $0006, $0008	
 	dc.l	loc_00020F6A
 	dc.w	$0000, $000E, $0001
-	dc.l	$00020E24
+	dc.l	loc_00020E24
 	dc.w	$000B, $0000, $0002
 	dc.l	loc_00020E38	
 	dc.w	$FFFF
@@ -35217,7 +35218,7 @@ loc_000208CE:
 	dc.w	$0000, $0007, $0001	
 	dc.l	loc_00020F6A
 	dc.w	$000A, $0001, $0008
-	dc.l	$00020E4C
+	dc.l	loc_00020E4C
 	dc.w	$000C, $0001, $0002	
 	dc.l	loc_00020FE4
 	dc.w	$FFFF
@@ -35225,7 +35226,7 @@ loc_000208EE:
 	dc.w	$0000, $0001, $0004	
 	dc.l	loc_00020F6A
 	dc.w	$000B, $0004, $0008
-	dc.l	$00020E9C
+	dc.l	loc_00020E9C
 	dc.w	$0008, $000F, $0008	
 	dc.l	loc_00020E74	
 	dc.w	$FFFF
@@ -35233,9 +35234,9 @@ loc_0002090E:
 	dc.w	$0003, $000C, $0002	
 	dc.l	loc_00020F6A
 	dc.w	$000E, $000F, $0004 
-	dc.l	$00020E60 
+	dc.l	loc_00020E60 
 	dc.w	$000C, $0004, $0002 
-	dc.l	$00020EB0 
+	dc.l	loc_00020EB0 
 	dc.w	$0006, $0004, $0001 
 	dc.l	loc_00020FA2
 	dc.w	$FFFF
@@ -35243,7 +35244,7 @@ loc_00020938:
 	dc.w	$0004, $000D, $0008	
 	dc.l	loc_00020F6A	
 	dc.w	$0008, $000F, $0002
-	dc.l	$00020EC4
+	dc.l	loc_00020EC4
 	dc.w	$0007, $0005, $0004	
 	dc.l	loc_00020ED8	
 	dc.w	$FFFF
@@ -35251,7 +35252,7 @@ loc_00020958:
 	dc.w	$000D, $000B, $0004	
 	dc.l	loc_00020F6A	
 	dc.w	$000F, $0000, $0001
-	dc.l	$00020F00
+	dc.l	loc_00020F00
 	dc.w	$0000, $0000, $0002	
 	dc.l	loc_00021006
 	dc.w	$FFFF
@@ -35259,7 +35260,7 @@ loc_00020978:
 	dc.w	$0002, $000A, $0004	
 	dc.l	loc_00020F6A	
 	dc.w	$0002, $000F, $0008
-	dc.l	$00020F00
+	dc.l	loc_00020F00
 	dc.w	$0002, $0003, $0004	
 	dc.l	loc_00020EEC	
 	dc.w	$FFFF
@@ -35273,7 +35274,7 @@ loc_000209AE:
 	dc.w	$0004, $000D, $0004	
 	dc.l	loc_00020F6A
 	dc.w	$0006, $0002, $0001
-	dc.l	$00020D48
+	dc.l	loc_00020D48
 	dc.w	$000D, $0007, $0005	
 	dc.l	loc_00021082
 	dc.w	$FFFF
@@ -35283,11 +35284,11 @@ loc_000209CE:
 	dc.w	$0001, $000E, $0004 
 	dc.l	loc_000210BE
 	dc.w	$0005, $000E, $0004
-	dc.l	$00020CE4
+	dc.l	loc_00020CE4
 	dc.w	$000B, $000B, $0001	
 	dc.l	loc_00020CE4	
 	dc.w	$0009, $0007, $0004
-	dc.l	$00020CE4
+	dc.l	loc_00020CE4
 	dc.w	$0007, $000E, $0004	
 	dc.l	loc_00020E88
 	dc.w	$FFFF
@@ -35303,7 +35304,7 @@ loc_00020A2C:
 	dc.w	$0009, $000A, $0008	
 	dc.l	loc_00020F6A
 	dc.w	$0009, $0000, $0002 
-	dc.l	$00020D84 
+	dc.l	loc_00020D84 
 	dc.w	$FFFF 
 loc_00020A42:
 	dc.w	$0003, $0003, $0002 
@@ -35315,7 +35316,7 @@ loc_00020A58:
 	dc.w	$0000, $0000, $0002	
 	dc.l	loc_00020F6A
 	dc.w	$0003, $0004, $0002
-	dc.l	$0002051A
+	dc.l	loc_0002051A
 	dc.w	$0003, $000C, $0004	
 	dc.l	loc_00020F28	
 	dc.w	$FFFF
@@ -35323,15 +35324,15 @@ loc_00020A78:
 	dc.w	$0001, $000E, $0002	
 	dc.l	loc_00020F6A
 	dc.w	$0004, $0004, $0002
-	dc.l	$0002114C
+	dc.l	loc_0002114C
 	dc.w	$0000, $0001, $0002	
 	dc.l	loc_00020CF8
 	dc.w	$000E, $0006, $0008
-	dc.l	$00020F3C
+	dc.l	loc_00020F3C
 	dc.w	$0001, $000C, $0008	
 	dc.l	loc_00020F28	
 	dc.w	$000E, $0008, $0008
-	dc.l	$00020F14
+	dc.l	loc_00020F14
 	dc.w	$000D, $0003, $0008	
 	dc.l	loc_00020F14	
 	dc.w	$FFFF
@@ -35339,7 +35340,7 @@ loc_00020AC0:
 	dc.w	$000A, $0007, $0004	
 	dc.l	loc_00020F6A
 	dc.w	$0000, $0000, $0002 
-	dc.l	$00020D20 
+	dc.l	loc_00020D20 
 	dc.w	$FFFF 
 loc_00020AD6:
 	dc.w	$0000, $0000, $0001 
@@ -35391,15 +35392,15 @@ loc_00020B6C:
 	dc.w	$FFFF 
 loc_00020B6E:
 	dc.w	$0009, $0007, $0001 
-	dc.l	$00020F6A 
+	dc.l	loc_00020F6A 
 	dc.w	$000D, $0008, $0004 
 	dc.l	loc_000211BE
 	dc.w	$0005, $000E, $0004 
-	dc.l	$00020D70 
+	dc.l	loc_00020D70 
 	dc.w	$FFFF 
 loc_00020B8E:
 	dc.w	$0003, $0007, $0001 
-	dc.l	$00020F6A 
+	dc.l	loc_00020F6A 
 	dc.w	$FFFF 
 loc_00020B9A:
 	dc.w	$0005, $0003, $000A 
@@ -35440,8 +35441,7 @@ loc_00020C1C:
 	dc.l	loc_00020F6A
 	dc.w	$FFFF 
 loc_00020C28:
-	dc.w	$000F, $000C 
-	dc.w	$0008 
+	dc.w	$000F, $000C, $0008 
 	dc.l	loc_00020F6A
 	dc.w	$FFFF 
 loc_00020C34:
@@ -35462,7 +35462,7 @@ loc_00020C56:
 	dc.w	$FFFF 
 loc_00020C6C:
 	dc.w	$0002, $000D, $0002 
-	dc.l	$00020F6A 
+	dc.l	loc_00020F6A 
 	dc.w	$000F, $0007, $0001 
 	dc.l	loc_00020D98
 	dc.w	$FFFF
@@ -35529,7 +35529,9 @@ loc_00020D5C:
 	RTS
 	
 loc_00020D70:
-	dc.b	$31, $FC, $12, $38, $C5, $72, $21, $FC, $FF, $FF, $C7, $E7, $C5, $74, $61, $00, $06, $A8, $4E, $75, $31, $FC, $08, $1F, $C5, $72, $21, $FC, $FF, $FF, $C7, $E9 
+	dc.b	$31, $FC, $12, $38, $C5, $72, $21, $FC, $FF, $FF, $C7, $E7, $C5, $74, $61, $00, $06, $A8, $4E, $75
+loc_00020D84:	
+	dc.b	$31, $FC, $08, $1F, $C5, $72, $21, $FC, $FF, $FF, $C7, $E9 
 	dc.b	$C5, $74, $61, $00, $06, $94, $4E, $75 
 loc_00020D98:
 	MOVE.w	#$060F, $FFFFC572.w
@@ -35578,7 +35580,9 @@ loc_00020E38:
 	RTS
 	
 loc_00020E4C:	
-	dc.b	$31, $FC, $00, $00, $C5, $72, $21, $FC, $FF, $FF, $C7, $97, $C5, $74, $61, $00, $05, $C2, $4E, $75, $31, $FC, $08, $1E, $C5, $72, $21, $FC, $FF, $FF, $C7, $9D 
+	dc.b	$31, $FC, $00, $00, $C5, $72, $21, $FC, $FF, $FF, $C7, $97, $C5, $74, $61, $00, $05, $C2, $4E, $75
+loc_00020E60:
+	dc.b	$31, $FC, $08, $1E, $C5, $72, $21, $FC, $FF, $FF, $C7, $9D 
 	dc.b	$C5, $74, $61, $00, $05, $B8, $4E, $75 
 loc_00020E74:
 	MOVE.w	#$700, $FFFFC572.w	
@@ -35593,8 +35597,12 @@ loc_00020E88:
 	RTS
 	
 loc_00020E9C:
-	dc.b	$31, $FC, $08, $16, $C5, $72, $21, $FC, $FF, $FF, $C7, $9F, $C5, $74, $61, $00, $05, $7C, $4E, $75, $31, $FC, $10, $2A, $C5, $72, $21, $FC, $FF, $FF, $C7, $A0 
-	dc.b	$C5, $74, $61, $00, $05, $68, $4E, $75, $31, $FC, $08, $50, $C5, $72, $21, $FC, $FF, $FF, $C7, $A1, $C5, $74, $61, $00, $05, $5E, $4E, $75 
+	dc.b	$31, $FC, $08, $16, $C5, $72, $21, $FC, $FF, $FF, $C7, $9F, $C5, $74, $61, $00, $05, $7C, $4E, $75
+loc_00020EB0:	
+	dc.b	$31, $FC, $10, $2A, $C5, $72, $21, $FC, $FF, $FF, $C7, $A0 
+	dc.b	$C5, $74, $61, $00, $05, $68, $4E, $75
+loc_00020EC4:	
+	dc.b	$31, $FC, $08, $50, $C5, $72, $21, $FC, $FF, $FF, $C7, $A1, $C5, $74, $61, $00, $05, $5E, $4E, $75 
 loc_00020ED8:
 	MOVE.w	#2, $FFFFC572.w	
 	MOVE.l	#$FFFFC7A2, $FFFFC574.w	
@@ -36446,18 +36454,18 @@ loc_000221C0:
 	dc.l	Possessed_magics_list	
 WyclifItemShopAssortment:
 	dc.w	$2
-	dc.b	$00, ITEM_HERBS
-	dc.b	$00, ITEM_CANDLE
+	dc.b	ITEM_TYPE_DISCARDABLE, ITEM_HERBS
+	dc.b	ITEM_TYPE_DISCARDABLE, ITEM_CANDLE
 WyclifItemShopPrices:
 	dc.l	$20
 	dc.l	$10 
 ParmaItemShopAssortment:
 	dc.w	$5
-	dc.b	$00, ITEM_CANDLE
-	dc.b	$00, ITEM_HERBS
-	dc.b	$00, ITEM_POISON_BALM
-	dc.b	$00, ITEM_LANTERN
-	dc.b	$00, ITEM_GNOME_STONE
+	dc.b	ITEM_TYPE_DISCARDABLE, ITEM_CANDLE
+	dc.b	ITEM_TYPE_DISCARDABLE, ITEM_HERBS
+	dc.b	ITEM_TYPE_DISCARDABLE, ITEM_POISON_BALM
+	dc.b	ITEM_TYPE_DISCARDABLE, ITEM_LANTERN
+	dc.b	ITEM_TYPE_DISCARDABLE, ITEM_GNOME_STONE
 ParmaItemShopPrices:
 	dc.l	$15
 	dc.l	$25
@@ -36466,11 +36474,11 @@ ParmaItemShopPrices:
 	dc.l	$300
 DeepdaleItemShopAssortment:
 	dc.w	$5
-	dc.b	$00, ITEM_HERBS
-	dc.b	$00, ITEM_MEDICINE
-	dc.b	$00, ITEM_POISON_BALM
-	dc.b	$00, ITEM_LANTERN
-	dc.b	$00, ITEM_GNOME_STONE
+	dc.b	ITEM_TYPE_DISCARDABLE, ITEM_HERBS
+	dc.b	ITEM_TYPE_DISCARDABLE, ITEM_MEDICINE
+	dc.b	ITEM_TYPE_DISCARDABLE, ITEM_POISON_BALM
+	dc.b	ITEM_TYPE_DISCARDABLE, ITEM_LANTERN
+	dc.b	ITEM_TYPE_DISCARDABLE, ITEM_GNOME_STONE
 DeepdaleItemShopPrices:
 	dc.l	$30
 	dc.l	$120
@@ -36479,12 +36487,12 @@ DeepdaleItemShopPrices:
 	dc.l	$350 
 StowItemShopAssortment:
 	dc.w	$6
-	dc.b	$00, ITEM_HERBS
-	dc.b	$00, ITEM_MEDICINE
-	dc.b	$00, ITEM_POISON_BALM
-	dc.b	$00, ITEM_LANTERN
-	dc.b	$00, ITEM_GNOME_STONE
-	dc.b	$00, ITEM_GRIFFIN_WING
+	dc.b	ITEM_TYPE_DISCARDABLE, ITEM_HERBS
+	dc.b	ITEM_TYPE_DISCARDABLE, ITEM_MEDICINE
+	dc.b	ITEM_TYPE_DISCARDABLE, ITEM_POISON_BALM
+	dc.b	ITEM_TYPE_DISCARDABLE, ITEM_LANTERN
+	dc.b	ITEM_TYPE_DISCARDABLE, ITEM_GNOME_STONE
+	dc.b	ITEM_TYPE_DISCARDABLE, ITEM_GRIFFIN_WING
 StowItemShopPrices:
 	dc.l	$30
 	dc.l	$125
@@ -36494,11 +36502,11 @@ StowItemShopPrices:
 	dc.l	$820 
 KeltwickItemShopAssortment:
 	dc.w	$5
-	dc.b	$00, ITEM_MEDICINE
-	dc.b	$00, ITEM_POISON_BALM
-	dc.b	$00, ITEM_LANTERN
-	dc.b	$00, ITEM_GRIFFIN_WING
-	dc.b	$00, ITEM_ALARM_CLOCK 
+	dc.b	ITEM_TYPE_DISCARDABLE, ITEM_MEDICINE
+	dc.b	ITEM_TYPE_DISCARDABLE, ITEM_POISON_BALM
+	dc.b	ITEM_TYPE_DISCARDABLE, ITEM_LANTERN
+	dc.b	ITEM_TYPE_DISCARDABLE, ITEM_GRIFFIN_WING
+	dc.b	ITEM_TYPE_DISCARDABLE, ITEM_ALARM_CLOCK 
 KeltwickItemShopPrices:
 	dc.l	$130
 	dc.l	$70
@@ -36507,21 +36515,21 @@ KeltwickItemShopPrices:
 	dc.l	$2000 
 MalagaItemShopAssortment:
 	dc.w	$3
-	dc.b	$00, ITEM_VASE
-	dc.b	$00, ITEM_JOKE_BOOK
-	dc.b	$00, ITEM_SMALL_BOMB
+	dc.b	ITEM_TYPE_DISCARDABLE, ITEM_VASE
+	dc.b	ITEM_TYPE_DISCARDABLE, ITEM_JOKE_BOOK
+	dc.b	ITEM_TYPE_DISCARDABLE, ITEM_SMALL_BOMB
 MalagaItemShopPrices:
 	dc.l	$10
 	dc.l	$10
 	dc.l	$10 
 BarrowItemShopAssortment:
 	dc.w	$6
-	dc.b	$00, ITEM_MEDICINE
-	dc.b	$00, ITEM_LANTERN
-	dc.b	$00, ITEM_GRIFFIN_WING
-	dc.b	$00, ITEM_AGATE_JEWEL
-	dc.b	$00, ITEM_GNOME_STONE
-	dc.b	$00, ITEM_BANSHEE_POWDER
+	dc.b	ITEM_TYPE_DISCARDABLE, ITEM_MEDICINE
+	dc.b	ITEM_TYPE_DISCARDABLE, ITEM_LANTERN
+	dc.b	ITEM_TYPE_DISCARDABLE, ITEM_GRIFFIN_WING
+	dc.b	ITEM_TYPE_DISCARDABLE, ITEM_AGATE_JEWEL
+	dc.b	ITEM_TYPE_DISCARDABLE, ITEM_GNOME_STONE
+	dc.b	ITEM_TYPE_DISCARDABLE, ITEM_BANSHEE_POWDER
 BarrowItemShopPrices:
 	dc.l	$142
 	dc.l	$80
@@ -36531,12 +36539,12 @@ BarrowItemShopPrices:
 	dc.l	$2200 
 HelwigItemShopAssortment:
 	dc.w	$6
-	dc.b	$00, ITEM_MEDICINE
-	dc.b	$00, ITEM_GRIFFIN_WING
-	dc.b	$00, ITEM_LANTERN
-	dc.b	$00, ITEM_AGATE_JEWEL
-	dc.b	$00, ITEM_GNOME_STONE
-	dc.b	$00, ITEM_POISON_BALM
+	dc.b	ITEM_TYPE_DISCARDABLE, ITEM_MEDICINE
+	dc.b	ITEM_TYPE_DISCARDABLE, ITEM_GRIFFIN_WING
+	dc.b	ITEM_TYPE_DISCARDABLE, ITEM_LANTERN
+	dc.b	ITEM_TYPE_DISCARDABLE, ITEM_AGATE_JEWEL
+	dc.b	ITEM_TYPE_DISCARDABLE, ITEM_GNOME_STONE
+	dc.b	ITEM_TYPE_DISCARDABLE, ITEM_POISON_BALM
 HelwigItemShopPrices:
 	dc.l	$155
 	dc.l	$1020
@@ -36546,11 +36554,11 @@ HelwigItemShopPrices:
 	dc.l	$90 
 SwaffhamItemShopAssortment:
 	dc.w	$5
-	dc.b	$00, ITEM_MEDICINE
-	dc.b	$00, ITEM_POISON_BALM
-	dc.b	$00, ITEM_LANTERN
-	dc.b	$00, ITEM_GRIFFIN_WING
-	dc.b	$00, ITEM_AGATE_JEWEL 
+	dc.b	ITEM_TYPE_DISCARDABLE, ITEM_MEDICINE
+	dc.b	ITEM_TYPE_DISCARDABLE, ITEM_POISON_BALM
+	dc.b	ITEM_TYPE_DISCARDABLE, ITEM_LANTERN
+	dc.b	ITEM_TYPE_DISCARDABLE, ITEM_GRIFFIN_WING
+	dc.b	ITEM_TYPE_DISCARDABLE, ITEM_AGATE_JEWEL 
 SwaffhamItemShopPrices:
 	dc.l	$171
 	dc.l	$108
@@ -36559,11 +36567,11 @@ SwaffhamItemShopPrices:
 	dc.l	$4120 
 HastingsItemShopAssortment:
 	dc.w	$5
-	dc.b	$00, ITEM_MEDICINE
-	dc.b	$00, ITEM_POISON_BALM
-	dc.b	$00, ITEM_TOPAZ_JEWEL
-	dc.b	$00, ITEM_LANTERN
-	dc.b	$00, ITEM_BANSHEE_POWDER
+	dc.b	ITEM_TYPE_DISCARDABLE, ITEM_MEDICINE
+	dc.b	ITEM_TYPE_DISCARDABLE, ITEM_POISON_BALM
+	dc.b	ITEM_TYPE_DISCARDABLE, ITEM_TOPAZ_JEWEL
+	dc.b	ITEM_TYPE_DISCARDABLE, ITEM_LANTERN
+	dc.b	ITEM_TYPE_DISCARDABLE, ITEM_BANSHEE_POWDER
 HastingsItemShopPrices:
 	dc.l	$190
 	dc.l	$122
@@ -36595,11 +36603,11 @@ StowMagicShopPrices:
 	dc.l	$1400 
 KeltwickMagicShopAssortment:
 	dc.w	$5
-	dc.b	$02, MAGIC_AERO
-	dc.b	$00, MAGIC_LUMINOS
-	dc.b	$02, MAGIC_HYDRO
-	dc.b	$02, MAGIC_CHRONO
-	dc.b	$00, MAGIC_TOXIOS 
+	dc.b	MAGIC_TYPE_BATTLE, MAGIC_AERO
+	dc.b	MAGIC_TYPE_FIELD, MAGIC_LUMINOS
+	dc.b	MAGIC_TYPE_BATTLE, MAGIC_HYDRO
+	dc.b	MAGIC_TYPE_BATTLE, MAGIC_CHRONO
+	dc.b	MAGIC_TYPE_FIELD, MAGIC_TOXIOS 
 KeltwickMagicShopPrices:
 	dc.l	$3400
 	dc.l	$5200
