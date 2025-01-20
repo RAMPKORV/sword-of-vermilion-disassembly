@@ -3244,7 +3244,7 @@ loc_0000343E:
 	RTS
 
 loc_00003442:
-	MOVE.l	#loc_00026034, Script_talk_source.w
+	MOVE.l	#NoOneHereStr, Script_talk_source.w
 	LEA	loc_000200B6, A0
 	MOVE.w	Player_map_sector_x.w, D0
 	ADD.w	D0, D0
@@ -3301,7 +3301,7 @@ loc_000034D0:
 	LEA	$A(A0), A0
 	BRA.b	loc_000034AA
 loc_000034D6:
-	MOVE.l	#loc_00026034, Script_talk_source.w
+	MOVE.l	#NoOneHereStr, Script_talk_source.w
 	RTS
 
 loc_000034E0:
@@ -9644,7 +9644,7 @@ loc_00008D26:
 loc_00008D2C:
 	TST.b	$FFFFC75C.w
 	BEQ.b	loc_00008D44
-	MOVE.l	#loc_00026034, Script_talk_source.w
+	MOVE.l	#NoOneHereStr, Script_talk_source.w
 	BCLR.b	#7, (A5)
 	CLR.b	$FFFFC578.w
 	RTS
@@ -9689,7 +9689,7 @@ loc_00008DC0:
 loc_00008DC6:
 	TST.b	$FFFFC804.w
 	BEQ.b	loc_00008DD4
-	MOVE.l	#loc_00026034, Script_talk_source.w
+	MOVE.l	#NoOneHereStr, Script_talk_source.w
 loc_00008DD4:
 	JMP	loc_0000F6DC
 loc_00008DDA:
@@ -9735,7 +9735,7 @@ loc_00008E5C:
 	MOVE.w	$FFFFC43C.w, D5
 	TST.b	(A0,D5.w)
 	BEQ.b	loc_00008E82
-	MOVE.l	#loc_00026034, Script_talk_source.w
+	MOVE.l	#NoOneHereStr, Script_talk_source.w
 	BCLR.b	#7, (A5)
 	MOVE.b	#$FF, $FFFFC55F.w
 	JMP	loc_00006458
@@ -9744,7 +9744,7 @@ loc_00008E82:
 loc_00008E88:
 	TST.b	(A0)
 	BEQ.b	loc_00008E9E
-	MOVE.l	#loc_00026034, Script_talk_source.w
+	MOVE.l	#NoOneHereStr, Script_talk_source.w
 	BCLR.b	#7, (A5)
 	CLR.b	$FFFFC578.w
 	RTS
@@ -20005,28 +20005,28 @@ loc_00011AEC:
 	MOVE.w	#1, $FFFF9906.w
 	MOVE.w	#2, $FFFF990C.w
 	BSR.w	loc_00012CE6
-	LEA	loc_00026054, A0
+	LEA	NothingStr, A0
 	MOVE.w	Equipped_sword.w, D0
 	BLT.b	loc_00011B34
 	BSR.w	loc_00011B90
 loc_00011B34:
 	MOVE.w	#$0074, D0
 	BSR.w	loc_00012CF6
-	LEA	loc_00026054, A0
+	LEA	NothingStr, A0
 	MOVE.w	Equipped_shield.w, D0
 	BLT.b	loc_00011B4C
 	BSR.w	loc_00011B90
 loc_00011B4C:
 	MOVE.w	#$00AA, D0
 	BSR.w	loc_00012CF6
-	LEA	loc_00026054, A0
+	LEA	NothingStr, A0
 	MOVE.w	Equipped_armor.w, D0
 	BLT.b	loc_00011B64
 	BSR.w	loc_00011B90
 loc_00011B64:
 	MOVE.w	#$00DF, D0
 	BSR.w	loc_00012CF6
-	LEA	loc_00026054, A0
+	LEA	NothingStr, A0
 	MOVE.w	Readied_magic.w, D0
 	BLT.b	loc_00011B7C
 	BSR.w	loc_00011BA4
@@ -20099,7 +20099,7 @@ loc_00011C4C:
 	MOVE.w	#2, $FFFF9906.w	
 	MOVE.w	#2, $FFFF990C.w	
 	BSR.w	loc_00012CE6	
-	LEA	loc_00026054, A0	
+	LEA	NothingStr, A0	
 	MOVE.w	#$0060, D0	
 	BSR.w	loc_00012CF6	
 	CLR.w	$FFFF9914.w	
@@ -20173,7 +20173,7 @@ loc_00011D56:
 	MOVE.w	#2, $FFFF9906.w
 	MOVE.w	#2, $FFFF990C.w
 	BSR.w	loc_00012CE6
-	LEA	loc_00026054, A0
+	LEA	NothingStr, A0
 	MOVE.w	#$004C, D0
 	BSR.w	loc_00012CF6
 	CLR.w	$FFFF9914.w
@@ -20220,7 +20220,7 @@ loc_00011E12:
 	MOVE.w	#2, $FFFF9906.w	
 	MOVE.w	#2, $FFFF990C.w	
 	BSR.w	loc_00012CE6	
-	LEA	loc_00026054, A0	
+	LEA	NothingStr, A0	
 	MOVE.w	#$0060, D0	
 	BSR.w	loc_00012CF6	
 	CLR.w	$FFFF9914.w	
@@ -20284,10 +20284,10 @@ loc_00011EF8:
 	MOVE.w	#2, $FFFF9906.w	
 	MOVE.w	#2, $FFFF990C.w	
 	BSR.w	loc_00012CE6	
-	LEA	loc_00026054, A0	
+	LEA	NothingStr, A0	
 	TST.b	$FFFFC778.w	
 	BEQ.b	loc_00011F30	
-	LEA	loc_0002605C, A0	
+	LEA	AllRingsStr, A0	
 loc_00011F30:
 	MOVE.w	#$004C, D0	
 	BSR.w	loc_00012CF6	
@@ -21491,7 +21491,7 @@ loc_00013028:
 	MOVEA.l	(A0,D0.w), A0
 	BRA.w	loc_0001304A
 loc_00013044:
-	LEA	loc_00026054, A0
+	LEA	NothingStr, A0
 loc_0001304A:
 	ORI	#$0700, SR
 	MOVE.l	#$4CB60003, VDP_control_port
@@ -26090,15 +26090,15 @@ CastToxios:
 	BNE.w	loc_000189AC
 	BSR.w	loc_0001A21C
 	BNE.w	loc_00018996
-	MOVE.l	#loc_00026634, Script_source_base.w
+	MOVE.l	#PoisonPurgedStr, Script_source_base.w
 	TST.w	Player_poisoned.w
 	BNE.b	loc_000188AE
-	MOVE.l	#loc_00026732, Script_source_base.w
+	MOVE.l	#NotPoisonousStr, Script_source_base.w
 	BRA.b	loc_000188BE
 loc_000188AE:
 	TST.b	Player_greatly_poisoned.w
 	BEQ.b	loc_000188BE
-	MOVE.l	#loc_00026750, Script_source_base.w
+	MOVE.l	#PoisonTooStrongStr, Script_source_base.w
 	BRA.b	loc_000188D0
 loc_000188BE:
 	CLR.w	Player_poisoned.w
@@ -28613,7 +28613,7 @@ UseRafaelsStick:
 	JSR	CheckIfCursed
 	BEQ.b	loc_0001ABDE
 	JSR	RemoveCursedEquipment	
-	MOVE.l	#loc_000266AA, Script_source_base.w	
+	MOVE.l	#CurseRemovedStr, Script_source_base.w	
 	MOVE.w	#$00AE, D0	
 	JSR	loc_00010522	
 	RTS
@@ -28735,15 +28735,15 @@ UsePoisonBalm:
 	BNE.b	loc_0001AD4E
 	CLR.b	$FFFFC7C6.w
 	CLR.w	Player_poisoned.w
-	MOVE.l	#loc_00026634, Script_source_base.w
+	MOVE.l	#PoisonPurgedStr, Script_source_base.w
 	MOVE.w	#$00AE, D0
 	JSR	loc_00010522
 	BRA.b	loc_0001AD56
 loc_0001AD44:
-	MOVE.l	#loc_00026732, Script_source_base.w
+	MOVE.l	#NotPoisonousStr, Script_source_base.w
 	BRA.b	loc_0001AD56
 loc_0001AD4E:
-	MOVE.l	#loc_00026750, Script_source_base.w	
+	MOVE.l	#PoisonTooStrongStr, Script_source_base.w	
 loc_0001AD56:
 	BSR.w	RemoveSelectedItemFromList
 	RTS
@@ -28997,10 +28997,10 @@ UseDigotPlant:
 	CLR.b	$FFFFC7C6.w
 	CLR.w	Player_poisoned.w
 	CLR.b	Player_greatly_poisoned.w
-	MOVE.l	#loc_00026634, Script_source_base.w
+	MOVE.l	#PoisonPurgedStr, Script_source_base.w
 	BRA.b	loc_0001B010
 loc_0001B008:
-	MOVE.l	#loc_00026732, Script_source_base.w
+	MOVE.l	#NotPoisonousStr, Script_source_base.w
 loc_0001B010:
 	BSR.w	RemoveSelectedItemFromList
 	RTS
@@ -29215,7 +29215,7 @@ loc_0001B266:
 	BRA.w	loc_0001B496
 loc_0001B2B6:
 	MOVE.w	#$21, Dialogue_state.w
-	MOVE.l	#loc_00026592, Script_source_base.w
+	MOVE.l	#HelpPromptStr, Script_source_base.w
 	RTS
 
 loc_0001B2C6:
@@ -29261,10 +29261,10 @@ loc_0001B312:
 	BRA.b	loc_0001B3B0
 loc_0001B35E:
 	LEA	$FFFFC260.w, A1
-	LEA	loc_0002623A, A0
+	LEA	RoomRentStr, A0
 	JSR	loc_00012A6C
 	MOVE.b	#$FD, (A1)+
-	LEA	loc_000260CC, A0
+	LEA	IsStr, A0
 	JSR	loc_00012A6C
 	MOVE.w	Current_town.w, D0
 	ADD.w	D0, D0
@@ -29273,7 +29273,7 @@ loc_0001B35E:
 	MOVE.l	(A0,D0.w), D0
 	BSR.w	loc_0001CF38
 	MOVE.b	#$20, (A1)+
-	LEA	loc_000260D6, A0
+	LEA	AllRightStr, A0
 	JSR	loc_00012A6C
 	MOVE.b	#$FF, (A1)
 	MOVE.l	#$FFFFC260, Script_source_base.w
@@ -29283,10 +29283,10 @@ loc_0001B3B0:
 
 loc_0001B3B8:
 	LEA	$FFFFC260.w, A1
-	LEA	loc_000264E2, A0
+	LEA	FortuneTellerStr, A0
 	JSR	loc_00012A6C
 	MOVE.b	#$FD, (A1)+
-	LEA	loc_00026512, A0
+	LEA	FeeStr, A0
 	JSR	loc_00012A6C
 	MOVE.w	Current_town.w, D0
 	ADD.w	D0, D0
@@ -29296,7 +29296,7 @@ loc_0001B3B8:
 	BSR.w	loc_0001CF38
 	MOVE.b	#$2E, (A1)+
 	MOVE.b	#$FE, (A1)+
-	LEA	loc_0002651E, A0
+	LEA	PayFirstStr, A0
 	JSR	loc_00012A6C
 	MOVE.b	#$FF, (A1)
 	MOVE.l	#$FFFFC260, Script_source_base.w
@@ -29924,7 +29924,7 @@ loc_0001BE6E:
 	JSR	loc_00010D44
 	JSR	loc_00011666
 	LEA	$FFFFC260.w, A1
-	LEA	loc_000260CC, A0
+	LEA	IsStr, A0
 	JSR	loc_00012A6C
 	LEA	loc_000226D6, A0
 	MOVE.w	Current_shop_type.w, D0
@@ -30229,7 +30229,7 @@ loc_0001C2AA:
 	BNE.b	loc_0001C33A
 loc_0001C2FE:
 	MOVE.w	D0, D2
-	LEA	loc_000260CC, A0
+	LEA	IsStr, A0
 	JSR	loc_00012A6C
 	BSR.w	loc_0001CEF8
 	MOVE.w	Current_shop_type.w, D0
@@ -30244,7 +30244,7 @@ loc_0001C2FE:
 	RTS
 
 loc_0001C33A:
-	MOVE.l	#loc_00026212, Script_source_base.w	
+	MOVE.l	#CursedItemStr, Script_source_base.w	
 	BRA.b	loc_0001C358	
 loc_0001C344:
 	MOVE.w	Current_shop_type.w, D0
@@ -30469,10 +30469,10 @@ loc_0001C5F4:
 	JSR	(A0)
 	BRA.b	loc_0001C672
 loc_0001C660:
-	MOVE.l	#loc_00026532, Script_source_base.w
+	MOVE.l	#NoPayNoFortuneStr, Script_source_base.w
 	BRA.b	loc_0001C672
 loc_0001C66A:
-	MOVE.l	#loc_00026560, Script_source_base.w
+	MOVE.l	#NoQuestionsStr, Script_source_base.w
 loc_0001C672:
 	JSR	loc_00012670
 	MOVE.w	#$1B, Dialogue_state.w
@@ -30608,7 +30608,7 @@ loc_0001C7DA:
 	MOVE.l	D0, $FFFFC65A.w
 	JSR	DeductPaymentAmount
 	JSR	loc_000115DE
-	MOVE.l	#loc_00026260, Script_source_base.w
+	MOVE.l	#RestWellStr, Script_source_base.w
 	JSR	loc_00012670
 	JSR	loc_00010C4A
 loc_0001C84E:
@@ -30616,10 +30616,10 @@ loc_0001C84E:
 	RTS
 
 loc_0001C856:
-	MOVE.l	#loc_000262AA, Script_source_base.w
+	MOVE.l	#NoPaySleepStreetStr, Script_source_base.w
 	BRA.b	loc_0001C868
 loc_0001C860:
-	MOVE.l	#loc_000262F0, Script_source_base.w
+	MOVE.l	#ServicesCostStr, Script_source_base.w
 loc_0001C868:
 	JSR	loc_00012670
 	MOVE.w	#$1B, Dialogue_state.w
@@ -30678,7 +30678,7 @@ loc_0001C920:
 	MOVE.l	#loc_000301D0, Script_source_base.w
 	BRA.b	loc_0001C932
 loc_0001C92A:
-	MOVE.l	#loc_00026286, Script_source_base.w
+	MOVE.l	#BetterMorningStr, Script_source_base.w
 loc_0001C932:
 	MOVE.w	#$0012, $FFFFC080.w
 	MOVE.w	$FFFFC096.w, $FFFFC082.w
@@ -30727,14 +30727,14 @@ loc_0001C9B4:
 	CMPI.w	#2, $FFFFC500.w
 	BEQ.w	loc_0001CABC
 loc_0001C9E8:
-	MOVE.l	#loc_00026702, Script_source_base.w
+	MOVE.l	#NeverGiveUpStr, Script_source_base.w
 	MOVE.w	#$23, Dialogue_state.w
 	BRA.w	loc_0001CACA
 loc_0001C9FA:
 	BSR.w	CheckIfCursed
 	BEQ.b	loc_0001CA4C
 	LEA	$FFFFC260.w, A1
-	LEA	loc_000265C4, A0
+	LEA	GiveToCharityStr, A0
 	JSR	loc_00012A6C
 	MOVE.b	#$FE, (A1)+
 	MOVE.w	Current_town.w, D0
@@ -30743,21 +30743,21 @@ loc_0001C9FA:
 	LEA	ChurchCurseRemovalPricesByTown, A0
 	MOVE.l	(A0,D0.w), D0
 	BSR.w	loc_0001CF38
-	LEA	loc_000265D4, A0
+	LEA	CharityAgreeStr, A0
 	JSR	loc_00012A6C
 	MOVE.b	#$FF, (A1)
 	MOVE.l	#$FFFFC260, Script_source_base.w
 	MOVE.w	#$25, Dialogue_state.w
 	BRA.w	loc_0001CACA
 loc_0001CA4C:
-	MOVE.l	#loc_00026690, Script_source_base.w
+	MOVE.l	#NoCurseStr, Script_source_base.w
 	MOVE.w	#$23, Dialogue_state.w
 	BRA.b	loc_0001CACA
 loc_0001CA5C:
 	MOVE.w	Player_poisoned.w, D0
 	BEQ.b	loc_0001CAAC
 	LEA	$FFFFC260.w, A1
-	LEA	loc_000265C4, A0
+	LEA	GiveToCharityStr, A0
 	JSR	loc_00012A6C
 	MOVE.b	#$FE, (A1)+
 	MOVE.w	Current_town.w, D0
@@ -30766,18 +30766,18 @@ loc_0001CA5C:
 	LEA	ChurchPoisonCurePricesByTown, A0
 	MOVE.l	(A0,D0.w), D0
 	BSR.w	loc_0001CF38
-	LEA	loc_000265D4, A0
+	LEA	CharityAgreeStr, A0
 	JSR	loc_00012A6C
 	MOVE.b	#$FF, (A1)
 	MOVE.l	#$FFFFC260, Script_source_base.w
 	MOVE.w	#$28, Dialogue_state.w
 	BRA.b	loc_0001CACA
 loc_0001CAAC:
-	MOVE.l	#loc_000265A8, Script_source_base.w
+	MOVE.l	#NotPoisonedStr, Script_source_base.w
 	MOVE.w	#$23, Dialogue_state.w
 	BRA.b	loc_0001CACA
 loc_0001CABC:
-	MOVE.l	#loc_000266C6, Script_source_base.w
+	MOVE.l	#SaveNumberStr, Script_source_base.w
 	MOVE.w	#$2B, Dialogue_state.w
 loc_0001CACA:
 	JMP	loc_00010C4A
@@ -30867,7 +30867,7 @@ loc_0001CB94:
 	JSR	DeductPaymentAmount
 	JSR	loc_000115DE
 	BSR.w	RemoveCursedEquipment
-	MOVE.l	#loc_000266AA, Script_source_base.w
+	MOVE.l	#CurseRemovedStr, Script_source_base.w
 	JSR	loc_00012670
 	JSR	loc_00012766
 	JSR	loc_00010C4A
@@ -30875,10 +30875,10 @@ loc_0001CB94:
 	RTS
 
 loc_0001CC1A:
-	MOVE.l	#loc_00026660, Script_source_base.w	
+	MOVE.l	#NoTakeBackStr, Script_source_base.w	
 	BRA.b	loc_0001CC2C	
 loc_0001CC24:
-	MOVE.l	#loc_00026660, Script_source_base.w	
+	MOVE.l	#NoTakeBackStr, Script_source_base.w	
 loc_0001CC2C:
 	JSR	loc_00012670	
 	JSR	loc_00012766	
@@ -30936,10 +30936,10 @@ loc_0001CC90:
 	BNE.b	loc_0001CD0A
 	CLR.w	Player_poisoned.w
 	CLR.b	$FFFFC7C6.w
-	MOVE.l	#loc_00026634, Script_source_base.w
+	MOVE.l	#PoisonPurgedStr, Script_source_base.w
 	BRA.b	loc_0001CD12
 loc_0001CD0A:
-	MOVE.l	#loc_000265F0, Script_source_base.w
+	MOVE.l	#CantCureStr, Script_source_base.w
 loc_0001CD12:
 	JSR	loc_00012670
 	JSR	loc_00012766
@@ -30948,10 +30948,10 @@ loc_0001CD12:
 	RTS
 
 loc_0001CD2C:
-	MOVE.l	#loc_00026660, Script_source_base.w	
+	MOVE.l	#NoTakeBackStr, Script_source_base.w	
 	BRA.b	loc_0001CD3E	
 loc_0001CD36:
-	MOVE.l	#loc_00026660, Script_source_base.w	
+	MOVE.l	#NoTakeBackStr, Script_source_base.w	
 loc_0001CD3E:
 	JSR	loc_00012670	
 	JSR	loc_00012766	
@@ -30985,7 +30985,7 @@ loc_0001CD88:
 	JSR	loc_0001059C
 	JSR	loc_00012694
 	JSR	loc_00010C4A
-	MOVE.l	#loc_000266E0, Script_source_base.w
+	MOVE.l	#GameSavedStr, Script_source_base.w
 	MOVE.w	#$23, Dialogue_state.w
 	RTS
 
@@ -31096,7 +31096,7 @@ loc_0001CEE0:
 	LEA	(A6,D2.w), A6
 	DBF	D7, loc_0001CEA6
 loc_0001CEEE:
-	MOVE.l	#loc_00026034, Script_source_base.w
+	MOVE.l	#NoOneHereStr, Script_source_base.w
 	RTS
 
 loc_0001CEF8:
@@ -31290,13 +31290,13 @@ loc_0001D156:
 	JSR	loc_000125B6
 	JSR	loc_000110F4
 	JSR	loc_00012B0A
-	MOVE.l	#loc_00026388, Script_source_base.w
+	MOVE.l	#ReadyPromptStr, Script_source_base.w
 	MOVE.w	#3, $FFFFC426.w
 	CLR.w	Selected_equipment_option.w
 	RTS
 
 loc_0001D1A8:
-	MOVE.l	#loc_00026362, Script_source_base.w
+	MOVE.l	#ProperEquipmentStr, Script_source_base.w
 	MOVE.w	#6, $FFFFC426.w
 loc_0001D1B6:
 	RTS
@@ -31347,7 +31347,7 @@ loc_0001D216:
 	ADD.w	D0, D0
 	LEA	loc_0001D4B8, A0
 	JSR	(A0,D0.w)
-	LEA	loc_0002634E, A0
+	LEA	ReadiedStr, A0
 	JSR	loc_00012A6C
 	MOVE.b	#$FE, (A1)+
 	BSR.w	loc_0001D664
@@ -31359,7 +31359,7 @@ loc_0001D216:
 	RTS
 
 loc_0001D29C:
-	MOVE.l	#loc_000263A4, Script_source_base.w
+	MOVE.l	#AlreadyReadiedStr, Script_source_base.w
 	BSR.w	loc_0001D5E8
 	CMP.b	D0, D1
 	BEQ.w	loc_0001D342
@@ -31383,7 +31383,7 @@ loc_0001D29C:
 	ADD.w	D0, D0
 	LEA	loc_0001D4B8, A0
 	JSR	(A0,D0.w)
-	LEA	loc_00026358, A0
+	LEA	RemovedStr, A0
 	JSR	loc_00012A6C
 	MOVE.b	#$FE, (A1)+
 	BSR.w	loc_0001D664
@@ -31394,7 +31394,7 @@ loc_0001D29C:
 	MOVE.b	#$FE, (A1)+
 	BSR.w	loc_0001D5E8
 	MOVE.w	D1, D2
-	LEA	loc_0002634E, A0
+	LEA	ReadiedStr, A0
 	JSR	loc_00012A6C
 	BSR.w	loc_0001D664
 	MOVE.b	#$2E, (A1)+
@@ -31404,10 +31404,10 @@ loc_0001D342:
 	BSR.w	loc_0001D5FC
 	BRA.b	loc_0001D35A
 loc_0001D348:
-	MOVE.l	#loc_000263DC, Script_source_base.w
+	MOVE.l	#ExchangeCursedStr, Script_source_base.w
 	BRA.b	loc_0001D35A
 loc_0001D352:
-	MOVE.l	#loc_000263FE, Script_source_base.w
+	MOVE.l	#CursedStr, Script_source_base.w
 loc_0001D35A:
 	MOVE.w	#6, $FFFFC426.w
 	JSR	loc_00012742
@@ -31462,7 +31462,7 @@ loc_0001D3BA:
 	BSR.w	loc_0001D650
 	BSR.w	loc_0001D5D8
 	MOVE.w	D0, D2
-	LEA	loc_00026358, A0
+	LEA	RemovedStr, A0
 	JSR	loc_00012A6C
 	MOVE.b	#$FE, (A1)+
 	BSR.w	loc_0001D664
@@ -31477,12 +31477,12 @@ loc_0001D3BA:
 	RTS
 
 loc_0001D456:
-	MOVE.l	#loc_00026334, Script_source_base.w
+	MOVE.l	#NothingToUseStr, Script_source_base.w
 	MOVE.w	#6, $FFFFC426.w
 	RTS
 
 loc_0001D466:
-	MOVE.l	#loc_000263BE, Script_source_base.w	
+	MOVE.l	#DropCursedStr, Script_source_base.w	
 	MOVE.w	#6, $FFFFC426.w	
 	RTS
 	
@@ -32377,16 +32377,16 @@ loc_0001E034:
 	BNE.w	loc_0001E058
 	BRA.w	loc_0001E098
 loc_0001E058:
-	MOVE.l	#loc_0002644C, Script_source_base.w
+	MOVE.l	#SomeoneStandingStr, Script_source_base.w
 	BRA.w	loc_0001E084
 loc_0001E064:
-	MOVE.l	#loc_00026472, Script_source_base.w
+	MOVE.l	#TreasureChestStr, Script_source_base.w
 	BRA.w	loc_0001E084
 loc_0001E070:
-	MOVE.l	#loc_0002648A, Script_source_base.w	
+	MOVE.l	#HerbsStillThereStr, Script_source_base.w	
 	BRA.w	loc_0001E084	
 loc_0001E07C:
-	MOVE.l	#loc_000264B4, Script_source_base.w	
+	MOVE.l	#TrufflesStillThereStr, Script_source_base.w	
 loc_0001E084:
 	JSR	loc_0001229E
 	JSR	loc_00010C4A
@@ -32400,7 +32400,7 @@ loc_0001E098:
 loc_0001E09E:
 	JSR	loc_0001229E
 	JSR	loc_00010C4A
-	MOVE.l	#loc_0002640C, Script_source_base.w
+	MOVE.l	#NoUnusualStr, Script_source_base.w
 	ADDQ.w	#1, Confirm_option.w
 	RTS
 	
@@ -34892,7 +34892,7 @@ loc_0002039E:
 loc_000203C6:
 	MOVE.b	#$FF, $FFFFC56C.w
 	BSR.w	loc_00021480
-	MOVE.l	#loc_00026034, Script_talk_source.w
+	MOVE.l	#NoOneHereStr, Script_talk_source.w
 loc_000203D8:
 	RTS
 	
@@ -34976,7 +34976,7 @@ loc_0002051A:
 	MOVE.l	#0, $FFFFC574.w
 	MOVE.b	#$FF, $FFFFC56C.w
 	BSR.w	loc_00021480
-	MOVE.l	#loc_00026034, Script_talk_source.w
+	MOVE.l	#NoOneHereStr, Script_talk_source.w
 	RTS
 	
 loc_00020542:
@@ -35672,7 +35672,7 @@ loc_00020F84:
 	MOVE.w	D0, $FFFFC572.w
 	MOVE.b	#$FF, $FFFFC56C.w
 	BSR.w	loc_00021480
-	MOVE.l	#loc_00026034, Script_talk_source.w
+	MOVE.l	#NoOneHereStr, Script_talk_source.w
 	RTS
 	
 loc_00020FA2:
@@ -35686,12 +35686,12 @@ loc_00020FA2:
 	MOVE.l	#loc_00008B6A, $2(A6)
 	MOVE.l	#loc_0001F7BA, $FFFFC566.w
 	BSR.w	loc_000213FE
-	MOVE.l	#loc_00026034, Script_talk_source.w
+	MOVE.l	#NoOneHereStr, Script_talk_source.w
 loc_00020FE2:
 	RTS
 	
 loc_00020FE4:
-	MOVE.l	#loc_00026034, Script_talk_source.w
+	MOVE.l	#NoOneHereStr, Script_talk_source.w
 	TST.b	$FFFFC73E.w
 	BEQ.b	loc_00021004
 	TST.b	$FFFFC729.w
@@ -35731,12 +35731,12 @@ loc_0002105E:
 	MOVE.l	#loc_0003248A, Script_talk_source.w
 	BRA.b	loc_00021080
 loc_00021078:
-	MOVE.l	#loc_00026034, Script_talk_source.w
+	MOVE.l	#NoOneHereStr, Script_talk_source.w
 loc_00021080:
 	RTS
 	
 loc_00021082:
-	MOVE.l	#loc_00026034, Script_talk_source.w
+	MOVE.l	#NoOneHereStr, Script_talk_source.w
 	TST.b	$FFFFC7A7.w
 	BEQ.b	loc_000210BC
 	TST.b	$FFFFC734.w
@@ -35751,7 +35751,7 @@ loc_000210BC:
 	RTS
 
 loc_000210BE:
-	MOVE.l	#loc_00026034, Script_talk_source.w
+	MOVE.l	#NoOneHereStr, Script_talk_source.w
 	TST.b	$FFFFC7A7.w
 	BEQ.b	loc_000210DE
 	MOVE.w	#$0823, $FFFFC572.w
@@ -35761,7 +35761,7 @@ loc_000210DE:
 	RTS
 
 loc_000210E0:
-	MOVE.l	#loc_00026034, Script_talk_source.w
+	MOVE.l	#NoOneHereStr, Script_talk_source.w
 	TST.b	$FFFFC7A8.w
 	BEQ.b	loc_00021128
 	TST.b	$FFFFC73B.w
@@ -35779,7 +35779,7 @@ loc_00021128:
 	RTS
 
 loc_0002112A:
-	MOVE.l	#loc_00026034, Script_talk_source.w
+	MOVE.l	#NoOneHereStr, Script_talk_source.w
 	TST.b	$FFFFC7A8.w
 	BEQ.b	loc_0002114A
 	MOVE.w	#$0114, $FFFFC572.w
@@ -35791,7 +35791,7 @@ loc_0002114A:
 loc_0002114C:
 	dc.b	$31, $FC, $80, $00, $C5, $72, $21, $FC, $FF, $FF, $C7, $3F, $C5, $74, $61, $00, $02, $D6, $4E, $75 
 loc_00021160:
-	MOVE.l	#loc_00026034, Script_talk_source.w
+	MOVE.l	#NoOneHereStr, Script_talk_source.w
 	TST.b	$FFFFC741.w
 	BEQ.b	loc_0002119A
 	TST.b	$FFFFC73D.w
@@ -35806,7 +35806,7 @@ loc_0002119A:
 	RTS
 
 loc_0002119C:
-	MOVE.l	#loc_00026034, Script_talk_source.w
+	MOVE.l	#NoOneHereStr, Script_talk_source.w
 	TST.b	$FFFFC7A9.w
 	BEQ.b	loc_000211BC
 	TST.b	$FFFFC744.w
@@ -35829,7 +35829,7 @@ loc_000211BE:
 	MOVE.l	#loc_00008B88, $2(A6)
 	MOVE.l	#loc_0001F79E, $FFFFC566.w
 	BSR.w	loc_000213FE
-	MOVE.l	#loc_00026034, Script_talk_source.w
+	MOVE.l	#NoOneHereStr, Script_talk_source.w
 loc_00021204:
 	RTS
 	
@@ -36000,7 +36000,7 @@ loc_00021438:
 loc_00021446:
 	MOVE.b	#$FF, $FFFFC56C.w
 	BSR.w	loc_00021480
-	MOVE.l	#loc_00026034, Script_talk_source.w
+	MOVE.l	#NoOneHereStr, Script_talk_source.w
 	RTS
 	
 loc_0002145A:
@@ -36009,7 +36009,7 @@ loc_0002145A:
 	MOVE.b	#$FF, $FFFFC56F.w
 	MOVE.b	#$FF, $FFFFC56C.w
 	BSR.w	loc_00021480
-	MOVE.l	#loc_00026034, Script_talk_source.w
+	MOVE.l	#NoOneHereStr, Script_talk_source.w
 	RTS
 	
 loc_00021480:
@@ -40535,203 +40535,203 @@ EquipmentNames:
 	dc.l	loc_00025CA2
 	dc.l	loc_00025CB0	
 loc_00025FA4:
-	dc.l	loc_00026176	
-	dc.l	loc_00026176	
-	dc.l	loc_00026176	
+	dc.l	NextTimeStr	
+	dc.l	NextTimeStr	
+	dc.l	NextTimeStr	
 loc_00025FB0:
-	dc.l	loc_000260E2	
-	dc.l	loc_000260E2	
-	dc.l	loc_000260E2	
+	dc.l	ThankYouStr	
+	dc.l	ThankYouStr	
+	dc.l	ThankYouStr	
 loc_00025FBC:
-	dc.l	loc_000260EE	
-	dc.l	loc_000260EE	
-	dc.l	loc_000260EE	
+	dc.l	AnythingElseStr	
+	dc.l	AnythingElseStr	
+	dc.l	AnythingElseStr	
 loc_00025FC8:
-	dc.l	loc_0002610C	
-	dc.l	loc_0002610C	
-	dc.l	loc_0002610C	
+	dc.l	BusinessThanksStr	
+	dc.l	BusinessThanksStr	
+	dc.l	BusinessThanksStr	
 loc_00025FD4:
-	dc.l	loc_00026158	
-	dc.l	loc_00026158	
-	dc.l	loc_00026158	
+	dc.l	SellAnythingStr	
+	dc.l	SellAnythingStr	
+	dc.l	SellAnythingStr	
 loc_00025FE0:
-	dc.l	loc_00026188	
-	dc.l	loc_00026188	
-	dc.l	loc_00026188	
+	dc.l	NoNeedStr	
+	dc.l	NoNeedStr	
+	dc.l	NoNeedStr	
 loc_00025FEC:
-	dc.l	loc_0002612A	
-	dc.l	loc_0002612A	
-	dc.l	loc_0002612A	
+	dc.l	GivingAwayStr	
+	dc.l	GivingAwayStr	
+	dc.l	GivingAwayStr	
 loc_00025FF8:
-	dc.l	loc_00026096	
-	dc.l	loc_00026096	
-	dc.l	loc_00026096	
+	dc.l	BuyPromptStr	
+	dc.l	BuyPromptStr	
+	dc.l	BuyPromptStr	
 loc_00026004:
-	dc.l	loc_000260D0
-	dc.l	loc_000260D0
-	dc.l	loc_000260D0
+	dc.l	OkStr
+	dc.l	OkStr
+	dc.l	OkStr
 loc_00026010:
-	dc.l	loc_000260B2	
-	dc.l	loc_000260B2	
-	dc.l	loc_000260B2	
+	dc.l	SellPromptStr	
+	dc.l	SellPromptStr	
+	dc.l	SellPromptStr	
 loc_0002601C:
-	dc.l	loc_000260D6
-	dc.l	loc_000260D6
-	dc.l	loc_000260D6
+	dc.l	AllRightStr
+	dc.l	AllRightStr
+	dc.l	AllRightStr
 loc_00026028:
-	dc.l	loc_00026066
-	dc.l	loc_000261E4
-	dc.l	loc_000261B2
-loc_00026034:
+	dc.l	ShopWelcomeStr
+	dc.l	WeaponsArmorStr
+	dc.l	SpellBooksStr
+NoOneHereStr:
 	dc.b	"There's no one", $FE
 	dc.b	"here to talk to.", $FF 
-loc_00026054:
+NothingStr:
 	dc.b	"nothing", $FF 
-loc_0002605C:
+AllRingsStr:
 	dc.b	"All Rings", $FF
-loc_00026066:
+ShopWelcomeStr:
 	dc.b	"Welcome to my shop.", $FE
 	dc.b	"Does anything interest you?", $FF 
-loc_00026096:
+BuyPromptStr:
 	dc.b	"What would you like to buy?", $FF 
-loc_000260B2:
+SellPromptStr:
 	dc.b	"What do you want to sell?", $FF 
-loc_000260CC:
+IsStr:
 	dc.b	"Is ", $FF 
-loc_000260D0:
+OkStr:
 	dc.b	" OK?", $FF, $00 
-loc_000260D6:
+AllRightStr:
 	dc.b	"all right?", $FF, $00 
-loc_000260E2:
+ThankYouStr:
 	dc.b	"Thank you.", $FF, $00 
-loc_000260EE:
+AnythingElseStr:
 	dc.b	"Anything else for you today?", $FF, $00 
-loc_0002610C:
+BusinessThanksStr:
 	dc.b	"Thank you for your business!", $FF, $00 
-loc_0002612A:
+GivingAwayStr:
 	dc.b	"Hmmph! You think I'm", $FE
 	dc.b	"giving this stuff away?", $FF, $00 
-loc_00026158:
+SellAnythingStr:
 	dc.b	"Do you have", $FE
 	dc.b	"anything to sell?", $FF 
-loc_00026176:
+NextTimeStr:
 	dc.b	"Maybe next time!", $FF, $00 
-loc_00026188:
+NoNeedStr:
 	dc.b	"Sorry, sir, but I have", $FE
 	dc.b	"no need for that.", $FF, $00
-loc_000261B2:
+SpellBooksStr:
 	dc.b	"Books of Spells", $FE
 	dc.b	"are my specialty.", $FE
 	dc.b	"May I help you?", $FF
-loc_000261E4:
+WeaponsArmorStr:
 	dc.b	"You can buy weapons,", $FE
 	dc.b	"armor, and shields here.", $FF
-loc_00026212:
+CursedItemStr:
 	dc.b	"I don't want to buy", $FE
 	dc.b	"that--it's cursed!", $FF, $00 
-loc_0002623A:
+RoomRentStr:
 	dc.b	"Welcome!", $FE
 	dc.b	"We rent rooms", $FE
 	dc.b	"for the night.", $FF
-loc_00026260:
+RestWellStr:
 	dc.b	"Relax and enjoy a", $FE
 	dc.b	"well-deserved rest.", $FF
-loc_00026286:
+BetterMorningStr:
 	dc.b	"You look much better", $FE
 	dc.b	"this morning!", $FF, $00
-loc_000262AA:
+NoPaySleepStreetStr:
 	dc.b	"I'm sorry, but if you", $FE
 	dc.b	"can't pay, you'll have", $FE
 	dc.b	"to sleep in the street!", $FF, $00
-loc_000262F0:
+ServicesCostStr:
 	dc.b	"My services cost money,", $FE
 	dc.b	"you know. You can't stay", $FE
 	dc.b	"if you don't pay!", $FF, $00
-loc_00026334:
+NothingToUseStr:
 	dc.b	"You have nothing to use!", $FF, $00 
-loc_0002634E:
+ReadiedStr:
 	dc.b	"readied ", $FF, $00 
-loc_00026358:
+RemovedStr:
 	dc.b	"removed ", $FF, $00
-loc_00026362:
+ProperEquipmentStr:
 	dc.b	"You don't have the", $FE
 	dc.b	"proper equipment!", $FF, $00
-loc_00026388:
+ReadyPromptStr:
 	dc.b	"What do you want to ready?", $FF, $00
-loc_000263A4:
+AlreadyReadiedStr:
 	dc.b	"You readied that earlier.", $FF
-loc_000263BE:
+DropCursedStr:
 	dc.b	"You can't drop", $FE
 	dc.b	"a cursed item!", $FF
-loc_000263DC:
+ExchangeCursedStr:
 	dc.b	"You can't exchange", $FE
 	dc.b	"a cursed item.", $FF
-loc_000263FE:
+CursedStr:
 	dc.b	"It's cursed!", $FF, $00
-loc_0002640C:
+NoUnusualStr:
 	dc.b	"You searched carefully,", $FE
 	dc.b	"but you didn't notice", $FE
 	dc.b	"anything unusual.", $FF
-loc_0002644C:
+SomeoneStandingStr:
 	dc.b	"Someone is standing in", $FE
 	dc.b	"front of you!", $FF, $00
-loc_00026472:
+TreasureChestStr:
 	dc.b	"It's a treasure chest!", $FF, $00
-loc_0002648A:
+HerbsStillThereStr:
 	dc.b	"Stop worrying, the", $FE
 	dc.b	"herbs are still there!", $FF
-loc_000264B4:
+TrufflesStillThereStr:
 	dc.b	"Stop worrying, the", $FE
 	dc.b	"truffles are still there!", $FF, $00 
-loc_000264E2:
+FortuneTellerStr:
 	dc.b	"I can tell your fortune,", $FE
 	dc.b	"if your money is good.", $FF 
-loc_00026512:
+FeeStr:
 	dc.b	"The fee is ", $FF 
-loc_0002651E:
+PayFirstStr:
 	dc.b	"You must pay first!", $FF
-loc_00026532:
+NoPayNoFortuneStr:
 	dc.b	"If you can't pay,", $FE
 	dc.b	"I won't tell your fortune.", $FF, $00
-loc_00026560:
+NoQuestionsStr:
 	dc.b	"If you have no questions,", $FE
 	dc.b	"then why are you here?", $FF, $00
-loc_00026592:
-	dc.b	"How may we help you?", $FF, $00
-loc_000265A8:
+HelpPromptStr:
+	dc.b	"How may we help you?", $FF, $00 
+NotPoisonedStr:
 	dc.b	"You haven't been poisoned.", $FF, $00 
-loc_000265C4:
+GiveToCharityStr:
 	dc.b	"You must give ", $FF, $00 
-loc_000265D4:
+CharityAgreeStr:
 	dc.b	" to charity.", $FE
 	dc.b	"Do you agree?", $FF, $00
-loc_000265F0:
+CantCureStr:
 	dc.b	"I'm sorry. I can't cure", $FE
 	dc.b	"you. Your donation is", $FE
 	dc.b	"appreciated, though.", $FF, $00 
-loc_00026634:
+PoisonPurgedStr:
 	dc.b	"The poison has been", $FE
 	dc.b	"purged from your body.", $FF, $00
-loc_00026660:
+NoTakeBackStr:
 	dc.b	"Don't even think of taking", $FE
 	dc.b	"back your donation.", $FF, $00
-loc_00026690:
+NoCurseStr:
 	dc.b	"There is no curse on you.", $FF
-loc_000266AA:
+CurseRemovedStr:
 	dc.b	"The curse has been removed.", $FF
-loc_000266C6:
+SaveNumberStr:
 	dc.b	"Save under", $FE
 	dc.b	"which number?", $FF, $00
-loc_000266E0:
+GameSavedStr:
 	dc.b	"Your game was saved", $FE 
 	dc.b	"successfully!", $FF
-loc_00026702:
+NeverGiveUpStr:
 	dc.b	"Never give up. Every obstacle", $FE
 	dc.b	"can be overcome!", $FF, $00
-loc_00026732:
+NotPoisonousStr:
 	dc.b	"Go ahead--it's", $FE
 	dc.b	"not poisonous!", $FF
-loc_00026750:
+PoisonTooStrongStr:
 	dc.b	"The poison is too", $FE
 	dc.b	"strong for that cure.", $FF
 loc_00026778:
@@ -41592,14 +41592,14 @@ loc_000290F8:
 	dc.l	loc_00029794
 	dc.l	loc_0002982C
 	dc.l	loc_0002982C
-	dc.l	loc_00026034 
+	dc.l	NoOneHereStr 
 loc_00029110:
 	dc.l	loc_00029648
 	dc.l	loc_0002970A
 	dc.l	loc_0002970A
 	dc.l	loc_000297DA
 	dc.l	loc_000297DA
-	dc.l	loc_00026034 
+	dc.l	NoOneHereStr 
 loc_00029128:
 	dc.l	loc_00029446
 	dc.l	loc_000295E4
@@ -42113,14 +42113,14 @@ loc_0002ACDC:
 	dc.l	loc_0002AF8A 
 	dc.l	loc_0002AFD4 
 	dc.l	loc_0002B1E2 
-	dc.l	loc_00026034 
+	dc.l	NoOneHereStr 
 	dc.l	loc_0002B18A 
 	dc.l	loc_0002AE48 
 	dc.l	loc_0002AF1C 
 	dc.l	loc_0002AF8A 
 	dc.l	loc_0002AFD4 
 	dc.l	loc_0002B2B0
-	dc.l	loc_00026034
+	dc.l	NoOneHereStr
 loc_0002AD14
 	dc.b	"Bruno is in Harmony Cave,", $FE
 	dc.b	"far to the east.", $FE
@@ -42456,10 +42456,10 @@ loc_0002BFEC:
 	dc.b	$00, $03, $DF, $04, $00, $00, $6F, $36, $00, $01, $FF, $FF 
 loc_0002C07C:
 	dc.l	loc_0002C0A4
-	dc.l	loc_00026034
-	dc.l	loc_00026034
-	dc.l	loc_00026034
-	dc.l	loc_00026034 
+	dc.l	NoOneHereStr
+	dc.l	NoOneHereStr
+	dc.l	NoOneHereStr
+	dc.l	NoOneHereStr 
 loc_0002C090:
 	dc.l	loc_0002C210
 	dc.l	loc_0002C276
@@ -42830,37 +42830,37 @@ loc_0002D4D4:
 loc_0002D4D8:
 	dc.l	loc_0002CABA
 	dc.l	loc_0002CB32
-	dc.l	loc_00026034 
+	dc.l	NoOneHereStr 
 loc_0002D4E4:
 	dc.l	loc_0002CB14
 	dc.l	loc_0002CDE8
-	dc.l	loc_00026034
+	dc.l	NoOneHereStr
 loc_0002D4F0:
 	dc.l	loc_0002CB14
 	dc.l	loc_0002CDE8
-	dc.l	loc_00026034 
+	dc.l	NoOneHereStr 
 loc_0002D4FC:
 	dc.l	loc_0002D038
 	dc.l	loc_0002D06A 
 loc_0002D504:
 	dc.l	loc_0002CEC8
-	dc.l	loc_00026034 
+	dc.l	NoOneHereStr 
 loc_0002D50C:
 	dc.l	loc_0002CEC8
-	dc.l	loc_00026034 
+	dc.l	NoOneHereStr 
 loc_0002D514:
 	dc.l	loc_0002CEEE
-	dc.l	loc_00026034 
+	dc.l	NoOneHereStr 
 loc_0002D51C:
 	dc.l	loc_0002D0B2
 	dc.l	loc_0002D0D2
-	dc.l	loc_00026034 
+	dc.l	NoOneHereStr 
 loc_0002D528:
 	dc.l	loc_0002CF1E
-	dc.l	loc_00026034 
+	dc.l	NoOneHereStr 
 loc_0002D530:
 	dc.l	loc_0002CF68
-	dc.l	loc_00026034 
+	dc.l	NoOneHereStr 
 
 loc_0002D538:
 	dc.b	$30, $2D, $3F, $20, $3F, $20, $BF, $BF, $B8, $3F, $A0, $2C, $A0, $A3, $01, $A0, $3F, $B0, $2B, $B0, $01, $A0, $25, $20 
@@ -43181,10 +43181,10 @@ loc_0002E950:
 loc_0002E958:
 	dc.l	loc_0002EF5E
 	dc.l	loc_0002EF9E
-	dc.l	loc_00026034 
+	dc.l	NoOneHereStr 
 	dc.l	loc_0002EF5E
 	dc.l	loc_0002EF9E
-	dc.l	loc_00026034
+	dc.l	NoOneHereStr
 loc_0002E970:	
 	dc.b	"Welcome to Parma, stranger!", $FF
 loc_0002E98C:
@@ -43996,7 +43996,7 @@ loc_000319CC:
 	dc.l	loc_00031ED4 
 loc_000319D0:
 	dc.l	loc_00032040
-	dc.l	loc_00026034 
+	dc.l	NoOneHereStr 
 loc_000319D8:
 	dc.l	loc_00032040 
 	dc.l	loc_00032040 
@@ -44394,7 +44394,7 @@ loc_00032DF8:
 	dc.l	loc_000335EC 
 loc_00032DFC:
 	dc.l	loc_00032F2C
-	dc.l	loc_00026034 
+	dc.l	NoOneHereStr 
 loc_00032E04:
 	dc.l	loc_00033216
 loc_00032E08:
@@ -44951,7 +44951,7 @@ loc_00034D02:
 	dc.l	loc_00034E62
 	dc.l	loc_00034EC8 
 loc_00034D1A:
-	dc.l	loc_00026034 
+	dc.l	NoOneHereStr 
 loc_00034D1E:
 	dc.l	loc_000350A8 
 loc_00034D22:
@@ -45184,10 +45184,10 @@ loc_00035D44:
 	dc.l	loc_0003612A
 	dc.l	loc_000361A8
 	dc.l	loc_000361F6
-	dc.l	loc_00026034
-	dc.l	loc_00026034
-	dc.l	loc_00026034
-	dc.l	loc_00026034 
+	dc.l	NoOneHereStr
+	dc.l	NoOneHereStr
+	dc.l	NoOneHereStr
+	dc.l	NoOneHereStr 
 loc_00035D80:
 	dc.l	loc_00035DE4
 	dc.l	loc_00035E7E
@@ -45200,10 +45200,10 @@ loc_00035D80:
 	dc.l	loc_0003614E
 	dc.l	loc_000361A8
 	dc.l	loc_00036232
-	dc.l	loc_00026034
-	dc.l	loc_00026034
-	dc.l	loc_00026034
-	dc.l	loc_00026034 
+	dc.l	NoOneHereStr
+	dc.l	NoOneHereStr
+	dc.l	NoOneHereStr
+	dc.l	NoOneHereStr 
 loc_00035DBC:
 	dc.l	loc_00036388
 	dc.l	loc_00036416 
@@ -45495,14 +45495,14 @@ loc_00036DD2:
 	dc.l	loc_00037116
 	dc.l	loc_000371B2 
 	dc.l	loc_00037440
-	dc.l	loc_00026034
-	dc.l	loc_00026034
-	dc.l	loc_00026034
-	dc.l	loc_00026034
-	dc.l	loc_00026034
-	dc.l	loc_00026034
-	dc.l	loc_00026034 
-	dc.l	loc_00026034 
+	dc.l	NoOneHereStr
+	dc.l	NoOneHereStr
+	dc.l	NoOneHereStr
+	dc.l	NoOneHereStr
+	dc.l	NoOneHereStr
+	dc.l	NoOneHereStr
+	dc.l	NoOneHereStr 
+	dc.l	NoOneHereStr 
 loc_00036E16:
 	dc.l	loc_00036E76
 	dc.l	loc_00036EBE
@@ -45521,16 +45521,16 @@ loc_00036E16:
 	dc.l	loc_00037612
 	dc.l	loc_000376D0 
 loc_00036E56:
-	dc.l	loc_00026034
+	dc.l	NoOneHereStr
 	dc.l	loc_00037756
-	dc.l	loc_00026034 
+	dc.l	NoOneHereStr 
 loc_00036E62:
-	dc.l	loc_00026034
+	dc.l	NoOneHereStr
 	dc.l	loc_000378D4
 	dc.l	loc_00037920 
 loc_00036E6E:
 	dc.l	loc_00037708
-	dc.l	loc_00026034
+	dc.l	NoOneHereStr
 loc_00036E76:
 	dc.b	"You are in Helwig,", $FE
 	dc.b	"adventurer!", $FF, $00
@@ -46254,7 +46254,7 @@ loc_0003A0B2:
 	dc.l	loc_0003A366
 	dc.l	loc_0003A3FE
 	dc.l	loc_0003AB3E
-	dc.l	loc_00026034 
+	dc.l	NoOneHereStr 
 loc_0003A0E2:
 	dc.l	loc_0003AC1C
 	dc.l	loc_0003AC60
@@ -46266,12 +46266,12 @@ loc_0003A0F2:
 loc_0003A0F6:
 	dc.l	loc_0003A758 
 loc_0003A0FA:
-	dc.l	loc_00026034
+	dc.l	NoOneHereStr
 	dc.l	loc_0003A7A8
 	dc.l	loc_0003A84E
 	dc.l	loc_0003A9A8
 	dc.l	loc_0003AA72
-	dc.l	loc_00026034
+	dc.l	NoOneHereStr
 	dc.l	loc_0003A7FC
 	dc.l	loc_0003A882 
 	dc.l	loc_0003A9F4
@@ -46591,7 +46591,7 @@ loc_0003B820:
 	dc.l	loc_0003B8EA
 	dc.l	loc_0003B90E
 	dc.l	loc_0003B958 
-	dc.l	loc_00026034 
+	dc.l	NoOneHereStr 
 loc_0003B844:
 	dc.l	loc_0003BA2C 
 loc_0003B848:
