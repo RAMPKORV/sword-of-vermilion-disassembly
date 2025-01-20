@@ -90,6 +90,7 @@ ROMEndLoc:
 	dc.b "            "	; Modem support
 	dc.b "                                        "	; Notes (unused, anything can be put in this space, but it has to be 52 bytes.)
 	dc.b "U               " ; Region
+
 ErrorTrap:
 	RTE	
 loc_00000202:
@@ -176,6 +177,7 @@ loc_000002EA:
 loc_00000304:
 	dc.b	$3C, $3C, $1F, $FF, $4E, $B9, $00, $01, $03, $FE, $4E, $75, $2E, $3C, $70, $00, $00, $02, $3C, $3C, $0D, $FF, $1A, $3C, $00, $00, $38, $3C, $00, $01, $4E, $B9 
 	dc.b	$00, $01, $03, $FE, $4E, $75 
+
 loc_0000032A:
 	MOVEQ	#$00000040, D0
 	MOVE.w	#$0100, Z80_bus_request
@@ -215,6 +217,7 @@ loc_00000362:
 
 loc_000003BC:
 	dc.b	$2E, $3C, $40, $00, $00, $00, $3C, $3C, $FF, $FF, $1A, $3C, $00, $00, $38, $3C, $00, $01, $4E, $B9, $00, $01, $03, $FE, $4E, $75 
+
 loc_000003D6:
 	MOVE.w	#$0100, Z80_bus_request
 	MOVE.w	#$0100, $00A11200
@@ -246,6 +249,7 @@ loc_0000041C:
 	dc.b	$01, $3A, $FB, $1F, $47, $10, $FE, $7E, $E6, $0F, $D9, $6F, $26, $00, $19, $3A, $FC, $1F, $86, $32, $FC, $1F, $D9, $06, $2A, $CD, $19, $01, $23, $1B, $3A, $FF 
 	dc.b	$1F, $CB, $7F, $CA, $16, $01, $7B, $B2, $CA, $00, $00, $3A, $FF, $1F, $E6, $3F, $C2, $68, $00, $C3, $C8, $00, $C3, $00, $00, $E5, $21, $FD, $1F, $CB, $FE, $08 
 	dc.b	$78, $32, $00, $40, $08, $00, $32, $01, $40, $32, $FC, $1F, $CB, $BE, $E1, $C9, $01, $03, $06, $0C, $18, $28, $50, $90, $FF, $FD, $FA, $F4, $E8, $D8, $B0, $70 
+
 loc_0000055C:
 	LEA	$FFFFD0E0.w, A0
 	LEA	loc_00000718, A1
@@ -282,7 +286,9 @@ loc_000005CC:
 	LEA	$FFFFD0E0.w, A0
 	LEA	loc_00000E88, A1
 	BRA.w	loc_000005F2
+loc_000005DA:
 	dc.b	$41, $F8, $D0, $E0, $43, $F9, $00, $00, $0E, $FA, $60, $00, $00, $0C 
+
 loc_000005E8:
 	LEA	$FFFFD000.w, A0
 	LEA	loc_000006B6, A1
@@ -569,6 +575,7 @@ loc_00000E88:
 	dc.b	$00, $00, $00, $00, $00, $1F, $00, $40, $00, $00, $00, $00, $00, $00, $FF, $FF, $CC, $24, $00, $02, $00, $00, $00, $1F, $00, $40, $00, $00, $00, $00, $00, $00 
 	dc.b	$FF, $FF, $CC, $14, $00, $3F, $00, $0F, $00, $20, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $0F, $00, $0F, $00, $20, $00, $00, $00, $00, $00, $00 
 	dc.b	$00, $00, $00, $00 
+
 EntryPoint:
 	TST.l	$00A10008
 loc_00000F32:
@@ -666,6 +673,7 @@ VDPInitValues_End:
 	dc.b	$AF, $01, $D7, $1F, $11, $29, $00, $21 
 	dc.b	$28, $00, $F9, $77, $ED, $B0, $DD, $E1, $FD, $E1, $ED, $47, $ED, $4F, $08, $D9, $F1, $C1, $D1, $E1, $08, $D9, $F1, $D1, $E1, $F9, $F3, $ED, $56, $36, $E9, $E9 
 	dc.b	$9F, $BF, $DF, $FF 
+
 loc_0000102C:
 	MOVE.w	#$0100, Z80_bus_request
 	MOVE.b	$00A1000D, D0
@@ -713,6 +721,7 @@ loc_000010D0:
 	MOVE.b	#$FF, $FFFFE002.w
 	BRA.b	loc_00001092
 	dc.b	$42, $38, $C0, $FF 
+
 loc_000010DC:
 	TST.b	$FFFFC0FF.w
 	BEQ.b	loc_000010DC
@@ -2099,7 +2108,7 @@ loc_000024D4:
 loc_000024D6:
 	JSR	loc_00000628
 	MOVE.b	#$FF, $FFFFC41C.w
-	PRINT 	loc_0003633C
+	PRINT 	YouHaveNotWonYetStr
 	JSR	loc_00010C4A
 	MOVE.w	#$2C, Game_state.w
 	RTS
@@ -2816,6 +2825,7 @@ loc_00002EEA:
 	dc.w	$00D8, $0068
 	dc.w	$00D8, $0068
 	dc.w	$00D8, $0068 
+
 loc_00002F2A:
 	TST.w	Player_hp.w
 	BGT.b	loc_00002F50
@@ -3106,6 +3116,7 @@ loc_000032C8:
 	dc.l	loc_0001CFFE
 	dc.l	loc_0001DFE8
 	dc.l	loc_0001E46C
+
 loc_000032E8:
 	CLR.w	$FFFFC610.w
 	LEA	$FFFF2000, A0
@@ -3397,6 +3408,7 @@ loc_0000362C:
 	dc.w	$0010, $0000 	; Left
 	dc.w	$0000, $FFF0 	; Down
 	dc.w	$FFF0, $0000 	; Right
+
 loc_0000363C:
 	MOVEA.l	$FFFFCC14.w, A6
 loc_00003640:
@@ -3435,6 +3447,7 @@ loc_00003694:
 	dc.l	loc_00000594
 	dc.l	loc_000005BE
 	dc.l	loc_000005CC
+
 loc_000036CC:
 	LEA	loc_000036E8, A0
 	MOVE.w	Current_cave_room.w, D1
@@ -3447,6 +3460,7 @@ loc_000036CC:
 loc_000036E8:
 	dc.b	$97, $8A, $8A, $98, $98, $8A, $8A, $97, $97, $98, $98, $97, $97, $97, $97, $8A, $8A, $8A, $8A, $98, $97, $97, $98, $8A, $8A, $8A, $8A, $8A, $8A, $8A, $8A, $8A 
 	dc.b	$98, $98, $98, $98, $98, $98, $98, $98, $98, $98, $8A, $8A 
+
 loc_00003714:
 	BCLR.b	#7, $7(A5)
 	BCLR.b	#3, $7(A5)
@@ -3529,6 +3543,7 @@ loc_00003834:
 
 loc_00003836:
 	dc.b	$4E, $B9, $00, $00, $F5, $D6, $4E, $75 
+
 loc_0000383E:
 	BRA.w	loc_00003896
 	BRA.w	loc_00003896	
@@ -3856,6 +3871,7 @@ loc_00003C5E:
 	dc.w	$FFE2, $0000, $FFF1, $000F
 	dc.w	$FFF1, $000F, $0000, $001E
 	dc.w	$0000, $001E, $FFF1, $000F 
+
 loc_00003C7E:	
 	BCLR.b	#7, $7(A5)
 	BCLR.b	#3, $7(A5)
@@ -6726,6 +6742,7 @@ loc_00006506:
 
 loc_00006508:
 	dc.b	$85, $AE, $85, $AF, $85, $B0, $85, $B1, $85, $B2, $85, $B3, $85, $B4, $85, $B5, $85, $B6 
+
 loc_0000651A:
 	MOVE.w	$FFFFC562.w, D0
 	BGT.b	loc_0000653C
@@ -6857,6 +6874,7 @@ loc_000067A4:
 	dc.l	loc_0008710C
 loc_00006824:
 	dc.b	$04, $4C, $02, $20, $06, $70, $07, $70, $04, $4C, $04, $4C, $06, $70, $06, $70 
+
 loc_00006834:
 	BCLR.b	#7, $7(A5)
 	BCLR.b	#3, $7(A5)
@@ -6932,6 +6950,7 @@ loc_0000694E:
 loc_00006976:
 	dc.b	$0F
 	dc.b	$10
+
 loc_00006978:
 	TST.b	$FFFFC41C.w
 	BNE.w	loc_00006A3C
@@ -7428,7 +7447,7 @@ loc_00006FF4:
 loc_00006FFE:
 	TST.b	Blade_is_dead.w
 	BEQ.b	loc_0000700C
-	MOVE.l	#loc_0002CDE8, $1C(A5)
+	MOVE.l	#NoAnswerStr, $1C(A5)
 loc_0000700C:
 	BRA.b	loc_00006FD4
 	BSR.w	loc_00008234
@@ -7445,7 +7464,7 @@ loc_00007026:
 loc_00007030:   
 	TST.b	Blade_is_dead.w
 	BEQ.b	loc_0000703E
-	MOVE.l	#loc_0002CAF8, $1C(A5)
+	MOVE.l	#FindRingStr, $1C(A5)
 loc_0000703E:
 	BRA.w	loc_00006F8E
 	BSR.w	loc_00008234
@@ -8255,7 +8274,7 @@ loc_00007ACC:
 loc_00007AE0:
 	TST.b	$FFFFC76B.w
 	BEQ.b	loc_00007AEE
-	MOVE.l	#loc_0002CDE8, $1C(A5)
+	MOVE.l	#NoAnswerStr, $1C(A5)
 loc_00007AEE:
 	BRA.w	loc_00008154
 	BSR.w	loc_00008234
@@ -8481,7 +8500,7 @@ loc_00007DDC:
 loc_00007DE8:
 	TST.b	$FFFFC759.w
 	BEQ.b	loc_00007DF6
-	MOVE.l	#loc_0002C124, $1C(A5)
+	MOVE.l	#BestedMeStr, $1C(A5)
 loc_00007DF6:
 	BRA.w	loc_00006F44
 loc_00007DFA:
@@ -9193,6 +9212,7 @@ loc_00008668:
 	dc.w	$FFFD, $0001, $FFFD, $0003
 	dc.w	$FFFD, $0001, $FFFD, $0003
 	dc.w	$FFFF, $0003, $FFFD, $0003
+
 loc_00008688:
 	MOVEA.l	$FFFFCC14.w, A6
 	BSR.w	loc_00008722
@@ -9229,6 +9249,7 @@ loc_00008688:
 
 loc_00008706:
 	dc.b	$2C, $78, $CC, $50, $3E, $3C, $00, $30, $08, $96, $00, $07, $42, $40, $10, $2E, $00, $01, $4D, $F6, $00, $00, $51, $CF, $FF, $F0, $4E, $75 
+
 loc_00008722:
 	BSR.w	loc_00008768
 	MOVE.l	#loc_000088B4, $2(A6)
@@ -9638,7 +9659,7 @@ loc_00008D12:
 loc_00008D18:
 	TST.b	Map_triggers_start.w
 	BEQ.b	loc_00008D26
-	MOVE.l	#loc_0002CE90, Script_talk_source.w
+	MOVE.l	#OnlyYouCanSaveUsStr, Script_talk_source.w
 loc_00008D26:
 	JMP	loc_0000F6DC
 loc_00008D2C:
@@ -9755,6 +9776,7 @@ loc_00008EA4:
 	dc.w	$FFF0, $FFD0, $0010, $FFD0 
 	dc.w	$FFF0, $FFE8, $0010, $FFE8
 	dc.w	$FFF0, $0000, $0010, $0000 
+
 loc_00008EBC:
 	MOVE.b	$1(A5), D0
 	LEA	(A5,D0.w), A4
@@ -9881,6 +9903,7 @@ loc_0000905E:
 
 loc_00009072:
 	dc.b	$2C, $78, $CC, $14, $3E, $3C, $00, $17, $08, $96, $00, $07, $42, $40, $10, $2E, $00, $01, $4D, $F6, $00, $00, $51, $CF, $FF, $F0, $4E, $75 
+
 loc_0000908E:
 	LEA	loc_0002277E, A0
 	MOVE.l	$20(A5), D0
@@ -18396,7 +18419,7 @@ loc_00010518:
 loc_00010520:
 	RTS
 	
-loc_00010522:
+loc_00010522: ; suspected play sound effect?
 	MOVE.w	$FFFFC320.w, D1
 	CMPI.w	#8, D1
 	BGE.b	loc_00010538
@@ -25623,7 +25646,7 @@ loc_000181DC:
 	JSR	loc_000126B6
 	JSR	loc_00010C4A
 	JSR	loc_0001D650
-	LEA	loc_0002591A, A0
+	LEA	DiscardsTheStr, A0
 	JSR	loc_00012A6C
 	MOVE.b	#$FE, (A1)+
 	LEA	MagicNames, A0
@@ -25778,7 +25801,7 @@ loc_00018432:
 loc_0001844C:
 	TST.b	$FFFFC0AA.w
 	BNE.b	loc_00018466
-	PRINT 	loc_000259C4
+	PRINT 	AreaBrightStr
 	JSR	loc_00006458
 	MOVE.w	#9, $FFFFC424.w
 loc_00018466:
@@ -25974,9 +25997,10 @@ CastFieldMagicMap:
 	BRA.w	CastSanguio
 	BRA.w	CastToxios
 	BRA.w	CastSanguio
+
 loc_000186F8: ; Attempting to use battle magic in field
 	JSR	loc_00010C4A	
-	PRINT 	loc_00025928	
+	PRINT 	CantUseHereStr	
 	MOVE.w	#9, $FFFFC424.w	
 	RTS
 
@@ -26000,7 +26024,7 @@ CastInaudios:
 
 loc_00018752:
 	JSR	loc_00010C4A	
-	PRINT 	loc_00025928	
+	PRINT 	CantUseHereStr	
 	MOVE.w	#9, $FFFFC424.w	
 	RTS
 	
@@ -26026,7 +26050,7 @@ CastLuminos:
 
 loc_000187B4:
 	JSR	loc_00010C4A
-	PRINT 	loc_00025992
+	PRINT 	BrightPlaceStr
 	MOVE.w	#9, $FFFFC424.w
 	RTS
 
@@ -26125,7 +26149,7 @@ CastAries:
 	MOVE.w	#$000B, $FFFFC424.w
 	RTS
 loc_00018912:
-	PRINT 	loc_00025928
+	PRINT 	CantUseHereStr
 	JSR	loc_00010C4A
 	MOVE.w	#9, $FFFFC424.w
 	RTS
@@ -26154,18 +26178,18 @@ CastExtrios:
 
 loc_00018982:
 	JSR	loc_00010C4A
-	PRINT 	loc_00025928
+	PRINT 	CantUseHereStr
 	ADDQ.w	#2, $FFFFC424.w
 	RTS
 
 loc_00018996:
-	PRINT 	loc_0002595C	
+	PRINT 	NotEnoughMpStr	
 	JSR	loc_00010C4A	
 	MOVE.w	#9, $FFFFC424.w	
 	RTS
 	
 loc_000189AC:
-	PRINT 	loc_00025942
+	PRINT 	SorryYouAreCursedStr
 	JSR	loc_00010C4A
 	MOVE.w	#9, $FFFFC424.w
 	RTS
@@ -28166,11 +28190,11 @@ loc_0001A59C:
 	MOVE.w	(A2,D0.w), D0
 	ANDI.w	#(ITEM_TYPE_NON_DISCARDABLE<<8), D0 ; Check if we can discard item
 	BEQ.b	loc_0001A5D4
-	PRINT 	loc_00025D80
+	PRINT 	CantPutDownStr
 	BRA.w	loc_0001A636
 loc_0001A5D4:
 	JSR	loc_0001D650
-	LEA	loc_0002591A, A0
+	LEA	DiscardsTheStr, A0
 	JSR	loc_00012A6C
 	MOVE.b	#$FE, (A1)+
 	LEA	ItemNames, A0
@@ -28264,7 +28288,7 @@ loc_0001A702:
 	JSR	loc_000126B6
 	JSR	loc_00010C4A
 	JSR	loc_0001D650
-	LEA	loc_00025904, A0
+	LEA	UsesTheStr, A0
 	JSR	loc_00012A6C
 	MOVE.b	#$FE, (A1)+
 	LEA	ItemNames, A0
@@ -28379,7 +28403,7 @@ loc_0001A8A2:
 loc_0001A8A4:
 	TST.b	$FFFFC0AA.w
 	BNE.b	loc_0001A8BE
-	PRINT 	loc_000259C4
+	PRINT 	AreaBrightStr
 	JSR	loc_00006458
 	MOVE.w	#$B, $FFFFC420.w
 loc_0001A8BE:
@@ -28619,7 +28643,7 @@ UseRafaelsStick:
 	RTS
 	
 loc_0001ABDE:
-	PRINT 	loc_00025980
+	PRINT 	NothingHappenedStr
 	RTS
 
 ;loc_0001ABE8
@@ -28681,7 +28705,7 @@ UseGriffinWing:
 	BSR.w	RemoveSelectedItemFromList
 	MOVE.w	#$D, $FFFFC420.w
 loc_0001AC9A:
-	PRINT 	loc_00025980
+	PRINT 	NothingHappenedStr
 	RTS
 
 ;loc_0001ACA4
@@ -28712,7 +28736,7 @@ UseTitaniasMirror:
 	RTS
 	
 loc_0001ACF6:
-	PRINT 	loc_00025980	
+	PRINT 	NothingHappenedStr	
 	RTS
 	
 ;loc_0001AD00
@@ -28724,7 +28748,7 @@ UseGnomeStone:
 	RTS
 
 loc_0001AD12:
-	PRINT 	loc_00025980
+	PRINT 	NothingHappenedStr
 	RTS
 
 ;loc_0001AD1C:
@@ -28767,7 +28791,7 @@ UseCandle:
 
 loc_0001AD9C:
 	BSR.w	RemoveSelectedItemFromList
-	PRINT 	loc_00025992
+	PRINT 	BrightPlaceStr
 	RTS
 
 ;loc_0001ADAA:
@@ -28789,7 +28813,7 @@ UseLantern:
 
 loc_0001ADE8:
 	BSR.w	RemoveSelectedItemFromList	
-	PRINT 	loc_00025992	
+	PRINT 	BrightPlaceStr	
 	RTS
 	
 ;loc_0001ADF6:
@@ -29415,6 +29439,7 @@ loc_0001B58A:
 	dc.b	"Vermilion, the most powerful", $FE
 	dc.b	"weapon in the world! Use it", $FE
 	dc.b	"wisely, my Prince!", $FF, $00
+
 loc_0001B6B6:
 	TST.b	$FFFFC20F.w
 	BEQ.b	loc_0001B6D2
@@ -29516,6 +29541,7 @@ loc_0001B91C:
 loc_0001B952:
 	dc.b	"I have done my best;", $FE
 	dc.b	"the rest is up to you.", $FF
+
 loc_0001B97E:
 	TST.b	$FFFFC20F.w
 	BEQ.w	loc_0001BAEE
@@ -29537,7 +29563,7 @@ loc_0001B97E:
 	MOVE.w	(A0), D0
 	CMPI.w	#8, D0
 	BLT.b	loc_0001B9E4
-	PRINT 	loc_00025D9A	
+	PRINT 	CantCarryMoreStr2	
 	BRA.w	loc_0001BA8A	
 loc_0001B9E4:
 	CLR.b	$FFFFC20F.w
@@ -29999,7 +30025,7 @@ loc_0001BF28:
 	MOVE.w	(A0), D0
 	CMPI.w	#8, D0
 	BLT.b	loc_0001BFD2
-	PRINT 	loc_00025D9A
+	PRINT 	CantCarryMoreStr2
 	BRA.b	loc_0001C024
 loc_0001BFD2:
 	ADDQ.w	#1, (A0)+
@@ -32987,13 +33013,13 @@ loc_0001E936: ; Discard item
 	MOVE.w	(A2,D0.w), D0
 	ANDI.w	#(ITEM_TYPE_NON_DISCARDABLE<<8), D0
 	BEQ.w	loc_0001E96A
-	PRINT 	loc_00025D80
+	PRINT 	CantPutDownStr
 	BRA.w	loc_0001EA38
 loc_0001E96A:
 	MOVE.w	#$0090, D0
 	JSR	loc_00010522
 	LEA	$FFFFC260.w, A1
-	LEA	loc_0002590E, A0
+	LEA	PutStr, A0
 	JSR	loc_00012A6C
 	LEA	loc_000226D6, A0
 	MOVE.w	$FFFFC570.w, D0
@@ -33011,7 +33037,7 @@ loc_0001E96A:
 	ADD.w	D0, D0
 	MOVEA.l	(A0,D0.w), A0
 	JSR	loc_00012A6C
-	LEA	loc_00025914, A0
+	LEA	PutDownStr, A0
 	JSR	loc_00012A6C
 	MOVE.b	#$FE, (A1)+
 	MOVE.b	#$61, (A1)+
@@ -35498,7 +35524,7 @@ loc_00020C8E:
 	MOVE.l	#loc_00008AF8, $2(A6)
 	MOVE.l	#loc_0001F712, $FFFFC566.w
 	BSR.w	loc_000213FE
-	MOVE.l	#loc_0002CDFC, Script_talk_source.w
+	MOVE.l	#RingOfWisdomStr, Script_talk_source.w
 loc_00020CBA:
 	RTS
 	
@@ -40226,181 +40252,181 @@ loc_000258EC:
 	dc.b	"Mineral Bar", $FF
 loc_000258F8:
 	dc.b	"Mega Blast", $FF, $00
-loc_00025904:
+UsesTheStr:
 	dc.b	"uses the", $FF, $00
-loc_0002590E:
+PutStr:
 	dc.b	"Put ", $FF, $00
-loc_00025914:
+PutDownStr:
 	dc.b	" down", $FF
-loc_0002591A:
+DiscardsTheStr:
 	dc.b	"discards the", $FF, $00
-loc_00025928:
+CantUseHereStr:
 	dc.b	"You can't use that here.", $FF, $00
-loc_00025942:
+SorryYouAreCursedStr:
 	dc.b	"Sorry, but you're cursed.", $FF
-loc_0002595C:
+NotEnoughMpStr:
 	dc.b	"you don't have enough", $FE
 	dc.b	"Magic Points.", $FF
-loc_00025980:
+NothingHappenedStr:
 	dc.b	"Nothing happened!", $FF
-loc_00025992:
+BrightPlaceStr:
 	dc.b	"If you use it in a bright", $FE
 	dc.b	"place, nothing happens.", $FF
-loc_000259C4:
+AreaBrightStr:
 	dc.b	"The area has become bright.", $FF 
-loc_000259E0:
+BronzeSwordStr:
 	dc.b	"Bronze Sword", $FF, $00 
-loc_000259EE:
+IronSwordStr:
 	dc.b	"Iron Sword", $FF, $00 
-loc_000259FA:
+SharpSwordStr:
 	dc.b	"Sharp Sword", $FF 
-loc_00025A06:
+LongSwordStr:
 	dc.b	"Long Sword", $FF, $00 
-loc_00025A12:
+SilverSwordStr:
 	dc.b	"Silver Sword", $FF, $00 
-loc_00025A20:
+PrimeSwordStr:
 	dc.b	"Prime Sword", $FF 
-loc_00025A2C:
+GoldenSwordStr:
 	dc.b	"Golden Sword", $FF, $00 
-loc_00025A3A:
+MirageSwordStr:
 	dc.b	"Mirage Sword", $FF, $00 
-loc_00025A48:
+PlatinumSwordStr:
 	dc.b	"Platinum Sword", $FF, $00 
-loc_00025A58:
+DiamondSwordStr:
 	dc.b	"Diamond Sword", $FF 
-loc_00025A66:
+GraphiteSwordStr:
 	dc.b	"Graphite Sword", $FF, $00 
-loc_00025A76:
+RoyalSwordStr:
 	dc.b	"Royal Sword", $FF 
-loc_00025A82:
+UltimateSwordStr:
 	dc.b	"Ultimate Sword", $FF, $00 
-loc_00025A92:
+SwordOfVermilionStr:
 	dc.b	"Sword of Vermilion", $FF, $00 
-loc_00025AA6:
+DarkSwordStr:
 	dc.b	"Dark Sword", $FF, $00 
-loc_00025AB2:
+DeathSwordStr:
 	dc.b	"Death Sword", $FF 
-loc_00025ABE:
+BarbarianSwordStr:
 	dc.b	"Barbarian Sword", $FF 
-loc_00025ACE:
+CriticalSwordStr:
 	dc.b	"Critical Sword", $FF, $00 
-loc_00025ADE:
+LeatherShieldStr:
 	dc.b	"Leather Shield", $FF, $00 
-loc_00025AEE:
+SmallShieldStr:
 	dc.b	"Small Shield", $FF, $00 
-loc_00025AFC:
+LargeShieldStr:
 	dc.b	"Large Shield", $FF, $00 
-loc_00025B0A:
+SilverShieldStr:
 	dc.b	"Silver Shield", $FF 
-loc_00025B18:
+GoldShieldStr:
 	dc.b	"Gold Shield", $FF 
-loc_00025B24:
+PlatinumShieldStr:
 	dc.b	"Platinum Shield", $FF 
-loc_00025B34:
+GemShieldStr:
 	dc.b	"Gem Shield", $FF, $00 
-loc_00025B40:
+SapphireShieldStr:
 	dc.b	"Sapphire Shiel", $64, $FF 
-loc_00025B50:
+DiamondShieldStr:
 	dc.b	"Diamond Shield", $FF, $00 
-loc_00025B60:
+DragonShieldStr:
 	dc.b	"Dragon Shield", $FF 
-loc_00025B6E:
+MagicShieldStr:
 	dc.b	"Magic Shield", $FF, $00 
-loc_00025B7C:
+PhantomShieldStr:
 	dc.b	"Phantom Shield", $FF, $00 
-loc_00025B8C:
+GrizzlyShieldStr:
 	dc.b	"Grizzly Shield", $FF, $00 
-loc_00025B9C:
+CarmineShieldStr:
 	dc.b	"Carmine Shield", $FF, $00 
-loc_00025BAC:
+RoyalShieldStr:
 	dc.b	"Royal Shield", $FF, $00 
-loc_00025BBA:
+PoisonShieldStr:
 	dc.b	"Poison Shield", $FF 
-loc_00025BC8:
+KnightShieldStr:
 	dc.b	"Knight Shield", $FF 
-loc_00025BD6:
+LeatherArmorStr:
 	dc.b	"Leather Armor", $FF 
-loc_00025BE4:
+BronzeArmorStr:
 	dc.b	"Bronze Armor", $FF, $00 
-loc_00025BF2:
+MetalArmorStr:
 	dc.b	"Metal Armor", $FF 
-loc_00025BFE:
+ScaleArmorStr:
 	dc.b	"Scale Armor", $FF 
-loc_00025C0A:
+PlateArmorStr:
 	dc.b	"Plate Armor", $FF 
-loc_00025C16:
+SilverArmorStr:
 	dc.b	"Silver Armor", $FF, $00 
-loc_00025C24:
+GoldArmorStr:
 	dc.b	"Gold Armor", $FF, $00 
-loc_00025C30:
+CrystalArmorStr:
 	dc.b	"Crystal Armor", $FF 
-loc_00025C3E:
+EmeraldArmorStr:
 	dc.b	"Emerald Armor", $FF 
-loc_00025C4C:
+DiamondArmorStr:
 	dc.b	"Diamond Armor", $FF 
-loc_00025C5A:
+KnightArmorStr:
 	dc.b	"Knight Armor", $FF, $00 
-loc_00025C68:
+UltimateArmorStr:
 	dc.b	"Ultimate Armor", $FF, $00 
-loc_00025C78:
+OdinArmorStr:
 	dc.b	"Odin Armor", $FF, $00 
-loc_00025C84:
+SecretArmorStr:
 	dc.b	"Secret Armor", $FF, $00 
-loc_00025C92:
+SkeletonArmorStr:
 	dc.b	"Skeleton Armor", $FF, $00 
-loc_00025CA2:
+CrimsonArmorStr:
 	dc.b	"Crimson Armor", $FF 
-loc_00025CB0:
+OldNickArmorStr:
 	dc.b	"Old Nick Armor", $FF, $00 
-loc_00025CC0:
+AeroStr:
 	dc.b	"Aero", $FF, $00 
-loc_00025CC6:
+AeriosStr:
 	dc.b	"Aerios", $FF, $00 
-loc_00025CCE:
+VoltiStr:
 	dc.b	"Volti", $FF 
-loc_00025CD4:
+VoltioStr:
 	dc.b	"Voltio", $FF, $00 
-loc_00025CDC:
+VoltiosStr:
 	dc.b	"Voltios", $FF 
-loc_00025CE4:
+FerrosStr:
 	dc.b	"Ferros", $FF, $00 
-loc_00025CEC:
+CopperosStr:
 	dc.b	"Copperos", $FF, $00 
-loc_00025CF6:
+MercuriosStr:
 	dc.b	"Mercurios", $FF 
-loc_00025D00:
+ArgentosStr:
 	dc.b	"Argentos", $FF, $00 
-loc_00025D0A:
+HydroStr:
 	dc.b	"Hydro", $FF 
-loc_00025D10:
+HydriosStr:
 	dc.b	"Hydrios", $FF 
-loc_00025D18:
+ChronoStr:
 	dc.b	"Chrono", $FF, $00 
-loc_00025D20:
+ChroniosStr:
 	dc.b	"Chronios", $FF, $00 
-loc_00025D2A:
+TerrafissiStr:
 	dc.b	"Terrafissi", $FF, $00 
-loc_00025D36:
+AriesStr:
 	dc.b	"Aries", $FF 
-loc_00025D3C:
+ExtriosStr:
 	dc.b	"Extrios", $FF 
-loc_00025D44:
+InaudiosStr:
 	dc.b	"Inaudios", $FF, $00 
-loc_00025D4E:
+LuminosStr:
 	dc.b	"Luminos", $FF 
-loc_00025D56:
+SanguaStr:
 	dc.b	"Sangua", $FF, $00 
-loc_00025D5E:
+SanguiaStr:
 	dc.b	"Sanguia", $FF 
-loc_00025D66:
+SanguioStr:
 	dc.b	"Sanguio", $FF
-loc_00025D6E:
+SanguiosStr:
 	dc.b	"Sanguios", $FF, $00
-loc_00025D78:
+ToxiosStr:
 	dc.b	"Toxios", $FF, $00
-loc_00025D80: 
+CantPutDownStr: 
 	dc.b	"You can't put that down.", $FF, $00
-loc_00025D9A:
+CantCarryMoreStr2:
 	dc.b	"You can't carry any more.", $FF
 ; ===========================================================================
 ;loc_00025DB4:
@@ -40452,89 +40478,89 @@ ItemNames:
 ; ===========================================================================
 ;loc_00025E64
 MagicNames:
-	dc.l	loc_00025CC0
-	dc.l	loc_00025CC6
-	dc.l	loc_00025CCE
-	dc.l	loc_00025CD4
-	dc.l	loc_00025CDC
-	dc.l	loc_00025CE4
-	dc.l	loc_00025CEC
-	dc.l	loc_00025CF6
-	dc.l	loc_00025D00
-	dc.l	loc_00025D0A
-	dc.l	loc_00025D10
-	dc.l	loc_00025D18
-	dc.l	loc_00025D20
-	dc.l	loc_00025D2A
-	dc.l	loc_00025D36
-	dc.l	loc_00025D3C
-	dc.l	loc_00025D44
-	dc.l	loc_00025D4E
-	dc.l	loc_00025D56
-	dc.l	loc_00025D5E
-	dc.l	loc_00025D66
-	dc.l	loc_00025D78
-	dc.l	loc_00025D6E
+	dc.l	AeroStr
+	dc.l	AeriosStr
+	dc.l	VoltiStr
+	dc.l	VoltioStr
+	dc.l	VoltiosStr
+	dc.l	FerrosStr
+	dc.l	CopperosStr
+	dc.l	MercuriosStr
+	dc.l	ArgentosStr
+	dc.l	HydroStr
+	dc.l	HydriosStr
+	dc.l	ChronoStr
+	dc.l	ChroniosStr
+	dc.l	TerrafissiStr
+	dc.l	AriesStr
+	dc.l	ExtriosStr
+	dc.l	InaudiosStr
+	dc.l	LuminosStr
+	dc.l	SanguaStr
+	dc.l	SanguiaStr
+	dc.l	SanguioStr
+	dc.l	ToxiosStr
+	dc.l	SanguiosStr
 ; ===========================================================================
 ;loc_00025EC0:
 EquipmentNames:
-	dc.l	loc_000259E0
-	dc.l	loc_000259EE
-	dc.l	loc_000259FA
-	dc.l	loc_00025A06
-	dc.l	loc_00025A12
-	dc.l	loc_00025A20
-	dc.l	loc_00025A2C
-	dc.l	loc_00025A3A
-	dc.l	loc_00025A48
-	dc.l	loc_00025A58
-	dc.l	loc_00025A66
-	dc.l	loc_00025A76
-	dc.l	loc_00025A82
-	dc.l	loc_00025A92
-	dc.l	loc_00025AA6
-	dc.l	loc_00025AB2
-	dc.l	loc_00025ABE
-	dc.l	loc_00025ACE
-	dc.l	loc_00025AA6	
-	dc.l	loc_00025AA6	
-	dc.l	loc_00025ADE
-	dc.l	loc_00025AEE
-	dc.l	loc_00025AFC
-	dc.l	loc_00025B0A
-	dc.l	loc_00025B18
-	dc.l	loc_00025B24
-	dc.l	loc_00025B34	
-	dc.l	loc_00025B40	
-	dc.l	loc_00025B50
-	dc.l	loc_00025B60
-	dc.l	loc_00025B6E	
-	dc.l	loc_00025B7C	
-	dc.l	loc_00025B8C	
-	dc.l	loc_00025B9C
-	dc.l	loc_00025BAC	
-	dc.l	loc_00025BBA
-	dc.l	loc_00025BC8
-	dc.l	loc_00025B9C	
-	dc.l	loc_00025B9C	
-	dc.l	loc_00025B9C	
-	dc.l	loc_00025BD6
-	dc.l	loc_00025BE4
-	dc.l	loc_00025BF2
-	dc.l	loc_00025BFE
-	dc.l	loc_00025C0A
-	dc.l	loc_00025C16
-	dc.l	loc_00025C24
-	dc.l	loc_00025C30
-	dc.l	loc_00025C3E	
-	dc.l	loc_00025C4C
-	dc.l	loc_00025C5A
-	dc.l	loc_00025C68
-	dc.l	loc_00025C78
-	dc.l	loc_00025C84
-	dc.l	loc_00025C92	
-	dc.l	loc_00025CA2
-	dc.l	loc_00025CB0	
+	dc.l	BronzeSwordStr
+	dc.l	IronSwordStr
+	dc.l	SharpSwordStr
+	dc.l	LongSwordStr
+	dc.l	SilverSwordStr
+	dc.l	PrimeSwordStr
+	dc.l	GoldenSwordStr
+	dc.l	MirageSwordStr
+	dc.l	PlatinumSwordStr
+	dc.l	DiamondSwordStr
+	dc.l	GraphiteSwordStr
+	dc.l	RoyalSwordStr
+	dc.l	UltimateSwordStr
+	dc.l	SwordOfVermilionStr
+	dc.l	DarkSwordStr
+	dc.l	DeathSwordStr
+	dc.l	BarbarianSwordStr
+	dc.l	CriticalSwordStr
+	dc.l	DarkSwordStr	
+	dc.l	DarkSwordStr	
+	dc.l	LeatherShieldStr
+	dc.l	SmallShieldStr
+	dc.l	LargeShieldStr
+	dc.l	SilverShieldStr
+	dc.l	GoldShieldStr
+	dc.l	PlatinumShieldStr
+	dc.l	GemShieldStr	
+	dc.l	SapphireShieldStr	
+	dc.l	DiamondShieldStr
+	dc.l	DragonShieldStr
+	dc.l	MagicShieldStr	
+	dc.l	PhantomShieldStr	
+	dc.l	GrizzlyShieldStr	
+	dc.l	CarmineShieldStr
+	dc.l	RoyalShieldStr	
+	dc.l	PoisonShieldStr
+	dc.l	KnightShieldStr
+	dc.l	CarmineShieldStr	
+	dc.l	CarmineShieldStr	
+	dc.l	CarmineShieldStr	
+	dc.l	LeatherArmorStr
+	dc.l	BronzeArmorStr
+	dc.l	MetalArmorStr
+	dc.l	ScaleArmorStr
+	dc.l	PlateArmorStr
+	dc.l	SilverArmorStr
+	dc.l	GoldArmorStr
+	dc.l	CrystalArmorStr
+	dc.l	EmeraldArmorStr	
+	dc.l	DiamondArmorStr
+	dc.l	KnightArmorStr
+	dc.l	UltimateArmorStr
+	dc.l	OdinArmorStr
+	dc.l	SecretArmorStr
+	dc.l	SkeletonArmorStr	
+	dc.l	CrimsonArmorStr
+	dc.l	OldNickArmorStr	
 loc_00025FA4:
 	dc.l	NextTimeStr	
 	dc.l	NextTimeStr	
@@ -42456,18 +42482,18 @@ loc_0002BFEC:
 	dc.b	$00, $03, $DE, $A0, $00, $00, $6F, $36, $60, $01, $01, $88, $00, $C8, $01, $D5, $00, $03, $DE, $A0, $00, $00, $6F, $36, $60, $01, $01, $98, $00, $58, $02, $89 
 	dc.b	$00, $03, $DF, $04, $00, $00, $6F, $36, $00, $01, $FF, $FF 
 loc_0002C07C:
-	dc.l	loc_0002C0A4
+	dc.l	WelcomeFoolStr
 	dc.l	NoOneHereStr
 	dc.l	NoOneHereStr
 	dc.l	NoOneHereStr
 	dc.l	NoOneHereStr 
 loc_0002C090:
-	dc.l	loc_0002C210
-	dc.l	loc_0002C276
-	dc.l	loc_0002C2E8
-	dc.l	loc_0002C35E 
-	dc.l	loc_0002C162
-loc_0002C0A4:
+	dc.l	UseRingsStr
+	dc.l	BanishEvilsStr
+	dc.l	UniteRingsStr
+	dc.l	CreateWorldStr 
+	dc.l	ErikProudStr
+WelcomeFoolStr:
 	dc.b	"Welcome, fool!", $FE
 	dc.b	"Tsarkon has gone", $FE
 	dc.b	"east to Thule Cave.", $FD
@@ -42475,12 +42501,12 @@ loc_0002C0A4:
 	dc.b	"gift--this town as your", $FE
 	dc.b	"grave! Prepare to die!"
 	dc.b	$F8, $02, $F7, $E8
-loc_0002C124:
+BestedMeStr:
 	dc.b	"You may have bested me,", $FE
 	dc.b	"but you will never", $FE
 	dc.b	"defeat Tsarkon!"
 	dc.b	$F8, $01, $53, $00
-loc_0002C162:
+ErikProudStr:
 	dc.b	Script_player_name, ", if only Erik", $FE
 	dc.b	"could see you now.", $FE
 	dc.b	"How proud he would be!", $FD
@@ -42489,41 +42515,41 @@ loc_0002C162:
 	dc.b	"him, he turned me to stone.", $FD
 	dc.b	"Your bravery has", $FE
 	dc.b	"freed me at last.", $FF 
-loc_0002C210:
+UseRingsStr:
 	dc.b	"Please stand in", $FE
 	dc.b	"front of the throne", $FE
 	dc.b	"and use the rings.", $FD
 	dc.b	"The day to heal the", $FE
 	dc.b	"world's wounds is upon us!", $FF
-loc_0002C276:
+BanishEvilsStr:
 	dc.b	"Now you must stand", $FE
 	dc.b	"in front of the throne", $FE
 	dc.b	"and use the rings.", $FD
 	dc.b	"Only you can banish the", $FE
 	dc.b	"evils of the last 18 years.", $FF, $00
-loc_0002C2E8:
+UniteRingsStr:
 	dc.b	"Now that the rings of good", $FE
 	dc.b	"and evil are united, the", $FE
 	dc.b	"world can be whole again.", $FD
 	dc.b	"Hurry to the throne", $FE
 	dc.b	"and use the rings!", $FF, $00
-loc_0002C35E:
+CreateWorldStr:
 	dc.b	"It is up to you to create", $FE
 	dc.b	"the kind of world that", $FE
 	dc.b	"Erik and Tsarkon wanted.", $FD
 	dc.b	"Place yourself in", $FE
 	dc.b	"front of the throne", $FE
 	dc.b	"and use the rings.", $FF, $00
-loc_0002C3E2:
+GoodPersonStr:
 	dc.b	"A person that", $FE 
 	dc.b	"good shouldn't die.", $FF
-loc_0002C404:
+KingRingStr:
 	dc.b	"That ring! The king of", $FE
 	dc.b	"Parma has one just like it!", $FF, $00
-loc_0002C438:
+FatherCallingStr:
 	dc.b	"Your father is", $FE
 	dc.b	"calling for you!", $FF
-loc_0002C458:
+RingInCaveStr:
 	dc.b	"There's a ring in a cave", $FE
 	dc.b	"south of here.", $FE
 	dc.b	"Here's a map to guide you."
@@ -42535,14 +42561,14 @@ loc_0002C458:
 			; 60 => offset from Map_triggers_start
 			; 01 => is map flag (has one argument)
 			; 70 => offset from Map_triggers_start
-loc_0002C4A0:
+SurprisedAliveStr:
 	dc.b	"I'm surprised you", $FE
 	dc.b	"came back alive!", $FF, $00
-loc_0002C4C4:
+BuyGearStr:
 	dc.b	"Be sure to buy armor, a", $FE
 	dc.b	"weapon, and a shield before", $FE
 	dc.b	"you leave the village.", $FF, $00 
-loc_0002C510:
+QuestBeginsStr:
 	dc.b	"Now your quest begins in", $FE
 	dc.b	"earnest! Here is a map of", $FE
 	dc.b	"the route to Parma."
@@ -42552,104 +42578,104 @@ loc_0002C510:
 	dc.b	$01, $51
 	dc.b	$01, $60
 	dc.b	$01, $70
-loc_0002C562:
+SorryAboutBladeStr:
 	dc.b	"We're all very", $FE
 	dc.b	"sorry about Blade.", $FF
-loc_0002C584:
+EvilRoamsStr:
 	dc.b	"Be careful! Evil roams", $FE
 	dc.b	"everywhere outside our", $FE
 	dc.b	"village walls!", $FF, $00
-loc_0002C5C2:
+DontLoiterStr:
 	dc.b	"Don't loiter any place", $FE
 	dc.b	"that isn't on your map.", $FF, $00
-loc_0002C5F2:
+ValuableItemsStr:
 	dc.b	"Valuable items can be", $FE
 	dc.b	"found in remote parts", $FE
 	dc.b	"of the wilderness.", $FD
 	dc.b	"You are now strong enough", $FE
 	dc.b	"to face the tests ahead of", $FE
 	dc.b	"you. Good luck!", $FF
-loc_0002C676:
+FatherNearingDeathStr:
 	dc.b	"Everyone has been looking", $FE 
 	dc.b	"for you. Your father is", $FE
 	dc.b	"nearing death's door.", $FF
-loc_0002C6BE:
+BladeMissedStr:
 	dc.b	"Blade will be missed", $FE
 	dc.b	"by all who knew him.", $FF
-loc_0002C6E8:
+FoundRingStr:
 	dc.b	"You found the ring!", $FE
 	dc.b	"Take good care of it.", $FF
-loc_0002C712:
+FatherFailingStr:
 	dc.b	"Hurry, ", Script_player_name, ", your father", $FE
 	dc.b	"is failing fast.", $FF, $00
-loc_0002C73A:
+ShareSorrowStr:
 	dc.b	"We all share", $FE
 	dc.b	"in your sorrow.", $FF, $00
-loc_0002C758:
+BladeDyingStr:
 	dc.b	"Blade is dying--hurry!", $FF, $00 
-loc_0002C770:
+HaveMapStr:
 	dc.b	"Be sure to have a map", $FE
 	dc.b	"before you leave a", $FE
 	dc.b	"town or village!", $FF
-loc_0002C7AA:
+GainMoneyStr:
 	dc.b	"To gain money, you", $FE
 	dc.b	"must defeat monsters.", $FF, $00
-loc_0002C7D4:
+RushToFatherStr:
 	dc.b	"Hurry! Rush to your", $FE
 	dc.b	"father's side.", $FF, $00
-loc_0002C7F8:
+VisitChurchesStr:
 	dc.b	"Visit churches often!", $FE
 	dc.b	"There you may save your", $FE
 	dc.b	"journeys for later use.", $FF
-loc_0002C83E:
+RunHomeStr:
 	dc.b	"Run home, ", Script_player_name, "! Your father", $FE
 	dc.b	"needs you desperately.", $FF
-loc_0002C86E:
+FatherRestsStr:
 	dc.b	"Your father rests here,", $FE
 	dc.b	"in peace at last.", $FF
-loc_0002C898:
+BewareWorldStr:
 	dc.b	"Beware, young man! The", $FE
 	dc.b	"world is a dangerous place.", $FF, $00
-loc_0002C8CC:
+EvilSoldiersStr:
 	dc.b	"Evil has infected the", $FE
 	dc.b	"soldiers of Cartahena.", $FE
 	dc.b	"Though they appear to be", $FD
 	dc.b	"human, inside they are", $FE
 	dc.b	"horrible monsters!", $FF
-loc_0002C93C:
+RingPropertyStr:
 	dc.b	"Oh, this ring ...", $FD
 	dc.b	"this must be the property", $FE
 	dc.b	"of the King's family.", $FE
 	dc.b	"Why do you have it?", $FF
-loc_0002C992:
+FortunetellerAdviceStr:
 	dc.b	"The fortuneteller may", $FE
 	dc.b	"have advice for you.", $FF, $00
-loc_0002C9BE:
+BladeWoundsStr:
 	dc.b	"Blade was once a mighty", $FE
 	dc.b	"warrior, but the wounds of", $FE
 	dc.b	"long ago never healed.", $FF
-loc_0002CA08:
+PeopleSayStr:
 	dc.b	"People have much to say,", $FE
 	dc.b	"if you take time to listen.", $FF, $00
-loc_0002CA3E:
+FatherCallingStr2:
 	dc.b	"Where have you been? Your", $FE
 	dc.b	"father is calling for you.", $FF, $00
-loc_0002CA74:
+BladeDeadStr:
 	dc.b	"Alas, brave Blade is dead!", $FF, $00 
-loc_0002CA90:
+FatherProudStr:
 	dc.b	"Your father would", $FE
 	dc.b	"have been proud of you.", $FF
-loc_0002CABA:
+BladeHealthStr:
 	dc.b	"Blade's health failed", $FE 
 	dc.b	"so quickly that", $FE
 	dc.b	"nothing could be done.", $FF, $00
-loc_0002CAF8:
+FindRingStr:
 	dc.b	"Go! You must find the ring!", $FF
-loc_0002CB14:
+FatherGraveStr:
 	dc.b	"Your father is", $FE
 	dc.b	"in his grave."
 	dc.b	$FF, $00
-loc_0002CB32:
+IAmNotYourRealFatherStr:
 	dc.b	Script_player_name, ", at last you are here!", $FE
 	dc.b	"I have much to tell you...I", $FE
 	dc.b	"am not your real father.", $FD
@@ -42685,9 +42711,9 @@ loc_0002CB32:
 			; $00, $00, $02, $00 => 200 kims
 			; 00 => set event trigger
 			; 00 => offset from Event_triggers_start
-loc_0002CDE8:
+NoAnswerStr:
 	dc.b	"There is no answer.", $FF
-loc_0002CDFC:
+RingOfWisdomStr:
 	dc.b	"I have waited a long time", $FE
 	dc.b	"for you, Prince ", Script_player_name, ".", $FD
 	dc.b	"Here is the Ring of Wisdom,", $FE
@@ -42695,46 +42721,46 @@ loc_0002CDFC:
 	dc.b	"Blade. It is rightfully", $FD
 	dc.b	"yours; please accept it."
 	dc.b	$F9, $01, $00, $F8, $00 
-loc_0002CE90:
+OnlyYouCanSaveUsStr:
 	dc.b	"Only you can save us", $FE
 	dc.b	"from Cartahena.", $FE
 	dc.b	"You must not fail!", $FF
-loc_0002CEC8:
+EquipWeaponStr:
 	dc.b	"You must equip your weapon", $FE
 	dc.b	"and armor.", $FF
-loc_0002CEEE:
+FineWeaponStr:
 	dc.b	"I have a fine weapon;", $FE
 	dc.b	"may you be as lucky as I!", $FF
-loc_0002CF1E:
+EnterCaveWithoutCandlesStr:
 	dc.b	"If you enter a cave without", $FE
 	dc.b	"candles, your task will be", $FE
 	dc.b	"difficult indeed.", $FF, $00
-loc_0002CF68:
+BetterThanCandlesStr:
 	dc.b	"In the next town they sell", $FE
 	dc.b	"something even better", $FE
 	dc.b	"than candles.", $FF, $00
-loc_0002CFA8:
+DangerousPathStr:
 	dc.b	"Your path is dangerous;", $FE
 	dc.b	"you will face many tests.", $FF
-loc_0002CFDA:
+RingInParmaStr:
 	dc.b	"I see a ring in Parma, a", $FE
 	dc.b	"town north of here.", $FF, $00
-loc_0002D008:
+GreatManStr:
 	dc.b	"I see that one day you", $FE
 	dc.b	"may become a great man.", $FF, $00
-loc_0002D038:
+MissFatherStr:
 	dc.b	"Your father was a good", $FE
 	dc.b	"customer. I will miss him.", $FF
-loc_0002D06A:
+CastAsideGriefStr:
 	dc.b	"Be strong and cast aside", $FE
 	dc.b	"your grief. You have an", $FE
 	dc.b	"important task ahead!"
 	dc.b	$FF, $00
-loc_0002D0B2:
+GrieveFatherStr:
 	dc.b	"I grieve for", $FE
 	dc.b	"your poor father."
 	dc.b	$FF, $00
-loc_0002D0D2:	
+GoodManStr:	
 	dc.b	"Your father was a good man.", $FF 
 loc_0002D0EE:
 	dc.b	$00, $09, $00, $0B, $00, $98, $00, $C8, $00, $00, $00, $00, $00, $04, $00, $28, $00, $02, $D2, $EE, $00, $98, $00, $58, $00, $2A, $00, $02, $D3, $04, $00, $00 
@@ -42778,89 +42804,89 @@ loc_0002d208:
 	dc.b	$00, $00, $6F, $CA, $60, $01, $FF, $FF, $00, $01, $EB, $90, $00, $28, $00, $48, $01, $09, $00, $03, $DD, $D4, $00, $00, $6F, $A8, $60, $01, $01, $68, $00, $48 
 	dc.b	$01, $D5, $00, $03, $DE, $34, $00, $00, $6F, $36, $60, $01, $00, $D8, $00, $48, $02, $05, $00, $03, $DE, $94, $00, $00, $6F, $CA, $60, $01, $FF, $FF 
 loc_0002D424:
-	dc.l	loc_0002C3E2
-	dc.l	loc_0002C438
-	dc.l	loc_0002C562
-	dc.l	loc_0002C438
-	dc.l	loc_0002C676
-	dc.l	loc_0002C676
-	dc.l	loc_0002C712
-	dc.l	loc_0002C758 
-	dc.l	loc_0002C758
-	dc.l	loc_0002C7D4
-	dc.l	loc_0002C83E
-	dc.l	loc_0002C898
-	dc.l	loc_0002C898
-	dc.l	loc_0002C9BE 
+	dc.l	GoodPersonStr
+	dc.l	FatherCallingStr
+	dc.l	SorryAboutBladeStr
+	dc.l	FatherCallingStr
+	dc.l	FatherNearingDeathStr
+	dc.l	FatherNearingDeathStr
+	dc.l	FatherFailingStr
+	dc.l	BladeDyingStr 
+	dc.l	BladeDyingStr
+	dc.l	RushToFatherStr
+	dc.l	RunHomeStr
+	dc.l	BewareWorldStr
+	dc.l	BewareWorldStr
+	dc.l	BladeWoundsStr 
 loc_0002D45C:
-	dc.l	loc_0002C3E2
-	dc.l	loc_0002C458
-	dc.l	loc_0002C584
-	dc.l	loc_0002C4C4
-	dc.l	loc_0002C6BE
-	dc.l	loc_0002C6BE
-	dc.l	loc_0002C73A
-	dc.l	loc_0002C770 
-	dc.l	loc_0002C7AA
-	dc.l	loc_0002C7F8
-	dc.l	loc_0002C86E
-	dc.l	loc_0002C8CC
-	dc.l	loc_0002C8CC
-	dc.l	loc_0002C9BE 
+	dc.l	GoodPersonStr
+	dc.l	RingInCaveStr
+	dc.l	EvilRoamsStr
+	dc.l	BuyGearStr
+	dc.l	BladeMissedStr
+	dc.l	BladeMissedStr
+	dc.l	ShareSorrowStr
+	dc.l	HaveMapStr 
+	dc.l	GainMoneyStr
+	dc.l	VisitChurchesStr
+	dc.l	FatherRestsStr
+	dc.l	EvilSoldiersStr
+	dc.l	EvilSoldiersStr
+	dc.l	BladeWoundsStr 
 loc_0002D494:
-	dc.l	loc_0002C404
-	dc.l	loc_0002C4A0
-	dc.l	loc_0002C5C2
-	dc.l	loc_0002C510
-	dc.l	loc_0002C5F2
-	dc.l	loc_0002C5F2
-	dc.l	loc_0002C6E8
-	dc.l	loc_0002C770 
-	dc.l	loc_0002C7AA
-	dc.l	loc_0002C7F8
-	dc.l	loc_0002C86E
-	dc.l	loc_0002C93C
-	dc.l	loc_0002C992
-	dc.l	loc_0002CA08 
+	dc.l	KingRingStr
+	dc.l	SurprisedAliveStr
+	dc.l	DontLoiterStr
+	dc.l	QuestBeginsStr
+	dc.l	ValuableItemsStr
+	dc.l	ValuableItemsStr
+	dc.l	FoundRingStr
+	dc.l	HaveMapStr 
+	dc.l	GainMoneyStr
+	dc.l	VisitChurchesStr
+	dc.l	FatherRestsStr
+	dc.l	RingPropertyStr
+	dc.l	FortunetellerAdviceStr
+	dc.l	PeopleSayStr 
 loc_0002D4CC:
-	dc.l	loc_0002CA3E 
+	dc.l	FatherCallingStr2 
 loc_0002D4D0:
-	dc.l	loc_0002CA74 
+	dc.l	BladeDeadStr 
 loc_0002D4D4:
-	dc.l	loc_0002CA90 
+	dc.l	FatherProudStr 
 loc_0002D4D8:
-	dc.l	loc_0002CABA
-	dc.l	loc_0002CB32
+	dc.l	BladeHealthStr
+	dc.l	IAmNotYourRealFatherStr
 	dc.l	NoOneHereStr 
 loc_0002D4E4:
-	dc.l	loc_0002CB14
-	dc.l	loc_0002CDE8
+	dc.l	FatherGraveStr
+	dc.l	NoAnswerStr
 	dc.l	NoOneHereStr
 loc_0002D4F0:
-	dc.l	loc_0002CB14
-	dc.l	loc_0002CDE8
+	dc.l	FatherGraveStr
+	dc.l	NoAnswerStr
 	dc.l	NoOneHereStr 
 loc_0002D4FC:
-	dc.l	loc_0002D038
-	dc.l	loc_0002D06A 
+	dc.l	MissFatherStr
+	dc.l	CastAsideGriefStr 
 loc_0002D504:
-	dc.l	loc_0002CEC8
+	dc.l	EquipWeaponStr
 	dc.l	NoOneHereStr 
 loc_0002D50C:
-	dc.l	loc_0002CEC8
+	dc.l	EquipWeaponStr
 	dc.l	NoOneHereStr 
 loc_0002D514:
-	dc.l	loc_0002CEEE
+	dc.l	FineWeaponStr
 	dc.l	NoOneHereStr 
 loc_0002D51C:
-	dc.l	loc_0002D0B2
-	dc.l	loc_0002D0D2
+	dc.l	GrieveFatherStr
+	dc.l	GoodManStr
 	dc.l	NoOneHereStr 
 loc_0002D528:
-	dc.l	loc_0002CF1E
+	dc.l	EnterCaveWithoutCandlesStr
 	dc.l	NoOneHereStr 
 loc_0002D530:
-	dc.l	loc_0002CF68
+	dc.l	BetterThanCandlesStr
 	dc.l	NoOneHereStr 
 
 loc_0002D538:
@@ -43005,17 +43031,17 @@ loc_0002E3D2:
 	RTS
 	
 loc_0002E3D4:
-	PRINT 	loc_0002D038
+	PRINT 	MissFatherStr
 	RTS
 	
 loc_0002E3DE:
-	PRINT 	loc_0002D008
+	PRINT 	GreatManStr
 	TST.b	Fake_king_killed.w
 	BNE.w	loc_0002E406
-	PRINT 	loc_0002CFDA
+	PRINT 	RingInParmaStr
 	TST.b	Map_triggers_start.w
 	BNE.w	loc_0002E406
-	PRINT 	loc_0002CFA8	
+	PRINT 	DangerousPathStr	
 loc_0002E406:
 	RTS
 	
@@ -45323,7 +45349,7 @@ loc_000362B0
 	dc.b	"master! Prepare to die,", $FE
 	dc.b	"vile imposter!"
 	dc.b	$F8, $01, $F6 
-loc_0003633C
+YouHaveNotWonYetStr
 	dc.b	"You haven't won yet! Come", $FE
 	dc.b	"to Darmon's Cave and face", $FE
 	dc.b	"my master, if you dare!", $FF
