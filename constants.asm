@@ -43,6 +43,8 @@ Possessed_magics_list       = $FFFFC464
 Possessed_equipment_length  = $FFFFC482
 Possessed_equipment_list    = $FFFFC484
 
+Dialogue_state              = $FFFFC41E
+
 Selected_equipment_option   = $FFFFC4E6
 
 Current_shop_type = $FFFFC4A6
@@ -139,6 +141,7 @@ Talked_to_real_king                         = $FFFFC725
 Treasure_of_troy_found                      = $FFFFC726
 Talked_to_king_after_given_treasure_of_troy = $FFFFC727
 Swaffham_ruined                             = $FFFFC748
+Player_has_received_sword_of_vermilion      = $FFFFC757
 Tsarkon_is_dead                             = $FFFFC758
 Old_man_has_received_sketch                 = $FFFFC75F
 Old_woman_has_received_sketch               = $FFFFC760

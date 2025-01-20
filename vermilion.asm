@@ -3046,7 +3046,7 @@ loc_00003208:
 	MOVE.w	#5, $FFFFC246.w
 	MOVE.w	#3, $FFFFC236.w
 	MOVE.w	#4, $FFFFC238.w
-	CLR.w	$FFFFC41E.w
+	CLR.w	Dialogue_state.w
 	CLR.w	$FFFFC420.w
 	CLR.w	$FFFFC422.w
 	CLR.w	$FFFFC424.w
@@ -8435,7 +8435,7 @@ loc_00007D56:
 	BSR.w	loc_00008234
 	CLR.b	$25(A5)
 	MOVE.l	#loc_0003A3FE, $1C(A5)
-	TST.b	$FFFFC757.w
+	TST.b	Player_has_received_sword_of_vermilion.w
 	BNE.b	loc_00007D82
 	MOVE.l	#loc_0003A448, $1C(A5)
 	TST.b	$FFFFC755.w
@@ -29130,16 +29130,17 @@ RemoveSelectedItemFromList:
 	JSR	loc_0000FB8C
 	RTS
 
-loc_0001B17E: ; handle dialogue states
-	MOVE.w	$FFFFC41E.w, D0
+loc_0001B17E:
+	MOVE.w	Dialogue_state.w, D0
 	ANDI.w	#$003F, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
-	LEA	loc_0001B196, A0
+	LEA	DialogueStateHandlerMap, A0
 	JSR	(A0,D0.w)
 	RTS
 
-loc_0001B196: ; dialogue state handlers
+;loc_0001B196:
+DialogueStateHandlerMap:
 	BRA.w	loc_0001B266
 	BRA.w	loc_0001BB74
 	BRA.w	loc_0001BBAA
@@ -29197,7 +29198,7 @@ loc_0001B266:
 	JSR	loc_0001290C
 	JSR	loc_0001229E
 	JSR	loc_00010C4A
-	ADDQ.w	#1, $FFFFC41E.w
+	ADDQ.w	#1, Dialogue_state.w
 	TST.b	Player_is_in_overworld.w
 	BNE.w	loc_0001B49C
 	JSR	loc_000039C0
@@ -29213,7 +29214,7 @@ loc_0001B266:
 	BEQ.b	loc_0001B2B6
 	BRA.w	loc_0001B496
 loc_0001B2B6:
-	MOVE.w	#$0021, $FFFFC41E.w
+	MOVE.w	#$21, Dialogue_state.w
 	MOVE.l	#loc_00026592, Script_source_base.w
 	RTS
 
@@ -29277,7 +29278,7 @@ loc_0001B35E:
 	MOVE.b	#$FF, (A1)
 	MOVE.l	#$FFFFC260, Script_source_base.w
 loc_0001B3B0:
-	MOVE.w	#$001C, $FFFFC41E.w
+	MOVE.w	#$1C, Dialogue_state.w
 	RTS
 
 loc_0001B3B8:
@@ -29299,18 +29300,18 @@ loc_0001B3B8:
 	JSR	loc_00012A6C
 	MOVE.b	#$FF, (A1)
 	MOVE.l	#$FFFFC260, Script_source_base.w
-	MOVE.w	#$0018, $FFFFC41E.w
+	MOVE.w	#$18, Dialogue_state.w
 	RTS
 
 loc_0001B416:
-	MOVE.w	#6, $FFFFC41E.w
+	MOVE.w	#6, Dialogue_state.w
 	CLR.w	Current_shop_type.w
-	MOVE.w	Current_town_room.w, D0 ; The shop type entered?
+	MOVE.w	Current_town_room.w, D0
 	ANDI.w	#$0100, D0
 	BEQ.b	loc_0001B43A
 	CLR.w	Current_shop_type.w
 	MOVE.w	Current_town.w, D0
-	CMPI.w	#TOWN_MALAGA, D0 ; The town where guy steals your stuff
+	CMPI.w	#TOWN_MALAGA, D0
 	BNE.b	loc_0001B45C
 	BRA.b	loc_0001B4A4
 loc_0001B43A:
@@ -29356,19 +29357,19 @@ loc_0001B4A4:
 	LEA	loc_0001B51C, A0
 	CLR.w	D2
 	MOVE.w	#3, D2
-	MOVE.w	#$0032, $FFFFC41E.w
-	TST.b	$FFFFC757.w
+	MOVE.w	#$32, Dialogue_state.w
+	TST.b	Player_has_received_sword_of_vermilion.w
 	BNE.b	loc_0001B4E4
 	MOVE.w	#2, D2
-	MOVE.w	#$0031, $FFFFC41E.w
+	MOVE.w	#$31, Dialogue_state.w
 	TST.b	$FFFFC756.w
 	BNE.b	loc_0001B4E4
 	MOVE.w	#1, D2
-	MOVE.w	#$0032, $FFFFC41E.w
+	MOVE.w	#$32, Dialogue_state.w
 	TST.b	$FFFFC755.w
 	BNE.b	loc_0001B4E4
 	CLR.w	D2
-	MOVE.w	#$002D, $FFFFC41E.w
+	MOVE.w	#$2D, Dialogue_state.w
 loc_0001B4E4:
 	ADD.w	D2, D2
 	ADD.w	D2, D2
@@ -29420,7 +29421,7 @@ loc_0001B6B6:
 	JSR	loc_000123EA
 	JSR	loc_00011274
 	CLR.w	$FFFFC4A0.w
-	ADDQ.w	#1, $FFFFC41E.w
+	ADDQ.w	#1, Dialogue_state.w
 	RTS
 
 loc_0001B6D2:
@@ -29430,7 +29431,7 @@ loc_0001B6D8:
 	BNE.b	loc_0001B6EE
 	JSR	loc_0001242E
 	JSR	loc_0001106E
-	ADDQ.w	#1, $FFFFC41E.w
+	ADDQ.w	#1, Dialogue_state.w
 loc_0001B6EE:
 	RTS
 
@@ -29447,7 +29448,7 @@ loc_0001B6F0:
 	JSR	loc_00010522	
 	JSR	loc_00012766	
 	JSR	loc_000126DA	
-	MOVE.w	#$002D, $FFFFC41E.w	
+	MOVE.w	#$2D, Dialogue_state.w	
 	RTS
 	
 loc_0001B734:
@@ -29462,7 +29463,7 @@ loc_0001B73A:
 	JSR	loc_00010522
 	JSR	loc_000122F4
 	JSR	loc_00010D44
-	MOVE.w	#$0033, $FFFFC41E.w
+	MOVE.w	#$33, Dialogue_state.w
 	RTS
 
 loc_0001B770:
@@ -29487,7 +29488,7 @@ loc_0001B784:
 	JSR	loc_00012A6C
 	MOVE.b	#$FF, (A1)
 	MOVE.l	#$FFFFC260, Script_source_base.w
-	MOVE.w	#$0030, $FFFFC41E.w
+	MOVE.w	#$30, Dialogue_state.w
 	RTS
 
 loc_0001B7CA:
@@ -29597,14 +29598,14 @@ loc_0001BA8A:
 	JSR	loc_00012766
 	JSR	loc_000126DA
 	JSR	loc_00010C4A
-	MOVE.w	#1, $FFFFC41E.w
+	MOVE.w	#1, Dialogue_state.w
 	RTS
 
 loc_0001BAA4:
 	MOVE.w	#$00A8, D0
 	JSR	loc_00010522
 	JSR	loc_00012670
-	MOVE.w	#$002D, $FFFFC41E.w
+	MOVE.w	#$2D, Dialogue_state.w
 	JSR	loc_00012766
 	JSR	loc_000126DA
 	JSR	loc_00010C4A
@@ -29634,9 +29635,9 @@ loc_0001BB0C:
 	ADDQ.w	#1, (A0)+
 	ADD.w	D0, D0
 	MOVE.w	#((EQUIPMENT_TYPE_SWORD<<8)|EQUIPMENT_SWORD_OF_VERMILION), (A0,D0.w)
-	MOVE.b	#$FF, $FFFFC757.w
+	MOVE.b	#$FF, Player_has_received_sword_of_vermilion.w
 loc_0001BB1E:
-	MOVE.w	#1, $FFFFC41E.w
+	MOVE.w	#1, Dialogue_state.w
 	RTS
 
 loc_0001BB26:
@@ -29654,7 +29655,7 @@ loc_0001BB26:
 
 loc_0001BB4E:
 	CLR.w	$FFFF9916.w
-	MOVE.w	#9, $FFFFC41E.w
+	MOVE.w	#9, Dialogue_state.w
 	RTS
 
 loc_0001BB5A:
@@ -29676,15 +29677,15 @@ loc_0001BB74:
 	BNE.b	loc_0001BB92
 	TST.b	$FFFFC212.w
 	BNE.b	loc_0001BB9A
-	ADDQ.w	#1, $FFFFC41E.w
+	ADDQ.w	#1, Dialogue_state.w
 	RTS
 
 loc_0001BB92:
-	MOVE.w	#3, $FFFFC41E.w
+	MOVE.w	#3, Dialogue_state.w
 	RTS
 
 loc_0001BB9A:
-	MOVE.w	#4, $FFFFC41E.w
+	MOVE.w	#4, Dialogue_state.w
 	RTS
 
 loc_0001BBA2:
@@ -29714,14 +29715,14 @@ loc_0001BBE0:
 	JSR	loc_000012F2
 	BEQ.b	loc_0001BBF8
 	JSR	loc_00010C4E
-	MOVE.w	#1, $FFFFC41E.w
+	MOVE.w	#1, Dialogue_state.w
 loc_0001BBF8:
 	RTS
 
 loc_0001BBFA:
 	JSR	loc_000122F4
 	JSR	loc_00010D44
-	ADDQ.w	#1, $FFFFC41E.w
+	ADDQ.w	#1, Dialogue_state.w
 	RTS
 
 loc_0001BC0C:
@@ -29768,7 +29769,7 @@ loc_0001BC80:
 	ADD.w	D0, D0
 	ADD.w	D0, D0
 	MOVE.l	(A0,D0.w), Script_source_base.w
-	MOVE.w	#1, $FFFFC41E.w
+	MOVE.w	#1, Dialogue_state.w
 	RTS
 
 loc_0001BCA4:
@@ -29784,7 +29785,7 @@ loc_0001BCB8:
 	JSR	loc_000123A6
 	JSR	loc_00011012
 	CLR.w	$FFFFC4A4.w
-	ADDQ.w	#1, $FFFFC41E.w
+	ADDQ.w	#1, Dialogue_state.w
 	RTS
 
 loc_0001BCD8:
@@ -29818,7 +29819,7 @@ loc_0001BD22:
 	LEA	loc_00025FC8, A0	
 loc_0001BD3C:
 	MOVE.l	(A0,D0.w), Script_source_base.w
-	MOVE.w	#8, $FFFFC41E.w
+	MOVE.w	#8, Dialogue_state.w
 	BRA.b	loc_0001BD80
 loc_0001BD4A:
 	MOVE.w	Current_shop_type.w, D0
@@ -29826,7 +29827,7 @@ loc_0001BD4A:
 	ADD.w	D0, D0
 	LEA	loc_00025FF8, A0
 	MOVE.l	(A0,D0.w), Script_source_base.w
-	MOVE.w	#$000A, $FFFFC41E.w
+	MOVE.w	#$A, Dialogue_state.w
 	BRA.b	loc_0001BD80
 loc_0001BD66:
 	MOVE.w	Current_shop_type.w, D0
@@ -29834,7 +29835,7 @@ loc_0001BD66:
 	ADD.w	D0, D0
 	LEA	loc_00026010, A0
 	MOVE.l	(A0,D0.w), Script_source_base.w
-	MOVE.w	#$0011, $FFFFC41E.w
+	MOVE.w	#$11, Dialogue_state.w
 loc_0001BD80:
 	JMP	loc_00010C4A
 loc_0001BD86:
@@ -29859,7 +29860,7 @@ loc_0001BDBA:
 	MOVE.w	#5, $FFFF9912.w
 	CLR.w	$FFFF9916.w
 	MOVE.b	#$FF, $FFFF9911.w
-	MOVE.w	#9, $FFFFC41E.w
+	MOVE.w	#9, Dialogue_state.w
 	RTS
 
 loc_0001BDD2:
@@ -29881,7 +29882,7 @@ loc_0001BDFA:
 	JSR	loc_000123EA
 	JSR	loc_0001119A
 	CLR.w	$FFFFC4A0.w
-	ADDQ.w	#1, $FFFFC41E.w
+	ADDQ.w	#1, Dialogue_state.w
 	RTS
 
 loc_0001BE16:
@@ -29893,7 +29894,7 @@ loc_0001BE1E:
 	BNE.b	loc_0001BE34
 	JSR	loc_0001242E
 	JSR	loc_0001106E
-	ADDQ.w	#1, $FFFFC41E.w
+	ADDQ.w	#1, Dialogue_state.w
 loc_0001BE34:
 	RTS
 
@@ -29908,7 +29909,7 @@ loc_0001BE36:
 	JSR	loc_00012766
 	JSR	loc_000126DA
 	JSR	loc_00011012
-	MOVE.w	#7, $FFFFC41E.w
+	MOVE.w	#7, Dialogue_state.w
 	RTS
 
 loc_0001BE6E:
@@ -29946,7 +29947,7 @@ loc_0001BE6E:
 	JSR	loc_00012A6C
 	MOVE.b	#$FF, (A1)
 	MOVE.l	#$FFFFC260, Script_source_base.w
-	ADDQ.w	#1, $FFFFC41E.w
+	ADDQ.w	#1, Dialogue_state.w
 	RTS
 
 loc_0001BF0E:
@@ -30025,14 +30026,14 @@ loc_0001C010:
 	MOVE.l	(A0,D0.w), Script_source_base.w
 loc_0001C024:
 	JSR	loc_000126DA
-	ADDQ.w	#1, $FFFFC41E.w
+	ADDQ.w	#1, Dialogue_state.w
 	RTS
 
 loc_0001C030:
 	MOVE.w	#$00A8, D0	
 	JSR	loc_00010522	
 	JSR	loc_00012670	
-	MOVE.w	#$000C, $FFFFC41E.w	
+	MOVE.w	#$C, Dialogue_state.w	
 	JSR	loc_00011648	
 	JSR	loc_00010C4A	
 	MOVE.w	Current_shop_type.w, D0	
@@ -30054,7 +30055,7 @@ loc_0001C082:
 	TST.b	$FFFFC20F.w
 	BEQ.b	loc_0001C0BA
 	JSR	loc_000122F4
-	ADDQ.w	#1, $FFFFC41E.w
+	ADDQ.w	#1, Dialogue_state.w
 	JSR	loc_00011666
 	MOVE.w	Current_shop_type.w, D0
 	ADD.w	D0, D0
@@ -30089,7 +30090,7 @@ loc_0001C0F4:
 	JSR	loc_00011012
 	JSR	loc_00012766
 	JSR	loc_00012670
-	MOVE.w	#7, $FFFFC41E.w
+	MOVE.w	#7, Dialogue_state.w
 	RTS
 
 loc_0001C120:
@@ -30101,7 +30102,7 @@ loc_0001C120:
 	ADD.w	D0, D0
 	LEA	loc_00025FC8, A0
 	MOVE.l	(A0,D0.w), Script_source_base.w
-	ADDQ.w	#1, $FFFFC41E.w
+	ADDQ.w	#1, Dialogue_state.w
 	RTS
 
 loc_0001C14C:
@@ -30109,7 +30110,7 @@ loc_0001C14C:
 loc_0001C152:
 	TST.b	$FFFFC20F.w
 	BEQ.b	loc_0001C160
-	MOVE.w	#8, $FFFFC41E.w
+	MOVE.w	#8, Dialogue_state.w
 	RTS
 
 loc_0001C160:
@@ -30152,7 +30153,7 @@ loc_0001C1E4:
 	JSR	loc_0001106E
 	JSR	loc_000115DE
 	CLR.w	$FFFFC4A0.w
-	MOVE.w	#$0013, $FFFFC41E.w
+	MOVE.w	#$13, Dialogue_state.w
 	RTS
 
 loc_0001C208:
@@ -30163,7 +30164,7 @@ loc_0001C208:
 	ADD.w	D0, D0
 	LEA	loc_00025FD4, A0
 	MOVE.l	(A0,D0.w), Script_source_base.w
-	ADDQ.w	#1, $FFFFC41E.w
+	ADDQ.w	#1, Dialogue_state.w
 	RTS
 
 loc_0001C22E:
@@ -30186,7 +30187,7 @@ loc_0001C254:
 	ADD.w	D0, D0
 	LEA	loc_00025FBC, A0
 	MOVE.l	(A0,D0.w), Script_source_base.w
-	MOVE.w	#$0016, $FFFFC41E.w
+	MOVE.w	#$16, Dialogue_state.w
 	RTS
 
 loc_0001C276:
@@ -30200,7 +30201,7 @@ loc_0001C27C:
 	JSR	loc_000126B6
 	JSR	loc_00012766
 	JSR	loc_00011012
-	MOVE.w	#7, $FFFFC41E.w
+	MOVE.w	#7, Dialogue_state.w
 	RTS
 
 loc_0001C2AA:
@@ -30239,7 +30240,7 @@ loc_0001C2FE:
 	JSR	loc_00012A6C
 	MOVE.b	#$FF, (A1)
 	MOVE.l	#$FFFFC260, Script_source_base.w
-	ADDQ.w	#1, $FFFFC41E.w
+	ADDQ.w	#1, Dialogue_state.w
 	RTS
 
 loc_0001C33A:
@@ -30254,7 +30255,7 @@ loc_0001C344:
 loc_0001C358:
 	JSR	loc_000126B6
 	JSR	loc_00010C4A
-	MOVE.w	#$0012, $FFFFC41E.w
+	MOVE.w	#$12, Dialogue_state.w
 	RTS
 
 loc_0001C36C:
@@ -30270,7 +30271,7 @@ loc_0001C386:
 	BEQ.b	loc_0001C39E
 	JSR	loc_000122F4
 	JSR	loc_00010D44
-	ADDQ.w	#1, $FFFFC41E.w
+	ADDQ.w	#1, Dialogue_state.w
 	RTS
 
 loc_0001C39E:
@@ -30344,12 +30345,12 @@ loc_0001C474:
 	ADD.w	D0, D0
 	LEA	loc_00025FB0, A0
 	MOVE.l	(A0,D0.w), Script_source_base.w
-	MOVE.w	#$000E, $FFFFC41E.w
+	MOVE.w	#$E, Dialogue_state.w
 	RTS
 
 loc_0001C4B0:
 	JSR	loc_00012670	
-	MOVE.w	#$0013, $FFFFC41E.w	
+	MOVE.w	#$13, Dialogue_state.w	
 	MOVEA.l	$FFFFC4A8.w, A0	
 	MOVE.w	-$2(A0), D0	
 	JSR	loc_000115FA	
@@ -30370,7 +30371,7 @@ loc_0001C4E6:
 loc_0001C4FA:
 	JSR	loc_000122F4
 	JSR	loc_00010D44
-	MOVE.w	#$0017, $FFFFC41E.w
+	MOVE.w	#$17, Dialogue_state.w
 	RTS
 
 loc_0001C50E:
@@ -30395,7 +30396,7 @@ loc_0001C542:
 	JSR	loc_00012766	
 	JSR	loc_00011012	
 	JSR	loc_00012670	
-	MOVE.w	#7, $FFFFC41E.w	
+	MOVE.w	#7, Dialogue_state.w	
 	RTS
 	
 loc_0001C56E:
@@ -30407,7 +30408,7 @@ loc_0001C56E:
 	ADD.w	D0, D0
 	LEA	loc_00025FC8, A0
 	MOVE.l	(A0,D0.w), Script_source_base.w
-	MOVE.w	#$0010, $FFFFC41E.w
+	MOVE.w	#$10, Dialogue_state.w
 	RTS
 
 loc_0001C59C:
@@ -30419,7 +30420,7 @@ loc_0001C5A2:
 	BNE.w	loc_0001C5C2
 	JSR	loc_000122F4
 	JSR	loc_00010D44
-	ADDQ.w	#1, $FFFFC41E.w
+	ADDQ.w	#1, Dialogue_state.w
 	RTS
 
 loc_0001C5C2:
@@ -30436,7 +30437,7 @@ loc_0001C5DC:
 	JSR	loc_0001242E
 	JSR	loc_0001106E
 	JSR	loc_000115DE
-	ADDQ.w	#1, $FFFFC41E.w
+	ADDQ.w	#1, Dialogue_state.w
 	RTS
 
 loc_0001C5F4:
@@ -30474,7 +30475,7 @@ loc_0001C66A:
 	MOVE.l	#loc_00026560, Script_source_base.w
 loc_0001C672:
 	JSR	loc_00012670
-	MOVE.w	#$001B, $FFFFC41E.w
+	MOVE.w	#$1B, Dialogue_state.w
 	JMP	loc_00010C4A
 loc_0001C684:
 	MOVE.w	Confirm_option.w, $FFFFC23E.w
@@ -30528,7 +30529,7 @@ loc_0001C716:
 	JSR	loc_000122F4
 	JSR	loc_00010D44
 loc_0001C722:
-	MOVE.w	#$001D, $FFFFC41E.w
+	MOVE.w	#$1D, Dialogue_state.w
 	RTS
 
 loc_0001C72A:
@@ -30545,7 +30546,7 @@ loc_0001C744:
 	JSR	loc_0001242E
 	JSR	loc_0001106E
 	JSR	loc_000115DE
-	ADDQ.w	#1, $FFFFC41E.w
+	ADDQ.w	#1, Dialogue_state.w
 	RTS
 
 loc_0001C75C:
@@ -30611,7 +30612,7 @@ loc_0001C7DA:
 	JSR	loc_00012670
 	JSR	loc_00010C4A
 loc_0001C84E:
-	MOVE.w	#$001F, $FFFFC41E.w
+	MOVE.w	#$1F, Dialogue_state.w
 	RTS
 
 loc_0001C856:
@@ -30621,7 +30622,7 @@ loc_0001C860:
 	MOVE.l	#loc_000262F0, Script_source_base.w
 loc_0001C868:
 	JSR	loc_00012670
-	MOVE.w	#$001B, $FFFFC41E.w
+	MOVE.w	#$1B, Dialogue_state.w
 	JSR	loc_00010C4A
 	RTS
 
@@ -30634,7 +30635,7 @@ loc_0001C87C:
 loc_0001C890:
 	TST.b	$FFFFC20F.w
 	BEQ.b	loc_0001C8B2
-	MOVE.w	#$0020, $FFFFC41E.w
+	MOVE.w	#$20, Dialogue_state.w
 	MOVE.b	#$FF, Fade_out_buffer.w
 	MOVE.w	#$012C, $FFFFC434.w
 	MOVE.b	#$85, D0
@@ -30685,7 +30686,7 @@ loc_0001C932:
 	MOVE.w	#$0011, $FFFFC086.w
 	JSR	loc_0001325E
 	JSR	loc_00010C4A
-	MOVE.w	#$001B, $FFFFC41E.w
+	MOVE.w	#$1B, Dialogue_state.w
 	JSR	loc_000033BE
 	JSR	loc_00010C4A
 loc_0001C968:
@@ -30699,7 +30700,7 @@ loc_0001C96A:
 	MOVE.w	#$00A0, D0
 	JSR	loc_00010522
 	CLR.w	$FFFFC500.w
-	ADDQ.w	#1, $FFFFC41E.w
+	ADDQ.w	#1, Dialogue_state.w
 	RTS
 
 loc_0001C990:
@@ -30727,7 +30728,7 @@ loc_0001C9B4:
 	BEQ.w	loc_0001CABC
 loc_0001C9E8:
 	MOVE.l	#loc_00026702, Script_source_base.w
-	MOVE.w	#$0023, $FFFFC41E.w
+	MOVE.w	#$23, Dialogue_state.w
 	BRA.w	loc_0001CACA
 loc_0001C9FA:
 	BSR.w	CheckIfCursed
@@ -30746,11 +30747,11 @@ loc_0001C9FA:
 	JSR	loc_00012A6C
 	MOVE.b	#$FF, (A1)
 	MOVE.l	#$FFFFC260, Script_source_base.w
-	MOVE.w	#$0025, $FFFFC41E.w
+	MOVE.w	#$25, Dialogue_state.w
 	BRA.w	loc_0001CACA
 loc_0001CA4C:
 	MOVE.l	#loc_00026690, Script_source_base.w
-	MOVE.w	#$0023, $FFFFC41E.w
+	MOVE.w	#$23, Dialogue_state.w
 	BRA.b	loc_0001CACA
 loc_0001CA5C:
 	MOVE.w	Player_poisoned.w, D0
@@ -30769,15 +30770,15 @@ loc_0001CA5C:
 	JSR	loc_00012A6C
 	MOVE.b	#$FF, (A1)
 	MOVE.l	#$FFFFC260, Script_source_base.w
-	MOVE.w	#$0028, $FFFFC41E.w
+	MOVE.w	#$28, Dialogue_state.w
 	BRA.b	loc_0001CACA
 loc_0001CAAC:
 	MOVE.l	#loc_000265A8, Script_source_base.w
-	MOVE.w	#$0023, $FFFFC41E.w
+	MOVE.w	#$23, Dialogue_state.w
 	BRA.b	loc_0001CACA
 loc_0001CABC:
 	MOVE.l	#loc_000266C6, Script_source_base.w
-	MOVE.w	#$002B, $FFFFC41E.w
+	MOVE.w	#$2B, Dialogue_state.w
 loc_0001CACA:
 	JMP	loc_00010C4A
 loc_0001CAD0:
@@ -30804,7 +30805,7 @@ loc_0001CB04:
 	MOVE.w	#8, $FFFF9912.w
 	CLR.w	$FFFF9916.w
 	MOVE.b	#$FF, $FFFF9911.w
-	MOVE.w	#$0024, $FFFFC41E.w
+	MOVE.w	#$24, Dialogue_state.w
 	RTS
 
 loc_0001CB26:
@@ -30827,7 +30828,7 @@ loc_0001CB58:
 	BEQ.b	loc_0001CB70
 	JSR	loc_000122F4
 	JSR	loc_00010D44
-	ADDQ.w	#1, $FFFFC41E.w
+	ADDQ.w	#1, Dialogue_state.w
 	RTS
 
 loc_0001CB70:
@@ -30838,7 +30839,7 @@ loc_0001CB76:
 	JSR	loc_0001242E
 	JSR	loc_0001106E
 	JSR	loc_000115DE
-	ADDQ.w	#1, $FFFFC41E.w
+	ADDQ.w	#1, Dialogue_state.w
 loc_0001CB92:
 	RTS
 
@@ -30870,7 +30871,7 @@ loc_0001CB94:
 	JSR	loc_00012670
 	JSR	loc_00012766
 	JSR	loc_00010C4A
-	MOVE.w	#$0023, $FFFFC41E.w
+	MOVE.w	#$23, Dialogue_state.w
 	RTS
 
 loc_0001CC1A:
@@ -30881,7 +30882,7 @@ loc_0001CC24:
 loc_0001CC2C:
 	JSR	loc_00012670	
 	JSR	loc_00012766	
-	MOVE.w	#$0023, $FFFFC41E.w	
+	MOVE.w	#$23, Dialogue_state.w	
 	JSR	loc_00010C4A	
 	RTS
 	
@@ -30896,7 +30897,7 @@ loc_0001CC5A:
 	BEQ.b	loc_0001CC72
 	JSR	loc_000122F4
 	JSR	loc_00010D44
-	ADDQ.w	#1, $FFFFC41E.w
+	ADDQ.w	#1, Dialogue_state.w
 	RTS
 
 loc_0001CC72:
@@ -30905,7 +30906,7 @@ loc_0001CC78:
 	JSR	loc_0001242E
 	JSR	loc_0001106E
 	JSR	loc_000115DE
-	ADDQ.w	#1, $FFFFC41E.w
+	ADDQ.w	#1, Dialogue_state.w
 	RTS
 
 loc_0001CC90:
@@ -30943,7 +30944,7 @@ loc_0001CD12:
 	JSR	loc_00012670
 	JSR	loc_00012766
 	JSR	loc_00010C4A
-	MOVE.w	#$0023, $FFFFC41E.w
+	MOVE.w	#$23, Dialogue_state.w
 	RTS
 
 loc_0001CD2C:
@@ -30954,7 +30955,7 @@ loc_0001CD36:
 loc_0001CD3E:
 	JSR	loc_00012670	
 	JSR	loc_00012766	
-	MOVE.w	#$0023, $FFFFC41E.w	
+	MOVE.w	#$23, Dialogue_state.w	
 	JMP	loc_00010C4A	
 loc_0001CD56:
 	MOVE.w	Confirm_option.w, $FFFFC23E.w
@@ -30967,7 +30968,7 @@ loc_0001CD6A:
 	BEQ.b	loc_0001CD82
 	JSR	loc_00012318
 	JSR	loc_00010DA4
-	ADDQ.w	#1, $FFFFC41E.w
+	ADDQ.w	#1, Dialogue_state.w
 	RTS
 
 loc_0001CD82:
@@ -30985,7 +30986,7 @@ loc_0001CD88:
 	JSR	loc_00012694
 	JSR	loc_00010C4A
 	MOVE.l	#loc_000266E0, Script_source_base.w
-	MOVE.w	#$0023, $FFFFC41E.w
+	MOVE.w	#$23, Dialogue_state.w
 	RTS
 
 loc_0001CDC8:
@@ -30994,7 +30995,7 @@ loc_0001CDC8:
 	MOVE.w	#$00A0, D0	
 	JSR	loc_00010522	
 	CLR.w	$FFFFC500.w	
-	MOVE.w	#$0022, $FFFFC41E.w	
+	MOVE.w	#$22, Dialogue_state.w	
 	RTS
 	
 loc_0001CDEA:
