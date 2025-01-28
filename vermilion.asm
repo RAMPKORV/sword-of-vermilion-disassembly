@@ -1003,39 +1003,41 @@ loc_00001486:
 
 ;loc_000014A8:
 ProgramStateMap:
-	BRA.w	loc_00001502 ; $00
-	BRA.w	loc_0000151C ; $01 Sega screen
-	BRA.w	loc_0000155C ; $02 
-	BRA.w	loc_00001586 ; $03 Title screen
-	BRA.w	loc_000015E8 ; $04 
-	BRA.w	loc_00001758 ; $05 Transition from title screen to name entry
-	BRA.w	loc_000017AC ; $06 Name entry
-	BRA.w	loc_000017C0 ; $07 Transition from name entry to prologue
-	BRA.w	loc_00001616 ; $08 Intermediate before prologue starts?
-	BRA.w	loc_00001636 ; $09 Prologue
-	BRA.w	loc_0000164A ; $0A Transition from prologue to main game
-	BRA.w	loc_0000168C ; $0B Transition from title screen to continue screen
-	BRA.w	loc_000016E6 ; $0C Continue screen
-	BRA.w	loc_000016FA ; $0D Using sixteen rings, blank white screen
-	BRA.w	loc_000017F8 ; $0E 
-	BRA.w	loc_0000181A ; $0F Main game
-	BRA.w	loc_000017F8 ; $10 
-	BRA.w	loc_0000181A ; $11 
-	BRA.w	loc_000017E6 ; $12
-	BRA.w	loc_000017F6 ; $13 
-	BRA.w	loc_000017F6 ; $14
-	BRA.w	loc_0000171A ; $15
+	BRA.w	ProgramState_00			;
+	BRA.w	ProgramState_01 		; Sega screen
+	BRA.w	ProgramState_02			;
+	BRA.w	ProgramState_03 		; Title screen
+	BRA.w	ProgramState_04  		; Sega screen 2
+	BRA.w	ProgramState_05 		; Transition from title screen to name entry
+	BRA.w	ProgramState_06 		; Name entry
+	BRA.w	ProgramState_07 		; Transition from name entry to prologue
+	BRA.w	ProgramState_08 		; Intermediate before prologue starts?
+	BRA.w	ProgramState_09 		; Prologue
+	BRA.w	ProgramState_0A 		; Transition from prologue to main game
+	BRA.w	ProgramState_0B 		; Transition from title screen to continue screen
+	BRA.w	ProgramState_0C 		; Continue screen
+	BRA.w	ProgramState_0D 		; Using sixteen rings, blank white screen
+	BRA.w	ProgramState_0E_and_10 	; $0E 
+	BRA.w	ProgramState_0F_and_11 	; $0F Main game
+	BRA.w	ProgramState_0E_and_10 	; $10 
+	BRA.w	ProgramState_0F_and_11 	; $11 Main game
+	BRA.w	ProgramState_12 		; $12
+	BRA.w	ProgramState_13_and_14 	; $13 
+	BRA.w	ProgramState_13_and_14 	; $14
+	BRA.w	ProgramState_15 		; $15
 loc_00001500:
 	RTS
 
-loc_00001502:
+;loc_00001502:
+ProgramState_00:
 	MOVE.b	#2, $FFFFC403.w
 	MOVE.l	#loc_000155F4, $12(A5)
-	MOVE.w	#1, Program_state.w
+	MOVE.w	#PROGRAM_STATE_01, Program_state.w
 	CLR.b	$FFFFC3B0.w
 	RTS
 
-loc_0000151C:
+;loc_0000151C:
+ProgramState_01
 	MOVE.b	$FFFFC408.w, D0
 	ANDI.b	#$F0, D0
 	BNE.b	loc_00001540
@@ -1046,7 +1048,7 @@ loc_0000151C:
 	BSR.w	loc_00003304
 	BNE.b	loc_0000155A
 loc_00001540:
-	MOVE.w	#2, Program_state.w
+	MOVE.w	#PROGRAM_STATE_02, Program_state.w
 	CLR.b	Fade_out_buffer.w
 	CLR.w	$FFFFC08C.w
 	MOVE.w	#0, $FFFFC080.w
@@ -1054,18 +1056,20 @@ loc_00001540:
 loc_0000155A:
 	RTS
 
-loc_0000155C:
+;loc_0000155C:
+ProgramState_02:
 	MOVE.b	#$45, $FFFFC403.w
 	BTST.b	#6, $00A10001
 	BEQ.b	loc_00001572
 	MOVE.b	#$37, $FFFFC403.w	
 loc_00001572:
 	MOVE.l	#loc_000169D0, $12(A5)
-	MOVE.w	#3, Program_state.w
+	MOVE.w	#PROGRAM_STATE_03, Program_state.w
 	CLR.b	$FFFFC3B1.w
 	RTS
 
-loc_00001586:
+;loc_00001586:
+ProgramState_03:
 	TST.b	$FFFFC3B1.w
 	BEQ.w	loc_000015E6
 	TST.b	$FFFF9910.w
@@ -1075,10 +1079,10 @@ loc_00001586:
 	BEQ.w	loc_000015C0
 	TST.w	Confirm_option.w
 	BEQ.b	loc_000015B2
-	MOVE.w	#$B, Program_state.w
+	MOVE.w	#PROGRAM_STATE_0B, Program_state.w
 	BRA.b	loc_000015B8
 loc_000015B2:
-	MOVE.w	#5, Program_state.w
+	MOVE.w	#PROGRAM_STATE_05, Program_state.w
 loc_000015B8:
 	MOVE.b	#$FF, Fade_out_buffer.w
 	RTS
@@ -1089,14 +1093,15 @@ loc_000015C0:
 	MOVE.w	$FFFFC23E.w, Confirm_option.w
 	BSR.w	loc_00003304
 	BNE.b	loc_000015E6
-	MOVE.w	#4, Program_state.w
+	MOVE.w	#PROGRAM_STATE_04, Program_state.w
 	MOVE.b	#$FF, Fade_out_buffer.w
 	RTS
 
 loc_000015E6:
 	RTS
 
-loc_000015E8:
+;loc_000015E8:
+ProgramState_04:
 	TST.b	Fade_out_buffer.w
 	BNE.b	loc_00001614
 	MOVE.w	#$00E0, D0
@@ -1109,30 +1114,33 @@ loc_000015E8:
 loc_00001614:
 	RTS
 
-loc_00001616:
+;loc_00001616:
+ProgramState_08:
 	TST.b	Fade_out_buffer.w
 	BNE.b	loc_00001634
 	JSR	loc_0001026A
 	MOVE.l	#loc_000156C0, $12(A5)
-	MOVE.w	#9, Program_state.w
+	MOVE.w	#PROGRAM_STATE_09, Program_state.w
 	CLR.b	$FFFFC3A5.w
 loc_00001634:
 	RTS
 
-loc_00001636:
+;loc_00001636:
+ProgramState_09:
 	TST.b	$FFFFC3A5.w
 	BEQ.b	loc_00001648
-	MOVE.w	#$A, Program_state.w
+	MOVE.w	#PROGRAM_STATE_0A, Program_state.w
 	MOVE.b	#$FF, Fade_out_buffer.w
 loc_00001648:
 	RTS
 
-loc_0000164A:
+;loc_0000164A:
+ProgramState_0A:
 	TST.b	Fade_out_buffer.w
 	BNE.b	loc_0000168A
 	JSR	loc_00015966
 	MOVE.l	#loc_0000146E, $12(A5)
-	MOVE.w	#$E, Program_state.w
+	MOVE.w	#PROGRAM_STATE_0E, Program_state.w
 	CLR.w	Current_town.w
 	MOVE.w	#8, Player_position_x_outside_town.w
 	MOVE.w	#$D, Player_position_y_outside_town.w
@@ -1143,7 +1151,8 @@ loc_0000164A:
 loc_0000168A:
 	RTS
 
-loc_0000168C:
+;loc_0000168C:
+ProgramState_0B:
 	TST.b	Fade_out_buffer.w
 	BNE.b	loc_000016E4
 	JSR	loc_000002D0
@@ -1157,32 +1166,35 @@ loc_0000168C:
 	CLR.w	$FFFFC672.w
 	CLR.b	$FFFFC67C.w
 	MOVE.w	#$0012, $FFFFC080.w
-	MOVE.w	#$000C, Program_state.w
-	MOVE.w	#$008D, D0
+	MOVE.w	#PROGRAM_STATE_0C, Program_state.w
+	MOVE.w	#$8D, D0
 	JSR	loc_00010522
 	JSR	loc_0001325E
 loc_000016E4:
 	RTS
 
-loc_000016E6:
+;loc_000016E6:
+ProgramState_0C:
 	TST.b	$FFFFC67C.w
 	BEQ.b	loc_000016F8
-	MOVE.w	#$D, Program_state.w	
+	MOVE.w	#PROGRAM_STATE_0D, Program_state.w	
 	MOVE.b	#$FF, Fade_out_buffer.w	
 loc_000016F8:
 	RTS
 
-loc_000016FA:
+;loc_000016FA:
+ProgramState_0D:
 	TST.b	Fade_out_buffer.w	
 	BNE.b	loc_00001718	
 	MOVE.l	#loc_0000146E, $12(A5)	
-	MOVE.w	#$15, Program_state.w	
+	MOVE.w	#PROGRAM_STATE_15, Program_state.w	
 	MOVE.w	#$00E0, D0	
 	JSR	loc_00010522	
 loc_00001718:
 	RTS
 	
-loc_0000171A:
+;loc_0000171A:
+ProgramState_15:
 	TST.b	Fade_out_buffer.w	
 	BNE.b	loc_00001756	
 	MOVE.w	#$300, $FFFFC12A.w	
@@ -1192,14 +1204,15 @@ loc_0000171A:
 	CLR.b	$FFFFC560.w	
 	CLR.w	$FFFFC562.w	
 	BSR.w	loc_000034E0	
-	MOVE.w	#$E, Program_state.w ; Transition to main game?	
+	MOVE.w	#PROGRAM_STATE_0E, Program_state.w ; Transition to main game?	
 	MOVE.w	#3, Game_state.w 	 ; Entering building/town?
 	MOVE.w	$FFFFC152.w, Current_town_room.w	
 	JSR	loc_000033BE	
 loc_00001756:
 	RTS
 	
-loc_00001758:
+;loc_00001758:
+ProgramState_05:
 	TST.b	Fade_out_buffer.w
 	BNE.b	loc_000017AA
 	JSR	loc_00000682
@@ -1212,41 +1225,46 @@ loc_00001758:
 	JSR	loc_00010344
 	JSR	loc_0000066E
 	MOVE.l	#loc_000150F6, $12(A5)
-	MOVE.w	#6, Program_state.w
+	MOVE.w	#PROGRAM_STATE_06, Program_state.w
 	CLR.b	$FFFFC385.w
 	MOVE.b	#$8D, D0
 	JSR	loc_00010522
 loc_000017AA:
 	RTS
 
-loc_000017AC:
+;loc_000017AC:
+ProgramState_06:
 	TST.b	$FFFFC385.w
 	BEQ.b	loc_000017BE
-	MOVE.w	#7, Program_state.w
+	MOVE.w	#PROGRAM_STATE_07, Program_state.w
 	MOVE.b	#$FF, Fade_out_buffer.w
 loc_000017BE:
 	RTS
 
-loc_000017C0:
+;loc_000017C0:
+ProgramState_07:
 	TST.b	Fade_out_buffer.w
 	BNE.b	loc_000017E4
 	JSR	loc_000153E2
 	MOVE.l	#loc_0000146E, $12(A5)
-	MOVE.w	#8, Program_state.w
+	MOVE.w	#PROGRAM_STATE_08, Program_state.w
 	MOVE.w	#$00E0, D0
 	JSR	loc_00010522
 loc_000017E4:
 	RTS
 
-loc_000017E6:
+;loc_000017E6
+ProgramState_12:
 	MOVE.l	#loc_00016F82, $12(A5)
-	MOVE.w	#$0013, Program_state.w
+	MOVE.w	#PROGRAM_STATE_13, Program_state.w
 	RTS
 
-loc_000017F6:
+;loc_000017F6
+ProgramState_13_and_14:
 	RTS
 
-loc_000017F8:
+;loc_000017F8:
+ProgramState_0E_and_10:
 	TST.b	Fade_out_buffer.w
 	BNE.w	loc_00001818
 	JSR	loc_00000682
@@ -1257,7 +1275,8 @@ loc_000017F8:
 loc_00001818:
 	RTS
 
-loc_0000181A:
+;loc_0000181A
+ProgramState_0F_and_11:
 	TST.b	Player_movement_buffer_in_town.w
 	BNE.b	loc_00001838
 	TST.b	Camera_movement_buffer_in_town.w
@@ -1359,7 +1378,7 @@ loc_00001958:
 	BLT.b	loc_0000198C
 	SUBQ.w	#1, D0
 loc_0000198C:
-	CMPI.w	#6, D0
+	CMPI.w	#TOWN_KELTWICK, D0
 	BLT.b	loc_00001994
 	SUBQ.w	#1, D0
 loc_00001994:
@@ -1820,7 +1839,7 @@ loc_00002022:
 	MOVE.w	$FFFFC096.w, $FFFFC0AE.w
 	MOVE.w	$FFFFC098.w, $FFFFC0B0.w
 	MOVE.w	#$0011, $FFFFC0B2.w
-	MOVE.w	#$001F, Game_state.w
+	MOVE.w	#$1F, Game_state.w
 	MOVE.b	#$FF, $FFFFC0AA.w
 	CLR.w	$FFFFC416.w
 	JSR	loc_0000066E
@@ -3471,7 +3490,7 @@ loc_00003714:
 	MOVE.w	#1, $8(A5)
 	CLR.w	$16(A5)
 	MOVE.l	#loc_00003782, $2(A5)
-	MOVE.w	#$0011, $FFFFC086.w
+	MOVE.w	#$11, $FFFFC086.w
 	MOVE.b	#1, $24(A5)
 	CLR.b	$1B(A5)
 	MOVE.b	#$10, $FFFFC60F.w
@@ -7297,7 +7316,7 @@ loc_00006DCC:
 loc_00006E1C:
 	CLR.b	$FFFFC303.w
 	CLR.w	D5
-	MOVEQ	#$0000001D, D7
+	MOVEQ	#$1D, D7                ; for $1D (29) {
 	CLR.w	D6
 	MOVEA.l	$FFFFCC14.w, A6
 	MOVEA.l	$FFFFC15E.w, A0
@@ -7335,7 +7354,7 @@ loc_00006E96:
 	CLR.w	D0
 	MOVE.b	$1(A6), D0
 	LEA	(A6,D0.w), A6
-	DBF	D7, loc_00006E32
+	DBF	D7, loc_00006E32			; }
 	MOVE.w	D5, $FFFFC0FC.w
 	MOVEA.l	$FFFFC170.w, A0
 	JSR	(A0)
@@ -9207,11 +9226,11 @@ loc_00008648:
 	dc.l	$FFFF8000, $00000000 
 	dc.l	$00000000, $00008000 
 	dc.l	$00008000, $00000000 
-loc_00008668:
-	dc.w	$FFFD, $0000, $0000, $0003
-	dc.w	$FFFD, $0001, $FFFD, $0003
-	dc.w	$FFFD, $0001, $FFFD, $0003
-	dc.w	$FFFF, $0003, $FFFD, $0003
+loc_00008668: ; Parma soldiers detection area
+	dc.w -3, 0,  0, 3
+	dc.w -3, 1, -3, 3
+	dc.w -3, 1, -3, 3
+	dc.w -1, 3, -3, 3
 
 loc_00008688:
 	MOVEA.l	$FFFFCC14.w, A6
@@ -28099,7 +28118,7 @@ loc_0001A44E:
 	MOVE.b	#$FF, $FFFF9911.w
 	TST.b	$FFFFC77E.w
 	BEQ.b	loc_0001A474
-	MOVE.w	#$0012, Program_state.w
+	MOVE.w	#PROGRAM_STATE_12, Program_state.w
 loc_0001A474:
 	RTS
 
@@ -34560,7 +34579,7 @@ loc_0001FE94:
 	dc.b	$91
 	dc.b	$91, $91, $8C, $8C, $8C, $8C, $8C, $8C, $8C 
 	dc.b	$8C
-loc_0001FECA:
+loc_0001FECA: ; Town NPC setup scripts
 	BRA.w	loc_0001FF0A
 	BRA.w	loc_0001FF14
 	BRA.w	loc_0001FF40
@@ -34584,7 +34603,7 @@ loc_0001FF0A:
 loc_0001FF14:
 	TST.b	Talked_to_real_king.w
 	BNE.b	loc_0001FF2C
-	TST.b	$FFFFC728.w
+	TST.b	$FFFFC728.w ; Locked in parma?
 	BNE.b	loc_0001FF36
 	TST.b	Fake_king_killed.w
 	BNE.b	loc_0001FF2C

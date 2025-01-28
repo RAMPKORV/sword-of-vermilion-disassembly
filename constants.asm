@@ -3,6 +3,28 @@ VDP_data_port       = $C00000
 Z80_bus_request     = $A11100
 Script_player_name  = $F7
 
+PROGRAM_STATE_00 = $00
+PROGRAM_STATE_01 = $01;
+PROGRAM_STATE_02 = $02;
+PROGRAM_STATE_03 = $03;
+PROGRAM_STATE_04 = $04;
+PROGRAM_STATE_05 = $05;
+PROGRAM_STATE_06 = $06;
+PROGRAM_STATE_07 = $07;
+PROGRAM_STATE_08 = $08;
+PROGRAM_STATE_09 = $09;
+PROGRAM_STATE_0A = $0A;
+PROGRAM_STATE_0B = $0B;
+PROGRAM_STATE_0C = $0C;
+PROGRAM_STATE_0D = $0D;
+PROGRAM_STATE_0E = $0E;
+PROGRAM_STATE_0F = $0F;
+PROGRAM_STATE_10 = $10;
+PROGRAM_STATE_11 = $11;
+PROGRAM_STATE_12 = $12;
+PROGRAM_STATE_13 = $13;
+PROGRAM_STATE_14 = $14;
+PROGRAM_STATE_15 = $15;
 
 ;RAM
 
@@ -114,8 +136,6 @@ Current_encounter_type          = $FFFFC68A
 Encounter_rate                  = $FFFFC69C
 MAX_STEPS_BETWEEN_ENCOUNTERS    = 20
 
-Player_greatly_poisoned         = $FFFFC76C
-
 MAX_PLAYER_LEVEL    = 30
 MAX_PLAYER_MMP      = 600
 MAX_PLAYER_MHP      = 1200
@@ -146,6 +166,7 @@ Tsarkon_is_dead                             = $FFFFC758
 Old_man_has_received_sketch                 = $FFFFC75F
 Old_woman_has_received_sketch               = $FFFFC760
 Player_has_received_old_womans_sketch       = $FFFFC763
+Player_greatly_poisoned                     = $FFFFC76C
 
 Boss_event_trigger                      = $FFFFC817
 Solidier_fight_event_trigger            = $FFFFC816
