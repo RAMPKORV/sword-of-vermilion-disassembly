@@ -635,6 +635,7 @@ loc_00000FB4:
 	MOVEM.l	(A6), D0/D1/D2/D3/D4/D5/D6/D7/A0/A1/A2/A3/A4/A5/A6
 	MOVE	#$2700, SR
 	BRA.b	loc_0000102C
+
 loc_00000FC8:
 	dc.l	$00008000	
 	dc.l	$00003FFF	
@@ -644,6 +645,7 @@ loc_00000FC8:
 	dc.l	$00A11200	
 	dc.l	VDP_data_port	
 	dc.l	VDP_control_port	
+
 VDPInitValues:	; values for VDP registers
 	dc.b 4			; Command $8004 - HInt off, Enable HV counter read
 	dc.b $14		; Command $8114 - Display off, VInt off, DMA on, PAL off
@@ -669,6 +671,7 @@ VDPInitValues:	; values for VDP registers
 	dc.b 0			; Command $9500 - DMA Source Address $0
 	dc.b 0			; Command $9600 - See above
 	dc.b $80		; Command $9780	- See above + VRAM fill mode
+
 VDPInitValues_End:
 	dc.b	$AF, $01, $D7, $1F, $11, $29, $00, $21 
 	dc.b	$28, $00, $F9, $77, $ED, $B0, $DD, $E1, $FD, $E1, $ED, $47, $ED, $4F, $08, $D9, $F1, $C1, $D1, $E1, $08, $D9, $F1, $D1, $E1, $F9, $F3, $ED, $56, $36, $E9, $E9 
@@ -2811,22 +2814,22 @@ loc_00002E2A:
 loc_00002E6A: ; town teleport locations
 	; format:
 	; (x,y) within map sector, (x,y) sector of world map
-	dc.w	$0008, $000D, $0000, $0006 ; Wyclif
-	dc.w	$0007, $0006, $0001, $0004 ; Parma
-	dc.w	$0008, $0004, $0006, $0005 ; Watling
-	dc.w	$0004, $0008, $0004, $0007 ; Deepdale
-	dc.w	$000A, $0005, $000B, $0007 ; Stow
-	dc.w	$000A, $0005, $000B, $0007 ; Stow
-	dc.w	$0004, $0005, $000E, $0004 ; Keltwick
-	dc.w	$0004, $0006, $000C, $0002 ; Malaga
-	dc.w	$0009, $0005, $000E, $0000 ; Barrow
-	dc.w	$000A, $0006, $0009, $0001 ; Tadcaster
-	dc.w	$0006, $000F, $0006, $0000 ; Helwig
-	dc.w	$0007, $0007, $0001, $0000 ; Swaffham
-	dc.w	$000A, $0005, $0005, $0002 ; Excalabria
-	dc.w	$0005, $0004, $0009, $0002 ; Hastings
-	dc.w	$0005, $0004, $0009, $0002 ; Hastings
-	dc.w	$0008, $0008, $000A, $0005 ; Carthahena
+	dc.w	$8, $D, $0, $6 ; Wyclif
+	dc.w	$7, $6, $1, $4 ; Parma
+	dc.w	$8, $4, $6, $5 ; Watling
+	dc.w	$4, $8, $4, $7 ; Deepdale
+	dc.w	$A, $5, $B, $7 ; Stow
+	dc.w	$A, $5, $B, $7 ; Stow
+	dc.w	$4, $5, $E, $4 ; Keltwick
+	dc.w	$4, $6, $C, $2 ; Malaga
+	dc.w	$9, $5, $E, $0 ; Barrow
+	dc.w	$A, $6, $9, $1 ; Tadcaster
+	dc.w	$6, $F, $6, $0 ; Helwig
+	dc.w	$7, $7, $1, $0 ; Swaffham
+	dc.w	$A, $5, $5, $2 ; Excalabria
+	dc.w	$5, $4, $9, $2 ; Hastings
+	dc.w	$5, $4, $9, $2 ; Hastings
+	dc.w	$8, $8, $A, $5 ; Carthahena
 loc_00002EEA:
 	dc.w	$00D8, $0068 
 	dc.w	$0058, $0068
@@ -3418,15 +3421,15 @@ loc_000035FA:
 	RTS
 
 loc_0000361C: ; Going through gates or entering caves?
-	dc.w	 0, -2			; Up
-	dc.w	-2,  0			; Left
-	dc.w	 0,  2			; Down
-	dc.w	 2,  0			; Right
+	dc.w	  0,  -2		; Up
+	dc.w	 -2,   0		; Left
+	dc.w	  0,   2		; Down
+	dc.w	  2,   0		; Right
 loc_0000362C:
-	dc.w	$0000, $0010 	; Up
-	dc.w	$0010, $0000 	; Left
-	dc.w	$0000, $FFF0 	; Down
-	dc.w	$FFF0, $0000 	; Right
+	dc.w	  0,  16		; Up
+	dc.w	 16,   0		; Left
+	dc.w	  0, -16		; Down
+	dc.w	-16,   0		; Right
 
 loc_0000363C:
 	MOVEA.l	$FFFFCC14.w, A6
@@ -4315,26 +4318,27 @@ loc_0000423C:
 	RTS
 
 loc_00004250:
-	dc.w	$0000, $0000, $0000, $0000, $0000, $0000
-	dc.w	$0000, $0000, $0000, $0000, $0000, $0000
-	dc.w	$0008, $0010, $FFF4, $0000, $0000, $0000
-	dc.w	$0000, $0000, $0004, $0014, $FFF4, $0000
-	dc.w	$FFF8, $0008, $0000, $0008, $0000, $0000
-	dc.w	$0000, $0000, $FFF8, $0008, $0000, $0010
-	dc.w	$0000, $0000, $0000, $0000, $0000, $0000
-	dc.w	$0000, $0000, $0000, $0000, $0000, $0000 
-	dc.w	$0000, $0000, $0000, $0000, $0000, $0000
-	dc.w	$0000, $0000, $0000, $0000, $0000, $0000
-	dc.w	$0004, $0008, $0000, $0006, $0000, $0000
-	dc.w	$0000, $0000, $0004, $000C, $0000, $000C
-	dc.w	$FFF8, $0008, $FFF0, $0000, $0000, $0000
-	dc.w	$0000, $0000, $FFF8, $0008, $FFE8, $0000
-	dc.w	$0000, $0000, $0000, $0000, $0000, $0000
-	dc.w	$0000, $0000, $0000, $0000, $0000, $0000 
-	dc.w	$0000, $0000, $0000, $0000, $0000, $0000
-	dc.w	$0000, $0000, $0000, $0000, $0000, $0000
-	dc.w	$0004, $0008, $FFF4, $0000, $0000, $0000
-	dc.w	$0000, $0000, $0004, $000C, $FFEC, $0000 
+	dc.w	 0,   0,   0,   0,   0,   0
+	dc.w	 0,   0,   0,   0,   0,   0
+	dc.w	 8,  16, -12,   0,   0,   0
+	dc.w	 0,   0,   4,  20, -12,   0
+	dc.w	-8,   8,   0,   8,   0,   0
+	dc.w	 0,   0,  -8,   8,   0,  16
+	dc.w	 0,   0,   0,   0,   0,   0
+	dc.w	 0,   0,   0,   0,   0,   0
+	dc.w	 0,   0,   0,   0,   0,   0
+	dc.w	 0,   0,   0,   0,   0,   0
+	dc.w	 4,   8,   0,   6,   0,   0
+	dc.w	 0,   0,   4,  12,   0,  12
+	dc.w	-8,   8, -16,   0,   0,   0
+	dc.w	 0,   0,  -8,   8, -24,   0
+	dc.w	 0,   0,   0,   0,   0,   0
+	dc.w	 0,   0,   0,   0,   0,   0
+	dc.w	 0,   0,   0,   0,   0,   0
+	dc.w	 0,   0,   0,   0,   0,   0
+	dc.w	 4,   8, -12,   0,   0,   0
+	dc.w	 0,   0,   4,  12, -20,   0
+
 	
 loc_00004340:
 	CLR.w	D0
