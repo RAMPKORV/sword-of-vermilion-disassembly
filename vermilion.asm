@@ -7394,7 +7394,7 @@ loc_00006F10:
 	MOVE.w	#$5D, D5
 	TST.b	(A0,D5.w)
 	BEQ.b	loc_00006F32
-	MOVE.l	#loc_0002A91C, $1C(A5)
+	MOVE.l	#BringDoctorHereStr, $1C(A5)
 loc_00006F32:
 	BRA.w	loc_00008154
 	BSR.w	loc_00008234
@@ -7494,7 +7494,7 @@ loc_0000703E:
 loc_00007054:  
 	TST.b	Map_triggers_start.w
 	BNE.b	loc_0000706A
-	MOVE.l	#loc_0002EB52, $FFFFC438.w
+	MOVE.l	#UseMapStr, $FFFFC438.w
 	MOVE.w	#$0070, D5
 	BSR.w	loc_0000858A
 loc_0000706A:
@@ -7507,7 +7507,7 @@ loc_0000706A:
 loc_00007080:
 	TST.b	Map_triggers_start.w
 	BEQ.b	loc_00007096
-	MOVE.l	#loc_0002EB52, $FFFFC438.w
+	MOVE.l	#UseMapStr, $FFFFC438.w
 	MOVE.w	#$0051, D5
 	BSR.w	loc_0000858A
 loc_00007096:
@@ -7518,7 +7518,7 @@ loc_00007096:
 	RTS
 
 loc_000070AC:   
-	MOVE.l	#loc_0002EB52, $FFFFC438.w
+	MOVE.l	#UseMapStr, $FFFFC438.w
 	MOVE.w	#$0040, D5
 	BSR.w	loc_0000858A
 	BRA.w	loc_00006F44
@@ -7530,14 +7530,14 @@ loc_000070AC:
 loc_000070D2:
 	TST.b	Talked_to_real_king.w
 	BEQ.b	loc_000070EA
-	MOVE.l	#loc_0002F180, $FFFFC438.w	
+	MOVE.l	#AdviceForQuestionsStr, $FFFFC438.w	
 	MOVE.w	#$0044, D5	
 	BSR.w	loc_0000858A	
 	BRA.b	loc_00007100	
 loc_000070EA:
 	TST.b	Treasure_of_troy_challenge_issued.w
 	BEQ.b	loc_00007100
-	MOVE.l	#loc_0002F180, $FFFFC438.w
+	MOVE.l	#AdviceForQuestionsStr, $FFFFC438.w
 	MOVE.w	#$0052, D5
 	BSR.w	loc_0000858A
 loc_00007100:
@@ -7546,7 +7546,7 @@ loc_00007100:
 	CLR.b	$25(A5)
 	TST.b	Talked_to_real_king.w
 	BEQ.b	loc_0000711C
-	MOVE.l	#loc_000295AA, $1C(A5)
+	MOVE.l	#GotRingStr, $1C(A5)
 	BRA.b	loc_0000714E
 loc_0000711C:
 	TST.b	Fake_king_killed.w
@@ -7557,7 +7557,7 @@ loc_0000711C:
 loc_00007128:
 	TST.b	Talked_to_king_after_given_treasure_of_troy.w
 	BEQ.b	loc_00007138
-	MOVE.l	#loc_000293A8, $1C(A5)
+	MOVE.l	#NeedPermanentSolutionStr, $1C(A5)
 	BRA.b	loc_0000714E
 loc_00007138:
 	TST.b	Treasure_of_troy_found.w
@@ -7575,7 +7575,7 @@ loc_0000714E:
 loc_00007158:  
 	TST.b	Treasure_of_troy_given_to_king.w
 	BEQ.b	loc_00007178
-	MOVE.l	#loc_00029386, $1C(A5)
+	MOVE.l	#NicePlaceStr, $1C(A5)
 	LEA	Possessed_items_list.w, A3
 	LEA	Possessed_items_length.w, A2
 	MOVE.w	#((ITEM_TYPE_NON_DISCARDABLE<<8)|ITEM_TREASURE_OF_TROY), D4
@@ -7584,12 +7584,12 @@ loc_00007158:
 loc_00007178:
 	TST.b	Treasure_of_troy_found.w
 	BEQ.b	loc_00007188
-	MOVE.l	#loc_0002929E, $1C(A5)
+	MOVE.l	#TreasureReturnedStr, $1C(A5)
 	BRA.b	loc_00007196
 loc_00007188:
 	TST.b	Treasure_of_troy_challenge_issued.w
 	BEQ.b	loc_00007196
-	MOVE.l	#loc_00029264, $1C(A5)
+	MOVE.l	#FindTreasureStr, $1C(A5)
 loc_00007196:
 	BRA.w	loc_00006F44
 	BSR.w	loc_00008234
@@ -7606,7 +7606,7 @@ loc_000071AE:
 loc_000071B8:
 	TST.b	Talked_to_real_king.w
 	BEQ.b	loc_000071C6
-	MOVE.l	#loc_000295AA, $1C(A5)
+	MOVE.l	#GotRingStr, $1C(A5)
 loc_000071C6:
 	BRA.w	loc_00006F44
 	BSR.w	loc_00008234
@@ -7634,7 +7634,7 @@ loc_00007216:
 	RTS
 
 loc_00007220:       
-	MOVE.l	#loc_000300B2, $FFFFC438.w
+	MOVE.l	#GoNorthVerlinsCaveStr, $FFFFC438.w
 	MOVE.w	#$36, D5
 	BSR.w	loc_0000858A
 	BRA.w	loc_00006F44
@@ -7652,7 +7652,7 @@ loc_0000725A:
 	RTS
 
 loc_00007264:
-	MOVE.l	#loc_0002FD92, $FFFFC438.w
+	MOVE.l	#ThankYouStrangerStr, $FFFFC438.w
 	MOVE.w	#$65, D5
 	BSR.w	loc_0000858A
 	BRA.w	loc_00006F44
@@ -7684,7 +7684,7 @@ loc_000072C0:
 loc_000072CA:
 	TST.b	$FFFFC72D.w
 	BEQ.b	loc_000072F4
-	MOVE.l	#loc_00030E7E, $1C(A5)
+	MOVE.l	#KeptSecretStr, $1C(A5)
 	TST.b	$FFFFC7C0.w
 	BNE.b	loc_000072F4
 	LEA	Possessed_items_list.w, A3
@@ -7704,7 +7704,7 @@ loc_0000730A:
 	BNE.b	loc_00007326
 	TST.b	$FFFFC72B.w
 	BEQ.b	loc_00007326
-	MOVE.l	#loc_00029DCE, $FFFFC438.w
+	MOVE.l	#BremensCaveNorthwestStr, $FFFFC438.w
 	MOVE.w	#$62, D5
 	BSR.w	loc_0000858A
 loc_00007326:
@@ -7717,7 +7717,7 @@ loc_00007326:
 loc_0000733C:
 	TST.b	$FFFFC72D.w
 	BEQ.b	loc_00007352
-	MOVE.l	#loc_00030B18, $FFFFC438.w
+	MOVE.l	#RoadToStowDangerousStr, $FFFFC438.w
 	MOVE.w	#$7A, D5
 	BSR.w	loc_0000858A
 loc_00007352:
@@ -7738,7 +7738,7 @@ loc_00007374:
 loc_0000737E:
 	TST.b	$FFFFC733.w
 	BEQ.b	loc_000073AE
-	MOVE.l	#loc_0002A902, $1C(A5)
+	MOVE.l	#HopesWithYouStr, $1C(A5)
 	TST.b	$FFFFC768.w
 	BNE.w	loc_00007408
 	LEA	Possessed_magics_length.w, A0
@@ -7755,15 +7755,15 @@ loc_000073AE:
 	MOVE.w	(A0), D0
 	CMPI.w	#8, D0
 	BLT.b	loc_000073CC
-	MOVE.l	#loc_0002A8B6, $1C(A5)
+	MOVE.l	#DiscardBookSpellsStr, $1C(A5)
 	BRA.w	loc_00007408
 loc_000073CC:
-	MOVE.l	#loc_0002A7A4, $1C(A5)
+	MOVE.l	#BookSanguiaEffortsStr, $1C(A5)
 	BRA.w	loc_00007408
 loc_000073D8:
 	TST.b	$FFFFC72F.w
 	BEQ.w	loc_00007408
-	MOVE.l	#loc_0002A528, $1C(A5)
+	MOVE.l	#ReturnWhenInnocentStr, $1C(A5)
 	TST.b	$FFFFC767.w
 	BNE.b	loc_00007408
 	LEA	Possessed_magics_list.w, A3
@@ -7788,7 +7788,7 @@ loc_00007424:
 loc_0000742E:
 	TST.b	$FFFFC72F.w
 	BEQ.b	loc_0000743C
-	MOVE.l	#loc_0002A2AA, $1C(A5)
+	MOVE.l	#YoureTheThiefStr, $1C(A5)
 loc_0000743C:
 	BRA.w	loc_00006F44
 	BSR.w	loc_00008234
@@ -7805,7 +7805,7 @@ loc_00007458:
 loc_00007462:
 	TST.b	$FFFFC72F.w
 	BEQ.b	loc_00007470
-	MOVE.l	#loc_0002A31C, $1C(A5)
+	MOVE.l	#FaceOfCriminalStr, $1C(A5)
 loc_00007470:
 	BRA.w	loc_00006F44
 	BSR.w	loc_00008234
@@ -7827,7 +7827,7 @@ loc_000074A2:
 	BNE.b	loc_000074D4
 	BSR.w	loc_0000857E
 	BGE.w	loc_00007522
-	MOVE.l	#loc_0003348A, $1C(A5)
+	MOVE.l	#MalagaNorthKeyStr, $1C(A5)
 	TST.b	$FFFFC7AA.w
 	BEQ.w	loc_0000752A
 	BSR.w	loc_00008572
@@ -7844,7 +7844,7 @@ loc_000074D4:
 	BNE.w	loc_00007518
 	TST.b	$FFFFC7AD.w	
 	BNE.b	loc_00007518	
-	MOVE.l	#loc_000334F4, $1C(A5)	
+	MOVE.l	#LostKeyStr, $1C(A5)	
 	TST.b	$FFFFC7AC.w	
 	BEQ.w	loc_0000752A	
 	BSR.w	loc_00008572	
@@ -7852,10 +7852,10 @@ loc_000074D4:
 	MOVE.b	#$FF, $FFFFC7AD.w	
 	BRA.b	loc_0000752A	
 loc_00007518:
-	MOVE.l	#loc_0003346A, $1C(A5)
+	MOVE.l	#FindPoisonShieldStr, $1C(A5)
 	BRA.b	loc_0000752A
 loc_00007522:
-	MOVE.l	#loc_00033440, $1C(A5)	
+	MOVE.l	#ComeBackLessGearStr, $1C(A5)	
 loc_0000752A:
 	BRA.w	loc_00006F44
 	BSR.w	loc_00008234
@@ -7866,7 +7866,7 @@ loc_0000752A:
 loc_00007540:
 	TST.b	$FFFFC733.w
 	BEQ.b	loc_00007556
-	MOVE.l	#loc_00032EC4, $FFFFC438.w
+	MOVE.l	#MalagaNortheastStr, $FFFFC438.w
 	MOVE.w	#$003D, D5
 	BSR.w	loc_0000858A
 loc_00007556:
@@ -7879,7 +7879,7 @@ loc_00007556:
 loc_0000756C:
 	TST.b	$FFFFC733.w
 	BEQ.b	loc_00007582
-	MOVE.l	#loc_00033090, $FFFFC438.w
+	MOVE.l	#GoWestBlazonsCaveStr, $FFFFC438.w
 	MOVE.w	#$004C, D5
 	BSR.w	loc_0000858A
 loc_00007582:
@@ -7888,7 +7888,7 @@ loc_00007582:
 	CLR.b	$25(A5)
 	TST.b	$FFFFC746.w
 	BEQ.b	loc_0000759E
-	MOVE.l	#loc_00033410, $1C(A5)
+	MOVE.l	#WaitingForLetterStr, $1C(A5)
 	BRA.b	loc_000075A8
 loc_0000759E:
 	MOVE.l	#loc_000075B2, $2(A5)
@@ -7909,10 +7909,10 @@ loc_000075B2:
 loc_000075D0:
 	TST.b	$FFFFC78B.w
 	BEQ.b	loc_000075E2
-	MOVE.l	#loc_00033410, $1C(A5)	
+	MOVE.l	#WaitingForLetterStr, $1C(A5)	
 	BRA.w	loc_00007610	
 loc_000075E2:
-	MOVE.l	#loc_000333A4, $1C(A5)
+	MOVE.l	#LoneTreeTreasureStr, $1C(A5)
 	BRA.b	loc_00007610
 loc_000075EC:
 	TST.b	Old_man_has_received_sketch.w
@@ -7921,10 +7921,10 @@ loc_000075EC:
 	MOVE.w	(A0), D0
 	CMPI.w	#8, D0
 	BLT.b	loc_00007608
-	MOVE.l	#loc_00033440, $1C(A5)	
+	MOVE.l	#ComeBackLessGearStr, $1C(A5)	
 	BRA.b	loc_00007610	
 loc_00007608:
-	MOVE.l	#loc_00033356, $1C(A5)
+	MOVE.l	#ShowSketchStr, $1C(A5)
 loc_00007610:
 	BRA.w	loc_00006F8E
 	CLR.b	$FFFFC75A.w
@@ -7957,10 +7957,10 @@ loc_0000765E:
 	BEQ.b	loc_0000768E
 	TST.b	$FFFFC75A.w
 	BEQ.b	loc_0000768E
-	MOVE.l	#loc_000335C6, $1C(A5)
+	MOVE.l	#ReadyToLeaveStowStr, $1C(A5)
 	TST.b	$FFFFC732.w
 	BNE.b	loc_00007688
-	MOVE.l	#loc_00033544, $1C(A5)
+	MOVE.l	#WhatsWrongStowStr, $1C(A5)
 	MOVE.l	#loc_0003DD94, $2E(A5)
 loc_00007688:
 	BSR.w	loc_00006F44
@@ -7976,12 +7976,12 @@ loc_0000768E:
 loc_000076A4:
 	TST.b	Tsarkon_is_dead.w
 	BEQ.b	loc_000076B6
-	MOVE.l	#loc_0002B1CC, $1C(A5)
+	MOVE.l	#WillWaitForYouStr, $1C(A5)
 	BRA.w	loc_000076CC
 loc_000076B6:
 	TST.b	$FFFFC73B.w
 	BNE.b	loc_000076CC
-	MOVE.l	#loc_0002B18A, $FFFFC438.w
+	MOVE.l	#HopeReturnSafelyStr, $FFFFC438.w
 	MOVE.w	#$002E, D5
 	BSR.w	loc_0000858A
 loc_000076CC:
@@ -7994,7 +7994,7 @@ loc_000076CC:
 loc_000076E2:
 	TST.b	$FFFFC73C.w
 	BEQ.b	loc_000076F8
-	MOVE.l	#loc_0002AE8C, $FFFFC438.w
+	MOVE.l	#BarrowNortheastStr, $FFFFC438.w
 	MOVE.w	#$001D, D5
 	BSR.w	loc_0000858A
 loc_000076F8:
@@ -8024,12 +8024,12 @@ loc_00007728:
 loc_0000773E:
 	TST.b	Tsarkon_is_dead.w
 	BEQ.b	loc_00007750
-	MOVE.l	#loc_0002B2DC, $1C(A5)
+	MOVE.l	#JourneyToCartahenaStr, $1C(A5)
 	BRA.w	loc_0000775E
 loc_00007750:
 	TST.b	$FFFFC735.w
 	BEQ.b	loc_0000775E
-	MOVE.l	#loc_0002B2B0, $1C(A5)	
+	MOVE.l	#ReturnAfterTaskStr, $1C(A5)	
 loc_0000775E:
 	BRA.w	loc_00006F8E
 	BSR.w	loc_00008234
@@ -8038,7 +8038,7 @@ loc_0000775E:
 	RTS
 
 loc_00007774:
-	MOVE.l	#loc_00034E20, $FFFFC438.w
+	MOVE.l	#ReachTadcasterStr, $FFFFC438.w
 	MOVE.w	#$000A, D5
 	BSR.w	loc_0000858A
 	BRA.w	loc_00006F44
@@ -8050,7 +8050,7 @@ loc_00007774:
 loc_0000779A:
 	TST.b	$FFFFC73F.w
 	BEQ.b	loc_000077D2
-	MOVE.l	#loc_00035004, $1C(A5)	
+	MOVE.l	#ShareTreasureStr, $1C(A5)	
 	TST.b	$FFFFC740.w	
 	BEQ.b	loc_000077E2	
 	TST.b	$FFFFC76A.w	
@@ -8059,10 +8059,10 @@ loc_0000779A:
 	JSR	DeductPaymentAmount	
 	MOVE.b	#$FF, $FFFFC76A.w	
 loc_000077C8:
-	MOVE.l	#loc_0003507E, $1C(A5)	
+	MOVE.l	#DontSpendAllWealthStr, $1C(A5)	
 	BRA.b	loc_000077E2	
 loc_000077D2:
-	MOVE.l	#loc_00034FB4, $FFFFC438.w
+	MOVE.l	#TreasureInCaveStr, $FFFFC438.w
 	MOVE.w	#$001C, D5
 	BSR.w	loc_0000858A
 loc_000077E2:
@@ -8091,7 +8091,7 @@ loc_0000780E:
 	JSR	DeductPaymentAmount
 	MOVE.b	#$FF, $FFFFC765.w
 loc_00007838:
-	MOVE.l	#loc_000350A8, $1C(A5)
+	MOVE.l	#GoAwayStr, $1C(A5)
 	BRA.w	loc_0000787A
 loc_00007844:
 	MOVE.l	#PRICE_PASS_TO_CARTHAHENA, D0
@@ -8101,13 +8101,13 @@ loc_00007844:
 	BLT.b	loc_00007868
 	BSR.w	loc_0000857E
 	BLT.b	loc_00007872
-	MOVE.l	#loc_000351B0, $1C(A5)	
+	MOVE.l	#BuyPassToCartahenaStr3, $1C(A5)	
 	BRA.b	loc_0000787A	
 loc_00007868:
-	MOVE.l	#loc_00035148, $1C(A5)	
+	MOVE.l	#BuyPassToCartahenaStr2, $1C(A5)	
 	BRA.b	loc_0000787A	
 loc_00007872:
-	MOVE.l	#loc_000350B2, $1C(A5)
+	MOVE.l	#BuyPassToCartahenaStr, $1C(A5)
 loc_0000787A:
 	BRA.w	loc_00006F8E
 	BSR.w	loc_00008234
@@ -8118,7 +8118,7 @@ loc_0000787A:
 loc_00007890:
 	TST.b	$FFFFC73D.w
 	BNE.b	loc_000078A6
-	MOVE.l	#loc_00035FB2, $FFFFC438.w
+	MOVE.l	#ImposterDarmonsCaveConfirmedStr, $FFFFC438.w
 	MOVE.w	#8, D5
 	BSR.w	loc_0000858A
 loc_000078A6:
@@ -8131,7 +8131,7 @@ loc_000078A6:
 loc_000078BC:
 	TST.b	$FFFFC73D.w
 	BEQ.b	loc_000078D2
-	MOVE.l	#loc_0003628C, $FFFFC438.w
+	MOVE.l	#ReachHelwigStr, $FFFFC438.w
 	MOVE.w	#$0017, D5
 	BSR.w	loc_0000858A
 loc_000078D2:
@@ -8160,7 +8160,7 @@ loc_00007902:
 loc_00007914:
 	TST.b	$FFFFC744.w
 	BNE.b	loc_0000792A
-	MOVE.l	#loc_000370CA, $FFFFC438.w
+	MOVE.l	#CountOnYouStr, $FFFFC438.w
 	MOVE.w	#$14, D5
 	BSR.w	loc_0000858A
 loc_0000792A:
@@ -8171,7 +8171,7 @@ loc_0000792A:
 	RTS
 
 loc_00007940:
-	MOVE.l	#loc_00036F06, $FFFFC438.w
+	MOVE.l	#JourneyWestToSwaffhamStr, $FFFFC438.w
 	MOVE.w	#3, D5
 	BSR.w	loc_0000858A
 	BRA.w	loc_00006F44
@@ -8212,7 +8212,7 @@ loc_000079B2:
 	BNE.b	loc_000079DE
 	BSR.w	loc_0000857E
 	BGE.b	loc_000079E8
-	MOVE.l	#loc_0003751A, $1C(A5)
+	MOVE.l	#KeyFromCaveStr, $1C(A5)
 	TST.b	$FFFFC785.w
 	BEQ.b	loc_000079F0
 	BSR.w	loc_00008572
@@ -8220,17 +8220,17 @@ loc_000079B2:
 	MOVE.b	#$FF, $FFFFC786.w
 	BRA.b	loc_000079F0
 loc_000079DE:
-	MOVE.l	#loc_0003759C, $1C(A5)
+	MOVE.l	#RememberedAsHeroStr, $1C(A5)
 	BRA.b	loc_000079F0
 loc_000079E8:
-	MOVE.l	#loc_000375D4, $1C(A5)
+	MOVE.l	#CantCarryMoreItemsStr, $1C(A5)
 loc_000079F0:
 	BRA.w	loc_00006F44
 	BSR.w	loc_00008234
 	CLR.b	$25(A5)
 	TST.b	$FFFFC736.w
 	BEQ.b	loc_00007A0A
-	MOVE.l	#loc_00037292, $1C(A5)
+	MOVE.l	#FoundSomeoneForMeStr, $1C(A5)
 loc_00007A0A:
 	MOVE.l	#loc_00007A14, $2(A5)
 	RTS
@@ -8238,7 +8238,7 @@ loc_00007A0A:
 loc_00007A14:
 	TST.b	$FFFFC747.w
 	BEQ.b	loc_00007A44
-	MOVE.l	#loc_00037364, $1C(A5)
+	MOVE.l	#GetAlongFineStr, $1C(A5)
 	TST.b	$FFFFC764.w
 	BNE.w	loc_00007ACC
 	LEA	Possessed_equipment_length.w, A0
@@ -8251,16 +8251,16 @@ loc_00007A14:
 loc_00007A44:
 	TST.b	Old_woman_has_received_sketch.w
 	BEQ.w	loc_00007A82
-	MOVE.l	#loc_000372B2, $1C(A5)
+	MOVE.l	#WriteLetterGiftDragonShieldStr, $1C(A5)
 	TST.b	$FFFFC761.w
 	BEQ.b	loc_00007A62
-	MOVE.l	#loc_00037320, $1C(A5)
+	MOVE.l	#GiftDragonShieldStr, $1C(A5)
 loc_00007A62:
 	LEA	Possessed_equipment_length.w, A0
 	MOVE.w	(A0), D0
 	CMPI.w	#8, D0
 	BLT.w	loc_00007ACC
-	MOVE.l	#loc_000373C0, $1C(A5)
+	MOVE.l	#FriendGiftDragonShieldStr, $1C(A5)
 	MOVE.b	#$FF, $FFFFC761.w
 	BRA.w	loc_00007ACC
 loc_00007A82:
@@ -8277,13 +8277,13 @@ loc_00007AA4:
 	BEQ.b	loc_00007ACC
 	BSR.w	loc_0000857E
 	BLT.b	loc_00007ABA
-	MOVE.l	#loc_00037388, $1C(A5)
+	MOVE.l	#ComeBackLessGearStr2, $1C(A5)
 	BRA.b	loc_00007ACC
 loc_00007ABA:
-	MOVE.l	#loc_000371F0, $1C(A5)
+	MOVE.l	#FindSomeoneForMeStr, $1C(A5)
 	BRA.b	loc_00007ACC
 loc_00007AC4:
-	MOVE.l	#loc_00037292, $1C(A5)
+	MOVE.l	#FoundSomeoneForMeStr, $1C(A5)
 loc_00007ACC:
 	BRA.w	loc_00006F8E
 	MOVE.b	#9, $6(A5)
@@ -8312,7 +8312,7 @@ loc_00007B04:
 	LEA	Possessed_items_length.w, A2
 	MOVE.w	#$0113, D4
 	BSR.w	loc_000084C0
-	MOVE.l	#loc_0002BF60, $1C(A5)
+	MOVE.l	#BegoneNothingMoreStr, $1C(A5)
 	BRA.w	loc_00007C30
 loc_00007B38:
 	TST.b	$FFFFC74F.w
@@ -8335,7 +8335,7 @@ loc_00007B42:
 	MOVE.w	#((ITEM_TYPE_NON_DISCARDABLE<<8)|ITEM_BLUE_KEY), (A0,D0.w)
 	MOVE.b	#$FF, $FFFFC772.w
 loc_00007B82:
-	MOVE.l	#loc_0002BF3E, $1C(A5)
+	MOVE.l	#BackSoSoonStr, $1C(A5)
 	BRA.w	loc_00007C30
 loc_00007B8E:
 	TST.b	$FFFFC74D.w
@@ -8358,7 +8358,7 @@ loc_00007B9A:
 	MOVE.w	#((ITEM_TYPE_NON_DISCARDABLE<<8)|ITEM_RED_KEY), (A0,D0.w)
 	MOVE.b	#$FF, $FFFFC771.w
 loc_00007BDA:
-	MOVE.l	#loc_0002BF3E, $1C(A5)
+	MOVE.l	#BackSoSoonStr, $1C(A5)
 	BRA.w	loc_00007C30
 loc_00007BE6:
 	TST.b	$FFFFC74B.w
@@ -8373,15 +8373,15 @@ loc_00007BF0:
 	MOVE.w	#((ITEM_TYPE_NON_DISCARDABLE<<8)|ITEM_WHITE_CRYSTAL), (A0,D0.w)
 	MOVE.b	#$FF, $FFFFC770.w
 loc_00007C0C:
-	MOVE.l	#loc_0002BF3E, $1C(A5)
+	MOVE.l	#BackSoSoonStr, $1C(A5)
 	BRA.w	loc_00007C30
 loc_00007C18:
 	BSR.w	loc_0000857E
 	BLT.b	loc_00007C28
-	MOVE.l	#loc_0002BF8C, $1C(A5)	
+	MOVE.l	#CantGiveKeyStr, $1C(A5)	
 	BRA.b	loc_00007C30	
 loc_00007C28:
-	MOVE.l	#loc_0002BAB4, $1C(A5)
+	MOVE.l	#RingOfEarthQuestStr, $1C(A5)
 loc_00007C30:
 	BRA.w	loc_00006F8E
 	BSR.w	loc_00008234
@@ -8389,7 +8389,7 @@ loc_00007C30:
 	MOVE.w	#4, D7
 	BSR.w	loc_00008518
 	BEQ.b	loc_00007C50
-	MOVE.l	#loc_00039820, $1C(A5)	
+	MOVE.l	#GetAllRingsStr, $1C(A5)	
 	BRA.b	loc_00007C66	
 loc_00007C50:
 	TST.b	$FFFFC76B.w
@@ -8407,7 +8407,7 @@ loc_00007C70:
 	TST.b	Swaffham_ruined.w
 	BEQ.b	loc_00007C82
 	CLR.b	$FFFFC81D.w
-	MOVE.l	#loc_00039554, $1C(A5)
+	MOVE.l	#WaitingExcalabriaStr, $1C(A5)
 loc_00007C82:
 	BRA.w	loc_00006F8E
 	BSR.w	loc_00008234
@@ -8430,12 +8430,12 @@ loc_00007CAC:
 loc_00007CBA:
 	TST.b	$FFFFC753.w
 	BEQ.b	loc_00007CCC
-	MOVE.l	#loc_0003A758, $1C(A5)
+	MOVE.l	#PoisonedFoodStr, $1C(A5)
 	BRA.w	loc_00007D32
 loc_00007CCC:
 	TST.b	$FFFFC750.w
 	BEQ.w	loc_00007D32
-	MOVE.l	#loc_0003A74A, $1C(A5)
+	MOVE.l	#WasItGoodStr, $1C(A5)
 	TST.b	$FFFFC77B.w
 	BNE.b	loc_00007D32
 	MOVEA.l	$FFFFCC08.w, A6
@@ -8472,13 +8472,13 @@ loc_00007D4C:
 loc_00007D56:
 	BSR.w	loc_00008234
 	CLR.b	$25(A5)
-	MOVE.l	#loc_0003A3FE, $1C(A5)
+	MOVE.l	#SeveralPeopleWaitingStr, $1C(A5)
 	TST.b	Player_has_received_sword_of_vermilion.w
 	BNE.b	loc_00007D82
-	MOVE.l	#loc_0003A448, $1C(A5)
+	MOVE.l	#WelcomePrinceStr, $1C(A5)
 	TST.b	$FFFFC755.w
 	BNE.b	loc_00007D82
-	MOVE.l	#loc_0003A3FE, $1C(A5)	
+	MOVE.l	#SeveralPeopleWaitingStr, $1C(A5)	
 loc_00007D82:
 	MOVE.l	#loc_00006F8E, $2(A5)
 	RTS
@@ -8545,12 +8545,12 @@ loc_00007E54:
 	MOVE.w	#4, D7
 	BSR.w	loc_00008518
 	BNE.w	loc_00007EB0
-	MOVE.l	#loc_0003BB3A, $1C(A5)
+	MOVE.l	#TsarkonFledEastwardStr, $1C(A5)
 	TST.b	$FFFFC784.w
 	BNE.w	loc_00007EB8
 	BSR.w	loc_0000857E
 	BGE.b	loc_00007EA6
-	MOVE.l	#loc_0003BAAC, $1C(A5)
+	MOVE.l	#TsarkonFledEastStr, $1C(A5)
 	TST.b	$FFFFC783.w
 	BEQ.b	loc_00007EB8
 	BSR.w	loc_00008572
@@ -8558,10 +8558,10 @@ loc_00007E54:
 	MOVE.b	#$FF, $FFFFC784.w
 	BRA.b	loc_00007EB8
 loc_00007EA6:
-	MOVE.l	#loc_0003BBAE, $1C(A5)
+	MOVE.l	#ComeBackLessGearStr3, $1C(A5)
 	BRA.b	loc_00007EB8
 loc_00007EB0:
-	MOVE.l	#loc_0003BB68, $1C(A5)	
+	MOVE.l	#MustHaveAllRingsStr, $1C(A5)	
 loc_00007EB8:
 	BRA.w	loc_00006F44
 	BSR.w	loc_00008234
@@ -8577,13 +8577,13 @@ loc_00007ECA:
 	BGE.b	loc_00007EF6
 	CMPI.w	#4, D0
 	BEQ.b	loc_00007EEC
-	MOVE.l	#loc_00037756, $1C(A5)
+	MOVE.l	#SleepInSoftBedStr, $1C(A5)
 	BRA.b	loc_00007EFE
 loc_00007EEC:
-	MOVE.l	#loc_00037756, $1C(A5)	
+	MOVE.l	#SleepInSoftBedStr, $1C(A5)	
 	BRA.b	loc_00007EFE	
 loc_00007EF6:
-	MOVE.l	#loc_000377A0, $1C(A5)	
+	MOVE.l	#SleepInSoftBedStr2, $1C(A5)	
 loc_00007EFE:
 	MOVEA.l	$2E(A5), A1
 	MOVE.b	#$FF, $25(A5)
@@ -9705,7 +9705,7 @@ loc_00008D44:
 	JSR	DeductPaymentAmount
 	MOVE.b	#$FF, $FFFFC766.w
 loc_00008D7A:
-	MOVE.l	#loc_000322FC, Script_talk_source.w
+	MOVE.l	#NothingForYouStr, Script_talk_source.w
 	BRA.b	loc_00008DC0
 loc_00008D84: ; buy Sanguios from little girl
 	MOVE.l	#PRICE_SANGUIOS, D0
@@ -9717,13 +9717,13 @@ loc_00008D84: ; buy Sanguios from little girl
 	MOVE.w	(A0), D0
 	CMPI.w	#8, D0
 	BLT.b	loc_00008DB8
-	MOVE.l	#loc_00032232, Script_talk_source.w	
+	MOVE.l	#BuyBookSanguiosThirdStr3, Script_talk_source.w	
 	BRA.b	loc_00008DC0	
 loc_00008DAE:
-	MOVE.l	#loc_00032176, Script_talk_source.w	
+	MOVE.l	#BuyBookSanguiosStr2, Script_talk_source.w	
 	BRA.b	loc_00008DC0	
 loc_00008DB8:
-	MOVE.l	#loc_000320C0, Script_talk_source.w
+	MOVE.l	#BuyBookSanguiosStr, Script_talk_source.w
 loc_00008DC0:
 	JMP	loc_0000F6DC
 loc_00008DC6:
@@ -9739,22 +9739,22 @@ loc_00008DDA:
 	LEA	Possessed_items_length.w, A2
 	MOVE.w	#$0114, D4 ; Crown?
 	JSR	loc_000084C0
-	MOVE.l	#loc_00034B78, Script_talk_source.w
+	MOVE.l	#ReturnToMalagaStr, Script_talk_source.w
 	BRA.b	loc_00008E20
 loc_00008DFC:
-	MOVE.l	#loc_00034AD4, Script_talk_source.w
+	MOVE.l	#NeverExpectedSucceedStr, Script_talk_source.w
 	TST.b	$FFFFC75B.w
 	BNE.b	loc_00008E20
-	MOVE.l	#loc_00034AB2, Script_talk_source.w
+	MOVE.l	#HaveYouGivenUpStr, Script_talk_source.w
 	TST.b	$FFFFC7ED.w
 	BNE.b	loc_00008E20
-	MOVE.l	#loc_000349CC, Script_talk_source.w
+	MOVE.l	#WaitingForPlayerNameStr, Script_talk_source.w
 loc_00008E20:
 	JMP	loc_0000F6DC
 loc_00008E26:
 	TST.b	Tsarkon_is_dead.w
 	BEQ.b	loc_00008E3E
-	MOVE.l	#loc_0003C10C, Script_talk_source.w
+	MOVE.l	#EvilDiedWithTsarkonStr, Script_talk_source.w
 	BCLR.b	#7, (A5)
 	CLR.b	$FFFFC578.w
 	RTS
@@ -19016,7 +19016,7 @@ loc_00010BEA:
 	MOVE.w	#6, $FFFF990A.w
 	MOVE.w	#0, $FFFF990E.w
 	BSR.w	loc_00012C9A
-	LEA	loc_0002194A, A0
+	LEA	MenuStartContinueStr, A0
 	MOVE.w	#2, $FFFF9906.w
 	MOVE.w	#2, $FFFF990C.w
 	BSR.w	loc_00012CE6
@@ -19051,7 +19051,7 @@ loc_00010C9E:
 	MOVE.w	#$000A, $FFFF990A.w
 	MOVE.w	#0, $FFFF990E.w
 	BSR.w	loc_00012C9A
-	LEA	loc_0002195A, A0
+	LEA	MenuOptionsStr, A0
 	MOVE.w	#2, $FFFF9906.w
 	MOVE.w	#2, $FFFF990C.w
 	BSR.w	loc_00012CE6
@@ -19066,7 +19066,7 @@ loc_00010CE2:
 	MOVE.w	#$000A, $FFFF990A.w	
 	MOVE.w	#0, $FFFF990E.w	
 	BSR.w	loc_00012C9A	
-	LEA	loc_00021984, A0	
+	LEA	MessageSpeedStr, A0	
 	MOVE.w	#1, $FFFF9906.w	
 	MOVE.w	#2, $FFFF990C.w	
 	BSR.w	loc_00012CE6	
@@ -19095,7 +19095,7 @@ loc_00010D44:
 	MOVE.w	#6, $FFFF990A.w
 	MOVE.w	#0, $FFFF990E.w
 	BSR.w	loc_00012C9A
-	LEA	loc_000219B0, A0
+	LEA	YesNoStr, A0
 	MOVE.w	#3, $FFFF9906.w
 	MOVE.w	#2, $FFFF990C.w
 	BSR.w	loc_00012CE6
@@ -19115,7 +19115,7 @@ loc_00010DA4:
 	MOVE.w	#7, $FFFF990A.w
 	MOVE.w	#0, $FFFF990E.w
 	BSR.w	loc_00012C9A
-	LEA	loc_00021D14, A0
+	LEA	SavedGameOptionsStr, A0
 	MOVE.w	#2, $FFFF9906.w
 	MOVE.w	#2, $FFFF990C.w
 	BSR.w	loc_00012CE6
@@ -19149,7 +19149,7 @@ loc_00010E46:
 	MOVE.w	#8, $FFFF990A.w
 	MOVE.w	#0, $FFFF990E.w
 	BSR.w	loc_00012C9A
-	LEA	loc_000219C4, A0
+	LEA	CastReadyDiscardStr, A0
 	MOVE.w	#2, $FFFF9906.w
 	MOVE.w	#2, $FFFF990C.w
 	BSR.w	loc_00012CE6
@@ -19168,7 +19168,7 @@ loc_00010EA2:
 	MOVE.w	#6, $FFFF990A.w
 	MOVE.w	#0, $FFFF990E.w
 	BSR.w	loc_00012C9A
-	LEA	loc_000219B8, A0
+	LEA	UseDiscardStr, A0
 	MOVE.w	#2, $FFFF9906.w
 	MOVE.w	#2, $FFFF990C.w
 	BSR.w	loc_00012CE6
@@ -19187,7 +19187,7 @@ loc_00010EFE:
 	MOVE.w	#8, $FFFF990A.w
 	MOVE.w	#0, $FFFF990E.w
 	BSR.w	loc_00012C9A
-	LEA	loc_000219D8, A0
+	LEA	PutOnRemoveStopStr, A0
 	MOVE.w	#2, $FFFF9906.w
 	MOVE.w	#2, $FFFF990C.w
 	BSR.w	loc_00012CE6
@@ -19206,7 +19206,7 @@ loc_00010F5A:
 	MOVE.w	#8, $FFFF990A.w
 	MOVE.w	#0, $FFFF990E.w
 	BSR.w	loc_00012C9A
-	LEA	loc_000219EC, A0
+	LEA	EquipOptionsStr, A0
 	MOVE.w	#2, $FFFF9906.w
 	MOVE.w	#2, $FFFF990C.w
 	BSR.w	loc_00012CE6
@@ -19225,7 +19225,7 @@ loc_00010FB6:
 	MOVE.w	#$000A, $FFFF990A.w
 	MOVE.w	#0, $FFFF990E.w
 	BSR.w	loc_00012C9A
-	LEA	loc_00021A00, A0
+	LEA	ChurchOptionsStr, A0
 	MOVE.w	#2, $FFFF9906.w
 	MOVE.w	#2, $FFFF990C.w
 	BSR.w	loc_00012CE6
@@ -19244,7 +19244,7 @@ loc_00011012:
 	MOVE.w	#8, $FFFF990A.w
 	MOVE.w	#0, $FFFF990E.w
 	BSR.w	loc_00012C9A
-	LEA	loc_00021A36, A0
+	LEA	BuySellStopStr, A0
 	MOVE.w	#2, $FFFF9906.w
 	MOVE.w	#2, $FFFF990C.w
 	BSR.w	loc_00012CE6
@@ -19259,7 +19259,7 @@ loc_0001106E:
 	MOVE.w	#6, $FFFF990A.w
 	MOVE.w	#0, $FFFF990E.w
 	BSR.w	loc_00012C9A
-	LEA	loc_00021A44, A0
+	LEA	KimStr, A0
 	MOVE.w	#2, $FFFF9906.w
 	MOVE.w	#2, $FFFF990C.w
 	BSR.w	loc_00012CE6
@@ -19754,7 +19754,7 @@ loc_0001168C:
 	MOVE.w	#$0010, $FFFF990A.w
 	MOVE.w	#0, $FFFF990E.w
 	BSR.w	loc_00012C9A
-	LEA	loc_00021BC0, A0
+	LEA	SelectNumberStr, A0
 	MOVE.w	#2, $FFFF9906.w
 	MOVE.w	#4, $FFFF990C.w
 	BSR.w	loc_00012CE6
@@ -19857,7 +19857,7 @@ loc_000117E8:
 	MOVE.w	#$000A, $FFFF990A.w
 	MOVE.w	#0, $FFFF990E.w
 	BSR.w	loc_00012C9A
-	LEA	loc_00021C24, A0
+	LEA	ErrorPressCStr, A0
 	MOVE.w	#2, $FFFF9906.w
 	MOVE.w	#2, $FFFF990C.w
 	BSR.w	loc_00012CE6
@@ -19872,7 +19872,7 @@ loc_0001182C:
 	MOVE.w	#$000A, $FFFF990A.w	
 	MOVE.w	#0, $FFFF990E.w	
 	BSR.w	loc_00012C9A	
-	LEA	loc_00021C48, A0	
+	LEA	LooksBetterPressCStr, A0	
 	MOVE.w	#2, $FFFF9906.w	
 	MOVE.w	#2, $FFFF990C.w	
 	BSR.w	loc_00012CE6	
@@ -19887,7 +19887,7 @@ loc_00011870:
 	MOVE.w	#$000A, $FFFF990A.w
 	MOVE.w	#0, $FFFF990E.w
 	BSR.w	loc_00012C9A
-	LEA	loc_00021C72, A0
+	LEA	DidntWorkPressResetStr, A0
 	MOVE.w	#2, $FFFF9906.w
 	MOVE.w	#2, $FFFF990C.w
 	BSR.w	loc_00012CE6
@@ -19902,7 +19902,7 @@ loc_000118B4:
 	MOVE.w	#$000A, $FFFF990A.w
 	MOVE.w	#0, $FFFF990E.w
 	BSR.w	loc_00012C9A
-	LEA	loc_00021CA8, A0
+	LEA	NoSavedGameStr, A0
 	MOVE.w	#2, $FFFF9906.w
 	MOVE.w	#2, $FFFF990C.w
 	BSR.w	loc_00012CE6
@@ -19917,7 +19917,7 @@ loc_000118F8:
 	MOVE.w	#$000A, $FFFF990A.w	
 	MOVE.w	#0, $FFFF990E.w	
 	BSR.w	loc_00012C9A	
-	LEA	loc_00021CE8, A0	
+	LEA	GameReadyPressCStr, A0	
 	MOVE.w	#2, $FFFF9906.w	
 	MOVE.w	#2, $FFFF990C.w	
 	BSR.w	loc_00012CE6	
@@ -19932,7 +19932,7 @@ loc_0001193C:
 	MOVE.w	#$0014, $FFFF990A.w
 	MOVE.w	#0, $FFFF990E.w
 	BSR.w	loc_00012C9A
-	LEA	loc_00021A48, A0
+	LEA	CharacterStatsStr, A0
 	MOVE.w	#2, $FFFF9906.w
 	MOVE.w	#2, $FFFF990C.w
 	BSR.w	loc_00012CE6
@@ -20043,7 +20043,7 @@ loc_00011AEC:
 	MOVE.w	#$000C, $FFFF990A.w
 	MOVE.w	#0, $FFFF990E.w
 	BSR.w	loc_00012C9A
-	LEA	loc_00021AD4, A0
+	LEA	EquipmentReadiedStr, A0
 	MOVE.w	#1, $FFFF9906.w
 	MOVE.w	#2, $FFFF990C.w
 	BSR.w	loc_00012CE6
@@ -20106,7 +20106,7 @@ loc_00011BB8:
 	MOVE.w	D0, $FFFF990A.w
 	MOVE.w	#0, $FFFF990E.w
 	BSR.w	loc_00012C9A
-	LEA	loc_00021B04, A0
+	LEA	GearCombatStr, A0
 	MOVE.w	#2, $FFFF9906.w
 	MOVE.w	#2, $FFFF990C.w
 	BSR.w	loc_00012CE6
@@ -20137,7 +20137,7 @@ loc_00011C4C:
 	MOVE.w	#5, $FFFF990A.w	
 	MOVE.w	#0, $FFFF990E.w	
 	BSR.w	loc_00012C9A	
-	LEA	loc_00021B04, A0	
+	LEA	GearCombatStr, A0	
 	MOVE.w	#2, $FFFF9906.w	
 	MOVE.w	#2, $FFFF990C.w	
 	BSR.w	loc_00012CE6	
@@ -20180,7 +20180,7 @@ loc_00011CC2:
 	MOVE.w	D0, $FFFF990A.w
 	MOVE.w	#0, $FFFF990E.w
 	BSR.w	loc_00012C9A
-	LEA	loc_00021B12, A0
+	LEA	GearMagicStr, A0
 	MOVE.w	#2, $FFFF9906.w
 	MOVE.w	#2, $FFFF990C.w
 	BSR.w	loc_00012CE6
@@ -20211,7 +20211,7 @@ loc_00011D56:
 	MOVE.w	#5, $FFFF990A.w
 	MOVE.w	#0, $FFFF990E.w
 	BSR.w	loc_00012C9A
-	LEA	loc_00021B12, A0
+	LEA	GearMagicStr, A0
 	MOVE.w	#2, $FFFF9906.w
 	MOVE.w	#2, $FFFF990C.w
 	BSR.w	loc_00012CE6
@@ -20233,7 +20233,7 @@ loc_00011D96:
 	MOVE.w	D0, $FFFF990A.w
 	MOVE.w	#0, $FFFF990E.w
 	BSR.w	loc_00012C9A
-	LEA	loc_00021B20, A0
+	LEA	GearItemStr, A0
 	MOVE.w	#2, $FFFF9906.w
 	MOVE.w	#2, $FFFF990C.w
 	BSR.w	loc_00012CE6
@@ -20258,7 +20258,7 @@ loc_00011E12:
 	MOVE.w	#5, $FFFF990A.w	
 	MOVE.w	#0, $FFFF990E.w	
 	BSR.w	loc_00012C9A	
-	LEA	loc_00021B20, A0	
+	LEA	GearItemStr, A0	
 	MOVE.w	#2, $FFFF9906.w	
 	MOVE.w	#2, $FFFF990C.w	
 	BSR.w	loc_00012CE6	
@@ -20292,7 +20292,7 @@ loc_00011E62:
 	MOVE.w	D0, $FFFF990A.w
 	MOVE.w	#0, $FFFF990E.w
 	BSR.w	loc_00012C9A
-	LEA	loc_00021B2C, A0
+	LEA	RingsStr, A0
 	MOVE.w	#7, $FFFF9906.w
 	MOVE.w	#2, $FFFF990C.w
 	BSR.w	loc_00012CE6
@@ -20322,7 +20322,7 @@ loc_00011EF8:
 	MOVE.w	#5, $FFFF990A.w	
 	MOVE.w	#0, $FFFF990E.w	
 	BSR.w	loc_00012C9A	
-	LEA	loc_00021B2C, A0	
+	LEA	RingsStr, A0	
 	MOVE.w	#2, $FFFF9906.w	
 	MOVE.w	#2, $FFFF990C.w	
 	BSR.w	loc_00012CE6	
@@ -22961,7 +22961,7 @@ loc_00015968:
 	MOVE.w	#$A080, D4
 	BSR.w	loc_00015AE2
 	MOVE.l	#$61060003, D5
-	LEA	loc_00015BAE, A0
+	LEA	Prologue1Str, A0
 	MOVE.w	#$84C0, D4
 	BSR.w	loc_00015B0C
 	MOVE.l	#$67840003, D5
@@ -22972,7 +22972,7 @@ loc_00015968:
 	MOVE.w	#$E100, D4
 	BSR.w	loc_00015AE2
 	MOVE.l	#$67A40003, D5
-	LEA	loc_00015C12, A0
+	LEA	Prologue2Str, A0
 	MOVE.w	#$C4C0, D4
 	BSR.w	loc_00015B0C
 	ANDI	#$F8FF, SR
@@ -22988,7 +22988,7 @@ loc_000159DE:
 	MOVE.w	#$C180, D4
 	BSR.w	loc_00015AE2
 	MOVE.l	#$61820003, D5
-	LEA	loc_00015C64, A0
+	LEA	Prologue3Str, A0
 	MOVE.w	#$84C0, D4
 	BSR.w	loc_00015B0C
 	ANDI	#$F8FF, SR
@@ -23004,7 +23004,7 @@ loc_00015A1E:
 	MOVE.w	#$A200, D4
 	BSR.w	loc_00015AE2
 	MOVE.l	#$61A40003, D5
-	LEA	loc_00015D36, A0
+	LEA	Prologue4Str, A0
 	MOVE.w	#$84C0, D4
 	BSR.w	loc_00015B0C
 	MOVE.l	#$67B00003, D5
@@ -23015,7 +23015,7 @@ loc_00015A1E:
 	MOVE.w	#$E280, D4
 	BSR.w	loc_00015AE2
 	MOVE.l	#$68840003, D5
-	LEA	loc_00015D80, A0
+	LEA	Prologue5Str, A0
 	MOVE.w	#$C4C0, D4
 	BSR.w	loc_00015B0C
 	ANDI	#$F8FF, SR
@@ -23024,7 +23024,7 @@ loc_00015A1E:
 loc_00015A94:
 	ORI	#$0700, SR
 	MOVE.l	#$648E0003, D5
-	LEA	loc_00015DCC, A0
+	LEA	Prologue6Str, A0
 	MOVE.w	#$84C0, D4
 	BSR.w	loc_00015B0C
 	ANDI	#$F8FF, SR
@@ -23135,19 +23135,19 @@ loc_00015B70: ; Fade animation data during prologue
 	dc.b	$00, $00, $02 
 	dc.b	$FF
 	dc.b	$00, $00, $00, $00 
-loc_00015BAE:
+Prologue1Str:
 	dc.b	"Long ago, King", $FE
 	dc.b	"Tsarkon of Cartahena", $FE
 	dc.b	"unleashed his evil", $FE
 	dc.b	"hordes upon the", $FE
 	dc.b	"peaceful land of", $FE
 	dc.b	"Excalabria.", $FF 
-loc_00015C12: 
+Prologue2Str: 
 	dc.b	"Though the people of", $FE
 	dc.b	"Excalabria fought", $FE
 	dc.b	"bravely, in the end", $FE
 	dc.b	"they were overwhelmed.", $FF
-loc_00015C64:
+Prologue3Str:
 	dc.b	"As his castle", $FE
 	dc.b	"collapsed around him,", $FE
 	dc.b	"King Erik V of", $FE
@@ -23160,17 +23160,17 @@ loc_00015C64:
 	dc.b	"Ring of Wisdom, an", $FE
 	dc.b	"ancient family", $FE
 	dc.b	"heirloom.", $FF
-loc_00015D36:
+Prologue4Str:
 	dc.b	"Blade slipped out a", $FE
 	dc.b	"secret passage as the", $FE
 	dc.b	"castle was engulfed", $FE
 	dc.b	"in flames.", $FF, $00
-loc_00015D80:
+Prologue5Str:
 	dc.b	"He fled with the babe", $FE
 	dc.b	"to a distant village", $FE
 	dc.b	"and raised the child", $FE
 	dc.b	"as his own.", $FF
-loc_00015DCC:
+Prologue6Str:
 	dc.b	"Tsarkon vowed to devote", $FE
 	dc.b	"all of Cartahena's power", $FE
 	dc.b	"to searching for the", $FE
@@ -24654,7 +24654,7 @@ loc_0001708C:
 	BGT.b	loc_000170BE
 	MOVE.w	#$0085, $FFFFC0B6.w
 	MOVE.l	#$67140003, D5
-	LEA	loc_00017726, A0
+	LEA	Outro1Str, A0
 	MOVE.w	#$84C0, D4
 	JSR	loc_00015B0C
 	MOVE.b	#1, $FFFFC0AB.w
@@ -24680,7 +24680,7 @@ loc_000170DE:
 	BSR.w	loc_0001765A
 	MOVE.w	#$0085, $FFFFC0B6.w
 	MOVE.l	#$67140003, D5
-	LEA	loc_00017760, A0
+	LEA	Outro2Str, A0
 	MOVE.w	#$84C0, D4
 	JSR	loc_00015B0C
 	MOVE.b	#1, $FFFFC0AB.w
@@ -24732,7 +24732,7 @@ loc_0001719C:
 	CMPI.w	#$FFCE, $FFFFC18A.w
 	BGT.b	loc_000171DE
 	MOVE.l	#$413C0003, D5
-	LEA	loc_000177CE, A0
+	LEA	Outro3Str, A0
 	MOVE.w	#$84C0, D4
 	JSR	loc_00015B0C
 	MOVE.w	#$0095, $FFFFC0B6.w
@@ -24759,7 +24759,7 @@ loc_00017206:
 	BNE.b	loc_0001723C
 	BSR.w	loc_00017690
 	MOVE.l	#$413C0003, D5
-	LEA	loc_00017880, A0
+	LEA	Outro4Str, A0
 	MOVE.w	#$84C0, D4
 	JSR	loc_00015B0C
 	MOVE.w	#$0095, $FFFFC0B6.w
@@ -24783,7 +24783,7 @@ loc_00017260:
 	BNE.b	loc_00017296
 	BSR.w	loc_00017690
 	MOVE.l	#$413C0003, D5
-	LEA	loc_00017922, A0
+	LEA	Outro5Str, A0
 	MOVE.w	#$84C0, D4
 	JSR	loc_00015B0C
 	MOVE.w	#$0095, $FFFFC0B6.w
@@ -25129,17 +25129,17 @@ loc_0001771E:
 loc_00017724:
 	RTS
 
-loc_00017726:
+Outro1Str:
 	dc.b	"Mother, let's go back to", $FE
 	dc.b	"the village where", $FE
 	dc.b	"I was raised.", $FF, $00
-loc_00017760:
+Outro2Str:
 	dc.b	"Yes, let's do that.", $FE
 	dc.b	"You're grown now,", $FE 
 	dc.b	"and you've become important.", $FE
 	dc.b	"It's time for", $FE
 	dc.b	"you to visit Blade's grave.", $FF, $00
-loc_000177CE:
+Outro3Str:
 	dc.b	"Whenever evil", $FE
 	dc.b	"oversteps its",  $FE
 	dc.b	"bounds and", $FE
@@ -25152,7 +25152,7 @@ loc_000177CE:
 	dc.b	"call this time,", $FE
 	dc.b	"and the balance", $FE
 	dc.b	"between good", $FF, $00
-loc_00017880:
+Outro4Str:
 	dc.b	"and evil has", $FE
 	dc.b	"been restored.", $FE
 	dc.b	"Who will answer", $FE
@@ -25165,7 +25165,7 @@ loc_00017880:
 	dc.b	"Vermilion.", $FE
 	dc.b	"You married", $FE
 	dc.b	"your Princess", $FF
-loc_00017922:
+Outro5Str:
 	dc.b	"and rebuilt", $FE
 	dc.b	"Excalabria as", $FE
 	dc.b	"the heart of", $FE
@@ -29276,7 +29276,7 @@ loc_0001B2DC:
 	BNE.w	loc_0001B35E
 	TST.b	$FFFFC77C.w
 	BNE.w	loc_0001B35E
-	PRINT 	loc_000300D4
+	PRINT 	CustomerStayHereStr
 	TST.b	$FFFFC729.w
 	BNE.b	loc_0001B302
 	BRA.w	loc_0001B3B0
@@ -29287,7 +29287,7 @@ loc_0001B302:
 	BRA.w	loc_0001B35E	
 loc_0001B312:
 	LEA	$FFFFC260.w, A1
-	LEA	loc_00030154, A0
+	LEA	StayingForFreeStr, A0
 	JSR	loc_00012A6C
 	MOVE.b	#$FE, (A1)+
 	MOVE.w	$FFFFC7F6.w, D0
@@ -29297,7 +29297,7 @@ loc_0001B312:
 	BSR.w	loc_0001CF38
 	MOVE.b	#$2C, (A1)+
 	MOVE.b	#$FE, (A1)+
-	LEA	loc_000301B8, A0
+	LEA	PayOrWorkStr, A0
 	JSR	loc_00012A6C
 	MOVE.b	#$FF, (A1)
 	PRINT 	$FFFFC260
@@ -29435,17 +29435,17 @@ loc_0001B514:
 	RTS
 
 loc_0001B51C:
-	dc.l	loc_0001B52C
-	dc.l	loc_0001B546
-	dc.l	loc_0001B58A
-	dc.l	loc_0001B952
-loc_0001B52C:
+	dc.l	WelcomeMessageStr
+	dc.l	HostileGreetingStr
+	dc.l	ExplanationStr
+	dc.l	DoneMyBestStr
+WelcomeMessageStr:
 	dc.b	"Welcome! May I help you?", $FF, $00
-loc_0001B546:
+HostileGreetingStr:
 	dc.b	"You again! I'll have", $FE
 	dc.b	"nothing to do with the", $FE
 	dc.b	"likes of you! Go away!", $FF, $00
-loc_0001B58A:
+ExplanationStr:
 	dc.b	"At last I can explain my", $FE
 	dc.b	"actions. I took your sword", $FE
 	dc.b	"and gold so that I could", $FD
@@ -29486,7 +29486,7 @@ loc_0001B6F0:
 	JSR	loc_000012F2
 	BEQ.b	loc_0001B73A
 	JSR	loc_00010C4A	
-	PRINT 	loc_0001B7CA	
+	PRINT 	NoLeaveWithoutBuyingStr	
 	CLR.b	$FFFFC20F.w	
 	MOVE.w	#$00A8, D0	
 	JSR	loc_00010522	
@@ -29528,20 +29528,20 @@ loc_0001B784:
 	ANDI.w	#$00FF, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
-	LEA	loc_0001B7F4, A0
+	LEA	VeryExpensiveStr, A0
 	JSR	loc_00012A6C
 	MOVE.b	#$FF, (A1)
 	PRINT 	$FFFFC260
 	MOVE.w	#$30, Dialogue_state.w
 	RTS
 
-loc_0001B7CA:
+NoLeaveWithoutBuyingStr:
 	dc.b	"You can't leave unless", $FE
 	dc.b	"you buy something!", $FF
-loc_0001B7F4:
+VeryExpensiveStr:
 	dc.b	"OK, but that's", $FE
 	dc.b	"very expensive.", $FF, $00
-loc_0001B814:
+NotEnoughMoneyStr:
 	dc.b	"It seems that you don't", $FE
 	dc.b	"have enough money to buy", $FE
 	dc.b	"that item. What can we do?", $FD
@@ -29551,13 +29551,13 @@ loc_0001B814:
 	dc.b	"without a sword. Here, take", $FE
 	dc.b	"this one and get out before", $FE
 	dc.b	"I change my mind.", $FF, $00
-loc_0001B8EE:
+InsufficientFundsStr:
 	dc.b	"You don't have enough", $FE
 	dc.b	"money to buy that item.", $FF
-loc_0001B91C:
+ComeBackWithLessStr:
 	dc.b	"Please come back when you", $FE
 	dc.b	"have less combat equipment.", $FF
-loc_0001B952:
+DoneMyBestStr:
 	dc.b	"I have done my best;", $FE
 	dc.b	"the rest is up to you.", $FF
 
@@ -29586,7 +29586,7 @@ loc_0001B97E:
 	BRA.w	loc_0001BA8A	
 loc_0001B9E4:
 	CLR.b	$FFFFC20F.w
-	PRINT 	loc_0001B814
+	PRINT 	NotEnoughMoneyStr
 	LEA	Possessed_equipment_length.w, A2
 	LEA	(A2), A1
 	MOVE.w	(A2)+, D7
@@ -29612,7 +29612,7 @@ loc_0001BA22:
 	MOVE.w	(A1), D0
 	CMPI.w	#8, D0
 	BLT.b	loc_0001BA38
-	PRINT 	loc_0001B8EE	
+	PRINT 	InsufficientFundsStr	
 	BRA.b	loc_0001BA8A	
 loc_0001BA38:
 	MOVE.w	(A1), D0
@@ -29654,7 +29654,7 @@ loc_0001BAA4:
 	JSR	loc_00012766
 	JSR	loc_000126DA
 	JSR	loc_00010C4A
-	PRINT 	loc_0001B7CA
+	PRINT 	NoLeaveWithoutBuyingStr
 	CLR.b	$FFFFC20F.w
 	RTS
 
@@ -29673,7 +29673,7 @@ loc_0001BAF6:
 	MOVE.w	(A0), D0
 	CMPI.w	#8, D0 ; Max number of equipment
 	BLT.b	loc_0001BB0C
-	PRINT 	loc_0001B91C	
+	PRINT 	ComeBackWithLessStr	
 	BRA.b	loc_0001BB1E	
 loc_0001BB0C:
 	MOVE.w	(A0), D0
@@ -30716,11 +30716,11 @@ loc_0001C8FA:
 	BNE.b	loc_0001C92A
 	TST.b	$FFFFC729.w
 	BEQ.b	loc_0001C920
-	PRINT 	loc_000301EA
+	PRINT 	DontPullOnMeStr
 	MOVE.b	#$FF, $FFFFC77C.w
 	BRA.b	loc_0001C932
 loc_0001C920:
-	PRINT 	loc_000301D0
+	PRINT 	MoveAlongStr
 	BRA.b	loc_0001C932
 loc_0001C92A:
 	PRINT 	BetterMorningStr
@@ -32524,7 +32524,7 @@ loc_0001E172:
 	BNE.w	loc_0001E1CC	
 	JSR	loc_0000857E	
 	BGE.w	loc_0001E1BA	
-	LEA	loc_00025842, A2	
+	LEA	TitaniasMirrorStr, A2	
 	BSR.w	loc_0001E410	
 	BSR.w	loc_0001E42C	
 	JSR	loc_00008572	
@@ -32534,7 +32534,7 @@ loc_0001E172:
 	JSR	loc_00010522	
 	BRA.w	loc_0001E1C8	
 loc_0001E1BA:
-	LEA	loc_00025842, A2	
+	LEA	TitaniasMirrorStr, A2	
 	BSR.w	loc_0001E410	
 	BSR.w	loc_0001E452	
 loc_0001E1C8:
@@ -32552,7 +32552,7 @@ loc_0001E22E:
 	BNE.w	loc_0001E280
 	JSR	loc_0000857E
 	BGE.w	loc_0001E26E
-	LEA	loc_0002587C, A2
+	LEA	RafaelsStickStr, A2
 	BSR.w	loc_0001E410
 	BSR.w	loc_0001E42C
 	JSR	loc_00008572
@@ -32562,7 +32562,7 @@ loc_0001E22E:
 	JSR	loc_00010522
 	BRA.w	loc_0001E27C
 loc_0001E26E:
-	LEA	loc_0002587C, A2	
+	LEA	RafaelsStickStr, A2	
 	BSR.w	loc_0001E410	
 	BSR.w	loc_0001E452	
 loc_0001E27C:
@@ -32574,7 +32574,7 @@ loc_0001E280:
 loc_0001E288:
 	JSR	loc_0000857E	
 	BGE.w	loc_0001E2BA	
-	LEA	loc_000256E4, A2	
+	LEA	HerbsStr, A2	
 	BSR.w	loc_0001E410	
 	BSR.w	loc_0001E42C	
 	JSR	loc_00008572	
@@ -32583,7 +32583,7 @@ loc_0001E288:
 	JSR	loc_00010522	
 	BRA.w	loc_0001E2C8	
 loc_0001E2BA:
-	LEA	loc_000256E4, A2	
+	LEA	HerbsStr, A2	
 	BSR.w	loc_0001E410	
 	BSR.w	loc_0001E452	
 loc_0001E2C8:
@@ -32591,7 +32591,7 @@ loc_0001E2C8:
 
 loc_0001E2CC: ; Find 1kim
 	dc.b	$45, $F9 
-	dc.l	loc_0001E40A 
+	dc.l	OneKimStr 
 	dc.b	$61, $00, $01, $3C, $61, $00, $01, $54, $21, $FC, $00, $00, $00, $01, $C6, $5A, $4E, $B9, $00, $01, $15, $76, $30, $3C, $00, $A6 
 	dc.b	$4E, $B9, $00, $01, $05, $22, $60, $00, $00, $1E
 
@@ -32659,27 +32659,28 @@ loc_0001E3AC:
 	dc.l	loc_0001E2F6
 	dc.w	$FFFF
 
-loc_0001E3C2:
+FoundItemStr:
 	dc.b	"found ", $FF, $00
-loc_0001E3CA:
+FoundItemCommaStr:
 	dc.b	",", $FE
 	dc.b	"and received ", $FF
-loc_0001E3DA:
+TooMuchToCarryStr:
 	dc.b	",", $FE
 	dc.b	"but there is too much", $FE
 	dc.b	"here for you to carry.", $FF, $00
-loc_0001E40A:
+OneKimStr:
 	dc.b	"1kim", $FF, $00
+
 loc_0001E410:
 	JSR	loc_0001D650
-	LEA	loc_0001E3C2, A0
+	LEA	FoundItemStr, A0
 	JSR	loc_00012A6C
 	MOVEA.l	A2, A0
 	JSR	loc_00012A6C
 	RTS
 	
 loc_0001E42C:
-	LEA	loc_0001E3CA, A0
+	LEA	FoundItemCommaStr, A0
 	JSR	loc_00012A6C
 	MOVEA.l	A2, A0
 	JSR	loc_00012A6C
@@ -32689,7 +32690,7 @@ loc_0001E42C:
 	RTS
 	
 loc_0001E452:
-	LEA	loc_0001E3DA, A0	
+	LEA	TooMuchToCarryStr, A0	
 	JSR	loc_00012A6C	
 	MOVE.b	#$FF, (A1)+	
 	PRINT 	$FFFFC260	
@@ -33733,33 +33734,33 @@ loc_0001F39C:
 	dc.l	loc_00000000 
 	dc.l	loc_0009239A
 loc_0001F3B0:
-	dc.l	loc_00029330
-	dc.l	loc_000294F2
-	dc.l	loc_00035106
-	dc.l	loc_00032112 
-	dc.l	loc_00032384
-	dc.l	loc_0002B294
-	dc.l	loc_00035106
-	dc.l	loc_00035106
-	dc.l	loc_000321C6
-	dc.l	loc_00032282 
-	dc.l	loc_0003789C
-	dc.l	loc_0003BE84
-	dc.l	loc_0003BEEE
+	dc.l	NoChoiceStr
+	dc.l	RingOfSkyGiftStr
+	dc.l	WhyHereStr
+	dc.l	BuyItStr 
+	dc.l	JustBorrowedBookStr
+	dc.l	DontRefuseUsStr
+	dc.l	WhyHereStr
+	dc.l	WhyHereStr
+	dc.l	TurnDownBargainStr
+	dc.l	TurnDownBargainStr2 
+	dc.l	HurryBringBackHusbandsStr
+	dc.l	BreakMothersHeartStr
+	dc.l	OneOfUsWillDieStr
 loc_0001F3E4:
-	dc.l	loc_0002936A
-	dc.l	loc_000295C0
-	dc.l	loc_0003511E
-	dc.l	loc_00032130
-	dc.l	loc_00032378
-	dc.l	loc_0002B256
-	dc.l	loc_0003519A
-	dc.l	loc_00035202 
-	dc.l	loc_000321F2
-	dc.l	loc_000322AE 
-	dc.l	loc_000377EA
-	dc.l	loc_0003BE32
-	dc.l	loc_0003BE32
+	dc.l	OffYouGoStr
+	dc.l	DecideToLiveHereStr
+	dc.l	BoughtFromMeStr
+	dc.l	MoreNeatStuffStr
+	dc.l	ThankYouStr3
+	dc.l	KeepRingOfWaterStr
+	dc.l	CantAffordPassStr
+	dc.l	TooMuchGearStr 
+	dc.l	NotEnoughMoneyStr2
+	dc.l	NoRoomMoreBooksStr 
+	dc.l	LazySlugStr
+	dc.l	ChaosReignStr
+	dc.l	ChaosReignStr
 loc_0001F418: ; Tile mappings + graphics by town
 	dc.l	loc_0008863E
 	dc.l	loc_0008A34A
@@ -35027,7 +35028,7 @@ loc_0002051A:
 	
 loc_00020542:
 	BSR.w	loc_00021498	
-	MOVE.l	#loc_00021510, Script_talk_source.w	
+	MOVE.l	#LongDangerousRoadAheadStr, Script_talk_source.w	
 	RTS
 	
 	
@@ -35039,7 +35040,7 @@ loc_00020550:
 	
 loc_00020564:
 	BSR.w	loc_00021498
-	MOVE.l	#loc_00021558, Script_talk_source.w
+	MOVE.l	#WrongRoadStr, Script_talk_source.w
 	RTS
 	
 loc_00020572:
@@ -35079,79 +35080,79 @@ loc_000205EA:
 	
 loc_000205FE:
 	BSR.w	loc_000214B6
-	MOVE.l	#loc_00021594, Script_talk_source.w
+	MOVE.l	#MerchantFromParmaStr, Script_talk_source.w
 	RTS
 	
 loc_0002060C:
 	BSR.w	loc_000214B6
-	MOVE.l	#loc_000215DA, Script_talk_source.w
+	MOVE.l	#PreparedForTaskStr, Script_talk_source.w
 	RTS
 	
 loc_0002061A:
 	BSR.w	loc_000214B6
-	MOVE.l	#loc_0002160C, Script_talk_source.w
+	MOVE.l	#HeadedToWatlingStr, Script_talk_source.w
 	RTS
 	
 loc_00020628:
 	BSR.w	loc_000214B6
-	MOVE.l	#loc_0002164A, Script_talk_source.w
+	MOVE.l	#WayToDeepdaleStr, Script_talk_source.w
 	RTS
 	
 loc_00020636:
 	BSR.w	loc_00021498
-	MOVE.l	#loc_00021676, Script_talk_source.w
+	MOVE.l	#LongWayToStowStr, Script_talk_source.w
 	RTS
 	
 loc_00020644:
 	BSR.w	loc_00021498	
-	MOVE.l	#loc_000216A2, Script_talk_source.w	
+	MOVE.l	#GreetingsWarriorStr, Script_talk_source.w	
 	RTS
 	
 loc_00020652:
 	BSR.w	loc_000214B6
-	MOVE.l	#loc_000216E0, Script_talk_source.w
+	MOVE.l	#EvilFlourishesStr, Script_talk_source.w
 	RTS
 	
 loc_00020660:
 	BSR.w	loc_00021498	
-	MOVE.l	#loc_002170E, Script_talk_source.w	
+	MOVE.l	#AppearancesDeceiveStr, Script_talk_source.w	
 	RTS
 	
 loc_0002066E:
 	dc.b	$61, $00, $0E, $28, $21, $FC, $00, $02, $17, $3A, $C2, $50, $4E, $75 
 loc_0002067C:
 	BSR.w	loc_00021498
-	MOVE.l	#loc_0002176C, Script_talk_source.w
+	MOVE.l	#ProgressingWellStr, Script_talk_source.w
 	RTS
 	
 loc_0002068A:
 	BSR.w	loc_00021498	
-	MOVE.l	#loc_00021798, Script_talk_source.w	
+	MOVE.l	#TharFashionsEvilStr, Script_talk_source.w	
 	RTS
 	
 loc_00020698:
 	BSR.w	loc_00021498
-	MOVE.l	#loc_000217C4, Script_talk_source.w
+	MOVE.l	#UseBansheePowderStr, Script_talk_source.w
 	RTS
 	
 loc_000206A6:
 	BSR.w	loc_00021498
-	MOVE.l	#loc_000217FA, Script_talk_source.w
+	MOVE.l	#TsarkonPawnOfEvilStr, Script_talk_source.w
 	RTS
 	
 loc_000206B4:
 	BSR.w	loc_00021498
-	MOVE.l	#loc_00021818, Script_talk_source.w
+	MOVE.l	#SpendWealthWiselyStr, Script_talk_source.w
 	RTS
 	
 loc_000206C2:
 	BSR.w	loc_00021498
-	MOVE.l	#loc_00021832, Script_talk_source.w
+	MOVE.l	#LearnFromMistakesStr, Script_talk_source.w
 	RTS
 	
 loc_000206D0:
 	BSR.w	loc_00021498
-	MOVE.l	#loc_00021860, Script_talk_source.w
+	MOVE.l	#SawMotherInCartahenaStr, Script_talk_source.w
 	RTS
 	
 loc_000206DE:
@@ -35743,7 +35744,7 @@ loc_00020FE4:
 	TST.b	$FFFFC729.w
 	BNE.b	loc_00021004
 	BSR.w	loc_000214F2
-	MOVE.l	#loc_00030218, Script_talk_source.w
+	MOVE.l	#StoleYouthStr, Script_talk_source.w
 loc_00021004:
 	RTS
 	
@@ -35755,16 +35756,16 @@ loc_00021006:
 	MOVE.l	#loc_00008ADA, $2(A6)
 	MOVE.l	#loc_0001F72E, $FFFFC566.w
 	BSR.w	loc_000213FE
-	MOVE.l	#loc_000323D2, Script_talk_source.w
+	MOVE.l	#SorryForStealingStr, Script_talk_source.w
 	TST.b	$FFFFC730.w
 	BNE.b	loc_0002105C
-	MOVE.l	#loc_00032326, Script_talk_source.w
+	MOVE.l	#DidntStealBookStr, Script_talk_source.w
 	TST.b	$FFFFC72F.w
 	BNE.b	loc_0002105C
-	MOVE.l	#loc_000322FC, Script_talk_source.w
+	MOVE.l	#NothingForYouStr, Script_talk_source.w
 	TST.b	$FFFFC72E.w
 	BNE.b	loc_0002105C
-	MOVE.l	#loc_000320C0, Script_talk_source.w
+	MOVE.l	#BuyBookSanguiosStr, Script_talk_source.w
 loc_0002105C:
 	RTS
 	
@@ -35774,7 +35775,7 @@ loc_0002105E:
 	TST.b	$FFFFC731.w
 	BNE.b	loc_00021078
 	BSR.w	loc_000214D4
-	MOVE.l	#loc_0003248A, Script_talk_source.w
+	MOVE.l	#MeetAgainStr2, Script_talk_source.w
 	BRA.b	loc_00021080
 loc_00021078:
 	MOVE.l	#NoOneHereStr, Script_talk_source.w
@@ -35792,7 +35793,7 @@ loc_00021082:
 	MOVE.l	#loc_00008B4C, $2(A6)
 	MOVE.l	#loc_0001F74A, $FFFFC566.w
 	BSR.w	loc_000213FE
-	MOVE.l	#loc_00033624, Script_talk_source.w
+	MOVE.l	#BearwulfIntroductionStr, Script_talk_source.w
 loc_000210BC:
 	RTS
 
@@ -35817,10 +35818,10 @@ loc_000210E0:
 	MOVE.l	#loc_00008B1C, $2(A6)
 	MOVE.l	#loc_0001F712, $FFFFC566.w
 	BSR.w	loc_000213FE
-	MOVE.l	#loc_00034AD4, Script_talk_source.w
+	MOVE.l	#NeverExpectedSucceedStr, Script_talk_source.w
 	TST.b	$FFFFC75B.w
 	BNE.b	loc_00021128
-	MOVE.l	#loc_000349CC, Script_talk_source.w
+	MOVE.l	#WaitingForPlayerNameStr, Script_talk_source.w
 loc_00021128:
 	RTS
 
@@ -35847,7 +35848,7 @@ loc_00021160:
 	MOVE.l	#loc_00008B0A, $2(A6)
 	MOVE.l	#loc_0001F7D6, $FFFFC566.w
 	BSR.w	loc_000213FE
-	MOVE.l	#loc_00036640, Script_talk_source.w
+	MOVE.l	#AwaitingYouStr, Script_talk_source.w
 loc_0002119A:
 	RTS
 
@@ -35858,7 +35859,7 @@ loc_0002119C:
 	TST.b	$FFFFC744.w
 	BNE.b	loc_000211BC
 	BSR.w	loc_000214F2
-	MOVE.l	#loc_000379B6, Script_talk_source.w
+	MOVE.l	#FreeAtLastStr, Script_talk_source.w
 loc_000211BC:
 	RTS
 
@@ -35922,10 +35923,10 @@ loc_00021284:
 	TST.b	$FFFFC774.w
 	BNE.w	loc_000212AA
 	BSR.w	loc_000214D4
-	MOVE.l	#loc_0003BC72, Script_talk_source.w
+	MOVE.l	#DieLaughStr, Script_talk_source.w
 	TST.b	$FFFFC750.w
 	BEQ.w	loc_000212A8
-	MOVE.l	#loc_0003BC2C, Script_talk_source.w
+	MOVE.l	#WishPoisonKilledStr, Script_talk_source.w
 loc_000212A8:
 	RTS
 	
@@ -35946,7 +35947,7 @@ loc_000212D8:
 	TST.b	$FFFFC775.w
 	BNE.w	loc_000212EE
 	BSR.w	loc_00021498
-	MOVE.l	#loc_0003BC8E, Script_talk_source.w
+	MOVE.l	#TharRevengeStr, Script_talk_source.w
 	RTS
 	
 loc_000212EE:
@@ -35966,7 +35967,7 @@ loc_0002131C:
 	TST.b	$FFFFC776.w
 	BNE.w	loc_00021332
 	BSR.w	loc_00021498
-	MOVE.l	#loc_0003BD14, Script_talk_source.w
+	MOVE.l	#LutherDevastatedSwaffhamStr, Script_talk_source.w
 	RTS
 	
 loc_00021332:
@@ -35993,19 +35994,19 @@ loc_00021360:
 	MOVE.l	#loc_00008B2E, $2(A6)
 	MOVE.l	#loc_0001F7F2, $FFFFC566.w
 	BSR.w	loc_000213FE
-	MOVE.l	#loc_0003BF0E, Script_talk_source.w
+	MOVE.l	#FreedAtLastStr, Script_talk_source.w
 	TST.b	$FFFFC778.w
 	BNE.b	loc_000213CC
-	MOVE.l	#loc_0003BE84, Script_talk_source.w
+	MOVE.l	#BreakMothersHeartStr, Script_talk_source.w
 	TST.b	$FFFFC7C1.w
 	BNE.b	loc_000213CC
-	MOVE.l	#loc_0003BD90, Script_talk_source.w
+	MOVE.l	#StepfatherRingsStr, Script_talk_source.w
 	BRA.b	loc_000213CC
 loc_000213BA:
-	MOVE.l	#loc_0003C078, Script_talk_source.w	
+	MOVE.l	#FeelChillsStr, Script_talk_source.w	
 	BRA.b	loc_000213CC	
 loc_000213C4:
-	MOVE.l	#loc_0003C10C, Script_talk_source.w	
+	MOVE.l	#EvilDiedWithTsarkonStr, Script_talk_source.w	
 loc_000213CC:
 	RTS
 	
@@ -36087,64 +36088,65 @@ loc_000214F2:
 	MOVE.l	#loc_00008AB2, $2(A6)
 	MOVE.l	#loc_0001F766, $FFFFC566.w
 	BRA.w	loc_000213FE
-loc_00021510:
+
+LongDangerousRoadAheadStr:
 	dc.b	"You have a long and", $FE
 	dc.b	"dangerous road ahead of", $FE
 	dc.b	"you. Hurry or all is lost!", $FF, $00
-loc_00021558:
+WrongRoadStr:
 	dc.b	"Oops. It must be the", $FE
 	dc.b	"other road that leads to", $FE
 	dc.b	"Verlin's Cave", $FF
-loc_00021594:
+MerchantFromParmaStr:
 	dc.b	"I'm a merchant from Parma.", $FE
 	dc.b	"I hope I'm going the right", $FE
 	dc.b	"way to Wyclif.", $FF, $00
-loc_000215DA:
+PreparedForTaskStr:
 	dc.b	"Are you sure you're", $FE
 	dc.b	"prepared for the task", $FE
 	dc.b	"ahead?", $FF, $00
-loc_0002160C:
+HeadedToWatlingStr:
 	dc.b	"Headed to Watling? It's an", $FE
 	dc.b	"odd place--not many young", $FE
 	dc.b	"people.", $FF, $00
-loc_0002164A:
+WayToDeepdaleStr:
 	dc.b	"Do you know if this is the", $FE
 	dc.b	"way to Deepdale?", $FF
-loc_00021676:
+LongWayToStowStr:
 	dc.b	"Prepare yourself--it's a", $FE
 	dc.b	"long way to Stow!", $FF, $00
-loc_000216A2:
+GreetingsWarriorStr:
 	dc.b	"Greetings, warrior! Off to", $FE
 	dc.b	"combat evil, eh? Well, good", $FE
 	dc.b	"luck!", $FF, $00
-loc_000216E0:
+EvilFlourishesStr:
 	dc.b	"Evil flourishes when the", $FE
 	dc.b	"rings are scattered!", $FF
-loc_002170E:
+AppearancesDeceiveStr:
 	dc.b	"Appearances deceive, as do", $FE
 	dc.b	"Thar and Luther!", $FF
-loc_0002173A:
+RingsHavePowerStr:
 	dc.b	"The rings have tremendous", $FE
 	dc.b	"power. Use them wisely.", $FF
-loc_0002176C:
+ProgressingWellStr:
 	dc.b	"You are progressing!", $FE
 	dc.b	"Keep up the good work!", $FF
-loc_00021798:
+TharFashionsEvilStr:
 	dc.b	"Thar can fashion evil", $FE
 	dc.b	"beings from thin air.", $FF
-loc_000217C4:
+UseBansheePowderStr:
 	dc.b	"Use banshee powder", $FE
 	dc.b	"only when you're", $FE
 	dc.b	"in mortal danger.", $FF
-loc_000217FA:
+TsarkonPawnOfEvilStr:
 	dc.b	"Tsarkon is the", $FE
 	dc.b	"pawn of evil.", $FF, $00
-loc_00021818:
+SpendWealthWiselyStr:
 	dc.b	"Spend your wealth wisely!", $FF
-loc_00021832:
+LearnFromMistakesStr:
 	dc.b	"Learn from the mistakes", $FE
 	dc.b	"of Tsarkon and Erik!", $FF, $00
-loc_00021860:
+SawMotherInCartahenaStr:
 	dc.b	"I saw your dear mother", $FE
 	dc.b	"in Cartahena, but that", $FE
 	dc.b	"was many years ago.", $FF
@@ -36178,49 +36180,49 @@ loc_00021914:
 	dc.b	$01, $28
 	dc.b	$01, $29
 	dc.b	$00 ; padding
-loc_0002194A:
+MenuStartContinueStr:
 	dc.b	"Start", $FE
 	dc.b	"Continue", $FF, $00
-loc_0002195A:
+MenuOptionsStr:
 	dc.b	"Talk Magic", $FE
 	dc.b	"Item Equip", $FE
 	dc.b	"Str  Seek", $FE
 	dc.b	"Open Take", $FF
-loc_00021984:
+MessageSpeedStr:
 	dc.b	"Message Speed", $FE
 	dc.b	"    Fast", $FE
 	dc.b	"    Normal", $FE
 	dc.b	"    Slow", $FF, $00
-loc_000219B0:
+YesNoStr:
 	dc.b	"Yes", $FE
 	dc.b	"No", $FF, $00
-loc_000219B8:
+UseDiscardStr:
 	dc.b	"Use", $FE
 	dc.b	"Discard", $FF
-loc_000219C4:
+CastReadyDiscardStr:
 	dc.b	"Cast", $FE
 	dc.b	"Ready", $FE
 	dc.b	"Discard", $FF, $00
-loc_000219D8:
+PutOnRemoveStopStr:
 	dc.b	"Put on", $FE
 	dc.b	"Remove", $FE
 	dc.b	"Stop", $FF, $00
-loc_000219EC:
+EquipOptionsStr:
 	dc.b	"Weapon", $FE
 	dc.b	"Shield", $FE
 	dc.b	"Armor", $FF
-loc_00021A00:
+ChurchOptionsStr:
 	dc.b	"Remove a curse", $FE
 	dc.b	"Apply poison balm", $FE
 	dc.b	"Save your game", $FE
 	dc.b	"Stop", $FF, $00
-loc_00021A36:
+BuySellStopStr:
 	dc.b	"Buy", $FE
 	dc.b	"Sell", $FE
 	dc.b	"Stop", $FF
-loc_00021A44:
+KimStr:
 	dc.b	"Kim", $FF
-loc_00021A48:
+CharacterStatsStr:
 	dc.b	"Name:", $FE
 	dc.b	"Condition:", $FE
 	dc.b	"Level:       EXP:", $FE
@@ -36230,74 +36232,74 @@ loc_00021A48:
 	dc.b	"STR:         AC:", $FE
 	dc.b	"INT:         DEX:", $FE
 	dc.b	"LUK:         KIM:", $FF
-loc_00021AD4:
+EquipmentReadiedStr:
 	dc.b	"Equipment Readied", $FE
 	dc.b	"Weapon:", $FE
 	dc.b	"Shield:", $FE
 	dc.b	"Armor:", $FE
 	dc.b	"Magic:", $FF
-loc_00021B04:
+GearCombatStr:
 	dc.b	"Gear (Combat)", $FF
-loc_00021B12:
+GearMagicStr:
 	dc.b	"Gear (Magic)", $FF, $00
-loc_00021B20:
+GearItemStr:
 	dc.b	"Gear (Item)", $FF
-loc_00021B2C:
+RingsStr:
 	dc.b	"Rings", $FF
 
 ; ===========================================================================
 ;loc_00021B32: 
 RingNames:
-	dc.l	loc_00021B52
-	dc.l	loc_00021B62
-	dc.l	loc_00021B6E
-	dc.l	loc_00021B7C
-	dc.l	loc_00021B8A
-	dc.l	loc_00021B98
-	dc.l	loc_00021BA6
-	dc.l	loc_00021BB2
-loc_00021B52:
+	dc.l	RingWisdomStr
+	dc.l	RingSkyStr
+	dc.l	RingWindStr
+	dc.l	RingFireStr
+	dc.l	RingWaterStr
+	dc.l	RingEarthStr
+	dc.l	RingSunStr
+	dc.l	RingPowerStr
+RingWisdomStr:
 	dc.b	"Ring of Wisdom", $FF, $00
-loc_00021B62:
+RingSkyStr:
 	dc.b	"Ring of Sky", $FF
-loc_00021B6E:
+RingWindStr:
 	dc.b	"Ring of Wind", $FF, $00
-loc_00021B7C:
+RingFireStr:
 	dc.b	"Ring of Fire", $FF, $00
-loc_00021B8A:
+RingWaterStr:
 	dc.b	"Ring of Water", $FF
-loc_00021B98:
+RingEarthStr:
 	dc.b	"Ring of Earth", $FF
-loc_00021BA6:
+RingSunStr:
 	dc.b	"Ring of Sun", $FF
-loc_00021BB2:
+RingPowerStr:
 	dc.b	"Ring of Power", $FF
 	
-loc_00021BC0:
+SelectNumberStr:
 	dc.b	"Select a number", $FE
 	dc.b	"and press Button C.", $FE
 	dc.b	"             Name  Level", $FE
 	dc.b	"Saved Game 1", $FE
 	dc.b	"Saved Game 2", $FE
 	dc.b	"Saved Game 3", $FF
-loc_00021C24:
+ErrorPressCStr:
 	dc.b	"If an error occurs,", $FE
 	dc.b	"press button C.", $FF
-loc_00021C48:
+LooksBetterPressCStr:
 	dc.b	"That looks better.", $FE
 	dc.b	"Please press button C.", $FF
-loc_00021C72:
+DidntWorkPressResetStr:
 	dc.b	"Sorry, it didn't work.", $FE
 	dc.b	"Please press", $FE
 	dc.b	"the Reset button.", $FF
-loc_00021CA8:
+NoSavedGameStr:
 	dc.b	"You don't have a", $FE
 	dc.b	"saved game to retrieve!", $FE
 	dc.b	"Please press button C.", $FF
-loc_00021CE8:
+GameReadyPressCStr:
 	dc.b	"Your game is ready!", $FE
 	dc.b	"Please press button C.", $FF, $00
-loc_00021D14:
+SavedGameOptionsStr:
 	dc.b	"Saved Game 1", $FE
 	dc.b	"Saved Game 2", $FE
 	dc.b	"Saved Game 3", $FF, $00
@@ -40183,93 +40185,93 @@ TakesStr:
 	dc.b	"takes ", $FF, $00
 AreaMapStr:
 	dc.b	"Area Map", $FF, $00
-loc_000256E4:
+HerbsStr:
 	dc.b	"Herbs", $FF
-loc_000256EA:
+CandleStr:
 	dc.b	"Candle", $FF, $00
-loc_000256F2:
+LanternStr:
 	dc.b	"Lantern", $FF
-loc_000256FA:
+PoisonBalmStr:
 	dc.b	"Poison Balm", $FF
-loc_00025706:
+AlarmClockStr:
 	dc.b	"Alarm Clock", $FF
-loc_00025712:
+VaseStr:
 	dc.b	"Vase", $FF, $00
-loc_00025718:
+JokeBookStr:
 	dc.b	"Joke Book", $FF
-loc_00025722:
+SmallBombStr:
 	dc.b	"Small Bomb", $FF, $00
-loc_0002572E:
+OldWomanSketchStr:
 	dc.b	"Old Woman's Sketch", $FF, $00
-loc_00025742:
+OldManSketchStr:
 	dc.b	"Old Man's Sketch", $FF, $00
-loc_00025754:
+PassToCartahenaStr:
 	dc.b	"Pass to Cartahena", $FF
-loc_00025766:
+TrufflesStr:
 	dc.b	"Truffles", $FF, $00
-loc_00025770:
+DigotPlantStr:
 	dc.b	"Digot Plant", $FF
-loc_0002577C:
+TreasureOfTroyStr:
 	dc.b	"Treasure of Troy", $FF, $00
-loc_0002578E:
+WhiteCrystalStr:
 	dc.b	"White Crystal", $FF
-loc_0002579C:
+RedCrystalStr:
 	dc.b	"Red Crystal", $FF
-loc_000257A8:
+BlueCrystalStr:
 	dc.b	"Blue Crystal", $FF, $00
-loc_000257B6:
+WhiteKeyStr:
 	dc.b	"White Key", $FF
-loc_000257C0:
+RedKeyStr:
 	dc.b	"Red Key", $FF
-loc_000257C8:
+BlueKeyStr:
 	dc.b	"Blue Key", $FF, $00
-loc_000257D2:
+CrownStr:
 	dc.b	"Crown", $FF
-loc_000257D8:
+SixteenRingsStr:
 	dc.b	"Sixteen Rings", $FF
-loc_000257E6:
+BronzeKeyStr:
 	dc.b	"Bronze Key", $FF, $00
-loc_000257F2:
+SilverKeyStr:
 	dc.b	"Silver Key", $FF, $00
-loc_000257FE:
+GoldKeyStr:
 	dc.b	"Gold Key", $FF, $00
-loc_00025808:
+ThuleKeyStr:
 	dc.b	"Thule Key", $FF
-loc_00025812:
+SecretKeyStr:
 	dc.b	"Secret Key", $FF, $00
-loc_0002581E:
+MedicineStr:
 	dc.b	"Medicine", $FF, $00
-loc_00025828:
+AgateJewelStr:
 	dc.b	"Agate Jewel", $FF
-loc_00025834:
+GriffinWingStr:
 	dc.b	"Griffin Wing", $FF, $00
-loc_00025842:
+TitaniasMirrorStr:
 	dc.b	"Titania's Mirror", $FF, $00
-loc_00025854:
+GnomeStoneStr:
 	dc.b	"Gnome Stone", $FF
-loc_00025860:
+TopazJewelStr:
 	dc.b	"Topaz Jewel", $FF
-loc_0002586C:
+BansheePowderStr:
 	dc.b	"Banshee Powder", $FF, $00
-loc_0002587C:
+RafaelsStickStr:
 	dc.b	"Rafael's Stick", $FF, $00
-loc_0002588C:
+MirrorOfAtlasStr:
 	dc.b	"Mirror of Atlas", $FF
-loc_0002589C:
+RubyBroochStr:
 	dc.b	"Ruby Brooch", $FF
-loc_000258A8:
+DungeonKeyStr:
 	dc.b	"Dungeon Key", $FF
-loc_000258B4:
+KulmVaseStr:
 	dc.b	"Kulm Vase", $FF
-loc_000258BE:
+KasanChiselStr:
 	dc.b	"Kasan's Chisel", $FF, $00
-loc_000258CE:
+BookOfKielStr:
 	dc.b	"Book of Kiel", $FF, $00
-loc_000258DC:
+DanegeldWaterStr:
 	dc.b	"Danegeld Water", $FF, $00
-loc_000258EC:
+MineralBarStr:
 	dc.b	"Mineral Bar", $FF
-loc_000258F8:
+MegaBlastStr:
 	dc.b	"Mega Blast", $FF, $00
 UsesTheStr:
 	dc.b	"uses the", $FF, $00
@@ -40450,50 +40452,50 @@ CantCarryMoreStr2:
 ; ===========================================================================
 ;loc_00025DB4:
 ItemNames:
-	dc.l	loc_000256E4
-	dc.l	loc_000256EA
-	dc.l	loc_000256F2
-	dc.l	loc_000256FA
-	dc.l	loc_00025706
-	dc.l	loc_00025712
-	dc.l	loc_00025718
-	dc.l	loc_00025722
-	dc.l	loc_0002572E
-	dc.l	loc_00025742
-	dc.l	loc_00025754
-	dc.l	loc_00025766
-	dc.l	loc_00025770
-	dc.l	loc_0002577C
-	dc.l	loc_0002578E
-	dc.l	loc_0002579C
-	dc.l	loc_000257A8
-	dc.l	loc_000257B6
-	dc.l	loc_000257C0
-	dc.l	loc_000257C8
-	dc.l	loc_000257D2
-	dc.l	loc_000257D8
-	dc.l	loc_000257E6
-	dc.l	loc_000257F2
-	dc.l	loc_000257FE
-	dc.l	loc_00025808
-	dc.l	loc_00025812
-	dc.l	loc_0002581E
-	dc.l	loc_00025828
-	dc.l	loc_00025834
-	dc.l	loc_00025842	
-	dc.l	loc_00025854
-	dc.l	loc_00025860
-	dc.l	loc_0002586C
-	dc.l	loc_0002587C
-	dc.l	loc_0002588C
-	dc.l	loc_0002589C
-	dc.l	loc_000258A8
-	dc.l	loc_000258B4	
-	dc.l	loc_000258BE	
-	dc.l	loc_000258CE	
-	dc.l	loc_000258DC	
-	dc.l	loc_000258EC	
-	dc.l	loc_000258F8	
+	dc.l	HerbsStr
+	dc.l	CandleStr
+	dc.l	LanternStr
+	dc.l	PoisonBalmStr
+	dc.l	AlarmClockStr
+	dc.l	VaseStr
+	dc.l	JokeBookStr
+	dc.l	SmallBombStr
+	dc.l	OldWomanSketchStr
+	dc.l	OldManSketchStr
+	dc.l	PassToCartahenaStr
+	dc.l	TrufflesStr
+	dc.l	DigotPlantStr
+	dc.l	TreasureOfTroyStr
+	dc.l	WhiteCrystalStr
+	dc.l	RedCrystalStr
+	dc.l	BlueCrystalStr
+	dc.l	WhiteKeyStr
+	dc.l	RedKeyStr
+	dc.l	BlueKeyStr
+	dc.l	CrownStr
+	dc.l	SixteenRingsStr
+	dc.l	BronzeKeyStr
+	dc.l	SilverKeyStr
+	dc.l	GoldKeyStr
+	dc.l	ThuleKeyStr
+	dc.l	SecretKeyStr
+	dc.l	MedicineStr
+	dc.l	AgateJewelStr
+	dc.l	GriffinWingStr
+	dc.l	TitaniasMirrorStr	
+	dc.l	GnomeStoneStr
+	dc.l	TopazJewelStr
+	dc.l	BansheePowderStr
+	dc.l	RafaelsStickStr
+	dc.l	MirrorOfAtlasStr
+	dc.l	RubyBroochStr
+	dc.l	DungeonKeyStr
+	dc.l	KulmVaseStr	
+	dc.l	KasanChiselStr	
+	dc.l	BookOfKielStr	
+	dc.l	DanegeldWaterStr	
+	dc.l	MineralBarStr	
+	dc.l	MegaBlastStr	
 ; ===========================================================================
 ;loc_00025E64
 MagicNames:
@@ -41605,51 +41607,51 @@ loc_00028F92:
 	dc.b	$00, $03, $DE, $C0, $00, $00, $71, $04, $60, $01, $FF, $FF, $00, $01, $EC, $C2, $00, $C8, $00, $68, $02, $11, $00, $03, $DE, $C0, $00, $00, $71, $9A, $60, $01 
 	dc.b	$FF, $FF 
 loc_00029098:
-	dc.l	loc_0002960A
-	dc.l	loc_0002967A
-	dc.l	loc_00029742
-	dc.l	loc_000297B2
-	dc.l	loc_000297F2
-	dc.l	loc_00029130 
+	dc.l	TalkKingStr
+	dc.l	DeliverMealStr
+	dc.l	KingPersonalityChangeStr
+	dc.l	CannotPassStr
+	dc.l	NoEnterRoomStr
+	dc.l	RingOfferStr 
 loc_000290B0:
-	dc.l	loc_0002960A
-	dc.l	loc_000296A0
-	dc.l	loc_00029742
-	dc.l	loc_000297B2
-	dc.l	loc_000297F2
-	dc.l	loc_00029264 
+	dc.l	TalkKingStr
+	dc.l	KingEatsMoreStr
+	dc.l	KingPersonalityChangeStr
+	dc.l	CannotPassStr
+	dc.l	NoEnterRoomStr
+	dc.l	FindTreasureStr 
 loc_000290C8:
-	dc.l	loc_0002960A
-	dc.l	loc_000296A0
-	dc.l	loc_00029742
-	dc.l	loc_000297B2
-	dc.l	loc_000297F2
-	dc.l	loc_0002929E 
+	dc.l	TalkKingStr
+	dc.l	KingEatsMoreStr
+	dc.l	KingPersonalityChangeStr
+	dc.l	CannotPassStr
+	dc.l	NoEnterRoomStr
+	dc.l	TreasureReturnedStr 
 loc_000290E0:
-	dc.l	loc_0002960A
-	dc.l	loc_000296A0
-	dc.l	loc_00029742
-	dc.l	loc_000297B2
-	dc.l	loc_000297F2
-	dc.l	loc_00029386 
+	dc.l	TalkKingStr
+	dc.l	KingEatsMoreStr
+	dc.l	KingPersonalityChangeStr
+	dc.l	CannotPassStr
+	dc.l	NoEnterRoomStr
+	dc.l	NicePlaceStr 
 loc_000290F8:
-	dc.l	loc_0002962C
-	dc.l	loc_000296E4
-	dc.l	loc_00029794
-	dc.l	loc_0002982C
-	dc.l	loc_0002982C
+	dc.l	NotHaveKnownStr
+	dc.l	KingMonsterStr
+	dc.l	KingImposterStr
+	dc.l	ShowNoMercyStr
+	dc.l	ShowNoMercyStr
 	dc.l	NoOneHereStr 
 loc_00029110:
-	dc.l	loc_00029648
-	dc.l	loc_0002970A
-	dc.l	loc_0002970A
-	dc.l	loc_000297DA
-	dc.l	loc_000297DA
+	dc.l	SuspicionsRightStr
+	dc.l	TrueKingBackStr
+	dc.l	TrueKingBackStr
+	dc.l	SavedCountryStr
+	dc.l	SavedCountryStr
 	dc.l	NoOneHereStr 
 loc_00029128:
-	dc.l	loc_00029446
-	dc.l	loc_000295E4
-loc_00029130:
+	dc.l	CartahenaBeastStr
+	dc.l	ReallyLiveHereStr
+RingOfferStr:
 	dc.b	"Yes, I have the ring.", $FE
 	dc.b	"You need it to combat", $FE
 	dc.b	"the hordes of Cartahena?", $FD
@@ -41664,11 +41666,11 @@ loc_00029130:
 	dc.b	"Of course, the cave does", $FE
 	dc.b	"have its guardians...."
 	dc.b	$F8, $01, $02
-loc_00029264:
+FindTreasureStr:
 	dc.b	"Find the treasure", $FE
 	dc.b	"quickly, before I", $FE 
 	dc.b	"reconsider my offer.", $FF, $00
-loc_0002929E:
+TreasureReturnedStr:
 	dc.b	"I don't believe it!", $FE
 	dc.b	"You've returned with", $FE
 	dc.b	"the Treasure of Troy!", $FD
@@ -41676,17 +41678,17 @@ loc_0002929E:
 	dc.b	"about the ring and settle", $FE
 	dc.b	"down to a quiet life here?"
 	dc.b	$FB, $00, $04, $00, $00
-loc_00029330:
+NoChoiceStr:
 	dc.b	"You really have no choice;", $FE
 	dc.b	"just accept it, young man."
 	dc.b	$FB, $00, $04, $00, $00
-loc_0002936A:
+OffYouGoStr:
 	dc.b	"Good, good. Off you go now.", $FF
-loc_00029386:
+NicePlaceStr:
 	dc.b	"But this is", $FE
 	dc.b	"such a nice place."
 	dc.b	$F8, $01, $07, $00 
-loc_000293A8:
+NeedPermanentSolutionStr:
 	dc.b	"What is this?", $FE
 	dc.b	"You again? I see that I", $FE
 	dc.b	"need a more permanent", $FD
@@ -41695,7 +41697,7 @@ loc_000293A8:
 	dc.b	"I become rather beastly", $FE
 	dc.b	"when I'm bothered...."
 	dc.b	$F8, $02, $F7, $E0
-loc_00029446:
+CartahenaBeastStr:
 	dc.b	"Thank you, ", Script_player_name, ".", $FD
 	dc.b	"That beast", $FE
 	dc.b	"from Cartahena transformed", $FE
@@ -41706,7 +41708,7 @@ loc_00029446:
 	dc.b	"Would you care to", $FE
 	dc.b	"settle down here?"
 	dc.b	$FB, $01, $08, $00
-loc_000294F2:
+RingOfSkyGiftStr:
 	dc.b	"If you must go, head to", $FE
 	dc.b	"Watling. You can get a good", $FE
 	dc.b	"deal of information there.", $FD
@@ -41716,54 +41718,54 @@ loc_000294F2:
 	dc.b	"Go forth on your quest,", $FE
 	dc.b	"brave warrior!"
 	dc.b	$F9, $02, $00, $05, $00, $F9
-loc_000295AA:
+GotRingStr:
 	dc.b	"Did you get the ring?", $FF
-loc_000295C0:
+DecideToLiveHereStr:
 	dc.b	"What made you", $FE
 	dc.b	"decide to live here?", $FF, $00
-loc_000295E4:
+ReallyLiveHereStr:
 	dc.b	"Are you really", $FE
 	dc.b	"going to live here?"
 	dc.b	$FB, $01, $08, $00
-loc_0002960A:
+TalkKingStr:
 	dc.b	"It's better to", $FE
 	dc.b	"talk to the king.", $FF, $00
-loc_0002962C:
+NotHaveKnownStr:
 	dc.b	"How could I not have known?", $FF 
-loc_00029648:
+SuspicionsRightStr:
 	dc.b	"I had my suspicions that", $FE
 	dc.b	"something wasn't right.", $FF, $00
-loc_0002967A:
+DeliverMealStr:
 	dc.b	"I am here to deliver", $FE
 	dc.b	"the king's meal.", $FF
-loc_000296A0:
+KingEatsMoreStr:
 	dc.b	"The king eats much", $FE
 	dc.b	"more than he used to.", $FE
 	dc.b	"Where does he put it all?", $FF, $00
-loc_000296E4:
+KingMonsterStr:
 	dc.b	"I had no idea the", $FE
 	dc.b	"king was a monster.", $FF
-loc_0002970A:
+TrueKingBackStr:
 	dc.b	"Our true king is back,", $FE
 	dc.b	"and we have you", $FE
 	dc.b	"to thank for it!", $FF
-loc_00029742:
+KingPersonalityChangeStr:
 	dc.b	"It seemed to me that the", $FE
 	dc.b	"king's personality changed,", $FE
 	dc.b	"but I thought he was moody.", $FF, $00
-loc_00029794:
+KingImposterStr:
 	dc.b	"So the king", $FE
 	dc.b	"was an imposter!", $FF, $00
-loc_000297B2:
+CannotPassStr:
 	dc.b	"You cannot pass.", $FE
 	dc.b	"It's the king's order.", $FF
-loc_000297DA:
+SavedCountryStr:
 	dc.b	"You saved our country!", $FF, $00
-loc_000297F2:
+NoEnterRoomStr:
 	dc.b	"All I know is that", $FE
 	dc.b	"no one is supposed", $FE
 	dc.b	"to enter this room.", $FF
-loc_0002982C:
+ShowNoMercyStr:
 	dc.b	"I show no mercy to anyone!", $FF, $00 
 loc_00029848:
 	dc.b	$1E, $17, $02, $73, $5B, $24, $5E, $01, $5C, $24, $5D, $25, $5E, $01, $73, $2D, $00, $02, $73, $5F, $24, $61, $01, $60, $A4, $25, $61, $AF, $01, $62, $24, $64 
@@ -41833,35 +41835,35 @@ loc_00029BDE:
 	dc.b	$72, $F8, $60, $01, $00, $88, $01, $28, $01, $51, $00, $03, $DD, $F4, $00, $00, $6F, $5E, $00, $01, $01, $38, $00, $B8, $01, $D5, $00, $03, $DE, $A0, $00, $00 
 	dc.b	$6F, $5E, $60, $01, $01, $A8, $00, $58, $01, $D5, $00, $03, $DE, $A0, $00, $00, $6F, $36, $60, $01, $FF, $FF 
 loc_00029C58:
-	dc.l	loc_00029C94
-	dc.l	loc_00029CEA
-	dc.l	loc_00029DF2
-	dc.l	loc_00029EB4
-	dc.l	loc_00029F0C 
+	dc.l	KingDisguiseMasterStr
+	dc.l	KingPeaceProsperityStr
+	dc.l	KingThinksOfPeopleStr
+	dc.l	KingNotHereStr
+	dc.l	KingNotSeeingVisitorsStr 
 loc_00029C6C:
-	dc.l	loc_00029C94
-	dc.l	loc_00029D34
-	dc.l	loc_00029E1E
-	dc.l	loc_00029EB4
-	dc.l	loc_00029F0C 
+	dc.l	KingDisguiseMasterStr
+	dc.l	KingLikesTrufflesStr
+	dc.l	KingDisguiseOrdinaryStr
+	dc.l	KingNotHereStr
+	dc.l	KingNotSeeingVisitorsStr 
 loc_00029C80:
-	dc.l	loc_00029CB6 
-	dc.l	loc_00029E9C 
-	dc.l	loc_00029E9C 
-	dc.l	loc_00029EDA 
-	dc.l	loc_00029F3A
-loc_00029C94:
+	dc.l	SeeThroughDisguiseStr 
+	dc.l	MeetKingStr 
+	dc.l	MeetKingStr 
+	dc.l	KingNotSureReturnStr 
+	dc.l	KingInTownStr
+KingDisguiseMasterStr:
 	dc.b	"The king is a", $FE
 	dc.b	"master of disguise.", $FF
-loc_00029CB6:
+SeeThroughDisguiseStr:
 	dc.b	"You can sometimes", $FE
 	dc.b	"see through the", $FE
 	dc.b	"king's disguise.", $FF, $00
-loc_00029CEA:
+KingPeaceProsperityStr:
 	dc.b	"The king has brought us", $FE
 	dc.b	"peace and prosperity,", $FE
 	dc.b	"despite his unusual habits.", $FF
-loc_00029D34:
+KingLikesTrufflesStr:
 	dc.b	"The king really likes", $FE
 	dc.b	"truffles. They are his", $FE
 	dc.b	"one indulgence.", $FD
@@ -41874,33 +41876,33 @@ loc_00029D34:
 	dc.b	$01, $72
 	dc.b	$01, $74
 	dc.b	$01, $73
-loc_00029DCE:
+BremensCaveNorthwestStr:
 	dc.b	"Bremen's Cave is", $FE
 	dc.b	"to the northwest.", $FF, $00
-loc_00029DF2:
+KingThinksOfPeopleStr:
 	dc.b	"The king is always", $FE
 	dc.b	"thinking of his people.", $FF, $00
-loc_00029E1E:
+KingDisguiseOrdinaryStr:
 	dc.b	"The king sometimes puts", $FE
 	dc.b	"on a disguise to blend", $FE
 	dc.b	"in with ordinary people.", $FD
 	dc.b	"He wants to see what", $FE
 	dc.b	"kind of lives his", $FE
 	dc.b	"subjects lead.", $FF
-loc_00029E9C:
+MeetKingStr:
 	dc.b	"Have you met the king?", $FF, $00
-loc_00029EB4:
+KingNotHereStr:
 	dc.b	"The king is not", $FE
 	dc.b	"here at the moment."
 	dc.b	$F8, $01, $0B
-loc_00029EDA:
+KingNotSureReturnStr:
 	dc.b	"I'm not really sure when", $FE
 	dc.b	"the king is coming back.", $FF
-loc_00029F0C:
+KingNotSeeingVisitorsStr:
 	dc.b	"The king is not seeing", $FE
 	dc.b	"visitors right now."
 	dc.b	$F8, $01, $0B, $00
-loc_00029F3A:
+KingInTownStr:
 	dc.b	"The king is in", $FE
 	dc.b	"town somewhere.", $FF, $00
 
@@ -41952,61 +41954,61 @@ loc_0002A16E:
 	dc.b	$00, $00, $00, $00, $00, $00, $6E, $EC, $60, $00, $01, $18, $00, $98, $02, $BF, $00, $00, $00, $00, $00, $00, $6E, $EC, $60, $01, $00, $B8, $00, $58, $02, $C5 
 	dc.b	$00, $00, $00, $00, $00, $00, $6F, $00, $60, $01, $00, $B8, $00, $68, $02, $CB, $00, $00, $00, $00, $00, $00, $6F, $00, $60, $01, $FF, $FF 
 loc_0002A22E:
-	dc.l	loc_0002A3BA
-	dc.l	loc_0002A3BA
-	dc.l	loc_0002A3BA 
+	dc.l	BusyNowStr
+	dc.l	BusyNowStr
+	dc.l	BusyNowStr 
 loc_0002A23A:
-	dc.l	loc_0002A28E
-	dc.l	loc_0002A2FA
-	dc.l	loc_0002A3D4 
+	dc.l	KingKnowsRingsStr
+	dc.l	HonestLookingFellowStr
+	dc.l	HeardOfYouStr 
 loc_0002A246:
-	dc.l	loc_0002A2AA
-	dc.l	loc_0002A31C
-	dc.l	loc_0002A528 
+	dc.l	YoureTheThiefStr
+	dc.l	FaceOfCriminalStr
+	dc.l	ReturnWhenInnocentStr 
 loc_0002A252:
-	dc.l	loc_0002A2C0
-	dc.l	loc_0002A2C0
-	dc.l	loc_0002A358
-	dc.l	loc_0002A358
-	dc.l	loc_0002A55C
-	dc.l	loc_0002A55C 
+	dc.l	AttackedWithoutWarningStr
+	dc.l	AttackedWithoutWarningStr
+	dc.l	MonsterTooPowerfulStr
+	dc.l	MonsterTooPowerfulStr
+	dc.l	MonsterLittleGirlStr
+	dc.l	MonsterLittleGirlStr 
 loc_0002A26A:
-	dc.l	loc_0002A2C0
-	dc.l	loc_0002A2C0
-	dc.l	loc_0002A358
-	dc.l	loc_0002A358
-	dc.l	loc_0002A664
-	dc.l	loc_0002A664 
+	dc.l	AttackedWithoutWarningStr
+	dc.l	AttackedWithoutWarningStr
+	dc.l	MonsterTooPowerfulStr
+	dc.l	MonsterTooPowerfulStr
+	dc.l	RingsAreSafeStr
+	dc.l	RingsAreSafeStr 
 loc_0002A282:
-	dc.l	loc_0002A2E2
-	dc.l	loc_0002A392
-	dc.l	loc_0002A7A4
-loc_0002A28E:
+	dc.l	TrueHeroStr
+	dc.l	KingOverjoyedStr
+	dc.l	BookSanguiaEffortsStr
+KingKnowsRingsStr:
 	dc.b	"The king knows about rings.", $FF
-loc_0002A2AA:
+YoureTheThiefStr:
 	dc.b	"So, you're the thief!", $FF
-loc_0002A2C0:
+AttackedWithoutWarningStr:
 	dc.b	"We were attacked", $FE
 	dc.b	"without warning.", $FF 
-loc_0002A2E2:
+TrueHeroStr:
 	dc.b	"You are a true hero, ", Script_player_name, "!", $FF
-loc_0002A2FA:
+HonestLookingFellowStr:
 	dc.b	"You're an honest-looking", $FE
 	dc.b	"fellow!", $FF, $00
-loc_0002A31C:
+FaceOfCriminalStr:
 	dc.b	"Come to think of it,", $FE
 	dc.b	"you even have the", $FE
 	dc.b	"face of a criminal.", $FF, $00
-loc_0002A358:
+MonsterTooPowerfulStr:
 	dc.b	"The monster was", $FE
 	dc.b	"so powerful that we", $FE
 	dc.b	"could not resist it!", $FF, $00
-loc_0002A392:
+KingOverjoyedStr:
 	dc.b	"The king is overjoyed", $FE
 	dc.b	"at your success.", $FF, $00
-loc_0002A3BA:
+BusyNowStr:
 	dc.b	"Excuse me, I'm busy now.", $FF, $00
-loc_0002A3D4:
+HeardOfYouStr:
 	dc.b	"I've heard of you--you're", $FE
 	dc.b	"the young warrior who's", $FE
 	dc.b	"collecting rings!", $FD
@@ -42023,10 +42025,10 @@ loc_0002A3D4:
 	dc.b	"to ensure that you", $FE
 	dc.b	"don't just run off."
 	dc.b	$F8, $01, $0F
-loc_0002A528:
+ReturnWhenInnocentStr:
 	dc.b	"Return only when you have", $FE 
 	dc.b	"proof of your innocence.", $FF, $00
-loc_0002A55C:
+MonsterLittleGirlStr:
 	dc.b	"The monster appeared to be", $FE
 	dc.b	"a little girl. We suspected", $FE
 	dc.b	"nothing until it attacked.", $FD
@@ -42039,7 +42041,7 @@ loc_0002A55C:
 	dc.b	"The tavernkeeper has a map", $FE
 	dc.b	"to Asti's Cave."
 	dc.b	$F8, $01, $5F, $00
-loc_0002A664:
+RingsAreSafeStr:
 	dc.b	"Good, the rings are safe.", $FE
 	dc.b	"I'm really sorry, but I", $FE
 	dc.b	"have a favor to ask of you.", $FD
@@ -42062,7 +42064,7 @@ loc_0002A664:
 	dc.b	$01, $6D
 	dc.b	$01, $4E
 	dc.b	$00 ; padding
-loc_0002A7A4:
+BookSanguiaEffortsStr:
 	dc.b	"Brave warrior, please", $FE
 	dc.b	"take this Book of Sanguia", $FE
 	dc.b	"Spells for your efforts.", $FD
@@ -42075,14 +42077,14 @@ loc_0002A7A4:
 	dc.b	"please stop in Keltwick and", $FE
 	dc.b	"thank Doctor Basil for us", $2E
 	dc.b	$F8, $01, $13, $00
-loc_0002A8B6:
+DiscardBookSpellsStr:
 	dc.b	"If you discard a Book of", $FE
 	dc.b	"Spells, I can give you the", $FE
 	dc.b	"Book of Sanguia Spells.", $FF 
-loc_0002A902:
+HopesWithYouStr:
 	dc.b	"Our hopes go with you,", $FE
 	dc.b	$F7, $21, $FF
-loc_0002A91C:
+BringDoctorHereStr:
 	dc.b	"Please bring the", $FE
 	dc.b	"doctor here!", $FF
 loc_0002A93A:
@@ -42137,61 +42139,61 @@ loc_0002ABA4:
 	dc.b	$00, $03, $DD, $94, $00, $00, $6F, $36, $60, $01, $01, $C8, $00, $98, $00, $19, $00, $03, $DD, $34, $00, $00, $6F, $80, $60, $01, $01, $28, $00, $D8, $01, $09 
 	dc.b	$00, $03, $DD, $D4, $00, $00, $6F, $80, $60, $01, $01, $48, $00, $78, $00, $19, $00, $03, $DD, $34, $00, $00, $77, $2C, $60, $01, $FF, $FF 
 loc_0002ACA4:
-	dc.l	loc_0002AFE8 
-	dc.l	loc_0002ADF4 
-	dc.l	loc_0002AEA8 
-	dc.l	loc_0002AF3E 
-	dc.l	loc_0002AFBA 
-	dc.l	loc_0002AD14 
-	dc.l	loc_0002AD76 
+	dc.l	HelpInTimeOfNeedStr 
+	dc.l	BrunoLoyalServantStr 
+	dc.l	ReceiveRingMarryStr 
+	dc.l	PeopleNotHappyMinistersStr 
+	dc.l	BrunoWaitingStr 
+	dc.l	BrunoInHarmonyCaveStr 
+	dc.l	BrunoNotRightStr 
 loc_0002ACC0:
-	dc.l	loc_0002B1A4 
-	dc.l	loc_0002AE26 
-	dc.l	loc_0002AEF8
-	dc.l	loc_0002AF8A 
-	dc.l	loc_0002AEF8 
-	dc.l	loc_0002AD5C 
-	dc.l	loc_0002ADC8 
+	dc.l	ReturnAfterQuestStr 
+	dc.l	WelcomeToCastleStr 
+	dc.l	MeetMinistersStr
+	dc.l	LandPeacefulProsperousStr 
+	dc.l	MeetMinistersStr 
+	dc.l	DontForgetFaceStr 
+	dc.l	MeetAgainStr 
 loc_0002ACDC:
-	dc.l	loc_0002B1A4 
-	dc.l	loc_0002AE48 
-	dc.l	loc_0002AF1C 
-	dc.l	loc_0002AF8A 
-	dc.l	loc_0002AFD4 
-	dc.l	loc_0002B1E2 
+	dc.l	ReturnAfterQuestStr 
+	dc.l	JourneyNortheastBarrowStr 
+	dc.l	PrincessWaitingStr 
+	dc.l	LandPeacefulProsperousStr 
+	dc.l	BrunoReturnedStr 
+	dc.l	RuleMalagaStr 
 	dc.l	NoOneHereStr 
-	dc.l	loc_0002B18A 
-	dc.l	loc_0002AE48 
-	dc.l	loc_0002AF1C 
-	dc.l	loc_0002AF8A 
-	dc.l	loc_0002AFD4 
-	dc.l	loc_0002B2B0
+	dc.l	HopeReturnSafelyStr 
+	dc.l	JourneyNortheastBarrowStr 
+	dc.l	PrincessWaitingStr 
+	dc.l	LandPeacefulProsperousStr 
+	dc.l	BrunoReturnedStr 
+	dc.l	ReturnAfterTaskStr
 	dc.l	NoOneHereStr
-loc_0002AD14
+BrunoInHarmonyCaveStr
 	dc.b	"Bruno is in Harmony Cave,", $FE
 	dc.b	"far to the east.", $FE
 	dc.b	"He has the Ring of Water", $2E
 	dc.b	$F8, $01, $88, $00 
-loc_0002ad5c:
+DontForgetFaceStr:
 	dc.b	"Don't forget my face", $21
 	dc.b	$F8, $02, $1C, $59, $00
-loc_0002AD76:
+BrunoNotRightStr:
 	dc.b	"Bruno is not right in the", $FE
 	dc.b	"head. If I " 
 	dc.b	"had the Ring of", $FE
 	dc.b	"Water, all would be well!"
 	dc.b	$F8, $01, $88, $00
-loc_0002adc8:
+MeetAgainStr:
 	dc.b	"We will meet again", $FE
 	dc.b	"someday, never fear!"
 	dc.b	$F8, $02, $1C, $5A, $00
-loc_0002ADF4:
+BrunoLoyalServantStr:
 	dc.b	"Bruno was the most loyal", $FE
 	dc.b	"servant of the old king.", $FF
-loc_0002AE26
+WelcomeToCastleStr
 	dc.b	"Welcome to your castle,", $FE
 	dc.b	"my king!", $FF, $00
-loc_0002AE48
+JourneyNortheastBarrowStr
 	dc.b	"Journey northeast to", $FE
 	dc.b	"Barrow. Let this map", $FE
 	dc.b	"be your guide."
@@ -42201,30 +42203,30 @@ loc_0002AE48
 	dc.b	$01, $1D 
 	dc.b	$01, $2D 
 	dc.b	$01, $2C
-loc_0002AE8C:
+BarrowNortheastStr:
 	dc.b	"Barrow is to the northeast.", $FF
-loc_0002AEA8
+ReceiveRingMarryStr
 	dc.b	"Whoever receives the ring", $FE
 	dc.b	"from Bruno shall marry the", $FE
 	dc.b	"Princess and rule Malaga.", $FF, $00
-loc_0002AEF8
+MeetMinistersStr
 	dc.b	"Have you met the", $FE
 	dc.b	"two ministers yet?", $FF 
-loc_0002AF1C
+PrincessWaitingStr
 	dc.b	"The Princess is", $FE
 	dc.b	"waiting for you.", $FF, $00
-loc_0002AF3E
+PeopleNotHappyMinistersStr
 	dc.b	"The townspeople will not", $FE
 	dc.b	"be happy if either of the", $FE
 	dc.b	"ministers becomes king.", $FF, $00
-loc_0002AF8A
+LandPeacefulProsperousStr
 	dc.b	"Our land is once again", $FE
 	dc.b	"peaceful and prosperous.", $FF
-loc_0002AFBA
+BrunoWaitingStr
 	dc.b	"Bruno is waiting for you.", $FF
-loc_0002AFD4
+BrunoReturnedStr
 	dc.b	"Bruno has returned.", $FF
-loc_0002AFE8
+HelpInTimeOfNeedStr
 	dc.b	"I have been waiting", $FE 
 	dc.b	"for you. Please help", $FE
 	dc.b	"us in our time of need!", $FD
@@ -42249,14 +42251,14 @@ loc_0002AFE8
 	dc.b	$01, $2E
 	dc.b	$01, $3E
 	dc.b	$01, $3F
-loc_0002B18A:
+HopeReturnSafelyStr:
 	dc.b	"I hope you return safely.", $FF
-loc_0002B1A4
+ReturnAfterQuestStr
 	dc.b	"Return to me after", $FE
 	dc.b	"your quest is ended!", $FF
-loc_0002B1CC
+WillWaitForYouStr
 	dc.b	"I will wait for you.", $FF, $00
-loc_0002B1E2
+RuleMalagaStr
 	dc.b	"Please, rule Malaga", $FE
 	dc.b	"as our king and marry", $FE
 	dc.b	"the Princess.", $FD
@@ -42264,17 +42266,17 @@ loc_0002B1E2
 	dc.b	"married after you", $FE
 	dc.b	"finish your mission?"
 	dc.b	$FB, $05, $15, $00
-loc_0002B256:
+KeepRingOfWaterStr:
 	dc.b	"Good! Please keep the", $FE
 	dc.b	"Ring of Water as your", $FE
 	dc.b	"engagement ring.", $FF, $00
-loc_0002B294
+DontRefuseUsStr
 	dc.b	"Please don't refuse us", $2E
 	dc.b	$FB, $05, $15, $00, $00
-loc_0002B2B0:
+ReturnAfterTaskStr:
 	dc.b	"Return as soon as you", $FE
 	dc.b	"accomplish your task.", $FF 
-loc_0002B2DC
+JourneyToCartahenaStr
 	dc.b	"You still must", $FE
 	dc.b	"journey to Cartahena.", $FF, $00
 loc_0002B302:
@@ -42330,44 +42332,44 @@ loc_0002B67C:
 	dc.b	$00, $01, $EF, $A8, $00, $48, $00, $88, $01, $D5, $00, $03, $DE, $A0, $00, $00, $6F, $36, $60, $01, $01, $68, $00, $48, $02, $11, $00, $03, $DE, $C0, $00, $00 
 	dc.b	$6F, $36, $60, $01, $01, $28, $00, $38, $02, $89, $00, $03, $DF, $04, $00, $00, $6F, $80, $00, $01, $FF, $FF 
 loc_0002B6D6:
-	dc.l	loc_0002B6FA
-	dc.l	loc_0002B756
-	dc.l	loc_0002B8A8 
+	dc.l	WhyAreYouHereStr
+	dc.l	GreetingsHighnessStr
+	dc.l	DontTormentHusbandStr 
 loc_0002B6E2:
-	dc.l	loc_0002B70C
-	dc.l	loc_0002B7E2
-	dc.l	loc_0002B8D2
-	dc.l	loc_0002B70C
-	dc.l	loc_0002B830
-	dc.l	loc_0002B8D2
+	dc.l	DoNotJudgeKingStr
+	dc.l	KnowImposterStr
+	dc.l	BegDontTormentHusbandStr
+	dc.l	DoNotJudgeKingStr
+	dc.l	SavedMyLandStr
+	dc.l	BegDontTormentHusbandStr
 	
-loc_0002B6FA:
+WhyAreYouHereStr:
 	dc.b	"Why are you here?", $FF
-loc_0002B70C:
+DoNotJudgeKingStr:
 	dc.b	"Do not judge the king", $FE 
 	dc.b	"harshly. He obeyed that", $FE
 	dc.b	"villain to save his people.", $FF
-loc_0002B756:
+GreetingsHighnessStr:
 	dc.b	"Greetings, Your Highness.", $FE
 	dc.b	"What would you like today?", $FE
 	dc.b	"The ring? Why, you have it!", $FD
 	dc.b	"I gave it to you yesterday.", $FE
 	dc.b	"Please, stop tormenting us!"
 	dc.b	$F8, $01, $22, $00 
-loc_0002B7E2:
+KnowImposterStr:
 	dc.b	"Now I know that he was an", $FE
 	dc.b	"imposter. Unfortunately, he", $FE
 	dc.b	"stole the Ring of Sun.", $FF, $00
-loc_0002B830:
+SavedMyLandStr:
 	dc.b	"Now I know he was", $FE 
 	dc.b	"an imposter. Unfortunately,", $FE
 	dc.b	"he stole the Ring of Sun.", $FD
 	dc.b	"Thank you! You saved my", $FE
 	dc.b	"land when I could not.", $FF, $00
-loc_0002B8A8:
+DontTormentHusbandStr:
 	dc.b	"Please don't torment", $FE
 	dc.b	"my husband any more!", $FF
-loc_0002B8D2:
+BegDontTormentHusbandStr:
 	dc.b	"Please don't torment", $FE
 	dc.b	"my husband any more,", $FE
 	dc.b	"I beg of you!"
@@ -42379,53 +42381,53 @@ loc_0002B910:
 	dc.b	$6F, $80, $60, $01, $00, $28, $00, $88, $01, $81, $00, $03, $DE, $14, $00, $00, $6F, $A8, $60, $01, $01, $38, $00, $88, $01, $81, $00, $03, $DE, $14, $00, $00 
 	dc.b	$6F, $A8, $60, $01, $00, $B8, $00, $58, $02, $11, $00, $03, $DE, $C0, $00, $00, $7A, $F2, $60, $01, $FF, $FF 
 loc_0002B98A:
-	dc.l	loc_0002BA02
-	dc.l	loc_0002BA3A
-	dc.l	loc_0002BA52
-	dc.l	loc_0002BA76
-	dc.l	loc_0002BAB4 
+	dc.l	KingWorryingCartahenansStr
+	dc.l	BoredJobStr
+	dc.l	DullJobLousyWagesStr
+	dc.l	LookingForJobStr
+	dc.l	RingOfEarthQuestStr 
 loc_0002B99E:
-	dc.l	loc_0002BA02
-	dc.l	loc_0002BA3A
-	dc.l	loc_0002BA52
-	dc.l	loc_0002BA76
-	dc.l	loc_0002BC26 
+	dc.l	KingWorryingCartahenansStr
+	dc.l	BoredJobStr
+	dc.l	DullJobLousyWagesStr
+	dc.l	LookingForJobStr
+	dc.l	GiveWhiteCrystalStr 
 loc_0002B9B2:
-	dc.l	loc_0002BA02
-	dc.l	loc_0002BA3A
-	dc.l	loc_0002BA52
-	dc.l	loc_0002BA76
-	dc.l	loc_0002BD8A 
+	dc.l	KingWorryingCartahenansStr
+	dc.l	BoredJobStr
+	dc.l	DullJobLousyWagesStr
+	dc.l	LookingForJobStr
+	dc.l	RedCrystalTaskStr 
 loc_0002B9C6:
-	dc.l	loc_0002BA02
-	dc.l	loc_0002BA3A
-	dc.l	loc_0002BA52
-	dc.l	loc_0002BA76
-	dc.l	loc_0002BE76 
+	dc.l	KingWorryingCartahenansStr
+	dc.l	BoredJobStr
+	dc.l	DullJobLousyWagesStr
+	dc.l	LookingForJobStr
+	dc.l	ThreeCrystalsStr 
 loc_0002B9DA:
-	dc.l	loc_0002BA02
-	dc.l	loc_0002BA3A
-	dc.l	loc_0002BA52
-	dc.l	loc_0002BA76
-	dc.l	loc_0002BF3E
-	dc.l	loc_0002BA02
-	dc.l	loc_0002BA3A
-	dc.l	loc_0002BA52 
-	dc.l	loc_0002BA76
-	dc.l	loc_0002BF60
-loc_0002BA02:
+	dc.l	KingWorryingCartahenansStr
+	dc.l	BoredJobStr
+	dc.l	DullJobLousyWagesStr
+	dc.l	LookingForJobStr
+	dc.l	BackSoSoonStr
+	dc.l	KingWorryingCartahenansStr
+	dc.l	BoredJobStr
+	dc.l	DullJobLousyWagesStr 
+	dc.l	LookingForJobStr
+	dc.l	BegoneNothingMoreStr
+KingWorryingCartahenansStr:
 	dc.b	"Our king has been worrying", $FE
 	dc.b	"about the evil Cartahenans.", $FF, $00 
-loc_0002BA3A:
+BoredJobStr:
 	dc.b	"I'm bored with my job.", $FF, $00
-loc_0002BA52:
+DullJobLousyWagesStr:
 	dc.b	"A dull job and", $FE
 	dc.b	"lousy wages to boot!", $FF
-loc_0002BA76:
+LookingForJobStr:
 	dc.b	"I'm looking for another", $FE
 	dc.b	"job. Have you heard", $FE
 	dc.b	"of any openings?", $FF, $00
-loc_0002BAB4:
+RingOfEarthQuestStr:
 	dc.b	"The Ring of Earth? Yes, I", $FE
 	dc.b	"have it, but I won't give", $FE
 	dc.b	"it to you for free.", $FD
@@ -42442,7 +42444,7 @@ loc_0002BAB4:
 	dc.b	"Ivory Cave. Off you go.", $FE
 	dc.b	"Good lad!"
 	dc.b	$F9, $01, $00, $2A, $00
-loc_0002BC26:
+GiveWhiteCrystalStr:
 	dc.b	"Give me the White Crystal!", $FE
 	dc.b	"The ring?, Well, I did", $FE
 	dc.b	"consider giving it to you.", $FD
@@ -42458,7 +42460,7 @@ loc_0002BC26:
 	dc.b	"Here, don't forget the key.", $FE
 	dc.b	"Hurry back now."
 	dc.b	$F9, $01, $00, $2C
-loc_0002BD8A:
+RedCrystalTaskStr:
 	dc.b	"Now I have the Red Crystal,", $FE
 	dc.b	"too! But one easy task", $FE
 	dc.b	"remains for you.", $FD
@@ -42470,7 +42472,7 @@ loc_0002BD8A:
 	dc.b	"from the likes of you!", $FD
 	dc.b	"You'll need this key."
 	dc.b	$F9, $01, $00, $2E, $00
-loc_0002BE76:
+ThreeCrystalsStr:
 	dc.b	"At last, all three crystals", $FE
 	dc.b	"are mine, all mine!", $FE
 	dc.b	"What? You want my ring?", $FD
@@ -42480,13 +42482,13 @@ loc_0002BE76:
 	dc.b	"Here is the Ring of Earth.", $FE
 	dc.b	"Now, good riddance to you!"
 	dc.b	$F9, $02, $00, $29, $00, $FD
-loc_0002BF3E:
+BackSoSoonStr:
 	dc.b	"Back so soon?", $FE
 	dc.b	"Where's my crystal?", $FF
-loc_0002BF60:
+BegoneNothingMoreStr:
 	dc.b	"Begone! You will get", $FE
 	dc.b	"nothing more from me!", $FF, $00
-loc_0002BF8C:
+CantGiveKeyStr:
 	dc.b	"I can't give you the", $FE
 	dc.b	"key--you're carrying", $FE
 	dc.b	"too much already.", $FF 
@@ -43138,244 +43140,244 @@ loc_0002e600:
 	dc.b	$00, $01, $EB, $EE, $00, $B8, $00, $A8, $01, $51, $00, $03, $DD, $F4, $00, $00, $6F, $36, $00, $01, $00, $A8 
 	dc.b	$00, $48, $02, $65, $00, $03, $DF, $2C, $00, $00, $6F, $CA, $00, $01, $FF, $FF 
 loc_0002E838:
-	dc.l	loc_0002E970
-	dc.l	loc_0002E970
-	dc.l	loc_0002E970
-	dc.l	loc_0002EA32
-	dc.l	loc_0002EA32
-	dc.l	loc_0002EB04
-	dc.l	loc_0002EB66
-	dc.l	loc_0002EBB4 
-	dc.l	loc_0002EC22
-	dc.l	loc_0002ECE4
-	dc.l	loc_0002ED8C 
+	dc.l	WelcomeParmaStr
+	dc.l	WelcomeParmaStr
+	dc.l	WelcomeParmaStr
+	dc.l	KingHasRingStr
+	dc.l	KingHasRingStr
+	dc.l	WealthWestStr
+	dc.l	MonstersEastStr
+	dc.l	BeCarefulOutThereStr 
+	dc.l	KingBehavingOddlyStr
+	dc.l	AskKingAboutRingStr
+	dc.l	BewareSlanderingKingStr 
 loc_0002E864:
-	dc.l	loc_0002E970
-	dc.l	loc_0002E970
-	dc.l	loc_0002E970
-	dc.l	loc_0002E9B2
-	dc.l	loc_0002EA5C
-	dc.l	loc_0002EB04
-	dc.l	loc_0002EB66
-	dc.l	loc_0002EBCA 
-	dc.l	loc_0002EC56
-	dc.l	loc_0002ED14
-	dc.l	loc_0002EDAC 
+	dc.l	WelcomeParmaStr
+	dc.l	WelcomeParmaStr
+	dc.l	WelcomeParmaStr
+	dc.l	CaveTroyEastStr
+	dc.l	ArmWellStr
+	dc.l	WealthWestStr
+	dc.l	MonstersEastStr
+	dc.l	BraveManHereStr 
+	dc.l	CarefulInCaveStr
+	dc.l	DontAngerKingStr
+	dc.l	GnostanEvilStr 
 loc_0002E890:
-	dc.l	loc_0002E970
-	dc.l	loc_0002E970
-	dc.l	loc_0002E970
-	dc.l	loc_0002E9B2
-	dc.l	loc_0002EA5C
-	dc.l	loc_0002EB04
-	dc.l	loc_0002EB66
-	dc.l	loc_0002EBCA 
-	dc.l	loc_0002ECBA
-	dc.l	loc_0002ED6A
-	dc.l	loc_0002EDAC 
+	dc.l	WelcomeParmaStr
+	dc.l	WelcomeParmaStr
+	dc.l	WelcomeParmaStr
+	dc.l	CaveTroyEastStr
+	dc.l	ArmWellStr
+	dc.l	WealthWestStr
+	dc.l	MonstersEastStr
+	dc.l	BraveManHereStr 
+	dc.l	InYourDebtStr
+	dc.l	VeryBraveStr
+	dc.l	GnostanEvilStr 
 loc_0002E8BC:
-	dc.l	loc_0002E98C
-	dc.l	loc_0002E98C
-	dc.l	loc_0002E98C
-	dc.l	loc_0002E9D4
-	dc.l	loc_0002E9D4
-	dc.l	loc_0002EB04
-	dc.l	loc_0002EB66
-	dc.l	loc_0002EBCA 
-	dc.l	loc_0002EC8C
-	dc.l	loc_0002ED36
-	dc.l	loc_0002EDAC 
+	dc.l	CannotLeaveStr
+	dc.l	CannotLeaveStr
+	dc.l	CannotLeaveStr
+	dc.l	GiveUpQuestStr
+	dc.l	GiveUpQuestStr
+	dc.l	WealthWestStr
+	dc.l	MonstersEastStr
+	dc.l	BraveManHereStr 
+	dc.l	NoDangerTownStr
+	dc.l	StayHereStr
+	dc.l	GnostanEvilStr 
 loc_0002E8E8:
-	dc.l	loc_0002E970
-	dc.l	loc_0002E970
-	dc.l	loc_0002E970
-	dc.l	loc_0002E9FA
-	dc.l	loc_0002EA90
-	dc.l	loc_0002EB04
-	dc.l	loc_0002EB66
-	dc.l	loc_0002EC02 
-	dc.l	loc_0002ECBA
-	dc.l	loc_0002ED6A
-	dc.l	loc_0002EDE2 
+	dc.l	WelcomeParmaStr
+	dc.l	WelcomeParmaStr
+	dc.l	WelcomeParmaStr
+	dc.l	VillageWatlingEastStr
+	dc.l	StrangeWatlingStr
+	dc.l	WealthWestStr
+	dc.l	MonstersEastStr
+	dc.l	SearchAdventureStr 
+	dc.l	InYourDebtStr
+	dc.l	VeryBraveStr
+	dc.l	WelcomeBackStr 
 loc_0002E914:
-	dc.l	loc_0002EE14 
+	dc.l	BooksOfSpellsStr 
 loc_0002E918:
-	dc.l	loc_0002EE58 
+	dc.l	GoodThingsCostStr 
 loc_0002E91C:
-	dc.l	loc_0002EE90 
+	dc.l	NotReallyPeopleStr 
 loc_0002E920:
-	dc.l	loc_0002EE90 
+	dc.l	NotReallyPeopleStr 
 loc_0002E924:
-	dc.l	loc_0002EEC2
-	dc.l	loc_0002EF14 
+	dc.l	LanternCostStr
+	dc.l	ManyCandlesStr 
 loc_0002E92C:
-	dc.l	loc_0002EFD0
-	dc.l	loc_0002F00E 
-	dc.l	loc_0002EFEC
-	dc.l	loc_0002F052 
+	dc.l	GnostanDonationsStr
+	dc.l	ConvertToGnostanStr 
+	dc.l	GoodToBeFreeStr
+	dc.l	BelieveInGoodStr 
 loc_0002E93C:
-	dc.l	loc_0002F086
-	dc.l	loc_0002F0BA 
+	dc.l	KingForcesGnostanStr
+	dc.l	ThanksForFreeingUsStr 
 loc_0002E944:
-	dc.l	loc_0002F0E6
-	dc.l	loc_0002F152 
+	dc.l	ConvertForMoneyStr
+	dc.l	SavedFromEvilStr 
 loc_0002E94C:
-	dc.l	loc_0002F180 
+	dc.l	AdviceForQuestionsStr 
 loc_0002E950:
-	dc.l	loc_0002F1B2
-	dc.l	loc_0002F206 
+	dc.l	CaveOfTroyMapStr
+	dc.l	WatlingMapStr 
 loc_0002E958:
-	dc.l	loc_0002EF5E
-	dc.l	loc_0002EF9E
+	dc.l	ExploringCavesStr
+	dc.l	GoWestStr
 	dc.l	NoOneHereStr 
-	dc.l	loc_0002EF5E
-	dc.l	loc_0002EF9E
+	dc.l	ExploringCavesStr
+	dc.l	GoWestStr
 	dc.l	NoOneHereStr
-loc_0002E970:	
+WelcomeParmaStr:	
 	dc.b	"Welcome to Parma, stranger!", $FF
-loc_0002E98C:
+CannotLeaveStr:
 	dc.b	"Those who live here", $FE
 	dc.b	"can never leave.", $FF, $00
-loc_0002E9B2:
+CaveTroyEastStr:
 	dc.b	"The Cave of Troy", $FE
 	dc.b	"is to the east.", $FF, $00
-loc_0002E9D4:
+GiveUpQuestStr:
 	dc.b	"Have you given up", $FE
 	dc.b	"your quest so soon?", $FF
-loc_0002E9FA:
+VillageWatlingEastStr:
 	dc.b	"The village of Watling?", $FE
 	dc.b	"It is east of", $FE
 	dc.b	"the Cave of Troy.", $FF
-loc_0002EA32:
+KingHasRingStr:
 	dc.b	"Hey, the king has a", $FE
 	dc.b	"ring just like yours!", $FF
-loc_0002EA5C:
+ArmWellStr:
 	dc.b	"Arm yourself well before", $FE
 	dc.b	"you enter the dread cave.", $FF, $00
-loc_0002EA90:
+StrangeWatlingStr:
 	dc.b	"I've heard strange", $FE
 	dc.b	"things about the", $FE
 	dc.b	"village of Watling.", $FD
 	dc.b	"It's full of old people--", $FE
 	dc.b	"not a single young", $FE
 	dc.b	"person there.", $FF, $00
-loc_0002EB04:
+WealthWestStr:
 	dc.b	"Much wealth is said to lie", $FE
 	dc.b	"west of here. Take this map", $FE
 	dc.b	"and good luck!"
 	dc.b	$F9, $03, $01, $40, $01, $50, $01, $41, $00
-loc_0002EB52:
+UseMapStr:
 	dc.b	"Did you use my map?", $FF
-loc_0002EB66:
+MonstersEastStr:
 	dc.b	"Horrible monsters live east", $FE
 	dc.b	"of here! Go west to gain", $FE
 	dc.b	"experience and treasure.", $FF
-loc_0002EBB4:
+BeCarefulOutThereStr:
 	dc.b	"Be careful out there!", $FF
-loc_0002EBCA:
+BraveManHereStr:
 	dc.b	"What's a brave man", $FE
 	dc.b	"like you doing in", $FE
 	dc.b	"a place like this?", $FF
-loc_0002EC02:
+SearchAdventureStr:
 	dc.b	"Search for adventure,", $FE 
 	dc.b	"warrior!", $FF, $00
-loc_0002EC22:
+KingBehavingOddlyStr:
 	dc.b	"Our king has been behaving", $FE
 	dc.b	"oddly the last few days.", $FF
-loc_0002EC56:
+CarefulInCaveStr:
 	dc.b	"Be very careful in", $FE
 	dc.b	"the cave--it's a", $FE
 	dc.b	"dangerous place!", $FF, $00
-loc_0002EC8C:
+NoDangerTownStr:
 	dc.b	"Don't worry--there's no", $FE
 	dc.b	"danger here in town.", $FF, $00
-loc_0002ECBA:
+InYourDebtStr:
 	dc.b	"We will always be in", $FE
 	dc.b	"your debt, warrior!", $FF, $00
-loc_0002ECE4:
+AskKingAboutRingStr:
 	dc.b	"When you see the king,", $FE
 	dc.b	"ask him about the ring.", $FF, $00
-loc_0002ED14:
+DontAngerKingStr:
 	dc.b	"Take care not to", $FE
 	dc.b	"anger our king.", $FF, $00
-loc_0002ED36:
+StayHereStr:
 	dc.b	"You're staying here? Good!", $FE
 	dc.b	"This is a peaceful town.", $FF
-loc_0002ED6A:
+VeryBraveStr:
 	dc.b	"You are very brave, ", Script_player_name, ".", $FE
 	dc.b	"Good luck!", $FF
-loc_0002ED8C:
+BewareSlanderingKingStr:
 	dc.b	"Beware of slandering", $FE
 	dc.b	"the king.", $FF, $00
-loc_0002EDAC:
+GnostanEvilStr:
 	dc.b	"Beware, stranger!", $FE
 	dc.b	'"Gnostan" is another', $FE
 	dc.b	"name for evil.", $FF
-loc_0002EDE2:
+WelcomeBackStr:
 	dc.b	"Welcome back! We're so glad", $FE
 	dc.b	"you returned safely.", $FF, $00
-loc_0002EE14:
+BooksOfSpellsStr:
 	dc.b	"Books of Spells are", $FE
 	dc.b	"extremely useful. Get", $FE
 	dc.b	"some as soon as you can.", $FF, $00 
-loc_0002EE58:
+GoodThingsCostStr:
 	dc.b	"Unfortunately, good things", $FE
 	dc.b	"usually cost lots of money.", $FF, $00
-loc_0002EE90:
+NotReallyPeopleStr:
 	dc.b	"Some of the people you meet", $FE
 	dc.b	"aren't really people.", $FF
-loc_0002EEC2:
+LanternCostStr:
 	dc.b	"A lantern costs more than a", $FE
 	dc.b	"candle, but it lasts for as", $FE
 	dc.b	"long as you're in a cave.", $FF
-loc_0002EF14:
+ManyCandlesStr:
 	dc.b	"You would need many candles", $FE
 	dc.b	"to explore a cave, but one", $FE
 	dc.b	"lantern is enough.", $FF
-loc_0002EF5E:
+ExploringCavesStr:
 	dc.b	"Exploring caves is", $FE
 	dc.b	"easier once you find", $FE
 	dc.b	"the maps hidden there.", $FF, $00
-loc_0002EF9E:
+GoWestStr:
 	dc.b	"They say it's best to go", $FE
 	dc.b	"west to gain experience.", $FF
-loc_0002EFD0:
+GnostanDonationsStr:
 	dc.b	"Gnostan demands donations.", $FF, $00
-loc_0002EFEC:
+GoodToBeFreeStr:
 	dc.b	"It is good to be", $FE
 	dc.b	"free once more.", $FF, $00
-loc_0002F00E:
+ConvertToGnostanStr:
 	dc.b	"I used to believe in", $FE
 	dc.b	"good, but I was forced", $FE
 	dc.b	"to convert to Gnostan.", $FF, $00
-loc_0002F052:
+BelieveInGoodStr:
 	dc.b	"You have made me", $FE
 	dc.b	"believe in good again!", $FE
 	dc.b	"Thank you.", $FF, $00
-loc_0002F086:
+KingForcesGnostanStr:
 	dc.b	"Now the king forces us to", $FE
 	dc.b	"believe only in Gnostan.", $FF, $00
-loc_0002F0BA:
+ThanksForFreeingUsStr:
 	dc.b	"Thanks for freeing us", $FE
 	dc.b	"from those monsters.", $FF, $00
-loc_0002F0E6:
+ConvertForMoneyStr:
 	dc.b	"We can collect a lot of", $FE
 	dc.b	"money if we convert to", $FE
 	dc.b	"belief in Gnostan. If", $FD
 	dc.b	"we don't, the king will", $FE
 	dc.b	"get the money.", $FF
-loc_0002F152:
+SavedFromEvilStr:
 	dc.b	"You saved us from a slow", $FE
 	dc.b	"conversion to evil.", $FF, $00
-loc_0002F180:
+AdviceForQuestionsStr:
 	dc.b	"I sometimes have advice for", $FE
 	dc.b	"those with questions.", $FF
-loc_0002F1B2:
+CaveOfTroyMapStr:
 	dc.b	"Seek the Cave of Troy to", $FE
 	dc.b	"the east. I'll give you a", $FE
 	dc.b	"map to show the way", $2E
 	dc.b	$F9, $05, $01, $42, $01, $52, $01, $43, $01, $53, $01, $41, $00
-loc_0002F206:
+WatlingMapStr:
 	dc.b	"Watling? It's to the east.", $FE
 	dc.b	"I'll give you a map to", $FE 
 	dc.b	"help you get there."
@@ -43449,6 +43451,7 @@ loc_0002F8CC:
 	dc.b	$2D, $12, $A7, $01, $02, $A2, $23, $02, $A2, $30, $02, $B6, $3D, $04, $B3, $2E, $02, $01, $04, $2B, $02, $B7, $2C, $12, $A3, $29, $12, $BB, $23, $1A, $AC, $23 
 	dc.b	$1A, $BE, $29, $12, $A6, $26, $12, $AC, $01, $22, $AF, $01, $22, $AE, $01, $22, $B0, $01, $02, $AF, $01, $02, $AE, $01, $02, $BC, $2D, $02, $A2, $2A, $02, $A4 
 	dc.b	$2E, $02, $A4, $3F, $04, $2E, $04, $A2, $3B, $0A, $A3, $30, $0A, $A2, $3B, $12, $23, $F4, $31, $12, $3F, $00 
+
 loc_0002F9EE:
 	MOVE.l	#loc_0002F4EA, $FFFFC182.w
 	MOVE.l	#loc_0002F262, $FFFFC186.w
@@ -43459,38 +43462,39 @@ loc_0002FA00:
 	MOVE.l	#loc_0002F5A2, $FFFFC186.w
 	RTS
 	
-loc_0002FA12:
+TalkToEveryoneStr:
 	dc.b	"Talk to everyone. Some", $FE
 	dc.b	"people say different", $FE
 	dc.b	"things at different times.", $FF, $00
-loc_0002FA5A:
+CrystalBallMonsterStr:
 	dc.b	"My crystal ball shows", $FE
 	dc.b	"me a vision of an", $FE
 	dc.b	"enormous monster!", $FD
 	dc.b	"This foul creature drains", $FE
 	dc.b	"the good from everyone!", $FF
-loc_0002FAC6:
+PrepareKingsMealsStr:
 	dc.b	"We prepare the king's meals", $FE
 	dc.b	"in our shop and bring them", $FE
 	dc.b	"to the castle.", $FD
 	dc.b	"It's strange, but he", $FE
 	dc.b	"now eats many times", $FE
 	dc.b	"what he used to.", $FF
-loc_0002FB46:
+NotOurKingStr:
 	dc.b	"So he wasn't our", $FE
 	dc.b	"king after all!", $FF, $00 
+
 loc_0002FB68:
-	PRINT 	loc_0002FA12
+	PRINT 	TalkToEveryoneStr
 	TST.b	Talked_to_real_king.w
 	BEQ.w	loc_0002FB80
-	PRINT 	loc_0002FA5A	
+	PRINT 	CrystalBallMonsterStr	
 loc_0002FB80:
 	RTS
 loc_0002FB82:
-	PRINT 	loc_0002FB46
+	PRINT 	NotOurKingStr
 	TST.b	Talked_to_real_king.w
 	BNE.w	loc_0002FB9A
-	PRINT 	loc_0002FAC6
+	PRINT 	PrepareKingsMealsStr
 loc_0002FB9A:
 	RTS
 	
@@ -43517,74 +43521,74 @@ loc_0002FCA4:
 	dc.b	$00, $01, $ED, $28, $FF, $FF, $00, $01, $ED, $28, $00, $A8, $00, $A8, $00, $19, $00, $03, $DD, $34, $00, $00, $71, $F0, $60, $01, $FF, $FF, $00, $01, $ED, $28 
 	dc.b	$00, $D8, $00, $48, $02, $05, $00, $03, $DE, $94, $00, $00, $6F, $CA, $60, $01, $FF, $FF 
 loc_0002FCD6:
-	dc.l	loc_0002FD2A 
-	dc.l	loc_0002FD2A 
-	dc.l	loc_0002FE2E 
-	dc.l	loc_0002FE2E 
-	dc.l	loc_0002FE2E 
-	dc.l	loc_0002FD2A 
+	dc.l	WhatIsThisStr 
+	dc.l	WhatIsThisStr 
+	dc.l	HowAreYouStr 
+	dc.l	HowAreYouStr 
+	dc.l	HowAreYouStr 
+	dc.l	WhatIsThisStr 
 loc_0002FCEE:
-	dc.l	loc_0002FD92 
-	dc.l	loc_0002FDA8 
-	dc.l	loc_0002FDA8 
-	dc.l	loc_0002FE3E 
-	dc.l	loc_0002FECE 
-	dc.l	loc_0002FECE 
+	dc.l	ThankYouStrangerStr 
+	dc.l	BecomeYoungerStr 
+	dc.l	BecomeYoungerStr 
+	dc.l	OldStillStr 
+	dc.l	NightmareStr 
+	dc.l	NightmareStr 
 loc_0002FD06:
-	dc.l	loc_0002FD38
-	dc.l	loc_0002FDCA
-	dc.l	loc_0002FE0E
-	dc.l	loc_0002FE84
-	dc.l	loc_0002FEF4
-	dc.l	loc_0002FF28 
+	dc.l	HelpMapRegionStr
+	dc.l	SearchingForRingsStr
+	dc.l	GoSouthwestDeepdaleStr
+	dc.l	RingsGoodEvilStr
+	dc.l	DeepdaleClosestTownStr
+	dc.l	SixteenRingsTotalStr 
 loc_0002FD1E:
-	dc.l	loc_0002FF66 
+	dc.l	NoYoungPeopleStr 
 loc_0002FD22:
-	dc.l	loc_0003003C 
+	dc.l	ThankYouHelpStr 
 loc_0002FD26:
-	dc.l	loc_0003008C
-loc_0002FD2A:
+	dc.l	KnowledgeablePeopleStr
+WhatIsThisStr:
 	dc.b	"What is this?", $FF
-loc_0002FD38:
+HelpMapRegionStr:
 	dc.b	"Eh, what'd you say?", $FE
 	dc.b	"For all your help,", $FE
 	dc.b	"please accept this", $FD
 	dc.b	"map of our region."
 	dc.b	$F9, $06, $01, $74, $01, $65, $01, $75, $01, $66, $01, $56, $01, $55
-loc_0002FD92:
+ThankYouStrangerStr:
 	dc.b	"Thank you, stranger.", $FF, $00
-loc_0002FDA8:
+BecomeYoungerStr:
 	dc.b	"Have you become", $FE
 	dc.b	"younger as well?", $FF, $00
-loc_0002FDCA:
+SearchingForRingsStr:
 	dc.b	"You are searching for", $FE
 	dc.b	"rings? The kings of most", $FE
 	dc.b	"regions have rings.", $FF, $00
-loc_0002FE0E:
+GoSouthwestDeepdaleStr:
 	dc.b	"Go southwest to", $FE
 	dc.b	"find Deepdale.", $FF, $00
-loc_0002FE2E:
+HowAreYouStr:
 	dc.b	"How are you?"
 	dc.b	$F8, $01, $1E, $00
-loc_0002FE3E:
+OldStillStr:
 	dc.b	"Why are you so surprised?", $FE
 	dc.b	"I was an old man before,", $FE
 	dc.b	"so I am old still.", $FF
-loc_0002FE84:
+RingsGoodEvilStr:
 	dc.b	"There are rings of good and", $FE
 	dc.b	"evil. The rings of evil are", $FE
 	dc.b	"now in Cartahena.", $FF
-loc_0002FECE:
+NightmareStr:
 	dc.b	"Was it all just a", $FE
 	dc.b	"horrible nightmare?", $FF
-loc_0002FEF4:
+DeepdaleClosestTownStr:
 	dc.b	"Deepdale is the closest", $FE
 	dc.b	"town to our humble village.", $FF
-loc_0002FF28:
+SixteenRingsTotalStr:
 	dc.b	"There are 16 rings all", $FE
 	dc.b	"told--eight of good", $FE
 	dc.b	"and eight of evil.", $FF 
-loc_0002FF66:
+NoYoungPeopleStr:
 	dc.b	"What do you mean", $FE
 	dc.b	'by "no young people"?', $FE
 	dc.b	"I'm only 24!", $FD
@@ -43612,39 +43616,39 @@ loc_0003000D:
 	dc.b	$01, $46
 	dc.b	$01, $56
 	dc.b	$00
-loc_0003003C:	
+ThankYouHelpStr:	
 	dc.b	"Thank you for your help.", $FE
 	dc.b	"You want to know about", $FE
 	dc.b	"the rings?", $FD
 	dc.b	"Ask the villagers."
 	dc.b	$F8, $01, $0A
-loc_0003008C:
+KnowledgeablePeopleStr:
 	dc.b	"There are many", $FE
 	dc.b	"knowledgeable people.", $FF, $00
-loc_000300B2:
+GoNorthVerlinsCaveStr:
 	dc.b	"Go north to reach", $FE
 	dc.b	"Verlin's Cave.", $FF, $00
-loc_000300D4:
+CustomerStayHereStr:
 	dc.b	"Are you a customer?", $FE
 	dc.b	"If you want to stay here,", $FE
 	dc.b	"go ahead.", $FD
 	dc.b	"Eh? Sorry, I can't seem to", $FE
 	dc.b	"remember how much it costs.", $FE
 	dc.b	"Maybe it's free.", $FF 
-loc_00030154:
+StayingForFreeStr:
 	dc.b	"You've been staying here", $FE
 	dc.b	"for free!", $FD
 	dc.b	"I did count how many", $FE
 	dc.b	"times you stayed here.", $FD
 	dc.b	"Now you have to pay", $FF, $00 
-loc_000301B8:
+PayOrWorkStr:
 	dc.b	"or you'll have to work.", $FF
-loc_000301D0:
+MoveAlongStr:
 	dc.b	"Move along now, stranger.", $FF
-loc_000301EA:
+DontPullOnMeStr:
 	dc.b	"Don't try to pull one", $FE
 	dc.b	"on me again, young man!", $FF 
-loc_00030218:
+StoleYouthStr:
 	dc.b	"Greetings, weakling! I'm", $FE
 	dc.b	"the one who stole the youth", $FE
 	dc.b	"from the villagers.", $FD
@@ -43742,45 +43746,45 @@ loc_00030870:
 	dc.b	$00, $01, $ED, $6C, $00, $58, $00, $48, $02, $05, $00, $03, $DE, $94, $00, $00, $6F, $CA, $60, $01, $FF, $FF, $00, $01, $ED, $6C, $FF, $FF, $00, $01, $ED, $6C 
 	dc.b	$00, $A8, $00, $48, $02, $65, $00, $03, $DF, $2C, $00, $00, $6F, $CA, $00, $01, $FF, $FF 
 loc_00030A12:
-	dc.l	loc_00030A7A
-	dc.l	loc_00030AA2
-	dc.l	loc_00030B42
-	dc.l	loc_00030BDE
-	dc.l	loc_00030C10
-	dc.l	loc_00030CB2
-	dc.l	loc_00030CF4 
+	dc.l	EnjoyStayDeepdaleStr
+	dc.l	AmazinglyPeacefulStr
+	dc.l	RingOfWindStr
+	dc.l	CartahenaNotInvadedStr
+	dc.l	KingNotEasyMeetStr
+	dc.l	KindKingStr
+	dc.l	SwellGuyStr 
 loc_00030A2E:
-	dc.l	loc_00030A7A
-	dc.l	loc_00030AA2
-	dc.l	loc_00030B42
-	dc.l	loc_00030BDE
-	dc.l	loc_00030C78
-	dc.l	loc_00030CB2
-	dc.l	loc_00030CF4 
+	dc.l	EnjoyStayDeepdaleStr
+	dc.l	AmazinglyPeacefulStr
+	dc.l	RingOfWindStr
+	dc.l	CartahenaNotInvadedStr
+	dc.l	CheckCastleStr
+	dc.l	KindKingStr
+	dc.l	SwellGuyStr 
 loc_00030A4A:
-	dc.l	loc_00030A7A
-	dc.l	loc_00030AC4
-	dc.l	loc_00030B68
-	dc.l	loc_00030BDE
-	dc.l	loc_00030C2E
-	dc.l	loc_00030CCA
-	dc.l	loc_00030D0C 
+	dc.l	EnjoyStayDeepdaleStr
+	dc.l	MapToStowStr
+	dc.l	VisitStowFirstStr
+	dc.l	CartahenaNotInvadedStr
+	dc.l	CaveToStowStr
+	dc.l	BringingTrufflesStr
+	dc.l	KingInCastleStr 
 loc_00030A66:
-	dc.l	loc_00030D2A 
+	dc.l	VisitorToTownStr 
 loc_00030A6A:
-	dc.l	loc_00030D64 
+	dc.l	RingOfWindRewardStr 
 loc_00030A6E:
-	dc.l	loc_00030E7E
-	dc.l	loc_00030EA4 
+	dc.l	KeptSecretStr
+	dc.l	LikedItHereStr 
 loc_00030A76:
-	dc.l	loc_00030EF0
-loc_00030A7A:
+	dc.l	TellPriestsStr
+EnjoyStayDeepdaleStr:
 	dc.b	"Enjoy your stay in", $FE
 	dc.b	"Deepdale, traveler.", $FF, $00
-loc_00030AA2:
+AmazinglyPeacefulStr:
 	dc.b	"This town is", $FE
 	dc.b	"amazingly peaceful.", $FF, $00
-loc_00030AC4:
+MapToStowStr:
 	dc.b	"Stow is far to the east.", $FE
 	dc.b	"This map will show", $FE
 	dc.b	"you the way."
@@ -43798,47 +43802,47 @@ loc_00030AC4:
 	dc.b	$01, $6A 
 	dc.b	$01, $7A 
 	dc.b	$01, $7B
-loc_00030B18:
+RoadToStowDangerousStr:
 	dc.b	"The road to Stow is", $FE
 	dc.b	"extremely dangerous.", $FF, $00
-loc_00030B42:
+RingOfWindStr:
 	dc.b	"Our king's ring is", $FE
 	dc.b	"the Ring of Wind.", $FF, $00
-loc_00030B68:
+VisitStowFirstStr:
 	dc.b	"On the way to Stow is a", $FE
 	dc.b	"cave. You'll probably want", $FE
 	dc.b	"to visit Stow first,", $FD
 	dc.b	"but visit the cave before", $FE
 	dc.b	"you leave the area.", $FF
-loc_00030BDE:
+CartahenaNotInvadedStr:
 	dc.b	"The armies of Cartahena", $FE 
 	dc.b	"have not invaded us yet.", $FF, $00
-loc_00030C10:
+KingNotEasyMeetStr:
 	dc.b	"Our king is not", $FE
 	dc.b	"easy to meet.", $FF
-loc_00030C2E:
+CaveToStowStr:
 	dc.b	"There is a cave on the", $FE
 	dc.b	"way to Stow. Something", $FE
 	dc.b	"interesting awaits inside.", $FF, $00
-loc_00030C78:
+CheckCastleStr:
 	dc.b	"The king isn't here?", $FE
 	dc.b	"Did you check the", $FE
 	dc.b	"castle thoroughly?", $FF
-loc_00030CB2:
+KindKingStr:
 	dc.b	"Our king is a kind man.", $FF
-loc_00030CCA:
+BringingTrufflesStr:
 	dc.b	"I am bringing some", $FE
 	dc.b	"truffles to the king.", $FF, $00
-loc_00030CF4:
+SwellGuyStr:
 	dc.b	"The king's a swell guy!", $FF
-loc_00030D0C:
+KingInCastleStr:
 	dc.b	"Isn't the king", $FE
 	dc.b	"in the castle?", $FF
-loc_00030D2A:
+VisitorToTownStr:
 	dc.b	"Greetings, stranger.", $FE
 	dc.b	"Are you a visitor", $FE
 	dc.b	"to our fair town?", $FF, $00
-loc_00030D64:
+RingOfWindRewardStr:
 	dc.b	"You have truffles! May I", $FE
 	dc.b	"have some? There goes my", $FE 
 	dc.b	"secret identity, I guess.", $FD
@@ -43852,21 +43856,21 @@ loc_00030D64:
 	dc.b	"anyone who I am.", $FE
 	dc.b	"Thanks for the truffles!"
 	dc.b	$F9, $02, $00, $0D, $00, $FA
-loc_00030E7E:
+KeptSecretStr:
 	dc.b	"I hope you've kept", $FE
 	dc.b	"our little secret!", $FF
-loc_00030EA4:
+LikedItHereStr:
 	dc.b	"I was also a traveler, but", $FE
 	dc.b	"I liked it here so much", $FE
 	dc.b	"that I decided to stay.", $FF, $00
-loc_00030EF0:
+TellPriestsStr:
 	dc.b	"If your way is dangerous,", $FE
 	dc.b	"enter a church and tell the", $FE
 	dc.b	"priests of your adventures.", $FD
 	dc.b	"That way that your deeds", $FE
 	dc.b	"will be remembered.", $FF, $00 
 loc_00030F70:
-	PRINT 	loc_00030EA4	
+	PRINT 	LikedItHereStr	
 	RTS
 	
 loc_00030F7A:
@@ -43977,186 +43981,186 @@ loc_0003175A:
 	dc.b	$00, $58, $01, $D5, $00, $03, $DE, $34, $00, $00, $6F, $36, $60, $01, $FF, $FF, $00, $01, $EE, $66, $00, $B8, $00, $68, $01, $D5, $00, $03, $DE, $34, $00, $00 
 	dc.b	$6F, $36, $60, $01, $FF, $FF 
 loc_000318F0:
-	dc.l	loc_000319E4
-	dc.l	loc_00031A12
-	dc.l	loc_00031AE2
-	dc.l	loc_00031B8C
-	dc.l	loc_00031C1A
-	dc.l	loc_00031C1A
-	dc.l	loc_00031D2A
-	dc.l	loc_00031D96 
-	dc.l	loc_00031DFA 
+	dc.l	ThisIsStowStr
+	dc.l	LookingForButtonStr
+	dc.l	RingOfFireFoundStr
+	dc.l	TooBusyTalkStr
+	dc.l	KingGoodManStr
+	dc.l	KingGoodManStr
+	dc.l	SawShadowCastleStr
+	dc.l	PlayAGameStr 
+	dc.l	DontHearWellStr 
 loc_00031914:
-	dc.l	loc_000319E4
-	dc.l	loc_00031A48
-	dc.l	loc_00031AE2
-	dc.l	loc_00031B8C
-	dc.l	loc_00031C1A
-	dc.l	loc_00031C1A
-	dc.l	loc_00031D2A
-	dc.l	loc_00031D96 
-	dc.l	loc_00031DFA 
+	dc.l	ThisIsStowStr
+	dc.l	BookOfSpellsWhereStr
+	dc.l	RingOfFireFoundStr
+	dc.l	TooBusyTalkStr
+	dc.l	KingGoodManStr
+	dc.l	KingGoodManStr
+	dc.l	SawShadowCastleStr
+	dc.l	PlayAGameStr 
+	dc.l	DontHearWellStr 
 loc_00031938:
-	dc.l	loc_000319E4
-	dc.l	loc_00031A78
-	dc.l	loc_00031B0A
-	dc.l	loc_00031BA4
-	dc.l	loc_00031C44
-	dc.l	loc_00031CB2
-	dc.l	loc_00031D2A
-	dc.l	loc_00031D96 
-	dc.l	loc_00031DFA 
+	dc.l	ThisIsStowStr
+	dc.l	ReallyInnocentStr
+	dc.l	ProveInnocenceStr
+	dc.l	BetGuiltyStr
+	dc.l	FindBookSellerStr
+	dc.l	LookForBookSellerStr
+	dc.l	SawShadowCastleStr
+	dc.l	PlayAGameStr 
+	dc.l	DontHearWellStr 
 loc_0003195C:
-	dc.l	loc_000319F2
-	dc.l	loc_000319F2
-	dc.l	loc_00031A92
-	dc.l	loc_00031A92
-	dc.l	loc_00031B38
-	dc.l	loc_00031B38
-	dc.l	loc_00031BD0
-	dc.l	loc_00031BD0 
-	dc.l	loc_00031C82
-	dc.l	loc_00031C82
-	dc.l	loc_00031D7A
-	dc.l	loc_00031D7A
-	dc.l	loc_00031D7A
-	dc.l	loc_00031D7A
-	dc.l	loc_00031DB6
-	dc.l	loc_00031E1E 
-	dc.l	loc_00031E1E 
+	dc.l	HappenInStowStr
+	dc.l	HappenInStowStr
+	dc.l	ThankHeavensStr
+	dc.l	ThankHeavensStr
+	dc.l	MonsterDidntAttackStr
+	dc.l	MonsterDidntAttackStr
+	dc.l	ReallyInnocentConfirmedStr
+	dc.l	ReallyInnocentConfirmedStr 
+	dc.l	PleaseHelpUsStr
+	dc.l	PleaseHelpUsStr
+	dc.l	MonsterTwoHeadsStr
+	dc.l	MonsterTwoHeadsStr
+	dc.l	MonsterTwoHeadsStr
+	dc.l	MonsterTwoHeadsStr
+	dc.l	MakeMonsterGoAwayStr
+	dc.l	MonsterKillUsStr2 
+	dc.l	MonsterKillUsStr2 
 loc_000319A0:
-	dc.l	loc_000319E4
-	dc.l	loc_00031ABE
-	dc.l	loc_00031B64
-	dc.l	loc_00031BF2
-	dc.l	loc_00031C92
-	dc.l	loc_00031CFC
-	dc.l	loc_00031C92
-	dc.l	loc_00031DDA 
-	dc.l	loc_00031E3E 
+	dc.l	ThisIsStowStr
+	dc.l	FeelBetterStr
+	dc.l	EveryoneBetterStr
+	dc.l	DeedsRememberedStr
+	dc.l	DoctorHealedAllStr
+	dc.l	KingThanksHeroismStr
+	dc.l	DoctorHealedAllStr
+	dc.l	MonsterKillUsStr 
+	dc.l	ThankYouLivesStr 
 loc_000319C4:
-	dc.l	loc_00031E62 
+	dc.l	DozedOffStr 
 loc_000319C8:
-	dc.l	loc_00031E84 
+	dc.l	AfraidMonsterStr 
 loc_000319CC:
-	dc.l	loc_00031ED4 
+	dc.l	AtoneCowardiceStr 
 loc_000319D0:
-	dc.l	loc_00032040
+	dc.l	GoodMorningStr
 	dc.l	NoOneHereStr 
 loc_000319D8:
-	dc.l	loc_00032040 
-	dc.l	loc_00032040 
+	dc.l	GoodMorningStr 
+	dc.l	GoodMorningStr 
 loc_000319E0:
-	dc.l	loc_00032070
-loc_000319E4:
+	dc.l	MetAcolytesStr
+ThisIsStowStr:
 	dc.b	"This is Stow.", $FF
-loc_000319F2:
+HappenInStowStr:
 	dc.b	"How could this", $FE
 	dc.b	"happen in Stow?", $FF, $00
-loc_00031A12:
+LookingForButtonStr:
 	dc.b	"I can't speak with you now;", $FE
 	dc.b	"I'm looking for a button.", $FF
-loc_00031A48:
+BookOfSpellsWhereStr:
 	dc.b	"Hey, you! Where'd you get", $FE
 	dc.b	"that Book of Spells?", $FF, $00
-loc_00031A78:
+ReallyInnocentStr:
 	dc.b	"Are you really innocent?", $FF, $00
-loc_00031A92:
+ThankHeavensStr:
 	dc.b	"Thank heavens you're here!", $FE
 	dc.b	"It was horrible!", $FF
-loc_00031ABE:
+FeelBetterStr:
 	dc.b	"I feel better than", $FE
 	dc.b	"I have in years.", $FF
-loc_00031AE2:
+RingOfFireFoundStr:
 	dc.b	"The Ring of Fire is", $FE
 	dc.b	"found in our land.", $FF, $00
-loc_00031B0A:
+ProveInnocenceStr:
 	dc.b	"You have to prove your", $FE
 	dc.b	"innocence, or else....", $FF
-loc_00031B38:
+MonsterDidntAttackStr:
 	dc.b	"The monster didn't attack", $FE
 	dc.b	"those in houses.", $FF, $00
-loc_00031B64:
+EveryoneBetterStr:
 	dc.b	"Everyone is better now,", $FE
 	dc.b	"thanks to you.", $FF, $00
-loc_00031B8C:
+TooBusyTalkStr:
 	dc.b	"Too busy to talk. Bye!", $FF, $00
-loc_00031BA4:
+BetGuiltyStr:
 	dc.b	"I bet you're guilty.", $FE
 	dc.b	"You even look guilty.", $FF, $00
-loc_00031BD0:
+ReallyInnocentConfirmedStr:
 	dc.b	"I guess you really", $FE
 	dc.b	"are innocent.", $FF, $00
-loc_00031BF2:
+DeedsRememberedStr:
 	dc.b	"Your deeds will be", $FE
 	dc.b	"remembered forever!", $FF, $00
-loc_00031C1A:
+KingGoodManStr:
 	dc.b	"Our king is a good man", $FE
 	dc.b	"who detests evil.", $FF, $00
-loc_00031C44:
+FindBookSellerStr:
 	dc.b	"You should find the", $FE
 	dc.b	"person who sold you", $FE
 	dc.b	"that Book of Spells.", $FF, $00
-loc_00031C82:
+PleaseHelpUsStr:
 	dc.b	"Please help us!", $FF
-loc_00031C92:
+DoctorHealedAllStr:
 	dc.b	"That doctor has", $FE
 	dc.b	"healed us all.", $FF, $00
-loc_00031CB2:
+LookForBookSellerStr:
 	dc.b	"If I were you, I'd look", $FE
 	dc.b	"for the person who sold", $FE
 	dc.b	"you that Book of Spells.", $FF, $00
-loc_00031CFC:
+KingThanksHeroismStr:
 	dc.b	"The king wants to thank", $FE
 	dc.b	"you for your heroism.", $FF
-loc_00031D2A:
+SawShadowCastleStr:
 	dc.b	"Last night, I saw a shadow", $FE
 	dc.b	"in a castle window, as if a", $FE
 	dc.b	"child was running away.", $FF, $00
-loc_00031D7A:
+MonsterTwoHeadsStr:
 	dc.b	"The monster had two heads!", $FF, $00
-loc_00031D96:
+PlayAGameStr:
 	dc.b	"Would you like", $FE
 	dc.b	"to play a game?", $FF, $00
-loc_00031DB6:
+MakeMonsterGoAwayStr:
 	dc.b	"Help me! Make the", $FE
 	dc.b	"monster go away!", $FF, $00
-loc_00031DDA:
+MonsterKillUsStr:
 	dc.b	"Don't let the", $FE
 	dc.b	"monster kill us!", $FF, $00
-loc_00031DFA:
+DontHearWellStr:
 	dc.b	"Eh? I don't hear", $FE
 	dc.b	"very well anymore.", $FF
-loc_00031E1E:
+MonsterKillUsStr2:
 	dc.b	"Don't let the", $FE
 	dc.b	"monster kill us!", $FF, $00
-loc_00031E3E:
+ThankYouLivesStr:
 	dc.b	"Thank you. We owe", $FE
 	dc.b	"our lives to you!", $FF
-loc_00031E62:
+DozedOffStr:
 	dc.b	"Er...um...I must", $FE
 	dc.b	"have dozed off.", $FF, $00
-loc_00031E84:
+AfraidMonsterStr:
 	dc.b	"I was hoping no one would", $FE
 	dc.b	"find me. I was afraid of", $FE
 	dc.b	"the monster, so I hid here.", $FF, $00
-loc_00031ED4:
+AtoneCowardiceStr:
 	dc.b	"From now on, I will", $FE
 	dc.b	"atone for my cowardice.", $FF 
-loc_00031F00:
+PrettyGirlMonsterStr:
 	dc.b	"I see a pretty girl turning", $FE
 	dc.b	"into a horrible monster.", $FF, $00
-loc_00031F36:
+KeltwickShopsStr:
 	dc.b	"In the shops of Keltwick,", $FE
 	dc.b	"northeast of here, they", $FE
 	dc.b	"sell unusual things.", $FF, $00
-loc_00031F7E:
+TooBusyTalkStr2:
 	dc.b	"Sorry, too busy to talk!", $FF, $00
-loc_00031F98:
+WelcomeEatStr:
 	dc.b	"Welcome!", $FE
 	dc.b	"You didn't come here to", $FE
 	dc.b	"eat, did you?", $FF, $00
-loc_00031FC8:
+MapAstiCaveStr:
 	dc.b	"Here is a map", $FE
 	dc.b	"to Asti's Cave", $2E
 	dc.b	$F9, $05 ; 5 map areas
@@ -44166,73 +44170,73 @@ loc_00031FC8:
 	dc.b	$01, $6D
 	dc.b	$01, $7B
 	dc.b	$00 ; padding
-loc_00031FF2:
+GetRingsStr:
 	dc.b	"Be sure to get the rings.", $FF
-loc_0003200C:
+LandSafeStr:
 	dc.b	"Thanks to you,", $FE
 	dc.b	"our land is safe.", $FF, $00
-loc_0003202E:
+PleaseRescueUsStr:
 	dc.b	"Please rescue us!", $FF 
-loc_00032040:
+GoodMorningStr:
 	dc.b	"Good morning!", $FE
 	dc.b	"Excuse me, please.", $FE
 	dc.b	"I'm very busy.", $FF
-loc_00032070:
+MetAcolytesStr:
 	dc.b	"Have you met my acolytes", $FE
 	dc.b	"downstairs? We're too busy", $FE
 	dc.b	"to talk, but we're polite.", $FF, $00 
-loc_000320C0:
+BuyBookSanguiosStr:
 	dc.b	"Hello. Would you like to buy", $FE
 	dc.b	"a Book of Sanguios Spells?", $FE
 	dc.b	"It's only 1,000 kims."
 	dc.b	$FB, $03, $0E, $00, $00
-loc_00032112:
+BuyItStr:
 	dc.b	"Don't say no! Just buy it."
 	dc.b	$FB, $03, $0E, $00
-loc_00032130:
+MoreNeatStuffStr:
 	dc.b	"Thanks. When you come back,", $FE
 	dc.b	"I'll try to have more neat", $FE
 	dc.b	"stuff for you.", $FF
-loc_00032176:
+BuyBookSanguiosStr2:
 	dc.b	"Hello. Would you like to buy", $FE
 	dc.b	"a Book of Sanguios Spells?", $FE
 	dc.b	"It's only 1,000 kims.", $FC
 	dc.b	$08, $00
-loc_000321C6:
+TurnDownBargainStr:
 	dc.b	"How can you turn down a", $FE
 	dc.b	"bargain like this?", $FC, $08
-loc_000321F2:
+NotEnoughMoneyStr2:
 	dc.b	"Darn, you don't have", $FE
 	dc.b	"enough money! Get some", $FE
 	dc.b	"more and come back.", $FF
-loc_00032232:
+BuyBookSanguiosThirdStr3:
 	dc.b	"Hello. Would you like to buy", $FE
 	dc.b	"a Book of Sanguios Spells?", $FE
 	dc.b	"It's only 1,000 kims.", $FC 
 	dc.b	$09, $00
-loc_00032282:
+TurnDownBargainStr2:
 	dc.b	"How can you turn down a", $FE
 	dc.b	"bargain like this?", $FC, $09
-loc_000322AE:
+NoRoomMoreBooksStr:
 	dc.b	"You don't have room for", $FE
 	dc.b	"any more Books of Spells.", $FE 
 	dc.b	"Too bad. It's a great Book.", $FF
-loc_000322FC:
+NothingForYouStr:
 	dc.b	"Right now I don't", $FE
 	dc.b	"have anything for you.", $FF, $00
-loc_00032326:
+DidntStealBookStr:
 	dc.b	"What? They said I stole the", $FE
 	dc.b	"Book of Sanguios Spells?", $FE
 	dc.b	"No way! Please believe me.", $FC
 	dc.b	$04, $10
-loc_00032378:
+ThankYouStr3:
 	dc.b	"Thank you.", $FF, $00
-loc_00032384:
+JustBorrowedBookStr:
 	dc.b	"But it's true. I didn't", $FE
 	dc.b	"steal it--I just borrowed", $FE
 	dc.b	"it for a moment. Ha, ha!"
 	dc.b	$F8, $02, $F7, $E2
-loc_000323D2:
+SorryForStealingStr:
 	dc.b	"I'm sorry. I make", $FE
 	dc.b	"a living selling", $FE
 	dc.b	"things that I steal.", $FD
@@ -44243,7 +44247,7 @@ loc_000323D2:
 	dc.b	"show them how much I", $FE
 	dc.b	"regret my past mistakes."
 	dc.b	$F8, $01, $3C
-loc_0003248A:
+MeetAgainStr2:
 	dc.b	"Hello! So we meet again.", $FD
 	dc.b	"I reported to King Tsarkon", $FE
 	dc.b	"in Cartahena that you are", $FE
@@ -44315,36 +44319,36 @@ loc_00032A92:
 	RTS
 	
 loc_00032AA4:
-	PRINT 	loc_00031F7E
+	PRINT 	TooBusyTalkStr2
 	TST.b	$FFFFC732.w
 	BNE.w	loc_00032ACC
-	PRINT 	loc_00031F36
+	PRINT 	KeltwickShopsStr
 	TST.b	$FFFFC730.w
 	BNE.w	loc_00032ACC
-	PRINT 	loc_00031F00
+	PRINT 	PrettyGirlMonsterStr
 loc_00032ACC:
 	RTS
 	
 loc_00032ACE:
-	PRINT 	loc_0003200C
+	PRINT 	LandSafeStr
 	TST.b	$FFFFC732.w
 	BNE.w	loc_00032B2E
-	PRINT 	loc_0003202E
+	PRINT 	PleaseRescueUsStr
 	TST.b	$FFFFC731.w
 	BNE.w	loc_00032B2E
-	PRINT 	loc_00031FC8
+	PRINT 	MapAstiCaveStr
 	LEA	$FFFFC820.w, A0
 	MOVE.w	#$005C, D5
 	TST.b	(A0,D5.w)
 	BEQ.w	loc_00032B0E
-	PRINT 	loc_00031FF2
+	PRINT 	GetRingsStr
 loc_00032B0E:
 	TST.b	$FFFFC77F.w
 	BNE.w	loc_00032B2E
-	PRINT 	loc_0003202E
+	PRINT 	PleaseRescueUsStr
 	TST.b	$FFFFC730.w
 	BNE.w	loc_00032B2E
-	PRINT 	loc_00031F98
+	PRINT 	WelcomeEatStr
 loc_00032B2E:
 	RTS
 	
@@ -44377,150 +44381,150 @@ loc_00032BD6:
 	dc.b	$DE, $94, $00, $00, $6F, $CA, $60, $01, $FF, $FF, $00, $01, $EE, $D8, $FF, $FF, $00, $01, $EE, $D8, $00, $B8, $00, $48, $01, $D5, $00, $03, $DE, $34, $00, $00 
 	dc.b	$6F, $36, $60, $01, $FF, $FF 
 loc_00032D24:
-	dc.l	loc_00032E08
-	dc.l	loc_00032E1A
-	dc.l	loc_00032E1A
-	dc.l	loc_00032E1A
-	dc.l	loc_00032E1A
-	dc.l	loc_000330BC
-	dc.l	loc_000330BC
-	dc.l	loc_000331A6 
-	dc.l	loc_0003330C
-	dc.l	loc_000331A6 
+	dc.l	ThisIsKeltwickStr
+	dc.l	ExploreKeltwickStr
+	dc.l	ExploreKeltwickStr
+	dc.l	ExploreKeltwickStr
+	dc.l	ExploreKeltwickStr
+	dc.l	DontBotherMeStr
+	dc.l	DontBotherMeStr
+	dc.l	WhatsYourNameStr 
+	dc.l	IntroduceMeToSomeoneStr
+	dc.l	WhatsYourNameStr 
 loc_00032D4C:
-	dc.l	loc_00032E08
-	dc.l	loc_00032E48
-	dc.l	loc_00032EE2
-	dc.l	loc_00032F52
-	dc.l	loc_00033002
-	dc.l	loc_000330CE
-	dc.l	loc_000330CE
-	dc.l	loc_000331A6 
-	dc.l	loc_0003330C
-	dc.l	loc_000331A6 
+	dc.l	ThisIsKeltwickStr
+	dc.l	BasilFineDoctorStr
+	dc.l	BasilNappingStr
+	dc.l	BasilLaziestDoctorStr
+	dc.l	LookingForBasilStr
+	dc.l	TroubleAtStowStr
+	dc.l	TroubleAtStowStr
+	dc.l	WhatsYourNameStr 
+	dc.l	IntroduceMeToSomeoneStr
+	dc.l	WhatsYourNameStr 
 loc_00032D74:
-	dc.l	loc_00032E08
-	dc.l	loc_00032E74
-	dc.l	loc_00032F04
-	dc.l	loc_00032F7E
-	dc.l	loc_00033042
-	dc.l	loc_000330F8
-	dc.l	loc_00033156
-	dc.l	loc_000331BC 
-	dc.l	loc_0003330C
-	dc.l	loc_00033246 
+	dc.l	ThisIsKeltwickStr
+	dc.l	MapToMalagaStr
+	dc.l	BearwulfWantsToSeeYouStr
+	dc.l	MalagaNoNewKingStr
+	dc.l	MapToBlazonsCaveStr
+	dc.l	TalkToEveryoneMalagaStr
+	dc.l	BearwulfWaitingStr
+	dc.l	PoorAnselmStr 
+	dc.l	IntroduceMeToSomeoneStr
+	dc.l	AnselmIntroductionStr 
 loc_00032D9C:
-	dc.l	loc_00032E08
-	dc.l	loc_00032E74
-	dc.l	loc_00032F2C
-	dc.l	loc_00032F7E
-	dc.l	loc_00033042
-	dc.l	loc_000330F8
-	dc.l	loc_00033174
-	dc.l	loc_000331F4 
-	dc.l	loc_0003330C
-	dc.l	loc_000332D8
-	dc.l	loc_00032E08
-	dc.l	loc_00032E74
-	dc.l	loc_00032F2C
-	dc.l	loc_00032FCC
-	dc.l	loc_00033042
-	dc.l	loc_00033120 
-	dc.l	loc_00033174 
-	dc.l	loc_000331F4
-	dc.l	loc_0003330C
-	dc.l	loc_000332D8 
+	dc.l	ThisIsKeltwickStr
+	dc.l	MapToMalagaStr
+	dc.l	BearwulfLivesWithSonStr
+	dc.l	MalagaNoNewKingStr
+	dc.l	MapToBlazonsCaveStr
+	dc.l	TalkToEveryoneMalagaStr
+	dc.l	BearwulfIsBackStr
+	dc.l	HasFatherReturnedStr 
+	dc.l	IntroduceMeToSomeoneStr
+	dc.l	ThankYouForFindingHimStr
+	dc.l	ThisIsKeltwickStr
+	dc.l	MapToMalagaStr
+	dc.l	BearwulfLivesWithSonStr
+	dc.l	NewKingChosenStr
+	dc.l	MapToBlazonsCaveStr
+	dc.l	EveryoneKnowsSomethingStr 
+	dc.l	BearwulfIsBackStr 
+	dc.l	HasFatherReturnedStr
+	dc.l	IntroduceMeToSomeoneStr
+	dc.l	ThankYouForFindingHimStr 
 loc_00032DEC:
-	dc.l	loc_0003346A 
+	dc.l	FindPoisonShieldStr 
 loc_00032DF0:
-	dc.l	loc_00033520 
+	dc.l	TroubleWakingUpStr 
 loc_00032DF4:
-	dc.l	loc_00033544 
+	dc.l	WhatsWrongStowStr 
 loc_00032DF8:
-	dc.l	loc_000335EC 
+	dc.l	GettingReadyForBedStr 
 loc_00032DFC:
-	dc.l	loc_00032F2C
+	dc.l	BearwulfLivesWithSonStr
 	dc.l	NoOneHereStr 
 loc_00032E04:
-	dc.l	loc_00033216
-loc_00032E08:
+	dc.l	GreetingsYoungManStr
+ThisIsKeltwickStr:
 	dc.b	"This is Keltwick.", $FF
-loc_00032E1A:
+ExploreKeltwickStr:
 	dc.b	"Explore the fair town of", $FE
 	dc.b	"Keltwick, stranger.", $FF, $00
-loc_00032E48:
+BasilFineDoctorStr:
 	dc.b	"Basil may be lazy, but he's", $FE 
 	dc.b	"a fine doctor.", $FF, $00
-loc_00032E74:
+MapToMalagaStr:
 	dc.b	"Malaga lies to the", $FE
 	dc.b	"northeast. Here is a map to", $FE
 	dc.b	"help you get there."
 	dc.b	$F9, $06, $01, $2C, $01, $3C, $01, $3D, $01, $3E, $01, $3F, $01, $4E
-loc_00032EC4:
+MalagaNortheastStr:
 	dc.b	"Malaga is", $FE
 	dc.b	"northeast of here.", $FF, $00
-loc_00032EE2:
+BasilNappingStr:
 	dc.b	"Basil must be", $FE
 	dc.b	"napping somewhere.", $FF, $00 
-loc_00032F04:
+BearwulfWantsToSeeYouStr:
 	dc.b	"I hear that Bearwulf", $FE
 	dc.b	"wants to see you.", $FF, $00
-loc_00032F2C:
+BearwulfLivesWithSonStr:
 	dc.b	"Bearwulf lives with", $FE
 	dc.b	"his son, Anselm.", $FF, $00
-loc_00032F52:
+BasilLaziestDoctorStr:
 	dc.b	"Basil's the laziest", $FE
 	dc.b	"doctor I've ever seen.", $FF, $00
-loc_00032F7E:
+MalagaNoNewKingStr:
 	dc.b	"The king of Malaga died two", $FE
 	dc.b	"years ago, but they still", $FE
 	dc.b	"don't have a new king.", $FF, $00
-loc_00032FCC:
+NewKingChosenStr:
 	dc.b	"I heard that the new king", $FE
 	dc.b	"of Malaga has been chosen.", $FF, $00
-loc_00033002:
+LookingForBasilStr:
 	dc.b	"You're looking for", $FE
 	dc.b	"Doctor Basil? I didn't", $FE
 	dc.b	"know he was a doctor.", $FF
-loc_00033042:
+MapToBlazonsCaveStr:
 	dc.b	"Go west to find Blazon's", $FE
 	dc.b	"Cave. I'll give you a map", $FE
 	dc.b	"that shows the way."
 	dc.b	$F9, $03, $01, $4C, $01, $4D, $01, $4E
-loc_00033090:	
+GoWestBlazonsCaveStr:	
 	dc.b	"If you go west, you'll", $FE
 	dc.b	"find Blazon's Cave.", $FF, $00
-loc_000330BC:
+DontBotherMeStr:
 	dc.b	"Don't bother me.", $FE, $00
-loc_000330CE:
+TroubleAtStowStr:
 	dc.b	"I hear there's a lot", $FE
 	dc.b	"of trouble at Stow.", $FF, $00
-loc_000330F8:
+TalkToEveryoneMalagaStr:
 	dc.b	"Be sure to talk to", $FE
 	dc.b	"everyone in Malaga.", $FF, $00
-loc_00033120:
+EveryoneKnowsSomethingStr:
 	dc.b	"I hear that everyone", $FE
 	dc.b	"in town knows", $FE
 	dc.b	"something useful.", $FF, $00
-loc_00033156:
+BearwulfWaitingStr:
 	dc.b	"Bearwulf is", $FE
 	dc.b	"waiting for you.", $FF, $00
-loc_00033174:
+BearwulfIsBackStr:
 	dc.b	"Bearwulf is back!", $FE
 	dc.b	"Anselm will be", $FE
 	dc.b	"glad to see him.", $FF
-loc_000331A6:
+WhatsYourNameStr:
 	dc.b	"Hi! What's your name?", $FF
-loc_000331BC:
+PoorAnselmStr:
 	dc.b	"Poor Anselm! His father has", $FE
 	dc.b	"been gone for several days.", $FF
-loc_000331F4:
+HasFatherReturnedStr:
 	dc.b	"Has Anselm's father", $FE
 	dc.b	"returned yet?", $FF
-loc_00033216:
+GreetingsYoungManStr:
 	dc.b	"Greetings, young man.", $FE
 	dc.b	"enjoying our lovely town?", $FF
-loc_00033246:
+AnselmIntroductionStr:
 	dc.b	"Hi, ", Script_player_name, ". I am Anselm.", $FE
 	dc.b	"My father went to Blazon's", $FE
 	dc.b	"Cave to get the mighty", $FD
@@ -44528,63 +44532,63 @@ loc_00033246:
 	dc.b	"He's been gone for so long!", $FE
 	dc.b	"Please find my father."
 	dc.b	$F8, $01, $87
-loc_000332D8:
+ThankYouForFindingHimStr:
 	dc.b	"My father has come back.", $FE
 	dc.b	"Thank you for finding him.", $FF
-loc_0003330C:
+IntroduceMeToSomeoneStr:
 	dc.b	"I am old and lonely. I may", $FE
 	dc.b	"help you if you introduce", $FE
 	dc.b	"me to someone nice.", $FF, $00
-loc_00033356:
+ShowSketchStr:
 	dc.b	"She's very beautiful. Would", $FE
 	dc.b	"you show her this sketch", $FE
 	dc.b	"an artist drew of me?"
 	dc.b	$F9, $01, $00, $26 
-loc_000333A4:
+LoneTreeTreasureStr:
 	dc.b	"If you go north, you'll", $FE
 	dc.b	"find a lone tree.", $FE
 	dc.b	"A treasure of my ancestors", $FD
 	dc.b	"is hidden there.", $FE
 	dc.b	"Take it as my gift."
 	dc.b	$F8, $01, $7A
-loc_00033410:
+WaitingForLetterStr:
 	dc.b	"I am waiting for a letter", $FE
 	dc.b	"from my lady friend.", $FF, $00
-loc_00033440:
+ComeBackLessGearStr:
 	dc.b	"Come back when you're", $FE
 	dc.b	"carrying less gear.", $FF
-loc_0003346A:
+FindPoisonShieldStr:
 	dc.b	"Did you find the", $FE
 	dc.b	"Poison Shield?", $FF
-loc_0003348A:
+MalagaNorthKeyStr:
 	dc.b	"Malaga is to the north, but", $FE
 	dc.b	"you must go through a cave", $FE
 	dc.b	"to get there.", $FD
 	dc.b	"I'll give you the key to", $FE
 	dc.b	"the cave."
 	dc.b	$F8, $01, $8A
-loc_000334F4:	
+LostKeyStr:	
 	dc.b	"Did you lose the key?", $FE
 	dc.b	"I have another one."
 	dc.b	$F8, $01, $8C
-loc_00033520:
+TroubleWakingUpStr:
 	dc.b	"Yawn! I'm having", $FE
 	dc.b	"trouble waking up.", $FF 
-loc_00033544:
+WhatsWrongStowStr:
 	dc.b	"Hello! What's wrong?", $FE
 	dc.b	"The people of Stow have", $FE
 	dc.b	"been attacked by a monster?", $FD
 	dc.b	"This is terrible! I'll go", $FE
 	dc.b	"there as soon as I'm ready."
 	dc.b	$F8, $01, $12, $00
-loc_000335C6:
+ReadyToLeaveStowStr:
 	dc.b	"I'm getting ready", $FE
 	dc.b	"to leave for Stow.", $FF, $00
-loc_000335EC:
+GettingReadyForBedStr:
 	dc.b	"Can't you see that I'm", $FE
 	dc.b	"getting ready for bed?", $FE
 	dc.b	"Go away!", $FF, $00 
-loc_00033624:
+BearwulfIntroductionStr:
 	dc.b	"I am Bearwulf. I was once a", $FE
 	dc.b	"servant of Tsarkon, but I", $FE
 	dc.b	"turned from him long ago.", $FD
@@ -44597,7 +44601,7 @@ loc_00033624:
 	dc.b	"Try to find the Poison", $FE
 	dc.b	$53, $68, $69, $65, $6C, $64, $2D, $2D, $79, $6F, $75, $27, $6C, $6C, $20, $6E, $65, $65, $64, $20, $69, $74, $21, $F8, $01, $14 
 loc_0003373A:
-	PRINT 	loc_0003346A	
+	PRINT 	FindPoisonShieldStr	
 	RTS
 	
 loc_00033744:
@@ -44703,228 +44707,228 @@ loc_00033D1A:
 	dc.b	$00, $00, $6F, $5E, $00, $01, $00, $28, $00, $C8, $01, $51, $00, $03, $DD, $F4, $00, $00, $6F, $36, $00, $01, $00, $B8, $00, $58, $01, $51, $00, $03, $DD, $F4 
 	dc.b	$00, $00, $6F, $36, $00, $01, $00, $48, $00, $58, $02, $4D, $00, $03, $DF, $28, $00, $00, $6F, $CA, $60, $01, $FF, $FF 
 loc_00034012:
-	dc.l	loc_000342A2
-	dc.l	loc_0003412E
-	dc.l	loc_00034158 
-	dc.l	loc_000341C2 
-	dc.l	loc_00034238 
-	dc.l	loc_000342EC 
-	dc.l	loc_0003433C 
-	dc.l	loc_000343B0 
-	dc.l	loc_00034404
-	dc.l	loc_00034460 
-	dc.l	loc_000344E8 
+	dc.l	PrincessWaitingStr2
+	dc.l	WelcomeMalagaStr
+	dc.l	SoldierOfTharStr 
+	dc.l	LongLiveLutherStr 
+	dc.l	SplitIntoFactionsStr 
+	dc.l	TharLutherWantKingStr 
+	dc.l	KingMustHaveRingOfWaterStr 
+	dc.l	WoeToMalagaStr 
+	dc.l	RuinLandStr
+	dc.l	KingDiedYearsAgoStr 
+	dc.l	KingWorriedPrincessStr 
 loc_0003403E:
-	dc.l	loc_000342A2 
-	dc.l	loc_0003412E 
-	dc.l	loc_00034184 
-	dc.l	loc_000341F4 
-	dc.l	loc_00034284 
-	dc.l	loc_00034362 
-	dc.l	loc_00034362 
-	dc.l	loc_000343D6 
-	dc.l	loc_00034432 
-	dc.l	loc_000344A2 
-	dc.l	loc_0003452E 
+	dc.l	PrincessWaitingStr2 
+	dc.l	WelcomeMalagaStr 
+	dc.l	SecretlyHatedTharStr 
+	dc.l	LutherFooledUsStr 
+	dc.l	TownUnitedAgainStr 
+	dc.l	LongLiveKingAndPrincessStr 
+	dc.l	LongLiveKingAndPrincessStr 
+	dc.l	RelievedTharNotKingStr 
+	dc.l	GladLutherNotKingStr 
+	dc.l	TharLutherHateYouStr 
+	dc.l	NewKingQuestionStr 
 loc_0003406A:
-	dc.l	loc_000342D6 
-	dc.l	loc_0003412E
-	dc.l	loc_00034184 
-	dc.l	loc_000341F4 
-	dc.l	loc_00034284 
-	dc.l	loc_00034362 
-	dc.l	loc_00034362 
-	dc.l	loc_000343D6 
-	dc.l	loc_00034432 
-	dc.l	loc_000344A2 
-	dc.l	loc_0003452E 
-	dc.l	loc_000342A2 
-	dc.l	loc_0003412E 
-	dc.l	loc_00034184 
-	dc.l	loc_000341F4 
-	dc.l	loc_00034284 
-	dc.l	loc_00034392 
-	dc.l	loc_00034392 
-	dc.l	loc_000343D6 
-	dc.l	loc_00034432 
-	dc.l	loc_000344BC 
-	dc.l	loc_00034544 
+	dc.l	BrunoComingBackStr 
+	dc.l	WelcomeMalagaStr
+	dc.l	SecretlyHatedTharStr 
+	dc.l	LutherFooledUsStr 
+	dc.l	TownUnitedAgainStr 
+	dc.l	LongLiveKingAndPrincessStr 
+	dc.l	LongLiveKingAndPrincessStr 
+	dc.l	RelievedTharNotKingStr 
+	dc.l	GladLutherNotKingStr 
+	dc.l	TharLutherHateYouStr 
+	dc.l	NewKingQuestionStr 
+	dc.l	PrincessWaitingStr2 
+	dc.l	WelcomeMalagaStr 
+	dc.l	SecretlyHatedTharStr 
+	dc.l	LutherFooledUsStr 
+	dc.l	TownUnitedAgainStr 
+	dc.l	WaitForReturnStr 
+	dc.l	WaitForReturnStr 
+	dc.l	RelievedTharNotKingStr 
+	dc.l	GladLutherNotKingStr 
+	dc.l	VillageOfBarrowStr 
+	dc.l	HopeYouSucceedStr 
 loc_000340C2:
-	dc.l	loc_0003455E 
-	dc.l	loc_0003455E
-	dc.l	loc_00034596 
-	dc.l	loc_00034596 
-	dc.l	loc_000345E2 
-	dc.l	loc_00034614 
-	dc.l	loc_000345C6 
-	dc.l	loc_000345E2 
-	dc.l	loc_00034650 
-	dc.l	loc_000346E8 
-	dc.l	loc_00034716 
-	dc.l	loc_0003477A 
-	dc.l	loc_00034798 
-	dc.l	loc_000347D2 
-	dc.l	loc_00034872 
-	dc.l	loc_00034872 
-	dc.l	loc_00034730 
-	dc.l	loc_00034758 
-	dc.l	loc_00034674 
-	dc.l	loc_00034698 
-	dc.l	loc_0003477A 
-	dc.l	loc_000347D2 
-	dc.l	loc_00034808 
-	dc.l	loc_00034808 
-	dc.l	loc_00034826 
-	dc.l	loc_00034896
-	dc.l	loc_0003495C
-loc_0003412E:
+	dc.l	FoodPriceBestStr 
+	dc.l	FoodPriceBestStr
+	dc.l	ComeHereOftenStr 
+	dc.l	ComeHereOftenStr 
+	dc.l	TavernReputationStr 
+	dc.l	BusyPlaceStr 
+	dc.l	AbsolutelyDeliciousStr 
+	dc.l	TavernReputationStr 
+	dc.l	BotheringWhileEatingStr 
+	dc.l	GoodFoodSpiritsStr 
+	dc.l	StopLookingAtFoodStr 
+	dc.l	OnlyTavernStr 
+	dc.l	WonderWhyTsarkonEvilStr 
+	dc.l	EverythingFreeStr 
+	dc.l	WhatElseToEatStr 
+	dc.l	WhatElseToEatStr 
+	dc.l	TavernTooPopularStr 
+	dc.l	BestTavernStr 
+	dc.l	GrabSomeFoodStr 
+	dc.l	LookingForRingStr 
+	dc.l	OnlyTavernStr 
+	dc.l	EverythingFreeStr 
+	dc.l	LikeAnythingFreeStr 
+	dc.l	LikeAnythingFreeStr 
+	dc.l	ErikAndTsarkonFriendsStr 
+	dc.l	WhyTsarkonKillFriendStr
+	dc.l	TharOrLutherEndMalagaStr
+WelcomeMalagaStr:
 	dc.b	"Welcome, traveler,", $FE
 	dc.b	"to the town of Malaga.", $FF
-loc_00034158:
+SoldierOfTharStr:
 	dc.b	"I am a soldier of Thar.", $FE
 	dc.b	"Do not aid Luther!", $FF, $00
-loc_00034184:
+SecretlyHatedTharStr:
 	dc.b	"To tell the truth,", $FE
 	dc.b	"I secretly hated Thar.", $FE
 	dc.b	"I am happy for you.", $FF 
-loc_000341C2:
+LongLiveLutherStr:
 	dc.b	"Luther should be", $FE
 	dc.b	"the next king.", $FE 
 	dc.b	"Long live Luther!", $FF
-loc_000341F4:
+LutherFooledUsStr:
 	dc.b	"That evil Luther fooled us", $FE
 	dc.b	"into supporting him.", $FE
 	dc.b	"I'm glad he failed.", $FF
-loc_00034238:
+SplitIntoFactionsStr:
 	dc.b	"After the king died, we all", $FE
 	dc.b	"split into a Thar faction", $FE
 	dc.b	"and a Luther faction.", $FF
-loc_00034284:
+TownUnitedAgainStr:
 	dc.b	"Now the town", $FE
 	dc.b	"is united again.", $FF 
-loc_000342A2:
+PrincessWaitingStr2:
 	dc.b	"The Princess is waiting", $FE
 	dc.b	"for you inside the castle.", $FF, $00
-loc_000342D6:
+BrunoComingBackStr:
 	dc.b	"Bruno is coming back.", $FF
-loc_000342EC:
+TharLutherWantKingStr:
 	dc.b	"Both Thar and Luther want", $FE
 	dc.b	"to marry the Princess. Each", $FE 
 	dc.b	"of them wants to be king.", $FF
-loc_0003433C:
+KingMustHaveRingOfWaterStr:
 	dc.b	"The king must have", $FE
 	dc.b	"the Ring of Water.", $FF 
-loc_00034362:
+LongLiveKingAndPrincessStr:
 	dc.b	"Long live the king!", $FE
 	dc.b	"Long live Princess Wynifir!", $FF
-loc_00034392:
+WaitForReturnStr:
 	dc.b	"We will wait", $FE
 	dc.b	"for your return.", $FF
-loc_000343B0:
+WoeToMalagaStr:
 	dc.b	"If Thar becomes king,", $FE
 	dc.b	"woe to Malaga!", $FF, $00
-loc_000343D6:
+RelievedTharNotKingStr:
 	dc.b	"I am relieved that Thar", $FE
 	dc.b	"did not become king!", $FF, $00
-loc_00034404:
+RuinLandStr:
 	dc.b	"If Luther becomes king,", $FE
 	dc.b	"he'll ruin this land.", $FF
-loc_00034432:
+GladLutherNotKingStr:
 	dc.b	"I'm so glad that Luther", $FE
 	dc.b	"is not our new king!", $FF, $00
-loc_00034460:
+KingDiedYearsAgoStr:
 	dc.b	"Two years ago the King died,", $FE
 	dc.b	"and Princess Wynifir was", $FE
 	dc.b	"left alone.", $FF 
-loc_000344A2:
+TharLutherHateYouStr:
 	dc.b	"Thar and Luther hate you.", $FF
-loc_000344BC:
+VillageOfBarrowStr:
 	dc.b	"The village of Barrow", $FE
 	dc.b	"is to the northeast.", $FF, $00
-loc_000344E8:
+KingWorriedPrincessStr:
 	dc.b	"After the queen died, the", $FE 
 	dc.b	"king worried constantly", $FE
 	dc.b	"about the Princess.", $FF
-loc_0003452E:
+NewKingQuestionStr:
 	dc.b	"Are you the new king?", $FF
-loc_00034544:
+HopeYouSucceedStr:
 	dc.b	"I hope that you succeed.", $FF, $00
-loc_0003455E:
+FoodPriceBestStr:
 	dc.b	"The price is the best thing", $FE
 	dc.b	"about the food--it's free!", $FF, $00
-loc_00034596:
+ComeHereOftenStr:
 	dc.b	"I don't have much money,", $FE
 	dc.b	"so I always come here.", $FF
-loc_000345C6:
+AbsolutelyDeliciousStr:
 	dc.b	"It's absolutely delicious!", $FF, $00 
-loc_000345E2:
+TavernReputationStr:
 	dc.b	"This tavern has a", $FE
 	dc.b	"reputation for", $FE
 	dc.b	"delicious meals.", $FF
-loc_00034614:
+BusyPlaceStr:
 	dc.b	"This place is so busy", $FE
 	dc.b	"that you may not be", $FE
 	dc.b	"able to get out!", $FF, $00
-loc_00034650:
+BotheringWhileEatingStr:
 	dc.b	"Stop bothering me", $FE 
 	dc.b	"while I'm eating!", $FF
-loc_00034674:
+GrabSomeFoodStr:
 	dc.b	"Pull up a seat", $FE
 	dc.b	"and grab some food.", $FF, $00
-loc_00034698:
+LookingForRingStr:
 	dc.b	"I hear you collect rings.", $FE
 	dc.b	"I'm looking for one in size", $FE
 	dc.b	"six. Have you found any?", $FF, $00
-loc_000346E8:
+GoodFoodSpiritsStr:
 	dc.b	"Nothing like good food", $FE
 	dc.b	"to raise your spirits.", $FF
-loc_00034716:
+StopLookingAtFoodStr:
 	dc.b	"Stop looking at my food!", $FF, $00
-loc_00034730:
+TavernTooPopularStr:
 	dc.b	"Sometimes a tavern", $FE
 	dc.b	"can be too popular!", $FF, $00
-loc_00034758:
+BestTavernStr:
 	dc.b	"This is the best", $FE
 	dc.b	"tavern in town!", $FF, $00
-loc_0003477A:
+OnlyTavernStr:
 	dc.b	"It's the only", $FE
 	dc.b	"tavern in town!", $FF
-loc_00034798:
+WonderWhyTsarkonEvilStr:
 	dc.b	"Tsarkon was once a", $FE
 	dc.b	"good man. I wonder", $FE
 	dc.b	"why he turned evil?", $FF
-loc_000347D2:
+EverythingFreeStr:
 	dc.b	"Everything here is free.", $FE
 	dc.b	"That's why it's so crowded.", $FF, $00
-loc_00034808:
+LikeAnythingFreeStr:
 	dc.b	"I like anything", $FE
 	dc.b	"that's free!", $FF, $00
-loc_00034826:
+ErikAndTsarkonFriendsStr:
 	dc.b	"A long time ago, Erik of", $FE
 	dc.b	"Excalabria and Tsarkon of", $FE
 	dc.b	"Cartahena were friends.", $FF, $00
-loc_00034872:
+WhatElseToEatStr:
 	dc.b	"I wonder what else", $FE
 	dc.b	"there is to eat.", $FF
-loc_00034896:
+WhyTsarkonKillFriendStr:
 	dc.b	"Tsarkon and Erik were close", $FE
 	dc.b	"friends. Why would Tsarkon", $FE
 	dc.b	"kill his best friend?", $FF, $00
-loc_000348E4:
+ShopOwnerVisionStr:
 	dc.b	"I see the face of a shop", $FE
 	dc.b	"owner in this town.", $FE
 	dc.b	"He looks cruel.", $FD
 	dc.b	"Oh! But now he's smiling.", $FE
 	dc.b	"I don't understand", $FE
 	dc.b	"this vision.", $FF, $00
-loc_0003495C:
+TharOrLutherEndMalagaStr:
 	dc.b	"If either Thar or Luther", $FE
 	dc.b	"becomes king, that will be", $FE
 	dc.b	"the end of lovely Malaga.", $FF
-loc_000349AA:
+EverythingOnHouseStr:
 	dc.b	"Today, everything's", $FE
 	dc.b	"on the house!", $FF
-loc_000349CC:
+WaitingForPlayerNameStr:
 	dc.b	"I am waiting for ", Script_player_name, ".", $FE
 	dc.b	"He will come some day. You", $FE
 	dc.b	"can't be the ", "", Script_player_name, " I await!", $FD
@@ -44935,10 +44939,10 @@ loc_000349CC:
 	dc.b	"the crown from inside the", $FE
 	dc.b	"cave, you will be king."
 	dc.b	$F8, $01, $CD, $00
-loc_00034AB2:
+HaveYouGivenUpStr:
 	dc.b	"What happened?", $FE
 	dc.b	"Have you given up?", $FF
-loc_00034AD4:
+NeverExpectedSucceedStr:
 	dc.b	"To be honest,", $FE 
 	dc.b	"I never expected", $FE
 	dc.b	"that you would succeed.", $FD
@@ -44947,18 +44951,18 @@ loc_00034AD4:
 	dc.b	"are now the king of Malaga.", $FD
 	dc.b	"Please return to Malaga."
 	dc.b	$F9, $02, $00, $1B, $00, $FC
-loc_00034B78:
+ReturnToMalagaStr:
 	dc.b	"Please return to Malaga.", $FF, $00 
 
 loc_00034B92:
-	PRINT 	loc_000348E4
+	PRINT 	ShopOwnerVisionStr
 	RTS
 	
 loc_00034B9C:
-	PRINT 	loc_000349AA
+	PRINT 	EverythingOnHouseStr
 	TST.b	$FFFFC73B.w
 	BNE.w	loc_00034BB4
-	PRINT 	loc_0003495C
+	PRINT 	TharOrLutherEndMalagaStr
 loc_00034BB4:
 	RTS
 	
@@ -44983,56 +44987,56 @@ loc_00034C1C:
 	dc.b	$FF, $FF, $00, $01, $EF, $5A, $00, $88, $00, $48, $00, $19, $00, $03, $DD, $34, $00, $00, $77, $E6, $60, $01, $FF, $FF, $00, $01, $EF, $7C, $00, $48, $00, $58 
 	dc.b	$02, $7D, $00, $03, $DF, $30, $00, $00, $6F, $CA, $60, $01, $FF, $FF 
 loc_00034CEA:
-	dc.l	loc_00034D2A
-	dc.l	loc_00034D8A
-	dc.l	loc_00034D8A
-	dc.l	loc_00034DDA
-	dc.l	loc_00034E40
-	dc.l	loc_00034EC8 
+	dc.l	WelcomeToBarrowStr
+	dc.l	TadcasterDangerStr
+	dc.l	TadcasterDangerStr
+	dc.l	MapToTadcasterStr
+	dc.l	HeadTowardTadcasterStr
+	dc.l	TreasureLegendStr 
 loc_00034D02:
-	dc.l	loc_00034D2A
-	dc.l	loc_00034D3E
-	dc.l	loc_00034DB8
-	dc.l	loc_00034DDA
-	dc.l	loc_00034E62
-	dc.l	loc_00034EC8 
+	dc.l	WelcomeToBarrowStr
+	dc.l	UncleTiborStr
+	dc.l	UncleTiborForestStr
+	dc.l	MapToTadcasterStr
+	dc.l	HiddenRoadForestStr
+	dc.l	TreasureLegendStr 
 loc_00034D1A:
 	dc.l	NoOneHereStr 
 loc_00034D1E:
-	dc.l	loc_000350A8 
+	dc.l	GoAwayStr 
 loc_00034D22:
-	dc.l	loc_000350B2
-	dc.l	loc_000350A8
-loc_00034D2A:	
+	dc.l	BuyPassToCartahenaStr
+	dc.l	GoAwayStr
+WelcomeToBarrowStr:	
 	dc.b	"Welcome to Barrow.", $FF, $00
-loc_00034D3E:
+UncleTiborStr:
 	dc.b	"There is an old man here,", $FE
 	dc.b	"Uncle Tibor by name. We", $FE
 	dc.b	"don't see him very often.", $FF
-loc_00034D8A:
+TadcasterDangerStr:
 	dc.b	"The people of Tadcaster", $FE 
 	dc.b	"are in grave danger!", $FF, $00
-loc_00034DB8:
+UncleTiborForestStr:
 	dc.b	"Uncle Tibor lives", $FE
 	dc.b	"in the forest.", $FF, $00
-loc_00034DDA:
+MapToTadcasterStr:
 	dc.b	"Travel west to", $FE
 	dc.b	"reach Tadcaster.", $FE
 	dc.b	"I have a map for you."
 	dc.b	$F9, $07, $01, $0E, $01, $0D, $01, $0C, $01, $0B, $01, $0A, $01, $09, $01, $19, $00
-loc_00034E20:
+ReachTadcasterStr:
 	dc.b	"Travel west to", $FE
 	dc.b	"reach Tadcaster.", $FF
-loc_00034E40:
+HeadTowardTadcasterStr:
 	dc.b	"You should head", $FE
 	dc.b	"toward Tadcaster.", $FF 
-loc_00034E62:
+HiddenRoadForestStr:
 	dc.b	"There is a hidden", $FE
 	dc.b	"road into the forest.", $FE
 	dc.b	"It is near the church.", $FD
 	dc.b	"Take it to get to", $FE
 	dc.b	"Uncle Tibor's house.", $FF
-loc_00034EC8:
+TreasureLegendStr:
 	dc.b	"There is an ancient legend", $FE
 	dc.b	"we tell in this village.", $FE
 	dc.b	"A treasure of 15,000 kims", $FD
@@ -45043,11 +45047,11 @@ loc_00034EC8:
 	dc.b	"If you wish to try your", $FE
 	dc.b	"luck, use this map."
 	dc.b	$F9, $04, $01, $0C, $01, $1C, $01, $0D, $01, $0E, $00
-loc_00034FB4:
+TreasureInCaveStr:
 	dc.b	"A treasure of 15,000 kims", $FE
 	dc.b	"is hidden in the Cave of", $FE
 	dc.b	"Burgandy, to the southwest.", $FF, $00
-loc_00035004:
+ShareTreasureStr:
 	dc.b	"I'm amazed you made", $FE
 	dc.b	"it back! Did you find", $FE
 	dc.b	"the 15,000 kims?", $FD
@@ -45055,38 +45059,38 @@ loc_00035004:
 	dc.b	"before you did,", $FE
 	dc.b	"so I should get half of it."
 	dc.b	$F8, $01, $20, $00
-loc_0003507E:
+DontSpendAllWealthStr:
 	dc.b	"Don't spend your wealth", $FE
 	dc.b	"all in one place!", $FF
-loc_000350A8:
+GoAwayStr:
 	dc.b	"Go away.", $FF, $00
-loc_000350B2:
+BuyPassToCartahenaStr:
 	dc.b	"You wish a pass to allow", $FE
 	dc.b	"you into Cartahena? Are you", $FE
 	dc.b	"willing to pay 50,000 kims?"
 	dc.b	$FB, $02, $34, $00
-loc_00035106:
+WhyHereStr:
 	dc.b	"Then why are you here?", $FF, $00
-loc_0003511E:
+BoughtFromMeStr:
 	dc.b	"Don't tell anyone you", $FE
 	dc.b	"bought it from me.", $FF, $00
-loc_00035148:
+BuyPassToCartahenaStr2:
 	dc.b	"You wish a pass to allow", $FE
 	dc.b	"you into Cartahena? Are you", $FE
 	dc.b	"willing to pay 50,000 kims?"
 	dc.b	$FC, $06
-loc_0003519A:
+CantAffordPassStr:
 	dc.b	"You can't afford it.", $FF, $00
-loc_000351B0:
+BuyPassToCartahenaStr3:
 	dc.b	"You wish a pass to allow", $FE
 	dc.b	"you into Cartahena? Are you", $FE
 	dc.b	"willing to pay 50,000 kims?"
 	dc.b	$FC, $07 
-loc_00035202:
+TooMuchGearStr:
 	dc.b	"You have too much gear", $FE
 	dc.b	"to carry this pass.", $FF, $00 
 loc_0003522E:
-	PRINT 	loc_0003511E	
+	PRINT 	BoughtFromMeStr	
 	RTS
 	
 loc_00035238:
@@ -45203,95 +45207,95 @@ loc_00035BFE:
 	dc.b	$60, $01, $00, $F8, $00, $78, $00, $CD, $00, $03, $DD, $94, $00, $00, $6F, $36, $60, $01, $FF, $FF, $00, $01, $EB, $20, $00, $88, $00, $58, $02, $95, $00, $03 
 	dc.b	$DF, $34, $00, $00, $6F, $CA, $60, $01, $FF, $FF 
 loc_00035D08:
-	dc.l	loc_00035DE4
-	dc.l	loc_00035E10
-	dc.l	loc_00035E5C
-	dc.l	loc_00035E7E
-	dc.l	loc_00035EDE
-	dc.l	loc_00035F3C
-	dc.l	loc_00036038
-	dc.l	loc_000360A2 
-	dc.l	loc_00036108
-	dc.l	loc_00036180
-	dc.l	loc_000361C6
-	dc.l	loc_000362B0
-	dc.l	loc_000362B0
-	dc.l	loc_000362B0
-	dc.l	loc_000362B0 
+	dc.l	TadcasterBegsForMercyStr
+	dc.l	PleaseDontTormentStr
+	dc.l	DontHarmChildrenStr
+	dc.l	CartahenanArmyCruelStr
+	dc.l	WelcomeHighnessNoItemsStr
+	dc.l	DontHurtMeStr
+	dc.l	WelcomeHighnessHopeWellStr
+	dc.l	SorryNoMoneyStr 
+	dc.l	OhNoDontHurtStr
+	dc.l	WhatDidToDaddyStr
+	dc.l	DontPickOnMeStr
+	dc.l	ImposterConfrontationStr
+	dc.l	ImposterConfrontationStr
+	dc.l	ImposterConfrontationStr
+	dc.l	ImposterConfrontationStr 
 loc_00035D44:
-	dc.l	loc_00035DE4
-	dc.l	loc_00035E32
-	dc.l	loc_00035E32
-	dc.l	loc_00035EAA
-	dc.l	loc_00035F24
-	dc.l	loc_00035F4E
-	dc.l	loc_0003606A
-	dc.l	loc_000360E0 
-	dc.l	loc_0003612A
-	dc.l	loc_000361A8
-	dc.l	loc_000361F6
+	dc.l	TadcasterBegsForMercyStr
+	dc.l	NastyGuyStr
+	dc.l	NastyGuyStr
+	dc.l	ImposterSpyStr
+	dc.l	ImposterConfirmedStr
+	dc.l	ImposterDarmonsCaveStr
+	dc.l	AshamedBullyStr
+	dc.l	VillainUsingNameStr 
+	dc.l	ReallyNiceGuyStr
+	dc.l	WhenDaddyComeBackStr
+	dc.l	SorryMistookImposterStr
 	dc.l	NoOneHereStr
 	dc.l	NoOneHereStr
 	dc.l	NoOneHereStr
 	dc.l	NoOneHereStr 
 loc_00035D80:
-	dc.l	loc_00035DE4
-	dc.l	loc_00035E7E
-	dc.l	loc_00035E7E
-	dc.l	loc_00035EAA
-	dc.l	loc_00035F24
-	dc.l	loc_00035FEA
-	dc.l	loc_0003606A
-	dc.l	loc_00035FEA 
-	dc.l	loc_0003614E
-	dc.l	loc_000361A8
-	dc.l	loc_00036232
+	dc.l	TadcasterBegsForMercyStr
+	dc.l	CartahenanArmyCruelStr
+	dc.l	CartahenanArmyCruelStr
+	dc.l	ImposterSpyStr
+	dc.l	ImposterConfirmedStr
+	dc.l	HelwigSufferingStr
+	dc.l	AshamedBullyStr
+	dc.l	HelwigSufferingStr 
+	dc.l	GoodAllAlongStr
+	dc.l	WhenDaddyComeBackStr
+	dc.l	MapToHelwigStr
 	dc.l	NoOneHereStr
 	dc.l	NoOneHereStr
 	dc.l	NoOneHereStr
 	dc.l	NoOneHereStr 
 loc_00035DBC:
-	dc.l	loc_00036388
-	dc.l	loc_00036416 
+	dc.l	WelcomeToTavernStr
+	dc.l	WouldLikeToEatStr 
 loc_00035DC4:
-	dc.l	loc_000363A6
-	dc.l	loc_0003644C
-	dc.l	loc_000363CE 
-	dc.l	loc_00036494 
+	dc.l	BulliesAteFoodStr
+	dc.l	HungryNoMoneyStr
+	dc.l	CelebrateTriumphStr 
+	dc.l	TavernkeeperGreatGuyStr 
 loc_00035DD4:
-	dc.l	loc_000364B6 
+	dc.l	TsarkonErikRingsStr 
 loc_00035DD8:
-	dc.l	loc_00036550 
+	dc.l	WhyEvilStr 
 loc_00035DDC:
-	dc.l	loc_00036566 
-	dc.l	loc_00036566
-loc_00035DE4
+	dc.l	TryToBeGoodStr 
+	dc.l	TryToBeGoodStr
+TadcasterBegsForMercyStr
 	dc.b	"No, not again! Tadcaster", $FE
 	dc.b	"begs for mercy, ", Script_player_name, ".", $FF
-loc_00035E10:
+PleaseDontTormentStr:
 	dc.b	"Please don't", $FE
 	dc.b	"torment us any more.", $FF
-loc_00035E32
+NastyGuyStr
 	dc.b	"Anyway you look at it,", $FE
 	dc.b	"he's a nasty guy.", $FF, $00 
-loc_00035E5C
+DontHarmChildrenStr
 	dc.b	"Please, don't", $FE
 	dc.b	"harm the children!", $FF, $00
-loc_00035E7E
+CartahenanArmyCruelStr
 	dc.b	"The Cartahenan army is", $FE
 	dc.b	"cruel beyond belief.", $FF
-loc_00035EAA
+ImposterSpyStr
 	dc.b	"That imposter must have", $FE
 	dc.b	"been a spy from Cartahena.", $FF, $00
-loc_00035EDE
+WelcomeHighnessNoItemsStr
 	dc.b	"Welcome, Your Highness.", $FE
 	dc.b	"I don't have anything", $FE
 	dc.b	"for you to take today.", $FF, $00
-loc_00035F24
+ImposterConfirmedStr
 	dc.b	"Ah, he was an imposter.", $FF 
-loc_00035F3C
+DontHurtMeStr
 	dc.b	"Don't hurt me, ", Script_player_name, "!", $FF
-loc_00035F4E:
+ImposterDarmonsCaveStr:
 	dc.b	"The imposter lives", $FE
 	dc.b	"in Darmon's Cave,", $FE
 	dc.b	"northwest of here.", $FD
@@ -45303,51 +45307,51 @@ loc_00035F4E:
 	dc.b	$01, $18
 	dc.b	$01, $08
 	dc.b	$00
-loc_00035FB2
+ImposterDarmonsCaveConfirmedStr
 	dc.b	"The imposter lives", $FE
 	dc.b	"in Darmon's Cave,", $FE
 	dc.b	"to the northwest.", $FF, $00
-loc_00035FEA
+HelwigSufferingStr
 	dc.b	"The people of Helwig are", $FE
 	dc.b	"still suffering from the", $FE 
 	dc.b	"cruelty of the Cartahenans.", $FF
-loc_00036038
+WelcomeHighnessHopeWellStr
 	dc.b	"Welcome, Your Highness.", $FE
 	dc.b	"I hope that you are well.", $FF
-loc_0003606A
+AshamedBullyStr
 	dc.b	"Why did I let him bully me?", $FE
 	dc.b	"I'm ashamed of myself now.", $FF, $00
-loc_000360A2
+SorryNoMoneyStr
 	dc.b	"Sorry, ", Script_player_name, ", the money", $FE
 	dc.b	"you took from me", $FE
 	dc.b	"yesterday is all I had.", $FF, $00
-loc_000360E0
+VillainUsingNameStr
 	dc.b	"Why, that villain", $FE
 	dc.b	"was using your name.", $FF, $00
-loc_00036108
+OhNoDontHurtStr
 	dc.b	"Oh, no!", $FE
 	dc.b	"Please don't", $FE
 	dc.b	"hurt me, ", Script_player_name, "!", $FF, $00
-loc_0003612A
+ReallyNiceGuyStr
 	dc.b	"You mean you're", $FE
 	dc.b	"really a nice guy?", $FF, $00
-loc_0003614E
+GoodAllAlongStr
 	dc.b	"Young man, you were good", $FE
 	dc.b	"all along, weren't you?", $FF, $00
-loc_00036180
+WhatDidToDaddyStr
 	dc.b	"What did you do to", $FE
 	dc.b	"my daddy, you bully?", $FF
-loc_000361A8
+WhenDaddyComeBackStr
 	dc.b	"When will my", $FE
 	dc.b	"daddy come back?", $FF
-loc_000361C6
+DontPickOnMeStr
 	dc.b	"I'm too old. Please don't", $FE
 	dc.b	"pick on me any more.", $FF, $00
-loc_000361F6
+SorryMistookImposterStr
 	dc.b	"Now I understand.", $FE
 	dc.b	"I'm sorry I mistook", $FE 
 	dc.b	"the imposter for you.", $FF
-loc_00036232
+MapToHelwigStr
 	dc.b	"You can reach Helwig by", $FE
 	dc.b	"going west. I'll give you a", $FE
 	dc.b	"map so you don't get lost."
@@ -45357,10 +45361,10 @@ loc_00036232
 	dc.b	$01, $17
 	dc.b	$01, $16
 	dc.b	$01, $06
-loc_0003628C
+ReachHelwigStr
 	dc.b	"You can reach", $FE
 	dc.b	"Helwig by going west.", $FF
-loc_000362B0
+ImposterConfrontationStr
 	dc.b	"Master! How did you get", $FE
 	dc.b	"here? You were in Darmon's", $FE
 	dc.b	"Cave just a short time ago.", $FD
@@ -45372,53 +45376,53 @@ YouHaveNotWonYetStr
 	dc.b	"You haven't won yet! Come", $FE
 	dc.b	"to Darmon's Cave and face", $FE
 	dc.b	"my master, if you dare!", $FF
-loc_00036388
+WelcomeToTavernStr
 	dc.b	"Welcome!", $FE
 	dc.b	"What can we get you?", $FF
-loc_000363A6
+BulliesAteFoodStr
 	dc.b	"Those bullies", $FE
 	dc.b	"gobbled up all our food!", $FF, $00
-loc_000363CE
+CelebrateTriumphStr
 	dc.b	"To celebrate your triumph,", $FE
 	dc.b	"I'll serve free food to", $FE
 	dc.b	"all the townspeople.", $FF
-loc_00036416
+WouldLikeToEatStr
 	dc.b	"Would you like to eat?", $FE
 	dc.b	"I'm hoping for", $FE 
 	dc.b	"some free food.", $FF
-loc_0003644C
+HungryNoMoneyStr
 	dc.b	"I'm hungry,", $FE
 	dc.b	"but I don't have a penny.", $FD
 	dc.b	"These fellows stole", $FE
 	dc.b	"all my money.", $FF
-loc_00036494
+TavernkeeperGreatGuyStr
 	dc.b	"The tavernkeeper", $FE
 	dc.b	"is a great guy.", $FF, $00
-loc_000364B6
+TsarkonErikRingsStr
 	dc.b	"A long time ago, Tsarkon", $FE
 	dc.b	"and Erik began collecting", $FE
 	dc.b	"the rings of good and evil.", $FD
 	dc.b	"They thought that they", $FE 
 	dc.b	"could change the world by", $FE
 	dc.b	"collecting all the rings.", $FF
-loc_00036550
+WhyEvilStr
 	dc.b	"Why are you so evil?", $FF, $00
-loc_00036566
+TryToBeGoodStr
 	dc.b	"Try to be good", $FE
 	dc.b	"in all you do.", $FF
-loc_00036584
+SeeSomeoneNorthwestStr
 	dc.b	"I see someone northwest", $FE 
 	dc.b	"of here. Why, it's you!", $FE
 	dc.b	"Or is it?", $FF
-loc_000365BE
+WomanCryingHelpStr
 	dc.b	"I hear a woman's voice", $FE
 	dc.b	"to the west. She is", $FE
 	dc.b	"crying for help....", $FF, $00
-loc_000365FE
+TakeTaskStepByStepStr
 	dc.b	"Take your task one step", $FE
 	dc.b	"at a time and it may", $FE
 	dc.b	"turn out all right.", $FF, $00
-loc_00036640
+AwaitingYouStr
 	dc.b	"Welcome, ", Script_player_name, ".", $FE
 	dc.b	"I have been awaiting you", $FE
 	dc.b	"for quite some time now.", $FD
@@ -45480,24 +45484,24 @@ loc_00036B2A:
 	RTS
 	
 loc_00036B3C:
-	PRINT 	loc_000365FE
+	PRINT 	TakeTaskStepByStepStr
 	TST.b	$FFFFC744.w
 	BNE.w	loc_00036B64
-	PRINT 	loc_000365BE
+	PRINT 	WomanCryingHelpStr
 	TST.b	$FFFFC73D.w
 	BNE.w	loc_00036B64
-	PRINT 	loc_00036584
+	PRINT 	SeeSomeoneNorthwestStr
 loc_00036B64:
 	RTS
 	
 loc_00036B66:
-	PRINT 	loc_000363CE
+	PRINT 	CelebrateTriumphStr
 	TST.b	$FFFFC73D.w
 	BNE.w	loc_00036B8E
-	PRINT 	loc_000363A6
+	PRINT 	BulliesAteFoodStr
 	TST.b	$FFFFC741.w
 	BNE.w	loc_00036B8E
-	PRINT 	loc_00036388
+	PRINT 	WelcomeToTavernStr
 loc_00036B8E:
 	RTS
 	
@@ -45532,15 +45536,15 @@ loc_00036C96:
 	dc.b	$01, $09, $00, $03, $DD, $D4, $00, $00, $6F, $A8, $60, $01, $00, $D8, $00, $48, $02, $05, $00, $03, $DE, $94, $00, $00, $6F, $CA, $60, $01, $FF, $FF, $00, $01 
 	dc.b	$EB, $20, $00, $88, $00, $58, $02, $65, $00, $03, $DF, $2C, $00, $00, $6F, $CA, $00, $01, $FF, $FF 
 loc_00036DD2:
-	dc.l	loc_00036E76
-	dc.l	loc_00036E96
-	dc.l	loc_00036F20
-	dc.l	loc_00036F96
-	dc.l	loc_00037000
-	dc.l	loc_00037040
-	dc.l	loc_00037116
-	dc.l	loc_000371B2 
-	dc.l	loc_00037440
+	dc.l	YouAreInHelwigStr
+	dc.l	OnlyWomenRemainStr
+	dc.l	HusbandCapturedStr
+	dc.l	VillageMenSlaveLaborStr
+	dc.l	ToBeMarriedNextWeekStr
+	dc.l	MethuenCaveMapStr
+	dc.l	GoldMinedMethuenCaveStr
+	dc.l	WarBetweenCartahenaAndExcalabriaStr 
+	dc.l	NeverSeeDaddyAgainStr
 	dc.l	NoOneHereStr
 	dc.l	NoOneHereStr
 	dc.l	NoOneHereStr
@@ -45550,65 +45554,65 @@ loc_00036DD2:
 	dc.l	NoOneHereStr 
 	dc.l	NoOneHereStr 
 loc_00036E16:
-	dc.l	loc_00036E76
-	dc.l	loc_00036EBE
-	dc.l	loc_00036F70
-	dc.l	loc_00036FE0
-	dc.l	loc_00037028
-	dc.l	loc_000370E6
-	dc.l	loc_00036FE0
-	dc.l	loc_000371F0 
-	dc.l	loc_0003746E
-	dc.l	loc_00037498
-	dc.l	loc_000374BA
-	dc.l	loc_000374EE
-	dc.l	loc_0003759C
-	dc.l	loc_0003759C
-	dc.l	loc_00037612
-	dc.l	loc_000376D0 
+	dc.l	YouAreInHelwigStr
+	dc.l	JourneyWestToSwaffhamMapStr
+	dc.l	HusbandReturnedStr
+	dc.l	ThankYouRescueMenStr
+	dc.l	NeverRepayYouStr
+	dc.l	RingOfEarthSwaffhamStr
+	dc.l	ThankYouRescueMenStr
+	dc.l	FindSomeoneForMeStr 
+	dc.l	DaddyBackStr
+	dc.l	OweYouMyLifeStr
+	dc.l	WelcomeAtWeddingStr
+	dc.l	DaughterGratefulStr
+	dc.l	RememberedAsHeroStr
+	dc.l	RememberedAsHeroStr
+	dc.l	DragonShieldVillageStr
+	dc.l	KingOfSwaffhamStingyStr 
 loc_00036E56:
 	dc.l	NoOneHereStr
-	dc.l	loc_00037756
+	dc.l	SleepInSoftBedStr
 	dc.l	NoOneHereStr 
 loc_00036E62:
 	dc.l	NoOneHereStr
-	dc.l	loc_000378D4
-	dc.l	loc_00037920 
+	dc.l	AppreciateYouStr
+	dc.l	StopByForFoodStr 
 loc_00036E6E:
-	dc.l	loc_00037708
+	dc.l	MinisterTrickedSoldiersStr
 	dc.l	NoOneHereStr
-loc_00036E76:
+YouAreInHelwigStr:
 	dc.b	"You are in Helwig,", $FE
 	dc.b	"adventurer!", $FF, $00
-loc_00036E96:
+OnlyWomenRemainStr:
 	dc.b	"Only the women of", $FE
 	dc.b	"this village remain.", $FF, $00
-loc_00036EBE:
+JourneyWestToSwaffhamMapStr:
 	dc.b	"Journey west to Swaffham.", $FE
 	dc.b	"Use this map as your guide."
 	dc.b	$F9, $08, $01, $06, $01, $16, $01, $15, $01, $05, $01, $04, $01, $03, $01, $02, $01, $01, $00
-loc_00036F06:
+JourneyWestToSwaffhamStr:
 	dc.b	"Journey west to Swaffham.", $FF
-loc_00036F20:
+HusbandCapturedStr:
 	dc.b	"The soldiers of Cartahena", $FE
 	dc.b	"captured my husband. I fear", $FE
 	dc.b	"I'll never see him again.", $FF
-loc_00036F70:
+HusbandReturnedStr:
 	dc.b	"I'm so happy to", $FE
 	dc.b	"have my husband back!", $FF
-loc_00036F96:
+VillageMenSlaveLaborStr:
 	dc.b	"All the village men have", $FE
 	dc.b	"been forced into slave", $FE
 	dc.b	"labor by the Cartahenans.", $FF
-loc_00036FE0:
+ThankYouRescueMenStr:
 	dc.b	"Thank you for", $FE 
 	dc.b	"rescuing our men!", $FF
-loc_00037000:
+ToBeMarriedNextWeekStr:
 	dc.b	"Alas! We were to be", $FE
 	dc.b	"married next week!", $FF, $00
-loc_00037028:
+NeverRepayYouStr:
 	dc.b	"We can never repay you!", $FF
-loc_00037040:
+MethuenCaveMapStr:
 	dc.b	"The soldiers of Cartahena", $FE
 	dc.b	"took our men to Methuen's", $FE
 	dc.b	"Cave to the southwest.", $FD
@@ -45621,12 +45625,12 @@ loc_00037040:
 	dc.b	$01, $15
 	dc.b	$01, $14
 	dc.b	$00
-loc_000370CA:
+CountOnYouStr:
 	dc.b	"I know I can count on you!", $FF, $00
-loc_000370E6:
+RingOfEarthSwaffhamStr:
 	dc.b	"I heard that the Ring", $FE
 	dc.b	"of Earth is in Swaffham.", $FF, $00
-loc_00037116:
+GoldMinedMethuenCaveStr:
 	dc.b	"For as long as our village", $FE
 	dc.b	"has existed, gold has been", $FE
 	dc.b	"mined from Methuen's Cave.", $FD
@@ -45634,11 +45638,11 @@ loc_00037116:
 	dc.b	"dig out gold to fund their", $FE
 	dc.b	"wars of destruction", $2E
 	dc.b	$F8, $01, $89
-loc_000371B2:
+WarBetweenCartahenaAndExcalabriaStr:
 	dc.b	"We also suffered in", $FE
 	dc.b	"the war between", $FE
 	dc.b	"Cartahena and Excalabria.", $FF
-loc_000371F0:
+FindSomeoneForMeStr:
 	dc.b	"Everyone has someone except", $FE
 	dc.b	"me. Could you find someone", $FE
 	dc.b	"for me? Take this sketch an", $FD
@@ -45646,90 +45650,90 @@ loc_000371F0:
 	dc.b	"someone would like to meet", $FE
 	dc.b	"me after seeing this", $2E 
 	dc.b	$F9, $01, $00, $16
-loc_00037292:
+FoundSomeoneForMeStr:
 	dc.b	"Have you found", $FE
 	dc.b	"someone for me?", $FF, $00
-loc_000372B2:
+WriteLetterGiftDragonShieldStr:
 	dc.b	"He looks like a", $FE
 	dc.b	"very nice person.", $FE
 	dc.b	"I'll write him a letter.", $FD
 	dc.b	"Here, take the Dragon", $FE
 	dc.b	"Shield for your kindness."
 	dc.b	$F9, $01, $00, $27
-loc_00037320:
+GiftDragonShieldStr:
 	dc.b	"Here is a gift to", $FE
 	dc.b	"repay your kindness.", $FE
 	dc.b	"It is the Dragon Shield."
 	dc.b	$F9, $01, $00, $27, $00
-loc_00037364:
+GetAlongFineStr:
 	dc.b	"I'm sure we'll get along", $FE
 	dc.b	"just fine.", $FF
-loc_00037388:
+ComeBackLessGearStr2:
 	dc.b	"Please come back", $FE
 	dc.b	"when you're not", $FE
 	dc.b	"carrying so much gear.", $FF
-loc_000373C0:	
+FriendGiftDragonShieldStr:	
 	dc.b	"He's a nice person and a", $FE
 	dc.b	"good friend. I want to give", $FE
 	dc.b	"you the Dragon Shield as a", $FD
 	dc.b	"present, but you are", $FE
 	dc.b	"carrying too much already.", $FF
-loc_00037440:
+NeverSeeDaddyAgainStr:
 	dc.b	"I don't know if I'll", $FE
 	dc.b	"ever see my daddy again!", $FF 
-loc_0003746E:
+DaddyBackStr:
 	dc.b	"My daddy's back!", $FE
 	dc.b	"Thank you ever so much!", $FF, $00
-loc_00037498:
+OweYouMyLifeStr:
 	dc.b	"I owe you my life,", $FE
 	dc.b	"brave warrior.", $FF
-loc_000374BA:
+WelcomeAtWeddingStr:
 	dc.b	"You would be most welcome", $FE
 	dc.b	"at our wedding next week.", $FF 
-loc_000374EE:
+DaughterGratefulStr:
 	dc.b	"My daughter and I are", $FE
 	dc.b	"most grateful to you.", $FF
-loc_0003751A:
+KeyFromCaveStr:
 	dc.b	"I found this key in the", $FE
 	dc.b	"cave. Some soldiers dropped", $FE 
 	dc.b	"it, and I picked it up.", $FD
 	dc.b	"You might be able to use it", $FE
 	dc.b	"somewhere in the cave."
 	dc.b	$F9, $01, $00, $65
-loc_0003759C:
+RememberedAsHeroStr:
 	dc.b	"You will always", $FE
 	dc.b	"be remembered in our", $FE
 	dc.b	"village as a hero!", $FF
-loc_000375D4:
+CantCarryMoreItemsStr:
 	dc.b	"I would give you a gift,", $FE
 	dc.b	"but you can't carry", $FE
 	dc.b	"any more items.", $FF, $00
-loc_00037612:
+DragonShieldVillageStr:
 	dc.b	"Greetings. I am also a", $FE
 	dc.b	"stranger here. I hear that", $FE
 	dc.b	"the Dragon Shield is in", $FD
 	dc.b	"this village somewhere. I", $FE
 	dc.b	"haven't found it yet, but", $FE
 	dc.b	"I'll keep looking.", $FF, $00
-loc_000376A4:
+GetBackToHelwigStr:
 	dc.b	"I didn't think I'd ever", $FE
 	dc.b	"get back to Helwig!", $FF
-loc_000376D0:
+KingOfSwaffhamStingyStr:
 	dc.b	"Rumor has it that the king", $FE
 	dc.b	"of Swaffham is very stingy.", $FF, $00
-loc_00037708:
+MinisterTrickedSoldiersStr:
 	dc.b	"The minister in this church", $FE
 	dc.b	"tricked the soldiers by", $FE
 	dc.b	"pretending to be a woman.", $FF
-loc_00037756:
+SleepInSoftBedStr:
 	dc.b	"Are you going to sleep", $FE
 	dc.b	"in a soft bed while our", $FE
 	dc.b	"husbands toil and suffer?", $FC, $0A
-loc_000377A0:
+SleepInSoftBedStr2:
 	dc.b	"Are you going to sleep", $FE
 	dc.b	"in a soft bed while our", $FE
 	dc.b	"husbands toil and suffer?", $FF, $00
-loc_000377EA:
+LazySlugStr:
 	dc.b	"Why you lazy slug!", $FE
 	dc.b	"I've a good mind to whack", $FE
 	dc.b	"you over the head with this", $FD
@@ -45738,23 +45742,23 @@ loc_000377EA:
 	dc.b	"Now don't come back until", $FE
 	dc.b	"you've rescued our men."
 	dc.b	$F8, $01, $D2, $00
-loc_0003789C:
+HurryBringBackHusbandsStr:
 	dc.b	"Good for you!", $FE
 	dc.b	"Please hurry and", $FE
 	dc.b	"bring our husbands back.", $FF
-loc_000378D4:
+AppreciateYouStr:
 	dc.b	"I really appreciate all", $FE
 	dc.b	"that you've done for us.", $FE
 	dc.b	"No hard feelings, I hope?", $FF, $00
-loc_00037920:
+StopByForFoodStr:
 	dc.b	"Next time you're here, stop", $FE
 	dc.b	"by for some food. My wife's", $FE
 	dc.b	"handy with a frying pan!", $FF, $00
-loc_00037972:
+WhatsWrongHereStr:
 	dc.b	"What's wrong here?", $FE
 	dc.b	"Forgive me, but I can't", $FE
 	dc.b	"see your future at all.", $FF, $00
-loc_000379B6:
+FreeAtLastStr:
 	dc.b	"Free at last, thanks to", $FE 
 	dc.b	"you, warrior! We're", $FE
 	dc.b	"returning to Helwig now.", $FD
@@ -45855,7 +45859,7 @@ loc_000383A2:
 	RTS
 	
 loc_000383B4:
-	PRINT 	loc_00037972
+	PRINT 	WhatsWrongHereStr
 	RTS
 	
 loc_000383BE:
@@ -45888,108 +45892,108 @@ loc_000384BA:
 	dc.l	$00000000
 	dc.b	$FF, $FF 
 loc_00038584:
-	dc.l	loc_000385F8 
-	dc.l	loc_00038630 
-	dc.l	loc_00038654 
-	dc.l	loc_000386F0 
-	dc.l	loc_00038710 
-	dc.l	loc_00038758 
-	dc.l	loc_000387A2 
-	dc.l	loc_00038832 
-	dc.l	loc_0003887A 
-	dc.l	loc_00038908 
-	dc.l	loc_00038994 
-	dc.l	loc_000389CE 
-	dc.l	loc_00038A5E 
+	dc.l	MapsHardToFindStr 
+	dc.l	YoureInSwaffhamStr 
+	dc.l	AskKingForGoldStr 
+	dc.l	KingVeryGreedyStr 
+	dc.l	CartahenaInvadeSwaffhamStr 
+	dc.l	OldTownRuinsStr 
+	dc.l	TreasureNearbyCaveStr 
+	dc.l	StingyKingPeaceStr 
+	dc.l	KingNoQueenStr 
+	dc.l	KingWantsJewelStr 
+	dc.l	TownDestroyedLongAgoStr 
+	dc.l	TerribleMonsterCaveStr 
+	dc.l	ExcalabriaDestroyedStr 
 loc_000385B8:
-	dc.l	loc_000385F8 
-	dc.l	loc_00038630 
-	dc.l	loc_000386A0 
-	dc.l	loc_000386F0
-	dc.l	loc_00038710 
-	dc.l	loc_00038758 
-	dc.l	loc_000387A2 
-	dc.l	loc_00038832 
-	dc.l	loc_000388C2 
-	dc.l	loc_00038946 
-	dc.l	loc_00038994 
-	dc.l	loc_00038A22 
-	dc.l	loc_00038A5E 
+	dc.l	MapsHardToFindStr 
+	dc.l	YoureInSwaffhamStr 
+	dc.l	KingGaveRingStr 
+	dc.l	KingVeryGreedyStr
+	dc.l	CartahenaInvadeSwaffhamStr 
+	dc.l	OldTownRuinsStr 
+	dc.l	TreasureNearbyCaveStr 
+	dc.l	StingyKingPeaceStr 
+	dc.l	MinistersQuitStr 
+	dc.l	FearCartahenaStr 
+	dc.l	TownDestroyedLongAgoStr 
+	dc.l	ThreeCavesToRuinsStr 
+	dc.l	ExcalabriaDestroyedStr 
 loc_000385EC:
-	dc.l	loc_00038AA6 
-	dc.l	loc_00038AA6
-	dc.l	loc_000387E6
-loc_000385F8:
+	dc.l	CartahenaDestroyedSwaffhamStr 
+	dc.l	CartahenaDestroyedSwaffhamStr
+	dc.l	TaxesHighStr
+MapsHardToFindStr:
 	dc.b	"Maps? Well, they're", $FE 
 	dc.b	"pretty hard to find", $FE
 	dc.b	"in these parts.", $FF
-loc_00038630:
+YoureInSwaffhamStr:
 	dc.b	"Why, you're in", $FE
 	dc.b	"Swaffham, traveler!", $FF, $00
-loc_00038654:
+AskKingForGoldStr:
 	dc.b	"If you see the king, ask", $FE
 	dc.b	"him if he can spare some", $FE
 	dc.b	"gold so that we can eat.", $FF, $00
-loc_000386A0:
+KingGaveRingStr:
 	dc.b	"The king gave you a ring?", $FE
 	dc.b	"That's incredibly generous", $FE
 	dc.b	"for a skinflint like him!", $FF, $00
-loc_000386F0:
+KingVeryGreedyStr:
 	dc.b	"Our king is a", $FE
 	dc.b	"very greedy man.", $FF, $00
-loc_00038710:
+CartahenaInvadeSwaffhamStr:
 	dc.b	"Cartahena hasn't invaded", $FE
 	dc.b	"Swaffham yet, but it's", $FE
 	dc.b	"only a matter of time.", $FF, $00
-loc_00038758:
+OldTownRuinsStr:
 	dc.b	"An old town near here is", $FE
 	dc.b	"in ruins. It's been that", $FE
 	dc.b	"way for about 18 years.", $FF
-loc_000387A2:
+TreasureNearbyCaveStr:
 	dc.b	"The people here tell", $FE
 	dc.b	"of a treasure that is", $FE
 	dc.b	"hidden in a nearby cave.", $FF
-loc_000387E6:
+TaxesHighStr:
 	dc.b	"Taxes in this land are", $FE
 	dc.b	"really high, the better to", $FE
 	dc.b	"fill the king's coffers.", $FF, $00
-loc_00038832:
+StingyKingPeaceStr:
 	dc.b	"Our king may be stingy,", $FE
 	dc.b	"but at least we're at", $FE
 	dc.b	"peace. Thus far, that is.", $FF
-loc_0003887A:
+KingNoQueenStr:
 	dc.b	"Our king doesn't want a", $FE
 	dc.b	"Queen because he thinks", $FE
 	dc.b	"she'd spend his money.", $FF, $00
-loc_000388C2:
+MinistersQuitStr:
 	dc.b	"Every minister we've ever", $FE
 	dc.b	"had has quit because our", $FE
 	dc.b	"king is so cheap.", $FF, $00
-loc_00038908:
+KingWantsJewelStr:
 	dc.b	"The king really wants", $FE
 	dc.b	"a jewel that's hidden", $FE
 	dc.b	"in a nearby cave.", $FF
-loc_00038946:
+FearCartahenaStr:
 	dc.b	"When you see that ruined", $FE
 	dc.b	"town, you'll know the fear", $FE
 	dc.b	"that Cartahena inspires.", $FF, $00
-loc_00038994:
+TownDestroyedLongAgoStr:
 	dc.b	"A nearby town was", $FE
 	dc.b	"destroyed by Cartahena", $FE
 	dc.b	"a long time ago.", $FF
-loc_000389CE:
+TerribleMonsterCaveStr:
 	dc.b	"A terrible monster lives in", $FE
 	dc.b	"a cave near here. Only the", $FE
 	dc.b	"king has a key to the cave.", $FF, $00
-loc_00038A22:
+ThreeCavesToRuinsStr:
 	dc.b	"The ruins? You have", $FE
 	dc.b	"to go through three", $FE
 	dc.b	"caves to get there.", $FF
-loc_00038A5E:
+ExcalabriaDestroyedStr:
 	dc.b	"Eighteen years ago, the", $FE
 	dc.b	"town of Excalabria was", $FE
 	dc.b	"destroyed by Cartahena.", $FF, $00
-loc_00038AA6:
+CartahenaDestroyedSwaffhamStr:
 	dc.b	"After you left, the hordes", $FE
 	dc.b	"of Cartahena swarmed over", $FE
 	dc.b	"our walls and destroyed", $FD
@@ -46000,12 +46004,12 @@ loc_00038AA6:
 	dc.b	"and the true Ring of Earth.", $FE
 	dc.b	"Only you can stop them now."
 	dc.b	$F8, $01, $4B, $00
-loc_00038B96:
+SomethingStrangeHappenStr:
 	dc.b	"I feel that something", $FE 
 	dc.b	"strange is going to happen.", $FE
 	dc.b	"I'm not sure what it is.", $FF, $00 
 loc_00038BE2:
-	PRINT 	loc_00038B96
+	PRINT 	SomethingStrangeHappenStr
 	RTS
 	
 loc_00038BEC:
@@ -46120,12 +46124,12 @@ loc_00039530:
 loc_00039546:
 	dc.b	$FF, $FF 
 loc_00039548:
-	dc.l	loc_00039554 
+	dc.l	WaitingExcalabriaStr 
 loc_0003954C:
-	dc.l	loc_000395EE 
+	dc.l	LongWaitedForYouStr 
 loc_00039550:
-	dc.l	loc_000396CE
-loc_00039554:
+	dc.l	TerribleNewsStr
+WaitingExcalabriaStr:
 	dc.b	"I've been waiting for you,", $FE 
 	dc.b	"This is Excalabria,", $FE 
 	dc.b	"Journey to Swaffham and", $FD
@@ -46133,7 +46137,7 @@ loc_00039554:
 	dc.b	"Hurry, ", Script_player_name, "!", $FD
 	dc.b	"I have much to tell you", $FE 
 	dc.b	"and time is running out!", $FF
-loc_000395EE:
+LongWaitedForYouStr:
 	dc.b	"Long have I waited for you.", $FE 
 	dc.b	"This is Excalabria, your", $FE 
 	dc.b	"birthplace. I am Knute.", $FD
@@ -46144,7 +46148,7 @@ loc_000395EE:
 	dc.b	"is a fake! Return to", $FE 
 	dc.b	"Swaffham for the true ring."
 	dc.b	$F8, $01, $28
-loc_000396CE:
+TerribleNewsStr:
 	dc.b	"Swaffham in ruins?", $FE 
 	dc.b	"That is terrible news.", $FE 
 	dc.b	"We don't have much time.", $FD
@@ -46159,12 +46163,12 @@ loc_000396CE:
 	dc.b	"the rings from him.", $FD
 	dc.b	"You can get information in", $FE 
 	dc.b	"the towns along the way.", $FF
-loc_00039820:
+GetAllRingsStr:
 	dc.b	"You must have all the", $FE 
 	dc.b	"rings! Visit each town one", $FE 
 	dc.b	"more time to get the rings.", $FF, $00 
 loc_0003986E:
-	PRINT 	loc_00039554	
+	PRINT 	WaitingExcalabriaStr	
 	RTS
 	
 loc_00039878:
@@ -46256,125 +46260,125 @@ loc_00039E80:
 	dc.b	$DD, $94, $00, $00, $6F, $36, $60, $01, $00, $E8, $00, $88, $00, $91, $00, $03, $DD, $74, $00, $00, $6F, $5E, $60, $01, $00, $48, $00, $58, $02, $4D, $00, $03 
 	dc.b	$DF, $28, $00, $00, $6F, $CA, $60, $01, $FF, $FF 
 loc_0003A03A:
-	dc.l	loc_0003A620
-	dc.l	loc_0003A558
-	dc.l	loc_0003A122
-	dc.l	loc_0003A156
-	dc.l	loc_0003A2D0
-	dc.l	loc_0003A22E
-	dc.l	loc_0003A2D0 
-	dc.l	loc_0003A2F4 
-	dc.l	loc_0003A382
-	dc.l	loc_0003A3FE 
+	dc.l	ShopInSwaffhamStr
+	dc.l	EscapedDestructionExcalabriaStr
+	dc.l	VillageOfHastingsStr
+	dc.l	BewareSpyStr
+	dc.l	NeedPassCartahenaStr
+	dc.l	ArmyGainsStrengthStr
+	dc.l	NeedPassCartahenaStr 
+	dc.l	SoldiersLookingForYouStr 
+	dc.l	WhyAreYouHereStr2
+	dc.l	SeveralPeopleWaitingStr 
 loc_0003A062:
-	dc.l	loc_0003A620
-	dc.l	loc_0003A558
-	dc.l	loc_0003A122
-	dc.l	loc_0003A19E
-	dc.l	loc_0003A2D0
-	dc.l	loc_0003A25A
-	dc.l	loc_0003A2D0
-	dc.l	loc_0003A2F4 
-	dc.l	loc_0003A382
-	dc.l	loc_0003A3FE 
+	dc.l	ShopInSwaffhamStr
+	dc.l	EscapedDestructionExcalabriaStr
+	dc.l	VillageOfHastingsStr
+	dc.l	YouLookIllStr
+	dc.l	NeedPassCartahenaStr
+	dc.l	WomanDinnerStr
+	dc.l	NeedPassCartahenaStr
+	dc.l	SoldiersLookingForYouStr 
+	dc.l	WhyAreYouHereStr2
+	dc.l	SeveralPeopleWaitingStr 
 loc_0003A08A:
-	dc.l	loc_0003A620
-	dc.l	loc_0003A558
-	dc.l	loc_0003A122
-	dc.l	loc_0003A19E
-	dc.l	loc_0003A1FA
-	dc.l	loc_0003A25A
-	dc.l	loc_0003A2D0
-	dc.l	loc_0003A32C 
-	dc.l	loc_0003A3C0
-	dc.l	loc_0003A3FE 
+	dc.l	ShopInSwaffhamStr
+	dc.l	EscapedDestructionExcalabriaStr
+	dc.l	VillageOfHastingsStr
+	dc.l	YouLookIllStr
+	dc.l	CureEraclePoisonStr
+	dc.l	WomanDinnerStr
+	dc.l	NeedPassCartahenaStr
+	dc.l	EraclePlantPoisonStr 
+	dc.l	DigotPlantWhisbyCaveStr
+	dc.l	SeveralPeopleWaitingStr 
 loc_0003A0B2:
-	dc.l	loc_0003A620
-	dc.l	loc_0003A558
-	dc.l	loc_0003A122
-	dc.l	loc_0003A1DE
-	dc.l	loc_0003A366
-	dc.l	loc_0003A29C
-	dc.l	loc_0003A2D0
-	dc.l	loc_0003A366 
-	dc.l	loc_0003A366
-	dc.l	loc_0003A3FE
-	dc.l	loc_0003AB3E
+	dc.l	ShopInSwaffhamStr
+	dc.l	EscapedDestructionExcalabriaStr
+	dc.l	VillageOfHastingsStr
+	dc.l	GladRecoveredStr
+	dc.l	CartahenaSouthStr
+	dc.l	PoisonedBySpyStr
+	dc.l	NeedPassCartahenaStr
+	dc.l	CartahenaSouthStr 
+	dc.l	CartahenaSouthStr
+	dc.l	SeveralPeopleWaitingStr
+	dc.l	SearchForRingsStr
 	dc.l	NoOneHereStr 
 loc_0003A0E2:
-	dc.l	loc_0003AC1C
-	dc.l	loc_0003AC60
-	dc.l	loc_0003ACD6 
+	dc.l	TalesAreTrueStr
+	dc.l	WhatTurnedFriendshipStr
+	dc.l	NotHungryCantHelpStr 
 loc_0003A0EE:
-	dc.l	loc_0003A6AE 
+	dc.l	HonorHumbleHomeStr 
 loc_0003A0F2:
-	dc.l	loc_0003A74A 
+	dc.l	WasItGoodStr 
 loc_0003A0F6:
-	dc.l	loc_0003A758 
+	dc.l	PoisonedFoodStr 
 loc_0003A0FA:
 	dc.l	NoOneHereStr
-	dc.l	loc_0003A7A8
-	dc.l	loc_0003A84E
-	dc.l	loc_0003A9A8
-	dc.l	loc_0003AA72
+	dc.l	NeedPassStr
+	dc.l	GreetingsServantsStr
+	dc.l	WaitingForThisDayStr
+	dc.l	GrownIntoFineYoungManStr
 	dc.l	NoOneHereStr
-	dc.l	loc_0003A7FC
-	dc.l	loc_0003A882 
-	dc.l	loc_0003A9F4
-	dc.l	loc_0003AABA
-loc_0003A122
+	dc.l	FinalBattleStr
+	dc.l	HelloPrinceStr 
+	dc.l	RingsOfEvilStr
+	dc.l	FindRingsInCartahenaStr
+VillageOfHastingsStr
 	dc.b	"The village of Hastings", $FE 
 	dc.b	"stands before you, warrior.", $FF 
-loc_0003A156
+BewareSpyStr
 	dc.b	"Beware! A spy from", $FE 
 	dc.b	"Cartahena came here several", $FE 
 	dc.b	"times asking about you.", $FF, $00 
-loc_0003A19E
+YouLookIllStr
 	dc.b	"You look ill. Did you", $FE 
 	dc.b	"eat something that", $FE 
 	dc.b	"disagreed with you?"
 	dc.b	$F8, $01, $33, $00
-loc_0003A1DE
+GladRecoveredStr
 	dc.b	"I'm so glad you recovered!", $FF, $00 
-loc_0003A1FA
+CureEraclePoisonStr
 	dc.b	"The Digot plant can cure", $FE 
 	dc.b	"the Eracle poison you ate.", $FF 
-loc_0003A22E
+ArmyGainsStrengthStr
 	dc.b	"The army of Cartahena", $FE 
 	dc.b	"gains strength daily.", $FF 
-loc_0003A25A
+WomanDinnerStr
 	dc.b	"A woman gave you dinner", $FE 
 	dc.b	"in that house?", $FE 
 	dc.b	"But no one lives there!"
 	dc.b	$F8, $01, $33, $00
-loc_0003A29C
+PoisonedBySpyStr
 	dc.b	"I think you were poisoned", $FE
 	dc.b	"by a spy from Cartahena.", $FF, $00 
-loc_0003A2D0
+NeedPassCartahenaStr
 	dc.b	"You need a pass", $FE 
 	dc.b	"to enter Cartahena.", $FF 
-loc_0003A2F4
+SoldiersLookingForYouStr
 	dc.b	"Soldiers from Cartahena are", $FE 
 	dc.b	"looking for you everywhere.", $FF 
-loc_0003A32C
+EraclePlantPoisonStr
 	dc.b	"That poison you ate", $FE 
 	dc.b	"must have come from", $FE 
 	dc.b	"the Eracle plant.", $FF 
-loc_0003A366
+CartahenaSouthStr
 	dc.b	"Cartahena is south of here.", $FF 
-loc_0003A382
+WhyAreYouHereStr2
 	dc.b	"Why are you here?", $FE 
 	dc.b	"Soldiers are searching", $FE 
 	dc.b	"for you everywhere.", $FF, $00 
-loc_0003A3C0
+DigotPlantWhisbyCaveStr
 	dc.b	"The Digot plant grows", $FE 
 	dc.b	"in Whisby Cave,", $FE 
 	dc.b	"which is east of here.", $FF, $00 
-loc_0003A3FE
+SeveralPeopleWaitingStr
 	dc.b	"Have you gone into the", $FE 
 	dc.b	"church? Several people", $FE 
 	dc.b	"are waiting for you there.", $FF, $00 
-loc_0003A448
+WelcomePrinceStr
 	dc.b	"Welcome, Prince ", Script_player_name, "!", $FE 
 	dc.b	"I was once a servant", $FE 
 	dc.b	"of your father's.", $FD 
@@ -46388,7 +46392,7 @@ loc_0003A448
 	dc.b	"as you desperately", $FE 
 	dc.b	"need his creation."
 	dc.b	$F8, $01, $36, $00
-loc_0003A558
+EscapedDestructionExcalabriaStr
 	dc.b	"I escaped the destruction", $FE 
 	dc.b	"of Excalabria. I knew a", $FE 
 	dc.b	"hero would arrive one day.", $FD 
@@ -46399,14 +46403,14 @@ loc_0003A558
 	dc.b	"tree in Excalabria.", $FE 
 	dc.b	"It may still be there."
 	dc.b	$F8, $01, $A2
-loc_0003A620
+ShopInSwaffhamStr
 	dc.b	"I used to work in a shop in", $FE 
 	dc.b	"Swaffham, but I didn't like", $FE
 	dc.b	"the king, so I moved here.", $FD 
 	dc.b	"I wonder if the", $FE 
 	dc.b	"treasure I hid in", $FE 
 	dc.b	"the shop is still there?", $FF 
-loc_0003A6AE
+HonorHumbleHomeStr
 	dc.b	"You greatly honor me and my", $FE 
 	dc.b	"humble home with your", $FE 
 	dc.b	"presence, Your Highness.", $FD 
@@ -46414,27 +46418,27 @@ loc_0003A6AE
 	dc.b	"I have prepared for you.", $FE 
 	dc.b	"I have much to tell you."
 	dc.b	$F8, $02, $30, $4C
-loc_0003A74A
+WasItGoodStr
 	dc.b	"Was it good?", $FF, $00 
-loc_0003A758
+PoisonedFoodStr
 	dc.b	"Young fool, I poisoned your", $FE 
 	dc.b	"food. You will die soon!", $FE 
 	dc.b	"Tsarkon will be pleased!"
 	dc.b	$F8, $01, $31
-loc_0003A7A8
+NeedPassStr
 	dc.b	"You need a pass to get into", $FE 
 	dc.b	"Cartahena. I hear that one", $FE 
 	dc.b	"can be obtained in Barrow", $2E
 	dc.b	$F8, $01, $25 
-loc_0003A7FC
+FinalBattleStr
 	dc.b	"Your Highness, now is the", $FE 
 	dc.b	"time for the final battle.", $FE 
 	dc.b	"Go south to meet the enemy.", $FF, $00 
-loc_0003A84E
+GreetingsServantsStr
 	dc.b	"Greetings, ", Script_player_name, "!", $FE 
 	dc.b	"We were once", $FE 
 	dc.b	"your father's servants.", $FF, $00 
-loc_0003A882
+HelloPrinceStr
 	dc.b	"Hello again, my Prince.", $FE 
 	dc.b	"There are 16 rings", $FE 
 	dc.b	"that rule the world.", $FD 
@@ -46447,28 +46451,28 @@ loc_0003A882
 	dc.b	"Win the rings from Tsarkon", $FE 
 	dc.b	"and the Cartahenan army", $FE 
 	dc.b	"will vanish from our land.", $FF, $00 
-loc_0003A9A8
+WaitingForThisDayStr
 	dc.b	"The four of us have been", $FE 
 	dc.b	"waiting for this day for 18", $FE 
 	dc.b	"long years, my Prince.", $FF 
-loc_0003A9F4
+RingsOfEvilStr
 	dc.b	"Tsarkon has the eight", $FE 
 	dc.b	"rings of evil. To fight", $FE 
 	dc.b	"this malevolent force,", $FD 
 	dc.b	"you need the opposing power", $FE 
 	dc.b	"of all eight rings of good.", $FF, $00 
-loc_0003AA72
+GrownIntoFineYoungManStr
 	dc.b	"You have grown into a fine", $FE 
 	dc.b	"young man! You greatly", $FE 
 	dc.b	"resemble your father.", $FF 
-loc_0003AABA
+FindRingsInCartahenaStr
 	dc.b	"You must find the three", $FE 
 	dc.b	"rings of good that are", $FE 
 	dc.b	"hidden in Cartahena.", $FD 
 	dc.b	"Only then can you", $FE 
 	dc.b	"confront Tsarkon with", $FE 
 	dc.b	"power equal to his own.", $FF 
-loc_0003AB3E
+SearchForRingsStr
 	dc.b	"Long ago, Tsarkon and Erik", $FE 
 	dc.b	"searched the world for the", $FE 
 	dc.b	"rings of good and evil.", $FD 
@@ -46478,25 +46482,25 @@ loc_0003AB3E
 	dc.b	"The malignant power of", $FE 
 	dc.b	"these rings turned Tsarkon", $FE 
 	dc.b	"into a minion of evil.", $FF 
-loc_0003AC1C
+TalesAreTrueStr
 	dc.b	"The tales are true.", $FE 
 	dc.b	"Once Tsarkon and Erik", $FE 
 	dc.b	"were the best of friends.", $FF 
-loc_0003AC60
+WhatTurnedFriendshipStr
 	dc.b	"What could have turned", $FE 
 	dc.b	"Tsarkon and Erik's", $FE 
 	dc.b	"friendship into hatred?", $FD 
 	dc.b	"A force too powerful for", $FE 
 	dc.b	"man to resist, I'm afraid.", $FF 
-loc_0003ACD6
+NotHungryCantHelpStr
 	dc.b	"If you're not hungry,", $FE 
 	dc.b	"then I can't help you.", $FF, $00 
 loc_0003AD04:
-	PRINT 	loc_0003AABA	
+	PRINT 	FindRingsInCartahenaStr	
 	RTS
 	
 loc_0003AD0E:
-	PRINT 	loc_0003ACD6	
+	PRINT 	NotHungryCantHelpStr	
 	RTS
 	
 loc_0003AD18:
@@ -46615,76 +46619,76 @@ loc_0003B732:
 	dc.l	$00000000
 	dc.b	$FF, $FF, $00, $01, $F1, $92, $FF, $FF, $00, $01, $F1, $92, $00, $88, $00, $48, $00, $91, $00, $03, $DD, $74, $00, $00, $7E, $32, $60, $01, $FF, $FF 
 loc_0003B7F0:
-	dc.l	loc_0003B84C
-	dc.l	loc_0003B84C
-	dc.l	loc_0003B84C
-	dc.l	loc_0003B84C
-	dc.l	loc_0003B84C
-	dc.l	loc_0003B860 
+	dc.l	SheNeverAnsweredStr
+	dc.l	SheNeverAnsweredStr
+	dc.l	SheNeverAnsweredStr
+	dc.l	SheNeverAnsweredStr
+	dc.l	SheNeverAnsweredStr
+	dc.l	CannotEnterWithoutPassStr 
 loc_0003B808:
-	dc.l	loc_0003B84C
-	dc.l	loc_0003B84C
-	dc.l	loc_0003B84C
-	dc.l	loc_0003B84C
-	dc.l	loc_0003B84C
-	dc.l	loc_0003B882 
+	dc.l	SheNeverAnsweredStr
+	dc.l	SheNeverAnsweredStr
+	dc.l	SheNeverAnsweredStr
+	dc.l	SheNeverAnsweredStr
+	dc.l	SheNeverAnsweredStr
+	dc.l	PassGrantsAdmittanceStr 
 loc_0003B820:
-	dc.l	loc_0003B8C6
-	dc.l	loc_0003B97E
-	dc.l	loc_0003B9B8
-	dc.l	loc_0003B9DE
-	dc.l	loc_0003BA16
-	dc.l	loc_0003B8EA
-	dc.l	loc_0003B90E
-	dc.l	loc_0003B958 
+	dc.l	ThankYouForBeatingStr
+	dc.l	WorldWaitedLongEnoughStr
+	dc.l	MotherAwaitsStr
+	dc.l	ServantsAwaitStr
+	dc.l	FreedUsAllStr
+	dc.l	TsarkonDeadStr
+	dc.l	ChangedIntoMonsterStr
+	dc.l	ToysForTsarkonStr 
 	dc.l	NoOneHereStr 
 loc_0003B844:
-	dc.l	loc_0003BA2C 
+	dc.l	MenTurnedIntoMonstersStr 
 loc_0003B848:
-	dc.l	loc_0003BBE6
-loc_0003B84C:
+	dc.l	FailedToKillTsarkonStr
+SheNeverAnsweredStr:
 	dc.b	"She never answered.", $FF 
-loc_0003B860:
+CannotEnterWithoutPassStr:
 	dc.b	"You may not enter", $FE
 	dc.b	"without a pass.", $FF 
-loc_0003B882:
+PassGrantsAdmittanceStr:
 	dc.b	"Your pass grants you", $FE
 	dc.b	"admittance to our peaceful", $FE
 	dc.b	"town of Cartahena.", $FF, $00 
-loc_0003B8C6:
+ThankYouForBeatingStr:
 	dc.b	"Thank you for beating", $FE
 	dc.b	"that bad man.", $FF 
-loc_0003B8EA:
+TsarkonDeadStr:
 	dc.b	"Tsarkon is dead", $FE
 	dc.b	"and we live again!", $FF, $00 
-loc_0003B90E:
+ChangedIntoMonsterStr:
 	dc.b	"I came here to kill", $FE
 	dc.b	"Tsarkon, but he changed me", $FE
 	dc.b	"into a monster. Thank you!", $FF 
-loc_0003B958:
+ToysForTsarkonStr:
 	dc.b	"We were all merely", $FE
 	dc.b	"toys for Tsarkon.", $FF, $00 
-loc_0003B97E:
+WorldWaitedLongEnoughStr:
 	dc.b	"Hurry! The world has", $FE
 	dc.b	"waited long enough", $FE
 	dc.b	"for this moment!", $FF, $00 
-loc_0003B9B8:
+MotherAwaitsStr:
 	dc.b	"Your mother awaits", $FE
 	dc.b	"you in the castle.", $FF 
-loc_0003B9DE:
+ServantsAwaitStr:
 	dc.b	"Several servants of", $FE
 	dc.b	"Excalabria await", $FE
 	dc.b	"you in the castle.", $FF 
-loc_0003BA16:
+FreedUsAllStr:
 	dc.b	"You've freed us all!", $FF, $00 
-loc_0003BA2C:
+MenTurnedIntoMonstersStr:
 	dc.b	"All the men of Cartahena", $FE
 	dc.b	"were turned into", $FE
 	dc.b	"monsters or soldiers.", $FD
 	dc.b	"The women were turned", $FE
 	dc.b	"to stone. I hid so", $FE
 	dc.b	"they wouldn't find me.", $FF 
-loc_0003BAAC:
+TsarkonFledEastStr:
 	dc.b	"Tsarkon fled as you", $FE
 	dc.b	"approached. He went east,", $FE
 	dc.b	"to the Cave of Thule.", $FD
@@ -46692,31 +46696,31 @@ loc_0003BAAC:
 	dc.b	"need to get into the cave.", $FE
 	dc.b	"Here, it is yours", $2E
 	dc.b	$F9, $01, $00, $63
-loc_0003BB3A:
+TsarkonFledEastwardStr:
 	dc.b	"Tsarkon fled eastward,", $FE
 	dc.b	"to the Cave of Thule.", $FF, $00 
-loc_0003BB68:
+MustHaveAllRingsStr:
 	dc.b	"I have something to give", $FE
 	dc.b	"you, but first you must", $FE
 	dc.b	"have all the rings.", $FF, $00 
-loc_0003BBAE:
+ComeBackLessGearStr3:
 	dc.b	"Please come back when", $FE
 	dc.b	"you're not carrying", $FE
 	dc.b	"so much gear.", $FF 
-loc_0003BBE6:
+FailedToKillTsarkonStr:
 	dc.b	"I failed to kill Tsarkon.", $FE
 	dc.b	"You had the courage to", $FE
 	dc.b	"do what I could not.", $FF 
-loc_0003BC2C:
+WishPoisonKilledStr:
 	dc.b	"You'll soon wish that", $FE
 	dc.b	"the poisoned food I", $FE
 	dc.b	"gave you had killed you!"
 	dc.b	$F8, $02, $F7, $E9 
-loc_0003BC72:
+DieLaughStr:
 	dc.b	"Ha, ha, ha!", $FE
 	dc.b	"you'll die!"
 	dc.b	$F8, $02, $F7, $E9, $00 
-loc_0003BC8E:
+TharRevengeStr:
 	dc.b	"So, you are here at last.", $FE 
 	dc.b	"Do you remember me?", $FE
 	dc.b	"I am Thar!", $FD
@@ -46724,36 +46728,36 @@ loc_0003BC8E:
 	dc.b	"into a monster. Now my", $FE
 	dc.b	"revenge will be sweet!"
 	dc.b	$F8, $02, $F7, $EB, $00 
-loc_0003BD14:
+LutherDevastatedSwaffhamStr:
 	dc.b	"Once again we meet, young", $FE
 	dc.b	"fool! It was I, Luther, who", $FE
 	dc.b	"devastated Swaffham.", $FD
 	dc.b	"After I kill you, I'm off", $FE
 	dc.b	"to visit Wyclif...."
 	dc.b	$F8, $02, $F7, $EA 
-loc_0003BD90:
+StepfatherRingsStr:
 	dc.b	"Finally, you've come, my", $FE
 	dc.b	"son! I call you that though", $FE
 	dc.b	"I am only your stepfather.", $FD
 	dc.b	"Your mother is now my wife.", $FE
 	dc.b	"Join your rings with mine", $FE
 	dc.b	"and we can rule the world!", $FC, $0B
-loc_0003BE32:
+ChaosReignStr:
 	dc.b	"Now the world is ours! Let", $FE
 	dc.b	"chaos reign! Everyone can", $FE
 	dc.b	"suffer as I have suffered!"
 	dc.b	$F8, $01, $A1 
-loc_0003BE84:
+BreakMothersHeartStr:
 	dc.b	"This will break your", $FE
 	dc.b	"poor mother's heart!", $FE
 	dc.b	"She loves us both.", $FD
 	dc.b	"Why not join our family?", $FE
 	dc.b	"Please reconsider!", $FC, $0C
-loc_0003BEEE:
+OneOfUsWillDieStr:
 	dc.b	"Then one of us", $FE
 	dc.b	"will die now!"
 	dc.b	$F8, $02, $F7, $EC 
-loc_0003BF0E:
+FreedAtLastStr:
 	dc.b	"You have freed me at last!", $FE
 	dc.b	"Long have I been in thrall", $FE
 	dc.b	"to the forces of evil.", $FD
@@ -46770,18 +46774,18 @@ loc_0003BF0E:
 	dc.b	"Someone special waits", $FD
 	dc.b	"for you there."
 	dc.b	$F8, $01, $38, $00 
-loc_0003C078:
+FeelChillsStr:
 	dc.b	"You feel chills, as if", $FE
 	dc.b	"something evil is beside", $FE 
 	dc.b	"you, but you see nothing.", $FD
 	dc.b	"Perhaps if you possessed", $FE
 	dc.b	"all eight rings of good,", $FE
 	dc.b	"you could see the evil.", $FF 
-loc_0003C10C:
+EvilDiedWithTsarkonStr:
 	dc.b	"The evil died", $FE
 	dc.b	"along with Tsarkon.", $FF 
 loc_0003C12E:
-	PRINT 	loc_0003B9B8	
+	PRINT 	MotherAwaitsStr	
 	RTS
 	
 loc_0003C138:
