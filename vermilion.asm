@@ -9151,7 +9151,7 @@ loc_00008512:
 loc_00008516:
 	RTS
 
-loc_00008518:
+loc_00008518: ; Check that we have D7 consecutive number of flags set starting from A0
 	LEA	Map_triggers_start.w, A0
 loc_0000851C:
 	TST.b	(A0)+
