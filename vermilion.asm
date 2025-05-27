@@ -8682,7 +8682,7 @@ loc_00008038:
 loc_00008050:
 	RTS
 
-loc_00008052:
+loc_00008052: ; Check whether player is in the bounding box for Parma soldiers
 	CLR.w	D0
 	MOVE.b	$2A(A5), D0
 	MOVE.w	D0, D1
