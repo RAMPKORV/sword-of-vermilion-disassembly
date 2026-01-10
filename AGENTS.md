@@ -15,19 +15,47 @@ asm68k.exe          # Motorola 68000 assembler for Sega Genesis
 
 ## Build Commands
 
-```batch
-build.bat
-```
-Or directly:
-```batch
-asm68k /k /p /o ae- vermilion.asm,out.bin,,vermilion.lst
+```powershell
+# Windows PowerShell (recommended for LLM agents)
+powershell -Command "& .\asm68k.exe '/k' '/p' '/o' 'ae-' 'vermilion.asm,out.bin,,vermilion.lst'"
 ```
 
 **Flags:** `/k` keep temps, `/p` produce listing, `/o ae-` output opts  
 **Output:** `out.bin` (ROM binary), `vermilion.lst` (listing with addresses)
 
-### Verification
-No automated tests. Verify by comparing `out.bin` against original ROM and testing in an emulator (Kega Fusion, BlastEm).
+### Successful Build Output
+```
+SN 68k version 2.53
+
+Assembly completed.
+0 error(s) from 79517 lines in 0.5 seconds
+```
+
+### Build Verification Workflow
+
+**IMPORTANT:** After ANY modification to `.asm` files, run the build command and verify:
+1. Output shows `0 error(s)`
+2. If errors occur, fix them before considering the task complete
+
+### Common Build Errors
+
+| Error | Cause | Fix |
+|-------|-------|-----|
+| `Op-code not recognised` | Invalid instruction | Check opcode spelling (e.g., `MOVE`, `BSR`, `RTS`) |
+| `Symbol 'x' not defined` | Undefined label reference | Add missing label or fix typo |
+| `Expected comma after operand` | Missing comma in instruction | Add comma between operands (e.g., `DBF D6, label`) |
+| `Illegal addressing mode` | Invalid register (D8+, A8+) | Use only D0-D7 and A0-A7 |
+| `Illegal value` | Value out of range | `MOVEQ` only accepts -128 to 127 |
+| `Branch is out of range` | Short branch too far | Use `BRA.w` instead of `BRA.s` |
+| `Label multiply defined` | Duplicate label name | Rename one of the duplicate labels |
+| `No closing quote on string` | Unclosed string literal | Add closing `"` to string |
+
+### Error Message Format
+```
+E:\...\VERMILION.ASM(LINE) : Error : MESSAGE
+ offending_code
+```
+The line number in parentheses indicates exactly where to fix the issue.
 
 ## Code Style Guidelines
 
@@ -56,16 +84,6 @@ TOWN_WYCLIF         = $00
 ITEM_HERBS          = $00
 MAX_PLAYER_LEVEL    = 30
 ```
-
-### File Organization
-
-1. Includes at top (`macros.asm`, `constants.asm`)
-2. ROM Header with vector table at address 0
-3. Initialization (hardware, Z80, VDP setup)
-4. Main loop and state machine
-5. Subroutines grouped by functionality
-6. Data tables and string data
-7. Compressed graphics at end
 
 ### Assembly Patterns
 
@@ -129,13 +147,6 @@ dc.l    $12345678         ; Long data (32-bit)
 dc.l    SomeLabel         ; Address reference
 ```
 
-### Comments
-
-```asm
-; Full line comment explaining the section
-MOVE.w  D0, D1            ; Inline comment after instruction
-```
-
 ## Technical Reference
 
 **Platform:** Sega Genesis/Mega Drive (68000 @ 7.67 MHz)  
@@ -148,7 +159,7 @@ MOVE.w  D0, D1            ; Inline comment after instruction
 2. **Use existing constants** - Check constants.asm before hardcoding
 3. **Follow naming patterns** - PascalCase for new labels, `loc_XXXXXXXX` for raw
 4. **Document discoveries** - Rename labels when code is understood
-5. **Test in emulator** - Build and verify changes work
+5. **Always run build** - Verify `0 error(s)` after changes
 6. **Update notes.txt** - Add RAM location findings
 
 ## Common Tasks
