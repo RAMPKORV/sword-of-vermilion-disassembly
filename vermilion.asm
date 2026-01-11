@@ -1,105 +1,15 @@
-	include "macros.asm"
-	include "constants.asm"
-StartOfRom:
-loc_00000000:
-	dc.l	$FFFFFE00 			; Initial stack pointer value
-loc_00000004:
-	dc.l	EntryPoint 			; Start of program
-	dc.l	ErrorTrap 			; Bus error
-loc_0000000C:
-	dc.l	ErrorTrap 			; Address error (4)
-loc_00000010:
-	dc.l	ErrorTrap			; Illegal instruction
-	dc.l	ErrorTrap			; Division by zero
-	dc.l	ErrorTrap			; CHK exception
-	dc.l	ErrorTrap			; TRAPV exception (8)
-	dc.l	ErrorTrap			; Privilege violation
-	dc.l	ErrorTrap			; TRACE exception
-	dc.l	ErrorTrap			; Line-A emulator
-	dc.l	ErrorTrap			; Line-F emulator (12)
-	dc.l	ErrorTrap			; Unused (reserved)
-	dc.l	ErrorTrap			; Unused (reserved)
-	dc.l	ErrorTrap			; Unused (reserved)
-	dc.l	ErrorTrap			; Unused (reserved) (16)
-	dc.l	ErrorTrap			; Unused (reserved)
-	dc.l	ErrorTrap			; Unused (reserved)
-	dc.l	ErrorTrap			; Unused (reserved)
-	dc.l	ErrorTrap			; Unused (reserved) (20)
-	dc.l	ErrorTrap			; Unused (reserved)
-	dc.l	ErrorTrap			; Unused (reserved)
-	dc.l	ErrorTrap			; Unused (reserved)
-	dc.l	ErrorTrap			; Unused (reserved) (24)
-	dc.l	ErrorTrap			; Spurious exception
-	dc.l	ErrorTrap			; IRQ level 1
-	dc.l	ErrorTrap			; IRQ level 2
-	dc.l	ErrorTrap			; IRQ level 3 (28)
-	dc.l	ErrorTrap			; IRQ level 4 (horizontal retrace interrupt)
-	dc.l	ErrorTrap			; IRQ level 5
-	dc.l	VerticalInterrupt 	; IRQ level 6 (vertical retrace interrupt)
-	dc.l	ErrorTrap			; IRQ level 7 (32)
-	dc.l	ErrorTrap			; TRAP #00 exception
-	dc.l	ErrorTrap			; TRAP #01 exception
-	dc.l	ErrorTrap			; TRAP #02 exception
-	dc.l	ErrorTrap			; TRAP #03 exception (36)
-	dc.l	ErrorTrap			; TRAP #04 exception
-	dc.l	ErrorTrap			; TRAP #05 exception
-	dc.l	ErrorTrap			; TRAP #06 exception
-	dc.l	ErrorTrap			; TRAP #07 exception (40)
-	dc.l	ErrorTrap			; TRAP #08 exception
-	dc.l	ErrorTrap			; TRAP #09 exception
-	dc.l	ErrorTrap			; TRAP #10 exception
-	dc.l	ErrorTrap			; TRAP #11 exception (44)
-	dc.l	ErrorTrap			; TRAP #12 exception
-	dc.l	ErrorTrap			; TRAP #13 exception
-	dc.l	ErrorTrap			; TRAP #14 exception
-	dc.l	ErrorTrap			; TRAP #15 exception (48)
-	dc.l	ErrorTrap			; Unused (reserved)
-	dc.l	ErrorTrap			; Unused (reserved)
-	dc.l	ErrorTrap			; Unused (reserved)
-	dc.l	ErrorTrap			; Unused (reserved) (52)
-	dc.l	ErrorTrap			; Unused (reserved)
-	dc.l	ErrorTrap			; Unused (reserved)
-	dc.l	ErrorTrap			; Unused (reserved)
-	dc.l	ErrorTrap			; Unused (reserved) (56)
-	dc.l	ErrorTrap			; Unused (reserved)
-	dc.l	ErrorTrap			; Unused (reserved)
-	dc.l	ErrorTrap			; Unused (reserved)
-	dc.l	ErrorTrap			; Unused (reserved) (60)
-	dc.l	ErrorTrap			; Unused (reserved)
-	dc.l	ErrorTrap			; Unused (reserved)
-	dc.l	ErrorTrap			; Unused (reserved)
-	dc.l	ErrorTrap			; Unused (reserved) (64)
-Header:
-	dc.b "SEGA_MEGA_DRIVE " 	; Console name
-	dc.b "(C)SEGA 1990.SEP" 	; Copyright holder and release date
-	dc.b "VERMILION                                       " ; Domestic name
-	dc.b "SWORD OF VERMILION                              " ; International name
-	dc.b "GM 00005502-00" 		; Version
-loc_0000018E:
-	dc.w	$06B5 				; Checksum
-	dc.b	'J               '
-	dc.l StartOfRom
-;loc_000001A4:
-ROMEndLoc:
-	dc.l EndOfRom-1
-	dc.l $00FF0000 		; Start of RAM
-	dc.l $00FFFFFF 		; End of RAM
-	dc.l $5241F820		; Backup RAM ID
-	dc.l $00200001		; Backup RAM start address
-	dc.l $00203FFF		; Backup RAM end address
-	dc.b "            "	; Modem support
-	dc.b "                                        "	; Notes (unused, anything can be put in this space, but it has to be 52 bytes.)
-	dc.b "U               " ; Region
+	include "header.asm"
 
 ErrorTrap:
+
 	RTE	
-loc_00000202:
+InitVDP:
 	LEA	$FFFFFE00.w, A6
 	MOVEQ	#0, D7
 	MOVE.w	#$007F, D6
-loc_0000020C:
+InitPSG:
 	MOVE.l	D7, (A6)+
-	DBF	D6, loc_0000020C
+	DBF	D6, InitPSG
 	RTS
 
 loc_00000214:
@@ -683,7 +593,7 @@ loc_0000102C:
 	MOVE.w	#0, Z80_bus_request
 	BTST.l	#6, D0
 	BNE.w	loc_00001050
-	JSR	loc_00000202
+	JSR	InitVDP
 loc_00001050:
 	MOVE.b	$00A10001, D0
 	ANDI.b	#$0F, D0
@@ -25183,261 +25093,263 @@ Outro5Str:
 	dc.b	"another guise,", $FE
 	dc.b	"at another", $FE
 	dc.b	"time....", $FF, $00
-loc_000179CA:
+StaffTextStr:
 	dc.b	"      STAFF", $FF
-loc_000179D6:
+DirectorTextStr:
 	dc.b	"DIRECTOR", $FF, $00
-loc_000179E0:
+ScenarioWriterTextStr:
 	dc.b	"SCENARIO WRITER", $FF
-loc_000179F0:
+GameDesignTextStr:
 	dc.b	"GAME DESIGN", $FF
-loc_000179FC:
+ChiefProgrammerTextStr:
 	dc.b	"CHIEF PROGRAMER", $FF
-loc_00017A0C:
+ChiefDesignerTextStr:
 	dc.b	"CHIEF DESIGNER", $FF, $00
-loc_00017A1C:
+MainProgramTextStr:
 	dc.b	"MAIN PROGRAM", $FF, $00
-loc_00017A2A:
+ProgramTextStr:
 	dc.b	"PROGRAM", $FF
-loc_00017A32:
+SoundProgramTextStr:
 	dc.b	"SOUND PROGRAM", $FF
-loc_00017A40:
+Cpu68000TextStr:
 	dc.b	"68000", $FF
-loc_00017A46:
+CpuZ80TextStr:
 	dc.b	"Z80", $FF
-loc_00017A4A:
+BackgroundDesignTextStr:
 	dc.b	"BACKGROUND DESIGN", $FF
-loc_00017A5C:
+PlayerDesignTextStr:
 	dc.b	"PLAYER DESIGN", $FF
-loc_00017A6A:
+BossDesignTextStr:
 	dc.b	"BOSS DESIGN", $FF
-loc_00017A76:
+EnemyDesignTextStr:
 	dc.b	"ENEMY DESIGN", $FF, $00
-loc_00017A84:
+OpeningDesignTextStr:
 	dc.b	"OPENING DESIGN", $FF, $00
-loc_00017A94:
+TitleDesignTextStr:
 	dc.b	"TITLE DESIGN", $FF, $00
-loc_00017AA2:
+AsciiDesignTextStr:
 	dc.b	"ASCII DESIGN", $FF, $00
-loc_00017AB0:
+MapDesignTextStr:
 	dc.b	"MAP DESIGN", $FF, $00
-loc_00017ABC:
+MapEditTextStr:
 	dc.b	"MAP EDIT", $FF, $00
-loc_00017AC6:
+SoundBgmTextStr:
 	dc.b	"SOUND (BGM)", $FF
-loc_00017AD2:
+SoundEffectTextStr:
 	dc.b	"SOUND (EFFECT)", $FF, $00
-loc_00017AE2:
+GameCheckTextStr:
 	dc.b	"GAME CHECK", $FF, $00
-loc_00017AEE:
+ManualWriteTextStr:
 	dc.b	"MANUAL WRITE", $FF, $00
-loc_00017AFC:
+SpecialThanksTextStr:
 	dc.b	"SPECIAL THANKS", $FF, $00
-loc_00017B0C:
+SadaTextStr:
 	dc.b	"      SADA", $FF, $00
-loc_00017B18:
+NamakoTextStr:
 	dc.b	"      NAMAKO", $FF, $00
-loc_00017B26:
+MadokaTextStr:
 	dc.b	"      MADOKA", $FF, $00
-loc_00017B34:
+ZeasQTextStr:
 	dc.b	"      ZEAS-Q", $FF, $00
-loc_00017B42:
+Lalf2TextStr:
 	dc.b	"      LALF2", $FF
-loc_00017B4E:
+HiroTextStr:
 	dc.b	"      HIRO", $FF, $00
-loc_00017B5A:
+YasTextStr:
 	dc.b	"      YAS", $FF
-loc_00017B64:
+KeyTextStr:
 	dc.b	"      KEY", $FF
-loc_00017B6E:
+GudonTextStr:
 	dc.b	"      GUDON", $FF
-loc_00017B7A:
+PapaTextStr:
 	dc.b	"      PAPA", $FF, $00
-loc_00017B86:
+JijiTextStr:
 	dc.b	"      JIJI", $FF, $00
-loc_00017B92:
+RoboTextStr:
 	dc.b	"      ROBO", $FF, $00
-loc_00017B9E:
+LucyTextStr:
 	dc.b	"      LUCY", $FF, $00
-loc_00017BAA:
+ComaTextStr:
 	dc.b	"      COMA", $FF, $00
-loc_00017BB6:
+DogTextStr:
 	dc.b	"      DOG", $FF
-loc_00017BC0:
+YuTextStr:
 	dc.b	"      YU", $FF, $00
-loc_00017BCA:
+BinTextStr:
 	dc.b	"      BIN", $FF
-loc_00017BD4:
+PlayerTextStr:
 	dc.b	"PLAYER", $FF, $00
-loc_00017BDC:
+PutInYourPadTextStr:
 	dc.b	"PUT IN YOUR PAD", $FF
-loc_00017BEC:
+OnThe2PSideTextStr:
 	dc.b	"    ON THE 2P SIDE", $FF, $00
-loc_00017C00:
+AndPushAbcStartTextStr:
 	dc.b	'AND PUSH "A""B""C""START"', $FF
+
 loc_00017C1A:
 	dc.b	$00, $00
 loc_00017C1C:
 	dc.b	$FE, $00
 loc_00017C1E:
 	dc.l	loc_00017C1A
-	dc.l	loc_000179CA
+	dc.l	StaffTextStr
 	dc.l	loc_00017C1A
 	dc.l	loc_00017C1A
 	dc.l	loc_00017C1A
 	dc.l	loc_00017C1A
-	dc.l	loc_000179D6
+	dc.l	DirectorTextStr
 	dc.l	loc_00017C1A
-	dc.l	loc_00017B0C
+	dc.l	SadaTextStr
 	dc.l	loc_00017C1A
 	dc.l	loc_00017C1A
-	dc.l	loc_000179E0
+	dc.l	ScenarioWriterTextStr
 	dc.l	loc_00017C1A
-	dc.l	loc_00017B18
+	dc.l	NamakoTextStr
 	dc.l	loc_00017C1A
 	dc.l	loc_00017C1A
-	dc.l	loc_000179F0
+	dc.l	GameDesignTextStr
 	dc.l	loc_00017C1A
-	dc.l	loc_00017B0C
+	dc.l	SadaTextStr
 	dc.l	loc_00017C1A
-	dc.l	loc_00017B18
+	dc.l	NamakoTextStr
 	dc.l	loc_00017C1A
-	dc.l	loc_00017B26
+	dc.l	MadokaTextStr
 	dc.l	loc_00017C1A
 	dc.l	loc_00017C1A
-	dc.l	loc_000179FC
+	dc.l	ChiefProgrammerTextStr
 	dc.l	loc_00017C1A
-	dc.l	loc_00017B26
+	dc.l	MadokaTextStr
 	dc.l	loc_00017C1A
 	dc.l	loc_00017C1A
-	dc.l	loc_00017A0C
+	dc.l	ChiefDesignerTextStr
 	dc.l	loc_00017C1A
-	dc.l	loc_00017B64
+	dc.l	KeyTextStr
 	dc.l	loc_00017C1A
 	dc.l	loc_00017C1A
-	dc.l	loc_00017A1C
+	dc.l	MainProgramTextStr
 	dc.l	loc_00017C1A
-	dc.l	loc_00017B26
+	dc.l	MadokaTextStr
 	dc.l	loc_00017C1A
-	dc.l	loc_00017B18
+	dc.l	NamakoTextStr
 	dc.l	loc_00017C1A
 	dc.l	loc_00017C1A
-	dc.l	loc_00017A2A
+	dc.l	ProgramTextStr
 	dc.l	loc_00017C1A
-	dc.l	loc_00017BCA
+	dc.l	BinTextStr
 	dc.l	loc_00017C1A
-	dc.l	loc_00017B34
+	dc.l	ZeasQTextStr
 	dc.l	loc_00017C1A
-	dc.l	loc_00017B42
+	dc.l	Lalf2TextStr
 	dc.l	loc_00017C1A
 	dc.l	loc_00017C1A
-	dc.l	loc_00017A32
+	dc.l	SoundProgramTextStr
 	dc.l	loc_00017C1A
-	dc.l	loc_00017A40
+	dc.l	Cpu68000TextStr
 	dc.l	loc_00017C1A
-	dc.l	loc_00017B4E
-	dc.l	loc_00017A46
+	dc.l	HiroTextStr
+	dc.l	CpuZ80TextStr
 	dc.l	loc_00017C1A
-	dc.l	loc_00017B5A
+	dc.l	YasTextStr
 	dc.l	loc_00017C1A
 	dc.l	loc_00017C1A
-	dc.l	loc_00017A4A
+	dc.l	BackgroundDesignTextStr
 	dc.l	loc_00017C1A
-	dc.l	loc_00017B64
+	dc.l	KeyTextStr
 	dc.l	loc_00017C1A
 	dc.l	loc_00017C1A
-	dc.l	loc_00017A5C
+	dc.l	PlayerDesignTextStr
 	dc.l	loc_00017C1A
-	dc.l	loc_00017B6E
+	dc.l	GudonTextStr
 	dc.l	loc_00017C1A
 	dc.l	loc_00017C1A
-	dc.l	loc_00017A6A
+	dc.l	BossDesignTextStr
 	dc.l	loc_00017C1A
-	dc.l	loc_00017B6E
+	dc.l	GudonTextStr
 	dc.l	loc_00017C1A
-	dc.l	loc_00017B7A
+	dc.l	PapaTextStr
 	dc.l	loc_00017C1A
 	dc.l	loc_00017C1A
-	dc.l	loc_00017A76
+	dc.l	EnemyDesignTextStr
 	dc.l	loc_00017C1A
-	dc.l	loc_00017B6E
+	dc.l	GudonTextStr
 	dc.l	loc_00017C1A
-	dc.l	loc_00017B7A
+	dc.l	PapaTextStr
 	dc.l	loc_00017C1A
-	dc.l	loc_00017B92
+	dc.l	RoboTextStr
 	dc.l	loc_00017C1A
 	dc.l	loc_00017C1A
-	dc.l	loc_00017A84
+	dc.l	OpeningDesignTextStr
 	dc.l	loc_00017C1A
-	dc.l	loc_00017B86
+	dc.l	JijiTextStr
 	dc.l	loc_00017C1A
 	dc.l	loc_00017C1A
-	dc.l	loc_00017A94
+	dc.l	TitleDesignTextStr
 	dc.l	loc_00017C1A
-	dc.l	loc_00017B64
+	dc.l	KeyTextStr
 	dc.l	loc_00017C1A
 	dc.l	loc_00017C1A
-	dc.l	loc_00017AA2
+	dc.l	AsciiDesignTextStr
 	dc.l	loc_00017C1A
-	dc.l	loc_00017B64
+	dc.l	KeyTextStr
 	dc.l	loc_00017C1A
 	dc.l	loc_00017C1A
-	dc.l	loc_00017AB0
+	dc.l	MapDesignTextStr
 	dc.l	loc_00017C1A
-	dc.l	loc_00017B0C
+	dc.l	SadaTextStr
 	dc.l	loc_00017C1A
-	dc.l	loc_00017B18
+	dc.l	NamakoTextStr
 	dc.l	loc_00017C1A
 	dc.l	loc_00017C1A
-	dc.l	loc_00017ABC
+	dc.l	MapEditTextStr
 	dc.l	loc_00017C1A
-	dc.l	loc_00017BAA
+	dc.l	ComaTextStr
 	dc.l	loc_00017C1A
-	dc.l	loc_00017B9E
+	dc.l	LucyTextStr
 	dc.l	loc_00017C1A
 	dc.l	loc_00017C1A
-	dc.l	loc_00017AC6
+	dc.l	SoundBgmTextStr
 	dc.l	loc_00017C1A
-	dc.l	loc_00017B4E
+	dc.l	HiroTextStr
 	dc.l	loc_00017C1A
-	dc.l	loc_00017B5A
+	dc.l	YasTextStr
 	dc.l	loc_00017C1A
 	dc.l	loc_00017C1A
-	dc.l	loc_00017AD2
+	dc.l	SoundEffectTextStr
 	dc.l	loc_00017C1A
-	dc.l	loc_00017B5A
+	dc.l	YasTextStr
 	dc.l	loc_00017C1A
 	dc.l	loc_00017C1A
-	dc.l	loc_00017AE2
+	dc.l	GameCheckTextStr
 	dc.l	loc_00017C1A
-	dc.l	loc_00017BB6
+	dc.l	DogTextStr
 	dc.l	loc_00017C1A
 	dc.l	loc_00017C1A
-	dc.l	loc_00017AEE
+	dc.l	ManualWriteTextStr
 	dc.l	loc_00017C1A
-	dc.l	loc_00017B26
+	dc.l	MadokaTextStr
 	dc.l	loc_00017C1A
-	dc.l	loc_00017B18
+	dc.l	NamakoTextStr
 	dc.l	loc_00017C1A
 	dc.l	loc_00017C1A
-	dc.l	loc_00017BD4
+	dc.l	PlayerTextStr
 	dc.l	loc_00017C1A
 	dc.l	$FFFFC646
 	dc.l	loc_00017C1A
 	dc.l	loc_00017C1A
-	dc.l	loc_00017AFC
+	dc.l	SpecialThanksTextStr
 	dc.l	loc_00017C1A
-	dc.l	loc_00017BC0
+	dc.l	YuTextStr
 	dc.l	loc_00017C1A
-	dc.l	loc_00017BCA
+	dc.l	BinTextStr
 	dc.l	loc_00017C1A
 	dc.l	loc_00017C1A
-	dc.l	loc_00017BDC
+	dc.l	PutInYourPadTextStr
 	dc.l	loc_00017C1A
-	dc.l	loc_00017BEC
+	dc.l	OnThe2PSideTextStr
 	dc.l	loc_00017C1A
-	dc.l	loc_00017C00
+	dc.l	AndPushAbcStartTextStr
 	dc.l	loc_00017C1A
+
 	dc.l	loc_00017C1A
 	dc.l	loc_00017C1A
 	dc.l	loc_00017C1A
@@ -64762,7 +64674,7 @@ loc_0007111A:
 	dc.l	$06660266	
 loc_00071132:
 	dc.l	$0041BE00	
-	dc.l	loc_00000004-3	
+	dc.l	BusError-3	
 	dc.l	$FF434565	
 	dc.l	$45445655	
 	dc.l	$56455456	
