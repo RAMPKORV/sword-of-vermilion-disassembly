@@ -4,6 +4,7 @@ The following tasks are required to bring the Sword of Vermilion disassembly pro
 
 ## Phase 1: Structural Reorganization
 - [ ] **Split Main Assembly**: Break down `vermilion.asm` (~80,000 lines) into smaller, logical modules (e.g., `header.asm`, `init.asm`, `vdp.asm`, `combat.asm`, `scripts/`, etc.).
+    - [x] Create `header.asm` and include in `vermilion.asm`.
 - [ ] **Asset Extraction**: Move large `dc.b` / `dc.w` data blobs (graphics, maps, sound) to external binary files and use `incbin` to include them.
 - [ ] **Directory Hierarchy**: Create a standard folder structure:
     - `/art`: Graphics and palettes
