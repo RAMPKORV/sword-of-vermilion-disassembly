@@ -2575,23 +2575,23 @@ loc_00002E2A:
 	dc.w	$0020, $0012, $0020, $0012 
 loc_00002E6A: ; town teleport locations
 	; format:
-	; (x,y) within map sector, (x,y) sector of world map
-	dc.w	$8, $D, $0, $6 ; Wyclif
-	dc.w	$7, $6, $1, $4 ; Parma
-	dc.w	$8, $4, $6, $5 ; Watling
-	dc.w	$4, $8, $4, $7 ; Deepdale
-	dc.w	$A, $5, $B, $7 ; Stow
-	dc.w	$A, $5, $B, $7 ; Stow
-	dc.w	$4, $5, $E, $4 ; Keltwick
-	dc.w	$4, $6, $C, $2 ; Malaga
-	dc.w	$9, $5, $E, $0 ; Barrow
-	dc.w	$A, $6, $9, $1 ; Tadcaster
-	dc.w	$6, $F, $6, $0 ; Helwig
-	dc.w	$7, $7, $1, $0 ; Swaffham
-	dc.w	$A, $5, $5, $2 ; Excalabria
-	dc.w	$5, $4, $9, $2 ; Hastings
-	dc.w	$5, $4, $9, $2 ; Hastings
-	dc.w	$8, $8, $A, $5 ; Carthahena
+	; dc.w (x_in_sector), (y_in_sector), (sector_x), (sector_y)
+	dc.w	$8, $D, $0, $6 ; TOWN_WYCLIF
+	dc.w	$7, $6, $1, $4 ; TOWN_PARMA
+	dc.w	$8, $4, $6, $5 ; TOWN_WATLING
+	dc.w	$4, $8, $4, $7 ; TOWN_DEEPDALE
+	dc.w	$A, $5, $B, $7 ; TOWN_STOW1
+	dc.w	$A, $5, $B, $7 ; TOWN_STOW2
+	dc.w	$4, $5, $E, $4 ; TOWN_KELTWICK
+	dc.w	$4, $6, $C, $2 ; TOWN_MALAGA
+	dc.w	$9, $5, $E, $0 ; TOWN_BARROW
+	dc.w	$A, $6, $9, $1 ; TOWN_TADCASTER
+	dc.w	$6, $F, $6, $0 ; TOWN_HELWIG
+	dc.w	$7, $7, $1, $0 ; TOWN_SWAFHAM
+	dc.w	$A, $5, $5, $2 ; TOWN_EXCALABRIA
+	dc.w	$5, $4, $9, $2 ; TOWN_HASTINGS1
+	dc.w	$5, $4, $9, $2 ; TOWN_HASTINGS2
+	dc.w	$8, $8, $A, $5 ; TOWN_CARTHAHENA
 loc_00002EEA:
 	dc.w	$00D8, $0068 
 	dc.w	$0058, $0068
@@ -26020,21 +26020,23 @@ loc_000189AC:
 	MOVE.w	#9, $FFFFC424.w
 	RTS
 
-loc_000189C2: ; Town locations. Without duplicates. Investigate how it's related to loc_00002E6A
-	dc.w	$0008, $000D, $0000, $0006
-	dc.w	$0007, $0006, $0001, $0004 
-	dc.w	$0008, $0004, $0006, $0005 
-	dc.w	$0004, $0008, $0004, $0007 
-	dc.w	$000A, $0005, $000B, $0007 
-	dc.w	$0004, $0005, $000E, $0004 
-	dc.w	$0004, $0006, $000C, $0002 
-	dc.w	$0009, $0005, $000E, $0000 
-	dc.w	$000A, $0006, $0009, $0001 
-	dc.w	$0006, $000F, $0006, $0000 
-	dc.w	$0007, $0007, $0001, $0000 
-	dc.w	$000A, $0005, $0005, $0002 
-	dc.w	$0005, $0004, $0009, $0002 
-	dc.w	$0008, $0008, $000A, $0005 
+loc_000189C2: ; Town locations. Without duplicates.
+	; format:
+	; dc.w (x_in_sector), (y_in_sector), (sector_x), (sector_y)
+	dc.w	$0008, $000D, $0000, $0006 ; TOWN_WYCLIF
+	dc.w	$0007, $0006, $0001, $0004 ; TOWN_PARMA
+	dc.w	$0008, $0004, $0006, $0005 ; TOWN_WATLING
+	dc.w	$0004, $0008, $0004, $0007 ; TOWN_DEEPDALE
+	dc.w	$000A, $0005, $000B, $0007 ; TOWN_STOW
+	dc.w	$0004, $0005, $000E, $0004 ; TOWN_KELTWICK
+	dc.w	$0004, $0006, $000C, $0002 ; TOWN_MALAGA
+	dc.w	$0009, $0005, $000E, $0000 ; TOWN_BARROW
+	dc.w	$000A, $0006, $0009, $0001 ; TOWN_TADCASTER
+	dc.w	$0006, $000F, $0006, $0000 ; TOWN_HELWIG
+	dc.w	$0007, $0007, $0001, $0000 ; TOWN_SWAFHAM
+	dc.w	$000A, $0005, $0005, $0002 ; TOWN_EXCALABRIA
+	dc.w	$0005, $0004, $0009, $0002 ; TOWN_HASTINGS
+	dc.w	$0008, $0008, $000A, $0005 ; TOWN_CARTHAHENA
 
 ;loc_00018A32
 CastBattleMagicMap:
@@ -41487,7 +41489,7 @@ RingOfferStr:
 FindTreasureStr:
 	dc.b	"Find the treasure", $FE
 	dc.b	"quickly, before I", $FE 
-	dc.b	"reconsider my offer.", $FF, $00
+	dc.b	"reconsider my offer.", SCRIPT_END, $00
 TreasureReturnedStr:
 	dc.b	"I don't believe it!", $FE
 	dc.b	"You've returned with", $FE
@@ -41501,11 +41503,12 @@ NoChoiceStr:
 	dc.b	"just accept it, young man."
 	dc.b	$FB, $00, $04, $00, $00
 OffYouGoStr:
-	dc.b	"Good, good. Off you go now.", $FF
+	dc.b	"Good, good. Off you go now.", SCRIPT_END
 NicePlaceStr:
 	dc.b	"But this is", $FE
 	dc.b	"such a nice place."
-	dc.b	$F8, $01, $07, $00 
+	dc.b	SCRIPT_TRIGGERS, $01, TRIGGER_Talked_to_king_after_given_treasure_of_troy - Event_triggers_start
+	dc.b	$00 
 NeedPermanentSolutionStr:
 	dc.b	"What is this?", $FE
 	dc.b	"You again? I see that I", $FE
@@ -41712,17 +41715,17 @@ MeetKingStr:
 KingNotHereStr:
 	dc.b	"The king is not", $FE
 	dc.b	"here at the moment."
-	dc.b	$F8, $01, $0B
+	dc.b	SCRIPT_TRIGGERS, $01, TRIGGER_Truffle_collected - Event_triggers_start
 KingNotSureReturnStr:
 	dc.b	"I'm not really sure when", $FE
-	dc.b	"the king is coming back.", $FF
+	dc.b	"the king is coming back.", SCRIPT_END
 KingNotSeeingVisitorsStr:
 	dc.b	"The king is not seeing", $FE
 	dc.b	"visitors right now."
-	dc.b	$F8, $01, $0B, $00
+	dc.b	SCRIPT_TRIGGERS, $01, TRIGGER_Truffle_collected - Event_triggers_start, $00
 KingInTownStr:
 	dc.b	"The king is in", $FE
-	dc.b	"town somewhere.", $FF, $00
+	dc.b	"town somewhere.", SCRIPT_END, $00
 
 loc_00029F5A:
 	dc.b	$1E, $17, $3F, $00, $0B, $00 
