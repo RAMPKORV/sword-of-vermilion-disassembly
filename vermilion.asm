@@ -569,7 +569,7 @@ loc_000011C0:
 	MOVEM.l	(A7)+, D0/D1/D2/D3/D4/D5/D6/D7/A0/A1/A2/A3/A4/A5/A6
 	RTE
 loc_000011D4:
-	MOVE.b	$FFFFC40A.w, D0
+	MOVE.b	Controller_2_current_state.w, D0
 	CMPI.b	#$F0, D0
 	BNE.b	loc_000011EC
 	MOVE.l	#loc_003C6E8, $42(A7)	
@@ -753,7 +753,7 @@ loc_0000146E:
 
 loc_00001474:
 	CLR.w	Program_state.w
-	MOVE.w	#$3C, $FFFFC406.w
+	MOVE.w	#$3C, Timer_frames_per_second.w
 	MOVE.l	#loc_00001486, $2(A5)
 loc_00001486:
 	MOVE.w	Program_state.w, D0
@@ -1172,7 +1172,7 @@ loc_000019BE:
 	JSR	(A0,D0.w)
 	JSR	loc_00016018
 	MOVE.w	#$0300, Town_vram_tile_base.w
-	MOVE.w	#$4000, $FFFFC158.w
+	MOVE.w	#$4000, Town_tilemap_vram_base.w
 	JSR	loc_0001622A
 	TST.b	Skip_town_intro_after_fight.w
 	BNE.b	loc_00001A1A
@@ -1559,8 +1559,8 @@ loc_00001F5C:
 	MOVE.w	$12(A6), D0
 	ADD.w	(A0), D0
 	MOVE.w	D0, Saved_player_y_room1.w
-	MOVE.w	Town_camera_tile_x.w, $FFFFC140.w
-	MOVE.w	$FFFFC114.w, $FFFFC142.w
+	MOVE.w	Town_camera_tile_x.w, Saved_camera_tile_x_unused.w
+	MOVE.w	$FFFFC114.w, Saved_camera_tile_y_unused.w
 	MOVE.b	#$FF, Player_is_moving.w
 	MOVE.w	#DIRECTION_DOWN, Player_direction.w
 	RTS
@@ -1595,7 +1595,7 @@ loc_00002020:
 
 loc_00002022:
 	JSR	loc_00016018
-	MOVE.w	#$2000, $FFFFC158.w
+	MOVE.w	#$2000, Town_tilemap_vram_base.w
 	JSR	loc_0001622A
 	MOVEA.l	$FFFFCC14.w, A6
 	BSET.b	#7, (A6)
@@ -1731,8 +1731,8 @@ loc_00002234:
 	MOVE.w	$12(A6), D0
 	ADDI.w	#$0010, D0
 	MOVE.w	D0, Saved_player_y_room1.w
-	MOVE.w	Town_camera_tile_x.w, $FFFFC140.w
-	MOVE.w	$FFFFC114.w, $FFFFC142.w
+	MOVE.w	Town_camera_tile_x.w, Saved_camera_tile_x_unused.w
+	MOVE.w	$FFFFC114.w, Saved_camera_tile_y_unused.w
 	MOVE.b	#$FF, Player_is_moving.w
 	MOVE.w	#DIRECTION_DOWN, Player_direction.w
 	RTS
@@ -2906,16 +2906,16 @@ loc_000032C8:
 GetCurrentTileType:
 	CLR.w	Current_tile_type.w
 	LEA	Tilemap_buffer_plane_b, A0
-	MOVE.w	$FFFFC604.w, D0
+	MOVE.w	Player_tilemap_offset.w, D0
 	MOVE.w	(A0,D0.w), D0
 	ANDI.w	#$F000, D0
 	MOVE.w	D0, Current_tile_type.w
 	RTS
 
 loc_00003304:
-	SUBQ.w	#1, $FFFFC404.w
+	SUBQ.w	#1, Timer_frame_counter.w
 	BGE.b	loc_00003322
-	MOVE.w	$FFFFC406.w, $FFFFC404.w
+	MOVE.w	Timer_frames_per_second.w, Timer_frame_counter.w
 	MOVEQ	#0, D1
 	ADDQ.w	#1, D1
 	MOVE.b	Timer_seconds_bcd.w, D0
@@ -3280,20 +3280,20 @@ loc_00003782:
 	LSR.w	#3, D0
 	MOVE.w	D0, D2
 	LSR.w	#1, D2
-	MOVE.w	D0, $FFFFC600.w
+	MOVE.w	D0, Player_tile_x.w
 	MOVE.w	D2, Player_position_x_in_town.w
 	ANDI.w	#$003F, D0
 	MOVE.w	$12(A5), D1
 	LSR.w	#3, D1
 	MOVE.w	D1, D3
 	LSR.w	#1, D3
-	MOVE.w	D1, $FFFFC602.w
+	MOVE.w	D1, Player_tile_y.w
 	MOVE.w	D3, Player_position_y_in_town.w
 	ANDI.w	#$003F, D1
 	ASL.w	#7, D1
 	ASL.w	#1, D0
 	ADD.w	D1, D0
-	MOVE.w	D0, $FFFFC604.w
+	MOVE.w	D0, Player_tilemap_offset.w
 	TST.b	Player_input_blocked.w
 	BNE.w	loc_0000385E
 	TST.b	Fade_in_lines_mask.w
@@ -3458,8 +3458,8 @@ loc_000039C0:
 	ADD.w	D2, D2
 	LEA	loc_00003C4E, A1
 	LEA	Tilemap_buffer_plane_b, A0
-	MOVE.w	$FFFFC600.w, D0
-	MOVE.w	$FFFFC602.w, D1
+	MOVE.w	Player_tile_x.w, D0
+	MOVE.w	Player_tile_y.w, D1
 	ASL.w	#7, D1
 	ASL.w	#1, D0
 	ADD.w	(A1,D2.w), D0
@@ -8273,7 +8273,7 @@ loc_00007DAC:
 loc_00007DB6:
 	BSR.w	loc_00008234
 	CLR.b	$25(A5)
-	TST.b	$FFFFC773.w
+	TST.b	Carthahena_boss_defeated.w
 	BEQ.b	loc_00007DD2
 	BCLR.b	#7, (A5)	
 	MOVE.l	#loc_00006F44, $2(A5)	
@@ -8284,7 +8284,7 @@ loc_00007DD2:
 	RTS
 
 loc_00007DDC:
-	TST.b	$FFFFC773.w
+	TST.b	Carthahena_boss_defeated.w
 	BEQ.b	loc_00007DE8
 	BCLR.b	#7, (A5)
 	BRA.b	loc_00007DF6
@@ -8310,7 +8310,7 @@ loc_00007E4A:
 	RTS
 
 loc_00007E54:
-	TST.b	$FFFFC773.w
+	TST.b	Carthahena_boss_defeated.w
 	BEQ.w	loc_00007EB8
 	TST.b	Knute_informed_of_swaffham_ruin.w
 	BEQ.w	loc_00007EB0
@@ -18723,8 +18723,8 @@ loc_00010AC8:
 	MOVE.w	D3, VDP_data_port
 	BRA.w	loc_00010BBE
 loc_00010B18:
-	MOVE.b	$2(A0,D2.w), $FFFFC704.w	
-	MOVE.b	$3(A0,D2.w), $FFFFC705.w	
+	MOVE.b	$2(A0,D2.w), Quest_choice_expected_answer.w	
+	MOVE.b	$3(A0,D2.w), Quest_choice_map_trigger.w	
 	MOVE.b	#$FF, Quest_choice_pending.w	
 	BRA.w	loc_00010BB2	
 loc_00010B2E:
@@ -22652,7 +22652,7 @@ loc_000157F0:
 	BSR.w	LoadPrologueFadeParams
 	CMPI.l	#$8F84DE76, Player_name.w
 	BNE.b	loc_0001589E
-	MOVE.b	$FFFFC40A.w, D0	
+	MOVE.b	Controller_2_current_state.w, D0	
 	MOVE.b	D0, D1	
 	ANDI.w	#1, D0	
 	BEQ.b	loc_0001589E	
@@ -23435,7 +23435,7 @@ loc_00016328:
 	BSR.w	loc_0001658E
 	MOVE.w	$FFFFC114.w, D0
 	SUBQ.w	#3, D0
-	MOVE.w	D0, $FFFFC120.w
+	MOVE.w	D0, Town_tilemap_update_row.w
 	MOVE.b	#$FF, Town_tilemap_row_update_pending.w
 	RTS
 
@@ -23476,7 +23476,7 @@ loc_000163BA:
 	BSR.w	loc_000165EC
 	MOVE.w	Town_camera_tile_x.w, D0
 	SUBQ.w	#3, D0
-	MOVE.w	D0, $FFFFC122.w
+	MOVE.w	D0, Town_tilemap_update_column.w
 	MOVE.b	#$FF, Town_tilemap_column_update_pending.w
 	RTS
 
@@ -23517,7 +23517,7 @@ loc_0001644E:
 	BSR.w	loc_0001658E
 	MOVE.w	$FFFFC114.w, D0
 	ADDI.w	#$1C, D0
-	MOVE.w	D0, $FFFFC120.w
+	MOVE.w	D0, Town_tilemap_update_row.w
 	MOVE.b	#$FF, Town_tilemap_row_update_pending.w
 	RTS
 
@@ -23558,7 +23558,7 @@ loc_000164EE:
 	BSR.w	loc_000165EC
 	MOVE.w	Town_camera_tile_x.w, D0
 	ADDI.w	#$1C, D0
-	MOVE.w	D0, $FFFFC122.w
+	MOVE.w	D0, Town_tilemap_update_column.w
 	MOVE.b	#$FF, Town_tilemap_column_update_pending.w
 	RTS
 
@@ -23651,7 +23651,7 @@ loc_0001664E:
 	RTS
 
 loc_0001666C:
-	MOVE.w	$FFFFC120.w, D0
+	MOVE.w	Town_tilemap_update_row.w, D0
 	ANDI.l	#$1F, D0
 	ASL.w	#8, D0
 	LEA	(A3,D0.w), A0
@@ -23696,7 +23696,7 @@ loc_000166CC:
 	RTS
 
 loc_000166EA:
-	MOVE.w	$FFFFC122.w, D0
+	MOVE.w	Town_tilemap_update_column.w, D0
 	ANDI.w	#$1F, D0
 	ASL.w	#2, D0
 	LEA	(A3,D0.w), A0
@@ -23838,11 +23838,11 @@ loc_0001686C:
 	MOVE.w	D1, -$4(A2)
 	MOVE.b	D1, Tilemap_width.w
 	MOVE.b	(A1)+, D0
-	MOVE.b	D0, $FFFFC17F.w
+	MOVE.b	D0, Tilemap_height.w
 	MOVE.w	D0, -$2(A2)
 	MULU.w	D1, D0
 	ADD.w	D0, D0
-	MOVE.w	D0, $FFFFC180.w
+	MOVE.w	D0, Tilemap_buffer_size.w
 	BRA.w	loc_000168B6
 loc_00016892:
 	CLR.w	D6
@@ -23852,15 +23852,15 @@ loc_00016892:
 	MOVE.w	D1, -$4(A2)
 	MOVE.b	D1, Tilemap_width.w
 	MOVE.b	(A1)+, D0
-	MOVE.b	D0, $FFFFC17F.w
+	MOVE.b	D0, Tilemap_height.w
 	MOVE.w	D0, -$2(A2)
 	MULU.w	D1, D0
 	ADD.w	D0, D0
-	MOVE.w	D0, $FFFFC180.w
+	MOVE.w	D0, Tilemap_buffer_size.w
 	ADDQ.w	#1, A2
 loc_000168B6:
 	CLR.w	D0
-	CMP.w	$FFFFC180.w, D6
+	CMP.w	Tilemap_buffer_size.w, D6
 	BGE.w	loc_000169CE
 	MOVE.b	(A1)+, D0
 	MOVE.w	D0, D1
@@ -24007,7 +24007,7 @@ loc_000169D0:
 	MOVE.w	D0, VDP_data_port
 	MOVE.w	D0, VDP_data_port
 	MOVE.b	#$FF, $FFFFC3B4.w
-	MOVE.b	#$FF, $FFFFC3B5.w
+	MOVE.b	#$FF, Intro_text_pending.w
 	JSR	loc_0000F9A0
 	JSR	loc_0000F9AA
 	JSR	loc_0001325E
@@ -24109,11 +24109,11 @@ loc_00016B88:
 
 loc_00016B8A:
 	BSR.w	loc_00016C12
-	TST.b	$FFFFC3B5.w
+	TST.b	Intro_text_pending.w
 	BEQ.b	loc_00016BB0
 	TST.b	Fade_in_lines_mask.w
 	BNE.b	loc_00016BAE
-	CLR.b	$FFFFC3B5.w
+	CLR.b	Intro_text_pending.w
 	BSR.w	loc_00016F3C
 	MOVE.w	#$0031, $FFFFC080.w
 	JSR	loc_0001325E
@@ -29590,7 +29590,7 @@ loc_0001BC0C:
 	BNE.b	loc_0001BC50
 	TST.b	Quest_choice_pending.w
 	BEQ.b	loc_0001BC6C
-	MOVE.w	$FFFFC704.w, D0	
+	MOVE.w	Quest_choice_expected_answer.w, D0	
 	MOVE.w	Dialog_selection.w, D1	
 	CMP.b	D1, D0	
 	BNE.b	loc_0001BC6C	
@@ -29636,7 +29636,7 @@ loc_0001BCA4:
 loc_0001BCB8:
 	TST.b	Script_text_complete.w
 	BEQ.b	loc_0001BCD8
-	CLR.b	$FFFFC4C4.w
+	CLR.b	Shop_purchase_made.w
 	JSR	loc_000123A6
 	JSR	loc_00011012
 	CLR.w	Shop_action_selection.w
@@ -29669,7 +29669,7 @@ loc_0001BD22:
 	ADD.w	D0, D0
 	ADD.w	D0, D0
 	LEA	loc_00025FA4, A0
-	TST.b	$FFFFC4C4.w
+	TST.b	Shop_purchase_made.w
 	BEQ.b	loc_0001BD3C
 	LEA	loc_00025FC8, A0	
 loc_0001BD3C:
@@ -29917,7 +29917,7 @@ loc_0001C082:
 	ADD.w	D0, D0
 	LEA	loc_00025FBC, A0
 	MOVE.l	(A0,D0.w), Script_source_base.w
-	MOVE.b	#$FF, $FFFFC4C4.w
+	MOVE.b	#$FF, Shop_purchase_made.w
 	JSR	loc_00010D44
 	RTS
 
@@ -30434,7 +30434,7 @@ loc_0001C79C:
 	DBF	D7, loc_0001C79C
 	BRA.b	loc_0001C7CC
 loc_0001C7C2:
-	MOVE.b	#$FF, $FFFFC77D.w	
+	MOVE.b	#$FF, Watling_inn_broke_penalty.w	
 	CLR.l	Player_kims.w	
 loc_0001C7CC:
 	JSR	DisplayPlayerKims
@@ -30502,7 +30502,7 @@ loc_0001C8B8:
 	BNE.w	loc_0001C968
 	SUBQ.w	#1, Sleep_delay_timer.w
 	BGE.w	loc_0001C968
-	TST.b	$FFFFC77D.w
+	TST.b	Watling_inn_broke_penalty.w
 	BEQ.b	loc_0001C8EE
 	MOVE.w	Player_hp.w, D0	
 	CMPI.w	#1, D0	
@@ -30513,7 +30513,7 @@ loc_0001C8DA:
 	MOVE.w	Player_mp.w, D0	
 	LSR.w	#1, D0	
 	MOVE.w	D0, Player_mp.w	
-	CLR.b	$FFFFC77D.w	
+	CLR.b	Watling_inn_broke_penalty.w	
 	BRA.b	loc_0001C8FA	
 loc_0001C8EE:
 	MOVE.w	Player_mhp.w, Player_hp.w
@@ -31960,7 +31960,7 @@ loc_0001DC2A:
 	TST.b	Door_unlocked_flag.w
 	BEQ.w	loc_0001DCD4
 	CLR.w	Chest_animation_frame.w
-	CLR.w	$FFFFC582.w
+	CLR.w	Chest_animation_timer.w
 	MOVE.w	#$00BB, D0
 	JSR	loc_00010522
 	MOVE.w	#3, Open_menu_state.w
@@ -32039,8 +32039,8 @@ loc_0001DD50:
 loc_0001DD66:
 	TST.b	$FFFF9911.w
 	BNE.w	loc_0001DDA2
-	ADDQ.w	#1, $FFFFC582.w
-	MOVE.w	$FFFFC582.w, D0
+	ADDQ.w	#1, Chest_animation_timer.w
+	MOVE.w	Chest_animation_timer.w, D0
 	ANDI.w	#$000F, D0
 	BNE.w	loc_0001DDA2
 	CMPI.w	#4, Chest_animation_frame.w
@@ -34417,7 +34417,7 @@ loc_0001FF0A:
 loc_0001FF14:
 	TST.b	Talked_to_real_king.w
 	BNE.b	loc_0001FF2C
-	TST.b	$FFFFC728.w ; Locked in parma?
+	TST.b	Player_chose_to_stay_in_parma.w ; Locked in parma?
 	BNE.b	loc_0001FF36
 	TST.b	Fake_king_killed.w
 	BNE.b	loc_0001FF2C
