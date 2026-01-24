@@ -4,7 +4,7 @@ ErrorTrap:
 
 	RTE	
 InitVDP:
-	LEA	$FFFFFE00.w, A6
+	LEA	Stack_base.w, A6
 	MOVEQ	#0, D7
 	MOVE.w	#$007F, D6
 InitPSG:
@@ -13,7 +13,7 @@ InitPSG:
 	RTS
 
 loc_00000214:
-	LEA	$FFFF0000, A0
+	LEA	Tilemap_buffer_plane_a, A0
 	MOVE.w	#$3F3F, D0
 loc_0000021E:
 	CLR.l	(A0)+
@@ -107,7 +107,7 @@ loc_00000362:
 	MOVE.w	(A0)+, VDP_control_port
 	DBF	D0, loc_00000362
 	LEA	loc_00000696, A0
-	LEA	$FFFFC3F0.w, A1
+	LEA	VDP_regs_cache.w, A1
 	MOVE.l	(A0)+, (A1)+
 	MOVE.l	(A0)+, (A1)+
 	MOVE.w	(A0)+, (A1)+
@@ -161,46 +161,46 @@ loc_0000041C:
 	dc.b	$78, $32, $00, $40, $08, $00, $32, $01, $40, $32, $FC, $1F, $CB, $BE, $E1, $C9, $01, $03, $06, $0C, $18, $28, $50, $90, $FF, $FD, $FA, $F4, $E8, $D8, $B0, $70 
 
 loc_0000055C:
-	LEA	$FFFFD0E0.w, A0
+	LEA	Object_table_base.w, A0
 	LEA	loc_00000718, A1
 	BRA.w	InitObjectsFromTable
 loc_0000056A:
-	LEA	$FFFFD0E0.w, A0
+	LEA	Object_table_base.w, A0
 	LEA	loc_0000073A, A1
 	BRA.w	InitObjectsFromTable
 loc_00000578:
-	LEA	$FFFFD0E0.w, A0
+	LEA	Object_table_base.w, A0
 	LEA	loc_000008AC, A1
 	BRA.w	InitObjectsFromTable
 loc_00000586:
-	LEA	$FFFFD0E0.w, A0
+	LEA	Object_table_base.w, A0
 	LEA	loc_00000A7E, A1
 	BRA.w	InitObjectsFromTable
 loc_00000594:
-	LEA	$FFFFD0E0.w, A0
+	LEA	Object_table_base.w, A0
 	LEA	loc_00000B50, A1
 	BRA.w	InitObjectsFromTable
 loc_000005A2:
-	LEA	$FFFFD0E0.w, A0
+	LEA	Object_table_base.w, A0
 	LEA	loc_00000BF2, A1
 	BRA.w	InitObjectsFromTable
 loc_000005B0:
-	LEA	$FFFFD0E0.w, A0
+	LEA	Object_table_base.w, A0
 	LEA	loc_00000CE4, A1
 	BRA.w	InitObjectsFromTable
 loc_000005BE:
-	LEA	$FFFFD0E0.w, A0
+	LEA	Object_table_base.w, A0
 	LEA	loc_00000D56, A1
 	BRA.w	InitObjectsFromTable
 loc_000005CC:
-	LEA	$FFFFD0E0.w, A0
+	LEA	Object_table_base.w, A0
 	LEA	loc_00000E88, A1
 	BRA.w	InitObjectsFromTable
 loc_000005DA:
 	dc.b	$41, $F8, $D0, $E0, $43, $F9, $00, $00, $0E, $FA, $60, $00, $00, $0C 
 
 loc_000005E8:
-	LEA	$FFFFD000.w, A0
+	LEA	Object_slot_base.w, A0
 	LEA	loc_000006B6, A1
 ; InitObjectsFromTable
 InitObjectsFromTable:
@@ -269,10 +269,10 @@ loc_000006B6:
 	
 	dc.w	$0000, $0007, $0010, $0080
 	dc.l	loc_00001474
-	dc.l	$FFFFCC00
+	dc.l	VBlank_object_ptr
 	dc.w	$0000, $0007, $0010, $0080
 	dc.l	loc_0000146E
-	dc.l	$FFFFCC04
+	dc.l	HBlank_object_ptr
 	dc.w	$0000, $001F, $0040, $0000
 	dc.l	loc_00003714
 	dc.l	$FFFFCC08
@@ -294,7 +294,7 @@ loc_00000718:
 	
 	dc.w	$0000, $0007, $0010, $0080
 	dc.l	$00015E58 
-	dc.l	$FFFFCC74 
+	dc.l	Menu_object_ptr 
 loc_0000073A:
 	dc.w	$0016
 	
@@ -515,8 +515,8 @@ loc_00001122:
 	BSR.w	loc_00001448
 	BTST.b	#6, $00A10001
 	BEQ.b	loc_0000115C
-	ADDQ.w	#1, $FFFFC32C.w	
-	MOVE.w	$FFFFC32C.w, D4	
+	ADDQ.w	#1, Vblank_frame_counter.w	
+	MOVE.w	Vblank_frame_counter.w, D4	
 	ANDI.w	#3, D4	
 	BNE.w	loc_00001152	
 	JSR	loc_00092900	
@@ -532,7 +532,7 @@ loc_00001156:
 	DBF	D7, loc_00001156	
 loc_0000115C:
 	JSR	loc_000131C4
-	TST.b	$FFFFC340.w
+	TST.b	Skip_tilemap_updates.w
 	BNE.w	loc_000011C0
 	TST.b	Town_tilemap_row_update_pending.w
 	BEQ.b	loc_0000117A
@@ -565,7 +565,7 @@ loc_000011BC:
 loc_000011C0:
 	JSR	loc_00092900
 	BSR.w	loc_000011EE
-	ST	$FFFFC0FF.w
+	ST	Vblank_flag.w
 	MOVEM.l	(A7)+, D0/D1/D2/D3/D4/D5/D6/D7/A0/A1/A2/A3/A4/A5/A6
 	RTE
 loc_000011D4:
@@ -573,7 +573,7 @@ loc_000011D4:
 	CMPI.b	#$F0, D0
 	BNE.b	loc_000011EC
 	MOVE.l	#loc_003C6E8, $42(A7)	
-	MOVE.b	#$FF, $FFFFC340.w	
+	MOVE.b	#$FF, Skip_tilemap_updates.w	
 loc_000011EC:
 	RTS
 
@@ -1316,9 +1316,9 @@ loc_00001C1A:
 loc_00001C1C:
 	TST.b	Player_awakening_flag.w
 	BNE.w	loc_00001D14
-	TST.b	$FFFFC7F2.w
+	TST.b	Helwig_inn_wakeup_trigger.w
 	BEQ.b	loc_00001C56
-	CLR.b	$FFFFC7F2.w
+	CLR.b	Helwig_inn_wakeup_trigger.w
 	MOVE.w	Current_town.w, D0
 	CMPI.w	#TOWN_HELWIG, D0
 	BNE.b	loc_00001C56
@@ -1436,7 +1436,7 @@ loc_00001DB4: ; Woman hitting player with frying pan
 	LSR.w	#1, D0
 	BLE.b	loc_00001E0A
 	MOVE.w	D0, Player_hp.w
-	ADDQ.w	#1, $FFFFC7F0.w
+	ADDQ.w	#1, Helwig_frypan_hit_count.w
 	PRINT 	AfraidKilledStr
 	MOVE.w	#$2A, Gameplay_substate.w
 	JSR	loc_000033BE
@@ -3263,7 +3263,7 @@ loc_00003714:
 	CLR.b	$1B(A5)
 	MOVE.b	#$10, Player_movement_step_counter.w
 	CLR.b	Player_is_moving.w
-	CLR.w	$FFFFC614.w
+	CLR.w	Player_movement_flags.w
 	CLR.w	D0
 	MOVE.b	$1(A5), D0
 	LEA	(A5,D0.w), A6
@@ -3546,7 +3546,7 @@ loc_00003A92:
 	RTS
 
 loc_00003ACA:
-	LEA	$FFFF0000, A0
+	LEA	Tilemap_buffer_plane_a, A0
 	MOVEA.l	$FFFFCC08.w, A6
 	CLR.w	D0
 	MOVE.b	$24(A6), D0
@@ -3556,7 +3556,7 @@ loc_00003ACA:
 	MOVE.l	#$41A00080, D3
 	MOVE.l	#$94009380, D5
 	BSR.w	loc_00003BBE
-	LEA	$FFFF1500, A0
+	LEA	Battle_gfx_slot_1_buffer, A0
 	MOVEA.l	Battle_entity_slot_1_ptr.w, A6
 	CLR.w	D0
 	MOVE.b	$24(A6), D0
@@ -3566,7 +3566,7 @@ loc_00003ACA:
 	MOVE.l	#$40200080, D3
 	MOVE.l	#$940093C0, D5
 	BSR.w	loc_00003BBE
-	LEA	$FFFF4200, A0
+	LEA	Battle_gfx_slot_2_buffer, A0
 	MOVEA.l	Battle_entity_slot_2_ptr.w, A6
 	CLR.w	D0
 	MOVE.b	$24(A6), D0
@@ -3579,7 +3579,7 @@ loc_00003ACA:
 	RTS
 
 loc_00003B44:
-	LEA	$FFFF0000, A0
+	LEA	Tilemap_buffer_plane_a, A0
 	MOVEA.l	$FFFFCC08.w, A6
 	CLR.w	D0
 	MOVE.b	$24(A6), D0
@@ -3589,7 +3589,7 @@ loc_00003B44:
 	MOVE.l	#$42200080, D3
 	MOVE.l	#$940093C0, D5
 	BSR.w	loc_00003BBE
-	LEA	$FFFF1800, A0
+	LEA	Boss_gfx_slot_1_buffer, A0
 	MOVEA.l	Battle_entity_slot_1_ptr.w, A6
 	CLR.w	D0
 	MOVE.b	$24(A6), D0
@@ -3599,7 +3599,7 @@ loc_00003B44:
 	MOVE.l	#$40200080, D3
 	MOVE.l	#$94019300, D5
 	BSR.w	loc_00003BBE
-	LEA	$FFFF3A00, A0
+	LEA	Boss_gfx_slot_2_buffer, A0
 	MOVEA.l	Battle_entity_slot_2_ptr.w, A6
 	CLR.w	D0
 	MOVE.b	$24(A6), D0
@@ -6261,7 +6261,7 @@ loc_00006204:
 loc_0000622A:
 	TST.b	Is_in_cave.w
 	BEQ.w	loc_0000626C
-	LEA	$FFFF9000.w, A2
+	LEA	Map_sector_top_left.w, A2
 	MOVE.w	#$023F, D7
 loc_0000623A:
 	MOVE.l	#$05050505, (A2)+ ; Fill up map data with cave rocks
@@ -6287,23 +6287,23 @@ loc_0000626C:
 	MOVE.w	D1, D3
 	SUBQ.w	#1, D2
 	SUBQ.w	#1, D3
-	LEA	$FFFF9000.w, A2
+	LEA	Map_sector_top_left.w, A2
 	BSR.w	LoadMapSectorIfInBounds
 	MOVE.w	D0, D2
 	MOVE.w	D1, D3
 	SUBQ.w	#1, D3
-	LEA	$FFFF9010.w, A2
+	LEA	Map_sector_top_center.w, A2
 	BSR.w	LoadMapSectorIfInBounds
 	MOVE.w	D0, D2
 	MOVE.w	D1, D3
 	ADDQ.w	#1, D2
 	SUBQ.w	#1, D3
-	LEA	$FFFF9020.w, A2
+	LEA	Map_sector_top_right.w, A2
 	BSR.w	LoadMapSectorIfInBounds
 	MOVE.w	D0, D2
 	MOVE.w	D1, D3
 	SUBQ.w	#1, D2
-	LEA	$FFFF9300.w, A2
+	LEA	Map_sector_middle_left.w, A2
 	BSR.w	LoadMapSectorIfInBounds
 	MOVE.w	D0, D2
 	MOVE.w	D1, D3
@@ -6312,24 +6312,24 @@ loc_0000626C:
 	MOVE.w	D0, D2
 	MOVE.w	D1, D3
 	ADDQ.w	#1, D2
-	LEA	$FFFF9320.w, A2
+	LEA	Map_sector_middle_right.w, A2
 	BSR.w	LoadMapSectorIfInBounds
 	MOVE.w	D0, D2
 	MOVE.w	D1, D3
 	SUBQ.w	#1, D2
 	ADDQ.w	#1, D3
-	LEA	$FFFF9600.w, A2
+	LEA	Map_sector_bottom_left.w, A2
 	BSR.w	LoadMapSectorIfInBounds
 	MOVE.w	D0, D2
 	MOVE.w	D1, D3
 	ADDQ.w	#1, D3
-	LEA	$FFFF9610.w, A2
+	LEA	Map_sector_bottom_center.w, A2
 	BSR.w	LoadMapSectorIfInBounds
 	MOVE.w	D0, D2
 	MOVE.w	D1, D3
 	ADDQ.w	#1, D2
 	ADDQ.w	#1, D3
-	LEA	$FFFF9620.w, A2
+	LEA	Map_sector_bottom_right.w, A2
 	BSR.w	LoadMapSectorIfInBounds
 	BSR.w	loc_00006390
 	BSR.w	loc_00006458
@@ -7092,7 +7092,7 @@ loc_00006E1C:
 	CLR.w	D6
 	MOVEA.l	$FFFFCC14.w, A6
 	MOVEA.l	Town_npc_data_ptr.w, A0
-	MOVE.l	(A0)+, $FFFFC170.w
+	MOVE.l	(A0)+, Npc_init_routine_ptr.w
 loc_00006E32:
 	TST.b	Npc_load_done_flag.w
 	BNE.w	loc_00006E92
@@ -7127,10 +7127,10 @@ loc_00006E96:
 	MOVE.b	$1(A6), D0
 	LEA	(A6,D0.w), A6
 	DBF	D7, loc_00006E32			; }
-	MOVE.w	D5, $FFFFC0FC.w
-	MOVEA.l	$FFFFC170.w, A0
+	MOVE.w	D5, Npc_count.w
+	MOVEA.l	Npc_init_routine_ptr.w, A0
 	JSR	(A0)
-	MOVE.w	$FFFFC0FC.w, D7
+	MOVE.w	Npc_count.w, D7
 	SUBQ.w	#1, D7
 	BLT.b	loc_00006ED0
 	MOVEA.l	$FFFFCC14.w, A6
@@ -7457,13 +7457,13 @@ loc_000072CA:
 	TST.b	Deepdale_king_secret_kept.w
 	BEQ.b	loc_000072F4
 	MOVE.l	#KeptSecretStr, $1C(A5)
-	TST.b	$FFFFC7C0.w
+	TST.b	Deepdale_medicine_removed.w
 	BNE.b	loc_000072F4
 	LEA	Possessed_items_list.w, A3
 	LEA	Possessed_items_length.w, A2
 	MOVE.w	#$010B, D4
 	BSR.w	RemoveItemFromList
-	MOVE.b	#$FF, $FFFFC7C0.w
+	MOVE.b	#$FF, Deepdale_medicine_removed.w
 loc_000072F4:
 	BRA.w	loc_00006F44
 	BSR.w	loc_00008234
@@ -7511,14 +7511,14 @@ loc_0000737E:
 	TST.b	Sent_to_malaga.w
 	BEQ.b	loc_000073AE
 	MOVE.l	#HopesWithYouStr, $1C(A5)
-	TST.b	$FFFFC768.w
+	TST.b	Sanguia_learned_from_book.w
 	BNE.w	loc_00007408
 	LEA	Possessed_magics_length.w, A0
 	MOVE.w	(A0), D0
 	ADDQ.w	#1, (A0)+
 	ADD.w	D0, D0
 	MOVE.w	#((MAGIC_TYPE_FIELD<<8)|MAGIC_SANGUIA), (A0,D0.w)
-	MOVE.b	#$FF, $FFFFC768.w
+	MOVE.b	#$FF, Sanguia_learned_from_book.w
 	BRA.w	loc_00007408
 loc_000073AE:
 	TST.b	Stow_innocence_proven.w
@@ -7536,14 +7536,14 @@ loc_000073D8:
 	TST.b	Accused_of_theft.w
 	BEQ.w	loc_00007408
 	MOVE.l	#ReturnWhenInnocentStr, $1C(A5)
-	TST.b	$FFFFC767.w
+	TST.b	Sanguios_confiscated.w
 	BNE.b	loc_00007408
 	LEA	Possessed_magics_list.w, A3
 	LEA	Possessed_magics_length.w, A2
 	MOVE.w	#$0116, D4
 	BSR.w	RemoveItemFromList
 	BSR.w	loc_0000852E
-	MOVE.b	#$FF, $FFFFC767.w
+	MOVE.b	#$FF, Sanguios_confiscated.w
 loc_00007408:
 	BRA.w	loc_00006F8E
 	BSR.w	loc_00008234
@@ -7590,21 +7590,21 @@ loc_00007470:
 
 loc_00007490:
 	CLR.b	Received_replacement_key.w
-	CLR.b	$FFFFC7AC.w
+	CLR.b	Replacement_key_enabled.w
 	MOVE.l	#loc_000074A2, $2(A5)
 	RTS
 
 loc_000074A2:
-	TST.b	$FFFFC7AB.w
+	TST.b	Dungeon_key_received.w
 	BNE.b	loc_000074D4
 	BSR.w	CheckInventoryFull
 	BGE.w	loc_00007522
 	MOVE.l	#MalagaNorthKeyStr, $1C(A5)
-	TST.b	$FFFFC7AA.w
+	TST.b	Malaga_key_dialog_shown.w
 	BEQ.w	loc_0000752A
 	BSR.w	AddItemToInventoryList
 	MOVE.w	#$0025, (A0,D0.w)
-	MOVE.b	#$FF, $FFFFC7AB.w
+	MOVE.b	#$FF, Dungeon_key_received.w
 	BRA.w	loc_0000752A
 loc_000074D4:
 	BSR.w	CheckInventoryFull
@@ -7617,7 +7617,7 @@ loc_000074D4:
 	TST.b	Received_replacement_key.w	
 	BNE.b	loc_00007518	
 	MOVE.l	#LostKeyStr, $1C(A5)	
-	TST.b	$FFFFC7AC.w	
+	TST.b	Replacement_key_enabled.w	
 	BEQ.w	loc_0000752A	
 	BSR.w	AddItemToInventoryList	
 	MOVE.w	#$0025, (A0,D0.w)	
@@ -7658,7 +7658,7 @@ loc_00007582:
 	BRA.w	loc_00006F44
 	BSR.w	loc_00008234
 	CLR.b	$25(A5)
-	TST.b	$FFFFC746.w
+	TST.b	Old_man_waiting_for_letter.w
 	BEQ.b	loc_0000759E
 	MOVE.l	#WaitingForLetterStr, $1C(A5)
 	BRA.b	loc_000075A8
@@ -7671,15 +7671,15 @@ loc_000075A8:
 	RTS
 
 loc_000075B2:
-	TST.b	$FFFFC746.w
+	TST.b	Old_man_waiting_for_letter.w
 	BEQ.w	loc_000075EC
-	TST.b	$FFFFC762.w
+	TST.b	Old_mans_sketch_given.w
 	BNE.b	loc_000075D0
 	BSR.w	AddItemToInventoryList
 	MOVE.w	#((ITEM_TYPE_NON_DISCARDABLE<<8)|ITEM_OLD_MANS_SKETCH), (A0,D0.w)
-	MOVE.b	#$FF, $FFFFC762.w
+	MOVE.b	#$FF, Old_mans_sketch_given.w
 loc_000075D0:
-	TST.b	$FFFFC78B.w
+	TST.b	Crimson_armor_chest_opened.w
 	BEQ.b	loc_000075E2
 	MOVE.l	#WaitingForLetterStr, $1C(A5)	
 	BRA.w	loc_00007610	
@@ -7781,9 +7781,9 @@ loc_0000770E:
 	RTS
 
 loc_00007718:
-	TST.b	$FFFFC779.w
+	TST.b	Barrow_quest_1_complete.w
 	BEQ.b	loc_00007728
-	TST.b	$FFFFC77A.w
+	TST.b	Barrow_quest_2_complete.w
 	BEQ.b	loc_00007728
 	BCLR.b	#7, (A5)
 loc_00007728:
@@ -7820,16 +7820,16 @@ loc_00007774:
 	RTS
 
 loc_0000779A:
-	TST.b	$FFFFC73F.w
+	TST.b	Tadcaster_treasure_quest_started.w
 	BEQ.b	loc_000077D2
 	MOVE.l	#ShareTreasureStr, $1C(A5)	
-	TST.b	$FFFFC740.w	
+	TST.b	Tadcaster_treasure_found.w	
 	BEQ.b	loc_000077E2	
-	TST.b	$FFFFC76A.w	
+	TST.b	Tadcaster_treasure_kims_received.w	
 	BNE.b	loc_000077C8	
 	MOVE.l	#$7500, Transaction_amount.w	
 	JSR	DeductPaymentAmount	
-	MOVE.b	#$FF, $FFFFC76A.w	
+	MOVE.b	#$FF, Tadcaster_treasure_kims_received.w	
 loc_000077C8:
 	MOVE.l	#DontSpendAllWealthStr, $1C(A5)	
 	BRA.b	loc_000077E2	
@@ -7855,13 +7855,13 @@ loc_00007804:
 loc_0000780E:
 	TST.b	Pass_to_carthahena_purchased.w
 	BEQ.b	loc_00007844
-	TST.b	$FFFFC765.w
+	TST.b	Pass_to_carthahena_given.w
 	BNE.b	loc_00007838
 	BSR.w	AddItemToInventoryList
 	MOVE.w	#((ITEM_TYPE_NON_DISCARDABLE<<8)|ITEM_PASS_TO_CARTHAHENA), (A0,D0.w)
 	MOVE.l	#PRICE_PASS_TO_CARTHAHENA, Transaction_amount.w
 	JSR	DeductPaymentAmount
-	MOVE.b	#$FF, $FFFFC765.w
+	MOVE.b	#$FF, Pass_to_carthahena_given.w
 loc_00007838:
 	MOVE.l	#GoAwayStr, $1C(A5)
 	BRA.w	loc_0000787A
@@ -7912,7 +7912,7 @@ loc_000078D2:
 	CLR.b	$25(A5)
 	TST.b	Bully_first_fight_won.w
 	BNE.b	loc_000078EA
-	TST.b	$FFFFC742.w
+	TST.b	Tadcaster_bully_triggered.w
 	BNE.b	loc_000078F8
 loc_000078EA:
 	BCLR.b	#7, (A5)
@@ -7980,16 +7980,16 @@ loc_000079A8:
 	RTS
 
 loc_000079B2:
-	TST.b	$FFFFC786.w
+	TST.b	Secret_key_received.w
 	BNE.b	loc_000079DE
 	BSR.w	CheckInventoryFull
 	BGE.b	loc_000079E8
 	MOVE.l	#KeyFromCaveStr, $1C(A5)
-	TST.b	$FFFFC785.w
+	TST.b	Cave_key_dialog_shown.w
 	BEQ.b	loc_000079F0
 	BSR.w	AddItemToInventoryList
 	MOVE.w	#((ITEM_TYPE_DISCARDABLE<<8)|ITEM_SECRET_KEY), (A0,D0.w)
-	MOVE.b	#$FF, $FFFFC786.w
+	MOVE.b	#$FF, Secret_key_received.w
 	BRA.b	loc_000079F0
 loc_000079DE:
 	MOVE.l	#RememberedAsHeroStr, $1C(A5)
@@ -8000,7 +8000,7 @@ loc_000079F0:
 	BRA.w	loc_00006F44
 	BSR.w	loc_00008234
 	CLR.b	$25(A5)
-	TST.b	$FFFFC736.w
+	TST.b	Helwig_old_woman_quest_started.w
 	BEQ.b	loc_00007A0A
 	MOVE.l	#FoundSomeoneForMeStr, $1C(A5)
 loc_00007A0A:
@@ -8008,23 +8008,23 @@ loc_00007A0A:
 	RTS
 
 loc_00007A14:
-	TST.b	$FFFFC747.w
+	TST.b	Old_man_and_woman_paired.w
 	BEQ.b	loc_00007A44
 	MOVE.l	#GetAlongFineStr, $1C(A5)
-	TST.b	$FFFFC764.w
+	TST.b	Dragon_shield_received.w
 	BNE.w	loc_00007ACC
 	LEA	Possessed_equipment_length.w, A0
 	MOVE.w	(A0), D0
 	ADDQ.w	#1, (A0)+
 	ADD.w	D0, D0
 	MOVE.w	#((EQUIPMENT_TYPE_SHIELD<<8)|EQUIPMENT_SHIELD_DRAGON), (A0,D0.w)
-	MOVE.b	#$FF, $FFFFC764.w
+	MOVE.b	#$FF, Dragon_shield_received.w
 	BRA.w	loc_00007ACC
 loc_00007A44:
 	TST.b	Old_woman_has_received_sketch.w
 	BEQ.w	loc_00007A82
 	MOVE.l	#WriteLetterGiftDragonShieldStr, $1C(A5)
-	TST.b	$FFFFC761.w
+	TST.b	Dragon_shield_offered_to_player.w
 	BEQ.b	loc_00007A62
 	MOVE.l	#GiftDragonShieldStr, $1C(A5)
 loc_00007A62:
@@ -8033,10 +8033,10 @@ loc_00007A62:
 	CMPI.w	#8, D0
 	BLT.w	loc_00007ACC
 	MOVE.l	#FriendGiftDragonShieldStr, $1C(A5)
-	MOVE.b	#$FF, $FFFFC761.w
+	MOVE.b	#$FF, Dragon_shield_offered_to_player.w
 	BRA.w	loc_00007ACC
 loc_00007A82:
-	TST.b	$FFFFC736.w
+	TST.b	Helwig_old_woman_quest_started.w
 	BEQ.b	loc_00007AA4
 	TST.b	Player_has_received_old_womans_sketch.w
 	BNE.w	loc_00007AC4
@@ -8091,9 +8091,9 @@ loc_00007B38:
 	BEQ.b	loc_00007B42
 	BRA.w	loc_00007C30
 loc_00007B42:
-	TST.b	$FFFFC74E.w
+	TST.b	Blue_crystal_quest_started.w
 	BEQ.w	loc_00007B8E
-	TST.b	$FFFFC772.w
+	TST.b	Blue_key_received.w
 	BNE.w	loc_00007B82
 	LEA	Possessed_items_list.w, A3
 	LEA	Possessed_items_length.w, A2
@@ -8105,7 +8105,7 @@ loc_00007B42:
 	BSR.w	RemoveItemFromList
 	BSR.w	AddItemToInventoryList
 	MOVE.w	#((ITEM_TYPE_NON_DISCARDABLE<<8)|ITEM_BLUE_KEY), (A0,D0.w)
-	MOVE.b	#$FF, $FFFFC772.w
+	MOVE.b	#$FF, Blue_key_received.w
 loc_00007B82:
 	MOVE.l	#BackSoSoonStr, $1C(A5)
 	BRA.w	loc_00007C30
@@ -8114,9 +8114,9 @@ loc_00007B8E:
 	BEQ.w	loc_00007B9A
 	BRA.w	loc_00007C30
 loc_00007B9A:
-	TST.b	$FFFFC74C.w
+	TST.b	Red_crystal_quest_started.w
 	BEQ.w	loc_00007BE6
-	TST.b	$FFFFC771.w
+	TST.b	Red_key_received.w
 	BNE.w	loc_00007BDA
 	LEA	Possessed_items_list.w, A3
 	LEA	Possessed_items_length.w, A2
@@ -8128,7 +8128,7 @@ loc_00007B9A:
 	BSR.w	RemoveItemFromList
 	BSR.w	AddItemToInventoryList
 	MOVE.w	#((ITEM_TYPE_NON_DISCARDABLE<<8)|ITEM_RED_KEY), (A0,D0.w)
-	MOVE.b	#$FF, $FFFFC771.w
+	MOVE.b	#$FF, Red_key_received.w
 loc_00007BDA:
 	MOVE.l	#BackSoSoonStr, $1C(A5)
 	BRA.w	loc_00007C30
@@ -8137,13 +8137,13 @@ loc_00007BE6:
 	BEQ.b	loc_00007BF0
 	BRA.w	loc_00007C30
 loc_00007BF0:
-	TST.b	$FFFFC74A.w
+	TST.b	White_crystal_quest_started.w
 	BEQ.b	loc_00007C18
-	TST.b	$FFFFC770.w
+	TST.b	White_crystal_received.w
 	BNE.b	loc_00007C0C
 	BSR.w	AddItemToInventoryList
 	MOVE.w	#((ITEM_TYPE_NON_DISCARDABLE<<8)|ITEM_WHITE_CRYSTAL), (A0,D0.w)
-	MOVE.b	#$FF, $FFFFC770.w
+	MOVE.b	#$FF, White_crystal_received.w
 loc_00007C0C:
 	MOVE.l	#BackSoSoonStr, $1C(A5)
 	BRA.w	loc_00007C30
@@ -8178,7 +8178,7 @@ loc_00007C66:
 loc_00007C70:
 	TST.b	Swaffham_ruined.w
 	BEQ.b	loc_00007C82
-	CLR.b	$FFFFC81D.w
+	CLR.b	Carthahena_soldier_1_defeated.w
 	MOVE.l	#WaitingExcalabriaStr, $1C(A5)
 loc_00007C82:
 	BRA.w	loc_00006F8E
@@ -8200,7 +8200,7 @@ loc_00007CAC:
 	BCLR.b	#7, (A5)
 	BRA.w	loc_00007D36
 loc_00007CBA:
-	TST.b	$FFFFC753.w
+	TST.b	Spy_dinner_poisoned_flag.w
 	BEQ.b	loc_00007CCC
 	MOVE.l	#PoisonedFoodStr, $1C(A5)
 	BRA.w	loc_00007D32
@@ -8208,7 +8208,7 @@ loc_00007CCC:
 	TST.b	Ate_spy_dinner.w
 	BEQ.w	loc_00007D32
 	MOVE.l	#WasItGoodStr, $1C(A5)
-	TST.b	$FFFFC77B.w
+	TST.b	Poison_trap_sprung.w
 	BNE.b	loc_00007D32
 	MOVEA.l	$FFFFCC08.w, A6
 	MOVE.w	$E(A6), Saved_player_x_in_town.w
@@ -8223,7 +8223,7 @@ loc_00007CCC:
 	MOVE.b	#$FF, Poison_notified.w
 	MOVE.w	Player_mhp.w, Player_hp.w
 	MOVE.w	Player_mmp.w, Player_mp.w
-	MOVE.b	#$FF, $FFFFC77B.w
+	MOVE.b	#$FF, Poison_trap_sprung.w
 loc_00007D32:
 	BSR.w	loc_00006F44
 loc_00007D36:
@@ -8289,7 +8289,7 @@ loc_00007DDC:
 	BCLR.b	#7, (A5)
 	BRA.b	loc_00007DF6
 loc_00007DE8:
-	TST.b	$FFFFC759.w
+	TST.b	Carthahena_boss_met.w
 	BEQ.b	loc_00007DF6
 	MOVE.l	#BestedMeStr, $1C(A5)
 loc_00007DF6:
@@ -8318,16 +8318,16 @@ loc_00007E54:
 	BSR.w	loc_00008518
 	BNE.w	loc_00007EB0
 	MOVE.l	#TsarkonFledEastwardStr, $1C(A5)
-	TST.b	$FFFFC784.w
+	TST.b	Thule_key_received.w
 	BNE.w	loc_00007EB8
 	BSR.w	CheckInventoryFull
 	BGE.b	loc_00007EA6
 	MOVE.l	#TsarkonFledEastStr, $1C(A5)
-	TST.b	$FFFFC783.w
+	TST.b	Knute_thule_key_dialog_shown.w
 	BEQ.b	loc_00007EB8
 	BSR.w	AddItemToInventoryList
 	MOVE.w	#((ITEM_TYPE_NON_DISCARDABLE<<8)|ITEM_THULE_KEY), (A0,D0.w)
-	MOVE.b	#$FF, $FFFFC784.w
+	MOVE.b	#$FF, Thule_key_received.w
 	BRA.b	loc_00007EB8
 loc_00007EA6:
 	MOVE.l	#ComeBackLessGearStr3, $1C(A5)
@@ -8343,7 +8343,7 @@ loc_00007EB8:
 loc_00007ECA:
 	TST.b	Helwig_men_rescued.w
 	BNE.b	loc_00007EFE
-	MOVE.w	$FFFFC7F0.w, D0
+	MOVE.w	Helwig_frypan_hit_count.w, D0
 	BEQ.b	loc_00007EFE
 	CMPI.w	#$000A, D0
 	BGE.b	loc_00007EF6
@@ -9106,7 +9106,7 @@ loc_000087FE:
 	RTS
 
 loc_00008830:
-	MOVEA.l	$FFFFCC50.w, A6
+	MOVEA.l	Map_indicator_entity_ptr.w, A6
 	BSET.b	#7, (A6)
 	MOVE.l	#loc_00008866, $2(A6)
 	BSET.b	#7, $7(A6)
@@ -9470,7 +9470,7 @@ loc_00008D44:
 	BNE.b	loc_00008DC0
 	TST.b	Sanguios_book_offered.w
 	BEQ.b	loc_00008D84
-	TST.b	$FFFFC766.w
+	TST.b	Sanguios_purchased.w
 	BNE.b	loc_00008D7A
 	LEA	Possessed_magics_length.w, A0
 	MOVE.w	(A0), D0
@@ -9479,7 +9479,7 @@ loc_00008D44:
 	MOVE.w	#((ITEM_TYPE_NON_DISCARDABLE<<8)|MAGIC_SANGUIOS), (A0,D0.w)
 	MOVE.l	#PRICE_SANGUIOS, Transaction_amount.w
 	JSR	DeductPaymentAmount
-	MOVE.b	#$FF, $FFFFC766.w
+	MOVE.b	#$FF, Sanguios_purchased.w
 loc_00008D7A:
 	MOVE.l	#NothingForYouStr, Script_talk_source.w
 	BRA.b	loc_00008DC0
@@ -9503,7 +9503,7 @@ loc_00008DB8:
 loc_00008DC0:
 	JMP	QueueSpriteOAMIfVisible
 loc_00008DC6:
-	TST.b	$FFFFC804.w
+	TST.b	Imposter_boss_trigger.w
 	BEQ.b	loc_00008DD4
 	MOVE.l	#NoOneHereStr, Script_talk_source.w
 loc_00008DD4:
@@ -9522,7 +9522,7 @@ loc_00008DFC:
 	TST.b	Crown_received.w
 	BNE.b	loc_00008E20
 	MOVE.l	#HaveYouGivenUpStr, Script_talk_source.w
-	TST.b	$FFFFC7ED.w
+	TST.b	Malaga_quest_progress.w
 	BNE.b	loc_00008E20
 	MOVE.l	#WaitingForPlayerNameStr, Script_talk_source.w
 loc_00008E20:
@@ -9643,7 +9643,7 @@ loc_00008F5A: ; Loop number of enemies
 	MOVE.w	$2(A2,D0.w), $12(A6)	; y position
 	MOVE.w	$4(A0), $FFFFC082.w
 	MOVE.w	$6(A0), Enemy_reward_type.w
-	MOVE.w	$8(A0), $FFFFC57C.w
+	MOVE.w	$8(A0), Enemy_reward_value.w
 	MOVE.w	$C(A0), $28(A6)
 	MOVE.w	$E(A0), $2C(A6)
 	MOVE.w	$10(A0), $2A(A6)
@@ -12816,7 +12816,7 @@ loc_0000BC7E:
 	BLE.b	loc_0000BC9C
 	MOVE.w	#6, Boss_ai_state.w
 	MOVE.l	#$4000, $32(A5)
-	MOVE.l	#$FFFF0000, $36(A5)
+	MOVE.l	#Tilemap_buffer_plane_a, $36(A5)
 loc_0000BC9C:
 	RTS
 
@@ -14179,7 +14179,7 @@ loc_0000CF76:
 loc_0000CF7E:
 	MOVE.b	#$FF, Asti_monster_defeated.w
 	JSR	loc_00008550
-	MOVE.b	#$FF, $FFFFC81B.w
+	MOVE.b	#$FF, Asti_monster_battle_complete.w
 	RTS
 	
 loc_0000CF92:
@@ -14187,35 +14187,35 @@ loc_0000CF92:
 	RTS
 	
 loc_0000CF9A:
-	MOVE.b	#$FF, $FFFFC76D.w
+	MOVE.b	#$FF, Excalabria_boss_1_defeated.w
 	RTS
 	
 loc_0000CFA2:
-	MOVE.b	#$FF, $FFFFC76E.w
+	MOVE.b	#$FF, Excalabria_boss_2_defeated.w
 	RTS
 	
 loc_0000CFAA:
-	MOVE.b	#$FF, $FFFFC76F.w
+	MOVE.b	#$FF, Excalabria_boss_3_defeated.w
 	RTS
 	
 loc_0000CFB2:
-	MOVE.b	#$FF, $FFFFC759.w
+	MOVE.b	#$FF, Carthahena_boss_met.w
 	RTS
 	
 loc_0000CFBA:
-	MOVE.b	#$FF, $FFFFC774.w
+	MOVE.b	#$FF, Swaffham_spy_defeated.w
 	RTS
 	
 loc_0000CFC2:
-	MOVE.b	#$FF, $FFFFC776.w
+	MOVE.b	#$FF, Luther_defeated.w
 	RTS
 	
 loc_0000CFCA:
-	MOVE.b	#$FF, $FFFFC775.w
+	MOVE.b	#$FF, Thar_defeated.w
 	RTS
 	
 loc_0000CFD2:
-	MOVE.b	#$FF, $FFFFC777.w
+	MOVE.b	#$FF, Swaffham_miniboss_defeated.w
 	RTS
 	
 loc_0000CFDA:
@@ -16134,7 +16134,7 @@ loc_0000EAF8:
 	SUBQ.b	#1, $1A(A5)
 	BNE.b	loc_0000EB20
 	BSR.w	loc_0000CF16
-	TST.b	$FFFFC777.w
+	TST.b	Swaffham_miniboss_defeated.w
 	BNE.b	loc_0000EB18
 	MOVE.l	#loc_0000BEB6, $2(A5)
 	MOVE.w	#$0032, $FFFFC554.w
@@ -16146,7 +16146,7 @@ loc_0000EB20:
 	RTS
 	
 loc_0000EB22:
-	MOVE.b	#$FF, $FFFFC80D.w
+	MOVE.b	#$FF, Boss_battle_type_marker.w
 	CLR.w	D0
 	LEA	Boss_battle_flags.w, A0
 	MOVE.w	#$000F, D7
@@ -16981,7 +16981,7 @@ loc_0000F5D6:
 	SUB.w	D1, D6
 	CMPI.w	#$0140, D6
 	BGE.w	loc_0000F682
-	LEA	$FFFFE200.w, A0
+	LEA	Sprite_sort_buffer.w, A0
 	MOVE.w	$FFFFE000.w, D0
 	ASL.w	#3, D0
 	ADDA.w	D0, A0
@@ -16998,7 +16998,7 @@ loc_0000F5D6:
 	ADD.w	D1, D0
 	MOVE.w	D0, (A0)+
 	MOVE.w	D6, (A0)
-	LEA	$FFFFE400.w, A0
+	LEA	Sprite_priority_slots.w, A0
 	MOVE.w	$16(A5), D0
 	ANDI.w	#$00FF, D0
 	MOVE.w	#$00FF, D7
@@ -17092,7 +17092,7 @@ loc_0000F75E:
 	BLE.w	loc_0000F7BC
 	LEA	$FFFFE3F0.w, A1
 	LEA	$FFFFE004.w, A4
-	LEA	$FFFFE200.w, A2
+	LEA	Sprite_sort_buffer.w, A2
 	CLR.w	D1
 	MOVE.w	#$0010, D5
 	MOVE.w	#$00FF, D0
@@ -17129,7 +17129,7 @@ loc_0000F7C2:
 	RTE	
 loc_0000F7C4:
 	MOVE.w	#$001F, D7
-	LEA	$FFFFE400.w, A0
+	LEA	Sprite_priority_slots.w, A0
 loc_0000F7CC:
 	CLR.b	(A0)
 	LEA	$10(A0), A0
@@ -17235,7 +17235,7 @@ loc_0000F8D2:
 	MOVEA.l	$4(A6), A3
 	MOVE.w	#$000F, D5
 	BSR.w	loc_0000FAC6
-	LEA	$FFFFA200.w, A2
+	LEA	Enemy_gfx_buffer.w, A2
 	MOVEA.l	$FFFFC686.w, A6
 	TST.l	$8(A6)
 	BEQ.b	loc_0000F938
@@ -17253,7 +17253,7 @@ loc_0000F93A:
 	MOVEA.l	$4(A6), A3
 	MOVE.w	$8(A6), D5
 	BSR.w	loc_0000FAC6
-	LEA	$FFFFA200.w, A2
+	LEA	Enemy_gfx_buffer.w, A2
 	MOVEA.l	$FFFFC566.w, A6
 	TST.l	$A(A6)
 	BEQ.b	loc_0000F970
@@ -17303,17 +17303,17 @@ loc_0000F9D2:
 	RTS
 	
 loc_0000F9EE:
-	LEA	$FFFF0000, A2
+	LEA	Tilemap_buffer_plane_a, A2
 	LEA	loc_00042E28, A4
 	LEA	loc_0004367A, A3
 	MOVE.w	#$00A7, D5
 	BSR.w	loc_0000FAC6
-	LEA	$FFFF1500, A2
+	LEA	Battle_gfx_slot_1_buffer, A2
 	LEA	loc_000437DE, A4
 	LEA	loc_00045286, A3
 	MOVE.w	#$0167, D5
 	BSR.w	loc_0000FAC6
-	LEA	$FFFF4200, A2
+	LEA	Battle_gfx_slot_2_buffer, A2
 	LEA	loc_00042978, A4
 	LEA	loc_00042D44, A3
 	MOVE.w	#$0077, D5
@@ -17321,22 +17321,22 @@ loc_0000F9EE:
 	RTS
 	
 loc_0000FA3E:
-	LEA	$FFFF0000, A2
+	LEA	Tilemap_buffer_plane_a, A2
 	LEA	loc_000460D8, A4
 	LEA	loc_0004720C, A3
 	MOVE.w	#$00BF, D5
 	BSR.w	loc_0000FAC6
-	LEA	$FFFF1800, A2
+	LEA	Boss_gfx_slot_1_buffer, A2
 	LEA	loc_000474BC, A4
 	LEA	loc_00048872, A3
 	MOVE.w	#$00EF, D5
 	BSR.w	loc_0000FAC6
-	LEA	$FFFF3600, A2
+	LEA	Boss_gfx_extra_buffer, A2
 	LEA	loc_00048B4E, A4
 	LEA	loc_00048D9C, A3
 	MOVE.w	#$001F, D5
 	BSR.w	loc_0000FAC6
-	LEA	$FFFF3A00, A2
+	LEA	Boss_gfx_slot_2_buffer, A2
 	LEA	loc_00048DEC, A4
 	LEA	loc_00048ECA, A3
 	MOVE.w	#$001B, D5
@@ -17402,7 +17402,7 @@ loc_0000FAEC:
 ;loc_0000FB5C:
 GetRandomNumber:
 	MOVEM.l	D1, -(A7)
-	MOVE.l	$FFFFC0A0.w, D1
+	MOVE.l	Rng_state.w, D1
 	BNE.w	loc_0000FB6E
 	MOVE.l	#$2A6D365A, D1
 loc_0000FB6E:
@@ -17416,7 +17416,7 @@ loc_0000FB6E:
 	ADD.w	D1, D0
 	MOVE.w	D0, D1
 	SWAP	D1
-	MOVE.l	D1, $FFFFC0A0.w
+	MOVE.l	D1, Rng_state.w
 	MOVEM.l	(A7)+, D1
 	RTS
 
@@ -18183,7 +18183,7 @@ loc_000104BA:
 	DIVU.w	D1, D0
 	OR.b	D0, D3
 	LSL.l	#4, D3
-	ANDI.l	#$FFFF0000, D0
+	ANDI.l	#Tilemap_buffer_plane_a, D0
 	SWAP	D0
 	RTS
 	
@@ -18608,8 +18608,8 @@ loc_0001095A:
 loc_0001096A:
 	TST.b	$FFFF9900.w
 	BNE.w	loc_00010BE2
-	ADDQ.w	#1, $FFFFC20C.w
-	MOVE.w	$FFFFC20C.w, D0
+	ADDQ.w	#1, Script_render_tick.w
+	MOVE.w	Script_render_tick.w, D0
 	MOVE.b	Message_speed.w, D2
 	MOVE.w	D0, D1
 	SUBQ.w	#1, D1
@@ -18772,7 +18772,7 @@ loc_00010BA0:
 	MOVE.b	$3(A0,D2.w), $FFFFC701.w
 	MOVE.b	#$FF, Dialogue_event_trigger_flag.w
 loc_00010BB2:
-	MOVE.b	$1(A0,D2.w), $FFFFC240.w
+	MOVE.b	$1(A0,D2.w), Dialog_response_index.w
 	MOVE.b	#$FF, Script_has_yes_no_question.w
 loc_00010BBE:
 	TST.b	Script_reading_player_name.w
@@ -19630,7 +19630,7 @@ loc_000117BC:
 	
 loc_000117BE:
 	MOVE.l	#$3F3F3F3F, Savegame_name_buffer.w	
-	MOVE.w	#$FFFF, $FFFFC35E.w	
+	MOVE.w	#$FFFF, Savegame_name_overflow.w	
 	RTS
 	
 loc_000117CE:
@@ -20176,7 +20176,7 @@ loc_00011FD6:
 	MOVE.w	#2, $FFFFC222.w
 	MOVE.w	#$001A, $FFFFC228.w
 	MOVE.w	#$000C, $FFFFC22A.w
-	LEA	$FFFF7F4C, A0
+	LEA	Full_menu_tiles_buffer, A0
 	BRA.w	DrawWindowRowFromBuffer
 loc_00011FF8:
 	MOVE.w	#$000F, $FFFFC220.w
@@ -20189,7 +20189,7 @@ loc_00012014:
 	ADD.w	D0, D0
 	ADDQ.w	#3, D0
 	MOVE.w	D0, $FFFFC22A.w
-	LEA	$FFFF820A.w, A0
+	LEA	Equipment_list_tiles_buffer.w, A0
 	BRA.w	DrawWindowRowFromBuffer
 loc_00012024:
 	MOVE.w	#2, $FFFFC220.w
@@ -20202,7 +20202,7 @@ loc_00012040:
 	ADD.w	D0, D0
 	ADDQ.w	#3, D0
 	MOVE.w	D0, $FFFFC22A.w
-	LEA	$FFFF85D0.w, A0
+	LEA	Magic_list_tiles_buffer.w, A0
 	BRA.w	DrawWindowRowFromBuffer
 loc_00012050:
 	MOVE.w	#$000F, $FFFFC220.w
@@ -20215,7 +20215,7 @@ loc_0001206C:
 	ADD.w	D0, D0
 	ADDQ.w	#3, D0
 	MOVE.w	D0, $FFFFC22A.w
-	LEA	$FFFF88C4.w, A0
+	LEA	Item_list_right_tiles_buffer.w, A0
 	BRA.w	DrawWindowRowFromBuffer
 loc_0001207C:
 	MOVE.w	#9, $FFFFC220.w
@@ -20228,7 +20228,7 @@ loc_00012098:
 	ADD.w	D0, D0
 	ADDQ.w	#3, D0
 	MOVE.w	D0, $FFFFC22A.w
-	LEA	$FFFF8C8A.w, A0
+	LEA	Rings_list_tiles_buffer.w, A0
 	BRA.w	DrawWindowRowFromBuffer
 loc_000120A8:
 	MOVE.w	#$000A, $FFFFC220.w	
@@ -20378,7 +20378,7 @@ loc_000122AE:
 	RTS
 	
 loc_000122D2:
-	LEA	$FFFF8366.w, A0
+	LEA	Prompt_menu_tiles_buffer.w, A0
 	MOVE.w	#5, $FFFFC224.w
 	MOVE.w	#4, $FFFFC226.w
 	MOVE.w	#$000B, $FFFFC22C.w
@@ -20396,7 +20396,7 @@ loc_000122F4:
 	RTS
 	
 loc_00012318:
-	LEA	$FFFF83FE.w, A0
+	LEA	Shop_submenu_tiles_buffer.w, A0
 	MOVE.w	#$000F, $FFFFC224.w
 	MOVE.w	#$000C, $FFFFC226.w
 	MOVE.w	#$0015, $FFFFC22C.w
@@ -20450,7 +20450,7 @@ loc_000123C8:
 	RTS
 	
 loc_000123EA:
-	LEA	$FFFF82AA.w, A0
+	LEA	Shop_list_tiles_buffer.w, A0
 	MOVE.w	#$000A, $FFFFC224.w
 	MOVE.w	#2, $FFFFC226.w
 	MOVE.w	#$0018, $FFFFC22C.w
@@ -20496,7 +20496,7 @@ loc_00012470:
 	RTS
 	
 loc_00012494:
-	LEA	$FFFF7F4C, A0
+	LEA	Full_menu_tiles_buffer, A0
 	MOVE.w	#2, $FFFFC224.w
 	MOVE.w	#2, $FFFFC226.w
 	MOVE.w	#$001A, $FFFFC22C.w
@@ -20506,7 +20506,7 @@ loc_00012494:
 	RTS
 	
 loc_000124BA:
-	LEA	$FFFF820A.w, A0
+	LEA	Equipment_list_tiles_buffer.w, A0
 	MOVE.w	#$000F, $FFFFC224.w
 	MOVE.w	#2, $FFFFC226.w
 	MOVE.w	#$0016, $FFFFC22C.w
@@ -20516,7 +20516,7 @@ loc_000124BA:
 	RTS
 	
 loc_000124DE:
-	LEA	$FFFF85D0.w, A0
+	LEA	Magic_list_tiles_buffer.w, A0
 	MOVE.w	#2, $FFFFC224.w
 	MOVE.w	#2, $FFFFC226.w
 	MOVE.w	#$0011, $FFFFC22C.w
@@ -20526,7 +20526,7 @@ loc_000124DE:
 	RTS
 	
 loc_00012502:
-	LEA	$FFFF88C4.w, A0
+	LEA	Item_list_right_tiles_buffer.w, A0
 	MOVE.w	#$000F, $FFFFC224.w
 	MOVE.w	#2, $FFFFC226.w
 	MOVE.w	#$0016, $FFFFC22C.w
@@ -20536,7 +20536,7 @@ loc_00012502:
 	RTS
 	
 loc_00012526:
-	LEA	$FFFF8C8A.w, A0
+	LEA	Rings_list_tiles_buffer.w, A0
 	MOVE.w	#9, $FFFFC224.w
 	MOVE.w	#2, $FFFFC226.w
 	MOVE.w	#$0011, $FFFFC22C.w
@@ -20574,7 +20574,7 @@ loc_00012592:
 	RTS
 	
 loc_000125B6:
-	LEA	$FFFF7E80, A0
+	LEA	Ready_equipment_menu_tiles_buffer, A0
 	MOVE.w	#$000F, $FFFFC224.w
 	MOVE.w	#2, $FFFFC226.w
 	MOVE.w	#$0015, $FFFFC22C.w
@@ -20621,7 +20621,7 @@ loc_0001264C:
 	RTS
 	
 loc_0001264E:
-	LEA	$FFFF8366.w, A0
+	LEA	Prompt_menu_tiles_buffer.w, A0
 	MOVE.w	#5, $FFFFC224.w
 	MOVE.w	#4, $FFFFC226.w
 	MOVE.w	#$000B, $FFFFC22C.w
@@ -20639,7 +20639,7 @@ loc_00012670:
 	RTS
 	
 loc_00012694:
-	LEA	$FFFF83FE.w, A0
+	LEA	Shop_submenu_tiles_buffer.w, A0
 	MOVE.w	#$000F, $FFFFC224.w
 	MOVE.w	#$000C, $FFFFC226.w
 	MOVE.w	#$0015, $FFFFC22C.w
@@ -20657,7 +20657,7 @@ loc_000126B6:
 	RTS
 	
 loc_000126DA:
-	LEA	$FFFF82AA.w, A0
+	LEA	Shop_list_tiles_buffer.w, A0
 	MOVE.w	#$000A, $FFFFC224.w
 	MOVE.w	#2, $FFFFC226.w
 	MOVE.w	#$0018, $FFFFC22C.w
@@ -20684,7 +20684,7 @@ loc_0001271E:
 	RTS
 	
 loc_00012742:
-	LEA	$FFFF7E80, A0
+	LEA	Ready_equipment_menu_tiles_buffer, A0
 	MOVE.w	#$000F, $FFFFC224.w
 	MOVE.w	#2, $FFFFC226.w
 	MOVE.w	#$0015, $FFFFC22C.w
@@ -21444,7 +21444,7 @@ loc_000131C4:
 	BNE.w	loc_000132AC
 	TST.b	Fade_in_lines_mask.w
 	BNE.w	loc_0001343E
-	BCLR.b	#7, $FFFFC0BD.w
+	BCLR.b	#7, Palette_buffer_dirty.w
 	BEQ.w	loc_0001325C
 	MOVE.w	#$0100, Z80_bus_request
 loc_000131F2:
@@ -21494,7 +21494,7 @@ loc_00013286:
 	MOVE.l	(A3)+, (A1)+
 	MOVE.l	(A3)+, (A1)+
 	DBF	D2, loc_00013286
-	BSET.b	#7, $FFFFC0BD.w
+	BSET.b	#7, Palette_buffer_dirty.w
 loc_000132AA:
 	RTS
 
@@ -23052,7 +23052,7 @@ loc_00015F1A:
 	BRA.b	ResetTownCameraMovementState
 loc_00015F1C:
 	MOVE.w	$FFFFC106.w, D0
-	CMP.w	$FFFFC10A.w, D0
+	CMP.w	VScroll_max_limit.w, D0
 	BGE.b	ResetTownCameraMovementState
 	MOVEA.l	$FFFFCC08.w, A6
 	MOVE.w	$12(A6), D0
@@ -23112,7 +23112,7 @@ loc_00015FC0:
 	BRA.w	ResetTownCameraMovementState
 loc_00015FC4:
 	MOVE.w	$FFFFC104.w, D0
-	CMP.w	$FFFFC108.w, D0
+	CMP.w	HScroll_min_limit.w, D0
 	BLE.w	ResetTownCameraMovementState
 	MOVEA.l	$FFFFCC08.w, A6
 	MOVE.w	$E(A6), D0
@@ -23147,9 +23147,9 @@ loc_00016018:
 	MOVEA.l	(A0,D0.w), A0
 	JSR	(A0)
 	BSR.w	loc_00016830
-	LEA	$FFFF4D80, A0
+	LEA	Town_tilemap_plane_a, A0
 	LEA	Town_tilemap_plane_a_ptr.w, A1
-	LEA	$FFFF0000, A6
+	LEA	Tilemap_buffer_plane_a, A6
 	CLR.w	Tilemap_plane_select.w
 	BSR.w	loc_000160D0
 	LEA	loc_0001F2C4, A0
@@ -23168,12 +23168,12 @@ loc_00016018:
 	MOVE.w	Town_tilemap_height.w, D0
 	ASL.w	#4, D0
 	SUBI.w	#$00E0, D0
-	MOVE.w	D0, $FFFFC10A.w
+	MOVE.w	D0, VScroll_max_limit.w
 	MOVE.w	Town_tilemap_width.w, D0
 	ASL.w	#4, D0
 	SUBI.w	#$0140, D0
 	NEG.w	D0
-	MOVE.w	D0, $FFFFC108.w
+	MOVE.w	D0, HScroll_min_limit.w
 	MOVE.w	Town_camera_tile_x.w, D0
 	MOVE.w	$FFFFC114.w, D1
 	ASL.w	#4, D0
@@ -23196,7 +23196,7 @@ loc_000160D0:
 	MOVE.w	D1, Town_tilemap_height.w
 	MOVE.w	D0, D2
 	MULU.w	D1, D0
-	MOVE.w	D0, $FFFFC118.w
+	MOVE.w	D0, Tilemap_total_tiles.w
 	CLR.b	Tilemap_row_overflow_flag.w
 	MOVE.w	Town_camera_spawn_x.w, D0
 	MOVE.w	D0, Town_camera_tile_x.w
@@ -23325,7 +23325,7 @@ loc_000161E8:
 loc_0001622A:
 	ORI	#$0700, SR
 	MOVE.l	#$40000003, VDP_control_port
-	LEA	$FFFF0000, A0
+	LEA	Tilemap_buffer_plane_a, A0
 	MOVE.w	#$0FFF, D4
 loc_00016242:
 	MOVE.w	(A0)+, D1
@@ -23374,8 +23374,8 @@ loc_000162CA:
 	MOVE.w	(A0)+, Palette_line_1_index_saved.w
 	MOVE.w	(A0), Palette_line_2_index.w
 	MOVE.w	(A0)+, Palette_line_2_cycle_base.w
-	MOVE.w	(A0)+, $FFFFC09A.w
-	MOVE.w	(A0)+, $FFFFC09C.w
+	MOVE.w	(A0)+, Palette_line_2_cycle_index_1.w
+	MOVE.w	(A0)+, Palette_line_2_cycle_index_2.w
 	RTS
 
 loc_000162EA:
@@ -23389,8 +23389,8 @@ loc_000162F6:
 	MOVE.w	(A0)+, D0
 	MOVE.w	(A0), Palette_line_2_index.w
 	MOVE.w	(A0)+, Palette_line_2_cycle_base.w
-	MOVE.w	(A0)+, $FFFFC09A.w
-	MOVE.w	(A0)+, $FFFFC09C.w
+	MOVE.w	(A0)+, Palette_line_2_cycle_index_1.w
+	MOVE.w	(A0)+, Palette_line_2_cycle_index_2.w
 	LEA	loc_00016810, A0
 	MOVE.w	Current_town.w, D0
 	ADD.w	D0, D0
@@ -23402,7 +23402,7 @@ loc_00016328:
 	MOVE.w	$FFFFC114.w, D0
 	SUBQ.w	#3, D0
 	MOVE.w	Town_camera_tile_x.w, D6
-	LEA	$FFFF0000, A3
+	LEA	Tilemap_buffer_plane_a, A3
 	MOVEA.l	Town_tilemap_plane_a_ptr.w, A0
 	MOVEQ	#$1D, D5
 	CLR.w	Tilemap_plane_select.w
@@ -23419,7 +23419,7 @@ loc_00016328:
 	SUBQ.w	#3, D0
 	MOVE.w	Town_camera_tile_x.w, D6
 	SUBQ.w	#2, D6
-	LEA	$FFFF0000, A3
+	LEA	Tilemap_buffer_plane_a, A3
 	MOVEA.l	Town_tilemap_plane_a_ptr.w, A0
 	MOVEQ	#1, D5
 	CLR.w	Tilemap_plane_select.w
@@ -23443,7 +23443,7 @@ loc_000163BA:
 	MOVE.w	Town_camera_tile_x.w, D0
 	SUBQ.w	#3, D0
 	MOVE.w	$FFFFC114.w, D6
-	LEA	$FFFF0000, A3
+	LEA	Tilemap_buffer_plane_a, A3
 	MOVEA.l	Town_tilemap_plane_a_ptr.w, A0
 	MOVEQ	#$1D, D5
 	CLR.w	Tilemap_plane_select.w
@@ -23460,7 +23460,7 @@ loc_000163BA:
 	SUBQ.w	#3, D0
 	MOVE.w	$FFFFC114.w, D6
 	SUBQ.w	#2, D6
-	LEA	$FFFF0000, A3
+	LEA	Tilemap_buffer_plane_a, A3
 	MOVEA.l	Town_tilemap_plane_a_ptr.w, A0
 	MOVEQ	#1, D5
 	CLR.w	Tilemap_plane_select.w
@@ -23484,7 +23484,7 @@ loc_0001644E:
 	MOVE.w	$FFFFC114.w, D0
 	ADDI.w	#$1C, D0
 	MOVE.w	Town_camera_tile_x.w, D6
-	LEA	$FFFF0000, A3
+	LEA	Tilemap_buffer_plane_a, A3
 	MOVEA.l	Town_tilemap_plane_a_ptr.w, A0
 	MOVEQ	#$1D, D5
 	CLR.w	Tilemap_plane_select.w
@@ -23501,7 +23501,7 @@ loc_0001644E:
 	ADDI.w	#$1C, D0
 	MOVE.w	Town_camera_tile_x.w, D6
 	SUBQ.w	#2, D6
-	LEA	$FFFF0000, A3
+	LEA	Tilemap_buffer_plane_a, A3
 	MOVEA.l	Town_tilemap_plane_a_ptr.w, A0
 	MOVEQ	#1, D5
 	CLR.w	Tilemap_plane_select.w
@@ -23525,7 +23525,7 @@ loc_000164EE:
 	MOVE.w	Town_camera_tile_x.w, D0
 	ADDI.w	#$1C, D0
 	MOVE.w	$FFFFC114.w, D6
-	LEA	$FFFF0000, A3
+	LEA	Tilemap_buffer_plane_a, A3
 	MOVEA.l	Town_tilemap_plane_a_ptr.w, A0
 	MOVEQ	#$0000001D, D5
 	CLR.w	Tilemap_plane_select.w
@@ -23542,7 +23542,7 @@ loc_000164EE:
 	ADDI.w	#$1C, D0
 	MOVE.w	$FFFFC114.w, D6
 	SUBQ.w	#2, D6
-	LEA	$FFFF0000, A3
+	LEA	Tilemap_buffer_plane_a, A3
 	MOVEA.l	Town_tilemap_plane_a_ptr.w, A0
 	MOVEQ	#1, D5
 	CLR.w	Tilemap_plane_select.w
@@ -23642,7 +23642,7 @@ loc_0001662A:
 	RTS
 
 loc_0001664E:
-	LEA	$FFFF0000, A3
+	LEA	Tilemap_buffer_plane_a, A3
 	MOVE.w	#$C000, D5
 	BSR.w	loc_0001666C
 	LEA	Tilemap_buffer_plane_b, A3
@@ -23687,7 +23687,7 @@ loc_000166BA:
 	RTS
 
 loc_000166CC:
-	LEA	$FFFF0000, A3
+	LEA	Tilemap_buffer_plane_a, A3
 	MOVE.w	#$C000, D5
 	BSR.w	loc_000166EA
 	LEA	Tilemap_buffer_plane_b, A3
@@ -23748,8 +23748,8 @@ loc_00016760:
 	RTS
 
 loc_0001677C:
-	ADDQ.b	#1, $FFFFC09E.w
-	MOVE.b	$FFFFC09E.w, D0
+	ADDQ.b	#1, Palette_cycle_frame_counter.w
+	MOVE.b	Palette_cycle_frame_counter.w, D0
 	MOVE.b	D0, D1
 	SUBQ.b	#1, D1
 	EOR.b	D0, D1
@@ -23813,19 +23813,19 @@ loc_00016810:
 	dc.b	$00, $00, $00, $15, $00, $00 
 	dc.w	$00B0
 loc_00016830:
-	LEA	$FFFF4D84, A2
+	LEA	Town_tilemap_plane_a_data, A2
 	MOVEA.l	Tilemap_data_ptr_plane_a.w, A1
 	JSR	loc_0001686C(PC)
-	LEA	$FFFF4D84, A2
+	LEA	Town_tilemap_plane_a_data, A2
 	MOVEA.l	Tilemap_data_ptr_plane_b.w, A1
 	JSR	loc_00016892(PC)
 	RTS
 
 loc_0001684E:
-	LEA	$FFFF6384, A2
+	LEA	Town_tilemap_plane_b_data, A2
 	MOVEA.l	Tilemap_data_ptr_plane_a.w, A1
 	JSR	loc_0001686C(PC)
-	LEA	$FFFF6384, A2
+	LEA	Town_tilemap_plane_b_data, A2
 	MOVEA.l	Tilemap_data_ptr_plane_b.w, A1
 	JSR	loc_00016892(PC)
 	RTS
@@ -23999,7 +23999,7 @@ loc_000169D0:
 	ORI.w	#3, D0
 	MOVE.w	D0, VDP_control_port
 	CLR.w	Cursor_blink_timer.w
-	CLR.w	$FFFFC3B2.w
+	CLR.w	Intro_scroll_accumulator.w
 	MOVE.w	#$FF20, $FFFFC106.w
 	MOVE.w	$FFFFC106.w, D0
 	ANDI.w	#$01FF, D0
@@ -24125,7 +24125,7 @@ loc_00016BB0:
 	LEA	loc_00062782, A0
 	BSR.w	loc_00016D94
 	MOVE.w	#$00FF, Prologue_state.w
-	MOVE.w	#$02FF, $FFFFC3A4.w
+	MOVE.w	#$02FF, Prologue_scroll_offset.w
 	MOVE.l	#loc_00016BE0, $2(A5)
 	BSR.w	loc_00016DCE
 	JSR	loc_0001325E
@@ -24163,7 +24163,7 @@ loc_00016C30:
 	MOVE.l	#$7C440002, D0
 	LEA	Prologue_state.w, A0
 	ADDI.l	#$000A0000, (A0)
-	LEA	$FFFFC3A4.w, A1
+	LEA	Prologue_scroll_offset.w, A1
 	SUBI.l	#$000A0000, (A1)
 	MOVE.w	#$0054, D7
 loc_00016C4E:
@@ -24658,7 +24658,7 @@ loc_0001733A:
 	MOVE.w	#$0012, $FFFFC080.w
 	MOVE.w	#$0093, $FFFFC082.w
 	JSR	loc_0001325E
-	LEA	$FFFFC646.w, A0
+	LEA	Ending_player_name_buffer.w, A0
 	MOVE.w	#5, D7
 loc_00017378:
 	MOVE.b	#$20, (A0)+
@@ -25687,7 +25687,7 @@ loc_00018528:
 	TST.b	Script_text_complete.w	
 	BEQ.b	loc_00018540	
 	JSR	loc_00011666	
-	MOVE.l	$FFFFC254.w, Script_source_base.w	
+	MOVE.l	Script_continuation_ptr.w, Script_source_base.w	
 	ADDQ.w	#1, $FFFFC424.w	
 	RTS
 	
@@ -27926,7 +27926,7 @@ loc_0001A44E:
 	MOVE.w	#3, Window_draw_type.w
 	CLR.w	$FFFF9916.w
 	MOVE.b	#$FF, $FFFF9911.w
-	TST.b	$FFFFC77E.w
+	TST.b	Sixteen_rings_used_at_throne.w
 	BEQ.b	loc_0001A474
 	MOVE.w	#PROGRAM_STATE_12, Program_state.w
 loc_0001A474:
@@ -28884,7 +28884,7 @@ UseSixteenRings:
 	CMP.w	Player_position_y_in_town.w, D0
 	BNE.b	loc_0001B06C
 	PRINT 	RingsLeaveStr
-	MOVE.b	#$FF, $FFFFC77E.w
+	MOVE.b	#$FF, Sixteen_rings_used_at_throne.w
 	MOVE.w	#$E0, D0
 	JSR	loc_00010522
 	RTS
@@ -29215,7 +29215,7 @@ loc_0001B4A4:
 	BNE.b	loc_0001B4E4
 	MOVE.w	#2, D2
 	MOVE.w	#$31, Dialogue_state.w
-	TST.b	$FFFFC756.w
+	TST.b	Sword_retrieved_from_blacksmith.w
 	BNE.b	loc_0001B4E4
 	MOVE.w	#1, D2
 	MOVE.w	#$32, Dialogue_state.w
@@ -29620,7 +29620,7 @@ loc_0001BC80:
 	CLR.b	Dialogue_event_trigger_flag.w
 	CLR.b	Quest_choice_pending.w
 	CLR.w	D0
-	MOVE.b	$FFFFC240.w, D0
+	MOVE.b	Dialog_response_index.w, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
 	MOVE.l	(A0,D0.w), Script_source_base.w
@@ -30142,7 +30142,7 @@ loc_0001C3A4:
 	JSR	loc_0001290C
 	TST.w	Dialog_selection.w
 	BNE.w	loc_0001C4B0
-	MOVE.l	$FFFFC4AC.w, Transaction_amount.w
+	MOVE.l	Shop_sell_price.w, Transaction_amount.w
 	JSR	loc_00011576
 	JSR	DisplayPlayerKims
 	LEA	ShopCategoryNameTables, A0
@@ -30969,7 +30969,7 @@ loc_0001CEF8:
 	ADD.w	D0, D0
 	ADD.w	D0, D0
 	MOVE.l	(A0,D0.w), D0
-	MOVE.l	D0, $FFFFC4AC.w
+	MOVE.l	D0, Shop_sell_price.w
 	BSR.w	FormatKimsAmount
 	MOVE.b	#$FE, (A1)+
 	RTS
@@ -32330,9 +32330,9 @@ loc_0001E166:
 	dc.l	TombstoneStr
 	dc.b	$C2, $04, $60, $00, $01, $A2 
 loc_0001E172:
-	TST.b	$FFFFC7C2.w
+	TST.b	Titanias_mirror_quest_prereq.w
 	BEQ.w	loc_0001E1CC
-	TST.b	$FFFFC7C3.w	
+	TST.b	Titanias_mirror_acquired.w	
 	BNE.w	loc_0001E1CC	
 	JSR	CheckInventoryFull	
 	BGE.w	loc_0001E1BA	
@@ -32341,7 +32341,7 @@ loc_0001E172:
 	BSR.w	loc_0001E42C	
 	JSR	AddItemToInventoryList	
 	MOVE.w	#((ITEM_TYPE_DISCARDABLE<<8)|ITEM_TITANIAS_MIRROR), (A0,D0.w)
-	MOVE.b	#$FF, $FFFFC7C3.w	
+	MOVE.b	#$FF, Titanias_mirror_acquired.w	
 	MOVE.w	#$00A6, D0	
 	JSR	loc_00010522	
 	BRA.w	loc_0001E1C8	
@@ -32360,7 +32360,7 @@ loc_0001E1D4:
 	dc.b	$4E, $B9, $00, $00, $85, $72, $31, $BC, $00, $2B, $00, $00, $11, $FC, $00, $FF, $C7, $C4, $30, $3C, $00, $A6, $4E, $B9, $00, $01, $05, $22, $60, $00, $00, $10 
 	dc.b	$45, $F9, $00, $02, $58, $F8, $61, $00, $01, $F4, $61, $00, $02, $32, $60, $00, $00, $EE, $31, $FC, $00, $01, $C4, $28, $4E, $75 
 loc_0001E22E:
-	TST.b	$FFFFC7C5.w
+	TST.b	Rafaels_stick_acquired.w
 	BNE.w	loc_0001E280
 	JSR	CheckInventoryFull
 	BGE.w	loc_0001E26E
@@ -32369,7 +32369,7 @@ loc_0001E22E:
 	BSR.w	loc_0001E42C
 	JSR	AddItemToInventoryList
 	MOVE.w	#((ITEM_TYPE_DISCARDABLE<<8)|ITEM_RAFAELS_STICK), (A0,D0.w)
-	MOVE.b	#$FF, $FFFFC7C5.w
+	MOVE.b	#$FF, Rafaels_stick_acquired.w
 	MOVE.w	#$00A6, D0
 	JSR	loc_00010522
 	BRA.w	loc_0001E27C
@@ -34740,7 +34740,7 @@ loc_00020390:
 	dc.l	loc_0002039E
 	dc.w	$FFFF
 loc_0002039E:
-	TST.b	$FFFFC79A.w
+	TST.b	Crimson_armor_reward_enabled.w
 	BEQ.b	loc_000203D8
 	MOVE.w	#1, $FFFFC570.w
 	MOVE.w	#$1037, $FFFFC572.w
@@ -35553,7 +35553,7 @@ loc_00020FE2:
 	
 loc_00020FE4:
 	MOVE.l	#NoOneHereStr, Script_talk_source.w
-	TST.b	$FFFFC73E.w
+	TST.b	Watling_monster_encounter_triggered.w
 	BEQ.b	loc_00021004
 	TST.b	Watling_youth_restored.w
 	BNE.b	loc_00021004
@@ -35598,7 +35598,7 @@ loc_00021080:
 	
 loc_00021082:
 	MOVE.l	#NoOneHereStr, Script_talk_source.w
-	TST.b	$FFFFC7A7.w
+	TST.b	Bearwulf_cave_entered.w
 	BEQ.b	loc_000210BC
 	TST.b	Bearwulf_met.w
 	BNE.b	loc_000210BC
@@ -35613,7 +35613,7 @@ loc_000210BC:
 
 loc_000210BE:
 	MOVE.l	#NoOneHereStr, Script_talk_source.w
-	TST.b	$FFFFC7A7.w
+	TST.b	Bearwulf_cave_entered.w
 	BEQ.b	loc_000210DE
 	MOVE.w	#$0823, $FFFFC572.w
 	MOVE.l	#$FFFFC769, $FFFFC574.w
@@ -35623,7 +35623,7 @@ loc_000210DE:
 
 loc_000210E0:
 	MOVE.l	#NoOneHereStr, Script_talk_source.w
-	TST.b	$FFFFC7A8.w
+	TST.b	Malaga_dungeon_person_rescued.w
 	BEQ.b	loc_00021128
 	TST.b	Malaga_king_crowned.w
 	BNE.b	loc_00021128
@@ -35641,7 +35641,7 @@ loc_00021128:
 
 loc_0002112A:
 	MOVE.l	#NoOneHereStr, Script_talk_source.w
-	TST.b	$FFFFC7A8.w
+	TST.b	Malaga_dungeon_person_rescued.w
 	BEQ.b	loc_0002114A
 	MOVE.w	#$0114, $FFFFC572.w
 	MOVE.l	#$FFFFC75B, $FFFFC574.w
@@ -35668,7 +35668,7 @@ loc_0002119A:
 
 loc_0002119C:
 	MOVE.l	#NoOneHereStr, Script_talk_source.w
-	TST.b	$FFFFC7A9.w
+	TST.b	Helwig_prison_entered.w
 	BEQ.b	loc_000211BC
 	TST.b	Helwig_men_rescued.w
 	BNE.b	loc_000211BC
@@ -35695,10 +35695,10 @@ loc_00021204:
 	RTS
 	
 loc_00021206:
-	TST.b	$FFFFC76D.w
+	TST.b	Excalabria_boss_1_defeated.w
 	BNE.w	loc_0002121C
 	MOVE.b	#$FF, Boss_event_trigger.w
-	MOVE.b	#$FF, $FFFFC805.w
+	MOVE.b	#$FF, Ring_guardian_1_boss_trigger.w
 	RTS
 	
 loc_0002121C:
@@ -35708,10 +35708,10 @@ loc_0002121C:
 	RTS
 	
 loc_00021230:
-	TST.b	$FFFFC76E.w
+	TST.b	Excalabria_boss_2_defeated.w
 	BNE.w	loc_00021246
 	MOVE.b	#$FF, Boss_event_trigger.w
-	MOVE.b	#$FF, $FFFFC806.w
+	MOVE.b	#$FF, Ring_guardian_2_boss_trigger.w
 	RTS
 	
 loc_00021246:
@@ -35721,10 +35721,10 @@ loc_00021246:
 	RTS
 	
 loc_0002125A:
-	TST.b	$FFFFC76F.w
+	TST.b	Excalabria_boss_3_defeated.w
 	BNE.w	loc_00021270
 	MOVE.b	#$FF, Boss_event_trigger.w
-	MOVE.b	#$FF, $FFFFC807.w
+	MOVE.b	#$FF, Ring_guardian_3_boss_trigger.w
 	RTS
 	
 loc_00021270:
@@ -35734,7 +35734,7 @@ loc_00021270:
 	RTS
 	
 loc_00021284:
-	TST.b	$FFFFC774.w
+	TST.b	Swaffham_spy_defeated.w
 	BNE.w	loc_000212AA
 	BSR.w	loc_000214D4
 	MOVE.l	#DieLaughStr, Script_talk_source.w
@@ -35758,7 +35758,7 @@ loc_000212BE:
 	RTS
 	
 loc_000212D8:
-	TST.b	$FFFFC775.w
+	TST.b	Thar_defeated.w
 	BNE.w	loc_000212EE
 	BSR.w	InitTalkerWithGfxDescriptor_1F712
 	MOVE.l	#TharRevengeStr, Script_talk_source.w
@@ -35778,7 +35778,7 @@ loc_00021302:
 	RTS
 	
 loc_0002131C:
-	TST.b	$FFFFC776.w
+	TST.b	Luther_defeated.w
 	BNE.w	loc_00021332
 	BSR.w	InitTalkerWithGfxDescriptor_1F712
 	MOVE.l	#LutherDevastatedSwaffhamStr, Script_talk_source.w
@@ -35812,7 +35812,7 @@ loc_00021360:
 	TST.b	All_rings_collected.w
 	BNE.b	loc_000213CC
 	MOVE.l	#BreakMothersHeartStr, Script_talk_source.w
-	TST.b	$FFFFC7C1.w
+	TST.b	Stepfather_ring_dialog_shown.w
 	BNE.b	loc_000213CC
 	MOVE.l	#StepfatherRingsStr, Script_talk_source.w
 	BRA.b	loc_000213CC
@@ -35868,7 +35868,7 @@ loc_00021446:
 	
 loc_0002145A:
 	MOVE.w	Enemy_reward_type.w, $FFFFC570.w
-	MOVE.w	$FFFFC57C.w, $FFFFC572.w
+	MOVE.w	Enemy_reward_value.w, $FFFFC572.w
 	MOVE.b	#$FF, $FFFFC56F.w
 	MOVE.b	#$FF, $FFFFC56C.w
 	BSR.w	loc_00021480
@@ -44161,7 +44161,7 @@ loc_00032ACE:
 	BEQ.w	loc_00032B0E
 	PRINT 	GetRingsStr
 loc_00032B0E:
-	TST.b	$FFFFC77F.w
+	TST.b	Stow_tavern_free_meal_offered.w
 	BNE.w	loc_00032B2E
 	PRINT 	PleaseRescueUsStr
 	TST.b	Stow_thief_defeated.w
