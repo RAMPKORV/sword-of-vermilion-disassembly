@@ -28,8 +28,8 @@ PROGRAM_STATE_15 = $15;
 
 ;RAM
 
-Fade_out_buffer         = $FFFFC08E
-Fade_in_buffer          = $FFFFC0AA
+Fade_out_lines_mask     = $FFFFC08E
+Fade_in_lines_mask      = $FFFFC0AA
 Palette_fade_in_mask    = $FFFFC0AB
 Palette_line_0_index    = $FFFFC080
 Palette_line_1_index    = $FFFFC082
@@ -56,7 +56,7 @@ Palette_line_1_fade_in_target = $FFFFC0B8
 Palette_line_2_fade_in_target = $FFFFC0BA
 Palette_line_3_fade_in_target = $FFFFC0BC
 
-Camera_movement_buffer_in_town = $FFFFC10C
+Camera_scrolling_active = $FFFFC10C
 Tilemap_row_overflow_flag = $FFFFC10D
 Town_tilemap_width      = $FFFFC110
 Town_tilemap_height     = $FFFFC112
@@ -322,9 +322,9 @@ Current_cave_room = $FFFFC556
 
 Program_state = $FFFFC400
 Timer_seconds_bcd = $FFFFC403
-Game_state = $FFFFC412
+Gameplay_substate = $FFFFC412
 
-Confirm_option = $FFFFC428
+Dialog_selection = $FFFFC428
 
 Equipped_items  = $FFFFC4D0
 Equipped_sword  = $FFFFC4D0
@@ -333,11 +333,11 @@ Equipped_armor  = $FFFFC4D4
 Readied_magic   = $FFFFC4D6
 Equipped_unused = $FFFFC4D8 ; Probably unused, at least
 
-Selected_item_option        = $FFFFC440
+Selected_item_index         = $FFFFC440
 Possessed_items_length      = $FFFFC442
 Possessed_items_list        = $FFFFC444
 
-Selected_magic_option       = $FFFFC460
+Magic_list_cursor_index     = $FFFFC460
 
 Possessed_magics_length     = $FFFFC462
 Possessed_magics_list       = $FFFFC464
@@ -346,7 +346,7 @@ Possessed_equipment_list    = $FFFFC484
 
 Dialogue_state              = $FFFFC41E
 
-Selected_equipment_option   = $FFFFC4E6
+Ready_equipment_cursor_index = $FFFFC4E6
 Ready_equipment_list        = $FFFFC4E8
 Ready_equipment_category    = $FFFFC4E4
 Ready_equipment_selection   = $FFFFC4E2
@@ -365,7 +365,7 @@ Aries_selected_town          = $FFFFC506
 Church_service_selection    = $FFFFC500
 Possessed_rings_count       = $FFFFC502
 
-Player_is_in_overworld                          = $FFFFC540
+Player_in_first_person_mode                     = $FFFFC540
 Player_move_forward_in_overworld                = $FFFFC541
 Player_move_backward_in_overworld               = $FFFFC544
 Player_rotate_counter_clockwise_in_overworld    = $FFFFC542
@@ -381,8 +381,8 @@ DIRECTION_ANY   = $F
 
 Player_position_x_in_town       = $FFFFC606
 Player_position_y_in_town       = $FFFFC608
-Player_direction_in_town        = $FFFFC60C
-Player_movement_buffer_in_town  = $FFFFC60E
+Player_direction                = $FFFFC60C
+Player_is_moving                = $FFFFC60E
 Player_movement_step_counter    = $FFFFC60F
 Current_tile_type               = $FFFFC610
 Town_movement_blocked           = $FFFFC612
@@ -421,7 +421,7 @@ Sram_backup_ptr                 = $FFFFC678
 Random_number                   = $FFFFC680
 Number_Of_Enemies               = $FFFFC682
 Checked_for_encounter           = $FFFFC683
-Current_encounter_type_options  = $FFFFC684
+Encounter_group_index           = $FFFFC684
 Steps_since_last_encounter      = $FFFFC685
 Current_encounter_type          = $FFFFC68A
 
@@ -504,8 +504,8 @@ Watling_inn_unpaid_nights                   = $FFFFC7F6
 Boss_battle_flags                           = $FFFFC800
 
 Boss_event_trigger                      = $FFFFC817
-Solidier_fight_event_trigger            = $FFFFC816
-Map_triggers_start = $FFFFC818
+Soldier_fight_event_trigger             = $FFFFC816
+Rings_collected = $FFFFC818
 
 ; Towns
 TOWN_WYCLIF         = $00

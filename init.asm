@@ -139,7 +139,7 @@ loc_000010B8:
 	ADDA.w	D0, A5
 	BRA.b	loc_000010AC
 loc_000010C4:
-	TST.b	Player_is_in_overworld.w
+	TST.b	Player_in_first_person_mode.w
 	BNE.b	loc_000010D0
 	JSR	loc_0000F75E
 loc_000010D0:
