@@ -34,6 +34,7 @@ Palette_fade_in_mask    = $FFFFC0AB
 Palette_line_0_index    = $FFFFC080
 Palette_line_1_index    = $FFFFC082
 Palette_line_2_index    = $FFFFC084
+Palette_line_2_fade_target = $FFFFC0B0
 Palette_line_3_index    = $FFFFC086
 
 Camera_movement_buffer_in_town = $FFFFC10C
@@ -113,6 +114,8 @@ Menu_cursor_base_x          = $FFFFC236
 Menu_cursor_base_y          = $FFFFC238
 
 Player_entity_ptr           = $FFFFCC08
+Battle_entity_slot_1_ptr    = $FFFFCC0C
+Battle_entity_slot_2_ptr    = $FFFFCC10
 Enemy_list_ptr              = $FFFFCC14
 Current_encounter_gfx_ptr   = $FFFFC686
 Player_invulnerable         = $FFFFC661
@@ -140,6 +143,7 @@ Enemy_pair_offset_flag       = $FFFFC69E
 Enemy_direction_flag         = $FFFFC69F
 Encounter_behavior_flag      = $FFFFC68C
 Boss_ai_state                = $FFFFC536
+Battle_type                  = $FFFFC534
 
 Shop_selected_index          = $FFFFC4A0
 Shop_item_count              = $FFFFC4A2

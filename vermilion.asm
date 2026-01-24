@@ -278,10 +278,10 @@ loc_000006B6:
 	dc.l	$FFFFCC08
 	dc.w	$0000, $001F, $0040, $0000
 	dc.l	$00000000
-	dc.l	$FFFFCC0C
+	dc.l	Battle_entity_slot_1_ptr
 	dc.w	$0000, $001F, $0040, $0000
 	dc.l	$00000000
-	dc.l	$FFFFCC10
+	dc.l	Battle_entity_slot_2_ptr
 	dc.w	$001D, $001F, $0040, $0000
 	dc.l	$00000000
 	dc.l	$FFFFCC14 
@@ -1193,7 +1193,7 @@ loc_00001A46:
 	MOVE.w	#$0012, $FFFFC0AC.w
 loc_00001A4C:
 	MOVE.w	$FFFFC096.w, $FFFFC0AE.w
-	MOVE.w	$FFFFC098.w, $FFFFC0B0.w
+	MOVE.w	$FFFFC098.w, Palette_line_2_fade_target.w
 	MOVE.w	#$0011, $FFFFC0B2.w
 	MOVE.w	#2, $FFFFC414.w
 	MOVE.w	#$1F, Game_state.w
@@ -1602,7 +1602,7 @@ loc_00002022:
 	MOVE.l	#loc_00006E1C, $2(A6)
 	MOVE.w	#$0012, $FFFFC0AC.w
 	MOVE.w	$FFFFC096.w, $FFFFC0AE.w
-	MOVE.w	$FFFFC098.w, $FFFFC0B0.w
+	MOVE.w	$FFFFC098.w, Palette_line_2_fade_target.w
 	MOVE.w	#$0011, $FFFFC0B2.w
 	MOVE.w	#$1F, Game_state.w
 	MOVE.b	#$FF, Fade_in_buffer.w
@@ -2334,7 +2334,7 @@ loc_00002AC0:
 loc_00002ACC:
 	CLR.b	Boss_event_trigger.w
 	CLR.b	-$2(A0)
-	MOVE.w	D0, $FFFFC534.w
+	MOVE.w	D0, Battle_type.w
 	LEA	$FFFFC800.w, A0
 	MOVE.w	#3, D7
 loc_00002AE0:
@@ -2342,7 +2342,7 @@ loc_00002AE0:
 	DBF	D7, loc_00002AE0
 	BSR.w	ClearAllEnemyEntities
 	LEA	loc_00003694, A0
-	MOVE.w	$FFFFC534.w, D0
+	MOVE.w	Battle_type.w, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
 	MOVEA.l	(A0,D0.w), A0
@@ -2376,11 +2376,11 @@ loc_00002AE0:
 	CLR.b	Player_is_in_overworld.w
 	BSR.w	loc_00003654
 	LEA	loc_00003678, A0
-	MOVE.w	$FFFFC534.w, D0
+	MOVE.w	Battle_type.w, D0
 	ADD.w	D0, D0
 	MOVE.w	(A0,D0.w), $FFFFC0AE.w
 	MOVE.w	#$0036, $FFFFC0AC.w
-	MOVE.w	#$005E, $FFFFC0B0.w
+	MOVE.w	#$005E, Palette_line_2_fade_target.w
 	MOVE.w	#$0060, $FFFFC0B2.w
 	MOVE.b	#$FF, Fade_in_buffer.w
 	JSR	EnableDisplay
@@ -3210,7 +3210,7 @@ loc_00003652:
 
 loc_00003654:
 	LEA	loc_0000366A, A0
-	MOVE.w	$FFFFC534.w, D0
+	MOVE.w	Battle_type.w, D0
 	MOVE.b	(A0,D0.w), D0
 	JSR	loc_00010522
 	RTS
@@ -3557,7 +3557,7 @@ loc_00003ACA:
 	MOVE.l	#$94009380, D5
 	BSR.w	loc_00003BBE
 	LEA	$FFFF1500, A0
-	MOVEA.l	$FFFFCC0C.w, A6
+	MOVEA.l	Battle_entity_slot_1_ptr.w, A6
 	CLR.w	D0
 	MOVE.b	$24(A6), D0
 	MULU.w	#$0180, D0
@@ -3567,7 +3567,7 @@ loc_00003ACA:
 	MOVE.l	#$940093C0, D5
 	BSR.w	loc_00003BBE
 	LEA	$FFFF4200, A0
-	MOVEA.l	$FFFFCC10.w, A6
+	MOVEA.l	Battle_entity_slot_2_ptr.w, A6
 	CLR.w	D0
 	MOVE.b	$24(A6), D0
 	MULU.w	#$0080, D0
@@ -3590,7 +3590,7 @@ loc_00003B44:
 	MOVE.l	#$940093C0, D5
 	BSR.w	loc_00003BBE
 	LEA	$FFFF1800, A0
-	MOVEA.l	$FFFFCC0C.w, A6
+	MOVEA.l	Battle_entity_slot_1_ptr.w, A6
 	CLR.w	D0
 	MOVE.b	$24(A6), D0
 	MULU.w	#$0200, D0
@@ -3600,7 +3600,7 @@ loc_00003B44:
 	MOVE.l	#$94019300, D5
 	BSR.w	loc_00003BBE
 	LEA	$FFFF3A00, A0
-	MOVEA.l	$FFFFCC10.w, A6
+	MOVEA.l	Battle_entity_slot_2_ptr.w, A6
 	CLR.w	D0
 	MOVE.b	$24(A6), D0
 	MULU.w	#$0080, D0
@@ -3672,7 +3672,7 @@ loc_00003C7E:
 	CLR.b	Player_movement_buffer_in_town.w
 	CLR.b	$FFFFC660.w
 	MOVE.l	#loc_00003D5A, $2(A5)
-	MOVEA.l	$FFFFCC0C.w, A6
+	MOVEA.l	Battle_entity_slot_1_ptr.w, A6
 	BSET.b	#7, (A6)
 	BCLR.b	#7, $7(A6)
 	BCLR.b	#3, $7(A6)
@@ -3685,7 +3685,7 @@ loc_00003C7E:
 	MOVE.l	#loc_00004068, $2(A6)
 	TST.w	Equipped_sword.w
 	BLT.b	loc_00003D50
-	MOVEA.l	$FFFFCC10.w, A6
+	MOVEA.l	Battle_entity_slot_2_ptr.w, A6
 	BSET.b	#7, (A6)
 	BCLR.b	#7, $7(A6)
 	BCLR.b	#3, $7(A6)
@@ -3701,7 +3701,7 @@ loc_00003C7E:
 	RTS
 
 loc_00003D50:
-	MOVEA.l	$FFFFCC10.w, A6
+	MOVEA.l	Battle_entity_slot_2_ptr.w, A6
 	BCLR.b	#7, (A6)
 	RTS
 
@@ -3811,8 +3811,8 @@ loc_00003EBC:
 	RTS
 
 loc_00003EC4:
-	MOVEA.l	$FFFFCC0C.w, A6
-	MOVEA.l	$FFFFCC10.w, A4
+	MOVEA.l	Battle_entity_slot_1_ptr.w, A6
+	MOVEA.l	Battle_entity_slot_2_ptr.w, A4
 	LEA	loc_0003DA08, A0
 	MOVE.w	Player_direction_in_town.w, D1
 	ASL.w	#4, D1
@@ -3838,8 +3838,8 @@ loc_00003F22:
 	ANDI.w	#$000C, D0	
 	ADD.w	D1, D0	
 loc_00003F28:
-	MOVEA.l	$FFFFCC0C.w, A6
-	MOVEA.l	$FFFFCC10.w, A4
+	MOVEA.l	Battle_entity_slot_1_ptr.w, A6
+	MOVEA.l	Battle_entity_slot_2_ptr.w, A4
 	LEA	loc_0003DA08, A0
 	MOVE.b	(A0,D0.w), $24(A5)
 	MOVE.b	$1(A0,D0.w), $24(A6)
@@ -3851,8 +3851,8 @@ loc_00003F28:
 loc_00003F58:
 	TST.b	$FFFFC660.w
 	BEQ.w	loc_00003FA2
-	MOVEA.l	$FFFFCC0C.w, A6
-	MOVEA.l	$FFFFCC10.w, A4
+	MOVEA.l	Battle_entity_slot_1_ptr.w, A6
+	MOVEA.l	Battle_entity_slot_2_ptr.w, A4
 	ADDQ.b	#1, $28(A5)
 	MOVE.b	$28(A5), D0
 	ASR.w	#3, D0
@@ -3965,7 +3965,7 @@ loc_000040BA:
 
 loc_000040DE: ; suspected collision detection
 	LEA	loc_00004250, A0
-	MOVEA.l	$FFFFCC0C.w, A6
+	MOVEA.l	Battle_entity_slot_1_ptr.w, A6
 	CLR.w	D0
 	MOVE.b	$24(A6), D0
 	ASL.w	#3, D0
@@ -6681,7 +6681,7 @@ loc_00006834:
 	CLR.b	Player_movement_buffer_in_town.w
 	CLR.b	$FFFFC67E.w
 	MOVE.l	#loc_00006908, $2(A5)
-	MOVEA.l	$FFFFCC0C.w, A6
+	MOVEA.l	Battle_entity_slot_1_ptr.w, A6
 	BSET.b	#7, (A6)
 	BCLR.b	#7, $7(A6)
 	BCLR.b	#3, $7(A6)
@@ -6692,7 +6692,7 @@ loc_00006834:
 	MOVE.w	#1, $8(A6)
 	CLR.w	$16(A6)
 	MOVE.l	#loc_00006BA0, $2(A6)
-	MOVEA.l	$FFFFCC10.w, A6
+	MOVEA.l	Battle_entity_slot_2_ptr.w, A6
 	BSET.b	#7, (A6)
 	BCLR.b	#7, $7(A6)
 	BCLR.b	#3, $7(A6)
@@ -6730,11 +6730,11 @@ loc_00006930:
 loc_0000694C:
 	CLR.w	D0
 loc_0000694E:
-	MOVEA.l	$FFFFCC0C.w, A6
+	MOVEA.l	Battle_entity_slot_1_ptr.w, A6
 	LEA	loc_00006976, A0
 	MOVE.b	(A0,D0.w), $24(A6)
 	MOVE.b	#8, $24(A5)
-	MOVEA.l	$FFFFCC10.w, A4
+	MOVEA.l	Battle_entity_slot_2_ptr.w, A4
 	MOVE.b	#6, $24(A4)
 	CLR.b	Player_movement_buffer_in_town.w
 	BRA.w	loc_00006B0A
@@ -6775,8 +6775,8 @@ loc_000069C0:
 	BRA.w	loc_00006A3C
 loc_000069E4:
 	MOVE.w	#$0027, $1E(A5)
-	MOVEA.l	$FFFFCC0C.w, A6
-	MOVEA.l	$FFFFCC10.w, A4
+	MOVEA.l	Battle_entity_slot_1_ptr.w, A6
+	MOVEA.l	Battle_entity_slot_2_ptr.w, A4
 	MOVE.b	#$0C, $24(A5)
 	MOVE.b	#$0C, $24(A6)
 	MOVE.b	#5, $24(A4)
@@ -6797,8 +6797,8 @@ loc_00006A22:
 	BRA.w	loc_00006A6A
 loc_00006A3C:
 	MOVE.w	#$0030, $1E(A5)
-	MOVEA.l	$FFFFCC0C.w, A6
-	MOVEA.l	$FFFFCC10.w, A4
+	MOVEA.l	Battle_entity_slot_1_ptr.w, A6
+	MOVEA.l	Battle_entity_slot_2_ptr.w, A4
 	MOVE.b	#8, $24(A5)
 	MOVE.b	#8, $24(A6)
 	MOVE.b	#6, $24(A4)
@@ -6818,8 +6818,8 @@ loc_00006A8E:
 	ANDI.w	#6, D0	
 	ASL.w	#1, D0	
 loc_00006A94:
-	MOVEA.l	$FFFFCC0C.w, A6
-	MOVEA.l	$FFFFCC10.w, A4
+	MOVEA.l	Battle_entity_slot_1_ptr.w, A6
+	MOVEA.l	Battle_entity_slot_2_ptr.w, A4
 	MOVE.b	(A0,D0.w), $24(A5)
 	MOVE.b	$1(A0,D0.w), $24(A6)
 	MOVE.b	$2(A0,D0.w), $24(A4)
@@ -6830,8 +6830,8 @@ loc_00006A94:
 loc_00006ABE:
 	TST.b	$FFFFC660.w
 	BEQ.w	loc_00006B0A
-	MOVEA.l	$FFFFCC0C.w, A6
-	MOVEA.l	$FFFFCC10.w, A4
+	MOVEA.l	Battle_entity_slot_1_ptr.w, A6
+	MOVEA.l	Battle_entity_slot_2_ptr.w, A4
 	ADDQ.b	#1, $28(A5)
 	MOVE.b	$28(A5), D0
 	ASR.w	#2, D0
@@ -6922,7 +6922,7 @@ loc_00006BCA:
 
 loc_00006C10:
 	LEA	loc_00006C24, A0
-	MOVE.w	$FFFFC534.w, D2
+	MOVE.w	Battle_type.w, D2
 	ADD.w	D2, D2
 	ADD.w	D2, D2
 	JSR	(A0,D2.w)
@@ -12507,7 +12507,7 @@ EnemyStartingPositions:
 	dc.w	$00DE, $00A0 
 loc_0000B7AC:
 	LEA	loc_0000B7C4, A0
-	MOVE.w	$FFFFC534.w, D0
+	MOVE.w	Battle_type.w, D0
 	ANDI.w	#$000F, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
@@ -14142,7 +14142,7 @@ SetEntityAnimFrames:
 
 loc_0000CF16:
 	LEA	loc_0000CF2E, A0
-	MOVE.w	$FFFFC534.w, D0
+	MOVE.w	Battle_type.w, D0
 	ANDI.w	#$000F, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
@@ -14258,7 +14258,7 @@ loc_0000D03A:
 ; loc_0000D046
 UpdateEncounterPalette:
 	LEA	loc_00003678, A0
-	MOVE.w	$FFFFC534.w, D0
+	MOVE.w	Battle_type.w, D0
 	ADD.w	D0, D0
 	MOVE.w	(A0,D0.w), D0
 	CMP.w	$FFFFC082.w, D0
@@ -14270,7 +14270,7 @@ loc_0000D068:
 
 loc_0000D06A:
 	LEA	loc_0000D116, A2
-	MOVE.w	$FFFFC534.w, D6
+	MOVE.w	Battle_type.w, D6
 	ANDI.w	#$000F, D6
 	ASL.w	#3, D6
 	MOVE.l	(A2,D6.w), Transaction_amount.w
@@ -14286,7 +14286,7 @@ loc_0000D094:
 	MOVE.b	#$20, (A1)+
 	MOVEA.l	#TakesStr, A0
 	JSR	loc_00012A6C
-	MOVE.w	$FFFFC534.w, D6
+	MOVE.w	Battle_type.w, D6
 	ASL.w	#3, D6
 	LEA	loc_0000D116, A2
 	MOVE.l	(A2,D6.w), D0
@@ -14296,7 +14296,7 @@ loc_0000D094:
 	MOVE.b	#$6E, (A1)+
 	MOVE.b	#$64, (A1)+
 	MOVE.b	#$20, (A1)+
-	MOVE.w	$FFFFC534.w, D6
+	MOVE.w	Battle_type.w, D6
 	ASL.w	#3, D6
 	LEA	loc_0000D116, A2
 	MOVE.l	$4(A2,D6.w), D0
@@ -16159,7 +16159,7 @@ loc_0000EB32:
 loc_0000EB40:
 	CLR.b	Boss_event_trigger.w
 	CLR.b	-$2(A0)
-	MOVE.w	D0, $FFFFC534.w
+	MOVE.w	D0, Battle_type.w
 	LEA	$FFFFC800.w, A0
 	MOVE.w	#3, D7
 loc_0000EB54:
@@ -16167,7 +16167,7 @@ loc_0000EB54:
 	DBF	D7, loc_0000EB54
 	JSR	ClearAllEnemyEntities
 	LEA	loc_00003694, A0
-	MOVE.w	$FFFFC534.w, D0
+	MOVE.w	Battle_type.w, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
 	MOVEA.l	(A0,D0.w), A0
@@ -18238,7 +18238,7 @@ loc_00010538:
 	
 loc_0001053A:
 	LEA	loc_000235A0, A6
-	MOVE.w	$FFFFC534.w, D0
+	MOVE.w	Battle_type.w, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
 	MOVEA.l	(A6,D0.w), A6
@@ -18258,7 +18258,7 @@ loc_00010568:
 	
 loc_0001056A:
 	LEA	loc_00023740, A6
-	MOVE.w	$FFFFC534.w, D0
+	MOVE.w	Battle_type.w, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
 	MOVEA.l	(A6,D0.w), A6
@@ -21631,7 +21631,7 @@ loc_0001348A:
 	BTST.l	#2, D3
 	BEQ.b	loc_0001349C
 	LEA	$FFFFC040.w, A1
-	MOVE.w	$FFFFC0B0.w, D1
+	MOVE.w	Palette_line_2_fade_target.w, D1
 	BSR.w	loc_00013522
 loc_0001349C:
 	BTST.l	#3, D3
@@ -21712,7 +21712,7 @@ loc_0001358C:
 loc_00013598:
 	BTST.l	#2, D3
 	BEQ.b	loc_000135A4
-	MOVE.w	$FFFFC0B0.w, Palette_line_2_index.w
+	MOVE.w	Palette_line_2_fade_target.w, Palette_line_2_index.w
 loc_000135A4:
 	BTST.l	#3, D3
 	BEQ.b	loc_000135B0
@@ -22124,7 +22124,7 @@ loc_000150F6:
 	JSR	loc_000002D0
 	JSR	loc_000002EA
 	MOVE.w	#$0033, $FFFFC0AE.w
-	MOVE.w	#$0034, $FFFFC0B0.w
+	MOVE.w	#$0034, Palette_line_2_fade_target.w
 	MOVE.w	#$0032, $FFFFC0B2.w
 	MOVE.b	#$FF, Fade_in_buffer.w
 	BSR.w	loc_000153FA
@@ -22562,7 +22562,7 @@ loc_000156C0:
 	JSR	loc_000002EA
 	MOVE.w	#$004F, $FFFFC0AC.w
 	MOVE.w	#$0050, $FFFFC0AE.w
-	MOVE.w	#$004F, $FFFFC0B0.w
+	MOVE.w	#$004F, Palette_line_2_fade_target.w
 	MOVE.w	#$0052, $FFFFC0B2.w
 	MOVE.w	#$0033, $FFFFC0B6.w
 	MOVE.w	#$0032, $FFFFC0B8.w
@@ -22646,7 +22646,7 @@ loc_000157F0:
 	BSR.w	loc_000159DE
 	MOVE.w	#$004F, $FFFFC0AC.w
 	MOVE.w	#$0050, $FFFFC0AE.w
-	MOVE.w	#$0051, $FFFFC0B0.w
+	MOVE.w	#$0051, Palette_line_2_fade_target.w
 	MOVE.w	#$0052, $FFFFC0B2.w
 	ADDQ.w	#1, $FFFFC3A0.w
 	BSR.w	LoadPrologueFadeParams
@@ -22689,7 +22689,7 @@ loc_000158A0:
 	BSR.w	loc_00015A1E
 	MOVE.w	#$004F, $FFFFC0AC.w
 	MOVE.w	#$0052, $FFFFC0AE.w
-	MOVE.w	#$004F, $FFFFC0B0.w
+	MOVE.w	#$004F, Palette_line_2_fade_target.w
 	MOVE.w	#$0052, $FFFFC0B2.w
 	ADDQ.w	#1, $FFFFC3A0.w
 	BSR.w	LoadPrologueFadeParams
@@ -22703,7 +22703,7 @@ loc_000158D2:
 	BSR.w	loc_00015A94
 	MOVE.w	#$004F, $FFFFC0AC.w
 	MOVE.w	#$0052, $FFFFC0AE.w
-	MOVE.w	#$004F, $FFFFC0B0.w
+	MOVE.w	#$004F, Palette_line_2_fade_target.w
 	MOVE.w	#$0052, $FFFFC0B2.w
 	ADDQ.w	#1, $FFFFC3A0.w
 	BSR.w	LoadPrologueFadeParams
@@ -24031,7 +24031,7 @@ loc_00016A8C:
 	BNE.b	loc_00016AB6
 	MOVE.l	#loc_00016AB8, $2(A5)
 	MOVE.b	#4, Fade_in_buffer.w
-	MOVE.w	#$0028, $FFFFC0B0.w
+	MOVE.w	#$0028, Palette_line_2_fade_target.w
 	MOVE.b	#$82, D0
 	JSR	loc_00010522
 loc_00016AB6:
@@ -24388,9 +24388,9 @@ loc_00016F82:
 	JSR	ClearAllEnemyEntities
 	MOVEA.l	$FFFFCC08.w, A6
 	BCLR.b	#7, (A6)
-	MOVEA.l	$FFFFCC0C.w, A6
+	MOVEA.l	Battle_entity_slot_1_ptr.w, A6
 	BCLR.b	#7, (A6)
-	MOVEA.l	$FFFFCC10.w, A6
+	MOVEA.l	Battle_entity_slot_2_ptr.w, A6
 	BCLR.b	#7, (A6)
 	MOVE.w	#$0032, Ending_timer.w
 	MOVE.l	#loc_00016FD8, $2(A5)
@@ -24516,7 +24516,7 @@ loc_00017134:
 	MOVE.b	#6, Fade_in_buffer.w
 	MOVE.w	#$0094, $FFFFC080.w
 	MOVE.w	#$0092, $FFFFC0AE.w
-	MOVE.w	#$0028, $FFFFC0B0.w
+	MOVE.w	#$0028, Palette_line_2_fade_target.w
 	MOVE.w	#$0096, $FFFFC086.w
 	ADDQ.w	#1, Ending_sequence_step.w
 	MOVE.w	#$009C, D0
@@ -25866,7 +25866,7 @@ CastLuminos:
 	BNE.b	loc_000187B4
 	MOVE.w	#$000F, $FFFFC424.w
 	MOVE.w	#$0048, $FFFFC0AE.w
-	MOVE.w	#$0040, $FFFFC0B0.w
+	MOVE.w	#$0040, Palette_line_2_fade_target.w
 	MOVE.b	#6, Fade_in_buffer.w
 	CLR.w	$FFFFC562.w
 	MOVE.b	#1, $FFFFC560.w
@@ -28609,7 +28609,7 @@ UseCandle:
 	BNE.b	loc_0001AD9C
 	MOVE.w	#$C, Item_menu_state.w
 	MOVE.w	#$48, $FFFFC0AE.w
-	MOVE.w	#$40, $FFFFC0B0.w
+	MOVE.w	#$40, Palette_line_2_fade_target.w
 	MOVE.b	#6, Fade_in_buffer.w
 	MOVE.w	#$0800, $FFFFC562.w
 	MOVE.b	#$FF, $FFFFC560.w
@@ -28631,7 +28631,7 @@ UseLantern:
 	BNE.b	loc_0001ADE8
 	MOVE.w	#$C, Item_menu_state.w
 	MOVE.w	#$48, $FFFFC0AE.w
-	MOVE.w	#$40, $FFFFC0B0.w
+	MOVE.w	#$40, Palette_line_2_fade_target.w
 	MOVE.b	#6, Fade_in_buffer.w
 	CLR.w	$FFFFC562.w
 	MOVE.b	#1, $FFFFC560.w
