@@ -38,6 +38,120 @@ Script_source_base      = $FFFFC204
 Script_output_y         = $FFFFC232
 Script_output_x         = $FFFFC234
 Script_talk_source      = $FFFFC250
+Script_window_tiles_buffer = $FFFF7AB4
+Small_menu_tiles_buffer    = $FFFF7CF4
+Large_menu_tiles_buffer    = $FFFF7E52
+Left_menu_tiles_buffer     = $FFFF862E
+Window_tilemap_buffer      = $FFFF9920
+Window_text_scratch        = $FFFF9D80
+
+Window_tile_x              = $FFFFC224
+Window_tile_y              = $FFFFC226
+Window_tile_width          = $FFFFC22C
+Window_tile_height         = $FFFFC22E
+Window_text_x              = $FFFF9906
+Window_text_y              = $FFFF990C
+Window_width               = $FFFF9904
+Window_height              = $FFFF990A
+Window_tilemap_x           = $FFFF9902
+Window_tilemap_y           = $FFFF9908
+Window_tile_attrs          = $FFFF990E
+Window_tilemap_draw_pending = $FFFF9900
+Window_draw_row            = $FFFF9914
+Window_text_row            = $FFFF9916
+Window_tilemap_row_draw_pending = $FFFF9911
+
+Window_tilemap_draw_x       = $FFFFC220
+Window_tilemap_draw_y       = $FFFFC222
+Window_tilemap_draw_width   = $FFFFC228
+Window_tilemap_draw_height  = $FFFFC22A
+Window_number_cursor_x      = $FFFFC242
+Window_number_cursor_y      = $FFFFC244
+
+Reward_script_type          = $FFFFC570
+Reward_script_value         = $FFFFC572
+Reward_script_flag          = $FFFFC574
+Reward_script_active        = $FFFFC56C
+Reward_script_available     = $FFFFC56F
+Pending_hint_text           = $FFFFC438
+Map_trigger_flags           = $FFFFC820
+Talker_gfx_descriptor_ptr   = $FFFFC566
+Talker_present_flag         = $FFFFC578
+Dialog_active_flag          = $FFFFC561
+Dialog_state_flag           = $FFFFC56A
+Dialog_timer                = $FFFFC554
+Dialog_phase                = $FFFFC552
+Saved_game_state            = $FFFFC414
+Saved_player_direction      = $FFFFC616
+Spellbook_menu_state        = $FFFFC424
+
+Menu_cursor_column_break    = $FFFFC23A
+Menu_cursor_last_index      = $FFFFC23C
+Menu_cursor_base_x          = $FFFFC236
+Menu_cursor_base_y          = $FFFFC238
+
+Player_entity_ptr           = $FFFFCC08
+Enemy_list_ptr              = $FFFFCC14
+Current_encounter_gfx_ptr   = $FFFFC686
+Player_invulnerable         = $FFFFC661
+Object_slot_01_ptr           = $FFFFCC18
+Object_slot_02_ptr           = $FFFFCC1C
+Object_slot_03_ptr           = $FFFFCC20
+Object_slot_04_ptr           = $FFFFCC24
+Object_slot_05_ptr           = $FFFFCC28
+Object_slot_06_ptr           = $FFFFCC2C
+Object_slot_07_ptr           = $FFFFCC30
+Object_slot_08_ptr           = $FFFFCC34
+Object_slot_09_ptr           = $FFFFCC38
+Object_slot_0A_ptr           = $FFFFCC3C
+Object_slot_0B_ptr           = $FFFFCC40
+Object_slot_0C_ptr           = $FFFFCC44
+Object_slot_0D_ptr           = $FFFFCC48
+Object_slot_0E_ptr           = $FFFFCC4C
+Current_actor_ptr            = $FFFFCC54
+
+Enemy_anim_frame_mask        = $FFFFC690
+Enemy_anim_frame_shift       = $FFFFC692
+Enemy_anim_table_main        = $FFFFC694
+Enemy_anim_table_child       = $FFFFC698
+Enemy_pair_offset_flag       = $FFFFC69E
+Enemy_direction_flag         = $FFFFC69F
+Encounter_behavior_flag      = $FFFFC68C
+
+Shop_selected_index          = $FFFFC4A0
+Shop_item_count              = $FFFFC4A2
+Shop_selected_price          = $FFFFC4B0
+Shop_item_list               = $FFFFC4B4
+
+Town_camera_move_state       = $FFFFC100
+Town_camera_move_counter     = $FFFFC102
+HScroll_base                 = $FFFFC104
+VScroll_base                 = $FFFFC106
+VDP_Reg1_cache               = $FFFFC3F2
+HScroll_full_update_flag     = $FFFFC39A
+HScroll_update_busy          = $FFFFC3B4
+Scene_update_flag            = $FFFFC3B6
+HScroll_run_table            = $FFFFC3B8
+Vdp_dma_cmd                  = $FFFFC18C
+Vdp_dma_cmd_hi               = $FFFFC18E
+Vdp_dma_ram_routine          = $FFFFC190
+Sprite_attr_count            = $FFFFE000
+Sprite_attr_buffer           = $FFFFE004
+
+Area_map_revealed             = $FFFFC55F
+Cave_light_active             = $FFFFC560
+Cave_light_timer              = $FFFFC562
+
+Camera_scroll_x               = $FFFFC40E
+Camera_scroll_y               = $FFFFC410
+
+Controller_current_state    = $FFFFC408
+Controller_previous_state   = $FFFFC409
+
+Sound_queue_count           = $FFFFC320
+Sound_queue_buffer          = $FFFFC322
+Sound_driver_play           = $FFFFF404
+
 
 Current_town = $FFFFC40C
 Current_cave_room = $FFFFC556
