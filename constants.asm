@@ -1,7 +1,281 @@
 VDP_control_port    = $C00004
 VDP_data_port       = $C00000
 Z80_bus_request     = $A11100
-Script_player_name  = $F7
+
+; ============================================================
+; Dialogue Script Opcodes
+; ============================================================
+; These control codes are embedded in dialogue text strings
+; to control text rendering and trigger game events.
+;
+; Text Control Codes:
+SCRIPT_END              = $FF   ; End of dialogue script
+SCRIPT_NEWLINE          = $FE   ; Carriage return / new line
+SCRIPT_CONTINUE         = $FD   ; Show text, wait for input, then continue
+SCRIPT_QUESTION         = $FC   ; Related to dialog questions (shows choices)
+SCRIPT_YES_NO           = $FB   ; Yes/No choice with event trigger params
+SCRIPT_CHOICE           = $FA   ; Quest choice - expects answer and map trigger
+SCRIPT_ACTIONS          = $F9   ; Execute actions (give items/money, set triggers)
+SCRIPT_TRIGGERS         = $F8   ; Set multiple event triggers (simpler format)
+Script_player_name      = $F7   ; Insert player's name
+;
+; $F9 (SCRIPT_ACTIONS) Format:
+; --------------------------
+; Byte 0: $F9 opcode
+; Byte 1: Number of actions
+; Following bytes: Action entries (variable length)
+;
+; Action types:
+;   - If first byte of action == $02: Give money
+;     Format: $02, BCD0, BCD1, BCD2, BCD3 (4-byte BCD amount in kims)
+;   - Otherwise: Set event trigger
+;     Format: HI_BYTE, LO_BYTE (16-bit offset from Event_triggers_start)
+;
+; $F8 (SCRIPT_TRIGGERS) Format:
+; ---------------------------
+; Byte 0: $F8 opcode  
+; Byte 1: Number of triggers
+; Following bytes: Single-byte offsets from Event_triggers_start
+
+SCRIPT_ACTION_GIVE_KIMS = $02   ; Action type: give money to player
+
+; ============================================================
+; Event Trigger Offsets (for use in SCRIPT_ACTIONS dc.w)
+; ============================================================
+; These are 16-bit offsets from Event_triggers_start ($FFFFC720)
+; Used with SCRIPT_ACTIONS ($F9) to set event flags
+; Formula: TRIGGER_xxx = RAM_address - $FFFFC720
+;
+TRIGGER_Blade_is_dead                       = $0000
+TRIGGER_Treasure_of_troy_challenge_issued   = $0002
+TRIGGER_Fake_king_killed                    = $0003
+TRIGGER_Treasure_of_troy_given_to_king      = $0004
+TRIGGER_Talked_to_real_king                 = $0005
+TRIGGER_Treasure_of_troy_found              = $0006
+TRIGGER_Talked_to_king_after_treasure       = $0007
+TRIGGER_Player_chose_to_stay_in_parma       = $0008
+TRIGGER_Watling_villagers_asked_about_rings    = $000A
+TRIGGER_Treasure_of_troy_challenge_issued       = $0002
+TRIGGER_Talked_to_king_after_given_treasure_of_troy = $0007
+TRIGGER_Truffle_collected                   = $000C
+TRIGGER_Deepdale_king_secret_kept           = $000D
+TRIGGER_Sanguios_book_offered               = $000E
+TRIGGER_Accused_of_theft                    = $000F
+TRIGGER_Stow_thief_defeated                 = $0010
+TRIGGER_Asti_monster_defeated               = $0011
+TRIGGER_Stow_innocence_proven               = $0012
+TRIGGER_Sent_to_malaga                      = $0013
+TRIGGER_Bearwulf_met                        = $0014
+TRIGGER_Bearwulf_returned_home              = $0015
+TRIGGER_Helwig_old_woman_quest_started      = $0016
+TRIGGER_Watling_monster_encounter           = $001E
+TRIGGER_Tadcaster_treasure_quest_started    = $001F
+TRIGGER_Tadcaster_treasure_found            = $0020
+TRIGGER_Malaga_king_crowned                 = $001B
+TRIGGER_Barrow_map_received                 = $001C
+TRIGGER_Imposter_killed                     = $001D
+TRIGGER_Bully_first_fight_won               = $0021
+TRIGGER_Tadcaster_bully_triggered           = $0022
+TRIGGER_Helwig_men_rescued                  = $0024
+TRIGGER_Uncle_tibor_visited                 = $0025
+TRIGGER_Old_man_waiting_for_letter          = $0026
+TRIGGER_Old_man_and_woman_paired            = $0027
+TRIGGER_Swaffham_ruined                     = $0028
+TRIGGER_Ring_of_earth_obtained              = $0029
+TRIGGER_White_crystal_quest_started         = $002A
+TRIGGER_Ring_of_wind_received               = $002B
+TRIGGER_Red_crystal_quest_started           = $002C
+TRIGGER_Red_crystal_received                = $002D
+TRIGGER_Blue_crystal_quest_started          = $002E
+TRIGGER_Blue_crystal_received               = $002F
+TRIGGER_Ate_spy_dinner                      = $0030
+TRIGGER_Swaffham_ate_poisoned_food          = $0031
+TRIGGER_Digot_plant_received                = $0032
+TRIGGER_Spy_dinner_poisoned_flag            = $0033
+TRIGGER_Pass_to_carthahena_purchased        = $0034
+TRIGGER_Sword_stolen_by_blacksmith          = $0035
+TRIGGER_Sword_retrieved_from_blacksmith     = $0036
+TRIGGER_Player_has_sword_of_vermilion       = $0037
+TRIGGER_Tsarkon_is_dead                     = $0038
+TRIGGER_Carthahena_boss_met                 = $0039
+TRIGGER_Alarm_clock_rang                    = $003A
+TRIGGER_Crown_received                      = $003B
+TRIGGER_Girl_left_for_stow                  = $003C
+TRIGGER_Keltwick_girl_sleeping              = $003E
+TRIGGER_Old_man_has_received_sketch         = $003F
+TRIGGER_Old_woman_has_received_sketch       = $0040
+TRIGGER_Dragon_shield_offered               = $0041
+TRIGGER_Old_mans_sketch_given               = $0042
+TRIGGER_Player_has_old_womans_sketch        = $0043
+TRIGGER_Dragon_shield_received              = $0044
+TRIGGER_Pass_to_carthahena_given            = $0045
+TRIGGER_Sanguios_purchased                  = $0046
+TRIGGER_Sanguios_confiscated                = $0047
+TRIGGER_Sanguia_learned_from_book           = $0048
+TRIGGER_Bearwulf_weapon_reward_given        = $0049
+TRIGGER_Tadcaster_treasure_kims_received    = $004A
+TRIGGER_Knute_informed_of_swaffham_ruin     = $004B
+TRIGGER_Player_greatly_poisoned             = $004C
+TRIGGER_Excalabria_boss_1_defeated          = $004D
+TRIGGER_Excalabria_boss_2_defeated          = $004E
+TRIGGER_Excalabria_boss_3_defeated          = $004F
+TRIGGER_White_crystal_received              = $0050
+TRIGGER_Red_key_received                    = $0051
+TRIGGER_Blue_key_received                   = $0052
+TRIGGER_Carthahena_boss_defeated            = $0053
+TRIGGER_Swaffham_spy_defeated               = $0054
+TRIGGER_Thar_defeated                       = $0055
+TRIGGER_Luther_defeated                     = $0056
+TRIGGER_Swaffham_miniboss_defeated          = $0057
+TRIGGER_All_rings_collected                 = $0058
+TRIGGER_Barrow_quest_1_complete             = $0059
+TRIGGER_Barrow_quest_2_complete             = $005A
+TRIGGER_Poison_trap_sprung                  = $005B
+TRIGGER_Watling_inn_free_stay_used          = $005C
+TRIGGER_Watling_inn_broke_penalty           = $005D
+TRIGGER_Sixteen_rings_used_at_throne        = $005E
+TRIGGER_Stow_tavern_free_meal_offered       = $005F
+; Chest/Treasure flags
+TRIGGER_Thar_bronze_key_collected           = $0060
+TRIGGER_Thar_silver_key_collected           = $0061
+TRIGGER_Luther_gold_key_collected           = $0062
+TRIGGER_Knute_thule_key_dialog_shown        = $0063
+TRIGGER_Thule_key_received                  = $0064
+TRIGGER_Cave_key_dialog_shown               = $0065
+TRIGGER_Secret_key_received                 = $0066
+TRIGGER_Royal_shield_chest_opened           = $0067
+TRIGGER_Money_chest_256_opened                      = $0088
+TRIGGER_Herbs_chest_opened                          = $0089
+TRIGGER_Herbs_chest_2_opened                        = $008A
+TRIGGER_Crimson_armor_chest_opened                  = $008B
+TRIGGER_Candle_chest_opened                         = $008C
+TRIGGER_Herbs_chest_3_opened                        = $008D
+TRIGGER_Dark_sword_chest_opened                     = $008F
+TRIGGER_Herbs_chest_4_opened                        = $0090
+TRIGGER_Scale_armor_chest_opened                    = $0091
+TRIGGER_Money_chest_768_opened                      = $0093
+TRIGGER_Candle_chest_2_opened                       = $0096
+TRIGGER_Wyclif_outskirts_chest_opened               = $0098
+TRIGGER_Medicine_chest_opened                       = $0099
+TRIGGER_Crimson_armor_reward_enabled                = $009A
+TRIGGER_Money_chest_768_b_opened                    = $009B
+TRIGGER_Herbs_chest_5_opened                        = $009C
+TRIGGER_Money_chest_1792_opened                     = $009E
+TRIGGER_Lantern_chest_opened                        = $00A2
+TRIGGER_Money_chest_8192_opened                     = $00A4
+TRIGGER_Money_chest_12288_opened                    = $00A5
+TRIGGER_Bearwulf_cave_entered                       = $00A7
+TRIGGER_Malaga_dungeon_person_rescued               = $00A8
+TRIGGER_Helwig_prison_entered                       = $00A9
+TRIGGER_Malaga_key_dialog_shown                     = $00AA
+TRIGGER_Dungeon_key_received                        = $00AB
+TRIGGER_Replacement_key_enabled                     = $00AC
+TRIGGER_Received_replacement_key                    = $00AD
+TRIGGER_Candle_chest_3_opened                       = $00AE
+TRIGGER_Lantern_chest_2_opened                      = $00AF
+TRIGGER_Herbs_chest_6_opened                        = $00B0
+TRIGGER_Ruby_brooch_chest_opened                    = $00B2
+; Ring of Wisdom region
+TRIGGER_Ring_of_wisdom_received             = $00F8
+TRIGGER_Ring_of_sky_received                = $00F9
+TRIGGER_Ring_of_earth_quest_complete        = $00FD
+; Map reveal triggers (offset $100+)
+; These are 16-bit offsets used to reveal areas on the world map
+; Format: $01XX where XX is the map grid position
+TRIGGER_Map_01_00                           = $0100
+TRIGGER_Map_01_01                           = $0101
+TRIGGER_Map_01_02                           = $0102
+TRIGGER_Map_01_03                           = $0103
+TRIGGER_Map_01_04                           = $0104
+TRIGGER_Map_01_05                           = $0105
+TRIGGER_Map_01_06                           = $0106
+TRIGGER_Map_01_07                           = $0107
+TRIGGER_Map_01_08                           = $0108
+TRIGGER_Map_01_09                           = $0109
+TRIGGER_Map_01_0A                           = $010A
+TRIGGER_Map_01_0B                           = $010B
+TRIGGER_Map_01_0C                           = $010C
+TRIGGER_Map_01_0D                           = $010D
+TRIGGER_Map_01_0E                           = $010E
+TRIGGER_Map_01_10                           = $0110
+TRIGGER_Map_01_11                           = $0111
+TRIGGER_Map_01_12                           = $0112
+TRIGGER_Map_01_13                           = $0113
+TRIGGER_Map_01_14                           = $0114
+TRIGGER_Map_01_15                           = $0115
+TRIGGER_Map_01_16                           = $0116
+TRIGGER_Map_01_17                           = $0117
+TRIGGER_Map_01_18                           = $0118
+TRIGGER_Map_01_19                           = $0119
+TRIGGER_Map_01_1D                           = $011D
+TRIGGER_Map_01_1C                           = $011C
+TRIGGER_Map_01_21                           = $0121
+TRIGGER_Map_01_22                           = $0122
+TRIGGER_Map_01_23                           = $0123
+TRIGGER_Map_01_24                           = $0124
+TRIGGER_Map_01_25                           = $0125
+TRIGGER_Map_01_26                           = $0126
+TRIGGER_Map_01_27                           = $0127
+TRIGGER_Map_01_28                           = $0128
+TRIGGER_Map_01_29                           = $0129
+TRIGGER_Map_01_2C                           = $012C
+TRIGGER_Map_01_2D                           = $012D
+TRIGGER_Map_01_2E                           = $012E
+TRIGGER_Map_01_36                           = $0136
+TRIGGER_Map_01_3C                           = $013C
+TRIGGER_Map_01_3D                           = $013D
+TRIGGER_Map_01_3E                           = $013E
+TRIGGER_Map_01_3F                           = $013F
+TRIGGER_Map_01_40                           = $0140
+TRIGGER_Map_01_41                           = $0141
+TRIGGER_Map_01_42                           = $0142
+TRIGGER_Map_01_43                           = $0143
+TRIGGER_Map_01_44                           = $0144
+TRIGGER_Map_01_45                           = $0145
+TRIGGER_Map_01_46                           = $0146
+TRIGGER_Map_01_4C                           = $014C
+TRIGGER_Map_01_4D                           = $014D
+TRIGGER_Map_01_4E                           = $014E
+TRIGGER_Map_01_50                           = $0150
+TRIGGER_Map_01_51                           = $0151
+TRIGGER_Map_01_52                           = $0152
+TRIGGER_Map_01_53                           = $0153
+TRIGGER_Map_01_54                           = $0154
+TRIGGER_Map_01_55                           = $0155
+TRIGGER_Map_01_56                           = $0156
+TRIGGER_Map_01_5C                           = $015C
+TRIGGER_Map_01_5D                           = $015D
+TRIGGER_Map_01_60                           = $0160
+TRIGGER_Map_01_62                           = $0162
+TRIGGER_Map_01_65                           = $0165
+TRIGGER_Map_01_66                           = $0166
+TRIGGER_Map_01_67                           = $0167
+TRIGGER_Map_01_68                           = $0168
+TRIGGER_Map_01_69                           = $0169
+TRIGGER_Map_01_6A                           = $016A
+TRIGGER_Map_01_6C                           = $016C
+TRIGGER_Map_01_6D                           = $016D
+TRIGGER_Map_01_70                           = $0170
+TRIGGER_Map_01_72                           = $0172
+TRIGGER_Map_01_73                           = $0173
+TRIGGER_Map_01_74                           = $0174
+TRIGGER_Map_01_75                           = $0175
+TRIGGER_Map_01_76                           = $0176
+TRIGGER_Map_01_77                           = $0177
+TRIGGER_Map_01_79                           = $0179
+TRIGGER_Map_01_7A                           = $017A
+TRIGGER_Map_01_7B                           = $017B
+TRIGGER_Map_01_7C                           = $017C
+; Additional trigger offsets for miscellaneous events
+TRIGGER_Misc_00FA                           = $00FA
+TRIGGER_Misc_00FC                           = $00FC
+TRIGGER_Misc_00F2                           = $00F2
+TRIGGER_Misc_00F3                           = $00F3
+TRIGGER_Misc_00F4                           = $00F4
+TRIGGER_Misc_00F5                           = $00F5
+TRIGGER_Misc_00F6                           = $00F6
+TRIGGER_Misc_00F7                           = $00F7
+TRIGGER_Misc_011C                           = $011C
 
 PROGRAM_STATE_00 = $00
 PROGRAM_STATE_01 = $01;
