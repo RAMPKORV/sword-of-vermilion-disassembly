@@ -41507,8 +41507,7 @@ OffYouGoStr:
 NicePlaceStr:
 	dc.b	"But this is", $FE
 	dc.b	"such a nice place."
-	dc.b	SCRIPT_TRIGGERS, $01, TRIGGER_Talked_to_king_after_given_treasure_of_troy - Event_triggers_start
-	dc.b	$00 
+	dc.b	SCRIPT_TRIGGERS, $01, TRIGGER_Talked_to_king_after_given_treasure_of_troy, $00
 NeedPermanentSolutionStr:
 	dc.b	"What is this?", $FE
 	dc.b	"You again? I see that I", $FE
@@ -41715,14 +41714,14 @@ MeetKingStr:
 KingNotHereStr:
 	dc.b	"The king is not", $FE
 	dc.b	"here at the moment."
-	dc.b	SCRIPT_TRIGGERS, $01, TRIGGER_Truffle_collected - Event_triggers_start
+	dc.b	SCRIPT_TRIGGERS, $01, TRIGGER_Truffle_collected
 KingNotSureReturnStr:
 	dc.b	"I'm not really sure when", $FE
 	dc.b	"the king is coming back.", SCRIPT_END
 KingNotSeeingVisitorsStr:
 	dc.b	"The king is not seeing", $FE
 	dc.b	"visitors right now."
-	dc.b	SCRIPT_TRIGGERS, $01, TRIGGER_Truffle_collected - Event_triggers_start, $00
+	dc.b	SCRIPT_TRIGGERS, $01, TRIGGER_Truffle_collected, $00
 KingInTownStr:
 	dc.b	"The king is in", $FE
 	dc.b	"town somewhere.", SCRIPT_END, $00

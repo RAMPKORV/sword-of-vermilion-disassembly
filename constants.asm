@@ -57,7 +57,7 @@ TRIGGER_Player_chose_to_stay_in_parma       = $0008
 TRIGGER_Watling_villagers_asked_about_rings    = $000A
 TRIGGER_Treasure_of_troy_challenge_issued       = $0002
 TRIGGER_Talked_to_king_after_given_treasure_of_troy = $0007
-TRIGGER_Truffle_collected                   = $000C
+TRIGGER_Truffle_collected                   = $000B
 TRIGGER_Deepdale_king_secret_kept           = $000D
 TRIGGER_Sanguios_book_offered               = $000E
 TRIGGER_Accused_of_theft                    = $000F
@@ -1149,3 +1149,28 @@ OLD_MAN_POSITION_Y = $000D
 
 OLD_WOMAN_POSITION_X = $0027
 OLD_WOMAN_POSITION_Y = $0003
+
+; ============================================================
+; Sound Effect IDs
+; ============================================================
+; These are passed to loc_00010522 (PlaySound function)
+; to play sound effects. Use with the PlaySound macro.
+;
+SOUND_MENU_CANCEL       = $00A8   ; Cancel/back sound (36 uses)
+SOUND_MENU_SELECT       = $00A1   ; Confirm/select sound (23 uses)
+SOUND_MENU_CURSOR       = $00A0   ; Cursor movement (8 uses)
+SOUND_ITEM_PICKUP       = $00AE   ; Item pickup/acquire (16 uses)
+SOUND_LEVEL_UP          = $00E0   ; Level up fanfare (16 uses)
+SOUND_PURCHASE          = $00AC   ; Shop purchase (6 uses)
+SOUND_HEAL              = $00B5   ; Healing sound (6 uses)
+SOUND_DOOR_OPEN         = $00C0   ; Door opening (5 uses)
+SOUND_ATTACK            = $00A6   ; Attack sound (5 uses)
+SOUND_HIT               = $00A9   ; Hit/damage sound (5 uses)
+SOUND_SPELL_CAST        = $00B9   ; Spell casting (4 uses)
+SOUND_MAGIC_EFFECT      = $00B1   ; Magic effect (4 uses)
+SOUND_ERROR             = $0090   ; Error/invalid action (3 uses)
+SOUND_TREASURE          = $00BE   ; Treasure chest (3 uses)
+SOUND_SAVE              = $00BC   ; Save game (3 uses)
+SOUND_FOOTSTEP          = $0089   ; Footstep/walk (3 uses)
+SOUND_ENEMY_DEATH       = $00AD   ; Enemy death (3 uses)
+
