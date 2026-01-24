@@ -29,15 +29,27 @@ PROGRAM_STATE_15 = $15;
 ;RAM
 
 Fade_out_buffer         = $FFFFC08E
+Fade_in_buffer          = $FFFFC0AA
+Palette_fade_in_mask    = $FFFFC0AB
+Palette_line_0_index    = $FFFFC080
+Palette_line_1_index    = $FFFFC082
+Palette_line_2_index    = $FFFFC084
+Palette_line_3_index    = $FFFFC086
 
 Camera_movement_buffer_in_town = $FFFFC10C
+Town_tileset_index      = $FFFFC128
+Town_npc_data_ptr       = $FFFFC15E
+Tilemap_plane_select    = $FFFFC174
 Current_town_room = $FFFFC126
 
 Script_source_offset    = $FFFFC202
 Script_source_base      = $FFFFC204
+Script_tile_attrs       = $FFFFC208
+Script_text_complete    = $FFFFC20F
 Script_output_y         = $FFFFC232
 Script_output_x         = $FFFFC234
 Script_talk_source      = $FFFFC250
+Text_build_buffer       = $FFFFC260
 Script_window_tiles_buffer = $FFFF7AB4
 Small_menu_tiles_buffer    = $FFFF7CF4
 Large_menu_tiles_buffer    = $FFFF7E52
@@ -57,7 +69,9 @@ Window_tilemap_x           = $FFFF9902
 Window_tilemap_y           = $FFFF9908
 Window_tile_attrs          = $FFFF990E
 Window_tilemap_draw_pending = $FFFF9900
+Window_tilemap_draw_active  = $FFFF9910
 Window_draw_row            = $FFFF9914
+Window_draw_type           = $FFFF9912
 Window_text_row            = $FFFF9916
 Window_tilemap_row_draw_pending = $FFFF9911
 
@@ -84,9 +98,17 @@ Dialog_phase                = $FFFFC552
 Saved_game_state            = $FFFFC414
 Saved_player_direction      = $FFFFC616
 Spellbook_menu_state        = $FFFFC424
+Overworld_menu_state        = $FFFFC416
+Main_menu_selection         = $FFFFC418
+Player_input_blocked        = $FFFFC41C
+Item_menu_state             = $FFFFC420
+Equip_list_menu_state       = $FFFFC422
+Ready_equipment_state       = $FFFFC426
+Take_item_state             = $FFFFC42C
 
 Menu_cursor_column_break    = $FFFFC23A
 Menu_cursor_last_index      = $FFFFC23C
+Menu_cursor_index           = $FFFFC23E
 Menu_cursor_base_x          = $FFFFC236
 Menu_cursor_base_y          = $FFFFC238
 
@@ -117,6 +139,7 @@ Enemy_anim_table_child       = $FFFFC698
 Enemy_pair_offset_flag       = $FFFFC69E
 Enemy_direction_flag         = $FFFFC69F
 Encounter_behavior_flag      = $FFFFC68C
+Boss_ai_state                = $FFFFC536
 
 Shop_selected_index          = $FFFFC4A0
 Shop_item_count              = $FFFFC4A2
@@ -127,16 +150,24 @@ Town_camera_move_state       = $FFFFC100
 Town_camera_move_counter     = $FFFFC102
 HScroll_base                 = $FFFFC104
 VScroll_base                 = $FFFFC106
+Town_camera_tile_x           = $FFFFC116
+Town_camera_tile_y           = $FFFFC114
 VDP_Reg1_cache               = $FFFFC3F2
 HScroll_full_update_flag     = $FFFFC39A
+Ending_sequence_step         = $FFFFC390
+Ending_timer                 = $FFFFC392
 HScroll_update_busy          = $FFFFC3B4
 Scene_update_flag            = $FFFFC3B6
 HScroll_run_table            = $FFFFC3B8
 Vdp_dma_cmd                  = $FFFFC18C
 Vdp_dma_cmd_hi               = $FFFFC18E
 Vdp_dma_ram_routine          = $FFFFC190
+Tilemap_data_ptr_plane_a     = $FFFFC182
+Tilemap_data_ptr_plane_b     = $FFFFC186
 Sprite_attr_count            = $FFFFE000
 Sprite_attr_buffer           = $FFFFE004
+Tile_gfx_buffer              = $FFFFA000
+Tilemap_buffer_plane_b       = $FFFF2000
 
 Area_map_revealed             = $FFFFC55F
 Cave_light_active             = $FFFFC560
@@ -209,6 +240,7 @@ Player_position_x_in_town       = $FFFFC606
 Player_position_y_in_town       = $FFFFC608
 Player_direction_in_town        = $FFFFC60C
 Player_movement_buffer_in_town  = $FFFFC60E
+Current_tile_type               = $FFFFC610
 Player_kims                     = $FFFFC620
 Player_experience               = $FFFFC624
 Player_next_level_experience    = $FFFFC628
@@ -224,8 +256,8 @@ Player_luk                      = $FFFFC63C
 Player_level                    = $FFFFC640
 Player_poisoned                 = $FFFFC642
 Player_name                     = $FFFFC64C
+Transaction_amount              = $FFFFC65A
 
-;$FFFFC65A.w
 ;$FFFFC65B.w
 ;$FFFFC65C.w
 ;$FFFFC65D.w
