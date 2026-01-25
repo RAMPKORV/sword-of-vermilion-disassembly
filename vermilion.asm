@@ -1453,7 +1453,7 @@ loc_00001D58:
 	RTS
 
 loc_00001D7E:
-	JSR	loc_00012610
+	JSR	DrawStatusHudWindow
 	CLR.b	Player_input_blocked.w
 	CLR.b	Player_awakening_flag.w
 	CLR.b	Banshee_powder_active.w
@@ -1547,7 +1547,7 @@ loc_00001E9C:
 	RTS
 
 loc_00001EC4:
-	JSR	loc_00012610
+	JSR	DrawStatusHudWindow
 	CLR.w	Overworld_menu_state.w
 	MOVE.w	#3, Window_draw_type.w
 	CLR.w	$FFFF9916.w
@@ -2584,7 +2584,7 @@ loc_00002D6C:
 	RTS
 
 loc_00002D92:
-	JSR	loc_00012610
+	JSR	DrawStatusHudWindow
 	MOVE.w	#$13, Gameplay_substate.w
 	CLR.b	Player_input_blocked.w
 loc_00002DA2:
@@ -20791,7 +20791,9 @@ loc_000125E4:
 	BLE.b	loc_000125E2
 	RTS
 	
-loc_00012610:
+; DrawStatusHudWindow
+; Draw main status HUD window (bottom bar showing HP, level, etc.)
+DrawStatusHudWindow:
 	TST.b	$FFFFC561.w
 	BEQ.b	loc_00012620
 	MOVEA.l	$FFFFCC54.w, A6
@@ -25582,7 +25584,7 @@ loc_00018038:
 	RTS
 
 loc_0001805A:
-	JSR	loc_00012610
+	JSR	DrawStatusHudWindow
 	MOVE.w	#$000A, $FFFFC424.w
 	MOVE.w	#$000E, Window_draw_type.w
 	CLR.w	$FFFF9916.w
@@ -25630,7 +25632,7 @@ loc_000180DE:
 	MOVE.w	#$00A8, D0	
 	JSR	QueueSoundEffect	
 	JSR	loc_000126B6	
-	JSR	loc_00012610	
+	JSR	DrawStatusHudWindow	
 	MOVE.w	#1, $FFFFC424.w	
 	BRA.w	loc_0001162E	
 loc_0001810A:
@@ -25666,7 +25668,7 @@ loc_00018158:
 	BEQ.w	loc_000181C6
 	JSR	DrawLeftMenuWindow	
 	JSR	loc_000126B6	
-	JSR	loc_00012610	
+	JSR	DrawStatusHudWindow	
 	MOVE.w	#1, $FFFFC424.w	
 	JSR	loc_0001162E	
 	RTS
@@ -25745,7 +25747,7 @@ loc_000182A4:
 	MOVE.w	#$00A8, D0
 	JSR	QueueSoundEffect
 	JSR	loc_000126B6
-	JSR	loc_00012610
+	JSR	DrawStatusHudWindow
 	MOVE.w	#1, $FFFFC424.w
 	BRA.w	loc_0001162E
 loc_000182D0:
@@ -25781,7 +25783,7 @@ loc_0001831E:
 	BEQ.b	loc_00018388
 	JSR	DrawLeftMenuWindow	
 	JSR	loc_000126B6	
-	JSR	loc_00012610	
+	JSR	DrawStatusHudWindow	
 	MOVE.w	#1, $FFFFC424.w	
 	JSR	loc_0001162E	
 	RTS
@@ -25874,7 +25876,7 @@ loc_00018498:
 	MOVE.w	#$00A8, D0
 	JSR	QueueSoundEffect
 	BSR.w	loc_000126B6
-	BSR.w	loc_00012610
+	BSR.w	DrawStatusHudWindow
 	MOVE.w	#1, $FFFFC424.w
 	BRA.w	loc_0001162E
 	dc.b	$4E, $75 
@@ -25929,7 +25931,7 @@ loc_00018548:
 	RTS
 
 loc_0001856A:
-	JSR	loc_00012610
+	JSR	DrawStatusHudWindow
 	MOVE.w	#$000A, $FFFFC424.w
 	MOVE.w	#$000E, Window_draw_type.w
 	CLR.w	$FFFF9916.w
@@ -28132,7 +28134,7 @@ loc_0001A406:
 	RTS
 
 loc_0001A428:
-	JSR	loc_00012610
+	JSR	DrawStatusHudWindow
 	MOVE.w	#3, Item_menu_state.w
 	MOVE.w	#4, Window_draw_type.w
 	CLR.w	$FFFF9916.w
@@ -28179,7 +28181,7 @@ loc_0001A4AC:
 	MOVE.w	#$00A8, D0
 	JSR	QueueSoundEffect
 	JSR	loc_000126B6
-	JSR	loc_00012610
+	JSR	DrawStatusHudWindow
 	MOVE.w	#1, Item_menu_state.w
 	JSR	loc_00011614
 	RTS
@@ -28217,7 +28219,7 @@ loc_0001A52C:
 	BEQ.b	loc_0001A59C
 	JSR	DrawLeftMenuWindow
 	JSR	loc_000126B6
-	JSR	loc_00012610
+	JSR	DrawStatusHudWindow
 	MOVE.w	#1, Item_menu_state.w
 	JSR	loc_00011614
 	RTS
@@ -28291,7 +28293,7 @@ loc_0001A656:
 	RTS
 
 loc_0001A678:
-	JSR	loc_00012610
+	JSR	DrawStatusHudWindow
 	MOVE.w	#4, Window_draw_type.w
 	CLR.w	$FFFF9916.w
 	MOVE.b	#$FF, $FFFF9911.w
@@ -28325,7 +28327,7 @@ loc_0001A6D2:
 	MOVE.w	#$00A8, D0
 	JSR	QueueSoundEffect
 	JSR	loc_000126B6
-	JSR	loc_00012610
+	JSR	DrawStatusHudWindow
 	MOVE.w	#1, Item_menu_state.w
 	JSR	loc_00011614
 	RTS
@@ -28426,7 +28428,7 @@ loc_0001A82A:
 	RTS
 
 loc_0001A854:
-	JSR	loc_00012610
+	JSR	DrawStatusHudWindow
 	TST.b	Player_in_first_person_mode.w
 	BEQ.b	loc_0001A870
 	TST.b	Banshee_powder_active.w
@@ -29783,7 +29785,7 @@ loc_0001BBAA:
 
 loc_0001BBC4:
 	CLR.w	Overworld_menu_state.w
-	JSR	loc_00012610
+	JSR	DrawStatusHudWindow
 	MOVE.w	#3, Window_draw_type.w
 	CLR.w	$FFFF9916.w
 	MOVE.b	#$FF, $FFFF9911.w
@@ -29947,7 +29949,7 @@ loc_0001BDD2:
 loc_0001BDD8:
 	TST.b	$FFFF9911.w
 	BNE.b	loc_0001BDF8
-	JSR	loc_00012610
+	JSR	DrawStatusHudWindow
 	CLR.w	Overworld_menu_state.w
 	MOVE.w	#3, Window_draw_type.w
 	CLR.w	$FFFF9916.w
@@ -30576,7 +30578,7 @@ loc_0001C698:
 	RTS
 
 loc_0001C6BE:
-	JSR	loc_00012610
+	JSR	DrawStatusHudWindow
 	JSR	loc_00012766
 	CLR.w	Overworld_menu_state.w
 	MOVE.w	#3, Window_draw_type.w
@@ -30892,7 +30894,7 @@ loc_0001CB26:
 loc_0001CB2C:
 	TST.b	$FFFF9911.w
 	BNE.b	loc_0001CB56
-	JSR	loc_00012610
+	JSR	DrawStatusHudWindow
 	MOVE.w	#$00A8, D0
 	JSR	QueueSoundEffect
 	CLR.w	Overworld_menu_state.w
@@ -31399,7 +31401,7 @@ loc_0001D1EC:
 	MOVE.w	#$00A8, D0
 	JSR	QueueSoundEffect
 	JSR	loc_00012742
-	JSR	loc_00012610
+	JSR	DrawStatusHudWindow
 	JSR	loc_0001271E
 	JSR	loc_00010EFE
 	MOVE.w	#1, Ready_equipment_state.w
@@ -31578,7 +31580,7 @@ loc_0001D476:
 	RTS
 
 loc_0001D496:
-	JSR	loc_00012610
+	JSR	DrawStatusHudWindow
 	JSR	loc_0001271E
 	JSR	loc_00010EFE
 	MOVE.w	#1, Ready_equipment_state.w
@@ -32267,7 +32269,7 @@ loc_0001DD14:
 	RTS
 	
 loc_0001DD3A:
-	JSR	loc_00012610
+	JSR	DrawStatusHudWindow
 	MOVE.w	#2, Open_menu_state.w
 	RTS
 	
@@ -32520,7 +32522,7 @@ loc_0001E0B8:
 	RTS
 	
 loc_0001E0DE:
-	JSR	loc_00012610
+	JSR	DrawStatusHudWindow
 	CLR.w	Overworld_menu_state.w
 	MOVE.w	#3, Window_draw_type.w
 	CLR.w	$FFFF9916.w
@@ -32821,7 +32823,7 @@ loc_0001E514:
 	RTS
 	
 loc_0001E53A:
-	JSR	loc_00012610
+	JSR	DrawStatusHudWindow
 	CLR.w	Overworld_menu_state.w
 	MOVE.w	#3, Window_draw_type.w
 	CLR.w	$FFFF9916.w
@@ -33170,7 +33172,7 @@ loc_0001EA5A:
 loc_0001EA80:
 	MOVE.w	Current_area_music.w, D0
 	JSR	QueueSoundEffect
-	JSR	loc_00012610
+	JSR	DrawStatusHudWindow
 	CLR.w	Overworld_menu_state.w
 	MOVE.w	#3, Window_draw_type.w
 	CLR.w	$FFFF9916.w
