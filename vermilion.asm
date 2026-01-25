@@ -2075,7 +2075,7 @@ loc_000026BA: ; level up
 	JSR	UpgradeLevelStats
 	MOVE.w	#100, Level_up_timer.w
 	JSR	loc_000122D2
-	JSR	loc_00012E68
+	JSR	LoadLevelUpBannerTiles
 	BRA.b	loc_00002724
 loc_00002706:
 	TST.b	Is_in_cave.w
@@ -2295,7 +2295,7 @@ loc_00002974:
 	JSR	UpgradeLevelStats
 	MOVE.w	#100, Level_up_timer.w
 	JSR	loc_000122D2
-	JSR	loc_00012E68
+	JSR	LoadLevelUpBannerTiles
 	JSR	DisplayPlayerHpMp
 	JSR	loc_000130EA
 	JSR	loc_00013186
@@ -19201,7 +19201,8 @@ loc_00010EA2:
 	MOVE.b	#$FF, Window_tilemap_draw_active.w
 	RTS
 	
-loc_00010EFE:
+; DrawEquipmentMenuWindow
+DrawEquipmentMenuWindow:
 	MOVE.w	#2, Menu_cursor_column_break.w
 	MOVE.w	#$FFFF, Menu_cursor_last_index.w
 	MOVE.w	#3, Menu_cursor_base_x.w
@@ -19258,7 +19259,8 @@ loc_00010FB6:
 	MOVE.b	#$FF, Window_tilemap_draw_active.w
 	RTS
 	
-loc_00011012:
+; DrawShopMenuWindow
+DrawShopMenuWindow:
 	MOVE.w	#2, Menu_cursor_column_break.w
 	MOVE.w	#$FFFF, Menu_cursor_last_index.w
 	MOVE.w	#3, Menu_cursor_base_x.w
@@ -19303,7 +19305,8 @@ loc_000110BE:
 	BSR.w	loc_00011168
 	RTS
 	
-loc_000110D0:
+; DrawMagicListBorders
+DrawMagicListBorders:
 	MOVE.w	Possessed_magics_length.w, D7
 	BSR.w	loc_00011106
 	MOVE.w	Possessed_magics_length.w, D0
@@ -19765,7 +19768,8 @@ loc_00011648:
 	MOVE.w	#4, Menu_cursor_base_y.w	
 	RTS
 	
-loc_00011666:
+; ResetScriptOutputVars
+ResetScriptOutputVars:
 	MOVE.w	#5, Script_output_base_x.w
 	ADDQ.w	#2, Script_output_y.w
 	MOVE.w	#0, Script_tile_attrs.w
@@ -20905,7 +20909,8 @@ DrawCenterMenuWindow:
 	BSR.w	DrawWindowFromBuffer
 	RTS
 	
-loc_000126DA:
+; RestoreShopListFromBuffer
+RestoreShopListFromBuffer:
 	LEA	Shop_list_tiles_buffer.w, A0
 	MOVE.w	#$000A, Window_tile_x.w
 	MOVE.w	#2, Window_tile_y.w
@@ -21518,7 +21523,8 @@ loc_00012E28:
 	BLE.b	loc_00012E28
 	RTS
 
-loc_00012E68:
+; loc_00012E68
+LoadLevelUpBannerTiles:
 	LEA	loc_00021EE4, A0
 	MOVE.l	#$420A0003, D5
 	ORI	#$0700, SR
@@ -25670,7 +25676,7 @@ loc_000180A8:
 	TST.b	Script_text_complete.w
 	BEQ.b	loc_000180D6
 	JSR	SaveCenterDialogAreaToBuffer
-	JSR	loc_000110D0
+	JSR	DrawMagicListBorders
 	JSR	loc_00012A9A
 	CLR.w	Magic_list_cursor_index.w
 	MOVE.w	#4, Spellbook_menu_state.w
@@ -25786,7 +25792,7 @@ loc_00018272:
 	TST.b	Script_text_complete.w
 	BEQ.b	loc_0001829C
 	JSR	SaveCenterDialogAreaToBuffer
-	JSR	loc_000110D0
+	JSR	DrawMagicListBorders
 	JSR	loc_00012A9A
 	CLR.w	Magic_list_cursor_index.w
 	ADDQ.w	#1, Spellbook_menu_state.w
@@ -25916,7 +25922,7 @@ loc_00018468:
 	TST.b	Script_text_complete.w
 	BEQ.b	loc_00018490
 	JSR	SaveCenterDialogAreaToBuffer
-	JSR	loc_000110D0
+	JSR	DrawMagicListBorders
 	JSR	loc_00012A9A
 	CLR.w	Magic_list_cursor_index.w
 	ADDQ.w	#1, Spellbook_menu_state.w
@@ -25967,7 +25973,7 @@ loc_0001850E:
 loc_00018528:
 	TST.b	Script_text_complete.w	
 	BEQ.b	loc_00018540	
-	JSR	loc_00011666	
+	JSR	ResetScriptOutputVars	
 	MOVE.l	Script_continuation_ptr.w, Script_source_base.w	
 	ADDQ.w	#1, Spellbook_menu_state.w	
 	RTS
@@ -28446,7 +28452,7 @@ loc_0001A7D2:
 	BNE.w	loc_0001A7F2
 	TST.b	Script_text_complete.w
 	BEQ.b	loc_0001A7EA
-	JSR	loc_00011666
+	JSR	ResetScriptOutputVars
 	BRA.w	loc_0001A804
 loc_0001A7EA:
 	JSR	ProcessScriptText
@@ -29584,7 +29590,7 @@ loc_0001B6F0:
 	MOVE.w	#$00A8, D0	
 	JSR	QueueSoundEffect	
 	JSR	RestoreLeftMenuFromBuffer	
-	JSR	loc_000126DA	
+	JSR	RestoreShopListFromBuffer	
 	MOVE.w	#$2D, Dialogue_state.w	
 	RTS
 	
@@ -29734,7 +29740,7 @@ loc_0001BA5E:
 	MOVE.w	D1, (A0,D0.w)
 loc_0001BA8A:
 	JSR	RestoreLeftMenuFromBuffer
-	JSR	loc_000126DA
+	JSR	RestoreShopListFromBuffer
 	JSR	ResetScriptAndInitDialogue
 	MOVE.w	#1, Dialogue_state.w
 	RTS
@@ -29745,7 +29751,7 @@ loc_0001BAA4:
 	JSR	DrawLeftMenuWindow
 	MOVE.w	#$2D, Dialogue_state.w
 	JSR	RestoreLeftMenuFromBuffer
-	JSR	loc_000126DA
+	JSR	RestoreShopListFromBuffer
 	JSR	ResetScriptAndInitDialogue
 	PRINT 	NoLeaveWithoutBuyingStr
 	CLR.b	Script_text_complete.w
@@ -29921,7 +29927,7 @@ loc_0001BCB8:
 	BEQ.b	loc_0001BCD8
 	CLR.b	Shop_purchase_made.w
 	JSR	loc_000123A6
-	JSR	loc_00011012
+	JSR	DrawShopMenuWindow
 	CLR.w	Shop_action_selection.w
 	ADDQ.w	#1, Dialogue_state.w
 	RTS
@@ -30045,8 +30051,8 @@ loc_0001BE36:
 	MOVE.w	#$00A8, D0
 	JSR	QueueSoundEffect
 	JSR	RestoreLeftMenuFromBuffer
-	JSR	loc_000126DA
-	JSR	loc_00011012
+	JSR	RestoreShopListFromBuffer
+	JSR	DrawShopMenuWindow
 	MOVE.w	#7, Dialogue_state.w
 	RTS
 
@@ -30060,7 +30066,7 @@ loc_0001BE6E:
 	JSR	DrawMenuCursor
 	JSR	SaveRightMenuAreaToBuffer
 	JSR	DrawYesNoDialog
-	JSR	loc_00011666
+	JSR	ResetScriptOutputVars
 	LEA	Text_build_buffer.w, A1
 	LEA	IsStr, A0
 	JSR	CopyStringUntilFF
@@ -30163,7 +30169,7 @@ loc_0001C010:
 	LEA	loc_00025FEC, A0
 	MOVE.l	(A0,D0.w), Script_source_base.w
 loc_0001C024:
-	JSR	loc_000126DA
+	JSR	RestoreShopListFromBuffer
 	ADDQ.w	#1, Dialogue_state.w
 	RTS
 
@@ -30194,7 +30200,7 @@ loc_0001C082:
 	BEQ.b	loc_0001C0BA
 	JSR	SaveRightMenuAreaToBuffer
 	ADDQ.w	#1, Dialogue_state.w
-	JSR	loc_00011666
+	JSR	ResetScriptOutputVars
 	MOVE.w	Current_shop_type.w, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
@@ -30225,7 +30231,7 @@ loc_0001C0F4:
 	JSR	DrawMenuCursor
 	TST.w	Dialog_selection.w
 	BNE.b	loc_0001C120
-	JSR	loc_00011012
+	JSR	DrawShopMenuWindow
 	JSR	RestoreLeftMenuFromBuffer
 	JSR	DrawLeftMenuWindow
 	MOVE.w	#7, Dialogue_state.w
@@ -30269,7 +30275,7 @@ loc_0001C168:
 	BEQ.b	loc_0001C1B2
 	CMPI.w	#1, D0
 	BEQ.b	loc_0001C1CC
-	JSR	loc_000110D0
+	JSR	DrawMagicListBorders
 	JSR	loc_00012A9A
 	MOVE.l	#Possessed_magics_list, Active_inventory_list_ptr.w
 	MOVE.w	Possessed_magics_length.w, D0
@@ -30338,7 +30344,7 @@ loc_0001C27C:
 	BEQ.b	loc_0001C2AA
 	JSR	DrawCenterMenuWindow
 	JSR	RestoreLeftMenuFromBuffer
-	JSR	loc_00011012
+	JSR	DrawShopMenuWindow
 	MOVE.w	#7, Dialogue_state.w
 	RTS
 
@@ -30532,7 +30538,7 @@ loc_0001C542:
 	TST.w	Dialog_selection.w
 	BNE.b	loc_0001C56E
 	JSR	RestoreLeftMenuFromBuffer	
-	JSR	loc_00011012	
+	JSR	DrawShopMenuWindow	
 	JSR	DrawLeftMenuWindow	
 	MOVE.w	#7, Dialogue_state.w	
 	RTS
@@ -31344,7 +31350,7 @@ loc_0001D036:
 	MOVE.w	Main_menu_selection.w, Menu_cursor_index.w
 	JSR	DrawMenuCursor
 	JSR	loc_0001256E
-	JSR	loc_00010EFE
+	JSR	DrawEquipmentMenuWindow
 	ADDQ.w	#1, Ready_equipment_state.w
 	CLR.w	Ready_equipment_selection.w
 	CLR.w	Menu_cursor_index.w
@@ -31412,7 +31418,7 @@ loc_0001D138:
 	MOVE.w	#$00A8, D0
 	JSR	QueueSoundEffect
 	JSR	loc_0001271E
-	JSR	loc_00010EFE
+	JSR	DrawEquipmentMenuWindow
 	MOVE.w	#1, Ready_equipment_state.w
 	RTS
 
@@ -31460,7 +31466,7 @@ loc_0001D1EC:
 	JSR	loc_00012742
 	JSR	DrawStatusHudWindow
 	JSR	loc_0001271E
-	JSR	loc_00010EFE
+	JSR	DrawEquipmentMenuWindow
 	MOVE.w	#1, Ready_equipment_state.w
 	RTS
 
@@ -31572,7 +31578,7 @@ loc_0001D39C:
 	MOVE.w	#$00A8, D0	
 	JSR	QueueSoundEffect	
 	JSR	loc_0001271E	
-	JSR	loc_00010EFE	
+	JSR	DrawEquipmentMenuWindow	
 	MOVE.w	#1, Ready_equipment_state.w	
 	RTS
 	
@@ -31639,7 +31645,7 @@ loc_0001D476:
 loc_0001D496:
 	JSR	DrawStatusHudWindow
 	JSR	loc_0001271E
-	JSR	loc_00010EFE
+	JSR	DrawEquipmentMenuWindow
 	MOVE.w	#1, Ready_equipment_state.w
 	RTS
 
@@ -32437,7 +32443,7 @@ loc_0001DEBA:
 loc_0001DEC6:
 	PRINT 	MoneyInsideStr
 loc_0001DECE:
-	JSR	loc_00011666
+	JSR	ResetScriptOutputVars
 	MOVE.w	#1, Open_menu_state.w
 	RTS
 	
@@ -33064,7 +33070,7 @@ loc_0001E7DE:
 	BEQ.w	loc_0001E818
 	CMPI.w	#1, D0
 	BEQ.w	loc_0001E834
-	JSR	loc_000110D0
+	JSR	DrawMagicListBorders
 	JSR	loc_00012A9A
 	MOVE.l	#Possessed_magics_list, Active_inventory_list_ptr.w
 	MOVE.w	Possessed_magics_length.w, D0
