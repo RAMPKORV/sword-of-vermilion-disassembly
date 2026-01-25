@@ -1424,7 +1424,7 @@ loc_00001CDC:
 loc_00001D14:
 	MOVE.b	#$FF, Player_input_blocked.w
 	JSR	loc_0001229E
-	JSR	loc_00010C4A
+	JSR	ResetScriptAndInitDialogue
 	PRINT 	AwakenVoiceStr
 	TST.b	Frying_pan_knockout_flag.w
 	BEQ.b	loc_00001D42
@@ -1485,7 +1485,7 @@ loc_00001DB4: ; Woman hitting player with frying pan
 	PRINT 	AfraidKilledStr
 	MOVE.w	#$2A, Gameplay_substate.w
 	JSR	loc_000033BE
-	JSR	loc_00010C4A
+	JSR	ResetScriptAndInitDialogue
 	MOVE.w	#$0012, $FFFFC080.w
 	MOVE.w	Palette_line_1_index_saved.w, $FFFFC082.w
 	MOVE.w	Palette_line_2_cycle_base.w, Palette_line_2_index.w
@@ -1938,7 +1938,7 @@ loc_000024D6:
 	JSR	ClearScrollData
 	MOVE.b	#$FF, Player_input_blocked.w
 	PRINT 	YouHaveNotWonYetStr
-	JSR	loc_00010C4A
+	JSR	ResetScriptAndInitDialogue
 	MOVE.w	#$2C, Gameplay_substate.w
 	RTS
 
@@ -2555,7 +2555,7 @@ loc_00002D20:
 
 loc_00002D22:
 	JSR	loc_0001229E
-	JSR	loc_00010C4A
+	JSR	ResetScriptAndInitDialogue
 	PRINT 	InaudiosWornOffStr
 	MOVE.w	#$27, Gameplay_substate.w
 	MOVE.b	#$FF, Player_input_blocked.w
@@ -2563,7 +2563,7 @@ loc_00002D22:
 
 loc_00002D44:
 	JSR	loc_0001229E
-	JSR	loc_00010C4A
+	JSR	ResetScriptAndInitDialogue
 	PRINT 	PoisonedStr
 	MOVE.w	#$27, Gameplay_substate.w
 	MOVE.b	#$FF, Player_input_blocked.w
@@ -14474,7 +14474,7 @@ loc_0000D094:
 	JSR	loc_00012A6C
 	MOVE.b	#$FF, (A1)
 	PRINT 	$FFFFC260
-	JSR	loc_00010C4A
+	JSR	ResetScriptAndInitDialogue
 	RTS
 
 loc_0000D116:
@@ -18977,7 +18977,10 @@ loc_00010BEA:
 	MOVE.b	#$FF, Window_tilemap_draw_active.w
 	RTS
 	
-loc_00010C4A:
+; ResetScriptAndInitDialogue
+; Initialize dialogue window and reset script source offset
+; This entry point clears the script offset before initializing the window
+ResetScriptAndInitDialogue:
 	CLR.w	Script_source_offset.w
 ; InitDialogueWindow
 InitDialogueWindow:
@@ -25469,7 +25472,7 @@ loc_00017F80:
 	MOVE.w	#$00A1, D0
 	JSR	QueueSoundEffect
 	JSR	loc_0001229E
-	JSR	loc_00010C4A
+	JSR	ResetScriptAndInitDialogue
 	TST.w	Possessed_magics_length.w
 	BGT.b	loc_00017FC8
 	PRINT 	NoBooksOfSpellsStr
@@ -25626,7 +25629,7 @@ loc_000181C6:
 loc_000181DC:
 	JSR	loc_00012670
 	JSR	loc_000126B6
-	JSR	loc_00010C4A
+	JSR	ResetScriptAndInitDialogue
 	JSR	CopyPlayerNameToTextBuffer
 	LEA	DiscardsTheStr, A0
 	JSR	loc_00012A6C
@@ -25733,7 +25736,7 @@ loc_00018368:
 loc_00018388:
 	JSR	loc_00012670
 	JSR	loc_000126B6
-	JSR	loc_00010C4A
+	JSR	ResetScriptAndInitDialogue
 	LEA	Possessed_magics_list.w, A0
 	MOVE.w	Magic_list_cursor_index.w, D0
 	ADD.w	D0, D0
@@ -25983,7 +25986,7 @@ CastFieldMagicMap:
 ; loc_000186F8
 ; Attempting to use battle magic in field
 CastFieldMagicNotAllowed:
-	JSR	loc_00010C4A	
+	JSR	ResetScriptAndInitDialogue	
 	PRINT 	CantUseHereStr	
 	MOVE.w	#9, $FFFFC424.w	
 	RTS
@@ -26001,13 +26004,13 @@ CastInaudios:
 	MOVE.w	#$001E, Inaudios_steps_remaining.w
 	MOVE.w	#$00AE, D0
 	JSR	QueueSoundEffect
-	JSR	loc_00010C4A
+	JSR	ResetScriptAndInitDialogue
 	PRINT 	InaudiosSpellsStr
 	MOVE.w	#9, $FFFFC424.w
 	RTS
 
 loc_00018752:
-	JSR	loc_00010C4A	
+	JSR	ResetScriptAndInitDialogue	
 	PRINT 	CantUseHereStr	
 	MOVE.w	#9, $FFFFC424.w	
 	RTS
@@ -26033,7 +26036,7 @@ CastLuminos:
 	RTS
 
 loc_000187B4:
-	JSR	loc_00010C4A
+	JSR	ResetScriptAndInitDialogue
 	PRINT 	BrightPlaceStr
 	MOVE.w	#9, $FFFFC424.w
 	RTS
@@ -26074,7 +26077,7 @@ loc_0001882C:
 loc_00018834:
 	MOVE.w	#$00AE, D0
 	JSR	QueueSoundEffect
-	JSR	loc_00010C4A
+	JSR	ResetScriptAndInitDialogue
 	MOVE.w	#9, $FFFFC424.w
 	RTS
 
@@ -26088,7 +26091,7 @@ CastSanguio:
 	PRINT 	AllHitPointsStr
 	MOVE.w	#$00AE, D0
 	JSR	QueueSoundEffect
-	JSR	loc_00010C4A
+	JSR	ResetScriptAndInitDialogue
 	MOVE.w	#9, $FFFFC424.w
 	RTS
 
@@ -26114,7 +26117,7 @@ loc_000188BE:
 	MOVE.w	#$00AE, D0
 	JSR	QueueSoundEffect
 loc_000188D0:
-	JSR	loc_00010C4A
+	JSR	ResetScriptAndInitDialogue
 	MOVE.w	#9, $FFFFC424.w
 	RTS
 
@@ -26134,7 +26137,7 @@ CastAries:
 	RTS
 loc_00018912:
 	PRINT 	CantUseHereStr
-	JSR	loc_00010C4A
+	JSR	ResetScriptAndInitDialogue
 	MOVE.w	#9, $FFFFC424.w
 	RTS
 
@@ -26161,20 +26164,20 @@ CastExtrios:
 	RTS
 
 loc_00018982:
-	JSR	loc_00010C4A
+	JSR	ResetScriptAndInitDialogue
 	PRINT 	CantUseHereStr
 	ADDQ.w	#2, $FFFFC424.w
 	RTS
 
 loc_00018996:
 	PRINT 	NotEnoughMpStr	
-	JSR	loc_00010C4A	
+	JSR	ResetScriptAndInitDialogue	
 	MOVE.w	#9, $FFFFC424.w	
 	RTS
 	
 loc_000189AC:
 	PRINT 	SorryYouAreCursedStr
-	JSR	loc_00010C4A
+	JSR	ResetScriptAndInitDialogue
 	MOVE.w	#9, $FFFFC424.w
 	RTS
 
@@ -28031,7 +28034,7 @@ loc_0001A380:
 	MOVE.w	#$00A1, D0
 	JSR	QueueSoundEffect
 	JSR	loc_0001229E
-	JSR	loc_00010C4A
+	JSR	ResetScriptAndInitDialogue
 	TST.w	Possessed_items_length.w
 	BNE.b	loc_0001A3C6
 	PRINT 	YouHaveNothingToUseStr
@@ -28171,7 +28174,7 @@ loc_0001A576:
 loc_0001A59C:
 	JSR	loc_00012670
 	JSR	loc_000126B6
-	JSR	loc_00010C4A
+	JSR	ResetScriptAndInitDialogue
 	LEA	ItemNames, A0
 	LEA	Possessed_items_list.w, A2
 	MOVE.w	Selected_item_index.w, D0
@@ -28275,7 +28278,7 @@ loc_0001A702:
 	MOVE.w	#$00A1, D0
 	JSR	QueueSoundEffect
 	JSR	loc_000126B6
-	JSR	loc_00010C4A
+	JSR	ResetScriptAndInitDialogue
 	JSR	CopyPlayerNameToTextBuffer
 	LEA	UsesTheStr, A0
 	JSR	loc_00012A6C
@@ -28333,7 +28336,7 @@ loc_0001A7F2:
 	MOVE.w	#5, D2
 	JSR	CheckButtonPress
 	BEQ.b	loc_0001A828
-	JSR	loc_00010C4A
+	JSR	ResetScriptAndInitDialogue
 loc_0001A804:
 	ADDQ.w	#1, Item_menu_state.w
 	LEA	Possessed_items_list.w, A0
@@ -29210,7 +29213,7 @@ loc_0001B266:
 	MOVE.w	Main_menu_selection.w, Menu_cursor_index.w
 	JSR	loc_0001290C
 	JSR	loc_0001229E
-	JSR	loc_00010C4A
+	JSR	ResetScriptAndInitDialogue
 	ADDQ.w	#1, Dialogue_state.w
 	TST.b	Player_in_first_person_mode.w
 	BNE.w	loc_0001B49C
@@ -29455,7 +29458,7 @@ loc_0001B6F0:
 	MOVE.w	#4, D2
 	JSR	CheckButtonPress
 	BEQ.b	loc_0001B73A
-	JSR	loc_00010C4A	
+	JSR	ResetScriptAndInitDialogue	
 	PRINT 	NoLeaveWithoutBuyingStr	
 	CLR.b	Script_text_complete.w	
 	MOVE.w	#$00A8, D0	
@@ -29487,7 +29490,7 @@ loc_0001B770:
 	RTS
 
 loc_0001B784:
-	JSR	loc_00010C4A
+	JSR	ResetScriptAndInitDialogue
 	MOVE.w	Current_shop_type.w, D0
 	ASL.w	#3, D0
 	LEA	Text_build_buffer.w, A1
@@ -29547,7 +29550,7 @@ loc_0001B97E:
 	MOVE.w	#$00A1, D0
 	JSR	QueueSoundEffect
 	JSR	loc_00012670
-	JSR	loc_00010C4A
+	JSR	ResetScriptAndInitDialogue
 	LEA	Possessed_items_length.w, A0
 	MOVE.w	(A0), D0
 	CMPI.w	#8, D0
@@ -29612,7 +29615,7 @@ loc_0001BA5E:
 loc_0001BA8A:
 	JSR	loc_00012766
 	JSR	loc_000126DA
-	JSR	loc_00010C4A
+	JSR	ResetScriptAndInitDialogue
 	MOVE.w	#1, Dialogue_state.w
 	RTS
 
@@ -29623,7 +29626,7 @@ loc_0001BAA4:
 	MOVE.w	#$2D, Dialogue_state.w
 	JSR	loc_00012766
 	JSR	loc_000126DA
-	JSR	loc_00010C4A
+	JSR	ResetScriptAndInitDialogue
 	PRINT 	NoLeaveWithoutBuyingStr
 	CLR.b	Script_text_complete.w
 	RTS
@@ -29745,7 +29748,7 @@ loc_0001BC0C:
 	JSR	CheckButtonPress
 	BEQ.w	loc_0001BCA4
 	JSR	loc_00012670
-	JSR	loc_00010C4A
+	JSR	ResetScriptAndInitDialogue
 	TST.b	Dialogue_event_trigger_flag.w
 	BNE.b	loc_0001BC50
 	TST.b	Quest_choice_pending.w
@@ -29852,7 +29855,7 @@ loc_0001BD66:
 	MOVE.l	(A0,D0.w), Script_source_base.w
 	MOVE.w	#$11, Dialogue_state.w
 loc_0001BD80:
-	JMP	loc_00010C4A
+	JMP	ResetScriptAndInitDialogue
 loc_0001BD86:
 	MOVE.w	Shop_action_selection.w, Menu_cursor_index.w
 	JSR	loc_000127EA
@@ -29989,7 +29992,7 @@ loc_0001BF28:
 	MOVE.w	#$00A1, D0
 	JSR	QueueSoundEffect
 	JSR	loc_00012670
-	JSR	loc_00010C4A
+	JSR	ResetScriptAndInitDialogue
 	LEA	ShopPricesByTownAndType, A0
 	MOVE.w	Current_town.w, D0
 	ADD.w	D0, D0
@@ -30050,7 +30053,7 @@ loc_0001C030:
 	JSR	loc_00012670	
 	MOVE.w	#$C, Dialogue_state.w	
 	JSR	loc_00011648	
-	JSR	loc_00010C4A	
+	JSR	ResetScriptAndInitDialogue	
 	MOVE.w	Current_shop_type.w, D0	
 	ADD.w	D0, D0	
 	ADD.w	D0, D0	
@@ -30111,7 +30114,7 @@ loc_0001C0F4:
 loc_0001C120:
 	JSR	loc_00012766
 	JSR	loc_00012670
-	JSR	loc_00010C4A
+	JSR	ResetScriptAndInitDialogue
 	MOVE.w	Current_shop_type.w, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
@@ -30172,7 +30175,7 @@ loc_0001C1E4:
 	RTS
 
 loc_0001C208:
-	JSR	loc_00010C4A
+	JSR	ResetScriptAndInitDialogue
 	JSR	SaveLeftMenuTiles
 	MOVE.w	Current_shop_type.w, D0
 	ADD.w	D0, D0
@@ -30196,7 +30199,7 @@ loc_0001C234:
 	RTS
 
 loc_0001C254:
-	JSR	loc_00010C4A
+	JSR	ResetScriptAndInitDialogue
 	MOVE.w	Current_shop_type.w, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
@@ -30225,7 +30228,7 @@ loc_0001C2AA:
 	BEQ.w	loc_0001C36C
 	MOVE.w	$FFFFC4A0.w, Menu_cursor_index.w
 	JSR	loc_0001290C
-	JSR	loc_00010C4A
+	JSR	ResetScriptAndInitDialogue
 	LEA	Text_build_buffer.w, A1
 	MOVEA.l	Active_inventory_list_ptr.w, A2
 	MOVE.w	$FFFFC4A0.w, D0
@@ -30269,7 +30272,7 @@ loc_0001C344:
 	MOVE.l	(A0,D0.w), Script_source_base.w
 loc_0001C358:
 	JSR	loc_000126B6
-	JSR	loc_00010C4A
+	JSR	ResetScriptAndInitDialogue
 	MOVE.w	#$12, Dialogue_state.w
 	RTS
 
@@ -30354,7 +30357,7 @@ loc_0001C474:
 	JSR	loc_0000FB8C
 	JSR	loc_00012670
 	JSR	loc_000126B6
-	JSR	loc_00010C4A
+	JSR	ResetScriptAndInitDialogue
 	MOVE.w	Current_shop_type.w, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
@@ -30369,7 +30372,7 @@ loc_0001C4B0:
 	MOVEA.l	Active_inventory_list_ptr.w, A0	
 	MOVE.w	-$2(A0), D0	
 	JSR	InitMenuCursorForList	
-	JSR	loc_00010C4A	
+	JSR	ResetScriptAndInitDialogue	
 	MOVE.w	Current_shop_type.w, D0	
 	ADD.w	D0, D0	
 	ADD.w	D0, D0	
@@ -30417,7 +30420,7 @@ loc_0001C542:
 loc_0001C56E:
 	JSR	loc_00012766
 	JSR	loc_00012670
-	JSR	loc_00010C4A
+	JSR	ResetScriptAndInitDialogue
 	MOVE.w	Current_shop_type.w, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
@@ -30491,7 +30494,7 @@ loc_0001C66A:
 loc_0001C672:
 	JSR	loc_00012670
 	MOVE.w	#$1B, Dialogue_state.w
-	JMP	loc_00010C4A
+	JMP	ResetScriptAndInitDialogue
 loc_0001C684:
 	MOVE.w	Dialog_selection.w, Menu_cursor_index.w
 	JSR	loc_000127EA
@@ -30625,7 +30628,7 @@ loc_0001C7DA:
 	JSR	DisplayPlayerKims
 	PRINT 	RestWellStr
 	JSR	loc_00012670
-	JSR	loc_00010C4A
+	JSR	ResetScriptAndInitDialogue
 loc_0001C84E:
 	MOVE.w	#$1F, Dialogue_state.w
 	RTS
@@ -30638,7 +30641,7 @@ loc_0001C860:
 loc_0001C868:
 	JSR	loc_00012670
 	MOVE.w	#$1B, Dialogue_state.w
-	JSR	loc_00010C4A
+	JSR	ResetScriptAndInitDialogue
 	RTS
 
 loc_0001C87C:
@@ -30700,10 +30703,10 @@ loc_0001C932:
 	MOVE.w	Palette_line_2_cycle_base.w, Palette_line_2_index.w
 	MOVE.w	#$0011, $FFFFC086.w
 	JSR	loc_0001325E
-	JSR	loc_00010C4A
+	JSR	ResetScriptAndInitDialogue
 	MOVE.w	#$1B, Dialogue_state.w
 	JSR	loc_000033BE
-	JSR	loc_00010C4A
+	JSR	ResetScriptAndInitDialogue
 loc_0001C968:
 	RTS
 
@@ -30795,7 +30798,7 @@ loc_0001CABC:
 	PRINT 	SaveNumberStr
 	MOVE.w	#$2B, Dialogue_state.w
 loc_0001CACA:
-	JMP	loc_00010C4A
+	JMP	ResetScriptAndInitDialogue
 loc_0001CAD0:
 	MOVE.w	Church_service_selection.w, Menu_cursor_index.w
 	JSR	loc_000127EA
@@ -30885,7 +30888,7 @@ loc_0001CB94:
 	PRINT 	CurseRemovedStr
 	JSR	loc_00012670
 	JSR	loc_00012766
-	JSR	loc_00010C4A
+	JSR	ResetScriptAndInitDialogue
 	MOVE.w	#$23, Dialogue_state.w
 	RTS
 
@@ -30898,7 +30901,7 @@ loc_0001CC2C:
 	JSR	loc_00012670	
 	JSR	loc_00012766	
 	MOVE.w	#$23, Dialogue_state.w	
-	JSR	loc_00010C4A	
+	JSR	ResetScriptAndInitDialogue	
 	RTS
 	
 loc_0001CC46:
@@ -30958,7 +30961,7 @@ loc_0001CD0A:
 loc_0001CD12:
 	JSR	loc_00012670
 	JSR	loc_00012766
-	JSR	loc_00010C4A
+	JSR	ResetScriptAndInitDialogue
 	MOVE.w	#$23, Dialogue_state.w
 	RTS
 
@@ -30971,7 +30974,7 @@ loc_0001CD3E:
 	JSR	loc_00012670	
 	JSR	loc_00012766	
 	MOVE.w	#$23, Dialogue_state.w	
-	JMP	loc_00010C4A	
+	JMP	ResetScriptAndInitDialogue	
 loc_0001CD56:
 	MOVE.w	Dialog_selection.w, Menu_cursor_index.w
 	JSR	loc_000127EA
@@ -30999,7 +31002,7 @@ loc_0001CD88:
 	BEQ.b	loc_0001CDEA
 	JSR	loc_0001059C
 	JSR	loc_00012694
-	JSR	loc_00010C4A
+	JSR	ResetScriptAndInitDialogue
 	PRINT 	GameSavedStr
 	MOVE.w	#$23, Dialogue_state.w
 	RTS
@@ -31300,7 +31303,7 @@ loc_0001D156:
 	JSR	QueueSoundEffect
 	BSR.w	loc_0001D5AC
 	JSR	loc_0001229E
-	JSR	loc_00010C4A
+	JSR	ResetScriptAndInitDialogue
 	TST.w	Ready_equipment_list_length.w
 	BLE.b	loc_0001D1A8
 	JSR	loc_000125B6
@@ -31346,7 +31349,7 @@ loc_0001D216:
 	JSR	loc_0001290C
 	MOVE.w	#$00A1, D0
 	JSR	QueueSoundEffect
-	JSR	loc_00010C4A
+	JSR	ResetScriptAndInitDialogue
 	BSR.w	loc_0001D5D8
 	TST.w	D0
 	BGE.w	loc_0001D29C
@@ -31460,7 +31463,7 @@ loc_0001D3BA:
 	JSR	QueueSoundEffect
 	BSR.w	loc_0001D5AC
 	JSR	loc_0001229E
-	JSR	loc_00010C4A
+	JSR	ResetScriptAndInitDialogue
 	BSR.w	loc_0001D5D8
 	TST.w	D0
 	BLT.w	loc_0001D456
@@ -32187,7 +32190,7 @@ loc_0001DCF8:
 	PRINT 	AlreadyOpenStr	
 loc_0001DD00:
 	JSR	loc_0001229E             ; Display message
-	JSR	loc_00010C4A
+	JSR	ResetScriptAndInitDialogue
 	MOVE.w	#1, Open_menu_state.w    ; State 1
 	RTS
 	
@@ -32247,7 +32250,7 @@ loc_0001DDB0:
 	BNE.w	loc_0001DDD2	
 	PRINT 	CantOpenStr	
 	JSR	loc_0001229E	
-	JSR	loc_00010C4A	
+	JSR	ResetScriptAndInitDialogue	
 	MOVE.w	#1, Open_menu_state.w	
 loc_0001DDD2:
 	RTS
@@ -32257,7 +32260,7 @@ loc_0001DDD4:
 	BNE.w	loc_0001DDF6
 	PRINT 	OpenedChestStr
 	JSR	loc_0001229E
-	JSR	loc_00010C4A
+	JSR	ResetScriptAndInitDialogue
 	MOVE.w	#6, Open_menu_state.w
 loc_0001DDF6:
 	RTS
@@ -32429,7 +32432,7 @@ loc_0001E07C:
 	PRINT 	TrufflesStillThereStr	
 loc_0001E084:
 	JSR	loc_0001229E
-	JSR	loc_00010C4A
+	JSR	ResetScriptAndInitDialogue
 	MOVE.w	#2, Dialog_selection.w
 	RTS
 	
@@ -32439,7 +32442,7 @@ loc_0001E098:
 	
 loc_0001E09E:
 	JSR	loc_0001229E
-	JSR	loc_00010C4A
+	JSR	ResetScriptAndInitDialogue
 	PRINT 	NoUnusualStr
 	ADDQ.w	#1, Dialog_selection.w
 	RTS
@@ -32595,7 +32598,7 @@ loc_0001E2F6: ; Regain all HP
 
 loc_0001E312:
 	JSR	loc_0001229E
-	JSR	loc_00010C4A
+	JSR	ResetScriptAndInitDialogue
 	MOVE.w	#2, Dialog_selection.w
 	RTS
 	
@@ -32740,7 +32743,7 @@ loc_0001E4F2:
 	
 loc_0001E4FA:
 	JSR	loc_0001229E
-	JSR	loc_00010C4A
+	JSR	ResetScriptAndInitDialogue
 	PRINT 	NothingToTakeStr
 	ADDQ.w	#1, Take_item_state.w
 	RTS
@@ -32787,7 +32790,7 @@ loc_0001E590:
 	PRINT 	CantTakeBoxStr
 loc_0001E598:
 	JSR	loc_0001229E
-	JSR	loc_00010C4A
+	JSR	ResetScriptAndInitDialogue
 	MOVE.w	#3, Take_item_state.w
 	RTS
 	
@@ -32859,7 +32862,7 @@ loc_0001E6A0:
 	MOVE.w	#$0090, D0
 	JSR	QueueSoundEffect
 	JSR	loc_0001229E
-	JSR	loc_00010C4A
+	JSR	ResetScriptAndInitDialogue
 	BSR.w	loc_0001EAAE
 	MOVE.w	#$000A, Take_item_state.w
 	CLR.b	Herbs_available.w
@@ -32869,7 +32872,7 @@ loc_0001E6A0:
 	
 loc_0001E6DE:
 	JSR	loc_0001229E
-	JSR	loc_00010C4A
+	JSR	ResetScriptAndInitDialogue
 	PRINT 	CantCarryMoreStr
 	MOVE.w	#5, Take_item_state.w
 	RTS
@@ -32905,7 +32908,7 @@ loc_0001E722:
 	
 loc_0001E766:
 	JSR	loc_00012670
-	JSR	loc_00010C4A
+	JSR	ResetScriptAndInitDialogue
 	LEA	Text_build_buffer.w, A1
 	LEA	DontWantCarryStr, A0
 	JSR	loc_00012A6C
@@ -32973,7 +32976,7 @@ loc_0001E862:
 	MOVE.w	#$00A8, D0
 	JSR	QueueSoundEffect
 	JSR	loc_000126B6
-	JSR	loc_00010C4A
+	JSR	ResetScriptAndInitDialogue
 	PRINT 	CantCarryMoreStr
 	MOVE.w	#5, Take_item_state.w
 	RTS
@@ -33021,7 +33024,7 @@ loc_0001E910:
 loc_0001E936: ; Discard item
 	JSR	loc_00012670
 	JSR	loc_000126B6
-	JSR	loc_00010C4A
+	JSR	ResetScriptAndInitDialogue
 	MOVEA.l	Active_inventory_list_ptr.w, A2
 	MOVE.w	Selected_item_index.w, D0
 	ADD.w	D0, D0
