@@ -301,34 +301,22 @@ BasicObjectInitTable:
 	dc.w	$0005                        ; 6 object groups
 	
 	; VBlank handler object
-	dc.w	0, 7, $10, $80               ; 1 copy, 8 words, type=$10, flags=$80
-	dc.l	loc_00001474                 ; Handler: VBlank state machine
-	dc.l	VBlank_object_ptr            ; Store pointer here
+	objectInitGroup 1, 8, $10, $80, loc_00001474, VBlank_object_ptr
 	
 	; HBlank handler object
-	dc.w	0, 7, $10, $80               ; 1 copy, 8 words, type=$10, flags=$80
-	dc.l	loc_0000146E                 ; Handler: HBlank (NOP)
-	dc.l	HBlank_object_ptr            ; Store pointer here
+	objectInitGroup 1, 8, $10, $80, loc_0000146E, HBlank_object_ptr
 	
 	; Entity slot (appears unused in this table)
-	dc.w	0, $1F, $40, 0               ; 1 copy, 32 words, type=$40, no flags
-	dc.l	loc_00003714                 ; Handler: Entity behavior
-	dc.l	$FFFFCC08                    ; Store pointer at $FFFFCC08
+	objectInitGroup 1, 32, $40, 0, loc_00003714, $FFFFCC08
 	
 	; Battle entity slot 1
-	dc.w	0, $1F, $40, 0               ; 1 copy, 32 words, type=$40, no flags
-	dc.l	$00000000                    ; No handler
-	dc.l	Battle_entity_slot_1_ptr     ; Store pointer here
+	objectInitGroup 1, 32, $40, 0, $00000000, Battle_entity_slot_1_ptr
 	
 	; Battle entity slot 2
-	dc.w	0, $1F, $40, 0               ; 1 copy, 32 words, type=$40, no flags
-	dc.l	$00000000                    ; No handler
-	dc.l	Battle_entity_slot_2_ptr     ; Store pointer here
+	objectInitGroup 1, 32, $40, 0, $00000000, Battle_entity_slot_2_ptr
 	
-	; Additional entity slots (29 copies)
-	dc.w	$1D, $1F, $40, 0             ; 30 copies, 32 words each, type=$40
-	dc.l	$00000000                    ; No handler
-	dc.l	$FFFFCC14                    ; Store pointer at $FFFFCC14
+	; Additional entity slots (30 copies)
+	objectInitGroup 30, 32, $40, 0, $00000000, $FFFFCC14
 
 ; ============================================================================
 ; Menu Object Initialization Table
@@ -340,15 +328,11 @@ BasicObjectInitTable:
 MenuObjectInitTable:
 	dc.w	$0001                        ; 2 object groups
 	
-	; Entity slots (29 copies)
-	dc.w	$1D, $1F, $40, 0             ; 30 copies, 32 words each, type=$40
-	dc.l	$00000000                    ; No handler
-	dc.l	$FFFFCC14                    ; Store pointer at $FFFFCC14
+	; Entity slots (30 copies)
+	objectInitGroup 30, 32, $40, 0, $00000000, $FFFFCC14
 	
 	; Menu handler object
-	dc.w	0, 7, $10, $80               ; 1 copy, 8 words, type=$10, flags=$80
-	dc.l	$00015E58                    ; Handler: Menu logic
-	dc.l	Menu_object_ptr              ; Store pointer here
+	objectInitGroup 1, 8, $10, $80, MenuObjectHandler, Menu_object_ptr
 
 ; ============================================================================
 ; Gameplay Object Initialization Table
@@ -23130,6 +23114,8 @@ Prologue6Str:
 	dc.b	"Prince. Eighteen years", $FE
 	dc.b	"have passed since Tsarkon", $FE
 	dc.b	"began his search....", $FF
+; loc_00015E58
+MenuObjectHandler:
 	CLR.w	$FFFFC100.w
 	MOVE.l	#loc_00015E6A, $2(A5)
 	CLR.b	Camera_scrolling_active.w
