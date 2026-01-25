@@ -9954,7 +9954,10 @@ loc_00009186:
 	MOVE.w	$C(A5), $16(A5)
 	RTS
 
-loc_0000919A: ; suspected: Take a hit from an enemy
+; HandlePlayerTakeDamage
+; Handle player taking damage from enemy collision
+; Checks collision with enemy hitbox, applies damage, poison chance, and knockback
+HandlePlayerTakeDamage:
 	TST.b	Fade_out_lines_mask.w
 	BNE.w	loc_0000926E
 	MOVEA.l	$FFFFCC08.w, A6
@@ -10287,7 +10290,7 @@ loc_00009608:
 loc_00009614:
 	BSR.w	loc_0000908E
 	BSR.w	loc_000092F6
-	BSR.w	loc_0000919A
+	BSR.w	HandlePlayerTakeDamage
 	BSR.w	loc_000090BA
 	MOVE.l	$32(A5), D0
 	OR.l	$36(A5), D0
@@ -10393,7 +10396,7 @@ loc_000097AA:
 	BSR.w	loc_0000908E
 	BSR.w	loc_000092F6
 loc_000097B2:
-	BSR.w	loc_0000919A
+	BSR.w	HandlePlayerTakeDamage
 	BSR.w	loc_000090BA
 	MOVE.l	$32(A5), D0
 	OR.l	$36(A5), D0
@@ -10486,7 +10489,7 @@ loc_000098E8:
 	BSR.w	loc_0000908E
 	BSR.w	loc_000092F6
 loc_000098F0:
-	BSR.w	loc_0000919A
+	BSR.w	HandlePlayerTakeDamage
 	BSR.w	loc_000090BA
 	MOVE.l	$32(A5), D0
 	OR.l	$36(A5), D0
@@ -10563,7 +10566,7 @@ loc_000099F0:
 loc_000099FC:
 	BSR.w	loc_0000908E
 	BSR.w	loc_000092F6
-	BSR.w	loc_0000919A
+	BSR.w	HandlePlayerTakeDamage
 	BSR.w	loc_000090BA
 	MOVE.l	$32(A5), D0
 	OR.l	$36(A5), D0
@@ -10647,7 +10650,7 @@ loc_00009B2A:
 	BSR.w	loc_0000908E
 	BSR.w	loc_000092F6
 loc_00009B32:
-	BSR.w	loc_0000919A
+	BSR.w	HandlePlayerTakeDamage
 	BSR.w	loc_000090BA
 	CLR.w	D0
 	MOVE.b	$1(A5), D0
@@ -10725,7 +10728,7 @@ loc_00009C42:
 	BSR.w	loc_0000908E
 	BSR.w	loc_000092F6
 loc_00009C4A:
-	BSR.w	loc_0000919A
+	BSR.w	HandlePlayerTakeDamage
 	BSR.w	loc_000090BA
 	MOVE.l	$32(A5), D0
 	OR.l	$36(A5), D0
@@ -10797,7 +10800,7 @@ loc_00009D2E:
 loc_00009D56:
 	BSR.w	loc_0000908E
 	BSR.w	loc_00009136
-	BSR.w	loc_0000919A
+	BSR.w	HandlePlayerTakeDamage
 	MOVE.l	$32(A5), D0
 	OR.l	$36(A5), D0
 	BEQ.w	loc_00009D72
@@ -10870,7 +10873,7 @@ loc_00009E3A:
 	MOVE.l	#loc_00009EF6, $2(A4)
 	MOVE.w	$2C(A5), $2C(A4)
 loc_00009E7A:
-	BSR.w	loc_0000919A
+	BSR.w	HandlePlayerTakeDamage
 	BSR.w	loc_000090BA
 	CLR.w	D0
 	MOVE.b	$1(A5), D0
@@ -10924,7 +10927,7 @@ loc_00009F34:
 	BSR.w	loc_0000908E
 	BSR.w	loc_00009136
 loc_00009F3C:
-	BSR.w	loc_0000919A
+	BSR.w	HandlePlayerTakeDamage
 	MOVE.l	$32(A5), D0
 	OR.l	$36(A5), D0
 	BEQ.w	loc_00009F50
@@ -11007,7 +11010,7 @@ loc_0000A05A:
 	BSR.w	loc_0000908E
 	BSR.w	loc_000092F6
 loc_0000A062:
-	BSR.w	loc_0000919A
+	BSR.w	HandlePlayerTakeDamage
 	BSR.w	loc_000090BA
 	MOVE.l	$32(A5), D0
 	OR.l	$36(A5), D0
@@ -11093,7 +11096,7 @@ loc_0000A18A:
 	BSR.w	loc_0000908E
 	BSR.w	loc_000092F6
 loc_0000A192:
-	BSR.w	loc_0000919A
+	BSR.w	HandlePlayerTakeDamage
 	BSR.w	loc_000090BA
 	ADDQ.b	#1, $1B(A5)
 	MOVE.b	$1B(A5), D0
@@ -11148,7 +11151,7 @@ loc_0000A248:
 	CLR.b	$26(A5)
 	SUBQ.w	#1, $3C(A5)
 	BSR.w	loc_000092F6
-	BSR.w	loc_0000919A
+	BSR.w	HandlePlayerTakeDamage
 	BSR.w	loc_000090BA
 	ADDQ.b	#1, $1B(A5)
 	MOVE.b	$1B(A5), D0
@@ -11257,7 +11260,7 @@ loc_0000A3D2:
 	BSR.w	loc_0000908E
 	BSR.w	loc_000092F6
 loc_0000A3DA:
-	BSR.w	loc_0000919A
+	BSR.w	HandlePlayerTakeDamage
 	BSR.w	loc_000090BA
 	MOVE.l	$32(A5), D0
 	OR.l	$36(A5), D0
@@ -11292,7 +11295,7 @@ loc_0000A446:
 	JSR	loc_00009020(PC)
 	BTST.b	#7, (A5)
 	BEQ.b	loc_0000A476
-	JSR	loc_0000919A(PC)
+	JSR	HandlePlayerTakeDamage(PC)
 	ADDQ.b	#1, $1B(A5)
 	MOVE.b	$1B(A5), D0
 	ANDI.w	#$000C, D0
@@ -11364,7 +11367,7 @@ loc_0000A51E:
 	MOVE.l	#loc_0000A5DA, $2(A6)
 	DBF	D7, loc_0000A51E
 loc_0000A55E:
-	BSR.w	loc_0000919A
+	BSR.w	HandlePlayerTakeDamage
 	BSR.w	loc_000090BA
 	CLR.w	D0
 	MOVE.b	$1(A5), D0
@@ -11423,7 +11426,7 @@ loc_0000A628:
 	BSR.w	loc_0000908E
 	BSR.w	loc_00009136
 loc_0000A630:
-	BSR.w	loc_0000919A
+	BSR.w	HandlePlayerTakeDamage
 	MOVE.l	$32(A5), D0
 	OR.l	$36(A5), D0
 	BEQ.w	loc_0000A644
@@ -11519,7 +11522,7 @@ loc_0000A750:
 	MOVE.l	#loc_0000A446, $2(A6)
 	DBF	D7, loc_0000A750
 loc_0000A784:
-	BSR.w	loc_0000919A
+	BSR.w	HandlePlayerTakeDamage
 	BSR.w	loc_000090BA
 	CLR.w	D0
 	MOVE.b	$1(A5), D0
@@ -11668,7 +11671,7 @@ loc_0000A9AC:
 	BSR.w	loc_0000908E
 	BSR.w	loc_000092F6
 loc_0000A9B4:
-	BSR.w	loc_0000919A
+	BSR.w	HandlePlayerTakeDamage
 	BSR.w	loc_000090BA
 	CLR.w	D0
 	MOVE.b	$1(A5), D0
@@ -11737,7 +11740,7 @@ loc_0000AA9E:
 	MOVE.w	$E(A5), $A(A5)
 	MOVE.w	$12(A5), $C(A5)
 	MOVE.w	$C(A5), $16(A5)
-	JSR	loc_0000919A(PC)
+	JSR	HandlePlayerTakeDamage(PC)
 	ADDQ.b	#1, $1B(A5)
 	MOVE.b	$1B(A5), D0
 	ANDI.w	#$000C, D0
@@ -11863,7 +11866,7 @@ loc_0000AC76:
 	BSR.w	loc_0000908E
 	BSR.w	loc_000092F6
 loc_0000AC7E:
-	BSR.w	loc_0000919A
+	BSR.w	HandlePlayerTakeDamage
 	BSR.w	loc_000090BA
 	MOVE.l	$32(A5), D0
 	OR.l	$36(A5), D0
@@ -11940,7 +11943,7 @@ loc_0000AD7E:
 	MOVE.w	$E(A5), $A(A5)
 	MOVE.w	$12(A5), $C(A5)
 	MOVE.w	$C(A5), $16(A5)
-	JSR	loc_0000919A(PC)
+	JSR	HandlePlayerTakeDamage(PC)
 	ADDQ.b	#1, $1B(A5)
 	MOVE.b	$1B(A5), D0
 	ANDI.w	#$000C, D0
@@ -12042,7 +12045,7 @@ loc_0000AECE:
 	MOVE.l	D0, $36(A5)
 loc_0000AF0E:
 	BSR.w	loc_000092F6
-	BSR.w	loc_0000919A
+	BSR.w	HandlePlayerTakeDamage
 	BSR.w	loc_000090BA
 	CLR.w	D0
 	MOVE.b	$1(A5), D0
@@ -12190,7 +12193,7 @@ loc_0000B0DC:
 	EXT.l	D0
 	MOVE.l	D0, $36(A5)
 	BSR.w	loc_000092F6
-	BSR.w	loc_0000919A
+	BSR.w	HandlePlayerTakeDamage
 	BSR.w	loc_000090BA
 	MOVE.w	#8, D7
 	LEA	(A5), A4
@@ -12257,7 +12260,7 @@ loc_0000B194:
 	DBF	D7, loc_0000B194
 	LEA	(A0), A5
 	BSR.w	loc_000092F6
-	BSR.w	loc_0000919A
+	BSR.w	HandlePlayerTakeDamage
 	BSR.w	loc_000090BA
 loc_0000B1F2:
 	ADDQ.b	#1, $1B(A5)
@@ -12385,7 +12388,7 @@ loc_0000B394:
 	MOVE.l	D0, $36(A5)
 loc_0000B3D4:
 	BSR.w	loc_000092F6
-	BSR.w	loc_0000919A
+	BSR.w	HandlePlayerTakeDamage
 	BSR.w	loc_000090BA
 	ADDQ.b	#1, $1B(A5)
 	MOVE.b	$1B(A5), D1
@@ -12450,7 +12453,7 @@ loc_0000B48C:
 	MOVE.w	$E(A5), $A(A5)
 	MOVE.w	$12(A5), $C(A5)
 	MOVE.w	$12(A5), $16(A5)
-	JSR	loc_0000919A(PC)
+	JSR	HandlePlayerTakeDamage(PC)
 	MOVE.w	$E(A5), D0
 	CMPI.w	#0, D0
 	BLE.w	loc_0000B4D4
