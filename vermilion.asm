@@ -7337,7 +7337,7 @@ loc_00006F10:
 	MOVE.l	#BringDoctorHereStr, $1C(A5)
 loc_00006F32:
 	BRA.w	loc_00008154
-	BSR.w	loc_00008234
+	BSR.w	SetRandomDirection
 	MOVE.l	#loc_00006F44, $2(A5)
 	RTS
 
@@ -7350,7 +7350,7 @@ loc_00006F44:
 	RTS
 
 loc_00006F5E:
-	BSR.w	loc_00008234
+	BSR.w	SetRandomDirection
 	MOVE.l	#loc_00006F70, $2(A5)
 	CLR.b	$25(A5)
 	RTS
@@ -7360,7 +7360,7 @@ loc_00006F70
 	BSR.w	loc_00008248
 	MOVEA.l	$2E(A5), A1
 	BRA.w	loc_000081F0
-	BSR.w	loc_00008234
+	BSR.w	SetRandomDirection
 	MOVE.l	#loc_00006F8E, $2(A5)
 	RTS
 
@@ -7373,7 +7373,7 @@ loc_00006F8E:
 	RTS
 
 loc_00006FA8
-	BSR.w	loc_00008234
+	BSR.w	SetRandomDirection
 	MOVE.l	#loc_00006FBA, $2(A5)
 	CLR.b	$25(A5)
 	RTS
@@ -7409,7 +7409,7 @@ loc_00006FFE:
 	MOVE.l	#NoAnswerStr, $1C(A5)
 loc_0000700C:
 	BRA.b	loc_00006FD4
-	BSR.w	loc_00008234
+	BSR.w	SetRandomDirection
 	CLR.b	$25(A5)
 	TST.b	Blade_is_dead.w
 	BEQ.b	loc_00007026
@@ -7426,7 +7426,7 @@ loc_00007030:
 	MOVE.l	#FindRingStr, $1C(A5)
 loc_0000703E:
 	BRA.w	loc_00006F8E
-	BSR.w	loc_00008234
+	BSR.w	SetRandomDirection
 	CLR.b	$25(A5)
 	MOVE.l	#loc_00007054, $2(A5)
 	RTS
@@ -7439,7 +7439,7 @@ loc_00007054:
 	BSR.w	loc_0000858A
 loc_0000706A:
 	BRA.w	loc_00006F44
-	BSR.w	loc_00008234
+	BSR.w	SetRandomDirection
 	CLR.b	$25(A5)
 	MOVE.l	#loc_00007080, $2(A5)
 	RTS
@@ -7452,7 +7452,7 @@ loc_00007080:
 	BSR.w	loc_0000858A
 loc_00007096:
 	BRA.w	loc_00006F44
-	BSR.w	loc_00008234
+	BSR.w	SetRandomDirection
 	CLR.b	$25(A5)
 	MOVE.l	#loc_000070AC, $2(A5)
 	RTS
@@ -7462,7 +7462,7 @@ loc_000070AC:
 	MOVE.w	#$0040, D5
 	BSR.w	loc_0000858A
 	BRA.w	loc_00006F44
-	BSR.w	loc_00008234
+	BSR.w	SetRandomDirection
 	CLR.b	$25(A5)
 	MOVE.l	#loc_000070D2, $2(A5)
 	RTS
@@ -7482,7 +7482,7 @@ loc_000070EA:
 	BSR.w	loc_0000858A
 loc_00007100:
 	BRA.w	loc_00006F44
-	BSR.w	loc_00008234
+	BSR.w	SetRandomDirection
 	CLR.b	$25(A5)
 	TST.b	Talked_to_real_king.w
 	BEQ.b	loc_0000711C
@@ -7532,7 +7532,7 @@ loc_00007188:
 	MOVE.l	#FindTreasureStr, $1C(A5)
 loc_00007196:
 	BRA.w	loc_00006F44
-	BSR.w	loc_00008234
+	BSR.w	SetRandomDirection
 	CLR.b	$25(A5)
 	TST.b	Talked_to_real_king.w
 	BEQ.b	loc_000071AE
@@ -7549,7 +7549,7 @@ loc_000071B8:
 	MOVE.l	#GotRingStr, $1C(A5)
 loc_000071C6:
 	BRA.w	loc_00006F44
-	BSR.w	loc_00008234
+	BSR.w	SetRandomDirection
 	CLR.b	$25(A5)
 	TST.b	Watling_youth_restored.w
 	BEQ.b	loc_000071E6
@@ -7560,7 +7560,7 @@ loc_000071E6:
 	RTS
 
 loc_000071F0:
-	BSR.w	loc_00008234
+	BSR.w	SetRandomDirection
 	CLR.b	$25(A5)
 	TST.b	Watling_youth_restored.w
 	BEQ.b	loc_00007216
@@ -7578,7 +7578,7 @@ loc_00007220:
 	MOVE.w	#$36, D5
 	BSR.w	loc_0000858A
 	BRA.w	loc_00006F44
-	BSR.w	loc_00008234
+	BSR.w	SetRandomDirection
 	CLR.b	$25(A5)
 	TST.b	Watling_youth_restored.w
 	BEQ.b	loc_0000725A
@@ -7596,7 +7596,7 @@ loc_00007264:
 	MOVE.w	#$65, D5
 	BSR.w	loc_0000858A
 	BRA.w	loc_00006F44
-	BSR.w	loc_00008234
+	BSR.w	SetRandomDirection
 	CLR.b	$25(A5)
 	TST.b	Watling_youth_restored.w
 	BEQ.b	loc_0000729E
@@ -7610,7 +7610,7 @@ loc_0000729E:
 	RTS
 
 loc_000072A8:
-	BSR.w	loc_00008234
+	BSR.w	SetRandomDirection
 	CLR.b	$25(A5)
 	TST.b	Deepdale_king_secret_kept.w
 	BNE.b	loc_000072C0
@@ -7634,7 +7634,7 @@ loc_000072CA:
 	MOVE.b	#$FF, Deepdale_medicine_removed.w
 loc_000072F4:
 	BRA.w	loc_00006F44
-	BSR.w	loc_00008234
+	BSR.w	SetRandomDirection
 	CLR.b	$25(A5)
 	MOVE.l	#loc_0000730A, $2(A5)
 	RTS
@@ -7649,7 +7649,7 @@ loc_0000730A:
 	BSR.w	loc_0000858A
 loc_00007326:
 	BRA.w	loc_00006F44
-	BSR.w	loc_00008234
+	BSR.w	SetRandomDirection
 	CLR.b	$25(A5)
 	MOVE.l	#loc_0000733C, $2(A5)
 	RTS
@@ -7662,7 +7662,7 @@ loc_0000733C:
 	BSR.w	loc_0000858A
 loc_00007352:
 	BRA.w	loc_00006F44
-	BSR.w	loc_00008234
+	BSR.w	SetRandomDirection
 	CLR.b	$25(A5)
 	TST.b	Stow_innocence_proven.w
 	BNE.b	loc_00007374
@@ -7714,7 +7714,7 @@ loc_000073D8:
 	MOVE.b	#$FF, Sanguios_confiscated.w
 loc_00007408:
 	BRA.w	loc_00006F8E
-	BSR.w	loc_00008234
+	BSR.w	SetRandomDirection
 	CLR.b	$25(A5)
 	TST.b	Accused_of_theft.w
 	BEQ.b	loc_00007424
@@ -7731,7 +7731,7 @@ loc_0000742E:
 	MOVE.l	#YoureTheThiefStr, $1C(A5)
 loc_0000743C:
 	BRA.w	loc_00006F44
-	BSR.w	loc_00008234
+	BSR.w	SetRandomDirection
 	CLR.b	$25(A5)
 	TST.b	Accused_of_theft.w
 	BEQ.b	loc_00007458
@@ -7748,7 +7748,7 @@ loc_00007462:
 	MOVE.l	#FaceOfCriminalStr, $1C(A5)
 loc_00007470:
 	BRA.w	loc_00006F44
-	BSR.w	loc_00008234
+	BSR.w	SetRandomDirection
 	CLR.b	$25(A5)
 	TST.b	Bearwulf_met.w
 	BNE.b	loc_00007490
@@ -7798,7 +7798,7 @@ loc_00007522:
 	MOVE.l	#ComeBackLessGearStr, $1C(A5)	
 loc_0000752A:
 	BRA.w	loc_00006F44
-	BSR.w	loc_00008234
+	BSR.w	SetRandomDirection
 	CLR.b	$25(A5)
 	MOVE.l	#loc_00007540, $2(A5)
 	RTS
@@ -7811,7 +7811,7 @@ loc_00007540:
 	BSR.w	loc_0000858A
 loc_00007556:
 	BRA.w	loc_00006F44
-	BSR.w	loc_00008234
+	BSR.w	SetRandomDirection
 	CLR.b	$25(A5)
 	MOVE.l	#loc_0000756C, $2(A5)
 	RTS
@@ -7824,7 +7824,7 @@ loc_0000756C:
 	BSR.w	loc_0000858A
 loc_00007582:
 	BRA.w	loc_00006F44
-	BSR.w	loc_00008234
+	BSR.w	SetRandomDirection
 	CLR.b	$25(A5)
 	TST.b	Old_man_waiting_for_letter.w
 	BEQ.b	loc_0000759E
@@ -7868,7 +7868,7 @@ loc_00007608:
 loc_00007610:
 	BRA.w	loc_00006F8E
 	CLR.b	Alarm_clock_rang.w
-	BSR.w	loc_00008234
+	BSR.w	SetRandomDirection
 	CLR.b	$25(A5)
 	TST.b	Asti_monster_defeated.w
 	BNE.b	loc_00007632
@@ -7908,7 +7908,7 @@ loc_00007688:
 
 loc_0000768E:
 	BRA.w	loc_00006F8E
-	BSR.w	loc_00008234
+	BSR.w	SetRandomDirection
 	CLR.b	$25(A5)
 	MOVE.l	#loc_000076A4, $2(A5)
 	RTS
@@ -7926,7 +7926,7 @@ loc_000076B6:
 	BSR.w	loc_0000858A
 loc_000076CC:
 	BRA.w	loc_00006F8E
-	BSR.w	loc_00008234
+	BSR.w	SetRandomDirection
 	CLR.b	$25(A5)
 	MOVE.l	#loc_000076E2, $2(A5)
 	RTS
@@ -7939,7 +7939,7 @@ loc_000076E2:
 	BSR.w	loc_0000858A
 loc_000076F8:
 	BRA.w	loc_00006F44
-	BSR.w	loc_00008234
+	BSR.w	SetRandomDirection
 	CLR.b	$25(A5)
 	TST.b	Barrow_map_received.w
 	BEQ.b	loc_0000770E
@@ -7956,7 +7956,7 @@ loc_00007718:
 	BCLR.b	#7, (A5)
 loc_00007728:
 	BRA.w	loc_00006F44
-	BSR.w	loc_00008234
+	BSR.w	SetRandomDirection
 	CLR.b	$25(A5)
 	MOVE.l	#loc_0000773E, $2(A5)
 	RTS
@@ -7972,7 +7972,7 @@ loc_00007750:
 	MOVE.l	#ReturnAfterTaskStr, $1C(A5)	
 loc_0000775E:
 	BRA.w	loc_00006F8E
-	BSR.w	loc_00008234
+	BSR.w	SetRandomDirection
 	CLR.b	$25(A5)
 	MOVE.l	#loc_00007774, $2(A5)
 	RTS
@@ -7982,7 +7982,7 @@ loc_00007774:
 	MOVE.w	#$000A, D5
 	BSR.w	loc_0000858A
 	BRA.w	loc_00006F44
-	BSR.w	loc_00008234
+	BSR.w	SetRandomDirection
 	CLR.b	$25(A5)
 	MOVE.l	#loc_0000779A, $2(A5)
 	RTS
@@ -8007,7 +8007,7 @@ loc_000077D2:
 	BSR.w	loc_0000858A
 loc_000077E2:
 	BRA.w	loc_00006F8E
-	BSR.w	loc_00008234
+	BSR.w	SetRandomDirection
 	CLR.b	$25(A5)
 	TST.b	Pass_to_carthahena_purchased.w
 	BNE.b	loc_00007804
@@ -8050,7 +8050,7 @@ loc_00007872:
 	MOVE.l	#BuyPassToCartahenaStr, $1C(A5)
 loc_0000787A:
 	BRA.w	loc_00006F8E
-	BSR.w	loc_00008234
+	BSR.w	SetRandomDirection
 	CLR.b	$25(A5)
 	MOVE.l	#loc_00007890, $2(A5)
 	RTS
@@ -8063,7 +8063,7 @@ loc_00007890:
 	BSR.w	loc_0000858A
 loc_000078A6:
 	BRA.w	loc_00006F44
-	BSR.w	loc_00008234
+	BSR.w	SetRandomDirection
 	CLR.b	$25(A5)
 	MOVE.l	#loc_000078BC, $2(A5)
 	RTS
@@ -8076,7 +8076,7 @@ loc_000078BC:
 	BSR.w	loc_0000858A
 loc_000078D2:
 	BRA.w	loc_00006F44
-	BSR.w	loc_00008234
+	BSR.w	SetRandomDirection
 	CLR.b	$25(A5)
 	TST.b	Bully_first_fight_won.w
 	BNE.b	loc_000078EA
@@ -8092,7 +8092,7 @@ loc_000078F8:
 	RTS
 
 loc_00007902:
-	BSR.w	loc_00008234
+	BSR.w	SetRandomDirection
 	CLR.b	$25(A5)
 	MOVE.l	#loc_00007914, $2(A5)
 	RTS
@@ -8105,7 +8105,7 @@ loc_00007914:
 	BSR.w	loc_0000858A
 loc_0000792A:
 	BRA.w	loc_00006F44
-	BSR.w	loc_00008234
+	BSR.w	SetRandomDirection
 	CLR.b	$25(A5)
 	MOVE.l	#loc_00007940, $2(A5)
 	RTS
@@ -8115,7 +8115,7 @@ loc_00007940:
 	MOVE.w	#3, D5
 	BSR.w	loc_0000858A
 	BRA.w	loc_00006F44
-	BSR.w	loc_00008234
+	BSR.w	SetRandomDirection
 	CLR.b	$25(A5)
 	TST.b	Helwig_men_rescued.w
 	BNE.b	loc_00007966
@@ -8125,7 +8125,7 @@ loc_00007966:
 	RTS
 
 loc_00007970:
-	BSR.w	loc_00008234
+	BSR.w	SetRandomDirection
 	CLR.b	$25(A5)
 	TST.b	Helwig_men_rescued.w
 	BNE.b	loc_00007982
@@ -8135,7 +8135,7 @@ loc_00007982:
 	RTS
 
 loc_0000798C:
-	BSR.w	loc_00008234
+	BSR.w	SetRandomDirection
 	CLR.b	$25(A5)
 	TST.b	Helwig_men_rescued.w
 	BNE.b	loc_000079A8
@@ -8166,7 +8166,7 @@ loc_000079E8:
 	MOVE.l	#CantCarryMoreItemsStr, $1C(A5)
 loc_000079F0:
 	BRA.w	loc_00006F44
-	BSR.w	loc_00008234
+	BSR.w	SetRandomDirection
 	CLR.b	$25(A5)
 	TST.b	Helwig_old_woman_quest_started.w
 	BEQ.b	loc_00007A0A
@@ -8236,7 +8236,7 @@ loc_00007AE0:
 	MOVE.l	#NoAnswerStr, $1C(A5)
 loc_00007AEE:
 	BRA.w	loc_00008154
-	BSR.w	loc_00008234
+	BSR.w	SetRandomDirection
 	CLR.b	$25(A5)
 	MOVE.l	#loc_00007B04, $2(A5)
 	RTS
@@ -8324,7 +8324,7 @@ loc_00007C28:
 	MOVE.l	#RingOfEarthQuestStr, $1C(A5)
 loc_00007C30:
 	BRA.w	loc_00006F8E
-	BSR.w	loc_00008234
+	BSR.w	SetRandomDirection
 	CLR.b	$25(A5)
 	MOVE.w	#4, D7
 	BSR.w	loc_00008518
@@ -8350,7 +8350,7 @@ loc_00007C70:
 	MOVE.l	#WaitingExcalabriaStr, $1C(A5)
 loc_00007C82:
 	BRA.w	loc_00006F8E
-	BSR.w	loc_00008234
+	BSR.w	SetRandomDirection
 	CLR.b	$25(A5)
 	TST.b	Swaffham_ate_poisoned_food.w
 	BNE.b	loc_00007C9E
@@ -8398,7 +8398,7 @@ loc_00007D36:
 	RTS
 
 loc_00007D38:
-	BSR.w	loc_00008234
+	BSR.w	SetRandomDirection
 	CLR.b	$25(A5)
 	TST.b	Tsarkon_is_dead.w
 	BEQ.b	loc_00007D4C
@@ -8410,7 +8410,7 @@ loc_00007D4C:
 	RTS
 
 loc_00007D56:
-	BSR.w	loc_00008234
+	BSR.w	SetRandomDirection
 	CLR.b	$25(A5)
 	MOVE.l	#SeveralPeopleWaitingStr, $1C(A5)
 	TST.b	Player_has_received_sword_of_vermilion.w
@@ -8424,7 +8424,7 @@ loc_00007D82:
 	RTS
 
 loc_00007D8C:
-	BSR.w	loc_00008234
+	BSR.w	SetRandomDirection
 	CLR.b	$25(A5)
 	TST.b	Tsarkon_is_dead.w
 	BEQ.b	loc_00007DA0
@@ -8439,7 +8439,7 @@ loc_00007DAC:
 	RTS
 
 loc_00007DB6:
-	BSR.w	loc_00008234
+	BSR.w	SetRandomDirection
 	CLR.b	$25(A5)
 	TST.b	Carthahena_boss_defeated.w
 	BEQ.b	loc_00007DD2
@@ -8466,7 +8466,7 @@ loc_00007DFA:
 	dc.b	$61, $00, $04, $38, $42, $2D, $00, $25, $4A, $38, $C7, $58, $66, $04, $08, $95, $00, $07, $2B, $7C, $00, $00, $6F, $44, $00, $02, $4E, $75, $61, $00, $04, $1C 
 	dc.b	$42, $2D, $00, $25, $4A, $38, $C7, $58, $66, $04, $08, $95, $00, $07, $2B, $7C, $00, $00, $6F, $44, $00, $02, $4E, $75 
 loc_00007E32:
-	BSR.w	loc_00008234
+	BSR.w	SetRandomDirection
 	CLR.b	$25(A5)
 	TST.b	Tsarkon_is_dead.w
 	BNE.b	loc_00007E4A
@@ -8504,7 +8504,7 @@ loc_00007EB0:
 	MOVE.l	#MustHaveAllRingsStr, $1C(A5)	
 loc_00007EB8:
 	BRA.w	loc_00006F44
-	BSR.w	loc_00008234
+	BSR.w	SetRandomDirection
 	MOVE.l	#loc_00007ECA, $2(A5)
 	RTS
 
@@ -8796,7 +8796,10 @@ loc_00008224:
 loc_0000822A:
 	MOVE.w	(A1,D0.w), $8(A5)
 	BRA.w	loc_00008154
-loc_00008234:
+; SetRandomDirection
+; Set random direction for NPC/entity
+; Gets random number, masks to valid direction (0,2,4,6), stores in entity data
+SetRandomDirection:
 	JSR	GetRandomNumber
 	ANDI.b	#6, D0
 	MOVE.b	D0, $18(A5)
