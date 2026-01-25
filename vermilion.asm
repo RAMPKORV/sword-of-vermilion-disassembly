@@ -596,7 +596,7 @@ loc_0000118A:
 loc_00001196:
 	TST.b	Window_tilemap_row_draw_pending.w
 	BEQ.b	loc_000011A2
-	JSR	loc_00011F44
+	JSR	DispatchWindowDrawType
 loc_000011A2:
 	TST.b	Window_tilemap_draw_pending.w
 	BEQ.b	loc_000011AE
@@ -2877,7 +2877,7 @@ loc_000031EC:
 	RTS
 	
 loc_000031EE:
-	JSR	loc_0001227A
+	JSR	SaveMessageSpeedMenuToBuffer_Alt
 	JSR	loc_00010C9E
 	ADDQ.w	#1, Overworld_menu_state.w
 	CLR.w	Main_menu_selection.w
@@ -18685,13 +18685,13 @@ loc_0001076C:
 loc_0001077E:
 	MOVEA.l	Sram_save_slot_ptr.w, A0	
 	BSR.w	loc_00010854	
-	JSR	loc_000118F8	
+	JSR	DrawGameReadyWindow	
 	MOVE.w	#5, File_menu_phase.w	
 	RTS
 	
 loc_00010794:
 	MOVE.w	#4, File_menu_phase.w
-	JSR	loc_000118B4
+	JSR	DrawNoSavedGameWindow
 	RTS
 	
 loc_000107A2:
@@ -18710,7 +18710,7 @@ loc_000107B6:
 	MOVEA.l	Sram_backup_ptr.w, A0
 	BSR.w	loc_000108FE
 	BEQ.b	loc_000107F6
-	JSR	loc_00011870
+	JSR	DrawSaveFailedWindow
 	ADDQ.w	#1, File_menu_phase.w
 	MOVE.w	#$0094, D0
 	JSR	QueueSoundEffect
@@ -19944,7 +19944,8 @@ loc_0001182C:
 	MOVE.b	#$FF, Window_tilemap_draw_active.w	
 	RTS
 	
-loc_00011870:
+;DrawSaveFailedWindow:
+DrawSaveFailedWindow:
 	MOVE.w	#$000A, Window_tilemap_x.w
 	MOVE.w	#$0010, Window_tilemap_y.w
 	MOVE.w	#$0019, Window_width.w
@@ -19959,7 +19960,8 @@ loc_00011870:
 	MOVE.b	#$FF, Window_tilemap_draw_active.w
 	RTS
 	
-loc_000118B4:
+;DrawNoSavedGameWindow:
+DrawNoSavedGameWindow:
 	MOVE.w	#$000A, Window_tilemap_x.w
 	MOVE.w	#$0010, Window_tilemap_y.w
 	MOVE.w	#$0019, Window_width.w
@@ -19974,7 +19976,8 @@ loc_000118B4:
 	MOVE.b	#$FF, Window_tilemap_draw_active.w
 	RTS
 	
-loc_000118F8:
+;DrawGameReadyWindow:
+DrawGameReadyWindow:
 	MOVE.w	#$000A, Window_tilemap_x.w	
 	MOVE.w	#$0010, Window_tilemap_y.w	
 	MOVE.w	#$0019, Window_width.w	
@@ -20101,7 +20104,8 @@ loc_000119AA: ; stats screen?
 	MOVE.b	#$FF, Window_tilemap_draw_active.w
 	RTS
 	
-loc_00011AEC:
+;DrawEquippedGearWindow:
+DrawEquippedGearWindow:
 	MOVE.w	#2, Window_tilemap_x.w
 	MOVE.w	#2, Window_tilemap_y.w
 	MOVE.w	#$001A, Window_width.w
@@ -20160,7 +20164,8 @@ loc_00011BA4:
 	MOVEA.l	(A1,D0.w), A0
 	RTS
 	
-loc_00011BB8:
+;DrawGearCombatWindow:
+DrawGearCombatWindow:
 	MOVE.w	#$000F, Window_tilemap_x.w
 	MOVE.w	#2, Window_tilemap_y.w
 	MOVE.w	#$0016, Window_width.w
@@ -20234,7 +20239,8 @@ loc_00011CB8:
 	DBF	D7, loc_00011C94
 	RTS
 	
-loc_00011CC2:
+;DrawMagicListWindow:
+DrawMagicListWindow:
 	MOVE.w	#2, Window_tilemap_x.w
 	MOVE.w	#2, Window_tilemap_y.w
 	MOVE.w	#$0011, Window_width.w
@@ -20287,7 +20293,8 @@ loc_00011D56:
 	MOVE.b	#$FF, Window_tilemap_draw_active.w
 	RTS
 	
-loc_00011D96:
+;DrawItemsListWindow:
+DrawItemsListWindow:
 	MOVE.w	#$000F, Window_tilemap_x.w
 	MOVE.w	#2, Window_tilemap_y.w
 	MOVE.w	#$0016, Window_width.w
@@ -20334,7 +20341,8 @@ loc_00011E12:
 	MOVE.b	#$FF, Window_tilemap_draw_active.w	
 	RTS
 	
-loc_00011E52:
+;DrawRingsListWindow:
+DrawRingsListWindow:
 	LEA	Rings_collected.w, A0
 	CLR.w	D0
 	MOVE.w	#7, D7
@@ -20402,7 +20410,8 @@ loc_00011F30:
 	MOVE.b	#$FF, Window_tilemap_draw_active.w	
 	RTS
 	
-loc_00011F44:
+;DispatchWindowDrawType:
+DispatchWindowDrawType:
 	LEA	loc_00011F58, A0
 	MOVE.w	Window_draw_type.w, D0
 	ADD.w	D0, D0
@@ -20625,7 +20634,8 @@ loc_00012240:
 	ADDQ.w	#1, Window_text_row.w
 	RTS
 	
-loc_0001227A:
+;SaveMessageSpeedMenuToBuffer_Alt:
+SaveMessageSpeedMenuToBuffer_Alt:
 	LEA	Message_speed_menu_tiles_buffer, A0
 	MOVE.w	#2, Window_tile_x.w
 	MOVE.w	#2, Window_tile_y.w
@@ -31976,7 +31986,7 @@ loc_0001D746:
 	MOVE.w	#$00A0, D0
 	JSR	QueueSoundEffect
 	JSR	SaveFullMenuTiles
-	JSR	loc_00011AEC
+	JSR	DrawEquippedGearWindow
 	ADDQ.w	#1, Equip_list_menu_state.w
 loc_0001D760:
 	RTS
@@ -32007,7 +32017,7 @@ loc_0001D7B2:
 	MOVE.w	#$00A0, D0
 	JSR	QueueSoundEffect
 	JSR	SaveEquipmentListTiles
-	JSR	loc_00011BB8
+	JSR	DrawGearCombatWindow
 	ADDQ.w	#1, Equip_list_menu_state.w
 loc_0001D7CC:
 	RTS
@@ -32038,7 +32048,7 @@ loc_0001D81E:
 	MOVE.w	#$00A0, D0
 	JSR	QueueSoundEffect
 	JSR	SaveMagicListTiles
-	JSR	loc_00011CC2
+	JSR	DrawMagicListWindow
 	ADDQ.w	#1, Equip_list_menu_state.w
 loc_0001D838:
 	RTS
@@ -32069,7 +32079,7 @@ loc_0001D88A:
 	MOVE.w	#$00A0, D0
 	JSR	QueueSoundEffect
 	JSR	SaveItemListRightTiles
-	JSR	loc_00011D96
+	JSR	DrawItemsListWindow
 	ADDQ.w	#1, Equip_list_menu_state.w
 loc_0001D8A4:
 	RTS
@@ -32100,7 +32110,7 @@ loc_0001D8F6:
 	MOVE.w	#$00A0, D0
 	JSR	QueueSoundEffect
 	JSR	SaveRingsListMenuToBuffer
-	JSR	loc_00011E52
+	JSR	DrawRingsListWindow
 	ADDQ.w	#1, Equip_list_menu_state.w
 loc_0001D910:
 	RTS
