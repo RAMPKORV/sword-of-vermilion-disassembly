@@ -4234,7 +4234,7 @@ loc_00004340:
 ;InitFirstPersonView:
 InitFirstPersonView:
 	BSR.w	ClearFirstPersonTilemap
-	BSR.w	loc_00005304
+	BSR.w	UpdateFirstPersonWallData
 	MOVE.w	#0, First_person_wall_frame.w
 	MOVE.w	#$000C, Wall_render_y_offset.w
 	BSR.w	DrawFirstPersonWalls
@@ -4379,7 +4379,8 @@ loc_00004566:
 loc_0000457C:
 	RTS
 
-loc_0000457E:
+;DecrementInaudiosSteps:
+DecrementInaudiosSteps:
 	TST.w	Inaudios_steps_remaining.w
 	BNE.b	loc_0000458C
 	MOVE.w	#$26, Gameplay_substate.w
@@ -4443,7 +4444,7 @@ loc_00004626:
 
 loc_00004642:
 	CLR.b	Player_move_forward_in_overworld.w
-	BSR.w	loc_00005304
+	BSR.w	UpdateFirstPersonWallData
 	MOVE.w	#0, First_person_wall_frame.w
 	MOVE.w	#$000C, Wall_render_y_offset.w
 	BSR.w	DrawFirstPersonWalls
@@ -4663,7 +4664,7 @@ loc_000048EA:
 	BSR.w	DisplayKimsToVRAM
 loc_000048EE:
 	BSR.w	UpdateAreaVisibility
-	BSR.w	loc_0000457E
+	BSR.w	DecrementInaudiosSteps
 	RTS
 
 loc_000048F8:
@@ -4681,7 +4682,7 @@ loc_0000491E:
 	BSR.w	DisplayKimsToVRAM
 loc_00004922:
 	BSR.w	UpdateAreaVisibility
-	BSR.w	loc_0000457E
+	BSR.w	DecrementInaudiosSteps
 	RTS
 
 loc_0000492C:
@@ -4697,7 +4698,7 @@ loc_00004946:
 	JSR	LoadPalettesFromTable
 	LEA	loc_00005A1C, A0
 	BSR.w	loc_000059AE
-	BSR.w	loc_00005304
+	BSR.w	UpdateFirstPersonWallData
 	MOVE.w	#4, First_person_wall_frame.w
 	MOVE.w	#0, Wall_render_y_offset.w
 	BSR.w	DrawFirstPersonWalls
@@ -4774,7 +4775,7 @@ loc_00004A44:
 	MOVE.w	#0, First_person_wall_frame.w
 	MOVE.w	#$000C, Wall_render_y_offset.w
 	BSR.w	DrawFirstPersonWalls
-	BSR.w	loc_0000457E
+	BSR.w	DecrementInaudiosSteps
 	BRA.w	loc_00004BA0
 loc_00004A66:
 	BRA.w	loc_00004A76
@@ -4861,12 +4862,12 @@ loc_00004B6C:
 	CLR.b	Player_move_backward_in_overworld.w
 	LEA	loc_00005A2C, A0
 	BSR.w	loc_000059AE
-	BSR.w	loc_00005304
+	BSR.w	UpdateFirstPersonWallData
 	MOVE.w	#0, First_person_wall_frame.w
 	MOVE.w	#$000C, Wall_render_y_offset.w
 	BSR.w	DrawFirstPersonWalls
 	BSR.w	UpdateAreaVisibility
-	BSR.w	loc_0000457E
+	BSR.w	DecrementInaudiosSteps
 	BRA.w	loc_00004BA0
 loc_00004BA0:
 	MOVEA.l	Enemy_list_ptr.w, A6
@@ -5306,7 +5307,8 @@ loc_000052E8:
 	ANDI	#$F8FF, SR
 	RTS
 
-loc_00005304:
+;UpdateFirstPersonWallData:
+UpdateFirstPersonWallData:
 	LEA	Map_sector_center.w, A0
 	LEA	loc_00005326, A2
 	MOVE.w	Player_position_x_outside_town.w, D0
@@ -10385,7 +10387,7 @@ loc_00009666:
 	BSR.w	CopyPositionToLinkedSprite
 	BRA.w	loc_00009692
 loc_0000968E:
-	BSR.w	loc_0000A68A
+	BSR.w	CopyEnemyPositionToChildObject
 loc_00009692:
 	JSR	AddSpriteToDisplayList
 	RTS
@@ -10856,7 +10858,7 @@ loc_00009D2E:
 	LEA	loc_0003DC70, A1
 	MOVE.w	(A0,D1.w), $8(A5)
 	MOVE.w	(A1,D1.w), $8(A6)
-	BSR.w	loc_0000A68A
+	BSR.w	CopyEnemyPositionToChildObject
 	JSR	AddSpriteToDisplayList
 	RTS
 
@@ -11109,7 +11111,7 @@ loc_0000A0D4:
 	
 loc_0000A0DC:
 	BSR.w	InitEnemyAI
-	BSR.w	loc_0000B758
+	BSR.w	InitEnemyProjectileSpeed
 	MOVE.l	#loc_0000A0FC, $2(A5)
 	MOVE.b	#$0E, $6(A6)
 	MOVE.l	#loc_0000A662, $2(A6)
@@ -11184,7 +11186,7 @@ loc_0000A1DC:
 	
 loc_0000A1E4:
 	BSR.w	InitEnemyAI
-	BSR.w	loc_0000B758
+	BSR.w	InitEnemyProjectileSpeed
 	MOVE.l	#loc_0000A204, $2(A5)
 	MOVE.b	#$0E, $6(A6)
 	MOVE.l	#loc_0000A662, $2(A6)
@@ -11349,7 +11351,7 @@ loc_0000A420:
 	LEA	loc_0003DC70, A1
 	MOVE.w	(A0,D1.w), $8(A5)
 	MOVE.w	(A1,D1.w), $8(A6)
-	BSR.w	loc_0000A68A
+	BSR.w	CopyEnemyPositionToChildObject
 	JSR	AddSpriteToDisplayList(PC)
 	RTS
 	
@@ -11517,7 +11519,8 @@ CopyPositionToLinkedSprite:
 	MOVE.w	$16(A5), $16(A6)
 	RTS
 	
-loc_0000A68A:
+;CopyEnemyPositionToChildObject:
+CopyEnemyPositionToChildObject:
 	MOVE.b	$7(A5), $7(A6)
 	MOVE.w	$A(A5), $A(A6)
 	MOVE.w	$C(A5), D0
@@ -11624,7 +11627,7 @@ loc_0000A800:
 	JSR	GetRandomNumber
 	MOVE.b	D0, $1B(A5)
 	MOVE.l	#loc_0000A842, $2(A5)
-	BSR.w	loc_0000B758
+	BSR.w	InitEnemyProjectileSpeed
 	MOVE.l	#AddSpriteToDisplayList, $2(A6)
 	MOVE.b	#$0E, $6(A6)
 	CLR.b	$1A(A5)
@@ -11955,7 +11958,7 @@ loc_0000ACC4:
 	LEA	loc_0003DC70, A1
 	MOVE.w	(A0,D1.w), $8(A5)
 	MOVE.w	(A1,D1.w), $8(A6)
-	BSR.w	loc_0000A68A
+	BSR.w	CopyEnemyPositionToChildObject
 	JSR	AddSpriteToDisplayList(PC)
 	RTS
 	
@@ -12731,7 +12734,8 @@ loc_0000B73E:
 	MOVE.w	#$000C, $1E(A5)
 	RTS
 	
-loc_0000B758:
+;InitEnemyProjectileSpeed:
+InitEnemyProjectileSpeed:
 	MOVE.w	#$0019, $8(A5)
 	MOVE.b	#$0D, $6(A5)
 	MOVE.w	#$000C, $1C(A5)
@@ -14277,22 +14281,23 @@ loc_0000CD5E:
 loc_0000CD6E:
 	LEA	loc_00072A12, A0
 	MOVE.l	#$46420003, D5
-	BSR.w	loc_0000CDA4
+	BSR.w	Write7x8TilesToVRAM
 	RTS
 
 loc_0000CD80:
 	LEA	loc_00072A4A, A0
 	MOVE.l	#$46420003, D5
-	BSR.w	loc_0000CDA4
+	BSR.w	Write7x8TilesToVRAM
 	RTS
 
 loc_0000CD92:
 	LEA	loc_00072A82, A0
 	MOVE.l	#$46420003, D5
-	BSR.w	loc_0000CDA4
+	BSR.w	Write7x8TilesToVRAM
 	RTS
 
-loc_0000CDA4:
+;Write7x8TilesToVRAM:
+Write7x8TilesToVRAM:
 	ORI	#$0700, SR
 	MOVE.w	#6, D7
 loc_0000CDAC:
@@ -19441,7 +19446,7 @@ DrawListTopBorders:
 	MOVE.w	#$0015, Window_tilemap_draw_width.w
 	MOVE.w	#0, Window_tilemap_draw_height.w
 	MOVE.w	#0, Script_tile_attrs.w
-	BSR.w	loc_000113AE
+	BSR.w	RenderTextToTilemap
 	ADD.w	D7, D7
 	ADDQ.w	#1, D7
 	MOVEQ	#1, D6
@@ -19454,7 +19459,7 @@ loc_00011134:
 	MOVE.w	#$0015, Window_tilemap_draw_width.w
 	MOVE.w	#0, Window_tilemap_draw_height.w
 	MOVE.w	#0, Script_tile_attrs.w
-	BSR.w	loc_000113AE
+	BSR.w	RenderTextToTilemap
 	ADDQ.w	#1, D6
 	DBF	D7, loc_00011134
 	RTS
@@ -19471,7 +19476,7 @@ DrawListBottomBorder:
 	MOVE.w	#$0015, Window_tilemap_draw_width.w
 	MOVE.w	#0, Window_tilemap_draw_height.w
 	MOVE.w	#0, Script_tile_attrs.w
-	BSR.w	loc_000113AE
+	BSR.w	RenderTextToTilemap
 	RTS
 	
 ;DrawShopItemListWindow:
@@ -19618,7 +19623,8 @@ loc_0001139A:
 	MOVE.b	#$FF, Window_tilemap_draw_active.w
 	RTS
 	
-loc_000113AE:
+;RenderTextToTilemap:
+RenderTextToTilemap:
 	JSR	GetScrollOffsetInTiles
 	CLR.w	D3
 loc_000113B6:
@@ -19932,15 +19938,15 @@ DrawSaveFileSelectWindow:
 	MOVE.w	#$0197, D0
 	BSR.w	RenderTextAtOffset
 	LEA	$00200131, A0
-	BSR.w	loc_000117CE
+	BSR.w	FormatItemCountToBCD
 	MOVE.w	#$012E, D0
 	BSR.w	RenderTextToWindowAtPosition
 	LEA	$00200BB1, A0
-	BSR.w	loc_000117CE
+	BSR.w	FormatItemCountToBCD
 	MOVE.w	#$0166, D0
 	BSR.w	RenderTextToWindowAtPosition
 	LEA	$00201631, A0
-	BSR.w	loc_000117CE
+	BSR.w	FormatItemCountToBCD
 	MOVE.w	#$019E, D0
 	BSR.w	RenderTextToWindowAtPosition
 	CLR.w	Window_draw_row.w
@@ -19994,7 +20000,8 @@ loc_000117BE:
 	MOVE.w	#$FFFF, Savegame_name_overflow.w	
 	RTS
 	
-loc_000117CE:
+;FormatItemCountToBCD:
+FormatItemCountToBCD:
 	CLR.w	D0
 	MOVE.b	(A0), D0
 	ASL.w	#4, D0
@@ -20212,21 +20219,21 @@ DrawEquippedGearWindow:
 	LEA	NothingStr, A0
 	MOVE.w	Equipped_sword.w, D0
 	BLT.b	loc_00011B34
-	BSR.w	loc_00011B90
+	BSR.w	GetEquipmentNamePointer
 loc_00011B34:
 	MOVE.w	#$0074, D0
 	BSR.w	RenderTextAtOffset
 	LEA	NothingStr, A0
 	MOVE.w	Equipped_shield.w, D0
 	BLT.b	loc_00011B4C
-	BSR.w	loc_00011B90
+	BSR.w	GetEquipmentNamePointer
 loc_00011B4C:
 	MOVE.w	#$00AA, D0
 	BSR.w	RenderTextAtOffset
 	LEA	NothingStr, A0
 	MOVE.w	Equipped_armor.w, D0
 	BLT.b	loc_00011B64
-	BSR.w	loc_00011B90
+	BSR.w	GetEquipmentNamePointer
 loc_00011B64:
 	MOVE.w	#$00DF, D0
 	BSR.w	RenderTextAtOffset
@@ -20241,7 +20248,8 @@ loc_00011B7C:
 	MOVE.b	#$FF, Window_tilemap_draw_active.w
 	RTS
 	
-loc_00011B90:
+;GetEquipmentNamePointer:
+GetEquipmentNamePointer:
 	LEA	EquipmentNames, A1
 	ANDI.w	#$00FF, D0
 	ADD.w	D0, D0
@@ -21356,7 +21364,7 @@ DrawMagicListWithMP:
 	MOVE.w	#4, Window_tilemap_draw_y.w
 	LEA	Possessed_magics_list.w, A2
 	MOVE.w	Possessed_magics_length.w, D7
-	BSR.w	loc_00012C3E
+	BSR.w	DrawInventorySelectionMarkers
 	RTS
 	
 ;DrawPossessedEquipmentList:
@@ -21371,7 +21379,7 @@ DrawPossessedEquipmentList:
 	MOVE.w	#4, Window_tilemap_draw_y.w
 	LEA	Possessed_equipment_list.w, A2
 	MOVE.w	Possessed_equipment_length.w, D7
-	BSR.w	loc_00012C3E
+	BSR.w	DrawInventorySelectionMarkers
 	RTS
 	
 ;DrawReadyEquipmentList:
@@ -21392,7 +21400,7 @@ DrawReadyEquipmentList:
 	MOVE.w	#$0023, Window_tilemap_draw_x.w
 	MOVE.w	#4, Window_tilemap_draw_y.w
 	LEA	Ready_equipment_list.w, A2
-	BSR.w	loc_00012C3E
+	BSR.w	DrawInventorySelectionMarkers
 	RTS
 	
 ;DrawListItems:
@@ -21472,7 +21480,8 @@ loc_00012BE6:
 	ANDI	#$F8FF, SR	
 	RTS
 	
-loc_00012C3E:
+;DrawInventorySelectionMarkers:
+DrawInventorySelectionMarkers:
 	SUBQ.w	#1, D7
 	CLR.w	D3
 loc_00012C42:
@@ -23715,10 +23724,10 @@ loc_0001613A:
 	MOVE.w	(A3)+, D0
 	TST.w	Tilemap_plane_select.w
 	BEQ.b	loc_0001616A
-	BSR.w	loc_000161E8
+	BSR.w	WriteTownTile2x2
 	BRA.b	loc_0001616E
 loc_0001616A:
-	BSR.w	loc_0001619A
+	BSR.w	WriteTownTile2x2WithFlip
 loc_0001616E:
 	BRA.b	loc_0001617E
 loc_00016170:
@@ -23735,7 +23744,8 @@ loc_0001617E:
 	DBF	D7, loc_0001611C
 	RTS
 
-loc_0001619A:
+;WriteTownTile2x2WithFlip:
+WriteTownTile2x2WithFlip:
 	MOVE.w	#$000C, D3
 	LEA	loc_0001F39C, A1
 	MOVE.w	Town_tileset_index.w, D1
@@ -23765,7 +23775,8 @@ loc_000161D6:
 	MOVE.w	D0, $82(A2)
 	RTS
 
-loc_000161E8:
+;WriteTownTile2x2:
+WriteTownTile2x2:
 	LEA	loc_0001F39C, A1
 	MOVE.w	Town_tileset_index.w, D1
 	ADD.w	D1, D1
@@ -24058,10 +24069,10 @@ loc_000165B0:
 	LEA	(A4,D2.w), A6
 	TST.w	Tilemap_plane_select.w
 	BEQ.b	loc_000165D4
-	BSR.w	loc_000161E8
+	BSR.w	WriteTownTile2x2
 	BRA.b	loc_000165D8
 loc_000165D4:
-	BSR.w	loc_0001619A
+	BSR.w	WriteTownTile2x2WithFlip
 loc_000165D8:
 	ADDQ.w	#2, D7
 	ADDQ.w	#4, D6
@@ -24094,10 +24105,10 @@ loc_0001660E:
 	MOVE.w	(A0,D7.w), D0
 	TST.w	Tilemap_plane_select.w
 	BEQ.b	loc_00016626
-	BSR.w	loc_000161E8
+	BSR.w	WriteTownTile2x2
 	BRA.b	loc_0001662A
 loc_00016626:
-	BSR.w	loc_0001619A
+	BSR.w	WriteTownTile2x2WithFlip
 loc_0001662A:
 	MOVE.w	Town_tilemap_width.w, D1
 	ASL.w	#1, D1
@@ -25037,7 +25048,7 @@ loc_00017202:
 loc_00017206:
 	TST.b	Palette_fade_in_mask.w
 	BNE.b	loc_0001723C
-	BSR.w	loc_00017690
+	BSR.w	FillDialogAreaWithPattern
 	MOVE.l	#$413C0003, D5
 	LEA	Outro4Str, A0
 	MOVE.w	#$84C0, D4
@@ -25061,7 +25072,7 @@ loc_0001725C:
 loc_00017260:
 	TST.b	Palette_fade_in_mask.w
 	BNE.b	loc_00017296
-	BSR.w	loc_00017690
+	BSR.w	FillDialogAreaWithPattern
 	MOVE.l	#$413C0003, D5
 	LEA	Outro5Str, A0
 	MOVE.w	#$84C0, D4
@@ -25085,7 +25096,7 @@ loc_000172B6:
 loc_000172BA:
 	TST.b	Palette_fade_in_mask.w
 	BNE.b	loc_000172CE
-	BSR.w	loc_00017690
+	BSR.w	FillDialogAreaWithPattern
 	MOVE.w	#$00C8, Ending_timer.w
 	ADDQ.w	#1, Ending_sequence_step.w
 loc_000172CE:
@@ -25362,7 +25373,8 @@ loc_00017676:
 	ANDI	#$F8FF, SR
 	RTS
 
-loc_00017690:
+;FillDialogAreaWithPattern:
+FillDialogAreaWithPattern:
 	MOVE.l	#$40BC0003, D5
 	MOVE.w	#$0019, D7
 loc_0001769A:
@@ -26819,22 +26831,23 @@ CastVoltio:
 	MOVE.w	#$0245, D6
 	LEA	loc_00018FDA, A0
 	MOVE.l	#loc_00018F30, $2(A6)
-	BSR.w	loc_00018EBE
+	BSR.w	InitMagicProjectile
 	MOVE.w	#2, D7
 loc_00018E94:
 	MOVE.l	#loc_00018F5A, $2(A6)
-	BSR.w	loc_00018EBE
+	BSR.w	InitMagicProjectile
 	DBF	D7, loc_00018E94
 	MOVE.w	#$025D, D6
 	MOVE.w	#3, D7
 loc_00018EAC:
 	MOVE.l	#loc_00018FA0, $2(A6)
-	BSR.w	loc_00018EBE
+	BSR.w	InitMagicProjectile
 	DBF	D7, loc_00018EAC
 loc_00018EBC:
 	RTS
 
-loc_00018EBE:
+;InitMagicProjectile:
+InitMagicProjectile:
 	BSET.b	#7, (A6)
 	BCLR.b	#5, $7(A6)
 	BCLR.b	#6, $7(A6)
@@ -26876,7 +26889,7 @@ loc_00018F30:
 	RTS
 
 loc_00018F54:
-	BSR.w	loc_0001A08C
+	BSR.w	ClearEnemyActiveFlags_Alt
 	RTS
 
 loc_00018F5A:
@@ -27197,7 +27210,7 @@ loc_00019340:
 	RTS
 
 loc_0001937E:
-	BSR.w	loc_0001A08C
+	BSR.w	ClearEnemyActiveFlags_Alt
 	RTS
 
 loc_00019384:
@@ -28079,11 +28092,12 @@ loc_0001A078:
 	MOVE.b	$1(A6), D0
 	LEA	(A6,D0.w), A6
 	DBF	D7, loc_0001A06C
-	BSR.w	loc_0001A08C
+	BSR.w	ClearEnemyActiveFlags_Alt
 loc_0001A08A:
 	RTS
 
-loc_0001A08C:
+;ClearEnemyActiveFlags_Alt:
+ClearEnemyActiveFlags_Alt:
 	MOVEA.l	Object_slot_02_ptr.w, A6
 	MOVE.w	#$000C, D7
 loc_0001A094:
@@ -32853,7 +32867,7 @@ loc_0001E172:
 	BGE.w	loc_0001E1BA	
 	LEA	TitaniasMirrorStr, A2	
 	BSR.w	DisplayFoundItemMessage	
-	BSR.w	loc_0001E42C	
+	BSR.w	DisplayFoundItemWithName	
 	JSR	AddItemToInventoryList	
 	MOVE.w	#((ITEM_TYPE_DISCARDABLE<<8)|ITEM_TITANIAS_MIRROR), (A0,D0.w)
 	MOVE.b	#$FF, Titanias_mirror_acquired.w	
@@ -32863,7 +32877,7 @@ loc_0001E172:
 loc_0001E1BA:
 	LEA	TitaniasMirrorStr, A2	
 	BSR.w	DisplayFoundItemMessage	
-	BSR.w	loc_0001E452	
+	BSR.w	DisplayInventoryFullMessage	
 loc_0001E1C8:
 	BRA.w	loc_0001E312	
 loc_0001E1CC:
@@ -32881,7 +32895,7 @@ loc_0001E22E:
 	BGE.w	loc_0001E26E
 	LEA	RafaelsStickStr, A2
 	BSR.w	DisplayFoundItemMessage
-	BSR.w	loc_0001E42C
+	BSR.w	DisplayFoundItemWithName
 	JSR	AddItemToInventoryList
 	MOVE.w	#((ITEM_TYPE_DISCARDABLE<<8)|ITEM_RAFAELS_STICK), (A0,D0.w)
 	MOVE.b	#$FF, Rafaels_stick_acquired.w
@@ -32891,7 +32905,7 @@ loc_0001E22E:
 loc_0001E26E:
 	LEA	RafaelsStickStr, A2	
 	BSR.w	DisplayFoundItemMessage	
-	BSR.w	loc_0001E452	
+	BSR.w	DisplayInventoryFullMessage	
 loc_0001E27C:
 	BRA.w	loc_0001E312
 loc_0001E280:
@@ -32903,7 +32917,7 @@ loc_0001E288:
 	BGE.w	loc_0001E2BA	
 	LEA	HerbsStr, A2	
 	BSR.w	DisplayFoundItemMessage	
-	BSR.w	loc_0001E42C	
+	BSR.w	DisplayFoundItemWithName	
 	JSR	AddItemToInventoryList	
 	MOVE.w	#0, (A0,D0.w)	
 	MOVE.w	#$00A6, D0	
@@ -32912,7 +32926,7 @@ loc_0001E288:
 loc_0001E2BA:
 	LEA	HerbsStr, A2	
 	BSR.w	DisplayFoundItemMessage	
-	BSR.w	loc_0001E452	
+	BSR.w	DisplayInventoryFullMessage	
 loc_0001E2C8:
 	BRA.w	loc_0001E312	
 
@@ -33008,7 +33022,8 @@ DisplayFoundItemMessage:
 	JSR	CopyStringUntilFF
 	RTS
 	
-loc_0001E42C:
+;DisplayFoundItemWithName:
+DisplayFoundItemWithName:
 	LEA	FoundItemCommaStr, A0
 	JSR	CopyStringUntilFF
 	MOVEA.l	A2, A0
@@ -33018,7 +33033,8 @@ loc_0001E42C:
 	PRINT 	$FFFFC260
 	RTS
 	
-loc_0001E452:
+;DisplayInventoryFullMessage:
+DisplayInventoryFullMessage:
 	LEA	TooMuchToCarryStr, A0	
 	JSR	CopyStringUntilFF	
 	MOVE.b	#$FF, (A1)+	
@@ -36279,7 +36295,7 @@ loc_000212BE:
 	MOVE.w	#4, Reward_script_type.w
 	MOVE.w	#5, Reward_script_value.w
 	MOVE.l	#$FFFFC81D, Reward_script_flag.w
-	BSR.w	loc_00021438
+	BSR.w	SetupChestReward
 	RTS
 	
 loc_000212D8:
@@ -36299,7 +36315,7 @@ loc_00021302:
 	MOVE.w	#4, Reward_script_type.w
 	MOVE.w	#6, Reward_script_value.w
 	MOVE.l	#$FFFFC81E, Reward_script_flag.w
-	BSR.w	loc_00021438
+	BSR.w	SetupChestReward
 	RTS
 	
 loc_0002131C:
@@ -36319,7 +36335,7 @@ loc_00021346:
 	MOVE.w	#4, Reward_script_type.w
 	MOVE.w	#7, Reward_script_value.w
 	MOVE.l	#$FFFFC81F, Reward_script_flag.w
-	BSR.w	loc_00021438
+	BSR.w	SetupChestReward
 	RTS
 	
 loc_00021360:
@@ -36391,13 +36407,13 @@ InitDialogGraphics:
 ; loc_0002141E
 SetupItemTreasure:
 	MOVE.w	#0, Reward_script_type.w          ; Type 0 = Item
-	BRA.w	loc_00021438
+	BRA.w	SetupChestReward
 	
 ; Initialize equipment chest (type 1)
 ; loc_00021428
 SetupEquipmentTreasure:
 	MOVE.w	#1, Reward_script_type.w          ; Type 1 = Equipment
-	BRA.w	loc_00021438
+	BRA.w	SetupChestReward
 	
 ; Initialize money chest (type 3)
 ; loc_00021432
@@ -36405,7 +36421,8 @@ InitMoneyTreasure:
 	MOVE.w	#3, Reward_script_type.w          ; Type 3 = Money
 	
 	; Common chest initialization
-loc_00021438:
+;SetupChestReward:
+SetupChestReward:
 	MOVEA.l	Reward_script_flag.w, A0          ; A0 = flag byte pointer
 	TST.b	(A0)                     ; Already opened?
 	BNE.b	loc_00021446             ; Yes: skip treasure flag
@@ -74831,7 +74848,7 @@ loc_00092A60:
 	BNE.w	loc_00092A7E
 	BSR.w	loc_00092A84
 loc_00092A74:
-	BSR.w	loc_00092BB6
+	BSR.w	ProcessPSGChannelNoteSequence
 	BSR.w	loc_000933E4
 	RTS
 	
@@ -74854,7 +74871,7 @@ loc_00092A9E:
 	BTST.b	#5, $0(A3)
 	BNE.w	loc_00092B1C
 loc_00092AB2:
-	BSR.w	loc_00093402
+	BSR.w	WriteFMChannelRegisters
 	TST.b	D5
 	BPL.w	loc_00092ACE
 	BSR.w	loc_00092FB8
@@ -74873,13 +74890,13 @@ loc_00092AD8:
 	SUBQ.w	#1, $A(A3)
 	BNE.w	loc_00092AEE
 	BSR.w	loc_00092AF8
-	BSR.w	loc_00092BB6
+	BSR.w	ProcessPSGChannelNoteSequence
 	BSR.w	loc_000933E4
 	RTS
 	
 loc_00092AEE:
 	BSR.w	loc_00092B3E
-	BSR.w	loc_00092BB6
+	BSR.w	ProcessPSGChannelNoteSequence
 	RTS
 	
 loc_00092AF8:
@@ -74895,7 +74912,7 @@ loc_00092B12:
 	BTST.b	#5, $0(A3)
 	BEQ.w	loc_00092AB2
 loc_00092B1C:
-	BSR.w	loc_00093402
+	BSR.w	WriteFMChannelRegisters
 	BSR.w	loc_00092FB8
 	MOVE.b	(A4)+, $10(A3)
 	MOVE.b	(A4)+, D5
@@ -74953,10 +74970,11 @@ loc_00092BAA:
 	
 loc_00092BAC:
 	MOVE.b	$6(A3), D7
-	BNE.w	loc_00092BB6
+	BNE.w	ProcessPSGChannelNoteSequence
 	RTS
 	
-loc_00092BB6:
+;ProcessPSGChannelNoteSequence:
+ProcessPSGChannelNoteSequence:
 	MOVE.w	$C(A3), D4
 	BEQ.w	loc_00092C68
 	CLR.w	D7
@@ -75200,7 +75218,7 @@ loc_00092E42:
 	BSR.w	loc_00093810
 	BRA.w	loc_00092E6E
 loc_00092E64:
-	BSR.w	loc_00093402
+	BSR.w	WriteFMChannelRegisters
 	BSET.b	#1, $0(A3)
 loc_00092E6E:
 	TST.b	$00FFF421
@@ -75653,7 +75671,8 @@ loc_000933E4:
 loc_00093400:
 	RTS
 	
-loc_00093402:
+;WriteFMChannelRegisters:
+WriteFMChannelRegisters:
 	MOVE.b	$0(A3), D2
 	ANDI.b	#6, D2
 	BNE.w	loc_0009341A
@@ -75725,7 +75744,7 @@ loc_00093554:
 	SUBQ.w	#1, $A(A3)
 	BNE.w	loc_00093574
 	BSR.w	loc_000935A2
-	BSR.w	loc_0009365C
+	BSR.w	ProcessFMChannelNoteSequence
 	BSR.w	loc_00093736
 	RTS
 	
@@ -75740,13 +75759,13 @@ loc_0009357E:
 	dc.b	$00, $10 
 	dc.w	$6100
 	dc.w	$0052
-	BSR.w	loc_0009365C	
+	BSR.w	ProcessFMChannelNoteSequence	
 	BSR.w	loc_00093736	
 	RTS
 	
 loc_00093594:
 	BSR.w	loc_000937F0	
-	BSR.w	loc_0009365C	
+	BSR.w	ProcessFMChannelNoteSequence	
 	BSR.w	loc_0009374A	
 	dc.w	$4E75
 loc_000935A2:
@@ -75813,7 +75832,8 @@ loc_00093640:
 	BEQ.w	loc_00093734
 	MOVE.b	$6(A3), D7
 	BEQ.w	loc_00093734
-loc_0009365C:
+;ProcessFMChannelNoteSequence:
+ProcessFMChannelNoteSequence:
 	MOVE.w	$C(A3), D4
 	CLR.w	D0
 	MOVE.b	$6(A3), D0
