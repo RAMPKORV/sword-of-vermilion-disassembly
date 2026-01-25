@@ -3837,7 +3837,7 @@ loc_00003DB6:
 	ADD.w	D0, D0
 	LEA	loc_000228FE, A0
 	MOVE.w	(A0,D0.w), Player_direction.w
-	LEA	loc_0002277E, A0
+	LEA	SineTable, A0
 	MOVE.l	$20(A5), D0
 	MOVE.w	Player_direction.w, D1
 	ASL.w	#5, D1
@@ -9887,7 +9887,7 @@ loc_00009072:
 	dc.b	$2C, $78, $CC, $14, $3E, $3C, $00, $17, $08, $96, $00, $07, $42, $40, $10, $2E, $00, $01, $4D, $F6, $00, $00, $51, $CF, $FF, $F0, $4E, $75 
 
 loc_0000908E:
-	LEA	loc_0002277E, A0
+	LEA	SineTable, A0
 	MOVE.l	$20(A5), D0
 	CLR.w	D1
 	MOVE.b	$18(A5), D1
@@ -11721,7 +11721,7 @@ loc_0000AA1A:
 loc_0000AA30:
 	ADDQ.w	#1, $2A(A5)
 	ADDQ.b	#4, $18(A5)
-	LEA	loc_0002277E, A0
+	LEA	SineTable, A0
 	MOVE.w	$2A(A5), D0
 	ASR.w	#1, D0
 	CLR.w	D1
@@ -11926,7 +11926,7 @@ loc_0000AD10:
 	MOVE.w	D0, D1
 	ASR.w	#1, D1
 	ADD.b	D1, $27(A5)
-	LEA	loc_0002277E, A0
+	LEA	SineTable, A0
 	CLR.w	D1
 	MOVE.b	$27(A5), D1
 	MOVE.b	(A0,D1.w), D2
@@ -12044,14 +12044,14 @@ loc_0000AECE:
 	ASL.w	#5, D0
 	MOVE.w	D0, D5
 	CLR.l	D0
-	LEA	loc_0002277E, A0
+	LEA	SineTable, A0
 	MOVE.b	$40(A0,D5.w), D0
 	ASL.w	#8, D0
 	EXT.l	D0
 	NEG.l	D0
 	MOVE.l	D0, $32(A5)
 	CLR.l	D0
-	LEA	loc_0002277E, A0
+	LEA	SineTable, A0
 	MOVE.b	(A0,D5.w), D0
 	ASL.w	#8, D0
 	EXT.l	D0
@@ -12084,7 +12084,7 @@ loc_0000AF4A:
 	CLR.w	D5
 	MOVE.b	$3A(A6), D5
 	CLR.l	D0
-	LEA	loc_0002277E, A1
+	LEA	SineTable, A1
 	MOVE.b	$40(A1,D5.w), D0
 	ASL.w	#8, D0
 	EXT.l	D0
@@ -12092,7 +12092,7 @@ loc_0000AF4A:
 	ADD.l	$E(A5), D0
 	MOVE.l	D0, $E(A6)
 	CLR.l	D0
-	LEA	loc_0002277E, A1
+	LEA	SineTable, A1
 	MOVE.b	(A1,D5.w), D0
 	ASL.w	#8, D0
 	EXT.l	D0
@@ -12193,14 +12193,14 @@ loc_0000B0DC:
 	ASL.w	#5, D0
 	MOVE.w	D0, D5
 	CLR.l	D0
-	LEA	loc_0002277E, A0
+	LEA	SineTable, A0
 	MOVE.b	$40(A0,D5.w), D0
 	ASL.w	#8, D0
 	EXT.l	D0
 	NEG.l	D0
 	MOVE.l	D0, $32(A5)
 	CLR.l	D0
-	LEA	loc_0002277E, A0
+	LEA	SineTable, A0
 	MOVE.b	(A0,D5.w), D0
 	ASL.w	#8, D0
 	EXT.l	D0
@@ -12252,7 +12252,7 @@ loc_0000B194:
 	MOVE.b	$1(A4), D0
 	LEA	(A4,D0.w), A6
 	CLR.l	D0
-	LEA	loc_0002277E, A1
+	LEA	SineTable, A1
 	MOVE.b	$40(A1,D5.w), D0
 	ASL.w	#8, D0
 	EXT.l	D0
@@ -12260,7 +12260,7 @@ loc_0000B194:
 	ADD.l	$E(A0), D0
 	MOVE.l	D0, $E(A6)
 	CLR.l	D0
-	LEA	loc_0002277E, A1
+	LEA	SineTable, A1
 	MOVE.b	(A1,D5.w), D0
 	ASL.w	#8, D0
 	EXT.l	D0
@@ -12387,14 +12387,14 @@ loc_0000B394:
 	ASL.w	#5, D0
 	MOVE.w	D0, D5
 	CLR.l	D0
-	LEA	loc_0002277E, A0
+	LEA	SineTable, A0
 	MOVE.b	$40(A0,D5.w), D0
 	ASL.w	#8, D0
 	EXT.l	D0
 	NEG.l	D0
 	MOVE.l	D0, $32(A5)
 	CLR.l	D0
-	LEA	loc_0002277E, A0
+	LEA	SineTable, A0
 	MOVE.b	(A0,D5.w), D0
 	ASL.w	#8, D0
 	EXT.l	D0
@@ -12484,13 +12484,13 @@ loc_0000B4D4:
 loc_0000B4D6:
 	CLR.w	D5
 	MOVE.b	$3A(A6), D5
-	LEA	loc_0002277E, A2
+	LEA	SineTable, A2
 	MOVE.b	$40(A2,D5.w), D0
 	EXT.w	D0
 	ASR.w	#4, D0
 	ADD.w	$E(A4), D0
 	MOVE.w	D0, $E(A6)
-	LEA	loc_0002277E, A2
+	LEA	SineTable, A2
 	MOVE.b	(A2,D5.w), D0
 	EXT.w	D0
 	ASR.w	#4, D0
@@ -15913,7 +15913,7 @@ loc_0000E4A8:
 	RTS
 
 loc_0000E4DE:
-	LEA	loc_0002277E, A0
+	LEA	SineTable, A0
 	MOVE.w	$20(A5), D0
 	CLR.w	D1
 	MOVE.b	$18(A5), D1
@@ -16728,7 +16728,7 @@ loc_0000F03E:
 loc_0000F06C:
 	BRA.w	loc_0000F0D2
 loc_0000F070:
-	LEA	loc_0002277E, A0
+	LEA	SineTable, A0
 	MOVE.l	$20(A5), D0
 	CLR.w	D1
 	MOVE.b	$18(A5), D1
@@ -26320,7 +26320,7 @@ CastAero:
 	ASL.w	#3, D0
 	MOVE.w	D0, $3A(A6)
 	MOVE.w	#$0245, $8(A6)
-	LEA	loc_0002277E, A0
+	LEA	SineTable, A0
 	MOVE.l	#$400, D0
 	ASL.w	#5, D1
 	MOVE.b	(A0,D1.w), D2
@@ -26469,7 +26469,7 @@ loc_00018CDA:
 	ADD.w	D0, D0
 	LEA	loc_0003DF3C, A0
 	MOVE.w	(A0,D0.w), $8(A5)
-	LEA	loc_0002277E, A0
+	LEA	SineTable, A0
 	MOVE.l	$20(A5), D0
 	CLR.w	D1
 	MOVE.b	$18(A5), D1
@@ -26521,7 +26521,7 @@ CastVolti:
 	CLR.b	$19(A6)
 	MOVE.w	#$0245, $8(A6)
 	BSR.w	InitMagicDamageAndFlags
-	LEA	loc_0002277E, A0
+	LEA	SineTable, A0
 	MOVE.l	#$400, D0
 	MOVE.w	Player_direction.w, D1
 	ASL.w	#5, D1
@@ -27047,7 +27047,7 @@ loc_000194B6:
 	BLE.w	loc_00019534
 loc_000194CA:
 	SUBQ.b	#4, $18(A5)
-	LEA	loc_0002277E, A0
+	LEA	SineTable, A0
 	CLR.w	D1
 	MOVE.b	$18(A5), D1
 	MOVE.b	(A0,D1.w), D2
@@ -27119,7 +27119,7 @@ loc_000195DA:
 	JSR	CheckProjectileHitEnemies(PC)
 	TST.b	$19(A5)
 	BMI.w	loc_00019688
-	LEA	loc_0002277E, A0
+	LEA	SineTable, A0
 	MOVE.l	$20(A5), D0
 	CLR.w	D1
 	MOVE.b	$18(A5), D1
@@ -27216,7 +27216,7 @@ loc_00019746:
 	SUBI.l	#$8000, $20(A5)
 	BLE.w	loc_000197D2
 loc_00019756:
-	LEA	loc_0002277E, A0
+	LEA	SineTable, A0
 	CLR.w	D1
 	MOVE.b	$18(A5), D1
 	MOVE.b	(A0,D1.w), D2
@@ -27318,7 +27318,7 @@ loc_000198C2:
 	ASR.w	#2, D0
 	ADDQ.w	#1, D0
 	SUB.b	D0, $18(A5)
-	LEA	loc_0002277E, A0
+	LEA	SineTable, A0
 	CLR.w	D1
 	MOVE.b	$18(A5), D1
 	MOVE.b	(A0,D1.w), D2
@@ -27413,7 +27413,7 @@ loc_000199E8:
 loc_00019A32:
 	JSR	loc_0001A152(PC)
 loc_00019A36:
-	LEA	loc_0002277E, A0
+	LEA	SineTable, A0
 	MOVE.l	$20(A5), D0
 	CLR.w	D1
 	MOVE.b	$18(A5), D1
@@ -37142,8 +37142,13 @@ ShopCategoryNameTables:
 	dc.l	$DADDE0E3	
 	dc.l	$E7EAEDF0	
 	dc.l	$F3F6F9FC	
-loc_0002277E:
-	dc.b	$00, $03, $06, $09, $0C, $0F, $12, $15, $18, $1C, $1F, $22, $25, $28, $2B, $2E, $30, $33, $36, $39, $3C, $3F, $41, $44, $47, $49, $4C, $4E, $51, $53, $55, $58 
+; SineTable
+; Sine/Cosine lookup table (256 entries, values -128 to +127)
+; Sine values: SineTable[angle]
+; Cosine values: SineTable[angle + 64] (90 degree phase shift)
+; Angle is in units of 256/360 = 1.40625 degrees per unit
+SineTable:
+	dc.b	$00, $03, $06, $09, $0C, $0F, $12, $15, $18, $1C, $1F, $22, $25, $28, $2B, $2E, $30, $33, $36, $39, $3C, $3F, $41, $44, $47, $49, $4C, $4E, $51, $53, $55, $58
 	dc.b	$5A, $5C, $5E, $60, $62, $64, $66, $68, $6A, $6C, $6D, $6F, $70, $72, $73, $75, $76, $77, $78, $79, $7A, $7B, $7C, $7C, $7D, $7E, $7E, $7F, $7F, $7F, $7F, $7F 
 	dc.b	$7F, $7F, $7F, $7F, $7F, $7F, $7E, $7E, $7D, $7C, $7C, $7B, $7A, $79, $78, $77, $76, $75, $73, $72, $70, $6F, $6D, $6C, $6A, $68, $66, $64, $62, $60, $5E, $5C 
 	dc.b	$5A, $58, $55, $53, $51, $4E, $4C, $49, $47, $44, $41, $3F, $3C, $39, $36, $33, $30, $2E, $2B, $28, $25, $22, $1F, $1C, $18, $15, $12, $0F, $0C, $09, $06, $03 
