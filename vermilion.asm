@@ -5306,44 +5306,44 @@ loc_00005336:
 	ADD.w	D0, D1
 	LEA	(A0,D1.w), A2
 	MOVE.b	(A2), D4
-	BSR.w	loc_00006000
+	BSR.w	ValidateDungeonTileType
 	MOVE.b	D4, First_person_center_wall.w
 	MOVE.b	-$30(A2), D4
-	BSR.w	loc_00006000
+	BSR.w	ValidateDungeonTileType
 	MOVE.b	D4, Fp_wall_right_2.w
 	MOVE.b	$30(A2), D4
-	BSR.w	loc_00006000
+	BSR.w	ValidateDungeonTileType
 	MOVE.b	D4, First_person_wall_right.w
 	LEA	loc_00006732, A1
 	LEA	-$1(A2), A2
 	MOVEA.l	$FFFFCC24.w, A6
 	CLR.w	D4
 	MOVE.b	-$60(A2), D4
-	BSR.w	loc_00006000
+	BSR.w	ValidateDungeonTileType
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), $8(A6)
 	MOVEA.l	$FFFFCC18.w, A6
 	CLR.w	D4
 	MOVE.b	-$30(A2), D4
-	BSR.w	loc_00006000
+	BSR.w	ValidateDungeonTileType
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), $8(A6)
 	MOVEA.l	$FFFFCC1C.w, A6
 	CLR.w	D4
 	MOVE.b	(A2), D4
-	BSR.w	loc_00006000
+	BSR.w	ValidateDungeonTileType
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), $8(A6)
 	MOVEA.l	$FFFFCC14.w, A6
 	CLR.w	D4
 	MOVE.b	$30(A2), D4
-	BSR.w	loc_00006000
+	BSR.w	ValidateDungeonTileType
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), $8(A6)
 	MOVEA.l	$FFFFCC20.w, A6
 	CLR.w	D4
 	MOVE.b	$60(A2), D4
-	BSR.w	loc_00006000
+	BSR.w	ValidateDungeonTileType
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), $8(A6)
 	LEA	-$1(A2), A2
@@ -5351,31 +5351,31 @@ loc_00005336:
 	MOVEA.l	$FFFFCC38.w, A6
 	CLR.w	D4
 	MOVE.b	-$60(A2), D4
-	BSR.w	loc_00006000
+	BSR.w	ValidateDungeonTileType
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), $8(A6)
 	MOVEA.l	$FFFFCC2C.w, A6
 	CLR.w	D4
 	MOVE.b	-$30(A2), D4
-	BSR.w	loc_00006000
+	BSR.w	ValidateDungeonTileType
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), $8(A6)
 	MOVEA.l	$FFFFCC30.w, A6
 	CLR.w	D4
 	MOVE.b	(A2), D4
-	BSR.w	loc_00006000
+	BSR.w	ValidateDungeonTileType
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), $8(A6)
 	MOVEA.l	$FFFFCC28.w, A6
 	CLR.w	D4
 	MOVE.b	$30(A2), D4
-	BSR.w	loc_00006000
+	BSR.w	ValidateDungeonTileType
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), $8(A6)
 	MOVEA.l	$FFFFCC34.w, A6
 	CLR.w	D4
 	MOVE.b	$60(A2), D4
-	BSR.w	loc_00006000
+	BSR.w	ValidateDungeonTileType
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), $8(A6)
 	LEA	-$1(A2), A2
@@ -5383,31 +5383,31 @@ loc_00005336:
 	MOVEA.l	$FFFFCC4C.w, A6
 	CLR.w	D4
 	MOVE.b	-$60(A2), D4
-	BSR.w	loc_00006000
+	BSR.w	ValidateDungeonTileType
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), $8(A6)
 	MOVEA.l	$FFFFCC40.w, A6
 	CLR.w	D4
 	MOVE.b	-$30(A2), D4
-	BSR.w	loc_00006000
+	BSR.w	ValidateDungeonTileType
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), $8(A6)
 	MOVEA.l	$FFFFCC44.w, A6
 	CLR.w	D4
 	MOVE.b	(A2), D4
-	BSR.w	loc_00006000
+	BSR.w	ValidateDungeonTileType
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), $8(A6)
 	MOVEA.l	$FFFFCC3C.w, A6
 	CLR.w	D4
 	MOVE.b	$30(A2), D4
-	BSR.w	loc_00006000
+	BSR.w	ValidateDungeonTileType
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), $8(A6)
 	MOVEA.l	$FFFFCC48.w, A6
 	CLR.w	D4
 	MOVE.b	$60(A2), D4
-	BSR.w	loc_00006000
+	BSR.w	ValidateDungeonTileType
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), $8(A6)
 	RTS
@@ -5418,44 +5418,44 @@ loc_000054C8:
 	ADD.w	D0, D1
 	LEA	(A0,D1.w), A2
 	MOVE.b	-$1(A2), D4
-	BSR.w	loc_00006000
+	BSR.w	ValidateDungeonTileType
 	MOVE.b	D4, Fp_wall_right_2.w
 	MOVE.b	(A2), D4
-	BSR.w	loc_00006000
+	BSR.w	ValidateDungeonTileType
 	MOVE.b	D4, First_person_center_wall.w
 	MOVE.b	$1(A2), D4
-	BSR.w	loc_00006000
+	BSR.w	ValidateDungeonTileType
 	MOVE.b	D4, First_person_wall_right.w
 	LEA	$30(A2), A2
 	LEA	loc_00006732, A1
 	MOVEA.l	$FFFFCC24.w, A6
 	CLR.w	D4
 	MOVE.b	-$2(A2), D4
-	BSR.w	loc_00006000
+	BSR.w	ValidateDungeonTileType
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), $8(A6)
 	MOVEA.l	$FFFFCC18.w, A6
 	CLR.w	D4
 	MOVE.b	-$1(A2), D4
-	BSR.w	loc_00006000
+	BSR.w	ValidateDungeonTileType
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), $8(A6)
 	MOVEA.l	$FFFFCC1C.w, A6
 	CLR.w	D4
 	MOVE.b	(A2), D4
-	BSR.w	loc_00006000
+	BSR.w	ValidateDungeonTileType
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), $8(A6)
 	MOVEA.l	$FFFFCC14.w, A6
 	CLR.w	D4
 	MOVE.b	$1(A2), D4
-	BSR.w	loc_00006000
+	BSR.w	ValidateDungeonTileType
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), $8(A6)
 	MOVEA.l	$FFFFCC20.w, A6
 	CLR.w	D4
 	MOVE.b	$2(A2), D4
-	BSR.w	loc_00006000
+	BSR.w	ValidateDungeonTileType
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), $8(A6)
 	LEA	$30(A2), A2
@@ -5463,31 +5463,31 @@ loc_000054C8:
 	MOVEA.l	$FFFFCC38.w, A6
 	CLR.w	D4
 	MOVE.b	-$2(A2), D4
-	BSR.w	loc_00006000
+	BSR.w	ValidateDungeonTileType
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), $8(A6)
 	MOVEA.l	$FFFFCC2C.w, A6
 	CLR.w	D4
 	MOVE.b	-$1(A2), D4
-	BSR.w	loc_00006000
+	BSR.w	ValidateDungeonTileType
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), $8(A6)
 	MOVEA.l	$FFFFCC30.w, A6
 	CLR.w	D4
 	MOVE.b	(A2), D4
-	BSR.w	loc_00006000
+	BSR.w	ValidateDungeonTileType
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), $8(A6)
 	MOVEA.l	$FFFFCC28.w, A6
 	CLR.w	D4
 	MOVE.b	$1(A2), D4
-	BSR.w	loc_00006000
+	BSR.w	ValidateDungeonTileType
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), $8(A6)
 	MOVEA.l	$FFFFCC34.w, A6
 	CLR.w	D4
 	MOVE.b	$2(A2), D4
-	BSR.w	loc_00006000
+	BSR.w	ValidateDungeonTileType
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), $8(A6)
 	LEA	$30(A2), A2
@@ -5495,32 +5495,32 @@ loc_000054C8:
 	MOVEA.l	$FFFFCC4C.w, A6
 	CLR.w	D4
 	MOVE.b	-$2(A2), D4
-	BSR.w	loc_00006000
+	BSR.w	ValidateDungeonTileType
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), $8(A6)
 	LEA	loc_0000675E, A1
 	MOVEA.l	$FFFFCC40.w, A6
 	CLR.w	D4
 	MOVE.b	-$1(A2), D4
-	BSR.w	loc_00006000
+	BSR.w	ValidateDungeonTileType
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), $8(A6)
 	MOVEA.l	$FFFFCC44.w, A6
 	CLR.w	D4
 	MOVE.b	(A2), D4
-	BSR.w	loc_00006000
+	BSR.w	ValidateDungeonTileType
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), $8(A6)
 	MOVEA.l	$FFFFCC3C.w, A6
 	CLR.w	D4
 	MOVE.b	$1(A2), D4
-	BSR.w	loc_00006000
+	BSR.w	ValidateDungeonTileType
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), $8(A6)
 	MOVEA.l	$FFFFCC48.w, A6
 	CLR.w	D4
 	MOVE.b	$2(A2), D4
-	BSR.w	loc_00006000
+	BSR.w	ValidateDungeonTileType
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), $8(A6)
 	RTS
@@ -5531,44 +5531,44 @@ loc_00005660:
 	ADD.w	D1, D0
 	LEA	(A0,D0.w), A2
 	MOVE.b	-$30(A2), D4
-	BSR.w	loc_00006000
+	BSR.w	ValidateDungeonTileType
 	MOVE.b	D4, First_person_wall_right.w
 	MOVE.b	(A2), D4
-	BSR.w	loc_00006000
+	BSR.w	ValidateDungeonTileType
 	MOVE.b	D4, First_person_center_wall.w
 	MOVE.b	$30(A2), D4
-	BSR.w	loc_00006000
+	BSR.w	ValidateDungeonTileType
 	MOVE.b	D4, Fp_wall_right_2.w
 	LEA	$1(A2), A2
 	LEA	loc_00006732, A1
 	MOVEA.l	$FFFFCC20.w, A6
 	CLR.w	D4
 	MOVE.b	-$60(A2), D4
-	BSR.w	loc_00006000
+	BSR.w	ValidateDungeonTileType
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), $8(A6)
 	MOVEA.l	$FFFFCC14.w, A6
 	CLR.w	D4
 	MOVE.b	-$30(A2), D4
-	BSR.w	loc_00006000
+	BSR.w	ValidateDungeonTileType
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), $8(A6)
 	MOVEA.l	$FFFFCC1C.w, A6
 	CLR.w	D4
 	MOVE.b	(A2), D4
-	BSR.w	loc_00006000
+	BSR.w	ValidateDungeonTileType
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), $8(A6)
 	MOVEA.l	$FFFFCC18.w, A6
 	CLR.w	D4
 	MOVE.b	$30(A2), D4
-	BSR.w	loc_00006000
+	BSR.w	ValidateDungeonTileType
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), $8(A6)
 	MOVEA.l	$FFFFCC24.w, A6
 	CLR.w	D4
 	MOVE.b	$60(A2), D4
-	BSR.w	loc_00006000
+	BSR.w	ValidateDungeonTileType
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), $8(A6)
 	LEA	$1(A2), A2
@@ -5576,31 +5576,31 @@ loc_00005660:
 	MOVEA.l	$FFFFCC34.w, A6
 	CLR.w	D4
 	MOVE.b	-$60(A2), D4
-	BSR.w	loc_00006000
+	BSR.w	ValidateDungeonTileType
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), $8(A6)
 	MOVEA.l	$FFFFCC28.w, A6
 	CLR.w	D4
 	MOVE.b	-$30(A2), D4
-	BSR.w	loc_00006000
+	BSR.w	ValidateDungeonTileType
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), $8(A6)
 	MOVEA.l	$FFFFCC30.w, A6
 	CLR.w	D4
 	MOVE.b	(A2), D4
-	BSR.w	loc_00006000
+	BSR.w	ValidateDungeonTileType
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), $8(A6)
 	MOVEA.l	$FFFFCC2C.w, A6
 	CLR.w	D4
 	MOVE.b	$30(A2), D4
-	BSR.w	loc_00006000
+	BSR.w	ValidateDungeonTileType
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), $8(A6)
 	MOVEA.l	$FFFFCC38.w, A6
 	CLR.w	D4
 	MOVE.b	$60(A2), D4
-	BSR.w	loc_00006000
+	BSR.w	ValidateDungeonTileType
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), $8(A6)
 	LEA	$1(A2), A2
@@ -5608,31 +5608,31 @@ loc_00005660:
 	MOVEA.l	$FFFFCC48.w, A6
 	CLR.w	D4
 	MOVE.b	-$60(A2), D4
-	BSR.w	loc_00006000
+	BSR.w	ValidateDungeonTileType
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), $8(A6)
 	MOVEA.l	$FFFFCC3C.w, A6
 	CLR.w	D4
 	MOVE.b	-$30(A2), D4
-	BSR.w	loc_00006000
+	BSR.w	ValidateDungeonTileType
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), $8(A6)
 	MOVEA.l	$FFFFCC44.w, A6
 	CLR.w	D4
 	MOVE.b	(A2), D4
-	BSR.w	loc_00006000
+	BSR.w	ValidateDungeonTileType
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), $8(A6)
 	MOVEA.l	$FFFFCC40.w, A6
 	CLR.w	D4
 	MOVE.b	$30(A2), D4
-	BSR.w	loc_00006000
+	BSR.w	ValidateDungeonTileType
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), $8(A6)
 	MOVEA.l	$FFFFCC4C.w, A6
 	CLR.w	D4
 	MOVE.b	$60(A2), D4
-	BSR.w	loc_00006000
+	BSR.w	ValidateDungeonTileType
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), $8(A6)
 	RTS
@@ -5645,44 +5645,44 @@ loc_000057F2:
 	ADD.w	D2, D3
 	LEA	(A0,D3.w), A2
 	MOVE.b	-$1(A2), D4
-	BSR.w	loc_00006000
+	BSR.w	ValidateDungeonTileType
 	MOVE.b	D4, First_person_wall_right.w
 	MOVE.b	(A2), D4
-	BSR.w	loc_00006000
+	BSR.w	ValidateDungeonTileType
 	MOVE.b	D4, First_person_center_wall.w
 	MOVE.b	$1(A2), D4
-	BSR.w	loc_00006000
+	BSR.w	ValidateDungeonTileType
 	MOVE.b	D4, Fp_wall_right_2.w
 	LEA	-$30(A2), A2
 	LEA	loc_00006732, A1
 	MOVEA.l	$FFFFCC20.w, A6
 	CLR.w	D4
 	MOVE.b	-$2(A2), D4
-	BSR.w	loc_00006000
+	BSR.w	ValidateDungeonTileType
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), $8(A6)
 	MOVEA.l	$FFFFCC14.w, A6
 	CLR.w	D4
 	MOVE.b	-$1(A2), D4
-	BSR.w	loc_00006000
+	BSR.w	ValidateDungeonTileType
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), $8(A6)
 	MOVEA.l	$FFFFCC1C.w, A6
 	CLR.w	D4
 	MOVE.b	(A2), D4
-	BSR.w	loc_00006000
+	BSR.w	ValidateDungeonTileType
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), $8(A6)
 	MOVEA.l	$FFFFCC18.w, A6
 	CLR.w	D4
 	MOVE.b	$1(A2), D4
-	BSR.w	loc_00006000
+	BSR.w	ValidateDungeonTileType
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), $8(A6)
 	MOVEA.l	$FFFFCC24.w, A6
 	CLR.w	D4
 	MOVE.b	$2(A2), D4
-	BSR.w	loc_00006000
+	BSR.w	ValidateDungeonTileType
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), $8(A6)
 	LEA	-$30(A2), A2
@@ -5690,31 +5690,31 @@ loc_000057F2:
 	MOVEA.l	$FFFFCC34.w, A6
 	CLR.w	D4
 	MOVE.b	-$2(A2), D4
-	BSR.w	loc_00006000
+	BSR.w	ValidateDungeonTileType
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), $8(A6)
 	MOVEA.l	$FFFFCC28.w, A6
 	CLR.w	D4
 	MOVE.b	-$1(A2), D4
-	BSR.w	loc_00006000
+	BSR.w	ValidateDungeonTileType
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), $8(A6)
 	MOVEA.l	$FFFFCC30.w, A6
 	CLR.w	D4
 	MOVE.b	(A2), D4
-	BSR.w	loc_00006000
+	BSR.w	ValidateDungeonTileType
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), $8(A6)
 	MOVEA.l	$FFFFCC2C.w, A6
 	CLR.w	D4
 	MOVE.b	$1(A2), D4
-	BSR.w	loc_00006000
+	BSR.w	ValidateDungeonTileType
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), $8(A6)
 	MOVEA.l	$FFFFCC38.w, A6
 	CLR.w	D4
 	MOVE.b	$2(A2), D4
-	BSR.w	loc_00006000
+	BSR.w	ValidateDungeonTileType
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), $8(A6)
 	LEA	-$30(A2), A2
@@ -5722,31 +5722,31 @@ loc_000057F2:
 	MOVEA.l	$FFFFCC48.w, A6
 	CLR.w	D4
 	MOVE.b	-$2(A2), D4
-	BSR.w	loc_00006000
+	BSR.w	ValidateDungeonTileType
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), $8(A6)
 	MOVEA.l	$FFFFCC3C.w, A6
 	CLR.w	D4
 	MOVE.b	-$1(A2), D4
-	BSR.w	loc_00006000
+	BSR.w	ValidateDungeonTileType
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), $8(A6)
 	MOVEA.l	$FFFFCC44.w, A6
 	CLR.w	D4
 	MOVE.b	(A2), D4
-	BSR.w	loc_00006000
+	BSR.w	ValidateDungeonTileType
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), $8(A6)
 	MOVEA.l	$FFFFCC40.w, A6
 	CLR.w	D4
 	MOVE.b	$1(A2), D4
-	BSR.w	loc_00006000
+	BSR.w	ValidateDungeonTileType
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), $8(A6)
 	MOVEA.l	$FFFFCC4C.w, A6
 	CLR.w	D4
 	MOVE.b	$2(A2), D4
-	BSR.w	loc_00006000
+	BSR.w	ValidateDungeonTileType
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), $8(A6)
 	RTS
@@ -6166,7 +6166,11 @@ loc_00005FFC:
 loc_00005FFE:
 	RTS
 
-loc_00006000:
+; ValidateDungeonTileType
+; Validate and normalize map tile type for first-person dungeon rendering
+; Input: D4.b = Raw tile type value
+; Output: D4.b = Validated/normalized tile type
+ValidateDungeonTileType:
 	CLR.b	$18(A6)
 	TST.b	D4
 	BEQ.b	loc_0000603C
