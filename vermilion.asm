@@ -1011,8 +1011,8 @@ ProgramState_15:
 	BSR.w	ClearAllEnemyEntities	
 	CLR.b	Player_in_first_person_mode.w	
 	CLR.b	Is_in_cave.w	
-	CLR.b	$FFFFC560.w	
-	CLR.w	$FFFFC562.w	
+	CLR.b	Cave_light_active.w	
+	CLR.w	Cave_light_timer.w	
 	BSR.w	loc_000034E0	
 	MOVE.w	#PROGRAM_STATE_0E, Program_state.w ; Transition to main game?	
 	MOVE.w	#3, Gameplay_substate.w 	 ; Entering building/town?
@@ -1838,7 +1838,7 @@ loc_00002324:
 	JSR	loc_0000F688
 	CLR.b	Is_boss_battle.w
 	CLR.b	Boss_max_hp.w
-	CLR.b	$FFFFC68C.w
+	CLR.b	Encounter_behavior_flag.w
 	JSR	loc_0000FF82
 	JSR	loc_0000FF08
 	BSR.w	loc_00002FCC
@@ -2011,7 +2011,7 @@ loc_000025CE:
 	JSR	loc_000100B2
 	JSR	loc_0000F994
 	BSR.w	loc_0000341A
-	TST.b	$FFFFC560.w
+	TST.b	Cave_light_active.w
 	BEQ.b	loc_0000260E
 	MOVE.w	#$0048, Palette_line_1_index.w
 	MOVE.w	#$0040, Palette_line_2_index.w
@@ -2169,8 +2169,8 @@ loc_00002814:
 	TST.b	Fade_out_lines_mask.w
 	BNE.b	loc_00002830
 	CLR.b	Is_in_cave.w
-	CLR.b	$FFFFC560.w
-	CLR.w	$FFFFC562.w
+	CLR.b	Cave_light_active.w
+	CLR.w	Cave_light_timer.w
 	MOVE.w	#$12, Gameplay_substate.w
 	MOVEA.l	Player_entity_ptr.w, A6
 loc_00002830:
@@ -2320,7 +2320,7 @@ loc_000029FA:
 	JSR	loc_00004384
 	MOVE.w	#$16, Gameplay_substate.w
 	MOVE.w	#$0036, Palette_line_0_index.w
-	TST.b	$FFFFC560.w
+	TST.b	Cave_light_active.w
 	BEQ.b	loc_00002A28
 	MOVE.w	#$0048, Palette_line_1_index.w
 	MOVE.w	#$0040, Palette_line_2_index.w
@@ -2497,8 +2497,8 @@ loc_00002C7C:
 	BSR.w	ClearAllEnemyEntities
 	CLR.b	Player_in_first_person_mode.w
 	CLR.b	Is_in_cave.w
-	CLR.b	$FFFFC560.w
-	CLR.w	$FFFFC562.w
+	CLR.b	Cave_light_active.w
+	CLR.w	Cave_light_timer.w
 	TST.b	Player_greatly_poisoned.w
 	BNE.b	loc_00002CA2
 	CLR.w	Player_poisoned.w
@@ -3807,11 +3807,11 @@ loc_00003D5A:
 	BNE.w	loc_00003EC4
 	TST.b	Fade_out_lines_mask.w
 	BNE.w	loc_00003EC4
-	TST.b	$FFFFC661.w
+	TST.b	Player_invulnerable.w
 	BEQ.b	loc_00003D7A
 	SUBQ.b	#1, $1A(A5)
 	BGT.b	loc_00003D7A
-	CLR.b	$FFFFC661.w
+	CLR.b	Player_invulnerable.w
 loc_00003D7A:
 	TST.b	Player_attacking_flag.w
 	BNE.b	loc_00003DA6
@@ -4359,7 +4359,7 @@ loc_00004566:
 	BEQ.b	loc_0000457C
 	TST.b	Chest_already_opened.w
 	BNE.b	loc_0000457C
-	TST.b	$FFFFC560.w
+	TST.b	Cave_light_active.w
 	BGE.b	loc_0000457C
 	BSR.w	loc_0000651A
 loc_0000457C:
@@ -6580,7 +6580,7 @@ loc_0000638A:
 	RTS
 
 loc_00006390:
-	CLR.b	$FFFFC55F.w
+	CLR.b	Area_map_revealed.w
 	MOVE.w	Player_map_sector_x.w, D0
 	MOVE.w	Player_map_sector_y.w, D1
 	ASL.w	#4, D1
@@ -6588,18 +6588,18 @@ loc_00006390:
 	LEA	$FFFFC820.w, A0
 	MOVE.b	(A0,D0.w), D0
 	BEQ.b	loc_000063B0
-	MOVE.b	#$FF, $FFFFC55F.w
+	MOVE.b	#$FF, Area_map_revealed.w
 loc_000063B0:
 	RTS
 
 loc_000063B2:
-	CLR.b	$FFFFC55F.w
+	CLR.b	Area_map_revealed.w
 	MOVE.w	Current_cave_room.w, D0
 	ADDI.w	#$0090, D0
 	LEA	$FFFFC820.w, A0
 	MOVE.b	(A0,D0.w), D0
 	BEQ.b	loc_000063CE
-	MOVE.b	#$FF, $FFFFC55F.w
+	MOVE.b	#$FF, Area_map_revealed.w
 loc_000063CE:
 	RTS
 
@@ -6656,11 +6656,11 @@ loc_00006436:
 
 loc_00006458:
 	CLR.w	D4
-	TST.b	$FFFFC55F.w
+	TST.b	Area_map_revealed.w
 	BEQ.b	loc_0000646C
 	TST.b	Is_in_cave.w
 	BEQ.b	loc_00006470
-	TST.b	$FFFFC560.w
+	TST.b	Cave_light_active.w
 	BNE.b	loc_00006470
 loc_0000646C:
 	MOVE.w	#$85B7, D4
@@ -6678,11 +6678,11 @@ loc_00006484:
 	ADDI.l	#$00800000, D5
 	DBF	D7, loc_0000647C
 	ANDI	#$F8FF, SR
-	TST.b	$FFFFC55F.w
+	TST.b	Area_map_revealed.w
 	BNE.w	loc_00006506
 	TST.b	Is_in_cave.w
 	BEQ.b	loc_000064B6
-	TST.b	$FFFFC560.w
+	TST.b	Cave_light_active.w
 	BEQ.w	loc_00006506
 loc_000064B6:
 	LEA	loc_00006508, A0
@@ -6716,10 +6716,10 @@ loc_00006508:
 	dc.b	$85, $AE, $85, $AF, $85, $B0, $85, $B1, $85, $B2, $85, $B3, $85, $B4, $85, $B5, $85, $B6 
 
 loc_0000651A:
-	MOVE.w	$FFFFC562.w, D0
+	MOVE.w	Cave_light_timer.w, D0
 	BGT.b	loc_0000653C
-	CLR.b	$FFFFC560.w
-	CLR.w	$FFFFC562.w
+	CLR.b	Cave_light_active.w
+	CLR.w	Cave_light_timer.w
 	CLR.w	Palette_line_1_index.w
 	CLR.w	Palette_line_2_index.w
 	BSR.w	loc_00006458
@@ -6727,7 +6727,7 @@ loc_0000651A:
 	RTS
 
 loc_0000653C:
-	SUBQ.w	#1, $FFFFC562.w
+	SUBQ.w	#1, Cave_light_timer.w
 	RTS
 
 loc_00006542:
@@ -6928,11 +6928,11 @@ loc_00006978:
 	BNE.w	loc_00006A3C
 	TST.b	Fade_out_lines_mask.w
 	BNE.w	loc_00006A3C
-	TST.b	$FFFFC661.w
+	TST.b	Player_invulnerable.w
 	BEQ.b	loc_00006998
 	SUBQ.b	#1, $1A(A5)
 	BGT.b	loc_00006998
-	CLR.b	$FFFFC661.w
+	CLR.b	Player_invulnerable.w
 loc_00006998:
 	TST.b	Player_attacking_flag.w
 	BNE.w	loc_00006ABE
@@ -9745,7 +9745,7 @@ loc_00008E5C:
 	BEQ.b	loc_00008E82
 	MOVE.l	#NoOneHereStr, Script_talk_source.w
 	BCLR.b	#7, (A5)
-	MOVE.b	#$FF, $FFFFC55F.w
+	MOVE.b	#$FF, Area_map_revealed.w
 	JMP	loc_00006458
 loc_00008E82:
 	JMP	QueueSpriteOAMIfVisible
@@ -10009,9 +10009,9 @@ HandlePlayerTakeDamage:
 	SUBQ.w	#8, D2
 	CMP.w	D0, D2
 	BGT.w	loc_0000926E
-	TST.b	$FFFFC661.w
+	TST.b	Player_invulnerable.w
 	BNE.w	loc_0000926E
-	MOVE.b	#$FF, $FFFFC661.w
+	MOVE.b	#$FF, Player_invulnerable.w
 	MOVE.b	#$10, $1A(A6)
 	BSR.w	loc_0000B5A8
 	MOVE.b	#$B2, D0
@@ -10274,7 +10274,7 @@ loc_0000957C:
 
 loc_0000958E:
 	CLR.b	$26(A5)
-	TST.b	$FFFFC68C.w
+	TST.b	Encounter_behavior_flag.w
 	BNE.w	loc_00009692
 	TST.w	$3C(A5)
 	BEQ.w	loc_000095BC
@@ -10385,7 +10385,7 @@ loc_00009726:
 
 loc_00009738:
 	CLR.b	$26(A5)
-	TST.b	$FFFFC68C.w
+	TST.b	Encounter_behavior_flag.w
 	BNE.w	loc_00009818
 	TST.w	$3C(A5)
 	BEQ.w	loc_00009766
@@ -10470,7 +10470,7 @@ loc_00009854:
 
 loc_00009866:
 	CLR.b	$26(A5)
-	TST.b	$FFFFC68C.w
+	TST.b	Encounter_behavior_flag.w
 	BNE.w	loc_00009956
 	TST.w	$3C(A5)
 	BEQ.w	loc_00009894
@@ -10562,7 +10562,7 @@ loc_00009992:
 
 loc_000099A4:
 	CLR.b	$26(A5)
-	TST.b	$FFFFC68C.w
+	TST.b	Encounter_behavior_flag.w
 	BNE.w	loc_00009A6A
 	TST.w	$3C(A5)
 	BEQ.w	loc_000099D2
@@ -10639,7 +10639,7 @@ loc_00009AA6:
 
 loc_00009AB8:
 	CLR.b	$26(A5)
-	TST.b	$FFFFC68C.w
+	TST.b	Encounter_behavior_flag.w
 	BNE.w	loc_00009B88
 	TST.w	$3C(A5)
 	BEQ.w	loc_00009AE6
@@ -10990,7 +10990,7 @@ loc_00009FB8:
 
 loc_00009FCA:
 	CLR.b	$26(A5)
-	TST.b	$FFFFC68C.w
+	TST.b	Encounter_behavior_flag.w
 	BNE.w	loc_0000A0D4
 	TST.w	$3C(A5)
 	BEQ.w	loc_00009FF8
@@ -11083,7 +11083,7 @@ loc_0000A0FC:
 	
 loc_0000A10E:
 	CLR.b	$26(A5)
-	TST.b	$FFFFC68C.w
+	TST.b	Encounter_behavior_flag.w
 	BNE.w	loc_0000A1DC
 	TST.w	$3C(A5)
 	BEQ.w	loc_0000A13C
@@ -13988,11 +13988,11 @@ loc_0000CA10:
 	SUB.w	$1E(A6), D2
 	CMP.w	D1, D2
 	BGT.w	loc_0000CAE6
-	TST.b	$FFFFC661.w
+	TST.b	Player_invulnerable.w
 	BNE.w	loc_0000CAE6
 	MOVE.w	#$00B2, D0
 	JSR	QueueSoundEffect
-	MOVE.b	#$FF, $FFFFC661.w
+	MOVE.b	#$FF, Player_invulnerable.w
 	MOVE.b	#$10, $1A(A6)
 	JSR	loc_0000B5A8
 	MOVE.l	$32(A5), D0
@@ -14026,9 +14026,9 @@ loc_0000CAE8:
 	MOVE.w	$E(A6), D0
 	CMP.w	D1, D0
 	BLT.b	loc_0000CB1C
-	TST.b	$FFFFC661.w
+	TST.b	Player_invulnerable.w
 	BNE.b	loc_0000CB1C
-	MOVE.b	#$FF, $FFFFC661.w
+	MOVE.b	#$FF, Player_invulnerable.w
 	MOVE.b	#$10, $1A(A6)
 	JSR	loc_0000B5A8
 	SUBI.w	#$0014, $E(A6)
@@ -26131,14 +26131,14 @@ CastLuminos:
 	BNE.w	loc_00018996
 	TST.b	Is_in_cave.w
 	BEQ.b	loc_000187B4
-	TST.b	$FFFFC560.w
+	TST.b	Cave_light_active.w
 	BNE.b	loc_000187B4
 	MOVE.w	#$000F, Spellbook_menu_state.w
 	MOVE.w	#$0048, Palette_line_1_fade_target.w
 	MOVE.w	#$0040, Palette_line_2_fade_target.w
 	MOVE.b	#6, Fade_in_lines_mask.w
-	CLR.w	$FFFFC562.w
-	MOVE.b	#1, $FFFFC560.w
+	CLR.w	Cave_light_timer.w
+	MOVE.b	#1, Cave_light_active.w
 	MOVE.w	#$00AD, D0
 	JSR	QueueSoundEffect
 	RTS
@@ -26265,8 +26265,8 @@ CastExtrios:
 	MOVE.w	#$12, Gameplay_substate.w
 	MOVE.b	#$FF, Player_in_first_person_mode.w
 	CLR.b	Is_in_cave.w
-	CLR.b	$FFFFC560.w
-	CLR.w	$FFFFC562.w
+	CLR.b	Cave_light_active.w
+	CLR.w	Cave_light_timer.w
 	MOVE.w	#$0089, D0
 	JSR	QueueSoundEffect
 	RTS
@@ -27753,7 +27753,7 @@ CastChronos:
 	BSET.b	#7, (A6)
 	MOVE.w	#$00C8, $28(A6)
 	MOVE.l	#loc_00019EA2, $2(A6)
-	MOVE.b	#$FF, $FFFFC68C.w
+	MOVE.b	#$FF, Encounter_behavior_flag.w
 	MOVE.w	#$00AE, D0
 	JSR	QueueSoundEffect
 loc_00019EA0:
@@ -27763,7 +27763,7 @@ loc_00019EA2:
 	SUBQ.w	#1, $28(A5)
 	BGT.b	loc_00019EB0
 	BCLR.b	#7, (A5)
-	CLR.b	$FFFFC68C.w
+	CLR.b	Encounter_behavior_flag.w
 loc_00019EB0:
 	RTS
 
@@ -27775,7 +27775,7 @@ CastChronios:
 	BSET.b	#7, (A6)
 	MOVE.w	#$01F4, $28(A6)
 	MOVE.l	#loc_00019EA2, $2(A6)
-	MOVE.b	#$FF, $FFFFC68C.w
+	MOVE.b	#$FF, Encounter_behavior_flag.w
 	MOVE.w	#$00AE, D0
 	JSR	QueueSoundEffect
 loc_00019EDE:
@@ -28562,8 +28562,8 @@ loc_0001A954:
 	MOVE.w	#$12, Gameplay_substate.w
 	MOVE.b	#$FF, Player_in_first_person_mode.w
 	CLR.b	Is_in_cave.w
-	CLR.b	$FFFFC560.w
-	CLR.w	$FFFFC562.w
+	CLR.b	Cave_light_active.w
+	CLR.w	Cave_light_timer.w
 	MOVE.w	#$0089, D0
 	JSR	QueueSoundEffect
 	RTS
@@ -28818,7 +28818,7 @@ loc_0001ACB4:
 	DBF	D7, loc_0001ACB4
 	TST.b	Player_in_first_person_mode.w
 	BEQ.b	loc_0001ACCE
-	MOVE.b	#$FF, $FFFFC55F.w
+	MOVE.b	#$FF, Area_map_revealed.w
 	JSR	loc_00006458
 loc_0001ACCE:
 	BSR.w	RemoveSelectedItemFromList
@@ -28830,7 +28830,7 @@ UseTitaniasMirror:
 	BEQ.b	loc_0001ACF6	
 	TST.b	Is_in_cave.w	
 	BNE.b	loc_0001ACF6	
-	MOVE.b	#$FF, $FFFFC55F.w	
+	MOVE.b	#$FF, Area_map_revealed.w	
 	JSR	loc_00006458	
 	PRINT 	GlowingMapStr	
 	RTS
@@ -28876,14 +28876,14 @@ loc_0001AD56:
 UseCandle:
 	TST.b	Is_in_cave.w
 	BEQ.b	loc_0001AD9C
-	TST.b	$FFFFC560.w
+	TST.b	Cave_light_active.w
 	BNE.b	loc_0001AD9C
 	MOVE.w	#$C, Item_menu_state.w
 	MOVE.w	#$48, Palette_line_1_fade_target.w
 	MOVE.w	#$40, Palette_line_2_fade_target.w
 	MOVE.b	#6, Fade_in_lines_mask.w
-	MOVE.w	#$0800, $FFFFC562.w
-	MOVE.b	#$FF, $FFFFC560.w
+	MOVE.w	#$0800, Cave_light_timer.w
+	MOVE.b	#$FF, Cave_light_active.w
 	BSR.w	RemoveSelectedItemFromList
 	MOVE.w	#$00AD, D0
 	JSR	QueueSoundEffect
@@ -28898,14 +28898,14 @@ loc_0001AD9C:
 UseLantern:
 	TST.b	Is_in_cave.w
 	BEQ.b	loc_0001ADE8
-	TST.b	$FFFFC560.w
+	TST.b	Cave_light_active.w
 	BNE.b	loc_0001ADE8
 	MOVE.w	#$C, Item_menu_state.w
 	MOVE.w	#$48, Palette_line_1_fade_target.w
 	MOVE.w	#$40, Palette_line_2_fade_target.w
 	MOVE.b	#6, Fade_in_lines_mask.w
-	CLR.w	$FFFFC562.w
-	MOVE.b	#1, $FFFFC560.w
+	CLR.w	Cave_light_timer.w
+	MOVE.b	#1, Cave_light_active.w
 	BSR.w	RemoveSelectedItemFromList
 	MOVE.w	#$00AD, D0
 	JSR	QueueSoundEffect
@@ -32936,7 +32936,7 @@ loc_0001E61E:
 	LEA	$FFFFC820.w, A0
 	MOVE.w	Reward_script_value.w, D0
 	MOVE.b	#$FF, (A0,D0.w)
-	MOVE.b	#$FF, $FFFFC55F.w
+	MOVE.b	#$FF, Area_map_revealed.w
 	JSR	loc_00006458
 	MOVEA.l	#AreaMapStr, A0
 	JSR	CopyStringUntilFF
