@@ -263,8 +263,8 @@ loc_0000063A:
 loc_00000654:
 	MOVE.w	#0, VDP_data_port
 	DBF	D7, loc_00000654
-	CLR.w	$FFFFC104.w
-	CLR.w	$FFFFC106.w
+	CLR.w	HScroll_base.w
+	CLR.w	VScroll_base.w
 	ANDI	#$F8FF, SR
 	RTS
 
@@ -657,12 +657,12 @@ loc_00001260:
 	RTS
 
 loc_00001282:
-	MOVE.w	$FFFFC104.w, D0
+	MOVE.w	HScroll_base.w, D0
 	ANDI.w	#$01FF, D0
 	MOVE.l	#$7C000002, VDP_control_port
 	MOVE.w	D0, VDP_data_port
 	MOVE.w	D0, VDP_data_port
-	MOVE.w	$FFFFC106.w, D0
+	MOVE.w	VScroll_base.w, D0
 	ANDI.w	#$01FF, D0
 	MOVE.l	#$40000010, VDP_control_port
 	MOVE.w	D0, VDP_data_port
@@ -670,11 +670,11 @@ loc_00001282:
 	RTS
 
 loc_000012C0:
-	MOVE.w	$FFFFC104.w, D0
+	MOVE.w	HScroll_base.w, D0
 	ANDI.w	#$01FF, D0
 	MOVE.l	#$7C000002, VDP_control_port
 	MOVE.w	D0, VDP_data_port
-	MOVE.w	$FFFFC106.w, D0
+	MOVE.w	VScroll_base.w, D0
 	ANDI.w	#$01FF, D0
 	MOVE.l	#$40000010, VDP_control_port
 	MOVE.w	D0, VDP_data_port
@@ -708,9 +708,9 @@ loc_0000130C:
 loc_00001364:
 	TST.b	$FFFFC39A.w
 	BNE.b	loc_00001390
-	MOVE.w	$FFFFC106.w, D0
+	MOVE.w	VScroll_base.w, D0
 	BEQ.b	loc_00001394
-	ADDQ.w	#1, $FFFFC106.w
+	ADDQ.w	#1, VScroll_base.w
 	ANDI.w	#$01FF, D0
 	MOVE.l	#$40000010, VDP_control_port
 	MOVE.w	D0, VDP_data_port
@@ -1321,7 +1321,7 @@ loc_00001B72:
 	ADDI.w	#$0010, D0
 	MOVE.w	D0, Player_spawn_tile_y_buffer.w
 	MOVE.w	Town_camera_tile_x.w, Town_camera_initial_x.w
-	MOVE.w	$FFFFC410.w, D0
+	MOVE.w	Camera_scroll_y.w, D0
 	ASR.w	#4, D0
 	MOVE.w	D0, Town_default_camera_y.w
 	RTS
@@ -1843,8 +1843,8 @@ loc_00002324:
 	JSR	loc_0000FF08
 	BSR.w	loc_00002FCC
 	BSR.w	loc_00003024
-	CLR.w	$FFFFC40E.w
-	CLR.w	$FFFFC410.w
+	CLR.w	Camera_scroll_x.w
+	CLR.w	Camera_scroll_y.w
 	JSR	loc_0000F9EE
 	MOVEA.l	Player_entity_ptr.w, A6
 	MOVE.w	#$00A0, $E(A6)
@@ -2028,8 +2028,8 @@ loc_00002620:
 	JSR	loc_000002D0
 	JSR	loc_000002EA
 	JSR	ClearScrollData
-	CLR.w	$FFFFC40E.w
-	CLR.w	$FFFFC410.w
+	CLR.w	Camera_scroll_x.w
+	CLR.w	Camera_scroll_y.w
 	BSR.w	ClearAllEnemyEntities
 	JSR	loc_00000578
 	CLR.w	$FFFFE000.w
@@ -2401,8 +2401,8 @@ loc_00002AE0:
 	JSR	loc_0001053A
 	BSR.w	loc_00002FCC
 	BSR.w	loc_00003024
-	CLR.w	$FFFFC40E.w
-	CLR.w	$FFFFC410.w
+	CLR.w	Camera_scroll_x.w
+	CLR.w	Camera_scroll_y.w
 	JSR	loc_0000FA3E
 	MOVEA.l	Player_entity_ptr.w, A6
 	ADDQ.w	#1, Gameplay_substate.w
@@ -2980,9 +2980,9 @@ loc_00003326:
 ; Input: $FFFFC40E (screen X), $FFFFC410 (screen Y)
 ; Output: D0 = X in tiles (pixels / 8), D1 = Y in tiles (pixels / 8)
 GetScrollOffsetInTiles:
-	MOVE.w	$FFFFC40E.w, D0
+	MOVE.w	Camera_scroll_x.w, D0
 	LSR.w	#3, D0
-	MOVE.w	$FFFFC410.w, D1
+	MOVE.w	Camera_scroll_y.w, D1
 	LSR.w	#3, D1
 	RTS
 
@@ -3460,7 +3460,7 @@ loc_00003892:
 loc_00003896:
 	MOVE.w	#1, $FFFFC100.w
 	MOVE.w	$12(A5), D0
-	SUB.w	$FFFFC410.w, D0
+	SUB.w	Camera_scroll_y.w, D0
 	BLE.b	loc_000038AA
 	SUBQ.w	#1, $12(A5)
 loc_000038AA:
@@ -3468,7 +3468,7 @@ loc_000038AA:
 loc_000038AE:
 	MOVE.w	#2, $FFFFC100.w
 	MOVE.w	$12(A5), D0
-	SUB.w	$FFFFC410.w, D0
+	SUB.w	Camera_scroll_y.w, D0
 	CMPI.w	#$00E0, D0
 	BGE.b	loc_000038C6
 	ADDQ.w	#1, $12(A5)
@@ -3477,7 +3477,7 @@ loc_000038C6:
 loc_000038CA:
 	MOVE.w	#3, $FFFFC100.w
 	MOVE.w	$E(A5), D0
-	SUB.w	$FFFFC40E.w, D0
+	SUB.w	Camera_scroll_x.w, D0
 	CMPI.w	#$0010, D0
 	BLE.w	loc_000038E4
 	SUBQ.w	#1, $E(A5)
@@ -3486,7 +3486,7 @@ loc_000038E4:
 loc_000038E8:
 	MOVE.w	#4, $FFFFC100.w
 	MOVE.w	$E(A5), D0
-	SUB.w	$FFFFC40E.w, D0
+	SUB.w	Camera_scroll_x.w, D0
 	CMPI.w	#$0130, D0
 	BGE.b	loc_00003900
 	ADDQ.w	#1, $E(A5)
@@ -3533,10 +3533,10 @@ loc_00003966:
 loc_0000397C:
 	MOVE.b	#$FF, Sprite_dma_update_pending.w
 	MOVE.w	$E(A5), D0
-	SUB.w	$FFFFC40E.w, D0
+	SUB.w	Camera_scroll_x.w, D0
 	MOVE.w	D0, $A(A5)
 	MOVE.w	$12(A5), D0
-	SUB.w	$FFFFC410.w, D0
+	SUB.w	Camera_scroll_y.w, D0
 	ADDI.w	#0, D0
 	MOVE.w	D0, $C(A5)
 	MOVE.w	$C(A5), $16(A5)
@@ -8741,7 +8741,7 @@ loc_00008150:
 
 loc_00008154:
 	MOVE.w	$E(A5), D0
-	SUB.w	$FFFFC40E.w, D0
+	SUB.w	Camera_scroll_x.w, D0
 	MOVE.w	D0, $A(A5)
 	TST.b	$18(A5)
 	BEQ.b	loc_00008170
@@ -8754,7 +8754,7 @@ loc_00008170:
 	SUBQ.w	#1, $A(A5)
 loc_0000817C:
 	MOVE.w	$12(A5), D0
-	SUB.w	$FFFFC410.w, D0
+	SUB.w	Camera_scroll_y.w, D0
 	ADDI.w	#0, D0
 	MOVE.w	D0, $C(A5)
 	MOVE.w	$C(A5), $16(A5)
@@ -8921,14 +8921,14 @@ loc_00008374:
 
 loc_00008376:
 	MOVE.w	$E(A5), D0
-	SUB.w	$FFFFC40E.w, D0
+	SUB.w	Camera_scroll_x.w, D0
 	ASR.w	#4, D0
 	CMPI.w	#$0019, D0
 	BGE.b	loc_000083A6
 	CMPI.w	#$FFFF, D0
 	BLE.b	loc_000083A6
 	MOVE.w	$12(A5), D0
-	SUB.w	$FFFFC410.w, D0
+	SUB.w	Camera_scroll_y.w, D0
 	ASR.w	#4, D0
 	CMPI.w	#$0019, D0
 	BGE.b	loc_000083A6
@@ -15169,7 +15169,7 @@ loc_0000DA18:
 	SWAP	D1
 	ASR.l	#4, D1
 	ADD.l	D1, $28(A5)
-	MOVE.w	$28(A5), $FFFFC104.w
+	MOVE.w	$28(A5), HScroll_base.w
 	ADDQ.b	#1, $1B(A5)
 	MOVE.b	$1B(A5), D0
 	ANDI.w	#$00E0, D0
@@ -15186,7 +15186,7 @@ loc_0000DA62:
 	MOVE.w	#$0093, D0
 	JSR	QueueSoundEffect
 	MOVE.l	#loc_0000DA7A, $2(A5)
-	CLR.l	$FFFFC104.w
+	CLR.l	HScroll_base.w
 	RTS
 	
 loc_0000DA7A:
@@ -16789,10 +16789,10 @@ loc_0000F0F8:
 loc_0000F11C:
 	CLR.b	$26(A5)
 	MOVE.w	$E(A5), D0
-	MOVE.w	D0, $FFFFC104.w
+	MOVE.w	D0, HScroll_base.w
 	MOVE.w	#$200, D0
 	SUB.w	$12(A5), D0
-	MOVE.w	D0, $FFFFC106.w
+	MOVE.w	D0, VScroll_base.w
 	RTS
 	
 loc_0000F136:
@@ -16813,10 +16813,10 @@ loc_0000F136:
 	JSR	QueueSoundEffect
 loc_0000F184:
 	MOVE.w	$E(A5), D0
-	MOVE.w	D0, $FFFFC104.w
+	MOVE.w	D0, HScroll_base.w
 	MOVE.w	#$0200, D0
 	SUB.w	$12(A5), D0
-	MOVE.w	D0, $FFFFC106.w
+	MOVE.w	D0, VScroll_base.w
 	RTS
 	
 loc_0000F19A:
@@ -23286,17 +23286,17 @@ ResetTownCameraMovementState:
 	RTS
 
 loc_00015ECA:
-	TST.w	$FFFFC106.w
+	TST.w	VScroll_base.w
 	BLE.b	ResetTownCameraMovementState
 	MOVEA.l	Player_entity_ptr.w, A6
 	MOVE.w	$12(A6), D0
-	SUB.w	$FFFFC410.w, D0
+	SUB.w	Camera_scroll_y.w, D0
 	ADDQ.w	#4, D0
 	ASR.w	#4, D0
 	CMPI.w	#8, D0
 	BGE.b	ResetTownCameraMovementState
-	SUBQ.w	#1, $FFFFC106.w
-	SUBQ.w	#1, $FFFFC410.w
+	SUBQ.w	#1, VScroll_base.w
+	SUBQ.w	#1, Camera_scroll_y.w
 	SUBQ.w	#1, $FFFFC102.w
 	BLE.b	loc_00015EF6
 	RTS
@@ -23318,18 +23318,18 @@ loc_00015F16:
 loc_00015F1A:
 	BRA.b	ResetTownCameraMovementState
 loc_00015F1C:
-	MOVE.w	$FFFFC106.w, D0
+	MOVE.w	VScroll_base.w, D0
 	CMP.w	VScroll_max_limit.w, D0
 	BGE.b	ResetTownCameraMovementState
 	MOVEA.l	Player_entity_ptr.w, A6
 	MOVE.w	$12(A6), D0
-	SUB.w	$FFFFC410.w, D0
+	SUB.w	Camera_scroll_y.w, D0
 	ADDQ.w	#4, D0
 	ASR.w	#4, D0
 	CMPI.w	#6, D0
 	BLE.w	ResetTownCameraMovementState
-	ADDQ.w	#1, $FFFFC106.w
-	ADDQ.w	#1, $FFFFC410.w
+	ADDQ.w	#1, VScroll_base.w
+	ADDQ.w	#1, Camera_scroll_y.w
 	SUBQ.w	#1, $FFFFC102.w
 	BLE.b	loc_00015F4E
 	RTS
@@ -23346,17 +23346,17 @@ loc_00015F66:
 	ADDQ.w	#1, Town_camera_tile_y.w
 	BRA.w	ResetTownCameraMovementState
 loc_00015F6E:
-	TST.w	$FFFFC104.w
+	TST.w	HScroll_base.w
 	BGE.w	ResetTownCameraMovementState
 	MOVEA.l	Player_entity_ptr.w, A6
 	MOVE.w	$E(A6), D0
-	SUB.w	$FFFFC40E.w, D0
+	SUB.w	Camera_scroll_x.w, D0
 	SUBQ.w	#8, D0
 	ASR.w	#4, D0
 	CMPI.w	#$000B, D0
 	BGE.w	ResetTownCameraMovementState
-	ADDQ.w	#1, $FFFFC104.w
-	SUBQ.w	#1, $FFFFC40E.w
+	ADDQ.w	#1, HScroll_base.w
+	SUBQ.w	#1, Camera_scroll_x.w
 	SUBQ.w	#1, $FFFFC102.w
 	BLE.b	loc_00015F9E
 	RTS
@@ -23378,18 +23378,18 @@ loc_00015FBC:
 loc_00015FC0:
 	BRA.w	ResetTownCameraMovementState
 loc_00015FC4:
-	MOVE.w	$FFFFC104.w, D0
+	MOVE.w	HScroll_base.w, D0
 	CMP.w	HScroll_min_limit.w, D0
 	BLE.w	ResetTownCameraMovementState
 	MOVEA.l	Player_entity_ptr.w, A6
 	MOVE.w	$E(A6), D0
-	SUB.w	$FFFFC40E.w, D0
+	SUB.w	Camera_scroll_x.w, D0
 	SUBQ.w	#8, D0
 	ASR.w	#4, D0
 	CMPI.w	#8, D0
 	BLE.w	ResetTownCameraMovementState
-	SUBQ.w	#1, $FFFFC104.w
-	ADDQ.w	#1, $FFFFC40E.w
+	SUBQ.w	#1, HScroll_base.w
+	ADDQ.w	#1, Camera_scroll_x.w
 	SUBQ.w	#1, $FFFFC102.w
 	BLE.b	loc_00015FF8
 	RTS
@@ -23445,11 +23445,11 @@ loc_00016018:
 	MOVE.w	Town_camera_tile_y.w, D1
 	ASL.w	#4, D0
 	ASL.w	#4, D1
-	MOVE.w	D0, $FFFFC40E.w
-	MOVE.w	D1, $FFFFC410.w
+	MOVE.w	D0, Camera_scroll_x.w
+	MOVE.w	D1, Camera_scroll_y.w
 	NEG.w	D0
-	MOVE.w	D0, $FFFFC104.w
-	MOVE.w	D1, $FFFFC106.w
+	MOVE.w	D0, HScroll_base.w
+	MOVE.w	D1, VScroll_base.w
 	MOVEA.l	Player_entity_ptr.w, A6
 	MOVE.w	Player_spawn_position_x.w, $E(A6)
 	MOVE.w	Player_spawn_tile_y.w, $12(A6)
@@ -24267,8 +24267,8 @@ loc_000169D0:
 	MOVE.w	D0, VDP_control_port
 	CLR.w	Cursor_blink_timer.w
 	CLR.w	Intro_scroll_accumulator.w
-	MOVE.w	#$FF20, $FFFFC106.w
-	MOVE.w	$FFFFC106.w, D0
+	MOVE.w	#$FF20, VScroll_base.w
+	MOVE.w	VScroll_base.w, D0
 	ANDI.w	#$01FF, D0
 	MOVE.l	#$40000010, VDP_control_port
 	MOVE.w	D0, VDP_data_port
@@ -24945,7 +24945,7 @@ loc_0001738C:
 loc_0001739E:
 	ADDQ.l	#1, Ending_timer.w
 	ADDI.l	#$4000, Ending_vscroll_accumulator.w
-	MOVE.w	Ending_vscroll_accumulator.w, $FFFFC106.w
+	MOVE.w	Ending_vscroll_accumulator.w, VScroll_base.w
 	BRA.w	EndingSequence_CommonUpdate
 loc_000173B4:
 	MOVE.w	Ending_timer.w, D0
@@ -24955,7 +24955,7 @@ loc_000173B4:
 loc_000173C2:
 	ADDQ.w	#1, Ending_timer.w
 	ADDI.l	#$4000, Ending_vscroll_accumulator.w
-	MOVE.w	Ending_vscroll_accumulator.w, $FFFFC106.w
+	MOVE.w	Ending_vscroll_accumulator.w, VScroll_base.w
 	BRA.w	EndingSequence_CommonUpdate
 ; loc_000173D8
 EndingSequence_CommonUpdate:
@@ -27813,11 +27813,11 @@ loc_00019F1A:
 	SWAP	D1
 	ASR.l	#4, D1
 	ADD.l	D1, $28(A5)
-	MOVE.w	$28(A5), $FFFFC104.w
+	MOVE.w	$28(A5), HScroll_base.w
 	RTS
 
 loc_00019F4A:
-	CLR.l	$FFFFC104.w
+	CLR.l	HScroll_base.w
 	BCLR.b	#7, (A5)
 	RTS
 
