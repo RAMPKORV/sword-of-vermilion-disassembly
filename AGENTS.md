@@ -206,6 +206,24 @@ $FFFFC720+  Event_triggers      - Story progress flags
 
 ## Important Conventions
 
+### Git Operations - CRITICAL WARNING
+
+**NEVER use `git checkout -- <file>` or `git revert` unless absolutely certain you want to lose ALL uncommitted changes!**
+
+When a build breaks after making changes:
+1. **DO NOT** immediately run `git checkout` or `git revert`
+2. **IDENTIFY** the specific problem by examining build errors or using binary comparison
+3. **FIX** the specific issue using targeted edits
+4. **ONLY** revert if you've exhausted all other options
+
+**Best practice for multi-step changes:**
+1. Make a small change
+2. Test with `verify.bat`
+3. If successful, commit immediately: `git add . && git commit -m "Description"`
+4. Repeat for next change
+
+This prevents losing hours of work due to a single bad revert.
+
 ### Hex Values
 - Use `$` prefix for hex: `$FFFFC400`, `$80`, `$0F`
 - Use decimal for small constants when semantically clear

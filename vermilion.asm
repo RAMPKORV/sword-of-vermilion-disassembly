@@ -90,14 +90,11 @@ loc_00000304:
 
 loc_0000032A:
 	MOVEQ	#$00000040, D0
-	MOVE.w	#$0100, Z80_bus_request
-loc_00000334:
-	BTST.b	#0, Z80_bus_request
-	BNE.b	loc_00000334
+	stopZ80
 	MOVE.b	D0, $00A10009
 	MOVE.b	D0, $00A1000B
 	MOVE.b	D0, $00A1000D
-	MOVE.w	#0, Z80_bus_request
+	startZ80
 	RTS
 
 loc_0000035A:
@@ -644,21 +641,15 @@ loc_000011EC:
 
 loc_000011EE:
 	LEA	$FFFFC408.w, A0
-	MOVE.w	#$0100, Z80_bus_request
-loc_000011FA:
-	BTST.b	#0, Z80_bus_request
-	BNE.b	loc_000011FA
+	stopZ80
 	LEA	$00A10003, A1
 	LEA	$00A10009, A2
-	MOVE.w	#0, Z80_bus_request
+	startZ80
 	BSR.w	loc_00001242
-	MOVE.w	#$0100, Z80_bus_request
-loc_00001224:
-	BTST.b	#0, Z80_bus_request
-	BNE.b	loc_00001224
+	stopZ80
 	LEA	$00A10005, A1
 	LEA	$00A1000B, A2
-	MOVE.w	#0, Z80_bus_request
+	startZ80
 loc_00001242:
 	MOVE.b	(A0), $1(A0)
 	BSET.b	#6, (A2)
@@ -3741,10 +3732,7 @@ loc_00003BBE:
 	SWAP	D0
 	MOVE.w	#$9700, D1
 	MOVE.b	D0, D1
-	MOVE.w	#$0100, Z80_bus_request
-loc_00003BF0:
-	BTST.b	#0, Z80_bus_request
-	BNE.b	loc_00003BF0
+	stopZ80
 	JSR	InitVdpDmaRamRoutine
 	MOVE.w	#2, D4
 	ORI.w	#$8F00, D4
@@ -3760,7 +3748,7 @@ loc_00003BF0:
 	MOVE.w	$FFFFC3F2.w, D4
 	BCLR.l	#4, D4
 	MOVE.w	D4, VDP_control_port
-	MOVE.w	#0, Z80_bus_request
+	startZ80
 	RTS
 
 loc_00003C4E:
