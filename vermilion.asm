@@ -17546,10 +17546,7 @@ loc_0000FAC6:
 ; ExecuteVdpDmaTransfer
 ExecuteVdpDmaTransfer:
 	ORI	#$0700, SR
-	MOVE.w	#$0100, Z80_bus_request
-loc_0000FAEC:
-	BTST.b	#0, Z80_bus_request
-	BNE.b	loc_0000FAEC
+	stopZ80
 	BSR.w	InitVdpDmaRamRoutine
 	MOVE.w	#2, D4
 	ORI.w	#$8F00, D4
@@ -17794,10 +17791,7 @@ loc_0000FD0A:
 	RTS
 
 loc_0000FD1C:
-	MOVE.w	#$0100, Z80_bus_request
-loc_0000FD24:
-	BTST.b	#0, Z80_bus_request
-	BNE.b	loc_0000FD24
+	stopZ80
 	JSR	InitVdpDmaRamRoutine
 	MOVE.w	#2, D4
 	ORI.w	#$8F00, D4
@@ -17888,10 +17882,7 @@ loc_0000FE5E:
 	
 loc_0000FE76:
 	ORI	#$0700, SR
-	MOVE.w	#$0100, Z80_bus_request
-loc_0000FE82:
-	BTST.b	#0, Z80_bus_request
-	BNE.b	loc_0000FE82
+	stopZ80
 	BSR.w	InitVdpDmaRamRoutine
 	MOVE.w	#2, D4
 	ORI.w	#$8F00, D4
@@ -18263,11 +18254,7 @@ loc_00010352:
 loc_0001036A:
 	ORI	#$0700, SR
 loc_0001036E:
-	MOVE.w	#$0100, Z80_bus_request
-loc_00010376:
-	BTST.b	#0, Z80_bus_request
-loc_0001037E:
-	BNE.b	loc_00010376
+	stopZ80
 	BSR.w	InitVdpDmaRamRoutine
 	MOVE.w	#2, D4
 	ORI.w	#$8F00, D4
@@ -21620,10 +21607,7 @@ loc_000131C4:
 	BNE.w	loc_0001343E
 	BCLR.b	#7, Palette_buffer_dirty.w
 	BEQ.w	loc_0001325C
-	MOVE.w	#$0100, Z80_bus_request
-loc_000131F2:
-	BTST.b	#0, Z80_bus_request
-	BNE.b	loc_000131F2
+	stopZ80
 	JSR	InitVdpDmaRamRoutine
 	MOVE.w	#2, D4
 	ORI.w	#$8F00, D4
@@ -21639,7 +21623,7 @@ loc_000131F2:
 	MOVE.w	$FFFFC3F2.w, D4
 	BCLR.l	#4, D4
 	MOVE.w	D4, VDP_control_port
-	MOVE.w	#0, Z80_bus_request
+	startZ80
 loc_0001325C:
 	RTS
 
@@ -21704,10 +21688,7 @@ loc_000132FE:
 	LEA	Palette_line_3_buffer.w, A1
 	BSR.w	loc_00013380
 loc_0001330C:
-	MOVE.w	#$0100, Z80_bus_request
-loc_00013314:
-	BTST.b	#0, Z80_bus_request
-	BNE.b	loc_00013314
+	stopZ80
 	JSR	InitVdpDmaRamRoutine
 	MOVE.w	#2, D4
 	ORI.w	#$8F00, D4
@@ -21723,7 +21704,7 @@ loc_00013314:
 	MOVE.w	$FFFFC3F2.w, D4
 	BCLR.l	#4, D4
 	MOVE.w	D4, VDP_control_port
-	MOVE.w	#0, Z80_bus_request
+	startZ80
 	RTS
 
 loc_00013380:
