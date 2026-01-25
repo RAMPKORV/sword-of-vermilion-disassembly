@@ -861,7 +861,7 @@ loc_00001540:
 	MOVE.w	#PROGRAM_STATE_02, Program_state.w
 	CLR.b	Fade_out_lines_mask.w
 	CLR.w	Palette_fade_step_counter.w
-	MOVE.w	#0, $FFFFC080.w
+	MOVE.w	#0, Palette_line_0_index.w
 	JSR	LoadPalettesFromTable
 loc_0000155A:
 	RTS
@@ -975,7 +975,7 @@ ProgramState_0B:
 	MOVE.l	#loc_000106C2, $12(A5)
 	CLR.w	File_menu_phase.w
 	CLR.b	File_load_complete.w
-	MOVE.w	#$0012, $FFFFC080.w
+	MOVE.w	#$0012, Palette_line_0_index.w
 	MOVE.w	#PROGRAM_STATE_0C, Program_state.w
 	MOVE.w	#$8D, D0
 	JSR	QueueSoundEffect
@@ -1486,10 +1486,10 @@ loc_00001DB4: ; Woman hitting player with frying pan
 	MOVE.w	#$2A, Gameplay_substate.w
 	JSR	loc_000033BE
 	JSR	ResetScriptAndInitDialogue
-	MOVE.w	#$0012, $FFFFC080.w
-	MOVE.w	Palette_line_1_index_saved.w, $FFFFC082.w
+	MOVE.w	#$0012, Palette_line_0_index.w
+	MOVE.w	Palette_line_1_index_saved.w, Palette_line_1_index.w
 	MOVE.w	Palette_line_2_cycle_base.w, Palette_line_2_index.w
-	MOVE.w	#$0011, $FFFFC086.w
+	MOVE.w	#$0011, Palette_line_3_index.w
 	JSR	LoadPalettesFromTable
 loc_00001E08:
 	RTS
@@ -1849,8 +1849,8 @@ loc_00002324:
 	MOVEA.l	Player_entity_ptr.w, A6
 	MOVE.w	#$00A0, $E(A6)
 	MOVE.w	#$0064, $12(A6)
-	MOVE.w	#$0036, $FFFFC080.w
-	MOVE.w	#$0013, $FFFFC086.w
+	MOVE.w	#$0036, Palette_line_0_index.w
+	MOVE.w	#$0013, Palette_line_3_index.w
 	ADDQ.w	#1, Gameplay_substate.w
 	CLR.w	Overworld_menu_state.w
 	MOVE.b	#$FF, Is_in_battle.w
@@ -1979,7 +1979,7 @@ loc_00002542:
 	BSR.w	loc_0000340C
 	JSR	loc_0000F972
 	MOVE.b	#$FF, Player_in_first_person_mode.w
-	MOVE.w	#$0037, $FFFFC082.w
+	MOVE.w	#$0037, Palette_line_1_index.w
 	MOVE.w	#$0038, Palette_line_2_index.w
 	JSR	LoadPalettesFromTable
 	JSR	EnableDisplay
@@ -2013,7 +2013,7 @@ loc_000025CE:
 	BSR.w	loc_0000341A
 	TST.b	$FFFFC560.w
 	BEQ.b	loc_0000260E
-	MOVE.w	#$0048, $FFFFC082.w
+	MOVE.w	#$0048, Palette_line_1_index.w
 	MOVE.w	#$0040, Palette_line_2_index.w
 	JSR	LoadPalettesFromTable
 loc_0000260E:
@@ -2040,8 +2040,8 @@ loc_00002620:
 	MOVEA.l	Player_entity_ptr.w, A6
 	MOVE.l	#loc_00004340, $2(A6)
 	ADDQ.w	#1, Gameplay_substate.w
-	MOVE.w	#$0036, $FFFFC080.w
-	MOVE.w	#$0011, $FFFFC086.w
+	MOVE.w	#$0036, Palette_line_0_index.w
+	MOVE.w	#$0011, Palette_line_3_index.w
 	CLR.b	$FFFFC561.w
 	CLR.b	Encounter_triggered.w
 	CLR.b	$FFFFC56A.w
@@ -2319,15 +2319,15 @@ loc_000029FA:
 	BSR.w	loc_000035FA
 	JSR	loc_00004384
 	MOVE.w	#$16, Gameplay_substate.w
-	MOVE.w	#$0036, $FFFFC080.w
+	MOVE.w	#$0036, Palette_line_0_index.w
 	TST.b	$FFFFC560.w
 	BEQ.b	loc_00002A28
-	MOVE.w	#$0048, $FFFFC082.w
+	MOVE.w	#$0048, Palette_line_1_index.w
 	MOVE.w	#$0040, Palette_line_2_index.w
 loc_00002A28:
 	MOVE.w	#$00B3, D0
 	JSR	QueueSoundEffect
-	MOVE.w	#$0011, $FFFFC086.w
+	MOVE.w	#$0011, Palette_line_3_index.w
 	CLR.b	Encounter_triggered.w
 	CLR.b	Chest_already_opened.w
 	CLR.w	Overworld_menu_state.w
@@ -3358,7 +3358,7 @@ PlayerObjectHandler:
 	MOVE.w	#1, $8(A5)
 	CLR.w	$16(A5)
 	MOVE.l	#loc_00003782, $2(A5)
-	MOVE.w	#$11, $FFFFC086.w
+	MOVE.w	#$11, Palette_line_3_index.w
 	MOVE.b	#1, $24(A5)
 	CLR.b	$1B(A5)
 	MOVE.b	#$10, Player_movement_step_counter.w
@@ -3793,7 +3793,7 @@ loc_00003C7E:
 	MOVE.w	#$0015, $8(A6)
 	CLR.w	$16(A6)
 	MOVE.l	#loc_00004092, $2(A6)
-	MOVE.w	#$0013, $FFFFC086.w
+	MOVE.w	#$0013, Palette_line_3_index.w
 	JSR	LoadPalettesFromTable
 	RTS
 
@@ -4697,7 +4697,7 @@ loc_00004974:
 loc_0000497E:
 	TST.w	Player_poisoned.w
 	BEQ.b	loc_0000499E
-	MOVE.w	#$0072, $FFFFC080.w
+	MOVE.w	#$0072, Palette_line_0_index.w
 	MOVE.w	Player_str.w, D0
 	ASR.w	#7, D0
 	BGT.b	loc_00004994
@@ -4729,7 +4729,7 @@ loc_000049E2:
 	BEQ.b	loc_000049EC
 	ADDQ.w	#1, Palette_line_2_index.w
 loc_000049EC:
-	MOVE.w	#$0036, $FFFFC080.w
+	MOVE.w	#$0036, Palette_line_0_index.w
 	JSR	LoadPalettesFromTable
 	MOVE.w	#$000C, First_person_wall_frame.w
 	MOVE.w	#8, Wall_render_y_offset.w
@@ -4797,7 +4797,7 @@ loc_00004AC2:
 loc_00004ACC:
 	TST.w	Player_poisoned.w
 	BEQ.b	loc_00004AEC
-	MOVE.w	#$0072, $FFFFC080.w
+	MOVE.w	#$0072, Palette_line_0_index.w
 	MOVE.w	Player_str.w, D0
 	ASR.w	#7, D0
 	BGT.b	loc_00004AE2
@@ -4831,7 +4831,7 @@ loc_00004B36:
 	BEQ.b	loc_00004B40
 	SUBQ.w	#1, Palette_line_2_index.w
 loc_00004B40:
-	MOVE.w	#$0036, $FFFFC080.w
+	MOVE.w	#$0036, Palette_line_0_index.w
 	JSR	LoadPalettesFromTable
 	MOVE.w	#4, First_person_wall_frame.w
 	MOVE.w	#0, Wall_render_y_offset.w
@@ -6720,7 +6720,7 @@ loc_0000651A:
 	BGT.b	loc_0000653C
 	CLR.b	$FFFFC560.w
 	CLR.w	$FFFFC562.w
-	CLR.w	$FFFFC082.w
+	CLR.w	Palette_line_1_index.w
 	CLR.w	Palette_line_2_index.w
 	BSR.w	loc_00006458
 	JSR	LoadPalettesFromTable
@@ -9574,7 +9574,7 @@ loc_00008BA6:
 	MULU.w	#$C, D1 ; Each encounter encompasses three pointers
 	MOVEA.l	(A6,D1.w), A6
 	MOVE.b	$14(A6), $6(A5)
-	MOVE.w	$16(A6), $FFFFC086.w
+	MOVE.w	$16(A6), Palette_line_3_index.w
 	MOVE.b	#$60, $7(A5)
 	BSET.b	#7, $7(A5)
 	BCLR.b	#3, $7(A5)
@@ -9609,7 +9609,7 @@ loc_00008C6C:
 ; loc_00008C74
 InitTalkerPortraitSprite:
 	MOVE.b	$18(A6), $6(A5)
-	MOVE.w	$1A(A6), $FFFFC086.w
+	MOVE.w	$1A(A6), Palette_line_3_index.w
 	MOVE.b	#$60, $7(A5)
 	BSET.b	#7, $7(A5)
 	BCLR.b	#3, $7(A5)
@@ -9833,7 +9833,7 @@ loc_00008F5A: ; Loop number of enemies
 	ADD.w	D0, D0
 	MOVE.w	(A2,D0.w), $E(A6)		; x position
 	MOVE.w	$2(A2,D0.w), $12(A6)	; y position
-	MOVE.w	$4(A0), $FFFFC082.w
+	MOVE.w	$4(A0), Palette_line_1_index.w
 	MOVE.w	$6(A0), Enemy_reward_type.w
 	MOVE.w	$8(A0), Enemy_reward_value.w
 	MOVE.w	$C(A0), $28(A6)
@@ -13686,7 +13686,7 @@ loc_0000C5D4:
 	RTS
 	
 loc_0000C640:
-	MOVE.w	#$00B6, $FFFFC082.w
+	MOVE.w	#$00B6, Palette_line_1_index.w
 	MOVE.w	#$0064, $3C(A5)
 	MOVEA.l	Enemy_list_ptr.w, A6
 	MOVE.l	#loc_0000C69A, $2(A6)
@@ -13759,7 +13759,7 @@ loc_0000C724:
 loc_0000C746:
 	TST.b	$26(A5)
 	BEQ.w	loc_0000C7D8
-	MOVE.w	#$00B5, $FFFFC082.w
+	MOVE.w	#$00B5, Palette_line_1_index.w
 	JSR	LoadPalettesFromTable
 	MOVE.w	Player_str.w, D0
 	SUB.w	D0, $28(A5)
@@ -13861,7 +13861,7 @@ loc_0000C896:
 loc_0000C8B8:
 	TST.b	$26(A5)
 	BEQ.w	loc_0000C942
-	MOVE.w	#$00B5, $FFFFC082.w
+	MOVE.w	#$00B5, Palette_line_1_index.w
 	JSR	LoadPalettesFromTable
 	MOVE.w	Player_str.w, D0
 	SUB.w	D0, $28(A5)
@@ -14042,7 +14042,7 @@ loc_0000CB1E:
 	TST.w	$3C(A6)
 	BLE.b	loc_0000CB3A
 	SUBQ.w	#1, $3C(A6)
-	MOVE.w	#$0062, $FFFFC082.w
+	MOVE.w	#$0062, Palette_line_1_index.w
 	JSR	LoadPalettesFromTable
 	BRA.b	loc_0000CB6C
 loc_0000CB3A:
@@ -14465,9 +14465,9 @@ UpdateEncounterPalette:
 	MOVE.w	Battle_type.w, D0
 	ADD.w	D0, D0
 	MOVE.w	(A0,D0.w), D0
-	CMP.w	$FFFFC082.w, D0
+	CMP.w	Palette_line_1_index.w, D0
 	BEQ.w	loc_0000D068
-	MOVE.w	D0, $FFFFC082.w
+	MOVE.w	D0, Palette_line_1_index.w
 	JSR	LoadPalettesFromTable
 loc_0000D068:
 	RTS
@@ -14867,7 +14867,7 @@ loc_0000D644:
 	TST.w	$3C(A5)
 	BLE.b	loc_0000D65E
 	SUBQ.w	#1, $3C(A5)
-	MOVE.w	#$0026, $FFFFC082.w
+	MOVE.w	#$0026, Palette_line_1_index.w
 	JSR	LoadPalettesFromTable
 	BRA.w	loc_0000D6F6
 loc_0000D65E:
@@ -15280,7 +15280,7 @@ loc_0000DC1C:
 	BEQ.b	loc_0000DC54
 	TST.b	Boss_death_anim_done.w
 	BEQ.b	loc_0000DC54
-	MOVE.w	#$00B8, $FFFFC082.w
+	MOVE.w	#$00B8, Palette_line_1_index.w
 	JSR	LoadPalettesFromTable
 	CLR.w	Dialog_timer.w
 	CLR.w	Dialog_phase.w
@@ -15777,7 +15777,7 @@ loc_0000E2EC:
 loc_0000E300:
 	TST.b	$26(A5)
 	BEQ.b	loc_0000E344
-	MOVE.w	#$00B7, $FFFFC082.w
+	MOVE.w	#$00B7, Palette_line_1_index.w
 	JSR	LoadPalettesFromTable
 	MOVE.w	Player_str.w, D0
 	SUB.w	D0, $28(A5)
@@ -15841,7 +15841,7 @@ loc_0000E3B6:
 loc_0000E3CA:
 	TST.b	$26(A5)
 	BEQ.b	loc_0000E40E
-	MOVE.w	#$00B7, $FFFFC082.w
+	MOVE.w	#$00B7, Palette_line_1_index.w
 	JSR	LoadPalettesFromTable
 	MOVE.w	Player_str.w, D0
 	SUB.w	D0, $28(A5)
@@ -16774,7 +16774,7 @@ loc_0000F0D2:
 	TST.w	$3C(A5)
 	BLE.b	loc_0000F0F8
 	SUBQ.w	#1, $3C(A5)
-	MOVE.w	#$007F, $FFFFC082.w
+	MOVE.w	#$007F, Palette_line_1_index.w
 	JSR	LoadPalettesFromTable
 	BRA.b	loc_0000F11C
 loc_0000F0F8:
@@ -16802,7 +16802,7 @@ loc_0000F136:
 	CMPI.w	#$0044, $12(A5)
 	BLE.b	loc_0000F184
 	MOVE.w	#$0044, $12(A5)
-	MOVE.w	#$0080, $FFFFC082.w
+	MOVE.w	#$0080, Palette_line_1_index.w
 	JSR	LoadPalettesFromTable
 	MOVE.l	#loc_0000F19A, $2(A5)
 	CLR.w	Dialog_timer.w
@@ -17417,7 +17417,7 @@ loc_0000F8A0:
 	MOVEA.l	(A6)+, A4
 	MOVEA.l	(A6)+, A3
 	MOVE.w	(A6)+, D5
-	MOVE.w	(A6), $FFFFC080.w
+	MOVE.w	(A6), Palette_line_0_index.w
 	BSR.w	LoadMultipleTilesFromTable
 	BSR.w	ExecuteVdpDmaTransfer
 	JSR	LoadPalettesFromTable
@@ -19024,7 +19024,7 @@ loc_00010BEA:
 	MOVE.w	#$FFFF, Menu_cursor_last_index.w
 	MOVE.w	#$000F, Menu_cursor_base_x.w
 	MOVE.w	#$0015, Menu_cursor_base_y.w
-	MOVE.w	#$000E, $FFFF9902.w
+	MOVE.w	#$000E, Window_tilemap_x.w
 	MOVE.w	#$0013, Window_tilemap_y.w
 	MOVE.w	#$000B, Window_width.w
 	MOVE.w	#6, Window_height.w
@@ -19034,7 +19034,7 @@ loc_00010BEA:
 	MOVE.w	#2, Window_text_x.w
 	MOVE.w	#2, Window_text_y.w
 	BSR.w	RenderTextToWindow
-	CLR.w	$FFFF9914.w
+	CLR.w	Window_draw_row.w
 	MOVE.b	#$FF, Window_tilemap_draw_active.w
 	RTS
 	
@@ -19052,18 +19052,18 @@ InitDialogueWindow:
 	MOVE.w	#$0015, Script_output_y.w
 	MOVE.w	#0, Script_tile_attrs.w
 	CLR.w	Script_output_x.w
-	MOVE.w	#4, $FFFF9902.w
+	MOVE.w	#4, Window_tilemap_x.w
 	MOVE.w	#$0013, Window_tilemap_y.w
 	MOVE.w	#$001F, Window_width.w
 	MOVE.w	#8, Window_height.w
 	MOVE.w	#0, Window_tile_attrs.w
 	BSR.w	DrawWindowBorder
-	CLR.w	$FFFF9914.w
+	CLR.w	Window_draw_row.w
 	MOVE.b	#$FF, $FFFF9900.w
 	RTS
 	
 loc_00010C9E:
-	MOVE.w	#2, $FFFF9902.w
+	MOVE.w	#2, Window_tilemap_x.w
 	MOVE.w	#2, Window_tilemap_y.w
 	MOVE.w	#$000D, Window_width.w
 	MOVE.w	#$000A, Window_height.w
@@ -19073,12 +19073,12 @@ loc_00010C9E:
 	MOVE.w	#2, Window_text_x.w
 	MOVE.w	#2, Window_text_y.w
 	BSR.w	RenderTextToWindow
-	CLR.w	$FFFF9914.w
+	CLR.w	Window_draw_row.w
 	MOVE.b	#$FF, Window_tilemap_draw_active.w
 	RTS
 	
 loc_00010CE2:
-	MOVE.w	#$000A, $FFFF9902.w	
+	MOVE.w	#$000A, Window_tilemap_x.w	
 	MOVE.w	#$000A, Window_tilemap_y.w	
 	MOVE.w	#$000E, Window_width.w	
 	MOVE.w	#$000A, Window_height.w	
@@ -19097,7 +19097,7 @@ loc_00010CE2:
 	MULU.w	D0, D1	
 	ADDI.w	#$000C, D1	
 	MOVE.b	#$2A, (A1,D1.w)	
-	CLR.w	$FFFF9914.w	
+	CLR.w	Window_draw_row.w	
 	MOVE.b	#$FF, Window_tilemap_draw_active.w	
 	RTS
 	
@@ -19107,7 +19107,7 @@ loc_00010D44:
 	MOVE.w	#$FFFF, Menu_cursor_last_index.w
 	MOVE.w	#$001E, Menu_cursor_base_x.w
 	MOVE.w	#$000F, Menu_cursor_base_y.w
-	MOVE.w	#$001C, $FFFF9902.w
+	MOVE.w	#$001C, Window_tilemap_x.w
 	MOVE.w	#$000D, Window_tilemap_y.w
 	MOVE.w	#6, Window_width.w
 	MOVE.w	#6, Window_height.w
@@ -19117,7 +19117,7 @@ loc_00010D44:
 	MOVE.w	#3, Window_text_x.w
 	MOVE.w	#2, Window_text_y.w
 	BSR.w	RenderTextToWindow
-	CLR.w	$FFFF9914.w
+	CLR.w	Window_draw_row.w
 	MOVE.b	#$FF, $FFFF9900.w
 	RTS
 	
@@ -19127,7 +19127,7 @@ loc_00010DA4:
 	MOVE.w	#$FFFF, Menu_cursor_last_index.w
 	MOVE.w	#$0010, Menu_cursor_base_x.w
 	MOVE.w	#$000E, Menu_cursor_base_y.w
-	MOVE.w	#$000F, $FFFF9902.w
+	MOVE.w	#$000F, Window_tilemap_x.w
 	MOVE.w	#$000C, Window_tilemap_y.w
 	MOVE.w	#$0015, Window_width.w
 	MOVE.w	#7, Window_height.w
@@ -19152,7 +19152,7 @@ loc_00010DA4:
 	LEA	Savegame_name_buffer.w, A0
 	MOVE.w	#$0093, D0
 	BSR.w	loc_00012CF6
-	CLR.w	$FFFF9914.w
+	CLR.w	Window_draw_row.w
 	MOVE.b	#$FF, $FFFF9900.w
 	RTS
 	
@@ -19161,7 +19161,7 @@ loc_00010E46:
 	MOVE.w	#$FFFF, Menu_cursor_last_index.w
 	MOVE.w	#3, Menu_cursor_base_x.w
 	MOVE.w	#$000E, Menu_cursor_base_y.w
-	MOVE.w	#2, $FFFF9902.w
+	MOVE.w	#2, Window_tilemap_x.w
 	MOVE.w	#$000C, Window_tilemap_y.w
 	MOVE.w	#$000D, Window_width.w
 	MOVE.w	#8, Window_height.w
@@ -19171,7 +19171,7 @@ loc_00010E46:
 	MOVE.w	#2, Window_text_x.w
 	MOVE.w	#2, Window_text_y.w
 	BSR.w	RenderTextToWindow
-	CLR.w	$FFFF9914.w
+	CLR.w	Window_draw_row.w
 	MOVE.b	#$FF, Window_tilemap_draw_active.w
 	RTS
 	
@@ -19180,7 +19180,7 @@ loc_00010EA2:
 	MOVE.w	#$FFFF, Menu_cursor_last_index.w
 	MOVE.w	#3, Menu_cursor_base_x.w
 	MOVE.w	#$000E, Menu_cursor_base_y.w
-	MOVE.w	#2, $FFFF9902.w
+	MOVE.w	#2, Window_tilemap_x.w
 	MOVE.w	#$000C, Window_tilemap_y.w
 	MOVE.w	#$000D, Window_width.w
 	MOVE.w	#6, Window_height.w
@@ -19190,7 +19190,7 @@ loc_00010EA2:
 	MOVE.w	#2, Window_text_x.w
 	MOVE.w	#2, Window_text_y.w
 	BSR.w	RenderTextToWindow
-	CLR.w	$FFFF9914.w
+	CLR.w	Window_draw_row.w
 	MOVE.b	#$FF, Window_tilemap_draw_active.w
 	RTS
 	
@@ -19199,7 +19199,7 @@ loc_00010EFE:
 	MOVE.w	#$FFFF, Menu_cursor_last_index.w
 	MOVE.w	#3, Menu_cursor_base_x.w
 	MOVE.w	#$000E, Menu_cursor_base_y.w
-	MOVE.w	#2, $FFFF9902.w
+	MOVE.w	#2, Window_tilemap_x.w
 	MOVE.w	#$000C, Window_tilemap_y.w
 	MOVE.w	#$000B, Window_width.w
 	MOVE.w	#8, Window_height.w
@@ -19209,7 +19209,7 @@ loc_00010EFE:
 	MOVE.w	#2, Window_text_x.w
 	MOVE.w	#2, Window_text_y.w
 	BSR.w	RenderTextToWindow
-	CLR.w	$FFFF9914.w
+	CLR.w	Window_draw_row.w
 	MOVE.b	#$FF, Window_tilemap_draw_active.w
 	RTS
 	
@@ -19218,7 +19218,7 @@ loc_00010F5A:
 	MOVE.w	#$FFFF, Menu_cursor_last_index.w
 	MOVE.w	#$000D, Menu_cursor_base_x.w
 	MOVE.w	#6, Menu_cursor_base_y.w
-	MOVE.w	#$000C, $FFFF9902.w
+	MOVE.w	#$000C, Window_tilemap_x.w
 	MOVE.w	#4, Window_tilemap_y.w
 	MOVE.w	#9, Window_width.w
 	MOVE.w	#8, Window_height.w
@@ -19228,7 +19228,7 @@ loc_00010F5A:
 	MOVE.w	#2, Window_text_x.w
 	MOVE.w	#2, Window_text_y.w
 	BSR.w	RenderTextToWindow
-	CLR.w	$FFFF9914.w
+	CLR.w	Window_draw_row.w
 	MOVE.b	#$FF, Window_tilemap_draw_active.w
 	RTS
 	
@@ -19237,7 +19237,7 @@ loc_00010FB6:
 	MOVE.w	#$FFFF, Menu_cursor_last_index.w
 	MOVE.w	#3, Menu_cursor_base_x.w
 	MOVE.w	#$000C, Menu_cursor_base_y.w
-	MOVE.w	#2, $FFFF9902.w
+	MOVE.w	#2, Window_tilemap_x.w
 	MOVE.w	#$000A, Window_tilemap_y.w
 	MOVE.w	#$0015, Window_width.w
 	MOVE.w	#$000A, Window_height.w
@@ -19247,7 +19247,7 @@ loc_00010FB6:
 	MOVE.w	#2, Window_text_x.w
 	MOVE.w	#2, Window_text_y.w
 	BSR.w	RenderTextToWindow
-	CLR.w	$FFFF9914.w
+	CLR.w	Window_draw_row.w
 	MOVE.b	#$FF, Window_tilemap_draw_active.w
 	RTS
 	
@@ -19256,7 +19256,7 @@ loc_00011012:
 	MOVE.w	#$FFFF, Menu_cursor_last_index.w
 	MOVE.w	#3, Menu_cursor_base_x.w
 	MOVE.w	#$000E, Menu_cursor_base_y.w
-	MOVE.w	#2, $FFFF9902.w
+	MOVE.w	#2, Window_tilemap_x.w
 	MOVE.w	#$000C, Window_tilemap_y.w
 	MOVE.w	#7, Window_width.w
 	MOVE.w	#8, Window_height.w
@@ -19266,12 +19266,12 @@ loc_00011012:
 	MOVE.w	#2, Window_text_x.w
 	MOVE.w	#2, Window_text_y.w
 	BSR.w	RenderTextToWindow
-	CLR.w	$FFFF9914.w
+	CLR.w	Window_draw_row.w
 	MOVE.b	#$FF, Window_tilemap_draw_active.w
 	RTS
 	
 loc_0001106E:
-	MOVE.w	#0, $FFFF9902.w
+	MOVE.w	#0, Window_tilemap_x.w
 	MOVE.w	#2, Window_tilemap_y.w
 	MOVE.w	#9, Window_width.w
 	MOVE.w	#6, Window_height.w
@@ -19318,8 +19318,8 @@ loc_000110F4:
 	
 loc_00011106:
 	LEA	loc_00021DA2, A0
-	MOVE.w	#$000F, $FFFFC220.w
-	MOVE.w	#2, $FFFFC222.w
+	MOVE.w	#$000F, Window_tilemap_draw_x.w
+	MOVE.w	#2, Window_tilemap_draw_y.w
 	MOVE.w	#$0015, Window_tilemap_draw_width.w
 	MOVE.w	#0, Window_tilemap_draw_height.w
 	MOVE.w	#0, Script_tile_attrs.w
@@ -19329,10 +19329,10 @@ loc_00011106:
 	MOVEQ	#1, D6
 loc_00011134:
 	LEA	loc_00021DB8, A0
-	MOVE.w	#$000F, $FFFFC220.w
+	MOVE.w	#$000F, Window_tilemap_draw_x.w
 	MOVE.w	#2, D0
 	ADD.w	D6, D0
-	MOVE.w	D0, $FFFFC222.w
+	MOVE.w	D0, Window_tilemap_draw_y.w
 	MOVE.w	#$0015, Window_tilemap_draw_width.w
 	MOVE.w	#0, Window_tilemap_draw_height.w
 	MOVE.w	#0, Script_tile_attrs.w
@@ -19345,10 +19345,10 @@ loc_00011168:
 	LEA	loc_00021DE4, A0
 	ADDQ.w	#1, D0
 	ADD.w	D0, D0
-	MOVE.w	#$000F, $FFFFC220.w
+	MOVE.w	#$000F, Window_tilemap_draw_x.w
 	MOVE.w	#2, D1
 	ADD.w	D0, D1
-	MOVE.w	D1, $FFFFC222.w
+	MOVE.w	D1, Window_tilemap_draw_y.w
 	MOVE.w	#$0015, Window_tilemap_draw_width.w
 	MOVE.w	#0, Window_tilemap_draw_height.w
 	MOVE.w	#0, Script_tile_attrs.w
@@ -19362,7 +19362,7 @@ loc_0001119A:
 	MOVE.w	#$FFFF, Menu_cursor_last_index.w
 	MOVE.w	#$000B, Menu_cursor_base_x.w
 	MOVE.w	#4, Menu_cursor_base_y.w
-	MOVE.w	#$000A, $FFFF9902.w
+	MOVE.w	#$000A, Window_tilemap_x.w
 	MOVE.w	#2, Window_tilemap_y.w
 	MOVE.w	#$0018, Window_width.w
 	MOVE.w	$FFFFC4A2.w, D0
@@ -19410,7 +19410,7 @@ loc_0001124C:
 	MOVE.w	Shop_item_index.w, D0
 	CMP.w	$FFFFC4A2.w, D0
 	BLT.b	loc_0001124C
-	CLR.w	$FFFF9914.w
+	CLR.w	Window_draw_row.w
 	MOVE.b	#$FF, Window_tilemap_draw_active.w
 	RTS
 	
@@ -19421,7 +19421,7 @@ loc_00011274:
 	MOVE.w	#$FFFF, Menu_cursor_last_index.w
 	MOVE.w	#$000B, Menu_cursor_base_x.w
 	MOVE.w	#4, Menu_cursor_base_y.w
-	MOVE.w	#$000A, $FFFF9902.w
+	MOVE.w	#$000A, Window_tilemap_x.w
 	MOVE.w	#2, Window_tilemap_y.w
 	MOVE.w	#$0018, Window_width.w
 	MOVE.w	$FFFFC4A2.w, D0
@@ -19448,14 +19448,14 @@ loc_000112DE:
 	BSR.w	RenderTextToWindow
 	ADDQ.w	#2, Window_text_y.w
 	DBF	D7, loc_000112DE
-	CLR.w	$FFFF9914.w
+	CLR.w	Window_draw_row.w
 	MOVE.b	#$FF, Window_tilemap_draw_active.w
 	RTS
 	
 loc_00011304:
 	MOVE.w	#$000B, Menu_cursor_base_x.w
 	MOVE.w	#4, Menu_cursor_base_y.w
-	MOVE.w	#$000A, $FFFF9902.w
+	MOVE.w	#$000A, Window_tilemap_x.w
 	MOVE.w	#2, Window_tilemap_y.w
 	MOVE.w	#0, Window_tile_attrs.w
 	MOVE.w	#$000D, D0
@@ -19492,7 +19492,7 @@ loc_00011390:
 loc_0001139A:
 	ADDQ.w	#2, Window_text_y.w
 	DBF	D7, loc_00011390
-	CLR.w	$FFFF9914.w
+	CLR.w	Window_draw_row.w
 	MOVE.b	#$FF, Window_tilemap_draw_active.w
 	RTS
 	
@@ -19506,8 +19506,8 @@ loc_000113B8:
 	MOVE.w	D3, D5
 	ADD.w	D0, D4
 	ADD.w	D1, D5
-	ADD.w	$FFFFC220.w, D4
-	ADD.w	$FFFFC222.w, D5
+	ADD.w	Window_tilemap_draw_x.w, D4
+	ADD.w	Window_tilemap_draw_y.w, D5
 	ANDI.w	#$003F, D4
 	ANDI.w	#$003F, D5
 	ASL.w	#1, D4
@@ -19769,7 +19769,7 @@ loc_00011666:
 	RTS
 	
 loc_0001168C:
-	MOVE.w	#4, $FFFF9902.w
+	MOVE.w	#4, Window_tilemap_x.w
 	MOVE.w	#1, Window_tilemap_y.w
 	MOVE.w	#$001B, Window_width.w
 	MOVE.w	#$0010, Window_height.w
@@ -19810,7 +19810,7 @@ loc_0001168C:
 	BSR.w	loc_000117CE
 	MOVE.w	#$019E, D0
 	BSR.w	loc_00012CDA
-	CLR.w	$FFFF9914.w
+	CLR.w	Window_draw_row.w
 	MOVE.b	#$FF, Window_tilemap_draw_active.w
 	RTS
 	
@@ -19872,7 +19872,7 @@ loc_000117CE:
 	RTS
 	
 loc_000117E8:
-	MOVE.w	#$000A, $FFFF9902.w
+	MOVE.w	#$000A, Window_tilemap_x.w
 	MOVE.w	#$0010, Window_tilemap_y.w
 	MOVE.w	#$0019, Window_width.w
 	MOVE.w	#$000A, Window_height.w
@@ -19882,12 +19882,12 @@ loc_000117E8:
 	MOVE.w	#2, Window_text_x.w
 	MOVE.w	#2, Window_text_y.w
 	BSR.w	RenderTextToWindow
-	CLR.w	$FFFF9914.w
+	CLR.w	Window_draw_row.w
 	MOVE.b	#$FF, Window_tilemap_draw_active.w
 	RTS
 	
 loc_0001182C:
-	MOVE.w	#$000A, $FFFF9902.w	
+	MOVE.w	#$000A, Window_tilemap_x.w	
 	MOVE.w	#$0010, Window_tilemap_y.w	
 	MOVE.w	#$0019, Window_width.w	
 	MOVE.w	#$000A, Window_height.w	
@@ -19897,12 +19897,12 @@ loc_0001182C:
 	MOVE.w	#2, Window_text_x.w	
 	MOVE.w	#2, Window_text_y.w	
 	BSR.w	RenderTextToWindow	
-	CLR.w	$FFFF9914.w	
+	CLR.w	Window_draw_row.w	
 	MOVE.b	#$FF, Window_tilemap_draw_active.w	
 	RTS
 	
 loc_00011870:
-	MOVE.w	#$000A, $FFFF9902.w
+	MOVE.w	#$000A, Window_tilemap_x.w
 	MOVE.w	#$0010, Window_tilemap_y.w
 	MOVE.w	#$0019, Window_width.w
 	MOVE.w	#$000A, Window_height.w
@@ -19912,12 +19912,12 @@ loc_00011870:
 	MOVE.w	#2, Window_text_x.w
 	MOVE.w	#2, Window_text_y.w
 	BSR.w	RenderTextToWindow
-	CLR.w	$FFFF9914.w
+	CLR.w	Window_draw_row.w
 	MOVE.b	#$FF, Window_tilemap_draw_active.w
 	RTS
 	
 loc_000118B4:
-	MOVE.w	#$000A, $FFFF9902.w
+	MOVE.w	#$000A, Window_tilemap_x.w
 	MOVE.w	#$0010, Window_tilemap_y.w
 	MOVE.w	#$0019, Window_width.w
 	MOVE.w	#$000A, Window_height.w
@@ -19927,12 +19927,12 @@ loc_000118B4:
 	MOVE.w	#2, Window_text_x.w
 	MOVE.w	#2, Window_text_y.w
 	BSR.w	RenderTextToWindow
-	CLR.w	$FFFF9914.w
+	CLR.w	Window_draw_row.w
 	MOVE.b	#$FF, Window_tilemap_draw_active.w
 	RTS
 	
 loc_000118F8:
-	MOVE.w	#$000A, $FFFF9902.w	
+	MOVE.w	#$000A, Window_tilemap_x.w	
 	MOVE.w	#$0010, Window_tilemap_y.w	
 	MOVE.w	#$0019, Window_width.w	
 	MOVE.w	#$000A, Window_height.w	
@@ -19942,12 +19942,12 @@ loc_000118F8:
 	MOVE.w	#2, Window_text_x.w	
 	MOVE.w	#2, Window_text_y.w	
 	BSR.w	RenderTextToWindow	
-	CLR.w	$FFFF9914.w	
+	CLR.w	Window_draw_row.w	
 	MOVE.b	#$FF, Window_tilemap_draw_active.w	
 	RTS
 	
 loc_0001193C:
-	MOVE.w	#2, $FFFF9902.w
+	MOVE.w	#2, Window_tilemap_x.w
 	MOVE.w	#2, Window_tilemap_y.w
 	MOVE.w	#$001B, Window_width.w
 	MOVE.w	#$0014, Window_height.w
@@ -20053,12 +20053,12 @@ loc_000119AA: ; stats screen?
 	BSR.w	loc_00011458
 	MOVE.w	#$00F4, D0
 	BSR.w	loc_00012CDA
-	CLR.w	$FFFF9914.w
+	CLR.w	Window_draw_row.w
 	MOVE.b	#$FF, Window_tilemap_draw_active.w
 	RTS
 	
 loc_00011AEC:
-	MOVE.w	#2, $FFFF9902.w
+	MOVE.w	#2, Window_tilemap_x.w
 	MOVE.w	#2, Window_tilemap_y.w
 	MOVE.w	#$001A, Window_width.w
 	MOVE.w	#$000C, Window_height.w
@@ -20096,7 +20096,7 @@ loc_00011B64:
 loc_00011B7C:
 	MOVE.w	#$0115, D0
 	BSR.w	loc_00012CF6
-	CLR.w	$FFFF9914.w
+	CLR.w	Window_draw_row.w
 	MOVE.b	#$FF, Window_tilemap_draw_active.w
 	RTS
 	
@@ -20117,7 +20117,7 @@ loc_00011BA4:
 	RTS
 	
 loc_00011BB8:
-	MOVE.w	#$000F, $FFFF9902.w
+	MOVE.w	#$000F, Window_tilemap_x.w
 	MOVE.w	#2, Window_tilemap_y.w
 	MOVE.w	#$0016, Window_width.w
 	MOVE.w	Possessed_equipment_length.w, D0
@@ -20150,7 +20150,7 @@ loc_00011C0E:
 	LEA	Possessed_equipment_list.w, A2
 	MOVE.w	Possessed_equipment_length.w, D7
 	BSR.w	loc_00011C8C
-	CLR.w	$FFFF9914.w
+	CLR.w	Window_draw_row.w
 	MOVE.b	#$FF, Window_tilemap_draw_active.w
 	RTS
 	
@@ -20165,7 +20165,7 @@ loc_00011C4C:
 	LEA	NothingStr, A0	
 	MOVE.w	#$0060, D0	
 	BSR.w	loc_00012CF6	
-	CLR.w	$FFFF9914.w	
+	CLR.w	Window_draw_row.w	
 	MOVE.b	#$FF, Window_tilemap_draw_active.w	
 	RTS
 	
@@ -20191,7 +20191,7 @@ loc_00011CB8:
 	RTS
 	
 loc_00011CC2:
-	MOVE.w	#2, $FFFF9902.w
+	MOVE.w	#2, Window_tilemap_x.w
 	MOVE.w	#2, Window_tilemap_y.w
 	MOVE.w	#$0011, Window_width.w
 	MOVE.w	Possessed_magics_length.w, D0
@@ -20224,7 +20224,7 @@ loc_00011D18:
 	LEA	Possessed_magics_list.w, A2
 	MOVE.w	Possessed_magics_length.w, D7
 	BSR.w	loc_00011C8C
-	CLR.w	$FFFF9914.w
+	CLR.w	Window_draw_row.w
 	MOVE.b	#$FF, Window_tilemap_draw_active.w
 	RTS
 	
@@ -20239,12 +20239,12 @@ loc_00011D56:
 	LEA	NothingStr, A0
 	MOVE.w	#$004C, D0
 	BSR.w	loc_00012CF6
-	CLR.w	$FFFF9914.w
+	CLR.w	Window_draw_row.w
 	MOVE.b	#$FF, Window_tilemap_draw_active.w
 	RTS
 	
 loc_00011D96:
-	MOVE.w	#$000F, $FFFF9902.w
+	MOVE.w	#$000F, Window_tilemap_x.w
 	MOVE.w	#2, Window_tilemap_y.w
 	MOVE.w	#$0016, Window_width.w
 	MOVE.w	Possessed_items_length.w, D0
@@ -20272,7 +20272,7 @@ loc_00011DEC:
 	BSR.w	RenderTextToWindow
 	ADDQ.w	#2, Window_text_y.w
 	DBF	D7, loc_00011DEC
-	CLR.w	$FFFF9914.w
+	CLR.w	Window_draw_row.w
 	MOVE.b	#$FF, Window_tilemap_draw_active.w
 	RTS
 loc_00011E12:
@@ -20286,7 +20286,7 @@ loc_00011E12:
 	LEA	NothingStr, A0	
 	MOVE.w	#$0060, D0	
 	BSR.w	loc_00012CF6	
-	CLR.w	$FFFF9914.w	
+	CLR.w	Window_draw_row.w	
 	MOVE.b	#$FF, Window_tilemap_draw_active.w	
 	RTS
 	
@@ -20301,7 +20301,7 @@ loc_00011E5C:
 loc_00011E62:
 	DBF	D7, loc_00011E5C
 	MOVE.w	D0, Possessed_rings_count.w
-	MOVE.w	#9, $FFFF9902.w
+	MOVE.w	#9, Window_tilemap_x.w
 	MOVE.w	#2, Window_tilemap_y.w
 	MOVE.w	#$0011, Window_width.w
 	TST.w	D0
@@ -20335,7 +20335,7 @@ loc_00011ED0:
 	BSR.w	RenderTextToWindow
 	ADDQ.w	#2, Window_text_y.w
 	DBF	D7, loc_00011ED0
-	CLR.w	$FFFF9914.w
+	CLR.w	Window_draw_row.w
 	MOVE.b	#$FF, Window_tilemap_draw_active.w
 	RTS
 	
@@ -20354,7 +20354,7 @@ loc_00011EF8:
 loc_00011F30:
 	MOVE.w	#$004C, D0	
 	BSR.w	loc_00012CF6	
-	CLR.w	$FFFF9914.w	
+	CLR.w	Window_draw_row.w	
 	MOVE.b	#$FF, Window_tilemap_draw_active.w	
 	RTS
 	
@@ -20392,22 +20392,22 @@ loc_00011F94:
 	LEA	(A6,D0.w), A6
 	BSET.b	#7, $7(A6)
 loc_00011FB4:
-	MOVE.w	#2, $FFFFC220.w
-	MOVE.w	#2, $FFFFC222.w
+	MOVE.w	#2, Window_tilemap_draw_x.w
+	MOVE.w	#2, Window_tilemap_draw_y.w
 	MOVE.w	#$001B, Window_tilemap_draw_width.w
 	MOVE.w	#$0014, Window_tilemap_draw_height.w
 	LEA	$FFFF7AB4, A0
 	BRA.w	DrawWindowRowFromBuffer
 loc_00011FD6:
-	MOVE.w	#2, $FFFFC220.w
-	MOVE.w	#2, $FFFFC222.w
+	MOVE.w	#2, Window_tilemap_draw_x.w
+	MOVE.w	#2, Window_tilemap_draw_y.w
 	MOVE.w	#$001A, Window_tilemap_draw_width.w
 	MOVE.w	#$000C, Window_tilemap_draw_height.w
 	LEA	Full_menu_tiles_buffer, A0
 	BRA.w	DrawWindowRowFromBuffer
 loc_00011FF8:
-	MOVE.w	#$000F, $FFFFC220.w
-	MOVE.w	#2, $FFFFC222.w
+	MOVE.w	#$000F, Window_tilemap_draw_x.w
+	MOVE.w	#2, Window_tilemap_draw_y.w
 	MOVE.w	#$0016, Window_tilemap_draw_width.w
 	MOVE.w	Possessed_equipment_length.w, D0
 	BGT.b	loc_00012014
@@ -20419,8 +20419,8 @@ loc_00012014:
 	LEA	Equipment_list_tiles_buffer.w, A0
 	BRA.w	DrawWindowRowFromBuffer
 loc_00012024:
-	MOVE.w	#2, $FFFFC220.w
-	MOVE.w	#2, $FFFFC222.w
+	MOVE.w	#2, Window_tilemap_draw_x.w
+	MOVE.w	#2, Window_tilemap_draw_y.w
 	MOVE.w	#$0011, Window_tilemap_draw_width.w
 	MOVE.w	Possessed_magics_length.w, D0
 	BGT.b	loc_00012040
@@ -20432,8 +20432,8 @@ loc_00012040:
 	LEA	Magic_list_tiles_buffer.w, A0
 	BRA.w	DrawWindowRowFromBuffer
 loc_00012050:
-	MOVE.w	#$000F, $FFFFC220.w
-	MOVE.w	#2, $FFFFC222.w
+	MOVE.w	#$000F, Window_tilemap_draw_x.w
+	MOVE.w	#2, Window_tilemap_draw_y.w
 	MOVE.w	#$0016, Window_tilemap_draw_width.w
 	MOVE.w	Possessed_items_length.w, D0
 	BGT.b	loc_0001206C
@@ -20445,8 +20445,8 @@ loc_0001206C:
 	LEA	Item_list_right_tiles_buffer.w, A0
 	BRA.w	DrawWindowRowFromBuffer
 loc_0001207C:
-	MOVE.w	#9, $FFFFC220.w
-	MOVE.w	#2, $FFFFC222.w
+	MOVE.w	#9, Window_tilemap_draw_x.w
+	MOVE.w	#2, Window_tilemap_draw_y.w
 	MOVE.w	#$0011, Window_tilemap_draw_width.w
 	MOVE.w	Possessed_rings_count.w, D0
 	BGT.b	loc_00012098
@@ -20458,57 +20458,57 @@ loc_00012098:
 	LEA	Rings_list_tiles_buffer.w, A0
 	BRA.w	DrawWindowRowFromBuffer
 loc_000120A8:
-	MOVE.w	#$000A, $FFFFC220.w	
-	MOVE.w	#$000A, $FFFFC222.w	
+	MOVE.w	#$000A, Window_tilemap_draw_x.w	
+	MOVE.w	#$000A, Window_tilemap_draw_y.w	
 	MOVE.w	#$000E, Window_tilemap_draw_width.w	
 	MOVE.w	#$000A, Window_tilemap_draw_height.w	
 	LEA	Message_speed_menu_tiles_buffer, A0	
 	BRA.w	DrawWindowRowFromBuffer	
 loc_000120CA:
-	MOVE.w	#2, $FFFFC220.w
-	MOVE.w	#2, $FFFFC222.w
+	MOVE.w	#2, Window_tilemap_draw_x.w
+	MOVE.w	#2, Window_tilemap_draw_y.w
 	MOVE.w	#$000D, Window_tilemap_draw_width.w
 	MOVE.w	#$000A, Window_tilemap_draw_height.w
 	LEA	Message_speed_menu_tiles_buffer, A0
 	BRA.w	DrawWindowRowFromBuffer
 loc_000120EC:
-	MOVE.w	#2, $FFFFC220.w
-	MOVE.w	#$000C, $FFFFC222.w
+	MOVE.w	#2, Window_tilemap_draw_x.w
+	MOVE.w	#$000C, Window_tilemap_draw_y.w
 	MOVE.w	#$000D, Window_tilemap_draw_width.w
 	MOVE.w	#6, Window_tilemap_draw_height.w
 	LEA	Item_list_tiles_buffer, A0
 	BRA.w	DrawWindowRowFromBuffer
 loc_0001210E:
-	MOVE.w	#2, $FFFFC220.w
-	MOVE.w	#$000C, $FFFFC222.w
+	MOVE.w	#2, Window_tilemap_draw_x.w
+	MOVE.w	#$000C, Window_tilemap_draw_y.w
 	MOVE.w	#$000D, Window_tilemap_draw_width.w
 	MOVE.w	#8, Window_tilemap_draw_height.w
 	LEA	Item_list_tiles_buffer, A0
 	BRA.w	DrawWindowRowFromBuffer
 loc_00012130:
-	MOVE.w	#2, $FFFFC220.w
-	MOVE.w	#$000C, $FFFFC222.w
+	MOVE.w	#2, Window_tilemap_draw_x.w
+	MOVE.w	#$000C, Window_tilemap_draw_y.w
 	MOVE.w	#7, Window_tilemap_draw_width.w
 	MOVE.w	#8, Window_tilemap_draw_height.w
 	LEA	Status_menu_tiles_buffer.w, A0
 	BRA.w	DrawWindowRowFromBuffer
 loc_00012150:
-	MOVE.w	#2, $FFFFC220.w
-	MOVE.w	#$000C, $FFFFC222.w
+	MOVE.w	#2, Window_tilemap_draw_x.w
+	MOVE.w	#$000C, Window_tilemap_draw_y.w
 	MOVE.w	#$000B, Window_tilemap_draw_width.w
 	MOVE.w	#8, Window_tilemap_draw_height.w
 	LEA	$FFFF7CF4, A0
 	BRA.w	DrawWindowRowFromBuffer
 loc_00012172:
-	MOVE.w	#$000C, $FFFFC220.w	
-	MOVE.w	#4, $FFFFC222.w	
+	MOVE.w	#$000C, Window_tilemap_draw_x.w	
+	MOVE.w	#4, Window_tilemap_draw_y.w	
 	MOVE.w	#9, Window_tilemap_draw_width.w	
 	MOVE.w	#8, Window_tilemap_draw_height.w	
 	LEA	Right_menu_tiles_buffer, A0	
 	BRA.w	DrawWindowRowFromBuffer	
 loc_00012194:
-	MOVE.w	#2, $FFFFC220.w
-	MOVE.w	#$000A, $FFFFC222.w
+	MOVE.w	#2, Window_tilemap_draw_x.w
+	MOVE.w	#$000A, Window_tilemap_draw_y.w
 	MOVE.w	#$0015, Window_tilemap_draw_width.w
 	MOVE.w	#$000A, Window_tilemap_draw_height.w
 	LEA	Status_menu_tiles_buffer.w, A0
@@ -20517,14 +20517,14 @@ DrawWindowRowFromBuffer:
 	MOVE.w	Window_tilemap_draw_height.w, D0
 	SUB.w	Window_text_row.w, D0
 	BLE.w	loc_0001222A
-	ADD.w	D0, $FFFFC222.w
+	ADD.w	D0, Window_tilemap_draw_y.w
 	MOVE.w	Window_tilemap_draw_width.w, D1
 	ADDQ.w	#1, D1
 	MULU.w	D1, D0
 	ADD.w	D0, D0
 	LEA	(A0,D0.w), A0
 	JSR	GetScrollOffsetInTiles
-	ADD.w	$FFFFC222.w, D1
+	ADD.w	Window_tilemap_draw_y.w, D1
 	SUBQ.w	#1, D1
 	ANDI.w	#$003F, D1
 	ASL.w	#7, D1
@@ -20533,7 +20533,7 @@ loc_000121E2:
 	MOVE.w	D2, D4
 	ADD.w	D0, D4
 	MOVE.w	D1, D5
-	ADD.w	$FFFFC220.w, D4
+	ADD.w	Window_tilemap_draw_x.w, D4
 	ANDI.w	#$003F, D4
 	ASL.w	#1, D4
 	ADD.w	D4, D5
@@ -20558,7 +20558,7 @@ loc_0001222A:
 	CLR.b	Window_tilemap_row_draw_pending.w
 loc_0001222E:
 	JSR	GetScrollOffsetInTiles
-	ADD.w	$FFFFC222.w, D1
+	ADD.w	Window_tilemap_draw_y.w, D1
 	ANDI.w	#$003F, D1
 	ASL.w	#7, D1
 	CLR.w	D2
@@ -20566,7 +20566,7 @@ loc_00012240:
 	MOVE.w	D2, D4
 	ADD.w	D0, D4
 	MOVE.w	D1, D5
-	ADD.w	$FFFFC220.w, D4
+	ADD.w	Window_tilemap_draw_x.w, D4
 	ANDI.w	#$003F, D4
 	ASL.w	#1, D4
 	ADD.w	D4, D5
@@ -20583,10 +20583,10 @@ loc_00012240:
 	
 loc_0001227A:
 	LEA	Message_speed_menu_tiles_buffer, A0
-	MOVE.w	#2, $FFFFC224.w
-	MOVE.w	#2, $FFFFC226.w
-	MOVE.w	#$000D, $FFFFC22C.w
-	MOVE.w	#$000A, $FFFFC22E.w
+	MOVE.w	#2, Window_tile_x.w
+	MOVE.w	#2, Window_tile_y.w
+	MOVE.w	#$000D, Window_tile_width.w
+	MOVE.w	#$000A, Window_tile_height.w
 	BSR.w	ReadWindowToBuffer
 	RTS
 	
@@ -20597,110 +20597,110 @@ loc_0001229E:
 	BCLR.b	#7, $7(A6)
 loc_000122AE:
 	LEA	$FFFF7AB4, A0
-	MOVE.w	#4, $FFFFC224.w
-	MOVE.w	#$0013, $FFFFC226.w
-	MOVE.w	#$001F, $FFFFC22C.w
-	MOVE.w	#8, $FFFFC22E.w
+	MOVE.w	#4, Window_tile_x.w
+	MOVE.w	#$0013, Window_tile_y.w
+	MOVE.w	#$001F, Window_tile_width.w
+	MOVE.w	#8, Window_tile_height.w
 	BSR.w	ReadWindowToBuffer
 	RTS
 	
 loc_000122D2:
 	LEA	Prompt_menu_tiles_buffer.w, A0
-	MOVE.w	#5, $FFFFC224.w
-	MOVE.w	#4, $FFFFC226.w
-	MOVE.w	#$000B, $FFFFC22C.w
-	MOVE.w	#2, $FFFFC22E.w
+	MOVE.w	#5, Window_tile_x.w
+	MOVE.w	#4, Window_tile_y.w
+	MOVE.w	#$000B, Window_tile_width.w
+	MOVE.w	#2, Window_tile_height.w
 	BSR.w	ReadWindowToBuffer
 	RTS
 	
 loc_000122F4:
 	LEA	$FFFF7CF4, A0
-	MOVE.w	#$001C, $FFFFC224.w
-	MOVE.w	#$000D, $FFFFC226.w
-	MOVE.w	#6, $FFFFC22C.w
-	MOVE.w	#6, $FFFFC22E.w
+	MOVE.w	#$001C, Window_tile_x.w
+	MOVE.w	#$000D, Window_tile_y.w
+	MOVE.w	#6, Window_tile_width.w
+	MOVE.w	#6, Window_tile_height.w
 	BSR.w	ReadWindowToBuffer
 	RTS
 	
 loc_00012318:
 	LEA	Shop_submenu_tiles_buffer.w, A0
-	MOVE.w	#$000F, $FFFFC224.w
-	MOVE.w	#$000C, $FFFFC226.w
-	MOVE.w	#$0015, $FFFFC22C.w
-	MOVE.w	#7, $FFFFC22E.w
+	MOVE.w	#$000F, Window_tile_x.w
+	MOVE.w	#$000C, Window_tile_y.w
+	MOVE.w	#$0015, Window_tile_width.w
+	MOVE.w	#7, Window_tile_height.w
 	BSR.w	ReadWindowToBuffer
 	RTS
 	
 loc_0001233A:
 	LEA	$FFFF7E52, A0
-	MOVE.w	#$000F, $FFFFC224.w
-	MOVE.w	#2, $FFFFC226.w
-	MOVE.w	#$0015, $FFFFC22C.w
-	MOVE.w	#$0015, $FFFFC22E.w
+	MOVE.w	#$000F, Window_tile_x.w
+	MOVE.w	#2, Window_tile_y.w
+	MOVE.w	#$0015, Window_tile_width.w
+	MOVE.w	#$0015, Window_tile_height.w
 	BSR.w	ReadWindowToBuffer
 	RTS
 	
 loc_0001235E:
 	LEA	Item_list_tiles_buffer, A0
-	MOVE.w	#2, $FFFFC224.w
-	MOVE.w	#$000C, $FFFFC226.w
-	MOVE.w	#$000D, $FFFFC22C.w
-	MOVE.w	#6, $FFFFC22E.w
+	MOVE.w	#2, Window_tile_x.w
+	MOVE.w	#$000C, Window_tile_y.w
+	MOVE.w	#$000D, Window_tile_width.w
+	MOVE.w	#6, Window_tile_height.w
 	BSR.w	ReadWindowToBuffer
 	RTS
 	
 loc_00012382:
 	LEA	Item_list_tiles_buffer, A0
-	MOVE.w	#2, $FFFFC224.w
-	MOVE.w	#$000C, $FFFFC226.w
-	MOVE.w	#$000D, $FFFFC22C.w
-	MOVE.w	#8, $FFFFC22E.w
+	MOVE.w	#2, Window_tile_x.w
+	MOVE.w	#$000C, Window_tile_y.w
+	MOVE.w	#$000D, Window_tile_width.w
+	MOVE.w	#8, Window_tile_height.w
 	BSR.w	ReadWindowToBuffer
 	RTS
 	
 loc_000123A6:
 	LEA	Status_menu_tiles_buffer.w, A0
-	MOVE.w	#2, $FFFFC224.w
-	MOVE.w	#$000C, $FFFFC226.w
-	MOVE.w	#7, $FFFFC22C.w
-	MOVE.w	#8, $FFFFC22E.w
+	MOVE.w	#2, Window_tile_x.w
+	MOVE.w	#$000C, Window_tile_y.w
+	MOVE.w	#7, Window_tile_width.w
+	MOVE.w	#8, Window_tile_height.w
 	BSR.w	ReadWindowToBuffer
 	RTS
 	
 loc_000123C8:
 	LEA	Status_menu_tiles_buffer.w, A0
-	MOVE.w	#2, $FFFFC224.w
-	MOVE.w	#$000A, $FFFFC226.w
-	MOVE.w	#$0015, $FFFFC22C.w
-	MOVE.w	#$000A, $FFFFC22E.w
+	MOVE.w	#2, Window_tile_x.w
+	MOVE.w	#$000A, Window_tile_y.w
+	MOVE.w	#$0015, Window_tile_width.w
+	MOVE.w	#$000A, Window_tile_height.w
 	BSR.w	ReadWindowToBuffer
 	RTS
 	
 loc_000123EA:
 	LEA	Shop_list_tiles_buffer.w, A0
-	MOVE.w	#$000A, $FFFFC224.w
-	MOVE.w	#2, $FFFFC226.w
-	MOVE.w	#$0018, $FFFFC22C.w
-	MOVE.w	#$0011, $FFFFC22E.w
+	MOVE.w	#$000A, Window_tile_x.w
+	MOVE.w	#2, Window_tile_y.w
+	MOVE.w	#$0018, Window_tile_width.w
+	MOVE.w	#$0011, Window_tile_height.w
 	BSR.w	ReadWindowToBuffer
 	RTS
 	
 loc_0001240C:
 	LEA	Status_menu_tiles_buffer.w, A0
-	MOVE.w	#$000A, $FFFFC224.w
-	MOVE.w	#2, $FFFFC226.w
-	MOVE.w	#$0016, $FFFFC22C.w
-	MOVE.w	#$0010, $FFFFC22E.w
+	MOVE.w	#$000A, Window_tile_x.w
+	MOVE.w	#2, Window_tile_y.w
+	MOVE.w	#$0016, Window_tile_width.w
+	MOVE.w	#$0010, Window_tile_height.w
 	BSR.w	ReadWindowToBuffer
 	RTS
 	
 ; SaveLeftMenuTiles
 SaveLeftMenuTiles:
 	LEA	$FFFF862E.w, A0
-	MOVE.w	#0, $FFFFC224.w
-	MOVE.w	#2, $FFFFC226.w
-	MOVE.w	#9, $FFFFC22C.w
-	MOVE.w	#6, $FFFFC22E.w
+	MOVE.w	#0, Window_tile_x.w
+	MOVE.w	#2, Window_tile_y.w
+	MOVE.w	#9, Window_tile_width.w
+	MOVE.w	#6, Window_tile_height.w
 	BSR.w	ReadWindowToBuffer
 	RTS
 	
@@ -20715,97 +20715,97 @@ loc_00012450:
 	BCLR.b	#7, $7(A6)
 loc_00012470:
 	LEA	$FFFF7AB4, A0
-	MOVE.w	#2, $FFFFC224.w
-	MOVE.w	#2, $FFFFC226.w
-	MOVE.w	#$001B, $FFFFC22C.w
-	MOVE.w	#$0014, $FFFFC22E.w
+	MOVE.w	#2, Window_tile_x.w
+	MOVE.w	#2, Window_tile_y.w
+	MOVE.w	#$001B, Window_tile_width.w
+	MOVE.w	#$0014, Window_tile_height.w
 	BSR.w	ReadWindowToBuffer
 	RTS
 	
 loc_00012494:
 	LEA	Full_menu_tiles_buffer, A0
-	MOVE.w	#2, $FFFFC224.w
-	MOVE.w	#2, $FFFFC226.w
-	MOVE.w	#$001A, $FFFFC22C.w
+	MOVE.w	#2, Window_tile_x.w
+	MOVE.w	#2, Window_tile_y.w
+	MOVE.w	#$001A, Window_tile_width.w
 	MOVE.w	#$000C, D0
-	MOVE.w	D0, $FFFFC22E.w
+	MOVE.w	D0, Window_tile_height.w
 	BSR.w	ReadWindowToBuffer
 	RTS
 	
 loc_000124BA:
 	LEA	Equipment_list_tiles_buffer.w, A0
-	MOVE.w	#$000F, $FFFFC224.w
-	MOVE.w	#2, $FFFFC226.w
-	MOVE.w	#$0016, $FFFFC22C.w
+	MOVE.w	#$000F, Window_tile_x.w
+	MOVE.w	#2, Window_tile_y.w
+	MOVE.w	#$0016, Window_tile_width.w
 	MOVE.w	#$0014, D0
-	MOVE.w	D0, $FFFFC22E.w
+	MOVE.w	D0, Window_tile_height.w
 	BSR.w	ReadWindowToBuffer
 	RTS
 	
 loc_000124DE:
 	LEA	Magic_list_tiles_buffer.w, A0
-	MOVE.w	#2, $FFFFC224.w
-	MOVE.w	#2, $FFFFC226.w
-	MOVE.w	#$0011, $FFFFC22C.w
+	MOVE.w	#2, Window_tile_x.w
+	MOVE.w	#2, Window_tile_y.w
+	MOVE.w	#$0011, Window_tile_width.w
 	MOVE.w	#$0014, D0
-	MOVE.w	D0, $FFFFC22E.w
+	MOVE.w	D0, Window_tile_height.w
 	BSR.w	ReadWindowToBuffer
 	RTS
 	
 loc_00012502:
 	LEA	Item_list_right_tiles_buffer.w, A0
-	MOVE.w	#$000F, $FFFFC224.w
-	MOVE.w	#2, $FFFFC226.w
-	MOVE.w	#$0016, $FFFFC22C.w
+	MOVE.w	#$000F, Window_tile_x.w
+	MOVE.w	#2, Window_tile_y.w
+	MOVE.w	#$0016, Window_tile_width.w
 	MOVE.w	#$0014, D0
-	MOVE.w	D0, $FFFFC22E.w
+	MOVE.w	D0, Window_tile_height.w
 	BSR.w	ReadWindowToBuffer
 	RTS
 	
 loc_00012526:
 	LEA	Rings_list_tiles_buffer.w, A0
-	MOVE.w	#9, $FFFFC224.w
-	MOVE.w	#2, $FFFFC226.w
-	MOVE.w	#$0011, $FFFFC22C.w
+	MOVE.w	#9, Window_tile_x.w
+	MOVE.w	#2, Window_tile_y.w
+	MOVE.w	#$0011, Window_tile_width.w
 	MOVE.w	#$0014, D0
-	MOVE.w	D0, $FFFFC22E.w
+	MOVE.w	D0, Window_tile_height.w
 	BSR.w	ReadWindowToBuffer
 	RTS
 	
 loc_0001254A:
 	LEA	Message_speed_menu_tiles_buffer, A0	
-	MOVE.w	#$000A, $FFFFC224.w	
-	MOVE.w	#$000A, $FFFFC226.w	
-	MOVE.w	#$000E, $FFFFC22C.w	
-	MOVE.w	#$000A, $FFFFC22E.w	
+	MOVE.w	#$000A, Window_tile_x.w	
+	MOVE.w	#$000A, Window_tile_y.w	
+	MOVE.w	#$000E, Window_tile_width.w	
+	MOVE.w	#$000A, Window_tile_height.w	
 	BSR.w	ReadWindowToBuffer	
 	RTS
 	
 	
 loc_0001256E:
 	LEA	$FFFF7CF4, A0
-	MOVE.w	#2, $FFFFC224.w
-	MOVE.w	#$000C, $FFFFC226.w
-	MOVE.w	#$000B, $FFFFC22C.w
-	MOVE.w	#8, $FFFFC22E.w
+	MOVE.w	#2, Window_tile_x.w
+	MOVE.w	#$000C, Window_tile_y.w
+	MOVE.w	#$000B, Window_tile_width.w
+	MOVE.w	#8, Window_tile_height.w
 	BSR.w	ReadWindowToBuffer
 	RTS
 	
 loc_00012592:
 	LEA	Right_menu_tiles_buffer, A0
-	MOVE.w	#$000C, $FFFFC224.w
-	MOVE.w	#4, $FFFFC226.w
-	MOVE.w	#9, $FFFFC22C.w
-	MOVE.w	#8, $FFFFC22E.w
+	MOVE.w	#$000C, Window_tile_x.w
+	MOVE.w	#4, Window_tile_y.w
+	MOVE.w	#9, Window_tile_width.w
+	MOVE.w	#8, Window_tile_height.w
 	BSR.w	ReadWindowToBuffer
 	RTS
 	
 loc_000125B6:
 	LEA	Ready_equipment_menu_tiles_buffer, A0
-	MOVE.w	#$000F, $FFFFC224.w
-	MOVE.w	#2, $FFFFC226.w
-	MOVE.w	#$0015, $FFFFC22C.w
-	MOVE.w	#$0012, $FFFFC22E.w
+	MOVE.w	#$000F, Window_tile_x.w
+	MOVE.w	#2, Window_tile_y.w
+	MOVE.w	#$0015, Window_tile_width.w
+	MOVE.w	#$0012, Window_tile_height.w
 	BSR.w	ReadWindowToBuffer
 	RTS
 	
@@ -20827,10 +20827,10 @@ loc_000125E4:
 	MOVE.w	VDP_data_port, (A0)+
 	ANDI	#$F8FF, SR
 	ADDQ.w	#1, D2
-	CMP.w	$FFFFC22C.w, D2
+	CMP.w	Window_tile_width.w, D2
 	BLE.b	loc_000125E4
 	ADDQ.w	#1, D3
-	CMP.w	$FFFFC22E.w, D3
+	CMP.w	Window_tile_height.w, D3
 	BLE.b	loc_000125E2
 	RTS
 	
@@ -20843,10 +20843,10 @@ DrawStatusHudWindow:
 	BSET.b	#7, $7(A6)
 loc_00012620:
 	LEA	$FFFF7AB4, A0
-	MOVE.w	#4, $FFFFC224.w
-	MOVE.w	#$0013, $FFFFC226.w
-	MOVE.w	#$001F, $FFFFC22C.w
-	MOVE.w	#8, $FFFFC22E.w
+	MOVE.w	#4, Window_tile_x.w
+	MOVE.w	#$0013, Window_tile_y.w
+	MOVE.w	#$001F, Window_tile_width.w
+	MOVE.w	#8, Window_tile_height.w
 	BSR.w	DrawWindowFromBuffer
 	TST.b	Player_in_first_person_mode.w
 	BEQ.b	loc_0001264C
@@ -20856,10 +20856,10 @@ loc_0001264C:
 	
 loc_0001264E:
 	LEA	Prompt_menu_tiles_buffer.w, A0
-	MOVE.w	#5, $FFFFC224.w
-	MOVE.w	#4, $FFFFC226.w
-	MOVE.w	#$000B, $FFFFC22C.w
-	MOVE.w	#2, $FFFFC22E.w
+	MOVE.w	#5, Window_tile_x.w
+	MOVE.w	#4, Window_tile_y.w
+	MOVE.w	#$000B, Window_tile_width.w
+	MOVE.w	#2, Window_tile_height.w
 	BSR.w	DrawWindowFromBuffer
 	RTS
 	
@@ -20867,19 +20867,19 @@ loc_0001264E:
 ; Draw left menu window (buffer at $FFFF7CF4, 28x13 at position 6,6)
 DrawLeftMenuWindow:
 	LEA	$FFFF7CF4, A0
-	MOVE.w	#$001C, $FFFFC224.w
-	MOVE.w	#$000D, $FFFFC226.w
-	MOVE.w	#6, $FFFFC22C.w
-	MOVE.w	#6, $FFFFC22E.w
+	MOVE.w	#$001C, Window_tile_x.w
+	MOVE.w	#$000D, Window_tile_y.w
+	MOVE.w	#6, Window_tile_width.w
+	MOVE.w	#6, Window_tile_height.w
 	BSR.w	DrawWindowFromBuffer
 	RTS
 	
 loc_00012694:
 	LEA	Shop_submenu_tiles_buffer.w, A0
-	MOVE.w	#$000F, $FFFFC224.w
-	MOVE.w	#$000C, $FFFFC226.w
-	MOVE.w	#$0015, $FFFFC22C.w
-	MOVE.w	#7, $FFFFC22E.w
+	MOVE.w	#$000F, Window_tile_x.w
+	MOVE.w	#$000C, Window_tile_y.w
+	MOVE.w	#$0015, Window_tile_width.w
+	MOVE.w	#7, Window_tile_height.w
 	BSR.w	DrawWindowFromBuffer
 	RTS
 	
@@ -20887,55 +20887,55 @@ loc_00012694:
 ; Draw center menu window (buffer at $FFFF7E52, 21x21 at position 15,2)
 DrawCenterMenuWindow:
 	LEA	$FFFF7E52, A0
-	MOVE.w	#$000F, $FFFFC224.w
-	MOVE.w	#2, $FFFFC226.w
-	MOVE.w	#$0015, $FFFFC22C.w
-	MOVE.w	#$0015, $FFFFC22E.w
+	MOVE.w	#$000F, Window_tile_x.w
+	MOVE.w	#2, Window_tile_y.w
+	MOVE.w	#$0015, Window_tile_width.w
+	MOVE.w	#$0015, Window_tile_height.w
 	BSR.w	DrawWindowFromBuffer
 	RTS
 	
 loc_000126DA:
 	LEA	Shop_list_tiles_buffer.w, A0
-	MOVE.w	#$000A, $FFFFC224.w
-	MOVE.w	#2, $FFFFC226.w
-	MOVE.w	#$0018, $FFFFC22C.w
-	MOVE.w	#$0011, $FFFFC22E.w
+	MOVE.w	#$000A, Window_tile_x.w
+	MOVE.w	#2, Window_tile_y.w
+	MOVE.w	#$0018, Window_tile_width.w
+	MOVE.w	#$0011, Window_tile_height.w
 	BSR.w	DrawWindowFromBuffer
 	RTS
 	
 loc_000126FC:
 	LEA	Status_menu_tiles_buffer.w, A0
-	MOVE.w	#$000A, $FFFFC224.w
-	MOVE.w	#2, $FFFFC226.w
-	MOVE.w	#$0016, $FFFFC22C.w
-	MOVE.w	#$0010, $FFFFC22E.w
+	MOVE.w	#$000A, Window_tile_x.w
+	MOVE.w	#2, Window_tile_y.w
+	MOVE.w	#$0016, Window_tile_width.w
+	MOVE.w	#$0010, Window_tile_height.w
 	BSR.w	DrawWindowFromBuffer
 	RTS
 	
 loc_0001271E:
 	LEA	Right_menu_tiles_buffer, A0
-	MOVE.w	#$000C, $FFFFC224.w
-	MOVE.w	#4, $FFFFC226.w
-	MOVE.w	#9, $FFFFC22C.w
-	MOVE.w	#8, $FFFFC22E.w
+	MOVE.w	#$000C, Window_tile_x.w
+	MOVE.w	#4, Window_tile_y.w
+	MOVE.w	#9, Window_tile_width.w
+	MOVE.w	#8, Window_tile_height.w
 	BSR.w	DrawWindowFromBuffer
 	RTS
 	
 loc_00012742:
 	LEA	Ready_equipment_menu_tiles_buffer, A0
-	MOVE.w	#$000F, $FFFFC224.w
-	MOVE.w	#2, $FFFFC226.w
-	MOVE.w	#$0015, $FFFFC22C.w
-	MOVE.w	#$0012, $FFFFC22E.w
+	MOVE.w	#$000F, Window_tile_x.w
+	MOVE.w	#2, Window_tile_y.w
+	MOVE.w	#$0015, Window_tile_width.w
+	MOVE.w	#$0012, Window_tile_height.w
 	BSR.w	DrawWindowFromBuffer
 	RTS
 	
 loc_00012766:
 	LEA	$FFFF862E.w, A0
-	MOVE.w	#0, $FFFFC224.w
-	MOVE.w	#2, $FFFFC226.w
-	MOVE.w	#9, $FFFFC22C.w
-	MOVE.w	#6, $FFFFC22E.w
+	MOVE.w	#0, Window_tile_x.w
+	MOVE.w	#2, Window_tile_y.w
+	MOVE.w	#9, Window_tile_width.w
+	MOVE.w	#6, Window_tile_height.w
 	BSR.w	DrawWindowFromBuffer
 	RTS
 	
@@ -20957,10 +20957,10 @@ loc_00012792:
 	MOVE.w	(A0)+, VDP_data_port
 	ANDI	#$F8FF, SR
 	ADDQ.w	#1, D2
-	CMP.w	$FFFFC22C.w, D2
+	CMP.w	Window_tile_width.w, D2
 	BLE.b	loc_00012792
 	ADDQ.w	#1, D3
-	CMP.w	$FFFFC22E.w, D3
+	CMP.w	Window_tile_height.w, D3
 	BLE.b	loc_00012790
 	RTS
 	
@@ -20969,8 +20969,8 @@ loc_000127C2:
 	MOVE.w	D3, D5
 	ADD.w	D0, D4
 	ADD.w	D1, D5
-	ADD.w	$FFFFC224.w, D4
-	ADD.w	$FFFFC226.w, D5
+	ADD.w	Window_tile_x.w, D4
+	ADD.w	Window_tile_y.w, D5
 	ANDI.w	#$003F, D4
 	ANDI.w	#$003F, D5
 	ASL.w	#1, D4
@@ -21160,8 +21160,8 @@ loc_00012A78:
 	RTS
 	
 loc_00012A7A:
-	MOVE.w	#$0011, $FFFFC220.w
-	MOVE.w	#4, $FFFFC222.w
+	MOVE.w	#$0011, Window_tilemap_draw_x.w
+	MOVE.w	#4, Window_tilemap_draw_y.w
 	LEA	Possessed_items_list.w, A2
 	LEA	ItemNames, A1
 	MOVE.w	Possessed_items_length.w, D7
@@ -21169,28 +21169,28 @@ loc_00012A7A:
 	RTS
 	
 loc_00012A9A:
-	MOVE.w	#$0011, $FFFFC220.w
-	MOVE.w	#4, $FFFFC222.w
+	MOVE.w	#$0011, Window_tilemap_draw_x.w
+	MOVE.w	#4, Window_tilemap_draw_y.w
 	LEA	Possessed_magics_list.w, A2
 	LEA	MagicNames, A1
 	MOVE.w	Possessed_magics_length.w, D7
 	BSR.w	loc_00012B5C
-	MOVE.w	#$0021, $FFFFC220.w
-	MOVE.w	#4, $FFFFC222.w
+	MOVE.w	#$0021, Window_tilemap_draw_x.w
+	MOVE.w	#4, Window_tilemap_draw_y.w
 	LEA	Possessed_magics_list.w, A2
 	MOVE.w	Possessed_magics_length.w, D7
 	BSR.w	loc_00012C3E
 	RTS
 	
 loc_00012AD2:
-	MOVE.w	#$0011, $FFFFC220.w
-	MOVE.w	#4, $FFFFC222.w
+	MOVE.w	#$0011, Window_tilemap_draw_x.w
+	MOVE.w	#4, Window_tilemap_draw_y.w
 	LEA	Possessed_equipment_list.w, A2
 	LEA	EquipmentNames, A1
 	MOVE.w	Possessed_equipment_length.w, D7
 	BSR.w	loc_00012B5C
-	MOVE.w	#$0023, $FFFFC220.w
-	MOVE.w	#4, $FFFFC222.w
+	MOVE.w	#$0023, Window_tilemap_draw_x.w
+	MOVE.w	#4, Window_tilemap_draw_y.w
 	LEA	Possessed_equipment_list.w, A2
 	MOVE.w	Possessed_equipment_length.w, D7
 	BSR.w	loc_00012C3E
@@ -21204,14 +21204,14 @@ loc_00012B0A:
 	MOVE.w	#$FFFF, Menu_cursor_last_index.w
 	MOVE.w	#$0010, Menu_cursor_base_x.w
 	MOVE.w	#4, Menu_cursor_base_y.w
-	MOVE.w	#$0011, $FFFFC220.w
-	MOVE.w	#4, $FFFFC222.w
+	MOVE.w	#$0011, Window_tilemap_draw_x.w
+	MOVE.w	#4, Window_tilemap_draw_y.w
 	LEA	Ready_equipment_list.w, A2
 	LEA	EquipmentNames, A1
 	BSR.w	loc_00012B5C
 	MOVE.w	Ready_equipment_list_length.w, D7
-	MOVE.w	#$0023, $FFFFC220.w
-	MOVE.w	#4, $FFFFC222.w
+	MOVE.w	#$0023, Window_tilemap_draw_x.w
+	MOVE.w	#4, Window_tilemap_draw_y.w
 	LEA	Ready_equipment_list.w, A2
 	BSR.w	loc_00012C3E
 	RTS
@@ -21230,8 +21230,8 @@ loc_00012B70:
 	JSR	GetScrollOffsetInTiles
 	ADD.w	D2, D0
 	ADD.w	D3, D1
-	ADD.w	$FFFFC220.w, D0
-	ADD.w	$FFFFC222.w, D1
+	ADD.w	Window_tilemap_draw_x.w, D0
+	ADD.w	Window_tilemap_draw_y.w, D1
 	ANDI.w	#$003F, D0
 	ANDI.w	#$003F, D1
 	ASL.w	#1, D0
@@ -21274,8 +21274,8 @@ loc_00012BE6:
 	MOVE.w	D3, D5	
 	ADD.w	D0, D4	
 	ADD.w	D1, D5	
-	ADD.w	$FFFFC220.w, D4	
-	ADD.w	$FFFFC222.w, D5	
+	ADD.w	Window_tilemap_draw_x.w, D4	
+	ADD.w	Window_tilemap_draw_y.w, D5	
 	SUBQ.w	#1, D4	
 	SUBQ.w	#1, D5	
 	ANDI.w	#$003F, D4	
@@ -21303,8 +21303,8 @@ loc_00012C42:
 	JSR	GetScrollOffsetInTiles
 	ADD.w	D2, D0
 	ADD.w	D3, D1
-	ADD.w	$FFFFC220.w, D0
-	ADD.w	$FFFFC222.w, D1
+	ADD.w	Window_tilemap_draw_x.w, D0
+	ADD.w	Window_tilemap_draw_y.w, D1
 	ANDI.w	#$003F, D0
 	ANDI.w	#$003F, D1
 	ASL.w	#1, D0
@@ -21422,7 +21422,7 @@ loc_00012D5A:
 	MOVE.w	D3, D5
 	ADD.w	D0, D4
 	ADD.w	D1, D5
-	ADD.w	$FFFF9902.w, D4
+	ADD.w	Window_tilemap_x.w, D4
 	ADD.w	Window_tilemap_y.w, D5
 	ANDI.w	#$003F, D4
 	ANDI.w	#$003F, D5
@@ -21451,7 +21451,7 @@ loc_00012D5A:
 loc_00012DB8:
 	LEA	$FFFF9920.w, A0
 	MOVE.w	Window_width.w, D2
-	MOVE.w	$FFFF9914.w, D0
+	MOVE.w	Window_draw_row.w, D0
 	CMP.w	Window_height.w, D0
 	BGE.w	loc_00012E20
 	ADDQ.w	#1, D2
@@ -21459,7 +21459,7 @@ loc_00012DB8:
 	LEA	(A0,D0.w), A0
 	JSR	GetScrollOffsetInTiles
 	ADD.w	Window_tilemap_y.w, D1
-	ADD.w	$FFFF9914.w, D1
+	ADD.w	Window_draw_row.w, D1
 	ANDI.w	#$003F, D1
 	ASL.w	#7, D1
 	BSR.w	loc_00012E26
@@ -21471,12 +21471,12 @@ loc_00012DB8:
 	LEA	(A0,D0.w), A0
 	JSR	GetScrollOffsetInTiles
 	ADD.w	Window_tilemap_y.w, D1
-	ADD.w	$FFFF9914.w, D1
+	ADD.w	Window_draw_row.w, D1
 	ADDQ.w	#1, D1
 	ANDI.w	#$003F, D1
 	ASL.w	#7, D1
 	BSR.w	loc_00012E26
-	ADDQ.w	#1, $FFFF9914.w
+	ADDQ.w	#1, Window_draw_row.w
 	RTS
 
 loc_00012E20:
@@ -21489,7 +21489,7 @@ loc_00012E28:
 	MOVE.w	D2, D4
 	ADD.w	D0, D4
 	MOVE.w	D1, D5
-	ADD.w	$FFFF9902.w, D4
+	ADD.w	Window_tilemap_x.w, D4
 	ANDI.w	#$003F, D4
 	ASL.w	#1, D4
 	ADD.w	D4, D5
@@ -21748,7 +21748,7 @@ LoadPalettesFromTable:
 	TST.b	Fade_in_lines_mask.w
 	BNE.w	loc_000132AA
 	LEA	Palette_line_0_buffer.w, A1
-	LEA	$FFFFC080.w, A0
+	LEA	Palette_line_0_index.w, A0
 	LEA	loc_00013876, A2
 	MOVEQ	#3, D2
 loc_00013286:
@@ -21847,7 +21847,7 @@ loc_000133AA:
 loc_000133B2:
 	CLR.b	Fade_out_lines_mask.w
 	CLR.w	Palette_fade_step_counter.w
-	LEA	$FFFFC080.w, A0
+	LEA	Palette_line_0_index.w, A0
 	MOVE.l	#0, (A0)+
 	MOVE.l	#0, (A0)+
 	stopZ80
@@ -21969,11 +21969,11 @@ loc_0001357C:
 	MOVE.b	Fade_in_lines_mask.w, D3
 	BTST.l	#0, D3
 	BEQ.b	loc_0001358C
-	MOVE.w	Palette_line_0_fade_target.w, $FFFFC080.w
+	MOVE.w	Palette_line_0_fade_target.w, Palette_line_0_index.w
 loc_0001358C:
 	BTST.l	#1, D3
 	BEQ.b	loc_00013598
-	MOVE.w	Palette_line_1_fade_target.w, $FFFFC082.w
+	MOVE.w	Palette_line_1_fade_target.w, Palette_line_1_index.w
 loc_00013598:
 	BTST.l	#2, D3
 	BEQ.b	loc_000135A4
@@ -21981,7 +21981,7 @@ loc_00013598:
 loc_000135A4:
 	BTST.l	#3, D3
 	BEQ.b	loc_000135B0
-	MOVE.w	Palette_line_3_fade_target.w, $FFFFC086.w
+	MOVE.w	Palette_line_3_fade_target.w, Palette_line_3_index.w
 loc_000135B0:
 	CLR.b	Fade_in_lines_mask.w
 	CLR.w	Palette_fade_in_step.w
@@ -22026,7 +22026,7 @@ loc_0001362C:
 	BSR.w	loc_00013756
 	BRA.b	loc_00013670
 loc_00013668:
-	MOVE.w	$FFFFC080.w, D1
+	MOVE.w	Palette_line_0_index.w, D1
 	BSR.w	loc_00013738
 loc_00013670:
 	LEA	Palette_line_1_buffer.w, A1
@@ -22036,7 +22036,7 @@ loc_00013670:
 	BSR.w	loc_00013756
 	BRA.b	loc_0001368C
 loc_00013684:
-	MOVE.w	$FFFFC082.w, D1
+	MOVE.w	Palette_line_1_index.w, D1
 	BSR.w	loc_00013738
 loc_0001368C:
 	LEA	Palette_line_2_buffer.w, A1
@@ -22056,7 +22056,7 @@ loc_000136A8:
 	BSR.w	loc_00013756
 	BRA.b	loc_000136C4
 loc_000136BC:
-	MOVE.w	$FFFFC086.w, D1
+	MOVE.w	Palette_line_3_index.w, D1
 	BSR.w	loc_00013738
 loc_000136C4:
 	MOVE.w	#$0100, Z80_bus_request
@@ -22149,11 +22149,11 @@ loc_000137C6:
 	MOVE.b	Palette_fade_in_mask.w, D3
 	BTST.l	#0, D3
 	BEQ.b	loc_000137D6
-	MOVE.w	Palette_line_0_fade_in_target.w, $FFFFC080.w
+	MOVE.w	Palette_line_0_fade_in_target.w, Palette_line_0_index.w
 loc_000137D6:
 	BTST.l	#1, D3
 	BEQ.b	loc_000137E2
-	MOVE.w	Palette_line_1_fade_in_target.w, $FFFFC082.w
+	MOVE.w	Palette_line_1_fade_in_target.w, Palette_line_1_index.w
 loc_000137E2:
 	BTST.l	#2, D3
 	BEQ.b	loc_000137EE
@@ -22161,7 +22161,7 @@ loc_000137E2:
 loc_000137EE:
 	BTST.l	#3, D3
 	BEQ.b	loc_000137FA
-	MOVE.w	Palette_line_3_fade_in_target.w, $FFFFC086.w
+	MOVE.w	Palette_line_3_fade_in_target.w, Palette_line_3_index.w
 loc_000137FA:
 	CLR.b	Palette_fade_in_mask.w
 	CLR.w	Palette_fade_in_step_counter.w
@@ -22794,7 +22794,7 @@ loc_00015640:
 	DBF	D7, loc_00015636
 	ANDI	#$F8FF, SR
 	JSR	EnableDisplay
-	MOVE.w	#1, $FFFFC080.w
+	MOVE.w	#1, Palette_line_0_index.w
 	MOVE.l	#loc_00015682, $2(A5)
 	JSR	LoadPalettesFromTable
 	RTS
@@ -22810,12 +22810,12 @@ loc_0001569C:
 	ANDI.w	#3, Frame_delay_counter.w	
 	BNE.b	loc_000156BE	
 loc_000156A4:
-	CMPI.w	#$0010, $FFFFC080.w
+	CMPI.w	#$0010, Palette_line_0_index.w
 	BLT.b	loc_000156B4
 	MOVE.b	#$FF, Intro_animation_done.w
 	BRA.b	loc_000156B8
 loc_000156B4:
-	ADDQ.w	#1, $FFFFC080.w
+	ADDQ.w	#1, Palette_line_0_index.w
 loc_000156B8:
 	JSR	LoadPalettesFromTable
 loc_000156BE:
@@ -23637,7 +23637,7 @@ loc_000162C6:
 loc_000162CA:
 	ASL.w	#3, D0
 	LEA	(A0,D0.w), A0
-	MOVE.w	(A0), $FFFFC082.w
+	MOVE.w	(A0), Palette_line_1_index.w
 	MOVE.w	(A0)+, Palette_line_1_index_saved.w
 	MOVE.w	(A0), Palette_line_2_index.w
 	MOVE.w	(A0)+, Palette_line_2_cycle_base.w
@@ -23661,8 +23661,8 @@ loc_000162F6:
 	LEA	loc_00016810, A0
 	MOVE.w	Current_town.w, D0
 	ADD.w	D0, D0
-	MOVE.w	(A0,D0.w), $FFFFC082.w
-	MOVE.w	$FFFFC082.w, Palette_line_1_index_saved.w
+	MOVE.w	(A0,D0.w), Palette_line_1_index.w
+	MOVE.w	Palette_line_1_index.w, Palette_line_1_index_saved.w
 	RTS
 
 loc_00016328:
@@ -24257,11 +24257,11 @@ loc_000169D0:
 	BSR.w	loc_00016C92
 	BSR.w	loc_00016CD2
 	MOVE.l	#loc_00016A8C, $2(A5)
-	MOVE.w	#0, $FFFFC080.w
-	MOVE.w	#$0029, $FFFFC082.w
+	MOVE.w	#0, Palette_line_0_index.w
+	MOVE.w	#$0029, Palette_line_1_index.w
 	MOVE.w	#0, Palette_line_2_index.w
 	CLR.w	Intro_animation_frame.w
-	MOVE.w	#$0027, $FFFFC086.w
+	MOVE.w	#$0027, Palette_line_3_index.w
 	MOVE.w	VDP_Reg11_cache.w, D0
 	ORI.w	#3, D0
 	MOVE.w	D0, VDP_control_port
@@ -24322,7 +24322,7 @@ loc_00016AB8:
 	BGE.b	loc_00016AEC
 	MOVE.w	#$0089, Intro_animation_frame.w
 loc_00016AEC:
-	MOVE.w	Intro_animation_frame.w, $FFFFC080.w
+	MOVE.w	Intro_animation_frame.w, Palette_line_0_index.w
 	JSR	LoadPalettesFromTable
 loc_00016AF8:
 	ADDQ.w	#1, Intro_animation_frame.w
@@ -24356,18 +24356,18 @@ loc_00016B3E:
 	BEQ.b	loc_00016B6E
 	BTST.l	#0, D2
 	BEQ.b	loc_00016B5C
-	MOVE.w	#$0030, $FFFFC080.w
-	MOVE.w	#$0027, $FFFFC086.w
+	MOVE.w	#$0030, Palette_line_0_index.w
+	MOVE.w	#$0027, Palette_line_3_index.w
 	ADDQ.w	#1, Intro_animation_frame.w
 	BRA.b	loc_00016B82
 loc_00016B5C:
-	MOVE.w	#$0084, $FFFFC080.w
-	MOVE.w	#$0029, $FFFFC086.w
+	MOVE.w	#$0084, Palette_line_0_index.w
+	MOVE.w	#$0029, Palette_line_3_index.w
 	ADDQ.w	#1, Intro_animation_frame.w
 	BRA.b	loc_00016B82
 loc_00016B6E:
-	MOVE.w	#$0030, $FFFFC080.w
-	MOVE.w	#$0027, $FFFFC086.w
+	MOVE.w	#$0030, Palette_line_0_index.w
+	MOVE.w	#$0027, Palette_line_3_index.w
 	MOVE.l	#loc_00016B8A, $2(A5)
 loc_00016B82:
 	JSR	LoadPalettesFromTable
@@ -24382,13 +24382,13 @@ loc_00016B8A:
 	BNE.b	loc_00016BAE
 	CLR.b	Intro_text_pending.w
 	BSR.w	loc_00016F3C
-	MOVE.w	#$0031, $FFFFC080.w
+	MOVE.w	#$0031, Palette_line_0_index.w
 	JSR	LoadPalettesFromTable
 loc_00016BAE:
 	RTS
 
 loc_00016BB0:
-	MOVE.w	#$0029, $FFFFC082.w
+	MOVE.w	#$0029, Palette_line_1_index.w
 	LEA	loc_00062782, A0
 	BSR.w	loc_00016D94
 	MOVE.w	#$00FF, Prologue_state.w
@@ -24781,10 +24781,10 @@ loc_00017134:
 	BSR.w	loc_0001756A
 	BSR.w	loc_0001760A
 	MOVE.b	#6, Fade_in_lines_mask.w
-	MOVE.w	#$0094, $FFFFC080.w
+	MOVE.w	#$0094, Palette_line_0_index.w
 	MOVE.w	#$0092, Palette_line_1_fade_target.w
 	MOVE.w	#$0028, Palette_line_2_fade_target.w
-	MOVE.w	#$0096, $FFFFC086.w
+	MOVE.w	#$0096, Palette_line_3_index.w
 	ADDQ.w	#1, Ending_sequence_step.w
 	MOVE.w	#$009C, D0
 	JSR	QueueSoundEffect
@@ -24922,8 +24922,8 @@ loc_0001733A:
 	MOVE.b	#$FF, Boss_max_hp.w
 	MOVE.w	#$0099, D0
 	JSR	QueueSoundEffect
-	MOVE.w	#$0012, $FFFFC080.w
-	MOVE.w	#$0093, $FFFFC082.w
+	MOVE.w	#$0012, Palette_line_0_index.w
+	MOVE.w	#$0093, Palette_line_1_index.w
 	JSR	LoadPalettesFromTable
 	LEA	Ending_player_name_buffer.w, A0
 	MOVE.w	#5, D7
@@ -25190,10 +25190,10 @@ loc_000176F8:
 	EOR.w	D1, D0
 	BTST.l	#3, D0
 	BEQ.b	loc_00017724
-	ADDQ.w	#1, $FFFFC086.w
-	CMPI.w	#$009D, $FFFFC086.w
+	ADDQ.w	#1, Palette_line_3_index.w
+	CMPI.w	#$009D, Palette_line_3_index.w
 	BLE.b	loc_0001771E
-	MOVE.w	#$0096, $FFFFC086.w
+	MOVE.w	#$0096, Palette_line_3_index.w
 loc_0001771E:
 	JSR	LoadPalettesFromTable
 loc_00017724:
@@ -30806,10 +30806,10 @@ loc_0001C920:
 loc_0001C92A:
 	PRINT 	BetterMorningStr
 loc_0001C932:
-	MOVE.w	#$0012, $FFFFC080.w
-	MOVE.w	Palette_line_1_index_saved.w, $FFFFC082.w
+	MOVE.w	#$0012, Palette_line_0_index.w
+	MOVE.w	Palette_line_1_index_saved.w, Palette_line_1_index.w
 	MOVE.w	Palette_line_2_cycle_base.w, Palette_line_2_index.w
-	MOVE.w	#$0011, $FFFFC086.w
+	MOVE.w	#$0011, Palette_line_3_index.w
 	JSR	LoadPalettesFromTable
 	JSR	ResetScriptAndInitDialogue
 	MOVE.w	#$1B, Dialogue_state.w
