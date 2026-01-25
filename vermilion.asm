@@ -20883,7 +20883,9 @@ loc_00012694:
 	BSR.w	DrawWindowFromBuffer
 	RTS
 	
-loc_000126B6:
+; DrawCenterMenuWindow
+; Draw center menu window (buffer at $FFFF7E52, 21x21 at position 15,2)
+DrawCenterMenuWindow:
 	LEA	$FFFF7E52, A0
 	MOVE.w	#$000F, $FFFFC224.w
 	MOVE.w	#2, $FFFFC226.w
@@ -25674,7 +25676,7 @@ loc_000180DE:
 	BEQ.b	loc_0001810A
 	MOVE.w	#$00A8, D0	
 	JSR	QueueSoundEffect	
-	JSR	loc_000126B6	
+	JSR	DrawCenterMenuWindow	
 	JSR	DrawStatusHudWindow	
 	MOVE.w	#1, $FFFFC424.w	
 	BRA.w	loc_0001162E	
@@ -25710,7 +25712,7 @@ loc_00018158:
 	TST.w	Dialog_selection.w
 	BEQ.w	loc_000181C6
 	JSR	DrawLeftMenuWindow	
-	JSR	loc_000126B6	
+	JSR	DrawCenterMenuWindow	
 	JSR	DrawStatusHudWindow	
 	MOVE.w	#1, $FFFFC424.w	
 	JSR	loc_0001162E	
@@ -25734,7 +25736,7 @@ loc_000181C6:
 	MOVE.w	#$FFFF, Readied_magic.w
 loc_000181DC:
 	JSR	DrawLeftMenuWindow
-	JSR	loc_000126B6
+	JSR	DrawCenterMenuWindow
 	JSR	ResetScriptAndInitDialogue
 	JSR	CopyPlayerNameToTextBuffer
 	LEA	DiscardsTheStr, A0
@@ -25789,7 +25791,7 @@ loc_000182A4:
 	BEQ.b	loc_000182D0
 	MOVE.w	#$00A8, D0
 	JSR	QueueSoundEffect
-	JSR	loc_000126B6
+	JSR	DrawCenterMenuWindow
 	JSR	DrawStatusHudWindow
 	MOVE.w	#1, $FFFFC424.w
 	BRA.w	loc_0001162E
@@ -25825,7 +25827,7 @@ loc_0001831E:
 	TST.w	Dialog_selection.w
 	BEQ.b	loc_00018388
 	JSR	DrawLeftMenuWindow	
-	JSR	loc_000126B6	
+	JSR	DrawCenterMenuWindow	
 	JSR	DrawStatusHudWindow	
 	MOVE.w	#1, $FFFFC424.w	
 	JSR	loc_0001162E	
@@ -25841,7 +25843,7 @@ loc_00018368:
 	dc.b	$4E, $75 
 loc_00018388:
 	JSR	DrawLeftMenuWindow
-	JSR	loc_000126B6
+	JSR	DrawCenterMenuWindow
 	JSR	ResetScriptAndInitDialogue
 	LEA	Possessed_magics_list.w, A0
 	MOVE.w	Magic_list_cursor_index.w, D0
@@ -25918,7 +25920,7 @@ loc_00018498:
 	BEQ.b	loc_000184C2
 	MOVE.w	#$00A8, D0
 	JSR	QueueSoundEffect
-	BSR.w	loc_000126B6
+	BSR.w	DrawCenterMenuWindow
 	BSR.w	DrawStatusHudWindow
 	MOVE.w	#1, $FFFFC424.w
 	BRA.w	loc_0001162E
@@ -25931,7 +25933,7 @@ loc_000184C2:
 	JSR	DrawMenuCursor
 	MOVE.w	#$00A1, D0
 	JSR	QueueSoundEffect
-	JSR	loc_000126B6
+	JSR	DrawCenterMenuWindow
 	LEA	Possessed_magics_list.w, A0
 	MOVE.w	Magic_list_cursor_index.w, D0
 	ADD.w	D0, D0
@@ -28223,7 +28225,7 @@ loc_0001A4AC:
 	BEQ.b	loc_0001A4DC
 	MOVE.w	#$00A8, D0
 	JSR	QueueSoundEffect
-	JSR	loc_000126B6
+	JSR	DrawCenterMenuWindow
 	JSR	DrawStatusHudWindow
 	MOVE.w	#1, Item_menu_state.w
 	JSR	loc_00011614
@@ -28261,7 +28263,7 @@ loc_0001A52C:
 	TST.w	Dialog_selection.w
 	BEQ.b	loc_0001A59C
 	JSR	DrawLeftMenuWindow
-	JSR	loc_000126B6
+	JSR	DrawCenterMenuWindow
 	JSR	DrawStatusHudWindow
 	MOVE.w	#1, Item_menu_state.w
 	JSR	loc_00011614
@@ -28279,7 +28281,7 @@ loc_0001A576:
 	
 loc_0001A59C:
 	JSR	DrawLeftMenuWindow
-	JSR	loc_000126B6
+	JSR	DrawCenterMenuWindow
 	JSR	ResetScriptAndInitDialogue
 	LEA	ItemNames, A0
 	LEA	Possessed_items_list.w, A2
@@ -28369,7 +28371,7 @@ loc_0001A6D2:
 	BEQ.b	loc_0001A702
 	MOVE.w	#$00A8, D0
 	JSR	QueueSoundEffect
-	JSR	loc_000126B6
+	JSR	DrawCenterMenuWindow
 	JSR	DrawStatusHudWindow
 	MOVE.w	#1, Item_menu_state.w
 	JSR	loc_00011614
@@ -28383,7 +28385,7 @@ loc_0001A702:
 	JSR	DrawMenuCursor
 	MOVE.w	#$00A1, D0
 	JSR	QueueSoundEffect
-	JSR	loc_000126B6
+	JSR	DrawCenterMenuWindow
 	JSR	ResetScriptAndInitDialogue
 	JSR	CopyPlayerNameToTextBuffer
 	LEA	UsesTheStr, A0
@@ -30322,7 +30324,7 @@ loc_0001C27C:
 	MOVE.w	#BUTTON_BIT_B, D2
 	JSR	CheckButtonPress
 	BEQ.b	loc_0001C2AA
-	JSR	loc_000126B6
+	JSR	DrawCenterMenuWindow
 	JSR	loc_00012766
 	JSR	loc_00011012
 	MOVE.w	#7, Dialogue_state.w
@@ -30377,7 +30379,7 @@ loc_0001C344:
 	LEA	loc_00025FE0, A0
 	MOVE.l	(A0,D0.w), Script_source_base.w
 loc_0001C358:
-	JSR	loc_000126B6
+	JSR	DrawCenterMenuWindow
 	JSR	ResetScriptAndInitDialogue
 	MOVE.w	#$12, Dialogue_state.w
 	RTS
@@ -30462,7 +30464,7 @@ loc_0001C474:
 	MOVE.w	#8, D2
 	JSR	loc_0000FB8C
 	JSR	DrawLeftMenuWindow
-	JSR	loc_000126B6
+	JSR	DrawCenterMenuWindow
 	JSR	ResetScriptAndInitDialogue
 	MOVE.w	Current_shop_type.w, D0
 	ADD.w	D0, D0
@@ -33081,7 +33083,7 @@ loc_0001E862:
 	BEQ.w	loc_0001E896
 	MOVE.w	#$00A8, D0
 	JSR	QueueSoundEffect
-	JSR	loc_000126B6
+	JSR	DrawCenterMenuWindow
 	JSR	ResetScriptAndInitDialogue
 	PRINT 	CantCarryMoreStr
 	MOVE.w	#5, Take_item_state.w
@@ -33129,7 +33131,7 @@ loc_0001E910:
 	
 loc_0001E936: ; Discard item
 	JSR	DrawLeftMenuWindow
-	JSR	loc_000126B6
+	JSR	DrawCenterMenuWindow
 	JSR	ResetScriptAndInitDialogue
 	MOVEA.l	Active_inventory_list_ptr.w, A2
 	MOVE.w	Selected_item_index.w, D0
