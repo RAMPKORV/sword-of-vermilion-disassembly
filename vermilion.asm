@@ -1461,7 +1461,7 @@ loc_00001D7E:
 	RTS
 
 loc_00001D98:
-	JSR	loc_0001096A
+	JSR	ProcessScriptText
 	RTS
 
 loc_00001DA0:
@@ -1561,7 +1561,7 @@ loc_00001EE6:
 	BEQ.b	loc_00001EFE
 	JSR	InitDialogueWindow
 loc_00001EF8:
-	JSR	loc_0001096A
+	JSR	ProcessScriptText
 loc_00001EFE:
 	RTS
 
@@ -1963,7 +1963,7 @@ loc_00002518:
 	RTS
 
 loc_0000253A:
-	JSR	loc_0001096A
+	JSR	ProcessScriptText
 	RTS
 
 loc_00002542:
@@ -2588,7 +2588,7 @@ loc_00002D92:
 	MOVE.w	#$13, Gameplay_substate.w
 	CLR.b	Player_input_blocked.w
 loc_00002DA2:
-	JSR	loc_0001096A
+	JSR	ProcessScriptText
 loc_00002DA8:
 	RTS
 
@@ -13163,7 +13163,7 @@ loc_0000BF04:
 	RTS
 
 loc_0000BF0C:
-	JSR	loc_0001096A
+	JSR	ProcessScriptText
 	RTS
 
 loc_0000BF14:
@@ -18768,7 +18768,11 @@ loc_0001095A:
 	dc.l	$00200FC1
 	dc.l	$00201A41
 	dc.l	$00200541 
-loc_0001096A:
+; ProcessScriptText
+; Process and render dialogue/script text
+; Handles script commands, text timing, player name insertion
+; Main text rendering loop for dialogue windows
+ProcessScriptText:
 	TST.b	$FFFF9900.w
 	BNE.w	loc_00010BE2
 	ADDQ.w	#1, Script_render_tick.w
@@ -25533,7 +25537,7 @@ loc_0001805A:
 	RTS
 
 loc_00018078:
-	JSR	loc_0001096A
+	JSR	ProcessScriptText
 	RTS
 
 loc_00018080:
@@ -25563,7 +25567,7 @@ loc_000180A8:
 	RTS
 
 loc_000180D6:
-	JSR	loc_0001096A
+	JSR	ProcessScriptText
 	RTS
 
 loc_000180DE:
@@ -25678,7 +25682,7 @@ loc_00018272:
 	BRA.w	InitMenuCursorForList
 	dc.b	$4E, $75 
 loc_0001829C:
-	JSR	loc_0001096A
+	JSR	ProcessScriptText
 	RTS
 
 loc_000182A4:
@@ -25807,7 +25811,7 @@ loc_00018468:
 	MOVE.w	Possessed_magics_length.w, D0
 	BRA.w	InitMenuCursorForList
 loc_00018490:
-	JSR	loc_0001096A
+	JSR	ProcessScriptText
 	RTS
 
 loc_00018498:
@@ -25857,7 +25861,7 @@ loc_00018528:
 	RTS
 	
 loc_00018540:
-	JSR	loc_0001096A	
+	JSR	ProcessScriptText	
 	RTS
 	
 loc_00018548:
@@ -25881,7 +25885,7 @@ loc_0001856A:
 	BEQ.b	loc_00018592
 	JSR	DisplayPlayerHpMp
 loc_00018592:
-	JSR	loc_0001096A
+	JSR	ProcessScriptText
 	RTS
 
 loc_0001859A:
@@ -28083,7 +28087,7 @@ loc_0001A428:
 	RTS
 
 loc_0001A446:
-	JSR	loc_0001096A
+	JSR	ProcessScriptText
 	RTS
 
 loc_0001A44E:
@@ -28112,7 +28116,7 @@ loc_0001A476:
 	RTS
 
 loc_0001A4A4:
-	JSR	loc_0001096A
+	JSR	ProcessScriptText
 	RTS
 
 loc_0001A4AC:
@@ -28242,7 +28246,7 @@ loc_0001A678:
 	RTS
 
 loc_0001A696:
-	JSR	loc_0001096A
+	JSR	ProcessScriptText
 	RTS
 
 loc_0001A69E:
@@ -28258,7 +28262,7 @@ loc_0001A69E:
 	RTS
 
 loc_0001A6CA:
-	JSR	loc_0001096A
+	JSR	ProcessScriptText
 	RTS
 
 loc_0001A6D2:
@@ -28333,7 +28337,7 @@ loc_0001A7D2:
 	JSR	loc_00011666
 	BRA.w	loc_0001A804
 loc_0001A7EA:
-	JSR	loc_0001096A
+	JSR	ProcessScriptText
 	RTS
 
 loc_0001A7F2:
@@ -28385,7 +28389,7 @@ loc_0001A870:
 	RTS
 
 loc_0001A888:
-	JSR	loc_0001096A
+	JSR	ProcessScriptText
 	RTS
 
 loc_0001A890:
@@ -29446,7 +29450,7 @@ loc_0001B6B6:
 	RTS
 
 loc_0001B6D2:
-	JMP	loc_0001096A
+	JMP	ProcessScriptText
 loc_0001B6D8:
 	TST.b	Window_tilemap_draw_active.w
 	BNE.b	loc_0001B6EE
@@ -29473,7 +29477,7 @@ loc_0001B6F0:
 	RTS
 	
 loc_0001B734:
-	JMP	loc_0001096A	
+	JMP	ProcessScriptText	
 loc_0001B73A:
 	MOVE.w	#5, D2
 	JSR	CheckButtonPress
@@ -29642,7 +29646,7 @@ loc_0001BADA:
 	RTS
 
 loc_0001BAEE:
-	JSR	loc_0001096A
+	JSR	ProcessScriptText
 	RTS
 
 loc_0001BAF6:
@@ -29686,7 +29690,7 @@ loc_0001BB5A:
 	BEQ.b	loc_0001BB72	
 	JSR	InitDialogueWindow	
 loc_0001BB6C:
-	JSR	loc_0001096A
+	JSR	ProcessScriptText
 loc_0001BB72:
 	RTS
 
@@ -29711,7 +29715,7 @@ loc_0001BB9A:
 	RTS
 
 loc_0001BBA2:
-	JSR	loc_0001096A
+	JSR	ProcessScriptText
 loc_0001BBA8:
 	RTS
 
@@ -29811,7 +29815,7 @@ loc_0001BCB8:
 	RTS
 
 loc_0001BCD8:
-	JMP	loc_0001096A
+	JMP	ProcessScriptText
 loc_0001BCDE:
 	TST.b	Window_tilemap_draw_active.w
 	BNE.w	loc_0001BD98
@@ -29886,7 +29890,7 @@ loc_0001BDBA:
 	RTS
 
 loc_0001BDD2:
-	JMP	loc_0001096A
+	JMP	ProcessScriptText
 loc_0001BDD8:
 	TST.b	$FFFF9911.w
 	BNE.b	loc_0001BDF8
@@ -29908,7 +29912,7 @@ loc_0001BDFA:
 	RTS
 
 loc_0001BE16:
-	JSR	loc_0001096A
+	JSR	ProcessScriptText
 	RTS
 
 loc_0001BE1E:
@@ -29979,7 +29983,7 @@ loc_0001BF0E:
 	RTS
 
 loc_0001BF22:
-	JMP	loc_0001096A	
+	JMP	ProcessScriptText	
 loc_0001BF28:
 	TST.b	Script_text_complete.w
 	BEQ.w	loc_0001C07C
@@ -30072,7 +30076,7 @@ loc_0001C068:
 	RTS
 
 loc_0001C07C:
-	JMP	loc_0001096A
+	JMP	ProcessScriptText
 loc_0001C082:
 	TST.b	Script_text_complete.w
 	BEQ.b	loc_0001C0BA
@@ -30089,7 +30093,7 @@ loc_0001C082:
 	RTS
 
 loc_0001C0BA:
-	JMP	loc_0001096A
+	JMP	ProcessScriptText
 loc_0001C0C0:
 	TST.b	Script_text_complete.w
 	BEQ.w	loc_0001C14C
@@ -30128,7 +30132,7 @@ loc_0001C120:
 	RTS
 
 loc_0001C14C:
-	JMP	loc_0001096A
+	JMP	ProcessScriptText
 loc_0001C152:
 	TST.b	Script_text_complete.w
 	BEQ.b	loc_0001C160
@@ -30136,7 +30140,7 @@ loc_0001C152:
 	RTS
 
 loc_0001C160:
-	JSR	loc_0001096A
+	JSR	ProcessScriptText
 	RTS
 
 loc_0001C168:
@@ -30190,7 +30194,7 @@ loc_0001C208:
 	RTS
 
 loc_0001C22E:
-	JMP	loc_0001096A
+	JMP	ProcessScriptText
 loc_0001C234:
 	TST.b	Script_text_complete.w
 	BEQ.b	loc_0001C276
@@ -30213,7 +30217,7 @@ loc_0001C254:
 	RTS
 
 loc_0001C276:
-	JMP	loc_0001096A
+	JMP	ProcessScriptText
 loc_0001C27C:
 	TST.b	Script_text_complete.w
 	BEQ.w	loc_0001C380
@@ -30287,7 +30291,7 @@ loc_0001C36C:
 	RTS
 
 loc_0001C380:
-	JMP	loc_0001096A	
+	JMP	ProcessScriptText	
 loc_0001C386:
 	TST.b	Script_text_complete.w
 	BEQ.b	loc_0001C39E
@@ -30297,7 +30301,7 @@ loc_0001C386:
 	RTS
 
 loc_0001C39E:
-	JMP	loc_0001096A
+	JMP	ProcessScriptText
 loc_0001C3A4:
 	MOVE.w	#4, D2
 	JSR	CheckButtonPress
@@ -30434,7 +30438,7 @@ loc_0001C56E:
 	RTS
 
 loc_0001C59C:
-	JMP	loc_0001096A
+	JMP	ProcessScriptText
 loc_0001C5A2:
 	TST.b	Script_text_complete.w
 	BEQ.b	loc_0001C5D4
@@ -30451,7 +30455,7 @@ loc_0001C5C2:
 	BEQ.b	loc_0001C5DA
 	JSR	InitDialogueWindow
 loc_0001C5D4:
-	JSR	loc_0001096A
+	JSR	ProcessScriptText
 loc_0001C5DA:
 	RTS
 
@@ -30528,7 +30532,7 @@ loc_0001C6BE:
 	RTS
 
 loc_0001C6E0:
-	JMP	loc_0001096A
+	JMP	ProcessScriptText
 loc_0001C6E6:
 	MOVE.w	#5, D2
 	JSR	CheckButtonPress
@@ -30555,7 +30559,7 @@ loc_0001C722:
 	RTS
 
 loc_0001C72A:
-	JMP	loc_0001096A
+	JMP	ProcessScriptText
 loc_0001C730:
 	MOVE.w	#5, D2
 	JSR	CheckButtonPress
@@ -30663,7 +30667,7 @@ loc_0001C890:
 	MOVE.b	#$85, D0
 	JMP	QueueSoundEffect
 loc_0001C8B2:
-	JMP	loc_0001096A
+	JMP	ProcessScriptText
 loc_0001C8B8:
 	TST.b	Fade_out_lines_mask.w
 	BNE.w	loc_0001C968
@@ -30726,7 +30730,7 @@ loc_0001C96A:
 	RTS
 
 loc_0001C990:
-	JMP	loc_0001096A
+	JMP	ProcessScriptText
 loc_0001C996:
 	TST.b	Window_tilemap_draw_active.w
 	BNE.w	loc_0001CAE2
@@ -30831,7 +30835,7 @@ loc_0001CB04:
 	RTS
 
 loc_0001CB26:
-	JMP	loc_0001096A
+	JMP	ProcessScriptText
 loc_0001CB2C:
 	TST.b	$FFFF9911.w
 	BNE.b	loc_0001CB56
@@ -30854,7 +30858,7 @@ loc_0001CB58:
 	RTS
 
 loc_0001CB70:
-	JMP	loc_0001096A
+	JMP	ProcessScriptText
 loc_0001CB76:
 	TST.b	Window_tilemap_draw_active.w
 	BNE.b	loc_0001CB92
@@ -30923,7 +30927,7 @@ loc_0001CC5A:
 	RTS
 
 loc_0001CC72:
-	JMP	loc_0001096A
+	JMP	ProcessScriptText
 loc_0001CC78:
 	JSR	SaveLeftMenuTiles
 	JSR	loc_0001106E
@@ -30994,7 +30998,7 @@ loc_0001CD6A:
 	RTS
 
 loc_0001CD82:
-	JMP	loc_0001096A
+	JMP	ProcessScriptText
 loc_0001CD88:
 	TST.b	Window_tilemap_draw_active.w
 	BNE.b	loc_0001CDFC
@@ -31437,7 +31441,7 @@ loc_0001D35A:
 	RTS
 
 loc_0001D368:
-	JSR	loc_0001096A
+	JSR	ProcessScriptText
 	RTS
 
 loc_0001D370:
@@ -31528,7 +31532,7 @@ loc_0001D496:
 	RTS
 
 loc_0001D4B0:
-	JSR	loc_0001096A
+	JSR	ProcessScriptText
 	RTS
 
 loc_0001D4B8:
@@ -32215,7 +32219,7 @@ loc_0001DD3A:
 	RTS
 	
 loc_0001DD48:
-	JSR	loc_0001096A
+	JSR	ProcessScriptText
 	RTS
 	
 loc_0001DD50:
@@ -32326,7 +32330,7 @@ loc_0001DECE:
 	RTS
 	
 loc_0001DEDC:
-	JSR	loc_0001096A
+	JSR	ProcessScriptText
 	RTS
 	
 loc_0001DEE4:
@@ -32471,7 +32475,7 @@ loc_0001E0DE:
 	RTS
 	
 loc_0001E0FA:
-	JSR	loc_0001096A
+	JSR	ProcessScriptText
 	RTS
 	
 loc_0001E102:
@@ -32772,7 +32776,7 @@ loc_0001E53A:
 	RTS
 	
 loc_0001E556:
-	JSR	loc_0001096A
+	JSR	ProcessScriptText
 	RTS
 	
 loc_0001E55E:
@@ -32891,7 +32895,7 @@ loc_0001E6FA:
 	RTS
 	
 loc_0001E71A:
-	JSR	loc_0001096A
+	JSR	ProcessScriptText
 	RTS
 	
 loc_0001E722:
@@ -32970,7 +32974,7 @@ loc_0001E84C:
 	RTS
 	
 loc_0001E85A:
-	JSR	loc_0001096A	
+	JSR	ProcessScriptText	
 	RTS
 	
 loc_0001E862:
@@ -33121,7 +33125,7 @@ loc_0001EA80:
 	RTS
 	
 loc_0001EAA6:
-	JSR	loc_0001096A
+	JSR	ProcessScriptText
 	RTS
 	
 loc_0001EAAE:
