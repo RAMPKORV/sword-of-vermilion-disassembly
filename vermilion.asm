@@ -590,7 +590,7 @@ loc_0000118A:
 	BEQ.b	loc_00001196
 	JSR	loc_00012DB8
 loc_00001196:
-	TST.b	$FFFF9911.w
+	TST.b	Window_tilemap_row_draw_pending.w
 	BEQ.b	loc_000011A2
 	JSR	loc_00011F44
 loc_000011A2:
@@ -1078,7 +1078,7 @@ ProgramState_0E_and_10:
 	TST.b	Fade_out_lines_mask.w
 	BNE.w	loc_00001818
 	JSR	loc_00000682
-	MOVEA.l	$FFFFCC08.w, A6
+	MOVEA.l	Player_entity_ptr.w, A6
 	BSET.b	#7, (A6)
 	ADDQ.w	#1, Program_state.w
 	MOVE.b	#1, Message_speed.w
@@ -1155,7 +1155,7 @@ loc_000018F2:
 	BSR.w	ClearAllEnemyEntities
 	JSR	loc_0000055C
 	CLR.b	Player_in_first_person_mode.w
-	MOVEA.l	$FFFFCC08.w, A6
+	MOVEA.l	Player_entity_ptr.w, A6
 	MOVE.l	#PlayerObjectHandler, $2(A6)
 	CLR.w	D0
 	MOVE.b	$1(A6), D0
@@ -1224,7 +1224,7 @@ loc_000019BE:
 	JSR	loc_000033BE
 loc_00001A1A:
 	CLR.b	Skip_town_intro_after_fight.w
-	MOVEA.l	$FFFFCC14.w, A6
+	MOVEA.l	Enemy_list_ptr.w, A6
 	BSET.b	#7, (A6)
 	MOVE.l	#loc_00006E1C, $2(A6)
 	MOVE.w	Current_town.w, D0
@@ -1315,7 +1315,7 @@ loc_00001B54:
 	MOVE.b	#$FF, Fade_out_lines_mask.w
 	ADDQ.w	#1, Gameplay_substate.w
 loc_00001B72:
-	MOVEA.l	$FFFFCC08.w, A6
+	MOVEA.l	Player_entity_ptr.w, A6
 	MOVE.w	$E(A6), Town_spawn_x.w
 	MOVE.w	$12(A6), D0
 	ADDI.w	#$0010, D0
@@ -1327,7 +1327,7 @@ loc_00001B72:
 	RTS
 
 loc_00001B9A:
-	MOVEA.l	$FFFFCC08.w, A6
+	MOVEA.l	Player_entity_ptr.w, A6
 	MOVE.w	$E(A6), Town_spawn_x.w
 	MOVE.w	$12(A6), Player_spawn_tile_y_buffer.w
 	MOVE.w	Town_camera_tile_x.w, Town_camera_initial_x.w
@@ -1377,7 +1377,7 @@ loc_00001C1C:
 loc_00001C56:
 	TST.b	Boss_event_trigger.w
 	BEQ.b	loc_00001C96
-	MOVEA.l	$FFFFCC08.w, A6	
+	MOVEA.l	Player_entity_ptr.w, A6	
 	MOVE.w	$E(A6), Saved_player_x_in_town.w	
 	MOVE.w	$12(A6), Town_player_spawn_y.w	
 	MOVE.w	Town_camera_tile_x.w, Town_saved_camera_x.w	
@@ -1412,7 +1412,7 @@ loc_00001CDC:
 	JSR	QueueSoundEffect
 	MOVE.b	#$FF, Fade_out_lines_mask.w
 	ADDQ.w	#1, Gameplay_substate.w
-	MOVEA.l	$FFFFCC08.w, A6
+	MOVEA.l	Player_entity_ptr.w, A6
 	MOVE.w	$E(A6), Saved_player_x_in_town.w
 	MOVE.w	$12(A6), D0
 	ADDI.w	#$0010, D0
@@ -1550,8 +1550,8 @@ loc_00001EC4:
 	JSR	DrawStatusHudWindow
 	CLR.w	Overworld_menu_state.w
 	MOVE.w	#3, Window_draw_type.w
-	CLR.w	$FFFF9916.w
-	MOVE.b	#$FF, $FFFF9911.w
+	CLR.w	Window_text_row.w
+	MOVE.b	#$FF, Window_tilemap_row_draw_pending.w
 	MOVE.w	#4, Gameplay_substate.w
 	RTS
 
@@ -1597,7 +1597,7 @@ loc_00001F5C:
 	MOVE.w	Player_direction.w, D0
 	ADD.w	D0, D0
 	LEA	(A0,D0.w), A0
-	MOVEA.l	$FFFFCC08.w, A6
+	MOVEA.l	Player_entity_ptr.w, A6
 	MOVE.w	$E(A6), D0
 	ADD.w	(A0)+, D0
 	MOVE.w	D0, Saved_player_spawn_x.w
@@ -1615,7 +1615,7 @@ loc_00001FB4:
 	JSR	QueueSoundEffect
 	MOVE.b	#$FF, Fade_out_lines_mask.w
 	ADDQ.w	#1, Gameplay_substate.w
-	MOVEA.l	$FFFFCC08.w, A6
+	MOVEA.l	Player_entity_ptr.w, A6
 	MOVE.w	$E(A6), Saved_player_spawn_x.w
 	MOVE.w	$12(A6), D0
 	ADDI.w	#$0010, D0
@@ -1642,7 +1642,7 @@ loc_00002022:
 	JSR	loc_00016018
 	MOVE.w	#$2000, Town_tilemap_vram_base.w
 	JSR	loc_0001622A
-	MOVEA.l	$FFFFCC14.w, A6
+	MOVEA.l	Enemy_list_ptr.w, A6
 	BSET.b	#7, (A6)
 	MOVE.l	#loc_00006E1C, $2(A6)
 	MOVE.w	#$0012, Palette_line_0_fade_target.w
@@ -1698,7 +1698,7 @@ loc_00002114:
 loc_00002116:
 	TST.b	Boss_event_trigger.w
 	BEQ.b	loc_00002156
-	MOVEA.l	$FFFFCC08.w, A6
+	MOVEA.l	Player_entity_ptr.w, A6
 	MOVE.w	$E(A6), Saved_player_x_in_town.w
 	MOVE.w	$12(A6), Town_player_spawn_y.w
 	MOVE.w	Town_camera_tile_x.w, Town_saved_camera_x.w
@@ -1734,7 +1734,7 @@ loc_000021A2:
 	JSR	QueueSoundEffect
 	MOVE.b	#$FF, Fade_out_lines_mask.w
 	ADDQ.w	#1, Gameplay_substate.w
-	MOVEA.l	$FFFFCC08.w, A6
+	MOVEA.l	Player_entity_ptr.w, A6
 	MOVE.w	$E(A6), Saved_player_x_in_town.w
 	MOVE.w	$12(A6), D0
 	SUBI.w	#$0010, D0
@@ -1771,7 +1771,7 @@ loc_00002234:
 	JSR	QueueSoundEffect
 	MOVE.b	#$FF, Fade_out_lines_mask.w
 	MOVE.w	#9, Gameplay_substate.w
-	MOVEA.l	$FFFFCC08.w, A6
+	MOVEA.l	Player_entity_ptr.w, A6
 	MOVE.w	$E(A6), Saved_player_spawn_x.w
 	MOVE.w	$12(A6), D0
 	ADDI.w	#$0010, D0
@@ -1787,7 +1787,7 @@ loc_0000227A:
 	JSR	QueueSoundEffect	
 	MOVE.b	#$FF, Fade_out_lines_mask.w	
 	ADDQ.w	#1, Gameplay_substate.w	
-	MOVEA.l	$FFFFCC08.w, A6	
+	MOVEA.l	Player_entity_ptr.w, A6	
 	MOVE.w	$E(A6), Saved_player_spawn_x.w	
 	MOVE.w	$12(A6), D0	
 	ADDI.w	#$0010, D0	
@@ -1846,7 +1846,7 @@ loc_00002324:
 	CLR.w	$FFFFC40E.w
 	CLR.w	$FFFFC410.w
 	JSR	loc_0000F9EE
-	MOVEA.l	$FFFFCC08.w, A6
+	MOVEA.l	Player_entity_ptr.w, A6
 	MOVE.w	#$00A0, $E(A6)
 	MOVE.w	#$0064, $12(A6)
 	MOVE.w	#$0036, $FFFFC080.w
@@ -1854,7 +1854,7 @@ loc_00002324:
 	ADDQ.w	#1, Gameplay_substate.w
 	CLR.w	Overworld_menu_state.w
 	MOVE.b	#$FF, Is_in_battle.w
-	MOVEA.l	$FFFFCC08.w, A6
+	MOVEA.l	Player_entity_ptr.w, A6
 	MOVE.l	#loc_00003C7E, $2(A6)
 	MOVEQ	#0, D0
 	MOVE.w	Player_dex.w, D0
@@ -2037,7 +2037,7 @@ loc_00002620:
 	JSR	loc_0000FFCE
 	BSR.w	loc_00003064
 	JSR	loc_00008688
-	MOVEA.l	$FFFFCC08.w, A6
+	MOVEA.l	Player_entity_ptr.w, A6
 	MOVE.l	#loc_00004340, $2(A6)
 	ADDQ.w	#1, Gameplay_substate.w
 	MOVE.w	#$0036, $FFFFC080.w
@@ -2172,7 +2172,7 @@ loc_00002814:
 	CLR.b	$FFFFC560.w
 	CLR.w	$FFFFC562.w
 	MOVE.w	#$12, Gameplay_substate.w
-	MOVEA.l	$FFFFCC08.w, A6
+	MOVEA.l	Player_entity_ptr.w, A6
 loc_00002830:
 	RTS
 
@@ -2270,14 +2270,14 @@ loc_00002930:
 
 loc_0000295C:
 	MOVE.w	#0, Window_draw_type.w
-	CLR.w	$FFFF9916.w
-	MOVE.b	#$FF, $FFFF9911.w
+	CLR.w	Window_text_row.w
+	MOVE.b	#$FF, Window_tilemap_row_draw_pending.w
 	MOVE.w	#$1D, Gameplay_substate.w
 loc_00002972:
 	RTS
 
 loc_00002974:
-	TST.b	$FFFF9911.w
+	TST.b	Window_tilemap_row_draw_pending.w
 	BNE.w	loc_000029F8
 	JSR	loc_0001264E
 	CMPI.w	#MAX_PLAYER_LEVEL, Player_level.w
@@ -2404,11 +2404,11 @@ loc_00002AE0:
 	CLR.w	$FFFFC40E.w
 	CLR.w	$FFFFC410.w
 	JSR	loc_0000FA3E
-	MOVEA.l	$FFFFCC08.w, A6
+	MOVEA.l	Player_entity_ptr.w, A6
 	ADDQ.w	#1, Gameplay_substate.w
 	CLR.w	Overworld_menu_state.w
 	MOVE.b	#$FF, Is_in_battle.w
-	MOVEA.l	$FFFFCC08.w, A6
+	MOVEA.l	Player_entity_ptr.w, A6
 	MOVE.l	#loc_00006834, $2(A6)
 	MOVEQ	#0, D0
 	MOVE.w	Player_dex.w, D0
@@ -2453,7 +2453,7 @@ loc_00002BCC:
 	JSR	loc_0000055C
 	CLR.w	$FFFFE000.w
 	JSR	loc_0000F688
-	MOVEA.l	$FFFFCC08.w, A6
+	MOVEA.l	Player_entity_ptr.w, A6
 	MOVE.l	#PlayerObjectHandler, $2(A6)
 	MOVE.w	$FFFFC616.w, Player_direction.w
 	CLR.w	D0
@@ -2797,7 +2797,7 @@ loc_000030EA:
 loc_000030EE:
 	TST.b	Window_tilemap_draw_active.w
 	BNE.b	loc_00003116
-	TST.b	$FFFF9911.w
+	TST.b	Window_tilemap_row_draw_pending.w
 	BNE.b	loc_00003116
 	MOVE.b	#$FF, Player_input_blocked.w
 	MOVE.w	Overworld_menu_state.w, D0
@@ -2819,7 +2819,7 @@ loc_00003118:
 loc_00003130:
 	TST.b	Window_tilemap_draw_active.w
 	BNE.b	loc_00003140
-	TST.b	$FFFF9911.w
+	TST.b	Window_tilemap_row_draw_pending.w
 	BNE.b	loc_00003140
 	CLR.b	Player_input_blocked.w
 loc_00003140:
@@ -2846,8 +2846,8 @@ loc_00003170:
 	JSR	QueueSoundEffect	
 	CLR.w	Overworld_menu_state.w	
 	MOVE.w	#2, Window_draw_type.w	
-	CLR.w	$FFFF9916.w	
-	MOVE.b	#$FF, $FFFF9911.w	
+	CLR.w	Window_text_row.w	
+	MOVE.b	#$FF, Window_tilemap_row_draw_pending.w	
 	RTS
 	
 loc_000031A2:
@@ -2860,8 +2860,8 @@ loc_000031A2:
 	MOVE.b	D0, Message_speed.w	
 	CLR.w	Overworld_menu_state.w	
 	MOVE.w	#2, Window_draw_type.w	
-	CLR.w	$FFFF9916.w	
-	MOVE.b	#$FF, $FFFF9911.w	
+	CLR.w	Window_text_row.w	
+	MOVE.b	#$FF, Window_tilemap_row_draw_pending.w	
 	RTS
 	
 loc_000031D4:
@@ -2906,8 +2906,8 @@ loc_00003248:
 	JSR	QueueSoundEffect
 	CLR.w	Overworld_menu_state.w
 	MOVE.w	#3, Window_draw_type.w
-	CLR.w	$FFFF9916.w
-	MOVE.b	#$FF, $FFFF9911.w
+	CLR.w	Window_text_row.w
+	MOVE.b	#$FF, Window_tilemap_row_draw_pending.w
 	RTS
 
 loc_0000327A:
@@ -3203,7 +3203,7 @@ loc_000034D6:
 loc_000034E0:
 	BSR.w	ClearAllEnemyEntities
 	JSR	loc_0000055C
-	MOVEA.l	$FFFFCC08.w, A6
+	MOVEA.l	Player_entity_ptr.w, A6
 	MOVE.w	#DIRECTION_UP, Player_direction.w
 	MOVE.l	#PlayerObjectHandler, $2(A6)
 	CLR.w	D0
@@ -3296,7 +3296,7 @@ loc_0000362C:
 
 ; loc_0000363C
 ClearAllEnemyEntities:
-	MOVEA.l	$FFFFCC14.w, A6
+	MOVEA.l	Enemy_list_ptr.w, A6
 loc_00003640:
 	BCLR.b	#7, (A6)
 	CLR.w	D0
@@ -3601,7 +3601,7 @@ loc_00003A22:
 	ADD.w	$4(A1,D4.w), D2
 	ADD.w	$6(A1,D4.w), D3
 	MOVEQ	#$1D, D7
-	MOVEA.l	$FFFFCC14.w, A6
+	MOVEA.l	Enemy_list_ptr.w, A6
 loc_00003A56:
 	BTST.b	#7, (A6)
 	BEQ.b	loc_00003A90
@@ -3634,7 +3634,7 @@ loc_00003A92:
 	TST.b	Is_in_battle.w
 	BNE.b	loc_00003ACA
 	LEA	Player_overworld_gfx_buffer, A0
-	MOVEA.l	$FFFFCC08.w, A6
+	MOVEA.l	Player_entity_ptr.w, A6
 	CLR.w	D0
 	MOVE.b	$24(A6), D0
 	MULU.w	#$0180, D0
@@ -3647,7 +3647,7 @@ loc_00003A92:
 
 loc_00003ACA:
 	LEA	Tilemap_buffer_plane_a, A0
-	MOVEA.l	$FFFFCC08.w, A6
+	MOVEA.l	Player_entity_ptr.w, A6
 	CLR.w	D0
 	MOVE.b	$24(A6), D0
 	MULU.w	#$0100, D0
@@ -3680,7 +3680,7 @@ loc_00003ACA:
 
 loc_00003B44:
 	LEA	Tilemap_buffer_plane_a, A0
-	MOVEA.l	$FFFFCC08.w, A6
+	MOVEA.l	Player_entity_ptr.w, A6
 	CLR.w	D0
 	MOVE.b	$24(A6), D0
 	MULU.w	#$0180, D0
@@ -3875,7 +3875,7 @@ loc_00003E3A:
 	RTS
 
 loc_00003E48:
-	MOVEA.l	$FFFFCC08.w, A6
+	MOVEA.l	Player_entity_ptr.w, A6
 	MOVE.l	#loc_00003EBC, $2(A6)
 	CLR.w	D0
 	MOVE.b	$1(A6), D0
@@ -4027,7 +4027,7 @@ loc_00004044:
 	RTS
 
 loc_00004068
-	MOVEA.l	$FFFFCC08.w, A6
+	MOVEA.l	Player_entity_ptr.w, A6
 	MOVE.b	$7(A6), $7(A5)
 	MOVE.w	$A(A6), $A(A5)
 	MOVE.w	$C(A6), D2
@@ -4038,7 +4038,7 @@ loc_00004068
 	RTS
 
 loc_00004092 
-	MOVEA.l	$FFFFCC08.w, A6
+	MOVEA.l	Player_entity_ptr.w, A6
 	MOVE.b	$7(A6), $7(A5)
 	CLR.w	D0
 	MOVE.b	$24(A5), D0
@@ -4086,7 +4086,7 @@ loc_0000411A:
 	ADD.w	$12(A5), D2
 	MOVE.w	(A0), D3
 	ADD.w	$12(A5), D3
-	MOVEA.l	$FFFFCC14.w, A6
+	MOVEA.l	Enemy_list_ptr.w, A6
 	MOVE.w	#9, D7
 loc_0000412E:
 	BTST.b	#7, (A6)
@@ -4108,7 +4108,7 @@ loc_0000412E:
 	CMP.w	D4, D3
 	BLT.b	loc_0000419E
 	MOVE.b	#$FF, $26(A6)
-	MOVEA.l	$FFFFCC18.w, A4
+	MOVEA.l	Object_slot_01_ptr.w, A4
 	BSET.b	#7, (A4)
 	MOVE.l	#loc_000041C2, $2(A4)
 	MOVE.w	$E(A6), $E(A4)
@@ -4169,7 +4169,7 @@ loc_00004232:
 	RTS
 
 loc_00004234:
-	MOVEA.l	$FFFFCC1C.w, A6
+	MOVEA.l	Object_slot_02_ptr.w, A6
 	MOVE.w	#$000B, D7
 loc_0000423C:
 	BCLR.b	#7, (A6)
@@ -4855,22 +4855,22 @@ loc_00004B6C:
 	BSR.w	loc_0000457E
 	BRA.w	loc_00004BA0
 loc_00004BA0:
-	MOVEA.l	$FFFFCC14.w, A6
+	MOVEA.l	Enemy_list_ptr.w, A6
 	MOVE.l	#$00240000, $E(A6)
 	MOVE.l	#$00800000, $12(A6)
-	MOVEA.l	$FFFFCC18.w, A6
+	MOVEA.l	Object_slot_01_ptr.w, A6
 	MOVE.l	#$00940000, $E(A6)
 	MOVE.l	#$00800000, $12(A6)
-	MOVEA.l	$FFFFCC1C.w, A6
+	MOVEA.l	Object_slot_02_ptr.w, A6
 	MOVE.l	#$005C0000, $E(A6)
 	MOVE.l	#$00800000, $12(A6)
-	MOVEA.l	$FFFFCC20.w, A6
+	MOVEA.l	Object_slot_03_ptr.w, A6
 	MOVE.l	#$FFEC0000, $E(A6)
 	MOVE.l	#$00800000, $12(A6)
-	MOVEA.l	$FFFFCC24.w, A6
+	MOVEA.l	Object_slot_04_ptr.w, A6
 	MOVE.l	#$00CC0000, $E(A6)
 	MOVE.l	#$00800000, $12(A6)
-	MOVEA.l	$FFFFCC28.w, A6
+	MOVEA.l	Object_slot_05_ptr.w, A6
 	MOVE.l	#$003C0000, $E(A6)
 	MOVE.l	#$00680000, $12(A6)
 	MOVEA.l	$FFFFCC2C.w, A6
@@ -4903,22 +4903,22 @@ loc_00004BA0:
 	RTS
 
 loc_00004CCE:
-	MOVEA.l	$FFFFCC14.w, A6
+	MOVEA.l	Enemy_list_ptr.w, A6
 	MOVE.l	#$00360000, $E(A6)
 	MOVE.l	#$006E0000, $12(A6)
-	MOVEA.l	$FFFFCC18.w, A6
+	MOVEA.l	Object_slot_01_ptr.w, A6
 	MOVE.l	#$00820000, $E(A6)
 	MOVE.l	#$006E0000, $12(A6)
-	MOVEA.l	$FFFFCC1C.w, A6
+	MOVEA.l	Object_slot_02_ptr.w, A6
 	MOVE.l	#$005C0000, $E(A6)
 	MOVE.l	#$006E0000, $12(A6)
-	MOVEA.l	$FFFFCC20.w, A6
+	MOVEA.l	Object_slot_03_ptr.w, A6
 	MOVE.l	#$00220000, $E(A6)
 	MOVE.l	#$006E0000, $12(A6)
-	MOVEA.l	$FFFFCC24.w, A6
+	MOVEA.l	Object_slot_04_ptr.w, A6
 	MOVE.l	#$00960000, $E(A6)
 	MOVE.l	#$006E0000, $12(A6)
-	MOVEA.l	$FFFFCC28.w, A6
+	MOVEA.l	Object_slot_05_ptr.w, A6
 	MOVE.l	#$00480000, $E(A6)
 	MOVE.l	#$005C0000, $12(A6)
 	MOVEA.l	$FFFFCC2C.w, A6
@@ -4967,18 +4967,18 @@ loc_00004E18:
 	MOVE.w	#$0018, D3
 	MOVE.w	#6, D4
 loc_00004E24:
-	MOVEA.l	$FFFFCC14.w, A6
+	MOVEA.l	Enemy_list_ptr.w, A6
 	BSR.w	loc_00004EA2
-	MOVEA.l	$FFFFCC18.w, A6
+	MOVEA.l	Object_slot_01_ptr.w, A6
 	BSR.w	loc_00004EA2
-	MOVEA.l	$FFFFCC1C.w, A6
+	MOVEA.l	Object_slot_02_ptr.w, A6
 	BSR.w	loc_00004EA2
-	MOVEA.l	$FFFFCC20.w, A6
+	MOVEA.l	Object_slot_03_ptr.w, A6
 	BSR.w	loc_00004EA2
-	MOVEA.l	$FFFFCC24.w, A6
+	MOVEA.l	Object_slot_04_ptr.w, A6
 	BSR.w	loc_00004EA2
-	MOVEA.l	$FFFFCC1C.w, A6
-	MOVEA.l	$FFFFCC28.w, A6
+	MOVEA.l	Object_slot_02_ptr.w, A6
+	MOVEA.l	Object_slot_05_ptr.w, A6
 	BSR.w	loc_00004EAE
 	MOVEA.l	$FFFFCC2C.w, A6
 	BSR.w	loc_00004EAE
@@ -5024,21 +5024,21 @@ loc_00004EC4:
 loc_00004EC6:
 	TST.w	D7
 	BEQ.w	loc_00004FE2
-	MOVEA.l	$FFFFCC14.w, A6
+	MOVEA.l	Enemy_list_ptr.w, A6
 	ADDI.l	#$00060000, $E(A6)
 	SUBI.l	#$00060000, $12(A6)
-	MOVEA.l	$FFFFCC18.w, A6
+	MOVEA.l	Object_slot_01_ptr.w, A6
 	SUBI.l	#$00060000, $E(A6)
 	SUBI.l	#$00060000, $12(A6)
-	MOVEA.l	$FFFFCC1C.w, A6
+	MOVEA.l	Object_slot_02_ptr.w, A6
 	SUBI.l	#$00060000, $12(A6)
-	MOVEA.l	$FFFFCC20.w, A6
+	MOVEA.l	Object_slot_03_ptr.w, A6
 	ADDI.l	#$00120000, $E(A6)
 	SUBI.l	#$00060000, $12(A6)
-	MOVEA.l	$FFFFCC24.w, A6
+	MOVEA.l	Object_slot_04_ptr.w, A6
 	SUBI.l	#$00120000, $E(A6)
 	SUBI.l	#$00060000, $12(A6)
-	MOVEA.l	$FFFFCC28.w, A6
+	MOVEA.l	Object_slot_05_ptr.w, A6
 	ADDI.l	#$00040000, $E(A6)
 	SUBI.l	#$00040000, $12(A6)
 	MOVEA.l	$FFFFCC2C.w, A6
@@ -5069,21 +5069,21 @@ loc_00004EC6:
 	RTS
 
 loc_00004FE2:
-	MOVEA.l	$FFFFCC14.w, A6
+	MOVEA.l	Enemy_list_ptr.w, A6
 	SUBI.l	#$00060000, $E(A6)
 	ADDI.l	#$00060000, $12(A6)
-	MOVEA.l	$FFFFCC18.w, A6
+	MOVEA.l	Object_slot_01_ptr.w, A6
 	ADDI.l	#$00060000, $E(A6)
 	ADDI.l	#$00060000, $12(A6)
-	MOVEA.l	$FFFFCC1C.w, A6
+	MOVEA.l	Object_slot_02_ptr.w, A6
 	ADDI.l	#$00060000, $12(A6)
-	MOVEA.l	$FFFFCC20.w, A6
+	MOVEA.l	Object_slot_03_ptr.w, A6
 	SUBI.l	#$00120000, $E(A6)
 	ADDI.l	#$00060000, $12(A6)
-	MOVEA.l	$FFFFCC24.w, A6
+	MOVEA.l	Object_slot_04_ptr.w, A6
 	ADDI.l	#$00120000, $E(A6)
 	ADDI.l	#$00060000, $12(A6)
-	MOVEA.l	$FFFFCC28.w, A6
+	MOVEA.l	Object_slot_05_ptr.w, A6
 	SUBI.l	#$00040000, $E(A6)
 	ADDI.l	#$00040000, $12(A6)
 	MOVEA.l	$FFFFCC2C.w, A6
@@ -5320,31 +5320,31 @@ loc_00005336:
 	MOVE.b	D4, First_person_wall_right.w
 	LEA	loc_00006732, A1
 	LEA	-$1(A2), A2
-	MOVEA.l	$FFFFCC24.w, A6
+	MOVEA.l	Object_slot_04_ptr.w, A6
 	CLR.w	D4
 	MOVE.b	-$60(A2), D4
 	BSR.w	ValidateDungeonTileType
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), $8(A6)
-	MOVEA.l	$FFFFCC18.w, A6
+	MOVEA.l	Object_slot_01_ptr.w, A6
 	CLR.w	D4
 	MOVE.b	-$30(A2), D4
 	BSR.w	ValidateDungeonTileType
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), $8(A6)
-	MOVEA.l	$FFFFCC1C.w, A6
+	MOVEA.l	Object_slot_02_ptr.w, A6
 	CLR.w	D4
 	MOVE.b	(A2), D4
 	BSR.w	ValidateDungeonTileType
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), $8(A6)
-	MOVEA.l	$FFFFCC14.w, A6
+	MOVEA.l	Enemy_list_ptr.w, A6
 	CLR.w	D4
 	MOVE.b	$30(A2), D4
 	BSR.w	ValidateDungeonTileType
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), $8(A6)
-	MOVEA.l	$FFFFCC20.w, A6
+	MOVEA.l	Object_slot_03_ptr.w, A6
 	CLR.w	D4
 	MOVE.b	$60(A2), D4
 	BSR.w	ValidateDungeonTileType
@@ -5370,7 +5370,7 @@ loc_00005336:
 	BSR.w	ValidateDungeonTileType
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), $8(A6)
-	MOVEA.l	$FFFFCC28.w, A6
+	MOVEA.l	Object_slot_05_ptr.w, A6
 	CLR.w	D4
 	MOVE.b	$30(A2), D4
 	BSR.w	ValidateDungeonTileType
@@ -5432,31 +5432,31 @@ loc_000054C8:
 	MOVE.b	D4, First_person_wall_right.w
 	LEA	$30(A2), A2
 	LEA	loc_00006732, A1
-	MOVEA.l	$FFFFCC24.w, A6
+	MOVEA.l	Object_slot_04_ptr.w, A6
 	CLR.w	D4
 	MOVE.b	-$2(A2), D4
 	BSR.w	ValidateDungeonTileType
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), $8(A6)
-	MOVEA.l	$FFFFCC18.w, A6
+	MOVEA.l	Object_slot_01_ptr.w, A6
 	CLR.w	D4
 	MOVE.b	-$1(A2), D4
 	BSR.w	ValidateDungeonTileType
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), $8(A6)
-	MOVEA.l	$FFFFCC1C.w, A6
+	MOVEA.l	Object_slot_02_ptr.w, A6
 	CLR.w	D4
 	MOVE.b	(A2), D4
 	BSR.w	ValidateDungeonTileType
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), $8(A6)
-	MOVEA.l	$FFFFCC14.w, A6
+	MOVEA.l	Enemy_list_ptr.w, A6
 	CLR.w	D4
 	MOVE.b	$1(A2), D4
 	BSR.w	ValidateDungeonTileType
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), $8(A6)
-	MOVEA.l	$FFFFCC20.w, A6
+	MOVEA.l	Object_slot_03_ptr.w, A6
 	CLR.w	D4
 	MOVE.b	$2(A2), D4
 	BSR.w	ValidateDungeonTileType
@@ -5482,7 +5482,7 @@ loc_000054C8:
 	BSR.w	ValidateDungeonTileType
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), $8(A6)
-	MOVEA.l	$FFFFCC28.w, A6
+	MOVEA.l	Object_slot_05_ptr.w, A6
 	CLR.w	D4
 	MOVE.b	$1(A2), D4
 	BSR.w	ValidateDungeonTileType
@@ -5545,31 +5545,31 @@ loc_00005660:
 	MOVE.b	D4, Fp_wall_right_2.w
 	LEA	$1(A2), A2
 	LEA	loc_00006732, A1
-	MOVEA.l	$FFFFCC20.w, A6
+	MOVEA.l	Object_slot_03_ptr.w, A6
 	CLR.w	D4
 	MOVE.b	-$60(A2), D4
 	BSR.w	ValidateDungeonTileType
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), $8(A6)
-	MOVEA.l	$FFFFCC14.w, A6
+	MOVEA.l	Enemy_list_ptr.w, A6
 	CLR.w	D4
 	MOVE.b	-$30(A2), D4
 	BSR.w	ValidateDungeonTileType
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), $8(A6)
-	MOVEA.l	$FFFFCC1C.w, A6
+	MOVEA.l	Object_slot_02_ptr.w, A6
 	CLR.w	D4
 	MOVE.b	(A2), D4
 	BSR.w	ValidateDungeonTileType
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), $8(A6)
-	MOVEA.l	$FFFFCC18.w, A6
+	MOVEA.l	Object_slot_01_ptr.w, A6
 	CLR.w	D4
 	MOVE.b	$30(A2), D4
 	BSR.w	ValidateDungeonTileType
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), $8(A6)
-	MOVEA.l	$FFFFCC24.w, A6
+	MOVEA.l	Object_slot_04_ptr.w, A6
 	CLR.w	D4
 	MOVE.b	$60(A2), D4
 	BSR.w	ValidateDungeonTileType
@@ -5583,7 +5583,7 @@ loc_00005660:
 	BSR.w	ValidateDungeonTileType
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), $8(A6)
-	MOVEA.l	$FFFFCC28.w, A6
+	MOVEA.l	Object_slot_05_ptr.w, A6
 	CLR.w	D4
 	MOVE.b	-$30(A2), D4
 	BSR.w	ValidateDungeonTileType
@@ -5659,31 +5659,31 @@ loc_000057F2:
 	MOVE.b	D4, Fp_wall_right_2.w
 	LEA	-$30(A2), A2
 	LEA	loc_00006732, A1
-	MOVEA.l	$FFFFCC20.w, A6
+	MOVEA.l	Object_slot_03_ptr.w, A6
 	CLR.w	D4
 	MOVE.b	-$2(A2), D4
 	BSR.w	ValidateDungeonTileType
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), $8(A6)
-	MOVEA.l	$FFFFCC14.w, A6
+	MOVEA.l	Enemy_list_ptr.w, A6
 	CLR.w	D4
 	MOVE.b	-$1(A2), D4
 	BSR.w	ValidateDungeonTileType
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), $8(A6)
-	MOVEA.l	$FFFFCC1C.w, A6
+	MOVEA.l	Object_slot_02_ptr.w, A6
 	CLR.w	D4
 	MOVE.b	(A2), D4
 	BSR.w	ValidateDungeonTileType
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), $8(A6)
-	MOVEA.l	$FFFFCC18.w, A6
+	MOVEA.l	Object_slot_01_ptr.w, A6
 	CLR.w	D4
 	MOVE.b	$1(A2), D4
 	BSR.w	ValidateDungeonTileType
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), $8(A6)
-	MOVEA.l	$FFFFCC24.w, A6
+	MOVEA.l	Object_slot_04_ptr.w, A6
 	CLR.w	D4
 	MOVE.b	$2(A2), D4
 	BSR.w	ValidateDungeonTileType
@@ -5697,7 +5697,7 @@ loc_000057F2:
 	BSR.w	ValidateDungeonTileType
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), $8(A6)
-	MOVEA.l	$FFFFCC28.w, A6
+	MOVEA.l	Object_slot_05_ptr.w, A6
 	CLR.w	D4
 	MOVE.b	-$1(A2), D4
 	BSR.w	ValidateDungeonTileType
@@ -5809,13 +5809,13 @@ loc_00005A2C:
 	dc.b	0,  0,  0,  1,  0,  1,  0,  0,  0,  0, -1, -1, -1, -1,  0,  0
 
 loc_00005A3C:
-	MOVEA.l	$FFFFCC18.w, A6
+	MOVEA.l	Object_slot_01_ptr.w, A6
 	MOVE.l	#$00980000, $E(A6)
 	MOVE.l	#$00800000, $12(A6)
-	MOVEA.l	$FFFFCC14.w, A6
+	MOVEA.l	Enemy_list_ptr.w, A6
 	MOVE.l	#$00280000, $E(A6)
 	MOVE.l	#$00800000, $12(A6)
-	MOVEA.l	$FFFFCC1C.w, A6
+	MOVEA.l	Object_slot_02_ptr.w, A6
 	MOVE.l	#$00600000, $E(A6)
 	MOVE.l	#$00800000, $12(A6)
 	MOVEA.l	$FFFFCC2C.w, A6
@@ -5824,7 +5824,7 @@ loc_00005A3C:
 	MOVEA.l	$FFFFCC38.w, A6
 	MOVE.l	#$00840000, $E(A6)
 	MOVE.l	#$00680000, $12(A6)
-	MOVEA.l	$FFFFCC28.w, A6
+	MOVEA.l	Object_slot_05_ptr.w, A6
 	MOVE.l	#$00240000, $E(A6)
 	MOVE.l	#$00680000, $12(A6)
 	MOVEA.l	$FFFFCC30.w, A6
@@ -5871,14 +5871,14 @@ loc_00005B52:
 	BSR.w	loc_000047F6
 loc_00005B70:
 	LEA	loc_00006732, A0
-	MOVEA.l	$FFFFCC14.w, A6
+	MOVEA.l	Enemy_list_ptr.w, A6
 	BSR.w	LoadMapTileGfxIndex
-	MOVEA.l	$FFFFCC1C.w, A6
+	MOVEA.l	Object_slot_02_ptr.w, A6
 	BSR.w	LoadMapTileGfxIndex
-	MOVEA.l	$FFFFCC18.w, A6
+	MOVEA.l	Object_slot_01_ptr.w, A6
 	BSR.w	LoadMapTileGfxIndex
 	LEA	loc_00006748, A0
-	MOVEA.l	$FFFFCC28.w, A6
+	MOVEA.l	Object_slot_05_ptr.w, A6
 	BSR.w	LoadMapTileGfxIndex
 	MOVEA.l	$FFFFCC30.w, A6
 	BSR.w	LoadMapTileGfxIndex
@@ -5897,34 +5897,34 @@ loc_00005B70:
 	BSR.w	LoadMapTileGfxIndex
 	MOVEA.l	$FFFFCC4C.w, A6
 	BSR.w	LoadMapTileGfxIndex
-	MOVEA.l	$FFFFCC20.w, A6
+	MOVEA.l	Object_slot_03_ptr.w, A6
 	MOVE.w	#0, $8(A6)
-	MOVEA.l	$FFFFCC24.w, A6
+	MOVEA.l	Object_slot_04_ptr.w, A6
 	MOVE.w	#0, $8(A6)
 	MOVEA.l	$FFFFCC34.w, A6
 	MOVE.w	#0, $8(A6)
 	RTS
 
 loc_00005C02:
-	MOVEA.l	$FFFFCC24.w, A6
+	MOVEA.l	Object_slot_04_ptr.w, A6
 	MOVE.l	#$00900000, $E(A6)
 	MOVE.l	#$006C0000, $12(A6)
-	MOVEA.l	$FFFFCC20.w, A6
+	MOVEA.l	Object_slot_03_ptr.w, A6
 	MOVE.l	#$00280000, $E(A6)
 	MOVE.l	#$006C0000, $12(A6)
-	MOVEA.l	$FFFFCC18.w, A6
+	MOVEA.l	Object_slot_01_ptr.w, A6
 	MOVE.l	#$00940000, $E(A6)
 	MOVE.l	#$00840000, $12(A6)
-	MOVEA.l	$FFFFCC14.w, A6
+	MOVEA.l	Enemy_list_ptr.w, A6
 	MOVE.l	#$00240000, $E(A6)
 	MOVE.l	#$00840000, $12(A6)
-	MOVEA.l	$FFFFCC1C.w, A6
+	MOVEA.l	Object_slot_02_ptr.w, A6
 	MOVE.l	#$005C0000, $E(A6)
 	MOVE.l	#$007C0000, $12(A6)
 	MOVEA.l	$FFFFCC2C.w, A6
 	MOVE.l	#$007C0000, $E(A6)
 	MOVE.l	#$00580000, $12(A6)
-	MOVEA.l	$FFFFCC28.w, A6
+	MOVEA.l	Object_slot_05_ptr.w, A6
 	MOVE.l	#$003C0000, $E(A6)
 	MOVE.l	#$00580000, $12(A6)
 	RTS
@@ -5963,18 +5963,18 @@ loc_00005CD2:
 	BSR.w	loc_0000484C
 loc_00005CF0:
 	LEA	loc_00006732, A0
-	MOVEA.l	$FFFFCC14.w, A6
+	MOVEA.l	Enemy_list_ptr.w, A6
 	BSR.w	LoadMapTileGfxIndex
-	MOVEA.l	$FFFFCC20.w, A6
+	MOVEA.l	Object_slot_03_ptr.w, A6
 	BSR.w	LoadMapTileGfxIndexAlt1
-	MOVEA.l	$FFFFCC1C.w, A6
+	MOVEA.l	Object_slot_02_ptr.w, A6
 	BSR.w	LoadMapTileGfxIndex
-	MOVEA.l	$FFFFCC18.w, A6
+	MOVEA.l	Object_slot_01_ptr.w, A6
 	BSR.w	LoadMapTileGfxIndex
-	MOVEA.l	$FFFFCC24.w, A6
+	MOVEA.l	Object_slot_04_ptr.w, A6
 	BSR.w	LoadMapTileGfxIndexAlt1
 	LEA	loc_00006748, A0
-	MOVEA.l	$FFFFCC28.w, A6
+	MOVEA.l	Object_slot_05_ptr.w, A6
 	BSR.w	LoadMapTileGfxIndexAlt2
 	MOVEA.l	$FFFFCC2C.w, A6
 	BSR.w	LoadMapTileGfxIndexAlt2
@@ -5997,16 +5997,16 @@ loc_00005CF0:
 	RTS
 
 loc_00005D86:
-	MOVEA.l	$FFFFCC14.w, A6
+	MOVEA.l	Enemy_list_ptr.w, A6
 	MOVE.l	#$00200000, $E(A6)
 	MOVE.l	#$00800000, $12(A6)
-	MOVEA.l	$FFFFCC18.w, A6
+	MOVEA.l	Object_slot_01_ptr.w, A6
 	MOVE.l	#$00900000, $E(A6)
 	MOVE.l	#$00800000, $12(A6)
-	MOVEA.l	$FFFFCC1C.w, A6
+	MOVEA.l	Object_slot_02_ptr.w, A6
 	MOVE.l	#$00580000, $E(A6)
 	MOVE.l	#$00800000, $12(A6)
-	MOVEA.l	$FFFFCC28.w, A6
+	MOVEA.l	Object_slot_05_ptr.w, A6
 	MOVE.l	#$00580000, $E(A6)
 	MOVE.l	#$00680000, $12(A6)
 	MOVEA.l	$FFFFCC34.w, A6
@@ -6059,18 +6059,18 @@ loc_00005E9C:
 	BSR.w	loc_000047F6
 loc_00005EBA:
 	LEA	loc_00006732, A0
-	MOVEA.l	$FFFFCC18.w, A6
+	MOVEA.l	Object_slot_01_ptr.w, A6
 	BSR.w	LoadMapTileGfxIndex
-	MOVEA.l	$FFFFCC1C.w, A6
+	MOVEA.l	Object_slot_02_ptr.w, A6
 	BSR.w	LoadMapTileGfxIndex
-	MOVEA.l	$FFFFCC14.w, A6
+	MOVEA.l	Enemy_list_ptr.w, A6
 	BSR.w	LoadMapTileGfxIndex
 	LEA	loc_00006748, A0
 	MOVEA.l	$FFFFCC2C.w, A6
 	BSR.w	LoadMapTileGfxIndex
 	MOVEA.l	$FFFFCC30.w, A6
 	BSR.w	LoadMapTileGfxIndex
-	MOVEA.l	$FFFFCC28.w, A6
+	MOVEA.l	Object_slot_05_ptr.w, A6
 	BSR.w	LoadMapTileGfxIndex
 	MOVEA.l	$FFFFCC34.w, A6
 	BSR.w	LoadMapTileGfxIndex
@@ -6085,9 +6085,9 @@ loc_00005EBA:
 	BSR.w	LoadMapTileGfxIndex
 	MOVEA.l	$FFFFCC48.w, A6
 	BSR.w	LoadMapTileGfxIndex
-	MOVEA.l	$FFFFCC24.w, A6
+	MOVEA.l	Object_slot_04_ptr.w, A6
 	MOVE.w	#0, $8(A6)
-	MOVEA.l	$FFFFCC20.w, A6
+	MOVEA.l	Object_slot_03_ptr.w, A6
 	MOVE.w	#0, $8(A6)
 	MOVEA.l	$FFFFCC38.w, A6
 	MOVE.w	#0, $8(A6)
@@ -7050,7 +7050,7 @@ loc_00006B28:
 	RTS
 
 loc_00006B50:
-	MOVEA.l	$FFFFCC08.w, A6
+	MOVEA.l	Player_entity_ptr.w, A6
 	MOVE.l	#loc_00006B98, $2(A6)
 	CLR.w	D0
 	MOVE.b	$1(A6), D0
@@ -7071,7 +7071,7 @@ loc_00006B98:
 	RTS
 
 loc_00006BA0:
-	MOVEA.l	$FFFFCC08.w, A6
+	MOVEA.l	Player_entity_ptr.w, A6
 	MOVE.b	$7(A6), $7(A5)
 	MOVE.w	$A(A6), $A(A5)
 	MOVE.w	$C(A6), D2
@@ -7082,9 +7082,9 @@ loc_00006BA0:
 	RTS
 
 loc_00006BCA: 
-	MOVEA.l	$FFFFCC08.w, A6
+	MOVEA.l	Player_entity_ptr.w, A6
 	MOVE.b	$7(A6), $7(A5)
-	MOVEA.l	$FFFFCC08.w, A6
+	MOVEA.l	Player_entity_ptr.w, A6
 	CLR.w	D0
 	MOVE.b	$24(A6), D0
 	ADD.w	D0, D0
@@ -7126,21 +7126,21 @@ loc_00006C24:
 	BRA.w	loc_00006D12
 loc_00006C5C:
 	BSR.w	loc_00006D8E
-	MOVEA.l	$FFFFCC14.w, A6
+	MOVEA.l	Enemy_list_ptr.w, A6
 	BSR.w	loc_00006D40
-	MOVEA.l	$FFFFCC1C.w, A6
+	MOVEA.l	Object_slot_02_ptr.w, A6
 	BSR.w	loc_00006D40
 	RTS
 
 loc_00006C72:
 	BSR.w	loc_00006D8E
-	MOVEA.l	$FFFFCC1C.w, A6
+	MOVEA.l	Object_slot_02_ptr.w, A6
 	BSR.w	loc_00006D40
-	MOVEA.l	$FFFFCC24.w, A6
+	MOVEA.l	Object_slot_04_ptr.w, A6
 	BSR.w	loc_00006D40
-	MOVEA.l	$FFFFCC28.w, A6
+	MOVEA.l	Object_slot_05_ptr.w, A6
 	BSR.w	loc_00006D40
-	MOVEA.l	$FFFFCC20.w, A6
+	MOVEA.l	Object_slot_03_ptr.w, A6
 	MOVE.w	#$00C8, D4
 	MOVE.w	#$0140, D5
 	MOVE.w	#0, D6
@@ -7150,27 +7150,27 @@ loc_00006C72:
 
 loc_00006CA8:
 	BSR.w	loc_00006D8E
-	MOVEA.l	$FFFFCC14.w, A6
+	MOVEA.l	Enemy_list_ptr.w, A6
 	BSR.w	loc_00006D40
 	RTS
 
 loc_00006CB6:
 	BSR.w	loc_00006D8E
-	MOVEA.l	$FFFFCC14.w, A6
+	MOVEA.l	Enemy_list_ptr.w, A6
 	BSR.w	loc_00006D40
 	RTS
 
 loc_00006CC4:
 	BSR.w	loc_00006D8E
-	MOVEA.l	$FFFFCC14.w, A6
+	MOVEA.l	Enemy_list_ptr.w, A6
 	BSR.w	loc_00006D40
-	MOVEA.l	$FFFFCC1C.w, A6
+	MOVEA.l	Object_slot_02_ptr.w, A6
 	BSR.w	loc_00006D40
-	MOVEA.l	$FFFFCC20.w, A6
+	MOVEA.l	Object_slot_03_ptr.w, A6
 	BSR.w	loc_00006D40
-	MOVEA.l	$FFFFCC24.w, A6
+	MOVEA.l	Object_slot_04_ptr.w, A6
 	BSR.w	loc_00006D40
-	MOVEA.l	$FFFFCC28.w, A6
+	MOVEA.l	Object_slot_05_ptr.w, A6
 	BSR.w	loc_00006D40
 	MOVEA.l	$FFFFCC2C.w, A6
 	BSR.w	loc_00006D40
@@ -7184,11 +7184,11 @@ loc_00006CC4:
 
 loc_00006D12:
 	BSR.w	loc_00006D8E
-	MOVEA.l	$FFFFCC18.w, A6
+	MOVEA.l	Object_slot_01_ptr.w, A6
 	BSR.w	loc_00006D40
-	MOVEA.l	$FFFFCC20.w, A6
+	MOVEA.l	Object_slot_03_ptr.w, A6
 	BSR.w	loc_00006D40
-	MOVEA.l	$FFFFCC14.w, A6
+	MOVEA.l	Enemy_list_ptr.w, A6
 	MOVE.w	#$00D8, D4
 	MOVE.w	#$0140, D5
 	MOVE.w	#0, D6
@@ -7271,7 +7271,7 @@ loc_00006E1C:
 	CLR.w	D5
 	MOVEQ	#$1D, D7                ; for $1D (29) {
 	CLR.w	D6
-	MOVEA.l	$FFFFCC14.w, A6
+	MOVEA.l	Enemy_list_ptr.w, A6
 	MOVEA.l	Town_npc_data_ptr.w, A0
 	MOVE.l	(A0)+, Npc_init_routine_ptr.w
 loc_00006E32:
@@ -7314,7 +7314,7 @@ loc_00006E96:
 	MOVE.w	Npc_count.w, D7
 	SUBQ.w	#1, D7
 	BLT.b	loc_00006ED0
-	MOVEA.l	$FFFFCC14.w, A6
+	MOVEA.l	Enemy_list_ptr.w, A6
 loc_00006EBE:
 	MOVE.l	(A0)+, $1C(A6)
 	CLR.w	D0
@@ -8396,7 +8396,7 @@ loc_00007CCC:
 	MOVE.l	#WasItGoodStr, $1C(A5)
 	TST.b	Poison_trap_sprung.w
 	BNE.b	loc_00007D32
-	MOVEA.l	$FFFFCC08.w, A6
+	MOVEA.l	Player_entity_ptr.w, A6
 	MOVE.w	$E(A6), Saved_player_x_in_town.w
 	MOVE.w	$12(A6), Town_player_spawn_y.w
 	MOVE.w	Town_camera_tile_x.w, Town_saved_camera_x.w
@@ -9027,7 +9027,7 @@ loc_00008446:
 	LEA	loc_000085A8, A0
 	LEA	(A0,D6.w), A0
 	MOVEQ	#$0000001D, D7
-	MOVEA.l	$FFFFCC14.w, A6
+	MOVEA.l	Enemy_list_ptr.w, A6
 loc_0000846E:
 	LEA	(A0), A1
 	BTST.b	#7, (A6)
@@ -9200,17 +9200,17 @@ loc_00008668: ; Parma soldiers detection area
 	dc.w -1, 3, -3, 3
 
 loc_00008688:
-	MOVEA.l	$FFFFCC14.w, A6
+	MOVEA.l	Enemy_list_ptr.w, A6
 	BSR.w	loc_00008722
-	MOVEA.l	$FFFFCC18.w, A6
+	MOVEA.l	Object_slot_01_ptr.w, A6
 	BSR.w	loc_00008722
-	MOVEA.l	$FFFFCC1C.w, A6
+	MOVEA.l	Object_slot_02_ptr.w, A6
 	BSR.w	loc_00008722
-	MOVEA.l	$FFFFCC20.w, A6
+	MOVEA.l	Object_slot_03_ptr.w, A6
 	BSR.w	loc_00008722
-	MOVEA.l	$FFFFCC24.w, A6
+	MOVEA.l	Object_slot_04_ptr.w, A6
 	BSR.w	loc_00008722
-	MOVEA.l	$FFFFCC28.w, A6
+	MOVEA.l	Object_slot_05_ptr.w, A6
 	BSR.w	loc_00008792
 	MOVEA.l	$FFFFCC2C.w, A6
 	BSR.w	loc_00008792
@@ -9778,7 +9778,7 @@ loc_00008ED4:
 	MOVE.b	D0, (A1)+
 	ADDQ.b	#1, D0
 	DBF	D7, loc_00008ED4
-	MOVEA.l	$FFFFCC14.w, A6 ; Where to load enemies into
+	MOVEA.l	Enemy_list_ptr.w, A6 ; Where to load enemies into
 	LEA	loc_00023E70, A0
 	MOVE.w	Current_encounter_type.w, D0
 	MULU.w	#$C, D0
@@ -9983,7 +9983,7 @@ loc_00009186:
 HandlePlayerTakeDamage:
 	TST.b	Fade_out_lines_mask.w
 	BNE.w	loc_0000926E
-	MOVEA.l	$FFFFCC08.w, A6
+	MOVEA.l	Player_entity_ptr.w, A6
 	MOVE.l	$E(A5), D0
 	SUB.l	$32(A5), D0
 	SWAP	D0
@@ -10099,7 +10099,7 @@ loc_000092EA:
 	RTS
 
 loc_000092F6:
-	MOVEA.l	$FFFFCC14.w, A6
+	MOVEA.l	Enemy_list_ptr.w, A6
 	TST.w	Number_Of_Enemies.w
 	BEQ.w	loc_00009392
 	MOVE.w	#7, D7
@@ -10279,7 +10279,7 @@ loc_0000958E:
 	TST.w	$3C(A5)
 	BEQ.w	loc_000095BC
 	SUBQ.w	#1, $3C(A5)
-	MOVEA.l	$FFFFCC08.w, A6
+	MOVEA.l	Player_entity_ptr.w, A6
 	BSR.w	CalculateAngleBetweenObjects
 	ADDQ.b	#4, D0
 	ANDI.b	#7, D0
@@ -10307,7 +10307,7 @@ loc_000095F4:
 	BNE.w	loc_00009608
 	MOVE.w	#$00F0, $3A(A5)
 loc_00009608:
-	MOVEA.l	$FFFFCC08.w, A6
+	MOVEA.l	Player_entity_ptr.w, A6
 	BSR.w	CalculateAngleBetweenObjects
 	MOVE.b	D0, $18(A5)
 loc_00009614:
@@ -10390,7 +10390,7 @@ loc_00009738:
 	TST.w	$3C(A5)
 	BEQ.w	loc_00009766
 	SUBQ.w	#1, $3C(A5)
-	MOVEA.l	$FFFFCC08.w, A6
+	MOVEA.l	Player_entity_ptr.w, A6
 	BSR.w	CalculateAngleBetweenObjects
 	ADDQ.b	#4, D0
 	ANDI.b	#7, D0
@@ -10400,7 +10400,7 @@ loc_00009766:
 	TST.w	$3A(A5)
 	BEQ.w	loc_0000978A
 	SUBQ.w	#1, $3A(A5)
-	MOVEA.l	$FFFFCC08.w, A6
+	MOVEA.l	Player_entity_ptr.w, A6
 	BSR.w	CalculateAngleBetweenObjects
 	MOVE.b	D0, $18(A5)
 	CLR.l	$32(A5)
@@ -10412,7 +10412,7 @@ loc_0000978A:
 	BNE.w	loc_0000979E
 	MOVE.w	#$00B4, $3A(A5)
 loc_0000979E:
-	MOVEA.l	$FFFFCC08.w, A6
+	MOVEA.l	Player_entity_ptr.w, A6
 	BSR.w	CalculateAngleBetweenObjects
 	MOVE.b	D0, $18(A5)
 loc_000097AA:
@@ -10475,14 +10475,14 @@ loc_00009866:
 	TST.w	$3C(A5)
 	BEQ.w	loc_00009894
 	SUBQ.w	#1, $3C(A5)
-	MOVEA.l	$FFFFCC08.w, A6
+	MOVEA.l	Player_entity_ptr.w, A6
 	BSR.w	CalculateAngleBetweenObjects
 	ADDQ.b	#4, D0
 	ANDI.b	#7, D0
 	MOVE.b	D0, $18(A5)
 	BRA.w	loc_000098E8
 loc_00009894:
-	MOVEA.l	$FFFFCC08.w, A6
+	MOVEA.l	Player_entity_ptr.w, A6
 	MOVE.w	$E(A6), D0
 	SUB.w	$E(A5), D0
 	BGE.w	loc_000098A6
@@ -10498,14 +10498,14 @@ loc_000098BC:
 	CMPI.w	#$0040, D0
 	BLE.w	loc_000098DC
 loc_000098C4:
-	MOVEA.l	$FFFFCC08.w, A6
+	MOVEA.l	Player_entity_ptr.w, A6
 	BSR.w	CalculateAngleBetweenObjects
 	MOVE.b	D0, $18(A5)
 	CLR.l	$32(A5)
 	CLR.l	$36(A5)
 	BRA.w	loc_000098F0
 loc_000098DC:
-	MOVEA.l	$FFFFCC08.w, A6
+	MOVEA.l	Player_entity_ptr.w, A6
 	BSR.w	CalculateAngleBetweenObjects
 	MOVE.b	D0, $18(A5)
 loc_000098E8:
@@ -10567,7 +10567,7 @@ loc_000099A4:
 	TST.w	$3C(A5)
 	BEQ.w	loc_000099D2
 	SUBQ.w	#1, $3C(A5)
-	MOVEA.l	$FFFFCC08.w, A6
+	MOVEA.l	Player_entity_ptr.w, A6
 	BSR.w	CalculateAngleBetweenObjects
 	ADDQ.b	#4, D0
 	ANDI.b	#7, D0
@@ -10583,7 +10583,7 @@ loc_000099D2:
 	ADDI.w	#$0078, D1
 	MOVE.w	D1, $3C(A5)
 loc_000099F0:
-	MOVEA.l	$FFFFCC08.w, A6
+	MOVEA.l	Player_entity_ptr.w, A6
 	BSR.w	CalculateAngleBetweenObjects
 	MOVE.b	D0, $18(A5)
 loc_000099FC:
@@ -10644,7 +10644,7 @@ loc_00009AB8:
 	TST.w	$3C(A5)
 	BEQ.w	loc_00009AE6
 	SUBQ.w	#1, $3C(A5)	
-	MOVEA.l	$FFFFCC08.w, A6	
+	MOVEA.l	Player_entity_ptr.w, A6	
 	BSR.w	CalculateAngleBetweenObjects	
 	ADDQ.b	#4, D0	
 	ANDI.b	#7, D0	
@@ -10654,7 +10654,7 @@ loc_00009AE6:
 	TST.w	$3A(A5)
 	BEQ.w	loc_00009B0A
 	SUBQ.w	#1, $3A(A5)
-	MOVEA.l	$FFFFCC08.w, A6
+	MOVEA.l	Player_entity_ptr.w, A6
 	BSR.w	CalculateAngleBetweenObjects
 	MOVE.b	D0, $18(A5)
 	CLR.l	$32(A5)
@@ -10666,7 +10666,7 @@ loc_00009B0A:
 	BNE.w	loc_00009B1E
 	MOVE.w	#$00B4, $3A(A5)
 loc_00009B1E:
-	MOVEA.l	$FFFFCC08.w, A6
+	MOVEA.l	Player_entity_ptr.w, A6
 	BSR.w	CalculateAngleBetweenObjects
 	MOVE.b	D0, $18(A5)
 loc_00009B2A:
@@ -10715,7 +10715,7 @@ loc_00009BC2:
 	TST.w	$3C(A5)
 	BEQ.w	loc_00009BE8
 	SUBQ.w	#1, $3C(A5)
-	MOVEA.l	$FFFFCC08.w, A6
+	MOVEA.l	Player_entity_ptr.w, A6
 	BSR.w	CalculateAngleBetweenObjects
 	ADDQ.b	#4, D0
 	ANDI.b	#7, D0
@@ -10741,7 +10741,7 @@ loc_00009C1A:
 	MOVE.w	#$0078, $3A(A5)
 	BRA.w	loc_00009C42
 loc_00009C2A:
-	MOVEA.l	$FFFFCC08.w, A6
+	MOVEA.l	Player_entity_ptr.w, A6
 	BSR.w	CalculateAngleBetweenObjects
 	MOVE.b	D0, $18(A5)
 	CLR.l	$32(A5)
@@ -10764,7 +10764,7 @@ loc_00009C62:
 	CLR.w	D0
 	MOVE.b	$1(A6), D0
 	LEA	(A6,D0.w), A4
-	MOVEA.l	$FFFFCC08.w, A6
+	MOVEA.l	Player_entity_ptr.w, A6
 	BTST.b	#7, (A4)
 	BNE.w	loc_00009D00
 	MOVE.w	$E(A5), D0
@@ -10792,7 +10792,7 @@ loc_00009CAA:
 	MOVE.b	#1, $6(A4)
 	MOVE.l	#loc_00009D56, $2(A4)
 	MOVE.w	$2C(A5), $2C(A4)
-	MOVEA.l	$FFFFCC08.w, A6
+	MOVEA.l	Player_entity_ptr.w, A6
 	BSR.w	CalculateAngleBetweenObjects
 	MOVE.b	D0, $18(A4)
 	MOVE.b	D0, $18(A5)
@@ -10870,7 +10870,7 @@ loc_00009DF2:
 	LEA	(A5,D0.w), A6
 	MOVE.b	$1(A6), D1
 	LEA	(A6,D1.w), A4
-	MOVEA.l	$FFFFCC08.w, A6
+	MOVEA.l	Player_entity_ptr.w, A6
 	BSR.w	CalculateAngleBetweenObjects
 	MOVE.b	D0, $18(A5)
 	BTST.b	#7, (A4)
@@ -10943,7 +10943,7 @@ loc_00009F12:
 	EOR.w	D0, D1
 	BTST.l	#4, D1
 	BEQ.w	loc_00009F34
-	MOVEA.l	$FFFFCC08.w, A6
+	MOVEA.l	Player_entity_ptr.w, A6
 	BSR.w	CalculateAngleBetweenObjects
 	MOVE.b	D0, $18(A5)
 loc_00009F34:
@@ -10995,7 +10995,7 @@ loc_00009FCA:
 	TST.w	$3C(A5)
 	BEQ.w	loc_00009FF8
 	SUBQ.w	#1, $3C(A5)
-	MOVEA.l	$FFFFCC08.w, A6
+	MOVEA.l	Player_entity_ptr.w, A6
 	BSR.w	CalculateAngleBetweenObjects
 	ADDQ.b	#4, D0
 	ANDI.b	#7, D0
@@ -11016,14 +11016,14 @@ loc_0000A008:
 	ANDI.b	#7, D0
 	BRA.w	loc_0000A034
 loc_0000A02C:
-	MOVEA.l	$FFFFCC08.w, A6
+	MOVEA.l	Player_entity_ptr.w, A6
 	BSR.w	CalculateAngleBetweenObjects
 loc_0000A034:
 	MOVE.b	D0, $18(A5)
 	MOVE.w	#$0046, $3A(A5)
 	BRA.w	loc_0000A05A
 loc_0000A042:
-	MOVEA.l	$FFFFCC08.w, A6
+	MOVEA.l	Player_entity_ptr.w, A6
 	BSR.w	CalculateAngleBetweenObjects
 	MOVE.b	D0, $18(A5)
 	CLR.l	$32(A5)
@@ -11088,7 +11088,7 @@ loc_0000A10E:
 	TST.w	$3C(A5)
 	BEQ.w	loc_0000A13C
 	SUBQ.w	#1, $3C(A5)
-	MOVEA.l	$FFFFCC08.w, A6
+	MOVEA.l	Player_entity_ptr.w, A6
 	BSR.w	CalculateAngleBetweenObjects
 	ADDQ.b	#4, D0
 	ANDI.b	#7, D0
@@ -11109,7 +11109,7 @@ loc_0000A14C:
 	MOVE.w	#$0050, $3A(A5)
 	BRA.w	loc_0000A18A
 loc_0000A172:
-	MOVEA.l	$FFFFCC08.w, A6
+	MOVEA.l	Player_entity_ptr.w, A6
 	BSR.w	CalculateAngleBetweenObjects
 	MOVE.b	D0, $18(A5)
 	CLR.l	$32(A5)
@@ -11231,7 +11231,7 @@ loc_0000A310:
 	TST.w	$3C(A5)
 	BEQ.w	loc_0000A334
 	SUBQ.w	#1, $3C(A5)
-	MOVEA.l	$FFFFCC08.w, A6
+	MOVEA.l	Player_entity_ptr.w, A6
 	BSR.w	CalculateAngleBetweenObjects
 	MOVE.b	D0, $18(A5)
 	CLR.l	$32(A5)
@@ -11244,7 +11244,7 @@ loc_0000A334:
 loc_0000A342:
 	SUBQ.w	#1, $3C(A5)
 	BLE.w	loc_0000A35A
-	MOVEA.l	$FFFFCC08.w, A6
+	MOVEA.l	Player_entity_ptr.w, A6
 	JSR	loc_00009270(PC)
 	MOVE.b	D0, $18(A5)
 	BRA.w	loc_0000A3D2
@@ -11350,7 +11350,7 @@ loc_0000A4AE:
 	LEA	(A5,D0.w), A6
 	MOVE.b	$1(A6), D1
 	LEA	(A6,D1.w), A4
-	MOVEA.l	$FFFFCC08.w, A6
+	MOVEA.l	Player_entity_ptr.w, A6
 	BSR.w	CalculateAngleBetweenObjects
 	MOVE.b	D0, $18(A5)
 	BTST.b	#7, (A4)
@@ -11439,7 +11439,7 @@ loc_0000A5F6:
 	EOR.w	D0, D1
 	BTST.l	#4, D1
 	BEQ.w	loc_0000A628
-	MOVEA.l	$FFFFCC08.w, A6
+	MOVEA.l	Player_entity_ptr.w, A6
 	BSR.w	CalculateAngleBetweenObjects
 	MOVE.b	D0, $18(A5)
 	BRA.w	loc_0000A628
@@ -11507,7 +11507,7 @@ loc_0000A6E0:
 	LEA	(A5,D0.w), A6
 	MOVE.b	$1(A6), D1
 	LEA	(A6,D1.w), A4
-	MOVEA.l	$FFFFCC08.w, A6
+	MOVEA.l	Player_entity_ptr.w, A6
 	BSR.w	CalculateAngleBetweenObjects
 	MOVE.b	D0, $18(A5)
 	BTST.b	#7, (A4)
@@ -11618,7 +11618,7 @@ loc_0000A86E:
 loc_0000A88E:
 	SUBQ.w	#1, $3C(A5)
 	BLE.w	loc_0000A8A6
-	MOVEA.l	$FFFFCC08.w, A6
+	MOVEA.l	Player_entity_ptr.w, A6
 	JSR	loc_00009270(PC)
 	MOVE.b	D0, $18(A5)
 	BRA.w	loc_0000A9AC
@@ -11632,7 +11632,7 @@ loc_0000A8BC:
 	TST.w	$3C(A5)
 	BEQ.w	loc_0000A8D8
 	SUBQ.w	#1, $3C(A5)
-	MOVEA.l	$FFFFCC08.w, A6
+	MOVEA.l	Player_entity_ptr.w, A6
 	BSR.w	CalculateAngleBetweenObjects
 	MOVE.b	D0, $18(A5)
 	BRA.w	loc_0000A9AC
@@ -11813,7 +11813,7 @@ loc_0000AB38:
 loc_0000AB58:
 	SUBQ.w	#1, $3C(A5)
 	BLE.w	loc_0000AB70
-	MOVEA.l	$FFFFCC08.w, A6
+	MOVEA.l	Player_entity_ptr.w, A6
 	JSR	loc_00009270(PC)
 	MOVE.b	D0, $18(A5)
 	BRA.w	loc_0000AC76
@@ -11827,7 +11827,7 @@ loc_0000AB86:
 	TST.w	$3C(A5)	
 	BEQ.w	loc_0000ABA2	
 	SUBQ.w	#1, $3C(A5)	
-	MOVEA.l	$FFFFCC08.w, A6	
+	MOVEA.l	Player_entity_ptr.w, A6	
 	BSR.w	CalculateAngleBetweenObjects	
 	MOVE.b	D0, $18(A5)	
 	BRA.w	loc_0000AC76	
@@ -11841,7 +11841,7 @@ loc_0000ABB8:
 	TST.w	$3C(A5)
 	BEQ.w	loc_0000ABD4
 	SUBQ.w	#1, $3C(A5)
-	MOVEA.l	$FFFFCC08.w, A6
+	MOVEA.l	Player_entity_ptr.w, A6
 	JSR	CalculateAngleBetweenObjects(PC)
 	MOVE.b	D0, $18(A5)
 	BRA.w	loc_0000AC7E
@@ -12047,7 +12047,7 @@ loc_0000AEA6:
 	CLR.b	$3A(A5)
 loc_0000AECE:
 	ADDQ.b	#1, $3A(A5)
-	MOVEA.l	$FFFFCC08.w, A6
+	MOVEA.l	Player_entity_ptr.w, A6
 	BSR.w	CalculateAngleBetweenObjects
 	ADDQ.b	#2, D0
 	ANDI.w	#7, D0
@@ -12196,7 +12196,7 @@ loc_0000B0AC:
 	CLR.b	$3A(A5)
 loc_0000B0DC:
 	ADDQ.b	#1, $3A(A5)
-	MOVEA.l	$FFFFCC08.w, A6
+	MOVEA.l	Player_entity_ptr.w, A6
 	BSR.w	CalculateAngleBetweenObjects
 	ADDQ.b	#2, D0
 	ANDI.w	#7, D0
@@ -12232,7 +12232,7 @@ loc_0000B12E:
 	BRA.w	loc_0000B1F2
 loc_0000B154:
 	MOVE.b	#$21, $3B(A5)
-	MOVEA.l	$FFFFCC08.w, A6
+	MOVEA.l	Player_entity_ptr.w, A6
 	BSR.w	CalculateAngleBetweenObjects
 	ADDQ.b	#2, D0
 	ANDI.w	#7, D0
@@ -12390,7 +12390,7 @@ loc_0000B36C:
 	CLR.b	$3C(A5)
 loc_0000B394:
 	ADDQ.b	#1, $3C(A5)
-	MOVEA.l	$FFFFCC08.w, A6
+	MOVEA.l	Player_entity_ptr.w, A6
 	BSR.w	CalculateAngleBetweenObjects
 	ADDQ.b	#2, D0
 	ANDI.w	#7, D0
@@ -12437,7 +12437,7 @@ loc_0000B424:
 	BLT.b	loc_0000B478
 	LEA	(A6), A4
 	LEA	(A4), A5
-	MOVEA.l	$FFFFCC08.w, A6
+	MOVEA.l	Player_entity_ptr.w, A6
 	BSR.w	CalculateAngleBetweenObjects
 	ADDQ.b	#2, D0
 	ANDI.w	#7, D0
@@ -12734,33 +12734,33 @@ loc_0000B7C4:
 	BRA.w	loc_0000E520
 	BRA.w	loc_0000D9CA
 loc_0000B7FC:
-	MOVEA.l	$FFFFCC14.w, A6
+	MOVEA.l	Enemy_list_ptr.w, A6
 	MOVE.w	#$0032, $2C(A6)
 	MOVE.w	#$03E8, $28(A6)
-	MOVEA.l	$FFFFCC20.w, A6
+	MOVEA.l	Object_slot_03_ptr.w, A6
 	MOVE.w	#$0032, $2C(A6)
-	MOVEA.l	$FFFFCC24.w, A6
+	MOVEA.l	Object_slot_04_ptr.w, A6
 	MOVE.w	#$0032, $2C(A6)
 	BRA.w	loc_0000B870
 loc_0000B824:
-	MOVEA.l	$FFFFCC14.w, A6
+	MOVEA.l	Enemy_list_ptr.w, A6
 	MOVE.w	#$0186, $2C(A6)
 	MOVE.w	#$1388, $28(A6)
-	MOVEA.l	$FFFFCC20.w, A6
+	MOVEA.l	Object_slot_03_ptr.w, A6
 	MOVE.w	#$0186, $2C(A6)
-	MOVEA.l	$FFFFCC24.w, A6
+	MOVEA.l	Object_slot_04_ptr.w, A6
 	MOVE.w	#$0186, $2C(A6)
 	BRA.w	loc_0000B870
 loc_0000B84C:
-	MOVEA.l	$FFFFCC14.w, A6
+	MOVEA.l	Enemy_list_ptr.w, A6
 	MOVE.w	#$01D6, $2C(A6)
 	MOVE.w	#$1388, $28(A6)
-	MOVEA.l	$FFFFCC20.w, A6
+	MOVEA.l	Object_slot_03_ptr.w, A6
 	MOVE.w	#$01D6, $2C(A6)
-	MOVEA.l	$FFFFCC24.w, A6
+	MOVEA.l	Object_slot_04_ptr.w, A6
 	MOVE.w	#$01D6, $2C(A6)
 loc_0000B870:
-	MOVEA.l	$FFFFCC14.w, A6
+	MOVEA.l	Enemy_list_ptr.w, A6
 	CLR.w	Boss_ai_state.w
 	CLR.b	$1B(A6)
 	LEA	loc_00022ECA, A0
@@ -12788,7 +12788,7 @@ loc_0000B870:
 loc_0000B8F2:
 	BSR.w	InitNextSpriteSlot
 	DBF	D7, loc_0000B8F2
-	MOVEA.l	$FFFFCC1C.w, A6
+	MOVEA.l	Object_slot_02_ptr.w, A6
 	LEA	loc_00022EFA, A0
 	BSET.b	#7, (A6)
 	MOVE.b	#$20, $7(A6)
@@ -12811,7 +12811,7 @@ loc_0000B8F2:
 loc_0000B960:
 	BSR.w	InitNextSpriteSlot
 	DBF	D7, loc_0000B960
-	MOVEA.l	$FFFFCC20.w, A6
+	MOVEA.l	Object_slot_03_ptr.w, A6
 	LEA	loc_00022F2A, A0
 	BSET.b	#7, (A6)
 	MOVE.b	#$20, $7(A6)
@@ -12834,7 +12834,7 @@ loc_0000B960:
 loc_0000B9CE:
 	BSR.w	InitNextSpriteSlot
 	DBF	D7, loc_0000B9CE
-	MOVEA.l	$FFFFCC24.w, A6
+	MOVEA.l	Object_slot_04_ptr.w, A6
 	LEA	loc_00022F32, A0
 	BSET.b	#7, (A6)
 	MOVE.b	#$20, $7(A6)
@@ -12857,7 +12857,7 @@ loc_0000B9CE:
 loc_0000BA3C:
 	BSR.w	InitNextSpriteSlot
 	DBF	D7, loc_0000BA3C
-	MOVEA.l	$FFFFCC28.w, A6
+	MOVEA.l	Object_slot_05_ptr.w, A6
 	LEA	loc_00022F3A, A0
 	BSET.b	#7, (A6)
 	MOVE.b	#$20, $7(A6)
@@ -12970,7 +12970,7 @@ loc_0000BBCE:
 	MOVE.w	#4, Boss_ai_state.w
 	MOVE.b	#$64, $1A(A5)
 loc_0000BBE0:
-	MOVEA.l	$FFFFCC1C.w, A6
+	MOVEA.l	Object_slot_02_ptr.w, A6
 	ADDI.l	#$1000, $E(A6)
 	ADDI.l	#$4000, $12(A6)
 	RTS
@@ -12982,7 +12982,7 @@ loc_0000BBF6:
 	MOVE.l	#$FFFFC000, $32(A5)
 	MOVE.l	#$FFFF8000, $36(A5)
 loc_0000BC12:
-	MOVEA.l	$FFFFCC1C.w, A6
+	MOVEA.l	Object_slot_02_ptr.w, A6
 	SUBI.l	#$1000, $E(A6)
 	SUBI.l	#$4000, $12(A6)
 	RTS
@@ -13030,16 +13030,16 @@ loc_0000BC9E:
 	BGT.b	loc_0000BD02
 	MOVE.w	#$006E, $E(A5)
 	MOVE.w	#$0060, $12(A5)
-	MOVEA.l	$FFFFCC28.w, A6
+	MOVEA.l	Object_slot_05_ptr.w, A6
 	MOVE.w	#$00DA, $E(A6)
 	MOVE.w	#$0070, $12(A6)
-	MOVEA.l	$FFFFCC24.w, A6
+	MOVEA.l	Object_slot_04_ptr.w, A6
 	MOVE.w	#$00C8, $E(A6)
 	MOVE.w	#$0070, $12(A6)
-	MOVEA.l	$FFFFCC20.w, A6
+	MOVEA.l	Object_slot_03_ptr.w, A6
 	MOVE.w	#$00B2, $E(A6)
 	MOVE.w	#$0070, $12(A6)
-	MOVEA.l	$FFFFCC1C.w, A6
+	MOVEA.l	Object_slot_02_ptr.w, A6
 	MOVE.w	#$006E, $E(A6)
 	MOVE.w	#$006C, $12(A6)
 	MOVE.w	#0, Boss_ai_state.w
@@ -13052,17 +13052,17 @@ loc_0000BD04:
 	CLR.l	$32(A5)
 	MOVE.l	#$8000, $36(A5)
 	MOVE.b	#0, $1B(A5)
-	MOVEA.l	$FFFFCC1C.w, A6
+	MOVEA.l	Object_slot_02_ptr.w, A6
 	MOVE.l	#loc_0000C044, $2(A6)
 	CLR.l	$32(A6)
 	MOVE.l	#$8000, $36(A6)
-	MOVEA.l	$FFFFCC20.w, A6
+	MOVEA.l	Object_slot_03_ptr.w, A6
 	CLR.l	$32(A6)
 	MOVE.l	#$8000, $36(A6)
-	MOVEA.l	$FFFFCC24.w, A6
+	MOVEA.l	Object_slot_04_ptr.w, A6
 	CLR.l	$32(A6)
 	MOVE.l	#$8000, $36(A6)
-	MOVEA.l	$FFFFCC28.w, A6
+	MOVEA.l	Object_slot_05_ptr.w, A6
 	CLR.l	$32(A6)
 	MOVE.l	#$8000, $36(A6)
 	BSR.w	UpdateSpritePositionAndRender
@@ -13078,25 +13078,25 @@ loc_0000BD76:
 	ADDI.l	#$4000, $36(A5)
 	MOVE.w	#1, D0
 loc_0000BD8A:
-	MOVEA.l	$FFFFCC1C.w, A6
+	MOVEA.l	Object_slot_02_ptr.w, A6
 	TST.l	$36(A6)
 	BLE.b	loc_0000BDA0
 	ADDI.l	#$4000, $36(A6)
 	MOVE.w	#1, D0
 loc_0000BDA0:
-	MOVEA.l	$FFFFCC20.w, A6
+	MOVEA.l	Object_slot_03_ptr.w, A6
 	TST.l	$36(A6)
 	BLE.b	loc_0000BDB6
 	ADDI.l	#$4000, $36(A6)
 	MOVE.w	#1, D0
 loc_0000BDB6:
-	MOVEA.l	$FFFFCC24.w, A6
+	MOVEA.l	Object_slot_04_ptr.w, A6
 	TST.l	$36(A6)
 	BLE.b	loc_0000BDCC
 	ADDI.l	#$4000, $36(A6)
 	MOVE.w	#1, D0
 loc_0000BDCC:
-	MOVEA.l	$FFFFCC28.w, A6
+	MOVEA.l	Object_slot_05_ptr.w, A6
 	TST.l	$36(A6)
 	BLE.b	loc_0000BDE2
 	ADDI.l	#$4000, $36(A6)
@@ -13210,10 +13210,10 @@ loc_0000BF14:
 	BEQ.w	loc_0000BF84
 	MOVE.l	$32(A5), D0
 	MOVE.l	$36(A5), D1
-	MOVEA.l	$FFFFCC1C.w, A6
+	MOVEA.l	Object_slot_02_ptr.w, A6
 	MOVE.l	D0, $32(A6)
 	MOVE.l	D1, $36(A6)
-	MOVEA.l	$FFFFCC20.w, A6
+	MOVEA.l	Object_slot_03_ptr.w, A6
 	MOVE.l	D0, D2
 	MOVE.l	D0, D4
 	MOVE.l	D1, D3
@@ -13224,14 +13224,14 @@ loc_0000BF14:
 	SUB.l	D5, D3
 	MOVE.l	D2, $32(A6)
 	MOVE.l	D3, $36(A6)
-	MOVEA.l	$FFFFCC24.w, A6
+	MOVEA.l	Object_slot_04_ptr.w, A6
 	MOVE.l	D0, D2
 	MOVE.l	D1, D3
 	ASR.l	#1, D2
 	ASR.l	#1, D3
 	MOVE.l	D2, $32(A6)
 	MOVE.l	D3, $36(A6)
-	MOVEA.l	$FFFFCC28.w, A6
+	MOVEA.l	Object_slot_05_ptr.w, A6
 	MOVE.l	D0, D2
 	MOVE.l	D1, D3
 	ASR.l	#2, D2
@@ -13240,16 +13240,16 @@ loc_0000BF14:
 	MOVE.l	D3, $36(A6)
 	BRA.w	UpdateSpritePositionAndRender
 loc_0000BF84:
-	MOVEA.l	$FFFFCC1C.w, A6
+	MOVEA.l	Object_slot_02_ptr.w, A6
 	CLR.l	$32(A6)
 	CLR.l	$36(A6)
-	MOVEA.l	$FFFFCC20.w, A6
+	MOVEA.l	Object_slot_03_ptr.w, A6
 	CLR.l	$32(A6)
 	CLR.l	$36(A6)
-	MOVEA.l	$FFFFCC24.w, A6
+	MOVEA.l	Object_slot_04_ptr.w, A6
 	CLR.l	$32(A6)
 	CLR.l	$36(A6)
-	MOVEA.l	$FFFFCC28.w, A6
+	MOVEA.l	Object_slot_05_ptr.w, A6
 	CLR.l	$32(A6)
 	CLR.l	$36(A6)
 	BRA.w	loc_0000BFE0
@@ -13266,7 +13266,7 @@ UpdateSpritePositionAndRender:
 	CLR.l	$32(A5)
 	CLR.l	$36(A5)
 loc_0000BFE0:
-	MOVEA.l	$FFFFCC18.w, A6
+	MOVEA.l	Object_slot_01_ptr.w, A6
 	LEA	loc_00022F72, A0
 	CLR.w	D0
 	MOVE.b	$1B(A5), D0
@@ -13325,7 +13325,7 @@ loc_0000C09A:
 	ADD.l	D0, $E(A5)
 	ADD.l	D1, $12(A5)
 	BSR.w	loc_0000CB72
-	MOVEA.l	$FFFFCC14.w, A6
+	MOVEA.l	Enemy_list_ptr.w, A6
 	TST.w	$28(A6)
 	BLE.b	loc_0000C0BC
 	BSR.w	loc_0000CA10
@@ -13351,7 +13351,7 @@ loc_0000C0F4:
 	ADD.l	D0, $E(A5)
 	ADD.l	D1, $12(A5)
 	BSR.w	loc_0000CB72
-	MOVEA.l	$FFFFCC14.w, A6
+	MOVEA.l	Enemy_list_ptr.w, A6
 	TST.w	$28(A6)
 	BLE.b	loc_0000C116
 	BSR.w	loc_0000CA10
@@ -13414,7 +13414,7 @@ InitNextSpriteSlot:
 loc_0000C1DA:
 	dc.b	$2C, $78, $CC, $14, $3E, $3C, $00, $1F, $08, $96, $00, $07, $42, $40, $10, $2E, $00, $01, $4D, $F6, $00, $00, $51, $CF, $FF, $F0, $4E, $75 
 loc_0000C1F6:
-	MOVEA.l	$FFFFCC08.w, A6
+	MOVEA.l	Player_entity_ptr.w, A6
 	MOVE.w	$E(A6), D0
 	CMPI.w	#$0050, D0
 	BLE.b	loc_0000C20A
@@ -13426,44 +13426,44 @@ loc_0000C20A:
 	RTS
 
 loc_0000C20E:
-	MOVEA.l	$FFFFCC14.w, A6
+	MOVEA.l	Enemy_list_ptr.w, A6
 	MOVE.w	#$003C, $2C(A6)
-	MOVEA.l	$FFFFCC28.w, A6
+	MOVEA.l	Object_slot_05_ptr.w, A6
 	MOVE.w	#$003C, $2C(A6)
-	MOVEA.l	$FFFFCC24.w, A6
+	MOVEA.l	Object_slot_04_ptr.w, A6
 	MOVE.w	#$003C, $2C(A6)
-	MOVEA.l	$FFFFCC1C.w, A6
+	MOVEA.l	Object_slot_02_ptr.w, A6
 	MOVE.w	#$0AF0, $28(A6)
-	MOVEA.l	$FFFFCC20.w, A6
+	MOVEA.l	Object_slot_03_ptr.w, A6
 	MOVE.w	#$0AF0, $28(A6)
 	BRA.w	loc_0000C2AC
 loc_0000C244:
-	MOVEA.l	$FFFFCC14.w, A6
+	MOVEA.l	Enemy_list_ptr.w, A6
 	MOVE.w	#$0064, $2C(A6)
-	MOVEA.l	$FFFFCC28.w, A6
+	MOVEA.l	Object_slot_05_ptr.w, A6
 	MOVE.w	#$0064, $2C(A6)
-	MOVEA.l	$FFFFCC24.w, A6
+	MOVEA.l	Object_slot_04_ptr.w, A6
 	MOVE.w	#$0064, $2C(A6)
-	MOVEA.l	$FFFFCC1C.w, A6
+	MOVEA.l	Object_slot_02_ptr.w, A6
 	MOVE.w	#$0DAC, $28(A6)
-	MOVEA.l	$FFFFCC20.w, A6
+	MOVEA.l	Object_slot_03_ptr.w, A6
 	MOVE.w	#$0DAC, $28(A6)
 	BRA.w	loc_0000C2AC
 loc_0000C27A:
-	MOVEA.l	$FFFFCC14.w, A6
+	MOVEA.l	Enemy_list_ptr.w, A6
 	MOVE.w	#$00B4, $2C(A6)
-	MOVEA.l	$FFFFCC28.w, A6
+	MOVEA.l	Object_slot_05_ptr.w, A6
 	MOVE.w	#$00B4, $2C(A6)
-	MOVEA.l	$FFFFCC24.w, A6
+	MOVEA.l	Object_slot_04_ptr.w, A6
 	MOVE.w	#$00B4, $2C(A6)
-	MOVEA.l	$FFFFCC1C.w, A6
+	MOVEA.l	Object_slot_02_ptr.w, A6
 	MOVE.w	#$1D4C, $28(A6)
-	MOVEA.l	$FFFFCC20.w, A6
+	MOVEA.l	Object_slot_03_ptr.w, A6
 	MOVE.w	#$1D4C, $28(A6)
 loc_0000C2AC:
 	CLR.b	Boss_defeated_flag.w
 	CLR.b	Boss_death_anim_done.w
-	MOVEA.l	$FFFFCC14.w, A6
+	MOVEA.l	Enemy_list_ptr.w, A6
 	CLR.b	$1B(A6)
 	CLR.w	$3A(A6)
 	CLR.w	$3C(A6)
@@ -13485,7 +13485,7 @@ loc_0000C2AC:
 loc_0000C30E:
 	BSR.w	InitNextSpriteSlot
 	DBF	D7, loc_0000C30E
-	MOVEA.l	$FFFFCC18.w, A6
+	MOVEA.l	Object_slot_01_ptr.w, A6
 	CLR.b	$1B(A6)
 	CLR.w	$3C(A6)
 	LEA	loc_000230B6, A0
@@ -13506,7 +13506,7 @@ loc_0000C30E:
 loc_0000C36C:
 	BSR.w	InitNextSpriteSlot
 	DBF	D7, loc_0000C36C
-	MOVEA.l	$FFFFCC1C.w, A6
+	MOVEA.l	Object_slot_02_ptr.w, A6
 	BSET.b	#7, (A6)
 	CLR.b	$1B(A6)
 	CLR.w	$3C(A6)
@@ -13532,7 +13532,7 @@ loc_0000C36C:
 loc_0000C3E4:
 	BSR.w	InitNextSpriteSlot
 	DBF	D7, loc_0000C3E4
-	MOVEA.l	$FFFFCC20.w, A6
+	MOVEA.l	Object_slot_03_ptr.w, A6
 	BSET.b	#7, (A6)
 	CLR.b	$1B(A6)
 	CLR.w	$3C(A6)
@@ -13554,7 +13554,7 @@ loc_0000C3E4:
 loc_0000C444:
 	BSR.w	InitNextSpriteSlot
 	DBF	D7, loc_0000C444
-	MOVEA.l	$FFFFCC24.w, A6
+	MOVEA.l	Object_slot_04_ptr.w, A6
 	BSET.b	#7, (A6)
 	MOVE.b	#$F8, $2E(A6)
 	MOVE.b	#8, $2F(A6)
@@ -13565,7 +13565,7 @@ loc_0000C444:
 	MOVE.b	#$20, $7(A6)
 	MOVE.b	#5, $6(A6)
 	MOVE.l	#loc_0000C4CA, $2(A6)
-	MOVEA.l	$FFFFCC28.w, A6
+	MOVEA.l	Object_slot_05_ptr.w, A6
 	BSET.b	#7, (A6)
 	MOVE.b	#$F8, $2E(A6)
 	MOVE.b	#8, $2F(A6)
@@ -13581,11 +13581,11 @@ loc_0000C444:
 	
 loc_0000C4CA:
 	ADDQ.b	#1, $1B(A5)
-	MOVEA.l	$FFFFCC1C.w, A6
+	MOVEA.l	Object_slot_02_ptr.w, A6
 	BRA.w	loc_0000C4DE
 loc_0000C4D6:
 	ADDQ.b	#1, $1B(A5)
-	MOVEA.l	$FFFFCC20.w, A6
+	MOVEA.l	Object_slot_03_ptr.w, A6
 loc_0000C4DE:
 	TST.b	$19(A6)
 	BNE.b	loc_0000C52E
@@ -13688,13 +13688,13 @@ loc_0000C5D4:
 loc_0000C640:
 	MOVE.w	#$00B6, $FFFFC082.w
 	MOVE.w	#$0064, $3C(A5)
-	MOVEA.l	$FFFFCC14.w, A6
+	MOVEA.l	Enemy_list_ptr.w, A6
 	MOVE.l	#loc_0000C69A, $2(A6)
-	MOVEA.l	$FFFFCC18.w, A6
+	MOVEA.l	Object_slot_01_ptr.w, A6
 	MOVE.l	#loc_0000C192, $2(A6)
-	MOVEA.l	$FFFFCC1C.w, A6
+	MOVEA.l	Object_slot_02_ptr.w, A6
 	MOVE.l	#loc_0000C192, $2(A6)
-	MOVEA.l	$FFFFCC20.w, A6
+	MOVEA.l	Object_slot_03_ptr.w, A6
 	MOVE.l	#loc_0000C192, $2(A6)
 	BSR.w	loc_0000CF16
 	CLR.w	$FFFFC554.w
@@ -13786,7 +13786,7 @@ loc_0000C78A:
 	MOVE.b	$1(A6), D0
 	LEA	(A6,D0.w), A6
 	DBF	D7, loc_0000C78A
-	MOVEA.l	$FFFFCC24.w, A6
+	MOVEA.l	Object_slot_04_ptr.w, A6
 	BCLR.b	#7, (A6)
 	MOVE.w	#$012C, $3C(A5)
 	MOVE.b	#$FF, Boss_defeated_flag.w
@@ -13798,7 +13798,7 @@ loc_0000C7D8:
 	CLR.b	$26(A5)
 	TST.b	$19(A5)
 	BNE.b	loc_0000C826
-	MOVEA.l	$FFFFCC24.w, A6
+	MOVEA.l	Object_slot_04_ptr.w, A6
 	MOVE.w	$8(A6), D0
 	CMPI.w	#$00DD, D0
 	BNE.b	loc_0000C82C
@@ -13887,7 +13887,7 @@ loc_0000C8FA:
 	MOVE.b	$1(A6), D0
 	LEA	(A6,D0.w), A6
 	DBF	D7, loc_0000C8FA
-	MOVEA.l	$FFFFCC28.w, A6
+	MOVEA.l	Object_slot_05_ptr.w, A6
 	BCLR.b	#7, (A6)
 	MOVE.b	#$FF, Boss_death_anim_done.w
 	RTS
@@ -13898,7 +13898,7 @@ loc_0000C942:
 	CLR.b	$26(A5)
 	TST.b	$19(A5)
 	BNE.w	loc_0000C992
-	MOVEA.l	$FFFFCC28.w, A6
+	MOVEA.l	Object_slot_05_ptr.w, A6
 	MOVE.w	$8(A6), D0
 	CMPI.w	#$00DD, D0
 	BNE.b	loc_0000C998
@@ -13953,7 +13953,7 @@ loc_0000C9FA:
 	RTS
 
 loc_0000CA10:
-	MOVEA.l	$FFFFCC08.w, A6
+	MOVEA.l	Player_entity_ptr.w, A6
 	MOVE.w	$E(A5), D0
 	MOVE.w	D0, D1
 	CLR.w	D2
@@ -14022,7 +14022,7 @@ loc_0000CAE6:
 	RTS
 
 loc_0000CAE8:
-	MOVEA.l	$FFFFCC08.w, A6
+	MOVEA.l	Player_entity_ptr.w, A6
 	MOVE.w	$E(A6), D0
 	CMP.w	D1, D0
 	BLT.b	loc_0000CB1C
@@ -14038,7 +14038,7 @@ loc_0000CB1C:
 	RTS
 
 loc_0000CB1E:
-	MOVEA.l	$FFFFCC14.w, A6
+	MOVEA.l	Enemy_list_ptr.w, A6
 	TST.w	$3C(A6)
 	BLE.b	loc_0000CB3A
 	SUBQ.w	#1, $3C(A6)
@@ -14290,46 +14290,46 @@ loc_0000CE28:
 	RTS
 
 loc_0000CE4A:
-	MOVEA.l	$FFFFCC14.w, A6
+	MOVEA.l	Enemy_list_ptr.w, A6
 	LEA	loc_00022EE2, A0
 	MOVE.w	#5, D7
 	BSR.w	SetEntityAnimFrames
-	MOVEA.l	$FFFFCC1C.w, A6
+	MOVEA.l	Object_slot_02_ptr.w, A6
 	LEA	loc_00022F06, A0
 	MOVE.w	#2, D7
 	BSR.w	SetEntityAnimFrames
-	MOVEA.l	$FFFFCC20.w, A6
+	MOVEA.l	Object_slot_03_ptr.w, A6
 	LEA	loc_00022F42, A0
 	MOVE.w	#1, D7
 	BSR.w	SetEntityAnimFrames
-	MOVEA.l	$FFFFCC24.w, A6
+	MOVEA.l	Object_slot_04_ptr.w, A6
 	LEA	loc_00022F42, A0
 	MOVE.w	#1, D7
 	BSR.w	SetEntityAnimFrames
-	MOVEA.l	$FFFFCC28.w, A6
+	MOVEA.l	Object_slot_05_ptr.w, A6
 	LEA	loc_00022F42, A0
 	MOVE.w	#1, D7
 	BSR.w	SetEntityAnimFrames
 	RTS
 
 loc_0000CEA6:
-	MOVEA.l	$FFFFCC14.w, A6
+	MOVEA.l	Enemy_list_ptr.w, A6
 	LEA	loc_00022EEE, A0
 	MOVE.w	#5, D7
 	BSR.w	SetEntityAnimFrames
-	MOVEA.l	$FFFFCC1C.w, A6
+	MOVEA.l	Object_slot_02_ptr.w, A6
 	LEA	loc_00022F0C, A0
 	MOVE.w	#2, D7
 	BSR.w	SetEntityAnimFrames
-	MOVEA.l	$FFFFCC20.w, A6
+	MOVEA.l	Object_slot_03_ptr.w, A6
 	LEA	loc_00022F46, A0
 	MOVE.w	#1, D7
 	BSR.w	SetEntityAnimFrames
-	MOVEA.l	$FFFFCC24.w, A6
+	MOVEA.l	Object_slot_04_ptr.w, A6
 	LEA	loc_00022F46, A0
 	MOVE.w	#1, D7
 	BSR.w	SetEntityAnimFrames
-	MOVEA.l	$FFFFCC28.w, A6
+	MOVEA.l	Object_slot_05_ptr.w, A6
 	LEA	loc_00022F46, A0
 	MOVE.w	#1, D7
 	BSR.w	SetEntityAnimFrames
@@ -14544,18 +14544,18 @@ loc_0000D116:
 	dc.l	$0 
 
 loc_0000D186:
-	MOVEA.l	$FFFFCC14.w, A6
+	MOVEA.l	Enemy_list_ptr.w, A6
 	MOVE.w	#$05DC, $28(A6)
 	MOVE.w	#$05DC, Boss_max_hp.w
 	MOVE.w	#$0048, $2C(A6)
 	BRA.w	loc_0000D1B6
 loc_0000D1A0:
-	MOVEA.l	$FFFFCC14.w, A6
+	MOVEA.l	Enemy_list_ptr.w, A6
 	MOVE.w	#$270F, $28(A6)
 	MOVE.w	#$270F, Boss_max_hp.w
 	MOVE.w	#$00C8, $2C(A6)
 loc_0000D1B6:
-	MOVEA.l	$FFFFCC14.w, A6
+	MOVEA.l	Enemy_list_ptr.w, A6
 	BSET.b	#7, (A6)
 	MOVE.b	#$20, $7(A6)
 	BCLR.b	#7, $7(A6)
@@ -14598,7 +14598,7 @@ loc_0000D262:
 	CLR.b	$1C(A6)
 	MOVE.l	#loc_0000D820, $2(A6)
 	DBF	D7, loc_0000D262
-	MOVEA.l	$FFFFCC14.w, A4
+	MOVEA.l	Enemy_list_ptr.w, A4
 	MOVEA.l	$FFFFCC30.w, A6
 	MOVE.w	#3, D7
 loc_0000D2A4:
@@ -14737,7 +14737,7 @@ loc_0000D454:
 loc_0000D45A:
 	MOVE.b	#1, $41(A5)
 	JSR	loc_0000D594(PC)
-	MOVEA.l	$FFFFCC08.w, A6
+	MOVEA.l	Player_entity_ptr.w, A6
 	MOVE.w	$E(A6), D1
 	MOVE.w	$E(A5), D2
 	ADDI.w	#$0046, D2
@@ -14941,23 +14941,23 @@ loc_0000D74A:
 
 loc_0000D74C:
 	MOVE.w	$44(A5), D0
-	MOVEA.l	$FFFFCC18.w, A6
+	MOVEA.l	Object_slot_01_ptr.w, A6
 	MOVE.w	#6, D7
 	JSR	loc_0000D7AE(PC)
 	MOVE.w	$46(A5), D0
-	MOVEA.l	$FFFFCC1C.w, A6
+	MOVEA.l	Object_slot_02_ptr.w, A6
 	MOVE.w	#9, D7
 	JSR	loc_0000D7AE(PC)
 	MOVE.w	$48(A5), D0
-	MOVEA.l	$FFFFCC20.w, A6
+	MOVEA.l	Object_slot_03_ptr.w, A6
 	MOVE.w	#9, D7
 	JSR	loc_0000D7AE(PC)
 	MOVE.w	$4A(A5), D0
-	MOVEA.l	$FFFFCC24.w, A6
+	MOVEA.l	Object_slot_04_ptr.w, A6
 	MOVE.w	#9, D7
 	JSR	loc_0000D7AE(PC)
 	MOVE.w	$4C(A5), D0
-	MOVEA.l	$FFFFCC28.w, A6
+	MOVEA.l	Object_slot_05_ptr.w, A6
 	MOVE.w	#$000A, D7
 	JSR	loc_0000D7AE(PC)
 	MOVE.w	$4E(A5), D0
@@ -15043,7 +15043,7 @@ loc_0000D864:
 	MOVE.l	#loc_0000D928, $2(A6)
 	BRA.w	loc_0000D928
 loc_0000D8A8:
-	MOVEA.l	$FFFFCC14.w, A6
+	MOVEA.l	Enemy_list_ptr.w, A6
 	LEA	loc_0002353A, A1
 	BTST.b	#2, $1D(A6)
 	BNE.b	loc_0000D8BE
@@ -15137,7 +15137,7 @@ loc_0000D9C0:
 	dc.w	$0018 
 	dc.w	$0020 
 loc_0000D9CA:
-	MOVEA.l	$FFFFCC14.w, A6
+	MOVEA.l	Enemy_list_ptr.w, A6
 	BSET.b	#7, (A6)
 	CLR.b	$1B(A6)
 	CLR.b	$1A(A6)
@@ -15191,7 +15191,7 @@ loc_0000DA62:
 	
 loc_0000DA7A:
 	MOVE.b	#4, Boss_ai_state.w
-	MOVEA.l	$FFFFCC18.w, A6
+	MOVEA.l	Object_slot_01_ptr.w, A6
 	BSET.b	#7, (A6)
 	MOVE.l	#loc_0000DC7A, $2(A6)
 	MOVE.b	#$14, $1A(A6)
@@ -15232,7 +15232,7 @@ loc_0000DAC4:
 	ADD.w	D4, D2
 	DBF	D7, loc_0000DAC4
 	MOVE.b	#4, Boss_part_count.w
-	MOVEA.l	$FFFFCC20.w, A6
+	MOVEA.l	Object_slot_03_ptr.w, A6
 	BSET.b	#7, (A6)
 	MOVE.l	#loc_0000DF50, $2(A6)
 	MOVE.b	#$14, $1A(A6)
@@ -15375,7 +15375,7 @@ loc_0000DD36:
 	SUBQ.b	#1, $1A(A5)
 	BRA.b	loc_0000DD94
 loc_0000DD5C:
-	MOVEA.l	$FFFFCC08.w, A4
+	MOVEA.l	Player_entity_ptr.w, A4
 	MOVE.w	$E(A5), D0
 	SUBI.w	#$0046, D0
 	MOVE.w	$E(A4), D1
@@ -15474,7 +15474,7 @@ loc_0000DE94:
 	DBF	D7, loc_0000DE94
 	MOVE.w	$E(A6), $E(A5)
 	MOVE.w	$12(A6), $12(A5)
-	MOVEA.l	$FFFFCC1C.w, A4
+	MOVEA.l	Object_slot_02_ptr.w, A4
 	BSET.b	#7, (A4)
 	MOVE.b	#$20, $7(A4)
 	BCLR.b	#7, $7(A4)
@@ -15502,7 +15502,7 @@ loc_0000DE94:
 	RTS
 	
 loc_0000DF3C:
-	MOVEA.l	$FFFFCC1C.w, A6
+	MOVEA.l	Object_slot_02_ptr.w, A6
 	BTST.b	#7, (A6)
 	BNE.b	loc_0000DF4E
 	MOVE.l	#loc_0000DCBA, $2(A5)
@@ -15583,7 +15583,7 @@ loc_0000E012:
 	SUBQ.b	#1, $1A(A5)
 	BRA.b	loc_0000E05A
 loc_0000E038:
-	MOVEA.l	$FFFFCC08.w, A4
+	MOVEA.l	Player_entity_ptr.w, A4
 	CMPI.w	#$0046, $E(A4)
 	BLE.b	loc_0000E05A
 	MOVE.w	#$0100, $3A(A5)
@@ -15676,7 +15676,7 @@ loc_0000E15A:
 	DBF	D7, loc_0000E15A
 	MOVE.w	$E(A6), $E(A5)
 	MOVE.w	$12(A6), $12(A5)
-	MOVEA.l	$FFFFCC24.w, A4
+	MOVEA.l	Object_slot_04_ptr.w, A4
 	BSET.b	#7, (A4)
 	MOVE.b	#$20, $7(A4)
 	BCLR.b	#7, $7(A4)
@@ -15706,7 +15706,7 @@ loc_0000E15A:
 loc_0000E202:
 	dc.b	$2C, $78, $CC, $1C, $08, $16, $00, $07, $66, $08, $2B, $7C, $00, $00, $DF, $96, $00, $02, $4E, $B9, $00, $00, $E3, $B6, $4E, $75 
 loc_0000E21C:
-	MOVEA.l	$FFFFCC24.w, A6
+	MOVEA.l	Object_slot_04_ptr.w, A6
 	BTST.b	#7, (A6)
 	BNE.b	loc_0000E22E
 	MOVE.l	#loc_0000DF96, $2(A5)
@@ -15940,18 +15940,18 @@ loc_0000E4DE:
 	RTS
 
 loc_0000E50C:
-	MOVEA.l	$FFFFCC14.w, A6
+	MOVEA.l	Enemy_list_ptr.w, A6
 	MOVE.w	#$09C4, $28(A6)
 	MOVE.w	#$0064, $2C(A6)
 	BRA.w	loc_0000E530
 loc_0000E520:
-	MOVEA.l	$FFFFCC14.w, A6
+	MOVEA.l	Enemy_list_ptr.w, A6
 	MOVE.w	#$1388, $28(A6)
 	MOVE.w	#$0078, $2C(A6)
 loc_0000E530:
 	CLR.w	Boss_ai_state.w
 	CLR.w	Boss_active_parts.w
-	MOVEA.l	$FFFFCC14.w, A6
+	MOVEA.l	Enemy_list_ptr.w, A6
 	BSET.b	#7, (A6)
 	MOVE.b	#$F4, $2E(A6)
 	MOVE.b	#$0C, $2F(A6)
@@ -15992,7 +15992,7 @@ loc_0000E530:
 	MOVE.w	#$0114, $E(A6)
 	MOVE.w	#$0094, $12(A6)
 	MOVE.l	#loc_0000EF04, $2(A6)
-	MOVEA.l	$FFFFCC1C.w, A6
+	MOVEA.l	Object_slot_02_ptr.w, A6
 	MOVE.w	#1, D7
 	MOVE.w	#$0078, D6
 loc_0000E626:
@@ -16004,7 +16004,7 @@ loc_0000E626:
 	RTS
 	
 loc_0000E63C:
-	MOVEA.l	$FFFFCC1C.w, A6
+	MOVEA.l	Object_slot_02_ptr.w, A6
 	MOVE.w	Boss_ai_state.w, D7
 	SUBQ.w	#1, D7
 loc_0000E646:
@@ -16034,7 +16034,7 @@ loc_0000E670:
 	MOVE.b	#$10, $2F(A6)
 	MOVE.b	#$C8, $30(A6)
 	MOVE.b	#0, $31(A6)
-	MOVEA.l	$FFFFCC14.w, A4
+	MOVEA.l	Enemy_list_ptr.w, A4
 	MOVE.w	$28(A4), $28(A6)
 	MOVE.w	$2C(A4), $2C(A6)
 	CLR.b	$1B(A6)
@@ -16233,15 +16233,15 @@ loc_0000E97A:
 	BGE.b	loc_0000E9B0
 	CMPI.w	#3, Boss_active_parts.w
 	BGE.b	loc_0000E9B0
-	MOVEA.l	$FFFFCC08.w, A6
+	MOVEA.l	Player_entity_ptr.w, A6
 	CMPI.w	#$00E0, $E(A6)
 	BGE.b	loc_0000E9B0
-	MOVEA.l	$FFFFCC18.w, A6
+	MOVEA.l	Object_slot_01_ptr.w, A6
 	MOVE.l	#loc_0000ECBA, $2(A6)
 	BSR.w	loc_0000E63C
 	BRA.b	loc_0000E9BC
 loc_0000E9B0:
-	MOVEA.l	$FFFFCC18.w, A6
+	MOVEA.l	Object_slot_01_ptr.w, A6
 	MOVE.l	#loc_0000EC4C, $2(A6)
 loc_0000E9BC:
 	LEA	loc_000238CA, A0
@@ -16255,7 +16255,7 @@ loc_0000E9BC:
 	MOVE.b	$1(A6), D0
 	LEA	(A6,D0.w), A6
 	MOVE.w	(A0)+, $8(A6)
-	MOVEA.l	$FFFFCC18.w, A6
+	MOVEA.l	Object_slot_01_ptr.w, A6
 	TST.l	$32(A6)
 	BNE.b	loc_0000EA04
 	MOVE.w	$E(A5), D0
@@ -16280,7 +16280,7 @@ loc_0000EA1E:
 	MOVE.b	$1(A6), D0
 	LEA	(A6,D0.w), A4
 	BCLR.b	#7, (A4)
-	MOVEA.l	$FFFFCC18.w, A4
+	MOVEA.l	Object_slot_01_ptr.w, A4
 	BCLR.b	#7, (A4)
 	ADDQ.b	#1, $1B(A5)
 	MOVE.b	$1B(A5), D0
@@ -16378,7 +16378,7 @@ loc_0000EB54:
 	JSR	(A0)
 	JSR	loc_0001056A
 	JSR	loc_0001053A
-	MOVEA.l	$FFFFCC08.w, A6
+	MOVEA.l	Player_entity_ptr.w, A6
 	MOVE.b	#$FF, Is_in_battle.w
 	JSR	loc_0000B7AC
 	CLR.b	Player_in_first_person_mode.w
@@ -16386,7 +16386,7 @@ loc_0000EB54:
 	RTS
 	
 loc_0000EB9C:
-	MOVEA.l	$FFFFCC14.w, A6
+	MOVEA.l	Enemy_list_ptr.w, A6
 	CLR.w	D0
 	MOVE.b	$1(A6), D0
 	LEA	(A6,D0.w), A6
@@ -16401,13 +16401,13 @@ loc_0000EBBC:
 	RTS
 	
 loc_0000EBBE:
-	MOVEA.l	$FFFFCC18.w, A6
+	MOVEA.l	Object_slot_01_ptr.w, A6
 	BSET.b	#7, (A6)
 	MOVE.b	#$F8, $2E(A6)
 	MOVE.b	#8, $2F(A6)
 	MOVE.b	#$F0, $30(A6)
 	MOVE.b	#0, $31(A6)
-	MOVEA.l	$FFFFCC14.w, A4
+	MOVEA.l	Enemy_list_ptr.w, A4
 	MOVE.w	$2C(A4), $2C(A6)
 	MOVE.b	#$20, $7(A6)
 	BCLR.b	#7, $7(A6)
@@ -16433,7 +16433,7 @@ loc_0000EC1E:
 	RTS
 	
 loc_0000EC4C:
-	MOVEA.l	$FFFFCC18.w, A6
+	MOVEA.l	Object_slot_01_ptr.w, A6
 	MOVE.l	#$FFFD0000, $32(A6)
 	MOVE.w	#$0114, $E(A6)
 	MOVE.w	#$0084, $12(A6)
@@ -16460,12 +16460,12 @@ loc_0000EC80:
 	RTS
 	
 loc_0000ECBA:
-	MOVEA.l	$FFFFCC18.w, A6
+	MOVEA.l	Object_slot_01_ptr.w, A6
 	BCLR.b	#7, (A6)
 	RTS
 	
 loc_0000ECC4:
-	MOVEA.l	$FFFFCC08.w, A4
+	MOVEA.l	Player_entity_ptr.w, A4
 	MOVE.w	$E(A5), D0
 	MOVE.w	$E(A4), D1
 	SUB.w	D1, D0
@@ -16479,23 +16479,23 @@ loc_0000ECDE:
 	RTS
 	
 loc_0000ECE2:
-	MOVEA.l	$FFFFCC14.w, A6
+	MOVEA.l	Enemy_list_ptr.w, A6
 	MOVE.w	#6500, $28(A6)
 	MOVE.w	#180, $2C(A6)
 	BRA.b	loc_0000ED16
 loc_0000ECF4:
-	MOVEA.l	$FFFFCC14.w, A6
+	MOVEA.l	Enemy_list_ptr.w, A6
 	MOVE.w	#7000, $28(A6)
 	MOVE.w	#200, $2C(A6)
 	BRA.b	loc_0000ED16
 loc_0000ED06:
-	MOVEA.l	$FFFFCC14.w, A6
+	MOVEA.l	Enemy_list_ptr.w, A6
 	MOVE.w	#7000, $28(A6)
 	MOVE.w	#200, $2C(A6)
 loc_0000ED16:
 	MOVE.b	#$FF, Boss_max_hp.w
 	CLR.b	Boss_defeated_flag.w
-	MOVEA.l	$FFFFCC14.w, A6
+	MOVEA.l	Enemy_list_ptr.w, A6
 	BSET.b	#7, (A6)
 	JSR	loc_0000CC0C
 	MOVE.w	#100, $E(A6)
@@ -16511,7 +16511,7 @@ loc_0000ED16:
 	CLR.b	$18(A6)
 	MOVE.l	#loc_0000EF1E, $2(A6)
 	CLR.w	Boss_ai_state.w
-	MOVEA.l	$FFFFCC1C.w, A6
+	MOVEA.l	Object_slot_02_ptr.w, A6
 	LEA	(A6), A4
 	MOVE.w	#4, D7
 loc_0000ED82:
@@ -16527,7 +16527,7 @@ loc_0000ED82:
 	DBF	D7, loc_0000ED82
 	CLR.b	$1B(A6)
 	MOVE.l	#loc_0000EE0A, $2(A6)
-	MOVEA.l	$FFFFCC20.w, A6
+	MOVEA.l	Object_slot_03_ptr.w, A6
 	LEA	(A6), A4
 	MOVE.w	#1, D7
 loc_0000EDCA:
@@ -16555,7 +16555,7 @@ loc_0000EE14:
 	ASR.w	#2, D0
 	LEA	loc_00023802, A0
 	MOVEA.l	(A0,D0.w), A0
-	MOVEA.l	$FFFFCC14.w, A6
+	MOVEA.l	Enemy_list_ptr.w, A6
 	MOVE.w	$E(A6), D0
 	MOVE.w	$12(A6), D1
 	MOVE.w	(A0)+, $8(A5)
@@ -16598,7 +16598,7 @@ loc_0000EE9A:
 	ASR.w	#2, D0
 	LEA	loc_00023812, A0
 	MOVEA.l	(A0,D0.w), A0
-	MOVEA.l	$FFFFCC14.w, A6
+	MOVEA.l	Enemy_list_ptr.w, A6
 	MOVE.w	$E(A6), D0
 	MOVE.w	$12(A6), D1
 	MOVE.w	(A0)+, $8(A5)
@@ -16691,7 +16691,7 @@ loc_0000EFCA:
 	BSR.w	loc_0000F4C2
 	BRA.w	loc_0000F070
 loc_0000EFD2:
-	MOVEA.l	$FFFFCC08.w, A6
+	MOVEA.l	Player_entity_ptr.w, A6
 	MOVE.w	$E(A6), D0
 	MOVE.w	$E(A5), D1
 	SUBI.w	#$0018, D1
@@ -16713,7 +16713,7 @@ loc_0000F002:
 	ASR.w	#2, D0
 	CMPI.w	#$000C, D0
 	BLT.b	loc_0000F036
-	MOVEA.l	$FFFFCC18.w, A6
+	MOVEA.l	Object_slot_01_ptr.w, A6
 	BSET.b	#7, (A6)
 	CLR.b	$1B(A6)
 	CLR.w	$3A(A6)
@@ -16725,7 +16725,7 @@ loc_0000F036:
 	BSR.w	loc_0000F43E
 	BRA.w	loc_0000F0D2
 loc_0000F03E:
-	MOVEA.l	$FFFFCC18.w, A6
+	MOVEA.l	Object_slot_01_ptr.w, A6
 	BTST.b	#7, (A6)
 	BNE.b	loc_0000F06C
 	JSR	GetRandomNumber
@@ -16888,7 +16888,7 @@ loc_0000F242:
 	BCLR.b	#4, $7(A6)
 	MOVE.l	#loc_0000F210, $2(A6)
 	CLR.b	$1B(A6)
-	MOVEA.l	$FFFFCC14.w, A4
+	MOVEA.l	Enemy_list_ptr.w, A4
 	MOVE.w	$E(A4), D0
 	ADDI.w	#$001C, D0
 	MOVE.w	D0, $E(A6)
@@ -17044,7 +17044,7 @@ loc_0000F482:
 	BRA.w	loc_0000F4C2
 loc_0000F49C:
 	LEA	loc_0000F5B6, A1
-	MOVEA.l	$FFFFCC08.w, A6
+	MOVEA.l	Player_entity_ptr.w, A6
 	MOVE.w	$E(A6), D0
 	MOVE.w	$E(A5), D1
 	ADDI.w	#$0018, D1
@@ -19025,14 +19025,14 @@ loc_00010BEA:
 	MOVE.w	#$000F, $FFFFC236.w
 	MOVE.w	#$0015, $FFFFC238.w
 	MOVE.w	#$000E, $FFFF9902.w
-	MOVE.w	#$0013, $FFFF9908.w
-	MOVE.w	#$000B, $FFFF9904.w
-	MOVE.w	#6, $FFFF990A.w
-	MOVE.w	#0, $FFFF990E.w
+	MOVE.w	#$0013, Window_tilemap_y.w
+	MOVE.w	#$000B, Window_width.w
+	MOVE.w	#6, Window_height.w
+	MOVE.w	#0, Window_tile_attrs.w
 	BSR.w	DrawWindowBorder
 	LEA	MenuStartContinueStr, A0
-	MOVE.w	#2, $FFFF9906.w
-	MOVE.w	#2, $FFFF990C.w
+	MOVE.w	#2, Window_text_x.w
+	MOVE.w	#2, Window_text_y.w
 	BSR.w	RenderTextToWindow
 	CLR.w	$FFFF9914.w
 	MOVE.b	#$FF, Window_tilemap_draw_active.w
@@ -19053,10 +19053,10 @@ InitDialogueWindow:
 	MOVE.w	#0, Script_tile_attrs.w
 	CLR.w	Script_output_x.w
 	MOVE.w	#4, $FFFF9902.w
-	MOVE.w	#$0013, $FFFF9908.w
-	MOVE.w	#$001F, $FFFF9904.w
-	MOVE.w	#8, $FFFF990A.w
-	MOVE.w	#0, $FFFF990E.w
+	MOVE.w	#$0013, Window_tilemap_y.w
+	MOVE.w	#$001F, Window_width.w
+	MOVE.w	#8, Window_height.w
+	MOVE.w	#0, Window_tile_attrs.w
 	BSR.w	DrawWindowBorder
 	CLR.w	$FFFF9914.w
 	MOVE.b	#$FF, $FFFF9900.w
@@ -19064,14 +19064,14 @@ InitDialogueWindow:
 	
 loc_00010C9E:
 	MOVE.w	#2, $FFFF9902.w
-	MOVE.w	#2, $FFFF9908.w
-	MOVE.w	#$000D, $FFFF9904.w
-	MOVE.w	#$000A, $FFFF990A.w
-	MOVE.w	#0, $FFFF990E.w
+	MOVE.w	#2, Window_tilemap_y.w
+	MOVE.w	#$000D, Window_width.w
+	MOVE.w	#$000A, Window_height.w
+	MOVE.w	#0, Window_tile_attrs.w
 	BSR.w	DrawWindowBorder
 	LEA	MenuOptionsStr, A0
-	MOVE.w	#2, $FFFF9906.w
-	MOVE.w	#2, $FFFF990C.w
+	MOVE.w	#2, Window_text_x.w
+	MOVE.w	#2, Window_text_y.w
 	BSR.w	RenderTextToWindow
 	CLR.w	$FFFF9914.w
 	MOVE.b	#$FF, Window_tilemap_draw_active.w
@@ -19079,14 +19079,14 @@ loc_00010C9E:
 	
 loc_00010CE2:
 	MOVE.w	#$000A, $FFFF9902.w	
-	MOVE.w	#$000A, $FFFF9908.w	
-	MOVE.w	#$000E, $FFFF9904.w	
-	MOVE.w	#$000A, $FFFF990A.w	
-	MOVE.w	#0, $FFFF990E.w	
+	MOVE.w	#$000A, Window_tilemap_y.w	
+	MOVE.w	#$000E, Window_width.w	
+	MOVE.w	#$000A, Window_height.w	
+	MOVE.w	#0, Window_tile_attrs.w	
 	BSR.w	DrawWindowBorder	
 	LEA	MessageSpeedStr, A0	
-	MOVE.w	#1, $FFFF9906.w	
-	MOVE.w	#2, $FFFF990C.w	
+	MOVE.w	#1, Window_text_x.w	
+	MOVE.w	#2, Window_text_y.w	
 	BSR.w	RenderTextToWindow	
 	LEA	$FFFF9920.w, A1	
 	CLR.w	D1	
@@ -19108,14 +19108,14 @@ loc_00010D44:
 	MOVE.w	#$001E, $FFFFC236.w
 	MOVE.w	#$000F, $FFFFC238.w
 	MOVE.w	#$001C, $FFFF9902.w
-	MOVE.w	#$000D, $FFFF9908.w
-	MOVE.w	#6, $FFFF9904.w
-	MOVE.w	#6, $FFFF990A.w
-	MOVE.w	#0, $FFFF990E.w
+	MOVE.w	#$000D, Window_tilemap_y.w
+	MOVE.w	#6, Window_width.w
+	MOVE.w	#6, Window_height.w
+	MOVE.w	#0, Window_tile_attrs.w
 	BSR.w	DrawWindowBorder
 	LEA	YesNoStr, A0
-	MOVE.w	#3, $FFFF9906.w
-	MOVE.w	#2, $FFFF990C.w
+	MOVE.w	#3, Window_text_x.w
+	MOVE.w	#2, Window_text_y.w
 	BSR.w	RenderTextToWindow
 	CLR.w	$FFFF9914.w
 	MOVE.b	#$FF, $FFFF9900.w
@@ -19128,14 +19128,14 @@ loc_00010DA4:
 	MOVE.w	#$0010, $FFFFC236.w
 	MOVE.w	#$000E, $FFFFC238.w
 	MOVE.w	#$000F, $FFFF9902.w
-	MOVE.w	#$000C, $FFFF9908.w
-	MOVE.w	#$0015, $FFFF9904.w
-	MOVE.w	#7, $FFFF990A.w
-	MOVE.w	#0, $FFFF990E.w
+	MOVE.w	#$000C, Window_tilemap_y.w
+	MOVE.w	#$0015, Window_width.w
+	MOVE.w	#7, Window_height.w
+	MOVE.w	#0, Window_tile_attrs.w
 	BSR.w	DrawWindowBorder
 	LEA	SavedGameOptionsStr, A0
-	MOVE.w	#2, $FFFF9906.w
-	MOVE.w	#2, $FFFF990C.w
+	MOVE.w	#2, Window_text_x.w
+	MOVE.w	#2, Window_text_y.w
 	BSR.w	RenderTextToWindow
 	LEA	$00200001, A0
 	BSR.w	loc_00011760
@@ -19162,14 +19162,14 @@ loc_00010E46:
 	MOVE.w	#3, $FFFFC236.w
 	MOVE.w	#$000E, $FFFFC238.w
 	MOVE.w	#2, $FFFF9902.w
-	MOVE.w	#$000C, $FFFF9908.w
-	MOVE.w	#$000D, $FFFF9904.w
-	MOVE.w	#8, $FFFF990A.w
-	MOVE.w	#0, $FFFF990E.w
+	MOVE.w	#$000C, Window_tilemap_y.w
+	MOVE.w	#$000D, Window_width.w
+	MOVE.w	#8, Window_height.w
+	MOVE.w	#0, Window_tile_attrs.w
 	BSR.w	DrawWindowBorder
 	LEA	CastReadyDiscardStr, A0
-	MOVE.w	#2, $FFFF9906.w
-	MOVE.w	#2, $FFFF990C.w
+	MOVE.w	#2, Window_text_x.w
+	MOVE.w	#2, Window_text_y.w
 	BSR.w	RenderTextToWindow
 	CLR.w	$FFFF9914.w
 	MOVE.b	#$FF, Window_tilemap_draw_active.w
@@ -19181,14 +19181,14 @@ loc_00010EA2:
 	MOVE.w	#3, $FFFFC236.w
 	MOVE.w	#$000E, $FFFFC238.w
 	MOVE.w	#2, $FFFF9902.w
-	MOVE.w	#$000C, $FFFF9908.w
-	MOVE.w	#$000D, $FFFF9904.w
-	MOVE.w	#6, $FFFF990A.w
-	MOVE.w	#0, $FFFF990E.w
+	MOVE.w	#$000C, Window_tilemap_y.w
+	MOVE.w	#$000D, Window_width.w
+	MOVE.w	#6, Window_height.w
+	MOVE.w	#0, Window_tile_attrs.w
 	BSR.w	DrawWindowBorder
 	LEA	UseDiscardStr, A0
-	MOVE.w	#2, $FFFF9906.w
-	MOVE.w	#2, $FFFF990C.w
+	MOVE.w	#2, Window_text_x.w
+	MOVE.w	#2, Window_text_y.w
 	BSR.w	RenderTextToWindow
 	CLR.w	$FFFF9914.w
 	MOVE.b	#$FF, Window_tilemap_draw_active.w
@@ -19200,14 +19200,14 @@ loc_00010EFE:
 	MOVE.w	#3, $FFFFC236.w
 	MOVE.w	#$000E, $FFFFC238.w
 	MOVE.w	#2, $FFFF9902.w
-	MOVE.w	#$000C, $FFFF9908.w
-	MOVE.w	#$000B, $FFFF9904.w
-	MOVE.w	#8, $FFFF990A.w
-	MOVE.w	#0, $FFFF990E.w
+	MOVE.w	#$000C, Window_tilemap_y.w
+	MOVE.w	#$000B, Window_width.w
+	MOVE.w	#8, Window_height.w
+	MOVE.w	#0, Window_tile_attrs.w
 	BSR.w	DrawWindowBorder
 	LEA	PutOnRemoveStopStr, A0
-	MOVE.w	#2, $FFFF9906.w
-	MOVE.w	#2, $FFFF990C.w
+	MOVE.w	#2, Window_text_x.w
+	MOVE.w	#2, Window_text_y.w
 	BSR.w	RenderTextToWindow
 	CLR.w	$FFFF9914.w
 	MOVE.b	#$FF, Window_tilemap_draw_active.w
@@ -19219,14 +19219,14 @@ loc_00010F5A:
 	MOVE.w	#$000D, $FFFFC236.w
 	MOVE.w	#6, $FFFFC238.w
 	MOVE.w	#$000C, $FFFF9902.w
-	MOVE.w	#4, $FFFF9908.w
-	MOVE.w	#9, $FFFF9904.w
-	MOVE.w	#8, $FFFF990A.w
-	MOVE.w	#0, $FFFF990E.w
+	MOVE.w	#4, Window_tilemap_y.w
+	MOVE.w	#9, Window_width.w
+	MOVE.w	#8, Window_height.w
+	MOVE.w	#0, Window_tile_attrs.w
 	BSR.w	DrawWindowBorder
 	LEA	EquipOptionsStr, A0
-	MOVE.w	#2, $FFFF9906.w
-	MOVE.w	#2, $FFFF990C.w
+	MOVE.w	#2, Window_text_x.w
+	MOVE.w	#2, Window_text_y.w
 	BSR.w	RenderTextToWindow
 	CLR.w	$FFFF9914.w
 	MOVE.b	#$FF, Window_tilemap_draw_active.w
@@ -19238,14 +19238,14 @@ loc_00010FB6:
 	MOVE.w	#3, $FFFFC236.w
 	MOVE.w	#$000C, $FFFFC238.w
 	MOVE.w	#2, $FFFF9902.w
-	MOVE.w	#$000A, $FFFF9908.w
-	MOVE.w	#$0015, $FFFF9904.w
-	MOVE.w	#$000A, $FFFF990A.w
-	MOVE.w	#0, $FFFF990E.w
+	MOVE.w	#$000A, Window_tilemap_y.w
+	MOVE.w	#$0015, Window_width.w
+	MOVE.w	#$000A, Window_height.w
+	MOVE.w	#0, Window_tile_attrs.w
 	BSR.w	DrawWindowBorder
 	LEA	ChurchOptionsStr, A0
-	MOVE.w	#2, $FFFF9906.w
-	MOVE.w	#2, $FFFF990C.w
+	MOVE.w	#2, Window_text_x.w
+	MOVE.w	#2, Window_text_y.w
 	BSR.w	RenderTextToWindow
 	CLR.w	$FFFF9914.w
 	MOVE.b	#$FF, Window_tilemap_draw_active.w
@@ -19257,14 +19257,14 @@ loc_00011012:
 	MOVE.w	#3, $FFFFC236.w
 	MOVE.w	#$000E, $FFFFC238.w
 	MOVE.w	#2, $FFFF9902.w
-	MOVE.w	#$000C, $FFFF9908.w
-	MOVE.w	#7, $FFFF9904.w
-	MOVE.w	#8, $FFFF990A.w
-	MOVE.w	#0, $FFFF990E.w
+	MOVE.w	#$000C, Window_tilemap_y.w
+	MOVE.w	#7, Window_width.w
+	MOVE.w	#8, Window_height.w
+	MOVE.w	#0, Window_tile_attrs.w
 	BSR.w	DrawWindowBorder
 	LEA	BuySellStopStr, A0
-	MOVE.w	#2, $FFFF9906.w
-	MOVE.w	#2, $FFFF990C.w
+	MOVE.w	#2, Window_text_x.w
+	MOVE.w	#2, Window_text_y.w
 	BSR.w	RenderTextToWindow
 	CLR.w	$FFFF9914.w
 	MOVE.b	#$FF, Window_tilemap_draw_active.w
@@ -19272,14 +19272,14 @@ loc_00011012:
 	
 loc_0001106E:
 	MOVE.w	#0, $FFFF9902.w
-	MOVE.w	#2, $FFFF9908.w
-	MOVE.w	#9, $FFFF9904.w
-	MOVE.w	#6, $FFFF990A.w
-	MOVE.w	#0, $FFFF990E.w
+	MOVE.w	#2, Window_tilemap_y.w
+	MOVE.w	#9, Window_width.w
+	MOVE.w	#6, Window_height.w
+	MOVE.w	#0, Window_tile_attrs.w
 	BSR.w	DrawWindowBorder
 	LEA	KimStr, A0
-	MOVE.w	#2, $FFFF9906.w
-	MOVE.w	#2, $FFFF990C.w
+	MOVE.w	#2, Window_text_x.w
+	MOVE.w	#2, Window_text_y.w
 	BSR.w	RenderTextToWindow
 	MOVE.l	Player_kims.w, D2
 	BSR.w	loc_00011458
@@ -19363,16 +19363,16 @@ loc_0001119A:
 	MOVE.w	#$000B, $FFFFC236.w
 	MOVE.w	#4, $FFFFC238.w
 	MOVE.w	#$000A, $FFFF9902.w
-	MOVE.w	#2, $FFFF9908.w
-	MOVE.w	#$0018, $FFFF9904.w
+	MOVE.w	#2, Window_tilemap_y.w
+	MOVE.w	#$0018, Window_width.w
 	MOVE.w	$FFFFC4A2.w, D0
 	ADD.w	D0, D0
 	ADDQ.w	#2, D0
-	MOVE.w	D0, $FFFF990A.w
-	MOVE.w	#0, $FFFF990E.w
+	MOVE.w	D0, Window_height.w
+	MOVE.w	#0, Window_tile_attrs.w
 	BSR.w	DrawWindowBorder
-	MOVE.w	#2, $FFFF9906.w
-	MOVE.w	#2, $FFFF990C.w
+	MOVE.w	#2, Window_text_x.w
+	MOVE.w	#2, Window_text_y.w
 	LEA	$FFFFC4B4.w, A3
 	LEA	ShopCategoryNameTables, A4
 	MOVE.w	Current_shop_type.w, D0
@@ -19387,10 +19387,10 @@ loc_00011204:
 	ADD.w	D4, D4
 	MOVEA.l	(A4,D4.w), A0
 	BSR.w	RenderTextToWindow
-	ADDQ.w	#2, $FFFF990C.w
+	ADDQ.w	#2, Window_text_y.w
 	DBF	D7, loc_00011204
-	MOVE.w	#$0012, $FFFF9906.w
-	MOVE.w	#2, $FFFF990C.w
+	MOVE.w	#$0012, Window_text_x.w
+	MOVE.w	#2, Window_text_y.w
 	LEA	ShopPricesByTownAndType, A3
 	MOVE.w	Current_town.w, D0
 	ADD.w	D0, D0
@@ -19405,7 +19405,7 @@ loc_0001124C:
 	MOVE.l	(A3)+, D2
 	BSR.w	loc_00011458
 	BSR.w	loc_00012CE2
-	ADDQ.w	#2, $FFFF990C.w
+	ADDQ.w	#2, Window_text_y.w
 	ADDQ.w	#1, Shop_item_index.w
 	MOVE.w	Shop_item_index.w, D0
 	CMP.w	$FFFFC4A2.w, D0
@@ -19422,16 +19422,16 @@ loc_00011274:
 	MOVE.w	#$000B, $FFFFC236.w
 	MOVE.w	#4, $FFFFC238.w
 	MOVE.w	#$000A, $FFFF9902.w
-	MOVE.w	#2, $FFFF9908.w
-	MOVE.w	#$0018, $FFFF9904.w
+	MOVE.w	#2, Window_tilemap_y.w
+	MOVE.w	#$0018, Window_width.w
 	MOVE.w	$FFFFC4A2.w, D0
 	ADD.w	D0, D0
 	ADDQ.w	#2, D0
-	MOVE.w	D0, $FFFF990A.w
-	MOVE.w	#0, $FFFF990E.w
+	MOVE.w	D0, Window_height.w
+	MOVE.w	#0, Window_tile_attrs.w
 	BSR.w	DrawWindowBorder
-	MOVE.w	#2, $FFFF9906.w
-	MOVE.w	#2, $FFFF990C.w
+	MOVE.w	#2, Window_text_x.w
+	MOVE.w	#2, Window_text_y.w
 	LEA	$FFFFC4B4.w, A3
 	LEA	ShopCategoryNameTables, A4
 	MOVE.w	Current_shop_type.w, D0
@@ -19446,7 +19446,7 @@ loc_000112DE:
 	ADD.w	D4, D4
 	MOVEA.l	(A4,D4.w), A0
 	BSR.w	RenderTextToWindow
-	ADDQ.w	#2, $FFFF990C.w
+	ADDQ.w	#2, Window_text_y.w
 	DBF	D7, loc_000112DE
 	CLR.w	$FFFF9914.w
 	MOVE.b	#$FF, Window_tilemap_draw_active.w
@@ -19456,16 +19456,16 @@ loc_00011304:
 	MOVE.w	#$000B, $FFFFC236.w
 	MOVE.w	#4, $FFFFC238.w
 	MOVE.w	#$000A, $FFFF9902.w
-	MOVE.w	#2, $FFFF9908.w
-	MOVE.w	#0, $FFFF990E.w
+	MOVE.w	#2, Window_tilemap_y.w
+	MOVE.w	#0, Window_tile_attrs.w
 	MOVE.w	#$000D, D0
 	MOVE.w	#6, $FFFFC23A.w
 	MOVE.w	#$000D, $FFFFC23C.w
-	MOVE.w	#$0016, $FFFF9904.w
-	MOVE.w	#$0010, $FFFF990A.w
+	MOVE.w	#$0016, Window_width.w
+	MOVE.w	#$0010, Window_height.w
 	BSR.w	DrawWindowBorder
-	MOVE.w	#$000C, $FFFF9906.w
-	MOVE.w	#2, $FFFF990C.w
+	MOVE.w	#$000C, Window_text_x.w
+	MOVE.w	#2, Window_text_y.w
 	LEA	TownNames, A4
 	LEA	Towns_visited.w, A6
 	LEA	$1C(A4), A4
@@ -19477,10 +19477,10 @@ loc_00011364:
 	BEQ.b	loc_0001136E
 	BSR.w	RenderTextToWindow
 loc_0001136E:
-	ADDQ.w	#2, $FFFF990C.w
+	ADDQ.w	#2, Window_text_y.w
 	DBF	D7, loc_00011364
-	MOVE.w	#2, $FFFF9906.w
-	MOVE.w	#2, $FFFF990C.w
+	MOVE.w	#2, Window_text_x.w
+	MOVE.w	#2, Window_text_y.w
 	LEA	TownNames, A4
 	LEA	Towns_visited.w, A6
 	MOVE.w	#6, D7
@@ -19490,7 +19490,7 @@ loc_00011390:
 	BEQ.b	loc_0001139A
 	BSR.w	RenderTextToWindow
 loc_0001139A:
-	ADDQ.w	#2, $FFFF990C.w
+	ADDQ.w	#2, Window_text_y.w
 	DBF	D7, loc_00011390
 	CLR.w	$FFFF9914.w
 	MOVE.b	#$FF, Window_tilemap_draw_active.w
@@ -19770,14 +19770,14 @@ loc_00011666:
 	
 loc_0001168C:
 	MOVE.w	#4, $FFFF9902.w
-	MOVE.w	#1, $FFFF9908.w
-	MOVE.w	#$001B, $FFFF9904.w
-	MOVE.w	#$0010, $FFFF990A.w
-	MOVE.w	#0, $FFFF990E.w
+	MOVE.w	#1, Window_tilemap_y.w
+	MOVE.w	#$001B, Window_width.w
+	MOVE.w	#$0010, Window_height.w
+	MOVE.w	#0, Window_tile_attrs.w
 	BSR.w	DrawWindowBorder
 	LEA	SelectNumberStr, A0
-	MOVE.w	#2, $FFFF9906.w
-	MOVE.w	#4, $FFFF990C.w
+	MOVE.w	#2, Window_text_x.w
+	MOVE.w	#4, Window_text_y.w
 	BSR.w	RenderTextToWindow
 	MOVE.w	#2, $FFFFC23A.w
 	MOVE.w	#$FFFF, $FFFFC23C.w
@@ -19873,14 +19873,14 @@ loc_000117CE:
 	
 loc_000117E8:
 	MOVE.w	#$000A, $FFFF9902.w
-	MOVE.w	#$0010, $FFFF9908.w
-	MOVE.w	#$0019, $FFFF9904.w
-	MOVE.w	#$000A, $FFFF990A.w
-	MOVE.w	#0, $FFFF990E.w
+	MOVE.w	#$0010, Window_tilemap_y.w
+	MOVE.w	#$0019, Window_width.w
+	MOVE.w	#$000A, Window_height.w
+	MOVE.w	#0, Window_tile_attrs.w
 	BSR.w	DrawWindowBorder
 	LEA	ErrorPressCStr, A0
-	MOVE.w	#2, $FFFF9906.w
-	MOVE.w	#2, $FFFF990C.w
+	MOVE.w	#2, Window_text_x.w
+	MOVE.w	#2, Window_text_y.w
 	BSR.w	RenderTextToWindow
 	CLR.w	$FFFF9914.w
 	MOVE.b	#$FF, Window_tilemap_draw_active.w
@@ -19888,14 +19888,14 @@ loc_000117E8:
 	
 loc_0001182C:
 	MOVE.w	#$000A, $FFFF9902.w	
-	MOVE.w	#$0010, $FFFF9908.w	
-	MOVE.w	#$0019, $FFFF9904.w	
-	MOVE.w	#$000A, $FFFF990A.w	
-	MOVE.w	#0, $FFFF990E.w	
+	MOVE.w	#$0010, Window_tilemap_y.w	
+	MOVE.w	#$0019, Window_width.w	
+	MOVE.w	#$000A, Window_height.w	
+	MOVE.w	#0, Window_tile_attrs.w	
 	BSR.w	DrawWindowBorder	
 	LEA	LooksBetterPressCStr, A0	
-	MOVE.w	#2, $FFFF9906.w	
-	MOVE.w	#2, $FFFF990C.w	
+	MOVE.w	#2, Window_text_x.w	
+	MOVE.w	#2, Window_text_y.w	
 	BSR.w	RenderTextToWindow	
 	CLR.w	$FFFF9914.w	
 	MOVE.b	#$FF, Window_tilemap_draw_active.w	
@@ -19903,14 +19903,14 @@ loc_0001182C:
 	
 loc_00011870:
 	MOVE.w	#$000A, $FFFF9902.w
-	MOVE.w	#$0010, $FFFF9908.w
-	MOVE.w	#$0019, $FFFF9904.w
-	MOVE.w	#$000A, $FFFF990A.w
-	MOVE.w	#0, $FFFF990E.w
+	MOVE.w	#$0010, Window_tilemap_y.w
+	MOVE.w	#$0019, Window_width.w
+	MOVE.w	#$000A, Window_height.w
+	MOVE.w	#0, Window_tile_attrs.w
 	BSR.w	DrawWindowBorder
 	LEA	DidntWorkPressResetStr, A0
-	MOVE.w	#2, $FFFF9906.w
-	MOVE.w	#2, $FFFF990C.w
+	MOVE.w	#2, Window_text_x.w
+	MOVE.w	#2, Window_text_y.w
 	BSR.w	RenderTextToWindow
 	CLR.w	$FFFF9914.w
 	MOVE.b	#$FF, Window_tilemap_draw_active.w
@@ -19918,14 +19918,14 @@ loc_00011870:
 	
 loc_000118B4:
 	MOVE.w	#$000A, $FFFF9902.w
-	MOVE.w	#$0010, $FFFF9908.w
-	MOVE.w	#$0019, $FFFF9904.w
-	MOVE.w	#$000A, $FFFF990A.w
-	MOVE.w	#0, $FFFF990E.w
+	MOVE.w	#$0010, Window_tilemap_y.w
+	MOVE.w	#$0019, Window_width.w
+	MOVE.w	#$000A, Window_height.w
+	MOVE.w	#0, Window_tile_attrs.w
 	BSR.w	DrawWindowBorder
 	LEA	NoSavedGameStr, A0
-	MOVE.w	#2, $FFFF9906.w
-	MOVE.w	#2, $FFFF990C.w
+	MOVE.w	#2, Window_text_x.w
+	MOVE.w	#2, Window_text_y.w
 	BSR.w	RenderTextToWindow
 	CLR.w	$FFFF9914.w
 	MOVE.b	#$FF, Window_tilemap_draw_active.w
@@ -19933,14 +19933,14 @@ loc_000118B4:
 	
 loc_000118F8:
 	MOVE.w	#$000A, $FFFF9902.w	
-	MOVE.w	#$0010, $FFFF9908.w	
-	MOVE.w	#$0019, $FFFF9904.w	
-	MOVE.w	#$000A, $FFFF990A.w	
-	MOVE.w	#0, $FFFF990E.w	
+	MOVE.w	#$0010, Window_tilemap_y.w	
+	MOVE.w	#$0019, Window_width.w	
+	MOVE.w	#$000A, Window_height.w	
+	MOVE.w	#0, Window_tile_attrs.w	
 	BSR.w	DrawWindowBorder	
 	LEA	GameReadyPressCStr, A0	
-	MOVE.w	#2, $FFFF9906.w	
-	MOVE.w	#2, $FFFF990C.w	
+	MOVE.w	#2, Window_text_x.w	
+	MOVE.w	#2, Window_text_y.w	
 	BSR.w	RenderTextToWindow	
 	CLR.w	$FFFF9914.w	
 	MOVE.b	#$FF, Window_tilemap_draw_active.w	
@@ -19948,14 +19948,14 @@ loc_000118F8:
 	
 loc_0001193C:
 	MOVE.w	#2, $FFFF9902.w
-	MOVE.w	#2, $FFFF9908.w
-	MOVE.w	#$001B, $FFFF9904.w
-	MOVE.w	#$0014, $FFFF990A.w
-	MOVE.w	#0, $FFFF990E.w
+	MOVE.w	#2, Window_tilemap_y.w
+	MOVE.w	#$001B, Window_width.w
+	MOVE.w	#$0014, Window_height.w
+	MOVE.w	#0, Window_tile_attrs.w
 	BSR.w	DrawWindowBorder
 	LEA	CharacterStatsStr, A0
-	MOVE.w	#2, $FFFF9906.w
-	MOVE.w	#2, $FFFF990C.w
+	MOVE.w	#2, Window_text_x.w
+	MOVE.w	#2, Window_text_y.w
 	BSR.w	RenderTextToWindow
 	TST.w	Player_poisoned.w
 	BEQ.b	loc_00011982
@@ -20059,14 +20059,14 @@ loc_000119AA: ; stats screen?
 	
 loc_00011AEC:
 	MOVE.w	#2, $FFFF9902.w
-	MOVE.w	#2, $FFFF9908.w
-	MOVE.w	#$001A, $FFFF9904.w
-	MOVE.w	#$000C, $FFFF990A.w
-	MOVE.w	#0, $FFFF990E.w
+	MOVE.w	#2, Window_tilemap_y.w
+	MOVE.w	#$001A, Window_width.w
+	MOVE.w	#$000C, Window_height.w
+	MOVE.w	#0, Window_tile_attrs.w
 	BSR.w	DrawWindowBorder
 	LEA	EquipmentReadiedStr, A0
-	MOVE.w	#1, $FFFF9906.w
-	MOVE.w	#2, $FFFF990C.w
+	MOVE.w	#1, Window_text_x.w
+	MOVE.w	#2, Window_text_y.w
 	BSR.w	RenderTextToWindow
 	LEA	NothingStr, A0
 	MOVE.w	Equipped_sword.w, D0
@@ -20118,20 +20118,20 @@ loc_00011BA4:
 	
 loc_00011BB8:
 	MOVE.w	#$000F, $FFFF9902.w
-	MOVE.w	#2, $FFFF9908.w
-	MOVE.w	#$0016, $FFFF9904.w
+	MOVE.w	#2, Window_tilemap_y.w
+	MOVE.w	#$0016, Window_width.w
 	MOVE.w	Possessed_equipment_length.w, D0
 	BLE.w	loc_00011C4C
 	ADD.w	D0, D0
 	ADDQ.w	#3, D0
-	MOVE.w	D0, $FFFF990A.w
-	MOVE.w	#0, $FFFF990E.w
+	MOVE.w	D0, Window_height.w
+	MOVE.w	#0, Window_tile_attrs.w
 	BSR.w	DrawWindowBorder
 	LEA	GearCombatStr, A0
-	MOVE.w	#2, $FFFF9906.w
-	MOVE.w	#2, $FFFF990C.w
+	MOVE.w	#2, Window_text_x.w
+	MOVE.w	#2, Window_text_y.w
 	BSR.w	RenderTextToWindow
-	ADDQ.w	#2, $FFFF990C.w
+	ADDQ.w	#2, Window_text_y.w
 	LEA	Possessed_equipment_list.w, A3
 	LEA	EquipmentNames, A4
 	MOVE.w	Possessed_equipment_length.w, D7
@@ -20143,10 +20143,10 @@ loc_00011C0E:
 	ADD.w	D4, D4
 	MOVEA.l	(A4,D4.w), A0
 	BSR.w	RenderTextToWindow
-	ADDQ.w	#2, $FFFF990C.w
+	ADDQ.w	#2, Window_text_y.w
 	DBF	D7, loc_00011C0E
-	MOVE.w	#$0014, $FFFF9906.w
-	MOVE.w	#4, $FFFF990C.w
+	MOVE.w	#$0014, Window_text_x.w
+	MOVE.w	#4, Window_text_y.w
 	LEA	Possessed_equipment_list.w, A2
 	MOVE.w	Possessed_equipment_length.w, D7
 	BSR.w	loc_00011C8C
@@ -20155,12 +20155,12 @@ loc_00011C0E:
 	RTS
 	
 loc_00011C4C:
-	MOVE.w	#5, $FFFF990A.w	
-	MOVE.w	#0, $FFFF990E.w	
+	MOVE.w	#5, Window_height.w	
+	MOVE.w	#0, Window_tile_attrs.w	
 	BSR.w	DrawWindowBorder	
 	LEA	GearCombatStr, A0	
-	MOVE.w	#2, $FFFF9906.w	
-	MOVE.w	#2, $FFFF990C.w	
+	MOVE.w	#2, Window_text_x.w	
+	MOVE.w	#2, Window_text_y.w	
 	BSR.w	RenderTextToWindow	
 	LEA	NothingStr, A0	
 	MOVE.w	#$0060, D0	
@@ -20170,42 +20170,42 @@ loc_00011C4C:
 	RTS
 	
 loc_00011C8C:
-	MOVE.w	$FFFF990A.w, D7
+	MOVE.w	Window_height.w, D7
 	SUBQ.w	#1, D7
 	CLR.w	D3
 loc_00011C94:
 	MOVE.w	(A2)+, D4
 	ANDI.w	#$8000, D4
 	BEQ.b	loc_00011CB8
-	MOVE.w	$FFFF9904.w, D0
+	MOVE.w	Window_width.w, D0
 	ADDQ.w	#1, D0
-	MOVE.w	$FFFF990C.w, D1
+	MOVE.w	Window_text_y.w, D1
 	MULU.w	D1, D0
-	ADD.w	$FFFF9906.w, D0
+	ADD.w	Window_text_x.w, D0
 	LEA	$FFFF9920.w, A1
 	LEA	(A1,D0.w), A1
 	MOVE.b	#$2A, (A1)
 loc_00011CB8:
-	ADDQ.w	#2, $FFFF990C.w
+	ADDQ.w	#2, Window_text_y.w
 	DBF	D7, loc_00011C94
 	RTS
 	
 loc_00011CC2:
 	MOVE.w	#2, $FFFF9902.w
-	MOVE.w	#2, $FFFF9908.w
-	MOVE.w	#$0011, $FFFF9904.w
+	MOVE.w	#2, Window_tilemap_y.w
+	MOVE.w	#$0011, Window_width.w
 	MOVE.w	Possessed_magics_length.w, D0
 	BLE.w	loc_00011D56
 	ADD.w	D0, D0
 	ADDQ.w	#3, D0
-	MOVE.w	D0, $FFFF990A.w
-	MOVE.w	#0, $FFFF990E.w
+	MOVE.w	D0, Window_height.w
+	MOVE.w	#0, Window_tile_attrs.w
 	BSR.w	DrawWindowBorder
 	LEA	GearMagicStr, A0
-	MOVE.w	#2, $FFFF9906.w
-	MOVE.w	#2, $FFFF990C.w
+	MOVE.w	#2, Window_text_x.w
+	MOVE.w	#2, Window_text_y.w
 	BSR.w	RenderTextToWindow
-	ADDQ.w	#2, $FFFF990C.w
+	ADDQ.w	#2, Window_text_y.w
 	LEA	Possessed_magics_list.w, A3
 	LEA	MagicNames, A4
 	MOVE.w	Possessed_magics_length.w, D7
@@ -20217,10 +20217,10 @@ loc_00011D18:
 	ADD.w	D4, D4
 	MOVEA.l	(A4,D4.w), A0
 	BSR.w	RenderTextToWindow
-	ADDQ.w	#2, $FFFF990C.w
+	ADDQ.w	#2, Window_text_y.w
 	DBF	D7, loc_00011D18
-	MOVE.w	#$0021, $FFFF9906.w
-	MOVE.w	#3, $FFFF990C.w
+	MOVE.w	#$0021, Window_text_x.w
+	MOVE.w	#3, Window_text_y.w
 	LEA	Possessed_magics_list.w, A2
 	MOVE.w	Possessed_magics_length.w, D7
 	BSR.w	loc_00011C8C
@@ -20229,12 +20229,12 @@ loc_00011D18:
 	RTS
 	
 loc_00011D56:
-	MOVE.w	#5, $FFFF990A.w
-	MOVE.w	#0, $FFFF990E.w
+	MOVE.w	#5, Window_height.w
+	MOVE.w	#0, Window_tile_attrs.w
 	BSR.w	DrawWindowBorder
 	LEA	GearMagicStr, A0
-	MOVE.w	#2, $FFFF9906.w
-	MOVE.w	#2, $FFFF990C.w
+	MOVE.w	#2, Window_text_x.w
+	MOVE.w	#2, Window_text_y.w
 	BSR.w	RenderTextToWindow
 	LEA	NothingStr, A0
 	MOVE.w	#$004C, D0
@@ -20245,20 +20245,20 @@ loc_00011D56:
 	
 loc_00011D96:
 	MOVE.w	#$000F, $FFFF9902.w
-	MOVE.w	#2, $FFFF9908.w
-	MOVE.w	#$0016, $FFFF9904.w
+	MOVE.w	#2, Window_tilemap_y.w
+	MOVE.w	#$0016, Window_width.w
 	MOVE.w	Possessed_items_length.w, D0
 	BLE.w	loc_00011E12
 	ADD.w	D0, D0
 	ADDQ.w	#3, D0
-	MOVE.w	D0, $FFFF990A.w
-	MOVE.w	#0, $FFFF990E.w
+	MOVE.w	D0, Window_height.w
+	MOVE.w	#0, Window_tile_attrs.w
 	BSR.w	DrawWindowBorder
 	LEA	GearItemStr, A0
-	MOVE.w	#2, $FFFF9906.w
-	MOVE.w	#2, $FFFF990C.w
+	MOVE.w	#2, Window_text_x.w
+	MOVE.w	#2, Window_text_y.w
 	BSR.w	RenderTextToWindow
-	ADDQ.w	#2, $FFFF990C.w
+	ADDQ.w	#2, Window_text_y.w
 	LEA	Possessed_items_list.w, A3
 	LEA	ItemNames, A4
 	MOVE.w	Possessed_items_length.w, D7
@@ -20270,18 +20270,18 @@ loc_00011DEC:
 	ADD.w	D4, D4
 	MOVEA.l	(A4,D4.w), A0
 	BSR.w	RenderTextToWindow
-	ADDQ.w	#2, $FFFF990C.w
+	ADDQ.w	#2, Window_text_y.w
 	DBF	D7, loc_00011DEC
 	CLR.w	$FFFF9914.w
 	MOVE.b	#$FF, Window_tilemap_draw_active.w
 	RTS
 loc_00011E12:
-	MOVE.w	#5, $FFFF990A.w	
-	MOVE.w	#0, $FFFF990E.w	
+	MOVE.w	#5, Window_height.w	
+	MOVE.w	#0, Window_tile_attrs.w	
 	BSR.w	DrawWindowBorder	
 	LEA	GearItemStr, A0	
-	MOVE.w	#2, $FFFF9906.w	
-	MOVE.w	#2, $FFFF990C.w	
+	MOVE.w	#2, Window_text_x.w	
+	MOVE.w	#2, Window_text_y.w	
 	BSR.w	RenderTextToWindow	
 	LEA	NothingStr, A0	
 	MOVE.w	#$0060, D0	
@@ -20302,23 +20302,23 @@ loc_00011E62:
 	DBF	D7, loc_00011E5C
 	MOVE.w	D0, Possessed_rings_count.w
 	MOVE.w	#9, $FFFF9902.w
-	MOVE.w	#2, $FFFF9908.w
-	MOVE.w	#$0011, $FFFF9904.w
+	MOVE.w	#2, Window_tilemap_y.w
+	MOVE.w	#$0011, Window_width.w
 	TST.w	D0
 	BLE.w	loc_00011EF8
 	TST.b	All_rings_collected.w
 	BNE.w	loc_00011EF8
 	ADD.w	D0, D0
 	ADDQ.w	#3, D0
-	MOVE.w	D0, $FFFF990A.w
-	MOVE.w	#0, $FFFF990E.w
+	MOVE.w	D0, Window_height.w
+	MOVE.w	#0, Window_tile_attrs.w
 	BSR.w	DrawWindowBorder
 	LEA	RingsStr, A0
-	MOVE.w	#7, $FFFF9906.w
-	MOVE.w	#2, $FFFF990C.w
+	MOVE.w	#7, Window_text_x.w
+	MOVE.w	#2, Window_text_y.w
 	BSR.w	RenderTextToWindow
-	MOVE.w	#2, $FFFF9906.w
-	ADDQ.w	#2, $FFFF990C.w
+	MOVE.w	#2, Window_text_x.w
+	ADDQ.w	#2, Window_text_y.w
 	MOVE.w	#$FFFF, D4
 	LEA	RingNames, A4
 	LEA	Rings_collected.w, A3
@@ -20333,19 +20333,19 @@ loc_00011ED0:
 	ADD.w	D3, D3
 	MOVEA.l	(A4,D3.w), A0
 	BSR.w	RenderTextToWindow
-	ADDQ.w	#2, $FFFF990C.w
+	ADDQ.w	#2, Window_text_y.w
 	DBF	D7, loc_00011ED0
 	CLR.w	$FFFF9914.w
 	MOVE.b	#$FF, Window_tilemap_draw_active.w
 	RTS
 	
 loc_00011EF8:
-	MOVE.w	#5, $FFFF990A.w	
-	MOVE.w	#0, $FFFF990E.w	
+	MOVE.w	#5, Window_height.w	
+	MOVE.w	#0, Window_tile_attrs.w	
 	BSR.w	DrawWindowBorder	
 	LEA	RingsStr, A0	
-	MOVE.w	#2, $FFFF9906.w	
-	MOVE.w	#2, $FFFF990C.w	
+	MOVE.w	#2, Window_text_x.w	
+	MOVE.w	#2, Window_text_y.w	
 	BSR.w	RenderTextToWindow	
 	LEA	NothingStr, A0	
 	TST.b	All_rings_collected.w	
@@ -20515,7 +20515,7 @@ loc_00012194:
 ; loc_000121B0
 DrawWindowRowFromBuffer:
 	MOVE.w	$FFFFC22A.w, D0
-	SUB.w	$FFFF9916.w, D0
+	SUB.w	Window_text_row.w, D0
 	BLE.w	loc_0001222A
 	ADD.w	D0, $FFFFC222.w
 	MOVE.w	$FFFFC228.w, D1
@@ -20555,7 +20555,7 @@ loc_00012214:
 	BLE.b	loc_000121E2
 	BRA.b	loc_0001222E
 loc_0001222A:
-	CLR.b	$FFFF9911.w
+	CLR.b	Window_tilemap_row_draw_pending.w
 loc_0001222E:
 	JSR	GetScrollOffsetInTiles
 	ADD.w	$FFFFC222.w, D1
@@ -20578,7 +20578,7 @@ loc_00012240:
 	ADDQ.w	#1, D2
 	CMP.w	$FFFFC228.w, D2
 	BLE.b	loc_00012240
-	ADDQ.w	#1, $FFFF9916.w
+	ADDQ.w	#1, Window_text_row.w
 	RTS
 	
 loc_0001227A:
@@ -21094,14 +21094,14 @@ loc_000128EE:
 ; EraseMenuCursor
 EraseMenuCursor:
 	MOVE.w	#$84E0, D6
-	OR.w	$FFFF990E.w, D6
+	OR.w	Window_tile_attrs.w, D6
 	BSR.w	WriteMenuCursorTile
 	RTS
 	
 ; DrawMenuCursor
 DrawMenuCursor:
 	MOVE.w	#$84DC, D6
-	OR.w	$FFFF990E.w, D6
+	OR.w	Window_tile_attrs.w, D6
 	BSR.w	WriteMenuCursorTile
 	RTS
 	
@@ -21329,16 +21329,16 @@ loc_00012C92:
 ; Uses tile $E0 + offsets for different border parts
 DrawWindowBorder:
 	LEA	$FFFF9920.w, A0
-	MOVE.w	$FFFF990A.w, D7
+	MOVE.w	Window_height.w, D7
 	CLR.w	D1
 loc_00012CA4:
-	MOVE.w	$FFFF9904.w, D6
+	MOVE.w	Window_width.w, D6
 	CLR.w	D0
 loc_00012CAA:
 	MOVE.b	#$E0, D2
 	TST.w	D1
 	BEQ.b	loc_00012CBC
-	CMP.w	$FFFF990A.w, D1
+	CMP.w	Window_height.w, D1
 	BNE.b	loc_00012CBA
 	ADDQ.b	#3, D2
 loc_00012CBA:
@@ -21346,7 +21346,7 @@ loc_00012CBA:
 loc_00012CBC:
 	TST.w	D0
 	BEQ.b	loc_00012CCA
-	CMP.w	$FFFF9904.w, D0
+	CMP.w	Window_width.w, D0
 	BNE.b	loc_00012CC8
 	ADDQ.b	#1, D2
 loc_00012CC8:
@@ -21369,11 +21369,11 @@ loc_00012CE2:
 ; Input: A0 = Text string pointer
 ; Processes text codes: $FF=end, $FE=newline, $20→$E4, etc.
 RenderTextToWindow:
-	MOVE.w	$FFFF9904.w, D0
+	MOVE.w	Window_width.w, D0
 	ADDQ.w	#1, D0
-	MOVE.w	$FFFF990C.w, D1
+	MOVE.w	Window_text_y.w, D1
 	MULU.w	D1, D0
-	ADD.w	$FFFF9906.w, D0
+	ADD.w	Window_text_x.w, D0
 loc_00012CF6:
 	LEA	$FFFF9920.w, A1
 	LEA	(A1,D0.w), A1
@@ -21397,13 +21397,13 @@ loc_00012D2A:
 	MOVE.b	D6, (A2)+
 	BRA.b	loc_00012D00
 loc_00012D2E:
-	MOVE.w	$FFFF9904.w, D0
+	MOVE.w	Window_width.w, D0
 	ADDQ.w	#1, D0
 	ADD.w	D0, D0
 	LEA	(A1,D0.w), A1
 	BRA.b	loc_00012CFE
 loc_00012D3C:
-	MOVE.w	$FFFF9904.w, D0	
+	MOVE.w	Window_width.w, D0	
 	ADDQ.w	#1, D0	
 	NEG.w	D0	
 	MOVE.b	D6, -$1(A2,D0.w)	
@@ -21423,7 +21423,7 @@ loc_00012D5A:
 	ADD.w	D0, D4
 	ADD.w	D1, D5
 	ADD.w	$FFFF9902.w, D4
-	ADD.w	$FFFF9908.w, D5
+	ADD.w	Window_tilemap_y.w, D5
 	ANDI.w	#$003F, D4
 	ANDI.w	#$003F, D5
 	ASL.w	#1, D4
@@ -21437,40 +21437,40 @@ loc_00012D5A:
 	MOVE.b	(A0)+, D4
 	ADDI.w	#$04C0, D4
 	ORI.w	#$8000, D4
-	OR.w	$FFFF990E.w, D4
+	OR.w	Window_tile_attrs.w, D4
 	MOVE.w	D4, VDP_data_port
 	ADDQ.w	#1, D2
-	CMP.w	$FFFF9904.w, D2
+	CMP.w	Window_width.w, D2
 	BLE.b	loc_00012D5A
 	ADDQ.w	#1, D3
-	CMP.w	$FFFF990A.w, D3
+	CMP.w	Window_height.w, D3
 	BLE.b	loc_00012D58
 	CLR.b	$FFFF9900.w
 	RTS
 
 loc_00012DB8:
 	LEA	$FFFF9920.w, A0
-	MOVE.w	$FFFF9904.w, D2
+	MOVE.w	Window_width.w, D2
 	MOVE.w	$FFFF9914.w, D0
-	CMP.w	$FFFF990A.w, D0
+	CMP.w	Window_height.w, D0
 	BGE.w	loc_00012E20
 	ADDQ.w	#1, D2
 	MULU.w	D2, D0
 	LEA	(A0,D0.w), A0
 	JSR	GetScrollOffsetInTiles
-	ADD.w	$FFFF9908.w, D1
+	ADD.w	Window_tilemap_y.w, D1
 	ADD.w	$FFFF9914.w, D1
 	ANDI.w	#$003F, D1
 	ASL.w	#7, D1
 	BSR.w	loc_00012E26
 	LEA	$FFFF9920.w, A0
-	MOVE.w	$FFFF9904.w, D2
-	MOVE.w	$FFFF990A.w, D0
+	MOVE.w	Window_width.w, D2
+	MOVE.w	Window_height.w, D0
 	ADDQ.w	#1, D2
 	MULU.w	D2, D0
 	LEA	(A0,D0.w), A0
 	JSR	GetScrollOffsetInTiles
-	ADD.w	$FFFF9908.w, D1
+	ADD.w	Window_tilemap_y.w, D1
 	ADD.w	$FFFF9914.w, D1
 	ADDQ.w	#1, D1
 	ANDI.w	#$003F, D1
@@ -21498,11 +21498,11 @@ loc_00012E28:
 	ADDI.l	#$40000003, D5
 	MOVE.b	(A0)+, D4
 	ADDI.w	#$84C0, D4
-	OR.w	$FFFF990E.w, D4
+	OR.w	Window_tile_attrs.w, D4
 	MOVE.l	D5, VDP_control_port
 	MOVE.w	D4, VDP_data_port
 	ADDQ.w	#1, D2
-	CMP.w	$FFFF9904.w, D2
+	CMP.w	Window_width.w, D2
 	BLE.b	loc_00012E28
 	RTS
 
@@ -22394,7 +22394,7 @@ loc_000150F6:
 	MOVE.b	#$FF, Fade_in_lines_mask.w
 	BSR.w	loc_000153FA
 	BSR.w	loc_00015442
-	MOVEA.l	$FFFFCC14.w, A6
+	MOVEA.l	Enemy_list_ptr.w, A6
 	BSET.b	#7, (A6)
 	BSET.b	#7, $7(A6)
 	BCLR.b	#3, $7(A6)
@@ -22587,7 +22587,7 @@ loc_000153E0:
 	RTS
 
 loc_000153E2:
-	MOVEA.l	$FFFFCC14.w, A6
+	MOVEA.l	Enemy_list_ptr.w, A6
 	BCLR.b	#7, (A6)
 	CLR.w	D0
 	MOVE.b	$1(A6), D0
@@ -23288,7 +23288,7 @@ ResetTownCameraMovementState:
 loc_00015ECA:
 	TST.w	$FFFFC106.w
 	BLE.b	ResetTownCameraMovementState
-	MOVEA.l	$FFFFCC08.w, A6
+	MOVEA.l	Player_entity_ptr.w, A6
 	MOVE.w	$12(A6), D0
 	SUB.w	$FFFFC410.w, D0
 	ADDQ.w	#4, D0
@@ -23321,7 +23321,7 @@ loc_00015F1C:
 	MOVE.w	$FFFFC106.w, D0
 	CMP.w	VScroll_max_limit.w, D0
 	BGE.b	ResetTownCameraMovementState
-	MOVEA.l	$FFFFCC08.w, A6
+	MOVEA.l	Player_entity_ptr.w, A6
 	MOVE.w	$12(A6), D0
 	SUB.w	$FFFFC410.w, D0
 	ADDQ.w	#4, D0
@@ -23348,7 +23348,7 @@ loc_00015F66:
 loc_00015F6E:
 	TST.w	$FFFFC104.w
 	BGE.w	ResetTownCameraMovementState
-	MOVEA.l	$FFFFCC08.w, A6
+	MOVEA.l	Player_entity_ptr.w, A6
 	MOVE.w	$E(A6), D0
 	SUB.w	$FFFFC40E.w, D0
 	SUBQ.w	#8, D0
@@ -23381,7 +23381,7 @@ loc_00015FC4:
 	MOVE.w	$FFFFC104.w, D0
 	CMP.w	HScroll_min_limit.w, D0
 	BLE.w	ResetTownCameraMovementState
-	MOVEA.l	$FFFFCC08.w, A6
+	MOVEA.l	Player_entity_ptr.w, A6
 	MOVE.w	$E(A6), D0
 	SUB.w	$FFFFC40E.w, D0
 	SUBQ.w	#8, D0
@@ -23450,7 +23450,7 @@ loc_00016018:
 	NEG.w	D0
 	MOVE.w	D0, $FFFFC104.w
 	MOVE.w	D1, $FFFFC106.w
-	MOVEA.l	$FFFFCC08.w, A6
+	MOVEA.l	Player_entity_ptr.w, A6
 	MOVE.w	Player_spawn_position_x.w, $E(A6)
 	MOVE.w	Player_spawn_tile_y.w, $12(A6)
 	RTS
@@ -24282,7 +24282,7 @@ loc_000169D0:
 	RTS
 
 loc_00016A72:
-	MOVEA.l	$FFFFCC14.w, A6
+	MOVEA.l	Enemy_list_ptr.w, A6
 	MOVEQ	#$13, D7
 loc_00016A78:
 	BCLR.b	#7, (A6)
@@ -24550,7 +24550,7 @@ loc_00016DAC:
 	RTS
 
 loc_00016DCE:
-	MOVEA.l	$FFFFCC14.w, A6
+	MOVEA.l	Enemy_list_ptr.w, A6
 	BSET.b	#7, (A6)
 	BSET.b	#7, $7(A6)
 	BCLR.b	#3, $7(A6)
@@ -24586,7 +24586,7 @@ loc_00016E4A:
 loc_00016E76:
 	dc.b	$04, $83, $04, $84, $04, $85, $04, $86, $04, $85, $04, $86, $04, $84, $00, $00 
 loc_00016E86:
-	MOVEA.l	$FFFFCC14.w, A6
+	MOVEA.l	Enemy_list_ptr.w, A6
 	CLR.w	D0
 	MOVE.b	$1(A6), D0
 	LEA	(A6,D0.w), A6
@@ -24653,7 +24653,7 @@ loc_00016F82:
 	MOVE.b	#$0F, Palette_fade_in_mask.w
 	CLR.w	Ending_sequence_step.w
 	JSR	ClearAllEnemyEntities
-	MOVEA.l	$FFFFCC08.w, A6
+	MOVEA.l	Player_entity_ptr.w, A6
 	BCLR.b	#7, (A6)
 	MOVEA.l	Battle_entity_slot_1_ptr.w, A6
 	BCLR.b	#7, (A6)
@@ -25565,8 +25565,8 @@ loc_00017F44:
 	MOVE.w	#$00A8, D0
 	JSR	QueueSoundEffect
 	MOVE.w	#$000E, Window_draw_type.w
-	CLR.w	$FFFF9916.w
-	MOVE.b	#$FF, $FFFF9911.w
+	CLR.w	Window_text_row.w
+	MOVE.b	#$FF, Window_tilemap_row_draw_pending.w
 	MOVE.w	#4, Overworld_menu_state.w
 	JSR	loc_00003208
 	RTS
@@ -25632,8 +25632,8 @@ loc_0001805A:
 	JSR	DrawStatusHudWindow
 	MOVE.w	#$000A, $FFFFC424.w
 	MOVE.w	#$000E, Window_draw_type.w
-	CLR.w	$FFFF9916.w
-	MOVE.b	#$FF, $FFFF9911.w
+	CLR.w	Window_text_row.w
+	MOVE.b	#$FF, Window_tilemap_row_draw_pending.w
 	RTS
 
 loc_00018078:
@@ -25641,7 +25641,7 @@ loc_00018078:
 	RTS
 
 loc_00018080:
-	TST.b	$FFFF9911.w
+	TST.b	Window_tilemap_row_draw_pending.w
 	BNE.b	loc_000180A6
 	TST.b	Player_in_first_person_mode.w
 	BEQ.b	loc_00018092
@@ -25649,8 +25649,8 @@ loc_00018080:
 loc_00018092:
 	CLR.w	Overworld_menu_state.w
 	MOVE.w	#3, Window_draw_type.w
-	CLR.w	$FFFF9916.w
-	MOVE.b	#$FF, $FFFF9911.w
+	CLR.w	Window_text_row.w
+	MOVE.b	#$FF, Window_tilemap_row_draw_pending.w
 loc_000180A6:
 	RTS
 
@@ -25979,8 +25979,8 @@ loc_0001856A:
 	JSR	DrawStatusHudWindow
 	MOVE.w	#$000A, $FFFFC424.w
 	MOVE.w	#$000E, Window_draw_type.w
-	CLR.w	$FFFF9916.w
-	MOVE.b	#$FF, $FFFF9911.w
+	CLR.w	Window_text_row.w
+	MOVE.b	#$FF, Window_tilemap_row_draw_pending.w
 	TST.b	Player_in_first_person_mode.w
 	BEQ.b	loc_00018592
 	JSR	DisplayPlayerHpMp
@@ -26326,7 +26326,7 @@ CastBattleMagicMap:
 
 ;loc_00018A6A:
 CastAero:
-	MOVEA.l	$FFFFCC1C.w, A6
+	MOVEA.l	Object_slot_02_ptr.w, A6
 	BTST.b	#7, (A6)
 	BNE.w	loc_00018B12
 	BSR.w	CheckCursedAndConsumeReadiedMagicMp
@@ -26410,13 +26410,13 @@ loc_00018BA0:
 
 ;loc_00018BA6
 CastAerios:
-	MOVEA.l	$FFFFCC1C.w, A6
+	MOVEA.l	Object_slot_02_ptr.w, A6
 	BTST.b	#7, (A6)
 	BNE.w	loc_00018C62
 	BSR.w	CheckCursedAndConsumeReadiedMagicMp
 	BNE.w	loc_00018C62
 	BSR.w	InitMagicDamageAndFlags
-	MOVEA.l	$FFFFCC1C.w, A3
+	MOVEA.l	Object_slot_02_ptr.w, A3
 	CLR.w	D1
 	MOVE.w	#7, D7
 loc_00018BC8:
@@ -26448,7 +26448,7 @@ loc_00018BC8:
 	LEA	(A6,D0.w), A6
 	ADDQ.w	#1, D1
 	DBF	D7, loc_00018BC8
-	MOVEA.l	$FFFFCC1C.w, A6
+	MOVEA.l	Object_slot_02_ptr.w, A6
 	MOVE.l	#loc_00018C64, $2(A6)
 loc_00018C62:
 	RTS
@@ -26531,7 +26531,7 @@ loc_00018D52:
 
 ;loc_00018D5A
 CastVolti:
-	MOVEA.l	$FFFFCC1C.w, A6
+	MOVEA.l	Object_slot_02_ptr.w, A6
 	BTST.b	#7, (A6)
 	BNE.w	loc_00018DF6
 	BSR.w	CheckCursedAndConsumeReadiedMagicMp
@@ -26598,7 +26598,7 @@ loc_00018E56:
 
 ;loc_00018E5C
 CastVoltio:
-	MOVEA.l	$FFFFCC1C.w, A6
+	MOVEA.l	Object_slot_02_ptr.w, A6
 	BTST.b	#7, (A6)
 	BNE.w	loc_00018EBC
 	BSR.w	CheckCursedAndConsumeReadiedMagicMp
@@ -26669,9 +26669,9 @@ loc_00018F54:
 	RTS
 
 loc_00018F5A:
-	MOVEA.l	$FFFFCC1C.w, A6
+	MOVEA.l	Object_slot_02_ptr.w, A6
 	MOVE.w	$8(A6), $8(A5)
-	MOVEA.l	$FFFFCC08.w, A6
+	MOVEA.l	Player_entity_ptr.w, A6
 	MOVE.w	$E(A6), D0
 	ADD.w	$2E(A5), D0
 	MOVE.w	D0, $E(A5)
@@ -26688,7 +26688,7 @@ loc_00018F5A:
 
 loc_00018FA0:
 	BSR.w	CheckProjectileHitEnemies
-	MOVEA.l	$FFFFCC08.w, A6
+	MOVEA.l	Player_entity_ptr.w, A6
 	MOVE.w	$E(A6), D0
 	ADD.w	$2E(A5), D0
 	MOVE.w	D0, $E(A5)
@@ -26737,7 +26737,7 @@ loc_00018FDA:
 
 ;loc_0001901A
 CastVoltios:
-	MOVEA.l	$FFFFCC1C.w, A6
+	MOVEA.l	Object_slot_02_ptr.w, A6
 	BTST.b	#7, (A6)
 	BNE.b	loc_00019070
 	BSR.w	CheckCursedAndConsumeReadiedMagicMp
@@ -26747,7 +26747,7 @@ CastVoltios:
 	BSET.b	#7, (A6)
 	CLR.w	$3A(A6)
 	BSR.w	InitMagicDamageAndFlags
-	MOVEA.l	$FFFFCC08.w, A4
+	MOVEA.l	Player_entity_ptr.w, A4
 	MOVE.w	$E(A4), $E(A6)
 	MOVE.w	$12(A4), D0
 	MOVE.w	$16(A4), $16(A6)
@@ -26990,7 +26990,7 @@ loc_0001937E:
 	RTS
 
 loc_00019384:
-	MOVEA.l	$FFFFCC14.w, A4
+	MOVEA.l	Enemy_list_ptr.w, A4
 	MOVE.w	#7, D6
 loc_0001938C:
 	BTST.b	#7, (A4)
@@ -27030,7 +27030,7 @@ loc_000193F4:
 
 ;loc_00019408
 CastFerros:
-	MOVEA.l	$FFFFCC1C.w, A6
+	MOVEA.l	Object_slot_02_ptr.w, A6
 	BTST.b	#7, (A6)
 	BNE.w	loc_000194A0
 	BSR.w	CheckCursedAndConsumeReadiedMagicMp
@@ -27088,7 +27088,7 @@ loc_000194CA:
 	MULS.w	D0, D3
 	ASR.l	#7, D2
 	ASR.l	#7, D3
-	MOVEA.l	$FFFFCC08.w, A6
+	MOVEA.l	Player_entity_ptr.w, A6
 	ADD.w	$E(A6), D2
 	ADD.w	$12(A6), D3
 	MOVE.w	D2, $E(A5)
@@ -27111,7 +27111,7 @@ loc_00019534:
 
 ;loc_00019540
 CastCopperos:
-	MOVEA.l	$FFFFCC1C.w, A6
+	MOVEA.l	Object_slot_02_ptr.w, A6
 	BTST.b	#7, (A6)
 	BNE.w	loc_000195D8
 	BSR.w	CheckCursedAndConsumeReadiedMagicMp
@@ -27284,7 +27284,7 @@ loc_000197D2:
 
 ;loc_000197DA
 CastMercusios:
-	MOVEA.l	$FFFFCC1C.w, A6
+	MOVEA.l	Object_slot_02_ptr.w, A6
 	BTST.b	#7, (A6)
 	BNE.w	loc_0001989E
 	BSR.w	CheckCursedAndConsumeReadiedMagicMp
@@ -27324,7 +27324,7 @@ loc_000197FC:
 	LEA	(A6,D0.w), A6
 	ADDQ.w	#1, D1
 	DBF	D7, loc_000197FC
-	MOVEA.l	$FFFFCC1C.w, A6
+	MOVEA.l	Object_slot_02_ptr.w, A6
 	MOVE.l	#loc_000198A0, $2(A6)
 loc_0001989E:
 	RTS
@@ -27380,7 +27380,7 @@ loc_00019938:
 
 ;loc_00019940
 CastArgentos:
-	MOVEA.l	$FFFFCC1C.w, A6
+	MOVEA.l	Object_slot_02_ptr.w, A6
 	BTST.b	#7, (A6)
 	BNE.w	loc_000199E6
 	BSR.w	CheckCursedAndConsumeReadiedMagicMp
@@ -27551,7 +27551,7 @@ loc_00019BA6:
 	RTS
 	
 loc_00019BC6:
-	MOVEA.l	$FFFFCC14.w, A4
+	MOVEA.l	Enemy_list_ptr.w, A4
 loc_00019BCA:
 	BTST.b	#7, (A4)
 	BNE.w	loc_00019BFE
@@ -27574,7 +27574,7 @@ loc_00019BFE:
 
 ;loc_00019C04
 CastHydro:
-	MOVEA.l	$FFFFCC1C.w, A6
+	MOVEA.l	Object_slot_02_ptr.w, A6
 	BTST.b	#7, (A6)
 	BNE.w	loc_00019C7A
 	BSR.w	CheckCursedAndConsumeReadiedMagicMp
@@ -27717,7 +27717,7 @@ loc_00019DFE:
 	RTS
 
 loc_00019E20:
-	MOVEA.l	$FFFFCC14.w, A4
+	MOVEA.l	Enemy_list_ptr.w, A4
 	MOVEQ	#7, D7
 loc_00019E26:
 	BTST.b	#7, (A4)
@@ -27749,7 +27749,7 @@ loc_00019E44:
 CastChronos:
 	BSR.w	CheckCursedAndConsumeReadiedMagicMp
 	BNE.b	loc_00019EA0
-	MOVEA.l	$FFFFCC1C.w, A6
+	MOVEA.l	Object_slot_02_ptr.w, A6
 	BSET.b	#7, (A6)
 	MOVE.w	#$00C8, $28(A6)
 	MOVE.l	#loc_00019EA2, $2(A6)
@@ -27771,7 +27771,7 @@ loc_00019EB0:
 CastChronios:
 	BSR.w	CheckCursedAndConsumeReadiedMagicMp
 	BNE.b	loc_00019EDE
-	MOVEA.l	$FFFFCC1C.w, A6
+	MOVEA.l	Object_slot_02_ptr.w, A6
 	BSET.b	#7, (A6)
 	MOVE.w	#$01F4, $28(A6)
 	MOVE.l	#loc_00019EA2, $2(A6)
@@ -27783,7 +27783,7 @@ loc_00019EDE:
 
 ;loc_00019EE0:
 CastTerrafissi:
-	MOVEA.l	$FFFFCC1C.w, A6
+	MOVEA.l	Object_slot_02_ptr.w, A6
 	BTST.b	#7, (A6)
 	BNE.b	loc_00019F18
 	BSR.w	CheckCursedAndConsumeReadiedMagicMp
@@ -27822,7 +27822,7 @@ loc_00019F4A:
 	RTS
 
 loc_00019F54:
-	MOVEA.l	$FFFFCC14.w, A4
+	MOVEA.l	Enemy_list_ptr.w, A4
 	MOVE.w	#7, D6
 loc_00019F5C:
 	BTST.b	#7, (A4)
@@ -27851,7 +27851,7 @@ loc_00019F8E:
 	dc.b	$10, $F0, $10, $F0, $10, $10, $F0, $F0, $08, $08, $F8, $F8, $08, $08, $F8, $F8, $04, $04, $04, $04, $FC, $FC, $FC, $FC, $2C, $78, $CC, $1C, $4A, $2E, $00, $19 
 	dc.b	$67, $12, $42, $40, $10, $2E, $00, $01, $4D, $F6, $00, $00, $51, $CF, $FF, $EE, $61, $00, $00, $2C, $4E, $75 
 loc_0001A064:
-	MOVEA.l	$FFFFCC1C.w, A6
+	MOVEA.l	Object_slot_02_ptr.w, A6
 	MOVE.w	#7, D7
 loc_0001A06C:
 	BTST.b	#7, (A6)
@@ -27868,7 +27868,7 @@ loc_0001A08A:
 	RTS
 
 loc_0001A08C:
-	MOVEA.l	$FFFFCC1C.w, A6
+	MOVEA.l	Object_slot_02_ptr.w, A6
 	MOVE.w	#$000C, D7
 loc_0001A094:
 	BCLR.b	#7, (A6)
@@ -27887,7 +27887,7 @@ CheckProjectileHitEnemies:
 	MOVE.w	$12(A5), D3
 	MOVE.w	D3, D2
 	SUB.w	$1E(A5), D2
-	MOVEA.l	$FFFFCC14.w, A6
+	MOVEA.l	Enemy_list_ptr.w, A6
 	MOVE.w	#7, D7
 loc_0001A0C8:
 	BTST.b	#7, (A6)
@@ -27968,7 +27968,7 @@ loc_0001A19A:
 	RTS
 
 loc_0001A1A2:
-	MOVEA.l	$FFFFCC14.w, A4
+	MOVEA.l	Enemy_list_ptr.w, A4
 	MOVE.w	D1, D6
 	BLE.b	loc_0001A1CE
 	SUBQ.w	#1, D6
@@ -28127,8 +28127,8 @@ loc_0001A344:
 	MOVE.w	#4, Window_draw_type.w
 	MOVE.w	#$00A8, D0
 	JSR	QueueSoundEffect
-	CLR.w	$FFFF9916.w
-	MOVE.b	#$FF, $FFFF9911.w
+	CLR.w	Window_text_row.w
+	MOVE.b	#$FF, Window_tilemap_row_draw_pending.w
 	MOVE.w	#4, Overworld_menu_state.w
 	JSR	loc_00003208
 	RTS
@@ -28182,8 +28182,8 @@ loc_0001A428:
 	JSR	DrawStatusHudWindow
 	MOVE.w	#3, Item_menu_state.w
 	MOVE.w	#4, Window_draw_type.w
-	CLR.w	$FFFF9916.w
-	MOVE.b	#$FF, $FFFF9911.w
+	CLR.w	Window_text_row.w
+	MOVE.b	#$FF, Window_tilemap_row_draw_pending.w
 	RTS
 
 loc_0001A446:
@@ -28191,12 +28191,12 @@ loc_0001A446:
 	RTS
 
 loc_0001A44E:
-	TST.b	$FFFF9911.w
+	TST.b	Window_tilemap_row_draw_pending.w
 	BNE.b	loc_0001A474
 	CLR.w	Overworld_menu_state.w
 	MOVE.w	#3, Window_draw_type.w
-	CLR.w	$FFFF9916.w
-	MOVE.b	#$FF, $FFFF9911.w
+	CLR.w	Window_text_row.w
+	MOVE.b	#$FF, Window_tilemap_row_draw_pending.w
 	TST.b	Sixteen_rings_used_at_throne.w
 	BEQ.b	loc_0001A474
 	MOVE.w	#PROGRAM_STATE_12, Program_state.w
@@ -28340,8 +28340,8 @@ loc_0001A656:
 loc_0001A678:
 	JSR	DrawStatusHudWindow
 	MOVE.w	#4, Window_draw_type.w
-	CLR.w	$FFFF9916.w
-	MOVE.b	#$FF, $FFFF9911.w
+	CLR.w	Window_text_row.w
+	MOVE.b	#$FF, Window_tilemap_row_draw_pending.w
 	MOVE.w	#3, Item_menu_state.w
 	RTS
 
@@ -28483,8 +28483,8 @@ loc_0001A86A:
 	JSR	DisplayPlayerHpMp
 loc_0001A870:
 	MOVE.w	#4, Window_draw_type.w
-	CLR.w	$FFFF9916.w
-	MOVE.b	#$FF, $FFFF9911.w
+	CLR.w	Window_text_row.w
+	MOVE.b	#$FF, Window_tilemap_row_draw_pending.w
 	MOVE.w	#3, Item_menu_state.w
 	RTS
 
@@ -28934,7 +28934,7 @@ UseAlarmClock:
 	CLR.w	D0
 	CLR.w	D1
 	CLR.w	D2
-	MOVEA.l	$FFFFCC08.w, A6
+	MOVEA.l	Player_entity_ptr.w, A6
 	LEA	loc_0001AE88, A0
 	MOVE.w	#3, D7
 loc_0001AE40:
@@ -29061,7 +29061,7 @@ UseOldMansSketch
 	BNE.w	loc_0001AFA2
 	CLR.w	D0
 	CLR.w	D1
-	MOVEA.l	$FFFFCC08.w, A6
+	MOVEA.l	Player_entity_ptr.w, A6
 	LEA	loc_0001AFC0, A0
 	MOVE.w	#3, D7
 loc_0001AF7E:
@@ -29780,7 +29780,7 @@ loc_0001BB26:
 	RTS
 
 loc_0001BB4E:
-	CLR.w	$FFFF9916.w
+	CLR.w	Window_text_row.w
 	MOVE.w	#9, Dialogue_state.w
 	RTS
 
@@ -29832,8 +29832,8 @@ loc_0001BBC4:
 	CLR.w	Overworld_menu_state.w
 	JSR	DrawStatusHudWindow
 	MOVE.w	#3, Window_draw_type.w
-	CLR.w	$FFFF9916.w
-	MOVE.b	#$FF, $FFFF9911.w
+	CLR.w	Window_text_row.w
+	MOVE.b	#$FF, Window_tilemap_row_draw_pending.w
 	RTS
 
 loc_0001BBE0:
@@ -29919,7 +29919,7 @@ loc_0001BCD8:
 loc_0001BCDE:
 	TST.b	Window_tilemap_draw_active.w
 	BNE.w	loc_0001BD98
-	TST.b	$FFFF9911.w
+	TST.b	Window_tilemap_row_draw_pending.w
 	BNE.w	loc_0001BD98
 	MOVE.w	#BUTTON_BIT_B, D2
 	JSR	CheckButtonPress
@@ -29984,21 +29984,21 @@ loc_0001BD9A:
 
 loc_0001BDBA:
 	MOVE.w	#5, Window_draw_type.w
-	CLR.w	$FFFF9916.w
-	MOVE.b	#$FF, $FFFF9911.w
+	CLR.w	Window_text_row.w
+	MOVE.b	#$FF, Window_tilemap_row_draw_pending.w
 	MOVE.w	#9, Dialogue_state.w
 	RTS
 
 loc_0001BDD2:
 	JMP	ProcessScriptText
 loc_0001BDD8:
-	TST.b	$FFFF9911.w
+	TST.b	Window_tilemap_row_draw_pending.w
 	BNE.b	loc_0001BDF8
 	JSR	DrawStatusHudWindow
 	CLR.w	Overworld_menu_state.w
 	MOVE.w	#3, Window_draw_type.w
-	CLR.w	$FFFF9916.w
-	MOVE.b	#$FF, $FFFF9911.w
+	CLR.w	Window_text_row.w
+	MOVE.b	#$FF, Window_tilemap_row_draw_pending.w
 loc_0001BDF8:
 	RTS
 
@@ -30627,8 +30627,8 @@ loc_0001C6BE:
 	JSR	loc_00012766
 	CLR.w	Overworld_menu_state.w
 	MOVE.w	#3, Window_draw_type.w
-	CLR.w	$FFFF9916.w
-	MOVE.b	#$FF, $FFFF9911.w
+	CLR.w	Window_text_row.w
+	MOVE.b	#$FF, Window_tilemap_row_draw_pending.w
 	RTS
 
 loc_0001C6E0:
@@ -30834,7 +30834,7 @@ loc_0001C990:
 loc_0001C996:
 	TST.b	Window_tilemap_draw_active.w
 	BNE.w	loc_0001CAE2
-	TST.b	$FFFF9911.w
+	TST.b	Window_tilemap_row_draw_pending.w
 	BNE.w	loc_0001CAE2
 	MOVE.w	#BUTTON_BIT_B, D2
 	JSR	CheckButtonPress
@@ -30929,23 +30929,23 @@ loc_0001CB04:
 	MOVE.w	#$00A8, D0
 	JSR	QueueSoundEffect
 	MOVE.w	#8, Window_draw_type.w
-	CLR.w	$FFFF9916.w
-	MOVE.b	#$FF, $FFFF9911.w
+	CLR.w	Window_text_row.w
+	MOVE.b	#$FF, Window_tilemap_row_draw_pending.w
 	MOVE.w	#$24, Dialogue_state.w
 	RTS
 
 loc_0001CB26:
 	JMP	ProcessScriptText
 loc_0001CB2C:
-	TST.b	$FFFF9911.w
+	TST.b	Window_tilemap_row_draw_pending.w
 	BNE.b	loc_0001CB56
 	JSR	DrawStatusHudWindow
 	MOVE.w	#$00A8, D0
 	JSR	QueueSoundEffect
 	CLR.w	Overworld_menu_state.w
 	MOVE.w	#3, Window_draw_type.w
-	CLR.w	$FFFF9916.w
-	MOVE.b	#$FF, $FFFF9911.w
+	CLR.w	Window_text_row.w
+	MOVE.b	#$FF, Window_tilemap_row_draw_pending.w
 loc_0001CB56:
 	RTS
 
@@ -31196,7 +31196,7 @@ loc_0001CE80:
 	ADD.w	(A1,D2.w), D0
 	ADD.w	$2(A1,D2.w), D1
 	MOVEQ	#$0000001D, D7
-	MOVEA.l	$FFFFCC14.w, A6
+	MOVEA.l	Enemy_list_ptr.w, A6
 loc_0001CEA6:
 	BTST.b	#7, (A6)
 	BEQ.b	loc_0001CEEE
@@ -31341,7 +31341,7 @@ loc_0001D036:
 loc_0001D05C:
 	TST.b	Window_tilemap_draw_active.w
 	BNE.w	loc_0001D102
-	TST.b	$FFFF9911.w
+	TST.b	Window_tilemap_row_draw_pending.w
 	BNE.w	loc_0001D102
 	MOVE.w	#BUTTON_BIT_B, D2
 	JSR	CheckButtonPress
@@ -31358,8 +31358,8 @@ loc_0001D098:
 	MOVE.w	#$00A8, D0
 	JSR	QueueSoundEffect
 	MOVE.w	#6, Window_draw_type.w
-	CLR.w	$FFFF9916.w
-	MOVE.b	#$FF, $FFFF9911.w
+	CLR.w	Window_text_row.w
+	MOVE.b	#$FF, Window_tilemap_row_draw_pending.w
 	MOVE.w	#4, Overworld_menu_state.w
 	JSR	loc_00003208
 	RTS
@@ -31850,7 +31850,7 @@ loc_0001D6CE:
 loc_0001D6F6:
 	TST.b	Window_tilemap_draw_active.w
 	BNE.w	loc_0001D760
-	TST.b	$FFFF9911.w
+	TST.b	Window_tilemap_row_draw_pending.w
 	BNE.w	loc_0001D760
 	MOVE.w	#BUTTON_BIT_C, D2
 	JSR	CheckButtonPress
@@ -31865,8 +31865,8 @@ loc_0001D724:
 	JSR	QueueSoundEffect
 	MOVE.w	#8, Equip_list_menu_state.w
 	MOVE.w	#0, Window_draw_type.w
-	CLR.w	$FFFF9916.w
-	MOVE.b	#$FF, $FFFF9911.w
+	CLR.w	Window_text_row.w
+	MOVE.b	#$FF, Window_tilemap_row_draw_pending.w
 	RTS
 
 loc_0001D746:
@@ -31881,7 +31881,7 @@ loc_0001D760:
 loc_0001D762:
 	TST.b	Window_tilemap_draw_active.w
 	BNE.w	loc_0001D7CC
-	TST.b	$FFFF9911.w
+	TST.b	Window_tilemap_row_draw_pending.w
 	BNE.w	loc_0001D7CC
 	MOVE.w	#BUTTON_BIT_C, D2
 	JSR	CheckButtonPress
@@ -31895,8 +31895,8 @@ loc_0001D790:
 	MOVE.w	#$00A8, D0
 	JSR	QueueSoundEffect
 	MOVE.w	#1, Window_draw_type.w
-	MOVE.b	#$FF, $FFFF9911.w
-	CLR.w	$FFFF9916.w
+	MOVE.b	#$FF, Window_tilemap_row_draw_pending.w
+	CLR.w	Window_text_row.w
 	MOVE.w	#1, Equip_list_menu_state.w
 	RTS
 
@@ -31912,7 +31912,7 @@ loc_0001D7CC:
 loc_0001D7CE:
 	TST.b	Window_tilemap_draw_active.w
 	BNE.w	loc_0001D838
-	TST.b	$FFFF9911.w
+	TST.b	Window_tilemap_row_draw_pending.w
 	BNE.w	loc_0001D838
 	MOVE.w	#BUTTON_BIT_C, D2
 	JSR	CheckButtonPress
@@ -31926,8 +31926,8 @@ loc_0001D7FC:
 	MOVE.w	#$00A8, D0
 	JSR	QueueSoundEffect
 	MOVE.w	#9, Window_draw_type.w
-	MOVE.b	#$FF, $FFFF9911.w
-	CLR.w	$FFFF9916.w
+	MOVE.b	#$FF, Window_tilemap_row_draw_pending.w
+	CLR.w	Window_text_row.w
 	MOVE.w	#2, Equip_list_menu_state.w
 	RTS
 
@@ -31943,7 +31943,7 @@ loc_0001D838:
 loc_0001D83A:
 	TST.b	Window_tilemap_draw_active.w
 	BNE.w	loc_0001D8A4
-	TST.b	$FFFF9911.w
+	TST.b	Window_tilemap_row_draw_pending.w
 	BNE.w	loc_0001D8A4
 	MOVE.w	#BUTTON_BIT_C, D2
 	JSR	CheckButtonPress
@@ -31957,8 +31957,8 @@ loc_0001D868:
 	MOVE.w	#$00A8, D0
 	JSR	QueueSoundEffect
 	MOVE.w	#$000A, Window_draw_type.w
-	MOVE.b	#$FF, $FFFF9911.w
-	CLR.w	$FFFF9916.w
+	MOVE.b	#$FF, Window_tilemap_row_draw_pending.w
+	CLR.w	Window_text_row.w
 	MOVE.w	#3, Equip_list_menu_state.w
 	RTS
 
@@ -31974,7 +31974,7 @@ loc_0001D8A4:
 loc_0001D8A6:
 	TST.b	Window_tilemap_draw_active.w
 	BNE.w	loc_0001D910
-	TST.b	$FFFF9911.w
+	TST.b	Window_tilemap_row_draw_pending.w
 	BNE.w	loc_0001D910
 	MOVE.w	#BUTTON_BIT_C, D2
 	JSR	CheckButtonPress
@@ -31988,8 +31988,8 @@ loc_0001D8D4:
 	MOVE.w	#$00A8, D0
 	JSR	QueueSoundEffect
 	MOVE.w	#$000B, Window_draw_type.w
-	MOVE.b	#$FF, $FFFF9911.w
-	CLR.w	$FFFF9916.w
+	MOVE.b	#$FF, Window_tilemap_row_draw_pending.w
+	CLR.w	Window_text_row.w
 	MOVE.w	#4, Equip_list_menu_state.w
 	RTS
 
@@ -32005,7 +32005,7 @@ loc_0001D910:
 loc_0001D912:
 	TST.b	Window_tilemap_draw_active.w
 	BNE.w	loc_0001D96A
-	TST.b	$FFFF9911.w
+	TST.b	Window_tilemap_row_draw_pending.w
 	BNE.w	loc_0001D96A
 	MOVE.w	#BUTTON_BIT_C, D2
 	JSR	CheckButtonPress
@@ -32024,29 +32024,29 @@ loc_0001D950:
 	MOVE.w	#$00A8, D0
 	JSR	QueueSoundEffect
 	MOVE.w	#$000C, Window_draw_type.w
-	MOVE.b	#$FF, $FFFF9911.w
-	CLR.w	$FFFF9916.w
+	MOVE.b	#$FF, Window_tilemap_row_draw_pending.w
+	CLR.w	Window_text_row.w
 loc_0001D96A:
 	RTS
 
 loc_0001D96C:
 	TST.b	Window_tilemap_draw_active.w	
 	BNE.w	loc_0001D99C	
-	TST.b	$FFFF9911.w	
+	TST.b	Window_tilemap_row_draw_pending.w	
 	BNE.w	loc_0001D99C	
 	MOVE.w	#$00A8, D0	
 	JSR	QueueSoundEffect	
 	MOVE.w	#8, Equip_list_menu_state.w	
 	MOVE.w	#0, Window_draw_type.w	
-	CLR.w	$FFFF9916.w	
-	MOVE.b	#$FF, $FFFF9911.w	
+	CLR.w	Window_text_row.w	
+	MOVE.b	#$FF, Window_tilemap_row_draw_pending.w	
 loc_0001D99C:
 	RTS
 	
 loc_0001D99E:
 	TST.b	Window_tilemap_draw_active.w
 	BNE.w	loc_0001D9BA
-	TST.b	$FFFF9911.w
+	TST.b	Window_tilemap_row_draw_pending.w
 	BNE.w	loc_0001D9BA
 	MOVE.w	#4, Overworld_menu_state.w
 	JSR	loc_00003208
@@ -32054,59 +32054,59 @@ loc_0001D9BA:
 	RTS
 
 loc_0001D9BC:
-	TST.b	$FFFF9911.w
+	TST.b	Window_tilemap_row_draw_pending.w
 	BNE.w	loc_0001D9E4
 	MOVE.w	#$00A8, D0
 	JSR	QueueSoundEffect
 	MOVE.w	#$000B, Window_draw_type.w
-	MOVE.b	#$FF, $FFFF9911.w
-	CLR.w	$FFFF9916.w
+	MOVE.b	#$FF, Window_tilemap_row_draw_pending.w
+	CLR.w	Window_text_row.w
 	MOVE.w	#$000A, Equip_list_menu_state.w
 loc_0001D9E4:
 	RTS
 
 loc_0001D9E6:
-	TST.b	$FFFF9911.w
+	TST.b	Window_tilemap_row_draw_pending.w
 	BNE.w	loc_0001DA0E
 	MOVE.w	#$00A8, D0
 	JSR	QueueSoundEffect
 	MOVE.w	#$000A, Window_draw_type.w
-	MOVE.b	#$FF, $FFFF9911.w
-	CLR.w	$FFFF9916.w
+	MOVE.b	#$FF, Window_tilemap_row_draw_pending.w
+	CLR.w	Window_text_row.w
 	MOVE.w	#$000B, Equip_list_menu_state.w
 loc_0001DA0E:
 	RTS
 loc_0001DA10:
-	TST.b	$FFFF9911.w
+	TST.b	Window_tilemap_row_draw_pending.w
 	BNE.w	loc_0001DA38
 	MOVE.w	#$00A8, D0
 	JSR	QueueSoundEffect
 	MOVE.w	#9, Window_draw_type.w
-	MOVE.b	#$FF, $FFFF9911.w
-	CLR.w	$FFFF9916.w
+	MOVE.b	#$FF, Window_tilemap_row_draw_pending.w
+	CLR.w	Window_text_row.w
 	MOVE.w	#$000C, Equip_list_menu_state.w
 loc_0001DA38:
 	RTS
 loc_0001DA3A:
-	TST.b	$FFFF9911.w
+	TST.b	Window_tilemap_row_draw_pending.w
 	BNE.w	loc_0001DA62
 	MOVE.w	#$00A8, D0
 	JSR	QueueSoundEffect
 	MOVE.w	#1, Window_draw_type.w
-	MOVE.b	#$FF, $FFFF9911.w
-	CLR.w	$FFFF9916.w
+	MOVE.b	#$FF, Window_tilemap_row_draw_pending.w
+	CLR.w	Window_text_row.w
 	MOVE.w	#$000D, Equip_list_menu_state.w
 loc_0001DA62:
 	RTS
 loc_0001DA64:
-	TST.b	$FFFF9911.w
+	TST.b	Window_tilemap_row_draw_pending.w
 	BNE.w	loc_0001DA8C
 	MOVE.w	#$00A8, D0
 	JSR	QueueSoundEffect
 	MOVE.w	#8, Equip_list_menu_state.w
 	MOVE.w	#0, Window_draw_type.w
-	CLR.w	$FFFF9916.w
-	MOVE.b	#$FF, $FFFF9911.w
+	CLR.w	Window_text_row.w
+	MOVE.b	#$FF, Window_tilemap_row_draw_pending.w
 loc_0001DA8C:
 	RTS
 
@@ -32255,8 +32255,8 @@ loc_0001DC2A:
 	JSR	QueueSoundEffect
 	MOVE.w	#3, Open_menu_state.w    ; State 3: Animation
 	MOVE.w	#3, Window_draw_type.w
-	CLR.w	$FFFF9916.w
-	MOVE.b	#$FF, $FFFF9911.w
+	CLR.w	Window_text_row.w
+	MOVE.b	#$FF, Window_tilemap_row_draw_pending.w
 	RTS
 	
 loc_0001DC7C:
@@ -32325,12 +32325,12 @@ loc_0001DD48:
 loc_0001DD50:
 	CLR.w	Overworld_menu_state.w
 	MOVE.w	#3, Window_draw_type.w
-	CLR.w	$FFFF9916.w
-	MOVE.b	#$FF, $FFFF9911.w
+	CLR.w	Window_text_row.w
+	MOVE.b	#$FF, Window_tilemap_row_draw_pending.w
 	RTS
 	
 loc_0001DD66:
-	TST.b	$FFFF9911.w
+	TST.b	Window_tilemap_row_draw_pending.w
 	BNE.w	loc_0001DDA2
 	ADDQ.w	#1, Chest_animation_timer.w
 	MOVE.w	Chest_animation_timer.w, D0
@@ -32570,8 +32570,8 @@ loc_0001E0DE:
 	JSR	DrawStatusHudWindow
 	CLR.w	Overworld_menu_state.w
 	MOVE.w	#3, Window_draw_type.w
-	CLR.w	$FFFF9916.w
-	MOVE.b	#$FF, $FFFF9911.w
+	CLR.w	Window_text_row.w
+	MOVE.b	#$FF, Window_tilemap_row_draw_pending.w
 	RTS
 	
 loc_0001E0FA:
@@ -32871,8 +32871,8 @@ loc_0001E53A:
 	JSR	DrawStatusHudWindow
 	CLR.w	Overworld_menu_state.w
 	MOVE.w	#3, Window_draw_type.w
-	CLR.w	$FFFF9916.w
-	MOVE.b	#$FF, $FFFF9911.w
+	CLR.w	Window_text_row.w
+	MOVE.b	#$FF, Window_tilemap_row_draw_pending.w
 	RTS
 	
 loc_0001E556:
@@ -33220,8 +33220,8 @@ loc_0001EA80:
 	JSR	DrawStatusHudWindow
 	CLR.w	Overworld_menu_state.w
 	MOVE.w	#3, Window_draw_type.w
-	CLR.w	$FFFF9916.w
-	MOVE.b	#$FF, $FFFF9911.w
+	CLR.w	Window_text_row.w
+	MOVE.b	#$FF, Window_tilemap_row_draw_pending.w
 	RTS
 	
 loc_0001EAA6:
