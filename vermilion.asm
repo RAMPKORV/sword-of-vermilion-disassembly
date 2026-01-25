@@ -5872,31 +5872,31 @@ loc_00005B52:
 loc_00005B70:
 	LEA	loc_00006732, A0
 	MOVEA.l	$FFFFCC14.w, A6
-	BSR.w	loc_00005F4C
+	BSR.w	LoadMapTileGfxIndex
 	MOVEA.l	$FFFFCC1C.w, A6
-	BSR.w	loc_00005F4C
+	BSR.w	LoadMapTileGfxIndex
 	MOVEA.l	$FFFFCC18.w, A6
-	BSR.w	loc_00005F4C
+	BSR.w	LoadMapTileGfxIndex
 	LEA	loc_00006748, A0
 	MOVEA.l	$FFFFCC28.w, A6
-	BSR.w	loc_00005F4C
+	BSR.w	LoadMapTileGfxIndex
 	MOVEA.l	$FFFFCC30.w, A6
-	BSR.w	loc_00005F4C
+	BSR.w	LoadMapTileGfxIndex
 	MOVEA.l	$FFFFCC2C.w, A6
-	BSR.w	loc_00005F4C
+	BSR.w	LoadMapTileGfxIndex
 	MOVEA.l	$FFFFCC38.w, A6
-	BSR.w	loc_00005F4C
+	BSR.w	LoadMapTileGfxIndex
 	LEA	loc_0000675E, A0
 	MOVEA.l	$FFFFCC48.w, A6
-	BSR.w	loc_00005F4C
+	BSR.w	LoadMapTileGfxIndex
 	MOVEA.l	$FFFFCC3C.w, A6
-	BSR.w	loc_00005F4C
+	BSR.w	LoadMapTileGfxIndex
 	MOVEA.l	$FFFFCC44.w, A6
-	BSR.w	loc_00005F4C
+	BSR.w	LoadMapTileGfxIndex
 	MOVEA.l	$FFFFCC40.w, A6
-	BSR.w	loc_00005F4C
+	BSR.w	LoadMapTileGfxIndex
 	MOVEA.l	$FFFFCC4C.w, A6
-	BSR.w	loc_00005F4C
+	BSR.w	LoadMapTileGfxIndex
 	MOVEA.l	$FFFFCC20.w, A6
 	MOVE.w	#0, $8(A6)
 	MOVEA.l	$FFFFCC24.w, A6
@@ -5964,20 +5964,20 @@ loc_00005CD2:
 loc_00005CF0:
 	LEA	loc_00006732, A0
 	MOVEA.l	$FFFFCC14.w, A6
-	BSR.w	loc_00005F4C
+	BSR.w	LoadMapTileGfxIndex
 	MOVEA.l	$FFFFCC20.w, A6
-	BSR.w	loc_00005F6C
+	BSR.w	LoadMapTileGfxIndexAlt1
 	MOVEA.l	$FFFFCC1C.w, A6
-	BSR.w	loc_00005F4C
+	BSR.w	LoadMapTileGfxIndex
 	MOVEA.l	$FFFFCC18.w, A6
-	BSR.w	loc_00005F4C
+	BSR.w	LoadMapTileGfxIndex
 	MOVEA.l	$FFFFCC24.w, A6
-	BSR.w	loc_00005F6C
+	BSR.w	LoadMapTileGfxIndexAlt1
 	LEA	loc_00006748, A0
 	MOVEA.l	$FFFFCC28.w, A6
-	BSR.w	loc_00005F94
+	BSR.w	LoadMapTileGfxIndexAlt2
 	MOVEA.l	$FFFFCC2C.w, A6
-	BSR.w	loc_00005F94
+	BSR.w	LoadMapTileGfxIndexAlt2
 	MOVEA.l	$FFFFCC34.w, A6
 	MOVE.w	#0, $8(A6)
 	MOVEA.l	$FFFFCC30.w, A6
@@ -6060,31 +6060,31 @@ loc_00005E9C:
 loc_00005EBA:
 	LEA	loc_00006732, A0
 	MOVEA.l	$FFFFCC18.w, A6
-	BSR.w	loc_00005F4C
+	BSR.w	LoadMapTileGfxIndex
 	MOVEA.l	$FFFFCC1C.w, A6
-	BSR.w	loc_00005F4C
+	BSR.w	LoadMapTileGfxIndex
 	MOVEA.l	$FFFFCC14.w, A6
-	BSR.w	loc_00005F4C
+	BSR.w	LoadMapTileGfxIndex
 	LEA	loc_00006748, A0
 	MOVEA.l	$FFFFCC2C.w, A6
-	BSR.w	loc_00005F4C
+	BSR.w	LoadMapTileGfxIndex
 	MOVEA.l	$FFFFCC30.w, A6
-	BSR.w	loc_00005F4C
+	BSR.w	LoadMapTileGfxIndex
 	MOVEA.l	$FFFFCC28.w, A6
-	BSR.w	loc_00005F4C
+	BSR.w	LoadMapTileGfxIndex
 	MOVEA.l	$FFFFCC34.w, A6
-	BSR.w	loc_00005F4C
+	BSR.w	LoadMapTileGfxIndex
 	LEA	loc_0000675E, A0
 	MOVEA.l	$FFFFCC4C.w, A6
-	BSR.w	loc_00005F4C
+	BSR.w	LoadMapTileGfxIndex
 	MOVEA.l	$FFFFCC40.w, A6
-	BSR.w	loc_00005F4C
+	BSR.w	LoadMapTileGfxIndex
 	MOVEA.l	$FFFFCC44.w, A6
-	BSR.w	loc_00005F4C
+	BSR.w	LoadMapTileGfxIndex
 	MOVEA.l	$FFFFCC3C.w, A6
-	BSR.w	loc_00005F4C
+	BSR.w	LoadMapTileGfxIndex
 	MOVEA.l	$FFFFCC48.w, A6
-	BSR.w	loc_00005F4C
+	BSR.w	LoadMapTileGfxIndex
 	MOVEA.l	$FFFFCC24.w, A6
 	MOVE.w	#0, $8(A6)
 	MOVEA.l	$FFFFCC20.w, A6
@@ -6093,47 +6093,56 @@ loc_00005EBA:
 	MOVE.w	#0, $8(A6)
 	RTS
 
-loc_00005F4C:
+; LoadMapTileGfxIndex
+; Load map tile graphics index for object
+; Input: A2 = Map data, A4 = Offset pointer, A0 = Tile type table, A6 = Object
+; Output: Sets object+$8 to tile graphics index
+LoadMapTileGfxIndex:
 	MOVE.w	Map_tile_base_index.w, D0
 	ADD.w	(A4)+, D0
 	CLR.w	D4
 	MOVE.b	(A2,D0.w), D4
-	BEQ.w	loc_00005FBC
+	BEQ.w	ClearObjectGfxIndex
 	BSR.w	MapTileToTypeIndex
 	ADD.w	D4, D4
 	MOVE.w	(A0,D4.w), D0
 	MOVE.w	D0, $8(A6)
 	RTS
 
-loc_00005F6C:
+; LoadMapTileGfxIndexAlt1
+; Load map tile graphics index for object (variant - subtracts $24)
+LoadMapTileGfxIndexAlt1:
 	MOVE.w	Map_tile_base_index.w, D0
 	ADD.w	(A4)+, D0
 	CLR.w	D4
 	MOVE.b	(A2,D0.w), D4
-	BEQ.w	loc_00005FBC
+	BEQ.w	ClearObjectGfxIndex
 	BSR.w	MapTileToTypeIndex
-	BEQ.w	loc_00005FBC
+	BEQ.w	ClearObjectGfxIndex
 	ADD.w	D4, D4
 	MOVE.w	(A0,D4.w), D0
 	SUBI.w	#$0024, D0
 	MOVE.w	D0, $8(A6)
 	RTS
 
-loc_00005F94:
+; LoadMapTileGfxIndexAlt2
+; Load map tile graphics index for object (variant - subtracts $18)
+LoadMapTileGfxIndexAlt2:
 	MOVE.w	Map_tile_base_index.w, D0
 	ADD.w	(A4)+, D0
 	CLR.w	D4
 	MOVE.b	(A2,D0.w), D4
-	BEQ.w	loc_00005FBC
+	BEQ.w	ClearObjectGfxIndex
 	BSR.w	MapTileToTypeIndex
-	BEQ.w	loc_00005FBC
+	BEQ.w	ClearObjectGfxIndex
 	ADD.w	D4, D4
 	MOVE.w	(A0,D4.w), D0
 	SUBI.w	#$0018, D0
 	MOVE.w	D0, $8(A6)
 	RTS
 
-loc_00005FBC:
+; ClearObjectGfxIndex
+ClearObjectGfxIndex:
 	MOVE.w	#0, $8(A6)
 	RTS
 
