@@ -592,7 +592,7 @@ loc_0000117A:
 loc_0000118A:
 	TST.b	Window_tilemap_draw_active.w
 	BEQ.b	loc_00001196
-	JSR	loc_00012DB8
+	JSR	DrawWindowTilemapRow
 loc_00001196:
 	TST.b	Window_tilemap_row_draw_pending.w
 	BEQ.b	loc_000011A2
@@ -600,7 +600,7 @@ loc_00001196:
 loc_000011A2:
 	TST.b	Window_tilemap_draw_pending.w
 	BEQ.b	loc_000011AE
-	JSR	loc_00012D4C
+	JSR	DrawWindowTilemapFull
 loc_000011AE:
 	TST.b	Scene_update_flag.w
 	BEQ.b	loc_000011BC
@@ -2283,7 +2283,7 @@ loc_00002972:
 loc_00002974:
 	TST.b	Window_tilemap_row_draw_pending.w
 	BNE.w	loc_000029F8
-	JSR	loc_0001264E
+	JSR	DrawPromptMenuWindow
 	CMPI.w	#MAX_PLAYER_LEVEL, Player_level.w
 	BGE.b	loc_000029D4
 	MOVE.l	Player_experience.w, D0
@@ -2832,7 +2832,7 @@ loc_00003140:
 loc_00003142:
 	MOVE.w	#2, Menu_cursor_column_break.w	
 	MOVE.w  #$FFFF, Menu_cursor_last_index.w
-	JSR	loc_0001254A	
+	JSR	SaveMessageSpeedMenuToBuffer	
 	JSR	loc_00010CE2	
 	ADDQ.w	#1, Overworld_menu_state.w	
 	MOVE.w	#$000E, Menu_cursor_base_x.w	
@@ -20669,7 +20669,8 @@ SaveRightMenuAreaToBuffer:
 	BSR.w	ReadWindowToBuffer
 	RTS
 	
-loc_00012318:
+;SaveShopSubmenuAreaToBuffer:
+SaveShopSubmenuAreaToBuffer:
 	LEA	Shop_submenu_tiles_buffer.w, A0
 	MOVE.w	#$000F, Window_tile_x.w
 	MOVE.w	#$000C, Window_tile_y.w
@@ -20688,7 +20689,8 @@ SaveCenterDialogAreaToBuffer:
 	BSR.w	ReadWindowToBuffer
 	RTS
 	
-loc_0001235E:
+;SaveItemListAreaToBuffer_Small:
+SaveItemListAreaToBuffer_Small:
 	LEA	Item_list_tiles_buffer, A0
 	MOVE.w	#2, Window_tile_x.w
 	MOVE.w	#$000C, Window_tile_y.w
@@ -20697,7 +20699,8 @@ loc_0001235E:
 	BSR.w	ReadWindowToBuffer
 	RTS
 	
-loc_00012382:
+;SaveItemListAreaToBuffer_Large:
+SaveItemListAreaToBuffer_Large:
 	LEA	Item_list_tiles_buffer, A0
 	MOVE.w	#2, Window_tile_x.w
 	MOVE.w	#$000C, Window_tile_y.w
@@ -20706,7 +20709,8 @@ loc_00012382:
 	BSR.w	ReadWindowToBuffer
 	RTS
 	
-loc_000123A6:
+;SaveStatusMenuAreaToBuffer_Small:
+SaveStatusMenuAreaToBuffer_Small:
 	LEA	Status_menu_tiles_buffer.w, A0
 	MOVE.w	#2, Window_tile_x.w
 	MOVE.w	#$000C, Window_tile_y.w
@@ -20715,7 +20719,8 @@ loc_000123A6:
 	BSR.w	ReadWindowToBuffer
 	RTS
 	
-loc_000123C8:
+;SaveStatusMenuAreaToBuffer_Large:
+SaveStatusMenuAreaToBuffer_Large:
 	LEA	Status_menu_tiles_buffer.w, A0
 	MOVE.w	#2, Window_tile_x.w
 	MOVE.w	#$000A, Window_tile_y.w
@@ -20734,7 +20739,8 @@ SaveShopListToBuffer:
 	BSR.w	ReadWindowToBuffer
 	RTS
 	
-loc_0001240C:
+;SaveStatusMenuTiles:
+SaveStatusMenuTiles:
 	LEA	Status_menu_tiles_buffer.w, A0
 	MOVE.w	#$000A, Window_tile_x.w
 	MOVE.w	#2, Window_tile_y.w
@@ -20772,7 +20778,8 @@ loc_00012470:
 	BSR.w	ReadWindowToBuffer
 	RTS
 	
-loc_00012494:
+;SaveFullMenuTiles:
+SaveFullMenuTiles:
 	LEA	Full_menu_tiles_buffer, A0
 	MOVE.w	#2, Window_tile_x.w
 	MOVE.w	#2, Window_tile_y.w
@@ -20782,7 +20789,8 @@ loc_00012494:
 	BSR.w	ReadWindowToBuffer
 	RTS
 	
-loc_000124BA:
+;SaveEquipmentListTiles:
+SaveEquipmentListTiles:
 	LEA	Equipment_list_tiles_buffer.w, A0
 	MOVE.w	#$000F, Window_tile_x.w
 	MOVE.w	#2, Window_tile_y.w
@@ -20792,7 +20800,8 @@ loc_000124BA:
 	BSR.w	ReadWindowToBuffer
 	RTS
 	
-loc_000124DE:
+;SaveMagicListTiles:
+SaveMagicListTiles:
 	LEA	Magic_list_tiles_buffer.w, A0
 	MOVE.w	#2, Window_tile_x.w
 	MOVE.w	#2, Window_tile_y.w
@@ -20802,7 +20811,8 @@ loc_000124DE:
 	BSR.w	ReadWindowToBuffer
 	RTS
 	
-loc_00012502:
+;SaveItemListRightTiles:
+SaveItemListRightTiles:
 	LEA	Item_list_right_tiles_buffer.w, A0
 	MOVE.w	#$000F, Window_tile_x.w
 	MOVE.w	#2, Window_tile_y.w
@@ -20812,7 +20822,8 @@ loc_00012502:
 	BSR.w	ReadWindowToBuffer
 	RTS
 	
-loc_00012526:
+;SaveRingsListMenuToBuffer:
+SaveRingsListMenuToBuffer:
 	LEA	Rings_list_tiles_buffer.w, A0
 	MOVE.w	#9, Window_tile_x.w
 	MOVE.w	#2, Window_tile_y.w
@@ -20822,7 +20833,8 @@ loc_00012526:
 	BSR.w	ReadWindowToBuffer
 	RTS
 	
-loc_0001254A:
+;SaveMessageSpeedMenuToBuffer:
+SaveMessageSpeedMenuToBuffer:
 	LEA	Message_speed_menu_tiles_buffer, A0	
 	MOVE.w	#$000A, Window_tile_x.w	
 	MOVE.w	#$000A, Window_tile_y.w	
@@ -20832,7 +20844,8 @@ loc_0001254A:
 	RTS
 	
 	
-loc_0001256E:
+;SaveMainMenuToBuffer:
+SaveMainMenuToBuffer:
 	LEA	$FFFF7CF4, A0
 	MOVE.w	#2, Window_tile_x.w
 	MOVE.w	#$000C, Window_tile_y.w
@@ -20841,7 +20854,8 @@ loc_0001256E:
 	BSR.w	ReadWindowToBuffer
 	RTS
 	
-loc_00012592:
+;SaveRightMenuToBuffer:
+SaveRightMenuToBuffer:
 	LEA	Right_menu_tiles_buffer, A0
 	MOVE.w	#$000C, Window_tile_x.w
 	MOVE.w	#4, Window_tile_y.w
@@ -20850,7 +20864,8 @@ loc_00012592:
 	BSR.w	ReadWindowToBuffer
 	RTS
 	
-loc_000125B6:
+;SaveReadyEquipmentMenuToBuffer:
+SaveReadyEquipmentMenuToBuffer:
 	LEA	Ready_equipment_menu_tiles_buffer, A0
 	MOVE.w	#$000F, Window_tile_x.w
 	MOVE.w	#2, Window_tile_y.w
@@ -20904,7 +20919,8 @@ loc_00012620:
 loc_0001264C:
 	RTS
 	
-loc_0001264E:
+;DrawPromptMenuWindow:
+DrawPromptMenuWindow:
 	LEA	Prompt_menu_tiles_buffer.w, A0
 	MOVE.w	#5, Window_tile_x.w
 	MOVE.w	#4, Window_tile_y.w
@@ -20955,7 +20971,8 @@ RestoreShopListFromBuffer:
 	BSR.w	DrawWindowFromBuffer
 	RTS
 	
-loc_000126FC:
+;DrawStatusMenuWindow:
+DrawStatusMenuWindow:
 	LEA	Status_menu_tiles_buffer.w, A0
 	MOVE.w	#$000A, Window_tile_x.w
 	MOVE.w	#2, Window_tile_y.w
@@ -21254,7 +21271,8 @@ DrawPossessedEquipmentList:
 	BSR.w	loc_00012C3E
 	RTS
 	
-loc_00012B0A:
+;DrawReadyEquipmentList:
+DrawReadyEquipmentList:
 	MOVE.w	Ready_equipment_list_length.w, D7
 	MOVE.w	D7, D0
 	SUBQ.w	#1, D0
@@ -21469,7 +21487,8 @@ loc_00012D3C:
 loc_00012D4A:
 	RTS
 	
-loc_00012D4C:
+;DrawWindowTilemapFull:
+DrawWindowTilemapFull:
 	LEA	Window_tilemap_buffer.w, A0
 	JSR	GetScrollOffsetInTiles
 	CLR.w	D3
@@ -21506,7 +21525,8 @@ loc_00012D5A:
 	CLR.b	Window_tilemap_draw_pending.w
 	RTS
 
-loc_00012DB8:
+;DrawWindowTilemapRow:
+DrawWindowTilemapRow:
 	LEA	Window_tilemap_buffer.w, A0
 	MOVE.w	Window_width.w, D2
 	MOVE.w	Window_draw_row.w, D0
@@ -25626,7 +25646,7 @@ loc_00017EDE:
 loc_00017F1E:
 	MOVE.w	Main_menu_selection.w, Menu_cursor_index.w
 	JSR	DrawMenuCursor
-	JSR	loc_00012382
+	JSR	SaveItemListAreaToBuffer_Large
 	JSR	loc_00010E46
 	CLR.w	Item_menu_action_mode.w
 	ADDQ.w	#1, Spellbook_menu_state.w
@@ -26071,7 +26091,7 @@ loc_0001859A:
 	BEQ.b	loc_000185BC
 	MOVE.w	#$00A8, D0
 	JSR	QueueSoundEffect
-	BSR.w	loc_000126FC
+	BSR.w	DrawStatusMenuWindow
 	MOVE.w	#6, Spellbook_menu_state.w
 	RTS
 
@@ -26087,7 +26107,7 @@ loc_000185BC:
 	LEA	Towns_visited.w, A0
 	MOVE.b	(A0,D0.w), D1
 	BEQ.w	loc_00018642
-	JSR	loc_000126FC
+	JSR	DrawStatusMenuWindow
 	LEA	loc_000189C2, A0
 	MOVE.w	Aries_selected_town.w, D0
 	ANDI.w	#$000F, D0
@@ -26316,7 +26336,7 @@ CastAries:
 	BEQ.b	loc_00018912
 	TST.b	Is_in_cave.w
 	BNE.w	loc_00018912
-	JSR	loc_0001240C
+	JSR	SaveStatusMenuTiles
 	JSR	loc_00011304
 	MOVE.w	#$000B, Spellbook_menu_state.w
 	RTS
@@ -28195,7 +28215,7 @@ loc_0001A2E6: ; Item effect routines map
 loc_0001A322:
 	MOVE.w	Main_menu_selection.w, Menu_cursor_index.w
 	JSR	DrawMenuCursor
-	JSR	loc_0001235E
+	JSR	SaveItemListAreaToBuffer_Small
 	JSR	loc_00010EA2
 	CLR.w	Item_menu_action_mode.w
 	ADDQ.w	#1, Item_menu_state.w
@@ -29991,7 +30011,7 @@ loc_0001BCB8:
 	TST.b	Script_text_complete.w
 	BEQ.b	loc_0001BCD8
 	CLR.b	Shop_purchase_made.w
-	JSR	loc_000123A6
+	JSR	SaveStatusMenuAreaToBuffer_Small
 	JSR	DrawShopMenuWindow
 	CLR.w	Shop_action_selection.w
 	ADDQ.w	#1, Dialogue_state.w
@@ -30904,7 +30924,7 @@ loc_0001C968:
 loc_0001C96A:
 	TST.b	Script_text_complete.w
 	BEQ.b	loc_0001C990
-	JSR	loc_000123C8
+	JSR	SaveStatusMenuAreaToBuffer_Large
 	JSR	DrawChurchMenuWindow
 	MOVE.w	#$00A0, D0
 	JSR	QueueSoundEffect
@@ -31175,7 +31195,7 @@ loc_0001CD56:
 loc_0001CD6A:
 	TST.b	Script_text_complete.w
 	BEQ.b	loc_0001CD82
-	JSR	loc_00012318
+	JSR	SaveShopSubmenuAreaToBuffer
 	JSR	loc_00010DA4
 	ADDQ.w	#1, Dialogue_state.w
 	RTS
@@ -31414,7 +31434,7 @@ loc_0001D016:
 loc_0001D036:
 	MOVE.w	Main_menu_selection.w, Menu_cursor_index.w
 	JSR	DrawMenuCursor
-	JSR	loc_0001256E
+	JSR	SaveMainMenuToBuffer
 	JSR	DrawEquipmentMenuWindow
 	ADDQ.w	#1, Ready_equipment_state.w
 	CLR.w	Ready_equipment_selection.w
@@ -31457,7 +31477,7 @@ loc_0001D0C0:
 	JSR	QueueSoundEffect
 	CLR.w	Ready_equipment_category.w
 	MOVE.w	#2, Ready_equipment_state.w
-	JSR	loc_00012592
+	JSR	SaveRightMenuToBuffer
 	JSR	loc_00010F5A
 	MOVE.w	Ready_equipment_selection.w, D0
 	BEQ.b	loc_0001D102
@@ -31497,9 +31517,9 @@ loc_0001D156:
 	JSR	ResetScriptAndInitDialogue
 	TST.w	Ready_equipment_list_length.w
 	BLE.b	loc_0001D1A8
-	JSR	loc_000125B6
+	JSR	SaveReadyEquipmentMenuToBuffer
 	JSR	loc_000110F4
-	JSR	loc_00012B0A
+	JSR	DrawReadyEquipmentList
 	PRINT 	ReadyPromptStr
 	MOVE.w	#3, Ready_equipment_state.w
 	CLR.w	Ready_equipment_cursor_index.w
@@ -31955,7 +31975,7 @@ loc_0001D724:
 loc_0001D746:
 	MOVE.w	#$00A0, D0
 	JSR	QueueSoundEffect
-	JSR	loc_00012494
+	JSR	SaveFullMenuTiles
 	JSR	loc_00011AEC
 	ADDQ.w	#1, Equip_list_menu_state.w
 loc_0001D760:
@@ -31986,7 +32006,7 @@ loc_0001D790:
 loc_0001D7B2:
 	MOVE.w	#$00A0, D0
 	JSR	QueueSoundEffect
-	JSR	loc_000124BA
+	JSR	SaveEquipmentListTiles
 	JSR	loc_00011BB8
 	ADDQ.w	#1, Equip_list_menu_state.w
 loc_0001D7CC:
@@ -32017,7 +32037,7 @@ loc_0001D7FC:
 loc_0001D81E:
 	MOVE.w	#$00A0, D0
 	JSR	QueueSoundEffect
-	JSR	loc_000124DE
+	JSR	SaveMagicListTiles
 	JSR	loc_00011CC2
 	ADDQ.w	#1, Equip_list_menu_state.w
 loc_0001D838:
@@ -32048,7 +32068,7 @@ loc_0001D868:
 loc_0001D88A:
 	MOVE.w	#$00A0, D0
 	JSR	QueueSoundEffect
-	JSR	loc_00012502
+	JSR	SaveItemListRightTiles
 	JSR	loc_00011D96
 	ADDQ.w	#1, Equip_list_menu_state.w
 loc_0001D8A4:
@@ -32079,7 +32099,7 @@ loc_0001D8D4:
 loc_0001D8F6:
 	MOVE.w	#$00A0, D0
 	JSR	QueueSoundEffect
-	JSR	loc_00012526
+	JSR	SaveRingsListMenuToBuffer
 	JSR	loc_00011E52
 	ADDQ.w	#1, Equip_list_menu_state.w
 loc_0001D910:
