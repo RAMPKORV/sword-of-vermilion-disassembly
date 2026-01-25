@@ -10002,7 +10002,7 @@ loc_0000919A: ; suspected: Take a hit from an enemy
 	BLT.b	loc_00009244
 	MOVE.w	#$FFFF, Player_poisoned.w
 loc_00009244:
-	BSR.w	loc_000092A4
+	BSR.w	CalculateAngleBetweenObjects
 	ANDI.w	#7, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
@@ -10033,13 +10033,17 @@ loc_00009284:
 loc_00009298:
 	SUB.w	$E(A5), D0
 	SUB.w	$12(A5), D1
-	BRA.w	loc_000092B4
-loc_000092A4:
+	BRA.w	CalculateAngleBetweenObjects_common
+; CalculateAngleBetweenObjects
+; Calculate angle from object A5 to object A6
+; Input: A5 = Source object, A6 = Target object
+; Output: D0 = Angle (0-15, where 0=right, 4=down, 8=left, 12=up)
+CalculateAngleBetweenObjects:
 	MOVE.w	$E(A6), D0
 	SUB.w	$E(A5), D0
 	MOVE.w	$12(A6), D1
 	SUB.w	$12(A5), D1
-loc_000092B4:
+CalculateAngleBetweenObjects_common:
 	CLR.w	D2
 	TST.w	D0
 	BGE.w	loc_000092C2
@@ -10250,7 +10254,7 @@ loc_0000958E:
 	BEQ.w	loc_000095BC
 	SUBQ.w	#1, $3C(A5)
 	MOVEA.l	$FFFFCC08.w, A6
-	BSR.w	loc_000092A4
+	BSR.w	CalculateAngleBetweenObjects
 	ADDQ.b	#4, D0
 	ANDI.b	#7, D0
 	MOVE.b	D0, $18(A5)
@@ -10278,7 +10282,7 @@ loc_000095F4:
 	MOVE.w	#$00F0, $3A(A5)
 loc_00009608:
 	MOVEA.l	$FFFFCC08.w, A6
-	BSR.w	loc_000092A4
+	BSR.w	CalculateAngleBetweenObjects
 	MOVE.b	D0, $18(A5)
 loc_00009614:
 	BSR.w	loc_0000908E
@@ -10361,7 +10365,7 @@ loc_00009738:
 	BEQ.w	loc_00009766
 	SUBQ.w	#1, $3C(A5)
 	MOVEA.l	$FFFFCC08.w, A6
-	BSR.w	loc_000092A4
+	BSR.w	CalculateAngleBetweenObjects
 	ADDQ.b	#4, D0
 	ANDI.b	#7, D0
 	MOVE.b	D0, $18(A5)
@@ -10371,7 +10375,7 @@ loc_00009766:
 	BEQ.w	loc_0000978A
 	SUBQ.w	#1, $3A(A5)
 	MOVEA.l	$FFFFCC08.w, A6
-	BSR.w	loc_000092A4
+	BSR.w	CalculateAngleBetweenObjects
 	MOVE.b	D0, $18(A5)
 	CLR.l	$32(A5)
 	CLR.l	$36(A5)
@@ -10383,7 +10387,7 @@ loc_0000978A:
 	MOVE.w	#$00B4, $3A(A5)
 loc_0000979E:
 	MOVEA.l	$FFFFCC08.w, A6
-	BSR.w	loc_000092A4
+	BSR.w	CalculateAngleBetweenObjects
 	MOVE.b	D0, $18(A5)
 loc_000097AA:
 	BSR.w	loc_0000908E
@@ -10446,7 +10450,7 @@ loc_00009866:
 	BEQ.w	loc_00009894
 	SUBQ.w	#1, $3C(A5)
 	MOVEA.l	$FFFFCC08.w, A6
-	BSR.w	loc_000092A4
+	BSR.w	CalculateAngleBetweenObjects
 	ADDQ.b	#4, D0
 	ANDI.b	#7, D0
 	MOVE.b	D0, $18(A5)
@@ -10469,14 +10473,14 @@ loc_000098BC:
 	BLE.w	loc_000098DC
 loc_000098C4:
 	MOVEA.l	$FFFFCC08.w, A6
-	BSR.w	loc_000092A4
+	BSR.w	CalculateAngleBetweenObjects
 	MOVE.b	D0, $18(A5)
 	CLR.l	$32(A5)
 	CLR.l	$36(A5)
 	BRA.w	loc_000098F0
 loc_000098DC:
 	MOVEA.l	$FFFFCC08.w, A6
-	BSR.w	loc_000092A4
+	BSR.w	CalculateAngleBetweenObjects
 	MOVE.b	D0, $18(A5)
 loc_000098E8:
 	BSR.w	loc_0000908E
@@ -10538,7 +10542,7 @@ loc_000099A4:
 	BEQ.w	loc_000099D2
 	SUBQ.w	#1, $3C(A5)
 	MOVEA.l	$FFFFCC08.w, A6
-	BSR.w	loc_000092A4
+	BSR.w	CalculateAngleBetweenObjects
 	ADDQ.b	#4, D0
 	ANDI.b	#7, D0
 	MOVE.b	D0, $18(A5)
@@ -10554,7 +10558,7 @@ loc_000099D2:
 	MOVE.w	D1, $3C(A5)
 loc_000099F0:
 	MOVEA.l	$FFFFCC08.w, A6
-	BSR.w	loc_000092A4
+	BSR.w	CalculateAngleBetweenObjects
 	MOVE.b	D0, $18(A5)
 loc_000099FC:
 	BSR.w	loc_0000908E
@@ -10615,7 +10619,7 @@ loc_00009AB8:
 	BEQ.w	loc_00009AE6
 	SUBQ.w	#1, $3C(A5)	
 	MOVEA.l	$FFFFCC08.w, A6	
-	BSR.w	loc_000092A4	
+	BSR.w	CalculateAngleBetweenObjects	
 	ADDQ.b	#4, D0	
 	ANDI.b	#7, D0	
 	MOVE.b	D0, $18(A5)	
@@ -10625,7 +10629,7 @@ loc_00009AE6:
 	BEQ.w	loc_00009B0A
 	SUBQ.w	#1, $3A(A5)
 	MOVEA.l	$FFFFCC08.w, A6
-	BSR.w	loc_000092A4
+	BSR.w	CalculateAngleBetweenObjects
 	MOVE.b	D0, $18(A5)
 	CLR.l	$32(A5)
 	CLR.l	$36(A5)
@@ -10637,7 +10641,7 @@ loc_00009B0A:
 	MOVE.w	#$00B4, $3A(A5)
 loc_00009B1E:
 	MOVEA.l	$FFFFCC08.w, A6
-	BSR.w	loc_000092A4
+	BSR.w	CalculateAngleBetweenObjects
 	MOVE.b	D0, $18(A5)
 loc_00009B2A:
 	BSR.w	loc_0000908E
@@ -10686,7 +10690,7 @@ loc_00009BC2:
 	BEQ.w	loc_00009BE8
 	SUBQ.w	#1, $3C(A5)
 	MOVEA.l	$FFFFCC08.w, A6
-	BSR.w	loc_000092A4
+	BSR.w	CalculateAngleBetweenObjects
 	ADDQ.b	#4, D0
 	ANDI.b	#7, D0
 	MOVE.b	D0, $18(A5)
@@ -10712,7 +10716,7 @@ loc_00009C1A:
 	BRA.w	loc_00009C42
 loc_00009C2A:
 	MOVEA.l	$FFFFCC08.w, A6
-	BSR.w	loc_000092A4
+	BSR.w	CalculateAngleBetweenObjects
 	MOVE.b	D0, $18(A5)
 	CLR.l	$32(A5)
 	CLR.l	$36(A5)
@@ -10763,7 +10767,7 @@ loc_00009CAA:
 	MOVE.l	#loc_00009D56, $2(A4)
 	MOVE.w	$2C(A5), $2C(A4)
 	MOVEA.l	$FFFFCC08.w, A6
-	BSR.w	loc_000092A4
+	BSR.w	CalculateAngleBetweenObjects
 	MOVE.b	D0, $18(A4)
 	MOVE.b	D0, $18(A5)
 loc_00009D00:
@@ -10841,7 +10845,7 @@ loc_00009DF2:
 	MOVE.b	$1(A6), D1
 	LEA	(A6,D1.w), A4
 	MOVEA.l	$FFFFCC08.w, A6
-	BSR.w	loc_000092A4
+	BSR.w	CalculateAngleBetweenObjects
 	MOVE.b	D0, $18(A5)
 	BTST.b	#7, (A4)
 	BNE.w	loc_00009E7A
@@ -10914,7 +10918,7 @@ loc_00009F12:
 	BTST.l	#4, D1
 	BEQ.w	loc_00009F34
 	MOVEA.l	$FFFFCC08.w, A6
-	BSR.w	loc_000092A4
+	BSR.w	CalculateAngleBetweenObjects
 	MOVE.b	D0, $18(A5)
 loc_00009F34:
 	BSR.w	loc_0000908E
@@ -10966,7 +10970,7 @@ loc_00009FCA:
 	BEQ.w	loc_00009FF8
 	SUBQ.w	#1, $3C(A5)
 	MOVEA.l	$FFFFCC08.w, A6
-	BSR.w	loc_000092A4
+	BSR.w	CalculateAngleBetweenObjects
 	ADDQ.b	#4, D0
 	ANDI.b	#7, D0
 	MOVE.b	D0, $18(A5)
@@ -10987,14 +10991,14 @@ loc_0000A008:
 	BRA.w	loc_0000A034
 loc_0000A02C:
 	MOVEA.l	$FFFFCC08.w, A6
-	BSR.w	loc_000092A4
+	BSR.w	CalculateAngleBetweenObjects
 loc_0000A034:
 	MOVE.b	D0, $18(A5)
 	MOVE.w	#$0046, $3A(A5)
 	BRA.w	loc_0000A05A
 loc_0000A042:
 	MOVEA.l	$FFFFCC08.w, A6
-	BSR.w	loc_000092A4
+	BSR.w	CalculateAngleBetweenObjects
 	MOVE.b	D0, $18(A5)
 	CLR.l	$32(A5)
 	CLR.l	$36(A5)
@@ -11059,7 +11063,7 @@ loc_0000A10E:
 	BEQ.w	loc_0000A13C
 	SUBQ.w	#1, $3C(A5)
 	MOVEA.l	$FFFFCC08.w, A6
-	BSR.w	loc_000092A4
+	BSR.w	CalculateAngleBetweenObjects
 	ADDQ.b	#4, D0
 	ANDI.b	#7, D0
 	MOVE.b	D0, $18(A5)
@@ -11080,7 +11084,7 @@ loc_0000A14C:
 	BRA.w	loc_0000A18A
 loc_0000A172:
 	MOVEA.l	$FFFFCC08.w, A6
-	BSR.w	loc_000092A4
+	BSR.w	CalculateAngleBetweenObjects
 	MOVE.b	D0, $18(A5)
 	CLR.l	$32(A5)
 	CLR.l	$36(A5)
@@ -11202,7 +11206,7 @@ loc_0000A310:
 	BEQ.w	loc_0000A334
 	SUBQ.w	#1, $3C(A5)
 	MOVEA.l	$FFFFCC08.w, A6
-	BSR.w	loc_000092A4
+	BSR.w	CalculateAngleBetweenObjects
 	MOVE.b	D0, $18(A5)
 	CLR.l	$32(A5)
 	CLR.l	$36(A5)
@@ -11321,7 +11325,7 @@ loc_0000A4AE:
 	MOVE.b	$1(A6), D1
 	LEA	(A6,D1.w), A4
 	MOVEA.l	$FFFFCC08.w, A6
-	BSR.w	loc_000092A4
+	BSR.w	CalculateAngleBetweenObjects
 	MOVE.b	D0, $18(A5)
 	BTST.b	#7, (A4)
 	BNE.w	loc_0000A55E
@@ -11410,7 +11414,7 @@ loc_0000A5F6:
 	BTST.l	#4, D1
 	BEQ.w	loc_0000A628
 	MOVEA.l	$FFFFCC08.w, A6
-	BSR.w	loc_000092A4
+	BSR.w	CalculateAngleBetweenObjects
 	MOVE.b	D0, $18(A5)
 	BRA.w	loc_0000A628
 loc_0000A624:
@@ -11478,7 +11482,7 @@ loc_0000A6E0:
 	MOVE.b	$1(A6), D1
 	LEA	(A6,D1.w), A4
 	MOVEA.l	$FFFFCC08.w, A6
-	BSR.w	loc_000092A4
+	BSR.w	CalculateAngleBetweenObjects
 	MOVE.b	D0, $18(A5)
 	BTST.b	#7, (A4)
 	BNE.w	loc_0000A784
@@ -11603,7 +11607,7 @@ loc_0000A8BC:
 	BEQ.w	loc_0000A8D8
 	SUBQ.w	#1, $3C(A5)
 	MOVEA.l	$FFFFCC08.w, A6
-	BSR.w	loc_000092A4
+	BSR.w	CalculateAngleBetweenObjects
 	MOVE.b	D0, $18(A5)
 	BRA.w	loc_0000A9AC
 loc_0000A8D8:
@@ -11798,7 +11802,7 @@ loc_0000AB86:
 	BEQ.w	loc_0000ABA2	
 	SUBQ.w	#1, $3C(A5)	
 	MOVEA.l	$FFFFCC08.w, A6	
-	BSR.w	loc_000092A4	
+	BSR.w	CalculateAngleBetweenObjects	
 	MOVE.b	D0, $18(A5)	
 	BRA.w	loc_0000AC76	
 loc_0000ABA2:
@@ -11812,7 +11816,7 @@ loc_0000ABB8:
 	BEQ.w	loc_0000ABD4
 	SUBQ.w	#1, $3C(A5)
 	MOVEA.l	$FFFFCC08.w, A6
-	JSR	loc_000092A4(PC)
+	JSR	CalculateAngleBetweenObjects(PC)
 	MOVE.b	D0, $18(A5)
 	BRA.w	loc_0000AC7E
 loc_0000ABD4:
@@ -12018,7 +12022,7 @@ loc_0000AEA6:
 loc_0000AECE:
 	ADDQ.b	#1, $3A(A5)
 	MOVEA.l	$FFFFCC08.w, A6
-	BSR.w	loc_000092A4
+	BSR.w	CalculateAngleBetweenObjects
 	ADDQ.b	#2, D0
 	ANDI.w	#7, D0
 	ASL.w	#5, D0
@@ -12167,7 +12171,7 @@ loc_0000B0AC:
 loc_0000B0DC:
 	ADDQ.b	#1, $3A(A5)
 	MOVEA.l	$FFFFCC08.w, A6
-	BSR.w	loc_000092A4
+	BSR.w	CalculateAngleBetweenObjects
 	ADDQ.b	#2, D0
 	ANDI.w	#7, D0
 	ASL.w	#5, D0
@@ -12203,7 +12207,7 @@ loc_0000B12E:
 loc_0000B154:
 	MOVE.b	#$21, $3B(A5)
 	MOVEA.l	$FFFFCC08.w, A6
-	BSR.w	loc_000092A4
+	BSR.w	CalculateAngleBetweenObjects
 	ADDQ.b	#2, D0
 	ANDI.w	#7, D0
 	ASL.w	#5, D0
@@ -12361,7 +12365,7 @@ loc_0000B36C:
 loc_0000B394:
 	ADDQ.b	#1, $3C(A5)
 	MOVEA.l	$FFFFCC08.w, A6
-	BSR.w	loc_000092A4
+	BSR.w	CalculateAngleBetweenObjects
 	ADDQ.b	#2, D0
 	ANDI.w	#7, D0
 	ASL.w	#5, D0
@@ -12408,7 +12412,7 @@ loc_0000B424:
 	LEA	(A6), A4
 	LEA	(A4), A5
 	MOVEA.l	$FFFFCC08.w, A6
-	BSR.w	loc_000092A4
+	BSR.w	CalculateAngleBetweenObjects
 	ADDQ.b	#2, D0
 	ANDI.w	#7, D0
 	ASL.w	#5, D0
@@ -27869,7 +27873,7 @@ loc_0001A12E:
 	RTS
 
 loc_0001A152:
-	JSR	loc_000092A4
+	JSR	CalculateAngleBetweenObjects
 	ANDI.w	#7, D0
 	CLR.w	D2
 	MOVE.b	$18(A5), D2
