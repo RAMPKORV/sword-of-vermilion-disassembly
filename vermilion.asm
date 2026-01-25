@@ -14,9 +14,9 @@ InitPSG:
 
 loc_00000214:
 	clearRAM Tilemap_buffer_plane_a, $FFFFFD00
-	BSR.w	loc_000003D6
-	BSR.w	loc_0000035A
-	BSR.w	loc_0000032A
+	BSR.w	InitZ80SoundDriver
+	BSR.w	InitVDPAndClearVRAM
+	BSR.w	InitYM2612
 	RTS
 
 loc_00000232:
@@ -36,7 +36,8 @@ loc_00000250:
 	MOVE.b	#$FF, (A0)
 	RTS
 
-loc_00000280:
+;ClearVRAMSprites:
+ClearVRAMSprites:
 	MOVE.l	#$7C000002, D7
 	MOVE.w	#$03BF, D6
 	MOVE.b	#0, D5
@@ -45,7 +46,8 @@ loc_00000280:
 loc_00000298:
 	RTS
 
-loc_0000029A:
+;ClearVSRAM:
+ClearVSRAM:
 	MOVE.l	#$40000010, D7
 	MOVEQ	#$00000028, D6
 	MOVEQ	#0, D5
@@ -56,7 +58,8 @@ loc_000002B0:
 	DBF	D6, loc_000002AA
 	RTS
 
-loc_000002B6:
+;ClearVRAMHScroll:
+ClearVRAMHScroll:
 	MOVE.l	#$78000002, D7
 	MOVE.w	#$013F, D6
 	MOVE.b	#0, D5
@@ -86,7 +89,8 @@ loc_00000304:
 	dc.b	$3C, $3C, $1F, $FF, $4E, $B9, $00, $01, $03, $FE, $4E, $75, $2E, $3C, $70, $00, $00, $02, $3C, $3C, $0D, $FF, $1A, $3C, $00, $00, $38, $3C, $00, $01, $4E, $B9 
 	dc.b	$00, $01, $03, $FE, $4E, $75 
 
-loc_0000032A:
+;InitYM2612:
+InitYM2612:
 	MOVEQ	#$00000040, D0
 	stopZ80
 	MOVE.b	D0, $00A10009
@@ -95,7 +99,8 @@ loc_0000032A:
 	startZ80
 	RTS
 
-loc_0000035A:
+;InitVDPAndClearVRAM:
+InitVDPAndClearVRAM:
 	LEA	loc_00000696, A0
 	MOVEQ	#$0000000F, D0
 loc_00000362:
@@ -108,9 +113,9 @@ loc_00000362:
 	MOVE.w	(A0)+, (A1)+
 	MOVE.l	#$C0000000, VDP_control_port
 	MOVE.w	#0, VDP_data_port
-	BSR.w	loc_00000280
-	BSR.w	loc_0000029A
-	BSR.w	loc_000002B6
+	BSR.w	ClearVRAMSprites
+	BSR.w	ClearVSRAM
+	BSR.w	ClearVRAMHScroll
 	BSR.w	ClearVRAMPlaneA
 	BSR.w	ClearVRAMPlaneB
 	MOVE.l	#$40000000, D7
@@ -123,7 +128,8 @@ loc_00000362:
 loc_000003BC:
 	dc.b	$2E, $3C, $40, $00, $00, $00, $3C, $3C, $FF, $FF, $1A, $3C, $00, $00, $38, $3C, $00, $01, $4E, $B9, $00, $01, $03, $FE, $4E, $75 
 
-loc_000003D6:
+;InitZ80SoundDriver:
+InitZ80SoundDriver:
 	MOVE.w	#$0100, Z80_bus_request
 	MOVE.w	#$0100, $00A11200
 	MOVE.w	#0, $00A11200
@@ -131,10 +137,11 @@ loc_000003D6:
 loc_000003F2:
 	DBF	D7, loc_000003F2
 	MOVE.w	#$0100, $00A11200
-	BSR.w	loc_00000404
+	BSR.w	LoadZ80Driver
 	RTS
 
-loc_00000404: ; Send below chunk of data into Z80 RAM
+;LoadZ80Driver:
+LoadZ80Driver: ; Send below chunk of data into Z80 RAM
 	LEA	$00A00000, A1
 	LEA	loc_0000041C, A2
 	MOVE.w	#$013F, D6
@@ -545,10 +552,10 @@ VerticalInterrupt:
 	MOVE.w	VDP_control_port, D0
 	TST.b	Boss_max_hp.w
 	BEQ.b	loc_000010FE
-	BSR.w	loc_000012C0
+	BSR.w	UpdateScrollRegs_Boss
 	BRA.b	loc_00001102
 loc_000010FE:
-	BSR.w	loc_00001282
+	BSR.w	UpdateScrollRegs_Normal
 loc_00001102:
 	TST.b	Sprite_update_pending.w
 	BEQ.b	loc_00001112
@@ -560,7 +567,7 @@ loc_00001112:
 	JSR	UpdatePlayerSpriteDMA
 	CLR.b	Sprite_dma_update_pending.w
 loc_00001122:
-	BSR.w	loc_00001448
+	BSR.w	ProcessSoundQueue
 	BTST.b	#6, $00A10001
 	BEQ.b	loc_0000115C
 	ADDQ.w	#1, Vblank_frame_counter.w	
@@ -606,17 +613,18 @@ loc_000011A2:
 loc_000011AE:
 	TST.b	Scene_update_flag.w
 	BEQ.b	loc_000011BC
-	BSR.w	loc_00001364
+	BSR.w	UpdateSceneScrollBuffers
 	CLR.b	Scene_update_flag.w
 loc_000011BC:
-	BSR.w	loc_000011D4
+	BSR.w	CheckDebugMode
 loc_000011C0:
 	JSR	UpdateBattleEntities
-	BSR.w	loc_000011EE
+	BSR.w	ReadControllers
 	ST	Vblank_flag.w
 	MOVEM.l	(A7)+, D0/D1/D2/D3/D4/D5/D6/D7/A0/A1/A2/A3/A4/A5/A6
 	RTE
-loc_000011D4:
+;CheckDebugMode:
+CheckDebugMode:
 	MOVE.b	Controller_2_current_state.w, D0
 	CMPI.b	#$F0, D0
 	BNE.b	loc_000011EC
@@ -625,18 +633,20 @@ loc_000011D4:
 loc_000011EC:
 	RTS
 
-loc_000011EE:
+;ReadControllers:
+ReadControllers:
 	LEA	Controller_current_state.w, A0
 	stopZ80
 	LEA	$00A10003, A1
 	LEA	$00A10009, A2
 	startZ80
-	BSR.w	loc_00001242
+	BSR.w	ReadControllerPort
 	stopZ80
 	LEA	$00A10005, A1
 	LEA	$00A1000B, A2
 	startZ80
-loc_00001242:
+;ReadControllerPort:
+ReadControllerPort:
 	MOVE.b	(A0), $1(A0)
 	BSET.b	#6, (A2)
 	BCLR.b	#6, (A1)
@@ -662,7 +672,8 @@ loc_00001260:
 	LEA	$2(A0), A0
 	RTS
 
-loc_00001282:
+;UpdateScrollRegs_Normal:
+UpdateScrollRegs_Normal:
 	MOVE.w	HScroll_base.w, D0
 	ANDI.w	#$01FF, D0
 	MOVE.l	#$7C000002, VDP_control_port
@@ -675,7 +686,8 @@ loc_00001282:
 	MOVE.w	D0, VDP_data_port
 	RTS
 
-loc_000012C0:
+;UpdateScrollRegs_Boss:
+UpdateScrollRegs_Boss:
 	MOVE.w	HScroll_base.w, D0
 	ANDI.w	#$01FF, D0
 	MOVE.l	#$7C000002, VDP_control_port
@@ -711,7 +723,8 @@ loc_0000130C:
 	dc.b	$06, $44, $04, $C0, $00, $44, $80, $00, $88, $43, $30, $38, $C2, $42, $32, $38, $C2, $44, $D0, $40, $EF, $41, $D0, $41, $02, $80, $00, $00, $1F, $FF, $48, $40 
 	dc.b	$00, $80, $40, $00, $00, $03, $23, $C0, $00, $C0, $00, $04, $33, $C4, $00, $C0, $00, $00, $52, $78, $C2, $42, $4E, $75 
 
-loc_00001364:
+;UpdateSceneScrollBuffers:
+UpdateSceneScrollBuffers:
 	TST.b	HScroll_full_update_flag.w
 	BNE.b	loc_00001390
 	MOVE.w	VScroll_base.w, D0
@@ -724,7 +737,7 @@ loc_00001364:
 	RTS
 
 loc_00001390:
-	BSR.w	loc_0000141E
+	BSR.w	FillVScrollTable
 loc_00001394:
 	CLR.b	HScroll_update_busy.w
 	LEA	HScroll_run_table.w, A0
@@ -764,7 +777,8 @@ WriteHScrollRunToVRAM:
 	LEA	$4(A0), A0
 	RTS
 
-loc_0000141E:
+;FillVScrollTable:
+FillVScrollTable:
 	MOVE.l	#$7C000002, D0
 	MOVE.w	Ending_hscroll_offset.w, D1
 	ANDI.w	#$01FF, D1
@@ -776,7 +790,8 @@ loc_00001430:
 	DBF	D7, loc_00001430
 	RTS
 
-loc_00001448:
+;ProcessSoundQueue:
+ProcessSoundQueue:
 	MOVE.w	Sound_queue_count.w, D0
 	BLE.b	loc_0000146C
 	LEA	Sound_queue_buffer.w, A0
@@ -1701,7 +1716,7 @@ GameState_TransitionToCastleMain:
 	JSR	LoadWorldBattleGraphics
 	TST.w	Saved_player_x_in_town.w
 	BGT.b	loc_000020E0
-	BSR.w	loc_0000336E
+	BSR.w	LoadTownStateData
 	MOVE.w	Saved_town_room_1.w, Current_town_room.w
 	JSR	LoadAndPlayAreaMusic
 loc_000020E0:
@@ -2009,7 +2024,7 @@ GameState_OverworldReload:
 	JSR	LoadBattleEnemyTileGraphics
 	JSR	LoadBattlePlayerTileGraphics
 	JSR	LoadBattleStatusTileGraphics
-	BSR.w	loc_0000340C
+	BSR.w	UpdateAndDisplayCompass
 	JSR	LoadFirstPersonGraphics
 	MOVE.b	#$FF, Player_in_first_person_mode.w
 	MOVE.w	#$0037, Palette_line_1_index.w
@@ -2046,7 +2061,7 @@ GameState_EnteringCave:
 	JSR	LoadCaveEnemyTileGraphics
 	JSR	LoadCaveItemTileGraphics
 	JSR	LoadFirstPersonBattleGraphics
-	BSR.w	loc_0000341A
+	BSR.w	DisplayKimsAndCompass
 	TST.b	Cave_light_active.w
 	BEQ.b	loc_0000260E
 	MOVE.w	#$0048, Palette_line_1_index.w
@@ -2072,7 +2087,7 @@ InitBattleDisplay:
 	CLR.w	Sprite_attr_count.w
 	JSR	FlushSpriteAttributesToVDP
 	JSR	LoadWorldMapTileGraphics
-	BSR.w	loc_00003064
+	BSR.w	DrawBattleNametable
 	JSR	ProcessAllObjectSlots
 	MOVEA.l	Player_entity_ptr.w, A6
 	MOVE.l	#loc_00004340, $2(A6)
@@ -2363,7 +2378,7 @@ loc_000029F8:
 GameState_ReturnToFirstPersonView:
 	TST.b	Fade_out_lines_mask.w
 	BNE.b	loc_00002A50
-	BSR.w	loc_000035FA
+	BSR.w	UpdatePlayerOverworldPosition
 	JSR	InitFirstPersonView
 	MOVE.w	#GAMEPLAY_STATE_CAVE_EXPLORATION, Gameplay_state.w
 	MOVE.w	#$0036, Palette_line_0_index.w
@@ -2468,7 +2483,7 @@ loc_00002AE0:
 	JSR	DisplayMaxHpMp
 	JSR	DisplayCantUseMessage
 	CLR.b	Player_in_first_person_mode.w
-	BSR.w	loc_00003654
+	BSR.w	PlayBattleMusic
 	LEA	loc_00003678, A0
 	MOVE.w	Battle_type.w, D0
 	ADD.w	D0, D0
@@ -2769,9 +2784,10 @@ loc_00002FB8:
 ;DrawTerrainTilemap:
 DrawTerrainTilemap:
 	MOVE.l	#$60000003, D5
-	BSR.b	loc_00002FDA
+	BSR.b	DrawTerrainTilemapHelper
 	MOVE.l	#$60280003, D5
-loc_00002FDA:
+;DrawTerrainTilemapHelper:
+DrawTerrainTilemapHelper:
 	ORI	#$0700, SR
 	LEA	loc_0001F652, A0
 	MOVE.w	Terrain_tileset_index.w, D0
@@ -2814,7 +2830,8 @@ loc_00003042:
 	ANDI	#$F8FF, SR
 	RTS
 
-loc_00003064:
+;DrawBattleNametable:
+DrawBattleNametable:
 	ORI	#$0700, SR
 	MOVE.l	#$40000003, D5
 	LEA	loc_0006A240, A0
@@ -3098,7 +3115,8 @@ loc_00003366:
 loc_0000336C:
 	RTS                                  ; No match found
 	
-loc_0000336E:
+;LoadTownStateData:
+LoadTownStateData:
 	LEA	loc_0001FFFE, A0
 	MOVE.w	Current_town.w, D0
 	ADD.w	D0, D0
@@ -3155,12 +3173,14 @@ loc_00003400:
 	JSR	QueueSoundEffect
 	RTS
 
-loc_0000340C:
+;UpdateAndDisplayCompass:
+UpdateAndDisplayCompass:
 	JSR	UpdateCompassDisplay
 	JSR	DisplayCompassToVRAM
 	RTS
 
-loc_0000341A:
+;DisplayKimsAndCompass:
+DisplayKimsAndCompass:
 	JSR	DisplayKimsToVRAM
 	JSR	DisplayCompassToVRAM
 	RTS
@@ -3337,7 +3357,8 @@ loc_0000357C:
 	MOVE.w	$2(A0,D0.w), Town_player_spawn_y.w
 	RTS
 
-loc_000035FA:
+;UpdatePlayerOverworldPosition:
+UpdatePlayerOverworldPosition:
 	LEA	loc_0000361C, A0
 	MOVE.w	Player_direction.w, D0
 	ANDI.w	#6, D0
@@ -3372,7 +3393,8 @@ loc_00003640:
 loc_00003652:
 	RTS
 
-loc_00003654:
+;PlayBattleMusic:
+PlayBattleMusic:
 	LEA	loc_0000366A, A0
 	MOVE.w	Battle_type.w, D0
 	MOVE.b	(A0,D0.w), D0
@@ -3481,7 +3503,7 @@ loc_00003782:
 	BSR.w	GetTileInFrontOfPlayer
 	TST.b	Town_movement_blocked.w
 	BNE.w	loc_0000385E
-	BSR.w	loc_00003A22
+	BSR.w	CheckTownEnemyCollision
 loc_00003816:
 	TST.b	Town_movement_blocked.w
 	BNE.w	loc_0000385E
@@ -3654,7 +3676,8 @@ loc_00003A1C:
 	CLR.b	Town_movement_blocked.w
 	RTS
 
-loc_00003A22:
+;CheckTownEnemyCollision:
+CheckTownEnemyCollision:
 	MOVE.w	Player_direction.w, D4
 	LSR.w	#1, D4
 	ANDI.w	#3, D4
@@ -3898,7 +3921,7 @@ loc_00003DA6:
 	MOVE.w	#BUTTON_BIT_A, D2
 	JSR	CheckButtonPress
 	BEQ.b	loc_00003DB6
-	BSR.w	loc_0000421A
+	BSR.w	DispatchBattleMagic
 loc_00003DB6:
 	MOVE.b	Controller_current_state.w, D0
 	ANDI.w	#$F, D0
@@ -3955,7 +3978,7 @@ loc_00003E48:
 	MOVE.b	$1(A6), D0
 	LEA	(A6,D0.w), A6
 	MOVE.l	#loc_00003EBC, $2(A6)
-	BSR.w	loc_00004234
+	BSR.w	ClearObjectActiveFlags
 	TST.b	Soldier_fight_event_trigger.w
 	BEQ.b	loc_00003E8A
 	MOVE.w	#GAMEPLAY_STATE_SOLDIER_TAUNT, Gameplay_state.w
@@ -4032,7 +4055,7 @@ loc_00003F58:
 	MOVE.b	(A0,D0.w), $24(A5)
 	MOVE.b	$1(A0,D0.w), $24(A6)
 	MOVE.b	$2(A0,D0.w), $24(A4)
-	BSR.w	loc_000040DE
+	BSR.w	CheckBattleAttackHitbox
 	BRA.w	loc_00003FA2
 loc_00003F9E:
 	CLR.b	Player_attacking_flag.w
@@ -4130,7 +4153,8 @@ loc_000040BA:
 	JSR	AddSpriteToDisplayList
 	RTS
 
-loc_000040DE: ; suspected collision detection
+;CheckBattleAttackHitbox:
+CheckBattleAttackHitbox: ; suspected collision detection
 	LEA	loc_00004250, A0
 	MOVEA.l	Battle_entity_slot_1_ptr.w, A6
 	CLR.w	D0
@@ -4227,7 +4251,8 @@ loc_00004200:
 	JSR	AddSpriteToDisplayList
 	RTS
 
-loc_0000421A:
+;DispatchBattleMagic:
+DispatchBattleMagic:
 	MOVE.w	Readied_magic.w, D0
 	BLT.b	loc_00004232
 	ANDI.w	#$001F, D0
@@ -4238,7 +4263,8 @@ loc_0000421A:
 loc_00004232:
 	RTS
 
-loc_00004234:
+;ClearObjectActiveFlags:
+ClearObjectActiveFlags:
 	MOVEA.l	Object_slot_02_ptr.w, A6
 	MOVE.w	#$000B, D7
 loc_0000423C:
@@ -4526,7 +4552,7 @@ loc_00004680:
 loc_0000468A:
 	LEA	loc_0000471E, A0
 loc_00004690:
-	BSR.w	loc_00005A3C
+	BSR.w	InitObjectPositions_21x13
 	LEA	Map_sector_center.w, A2
 	BSR.w	UpdatePlayerMapSector
 	BSR.w	RenderMapToVRAM_DualPalette_21x13
@@ -4541,7 +4567,7 @@ loc_000046AE:
 loc_000046B8:
 	LEA	loc_0000472E, A0
 loc_000046BE:
-	BSR.w	loc_00005C02
+	BSR.w	InitObjectPositions_21x20
 	BSR.w	UpdatePlayerMapSector
 	BSR.w	RenderMapToVRAM_DualPalette_21x20
 	TST.b	Is_in_cave.w
@@ -4555,7 +4581,7 @@ loc_000046D8:
 loc_000046E2:
 	LEA	loc_0000473E, A0
 loc_000046E8:
-	BSR.w	loc_00005D86
+	BSR.w	InitObjectPositions_21x13Alt
 	BSR.w	UpdatePlayerMapSector
 	BSR.w	RenderMapToVRAM_DualPalette_21x13_Alt
 	TST.b	Is_in_cave.w
@@ -4654,7 +4680,8 @@ RenderWallTileWithPalette:
 	ORI.w	#$A000, D1
 	ORI.w	#$A800, D2
 	BRA.w	RenderWallTile_14x10_TwoPalette
-loc_00004820:
+;RenderWallTile_NearFrontTwoPalette:
+RenderWallTile_NearFrontTwoPalette:
 	LEA	loc_00006582, A1
 	LEA	loc_00006824, A3
 	MOVE.w	D4, D3
@@ -4669,7 +4696,8 @@ loc_00004820:
 	BSR.w	RenderWallTile_16x11_TwoPalette
 	RTS
 
-loc_0000484C:
+;RenderWallTile_MidSinglePalette:
+RenderWallTile_MidSinglePalette:
 	LEA	loc_00006582, A1
 	LEA	loc_00006824, A3
 	MOVE.w	D4, D3
@@ -4679,10 +4707,11 @@ loc_0000484C:
 	MOVE.w	(A3,D3.w), D4
 	MOVE.w	D4, D1
 	ORI.w	#$A800, D1
-	BSR.w	loc_00005224
+	BSR.w	RenderWallTile_16x5_Palette1
 	RTS
 
-loc_00004872:
+;RenderWallTile_FarSinglePalette:
+RenderWallTile_FarSinglePalette:
 	LEA	loc_00006582, A1
 	LEA	loc_00006824, A3
 	MOVE.w	D4, D3
@@ -4692,10 +4721,11 @@ loc_00004872:
 	MOVE.w	(A3,D3.w), D4
 	MOVE.w	D4, D1
 	ORI.w	#$A000, D1
-	BSR.w	loc_00005256
+	BSR.w	RenderWallTile_16x5_Palette0
 	RTS
 
-loc_00004898:
+;RenderWallTile_NearTwoPalette:
+RenderWallTile_NearTwoPalette:
 	LEA	loc_00006582, A1
 	LEA	loc_00006824, A3
 	MOVE.w	D4, D3
@@ -5215,7 +5245,7 @@ loc_00005124:
 	BLE.b	loc_0000513A
 	LEA	loc_00006794, A2
 	BSR.w	PrepareWallTileRenderData
-	BSR.w	loc_000051BA
+	BSR.w	RenderWallTile_14x10_TwoPalette_RightWall
 loc_0000513A:
 	RTS
 
@@ -5264,7 +5294,8 @@ loc_0000519A:
 	ANDI	#$F8FF, SR
 	RTS
 
-loc_000051BA:
+;RenderWallTile_14x10_TwoPalette_RightWall:
+RenderWallTile_14x10_TwoPalette_RightWall:
 	ORI	#$0700, SR
 	MOVE.w	#$000D, D7
 loc_000051C2:
@@ -5297,7 +5328,8 @@ loc_0000520A:
 	ANDI	#$F8FF, SR
 	RTS
 
-loc_00005224:
+;RenderWallTile_16x5_Palette1:
+RenderWallTile_16x5_Palette1:
 	ORI	#$0700, SR
 	MOVE.w	#$000F, D7
 loc_0000522C:
@@ -5314,7 +5346,8 @@ loc_00005236:
 	ANDI	#$F8FF, SR
 	RTS
 
-loc_00005256:
+;RenderWallTile_16x5_Palette0:
+RenderWallTile_16x5_Palette0:
 	ORI	#$0700, SR
 	MOVE.w	#$000F, D7
 loc_0000525E:
@@ -5896,7 +5929,8 @@ loc_00005A1C:
 loc_00005A2C:
 	dc.b	0,  0,  0,  1,  0,  1,  0,  0,  0,  0, -1, -1, -1, -1,  0,  0
 
-loc_00005A3C:
+;InitObjectPositions_21x13:
+InitObjectPositions_21x13:
 	MOVEA.l	Object_slot_01_ptr.w, A6
 	MOVE.l	#$00980000, $E(A6)
 	MOVE.l	#$00800000, $12(A6)
@@ -5946,7 +5980,7 @@ loc_00005B2E:
 	SUBQ.w	#1, D4
 	BLT.b	loc_00005B52
 	MOVE.l	#$62820003, D5
-	BSR.w	loc_00004820
+	BSR.w	RenderWallTile_NearFrontTwoPalette
 loc_00005B52:
 	MOVE.w	Map_tile_base_index.w, D0
 	ADD.w	(A4)+, D0
@@ -5993,7 +6027,8 @@ loc_00005B70:
 	MOVE.w	#0, $8(A6)
 	RTS
 
-loc_00005C02:
+;InitObjectPositions_21x20:
+InitObjectPositions_21x20:
 	MOVEA.l	Object_slot_04_ptr.w, A6
 	MOVE.l	#$00900000, $E(A6)
 	MOVE.l	#$006C0000, $12(A6)
@@ -6028,7 +6063,7 @@ loc_00005C90:
 	SUBQ.w	#1, D4
 	BLT.b	loc_00005CB4
 	MOVE.l	#$63220003, D5
-	BSR.w	loc_00004872
+	BSR.w	RenderWallTile_FarSinglePalette
 loc_00005CB4:
 	MOVE.w	Map_tile_base_index.w, D0
 	ADD.w	(A4)+, D0
@@ -6048,7 +6083,7 @@ loc_00005CD2:
 	SUBQ.w	#1, D4
 	BLT.b	loc_00005CF0
 	MOVE.l	#$63020003, D5
-	BSR.w	loc_0000484C
+	BSR.w	RenderWallTile_MidSinglePalette
 loc_00005CF0:
 	LEA	loc_00006732, A0
 	MOVEA.l	Enemy_list_ptr.w, A6
@@ -6084,7 +6119,8 @@ loc_00005CF0:
 	MOVE.w	#0, $8(A6)
 	RTS
 
-loc_00005D86:
+;InitObjectPositions_21x13Alt:
+InitObjectPositions_21x13Alt:
 	MOVEA.l	Enemy_list_ptr.w, A6
 	MOVE.l	#$00200000, $E(A6)
 	MOVE.l	#$00800000, $12(A6)
@@ -6134,7 +6170,7 @@ loc_00005E78:
 	SUBQ.w	#1, D4
 	BLT.b	loc_00005E9C
 	MOVE.l	#$62960003, D5
-	BSR.w	loc_00004898
+	BSR.w	RenderWallTile_NearTwoPalette
 loc_00005E9C:
 	MOVE.w	Map_tile_base_index.w, D0
 	ADD.w	(A4)+, D0
