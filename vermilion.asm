@@ -2108,7 +2108,7 @@ loc_0000273E:
 	RTS
 
 loc_00002752:
-	BSR.w	loc_00002F2A
+	BSR.w	CheckPlayerDeath
 	BEQ.b	loc_0000275A
 	RTS
 	
@@ -2440,12 +2440,12 @@ loc_00002BB6:
 	RTS
 
 loc_00002BB8:
-	BSR.w	loc_00002F2A
+	BSR.w	CheckPlayerDeath
 	JSR	DisplayCurrentHpMp
 	RTS
 
 loc_00002BC4:
-	BSR.w	loc_00002F2A
+	BSR.w	CheckPlayerDeath
 	BEQ.b	loc_00002BCC
 	RTS
 	
@@ -2662,7 +2662,8 @@ loc_00002EEA:
 	dc.w	$00D8, $0068
 	dc.w	$00D8, $0068 
 
-loc_00002F2A:
+;CheckPlayerDeath:
+CheckPlayerDeath:
 	TST.w	Player_hp.w
 	BGT.b	loc_00002F50
 	MOVE.w	#$00B9, D0
@@ -4469,7 +4470,7 @@ loc_0000468A:
 loc_00004690:
 	BSR.w	loc_00005A3C
 	LEA	Map_sector_center.w, A2
-	BSR.w	loc_00004702
+	BSR.w	UpdatePlayerMapSector
 	BSR.w	loc_00006052
 	TST.b	Is_in_cave.w
 	BNE.b	loc_000046AA
@@ -4483,7 +4484,7 @@ loc_000046B8:
 	LEA	loc_0000472E, A0
 loc_000046BE:
 	BSR.w	loc_00005C02
-	BSR.w	loc_00004702
+	BSR.w	UpdatePlayerMapSector
 	BSR.w	loc_00006048
 	TST.b	Is_in_cave.w
 	BNE.b	loc_000046D4
@@ -4497,14 +4498,15 @@ loc_000046E2:
 	LEA	loc_0000473E, A0
 loc_000046E8:
 	BSR.w	loc_00005D86
-	BSR.w	loc_00004702
+	BSR.w	UpdatePlayerMapSector
 	BSR.w	loc_00006060
 	TST.b	Is_in_cave.w
 	BNE.b	loc_000046FE
 	BRA.w	loc_000061D8
 loc_000046FE:
 	BRA.w	loc_00006118
-loc_00004702:
+;UpdatePlayerMapSector:
+UpdatePlayerMapSector:
 	LEA	Map_sector_center.w, A2
 	MOVE.w	Player_position_x_outside_town.w, D0
 	MOVE.w	Player_position_y_outside_town.w, D1
@@ -4580,7 +4582,8 @@ loc_000047E2:
 loc_000047EC:
 	LEA	loc_000066C2, A4
 	BRA.w	loc_00005E78
-loc_000047F6:
+;RenderWallTileWithPalette:
+RenderWallTileWithPalette:
 	MOVE.w	D4, D3
 	ADD.w	D3, D3
 	ASL.w	#4, D4
@@ -4750,7 +4753,7 @@ loc_000049EC:
 	MOVE.w	#8, Wall_render_y_offset.w
 	BSR.w	DrawFirstPersonWalls
 	CLR.w	D7
-	BSR.w	loc_00004E06
+	BSR.w	ApplyAreaDamageToObjects
 	CLR.w	D7
 	BRA.w	loc_00004EC6
 loc_00004A14:
@@ -4838,7 +4841,7 @@ loc_00004B1A:
 	MOVE.w	#4, Wall_render_y_offset.w
 	BSR.w	DrawFirstPersonWalls
 	MOVEQ	#1, D7
-	BSR.w	loc_00004E06
+	BSR.w	ApplyAreaDamageToObjects
 	MOVEQ	#1, D7
 	BRA.w	loc_00004EC6
 loc_00004B36:
@@ -4966,11 +4969,12 @@ loc_00004CCE:
 	TST.w	D7
 	BNE.b	loc_00004E04
 	MOVEQ	#1, D7
-	BSR.w	loc_00004E06
+	BSR.w	ApplyAreaDamageToObjects
 loc_00004E04:
 	RTS
 
-loc_00004E06:
+;ApplyAreaDamageToObjects:
+ApplyAreaDamageToObjects:
 	TST.w	D7
 	BEQ.b	loc_00004E18
 	MOVE.w	#$FFDC, D2
@@ -5137,26 +5141,27 @@ DrawFirstPersonWalls:
 	MOVE.b	First_person_wall_right.w, D0
 	BLE.b	loc_0000510E
 	LEA	loc_00006774, A2
-	BSR.w	loc_0000513C
+	BSR.w	PrepareWallTileRenderData
 	BSR.w	loc_00005174
 loc_0000510E:
 	CLR.w	D0
 	MOVE.b	First_person_center_wall.w, D0
 	BLE.b	loc_00005124
 	LEA	loc_00006784, A2
-	BSR.w	loc_0000513C
+	BSR.w	PrepareWallTileRenderData
 	BSR.w	loc_00005174
 loc_00005124:
 	CLR.w	D0
 	MOVE.b	Fp_wall_right_2.w, D0
 	BLE.b	loc_0000513A
 	LEA	loc_00006794, A2
-	BSR.w	loc_0000513C
+	BSR.w	PrepareWallTileRenderData
 	BSR.w	loc_000051BA
 loc_0000513A:
 	RTS
 
-loc_0000513C:
+;PrepareWallTileRenderData:
+PrepareWallTileRenderData:
 	MOVE.w	First_person_wall_frame.w, D1
 	MOVE.w	Wall_render_y_offset.w, D2
 	SUBQ.w	#1, D0
@@ -5889,7 +5894,7 @@ loc_00005B52:
 	SUBQ.w	#1, D4
 	BLT.b	loc_00005B70
 	MOVE.l	#$63180003, D5
-	BSR.w	loc_000047F6
+	BSR.w	RenderWallTileWithPalette
 loc_00005B70:
 	LEA	loc_00006732, A0
 	MOVEA.l	Enemy_list_ptr.w, A6
@@ -5971,7 +5976,7 @@ loc_00005CB4:
 	SUBQ.w	#1, D4
 	BLT.b	loc_00005CD2
 	MOVE.l	#$630C0003, D5
-	BSR.w	loc_000047F6
+	BSR.w	RenderWallTileWithPalette
 loc_00005CD2:
 	MOVE.w	Map_tile_base_index.w, D0
 	ADD.w	(A4)+, D0
@@ -6077,7 +6082,7 @@ loc_00005E9C:
 	SUBQ.w	#1, D4
 	BLT.b	loc_00005EBA
 	MOVE.l	#$63000003, D5
-	BSR.w	loc_000047F6
+	BSR.w	RenderWallTileWithPalette
 loc_00005EBA:
 	LEA	loc_00006732, A0
 	MOVEA.l	Object_slot_01_ptr.w, A6
@@ -9987,7 +9992,8 @@ UpdateObjectDisplayPosition:
 	MOVE.w	$C(A5), $16(A5)
 	RTS
 
-loc_00009136:
+;UpdateObjectScreenPosition:
+UpdateObjectScreenPosition:
 	MOVE.l	$E(A5), D0
 	SUB.l	$32(A5), D0
 	SWAP	D0
@@ -10740,7 +10746,7 @@ loc_00009B88:
 
 loc_00009B90:
 	BSR.w	InitEnemyAI
-	BSR.w	loc_0000B73E
+	BSR.w	SetObjectBoundsType1
 	MOVE.l	#loc_00009BB0, $2(A5)
 	MOVE.b	#$0E, $6(A6)
 	MOVE.l	#loc_0000A662, $2(A6)
@@ -10864,7 +10870,7 @@ loc_00009D2E:
 
 loc_00009D56:
 	BSR.w	CalculateVelocityFromAngle
-	BSR.w	loc_00009136
+	BSR.w	UpdateObjectScreenPosition
 	BSR.w	HandlePlayerTakeDamage
 	MOVE.l	$32(A5), D0
 	OR.l	$36(A5), D0
@@ -10990,7 +10996,7 @@ loc_00009F12:
 	MOVE.b	D0, $18(A5)
 loc_00009F34:
 	BSR.w	CalculateVelocityFromAngle
-	BSR.w	loc_00009136
+	BSR.w	UpdateObjectScreenPosition
 loc_00009F3C:
 	BSR.w	HandlePlayerTakeDamage
 	MOVE.l	$32(A5), D0
@@ -11242,7 +11248,7 @@ loc_0000A2A8:
 	
 loc_0000A2AA:
 	BSR.w	InitEnemyAI
-	BSR.w	loc_0000B73E
+	BSR.w	SetObjectBoundsType1
 	MOVE.l	#loc_0000A2D4, $2(A5)
 	MOVE.b	#$0E, $6(A5)
 	MOVE.l	#AddSpriteToDisplayList, $2(A6)
@@ -11489,7 +11495,7 @@ loc_0000A624:
 	SUBQ.w	#1, $3A(A5)
 loc_0000A628:
 	BSR.w	CalculateVelocityFromAngle
-	BSR.w	loc_00009136
+	BSR.w	UpdateObjectScreenPosition
 loc_0000A630:
 	BSR.w	HandlePlayerTakeDamage
 	MOVE.l	$32(A5), D0
@@ -11819,7 +11825,7 @@ loc_0000AAD2:
 	
 loc_0000AAD4:
 	BSR.w	InitEnemyAI
-	BSR.w	loc_0000B73E
+	BSR.w	SetObjectBoundsType1
 	MOVE.l	#loc_0000AB0C, $2(A5)
 	MOVE.b	#$0E, $6(A5)
 	MOVE.l	#AddSpriteToDisplayList, $2(A6)
@@ -12027,7 +12033,7 @@ loc_0000ADB4:
 	MOVE.b	D0, $18(A5)
 	MOVE.b	#$0F, $6(A5)
 	MOVE.l	#loc_0000AE64, $2(A5)
-	BSR.w	loc_0000B724
+	BSR.w	SetObjectBoundsType2
 	CLR.w	D0
 	MOVE.b	$1(A5), D0
 	LEA	(A5,D0.w), A6
@@ -12169,7 +12175,7 @@ loc_0000AFB6:
 	ANDI.b	#6, D0
 	MOVE.b	D0, $18(A5)
 	MOVE.b	#$0F, $6(A5)
-	BSR.w	loc_0000B724
+	BSR.w	SetObjectBoundsType2
 	MOVE.l	#loc_0000B06A, $2(A5)
 	MOVE.b	$7(A5), D2
 	LEA	(A5), A6
@@ -12345,7 +12351,7 @@ loc_0000B212:
 	MOVE.b	D0, $18(A5)
 	MOVE.b	#$0F, $6(A5)
 	MOVE.l	#loc_0000B32A, $2(A5)
-	BSR.w	loc_0000B724
+	BSR.w	SetObjectBoundsType2
 	CLR.w	D0
 	MOVE.b	$1(A5), D0
 	LEA	(A5,D0.w), A6
@@ -12720,14 +12726,16 @@ SetEnemyGraphicsParams:
 	MOVE.w	#$000E, $1E(A5)
 	RTS
 	
-loc_0000B724:
+;SetObjectBoundsType2:
+SetObjectBoundsType2:
 	MOVE.w	#$00D9, $8(A5)
 	MOVE.b	#$0F, $6(A5)
 	MOVE.w	#$000C, $1C(A5)
 	MOVE.w	#$000E, $1E(A5)
 	RTS
 	
-loc_0000B73E:
+;SetObjectBoundsType1:
+SetObjectBoundsType1:
 	MOVE.w	#$0019, $8(A5)
 	MOVE.b	#$0E, $6(A5)
 	MOVE.w	#$000C, $1C(A5)
@@ -36098,7 +36106,7 @@ loc_00020FE4:
 	BEQ.b	loc_00021004
 	TST.b	Watling_youth_restored.w
 	BNE.b	loc_00021004
-	BSR.w	loc_000214F2
+	BSR.w	InitMerchantDialog_Variant3
 	MOVE.l	#StoleYouthStr, Script_talk_source.w
 loc_00021004:
 	RTS
@@ -36129,7 +36137,7 @@ loc_0002105E:
 	BEQ.b	loc_00021078
 	TST.b	Asti_monster_defeated.w
 	BNE.b	loc_00021078
-	BSR.w	loc_000214D4
+	BSR.w	InitMerchantDialog_Variant2
 	MOVE.l	#MeetAgainStr2, Script_talk_source.w
 	BRA.b	loc_00021080
 loc_00021078:
@@ -36213,7 +36221,7 @@ loc_0002119C:
 	BEQ.b	loc_000211BC
 	TST.b	Helwig_men_rescued.w
 	BNE.b	loc_000211BC
-	BSR.w	loc_000214F2
+	BSR.w	InitMerchantDialog_Variant3
 	MOVE.l	#FreeAtLastStr, Script_talk_source.w
 loc_000211BC:
 	RTS
@@ -36277,7 +36285,7 @@ loc_00021270:
 loc_00021284:
 	TST.b	Swaffham_spy_defeated.w
 	BNE.w	loc_000212AA
-	BSR.w	loc_000214D4
+	BSR.w	InitMerchantDialog_Variant2
 	MOVE.l	#DieLaughStr, Script_talk_source.w
 	TST.b	Ate_spy_dinner.w
 	BEQ.w	loc_000212A8
@@ -36464,13 +36472,15 @@ InitTalkerWithGfxDescriptor_1F74A:
 	MOVE.l	#loc_00008AB2, $2(A6)
 	MOVE.l	#loc_0001F74A, Talker_gfx_descriptor_ptr.w
 	BRA.w	InitDialogGraphics
-loc_000214D4:
+;InitMerchantDialog_Variant2:
+InitMerchantDialog_Variant2:
 	MOVE.b	#$FF, Talker_present_flag.w
 	BSR.w	InitDialogMode
 	MOVE.l	#loc_00008AB2, $2(A6)
 	MOVE.l	#loc_0001F72E, Talker_gfx_descriptor_ptr.w
 	BRA.w	InitDialogGraphics
-loc_000214F2:
+;InitMerchantDialog_Variant3:
+InitMerchantDialog_Variant3:
 	MOVE.b	#$FF, Talker_present_flag.w
 	BSR.w	InitDialogMode
 	MOVE.l	#loc_00008AB2, $2(A6)
@@ -74751,7 +74761,7 @@ loc_0009292A:
 	MOVE.l	D6, -(A7)
 	BTST.b	#7, (A3)
 	BEQ.b	loc_00092936
-	BSR.w	loc_0009296A
+	BSR.w	ProcessSoundChannel_FM
 loc_00092936:
 	ADDA.w	#$0030, A3
 	MOVE.l	(A7)+, D6
@@ -74763,14 +74773,15 @@ loc_00092952:
 	MOVE.l	D6, -(A7)
 	BTST.b	#7, (A3)
 	BEQ.b	loc_0009295E
-	BSR.w	loc_0009296A
+	BSR.w	ProcessSoundChannel_FM
 loc_0009295E:
 	ADDA.w	#$0030, A3
 	MOVE.l	(A7)+, D6
 	DBF	D6, loc_00092952
 	RTS
 	
-loc_0009296A:
+;ProcessSoundChannel_FM:
+ProcessSoundChannel_FM:
 	MOVE.b	$1(A3), D7
 	BPL.w	loc_00092978
 	JMP	loc_00093554
@@ -74849,7 +74860,7 @@ loc_00092A60:
 	BSR.w	loc_00092A84
 loc_00092A74:
 	BSR.w	ProcessPSGChannelNoteSequence
-	BSR.w	loc_000933E4
+	BSR.w	UpdateYM2612KeyOff
 	RTS
 	
 loc_00092A7E:
@@ -74874,7 +74885,7 @@ loc_00092AB2:
 	BSR.w	WriteFMChannelRegisters
 	TST.b	D5
 	BPL.w	loc_00092ACE
-	BSR.w	loc_00092FB8
+	BSR.w	SetPSGNoteFrequency
 	MOVE.b	(A4)+, D5
 	TST.b	D5
 	BPL.w	loc_00092ACE
@@ -74891,7 +74902,7 @@ loc_00092AD8:
 	BNE.w	loc_00092AEE
 	BSR.w	loc_00092AF8
 	BSR.w	ProcessPSGChannelNoteSequence
-	BSR.w	loc_000933E4
+	BSR.w	UpdateYM2612KeyOff
 	RTS
 	
 loc_00092AEE:
@@ -74913,7 +74924,7 @@ loc_00092B12:
 	BEQ.w	loc_00092AB2
 loc_00092B1C:
 	BSR.w	WriteFMChannelRegisters
-	BSR.w	loc_00092FB8
+	BSR.w	SetPSGNoteFrequency
 	MOVE.b	(A4)+, $10(A3)
 	MOVE.b	(A4)+, D5
 	BPL.w	loc_00092B34
@@ -75215,7 +75226,7 @@ loc_00092E42:
 	BNE.w	loc_00092E7E
 	BTST.b	#7, $1(A3)
 	BEQ.w	loc_00092E64
-	BSR.w	loc_00093810
+	BSR.w	UpdateYM2612Channel
 	BRA.w	loc_00092E6E
 loc_00092E64:
 	BSR.w	WriteFMChannelRegisters
@@ -75223,7 +75234,7 @@ loc_00092E64:
 loc_00092E6E:
 	TST.b	$00FFF421
 	BEQ.b	loc_00092E7A
-	BSR.w	loc_00093258
+	BSR.w	InitSoundChannel_FM
 loc_00092E7A:
 	MOVE.l	(A7)+, D0
 	RTS
@@ -75232,7 +75243,7 @@ loc_00092E7E:
 	BSET.b	#1, $0(A3)
 	TST.b	$00FFF421
 	BEQ.b	loc_00092E90
-	BSR.w	loc_00093258
+	BSR.w	InitSoundChannel_FM
 loc_00092E90:
 	MOVE.w	#$0100, Z80_bus_request
 	MOVE.b	#0, $00A01FFF
@@ -75346,7 +75357,8 @@ loc_00092FA8:
 	MOVE.b	D1, $21(A3)
 	MOVE.b	#$B4, D0
 	BRA.w	WriteYM2612Register
-loc_00092FB8:
+;SetPSGNoteFrequency:
+SetPSGNoteFrequency:
 	SUBI.b	#$80, D5
 	BNE.w	loc_00092FCA
 	BSET.b	#1, $0(A3)
@@ -75451,7 +75463,7 @@ loc_0009310E:
 	SUBI.b	#$81, D0
 	BCS.w	loc_0009317A
 	MOVE.l	D0, -(A7)
-	BSR.w	loc_00093192
+	BSR.w	StopAllActiveSounds
 	MOVE.l	(A7)+, D0
 	LEA	loc_000938EE, A0
 	MOVE.b	(A0,D0.w), $00FFF402
@@ -75475,7 +75487,7 @@ loc_00093150:
 	DBF	D5, loc_0009314A
 	BRA.w	loc_0009317A
 loc_00093176:
-	BSR.w	loc_00093192
+	BSR.w	StopAllActiveSounds
 loc_0009317A:
 	MOVE.b	#$80, $00FFF404
 	RTS
@@ -75487,7 +75499,8 @@ GetSoundDataPointer:
 	ADDA.l	#$00093C00, A0
 	RTS
 	
-loc_00093192:
+;StopAllActiveSounds:
+StopAllActiveSounds:
 	MOVE.b	#$2B, D0
 	MOVE.b	#0, D1
 	BSR.w	loc_00093436
@@ -75536,7 +75549,7 @@ loc_0009320C:
 	
 loc_00093226:
 	SUBQ.b	#1, $00FFF41C
-	BEQ.w	loc_00093192
+	BEQ.w	StopAllActiveSounds
 	MOVE.b	#2, $00FFF41D
 	LEA	$00FFF430, A3
 	MOVE.w	#8, D6
@@ -75549,7 +75562,8 @@ loc_00093242:
 loc_00093256:
 	RTS
 	
-loc_00093258:
+;InitSoundChannel_FM:
+InitSoundChannel_FM:
 	MOVEA.l	A3, A6
 	SUBA.l	#$00000150, A3
 	BTST.b	#4, $2(A0)
@@ -75660,7 +75674,8 @@ loc_000933D4:
 loc_000933E2:
 	RTS
 	
-loc_000933E4:
+;UpdateYM2612KeyOff:
+UpdateYM2612KeyOff:
 	MOVE.b	$0(A3), D2
 	ANDI.b	#6, D2
 	BNE.w	loc_00093400
@@ -75692,7 +75707,7 @@ WriteYM2612Register:
 	ANDI.b	#3, D2
 	ADD.b	D2, D0
 loc_00093436:
-	BSR.w	loc_0009347A
+	BSR.w	WaitYM2612Ready
 	MOVE.b	D0, $00A04000
 	NOP
 	NOP
@@ -75704,7 +75719,7 @@ loc_00093436:
 loc_00093456:
 	ANDI.b	#3, D2
 	ADD.b	D2, D0
-	BSR.b	loc_0009347A
+	BSR.b	WaitYM2612Ready
 	MOVE.b	D0, $00A04002
 	NOP
 	NOP
@@ -75714,7 +75729,8 @@ loc_00093456:
 loc_00093478:
 	RTS
 	
-loc_0009347A:
+;WaitYM2612Ready:
+WaitYM2612Ready:
 	MOVE.w	#$0100, Z80_bus_request
 loc_00093482:
 	BTST.b	#0, Z80_bus_request
@@ -75727,7 +75743,7 @@ loc_00093482:
 	NOP
 	NOP
 	NOP
-	BRA.b	loc_0009347A
+	BRA.b	WaitYM2612Ready
 loc_000934AA:
 	RTS
 	
@@ -75745,12 +75761,12 @@ loc_00093554:
 	BNE.w	loc_00093574
 	BSR.w	loc_000935A2
 	BSR.w	ProcessFMChannelNoteSequence
-	BSR.w	loc_00093736
+	BSR.w	ProcessSoundChannelSequencer
 	RTS
 	
 loc_00093574:
 	BSR.w	loc_00093640
-	BSR.w	loc_0009374A
+	BSR.w	ProcessSoundCommand
 	RTS
 	
 loc_0009357E:
@@ -75760,13 +75776,13 @@ loc_0009357E:
 	dc.w	$6100
 	dc.w	$0052
 	BSR.w	ProcessFMChannelNoteSequence	
-	BSR.w	loc_00093736	
+	BSR.w	ProcessSoundChannelSequencer	
 	RTS
 	
 loc_00093594:
 	BSR.w	loc_000937F0	
 	BSR.w	ProcessFMChannelNoteSequence	
-	BSR.w	loc_0009374A	
+	BSR.w	ProcessSoundCommand	
 	dc.w	$4E75
 loc_000935A2:
 	BSR.w	LoadSoundScriptPointer
@@ -75779,7 +75795,7 @@ loc_000935A8:
 loc_000935B6:
 	TST.b	D5
 	BPL.w	loc_000935D0
-	BSR.w	loc_00093604
+	BSR.w	SetSoundNoteFrequency
 	MOVE.b	(A4)+, D5
 	TST.b	D5
 	BPL.w	loc_000935D0
@@ -75800,7 +75816,7 @@ loc_000935E0:
 	BSR.w	ProcessSoundScriptCommand	
 	BRA.b	loc_000935E0	
 loc_000935EE:
-	BSR.w	loc_00093604	
+	BSR.w	SetSoundNoteFrequency	
 	MOVE.b	(A4)+, $10(A3)	
 	MOVE.b	(A4)+, D0	
 	MOVE.b	(A4)+, D5	
@@ -75808,7 +75824,8 @@ loc_000935EE:
 	BSR.w	UpdateSoundChannelPitch	
 	RTS
 	
-loc_00093604:
+;SetSoundNoteFrequency:
+SetSoundNoteFrequency:
 	SUBI.b	#$80, D5
 	BNE.w	loc_0009361C
 	MOVE.b	#$1F, $14(A3)
@@ -75908,12 +75925,14 @@ loc_0009371C:
 loc_00093734:
 	RTS
 	
-loc_00093736:
+;ProcessSoundChannelSequencer:
+ProcessSoundChannelSequencer:
 	MOVE.b	#0, $13(A3)
 	CMPI.b	#$1F, $14(A3)
 	BEQ.w	loc_0009381C
 	BRA.w	loc_00093766
-loc_0009374A:
+;ProcessSoundCommand:
+ProcessSoundCommand:
 	MOVE.b	$7(A3), D7
 	BEQ.w	loc_000937DA
 	CMPI.b	#$1F, $14(A3)
@@ -75960,7 +75979,7 @@ loc_000937DA:
 	
 loc_000937DC:
 	SUBQ.b	#1, $13(A3)
-	BSR.w	loc_00093810
+	BSR.w	UpdateYM2612Channel
 	RTS
 	
 loc_000937E6:
@@ -75983,7 +76002,8 @@ loc_0009380A:
 	MOVE.w	D1, $C(A3)	
 	RTS
 	
-loc_00093810:
+;UpdateYM2612Channel:
+UpdateYM2612Channel:
 	BSET.b	#1, $0(A3)
 	MOVE.b	#$1F, $14(A3)
 loc_0009381C:
