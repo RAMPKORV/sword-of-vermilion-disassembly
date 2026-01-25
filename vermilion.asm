@@ -18982,7 +18982,7 @@ loc_00010BEA:
 	LEA	MenuStartContinueStr, A0
 	MOVE.w	#2, $FFFF9906.w
 	MOVE.w	#2, $FFFF990C.w
-	BSR.w	loc_00012CE6
+	BSR.w	RenderTextToWindow
 	CLR.w	$FFFF9914.w
 	MOVE.b	#$FF, Window_tilemap_draw_active.w
 	RTS
@@ -19021,7 +19021,7 @@ loc_00010C9E:
 	LEA	MenuOptionsStr, A0
 	MOVE.w	#2, $FFFF9906.w
 	MOVE.w	#2, $FFFF990C.w
-	BSR.w	loc_00012CE6
+	BSR.w	RenderTextToWindow
 	CLR.w	$FFFF9914.w
 	MOVE.b	#$FF, Window_tilemap_draw_active.w
 	RTS
@@ -19036,7 +19036,7 @@ loc_00010CE2:
 	LEA	MessageSpeedStr, A0	
 	MOVE.w	#1, $FFFF9906.w	
 	MOVE.w	#2, $FFFF990C.w	
-	BSR.w	loc_00012CE6	
+	BSR.w	RenderTextToWindow	
 	LEA	$FFFF9920.w, A1	
 	CLR.w	D1	
 	MOVE.b	Message_speed.w, D1	
@@ -19065,7 +19065,7 @@ loc_00010D44:
 	LEA	YesNoStr, A0
 	MOVE.w	#3, $FFFF9906.w
 	MOVE.w	#2, $FFFF990C.w
-	BSR.w	loc_00012CE6
+	BSR.w	RenderTextToWindow
 	CLR.w	$FFFF9914.w
 	MOVE.b	#$FF, $FFFF9900.w
 	RTS
@@ -19085,7 +19085,7 @@ loc_00010DA4:
 	LEA	SavedGameOptionsStr, A0
 	MOVE.w	#2, $FFFF9906.w
 	MOVE.w	#2, $FFFF990C.w
-	BSR.w	loc_00012CE6
+	BSR.w	RenderTextToWindow
 	LEA	$00200001, A0
 	BSR.w	loc_00011760
 	LEA	Savegame_name_buffer.w, A0
@@ -19119,7 +19119,7 @@ loc_00010E46:
 	LEA	CastReadyDiscardStr, A0
 	MOVE.w	#2, $FFFF9906.w
 	MOVE.w	#2, $FFFF990C.w
-	BSR.w	loc_00012CE6
+	BSR.w	RenderTextToWindow
 	CLR.w	$FFFF9914.w
 	MOVE.b	#$FF, Window_tilemap_draw_active.w
 	RTS
@@ -19138,7 +19138,7 @@ loc_00010EA2:
 	LEA	UseDiscardStr, A0
 	MOVE.w	#2, $FFFF9906.w
 	MOVE.w	#2, $FFFF990C.w
-	BSR.w	loc_00012CE6
+	BSR.w	RenderTextToWindow
 	CLR.w	$FFFF9914.w
 	MOVE.b	#$FF, Window_tilemap_draw_active.w
 	RTS
@@ -19157,7 +19157,7 @@ loc_00010EFE:
 	LEA	PutOnRemoveStopStr, A0
 	MOVE.w	#2, $FFFF9906.w
 	MOVE.w	#2, $FFFF990C.w
-	BSR.w	loc_00012CE6
+	BSR.w	RenderTextToWindow
 	CLR.w	$FFFF9914.w
 	MOVE.b	#$FF, Window_tilemap_draw_active.w
 	RTS
@@ -19176,7 +19176,7 @@ loc_00010F5A:
 	LEA	EquipOptionsStr, A0
 	MOVE.w	#2, $FFFF9906.w
 	MOVE.w	#2, $FFFF990C.w
-	BSR.w	loc_00012CE6
+	BSR.w	RenderTextToWindow
 	CLR.w	$FFFF9914.w
 	MOVE.b	#$FF, Window_tilemap_draw_active.w
 	RTS
@@ -19195,7 +19195,7 @@ loc_00010FB6:
 	LEA	ChurchOptionsStr, A0
 	MOVE.w	#2, $FFFF9906.w
 	MOVE.w	#2, $FFFF990C.w
-	BSR.w	loc_00012CE6
+	BSR.w	RenderTextToWindow
 	CLR.w	$FFFF9914.w
 	MOVE.b	#$FF, Window_tilemap_draw_active.w
 	RTS
@@ -19214,7 +19214,7 @@ loc_00011012:
 	LEA	BuySellStopStr, A0
 	MOVE.w	#2, $FFFF9906.w
 	MOVE.w	#2, $FFFF990C.w
-	BSR.w	loc_00012CE6
+	BSR.w	RenderTextToWindow
 	CLR.w	$FFFF9914.w
 	MOVE.b	#$FF, Window_tilemap_draw_active.w
 	RTS
@@ -19229,7 +19229,7 @@ loc_0001106E:
 	LEA	KimStr, A0
 	MOVE.w	#2, $FFFF9906.w
 	MOVE.w	#2, $FFFF990C.w
-	BSR.w	loc_00012CE6
+	BSR.w	RenderTextToWindow
 	MOVE.l	Player_kims.w, D2
 	BSR.w	loc_00011458
 	MOVE.w	#$002A, D0
@@ -19335,7 +19335,7 @@ loc_00011204:
 	ADD.w	D4, D4
 	ADD.w	D4, D4
 	MOVEA.l	(A4,D4.w), A0
-	BSR.w	loc_00012CE6
+	BSR.w	RenderTextToWindow
 	ADDQ.w	#2, $FFFF990C.w
 	DBF	D7, loc_00011204
 	MOVE.w	#$0012, $FFFF9906.w
@@ -19394,7 +19394,7 @@ loc_000112DE:
 	ADD.w	D4, D4
 	ADD.w	D4, D4
 	MOVEA.l	(A4,D4.w), A0
-	BSR.w	loc_00012CE6
+	BSR.w	RenderTextToWindow
 	ADDQ.w	#2, $FFFF990C.w
 	DBF	D7, loc_000112DE
 	CLR.w	$FFFF9914.w
@@ -19424,7 +19424,7 @@ loc_00011364:
 	MOVEA.l	(A4)+, A0
 	MOVE.b	(A6)+, D0
 	BEQ.b	loc_0001136E
-	BSR.w	loc_00012CE6
+	BSR.w	RenderTextToWindow
 loc_0001136E:
 	ADDQ.w	#2, $FFFF990C.w
 	DBF	D7, loc_00011364
@@ -19437,7 +19437,7 @@ loc_00011390:
 	MOVEA.l	(A4)+, A0
 	MOVE.b	(A6)+, D0
 	BEQ.b	loc_0001139A
-	BSR.w	loc_00012CE6
+	BSR.w	RenderTextToWindow
 loc_0001139A:
 	ADDQ.w	#2, $FFFF990C.w
 	DBF	D7, loc_00011390
@@ -19727,7 +19727,7 @@ loc_0001168C:
 	LEA	SelectNumberStr, A0
 	MOVE.w	#2, $FFFF9906.w
 	MOVE.w	#4, $FFFF990C.w
-	BSR.w	loc_00012CE6
+	BSR.w	RenderTextToWindow
 	MOVE.w	#2, $FFFFC23A.w
 	MOVE.w	#$FFFF, $FFFFC23C.w
 	MOVE.w	#5, $FFFFC236.w
@@ -19830,7 +19830,7 @@ loc_000117E8:
 	LEA	ErrorPressCStr, A0
 	MOVE.w	#2, $FFFF9906.w
 	MOVE.w	#2, $FFFF990C.w
-	BSR.w	loc_00012CE6
+	BSR.w	RenderTextToWindow
 	CLR.w	$FFFF9914.w
 	MOVE.b	#$FF, Window_tilemap_draw_active.w
 	RTS
@@ -19845,7 +19845,7 @@ loc_0001182C:
 	LEA	LooksBetterPressCStr, A0	
 	MOVE.w	#2, $FFFF9906.w	
 	MOVE.w	#2, $FFFF990C.w	
-	BSR.w	loc_00012CE6	
+	BSR.w	RenderTextToWindow	
 	CLR.w	$FFFF9914.w	
 	MOVE.b	#$FF, Window_tilemap_draw_active.w	
 	RTS
@@ -19860,7 +19860,7 @@ loc_00011870:
 	LEA	DidntWorkPressResetStr, A0
 	MOVE.w	#2, $FFFF9906.w
 	MOVE.w	#2, $FFFF990C.w
-	BSR.w	loc_00012CE6
+	BSR.w	RenderTextToWindow
 	CLR.w	$FFFF9914.w
 	MOVE.b	#$FF, Window_tilemap_draw_active.w
 	RTS
@@ -19875,7 +19875,7 @@ loc_000118B4:
 	LEA	NoSavedGameStr, A0
 	MOVE.w	#2, $FFFF9906.w
 	MOVE.w	#2, $FFFF990C.w
-	BSR.w	loc_00012CE6
+	BSR.w	RenderTextToWindow
 	CLR.w	$FFFF9914.w
 	MOVE.b	#$FF, Window_tilemap_draw_active.w
 	RTS
@@ -19890,7 +19890,7 @@ loc_000118F8:
 	LEA	GameReadyPressCStr, A0	
 	MOVE.w	#2, $FFFF9906.w	
 	MOVE.w	#2, $FFFF990C.w	
-	BSR.w	loc_00012CE6	
+	BSR.w	RenderTextToWindow	
 	CLR.w	$FFFF9914.w	
 	MOVE.b	#$FF, Window_tilemap_draw_active.w	
 	RTS
@@ -19905,7 +19905,7 @@ loc_0001193C:
 	LEA	CharacterStatsStr, A0
 	MOVE.w	#2, $FFFF9906.w
 	MOVE.w	#2, $FFFF990C.w
-	BSR.w	loc_00012CE6
+	BSR.w	RenderTextToWindow
 	TST.w	Player_poisoned.w
 	BEQ.b	loc_00011982
 	LEA	BadPoisonStr, A0
@@ -20016,7 +20016,7 @@ loc_00011AEC:
 	LEA	EquipmentReadiedStr, A0
 	MOVE.w	#1, $FFFF9906.w
 	MOVE.w	#2, $FFFF990C.w
-	BSR.w	loc_00012CE6
+	BSR.w	RenderTextToWindow
 	LEA	NothingStr, A0
 	MOVE.w	Equipped_sword.w, D0
 	BLT.b	loc_00011B34
@@ -20079,7 +20079,7 @@ loc_00011BB8:
 	LEA	GearCombatStr, A0
 	MOVE.w	#2, $FFFF9906.w
 	MOVE.w	#2, $FFFF990C.w
-	BSR.w	loc_00012CE6
+	BSR.w	RenderTextToWindow
 	ADDQ.w	#2, $FFFF990C.w
 	LEA	Possessed_equipment_list.w, A3
 	LEA	EquipmentNames, A4
@@ -20091,7 +20091,7 @@ loc_00011C0E:
 	ADD.w	D4, D4
 	ADD.w	D4, D4
 	MOVEA.l	(A4,D4.w), A0
-	BSR.w	loc_00012CE6
+	BSR.w	RenderTextToWindow
 	ADDQ.w	#2, $FFFF990C.w
 	DBF	D7, loc_00011C0E
 	MOVE.w	#$0014, $FFFF9906.w
@@ -20110,7 +20110,7 @@ loc_00011C4C:
 	LEA	GearCombatStr, A0	
 	MOVE.w	#2, $FFFF9906.w	
 	MOVE.w	#2, $FFFF990C.w	
-	BSR.w	loc_00012CE6	
+	BSR.w	RenderTextToWindow	
 	LEA	NothingStr, A0	
 	MOVE.w	#$0060, D0	
 	BSR.w	loc_00012CF6	
@@ -20153,7 +20153,7 @@ loc_00011CC2:
 	LEA	GearMagicStr, A0
 	MOVE.w	#2, $FFFF9906.w
 	MOVE.w	#2, $FFFF990C.w
-	BSR.w	loc_00012CE6
+	BSR.w	RenderTextToWindow
 	ADDQ.w	#2, $FFFF990C.w
 	LEA	Possessed_magics_list.w, A3
 	LEA	MagicNames, A4
@@ -20165,7 +20165,7 @@ loc_00011D18:
 	ADD.w	D4, D4
 	ADD.w	D4, D4
 	MOVEA.l	(A4,D4.w), A0
-	BSR.w	loc_00012CE6
+	BSR.w	RenderTextToWindow
 	ADDQ.w	#2, $FFFF990C.w
 	DBF	D7, loc_00011D18
 	MOVE.w	#$0021, $FFFF9906.w
@@ -20184,7 +20184,7 @@ loc_00011D56:
 	LEA	GearMagicStr, A0
 	MOVE.w	#2, $FFFF9906.w
 	MOVE.w	#2, $FFFF990C.w
-	BSR.w	loc_00012CE6
+	BSR.w	RenderTextToWindow
 	LEA	NothingStr, A0
 	MOVE.w	#$004C, D0
 	BSR.w	loc_00012CF6
@@ -20206,7 +20206,7 @@ loc_00011D96:
 	LEA	GearItemStr, A0
 	MOVE.w	#2, $FFFF9906.w
 	MOVE.w	#2, $FFFF990C.w
-	BSR.w	loc_00012CE6
+	BSR.w	RenderTextToWindow
 	ADDQ.w	#2, $FFFF990C.w
 	LEA	Possessed_items_list.w, A3
 	LEA	ItemNames, A4
@@ -20218,7 +20218,7 @@ loc_00011DEC:
 	ADD.w	D4, D4
 	ADD.w	D4, D4
 	MOVEA.l	(A4,D4.w), A0
-	BSR.w	loc_00012CE6
+	BSR.w	RenderTextToWindow
 	ADDQ.w	#2, $FFFF990C.w
 	DBF	D7, loc_00011DEC
 	CLR.w	$FFFF9914.w
@@ -20231,7 +20231,7 @@ loc_00011E12:
 	LEA	GearItemStr, A0	
 	MOVE.w	#2, $FFFF9906.w	
 	MOVE.w	#2, $FFFF990C.w	
-	BSR.w	loc_00012CE6	
+	BSR.w	RenderTextToWindow	
 	LEA	NothingStr, A0	
 	MOVE.w	#$0060, D0	
 	BSR.w	loc_00012CF6	
@@ -20265,7 +20265,7 @@ loc_00011E62:
 	LEA	RingsStr, A0
 	MOVE.w	#7, $FFFF9906.w
 	MOVE.w	#2, $FFFF990C.w
-	BSR.w	loc_00012CE6
+	BSR.w	RenderTextToWindow
 	MOVE.w	#2, $FFFF9906.w
 	ADDQ.w	#2, $FFFF990C.w
 	MOVE.w	#$FFFF, D4
@@ -20281,7 +20281,7 @@ loc_00011ED0:
 	ADD.w	D3, D3
 	ADD.w	D3, D3
 	MOVEA.l	(A4,D3.w), A0
-	BSR.w	loc_00012CE6
+	BSR.w	RenderTextToWindow
 	ADDQ.w	#2, $FFFF990C.w
 	DBF	D7, loc_00011ED0
 	CLR.w	$FFFF9914.w
@@ -20295,7 +20295,7 @@ loc_00011EF8:
 	LEA	RingsStr, A0	
 	MOVE.w	#2, $FFFF9906.w	
 	MOVE.w	#2, $FFFF990C.w	
-	BSR.w	loc_00012CE6	
+	BSR.w	RenderTextToWindow	
 	LEA	NothingStr, A0	
 	TST.b	All_rings_collected.w	
 	BEQ.b	loc_00011F30	
@@ -21277,7 +21277,11 @@ loc_00012CDA:
 	BRA.w	loc_00012CF6
 loc_00012CE2:
 	LEA	$FFFF9D80.w, A0
-loc_00012CE6:
+; RenderTextToWindow
+; Render text string to window tilemap buffer
+; Input: A0 = Text string pointer
+; Processes text codes: $FF=end, $FE=newline, $20→$E4, etc.
+RenderTextToWindow:
 	MOVE.w	$FFFF9904.w, D0
 	ADDQ.w	#1, D0
 	MOVE.w	$FFFF990C.w, D1
