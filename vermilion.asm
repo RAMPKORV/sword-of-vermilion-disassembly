@@ -303,7 +303,7 @@ BasicObjectInitTable:
 	objectInitGroup 1, 8, $10, $80, loc_0000146E, HBlank_object_ptr
 	
 	; Entity slot (appears unused in this table)
-	objectInitGroup 1, 32, $40, 0, loc_00003714, $FFFFCC08
+	objectInitGroup 1, 32, $40, 0, PlayerObjectHandler, $FFFFCC08
 	
 	; Battle entity slot 1
 	objectInitGroup 1, 32, $40, 0, $00000000, Battle_entity_slot_1_ptr
@@ -1147,7 +1147,7 @@ loc_000018F2:
 	JSR	loc_0000055C
 	CLR.b	Player_in_first_person_mode.w
 	MOVEA.l	$FFFFCC08.w, A6
-	MOVE.l	#loc_00003714, $2(A6)
+	MOVE.l	#PlayerObjectHandler, $2(A6)
 	CLR.w	D0
 	MOVE.b	$1(A6), D0
 	LEA	(A6,D0.w), A6
@@ -2445,7 +2445,7 @@ loc_00002BCC:
 	CLR.w	$FFFFE000.w
 	JSR	loc_0000F688
 	MOVEA.l	$FFFFCC08.w, A6
-	MOVE.l	#loc_00003714, $2(A6)
+	MOVE.l	#PlayerObjectHandler, $2(A6)
 	MOVE.w	$FFFFC616.w, Player_direction.w
 	CLR.w	D0
 	MOVE.b	$1(A6), D0
@@ -3192,7 +3192,7 @@ loc_000034E0:
 	JSR	loc_0000055C
 	MOVEA.l	$FFFFCC08.w, A6
 	MOVE.w	#DIRECTION_UP, Player_direction.w
-	MOVE.l	#loc_00003714, $2(A6)
+	MOVE.l	#PlayerObjectHandler, $2(A6)
 	CLR.w	D0
 	MOVE.b	$1(A6), D0
 	LEA	(A6,D0.w), A6
@@ -3334,7 +3334,8 @@ loc_000036E8:
 	dc.b	$97, $8A, $8A, $98, $98, $8A, $8A, $97, $97, $98, $98, $97, $97, $97, $97, $8A, $8A, $8A, $8A, $98, $97, $97, $98, $8A, $8A, $8A, $8A, $8A, $8A, $8A, $8A, $8A 
 	dc.b	$98, $98, $98, $98, $98, $98, $98, $98, $98, $98, $8A, $8A 
 
-loc_00003714:
+; loc_00003714
+PlayerObjectHandler:
 	BCLR.b	#7, $7(A5)
 	BCLR.b	#3, $7(A5)
 	BCLR.b	#4, $7(A5)
