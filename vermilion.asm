@@ -774,7 +774,7 @@ loc_00001448:
 	MOVE.w	Sound_queue_count.w, D0
 	BLE.b	loc_0000146C
 	LEA	Sound_queue_buffer.w, A0
-	MOVE.b	(A0), $FFFFF404.w
+	MOVE.b	(A0), Sound_driver_play.w
 	LEA	$1(A0), A1
 	MOVE.b	(A1)+, (A0)+
 	MOVE.b	(A1)+, (A0)+
@@ -18356,7 +18356,7 @@ VDP_DMAFill:
 	ORI.l	#$40000080, D7
 	MOVE.l	D7, Vdp_dma_cmd.w
 	MOVE.w	Vdp_dma_cmd.w, VDP_control_port
-	MOVE.w	$FFFFC18E.w, VDP_control_port
+	MOVE.w	Vdp_dma_cmd_hi.w, VDP_control_port
 	MOVE.b	D5, VDP_data_port
 loc_00010458:
 	MOVE.w	VDP_control_port, D4
