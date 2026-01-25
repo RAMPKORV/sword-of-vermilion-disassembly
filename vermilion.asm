@@ -4873,31 +4873,31 @@ loc_00004BA0:
 	MOVEA.l	Object_slot_05_ptr.w, A6
 	MOVE.l	#$003C0000, $E(A6)
 	MOVE.l	#$00680000, $12(A6)
-	MOVEA.l	$FFFFCC2C.w, A6
+	MOVEA.l	Object_slot_06_ptr.w, A6
 	MOVE.l	#$007C0000, $E(A6)
 	MOVE.l	#$00680000, $12(A6)
-	MOVEA.l	$FFFFCC30.w, A6
+	MOVEA.l	Object_slot_07_ptr.w, A6
 	MOVE.l	#$005C0000, $E(A6)
 	MOVE.l	#$00680000, $12(A6)
-	MOVEA.l	$FFFFCC34.w, A6
+	MOVEA.l	Object_slot_08_ptr.w, A6
 	MOVE.l	#$001C0000, $E(A6)
 	MOVE.l	#$00680000, $12(A6)
-	MOVEA.l	$FFFFCC38.w, A6
+	MOVEA.l	Object_slot_09_ptr.w, A6
 	MOVE.l	#$009C0000, $E(A6)
 	MOVE.l	#$00680000, $12(A6)
-	MOVEA.l	$FFFFCC3C.w, A6
+	MOVEA.l	Object_slot_0A_ptr.w, A6
 	MOVE.l	#$004C0000, $E(A6)
 	MOVE.l	#$00580000, $12(A6)
-	MOVEA.l	$FFFFCC40.w, A6
+	MOVEA.l	Object_slot_0B_ptr.w, A6
 	MOVE.l	#$006C0000, $E(A6)
 	MOVE.l	#$00580000, $12(A6)
-	MOVEA.l	$FFFFCC44.w, A6
+	MOVEA.l	Object_slot_0C_ptr.w, A6
 	MOVE.l	#$005C0000, $E(A6)
 	MOVE.l	#$00580000, $12(A6)
-	MOVEA.l	$FFFFCC48.w, A6
+	MOVEA.l	Object_slot_0D_ptr.w, A6
 	MOVE.l	#$003C0000, $E(A6)
 	MOVE.l	#$00580000, $12(A6)
-	MOVEA.l	$FFFFCC4C.w, A6
+	MOVEA.l	Object_slot_0E_ptr.w, A6
 	MOVE.l	#$007C0000, $E(A6)
 	MOVE.l	#$00580000, $12(A6)
 	RTS
@@ -4921,31 +4921,31 @@ loc_00004CCE:
 	MOVEA.l	Object_slot_05_ptr.w, A6
 	MOVE.l	#$00480000, $E(A6)
 	MOVE.l	#$005C0000, $12(A6)
-	MOVEA.l	$FFFFCC2C.w, A6
+	MOVEA.l	Object_slot_06_ptr.w, A6
 	MOVE.l	#$00700000, $E(A6)
 	MOVE.l	#$005C0000, $12(A6)
-	MOVEA.l	$FFFFCC30.w, A6
+	MOVEA.l	Object_slot_07_ptr.w, A6
 	MOVE.l	#$005C0000, $E(A6)
 	MOVE.l	#$005C0000, $12(A6)
-	MOVEA.l	$FFFFCC34.w, A6
+	MOVEA.l	Object_slot_08_ptr.w, A6
 	MOVE.l	#$00340000, $E(A6)
 	MOVE.l	#$005C0000, $12(A6)
-	MOVEA.l	$FFFFCC38.w, A6
+	MOVEA.l	Object_slot_09_ptr.w, A6
 	MOVE.l	#$00840000, $E(A6)
 	MOVE.l	#$005C0000, $12(A6)
-	MOVEA.l	$FFFFCC3C.w, A6
+	MOVEA.l	Object_slot_0A_ptr.w, A6
 	MOVE.l	#$00520000, $E(A6)
 	MOVE.l	#$00520000, $12(A6)
-	MOVEA.l	$FFFFCC40.w, A6
+	MOVEA.l	Object_slot_0B_ptr.w, A6
 	MOVE.l	#$00660000, $E(A6)
 	MOVE.l	#$00520000, $12(A6)
-	MOVEA.l	$FFFFCC44.w, A6
+	MOVEA.l	Object_slot_0C_ptr.w, A6
 	MOVE.l	#$005C0000, $E(A6)
 	MOVE.l	#$00520000, $12(A6)
-	MOVEA.l	$FFFFCC48.w, A6
+	MOVEA.l	Object_slot_0D_ptr.w, A6
 	MOVE.l	#$00480000, $E(A6)
 	MOVE.l	#$00520000, $12(A6)
-	MOVEA.l	$FFFFCC4C.w, A6
+	MOVEA.l	Object_slot_0E_ptr.w, A6
 	MOVE.l	#$00700000, $E(A6)
 	MOVE.l	#$00520000, $12(A6)
 	TST.w	D7
@@ -4980,23 +4980,23 @@ loc_00004E24:
 	MOVEA.l	Object_slot_02_ptr.w, A6
 	MOVEA.l	Object_slot_05_ptr.w, A6
 	BSR.w	loc_00004EAE
-	MOVEA.l	$FFFFCC2C.w, A6
+	MOVEA.l	Object_slot_06_ptr.w, A6
 	BSR.w	loc_00004EAE
-	MOVEA.l	$FFFFCC30.w, A6
+	MOVEA.l	Object_slot_07_ptr.w, A6
 	BSR.w	loc_00004EAE
-	MOVEA.l	$FFFFCC34.w, A6
+	MOVEA.l	Object_slot_08_ptr.w, A6
 	BSR.w	loc_00004EAE
-	MOVEA.l	$FFFFCC38.w, A6
+	MOVEA.l	Object_slot_09_ptr.w, A6
 	BSR.w	loc_00004EAE
-	MOVEA.l	$FFFFCC3C.w, A6
+	MOVEA.l	Object_slot_0A_ptr.w, A6
 	BSR.w	loc_00004EBA
-	MOVEA.l	$FFFFCC40.w, A6
+	MOVEA.l	Object_slot_0B_ptr.w, A6
 	BSR.w	loc_00004EBA
-	MOVEA.l	$FFFFCC44.w, A6
+	MOVEA.l	Object_slot_0C_ptr.w, A6
 	BSR.w	loc_00004EBA
-	MOVEA.l	$FFFFCC48.w, A6
+	MOVEA.l	Object_slot_0D_ptr.w, A6
 	BSR.w	loc_00004EBA
-	MOVEA.l	$FFFFCC4C.w, A6
+	MOVEA.l	Object_slot_0E_ptr.w, A6
 	BSR.w	loc_00004EBA
 	RTS
 
@@ -5041,29 +5041,29 @@ loc_00004EC6:
 	MOVEA.l	Object_slot_05_ptr.w, A6
 	ADDI.l	#$00040000, $E(A6)
 	SUBI.l	#$00040000, $12(A6)
-	MOVEA.l	$FFFFCC2C.w, A6
+	MOVEA.l	Object_slot_06_ptr.w, A6
 	SUBI.l	#$00040000, $E(A6)
 	SUBI.l	#$00040000, $12(A6)
-	MOVEA.l	$FFFFCC30.w, A6
+	MOVEA.l	Object_slot_07_ptr.w, A6
 	SUBI.l	#$00040000, $12(A6)
-	MOVEA.l	$FFFFCC34.w, A6
+	MOVEA.l	Object_slot_08_ptr.w, A6
 	ADDI.l	#$00080000, $E(A6)
 	SUBI.l	#$00040000, $12(A6)
-	MOVEA.l	$FFFFCC38.w, A6
+	MOVEA.l	Object_slot_09_ptr.w, A6
 	SUBI.l	#$00080000, $E(A6)
 	SUBI.l	#$00040000, $12(A6)
-	MOVEA.l	$FFFFCC3C.w, A6
+	MOVEA.l	Object_slot_0A_ptr.w, A6
 	ADDI.l	#$00020000, $E(A6)
 	SUBI.l	#$00020000, $12(A6)
-	MOVEA.l	$FFFFCC40.w, A6
+	MOVEA.l	Object_slot_0B_ptr.w, A6
 	SUBI.l	#$00020000, $E(A6)
 	SUBI.l	#$00020000, $12(A6)
-	MOVEA.l	$FFFFCC44.w, A6
+	MOVEA.l	Object_slot_0C_ptr.w, A6
 	SUBI.l	#$00020000, $12(A6)
-	MOVEA.l	$FFFFCC48.w, A6
+	MOVEA.l	Object_slot_0D_ptr.w, A6
 	ADDI.l	#$00040000, $E(A6)
 	SUBI.l	#$00020000, $12(A6)
-	MOVEA.l	$FFFFCC4C.w, A6
+	MOVEA.l	Object_slot_0E_ptr.w, A6
 	SUBI.l	#$00040000, $E(A6)
 	SUBI.l	#$00020000, $12(A6)
 	RTS
@@ -5086,29 +5086,29 @@ loc_00004FE2:
 	MOVEA.l	Object_slot_05_ptr.w, A6
 	SUBI.l	#$00040000, $E(A6)
 	ADDI.l	#$00040000, $12(A6)
-	MOVEA.l	$FFFFCC2C.w, A6
+	MOVEA.l	Object_slot_06_ptr.w, A6
 	ADDI.l	#$00040000, $E(A6)
 	ADDI.l	#$00040000, $12(A6)
-	MOVEA.l	$FFFFCC30.w, A6
+	MOVEA.l	Object_slot_07_ptr.w, A6
 	ADDI.l	#$00040000, $12(A6)
-	MOVEA.l	$FFFFCC34.w, A6
+	MOVEA.l	Object_slot_08_ptr.w, A6
 	SUBI.l	#$00080000, $E(A6)
 	ADDI.l	#$00040000, $12(A6)
-	MOVEA.l	$FFFFCC38.w, A6
+	MOVEA.l	Object_slot_09_ptr.w, A6
 	ADDI.l	#$00080000, $E(A6)
 	ADDI.l	#$00040000, $12(A6)
-	MOVEA.l	$FFFFCC3C.w, A6
+	MOVEA.l	Object_slot_0A_ptr.w, A6
 	SUBI.l	#$00020000, $E(A6)
 	ADDI.l	#$00020000, $12(A6)
-	MOVEA.l	$FFFFCC40.w, A6
+	MOVEA.l	Object_slot_0B_ptr.w, A6
 	ADDI.l	#$00020000, $E(A6)
 	ADDI.l	#$00020000, $12(A6)
-	MOVEA.l	$FFFFCC44.w, A6
+	MOVEA.l	Object_slot_0C_ptr.w, A6
 	ADDI.l	#$00020000, $12(A6)
-	MOVEA.l	$FFFFCC48.w, A6
+	MOVEA.l	Object_slot_0D_ptr.w, A6
 	SUBI.l	#$00040000, $E(A6)
 	ADDI.l	#$00020000, $12(A6)
-	MOVEA.l	$FFFFCC4C.w, A6
+	MOVEA.l	Object_slot_0E_ptr.w, A6
 	ADDI.l	#$00040000, $E(A6)
 	ADDI.l	#$00020000, $12(A6)
 	RTS
@@ -5352,19 +5352,19 @@ loc_00005336:
 	MOVE.w	(A1,D4.w), $8(A6)
 	LEA	-$1(A2), A2
 	LEA	loc_00006748, A1
-	MOVEA.l	$FFFFCC38.w, A6
+	MOVEA.l	Object_slot_09_ptr.w, A6
 	CLR.w	D4
 	MOVE.b	-$60(A2), D4
 	BSR.w	ValidateDungeonTileType
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), $8(A6)
-	MOVEA.l	$FFFFCC2C.w, A6
+	MOVEA.l	Object_slot_06_ptr.w, A6
 	CLR.w	D4
 	MOVE.b	-$30(A2), D4
 	BSR.w	ValidateDungeonTileType
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), $8(A6)
-	MOVEA.l	$FFFFCC30.w, A6
+	MOVEA.l	Object_slot_07_ptr.w, A6
 	CLR.w	D4
 	MOVE.b	(A2), D4
 	BSR.w	ValidateDungeonTileType
@@ -5376,7 +5376,7 @@ loc_00005336:
 	BSR.w	ValidateDungeonTileType
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), $8(A6)
-	MOVEA.l	$FFFFCC34.w, A6
+	MOVEA.l	Object_slot_08_ptr.w, A6
 	CLR.w	D4
 	MOVE.b	$60(A2), D4
 	BSR.w	ValidateDungeonTileType
@@ -5384,31 +5384,31 @@ loc_00005336:
 	MOVE.w	(A1,D4.w), $8(A6)
 	LEA	-$1(A2), A2
 	LEA	loc_0000675E, A1
-	MOVEA.l	$FFFFCC4C.w, A6
+	MOVEA.l	Object_slot_0E_ptr.w, A6
 	CLR.w	D4
 	MOVE.b	-$60(A2), D4
 	BSR.w	ValidateDungeonTileType
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), $8(A6)
-	MOVEA.l	$FFFFCC40.w, A6
+	MOVEA.l	Object_slot_0B_ptr.w, A6
 	CLR.w	D4
 	MOVE.b	-$30(A2), D4
 	BSR.w	ValidateDungeonTileType
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), $8(A6)
-	MOVEA.l	$FFFFCC44.w, A6
+	MOVEA.l	Object_slot_0C_ptr.w, A6
 	CLR.w	D4
 	MOVE.b	(A2), D4
 	BSR.w	ValidateDungeonTileType
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), $8(A6)
-	MOVEA.l	$FFFFCC3C.w, A6
+	MOVEA.l	Object_slot_0A_ptr.w, A6
 	CLR.w	D4
 	MOVE.b	$30(A2), D4
 	BSR.w	ValidateDungeonTileType
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), $8(A6)
-	MOVEA.l	$FFFFCC48.w, A6
+	MOVEA.l	Object_slot_0D_ptr.w, A6
 	CLR.w	D4
 	MOVE.b	$60(A2), D4
 	BSR.w	ValidateDungeonTileType
@@ -5464,19 +5464,19 @@ loc_000054C8:
 	MOVE.w	(A1,D4.w), $8(A6)
 	LEA	$30(A2), A2
 	LEA	loc_00006748, A1
-	MOVEA.l	$FFFFCC38.w, A6
+	MOVEA.l	Object_slot_09_ptr.w, A6
 	CLR.w	D4
 	MOVE.b	-$2(A2), D4
 	BSR.w	ValidateDungeonTileType
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), $8(A6)
-	MOVEA.l	$FFFFCC2C.w, A6
+	MOVEA.l	Object_slot_06_ptr.w, A6
 	CLR.w	D4
 	MOVE.b	-$1(A2), D4
 	BSR.w	ValidateDungeonTileType
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), $8(A6)
-	MOVEA.l	$FFFFCC30.w, A6
+	MOVEA.l	Object_slot_07_ptr.w, A6
 	CLR.w	D4
 	MOVE.b	(A2), D4
 	BSR.w	ValidateDungeonTileType
@@ -5488,7 +5488,7 @@ loc_000054C8:
 	BSR.w	ValidateDungeonTileType
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), $8(A6)
-	MOVEA.l	$FFFFCC34.w, A6
+	MOVEA.l	Object_slot_08_ptr.w, A6
 	CLR.w	D4
 	MOVE.b	$2(A2), D4
 	BSR.w	ValidateDungeonTileType
@@ -5496,32 +5496,32 @@ loc_000054C8:
 	MOVE.w	(A1,D4.w), $8(A6)
 	LEA	$30(A2), A2
 	LEA	loc_0000675E, A1
-	MOVEA.l	$FFFFCC4C.w, A6
+	MOVEA.l	Object_slot_0E_ptr.w, A6
 	CLR.w	D4
 	MOVE.b	-$2(A2), D4
 	BSR.w	ValidateDungeonTileType
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), $8(A6)
 	LEA	loc_0000675E, A1
-	MOVEA.l	$FFFFCC40.w, A6
+	MOVEA.l	Object_slot_0B_ptr.w, A6
 	CLR.w	D4
 	MOVE.b	-$1(A2), D4
 	BSR.w	ValidateDungeonTileType
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), $8(A6)
-	MOVEA.l	$FFFFCC44.w, A6
+	MOVEA.l	Object_slot_0C_ptr.w, A6
 	CLR.w	D4
 	MOVE.b	(A2), D4
 	BSR.w	ValidateDungeonTileType
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), $8(A6)
-	MOVEA.l	$FFFFCC3C.w, A6
+	MOVEA.l	Object_slot_0A_ptr.w, A6
 	CLR.w	D4
 	MOVE.b	$1(A2), D4
 	BSR.w	ValidateDungeonTileType
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), $8(A6)
-	MOVEA.l	$FFFFCC48.w, A6
+	MOVEA.l	Object_slot_0D_ptr.w, A6
 	CLR.w	D4
 	MOVE.b	$2(A2), D4
 	BSR.w	ValidateDungeonTileType
@@ -5577,7 +5577,7 @@ loc_00005660:
 	MOVE.w	(A1,D4.w), $8(A6)
 	LEA	$1(A2), A2
 	LEA	loc_00006748, A1
-	MOVEA.l	$FFFFCC34.w, A6
+	MOVEA.l	Object_slot_08_ptr.w, A6
 	CLR.w	D4
 	MOVE.b	-$60(A2), D4
 	BSR.w	ValidateDungeonTileType
@@ -5589,19 +5589,19 @@ loc_00005660:
 	BSR.w	ValidateDungeonTileType
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), $8(A6)
-	MOVEA.l	$FFFFCC30.w, A6
+	MOVEA.l	Object_slot_07_ptr.w, A6
 	CLR.w	D4
 	MOVE.b	(A2), D4
 	BSR.w	ValidateDungeonTileType
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), $8(A6)
-	MOVEA.l	$FFFFCC2C.w, A6
+	MOVEA.l	Object_slot_06_ptr.w, A6
 	CLR.w	D4
 	MOVE.b	$30(A2), D4
 	BSR.w	ValidateDungeonTileType
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), $8(A6)
-	MOVEA.l	$FFFFCC38.w, A6
+	MOVEA.l	Object_slot_09_ptr.w, A6
 	CLR.w	D4
 	MOVE.b	$60(A2), D4
 	BSR.w	ValidateDungeonTileType
@@ -5609,31 +5609,31 @@ loc_00005660:
 	MOVE.w	(A1,D4.w), $8(A6)
 	LEA	$1(A2), A2
 	LEA	loc_0000675E, A1
-	MOVEA.l	$FFFFCC48.w, A6
+	MOVEA.l	Object_slot_0D_ptr.w, A6
 	CLR.w	D4
 	MOVE.b	-$60(A2), D4
 	BSR.w	ValidateDungeonTileType
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), $8(A6)
-	MOVEA.l	$FFFFCC3C.w, A6
+	MOVEA.l	Object_slot_0A_ptr.w, A6
 	CLR.w	D4
 	MOVE.b	-$30(A2), D4
 	BSR.w	ValidateDungeonTileType
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), $8(A6)
-	MOVEA.l	$FFFFCC44.w, A6
+	MOVEA.l	Object_slot_0C_ptr.w, A6
 	CLR.w	D4
 	MOVE.b	(A2), D4
 	BSR.w	ValidateDungeonTileType
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), $8(A6)
-	MOVEA.l	$FFFFCC40.w, A6
+	MOVEA.l	Object_slot_0B_ptr.w, A6
 	CLR.w	D4
 	MOVE.b	$30(A2), D4
 	BSR.w	ValidateDungeonTileType
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), $8(A6)
-	MOVEA.l	$FFFFCC4C.w, A6
+	MOVEA.l	Object_slot_0E_ptr.w, A6
 	CLR.w	D4
 	MOVE.b	$60(A2), D4
 	BSR.w	ValidateDungeonTileType
@@ -5691,7 +5691,7 @@ loc_000057F2:
 	MOVE.w	(A1,D4.w), $8(A6)
 	LEA	-$30(A2), A2
 	LEA	loc_00006748, A1
-	MOVEA.l	$FFFFCC34.w, A6
+	MOVEA.l	Object_slot_08_ptr.w, A6
 	CLR.w	D4
 	MOVE.b	-$2(A2), D4
 	BSR.w	ValidateDungeonTileType
@@ -5703,19 +5703,19 @@ loc_000057F2:
 	BSR.w	ValidateDungeonTileType
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), $8(A6)
-	MOVEA.l	$FFFFCC30.w, A6
+	MOVEA.l	Object_slot_07_ptr.w, A6
 	CLR.w	D4
 	MOVE.b	(A2), D4
 	BSR.w	ValidateDungeonTileType
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), $8(A6)
-	MOVEA.l	$FFFFCC2C.w, A6
+	MOVEA.l	Object_slot_06_ptr.w, A6
 	CLR.w	D4
 	MOVE.b	$1(A2), D4
 	BSR.w	ValidateDungeonTileType
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), $8(A6)
-	MOVEA.l	$FFFFCC38.w, A6
+	MOVEA.l	Object_slot_09_ptr.w, A6
 	CLR.w	D4
 	MOVE.b	$2(A2), D4
 	BSR.w	ValidateDungeonTileType
@@ -5723,31 +5723,31 @@ loc_000057F2:
 	MOVE.w	(A1,D4.w), $8(A6)
 	LEA	-$30(A2), A2
 	LEA	loc_0000675E, A1
-	MOVEA.l	$FFFFCC48.w, A6
+	MOVEA.l	Object_slot_0D_ptr.w, A6
 	CLR.w	D4
 	MOVE.b	-$2(A2), D4
 	BSR.w	ValidateDungeonTileType
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), $8(A6)
-	MOVEA.l	$FFFFCC3C.w, A6
+	MOVEA.l	Object_slot_0A_ptr.w, A6
 	CLR.w	D4
 	MOVE.b	-$1(A2), D4
 	BSR.w	ValidateDungeonTileType
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), $8(A6)
-	MOVEA.l	$FFFFCC44.w, A6
+	MOVEA.l	Object_slot_0C_ptr.w, A6
 	CLR.w	D4
 	MOVE.b	(A2), D4
 	BSR.w	ValidateDungeonTileType
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), $8(A6)
-	MOVEA.l	$FFFFCC40.w, A6
+	MOVEA.l	Object_slot_0B_ptr.w, A6
 	CLR.w	D4
 	MOVE.b	$1(A2), D4
 	BSR.w	ValidateDungeonTileType
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), $8(A6)
-	MOVEA.l	$FFFFCC4C.w, A6
+	MOVEA.l	Object_slot_0E_ptr.w, A6
 	CLR.w	D4
 	MOVE.b	$2(A2), D4
 	BSR.w	ValidateDungeonTileType
@@ -5818,31 +5818,31 @@ loc_00005A3C:
 	MOVEA.l	Object_slot_02_ptr.w, A6
 	MOVE.l	#$00600000, $E(A6)
 	MOVE.l	#$00800000, $12(A6)
-	MOVEA.l	$FFFFCC2C.w, A6
+	MOVEA.l	Object_slot_06_ptr.w, A6
 	MOVE.l	#$00640000, $E(A6)
 	MOVE.l	#$00680000, $12(A6)
-	MOVEA.l	$FFFFCC38.w, A6
+	MOVEA.l	Object_slot_09_ptr.w, A6
 	MOVE.l	#$00840000, $E(A6)
 	MOVE.l	#$00680000, $12(A6)
 	MOVEA.l	Object_slot_05_ptr.w, A6
 	MOVE.l	#$00240000, $E(A6)
 	MOVE.l	#$00680000, $12(A6)
-	MOVEA.l	$FFFFCC30.w, A6
+	MOVEA.l	Object_slot_07_ptr.w, A6
 	MOVE.l	#$00440000, $E(A6)
 	MOVE.l	#$00680000, $12(A6)
-	MOVEA.l	$FFFFCC44.w, A6
+	MOVEA.l	Object_slot_0C_ptr.w, A6
 	MOVE.l	#$00300000, $E(A6)
 	MOVE.l	#$00580000, $12(A6)
-	MOVEA.l	$FFFFCC3C.w, A6
+	MOVEA.l	Object_slot_0A_ptr.w, A6
 	MOVE.l	#$00240000, $E(A6)
 	MOVE.l	#$00580000, $12(A6)
-	MOVEA.l	$FFFFCC48.w, A6
+	MOVEA.l	Object_slot_0D_ptr.w, A6
 	MOVE.l	#$00100000, $E(A6)
 	MOVE.l	#$00580000, $12(A6)
-	MOVEA.l	$FFFFCC40.w, A6
+	MOVEA.l	Object_slot_0B_ptr.w, A6
 	MOVE.l	#$00400000, $E(A6)
 	MOVE.l	#$00580000, $12(A6)
-	MOVEA.l	$FFFFCC4C.w, A6
+	MOVEA.l	Object_slot_0E_ptr.w, A6
 	MOVE.l	#$00500000, $E(A6)
 	MOVE.l	#$00580000, $12(A6)
 	RTS
@@ -5880,28 +5880,28 @@ loc_00005B70:
 	LEA	loc_00006748, A0
 	MOVEA.l	Object_slot_05_ptr.w, A6
 	BSR.w	LoadMapTileGfxIndex
-	MOVEA.l	$FFFFCC30.w, A6
+	MOVEA.l	Object_slot_07_ptr.w, A6
 	BSR.w	LoadMapTileGfxIndex
-	MOVEA.l	$FFFFCC2C.w, A6
+	MOVEA.l	Object_slot_06_ptr.w, A6
 	BSR.w	LoadMapTileGfxIndex
-	MOVEA.l	$FFFFCC38.w, A6
+	MOVEA.l	Object_slot_09_ptr.w, A6
 	BSR.w	LoadMapTileGfxIndex
 	LEA	loc_0000675E, A0
-	MOVEA.l	$FFFFCC48.w, A6
+	MOVEA.l	Object_slot_0D_ptr.w, A6
 	BSR.w	LoadMapTileGfxIndex
-	MOVEA.l	$FFFFCC3C.w, A6
+	MOVEA.l	Object_slot_0A_ptr.w, A6
 	BSR.w	LoadMapTileGfxIndex
-	MOVEA.l	$FFFFCC44.w, A6
+	MOVEA.l	Object_slot_0C_ptr.w, A6
 	BSR.w	LoadMapTileGfxIndex
-	MOVEA.l	$FFFFCC40.w, A6
+	MOVEA.l	Object_slot_0B_ptr.w, A6
 	BSR.w	LoadMapTileGfxIndex
-	MOVEA.l	$FFFFCC4C.w, A6
+	MOVEA.l	Object_slot_0E_ptr.w, A6
 	BSR.w	LoadMapTileGfxIndex
 	MOVEA.l	Object_slot_03_ptr.w, A6
 	MOVE.w	#0, $8(A6)
 	MOVEA.l	Object_slot_04_ptr.w, A6
 	MOVE.w	#0, $8(A6)
-	MOVEA.l	$FFFFCC34.w, A6
+	MOVEA.l	Object_slot_08_ptr.w, A6
 	MOVE.w	#0, $8(A6)
 	RTS
 
@@ -5921,7 +5921,7 @@ loc_00005C02:
 	MOVEA.l	Object_slot_02_ptr.w, A6
 	MOVE.l	#$005C0000, $E(A6)
 	MOVE.l	#$007C0000, $12(A6)
-	MOVEA.l	$FFFFCC2C.w, A6
+	MOVEA.l	Object_slot_06_ptr.w, A6
 	MOVE.l	#$007C0000, $E(A6)
 	MOVE.l	#$00580000, $12(A6)
 	MOVEA.l	Object_slot_05_ptr.w, A6
@@ -5976,23 +5976,23 @@ loc_00005CF0:
 	LEA	loc_00006748, A0
 	MOVEA.l	Object_slot_05_ptr.w, A6
 	BSR.w	LoadMapTileGfxIndexAlt2
-	MOVEA.l	$FFFFCC2C.w, A6
+	MOVEA.l	Object_slot_06_ptr.w, A6
 	BSR.w	LoadMapTileGfxIndexAlt2
-	MOVEA.l	$FFFFCC34.w, A6
+	MOVEA.l	Object_slot_08_ptr.w, A6
 	MOVE.w	#0, $8(A6)
-	MOVEA.l	$FFFFCC30.w, A6
+	MOVEA.l	Object_slot_07_ptr.w, A6
 	MOVE.w	#0, $8(A6)
-	MOVEA.l	$FFFFCC38.w, A6
+	MOVEA.l	Object_slot_09_ptr.w, A6
 	MOVE.w	#0, $8(A6)
-	MOVEA.l	$FFFFCC4C.w, A6
+	MOVEA.l	Object_slot_0E_ptr.w, A6
 	MOVE.w	#0, $8(A6)
-	MOVEA.l	$FFFFCC40.w, A6
+	MOVEA.l	Object_slot_0B_ptr.w, A6
 	MOVE.w	#0, $8(A6)
-	MOVEA.l	$FFFFCC44.w, A6
+	MOVEA.l	Object_slot_0C_ptr.w, A6
 	MOVE.w	#0, $8(A6)
-	MOVEA.l	$FFFFCC3C.w, A6
+	MOVEA.l	Object_slot_0A_ptr.w, A6
 	MOVE.w	#0, $8(A6)
-	MOVEA.l	$FFFFCC48.w, A6
+	MOVEA.l	Object_slot_0D_ptr.w, A6
 	MOVE.w	#0, $8(A6)
 	RTS
 
@@ -6009,28 +6009,28 @@ loc_00005D86:
 	MOVEA.l	Object_slot_05_ptr.w, A6
 	MOVE.l	#$00580000, $E(A6)
 	MOVE.l	#$00680000, $12(A6)
-	MOVEA.l	$FFFFCC34.w, A6
+	MOVEA.l	Object_slot_08_ptr.w, A6
 	MOVE.l	#$00380000, $E(A6)
 	MOVE.l	#$00680000, $12(A6)
-	MOVEA.l	$FFFFCC2C.w, A6
+	MOVEA.l	Object_slot_06_ptr.w, A6
 	MOVE.l	#$00980000, $E(A6)
 	MOVE.l	#$00680000, $12(A6)
-	MOVEA.l	$FFFFCC30.w, A6
+	MOVEA.l	Object_slot_07_ptr.w, A6
 	MOVE.l	#$00780000, $E(A6)
 	MOVE.l	#$00680000, $12(A6)
-	MOVEA.l	$FFFFCC44.w, A6
+	MOVEA.l	Object_slot_0C_ptr.w, A6
 	MOVE.l	#$008C0000, $E(A6)
 	MOVE.l	#$00580000, $12(A6)
-	MOVEA.l	$FFFFCC40.w, A6
+	MOVEA.l	Object_slot_0B_ptr.w, A6
 	MOVE.l	#$009C0000, $E(A6)
 	MOVE.l	#$00580000, $12(A6)
-	MOVEA.l	$FFFFCC4C.w, A6
+	MOVEA.l	Object_slot_0E_ptr.w, A6
 	MOVE.l	#$00AC0000, $E(A6)
 	MOVE.l	#$00580000, $12(A6)
-	MOVEA.l	$FFFFCC3C.w, A6
+	MOVEA.l	Object_slot_0A_ptr.w, A6
 	MOVE.l	#$007C0000, $E(A6)
 	MOVE.l	#$00580000, $12(A6)
-	MOVEA.l	$FFFFCC48.w, A6
+	MOVEA.l	Object_slot_0D_ptr.w, A6
 	MOVE.l	#$006C0000, $E(A6)
 	MOVE.l	#$00580000, $12(A6)
 	RTS
@@ -6066,30 +6066,30 @@ loc_00005EBA:
 	MOVEA.l	Enemy_list_ptr.w, A6
 	BSR.w	LoadMapTileGfxIndex
 	LEA	loc_00006748, A0
-	MOVEA.l	$FFFFCC2C.w, A6
+	MOVEA.l	Object_slot_06_ptr.w, A6
 	BSR.w	LoadMapTileGfxIndex
-	MOVEA.l	$FFFFCC30.w, A6
+	MOVEA.l	Object_slot_07_ptr.w, A6
 	BSR.w	LoadMapTileGfxIndex
 	MOVEA.l	Object_slot_05_ptr.w, A6
 	BSR.w	LoadMapTileGfxIndex
-	MOVEA.l	$FFFFCC34.w, A6
+	MOVEA.l	Object_slot_08_ptr.w, A6
 	BSR.w	LoadMapTileGfxIndex
 	LEA	loc_0000675E, A0
-	MOVEA.l	$FFFFCC4C.w, A6
+	MOVEA.l	Object_slot_0E_ptr.w, A6
 	BSR.w	LoadMapTileGfxIndex
-	MOVEA.l	$FFFFCC40.w, A6
+	MOVEA.l	Object_slot_0B_ptr.w, A6
 	BSR.w	LoadMapTileGfxIndex
-	MOVEA.l	$FFFFCC44.w, A6
+	MOVEA.l	Object_slot_0C_ptr.w, A6
 	BSR.w	LoadMapTileGfxIndex
-	MOVEA.l	$FFFFCC3C.w, A6
+	MOVEA.l	Object_slot_0A_ptr.w, A6
 	BSR.w	LoadMapTileGfxIndex
-	MOVEA.l	$FFFFCC48.w, A6
+	MOVEA.l	Object_slot_0D_ptr.w, A6
 	BSR.w	LoadMapTileGfxIndex
 	MOVEA.l	Object_slot_04_ptr.w, A6
 	MOVE.w	#0, $8(A6)
 	MOVEA.l	Object_slot_03_ptr.w, A6
 	MOVE.w	#0, $8(A6)
-	MOVEA.l	$FFFFCC38.w, A6
+	MOVEA.l	Object_slot_09_ptr.w, A6
 	MOVE.w	#0, $8(A6)
 	RTS
 
@@ -7172,13 +7172,13 @@ loc_00006CC4:
 	BSR.w	loc_00006D40
 	MOVEA.l	Object_slot_05_ptr.w, A6
 	BSR.w	loc_00006D40
-	MOVEA.l	$FFFFCC2C.w, A6
+	MOVEA.l	Object_slot_06_ptr.w, A6
 	BSR.w	loc_00006D40
-	MOVEA.l	$FFFFCC30.w, A6
+	MOVEA.l	Object_slot_07_ptr.w, A6
 	BSR.w	loc_00006D40
-	MOVEA.l	$FFFFCC34.w, A6
+	MOVEA.l	Object_slot_08_ptr.w, A6
 	BSR.w	loc_00006D40
-	MOVEA.l	$FFFFCC38.w, A6
+	MOVEA.l	Object_slot_09_ptr.w, A6
 	BSR.w	loc_00006D40
 	RTS
 
@@ -9212,23 +9212,23 @@ loc_00008688:
 	BSR.w	loc_00008722
 	MOVEA.l	Object_slot_05_ptr.w, A6
 	BSR.w	loc_00008792
-	MOVEA.l	$FFFFCC2C.w, A6
+	MOVEA.l	Object_slot_06_ptr.w, A6
 	BSR.w	loc_00008792
-	MOVEA.l	$FFFFCC30.w, A6
+	MOVEA.l	Object_slot_07_ptr.w, A6
 	BSR.w	loc_00008792
-	MOVEA.l	$FFFFCC34.w, A6
+	MOVEA.l	Object_slot_08_ptr.w, A6
 	BSR.w	loc_00008792
-	MOVEA.l	$FFFFCC38.w, A6
+	MOVEA.l	Object_slot_09_ptr.w, A6
 	BSR.w	loc_00008792
-	MOVEA.l	$FFFFCC3C.w, A6
+	MOVEA.l	Object_slot_0A_ptr.w, A6
 	BSR.w	loc_000087FE
-	MOVEA.l	$FFFFCC40.w, A6
+	MOVEA.l	Object_slot_0B_ptr.w, A6
 	BSR.w	loc_000087FE
-	MOVEA.l	$FFFFCC44.w, A6
+	MOVEA.l	Object_slot_0C_ptr.w, A6
 	BSR.w	loc_000087FE
-	MOVEA.l	$FFFFCC48.w, A6
+	MOVEA.l	Object_slot_0D_ptr.w, A6
 	BSR.w	loc_000087FE
-	MOVEA.l	$FFFFCC4C.w, A6
+	MOVEA.l	Object_slot_0E_ptr.w, A6
 	BSR.w	loc_000087FE
 	BSR.w	loc_00008830
 	RTS
@@ -12876,7 +12876,7 @@ loc_0000BA3C:
 loc_0000BA92:
 	BSR.w	InitNextSpriteSlot
 	DBF	D7, loc_0000BA92
-	MOVEA.l	$FFFFCC2C.w, A6
+	MOVEA.l	Object_slot_06_ptr.w, A6
 	LEA	loc_00022F12, A0
 	LEA	loc_00022F1E, A1
 	MOVE.w	#2, D7
@@ -14599,7 +14599,7 @@ loc_0000D262:
 	MOVE.l	#loc_0000D820, $2(A6)
 	DBF	D7, loc_0000D262
 	MOVEA.l	Enemy_list_ptr.w, A4
-	MOVEA.l	$FFFFCC30.w, A6
+	MOVEA.l	Object_slot_07_ptr.w, A6
 	MOVE.w	#3, D7
 loc_0000D2A4:
 	CLR.w	$3C(A6)
@@ -14761,7 +14761,7 @@ loc_0000D49E:
 	EXT.l	D1
 	ASL.l	#4, D1
 	NEG.l	D1
-	MOVEA.l	$FFFFCC30.w, A6
+	MOVEA.l	Object_slot_07_ptr.w, A6
 	MOVE.l	D1, $32(A6)
 	BSET.b	#7, (A6)
 	MOVE.l	#loc_0000D838, $2(A6)
@@ -14786,7 +14786,7 @@ loc_0000D4D2:
 	BNE.b	loc_0000D52E
 	MOVE.w	#$00BF, D0
 	JSR	QueueSoundEffect
-	MOVEA.l	$FFFFCC30.w, A6
+	MOVEA.l	Object_slot_07_ptr.w, A6
 	MOVE.b	#$FF, $1B(A6)
 	MOVE.l	#$00020000, $36(A6)
 	CLR.w	$3A(A6)
@@ -14801,7 +14801,7 @@ loc_0000D52E:
 	JSR	loc_0000D594(PC)
 	BRA.b	loc_0000D572
 loc_0000D542:
-	MOVEA.l	$FFFFCC30.w, A6
+	MOVEA.l	Object_slot_07_ptr.w, A6
 	MOVE.w	$3A(A5), D0
 	ASR.w	#1, D0
 	ANDI.w	#$003E, D0
@@ -14961,7 +14961,7 @@ loc_0000D74C:
 	MOVE.w	#$000A, D7
 	JSR	loc_0000D7AE(PC)
 	MOVE.w	$4E(A5), D0
-	MOVEA.l	$FFFFCC2C.w, A6
+	MOVEA.l	Object_slot_06_ptr.w, A6
 	MOVE.w	#$000A, D7
 	JSR	loc_0000D7AE(PC)
 	RTS
@@ -15026,7 +15026,7 @@ loc_0000D838:
 	BGT.w	loc_0000D928
 	MOVE.w	#6, $20(A5)
 	ADDQ.w	#1, $22(A5)
-	MOVEA.l	$FFFFCC30.w, A6
+	MOVEA.l	Object_slot_07_ptr.w, A6
 loc_0000D864:
 	CLR.w	D0
 	MOVE.b	$1(A6), D0
