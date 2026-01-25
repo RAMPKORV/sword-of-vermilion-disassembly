@@ -17995,7 +17995,9 @@ loc_0000FFDC:
 loc_0000FFE8:
 	LEA	loc_0001F6E2, A0
 	BSR.w	loc_0001036A
-loc_0000FFF2:
+; NullSpriteRoutine
+; Used as NullSpriteRoutine-2 in enemy data tables (points to BSR instruction)
+NullSpriteRoutine:
 	RTS
 	
 loc_0000FFF4:
@@ -38522,126 +38524,126 @@ loc_0002426C:
 	dc.l	loc_0005490C
 	dc.l	loc_000549E4
 	dc.l	loc_00054B3E
-	dc.l	loc_0000FFF2-2	
+	dc.l	NullSpriteRoutine-2	
 	dc.l	$0E0D005A	; Appearance palette/vfx
 loc_00024284:
 	dc.l	loc_000544E4
 	dc.l	loc_0005490C
 	dc.l	loc_000549E4
 	dc.l	loc_00054B3E
-	dc.l	loc_0000FFF2-2	
+	dc.l	NullSpriteRoutine-2	
 	dc.l	$0E0D0069	
 loc_0002429C:
 	dc.l	loc_000544E4
 	dc.l	loc_0005490C
 	dc.l	loc_000549E4
 	dc.l	loc_00054B3E
-	dc.l	loc_0000FFF2-2	
+	dc.l	NullSpriteRoutine-2	
 	dc.l	$0E0D006A	
 loc_000242B4:
 	dc.l	loc_000544E4	
 	dc.l	loc_0005490C	
 	dc.l	loc_000549E4	
 	dc.l	loc_00054B3E	
-	dc.l	loc_0000FFF2-2	
+	dc.l	NullSpriteRoutine-2	
 	dc.l	$0E0D006B	
 loc_000242CC:
 	dc.l	loc_000544E4
 	dc.l	loc_0005490C
 	dc.l	loc_000549E4
 	dc.l	loc_00054B3E
-	dc.l	loc_0000FFF2-2	
+	dc.l	NullSpriteRoutine-2	
 	dc.l	$0E0D00AC	
 loc_000242E4:
 	dc.l	loc_000544E4
 	dc.l	loc_0005490C
 	dc.l	loc_000549E4
 	dc.l	loc_00054B3E
-	dc.l	loc_0000FFF2-2	
+	dc.l	NullSpriteRoutine-2	
 	dc.l	$0E0D00AD	
 loc_000242FC:
 	dc.l	loc_000530CE
 	dc.l	loc_00053544
 	dc.l	loc_0005276A
 	dc.l	loc_00052F8A
-	dc.l	loc_0000FFF2-2	
+	dc.l	NullSpriteRoutine-2	
 	dc.l	$0D0E004E	
 loc_00024314:
 	dc.l	loc_000530CE
 	dc.l	loc_00053544
 	dc.l	loc_0005276A
 	dc.l	loc_00052F8A
-	dc.l	loc_0000FFF2-2	
+	dc.l	NullSpriteRoutine-2	
 	dc.l	$0D0E007B	
 loc_0002432C:
 	dc.l	loc_000530CE
 	dc.l	loc_00053544
 	dc.l	loc_0005276A
 	dc.l	loc_00052F8A
-	dc.l	loc_0000FFF2-2	
+	dc.l	NullSpriteRoutine-2	
 	dc.l	$0D0E007C	
 loc_00024344:
 	dc.l	loc_000530CE
 	dc.l	loc_00053544
 	dc.l	loc_0005276A
 	dc.l	loc_00052F8A
-	dc.l	loc_0000FFF2-2	
+	dc.l	NullSpriteRoutine-2	
 	dc.l	$0D0E007D	
 loc_0002435C:
 	dc.l	loc_00053F92
 	dc.l	loc_00054424
 	dc.l	loc_0005360C
 	dc.l	loc_00053E2E
-	dc.l	loc_0000FFF2-2	
+	dc.l	NullSpriteRoutine-2	
 	dc.l	$0D0E004D	
 loc_00024374:
 	dc.l	loc_00053F92
 	dc.l	loc_00054424
 	dc.l	loc_0005360C
 	dc.l	loc_00053E2E
-	dc.l	loc_0000FFF2-2	
+	dc.l	NullSpriteRoutine-2	
 	dc.l	$0D0E006C	
 loc_0002438C:
 	dc.l	loc_00053F92
 	dc.l	loc_00054424
 	dc.l	loc_0005360C
 	dc.l	loc_00053E2E
-	dc.l	loc_0000FFF2-2	
+	dc.l	NullSpriteRoutine-2	
 	dc.l	$0D0E006D	
 loc_000243A4:
 	dc.l	loc_00053F92
 	dc.l	loc_00054424
 	dc.l	loc_0005360C
 	dc.l	loc_00053E2E
-	dc.l	loc_0000FFF2-2	
+	dc.l	NullSpriteRoutine-2	
 	dc.l	$0D0E006E	
 loc_000243BC:
 	dc.l	loc_00055468
 	dc.l	loc_00055888
 	dc.l	loc_00054B76
 	dc.l	loc_00055300
-	dc.l	loc_0000FFF2-2	
+	dc.l	NullSpriteRoutine-2	
 	dc.l	$0D0E005B	
 loc_000243D4:
 	dc.l	loc_00055468
 	dc.l	loc_00055888
 	dc.l	loc_00054B76
 	dc.l	loc_00055300
-	dc.l	loc_0000FFF2-2	
+	dc.l	NullSpriteRoutine-2	
 	dc.l	$0D0E006F	
 loc_000243EC:
 	dc.l	loc_00055468
 	dc.l	loc_00055888
 	dc.l	loc_00054B76
 	dc.l	loc_00055300
-	dc.l	loc_0000FFF2-2	
+	dc.l	NullSpriteRoutine-2	
 	dc.l	$0D0E0070	
 loc_00024404:
 	dc.l	loc_00055468
 	dc.l	loc_00055888
 	dc.l	loc_00054B76
 	dc.l	loc_00055300
-	dc.l	loc_0000FFF2-2	
+	dc.l	NullSpriteRoutine-2	
 	dc.l	$0D0E0071	
 loc_0002441C:
 	dc.l	loc_00059BAA
@@ -38676,28 +38678,28 @@ loc_0002447C:
 	dc.l	loc_000569A6
 	dc.l	loc_00055970
 	dc.l	loc_00056436
-	dc.l	loc_0000FFF2-2	
+	dc.l	NullSpriteRoutine-2	
 	dc.l	$0D0E005C	
 loc_00024494:
 	dc.l	loc_000565F6
 	dc.l	loc_000569A6
 	dc.l	loc_00055970
 	dc.l	loc_00056436
-	dc.l	loc_0000FFF2-2	
+	dc.l	NullSpriteRoutine-2	
 	dc.l	$0D0E009E	
 loc_000244AC:
 	dc.l	loc_000565F6
 	dc.l	loc_000569A6
 	dc.l	loc_00055970
 	dc.l	loc_00056436
-	dc.l	loc_0000FFF2-2	
+	dc.l	NullSpriteRoutine-2	
 	dc.l	$0D0E009F	
 loc_000244C4:
 	dc.l	loc_000565F6
 	dc.l	loc_000569A6
 	dc.l	loc_00055970
 	dc.l	loc_00056436
-	dc.l	loc_0000FFF2-2	
+	dc.l	NullSpriteRoutine-2	
 	dc.l	$0D0E00A0	
 loc_000244DC:
 	dc.l	loc_00056A86
@@ -38732,112 +38734,112 @@ loc_0002453C:
 	dc.l	loc_0005B674
 	dc.l	loc_0005A3C6
 	dc.l	loc_0005ADF2
-	dc.l	loc_0000FFF2-2	
+	dc.l	NullSpriteRoutine-2	
 	dc.l	$0D0E0064	
 loc_00024554:
 	dc.l	loc_0005AF6E
 	dc.l	loc_0005B674
 	dc.l	loc_0005A3C6
 	dc.l	loc_0005ADF2
-	dc.l	loc_0000FFF2-2	
+	dc.l	NullSpriteRoutine-2	
 	dc.l	$0D0E00B9	
 loc_0002456C:
 	dc.l	loc_0005AF6E
 	dc.l	loc_0005B674
 	dc.l	loc_0005A3C6
 	dc.l	loc_0005ADF2
-	dc.l	loc_0000FFF2-2	
+	dc.l	NullSpriteRoutine-2	
 	dc.l	$0D0E00BA	
 loc_00024584:
 	dc.l	loc_0005AF6E
 	dc.l	loc_0005B674
 	dc.l	loc_0005A3C6
 	dc.l	loc_0005ADF2
-	dc.l	loc_0000FFF2-2	
+	dc.l	NullSpriteRoutine-2	
 	dc.l	$0D0E00BB	
 loc_0002459C:
 	dc.l	loc_0005C37E
 	dc.l	loc_0005C97E
 	dc.l	loc_0005B784
 	dc.l	loc_0005C1DE
-	dc.l	loc_0000FFF2-2	
+	dc.l	NullSpriteRoutine-2	
 	dc.l	$0D0E0065	
 loc_000245B4:
 	dc.l	loc_0005C37E
 	dc.l	loc_0005C97E
 	dc.l	loc_0005B784
 	dc.l	loc_0005C1DE
-	dc.l	loc_0000FFF2-2	
+	dc.l	NullSpriteRoutine-2	
 	dc.l	$0D0E00A7	
 loc_000245CC:
 	dc.l	loc_0005C37E
 	dc.l	loc_0005C97E
 	dc.l	loc_0005B784
 	dc.l	loc_0005C1DE
-	dc.l	loc_0000FFF2-2	
+	dc.l	NullSpriteRoutine-2	
 	dc.l	$0D0E00A8	
 loc_000245E4:
 	dc.l	loc_0005C37E
 	dc.l	loc_0005C97E
 	dc.l	loc_0005B784
 	dc.l	loc_0005C1DE
-	dc.l	loc_0000FFF2-2	
+	dc.l	NullSpriteRoutine-2	
 	dc.l	$0D0E00A9	
 loc_000245FC:
 	dc.l	loc_0005CF78
 	dc.l	loc_0005D180
 	dc.l	loc_0005CA9A
 	dc.l	loc_0005CED4
-	dc.l	loc_0000FFF2-2	
+	dc.l	NullSpriteRoutine-2	
 	dc.l	$0D0E0066	
 loc_00024614:
 	dc.l	loc_0005CF78
 	dc.l	loc_0005D180
 	dc.l	loc_0005CA9A
 	dc.l	loc_0005CED4
-	dc.l	loc_0000FFF2-2	
+	dc.l	NullSpriteRoutine-2	
 	dc.l	$0D0E00AA	
 loc_0002462C:
 	dc.l	loc_0005CF78
 	dc.l	loc_0005D180
 	dc.l	loc_0005CA9A
 	dc.l	loc_0005CED4
-	dc.l	loc_0000FFF2-2	
+	dc.l	NullSpriteRoutine-2	
 	dc.l	$0D0E00AB	
 loc_00024644:
 	dc.l	loc_0005CF78
 	dc.l	loc_0005D180
 	dc.l	loc_0005CA9A
 	dc.l	loc_0005CED4
-	dc.l	loc_0000FFF2-2	
+	dc.l	NullSpriteRoutine-2	
 	dc.l	$0D0E00BC	
 loc_0002465C:
 	dc.l	loc_000589B4
 	dc.l	loc_00059098
 	dc.l	loc_000580FC
 	dc.l	loc_00058858
-	dc.l	loc_0000FFF2-2	
+	dc.l	NullSpriteRoutine-2	
 	dc.l	$0D0E0061	
 loc_00024674:
 	dc.l	loc_000589B4	
 	dc.l	loc_00059098	
 	dc.l	loc_000580FC	
 	dc.l	loc_00058858	
-	dc.l	loc_0000FFF2-2	
+	dc.l	NullSpriteRoutine-2	
 	dc.l	$0D0E00BD	
 loc_0002468C:
 	dc.l	loc_000589B4
 	dc.l	loc_00059098
 	dc.l	loc_000580FC
 	dc.l	loc_00058858
-	dc.l	loc_0000FFF2-2	
+	dc.l	NullSpriteRoutine-2	
 	dc.l	$0D0E00BE	
 loc_000246A4:
 	dc.l	loc_000589B4
 	dc.l	loc_00059098
 	dc.l	loc_000580FC
 	dc.l	loc_00058858
-	dc.l	loc_0000FFF2-2	
+	dc.l	NullSpriteRoutine-2	
 	dc.l	$0D0E00BF	
 loc_000246BC:
 	dc.l	loc_0005D29E
