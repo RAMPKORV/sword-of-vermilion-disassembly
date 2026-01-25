@@ -862,7 +862,7 @@ loc_00001540:
 	CLR.b	Fade_out_lines_mask.w
 	CLR.w	Palette_fade_step_counter.w
 	MOVE.w	#0, $FFFFC080.w
-	JSR	loc_0001325E
+	JSR	LoadPalettesFromTable
 loc_0000155A:
 	RTS
 
@@ -979,7 +979,7 @@ ProgramState_0B:
 	MOVE.w	#PROGRAM_STATE_0C, Program_state.w
 	MOVE.w	#$8D, D0
 	JSR	QueueSoundEffect
-	JSR	loc_0001325E
+	JSR	LoadPalettesFromTable
 loc_000016E4:
 	RTS
 
@@ -1490,7 +1490,7 @@ loc_00001DB4: ; Woman hitting player with frying pan
 	MOVE.w	Palette_line_1_index_saved.w, $FFFFC082.w
 	MOVE.w	Palette_line_2_cycle_base.w, Palette_line_2_index.w
 	MOVE.w	#$0011, $FFFFC086.w
-	JSR	loc_0001325E
+	JSR	LoadPalettesFromTable
 loc_00001E08:
 	RTS
 
@@ -1872,7 +1872,7 @@ loc_000023EA:
 	CLR.b	Player_in_first_person_mode.w
 	MOVE.b	#$92, D0
 	JSR	QueueSoundEffect
-	JSR	loc_0001325E
+	JSR	LoadPalettesFromTable
 	JSR	EnableDisplay
 loc_00002410:
 	RTS
@@ -1981,7 +1981,7 @@ loc_00002542:
 	MOVE.b	#$FF, Player_in_first_person_mode.w
 	MOVE.w	#$0037, $FFFFC082.w
 	MOVE.w	#$0038, Palette_line_2_index.w
-	JSR	loc_0001325E
+	JSR	LoadPalettesFromTable
 	JSR	EnableDisplay
 	CLR.b	Is_in_cave.w
 	CLR.b	Cave_position_saved.w
@@ -2015,7 +2015,7 @@ loc_000025CE:
 	BEQ.b	loc_0000260E
 	MOVE.w	#$0048, $FFFFC082.w
 	MOVE.w	#$0040, Palette_line_2_index.w
-	JSR	loc_0001325E
+	JSR	LoadPalettesFromTable
 loc_0000260E:
 	JSR	EnableDisplay
 	MOVE.w	#$001F, Encounter_rate.w
@@ -2054,7 +2054,7 @@ loc_00002620:
 	CLR.b	Chest_already_opened.w
 	CLR.w	Overworld_menu_state.w
 	BCLR.b	#0, $FFFFC60D.w
-	JSR	loc_0001325E
+	JSR	LoadPalettesFromTable
 	RTS
 
 loc_000026BA: ; level up
@@ -2332,7 +2332,7 @@ loc_00002A28:
 	CLR.b	Chest_already_opened.w
 	CLR.w	Overworld_menu_state.w
 	BCLR.b	#0, $FFFFC60D.w
-	JSR	loc_0001325E
+	JSR	LoadPalettesFromTable
 loc_00002A50:
 	RTS
 
@@ -3790,7 +3790,7 @@ loc_00003C7E:
 	CLR.w	$16(A6)
 	MOVE.l	#loc_00004092, $2(A6)
 	MOVE.w	#$0013, $FFFFC086.w
-	JSR	loc_0001325E
+	JSR	LoadPalettesFromTable
 	RTS
 
 loc_00003D50:
@@ -4676,7 +4676,7 @@ loc_0000493C:
 	BEQ.b	loc_00004946
 	ADDQ.w	#1, Palette_line_2_index.w
 loc_00004946:
-	JSR	loc_0001325E
+	JSR	LoadPalettesFromTable
 	LEA	loc_00005A1C, A0
 	BSR.w	loc_000059AE
 	BSR.w	loc_00005304
@@ -4702,7 +4702,7 @@ loc_00004994:
 	SUB.w	D0, Player_hp.w
 	JSR	DisplayPlayerHpMp
 loc_0000499E:
-	JSR	loc_0001325E
+	JSR	LoadPalettesFromTable
 	MOVE.w	Equipped_armor.w, D0
 	ANDI.w	#$00FF, D0
 	CMPI.w	#EQUIPMENT_ARMOR_CRIMSON, D0
@@ -4726,7 +4726,7 @@ loc_000049E2:
 	ADDQ.w	#1, Palette_line_2_index.w
 loc_000049EC:
 	MOVE.w	#$0036, $FFFFC080.w
-	JSR	loc_0001325E
+	JSR	LoadPalettesFromTable
 	MOVE.w	#$000C, First_person_wall_frame.w
 	MOVE.w	#8, Wall_render_y_offset.w
 	BSR.w	DrawFirstPersonWalls
@@ -4751,7 +4751,7 @@ loc_00004A30:
 loc_00004A40:
 	ADDQ.w	#1, Palette_line_2_index.w
 loc_00004A44:
-	JSR	loc_0001325E
+	JSR	LoadPalettesFromTable
 	CLR.b	Player_move_forward_in_overworld.w
 	MOVE.w	#0, First_person_wall_frame.w
 	MOVE.w	#$000C, Wall_render_y_offset.w
@@ -4780,7 +4780,7 @@ loc_00004A92:
 loc_00004AA2:
 	SUBQ.w	#1, Palette_line_2_index.w
 loc_00004AA6:
-	JSR	loc_0001325E
+	JSR	LoadPalettesFromTable
 	MOVE.w	#$000C, First_person_wall_frame.w
 	MOVE.w	#8, Wall_render_y_offset.w
 	BSR.w	DrawFirstPersonWalls
@@ -4802,7 +4802,7 @@ loc_00004AE2:
 	SUB.w	D0, Player_hp.w
 	JSR	DisplayPlayerHpMp
 loc_00004AEC:
-	JSR	loc_0001325E
+	JSR	LoadPalettesFromTable
 	MOVE.w	Equipped_armor.w, D0
 	ANDI.w	#$00FF, D0
 	CMPI.w	#EQUIPMENT_ARMOR_CRIMSON, D0
@@ -4828,7 +4828,7 @@ loc_00004B36:
 	SUBQ.w	#1, Palette_line_2_index.w
 loc_00004B40:
 	MOVE.w	#$0036, $FFFFC080.w
-	JSR	loc_0001325E
+	JSR	LoadPalettesFromTable
 	MOVE.w	#4, First_person_wall_frame.w
 	MOVE.w	#0, Wall_render_y_offset.w
 	BSR.w	DrawFirstPersonWalls
@@ -4839,7 +4839,7 @@ loc_00004B62:
 	BEQ.b	loc_00004B6C
 	SUBQ.w	#1, Palette_line_2_index.w
 loc_00004B6C:
-	JSR	loc_0001325E
+	JSR	LoadPalettesFromTable
 	CLR.b	Player_move_backward_in_overworld.w
 	LEA	loc_00005A2C, A0
 	BSR.w	loc_000059AE
@@ -6710,7 +6710,7 @@ loc_0000651A:
 	CLR.w	$FFFFC082.w
 	CLR.w	Palette_line_2_index.w
 	BSR.w	loc_00006458
-	JSR	loc_0001325E
+	JSR	LoadPalettesFromTable
 	RTS
 
 loc_0000653C:
@@ -9582,7 +9582,7 @@ loc_00008BA6:
 	ADD.w	$12(A6), D0
 	MOVE.w	D0, $C(A4)
 loc_00008C6C:
-	JSR	loc_0001325E
+	JSR	LoadPalettesFromTable
 	RTS
 
 ; loc_00008C74
@@ -9617,7 +9617,7 @@ InitTalkerPortraitSprite:
 	ADD.w	$16(A6), D0
 	MOVE.w	D0, $C(A4)
 loc_00008D0A:
-	JSR	loc_0001325E
+	JSR	LoadPalettesFromTable
 	RTS
 
 loc_00008D12:
@@ -9835,7 +9835,7 @@ loc_00009006:
 	LEA	(A6,D0.w), A6
 	DBF	D6, loc_00009006
 	DBF	D7, loc_00008F5A
-	JSR	loc_0001325E
+	JSR	LoadPalettesFromTable
 	JSR	loc_0000F806
 	RTS
 
@@ -13668,7 +13668,7 @@ loc_0000C640:
 	CLR.w	$FFFFC552.w
 	MOVE.w	#$00C0, D0
 	JSR	QueueSoundEffect
-	JSR	loc_0001325E
+	JSR	LoadPalettesFromTable
 	RTS
 	
 loc_0000C69A:
@@ -13727,7 +13727,7 @@ loc_0000C746:
 	TST.b	$26(A5)
 	BEQ.w	loc_0000C7D8
 	MOVE.w	#$00B5, $FFFFC082.w
-	JSR	loc_0001325E
+	JSR	LoadPalettesFromTable
 	MOVE.w	Player_str.w, D0
 	SUB.w	D0, $28(A5)
 	BCC.b	loc_0000C7D2
@@ -13829,7 +13829,7 @@ loc_0000C8B8:
 	TST.b	$26(A5)
 	BEQ.w	loc_0000C942
 	MOVE.w	#$00B5, $FFFFC082.w
-	JSR	loc_0001325E
+	JSR	LoadPalettesFromTable
 	MOVE.w	Player_str.w, D0
 	SUB.w	D0, $28(A5)
 	BCC.w	loc_0000C93C
@@ -14010,7 +14010,7 @@ loc_0000CB1E:
 	BLE.b	loc_0000CB3A
 	SUBQ.w	#1, $3C(A6)
 	MOVE.w	#$0062, $FFFFC082.w
-	JSR	loc_0001325E
+	JSR	LoadPalettesFromTable
 	BRA.b	loc_0000CB6C
 loc_0000CB3A:
 	BSR.w	UpdateEncounterPalette
@@ -14435,7 +14435,7 @@ UpdateEncounterPalette:
 	CMP.w	$FFFFC082.w, D0
 	BEQ.w	loc_0000D068
 	MOVE.w	D0, $FFFFC082.w
-	JSR	loc_0001325E
+	JSR	LoadPalettesFromTable
 loc_0000D068:
 	RTS
 
@@ -14835,7 +14835,7 @@ loc_0000D644:
 	BLE.b	loc_0000D65E
 	SUBQ.w	#1, $3C(A5)
 	MOVE.w	#$0026, $FFFFC082.w
-	JSR	loc_0001325E
+	JSR	LoadPalettesFromTable
 	BRA.w	loc_0000D6F6
 loc_0000D65E:
 	JSR	UpdateEncounterPalette
@@ -15248,7 +15248,7 @@ loc_0000DC1C:
 	TST.b	Boss_death_anim_done.w
 	BEQ.b	loc_0000DC54
 	MOVE.w	#$00B8, $FFFFC082.w
-	JSR	loc_0001325E
+	JSR	LoadPalettesFromTable
 	CLR.w	$FFFFC554.w
 	CLR.w	$FFFFC552.w
 	MOVE.w	#$0080, $3A(A5)
@@ -15745,7 +15745,7 @@ loc_0000E300:
 	TST.b	$26(A5)
 	BEQ.b	loc_0000E344
 	MOVE.w	#$00B7, $FFFFC082.w
-	JSR	loc_0001325E
+	JSR	LoadPalettesFromTable
 	MOVE.w	Player_str.w, D0
 	SUB.w	D0, $28(A5)
 	BGT.b	loc_0000E334
@@ -15809,7 +15809,7 @@ loc_0000E3CA:
 	TST.b	$26(A5)
 	BEQ.b	loc_0000E40E
 	MOVE.w	#$00B7, $FFFFC082.w
-	JSR	loc_0001325E
+	JSR	LoadPalettesFromTable
 	MOVE.w	Player_str.w, D0
 	SUB.w	D0, $28(A5)
 	BGT.b	loc_0000E3FE
@@ -16742,7 +16742,7 @@ loc_0000F0D2:
 	BLE.b	loc_0000F0F8
 	SUBQ.w	#1, $3C(A5)
 	MOVE.w	#$007F, $FFFFC082.w
-	JSR	loc_0001325E
+	JSR	LoadPalettesFromTable
 	BRA.b	loc_0000F11C
 loc_0000F0F8:
 	JSR	UpdateEncounterPalette
@@ -16770,7 +16770,7 @@ loc_0000F136:
 	BLE.b	loc_0000F184
 	MOVE.w	#$0044, $12(A5)
 	MOVE.w	#$0080, $FFFFC082.w
-	JSR	loc_0001325E
+	JSR	LoadPalettesFromTable
 	MOVE.l	#loc_0000F19A, $2(A5)
 	CLR.w	$FFFFC554.w
 	CLR.w	$FFFFC552.w
@@ -17387,7 +17387,7 @@ loc_0000F8A0:
 	MOVE.w	(A6), $FFFFC080.w
 	BSR.w	loc_0000FAC6
 	BSR.w	ExecuteVdpDmaTransfer
-	JSR	loc_0001325E
+	JSR	LoadPalettesFromTable
 	RTS
 	
 loc_0000F8D2:
@@ -17948,7 +17948,7 @@ loc_0000FF36:
 	ADD.w	D0, D0
 	MOVEA.l	(A1,D0.w), A0
 	BSR.w	loc_0001036A
-	JSR	loc_0001325E
+	JSR	LoadPalettesFromTable
 	RTS
 	
 loc_0000FF74:
@@ -21643,7 +21643,10 @@ loc_000131C4:
 loc_0001325C:
 	RTS
 
-loc_0001325E:
+; LoadPalettesFromTable
+; Load palettes from table into palette buffer
+; Checks fade flags, then copies 4 palettes (32 bytes each) from indexed palette table
+LoadPalettesFromTable:
 	TST.b	Palette_fade_in_mask.w
 	BNE.w	loc_000132AA
 	TST.b	Fade_out_lines_mask.w
@@ -22699,7 +22702,7 @@ loc_00015640:
 	JSR	EnableDisplay
 	MOVE.w	#1, $FFFFC080.w
 	MOVE.l	#loc_00015682, $2(A5)
-	JSR	loc_0001325E
+	JSR	LoadPalettesFromTable
 	RTS
 
 loc_00015682:
@@ -22720,7 +22723,7 @@ loc_000156A4:
 loc_000156B4:
 	ADDQ.w	#1, $FFFFC080.w
 loc_000156B8:
-	JSR	loc_0001325E
+	JSR	LoadPalettesFromTable
 loc_000156BE:
 	RTS
 
@@ -23942,7 +23945,7 @@ loc_000167AA:
 	MOVE.w	(A0), D0	
 loc_000167C4:
 	MOVE.w	D0, Palette_line_2_index.w
-	JSR	loc_0001325E
+	JSR	LoadPalettesFromTable
 loc_000167CE:
 	RTS
 
@@ -24180,7 +24183,7 @@ loc_000169D0:
 	MOVE.b	#$FF, Intro_text_pending.w
 	JSR	loc_0000F9A0
 	JSR	loc_0000F9AA
-	JSR	loc_0001325E
+	JSR	LoadPalettesFromTable
 	JSR	EnableDisplay
 	RTS
 
@@ -24226,7 +24229,7 @@ loc_00016AB8:
 	MOVE.w	#$0089, Intro_animation_frame.w
 loc_00016AEC:
 	MOVE.w	Intro_animation_frame.w, $FFFFC080.w
-	JSR	loc_0001325E
+	JSR	LoadPalettesFromTable
 loc_00016AF8:
 	ADDQ.w	#1, Intro_animation_frame.w
 	MOVE.w	Intro_animation_frame.w, D0
@@ -24273,7 +24276,7 @@ loc_00016B6E:
 	MOVE.w	#$0027, $FFFFC086.w
 	MOVE.l	#loc_00016B8A, $2(A5)
 loc_00016B82:
-	JSR	loc_0001325E
+	JSR	LoadPalettesFromTable
 loc_00016B88:
 	RTS
 
@@ -24286,7 +24289,7 @@ loc_00016B8A:
 	CLR.b	Intro_text_pending.w
 	BSR.w	loc_00016F3C
 	MOVE.w	#$0031, $FFFFC080.w
-	JSR	loc_0001325E
+	JSR	LoadPalettesFromTable
 loc_00016BAE:
 	RTS
 
@@ -24298,7 +24301,7 @@ loc_00016BB0:
 	MOVE.w	#$02FF, Prologue_scroll_offset.w
 	MOVE.l	#loc_00016BE0, $2(A5)
 	BSR.w	loc_00016DCE
-	JSR	loc_0001325E
+	JSR	LoadPalettesFromTable
 	RTS
 
 loc_00016BE0:
@@ -24692,7 +24695,7 @@ loc_00017134:
 	MOVE.w	#$009C, D0
 	JSR	QueueSoundEffect
 	MOVE.w	#$00C8, Ending_timer.w
-	JSR	loc_0001325E
+	JSR	LoadPalettesFromTable
 loc_0001719A:
 	RTS
 
@@ -24827,7 +24830,7 @@ loc_0001733A:
 	JSR	QueueSoundEffect
 	MOVE.w	#$0012, $FFFFC080.w
 	MOVE.w	#$0093, $FFFFC082.w
-	JSR	loc_0001325E
+	JSR	LoadPalettesFromTable
 	LEA	Ending_player_name_buffer.w, A0
 	MOVE.w	#5, D7
 loc_00017378:
@@ -25098,7 +25101,7 @@ loc_000176F8:
 	BLE.b	loc_0001771E
 	MOVE.w	#$0096, $FFFFC086.w
 loc_0001771E:
-	JSR	loc_0001325E
+	JSR	LoadPalettesFromTable
 loc_00017724:
 	RTS
 
@@ -30713,7 +30716,7 @@ loc_0001C932:
 	MOVE.w	Palette_line_1_index_saved.w, $FFFFC082.w
 	MOVE.w	Palette_line_2_cycle_base.w, Palette_line_2_index.w
 	MOVE.w	#$0011, $FFFFC086.w
-	JSR	loc_0001325E
+	JSR	LoadPalettesFromTable
 	JSR	ResetScriptAndInitDialogue
 	MOVE.w	#$1B, Dialogue_state.w
 	JSR	loc_000033BE
