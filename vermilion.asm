@@ -25223,181 +25223,183 @@ OnThe2PSideTextStr:
 AndPushAbcStartTextStr:
 	dc.b	'AND PUSH "A""B""C""START"', $FF
 
-loc_00017C1A:
+; EmptyTextStr
+; Empty string used in credits/text tables
+EmptyTextStr:
 	dc.b	$00, $00
 loc_00017C1C:
 	dc.b	$FE, $00
 loc_00017C1E:
-	dc.l	loc_00017C1A
+	dc.l	EmptyTextStr
 	dc.l	StaffTextStr
-	dc.l	loc_00017C1A
-	dc.l	loc_00017C1A
-	dc.l	loc_00017C1A
-	dc.l	loc_00017C1A
+	dc.l	EmptyTextStr
+	dc.l	EmptyTextStr
+	dc.l	EmptyTextStr
+	dc.l	EmptyTextStr
 	dc.l	DirectorTextStr
-	dc.l	loc_00017C1A
+	dc.l	EmptyTextStr
 	dc.l	SadaTextStr
-	dc.l	loc_00017C1A
-	dc.l	loc_00017C1A
+	dc.l	EmptyTextStr
+	dc.l	EmptyTextStr
 	dc.l	ScenarioWriterTextStr
-	dc.l	loc_00017C1A
+	dc.l	EmptyTextStr
 	dc.l	NamakoTextStr
-	dc.l	loc_00017C1A
-	dc.l	loc_00017C1A
+	dc.l	EmptyTextStr
+	dc.l	EmptyTextStr
 	dc.l	GameDesignTextStr
-	dc.l	loc_00017C1A
+	dc.l	EmptyTextStr
 	dc.l	SadaTextStr
-	dc.l	loc_00017C1A
+	dc.l	EmptyTextStr
 	dc.l	NamakoTextStr
-	dc.l	loc_00017C1A
+	dc.l	EmptyTextStr
 	dc.l	MadokaTextStr
-	dc.l	loc_00017C1A
-	dc.l	loc_00017C1A
+	dc.l	EmptyTextStr
+	dc.l	EmptyTextStr
 	dc.l	ChiefProgrammerTextStr
-	dc.l	loc_00017C1A
+	dc.l	EmptyTextStr
 	dc.l	MadokaTextStr
-	dc.l	loc_00017C1A
-	dc.l	loc_00017C1A
+	dc.l	EmptyTextStr
+	dc.l	EmptyTextStr
 	dc.l	ChiefDesignerTextStr
-	dc.l	loc_00017C1A
+	dc.l	EmptyTextStr
 	dc.l	KeyTextStr
-	dc.l	loc_00017C1A
-	dc.l	loc_00017C1A
+	dc.l	EmptyTextStr
+	dc.l	EmptyTextStr
 	dc.l	MainProgramTextStr
-	dc.l	loc_00017C1A
+	dc.l	EmptyTextStr
 	dc.l	MadokaTextStr
-	dc.l	loc_00017C1A
+	dc.l	EmptyTextStr
 	dc.l	NamakoTextStr
-	dc.l	loc_00017C1A
-	dc.l	loc_00017C1A
+	dc.l	EmptyTextStr
+	dc.l	EmptyTextStr
 	dc.l	ProgramTextStr
-	dc.l	loc_00017C1A
+	dc.l	EmptyTextStr
 	dc.l	BinTextStr
-	dc.l	loc_00017C1A
+	dc.l	EmptyTextStr
 	dc.l	ZeasQTextStr
-	dc.l	loc_00017C1A
+	dc.l	EmptyTextStr
 	dc.l	Lalf2TextStr
-	dc.l	loc_00017C1A
-	dc.l	loc_00017C1A
+	dc.l	EmptyTextStr
+	dc.l	EmptyTextStr
 	dc.l	SoundProgramTextStr
-	dc.l	loc_00017C1A
+	dc.l	EmptyTextStr
 	dc.l	Cpu68000TextStr
-	dc.l	loc_00017C1A
+	dc.l	EmptyTextStr
 	dc.l	HiroTextStr
 	dc.l	CpuZ80TextStr
-	dc.l	loc_00017C1A
+	dc.l	EmptyTextStr
 	dc.l	YasTextStr
-	dc.l	loc_00017C1A
-	dc.l	loc_00017C1A
+	dc.l	EmptyTextStr
+	dc.l	EmptyTextStr
 	dc.l	BackgroundDesignTextStr
-	dc.l	loc_00017C1A
+	dc.l	EmptyTextStr
 	dc.l	KeyTextStr
-	dc.l	loc_00017C1A
-	dc.l	loc_00017C1A
+	dc.l	EmptyTextStr
+	dc.l	EmptyTextStr
 	dc.l	PlayerDesignTextStr
-	dc.l	loc_00017C1A
+	dc.l	EmptyTextStr
 	dc.l	GudonTextStr
-	dc.l	loc_00017C1A
-	dc.l	loc_00017C1A
+	dc.l	EmptyTextStr
+	dc.l	EmptyTextStr
 	dc.l	BossDesignTextStr
-	dc.l	loc_00017C1A
+	dc.l	EmptyTextStr
 	dc.l	GudonTextStr
-	dc.l	loc_00017C1A
+	dc.l	EmptyTextStr
 	dc.l	PapaTextStr
-	dc.l	loc_00017C1A
-	dc.l	loc_00017C1A
+	dc.l	EmptyTextStr
+	dc.l	EmptyTextStr
 	dc.l	EnemyDesignTextStr
-	dc.l	loc_00017C1A
+	dc.l	EmptyTextStr
 	dc.l	GudonTextStr
-	dc.l	loc_00017C1A
+	dc.l	EmptyTextStr
 	dc.l	PapaTextStr
-	dc.l	loc_00017C1A
+	dc.l	EmptyTextStr
 	dc.l	RoboTextStr
-	dc.l	loc_00017C1A
-	dc.l	loc_00017C1A
+	dc.l	EmptyTextStr
+	dc.l	EmptyTextStr
 	dc.l	OpeningDesignTextStr
-	dc.l	loc_00017C1A
+	dc.l	EmptyTextStr
 	dc.l	JijiTextStr
-	dc.l	loc_00017C1A
-	dc.l	loc_00017C1A
+	dc.l	EmptyTextStr
+	dc.l	EmptyTextStr
 	dc.l	TitleDesignTextStr
-	dc.l	loc_00017C1A
+	dc.l	EmptyTextStr
 	dc.l	KeyTextStr
-	dc.l	loc_00017C1A
-	dc.l	loc_00017C1A
+	dc.l	EmptyTextStr
+	dc.l	EmptyTextStr
 	dc.l	AsciiDesignTextStr
-	dc.l	loc_00017C1A
+	dc.l	EmptyTextStr
 	dc.l	KeyTextStr
-	dc.l	loc_00017C1A
-	dc.l	loc_00017C1A
+	dc.l	EmptyTextStr
+	dc.l	EmptyTextStr
 	dc.l	MapDesignTextStr
-	dc.l	loc_00017C1A
+	dc.l	EmptyTextStr
 	dc.l	SadaTextStr
-	dc.l	loc_00017C1A
+	dc.l	EmptyTextStr
 	dc.l	NamakoTextStr
-	dc.l	loc_00017C1A
-	dc.l	loc_00017C1A
+	dc.l	EmptyTextStr
+	dc.l	EmptyTextStr
 	dc.l	MapEditTextStr
-	dc.l	loc_00017C1A
+	dc.l	EmptyTextStr
 	dc.l	ComaTextStr
-	dc.l	loc_00017C1A
+	dc.l	EmptyTextStr
 	dc.l	LucyTextStr
-	dc.l	loc_00017C1A
-	dc.l	loc_00017C1A
+	dc.l	EmptyTextStr
+	dc.l	EmptyTextStr
 	dc.l	SoundBgmTextStr
-	dc.l	loc_00017C1A
+	dc.l	EmptyTextStr
 	dc.l	HiroTextStr
-	dc.l	loc_00017C1A
+	dc.l	EmptyTextStr
 	dc.l	YasTextStr
-	dc.l	loc_00017C1A
-	dc.l	loc_00017C1A
+	dc.l	EmptyTextStr
+	dc.l	EmptyTextStr
 	dc.l	SoundEffectTextStr
-	dc.l	loc_00017C1A
+	dc.l	EmptyTextStr
 	dc.l	YasTextStr
-	dc.l	loc_00017C1A
-	dc.l	loc_00017C1A
+	dc.l	EmptyTextStr
+	dc.l	EmptyTextStr
 	dc.l	GameCheckTextStr
-	dc.l	loc_00017C1A
+	dc.l	EmptyTextStr
 	dc.l	DogTextStr
-	dc.l	loc_00017C1A
-	dc.l	loc_00017C1A
+	dc.l	EmptyTextStr
+	dc.l	EmptyTextStr
 	dc.l	ManualWriteTextStr
-	dc.l	loc_00017C1A
+	dc.l	EmptyTextStr
 	dc.l	MadokaTextStr
-	dc.l	loc_00017C1A
+	dc.l	EmptyTextStr
 	dc.l	NamakoTextStr
-	dc.l	loc_00017C1A
-	dc.l	loc_00017C1A
+	dc.l	EmptyTextStr
+	dc.l	EmptyTextStr
 	dc.l	PlayerTextStr
-	dc.l	loc_00017C1A
+	dc.l	EmptyTextStr
 	dc.l	$FFFFC646
-	dc.l	loc_00017C1A
-	dc.l	loc_00017C1A
+	dc.l	EmptyTextStr
+	dc.l	EmptyTextStr
 	dc.l	SpecialThanksTextStr
-	dc.l	loc_00017C1A
+	dc.l	EmptyTextStr
 	dc.l	YuTextStr
-	dc.l	loc_00017C1A
+	dc.l	EmptyTextStr
 	dc.l	BinTextStr
-	dc.l	loc_00017C1A
-	dc.l	loc_00017C1A
+	dc.l	EmptyTextStr
+	dc.l	EmptyTextStr
 	dc.l	PutInYourPadTextStr
-	dc.l	loc_00017C1A
+	dc.l	EmptyTextStr
 	dc.l	OnThe2PSideTextStr
-	dc.l	loc_00017C1A
+	dc.l	EmptyTextStr
 	dc.l	AndPushAbcStartTextStr
-	dc.l	loc_00017C1A
+	dc.l	EmptyTextStr
 
-	dc.l	loc_00017C1A
-	dc.l	loc_00017C1A
-	dc.l	loc_00017C1A
-	dc.l	loc_00017C1A
-	dc.l	loc_00017C1A
-	dc.l	loc_00017C1A
-	dc.l	loc_00017C1A
-	dc.l	loc_00017C1A
-	dc.l	loc_00017C1A
-	dc.l	loc_00017C1A
-	dc.l	loc_00017C1A
+	dc.l	EmptyTextStr
+	dc.l	EmptyTextStr
+	dc.l	EmptyTextStr
+	dc.l	EmptyTextStr
+	dc.l	EmptyTextStr
+	dc.l	EmptyTextStr
+	dc.l	EmptyTextStr
+	dc.l	EmptyTextStr
+	dc.l	EmptyTextStr
+	dc.l	EmptyTextStr
+	dc.l	EmptyTextStr
 	dc.l	loc_00017C1C
 loc_00017EC6:
 	MOVE.w	$FFFFC424.w, D0
