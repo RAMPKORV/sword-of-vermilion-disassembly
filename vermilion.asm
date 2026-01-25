@@ -7338,10 +7338,13 @@ loc_00006F10:
 loc_00006F32:
 	BRA.w	loc_00008154
 	BSR.w	SetRandomDirection
-	MOVE.l	#loc_00006F44, $2(A5)
+	MOVE.l	#UpdateNPCSpriteFrame, $2(A5)
 	RTS
 
-loc_00006F44:
+; UpdateNPCSpriteFrame
+; Update NPC sprite animation frame
+; Sets animation flag, calls sprite update, restores direction
+UpdateNPCSpriteFrame:
 	MOVEA.l	$2E(A5), A1
 	MOVE.b	#$FF, $25(A5)
 	BSR.w	loc_000081F0
@@ -7438,7 +7441,7 @@ loc_00007054:
 	MOVE.w	#$0070, D5
 	BSR.w	loc_0000858A
 loc_0000706A:
-	BRA.w	loc_00006F44
+	BRA.w	UpdateNPCSpriteFrame
 	BSR.w	SetRandomDirection
 	CLR.b	$25(A5)
 	MOVE.l	#loc_00007080, $2(A5)
@@ -7451,7 +7454,7 @@ loc_00007080:
 	MOVE.w	#$0051, D5
 	BSR.w	loc_0000858A
 loc_00007096:
-	BRA.w	loc_00006F44
+	BRA.w	UpdateNPCSpriteFrame
 	BSR.w	SetRandomDirection
 	CLR.b	$25(A5)
 	MOVE.l	#loc_000070AC, $2(A5)
@@ -7461,7 +7464,7 @@ loc_000070AC:
 	MOVE.l	#UseMapStr, $FFFFC438.w
 	MOVE.w	#$0040, D5
 	BSR.w	loc_0000858A
-	BRA.w	loc_00006F44
+	BRA.w	UpdateNPCSpriteFrame
 	BSR.w	SetRandomDirection
 	CLR.b	$25(A5)
 	MOVE.l	#loc_000070D2, $2(A5)
@@ -7481,7 +7484,7 @@ loc_000070EA:
 	MOVE.w	#$0052, D5
 	BSR.w	loc_0000858A
 loc_00007100:
-	BRA.w	loc_00006F44
+	BRA.w	UpdateNPCSpriteFrame
 	BSR.w	SetRandomDirection
 	CLR.b	$25(A5)
 	TST.b	Talked_to_real_king.w
@@ -7531,7 +7534,7 @@ loc_00007188:
 	BEQ.b	loc_00007196
 	MOVE.l	#FindTreasureStr, $1C(A5)
 loc_00007196:
-	BRA.w	loc_00006F44
+	BRA.w	UpdateNPCSpriteFrame
 	BSR.w	SetRandomDirection
 	CLR.b	$25(A5)
 	TST.b	Talked_to_real_king.w
@@ -7548,7 +7551,7 @@ loc_000071B8:
 	BEQ.b	loc_000071C6
 	MOVE.l	#GotRingStr, $1C(A5)
 loc_000071C6:
-	BRA.w	loc_00006F44
+	BRA.w	UpdateNPCSpriteFrame
 	BSR.w	SetRandomDirection
 	CLR.b	$25(A5)
 	TST.b	Watling_youth_restored.w
@@ -7566,7 +7569,7 @@ loc_000071F0:
 	BEQ.b	loc_00007216
 	MOVE.w	#$00CD, $8(A5)
 	MOVE.l	#loc_0003DD94, $2E(A5)
-	MOVE.l	#loc_00006F44, $2(A5)
+	MOVE.l	#UpdateNPCSpriteFrame, $2(A5)
 	RTS
 
 loc_00007216:
@@ -7577,7 +7580,7 @@ loc_00007220:
 	MOVE.l	#GoNorthVerlinsCaveStr, $FFFFC438.w
 	MOVE.w	#$36, D5
 	BSR.w	loc_0000858A
-	BRA.w	loc_00006F44
+	BRA.w	UpdateNPCSpriteFrame
 	BSR.w	SetRandomDirection
 	CLR.b	$25(A5)
 	TST.b	Watling_youth_restored.w
@@ -7588,14 +7591,14 @@ loc_00007220:
 	RTS
 
 loc_0000725A:
-	MOVE.l	#loc_00006F44, $2(A5)
+	MOVE.l	#UpdateNPCSpriteFrame, $2(A5)
 	RTS
 
 loc_00007264:
 	MOVE.l	#ThankYouStrangerStr, $FFFFC438.w
 	MOVE.w	#$65, D5
 	BSR.w	loc_0000858A
-	BRA.w	loc_00006F44
+	BRA.w	UpdateNPCSpriteFrame
 	BSR.w	SetRandomDirection
 	CLR.b	$25(A5)
 	TST.b	Watling_youth_restored.w
@@ -7606,7 +7609,7 @@ loc_00007264:
 	RTS
 
 loc_0000729E:
-	MOVE.l	#loc_00006F44, $2(A5)
+	MOVE.l	#UpdateNPCSpriteFrame, $2(A5)
 	RTS
 
 loc_000072A8:
@@ -7618,7 +7621,7 @@ loc_000072A8:
 	RTS
 
 loc_000072C0:
-	MOVE.l	#loc_00006F44, $2(A5)	
+	MOVE.l	#UpdateNPCSpriteFrame, $2(A5)	
 	RTS
 	
 loc_000072CA:
@@ -7633,7 +7636,7 @@ loc_000072CA:
 	BSR.w	RemoveItemFromList
 	MOVE.b	#$FF, Deepdale_medicine_removed.w
 loc_000072F4:
-	BRA.w	loc_00006F44
+	BRA.w	UpdateNPCSpriteFrame
 	BSR.w	SetRandomDirection
 	CLR.b	$25(A5)
 	MOVE.l	#loc_0000730A, $2(A5)
@@ -7648,7 +7651,7 @@ loc_0000730A:
 	MOVE.w	#$62, D5
 	BSR.w	loc_0000858A
 loc_00007326:
-	BRA.w	loc_00006F44
+	BRA.w	UpdateNPCSpriteFrame
 	BSR.w	SetRandomDirection
 	CLR.b	$25(A5)
 	MOVE.l	#loc_0000733C, $2(A5)
@@ -7661,7 +7664,7 @@ loc_0000733C:
 	MOVE.w	#$7A, D5
 	BSR.w	loc_0000858A
 loc_00007352:
-	BRA.w	loc_00006F44
+	BRA.w	UpdateNPCSpriteFrame
 	BSR.w	SetRandomDirection
 	CLR.b	$25(A5)
 	TST.b	Stow_innocence_proven.w
@@ -7718,7 +7721,7 @@ loc_00007408:
 	CLR.b	$25(A5)
 	TST.b	Accused_of_theft.w
 	BEQ.b	loc_00007424
-	MOVE.l	#loc_00006F44, $2(A5)
+	MOVE.l	#UpdateNPCSpriteFrame, $2(A5)
 	RTS
 
 loc_00007424:
@@ -7730,12 +7733,12 @@ loc_0000742E:
 	BEQ.b	loc_0000743C
 	MOVE.l	#YoureTheThiefStr, $1C(A5)
 loc_0000743C:
-	BRA.w	loc_00006F44
+	BRA.w	UpdateNPCSpriteFrame
 	BSR.w	SetRandomDirection
 	CLR.b	$25(A5)
 	TST.b	Accused_of_theft.w
 	BEQ.b	loc_00007458
-	MOVE.l	#loc_00006F44, $2(A5)
+	MOVE.l	#UpdateNPCSpriteFrame, $2(A5)
 	RTS
 
 loc_00007458:
@@ -7747,13 +7750,13 @@ loc_00007462:
 	BEQ.b	loc_00007470
 	MOVE.l	#FaceOfCriminalStr, $1C(A5)
 loc_00007470:
-	BRA.w	loc_00006F44
+	BRA.w	UpdateNPCSpriteFrame
 	BSR.w	SetRandomDirection
 	CLR.b	$25(A5)
 	TST.b	Bearwulf_met.w
 	BNE.b	loc_00007490
 	BCLR.b	#7, (A5)
-	MOVE.l	#loc_00006F44, $2(A5)
+	MOVE.l	#UpdateNPCSpriteFrame, $2(A5)
 	RTS
 
 loc_00007490:
@@ -7797,7 +7800,7 @@ loc_00007518:
 loc_00007522:
 	MOVE.l	#ComeBackLessGearStr, $1C(A5)	
 loc_0000752A:
-	BRA.w	loc_00006F44
+	BRA.w	UpdateNPCSpriteFrame
 	BSR.w	SetRandomDirection
 	CLR.b	$25(A5)
 	MOVE.l	#loc_00007540, $2(A5)
@@ -7810,7 +7813,7 @@ loc_00007540:
 	MOVE.w	#$003D, D5
 	BSR.w	loc_0000858A
 loc_00007556:
-	BRA.w	loc_00006F44
+	BRA.w	UpdateNPCSpriteFrame
 	BSR.w	SetRandomDirection
 	CLR.b	$25(A5)
 	MOVE.l	#loc_0000756C, $2(A5)
@@ -7823,7 +7826,7 @@ loc_0000756C:
 	MOVE.w	#$004C, D5
 	BSR.w	loc_0000858A
 loc_00007582:
-	BRA.w	loc_00006F44
+	BRA.w	UpdateNPCSpriteFrame
 	BSR.w	SetRandomDirection
 	CLR.b	$25(A5)
 	TST.b	Old_man_waiting_for_letter.w
@@ -7903,7 +7906,7 @@ loc_0000765E:
 	MOVE.l	#WhatsWrongStowStr, $1C(A5)
 	MOVE.l	#loc_0003DD94, $2E(A5)
 loc_00007688:
-	BSR.w	loc_00006F44
+	BSR.w	UpdateNPCSpriteFrame
 	RTS
 
 loc_0000768E:
@@ -7938,7 +7941,7 @@ loc_000076E2:
 	MOVE.w	#$001D, D5
 	BSR.w	loc_0000858A
 loc_000076F8:
-	BRA.w	loc_00006F44
+	BRA.w	UpdateNPCSpriteFrame
 	BSR.w	SetRandomDirection
 	CLR.b	$25(A5)
 	TST.b	Barrow_map_received.w
@@ -7955,7 +7958,7 @@ loc_00007718:
 	BEQ.b	loc_00007728
 	BCLR.b	#7, (A5)
 loc_00007728:
-	BRA.w	loc_00006F44
+	BRA.w	UpdateNPCSpriteFrame
 	BSR.w	SetRandomDirection
 	CLR.b	$25(A5)
 	MOVE.l	#loc_0000773E, $2(A5)
@@ -7981,7 +7984,7 @@ loc_00007774:
 	MOVE.l	#ReachTadcasterStr, $FFFFC438.w
 	MOVE.w	#$000A, D5
 	BSR.w	loc_0000858A
-	BRA.w	loc_00006F44
+	BRA.w	UpdateNPCSpriteFrame
 	BSR.w	SetRandomDirection
 	CLR.b	$25(A5)
 	MOVE.l	#loc_0000779A, $2(A5)
@@ -8062,7 +8065,7 @@ loc_00007890:
 	MOVE.w	#8, D5
 	BSR.w	loc_0000858A
 loc_000078A6:
-	BRA.w	loc_00006F44
+	BRA.w	UpdateNPCSpriteFrame
 	BSR.w	SetRandomDirection
 	CLR.b	$25(A5)
 	MOVE.l	#loc_000078BC, $2(A5)
@@ -8075,7 +8078,7 @@ loc_000078BC:
 	MOVE.w	#$0017, D5
 	BSR.w	loc_0000858A
 loc_000078D2:
-	BRA.w	loc_00006F44
+	BRA.w	UpdateNPCSpriteFrame
 	BSR.w	SetRandomDirection
 	CLR.b	$25(A5)
 	TST.b	Bully_first_fight_won.w
@@ -8104,7 +8107,7 @@ loc_00007914:
 	MOVE.w	#$14, D5
 	BSR.w	loc_0000858A
 loc_0000792A:
-	BRA.w	loc_00006F44
+	BRA.w	UpdateNPCSpriteFrame
 	BSR.w	SetRandomDirection
 	CLR.b	$25(A5)
 	MOVE.l	#loc_00007940, $2(A5)
@@ -8114,14 +8117,14 @@ loc_00007940:
 	MOVE.l	#JourneyWestToSwaffhamStr, $FFFFC438.w
 	MOVE.w	#3, D5
 	BSR.w	loc_0000858A
-	BRA.w	loc_00006F44
+	BRA.w	UpdateNPCSpriteFrame
 	BSR.w	SetRandomDirection
 	CLR.b	$25(A5)
 	TST.b	Helwig_men_rescued.w
 	BNE.b	loc_00007966
 	BCLR.b	#7, (A5)
 loc_00007966:
-	MOVE.l	#loc_00006F44, $2(A5)
+	MOVE.l	#UpdateNPCSpriteFrame, $2(A5)
 	RTS
 
 loc_00007970:
@@ -8140,7 +8143,7 @@ loc_0000798C:
 	TST.b	Helwig_men_rescued.w
 	BNE.b	loc_000079A8
 	BCLR.b	#7, (A5)
-	MOVE.l	#loc_00006F44, $2(A5)
+	MOVE.l	#UpdateNPCSpriteFrame, $2(A5)
 	RTS
 
 loc_000079A8:
@@ -8165,7 +8168,7 @@ loc_000079DE:
 loc_000079E8:
 	MOVE.l	#CantCarryMoreItemsStr, $1C(A5)
 loc_000079F0:
-	BRA.w	loc_00006F44
+	BRA.w	UpdateNPCSpriteFrame
 	BSR.w	SetRandomDirection
 	CLR.b	$25(A5)
 	TST.b	Helwig_old_woman_quest_started.w
@@ -8340,7 +8343,7 @@ loc_00007C50:
 	RTS
 
 loc_00007C66:
-	MOVE.l	#loc_00006F44, $2(A5)
+	MOVE.l	#UpdateNPCSpriteFrame, $2(A5)
 	RTS
 
 loc_00007C70:
@@ -8359,7 +8362,7 @@ loc_00007C82:
 
 loc_00007C9E:
 	BCLR.b	#7, (A5)
-	MOVE.l	#loc_00006F44, $2(A5)
+	MOVE.l	#UpdateNPCSpriteFrame, $2(A5)
 	RTS
 
 loc_00007CAC:
@@ -8393,7 +8396,7 @@ loc_00007CCC:
 	MOVE.w	Player_mmp.w, Player_mp.w
 	MOVE.b	#$FF, Poison_trap_sprung.w
 loc_00007D32:
-	BSR.w	loc_00006F44
+	BSR.w	UpdateNPCSpriteFrame
 loc_00007D36:
 	RTS
 
@@ -8406,7 +8409,7 @@ loc_00007D38:
 	RTS
 	
 loc_00007D4C:
-	MOVE.l	#loc_00006F44, $2(A5)
+	MOVE.l	#UpdateNPCSpriteFrame, $2(A5)
 	RTS
 
 loc_00007D56:
@@ -8444,7 +8447,7 @@ loc_00007DB6:
 	TST.b	Carthahena_boss_defeated.w
 	BEQ.b	loc_00007DD2
 	BCLR.b	#7, (A5)	
-	MOVE.l	#loc_00006F44, $2(A5)	
+	MOVE.l	#UpdateNPCSpriteFrame, $2(A5)	
 	RTS
 	
 loc_00007DD2:
@@ -8461,7 +8464,7 @@ loc_00007DE8:
 	BEQ.b	loc_00007DF6
 	MOVE.l	#BestedMeStr, $1C(A5)
 loc_00007DF6:
-	BRA.w	loc_00006F44
+	BRA.w	UpdateNPCSpriteFrame
 loc_00007DFA:
 	dc.b	$61, $00, $04, $38, $42, $2D, $00, $25, $4A, $38, $C7, $58, $66, $04, $08, $95, $00, $07, $2B, $7C, $00, $00, $6F, $44, $00, $02, $4E, $75, $61, $00, $04, $1C 
 	dc.b	$42, $2D, $00, $25, $4A, $38, $C7, $58, $66, $04, $08, $95, $00, $07, $2B, $7C, $00, $00, $6F, $44, $00, $02, $4E, $75 
@@ -8474,7 +8477,7 @@ loc_00007E32:
 	RTS
 
 loc_00007E4A:
-	MOVE.l	#loc_00006F44, $2(A5)
+	MOVE.l	#UpdateNPCSpriteFrame, $2(A5)
 	RTS
 
 loc_00007E54:
@@ -8503,7 +8506,7 @@ loc_00007EA6:
 loc_00007EB0:
 	MOVE.l	#MustHaveAllRingsStr, $1C(A5)	
 loc_00007EB8:
-	BRA.w	loc_00006F44
+	BRA.w	UpdateNPCSpriteFrame
 	BSR.w	SetRandomDirection
 	MOVE.l	#loc_00007ECA, $2(A5)
 	RTS
