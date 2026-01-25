@@ -20799,7 +20799,7 @@ loc_00012620:
 	MOVE.w	#$0013, $FFFFC226.w
 	MOVE.w	#$001F, $FFFFC22C.w
 	MOVE.w	#8, $FFFFC22E.w
-	BSR.w	loc_00012788
+	BSR.w	DrawWindowFromBuffer
 	TST.b	Player_in_first_person_mode.w
 	BEQ.b	loc_0001264C
 	BSR.w	loc_00013186
@@ -20812,16 +20812,18 @@ loc_0001264E:
 	MOVE.w	#4, $FFFFC226.w
 	MOVE.w	#$000B, $FFFFC22C.w
 	MOVE.w	#2, $FFFFC22E.w
-	BSR.w	loc_00012788
+	BSR.w	DrawWindowFromBuffer
 	RTS
 	
-loc_00012670:
+; DrawLeftMenuWindow
+; Draw left menu window (buffer at $FFFF7CF4, 28x13 at position 6,6)
+DrawLeftMenuWindow:
 	LEA	$FFFF7CF4, A0
 	MOVE.w	#$001C, $FFFFC224.w
 	MOVE.w	#$000D, $FFFFC226.w
 	MOVE.w	#6, $FFFFC22C.w
 	MOVE.w	#6, $FFFFC22E.w
-	BSR.w	loc_00012788
+	BSR.w	DrawWindowFromBuffer
 	RTS
 	
 loc_00012694:
@@ -20830,7 +20832,7 @@ loc_00012694:
 	MOVE.w	#$000C, $FFFFC226.w
 	MOVE.w	#$0015, $FFFFC22C.w
 	MOVE.w	#7, $FFFFC22E.w
-	BSR.w	loc_00012788
+	BSR.w	DrawWindowFromBuffer
 	RTS
 	
 loc_000126B6:
@@ -20839,7 +20841,7 @@ loc_000126B6:
 	MOVE.w	#2, $FFFFC226.w
 	MOVE.w	#$0015, $FFFFC22C.w
 	MOVE.w	#$0015, $FFFFC22E.w
-	BSR.w	loc_00012788
+	BSR.w	DrawWindowFromBuffer
 	RTS
 	
 loc_000126DA:
@@ -20848,7 +20850,7 @@ loc_000126DA:
 	MOVE.w	#2, $FFFFC226.w
 	MOVE.w	#$0018, $FFFFC22C.w
 	MOVE.w	#$0011, $FFFFC22E.w
-	BSR.w	loc_00012788
+	BSR.w	DrawWindowFromBuffer
 	RTS
 	
 loc_000126FC:
@@ -20857,7 +20859,7 @@ loc_000126FC:
 	MOVE.w	#2, $FFFFC226.w
 	MOVE.w	#$0016, $FFFFC22C.w
 	MOVE.w	#$0010, $FFFFC22E.w
-	BSR.w	loc_00012788
+	BSR.w	DrawWindowFromBuffer
 	RTS
 	
 loc_0001271E:
@@ -20866,7 +20868,7 @@ loc_0001271E:
 	MOVE.w	#4, $FFFFC226.w
 	MOVE.w	#9, $FFFFC22C.w
 	MOVE.w	#8, $FFFFC22E.w
-	BSR.w	loc_00012788
+	BSR.w	DrawWindowFromBuffer
 	RTS
 	
 loc_00012742:
@@ -20875,7 +20877,7 @@ loc_00012742:
 	MOVE.w	#2, $FFFFC226.w
 	MOVE.w	#$0015, $FFFFC22C.w
 	MOVE.w	#$0012, $FFFFC22E.w
-	BSR.w	loc_00012788
+	BSR.w	DrawWindowFromBuffer
 	RTS
 	
 loc_00012766:
@@ -20884,10 +20886,15 @@ loc_00012766:
 	MOVE.w	#2, $FFFFC226.w
 	MOVE.w	#9, $FFFFC22C.w
 	MOVE.w	#6, $FFFFC22E.w
-	BSR.w	loc_00012788
+	BSR.w	DrawWindowFromBuffer
 	RTS
 	
-loc_00012788:
+; DrawWindowFromBuffer
+; Draw window from tile buffer to VDP
+; Input: A0 = Source tile buffer
+;        $FFFFC224 = X offset, $FFFFC226 = Y offset
+;        $FFFFC22C = Width, $FFFFC22E = Height
+DrawWindowFromBuffer:
 	JSR	loc_0000332A
 	CLR.w	D3
 loc_00012790:
@@ -25654,7 +25661,7 @@ loc_00018158:
 	JSR	QueueSoundEffect
 	TST.w	Dialog_selection.w
 	BEQ.w	loc_000181C6
-	JSR	loc_00012670	
+	JSR	DrawLeftMenuWindow	
 	JSR	loc_000126B6	
 	JSR	loc_00012610	
 	MOVE.w	#1, $FFFFC424.w	
@@ -25664,7 +25671,7 @@ loc_00018158:
 loc_000181A4:
 	MOVE.w	#$00A8, D0	
 	JSR	QueueSoundEffect	
-	JSR	loc_00012670	
+	JSR	DrawLeftMenuWindow	
 	MOVE.w	#4, $FFFFC424.w	
 	MOVE.w	Possessed_magics_length.w, D0	
 	JSR	InitMenuCursorForList	
@@ -25678,7 +25685,7 @@ loc_000181C6:
 	BGE.b	loc_000181DC
 	MOVE.w	#$FFFF, Readied_magic.w
 loc_000181DC:
-	JSR	loc_00012670
+	JSR	DrawLeftMenuWindow
 	JSR	loc_000126B6
 	JSR	ResetScriptAndInitDialogue
 	JSR	CopyPlayerNameToTextBuffer
@@ -25769,7 +25776,7 @@ loc_0001831E:
 	JSR	QueueSoundEffect
 	TST.w	Dialog_selection.w
 	BEQ.b	loc_00018388
-	JSR	loc_00012670	
+	JSR	DrawLeftMenuWindow	
 	JSR	loc_000126B6	
 	JSR	loc_00012610	
 	MOVE.w	#1, $FFFFC424.w	
@@ -25779,13 +25786,13 @@ loc_0001831E:
 loc_00018368:
 	MOVE.w	#$00A8, D0
 	JSR	QueueSoundEffect
-	JSR	loc_00012670
+	JSR	DrawLeftMenuWindow
 	MOVE.w	#$000D, $FFFFC424.w
 	MOVE.w	Possessed_magics_length.w, D0
 	BRA.w	InitMenuCursorForList
 	dc.b	$4E, $75 
 loc_00018388:
-	JSR	loc_00012670
+	JSR	DrawLeftMenuWindow
 	JSR	loc_000126B6
 	JSR	ResetScriptAndInitDialogue
 	LEA	Possessed_magics_list.w, A0
@@ -28205,7 +28212,7 @@ loc_0001A52C:
 	JSR	QueueSoundEffect
 	TST.w	Dialog_selection.w
 	BEQ.b	loc_0001A59C
-	JSR	loc_00012670
+	JSR	DrawLeftMenuWindow
 	JSR	loc_000126B6
 	JSR	loc_00012610
 	MOVE.w	#1, Item_menu_state.w
@@ -28215,7 +28222,7 @@ loc_0001A52C:
 loc_0001A576:
 	MOVE.w	#$00A8, D0	
 	JSR	QueueSoundEffect	
-	JSR	loc_00012670	
+	JSR	DrawLeftMenuWindow	
 	CLR.w	Selected_item_index.w	
 	MOVE.w	#5, Item_menu_state.w	
 	MOVE.w	Possessed_items_length.w, D0	
@@ -28223,7 +28230,7 @@ loc_0001A576:
 	RTS
 	
 loc_0001A59C:
-	JSR	loc_00012670
+	JSR	DrawLeftMenuWindow
 	JSR	loc_000126B6
 	JSR	ResetScriptAndInitDialogue
 	LEA	ItemNames, A0
@@ -29600,7 +29607,7 @@ loc_0001B97E:
 	BNE.w	loc_0001BAA4
 	MOVE.w	#$00A1, D0
 	JSR	QueueSoundEffect
-	JSR	loc_00012670
+	JSR	DrawLeftMenuWindow
 	JSR	ResetScriptAndInitDialogue
 	LEA	Possessed_items_length.w, A0
 	MOVE.w	(A0), D0
@@ -29673,7 +29680,7 @@ loc_0001BA8A:
 loc_0001BAA4:
 	MOVE.w	#$00A8, D0
 	JSR	QueueSoundEffect
-	JSR	loc_00012670
+	JSR	DrawLeftMenuWindow
 	MOVE.w	#$2D, Dialogue_state.w
 	JSR	loc_00012766
 	JSR	loc_000126DA
@@ -29798,7 +29805,7 @@ loc_0001BC0C:
 	MOVE.w	#BUTTON_BIT_C, D2
 	JSR	CheckButtonPress
 	BEQ.w	loc_0001BCA4
-	JSR	loc_00012670
+	JSR	DrawLeftMenuWindow
 	JSR	ResetScriptAndInitDialogue
 	TST.b	Dialogue_event_trigger_flag.w
 	BNE.b	loc_0001BC50
@@ -30042,7 +30049,7 @@ loc_0001BF28:
 	BNE.w	loc_0001C030
 	MOVE.w	#$00A1, D0
 	JSR	QueueSoundEffect
-	JSR	loc_00012670
+	JSR	DrawLeftMenuWindow
 	JSR	ResetScriptAndInitDialogue
 	LEA	ShopPricesByTownAndType, A0
 	MOVE.w	Current_town.w, D0
@@ -30101,7 +30108,7 @@ loc_0001C024:
 loc_0001C030:
 	MOVE.w	#$00A8, D0	
 	JSR	QueueSoundEffect	
-	JSR	loc_00012670	
+	JSR	DrawLeftMenuWindow	
 	MOVE.w	#$C, Dialogue_state.w	
 	JSR	loc_00011648	
 	JSR	ResetScriptAndInitDialogue	
@@ -30158,13 +30165,13 @@ loc_0001C0F4:
 	BNE.b	loc_0001C120
 	JSR	loc_00011012
 	JSR	loc_00012766
-	JSR	loc_00012670
+	JSR	DrawLeftMenuWindow
 	MOVE.w	#7, Dialogue_state.w
 	RTS
 
 loc_0001C120:
 	JSR	loc_00012766
-	JSR	loc_00012670
+	JSR	DrawLeftMenuWindow
 	JSR	ResetScriptAndInitDialogue
 	MOVE.w	Current_shop_type.w, D0
 	ADD.w	D0, D0
@@ -30406,7 +30413,7 @@ loc_0001C474:
 	MOVE.w	$FFFFC4A0.w, D0
 	MOVE.w	#8, D2
 	JSR	loc_0000FB8C
-	JSR	loc_00012670
+	JSR	DrawLeftMenuWindow
 	JSR	loc_000126B6
 	JSR	ResetScriptAndInitDialogue
 	MOVE.w	Current_shop_type.w, D0
@@ -30418,7 +30425,7 @@ loc_0001C474:
 	RTS
 
 loc_0001C4B0:
-	JSR	loc_00012670	
+	JSR	DrawLeftMenuWindow	
 	MOVE.w	#$13, Dialogue_state.w	
 	MOVEA.l	Active_inventory_list_ptr.w, A0	
 	MOVE.w	-$2(A0), D0	
@@ -30464,13 +30471,13 @@ loc_0001C542:
 	BNE.b	loc_0001C56E
 	JSR	loc_00012766	
 	JSR	loc_00011012	
-	JSR	loc_00012670	
+	JSR	DrawLeftMenuWindow	
 	MOVE.w	#7, Dialogue_state.w	
 	RTS
 	
 loc_0001C56E:
 	JSR	loc_00012766
-	JSR	loc_00012670
+	JSR	DrawLeftMenuWindow
 	JSR	ResetScriptAndInitDialogue
 	MOVE.w	Current_shop_type.w, D0
 	ADD.w	D0, D0
@@ -30543,7 +30550,7 @@ loc_0001C660:
 loc_0001C66A:
 	PRINT 	NoQuestionsStr
 loc_0001C672:
-	JSR	loc_00012670
+	JSR	DrawLeftMenuWindow
 	MOVE.w	#$1B, Dialogue_state.w
 	JMP	ResetScriptAndInitDialogue
 loc_0001C684:
@@ -30678,7 +30685,7 @@ loc_0001C7DA:
 	JSR	DeductPaymentAmount
 	JSR	DisplayPlayerKims
 	PRINT 	RestWellStr
-	JSR	loc_00012670
+	JSR	DrawLeftMenuWindow
 	JSR	ResetScriptAndInitDialogue
 loc_0001C84E:
 	MOVE.w	#$1F, Dialogue_state.w
@@ -30690,7 +30697,7 @@ loc_0001C856:
 loc_0001C860:
 	PRINT 	ServicesCostStr
 loc_0001C868:
-	JSR	loc_00012670
+	JSR	DrawLeftMenuWindow
 	MOVE.w	#$1B, Dialogue_state.w
 	JSR	ResetScriptAndInitDialogue
 	RTS
@@ -30937,7 +30944,7 @@ loc_0001CB94:
 	JSR	DisplayPlayerKims
 	BSR.w	RemoveCursedEquipment
 	PRINT 	CurseRemovedStr
-	JSR	loc_00012670
+	JSR	DrawLeftMenuWindow
 	JSR	loc_00012766
 	JSR	ResetScriptAndInitDialogue
 	MOVE.w	#$23, Dialogue_state.w
@@ -30949,7 +30956,7 @@ loc_0001CC1A:
 loc_0001CC24:
 	PRINT 	NoTakeBackStr	
 loc_0001CC2C:
-	JSR	loc_00012670	
+	JSR	DrawLeftMenuWindow	
 	JSR	loc_00012766	
 	MOVE.w	#$23, Dialogue_state.w	
 	JSR	ResetScriptAndInitDialogue	
@@ -31010,7 +31017,7 @@ loc_0001CC90:
 loc_0001CD0A:
 	PRINT 	CantCureStr
 loc_0001CD12:
-	JSR	loc_00012670
+	JSR	DrawLeftMenuWindow
 	JSR	loc_00012766
 	JSR	ResetScriptAndInitDialogue
 	MOVE.w	#$23, Dialogue_state.w
@@ -31022,7 +31029,7 @@ loc_0001CD2C:
 loc_0001CD36:
 	PRINT 	NoTakeBackStr	
 loc_0001CD3E:
-	JSR	loc_00012670	
+	JSR	DrawLeftMenuWindow	
 	JSR	loc_00012766	
 	MOVE.w	#$23, Dialogue_state.w	
 	JMP	ResetScriptAndInitDialogue	
@@ -32952,13 +32959,13 @@ loc_0001E722:
 	JSR	QueueSoundEffect
 	TST.w	Dialog_selection.w
 	BNE.w	loc_0001E766
-	JSR	loc_00012670
+	JSR	DrawLeftMenuWindow
 	PRINT 	DiscardWhichItemStr
 	MOVE.w	#7, Take_item_state.w
 	RTS
 	
 loc_0001E766:
-	JSR	loc_00012670
+	JSR	DrawLeftMenuWindow
 	JSR	ResetScriptAndInitDialogue
 	LEA	Text_build_buffer.w, A1
 	LEA	DontWantCarryStr, A0
@@ -33065,7 +33072,7 @@ loc_0001E8E2:
 loc_0001E910:
 	MOVE.w	#$00A8, D0	
 	JSR	QueueSoundEffect	
-	JSR	loc_00012670	
+	JSR	DrawLeftMenuWindow	
 	MOVEA.l	Active_inventory_list_ptr.w, A0	
 	MOVE.w	-$2(A0), D0	
 	JSR	InitMenuCursorForList	
@@ -33073,7 +33080,7 @@ loc_0001E910:
 	RTS
 	
 loc_0001E936: ; Discard item
-	JSR	loc_00012670
+	JSR	DrawLeftMenuWindow
 	JSR	loc_000126B6
 	JSR	ResetScriptAndInitDialogue
 	MOVEA.l	Active_inventory_list_ptr.w, A2
