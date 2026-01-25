@@ -1021,7 +1021,7 @@ ProgramState_15:
 	CLR.w	Cave_light_timer.w	
 	BSR.w	InitializeTownMode	
 	MOVE.w	#PROGRAM_STATE_0E, Program_state.w ; Transition to main game?	
-	MOVE.w	#3, Gameplay_substate.w 	 ; Entering building/town?
+	MOVE.w	#3, Gameplay_state.w 	 ; Entering building/town?
 	MOVE.w	Saved_town_room_1.w, Current_town_room.w	
 	JSR	LoadAndPlayAreaMusic	
 loc_00001756:
@@ -1097,7 +1097,7 @@ ProgramState_0F_and_11:
 	BNE.b	loc_00001838
 	TST.b	Camera_scrolling_active.w
 	BNE.b	loc_00001838
-	MOVE.w	Gameplay_substate.w, D0
+	MOVE.w	Gameplay_state.w, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
 	LEA	GameStateMap, A0
@@ -1107,54 +1107,55 @@ loc_00001838:
 
 ;loc_0000183A: ; $FFFFC410 - $FFFFC414
 GameStateMap:
-	BRA.w	loc_000018F2 ; $00
-	BRA.w	loc_00001958 ; $01 Exiting building
-	BRA.w	loc_00001AA0 ; $02 In town
-	BRA.w	loc_00001BB8 ; $03 Entering building
-	BRA.w	loc_00001C1C ; $04 Inside building
-	BRA.w	loc_00001F00 ; $05 Going upstairs/downstairs in church
-	BRA.w	loc_00001F42 ; $06 Upstairs in church
-	BRA.w	loc_00001FE0 ; $07 Going on 2nd floor in church
-	BRA.w	loc_00002074 ; $08 Being on second floor in church
-	BRA.w	loc_000020B2 ; $09 Entering castle
-	BRA.w	loc_00002116 ; $0A Entering castle #2
-	BRA.w	loc_000021DA ; $0B Inside castle
-	BRA.w	loc_0000221C ; $0C 
-	BRA.w	loc_000022A6 ; $0D 	
-	BRA.w	loc_000022E8 ; $0E Enter cave
-	BRA.w	loc_00002324 ; $0F Battle
-	BRA.w	loc_00002412 ; $10 Overworld?
-	BRA.w	loc_0000244A ; $11 Exit town
-	BRA.w	loc_00002542 ; $12 Exit town #2
-	BRA.w	loc_000025AE ; $13 Outside town
-	BRA.w	loc_000025B2 ; $14 Entering town
-	BRA.w	loc_000025CE ; $15 Entering cave #2
-	BRA.w	loc_0000273E ; $16 Inside cave
-	BRA.w	loc_00002814 ; $17 Exiting cave
-	BRA.w	loc_00002832 ; $18 Encounter
-	BRA.w	loc_000028C2 ; $19 
-	BRA.w	loc_000028FC ; $1A 
-	BRA.w	loc_00002916 ; $1B Start showing stats
-	BRA.w	loc_00002930 ; $1C 
-	BRA.w	loc_00002974 ; $1D 
-	BRA.w	loc_000029FA ; $1E Walk forward (Maybe just walk?)
-	BRA.w	loc_00001A92 ; $1F Loading/initialization of town or building
-	BRA.w	loc_00002A52 ; $20 Finding chest/character
-	BRA.w	loc_00002A92 ; $21 
-	BRA.w	loc_00002BB8 ; $22 
-	BRA.w	loc_00002BC4 ; $23 Reload town?
-	BRA.w	loc_00002C6A ; $24 Resurrect in church
-	BRA.w	loc_00002C7C ; $25 Resurrect in church #2
-	BRA.w	loc_00002D22 ; $26 Inaudios wear off
-	BRA.w	loc_00002D6C ; $27 
-	BRA.w	loc_00001D58 ; $28 
-	BRA.w	loc_00001DB4 ; $29 Get hit by frying pan message
-	BRA.w	loc_00001E9C ; $2A 
-	BRA.w	loc_000024D6 ; $2B "You haven't won yet"
-	BRA.w	loc_000024F8 ; $2C 
-	BRA.w	loc_00002D44 ; $2D Get poisoned messsage
+	BRA.w	GameState_InitTownEntry ; $00
+	BRA.w	GameState_LoadTown ; $01 Exiting building
+	BRA.w	GameState_TownExploration ; $02 In town
+	BRA.w	GameState_InitBuildingEntry ; $03 Entering building
+	BRA.w	GameState_BuildingInterior ; $04 Inside building
+	BRA.w	GameState_TransitionToSecondFloor ; $05 Going upstairs/downstairs in church
+	BRA.w	GameState_SecondFloorActive ; $06 Upstairs in church
+	BRA.w	GameState_TransitionToThirdFloor ; $07 Going on 2nd floor in church
+	BRA.w	GameState_ThirdFloorActive ; $08 Being on second floor in church
+	BRA.w	GameState_TransitionToCastleMain ; $09 Entering castle
+	BRA.w	GameState_CastleRoom1Active ; $0A Entering castle #2
+	BRA.w	GameState_LoadCastleRoom2 ; $0B Inside castle
+	BRA.w	GameState_CastleRoom2Active ; $0C 
+	BRA.w	GameState_LoadCastleRoom3 ; $0D 	
+	BRA.w	GameState_CaveEntrance ; $0E Enter cave
+	BRA.w	GameState_BattleInitialize ; $0F Battle
+	BRA.w	GameState_BattleActive ; $10 Overworld?
+	BRA.w	GameState_BattleExit ; $11 Exit town
+	BRA.w	GameState_OverworldReload ; $12 Exit town #2
+	BRA.w	GameState_OverworldActive ; $13 Outside town
+	BRA.w	GameState_TownFadeInComplete ; $14 Entering town
+	BRA.w	GameState_EnteringCave ; $15 Entering cave #2
+	BRA.w	GameState_CaveExploration ; $16 Inside cave
+	BRA.w	GameState_CaveFadeOutComplete ; $17 Exiting cave
+	BRA.w	GameState_EncounterInitialize ; $18 Encounter
+	BRA.w	GameState_EncounterGraphicsFadeIn ; $19 
+	BRA.w	GameState_EncounterPauseBeforeBattle ; $1A 
+	BRA.w	GameState_LevelUpBannerDisplay ; $1B Start showing stats
+	BRA.w	GameState_LevelUpStatsWaitInput ; $1C 
+	BRA.w	GameState_LevelUpComplete ; $1D 
+	BRA.w	GameState_ReturnToFirstPersonView ; $1E Walk forward (Maybe just walk?)
+	BRA.w	GameState_FadeInComplete ; $1F Loading/initialization of town or building
+	BRA.w	GameState_DialogDisplay ; $20 Finding chest/character
+	BRA.w	GameState_BossBattleInit ; $21 
+	BRA.w	GameState_BossBattleActive ; $22 
+	BRA.w	GameState_ReturnFromBossBattle ; $23 Reload town?
+	BRA.w	GameState_BeginResurrection ; $24 Resurrect in church
+	BRA.w	GameState_ProcessResurrection ; $25 Resurrect in church #2
+	BRA.w	GameState_NotifyInaudiosExpired ; $26 Inaudios wear off
+	BRA.w	GameState_WaitForNotificationDismiss ; $27 
+	BRA.w	GameState_ReadAwakeningMessage ; $28 
+	BRA.w	GameState_FryingPanDelay ; $29 Get hit by frying pan message
+	BRA.w	GameState_ReadFryingPanMessage ; $2A 
+	BRA.w	GameState_SoldierTaunt ; $2B "You haven't won yet"
+	BRA.w	GameState_ReadSoldierTaunt ; $2C 
+	BRA.w	GameState_ShowPoisonNotification ; $2D Get poisoned messsage
 
-loc_000018F2:
+;GameState_InitTownEntry:
+GameState_InitTownEntry:
 	TST.b	Fade_out_lines_mask.w
 	BNE.w	loc_00001956
 	JSR	DisableVDPDisplay
@@ -1175,12 +1176,13 @@ loc_000018F2:
 	JSR	ClearVRAMPlaneA
 	JSR	ClearVRAMPlaneB
 	JSR	ClearScrollData
-	ADDQ.w	#1, Gameplay_substate.w
+	ADDQ.w	#1, Gameplay_state.w
 	CLR.w	Town_spawn_x.w
 loc_00001956:
 	RTS
 
-loc_00001958:
+;GameState_LoadTown:
+GameState_LoadTown:
 	TST.b	Fade_out_lines_mask.w
 	BNE.w	loc_00001A90
 	JSR	DisableVDPDisplay
@@ -1247,7 +1249,7 @@ loc_00001A4C:
 	MOVE.w	Palette_line_2_cycle_base.w, Palette_line_2_fade_target.w
 	MOVE.w	#$0011, Palette_line_3_fade_target.w
 	MOVE.w	#2, Saved_game_state.w
-	MOVE.w	#$1F, Gameplay_substate.w
+	MOVE.w	#$1F, Gameplay_state.w
 	MOVE.b	#$FF, Fade_in_lines_mask.w
 	CLR.w	Overworld_menu_state.w
 	CLR.w	Saved_player_x_in_town.w
@@ -1259,19 +1261,21 @@ loc_00001A4C:
 loc_00001A90:
 	RTS
 
-loc_00001A92:
+;GameState_FadeInComplete:
+GameState_FadeInComplete:
 	TST.b	Fade_in_lines_mask.w
 	BNE.b	loc_00001A9E
-	MOVE.w	Saved_game_state.w, Gameplay_substate.w
+	MOVE.w	Saved_game_state.w, Gameplay_state.w
 loc_00001A9E:
 	RTS
 
-loc_00001AA0:
+;GameState_TownExploration:
+GameState_TownExploration:
 	TST.b	Soldier_fight_event_trigger.w
 	BEQ.b	loc_00001AC8
-	MOVE.w	Gameplay_substate.w, Saved_game_state.w
+	MOVE.w	Gameplay_state.w, Saved_game_state.w
 	BSR.w	loc_00001B9A
-	MOVE.w	#$F, Gameplay_substate.w
+	MOVE.w	#$F, Gameplay_state.w
 	MOVE.w	#$54, Current_encounter_type.w ; Carthahenian soldiers
 	MOVE.b	#$FF, Fade_out_lines_mask.w
 	CLR.b	Player_input_blocked.w
@@ -1280,9 +1284,9 @@ loc_00001AA0:
 loc_00001AC8:
 	TST.b	Boss_event_trigger.w
 	BEQ.b	loc_00001AE6
-	MOVE.w	Gameplay_substate.w, Saved_game_state.w	
+	MOVE.w	Gameplay_state.w, Saved_game_state.w	
 	BSR.w	loc_00001B9A	
-	MOVE.w	#$21, Gameplay_substate.w	
+	MOVE.w	#$21, Gameplay_state.w	
 	MOVE.b	#$FF, Fade_out_lines_mask.w	
 	RTS
 	
@@ -1301,7 +1305,7 @@ loc_00001B08:
 	MOVE.w	#$00E0, D0
 	JSR	QueueSoundEffect
 	MOVE.b	#$FF, Fade_out_lines_mask.w
-	MOVE.w	#9, Gameplay_substate.w
+	MOVE.w	#9, Gameplay_state.w
 	BRA.w	loc_00001B72
 loc_00001B2C:
 	MOVE.b	#$A3, D0
@@ -1309,7 +1313,7 @@ loc_00001B2C:
 	MOVE.w	#$00E0, D0
 	JSR	QueueSoundEffect
 	MOVE.b	#$FF, Fade_out_lines_mask.w
-	MOVE.w	#$12, Gameplay_substate.w
+	MOVE.w	#$12, Gameplay_state.w
 	MOVE.b	#$FF, Player_is_moving.w
 	RTS
 
@@ -1319,7 +1323,7 @@ loc_00001B54:
 	MOVE.w	#$00E0, D0
 	JSR	QueueSoundEffect
 	MOVE.b	#$FF, Fade_out_lines_mask.w
-	ADDQ.w	#1, Gameplay_substate.w
+	ADDQ.w	#1, Gameplay_state.w
 loc_00001B72:
 	MOVEA.l	Player_entity_ptr.w, A6
 	MOVE.w	$E(A6), Town_spawn_x.w
@@ -1340,7 +1344,8 @@ loc_00001B9A:
 	MOVE.w	Town_camera_tile_y.w, Town_default_camera_y.w
 	RTS
 
-loc_00001BB8:
+;GameState_InitBuildingEntry:
+GameState_InitBuildingEntry:
 	TST.b	Fade_out_lines_mask.w
 	BNE.b	loc_00001C1A
 	JSR	DisableVDPDisplay
@@ -1364,7 +1369,8 @@ loc_00001BE6:
 loc_00001C1A:
 	RTS
 
-loc_00001C1C:
+;GameState_BuildingInterior:
+GameState_BuildingInterior:
 	TST.b	Player_awakening_flag.w
 	BNE.w	loc_00001D14
 	TST.b	Helwig_inn_wakeup_trigger.w
@@ -1377,7 +1383,7 @@ loc_00001C1C:
 	MOVE.w	#$012C, Sleep_delay_timer.w
 	MOVE.b	#$85, D0
 	JSR	QueueSoundEffect
-	MOVE.w	#$29, Gameplay_substate.w
+	MOVE.w	#$29, Gameplay_state.w
 	RTS
 
 loc_00001C56:
@@ -1388,8 +1394,8 @@ loc_00001C56:
 	MOVE.w	$12(A6), Town_player_spawn_y.w	
 	MOVE.w	Town_camera_tile_x.w, Town_saved_camera_x.w	
 	MOVE.w	Town_camera_tile_y.w, Saved_camera_tile_y_room1.w	
-	MOVE.w	Gameplay_substate.w, Saved_game_state.w	
-	MOVE.w	#$21, Gameplay_substate.w	
+	MOVE.w	Gameplay_state.w, Saved_game_state.w	
+	MOVE.w	#$21, Gameplay_state.w	
 	MOVE.w	#$00E0, D0	
 	JSR	QueueSoundEffect	
 	MOVE.b	#$FF, Fade_out_lines_mask.w	
@@ -1408,7 +1414,7 @@ loc_00001CAE:
 	MOVE.w	#$00E0, D0
 	JSR	QueueSoundEffect
 	MOVE.b	#$FF, Fade_out_lines_mask.w
-	MOVE.w	#1, Gameplay_substate.w
+	MOVE.w	#1, Gameplay_state.w
 	MOVE.b	#$FF, Player_is_moving.w
 	MOVE.w	#DIRECTION_DOWN, Player_direction.w
 	RTS
@@ -1417,7 +1423,7 @@ loc_00001CDC:
 	MOVE.b	#$A3, D0
 	JSR	QueueSoundEffect
 	MOVE.b	#$FF, Fade_out_lines_mask.w
-	ADDQ.w	#1, Gameplay_substate.w
+	ADDQ.w	#1, Gameplay_state.w
 	MOVEA.l	Player_entity_ptr.w, A6
 	MOVE.w	$E(A6), Saved_player_x_in_town.w
 	MOVE.w	$12(A6), D0
@@ -1442,10 +1448,11 @@ loc_00001D42:
 	BNE.b	loc_00001D50
 	PRINT 	AriseWarriorStr
 loc_00001D50:
-	MOVE.w	#$28, Gameplay_substate.w
+	MOVE.w	#$28, Gameplay_state.w
 	RTS
 
-loc_00001D58:
+;GameState_ReadAwakeningMessage:
+GameState_ReadAwakeningMessage:
 	TST.b	Script_text_complete.w
 	BEQ.b	loc_00001D98
 	TST.b	Script_has_continuation.w
@@ -1463,7 +1470,7 @@ loc_00001D7E:
 	CLR.b	Player_input_blocked.w
 	CLR.b	Player_awakening_flag.w
 	CLR.b	Banshee_powder_active.w
-	MOVE.w	#4, Gameplay_substate.w
+	MOVE.w	#4, Gameplay_state.w
 	RTS
 
 loc_00001D98:
@@ -1478,7 +1485,8 @@ loc_00001DA0:
 loc_00001DB2:
 	RTS
 
-loc_00001DB4: ; Woman hitting player with frying pan
+;GameState_FryingPanDelay:
+GameState_FryingPanDelay: ; Woman hitting player with frying pan
 	TST.b	Fade_out_lines_mask.w
 	BNE.b	loc_00001E08
 	SUBQ.w	#1, Sleep_delay_timer.w
@@ -1489,7 +1497,7 @@ loc_00001DB4: ; Woman hitting player with frying pan
 	MOVE.w	D0, Player_hp.w
 	ADDQ.w	#1, Helwig_frypan_hit_count.w
 	PRINT 	AfraidKilledStr
-	MOVE.w	#$2A, Gameplay_substate.w
+	MOVE.w	#$2A, Gameplay_state.w
 	JSR	LoadAndPlayAreaMusic
 	JSR	ResetScriptAndInitDialogue
 	MOVE.w	#$0012, Palette_line_0_index.w
@@ -1504,7 +1512,7 @@ loc_00001E0A:
 	MOVE.b	#$FF, Frying_pan_knockout_flag.w	
 	MOVE.w	#$B9, D0	
 	JSR	QueueSoundEffect	
-	MOVE.w	#$24, Gameplay_substate.w	
+	MOVE.w	#$24, Gameplay_state.w	
 	CLR.w	Player_level.w	
 	CLR.w	Player_str.w	
 	CLR.w	Player_luk.w	
@@ -1539,7 +1547,8 @@ loc_00001E94:
 	JSR	UpgradeLevelStats	
 	RTS
 	
-loc_00001E9C:
+;GameState_ReadFryingPanMessage:
+GameState_ReadFryingPanMessage:
 	TST.b	Script_text_complete.w
 	BEQ.b	loc_00001EF8
 	TST.b	Script_has_continuation.w
@@ -1558,7 +1567,7 @@ loc_00001EC4:
 	MOVE.w	#3, Window_draw_type.w
 	CLR.w	Window_text_row.w
 	MOVE.b	#$FF, Window_tilemap_row_draw_pending.w
-	MOVE.w	#4, Gameplay_substate.w
+	MOVE.w	#4, Gameplay_state.w
 	RTS
 
 loc_00001EE6:
@@ -1571,7 +1580,8 @@ loc_00001EF8:
 loc_00001EFE:
 	RTS
 
-loc_00001F00:
+;GameState_TransitionToSecondFloor:
+GameState_TransitionToSecondFloor:
 	TST.b	Fade_out_lines_mask.w
 	BNE.b	loc_00001F40
 	JSR	DisableVDPDisplay
@@ -1587,7 +1597,8 @@ loc_00001F00:
 loc_00001F40:
 	RTS
 
-loc_00001F42:
+;GameState_SecondFloorActive:
+GameState_SecondFloorActive:
 	BSR.w	GetCurrentTileType
 	CMPI.w	#$F000, Current_tile_type.w
 	BEQ.b	loc_00001F5C
@@ -1598,7 +1609,7 @@ loc_00001F5C:
 	MOVE.b	#$FF, Fade_out_lines_mask.w
 	MOVE.b	#$A3, D0
 	JSR	QueueSoundEffect
-	MOVE.w	#3, Gameplay_substate.w
+	MOVE.w	#3, Gameplay_state.w
 	LEA	loc_0000362C, A0
 	MOVE.w	Player_direction.w, D0
 	ADD.w	D0, D0
@@ -1620,7 +1631,7 @@ loc_00001FB4:
 	MOVE.b	#$A3, D0
 	JSR	QueueSoundEffect
 	MOVE.b	#$FF, Fade_out_lines_mask.w
-	ADDQ.w	#1, Gameplay_substate.w
+	ADDQ.w	#1, Gameplay_state.w
 	MOVEA.l	Player_entity_ptr.w, A6
 	MOVE.w	$E(A6), Saved_player_spawn_x.w
 	MOVE.w	$12(A6), D0
@@ -1628,7 +1639,8 @@ loc_00001FB4:
 	MOVE.w	D0, Saved_player_y_room1.w
 	RTS
 
-loc_00001FE0:
+;GameState_TransitionToThirdFloor:
+GameState_TransitionToThirdFloor:
 	TST.b	Fade_out_lines_mask.w
 	BNE.b	loc_00002020
 	JSR	DisableVDPDisplay
@@ -1656,13 +1668,14 @@ InitTownDisplay:
 	MOVE.w	Palette_line_1_index_saved.w, Palette_line_1_fade_target.w
 	MOVE.w	Palette_line_2_cycle_base.w, Palette_line_2_fade_target.w
 	MOVE.w	#$0011, Palette_line_3_fade_target.w
-	MOVE.w	#$1F, Gameplay_substate.w
+	MOVE.w	#$1F, Gameplay_state.w
 	MOVE.b	#$FF, Fade_in_lines_mask.w
 	CLR.w	Overworld_menu_state.w
 	JSR	EnableDisplay
 	RTS
 
-loc_00002074:
+;GameState_ThirdFloorActive:
+GameState_ThirdFloorActive:
 	BSR.w	GetCurrentTileType
 	CMPI.w	#$F000, Current_tile_type.w
 	BEQ.b	loc_00002084
@@ -1673,12 +1686,13 @@ loc_00002084:
 	MOVE.b	#$FF, Fade_out_lines_mask.w
 	CMPI.w	#$F000, Current_tile_type.w
 	BNE.w	HandleOverworldMenuInput
-	MOVE.w	#5, Gameplay_substate.w
+	MOVE.w	#5, Gameplay_state.w
 	MOVE.b	#$FF, Player_is_moving.w
 	MOVE.w	#DIRECTION_DOWN, Player_direction.w
 	RTS
 
-loc_000020B2:
+;GameState_TransitionToCastleMain:
+GameState_TransitionToCastleMain:
 	TST.b	Fade_out_lines_mask.w
 	BNE.b	loc_00002114
 	JSR	DisableVDPDisplay
@@ -1702,7 +1716,8 @@ loc_000020E0:
 loc_00002114:
 	RTS
 
-loc_00002116:
+;GameState_CastleRoom1Active:
+GameState_CastleRoom1Active:
 	TST.b	Boss_event_trigger.w
 	BEQ.b	loc_00002156
 	MOVEA.l	Player_entity_ptr.w, A6
@@ -1710,8 +1725,8 @@ loc_00002116:
 	MOVE.w	$12(A6), Town_player_spawn_y.w
 	MOVE.w	Town_camera_tile_x.w, Town_saved_camera_x.w
 	MOVE.w	Town_camera_tile_y.w, Saved_camera_tile_y_room1.w
-	MOVE.w	Gameplay_substate.w, Saved_game_state.w
-	MOVE.w	#$21, Gameplay_substate.w
+	MOVE.w	Gameplay_state.w, Saved_game_state.w
+	MOVE.w	#$21, Gameplay_state.w
 	MOVE.w	#$00E0, D0
 	JSR	QueueSoundEffect
 	MOVE.b	#$FF, Fade_out_lines_mask.w
@@ -1730,7 +1745,7 @@ loc_00002170:
 	MOVE.w	#$00E0, D0
 	JSR	QueueSoundEffect
 	MOVE.b	#$FF, Fade_out_lines_mask.w
-	MOVE.w	#1, Gameplay_substate.w
+	MOVE.w	#1, Gameplay_state.w
 	CLR.w	Saved_player_x_in_town.w
 	MOVE.b	#$FF, Player_is_moving.w
 	MOVE.w	#DIRECTION_DOWN, Player_direction.w
@@ -1740,7 +1755,7 @@ loc_000021A2:
 	MOVE.b	#$A3, D0
 	JSR	QueueSoundEffect
 	MOVE.b	#$FF, Fade_out_lines_mask.w
-	ADDQ.w	#1, Gameplay_substate.w
+	ADDQ.w	#1, Gameplay_state.w
 	MOVEA.l	Player_entity_ptr.w, A6
 	MOVE.w	$E(A6), Saved_player_x_in_town.w
 	MOVE.w	$12(A6), D0
@@ -1750,7 +1765,8 @@ loc_000021A2:
 	MOVE.w	Town_camera_tile_y.w, Saved_camera_tile_y_room1.w
 	RTS
 
-loc_000021DA:
+;GameState_LoadCastleRoom2:
+GameState_LoadCastleRoom2:
 	TST.b	Fade_out_lines_mask.w
 	BNE.b	loc_0000221A
 	JSR	DisableVDPDisplay
@@ -1766,7 +1782,8 @@ loc_000021DA:
 loc_0000221A:
 	RTS
 
-loc_0000221C:
+;GameState_CastleRoom2Active:
+GameState_CastleRoom2Active:
 	BSR.w	GetCurrentTileType
 	CMPI.w	#$F000, Current_tile_type.w
 	BEQ.b	loc_00002234
@@ -1777,7 +1794,7 @@ loc_00002234:
 	MOVE.b	#$A3, D0
 	JSR	QueueSoundEffect
 	MOVE.b	#$FF, Fade_out_lines_mask.w
-	MOVE.w	#9, Gameplay_substate.w
+	MOVE.w	#9, Gameplay_state.w
 	MOVEA.l	Player_entity_ptr.w, A6
 	MOVE.w	$E(A6), Saved_player_spawn_x.w
 	MOVE.w	$12(A6), D0
@@ -1793,7 +1810,7 @@ loc_0000227A:
 	MOVE.b	#$A3, D0	
 	JSR	QueueSoundEffect	
 	MOVE.b	#$FF, Fade_out_lines_mask.w	
-	ADDQ.w	#1, Gameplay_substate.w	
+	ADDQ.w	#1, Gameplay_state.w	
 	MOVEA.l	Player_entity_ptr.w, A6	
 	MOVE.w	$E(A6), Saved_player_spawn_x.w	
 	MOVE.w	$12(A6), D0	
@@ -1801,7 +1818,8 @@ loc_0000227A:
 	MOVE.w	D0, Saved_player_y_room1.w	
 	RTS
 	
-loc_000022A6:
+;GameState_LoadCastleRoom3:
+GameState_LoadCastleRoom3:
 	TST.b	Fade_out_lines_mask.w	
 	BNE.b	loc_000022E6	
 	JSR	DisableVDPDisplay	
@@ -1817,7 +1835,8 @@ loc_000022A6:
 loc_000022E6:
 	RTS
 	
-loc_000022E8:
+;GameState_CaveEntrance:
+GameState_CaveEntrance:
 	BSR.w	GetCurrentTileType	
 	CMPI.w	#$F000, Current_tile_type.w	
 	BNE.w	HandleOverworldMenuInput	
@@ -1826,12 +1845,13 @@ loc_000022E8:
 	MOVE.b	#$FF, Fade_out_lines_mask.w	
 	CMPI.w	#$F000, Current_tile_type.w	
 	BNE.w	HandleOverworldMenuInput	
-	MOVE.w	#$B, Gameplay_substate.w	
+	MOVE.w	#$B, Gameplay_state.w	
 	MOVE.b	#$FF, Player_is_moving.w	
 	MOVE.w	#DIRECTION_DOWN, Player_direction.w	
 	RTS
 	
-loc_00002324:
+;GameState_BattleInitialize:
+GameState_BattleInitialize:
 	TST.b	Fade_out_lines_mask.w
 	BNE.w	loc_00002410
 	JSR	DisableVDPDisplay
@@ -1858,7 +1878,7 @@ loc_00002324:
 	MOVE.w	#$0064, $12(A6)
 	MOVE.w	#$0036, Palette_line_0_index.w
 	MOVE.w	#$0013, Palette_line_3_index.w
-	ADDQ.w	#1, Gameplay_substate.w
+	ADDQ.w	#1, Gameplay_state.w
 	CLR.w	Overworld_menu_state.w
 	MOVE.b	#$FF, Is_in_battle.w
 	MOVEA.l	Player_entity_ptr.w, A6
@@ -1884,7 +1904,8 @@ loc_000023EA:
 loc_00002410:
 	RTS
 
-loc_00002412:
+;GameState_BattleActive:
+GameState_BattleActive:
 	JSR	DisplayPlayerHpMp
 	TST.w	Player_hp.w
 	BGT.b	loc_00002448
@@ -1894,14 +1915,15 @@ loc_00002412:
 loc_00002428:
 	MOVE.w	#$00B9, D0
 	JSR	QueueSoundEffect
-	MOVE.w	#$24, Gameplay_substate.w
+	MOVE.w	#$24, Gameplay_state.w
 	MOVE.b	#8, Fade_out_lines_mask.w
 	CLR.w	Player_hp.w
 	JSR	DisplayPlayerHpMp
 loc_00002448:
 	RTS
 
-loc_0000244A:
+;GameState_BattleExit:
+GameState_BattleExit:
 	TST.w	Player_hp.w
 	BGT.b	loc_0000247E
 	TST.b	Bully_first_fight_won.w	
@@ -1910,7 +1932,7 @@ loc_0000244A:
 loc_0000245A:
 	MOVE.w	#$00B9, D0	
 	JSR	QueueSoundEffect	
-	MOVE.w	#$24, Gameplay_substate.w	
+	MOVE.w	#$24, Gameplay_state.w	
 	MOVE.b	#8, Fade_out_lines_mask.w	
 	CLR.w	Player_hp.w	
 	JSR	DisplayPlayerHpMp	
@@ -1925,14 +1947,14 @@ loc_0000247E:
 	CLR.b	Soldier_fight_event_trigger.w
 	MOVE.b	#$FF, Bully_first_fight_won.w
 	MOVE.b	#$FF, Skip_town_intro_after_fight.w
-	BRA.w	loc_00002BC4
+	BRA.w	GameState_ReturnFromBossBattle
 loc_000024AA:
 	TST.b	Is_in_cave.w
 	BNE.b	loc_000024B8
-	MOVE.w	#$12, Gameplay_substate.w
+	MOVE.w	#$12, Gameplay_state.w
 	BRA.b	loc_000024BE
 loc_000024B8:
-	MOVE.w	#$15, Gameplay_substate.w
+	MOVE.w	#$15, Gameplay_state.w
 loc_000024BE:
 	JSR	ClearAllEnemyEntities
 	CLR.w	Sprite_attr_count.w
@@ -1941,15 +1963,17 @@ loc_000024BE:
 loc_000024D4:
 	RTS
 
-loc_000024D6:
+;GameState_SoldierTaunt:
+GameState_SoldierTaunt:
 	JSR	ClearScrollData
 	MOVE.b	#$FF, Player_input_blocked.w
 	PRINT 	YouHaveNotWonYetStr
 	JSR	ResetScriptAndInitDialogue
-	MOVE.w	#$2C, Gameplay_substate.w
+	MOVE.w	#$2C, Gameplay_state.w
 	RTS
 
-loc_000024F8:
+;GameState_ReadSoldierTaunt:
+GameState_ReadSoldierTaunt:
 	TST.b	Script_text_complete.w
 	BEQ.b	loc_0000253A
 	MOVE.w	#BUTTON_BIT_C, D2
@@ -1961,7 +1985,7 @@ loc_000024F8:
 	RTS
 
 loc_00002518:
-	MOVE.w	#$11, Gameplay_substate.w
+	MOVE.w	#$11, Gameplay_state.w
 	MOVE.b	#$A3, D0
 	JSR	QueueSoundEffect
 	MOVE.w	#$00E0, D0
@@ -1973,7 +1997,8 @@ loc_0000253A:
 	JSR	ProcessScriptText
 	RTS
 
-loc_00002542:
+;GameState_OverworldReload:
+GameState_OverworldReload:
 	TST.b	Fade_out_lines_mask.w
 	BNE.w	loc_000025AC
 	BSR.w	loc_00002620
@@ -1997,19 +2022,22 @@ loc_00002542:
 loc_000025AC:
 	RTS
 
-loc_000025AE:
-	BRA.w	loc_0000273E
-loc_000025B2:
+;GameState_OverworldActive:
+GameState_OverworldActive:
+	BRA.w	GameState_CaveExploration
+;GameState_TownFadeInComplete:
+GameState_TownFadeInComplete:
 	TST.b	Fade_out_lines_mask.w
 	BNE.b	loc_000025CC
 	CLR.b	Player_in_first_person_mode.w
 	MOVE.w	#$00E0, D0
 	JSR	QueueSoundEffect
-	MOVE.w	#0, Gameplay_substate.w
+	MOVE.w	#0, Gameplay_state.w
 loc_000025CC:
 	RTS
 
-loc_000025CE:
+;GameState_EnteringCave:
+GameState_EnteringCave:
 	TST.b	Fade_out_lines_mask.w
 	BNE.w	loc_0000261E
 	BSR.w	loc_00002620
@@ -2046,7 +2074,7 @@ loc_00002620:
 	JSR	ProcessAllObjectSlots
 	MOVEA.l	Player_entity_ptr.w, A6
 	MOVE.l	#loc_00004340, $2(A6)
-	ADDQ.w	#1, Gameplay_substate.w
+	ADDQ.w	#1, Gameplay_state.w
 	MOVE.w	#$0036, Palette_line_0_index.w
 	MOVE.w	#$0011, Palette_line_3_index.w
 	CLR.b	Dialog_active_flag.w
@@ -2070,9 +2098,9 @@ loc_000026BA: ; level up
 	MOVE.l	Player_experience.w, D0
 	CMP.l	Player_next_level_experience.w, D0
 	BLT.b	loc_00002706
-	MOVE.w	Gameplay_substate.w, Saved_game_state.w
+	MOVE.w	Gameplay_state.w, Saved_game_state.w
 	MOVE.b	#$FF, Player_input_blocked.w
-	MOVE.w	#$1B, Gameplay_substate.w
+	MOVE.w	#$1B, Gameplay_state.w
 	MOVE.b	#$86, D0
 	JSR	QueueSoundEffect
 	ADDQ.w	#1, Player_level.w
@@ -2099,12 +2127,13 @@ loc_00002724:
 	JSR	DisplayReadiedMagicName
 	RTS
 
-loc_0000273E:
+;GameState_CaveExploration:
+GameState_CaveExploration:
 	TST.w	Player_poisoned.w
 	BEQ.b	loc_00002752
 	TST.b	Poison_notified.w
 	BNE.b	loc_00002752
-	MOVE.w	#$2D, Gameplay_substate.w
+	MOVE.w	#$2D, Gameplay_state.w
 	RTS
 
 loc_00002752:
@@ -2115,8 +2144,8 @@ loc_00002752:
 loc_0000275A:
 	TST.b	Boss_event_trigger.w
 	BEQ.b	loc_0000277E
-	MOVE.w	Gameplay_substate.w, Saved_game_state.w
-	MOVE.w	#$21, Gameplay_substate.w
+	MOVE.w	Gameplay_state.w, Saved_game_state.w
+	MOVE.w	#$21, Gameplay_state.w
 	MOVE.w	#$00E0, D0
 	JSR	QueueSoundEffect
 	MOVE.b	#$FF, Fade_out_lines_mask.w
@@ -2168,22 +2197,24 @@ loc_000027FC:
 loc_000027FE:
 	CLR.b	Steps_since_last_encounter.w
 	CLR.b	Player_input_blocked.w
-	MOVE.w	#$18, Gameplay_substate.w
+	MOVE.w	#$18, Gameplay_state.w
 	MOVE.b	#$FF, Encounter_triggered.w
 	RTS
 
-loc_00002814:
+;GameState_CaveFadeOutComplete:
+GameState_CaveFadeOutComplete:
 	TST.b	Fade_out_lines_mask.w
 	BNE.b	loc_00002830
 	CLR.b	Is_in_cave.w
 	CLR.b	Cave_light_active.w
 	CLR.w	Cave_light_timer.w
-	MOVE.w	#$12, Gameplay_substate.w
+	MOVE.w	#$12, Gameplay_state.w
 	MOVEA.l	Player_entity_ptr.w, A6
 loc_00002830:
 	RTS
 
-loc_00002832:
+;GameState_EncounterInitialize:
+GameState_EncounterInitialize:
 	TST.b	Is_in_cave.w
 	BNE.b	loc_00002858
 	LEA	EnemyEncounterTypesByMapSector, A0
@@ -2213,7 +2244,7 @@ loc_00002868:
 	MOVEA.l	Current_actor_ptr.w, A6
 	BSET.b	#7, (A6)
 	MOVE.l	#loc_00008BA6, $2(A6)
-	MOVE.w	#$19, Gameplay_substate.w
+	MOVE.w	#$19, Gameplay_state.w
 	CLR.w	Dialog_timer.w
 	CLR.w	Dialog_phase.w
 	CLR.b	Chest_already_opened.w
@@ -2221,7 +2252,8 @@ loc_00002868:
 	JSR	QueueSoundEffect
 	RTS
 
-loc_000028C2:
+;GameState_EncounterGraphicsFadeIn:
+GameState_EncounterGraphicsFadeIn:
 	ADDQ.w	#1, Dialog_timer.w
 	MOVE.w	Dialog_timer.w, D0
 	BTST.b	#6, $00A10001
@@ -2236,32 +2268,35 @@ loc_000028E2:
 	CMPI.w	#$000A, Dialog_phase.w
 	BLT.b	loc_000028F6
 	BSR.w	loc_00002F9C
-	MOVE.w	#$1A, Gameplay_substate.w
+	MOVE.w	#$1A, Gameplay_state.w
 	BRA.b	loc_000028FA
 loc_000028F6:
 	BSR.w	loc_00002F54
 loc_000028FA:
 	RTS
 
-loc_000028FC:
+;GameState_EncounterPauseBeforeBattle:
+GameState_EncounterPauseBeforeBattle:
 	ADDQ.w	#1, Dialog_timer.w
 	CMPI.w	#$0064, Dialog_timer.w
 	BLE.b	loc_00002914
-	MOVE.w	#$F, Gameplay_substate.w
+	MOVE.w	#$F, Gameplay_state.w
 	MOVE.b	#$FF, Fade_out_lines_mask.w
 loc_00002914:
 	RTS
 
-loc_00002916:
+;GameState_LevelUpBannerDisplay:
+GameState_LevelUpBannerDisplay:
 	SUBQ.w	#1, Level_up_timer.w
 	BGT.b	loc_0000292E
-	MOVE.w	#$1C, Gameplay_substate.w
+	MOVE.w	#$1C, Gameplay_state.w
 	JSR	SaveFullDialogAreaToBuffer
 	JSR	DrawCharacterStatsWindow
 loc_0000292E:
 	RTS
 
-loc_00002930:
+;GameState_LevelUpStatsWaitInput:
+GameState_LevelUpStatsWaitInput:
 	TST.b	Window_tilemap_draw_active.w
 	BNE.b	loc_00002972
 	MOVE.w	#BUTTON_BIT_A, D2
@@ -2279,11 +2314,12 @@ loc_0000295C:
 	MOVE.w	#0, Window_draw_type.w
 	CLR.w	Window_text_row.w
 	MOVE.b	#$FF, Window_tilemap_row_draw_pending.w
-	MOVE.w	#$1D, Gameplay_substate.w
+	MOVE.w	#$1D, Gameplay_state.w
 loc_00002972:
 	RTS
 
-loc_00002974:
+;GameState_LevelUpComplete:
+GameState_LevelUpComplete:
 	TST.b	Window_tilemap_row_draw_pending.w
 	BNE.w	loc_000029F8
 	JSR	DrawPromptMenuWindow
@@ -2292,7 +2328,7 @@ loc_00002974:
 	MOVE.l	Player_experience.w, D0
 	CMP.l	Player_next_level_experience.w, D0
 	BLT.b	loc_000029D4
-	MOVE.w	#$1B, Gameplay_substate.w
+	MOVE.w	#$1B, Gameplay_state.w
 	MOVE.b	#$86, D0
 	JSR	QueueSoundEffect
 	ADDQ.w	#1, Player_level.w
@@ -2307,7 +2343,7 @@ loc_00002974:
 
 loc_000029D4:
 	CLR.b	Player_input_blocked.w
-	MOVE.w	Saved_game_state.w, Gameplay_substate.w
+	MOVE.w	Saved_game_state.w, Gameplay_state.w
 	MOVE.b	#$8E, D0
 	TST.b	Is_in_cave.w
 	BEQ.b	loc_000029EE
@@ -2320,12 +2356,13 @@ loc_000029EE:
 loc_000029F8:
 	RTS
 
-loc_000029FA:
+;GameState_ReturnToFirstPersonView:
+GameState_ReturnToFirstPersonView:
 	TST.b	Fade_out_lines_mask.w
 	BNE.b	loc_00002A50
 	BSR.w	loc_000035FA
 	JSR	InitFirstPersonView
-	MOVE.w	#$16, Gameplay_substate.w
+	MOVE.w	#$16, Gameplay_state.w
 	MOVE.w	#$0036, Palette_line_0_index.w
 	TST.b	Cave_light_active.w
 	BEQ.b	loc_00002A28
@@ -2343,7 +2380,8 @@ loc_00002A28:
 loc_00002A50:
 	RTS
 
-loc_00002A52:
+;GameState_DialogDisplay:
+GameState_DialogDisplay:
 	ADDQ.w	#1, Dialog_timer.w
 	MOVE.w	Dialog_timer.w, D0
 	BTST.b	#6, $00A10001
@@ -2359,14 +2397,15 @@ loc_00002A74:
 	BLT.b	loc_00002A8C
 	CLR.b	Dialog_state_flag.w
 	BSR.w	loc_00002F9C
-	MOVE.w	Saved_game_state.w, Gameplay_substate.w
+	MOVE.w	Saved_game_state.w, Gameplay_state.w
 	BRA.b	loc_00002A90
 loc_00002A8C:
 	BSR.w	loc_00002F54
 loc_00002A90:
 	RTS
 
-loc_00002A92:
+;GameState_BossBattleInit:
+GameState_BossBattleInit:
 	TST.b	Fade_out_lines_mask.w
 	BNE.w	loc_00002BB6
 	JSR	DisableVDPDisplay
@@ -2412,7 +2451,7 @@ loc_00002AE0:
 	CLR.w	Camera_scroll_y.w
 	JSR	LoadBossGraphics
 	MOVEA.l	Player_entity_ptr.w, A6
-	ADDQ.w	#1, Gameplay_substate.w
+	ADDQ.w	#1, Gameplay_state.w
 	CLR.w	Overworld_menu_state.w
 	MOVE.b	#$FF, Is_in_battle.w
 	MOVEA.l	Player_entity_ptr.w, A6
@@ -2439,12 +2478,14 @@ loc_00002AE0:
 loc_00002BB6:
 	RTS
 
-loc_00002BB8:
+;GameState_BossBattleActive:
+GameState_BossBattleActive:
 	BSR.w	CheckPlayerDeath
 	JSR	DisplayCurrentHpMp
 	RTS
 
-loc_00002BC4:
+;GameState_ReturnFromBossBattle:
+GameState_ReturnFromBossBattle:
 	BSR.w	CheckPlayerDeath
 	BEQ.b	loc_00002BCC
 	RTS
@@ -2477,7 +2518,7 @@ loc_00002BCC:
 	JSR	ClearScrollData
 	MOVE.w	Saved_game_state.w, D0
 	SUBQ.w	#1, D0
-	MOVE.w	D0, Gameplay_substate.w
+	MOVE.w	D0, Gameplay_state.w
 	TST.b	Is_in_cave.w
 	BNE.b	loc_00002C5C
 	MOVE.w	Current_area_music.w, D0
@@ -2490,15 +2531,17 @@ loc_00002C62:
 loc_00002C68:
 	RTS
 
-loc_00002C6A:
+;GameState_BeginResurrection:
+GameState_BeginResurrection:
 	TST.b	Fade_out_lines_mask.w
 	BNE.b	loc_00002C7A
 	MOVE.b	#$FF, Fade_out_lines_mask.w
-	ADDQ.w	#1, Gameplay_substate.w
+	ADDQ.w	#1, Gameplay_state.w
 loc_00002C7A:
 	RTS
 
-loc_00002C7C:
+;GameState_ProcessResurrection:
+GameState_ProcessResurrection:
 	TST.b	Fade_out_lines_mask.w
 	BNE.w	loc_00002D20
 	BSR.w	ClearAllEnemyEntities
@@ -2553,31 +2596,34 @@ loc_00002CF6:
 	DBF	D4, loc_00002CC0
 loc_00002D04:
 	BSR.w	InitializeTownMode
-	MOVE.w	#3, Gameplay_substate.w
+	MOVE.w	#3, Gameplay_state.w
 	MOVE.w	Saved_town_room_1.w, Current_town_room.w
 	JSR	LoadAndPlayAreaMusic
 	MOVE.b	#$FF, Player_awakening_flag.w
 loc_00002D20:
 	RTS
 
-loc_00002D22:
+;GameState_NotifyInaudiosExpired:
+GameState_NotifyInaudiosExpired:
 	JSR	SaveStatusBarToBuffer
 	JSR	ResetScriptAndInitDialogue
 	PRINT 	InaudiosWornOffStr
-	MOVE.w	#$27, Gameplay_substate.w
+	MOVE.w	#$27, Gameplay_state.w
 	MOVE.b	#$FF, Player_input_blocked.w
 	RTS
 
-loc_00002D44:
+;GameState_ShowPoisonNotification:
+GameState_ShowPoisonNotification:
 	JSR	SaveStatusBarToBuffer
 	JSR	ResetScriptAndInitDialogue
 	PRINT 	PoisonedStr
-	MOVE.w	#$27, Gameplay_substate.w
+	MOVE.w	#$27, Gameplay_state.w
 	MOVE.b	#$FF, Player_input_blocked.w
 	MOVE.b	#$FF, Poison_notified.w
 	RTS
 
-loc_00002D6C:
+;GameState_WaitForNotificationDismiss:
+GameState_WaitForNotificationDismiss:
 	TST.b	Window_tilemap_draw_pending.w
 	BNE.b	loc_00002DA8
 	TST.b	Script_text_complete.w
@@ -2592,7 +2638,7 @@ loc_00002D6C:
 
 loc_00002D92:
 	JSR	DrawStatusHudWindow
-	MOVE.w	#$13, Gameplay_substate.w
+	MOVE.w	#$13, Gameplay_state.w
 	CLR.b	Player_input_blocked.w
 loc_00002DA2:
 	JSR	ProcessScriptText
@@ -2668,7 +2714,7 @@ CheckPlayerDeath:
 	BGT.b	loc_00002F50
 	MOVE.w	#$00B9, D0
 	JSR	QueueSoundEffect
-	MOVE.w	#$24, Gameplay_substate.w
+	MOVE.w	#$24, Gameplay_state.w
 	MOVE.b	#8, Fade_out_lines_mask.w
 	MOVE.w	#$FFFF, D0
 	CLR.w	Player_hp.w
@@ -3907,10 +3953,10 @@ loc_00003E48:
 	BSR.w	loc_00004234
 	TST.b	Soldier_fight_event_trigger.w
 	BEQ.b	loc_00003E8A
-	MOVE.w	#$2B, Gameplay_substate.w
+	MOVE.w	#$2B, Gameplay_state.w
 	BRA.b	loc_00003EAA
 loc_00003E8A:
-	MOVE.w	#$11, Gameplay_substate.w
+	MOVE.w	#$11, Gameplay_state.w
 	MOVE.b	#$A3, D0
 	JSR	QueueSoundEffect
 	MOVE.w	#$00E0, D0
@@ -4330,7 +4376,7 @@ loc_000044C2:
 	TST.b	Chest_already_opened.w
 	BEQ.b	loc_000044E0
 	MOVE.b	#6, Fade_out_lines_mask.w
-	MOVE.w	#$1E, Gameplay_substate.w
+	MOVE.w	#$1E, Gameplay_state.w
 	MOVE.b	#$A3, D0
 	JSR	QueueSoundEffect
 	RTS
@@ -4389,7 +4435,7 @@ loc_0000457C:
 DecrementInaudiosSteps:
 	TST.w	Inaudios_steps_remaining.w
 	BNE.b	loc_0000458C
-	MOVE.w	#$26, Gameplay_substate.w
+	MOVE.w	#$26, Gameplay_state.w
 	BRA.b	loc_0000458E
 loc_0000458C:
 	BLT.b	loc_00004592
@@ -4426,7 +4472,7 @@ loc_000045B4: ; Enter cave
 	MOVE.w	Player_map_sector_y.w, Player_cave_map_sector_y.w
 	MOVE.b	#$FF, Cave_position_saved.w
 loc_000045F0:
-	MOVE.w	#$15, Gameplay_substate.w
+	MOVE.w	#$15, Gameplay_state.w
 	MOVE.b	#$A3, D0
 	JSR	QueueSoundEffect
 	RTS
@@ -4434,7 +4480,7 @@ loc_000045F0:
 loc_00004602:
 	ANDI.w	#$000F, D0
 	MOVE.w	D0, Current_town.w
-	MOVE.w	#$14, Gameplay_substate.w
+	MOVE.w	#$14, Gameplay_state.w
 	CLR.b	Cave_position_saved.w
 	MOVE.b	#$A3, D0
 	JSR	QueueSoundEffect
@@ -4445,7 +4491,7 @@ loc_00004626:
 	MOVE.b	#$A3, D0
 	JSR	QueueSoundEffect
 	CLR.b	Cave_position_saved.w
-	MOVE.w	#$17, Gameplay_substate.w
+	MOVE.w	#$17, Gameplay_state.w
 	MOVE.b	#$FF, Fade_out_lines_mask.w
 	RTS
 
@@ -7103,7 +7149,7 @@ loc_00006B50:
 	MOVE.b	$1(A6), D0
 	LEA	(A6,D0.w), A6
 	MOVE.l	#loc_00006B98, $2(A6)
-	MOVE.w	#$23, Gameplay_substate.w
+	MOVE.w	#$23, Gameplay_state.w
 	MOVE.b	#$FF, Fade_out_lines_mask.w
 	CLR.b	Player_is_moving.w
 	JSR	AddSpriteToDisplayList
@@ -8450,7 +8496,7 @@ loc_00007CCC:
 	MOVE.b	#$FF, Fade_out_lines_mask.w
 	MOVE.b	#$85, D0
 	JSR	QueueSoundEffect
-	MOVE.w	#3, Gameplay_substate.w
+	MOVE.w	#3, Gameplay_state.w
 	MOVE.w	#$FFFF, Player_poisoned.w
 	MOVE.b	#$FF, Poison_notified.w
 	MOVE.w	Player_mhp.w, Player_hp.w
@@ -8623,7 +8669,7 @@ loc_00007F4E:
 	RTS
 
 loc_00007F7C:
-	MOVE.w	Gameplay_substate.w, D0
+	MOVE.w	Gameplay_state.w, D0
 	CMPI.w	#$000A, D0
 	BNE.b	loc_00007F96
 	TST.b	Fake_king_killed.w
@@ -26288,7 +26334,7 @@ loc_000185BC:
 	MOVE.w	$6(A0,D0.w), Player_map_sector_y.w
 	MOVE.w	#0, Player_direction.w
 	MOVE.b	#$FF, Fade_out_lines_mask.w
-	MOVE.w	#$12, Gameplay_substate.w
+	MOVE.w	#$12, Gameplay_state.w
 	MOVE.b	#$FF, Player_in_first_person_mode.w
 	CLR.b	Is_in_cave.w
 	MOVE.w	#$0089, D0
@@ -26529,7 +26575,7 @@ CastExtrios:
 	MOVE.w	Player_cave_map_sector_x.w, Player_map_sector_x.w
 	MOVE.w	Player_cave_map_sector_y.w, Player_map_sector_y.w
 	MOVE.b	#$FF, Fade_out_lines_mask.w
-	MOVE.w	#$12, Gameplay_substate.w
+	MOVE.w	#$12, Gameplay_state.w
 	MOVE.b	#$FF, Player_in_first_person_mode.w
 	CLR.b	Is_in_cave.w
 	CLR.b	Cave_light_active.w
@@ -28814,7 +28860,7 @@ loc_0001A8F4:
 	MOVE.w	$6(A0,D0.w), Player_map_sector_y.w
 	MOVE.w	#0, Player_direction.w
 	MOVE.b	#$FF, Fade_out_lines_mask.w
-	MOVE.w	#$12, Gameplay_substate.w
+	MOVE.w	#$12, Gameplay_state.w
 	MOVE.b	#$FF, Player_in_first_person_mode.w
 	CLR.b	Is_in_cave.w
 	MOVE.w	#$89, D0
@@ -28836,7 +28882,7 @@ loc_0001A954:
 	MOVE.w	Player_cave_map_sector_x.w, Player_map_sector_x.w
 	MOVE.w	Player_cave_map_sector_y.w, Player_map_sector_y.w
 	MOVE.b	#$FF, Fade_out_lines_mask.w
-	MOVE.w	#$12, Gameplay_substate.w
+	MOVE.w	#$12, Gameplay_state.w
 	MOVE.b	#$FF, Player_in_first_person_mode.w
 	CLR.b	Is_in_cave.w
 	CLR.b	Cave_light_active.w
@@ -29202,7 +29248,7 @@ UseAlarmClock:
 	MOVE.w	Current_town.w, D0
 	CMPI.w	#TOWN_KELTWICK, D0
 	BNE.w	loc_0001AE6E
-	MOVE.w	Gameplay_substate.w, D0
+	MOVE.w	Gameplay_state.w, D0
 	CMPI.w	#6, D0
 	BNE.w	loc_0001AE6E
 	MOVE.w	Current_town_room.w, D0
@@ -29282,7 +29328,7 @@ UseOldWomansSketch:
 	MOVE.w	Current_town.w, D0
 	CMPI.w	#TOWN_KELTWICK, D0
 	BNE.w	loc_0001AF1E
-	MOVE.w	Gameplay_substate.w, D0
+	MOVE.w	Gameplay_state.w, D0
 	CMPI.w	#2, D0
 	BNE.w	loc_0001AF1E
 	CLR.w	D0
@@ -29333,7 +29379,7 @@ UseOldMansSketch
 	MOVE.w	Current_town.w, D0
 	CMPI.w	#TOWN_HELWIG, D0
 	BNE.w	loc_0001AFA2
-	MOVE.w	Gameplay_substate.w, D0
+	MOVE.w	Gameplay_state.w, D0
 	TST.b	Player_in_first_person_mode.w
 	BNE.w	loc_0001AFA2
 	CLR.w	D0
@@ -29422,7 +29468,7 @@ UseSixteenRings:
 	MOVE.w	Current_town.w, D0
 	CMPI.w	#TOWN_CARTHAHENA, D0
 	BNE.b	loc_0001B06C
-	MOVE.w	Gameplay_substate.w, D0
+	MOVE.w	Gameplay_state.w, D0
 	CMPI.w	#$A, D0
 	BNE.b	loc_0001B06C
 	MOVE.w	#$15, D0
@@ -36420,9 +36466,9 @@ InitDialogMode:
 	MOVE.b	#$FF, Dialog_state_flag.w
 	CLR.w	Dialog_timer.w
 	CLR.w	Dialog_phase.w
-	MOVE.w	Gameplay_substate.w, Saved_game_state.w
+	MOVE.w	Gameplay_state.w, Saved_game_state.w
 	MOVE.w	Player_direction.w, Saved_player_direction.w
-	MOVE.w	#$20, Gameplay_substate.w
+	MOVE.w	#$20, Gameplay_state.w
 	RTS
 	
 ;InitDialogGraphics:
