@@ -922,7 +922,7 @@ ProgramState_04:
 	CLR.w	Program_state.w
 	CLR.b	Scene_update_flag.w
 	JSR	ClearScrollData
-	JSR	loc_00016A72
+	JSR	ClearEnemyActiveFlags
 	MOVE.l	#HBlankObjectHandler, $12(A5)
 loc_00001614:
 	RTS
@@ -971,7 +971,7 @@ ProgramState_0B:
 	JSR	ClearVRAMPlaneA
 	JSR	ClearVRAMPlaneB
 	JSR	ClearScrollData
-	JSR	loc_00016A72
+	JSR	ClearEnemyActiveFlags
 	MOVE.w	VDP_Reg11_cache.w, D0
 	ANDI.w	#$FFF8, D0
 	MOVE.w	D0, VDP_control_port
@@ -1031,7 +1031,7 @@ ProgramState_05:
 	JSR	DisableVDPDisplay
 	CLR.b	Scene_update_flag.w
 	JSR	ClearScrollData
-	JSR	loc_00016A72
+	JSR	ClearEnemyActiveFlags
 	MOVE.w	VDP_Reg11_cache.w, D0
 	ANDI.w	#$FFF8, D0
 	MOVE.w	D0, VDP_control_port
@@ -2091,7 +2091,7 @@ loc_00002720:
 loc_00002724:
 	JSR	DisplayPlayerHpMp
 	JSR	loc_000130EA
-	JSR	loc_00013186
+	JSR	DisplayPlayerKimsAndExperience
 	JSR	loc_00013028
 	RTS
 
@@ -2298,7 +2298,7 @@ loc_00002974:
 	JSR	LoadLevelUpBannerTiles
 	JSR	DisplayPlayerHpMp
 	JSR	loc_000130EA
-	JSR	loc_00013186
+	JSR	DisplayPlayerKimsAndExperience
 	RTS
 
 loc_000029D4:
@@ -2880,10 +2880,11 @@ loc_000031EE:
 	JSR	loc_00010C9E
 	ADDQ.w	#1, Overworld_menu_state.w
 	CLR.w	Main_menu_selection.w
-	BSR.w	loc_00003208
+	BSR.w	InitMenuCursorDefaults
 	RTS
 
-loc_00003208:
+;InitMenuCursorDefaults:
+InitMenuCursorDefaults:
 	MOVE.w	#3, Menu_cursor_column_break.w
 	MOVE.w	#7, Menu_cursor_last_index.w
 	MOVE.w	#5, Menu_cursor_second_column_x.w
@@ -10164,7 +10165,7 @@ loc_00009394:
 	MOVEQ	#0, D0
 	MOVE.w	$2A(A5), D0
 	MOVE.l	D0, Transaction_amount.w
-	JSR	loc_0001154E
+	JSR	AddExperiencePoints
 	MOVEQ	#0, D0
 	MOVE.w	$3E(A5), D0
 	MOVE.l	D0, Transaction_amount.w
@@ -10187,7 +10188,7 @@ EnemyDeathReward_TwoSprites:
 	MOVEQ	#0, D0
 	MOVE.w	$2A(A5), D0
 	MOVE.l	D0, Transaction_amount.w
-	JSR	loc_0001154E
+	JSR	AddExperiencePoints
 	MOVEQ	#0, D0
 	MOVE.w	$3E(A5), D0
 	MOVE.l	D0, Transaction_amount.w
@@ -12520,7 +12521,7 @@ loc_0000B50C:
 	MOVEQ	#0, D0
 	MOVE.w	$2A(A5), D0
 	MOVE.l	D0, Transaction_amount.w
-	JSR	loc_0001154E
+	JSR	AddExperiencePoints
 	MOVEQ	#0, D0
 	MOVE.w	$3E(A5), D0
 	MOVE.l	D0, Transaction_amount.w
@@ -13170,7 +13171,7 @@ loc_0000BE86:
 	MOVE.w	#$0032, Dialog_timer.w
 	BRA.b	loc_0000BEB0
 loc_0000BEAC:
-	BSR.w	loc_0000CDD8
+	BSR.w	ClearDialogPlane
 loc_0000BEB0:
 	BSR.w	UpdateSpritePositionAndRender
 	RTS
@@ -13729,7 +13730,7 @@ loc_0000C6BA:
 	MOVE.l	#loc_0000BEB6, $2(A5)
 	BRA.b	loc_0000C6DE
 loc_0000C6DA:
-	BSR.w	loc_0000CDD8
+	BSR.w	ClearDialogPlane
 loc_0000C6DE:
 	JSR	AddSpriteToDisplayList
 	RTS
@@ -14263,7 +14264,8 @@ loc_0000CDB6:
 	ANDI	#$F8FF, SR
 	RTS
 
-loc_0000CDD8:
+;ClearDialogPlane:
+ClearDialogPlane:
 	MOVE.l	#$44200000, D5
 	MOVEQ	#0, D0
 	MOVE.w	Dialog_phase.w, D0
@@ -14484,7 +14486,7 @@ loc_0000D06A:
 	ANDI.w	#$000F, D6
 	ASL.w	#3, D6
 	MOVE.l	(A2,D6.w), Transaction_amount.w
-	JSR	loc_0001154E
+	JSR	AddExperiencePoints
 	MOVE.l	$4(A2,D6.w), Transaction_amount.w
 	JSR	AddPaymentAmount
 	RTS
@@ -14742,7 +14744,7 @@ loc_0000D454:
 	BSET.b	#2, $1D(A5)
 loc_0000D45A:
 	MOVE.b	#1, $41(A5)
-	JSR	loc_0000D594(PC)
+	JSR	SetEntityCoordFromDirection(PC)
 	MOVEA.l	Player_entity_ptr.w, A6
 	MOVE.w	$E(A6), D1
 	MOVE.w	$E(A5), D2
@@ -14804,7 +14806,7 @@ loc_0000D52E:
 	CMPI.w	#6, $3A(A5)
 	BNE.b	loc_0000D542
 	MOVE.b	#0, $41(A5)
-	JSR	loc_0000D594(PC)
+	JSR	SetEntityCoordFromDirection(PC)
 	BRA.b	loc_0000D572
 loc_0000D542:
 	MOVEA.l	Object_slot_07_ptr.w, A6
@@ -14816,7 +14818,7 @@ loc_0000D542:
 	BRA.b	loc_0000D572
 loc_0000D55E:
 	MOVE.b	#2, $41(A5)
-	JSR	loc_0000D594(PC)
+	JSR	SetEntityCoordFromDirection(PC)
 	MOVE.w	#$0028, $3A(A5)
 	ADDQ.b	#1, $42(A5)
 loc_0000D572:
@@ -14827,13 +14829,14 @@ loc_0000D574:
 	BGT.b	loc_0000D592
 	CLR.b	$27(A5)
 	MOVE.b	#0, $41(A5)
-	JSR	loc_0000D594(PC)
+	JSR	SetEntityCoordFromDirection(PC)
 	MOVE.w	#$003C, $3A(A5)
 	CLR.b	$42(A5)
 loc_0000D592:
 	RTS
 
-loc_0000D594:
+;SetEntityCoordFromDirection:
+SetEntityCoordFromDirection:
 	BTST.b	#2, $1D(A5)
 	BNE.b	loc_0000D5B4
 	LEA	loc_0000D5DA, A0
@@ -14941,7 +14944,7 @@ loc_0000D718:
 	RTS
 
 loc_0000D744:
-	JSR	loc_0000CDD8
+	JSR	ClearDialogPlane
 loc_0000D74A:
 	RTS
 
@@ -15362,7 +15365,7 @@ loc_0000DD12:
 	MOVE.l	#loc_0000DD2C, $2(A5)
 	MOVE.w	#$0080, $3A(A5)
 	CLR.b	$41(A5)
-	JSR	loc_0000E2EC
+	JSR	ProcessPlayerStrengthCheck
 	RTS
 	
 loc_0000DD2C:
@@ -15412,7 +15415,7 @@ loc_0000DDB6:
 	MOVE.b	#$D0, $18(A6)
 	MOVE.b	#$FF, $41(A5)
 loc_0000DDCA:
-	JSR	loc_0000E2EC
+	JSR	ProcessPlayerStrengthCheck
 	RTS
 	
 loc_0000DDD2:
@@ -15439,7 +15442,7 @@ loc_0000DDDC:
 	MOVE.l	#loc_0000DCBA, $2(A5)
 	MOVE.b	#$50, $1A(A5)
 loc_0000DE2C:
-	JSR	loc_0000E2EC
+	JSR	ProcessPlayerStrengthCheck
 	RTS
 	
 loc_0000DE34:
@@ -15466,7 +15469,7 @@ loc_0000DE74:
 	ASR.w	#3, D0
 	LEA	loc_00023A4E, A0
 	MOVE.w	(A0,D0.w), $8(A6)
-	JSR	loc_0000E2EC
+	JSR	ProcessPlayerStrengthCheck
 	RTS
 	
 loc_0000DE8A:
@@ -15775,7 +15778,8 @@ loc_0000E2C4:
 	JSR	AddSpriteToDisplayList
 	RTS
 
-loc_0000E2EC:
+;ProcessPlayerStrengthCheck:
+ProcessPlayerStrengthCheck:
 	TST.w	$3C(A5)
 	BLE.b	loc_0000E300
 	SUBQ.w	#1, $3C(A5)
@@ -16337,7 +16341,7 @@ loc_0000EAC0:
 	RTS
 	
 loc_0000EAEA:
-	JSR	loc_0000CDD8
+	JSR	ClearDialogPlane
 loc_0000EAF0:
 	JSR	AddSpriteToDisplayList
 	RTS
@@ -16839,7 +16843,7 @@ loc_0000F19A:
 	JSR	loc_0000CF16
 	BRA.b	loc_0000F1CC
 loc_0000F1C6:
-	JSR	loc_0000CDD8
+	JSR	ClearDialogPlane
 loc_0000F1CC:
 	RTS
 	
@@ -16854,7 +16858,7 @@ loc_0000F1CE:
 	MOVE.w	#$0050, Dialog_timer.w
 	BRA.b	loc_0000F1FA
 loc_0000F1F4:
-	JSR	loc_0000CDD8
+	JSR	ClearDialogPlane
 loc_0000F1FA:
 	RTS
 	
@@ -19302,7 +19306,8 @@ DrawMoneyDisplayWindow:
 	MOVE.b	#$FF, Window_tilemap_draw_pending.w
 	RTS
 	
-loc_000110BE:
+;DrawItemListBorders:
+DrawItemListBorders:
 	MOVE.w	Possessed_items_length.w, D7
 	BSR.w	loc_00011106
 	MOVE.w	Possessed_items_length.w, D0
@@ -19685,7 +19690,8 @@ loc_00011522:
 	SWAP	D0
 	RTS
 
-loc_0001154E:
+;AddExperiencePoints:
+AddExperiencePoints:
 	LEA	Transaction_amount_end.w, A0
 	LEA	Player_next_level_experience.w, A1
 	MOVEQ	#3, D1
@@ -20870,7 +20876,7 @@ loc_00012620:
 	BSR.w	DrawWindowFromBuffer
 	TST.b	Player_in_first_person_mode.w
 	BEQ.b	loc_0001264C
-	BSR.w	loc_00013186
+	BSR.w	DisplayPlayerKimsAndExperience
 loc_0001264C:
 	RTS
 	
@@ -20933,7 +20939,8 @@ loc_000126FC:
 	BSR.w	DrawWindowFromBuffer
 	RTS
 	
-loc_0001271E:
+;RestoreRightMenuFromBuffer:
+RestoreRightMenuFromBuffer:
 	LEA	Right_menu_tiles_buffer, A0
 	MOVE.w	#$000C, Window_tile_x.w
 	MOVE.w	#4, Window_tile_y.w
@@ -21181,7 +21188,8 @@ CopyStringUntilFF:
 loc_00012A78:
 	RTS
 	
-loc_00012A7A:
+;DrawItemListNames:
+DrawItemListNames:
 	MOVE.w	#$0011, Window_tilemap_draw_x.w
 	MOVE.w	#4, Window_tilemap_draw_y.w
 	LEA	Possessed_items_list.w, A2
@@ -21714,7 +21722,8 @@ loc_00013138:
 	ANDI	#$F8FF, SR
 	RTS
 
-loc_00013186:
+;DisplayPlayerKimsAndExperience:
+DisplayPlayerKimsAndExperience:
 	ORI	#$0700, SR
 	MOVE.w	#$001C, Window_number_cursor_x.w
 	MOVE.w	#$0013, Window_number_cursor_y.w
@@ -24305,7 +24314,8 @@ loc_000169D0:
 	JSR	EnableDisplay
 	RTS
 
-loc_00016A72:
+;ClearEnemyActiveFlags:
+ClearEnemyActiveFlags:
 	MOVEA.l	Enemy_list_ptr.w, A6
 	MOVEQ	#$13, D7
 loc_00016A78:
@@ -25592,7 +25602,7 @@ loc_00017F44:
 	CLR.w	Window_text_row.w
 	MOVE.b	#$FF, Window_tilemap_row_draw_pending.w
 	MOVE.w	#4, Overworld_menu_state.w
-	JSR	loc_00003208
+	JSR	InitMenuCursorDefaults
 	RTS
 
 loc_00017F80:
@@ -28154,7 +28164,7 @@ loc_0001A344:
 	CLR.w	Window_text_row.w
 	MOVE.b	#$FF, Window_tilemap_row_draw_pending.w
 	MOVE.w	#4, Overworld_menu_state.w
-	JSR	loc_00003208
+	JSR	InitMenuCursorDefaults
 	RTS
 
 loc_0001A380:
@@ -28231,8 +28241,8 @@ loc_0001A476:
 	TST.b	Script_text_complete.w
 	BEQ.b	loc_0001A4A4
 	JSR	SaveCenterDialogAreaToBuffer
-	JSR	loc_000110BE
-	JSR	loc_00012A7A
+	JSR	DrawItemListBorders
+	JSR	DrawItemListNames
 	CLR.w	Selected_item_index.w
 	MOVE.w	#5, Item_menu_state.w
 	MOVE.w	Possessed_items_length.w, D0
@@ -28377,8 +28387,8 @@ loc_0001A69E:
 	TST.b	Script_text_complete.w
 	BEQ.b	loc_0001A6CA
 	JSR	SaveCenterDialogAreaToBuffer
-	JSR	loc_000110BE
-	JSR	loc_00012A7A
+	JSR	DrawItemListBorders
+	JSR	DrawItemListNames
 	CLR.w	Selected_item_index.w
 	ADDQ.w	#1, Item_menu_state.w
 	MOVE.w	Possessed_items_length.w, D0
@@ -30287,8 +30297,8 @@ loc_0001C168:
 	MOVE.w	Possessed_magics_length.w, D0
 	BRA.b	loc_0001C1E4
 loc_0001C1B2:
-	JSR	loc_000110BE
-	JSR	loc_00012A7A
+	JSR	DrawItemListBorders
+	JSR	DrawItemListNames
 	MOVE.l	#Possessed_items_list, Active_inventory_list_ptr.w
 	MOVE.w	Possessed_items_length.w, D0
 	BRA.b	loc_0001C1E4
@@ -31385,7 +31395,7 @@ loc_0001D098:
 	CLR.w	Window_text_row.w
 	MOVE.b	#$FF, Window_tilemap_row_draw_pending.w
 	MOVE.w	#4, Overworld_menu_state.w
-	JSR	loc_00003208
+	JSR	InitMenuCursorDefaults
 	RTS
 	
 loc_0001D0C0:
@@ -31423,7 +31433,7 @@ loc_0001D104:
 loc_0001D138:
 	MOVE.w	#$00A8, D0
 	JSR	QueueSoundEffect
-	JSR	loc_0001271E
+	JSR	RestoreRightMenuFromBuffer
 	JSR	DrawEquipmentMenuWindow
 	MOVE.w	#1, Ready_equipment_state.w
 	RTS
@@ -31471,7 +31481,7 @@ loc_0001D1EC:
 	JSR	QueueSoundEffect
 	JSR	loc_00012742
 	JSR	DrawStatusHudWindow
-	JSR	loc_0001271E
+	JSR	RestoreRightMenuFromBuffer
 	JSR	DrawEquipmentMenuWindow
 	MOVE.w	#1, Ready_equipment_state.w
 	RTS
@@ -31583,7 +31593,7 @@ loc_0001D370:
 loc_0001D39C:
 	MOVE.w	#$00A8, D0	
 	JSR	QueueSoundEffect	
-	JSR	loc_0001271E	
+	JSR	RestoreRightMenuFromBuffer	
 	JSR	DrawEquipmentMenuWindow	
 	MOVE.w	#1, Ready_equipment_state.w	
 	RTS
@@ -31650,7 +31660,7 @@ loc_0001D476:
 
 loc_0001D496:
 	JSR	DrawStatusHudWindow
-	JSR	loc_0001271E
+	JSR	RestoreRightMenuFromBuffer
 	JSR	DrawEquipmentMenuWindow
 	MOVE.w	#1, Ready_equipment_state.w
 	RTS
@@ -32073,7 +32083,7 @@ loc_0001D99E:
 	TST.b	Window_tilemap_row_draw_pending.w
 	BNE.w	loc_0001D9BA
 	MOVE.w	#4, Overworld_menu_state.w
-	JSR	loc_00003208
+	JSR	InitMenuCursorDefaults
 loc_0001D9BA:
 	RTS
 
@@ -32979,7 +32989,7 @@ loc_0001E668:
 	MOVE.w	Reward_script_value.w, D0
 	MOVE.l	D0, Transaction_amount.w
 	JSR	AddPaymentAmount
-	JSR	loc_00013186
+	JSR	DisplayPlayerKimsAndExperience
 	JSR	CopyPlayerNameToTextBuffer
 	LEA	TakesStr, A0
 	JSR	CopyStringUntilFF
@@ -33082,8 +33092,8 @@ loc_0001E7DE:
 	MOVE.w	Possessed_magics_length.w, D0
 	BRA.w	loc_0001E84C
 loc_0001E818:
-	JSR	loc_000110BE
-	JSR	loc_00012A7A
+	JSR	DrawItemListBorders
+	JSR	DrawItemListNames
 	MOVE.l	#Possessed_items_list, Active_inventory_list_ptr.w
 	MOVE.w	Possessed_items_length.w, D0
 	BRA.w	loc_0001E84C
