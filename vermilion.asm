@@ -18978,7 +18978,7 @@ loc_00010BEA:
 	MOVE.w	#$000B, $FFFF9904.w
 	MOVE.w	#6, $FFFF990A.w
 	MOVE.w	#0, $FFFF990E.w
-	BSR.w	loc_00012C9A
+	BSR.w	DrawWindowBorder
 	LEA	MenuStartContinueStr, A0
 	MOVE.w	#2, $FFFF9906.w
 	MOVE.w	#2, $FFFF990C.w
@@ -19006,7 +19006,7 @@ InitDialogueWindow:
 	MOVE.w	#$001F, $FFFF9904.w
 	MOVE.w	#8, $FFFF990A.w
 	MOVE.w	#0, $FFFF990E.w
-	BSR.w	loc_00012C9A
+	BSR.w	DrawWindowBorder
 	CLR.w	$FFFF9914.w
 	MOVE.b	#$FF, $FFFF9900.w
 	RTS
@@ -19017,7 +19017,7 @@ loc_00010C9E:
 	MOVE.w	#$000D, $FFFF9904.w
 	MOVE.w	#$000A, $FFFF990A.w
 	MOVE.w	#0, $FFFF990E.w
-	BSR.w	loc_00012C9A
+	BSR.w	DrawWindowBorder
 	LEA	MenuOptionsStr, A0
 	MOVE.w	#2, $FFFF9906.w
 	MOVE.w	#2, $FFFF990C.w
@@ -19032,7 +19032,7 @@ loc_00010CE2:
 	MOVE.w	#$000E, $FFFF9904.w	
 	MOVE.w	#$000A, $FFFF990A.w	
 	MOVE.w	#0, $FFFF990E.w	
-	BSR.w	loc_00012C9A	
+	BSR.w	DrawWindowBorder	
 	LEA	MessageSpeedStr, A0	
 	MOVE.w	#1, $FFFF9906.w	
 	MOVE.w	#2, $FFFF990C.w	
@@ -19061,7 +19061,7 @@ loc_00010D44:
 	MOVE.w	#6, $FFFF9904.w
 	MOVE.w	#6, $FFFF990A.w
 	MOVE.w	#0, $FFFF990E.w
-	BSR.w	loc_00012C9A
+	BSR.w	DrawWindowBorder
 	LEA	YesNoStr, A0
 	MOVE.w	#3, $FFFF9906.w
 	MOVE.w	#2, $FFFF990C.w
@@ -19081,7 +19081,7 @@ loc_00010DA4:
 	MOVE.w	#$0015, $FFFF9904.w
 	MOVE.w	#7, $FFFF990A.w
 	MOVE.w	#0, $FFFF990E.w
-	BSR.w	loc_00012C9A
+	BSR.w	DrawWindowBorder
 	LEA	SavedGameOptionsStr, A0
 	MOVE.w	#2, $FFFF9906.w
 	MOVE.w	#2, $FFFF990C.w
@@ -19115,7 +19115,7 @@ loc_00010E46:
 	MOVE.w	#$000D, $FFFF9904.w
 	MOVE.w	#8, $FFFF990A.w
 	MOVE.w	#0, $FFFF990E.w
-	BSR.w	loc_00012C9A
+	BSR.w	DrawWindowBorder
 	LEA	CastReadyDiscardStr, A0
 	MOVE.w	#2, $FFFF9906.w
 	MOVE.w	#2, $FFFF990C.w
@@ -19134,7 +19134,7 @@ loc_00010EA2:
 	MOVE.w	#$000D, $FFFF9904.w
 	MOVE.w	#6, $FFFF990A.w
 	MOVE.w	#0, $FFFF990E.w
-	BSR.w	loc_00012C9A
+	BSR.w	DrawWindowBorder
 	LEA	UseDiscardStr, A0
 	MOVE.w	#2, $FFFF9906.w
 	MOVE.w	#2, $FFFF990C.w
@@ -19153,7 +19153,7 @@ loc_00010EFE:
 	MOVE.w	#$000B, $FFFF9904.w
 	MOVE.w	#8, $FFFF990A.w
 	MOVE.w	#0, $FFFF990E.w
-	BSR.w	loc_00012C9A
+	BSR.w	DrawWindowBorder
 	LEA	PutOnRemoveStopStr, A0
 	MOVE.w	#2, $FFFF9906.w
 	MOVE.w	#2, $FFFF990C.w
@@ -19172,7 +19172,7 @@ loc_00010F5A:
 	MOVE.w	#9, $FFFF9904.w
 	MOVE.w	#8, $FFFF990A.w
 	MOVE.w	#0, $FFFF990E.w
-	BSR.w	loc_00012C9A
+	BSR.w	DrawWindowBorder
 	LEA	EquipOptionsStr, A0
 	MOVE.w	#2, $FFFF9906.w
 	MOVE.w	#2, $FFFF990C.w
@@ -19191,7 +19191,7 @@ loc_00010FB6:
 	MOVE.w	#$0015, $FFFF9904.w
 	MOVE.w	#$000A, $FFFF990A.w
 	MOVE.w	#0, $FFFF990E.w
-	BSR.w	loc_00012C9A
+	BSR.w	DrawWindowBorder
 	LEA	ChurchOptionsStr, A0
 	MOVE.w	#2, $FFFF9906.w
 	MOVE.w	#2, $FFFF990C.w
@@ -19210,7 +19210,7 @@ loc_00011012:
 	MOVE.w	#7, $FFFF9904.w
 	MOVE.w	#8, $FFFF990A.w
 	MOVE.w	#0, $FFFF990E.w
-	BSR.w	loc_00012C9A
+	BSR.w	DrawWindowBorder
 	LEA	BuySellStopStr, A0
 	MOVE.w	#2, $FFFF9906.w
 	MOVE.w	#2, $FFFF990C.w
@@ -19225,7 +19225,7 @@ loc_0001106E:
 	MOVE.w	#9, $FFFF9904.w
 	MOVE.w	#6, $FFFF990A.w
 	MOVE.w	#0, $FFFF990E.w
-	BSR.w	loc_00012C9A
+	BSR.w	DrawWindowBorder
 	LEA	KimStr, A0
 	MOVE.w	#2, $FFFF9906.w
 	MOVE.w	#2, $FFFF990C.w
@@ -19319,7 +19319,7 @@ loc_0001119A:
 	ADDQ.w	#2, D0
 	MOVE.w	D0, $FFFF990A.w
 	MOVE.w	#0, $FFFF990E.w
-	BSR.w	loc_00012C9A
+	BSR.w	DrawWindowBorder
 	MOVE.w	#2, $FFFF9906.w
 	MOVE.w	#2, $FFFF990C.w
 	LEA	$FFFFC4B4.w, A3
@@ -19378,7 +19378,7 @@ loc_00011274:
 	ADDQ.w	#2, D0
 	MOVE.w	D0, $FFFF990A.w
 	MOVE.w	#0, $FFFF990E.w
-	BSR.w	loc_00012C9A
+	BSR.w	DrawWindowBorder
 	MOVE.w	#2, $FFFF9906.w
 	MOVE.w	#2, $FFFF990C.w
 	LEA	$FFFFC4B4.w, A3
@@ -19412,7 +19412,7 @@ loc_00011304:
 	MOVE.w	#$000D, $FFFFC23C.w
 	MOVE.w	#$0016, $FFFF9904.w
 	MOVE.w	#$0010, $FFFF990A.w
-	BSR.w	loc_00012C9A
+	BSR.w	DrawWindowBorder
 	MOVE.w	#$000C, $FFFF9906.w
 	MOVE.w	#2, $FFFF990C.w
 	LEA	TownNames, A4
@@ -19723,7 +19723,7 @@ loc_0001168C:
 	MOVE.w	#$001B, $FFFF9904.w
 	MOVE.w	#$0010, $FFFF990A.w
 	MOVE.w	#0, $FFFF990E.w
-	BSR.w	loc_00012C9A
+	BSR.w	DrawWindowBorder
 	LEA	SelectNumberStr, A0
 	MOVE.w	#2, $FFFF9906.w
 	MOVE.w	#4, $FFFF990C.w
@@ -19826,7 +19826,7 @@ loc_000117E8:
 	MOVE.w	#$0019, $FFFF9904.w
 	MOVE.w	#$000A, $FFFF990A.w
 	MOVE.w	#0, $FFFF990E.w
-	BSR.w	loc_00012C9A
+	BSR.w	DrawWindowBorder
 	LEA	ErrorPressCStr, A0
 	MOVE.w	#2, $FFFF9906.w
 	MOVE.w	#2, $FFFF990C.w
@@ -19841,7 +19841,7 @@ loc_0001182C:
 	MOVE.w	#$0019, $FFFF9904.w	
 	MOVE.w	#$000A, $FFFF990A.w	
 	MOVE.w	#0, $FFFF990E.w	
-	BSR.w	loc_00012C9A	
+	BSR.w	DrawWindowBorder	
 	LEA	LooksBetterPressCStr, A0	
 	MOVE.w	#2, $FFFF9906.w	
 	MOVE.w	#2, $FFFF990C.w	
@@ -19856,7 +19856,7 @@ loc_00011870:
 	MOVE.w	#$0019, $FFFF9904.w
 	MOVE.w	#$000A, $FFFF990A.w
 	MOVE.w	#0, $FFFF990E.w
-	BSR.w	loc_00012C9A
+	BSR.w	DrawWindowBorder
 	LEA	DidntWorkPressResetStr, A0
 	MOVE.w	#2, $FFFF9906.w
 	MOVE.w	#2, $FFFF990C.w
@@ -19871,7 +19871,7 @@ loc_000118B4:
 	MOVE.w	#$0019, $FFFF9904.w
 	MOVE.w	#$000A, $FFFF990A.w
 	MOVE.w	#0, $FFFF990E.w
-	BSR.w	loc_00012C9A
+	BSR.w	DrawWindowBorder
 	LEA	NoSavedGameStr, A0
 	MOVE.w	#2, $FFFF9906.w
 	MOVE.w	#2, $FFFF990C.w
@@ -19886,7 +19886,7 @@ loc_000118F8:
 	MOVE.w	#$0019, $FFFF9904.w	
 	MOVE.w	#$000A, $FFFF990A.w	
 	MOVE.w	#0, $FFFF990E.w	
-	BSR.w	loc_00012C9A	
+	BSR.w	DrawWindowBorder	
 	LEA	GameReadyPressCStr, A0	
 	MOVE.w	#2, $FFFF9906.w	
 	MOVE.w	#2, $FFFF990C.w	
@@ -19901,7 +19901,7 @@ loc_0001193C:
 	MOVE.w	#$001B, $FFFF9904.w
 	MOVE.w	#$0014, $FFFF990A.w
 	MOVE.w	#0, $FFFF990E.w
-	BSR.w	loc_00012C9A
+	BSR.w	DrawWindowBorder
 	LEA	CharacterStatsStr, A0
 	MOVE.w	#2, $FFFF9906.w
 	MOVE.w	#2, $FFFF990C.w
@@ -20012,7 +20012,7 @@ loc_00011AEC:
 	MOVE.w	#$001A, $FFFF9904.w
 	MOVE.w	#$000C, $FFFF990A.w
 	MOVE.w	#0, $FFFF990E.w
-	BSR.w	loc_00012C9A
+	BSR.w	DrawWindowBorder
 	LEA	EquipmentReadiedStr, A0
 	MOVE.w	#1, $FFFF9906.w
 	MOVE.w	#2, $FFFF990C.w
@@ -20075,7 +20075,7 @@ loc_00011BB8:
 	ADDQ.w	#3, D0
 	MOVE.w	D0, $FFFF990A.w
 	MOVE.w	#0, $FFFF990E.w
-	BSR.w	loc_00012C9A
+	BSR.w	DrawWindowBorder
 	LEA	GearCombatStr, A0
 	MOVE.w	#2, $FFFF9906.w
 	MOVE.w	#2, $FFFF990C.w
@@ -20106,7 +20106,7 @@ loc_00011C0E:
 loc_00011C4C:
 	MOVE.w	#5, $FFFF990A.w	
 	MOVE.w	#0, $FFFF990E.w	
-	BSR.w	loc_00012C9A	
+	BSR.w	DrawWindowBorder	
 	LEA	GearCombatStr, A0	
 	MOVE.w	#2, $FFFF9906.w	
 	MOVE.w	#2, $FFFF990C.w	
@@ -20149,7 +20149,7 @@ loc_00011CC2:
 	ADDQ.w	#3, D0
 	MOVE.w	D0, $FFFF990A.w
 	MOVE.w	#0, $FFFF990E.w
-	BSR.w	loc_00012C9A
+	BSR.w	DrawWindowBorder
 	LEA	GearMagicStr, A0
 	MOVE.w	#2, $FFFF9906.w
 	MOVE.w	#2, $FFFF990C.w
@@ -20180,7 +20180,7 @@ loc_00011D18:
 loc_00011D56:
 	MOVE.w	#5, $FFFF990A.w
 	MOVE.w	#0, $FFFF990E.w
-	BSR.w	loc_00012C9A
+	BSR.w	DrawWindowBorder
 	LEA	GearMagicStr, A0
 	MOVE.w	#2, $FFFF9906.w
 	MOVE.w	#2, $FFFF990C.w
@@ -20202,7 +20202,7 @@ loc_00011D96:
 	ADDQ.w	#3, D0
 	MOVE.w	D0, $FFFF990A.w
 	MOVE.w	#0, $FFFF990E.w
-	BSR.w	loc_00012C9A
+	BSR.w	DrawWindowBorder
 	LEA	GearItemStr, A0
 	MOVE.w	#2, $FFFF9906.w
 	MOVE.w	#2, $FFFF990C.w
@@ -20227,7 +20227,7 @@ loc_00011DEC:
 loc_00011E12:
 	MOVE.w	#5, $FFFF990A.w	
 	MOVE.w	#0, $FFFF990E.w	
-	BSR.w	loc_00012C9A	
+	BSR.w	DrawWindowBorder	
 	LEA	GearItemStr, A0	
 	MOVE.w	#2, $FFFF9906.w	
 	MOVE.w	#2, $FFFF990C.w	
@@ -20261,7 +20261,7 @@ loc_00011E62:
 	ADDQ.w	#3, D0
 	MOVE.w	D0, $FFFF990A.w
 	MOVE.w	#0, $FFFF990E.w
-	BSR.w	loc_00012C9A
+	BSR.w	DrawWindowBorder
 	LEA	RingsStr, A0
 	MOVE.w	#7, $FFFF9906.w
 	MOVE.w	#2, $FFFF990C.w
@@ -20291,7 +20291,7 @@ loc_00011ED0:
 loc_00011EF8:
 	MOVE.w	#5, $FFFF990A.w	
 	MOVE.w	#0, $FFFF990E.w	
-	BSR.w	loc_00012C9A	
+	BSR.w	DrawWindowBorder	
 	LEA	RingsStr, A0	
 	MOVE.w	#2, $FFFF9906.w	
 	MOVE.w	#2, $FFFF990C.w	
@@ -21240,7 +21240,11 @@ loc_00012C92:
 	DBF	D7, loc_00012C42
 	RTS
 
-loc_00012C9A:
+; DrawWindowBorder
+; Draw window border/frame tiles
+; Fills window tilemap buffer with border tiles (corners, edges)
+; Uses tile $E0 + offsets for different border parts
+DrawWindowBorder:
 	LEA	$FFFF9920.w, A0
 	MOVE.w	$FFFF990A.w, D7
 	CLR.w	D1
