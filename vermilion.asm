@@ -1240,7 +1240,7 @@ loc_00001A4C:
 	MOVE.w	Palette_line_1_index_saved.w, Palette_line_1_fade_target.w
 	MOVE.w	Palette_line_2_cycle_base.w, Palette_line_2_fade_target.w
 	MOVE.w	#$0011, Palette_line_3_fade_target.w
-	MOVE.w	#2, $FFFFC414.w
+	MOVE.w	#2, Saved_game_state.w
 	MOVE.w	#$1F, Gameplay_substate.w
 	MOVE.b	#$FF, Fade_in_lines_mask.w
 	CLR.w	Overworld_menu_state.w
@@ -1256,14 +1256,14 @@ loc_00001A90:
 loc_00001A92:
 	TST.b	Fade_in_lines_mask.w
 	BNE.b	loc_00001A9E
-	MOVE.w	$FFFFC414.w, Gameplay_substate.w
+	MOVE.w	Saved_game_state.w, Gameplay_substate.w
 loc_00001A9E:
 	RTS
 
 loc_00001AA0:
 	TST.b	Soldier_fight_event_trigger.w
 	BEQ.b	loc_00001AC8
-	MOVE.w	Gameplay_substate.w, $FFFFC414.w
+	MOVE.w	Gameplay_substate.w, Saved_game_state.w
 	BSR.w	loc_00001B9A
 	MOVE.w	#$F, Gameplay_substate.w
 	MOVE.w	#$54, Current_encounter_type.w ; Carthahenian soldiers
@@ -1274,7 +1274,7 @@ loc_00001AA0:
 loc_00001AC8:
 	TST.b	Boss_event_trigger.w
 	BEQ.b	loc_00001AE6
-	MOVE.w	Gameplay_substate.w, $FFFFC414.w	
+	MOVE.w	Gameplay_substate.w, Saved_game_state.w	
 	BSR.w	loc_00001B9A	
 	MOVE.w	#$21, Gameplay_substate.w	
 	MOVE.b	#$FF, Fade_out_lines_mask.w	
@@ -1353,7 +1353,7 @@ loc_00001BE6:
 	MOVE.w	Saved_town_tileset_index.w, Town_tileset_index.w
 	MOVE.w	Saved_town_room_1.w, Current_town_room.w
 	MOVE.l	Saved_town_npc_data_ptr.w, Town_npc_data_ptr.w
-	MOVE.w	#4, $FFFFC414.w
+	MOVE.w	#4, Saved_game_state.w
 	BSR.w	loc_00002022
 loc_00001C1A:
 	RTS
@@ -1382,7 +1382,7 @@ loc_00001C56:
 	MOVE.w	$12(A6), Town_player_spawn_y.w	
 	MOVE.w	Town_camera_tile_x.w, Town_saved_camera_x.w	
 	MOVE.w	Town_camera_tile_y.w, Saved_camera_tile_y_room1.w	
-	MOVE.w	Gameplay_substate.w, $FFFFC414.w	
+	MOVE.w	Gameplay_substate.w, Saved_game_state.w	
 	MOVE.w	#$21, Gameplay_substate.w	
 	MOVE.w	#$00E0, D0	
 	JSR	QueueSoundEffect	
@@ -1576,7 +1576,7 @@ loc_00001F00:
 	MOVE.w	Saved_town_tileset_index.w, Town_tileset_index.w
 	MOVE.w	Saved_town_room_2.w, Current_town_room.w
 	MOVE.l	Saved_npc_data_ptr.w, Town_npc_data_ptr.w
-	MOVE.w	#6, $FFFFC414.w
+	MOVE.w	#6, Saved_game_state.w
 	BSR.w	loc_00002022
 loc_00001F40:
 	RTS
@@ -1633,7 +1633,7 @@ loc_00001FE0:
 	MOVE.w	Saved_town_tileset_index.w, Town_tileset_index.w
 	MOVE.w	Saved_town_room_3.w, Current_town_room.w
 	MOVE.l	Saved_npc_data_ptr_room3.w, Town_npc_data_ptr.w
-	MOVE.w	#8, $FFFFC414.w
+	MOVE.w	#8, Saved_game_state.w
 	BSR.w	loc_00002022
 loc_00002020:
 	RTS
@@ -1690,7 +1690,7 @@ loc_000020E0:
 	MOVE.w	Saved_town_tileset_index.w, Town_tileset_index.w
 	MOVE.w	Saved_town_room_1.w, Current_town_room.w
 	MOVE.l	Saved_town_npc_data_ptr.w, Town_npc_data_ptr.w
-	MOVE.w	#$A, $FFFFC414.w
+	MOVE.w	#$A, Saved_game_state.w
 	BSR.w	loc_00002022
 loc_00002114:
 	RTS
@@ -1703,7 +1703,7 @@ loc_00002116:
 	MOVE.w	$12(A6), Town_player_spawn_y.w
 	MOVE.w	Town_camera_tile_x.w, Town_saved_camera_x.w
 	MOVE.w	Town_camera_tile_y.w, Saved_camera_tile_y_room1.w
-	MOVE.w	Gameplay_substate.w, $FFFFC414.w
+	MOVE.w	Gameplay_substate.w, Saved_game_state.w
 	MOVE.w	#$21, Gameplay_substate.w
 	MOVE.w	#$00E0, D0
 	JSR	QueueSoundEffect
@@ -1754,7 +1754,7 @@ loc_000021DA:
 	MOVE.w	Saved_town_tileset_index.w, Town_tileset_index.w
 	MOVE.w	Saved_town_room_2.w, Current_town_room.w
 	MOVE.l	Saved_npc_data_ptr.w, Town_npc_data_ptr.w
-	MOVE.w	#$C, $FFFFC414.w
+	MOVE.w	#$C, Saved_game_state.w
 	BSR.w	loc_00002022
 loc_0000221A:
 	RTS
@@ -1805,7 +1805,7 @@ loc_000022A6:
 	MOVE.w	Saved_town_tileset_index.w, Town_tileset_index.w	
 	MOVE.w	Saved_town_room_3.w, Current_town_room.w	
 	MOVE.l	Saved_npc_data_ptr_room3.w, Town_npc_data_ptr.w	
-	MOVE.w	#$E, $FFFFC414.w	
+	MOVE.w	#$E, Saved_game_state.w	
 	BSR.w	loc_00002022	
 loc_000022E6:
 	RTS
@@ -1834,7 +1834,7 @@ loc_00002324:
 	MOVE.w	Player_direction.w, $FFFFC616.w
 	BSR.w	ClearAllEnemyEntities
 	JSR	loc_0000056A
-	CLR.w	$FFFFE000.w
+	CLR.w	Sprite_attr_count.w
 	JSR	loc_0000F688
 	CLR.b	Is_boss_battle.w
 	CLR.b	Boss_max_hp.w
@@ -1928,7 +1928,7 @@ loc_000024B8:
 	MOVE.w	#$15, Gameplay_substate.w
 loc_000024BE:
 	JSR	ClearAllEnemyEntities
-	CLR.w	$FFFFE000.w
+	CLR.w	Sprite_attr_count.w
 	JSR	loc_0000F688
 	MOVE.b	#$FF, Player_in_first_person_mode.w
 loc_000024D4:
@@ -2032,7 +2032,7 @@ loc_00002620:
 	CLR.w	Camera_scroll_y.w
 	BSR.w	ClearAllEnemyEntities
 	JSR	loc_00000578
-	CLR.w	$FFFFE000.w
+	CLR.w	Sprite_attr_count.w
 	JSR	loc_0000F688
 	JSR	loc_0000FFCE
 	BSR.w	loc_00003064
@@ -2063,7 +2063,7 @@ loc_000026BA: ; level up
 	MOVE.l	Player_experience.w, D0
 	CMP.l	Player_next_level_experience.w, D0
 	BLT.b	loc_00002706
-	MOVE.w	Gameplay_substate.w, $FFFFC414.w
+	MOVE.w	Gameplay_substate.w, Saved_game_state.w
 	MOVE.b	#$FF, Player_input_blocked.w
 	MOVE.w	#$1B, Gameplay_substate.w
 	MOVE.b	#$86, D0
@@ -2108,7 +2108,7 @@ loc_00002752:
 loc_0000275A:
 	TST.b	Boss_event_trigger.w
 	BEQ.b	loc_0000277E
-	MOVE.w	Gameplay_substate.w, $FFFFC414.w
+	MOVE.w	Gameplay_substate.w, Saved_game_state.w
 	MOVE.w	#$21, Gameplay_substate.w
 	MOVE.w	#$00E0, D0
 	JSR	QueueSoundEffect
@@ -2300,7 +2300,7 @@ loc_00002974:
 
 loc_000029D4:
 	CLR.b	Player_input_blocked.w
-	MOVE.w	$FFFFC414.w, Gameplay_substate.w
+	MOVE.w	Saved_game_state.w, Gameplay_substate.w
 	MOVE.b	#$8E, D0
 	TST.b	Is_in_cave.w
 	BEQ.b	loc_000029EE
@@ -2352,7 +2352,7 @@ loc_00002A74:
 	BLT.b	loc_00002A8C
 	CLR.b	$FFFFC56A.w
 	BSR.w	loc_00002F9C
-	MOVE.w	$FFFFC414.w, Gameplay_substate.w
+	MOVE.w	Saved_game_state.w, Gameplay_substate.w
 	BRA.b	loc_00002A90
 loc_00002A8C:
 	BSR.w	loc_00002F54
@@ -2392,7 +2392,7 @@ loc_00002AE0:
 	ADD.w	D0, D0
 	MOVEA.l	(A0,D0.w), A0
 	JSR	(A0)
-	CLR.w	$FFFFE000.w
+	CLR.w	Sprite_attr_count.w
 	JSR	loc_0000F688
 	MOVE.b	#$FF, Is_boss_battle.w
 	JSR	loc_0000FF82
@@ -2451,7 +2451,7 @@ loc_00002BCC:
 	CLR.b	Boss_max_hp.w
 	BSR.w	ClearAllEnemyEntities
 	JSR	loc_0000055C
-	CLR.w	$FFFFE000.w
+	CLR.w	Sprite_attr_count.w
 	JSR	loc_0000F688
 	MOVEA.l	Player_entity_ptr.w, A6
 	MOVE.l	#PlayerObjectHandler, $2(A6)
@@ -2468,7 +2468,7 @@ loc_00002BCC:
 	JSR	loc_000002D0
 	JSR	loc_000002EA
 	JSR	ClearScrollData
-	MOVE.w	$FFFFC414.w, D0
+	MOVE.w	Saved_game_state.w, D0
 	SUBQ.w	#1, D0
 	MOVE.w	D0, Gameplay_substate.w
 	TST.b	Is_in_cave.w
@@ -3737,8 +3737,8 @@ loc_00003BBE:
 	MOVE.l	D5, VDP_control_port
 	MOVE.l	D2, VDP_control_port
 	MOVE.w	D1, VDP_control_port
-	MOVE.l	D3, $FFFFC18C.w
-	JSR	$FFFFC190.w
+	MOVE.l	D3, Vdp_dma_cmd.w
+	JSR	Vdp_dma_ram_routine.w
 	MOVE.w	VDP_Reg1_cache.w, D4
 	BCLR.l	#4, D4
 	MOVE.w	D4, VDP_control_port
@@ -6585,7 +6585,7 @@ loc_00006390:
 	MOVE.w	Player_map_sector_y.w, D1
 	ASL.w	#4, D1
 	ADD.w	D1, D0
-	LEA	$FFFFC820.w, A0
+	LEA	Map_trigger_flags.w, A0
 	MOVE.b	(A0,D0.w), D0
 	BEQ.b	loc_000063B0
 	MOVE.b	#$FF, Area_map_revealed.w
@@ -6596,7 +6596,7 @@ loc_000063B2:
 	CLR.b	Area_map_revealed.w
 	MOVE.w	Current_cave_room.w, D0
 	ADDI.w	#$0090, D0
-	LEA	$FFFFC820.w, A0
+	LEA	Map_trigger_flags.w, A0
 	MOVE.b	(A0,D0.w), D0
 	BEQ.b	loc_000063CE
 	MOVE.b	#$FF, Area_map_revealed.w
@@ -7343,7 +7343,7 @@ loc_00006F10:
 	BNE.b	loc_00006F32
 	TST.b	Asti_monster_defeated.w
 	BEQ.b	loc_00006F32
-	LEA	$FFFFC820.w, A0
+	LEA	Map_trigger_flags.w, A0
 	MOVE.w	#$5D, D5
 	TST.b	(A0,D5.w)
 	BEQ.b	loc_00006F32
@@ -9168,7 +9168,7 @@ CheckInventoryFull:
 	RTS
 
 loc_0000858A:
-	LEA	$FFFFC820.w, A0
+	LEA	Map_trigger_flags.w, A0
 	TST.b	(A0,D5.w)
 	BEQ.b	loc_0000859A
 	MOVE.l	Pending_hint_text.w, $1C(A5)
@@ -9739,7 +9739,7 @@ loc_00008E54:
 	LEA	Digot_plant_received.w, A0
 	BRA.w	loc_00008E88
 loc_00008E5C:
-	LEA	$FFFFC820.w, A0
+	LEA	Map_trigger_flags.w, A0
 	MOVE.w	Map_trigger_index.w, D5
 	TST.b	(A0,D5.w)
 	BEQ.b	loc_00008E82
@@ -17190,7 +17190,7 @@ AddSpriteToDisplayList:
 	CMPI.w	#$0140, D6
 	BGE.w	loc_0000F682
 	LEA	Sprite_sort_buffer.w, A0
-	MOVE.w	$FFFFE000.w, D0
+	MOVE.w	Sprite_attr_count.w, D0
 	ASL.w	#3, D0
 	ADDA.w	D0, A0
 	ADDI.w	#$0080, D5
@@ -17223,16 +17223,16 @@ loc_0000F66E:
 	ADDQ.b	#1, (A0)
 	MOVE.b	(A0), D0
 	ANDI.w	#$000F, D0
-	MOVE.w	$FFFFE000.w, D1
+	MOVE.w	Sprite_attr_count.w, D1
 	MOVE.b	D1, (A0,D0.w)
-	ADDQ.w	#1, $FFFFE000.w
+	ADDQ.w	#1, Sprite_attr_count.w
 loc_0000F682:
 	ANDI	#$F8FF, SR
 	RTS
 	
 loc_0000F688:
 	MOVE.l	#$78000002, VDP_control_port
-	MOVE.w	$FFFFE000.w, D0
+	MOVE.w	Sprite_attr_count.w, D0
 	SUBQ.w	#1, D0
 	BLT.b	loc_0000F6BA
 	LEA	$FFFFE004.w, A2
@@ -17252,7 +17252,7 @@ loc_0000F6BA:
 ; loc_0000F6DC
 QueueSpriteOAMIfVisible:
 	LEA	$FFFFE004.w, A0
-	MOVE.w	$FFFFE000.w, D0
+	MOVE.w	Sprite_attr_count.w, D0
 	MOVE.w	D0, D4
 	ADDQ.w	#1, D4
 	ASL.w	#3, D0
@@ -17290,13 +17290,13 @@ QueueSpriteOAMIfVisible:
 	MOVE.w	$8(A5), D1
 	ADD.w	D1, D0
 	MOVE.w	D0, $4(A0)
-	ADDQ.w	#1, $FFFFE000.w
+	ADDQ.w	#1, Sprite_attr_count.w
 loc_0000F75C:
 	RTS
 	
 loc_0000F75E:
 	ORI	#$0700, SR
-	TST.w	$FFFFE000.w
+	TST.w	Sprite_attr_count.w
 	BLE.w	loc_0000F7BC
 	LEA	$FFFFE3F0.w, A1
 	LEA	$FFFFE004.w, A4
@@ -17598,8 +17598,8 @@ ExecuteVdpDmaTransfer:
 	MOVE.l	(A0)+, VDP_control_port
 	MOVE.l	(A0)+, VDP_control_port
 	MOVE.w	(A0)+, VDP_control_port
-	MOVE.l	(A0)+, $FFFFC18C.w
-	JSR	$FFFFC190.w
+	MOVE.l	(A0)+, Vdp_dma_cmd.w
+	JSR	Vdp_dma_ram_routine.w
 	MOVE.w	VDP_Reg1_cache.w, D4
 	BCLR.l	#4, D4
 	MOVE.w	D4, VDP_control_port
@@ -17843,8 +17843,8 @@ loc_0000FD1C:
 	MOVE.l	#$94109300, VDP_control_port
 	MOVE.l	#$96D09500, VDP_control_port
 	MOVE.w	#$977F, VDP_control_port
-	MOVE.l	#$58000082, $FFFFC18C.w
-	JSR	$FFFFC190.w
+	MOVE.l	#$58000082, Vdp_dma_cmd.w
+	JSR	Vdp_dma_ram_routine.w
 	MOVE.w	VDP_Reg1_cache.w, D4
 	BCLR.l	#4, D4
 	MOVE.w	D4, VDP_control_port
@@ -17934,8 +17934,8 @@ loc_0000FE76:
 	MOVE.l	(A0)+, VDP_control_port
 	MOVE.l	(A0)+, VDP_control_port
 	MOVE.w	(A0)+, VDP_control_port
-	MOVE.l	(A0)+, $FFFFC18C.w
-	JSR	$FFFFC190.w
+	MOVE.l	(A0)+, Vdp_dma_cmd.w
+	JSR	Vdp_dma_ram_routine.w
 	MOVE.w	VDP_Reg1_cache.w, D4
 	BCLR.l	#4, D4
 	MOVE.w	D4, VDP_control_port
@@ -18311,8 +18311,8 @@ loc_0001036E:
 	MOVE.l	(A0)+, VDP_control_port
 	MOVE.l	(A0)+, VDP_control_port
 	MOVE.w	(A0)+, VDP_control_port
-	MOVE.l	(A0)+, $FFFFC18C.w
-	JSR	$FFFFC190.w
+	MOVE.l	(A0)+, Vdp_dma_cmd.w
+	JSR	Vdp_dma_ram_routine.w
 	MOVE.w	VDP_Reg1_cache.w, D4
 	BCLR.l	#4, D4
 	MOVE.w	D4, VDP_control_port
@@ -18324,7 +18324,7 @@ loc_0001036E:
 InitVdpDmaRamRoutine:
 	LEA	loc_000103EC, A2
 loc_000103DC:
-	LEA	$FFFFC190.w, A3
+	LEA	Vdp_dma_ram_routine.w, A3
 	MOVE.l	(A2)+, (A3)+
 	MOVE.l	(A2)+, (A3)+
 	MOVE.l	(A2)+, (A3)+
@@ -18354,8 +18354,8 @@ VDP_DMAFill:
 	MOVE.l	D4, VDP_control_port
 	MOVE.w	#$9780, VDP_control_port
 	ORI.l	#$40000080, D7
-	MOVE.l	D7, $FFFFC18C.w
-	MOVE.w	$FFFFC18C.w, VDP_control_port
+	MOVE.l	D7, Vdp_dma_cmd.w
+	MOVE.w	Vdp_dma_cmd.w, VDP_control_port
 	MOVE.w	$FFFFC18E.w, VDP_control_port
 	MOVE.b	D5, VDP_data_port
 loc_00010458:
@@ -19356,7 +19356,7 @@ loc_00011168:
 	RTS
 	
 loc_0001119A:
-	MOVE.w	$FFFFC4A2.w, D0
+	MOVE.w	Shop_item_count.w, D0
 	SUBQ.w	#1, D0
 	MOVE.w	D0, Menu_cursor_column_break.w
 	MOVE.w	#$FFFF, Menu_cursor_last_index.w
@@ -19365,7 +19365,7 @@ loc_0001119A:
 	MOVE.w	#$000A, Window_tilemap_x.w
 	MOVE.w	#2, Window_tilemap_y.w
 	MOVE.w	#$0018, Window_width.w
-	MOVE.w	$FFFFC4A2.w, D0
+	MOVE.w	Shop_item_count.w, D0
 	ADD.w	D0, D0
 	ADDQ.w	#2, D0
 	MOVE.w	D0, Window_height.w
@@ -19378,7 +19378,7 @@ loc_0001119A:
 	MOVE.w	Current_shop_type.w, D0
 	ASL.w	#3, D0
 	MOVEA.l	(A4,D0.w), A4
-	MOVE.w	$FFFFC4A2.w, D7
+	MOVE.w	Shop_item_count.w, D7
 	SUBQ.w	#1, D7
 loc_00011204:
 	MOVE.w	(A3)+, D4
@@ -19408,14 +19408,14 @@ loc_0001124C:
 	ADDQ.w	#2, Window_text_y.w
 	ADDQ.w	#1, Shop_item_index.w
 	MOVE.w	Shop_item_index.w, D0
-	CMP.w	$FFFFC4A2.w, D0
+	CMP.w	Shop_item_count.w, D0
 	BLT.b	loc_0001124C
 	CLR.w	Window_draw_row.w
 	MOVE.b	#$FF, Window_tilemap_draw_active.w
 	RTS
 	
 loc_00011274:
-	MOVE.w	$FFFFC4A2.w, D0
+	MOVE.w	Shop_item_count.w, D0
 	SUBQ.w	#1, D0
 	MOVE.w	D0, Menu_cursor_column_break.w
 	MOVE.w	#$FFFF, Menu_cursor_last_index.w
@@ -19424,7 +19424,7 @@ loc_00011274:
 	MOVE.w	#$000A, Window_tilemap_x.w
 	MOVE.w	#2, Window_tilemap_y.w
 	MOVE.w	#$0018, Window_width.w
-	MOVE.w	$FFFFC4A2.w, D0
+	MOVE.w	Shop_item_count.w, D0
 	ADD.w	D0, D0
 	ADDQ.w	#2, D0
 	MOVE.w	D0, Window_height.w
@@ -19437,7 +19437,7 @@ loc_00011274:
 	MOVE.w	Current_shop_type.w, D0
 	ASL.w	#3, D0
 	MOVEA.l	(A4,D0.w), A4
-	MOVE.w	$FFFFC4A2.w, D7
+	MOVE.w	Shop_item_count.w, D7
 	SUBQ.w	#1, D7
 loc_000112DE:
 	MOVE.w	(A3)+, D4
@@ -19644,7 +19644,7 @@ loc_000114EA:
 	ORI.l	#$40000003, D0
 	MOVE.l	D0, VDP_control_port
 	MOVE.w	D4, VDP_data_port
-	ADDQ.w	#1, $FFFFC242.w
+	ADDQ.w	#1, Window_number_cursor_x.w
 	RTS
 
 loc_00011506:
@@ -19652,15 +19652,15 @@ loc_00011506:
 	ORI.l	#$60000003, D0
 	MOVE.l	D0, VDP_control_port
 	MOVE.w	D4, VDP_data_port
-	ADDQ.w	#1, $FFFFC242.w
+	ADDQ.w	#1, Window_number_cursor_x.w
 	RTS
 
 loc_00011522:
 	ADDI.w	#$84C0, D4
 	OR.w	D3, D4
 	JSR	GetScrollOffsetInTiles
-	ADD.w	$FFFFC242.w, D0
-	ADD.w	$FFFFC244.w, D1
+	ADD.w	Window_number_cursor_x.w, D0
+	ADD.w	Window_number_cursor_y.w, D1
 	ANDI.w	#$003F, D0
 	ANDI.w	#$003F, D1
 	ADD.w	D0, D0
@@ -19717,8 +19717,8 @@ loc_000115BE:
 	dc.b	$41, $F8, $C6, $5C, $43, $F8, $C6, $2E, $72, $01, $83, $08, $51, $C9, $FF, $FC, $42, $B8, $C6, $5A, $4A, $78, $C6, $2C, $6C, $04, $42, $78, $C6, $2C, $4E, $75 
 ; loc_000115DE
 DisplayPlayerKims:
-	MOVE.w	#2, $FFFFC242.w
-	MOVE.w	#6, $FFFFC244.w
+	MOVE.w	#2, Window_number_cursor_x.w
+	MOVE.w	#6, Window_number_cursor_y.w
 	MOVE.l	Player_kims.w, D2
 	MOVE.w	#0, D3
 	CLR.w	D5
@@ -19749,7 +19749,7 @@ loc_0001162E:
 	RTS
 	
 loc_00011648:
-	MOVE.w	$FFFFC4A2.w, D0	
+	MOVE.w	Shop_item_count.w, D0	
 	SUBQ.w	#1, D0	
 	MOVE.w	D0, Menu_cursor_column_break.w	
 	MOVE.w	#$FFFF, Menu_cursor_last_index.w	
@@ -21532,16 +21532,16 @@ loc_00012EA8:
 ; loc_00012EF6
 DisplayPlayerHpMp:
 	ORI	#$0700, SR
-	MOVE.w	#7, $FFFFC242.w
-	MOVE.w	#$0018, $FFFFC244.w
+	MOVE.w	#7, Window_number_cursor_x.w
+	MOVE.w	#$0018, Window_number_cursor_y.w
 	MOVE.w	Player_hp.w, D0
 	JSR	ConvertToBCD
 	MOVE.w	D0, D2
 	MOVE.w	#0, D3
 	CLR.w	D5
 	BSR.w	loc_00011470
-	MOVE.w	#7, $FFFFC242.w
-	MOVE.w	#$001A, $FFFFC244.w
+	MOVE.w	#7, Window_number_cursor_x.w
+	MOVE.w	#$001A, Window_number_cursor_y.w
 	MOVE.w	Player_mp.w, D0
 	JSR	ConvertToBCD
 	MOVE.w	D0, D2
@@ -21553,16 +21553,16 @@ DisplayPlayerHpMp:
 
 loc_00012F44:
 	ORI	#$0700, SR
-	MOVE.w	#7, $FFFFC242.w
-	MOVE.w	#$0018, $FFFFC244.w
+	MOVE.w	#7, Window_number_cursor_x.w
+	MOVE.w	#$0018, Window_number_cursor_y.w
 	MOVE.w	Player_hp.w, D0
 	JSR	ConvertToBCD
 	MOVE.w	D0, D2
 	MOVE.w	#0, D3
 	CLR.w	D5
 	BSR.w	loc_000114A4
-	MOVE.w	#7, $FFFFC242.w
-	MOVE.w	#$001A, $FFFFC244.w
+	MOVE.w	#7, Window_number_cursor_x.w
+	MOVE.w	#$001A, Window_number_cursor_y.w
 	MOVE.w	Player_mp.w, D0
 	JSR	ConvertToBCD
 	MOVE.w	D0, D2
@@ -21650,16 +21650,16 @@ loc_000130E8:
 
 loc_000130EA:
 	ORI	#$0700, SR
-	MOVE.w	#$000D, $FFFFC242.w
-	MOVE.w	#$0018, $FFFFC244.w
+	MOVE.w	#$000D, Window_number_cursor_x.w
+	MOVE.w	#$0018, Window_number_cursor_y.w
 	MOVE.w	Player_mhp.w, D0
 	JSR	ConvertToBCD
 	MOVE.w	D0, D2
 	MOVE.w	#0, D3
 	CLR.w	D5
 	BSR.w	loc_00011470
-	MOVE.w	#$000D, $FFFFC242.w
-	MOVE.w	#$001A, $FFFFC244.w
+	MOVE.w	#$000D, Window_number_cursor_x.w
+	MOVE.w	#$001A, Window_number_cursor_y.w
 	MOVE.w	Player_mmp.w, D0
 	JSR	ConvertToBCD
 	MOVE.w	D0, D2
@@ -21671,16 +21671,16 @@ loc_000130EA:
 
 loc_00013138:
 	ORI	#$0700, SR
-	MOVE.w	#$000D, $FFFFC242.w
-	MOVE.w	#$0018, $FFFFC244.w
+	MOVE.w	#$000D, Window_number_cursor_x.w
+	MOVE.w	#$0018, Window_number_cursor_y.w
 	MOVE.w	Player_mhp.w, D0
 	JSR	ConvertToBCD
 	MOVE.w	D0, D2
 	MOVE.w	#0, D3
 	CLR.w	D5
 	BSR.w	loc_000114A4
-	MOVE.w	#$000D, $FFFFC242.w
-	MOVE.w	#$001A, $FFFFC244.w
+	MOVE.w	#$000D, Window_number_cursor_x.w
+	MOVE.w	#$001A, Window_number_cursor_y.w
 	MOVE.w	Player_mmp.w, D0
 	JSR	ConvertToBCD
 	MOVE.w	D0, D2
@@ -21692,14 +21692,14 @@ loc_00013138:
 
 loc_00013186:
 	ORI	#$0700, SR
-	MOVE.w	#$001C, $FFFFC242.w
-	MOVE.w	#$0013, $FFFFC244.w
+	MOVE.w	#$001C, Window_number_cursor_x.w
+	MOVE.w	#$0013, Window_number_cursor_y.w
 	MOVE.l	Player_kims.w, D2
 	MOVE.w	#0, D3
 	CLR.w	D5
 	BSR.w	loc_00011420
-	MOVE.w	#$001C, $FFFFC242.w
-	MOVE.w	#$0015, $FFFFC244.w
+	MOVE.w	#$001C, Window_number_cursor_x.w
+	MOVE.w	#$0015, Window_number_cursor_y.w
 	MOVE.l	Player_experience.w, D2
 	MOVE.w	#0, D3
 	CLR.w	D5
@@ -21728,8 +21728,8 @@ loc_000131C4:
 	MOVE.l	#$94009340, VDP_control_port
 	MOVE.l	#$96E09500, VDP_control_port
 	MOVE.w	#$977F, VDP_control_port
-	MOVE.l	#$C0000080, $FFFFC18C.w
-	JSR	$FFFFC190.w
+	MOVE.l	#$C0000080, Vdp_dma_cmd.w
+	JSR	Vdp_dma_ram_routine.w
 	MOVE.w	VDP_Reg1_cache.w, D4
 	BCLR.l	#4, D4
 	MOVE.w	D4, VDP_control_port
@@ -21812,8 +21812,8 @@ loc_0001330C:
 	MOVE.l	#$94009340, VDP_control_port
 	MOVE.l	#$96E09500, VDP_control_port
 	MOVE.w	#$977F, VDP_control_port
-	MOVE.l	#$C0000080, $FFFFC18C.w
-	JSR	$FFFFC190.w
+	MOVE.l	#$C0000080, Vdp_dma_cmd.w
+	JSR	Vdp_dma_ram_routine.w
 	MOVE.w	VDP_Reg1_cache.w, D4
 	BCLR.l	#4, D4
 	MOVE.w	D4, VDP_control_port
@@ -21861,8 +21861,8 @@ loc_000133B2:
 	MOVE.l	#$94009340, VDP_control_port
 	MOVE.l	#$96E09500, VDP_control_port
 	MOVE.w	#$977F, VDP_control_port
-	MOVE.l	#$C0000080, $FFFFC18C.w
-	JSR	$FFFFC190.w
+	MOVE.l	#$C0000080, Vdp_dma_cmd.w
+	JSR	Vdp_dma_ram_routine.w
 	MOVE.w	VDP_Reg1_cache.w, D4
 	BCLR.l	#4, D4
 	MOVE.w	D4, VDP_control_port
@@ -21919,8 +21919,8 @@ loc_000134B6:
 	MOVE.l	#$94009340, VDP_control_port
 	MOVE.l	#$96E09500, VDP_control_port
 	MOVE.w	#$977F, VDP_control_port
-	MOVE.l	#$C0000080, $FFFFC18C.w
-	JSR	$FFFFC190.w
+	MOVE.l	#$C0000080, Vdp_dma_cmd.w
+	JSR	Vdp_dma_ram_routine.w
 	MOVE.w	VDP_Reg1_cache.w, D4
 	BCLR.l	#4, D4
 	MOVE.w	D4, VDP_control_port
@@ -21999,8 +21999,8 @@ loc_000135C0:
 	MOVE.l	#$94009340, VDP_control_port
 	MOVE.l	#$96E09500, VDP_control_port
 	MOVE.w	#$977F, VDP_control_port
-	MOVE.l	#$C0000080, $FFFFC18C.w
-	JSR	$FFFFC190.w
+	MOVE.l	#$C0000080, Vdp_dma_cmd.w
+	JSR	Vdp_dma_ram_routine.w
 	MOVE.w	VDP_Reg1_cache.w, D4
 	BCLR.l	#4, D4
 	MOVE.w	D4, VDP_control_port
@@ -22073,8 +22073,8 @@ loc_000136CC:
 	MOVE.l	#$94009340, VDP_control_port
 	MOVE.l	#$96E09500, VDP_control_port
 	MOVE.w	#$977F, VDP_control_port
-	MOVE.l	#$C0000080, $FFFFC18C.w
-	JSR	$FFFFC190.w
+	MOVE.l	#$C0000080, Vdp_dma_cmd.w
+	JSR	Vdp_dma_ram_routine.w
 	MOVE.w	VDP_Reg1_cache.w, D4
 	BCLR.l	#4, D4
 	MOVE.w	D4, VDP_control_port
@@ -22179,8 +22179,8 @@ loc_0001380A:
 	MOVE.l	#$94009340, VDP_control_port
 	MOVE.l	#$96E09500, VDP_control_port
 	MOVE.w	#$977F, VDP_control_port
-	MOVE.l	#$C0000080, $FFFFC18C.w
-	JSR	$FFFFC190.w
+	MOVE.l	#$C0000080, Vdp_dma_cmd.w
+	JSR	Vdp_dma_ram_routine.w
 	MOVE.w	VDP_Reg1_cache.w, D4
 	BCLR.l	#4, D4
 	MOVE.w	D4, VDP_control_port
@@ -28811,7 +28811,7 @@ loc_0001AC9A:
 ;loc_0001ACA4
 UseMirrorOfAtlas:
 	PRINT 	WorldMapsStr
-	LEA	$FFFFC820.w, A0
+	LEA	Map_trigger_flags.w, A0
 	MOVE.w	#$FF, D7
 loc_0001ACB4:
 	MOVE.b	#$FF, (A0)+ ; Fill 255 entries with $FF
@@ -29462,7 +29462,7 @@ loc_0001B45C:
 	MOVE.l	(A0,D0.w), Script_source_base.w
 	MOVEA.l	(A1,D1.w), A1
 	MOVE.w	(A1)+, D7
-	MOVE.w	D7, $FFFFC4A2.w
+	MOVE.w	D7, Shop_item_count.w
 	SUBQ.w	#1, D7
 loc_0001B48E:
 	MOVE.w	(A1)+, (A2)+
@@ -29508,7 +29508,7 @@ loc_0001B4E4:
 	MOVE.l	(A0,D2.w), Script_source_base.w
 	MOVEA.l	(A1,D1.w), A1
 	MOVE.w	(A1)+, D7
-	MOVE.w	D7, $FFFFC4A2.w
+	MOVE.w	D7, Shop_item_count.w
 	SUBQ.w	#1, D7
 loc_0001B514:
 	MOVE.w	(A1)+, (A2)+
@@ -29867,7 +29867,7 @@ loc_0001BC0C:
 	BNE.b	loc_0001BC6C	
 	LSR.w	#8, D0	
 	ANDI.w	#$00FF, D0	
-	LEA	$FFFFC820.w, A0	
+	LEA	Map_trigger_flags.w, A0	
 	MOVE.b	#1, (A0,D0.w)	
 	BRA.b	loc_0001BC6C	
 loc_0001BC50:
@@ -32933,7 +32933,7 @@ loc_0001E5AC:
 	JSR	CopyStringUntilFF
 	BRA.w	loc_0001E6A0
 loc_0001E61E:
-	LEA	$FFFFC820.w, A0
+	LEA	Map_trigger_flags.w, A0
 	MOVE.w	Reward_script_value.w, D0
 	MOVE.b	#$FF, (A0,D0.w)
 	MOVE.b	#$FF, Area_map_revealed.w
@@ -35269,7 +35269,7 @@ loc_000206D0:
 	RTS
 	
 loc_000206DE:
-	LEA	$FFFFC820.w, A0
+	LEA	Map_trigger_flags.w, A0
 	MOVE.w	#$0011, Map_trigger_index.w
 	MOVE.w	Map_trigger_index.w, D5
 	TST.b	(A0,D5.w)
@@ -35283,7 +35283,7 @@ loc_00020712:
 	RTS
 	
 loc_00020714:
-	LEA	$FFFFC820.w, A0
+	LEA	Map_trigger_flags.w, A0
 	MOVE.w	#$0013, Map_trigger_index.w
 	MOVE.w	Map_trigger_index.w, D5
 	TST.b	(A0,D5.w)
@@ -35297,7 +35297,7 @@ loc_00020748:
 	RTS
 	
 loc_0002074A:
-	LEA	$FFFFC820.w, A0
+	LEA	Map_trigger_flags.w, A0
 	MOVE.w	#$0028, Map_trigger_index.w
 	MOVE.w	Map_trigger_index.w, D5
 	TST.b	(A0,D5.w)
@@ -35823,7 +35823,7 @@ loc_00020F68:
 ; Check cave room enemy state and setup default "no one here" message
 ; Checks if current cave room has been cleared, sets script accordingly
 CheckCaveRoomEnemyState:
-	LEA	$FFFFC820.w, A0
+	LEA	Map_trigger_flags.w, A0
 	CLR.w	D0
 	MOVE.w	Current_cave_room.w, D0
 	ADDI.w	#$0090, D0
@@ -36133,7 +36133,7 @@ loc_000213CE:
 	MOVE.b	#$FF, $FFFFC56A.w
 	CLR.w	Dialog_timer.w
 	CLR.w	Dialog_phase.w
-	MOVE.w	Gameplay_substate.w, $FFFFC414.w
+	MOVE.w	Gameplay_substate.w, Saved_game_state.w
 	MOVE.w	Player_direction.w, $FFFFC616.w
 	MOVE.w	#$20, Gameplay_substate.w
 	RTS
@@ -44486,7 +44486,7 @@ loc_00032ACE:
 	TST.b	Asti_monster_defeated.w
 	BNE.w	loc_00032B2E
 	PRINT 	MapAstiCaveStr
-	LEA	$FFFFC820.w, A0
+	LEA	Map_trigger_flags.w, A0
 	MOVE.w	#$005C, D5
 	TST.b	(A0,D5.w)
 	BEQ.w	loc_00032B0E
