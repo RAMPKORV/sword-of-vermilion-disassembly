@@ -1297,7 +1297,7 @@ loc_00001BB8:
 	JSR	loc_0000F9BE
 	TST.w	Saved_player_x_in_town.w
 	BGT.b	loc_00001BE6
-	BSR.w	loc_00003338
+	BSR.w	SearchTownNPCData
 	MOVE.w	Saved_town_room_1.w, Current_town_room.w
 	JSR	loc_000033BE
 loc_00001BE6:
@@ -2083,10 +2083,10 @@ loc_0000277E: ; process movement actions in overworld
 	BNE.b	loc_000027CC
 	TST.b	Is_in_cave.w
 	BEQ.w	loc_000027B2
-	BSR.w	loc_00003498
+	BSR.w	CheckCaveInteractions
 	BRA.b	loc_000027B6
 loc_000027B2:
-	BSR.w	loc_00003442
+	BSR.w	CheckOverworldInteractions
 loc_000027B6:
 	TST.b	$FFFFC56A.w
 	BNE.b	loc_000027CC
@@ -2896,7 +2896,7 @@ loc_000032C8:
 	dc.l	loc_0001B17E
 	dc.l	loc_0001A2CE
 	dc.l	loc_0001D67E
-	dc.l	loc_0001DBC8
+	dc.l	ChestOpeningStateMachine
 	dc.l	loc_00017EC6
 	dc.l	loc_0001CFFE
 	dc.l	loc_0001DFE8
@@ -2937,31 +2937,54 @@ loc_0000332A:
 	LSR.w	#3, D1
 	RTS
 
-loc_00003338: ; Read NPC info into town?
-	MOVE.w	Player_position_x_in_town.w, D0
-	MOVE.w	Player_position_y_in_town.w, D1
-	LEA	loc_0001FDD4, A0
-	MOVE.w	Current_town.w, D2
+; ============================================================================
+; Search Town NPC Data for Player Position Match
+; ============================================================================
+; Searches through town NPC/interaction data to find an entry matching the
+; player's current position. If found, loads associated town state data.
+;
+; Town Data Structure (40 bytes/$28 per entry):
+;   +$00 (word): Player X position trigger
+;   +$02 (word): Player Y position trigger
+;   +$04-$27: Town state data (see loc_00003380 for details)
+;
+; Input:
+;   Player_position_x_in_town, Player_position_y_in_town
+;   Current_town - Town ID (0-15)
+; Output:
+;   If match found: Town state data loaded into RAM
+; ============================================================================
+; loc_00003338 - Read NPC info into town?
+SearchTownNPCData:
+	MOVE.w	Player_position_x_in_town.w, D0 ; D0 = player X
+	MOVE.w	Player_position_y_in_town.w, D1 ; D1 = player Y
+	LEA	loc_0001FDD4, A0                 ; A0 = town jump table
+	MOVE.w	Current_town.w, D2               ; D2 = town ID
+	ADD.w	D2, D2                           ; D2 *= 4
 	ADD.w	D2, D2
-	ADD.w	D2, D2
-	JSR	(A0,D2.w)
+	JSR	(A0,D2.w)                        ; Get town data array in A1
+	
+	; Search for position match
 loc_00003352:
-	LEA	(A1), A0
-	MOVE.w	(A0)+, D2
-	BLE.b	loc_0000336C
-	CMP.w	D2, D0
-	BEQ.b	loc_0000335E
-	BRA.b	loc_00003366
+	LEA	(A1), A0                         ; A0 = current entry
+	MOVE.w	(A0)+, D2                        ; D2 = entry X
+	BLE.b	loc_0000336C                     ; If <= 0, end of list
+	CMP.w	D2, D0                           ; X match?
+	BEQ.b	loc_0000335E                     ; Yes: check Y
+	BRA.b	loc_00003366                     ; No: next entry
+	
 loc_0000335E:
-	MOVE.w	(A0)+, D2
-	CMP.w	D2, D1
-	BNE.b	loc_00003366
-	BRA.b	loc_00003380
+	MOVE.w	(A0)+, D2                        ; D2 = entry Y
+	CMP.w	D2, D1                           ; Y match?
+	BNE.b	loc_00003366                     ; No: next entry
+	BRA.b	loc_00003380                     ; Yes: load data
+	
 loc_00003366:
-	LEA	$28(A1), A1
+	LEA	$28(A1), A1                      ; Skip to next entry
 	BRA.b	loc_00003352
+	
 loc_0000336C:
-	RTS
+	RTS                                  ; No match found
 	
 loc_0000336E:
 	LEA	loc_0001FFFE, A0
@@ -2969,22 +2992,24 @@ loc_0000336E:
 	ADD.w	D0, D0
 	ADD.w	D0, D0
 	JSR	(A0,D0.w)
+	
+	; Load town state data (40-byte structure)
 loc_00003380:
-	MOVE.w	(A0)+, Saved_player_x_in_town.w
-	MOVE.w	(A0)+, Town_player_spawn_y.w
-	MOVE.w	(A0)+, Town_saved_camera_x.w
-	MOVE.w	(A0)+, Saved_camera_tile_y_room1.w
-	MOVE.w	(A0)+, Saved_town_tileset_index.w
-	MOVE.w	(A0)+, Saved_town_room_1.w
-	MOVE.l	(A0)+, Saved_town_npc_data_ptr.w
-	MOVE.w	(A0)+, Saved_player_spawn_x.w
-	MOVE.w	(A0)+, Saved_player_y_room1.w
-	MOVE.w	(A0)+, Saved_town_room_2.w
-	MOVE.l	(A0)+, Saved_npc_data_ptr.w
-	MOVE.w	(A0)+, Saved_player_spawn_x_room2.w
-	MOVE.w	(A0)+, Saved_player_spawn_y_room2.w
-	MOVE.w	(A0)+, Saved_town_room_3.w
-	MOVE.l	(A0), Saved_npc_data_ptr_room3.w
+	MOVE.w	(A0)+, Saved_player_x_in_town.w      ; +$04: X in town
+	MOVE.w	(A0)+, Town_player_spawn_y.w         ; +$06: Spawn Y
+	MOVE.w	(A0)+, Town_saved_camera_x.w         ; +$08: Camera X
+	MOVE.w	(A0)+, Saved_camera_tile_y_room1.w   ; +$0A: Camera Y
+	MOVE.w	(A0)+, Saved_town_tileset_index.w    ; +$0C: Tileset
+	MOVE.w	(A0)+, Saved_town_room_1.w           ; +$0E: Room 1 ID
+	MOVE.l	(A0)+, Saved_town_npc_data_ptr.w     ; +$10: NPC ptr
+	MOVE.w	(A0)+, Saved_player_spawn_x.w        ; +$14: Spawn X
+	MOVE.w	(A0)+, Saved_player_y_room1.w        ; +$16: Player Y
+	MOVE.w	(A0)+, Saved_town_room_2.w           ; +$18: Room 2 ID
+	MOVE.l	(A0)+, Saved_npc_data_ptr.w          ; +$1A: NPC ptr 2
+	MOVE.w	(A0)+, Saved_player_spawn_x_room2.w  ; +$1E: Spawn X 2
+	MOVE.w	(A0)+, Saved_player_spawn_y_room2.w  ; +$20: Spawn Y 2
+	MOVE.w	(A0)+, Saved_town_room_3.w           ; +$22: Room 3 ID
+	MOVE.l	(A0), Saved_npc_data_ptr_room3.w     ; +$24: NPC ptr 3
 	RTS
 
 loc_000033BE:
@@ -3040,65 +3065,90 @@ loc_0000343E:
 	MOVEQ	#1, D0
 	RTS
 
-loc_00003442:
-	MOVE.l	#NoOneHereStr, Script_talk_source.w
-	LEA	loc_000200B6, A0
-	MOVE.w	Player_map_sector_x.w, D0
+; ============================================================================
+; Check Overworld Interactions
+; ============================================================================
+; Searches overworld interaction tables for triggers at player's current
+; position and direction. Used for NPCs, signposts, special events.
+;
+; Entry Format (12 bytes): Sector Y, X pos, Y pos, Direction flags, Handler ptr
+; Entry list terminated with $FFFF
+; ============================================================================
+; loc_00003442
+CheckOverworldInteractions:
+	MOVE.l	#NoOneHereStr, Script_talk_source.w ; Default message
+	LEA	loc_000200B6, A0                     ; Interaction table base
+	MOVE.w	Player_map_sector_x.w, D0            ; D0 = sector X
+	ADD.w	D0, D0                               ; D0 *= 4
 	ADD.w	D0, D0
-	ADD.w	D0, D0
-	MOVEA.l	(A0,D0.w), A0
+	MOVEA.l	(A0,D0.w), A0                        ; A0 = list for this sector
+	
 loc_0000345C:
-	LEA	(A0), A1
-	MOVE.w	(A1)+, D0
-	BLT.w	loc_00003496
-	CMP.w	Player_map_sector_y.w, D0
+	LEA	(A0), A1                             ; A1 = current entry
+	MOVE.w	(A1)+, D0                            ; D0 = sector Y
+	BLT.w	loc_00003496                         ; If < 0, end of list
+	CMP.w	Player_map_sector_y.w, D0            ; Sector Y match?
 	BNE.w	loc_00003490
-	MOVE.w	(A1)+, D0
-	CMP.w	Player_position_x_outside_town.w, D0
+	MOVE.w	(A1)+, D0                            ; D0 = X position
+	CMP.w	Player_position_x_outside_town.w, D0 ; X match?
 	BNE.w	loc_00003490
-	MOVE.w	(A1)+, D0
-	CMP.w	Player_position_y_outside_town.w, D0
+	MOVE.w	(A1)+, D0                            ; D0 = Y position
+	CMP.w	Player_position_y_outside_town.w, D0 ; Y match?
 	BNE.w	loc_00003490
-	MOVE.w	(A1)+, D0
-	MOVE.w	Player_direction.w, D1
-	ASR.w	#1, D1
-	BTST.l	D1, D0
+	MOVE.w	(A1)+, D0                            ; D0 = direction flags
+	MOVE.w	Player_direction.w, D1               ; D1 = player direction
+	ASR.w	#1, D1                               ; Convert to bit index
+	BTST.l	D1, D0                               ; Direction matches?
 	BEQ.b	loc_00003490
-	MOVEA.l	(A1)+, A0
-	JMP	(A0)
+	MOVEA.l	(A1)+, A0                            ; A0 = handler pointer
+	JMP	(A0)                                 ; Jump to handler
+	
 loc_00003490:
-	LEA	$C(A0), A0
+	LEA	$C(A0), A0                           ; Next entry (12 bytes)
 	BRA.b	loc_0000345C
 loc_00003496:
 	RTS
 
-loc_00003498:
-	LEA	loc_00020780, A0
-	MOVE.w	Current_cave_room.w, D0
+; ============================================================================
+; Check Cave Interactions
+; ============================================================================
+; Searches cave interaction tables for triggers at player's current position
+; and direction. Used for NPCs, treasures, and special events in caves.
+;
+; Entry Format (10 bytes): X pos, Y pos, Direction flags, Handler ptr
+; Entry list terminated with $FFFF
+; ============================================================================
+; loc_00003498
+CheckCaveInteractions:
+	LEA	loc_00020780, A0                     ; Cave interaction table base
+	MOVE.w	Current_cave_room.w, D0              ; D0 = cave room ID
+	ADD.w	D0, D0                               ; D0 *= 4
 	ADD.w	D0, D0
-	ADD.w	D0, D0
-	MOVEA.l	(A0,D0.w), A0
+	MOVEA.l	(A0,D0.w), A0                        ; A0 = list for this cave
+	
 loc_000034AA:
-	LEA	(A0), A1
-	MOVE.w	(A1)+, D0
-	BLT.w	loc_000034D6
-	CMP.w	Player_position_x_outside_town.w, D0
+	LEA	(A0), A1                             ; A1 = current entry
+	MOVE.w	(A1)+, D0                            ; D0 = X position
+	BLT.w	loc_000034D6                         ; If < 0, end of list
+	CMP.w	Player_position_x_outside_town.w, D0 ; X match?
 	BNE.b	loc_000034D0
-	MOVE.w	(A1)+, D0
-	CMP.w	Player_position_y_outside_town.w, D0
+	MOVE.w	(A1)+, D0                            ; D0 = Y position
+	CMP.w	Player_position_y_outside_town.w, D0 ; Y match?
 	BNE.b	loc_000034D0
-	MOVE.w	(A1)+, D0
-	MOVE.w	Player_direction.w, D1
-	ASR.w	#1, D1
-	BTST.l	D1, D0
+	MOVE.w	(A1)+, D0                            ; D0 = direction flags
+	MOVE.w	Player_direction.w, D1               ; D1 = player direction
+	ASR.w	#1, D1                               ; Convert to bit index
+	BTST.l	D1, D0                               ; Direction matches?
 	BEQ.b	loc_000034D0
-	MOVEA.l	(A1)+, A0
-	JMP	(A0)
+	MOVEA.l	(A1)+, A0                            ; A0 = handler pointer
+	JMP	(A0)                                 ; Jump to handler
+	
 loc_000034D0:
-	LEA	$A(A0), A0
+	LEA	$A(A0), A0                           ; Next entry (10 bytes)
 	BRA.b	loc_000034AA
+	
 loc_000034D6:
-	MOVE.l	#NoOneHereStr, Script_talk_source.w
+	MOVE.l	#NoOneHereStr, Script_talk_source.w  ; Default message
 	RTS
 
 loc_000034E0:
@@ -3164,7 +3214,7 @@ loc_0000357C:
 	MOVE.w	$2(A0,D0.w), Player_position_y_outside_town.w
 	MOVE.w	$4(A0,D0.w), Player_map_sector_x.w
 	MOVE.w	$6(A0,D0.w), Player_map_sector_y.w
-	BSR.w	loc_00003338
+	BSR.w	SearchTownNPCData
 	LEA	loc_00002EEA, A0
 	MOVE.w	Current_town.w, D0
 	ADD.w	D0, D0
@@ -6260,7 +6310,7 @@ loc_00006204:
 
 loc_0000622A:
 	TST.b	Is_in_cave.w
-	BEQ.w	loc_0000626C
+	BEQ.w	Load9SectorMapWindow
 	LEA	Map_sector_top_left.w, A2
 	MOVE.w	#$023F, D7
 loc_0000623A:
@@ -6272,14 +6322,36 @@ loc_0000623A:
 	ADD.w	D0, D0
 	ADD.w	D0, D0
 	MOVEA.l	(A0,D0.w), A1
-	BSR.w	loc_0000633C
+	BSR.w	DecompressMapSectorRLE
 	BSR.w	loc_000063B2
 	BSR.w	loc_00006458
 	BSR.w	loc_000063EA
 	RTS
 
+; ============================================================================
+; Load 9-Sector Map Window (3x3 Grid Around Player)
+; ============================================================================
+; Loads a 3x3 grid of map sectors centered on the player's current position.
+; This creates a 48x48 tile play area (3 sectors x 16 tiles each).
+;
+; Sector Layout in RAM:
+;   [Top-Left]    [Top-Center]    [Top-Right]
+;   [Mid-Left]    [Center]        [Mid-Right]
+;   [Bot-Left]    [Bot-Center]    [Bot-Right]
+;
+; The center sector is always the player's current sector. Surrounding
+; sectors are loaded if in bounds, otherwise filled with default tiles.
+;
+; Overworld Map Bounds: X: 0-15, Y: 0-7 (128 sectors total in 16x8 grid)
+;
+; Input:
+;   Player_map_sector_x, Player_map_sector_y - Player's current sector
+; Output:
+;   9 sectors loaded into RAM buffers starting at Map_sector_top_left
+; ============================================================================
 ; The game keeps 9 map sectors in memory
-loc_0000626C:
+; loc_0000626C
+Load9SectorMapWindow:
 	LEA	OverworldMaps, A0
 	MOVE.w	Player_map_sector_x.w, D0
 	MOVE.w	Player_map_sector_y.w, D1
@@ -6308,7 +6380,7 @@ loc_0000626C:
 	MOVE.w	D0, D2
 	MOVE.w	D1, D3
 	LEA	Map_sector_center.w, A2
-	BSR.w	loc_00006328
+	BSR.w	LoadMapSector_NoBoundsCheck
 	MOVE.w	D0, D2
 	MOVE.w	D1, D3
 	ADDQ.w	#1, D2
@@ -6336,66 +6408,115 @@ loc_0000626C:
 	BSR.w	loc_000063EA
 	RTS
 
+; ============================================================================
+; LoadMapSectorIfInBounds
+; ============================================================================
+; Loads a map sector at coordinates (D2, D3) if within map bounds.
+; If out of bounds, fills destination buffer with default tiles.
+;
+; Map bounds: X (D2): 0-15, Y (D3): 0-7
+;
+; Input:
+;   D2 = Sector X coordinate
+;   D3 = Sector Y coordinate
+;   A0 = Pointer to map table (OverworldMaps or CaveMaps)
+;   A2 = Destination buffer for decompressed sector
+; Output:
+;   Sector decompressed to buffer pointed to by A2
+; ============================================================================
 ; LoadMapSectorIfInBounds
 LoadMapSectorIfInBounds:
-	TST.w	D2
-	BLT.w	loc_000063D0
-	CMPI.w	#$F, D2
-	BGT.w	loc_000063D0
-	TST.w	D3
-	BLT.w	loc_000063D0
-	CMPI.w	#7, D3
-	BGT.w	loc_000063D0
-loc_00006328:
-	ASL.w	#4, D3
-	ADD.w	D3, D2
+	TST.w	D2                      ; Check if X < 0
+	BLT.w	loc_000063D0            ; Out of bounds
+	CMPI.w	#$F, D2                 ; Check if X > 15
+	BGT.w	loc_000063D0            ; Out of bounds
+	TST.w	D3                      ; Check if Y < 0
+	BLT.w	loc_000063D0            ; Out of bounds
+	CMPI.w	#7, D3                  ; Check if Y > 7
+	BGT.w	loc_000063D0            ; Out of bounds
+	
+	; Sector is in bounds - calculate index and load
+; loc_00006328
+LoadMapSector_NoBoundsCheck:
+	ASL.w	#4, D3                  ; D3 = Y * 16
+	ADD.w	D3, D2                  ; D2 = Y*16 + X (sector index)
+	ADD.w	D2, D2                  ; D2 *= 4 (long pointer offset)
 	ADD.w	D2, D2
-	ADD.w	D2, D2
-	MOVEA.l	(A0,D2.w), A1
-	LEA	(A2), A3
-	BSR.w	loc_0000633C
+	MOVEA.l	(A0,D2.w), A1           ; A1 = compressed sector data
+	LEA	(A2), A3                ; A3 = destination buffer
+	BSR.w	DecompressMapSectorRLE            ; Decompress sector
 	RTS
 
-; Read map data into memory. 
-; If the value is less than $80, read it directly.
-; If the value is $80 or greater, subtract $80 from the value and store it in D1.
-; Then, read another byte and repeat the process D1 times.
-loc_0000633C: 
-	MOVEM.w	D1/D0, -(A7)
-	LEA	-$20(A3), A3
-	CLR.w	D0
-	MOVE.w	D0, D1
+; ============================================================================
+; RLE Decompression Routine for Map Sector Data
+; ============================================================================
+; Decompresses a single 16x16 tile sector from RLE-encoded map data.
+; 
+; RLE Format:
+;   - Byte < $80: Output tile value directly
+;   - Byte >= $80: Run length encoding
+;       * Subtract $80 to get repeat count
+;       * Read next byte as tile value
+;       * Output that tile (repeat count) times
+;
+; Output Layout:
+;   - Writes 256 tiles ($100) in 16x16 grid format
+;   - Grid has 32-tile-wide stride (16 tiles data + 16 tiles padding per row)
+;   - Each row of 16 tiles is followed by $20-byte alignment for next row
+;
+; Input:
+;   A1 = Pointer to compressed map data
+;   A3 = Destination buffer (adjusted -$20 before write)
+; Output:
+;   256 tiles written to buffer in 16x16 grid with 32-tile stride
+; ============================================================================
+; loc_0000633C
+DecompressMapSectorRLE:
+	MOVEM.w	D1/D0, -(A7)        ; Save registers D0, D1
+	LEA	-$20(A3), A3            ; Adjust output pointer back $20 bytes
+	CLR.w	D0                      ; D0 = tile counter (0-255)
+	MOVE.w	D0, D1                  ; D1 = repeat counter for RLE runs
+	
+	; Main decompression loop
 loc_00006348:
-	MOVE.w	D0, D2
-	ANDI.w	#$000F, D2
-	BNE.b	loc_00006354
-	LEA	$20(A3), A3
+	MOVE.w	D0, D2                  ; Check if at end of row (every 16 tiles)
+	ANDI.w	#$000F, D2              ; D2 = tile counter % 16
+	BNE.b	loc_00006354            ; If not multiple of 16, continue
+	LEA	$20(A3), A3             ; Skip $20 bytes to next row
+	
 loc_00006354:
-	MOVE.b	(A1)+, D1
-	CMPI.w	#$80, D1
-	BLT.b	loc_00006380
-	SUBI.w	#$80, D1
-	MOVE.b	(A1)+, D3
+	MOVE.b	(A1)+, D1               ; Read next compressed byte
+	CMPI.w	#$80, D1                ; Check if RLE marker (>= $80)
+	BLT.b	loc_00006380            ; If < $80, it's a literal tile
+	
+	; RLE run handling
+	SUBI.w	#$80, D1                ; D1 = repeat count
+	MOVE.b	(A1)+, D3               ; D3 = tile value to repeat
+	
 loc_00006362:
-	MOVE.b	D3, (A3)+
-	ADDQ.w	#1, D0
-	MOVE.w	D0, D2
+	MOVE.b	D3, (A3)+               ; Write tile value
+	ADDQ.w	#1, D0                  ; Increment tile counter
+	MOVE.w	D0, D2                  ; Check if end of row
 	ANDI.w	#$000F, D2
 	BNE.b	loc_00006372
-	LEA	$20(A3), A3
+	LEA	$20(A3), A3             ; Skip to next row
+	
 loc_00006372:
-	CMPI.w	#$0100, D0
-	BGE.b	loc_0000638A
-	DBF	D1, loc_00006362
+	CMPI.w	#$0100, D0              ; 256 tiles written?
+	BGE.b	loc_0000638A            ; Yes: exit
+	DBF	D1, loc_00006362        ; Loop while repeat count > 0
 	CLR.w	D1
-	BRA.b	loc_00006354
+	BRA.b	loc_00006354            ; Read next byte
+	
+	; Literal tile handling
 loc_00006380:
-	MOVE.b	D1, (A3)+
-	ADDQ.w	#1, D0
-	CMPI.w	#$0100, D0
-	BLT.b	loc_00006348
+	MOVE.b	D1, (A3)+               ; Write tile directly
+	ADDQ.w	#1, D0                  ; Increment counter
+	CMPI.w	#$0100, D0              ; 256 tiles written?
+	BLT.b	loc_00006348            ; No: continue
+	
 loc_0000638A:
-	MOVEM.w	(A7)+, D0/D1
+	MOVEM.w	(A7)+, D0/D1            ; Restore registers
 	RTS
 
 loc_00006390:
@@ -31922,54 +32043,74 @@ loc_0001DBB2:
 	MOVE.l	(A0,D7.w), Player_next_level_experience.w
 	RTS
 
-loc_0001DBC8:
+; ============================================================================
+; Chest/Door Opening State Machine
+; ============================================================================
+; Handles player interaction with treasure chests and doors via Open command.
+; Uses a multi-state system to manage detection, animation, and rewards.
+;
+; States: 0=Detect, 1=Message wait, 2=Close window, 3=Animation,
+;         4=Tile delay, 5=Open delay, 6=Display contents
+; ============================================================================
+; loc_0001DBC8
+ChestOpeningStateMachine:
 	TST.b	Player_in_first_person_mode.w
 	BNE.w	loc_0001DBD0
 loc_0001DBD0:
-	MOVE.w	Open_menu_state.w, D0
+	MOVE.w	Open_menu_state.w, D0        ; Get current state
 	ANDI.w	#$000F, D0
+	ADD.w	D0, D0                       ; D0 *= 4
 	ADD.w	D0, D0
-	ADD.w	D0, D0
-	LEA	loc_0001DBE8, A0
-	JSR	(A0,D0.w)
+	LEA	loc_0001DBE8, A0             ; State jump table
+	JSR	(A0,D0.w)                    ; Call state handler
 	RTS
 
+	; State handler jump table
 loc_0001DBE8:
-	BRA.w	loc_0001DC04
-	BRA.w	loc_0001DD14
-	BRA.w	loc_0001DD50
-	BRA.w	loc_0001DD66
-	BRA.w	loc_0001DDB0	
-	BRA.w	loc_0001DDD4
-	BRA.w	loc_0001DDF8
+	BRA.w	loc_0001DC04            ; State 0: Detect
+	BRA.w	loc_0001DD14            ; State 1: Message wait
+	BRA.w	loc_0001DD50            ; State 2: Close
+	BRA.w	loc_0001DD66            ; State 3: Animation
+	BRA.w	loc_0001DDB0            ; State 4: Tile delay
+	BRA.w	loc_0001DDD4            ; State 5: Open delay
+	BRA.w	loc_0001DDF8            ; State 6: Contents
+	
+; State 0: Initial detection
 loc_0001DC04:
 	MOVE.w	Main_menu_selection.w, Menu_cursor_index.w
 	JSR	loc_0001290C
 	TST.b	Player_in_first_person_mode.w
-	BNE.w	loc_0001DC2A
-	JSR	loc_000039C0
-	CMPI.w	#$9000, D0
-	BEQ.w	loc_0001DC7C
-	BRA.w	loc_0001DC94
+	BNE.w	loc_0001DC2A             ; First-person: check sprite
+	
+	; Top-down: Check tile type
+	JSR	loc_000039C0             ; Get tile in front of player
+	CMPI.w	#$9000, D0               ; Chest tile?
+	BEQ.w	loc_0001DC7C             ; Yes: play sound, advance
+	BRA.w	loc_0001DC94             ; No: check chest sprite
+	
+	; First-person: Check chest sprite
 loc_0001DC2A:
-	TST.b	Chest_already_opened.w
-	BNE.w	loc_0001DCF8
+	TST.b	Chest_already_opened.w       ; Already opened?
+	BNE.w	loc_0001DCF8             ; Yes: "Already open"
 	LEA	loc_00005A1C, A0
-	JSR	loc_00005988
-	CMPI.b	#6, D0
+	JSR	loc_00005988             ; Search for object
+	CMPI.b	#6, D0                   ; Type 6 = chest sprite?
 	BNE.w	loc_0001DC94
-	BSR.w	loc_0001DF34
+	BSR.w	loc_0001DF34             ; Check if locked
 	TST.b	Door_unlocked_flag.w
-	BEQ.w	loc_0001DCD4
+	BEQ.w	loc_0001DCD4             ; Locked
+	
+	; Start opening animation
 	CLR.w	Chest_animation_frame.w
 	CLR.w	Chest_animation_timer.w
-	MOVE.w	#$00BB, D0
+	MOVE.w	#$00BB, D0               ; Sound effect
 	JSR	loc_00010522
-	MOVE.w	#3, Open_menu_state.w
+	MOVE.w	#3, Open_menu_state.w    ; State 3: Animation
 	MOVE.w	#3, Window_draw_type.w
 	CLR.w	$FFFF9916.w
 	MOVE.b	#$FF, $FFFF9911.w
 	RTS
+	
 loc_0001DC7C:
 	MOVE.b	#$AA, D0	
 	JSR	loc_00010522	
@@ -31978,20 +32119,22 @@ loc_0001DC7C:
 	RTS
 	
 loc_0001DC94:
-	TST.b	$FFFFC56C.w
-	BEQ.w	loc_0001DCEC
-	TST.b	Chest_opened_flag.w
-	BNE.w	loc_0001DCE0
+	TST.b	$FFFFC56C.w              ; Chest present?
+	BEQ.w	loc_0001DCEC             ; No
+	TST.b	Chest_opened_flag.w      ; Already opened?
+	BNE.w	loc_0001DCE0             ; Yes
+	
+	; Open the chest
 	MOVE.b	#$A7, D0
-	JSR	loc_00010522
+	JSR	loc_00010522             ; Sound effect
 	MOVE.b	#$FF, Chest_opened_flag.w
-	MOVEA.l	$FFFFCC54.w, A6
+	MOVEA.l	$FFFFCC54.w, A6          ; Chest sprite
 	CLR.w	D0
 	MOVE.b	$1(A6), D0
 	LEA	(A6,D0.w), A6
-	ADDQ.w	#8, $8(A6)
+	ADDQ.w	#8, $8(A6)               ; Adjust sprite Y
 	MOVE.b	#$50, Open_chest_delay_timer.w
-	MOVE.w	#5, Open_menu_state.w
+	MOVE.w	#5, Open_menu_state.w    ; State 5
 	RTS
 
 loc_0001DCD4:
@@ -32006,9 +32149,9 @@ loc_0001DCEC:
 loc_0001DCF8:
 	PRINT 	AlreadyOpenStr	
 loc_0001DD00:
-	JSR	loc_0001229E
+	JSR	loc_0001229E             ; Display message
 	JSR	loc_00010C4A
-	MOVE.w	#1, Open_menu_state.w
+	MOVE.w	#1, Open_menu_state.w    ; State 1
 	RTS
 	
 loc_0001DD14:
@@ -34805,25 +34948,25 @@ loc_000204A2:
 loc_000204B6:
 	MOVE.w	#1, $FFFFC572.w
 	MOVE.l	#$FFFFC7AE, $FFFFC574.w
-	BSR.w	loc_0002141E
+	BSR.w	SetupItemTreasure
 	RTS
 	
 loc_000204CA:
 	MOVE.w	#2, $FFFFC572.w
 	MOVE.l	#$FFFFC7AF, $FFFFC574.w
-	BSR.w	loc_0002141E
+	BSR.w	SetupItemTreasure
 	RTS
 	
 loc_000204DE:
 	MOVE.w	#0, $FFFFC572.w
 	MOVE.l	#$FFFFC789, $FFFFC574.w
-	BSR.w	loc_0002141E
+	BSR.w	SetupItemTreasure
 	RTS
 	
 loc_000204F2:
 	MOVE.w	#0, $FFFFC572.w
 	MOVE.l	#$FFFFC78A, $FFFFC574.w
-	BSR.w	loc_0002141E
+	BSR.w	SetupItemTreasure
 	RTS
 	
 loc_00020506:
@@ -34851,7 +34994,7 @@ loc_00020542:
 loc_00020550:
 	MOVE.w	#$001B, $FFFFC572.w
 	MOVE.l	#$FFFFC799, $FFFFC574.w
-	BSR.w	loc_0002141E
+	BSR.w	SetupItemTreasure
 	RTS
 	
 loc_00020564:
@@ -34862,19 +35005,19 @@ loc_00020564:
 loc_00020572:
 	MOVE.w	#0, $FFFFC572.w	
 	MOVE.l	#$FFFFC79C, $FFFFC574.w	
-	BSR.w	loc_0002141E	
+	BSR.w	SetupItemTreasure	
 	RTS
 	
 loc_00020586:
 	MOVE.w	#0, $FFFFC572.w	
 	MOVE.l	#$FFFFC7B0, $FFFFC574.w	
-	BSR.w	loc_0002141E	
+	BSR.w	SetupItemTreasure	
 	RTS
 	
 loc_0002059A:
 	MOVE.w	#$0024, $FFFFC572.w
 	MOVE.l	#$FFFFC7B2, $FFFFC574.w
-	BSR.w	loc_0002141E
+	BSR.w	SetupItemTreasure
 	RTS
 	
 loc_000205AE:
@@ -34885,7 +35028,7 @@ loc_000205C2:
 loc_000205D6:
 	MOVE.w	#$001F, $FFFFC572.w
 	MOVE.l	#$FFFFC7BE, $FFFFC574.w
-	BSR.w	loc_0002141E
+	BSR.w	SetupItemTreasure
 	RTS
 	
 loc_000205EA:
@@ -35367,7 +35510,7 @@ loc_00020CBA:
 loc_00020CBC:
 	MOVE.w	#$0023, $FFFFC572.w
 	MOVE.l	#$FFFFC7EE, $FFFFC574.w
-	BSR.w	loc_0002141E
+	BSR.w	SetupItemTreasure
 	RTS
 	
 loc_00020CD0:
@@ -35424,19 +35567,19 @@ loc_00020D98:
 loc_00020DAC:
 	MOVE.w	#0, $FFFFC572.w
 	MOVE.l	#$FFFFC78D, $FFFFC574.w
-	BSR.w	loc_0002141E
+	BSR.w	SetupItemTreasure
 	RTS
 	
 loc_00020DC0:
 	MOVE.w	#1, $FFFFC572.w
 	MOVE.l	#$FFFFC78C, $FFFFC574.w
-	BSR.w	loc_0002141E
+	BSR.w	SetupItemTreasure
 	RTS
 	
 loc_00020DD4:
 	MOVE.w	#0, $FFFFC572.w
 	MOVE.l	#$FFFFC790, $FFFFC574.w
-	BSR.w	loc_0002141E
+	BSR.w	SetupItemTreasure
 	RTS
 	
 loc_00020DE8:
@@ -35458,7 +35601,7 @@ loc_00020E24:
 loc_00020E38:
 	MOVE.w	#1, $FFFFC572.w	
 	MOVE.l	#$FFFFC796, $FFFFC574.w	
-	BSR.w	loc_0002141E	
+	BSR.w	SetupItemTreasure	
 	RTS
 	
 loc_00020E4C:	
@@ -35488,7 +35631,7 @@ loc_00020EC4:
 loc_00020ED8:
 	MOVE.w	#2, $FFFFC572.w	
 	MOVE.l	#$FFFFC7A2, $FFFFC574.w	
-	BSR.w	loc_0002141E	
+	BSR.w	SetupItemTreasure	
 	RTS
 	
 loc_00020EEC:
@@ -35518,7 +35661,7 @@ loc_00020F50:
 	BEQ.b	loc_00020F68
 	MOVE.w	#$010D, $FFFFC572.w
 	MOVE.l	#Treasure_of_troy_found, $FFFFC574.w
-	BSR.w	loc_0002141E
+	BSR.w	SetupItemTreasure
 loc_00020F68:
 	RTS
 	
@@ -35647,7 +35790,7 @@ loc_0002112A:
 	BEQ.b	loc_0002114A
 	MOVE.w	#$0114, $FFFFC572.w
 	MOVE.l	#$FFFFC75B, $FFFFC574.w
-	BSR.w	loc_0002141E
+	BSR.w	SetupItemTreasure
 loc_0002114A:
 	RTS
 
@@ -35706,7 +35849,7 @@ loc_00021206:
 loc_0002121C:
 	MOVE.w	#$010E, $FFFFC572.w
 	MOVE.l	#$FFFFC74B, $FFFFC574.w
-	BSR.w	loc_0002141E
+	BSR.w	SetupItemTreasure
 	RTS
 	
 loc_00021230:
@@ -35719,7 +35862,7 @@ loc_00021230:
 loc_00021246:
 	MOVE.w	#$010F, $FFFFC572.w
 	MOVE.l	#$FFFFC74D, $FFFFC574.w
-	BSR.w	loc_0002141E
+	BSR.w	SetupItemTreasure
 	RTS
 	
 loc_0002125A:
@@ -35732,7 +35875,7 @@ loc_0002125A:
 loc_00021270:
 	MOVE.w	#$0110, $FFFFC572.w
 	MOVE.l	#$FFFFC74F, $FFFFC574.w
-	BSR.w	loc_0002141E
+	BSR.w	SetupItemTreasure
 	RTS
 	
 loc_00021284:
@@ -35749,7 +35892,7 @@ loc_000212A8:
 loc_000212AA:
 	MOVE.w	#$0116, $FFFFC572.w
 	MOVE.l	#$FFFFC780, $FFFFC574.w
-	BSR.w	loc_0002141E
+	BSR.w	SetupItemTreasure
 	RTS
 	
 loc_000212BE:
@@ -35769,7 +35912,7 @@ loc_000212D8:
 loc_000212EE:
 	MOVE.w	#$0117, $FFFFC572.w
 	MOVE.l	#$FFFFC781, $FFFFC574.w
-	BSR.w	loc_0002141E
+	BSR.w	SetupItemTreasure
 	RTS
 	
 loc_00021302:
@@ -35789,7 +35932,7 @@ loc_0002131C:
 loc_00021332:
 	MOVE.w	#$0118, $FFFFC572.w
 	MOVE.l	#$FFFFC782, $FFFFC574.w
-	BSR.w	loc_0002141E
+	BSR.w	SetupItemTreasure
 	RTS
 	
 loc_00021346:
@@ -35846,25 +35989,49 @@ loc_000213FE:
 	MOVE.w	#1, D4
 	JSR	VDP_DMAFill
 	RTS
+; ============================================================================
+; Treasure Chest Initialization Functions
+; ============================================================================
+; Set up treasure chests with different content types.
+;
+; Treasure Types ($FFFFC570):
+;   0 = Item, 1 = Equipment, 3 = Money (Kims), 4 = Ring, 5 = Map
+;
+; Chest State Variables:
+;   $FFFFC56C = Chest present flag ($FF = exists)
+;   $FFFFC56F = Chest contains treasure ($FF = has item)
+;   $FFFFC570 = Treasure type
+;   $FFFFC572 = Treasure value/ID (set before calling)
+;   $FFFFC574 = Pointer to flag byte (set before calling, $FF if opened)
+; ============================================================================
 	
-loc_0002141E:
-	MOVE.w	#0, $FFFFC570.w
+; Initialize item chest (type 0)
+; loc_0002141E
+SetupItemTreasure:
+	MOVE.w	#0, $FFFFC570.w          ; Type 0 = Item
 	BRA.w	loc_00021438
+	
+; Initialize equipment chest (type 1)
 ; loc_00021428
 SetupEquipmentTreasure:
-	MOVE.w	#1, $FFFFC570.w
+	MOVE.w	#1, $FFFFC570.w          ; Type 1 = Equipment
 	BRA.w	loc_00021438
+	
+; Initialize money chest (type 3)
 ; loc_00021432
 InitMoneyTreasure:
-	MOVE.w	#3, $FFFFC570.w
+	MOVE.w	#3, $FFFFC570.w          ; Type 3 = Money
+	
+	; Common chest initialization
 loc_00021438:
-	MOVEA.l	$FFFFC574.w, A0
-	TST.b	(A0)
-	BNE.b	loc_00021446
-	MOVE.b	#$FF, $FFFFC56F.w
+	MOVEA.l	$FFFFC574.w, A0          ; A0 = flag byte pointer
+	TST.b	(A0)                     ; Already opened?
+	BNE.b	loc_00021446             ; Yes: skip treasure flag
+	MOVE.b	#$FF, $FFFFC56F.w        ; Mark chest contains treasure
+	
 loc_00021446:
-	MOVE.b	#$FF, $FFFFC56C.w
-	BSR.w	loc_00021480
+	MOVE.b	#$FF, $FFFFC56C.w        ; Mark chest present
+	BSR.w	loc_00021480             ; Spawn chest sprite
 	MOVE.l	#NoOneHereStr, Script_talk_source.w
 	RTS
 	
