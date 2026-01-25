@@ -4982,26 +4982,26 @@ loc_00004E18:
 	MOVE.w	#6, D4
 loc_00004E24:
 	MOVEA.l	Enemy_list_ptr.w, A6
-	BSR.w	loc_00004EA2
+	BSR.w	ApplyDamageToObjectIfAlive
 	MOVEA.l	Object_slot_01_ptr.w, A6
-	BSR.w	loc_00004EA2
+	BSR.w	ApplyDamageToObjectIfAlive
 	MOVEA.l	Object_slot_02_ptr.w, A6
-	BSR.w	loc_00004EA2
+	BSR.w	ApplyDamageToObjectIfAlive
 	MOVEA.l	Object_slot_03_ptr.w, A6
-	BSR.w	loc_00004EA2
+	BSR.w	ApplyDamageToObjectIfAlive
 	MOVEA.l	Object_slot_04_ptr.w, A6
-	BSR.w	loc_00004EA2
+	BSR.w	ApplyDamageToObjectIfAlive
 	MOVEA.l	Object_slot_02_ptr.w, A6
 	MOVEA.l	Object_slot_05_ptr.w, A6
-	BSR.w	loc_00004EAE
+	BSR.w	ApplyDamageToObjectIfAlive_D3
 	MOVEA.l	Object_slot_06_ptr.w, A6
-	BSR.w	loc_00004EAE
+	BSR.w	ApplyDamageToObjectIfAlive_D3
 	MOVEA.l	Object_slot_07_ptr.w, A6
-	BSR.w	loc_00004EAE
+	BSR.w	ApplyDamageToObjectIfAlive_D3
 	MOVEA.l	Object_slot_08_ptr.w, A6
-	BSR.w	loc_00004EAE
+	BSR.w	ApplyDamageToObjectIfAlive_D3
 	MOVEA.l	Object_slot_09_ptr.w, A6
-	BSR.w	loc_00004EAE
+	BSR.w	ApplyDamageToObjectIfAlive_D3
 	MOVEA.l	Object_slot_0A_ptr.w, A6
 	BSR.w	AddValueToObjectSlot_D4
 	MOVEA.l	Object_slot_0B_ptr.w, A6
@@ -5014,14 +5014,16 @@ loc_00004E24:
 	BSR.w	AddValueToObjectSlot_D4
 	RTS
 
-loc_00004EA2:
+;ApplyDamageToObjectIfAlive:
+ApplyDamageToObjectIfAlive:
 	TST.w	$8(A6)
 	BLE.b	loc_00004EAC
 	ADD.w	D2, $8(A6)
 loc_00004EAC:
 	RTS
 
-loc_00004EAE:
+;ApplyDamageToObjectIfAlive_D3:
+ApplyDamageToObjectIfAlive_D3:
 	TST.w	$8(A6)
 	BLE.b	loc_00004EB8
 	ADD.w	D3, $8(A6)
@@ -10405,7 +10407,7 @@ loc_0000969A:
 
 loc_000096EA:
 	BSR.w	InitEnemyAI
-	BSR.w	loc_0000B70A
+	BSR.w	SetEnemyGraphicsParams
 	MOVE.l	#loc_00009726, $2(A5)
 	MOVE.b	#$0E, $6(A6)
 	MOVE.l	#loc_0000A662, $2(A6)
@@ -10877,7 +10879,7 @@ loc_00009D72:
 
 loc_00009D90:
 	BSR.w	InitEnemyAI
-	BSR.w	loc_0000B70A
+	BSR.w	SetEnemyGraphicsParams
 	MOVE.l	#loc_00009DB0, $2(A5)
 	MOVE.b	#$0E, $6(A6)
 	MOVE.l	#loc_0000A662, $2(A6)
@@ -11199,7 +11201,7 @@ loc_0000A204:
 	CLR.w	D0
 	MOVE.b	$1(A5), D0
 	LEA	(A5,D0.w), A6
-	BSR.w	loc_0000B5C8
+	BSR.w	SetRandomEnemyPosition
 	CLR.l	$32(A5)
 	CLR.l	$36(A5)
 loc_0000A236:
@@ -11243,7 +11245,7 @@ loc_0000A2AA:
 	MOVE.b	#$0E, $6(A5)
 	MOVE.l	#AddSpriteToDisplayList, $2(A6)
 	MOVE.b	#$0E, $6(A6)
-	BSR.w	loc_0000B5C8
+	BSR.w	SetRandomEnemyPosition
 	RTS
 	
 loc_0000A2D4:
@@ -11369,11 +11371,11 @@ loc_0000A476:
 	
 loc_0000A478:
 	BSR.w	InitEnemyAI
-	BSR.w	loc_0000B70A
+	BSR.w	SetEnemyGraphicsParams
 	MOVE.l	#loc_0000A49C, $2(A5)
 	MOVE.b	#$0E, $6(A6)
 	MOVE.l	#loc_0000A662, $2(A6)
-	BSR.w	loc_0000B5C8
+	BSR.w	SetRandomEnemyPosition
 	RTS
 	
 loc_0000A49C:
@@ -11526,11 +11528,11 @@ loc_0000A68A:
 	
 loc_0000A6AA:
 	BSR.w	InitEnemyAI
-	BSR.w	loc_0000B70A
+	BSR.w	SetEnemyGraphicsParams
 	MOVE.l	#loc_0000A6CE, $2(A5)
 	MOVE.b	#$0E, $6(A6)
 	MOVE.l	#loc_0000A662, $2(A6)
-	BSR.w	loc_0000B5C8
+	BSR.w	SetRandomEnemyPosition
 	RTS
 	
 loc_0000A6CE:
@@ -12604,7 +12606,8 @@ loc_0000B5BA:
 loc_0000B5C6:
 	RTS
 
-loc_0000B5C8:
+;SetRandomEnemyPosition:
+SetRandomEnemyPosition:
 	CLR.w	D0
 	JSR	GetRandomNumber
 	ANDI.w	#$01FF, D0
@@ -12649,7 +12652,7 @@ loc_0000B630:
 	BLT.w	loc_0000B660
 	CMPI.w	#$006C, D0
 	BGT.w	loc_0000B660
-	BRA.w	loc_0000B5C8
+	BRA.w	SetRandomEnemyPosition
 loc_0000B660:
 	RTS
 	
@@ -12706,7 +12709,8 @@ loc_0000B704:
 	TST.w	$28(A5)
 	RTS
 	
-loc_0000B70A:
+;SetEnemyGraphicsParams:
+SetEnemyGraphicsParams:
 	MOVE.w	#$0019, $8(A5)
 	MOVE.b	#$0D, $6(A5)
 	MOVE.w	#$000C, $1C(A5)
@@ -13342,7 +13346,7 @@ loc_0000c044:
 	MOVE.l	$36(A5), D1
 	ADD.l	D0, $E(A5)
 	ADD.l	D1, $12(A5)
-	BSR.w	loc_0000CB72
+	BSR.w	ClampYPosition
 	LEA	loc_00022F6A, A0
 	LEA	(A5), A6
 	MOVE.w	#1, D7
@@ -13367,7 +13371,7 @@ loc_0000C09A:
 	MOVE.l	$36(A5), D1
 	ADD.l	D0, $E(A5)
 	ADD.l	D1, $12(A5)
-	BSR.w	loc_0000CB72
+	BSR.w	ClampYPosition
 	MOVEA.l	Enemy_list_ptr.w, A6
 	TST.w	$28(A6)
 	BLE.b	loc_0000C0BC
@@ -13393,7 +13397,7 @@ loc_0000C0F4:
 	MOVE.l	$36(A5), D1
 	ADD.l	D0, $E(A5)
 	ADD.l	D1, $12(A5)
-	BSR.w	loc_0000CB72
+	BSR.w	ClampYPosition
 	MOVEA.l	Enemy_list_ptr.w, A6
 	TST.w	$28(A6)
 	BLE.b	loc_0000C116
@@ -13419,7 +13423,7 @@ loc_0000C14E:
 	MOVE.l	$36(A5), D1
 	ADD.l	D0, $E(A5)
 	ADD.l	D1, $12(A5)
-	BSR.w	loc_0000CB72
+	BSR.w	ClampYPosition
 	LEA	loc_00022F52, A0
 	CLR.w	D0
 	MOVE.b	$1(A5), D0
@@ -14109,7 +14113,8 @@ loc_0000CB6C:
 	CLR.b	$26(A6)
 	RTS
 	
-loc_0000CB72:
+;ClampYPosition:
+ClampYPosition:
 	MOVE.w	$12(A5), D0
 	CMPI.w	#$00B0, D0
 	BLE.b	loc_0000CB8A
@@ -15444,7 +15449,7 @@ loc_0000DD5C:
 	RTS
 	
 loc_0000DD94:
-	BSR.w	loc_0000E236
+	BSR.w	GetSignedVelocity
 	ADD.w	D0, $18(A6)
 	TST.b	$41(A5)
 	BGE.b	loc_0000DDB6
@@ -15474,7 +15479,7 @@ loc_0000DDDC:
 	DBF	D7, loc_0000DDDC
 	MOVE.w	$E(A6), $E(A5)
 	MOVE.w	$12(A6), $12(A5)
-	BSR.w	loc_0000E236
+	BSR.w	GetSignedVelocity
 	ADD.w	D0, $18(A6)
 	CMPI.b	#$A0, $18(A6)
 	BGT.b	loc_0000DE2C
@@ -15646,7 +15651,7 @@ loc_0000E038:
 	RTS
 	
 loc_0000E05A:
-	BSR.w	loc_0000E236
+	BSR.w	GetSignedVelocity
 	ADD.w	D0, $18(A6)
 	TST.b	$41(A5)
 	BGE.b	loc_0000E07C
@@ -15676,7 +15681,7 @@ loc_0000E0A2:
 	DBF	D7, loc_0000E0A2
 	MOVE.w	$E(A6), $E(A5)
 	MOVE.w	$12(A6), $12(A5)
-	BSR.w	loc_0000E236
+	BSR.w	GetSignedVelocity
 	ADD.w	D0, $18(A6)
 	CMPI.b	#$B0, $18(A6)
 	BGT.b	loc_0000E0F2
@@ -15768,7 +15773,8 @@ loc_0000E22E:
 	JSR	ProcessBossFightDamage
 	RTS
 
-loc_0000E236:
+;GetSignedVelocity:
+GetSignedVelocity:
 	MOVE.w	$3A(A5), D0
 	TST.b	$41(A5)
 	BGE.b	loc_0000E242
@@ -17949,7 +17955,7 @@ loc_0000FDC4:
 	LEA	$20(A2), A2
 	DBF	D5, loc_0000FDC4
 	LEA	loc_0001F4C2, A0
-	BSR.w	loc_0000FE76
+	BSR.w	ExecuteVdpDmaFromPointer
 	LEA	Tile_gfx_buffer.w, A2
 	TST.b	Swaffham_ruined.w
 	BEQ.b	loc_0000FDFA
@@ -17972,7 +17978,7 @@ loc_0000FE14:
 	LEA	$20(A2), A2
 	DBF	D5, loc_0000FE14
 	LEA	loc_0001F4D2, A0
-	BSR.w	loc_0000FE76
+	BSR.w	ExecuteVdpDmaFromPointer
 	RTS
 	
 ;LoadBattleHudGraphics:
@@ -17985,7 +17991,7 @@ loc_0000FE3A:
 	LEA	$20(A2), A2
 	DBF	D5, loc_0000FE3A
 	LEA	loc_0001F4C2, A0
-	BSR.w	loc_0000FE76
+	BSR.w	ExecuteVdpDmaFromPointer
 	LEA	Tile_gfx_buffer.w, A2
 	LEA	loc_00091CBC, A0
 	MOVE.w	#$0039, D5
@@ -17994,10 +18000,11 @@ loc_0000FE5E:
 	LEA	$20(A2), A2
 	DBF	D5, loc_0000FE5E
 	LEA	loc_0001F4D2, A0
-	BSR.w	loc_0000FE76
+	BSR.w	ExecuteVdpDmaFromPointer
 	RTS
 	
-loc_0000FE76:
+;ExecuteVdpDmaFromPointer:
+ExecuteVdpDmaFromPointer:
 	ORI	#$0700, SR
 	stopZ80
 	BSR.w	InitVdpDmaRamRoutine
@@ -19397,36 +19404,37 @@ DrawMoneyDisplayWindow:
 ;DrawItemListBorders:
 DrawItemListBorders:
 	MOVE.w	Possessed_items_length.w, D7
-	BSR.w	loc_00011106
+	BSR.w	DrawListTopBorders
 	MOVE.w	Possessed_items_length.w, D0
-	BSR.w	loc_00011168
+	BSR.w	DrawListBottomBorder
 	RTS
 	
 ; DrawMagicListBorders
 DrawMagicListBorders:
 	MOVE.w	Possessed_magics_length.w, D7
-	BSR.w	loc_00011106
+	BSR.w	DrawListTopBorders
 	MOVE.w	Possessed_magics_length.w, D0
-	BSR.w	loc_00011168
+	BSR.w	DrawListBottomBorder
 	RTS
 	
 ;DrawEquipmentListWindow:
 DrawEquipmentListWindow:
 	MOVE.w	Possessed_equipment_length.w, D7
-	BSR.w	loc_00011106
+	BSR.w	DrawListTopBorders
 	MOVE.w	Possessed_equipment_length.w, D0
-	BSR.w	loc_00011168
+	BSR.w	DrawListBottomBorder
 	RTS
 	
 ;DrawReadyEquipmentMenuBorders:
 DrawReadyEquipmentMenuBorders:
 	MOVE.w	Ready_equipment_list_length.w, D7
-	BSR.w	loc_00011106
+	BSR.w	DrawListTopBorders
 	MOVE.w	Ready_equipment_list_length.w, D0
-	BSR.w	loc_00011168
+	BSR.w	DrawListBottomBorder
 	RTS
 	
-loc_00011106:
+;DrawListTopBorders:
+DrawListTopBorders:
 	LEA	loc_00021DA2, A0
 	MOVE.w	#$000F, Window_tilemap_draw_x.w
 	MOVE.w	#2, Window_tilemap_draw_y.w
@@ -19451,7 +19459,8 @@ loc_00011134:
 	DBF	D7, loc_00011134
 	RTS
 	
-loc_00011168:
+;DrawListBottomBorder:
+DrawListBottomBorder:
 	LEA	loc_00021DE4, A0
 	ADDQ.w	#1, D0
 	ADD.w	D0, D0
@@ -19648,7 +19657,8 @@ loc_000113B8:
 	
 loc_0001141A:
 	dc.b	$7E, $01, $60, $00, $00, $04 
-loc_00011420:
+;LongToDecimalString:
+LongToDecimalString:
 	MOVEQ	#0, D7
 	ROL.l	#8, D2
 	MOVEQ	#5, D6
@@ -19682,7 +19692,7 @@ FormatLongNumberToText:
 	MOVE.w	#0, D3
 	MOVEQ	#1, D5
 	LEA	Window_text_scratch.w, A0
-	BSR.b	loc_00011420
+	BSR.b	LongToDecimalString
 	MOVE.b	#$FF, (A0)
 	RTS
 	
@@ -19717,7 +19727,8 @@ loc_0001149E:
 	DBF	D6, loc_00011474
 	RTS
 	
-loc_000114A4:
+;WordToDecimalString_NoPad:
+WordToDecimalString_NoPad:
 	MOVEQ	#0, D7
 	MOVEQ	#3, D6
 loc_000114A8:
@@ -19839,7 +19850,7 @@ DisplayPlayerKims:
 	MOVE.l	Player_kims.w, D2
 	MOVE.w	#0, D3
 	CLR.w	D5
-	BSR.w	loc_00011420
+	BSR.w	LongToDecimalString
 	RTS
 	
 ; loc_000115FA
@@ -21330,7 +21341,7 @@ DrawItemListNames:
 	LEA	Possessed_items_list.w, A2
 	LEA	ItemNames, A1
 	MOVE.w	Possessed_items_length.w, D7
-	BSR.w	loc_00012B5C
+	BSR.w	DrawListItems
 	RTS
 	
 ;DrawMagicListWithMP:
@@ -21340,7 +21351,7 @@ DrawMagicListWithMP:
 	LEA	Possessed_magics_list.w, A2
 	LEA	MagicNames, A1
 	MOVE.w	Possessed_magics_length.w, D7
-	BSR.w	loc_00012B5C
+	BSR.w	DrawListItems
 	MOVE.w	#$0021, Window_tilemap_draw_x.w
 	MOVE.w	#4, Window_tilemap_draw_y.w
 	LEA	Possessed_magics_list.w, A2
@@ -21355,7 +21366,7 @@ DrawPossessedEquipmentList:
 	LEA	Possessed_equipment_list.w, A2
 	LEA	EquipmentNames, A1
 	MOVE.w	Possessed_equipment_length.w, D7
-	BSR.w	loc_00012B5C
+	BSR.w	DrawListItems
 	MOVE.w	#$0023, Window_tilemap_draw_x.w
 	MOVE.w	#4, Window_tilemap_draw_y.w
 	LEA	Possessed_equipment_list.w, A2
@@ -21376,7 +21387,7 @@ DrawReadyEquipmentList:
 	MOVE.w	#4, Window_tilemap_draw_y.w
 	LEA	Ready_equipment_list.w, A2
 	LEA	EquipmentNames, A1
-	BSR.w	loc_00012B5C
+	BSR.w	DrawListItems
 	MOVE.w	Ready_equipment_list_length.w, D7
 	MOVE.w	#$0023, Window_tilemap_draw_x.w
 	MOVE.w	#4, Window_tilemap_draw_y.w
@@ -21384,7 +21395,8 @@ DrawReadyEquipmentList:
 	BSR.w	loc_00012C3E
 	RTS
 	
-loc_00012B5C:
+;DrawListItems:
+DrawListItems:
 	SUBQ.w	#1, D7
 	CLR.w	D3
 loc_00012B60:
@@ -21734,7 +21746,7 @@ DisplayCurrentHpMp:
 	MOVE.w	D0, D2
 	MOVE.w	#0, D3
 	CLR.w	D5
-	BSR.w	loc_000114A4
+	BSR.w	WordToDecimalString_NoPad
 	MOVE.w	#7, Window_number_cursor_x.w
 	MOVE.w	#$001A, Window_number_cursor_y.w
 	MOVE.w	Player_mp.w, D0
@@ -21742,7 +21754,7 @@ DisplayCurrentHpMp:
 	MOVE.w	D0, D2
 	MOVE.w	#0, D3
 	CLR.w	D5
-	BSR.w	loc_000114A4
+	BSR.w	WordToDecimalString_NoPad
 	ANDI	#$F8FF, SR
 	RTS
 
@@ -21856,7 +21868,7 @@ DisplayMaxHpMp:
 	MOVE.w	D0, D2
 	MOVE.w	#0, D3
 	CLR.w	D5
-	BSR.w	loc_000114A4
+	BSR.w	WordToDecimalString_NoPad
 	MOVE.w	#$000D, Window_number_cursor_x.w
 	MOVE.w	#$001A, Window_number_cursor_y.w
 	MOVE.w	Player_mmp.w, D0
@@ -21864,7 +21876,7 @@ DisplayMaxHpMp:
 	MOVE.w	D0, D2
 	MOVE.w	#0, D3
 	CLR.w	D5
-	BSR.w	loc_000114A4
+	BSR.w	WordToDecimalString_NoPad
 	ANDI	#$F8FF, SR
 	RTS
 
@@ -21876,13 +21888,13 @@ DisplayPlayerKimsAndExperience:
 	MOVE.l	Player_kims.w, D2
 	MOVE.w	#0, D3
 	CLR.w	D5
-	BSR.w	loc_00011420
+	BSR.w	LongToDecimalString
 	MOVE.w	#$001C, Window_number_cursor_x.w
 	MOVE.w	#$0015, Window_number_cursor_y.w
 	MOVE.l	Player_experience.w, D2
 	MOVE.w	#0, D3
 	CLR.w	D5
-	BSR.w	loc_00011420
+	BSR.w	LongToDecimalString
 	ANDI	#$F8FF, SR
 	RTS
 
@@ -21964,22 +21976,22 @@ loc_000132AC:
 	BTST.l	#0, D3
 	BEQ.b	loc_000132E2
 	LEA	Palette_line_0_buffer.w, A1
-	BSR.w	loc_00013380
+	BSR.w	DecrementPaletteRGBValues
 loc_000132E2:
 	BTST.l	#1, D3
 	BEQ.b	loc_000132F0
 	LEA	Palette_line_1_buffer.w, A1
-	BSR.w	loc_00013380
+	BSR.w	DecrementPaletteRGBValues
 loc_000132F0:
 	BTST.l	#2, D3
 	BEQ.b	loc_000132FE
 	LEA	Palette_line_2_buffer.w, A1
-	BSR.w	loc_00013380
+	BSR.w	DecrementPaletteRGBValues
 loc_000132FE:
 	BTST.l	#3, D3
 	BEQ.b	loc_0001330C
 	LEA	Palette_line_3_buffer.w, A1
-	BSR.w	loc_00013380
+	BSR.w	DecrementPaletteRGBValues
 loc_0001330C:
 	stopZ80
 	JSR	InitVdpDmaRamRoutine
@@ -22000,7 +22012,8 @@ loc_0001330C:
 	startZ80
 	RTS
 
-loc_00013380:
+;DecrementPaletteRGBValues:
+DecrementPaletteRGBValues:
 	MOVEQ	#$0000000F, D2
 loc_00013382:
 	MOVE.w	(A1), D0
@@ -22065,25 +22078,25 @@ loc_0001343E:
 	BEQ.b	loc_00013478
 	LEA	Palette_line_0_buffer.w, A1
 	MOVE.w	Palette_line_0_fade_target.w, D1
-	BSR.w	loc_00013522
+	BSR.w	ShiftPaletteTowardsTarget
 loc_00013478:
 	BTST.l	#1, D3
 	BEQ.b	loc_0001348A
 	LEA	Palette_line_1_buffer.w, A1
 	MOVE.w	Palette_line_1_fade_target.w, D1
-	BSR.w	loc_00013522
+	BSR.w	ShiftPaletteTowardsTarget
 loc_0001348A:
 	BTST.l	#2, D3
 	BEQ.b	loc_0001349C
 	LEA	Palette_line_2_buffer.w, A1
 	MOVE.w	Palette_line_2_fade_target.w, D1
-	BSR.w	loc_00013522
+	BSR.w	ShiftPaletteTowardsTarget
 loc_0001349C:
 	BTST.l	#3, D3
 	BEQ.b	loc_000134AE
 	LEA	Palette_line_3_buffer.w, A1
 	MOVE.w	Palette_line_3_fade_target.w, D1
-	BSR.w	loc_00013522
+	BSR.w	ShiftPaletteTowardsTarget
 loc_000134AE:
 	MOVE.w	#$0100, Z80_bus_request
 loc_000134B6:
@@ -22107,7 +22120,8 @@ loc_000134B6:
 	MOVE.w	#0, Z80_bus_request
 	RTS
 
-loc_00013522:
+;ShiftPaletteTowardsTarget:
+ShiftPaletteTowardsTarget:
 	LEA	loc_00013876, A3
 	ASL.w	#5, D1
 	LEA	(A3,D1.w), A3
@@ -22203,41 +22217,41 @@ loc_0001362C:
 	BTST.l	#0, D3
 	BEQ.b	loc_00013668
 	MOVE.w	Palette_line_0_fade_in_target.w, D1
-	BSR.w	loc_00013756
+	BSR.w	FadePaletteTowardsTarget
 	BRA.b	loc_00013670
 loc_00013668:
 	MOVE.w	Palette_line_0_index.w, D1
-	BSR.w	loc_00013738
+	BSR.w	LoadPaletteByIndex
 loc_00013670:
 	LEA	Palette_line_1_buffer.w, A1
 	BTST.l	#1, D3
 	BEQ.b	loc_00013684
 	MOVE.w	Palette_line_1_fade_in_target.w, D1
-	BSR.w	loc_00013756
+	BSR.w	FadePaletteTowardsTarget
 	BRA.b	loc_0001368C
 loc_00013684:
 	MOVE.w	Palette_line_1_index.w, D1
-	BSR.w	loc_00013738
+	BSR.w	LoadPaletteByIndex
 loc_0001368C:
 	LEA	Palette_line_2_buffer.w, A1
 	BTST.l	#2, D3
 	BEQ.b	loc_000136A0
 	MOVE.w	Palette_line_2_fade_in_target.w, D1
-	BSR.w	loc_00013756
+	BSR.w	FadePaletteTowardsTarget
 	BRA.b	loc_000136A8
 loc_000136A0:
 	MOVE.w	Palette_line_2_index.w, D1
-	BSR.w	loc_00013738
+	BSR.w	LoadPaletteByIndex
 loc_000136A8:
 	LEA	Palette_line_3_buffer.w, A1
 	BTST.l	#3, D3
 	BEQ.b	loc_000136BC
 	MOVE.w	Palette_line_3_fade_in_target.w, D1
-	BSR.w	loc_00013756
+	BSR.w	FadePaletteTowardsTarget
 	BRA.b	loc_000136C4
 loc_000136BC:
 	MOVE.w	Palette_line_3_index.w, D1
-	BSR.w	loc_00013738
+	BSR.w	LoadPaletteByIndex
 loc_000136C4:
 	MOVE.w	#$0100, Z80_bus_request
 loc_000136CC:
@@ -22261,7 +22275,8 @@ loc_000136CC:
 	MOVE.w	#0, Z80_bus_request
 	RTS
 
-loc_00013738:
+;LoadPaletteByIndex:
+LoadPaletteByIndex:
 	LEA	loc_00013876, A2
 	ASL.w	#5, D1
 	LEA	(A2,D1.w), A3
@@ -22275,7 +22290,8 @@ loc_00013738:
 	MOVE.l	(A3)+, (A1)+
 	RTS
 
-loc_00013756:
+;FadePaletteTowardsTarget:
+FadePaletteTowardsTarget:
 	LEA	loc_00013876, A3
 	ASL.w	#5, D1
 	LEA	(A3,D1.w), A3
@@ -31661,12 +31677,12 @@ loc_0001D216:
 	MOVE.w	#$00A1, D0
 	JSR	QueueSoundEffect
 	JSR	ResetScriptAndInitDialogue
-	BSR.w	loc_0001D5D8
+	BSR.w	GetCurrentEquippedItemID
 	TST.w	D0
 	BGE.w	loc_0001D29C
 	BSR.w	loc_0001D5FC
 	BSR.w	CopyPlayerNameToTextBuffer
-	BSR.w	loc_0001D5E8
+	BSR.w	GetSelectedEquipmentID
 	MOVE.w	#9, D2
 	BTST.l	D2, D1
 	BNE.w	loc_0001D352
@@ -31680,7 +31696,7 @@ loc_0001D216:
 	LEA	ReadiedStr, A0
 	JSR	CopyStringUntilFF
 	MOVE.b	#$FE, (A1)+
-	BSR.w	loc_0001D664
+	BSR.w	CopyEquipmentNameToTextBuffer
 	MOVE.b	#$2E, (A1)+
 	MOVE.b	#$FF, (A1)
 	PRINT 	$FFFFC260
@@ -31690,7 +31706,7 @@ loc_0001D216:
 
 loc_0001D29C:
 	PRINT 	AlreadyReadiedStr
-	BSR.w	loc_0001D5E8
+	BSR.w	GetSelectedEquipmentID
 	CMP.b	D0, D1
 	BEQ.w	loc_0001D342
 	MOVE.w	#9, D2
@@ -31698,7 +31714,7 @@ loc_0001D29C:
 	BNE.w	loc_0001D348
 	BSR.w	loc_0001D62A
 	BSR.w	CopyPlayerNameToTextBuffer
-	BSR.w	loc_0001D5D8
+	BSR.w	GetCurrentEquippedItemID
 	MOVE.w	D0, D2
 	MOVE.w	D0, D6
 	MOVE.w	Ready_equipment_category.w, D0
@@ -31716,17 +31732,17 @@ loc_0001D29C:
 	LEA	RemovedStr, A0
 	JSR	CopyStringUntilFF
 	MOVE.b	#$FE, (A1)+
-	BSR.w	loc_0001D664
+	BSR.w	CopyEquipmentNameToTextBuffer
 	MOVE.b	#$20, (A1)+
 	MOVE.b	#$61, (A1)+
 	MOVE.b	#$6E, (A1)+
 	MOVE.b	#$64, (A1)+
 	MOVE.b	#$FE, (A1)+
-	BSR.w	loc_0001D5E8
+	BSR.w	GetSelectedEquipmentID
 	MOVE.w	D1, D2
 	LEA	ReadiedStr, A0
 	JSR	CopyStringUntilFF
-	BSR.w	loc_0001D664
+	BSR.w	CopyEquipmentNameToTextBuffer
 	MOVE.b	#$2E, (A1)+
 	MOVE.b	#$FF, (A1)
 	PRINT 	$FFFFC260
@@ -31775,7 +31791,7 @@ loc_0001D3BA:
 	BSR.w	loc_0001D5AC
 	JSR	SaveStatusBarToBuffer
 	JSR	ResetScriptAndInitDialogue
-	BSR.w	loc_0001D5D8
+	BSR.w	GetCurrentEquippedItemID
 	TST.w	D0
 	BLT.w	loc_0001D456
 	MOVE.w	#9, D1
@@ -31790,12 +31806,12 @@ loc_0001D3BA:
 	LEA	loc_0001D522, A0
 	JSR	(A0,D0.w)
 	BSR.w	CopyPlayerNameToTextBuffer
-	BSR.w	loc_0001D5D8
+	BSR.w	GetCurrentEquippedItemID
 	MOVE.w	D0, D2
 	LEA	RemovedStr, A0
 	JSR	CopyStringUntilFF
 	MOVE.b	#$FE, (A1)+
-	BSR.w	loc_0001D664
+	BSR.w	CopyEquipmentNameToTextBuffer
 	MOVE.b	#$2E, (A1)+
 	MOVE.b	#$FF, (A1)
 	MOVE.w	Ready_equipment_category.w, D0
@@ -31946,14 +31962,16 @@ loc_0001D5D2:
 	MOVE.w	D2, Ready_equipment_list_length.w
 	RTS
 
-loc_0001D5D8:
+;GetCurrentEquippedItemID:
+GetCurrentEquippedItemID:
 	MOVE.w	Ready_equipment_category.w, D0
 	ADD.w	D0, D0
 	LEA	Equipped_items.w, A2
 	MOVE.w	(A2,D0.w), D0
 	RTS
 
-loc_0001D5E8:
+;GetSelectedEquipmentID:
+GetSelectedEquipmentID:
 	MOVE.w	Ready_equipment_cursor_index.w, D1
 	ADD.w	D1, D1
 	LEA	Ready_equipment_list.w, A2
@@ -31962,7 +31980,7 @@ loc_0001D5E8:
 	RTS
 
 loc_0001D5FC:
-	BSR.b	loc_0001D5E8
+	BSR.b	GetSelectedEquipmentID
 	MOVE.w	Ready_equipment_category.w, D2
 	ADD.w	D2, D2
 	LEA	Equipped_items.w, A2
@@ -32007,7 +32025,8 @@ CopyPlayerNameToTextBuffer:
 	MOVE.b	#$20, (A1)+
 	RTS
 
-loc_0001D664:
+;CopyEquipmentNameToTextBuffer:
+CopyEquipmentNameToTextBuffer:
 	LEA	EquipmentNames, A2
 	ANDI.w	#$00FF, D2
 	ADD.w	D2, D2
