@@ -2203,7 +2203,7 @@ loc_00002868:
 	MOVE.b	#0, D5
 	MOVE.w	#1, D4
 	JSR	VDP_DMAFill
-	MOVEA.l	$FFFFCC54.w, A6
+	MOVEA.l	Current_actor_ptr.w, A6
 	BSET.b	#7, (A6)
 	MOVE.l	#loc_00008BA6, $2(A6)
 	MOVE.w	#$19, Gameplay_substate.w
@@ -4338,7 +4338,7 @@ loc_00004516:
 	CLR.b	Truffles_available.w
 	CLR.b	Reward_script_available.w
 	CLR.b	Talker_present_flag.w
-	MOVEA.l	$FFFFCC54.w, A6
+	MOVEA.l	Current_actor_ptr.w, A6
 	BCLR.b	#7, (A6)
 	CLR.w	D0
 	MOVE.b	$1(A6), D0
@@ -19373,7 +19373,7 @@ loc_0001119A:
 	BSR.w	DrawWindowBorder
 	MOVE.w	#2, Window_text_x.w
 	MOVE.w	#2, Window_text_y.w
-	LEA	$FFFFC4B4.w, A3
+	LEA	Shop_item_list.w, A3
 	LEA	ShopCategoryNameTables, A4
 	MOVE.w	Current_shop_type.w, D0
 	ASL.w	#3, D0
@@ -19432,7 +19432,7 @@ loc_00011274:
 	BSR.w	DrawWindowBorder
 	MOVE.w	#2, Window_text_x.w
 	MOVE.w	#2, Window_text_y.w
-	LEA	$FFFFC4B4.w, A3
+	LEA	Shop_item_list.w, A3
 	LEA	ShopCategoryNameTables, A4
 	MOVE.w	Current_shop_type.w, D0
 	ASL.w	#3, D0
@@ -20385,7 +20385,7 @@ loc_00011F58:
 loc_00011F94:
 	TST.b	Dialog_active_flag.w
 	BEQ.b	loc_00011FB4
-	MOVEA.l	$FFFFCC54.w, A6
+	MOVEA.l	Current_actor_ptr.w, A6
 	BSET.b	#7, $7(A6)
 	CLR.w	D0
 	MOVE.b	$1(A6), D0
@@ -20593,7 +20593,7 @@ loc_0001227A:
 loc_0001229E:
 	TST.b	Dialog_active_flag.w
 	BEQ.b	loc_000122AE
-	MOVEA.l	$FFFFCC54.w, A6
+	MOVEA.l	Current_actor_ptr.w, A6
 	BCLR.b	#7, $7(A6)
 loc_000122AE:
 	LEA	$FFFF7AB4, A0
@@ -20707,7 +20707,7 @@ SaveLeftMenuTiles:
 loc_00012450:
 	TST.b	Dialog_active_flag.w
 	BEQ.b	loc_00012470
-	MOVEA.l	$FFFFCC54.w, A6
+	MOVEA.l	Current_actor_ptr.w, A6
 	BCLR.b	#7, $7(A6)
 	CLR.w	D0
 	MOVE.b	$1(A6), D0
@@ -20839,7 +20839,7 @@ loc_000125E4:
 DrawStatusHudWindow:
 	TST.b	Dialog_active_flag.w
 	BEQ.b	loc_00012620
-	MOVEA.l	$FFFFCC54.w, A6
+	MOVEA.l	Current_actor_ptr.w, A6
 	BSET.b	#7, $7(A6)
 loc_00012620:
 	LEA	$FFFF7AB4, A0
@@ -29458,7 +29458,7 @@ loc_0001B45C:
 	ASL.w	#4, D1
 	ADD.w	D0, D1
 	LEA	ShopAssortmentByTownAndShopType, A1
-	LEA	$FFFFC4B4.w, A2
+	LEA	Shop_item_list.w, A2
 	MOVE.l	(A0,D0.w), Script_source_base.w
 	MOVEA.l	(A1,D1.w), A1
 	MOVE.w	(A1)+, D7
@@ -29504,7 +29504,7 @@ loc_0001B4E4:
 	ASL.w	#4, D1
 	ADD.w	D0, D1
 	LEA	ShopAssortmentByTownAndShopType, A1
-	LEA	$FFFFC4B4.w, A2
+	LEA	Shop_item_list.w, A2
 	MOVE.l	(A0,D2.w), Script_source_base.w
 	MOVEA.l	(A1,D1.w), A1
 	MOVE.w	(A1)+, D7
@@ -29602,7 +29602,7 @@ loc_0001B784:
 	MOVE.w	Current_shop_type.w, D0
 	ASL.w	#3, D0
 	LEA	Text_build_buffer.w, A1
-	LEA	$FFFFC4B4.w, A2
+	LEA	Shop_item_list.w, A2
 	MOVE.w	Shop_selected_index.w, D0
 	ADD.w	D0, D0
 	MOVE.w	(A2,D0.w), D0
@@ -29715,7 +29715,7 @@ loc_0001BA5E:
 	MOVE.w	(A0), D0
 	ADDQ.w	#1, (A0)+
 	ADD.w	D0, D0
-	LEA	$FFFFC4B4.w, A1
+	LEA	Shop_item_list.w, A1
 	MOVE.w	Shop_selected_index.w, D1
 	ADD.w	D1, D1
 	MOVE.w	(A1,D1.w), D1
@@ -30056,7 +30056,7 @@ loc_0001BE6E:
 	MOVE.w	Current_shop_type.w, D0
 	ASL.w	#3, D0
 	MOVEA.l	(A0,D0.w), A0
-	LEA	$FFFFC4B4.w, A2
+	LEA	Shop_item_list.w, A2
 	MOVE.w	Shop_selected_index.w, D0
 	ADD.w	D0, D0
 	MOVE.w	(A2,D0.w), D0
@@ -30130,7 +30130,7 @@ loc_0001BF28:
 loc_0001BFD2:
 	ADDQ.w	#1, (A0)+
 	ADD.w	D0, D0
-	LEA	$FFFFC4B4.w, A1
+	LEA	Shop_item_list.w, A1
 	MOVE.w	Shop_selected_index.w, D1
 	ADD.w	D1, D1
 	MOVE.w	(A1,D1.w), D1
@@ -32276,7 +32276,7 @@ loc_0001DC94:
 	MOVE.b	#$A7, D0
 	JSR	QueueSoundEffect             ; Sound effect
 	MOVE.b	#$FF, Chest_opened_flag.w
-	MOVEA.l	$FFFFCC54.w, A6          ; Chest sprite
+	MOVEA.l	Current_actor_ptr.w, A6          ; Chest sprite
 	CLR.w	D0
 	MOVE.b	$1(A6), D0
 	LEA	(A6,D0.w), A6
@@ -36127,7 +36127,7 @@ loc_000213CC:
 	RTS
 	
 loc_000213CE:
-	MOVEA.l	$FFFFCC54.w, A6
+	MOVEA.l	Current_actor_ptr.w, A6
 	BSET.b	#7, (A6)
 	MOVE.b	#$FF, Dialog_active_flag.w
 	MOVE.b	#$FF, Dialog_state_flag.w
