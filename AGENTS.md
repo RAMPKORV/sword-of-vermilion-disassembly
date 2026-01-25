@@ -158,6 +158,31 @@ dc.w    $8F02               ; VDP register command
 dc.b    $FF                 ; Bitmask/flag value
 ```
 
+**IMPORTANT - What NOT to simplify:**
+
+While adding comments and documentation, **DO NOT** convert existing hex values to decimal in data declarations unless you are absolutely certain of the context. Even seemingly simple values like `$0001` or `$0000` should remain in their original format.
+
+**Why this matters:**
+- Data tables may contain patterns where hex notation is intentional
+- Converting values can make verification difficult if the change breaks bit-perfect builds
+- The original disassembly format should be preserved for data structures
+
+**Safe approach:**
+1. Add comments that explain what values mean in decimal (e.g., `dc.w $0016 ; 23 object groups`)
+2. Keep the original hex notation in the actual data
+3. Only convert obvious immediate values in comments or when adding new constants
+
+**Example from object initialization tables:**
+```asm
+; CORRECT - Preserve original hex format
+dc.w    $0016                        ; 23 object groups (0x16 = 22 decimal, 0-based)
+dc.w    $0001, $001F, $0040, $0000   ; 2 copies, 32 words, type=$40
+
+; WRONG - Converting data values
+dc.w    22                           ; Changed from $0016 - breaks build!
+dc.w    1, $1F, $40, 0               ; Changed from $0001, $0000 - breaks build!
+```
+
 ### Include Directives
 
 ```asm
@@ -241,6 +266,58 @@ node -e "const fs = require('fs'); const data = fs.readFileSync('out.bin'); cons
 ```
 
 Node.js version: v25.0.0
+
+## Troubleshooting
+
+### Debugging Build Failures
+
+When `verify.bat` fails with a hash mismatch:
+
+1. **Compare binary files byte-by-byte:**
+   ```bash
+   cmp -l out.bin out_orig.bin | head -20
+   ```
+   This shows exactly which bytes differ and their offsets.
+
+2. **Inspect the differences:**
+   ```bash
+   # Convert offset to hex (e.g., offset 1380 = 0x564)
+   printf "Offset: 0x%X\n" 1380
+   
+   # View bytes around the difference
+   od -A x -t x1z -j 1378 -N 10 out.bin
+   od -A x -t x1z -j 1378 -N 10 out_orig.bin
+   ```
+
+3. **Common causes of build breakage:**
+   - Converting hex data values to decimal (e.g., `$0001` → `1`)
+   - Incorrect label references after renaming
+   - Missing or extra bytes in data declarations
+   - Changing numeric format in data tables
+
+4. **Fix approach:**
+   - Revert suspected changes one by one
+   - Use `git diff` to see what changed
+   - Test after each fix with `verify.bat`
+
+### Lessons Learned
+
+**Converting data values from hex to decimal breaks builds:**
+- Even simple values like `$0000` or `$0001` must stay in their original format
+- The assembler treats `0` differently from `$0000` in some contexts
+- Only convert in **comments**, never in actual data declarations
+- Exception: Immediate values in instructions like `MOVE.w #0, D0` are safe
+
+**Label renaming requires updating ALL references:**
+- Use grep to find all references: `grep -n "\bloc_XXXXXXXX\b" vermilion.asm`
+- Check both function calls (BSR/JSR) and data references (LEA/dc.l)
+- Always verify that the correct label is referenced (not a similar one)
+- Example: `loc_00000718` (MenuObjectInitTable) vs `loc_000006B6` (BasicObjectInitTable)
+
+**Binary comparison is faster than reviewing code:**
+- When a build fails, use `cmp -l` to immediately see what changed
+- 2-byte differences often indicate wrong label address references
+- Larger differences suggest data table modifications
 
 ## References
 

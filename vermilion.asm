@@ -162,11 +162,11 @@ loc_0000041C:
 
 loc_0000055C:
 	LEA	Object_table_base.w, A0
-	LEA	loc_00000718, A1
+	LEA	MenuObjectInitTable, A1
 	BRA.w	InitObjectsFromTable
 loc_0000056A:
 	LEA	Object_table_base.w, A0
-	LEA	loc_0000073A, A1
+	LEA	GameplayObjectInitTable, A1
 	BRA.w	InitObjectsFromTable
 loc_00000578:
 	LEA	Object_table_base.w, A0
@@ -201,32 +201,60 @@ loc_000005DA:
 
 loc_000005E8:
 	LEA	Object_slot_base.w, A0
-	LEA	loc_000006B6, A1
+	LEA	BasicObjectInitTable, A1
+	
+; ============================================================================
 ; InitObjectsFromTable
+; ============================================================================
+; Initializes game objects (entities, handlers, sprites) from a table.
+; Sets up RAM structures for VBlank/HBlank handlers, player, NPCs, enemies, etc.
+;
+; Input:
+;   A0 = Base RAM address for object slots
+;   A1 = Pointer to object initialization table
+;
+; Table Format:
+;   Header:
+;     dc.w  <count>        ; Number of object groups to initialize
+;
+;   Each Entry (16 bytes):
+;     dc.w  <copies>       ; Number of instances to create (0-based)
+;     dc.w  <size>         ; Size of each object in words minus 1
+;     dc.w  <type>         ; Object type/ID
+;     dc.w  <flags>        ; Attribute flags
+;     dc.l  <handler>      ; Code pointer for object behavior
+;     dc.l  <ram_ptr>      ; Optional: RAM address to store object pointer
+;
+; Object Structure Created (at A0):
+;   +$00.b: Flags (from <flags>)
+;   +$01.b: Type (from <type>)
+;   +$02.l: Handler pointer (from <handler>)
+;   +$06+:  Cleared RAM for object data
+; ============================================================================
 InitObjectsFromTable:
-	MOVE.w	(A1)+, D7
-loc_000005F4:
-	MOVE.w	(A1)+, D6
-	MOVE.w	(A1)+, D5
-	MOVE.w	(A1)+, D2
-	MOVE.w	(A1)+, D4
-	MOVEA.l	(A1)+, A2
-	MOVE.l	(A1)+, D0
-	BEQ.b	loc_00000606
-	MOVEA.l	D0, A4
-	MOVE.l	A0, (A4)
-loc_00000606:
-	MOVE.w	D5, D3
-	LEA	(A0), A3
-loc_0000060A:
-	CLR.w	(A0)+
-	DBF	D3, loc_0000060A
-	OR.b	D4, (A3)
-	MOVE.b	D2, $1(A3)
-	MOVE.l	A2, $2(A3)
-	DBF	D6, loc_00000606
-	DBF	D7, loc_000005F4
-	CLR.b	$1(A3)
+	MOVE.w	(A1)+, D7                    ; D7 = number of groups - 1 (outer loop)
+.group_loop:
+	MOVE.w	(A1)+, D6                    ; D6 = copies - 1 (middle loop)
+	MOVE.w	(A1)+, D5                    ; D5 = object size in words - 1
+	MOVE.w	(A1)+, D2                    ; D2 = object type
+	MOVE.w	(A1)+, D4                    ; D4 = flags
+	MOVEA.l	(A1)+, A2                    ; A2 = handler code pointer
+	MOVE.l	(A1)+, D0                    ; D0 = RAM pointer destination (optional)
+	BEQ.b	.init_object                 ; Skip if NULL
+	MOVEA.l	D0, A4                       ; A4 = pointer to store location
+	MOVE.l	A0, (A4)                     ; Store object's RAM address
+.init_object:
+	MOVE.w	D5, D3                       ; D3 = size counter for clearing
+	LEA	(A0), A3                     ; A3 = object base address
+.clear_loop:
+	CLR.w	(A0)+                        ; Clear 2 bytes
+	DBF	D3, .clear_loop              ; Loop until object cleared
+	OR.b	D4, (A3)                     ; Set flags at +$00
+	MOVE.b	D2, $1(A3)                   ; Set type at +$01
+	MOVE.l	A2, $2(A3)                   ; Set handler pointer at +$02
+	DBF	D6, .init_object             ; Next copy
+	DBF	D7, .group_loop              ; Next group
+	CLR.b	$1(A3)                       ; Clear last object's type (terminator)
 	RTS
 
 ; loc_00000628
@@ -264,39 +292,76 @@ loc_00000682:
 
 loc_00000696:
 	dc.w	$8004, $8164, $9011, $8B00, $8C81, $855C, $8D2F, $8230, $8407, $8600, $8700, $8A00, $8E00, $8F02, $9100, $9200 
-loc_000006B6:
-	dc.w	$0005
+
+; ============================================================================
+; Basic Object Initialization Table
+; ============================================================================
+; Sets up core system objects: VBlank, HBlank, and battle entity slots.
+; Used during initial startup and basic game states.
+; ============================================================================
+; loc_000006B6
+BasicObjectInitTable:
+	dc.w	$0005                        ; 6 object groups
 	
-	dc.w	$0000, $0007, $0010, $0080
-	dc.l	loc_00001474
-	dc.l	VBlank_object_ptr
-	dc.w	$0000, $0007, $0010, $0080
-	dc.l	loc_0000146E
-	dc.l	HBlank_object_ptr
-	dc.w	$0000, $001F, $0040, $0000
-	dc.l	loc_00003714
-	dc.l	$FFFFCC08
-	dc.w	$0000, $001F, $0040, $0000
-	dc.l	$00000000
-	dc.l	Battle_entity_slot_1_ptr
-	dc.w	$0000, $001F, $0040, $0000
-	dc.l	$00000000
-	dc.l	Battle_entity_slot_2_ptr
-	dc.w	$001D, $001F, $0040, $0000
-	dc.l	$00000000
-	dc.l	$FFFFCC14 
-loc_00000718:
-	dc.w	$0001 
+	; VBlank handler object
+	dc.w	0, 7, $10, $80               ; 1 copy, 8 words, type=$10, flags=$80
+	dc.l	loc_00001474                 ; Handler: VBlank state machine
+	dc.l	VBlank_object_ptr            ; Store pointer here
 	
-	dc.w	$001D, $001F, $0040, $0000 
-	dc.l	$00000000
-	dc.l	$FFFFCC14 
+	; HBlank handler object
+	dc.w	0, 7, $10, $80               ; 1 copy, 8 words, type=$10, flags=$80
+	dc.l	loc_0000146E                 ; Handler: HBlank (NOP)
+	dc.l	HBlank_object_ptr            ; Store pointer here
 	
-	dc.w	$0000, $0007, $0010, $0080
-	dc.l	$00015E58 
-	dc.l	Menu_object_ptr 
-loc_0000073A:
-	dc.w	$0016
+	; Entity slot (appears unused in this table)
+	dc.w	0, $1F, $40, 0               ; 1 copy, 32 words, type=$40, no flags
+	dc.l	loc_00003714                 ; Handler: Entity behavior
+	dc.l	$FFFFCC08                    ; Store pointer at $FFFFCC08
+	
+	; Battle entity slot 1
+	dc.w	0, $1F, $40, 0               ; 1 copy, 32 words, type=$40, no flags
+	dc.l	$00000000                    ; No handler
+	dc.l	Battle_entity_slot_1_ptr     ; Store pointer here
+	
+	; Battle entity slot 2
+	dc.w	0, $1F, $40, 0               ; 1 copy, 32 words, type=$40, no flags
+	dc.l	$00000000                    ; No handler
+	dc.l	Battle_entity_slot_2_ptr     ; Store pointer here
+	
+	; Additional entity slots (29 copies)
+	dc.w	$1D, $1F, $40, 0             ; 30 copies, 32 words each, type=$40
+	dc.l	$00000000                    ; No handler
+	dc.l	$FFFFCC14                    ; Store pointer at $FFFFCC14
+
+; ============================================================================
+; Menu Object Initialization Table
+; ============================================================================
+; Minimal object setup for menu screens and simple game states.
+; Only initializes entity slots and menu handler.
+; ============================================================================
+; loc_00000718
+MenuObjectInitTable:
+	dc.w	$0001                        ; 2 object groups
+	
+	; Entity slots (29 copies)
+	dc.w	$1D, $1F, $40, 0             ; 30 copies, 32 words each, type=$40
+	dc.l	$00000000                    ; No handler
+	dc.l	$FFFFCC14                    ; Store pointer at $FFFFCC14
+	
+	; Menu handler object
+	dc.w	0, 7, $10, $80               ; 1 copy, 8 words, type=$10, flags=$80
+	dc.l	$00015E58                    ; Handler: Menu logic
+	dc.l	Menu_object_ptr              ; Store pointer here
+
+; ============================================================================
+; Gameplay Object Initialization Table
+; ============================================================================
+; Full object setup for active gameplay (overworld, caves, battles).
+; Initializes 23 object groups with entity slots for player, NPCs, enemies, etc.
+; ============================================================================
+; loc_0000073A
+GameplayObjectInitTable:
+	dc.w	$0016                        ; 23 object groups (0x16 = 22 decimal, 0-based)
 	
 	dc.w	$0000, $0027, $0050, $0000 
 	dc.l	$00000000
@@ -388,7 +453,7 @@ loc_0000073A:
 	
 	dc.w	$000B, $001F, $0040, $0000
 	dc.l	$00000000
-	dc.l	$00000000 
+	dc.l	$00000000
 loc_000008AC:
 	dc.b	$00, $1C, $00, $00, $00, $07, $00, $10, $00, $00, $00, $00, $00, $00, $FF, $FF, $CC, $50, $00, $00, $00, $1F, $00, $40, $00, $00, $00, $00, $00, $00, $FF, $FF 
 	dc.b	$CC, $54, $00, $00, $00, $1F, $00, $40, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $27, $00, $50, $00, $00, $00, $00, $00, $00, $FF, $FF 
