@@ -577,17 +577,17 @@ loc_00001156:
 	NOP	
 	DBF	D7, loc_00001156	
 loc_0000115C:
-	JSR	loc_000131C4
+	JSR	UpdatePaletteBuffer
 	TST.b	Skip_tilemap_updates.w
 	BNE.w	loc_000011C0
 	TST.b	Town_tilemap_row_update_pending.w
 	BEQ.b	loc_0000117A
-	JSR	loc_0001664E
+	JSR	UpdateTownTilemapRow
 	CLR.b	Town_tilemap_row_update_pending.w
 loc_0000117A:
 	TST.b	Town_tilemap_column_update_pending.w
 	BEQ.b	loc_0000118A
-	JSR	loc_000166CC
+	JSR	UpdateTownTilemapColumn
 	CLR.b	Town_tilemap_column_update_pending.w
 loc_0000118A:
 	TST.b	Window_tilemap_draw_active.w
@@ -952,7 +952,7 @@ loc_00001648:
 ProgramState_0A:
 	TST.b	Fade_out_lines_mask.w
 	BNE.b	loc_0000168A
-	JSR	loc_00015966
+	JSR	Prologue_EmptyCallback
 	MOVE.l	#HBlankObjectHandler, $12(A5)
 	MOVE.w	#PROGRAM_STATE_0E, Program_state.w
 	CLR.w	Current_town.w
@@ -1059,7 +1059,7 @@ loc_000017BE:
 ProgramState_07:
 	TST.b	Fade_out_lines_mask.w
 	BNE.b	loc_000017E4
-	JSR	loc_000153E2
+	JSR	ClearEnemyListFlags
 	MOVE.l	#HBlankObjectHandler, $12(A5)
 	MOVE.w	#PROGRAM_STATE_08, Program_state.w
 	MOVE.w	#$00E0, D0
@@ -2141,7 +2141,7 @@ loc_000027B6:
 	BNE.b	loc_000027CC
 	TST.b	Found_something_nearby.w
 	BEQ.b	loc_000027CC
-	JSR	loc_0002145A
+	JSR	SetupFoundItemReward
 	CLR.b	Found_something_nearby.w
 loc_000027CC:
 	BSR.w	HandleOverworldMenuInput
@@ -2420,8 +2420,8 @@ loc_00002AE0:
 	ADDI.l	#$00000180, D0
 	MOVE.l	D0, $20(A6)
 	JSR	InitBattleEntities
-	JSR	loc_00013138
-	JSR	loc_00012FE0
+	JSR	DisplayMaxHpMp
+	JSR	DisplayCantUseMessage
 	CLR.b	Player_in_first_person_mode.w
 	BSR.w	loc_00003654
 	LEA	loc_00003678, A0
@@ -2438,7 +2438,7 @@ loc_00002BB6:
 
 loc_00002BB8:
 	BSR.w	loc_00002F2A
-	JSR	loc_00012F44
+	JSR	DisplayCurrentHpMp
 	RTS
 
 loc_00002BC4:
@@ -3099,12 +3099,12 @@ loc_00003400:
 
 loc_0000340C:
 	JSR	loc_000061AE
-	JSR	loc_0000603E
+	JSR	DisplayCompassToVRAM
 	RTS
 
 loc_0000341A:
 	JSR	loc_000060F6
-	JSR	loc_0000603E
+	JSR	DisplayCompassToVRAM
 	RTS
 
 ;loc_00003428
@@ -4299,7 +4299,7 @@ loc_00004478:
 	BRA.w	loc_00004516
 loc_00004486:
 	LEA	loc_00005A2C, A0
-	BSR.w	loc_00005988
+	BSR.w	GetMapTileInDirection
 	BSR.w	loc_00004594
 	BNE.w	loc_0000457C
 loc_00004498:
@@ -4324,7 +4324,7 @@ loc_000044C2:
 
 loc_000044E0:
 	LEA	loc_00005A1C, A0
-	BSR.w	loc_00005988
+	BSR.w	GetMapTileInDirection
 	BSR.w	loc_00004594
 	BNE.w	loc_0000457C
 loc_000044F2:
@@ -4647,7 +4647,7 @@ loc_000048C4:
 	ANDI.w	#7, Player_direction.w
 	BSR.w	loc_000052D0
 	BSR.w	loc_00004642
-	BSR.w	loc_0000603E
+	BSR.w	DisplayCompassToVRAM
 	TST.b	Is_in_cave.w
 	BNE.b	loc_000048EA
 	BSR.w	loc_000061AE
@@ -4665,7 +4665,7 @@ loc_000048F8:
 	ANDI.w	#7, Player_direction.w
 	BSR.w	loc_000052D0
 	BSR.w	loc_00004642
-	BSR.w	loc_0000603E
+	BSR.w	DisplayCompassToVRAM
 	TST.b	Is_in_cave.w
 	BNE.b	loc_0000491E
 	BSR.w	loc_000061AE
@@ -5762,7 +5762,8 @@ loc_000057F2:
 	MOVE.w	(A1,D4.w), $8(A6)
 	RTS
 
-loc_00005988:
+;GetMapTileInDirection:
+GetMapTileInDirection:
 	MOVE.w	Player_position_x_outside_town.w, D0
 	MOVE.w	Player_position_y_outside_town.w, D1
 	MOVE.w	Player_direction.w, D2
@@ -6223,7 +6224,8 @@ loc_0000603A:
 loc_0000603C:
 	RTS
 
-loc_0000603E:
+;DisplayCompassToVRAM:
+DisplayCompassToVRAM:
 	LEA	loc_0006AFC0, A0
 	BRA.w	loc_0000606E
 loc_00006048:
@@ -9899,7 +9901,8 @@ loc_0000905E:
 loc_00009072:
 	dc.b	$2C, $78, $CC, $14, $3E, $3C, $00, $17, $08, $96, $00, $07, $42, $40, $10, $2E, $00, $01, $4D, $F6, $00, $00, $51, $CF, $FF, $F0, $4E, $75 
 
-loc_0000908E:
+;CalculateVelocityFromAngle:
+CalculateVelocityFromAngle:
 	LEA	SineTable, A0
 	MOVE.l	$20(A5), D0
 	CLR.w	D1
@@ -10320,7 +10323,7 @@ loc_00009608:
 	BSR.w	CalculateAngleBetweenObjects
 	MOVE.b	D0, $18(A5)
 loc_00009614:
-	BSR.w	loc_0000908E
+	BSR.w	CalculateVelocityFromAngle
 	BSR.w	loc_000092F6
 	BSR.w	HandlePlayerTakeDamage
 	BSR.w	CheckObjectOnScreen
@@ -10425,7 +10428,7 @@ loc_0000979E:
 	BSR.w	CalculateAngleBetweenObjects
 	MOVE.b	D0, $18(A5)
 loc_000097AA:
-	BSR.w	loc_0000908E
+	BSR.w	CalculateVelocityFromAngle
 	BSR.w	loc_000092F6
 loc_000097B2:
 	BSR.w	HandlePlayerTakeDamage
@@ -10518,7 +10521,7 @@ loc_000098DC:
 	BSR.w	CalculateAngleBetweenObjects
 	MOVE.b	D0, $18(A5)
 loc_000098E8:
-	BSR.w	loc_0000908E
+	BSR.w	CalculateVelocityFromAngle
 	BSR.w	loc_000092F6
 loc_000098F0:
 	BSR.w	HandlePlayerTakeDamage
@@ -10596,7 +10599,7 @@ loc_000099F0:
 	BSR.w	CalculateAngleBetweenObjects
 	MOVE.b	D0, $18(A5)
 loc_000099FC:
-	BSR.w	loc_0000908E
+	BSR.w	CalculateVelocityFromAngle
 	BSR.w	loc_000092F6
 	BSR.w	HandlePlayerTakeDamage
 	BSR.w	CheckObjectOnScreen
@@ -10679,7 +10682,7 @@ loc_00009B1E:
 	BSR.w	CalculateAngleBetweenObjects
 	MOVE.b	D0, $18(A5)
 loc_00009B2A:
-	BSR.w	loc_0000908E
+	BSR.w	CalculateVelocityFromAngle
 	BSR.w	loc_000092F6
 loc_00009B32:
 	BSR.w	HandlePlayerTakeDamage
@@ -10757,7 +10760,7 @@ loc_00009C2A:
 	CLR.l	$36(A5)
 	BRA.w	loc_00009C4A
 loc_00009C42:
-	BSR.w	loc_0000908E
+	BSR.w	CalculateVelocityFromAngle
 	BSR.w	loc_000092F6
 loc_00009C4A:
 	BSR.w	HandlePlayerTakeDamage
@@ -10830,7 +10833,7 @@ loc_00009D2E:
 	RTS
 
 loc_00009D56:
-	BSR.w	loc_0000908E
+	BSR.w	CalculateVelocityFromAngle
 	BSR.w	loc_00009136
 	BSR.w	HandlePlayerTakeDamage
 	MOVE.l	$32(A5), D0
@@ -10956,7 +10959,7 @@ loc_00009F12:
 	BSR.w	CalculateAngleBetweenObjects
 	MOVE.b	D0, $18(A5)
 loc_00009F34:
-	BSR.w	loc_0000908E
+	BSR.w	CalculateVelocityFromAngle
 	BSR.w	loc_00009136
 loc_00009F3C:
 	BSR.w	HandlePlayerTakeDamage
@@ -11039,7 +11042,7 @@ loc_0000A042:
 	CLR.l	$36(A5)
 	BRA.w	loc_0000A062
 loc_0000A05A:
-	BSR.w	loc_0000908E
+	BSR.w	CalculateVelocityFromAngle
 	BSR.w	loc_000092F6
 loc_0000A062:
 	BSR.w	HandlePlayerTakeDamage
@@ -11125,7 +11128,7 @@ loc_0000A172:
 	CLR.l	$36(A5)
 	BRA.w	loc_0000A192
 loc_0000A18A:
-	BSR.w	loc_0000908E
+	BSR.w	CalculateVelocityFromAngle
 	BSR.w	loc_000092F6
 loc_0000A192:
 	BSR.w	HandlePlayerTakeDamage
@@ -11289,7 +11292,7 @@ loc_0000A390:
 	MOVE.w	#$0028, $3C(A5)
 	BRA.w	loc_0000A3DA
 loc_0000A3D2:
-	BSR.w	loc_0000908E
+	BSR.w	CalculateVelocityFromAngle
 	BSR.w	loc_000092F6
 loc_0000A3DA:
 	BSR.w	HandlePlayerTakeDamage
@@ -11323,7 +11326,7 @@ loc_0000A420:
 	RTS
 	
 loc_0000A446:
-	JSR	loc_0000908E(PC)
+	JSR	CalculateVelocityFromAngle(PC)
 	JSR	loc_00009020(PC)
 	BTST.b	#7, (A5)
 	BEQ.b	loc_0000A476
@@ -11455,7 +11458,7 @@ loc_0000A5F6:
 loc_0000A624:
 	SUBQ.w	#1, $3A(A5)
 loc_0000A628:
-	BSR.w	loc_0000908E
+	BSR.w	CalculateVelocityFromAngle
 	BSR.w	loc_00009136
 loc_0000A630:
 	BSR.w	HandlePlayerTakeDamage
@@ -11700,7 +11703,7 @@ loc_0000A98A:
 	MOVE.w	D0, $3C(A5)
 	BRA.w	loc_0000A9B4
 loc_0000A9AC:
-	BSR.w	loc_0000908E
+	BSR.w	CalculateVelocityFromAngle
 	BSR.w	loc_000092F6
 loc_0000A9B4:
 	BSR.w	HandlePlayerTakeDamage
@@ -11895,7 +11898,7 @@ loc_0000AC54:
 	MOVE.w	D0, $3C(A5)	
 	BRA.w	loc_0000AC7E	
 loc_0000AC76:
-	BSR.w	loc_0000908E
+	BSR.w	CalculateVelocityFromAngle
 	BSR.w	loc_000092F6
 loc_0000AC7E:
 	BSR.w	HandlePlayerTakeDamage
@@ -11931,7 +11934,7 @@ loc_0000ACC4:
 loc_0000ACEA:
 	CMPI.w	#$0040, $2A(A5)
 	BLT.w	loc_0000AD0C
-	JSR	loc_0000908E(PC)
+	JSR	CalculateVelocityFromAngle(PC)
 	MOVE.l	$32(A5), D0
 	SUB.l	D0, $2E(A5)
 	MOVE.l	$36(A5), D0
@@ -21607,7 +21610,8 @@ DisplayPlayerHpMp:
 	ANDI	#$F8FF, SR
 	RTS
 
-loc_00012F44:
+;DisplayCurrentHpMp:
+DisplayCurrentHpMp:
 	ORI	#$0700, SR
 	MOVE.w	#7, Window_number_cursor_x.w
 	MOVE.w	#$0018, Window_number_cursor_y.w
@@ -21632,7 +21636,8 @@ loc_00012F92:
 	dc.b	$00, $7C, $07, $00, $31, $FC, $00, $0C, $C2, $42, $31, $FC, $00, $18, $C2, $44, $30, $38, $C6, $2E, $4E, $B9, $00, $01, $04, $8C, $34, $00, $36, $3C, $00, $00 
 	dc.b	$42, $45, $61, $00, $E4, $EE, $31, $FC, $00, $0C, $C2, $42, $31, $FC, $00, $1A, $C2, $44, $30, $38, $C6, $30, $4E, $B9, $00, $01, $04, $8C, $34, $00, $36, $3C 
 	dc.b	$00, $00, $42, $45, $61, $00, $E4, $CC, $02, $7C, $F8, $FF, $4E, $75 
-loc_00012FE0:
+;DisplayCantUseMessage:
+DisplayCantUseMessage:
 	LEA	CantUseStr, A0
 	ORI	#$0700, SR
 	MOVE.l	#$6CB60003, VDP_control_port
@@ -21727,7 +21732,8 @@ DisplayPlayerMaxHpMp:
 	ANDI	#$F8FF, SR
 	RTS
 
-loc_00013138:
+;DisplayMaxHpMp:
+DisplayMaxHpMp:
 	ORI	#$0700, SR
 	MOVE.w	#$000D, Window_number_cursor_x.w
 	MOVE.w	#$0018, Window_number_cursor_y.w
@@ -21766,7 +21772,8 @@ DisplayPlayerKimsAndExperience:
 	ANDI	#$F8FF, SR
 	RTS
 
-loc_000131C4:
+;UpdatePaletteBuffer:
+UpdatePaletteBuffer:
 	LEA	Palette_line_0_buffer.w, A1
 	TST.b	Palette_fade_in_mask.w
 	BNE.w	loc_0001362C
@@ -22645,7 +22652,8 @@ loc_000153B8:
 loc_000153E0:
 	RTS
 
-loc_000153E2:
+;ClearEnemyListFlags:
+ClearEnemyListFlags:
 	MOVEA.l	Enemy_list_ptr.w, A6
 	BCLR.b	#7, (A6)
 	CLR.w	D0
@@ -23069,10 +23077,11 @@ loc_0001594E:
 	BRA.w	LoadPrologueFadeParams
 loc_00015956:
 	MOVE.b	#$FF, Prologue_complete_flag.w
-	MOVE.l	#loc_00015966, $2(A5)
+	MOVE.l	#Prologue_EmptyCallback, $2(A5)
 	RTS
 
-loc_00015966:
+;Prologue_EmptyCallback:
+Prologue_EmptyCallback:
 	RTS
 
 loc_00015968:
@@ -23969,7 +23978,8 @@ loc_0001662A:
 	DBF	D5, loc_0001660E
 	RTS
 
-loc_0001664E:
+;UpdateTownTilemapRow:
+UpdateTownTilemapRow:
 	LEA	Tilemap_buffer_plane_a, A3
 	MOVE.w	#$C000, D5
 	BSR.w	loc_0001666C
@@ -24014,7 +24024,8 @@ loc_000166BA:
 	DBF	D5, loc_0001669E
 	RTS
 
-loc_000166CC:
+;UpdateTownTilemapColumn:
+UpdateTownTilemapColumn:
 	LEA	Tilemap_buffer_plane_a, A3
 	MOVE.w	#$C000, D5
 	BSR.w	loc_000166EA
@@ -24198,9 +24209,10 @@ loc_000168B6:
 	LSR.w	#5, D1
 	MOVE.w	D1, D2
 	ASL.w	#2, D2
-	JSR	loc_000168D4(PC,D2.w)
+	JSR	TilemapDecompression_JumpTable(PC,D2.w)
 	BRA.b	loc_000168B6
-loc_000168D4:
+;TilemapDecompression_JumpTable:
+TilemapDecompression_JumpTable:
 	BRA.w	loc_000168F2
 	BRA.w	loc_00016906
 	BRA.w	loc_0001691A
@@ -24369,7 +24381,7 @@ loc_00016AB6:
 	RTS
 
 loc_00016AB8:
-	BSR.w	loc_00016C12
+	BSR.w	UpdateEndingHScrollValues
 	TST.b	Fade_in_lines_mask.w
 	BNE.b	loc_00016B12
 	ADDQ.w	#1, Intro_timer.w
@@ -24399,7 +24411,7 @@ loc_00016B12:
 	RTS
 
 loc_00016B14:
-	BSR.w	loc_00016C12
+	BSR.w	UpdateEndingHScrollValues
 	ADDQ.w	#1, Intro_timer.w
 	MOVE.w	Intro_timer.w, D0
 	MOVE.w	D0, D1
@@ -24439,7 +24451,7 @@ loc_00016B88:
 	RTS
 
 loc_00016B8A:
-	BSR.w	loc_00016C12
+	BSR.w	UpdateEndingHScrollValues
 	TST.b	Intro_text_pending.w
 	BEQ.b	loc_00016BB0
 	TST.b	Fade_in_lines_mask.w
@@ -24471,15 +24483,16 @@ loc_00016BE0:
 	BSR.w	loc_00016E86
 	MOVE.l	#loc_00016C0C, $2(A5)
 loc_00016C02:
-	BSR.w	loc_00016C12
+	BSR.w	UpdateEndingHScrollValues
 	BSR.w	loc_00016C30
 	RTS
 	
 loc_00016C0C:
-	BSR.w	loc_00016C12
+	BSR.w	UpdateEndingHScrollValues
 	RTS
 
-loc_00016C12:
+;UpdateEndingHScrollValues:
+UpdateEndingHScrollValues:
 	MOVE.b	#$FF, Scene_update_flag.w
 	LEA	HScroll_run_table.w, A0
 	LEA	loc_00016E4A, A1
@@ -25024,7 +25037,7 @@ loc_000173C2:
 ; loc_000173D8
 EndingSequence_CommonUpdate:
 	BSR.w	loc_000176F8
-	JSR	loc_00016C12
+	JSR	UpdateEndingHScrollValues
 	RTS
 
 loc_000173E4:
@@ -26538,7 +26551,7 @@ loc_00018C6E:
 	MOVEA.l	$28(A5), A6
 	BTST.b	#7, (A6)
 	BEQ.b	loc_00018CA2
-	BSR.w	loc_0001A152
+	BSR.w	UpdateHomingProjectileDirection
 loc_00018CA2:
 	BSET.b	#3, $7(A5)
 	MOVE.b	$1A(A5), D0
@@ -27286,18 +27299,19 @@ loc_0001968E:
 	MOVE.w	$12(A5), $12(A6)
 	MOVE.w	$E(A5), $28(A6)
 	MOVE.w	$12(A5), $2A(A6)
-	MOVE.l	#loc_00019732, $2(A6)
+	MOVE.l	#UpdateProjectileAscendingArc, $2(A6)
 	CLR.w	D0
 	MOVE.b	$1(A6), D0
 	LEA	(A6,D0.w), A6
 	DBF	D7, loc_0001968E
 	MOVE.l	#loc_00019728, $2(A5)
 loc_00019728:
-	JSR	loc_00019732(PC)
+	JSR	UpdateProjectileAscendingArc(PC)
 	JSR	CheckMagicSlotActiveOrClearAll(PC)
 	RTS
 
-loc_00019732:
+;UpdateProjectileAscendingArc:
+UpdateProjectileAscendingArc:
 	JSR	CheckProjectileHitEnemies(PC)
 	CLR.b	$19(A5)
 	TST.w	$3A(A5)
@@ -27382,7 +27396,7 @@ loc_000197FC:
 	MOVE.w	$12(A5), $12(A6)
 	MOVE.w	$E(A5), $28(A6)
 	MOVE.w	$12(A5), $2A(A6)
-	MOVE.l	#loc_000198AA, $2(A6)
+	MOVE.l	#UpdateProjectileDescendingArc, $2(A6)
 	CLR.w	D0
 	MOVE.b	$1(A6), D0
 	LEA	(A6,D0.w), A6
@@ -27394,11 +27408,12 @@ loc_0001989E:
 	RTS
 
 loc_000198A0:
-	JSR	loc_000198AA(PC)
+	JSR	UpdateProjectileDescendingArc(PC)
 	JSR	CheckMagicSlotActiveOrClearAll(PC)
 	RTS
 
-loc_000198AA:
+;UpdateProjectileDescendingArc:
+UpdateProjectileDescendingArc:
 	TST.b	$19(A5)
 	BNE.w	loc_00019938
 	JSR	CheckProjectileHitEnemies(PC)
@@ -27504,7 +27519,7 @@ loc_000199E8:
 	JSR	FindNthEnemyInList(PC)
 	BRA.b	loc_00019A36
 loc_00019A32:
-	JSR	loc_0001A152(PC)
+	JSR	UpdateHomingProjectileDirection(PC)
 loc_00019A36:
 	LEA	SineTable, A0
 	MOVE.l	$20(A5), D0
@@ -28000,7 +28015,8 @@ loc_0001A12E:
 	DBF	D7, loc_0001A0C8
 	RTS
 
-loc_0001A152:
+;UpdateHomingProjectileDirection:
+UpdateHomingProjectileDirection:
 	JSR	CalculateAngleBetweenObjects
 	ANDI.w	#7, D0
 	CLR.w	D2
@@ -29256,7 +29272,7 @@ UseGeneric:
 	BRA.w	loc_0001B148	
 loc_0001B0AC:
 	LEA	loc_00005A1C, A0
-	JSR	loc_00005988
+	JSR	GetMapTileInDirection
 	CMPI.b	#6, D0
 	BNE.w	loc_0001B148
 	LEA	loc_00005A1C, A2
@@ -32308,7 +32324,7 @@ loc_0001DC2A:
 	TST.b	Chest_already_opened.w       ; Already opened?
 	BNE.w	loc_0001DCF8             ; Yes: "Already open"
 	LEA	loc_00005A1C, A0
-	JSR	loc_00005988             ; Search for object
+	JSR	GetMapTileInDirection             ; Search for object
 	CMPI.b	#6, D0                   ; Type 6 = chest sprite?
 	BNE.w	loc_0001DC94
 	BSR.w	loc_0001DF34             ; Check if locked
@@ -36259,7 +36275,8 @@ loc_00021446:
 	MOVE.l	#NoOneHereStr, Script_talk_source.w
 	RTS
 	
-loc_0002145A:
+;SetupFoundItemReward:
+SetupFoundItemReward:
 	MOVE.w	Enemy_reward_type.w, Reward_script_type.w
 	MOVE.w	Enemy_reward_value.w, Reward_script_value.w
 	MOVE.b	#$FF, Reward_script_available.w
@@ -74880,11 +74897,12 @@ loc_00092C8E:
 	SUBI.b	#$E0, D5
 	ANDI.l	#$000000FF, D5
 	LSL.w	#2, D5
-	JSR	loc_00092CA2(PC,D5.w)
+	JSR	SoundScriptCommandJumpTable(PC,D5.w)
 	MOVE.b	(A4)+, D5
 	RTS
 	
-loc_00092CA2:
+;SoundScriptCommandJumpTable:
+SoundScriptCommandJumpTable:
 	BRA.w	loc_00092D22	
 	BRA.w	loc_00092D22	
 	BRA.w	loc_00092D22	
@@ -75196,9 +75214,10 @@ loc_00093020:
 	SUBI.b	#$E0, D0
 	ANDI.l	#$000000FF, D0
 	LSL.w	#2, D0
-	JSR	loc_00093034(PC,D0.w)
+	JSR	SoundCommand_JumpTable(PC,D0.w)
 	BRA.w	loc_0009317A
-loc_00093034:
+;SoundCommand_JumpTable:
+SoundCommand_JumpTable:
 	BRA.w	loc_000931F2
 	dc.b	$60, $00, $01, $3C 
 loc_0009303C:
@@ -75440,8 +75459,9 @@ loc_00093372:
 	MOVE.b	$1C(A3), D5
 	ANDI.w	#7, D5
 	LSL.w	#2, D5
-	JSR	loc_0009338A(PC,D5.w)
-loc_0009338A:
+	JSR	UpdateFM_OperatorRegisters(PC,D5.w)
+;UpdateFM_OperatorRegisters:
+UpdateFM_OperatorRegisters:
 	BRA.w	loc_000933D4
 	BRA.w	loc_000933D4
 	BRA.w	loc_000933D4
