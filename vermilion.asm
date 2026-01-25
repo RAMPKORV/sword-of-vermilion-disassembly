@@ -155,7 +155,8 @@ loc_0000041C:
 	dc.b	$1F, $CB, $7F, $CA, $16, $01, $7B, $B2, $CA, $00, $00, $3A, $FF, $1F, $E6, $3F, $C2, $68, $00, $C3, $C8, $00, $C3, $00, $00, $E5, $21, $FD, $1F, $CB, $FE, $08 
 	dc.b	$78, $32, $00, $40, $08, $00, $32, $01, $40, $32, $FC, $1F, $CB, $BE, $E1, $C9, $01, $03, $06, $0C, $18, $28, $50, $90, $FF, $FD, $FA, $F4, $E8, $D8, $B0, $70 
 
-loc_0000055C:
+;InitMenuObjects:
+InitMenuObjects:
 	LEA	Object_table_base.w, A0
 	LEA	MenuObjectInitTable, A1
 	BRA.w	InitObjectsFromTable
@@ -564,7 +565,7 @@ loc_00001122:
 	MOVE.w	Vblank_frame_counter.w, D4	
 	ANDI.w	#3, D4	
 	BNE.w	loc_00001152	
-	JSR	loc_00092900	
+	JSR	UpdateBattleEntities	
 	MOVE.w	#$021D, D7	
 loc_0000114A:
 	NOP	
@@ -608,7 +609,7 @@ loc_000011AE:
 loc_000011BC:
 	BSR.w	loc_000011D4
 loc_000011C0:
-	JSR	loc_00092900
+	JSR	UpdateBattleEntities
 	BSR.w	loc_000011EE
 	ST	Vblank_flag.w
 	MOVEM.l	(A7)+, D0/D1/D2/D3/D4/D5/D6/D7/A0/A1/A2/A3/A4/A5/A6
@@ -1156,7 +1157,7 @@ loc_000018F2:
 	BNE.w	loc_00001956
 	JSR	DisableVDPDisplay
 	BSR.w	ClearAllEnemyEntities
-	JSR	loc_0000055C
+	JSR	InitMenuObjects
 	CLR.b	Player_in_first_person_mode.w
 	MOVEA.l	Player_entity_ptr.w, A6
 	MOVE.l	#PlayerObjectHandler, $2(A6)
@@ -1168,7 +1169,7 @@ loc_000018F2:
 	MOVE.b	$1(A6), D0
 	LEA	(A6,D0.w), A6
 	BCLR.b	#7, (A6)
-	JSR	loc_0000F9D2
+	JSR	LoadPlayerOverworldGraphics
 	JSR	ClearVRAMPlaneA
 	JSR	ClearVRAMPlaneB
 	JSR	ClearScrollData
@@ -1842,7 +1843,7 @@ loc_00002324:
 	CLR.b	Is_boss_battle.w
 	CLR.b	Boss_max_hp.w
 	CLR.b	Encounter_behavior_flag.w
-	JSR	loc_0000FF82
+	JSR	LoadBattleTileGraphics
 	JSR	loc_0000FF08
 	BSR.w	loc_00002FCC
 	BSR.w	loc_00003024
@@ -1870,8 +1871,8 @@ loc_00002324:
 	ANDI.w	#$00FF, D0
 	JSR	loc_0000F8A0
 loc_000023EA:
-	JSR	loc_000130EA
-	JSR	loc_00013028
+	JSR	DisplayPlayerMaxHpMp
+	JSR	DisplayReadiedMagicName
 	CLR.b	Player_in_first_person_mode.w
 	MOVE.b	#$92, D0
 	JSR	QueueSoundEffect
@@ -1973,7 +1974,7 @@ loc_00002542:
 	TST.b	Fade_out_lines_mask.w
 	BNE.w	loc_000025AC
 	BSR.w	loc_00002620
-	JSR	loc_0000FF82
+	JSR	LoadBattleTileGraphics
 	JSR	loc_0000FFA8
 	JSR	loc_0001001A
 	JSR	loc_00010040
@@ -2090,9 +2091,9 @@ loc_00002720:
 	CLR.b	Player_input_blocked.w
 loc_00002724:
 	JSR	DisplayPlayerHpMp
-	JSR	loc_000130EA
+	JSR	DisplayPlayerMaxHpMp
 	JSR	DisplayPlayerKimsAndExperience
-	JSR	loc_00013028
+	JSR	DisplayReadiedMagicName
 	RTS
 
 loc_0000273E:
@@ -2297,7 +2298,7 @@ loc_00002974:
 	JSR	loc_000122D2
 	JSR	LoadLevelUpBannerTiles
 	JSR	DisplayPlayerHpMp
-	JSR	loc_000130EA
+	JSR	DisplayPlayerMaxHpMp
 	JSR	DisplayPlayerKimsAndExperience
 	RTS
 
@@ -2398,7 +2399,7 @@ loc_00002AE0:
 	CLR.w	Sprite_attr_count.w
 	JSR	FlushSpriteAttributesToVDP
 	MOVE.b	#$FF, Is_boss_battle.w
-	JSR	loc_0000FF82
+	JSR	LoadBattleTileGraphics
 	JSR	loc_0000FF08
 	JSR	loc_0001056A
 	JSR	loc_0001053A
@@ -2453,7 +2454,7 @@ loc_00002BCC:
 	CLR.b	Is_in_battle.w
 	CLR.b	Boss_max_hp.w
 	BSR.w	ClearAllEnemyEntities
-	JSR	loc_0000055C
+	JSR	InitMenuObjects
 	CLR.w	Sprite_attr_count.w
 	JSR	FlushSpriteAttributesToVDP
 	MOVEA.l	Player_entity_ptr.w, A6
@@ -2467,7 +2468,7 @@ loc_00002BCC:
 	MOVE.b	$1(A6), D0
 	LEA	(A6,D0.w), A6
 	BCLR.b	#7, (A6)
-	JSR	loc_0000F9D2
+	JSR	LoadPlayerOverworldGraphics
 	JSR	ClearVRAMPlaneA
 	JSR	ClearVRAMPlaneB
 	JSR	ClearScrollData
@@ -3207,7 +3208,7 @@ loc_000034D6:
 
 loc_000034E0:
 	BSR.w	ClearAllEnemyEntities
-	JSR	loc_0000055C
+	JSR	InitMenuObjects
 	MOVEA.l	Player_entity_ptr.w, A6
 	MOVE.w	#DIRECTION_UP, Player_direction.w
 	MOVE.l	#PlayerObjectHandler, $2(A6)
@@ -3219,7 +3220,7 @@ loc_000034E0:
 	MOVE.b	$1(A6), D0
 	LEA	(A6,D0.w), A6
 	BCLR.b	#7, (A6)
-	JSR	loc_0000F9D2
+	JSR	LoadPlayerOverworldGraphics
 	JSR	ClearVRAMPlaneA
 	JSR	ClearVRAMPlaneB
 	JSR	ClearScrollData
@@ -3417,7 +3418,7 @@ loc_00003782:
 	ANDI.w	#$000E, D0
 	MOVE.w	D0, Player_direction.w
 	CLR.b	Town_movement_blocked.w
-	BSR.w	loc_000039C0
+	BSR.w	GetTileInFrontOfPlayer
 	TST.b	Town_movement_blocked.w
 	BNE.w	loc_0000385E
 	BSR.w	loc_00003A22
@@ -3558,7 +3559,8 @@ loc_000039B8:
 loc_000039BE:
 	RTS
 
-loc_000039C0:
+;GetTileInFrontOfPlayer:
+GetTileInFrontOfPlayer:
 	MOVE.w	Player_direction.w, D2
 	ADD.w	D2, D2
 	LEA	loc_00003C4E, A1
@@ -10048,7 +10050,8 @@ loc_00009244:
 loc_0000926E:
 	RTS
 
-loc_00009270:
+;CalculateAngleToObjectCentered:
+CalculateAngleToObjectCentered:
 	MOVE.w	#$00A0, D2
 	MOVE.w	$E(A6), D0
 	ASR.w	#1, D0
@@ -11251,7 +11254,7 @@ loc_0000A342:
 	SUBQ.w	#1, $3C(A5)
 	BLE.w	loc_0000A35A
 	MOVEA.l	Player_entity_ptr.w, A6
-	JSR	loc_00009270(PC)
+	JSR	CalculateAngleToObjectCentered(PC)
 	MOVE.b	D0, $18(A5)
 	BRA.w	loc_0000A3D2
 loc_0000A35A:
@@ -11625,7 +11628,7 @@ loc_0000A88E:
 	SUBQ.w	#1, $3C(A5)
 	BLE.w	loc_0000A8A6
 	MOVEA.l	Player_entity_ptr.w, A6
-	JSR	loc_00009270(PC)
+	JSR	CalculateAngleToObjectCentered(PC)
 	MOVE.b	D0, $18(A5)
 	BRA.w	loc_0000A9AC
 loc_0000A8A6:
@@ -11820,7 +11823,7 @@ loc_0000AB58:
 	SUBQ.w	#1, $3C(A5)
 	BLE.w	loc_0000AB70
 	MOVEA.l	Player_entity_ptr.w, A6
-	JSR	loc_00009270(PC)
+	JSR	CalculateAngleToObjectCentered(PC)
 	MOVE.b	D0, $18(A5)
 	BRA.w	loc_0000AC76
 loc_0000AB70:
@@ -13702,7 +13705,7 @@ loc_0000C640:
 	MOVE.l	#loc_0000C192, $2(A6)
 	MOVEA.l	Object_slot_03_ptr.w, A6
 	MOVE.l	#loc_0000C192, $2(A6)
-	BSR.w	loc_0000CF16
+	BSR.w	ProcessBattleVictoryEvent
 	CLR.w	Dialog_timer.w
 	CLR.w	Dialog_phase.w
 	MOVE.w	#$00C0, D0
@@ -14062,7 +14065,7 @@ loc_0000CB3A:
 	SUB.w	D0, $28(A6)
 	BCC.b	loc_0000CB66
 	MOVE.l	#loc_0000BD04, $2(A6)
-	BSR.w	loc_0000CF16
+	BSR.w	ProcessBattleVictoryEvent
 	RTS
 
 loc_0000CB66:
@@ -14352,7 +14355,8 @@ SetEntityAnimFrames:
 	DBF	D7, SetEntityAnimFrames
 	RTS
 
-loc_0000CF16:
+;ProcessBattleVictoryEvent:
+ProcessBattleVictoryEvent:
 	LEA	loc_0000CF2E, A0
 	MOVE.w	Battle_type.w, D0
 	ANDI.w	#$000F, D0
@@ -14938,7 +14942,7 @@ loc_0000D718:
 	BNE.b	loc_0000D74A
 	CMPI.w	#8, Dialog_phase.w
 	BLT.b	loc_0000D744
-	JSR	loc_0000CF16
+	JSR	ProcessBattleVictoryEvent
 	MOVE.l	#loc_0000BEB6, $2(A5)
 	MOVE.w	#$0032, Dialog_timer.w
 	RTS
@@ -16349,7 +16353,7 @@ loc_0000EAF0:
 loc_0000EAF8:
 	SUBQ.b	#1, $1A(A5)
 	BNE.b	loc_0000EB20
-	BSR.w	loc_0000CF16
+	BSR.w	ProcessBattleVictoryEvent
 	TST.b	Swaffham_miniboss_defeated.w
 	BNE.b	loc_0000EB18
 	MOVE.l	#loc_0000BEB6, $2(A5)
@@ -16840,7 +16844,7 @@ loc_0000F19A:
 	BLT.b	loc_0000F1C6
 	MOVE.l	#loc_0000BEB6, $2(A5)
 	MOVE.w	#$0032, Dialog_timer.w
-	JSR	loc_0000CF16
+	JSR	ProcessBattleVictoryEvent
 	BRA.b	loc_0000F1CC
 loc_0000F1C6:
 	JSR	ClearDialogPlane
@@ -16865,7 +16869,7 @@ loc_0000F1FA:
 loc_0000F1FC:
 	SUBQ.w	#1, Dialog_timer.w
 	BGT.b	loc_0000F20E
-	JSR	loc_0000CF16
+	JSR	ProcessBattleVictoryEvent
 	MOVE.b	#$FF, Boss_battle_exit_flag.w
 loc_0000F20E:
 	RTS
@@ -17515,7 +17519,8 @@ loc_0000F9BE:
 loc_0000F9C8:
 	LEA	loc_0001FA96, A6
 	BRA.w	ProcessGraphicsLoadList
-loc_0000F9D2:
+;LoadPlayerOverworldGraphics:
+LoadPlayerOverworldGraphics:
 	LEA	loc_00045F44, A3
 	LEA	Player_overworld_gfx_buffer, A2
 	LEA	loc_0004567E, A4
@@ -18011,7 +18016,8 @@ loc_0000FF74:
 	DBF	D5, loc_0000FF74
 	RTS
 	
-loc_0000FF82:
+;LoadBattleTileGraphics:
+LoadBattleTileGraphics:
 	LEA	loc_00069F7C, A0
 	LEA	Tile_gfx_buffer.w, A2
 	MOVE.w	#$001A, D5
@@ -19756,7 +19762,8 @@ InitMenuCursorForList:
 	MOVE.w	#4, Menu_cursor_base_y.w
 	RTS
 	
-loc_00011614:
+;InitItemMenuCursor:
+InitItemMenuCursor:
 	MOVE.w	#1, Menu_cursor_column_break.w
 	MOVE.w	#$FFFF, Menu_cursor_last_index.w
 	MOVE.w	#3, Menu_cursor_base_x.w
@@ -20949,7 +20956,8 @@ RestoreRightMenuFromBuffer:
 	BSR.w	DrawWindowFromBuffer
 	RTS
 	
-loc_00012742:
+;RestoreReadyEquipmentMenuFromBuffer:
+RestoreReadyEquipmentMenuFromBuffer:
 	LEA	Ready_equipment_menu_tiles_buffer, A0
 	MOVE.w	#$000F, Window_tile_x.w
 	MOVE.w	#2, Window_tile_y.w
@@ -21623,7 +21631,8 @@ loc_00013012:
 	DBF	D7, loc_00013012
 	MOVE.l	#$6D360003, D5
 	BRA.w	loc_00013088
-loc_00013028:
+;DisplayReadiedMagicName:
+DisplayReadiedMagicName:
 	LEA	MagicNames, A0
 	MOVE.w	Readied_magic.w, D0
 	BLT.b	loc_00013044
@@ -21680,7 +21689,8 @@ loc_000130C8:
 loc_000130E8:
 	RTS
 
-loc_000130EA:
+;DisplayPlayerMaxHpMp:
+DisplayPlayerMaxHpMp:
 	ORI	#$0700, SR
 	MOVE.w	#$000D, Window_number_cursor_x.w
 	MOVE.w	#$0018, Window_number_cursor_y.w
@@ -25679,7 +25689,7 @@ loc_00018080:
 	BNE.b	loc_000180A6
 	TST.b	Player_in_first_person_mode.w
 	BEQ.b	loc_00018092
-	JSR	loc_00013028
+	JSR	DisplayReadiedMagicName
 loc_00018092:
 	CLR.w	Overworld_menu_state.w
 	MOVE.w	#3, Window_draw_type.w
@@ -26489,7 +26499,7 @@ loc_00018C62:
 
 loc_00018C64:
 	BSR.w	loc_00018C6E
-	BSR.w	loc_0001A064
+	BSR.w	CheckMagicSlotActiveOrClearAll
 	RTS
 
 loc_00018C6E:
@@ -27134,7 +27144,7 @@ loc_000194CA:
 	MOVE.w	$E(A5), $A(A5)
 	MOVE.w	$12(A5), $C(A5)
 	MOVE.w	$12(A5), $16(A5)
-	JSR	loc_00019B86(PC)
+	JSR	UpdatePlayerSpriteFrame(PC)
 	JSR	AddSpriteToDisplayList
 	RTS
 
@@ -27264,7 +27274,7 @@ loc_0001968E:
 	MOVE.l	#loc_00019728, $2(A5)
 loc_00019728:
 	JSR	loc_00019732(PC)
-	JSR	loc_0001A064(PC)
+	JSR	CheckMagicSlotActiveOrClearAll(PC)
 	RTS
 
 loc_00019732:
@@ -27365,7 +27375,7 @@ loc_0001989E:
 
 loc_000198A0:
 	JSR	loc_000198AA(PC)
-	JSR	loc_0001A064(PC)
+	JSR	CheckMagicSlotActiveOrClearAll(PC)
 	RTS
 
 loc_000198AA:
@@ -27404,7 +27414,7 @@ loc_000198C2:
 	MOVE.w	$E(A5), $A(A5)
 	MOVE.w	$12(A5), $C(A5)
 	MOVE.w	$12(A5), $16(A5)
-	JSR	loc_00019B86(PC)
+	JSR	UpdatePlayerSpriteFrame(PC)
 	JSR	AddSpriteToDisplayList
 	RTS
 	
@@ -27441,7 +27451,7 @@ CastArgentos:
 	BSR.w	InitMagicDamageAndFlags
 	MOVE.l	#$400, $20(A6)
 	MOVE.w	#7, D1
-	JSR	loc_00019BC6(PC)
+	JSR	FindNthEnemyInList(PC)
 	MOVE.w	$E(A5), $E(A6)
 	MOVE.w	$12(A5), $12(A6)
 	MOVE.l	#loc_000199E8, $2(A6)
@@ -27452,7 +27462,7 @@ loc_000199E6:
 
 loc_000199E8:
 	TST.b	$19(A5)
-	BNE.w	loc_0001A064
+	BNE.w	CheckMagicSlotActiveOrClearAll
 	JSR	CheckProjectileHitEnemies(PC)
 	CLR.b	$19(A5)
 	SUBQ.w	#1, $3C(A5)
@@ -27471,7 +27481,7 @@ loc_000199E8:
 	BNE.b	loc_00019A32
 	LEA	(A5), A6
 	MOVE.w	#7, D1
-	JSR	loc_00019BC6(PC)
+	JSR	FindNthEnemyInList(PC)
 	BRA.b	loc_00019A36
 loc_00019A32:
 	JSR	loc_0001A152(PC)
@@ -27563,7 +27573,8 @@ loc_00019B7A:
 	MOVE.b	#$FF, $19(A5)
 	RTS
 
-loc_00019B86:
+;UpdatePlayerSpriteFrame:
+UpdatePlayerSpriteFrame:
 	MOVE.b	$18(A5), D1
 	ASR.b	#4, D1
 	ADDQ.b	#5, D1
@@ -27584,7 +27595,8 @@ loc_00019BA6:
 	MOVE.w	(A0,D0.w), $8(A5)
 	RTS
 	
-loc_00019BC6:
+;FindNthEnemyInList:
+FindNthEnemyInList:
 	MOVEA.l	Enemy_list_ptr.w, A4
 loc_00019BCA:
 	BTST.b	#7, (A4)
@@ -27884,7 +27896,8 @@ loc_00019F8E:
 	dc.b	$30, $D0, $30, $D0, $30, $30, $D0, $D0, $30, $D0, $30, $D0, $30, $30, $D0, $D0, $20, $E0, $20, $E0, $20, $20, $E0, $E0, $20, $E0, $20, $E0, $20, $20, $E0, $E0 
 	dc.b	$10, $F0, $10, $F0, $10, $10, $F0, $F0, $08, $08, $F8, $F8, $08, $08, $F8, $F8, $04, $04, $04, $04, $FC, $FC, $FC, $FC, $2C, $78, $CC, $1C, $4A, $2E, $00, $19 
 	dc.b	$67, $12, $42, $40, $10, $2E, $00, $01, $4D, $F6, $00, $00, $51, $CF, $FF, $EE, $61, $00, $00, $2C, $4E, $75 
-loc_0001A064:
+;CheckMagicSlotActiveOrClearAll:
+CheckMagicSlotActiveOrClearAll:
 	MOVEA.l	Object_slot_02_ptr.w, A6
 	MOVE.w	#7, D7
 loc_0001A06C:
@@ -28262,7 +28275,7 @@ loc_0001A4AC:
 	JSR	DrawCenterMenuWindow
 	JSR	DrawStatusHudWindow
 	MOVE.w	#1, Item_menu_state.w
-	JSR	loc_00011614
+	JSR	InitItemMenuCursor
 	RTS
 
 loc_0001A4DC:
@@ -28300,7 +28313,7 @@ loc_0001A52C:
 	JSR	DrawCenterMenuWindow
 	JSR	DrawStatusHudWindow
 	MOVE.w	#1, Item_menu_state.w
-	JSR	loc_00011614
+	JSR	InitItemMenuCursor
 	RTS
 
 loc_0001A576:
@@ -28408,7 +28421,7 @@ loc_0001A6D2:
 	JSR	DrawCenterMenuWindow
 	JSR	DrawStatusHudWindow
 	MOVE.w	#1, Item_menu_state.w
-	JSR	loc_00011614
+	JSR	InitItemMenuCursor
 	RTS
 
 loc_0001A702:
@@ -29217,7 +29230,7 @@ UseBlueCrystal:
 UseGeneric:
 	TST.b	Player_in_first_person_mode.w
 	BNE.b	loc_0001B0AC
-	JSR	loc_000039C0	
+	JSR	GetTileInFrontOfPlayer	
 	CMPI.w	#$9000, D0	
 	BEQ.w	loc_0001B15C	
 	BRA.w	loc_0001B148	
@@ -29359,7 +29372,7 @@ loc_0001B266:
 	ADDQ.w	#1, Dialogue_state.w
 	TST.b	Player_in_first_person_mode.w
 	BNE.w	loc_0001B49C
-	JSR	loc_000039C0
+	JSR	GetTileInFrontOfPlayer
 	CMPI.w	#$4000, D0
 	BEQ.w	loc_0001B416
 	CMPI.w	#$7000, D0
@@ -31479,7 +31492,7 @@ loc_0001D1B8:
 loc_0001D1EC:
 	MOVE.w	#$00A8, D0
 	JSR	QueueSoundEffect
-	JSR	loc_00012742
+	JSR	RestoreReadyEquipmentMenuFromBuffer
 	JSR	DrawStatusHudWindow
 	JSR	RestoreRightMenuFromBuffer
 	JSR	DrawEquipmentMenuWindow
@@ -31516,7 +31529,7 @@ loc_0001D216:
 	MOVE.b	#$FF, (A1)
 	PRINT 	$FFFFC260
 	MOVE.w	#6, Ready_equipment_state.w
-	JSR	loc_00012742
+	JSR	RestoreReadyEquipmentMenuFromBuffer
 	RTS
 
 loc_0001D29C:
@@ -31571,7 +31584,7 @@ loc_0001D352:
 	PRINT 	CursedStr
 loc_0001D35A:
 	MOVE.w	#6, Ready_equipment_state.w
-	JSR	loc_00012742
+	JSR	RestoreReadyEquipmentMenuFromBuffer
 	RTS
 
 loc_0001D368:
@@ -32265,7 +32278,7 @@ loc_0001DC04:
 	BNE.w	loc_0001DC2A             ; First-person: check sprite
 	
 	; Top-down: Check tile type
-	JSR	loc_000039C0             ; Get tile in front of player
+	JSR	GetTileInFrontOfPlayer             ; Get tile in front of player
 	CMPI.w	#$9000, D0               ; Chest tile?
 	BEQ.w	loc_0001DC7C             ; Yes: play sound, advance
 	BRA.w	loc_0001DC94             ; No: check chest sprite
@@ -74523,7 +74536,8 @@ loc_0009239A:
 	dc.b	$00, $3E, $00, $3E, $01, $37, $01, $37, $00, $3E, $01, $35, $01, $36, $00, $00, $00, $00, $01, $06, $00, $00, $00, $00, $00, $00, $00, $00, $01, $06, $01, $01 
 	dc.b	$00, $00, $00, $00, $00, $00, $00, $00, $01, $01, $00, $00, $00, $00, $00, $F0, $00, $EE, $00, $00, $00, $00, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF 
 	dc.b	$FF, $FF, $FF, $FF 
-loc_00092900:
+;UpdateBattleEntities:
+UpdateBattleEntities:
 	LEA	$00FFF430, A3
 	BSR.w	loc_00092FE2
 	BSR.w	loc_000931C0
