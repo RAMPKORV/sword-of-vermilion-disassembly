@@ -687,7 +687,7 @@ loc_000012C0:
 ; Detects 0→1 transition (button was released, now pressed)
 CheckButtonPress:
 	MOVE.b	Controller_current_state.w, D0
-	MOVE.b	$FFFFC409.w, D1
+	MOVE.b	Controller_previous_state.w, D1
 	EOR.b	D1, D0
 	BTST.l	D2, D0
 	BEQ.b	loc_00001308
@@ -706,7 +706,7 @@ loc_0000130C:
 	dc.b	$00, $80, $40, $00, $00, $03, $23, $C0, $00, $C0, $00, $04, $33, $C4, $00, $C0, $00, $00, $52, $78, $C2, $42, $4E, $75 
 
 loc_00001364:
-	TST.b	$FFFFC39A.w
+	TST.b	HScroll_full_update_flag.w
 	BNE.b	loc_00001390
 	MOVE.w	VScroll_base.w, D0
 	BEQ.b	loc_00001394
@@ -720,8 +720,8 @@ loc_00001364:
 loc_00001390:
 	BSR.w	loc_0000141E
 loc_00001394:
-	CLR.b	$FFFFC3B4.w
-	LEA	$FFFFC3B8.w, A0
+	CLR.b	HScroll_update_busy.w
+	LEA	HScroll_run_table.w, A0
 	MOVE.l	#$7E620002, D0
 	MOVE.w	#2, D7
 	BSR.w	WriteHScrollRunToVRAM
@@ -771,9 +771,9 @@ loc_00001430:
 	RTS
 
 loc_00001448:
-	MOVE.w	$FFFFC320.w, D0
+	MOVE.w	Sound_queue_count.w, D0
 	BLE.b	loc_0000146C
-	LEA	$FFFFC322.w, A0
+	LEA	Sound_queue_buffer.w, A0
 	MOVE.b	(A0), $FFFFF404.w
 	LEA	$1(A0), A1
 	MOVE.b	(A1)+, (A0)+
@@ -783,7 +783,7 @@ loc_00001448:
 	MOVE.b	(A1)+, (A0)+
 	MOVE.b	(A1)+, (A0)+
 	MOVE.b	(A1)+, (A0)+
-	SUBQ.w	#1, $FFFFC320.w
+	SUBQ.w	#1, Sound_queue_count.w
 loc_0000146C:
 	RTS
 
@@ -1831,7 +1831,7 @@ loc_00002324:
 	JSR	loc_000002D0
 	JSR	loc_000002EA
 	JSR	ClearScrollData
-	MOVE.w	Player_direction.w, $FFFFC616.w
+	MOVE.w	Player_direction.w, Saved_player_direction.w
 	BSR.w	ClearAllEnemyEntities
 	JSR	loc_0000056A
 	CLR.w	Sprite_attr_count.w
@@ -1911,7 +1911,7 @@ loc_0000245A:
 loc_0000247E:
 	TST.b	Fade_out_lines_mask.w
 	BNE.w	loc_000024D4
-	MOVE.w	$FFFFC616.w, Player_direction.w
+	MOVE.w	Saved_player_direction.w, Player_direction.w
 	CLR.b	Is_in_battle.w
 	TST.b	Soldier_fight_event_trigger.w
 	BEQ.b	loc_000024AA
@@ -2455,7 +2455,7 @@ loc_00002BCC:
 	JSR	loc_0000F688
 	MOVEA.l	Player_entity_ptr.w, A6
 	MOVE.l	#PlayerObjectHandler, $2(A6)
-	MOVE.w	$FFFFC616.w, Player_direction.w
+	MOVE.w	Saved_player_direction.w, Player_direction.w
 	CLR.w	D0
 	MOVE.b	$1(A6), D0
 	LEA	(A6,D0.w), A6
@@ -10224,7 +10224,7 @@ loc_0000947E:
 	MOVE.b	#$0D, $6(A5)
 	MOVE.w	#$000C, $1C(A5)
 	MOVE.w	#$000A, $1E(A5)
-	CLR.b	$FFFFC69E.w
+	CLR.b	Enemy_pair_offset_flag.w
 	MOVE.l	#loc_0000957C, $2(A5)
 	MOVE.b	#$0E, $6(A6)
 	MOVE.l	#loc_0000A662, $2(A6)
@@ -10240,7 +10240,7 @@ loc_000094D2:
 	MOVE.b	#$0E, $6(A5)
 	MOVE.w	#$000C, $1C(A5)
 	MOVE.w	#$000A, $1E(A5)
-	MOVE.b	#$FF, $FFFFC69E.w
+	MOVE.b	#$FF, Enemy_pair_offset_flag.w
 	MOVE.l	#loc_0000957C, $2(A5)
 	MOVE.b	#$0E, $6(A6)
 	MOVE.l	#loc_0000A662, $2(A6)
@@ -10256,7 +10256,7 @@ loc_00009528:
 	MOVE.b	#$0D, $6(A5)
 	MOVE.w	#$000C, $1C(A5)
 	MOVE.w	#$000C, $1E(A5)
-	CLR.b	$FFFFC69E.w
+	CLR.b	Enemy_pair_offset_flag.w
 	MOVE.l	#loc_0000957C, $2(A5)
 	MOVE.b	#$0E, $6(A6)
 	MOVE.l	#loc_0000A662, $2(A6)
@@ -10340,7 +10340,7 @@ loc_00009666:
 	MOVEA.l	Enemy_anim_table_child.w, A1
 	MOVE.w	(A0,D1.w), $8(A5)
 	MOVE.w	(A1,D1.w), $8(A6)
-	TST.b	$FFFFC69E.w
+	TST.b	Enemy_pair_offset_flag.w
 	BNE.w	loc_0000968E
 	BSR.w	CopyPositionToLinkedSprite
 	BRA.w	loc_00009692
@@ -10967,7 +10967,7 @@ loc_00009F50:
 loc_00009F6E:
 	BSR.w	loc_0000B662
 	BSR.w	loc_0000B772
-	CLR.b	$FFFFC69F.w
+	CLR.b	Enemy_direction_flag.w
 	MOVE.l	#loc_00009FB8, $2(A5)
 	MOVE.b	#$0E, $6(A6)
 	MOVE.l	#loc_0000A662, $2(A6)
@@ -10976,7 +10976,7 @@ loc_00009F6E:
 loc_00009F92:
 	BSR.w	loc_0000B662
 	BSR.w	loc_0000B772
-	MOVE.b	#$FF, $FFFFC69F.w
+	MOVE.b	#$FF, Enemy_direction_flag.w
 	MOVE.l	#loc_00009FB8, $2(A5)
 	MOVE.b	#$0E, $6(A6)
 	MOVE.l	#loc_0000A662, $2(A6)
@@ -11010,7 +11010,7 @@ loc_0000A008:
 	JSR	GetRandomNumber
 	ANDI.w	#$003F, D0
 	BNE.w	loc_0000A042
-	TST.b	$FFFFC69F.w
+	TST.b	Enemy_direction_flag.w
 	BNE.w	loc_0000A02C
 	JSR	GetRandomNumber
 	ANDI.b	#7, D0
@@ -17235,7 +17235,7 @@ loc_0000F688:
 	MOVE.w	Sprite_attr_count.w, D0
 	SUBQ.w	#1, D0
 	BLT.b	loc_0000F6BA
-	LEA	$FFFFE004.w, A2
+	LEA	Sprite_attr_buffer.w, A2
 loc_0000F69E:
 	MOVE.w	(A2)+, VDP_data_port
 	MOVE.w	(A2)+, VDP_data_port
@@ -17251,7 +17251,7 @@ loc_0000F6BA:
 	
 ; loc_0000F6DC
 QueueSpriteOAMIfVisible:
-	LEA	$FFFFE004.w, A0
+	LEA	Sprite_attr_buffer.w, A0
 	MOVE.w	Sprite_attr_count.w, D0
 	MOVE.w	D0, D4
 	ADDQ.w	#1, D4
@@ -17299,7 +17299,7 @@ loc_0000F75E:
 	TST.w	Sprite_attr_count.w
 	BLE.w	loc_0000F7BC
 	LEA	$FFFFE3F0.w, A1
-	LEA	$FFFFE004.w, A4
+	LEA	Sprite_attr_buffer.w, A4
 	LEA	Sprite_sort_buffer.w, A2
 	CLR.w	D1
 	MOVE.w	#$0010, D5
@@ -17438,13 +17438,13 @@ loc_0000F8D2:
 	LEA	loc_00023E70, A6
 	MULU.w	#$C, D1
 	MOVEA.l	(A6,D1.w), A6
-	MOVE.l	A6, $FFFFC686.w
+	MOVE.l	A6, Current_encounter_gfx_ptr.w
 	MOVEA.l	$0(A6), A4
 	MOVEA.l	$4(A6), A3
 	MOVE.w	#$000F, D5
 	BSR.w	LoadMultipleTilesFromTable
 	LEA	Enemy_gfx_buffer.w, A2
-	MOVEA.l	$FFFFC686.w, A6
+	MOVEA.l	Current_encounter_gfx_ptr.w, A6
 	TST.l	$8(A6)
 	BEQ.b	loc_0000F938
 	MOVEA.l	$8(A6), A4
@@ -18447,12 +18447,12 @@ loc_00010520:
 ; Input: D0.b = Sound effect ID
 ; Adds sound to queue if not full (max 8 entries)
 QueueSoundEffect:
-	MOVE.w	$FFFFC320.w, D1
+	MOVE.w	Sound_queue_count.w, D1
 	CMPI.w	#8, D1
 	BGE.b	loc_00010538
-	LEA	$FFFFC322.w, A0
+	LEA	Sound_queue_buffer.w, A0
 	MOVE.b	D0, (A0,D1.w)
-	ADDQ.w	#1, $FFFFC320.w
+	ADDQ.w	#1, Sound_queue_count.w
 loc_00010538:
 	RTS
 	
@@ -19567,7 +19567,7 @@ loc_00011452:
 loc_00011458:
 	MOVE.w	#0, D3
 	MOVEQ	#1, D5
-	LEA	$FFFF9D80.w, A0
+	LEA	Window_text_scratch.w, A0
 	BSR.b	loc_00011420
 	MOVE.b	#$FF, (A0)
 	RTS
@@ -19634,7 +19634,7 @@ loc_000114D2:
 WordToDecimalString:
 	MOVE.w	#0, D3
 	MOVEQ	#1, D5
-	LEA	$FFFF9D80.w, A0
+	LEA	Window_text_scratch.w, A0
 	BSR.b	loc_00011470
 	MOVE.b	#$FF, (A0)
 	RTS
@@ -20696,7 +20696,7 @@ loc_0001240C:
 	
 ; SaveLeftMenuTiles
 SaveLeftMenuTiles:
-	LEA	$FFFF862E.w, A0
+	LEA	Left_menu_tiles_buffer.w, A0
 	MOVE.w	#0, Window_tile_x.w
 	MOVE.w	#2, Window_tile_y.w
 	MOVE.w	#9, Window_tile_width.w
@@ -20931,7 +20931,7 @@ loc_00012742:
 	RTS
 	
 loc_00012766:
-	LEA	$FFFF862E.w, A0
+	LEA	Left_menu_tiles_buffer.w, A0
 	MOVE.w	#0, Window_tile_x.w
 	MOVE.w	#2, Window_tile_y.w
 	MOVE.w	#9, Window_tile_width.w
@@ -20984,7 +20984,7 @@ loc_000127C2:
 ; Main menu input handler - processes D-pad input for cursor movement
 HandleMenuInput:
 	MOVE.b	Controller_current_state.w, D2
-	MOVE.b	$FFFFC409.w, D3
+	MOVE.b	Controller_previous_state.w, D3
 	EOR.b	D2, D3
 	BEQ.w	BlinkMenuCursor
 	ANDI.w	#$000F, D2
@@ -21360,10 +21360,10 @@ loc_00012CCA:
 	RTS
 
 loc_00012CDA:
-	LEA	$FFFF9D80.w, A0
+	LEA	Window_text_scratch.w, A0
 	BRA.w	loc_00012CF6
 loc_00012CE2:
-	LEA	$FFFF9D80.w, A0
+	LEA	Window_text_scratch.w, A0
 ; RenderTextToWindow
 ; Render text string to window tilemap buffer
 ; Input: A0 = Text string pointer
@@ -22641,7 +22641,7 @@ loc_0001548A:
 	MOVE.b	Controller_current_state.w, D0
 	ANDI.w	#$000F, D0
 	BEQ.w	loc_000155F2
-	MOVE.b	$FFFFC409.w, D1
+	MOVE.b	Controller_previous_state.w, D1
 	ANDI.w	#$000F, D1
 	EOR.b	D0, D1
 	BEQ.w	loc_0001558E
@@ -24273,7 +24273,7 @@ loc_000169D0:
 	MOVE.l	#$40000010, VDP_control_port
 	MOVE.w	D0, VDP_data_port
 	MOVE.w	D0, VDP_data_port
-	MOVE.b	#$FF, $FFFFC3B4.w
+	MOVE.b	#$FF, HScroll_update_busy.w
 	MOVE.b	#$FF, Intro_text_pending.w
 	JSR	loc_0000F9A0
 	JSR	loc_0000F9AA
@@ -24294,7 +24294,7 @@ loc_00016A78:
 
 loc_00016A8C:
 	MOVE.b	#$FF, Scene_update_flag.w
-	TST.b	$FFFFC3B4.w
+	TST.b	HScroll_update_busy.w
 	BNE.b	loc_00016AB6
 	MOVE.l	#loc_00016AB8, $2(A5)
 	MOVE.b	#4, Fade_in_lines_mask.w
@@ -24417,7 +24417,7 @@ loc_00016C0C:
 
 loc_00016C12:
 	MOVE.b	#$FF, Scene_update_flag.w
-	LEA	$FFFFC3B8.w, A0
+	LEA	HScroll_run_table.w, A0
 	LEA	loc_00016E4A, A1
 	MOVE.w	#$A, D7
 loc_00016C26:
@@ -24661,7 +24661,7 @@ loc_00016F82:
 	BCLR.b	#7, (A6)
 	MOVE.w	#$0032, Ending_timer.w
 	MOVE.l	#loc_00016FD8, $2(A5)
-	MOVE.b	#$FF, $FFFFC39A.w
+	MOVE.b	#$FF, HScroll_full_update_flag.w
 	RTS
 
 loc_00016FD8:
@@ -30112,7 +30112,7 @@ loc_0001BF28:
 	MOVE.w	Shop_selected_index.w, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
-	MOVE.l	(A0,D0.w), $FFFFC4B0.w
+	MOVE.l	(A0,D0.w), Shop_selected_price.w
 	MOVE.l	(A0,D0.w), D0
 	MOVE.l	Player_kims.w, D1
 	ANDI.l	#$00FFFFFF, D1
@@ -30140,7 +30140,7 @@ loc_0001BFD2:
 	ADD.w	D0, D0
 	LEA	loc_00025FB0, A0
 	MOVE.l	(A0,D0.w), Script_source_base.w
-	MOVE.l	$FFFFC4B0.w, Transaction_amount.w
+	MOVE.l	Shop_selected_price.w, Transaction_amount.w
 	JSR	DeductPaymentAmount
 	JSR	DisplayPlayerKims
 	BRA.b	loc_0001C024
@@ -36134,7 +36134,7 @@ loc_000213CE:
 	CLR.w	Dialog_timer.w
 	CLR.w	Dialog_phase.w
 	MOVE.w	Gameplay_substate.w, Saved_game_state.w
-	MOVE.w	Player_direction.w, $FFFFC616.w
+	MOVE.w	Player_direction.w, Saved_player_direction.w
 	MOVE.w	#$20, Gameplay_substate.w
 	RTS
 	
