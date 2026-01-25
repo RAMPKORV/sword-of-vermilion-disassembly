@@ -270,16 +270,16 @@ loc_00000654:
 
 ; loc_0000066E
 EnableDisplay:
-	MOVE.w	$FFFFC3F2.w, D0
+	MOVE.w	VDP_Reg1_cache.w, D0
 	BSET.l	#6, D0
-	MOVE.w	D0, $FFFFC3F2.w
+	MOVE.w	D0, VDP_Reg1_cache.w
 	MOVE.w	D0, VDP_control_port
 	RTS
 
 loc_00000682:
-	MOVE.w	$FFFFC3F2.w, D0
+	MOVE.w	VDP_Reg1_cache.w, D0
 	BCLR.l	#6, D0
-	MOVE.w	D0, $FFFFC3F2.w
+	MOVE.w	D0, VDP_Reg1_cache.w
 	MOVE.w	D0, VDP_control_port
 	RTS
 
@@ -1331,7 +1331,7 @@ loc_00001B9A:
 	MOVE.w	$E(A6), Town_spawn_x.w
 	MOVE.w	$12(A6), Player_spawn_tile_y_buffer.w
 	MOVE.w	Town_camera_tile_x.w, Town_camera_initial_x.w
-	MOVE.w	$FFFFC114.w, Town_default_camera_y.w
+	MOVE.w	Town_camera_tile_y.w, Town_default_camera_y.w
 	RTS
 
 loc_00001BB8:
@@ -1381,7 +1381,7 @@ loc_00001C56:
 	MOVE.w	$E(A6), Saved_player_x_in_town.w	
 	MOVE.w	$12(A6), Town_player_spawn_y.w	
 	MOVE.w	Town_camera_tile_x.w, Town_saved_camera_x.w	
-	MOVE.w	$FFFFC114.w, Saved_camera_tile_y_room1.w	
+	MOVE.w	Town_camera_tile_y.w, Saved_camera_tile_y_room1.w	
 	MOVE.w	Gameplay_substate.w, $FFFFC414.w	
 	MOVE.w	#$21, Gameplay_substate.w	
 	MOVE.w	#$00E0, D0	
@@ -1418,7 +1418,7 @@ loc_00001CDC:
 	ADDI.w	#$0010, D0
 	MOVE.w	D0, Town_player_spawn_y.w
 	MOVE.w	Town_camera_tile_x.w, Town_saved_camera_x.w
-	MOVE.w	$FFFFC114.w, Saved_camera_tile_y_room1.w
+	MOVE.w	Town_camera_tile_y.w, Saved_camera_tile_y_room1.w
 	RTS
 
 loc_00001D14:
@@ -1605,7 +1605,7 @@ loc_00001F5C:
 	ADD.w	(A0), D0
 	MOVE.w	D0, Saved_player_y_room1.w
 	MOVE.w	Town_camera_tile_x.w, Saved_camera_tile_x_unused.w
-	MOVE.w	$FFFFC114.w, Saved_camera_tile_y_unused.w
+	MOVE.w	Town_camera_tile_y.w, Saved_camera_tile_y_unused.w
 	MOVE.b	#$FF, Player_is_moving.w
 	MOVE.w	#DIRECTION_DOWN, Player_direction.w
 	RTS
@@ -1702,7 +1702,7 @@ loc_00002116:
 	MOVE.w	$E(A6), Saved_player_x_in_town.w
 	MOVE.w	$12(A6), Town_player_spawn_y.w
 	MOVE.w	Town_camera_tile_x.w, Town_saved_camera_x.w
-	MOVE.w	$FFFFC114.w, Saved_camera_tile_y_room1.w
+	MOVE.w	Town_camera_tile_y.w, Saved_camera_tile_y_room1.w
 	MOVE.w	Gameplay_substate.w, $FFFFC414.w
 	MOVE.w	#$21, Gameplay_substate.w
 	MOVE.w	#$00E0, D0
@@ -1740,7 +1740,7 @@ loc_000021A2:
 	SUBI.w	#$0010, D0
 	MOVE.w	D0, Town_player_spawn_y.w
 	MOVE.w	Town_camera_tile_x.w, Town_saved_camera_x.w
-	MOVE.w	$FFFFC114.w, Saved_camera_tile_y_room1.w
+	MOVE.w	Town_camera_tile_y.w, Saved_camera_tile_y_room1.w
 	RTS
 
 loc_000021DA:
@@ -1777,7 +1777,7 @@ loc_00002234:
 	ADDI.w	#$0010, D0
 	MOVE.w	D0, Saved_player_y_room1.w
 	MOVE.w	Town_camera_tile_x.w, Saved_camera_tile_x_unused.w
-	MOVE.w	$FFFFC114.w, Saved_camera_tile_y_unused.w
+	MOVE.w	Town_camera_tile_y.w, Saved_camera_tile_y_unused.w
 	MOVE.b	#$FF, Player_is_moving.w
 	MOVE.w	#DIRECTION_DOWN, Player_direction.w
 	RTS
@@ -2207,16 +2207,16 @@ loc_00002868:
 	BSET.b	#7, (A6)
 	MOVE.l	#loc_00008BA6, $2(A6)
 	MOVE.w	#$19, Gameplay_substate.w
-	CLR.w	$FFFFC554.w
-	CLR.w	$FFFFC552.w
+	CLR.w	Dialog_timer.w
+	CLR.w	Dialog_phase.w
 	CLR.b	Chest_already_opened.w
 	MOVE.w	#$0084, D0
 	JSR	QueueSoundEffect
 	RTS
 
 loc_000028C2:
-	ADDQ.w	#1, $FFFFC554.w
-	MOVE.w	$FFFFC554.w, D0
+	ADDQ.w	#1, Dialog_timer.w
+	MOVE.w	Dialog_timer.w, D0
 	BTST.b	#6, $00A10001
 	BNE.b	loc_000028DC
 	ANDI.w	#7, D0
@@ -2226,7 +2226,7 @@ loc_000028DC:
 	ANDI.w	#3, D0	
 	BNE.b	loc_000028FA	
 loc_000028E2:
-	CMPI.w	#$000A, $FFFFC552.w
+	CMPI.w	#$000A, Dialog_phase.w
 	BLT.b	loc_000028F6
 	BSR.w	loc_00002F9C
 	MOVE.w	#$1A, Gameplay_substate.w
@@ -2237,8 +2237,8 @@ loc_000028FA:
 	RTS
 
 loc_000028FC:
-	ADDQ.w	#1, $FFFFC554.w
-	CMPI.w	#$0064, $FFFFC554.w
+	ADDQ.w	#1, Dialog_timer.w
+	CMPI.w	#$0064, Dialog_timer.w
 	BLE.b	loc_00002914
 	MOVE.w	#$F, Gameplay_substate.w
 	MOVE.b	#$FF, Fade_out_lines_mask.w
@@ -2337,8 +2337,8 @@ loc_00002A50:
 	RTS
 
 loc_00002A52:
-	ADDQ.w	#1, $FFFFC554.w
-	MOVE.w	$FFFFC554.w, D0
+	ADDQ.w	#1, Dialog_timer.w
+	MOVE.w	Dialog_timer.w, D0
 	BTST.b	#6, $00A10001
 	BNE.w	loc_00002A6E
 	ANDI.w	#7, D0
@@ -2348,7 +2348,7 @@ loc_00002A6E:
 	ANDI.w	#3, D0	
 	BNE.b	loc_00002A90	
 loc_00002A74:
-	CMPI.w	#$000A, $FFFFC552.w
+	CMPI.w	#$000A, Dialog_phase.w
 	BLT.b	loc_00002A8C
 	CLR.b	$FFFFC56A.w
 	BSR.w	loc_00002F9C
@@ -2674,7 +2674,7 @@ loc_00002F54:
 	LEA	Tile_gfx_buffer.w, A0
 	MOVE.l	#$45600002, D5
 	MOVEQ	#0, D0
-	MOVE.w	$FFFFC552.w, D0
+	MOVE.w	Dialog_phase.w, D0
 	ADDA.w	D0, A0
 	SWAP	D0
 	ADD.l	D0, D5
@@ -2690,7 +2690,7 @@ loc_00002F72:
 	LEA	$A(A0), A0
 	DBF	D7, loc_00002F72
 	ANDI	#$F8FF, SR
-	ADDQ.w	#1, $FFFFC552.w
+	ADDQ.w	#1, Dialog_phase.w
 	RTS
 
 loc_00002F9C:
@@ -2704,7 +2704,7 @@ loc_00002FB8:
 	MOVE.w	(A0)+, VDP_data_port
 	DBF	D7, loc_00002FB8
 	ANDI	#$F8FF, SR
-	CLR.w	$FFFFC554.w
+	CLR.w	Dialog_timer.w
 	RTS
 
 loc_00002FCC:
@@ -2826,13 +2826,13 @@ loc_00003140:
 	RTS
 
 loc_00003142:
-	MOVE.w	#2, $FFFFC23A.w	
-	MOVE.w  #$FFFF, $FFFFC23C.w
+	MOVE.w	#2, Menu_cursor_column_break.w	
+	MOVE.w  #$FFFF, Menu_cursor_last_index.w
 	JSR	loc_0001254A	
 	JSR	loc_00010CE2	
 	ADDQ.w	#1, Overworld_menu_state.w	
-	MOVE.w	#$000E, $FFFFC236.w	
-	MOVE.w	#$000E, $FFFFC238.w	
+	MOVE.w	#$000E, Menu_cursor_base_x.w	
+	MOVE.w	#$000E, Menu_cursor_base_y.w	
 	CLR.w	Main_menu_selection.w	
 	RTS
 	
@@ -2881,15 +2881,15 @@ loc_000031EE:
 	RTS
 
 loc_00003208:
-	MOVE.w	#3, $FFFFC23A.w
-	MOVE.w	#7, $FFFFC23C.w
+	MOVE.w	#3, Menu_cursor_column_break.w
+	MOVE.w	#7, Menu_cursor_last_index.w
 	MOVE.w	#5, Menu_cursor_second_column_x.w
-	MOVE.w	#3, $FFFFC236.w
-	MOVE.w	#4, $FFFFC238.w
+	MOVE.w	#3, Menu_cursor_base_x.w
+	MOVE.w	#4, Menu_cursor_base_y.w
 	CLR.w	Dialogue_state.w
 	CLR.w	Item_menu_state.w
 	CLR.w	Equip_list_menu_state.w
-	CLR.w	$FFFFC424.w
+	CLR.w	Spellbook_menu_state.w
 	CLR.w	Ready_equipment_state.w
 	CLR.w	Dialog_selection.w
 	CLR.w	Open_menu_state.w
@@ -3731,7 +3731,7 @@ loc_00003BBE:
 	MOVE.w	#2, D4
 	ORI.w	#$8F00, D4
 	MOVE.w	D4, VDP_control_port
-	MOVE.w	$FFFFC3F2.w, D4
+	MOVE.w	VDP_Reg1_cache.w, D4
 	BSET.l	#4, D4
 	MOVE.w	D4, VDP_control_port
 	MOVE.l	D5, VDP_control_port
@@ -3739,7 +3739,7 @@ loc_00003BBE:
 	MOVE.w	D1, VDP_control_port
 	MOVE.l	D3, $FFFFC18C.w
 	JSR	$FFFFC190.w
-	MOVE.w	$FFFFC3F2.w, D4
+	MOVE.w	VDP_Reg1_cache.w, D4
 	BCLR.l	#4, D4
 	MOVE.w	D4, VDP_control_port
 	startZ80
@@ -7452,7 +7452,7 @@ loc_0000703E:
 loc_00007054:  
 	TST.b	Rings_collected.w
 	BNE.b	loc_0000706A
-	MOVE.l	#UseMapStr, $FFFFC438.w
+	MOVE.l	#UseMapStr, Pending_hint_text.w
 	MOVE.w	#$0070, D5
 	BSR.w	loc_0000858A
 loc_0000706A:
@@ -7465,7 +7465,7 @@ loc_0000706A:
 loc_00007080:
 	TST.b	Rings_collected.w
 	BEQ.b	loc_00007096
-	MOVE.l	#UseMapStr, $FFFFC438.w
+	MOVE.l	#UseMapStr, Pending_hint_text.w
 	MOVE.w	#$0051, D5
 	BSR.w	loc_0000858A
 loc_00007096:
@@ -7476,7 +7476,7 @@ loc_00007096:
 	RTS
 
 loc_000070AC:   
-	MOVE.l	#UseMapStr, $FFFFC438.w
+	MOVE.l	#UseMapStr, Pending_hint_text.w
 	MOVE.w	#$0040, D5
 	BSR.w	loc_0000858A
 	BRA.w	UpdateNPCSpriteFrame
@@ -7488,14 +7488,14 @@ loc_000070AC:
 loc_000070D2:
 	TST.b	Talked_to_real_king.w
 	BEQ.b	loc_000070EA
-	MOVE.l	#AdviceForQuestionsStr, $FFFFC438.w	
+	MOVE.l	#AdviceForQuestionsStr, Pending_hint_text.w	
 	MOVE.w	#$0044, D5	
 	BSR.w	loc_0000858A	
 	BRA.b	loc_00007100	
 loc_000070EA:
 	TST.b	Treasure_of_troy_challenge_issued.w
 	BEQ.b	loc_00007100
-	MOVE.l	#AdviceForQuestionsStr, $FFFFC438.w
+	MOVE.l	#AdviceForQuestionsStr, Pending_hint_text.w
 	MOVE.w	#$0052, D5
 	BSR.w	loc_0000858A
 loc_00007100:
@@ -7592,7 +7592,7 @@ loc_00007216:
 	RTS
 
 loc_00007220:       
-	MOVE.l	#GoNorthVerlinsCaveStr, $FFFFC438.w
+	MOVE.l	#GoNorthVerlinsCaveStr, Pending_hint_text.w
 	MOVE.w	#$36, D5
 	BSR.w	loc_0000858A
 	BRA.w	UpdateNPCSpriteFrame
@@ -7610,7 +7610,7 @@ loc_0000725A:
 	RTS
 
 loc_00007264:
-	MOVE.l	#ThankYouStrangerStr, $FFFFC438.w
+	MOVE.l	#ThankYouStrangerStr, Pending_hint_text.w
 	MOVE.w	#$65, D5
 	BSR.w	loc_0000858A
 	BRA.w	UpdateNPCSpriteFrame
@@ -7662,7 +7662,7 @@ loc_0000730A:
 	BNE.b	loc_00007326
 	TST.b	Deepdale_truffle_quest_started.w
 	BEQ.b	loc_00007326
-	MOVE.l	#BremensCaveNorthwestStr, $FFFFC438.w
+	MOVE.l	#BremensCaveNorthwestStr, Pending_hint_text.w
 	MOVE.w	#$62, D5
 	BSR.w	loc_0000858A
 loc_00007326:
@@ -7675,7 +7675,7 @@ loc_00007326:
 loc_0000733C:
 	TST.b	Deepdale_king_secret_kept.w
 	BEQ.b	loc_00007352
-	MOVE.l	#RoadToStowDangerousStr, $FFFFC438.w
+	MOVE.l	#RoadToStowDangerousStr, Pending_hint_text.w
 	MOVE.w	#$7A, D5
 	BSR.w	loc_0000858A
 loc_00007352:
@@ -7824,7 +7824,7 @@ loc_0000752A:
 loc_00007540:
 	TST.b	Sent_to_malaga.w
 	BEQ.b	loc_00007556
-	MOVE.l	#MalagaNortheastStr, $FFFFC438.w
+	MOVE.l	#MalagaNortheastStr, Pending_hint_text.w
 	MOVE.w	#$003D, D5
 	BSR.w	loc_0000858A
 loc_00007556:
@@ -7837,7 +7837,7 @@ loc_00007556:
 loc_0000756C:
 	TST.b	Sent_to_malaga.w
 	BEQ.b	loc_00007582
-	MOVE.l	#GoWestBlazonsCaveStr, $FFFFC438.w
+	MOVE.l	#GoWestBlazonsCaveStr, Pending_hint_text.w
 	MOVE.w	#$004C, D5
 	BSR.w	loc_0000858A
 loc_00007582:
@@ -7939,7 +7939,7 @@ loc_000076A4:
 loc_000076B6:
 	TST.b	Malaga_king_crowned.w
 	BNE.b	loc_000076CC
-	MOVE.l	#HopeReturnSafelyStr, $FFFFC438.w
+	MOVE.l	#HopeReturnSafelyStr, Pending_hint_text.w
 	MOVE.w	#$002E, D5
 	BSR.w	loc_0000858A
 loc_000076CC:
@@ -7952,7 +7952,7 @@ loc_000076CC:
 loc_000076E2:
 	TST.b	Barrow_map_received.w
 	BEQ.b	loc_000076F8
-	MOVE.l	#BarrowNortheastStr, $FFFFC438.w
+	MOVE.l	#BarrowNortheastStr, Pending_hint_text.w
 	MOVE.w	#$001D, D5
 	BSR.w	loc_0000858A
 loc_000076F8:
@@ -7996,7 +7996,7 @@ loc_0000775E:
 	RTS
 
 loc_00007774:
-	MOVE.l	#ReachTadcasterStr, $FFFFC438.w
+	MOVE.l	#ReachTadcasterStr, Pending_hint_text.w
 	MOVE.w	#$000A, D5
 	BSR.w	loc_0000858A
 	BRA.w	UpdateNPCSpriteFrame
@@ -8020,7 +8020,7 @@ loc_000077C8:
 	MOVE.l	#DontSpendAllWealthStr, $1C(A5)	
 	BRA.b	loc_000077E2	
 loc_000077D2:
-	MOVE.l	#TreasureInCaveStr, $FFFFC438.w
+	MOVE.l	#TreasureInCaveStr, Pending_hint_text.w
 	MOVE.w	#$001C, D5
 	BSR.w	loc_0000858A
 loc_000077E2:
@@ -8076,7 +8076,7 @@ loc_0000787A:
 loc_00007890:
 	TST.b	Imposter_killed.w
 	BNE.b	loc_000078A6
-	MOVE.l	#ImposterDarmonsCaveConfirmedStr, $FFFFC438.w
+	MOVE.l	#ImposterDarmonsCaveConfirmedStr, Pending_hint_text.w
 	MOVE.w	#8, D5
 	BSR.w	loc_0000858A
 loc_000078A6:
@@ -8089,7 +8089,7 @@ loc_000078A6:
 loc_000078BC:
 	TST.b	Imposter_killed.w
 	BEQ.b	loc_000078D2
-	MOVE.l	#ReachHelwigStr, $FFFFC438.w
+	MOVE.l	#ReachHelwigStr, Pending_hint_text.w
 	MOVE.w	#$0017, D5
 	BSR.w	loc_0000858A
 loc_000078D2:
@@ -8118,7 +8118,7 @@ loc_00007902:
 loc_00007914:
 	TST.b	Helwig_men_rescued.w
 	BNE.b	loc_0000792A
-	MOVE.l	#CountOnYouStr, $FFFFC438.w
+	MOVE.l	#CountOnYouStr, Pending_hint_text.w
 	MOVE.w	#$14, D5
 	BSR.w	loc_0000858A
 loc_0000792A:
@@ -8129,7 +8129,7 @@ loc_0000792A:
 	RTS
 
 loc_00007940:
-	MOVE.l	#JourneyWestToSwaffhamStr, $FFFFC438.w
+	MOVE.l	#JourneyWestToSwaffhamStr, Pending_hint_text.w
 	MOVE.w	#3, D5
 	BSR.w	loc_0000858A
 	BRA.w	UpdateNPCSpriteFrame
@@ -8400,7 +8400,7 @@ loc_00007CCC:
 	MOVE.w	$E(A6), Saved_player_x_in_town.w
 	MOVE.w	$12(A6), Town_player_spawn_y.w
 	MOVE.w	Town_camera_tile_x.w, Town_saved_camera_x.w
-	MOVE.w	$FFFFC114.w, Saved_camera_tile_y_room1.w
+	MOVE.w	Town_camera_tile_y.w, Saved_camera_tile_y_room1.w
 	MOVE.b	#$FF, Fade_out_lines_mask.w
 	MOVE.b	#$85, D0
 	JSR	QueueSoundEffect
@@ -9171,7 +9171,7 @@ loc_0000858A:
 	LEA	$FFFFC820.w, A0
 	TST.b	(A0,D5.w)
 	BEQ.b	loc_0000859A
-	MOVE.l	$FFFFC438.w, $1C(A5)
+	MOVE.l	Pending_hint_text.w, $1C(A5)
 loc_0000859A:
 	RTS
 
@@ -9489,12 +9489,12 @@ loc_00008AB0:
 	RTS
 
 loc_00008AB2:
-	MOVEA.l	$FFFFC566.w, A6
+	MOVEA.l	Talker_gfx_descriptor_ptr.w, A6
 	BSR.w	InitTalkerPortraitSprite
 	RTS
 
 loc_00008ABC:
-	MOVEA.l	$FFFFC566.w, A6
+	MOVEA.l	Talker_gfx_descriptor_ptr.w, A6
 	BSR.w	InitTalkerPortraitSprite
 	MOVE.l	#loc_00008E5C, $2(A5)
 	BSR.w	loc_00008EBC
@@ -9502,7 +9502,7 @@ loc_00008ABC:
 	RTS
 
 loc_00008ADA:
-	MOVEA.l	$FFFFC566.w, A6
+	MOVEA.l	Talker_gfx_descriptor_ptr.w, A6
 	BSR.w	InitTalkerPortraitSprite
 	MOVE.l	#loc_00008D2C, $2(A5)
 	BSR.w	loc_00008EBC
@@ -9510,25 +9510,25 @@ loc_00008ADA:
 	RTS
 
 loc_00008AF8:
-	MOVEA.l	$FFFFC566.w, A6
+	MOVEA.l	Talker_gfx_descriptor_ptr.w, A6
 	BSR.w	InitTalkerPortraitSprite
 	MOVE.l	#loc_00008D18, $2(A5)
 	RTS
 
 loc_00008B0A:
-	MOVEA.l	$FFFFC566.w, A6
+	MOVEA.l	Talker_gfx_descriptor_ptr.w, A6
 	BSR.w	InitTalkerPortraitSprite
 	MOVE.l	#loc_00008DC6, $2(A5)
 	RTS
 
 loc_00008B1C:
-	MOVEA.l	$FFFFC566.w, A6
+	MOVEA.l	Talker_gfx_descriptor_ptr.w, A6
 	BSR.w	InitTalkerPortraitSprite
 	MOVE.l	#loc_00008DDA, $2(A5)
 	RTS
 
 loc_00008B2E:
-	MOVEA.l	$FFFFC566.w, A6
+	MOVEA.l	Talker_gfx_descriptor_ptr.w, A6
 	BSR.w	InitTalkerPortraitSprite
 	MOVE.l	#loc_00008E26, $2(A5)
 	BSR.w	loc_00008EBC
@@ -9536,7 +9536,7 @@ loc_00008B2E:
 	RTS
 
 loc_00008B4C:
-	MOVEA.l	$FFFFC566.w, A6
+	MOVEA.l	Talker_gfx_descriptor_ptr.w, A6
 	BSR.w	InitTalkerPortraitSprite
 	MOVE.l	#loc_00008E44, $2(A5)
 	BSR.w	loc_00008EBC
@@ -9544,7 +9544,7 @@ loc_00008B4C:
 	RTS
 
 loc_00008B6A:
-	MOVEA.l	$FFFFC566.w, A6
+	MOVEA.l	Talker_gfx_descriptor_ptr.w, A6
 	BSR.w	InitTalkerPortraitSprite
 	MOVE.l	#loc_00008E4C, $2(A5)
 	BSR.w	loc_00008EBC
@@ -9552,7 +9552,7 @@ loc_00008B6A:
 	RTS
 
 loc_00008B88:
-	MOVEA.l	$FFFFC566.w, A6
+	MOVEA.l	Talker_gfx_descriptor_ptr.w, A6
 	BSR.w	InitTalkerPortraitSprite
 	MOVE.l	#loc_00008E54, $2(A5)
 	BSR.w	loc_00008EBC
@@ -13105,8 +13105,8 @@ loc_0000BDE2:
 	TST.w	D0
 	BNE.b	loc_0000BDFC
 	MOVE.l	#loc_0000BE02, $2(A5)
-	CLR.w	$FFFFC554.w
-	CLR.w	$FFFFC552.w
+	CLR.w	Dialog_timer.w
+	CLR.w	Dialog_phase.w
 	MOVE.b	#$32, $1A(A5)
 loc_0000BDFC:
 	BSR.w	UpdateSpritePositionAndRender
@@ -13155,14 +13155,14 @@ loc_0000BE80:
 	RTS
 
 loc_0000BE86:
-	ADDQ.w	#1, $FFFFC554.w
-	MOVE.w	$FFFFC554.w, D0
+	ADDQ.w	#1, Dialog_timer.w
+	MOVE.w	Dialog_timer.w, D0
 	ANDI.w	#7, D0
 	BNE.b	loc_0000BEB0
-	CMPI.w	#8, $FFFFC552.w
+	CMPI.w	#8, Dialog_phase.w
 	BLT.b	loc_0000BEAC
 	MOVE.l	#loc_0000BEB6, $2(A5)
-	MOVE.w	#$0032, $FFFFC554.w
+	MOVE.w	#$0032, Dialog_timer.w
 	BRA.b	loc_0000BEB0
 loc_0000BEAC:
 	BSR.w	loc_0000CDD8
@@ -13171,7 +13171,7 @@ loc_0000BEB0:
 	RTS
 
 loc_0000BEB6:
-	SUBQ.w	#1, $FFFFC554.w
+	SUBQ.w	#1, Dialog_timer.w
 	BGE.b	loc_0000BEE2
 	JSR	ClearScrollData
 	MOVE.w	#$0090, D0
@@ -13697,8 +13697,8 @@ loc_0000C640:
 	MOVEA.l	Object_slot_03_ptr.w, A6
 	MOVE.l	#loc_0000C192, $2(A6)
 	BSR.w	loc_0000CF16
-	CLR.w	$FFFFC554.w
-	CLR.w	$FFFFC552.w
+	CLR.w	Dialog_timer.w
+	CLR.w	Dialog_phase.w
 	MOVE.w	#$00C0, D0
 	JSR	QueueSoundEffect
 	JSR	LoadPalettesFromTable
@@ -13715,11 +13715,11 @@ loc_0000C6B2:
 	RTS
 	
 loc_0000C6BA:
-	ADDQ.w	#1, $FFFFC554.w
-	MOVE.w	$FFFFC554.w, D0
+	ADDQ.w	#1, Dialog_timer.w
+	MOVE.w	Dialog_timer.w, D0
 	ANDI.w	#7, D0
 	BNE.b	loc_0000C6DE
-	CMPI.w	#8, $FFFFC552.w
+	CMPI.w	#8, Dialog_phase.w
 	BLT.b	loc_0000C6DA
 	MOVE.l	#loc_0000BEB6, $2(A5)
 	BRA.b	loc_0000C6DE
@@ -14260,7 +14260,7 @@ loc_0000CDB6:
 loc_0000CDD8:
 	MOVE.l	#$44200000, D5
 	MOVEQ	#0, D0
-	MOVE.w	$FFFFC552.w, D0
+	MOVE.w	Dialog_phase.w, D0
 	ADD.w	D0, D0
 	SWAP	D0
 	ADD.l	D0, D5
@@ -14274,7 +14274,7 @@ loc_0000CDF2:
 	ANDI	#$F8FF, SR
 	MOVE.l	#$40000001, D5
 	MOVEQ	#0, D0
-	MOVE.w	$FFFFC552.w, D0
+	MOVE.w	Dialog_phase.w, D0
 	ADD.w	D0, D0
 	SWAP	D0
 	ADD.l	D0, D5
@@ -14286,7 +14286,7 @@ loc_0000CE28:
 	ADDI.l	#$00100000, D5
 	DBF	D7, loc_0000CE28
 	ANDI	#$F8FF, SR
-	ADDQ.w	#1, $FFFFC552.w
+	ADDQ.w	#1, Dialog_phase.w
 	RTS
 
 loc_0000CE4A:
@@ -14916,22 +14916,22 @@ loc_0000D6F6:
 
 loc_0000D6FC:
 	MOVE.l	#loc_0000D718, $2(A5)
-	CLR.w	$FFFFC554.w
-	CLR.w	$FFFFC552.w
+	CLR.w	Dialog_timer.w
+	CLR.w	Dialog_phase.w
 	MOVE.w	#$00AC, D0
 	JSR	QueueSoundEffect
 	RTS
 
 loc_0000D718:
-	ADDQ.w	#1, $FFFFC554.w
-	MOVE.w	$FFFFC554.w, D0
+	ADDQ.w	#1, Dialog_timer.w
+	MOVE.w	Dialog_timer.w, D0
 	ANDI.w	#7, D0
 	BNE.b	loc_0000D74A
-	CMPI.w	#8, $FFFFC552.w
+	CMPI.w	#8, Dialog_phase.w
 	BLT.b	loc_0000D744
 	JSR	loc_0000CF16
 	MOVE.l	#loc_0000BEB6, $2(A5)
-	MOVE.w	#$0032, $FFFFC554.w
+	MOVE.w	#$0032, Dialog_timer.w
 	RTS
 
 loc_0000D744:
@@ -15282,8 +15282,8 @@ loc_0000DC1C:
 	BEQ.b	loc_0000DC54
 	MOVE.w	#$00B8, $FFFFC082.w
 	JSR	LoadPalettesFromTable
-	CLR.w	$FFFFC554.w
-	CLR.w	$FFFFC552.w
+	CLR.w	Dialog_timer.w
+	CLR.w	Dialog_phase.w
 	MOVE.w	#$0080, $3A(A5)
 	MOVE.w	#$00C0, D0
 	JSR	QueueSoundEffect
@@ -16308,8 +16308,8 @@ loc_0000EA98:
 	SUBQ.b	#1, $1B(A5)
 	BGT.b	loc_0000EAB8
 	MOVE.l	#loc_0000EAC0, $2(A5)
-	CLR.w	$FFFFC554.w
-	CLR.w	$FFFFC552.w
+	CLR.w	Dialog_timer.w
+	CLR.w	Dialog_phase.w
 	MOVE.w	#$00AC, D0
 	JSR	QueueSoundEffect
 loc_0000EAB8:
@@ -16317,11 +16317,11 @@ loc_0000EAB8:
 	RTS
 	
 loc_0000EAC0:
-	ADDQ.w	#1, $FFFFC554.w
-	MOVE.w	$FFFFC554.w, D0
+	ADDQ.w	#1, Dialog_timer.w
+	MOVE.w	Dialog_timer.w, D0
 	ANDI.w	#7, D0
 	BNE.b	loc_0000EAF0
-	CMPI.w	#8, $FFFFC552.w
+	CMPI.w	#8, Dialog_phase.w
 	BLT.b	loc_0000EAEA
 	MOVE.l	#loc_0000EAF8, $2(A5)
 	MOVE.b	#$32, $1A(A5)
@@ -16341,7 +16341,7 @@ loc_0000EAF8:
 	TST.b	Swaffham_miniboss_defeated.w
 	BNE.b	loc_0000EB18
 	MOVE.l	#loc_0000BEB6, $2(A5)
-	MOVE.w	#$0032, $FFFFC554.w
+	MOVE.w	#$0032, Dialog_timer.w
 	RTS
 	
 loc_0000EB18:
@@ -16805,8 +16805,8 @@ loc_0000F136:
 	MOVE.w	#$0080, $FFFFC082.w
 	JSR	LoadPalettesFromTable
 	MOVE.l	#loc_0000F19A, $2(A5)
-	CLR.w	$FFFFC554.w
-	CLR.w	$FFFFC552.w
+	CLR.w	Dialog_timer.w
+	CLR.w	Dialog_phase.w
 	MOVE.w	#$00C0, D0
 	JSR	QueueSoundEffect
 	MOVE.w	#$00AC, D0
@@ -16820,14 +16820,14 @@ loc_0000F184:
 	RTS
 	
 loc_0000F19A:
-	ADDQ.w	#1, $FFFFC554.w
-	MOVE.w	$FFFFC554.w, D0
+	ADDQ.w	#1, Dialog_timer.w
+	MOVE.w	Dialog_timer.w, D0
 	ANDI.w	#7, D0
 	BNE.b	loc_0000F1CC
-	CMPI.w	#8, $FFFFC552.w
+	CMPI.w	#8, Dialog_phase.w
 	BLT.b	loc_0000F1C6
 	MOVE.l	#loc_0000BEB6, $2(A5)
-	MOVE.w	#$0032, $FFFFC554.w
+	MOVE.w	#$0032, Dialog_timer.w
 	JSR	loc_0000CF16
 	BRA.b	loc_0000F1CC
 loc_0000F1C6:
@@ -16836,14 +16836,14 @@ loc_0000F1CC:
 	RTS
 	
 loc_0000F1CE:
-	ADDQ.w	#1, $FFFFC554.w
-	MOVE.w	$FFFFC554.w, D0
+	ADDQ.w	#1, Dialog_timer.w
+	MOVE.w	Dialog_timer.w, D0
 	ANDI.w	#7, D0
 	BNE.b	loc_0000F1FA
-	CMPI.w	#8, $FFFFC552.w
+	CMPI.w	#8, Dialog_phase.w
 	BLT.b	loc_0000F1F4
 	MOVE.l	#loc_0000F1FC, $2(A5)
-	MOVE.w	#$0050, $FFFFC554.w
+	MOVE.w	#$0050, Dialog_timer.w
 	BRA.b	loc_0000F1FA
 loc_0000F1F4:
 	JSR	loc_0000CDD8
@@ -16851,7 +16851,7 @@ loc_0000F1FA:
 	RTS
 	
 loc_0000F1FC:
-	SUBQ.w	#1, $FFFFC554.w
+	SUBQ.w	#1, Dialog_timer.w
 	BGT.b	loc_0000F20E
 	JSR	loc_0000CF16
 	MOVE.b	#$FF, Boss_battle_exit_flag.w
@@ -17456,13 +17456,13 @@ loc_0000F938:
 	
 loc_0000F93A:
 	LEA	Tile_gfx_buffer.w, A2
-	MOVEA.l	$FFFFC566.w, A6
+	MOVEA.l	Talker_gfx_descriptor_ptr.w, A6
 	MOVEA.l	$0(A6), A4
 	MOVEA.l	$4(A6), A3
 	MOVE.w	$8(A6), D5
 	BSR.w	LoadMultipleTilesFromTable
 	LEA	Enemy_gfx_buffer.w, A2
-	MOVEA.l	$FFFFC566.w, A6
+	MOVEA.l	Talker_gfx_descriptor_ptr.w, A6
 	TST.l	$A(A6)
 	BEQ.b	loc_0000F970
 	MOVEA.l	$A(A6), A4
@@ -17588,7 +17588,7 @@ ExecuteVdpDmaTransfer:
 	MOVE.w	#2, D4
 	ORI.w	#$8F00, D4
 	MOVE.w	D4, VDP_control_port
-	MOVE.w	$FFFFC3F2.w, D4
+	MOVE.w	VDP_Reg1_cache.w, D4
 	BSET.l	#4, D4
 	MOVE.w	D4, VDP_control_port
 	LEA	loc_0002293A, A0
@@ -17600,7 +17600,7 @@ ExecuteVdpDmaTransfer:
 	MOVE.w	(A0)+, VDP_control_port
 	MOVE.l	(A0)+, $FFFFC18C.w
 	JSR	$FFFFC190.w
-	MOVE.w	$FFFFC3F2.w, D4
+	MOVE.w	VDP_Reg1_cache.w, D4
 	BCLR.l	#4, D4
 	MOVE.w	D4, VDP_control_port
 	MOVE.w	#0, Z80_bus_request
@@ -17837,7 +17837,7 @@ loc_0000FD1C:
 	MOVE.w	#2, D4
 	ORI.w	#$8F00, D4
 	MOVE.w	D4, VDP_control_port
-	MOVE.w	$FFFFC3F2.w, D4
+	MOVE.w	VDP_Reg1_cache.w, D4
 	BSET.l	#4, D4
 	MOVE.w	D4, VDP_control_port
 	MOVE.l	#$94109300, VDP_control_port
@@ -17845,7 +17845,7 @@ loc_0000FD1C:
 	MOVE.w	#$977F, VDP_control_port
 	MOVE.l	#$58000082, $FFFFC18C.w
 	JSR	$FFFFC190.w
-	MOVE.w	$FFFFC3F2.w, D4
+	MOVE.w	VDP_Reg1_cache.w, D4
 	BCLR.l	#4, D4
 	MOVE.w	D4, VDP_control_port
 	MOVE.w	#0, Z80_bus_request
@@ -17928,7 +17928,7 @@ loc_0000FE76:
 	MOVE.w	#2, D4
 	ORI.w	#$8F00, D4
 	MOVE.w	D4, VDP_control_port
-	MOVE.w	$FFFFC3F2.w, D4
+	MOVE.w	VDP_Reg1_cache.w, D4
 	BSET.l	#4, D4
 	MOVE.w	D4, VDP_control_port
 	MOVE.l	(A0)+, VDP_control_port
@@ -17936,7 +17936,7 @@ loc_0000FE76:
 	MOVE.w	(A0)+, VDP_control_port
 	MOVE.l	(A0)+, $FFFFC18C.w
 	JSR	$FFFFC190.w
-	MOVE.w	$FFFFC3F2.w, D4
+	MOVE.w	VDP_Reg1_cache.w, D4
 	BCLR.l	#4, D4
 	MOVE.w	D4, VDP_control_port
 	MOVE.w	#0, Z80_bus_request
@@ -18305,7 +18305,7 @@ loc_0001036E:
 	MOVE.w	#2, D4
 	ORI.w	#$8F00, D4
 	MOVE.w	D4, VDP_control_port
-	MOVE.w	$FFFFC3F2.w, D4
+	MOVE.w	VDP_Reg1_cache.w, D4
 	BSET.l	#4, D4
 	MOVE.w	D4, VDP_control_port
 	MOVE.l	(A0)+, VDP_control_port
@@ -18313,7 +18313,7 @@ loc_0001036E:
 	MOVE.w	(A0)+, VDP_control_port
 	MOVE.l	(A0)+, $FFFFC18C.w
 	JSR	$FFFFC190.w
-	MOVE.w	$FFFFC3F2.w, D4
+	MOVE.w	VDP_Reg1_cache.w, D4
 	BCLR.l	#4, D4
 	MOVE.w	D4, VDP_control_port
 	MOVE.w	#0, Z80_bus_request
@@ -18343,7 +18343,7 @@ VDP_DMAFill:
 	ORI	#$0700, SR
 	ORI.w	#$8F00, D4
 	MOVE.w	D4, VDP_control_port
-	MOVE.w	$FFFFC3F2.w, D4
+	MOVE.w	VDP_Reg1_cache.w, D4
 	BSET.l	#4, D4
 	MOVE.w	D4, VDP_control_port
 	MOVE.l	#$00940000, D4
@@ -18362,7 +18362,7 @@ loc_00010458:
 	MOVE.w	VDP_control_port, D4
 	BTST.l	#1, D4
 	BNE.b	loc_00010458
-	MOVE.w	$FFFFC3F2.w, D4
+	MOVE.w	VDP_Reg1_cache.w, D4
 	BCLR.l	#4, D4
 	MOVE.w	D4, VDP_control_port
 	MOVE.w	#$8F02, VDP_control_port
@@ -19020,10 +19020,10 @@ loc_00010BE4:
 	
 loc_00010BEA:
 	CLR.w	Dialog_selection.w
-	MOVE.w	#1, $FFFFC23A.w
-	MOVE.w	#$FFFF, $FFFFC23C.w
-	MOVE.w	#$000F, $FFFFC236.w
-	MOVE.w	#$0015, $FFFFC238.w
+	MOVE.w	#1, Menu_cursor_column_break.w
+	MOVE.w	#$FFFF, Menu_cursor_last_index.w
+	MOVE.w	#$000F, Menu_cursor_base_x.w
+	MOVE.w	#$0015, Menu_cursor_base_y.w
 	MOVE.w	#$000E, $FFFF9902.w
 	MOVE.w	#$0013, Window_tilemap_y.w
 	MOVE.w	#$000B, Window_width.w
@@ -19103,10 +19103,10 @@ loc_00010CE2:
 	
 loc_00010D44:
 	CLR.w	Dialog_selection.w
-	MOVE.w	#1, $FFFFC23A.w
-	MOVE.w	#$FFFF, $FFFFC23C.w
-	MOVE.w	#$001E, $FFFFC236.w
-	MOVE.w	#$000F, $FFFFC238.w
+	MOVE.w	#1, Menu_cursor_column_break.w
+	MOVE.w	#$FFFF, Menu_cursor_last_index.w
+	MOVE.w	#$001E, Menu_cursor_base_x.w
+	MOVE.w	#$000F, Menu_cursor_base_y.w
 	MOVE.w	#$001C, $FFFF9902.w
 	MOVE.w	#$000D, Window_tilemap_y.w
 	MOVE.w	#6, Window_width.w
@@ -19123,10 +19123,10 @@ loc_00010D44:
 	
 loc_00010DA4:
 	CLR.w	Dialog_selection.w
-	MOVE.w	#2, $FFFFC23A.w
-	MOVE.w	#$FFFF, $FFFFC23C.w
-	MOVE.w	#$0010, $FFFFC236.w
-	MOVE.w	#$000E, $FFFFC238.w
+	MOVE.w	#2, Menu_cursor_column_break.w
+	MOVE.w	#$FFFF, Menu_cursor_last_index.w
+	MOVE.w	#$0010, Menu_cursor_base_x.w
+	MOVE.w	#$000E, Menu_cursor_base_y.w
 	MOVE.w	#$000F, $FFFF9902.w
 	MOVE.w	#$000C, Window_tilemap_y.w
 	MOVE.w	#$0015, Window_width.w
@@ -19157,10 +19157,10 @@ loc_00010DA4:
 	RTS
 	
 loc_00010E46:
-	MOVE.w	#2, $FFFFC23A.w
-	MOVE.w	#$FFFF, $FFFFC23C.w
-	MOVE.w	#3, $FFFFC236.w
-	MOVE.w	#$000E, $FFFFC238.w
+	MOVE.w	#2, Menu_cursor_column_break.w
+	MOVE.w	#$FFFF, Menu_cursor_last_index.w
+	MOVE.w	#3, Menu_cursor_base_x.w
+	MOVE.w	#$000E, Menu_cursor_base_y.w
 	MOVE.w	#2, $FFFF9902.w
 	MOVE.w	#$000C, Window_tilemap_y.w
 	MOVE.w	#$000D, Window_width.w
@@ -19176,10 +19176,10 @@ loc_00010E46:
 	RTS
 	
 loc_00010EA2:
-	MOVE.w	#1, $FFFFC23A.w
-	MOVE.w	#$FFFF, $FFFFC23C.w
-	MOVE.w	#3, $FFFFC236.w
-	MOVE.w	#$000E, $FFFFC238.w
+	MOVE.w	#1, Menu_cursor_column_break.w
+	MOVE.w	#$FFFF, Menu_cursor_last_index.w
+	MOVE.w	#3, Menu_cursor_base_x.w
+	MOVE.w	#$000E, Menu_cursor_base_y.w
 	MOVE.w	#2, $FFFF9902.w
 	MOVE.w	#$000C, Window_tilemap_y.w
 	MOVE.w	#$000D, Window_width.w
@@ -19195,10 +19195,10 @@ loc_00010EA2:
 	RTS
 	
 loc_00010EFE:
-	MOVE.w	#2, $FFFFC23A.w
-	MOVE.w	#$FFFF, $FFFFC23C.w
-	MOVE.w	#3, $FFFFC236.w
-	MOVE.w	#$000E, $FFFFC238.w
+	MOVE.w	#2, Menu_cursor_column_break.w
+	MOVE.w	#$FFFF, Menu_cursor_last_index.w
+	MOVE.w	#3, Menu_cursor_base_x.w
+	MOVE.w	#$000E, Menu_cursor_base_y.w
 	MOVE.w	#2, $FFFF9902.w
 	MOVE.w	#$000C, Window_tilemap_y.w
 	MOVE.w	#$000B, Window_width.w
@@ -19214,10 +19214,10 @@ loc_00010EFE:
 	RTS
 	
 loc_00010F5A:
-	MOVE.w	#2, $FFFFC23A.w
-	MOVE.w	#$FFFF, $FFFFC23C.w
-	MOVE.w	#$000D, $FFFFC236.w
-	MOVE.w	#6, $FFFFC238.w
+	MOVE.w	#2, Menu_cursor_column_break.w
+	MOVE.w	#$FFFF, Menu_cursor_last_index.w
+	MOVE.w	#$000D, Menu_cursor_base_x.w
+	MOVE.w	#6, Menu_cursor_base_y.w
 	MOVE.w	#$000C, $FFFF9902.w
 	MOVE.w	#4, Window_tilemap_y.w
 	MOVE.w	#9, Window_width.w
@@ -19233,10 +19233,10 @@ loc_00010F5A:
 	RTS
 	
 loc_00010FB6:
-	MOVE.w	#3, $FFFFC23A.w
-	MOVE.w	#$FFFF, $FFFFC23C.w
-	MOVE.w	#3, $FFFFC236.w
-	MOVE.w	#$000C, $FFFFC238.w
+	MOVE.w	#3, Menu_cursor_column_break.w
+	MOVE.w	#$FFFF, Menu_cursor_last_index.w
+	MOVE.w	#3, Menu_cursor_base_x.w
+	MOVE.w	#$000C, Menu_cursor_base_y.w
 	MOVE.w	#2, $FFFF9902.w
 	MOVE.w	#$000A, Window_tilemap_y.w
 	MOVE.w	#$0015, Window_width.w
@@ -19252,10 +19252,10 @@ loc_00010FB6:
 	RTS
 	
 loc_00011012:
-	MOVE.w	#2, $FFFFC23A.w
-	MOVE.w	#$FFFF, $FFFFC23C.w
-	MOVE.w	#3, $FFFFC236.w
-	MOVE.w	#$000E, $FFFFC238.w
+	MOVE.w	#2, Menu_cursor_column_break.w
+	MOVE.w	#$FFFF, Menu_cursor_last_index.w
+	MOVE.w	#3, Menu_cursor_base_x.w
+	MOVE.w	#$000E, Menu_cursor_base_y.w
 	MOVE.w	#2, $FFFF9902.w
 	MOVE.w	#$000C, Window_tilemap_y.w
 	MOVE.w	#7, Window_width.w
@@ -19320,8 +19320,8 @@ loc_00011106:
 	LEA	loc_00021DA2, A0
 	MOVE.w	#$000F, $FFFFC220.w
 	MOVE.w	#2, $FFFFC222.w
-	MOVE.w	#$0015, $FFFFC228.w
-	MOVE.w	#0, $FFFFC22A.w
+	MOVE.w	#$0015, Window_tilemap_draw_width.w
+	MOVE.w	#0, Window_tilemap_draw_height.w
 	MOVE.w	#0, Script_tile_attrs.w
 	BSR.w	loc_000113AE
 	ADD.w	D7, D7
@@ -19333,8 +19333,8 @@ loc_00011134:
 	MOVE.w	#2, D0
 	ADD.w	D6, D0
 	MOVE.w	D0, $FFFFC222.w
-	MOVE.w	#$0015, $FFFFC228.w
-	MOVE.w	#0, $FFFFC22A.w
+	MOVE.w	#$0015, Window_tilemap_draw_width.w
+	MOVE.w	#0, Window_tilemap_draw_height.w
 	MOVE.w	#0, Script_tile_attrs.w
 	BSR.w	loc_000113AE
 	ADDQ.w	#1, D6
@@ -19349,8 +19349,8 @@ loc_00011168:
 	MOVE.w	#2, D1
 	ADD.w	D0, D1
 	MOVE.w	D1, $FFFFC222.w
-	MOVE.w	#$0015, $FFFFC228.w
-	MOVE.w	#0, $FFFFC22A.w
+	MOVE.w	#$0015, Window_tilemap_draw_width.w
+	MOVE.w	#0, Window_tilemap_draw_height.w
 	MOVE.w	#0, Script_tile_attrs.w
 	BSR.w	loc_000113AE
 	RTS
@@ -19358,10 +19358,10 @@ loc_00011168:
 loc_0001119A:
 	MOVE.w	$FFFFC4A2.w, D0
 	SUBQ.w	#1, D0
-	MOVE.w	D0, $FFFFC23A.w
-	MOVE.w	#$FFFF, $FFFFC23C.w
-	MOVE.w	#$000B, $FFFFC236.w
-	MOVE.w	#4, $FFFFC238.w
+	MOVE.w	D0, Menu_cursor_column_break.w
+	MOVE.w	#$FFFF, Menu_cursor_last_index.w
+	MOVE.w	#$000B, Menu_cursor_base_x.w
+	MOVE.w	#4, Menu_cursor_base_y.w
 	MOVE.w	#$000A, $FFFF9902.w
 	MOVE.w	#2, Window_tilemap_y.w
 	MOVE.w	#$0018, Window_width.w
@@ -19417,10 +19417,10 @@ loc_0001124C:
 loc_00011274:
 	MOVE.w	$FFFFC4A2.w, D0
 	SUBQ.w	#1, D0
-	MOVE.w	D0, $FFFFC23A.w
-	MOVE.w	#$FFFF, $FFFFC23C.w
-	MOVE.w	#$000B, $FFFFC236.w
-	MOVE.w	#4, $FFFFC238.w
+	MOVE.w	D0, Menu_cursor_column_break.w
+	MOVE.w	#$FFFF, Menu_cursor_last_index.w
+	MOVE.w	#$000B, Menu_cursor_base_x.w
+	MOVE.w	#4, Menu_cursor_base_y.w
 	MOVE.w	#$000A, $FFFF9902.w
 	MOVE.w	#2, Window_tilemap_y.w
 	MOVE.w	#$0018, Window_width.w
@@ -19453,14 +19453,14 @@ loc_000112DE:
 	RTS
 	
 loc_00011304:
-	MOVE.w	#$000B, $FFFFC236.w
-	MOVE.w	#4, $FFFFC238.w
+	MOVE.w	#$000B, Menu_cursor_base_x.w
+	MOVE.w	#4, Menu_cursor_base_y.w
 	MOVE.w	#$000A, $FFFF9902.w
 	MOVE.w	#2, Window_tilemap_y.w
 	MOVE.w	#0, Window_tile_attrs.w
 	MOVE.w	#$000D, D0
-	MOVE.w	#6, $FFFFC23A.w
-	MOVE.w	#$000D, $FFFFC23C.w
+	MOVE.w	#6, Menu_cursor_column_break.w
+	MOVE.w	#$000D, Menu_cursor_last_index.w
 	MOVE.w	#$0016, Window_width.w
 	MOVE.w	#$0010, Window_height.w
 	BSR.w	DrawWindowBorder
@@ -19526,10 +19526,10 @@ loc_000113B8:
 	MOVE.w	D4, VDP_data_port
 	ANDI	#$F8FF, SR
 	ADDQ.w	#1, D2
-	CMP.w	$FFFFC228.w, D2
+	CMP.w	Window_tilemap_draw_width.w, D2
 	BLE.b	loc_000113B8
 	ADDQ.w	#1, D3
-	CMP.w	$FFFFC22A.w, D3
+	CMP.w	Window_tilemap_draw_height.w, D3
 	BLE.b	loc_000113B6
 	RTS
 	
@@ -19728,33 +19728,33 @@ DisplayPlayerKims:
 ; loc_000115FA
 InitMenuCursorForList:
 	SUBQ.w	#1, D0
-	MOVE.w	D0, $FFFFC23A.w
-	MOVE.w	#$FFFF, $FFFFC23C.w
-	MOVE.w	#$0010, $FFFFC236.w
-	MOVE.w	#4, $FFFFC238.w
+	MOVE.w	D0, Menu_cursor_column_break.w
+	MOVE.w	#$FFFF, Menu_cursor_last_index.w
+	MOVE.w	#$0010, Menu_cursor_base_x.w
+	MOVE.w	#4, Menu_cursor_base_y.w
 	RTS
 	
 loc_00011614:
-	MOVE.w	#1, $FFFFC23A.w
-	MOVE.w	#$FFFF, $FFFFC23C.w
-	MOVE.w	#3, $FFFFC236.w
-	MOVE.w	#$000E, $FFFFC238.w
+	MOVE.w	#1, Menu_cursor_column_break.w
+	MOVE.w	#$FFFF, Menu_cursor_last_index.w
+	MOVE.w	#3, Menu_cursor_base_x.w
+	MOVE.w	#$000E, Menu_cursor_base_y.w
 	RTS
 	
 loc_0001162E:
-	MOVE.w	#2, $FFFFC23A.w
-	MOVE.w	#$FFFF, $FFFFC23C.w
-	MOVE.w	#3, $FFFFC236.w
-	MOVE.w	#$000E, $FFFFC238.w
+	MOVE.w	#2, Menu_cursor_column_break.w
+	MOVE.w	#$FFFF, Menu_cursor_last_index.w
+	MOVE.w	#3, Menu_cursor_base_x.w
+	MOVE.w	#$000E, Menu_cursor_base_y.w
 	RTS
 	
 loc_00011648:
 	MOVE.w	$FFFFC4A2.w, D0	
 	SUBQ.w	#1, D0	
-	MOVE.w	D0, $FFFFC23A.w	
-	MOVE.w	#$FFFF, $FFFFC23C.w	
-	MOVE.w	#$000B, $FFFFC236.w	
-	MOVE.w	#4, $FFFFC238.w	
+	MOVE.w	D0, Menu_cursor_column_break.w	
+	MOVE.w	#$FFFF, Menu_cursor_last_index.w	
+	MOVE.w	#$000B, Menu_cursor_base_x.w	
+	MOVE.w	#4, Menu_cursor_base_y.w	
 	RTS
 	
 loc_00011666:
@@ -19779,10 +19779,10 @@ loc_0001168C:
 	MOVE.w	#2, Window_text_x.w
 	MOVE.w	#4, Window_text_y.w
 	BSR.w	RenderTextToWindow
-	MOVE.w	#2, $FFFFC23A.w
-	MOVE.w	#$FFFF, $FFFFC23C.w
-	MOVE.w	#5, $FFFFC236.w
-	MOVE.w	#$000B, $FFFFC238.w
+	MOVE.w	#2, Menu_cursor_column_break.w
+	MOVE.w	#$FFFF, Menu_cursor_last_index.w
+	MOVE.w	#5, Menu_cursor_base_x.w
+	MOVE.w	#$000B, Menu_cursor_base_y.w
 	LEA	$00200001, A0
 	BSR.w	loc_00011760
 	LEA	Savegame_name_buffer.w, A0
@@ -20394,131 +20394,131 @@ loc_00011F94:
 loc_00011FB4:
 	MOVE.w	#2, $FFFFC220.w
 	MOVE.w	#2, $FFFFC222.w
-	MOVE.w	#$001B, $FFFFC228.w
-	MOVE.w	#$0014, $FFFFC22A.w
+	MOVE.w	#$001B, Window_tilemap_draw_width.w
+	MOVE.w	#$0014, Window_tilemap_draw_height.w
 	LEA	$FFFF7AB4, A0
 	BRA.w	DrawWindowRowFromBuffer
 loc_00011FD6:
 	MOVE.w	#2, $FFFFC220.w
 	MOVE.w	#2, $FFFFC222.w
-	MOVE.w	#$001A, $FFFFC228.w
-	MOVE.w	#$000C, $FFFFC22A.w
+	MOVE.w	#$001A, Window_tilemap_draw_width.w
+	MOVE.w	#$000C, Window_tilemap_draw_height.w
 	LEA	Full_menu_tiles_buffer, A0
 	BRA.w	DrawWindowRowFromBuffer
 loc_00011FF8:
 	MOVE.w	#$000F, $FFFFC220.w
 	MOVE.w	#2, $FFFFC222.w
-	MOVE.w	#$0016, $FFFFC228.w
+	MOVE.w	#$0016, Window_tilemap_draw_width.w
 	MOVE.w	Possessed_equipment_length.w, D0
 	BGT.b	loc_00012014
 	MOVE.w	#1, D0	
 loc_00012014:
 	ADD.w	D0, D0
 	ADDQ.w	#3, D0
-	MOVE.w	D0, $FFFFC22A.w
+	MOVE.w	D0, Window_tilemap_draw_height.w
 	LEA	Equipment_list_tiles_buffer.w, A0
 	BRA.w	DrawWindowRowFromBuffer
 loc_00012024:
 	MOVE.w	#2, $FFFFC220.w
 	MOVE.w	#2, $FFFFC222.w
-	MOVE.w	#$0011, $FFFFC228.w
+	MOVE.w	#$0011, Window_tilemap_draw_width.w
 	MOVE.w	Possessed_magics_length.w, D0
 	BGT.b	loc_00012040
 	MOVE.w	#1, D0
 loc_00012040:
 	ADD.w	D0, D0
 	ADDQ.w	#3, D0
-	MOVE.w	D0, $FFFFC22A.w
+	MOVE.w	D0, Window_tilemap_draw_height.w
 	LEA	Magic_list_tiles_buffer.w, A0
 	BRA.w	DrawWindowRowFromBuffer
 loc_00012050:
 	MOVE.w	#$000F, $FFFFC220.w
 	MOVE.w	#2, $FFFFC222.w
-	MOVE.w	#$0016, $FFFFC228.w
+	MOVE.w	#$0016, Window_tilemap_draw_width.w
 	MOVE.w	Possessed_items_length.w, D0
 	BGT.b	loc_0001206C
 	MOVE.w	#1, D0	
 loc_0001206C:
 	ADD.w	D0, D0
 	ADDQ.w	#3, D0
-	MOVE.w	D0, $FFFFC22A.w
+	MOVE.w	D0, Window_tilemap_draw_height.w
 	LEA	Item_list_right_tiles_buffer.w, A0
 	BRA.w	DrawWindowRowFromBuffer
 loc_0001207C:
 	MOVE.w	#9, $FFFFC220.w
 	MOVE.w	#2, $FFFFC222.w
-	MOVE.w	#$0011, $FFFFC228.w
+	MOVE.w	#$0011, Window_tilemap_draw_width.w
 	MOVE.w	Possessed_rings_count.w, D0
 	BGT.b	loc_00012098
 	MOVE.w	#1, D0	
 loc_00012098:
 	ADD.w	D0, D0
 	ADDQ.w	#3, D0
-	MOVE.w	D0, $FFFFC22A.w
+	MOVE.w	D0, Window_tilemap_draw_height.w
 	LEA	Rings_list_tiles_buffer.w, A0
 	BRA.w	DrawWindowRowFromBuffer
 loc_000120A8:
 	MOVE.w	#$000A, $FFFFC220.w	
 	MOVE.w	#$000A, $FFFFC222.w	
-	MOVE.w	#$000E, $FFFFC228.w	
-	MOVE.w	#$000A, $FFFFC22A.w	
+	MOVE.w	#$000E, Window_tilemap_draw_width.w	
+	MOVE.w	#$000A, Window_tilemap_draw_height.w	
 	LEA	Message_speed_menu_tiles_buffer, A0	
 	BRA.w	DrawWindowRowFromBuffer	
 loc_000120CA:
 	MOVE.w	#2, $FFFFC220.w
 	MOVE.w	#2, $FFFFC222.w
-	MOVE.w	#$000D, $FFFFC228.w
-	MOVE.w	#$000A, $FFFFC22A.w
+	MOVE.w	#$000D, Window_tilemap_draw_width.w
+	MOVE.w	#$000A, Window_tilemap_draw_height.w
 	LEA	Message_speed_menu_tiles_buffer, A0
 	BRA.w	DrawWindowRowFromBuffer
 loc_000120EC:
 	MOVE.w	#2, $FFFFC220.w
 	MOVE.w	#$000C, $FFFFC222.w
-	MOVE.w	#$000D, $FFFFC228.w
-	MOVE.w	#6, $FFFFC22A.w
+	MOVE.w	#$000D, Window_tilemap_draw_width.w
+	MOVE.w	#6, Window_tilemap_draw_height.w
 	LEA	Item_list_tiles_buffer, A0
 	BRA.w	DrawWindowRowFromBuffer
 loc_0001210E:
 	MOVE.w	#2, $FFFFC220.w
 	MOVE.w	#$000C, $FFFFC222.w
-	MOVE.w	#$000D, $FFFFC228.w
-	MOVE.w	#8, $FFFFC22A.w
+	MOVE.w	#$000D, Window_tilemap_draw_width.w
+	MOVE.w	#8, Window_tilemap_draw_height.w
 	LEA	Item_list_tiles_buffer, A0
 	BRA.w	DrawWindowRowFromBuffer
 loc_00012130:
 	MOVE.w	#2, $FFFFC220.w
 	MOVE.w	#$000C, $FFFFC222.w
-	MOVE.w	#7, $FFFFC228.w
-	MOVE.w	#8, $FFFFC22A.w
+	MOVE.w	#7, Window_tilemap_draw_width.w
+	MOVE.w	#8, Window_tilemap_draw_height.w
 	LEA	Status_menu_tiles_buffer.w, A0
 	BRA.w	DrawWindowRowFromBuffer
 loc_00012150:
 	MOVE.w	#2, $FFFFC220.w
 	MOVE.w	#$000C, $FFFFC222.w
-	MOVE.w	#$000B, $FFFFC228.w
-	MOVE.w	#8, $FFFFC22A.w
+	MOVE.w	#$000B, Window_tilemap_draw_width.w
+	MOVE.w	#8, Window_tilemap_draw_height.w
 	LEA	$FFFF7CF4, A0
 	BRA.w	DrawWindowRowFromBuffer
 loc_00012172:
 	MOVE.w	#$000C, $FFFFC220.w	
 	MOVE.w	#4, $FFFFC222.w	
-	MOVE.w	#9, $FFFFC228.w	
-	MOVE.w	#8, $FFFFC22A.w	
+	MOVE.w	#9, Window_tilemap_draw_width.w	
+	MOVE.w	#8, Window_tilemap_draw_height.w	
 	LEA	Right_menu_tiles_buffer, A0	
 	BRA.w	DrawWindowRowFromBuffer	
 loc_00012194:
 	MOVE.w	#2, $FFFFC220.w
 	MOVE.w	#$000A, $FFFFC222.w
-	MOVE.w	#$0015, $FFFFC228.w
-	MOVE.w	#$000A, $FFFFC22A.w
+	MOVE.w	#$0015, Window_tilemap_draw_width.w
+	MOVE.w	#$000A, Window_tilemap_draw_height.w
 	LEA	Status_menu_tiles_buffer.w, A0
 ; loc_000121B0
 DrawWindowRowFromBuffer:
-	MOVE.w	$FFFFC22A.w, D0
+	MOVE.w	Window_tilemap_draw_height.w, D0
 	SUB.w	Window_text_row.w, D0
 	BLE.w	loc_0001222A
 	ADD.w	D0, $FFFFC222.w
-	MOVE.w	$FFFFC228.w, D1
+	MOVE.w	Window_tilemap_draw_width.w, D1
 	ADDQ.w	#1, D1
 	MULU.w	D1, D0
 	ADD.w	D0, D0
@@ -20544,14 +20544,14 @@ loc_000121E2:
 	TST.w	D2
 	BEQ.b	loc_00012214
 	ADDQ.w	#1, D4
-	CMP.w	$FFFFC228.w, D2
+	CMP.w	Window_tilemap_draw_width.w, D2
 	BNE.b	loc_00012214
 	ADDQ.w	#1, D4
 loc_00012214:
 	MOVE.l	D5, VDP_control_port
 	MOVE.w	D4, VDP_data_port
 	ADDQ.w	#1, D2
-	CMP.w	$FFFFC228.w, D2
+	CMP.w	Window_tilemap_draw_width.w, D2
 	BLE.b	loc_000121E2
 	BRA.b	loc_0001222E
 loc_0001222A:
@@ -20576,7 +20576,7 @@ loc_00012240:
 	MOVE.l	D5, VDP_control_port
 	MOVE.w	(A0)+, VDP_data_port
 	ADDQ.w	#1, D2
-	CMP.w	$FFFFC228.w, D2
+	CMP.w	Window_tilemap_draw_width.w, D2
 	BLE.b	loc_00012240
 	ADDQ.w	#1, Window_text_row.w
 	RTS
@@ -21034,7 +21034,7 @@ loc_0001286A:
 MenuCursorUp:
 	MOVE.w	Menu_cursor_index.w, D0
 	BLE.b	loc_00012886
-	SUB.w	$FFFFC23A.w, D0
+	SUB.w	Menu_cursor_column_break.w, D0
 	SUBQ.w	#1, D0
 	BEQ.b	loc_00012886
 	BSR.w	EraseMenuCursor
@@ -21047,9 +21047,9 @@ loc_00012886:
 ; Handle DOWN button - move cursor down in menu
 MenuCursorDown:
 	MOVE.w	Menu_cursor_index.w, D0
-	CMP.w	$FFFFC23A.w, D0
+	CMP.w	Menu_cursor_column_break.w, D0
 	BEQ.b	loc_000128A4
-	CMP.w	$FFFFC23C.w, D0
+	CMP.w	Menu_cursor_last_index.w, D0
 	BEQ.b	loc_000128A4
 	BSR.w	EraseMenuCursor
 	ADDQ.w	#1, Menu_cursor_index.w
@@ -21061,10 +21061,10 @@ loc_000128A4:
 ; Handle LEFT button - move cursor to left column
 MenuCursorLeft:
 	MOVE.w	Menu_cursor_index.w, D0
-	CMP.w	$FFFFC23A.w, D0
+	CMP.w	Menu_cursor_column_break.w, D0
 	BLE.b	loc_000128C2
 	BSR.w	EraseMenuCursor
-	MOVE.w	$FFFFC23A.w, D0
+	MOVE.w	Menu_cursor_column_break.w, D0
 	ADDQ.w	#1, D0
 	SUB.w	D0, Menu_cursor_index.w
 	BSR.w	DrawMenuCursor
@@ -21075,14 +21075,14 @@ loc_000128C2:
 ; Handle RIGHT button - move cursor to right column
 MenuCursorRight:
 	MOVE.w	Menu_cursor_index.w, D0
-	CMP.w	$FFFFC23A.w, D0
+	CMP.w	Menu_cursor_column_break.w, D0
 	BGT.b	loc_000128EC
-	ADD.w	$FFFFC23A.w, D0
+	ADD.w	Menu_cursor_column_break.w, D0
 	ADDQ.w	#1, D0
-	CMP.w	$FFFFC23C.w, D0
+	CMP.w	Menu_cursor_last_index.w, D0
 	BGT.b	loc_000128EC
 	BSR.w	EraseMenuCursor
-	MOVE.w	$FFFFC23A.w, D0
+	MOVE.w	Menu_cursor_column_break.w, D0
 	ADDQ.w	#1, D0
 	ADD.w	D0, Menu_cursor_index.w
 	BSR.w	DrawMenuCursor
@@ -21111,15 +21111,15 @@ DrawMenuCursor:
 WriteMenuCursorTile:
 	CLR.w	D2
 	MOVE.w	Menu_cursor_index.w, D3
-	CMP.w	$FFFFC23A.w, D3
+	CMP.w	Menu_cursor_column_break.w, D3
 	BLE.b	loc_00012930
 	MOVE.w	Menu_cursor_second_column_x.w, D2
-	SUB.w	$FFFFC23A.w, D3
+	SUB.w	Menu_cursor_column_break.w, D3
 	SUBQ.w	#1, D3
 loc_00012930:
 	JSR	GetScrollOffsetInTiles
-	ADD.w	$FFFFC236.w, D0
-	ADD.w	$FFFFC238.w, D1
+	ADD.w	Menu_cursor_base_x.w, D0
+	ADD.w	Menu_cursor_base_y.w, D1
 	ASL.w	#1, D3
 	ADD.w	D2, D0
 	ADD.w	D3, D1
@@ -21200,10 +21200,10 @@ loc_00012B0A:
 	MOVE.w	Ready_equipment_list_length.w, D7
 	MOVE.w	D7, D0
 	SUBQ.w	#1, D0
-	MOVE.w	D0, $FFFFC23A.w
-	MOVE.w	#$FFFF, $FFFFC23C.w
-	MOVE.w	#$0010, $FFFFC236.w
-	MOVE.w	#4, $FFFFC238.w
+	MOVE.w	D0, Menu_cursor_column_break.w
+	MOVE.w	#$FFFF, Menu_cursor_last_index.w
+	MOVE.w	#$0010, Menu_cursor_base_x.w
+	MOVE.w	#4, Menu_cursor_base_y.w
 	MOVE.w	#$0011, $FFFFC220.w
 	MOVE.w	#4, $FFFFC222.w
 	LEA	Ready_equipment_list.w, A2
@@ -21722,7 +21722,7 @@ loc_000131C4:
 	MOVE.w	#2, D4
 	ORI.w	#$8F00, D4
 	MOVE.w	D4, VDP_control_port
-	MOVE.w	$FFFFC3F2.w, D4
+	MOVE.w	VDP_Reg1_cache.w, D4
 	BSET.l	#4, D4
 	MOVE.w	D4, VDP_control_port
 	MOVE.l	#$94009340, VDP_control_port
@@ -21730,7 +21730,7 @@ loc_000131C4:
 	MOVE.w	#$977F, VDP_control_port
 	MOVE.l	#$C0000080, $FFFFC18C.w
 	JSR	$FFFFC190.w
-	MOVE.w	$FFFFC3F2.w, D4
+	MOVE.w	VDP_Reg1_cache.w, D4
 	BCLR.l	#4, D4
 	MOVE.w	D4, VDP_control_port
 	startZ80
@@ -21806,7 +21806,7 @@ loc_0001330C:
 	MOVE.w	#2, D4
 	ORI.w	#$8F00, D4
 	MOVE.w	D4, VDP_control_port
-	MOVE.w	$FFFFC3F2.w, D4
+	MOVE.w	VDP_Reg1_cache.w, D4
 	BSET.l	#4, D4
 	MOVE.w	D4, VDP_control_port
 	MOVE.l	#$94009340, VDP_control_port
@@ -21814,7 +21814,7 @@ loc_0001330C:
 	MOVE.w	#$977F, VDP_control_port
 	MOVE.l	#$C0000080, $FFFFC18C.w
 	JSR	$FFFFC190.w
-	MOVE.w	$FFFFC3F2.w, D4
+	MOVE.w	VDP_Reg1_cache.w, D4
 	BCLR.l	#4, D4
 	MOVE.w	D4, VDP_control_port
 	startZ80
@@ -21855,7 +21855,7 @@ loc_000133B2:
 	MOVE.w	#2, D4
 	ORI.w	#$8F00, D4
 	MOVE.w	D4, VDP_control_port
-	MOVE.w	$FFFFC3F2.w, D4
+	MOVE.w	VDP_Reg1_cache.w, D4
 	BSET.l	#4, D4
 	MOVE.w	D4, VDP_control_port
 	MOVE.l	#$94009340, VDP_control_port
@@ -21863,7 +21863,7 @@ loc_000133B2:
 	MOVE.w	#$977F, VDP_control_port
 	MOVE.l	#$C0000080, $FFFFC18C.w
 	JSR	$FFFFC190.w
-	MOVE.w	$FFFFC3F2.w, D4
+	MOVE.w	VDP_Reg1_cache.w, D4
 	BCLR.l	#4, D4
 	MOVE.w	D4, VDP_control_port
 	startZ80
@@ -21913,7 +21913,7 @@ loc_000134B6:
 	MOVE.w	#2, D4
 	ORI.w	#$8F00, D4
 	MOVE.w	D4, VDP_control_port
-	MOVE.w	$FFFFC3F2.w, D4
+	MOVE.w	VDP_Reg1_cache.w, D4
 	BSET.l	#4, D4
 	MOVE.w	D4, VDP_control_port
 	MOVE.l	#$94009340, VDP_control_port
@@ -21921,7 +21921,7 @@ loc_000134B6:
 	MOVE.w	#$977F, VDP_control_port
 	MOVE.l	#$C0000080, $FFFFC18C.w
 	JSR	$FFFFC190.w
-	MOVE.w	$FFFFC3F2.w, D4
+	MOVE.w	VDP_Reg1_cache.w, D4
 	BCLR.l	#4, D4
 	MOVE.w	D4, VDP_control_port
 	MOVE.w	#0, Z80_bus_request
@@ -21993,7 +21993,7 @@ loc_000135C0:
 	MOVE.w	#2, D4
 	ORI.w	#$8F00, D4
 	MOVE.w	D4, VDP_control_port
-	MOVE.w	$FFFFC3F2.w, D4
+	MOVE.w	VDP_Reg1_cache.w, D4
 	BSET.l	#4, D4
 	MOVE.w	D4, VDP_control_port
 	MOVE.l	#$94009340, VDP_control_port
@@ -22001,7 +22001,7 @@ loc_000135C0:
 	MOVE.w	#$977F, VDP_control_port
 	MOVE.l	#$C0000080, $FFFFC18C.w
 	JSR	$FFFFC190.w
-	MOVE.w	$FFFFC3F2.w, D4
+	MOVE.w	VDP_Reg1_cache.w, D4
 	BCLR.l	#4, D4
 	MOVE.w	D4, VDP_control_port
 	MOVE.w	#0, Z80_bus_request
@@ -22067,7 +22067,7 @@ loc_000136CC:
 	MOVE.w	#2, D4
 	ORI.w	#$8F00, D4
 	MOVE.w	D4, VDP_control_port
-	MOVE.w	$FFFFC3F2.w, D4
+	MOVE.w	VDP_Reg1_cache.w, D4
 	BSET.l	#4, D4
 	MOVE.w	D4, VDP_control_port
 	MOVE.l	#$94009340, VDP_control_port
@@ -22075,7 +22075,7 @@ loc_000136CC:
 	MOVE.w	#$977F, VDP_control_port
 	MOVE.l	#$C0000080, $FFFFC18C.w
 	JSR	$FFFFC190.w
-	MOVE.w	$FFFFC3F2.w, D4
+	MOVE.w	VDP_Reg1_cache.w, D4
 	BCLR.l	#4, D4
 	MOVE.w	D4, VDP_control_port
 	MOVE.w	#0, Z80_bus_request
@@ -22173,7 +22173,7 @@ loc_0001380A:
 	MOVE.w	#2, D4
 	ORI.w	#$8F00, D4
 	MOVE.w	D4, VDP_control_port
-	MOVE.w	$FFFFC3F2.w, D4
+	MOVE.w	VDP_Reg1_cache.w, D4
 	BSET.l	#4, D4
 	MOVE.w	D4, VDP_control_port
 	MOVE.l	#$94009340, VDP_control_port
@@ -22181,7 +22181,7 @@ loc_0001380A:
 	MOVE.w	#$977F, VDP_control_port
 	MOVE.l	#$C0000080, $FFFFC18C.w
 	JSR	$FFFFC190.w
-	MOVE.w	$FFFFC3F2.w, D4
+	MOVE.w	VDP_Reg1_cache.w, D4
 	BCLR.l	#4, D4
 	MOVE.w	D4, VDP_control_port
 	MOVE.w	#0, Z80_bus_request
@@ -23305,16 +23305,16 @@ loc_00015EF6:
 	MOVE.w	Town_tilemap_height.w, D1
 	CMPI.w	#$0010, D1
 	BLE.b	loc_00015F10
-	MOVE.w	$FFFFC114.w, D0
+	MOVE.w	Town_camera_tile_y.w, D0
 	BLE.b	loc_00015F16
 	CMPI.w	#3, D0
 	BLT.b	loc_00015F10
 	BSR.w	loc_00016328
 loc_00015F10:
-	SUBQ.w	#1, $FFFFC114.w
+	SUBQ.w	#1, Town_camera_tile_y.w
 	BRA.b	loc_00015F1A
 loc_00015F16:
-	CLR.w	$FFFFC114.w
+	CLR.w	Town_camera_tile_y.w
 loc_00015F1A:
 	BRA.b	ResetTownCameraMovementState
 loc_00015F1C:
@@ -23339,11 +23339,11 @@ loc_00015F4E:
 	CMPI.w	#$0010, D1
 	BLE.b	loc_00015F66
 	SUBI.w	#$001C, D1
-	CMP.w	$FFFFC114.w, D1
+	CMP.w	Town_camera_tile_y.w, D1
 	BLE.b	loc_00015F66
 	BSR.w	loc_0001644E
 loc_00015F66:
-	ADDQ.w	#1, $FFFFC114.w
+	ADDQ.w	#1, Town_camera_tile_y.w
 	BRA.w	ResetTownCameraMovementState
 loc_00015F6E:
 	TST.w	$FFFFC104.w
@@ -23442,7 +23442,7 @@ loc_00016018:
 	NEG.w	D0
 	MOVE.w	D0, HScroll_min_limit.w
 	MOVE.w	Town_camera_tile_x.w, D0
-	MOVE.w	$FFFFC114.w, D1
+	MOVE.w	Town_camera_tile_y.w, D1
 	ASL.w	#4, D0
 	ASL.w	#4, D1
 	MOVE.w	D0, $FFFFC40E.w
@@ -23468,7 +23468,7 @@ loc_000160D0:
 	MOVE.w	Town_camera_spawn_x.w, D0
 	MOVE.w	D0, Town_camera_tile_x.w
 	MOVE.w	Town_camera_target_tile_y.w, D1
-	MOVE.w	D1, $FFFFC114.w
+	MOVE.w	D1, Town_camera_tile_y.w
 	CMPI.w	#3, D0
 	BGE.b	loc_00016102
 	MOVEQ	#3, D0
@@ -23666,7 +23666,7 @@ loc_000162F6:
 	RTS
 
 loc_00016328:
-	MOVE.w	$FFFFC114.w, D0
+	MOVE.w	Town_camera_tile_y.w, D0
 	SUBQ.w	#3, D0
 	MOVE.w	Town_camera_tile_x.w, D6
 	LEA	Tilemap_buffer_plane_a, A3
@@ -23674,7 +23674,7 @@ loc_00016328:
 	MOVEQ	#$1D, D5
 	CLR.w	Tilemap_plane_select.w
 	BSR.w	loc_0001658E
-	MOVE.w	$FFFFC114.w, D0
+	MOVE.w	Town_camera_tile_y.w, D0
 	SUBQ.w	#3, D0
 	MOVE.w	Town_camera_tile_x.w, D6
 	LEA	Tilemap_buffer_plane_b, A3
@@ -23682,7 +23682,7 @@ loc_00016328:
 	MOVEQ	#$1D, D5
 	MOVE.w	#$FFFF, Tilemap_plane_select.w
 	BSR.w	loc_0001658E
-	MOVE.w	$FFFFC114.w, D0
+	MOVE.w	Town_camera_tile_y.w, D0
 	SUBQ.w	#3, D0
 	MOVE.w	Town_camera_tile_x.w, D6
 	SUBQ.w	#2, D6
@@ -23691,7 +23691,7 @@ loc_00016328:
 	MOVEQ	#1, D5
 	CLR.w	Tilemap_plane_select.w
 	BSR.w	loc_0001658E
-	MOVE.w	$FFFFC114.w, D0
+	MOVE.w	Town_camera_tile_y.w, D0
 	SUBQ.w	#3, D0
 	MOVE.w	Town_camera_tile_x.w, D6
 	SUBQ.w	#2, D6
@@ -23700,7 +23700,7 @@ loc_00016328:
 	MOVEQ	#1, D5
 	MOVE.w	#$FFFF, Tilemap_plane_select.w
 	BSR.w	loc_0001658E
-	MOVE.w	$FFFFC114.w, D0
+	MOVE.w	Town_camera_tile_y.w, D0
 	SUBQ.w	#3, D0
 	MOVE.w	D0, Town_tilemap_update_row.w
 	MOVE.b	#$FF, Town_tilemap_row_update_pending.w
@@ -23709,7 +23709,7 @@ loc_00016328:
 loc_000163BA:
 	MOVE.w	Town_camera_tile_x.w, D0
 	SUBQ.w	#3, D0
-	MOVE.w	$FFFFC114.w, D6
+	MOVE.w	Town_camera_tile_y.w, D6
 	LEA	Tilemap_buffer_plane_a, A3
 	MOVEA.l	Town_tilemap_plane_a_ptr.w, A0
 	MOVEQ	#$1D, D5
@@ -23717,7 +23717,7 @@ loc_000163BA:
 	BSR.w	loc_000165EC
 	MOVE.w	Town_camera_tile_x.w, D0
 	SUBQ.w	#3, D0
-	MOVE.w	$FFFFC114.w, D6
+	MOVE.w	Town_camera_tile_y.w, D6
 	LEA	Tilemap_buffer_plane_b, A3
 	MOVEA.l	Town_tilemap_plane_b_ptr.w, A0
 	MOVEQ	#$1D, D5
@@ -23725,7 +23725,7 @@ loc_000163BA:
 	BSR.w	loc_000165EC
 	MOVE.w	Town_camera_tile_x.w, D0
 	SUBQ.w	#3, D0
-	MOVE.w	$FFFFC114.w, D6
+	MOVE.w	Town_camera_tile_y.w, D6
 	SUBQ.w	#2, D6
 	LEA	Tilemap_buffer_plane_a, A3
 	MOVEA.l	Town_tilemap_plane_a_ptr.w, A0
@@ -23734,7 +23734,7 @@ loc_000163BA:
 	BSR.w	loc_000165EC
 	MOVE.w	Town_camera_tile_x.w, D0
 	SUBQ.w	#3, D0
-	MOVE.w	$FFFFC114.w, D6
+	MOVE.w	Town_camera_tile_y.w, D6
 	SUBQ.w	#2, D6
 	LEA	Tilemap_buffer_plane_b, A3
 	LEA	Town_tilemap_plane_b, A0
@@ -23748,7 +23748,7 @@ loc_000163BA:
 	RTS
 
 loc_0001644E:
-	MOVE.w	$FFFFC114.w, D0
+	MOVE.w	Town_camera_tile_y.w, D0
 	ADDI.w	#$1C, D0
 	MOVE.w	Town_camera_tile_x.w, D6
 	LEA	Tilemap_buffer_plane_a, A3
@@ -23756,7 +23756,7 @@ loc_0001644E:
 	MOVEQ	#$1D, D5
 	CLR.w	Tilemap_plane_select.w
 	BSR.w	loc_0001658E
-	MOVE.w	$FFFFC114.w, D0
+	MOVE.w	Town_camera_tile_y.w, D0
 	ADDI.w	#$001C, D0
 	MOVE.w	Town_camera_tile_x.w, D6
 	LEA	Tilemap_buffer_plane_b, A3
@@ -23764,7 +23764,7 @@ loc_0001644E:
 	MOVEQ	#$1D, D5
 	MOVE.w	#$FFFF, Tilemap_plane_select.w
 	BSR.w	loc_0001658E
-	MOVE.w	$FFFFC114.w, D0
+	MOVE.w	Town_camera_tile_y.w, D0
 	ADDI.w	#$1C, D0
 	MOVE.w	Town_camera_tile_x.w, D6
 	SUBQ.w	#2, D6
@@ -23773,7 +23773,7 @@ loc_0001644E:
 	MOVEQ	#1, D5
 	CLR.w	Tilemap_plane_select.w
 	BSR.w	loc_0001658E
-	MOVE.w	$FFFFC114.w, D0
+	MOVE.w	Town_camera_tile_y.w, D0
 	ADDI.w	#$1C, D0
 	MOVE.w	Town_camera_tile_x.w, D6
 	SUBQ.w	#2, D6
@@ -23782,7 +23782,7 @@ loc_0001644E:
 	MOVEQ	#1, D5
 	MOVE.w	#$FFFF, Tilemap_plane_select.w
 	BSR.w	loc_0001658E
-	MOVE.w	$FFFFC114.w, D0
+	MOVE.w	Town_camera_tile_y.w, D0
 	ADDI.w	#$1C, D0
 	MOVE.w	D0, Town_tilemap_update_row.w
 	MOVE.b	#$FF, Town_tilemap_row_update_pending.w
@@ -23791,7 +23791,7 @@ loc_0001644E:
 loc_000164EE:
 	MOVE.w	Town_camera_tile_x.w, D0
 	ADDI.w	#$1C, D0
-	MOVE.w	$FFFFC114.w, D6
+	MOVE.w	Town_camera_tile_y.w, D6
 	LEA	Tilemap_buffer_plane_a, A3
 	MOVEA.l	Town_tilemap_plane_a_ptr.w, A0
 	MOVEQ	#$0000001D, D5
@@ -23799,7 +23799,7 @@ loc_000164EE:
 	BSR.w	loc_000165EC
 	MOVE.w	Town_camera_tile_x.w, D0
 	ADDI.w	#$1C, D0
-	MOVE.w	$FFFFC114.w, D6
+	MOVE.w	Town_camera_tile_y.w, D6
 	LEA	Tilemap_buffer_plane_b, A3
 	LEA	Town_tilemap_plane_b, A0
 	MOVEQ	#$0000001D, D5
@@ -23807,7 +23807,7 @@ loc_000164EE:
 	BSR.w	loc_000165EC
 	MOVE.w	Town_camera_tile_x.w, D0
 	ADDI.w	#$1C, D0
-	MOVE.w	$FFFFC114.w, D6
+	MOVE.w	Town_camera_tile_y.w, D6
 	SUBQ.w	#2, D6
 	LEA	Tilemap_buffer_plane_a, A3
 	MOVEA.l	Town_tilemap_plane_a_ptr.w, A0
@@ -23816,7 +23816,7 @@ loc_000164EE:
 	BSR.w	loc_000165EC
 	MOVE.w	Town_camera_tile_x.w, D0
 	ADDI.w	#$1C, D0
-	MOVE.w	$FFFFC114.w, D6
+	MOVE.w	Town_camera_tile_y.w, D6
 	SUBQ.w	#2, D6
 	LEA	Tilemap_buffer_plane_b, A3
 	LEA	Town_tilemap_plane_b, A0
@@ -23898,7 +23898,7 @@ loc_0001662A:
 	MOVE.w	Town_tilemap_width.w, D1
 	ASL.w	#1, D1
 	ADD.w	D1, D7
-	MOVE.w	$FFFFC114.w, D3
+	MOVE.w	Town_camera_tile_y.w, D3
 	ANDI.w	#$000F, D3
 	ADDI.w	#$0100, D6
 	ANDI.w	#$1F00, D6
@@ -24885,8 +24885,8 @@ loc_000172D2:
 	TST.w	Ending_hscroll_offset.w
 	BLT.b	loc_000172F2
 	ADDQ.w	#1, Ending_sequence_step.w
-	CLR.w	$FFFFC554.w
-	CLR.w	$FFFFC552.w
+	CLR.w	Dialog_timer.w
+	CLR.w	Dialog_phase.w
 	MOVE.w	#$0190, Ending_timer.w
 	BRA.b	loc_000172F6
 loc_000172F2:
@@ -24903,8 +24903,8 @@ loc_000172FA:
 loc_00017314:
 	BRA.w	EndingSequence_CommonUpdate
 loc_00017318:
-	ADDQ.w	#1, $FFFFC554.w
-	MOVE.w	$FFFFC554.w, D0
+	ADDQ.w	#1, Dialog_timer.w
+	MOVE.w	Dialog_timer.w, D0
 	BTST.b	#6, $00A10001
 	BNE.w	loc_00017334
 	ANDI.w	#7, D0
@@ -24914,7 +24914,7 @@ loc_00017334:
 	ANDI.w	#3, D0	
 	BNE.b	loc_00017388	
 loc_0001733A:
-	CMPI.w	#8, $FFFFC552.w
+	CMPI.w	#8, Dialog_phase.w
 	BLT.b	loc_00017384
 	ADDQ.w	#1, Ending_sequence_step.w
 	CLR.w	Ending_timer.w
@@ -25167,7 +25167,7 @@ loc_000176A4:
 loc_000176BC:
 	MOVE.l	#$50000000, D5
 	MOVEQ	#0, D0
-	MOVE.w	$FFFFC552.w, D0
+	MOVE.w	Dialog_phase.w, D0
 	ADD.w	D0, D0
 	SWAP	D0
 	ADD.l	D0, D5
@@ -25179,7 +25179,7 @@ loc_000176D6:
 	ADDI.l	#$00100000, D5
 	DBF	D7, loc_000176D6
 	ANDI	#$F8FF, SR
-	ADDQ.w	#1, $FFFFC552.w
+	ADDQ.w	#1, Dialog_phase.w
 	RTS
 
 loc_000176F8:
@@ -25521,7 +25521,7 @@ loc_00017C1E:
 	dc.l	EmptyTextStr
 	dc.l	loc_00017C1C
 loc_00017EC6:
-	MOVE.w	$FFFFC424.w, D0
+	MOVE.w	Spellbook_menu_state.w, D0
 	ANDI.w	#$001F, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
@@ -25552,7 +25552,7 @@ loc_00017F1E:
 	JSR	loc_00012382
 	JSR	loc_00010E46
 	CLR.w	Item_menu_action_mode.w
-	ADDQ.w	#1, $FFFFC424.w
+	ADDQ.w	#1, Spellbook_menu_state.w
 	CLR.w	Menu_cursor_index.w
 	RTS
 
@@ -25584,7 +25584,7 @@ loc_00017F80:
 	TST.w	Possessed_magics_length.w
 	BGT.b	loc_00017FC8
 	PRINT 	NoBooksOfSpellsStr
-	MOVE.w	#2, $FFFFC424.w
+	MOVE.w	#2, Spellbook_menu_state.w
 	BRA.w	loc_0001801C
 loc_00017FC8:
 	TST.w	Item_menu_action_mode.w
@@ -25592,21 +25592,21 @@ loc_00017FC8:
 	CMPI.w	#1, Item_menu_action_mode.w
 	BEQ.b	loc_00017FE8
 	PRINT 	PutDownBookStr
-	MOVE.w	#3, $FFFFC424.w
+	MOVE.w	#3, Spellbook_menu_state.w
 	BRA.b	loc_0001801C
 loc_00017FE8:
 	BSR.w	loc_00018662
 	BEQ.b	loc_00017FFE
 	PRINT 	ReadyBookCombatStr
-	MOVE.w	#$000C, $FFFFC424.w
+	MOVE.w	#$000C, Spellbook_menu_state.w
 	BRA.b	loc_0001801C
 loc_00017FFE:
 	PRINT 	NoCombatBooksStr	
-	MOVE.w	#2, $FFFFC424.w	
+	MOVE.w	#2, Spellbook_menu_state.w	
 	BRA.b	loc_0001801C	
 loc_0001800E:
 	PRINT 	CastSpellBookStr
-	MOVE.w	#6, $FFFFC424.w
+	MOVE.w	#6, Spellbook_menu_state.w
 loc_0001801C:
 	RTS
 
@@ -25630,7 +25630,7 @@ loc_00018038:
 
 loc_0001805A:
 	JSR	DrawStatusHudWindow
-	MOVE.w	#$000A, $FFFFC424.w
+	MOVE.w	#$000A, Spellbook_menu_state.w
 	MOVE.w	#$000E, Window_draw_type.w
 	CLR.w	Window_text_row.w
 	MOVE.b	#$FF, Window_tilemap_row_draw_pending.w
@@ -25661,7 +25661,7 @@ loc_000180A8:
 	JSR	loc_000110D0
 	JSR	loc_00012A9A
 	CLR.w	Magic_list_cursor_index.w
-	MOVE.w	#4, $FFFFC424.w
+	MOVE.w	#4, Spellbook_menu_state.w
 	MOVE.w	Possessed_magics_length.w, D0
 	JSR	InitMenuCursorForList
 	RTS
@@ -25678,7 +25678,7 @@ loc_000180DE:
 	JSR	QueueSoundEffect	
 	JSR	DrawCenterMenuWindow	
 	JSR	DrawStatusHudWindow	
-	MOVE.w	#1, $FFFFC424.w	
+	MOVE.w	#1, Spellbook_menu_state.w	
 	BRA.w	loc_0001162E	
 loc_0001810A:
 	MOVE.w	#BUTTON_BIT_C, D2
@@ -25690,7 +25690,7 @@ loc_0001810A:
 	JSR	QueueSoundEffect
 	JSR	loc_000122F4
 	JSR	loc_00010D44
-	ADDQ.w	#1, $FFFFC424.w
+	ADDQ.w	#1, Spellbook_menu_state.w
 	RTS
 
 loc_0001813E:
@@ -25714,7 +25714,7 @@ loc_00018158:
 	JSR	DrawLeftMenuWindow	
 	JSR	DrawCenterMenuWindow	
 	JSR	DrawStatusHudWindow	
-	MOVE.w	#1, $FFFFC424.w	
+	MOVE.w	#1, Spellbook_menu_state.w	
 	JSR	loc_0001162E	
 	RTS
 	
@@ -25722,7 +25722,7 @@ loc_000181A4:
 	MOVE.w	#$00A8, D0	
 	JSR	QueueSoundEffect	
 	JSR	DrawLeftMenuWindow	
-	MOVE.w	#4, $FFFFC424.w	
+	MOVE.w	#4, Spellbook_menu_state.w	
 	MOVE.w	Possessed_magics_length.w, D0	
 	JSR	InitMenuCursorForList	
 	RTS
@@ -25755,7 +25755,7 @@ loc_000181DC:
 	MOVE.b	#$2E, (A1)+
 	MOVE.b	#$FF, (A1)
 	PRINT 	$FFFFC260
-	MOVE.w	#2, $FFFFC424.w
+	MOVE.w	#2, Spellbook_menu_state.w
 	SUBQ.w	#1, Possessed_magics_length.w
 	LEA	Possessed_magics_list.w, A0
 	MOVE.w	Magic_list_cursor_index.w, D0
@@ -25777,7 +25777,7 @@ loc_00018272:
 	JSR	loc_000110D0
 	JSR	loc_00012A9A
 	CLR.w	Magic_list_cursor_index.w
-	ADDQ.w	#1, $FFFFC424.w
+	ADDQ.w	#1, Spellbook_menu_state.w
 	MOVE.w	Possessed_magics_length.w, D0
 	BRA.w	InitMenuCursorForList
 	dc.b	$4E, $75 
@@ -25793,7 +25793,7 @@ loc_000182A4:
 	JSR	QueueSoundEffect
 	JSR	DrawCenterMenuWindow
 	JSR	DrawStatusHudWindow
-	MOVE.w	#1, $FFFFC424.w
+	MOVE.w	#1, Spellbook_menu_state.w
 	BRA.w	loc_0001162E
 loc_000182D0:
 	MOVE.w	#BUTTON_BIT_C, D2
@@ -25805,7 +25805,7 @@ loc_000182D0:
 	JSR	QueueSoundEffect
 	JSR	loc_000122F4
 	JSR	loc_00010D44
-	ADDQ.w	#1, $FFFFC424.w
+	ADDQ.w	#1, Spellbook_menu_state.w
 	RTS
 
 loc_00018304:
@@ -25829,7 +25829,7 @@ loc_0001831E:
 	JSR	DrawLeftMenuWindow	
 	JSR	DrawCenterMenuWindow	
 	JSR	DrawStatusHudWindow	
-	MOVE.w	#1, $FFFFC424.w	
+	MOVE.w	#1, Spellbook_menu_state.w	
 	JSR	loc_0001162E	
 	RTS
 	
@@ -25837,7 +25837,7 @@ loc_00018368:
 	MOVE.w	#$00A8, D0
 	JSR	QueueSoundEffect
 	JSR	DrawLeftMenuWindow
-	MOVE.w	#$000D, $FFFFC424.w
+	MOVE.w	#$000D, Spellbook_menu_state.w
 	MOVE.w	Possessed_magics_length.w, D0
 	BRA.w	InitMenuCursorForList
 	dc.b	$4E, $75 
@@ -25870,7 +25870,7 @@ loc_00018388:
 	JSR	CopyStringUntilFF
 	MOVE.b	#$FF, (A1)
 	PRINT 	$FFFFC260
-	MOVE.w	#2, $FFFFC424.w
+	MOVE.w	#2, Spellbook_menu_state.w
 	LEA	Possessed_magics_list.w, A0
 	MOVE.w	Magic_list_cursor_index.w, D0
 	ADD.w	D0, D0
@@ -25881,7 +25881,7 @@ loc_00018388:
 
 loc_00018422:
 	PRINT 	CantUseBookInCombatStr
-	MOVE.w	#2, $FFFFC424.w
+	MOVE.w	#2, Spellbook_menu_state.w
 	RTS
 
 loc_00018432:
@@ -25896,7 +25896,7 @@ loc_0001844C:
 	BNE.b	loc_00018466
 	PRINT 	AreaBrightStr
 	JSR	loc_00006458
-	MOVE.w	#9, $FFFFC424.w
+	MOVE.w	#9, Spellbook_menu_state.w
 loc_00018466:
 	RTS
 
@@ -25907,7 +25907,7 @@ loc_00018468:
 	JSR	loc_000110D0
 	JSR	loc_00012A9A
 	CLR.w	Magic_list_cursor_index.w
-	ADDQ.w	#1, $FFFFC424.w
+	ADDQ.w	#1, Spellbook_menu_state.w
 	MOVE.w	Possessed_magics_length.w, D0
 	BRA.w	InitMenuCursorForList
 loc_00018490:
@@ -25922,7 +25922,7 @@ loc_00018498:
 	JSR	QueueSoundEffect
 	BSR.w	DrawCenterMenuWindow
 	BSR.w	DrawStatusHudWindow
-	MOVE.w	#1, $FFFFC424.w
+	MOVE.w	#1, Spellbook_menu_state.w
 	BRA.w	loc_0001162E
 	dc.b	$4E, $75 
 loc_000184C2:
@@ -25957,7 +25957,7 @@ loc_00018528:
 	BEQ.b	loc_00018540	
 	JSR	loc_00011666	
 	MOVE.l	Script_continuation_ptr.w, Script_source_base.w	
-	ADDQ.w	#1, $FFFFC424.w	
+	ADDQ.w	#1, Spellbook_menu_state.w	
 	RTS
 	
 loc_00018540:
@@ -25977,7 +25977,7 @@ loc_00018548:
 
 loc_0001856A:
 	JSR	DrawStatusHudWindow
-	MOVE.w	#$000A, $FFFFC424.w
+	MOVE.w	#$000A, Spellbook_menu_state.w
 	MOVE.w	#$000E, Window_draw_type.w
 	CLR.w	Window_text_row.w
 	MOVE.b	#$FF, Window_tilemap_row_draw_pending.w
@@ -25995,7 +25995,7 @@ loc_0001859A:
 	MOVE.w	#$00A8, D0
 	JSR	QueueSoundEffect
 	BSR.w	loc_000126FC
-	MOVE.w	#6, $FFFFC424.w
+	MOVE.w	#6, Spellbook_menu_state.w
 	RTS
 
 loc_000185BC:
@@ -26096,7 +26096,7 @@ CastFieldMagicMap:
 CastFieldMagicNotAllowed:
 	JSR	ResetScriptAndInitDialogue	
 	PRINT 	CantUseHereStr	
-	MOVE.w	#9, $FFFFC424.w	
+	MOVE.w	#9, Spellbook_menu_state.w	
 	RTS
 
 ;loc_0001870E
@@ -26114,13 +26114,13 @@ CastInaudios:
 	JSR	QueueSoundEffect
 	JSR	ResetScriptAndInitDialogue
 	PRINT 	InaudiosSpellsStr
-	MOVE.w	#9, $FFFFC424.w
+	MOVE.w	#9, Spellbook_menu_state.w
 	RTS
 
 loc_00018752:
 	JSR	ResetScriptAndInitDialogue	
 	PRINT 	CantUseHereStr	
-	MOVE.w	#9, $FFFFC424.w	
+	MOVE.w	#9, Spellbook_menu_state.w	
 	RTS
 	
 ;loc_00018768
@@ -26133,7 +26133,7 @@ CastLuminos:
 	BEQ.b	loc_000187B4
 	TST.b	$FFFFC560.w
 	BNE.b	loc_000187B4
-	MOVE.w	#$000F, $FFFFC424.w
+	MOVE.w	#$000F, Spellbook_menu_state.w
 	MOVE.w	#$0048, Palette_line_1_fade_target.w
 	MOVE.w	#$0040, Palette_line_2_fade_target.w
 	MOVE.b	#6, Fade_in_lines_mask.w
@@ -26146,7 +26146,7 @@ CastLuminos:
 loc_000187B4:
 	JSR	ResetScriptAndInitDialogue
 	PRINT 	BrightPlaceStr
-	MOVE.w	#9, $FFFFC424.w
+	MOVE.w	#9, Spellbook_menu_state.w
 	RTS
 
 ;loc_000187CA
@@ -26186,7 +26186,7 @@ loc_00018834:
 	MOVE.w	#$00AE, D0
 	JSR	QueueSoundEffect
 	JSR	ResetScriptAndInitDialogue
-	MOVE.w	#9, $FFFFC424.w
+	MOVE.w	#9, Spellbook_menu_state.w
 	RTS
 
 ;loc_0001884C
@@ -26200,7 +26200,7 @@ CastSanguio:
 	MOVE.w	#$00AE, D0
 	JSR	QueueSoundEffect
 	JSR	ResetScriptAndInitDialogue
-	MOVE.w	#9, $FFFFC424.w
+	MOVE.w	#9, Spellbook_menu_state.w
 	RTS
 
 ;loc_00018884
@@ -26226,7 +26226,7 @@ loc_000188BE:
 	JSR	QueueSoundEffect
 loc_000188D0:
 	JSR	ResetScriptAndInitDialogue
-	MOVE.w	#9, $FFFFC424.w
+	MOVE.w	#9, Spellbook_menu_state.w
 	RTS
 
 ;loc_000188DE
@@ -26241,12 +26241,12 @@ CastAries:
 	BNE.w	loc_00018912
 	JSR	loc_0001240C
 	JSR	loc_00011304
-	MOVE.w	#$000B, $FFFFC424.w
+	MOVE.w	#$000B, Spellbook_menu_state.w
 	RTS
 loc_00018912:
 	PRINT 	CantUseHereStr
 	JSR	ResetScriptAndInitDialogue
-	MOVE.w	#9, $FFFFC424.w
+	MOVE.w	#9, Spellbook_menu_state.w
 	RTS
 
 ;loc_00018928
@@ -26274,19 +26274,19 @@ CastExtrios:
 loc_00018982:
 	JSR	ResetScriptAndInitDialogue
 	PRINT 	CantUseHereStr
-	ADDQ.w	#2, $FFFFC424.w
+	ADDQ.w	#2, Spellbook_menu_state.w
 	RTS
 
 loc_00018996:
 	PRINT 	NotEnoughMpStr	
 	JSR	ResetScriptAndInitDialogue	
-	MOVE.w	#9, $FFFFC424.w	
+	MOVE.w	#9, Spellbook_menu_state.w	
 	RTS
 	
 loc_000189AC:
 	PRINT 	SorryYouAreCursedStr
 	JSR	ResetScriptAndInitDialogue
-	MOVE.w	#9, $FFFFC424.w
+	MOVE.w	#9, Spellbook_menu_state.w
 	RTS
 
 loc_000189C2: ; Town locations. Without duplicates.
@@ -29545,7 +29545,7 @@ loc_0001B6B6:
 	BEQ.b	loc_0001B6D2
 	JSR	loc_000123EA
 	JSR	loc_00011274
-	CLR.w	$FFFFC4A0.w
+	CLR.w	Shop_selected_index.w
 	ADDQ.w	#1, Dialogue_state.w
 	RTS
 
@@ -29582,7 +29582,7 @@ loc_0001B73A:
 	MOVE.w	#BUTTON_BIT_C, D2
 	JSR	CheckButtonPress
 	BEQ.b	loc_0001B770
-	MOVE.w	$FFFFC4A0.w, Menu_cursor_index.w
+	MOVE.w	Shop_selected_index.w, Menu_cursor_index.w
 	JSR	DrawMenuCursor
 	MOVE.w	#$00A1, D0
 	JSR	QueueSoundEffect
@@ -29592,9 +29592,9 @@ loc_0001B73A:
 	RTS
 
 loc_0001B770:
-	MOVE.w	$FFFFC4A0.w, Menu_cursor_index.w
+	MOVE.w	Shop_selected_index.w, Menu_cursor_index.w
 	JSR	HandleMenuInput
-	MOVE.w	Menu_cursor_index.w, $FFFFC4A0.w
+	MOVE.w	Menu_cursor_index.w, Shop_selected_index.w
 	RTS
 
 loc_0001B784:
@@ -29603,7 +29603,7 @@ loc_0001B784:
 	ASL.w	#3, D0
 	LEA	Text_build_buffer.w, A1
 	LEA	$FFFFC4B4.w, A2
-	MOVE.w	$FFFFC4A0.w, D0
+	MOVE.w	Shop_selected_index.w, D0
 	ADD.w	D0, D0
 	MOVE.w	(A2,D0.w), D0
 	ANDI.w	#$00FF, D0
@@ -29716,7 +29716,7 @@ loc_0001BA5E:
 	ADDQ.w	#1, (A0)+
 	ADD.w	D0, D0
 	LEA	$FFFFC4B4.w, A1
-	MOVE.w	$FFFFC4A0.w, D1
+	MOVE.w	Shop_selected_index.w, D1
 	ADD.w	D1, D1
 	MOVE.w	(A1,D1.w), D1
 	MOVE.w	D1, (A0,D0.w)
@@ -30007,7 +30007,7 @@ loc_0001BDFA:
 	BEQ.b	loc_0001BE16
 	JSR	loc_000123EA
 	JSR	loc_0001119A
-	CLR.w	$FFFFC4A0.w
+	CLR.w	Shop_selected_index.w
 	ADDQ.w	#1, Dialogue_state.w
 	RTS
 
@@ -30044,7 +30044,7 @@ loc_0001BE6E:
 	BEQ.w	loc_0001BF0E
 	MOVE.w	#$00A1, D0
 	JSR	QueueSoundEffect
-	MOVE.w	$FFFFC4A0.w, Menu_cursor_index.w
+	MOVE.w	Shop_selected_index.w, Menu_cursor_index.w
 	JSR	DrawMenuCursor
 	JSR	loc_000122F4
 	JSR	loc_00010D44
@@ -30057,7 +30057,7 @@ loc_0001BE6E:
 	ASL.w	#3, D0
 	MOVEA.l	(A0,D0.w), A0
 	LEA	$FFFFC4B4.w, A2
-	MOVE.w	$FFFFC4A0.w, D0
+	MOVE.w	Shop_selected_index.w, D0
 	ADD.w	D0, D0
 	MOVE.w	(A2,D0.w), D0
 	ANDI.w	#$00FF, D0
@@ -30077,9 +30077,9 @@ loc_0001BE6E:
 	RTS
 
 loc_0001BF0E:
-	MOVE.w	$FFFFC4A0.w, Menu_cursor_index.w
+	MOVE.w	Shop_selected_index.w, Menu_cursor_index.w
 	JSR	HandleMenuInput
-	MOVE.w	Menu_cursor_index.w, $FFFFC4A0.w
+	MOVE.w	Menu_cursor_index.w, Shop_selected_index.w
 	RTS
 
 loc_0001BF22:
@@ -30109,7 +30109,7 @@ loc_0001BF28:
 	ADD.w	D0, D0
 	ADD.w	D0, D0
 	MOVEA.l	(A0,D0.w), A0
-	MOVE.w	$FFFFC4A0.w, D0
+	MOVE.w	Shop_selected_index.w, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
 	MOVE.l	(A0,D0.w), $FFFFC4B0.w
@@ -30131,7 +30131,7 @@ loc_0001BFD2:
 	ADDQ.w	#1, (A0)+
 	ADD.w	D0, D0
 	LEA	$FFFFC4B4.w, A1
-	MOVE.w	$FFFFC4A0.w, D1
+	MOVE.w	Shop_selected_index.w, D1
 	ADD.w	D1, D1
 	MOVE.w	(A1,D1.w), D1
 	MOVE.w	D1, (A0,D0.w)
@@ -30278,7 +30278,7 @@ loc_0001C1E4:
 	JSR	SaveLeftMenuTiles
 	JSR	loc_0001106E
 	JSR	DisplayPlayerKims
-	CLR.w	$FFFFC4A0.w
+	CLR.w	Shop_selected_index.w
 	MOVE.w	#$13, Dialogue_state.w
 	RTS
 
@@ -30334,12 +30334,12 @@ loc_0001C2AA:
 	MOVE.w	#BUTTON_BIT_C, D2
 	JSR	CheckButtonPress
 	BEQ.w	loc_0001C36C
-	MOVE.w	$FFFFC4A0.w, Menu_cursor_index.w
+	MOVE.w	Shop_selected_index.w, Menu_cursor_index.w
 	JSR	DrawMenuCursor
 	JSR	ResetScriptAndInitDialogue
 	LEA	Text_build_buffer.w, A1
 	MOVEA.l	Active_inventory_list_ptr.w, A2
-	MOVE.w	$FFFFC4A0.w, D0
+	MOVE.w	Shop_selected_index.w, D0
 	ADD.w	D0, D0
 	MOVE.w	(A2,D0.w), D0
 	MOVE.w	#8, D1
@@ -30385,9 +30385,9 @@ loc_0001C358:
 	RTS
 
 loc_0001C36C:
-	MOVE.w	$FFFFC4A0.w, Menu_cursor_index.w
+	MOVE.w	Shop_selected_index.w, Menu_cursor_index.w
 	JSR	HandleMenuInput
-	MOVE.w	Menu_cursor_index.w, $FFFFC4A0.w
+	MOVE.w	Menu_cursor_index.w, Shop_selected_index.w
 	RTS
 
 loc_0001C380:
@@ -30422,7 +30422,7 @@ loc_0001C3A4:
 	MOVEA.l	$4(A0,D0.w), A0
 	SUBQ.w	#1, (A0)+
 	MOVEA.l	Active_inventory_list_ptr.w, A2
-	MOVE.w	$FFFFC4A0.w, D0
+	MOVE.w	Shop_selected_index.w, D0
 	ADD.w	D0, D0
 	MOVE.w	(A2,D0.w), D0
 	BGE.w	loc_0001C474
@@ -30460,7 +30460,7 @@ loc_0001C464:
 	ANDI.w	#$7FFF, D1
 	MOVE.w	D1, Player_ac.w
 loc_0001C474:
-	MOVE.w	$FFFFC4A0.w, D0
+	MOVE.w	Shop_selected_index.w, D0
 	MOVE.w	#8, D2
 	JSR	loc_0000FB8C
 	JSR	DrawLeftMenuWindow
@@ -31233,7 +31233,7 @@ loc_0001CEF8:
 	ADD.w	D0, D0
 	MOVEA.l	(A0,D0.w), A0
 	MOVEA.l	(A2,D0.w), A2
-	MOVE.w	$FFFFC4A0.w, D0
+	MOVE.w	Shop_selected_index.w, D0
 	ADD.w	D0, D0
 	MOVE.w	(A2,D0.w), D0
 	ANDI.w	#$00FF, D0
@@ -32395,7 +32395,7 @@ loc_0001DE14:
 	BEQ.w	loc_0001DEBA
 	ASL.w	#3, D0
 	MOVEA.l	(A0,D0.w), A0
-	MOVE.w	$FFFFC572.w, D0
+	MOVE.w	Reward_script_value.w, D0
 	ANDI.w	#$00FF, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
@@ -32408,7 +32408,7 @@ loc_0001DE14:
 	BRA.w	loc_0001DECE
 loc_0001DE82:
 	LEA	RingNames, A0
-	MOVE.w	$FFFFC572.w, D0
+	MOVE.w	Reward_script_value.w, D0
 	ANDI.w	#$00FF, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
@@ -32918,13 +32918,13 @@ loc_0001E5AC:
 	ASL.w	#3, D0
 	MOVEA.l	$4(A0,D0.w), A2
 	MOVEA.l	(A0,D0.w), A0
-	MOVE.w	$FFFFC572.w, D1
+	MOVE.w	Reward_script_value.w, D1
 	MOVE.w	(A2), D0
 	CMPI.w	#8, D0
 	BGE.w	loc_0001E6DE
 	ADDQ.w	#1, (A2)
 	ADD.w	D0, D0
-	MOVE.w	$FFFFC572.w, D1
+	MOVE.w	Reward_script_value.w, D1
 	MOVE.w	D1, $2(A2,D0.w)
 	ANDI.w	#$00FF, D1
 	ADD.w	D1, D1
@@ -32934,7 +32934,7 @@ loc_0001E5AC:
 	BRA.w	loc_0001E6A0
 loc_0001E61E:
 	LEA	$FFFFC820.w, A0
-	MOVE.w	$FFFFC572.w, D0
+	MOVE.w	Reward_script_value.w, D0
 	MOVE.b	#$FF, (A0,D0.w)
 	MOVE.b	#$FF, $FFFFC55F.w
 	JSR	loc_00006458
@@ -32943,7 +32943,7 @@ loc_0001E61E:
 	BRA.w	loc_0001E6A0
 loc_0001E648:
 	LEA	RingNames, A0
-	MOVE.w	$FFFFC572.w, D0
+	MOVE.w	Reward_script_value.w, D0
 	ANDI.w	#$00FF, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
@@ -32952,7 +32952,7 @@ loc_0001E648:
 	BRA.w	loc_0001E6A0
 loc_0001E668:
 	MOVEQ	#0, D0
-	MOVE.w	$FFFFC572.w, D0
+	MOVE.w	Reward_script_value.w, D0
 	MOVE.l	D0, Transaction_amount.w
 	JSR	loc_00011576
 	JSR	loc_00013186
@@ -32961,7 +32961,7 @@ loc_0001E668:
 	JSR	CopyStringUntilFF
 	MOVE.b	#$FE, (A1)+
 	MOVEQ	#0, D0
-	MOVE.w	$FFFFC572.w, D0
+	MOVE.w	Reward_script_value.w, D0
 	JSR	FormatKimsAmount
 loc_0001E6A0:
 	MOVE.b	#$2E, (A1)+
@@ -33025,7 +33025,7 @@ loc_0001E766:
 	MOVE.w	$FFFFC570.w, D0
 	ASL.w	#3, D0
 	MOVEA.l	(A0,D0.w), A0
-	MOVE.w	$FFFFC572.w, D1
+	MOVE.w	Reward_script_value.w, D1
 	ANDI.w	#$00FF, D1
 	ADD.w	D1, D1
 	ADD.w	D1, D1
@@ -33157,7 +33157,7 @@ loc_0001E96A:
 	ADD.w	D0, D0
 	LEA	$2(A2,D0.w), A2
 	MOVE.w	(A2), D0
-	MOVE.w	$FFFFC572.w, (A2)
+	MOVE.w	Reward_script_value.w, (A2)
 	ANDI.w	#$00FF, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
@@ -33176,7 +33176,7 @@ loc_0001E96A:
 	MOVE.w	$FFFFC570.w, D0
 	ASL.w	#3, D0
 	MOVEA.l	(A0,D0.w), A0
-	MOVE.w	$FFFFC572.w, D0
+	MOVE.w	Reward_script_value.w, D0
 	ANDI.w	#$00FF, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
@@ -33229,11 +33229,11 @@ loc_0001EAA6:
 	RTS
 	
 loc_0001EAAE:
-	MOVEA.l	$FFFFC574.w, A0
+	MOVEA.l	Reward_script_flag.w, A0
 	CMPA.l	#0, A0
 	BEQ.w	loc_0001EAC4
 	MOVE.b	#$FF, (A0)
-	CLR.l	$FFFFC574.w
+	CLR.l	Reward_script_flag.w
 loc_0001EAC4:
 	RTS
 	
@@ -35042,9 +35042,9 @@ loc_0002039E:
 	TST.b	Crimson_armor_reward_enabled.w
 	BEQ.b	loc_000203D8
 	MOVE.w	#1, $FFFFC570.w
-	MOVE.w	#$1037, $FFFFC572.w
-	MOVE.l	#$FFFFC78B, $FFFFC574.w
-	MOVEA.l	$FFFFC574.w, A0
+	MOVE.w	#$1037, Reward_script_value.w
+	MOVE.l	#$FFFFC78B, Reward_script_flag.w
+	MOVEA.l	Reward_script_flag.w, A0
 	TST.b	(A0)
 	BNE.b	loc_000203C6
 	MOVE.b	#$FF, $FFFFC56F.w
@@ -35056,22 +35056,22 @@ loc_000203D8:
 	RTS
 	
 loc_000203DA:
-	MOVE.w	#$100, $FFFFC572.w
-	MOVE.l	#$FFFFC788, $FFFFC574.w
+	MOVE.w	#$100, Reward_script_value.w
+	MOVE.l	#$FFFFC788, Reward_script_flag.w
 	BSR.w	InitMoneyTreasure
 	RTS
 	
 loc_000203EE:
 	dc.b	$31, $FC, $03, $00, $C5, $72, $21, $FC, $FF, $FF, $C7, $8E, $C5, $74, $61, $00, $10, $34, $4E, $75 
 loc_00020402:
-	MOVE.w	#$50, $FFFFC572.w 		  ; 50 kim chest outside Wyclif
-	MOVE.l	#$FFFFC798, $FFFFC574.w   ; $FFFFC798 is $FF if contents has been taken
+	MOVE.w	#$50, Reward_script_value.w 		  ; 50 kim chest outside Wyclif
+	MOVE.l	#$FFFFC798, Reward_script_flag.w   ; $FFFFC798 is $FF if contents has been taken
 	BSR.w	InitMoneyTreasure
 	RTS
 	
 loc_00020416:
-	MOVE.w	#$300, $FFFFC572.w	
-	MOVE.l	#$FFFFC79B, $FFFFC574.w	
+	MOVE.w	#$300, Reward_script_value.w	
+	MOVE.l	#$FFFFC79B, Reward_script_flag.w	
 	BSR.w	InitMoneyTreasure	
 	RTS
 	
@@ -35086,54 +35086,54 @@ loc_00020466:
 	dc.b	$31, $FC, $50, $00 
 	dc.b	$C5, $72, $21, $FC, $FF, $FF, $C7, $B9, $C5, $74, $61, $00, $0F, $BC, $4E, $75 
 loc_0002047A:
-	MOVE.w	#$1700, $FFFFC572.w	
-	MOVE.l	#$FFFFC7BA, $FFFFC574.w	
+	MOVE.w	#$1700, Reward_script_value.w	
+	MOVE.l	#$FFFFC7BA, Reward_script_flag.w	
 	BSR.w	InitMoneyTreasure	
 	RTS
 	
 loc_0002048E:	
 	dc.b	$31, $FC, $03, $60, $C5, $72, $21, $FC, $FF, $FF, $C7, $BB, $C5, $74, $61, $00, $0F, $94, $4E, $75 
 loc_000204A2:
-	MOVE.w	#$9999, $FFFFC572.w
-	MOVE.l	#$FFFFC7BC, $FFFFC574.w
+	MOVE.w	#$9999, Reward_script_value.w
+	MOVE.l	#$FFFFC7BC, Reward_script_flag.w
 	BSR.w	InitMoneyTreasure
 	RTS
 	
 loc_000204B6:
-	MOVE.w	#1, $FFFFC572.w
-	MOVE.l	#$FFFFC7AE, $FFFFC574.w
+	MOVE.w	#1, Reward_script_value.w
+	MOVE.l	#$FFFFC7AE, Reward_script_flag.w
 	BSR.w	SetupItemTreasure
 	RTS
 	
 loc_000204CA:
-	MOVE.w	#2, $FFFFC572.w
-	MOVE.l	#$FFFFC7AF, $FFFFC574.w
+	MOVE.w	#2, Reward_script_value.w
+	MOVE.l	#$FFFFC7AF, Reward_script_flag.w
 	BSR.w	SetupItemTreasure
 	RTS
 	
 loc_000204DE:
-	MOVE.w	#0, $FFFFC572.w
-	MOVE.l	#$FFFFC789, $FFFFC574.w
+	MOVE.w	#0, Reward_script_value.w
+	MOVE.l	#$FFFFC789, Reward_script_flag.w
 	BSR.w	SetupItemTreasure
 	RTS
 	
 loc_000204F2:
-	MOVE.w	#0, $FFFFC572.w
-	MOVE.l	#$FFFFC78A, $FFFFC574.w
+	MOVE.w	#0, Reward_script_value.w
+	MOVE.l	#$FFFFC78A, Reward_script_flag.w
 	BSR.w	SetupItemTreasure
 	RTS
 	
 loc_00020506:
-	MOVE.w	#$060E, $FFFFC572.w
-	MOVE.l	#$FFFFC78F, $FFFFC574.w
+	MOVE.w	#$060E, Reward_script_value.w
+	MOVE.l	#$FFFFC78F, Reward_script_flag.w
 	BSR.w	SetupEquipmentTreasure
 	RTS
 	
 ; SetupNoOneTalker
 SetupNoOneTalker:
 	MOVE.w	#0, $FFFFC570.w
-	MOVE.w	#0, $FFFFC572.w
-	MOVE.l	#0, $FFFFC574.w
+	MOVE.w	#0, Reward_script_value.w
+	MOVE.l	#0, Reward_script_flag.w
 	MOVE.b	#$FF, $FFFFC56C.w
 	BSR.w	loc_00021480
 	MOVE.l	#NoOneHereStr, Script_talk_source.w
@@ -35146,8 +35146,8 @@ loc_00020542:
 	
 	
 loc_00020550:
-	MOVE.w	#$001B, $FFFFC572.w
-	MOVE.l	#$FFFFC799, $FFFFC574.w
+	MOVE.w	#$001B, Reward_script_value.w
+	MOVE.l	#$FFFFC799, Reward_script_flag.w
 	BSR.w	SetupItemTreasure
 	RTS
 	
@@ -35157,20 +35157,20 @@ loc_00020564:
 	RTS
 	
 loc_00020572:
-	MOVE.w	#0, $FFFFC572.w	
-	MOVE.l	#$FFFFC79C, $FFFFC574.w	
+	MOVE.w	#0, Reward_script_value.w	
+	MOVE.l	#$FFFFC79C, Reward_script_flag.w	
 	BSR.w	SetupItemTreasure	
 	RTS
 	
 loc_00020586:
-	MOVE.w	#0, $FFFFC572.w	
-	MOVE.l	#$FFFFC7B0, $FFFFC574.w	
+	MOVE.w	#0, Reward_script_value.w	
+	MOVE.l	#$FFFFC7B0, Reward_script_flag.w	
 	BSR.w	SetupItemTreasure	
 	RTS
 	
 loc_0002059A:
-	MOVE.w	#$0024, $FFFFC572.w
-	MOVE.l	#$FFFFC7B2, $FFFFC574.w
+	MOVE.w	#$0024, Reward_script_value.w
+	MOVE.l	#$FFFFC7B2, Reward_script_flag.w
 	BSR.w	SetupItemTreasure
 	RTS
 	
@@ -35180,14 +35180,14 @@ loc_000205C2:
 	dc.b	$31, $FC, $00, $21, $C5, $72, $21, $FC, $FF, $FF, $C7, $B3 
 	dc.b	$C5, $74, $61, $00, $0E, $4C, $4E, $75 
 loc_000205D6:
-	MOVE.w	#$001F, $FFFFC572.w
-	MOVE.l	#$FFFFC7BE, $FFFFC574.w
+	MOVE.w	#$001F, Reward_script_value.w
+	MOVE.l	#$FFFFC7BE, Reward_script_flag.w
 	BSR.w	SetupItemTreasure
 	RTS
 	
 loc_000205EA:
-	MOVE.w	#$081A, $FFFFC572.w	
-	MOVE.l	#$FFFFC7BF, $FFFFC574.w	
+	MOVE.w	#$081A, Reward_script_value.w	
+	MOVE.l	#$FFFFC7BF, Reward_script_flag.w	
 	BSR.w	SetupEquipmentTreasure	
 	RTS
 	
@@ -35276,7 +35276,7 @@ loc_000206DE:
 	BNE.b	loc_00020712
 	BSR.w	loc_000213CE
 	MOVE.l	#loc_00008ABC, $2(A6)
-	MOVE.l	#loc_0001F712, $FFFFC566.w
+	MOVE.l	#loc_0001F712, Talker_gfx_descriptor_ptr.w
 	BSR.w	loc_000213FE
 	MOVE.l	#loc_000218A2, Script_talk_source.w
 loc_00020712:
@@ -35290,7 +35290,7 @@ loc_00020714:
 	BNE.b	loc_00020748
 	BSR.w	loc_000213CE
 	MOVE.l	#loc_00008ABC, $2(A6)
-	MOVE.l	#loc_0001F712, $FFFFC566.w
+	MOVE.l	#loc_0001F712, Talker_gfx_descriptor_ptr.w
 	BSR.w	loc_000213FE
 	MOVE.l	#loc_000218DE, Script_talk_source.w
 loc_00020748:
@@ -35304,7 +35304,7 @@ loc_0002074A:
 	BNE.b	loc_0002077E
 	BSR.w	loc_000213CE
 	MOVE.l	#loc_00008ABC, $2(A6)
-	MOVE.l	#loc_0001F712, $FFFFC566.w
+	MOVE.l	#loc_0001F712, Talker_gfx_descriptor_ptr.w
 	BSR.w	loc_000213FE
 	MOVE.l	#loc_00021914, Script_talk_source.w
 loc_0002077E:
@@ -35655,55 +35655,55 @@ loc_00020C8E:
 	MOVE.b	#$FF, $FFFFC578.w
 	BSR.w	loc_000213CE
 	MOVE.l	#loc_00008AF8, $2(A6)
-	MOVE.l	#loc_0001F712, $FFFFC566.w
+	MOVE.l	#loc_0001F712, Talker_gfx_descriptor_ptr.w
 	BSR.w	loc_000213FE
 	MOVE.l	#RingOfWisdomStr, Script_talk_source.w
 loc_00020CBA:
 	RTS
 	
 loc_00020CBC:
-	MOVE.w	#$0023, $FFFFC572.w
-	MOVE.l	#$FFFFC7EE, $FFFFC574.w
+	MOVE.w	#$0023, Reward_script_value.w
+	MOVE.l	#$FFFFC7EE, Reward_script_flag.w
 	BSR.w	SetupItemTreasure
 	RTS
 	
 loc_00020CD0:
-	MOVE.w	#$100, $FFFFC572.w
-	MOVE.l	#$FFFFC7E0, $FFFFC574.w
+	MOVE.w	#$100, Reward_script_value.w
+	MOVE.l	#$FFFFC7E0, Reward_script_flag.w
 	BSR.w	InitMoneyTreasure
 	RTS
 	
 loc_00020CE4:
-	MOVE.w	#$1000, $FFFFC572.w	
-	MOVE.l	#$FFFFC7EC, $FFFFC574.w	
+	MOVE.w	#$1000, Reward_script_value.w	
+	MOVE.l	#$FFFFC7EC, Reward_script_flag.w	
 	BSR.w	InitMoneyTreasure	
 	RTS
 	
 loc_00020CF8:
-	MOVE.w	#$040A, $FFFFC572.w
-	MOVE.l	#$FFFFC7E1, $FFFFC574.w
+	MOVE.w	#$040A, Reward_script_value.w
+	MOVE.l	#$FFFFC7E1, Reward_script_flag.w
 	BSR.w	SetupEquipmentTreasure
 	RTS
 	
 loc_00020D0C:
-	MOVE.w	#$0411, $FFFFC572.w
-	MOVE.l	#$FFFFC7E3, $FFFFC574.w
+	MOVE.w	#$0411, Reward_script_value.w
+	MOVE.l	#$FFFFC7E3, Reward_script_flag.w
 	BSR.w	SetupEquipmentTreasure
 	RTS
 	
 loc_00020D20:
 	dc.b	$31, $FC, $08, $20, $C5, $72, $21, $FC, $FF, $FF, $C7, $E2, $C5, $74, $61, $00, $06, $F8, $4E, $75 
 loc_00020D34:
-	MOVE.w	#$0410, $FFFFC572.w
-	MOVE.l	#$FFFFC7EF, $FFFFC574.w
+	MOVE.w	#$0410, Reward_script_value.w
+	MOVE.l	#$FFFFC7EF, Reward_script_flag.w
 	BSR.w	SetupEquipmentTreasure
 	RTS
 	
 loc_00020D48:
 	dc.b	$31, $FC, $10, $30, $C5, $72, $21, $FC, $FF, $FF, $C7, $E4, $C5, $74, $61, $00, $06, $D0, $4E, $75 
 loc_00020D5C:
-	MOVE.w	#$1035, $FFFFC572.w
-	MOVE.l	#$FFFFC7E6, $FFFFC574.w
+	MOVE.w	#$1035, Reward_script_value.w
+	MOVE.l	#$FFFFC7E6, Reward_script_flag.w
 	BSR.w	SetupEquipmentTreasure
 	RTS
 	
@@ -35713,48 +35713,48 @@ loc_00020D84:
 	dc.b	$31, $FC, $08, $1F, $C5, $72, $21, $FC, $FF, $FF, $C7, $E9 
 	dc.b	$C5, $74, $61, $00, $06, $94, $4E, $75 
 loc_00020D98:
-	MOVE.w	#$060F, $FFFFC572.w
-	MOVE.l	#$FFFFC7EA, $FFFFC574.w
+	MOVE.w	#$060F, Reward_script_value.w
+	MOVE.l	#$FFFFC7EA, Reward_script_flag.w
 	BSR.w	SetupEquipmentTreasure
 	RTS
 	
 loc_00020DAC:
-	MOVE.w	#0, $FFFFC572.w
-	MOVE.l	#$FFFFC78D, $FFFFC574.w
+	MOVE.w	#0, Reward_script_value.w
+	MOVE.l	#$FFFFC78D, Reward_script_flag.w
 	BSR.w	SetupItemTreasure
 	RTS
 	
 loc_00020DC0:
-	MOVE.w	#1, $FFFFC572.w
-	MOVE.l	#$FFFFC78C, $FFFFC574.w
+	MOVE.w	#1, Reward_script_value.w
+	MOVE.l	#$FFFFC78C, Reward_script_flag.w
 	BSR.w	SetupItemTreasure
 	RTS
 	
 loc_00020DD4:
-	MOVE.w	#0, $FFFFC572.w
-	MOVE.l	#$FFFFC790, $FFFFC574.w
+	MOVE.w	#0, Reward_script_value.w
+	MOVE.l	#$FFFFC790, Reward_script_flag.w
 	BSR.w	SetupItemTreasure
 	RTS
 	
 loc_00020DE8:
-	MOVE.w	#$102B, $FFFFC572.w
-	MOVE.l	#$FFFFC791, $FFFFC574.w
+	MOVE.w	#$102B, Reward_script_value.w
+	MOVE.l	#$FFFFC791, Reward_script_flag.w
 	BSR.w	SetupEquipmentTreasure
 	RTS
 	
 loc_00020DFC:
 	dc.b	$31, $FC, $00, $01, $C5, $72, $21, $FC, $FF, $FF, $C7, $92, $C5, $74, $61, $00, $06, $12, $4E, $75 
 loc_00020E10:
-	MOVE.w	#$0300, $FFFFC572.w
-	MOVE.l	#$FFFFC793, $FFFFC574.w
+	MOVE.w	#$0300, Reward_script_value.w
+	MOVE.l	#$FFFFC793, Reward_script_flag.w
 	BSR.w	InitMoneyTreasure
 	RTS
 	
 loc_00020E24:
 	dc.b	$31, $FC, $06, $00, $C5, $72, $21, $FC, $FF, $FF, $C7, $94, $C5, $74, $61, $00, $05, $FE, $4E, $75 
 loc_00020E38:
-	MOVE.w	#1, $FFFFC572.w	
-	MOVE.l	#$FFFFC796, $FFFFC574.w	
+	MOVE.w	#1, Reward_script_value.w	
+	MOVE.l	#$FFFFC796, Reward_script_flag.w	
 	BSR.w	SetupItemTreasure	
 	RTS
 	
@@ -35764,14 +35764,14 @@ loc_00020E60:
 	dc.b	$31, $FC, $08, $1E, $C5, $72, $21, $FC, $FF, $FF, $C7, $9D 
 	dc.b	$C5, $74, $61, $00, $05, $B8, $4E, $75 
 loc_00020E74:
-	MOVE.w	#$700, $FFFFC572.w	
-	MOVE.l	#$FFFFC79E, $FFFFC574.w	
+	MOVE.w	#$700, Reward_script_value.w	
+	MOVE.l	#$FFFFC79E, Reward_script_flag.w	
 	BSR.w	InitMoneyTreasure	
 	RTS
 	
 loc_00020E88:
-	MOVE.w	#$0407, $FFFFC572.w
-	MOVE.l	#$FFFFC7E8, $FFFFC574.w
+	MOVE.w	#$0407, Reward_script_value.w
+	MOVE.l	#$FFFFC7E8, Reward_script_flag.w
 	BSR.w	SetupEquipmentTreasure
 	RTS
 	
@@ -35783,28 +35783,28 @@ loc_00020EB0:
 loc_00020EC4:	
 	dc.b	$31, $FC, $08, $50, $C5, $72, $21, $FC, $FF, $FF, $C7, $A1, $C5, $74, $61, $00, $05, $5E, $4E, $75 
 loc_00020ED8:
-	MOVE.w	#2, $FFFFC572.w	
-	MOVE.l	#$FFFFC7A2, $FFFFC574.w	
+	MOVE.w	#2, Reward_script_value.w	
+	MOVE.l	#$FFFFC7A2, Reward_script_flag.w	
 	BSR.w	SetupItemTreasure	
 	RTS
 	
 loc_00020EEC:
-	MOVE.w	#$0822, $FFFFC572.w	
-	MOVE.l	#$FFFFC787, $FFFFC574.w	
+	MOVE.w	#$0822, Reward_script_value.w	
+	MOVE.l	#$FFFFC787, Reward_script_flag.w	
 	BSR.w	SetupEquipmentTreasure	
 	RTS
 	
 loc_00020F00:	
 	dc.b	$31, $FC, $10, $36, $C5, $72, $21, $FC, $FF, $FF, $C7, $A3, $C5, $74, $61, $00, $05, $18, $4E, $75 
 loc_00020F14:
-	MOVE.w	#$2000, $FFFFC572.w
-	MOVE.l	#$FFFFC7A4, $FFFFC574.w
+	MOVE.w	#$2000, Reward_script_value.w
+	MOVE.l	#$FFFFC7A4, Reward_script_flag.w
 	BSR.w	InitMoneyTreasure
 	RTS
 	
 loc_00020F28:
-	MOVE.w	#$3000, $FFFFC572.w	
-	MOVE.l	#$FFFFC7A5, $FFFFC574.w	
+	MOVE.w	#$3000, Reward_script_value.w	
+	MOVE.l	#$FFFFC7A5, Reward_script_flag.w	
 	BSR.w	InitMoneyTreasure	
 	RTS
 	
@@ -35813,8 +35813,8 @@ loc_00020F3C:
 loc_00020F50:
 	TST.b	Treasure_of_troy_challenge_issued.w
 	BEQ.b	loc_00020F68
-	MOVE.w	#$010D, $FFFFC572.w
-	MOVE.l	#Treasure_of_troy_found, $FFFFC574.w
+	MOVE.w	#$010D, Reward_script_value.w
+	MOVE.l	#Treasure_of_troy_found, Reward_script_flag.w
 	BSR.w	SetupItemTreasure
 loc_00020F68:
 	RTS
@@ -35832,7 +35832,7 @@ CheckCaveRoomEnemyState:
 	MOVE.b	#$FF, $FFFFC56F.w
 loc_00020F84:
 	MOVE.w	#5, $FFFFC570.w
-	MOVE.w	D0, $FFFFC572.w
+	MOVE.w	D0, Reward_script_value.w
 	MOVE.b	#$FF, $FFFFC56C.w
 	BSR.w	loc_00021480
 	MOVE.l	#NoOneHereStr, Script_talk_source.w
@@ -35843,11 +35843,11 @@ loc_00020FA2:
 	BNE.b	loc_00020FE2
 	MOVE.b	#$FF, Truffles_available.w
 	MOVE.w	#0, $FFFFC570.w
-	MOVE.w	#$010B, $FFFFC572.w
-	MOVE.l	#$FFFFC72C, $FFFFC574.w
+	MOVE.w	#$010B, Reward_script_value.w
+	MOVE.l	#$FFFFC72C, Reward_script_flag.w
 	BSR.w	loc_000213CE
 	MOVE.l	#loc_00008B6A, $2(A6)
-	MOVE.l	#loc_0001F7BA, $FFFFC566.w
+	MOVE.l	#loc_0001F7BA, Talker_gfx_descriptor_ptr.w
 	BSR.w	loc_000213FE
 	MOVE.l	#NoOneHereStr, Script_talk_source.w
 loc_00020FE2:
@@ -35870,7 +35870,7 @@ loc_00021006:
 	MOVE.b	#$FF, $FFFFC578.w
 	BSR.w	loc_000213CE
 	MOVE.l	#loc_00008ADA, $2(A6)
-	MOVE.l	#loc_0001F72E, $FFFFC566.w
+	MOVE.l	#loc_0001F72E, Talker_gfx_descriptor_ptr.w
 	BSR.w	loc_000213FE
 	MOVE.l	#SorryForStealingStr, Script_talk_source.w
 	TST.b	Stow_thief_defeated.w
@@ -35907,7 +35907,7 @@ loc_00021082:
 	MOVE.b	#$FF, $FFFFC578.w
 	BSR.w	loc_000213CE
 	MOVE.l	#loc_00008B4C, $2(A6)
-	MOVE.l	#loc_0001F74A, $FFFFC566.w
+	MOVE.l	#loc_0001F74A, Talker_gfx_descriptor_ptr.w
 	BSR.w	loc_000213FE
 	MOVE.l	#BearwulfIntroductionStr, Script_talk_source.w
 loc_000210BC:
@@ -35917,8 +35917,8 @@ loc_000210BE:
 	MOVE.l	#NoOneHereStr, Script_talk_source.w
 	TST.b	Bearwulf_cave_entered.w
 	BEQ.b	loc_000210DE
-	MOVE.w	#$0823, $FFFFC572.w
-	MOVE.l	#$FFFFC769, $FFFFC574.w
+	MOVE.w	#$0823, Reward_script_value.w
+	MOVE.l	#$FFFFC769, Reward_script_flag.w
 	BSR.w	SetupEquipmentTreasure
 loc_000210DE:
 	RTS
@@ -35932,7 +35932,7 @@ loc_000210E0:
 	MOVE.b	#$FF, $FFFFC578.w
 	BSR.w	loc_000213CE
 	MOVE.l	#loc_00008B1C, $2(A6)
-	MOVE.l	#loc_0001F712, $FFFFC566.w
+	MOVE.l	#loc_0001F712, Talker_gfx_descriptor_ptr.w
 	BSR.w	loc_000213FE
 	MOVE.l	#NeverExpectedSucceedStr, Script_talk_source.w
 	TST.b	Crown_received.w
@@ -35945,8 +35945,8 @@ loc_0002112A:
 	MOVE.l	#NoOneHereStr, Script_talk_source.w
 	TST.b	Malaga_dungeon_person_rescued.w
 	BEQ.b	loc_0002114A
-	MOVE.w	#$0114, $FFFFC572.w
-	MOVE.l	#$FFFFC75B, $FFFFC574.w
+	MOVE.w	#$0114, Reward_script_value.w
+	MOVE.l	#$FFFFC75B, Reward_script_flag.w
 	BSR.w	SetupItemTreasure
 loc_0002114A:
 	RTS
@@ -35962,7 +35962,7 @@ loc_00021160:
 	MOVE.b	#$FF, $FFFFC578.w
 	BSR.w	loc_000213CE
 	MOVE.l	#loc_00008B0A, $2(A6)
-	MOVE.l	#loc_0001F7D6, $FFFFC566.w
+	MOVE.l	#loc_0001F7D6, Talker_gfx_descriptor_ptr.w
 	BSR.w	loc_000213FE
 	MOVE.l	#AwaitingYouStr, Script_talk_source.w
 loc_0002119A:
@@ -35986,11 +35986,11 @@ loc_000211BE:
 	BNE.b	loc_00021204
 	MOVE.b	#$FF, Herbs_available.w
 	MOVE.w	#0, $FFFFC570.w
-	MOVE.w	#$010C, $FFFFC572.w
-	MOVE.l	#$FFFFC752, $FFFFC574.w
+	MOVE.w	#$010C, Reward_script_value.w
+	MOVE.l	#$FFFFC752, Reward_script_flag.w
 	BSR.w	loc_000213CE
 	MOVE.l	#loc_00008B88, $2(A6)
-	MOVE.l	#loc_0001F79E, $FFFFC566.w
+	MOVE.l	#loc_0001F79E, Talker_gfx_descriptor_ptr.w
 	BSR.w	loc_000213FE
 	MOVE.l	#NoOneHereStr, Script_talk_source.w
 loc_00021204:
@@ -36004,8 +36004,8 @@ loc_00021206:
 	RTS
 	
 loc_0002121C:
-	MOVE.w	#$010E, $FFFFC572.w
-	MOVE.l	#$FFFFC74B, $FFFFC574.w
+	MOVE.w	#$010E, Reward_script_value.w
+	MOVE.l	#$FFFFC74B, Reward_script_flag.w
 	BSR.w	SetupItemTreasure
 	RTS
 	
@@ -36017,8 +36017,8 @@ loc_00021230:
 	RTS
 	
 loc_00021246:
-	MOVE.w	#$010F, $FFFFC572.w
-	MOVE.l	#$FFFFC74D, $FFFFC574.w
+	MOVE.w	#$010F, Reward_script_value.w
+	MOVE.l	#$FFFFC74D, Reward_script_flag.w
 	BSR.w	SetupItemTreasure
 	RTS
 	
@@ -36030,8 +36030,8 @@ loc_0002125A:
 	RTS
 	
 loc_00021270:
-	MOVE.w	#$0110, $FFFFC572.w
-	MOVE.l	#$FFFFC74F, $FFFFC574.w
+	MOVE.w	#$0110, Reward_script_value.w
+	MOVE.l	#$FFFFC74F, Reward_script_flag.w
 	BSR.w	SetupItemTreasure
 	RTS
 	
@@ -36047,15 +36047,15 @@ loc_000212A8:
 	RTS
 	
 loc_000212AA:
-	MOVE.w	#$0116, $FFFFC572.w
-	MOVE.l	#$FFFFC780, $FFFFC574.w
+	MOVE.w	#$0116, Reward_script_value.w
+	MOVE.l	#$FFFFC780, Reward_script_flag.w
 	BSR.w	SetupItemTreasure
 	RTS
 	
 loc_000212BE:
 	MOVE.w	#4, $FFFFC570.w
-	MOVE.w	#5, $FFFFC572.w
-	MOVE.l	#$FFFFC81D, $FFFFC574.w
+	MOVE.w	#5, Reward_script_value.w
+	MOVE.l	#$FFFFC81D, Reward_script_flag.w
 	BSR.w	loc_00021438
 	RTS
 	
@@ -36067,15 +36067,15 @@ loc_000212D8:
 	RTS
 	
 loc_000212EE:
-	MOVE.w	#$0117, $FFFFC572.w
-	MOVE.l	#$FFFFC781, $FFFFC574.w
+	MOVE.w	#$0117, Reward_script_value.w
+	MOVE.l	#$FFFFC781, Reward_script_flag.w
 	BSR.w	SetupItemTreasure
 	RTS
 	
 loc_00021302:
 	MOVE.w	#4, $FFFFC570.w
-	MOVE.w	#6, $FFFFC572.w
-	MOVE.l	#$FFFFC81E, $FFFFC574.w
+	MOVE.w	#6, Reward_script_value.w
+	MOVE.l	#$FFFFC81E, Reward_script_flag.w
 	BSR.w	loc_00021438
 	RTS
 	
@@ -36087,15 +36087,15 @@ loc_0002131C:
 	RTS
 	
 loc_00021332:
-	MOVE.w	#$0118, $FFFFC572.w
-	MOVE.l	#$FFFFC782, $FFFFC574.w
+	MOVE.w	#$0118, Reward_script_value.w
+	MOVE.l	#$FFFFC782, Reward_script_flag.w
 	BSR.w	SetupItemTreasure
 	RTS
 	
 loc_00021346:
 	MOVE.w	#4, $FFFFC570.w
-	MOVE.w	#7, $FFFFC572.w
-	MOVE.l	#$FFFFC81F, $FFFFC574.w
+	MOVE.w	#7, Reward_script_value.w
+	MOVE.l	#$FFFFC81F, Reward_script_flag.w
 	BSR.w	loc_00021438
 	RTS
 	
@@ -36108,7 +36108,7 @@ loc_00021360:
 	MOVE.b	#$FF, $FFFFC578.w
 	BSR.w	loc_000213CE
 	MOVE.l	#loc_00008B2E, $2(A6)
-	MOVE.l	#loc_0001F7F2, $FFFFC566.w
+	MOVE.l	#loc_0001F7F2, Talker_gfx_descriptor_ptr.w
 	BSR.w	loc_000213FE
 	MOVE.l	#FreedAtLastStr, Script_talk_source.w
 	TST.b	All_rings_collected.w
@@ -36131,8 +36131,8 @@ loc_000213CE:
 	BSET.b	#7, (A6)
 	MOVE.b	#$FF, $FFFFC561.w
 	MOVE.b	#$FF, $FFFFC56A.w
-	CLR.w	$FFFFC554.w
-	CLR.w	$FFFFC552.w
+	CLR.w	Dialog_timer.w
+	CLR.w	Dialog_phase.w
 	MOVE.w	Gameplay_substate.w, $FFFFC414.w
 	MOVE.w	Player_direction.w, $FFFFC616.w
 	MOVE.w	#$20, Gameplay_substate.w
@@ -36181,7 +36181,7 @@ InitMoneyTreasure:
 	
 	; Common chest initialization
 loc_00021438:
-	MOVEA.l	$FFFFC574.w, A0          ; A0 = flag byte pointer
+	MOVEA.l	Reward_script_flag.w, A0          ; A0 = flag byte pointer
 	TST.b	(A0)                     ; Already opened?
 	BNE.b	loc_00021446             ; Yes: skip treasure flag
 	MOVE.b	#$FF, $FFFFC56F.w        ; Mark chest contains treasure
@@ -36194,7 +36194,7 @@ loc_00021446:
 	
 loc_0002145A:
 	MOVE.w	Enemy_reward_type.w, $FFFFC570.w
-	MOVE.w	Enemy_reward_value.w, $FFFFC572.w
+	MOVE.w	Enemy_reward_value.w, Reward_script_value.w
 	MOVE.b	#$FF, $FFFFC56F.w
 	MOVE.b	#$FF, $FFFFC56C.w
 	BSR.w	loc_00021480
@@ -36204,32 +36204,32 @@ loc_0002145A:
 loc_00021480:
 	BSR.w	loc_000213CE
 	MOVE.l	#loc_00008AB2, $2(A6)
-	MOVE.l	#loc_0001F782, $FFFFC566.w
+	MOVE.l	#loc_0001F782, Talker_gfx_descriptor_ptr.w
 	BRA.w	loc_000213FE
 ; loc_00021498
 InitTalkerWithGfxDescriptor_1F712:
 	MOVE.b	#$FF, $FFFFC578.w
 	BSR.w	loc_000213CE
 	MOVE.l	#loc_00008AB2, $2(A6)
-	MOVE.l	#loc_0001F712, $FFFFC566.w
+	MOVE.l	#loc_0001F712, Talker_gfx_descriptor_ptr.w
 	BRA.w	loc_000213FE
 loc_000214B6:
 	MOVE.b	#$FF, $FFFFC578.w
 	BSR.w	loc_000213CE
 	MOVE.l	#loc_00008AB2, $2(A6)
-	MOVE.l	#loc_0001F74A, $FFFFC566.w
+	MOVE.l	#loc_0001F74A, Talker_gfx_descriptor_ptr.w
 	BRA.w	loc_000213FE
 loc_000214D4:
 	MOVE.b	#$FF, $FFFFC578.w
 	BSR.w	loc_000213CE
 	MOVE.l	#loc_00008AB2, $2(A6)
-	MOVE.l	#loc_0001F72E, $FFFFC566.w
+	MOVE.l	#loc_0001F72E, Talker_gfx_descriptor_ptr.w
 	BRA.w	loc_000213FE
 loc_000214F2:
 	MOVE.b	#$FF, $FFFFC578.w
 	BSR.w	loc_000213CE
 	MOVE.l	#loc_00008AB2, $2(A6)
-	MOVE.l	#loc_0001F766, $FFFFC566.w
+	MOVE.l	#loc_0001F766, Talker_gfx_descriptor_ptr.w
 	BRA.w	loc_000213FE
 
 LongDangerousRoadAheadStr:
