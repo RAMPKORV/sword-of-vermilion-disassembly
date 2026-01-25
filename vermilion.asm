@@ -910,7 +910,7 @@ ProgramState_04:
 	TST.b	Fade_out_lines_mask.w
 	BNE.b	loc_00001614
 	MOVE.w	#$00E0, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	CLR.w	Program_state.w
 	CLR.b	$FFFFC3B6.w
 	JSR	ClearScrollData
@@ -952,7 +952,7 @@ ProgramState_0A:
 	MOVE.w	#0, Player_map_sector_x.w
 	MOVE.w	#6, Player_map_sector_y.w
 	MOVE.w	#$00E0, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 loc_0000168A:
 	RTS
 
@@ -973,7 +973,7 @@ ProgramState_0B:
 	MOVE.w	#$0012, $FFFFC080.w
 	MOVE.w	#PROGRAM_STATE_0C, Program_state.w
 	MOVE.w	#$8D, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	JSR	loc_0001325E
 loc_000016E4:
 	RTS
@@ -994,7 +994,7 @@ ProgramState_0D:
 	MOVE.l	#HBlankObjectHandler, $12(A5)	
 	MOVE.w	#PROGRAM_STATE_15, Program_state.w	
 	MOVE.w	#$00E0, D0	
-	JSR	loc_00010522	
+	JSR	QueueSoundEffect	
 loc_00001718:
 	RTS
 	
@@ -1033,7 +1033,7 @@ ProgramState_05:
 	MOVE.w	#PROGRAM_STATE_06, Program_state.w
 	CLR.b	Name_entry_complete.w
 	MOVE.b	#$8D, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 loc_000017AA:
 	RTS
 
@@ -1054,7 +1054,7 @@ ProgramState_07:
 	MOVE.l	#HBlankObjectHandler, $12(A5)
 	MOVE.w	#PROGRAM_STATE_08, Program_state.w
 	MOVE.w	#$00E0, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 loc_000017E4:
 	RTS
 
@@ -1286,17 +1286,17 @@ loc_00001AE6:
 	BRA.w	HandleOverworldMenuInput
 loc_00001B08:
 	MOVE.b	#$A3, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	MOVE.w	#$00E0, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	MOVE.b	#$FF, Fade_out_lines_mask.w
 	MOVE.w	#9, Gameplay_substate.w
 	BRA.w	loc_00001B72
 loc_00001B2C:
 	MOVE.b	#$A3, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	MOVE.w	#$00E0, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	MOVE.b	#$FF, Fade_out_lines_mask.w
 	MOVE.w	#$12, Gameplay_substate.w
 	MOVE.b	#$FF, Player_is_moving.w
@@ -1304,9 +1304,9 @@ loc_00001B2C:
 
 loc_00001B54:
 	MOVE.b	#$A3, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	MOVE.w	#$00E0, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	MOVE.b	#$FF, Fade_out_lines_mask.w
 	ADDQ.w	#1, Gameplay_substate.w
 loc_00001B72:
@@ -1365,7 +1365,7 @@ loc_00001C1C:
 	MOVE.b	#$FF, Fade_out_lines_mask.w
 	MOVE.w	#$012C, Sleep_delay_timer.w
 	MOVE.b	#$85, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	MOVE.w	#$29, Gameplay_substate.w
 	RTS
 
@@ -1380,7 +1380,7 @@ loc_00001C56:
 	MOVE.w	Gameplay_substate.w, $FFFFC414.w	
 	MOVE.w	#$21, Gameplay_substate.w	
 	MOVE.w	#$00E0, D0	
-	JSR	loc_00010522	
+	JSR	QueueSoundEffect	
 	MOVE.b	#$FF, Fade_out_lines_mask.w	
 	RTS
 	
@@ -1393,9 +1393,9 @@ loc_00001C96:
 	BRA.w	HandleOverworldMenuInput
 loc_00001CAE:
 	MOVE.b	#$A3, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	MOVE.w	#$00E0, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	MOVE.b	#$FF, Fade_out_lines_mask.w
 	MOVE.w	#1, Gameplay_substate.w
 	MOVE.b	#$FF, Player_is_moving.w
@@ -1404,7 +1404,7 @@ loc_00001CAE:
 
 loc_00001CDC:
 	MOVE.b	#$A3, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	MOVE.b	#$FF, Fade_out_lines_mask.w
 	ADDQ.w	#1, Gameplay_substate.w
 	MOVEA.l	$FFFFCC08.w, A6
@@ -1492,7 +1492,7 @@ loc_00001E08:
 loc_00001E0A:
 	MOVE.b	#$FF, Frying_pan_knockout_flag.w	
 	MOVE.w	#$B9, D0	
-	JSR	loc_00010522	
+	JSR	QueueSoundEffect	
 	MOVE.w	#$24, Gameplay_substate.w	
 	CLR.w	Player_level.w	
 	CLR.w	Player_str.w	
@@ -1586,7 +1586,7 @@ loc_00001F42:
 loc_00001F5C:
 	MOVE.b	#$FF, Fade_out_lines_mask.w
 	MOVE.b	#$A3, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	MOVE.w	#3, Gameplay_substate.w
 	LEA	loc_0000362C, A0
 	MOVE.w	Player_direction.w, D0
@@ -1607,7 +1607,7 @@ loc_00001F5C:
 
 loc_00001FB4:
 	MOVE.b	#$A3, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	MOVE.b	#$FF, Fade_out_lines_mask.w
 	ADDQ.w	#1, Gameplay_substate.w
 	MOVEA.l	$FFFFCC08.w, A6
@@ -1657,7 +1657,7 @@ loc_00002074:
 	BRA.w	HandleOverworldMenuInput
 loc_00002084:
 	MOVE.b	#$A3, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	MOVE.b	#$FF, Fade_out_lines_mask.w
 	CMPI.w	#$F000, Current_tile_type.w
 	BNE.w	HandleOverworldMenuInput
@@ -1701,7 +1701,7 @@ loc_00002116:
 	MOVE.w	Gameplay_substate.w, $FFFFC414.w
 	MOVE.w	#$21, Gameplay_substate.w
 	MOVE.w	#$00E0, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	MOVE.b	#$FF, Fade_out_lines_mask.w
 	RTS
 
@@ -1714,9 +1714,9 @@ loc_00002156:
 	BRA.w	HandleOverworldMenuInput
 loc_00002170:
 	MOVE.b	#$A3, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	MOVE.w	#$00E0, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	MOVE.b	#$FF, Fade_out_lines_mask.w
 	MOVE.w	#1, Gameplay_substate.w
 	CLR.w	Saved_player_x_in_town.w
@@ -1726,7 +1726,7 @@ loc_00002170:
 
 loc_000021A2:
 	MOVE.b	#$A3, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	MOVE.b	#$FF, Fade_out_lines_mask.w
 	ADDQ.w	#1, Gameplay_substate.w
 	MOVEA.l	$FFFFCC08.w, A6
@@ -1763,7 +1763,7 @@ loc_0000221C:
 	BRA.w	HandleOverworldMenuInput
 loc_00002234:
 	MOVE.b	#$A3, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	MOVE.b	#$FF, Fade_out_lines_mask.w
 	MOVE.w	#9, Gameplay_substate.w
 	MOVEA.l	$FFFFCC08.w, A6
@@ -1779,7 +1779,7 @@ loc_00002234:
 
 loc_0000227A:
 	MOVE.b	#$A3, D0	
-	JSR	loc_00010522	
+	JSR	QueueSoundEffect	
 	MOVE.b	#$FF, Fade_out_lines_mask.w	
 	ADDQ.w	#1, Gameplay_substate.w	
 	MOVEA.l	$FFFFCC08.w, A6	
@@ -1810,7 +1810,7 @@ loc_000022E8:
 	CMPI.w	#$F000, Current_tile_type.w	
 	BNE.w	HandleOverworldMenuInput	
 	MOVE.b	#$A3, D0	
-	JSR	loc_00010522	
+	JSR	QueueSoundEffect	
 	MOVE.b	#$FF, Fade_out_lines_mask.w	
 	CMPI.w	#$F000, Current_tile_type.w	
 	BNE.w	HandleOverworldMenuInput	
@@ -1866,7 +1866,7 @@ loc_000023EA:
 	JSR	loc_00013028
 	CLR.b	Player_in_first_person_mode.w
 	MOVE.b	#$92, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	JSR	loc_0001325E
 	JSR	EnableDisplay
 loc_00002410:
@@ -1881,7 +1881,7 @@ loc_00002412:
 	CLR.b	Soldier_fight_event_trigger.w
 loc_00002428:
 	MOVE.w	#$00B9, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	MOVE.w	#$24, Gameplay_substate.w
 	MOVE.b	#8, Fade_out_lines_mask.w
 	CLR.w	Player_hp.w
@@ -1897,7 +1897,7 @@ loc_0000244A:
 	CLR.b	Soldier_fight_event_trigger.w	
 loc_0000245A:
 	MOVE.w	#$00B9, D0	
-	JSR	loc_00010522	
+	JSR	QueueSoundEffect	
 	MOVE.w	#$24, Gameplay_substate.w	
 	MOVE.b	#8, Fade_out_lines_mask.w	
 	CLR.w	Player_hp.w	
@@ -1951,9 +1951,9 @@ loc_000024F8:
 loc_00002518:
 	MOVE.w	#$11, Gameplay_substate.w
 	MOVE.b	#$A3, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	MOVE.w	#$00E0, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	MOVE.b	#$FF, Fade_out_lines_mask.w
 	RTS
 
@@ -1992,7 +1992,7 @@ loc_000025B2:
 	BNE.b	loc_000025CC
 	CLR.b	Player_in_first_person_mode.w
 	MOVE.w	#$00E0, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	MOVE.w	#0, Gameplay_substate.w
 loc_000025CC:
 	RTS
@@ -2062,7 +2062,7 @@ loc_000026BA: ; level up
 	MOVE.b	#$FF, Player_input_blocked.w
 	MOVE.w	#$1B, Gameplay_substate.w
 	MOVE.b	#$86, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	ADDQ.w	#1, Player_level.w
 	JSR	UpgradeLevelStats
 	MOVE.w	#100, Level_up_timer.w
@@ -2077,7 +2077,7 @@ loc_00002706:
 loc_00002712:
 	MOVE.b	#$8E, D0
 	MOVE.w	D0, Current_area_music.w
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 loc_00002720:
 	CLR.b	Player_input_blocked.w
 loc_00002724:
@@ -2106,7 +2106,7 @@ loc_0000275A:
 	MOVE.w	Gameplay_substate.w, $FFFFC414.w
 	MOVE.w	#$21, Gameplay_substate.w
 	MOVE.w	#$00E0, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	MOVE.b	#$FF, Fade_out_lines_mask.w
 	RTS
 
@@ -2206,7 +2206,7 @@ loc_00002868:
 	CLR.w	$FFFFC552.w
 	CLR.b	Chest_already_opened.w
 	MOVE.w	#$0084, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	RTS
 
 loc_000028C2:
@@ -2282,7 +2282,7 @@ loc_00002974:
 	BLT.b	loc_000029D4
 	MOVE.w	#$1B, Gameplay_substate.w
 	MOVE.b	#$86, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	ADDQ.w	#1, Player_level.w
 	JSR	UpgradeLevelStats
 	MOVE.w	#100, Level_up_timer.w
@@ -2304,7 +2304,7 @@ loc_000029D4:
 
 loc_000029EE:
 	MOVE.w	D0, Current_area_music.w
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 loc_000029F8:
 	RTS
 
@@ -2321,7 +2321,7 @@ loc_000029FA:
 	MOVE.w	#$0040, Palette_line_2_index.w
 loc_00002A28:
 	MOVE.w	#$00B3, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	MOVE.w	#$0011, $FFFFC086.w
 	CLR.b	Encounter_triggered.w
 	CLR.b	Chest_already_opened.w
@@ -2469,7 +2469,7 @@ loc_00002BCC:
 	TST.b	Is_in_cave.w
 	BNE.b	loc_00002C5C
 	MOVE.w	Current_area_music.w, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	BRA.b	loc_00002C62
 loc_00002C5C:
 	MOVE.b	#$FF, Player_in_first_person_mode.w
@@ -2654,7 +2654,7 @@ loc_00002F2A:
 	TST.w	Player_hp.w
 	BGT.b	loc_00002F50
 	MOVE.w	#$00B9, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	MOVE.w	#$24, Gameplay_substate.w
 	MOVE.b	#8, Fade_out_lines_mask.w
 	MOVE.w	#$FFFF, D0
@@ -2778,14 +2778,14 @@ HandleOverworldMenuInput:
 	BEQ.b	loc_000030D0
 	MOVE.w	#1, Overworld_menu_state.w	
 	MOVE.b	#$A0, D0	
-	JSR	loc_00010522	
+	JSR	QueueSoundEffect	
 	BRA.w	loc_000030EE	
 loc_000030D0:
 	MOVE.w	#5, D2
 	BSR.w	loc_000012F2
 	BEQ.b	loc_000030EA
 	MOVE.b	#$A0, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	MOVE.w	#3, Overworld_menu_state.w
 loc_000030EA:
 	BRA.w	loc_000030EE
@@ -2838,7 +2838,7 @@ loc_00003170:
 	BSR.w	loc_000012F2	
 	BEQ.b	loc_000031A2	
 	MOVE.b	#$A8, D0	
-	JSR	loc_00010522	
+	JSR	QueueSoundEffect	
 	CLR.w	Overworld_menu_state.w	
 	MOVE.w	#2, Window_draw_type.w	
 	CLR.w	$FFFF9916.w	
@@ -2850,7 +2850,7 @@ loc_000031A2:
 	BSR.w	loc_000012F2	
 	BEQ.b	loc_000031D4	
 	MOVE.b	#$A1, D0	
-	JSR	loc_00010522	
+	JSR	QueueSoundEffect	
 	MOVE.w	Main_menu_selection.w, D0	
 	MOVE.b	D0, Message_speed.w	
 	CLR.w	Overworld_menu_state.w	
@@ -2898,7 +2898,7 @@ loc_00003248:
 	BSR.w	loc_000012F2
 	BEQ.b	loc_0000327A
 	MOVE.b	#$A8, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	CLR.w	Overworld_menu_state.w
 	MOVE.w	#3, Window_draw_type.w
 	CLR.w	$FFFF9916.w
@@ -2910,7 +2910,7 @@ loc_0000327A:
 	BSR.w	loc_000012F2
 	BEQ.b	loc_00003294
 	MOVE.b	#$A1, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	ADDQ.w	#1, Overworld_menu_state.w
 	RTS
 
@@ -3079,7 +3079,7 @@ loc_000033F6:
 	MOVE.w	#$0083, D0
 loc_00003400:
 	MOVE.w	D0, Current_area_music.w
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	RTS
 
 loc_0000340C:
@@ -3302,7 +3302,7 @@ loc_00003654:
 	LEA	loc_0000366A, A0
 	MOVE.w	Battle_type.w, D0
 	MOVE.b	(A0,D0.w), D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	RTS
 
 loc_0000366A:
@@ -3331,7 +3331,7 @@ loc_000036CC:
 	CLR.w	D0
 	MOVE.b	(A0,D1.w), D0
 	MOVE.w	D0, Current_area_music.w
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	RTS
 
 loc_000036E8:
@@ -3812,7 +3812,7 @@ loc_00003D7A:
 	TST.w	Equipped_sword.w
 	BLT.b	loc_00003DA6
 	MOVE.b	#$B6, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	MOVE.b	#$FF, Player_attacking_flag.w
 	CLR.b	$28(A5)
 loc_00003DA6:
@@ -3884,9 +3884,9 @@ loc_00003E48:
 loc_00003E8A:
 	MOVE.w	#$11, Gameplay_substate.w
 	MOVE.b	#$A3, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	MOVE.w	#$00E0, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	MOVE.b	#$FF, Fade_out_lines_mask.w
 loc_00003EAA:
 	MOVE.b	#$FF, Sprite_dma_update_pending.w
@@ -4303,7 +4303,7 @@ loc_000044C2:
 	MOVE.b	#6, Fade_out_lines_mask.w
 	MOVE.w	#$1E, Gameplay_substate.w
 	MOVE.b	#$A3, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	RTS
 
 loc_000044E0:
@@ -4338,7 +4338,7 @@ loc_00004516:
 	TST.b	Chest_already_opened.w
 	BEQ.b	loc_0000455C
 	MOVE.w	#$00B3, D0	
-	JSR	loc_00010522	
+	JSR	QueueSoundEffect	
 	CLR.b	Chest_already_opened.w	
 loc_0000455C:
 	CLR.b	Door_unlocked_flag.w
@@ -4397,7 +4397,7 @@ loc_000045B4: ; Enter cave
 loc_000045F0:
 	MOVE.w	#$15, Gameplay_substate.w
 	MOVE.b	#$A3, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	RTS
 
 loc_00004602:
@@ -4406,13 +4406,13 @@ loc_00004602:
 	MOVE.w	#$14, Gameplay_substate.w
 	CLR.b	Cave_position_saved.w
 	MOVE.b	#$A3, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	MOVE.b	#$FF, Fade_out_lines_mask.w
 	RTS
 
 loc_00004626:
 	MOVE.b	#$A3, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	CLR.b	Cave_position_saved.w
 	MOVE.w	#$17, Gameplay_substate.w
 	MOVE.b	#$FF, Fade_out_lines_mask.w
@@ -6918,7 +6918,7 @@ loc_00006998:
 	JSR	loc_000012F2
 	BEQ.b	loc_000069C0
 	MOVE.w	#$00B8, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	MOVE.b	#$FF, Player_attacking_flag.w
 	CLR.b	$28(A5)
 loc_000069C0:
@@ -8376,7 +8376,7 @@ loc_00007CCC:
 	MOVE.w	$FFFFC114.w, Saved_camera_tile_y_room1.w
 	MOVE.b	#$FF, Fade_out_lines_mask.w
 	MOVE.b	#$85, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	MOVE.w	#3, Gameplay_substate.w
 	MOVE.w	#$FFFF, Player_poisoned.w
 	MOVE.b	#$FF, Poison_notified.w
@@ -9974,7 +9974,7 @@ loc_0000919A: ; suspected: Take a hit from an enemy
 	MOVE.b	#$10, $1A(A6)
 	BSR.w	loc_0000B5A8
 	MOVE.b	#$B2, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	TST.b	$24(A5)
 	BEQ.w	loc_00009244
 	MOVE.w	Equipped_shield.w, D0
@@ -10110,7 +10110,7 @@ loc_00009392:
 
 loc_00009394:
 	MOVE.b	#$B1, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	MOVEQ	#0, D0
 	MOVE.w	$2A(A5), D0
 	MOVE.l	D0, Transaction_amount.w
@@ -10133,7 +10133,7 @@ loc_00009394:
 ; loc_000093EA
 EnemyDeathReward_TwoSprites:
 	MOVE.b	#$B1, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	MOVEQ	#0, D0
 	MOVE.w	$2A(A5), D0
 	MOVE.l	D0, Transaction_amount.w
@@ -10809,7 +10809,7 @@ loc_00009DC0:
 	TST.b	$26(A5)
 	BEQ.w	loc_00009DE0
 	MOVE.b	#$B5, D0	
-	JSR	loc_00010522	
+	JSR	QueueSoundEffect	
 	MOVE.w	Player_str.w, D0	
 	SUB.w	D0, $28(A5)	
 	MOVE.b	#$10, $1A(A5)	
@@ -11979,7 +11979,7 @@ loc_0000AE74:
 	TST.b	$26(A5)
 	BEQ.w	loc_0000AE94
 	MOVE.b	#$B5, D0	
-	JSR	loc_00010522	
+	JSR	QueueSoundEffect	
 	MOVE.w	Player_str.w, D0	
 	SUB.w	D0, $28(A5)	
 	MOVE.b	#$10, $1A(A5)	
@@ -12126,7 +12126,7 @@ loc_0000B07A:
 	TST.b	$26(A5)
 	BEQ.w	loc_0000B09A
 	MOVE.b	#$B5, D0	
-	JSR	loc_00010522	
+	JSR	QueueSoundEffect	
 	MOVE.w	Player_str.w, D0	
 	SUB.w	D0, $28(A5)	
 	MOVE.b	#$10, $1A(A5)	
@@ -12322,7 +12322,7 @@ loc_0000B33A:
 	TST.b	$26(A5)
 	BEQ.w	loc_0000B35A
 	MOVE.b	#$B5, D0	
-	JSR	loc_00010522	
+	JSR	QueueSoundEffect	
 	MOVE.w	Player_str.w, D0	
 	SUB.w	D0, $28(A5)	
 	MOVE.b	#$10, $1A(A5)	
@@ -12466,7 +12466,7 @@ loc_0000B4D6:
 
 loc_0000B50C:
 	MOVE.b	#$B1, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	MOVEQ	#0, D0
 	MOVE.w	$2A(A5), D0
 	MOVE.l	D0, Transaction_amount.w
@@ -12593,7 +12593,7 @@ loc_0000B6A8:
 	TST.b	$26(A5)
 	BEQ.w	loc_0000B6CE
 	MOVE.b	#$B5, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	MOVE.w	#$0078, $3C(A5)
 	MOVE.w	Player_str.w, D0
 	SUB.w	D0, $28(A5)
@@ -12611,7 +12611,7 @@ loc_0000B6E4:
 	TST.b	$26(A5)
 	BEQ.w	loc_0000B704
 	MOVE.b	#$B5, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	MOVE.w	Player_str.w, D0
 	SUB.w	D0, $28(A5)
 	MOVE.b	#$10, $1A(A5)
@@ -13023,7 +13023,7 @@ loc_0000BD04:
 	BSR.w	UpdateSpritePositionAndRender
 	MOVE.l	#loc_0000BD76, $2(A5)
 	MOVE.w	#$00C0, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	RTS
 
 loc_0000BD76:
@@ -13074,7 +13074,7 @@ loc_0000BE02:
 	MOVE.l	#loc_0000BE2A, $2(A5)
 	MOVE.b	#$32, $1A(A5)
 	MOVE.w	#$00AB, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 loc_0000BE24:
 	BSR.w	UpdateSpritePositionAndRender
 	RTS
@@ -13104,7 +13104,7 @@ loc_0000BE68:
 	BNE.b	loc_0000BE80
 	MOVE.l	#loc_0000BE86, $2(A5)
 	MOVE.w	#$00AC, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 loc_0000BE80:
 	BSR.w	UpdateSpritePositionAndRender
 	RTS
@@ -13130,7 +13130,7 @@ loc_0000BEB6:
 	BGE.b	loc_0000BEE2
 	JSR	ClearScrollData
 	MOVE.w	#$0090, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	MOVE.b	#$FF, Player_input_blocked.w
 	BSR.w	loc_0000D06A
 	BSR.w	loc_0000D094
@@ -13655,7 +13655,7 @@ loc_0000C640:
 	CLR.w	$FFFFC554.w
 	CLR.w	$FFFFC552.w
 	MOVE.w	#$00C0, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	JSR	loc_0001325E
 	RTS
 	
@@ -13664,7 +13664,7 @@ loc_0000C69A:
 	BGT.b	loc_0000C6B2
 	MOVE.l	#loc_0000C6BA, $2(A5)
 	MOVE.w	#$00AC, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 loc_0000C6B2:
 	JSR	loc_0000F5D6
 	RTS
@@ -13946,7 +13946,7 @@ loc_0000CA10:
 	TST.b	$FFFFC661.w
 	BNE.w	loc_0000CAE6
 	MOVE.w	#$00B2, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	MOVE.b	#$FF, $FFFFC661.w
 	MOVE.b	#$10, $1A(A6)
 	JSR	loc_0000B5A8
@@ -13988,7 +13988,7 @@ loc_0000CAE8:
 	JSR	loc_0000B5A8
 	SUBI.w	#$0014, $E(A6)
 	MOVE.w	#$00B2, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 loc_0000CB1C:
 	RTS
 
@@ -14005,7 +14005,7 @@ loc_0000CB3A:
 	TST.b	$26(A6)
 	BEQ.b	loc_0000CB6C
 	MOVE.w	#$00B5, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	MOVE.w	Player_str.w, D0
 	SUB.w	D0, $28(A6)
 	BCC.b	loc_0000CB66
@@ -14721,7 +14721,7 @@ loc_0000D49E:
 	BSET.b	#7, (A6)
 	MOVE.l	#loc_0000D838, $2(A6)
 	MOVE.w	#$00BE, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	MOVE.w	#$0064, $3A(A5)
 	ADDQ.b	#1, $42(A5)
 loc_0000D4D0:
@@ -14740,7 +14740,7 @@ loc_0000D4D2:
 	BGT.b	loc_0000D542
 	BNE.b	loc_0000D52E
 	MOVE.w	#$00BF, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	MOVEA.l	$FFFFCC30.w, A6
 	MOVE.b	#$FF, $1B(A6)
 	MOVE.l	#$00020000, $36(A6)
@@ -14831,13 +14831,13 @@ loc_0000D65E:
 	BEQ.w	loc_0000D6F6
 	MOVE.b	#$FF, $27(A5)
 	MOVE.w	#$00B5, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	MOVE.w	Player_str.w, D0
 	SUB.w	D0, $28(A5)
 	BCC.b	loc_0000D69A
 	MOVE.l	#loc_0000D6FC, $2(A5)
 	MOVE.b	#$B1, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	RTS
 
 loc_0000D69A:
@@ -14853,7 +14853,7 @@ loc_0000D69A:
 	CMPI.b	#3, D1
 	BNE.b	loc_0000D6F0
 	MOVE.b	#$B1, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	JSR	GetRandomNumber(PC)
 	BTST.l	#4, D0
 	BEQ.b	loc_0000D6E4
@@ -14874,7 +14874,7 @@ loc_0000D6FC:
 	CLR.w	$FFFFC554.w
 	CLR.w	$FFFFC552.w
 	MOVE.w	#$00AC, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	RTS
 
 loc_0000D718:
@@ -15098,9 +15098,9 @@ loc_0000D9CA:
 	CLR.b	$1A(A6)
 	CLR.l	$32(A6)
 	MOVE.w	#0, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	MOVE.w	#$00AF, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	CLR.l	$28(A6)
 	MOVE.w	#$0016, D0
 	ASL.w	#3, D0
@@ -15139,7 +15139,7 @@ loc_0000DA5A:
 	
 loc_0000DA62:
 	MOVE.w	#$0093, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	MOVE.l	#loc_0000DA7A, $2(A5)
 	CLR.l	$FFFFC104.w
 	RTS
@@ -15241,7 +15241,7 @@ loc_0000DC1C:
 	CLR.w	$FFFFC552.w
 	MOVE.w	#$0080, $3A(A5)
 	MOVE.w	#$00C0, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	MOVE.l	#loc_0000DC60, $2(A5)
 loc_0000DC54:
 	MOVE.w	#$00D8, D1
@@ -15252,7 +15252,7 @@ loc_0000DC60:
 	SUBQ.w	#1, $3A(A5)
 	BGE.b	loc_0000DC78
 	MOVE.w	#$00AC, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	MOVE.l	#loc_0000F1CE, $2(A5)
 loc_0000DC78:
 	RTS
@@ -15738,14 +15738,14 @@ loc_0000E300:
 	SUB.w	D0, $28(A5)
 	BGT.b	loc_0000E334
 	MOVE.w	#$00B1, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	CLR.b	$1B(A5)
 	MOVE.l	#loc_0000E34A, $2(A5)
 	RTS
 
 loc_0000E334:
 	MOVE.w	#$00B5, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	MOVE.w	#$0010, $3C(A5)
 loc_0000E344:
 	CLR.b	$26(A5)
@@ -15802,14 +15802,14 @@ loc_0000E3CA:
 	SUB.w	D0, $28(A5)
 	BGT.b	loc_0000E3FE
 	MOVE.w	#$00B1, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	CLR.b	$1B(A5)
 	MOVE.l	#loc_0000E414, $2(A5)
 	RTS
 
 loc_0000E3FE:
 	MOVE.w	#$00B5, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	MOVE.w	#$0010, $3C(A5)
 loc_0000E40E:
 	CLR.b	$26(A5)
@@ -16058,12 +16058,12 @@ loc_0000E7A2:
 	BCC.b	loc_0000E7D2
 	MOVE.l	#loc_0000E8AC, $2(A5)
 	MOVE.w	#$00B1, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	CLR.b	$1B(A5)
 	BRA.w	loc_0000E88C
 loc_0000E7D2:
 	MOVE.w	#$00B4, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	MOVE.w	#$0010, $3C(A5)
 loc_0000E7E2:
 	CLR.b	$26(A5)
@@ -16163,12 +16163,12 @@ loc_0000E91E:
 	BCC.b	loc_0000E948
 	MOVE.l	#loc_0000EA1E, $2(A5)
 	MOVE.w	#$00B1, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	CLR.b	$1B(A5)
 	BRA.w	loc_0000EA04
 loc_0000E948:
 	MOVE.w	#$00B5, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	MOVE.w	#$0010, $3C(A5)
 loc_0000E958:
 	CLR.b	$26(A5)
@@ -16247,7 +16247,7 @@ loc_0000EA1E:
 	MOVE.l	#loc_0000EA98, $2(A5)
 	MOVE.b	#$28, $1B(A5)
 	MOVE.w	#$00C0, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	MOVE.w	#$000C, D0
 loc_0000EA72:
 	LEA	loc_0002390A, A0
@@ -16266,7 +16266,7 @@ loc_0000EA98:
 	CLR.w	$FFFFC554.w
 	CLR.w	$FFFFC552.w
 	MOVE.w	#$00AC, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 loc_0000EAB8:
 	JSR	loc_0000F5D6
 	RTS
@@ -16737,7 +16737,7 @@ loc_0000F0F8:
 	TST.b	$26(A5)
 	BEQ.b	loc_0000F11C
 	MOVE.w	#$00B5, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	MOVE.w	Player_str.w, D0
 	SUB.w	D0, $28(A5)
 	MOVE.w	#$0010, $3C(A5)
@@ -16763,9 +16763,9 @@ loc_0000F136:
 	CLR.w	$FFFFC554.w
 	CLR.w	$FFFFC552.w
 	MOVE.w	#$00C0, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	MOVE.w	#$00AC, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 loc_0000F184:
 	MOVE.w	$E(A5), D0
 	MOVE.w	D0, $FFFFC104.w
@@ -16860,7 +16860,7 @@ loc_0000F242:
 	CLR.b	$1B(A6)
 	MOVE.l	#loc_0000F2FA, $2(A6)
 	MOVE.w	#$00BC, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 loc_0000F2D8:
 	RTS
 	
@@ -18372,7 +18372,11 @@ loc_00010518:
 loc_00010520:
 	RTS
 	
-loc_00010522: ; suspected play sound effect?
+; QueueSoundEffect
+; Queue a sound effect for playback
+; Input: D0.b = Sound effect ID
+; Adds sound to queue if not full (max 8 entries)
+QueueSoundEffect:
 	MOVE.w	$FFFFC320.w, D1
 	CMPI.w	#8, D1
 	BGE.b	loc_00010538
@@ -18609,9 +18613,9 @@ loc_000107B6:
 	JSR	loc_00011870
 	ADDQ.w	#1, File_menu_phase.w
 	MOVE.w	#$0094, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	MOVE.w	#$00B9, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	RTS
 	
 loc_000107F6:
@@ -18621,7 +18625,7 @@ loc_000107F6:
 	JSR	loc_0001182C	
 	MOVE.w	#5, File_menu_phase.w	
 	MOVE.w	#$0086, D0	
-	JSR	loc_00010522	
+	JSR	QueueSoundEffect	
 loc_00010818:
 	RTS
 	
@@ -18765,7 +18769,7 @@ loc_0001096A:
 	BTST.l	D2, D1
 	BEQ.w	loc_00010BE2
 	MOVE.b	#$A2, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	TST.b	Script_reading_player_name.w
 	BNE.b	loc_000109B4
 	MOVE.w	Script_source_offset.w, D2
@@ -18898,7 +18902,7 @@ loc_00010B56:
 loc_00010B6A:
 	DBF	D4, loc_00010B42
 	MOVE.w	#$00A6, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	BRA.w	loc_00010BBE
 loc_00010B7C:
 	CLR.l	D4
@@ -20891,7 +20895,7 @@ loc_000127EA:
 	ANDI.w	#$000F, D2
 	BEQ.w	loc_0001284A
 	MOVE.w	#$00A9, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	BTST.l	#0, D3
 	BEQ.b	loc_0001281A
 	BTST.l	#0, D2
@@ -22324,7 +22328,7 @@ loc_00015220:
 
 loc_00015222:
 	MOVE.w	#$00A1, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	LEA	Player_name.w, A0
 	LEA	loc_00068A86, A1
 	MOVE.l	#$41A20003, D6
@@ -22394,7 +22398,7 @@ loc_00015304:
 
 loc_00015318:
 	MOVE.w	#$00A8, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	TST.w	Name_entry_cursor_column.w
 	BLE.w	loc_00015390
 	LEA	Player_name.w, A0
@@ -22526,7 +22530,7 @@ loc_0001548A:
 	BNE.w	loc_000154EA
 loc_000154C0:
 	MOVE.w	#$00A9, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 loc_000154CA:
 	CMPI.w	#$001D, Name_entry_cursor_x.w
 	BGE.b	loc_000154DE
@@ -22543,7 +22547,7 @@ loc_000154DE:
 	
 loc_000154EA:
 	MOVE.w	#$00A9, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 loc_000154F4:
 	TST.w	Name_entry_cursor_x.w
 	BLE.b	loc_00015506
@@ -22559,7 +22563,7 @@ loc_00015506:
 	
 loc_00015514:
 	MOVE.w	#$00A9, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 loc_0001551E:
 	CMPI.w	#$0010, Name_entry_cursor_row.w
 	BGE.b	loc_00015532
@@ -22576,7 +22580,7 @@ loc_00015532:
 
 loc_0001553E:
 	MOVE.w	#$00A9, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 loc_00015548:
 	TST.w	Name_entry_cursor_row.w
 	BLE.b	loc_0001555A
@@ -22711,7 +22715,7 @@ loc_000156C0:
 	MOVE.b	#6, Timer_seconds_bcd.w
 	JSR	EnableDisplay
 	MOVE.b	#$81, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	MOVE.l	#loc_00015764, $2(A5)
 	RTS
 
@@ -22834,7 +22838,7 @@ loc_000158A0:
 
 loc_000158D2:
 	MOVE.b	#$E0, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	JSR	loc_000002D0
 	JSR	loc_000002EA
 	BSR.w	loc_00015A94
@@ -24172,7 +24176,7 @@ loc_00016A8C:
 	MOVE.b	#4, Fade_in_lines_mask.w
 	MOVE.w	#$0028, Palette_line_2_fade_target.w
 	MOVE.b	#$82, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 loc_00016AB6:
 	RTS
 
@@ -24572,7 +24576,7 @@ loc_0001703C:
 	BGT.b	loc_00017062
 	JSR	ClearScrollData
 	MOVE.w	#$00A5, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	MOVE.w	#$00C8, Ending_timer.w
 	ADDQ.w	#1, Ending_sequence_step.w
 loc_00017062:
@@ -24582,7 +24586,7 @@ loc_00017064:
 	SUBQ.w	#1, Ending_timer.w
 	BGT.b	loc_0001708A
 	MOVE.w	#$00A4, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	JSR	loc_000002D0
 	JSR	loc_000002EA
 	MOVE.w	#$00C8, Ending_timer.w
@@ -24659,7 +24663,7 @@ loc_00017134:
 	MOVE.w	#$0096, $FFFFC086.w
 	ADDQ.w	#1, Ending_sequence_step.w
 	MOVE.w	#$009C, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	MOVE.w	#$00C8, Ending_timer.w
 	JSR	loc_0001325E
 loc_0001719A:
@@ -24769,7 +24773,7 @@ loc_000172FA:
 	SUBQ.w	#1, Ending_timer.w
 	BGT.b	loc_00017314
 	MOVE.w	#$00E0, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	ADDQ.w	#1, Ending_sequence_step.w
 	JSR	loc_0000FCFC
 loc_00017314:
@@ -24793,7 +24797,7 @@ loc_0001733A:
 	CLR.l	Ending_vscroll_accumulator.w
 	MOVE.b	#$FF, Boss_max_hp.w
 	MOVE.w	#$0099, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	MOVE.w	#$0012, $FFFFC080.w
 	MOVE.w	#$0093, $FFFFC082.w
 	JSR	loc_0001325E
@@ -25433,7 +25437,7 @@ loc_00017F44:
 	JSR	loc_000012F2
 	BEQ.b	loc_00017F80
 	MOVE.w	#$00A8, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	MOVE.w	#$000E, Window_draw_type.w
 	CLR.w	$FFFF9916.w
 	MOVE.b	#$FF, $FFFF9911.w
@@ -25448,7 +25452,7 @@ loc_00017F80:
 	MOVE.w	Item_menu_action_mode.w, Menu_cursor_index.w
 	JSR	loc_0001290C
 	MOVE.w	#$00A1, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	JSR	loc_0001229E
 	JSR	loc_00010C4A
 	TST.w	Possessed_magics_length.w
@@ -25545,7 +25549,7 @@ loc_000180DE:
 	JSR	loc_000012F2
 	BEQ.b	loc_0001810A
 	MOVE.w	#$00A8, D0	
-	JSR	loc_00010522	
+	JSR	QueueSoundEffect	
 	JSR	loc_000126B6	
 	JSR	loc_00012610	
 	MOVE.w	#1, $FFFFC424.w	
@@ -25557,7 +25561,7 @@ loc_0001810A:
 	MOVE.w	Magic_list_cursor_index.w, Menu_cursor_index.w
 	JSR	loc_0001290C
 	MOVE.w	#$00A1, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	JSR	loc_000122F4
 	JSR	loc_00010D44
 	ADDQ.w	#1, $FFFFC424.w
@@ -25578,7 +25582,7 @@ loc_00018158:
 	JSR	loc_000012F2
 	BEQ.w	loc_00018258
 	MOVE.w	#$00A1, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	TST.w	Dialog_selection.w
 	BEQ.w	loc_000181C6
 	JSR	loc_00012670	
@@ -25590,7 +25594,7 @@ loc_00018158:
 	
 loc_000181A4:
 	MOVE.w	#$00A8, D0	
-	JSR	loc_00010522	
+	JSR	QueueSoundEffect	
 	JSR	loc_00012670	
 	MOVE.w	#4, $FFFFC424.w	
 	MOVE.w	Possessed_magics_length.w, D0	
@@ -25660,7 +25664,7 @@ loc_000182A4:
 	JSR	loc_000012F2
 	BEQ.b	loc_000182D0
 	MOVE.w	#$00A8, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	JSR	loc_000126B6
 	JSR	loc_00012610
 	MOVE.w	#1, $FFFFC424.w
@@ -25672,7 +25676,7 @@ loc_000182D0:
 	MOVE.w	Magic_list_cursor_index.w, Menu_cursor_index.w
 	JSR	loc_0001290C
 	MOVE.w	#$00A1, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	JSR	loc_000122F4
 	JSR	loc_00010D44
 	ADDQ.w	#1, $FFFFC424.w
@@ -25693,7 +25697,7 @@ loc_0001831E:
 	JSR	loc_000012F2
 	BEQ.w	loc_00018432
 	MOVE.w	#$00A1, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	TST.w	Dialog_selection.w
 	BEQ.b	loc_00018388
 	JSR	loc_00012670	
@@ -25705,7 +25709,7 @@ loc_0001831E:
 	
 loc_00018368:
 	MOVE.w	#$00A8, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	JSR	loc_00012670
 	MOVE.w	#$000D, $FFFFC424.w
 	MOVE.w	Possessed_magics_length.w, D0
@@ -25789,7 +25793,7 @@ loc_00018498:
 	JSR	loc_000012F2
 	BEQ.b	loc_000184C2
 	MOVE.w	#$00A8, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	BSR.w	loc_000126B6
 	BSR.w	loc_00012610
 	MOVE.w	#1, $FFFFC424.w
@@ -25802,7 +25806,7 @@ loc_000184C2:
 	MOVE.w	Magic_list_cursor_index.w, Menu_cursor_index.w
 	JSR	loc_0001290C
 	MOVE.w	#$00A1, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	JSR	loc_000126B6
 	LEA	Possessed_magics_list.w, A0
 	MOVE.w	Magic_list_cursor_index.w, D0
@@ -25863,7 +25867,7 @@ loc_0001859A:
 	JSR	loc_000012F2
 	BEQ.b	loc_000185BC
 	MOVE.w	#$00A8, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	BSR.w	loc_000126FC
 	MOVE.w	#6, $FFFFC424.w
 	RTS
@@ -25873,7 +25877,7 @@ loc_000185BC:
 	JSR	loc_000012F2
 	BEQ.w	loc_00018642
 	MOVE.w	#$00A1, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	MOVE.w	Aries_selected_town.w, D0
 	CMPI.w	#TOWN_HASTINGS1, D0
 	BGT.w	loc_00018642
@@ -25895,7 +25899,7 @@ loc_000185BC:
 	MOVE.b	#$FF, Player_in_first_person_mode.w
 	CLR.b	Is_in_cave.w
 	MOVE.w	#$0089, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	RTS
 
 loc_00018642:
@@ -25981,7 +25985,7 @@ CastInaudios:
 	BNE.b	loc_00018752
 	MOVE.w	#$001E, Inaudios_steps_remaining.w
 	MOVE.w	#$00AE, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	JSR	loc_00010C4A
 	PRINT 	InaudiosSpellsStr
 	MOVE.w	#9, $FFFFC424.w
@@ -26010,7 +26014,7 @@ CastLuminos:
 	CLR.w	$FFFFC562.w
 	MOVE.b	#1, $FFFFC560.w
 	MOVE.w	#$00AD, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	RTS
 
 loc_000187B4:
@@ -26054,7 +26058,7 @@ loc_0001882C:
 	PRINT 	HitPointsRegainedStr
 loc_00018834:
 	MOVE.w	#$00AE, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	JSR	loc_00010C4A
 	MOVE.w	#9, $FFFFC424.w
 	RTS
@@ -26068,7 +26072,7 @@ CastSanguio:
 	MOVE.w	Player_mhp.w, Player_hp.w
 	PRINT 	AllHitPointsStr
 	MOVE.w	#$00AE, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	JSR	loc_00010C4A
 	MOVE.w	#9, $FFFFC424.w
 	RTS
@@ -26093,7 +26097,7 @@ loc_000188BE:
 	CLR.w	Player_poisoned.w
 	CLR.b	Poison_notified.w
 	MOVE.w	#$00AE, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 loc_000188D0:
 	JSR	loc_00010C4A
 	MOVE.w	#9, $FFFFC424.w
@@ -26138,7 +26142,7 @@ CastExtrios:
 	CLR.b	$FFFFC560.w
 	CLR.w	$FFFFC562.w
 	MOVE.w	#$0089, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	RTS
 
 loc_00018982:
@@ -26407,7 +26411,7 @@ CastVolti:
 	BSR.w	CheckCursedAndConsumeReadiedMagicMp
 	BNE.w	loc_00018DF6
 	MOVE.w	#$00BE, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	BSET.b	#7, (A6)
 	BCLR.b	#5, $7(A6)
 	BCLR.b	#6, $7(A6)
@@ -26474,7 +26478,7 @@ CastVoltio:
 	BSR.w	CheckCursedAndConsumeReadiedMagicMp
 	BNE.w	loc_00018EBC
 	MOVE.w	#$00BE, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	MOVE.w	#$0245, D6
 	LEA	loc_00018FDA, A0
 	MOVE.l	#loc_00018F30, $2(A6)
@@ -26613,7 +26617,7 @@ CastVoltios:
 	BSR.w	CheckCursedAndConsumeReadiedMagicMp
 	BNE.b	loc_00019070
 	MOVE.w	#$00B0, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	BSET.b	#7, (A6)
 	CLR.w	$3A(A6)
 	BSR.w	InitMagicDamageAndFlags
@@ -26906,7 +26910,7 @@ CastFerros:
 	BSR.w	CheckCursedAndConsumeReadiedMagicMp
 	BNE.w	loc_000194A0
 	MOVE.w	#$00BC, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	BSET.b	#7, (A6)
 	BCLR.b	#7, $7(A6)
 	BCLR.b	#3, $7(A6)
@@ -26987,7 +26991,7 @@ CastCopperos:
 	BSR.w	CheckCursedAndConsumeReadiedMagicMp
 	BNE.w	loc_000195D8
 	MOVE.w	#$00BC, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	BSET.b	#7, (A6)
 	BCLR.b	#7, $7(A6)
 	BCLR.b	#3, $7(A6)
@@ -27160,7 +27164,7 @@ CastMercusios:
 	BSR.w	CheckCursedAndConsumeReadiedMagicMp
 	BNE.w	loc_0001989E
 	MOVE.w	#$00BD, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	MOVE.w	#7, D7
 loc_000197FC:
 	BSET.b	#7, (A6)
@@ -27282,7 +27286,7 @@ CastArgentos:
 	MOVE.w	$12(A5), $12(A6)
 	MOVE.l	#loc_000199E8, $2(A6)
 	MOVE.w	#$00BD, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 loc_000199E6:
 	RTS
 
@@ -27529,7 +27533,7 @@ loc_00019CCE:
 	BRA.b	loc_00019D6C
 loc_00019D62:
 	MOVE.w	#$00BA, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 loc_00019D6C:
 	JSR	CheckProjectileHitEnemies(PC)
 	MOVE.w	$E(A5), $A(A5)
@@ -27625,7 +27629,7 @@ CastChronos:
 	MOVE.l	#loc_00019EA2, $2(A6)
 	MOVE.b	#$FF, $FFFFC68C.w
 	MOVE.w	#$00AE, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 loc_00019EA0:
 	RTS
 	
@@ -27647,7 +27651,7 @@ CastChronios:
 	MOVE.l	#loc_00019EA2, $2(A6)
 	MOVE.b	#$FF, $FFFFC68C.w
 	MOVE.w	#$00AE, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 loc_00019EDE:
 	RTS
 
@@ -27659,7 +27663,7 @@ CastTerrafissi:
 	BSR.w	CheckCursedAndConsumeReadiedMagicMp
 	BNE.b	loc_00019F18
 	MOVE.w	#$00AF, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	BSET.b	#7, (A6)
 	CLR.l	$28(A6)
 	MOVE.w	#9, D0
@@ -27996,7 +28000,7 @@ loc_0001A344:
 	BEQ.b	loc_0001A380
 	MOVE.w	#4, Window_draw_type.w
 	MOVE.w	#$00A8, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	CLR.w	$FFFF9916.w
 	MOVE.b	#$FF, $FFFF9911.w
 	MOVE.w	#4, Overworld_menu_state.w
@@ -28010,7 +28014,7 @@ loc_0001A380:
 	MOVE.w	Item_menu_action_mode.w, Menu_cursor_index.w
 	JSR	loc_0001290C
 	MOVE.w	#$00A1, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	JSR	loc_0001229E
 	JSR	loc_00010C4A
 	TST.w	Possessed_items_length.w
@@ -28094,7 +28098,7 @@ loc_0001A4AC:
 	JSR	loc_000012F2
 	BEQ.b	loc_0001A4DC
 	MOVE.w	#$00A8, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	JSR	loc_000126B6
 	JSR	loc_00012610
 	MOVE.w	#1, Item_menu_state.w
@@ -28108,7 +28112,7 @@ loc_0001A4DC:
 	MOVE.w	Selected_item_index.w, Menu_cursor_index.w
 	JSR	loc_0001290C
 	MOVE.w	#$00A1, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	JSR	loc_000122F4
 	JSR	loc_00010D44
 	MOVE.w	#6, Item_menu_state.w
@@ -28129,7 +28133,7 @@ loc_0001A52C:
 	JSR	loc_000012F2
 	BEQ.w	loc_0001A63C
 	MOVE.w	#$00A1, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	TST.w	Dialog_selection.w
 	BEQ.b	loc_0001A59C
 	JSR	loc_00012670
@@ -28141,7 +28145,7 @@ loc_0001A52C:
 
 loc_0001A576:
 	MOVE.w	#$00A8, D0	
-	JSR	loc_00010522	
+	JSR	QueueSoundEffect	
 	JSR	loc_00012670	
 	CLR.w	Selected_item_index.w	
 	MOVE.w	#5, Item_menu_state.w	
@@ -28240,7 +28244,7 @@ loc_0001A6D2:
 	JSR	loc_000012F2
 	BEQ.b	loc_0001A702
 	MOVE.w	#$00A8, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	JSR	loc_000126B6
 	JSR	loc_00012610
 	MOVE.w	#1, Item_menu_state.w
@@ -28254,7 +28258,7 @@ loc_0001A702:
 	MOVE.w	Selected_item_index.w, Menu_cursor_index.w
 	JSR	loc_0001290C
 	MOVE.w	#$00A1, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	JSR	loc_000126B6
 	JSR	loc_00010C4A
 	JSR	CopyPlayerNameToTextBuffer
@@ -28411,7 +28415,7 @@ loc_0001A8F4:
 	MOVE.b	#$FF, Player_in_first_person_mode.w
 	CLR.b	Is_in_cave.w
 	MOVE.w	#$89, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	RTS
 
 loc_0001A93A:
@@ -28435,7 +28439,7 @@ loc_0001A954:
 	CLR.b	$FFFFC560.w
 	CLR.w	$FFFFC562.w
 	MOVE.w	#$0089, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	RTS
 
 ;loc_0001A996:
@@ -28525,7 +28529,7 @@ loc_0001AAAC:
 	PRINT 	JarBreaksStr	
 	BSR.w	RemoveSelectedItemFromList	
 	MOVE.w	#$00AE, D0	
-	JSR	loc_00010522	
+	JSR	QueueSoundEffect	
 	RTS
 	
 ;loc_0001AAC4
@@ -28538,7 +28542,7 @@ loc_0001AAD8:
 	PRINT 	HorribleTasteStr	
 	BSR.w	RemoveSelectedItemFromList	
 	MOVE.w	#$00AE, D0	
-	JSR	loc_00010522	
+	JSR	QueueSoundEffect	
 	RTS
 	
 ;loc_0001AAF0
@@ -28551,7 +28555,7 @@ loc_0001AB04:
 	PRINT 	ReadDisappearsStr	
 	BSR.w	RemoveSelectedItemFromList	
 	MOVE.w	#$00AE, D0	
-	JSR	loc_00010522	
+	JSR	QueueSoundEffect	
 	RTS
 	
 ;loc_0001AB1C
@@ -28573,7 +28577,7 @@ loc_0001AB4C:
 loc_0001AB54:
 	BSR.w	RemoveSelectedItemFromList	
 	MOVE.w	#$00AE, D0	
-	JSR	loc_00010522	
+	JSR	QueueSoundEffect	
 	RTS
 
 ;loc_0001AB64
@@ -28586,7 +28590,7 @@ loc_0001AB78:
 	PRINT 	BrokePowerStr	
 	BSR.w	RemoveSelectedItemFromList	
 	MOVE.w	#$00AE, D0	
-	JSR	loc_00010522	
+	JSR	QueueSoundEffect	
 	RTS
 	
 ;loc_0001AB90
@@ -28599,7 +28603,7 @@ loc_0001ABA4:
 	PRINT 	NoFeelStr	
 	BSR.w	RemoveSelectedItemFromList	
 	MOVE.w	#$00AE, D0	
-	JSR	loc_00010522	
+	JSR	QueueSoundEffect	
 	RTS
 	
 ;loc_0001ABBC
@@ -28609,7 +28613,7 @@ UseRafaelsStick:
 	JSR	RemoveCursedEquipment	
 	PRINT 	CurseRemovedStr	
 	MOVE.w	#$00AE, D0	
-	JSR	loc_00010522	
+	JSR	QueueSoundEffect	
 	RTS
 	
 loc_0001ABDE:
@@ -28642,7 +28646,7 @@ loc_0001AC14:
 loc_0001AC34:
 	BSR.w	RemoveSelectedItemFromList
 	MOVE.w	#$00AE, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	RTS
 
 ;loc_0001AC44
@@ -28663,7 +28667,7 @@ loc_0001AC54:
 loc_0001AC74:
 	BSR.w	RemoveSelectedItemFromList
 	MOVE.w	#$00AE, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	RTS
 
 ;loc_0001AC84
@@ -28731,7 +28735,7 @@ UsePoisonBalm:
 	CLR.w	Player_poisoned.w
 	PRINT 	PoisonPurgedStr
 	MOVE.w	#$00AE, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	BRA.b	loc_0001AD56
 loc_0001AD44:
 	PRINT 	NotPoisonousStr
@@ -28756,7 +28760,7 @@ UseCandle:
 	MOVE.b	#$FF, $FFFFC560.w
 	BSR.w	RemoveSelectedItemFromList
 	MOVE.w	#$00AD, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	RTS
 
 loc_0001AD9C:
@@ -28778,7 +28782,7 @@ UseLantern:
 	MOVE.b	#1, $FFFFC560.w
 	BSR.w	RemoveSelectedItemFromList
 	MOVE.w	#$00AD, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	RTS
 
 loc_0001ADE8:
@@ -28789,7 +28793,7 @@ loc_0001ADE8:
 ;loc_0001ADF6:
 UseAlarmClock:
 	MOVE.w	#$00C1, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	TST.b	Keltwick_girl_sleeping.w
 	BEQ.w	loc_0001AE6E
 	MOVE.w	Current_town.w, D0
@@ -28867,7 +28871,7 @@ UseSmallBomb:
 	PRINT 	LoudRoarStr
 	BSR.w	RemoveSelectedItemFromList
 	MOVE.w	#$00BF, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	RTS
 
 ;loc_0001AED4:
@@ -29027,7 +29031,7 @@ UseSixteenRings:
 	PRINT 	RingsLeaveStr
 	MOVE.b	#$FF, Sixteen_rings_used_at_throne.w
 	MOVE.w	#$E0, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	RTS
 
 loc_0001B06C:
@@ -29092,7 +29096,7 @@ loc_0001B0E2:
 	CMP.w	D1, D0
 	BNE.b	loc_0001B152
 	MOVE.w	#$00A6, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	MOVE.b	#$FF, Door_unlocked_flag.w
 	PRINT 	KeyUnlockedStr
 	RTS
@@ -29440,7 +29444,7 @@ loc_0001B6F0:
 	PRINT 	NoLeaveWithoutBuyingStr	
 	CLR.b	Script_text_complete.w	
 	MOVE.w	#$00A8, D0	
-	JSR	loc_00010522	
+	JSR	QueueSoundEffect	
 	JSR	loc_00012766	
 	JSR	loc_000126DA	
 	MOVE.w	#$2D, Dialogue_state.w	
@@ -29455,7 +29459,7 @@ loc_0001B73A:
 	MOVE.w	$FFFFC4A0.w, Menu_cursor_index.w
 	JSR	loc_0001290C
 	MOVE.w	#$00A1, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	JSR	loc_000122F4
 	JSR	loc_00010D44
 	MOVE.w	#$33, Dialogue_state.w
@@ -29526,7 +29530,7 @@ loc_0001B97E:
 	TST.w	Dialog_selection.w
 	BNE.w	loc_0001BAA4
 	MOVE.w	#$00A1, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	JSR	loc_00012670
 	JSR	loc_00010C4A
 	LEA	Possessed_items_length.w, A0
@@ -29599,7 +29603,7 @@ loc_0001BA8A:
 
 loc_0001BAA4:
 	MOVE.w	#$00A8, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	JSR	loc_00012670
 	MOVE.w	#$2D, Dialogue_state.w
 	JSR	loc_00012766
@@ -29901,7 +29905,7 @@ loc_0001BE36:
 	JSR	loc_000012F2
 	BEQ.b	loc_0001BE6E
 	MOVE.w	#$00A8, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	JSR	loc_00012766
 	JSR	loc_000126DA
 	JSR	loc_00011012
@@ -29913,7 +29917,7 @@ loc_0001BE6E:
 	JSR	loc_000012F2
 	BEQ.w	loc_0001BF0E
 	MOVE.w	#$00A1, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	MOVE.w	$FFFFC4A0.w, Menu_cursor_index.w
 	JSR	loc_0001290C
 	JSR	loc_000122F4
@@ -29968,7 +29972,7 @@ loc_0001BF28:
 	TST.w	Dialog_selection.w
 	BNE.w	loc_0001C030
 	MOVE.w	#$00A1, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	JSR	loc_00012670
 	JSR	loc_00010C4A
 	LEA	ShopPricesByTownAndType, A0
@@ -30027,7 +30031,7 @@ loc_0001C024:
 
 loc_0001C030:
 	MOVE.w	#$00A8, D0	
-	JSR	loc_00010522	
+	JSR	QueueSoundEffect	
 	JSR	loc_00012670	
 	MOVE.w	#$C, Dialogue_state.w	
 	JSR	loc_00011648	
@@ -30635,7 +30639,7 @@ loc_0001C890:
 	MOVE.b	#$FF, Fade_out_lines_mask.w
 	MOVE.w	#$012C, Sleep_delay_timer.w
 	MOVE.b	#$85, D0
-	JMP	loc_00010522
+	JMP	QueueSoundEffect
 loc_0001C8B2:
 	JMP	loc_0001096A
 loc_0001C8B8:
@@ -30694,7 +30698,7 @@ loc_0001C96A:
 	JSR	loc_000123C8
 	JSR	loc_00010FB6
 	MOVE.w	#$00A0, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	CLR.w	Church_service_selection.w
 	ADDQ.w	#1, Dialogue_state.w
 	RTS
@@ -30797,7 +30801,7 @@ loc_0001CAE4:
 
 loc_0001CB04:
 	MOVE.w	#$00A8, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	MOVE.w	#8, Window_draw_type.w
 	CLR.w	$FFFF9916.w
 	MOVE.b	#$FF, $FFFF9911.w
@@ -30811,7 +30815,7 @@ loc_0001CB2C:
 	BNE.b	loc_0001CB56
 	JSR	loc_00012610
 	MOVE.w	#$00A8, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	CLR.w	Overworld_menu_state.w
 	MOVE.w	#3, Window_draw_type.w
 	CLR.w	$FFFF9916.w
@@ -30989,7 +30993,7 @@ loc_0001CDC8:
 	JSR	loc_00012694	
 	JSR	loc_00010FB6	
 	MOVE.w	#$00A0, D0	
-	JSR	loc_00010522	
+	JSR	QueueSoundEffect	
 	CLR.w	Church_service_selection.w	
 	MOVE.w	#$22, Dialogue_state.w	
 	RTS
@@ -31226,7 +31230,7 @@ loc_0001D05C:
 
 loc_0001D098:
 	MOVE.w	#$00A8, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	MOVE.w	#6, Window_draw_type.w
 	CLR.w	$FFFF9916.w
 	MOVE.b	#$FF, $FFFF9911.w
@@ -31241,7 +31245,7 @@ loc_0001D0C0:
 	CMPI.w	#2, D0
 	BEQ.b	loc_0001D098
 	MOVE.w	#$00A1, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	CLR.w	Ready_equipment_category.w
 	MOVE.w	#2, Ready_equipment_state.w
 	JSR	loc_00012592
@@ -31268,7 +31272,7 @@ loc_0001D104:
 
 loc_0001D138:
 	MOVE.w	#$00A8, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	JSR	loc_0001271E
 	JSR	loc_00010EFE
 	MOVE.w	#1, Ready_equipment_state.w
@@ -31278,7 +31282,7 @@ loc_0001D156:
 	MOVE.w	Ready_equipment_category.w, Menu_cursor_index.w
 	JSR	loc_0001290C
 	MOVE.w	#$00A1, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	BSR.w	loc_0001D5AC
 	JSR	loc_0001229E
 	JSR	loc_00010C4A
@@ -31314,7 +31318,7 @@ loc_0001D1B8:
 
 loc_0001D1EC:
 	MOVE.w	#$00A8, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	JSR	loc_00012742
 	JSR	loc_00012610
 	JSR	loc_0001271E
@@ -31326,7 +31330,7 @@ loc_0001D216:
 	MOVE.w	Ready_equipment_cursor_index.w, Menu_cursor_index.w
 	JSR	loc_0001290C
 	MOVE.w	#$00A1, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	JSR	loc_00010C4A
 	BSR.w	loc_0001D5D8
 	TST.w	D0
@@ -31428,7 +31432,7 @@ loc_0001D370:
 
 loc_0001D39C:
 	MOVE.w	#$00A8, D0	
-	JSR	loc_00010522	
+	JSR	QueueSoundEffect	
 	JSR	loc_0001271E	
 	JSR	loc_00010EFE	
 	MOVE.w	#1, Ready_equipment_state.w	
@@ -31438,7 +31442,7 @@ loc_0001D3BA:
 	MOVE.w	Ready_equipment_category.w, Menu_cursor_index.w
 	JSR	loc_0001290C
 	MOVE.w	#$00A1, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	BSR.w	loc_0001D5AC
 	JSR	loc_0001229E
 	JSR	loc_00010C4A
@@ -31711,7 +31715,7 @@ loc_0001D6CE:
 	MOVE.w	Main_menu_selection.w, Menu_cursor_index.w
 	JSR	loc_0001290C
 	MOVE.w	#$00A0, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	JSR	loc_00012450
 	JSR	loc_0001193C
 	ADDQ.w	#1, Equip_list_menu_state.w
@@ -31732,7 +31736,7 @@ loc_0001D6F6:
 
 loc_0001D724:
 	MOVE.w	#$00A8, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	MOVE.w	#8, Equip_list_menu_state.w
 	MOVE.w	#0, Window_draw_type.w
 	CLR.w	$FFFF9916.w
@@ -31741,7 +31745,7 @@ loc_0001D724:
 
 loc_0001D746:
 	MOVE.w	#$00A0, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	JSR	loc_00012494
 	JSR	loc_00011AEC
 	ADDQ.w	#1, Equip_list_menu_state.w
@@ -31763,7 +31767,7 @@ loc_0001D762:
 
 loc_0001D790:
 	MOVE.w	#$00A8, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	MOVE.w	#1, Window_draw_type.w
 	MOVE.b	#$FF, $FFFF9911.w
 	CLR.w	$FFFF9916.w
@@ -31772,7 +31776,7 @@ loc_0001D790:
 
 loc_0001D7B2:
 	MOVE.w	#$00A0, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	JSR	loc_000124BA
 	JSR	loc_00011BB8
 	ADDQ.w	#1, Equip_list_menu_state.w
@@ -31794,7 +31798,7 @@ loc_0001D7CE:
 
 loc_0001D7FC:
 	MOVE.w	#$00A8, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	MOVE.w	#9, Window_draw_type.w
 	MOVE.b	#$FF, $FFFF9911.w
 	CLR.w	$FFFF9916.w
@@ -31803,7 +31807,7 @@ loc_0001D7FC:
 
 loc_0001D81E:
 	MOVE.w	#$00A0, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	JSR	loc_000124DE
 	JSR	loc_00011CC2
 	ADDQ.w	#1, Equip_list_menu_state.w
@@ -31825,7 +31829,7 @@ loc_0001D83A:
 
 loc_0001D868:
 	MOVE.w	#$00A8, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	MOVE.w	#$000A, Window_draw_type.w
 	MOVE.b	#$FF, $FFFF9911.w
 	CLR.w	$FFFF9916.w
@@ -31834,7 +31838,7 @@ loc_0001D868:
 
 loc_0001D88A:
 	MOVE.w	#$00A0, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	JSR	loc_00012502
 	JSR	loc_00011D96
 	ADDQ.w	#1, Equip_list_menu_state.w
@@ -31856,7 +31860,7 @@ loc_0001D8A6:
 
 loc_0001D8D4:
 	MOVE.w	#$00A8, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	MOVE.w	#$000B, Window_draw_type.w
 	MOVE.b	#$FF, $FFFF9911.w
 	CLR.w	$FFFF9916.w
@@ -31865,7 +31869,7 @@ loc_0001D8D4:
 
 loc_0001D8F6:
 	MOVE.w	#$00A0, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	JSR	loc_00012526
 	JSR	loc_00011E52
 	ADDQ.w	#1, Equip_list_menu_state.w
@@ -31892,7 +31896,7 @@ loc_0001D94A:
 	MOVE.w	#5, Equip_list_menu_state.w
 loc_0001D950:
 	MOVE.w	#$00A8, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	MOVE.w	#$000C, Window_draw_type.w
 	MOVE.b	#$FF, $FFFF9911.w
 	CLR.w	$FFFF9916.w
@@ -31905,7 +31909,7 @@ loc_0001D96C:
 	TST.b	$FFFF9911.w	
 	BNE.w	loc_0001D99C	
 	MOVE.w	#$00A8, D0	
-	JSR	loc_00010522	
+	JSR	QueueSoundEffect	
 	MOVE.w	#8, Equip_list_menu_state.w	
 	MOVE.w	#0, Window_draw_type.w	
 	CLR.w	$FFFF9916.w	
@@ -31927,7 +31931,7 @@ loc_0001D9BC:
 	TST.b	$FFFF9911.w
 	BNE.w	loc_0001D9E4
 	MOVE.w	#$00A8, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	MOVE.w	#$000B, Window_draw_type.w
 	MOVE.b	#$FF, $FFFF9911.w
 	CLR.w	$FFFF9916.w
@@ -31939,7 +31943,7 @@ loc_0001D9E6:
 	TST.b	$FFFF9911.w
 	BNE.w	loc_0001DA0E
 	MOVE.w	#$00A8, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	MOVE.w	#$000A, Window_draw_type.w
 	MOVE.b	#$FF, $FFFF9911.w
 	CLR.w	$FFFF9916.w
@@ -31950,7 +31954,7 @@ loc_0001DA10:
 	TST.b	$FFFF9911.w
 	BNE.w	loc_0001DA38
 	MOVE.w	#$00A8, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	MOVE.w	#9, Window_draw_type.w
 	MOVE.b	#$FF, $FFFF9911.w
 	CLR.w	$FFFF9916.w
@@ -31961,7 +31965,7 @@ loc_0001DA3A:
 	TST.b	$FFFF9911.w
 	BNE.w	loc_0001DA62
 	MOVE.w	#$00A8, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	MOVE.w	#1, Window_draw_type.w
 	MOVE.b	#$FF, $FFFF9911.w
 	CLR.w	$FFFF9916.w
@@ -31972,7 +31976,7 @@ loc_0001DA64:
 	TST.b	$FFFF9911.w
 	BNE.w	loc_0001DA8C
 	MOVE.w	#$00A8, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	MOVE.w	#8, Equip_list_menu_state.w
 	MOVE.w	#0, Window_draw_type.w
 	CLR.w	$FFFF9916.w
@@ -32122,7 +32126,7 @@ loc_0001DC2A:
 	CLR.w	Chest_animation_frame.w
 	CLR.w	Chest_animation_timer.w
 	MOVE.w	#$00BB, D0               ; Sound effect
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	MOVE.w	#3, Open_menu_state.w    ; State 3: Animation
 	MOVE.w	#3, Window_draw_type.w
 	CLR.w	$FFFF9916.w
@@ -32131,7 +32135,7 @@ loc_0001DC2A:
 	
 loc_0001DC7C:
 	MOVE.b	#$AA, D0	
-	JSR	loc_00010522	
+	JSR	QueueSoundEffect	
 	MOVE.b	#$50, Open_chest_delay_timer.w	
 	MOVE.w	#4, Open_menu_state.w	
 	RTS
@@ -32144,7 +32148,7 @@ loc_0001DC94:
 	
 	; Open the chest
 	MOVE.b	#$A7, D0
-	JSR	loc_00010522             ; Sound effect
+	JSR	QueueSoundEffect             ; Sound effect
 	MOVE.b	#$FF, Chest_opened_flag.w
 	MOVEA.l	$FFFFCC54.w, A6          ; Chest sprite
 	CLR.w	D0
@@ -32506,7 +32510,7 @@ loc_0001E172:
 	MOVE.w	#((ITEM_TYPE_DISCARDABLE<<8)|ITEM_TITANIAS_MIRROR), (A0,D0.w)
 	MOVE.b	#$FF, Titanias_mirror_acquired.w	
 	MOVE.w	#$00A6, D0	
-	JSR	loc_00010522	
+	JSR	QueueSoundEffect	
 	BRA.w	loc_0001E1C8	
 loc_0001E1BA:
 	LEA	TitaniasMirrorStr, A2	
@@ -32534,7 +32538,7 @@ loc_0001E22E:
 	MOVE.w	#((ITEM_TYPE_DISCARDABLE<<8)|ITEM_RAFAELS_STICK), (A0,D0.w)
 	MOVE.b	#$FF, Rafaels_stick_acquired.w
 	MOVE.w	#$00A6, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	BRA.w	loc_0001E27C
 loc_0001E26E:
 	LEA	RafaelsStickStr, A2	
@@ -32555,7 +32559,7 @@ loc_0001E288:
 	JSR	AddItemToInventoryList	
 	MOVE.w	#0, (A0,D0.w)	
 	MOVE.w	#$00A6, D0	
-	JSR	loc_00010522	
+	JSR	QueueSoundEffect	
 	BRA.w	loc_0001E2C8	
 loc_0001E2BA:
 	LEA	HerbsStr, A2	
@@ -32838,7 +32842,7 @@ loc_0001E6A0:
 	MOVE.b	#$FF, (A1)
 	PRINT 	$FFFFC260
 	MOVE.w	#$0090, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	JSR	loc_0001229E
 	JSR	loc_00010C4A
 	BSR.w	loc_0001EAAE
@@ -32876,7 +32880,7 @@ loc_0001E722:
 	JSR	loc_000012F2
 	BEQ.w	loc_0001E7C4
 	MOVE.w	#$00A1, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	TST.w	Dialog_selection.w
 	BNE.w	loc_0001E766
 	JSR	loc_00012670
@@ -32952,7 +32956,7 @@ loc_0001E862:
 	JSR	loc_000012F2
 	BEQ.w	loc_0001E896
 	MOVE.w	#$00A8, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	JSR	loc_000126B6
 	JSR	loc_00010C4A
 	PRINT 	CantCarryMoreStr
@@ -32965,7 +32969,7 @@ loc_0001E896:
 	BEQ.w	loc_0001E8C8
 	JSR	loc_0001290C
 	MOVE.w	#$00A1, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	JSR	loc_000122F4
 	JSR	loc_00010D44
 	MOVE.w	#9, Take_item_state.w
@@ -32986,12 +32990,12 @@ loc_0001E8E2:
 	JSR	loc_000012F2
 	BEQ.w	loc_0001EA40
 	MOVE.w	#$00A1, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	TST.w	Dialog_selection.w
 	BEQ.w	loc_0001E936
 loc_0001E910:
 	MOVE.w	#$00A8, D0	
-	JSR	loc_00010522	
+	JSR	QueueSoundEffect	
 	JSR	loc_00012670	
 	MOVEA.l	Active_inventory_list_ptr.w, A0	
 	MOVE.w	-$2(A0), D0	
@@ -33013,7 +33017,7 @@ loc_0001E936: ; Discard item
 	BRA.w	loc_0001EA38
 loc_0001E96A:
 	MOVE.w	#$0090, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	LEA	Text_build_buffer.w, A1
 	LEA	PutStr, A0
 	JSR	loc_00012A6C
@@ -33086,7 +33090,7 @@ loc_0001EA5A:
 	
 loc_0001EA80:
 	MOVE.w	Current_area_music.w, D0
-	JSR	loc_00010522
+	JSR	QueueSoundEffect
 	JSR	loc_00012610
 	CLR.w	Overworld_menu_state.w
 	MOVE.w	#3, Window_draw_type.w
