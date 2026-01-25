@@ -17546,7 +17546,7 @@ loc_0000FAC6:
 	ADD.w	D0, D0
 	ADD.w	D0, D0
 	MOVEA.l	(A3,D0.w), A0
-	BSR.w	loc_0000FBA4
+	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
 	DBF	D5, loc_0000FAC6
 	RTS
@@ -17612,7 +17612,11 @@ loc_0000FB9A:
 loc_0000FBA2:
 	RTS
 	
-loc_0000FBA4:
+; DecompressTileGraphics
+; Decompress tile graphics data
+; Input: A0 = Source compressed data, A2 = Destination buffer
+; Uses bitfield (D3) to track which pixels are already set
+DecompressTileGraphics:
 	CLR.l	D3
 loc_0000FBA6:
 	CLR.w	D0
@@ -17781,7 +17785,7 @@ loc_0000FCDC:
 	LEA	loc_00041A90, A0
 	MOVE.w	#$00FF, D5
 loc_0000FCEA:
-	BSR.w	loc_0000FBA4
+	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
 	DBF	D5, loc_0000FCEA
 	BSR.w	loc_0000FD1C
@@ -17837,7 +17841,7 @@ loc_0000FDAA:
 loc_0000FDC0:
 	MOVE.w	#$00FF, D5
 loc_0000FDC4:
-	BSR.w	loc_0000FBA4
+	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
 	DBF	D5, loc_0000FDC4
 	LEA	loc_0001F4C2, A0
@@ -17860,7 +17864,7 @@ loc_0000FDFA:
 	MOVEA.l	$4(A1,D0.w), A0
 	MOVE.w	$8(A1,D0.w), D5
 loc_0000FE14:
-	BSR.w	loc_0000FBA4
+	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
 	DBF	D5, loc_0000FE14
 	LEA	loc_0001F4D2, A0
@@ -17872,7 +17876,7 @@ loc_0000FE2C:
 	LEA	loc_0009032E, A0
 	MOVE.w	#$00FF, D5
 loc_0000FE3A:
-	BSR.w	loc_0000FBA4
+	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
 	DBF	D5, loc_0000FE3A
 	LEA	loc_0001F4C2, A0
@@ -17881,7 +17885,7 @@ loc_0000FE3A:
 	LEA	loc_00091CBC, A0
 	MOVE.w	#$0039, D5
 loc_0000FE5E:
-	BSR.w	loc_0000FBA4
+	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
 	DBF	D5, loc_0000FE5E
 	LEA	loc_0001F4D2, A0
@@ -17915,7 +17919,7 @@ loc_0000FEE2:
 	LEA	Tile_gfx_buffer.w, A2
 	MOVE.w	#$0039, D5
 loc_0000FEF0:
-	BSR.w	loc_0000FBA4
+	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
 	DBF	D5, loc_0000FEF0
 	LEA	loc_0001F532, A0
@@ -17959,7 +17963,7 @@ loc_0000FF36:
 	RTS
 	
 loc_0000FF74:
-	BSR.w	loc_0000FBA4
+	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
 	DBF	D5, loc_0000FF74
 	RTS
@@ -17969,7 +17973,7 @@ loc_0000FF82:
 	LEA	Tile_gfx_buffer.w, A2
 	MOVE.w	#$001A, D5
 loc_0000FF90:
-	BSR.w	loc_0000FBA4
+	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
 	DBF	D5, loc_0000FF90
 	LEA	loc_0001F642, A0
@@ -17981,7 +17985,7 @@ loc_0000FFA8:
 	LEA	Tile_gfx_buffer.w, A2
 	MOVE.w	#$003C, D5
 loc_0000FFB6:
-	BSR.w	loc_0000FBA4
+	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
 	DBF	D5, loc_0000FFB6
 	LEA	loc_0001F6F2, A0
@@ -17993,7 +17997,7 @@ loc_0000FFCE:
 	LEA	Tile_gfx_buffer.w, A2
 	MOVE.w	#$00EA, D5
 loc_0000FFDC:
-	BSR.w	loc_0000FBA4
+	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
 	DBF	D5, loc_0000FFDC
 loc_0000FFE8:
@@ -18010,7 +18014,7 @@ loc_0000FFFA:
 	LEA	Tile_gfx_buffer.w, A2
 	MOVE.w	#$0075, D5
 loc_00010002:
-	BSR.w	loc_0000FBA4
+	BSR.w	DecompressTileGraphics
 loc_00010006:
 	LEA	$20(A2), A2
 loc_0001000A:
@@ -18025,7 +18029,7 @@ loc_0001001A:
 	LEA	Tile_gfx_buffer.w, A2
 	MOVE.w	#$0064, D5
 loc_00010028:
-	BSR.w	loc_0000FBA4
+	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
 	DBF	D5, loc_00010028
 	LEA	loc_0001F682, A0
@@ -18037,7 +18041,7 @@ loc_00010040:
 	LEA	Tile_gfx_buffer.w, A2
 	MOVE.w	#$0056, D5
 loc_0001004E:
-	BSR.w	loc_0000FBA4
+	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
 	DBF	D5, loc_0001004E
 	LEA	loc_0001F692, A0
@@ -18049,7 +18053,7 @@ loc_00010066:
 	LEA	Tile_gfx_buffer.w, A2
 	MOVE.w	#$0058, D5
 loc_00010074:
-	BSR.w	loc_0000FBA4
+	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
 	DBF	D5, loc_00010074
 	LEA	loc_0001F6A2, A0
@@ -18061,7 +18065,7 @@ loc_0001008C:
 	LEA	Tile_gfx_buffer.w, A2
 	MOVE.w	#$0056, D5
 loc_0001009A:
-	BSR.w	loc_0000FBA4
+	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
 	DBF	D5, loc_0001009A
 	LEA	loc_0001F6C2, A0
@@ -18073,7 +18077,7 @@ loc_000100B2:
 	LEA	Tile_gfx_buffer.w, A2
 	MOVE.w	#$005D, D5
 loc_000100C0:
-	BSR.w	loc_0000FBA4
+	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
 	DBF	D5, loc_000100C0
 	LEA	loc_0001F6D2, A0
@@ -18085,7 +18089,7 @@ loc_000100D8:
 	LEA	Tile_gfx_buffer.w, A2
 	MOVE.w	#$004F, D5
 loc_000100E6:
-	BSR.w	loc_0000FBA4
+	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
 	DBF	D5, loc_000100E6
 	LEA	loc_0001F6B2, A0
@@ -18098,7 +18102,7 @@ loc_00010104:
 	LEA	Tile_gfx_buffer.w, A2
 	MOVE.w	#$00B6, D5
 loc_0001010C:
-	BSR.w	loc_0000FBA4
+	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
 	DBF	D5, loc_0001010C
 	LEA	loc_0001F4E2, A0
@@ -18107,7 +18111,7 @@ loc_0001010C:
 	LEA	loc_0005F262, A0
 	MOVE.w	#$00D9, D5
 loc_00010130:
-	BSR.w	loc_0000FBA4
+	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
 	DBF	D5, loc_00010130
 	LEA	loc_0001F4F2, A0
@@ -18116,7 +18120,7 @@ loc_00010130:
 	LEA	loc_000607AA, A0
 	MOVE.w	#$006B, D5
 loc_00010154:
-	BSR.w	loc_0000FBA4
+	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
 	DBF	D5, loc_00010154
 	LEA	loc_0001F502, A0
@@ -18125,7 +18129,7 @@ loc_00010154:
 	LEA	loc_00061A76, A0
 	MOVE.w	#$009D, D5
 loc_00010178:
-	BSR.w	loc_0000FBA4
+	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
 	DBF	D5, loc_00010178
 	LEA	loc_0001F512, A0
@@ -18134,7 +18138,7 @@ loc_00010178:
 	LEA	loc_00061484, A0
 	MOVE.w	#$0029, D5
 loc_0001019C:
-	BSR.w	loc_0000FBA4
+	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
 	DBF	D5, loc_0001019C
 	LEA	loc_0001F522, A0
@@ -18146,7 +18150,7 @@ loc_000101B4:
 	LEA	loc_00065EF2, A0
 	MOVE.w	#$00FF, D5
 loc_000101C2:
-	BSR.w	loc_0000FBA4
+	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
 	DBF	D5, loc_000101C2
 	LEA	loc_0001F542, A0
@@ -18155,7 +18159,7 @@ loc_000101C2:
 	LEA	loc_00067682, A0
 	MOVE.w	#$00FF, D5
 loc_000101E6:
-	BSR.w	loc_0000FBA4
+	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
 	DBF	D5, loc_000101E6
 	LEA	loc_0001F552, A0
@@ -18166,7 +18170,7 @@ loc_00010200:
 loc_00010206:
 	MOVE.w	#$006B, D5
 loc_0001020A:
-	BSR.w	loc_0000FBA4
+	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
 	DBF	D5, loc_0001020A
 	LEA	loc_0001F502, A0
@@ -18175,7 +18179,7 @@ loc_0001020A:
 	LEA	loc_0006803C, A0
 	MOVE.w	#$001A, D5
 loc_0001022E:
-	BSR.w	loc_0000FBA4
+	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
 	DBF	D5, loc_0001022E
 	LEA	loc_0001F562, A0
@@ -18184,7 +18188,7 @@ loc_0001022E:
 	LEA	loc_00067FB4, A0
 	MOVE.w	#7, D5
 loc_00010252:
-	BSR.w	loc_0000FBA4
+	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
 	DBF	D5, loc_00010252
 	LEA	loc_0001F572, A0
@@ -18196,7 +18200,7 @@ loc_0001026A:
 	LEA	Tile_gfx_buffer.w, A2
 	MOVE.w	#$004D, D5
 loc_00010278:
-	BSR.w	loc_0000FBA4
+	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
 	DBF	D5, loc_00010278
 	LEA	loc_0001F592, A0
@@ -18205,7 +18209,7 @@ loc_00010278:
 	LEA	Tile_gfx_buffer.w, A2
 	MOVE.w	#$006C, D5
 loc_0001029C:
-	BSR.w	loc_0000FBA4
+	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
 	DBF	D5, loc_0001029C
 	LEA	loc_0001F5A2, A0
@@ -18214,7 +18218,7 @@ loc_0001029C:
 	LEA	Tile_gfx_buffer.w, A2
 	MOVE.w	#$0062, D5
 loc_000102C0:
-	BSR.w	loc_0000FBA4
+	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
 	DBF	D5, loc_000102C0
 	LEA	loc_0001F5B2, A0
@@ -18223,7 +18227,7 @@ loc_000102C0:
 	LEA	Tile_gfx_buffer.w, A2
 	MOVE.w	#$004F, D5
 loc_000102E4:
-	BSR.w	loc_0000FBA4
+	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
 	DBF	D5, loc_000102E4
 	LEA	loc_0001F5C2, A0
@@ -18233,7 +18237,7 @@ loc_00010300:
 	LEA	Tile_gfx_buffer.w, A2
 	MOVE.w	#$0051, D5
 loc_00010308:
-	BSR.w	loc_0000FBA4
+	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
 	DBF	D5, loc_00010308
 	LEA	loc_0001F5D2, A0
@@ -18242,7 +18246,7 @@ loc_00010308:
 	LEA	Tile_gfx_buffer.w, A2
 	MOVE.w	#5, D5
 loc_0001032C:
-	BSR.w	loc_0000FBA4
+	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
 	DBF	D5, loc_0001032C
 	LEA	loc_0001F5E2, A0
@@ -18254,7 +18258,7 @@ loc_00010344:
 	LEA	Tile_gfx_buffer.w, A2
 	MOVE.w	#$003C, D5
 loc_00010352:
-	BSR.w	loc_0000FBA4
+	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
 	DBF	D5, loc_00010352
 	LEA	loc_0001F582, A0
@@ -18443,7 +18447,7 @@ loc_0001056A:
 	LEA	Tile_gfx_buffer.w, A2
 	MOVE.w	(A6)+, D5
 loc_00010588:
-	BSR.w	loc_0000FBA4
+	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
 	DBF	D5, loc_00010588
 	MOVEA.l	(A6), A0
