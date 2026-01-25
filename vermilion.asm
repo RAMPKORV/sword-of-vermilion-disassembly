@@ -934,7 +934,7 @@ loc_00001614:
 ProgramState_08:
 	TST.b	Fade_out_lines_mask.w
 	BNE.b	loc_00001634
-	JSR	loc_0001026A
+	JSR	LoadTitleScreenGraphics
 	MOVE.l	#loc_000156C0, $12(A5)
 	MOVE.w	#PROGRAM_STATE_09, Program_state.w
 	CLR.b	Prologue_complete_flag.w
@@ -1038,7 +1038,7 @@ ProgramState_05:
 	MOVE.w	VDP_Reg11_cache.w, D0
 	ANDI.w	#$FFF8, D0
 	MOVE.w	D0, VDP_control_port
-	JSR	loc_00010344
+	JSR	LoadOptionsMenuGraphics
 	JSR	EnableDisplay
 	MOVE.l	#loc_000150F6, $12(A5)
 	MOVE.w	#PROGRAM_STATE_06, Program_state.w
@@ -2835,7 +2835,7 @@ loc_00003142:
 	MOVE.w	#2, Menu_cursor_column_break.w	
 	MOVE.w  #$FFFF, Menu_cursor_last_index.w
 	JSR	SaveMessageSpeedMenuToBuffer	
-	JSR	loc_00010CE2	
+	JSR	DrawMessageSpeedMenu	
 	ADDQ.w	#1, Overworld_menu_state.w	
 	MOVE.w	#$000E, Menu_cursor_base_x.w	
 	MOVE.w	#$000E, Menu_cursor_base_y.w	
@@ -2880,7 +2880,7 @@ loc_000031EC:
 	
 loc_000031EE:
 	JSR	SaveMessageSpeedMenuToBuffer_Alt
-	JSR	loc_00010C9E
+	JSR	DrawOptionsMenu
 	ADDQ.w	#1, Overworld_menu_state.w
 	CLR.w	Main_menu_selection.w
 	BSR.w	InitMenuCursorDefaults
@@ -18242,7 +18242,8 @@ loc_0001019C:
 	BSR.w	ExecuteVdpDmaFromRam
 	RTS
 	
-loc_000101B4:
+;LoadMenuTileGraphics:
+LoadMenuTileGraphics:
 	LEA	Tile_gfx_buffer.w, A2
 	LEA	loc_00065EF2, A0
 	MOVE.w	#$00FF, D5
@@ -18292,7 +18293,8 @@ loc_00010252:
 	BSR.w	ExecuteVdpDmaFromRam
 	RTS
 	
-loc_0001026A:
+;LoadTitleScreenGraphics:
+LoadTitleScreenGraphics:
 	LEA	loc_00062AAA, A0
 	LEA	Tile_gfx_buffer.w, A2
 	MOVE.w	#$004D, D5
@@ -18350,7 +18352,8 @@ loc_0001032C:
 	BSR.w	ExecuteVdpDmaFromRam
 	RTS
 	
-loc_00010344:
+;LoadOptionsMenuGraphics:
+LoadOptionsMenuGraphics:
 	LEA	loc_00068236, A0
 	LEA	Tile_gfx_buffer.w, A2
 	MOVE.w	#$003C, D5
@@ -18566,7 +18569,8 @@ loc_00010588:
 loc_0001059A:
 	RTS
 	
-loc_0001059C:
+;SaveGameToSram:
+SaveGameToSram:
 	LEA	loc_0001094A, A0
 	LEA	loc_0001095A, A1
 	MOVE.w	Dialog_selection.w, D0
@@ -18626,7 +18630,7 @@ loc_0001064C:
 loc_0001065C:
 	BSR.w	CopyByteToSram
 	DBF	D7, loc_0001065C
-	JSR	loc_00010674
+	JSR	CalculateChecksumAndBackupSram
 	RTS
 
 ; loc_0001066C
@@ -18635,7 +18639,8 @@ CopyByteToSram:
 	LEA	$1(A0), A0
 	RTS
 	
-loc_00010674:
+;CalculateChecksumAndBackupSram:
+CalculateChecksumAndBackupSram:
 	MOVEA.l	Sram_save_slot_ptr.w, A0
 	MOVE.w	#$014E, D7
 	MOVEQ	#0, D1
@@ -18685,7 +18690,7 @@ loc_000106EE:
 	CLR.w	Dialog_selection.w
 	JSR	ClearVRAMPlaneA
 	JSR	ClearVRAMPlaneB
-	JSR	loc_0001168C
+	JSR	DrawSaveFileSelectWindow
 	ADDQ.w	#1, File_menu_phase.w
 	RTS
 	
@@ -18719,7 +18724,7 @@ loc_0001076C:
 	BSR.w	loc_000108FE
 	BEQ.b	loc_0001077E
 	ADDQ.w	#1, File_menu_phase.w
-	JSR	loc_000117E8
+	JSR	DrawSaveErrorWindow
 	RTS
 	
 loc_0001077E:
@@ -18762,7 +18767,7 @@ loc_000107F6:
 	MOVEA.l	Sram_backup_ptr.w, A0	
 	BSR.w	loc_0001092E	
 	BSR.w	loc_00010854	
-	JSR	loc_0001182C	
+	JSR	DrawSaveSuccessWindow	
 	MOVE.w	#5, File_menu_phase.w	
 	MOVE.w	#$0086, D0	
 	JSR	QueueSoundEffect	
@@ -19088,7 +19093,8 @@ loc_00010BE4:
 	ADDQ.w	#1, Player_name_index.w
 	RTS
 	
-loc_00010BEA:
+;DrawStartContinueMenu:
+DrawStartContinueMenu:
 	CLR.w	Dialog_selection.w
 	MOVE.w	#1, Menu_cursor_column_break.w
 	MOVE.w	#$FFFF, Menu_cursor_last_index.w
@@ -19132,7 +19138,8 @@ InitDialogueWindow:
 	MOVE.b	#$FF, Window_tilemap_draw_pending.w
 	RTS
 	
-loc_00010C9E:
+;DrawOptionsMenu:
+DrawOptionsMenu:
 	MOVE.w	#2, Window_tilemap_x.w
 	MOVE.w	#2, Window_tilemap_y.w
 	MOVE.w	#$000D, Window_width.w
@@ -19147,7 +19154,8 @@ loc_00010C9E:
 	MOVE.b	#$FF, Window_tilemap_draw_active.w
 	RTS
 	
-loc_00010CE2:
+;DrawMessageSpeedMenu:
+DrawMessageSpeedMenu:
 	MOVE.w	#$000A, Window_tilemap_x.w	
 	MOVE.w	#$000A, Window_tilemap_y.w	
 	MOVE.w	#$000E, Window_width.w	
@@ -19192,7 +19200,8 @@ DrawYesNoDialog:
 	MOVE.b	#$FF, Window_tilemap_draw_pending.w
 	RTS
 	
-loc_00010DA4:
+;DrawSavedGameOptionsMenu:
+DrawSavedGameOptionsMenu:
 	CLR.w	Dialog_selection.w
 	MOVE.w	#2, Menu_cursor_column_break.w
 	MOVE.w	#$FFFF, Menu_cursor_last_index.w
@@ -19227,7 +19236,8 @@ loc_00010DA4:
 	MOVE.b	#$FF, Window_tilemap_draw_pending.w
 	RTS
 	
-loc_00010E46:
+;DrawSpellActionMenu:
+DrawSpellActionMenu:
 	MOVE.w	#2, Menu_cursor_column_break.w
 	MOVE.w	#$FFFF, Menu_cursor_last_index.w
 	MOVE.w	#3, Menu_cursor_base_x.w
@@ -19246,7 +19256,8 @@ loc_00010E46:
 	MOVE.b	#$FF, Window_tilemap_draw_active.w
 	RTS
 	
-loc_00010EA2:
+;DrawUseDiscardMenuWindow:
+DrawUseDiscardMenuWindow:
 	MOVE.w	#1, Menu_cursor_column_break.w
 	MOVE.w	#$FFFF, Menu_cursor_last_index.w
 	MOVE.w	#3, Menu_cursor_base_x.w
@@ -19285,7 +19296,8 @@ DrawEquipmentMenuWindow:
 	MOVE.b	#$FF, Window_tilemap_draw_active.w
 	RTS
 	
-loc_00010F5A:
+;DrawEquipOptionsMenuWindow:
+DrawEquipOptionsMenuWindow:
 	MOVE.w	#2, Menu_cursor_column_break.w
 	MOVE.w	#$FFFF, Menu_cursor_last_index.w
 	MOVE.w	#$000D, Menu_cursor_base_x.w
@@ -19387,7 +19399,8 @@ DrawEquipmentListWindow:
 	BSR.w	loc_00011168
 	RTS
 	
-loc_000110F4:
+;DrawReadyEquipmentMenuBorders:
+DrawReadyEquipmentMenuBorders:
 	MOVE.w	Ready_equipment_list_length.w, D7
 	BSR.w	loc_00011106
 	MOVE.w	Ready_equipment_list_length.w, D0
@@ -19433,7 +19446,8 @@ loc_00011168:
 	BSR.w	loc_000113AE
 	RTS
 	
-loc_0001119A:
+;DrawShopItemListWindow:
+DrawShopItemListWindow:
 	MOVE.w	Shop_item_count.w, D0
 	SUBQ.w	#1, D0
 	MOVE.w	D0, Menu_cursor_column_break.w
@@ -19492,7 +19506,8 @@ loc_0001124C:
 	MOVE.b	#$FF, Window_tilemap_draw_active.w
 	RTS
 	
-loc_00011274:
+;DrawShopSellListWindow:
+DrawShopSellListWindow:
 	MOVE.w	Shop_item_count.w, D0
 	SUBQ.w	#1, D0
 	MOVE.w	D0, Menu_cursor_column_break.w
@@ -19530,7 +19545,8 @@ loc_000112DE:
 	MOVE.b	#$FF, Window_tilemap_draw_active.w
 	RTS
 	
-loc_00011304:
+;DrawTownListWindow:
+DrawTownListWindow:
 	MOVE.w	#$000B, Menu_cursor_base_x.w
 	MOVE.w	#4, Menu_cursor_base_y.w
 	MOVE.w	#$000A, Window_tilemap_x.w
@@ -19830,7 +19846,8 @@ InitSpellbookCursor:
 	MOVE.w	#$000E, Menu_cursor_base_y.w
 	RTS
 	
-loc_00011648:
+;SetShopMenuCursorPosition:
+SetShopMenuCursorPosition:
 	MOVE.w	Shop_item_count.w, D0	
 	SUBQ.w	#1, D0	
 	MOVE.w	D0, Menu_cursor_column_break.w	
@@ -19851,7 +19868,8 @@ ResetScriptOutputVars:
 	CLR.w	Script_output_x.w
 	RTS
 	
-loc_0001168C:
+;DrawSaveFileSelectWindow:
+DrawSaveFileSelectWindow:
 	MOVE.w	#4, Window_tilemap_x.w
 	MOVE.w	#1, Window_tilemap_y.w
 	MOVE.w	#$001B, Window_width.w
@@ -19954,7 +19972,8 @@ loc_000117CE:
 	BSR.w	WordToDecimalString
 	RTS
 	
-loc_000117E8:
+;DrawSaveErrorWindow:
+DrawSaveErrorWindow:
 	MOVE.w	#$000A, Window_tilemap_x.w
 	MOVE.w	#$0010, Window_tilemap_y.w
 	MOVE.w	#$0019, Window_width.w
@@ -19969,7 +19988,8 @@ loc_000117E8:
 	MOVE.b	#$FF, Window_tilemap_draw_active.w
 	RTS
 	
-loc_0001182C:
+;DrawSaveSuccessWindow:
+DrawSaveSuccessWindow:
 	MOVE.w	#$000A, Window_tilemap_x.w	
 	MOVE.w	#$0010, Window_tilemap_y.w	
 	MOVE.w	#$0019, Window_width.w	
@@ -24549,7 +24569,7 @@ loc_00016BE0:
 	CMPI.w	#$03FF, D1
 	BLT.b	loc_00016C02
 	MOVE.b	#$FF, Title_intro_complete.w
-	JSR	loc_00010BEA
+	JSR	DrawStartContinueMenu
 	BSR.w	loc_00016E86
 	MOVE.l	#loc_00016C0C, $2(A5)
 loc_00016C02:
@@ -24924,7 +24944,7 @@ loc_00017134:
 	MOVE.w	VDP_Reg11_cache.w, D0
 	ORI.w	#3, D0
 	MOVE.w	D0, VDP_control_port
-	JSR	loc_000101B4
+	JSR	LoadMenuTileGraphics
 	BSR.w	loc_0001756A
 	BSR.w	loc_0001760A
 	MOVE.b	#6, Fade_in_lines_mask.w
@@ -25697,7 +25717,7 @@ loc_00017F1E:
 	MOVE.w	Main_menu_selection.w, Menu_cursor_index.w
 	JSR	DrawMenuCursor
 	JSR	SaveItemListAreaToBuffer_Large
-	JSR	loc_00010E46
+	JSR	DrawSpellActionMenu
 	CLR.w	Item_menu_action_mode.w
 	ADDQ.w	#1, Spellbook_menu_state.w
 	CLR.w	Menu_cursor_index.w
@@ -26387,7 +26407,7 @@ CastAries:
 	TST.b	Is_in_cave.w
 	BNE.w	loc_00018912
 	JSR	SaveStatusMenuTiles
-	JSR	loc_00011304
+	JSR	DrawTownListWindow
 	MOVE.w	#$000B, Spellbook_menu_state.w
 	RTS
 loc_00018912:
@@ -28266,7 +28286,7 @@ loc_0001A322:
 	MOVE.w	Main_menu_selection.w, Menu_cursor_index.w
 	JSR	DrawMenuCursor
 	JSR	SaveItemListAreaToBuffer_Small
-	JSR	loc_00010EA2
+	JSR	DrawUseDiscardMenuWindow
 	CLR.w	Item_menu_action_mode.w
 	ADDQ.w	#1, Item_menu_state.w
 	RTS
@@ -29697,7 +29717,7 @@ loc_0001B6B6:
 	TST.b	Script_text_complete.w
 	BEQ.b	loc_0001B6D2
 	JSR	SaveShopListToBuffer
-	JSR	loc_00011274
+	JSR	DrawShopSellListWindow
 	CLR.w	Shop_selected_index.w
 	ADDQ.w	#1, Dialogue_state.w
 	RTS
@@ -30159,7 +30179,7 @@ loc_0001BDFA:
 	TST.b	Script_text_complete.w
 	BEQ.b	loc_0001BE16
 	JSR	SaveShopListToBuffer
-	JSR	loc_0001119A
+	JSR	DrawShopItemListWindow
 	CLR.w	Shop_selected_index.w
 	ADDQ.w	#1, Dialogue_state.w
 	RTS
@@ -30313,7 +30333,7 @@ loc_0001C030:
 	JSR	QueueSoundEffect	
 	JSR	DrawLeftMenuWindow	
 	MOVE.w	#$C, Dialogue_state.w	
-	JSR	loc_00011648	
+	JSR	SetShopMenuCursorPosition	
 	JSR	ResetScriptAndInitDialogue	
 	MOVE.w	Current_shop_type.w, D0	
 	ADD.w	D0, D0	
@@ -31246,7 +31266,7 @@ loc_0001CD6A:
 	TST.b	Script_text_complete.w
 	BEQ.b	loc_0001CD82
 	JSR	SaveShopSubmenuAreaToBuffer
-	JSR	loc_00010DA4
+	JSR	DrawSavedGameOptionsMenu
 	ADDQ.w	#1, Dialogue_state.w
 	RTS
 
@@ -31261,7 +31281,7 @@ loc_0001CD88:
 	MOVE.w	#BUTTON_BIT_C, D2
 	JSR	CheckButtonPress
 	BEQ.b	loc_0001CDEA
-	JSR	loc_0001059C
+	JSR	SaveGameToSram
 	JSR	RestoreShopSubmenuFromBuffer
 	JSR	ResetScriptAndInitDialogue
 	PRINT 	GameSavedStr
@@ -31528,7 +31548,7 @@ loc_0001D0C0:
 	CLR.w	Ready_equipment_category.w
 	MOVE.w	#2, Ready_equipment_state.w
 	JSR	SaveRightMenuToBuffer
-	JSR	loc_00010F5A
+	JSR	DrawEquipOptionsMenuWindow
 	MOVE.w	Ready_equipment_selection.w, D0
 	BEQ.b	loc_0001D102
 	MOVE.w	#5, Ready_equipment_state.w
@@ -31568,7 +31588,7 @@ loc_0001D156:
 	TST.w	Ready_equipment_list_length.w
 	BLE.b	loc_0001D1A8
 	JSR	SaveReadyEquipmentMenuToBuffer
-	JSR	loc_000110F4
+	JSR	DrawReadyEquipmentMenuBorders
 	JSR	DrawReadyEquipmentList
 	PRINT 	ReadyPromptStr
 	MOVE.w	#3, Ready_equipment_state.w
