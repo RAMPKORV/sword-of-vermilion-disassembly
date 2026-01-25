@@ -544,10 +544,10 @@ VerticalInterrupt:
 loc_000010FE:
 	BSR.w	loc_00001282
 loc_00001102:
-	TST.b	$FFFFE002.w
+	TST.b	Sprite_update_pending.w
 	BEQ.b	loc_00001112
 	JSR	loc_0000F688
-	CLR.b	$FFFFE002.w
+	CLR.b	Sprite_update_pending.w
 loc_00001112:
 	TST.b	Sprite_dma_update_pending.w
 	BEQ.b	loc_00001122
@@ -2053,7 +2053,7 @@ loc_00002620:
 	CLR.b	Talker_present_flag.w
 	CLR.b	Chest_already_opened.w
 	CLR.w	Overworld_menu_state.w
-	BCLR.b	#0, $FFFFC60D.w
+	BCLR.b	#0, Player_direction_flags.w
 	JSR	LoadPalettesFromTable
 	RTS
 
@@ -2331,7 +2331,7 @@ loc_00002A28:
 	CLR.b	Encounter_triggered.w
 	CLR.b	Chest_already_opened.w
 	CLR.w	Overworld_menu_state.w
-	BCLR.b	#0, $FFFFC60D.w
+	BCLR.b	#0, Player_direction_flags.w
 	JSR	LoadPalettesFromTable
 loc_00002A50:
 	RTS
@@ -17298,7 +17298,7 @@ loc_0000F75E:
 	ORI	#$0700, SR
 	TST.w	Sprite_attr_count.w
 	BLE.w	loc_0000F7BC
-	LEA	$FFFFE3F0.w, A1
+	LEA	Sprite_sort_temp_buffer.w, A1
 	LEA	Sprite_attr_buffer.w, A4
 	LEA	Sprite_sort_buffer.w, A2
 	CLR.w	D1
@@ -18969,9 +18969,9 @@ loc_00010B42:
 	BRA.b	loc_00010B6A
 loc_00010B56:
 	MOVE.b	(A4)+, Transaction_amount.w
-	MOVE.b	(A4)+, $FFFFC65B.w
-	MOVE.b	(A4)+, $FFFFC65C.w
-	MOVE.b	(A4)+, $FFFFC65D.w
+	MOVE.b	(A4)+, Transaction_item_id.w
+	MOVE.b	(A4)+, Transaction_item_quantity.w
+	MOVE.b	(A4)+, Transaction_item_flags.w
 	BSR.w	loc_00011576
 loc_00010B6A:
 	DBF	D4, loc_00010B42
@@ -18993,7 +18993,7 @@ loc_00010B90:
 	BRA.w	loc_00010BBE
 loc_00010BA0:
 	MOVE.b	$2(A0,D2.w), Dialog_choice_event_trigger.w
-	MOVE.b	$3(A0,D2.w), $FFFFC701.w
+	MOVE.b	$3(A0,D2.w), Dialog_choice_extended_trigger.w
 	MOVE.b	#$FF, Dialogue_event_trigger_flag.w
 loc_00010BB2:
 	MOVE.b	$1(A0,D2.w), Dialog_response_index.w
