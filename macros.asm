@@ -60,13 +60,13 @@ startZ80 macro
 ; ============================================================
 ; Efficiently clear a range of RAM to zero
 ; Handles odd alignment and uses long moves for speed
+; NOTE: Uses A0 and D0 to match original code patterns
 clearRAM macro startaddr,endaddr
-    LEA     (startaddr).w, A1
-    MOVEQ   #0, D0
-    MOVE.w  #((endaddr-startaddr)/4-1), D1
+    LEA     startaddr, A0
+    MOVE.w  #((endaddr-startaddr)/4-1), D0
 .loop\@:
-    MOVE.l  D0, (A1)+
-    DBRA    D1, .loop\@
+    CLR.l   (A0)+
+    DBF     D0, .loop\@
     ENDM
 
 ; ============================================================

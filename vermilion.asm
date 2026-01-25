@@ -13,11 +13,7 @@ InitPSG:
 	RTS
 
 loc_00000214:
-	LEA	Tilemap_buffer_plane_a, A0
-	MOVE.w	#$3F3F, D0
-loc_0000021E:
-	CLR.l	(A0)+
-	DBF	D0, loc_0000021E
+	clearRAM Tilemap_buffer_plane_a, $FFFFFD00
 	BSR.w	loc_000003D6
 	BSR.w	loc_0000035A
 	BSR.w	loc_0000032A
