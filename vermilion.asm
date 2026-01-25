@@ -21737,10 +21737,7 @@ loc_000133B2:
 	LEA	$FFFFC080.w, A0
 	MOVE.l	#0, (A0)+
 	MOVE.l	#0, (A0)+
-	MOVE.w	#$0100, Z80_bus_request
-loc_000133D2:
-	BTST.b	#0, Z80_bus_request
-	BNE.b	loc_000133D2
+	stopZ80
 	JSR	InitVdpDmaRamRoutine
 	MOVE.w	#2, D4
 	ORI.w	#$8F00, D4
@@ -21756,7 +21753,7 @@ loc_000133D2:
 	MOVE.w	$FFFFC3F2.w, D4
 	BCLR.l	#4, D4
 	MOVE.w	D4, VDP_control_port
-	MOVE.w	#0, Z80_bus_request
+	startZ80
 	RTS
 
 loc_0001343E:
