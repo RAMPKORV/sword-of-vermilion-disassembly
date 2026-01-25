@@ -1185,8 +1185,8 @@ loc_00001958:
 	BNE.w	loc_00001A90
 	JSR	DisableVDPDisplay
 	MOVE.w	#$F, Encounter_rate.w
-	JSR	loc_0000FD90
-	JSR	loc_0000F9B4
+	JSR	LoadTownTileGraphics
+	JSR	LoadTownGraphics
 	TST.w	Town_spawn_x.w
 	BGT.w	loc_000019BE
 	MOVE.w	Current_town.w, D0
@@ -1345,7 +1345,7 @@ loc_00001BB8:
 	BNE.b	loc_00001C1A
 	JSR	DisableVDPDisplay
 	JSR	LoadBattleHudGraphics
-	JSR	loc_0000F9BE
+	JSR	LoadTownBattleGraphics
 	TST.w	Saved_player_x_in_town.w
 	BGT.b	loc_00001BE6
 	BSR.w	SearchTownNPCData
@@ -1682,7 +1682,7 @@ loc_000020B2:
 	BNE.b	loc_00002114
 	JSR	DisableVDPDisplay
 	JSR	LoadBattleHudGraphics
-	JSR	loc_0000F9C8
+	JSR	LoadWorldBattleGraphics
 	TST.w	Saved_player_x_in_town.w
 	BGT.b	loc_000020E0
 	BSR.w	loc_0000336E
@@ -1851,7 +1851,7 @@ loc_00002324:
 	BSR.w	loc_00003024
 	CLR.w	Camera_scroll_x.w
 	CLR.w	Camera_scroll_y.w
-	JSR	loc_0000F9EE
+	JSR	LoadBattleTilesToBuffers
 	MOVEA.l	Player_entity_ptr.w, A6
 	MOVE.w	#$00A0, $E(A6)
 	MOVE.w	#$0064, $12(A6)
@@ -1977,13 +1977,13 @@ loc_00002542:
 	BNE.w	loc_000025AC
 	BSR.w	loc_00002620
 	JSR	LoadBattleTileGraphics
-	JSR	loc_0000FFA8
-	JSR	loc_0001001A
-	JSR	loc_00010040
-	JSR	loc_000100D8
-	JSR	loc_00010066
+	JSR	LoadBattleUiTileGraphics
+	JSR	LoadBattleGroundTileGraphics
+	JSR	LoadBattleEnemyTileGraphics
+	JSR	LoadBattlePlayerTileGraphics
+	JSR	LoadBattleStatusTileGraphics
 	BSR.w	loc_0000340C
-	JSR	loc_0000F972
+	JSR	LoadFirstPersonGraphics
 	MOVE.b	#$FF, Player_in_first_person_mode.w
 	MOVE.w	#$0037, Palette_line_1_index.w
 	MOVE.w	#$0038, Palette_line_2_index.w
@@ -2012,10 +2012,10 @@ loc_000025CE:
 	TST.b	Fade_out_lines_mask.w
 	BNE.w	loc_0000261E
 	BSR.w	loc_00002620
-	JSR	loc_0000FFF4
-	JSR	loc_0001008C
-	JSR	loc_000100B2
-	JSR	loc_0000F994
+	JSR	LoadCaveTileGraphics
+	JSR	LoadCaveEnemyTileGraphics
+	JSR	LoadCaveItemTileGraphics
+	JSR	LoadFirstPersonBattleGraphics
 	BSR.w	loc_0000341A
 	TST.b	Cave_light_active.w
 	BEQ.b	loc_0000260E
@@ -2040,7 +2040,7 @@ loc_00002620:
 	JSR	InitBattleObjects
 	CLR.w	Sprite_attr_count.w
 	JSR	FlushSpriteAttributesToVDP
-	JSR	loc_0000FFCE
+	JSR	LoadWorldMapTileGraphics
 	BSR.w	loc_00003064
 	JSR	ProcessAllObjectSlots
 	MOVEA.l	Player_entity_ptr.w, A6
@@ -2409,7 +2409,7 @@ loc_00002AE0:
 	BSR.w	loc_00003024
 	CLR.w	Camera_scroll_x.w
 	CLR.w	Camera_scroll_y.w
-	JSR	loc_0000FA3E
+	JSR	LoadBossGraphics
 	MOVEA.l	Player_entity_ptr.w, A6
 	ADDQ.w	#1, Gameplay_substate.w
 	CLR.w	Overworld_menu_state.w
@@ -17515,7 +17515,8 @@ LoadTalkerGraphics:
 loc_0000F970:
 	RTS
 	
-loc_0000F972:
+;LoadFirstPersonGraphics:
+LoadFirstPersonGraphics:
 	LEA	loc_0001F81C-2, A6
 	BSR.w	ProcessGraphicsLoadList
 	MOVE.l	#$40000000, D7
@@ -17525,24 +17526,30 @@ loc_0000F972:
 	BSR.w	VDP_DMAFill
 	RTS
 	
-loc_0000F994:
+;LoadFirstPersonBattleGraphics:
+LoadFirstPersonBattleGraphics:
 	LEA	loc_0001F8AC, A6
 	BSR.w	ProcessGraphicsLoadList
 	RTS
 	
-loc_0000F9A0:
+;LoadIntroSegalogGraphics:
+LoadIntroSegalogGraphics:
 	LEA	loc_0001F93E, A6
 	BRA.w	ProcessGraphicsLoadList
-loc_0000F9AA:
+;LoadIntroTitleGraphics:
+LoadIntroTitleGraphics:
 	LEA	loc_0001F94C, A6
 	BRA.w	ProcessGraphicsLoadList
-loc_0000F9B4:
+;LoadTownGraphics:
+LoadTownGraphics:
 	LEA	loc_0001F95A, A6
 	BRA.w	ProcessGraphicsLoadList
-loc_0000F9BE:
+;LoadTownBattleGraphics:
+LoadTownBattleGraphics:
 	LEA	loc_0001F9E0, A6
 	BRA.w	ProcessGraphicsLoadList
-loc_0000F9C8:
+;LoadWorldBattleGraphics:
+LoadWorldBattleGraphics:
 	LEA	loc_0001FA96, A6
 	BRA.w	ProcessGraphicsLoadList
 ;LoadPlayerOverworldGraphics:
@@ -17554,7 +17561,8 @@ LoadPlayerOverworldGraphics:
 	BSR.w	LoadMultipleTilesFromTable
 	RTS
 	
-loc_0000F9EE:
+;LoadBattleTilesToBuffers:
+LoadBattleTilesToBuffers:
 	LEA	Tilemap_buffer_plane_a, A2
 	LEA	loc_00042E28, A4
 	LEA	loc_0004367A, A3
@@ -17572,7 +17580,8 @@ loc_0000F9EE:
 	BSR.w	LoadMultipleTilesFromTable
 	RTS
 	
-loc_0000FA3E:
+;LoadBossGraphics:
+LoadBossGraphics:
 	LEA	Tilemap_buffer_plane_a, A2
 	LEA	loc_000460D8, A4
 	LEA	loc_0004720C, A3
@@ -17865,7 +17874,8 @@ loc_0000FCEA:
 	BSR.w	loc_0000FD1C
 	RTS
 
-loc_0000FCFC:
+;InitFontTiles:
+InitFontTiles:
 	LEA	Tile_gfx_buffer.w, A2
 	LEA	loc_00041A90, A0
 	MOVE.w	#$00FF, D5
@@ -17896,7 +17906,8 @@ loc_0000FD1C:
 	MOVE.w	#0, Z80_bus_request
 	RTS
 
-loc_0000FD90:
+;LoadTownTileGraphics:
+LoadTownTileGraphics:
 	LEA	Tile_gfx_buffer.w, A2
 	TST.b	Swaffham_ruined.w
 	BEQ.b	loc_0000FDAA
@@ -18057,7 +18068,8 @@ loc_0000FF90:
 	BSR.w	ExecuteVdpDmaFromRam
 	RTS
 	
-loc_0000FFA8:
+;LoadBattleUiTileGraphics:
+LoadBattleUiTileGraphics:
 	LEA	loc_0006A9C0, A0
 	LEA	Tile_gfx_buffer.w, A2
 	MOVE.w	#$003C, D5
@@ -18069,7 +18081,8 @@ loc_0000FFB6:
 	BSR.w	ExecuteVdpDmaFromRam
 	RTS
 	
-loc_0000FFCE:
+;LoadWorldMapTileGraphics:
+LoadWorldMapTileGraphics:
 	LEA	loc_0006B408, A0
 	LEA	Tile_gfx_buffer.w, A2
 	MOVE.w	#$00EA, D5
@@ -18085,7 +18098,8 @@ loc_0000FFE8:
 NullSpriteRoutine:
 	RTS
 	
-loc_0000FFF4:
+;LoadCaveTileGraphics:
+LoadCaveTileGraphics:
 	LEA	loc_0006D172, A0
 loc_0000FFFA:
 	LEA	Tile_gfx_buffer.w, A2
@@ -18101,7 +18115,8 @@ loc_0001000E:
 	BSR.w	ExecuteVdpDmaFromRam
 	RTS
 	
-loc_0001001A:
+;LoadBattleGroundTileGraphics:
+LoadBattleGroundTileGraphics:
 	LEA	loc_00080EAC, A0
 	LEA	Tile_gfx_buffer.w, A2
 	MOVE.w	#$0064, D5
@@ -18113,7 +18128,8 @@ loc_00010028:
 	BSR.w	ExecuteVdpDmaFromRam
 	RTS
 	
-loc_00010040:
+;LoadBattleEnemyTileGraphics:
+LoadBattleEnemyTileGraphics:
 	LEA	loc_0008287C, A0
 	LEA	Tile_gfx_buffer.w, A2
 	MOVE.w	#$0056, D5
@@ -18125,7 +18141,8 @@ loc_0001004E:
 	BSR.w	ExecuteVdpDmaFromRam
 	RTS
 	
-loc_00010066:
+;LoadBattleStatusTileGraphics:
+LoadBattleStatusTileGraphics:
 	LEA	loc_000844CA, A0
 	LEA	Tile_gfx_buffer.w, A2
 	MOVE.w	#$0058, D5
@@ -18137,7 +18154,8 @@ loc_00010074:
 	BSR.w	ExecuteVdpDmaFromRam
 	RTS
 	
-loc_0001008C:
+;LoadCaveEnemyTileGraphics:
+LoadCaveEnemyTileGraphics:
 	LEA	loc_0008287C, A0
 	LEA	Tile_gfx_buffer.w, A2
 	MOVE.w	#$0056, D5
@@ -18149,7 +18167,8 @@ loc_0001009A:
 	BSR.w	ExecuteVdpDmaFromRam
 	RTS
 	
-loc_000100B2:
+;LoadCaveItemTileGraphics:
+LoadCaveItemTileGraphics:
 	LEA	loc_000876DE, A0
 	LEA	Tile_gfx_buffer.w, A2
 	MOVE.w	#$005D, D5
@@ -18161,7 +18180,8 @@ loc_000100C0:
 	BSR.w	ExecuteVdpDmaFromRam
 	RTS
 	
-loc_000100D8:
+;LoadBattlePlayerTileGraphics:
+LoadBattlePlayerTileGraphics:
 	LEA	loc_00085BE8, A0
 	LEA	Tile_gfx_buffer.w, A2
 	MOVE.w	#$004F, D5
@@ -24400,8 +24420,8 @@ loc_000169D0:
 	MOVE.w	D0, VDP_data_port
 	MOVE.b	#$FF, HScroll_update_busy.w
 	MOVE.b	#$FF, Intro_text_pending.w
-	JSR	loc_0000F9A0
-	JSR	loc_0000F9AA
+	JSR	LoadIntroSegalogGraphics
+	JSR	LoadIntroTitleGraphics
 	JSR	LoadPalettesFromTable
 	JSR	EnableDisplay
 	RTS
@@ -25026,7 +25046,7 @@ loc_000172FA:
 	MOVE.w	#$00E0, D0
 	JSR	QueueSoundEffect
 	ADDQ.w	#1, Ending_sequence_step.w
-	JSR	loc_0000FCFC
+	JSR	InitFontTiles
 loc_00017314:
 	BRA.w	EndingSequence_CommonUpdate
 loc_00017318:
@@ -38136,7 +38156,7 @@ loc_00023926:
 	dc.l	loc_00000000	
 loc_0002392E:
 	dc.l	$025901D1	
-	dc.l	loc_0000FFF4	
+	dc.l	LoadCaveTileGraphics	
 	dc.l	$FFDB0265	
 loc_0002393A:
 	dc.l	$01E10000	
