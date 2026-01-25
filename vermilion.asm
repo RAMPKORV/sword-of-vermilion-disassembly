@@ -17366,7 +17366,7 @@ loc_0000F806:
 	MOVEA.l	(A6)+, A4
 	MOVEA.l	(A6)+, A3
 	MOVE.w	(A6)+, D5
-	BSR.w	loc_0000FAC6
+	BSR.w	LoadMultipleTilesFromTable
 	BSR.w	ExecuteVdpDmaTransfer
 	LEA	loc_0001F810-2, A6
 	MOVE.w	(A6)+, Vdp_dma_slot_index.w
@@ -17374,7 +17374,7 @@ loc_0000F806:
 	MOVEA.l	(A6)+, A4
 	MOVEA.l	(A6)+, A3
 	MOVE.w	(A6)+, D5
-	BSR.w	loc_0000FAC6
+	BSR.w	LoadMultipleTilesFromTable
 	BSR.w	ExecuteVdpDmaTransfer
 	LEA	loc_00023E70, A6
 	MOVE.w	Current_encounter_type.w, D0
@@ -17386,14 +17386,14 @@ loc_0000F806:
 	MOVEA.l	(A6)+, A4
 	MOVEA.l	(A6)+, A3
 	MOVE.w	(A6)+, D5
-	BSR.w	loc_0000FAC6
+	BSR.w	LoadMultipleTilesFromTable
 	BSR.w	ExecuteVdpDmaTransfer
 	MOVE.w	#$0036, Vdp_dma_slot_index.w
 	LEA	Tile_gfx_buffer.w, A2
 	MOVEA.l	(A6)+, A4
 	MOVEA.l	(A6)+, A3
 	MOVE.w	(A6)+, D5
-	BSR.w	loc_0000FAC6
+	BSR.w	LoadMultipleTilesFromTable
 	BSR.w	ExecuteVdpDmaTransfer
 	MOVE.l	(A6), D0
 	BLE.b	loc_0000F89E
@@ -17402,7 +17402,7 @@ loc_0000F806:
 	MOVEA.l	(A6)+, A4
 	MOVEA.l	(A6)+, A3
 	MOVE.w	(A6)+, D5
-	BSR.w	loc_0000FAC6
+	BSR.w	LoadMultipleTilesFromTable
 	BSR.w	ExecuteVdpDmaTransfer
 loc_0000F89E:
 	RTS
@@ -17418,7 +17418,7 @@ loc_0000F8A0:
 	MOVEA.l	(A6)+, A3
 	MOVE.w	(A6)+, D5
 	MOVE.w	(A6), $FFFFC080.w
-	BSR.w	loc_0000FAC6
+	BSR.w	LoadMultipleTilesFromTable
 	BSR.w	ExecuteVdpDmaTransfer
 	JSR	LoadPalettesFromTable
 	RTS
@@ -17442,7 +17442,7 @@ loc_0000F8D2:
 	MOVEA.l	$0(A6), A4
 	MOVEA.l	$4(A6), A3
 	MOVE.w	#$000F, D5
-	BSR.w	loc_0000FAC6
+	BSR.w	LoadMultipleTilesFromTable
 	LEA	Enemy_gfx_buffer.w, A2
 	MOVEA.l	$FFFFC686.w, A6
 	TST.l	$8(A6)
@@ -17450,7 +17450,7 @@ loc_0000F8D2:
 	MOVEA.l	$8(A6), A4
 	MOVEA.l	$C(A6), A3
 	MOVE.w	#$000F, D5
-	BSR.w	loc_0000FAC6
+	BSR.w	LoadMultipleTilesFromTable
 loc_0000F938:
 	RTS
 	
@@ -17460,7 +17460,7 @@ loc_0000F93A:
 	MOVEA.l	$0(A6), A4
 	MOVEA.l	$4(A6), A3
 	MOVE.w	$8(A6), D5
-	BSR.w	loc_0000FAC6
+	BSR.w	LoadMultipleTilesFromTable
 	LEA	Enemy_gfx_buffer.w, A2
 	MOVEA.l	$FFFFC566.w, A6
 	TST.l	$A(A6)
@@ -17468,7 +17468,7 @@ loc_0000F93A:
 	MOVEA.l	$A(A6), A4
 	MOVEA.l	$E(A6), A3
 	MOVE.w	$12(A6), D5
-	BSR.w	loc_0000FAC6
+	BSR.w	LoadMultipleTilesFromTable
 loc_0000F970:
 	RTS
 	
@@ -17507,7 +17507,7 @@ loc_0000F9D2:
 	LEA	Player_overworld_gfx_buffer, A2
 	LEA	loc_0004567E, A4
 	MOVE.w	#$006B, D5
-	BSR.w	loc_0000FAC6
+	BSR.w	LoadMultipleTilesFromTable
 	RTS
 	
 loc_0000F9EE:
@@ -17515,17 +17515,17 @@ loc_0000F9EE:
 	LEA	loc_00042E28, A4
 	LEA	loc_0004367A, A3
 	MOVE.w	#$00A7, D5
-	BSR.w	loc_0000FAC6
+	BSR.w	LoadMultipleTilesFromTable
 	LEA	Battle_gfx_slot_1_buffer, A2
 	LEA	loc_000437DE, A4
 	LEA	loc_00045286, A3
 	MOVE.w	#$0167, D5
-	BSR.w	loc_0000FAC6
+	BSR.w	LoadMultipleTilesFromTable
 	LEA	Battle_gfx_slot_2_buffer, A2
 	LEA	loc_00042978, A4
 	LEA	loc_00042D44, A3
 	MOVE.w	#$0077, D5
-	BSR.w	loc_0000FAC6
+	BSR.w	LoadMultipleTilesFromTable
 	RTS
 	
 loc_0000FA3E:
@@ -17533,22 +17533,22 @@ loc_0000FA3E:
 	LEA	loc_000460D8, A4
 	LEA	loc_0004720C, A3
 	MOVE.w	#$00BF, D5
-	BSR.w	loc_0000FAC6
+	BSR.w	LoadMultipleTilesFromTable
 	LEA	Boss_gfx_slot_1_buffer, A2
 	LEA	loc_000474BC, A4
 	LEA	loc_00048872, A3
 	MOVE.w	#$00EF, D5
-	BSR.w	loc_0000FAC6
+	BSR.w	LoadMultipleTilesFromTable
 	LEA	Boss_gfx_extra_buffer, A2
 	LEA	loc_00048B4E, A4
 	LEA	loc_00048D9C, A3
 	MOVE.w	#$001F, D5
-	BSR.w	loc_0000FAC6
+	BSR.w	LoadMultipleTilesFromTable
 	LEA	Boss_gfx_slot_2_buffer, A2
 	LEA	loc_00048DEC, A4
 	LEA	loc_00048ECA, A3
 	MOVE.w	#$001B, D5
-	BSR.w	loc_0000FAC6
+	BSR.w	LoadMultipleTilesFromTable
 	RTS
 	
 ; ProcessGraphicsLoadList
@@ -17560,13 +17560,16 @@ ProcessGraphicsLoadList:
 	MOVEA.l	(A6)+, A4
 	MOVEA.l	(A6)+, A3
 	MOVE.w	(A6)+, D5
-	BSR.w	loc_0000FAC6
+	BSR.w	LoadMultipleTilesFromTable
 	BSR.w	ExecuteVdpDmaTransfer
 	BRA.b	ProcessGraphicsLoadList
 loc_0000FAC4:
 	RTS
 	
-loc_0000FAC6:
+; LoadMultipleTilesFromTable
+; Load and decompress multiple tiles from indexed table
+; Input: A4 = Index list, A3 = Tile pointer table, A2 = Destination, D5 = Count
+LoadMultipleTilesFromTable:
 	CLR.w	D0
 	MOVE.b	(A4)+, D0
 	ADD.w	D0, D0
@@ -17574,7 +17577,7 @@ loc_0000FAC6:
 	MOVEA.l	(A3,D0.w), A0
 	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
-	DBF	D5, loc_0000FAC6
+	DBF	D5, LoadMultipleTilesFromTable
 	RTS
 	
 ; ExecuteVdpDmaTransfer
@@ -18467,7 +18470,7 @@ loc_0001054C:
 	MOVEA.l	(A6)+, A4
 	MOVEA.l	(A6)+, A3
 	MOVE.w	(A6)+, D5
-	BSR.w	loc_0000FAC6
+	BSR.w	LoadMultipleTilesFromTable
 	BSR.w	ExecuteVdpDmaTransfer
 	BRA.b	loc_0001054C
 loc_00010568:
