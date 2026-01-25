@@ -9907,27 +9907,32 @@ loc_0000908E:
 	MOVE.l	D3, $36(A5)
 	RTS
 
-loc_000090BA:
+; CheckObjectOnScreen
+; Check if object is within visible screen bounds and update position
+; Bounds: X = 0-320 pixels ($140), Y = 56-184 pixels ($38-$B8)
+; If out of bounds: Clears scroll offset and randomizes direction
+; If in bounds: Updates display position from world position
+CheckObjectOnScreen:
 	MOVE.l	$E(A5), D0
 	SUB.l	$32(A5), D0
 	SWAP	D0
 	CMPI.w	#0, D0
-	BLE.w	loc_000090FE
+	BLE.w	ObjectOffScreen
 	CMPI.w	#$0140, D0
-	BGE.w	loc_000090FE
+	BGE.w	ObjectOffScreen
 	SWAP	D0
 	MOVE.l	D0, $E(A5)
 	MOVE.l	$12(A5), D0
 	SUB.l	$36(A5), D0
 	SWAP	D0
 	CMPI.w	#$0038, D0
-	BLE.w	loc_000090FE
+	BLE.w	ObjectOffScreen
 	CMPI.w	#$00B8, D0
-	BGE.w	loc_000090FE
+	BGE.w	ObjectOffScreen
 	SWAP	D0
 	MOVE.l	D0, $12(A5)
-	BRA.w	loc_00009122
-loc_000090FE:
+	BRA.w	UpdateObjectDisplayPosition
+ObjectOffScreen:
 	CLR.l	$32(A5)
 	CLR.l	$36(A5)
 	CLR.w	$3A(A5)
@@ -9936,7 +9941,7 @@ loc_000090FE:
 	ANDI.b	#7, D0
 	ADD.b	D0, $18(A5)
 	ANDI.b	#7, $18(A5)
-loc_00009122:
+UpdateObjectDisplayPosition:
 	MOVE.w	$E(A5), $A(A5)
 	MOVE.w	$12(A5), $C(A5)
 	MOVE.w	$C(A5), $16(A5)
@@ -10309,7 +10314,7 @@ loc_00009614:
 	BSR.w	loc_0000908E
 	BSR.w	loc_000092F6
 	BSR.w	HandlePlayerTakeDamage
-	BSR.w	loc_000090BA
+	BSR.w	CheckObjectOnScreen
 	MOVE.l	$32(A5), D0
 	OR.l	$36(A5), D0
 	BEQ.w	loc_00009634
@@ -10415,7 +10420,7 @@ loc_000097AA:
 	BSR.w	loc_000092F6
 loc_000097B2:
 	BSR.w	HandlePlayerTakeDamage
-	BSR.w	loc_000090BA
+	BSR.w	CheckObjectOnScreen
 	MOVE.l	$32(A5), D0
 	OR.l	$36(A5), D0
 	BEQ.w	loc_000097CA
@@ -10508,7 +10513,7 @@ loc_000098E8:
 	BSR.w	loc_000092F6
 loc_000098F0:
 	BSR.w	HandlePlayerTakeDamage
-	BSR.w	loc_000090BA
+	BSR.w	CheckObjectOnScreen
 	MOVE.l	$32(A5), D0
 	OR.l	$36(A5), D0
 	BEQ.w	loc_00009908
@@ -10585,7 +10590,7 @@ loc_000099FC:
 	BSR.w	loc_0000908E
 	BSR.w	loc_000092F6
 	BSR.w	HandlePlayerTakeDamage
-	BSR.w	loc_000090BA
+	BSR.w	CheckObjectOnScreen
 	MOVE.l	$32(A5), D0
 	OR.l	$36(A5), D0
 	BEQ.w	loc_00009A1C
@@ -10669,7 +10674,7 @@ loc_00009B2A:
 	BSR.w	loc_000092F6
 loc_00009B32:
 	BSR.w	HandlePlayerTakeDamage
-	BSR.w	loc_000090BA
+	BSR.w	CheckObjectOnScreen
 	CLR.w	D0
 	MOVE.b	$1(A5), D0
 	LEA	(A5,D0.w), A6
@@ -10747,7 +10752,7 @@ loc_00009C42:
 	BSR.w	loc_000092F6
 loc_00009C4A:
 	BSR.w	HandlePlayerTakeDamage
-	BSR.w	loc_000090BA
+	BSR.w	CheckObjectOnScreen
 	MOVE.l	$32(A5), D0
 	OR.l	$36(A5), D0
 	BEQ.w	loc_00009C62
@@ -10892,7 +10897,7 @@ loc_00009E3A:
 	MOVE.w	$2C(A5), $2C(A4)
 loc_00009E7A:
 	BSR.w	HandlePlayerTakeDamage
-	BSR.w	loc_000090BA
+	BSR.w	CheckObjectOnScreen
 	CLR.w	D0
 	MOVE.b	$1(A5), D0
 	LEA	(A5,D0.w), A6
@@ -11029,7 +11034,7 @@ loc_0000A05A:
 	BSR.w	loc_000092F6
 loc_0000A062:
 	BSR.w	HandlePlayerTakeDamage
-	BSR.w	loc_000090BA
+	BSR.w	CheckObjectOnScreen
 	MOVE.l	$32(A5), D0
 	OR.l	$36(A5), D0
 	BEQ.w	loc_0000A086
@@ -11115,7 +11120,7 @@ loc_0000A18A:
 	BSR.w	loc_000092F6
 loc_0000A192:
 	BSR.w	HandlePlayerTakeDamage
-	BSR.w	loc_000090BA
+	BSR.w	CheckObjectOnScreen
 	ADDQ.b	#1, $1B(A5)
 	MOVE.b	$1B(A5), D0
 	ANDI.w	#$0038, D0
@@ -11170,7 +11175,7 @@ loc_0000A248:
 	SUBQ.w	#1, $3C(A5)
 	BSR.w	loc_000092F6
 	BSR.w	HandlePlayerTakeDamage
-	BSR.w	loc_000090BA
+	BSR.w	CheckObjectOnScreen
 	ADDQ.b	#1, $1B(A5)
 	MOVE.b	$1B(A5), D0
 	ANDI.w	#$0038, D0
@@ -11279,7 +11284,7 @@ loc_0000A3D2:
 	BSR.w	loc_000092F6
 loc_0000A3DA:
 	BSR.w	HandlePlayerTakeDamage
-	BSR.w	loc_000090BA
+	BSR.w	CheckObjectOnScreen
 	MOVE.l	$32(A5), D0
 	OR.l	$36(A5), D0
 	BEQ.w	loc_0000A3F2
@@ -11386,7 +11391,7 @@ loc_0000A51E:
 	DBF	D7, loc_0000A51E
 loc_0000A55E:
 	BSR.w	HandlePlayerTakeDamage
-	BSR.w	loc_000090BA
+	BSR.w	CheckObjectOnScreen
 	CLR.w	D0
 	MOVE.b	$1(A5), D0
 	LEA	(A5,D0.w), A6
@@ -11541,7 +11546,7 @@ loc_0000A750:
 	DBF	D7, loc_0000A750
 loc_0000A784:
 	BSR.w	HandlePlayerTakeDamage
-	BSR.w	loc_000090BA
+	BSR.w	CheckObjectOnScreen
 	CLR.w	D0
 	MOVE.b	$1(A5), D0
 	LEA	(A5,D0.w), A6
@@ -11690,7 +11695,7 @@ loc_0000A9AC:
 	BSR.w	loc_000092F6
 loc_0000A9B4:
 	BSR.w	HandlePlayerTakeDamage
-	BSR.w	loc_000090BA
+	BSR.w	CheckObjectOnScreen
 	CLR.w	D0
 	MOVE.b	$1(A5), D0
 	LEA	(A5,D0.w), A6
@@ -11885,7 +11890,7 @@ loc_0000AC76:
 	BSR.w	loc_000092F6
 loc_0000AC7E:
 	BSR.w	HandlePlayerTakeDamage
-	BSR.w	loc_000090BA
+	BSR.w	CheckObjectOnScreen
 	MOVE.l	$32(A5), D0
 	OR.l	$36(A5), D0
 	BEQ.w	loc_0000AC96
@@ -12064,7 +12069,7 @@ loc_0000AECE:
 loc_0000AF0E:
 	BSR.w	loc_000092F6
 	BSR.w	HandlePlayerTakeDamage
-	BSR.w	loc_000090BA
+	BSR.w	CheckObjectOnScreen
 	CLR.w	D0
 	MOVE.b	$1(A5), D0
 	LEA	(A5,D0.w), A6
@@ -12212,7 +12217,7 @@ loc_0000B0DC:
 	MOVE.l	D0, $36(A5)
 	BSR.w	loc_000092F6
 	BSR.w	HandlePlayerTakeDamage
-	BSR.w	loc_000090BA
+	BSR.w	CheckObjectOnScreen
 	MOVE.w	#8, D7
 	LEA	(A5), A4
 loc_0000B12E:
@@ -12279,7 +12284,7 @@ loc_0000B194:
 	LEA	(A0), A5
 	BSR.w	loc_000092F6
 	BSR.w	HandlePlayerTakeDamage
-	BSR.w	loc_000090BA
+	BSR.w	CheckObjectOnScreen
 loc_0000B1F2:
 	ADDQ.b	#1, $1B(A5)
 	MOVE.b	$1B(A5), D1
@@ -12407,7 +12412,7 @@ loc_0000B394:
 loc_0000B3D4:
 	BSR.w	loc_000092F6
 	BSR.w	HandlePlayerTakeDamage
-	BSR.w	loc_000090BA
+	BSR.w	CheckObjectOnScreen
 	ADDQ.b	#1, $1B(A5)
 	MOVE.b	$1B(A5), D1
 	ANDI.w	#$000C, D1
