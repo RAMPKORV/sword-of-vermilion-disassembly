@@ -35270,7 +35270,7 @@ loc_00020830:
 	dc.w	$0002, $0004, $0004 ; x, y, direction
 	dc.l	loc_00020C8E
 	dc.w	$000B, $000B, $0002 
-	dc.l	loc_00020F6A
+	dc.l	CheckCaveRoomEnemyState
 	dc.w	$0002, $000B, $0002 
 	dc.l	loc_00020CD0
 	dc.w	$0003, $0009, $0008 
@@ -35280,7 +35280,7 @@ loc_00020830:
 	dc.w	$FFFF
 loc_00020864:
 	dc.w	$0003, $000D, $0004	
-	dc.l	loc_00020F6A
+	dc.l	CheckCaveRoomEnemyState
 	dc.w	$0002, $0003, $0004 
 	dc.l	loc_00020DD4
 	dc.w	$0008, $0000, $0001 
@@ -35292,13 +35292,13 @@ loc_00020884:
 	dc.w	$000F, $0000, $0001 
 	dc.l	loc_00020F50
 	dc.w	$0002, $000C, $0002 
-	dc.l	loc_00020F6A
+	dc.l	CheckCaveRoomEnemyState
 	dc.w	$0008, $0008, $0002 
 	dc.l	loc_00020E10
 	dc.w	$FFFF
 loc_000208AE:
 	dc.w	$0003, $0006, $0008	
-	dc.l	loc_00020F6A
+	dc.l	CheckCaveRoomEnemyState
 	dc.w	$0000, $000E, $0001
 	dc.l	loc_00020E24
 	dc.w	$000B, $0000, $0002
@@ -35306,7 +35306,7 @@ loc_000208AE:
 	dc.w	$FFFF
 loc_000208CE:
 	dc.w	$0000, $0007, $0001	
-	dc.l	loc_00020F6A
+	dc.l	CheckCaveRoomEnemyState
 	dc.w	$000A, $0001, $0008
 	dc.l	loc_00020E4C
 	dc.w	$000C, $0001, $0002	
@@ -35314,7 +35314,7 @@ loc_000208CE:
 	dc.w	$FFFF
 loc_000208EE:
 	dc.w	$0000, $0001, $0004	
-	dc.l	loc_00020F6A
+	dc.l	CheckCaveRoomEnemyState
 	dc.w	$000B, $0004, $0008
 	dc.l	loc_00020E9C
 	dc.w	$0008, $000F, $0008	
@@ -35322,7 +35322,7 @@ loc_000208EE:
 	dc.w	$FFFF
 loc_0002090E:
 	dc.w	$0003, $000C, $0002	
-	dc.l	loc_00020F6A
+	dc.l	CheckCaveRoomEnemyState
 	dc.w	$000E, $000F, $0004 
 	dc.l	loc_00020E60 
 	dc.w	$000C, $0004, $0002 
@@ -35332,7 +35332,7 @@ loc_0002090E:
 	dc.w	$FFFF
 loc_00020938:
 	dc.w	$0004, $000D, $0008	
-	dc.l	loc_00020F6A	
+	dc.l	CheckCaveRoomEnemyState	
 	dc.w	$0008, $000F, $0002
 	dc.l	loc_00020EC4
 	dc.w	$0007, $0005, $0004	
@@ -35340,7 +35340,7 @@ loc_00020938:
 	dc.w	$FFFF
 loc_00020958:
 	dc.w	$000D, $000B, $0004	
-	dc.l	loc_00020F6A	
+	dc.l	CheckCaveRoomEnemyState	
 	dc.w	$000F, $0000, $0001
 	dc.l	loc_00020F00
 	dc.w	$0000, $0000, $0002	
@@ -35348,7 +35348,7 @@ loc_00020958:
 	dc.w	$FFFF
 loc_00020978:
 	dc.w	$0002, $000A, $0004	
-	dc.l	loc_00020F6A	
+	dc.l	CheckCaveRoomEnemyState	
 	dc.w	$0002, $000F, $0008
 	dc.l	loc_00020F00
 	dc.w	$0002, $0003, $0004	
@@ -35356,13 +35356,13 @@ loc_00020978:
 	dc.w	$FFFF
 loc_00020998:
 	dc.w	$000B, $000B, $000B	
-	dc.l	loc_00020F6A
+	dc.l	CheckCaveRoomEnemyState
 	dc.w	$0007, $0006, $0001 
 	dc.l	loc_0002105E
 	dc.w	$FFFF
 loc_000209AE:
 	dc.w	$0004, $000D, $0004	
-	dc.l	loc_00020F6A
+	dc.l	CheckCaveRoomEnemyState
 	dc.w	$0006, $0002, $0001
 	dc.l	loc_00020D48
 	dc.w	$000D, $0007, $0005	
@@ -35370,7 +35370,7 @@ loc_000209AE:
 	dc.w	$FFFF
 loc_000209CE:
 	dc.w	$000B, $0003, $0002	
-	dc.l	loc_00020F6A
+	dc.l	CheckCaveRoomEnemyState
 	dc.w	$0001, $000E, $0004 
 	dc.l	loc_000210BE
 	dc.w	$0005, $000E, $0004
@@ -35384,7 +35384,7 @@ loc_000209CE:
 	dc.w	$FFFF
 loc_00020A0C:
 	dc.w	$0005, $0002, $0002	
-	dc.l	loc_00020F6A
+	dc.l	CheckCaveRoomEnemyState
 	dc.w	$0003, $0007, $000A 
 	dc.l	loc_000210E0
 	dc.w	$000E, $0009, $0001 
@@ -35392,19 +35392,19 @@ loc_00020A0C:
 	dc.w	$FFFF
 loc_00020A2C:
 	dc.w	$0009, $000A, $0008	
-	dc.l	loc_00020F6A
+	dc.l	CheckCaveRoomEnemyState
 	dc.w	$0009, $0000, $0002 
 	dc.l	loc_00020D84 
 	dc.w	$FFFF 
 loc_00020A42:
 	dc.w	$0003, $0003, $0002 
-	dc.l	loc_00020F6A
+	dc.l	CheckCaveRoomEnemyState
 	dc.w	$0008, $0004, $0002 
 	dc.l	loc_00020F14
 	dc.w	$FFFF
 loc_00020A58:
 	dc.w	$0000, $0000, $0002	
-	dc.l	loc_00020F6A
+	dc.l	CheckCaveRoomEnemyState
 	dc.w	$0003, $0004, $0002
 	dc.l	SetupNoOneTalker
 	dc.w	$0003, $000C, $0004	
@@ -35412,7 +35412,7 @@ loc_00020A58:
 	dc.w	$FFFF
 loc_00020A78:
 	dc.w	$0001, $000E, $0002	
-	dc.l	loc_00020F6A
+	dc.l	CheckCaveRoomEnemyState
 	dc.w	$0004, $0004, $0002
 	dc.l	loc_0002114C
 	dc.w	$0000, $0001, $0002	
@@ -35428,13 +35428,13 @@ loc_00020A78:
 	dc.w	$FFFF
 loc_00020AC0:
 	dc.w	$000A, $0007, $0004	
-	dc.l	loc_00020F6A
+	dc.l	CheckCaveRoomEnemyState
 	dc.w	$0000, $0000, $0002 
 	dc.l	loc_00020D20 
 	dc.w	$FFFF 
 loc_00020AD6:
 	dc.w	$0000, $0000, $0001 
-	dc.l	loc_00020F6A
+	dc.l	CheckCaveRoomEnemyState
 	dc.w	$0007, $000F, $000A 
 	dc.l	loc_00021160
 	dc.w	$0000, $000C, $0002 
@@ -35442,39 +35442,39 @@ loc_00020AD6:
 	dc.w	$FFFF
 loc_00020AF6:
 	dc.w	$0000, $000E, $0004	
-	dc.l	loc_00020F6A
+	dc.l	CheckCaveRoomEnemyState
 	dc.w	$000A, $000E, $0008 
 	dc.l	loc_0002119C
 	dc.w	$FFFF
 loc_00020B0C:
 	dc.w	$000B, $0004, $000A	
-	dc.l	loc_00020F6A
+	dc.l	CheckCaveRoomEnemyState
 	dc.w	$FFFF
 loc_00020B18:
 	dc.w	$0008, $000B, $0004	
-	dc.l	loc_00020F6A
+	dc.l	CheckCaveRoomEnemyState
 	dc.w	$0000, $0007, $0005 
 	dc.l	loc_00021206
 	dc.w	$FFFF 
 loc_00020B2E:
 	dc.w	$0003, $000C, $0004 
-	dc.l	loc_00020F6A
+	dc.l	CheckCaveRoomEnemyState
 	dc.w	$FFFF 
 loc_00020B3A:
 	dc.w	$0004, $0007, $0002 
-	dc.l	loc_00020F6A
+	dc.l	CheckCaveRoomEnemyState
 	dc.w	$FFFF 
 loc_00020B46:
 	dc.w	$0001, $0005, $0001 
-	dc.l	loc_00020F6A
+	dc.l	CheckCaveRoomEnemyState
 	dc.w	$FFFF 
 loc_00020B52:
 	dc.w	$000B, $000E, $0004 
-	dc.l	loc_00020F6A
+	dc.l	CheckCaveRoomEnemyState
 	dc.w	$FFFF 
 loc_00020B5E:	
 	dc.w	$000A, $0006, $0008 
-	dc.l	loc_00020F6A
+	dc.l	CheckCaveRoomEnemyState
 	dc.w	$FFFF 
 loc_00020B6A:
 	dc.w	$FFFF 
@@ -35482,7 +35482,7 @@ loc_00020B6C:
 	dc.w	$FFFF 
 loc_00020B6E:
 	dc.w	$0009, $0007, $0001 
-	dc.l	loc_00020F6A 
+	dc.l	CheckCaveRoomEnemyState 
 	dc.w	$000D, $0008, $0004 
 	dc.l	loc_000211BE
 	dc.w	$0005, $000E, $0004 
@@ -35490,7 +35490,7 @@ loc_00020B6E:
 	dc.w	$FFFF 
 loc_00020B8E:
 	dc.w	$0003, $0007, $0001 
-	dc.l	loc_00020F6A 
+	dc.l	CheckCaveRoomEnemyState 
 	dc.w	$FFFF 
 loc_00020B9A:
 	dc.w	$0005, $0003, $000A 
@@ -35518,47 +35518,47 @@ loc_00020BE4:
 	dc.w	$FFFF
 loc_00020BFA:
 	dc.w	$0009, $0005, $0001	
-	dc.l	loc_00020F6A
+	dc.l	CheckCaveRoomEnemyState
 	dc.w	$FFFF
 loc_00020C06:
 	dc.w	$000A, $000B, $000A	
-	dc.l	loc_00020F6A
+	dc.l	CheckCaveRoomEnemyState
 	dc.w	$0004, $000C, $0005 
 	dc.l	loc_0002125A
 	dc.w	$FFFF 
 loc_00020C1C:
 	dc.w	$000C, $0003, $0008 
-	dc.l	loc_00020F6A
+	dc.l	CheckCaveRoomEnemyState
 	dc.w	$FFFF 
 loc_00020C28:
 	dc.w	$000F, $000C, $0008 
-	dc.l	loc_00020F6A
+	dc.l	CheckCaveRoomEnemyState
 	dc.w	$FFFF 
 loc_00020C34:
 	dc.w	$0009, $0009, $0002 
-	dc.l	loc_00020F6A
+	dc.l	CheckCaveRoomEnemyState
 	dc.w	$0001, $0001, $0001 
 	dc.l	loc_00020D0C
 	dc.w	$FFFF
 loc_00020C4A:
 	dc.w	$0008, $0000, $0002	
-	dc.l	loc_00020F6A
+	dc.l	CheckCaveRoomEnemyState
 	dc.w	$FFFF
 loc_00020C56:
 	dc.w	$0000, $000D, $0001	
-	dc.l	loc_00020F6A
+	dc.l	CheckCaveRoomEnemyState
 	dc.w	$000A, $000B, $0005 
 	dc.l	loc_00021230
 	dc.w	$FFFF 
 loc_00020C6C:
 	dc.w	$0002, $000D, $0002 
-	dc.l	loc_00020F6A 
+	dc.l	CheckCaveRoomEnemyState 
 	dc.w	$000F, $0007, $0001 
 	dc.l	loc_00020D98
 	dc.w	$FFFF
 loc_00020C82:
 	dc.w	$0001, $000E, $0004	
-	dc.l	loc_00020F6A
+	dc.l	CheckCaveRoomEnemyState
 	dc.w	$FFFF 
 loc_00020C8E:
 	TST.b	Rings_collected.w
@@ -35730,7 +35730,10 @@ loc_00020F50:
 loc_00020F68:
 	RTS
 	
-loc_00020F6A:
+; CheckCaveRoomEnemyState
+; Check cave room enemy state and setup default "no one here" message
+; Checks if current cave room has been cleared, sets script accordingly
+CheckCaveRoomEnemyState:
 	LEA	$FFFFC820.w, A0
 	CLR.w	D0
 	MOVE.w	Current_cave_room.w, D0
