@@ -2975,7 +2975,11 @@ loc_00003326:
 	CLR.w	D0
 	RTS
 
-loc_0000332A:
+; GetScrollOffsetInTiles
+; Get screen scroll offset in tile coordinates
+; Input: $FFFFC40E (screen X), $FFFFC410 (screen Y)
+; Output: D0 = X in tiles (pixels / 8), D1 = Y in tiles (pixels / 8)
+GetScrollOffsetInTiles:
 	MOVE.w	$FFFFC40E.w, D0
 	LSR.w	#3, D0
 	MOVE.w	$FFFFC410.w, D1
@@ -18847,7 +18851,7 @@ loc_000109C8: ; Text script handling
 	ADDI.w	#$04C0, D3
 	ORI.w	#$8000, D3
 	OR.w	Script_tile_attrs.w, D3
-	JSR	loc_0000332A
+	JSR	GetScrollOffsetInTiles
 	ADD.w	Script_output_x.w, D0
 	ADD.w	Script_output_base_x.w, D0
 	ADD.w	Script_output_y.w, D1
@@ -18869,7 +18873,7 @@ loc_00010A6E:
 	ADDI.w	#$04C0, D3	
 	ORI.w	#$8000, D3	
 	OR.w	Script_tile_attrs.w, D3	
-	JSR	loc_0000332A	
+	JSR	GetScrollOffsetInTiles	
 	ADD.w	Script_output_x.w, D0	
 	ADD.w	Script_output_base_x.w, D0	
 	ADD.w	Script_output_y.w, D1	
@@ -18892,7 +18896,7 @@ loc_00010ABC:
 	BRA.w	loc_00010BD8
 loc_00010AC8:
 	MOVE.b	#$FF, Script_has_continuation.w
-	JSR	loc_0000332A
+	JSR	GetScrollOffsetInTiles
 	ADDI.w	#$0014, D0
 	ADDI.w	#$001B, D1
 	SUBQ.w	#1, D0
@@ -19462,7 +19466,7 @@ loc_0001139A:
 	RTS
 	
 loc_000113AE:
-	JSR	loc_0000332A
+	JSR	GetScrollOffsetInTiles
 	CLR.w	D3
 loc_000113B6:
 	CLR.w	D2
@@ -19623,7 +19627,7 @@ loc_00011506:
 loc_00011522:
 	ADDI.w	#$84C0, D4
 	OR.w	D3, D4
-	JSR	loc_0000332A
+	JSR	GetScrollOffsetInTiles
 	ADD.w	$FFFFC242.w, D0
 	ADD.w	$FFFFC244.w, D1
 	ANDI.w	#$003F, D0
@@ -20488,7 +20492,7 @@ DrawWindowRowFromBuffer:
 	MULU.w	D1, D0
 	ADD.w	D0, D0
 	LEA	(A0,D0.w), A0
-	JSR	loc_0000332A
+	JSR	GetScrollOffsetInTiles
 	ADD.w	$FFFFC222.w, D1
 	SUBQ.w	#1, D1
 	ANDI.w	#$003F, D1
@@ -20522,7 +20526,7 @@ loc_00012214:
 loc_0001222A:
 	CLR.b	$FFFF9911.w
 loc_0001222E:
-	JSR	loc_0000332A
+	JSR	GetScrollOffsetInTiles
 	ADD.w	$FFFFC222.w, D1
 	ANDI.w	#$003F, D1
 	ASL.w	#7, D1
@@ -20775,7 +20779,7 @@ loc_000125B6:
 	RTS
 	
 loc_000125DA:
-	JSR	loc_0000332A
+	JSR	GetScrollOffsetInTiles
 	CLR.w	D3
 loc_000125E2:
 	CLR.w	D2
@@ -20903,7 +20907,7 @@ loc_00012766:
 ;        $FFFFC224 = X offset, $FFFFC226 = Y offset
 ;        $FFFFC22C = Width, $FFFFC22E = Height
 DrawWindowFromBuffer:
-	JSR	loc_0000332A
+	JSR	GetScrollOffsetInTiles
 	CLR.w	D3
 loc_00012790:
 	CLR.w	D2
@@ -21075,7 +21079,7 @@ WriteMenuCursorTile:
 	SUB.w	$FFFFC23A.w, D3
 	SUBQ.w	#1, D3
 loc_00012930:
-	JSR	loc_0000332A
+	JSR	GetScrollOffsetInTiles
 	ADD.w	$FFFFC236.w, D0
 	ADD.w	$FFFFC238.w, D1
 	ASL.w	#1, D3
@@ -21185,7 +21189,7 @@ loc_00012B60:
 	MOVEA.l	(A1,D4.w), A0
 	CLR.w	D2
 loc_00012B70:
-	JSR	loc_0000332A
+	JSR	GetScrollOffsetInTiles
 	ADD.w	D2, D0
 	ADD.w	D3, D1
 	ADD.w	$FFFFC220.w, D0
@@ -21227,7 +21231,7 @@ loc_00012BE6:
 	ADDI.w	#$04C0, D6	
 	ORI.w	#$8000, D6	
 	ORI.w	#0, D6	
-	JSR	loc_0000332A	
+	JSR	GetScrollOffsetInTiles	
 	MOVE.w	D2, D4	
 	MOVE.w	D3, D5	
 	ADD.w	D0, D4	
@@ -21258,7 +21262,7 @@ loc_00012C42:
 	ANDI.w	#$8000, D4
 	BEQ.w	loc_00012C92
 	CLR.w	D2
-	JSR	loc_0000332A
+	JSR	GetScrollOffsetInTiles
 	ADD.w	D2, D0
 	ADD.w	D3, D1
 	ADD.w	$FFFFC220.w, D0
@@ -21371,7 +21375,7 @@ loc_00012D4A:
 	
 loc_00012D4C:
 	LEA	$FFFF9920.w, A0
-	JSR	loc_0000332A
+	JSR	GetScrollOffsetInTiles
 	CLR.w	D3
 loc_00012D58:
 	CLR.w	D2
@@ -21415,7 +21419,7 @@ loc_00012DB8:
 	ADDQ.w	#1, D2
 	MULU.w	D2, D0
 	LEA	(A0,D0.w), A0
-	JSR	loc_0000332A
+	JSR	GetScrollOffsetInTiles
 	ADD.w	$FFFF9908.w, D1
 	ADD.w	$FFFF9914.w, D1
 	ANDI.w	#$003F, D1
@@ -21427,7 +21431,7 @@ loc_00012DB8:
 	ADDQ.w	#1, D2
 	MULU.w	D2, D0
 	LEA	(A0,D0.w), A0
-	JSR	loc_0000332A
+	JSR	GetScrollOffsetInTiles
 	ADD.w	$FFFF9908.w, D1
 	ADD.w	$FFFF9914.w, D1
 	ADDQ.w	#1, D1
