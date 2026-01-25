@@ -18363,22 +18363,31 @@ loc_00010458:
 	
 loc_00010480:
 	dc.b	$76, $00, $02, $80, $00, $00, $00, $FF, $60, $00, $00, $1A 
-loc_0001048C:
+; ConvertToBCD
+; Convert binary number to BCD (Binary Coded Decimal) format
+; Input: D0 = Binary number (0-99999)
+; Output: D0 = BCD representation (each nibble is a decimal digit)
+; Example: 12345 ($3039) -> $00012345 BCD
+ConvertToBCD:
 	MOVEQ	#0, D3
 	ANDI.l	#$0000FFFF, D0
-	MOVE.w	#$2710, D1
-	BSR.w	loc_000104BA
-	MOVE.w	#$03E8, D1
-	BSR.w	loc_000104BA
-	MOVE.w	#$0064, D1
-	BSR.w	loc_000104BA
-	MOVE.w	#$000A, D1
-	BSR.w	loc_000104BA
-	OR.b	D0, D3
+	MOVE.w	#$2710, D1		; 10000
+	BSR.w	ExtractBCDDigit
+	MOVE.w	#$03E8, D1		; 1000
+	BSR.w	ExtractBCDDigit
+	MOVE.w	#$0064, D1		; 100
+	BSR.w	ExtractBCDDigit
+	MOVE.w	#$000A, D1		; 10
+	BSR.w	ExtractBCDDigit
+	OR.b	D0, D3			; Ones digit
 	MOVE.l	D3, D0
 	RTS
 	
-loc_000104BA:
+; ExtractBCDDigit
+; Extract one BCD digit by division
+; Input: D0 = Number, D1 = Divisor, D3 = Accumulated BCD
+; Output: D0 = Remainder, D3 = BCD with new digit added
+ExtractBCDDigit:
 	DIVU.w	D1, D0
 	OR.b	D0, D3
 	LSL.l	#4, D3
@@ -19849,7 +19858,7 @@ loc_000117CE:
 	ASL.w	#4, D0
 	MOVE.b	$2(A0), D0
 	ADDQ.w	#1, D0
-	JSR	loc_0001048C
+	JSR	ConvertToBCD
 	MOVE.w	D0, D2
 	BSR.w	WordToDecimalString
 	RTS
@@ -19965,7 +19974,7 @@ loc_000119AA: ; stats screen?
 	BSR.w	loc_00012CF6
 	MOVE.w	Player_level.w, D0
 	ADDQ.w	#1, D0
-	JSR	loc_0001048C
+	JSR	ConvertToBCD
 	MOVE.w	D0, D2
 	BSR.w	WordToDecimalString
 	MOVE.w	#$00B1, D0
@@ -19975,43 +19984,43 @@ loc_000119AA: ; stats screen?
 	MOVE.w	#$00BC, D0
 	BSR.w	loc_00012CDA
 	MOVE.w	Player_hp.w, D0
-	JSR	loc_0001048C
+	JSR	ConvertToBCD
 	MOVE.w	D0, D2
 	BSR.w	WordToDecimalString
 	MOVE.w	#$0121, D0
 	BSR.w	loc_00012CDA
 	MOVE.w	Player_mp.w, D0
-	JSR	loc_0001048C
+	JSR	ConvertToBCD
 	MOVE.w	D0, D2
 	BSR.w	WordToDecimalString
 	MOVE.w	#$0159, D0
 	BSR.w	loc_00012CDA
 	MOVE.w	Player_str.w, D0
-	JSR	loc_0001048C
+	JSR	ConvertToBCD
 	MOVE.w	D0, D2
 	BSR.w	WordToDecimalString
 	MOVE.w	#$0191, D0
 	BSR.w	loc_00012CDA
 	MOVE.w	Player_ac.w, D0
-	JSR	loc_0001048C
+	JSR	ConvertToBCD
 	MOVE.w	D0, D2
 	BSR.w	WordToDecimalString
 	MOVE.w	#$019E, D0
 	BSR.w	loc_00012CDA
 	MOVE.w	Player_int.w, D0
-	JSR	loc_0001048C
+	JSR	ConvertToBCD
 	MOVE.w	D0, D2
 	BSR.w	WordToDecimalString
 	MOVE.w	#$01C9, D0
 	BSR.w	loc_00012CDA
 	MOVE.w	Player_dex.w, D0
-	JSR	loc_0001048C
+	JSR	ConvertToBCD
 	MOVE.w	D0, D2
 	BSR.w	WordToDecimalString
 	MOVE.w	#$01D6, D0
 	BSR.w	loc_00012CDA
 	MOVE.w	Player_luk.w, D0
-	JSR	loc_0001048C
+	JSR	ConvertToBCD
 	MOVE.w	D0, D2
 	BSR.w	WordToDecimalString
 	MOVE.w	#$0201, D0
@@ -20021,13 +20030,13 @@ loc_000119AA: ; stats screen?
 	MOVE.w	#$020C, D0
 	BSR.w	loc_00012CDA
 	MOVE.w	Player_mmp.w, D0
-	JSR	loc_0001048C
+	JSR	ConvertToBCD
 	MOVE.w	D0, D2
 	BSR.w	WordToDecimalString
 	MOVE.w	#$0166, D0
 	BSR.w	loc_00012CDA
 	MOVE.w	Player_mhp.w, D0
-	JSR	loc_0001048C
+	JSR	ConvertToBCD
 	MOVE.w	D0, D2
 	BSR.w	WordToDecimalString
 	MOVE.w	#$012E, D0
@@ -21516,7 +21525,7 @@ DisplayPlayerHpMp:
 	MOVE.w	#7, $FFFFC242.w
 	MOVE.w	#$0018, $FFFFC244.w
 	MOVE.w	Player_hp.w, D0
-	JSR	loc_0001048C
+	JSR	ConvertToBCD
 	MOVE.w	D0, D2
 	MOVE.w	#0, D3
 	CLR.w	D5
@@ -21524,7 +21533,7 @@ DisplayPlayerHpMp:
 	MOVE.w	#7, $FFFFC242.w
 	MOVE.w	#$001A, $FFFFC244.w
 	MOVE.w	Player_mp.w, D0
-	JSR	loc_0001048C
+	JSR	ConvertToBCD
 	MOVE.w	D0, D2
 	MOVE.w	#0, D3
 	CLR.w	D5
@@ -21537,7 +21546,7 @@ loc_00012F44:
 	MOVE.w	#7, $FFFFC242.w
 	MOVE.w	#$0018, $FFFFC244.w
 	MOVE.w	Player_hp.w, D0
-	JSR	loc_0001048C
+	JSR	ConvertToBCD
 	MOVE.w	D0, D2
 	MOVE.w	#0, D3
 	CLR.w	D5
@@ -21545,7 +21554,7 @@ loc_00012F44:
 	MOVE.w	#7, $FFFFC242.w
 	MOVE.w	#$001A, $FFFFC244.w
 	MOVE.w	Player_mp.w, D0
-	JSR	loc_0001048C
+	JSR	ConvertToBCD
 	MOVE.w	D0, D2
 	MOVE.w	#0, D3
 	CLR.w	D5
@@ -21634,7 +21643,7 @@ loc_000130EA:
 	MOVE.w	#$000D, $FFFFC242.w
 	MOVE.w	#$0018, $FFFFC244.w
 	MOVE.w	Player_mhp.w, D0
-	JSR	loc_0001048C
+	JSR	ConvertToBCD
 	MOVE.w	D0, D2
 	MOVE.w	#0, D3
 	CLR.w	D5
@@ -21642,7 +21651,7 @@ loc_000130EA:
 	MOVE.w	#$000D, $FFFFC242.w
 	MOVE.w	#$001A, $FFFFC244.w
 	MOVE.w	Player_mmp.w, D0
-	JSR	loc_0001048C
+	JSR	ConvertToBCD
 	MOVE.w	D0, D2
 	MOVE.w	#0, D3
 	CLR.w	D5
@@ -21655,7 +21664,7 @@ loc_00013138:
 	MOVE.w	#$000D, $FFFFC242.w
 	MOVE.w	#$0018, $FFFFC244.w
 	MOVE.w	Player_mhp.w, D0
-	JSR	loc_0001048C
+	JSR	ConvertToBCD
 	MOVE.w	D0, D2
 	MOVE.w	#0, D3
 	CLR.w	D5
@@ -21663,7 +21672,7 @@ loc_00013138:
 	MOVE.w	#$000D, $FFFFC242.w
 	MOVE.w	#$001A, $FFFFC244.w
 	MOVE.w	Player_mmp.w, D0
-	JSR	loc_0001048C
+	JSR	ConvertToBCD
 	MOVE.w	D0, D2
 	MOVE.w	#0, D3
 	CLR.w	D5
@@ -29355,7 +29364,7 @@ loc_0001B312:
 	MOVE.w	Watling_inn_unpaid_nights.w, D0
 	MULU.w	#$0190, D0
 	ADDI.w	#$0190, D0
-	JSR	loc_0001048C
+	JSR	ConvertToBCD
 	BSR.w	FormatKimsAmount
 	MOVE.b	#$2C, (A1)+
 	MOVE.b	#$FE, (A1)+
