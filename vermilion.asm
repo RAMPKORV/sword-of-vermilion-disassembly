@@ -549,7 +549,7 @@ loc_000010FE:
 loc_00001102:
 	TST.b	Sprite_update_pending.w
 	BEQ.b	loc_00001112
-	JSR	loc_0000F688
+	JSR	FlushSpriteAttributesToVDP
 	CLR.b	Sprite_update_pending.w
 loc_00001112:
 	TST.b	Sprite_dma_update_pending.w
@@ -1838,7 +1838,7 @@ loc_00002324:
 	BSR.w	ClearAllEnemyEntities
 	JSR	loc_0000056A
 	CLR.w	Sprite_attr_count.w
-	JSR	loc_0000F688
+	JSR	FlushSpriteAttributesToVDP
 	CLR.b	Is_boss_battle.w
 	CLR.b	Boss_max_hp.w
 	CLR.b	Encounter_behavior_flag.w
@@ -1932,7 +1932,7 @@ loc_000024B8:
 loc_000024BE:
 	JSR	ClearAllEnemyEntities
 	CLR.w	Sprite_attr_count.w
-	JSR	loc_0000F688
+	JSR	FlushSpriteAttributesToVDP
 	MOVE.b	#$FF, Player_in_first_person_mode.w
 loc_000024D4:
 	RTS
@@ -2036,7 +2036,7 @@ loc_00002620:
 	BSR.w	ClearAllEnemyEntities
 	JSR	loc_00000578
 	CLR.w	Sprite_attr_count.w
-	JSR	loc_0000F688
+	JSR	FlushSpriteAttributesToVDP
 	JSR	loc_0000FFCE
 	BSR.w	loc_00003064
 	JSR	loc_00008688
@@ -2396,7 +2396,7 @@ loc_00002AE0:
 	MOVEA.l	(A0,D0.w), A0
 	JSR	(A0)
 	CLR.w	Sprite_attr_count.w
-	JSR	loc_0000F688
+	JSR	FlushSpriteAttributesToVDP
 	MOVE.b	#$FF, Is_boss_battle.w
 	JSR	loc_0000FF82
 	JSR	loc_0000FF08
@@ -2455,7 +2455,7 @@ loc_00002BCC:
 	BSR.w	ClearAllEnemyEntities
 	JSR	loc_0000055C
 	CLR.w	Sprite_attr_count.w
-	JSR	loc_0000F688
+	JSR	FlushSpriteAttributesToVDP
 	MOVEA.l	Player_entity_ptr.w, A6
 	MOVE.l	#PlayerObjectHandler, $2(A6)
 	MOVE.w	Saved_player_direction.w, Player_direction.w
@@ -4228,7 +4228,7 @@ loc_00004384:
 	MOVE.w	#0, First_person_wall_frame.w
 	MOVE.w	#$000C, Wall_render_y_offset.w
 	BSR.w	DrawFirstPersonWalls
-	BSR.w	loc_00006458
+	BSR.w	UpdateAreaVisibility
 	BSR.w	loc_00004BA0
 	RTS
 
@@ -4652,7 +4652,7 @@ loc_000048C4:
 loc_000048EA:
 	BSR.w	loc_000060F6
 loc_000048EE:
-	BSR.w	loc_00006458
+	BSR.w	UpdateAreaVisibility
 	BSR.w	loc_0000457E
 	RTS
 
@@ -4670,7 +4670,7 @@ loc_000048F8:
 loc_0000491E:
 	BSR.w	loc_000060F6
 loc_00004922:
-	BSR.w	loc_00006458
+	BSR.w	UpdateAreaVisibility
 	BSR.w	loc_0000457E
 	RTS
 
@@ -4691,7 +4691,7 @@ loc_00004946:
 	MOVE.w	#4, First_person_wall_frame.w
 	MOVE.w	#0, Wall_render_y_offset.w
 	BSR.w	DrawFirstPersonWalls
-	BSR.w	loc_00006458
+	BSR.w	UpdateAreaVisibility
 	CLR.w	D7
 	BRA.w	loc_00004CCE
 loc_00004974:
@@ -4855,7 +4855,7 @@ loc_00004B6C:
 	MOVE.w	#0, First_person_wall_frame.w
 	MOVE.w	#$000C, Wall_render_y_offset.w
 	BSR.w	DrawFirstPersonWalls
-	BSR.w	loc_00006458
+	BSR.w	UpdateAreaVisibility
 	BSR.w	loc_0000457E
 	BRA.w	loc_00004BA0
 loc_00004BA0:
@@ -6388,7 +6388,7 @@ loc_0000623A:
 	MOVEA.l	(A0,D0.w), A1
 	BSR.w	DecompressMapSectorRLE
 	BSR.w	loc_000063B2
-	BSR.w	loc_00006458
+	BSR.w	UpdateAreaVisibility
 	BSR.w	loc_000063EA
 	RTS
 
@@ -6468,7 +6468,7 @@ Load9SectorMapWindow:
 	LEA	Map_sector_bottom_right.w, A2
 	BSR.w	LoadMapSectorIfInBounds
 	BSR.w	loc_00006390
-	BSR.w	loc_00006458
+	BSR.w	UpdateAreaVisibility
 	BSR.w	loc_000063EA
 	RTS
 
@@ -6658,7 +6658,8 @@ loc_00006436:
 	ANDI	#$F8FF, SR
 	RTS
 
-loc_00006458:
+;UpdateAreaVisibility:
+UpdateAreaVisibility:
 	CLR.w	D4
 	TST.b	Area_map_revealed.w
 	BEQ.b	loc_0000646C
@@ -6726,7 +6727,7 @@ loc_0000651A:
 	CLR.w	Cave_light_timer.w
 	CLR.w	Palette_line_1_index.w
 	CLR.w	Palette_line_2_index.w
-	BSR.w	loc_00006458
+	BSR.w	UpdateAreaVisibility
 	JSR	LoadPalettesFromTable
 	RTS
 
@@ -9750,7 +9751,7 @@ loc_00008E5C:
 	MOVE.l	#NoOneHereStr, Script_talk_source.w
 	BCLR.b	#7, (A5)
 	MOVE.b	#$FF, Area_map_revealed.w
-	JMP	loc_00006458
+	JMP	UpdateAreaVisibility
 loc_00008E82:
 	JMP	QueueSpriteOAMIfVisible
 loc_00008E88:
@@ -10167,7 +10168,7 @@ loc_00009394:
 	MOVEQ	#0, D0
 	MOVE.w	$3E(A5), D0
 	MOVE.l	D0, Transaction_amount.w
-	JSR	loc_00011576
+	JSR	AddPaymentAmount
 	SUBQ.w	#1, Number_Of_Enemies.w
 	CLR.b	$1B(A5)
 	MOVE.l	#loc_0000944E, $2(A5)
@@ -10190,7 +10191,7 @@ EnemyDeathReward_TwoSprites:
 	MOVEQ	#0, D0
 	MOVE.w	$3E(A5), D0
 	MOVE.l	D0, Transaction_amount.w
-	JSR	loc_00011576
+	JSR	AddPaymentAmount
 	SUBQ.w	#1, Number_Of_Enemies.w
 	CLR.b	$1B(A5)
 	MOVE.l	#loc_0000944E, $2(A5)
@@ -12523,7 +12524,7 @@ loc_0000B50C:
 	MOVEQ	#0, D0
 	MOVE.w	$3E(A5), D0
 	MOVE.l	D0, Transaction_amount.w
-	JSR	loc_00011576
+	JSR	AddPaymentAmount
 	SUBQ.w	#1, Number_Of_Enemies.w
 	CLR.b	$1B(A5)
 	MOVE.l	#loc_0000944E, $2(A5)
@@ -14485,7 +14486,7 @@ loc_0000D06A:
 	MOVE.l	(A2,D6.w), Transaction_amount.w
 	JSR	loc_0001154E
 	MOVE.l	$4(A2,D6.w), Transaction_amount.w
-	JSR	loc_00011576
+	JSR	AddPaymentAmount
 	RTS
 
 loc_0000D094:
@@ -14948,30 +14949,31 @@ loc_0000D74C:
 	MOVE.w	$44(A5), D0
 	MOVEA.l	Object_slot_01_ptr.w, A6
 	MOVE.w	#6, D7
-	JSR	loc_0000D7AE(PC)
+	JSR	SpawnChildObjects(PC)
 	MOVE.w	$46(A5), D0
 	MOVEA.l	Object_slot_02_ptr.w, A6
 	MOVE.w	#9, D7
-	JSR	loc_0000D7AE(PC)
+	JSR	SpawnChildObjects(PC)
 	MOVE.w	$48(A5), D0
 	MOVEA.l	Object_slot_03_ptr.w, A6
 	MOVE.w	#9, D7
-	JSR	loc_0000D7AE(PC)
+	JSR	SpawnChildObjects(PC)
 	MOVE.w	$4A(A5), D0
 	MOVEA.l	Object_slot_04_ptr.w, A6
 	MOVE.w	#9, D7
-	JSR	loc_0000D7AE(PC)
+	JSR	SpawnChildObjects(PC)
 	MOVE.w	$4C(A5), D0
 	MOVEA.l	Object_slot_05_ptr.w, A6
 	MOVE.w	#$000A, D7
-	JSR	loc_0000D7AE(PC)
+	JSR	SpawnChildObjects(PC)
 	MOVE.w	$4E(A5), D0
 	MOVEA.l	Object_slot_06_ptr.w, A6
 	MOVE.w	#$000A, D7
-	JSR	loc_0000D7AE(PC)
+	JSR	SpawnChildObjects(PC)
 	RTS
 	
-loc_0000D7AE:
+;SpawnChildObjects:
+SpawnChildObjects:
 	LEA	loc_000230DA, A1
 	ADDA.w	D0, A1
 	MOVEA.l	(A1)+, A2
@@ -15535,7 +15537,7 @@ loc_0000DF7A:
 	MOVE.b	$1(A6), D0
 	LEA	(A6,D0.w), A6
 	DBF	D7, loc_0000DF7A
-	JSR	loc_0000E3B6
+	JSR	ProcessBossFightDamage
 	RTS
 	
 loc_0000DF96:
@@ -15568,7 +15570,7 @@ loc_0000DFEE:
 	MOVE.l	#loc_0000E008, $2(A5)
 	MOVE.w	#$0080, $3A(A5)
 	CLR.b	$41(A5)
-	JSR	loc_0000E3B6
+	JSR	ProcessBossFightDamage
 	RTS
 	
 loc_0000E008:
@@ -15612,7 +15614,7 @@ loc_0000E07C:
 	MOVE.b	#$D0, $18(A6)
 	MOVE.b	#$FF, $41(A5)
 loc_0000E090:
-	JSR	loc_0000E3B6
+	JSR	ProcessBossFightDamage
 	RTS
 	
 loc_0000E098:
@@ -15639,7 +15641,7 @@ loc_0000E0A2:
 	MOVE.l	#loc_0000DF96, $2(A5)
 	MOVE.b	#$50, $1A(A5)
 loc_0000E0F2:
-	JSR	loc_0000E3B6
+	JSR	ProcessBossFightDamage
 	RTS
 	
 loc_0000E0FA:
@@ -15666,7 +15668,7 @@ loc_0000E13A:
 	ASR.w	#3, D0
 	LEA	loc_00023A4E, A0
 	MOVE.w	(A0,D0.w), $8(A6)
-	JSR	loc_0000E3B6
+	JSR	ProcessBossFightDamage
 	RTS
 	
 loc_0000E150:
@@ -15716,7 +15718,7 @@ loc_0000E21C:
 	BNE.b	loc_0000E22E
 	MOVE.l	#loc_0000DF96, $2(A5)
 loc_0000E22E:
-	JSR	loc_0000E3B6
+	JSR	ProcessBossFightDamage
 	RTS
 
 loc_0000E236:
@@ -15837,7 +15839,8 @@ loc_0000E3AE:
 	MOVE.b	#$FF, Boss_defeated_flag.w
 	RTS
 
-loc_0000E3B6:
+;ProcessBossFightDamage:
+ProcessBossFightDamage:
 	TST.w	$3C(A5)
 	BLE.b	loc_0000E3CA
 	SUBQ.w	#1, $3C(A5)
@@ -17235,7 +17238,8 @@ loc_0000F682:
 	ANDI	#$F8FF, SR
 	RTS
 	
-loc_0000F688:
+;FlushSpriteAttributesToVDP:
+FlushSpriteAttributesToVDP:
 	MOVE.l	#$78000002, VDP_control_port
 	MOVE.w	Sprite_attr_count.w, D0
 	SUBQ.w	#1, D0
@@ -18978,7 +18982,7 @@ loc_00010B56:
 	MOVE.b	(A4)+, Transaction_item_id.w
 	MOVE.b	(A4)+, Transaction_item_quantity.w
 	MOVE.b	(A4)+, Transaction_item_flags.w
-	BSR.w	loc_00011576
+	BSR.w	AddPaymentAmount
 loc_00010B6A:
 	DBF	D4, loc_00010B42
 	MOVE.w	#$00A6, D0
@@ -19695,7 +19699,8 @@ loc_00011558:
 loc_00011574:
 	RTS
 
-loc_00011576:
+;AddPaymentAmount:
+AddPaymentAmount:
 	LEA	Transaction_amount_end.w, A0
 	LEA	(Player_kims+4).w, A1
 	MOVEQ	#3, D1
@@ -21185,7 +21190,8 @@ loc_00012A7A:
 	BSR.w	loc_00012B5C
 	RTS
 	
-loc_00012A9A:
+;DrawMagicListWithMP:
+DrawMagicListWithMP:
 	MOVE.w	#$0011, Window_tilemap_draw_x.w
 	MOVE.w	#4, Window_tilemap_draw_y.w
 	LEA	Possessed_magics_list.w, A2
@@ -25677,7 +25683,7 @@ loc_000180A8:
 	BEQ.b	loc_000180D6
 	JSR	SaveCenterDialogAreaToBuffer
 	JSR	DrawMagicListBorders
-	JSR	loc_00012A9A
+	JSR	DrawMagicListWithMP
 	CLR.w	Magic_list_cursor_index.w
 	MOVE.w	#4, Spellbook_menu_state.w
 	MOVE.w	Possessed_magics_length.w, D0
@@ -25793,7 +25799,7 @@ loc_00018272:
 	BEQ.b	loc_0001829C
 	JSR	SaveCenterDialogAreaToBuffer
 	JSR	DrawMagicListBorders
-	JSR	loc_00012A9A
+	JSR	DrawMagicListWithMP
 	CLR.w	Magic_list_cursor_index.w
 	ADDQ.w	#1, Spellbook_menu_state.w
 	MOVE.w	Possessed_magics_length.w, D0
@@ -25913,7 +25919,7 @@ loc_0001844C:
 	TST.b	Fade_in_lines_mask.w
 	BNE.b	loc_00018466
 	PRINT 	AreaBrightStr
-	JSR	loc_00006458
+	JSR	UpdateAreaVisibility
 	MOVE.w	#9, Spellbook_menu_state.w
 loc_00018466:
 	RTS
@@ -25923,7 +25929,7 @@ loc_00018468:
 	BEQ.b	loc_00018490
 	JSR	SaveCenterDialogAreaToBuffer
 	JSR	DrawMagicListBorders
-	JSR	loc_00012A9A
+	JSR	DrawMagicListWithMP
 	CLR.w	Magic_list_cursor_index.w
 	ADDQ.w	#1, Spellbook_menu_state.w
 	MOVE.w	Possessed_magics_length.w, D0
@@ -28522,7 +28528,7 @@ loc_0001A8A4:
 	TST.b	Fade_in_lines_mask.w
 	BNE.b	loc_0001A8BE
 	PRINT 	AreaBrightStr
-	JSR	loc_00006458
+	JSR	UpdateAreaVisibility
 	MOVE.w	#$B, Item_menu_state.w
 loc_0001A8BE:
 	RTS
@@ -28837,7 +28843,7 @@ loc_0001ACB4:
 	TST.b	Player_in_first_person_mode.w
 	BEQ.b	loc_0001ACCE
 	MOVE.b	#$FF, Area_map_revealed.w
-	JSR	loc_00006458
+	JSR	UpdateAreaVisibility
 loc_0001ACCE:
 	BSR.w	RemoveSelectedItemFromList
 	RTS
@@ -28849,7 +28855,7 @@ UseTitaniasMirror:
 	TST.b	Is_in_cave.w	
 	BNE.b	loc_0001ACF6	
 	MOVE.b	#$FF, Area_map_revealed.w	
-	JSR	loc_00006458	
+	JSR	UpdateAreaVisibility	
 	PRINT 	GlowingMapStr	
 	RTS
 	
@@ -30276,7 +30282,7 @@ loc_0001C168:
 	CMPI.w	#1, D0
 	BEQ.b	loc_0001C1CC
 	JSR	DrawMagicListBorders
-	JSR	loc_00012A9A
+	JSR	DrawMagicListWithMP
 	MOVE.l	#Possessed_magics_list, Active_inventory_list_ptr.w
 	MOVE.w	Possessed_magics_length.w, D0
 	BRA.b	loc_0001C1E4
@@ -30432,7 +30438,7 @@ loc_0001C3A4:
 	TST.w	Dialog_selection.w
 	BNE.w	loc_0001C4B0
 	MOVE.l	Shop_sell_price.w, Transaction_amount.w
-	JSR	loc_00011576
+	JSR	AddPaymentAmount
 	JSR	DisplayPlayerKims
 	LEA	ShopCategoryNameTables, A0
 	MOVE.w	Current_shop_type.w, D0
@@ -32955,7 +32961,7 @@ loc_0001E61E:
 	MOVE.w	Reward_script_value.w, D0
 	MOVE.b	#$FF, (A0,D0.w)
 	MOVE.b	#$FF, Area_map_revealed.w
-	JSR	loc_00006458
+	JSR	UpdateAreaVisibility
 	MOVEA.l	#AreaMapStr, A0
 	JSR	CopyStringUntilFF
 	BRA.w	loc_0001E6A0
@@ -32972,7 +32978,7 @@ loc_0001E668:
 	MOVEQ	#0, D0
 	MOVE.w	Reward_script_value.w, D0
 	MOVE.l	D0, Transaction_amount.w
-	JSR	loc_00011576
+	JSR	AddPaymentAmount
 	JSR	loc_00013186
 	JSR	CopyPlayerNameToTextBuffer
 	LEA	TakesStr, A0
@@ -33071,7 +33077,7 @@ loc_0001E7DE:
 	CMPI.w	#1, D0
 	BEQ.w	loc_0001E834
 	JSR	DrawMagicListBorders
-	JSR	loc_00012A9A
+	JSR	DrawMagicListWithMP
 	MOVE.l	#Possessed_magics_list, Active_inventory_list_ptr.w
 	MOVE.w	Possessed_magics_length.w, D0
 	BRA.w	loc_0001E84C
