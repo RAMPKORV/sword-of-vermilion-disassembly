@@ -19104,7 +19104,8 @@ loc_00010CE2:
 	MOVE.b	#$FF, Window_tilemap_draw_active.w	
 	RTS
 	
-loc_00010D44:
+; DrawYesNoDialog
+DrawYesNoDialog:
 	CLR.w	Dialog_selection.w
 	MOVE.w	#1, Menu_cursor_column_break.w
 	MOVE.w	#$FFFF, Menu_cursor_last_index.w
@@ -20617,7 +20618,8 @@ loc_000122D2:
 	BSR.w	ReadWindowToBuffer
 	RTS
 	
-loc_000122F4:
+; SaveRightMenuAreaToBuffer
+SaveRightMenuAreaToBuffer:
 	LEA	$FFFF7CF4, A0
 	MOVE.w	#$001C, Window_tile_x.w
 	MOVE.w	#$000D, Window_tile_y.w
@@ -20934,7 +20936,8 @@ loc_00012742:
 	BSR.w	DrawWindowFromBuffer
 	RTS
 	
-loc_00012766:
+; RestoreLeftMenuFromBuffer
+RestoreLeftMenuFromBuffer:
 	LEA	Left_menu_tiles_buffer.w, A0
 	MOVE.w	#0, Window_tile_x.w
 	MOVE.w	#2, Window_tile_y.w
@@ -25692,8 +25695,8 @@ loc_0001810A:
 	JSR	DrawMenuCursor
 	MOVE.w	#$00A1, D0
 	JSR	QueueSoundEffect
-	JSR	loc_000122F4
-	JSR	loc_00010D44
+	JSR	SaveRightMenuAreaToBuffer
+	JSR	DrawYesNoDialog
 	ADDQ.w	#1, Spellbook_menu_state.w
 	RTS
 
@@ -25807,8 +25810,8 @@ loc_000182D0:
 	JSR	DrawMenuCursor
 	MOVE.w	#$00A1, D0
 	JSR	QueueSoundEffect
-	JSR	loc_000122F4
-	JSR	loc_00010D44
+	JSR	SaveRightMenuAreaToBuffer
+	JSR	DrawYesNoDialog
 	ADDQ.w	#1, Spellbook_menu_state.w
 	RTS
 
@@ -28243,8 +28246,8 @@ loc_0001A4DC:
 	JSR	DrawMenuCursor
 	MOVE.w	#$00A1, D0
 	JSR	QueueSoundEffect
-	JSR	loc_000122F4
-	JSR	loc_00010D44
+	JSR	SaveRightMenuAreaToBuffer
+	JSR	DrawYesNoDialog
 	MOVE.w	#6, Item_menu_state.w
 	RTS
 
@@ -29575,7 +29578,7 @@ loc_0001B6F0:
 	CLR.b	Script_text_complete.w	
 	MOVE.w	#$00A8, D0	
 	JSR	QueueSoundEffect	
-	JSR	loc_00012766	
+	JSR	RestoreLeftMenuFromBuffer	
 	JSR	loc_000126DA	
 	MOVE.w	#$2D, Dialogue_state.w	
 	RTS
@@ -29590,8 +29593,8 @@ loc_0001B73A:
 	JSR	DrawMenuCursor
 	MOVE.w	#$00A1, D0
 	JSR	QueueSoundEffect
-	JSR	loc_000122F4
-	JSR	loc_00010D44
+	JSR	SaveRightMenuAreaToBuffer
+	JSR	DrawYesNoDialog
 	MOVE.w	#$33, Dialogue_state.w
 	RTS
 
@@ -29725,7 +29728,7 @@ loc_0001BA5E:
 	MOVE.w	(A1,D1.w), D1
 	MOVE.w	D1, (A0,D0.w)
 loc_0001BA8A:
-	JSR	loc_00012766
+	JSR	RestoreLeftMenuFromBuffer
 	JSR	loc_000126DA
 	JSR	ResetScriptAndInitDialogue
 	MOVE.w	#1, Dialogue_state.w
@@ -29736,7 +29739,7 @@ loc_0001BAA4:
 	JSR	QueueSoundEffect
 	JSR	DrawLeftMenuWindow
 	MOVE.w	#$2D, Dialogue_state.w
-	JSR	loc_00012766
+	JSR	RestoreLeftMenuFromBuffer
 	JSR	loc_000126DA
 	JSR	ResetScriptAndInitDialogue
 	PRINT 	NoLeaveWithoutBuyingStr
@@ -29850,8 +29853,8 @@ loc_0001BBF8:
 	RTS
 
 loc_0001BBFA:
-	JSR	loc_000122F4
-	JSR	loc_00010D44
+	JSR	SaveRightMenuAreaToBuffer
+	JSR	DrawYesNoDialog
 	ADDQ.w	#1, Dialogue_state.w
 	RTS
 
@@ -30036,7 +30039,7 @@ loc_0001BE36:
 	BEQ.b	loc_0001BE6E
 	MOVE.w	#$00A8, D0
 	JSR	QueueSoundEffect
-	JSR	loc_00012766
+	JSR	RestoreLeftMenuFromBuffer
 	JSR	loc_000126DA
 	JSR	loc_00011012
 	MOVE.w	#7, Dialogue_state.w
@@ -30050,8 +30053,8 @@ loc_0001BE6E:
 	JSR	QueueSoundEffect
 	MOVE.w	Shop_selected_index.w, Menu_cursor_index.w
 	JSR	DrawMenuCursor
-	JSR	loc_000122F4
-	JSR	loc_00010D44
+	JSR	SaveRightMenuAreaToBuffer
+	JSR	DrawYesNoDialog
 	JSR	loc_00011666
 	LEA	Text_build_buffer.w, A1
 	LEA	IsStr, A0
@@ -30184,7 +30187,7 @@ loc_0001C07C:
 loc_0001C082:
 	TST.b	Script_text_complete.w
 	BEQ.b	loc_0001C0BA
-	JSR	loc_000122F4
+	JSR	SaveRightMenuAreaToBuffer
 	ADDQ.w	#1, Dialogue_state.w
 	JSR	loc_00011666
 	MOVE.w	Current_shop_type.w, D0
@@ -30193,7 +30196,7 @@ loc_0001C082:
 	LEA	loc_00025FBC, A0
 	MOVE.l	(A0,D0.w), Script_source_base.w
 	MOVE.b	#$FF, Shop_purchase_made.w
-	JSR	loc_00010D44
+	JSR	DrawYesNoDialog
 	RTS
 
 loc_0001C0BA:
@@ -30218,13 +30221,13 @@ loc_0001C0F4:
 	TST.w	Dialog_selection.w
 	BNE.b	loc_0001C120
 	JSR	loc_00011012
-	JSR	loc_00012766
+	JSR	RestoreLeftMenuFromBuffer
 	JSR	DrawLeftMenuWindow
 	MOVE.w	#7, Dialogue_state.w
 	RTS
 
 loc_0001C120:
-	JSR	loc_00012766
+	JSR	RestoreLeftMenuFromBuffer
 	JSR	DrawLeftMenuWindow
 	JSR	ResetScriptAndInitDialogue
 	MOVE.w	Current_shop_type.w, D0
@@ -30329,7 +30332,7 @@ loc_0001C27C:
 	JSR	CheckButtonPress
 	BEQ.b	loc_0001C2AA
 	JSR	DrawCenterMenuWindow
-	JSR	loc_00012766
+	JSR	RestoreLeftMenuFromBuffer
 	JSR	loc_00011012
 	MOVE.w	#7, Dialogue_state.w
 	RTS
@@ -30399,8 +30402,8 @@ loc_0001C380:
 loc_0001C386:
 	TST.b	Script_text_complete.w
 	BEQ.b	loc_0001C39E
-	JSR	loc_000122F4
-	JSR	loc_00010D44
+	JSR	SaveRightMenuAreaToBuffer
+	JSR	DrawYesNoDialog
 	ADDQ.w	#1, Dialogue_state.w
 	RTS
 
@@ -30499,8 +30502,8 @@ loc_0001C4E6:
 	RTS
 
 loc_0001C4FA:
-	JSR	loc_000122F4
-	JSR	loc_00010D44
+	JSR	SaveRightMenuAreaToBuffer
+	JSR	DrawYesNoDialog
 	MOVE.w	#$17, Dialogue_state.w
 	RTS
 
@@ -30523,14 +30526,14 @@ loc_0001C542:
 	JSR	DrawMenuCursor
 	TST.w	Dialog_selection.w
 	BNE.b	loc_0001C56E
-	JSR	loc_00012766	
+	JSR	RestoreLeftMenuFromBuffer	
 	JSR	loc_00011012	
 	JSR	DrawLeftMenuWindow	
 	MOVE.w	#7, Dialogue_state.w	
 	RTS
 	
 loc_0001C56E:
-	JSR	loc_00012766
+	JSR	RestoreLeftMenuFromBuffer
 	JSR	DrawLeftMenuWindow
 	JSR	ResetScriptAndInitDialogue
 	MOVE.w	Current_shop_type.w, D0
@@ -30548,8 +30551,8 @@ loc_0001C5A2:
 	BEQ.b	loc_0001C5D4
 	TST.b	Script_has_continuation.w
 	BNE.w	loc_0001C5C2
-	JSR	loc_000122F4
-	JSR	loc_00010D44
+	JSR	SaveRightMenuAreaToBuffer
+	JSR	DrawYesNoDialog
 	ADDQ.w	#1, Dialogue_state.w
 	RTS
 
@@ -30628,7 +30631,7 @@ loc_0001C698:
 
 loc_0001C6BE:
 	JSR	DrawStatusHudWindow
-	JSR	loc_00012766
+	JSR	RestoreLeftMenuFromBuffer
 	CLR.w	Overworld_menu_state.w
 	MOVE.w	#3, Window_draw_type.w
 	CLR.w	Window_text_row.w
@@ -30656,8 +30659,8 @@ loc_0001C6FA:
 	TST.b	Watling_inn_free_stay_used.w
 	BEQ.b	loc_0001C722
 loc_0001C716:
-	JSR	loc_000122F4
-	JSR	loc_00010D44
+	JSR	SaveRightMenuAreaToBuffer
+	JSR	DrawYesNoDialog
 loc_0001C722:
 	MOVE.w	#$1D, Dialogue_state.w
 	RTS
@@ -30956,8 +30959,8 @@ loc_0001CB56:
 loc_0001CB58:
 	TST.b	Script_text_complete.w
 	BEQ.b	loc_0001CB70
-	JSR	loc_000122F4
-	JSR	loc_00010D44
+	JSR	SaveRightMenuAreaToBuffer
+	JSR	DrawYesNoDialog
 	ADDQ.w	#1, Dialogue_state.w
 	RTS
 
@@ -30999,7 +31002,7 @@ loc_0001CB94:
 	BSR.w	RemoveCursedEquipment
 	PRINT 	CurseRemovedStr
 	JSR	DrawLeftMenuWindow
-	JSR	loc_00012766
+	JSR	RestoreLeftMenuFromBuffer
 	JSR	ResetScriptAndInitDialogue
 	MOVE.w	#$23, Dialogue_state.w
 	RTS
@@ -31011,7 +31014,7 @@ loc_0001CC24:
 	PRINT 	NoTakeBackStr	
 loc_0001CC2C:
 	JSR	DrawLeftMenuWindow	
-	JSR	loc_00012766	
+	JSR	RestoreLeftMenuFromBuffer	
 	MOVE.w	#$23, Dialogue_state.w	
 	JSR	ResetScriptAndInitDialogue	
 	RTS
@@ -31025,8 +31028,8 @@ loc_0001CC46:
 loc_0001CC5A:
 	TST.b	Script_text_complete.w
 	BEQ.b	loc_0001CC72
-	JSR	loc_000122F4
-	JSR	loc_00010D44
+	JSR	SaveRightMenuAreaToBuffer
+	JSR	DrawYesNoDialog
 	ADDQ.w	#1, Dialogue_state.w
 	RTS
 
@@ -31072,7 +31075,7 @@ loc_0001CD0A:
 	PRINT 	CantCureStr
 loc_0001CD12:
 	JSR	DrawLeftMenuWindow
-	JSR	loc_00012766
+	JSR	RestoreLeftMenuFromBuffer
 	JSR	ResetScriptAndInitDialogue
 	MOVE.w	#$23, Dialogue_state.w
 	RTS
@@ -31084,7 +31087,7 @@ loc_0001CD36:
 	PRINT 	NoTakeBackStr	
 loc_0001CD3E:
 	JSR	DrawLeftMenuWindow	
-	JSR	loc_00012766	
+	JSR	RestoreLeftMenuFromBuffer	
 	MOVE.w	#$23, Dialogue_state.w	
 	JMP	ResetScriptAndInitDialogue	
 loc_0001CD56:
@@ -32993,8 +32996,8 @@ loc_0001E6FA:
 	TST.b	Script_text_complete.w
 	BEQ.w	loc_0001E71A
 	CLR.w	Dialog_selection.w
-	JSR	loc_000122F4
-	JSR	loc_00010D44
+	JSR	SaveRightMenuAreaToBuffer
+	JSR	DrawYesNoDialog
 	MOVE.w	#6, Take_item_state.w
 	RTS
 	
@@ -33100,8 +33103,8 @@ loc_0001E896:
 	JSR	DrawMenuCursor
 	MOVE.w	#$00A1, D0
 	JSR	QueueSoundEffect
-	JSR	loc_000122F4
-	JSR	loc_00010D44
+	JSR	SaveRightMenuAreaToBuffer
+	JSR	DrawYesNoDialog
 	MOVE.w	#9, Take_item_state.w
 	RTS
 	
