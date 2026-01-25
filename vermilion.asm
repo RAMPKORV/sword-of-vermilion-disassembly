@@ -2042,9 +2042,9 @@ loc_00002620:
 	ADDQ.w	#1, Gameplay_substate.w
 	MOVE.w	#$0036, Palette_line_0_index.w
 	MOVE.w	#$0011, Palette_line_3_index.w
-	CLR.b	$FFFFC561.w
+	CLR.b	Dialog_active_flag.w
 	CLR.b	Encounter_triggered.w
-	CLR.b	$FFFFC56A.w
+	CLR.b	Dialog_state_flag.w
 	CLR.b	Chest_opened_flag.w
 	CLR.b	Reward_script_active.w
 	CLR.b	Herbs_available.w
@@ -2124,7 +2124,7 @@ loc_0000277E: ; process movement actions in overworld
 	BNE.w	loc_000027F8
 	TST.b	Player_rotate_clockwise_in_overworld.w
 	BNE.w	loc_000027F8
-	TST.b	$FFFFC561.w
+	TST.b	Dialog_active_flag.w
 	BNE.b	loc_000027CC
 	TST.b	Is_in_cave.w
 	BEQ.w	loc_000027B2
@@ -2133,7 +2133,7 @@ loc_0000277E: ; process movement actions in overworld
 loc_000027B2:
 	BSR.w	CheckOverworldInteractions
 loc_000027B6:
-	TST.b	$FFFFC56A.w
+	TST.b	Dialog_state_flag.w
 	BNE.b	loc_000027CC
 	TST.b	Found_something_nearby.w
 	BEQ.b	loc_000027CC
@@ -2350,7 +2350,7 @@ loc_00002A6E:
 loc_00002A74:
 	CMPI.w	#$000A, Dialog_phase.w
 	BLT.b	loc_00002A8C
-	CLR.b	$FFFFC56A.w
+	CLR.b	Dialog_state_flag.w
 	BSR.w	loc_00002F9C
 	MOVE.w	Saved_game_state.w, Gameplay_substate.w
 	BRA.b	loc_00002A90
@@ -4233,7 +4233,7 @@ loc_000043A6:
 	BNE.w	loc_0000457C
 	TST.b	Encounter_triggered.w
 	BNE.w	loc_0000457C
-	TST.b	$FFFFC56A.w
+	TST.b	Dialog_state_flag.w
 	BNE.w	loc_0000457C
 	TST.b	Fade_out_lines_mask.w
 	BNE.w	loc_0000457C
@@ -4331,7 +4331,7 @@ loc_000044F2:
 	LEA	loc_0000492C, A0
 	JSR	(A0,D0.w)
 loc_00004516:
-	CLR.b	$FFFFC561.w
+	CLR.b	Dialog_active_flag.w
 	CLR.b	Chest_opened_flag.w
 	CLR.b	Reward_script_active.w
 	CLR.b	Herbs_available.w
@@ -10228,10 +10228,10 @@ loc_0000947E:
 	MOVE.l	#loc_0000957C, $2(A5)
 	MOVE.b	#$0E, $6(A6)
 	MOVE.l	#loc_0000A662, $2(A6)
-	MOVE.w	#$0018, $FFFFC690.w
-	MOVE.w	#2, $FFFFC692.w
-	MOVE.l	#loc_0003DB90, $FFFFC694.w
-	MOVE.l	#loc_0003DB50, $FFFFC698.w
+	MOVE.w	#$0018, Enemy_anim_frame_mask.w
+	MOVE.w	#2, Enemy_anim_frame_shift.w
+	MOVE.l	#loc_0003DB90, Enemy_anim_table_main.w
+	MOVE.l	#loc_0003DB50, Enemy_anim_table_child.w
 	RTS
 
 loc_000094D2:
@@ -10244,10 +10244,10 @@ loc_000094D2:
 	MOVE.l	#loc_0000957C, $2(A5)
 	MOVE.b	#$0E, $6(A6)
 	MOVE.l	#loc_0000A662, $2(A6)
-	MOVE.w	#$0018, $FFFFC690.w
-	MOVE.w	#2, $FFFFC692.w
-	MOVE.l	#loc_0003DCB0, $FFFFC694.w
-	MOVE.l	#loc_0003DC70, $FFFFC698.w
+	MOVE.w	#$0018, Enemy_anim_frame_mask.w
+	MOVE.w	#2, Enemy_anim_frame_shift.w
+	MOVE.l	#loc_0003DCB0, Enemy_anim_table_main.w
+	MOVE.l	#loc_0003DC70, Enemy_anim_table_child.w
 	RTS
 
 loc_00009528:
@@ -10260,10 +10260,10 @@ loc_00009528:
 	MOVE.l	#loc_0000957C, $2(A5)
 	MOVE.b	#$0E, $6(A6)
 	MOVE.l	#loc_0000A662, $2(A6)
-	MOVE.w	#$000C, $FFFFC690.w
-	MOVE.w	#1, $FFFFC692.w
-	MOVE.l	#loc_0003DB90, $FFFFC694.w
-	MOVE.l	#loc_0003DB50, $FFFFC698.w
+	MOVE.w	#$000C, Enemy_anim_frame_mask.w
+	MOVE.w	#1, Enemy_anim_frame_shift.w
+	MOVE.l	#loc_0003DB90, Enemy_anim_table_main.w
+	MOVE.l	#loc_0003DB50, Enemy_anim_table_child.w
 	RTS
 
 loc_0000957C:
@@ -10324,8 +10324,8 @@ loc_00009634:
 	MOVE.b	$1(A5), D0
 	LEA	(A5,D0.w), A6
 	MOVE.b	$1B(A5), D0
-	AND.w	$FFFFC690.w, D0
-	MOVE.w	$FFFFC692.w, D1
+	AND.w	Enemy_anim_frame_mask.w, D0
+	MOVE.w	Enemy_anim_frame_shift.w, D1
 	ASR.w	D1, D0
 	BCLR.b	#3, $7(A5)
 	CLR.w	D1
@@ -10336,8 +10336,8 @@ loc_00009634:
 loc_00009666:
 	ASL.w	#3, D1
 	ADD.w	D0, D1
-	MOVEA.l	$FFFFC694.w, A0
-	MOVEA.l	$FFFFC698.w, A1
+	MOVEA.l	Enemy_anim_table_main.w, A0
+	MOVEA.l	Enemy_anim_table_child.w, A1
 	MOVE.w	(A0,D1.w), $8(A5)
 	MOVE.w	(A1,D1.w), $8(A6)
 	TST.b	$FFFFC69E.w
@@ -10359,10 +10359,10 @@ loc_0000969A:
 	MOVE.l	#loc_00009726, $2(A5)
 	MOVE.b	#$0E, $6(A6)
 	MOVE.l	#loc_0000A662, $2(A6)
-	MOVE.w	#$0018, $FFFFC690.w
-	MOVE.w	#2, $FFFFC692.w
-	MOVE.l	#loc_0003DB90, $FFFFC694.w
-	MOVE.l	#loc_0003DB50, $FFFFC698.w
+	MOVE.w	#$0018, Enemy_anim_frame_mask.w
+	MOVE.w	#2, Enemy_anim_frame_shift.w
+	MOVE.l	#loc_0003DB90, Enemy_anim_table_main.w
+	MOVE.l	#loc_0003DB50, Enemy_anim_table_child.w
 	RTS
 
 loc_000096EA:
@@ -10371,10 +10371,10 @@ loc_000096EA:
 	MOVE.l	#loc_00009726, $2(A5)
 	MOVE.b	#$0E, $6(A6)
 	MOVE.l	#loc_0000A662, $2(A6)
-	MOVE.w	#$000C, $FFFFC690.w
-	MOVE.w	#1, $FFFFC692.w
-	MOVE.l	#loc_0003DB90, $FFFFC694.w
-	MOVE.l	#loc_0003DB50, $FFFFC698.w
+	MOVE.w	#$000C, Enemy_anim_frame_mask.w
+	MOVE.w	#1, Enemy_anim_frame_shift.w
+	MOVE.l	#loc_0003DB90, Enemy_anim_table_main.w
+	MOVE.l	#loc_0003DB50, Enemy_anim_table_child.w
 	RTS
 
 loc_00009726:
@@ -10430,8 +10430,8 @@ loc_000097CA:
 	MOVE.b	$1(A5), D0
 	LEA	(A5,D0.w), A6
 	MOVE.b	$1B(A5), D0
-	AND.w	$FFFFC690.w, D0
-	MOVE.w	$FFFFC692.w, D1
+	AND.w	Enemy_anim_frame_mask.w, D0
+	MOVE.w	Enemy_anim_frame_shift.w, D1
 	ASR.w	D1, D0
 	BCLR.b	#3, $7(A5)
 	CLR.w	D1
@@ -10442,8 +10442,8 @@ loc_000097CA:
 loc_000097FC:
 	ASL.w	#3, D1
 	ADD.w	D0, D1
-	MOVEA.l	$FFFFC694.w, A0
-	MOVEA.l	$FFFFC698.w, A1
+	MOVEA.l	Enemy_anim_table_main.w, A0
+	MOVEA.l	Enemy_anim_table_child.w, A1
 	MOVE.w	(A0,D1.w), $8(A5)
 	MOVE.w	(A1,D1.w), $8(A6)
 	BSR.w	CopyPositionToLinkedSprite
@@ -20383,7 +20383,7 @@ loc_00011F58:
 	BRA.w	loc_000120A8	
 	BRA.w	loc_0001210E
 loc_00011F94:
-	TST.b	$FFFFC561.w
+	TST.b	Dialog_active_flag.w
 	BEQ.b	loc_00011FB4
 	MOVEA.l	$FFFFCC54.w, A6
 	BSET.b	#7, $7(A6)
@@ -20591,7 +20591,7 @@ loc_0001227A:
 	RTS
 	
 loc_0001229E:
-	TST.b	$FFFFC561.w
+	TST.b	Dialog_active_flag.w
 	BEQ.b	loc_000122AE
 	MOVEA.l	$FFFFCC54.w, A6
 	BCLR.b	#7, $7(A6)
@@ -20705,7 +20705,7 @@ SaveLeftMenuTiles:
 	RTS
 	
 loc_00012450:
-	TST.b	$FFFFC561.w
+	TST.b	Dialog_active_flag.w
 	BEQ.b	loc_00012470
 	MOVEA.l	$FFFFCC54.w, A6
 	BCLR.b	#7, $7(A6)
@@ -20837,7 +20837,7 @@ loc_000125E4:
 ; DrawStatusHudWindow
 ; Draw main status HUD window (bottom bar showing HP, level, etc.)
 DrawStatusHudWindow:
-	TST.b	$FFFFC561.w
+	TST.b	Dialog_active_flag.w
 	BEQ.b	loc_00012620
 	MOVEA.l	$FFFFCC54.w, A6
 	BSET.b	#7, $7(A6)
@@ -32833,7 +32833,7 @@ loc_0001E4B0:
 loc_0001E4C2:
 	TST.b	Player_in_first_person_mode.w
 	BEQ.w	loc_0001E4F2
-	TST.b	$FFFFC561.w
+	TST.b	Dialog_active_flag.w
 	BEQ.w	loc_0001E4F2
 	TST.b	Truffles_available.w
 	BNE.w	loc_0001E4EA
@@ -36129,8 +36129,8 @@ loc_000213CC:
 loc_000213CE:
 	MOVEA.l	$FFFFCC54.w, A6
 	BSET.b	#7, (A6)
-	MOVE.b	#$FF, $FFFFC561.w
-	MOVE.b	#$FF, $FFFFC56A.w
+	MOVE.b	#$FF, Dialog_active_flag.w
+	MOVE.b	#$FF, Dialog_state_flag.w
 	CLR.w	Dialog_timer.w
 	CLR.w	Dialog_phase.w
 	MOVE.w	Gameplay_substate.w, Saved_game_state.w
