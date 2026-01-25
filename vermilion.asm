@@ -1219,10 +1219,10 @@ loc_000019BE:
 	LEA	loc_0001FECA, A1
 	JSR	(A1,D0.w)
 	JSR	(A0,D0.w)
-	JSR	loc_00016018
+	JSR	LoadTownTilemaps
 	MOVE.w	#$0300, Town_vram_tile_base.w
 	MOVE.w	#$4000, Town_tilemap_vram_base.w
-	JSR	loc_0001622A
+	JSR	WriteTownTilemapToVRAM
 	TST.b	Skip_town_intro_after_fight.w
 	BNE.b	loc_00001A1A
 	JSR	LoadAndPlayAreaMusic
@@ -1342,7 +1342,7 @@ loc_00001BB8:
 	TST.b	Fade_out_lines_mask.w
 	BNE.b	loc_00001C1A
 	JSR	DisableVDPDisplay
-	JSR	loc_0000FE2C
+	JSR	LoadBattleHudGraphics
 	JSR	loc_0000F9BE
 	TST.w	Saved_player_x_in_town.w
 	BGT.b	loc_00001BE6
@@ -1643,9 +1643,9 @@ loc_00002020:
 	RTS
 
 loc_00002022:
-	JSR	loc_00016018
+	JSR	LoadTownTilemaps
 	MOVE.w	#$2000, Town_tilemap_vram_base.w
-	JSR	loc_0001622A
+	JSR	WriteTownTilemapToVRAM
 	MOVEA.l	Enemy_list_ptr.w, A6
 	BSET.b	#7, (A6)
 	MOVE.l	#loc_00006E1C, $2(A6)
@@ -1679,7 +1679,7 @@ loc_000020B2:
 	TST.b	Fade_out_lines_mask.w
 	BNE.b	loc_00002114
 	JSR	DisableVDPDisplay
-	JSR	loc_0000FE2C
+	JSR	LoadBattleHudGraphics
 	JSR	loc_0000F9C8
 	TST.w	Saved_player_x_in_town.w
 	BGT.b	loc_000020E0
@@ -1844,7 +1844,7 @@ loc_00002324:
 	CLR.b	Boss_max_hp.w
 	CLR.b	Encounter_behavior_flag.w
 	JSR	LoadBattleTileGraphics
-	JSR	loc_0000FF08
+	JSR	LoadBattleTerrainGraphics
 	BSR.w	loc_00002FCC
 	BSR.w	loc_00003024
 	CLR.w	Camera_scroll_x.w
@@ -2075,7 +2075,7 @@ loc_000026BA: ; level up
 	ADDQ.w	#1, Player_level.w
 	JSR	UpgradeLevelStats
 	MOVE.w	#100, Level_up_timer.w
-	JSR	loc_000122D2
+	JSR	SavePromptMenuToBuffer
 	JSR	LoadLevelUpBannerTiles
 	BRA.b	loc_00002724
 loc_00002706:
@@ -2253,8 +2253,8 @@ loc_00002916:
 	SUBQ.w	#1, Level_up_timer.w
 	BGT.b	loc_0000292E
 	MOVE.w	#$1C, Gameplay_substate.w
-	JSR	loc_00012450
-	JSR	loc_0001193C
+	JSR	SaveFullDialogAreaToBuffer
+	JSR	DrawCharacterStatsWindow
 loc_0000292E:
 	RTS
 
@@ -2295,7 +2295,7 @@ loc_00002974:
 	ADDQ.w	#1, Player_level.w
 	JSR	UpgradeLevelStats
 	MOVE.w	#100, Level_up_timer.w
-	JSR	loc_000122D2
+	JSR	SavePromptMenuToBuffer
 	JSR	LoadLevelUpBannerTiles
 	JSR	DisplayPlayerHpMp
 	JSR	DisplayPlayerMaxHpMp
@@ -2400,9 +2400,9 @@ loc_00002AE0:
 	JSR	FlushSpriteAttributesToVDP
 	MOVE.b	#$FF, Is_boss_battle.w
 	JSR	LoadBattleTileGraphics
-	JSR	loc_0000FF08
-	JSR	loc_0001056A
-	JSR	loc_0001053A
+	JSR	LoadBattleTerrainGraphics
+	JSR	LoadBattleGraphics
+	JSR	LoadBattleTilesToVram
 	BSR.w	loc_00002FCC
 	BSR.w	loc_00003024
 	CLR.w	Camera_scroll_x.w
@@ -2419,7 +2419,7 @@ loc_00002AE0:
 	ASR.l	#4, D0
 	ADDI.l	#$00000180, D0
 	MOVE.l	D0, $20(A6)
-	JSR	loc_0000B7AC
+	JSR	InitBattleEntities
 	JSR	loc_00013138
 	JSR	loc_00012FE0
 	CLR.b	Player_in_first_person_mode.w
@@ -10021,7 +10021,7 @@ HandlePlayerTakeDamage:
 	BNE.w	loc_0000926E
 	MOVE.b	#$FF, Player_invulnerable.w
 	MOVE.b	#$10, $1A(A6)
-	BSR.w	loc_0000B5A8
+	BSR.w	ApplyDamageToPlayer
 	MOVE.b	#$B2, D0
 	JSR	QueueSoundEffect
 	TST.b	$24(A5)
@@ -12348,7 +12348,7 @@ loc_0000B2AA:
 	MOVE.b	$3A(A4), D0
 	ADDI.w	#$0010, D0
 	MOVE.b	D0, $3A(A6)
-	JSR	loc_0000B4D6(PC)
+	JSR	CalculateCircularPosition(PC)
 	MOVE.l	#loc_0000B48C, $2(A6)
 	CLR.l	$32(A6)
 	CLR.l	$36(A6)
@@ -12472,7 +12472,7 @@ loc_0000B470:
 	ADD.w	D2, D6
 	MOVE.b	D1, $3A(A6)
 loc_0000B478:
-	JSR	loc_0000B4D6(PC)
+	JSR	CalculateCircularPosition(PC)
 	BSET.b	#7, (A6)
 	DBF	D7, loc_0000B424
 	LEA	(A0), A5
@@ -12500,7 +12500,8 @@ loc_0000B48C:
 loc_0000B4D4:
 	RTS
 
-loc_0000B4D6:
+;CalculateCircularPosition:
+CalculateCircularPosition:
 	CLR.w	D5
 	MOVE.b	$3A(A6), D5
 	LEA	SineTable, A2
@@ -12559,7 +12560,8 @@ loc_0000B588:
 	dc.w	$0010, $0000 
 	dc.w	$0008, $FFF8 
 
-loc_0000B5A8:
+;ApplyDamageToPlayer:
+ApplyDamageToPlayer:
 	MOVE.w	$2C(A5), D1
 	MOVE.w	Player_ac.w, D0
 	ASR.w	#3, D0
@@ -12718,7 +12720,8 @@ EnemyStartingPositions:
 	dc.w	$005E, $00A0
 	dc.w	$009E, $00A0
 	dc.w	$00DE, $00A0 
-loc_0000B7AC:
+;InitBattleEntities:
+InitBattleEntities:
 	LEA	loc_0000B7C4, A0
 	MOVE.w	Battle_type.w, D0
 	ANDI.w	#$000F, D0
@@ -14004,7 +14007,7 @@ CheckEntityPlayerCollisionAndDamage:
 	JSR	QueueSoundEffect
 	MOVE.b	#$FF, Player_invulnerable.w
 	MOVE.b	#$10, $1A(A6)
-	JSR	loc_0000B5A8
+	JSR	ApplyDamageToPlayer
 	MOVE.l	$32(A5), D0
 	BGT.b	loc_0000CAC2
 	CMPI.l	#$FFFF8000, D0
@@ -14040,7 +14043,7 @@ loc_0000CAE8:
 	BNE.b	loc_0000CB1C
 	MOVE.b	#$FF, Player_invulnerable.w
 	MOVE.b	#$10, $1A(A6)
-	JSR	loc_0000B5A8
+	JSR	ApplyDamageToPlayer
 	SUBI.w	#$0014, $E(A6)
 	MOVE.w	#$00B2, D0
 	JSR	QueueSoundEffect
@@ -16392,11 +16395,11 @@ loc_0000EB54:
 	ADD.w	D0, D0
 	MOVEA.l	(A0,D0.w), A0
 	JSR	(A0)
-	JSR	loc_0001056A
-	JSR	loc_0001053A
+	JSR	LoadBattleGraphics
+	JSR	LoadBattleTilesToVram
 	MOVEA.l	Player_entity_ptr.w, A6
 	MOVE.b	#$FF, Is_in_battle.w
-	JSR	loc_0000B7AC
+	JSR	InitBattleEntities
 	CLR.b	Player_in_first_person_mode.w
 	JSR	UpdateEncounterPalette
 	RTS
@@ -17919,7 +17922,8 @@ loc_0000FE14:
 	BSR.w	loc_0000FE76
 	RTS
 	
-loc_0000FE2C:
+;LoadBattleHudGraphics:
+LoadBattleHudGraphics:
 	LEA	Tile_gfx_buffer.w, A2
 	LEA	loc_0009032E, A0
 	MOVE.w	#$00FF, D5
@@ -17974,7 +17978,8 @@ loc_0000FEF0:
 	BSR.w	ExecuteVdpDmaFromRam
 	RTS
 	
-loc_0000FF08:
+;LoadBattleTerrainGraphics:
+LoadBattleTerrainGraphics:
 	TST.b	Is_boss_battle.w
 	BEQ.b	loc_0000FF16
 	MOVE.w	#3, Terrain_tileset_index.w
@@ -18476,7 +18481,8 @@ QueueSoundEffect:
 loc_00010538:
 	RTS
 	
-loc_0001053A:
+;LoadBattleTilesToVram:
+LoadBattleTilesToVram:
 	LEA	loc_000235A0, A6
 	MOVE.w	Battle_type.w, D0
 	ADD.w	D0, D0
@@ -18496,7 +18502,8 @@ loc_0001054C:
 loc_00010568:
 	RTS
 	
-loc_0001056A:
+;LoadBattleGraphics:
+LoadBattleGraphics:
 	LEA	loc_00023740, A6
 	MOVE.w	Battle_type.w, D0
 	ADD.w	D0, D0
@@ -19254,7 +19261,8 @@ loc_00010F5A:
 	MOVE.b	#$FF, Window_tilemap_draw_active.w
 	RTS
 	
-loc_00010FB6:
+;DrawChurchMenuWindow:
+DrawChurchMenuWindow:
 	MOVE.w	#3, Menu_cursor_column_break.w
 	MOVE.w	#$FFFF, Menu_cursor_last_index.w
 	MOVE.w	#3, Menu_cursor_base_x.w
@@ -19328,7 +19336,8 @@ DrawMagicListBorders:
 	BSR.w	loc_00011168
 	RTS
 	
-loc_000110E2:
+;DrawEquipmentListWindow:
+DrawEquipmentListWindow:
 	MOVE.w	Possessed_equipment_length.w, D7
 	BSR.w	loc_00011106
 	MOVE.w	Possessed_equipment_length.w, D0
@@ -19770,7 +19779,8 @@ InitItemMenuCursor:
 	MOVE.w	#$000E, Menu_cursor_base_y.w
 	RTS
 	
-loc_0001162E:
+;InitSpellbookCursor:
+InitSpellbookCursor:
 	MOVE.w	#2, Menu_cursor_column_break.w
 	MOVE.w	#$FFFF, Menu_cursor_last_index.w
 	MOVE.w	#3, Menu_cursor_base_x.w
@@ -19976,7 +19986,8 @@ loc_000118F8:
 	MOVE.b	#$FF, Window_tilemap_draw_active.w	
 	RTS
 	
-loc_0001193C:
+;DrawCharacterStatsWindow:
+DrawCharacterStatsWindow:
 	MOVE.w	#2, Window_tilemap_x.w
 	MOVE.w	#2, Window_tilemap_y.w
 	MOVE.w	#$001B, Window_width.w
@@ -20635,7 +20646,8 @@ loc_000122AE:
 	BSR.w	ReadWindowToBuffer
 	RTS
 	
-loc_000122D2:
+;SavePromptMenuToBuffer:
+SavePromptMenuToBuffer:
 	LEA	Prompt_menu_tiles_buffer.w, A0
 	MOVE.w	#5, Window_tile_x.w
 	MOVE.w	#4, Window_tile_y.w
@@ -20709,7 +20721,8 @@ loc_000123C8:
 	BSR.w	ReadWindowToBuffer
 	RTS
 	
-loc_000123EA:
+;SaveShopListToBuffer:
+SaveShopListToBuffer:
 	LEA	Shop_list_tiles_buffer.w, A0
 	MOVE.w	#$000A, Window_tile_x.w
 	MOVE.w	#2, Window_tile_y.w
@@ -20737,7 +20750,8 @@ SaveLeftMenuTiles:
 	BSR.w	ReadWindowToBuffer
 	RTS
 	
-loc_00012450:
+;SaveFullDialogAreaToBuffer:
+SaveFullDialogAreaToBuffer:
 	TST.b	Dialog_active_flag.w
 	BEQ.b	loc_00012470
 	MOVEA.l	Current_actor_ptr.w, A6
@@ -20907,7 +20921,8 @@ DrawLeftMenuWindow:
 	BSR.w	DrawWindowFromBuffer
 	RTS
 	
-loc_00012694:
+;RestoreShopSubmenuFromBuffer:
+RestoreShopSubmenuFromBuffer:
 	LEA	Shop_submenu_tiles_buffer.w, A0
 	MOVE.w	#$000F, Window_tile_x.w
 	MOVE.w	#$000C, Window_tile_y.w
@@ -21221,7 +21236,8 @@ DrawMagicListWithMP:
 	BSR.w	loc_00012C3E
 	RTS
 	
-loc_00012AD2:
+;DrawPossessedEquipmentList:
+DrawPossessedEquipmentList:
 	MOVE.w	#$0011, Window_tilemap_draw_x.w
 	MOVE.w	#4, Window_tilemap_draw_y.w
 	LEA	Possessed_equipment_list.w, A2
@@ -23448,7 +23464,8 @@ loc_00015FF8:
 loc_00016010:
 	ADDQ.w	#1, Town_camera_tile_x.w
 	BRA.w	ResetTownCameraMovementState
-loc_00016018:
+;LoadTownTilemaps:
+LoadTownTilemaps:
 	LEA	loc_0001F1EC, A0
 	MOVE.w	Current_town_room.w, D0
 	ANDI.w	#$00FF, D0
@@ -23632,7 +23649,8 @@ loc_000161E8:
 	MOVE.w	D0, $82(A2)
 	RTS
 
-loc_0001622A:
+;WriteTownTilemapToVRAM:
+WriteTownTilemapToVRAM:
 	ORI	#$0700, SR
 	MOVE.l	#$40000003, VDP_control_port
 	LEA	Tilemap_buffer_plane_a, A0
@@ -24125,22 +24143,23 @@ loc_00016810:
 loc_00016830:
 	LEA	Town_tilemap_plane_a_data, A2
 	MOVEA.l	Tilemap_data_ptr_plane_a.w, A1
-	JSR	loc_0001686C(PC)
+	JSR	DecompressTilemap(PC)
 	LEA	Town_tilemap_plane_a_data, A2
 	MOVEA.l	Tilemap_data_ptr_plane_b.w, A1
-	JSR	loc_00016892(PC)
+	JSR	DecompressTilemap_WithOffset(PC)
 	RTS
 
 loc_0001684E:
 	LEA	Town_tilemap_plane_b_data, A2
 	MOVEA.l	Tilemap_data_ptr_plane_a.w, A1
-	JSR	loc_0001686C(PC)
+	JSR	DecompressTilemap(PC)
 	LEA	Town_tilemap_plane_b_data, A2
 	MOVEA.l	Tilemap_data_ptr_plane_b.w, A1
-	JSR	loc_00016892(PC)
+	JSR	DecompressTilemap_WithOffset(PC)
 	RTS
 
-loc_0001686C:
+;DecompressTilemap:
+DecompressTilemap:
 	CLR.w	D6
 	CLR.w	D0
 	CLR.w	D1
@@ -24154,7 +24173,8 @@ loc_0001686C:
 	ADD.w	D0, D0
 	MOVE.w	D0, Tilemap_buffer_size.w
 	BRA.w	loc_000168B6
-loc_00016892:
+;DecompressTilemap_WithOffset:
+DecompressTilemap_WithOffset:
 	CLR.w	D6
 	CLR.w	D0
 	CLR.w	D1
@@ -25723,7 +25743,7 @@ loc_000180DE:
 	JSR	DrawCenterMenuWindow	
 	JSR	DrawStatusHudWindow	
 	MOVE.w	#1, Spellbook_menu_state.w	
-	BRA.w	loc_0001162E	
+	BRA.w	InitSpellbookCursor	
 loc_0001810A:
 	MOVE.w	#BUTTON_BIT_C, D2
 	JSR	CheckButtonPress
@@ -25759,7 +25779,7 @@ loc_00018158:
 	JSR	DrawCenterMenuWindow	
 	JSR	DrawStatusHudWindow	
 	MOVE.w	#1, Spellbook_menu_state.w	
-	JSR	loc_0001162E	
+	JSR	InitSpellbookCursor	
 	RTS
 	
 loc_000181A4:
@@ -25838,7 +25858,7 @@ loc_000182A4:
 	JSR	DrawCenterMenuWindow
 	JSR	DrawStatusHudWindow
 	MOVE.w	#1, Spellbook_menu_state.w
-	BRA.w	loc_0001162E
+	BRA.w	InitSpellbookCursor
 loc_000182D0:
 	MOVE.w	#BUTTON_BIT_C, D2
 	JSR	CheckButtonPress
@@ -25874,7 +25894,7 @@ loc_0001831E:
 	JSR	DrawCenterMenuWindow	
 	JSR	DrawStatusHudWindow	
 	MOVE.w	#1, Spellbook_menu_state.w	
-	JSR	loc_0001162E	
+	JSR	InitSpellbookCursor	
 	RTS
 	
 loc_00018368:
@@ -25967,7 +25987,7 @@ loc_00018498:
 	BSR.w	DrawCenterMenuWindow
 	BSR.w	DrawStatusHudWindow
 	MOVE.w	#1, Spellbook_menu_state.w
-	BRA.w	loc_0001162E
+	BRA.w	InitSpellbookCursor
 	dc.b	$4E, $75 
 loc_000184C2:
 	MOVE.w	#BUTTON_BIT_C, D2
@@ -29590,7 +29610,7 @@ ExplanationStr:
 loc_0001B6B6:
 	TST.b	Script_text_complete.w
 	BEQ.b	loc_0001B6D2
-	JSR	loc_000123EA
+	JSR	SaveShopListToBuffer
 	JSR	loc_00011274
 	CLR.w	Shop_selected_index.w
 	ADDQ.w	#1, Dialogue_state.w
@@ -30052,7 +30072,7 @@ loc_0001BDF8:
 loc_0001BDFA:
 	TST.b	Script_text_complete.w
 	BEQ.b	loc_0001BE16
-	JSR	loc_000123EA
+	JSR	SaveShopListToBuffer
 	JSR	loc_0001119A
 	CLR.w	Shop_selected_index.w
 	ADDQ.w	#1, Dialogue_state.w
@@ -30316,8 +30336,8 @@ loc_0001C1B2:
 	MOVE.w	Possessed_items_length.w, D0
 	BRA.b	loc_0001C1E4
 loc_0001C1CC:
-	JSR	loc_000110E2
-	JSR	loc_00012AD2
+	JSR	DrawEquipmentListWindow
+	JSR	DrawPossessedEquipmentList
 	MOVE.l	#Possessed_equipment_list, Active_inventory_list_ptr.w
 	MOVE.w	Possessed_equipment_length.w, D0
 loc_0001C1E4:
@@ -30869,7 +30889,7 @@ loc_0001C96A:
 	TST.b	Script_text_complete.w
 	BEQ.b	loc_0001C990
 	JSR	loc_000123C8
-	JSR	loc_00010FB6
+	JSR	DrawChurchMenuWindow
 	MOVE.w	#$00A0, D0
 	JSR	QueueSoundEffect
 	CLR.w	Church_service_selection.w
@@ -31156,15 +31176,15 @@ loc_0001CD88:
 	JSR	CheckButtonPress
 	BEQ.b	loc_0001CDEA
 	JSR	loc_0001059C
-	JSR	loc_00012694
+	JSR	RestoreShopSubmenuFromBuffer
 	JSR	ResetScriptAndInitDialogue
 	PRINT 	GameSavedStr
 	MOVE.w	#$23, Dialogue_state.w
 	RTS
 
 loc_0001CDC8:
-	JSR	loc_00012694	
-	JSR	loc_00010FB6	
+	JSR	RestoreShopSubmenuFromBuffer	
+	JSR	DrawChurchMenuWindow	
 	MOVE.w	#$00A0, D0	
 	JSR	QueueSoundEffect	
 	CLR.w	Church_service_selection.w	
@@ -31889,8 +31909,8 @@ loc_0001D6CE:
 	JSR	DrawMenuCursor
 	MOVE.w	#$00A0, D0
 	JSR	QueueSoundEffect
-	JSR	loc_00012450
-	JSR	loc_0001193C
+	JSR	SaveFullDialogAreaToBuffer
+	JSR	DrawCharacterStatsWindow
 	ADDQ.w	#1, Equip_list_menu_state.w
 	RTS
 
@@ -33111,8 +33131,8 @@ loc_0001E818:
 	MOVE.w	Possessed_items_length.w, D0
 	BRA.w	loc_0001E84C
 loc_0001E834:
-	JSR	loc_000110E2
-	JSR	loc_00012AD2
+	JSR	DrawEquipmentListWindow
+	JSR	DrawPossessedEquipmentList
 	MOVE.l	#Possessed_equipment_list, Active_inventory_list_ptr.w
 	MOVE.w	Possessed_equipment_length.w, D0
 loc_0001E84C:
