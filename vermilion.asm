@@ -899,7 +899,7 @@ loc_000015B8:
 
 loc_000015C0:
 	MOVE.w	Dialog_selection.w, Menu_cursor_index.w
-	JSR	loc_000127EA
+	JSR	HandleMenuInput
 	MOVE.w	Menu_cursor_index.w, Dialog_selection.w
 	BSR.w	loc_00003304
 	BNE.b	loc_000015E6
@@ -2867,7 +2867,7 @@ loc_000031A2:
 loc_000031D4:
 	MOVE.w	Main_menu_selection.w, Menu_cursor_index.w	
 	MOVE.w	#$6000, Script_tile_attrs.w	
-	JSR	loc_000127EA	
+	JSR	HandleMenuInput	
 	MOVE.w	Menu_cursor_index.w, Main_menu_selection.w	
 loc_000031EC:
 	RTS
@@ -2922,7 +2922,7 @@ loc_0000327A:
 loc_00003294:
 	MOVE.w	Main_menu_selection.w, Menu_cursor_index.w
 	MOVE.w	#$6000, Script_tile_attrs.w
-	JSR	loc_000127EA
+	JSR	HandleMenuInput
 	MOVE.w	Menu_cursor_index.w, Main_menu_selection.w
 loc_000032AC:
 	RTS
@@ -18615,7 +18615,7 @@ loc_00010794:
 	
 loc_000107A2:
 	MOVE.w	Dialog_selection.w, Menu_cursor_index.w
-	JSR	loc_000127EA
+	JSR	HandleMenuInput
 	MOVE.w	Menu_cursor_index.w, Dialog_selection.w
 loc_000107B4:
 	RTS
@@ -20913,39 +20913,42 @@ loc_000127C2:
 	SWAP	D5
 	RTS
 	
-loc_000127EA:
+; HandleMenuInput
+; Main menu input handler - processes D-pad input for cursor movement
+HandleMenuInput:
 	MOVE.b	$FFFFC408.w, D2
 	MOVE.b	$FFFFC409.w, D3
 	EOR.b	D2, D3
-	BEQ.w	loc_0001284A
+	BEQ.w	BlinkMenuCursor
 	ANDI.w	#$000F, D2
-	BEQ.w	loc_0001284A
+	BEQ.w	BlinkMenuCursor
 	MOVE.w	#$00A9, D0
 	JSR	QueueSoundEffect
 	BTST.l	#0, D3
 	BEQ.b	loc_0001281A
 	BTST.l	#0, D2
 	BEQ.b	loc_0001281A
-	BRA.w	loc_0001286C
+	BRA.w	MenuCursorUp
 loc_0001281A:
 	BTST.l	#1, D3
 	BEQ.b	loc_0001282A
 	BTST.l	#1, D2
 	BEQ.b	loc_0001282A
-	BRA.w	loc_00012888
+	BRA.w	MenuCursorDown
 loc_0001282A:
 	BTST.l	#2, D3
 	BEQ.b	loc_0001283A
 	BTST.l	#2, D2
 	BEQ.b	loc_0001283A
-	BRA.w	loc_000128A6
+	BRA.w	MenuCursorLeft
 loc_0001283A:
 	BTST.l	#3, D3
-	BEQ.b	loc_0001284A
+	BEQ.b	BlinkMenuCursor
 	BTST.l	#3, D2
-	BEQ.b	loc_0001284A
-	BRA.w	loc_000128C4
-loc_0001284A:
+	BEQ.b	BlinkMenuCursor
+	BRA.w	MenuCursorRight
+; BlinkMenuCursor
+BlinkMenuCursor:
 	ADDQ.w	#1, Cursor_blink_timer.w
 	MOVE.w	Cursor_blink_timer.w, D0
 	MOVE.w	D0, D1
@@ -20959,7 +20962,9 @@ loc_0001284A:
 loc_0001286A:
 	RTS
 	
-loc_0001286C:
+; loc_0001286C
+; Handle UP button - move cursor up in menu
+MenuCursorUp:
 	MOVE.w	Menu_cursor_index.w, D0
 	BLE.b	loc_00012886
 	SUB.w	$FFFFC23A.w, D0
@@ -20971,7 +20976,9 @@ loc_0001286C:
 loc_00012886:
 	RTS
 	
-loc_00012888:
+; loc_00012888
+; Handle DOWN button - move cursor down in menu
+MenuCursorDown:
 	MOVE.w	Menu_cursor_index.w, D0
 	CMP.w	$FFFFC23A.w, D0
 	BEQ.b	loc_000128A4
@@ -20983,7 +20990,9 @@ loc_00012888:
 loc_000128A4:
 	RTS
 	
-loc_000128A6:
+; loc_000128A6
+; Handle LEFT button - move cursor to left column
+MenuCursorLeft:
 	MOVE.w	Menu_cursor_index.w, D0
 	CMP.w	$FFFFC23A.w, D0
 	BLE.b	loc_000128C2
@@ -20995,7 +21004,9 @@ loc_000128A6:
 loc_000128C2:
 	RTS
 	
-loc_000128C4:
+; loc_000128C4
+; Handle RIGHT button - move cursor to right column
+MenuCursorRight:
 	MOVE.w	Menu_cursor_index.w, D0
 	CMP.w	$FFFFC23A.w, D0
 	BGT.b	loc_000128EC
@@ -25535,7 +25546,7 @@ loc_0001801C:
 loc_0001801E:
 	MOVE.w	Item_menu_action_mode.w, Menu_cursor_index.w
 	MOVE.w	#$6000, Script_tile_attrs.w
-	JSR	loc_000127EA
+	JSR	HandleMenuInput
 	MOVE.w	Menu_cursor_index.w, Item_menu_action_mode.w
 	RTS
 
@@ -25618,7 +25629,7 @@ loc_0001810A:
 loc_0001813E:
 	MOVE.w	Magic_list_cursor_index.w, Menu_cursor_index.w
 	MOVE.w	#$6000, Script_tile_attrs.w
-	JSR	loc_000127EA
+	JSR	HandleMenuInput
 	MOVE.w	Menu_cursor_index.w, Magic_list_cursor_index.w
 	RTS
 
@@ -25688,7 +25699,7 @@ loc_000181DC:
 loc_00018258:
 	MOVE.w	Dialog_selection.w, Menu_cursor_index.w
 	MOVE.w	#$6000, Script_tile_attrs.w
-	JSR	loc_000127EA
+	JSR	HandleMenuInput
 	MOVE.w	Menu_cursor_index.w, Dialog_selection.w
 	RTS
 
@@ -25733,7 +25744,7 @@ loc_000182D0:
 loc_00018304:
 	MOVE.w	Magic_list_cursor_index.w, Menu_cursor_index.w
 	MOVE.w	#$6000, Script_tile_attrs.w
-	JSR	loc_000127EA
+	JSR	HandleMenuInput
 	MOVE.w	Menu_cursor_index.w, Magic_list_cursor_index.w
 	RTS
 
@@ -25809,7 +25820,7 @@ loc_00018422:
 loc_00018432:
 	MOVE.w	Dialog_selection.w, Menu_cursor_index.w
 	MOVE.w	#$6000, Script_tile_attrs.w
-	JSR	loc_000127EA
+	JSR	HandleMenuInput
 	MOVE.w	Menu_cursor_index.w, Dialog_selection.w
 	RTS
 
@@ -25870,7 +25881,7 @@ loc_000184C2:
 loc_0001850E:
 	MOVE.w	Magic_list_cursor_index.w, Menu_cursor_index.w
 	MOVE.w	#$6000, Script_tile_attrs.w
-	JSR	loc_000127EA
+	JSR	HandleMenuInput
 	MOVE.w	Menu_cursor_index.w, Magic_list_cursor_index.w
 	RTS
 
@@ -25954,7 +25965,7 @@ loc_00018642:
 	MOVE.w	#$000A, Menu_cursor_second_column_x.w
 	MOVE.w	Aries_selected_town.w, Menu_cursor_index.w
 	MOVE.w	#$6000, Script_tile_attrs.w
-	JSR	loc_000127EA
+	JSR	HandleMenuInput
 	MOVE.w	Menu_cursor_index.w, Aries_selected_town.w
 	RTS
 
@@ -28085,7 +28096,7 @@ loc_0001A3EA:
 loc_0001A3EC:
 	MOVE.w	Item_menu_action_mode.w, Menu_cursor_index.w
 	MOVE.w	#$6000, Script_tile_attrs.w
-	JSR	loc_000127EA
+	JSR	HandleMenuInput
 	MOVE.w	Menu_cursor_index.w, Item_menu_action_mode.w
 	RTS
 
@@ -28169,7 +28180,7 @@ loc_0001A4DC:
 loc_0001A512:
 	MOVE.w	Selected_item_index.w, Menu_cursor_index.w
 	MOVE.w	#$6000, Script_tile_attrs.w
-	JSR	loc_000127EA
+	JSR	HandleMenuInput
 	MOVE.w	Menu_cursor_index.w, Selected_item_index.w
 	RTS
 
@@ -28244,7 +28255,7 @@ loc_0001A636:
 loc_0001A63C:
 	MOVE.w	Dialog_selection.w, Menu_cursor_index.w
 	MOVE.w	#$6000, Script_tile_attrs.w
-	JSR	loc_000127EA
+	JSR	HandleMenuInput
 	MOVE.w	Menu_cursor_index.w, Dialog_selection.w
 	RTS
 
@@ -28347,7 +28358,7 @@ loc_0001A794:
 loc_0001A7B8:
 	MOVE.w	Selected_item_index.w, Menu_cursor_index.w
 	MOVE.w	#$6000, Script_tile_attrs.w
-	JSR	loc_000127EA
+	JSR	HandleMenuInput
 	MOVE.w	Menu_cursor_index.w, Selected_item_index.w
 	RTS
 
@@ -29515,7 +29526,7 @@ loc_0001B73A:
 
 loc_0001B770:
 	MOVE.w	$FFFFC4A0.w, Menu_cursor_index.w
-	JSR	loc_000127EA
+	JSR	HandleMenuInput
 	MOVE.w	Menu_cursor_index.w, $FFFFC4A0.w
 	RTS
 
@@ -29663,7 +29674,7 @@ loc_0001BAA4:
 
 loc_0001BADA:
 	MOVE.w	Dialog_selection.w, Menu_cursor_index.w
-	JSR	loc_000127EA
+	JSR	HandleMenuInput
 	MOVE.w	Menu_cursor_index.w, Dialog_selection.w
 	RTS
 
@@ -29822,7 +29833,7 @@ loc_0001BC80:
 
 loc_0001BCA4:
 	MOVE.w	Dialog_selection.w, Menu_cursor_index.w
-	JSR	loc_000127EA
+	JSR	HandleMenuInput
 	MOVE.w	Menu_cursor_index.w, Dialog_selection.w
 	RTS
 
@@ -29888,7 +29899,7 @@ loc_0001BD80:
 	JMP	ResetScriptAndInitDialogue
 loc_0001BD86:
 	MOVE.w	Shop_action_selection.w, Menu_cursor_index.w
-	JSR	loc_000127EA
+	JSR	HandleMenuInput
 	MOVE.w	Menu_cursor_index.w, Shop_action_selection.w
 loc_0001BD98:
 	RTS
@@ -30000,7 +30011,7 @@ loc_0001BE6E:
 
 loc_0001BF0E:
 	MOVE.w	$FFFFC4A0.w, Menu_cursor_index.w
-	JSR	loc_000127EA
+	JSR	HandleMenuInput
 	MOVE.w	Menu_cursor_index.w, $FFFFC4A0.w
 	RTS
 
@@ -30093,7 +30104,7 @@ loc_0001C030:
 	
 loc_0001C068:
 	MOVE.w	Dialog_selection.w, Menu_cursor_index.w
-	JSR	loc_000127EA
+	JSR	HandleMenuInput
 	MOVE.w	Menu_cursor_index.w, Dialog_selection.w
 	RTS
 
@@ -30126,7 +30137,7 @@ loc_0001C0C0:
 	JSR	CheckButtonPress
 	BNE.b	loc_0001C0F4
 	MOVE.w	Dialog_selection.w, Menu_cursor_index.w
-	JSR	loc_000127EA
+	JSR	HandleMenuInput
 	MOVE.w	Menu_cursor_index.w, Dialog_selection.w
 	RTS
 
@@ -30308,7 +30319,7 @@ loc_0001C358:
 
 loc_0001C36C:
 	MOVE.w	$FFFFC4A0.w, Menu_cursor_index.w
-	JSR	loc_000127EA
+	JSR	HandleMenuInput
 	MOVE.w	Menu_cursor_index.w, $FFFFC4A0.w
 	RTS
 
@@ -30412,7 +30423,7 @@ loc_0001C4B0:
 	
 loc_0001C4E6:
 	MOVE.w	Dialog_selection.w, Menu_cursor_index.w
-	JSR	loc_000127EA
+	JSR	HandleMenuInput
 	MOVE.w	Menu_cursor_index.w, Dialog_selection.w
 	RTS
 
@@ -30432,7 +30443,7 @@ loc_0001C50E:
 	JSR	CheckButtonPress
 	BNE.b	loc_0001C542
 	MOVE.w	Dialog_selection.w, Menu_cursor_index.w
-	JSR	loc_000127EA
+	JSR	HandleMenuInput
 	MOVE.w	Menu_cursor_index.w, Dialog_selection.w
 	RTS
 
@@ -30527,7 +30538,7 @@ loc_0001C672:
 	JMP	ResetScriptAndInitDialogue
 loc_0001C684:
 	MOVE.w	Dialog_selection.w, Menu_cursor_index.w
-	JSR	loc_000127EA
+	JSR	HandleMenuInput
 	MOVE.w	Menu_cursor_index.w, Dialog_selection.w
 	RTS
 
@@ -30676,7 +30687,7 @@ loc_0001C868:
 
 loc_0001C87C:
 	MOVE.w	Dialog_selection.w, Menu_cursor_index.w
-	JSR	loc_000127EA
+	JSR	HandleMenuInput
 	MOVE.w	Menu_cursor_index.w, Dialog_selection.w
 	RTS
 
@@ -30831,7 +30842,7 @@ loc_0001CACA:
 	JMP	ResetScriptAndInitDialogue
 loc_0001CAD0:
 	MOVE.w	Church_service_selection.w, Menu_cursor_index.w
-	JSR	loc_000127EA
+	JSR	HandleMenuInput
 	MOVE.w	Menu_cursor_index.w, Church_service_selection.w
 loc_0001CAE2:
 	RTS
@@ -30936,7 +30947,7 @@ loc_0001CC2C:
 	
 loc_0001CC46:
 	MOVE.w	Dialog_selection.w, Menu_cursor_index.w
-	JSR	loc_000127EA
+	JSR	HandleMenuInput
 	MOVE.w	Menu_cursor_index.w, Dialog_selection.w
 	RTS
 
@@ -31007,7 +31018,7 @@ loc_0001CD3E:
 	JMP	ResetScriptAndInitDialogue	
 loc_0001CD56:
 	MOVE.w	Dialog_selection.w, Menu_cursor_index.w
-	JSR	loc_000127EA
+	JSR	HandleMenuInput
 	MOVE.w	Menu_cursor_index.w, Dialog_selection.w
 	RTS
 
@@ -31048,7 +31059,7 @@ loc_0001CDC8:
 	
 loc_0001CDEA:
 	MOVE.w	Dialog_selection.w, Menu_cursor_index.w
-	JSR	loc_000127EA
+	JSR	HandleMenuInput
 	MOVE.w	Menu_cursor_index.w, Dialog_selection.w
 loc_0001CDFC:
 	RTS
@@ -31272,7 +31283,7 @@ loc_0001D05C:
 	JSR	CheckButtonPress
 	BNE.b	loc_0001D0C0
 	MOVE.w	Ready_equipment_selection.w, Menu_cursor_index.w
-	JSR	loc_000127EA
+	JSR	HandleMenuInput
 	MOVE.w	Menu_cursor_index.w, Ready_equipment_selection.w
 	RTS
 
@@ -31314,7 +31325,7 @@ loc_0001D104:
 	JSR	CheckButtonPress
 	BNE.b	loc_0001D156
 	MOVE.w	Ready_equipment_category.w, Menu_cursor_index.w
-	JSR	loc_000127EA
+	JSR	HandleMenuInput
 	MOVE.w	Menu_cursor_index.w, Ready_equipment_category.w
 	RTS
 
@@ -31360,7 +31371,7 @@ loc_0001D1B8:
 	JSR	CheckButtonPress
 	BNE.b	loc_0001D216
 	MOVE.w	Ready_equipment_cursor_index.w, Menu_cursor_index.w
-	JSR	loc_000127EA
+	JSR	HandleMenuInput
 	MOVE.w	Menu_cursor_index.w, Ready_equipment_cursor_index.w
 	RTS
 
@@ -31474,7 +31485,7 @@ loc_0001D370:
 	JSR	CheckButtonPress
 	BNE.b	loc_0001D3BA
 	MOVE.w	Ready_equipment_category.w, Menu_cursor_index.w
-	JSR	loc_000127EA
+	JSR	HandleMenuInput
 	MOVE.w	Menu_cursor_index.w, Ready_equipment_category.w
 	RTS
 
@@ -32962,7 +32973,7 @@ loc_0001E766:
 loc_0001E7C4:
 	MOVE.w	Dialog_selection.w, Menu_cursor_index.w
 	MOVE.w	#$6000, Script_tile_attrs.w
-	JSR	loc_000127EA
+	JSR	HandleMenuInput
 	MOVE.w	Menu_cursor_index.w, Dialog_selection.w
 	RTS
 	
@@ -33026,7 +33037,7 @@ loc_0001E896:
 loc_0001E8C8:
 	MOVE.w	Selected_item_index.w, Menu_cursor_index.w
 	MOVE.w	#$6000, Script_tile_attrs.w
-	JSR	loc_000127EA
+	JSR	HandleMenuInput
 	MOVE.w	Menu_cursor_index.w, Selected_item_index.w
 	RTS
 	
@@ -33121,7 +33132,7 @@ loc_0001EA38:
 loc_0001EA40:
 	MOVE.w	Dialog_selection.w, Menu_cursor_index.w
 	MOVE.w	#$6000, Script_tile_attrs.w
-	JSR	loc_000127EA
+	JSR	HandleMenuInput
 	MOVE.w	Menu_cursor_index.w, Dialog_selection.w
 	RTS
 	
