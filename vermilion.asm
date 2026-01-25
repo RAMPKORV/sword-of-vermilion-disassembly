@@ -160,11 +160,13 @@ InitMenuObjects:
 	LEA	Object_table_base.w, A0
 	LEA	MenuObjectInitTable, A1
 	BRA.w	InitObjectsFromTable
-loc_0000056A:
+;InitGameplayObjects:
+InitGameplayObjects:
 	LEA	Object_table_base.w, A0
 	LEA	GameplayObjectInitTable, A1
 	BRA.w	InitObjectsFromTable
-loc_00000578:
+;InitBattleObjects:
+InitBattleObjects:
 	LEA	Object_table_base.w, A0
 	LEA	loc_000008AC, A1
 	BRA.w	InitObjectsFromTable
@@ -555,7 +557,7 @@ loc_00001102:
 loc_00001112:
 	TST.b	Sprite_dma_update_pending.w
 	BEQ.b	loc_00001122
-	JSR	loc_00003A92
+	JSR	UpdatePlayerSpriteDMA
 	CLR.b	Sprite_dma_update_pending.w
 loc_00001122:
 	BSR.w	loc_00001448
@@ -859,7 +861,7 @@ ProgramState_01
 	BEQ.b	loc_0000155A
 	MOVE.b	#$FF, Fade_out_lines_mask.w
 	MOVE.l	#HBlankObjectHandler, $12(A5)
-	BSR.w	loc_00003304
+	BSR.w	DecrementTimerBCD
 	BNE.b	loc_0000155A
 loc_00001540:
 	MOVE.w	#PROGRAM_STATE_02, Program_state.w
@@ -905,7 +907,7 @@ loc_000015C0:
 	MOVE.w	Dialog_selection.w, Menu_cursor_index.w
 	JSR	HandleMenuInput
 	MOVE.w	Menu_cursor_index.w, Dialog_selection.w
-	BSR.w	loc_00003304
+	BSR.w	DecrementTimerBCD
 	BNE.b	loc_000015E6
 	MOVE.w	#PROGRAM_STATE_04, Program_state.w
 	MOVE.b	#$FF, Fade_out_lines_mask.w
@@ -1837,7 +1839,7 @@ loc_00002324:
 	JSR	ClearScrollData
 	MOVE.w	Player_direction.w, Saved_player_direction.w
 	BSR.w	ClearAllEnemyEntities
-	JSR	loc_0000056A
+	JSR	InitGameplayObjects
 	CLR.w	Sprite_attr_count.w
 	JSR	FlushSpriteAttributesToVDP
 	CLR.b	Is_boss_battle.w
@@ -1865,11 +1867,11 @@ loc_00002324:
 	ASR.l	#3, D0
 	ADDI.l	#$00000180, D0
 	MOVE.l	D0, $20(A6)
-	JSR	loc_00008ECA
+	JSR	InitializeEncounter
 	MOVE.w	Readied_magic.w, D0
 	BLT.b	loc_000023EA
 	ANDI.w	#$00FF, D0
-	JSR	loc_0000F8A0
+	JSR	LoadMagicGraphics
 loc_000023EA:
 	JSR	DisplayPlayerMaxHpMp
 	JSR	DisplayReadiedMagicName
@@ -2035,12 +2037,12 @@ loc_00002620:
 	CLR.w	Camera_scroll_x.w
 	CLR.w	Camera_scroll_y.w
 	BSR.w	ClearAllEnemyEntities
-	JSR	loc_00000578
+	JSR	InitBattleObjects
 	CLR.w	Sprite_attr_count.w
 	JSR	FlushSpriteAttributesToVDP
 	JSR	loc_0000FFCE
 	BSR.w	loc_00003064
-	JSR	loc_00008688
+	JSR	ProcessAllObjectSlots
 	MOVEA.l	Player_entity_ptr.w, A6
 	MOVE.l	#loc_00004340, $2(A6)
 	ADDQ.w	#1, Gameplay_substate.w
@@ -2201,7 +2203,7 @@ loc_00002868:
 	JSR	GetRandomNumber
 	ANDI.w	#3, D0
 	MOVE.w	D0, Random_number.w
-	JSR	loc_0000F8D2
+	JSR	LoadEncounterTypeGraphics
 	MOVE.l	#$45600002, D7
 	MOVE.w	#$03FF, D6
 	MOVE.b	#0, D5
@@ -2321,7 +2323,7 @@ loc_000029FA:
 	TST.b	Fade_out_lines_mask.w
 	BNE.b	loc_00002A50
 	BSR.w	loc_000035FA
-	JSR	loc_00004384
+	JSR	InitFirstPersonView
 	MOVE.w	#$16, Gameplay_substate.w
 	MOVE.w	#$0036, Palette_line_0_index.w
 	TST.b	Cave_light_active.w
@@ -2962,7 +2964,8 @@ GetCurrentTileType:
 	MOVE.w	D0, Current_tile_type.w
 	RTS
 
-loc_00003304:
+;DecrementTimerBCD:
+DecrementTimerBCD:
 	SUBQ.w	#1, Timer_frame_counter.w
 	BGE.b	loc_00003322
 	MOVE.w	Timer_frames_per_second.w, Timer_frame_counter.w
@@ -3098,12 +3101,12 @@ loc_00003400:
 	RTS
 
 loc_0000340C:
-	JSR	loc_000061AE
+	JSR	UpdateCompassDisplay
 	JSR	DisplayCompassToVRAM
 	RTS
 
 loc_0000341A:
-	JSR	loc_000060F6
+	JSR	DisplayKimsToVRAM
 	JSR	DisplayCompassToVRAM
 	RTS
 
@@ -3635,7 +3638,8 @@ loc_00003A82:
 loc_00003A90:
 	RTS
 
-loc_00003A92:
+;UpdatePlayerSpriteDMA:
+UpdatePlayerSpriteDMA:
 	TST.b	Is_boss_battle.w
 	BNE.w	loc_00003B44
 	TST.b	Is_in_battle.w
@@ -4225,7 +4229,8 @@ loc_00004340:
 	CLR.b	Player_rotate_counter_clockwise_in_overworld.w
 	CLR.b	Player_rotate_clockwise_in_overworld.w
 	BSR.w	loc_0000622A
-loc_00004384:
+;InitFirstPersonView:
+InitFirstPersonView:
 	BSR.w	loc_000052D0
 	BSR.w	loc_00005304
 	MOVE.w	#0, First_person_wall_frame.w
@@ -4650,10 +4655,10 @@ loc_000048C4:
 	BSR.w	DisplayCompassToVRAM
 	TST.b	Is_in_cave.w
 	BNE.b	loc_000048EA
-	BSR.w	loc_000061AE
+	BSR.w	UpdateCompassDisplay
 	BRA.b	loc_000048EE
 loc_000048EA:
-	BSR.w	loc_000060F6
+	BSR.w	DisplayKimsToVRAM
 loc_000048EE:
 	BSR.w	UpdateAreaVisibility
 	BSR.w	loc_0000457E
@@ -4668,10 +4673,10 @@ loc_000048F8:
 	BSR.w	DisplayCompassToVRAM
 	TST.b	Is_in_cave.w
 	BNE.b	loc_0000491E
-	BSR.w	loc_000061AE
+	BSR.w	UpdateCompassDisplay
 	BRA.b	loc_00004922
 loc_0000491E:
-	BSR.w	loc_000060F6
+	BSR.w	DisplayKimsToVRAM
 loc_00004922:
 	BSR.w	UpdateAreaVisibility
 	BSR.w	loc_0000457E
@@ -6282,7 +6287,8 @@ loc_000060D6:
 	ANDI	#$F8FF, SR
 	RTS
 
-loc_000060F6:
+;DisplayKimsToVRAM:
+DisplayKimsToVRAM:
 	LEA	loc_0006CED2, A0
 	BRA.w	loc_00006126
 loc_00006100:
@@ -6339,7 +6345,8 @@ loc_0000618E:
 	ANDI	#$F8FF, SR
 	RTS
 
-loc_000061AE:
+;UpdateCompassDisplay:
+UpdateCompassDisplay:
 	MOVE.w	Player_direction.w, D0
 	CMPI.w	#2, D0
 	BEQ.b	loc_000061C8
@@ -8355,7 +8362,7 @@ loc_00007C30:
 	BSR.w	SetRandomDirection
 	CLR.b	$25(A5)
 	MOVE.w	#4, D7
-	BSR.w	loc_00008518
+	BSR.w	CheckRingsCollected
 	BEQ.b	loc_00007C50
 	MOVE.l	#GetAllRingsStr, $1C(A5)	
 	BRA.b	loc_00007C66	
@@ -8511,7 +8518,7 @@ loc_00007E54:
 	TST.b	Knute_informed_of_swaffham_ruin.w
 	BEQ.w	loc_00007EB0
 	MOVE.w	#4, D7
-	BSR.w	loc_00008518
+	BSR.w	CheckRingsCollected
 	BNE.w	loc_00007EB0
 	MOVE.l	#TsarkonFledEastwardStr, $1C(A5)
 	TST.b	Thule_key_received.w
@@ -9122,7 +9129,8 @@ loc_00008512:
 loc_00008516:
 	RTS
 
-loc_00008518: ; Check that we have D7 consecutive number of flags set starting from A0
+;CheckRingsCollected:
+CheckRingsCollected: ; Check that we have D7 consecutive number of flags set starting from A0
 	LEA	Rings_collected.w, A0
 loc_0000851C:
 	TST.b	(A0)+
@@ -9149,7 +9157,8 @@ loc_00008542:
 	DBF	D7, loc_0000853A
 	RTS
 
-loc_00008550:
+;RestoreRingsFromBackup:
+RestoreRingsFromBackup:
 	LEA	Rings_collected.w, A0
 	MOVE.w	#7, D7
 loc_00008558:
@@ -9209,7 +9218,8 @@ loc_00008668: ; Parma soldiers detection area
 	dc.w -3, 1, -3, 3
 	dc.w -1, 3, -3, 3
 
-loc_00008688:
+;ProcessAllObjectSlots:
+ProcessAllObjectSlots:
 	MOVEA.l	Enemy_list_ptr.w, A6
 	BSR.w	loc_00008722
 	MOVEA.l	Object_slot_01_ptr.w, A6
@@ -9780,7 +9790,8 @@ loc_00008EBC:
 	BSET.b	#7, (A4)
 	RTS
 
-loc_00008ECA:
+;InitializeEncounter:
+InitializeEncounter:
 	LEA	Enemy_position_indices.w, A1
 	CLR.w	D0
 	MOVE.w	#7, D7
@@ -9867,10 +9878,11 @@ loc_00009006:
 	DBF	D6, loc_00009006
 	DBF	D7, loc_00008F5A
 	JSR	LoadPalettesFromTable
-	JSR	loc_0000F806
+	JSR	LoadEncounterGraphics
 	RTS
 
-loc_00009020:
+;ClampProjectileToScreenBounds:
+ClampProjectileToScreenBounds:
 	MOVE.l	$E(A5), D0
 	SUB.l	$32(A5), D0
 	SWAP	D0
@@ -11327,7 +11339,7 @@ loc_0000A420:
 	
 loc_0000A446:
 	JSR	CalculateVelocityFromAngle(PC)
-	JSR	loc_00009020(PC)
+	JSR	ClampProjectileToScreenBounds(PC)
 	BTST.b	#7, (A5)
 	BEQ.b	loc_0000A476
 	JSR	HandlePlayerTakeDamage(PC)
@@ -12928,7 +12940,7 @@ loc_0000BB02:
 	BSR.w	loc_0000BF14
 	BSR.w	CheckEntityPlayerCollisionAndDamage
 	MOVE.w	#$00E0, D1
-	BSR.w	loc_0000CAE8
+	BSR.w	CheckPlayerDamageAndKnockback
 	RTS
 	
 loc_0000BB2E:
@@ -13697,7 +13709,7 @@ loc_0000C5D4:
 	JSR	AddSpriteToDisplayList
 	BSR.w	loc_0000CD3C
 	MOVE.w	#$00C8, D1
-	BSR.w	loc_0000CAE8
+	BSR.w	CheckPlayerDamageAndKnockback
 	RTS
 	
 loc_0000C640:
@@ -14037,7 +14049,8 @@ loc_0000CAE0:
 loc_0000CAE6:
 	RTS
 
-loc_0000CAE8:
+;CheckPlayerDamageAndKnockback:
+CheckPlayerDamageAndKnockback:
 	MOVEA.l	Player_entity_ptr.w, A6
 	MOVE.w	$E(A6), D0
 	CMP.w	D1, D0
@@ -14128,7 +14141,8 @@ loc_0000CBEA:
 	ANDI	#$F8FF, SR
 	RTS
 
-loc_0000CC0C:
+;DrawBossHealthBar:
+DrawBossHealthBar:
 	ORI	#$0700, SR
 	MOVE.l	#$40000003, D5
 	LEA	loc_00077FD4, A0
@@ -14400,7 +14414,7 @@ loc_0000CF76:
 	
 loc_0000CF7E:
 	MOVE.b	#$FF, Asti_monster_defeated.w
-	JSR	loc_00008550
+	JSR	RestoreRingsFromBackup
 	MOVE.b	#$FF, Asti_monster_battle_complete.w
 	RTS
 	
@@ -14646,8 +14660,8 @@ loc_0000D2F2:
 	ADD.w	D0, D0
 	LEA	loc_0000D31C, A0
 	JSR	(A0,D0.w)
-	JSR	loc_0000D644(PC)
-	JSR	loc_0000D74C(PC)
+	JSR	UpdateBossFlashAndDamage(PC)
+	JSR	SpawnBossChildObjects(PC)
 	JSR	CheckEntityPlayerCollisionAndDamage(PC)
 loc_0000D31A:
 	RTS
@@ -14882,7 +14896,8 @@ loc_0000D612:
 	dc.b	$00, $00, $00, $08, $00, $10, $00, $18, $00, $20, $00, $00, $00, $08, $00, $10, $00, $18, $00, $20, $00, $00, $00, $08, $00, $10, $00, $18, $00, $20, $00, $00 
 	dc.b	$00, $08, $00, $10, $00, $18, $00, $20, $00, $00, $00, $08, $00, $10, $00, $18, $00, $20 
 
-loc_0000D644:
+;UpdateBossFlashAndDamage:
+UpdateBossFlashAndDamage:
 	TST.w	$3C(A5)
 	BLE.b	loc_0000D65E
 	SUBQ.w	#1, $3C(A5)
@@ -14958,7 +14973,8 @@ loc_0000D744:
 loc_0000D74A:
 	RTS
 
-loc_0000D74C:
+;SpawnBossChildObjects:
+SpawnBossChildObjects:
 	MOVE.w	$44(A5), D0
 	MOVEA.l	Object_slot_01_ptr.w, A6
 	MOVE.w	#6, D7
@@ -15310,7 +15326,7 @@ loc_0000DC1C:
 	MOVE.l	#loc_0000DC60, $2(A5)
 loc_0000DC54:
 	MOVE.w	#$00D8, D1
-	JSR	loc_0000CAE8
+	JSR	CheckPlayerDamageAndKnockback
 	RTS
 	
 loc_0000DC60:
@@ -16519,7 +16535,7 @@ loc_0000ED16:
 	CLR.b	Boss_defeated_flag.w
 	MOVEA.l	Enemy_list_ptr.w, A6
 	BSET.b	#7, (A6)
-	JSR	loc_0000CC0C
+	JSR	DrawBossHealthBar
 	MOVE.w	#100, $E(A6)
 	MOVE.w	#50, $12(A6)
 	MOVE.b	#50, $1A(A6)
@@ -17382,7 +17398,8 @@ loc_0000F7CC:
 	ANDI	#$F8FF, SR
 	RTS
 	
-loc_0000F806:
+;LoadEncounterGraphics:
+LoadEncounterGraphics:
 	LEA	loc_00023A72-2, A6
 	MOVE.w	(A6)+, Vdp_dma_slot_index.w
 	LEA	Tile_gfx_buffer.w, A2
@@ -17430,7 +17447,8 @@ loc_0000F806:
 loc_0000F89E:
 	RTS
 	
-loc_0000F8A0:
+;LoadMagicGraphics:
+LoadMagicGraphics:
 	LEA	loc_0001FB34, A6
 	ADD.w	D0, D0
 	ADD.w	D0, D0
@@ -17446,7 +17464,8 @@ loc_0000F8A0:
 	JSR	LoadPalettesFromTable
 	RTS
 	
-loc_0000F8D2:
+;LoadEncounterTypeGraphics:
+LoadEncounterTypeGraphics:
 	LEA	Tile_gfx_buffer.w, A2
 	LEA	loc_00023B28, A1
 	CLR.w	D2
@@ -17477,7 +17496,8 @@ loc_0000F8D2:
 loc_0000F938:
 	RTS
 	
-loc_0000F93A:
+;LoadTalkerGraphics:
+LoadTalkerGraphics:
 	LEA	Tile_gfx_buffer.w, A2
 	MOVEA.l	Talker_gfx_descriptor_ptr.w, A6
 	MOVEA.l	$0(A6), A4
@@ -23098,7 +23118,7 @@ loc_00015942:
 	RTS
 
 loc_00015944:
-	JSR	loc_00003304
+	JSR	DecrementTimerBCD
 	BEQ.b	loc_0001594E
 	RTS
 
@@ -36216,7 +36236,7 @@ loc_00021360:
 	TST.b	Tsarkon_is_dead.w
 	BNE.w	loc_000213C4
 	MOVE.w	#7, D7
-	JSR	loc_00008518
+	JSR	CheckRingsCollected
 	BNE.w	loc_000213BA
 	MOVE.b	#$FF, Talker_present_flag.w
 	BSR.w	loc_000213CE
@@ -36252,7 +36272,7 @@ loc_000213CE:
 	RTS
 	
 loc_000213FE:
-	JSR	loc_0000F93A
+	JSR	LoadTalkerGraphics
 	MOVE.l	#$45600002, D7
 	MOVE.w	#$03FF, D6
 	MOVE.b	#0, D5
