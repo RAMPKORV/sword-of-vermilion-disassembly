@@ -3536,7 +3536,7 @@ loc_0000397C:
 	ADDI.w	#0, D0
 	MOVE.w	D0, $C(A5)
 	MOVE.w	$C(A5), $16(A5)
-	JSR	loc_0000F5D6
+	JSR	AddSpriteToDisplayList
 	RTS
 
 loc_000039AC:
@@ -3867,7 +3867,7 @@ loc_00003E36:
 	BRA.w	loc_00003E48
 loc_00003E3A:
 	MOVE.b	#$FF, Sprite_dma_update_pending.w
-	JSR	loc_0000F5D6
+	JSR	AddSpriteToDisplayList
 	RTS
 
 loc_00003E48:
@@ -3896,11 +3896,11 @@ loc_00003E8A:
 loc_00003EAA:
 	MOVE.b	#$FF, Sprite_dma_update_pending.w
 	CLR.b	Player_is_moving.w
-	JSR	loc_0000F5D6
+	JSR	AddSpriteToDisplayList
 	RTS
 
 loc_00003EBC:
-	JSR	loc_0000F5D6
+	JSR	AddSpriteToDisplayList
 	RTS
 
 loc_00003EC4:
@@ -4019,7 +4019,7 @@ loc_00004044:
 	ADDQ.w	#5, D0
 	MOVE.w	D0, $C(A5)
 	MOVE.w	$C(A5), $16(A5)
-	JSR	loc_0000F5D6
+	JSR	AddSpriteToDisplayList
 	RTS
 
 loc_00004068
@@ -4030,7 +4030,7 @@ loc_00004068
 	SUBI.w	#$0010, D2
 	MOVE.w	D2, $C(A5)
 	MOVE.w	$C(A6), $16(A5)
-	JSR	loc_0000F5D6
+	JSR	AddSpriteToDisplayList
 	RTS
 
 loc_00004092 
@@ -4053,7 +4053,7 @@ loc_000040BA:
 	ADD.w	$2(A0,D0.w), D2
 	MOVE.w	D2, $C(A5)
 	MOVE.w	$C(A6), $16(A5)
-	JSR	loc_0000F5D6
+	JSR	AddSpriteToDisplayList
 	RTS
 
 loc_000040DE: ; suspected collision detection
@@ -4150,7 +4150,7 @@ loc_00004200:
 	MOVE.w	(A0,D0.w), $8(A5)
 	MOVE.w	$E(A5), $A(A5)
 	MOVE.w	$12(A5), $C(A5)
-	JSR	loc_0000F5D6
+	JSR	AddSpriteToDisplayList
 	RTS
 
 loc_0000421A:
@@ -7029,7 +7029,7 @@ loc_00006B28:
 	MOVE.w	$E(A5), $A(A5)
 	MOVE.w	$12(A5), $C(A5)
 	MOVE.w	$C(A5), $16(A5)
-	JSR	loc_0000F5D6
+	JSR	AddSpriteToDisplayList
 	RTS
 
 loc_00006B50:
@@ -7046,11 +7046,11 @@ loc_00006B50:
 	MOVE.w	#$23, Gameplay_substate.w
 	MOVE.b	#$FF, Fade_out_lines_mask.w
 	CLR.b	Player_is_moving.w
-	JSR	loc_0000F5D6
+	JSR	AddSpriteToDisplayList
 	RTS
 
 loc_00006B98:
-	JSR	loc_0000F5D6
+	JSR	AddSpriteToDisplayList
 	RTS
 
 loc_00006BA0:
@@ -7061,7 +7061,7 @@ loc_00006BA0:
 	SUBI.w	#$0018, D2
 	MOVE.w	D2, $C(A5)
 	MOVE.w	$C(A6), $16(A5)
-	JSR	loc_0000F5D6
+	JSR	AddSpriteToDisplayList
 	RTS
 
 loc_00006BCA: 
@@ -7081,7 +7081,7 @@ loc_00006BCA:
 	ADD.w	$2(A0,D0.w), D2
 	MOVE.w	D2, $C(A5)
 	MOVE.w	$C(A6), $16(A5)
-	JSR	loc_0000F5D6
+	JSR	AddSpriteToDisplayList
 	RTS
 
 loc_00006C10:
@@ -8736,7 +8736,7 @@ loc_0000817C:
 	ADDI.w	#0, D0
 	MOVE.w	D0, $C(A5)
 	MOVE.w	$C(A5), $16(A5)
-	JSR	loc_0000F5D6
+	JSR	AddSpriteToDisplayList
 	RTS
 
 loc_0000819A:
@@ -10175,7 +10175,7 @@ loc_0000944E:
 
 loc_00009470:
 	MOVE.w	(A0,D0.w), $8(A5)
-	JSR	loc_0000F5D6
+	JSR	AddSpriteToDisplayList
 	RTS
 
 loc_0000947E:
@@ -10307,7 +10307,7 @@ loc_00009666:
 loc_0000968E:
 	BSR.w	loc_0000A68A
 loc_00009692:
-	JSR	loc_0000F5D6
+	JSR	AddSpriteToDisplayList
 	RTS
 
 loc_0000969A:
@@ -10408,7 +10408,7 @@ loc_000097FC:
 	MOVE.w	(A1,D1.w), $8(A6)
 	BSR.w	CopyPositionToLinkedSprite
 loc_00009818:
-	JSR	loc_0000F5D6
+	JSR	AddSpriteToDisplayList
 	RTS
 
 loc_00009820:
@@ -10500,7 +10500,7 @@ loc_00009936:
 	MOVE.w	(A1,D1.w), $8(A6)
 	BSR.w	CopyPositionToLinkedSprite
 loc_00009956:
-	JSR	loc_0000F5D6
+	JSR	AddSpriteToDisplayList
 	RTS
 
 loc_0000995E:
@@ -10577,7 +10577,7 @@ loc_00009A4A:
 	MOVE.w	(A1,D1.w), $8(A6)
 	BSR.w	CopyPositionToLinkedSprite
 loc_00009A6A:
-	JSR	loc_0000F5D6
+	JSR	AddSpriteToDisplayList
 	RTS
 
 loc_00009A72:
@@ -10653,7 +10653,7 @@ loc_00009B32:
 	MOVE.w	D0, $C(A6)
 	MOVE.w	$16(A5), $16(A6)
 loc_00009B88:
-	JSR	loc_0000F5D6
+	JSR	AddSpriteToDisplayList
 	RTS
 
 loc_00009B90:
@@ -10777,7 +10777,7 @@ loc_00009D2E:
 	MOVE.w	(A0,D1.w), $8(A5)
 	MOVE.w	(A1,D1.w), $8(A6)
 	BSR.w	loc_0000A68A
-	JSR	loc_0000F5D6
+	JSR	AddSpriteToDisplayList
 	RTS
 
 loc_00009D56:
@@ -10794,7 +10794,7 @@ loc_00009D72:
 	ASR.w	#1, D0
 	LEA	loc_0003DCF0, A2
 	MOVE.w	(A2,D0.w), $8(A5)
-	JSR	loc_0000F5D6
+	JSR	AddSpriteToDisplayList
 	RTS
 
 loc_00009D90:
@@ -10884,7 +10884,7 @@ loc_00009EB4:
 	SUBI.w	#$0010, D0
 	MOVE.w	D0, $C(A6)
 	MOVE.w	$16(A5), $16(A6)
-	JSR	loc_0000F5D6
+	JSR	AddSpriteToDisplayList
 	RTS
 
 loc_00009EF6:
@@ -10921,7 +10921,7 @@ loc_00009F50:
 	ASR.w	#2, D0
 	LEA	loc_0003DCF0, A2
 	MOVE.w	(A2,D0.w), $8(A5)
-	JSR	loc_0000F5D6
+	JSR	AddSpriteToDisplayList
 	RTS
 
 loc_00009F6E:
@@ -11024,7 +11024,7 @@ loc_0000A0B4:
 	MOVE.w	(A1,D1.w), $8(A6)
 	BSR.w	CopyPositionToLinkedSprite
 loc_0000A0D4:
-	JSR	loc_0000F5D6
+	JSR	AddSpriteToDisplayList
 	RTS
 	
 loc_0000A0DC:
@@ -11099,7 +11099,7 @@ loc_0000A1B6:
 	MOVE.w	(A1,D0.w), $8(A6)
 	BSR.w	CopyPositionToLinkedSprite
 loc_0000A1DC:
-	JSR	loc_0000F5D6
+	JSR	AddSpriteToDisplayList
 	RTS
 	
 loc_0000A1E4:
@@ -11153,7 +11153,7 @@ loc_0000A278:
 	MOVE.w	(A0,D0.w), $8(A5)
 	MOVE.w	(A1,D0.w), $8(A6)
 	BSR.w	CopyPositionToLinkedSprite
-	JSR	loc_0000F5D6
+	JSR	AddSpriteToDisplayList
 	BRA.w	loc_0000A2A8
 loc_0000A2A8:
 	RTS
@@ -11163,7 +11163,7 @@ loc_0000A2AA:
 	BSR.w	loc_0000B73E
 	MOVE.l	#loc_0000A2D4, $2(A5)
 	MOVE.b	#$0E, $6(A5)
-	MOVE.l	#loc_0000F5D6, $2(A6)
+	MOVE.l	#AddSpriteToDisplayList, $2(A6)
 	MOVE.b	#$0E, $6(A6)
 	BSR.w	loc_0000B5C8
 	RTS
@@ -11270,7 +11270,7 @@ loc_0000A420:
 	MOVE.w	(A0,D1.w), $8(A5)
 	MOVE.w	(A1,D1.w), $8(A6)
 	BSR.w	loc_0000A68A
-	JSR	loc_0000F5D6(PC)
+	JSR	AddSpriteToDisplayList(PC)
 	RTS
 	
 loc_0000A446:
@@ -11285,7 +11285,7 @@ loc_0000A446:
 	ASR.w	#1, D0
 	LEA	loc_0003DCF0, A2
 	MOVE.w	(A2,D0.w), $8(A5)
-	JSR	loc_0000F5D6(PC)
+	JSR	AddSpriteToDisplayList(PC)
 loc_0000A476:
 	RTS
 	
@@ -11378,7 +11378,7 @@ loc_0000A598:
 	SUBI.w	#$0010, D0
 	MOVE.w	D0, $C(A6)
 	MOVE.w	$16(A5), $16(A6)
-	JSR	loc_0000F5D6
+	JSR	AddSpriteToDisplayList
 	RTS
 	
 loc_0000A5DA:
@@ -11420,11 +11420,11 @@ loc_0000A644:
 	ASR.w	#1, D0
 	LEA	loc_0003DCF0, A2
 	MOVE.w	(A2,D0.w), $8(A5)
-	JSR	loc_0000F5D6
+	JSR	AddSpriteToDisplayList
 	RTS
 	
 loc_0000A662:
-	JSR	loc_0000F5D6
+	JSR	AddSpriteToDisplayList
 	RTS
 	
 ; CopyPositionToLinkedSprite
@@ -11533,7 +11533,7 @@ loc_0000A7BE:
 	SUBI.w	#$0010, D0
 	MOVE.w	D0, $C(A6)
 	MOVE.w	$16(A5), $16(A6)
-	JSR	loc_0000F5D6
+	JSR	AddSpriteToDisplayList
 	RTS
 	
 loc_0000A800:
@@ -11545,7 +11545,7 @@ loc_0000A800:
 	MOVE.b	D0, $1B(A5)
 	MOVE.l	#loc_0000A842, $2(A5)
 	BSR.w	loc_0000B758
-	MOVE.l	#loc_0000F5D6, $2(A6)
+	MOVE.l	#AddSpriteToDisplayList, $2(A6)
 	MOVE.b	#$0E, $6(A6)
 	CLR.b	$1A(A5)
 	CLR.w	$3A(A5)
@@ -11685,7 +11685,7 @@ loc_0000AA1A:
 	MOVE.w	(A0,D0.w), $8(A5)
 	MOVE.w	(A1,D0.w), $8(A6)
 	JSR	CopyPositionToLinkedSprite(PC)
-	JSR	loc_0000F5D6(PC)
+	JSR	AddSpriteToDisplayList(PC)
 	RTS
 	
 loc_0000AA30:
@@ -11730,7 +11730,7 @@ loc_0000AA9E:
 	ASR.w	#1, D0
 	LEA	loc_0003DCF0, A2
 	MOVE.w	(A2,D0.w), $8(A5)
-	JSR	loc_0000F5D6(PC)
+	JSR	AddSpriteToDisplayList(PC)
 loc_0000AAD2:
 	RTS
 	
@@ -11739,7 +11739,7 @@ loc_0000AAD4:
 	BSR.w	loc_0000B73E
 	MOVE.l	#loc_0000AB0C, $2(A5)
 	MOVE.b	#$0E, $6(A5)
-	MOVE.l	#loc_0000F5D6, $2(A6)
+	MOVE.l	#AddSpriteToDisplayList, $2(A6)
 	MOVE.b	#$0E, $6(A6)
 	JSR	GetRandomNumber
 	ANDI.w	#$00F0, D0
@@ -11876,7 +11876,7 @@ loc_0000ACC4:
 	MOVE.w	(A0,D1.w), $8(A5)
 	MOVE.w	(A1,D1.w), $8(A6)
 	BSR.w	loc_0000A68A
-	JSR	loc_0000F5D6(PC)
+	JSR	AddSpriteToDisplayList(PC)
 	RTS
 	
 loc_0000ACEA:
@@ -11933,7 +11933,7 @@ loc_0000AD7E:
 	ASR.w	#1, D0
 	LEA	loc_0003DCF0, A2
 	MOVE.w	(A2,D0.w), $8(A5)
-	JSR	loc_0000F5D6(PC)
+	JSR	AddSpriteToDisplayList(PC)
 loc_0000ADB2:
 	RTS
 	
@@ -12077,7 +12077,7 @@ loc_0000AF4A:
 	LSR.w	#1, D1
 	LEA	loc_0003DD1C, A0
 	MOVE.w	(A0,D1.w), $8(A5)
-	JSR	loc_0000F5D6(PC)
+	JSR	AddSpriteToDisplayList(PC)
 	RTS
 	
 loc_0000AFB6:
@@ -12252,7 +12252,7 @@ loc_0000B1F2:
 	LSR.w	#1, D1
 	LEA	loc_0003DD1C, A0
 	MOVE.w	(A0,D1.w), $8(A5)
-	JSR	loc_0000F5D6(PC)
+	JSR	AddSpriteToDisplayList(PC)
 	RTS
 	
 loc_0000B212:
@@ -12427,7 +12427,7 @@ loc_0000B478:
 	BSET.b	#7, (A6)
 	DBF	D7, loc_0000B424
 	LEA	(A0), A5
-	JSR	loc_0000F5D6(PC)
+	JSR	AddSpriteToDisplayList(PC)
 	RTS
 
 loc_0000B48C:	
@@ -12447,7 +12447,7 @@ loc_0000B48C:
 	BLE.w	loc_0000B4D4
 	CMPI.w	#$00B8, D0
 	BGE.w	loc_0000B4D4
-	JSR	loc_0000F5D6(PC)
+	JSR	AddSpriteToDisplayList(PC)
 loc_0000B4D4:
 	RTS
 
@@ -13248,7 +13248,7 @@ loc_0000C006:
 	DBF	D7, loc_0000C006
 	MOVE.w	$E(A5), $A(A5)
 	MOVE.w	$12(A5), $C(A5)
-	JSR	loc_0000F5D6
+	JSR	AddSpriteToDisplayList
 	BSR.w	loc_0000CC82
 	RTS
 
@@ -13276,7 +13276,7 @@ loc_0000C064:
 	DBF	D7, loc_0000C064
 	MOVE.w	$E(A5), $A(A5)
 	MOVE.w	$12(A5), $C(A5)
-	JSR	loc_0000F5D6
+	JSR	AddSpriteToDisplayList
 	RTS
 
 loc_0000C09A:
@@ -13302,7 +13302,7 @@ loc_0000C0BC:
 	MOVE.w	D0, $C(A6)
 	MOVE.w	$E(A5), $A(A5)
 	MOVE.w	$12(A5), $C(A5)
-	JSR	loc_0000F5D6
+	JSR	AddSpriteToDisplayList
 	RTS
 
 loc_0000C0F4:
@@ -13328,7 +13328,7 @@ loc_0000C116:
 	MOVE.w	D0, $C(A6)
 	MOVE.w	$E(A5), $A(A5)
 	MOVE.w	$12(A5), $C(A5)
-	JSR	loc_0000F5D6
+	JSR	AddSpriteToDisplayList
 	RTS
 
 loc_0000C14E:
@@ -13350,7 +13350,7 @@ loc_0000C14E:
 	MOVE.w	$E(A5), $A(A5)
 	MOVE.w	$12(A5), $C(A5)
 loc_0000C192:
-	JSR	loc_0000F5D6
+	JSR	AddSpriteToDisplayList
 	RTS
 
 ; InitNextSpriteSlot
@@ -13608,7 +13608,7 @@ loc_0000C5AE:
 	BSR.w	loc_0000CA10
 	MOVE.w	$E(A5), $A(A5)
 	MOVE.w	$12(A5), $C(A5)
-	JSR	loc_0000F5D6
+	JSR	AddSpriteToDisplayList
 	RTS
 	
 loc_0000C5C6:
@@ -13639,7 +13639,7 @@ loc_0000C5D4:
 	MOVE.w	D0, $C(A6)
 	MOVE.w	$E(A5), $A(A5)
 	MOVE.w	$12(A5), $C(A5)
-	JSR	loc_0000F5D6
+	JSR	AddSpriteToDisplayList
 	BSR.w	loc_0000CD3C
 	MOVE.w	#$00C8, D1
 	BSR.w	loc_0000CAE8
@@ -13671,7 +13671,7 @@ loc_0000C69A:
 	MOVE.w	#$00AC, D0
 	JSR	QueueSoundEffect
 loc_0000C6B2:
-	JSR	loc_0000F5D6
+	JSR	AddSpriteToDisplayList
 	RTS
 	
 loc_0000C6BA:
@@ -13686,7 +13686,7 @@ loc_0000C6BA:
 loc_0000C6DA:
 	BSR.w	loc_0000CDD8
 loc_0000C6DE:
-	JSR	loc_0000F5D6
+	JSR	AddSpriteToDisplayList
 	RTS
 	
 loc_0000C6E6:
@@ -13703,7 +13703,7 @@ loc_0000C6E6:
 	MOVE.w	D0, $C(A6)
 	MOVE.w	$E(A5), $A(A5)
 	MOVE.w	$12(A5), $C(A5)
-	JSR	loc_0000F5D6
+	JSR	AddSpriteToDisplayList
 	RTS
 	
 loc_0000C724:
@@ -13801,11 +13801,11 @@ loc_0000C854:
 	MOVE.b	$1(A6), D0
 	LEA	(A6,D0.w), A6
 	DBF	D7, loc_0000C854
-	JSR	loc_0000F5D6
+	JSR	AddSpriteToDisplayList
 	RTS
 
 loc_0000C88E:
-	JSR	loc_0000F5D6
+	JSR	AddSpriteToDisplayList
 	RTS
 
 loc_0000C896:
@@ -13901,7 +13901,7 @@ loc_0000C9C0:
 	MOVE.b	$1(A6), D0
 	LEA	(A6,D0.w), A6
 	DBF	D7, loc_0000C9C0
-	JSR	loc_0000F5D6
+	JSR	AddSpriteToDisplayList
 	RTS
 
 loc_0000C9FA:
@@ -14972,7 +14972,7 @@ loc_0000D820:
 	BEQ.b	loc_0000D836
 	MOVE.w	$E(A5), $A(A5)
 	MOVE.w	$12(A5), $C(A5)
-	JSR	loc_0000F5D6(PC)
+	JSR	AddSpriteToDisplayList(PC)
 loc_0000D836:
 	RTS
 
@@ -15041,7 +15041,7 @@ loc_0000D8BE:
 	MOVE.w	$12(A5), $1E(A5)
 	MOVE.w	$E(A5), $A(A5)
 	MOVE.w	$12(A5), $C(A5)
-	JSR	loc_0000F5D6(PC)
+	JSR	AddSpriteToDisplayList(PC)
 	RTS
 
 loc_0000D928:
@@ -15086,7 +15086,7 @@ loc_0000D99A:
 loc_0000D9AE:
 	MOVE.w	$E(A5), $A(A5)
 	MOVE.w	$12(A5), $C(A5)
-	JSR	loc_0000F5D6(PC)
+	JSR	AddSpriteToDisplayList(PC)
 loc_0000D9BE:
 	RTS
 
@@ -15706,7 +15706,7 @@ loc_0000E292:
 	MOVE.w	$E(A5), $A(A5)
 	MOVE.w	$12(A5), $C(A5)
 	JSR	loc_0000CA10
-	JSR	loc_0000F5D6
+	JSR	AddSpriteToDisplayList
 	RTS
 
 loc_0000E2AC:
@@ -15725,7 +15725,7 @@ loc_0000E2C4:
 	MOVE.w	$E(A5), $A(A5)
 	MOVE.w	$12(A5), $C(A5)
 	JSR	loc_0000CA10
-	JSR	loc_0000F5D6
+	JSR	AddSpriteToDisplayList
 	RTS
 
 loc_0000E2EC:
@@ -15879,7 +15879,7 @@ loc_0000E4A8:
 	MOVE.w	$E(A5), $A(A5)
 	MOVE.w	$12(A5), $C(A5)
 	JSR	loc_0000CA10
-	JSR	loc_0000F5D6
+	JSR	AddSpriteToDisplayList
 	RTS
 
 loc_0000E4DE:
@@ -16042,7 +16042,7 @@ loc_0000E764:
 	MOVE.w	(A0), $8(A6)
 	MOVE.w	$E(A5), $A(A5)
 	MOVE.w	$12(A5), $C(A5)
-	JSR	loc_0000F5D6
+	JSR	AddSpriteToDisplayList
 loc_0000E788:
 	RTS
 
@@ -16124,7 +16124,7 @@ loc_0000E88C:
 	MOVE.w	$E(A5), $A(A5)
 	MOVE.w	$12(A5), $C(A5)
 	JSR	loc_0000CA10
-	JSR	loc_0000F5D6
+	JSR	AddSpriteToDisplayList
 	RTS
 
 loc_0000E8AC:
@@ -16148,7 +16148,7 @@ loc_0000E8E8:
 	MOVE.w	$E(A5), $A(A6)
 	MOVE.w	$E(A5), $A(A5)
 	MOVE.w	$12(A5), $C(A5)
-	JSR	loc_0000F5D6
+	JSR	AddSpriteToDisplayList
 	RTS
 	
 loc_0000E902:
@@ -16228,7 +16228,7 @@ loc_0000EA04:
 	JSR	loc_0000CA10
 	MOVE.w	$E(A5), $A(A5)
 	MOVE.w	$12(A5), $C(A5)
-	JSR	loc_0000F5D6
+	JSR	AddSpriteToDisplayList
 loc_0000EA1C:
 	RTS
 	
@@ -16261,7 +16261,7 @@ loc_0000EA72:
 	MOVE.w	(A0), $8(A6)
 	MOVE.w	$E(A5), $A(A5)
 	MOVE.w	$12(A5), $C(A5)
-	JSR	loc_0000F5D6
+	JSR	AddSpriteToDisplayList
 	RTS
 	
 loc_0000EA98:
@@ -16273,7 +16273,7 @@ loc_0000EA98:
 	MOVE.w	#$00AC, D0
 	JSR	QueueSoundEffect
 loc_0000EAB8:
-	JSR	loc_0000F5D6
+	JSR	AddSpriteToDisplayList
 	RTS
 	
 loc_0000EAC0:
@@ -16291,7 +16291,7 @@ loc_0000EAC0:
 loc_0000EAEA:
 	JSR	loc_0000CDD8
 loc_0000EAF0:
-	JSR	loc_0000F5D6
+	JSR	AddSpriteToDisplayList
 	RTS
 	
 loc_0000EAF8:
@@ -16389,7 +16389,7 @@ loc_0000EC1E:
 	MOVE.w	(A0,D0.w), $8(A5)
 	MOVE.w	$E(A5), $A(A5)
 	MOVE.w	$12(A5), $C(A5)
-	JSR	loc_0000F5D6
+	JSR	AddSpriteToDisplayList
 	RTS
 	
 loc_0000EC4C:
@@ -16416,7 +16416,7 @@ loc_0000EC80:
 	MOVE.w	(A0,D0.w), $8(A5)
 	MOVE.w	$E(A5), $A(A5)
 	MOVE.w	$12(A5), $C(A5)
-	JSR	loc_0000F5D6
+	JSR	AddSpriteToDisplayList
 	RTS
 	
 loc_0000ECBA:
@@ -16589,7 +16589,7 @@ loc_0000EF04:
 	BEQ.b	loc_0000EF1C
 	MOVE.w	$E(A5), $A(A5)
 	MOVE.w	$12(A5), $C(A5)
-	JSR	loc_0000F5D6
+	JSR	AddSpriteToDisplayList
 loc_0000EF1C:
 	RTS
 	
@@ -16912,7 +16912,7 @@ loc_0000F318:
 loc_0000F35C:
 	MOVE.w	$E(A5), $A(A5)
 	MOVE.w	$12(A5), $C(A5)
-	JSR	loc_0000F5D6
+	JSR	AddSpriteToDisplayList
 	RTS
 	
 loc_0000F370:
@@ -16935,7 +16935,7 @@ loc_0000F38A:
 	MOVE.w	D0, $16(A5)
 	MOVE.w	$E(A5), $A(A5)
 	MOVE.w	$12(A5), $C(A5)
-	JSR	loc_0000F5D6
+	JSR	AddSpriteToDisplayList
 	RTS
 	
 loc_0000F3B8:
@@ -17124,7 +17124,11 @@ loc_0000F5C6:
 	dc.b	$C0
 	dc.b	$E0
 	dc.b	$E0, $00, $C0, $A0, $A0, $80 
-loc_0000F5D6:
+; AddSpriteToDisplayList
+; Add sprite to display list for rendering
+; Checks sprite bounds, calculates position, and adds to sprite buffer
+; Input: A5 = Object data pointer
+AddSpriteToDisplayList:
 	ORI	#$0700, SR
 	MOVE.w	$C(A5), D5
 	BLE.w	loc_0000F682
@@ -22449,7 +22453,7 @@ loc_00015394:
 	ASL.w	#3, D0
 	ADDI.w	#$0030, D0
 	MOVE.w	D0, $C(A5)
-	JSR	loc_0000F5D6
+	JSR	AddSpriteToDisplayList
 	RTS
 
 loc_000153B8:
@@ -22463,7 +22467,7 @@ loc_000153B8:
 	MOVE.b	$1B(A5), D0
 	BTST.l	#3, D0
 	BEQ.b	loc_000153E0
-	JSR	loc_0000F5D6
+	JSR	AddSpriteToDisplayList
 loc_000153E0:
 	RTS
 
@@ -24458,7 +24462,7 @@ loc_00016E1E:
 loc_00016E36:
 	LEA	loc_00016E76, A0
 	MOVE.w	(A0,D0.w), $8(A5)
-	JSR	loc_0000F5D6
+	JSR	AddSpriteToDisplayList
 	RTS
 
 loc_00016E4A:
@@ -24503,7 +24507,7 @@ loc_00016E86:
 	RTS
 
 loc_00016F34:
-	JSR	loc_0000F5D6
+	JSR	AddSpriteToDisplayList
 	RTS
 
 loc_00016F3C:
@@ -26283,7 +26287,7 @@ loc_00018B52:
 	MOVE.w	$E(A5), $A(A5)
 	MOVE.w	$12(A5), $C(A5)
 	MOVE.w	$12(A5), $16(A5)
-	JSR	loc_0000F5D6
+	JSR	AddSpriteToDisplayList
 	RTS
 loc_00018BA0:
 	BCLR.b	#7, (A5)
@@ -26403,7 +26407,7 @@ loc_00018CDA:
 	MOVE.w	$E(A5), $A(A5)
 	MOVE.w	$12(A5), $C(A5)
 	MOVE.w	$12(A5), $16(A5)
-	JSR	loc_0000F5D6
+	JSR	AddSpriteToDisplayList
 	RTS
 	
 loc_00018D52:
@@ -26470,7 +26474,7 @@ loc_00018DF8:
 	MOVE.w	$E(A5), $A(A5)
 	MOVE.w	$12(A5), $C(A5)
 	MOVE.w	$12(A5), $16(A5)
-	JSR	loc_0000F5D6
+	JSR	AddSpriteToDisplayList
 	RTS
 
 loc_00018E56:
@@ -26564,7 +26568,7 @@ loc_00018F5A:
 	MOVE.w	D0, $16(A5)
 	MOVE.w	$E(A5), $A(A5)
 	MOVE.w	$12(A5), $C(A5)
-	JSR	loc_0000F5D6
+	JSR	AddSpriteToDisplayList
 	RTS
 
 loc_00018FA0:
@@ -26579,7 +26583,7 @@ loc_00018FA0:
 	MOVE.w	#1, $16(A5)
 	MOVE.w	$E(A5), $A(A5)
 	MOVE.w	$12(A5), $C(A5)
-	JSR	loc_0000F5D6
+	JSR	AddSpriteToDisplayList
 	RTS
 
 loc_00018FDA:
@@ -26906,7 +26910,7 @@ loc_000193F2:
 loc_000193F4:
 	MOVE.w	$E(A5), $A(A5)
 	MOVE.w	$12(A5), $C(A5)
-	JSR	loc_0000F5D6
+	JSR	AddSpriteToDisplayList
 	RTS
 
 ;loc_00019408
@@ -26982,7 +26986,7 @@ loc_000194CA:
 	MOVE.w	$12(A5), $C(A5)
 	MOVE.w	$12(A5), $16(A5)
 	JSR	loc_00019B86(PC)
-	JSR	loc_0000F5D6
+	JSR	AddSpriteToDisplayList
 	RTS
 
 loc_00019534:
@@ -27068,7 +27072,7 @@ loc_00019656:
 	ASR.w	#1, D0
 	ADD.w	D1, D0
 	MOVE.w	(A0,D0.w), $8(A5)
-	JSR	loc_0000F5D6
+	JSR	AddSpriteToDisplayList
 	RTS
 
 loc_00019682:
@@ -27156,7 +27160,7 @@ loc_00019756:
 	ASR.w	#1, D0
 	ADDI.w	#$0020, D0
 	MOVE.w	(A0,D0.w), $8(A5)
-	JSR	loc_0000F5D6
+	JSR	AddSpriteToDisplayList
 	RTS
 
 loc_000197D2:
@@ -27252,7 +27256,7 @@ loc_000198C2:
 	MOVE.w	$12(A5), $C(A5)
 	MOVE.w	$12(A5), $16(A5)
 	JSR	loc_00019B86(PC)
-	JSR	loc_0000F5D6
+	JSR	AddSpriteToDisplayList
 	RTS
 	
 loc_00019938:
@@ -27353,7 +27357,7 @@ loc_00019A36:
 	ANDI.w	#$000C, D0
 	ASR.w	#1, D0
 	MOVE.w	(A0,D0.w), $8(A5)
-	JSR	loc_0000F5D6
+	JSR	AddSpriteToDisplayList
 	ADDQ.b	#1, $3B(A5)
 	CMPI.b	#6, $3B(A5)
 	BLE.w	loc_00019B40
@@ -27402,7 +27406,7 @@ loc_00019B4A:
 	ANDI.w	#$0018, D0
 	ASR.w	#2, D0
 	MOVE.w	(A0,D0.w), $8(A5)
-	JSR	loc_0000F5D6
+	JSR	AddSpriteToDisplayList
 	RTS
 
 loc_00019B7A:
@@ -27496,7 +27500,7 @@ loc_00019C98:
 loc_00019CA6:
 	MOVE.w	$E(A5), $A(A5)
 	MOVE.w	$12(A5), $C(A5)
-	JSR	loc_0000F5D6
+	JSR	AddSpriteToDisplayList
 	RTS
 
 loc_00019CBA:
@@ -27545,7 +27549,7 @@ loc_00019D6C:
 	JSR	CheckProjectileHitEnemies(PC)
 	MOVE.w	$E(A5), $A(A5)
 	MOVE.w	$12(A5), $C(A5)
-	JSR	loc_0000F5D6
+	JSR	AddSpriteToDisplayList
 	RTS
 
 loc_00019D84:
@@ -27563,7 +27567,7 @@ loc_00019D8C:
 loc_00019DA4:
 	MOVE.w	$E(A5), $A(A5)
 	MOVE.w	$12(A5), $C(A5)
-	JSR	loc_0000F5D6
+	JSR	AddSpriteToDisplayList
 	RTS
 
 loc_00019DB8:
@@ -27576,7 +27580,7 @@ loc_00019DCA:
 	ADD.l	D0, $12(A5)
 	MOVE.w	$E(A5), $A(A5)
 	MOVE.w	$12(A5), $C(A5)
-	JSR	loc_0000F5D6
+	JSR	AddSpriteToDisplayList
 	RTS
 
 loc_00019DE6:
@@ -27594,7 +27598,7 @@ loc_00019DFE:
 	MOVE.w	(A0,D0.w), $8(A5)
 	MOVE.w	$E(A5), $A(A5)
 	MOVE.w	$12(A5), $C(A5)
-	JSR	loc_0000F5D6
+	JSR	AddSpriteToDisplayList
 	RTS
 
 loc_00019E20:
