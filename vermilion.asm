@@ -12995,7 +12995,7 @@ loc_0000BB52:
 loc_0000BB66:
 	SUBQ.b	#1, $1A(A5)
 	BGE.w	loc_0000BBAE
-	BSR.w	loc_0000C1F6
+	BSR.w	CheckPlayerLeftOfScreen
 	BEQ.b	loc_0000BB98
 	JSR	GetRandomNumber
 	ANDI.w	#3, D0
@@ -13054,7 +13054,7 @@ loc_0000BC28:
 	RTS
 	
 loc_0000BC3C:
-	BSR.w	loc_0000C1F6
+	BSR.w	CheckPlayerLeftOfScreen
 	BEQ.b	loc_0000BC5A
 	MOVE.w	#5, Boss_ai_state.w
 	MOVE.l	#$FFFE0000, $32(A5)
@@ -13472,7 +13472,8 @@ InitNextSpriteSlot:
 
 loc_0000C1DA:
 	dc.b	$2C, $78, $CC, $14, $3E, $3C, $00, $1F, $08, $96, $00, $07, $42, $40, $10, $2E, $00, $01, $4D, $F6, $00, $00, $51, $CF, $FF, $F0, $4E, $75 
-loc_0000C1F6:
+;CheckPlayerLeftOfScreen:
+CheckPlayerLeftOfScreen:
 	MOVEA.l	Player_entity_ptr.w, A6
 	MOVE.w	$E(A6), D0
 	CMPI.w	#$0050, D0
@@ -13717,7 +13718,7 @@ loc_0000C5C6:
 	BNE.w	loc_0000C640
 loc_0000C5D4:
 	LEA	loc_000230AE, A0
-	BSR.w	loc_0000C9FA
+	BSR.w	AnimateSpriteFromTable
 	CLR.w	D0
 	MOVE.b	$1(A5), D0
 	LEA	(A5,D0.w), A6
@@ -13790,7 +13791,7 @@ loc_0000C6DE:
 	
 loc_0000C6E6:
 	LEA	loc_000230BE, A0
-	BSR.w	loc_0000C9FA
+	BSR.w	AnimateSpriteFromTable
 	CLR.w	D0
 	MOVE.b	$1(A5), D0
 	LEA	(A5,D0.w), A6
@@ -14003,7 +14004,8 @@ loc_0000C9C0:
 	JSR	AddSpriteToDisplayList
 	RTS
 
-loc_0000C9FA:
+;AnimateSpriteFromTable:
+AnimateSpriteFromTable:
 	ADDQ.b	#1, $1B(A5)
 	MOVE.b	$1B(A5), D0
 	ANDI.w	#$0030, D0
@@ -16071,7 +16073,7 @@ loc_0000E530:
 	MOVE.w	#1, D7
 	MOVE.w	#$0078, D6
 loc_0000E626:
-	BSR.w	loc_0000E670
+	BSR.w	InitBossBodyPart
 	ADDI.w	#$0050, D6
 	ADDQ.w	#1, Boss_ai_state.w
 	ADDQ.w	#1, Boss_active_parts.w
@@ -16091,12 +16093,13 @@ loc_0000E646:
 	LEA	(A6,D0.w), A6
 	DBF	D7, loc_0000E646
 	MOVE.w	#$0100, D6
-	BSR.w	loc_0000E670
+	BSR.w	InitBossBodyPart
 	ADDQ.w	#1, Boss_ai_state.w
 	ADDQ.w	#1, Boss_active_parts.w
 	RTS
 	
-loc_0000E670:
+;InitBossBodyPart:
+InitBossBodyPart:
 	BSET.b	#7, (A6)
 	MOVE.b	#$20, $7(A6)
 	BCLR.b	#7, $7(A6)
@@ -16797,7 +16800,7 @@ loc_0000F002:
 	RTS
 	
 loc_0000F036:
-	BSR.w	loc_0000F43E
+	BSR.w	WriteDirectionTilesForBoss
 	BRA.w	loc_0000F0D2
 loc_0000F03E:
 	MOVEA.l	Object_slot_01_ptr.w, A6
@@ -16809,7 +16812,7 @@ loc_0000F03E:
 	MOVE.w	#1, Boss_ai_state.w
 	MOVE.l	#$200, $20(A5)
 	CLR.w	D0
-	BSR.w	loc_0000F43E
+	BSR.w	WriteDirectionTilesForBoss
 loc_0000F06C:
 	BRA.w	loc_0000F0D2
 loc_0000F070:
@@ -17090,7 +17093,8 @@ loc_0000F41C:
 	ANDI	#$F8FF, SR
 	RTS
 	
-loc_0000F43E:
+;WriteDirectionTilesForBoss:
+WriteDirectionTilesForBoss:
 	ORI	#$0700, SR
 	LEA	loc_0000F55C, A0
 	MOVEA.l	(A0,D0.w), A0
@@ -17909,7 +17913,7 @@ loc_0000FCEA:
 	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
 	DBF	D5, loc_0000FCEA
-	BSR.w	loc_0000FD1C
+	BSR.w	TransferTilesViaDma
 	RTS
 
 ;InitFontTiles:
@@ -17921,10 +17925,11 @@ loc_0000FD0A:
 	BSR.w	loc_0000FC1C
 	LEA	$20(A2), A2
 	DBF	D5, loc_0000FD0A
-	BSR.w	loc_0000FD1C
+	BSR.w	TransferTilesViaDma
 	RTS
 
-loc_0000FD1C:
+;TransferTilesViaDma:
+TransferTilesViaDma:
 	stopZ80
 	JSR	InitVdpDmaRamRoutine
 	MOVE.w	#2, D4
@@ -18760,7 +18765,7 @@ loc_0001070A:
 	BNE.b	loc_0001076C
 	BRA.b	loc_00010794
 loc_0001076C:
-	BSR.w	loc_000108FE
+	BSR.w	VerifySaveChecksum
 	BEQ.b	loc_0001077E
 	ADDQ.w	#1, File_menu_phase.w
 	JSR	DrawSaveErrorWindow
@@ -18768,7 +18773,7 @@ loc_0001076C:
 	
 loc_0001077E:
 	MOVEA.l	Sram_save_slot_ptr.w, A0	
-	BSR.w	loc_00010854	
+	BSR.w	LoadGameFromSave	
 	JSR	DrawGameReadyWindow	
 	MOVE.w	#5, File_menu_phase.w	
 	RTS
@@ -18792,7 +18797,7 @@ loc_000107B6:
 	JSR	CheckButtonPress
 	BEQ.w	loc_00010818
 	MOVEA.l	Sram_backup_ptr.w, A0
-	BSR.w	loc_000108FE
+	BSR.w	VerifySaveChecksum
 	BEQ.b	loc_000107F6
 	JSR	DrawSaveFailedWindow
 	ADDQ.w	#1, File_menu_phase.w
@@ -18805,7 +18810,7 @@ loc_000107B6:
 loc_000107F6:
 	MOVEA.l	Sram_backup_ptr.w, A0	
 	BSR.w	loc_0001092E	
-	BSR.w	loc_00010854	
+	BSR.w	LoadGameFromSave	
 	JSR	DrawSaveSuccessWindow	
 	MOVE.w	#5, File_menu_phase.w	
 	MOVE.w	#$0086, D0	
@@ -18837,7 +18842,8 @@ loc_0001083A:
 loc_00010852:
 	RTS
 	
-loc_00010854:
+;LoadGameFromSave:
+LoadGameFromSave:
 	LEA	Player_name.w, A1	
 	MOVE.w	#$000D, D7	
 loc_0001085C:
@@ -18896,7 +18902,8 @@ CopyByteFromInterleavedSave:
 	LEA	$1(A0), A0	
 	RTS
 	
-loc_000108FE:
+;VerifySaveChecksum:
+VerifySaveChecksum:
 	MOVE.w	#$014E, D7
 	MOVEQ	#0, D1
 loc_00010904:
@@ -19693,7 +19700,7 @@ loc_00011440:
 loc_00011446:
 	TST.w	D5
 	BNE.b	loc_00011450
-	BSR.w	loc_000114EA
+	BSR.w	WriteDigitToWindowAndAdvance
 	BRA.b	loc_00011452
 loc_00011450:
 	MOVE.b	D4, (A0)+
@@ -19733,7 +19740,7 @@ loc_0001148C:
 loc_00011492:
 	TST.w	D5
 	BNE.b	loc_0001149C
-	BSR.w	loc_000114EA
+	BSR.w	WriteDigitToWindowAndAdvance
 	BRA.b	loc_0001149E
 loc_0001149C:
 	MOVE.b	D4, (A0)+
@@ -19779,8 +19786,9 @@ WordToDecimalString:
 	MOVE.b	#$FF, (A0)
 	RTS
 	
-loc_000114EA:
-	BSR.w	loc_00011522
+;WriteDigitToWindowAndAdvance:
+WriteDigitToWindowAndAdvance:
+	BSR.w	CalcWindowTileVramAddress
 	ORI.l	#$40000003, D0
 	MOVE.l	D0, VDP_control_port
 	MOVE.w	D4, VDP_data_port
@@ -19788,14 +19796,15 @@ loc_000114EA:
 	RTS
 
 loc_00011506:
-	BSR.w	loc_00011522
+	BSR.w	CalcWindowTileVramAddress
 	ORI.l	#$60000003, D0
 	MOVE.l	D0, VDP_control_port
 	MOVE.w	D4, VDP_data_port
 	ADDQ.w	#1, Window_number_cursor_x.w
 	RTS
 
-loc_00011522:
+;CalcWindowTileVramAddress:
+CalcWindowTileVramAddress:
 	ADDI.w	#$84C0, D4
 	OR.w	D3, D4
 	JSR	GetScrollOffsetInTiles
@@ -20307,7 +20316,7 @@ loc_00011C0E:
 	MOVE.w	#4, Window_text_y.w
 	LEA	Possessed_equipment_list.w, A2
 	MOVE.w	Possessed_equipment_length.w, D7
-	BSR.w	loc_00011C8C
+	BSR.w	DrawEquippedMarkers
 	CLR.w	Window_draw_row.w
 	MOVE.b	#$FF, Window_tilemap_draw_active.w
 	RTS
@@ -20327,7 +20336,8 @@ loc_00011C4C:
 	MOVE.b	#$FF, Window_tilemap_draw_active.w	
 	RTS
 	
-loc_00011C8C:
+;DrawEquippedMarkers:
+DrawEquippedMarkers:
 	MOVE.w	Window_height.w, D7
 	SUBQ.w	#1, D7
 	CLR.w	D3
@@ -20382,7 +20392,7 @@ loc_00011D18:
 	MOVE.w	#3, Window_text_y.w
 	LEA	Possessed_magics_list.w, A2
 	MOVE.w	Possessed_magics_length.w, D7
-	BSR.w	loc_00011C8C
+	BSR.w	DrawEquippedMarkers
 	CLR.w	Window_draw_row.w
 	MOVE.b	#$FF, Window_tilemap_draw_active.w
 	RTS
@@ -21004,7 +21014,7 @@ ReadWindowToBuffer:
 loc_000125E2:
 	CLR.w	D2
 loc_000125E4:
-	BSR.w	loc_000127C2
+	BSR.w	CalculateVDPAddress
 	ADDQ.l	#3, D5
 	ORI	#$0700, SR
 	MOVE.l	D5, VDP_control_port
@@ -21141,7 +21151,7 @@ DrawWindowFromBuffer:
 loc_00012790:
 	CLR.w	D2
 loc_00012792:
-	BSR.w	loc_000127C2
+	BSR.w	CalculateVDPAddress
 	ADDI.l	#$40000003, D5
 	ORI	#$0700, SR
 	MOVE.l	D5, VDP_control_port
@@ -21155,7 +21165,8 @@ loc_00012792:
 	BLE.b	loc_00012790
 	RTS
 	
-loc_000127C2:
+;CalculateVDPAddress:
+CalculateVDPAddress:
 	MOVE.w	D2, D4
 	MOVE.w	D3, D5
 	ADD.w	D0, D4
@@ -21663,7 +21674,7 @@ DrawWindowTilemapRow:
 	ADD.w	Window_draw_row.w, D1
 	ANDI.w	#$003F, D1
 	ASL.w	#7, D1
-	BSR.w	loc_00012E26
+	BSR.w	WriteWindowRowToVDP
 	LEA	Window_tilemap_buffer.w, A0
 	MOVE.w	Window_width.w, D2
 	MOVE.w	Window_height.w, D0
@@ -21676,7 +21687,7 @@ DrawWindowTilemapRow:
 	ADDQ.w	#1, D1
 	ANDI.w	#$003F, D1
 	ASL.w	#7, D1
-	BSR.w	loc_00012E26
+	BSR.w	WriteWindowRowToVDP
 	ADDQ.w	#1, Window_draw_row.w
 	RTS
 
@@ -21684,7 +21695,8 @@ loc_00012E20:
 	CLR.b	Window_tilemap_draw_active.w
 	RTS
 
-loc_00012E26:
+;WriteWindowRowToVDP:
+WriteWindowRowToVDP:
 	CLR.w	D2
 loc_00012E28:
 	MOVE.w	D2, D4
@@ -22691,7 +22703,8 @@ loc_00015272:
 	BEQ.w	loc_000152C0
 	CMPI.b	#$DF, D3
 	BEQ.w	loc_000152E2
-loc_00015282:
+;WriteCharacterToNameEntry:
+WriteCharacterToNameEntry:
 	CLR.w	D3
 	MOVE.b	$1E(A1,D2.w), D3
 	MOVE.b	D3, (A0)
@@ -22710,7 +22723,7 @@ loc_000152BE:
 	RTS
 
 loc_000152C0:
-	BSR.b	loc_00015282	
+	BSR.b	WriteCharacterToNameEntry	
 	SUBI.l	#$00800000, D6	
 	MOVE.l	D6, VDP_control_port	
 	MOVE.w	#$C5AC, VDP_data_port	
@@ -22719,7 +22732,7 @@ loc_000152C0:
 	RTS
 	
 loc_000152E2:
-	BSR.b	loc_00015282	
+	BSR.b	WriteCharacterToNameEntry	
 	SUBI.l	#$00800000, D6	
 	MOVE.l	D6, VDP_control_port	
 	MOVE.w	#$C5AD, VDP_data_port	
@@ -23636,7 +23649,7 @@ LoadTownTilemaps:
 	LEA	Town_tilemap_plane_a_ptr.w, A1
 	LEA	Tilemap_buffer_plane_a, A6
 	CLR.w	Tilemap_plane_select.w
-	BSR.w	loc_000160D0
+	BSR.w	InitializeTilemapFromData
 	LEA	loc_0001F2C4, A0
 	MOVE.w	Current_town_room.w, D0
 	ANDI.w	#$00FF, D0
@@ -23649,7 +23662,7 @@ LoadTownTilemaps:
 	LEA	Town_tilemap_plane_b_ptr.w, A1
 	LEA	Tilemap_buffer_plane_b, A6
 	MOVE.w	#$FFFF, Tilemap_plane_select.w
-	BSR.w	loc_000160D0
+	BSR.w	InitializeTilemapFromData
 	MOVE.w	Town_tilemap_height.w, D0
 	ASL.w	#4, D0
 	SUBI.w	#$00E0, D0
@@ -23673,7 +23686,8 @@ LoadTownTilemaps:
 	MOVE.w	Player_spawn_tile_y.w, $12(A6)
 	RTS
 
-loc_000160D0:
+;InitializeTilemapFromData:
+InitializeTilemapFromData:
 	MOVE.l	A0, (A1)
 	MOVE.w	(A0)+, D0
 	MOVE.w	D0, Town_tilemap_width.w
@@ -24135,13 +24149,14 @@ loc_0001662A:
 UpdateTownTilemapRow:
 	LEA	Tilemap_buffer_plane_a, A3
 	MOVE.w	#$C000, D5
-	BSR.w	loc_0001666C
+	BSR.w	WriteTilemapRowToVDP
 	LEA	Tilemap_buffer_plane_b, A3
 	MOVE.w	#$E000, D5
-	BSR.w	loc_0001666C
+	BSR.w	WriteTilemapRowToVDP
 	RTS
 
-loc_0001666C:
+;WriteTilemapRowToVDP:
+WriteTilemapRowToVDP:
 	MOVE.w	Town_tilemap_update_row.w, D0
 	ANDI.l	#$1F, D0
 	ASL.w	#8, D0
@@ -24181,13 +24196,14 @@ loc_000166BA:
 UpdateTownTilemapColumn:
 	LEA	Tilemap_buffer_plane_a, A3
 	MOVE.w	#$C000, D5
-	BSR.w	loc_000166EA
+	BSR.w	WriteTilemapColumnToVDP
 	LEA	Tilemap_buffer_plane_b, A3
 	MOVE.w	#$E000, D5
-	BSR.w	loc_000166EA
+	BSR.w	WriteTilemapColumnToVDP
 	RTS
 
-loc_000166EA:
+;WriteTilemapColumnToVDP:
+WriteTilemapColumnToVDP:
 	MOVE.w	Town_tilemap_update_column.w, D0
 	ANDI.w	#$1F, D0
 	ASL.w	#2, D0
@@ -31650,7 +31666,7 @@ loc_0001D156:
 	JSR	DrawMenuCursor
 	MOVE.w	#$00A1, D0
 	JSR	QueueSoundEffect
-	BSR.w	loc_0001D5AC
+	BSR.w	BuildEquipmentListForCategory
 	JSR	SaveStatusBarToBuffer
 	JSR	ResetScriptAndInitDialogue
 	TST.w	Ready_equipment_list_length.w
@@ -31702,7 +31718,7 @@ loc_0001D216:
 	BSR.w	GetCurrentEquippedItemID
 	TST.w	D0
 	BGE.w	loc_0001D29C
-	BSR.w	loc_0001D5FC
+	BSR.w	EquipSelectedItem
 	BSR.w	CopyPlayerNameToTextBuffer
 	BSR.w	GetSelectedEquipmentID
 	MOVE.w	#9, D2
@@ -31769,7 +31785,7 @@ loc_0001D29C:
 	MOVE.b	#$FF, (A1)
 	PRINT 	$FFFFC260
 loc_0001D342:
-	BSR.w	loc_0001D5FC
+	BSR.w	EquipSelectedItem
 	BRA.b	loc_0001D35A
 loc_0001D348:
 	PRINT 	ExchangeCursedStr
@@ -31810,7 +31826,7 @@ loc_0001D3BA:
 	JSR	DrawMenuCursor
 	MOVE.w	#$00A1, D0
 	JSR	QueueSoundEffect
-	BSR.w	loc_0001D5AC
+	BSR.w	BuildEquipmentListForCategory
 	JSR	SaveStatusBarToBuffer
 	JSR	ResetScriptAndInitDialogue
 	BSR.w	GetCurrentEquippedItemID
@@ -31963,7 +31979,8 @@ loc_0001D5A6:
 loc_0001D5AA:
 	RTS
 
-loc_0001D5AC:
+;BuildEquipmentListForCategory:
+BuildEquipmentListForCategory:
 	MOVE.w	Ready_equipment_category.w, D0
 	ADDI.w	#$000A, D0
 	CLR.w	D2
@@ -32001,7 +32018,8 @@ GetSelectedEquipmentID:
 	ANDI.w	#$7FFF, D1
 	RTS
 
-loc_0001D5FC:
+;EquipSelectedItem:
+EquipSelectedItem:
 	BSR.b	GetSelectedEquipmentID
 	MOVE.w	Ready_equipment_category.w, D2
 	ADD.w	D2, D2
@@ -33218,7 +33236,7 @@ loc_0001E6A0:
 	JSR	QueueSoundEffect
 	JSR	SaveStatusBarToBuffer
 	JSR	ResetScriptAndInitDialogue
-	BSR.w	loc_0001EAAE
+	BSR.w	ClearRewardScriptFlag
 	MOVE.w	#$000A, Take_item_state.w
 	CLR.b	Herbs_available.w
 	CLR.b	Truffles_available.w
@@ -33432,7 +33450,7 @@ loc_0001E96A:
 	MOVE.b	#$2E, (A1)+
 	MOVE.b	#$FF, (A1)
 	PRINT 	$FFFFC260
-	BSR.w	loc_0001EAAE
+	BSR.w	ClearRewardScriptFlag
 	CLR.b	Herbs_available.w
 	CLR.b	Truffles_available.w
 	CLR.b	Reward_script_available.w
@@ -33475,7 +33493,8 @@ loc_0001EAA6:
 	JSR	ProcessScriptText
 	RTS
 	
-loc_0001EAAE:
+;ClearRewardScriptFlag:
+ClearRewardScriptFlag:
 	MOVEA.l	Reward_script_flag.w, A0
 	CMPA.l	#0, A0
 	BEQ.w	loc_0001EAC4
