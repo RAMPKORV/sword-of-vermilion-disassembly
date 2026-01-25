@@ -18575,7 +18575,7 @@ loc_0001070A:
 	JSR	CheckButtonPress
 	BEQ.w	loc_000107A2
 	MOVE.w	Dialog_selection.w, Menu_cursor_index.w
-	JSR	loc_0001290C
+	JSR	DrawMenuCursor
 	LEA	loc_0001094A, A0
 	LEA	loc_0001095A, A1
 	MOVE.w	Dialog_selection.w, D0
@@ -20954,8 +20954,8 @@ loc_0001284A:
 	BTST.l	#2, D0
 	BEQ.b	loc_0001286A
 	BTST.l	#2, D1
-	BEQ.w	loc_0001290C
-	BRA.w	loc_000128FE
+	BEQ.w	DrawMenuCursor
+	BRA.w	EraseMenuCursor
 loc_0001286A:
 	RTS
 	
@@ -20965,9 +20965,9 @@ loc_0001286C:
 	SUB.w	$FFFFC23A.w, D0
 	SUBQ.w	#1, D0
 	BEQ.b	loc_00012886
-	BSR.w	loc_000128FE
+	BSR.w	EraseMenuCursor
 	SUBQ.w	#1, Menu_cursor_index.w
-	BSR.w	loc_0001290C
+	BSR.w	DrawMenuCursor
 loc_00012886:
 	RTS
 	
@@ -20977,9 +20977,9 @@ loc_00012888:
 	BEQ.b	loc_000128A4
 	CMP.w	$FFFFC23C.w, D0
 	BEQ.b	loc_000128A4
-	BSR.w	loc_000128FE
+	BSR.w	EraseMenuCursor
 	ADDQ.w	#1, Menu_cursor_index.w
-	BSR.w	loc_0001290C
+	BSR.w	DrawMenuCursor
 loc_000128A4:
 	RTS
 	
@@ -20987,11 +20987,11 @@ loc_000128A6:
 	MOVE.w	Menu_cursor_index.w, D0
 	CMP.w	$FFFFC23A.w, D0
 	BLE.b	loc_000128C2
-	BSR.w	loc_000128FE
+	BSR.w	EraseMenuCursor
 	MOVE.w	$FFFFC23A.w, D0
 	ADDQ.w	#1, D0
 	SUB.w	D0, Menu_cursor_index.w
-	BSR.w	loc_0001290C
+	BSR.w	DrawMenuCursor
 loc_000128C2:
 	RTS
 	
@@ -21003,29 +21003,34 @@ loc_000128C4:
 	ADDQ.w	#1, D0
 	CMP.w	$FFFFC23C.w, D0
 	BGT.b	loc_000128EC
-	BSR.w	loc_000128FE
+	BSR.w	EraseMenuCursor
 	MOVE.w	$FFFFC23A.w, D0
 	ADDQ.w	#1, D0
 	ADD.w	D0, Menu_cursor_index.w
-	BSR.w	loc_0001290C
+	BSR.w	DrawMenuCursor
 loc_000128EC:
 	RTS
 	
 loc_000128EE:
 	dc.b	$61, $00, $00, $0E, $31, $F8, $C2, $3C, $C2, $3E, $61, $00, $00, $12, $4E, $75 
-loc_000128FE:
+; EraseMenuCursor
+EraseMenuCursor:
 	MOVE.w	#$84E0, D6
 	OR.w	$FFFF990E.w, D6
-	BSR.w	loc_0001291A
+	BSR.w	WriteMenuCursorTile
 	RTS
 	
-loc_0001290C:
+; DrawMenuCursor
+DrawMenuCursor:
 	MOVE.w	#$84DC, D6
 	OR.w	$FFFF990E.w, D6
-	BSR.w	loc_0001291A
+	BSR.w	WriteMenuCursorTile
 	RTS
 	
-loc_0001291A:
+; WriteMenuCursorTile
+; Writes menu cursor tile to VRAM at calculated position
+; Input: D6 = Tile ID with attributes
+WriteMenuCursorTile:
 	CLR.w	D2
 	MOVE.w	Menu_cursor_index.w, D3
 	CMP.w	$FFFFC23A.w, D3
@@ -25465,7 +25470,7 @@ loc_00017EDE:
 	BRA.w	loc_0001844C
 loc_00017F1E:
 	MOVE.w	Main_menu_selection.w, Menu_cursor_index.w
-	JSR	loc_0001290C
+	JSR	DrawMenuCursor
 	JSR	loc_00012382
 	JSR	loc_00010E46
 	CLR.w	Item_menu_action_mode.w
@@ -25493,7 +25498,7 @@ loc_00017F80:
 	JSR	CheckButtonPress
 	BEQ.w	loc_0001801E
 	MOVE.w	Item_menu_action_mode.w, Menu_cursor_index.w
-	JSR	loc_0001290C
+	JSR	DrawMenuCursor
 	MOVE.w	#$00A1, D0
 	JSR	QueueSoundEffect
 	JSR	loc_0001229E
@@ -25602,7 +25607,7 @@ loc_0001810A:
 	JSR	CheckButtonPress
 	BEQ.b	loc_0001813E
 	MOVE.w	Magic_list_cursor_index.w, Menu_cursor_index.w
-	JSR	loc_0001290C
+	JSR	DrawMenuCursor
 	MOVE.w	#$00A1, D0
 	JSR	QueueSoundEffect
 	JSR	loc_000122F4
@@ -25717,7 +25722,7 @@ loc_000182D0:
 	JSR	CheckButtonPress
 	BEQ.b	loc_00018304
 	MOVE.w	Magic_list_cursor_index.w, Menu_cursor_index.w
-	JSR	loc_0001290C
+	JSR	DrawMenuCursor
 	MOVE.w	#$00A1, D0
 	JSR	QueueSoundEffect
 	JSR	loc_000122F4
@@ -25847,7 +25852,7 @@ loc_000184C2:
 	JSR	CheckButtonPress
 	BEQ.w	loc_0001850E
 	MOVE.w	Magic_list_cursor_index.w, Menu_cursor_index.w
-	JSR	loc_0001290C
+	JSR	DrawMenuCursor
 	MOVE.w	#$00A1, D0
 	JSR	QueueSoundEffect
 	JSR	loc_000126B6
@@ -28028,7 +28033,7 @@ loc_0001A2E6: ; Item effect routines map
 	BRA.w	loc_0001A93A ; Exit cave / Gnome Stone
 loc_0001A322:
 	MOVE.w	Main_menu_selection.w, Menu_cursor_index.w
-	JSR	loc_0001290C
+	JSR	DrawMenuCursor
 	JSR	loc_0001235E
 	JSR	loc_00010EA2
 	CLR.w	Item_menu_action_mode.w
@@ -28055,7 +28060,7 @@ loc_0001A380:
 	JSR	CheckButtonPress
 	BEQ.w	loc_0001A3EC
 	MOVE.w	Item_menu_action_mode.w, Menu_cursor_index.w
-	JSR	loc_0001290C
+	JSR	DrawMenuCursor
 	MOVE.w	#$00A1, D0
 	JSR	QueueSoundEffect
 	JSR	loc_0001229E
@@ -28153,7 +28158,7 @@ loc_0001A4DC:
 	JSR	CheckButtonPress
 	BEQ.b	loc_0001A512
 	MOVE.w	Selected_item_index.w, Menu_cursor_index.w
-	JSR	loc_0001290C
+	JSR	DrawMenuCursor
 	MOVE.w	#$00A1, D0
 	JSR	QueueSoundEffect
 	JSR	loc_000122F4
@@ -28299,7 +28304,7 @@ loc_0001A702:
 	JSR	CheckButtonPress
 	BEQ.w	loc_0001A7B8
 	MOVE.w	Selected_item_index.w, Menu_cursor_index.w
-	JSR	loc_0001290C
+	JSR	DrawMenuCursor
 	MOVE.w	#$00A1, D0
 	JSR	QueueSoundEffect
 	JSR	loc_000126B6
@@ -29236,7 +29241,7 @@ DialogueStateHandlerMap:
 	BRA.w	loc_0001B784
 loc_0001B266:
 	MOVE.w	Main_menu_selection.w, Menu_cursor_index.w
-	JSR	loc_0001290C
+	JSR	DrawMenuCursor
 	JSR	loc_0001229E
 	JSR	ResetScriptAndInitDialogue
 	ADDQ.w	#1, Dialogue_state.w
@@ -29500,7 +29505,7 @@ loc_0001B73A:
 	JSR	CheckButtonPress
 	BEQ.b	loc_0001B770
 	MOVE.w	$FFFFC4A0.w, Menu_cursor_index.w
-	JSR	loc_0001290C
+	JSR	DrawMenuCursor
 	MOVE.w	#$00A1, D0
 	JSR	QueueSoundEffect
 	JSR	loc_000122F4
@@ -29569,7 +29574,7 @@ loc_0001B97E:
 	JSR	CheckButtonPress
 	BEQ.w	loc_0001BADA
 	MOVE.w	Dialog_selection.w, Menu_cursor_index.w
-	JSR	loc_0001290C
+	JSR	DrawMenuCursor
 	TST.w	Dialog_selection.w
 	BNE.w	loc_0001BAA4
 	MOVE.w	#$00A1, D0
@@ -29847,7 +29852,7 @@ loc_0001BCFC:
 	JSR	CheckButtonPress
 	BEQ.b	loc_0001BD86
 	MOVE.w	Shop_action_selection.w, Menu_cursor_index.w
-	JSR	loc_0001290C
+	JSR	DrawMenuCursor
 	TST.w	Shop_action_selection.w
 	BEQ.b	loc_0001BD4A
 	CMPI.w	#1, Shop_action_selection.w
@@ -29962,7 +29967,7 @@ loc_0001BE6E:
 	MOVE.w	#$00A1, D0
 	JSR	QueueSoundEffect
 	MOVE.w	$FFFFC4A0.w, Menu_cursor_index.w
-	JSR	loc_0001290C
+	JSR	DrawMenuCursor
 	JSR	loc_000122F4
 	JSR	loc_00010D44
 	JSR	loc_00011666
@@ -30011,7 +30016,7 @@ loc_0001BF28:
 	JSR	CheckButtonPress
 	BEQ.w	loc_0001C068
 	MOVE.w	Dialog_selection.w, Menu_cursor_index.w
-	JSR	loc_0001290C
+	JSR	DrawMenuCursor
 	TST.w	Dialog_selection.w
 	BNE.w	loc_0001C030
 	MOVE.w	#$00A1, D0
@@ -30127,7 +30132,7 @@ loc_0001C0C0:
 
 loc_0001C0F4:
 	MOVE.w	Dialog_selection.w, Menu_cursor_index.w
-	JSR	loc_0001290C
+	JSR	DrawMenuCursor
 	TST.w	Dialog_selection.w
 	BNE.b	loc_0001C120
 	JSR	loc_00011012
@@ -30252,7 +30257,7 @@ loc_0001C2AA:
 	JSR	CheckButtonPress
 	BEQ.w	loc_0001C36C
 	MOVE.w	$FFFFC4A0.w, Menu_cursor_index.w
-	JSR	loc_0001290C
+	JSR	DrawMenuCursor
 	JSR	ResetScriptAndInitDialogue
 	LEA	Text_build_buffer.w, A1
 	MOVEA.l	Active_inventory_list_ptr.w, A2
@@ -30327,7 +30332,7 @@ loc_0001C3A4:
 	JSR	CheckButtonPress
 	BEQ.w	loc_0001C4E6
 	MOVE.w	Dialog_selection.w, Menu_cursor_index.w
-	JSR	loc_0001290C
+	JSR	DrawMenuCursor
 	TST.w	Dialog_selection.w
 	BNE.w	loc_0001C4B0
 	MOVE.l	Shop_sell_price.w, Transaction_amount.w
@@ -30433,7 +30438,7 @@ loc_0001C50E:
 
 loc_0001C542:
 	MOVE.w	Dialog_selection.w, Menu_cursor_index.w
-	JSR	loc_0001290C
+	JSR	DrawMenuCursor
 	TST.w	Dialog_selection.w
 	BNE.b	loc_0001C56E
 	JSR	loc_00012766	
@@ -30636,7 +30641,7 @@ loc_0001C7DA:
 	JSR	CheckButtonPress
 	BEQ.w	loc_0001C87C
 	MOVE.w	Dialog_selection.w, Menu_cursor_index.w
-	JSR	loc_0001290C
+	JSR	DrawMenuCursor
 	TST.w	Dialog_selection.w
 	BNE.w	loc_0001C860
 	MOVE.w	Current_town.w, D0
@@ -30762,7 +30767,7 @@ loc_0001C9B4:
 	JSR	CheckButtonPress
 	BEQ.w	loc_0001CAD0
 	MOVE.w	Church_service_selection.w, Menu_cursor_index.w
-	JSR	loc_0001290C
+	JSR	DrawMenuCursor
 	TST.w	Church_service_selection.w
 	BEQ.b	loc_0001C9FA
 	CMPI.w	#1, Church_service_selection.w
@@ -30894,7 +30899,7 @@ loc_0001CB94:
 	JSR	CheckButtonPress
 	BEQ.w	loc_0001CC46
 	MOVE.w	Dialog_selection.w, Menu_cursor_index.w
-	JSR	loc_0001290C
+	JSR	DrawMenuCursor
 	TST.w	Dialog_selection.w
 	BNE.w	loc_0001CC24
 	MOVE.w	Current_town.w, D0
@@ -30960,7 +30965,7 @@ loc_0001CC90:
 	JSR	CheckButtonPress
 	BEQ.w	loc_0001CD56
 	MOVE.w	Dialog_selection.w, Menu_cursor_index.w
-	JSR	loc_0001290C
+	JSR	DrawMenuCursor
 	TST.w	Dialog_selection.w
 	BNE.w	loc_0001CD36
 	MOVE.w	Current_town.w, D0
@@ -31247,7 +31252,7 @@ loc_0001D016:
 	BRA.w	loc_0001D370	
 loc_0001D036:
 	MOVE.w	Main_menu_selection.w, Menu_cursor_index.w
-	JSR	loc_0001290C
+	JSR	DrawMenuCursor
 	JSR	loc_0001256E
 	JSR	loc_00010EFE
 	ADDQ.w	#1, Ready_equipment_state.w
@@ -31283,7 +31288,7 @@ loc_0001D098:
 	
 loc_0001D0C0:
 	MOVE.w	Ready_equipment_selection.w, Menu_cursor_index.w
-	JSR	loc_0001290C
+	JSR	DrawMenuCursor
 	MOVE.w	Ready_equipment_selection.w, D0
 	CMPI.w	#2, D0
 	BEQ.b	loc_0001D098
@@ -31323,7 +31328,7 @@ loc_0001D138:
 
 loc_0001D156:
 	MOVE.w	Ready_equipment_category.w, Menu_cursor_index.w
-	JSR	loc_0001290C
+	JSR	DrawMenuCursor
 	MOVE.w	#$00A1, D0
 	JSR	QueueSoundEffect
 	BSR.w	loc_0001D5AC
@@ -31371,7 +31376,7 @@ loc_0001D1EC:
 
 loc_0001D216:
 	MOVE.w	Ready_equipment_cursor_index.w, Menu_cursor_index.w
-	JSR	loc_0001290C
+	JSR	DrawMenuCursor
 	MOVE.w	#$00A1, D0
 	JSR	QueueSoundEffect
 	JSR	ResetScriptAndInitDialogue
@@ -31483,7 +31488,7 @@ loc_0001D39C:
 	
 loc_0001D3BA:
 	MOVE.w	Ready_equipment_category.w, Menu_cursor_index.w
-	JSR	loc_0001290C
+	JSR	DrawMenuCursor
 	MOVE.w	#$00A1, D0
 	JSR	QueueSoundEffect
 	BSR.w	loc_0001D5AC
@@ -31756,7 +31761,7 @@ loc_0001D696:
 	BRA.w	loc_0001DA64
 loc_0001D6CE:
 	MOVE.w	Main_menu_selection.w, Menu_cursor_index.w
-	JSR	loc_0001290C
+	JSR	DrawMenuCursor
 	MOVE.w	#$00A0, D0
 	JSR	QueueSoundEffect
 	JSR	loc_00012450
@@ -32143,7 +32148,7 @@ loc_0001DBE8:
 ; State 0: Initial detection
 loc_0001DC04:
 	MOVE.w	Main_menu_selection.w, Menu_cursor_index.w
-	JSR	loc_0001290C
+	JSR	DrawMenuCursor
 	TST.b	Player_in_first_person_mode.w
 	BNE.w	loc_0001DC2A             ; First-person: check sprite
 	
@@ -32426,7 +32431,7 @@ loc_0001E000:
 	BRA.w	loc_0001E102
 loc_0001E010:
 	MOVE.w	Main_menu_selection.w, Menu_cursor_index.w
-	JSR	loc_0001290C
+	JSR	DrawMenuCursor
 	TST.b	Player_in_first_person_mode.w
 	BNE.w	loc_0001E034
 	BSR.w	loc_0001E14E
@@ -32743,7 +32748,7 @@ loc_0001E484:
 	BRA.w	loc_0001EA5A
 loc_0001E4B0:
 	MOVE.w	Main_menu_selection.w, Menu_cursor_index.w
-	JSR	loc_0001290C
+	JSR	DrawMenuCursor
 	ADDQ.w	#1, Take_item_state.w
 	RTS
 	
@@ -33010,7 +33015,7 @@ loc_0001E896:
 	MOVE.w	#BUTTON_BIT_C, D2
 	JSR	CheckButtonPress
 	BEQ.w	loc_0001E8C8
-	JSR	loc_0001290C
+	JSR	DrawMenuCursor
 	MOVE.w	#$00A1, D0
 	JSR	QueueSoundEffect
 	JSR	loc_000122F4
