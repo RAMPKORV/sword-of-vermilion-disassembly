@@ -14450,10 +14450,10 @@ loc_0000D06A:
 loc_0000D094:
 	LEA	Player_name.w, A0
 	LEA	Text_build_buffer.w, A1
-	JSR	loc_00012A6C
+	JSR	CopyStringUntilFF
 	MOVE.b	#$20, (A1)+
 	MOVEA.l	#TakesStr, A0
-	JSR	loc_00012A6C
+	JSR	CopyStringUntilFF
 	MOVE.w	Battle_type.w, D6
 	ASL.w	#3, D6
 	LEA	loc_0000D116, A2
@@ -14471,7 +14471,7 @@ loc_0000D094:
 	JSR	FormatKimsAmount
 	LEA	-$4(A1), A1
 	MOVEA.l	#ExpStr, A0
-	JSR	loc_00012A6C
+	JSR	CopyStringUntilFF
 	MOVE.b	#$FF, (A1)
 	PRINT 	$FFFFC260
 	JSR	ResetScriptAndInitDialogue
@@ -21053,12 +21053,16 @@ loc_00012976:
 	dc.b	$B6, $78, $C2, $2A, $51, $CF, $FF, $88, $4E, $75, $61, $00, $01, $C4, $60, $8E, $31, $FC, $00, $12, $C2, $42, $31, $FC, $00, $02, $C2, $44, $43, $F9, $00, $02 
 	dc.b	$20, $B0, $30, $38, $C4, $0C, $D0, $40, $D0, $40, $D0, $78, $C4, $A6, $D0, $40, $D0, $40, $22, $71, $00, $00, $3A, $38, $C4, $A2, $53, $45, $36, $3C, $00, $00 
 	dc.b	$24, $19, $61, $00, $E9, $C6, $31, $FC, $00, $12, $C2, $42, $54, $78, $C2, $44, $51, $CD, $FF, $EE, $4E, $75 
-loc_00012A6C:
+; CopyStringUntilFF
+; Copy string from A0 to A1 until $FF terminator
+; Input: A0 = Source string pointer, A1 = Destination pointer
+; Output: A0, A1 advanced past copied data
+CopyStringUntilFF:
 	MOVE.b	(A0), D0
 	CMPI.b	#$FF, D0
 	BEQ.b	loc_00012A78
 	MOVE.b	(A0)+, (A1)+
-	BRA.b	loc_00012A6C
+	BRA.b	CopyStringUntilFF
 loc_00012A78:
 	RTS
 	
@@ -25632,7 +25636,7 @@ loc_000181DC:
 	JSR	ResetScriptAndInitDialogue
 	JSR	CopyPlayerNameToTextBuffer
 	LEA	DiscardsTheStr, A0
-	JSR	loc_00012A6C
+	JSR	CopyStringUntilFF
 	MOVE.b	#$FE, (A1)+
 	LEA	MagicNames, A0
 	LEA	Possessed_magics_list.w, A2
@@ -25643,7 +25647,7 @@ loc_000181DC:
 	ADD.w	D0, D0
 	ADD.w	D0, D0
 	MOVEA.l	(A0,D0.w), A0
-	JSR	loc_00012A6C
+	JSR	CopyStringUntilFF
 	MOVE.b	#$2E, (A1)+
 	MOVE.b	#$FF, (A1)
 	PRINT 	$FFFFC260
@@ -25747,7 +25751,7 @@ loc_00018388:
 	BSR.w	loc_00018680
 	LEA	Text_build_buffer.w, A1
 	LEA	BookOfStr, A0
-	JSR	loc_00012A6C
+	JSR	CopyStringUntilFF
 	LEA	MagicNames, A0
 	LEA	Possessed_magics_list.w, A2
 	MOVE.w	Magic_list_cursor_index.w, D0
@@ -25757,9 +25761,9 @@ loc_00018388:
 	ADD.w	D0, D0
 	ADD.w	D0, D0
 	MOVEA.l	(A0,D0.w), A0
-	JSR	loc_00012A6C
+	JSR	CopyStringUntilFF
 	LEA	BookReadyStr, A0
-	JSR	loc_00012A6C
+	JSR	CopyStringUntilFF
 	MOVE.b	#$FF, (A1)
 	PRINT 	$FFFFC260
 	MOVE.w	#2, $FFFFC424.w
@@ -28187,7 +28191,7 @@ loc_0001A59C:
 loc_0001A5D4:
 	JSR	CopyPlayerNameToTextBuffer
 	LEA	DiscardsTheStr, A0
-	JSR	loc_00012A6C
+	JSR	CopyStringUntilFF
 	MOVE.b	#$FE, (A1)+
 	LEA	ItemNames, A0
 	LEA	Possessed_items_list.w, A2
@@ -28198,7 +28202,7 @@ loc_0001A5D4:
 	ADD.w	D0, D0
 	ADD.w	D0, D0
 	MOVEA.l	(A0,D0.w), A0
-	JSR	loc_00012A6C
+	JSR	CopyStringUntilFF
 	MOVE.b	#$2E, (A1)+
 	MOVE.b	#$FF, (A1)
 	PRINT 	$FFFFC260
@@ -28281,7 +28285,7 @@ loc_0001A702:
 	JSR	ResetScriptAndInitDialogue
 	JSR	CopyPlayerNameToTextBuffer
 	LEA	UsesTheStr, A0
-	JSR	loc_00012A6C
+	JSR	CopyStringUntilFF
 	MOVE.b	#$FE, (A1)+
 	LEA	ItemNames, A0
 	LEA	Possessed_items_list.w, A2
@@ -28296,7 +28300,7 @@ loc_0001A702:
 	ADD.w	D0, D0
 	ADD.w	D0, D0
 	MOVEA.l	(A0,D0.w), A0
-	JSR	loc_00012A6C
+	JSR	CopyStringUntilFF
 	MOVE.b	#$2E, (A1)+
 	MOVE.b	#$FD, (A1)+
 	PRINT 	$FFFFC260
@@ -28307,7 +28311,7 @@ loc_0001A794:
 	ADD.w	D0, D0
 	ADD.w	D0, D0
 	MOVEA.l	(A0,D0.w), A0
-	JSR	loc_00012A6C
+	JSR	CopyStringUntilFF
 	MOVE.b	#$2E, (A1)+
 	MOVE.b	#$FF, (A1)+
 	PRINT 	$FFFFC260
@@ -29261,7 +29265,7 @@ loc_0001B302:
 loc_0001B312:
 	LEA	Text_build_buffer.w, A1
 	LEA	StayingForFreeStr, A0
-	JSR	loc_00012A6C
+	JSR	CopyStringUntilFF
 	MOVE.b	#$FE, (A1)+
 	MOVE.w	Watling_inn_unpaid_nights.w, D0
 	MULU.w	#$0190, D0
@@ -29271,17 +29275,17 @@ loc_0001B312:
 	MOVE.b	#$2C, (A1)+
 	MOVE.b	#$FE, (A1)+
 	LEA	PayOrWorkStr, A0
-	JSR	loc_00012A6C
+	JSR	CopyStringUntilFF
 	MOVE.b	#$FF, (A1)
 	PRINT 	$FFFFC260
 	BRA.b	loc_0001B3B0
 loc_0001B35E:
 	LEA	Text_build_buffer.w, A1
 	LEA	RoomRentStr, A0
-	JSR	loc_00012A6C
+	JSR	CopyStringUntilFF
 	MOVE.b	#$FD, (A1)+
 	LEA	IsStr, A0
-	JSR	loc_00012A6C
+	JSR	CopyStringUntilFF
 	MOVE.w	Current_town.w, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
@@ -29290,7 +29294,7 @@ loc_0001B35E:
 	BSR.w	FormatKimsAmount
 	MOVE.b	#$20, (A1)+
 	LEA	AllRightStr, A0
-	JSR	loc_00012A6C
+	JSR	CopyStringUntilFF
 	MOVE.b	#$FF, (A1)
 	PRINT 	$FFFFC260
 loc_0001B3B0:
@@ -29300,10 +29304,10 @@ loc_0001B3B0:
 loc_0001B3B8:
 	LEA	Text_build_buffer.w, A1
 	LEA	FortuneTellerStr, A0
-	JSR	loc_00012A6C
+	JSR	CopyStringUntilFF
 	MOVE.b	#$FD, (A1)+
 	LEA	FeeStr, A0
-	JSR	loc_00012A6C
+	JSR	CopyStringUntilFF
 	MOVE.w	Current_town.w, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
@@ -29313,7 +29317,7 @@ loc_0001B3B8:
 	MOVE.b	#$2E, (A1)+
 	MOVE.b	#$FE, (A1)+
 	LEA	PayFirstStr, A0
-	JSR	loc_00012A6C
+	JSR	CopyStringUntilFF
 	MOVE.b	#$FF, (A1)
 	PRINT 	$FFFFC260
 	MOVE.w	#$18, Dialogue_state.w
@@ -29502,7 +29506,7 @@ loc_0001B784:
 	ADD.w	D0, D0
 	ADD.w	D0, D0
 	LEA	VeryExpensiveStr, A0
-	JSR	loc_00012A6C
+	JSR	CopyStringUntilFF
 	MOVE.b	#$FF, (A1)
 	PRINT 	$FFFFC260
 	MOVE.w	#$30, Dialogue_state.w
@@ -29943,7 +29947,7 @@ loc_0001BE6E:
 	JSR	loc_00011666
 	LEA	Text_build_buffer.w, A1
 	LEA	IsStr, A0
-	JSR	loc_00012A6C
+	JSR	CopyStringUntilFF
 	LEA	ShopCategoryNameTables, A0
 	MOVE.w	Current_shop_type.w, D0
 	ASL.w	#3, D0
@@ -29956,13 +29960,13 @@ loc_0001BE6E:
 	ADD.w	D0, D0
 	ADD.w	D0, D0
 	MOVEA.l	(A0,D0.w), A0
-	JSR	loc_00012A6C
+	JSR	CopyStringUntilFF
 	MOVE.w	Current_shop_type.w, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
 	LEA	loc_00026004, A0
 	MOVEA.l	(A0,D0.w), A0
-	JSR	loc_00012A6C
+	JSR	CopyStringUntilFF
 	MOVE.b	#$FF, (A1)
 	PRINT 	$FFFFC260
 	ADDQ.w	#1, Dialogue_state.w
@@ -30248,14 +30252,14 @@ loc_0001C2AA:
 loc_0001C2FE:
 	MOVE.w	D0, D2
 	LEA	IsStr, A0
-	JSR	loc_00012A6C
+	JSR	CopyStringUntilFF
 	BSR.w	loc_0001CEF8
 	MOVE.w	Current_shop_type.w, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
 	LEA	loc_0002601C, A0
 	MOVEA.l	(A0,D0.w), A0
-	JSR	loc_00012A6C
+	JSR	CopyStringUntilFF
 	MOVE.b	#$FF, (A1)
 	PRINT 	$FFFFC260
 	ADDQ.w	#1, Dialogue_state.w
@@ -30753,7 +30757,7 @@ loc_0001C9FA:
 	BEQ.b	loc_0001CA4C
 	LEA	Text_build_buffer.w, A1
 	LEA	GiveToCharityStr, A0
-	JSR	loc_00012A6C
+	JSR	CopyStringUntilFF
 	MOVE.b	#$FE, (A1)+
 	MOVE.w	Current_town.w, D0
 	ADD.w	D0, D0
@@ -30762,7 +30766,7 @@ loc_0001C9FA:
 	MOVE.l	(A0,D0.w), D0
 	BSR.w	FormatKimsAmount
 	LEA	CharityAgreeStr, A0
-	JSR	loc_00012A6C
+	JSR	CopyStringUntilFF
 	MOVE.b	#$FF, (A1)
 	PRINT 	$FFFFC260
 	MOVE.w	#$25, Dialogue_state.w
@@ -30776,7 +30780,7 @@ loc_0001CA5C:
 	BEQ.b	loc_0001CAAC
 	LEA	Text_build_buffer.w, A1
 	LEA	GiveToCharityStr, A0
-	JSR	loc_00012A6C
+	JSR	CopyStringUntilFF
 	MOVE.b	#$FE, (A1)+
 	MOVE.w	Current_town.w, D0
 	ADD.w	D0, D0
@@ -30785,7 +30789,7 @@ loc_0001CA5C:
 	MOVE.l	(A0,D0.w), D0
 	BSR.w	FormatKimsAmount
 	LEA	CharityAgreeStr, A0
-	JSR	loc_00012A6C
+	JSR	CopyStringUntilFF
 	MOVE.b	#$FF, (A1)
 	PRINT 	$FFFFC260
 	MOVE.w	#$28, Dialogue_state.w
@@ -31367,7 +31371,7 @@ loc_0001D216:
 	LEA	loc_0001D4B8, A0
 	JSR	(A0,D0.w)
 	LEA	ReadiedStr, A0
-	JSR	loc_00012A6C
+	JSR	CopyStringUntilFF
 	MOVE.b	#$FE, (A1)+
 	BSR.w	loc_0001D664
 	MOVE.b	#$2E, (A1)+
@@ -31403,7 +31407,7 @@ loc_0001D29C:
 	LEA	loc_0001D4B8, A0
 	JSR	(A0,D0.w)
 	LEA	RemovedStr, A0
-	JSR	loc_00012A6C
+	JSR	CopyStringUntilFF
 	MOVE.b	#$FE, (A1)+
 	BSR.w	loc_0001D664
 	MOVE.b	#$20, (A1)+
@@ -31414,7 +31418,7 @@ loc_0001D29C:
 	BSR.w	loc_0001D5E8
 	MOVE.w	D1, D2
 	LEA	ReadiedStr, A0
-	JSR	loc_00012A6C
+	JSR	CopyStringUntilFF
 	BSR.w	loc_0001D664
 	MOVE.b	#$2E, (A1)+
 	MOVE.b	#$FF, (A1)
@@ -31482,7 +31486,7 @@ loc_0001D3BA:
 	BSR.w	loc_0001D5D8
 	MOVE.w	D0, D2
 	LEA	RemovedStr, A0
-	JSR	loc_00012A6C
+	JSR	CopyStringUntilFF
 	MOVE.b	#$FE, (A1)+
 	BSR.w	loc_0001D664
 	MOVE.b	#$2E, (A1)+
@@ -31692,7 +31696,7 @@ loc_0001D64E:
 CopyPlayerNameToTextBuffer:
 	LEA	Player_name.w, A0
 	LEA	Text_build_buffer.w, A1
-	JSR	loc_00012A6C
+	JSR	CopyStringUntilFF
 	MOVE.b	#$20, (A1)+
 	RTS
 
@@ -31702,7 +31706,7 @@ loc_0001D664:
 	ADD.w	D2, D2
 	ADD.w	D2, D2
 	MOVEA.l	(A2,D2.w), A0
-	JSR	loc_00012A6C
+	JSR	CopyStringUntilFF
 	RTS
 
 loc_0001D67E:
@@ -32275,7 +32279,7 @@ loc_0001DDF8:
 loc_0001DE14:
 	LEA	Text_build_buffer.w, A1
 	LEA	ThereIsStr, A0
-	JSR	loc_00012A6C
+	JSR	CopyStringUntilFF
 	MOVE.b	#$FE, (A1)+
 	LEA	ShopCategoryNameTables, A0
 	MOVE.w	$FFFFC570.w, D0
@@ -32292,9 +32296,9 @@ loc_0001DE14:
 	ADD.w	D0, D0
 	ADD.w	D0, D0
 	MOVEA.l	(A0,D0.w), A0
-	JSR	loc_00012A6C
+	JSR	CopyStringUntilFF
 	LEA	InsideStr, A0
-	JSR	loc_00012A6C
+	JSR	CopyStringUntilFF
 	MOVE.b	#$FF, (A1)
 	PRINT 	$FFFFC260
 	BRA.w	loc_0001DECE
@@ -32305,9 +32309,9 @@ loc_0001DE82:
 	ADD.w	D0, D0
 	ADD.w	D0, D0
 	MOVEA.l	(A0,D0.w), A0
-	JSR	loc_00012A6C
+	JSR	CopyStringUntilFF
 	LEA	InsideStr, A0
-	JSR	loc_00012A6C
+	JSR	CopyStringUntilFF
 	MOVE.b	#$FF, (A1)
 	PRINT 	$FFFFC260
 	BRA.w	loc_0001DECE
@@ -32672,16 +32676,16 @@ OneKimStr:
 loc_0001E410:
 	JSR	CopyPlayerNameToTextBuffer
 	LEA	FoundItemStr, A0
-	JSR	loc_00012A6C
+	JSR	CopyStringUntilFF
 	MOVEA.l	A2, A0
-	JSR	loc_00012A6C
+	JSR	CopyStringUntilFF
 	RTS
 	
 loc_0001E42C:
 	LEA	FoundItemCommaStr, A0
-	JSR	loc_00012A6C
+	JSR	CopyStringUntilFF
 	MOVEA.l	A2, A0
-	JSR	loc_00012A6C
+	JSR	CopyStringUntilFF
 	MOVE.b	#$2E, (A1)+
 	MOVE.b	#$FF, (A1)+
 	PRINT 	$FFFFC260
@@ -32689,7 +32693,7 @@ loc_0001E42C:
 	
 loc_0001E452:
 	LEA	TooMuchToCarryStr, A0	
-	JSR	loc_00012A6C	
+	JSR	CopyStringUntilFF	
 	MOVE.b	#$FF, (A1)+	
 	PRINT 	$FFFFC260	
 	RTS
@@ -32797,7 +32801,7 @@ loc_0001E598:
 loc_0001E5AC:
 	JSR	CopyPlayerNameToTextBuffer
 	LEA	TakesStr, A0
-	JSR	loc_00012A6C
+	JSR	CopyStringUntilFF
 	MOVE.b	#$FE, (A1)+
 	LEA	ShopCategoryNameTables, A0
 	MOVE.w	$FFFFC570.w, D0
@@ -32822,7 +32826,7 @@ loc_0001E5AC:
 	ADD.w	D1, D1
 	ADD.w	D1, D1
 	MOVEA.l	(A0,D1.w), A0
-	JSR	loc_00012A6C
+	JSR	CopyStringUntilFF
 	BRA.w	loc_0001E6A0
 loc_0001E61E:
 	LEA	$FFFFC820.w, A0
@@ -32831,7 +32835,7 @@ loc_0001E61E:
 	MOVE.b	#$FF, $FFFFC55F.w
 	JSR	loc_00006458
 	MOVEA.l	#AreaMapStr, A0
-	JSR	loc_00012A6C
+	JSR	CopyStringUntilFF
 	BRA.w	loc_0001E6A0
 loc_0001E648:
 	LEA	RingNames, A0
@@ -32840,7 +32844,7 @@ loc_0001E648:
 	ADD.w	D0, D0
 	ADD.w	D0, D0
 	MOVEA.l	(A0,D0.w), A0
-	JSR	loc_00012A6C
+	JSR	CopyStringUntilFF
 	BRA.w	loc_0001E6A0
 loc_0001E668:
 	MOVEQ	#0, D0
@@ -32850,7 +32854,7 @@ loc_0001E668:
 	JSR	loc_00013186
 	JSR	CopyPlayerNameToTextBuffer
 	LEA	TakesStr, A0
-	JSR	loc_00012A6C
+	JSR	CopyStringUntilFF
 	MOVE.b	#$FE, (A1)+
 	MOVEQ	#0, D0
 	MOVE.w	$FFFFC572.w, D0
@@ -32911,7 +32915,7 @@ loc_0001E766:
 	JSR	ResetScriptAndInitDialogue
 	LEA	Text_build_buffer.w, A1
 	LEA	DontWantCarryStr, A0
-	JSR	loc_00012A6C
+	JSR	CopyStringUntilFF
 	MOVE.b	#$FE, (A1)+
 	LEA	ShopCategoryNameTables, A0
 	MOVE.w	$FFFFC570.w, D0
@@ -32922,7 +32926,7 @@ loc_0001E766:
 	ADD.w	D1, D1
 	ADD.w	D1, D1
 	MOVEA.l	(A0,D1.w), A0
-	JSR	loc_00012A6C
+	JSR	CopyStringUntilFF
 	MOVE.b	#$2E, (A1)+
 	MOVE.b	#$FF, (A1)
 	MOVE.w	#3, Take_item_state.w
@@ -33038,7 +33042,7 @@ loc_0001E96A:
 	JSR	QueueSoundEffect
 	LEA	Text_build_buffer.w, A1
 	LEA	PutStr, A0
-	JSR	loc_00012A6C
+	JSR	CopyStringUntilFF
 	LEA	ShopCategoryNameTables, A0
 	MOVE.w	$FFFFC570.w, D0
 	ASL.w	#3, D0
@@ -33054,16 +33058,16 @@ loc_0001E96A:
 	ADD.w	D0, D0
 	ADD.w	D0, D0
 	MOVEA.l	(A0,D0.w), A0
-	JSR	loc_00012A6C
+	JSR	CopyStringUntilFF
 	LEA	PutDownStr, A0
-	JSR	loc_00012A6C
+	JSR	CopyStringUntilFF
 	MOVE.b	#$FE, (A1)+
 	MOVE.b	#$61, (A1)+
 	MOVE.b	#$6E, (A1)+
 	MOVE.b	#$64, (A1)+
 	MOVE.b	#$20, (A1)+
 	LEA	TakesStr, A0
-	JSR	loc_00012A6C
+	JSR	CopyStringUntilFF
 	LEA	ShopCategoryNameTables, A0
 	MOVE.w	$FFFFC570.w, D0
 	ASL.w	#3, D0
@@ -33073,7 +33077,7 @@ loc_0001E96A:
 	ADD.w	D0, D0
 	ADD.w	D0, D0
 	MOVEA.l	(A0,D0.w), A0
-	JSR	loc_00012A6C
+	JSR	CopyStringUntilFF
 	MOVE.b	#$2E, (A1)+
 	MOVE.b	#$FF, (A1)
 	PRINT 	$FFFFC260
