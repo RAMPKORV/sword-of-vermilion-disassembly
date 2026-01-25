@@ -64,7 +64,8 @@ loc_000002B6:
 	JSR	VDP_DMAFill
 	RTS
 
-loc_000002D0:
+; ClearVRAMPlaneA
+ClearVRAMPlaneA:
 	MOVE.l	#$40000003, D7
 	MOVE.w	#$1FFF, D6
 	MOVE.b	#0, D5
@@ -72,7 +73,8 @@ loc_000002D0:
 	JSR	VDP_DMAFill
 	RTS
 
-loc_000002EA:
+; ClearVRAMPlaneB
+ClearVRAMPlaneB:
 	MOVE.l	#$60000003, D7
 	MOVE.w	#$1FFF, D6
 	MOVE.b	#0, D5
@@ -109,8 +111,8 @@ loc_00000362:
 	BSR.w	loc_00000280
 	BSR.w	loc_0000029A
 	BSR.w	loc_000002B6
-	BSR.w	loc_000002D0
-	BSR.w	loc_000002EA
+	BSR.w	ClearVRAMPlaneA
+	BSR.w	ClearVRAMPlaneB
 	MOVE.l	#$40000000, D7
 	MOVE.w	#$001F, D6
 	MOVE.b	#0, D5
@@ -276,7 +278,8 @@ EnableDisplay:
 	MOVE.w	D0, VDP_control_port
 	RTS
 
-loc_00000682:
+; DisableVDPDisplay
+DisableVDPDisplay:
 	MOVE.w	VDP_Reg1_cache.w, D0
 	BCLR.l	#6, D0
 	MOVE.w	D0, VDP_Reg1_cache.w
@@ -965,8 +968,8 @@ loc_0000168A:
 ProgramState_0B:
 	TST.b	Fade_out_lines_mask.w
 	BNE.b	loc_000016E4
-	JSR	loc_000002D0
-	JSR	loc_000002EA
+	JSR	ClearVRAMPlaneA
+	JSR	ClearVRAMPlaneB
 	JSR	ClearScrollData
 	JSR	loc_00016A72
 	MOVE.w	VDP_Reg11_cache.w, D0
@@ -1025,7 +1028,7 @@ loc_00001756:
 ProgramState_05:
 	TST.b	Fade_out_lines_mask.w
 	BNE.b	loc_000017AA
-	JSR	loc_00000682
+	JSR	DisableVDPDisplay
 	CLR.b	Scene_update_flag.w
 	JSR	ClearScrollData
 	JSR	loc_00016A72
@@ -1077,7 +1080,7 @@ ProgramState_13_and_14:
 ProgramState_0E_and_10:
 	TST.b	Fade_out_lines_mask.w
 	BNE.w	loc_00001818
-	JSR	loc_00000682
+	JSR	DisableVDPDisplay
 	MOVEA.l	Player_entity_ptr.w, A6
 	BSET.b	#7, (A6)
 	ADDQ.w	#1, Program_state.w
@@ -1151,7 +1154,7 @@ GameStateMap:
 loc_000018F2:
 	TST.b	Fade_out_lines_mask.w
 	BNE.w	loc_00001956
-	JSR	loc_00000682
+	JSR	DisableVDPDisplay
 	BSR.w	ClearAllEnemyEntities
 	JSR	loc_0000055C
 	CLR.b	Player_in_first_person_mode.w
@@ -1166,8 +1169,8 @@ loc_000018F2:
 	LEA	(A6,D0.w), A6
 	BCLR.b	#7, (A6)
 	JSR	loc_0000F9D2
-	JSR	loc_000002D0
-	JSR	loc_000002EA
+	JSR	ClearVRAMPlaneA
+	JSR	ClearVRAMPlaneB
 	JSR	ClearScrollData
 	ADDQ.w	#1, Gameplay_substate.w
 	CLR.w	Town_spawn_x.w
@@ -1177,7 +1180,7 @@ loc_00001956:
 loc_00001958:
 	TST.b	Fade_out_lines_mask.w
 	BNE.w	loc_00001A90
-	JSR	loc_00000682
+	JSR	DisableVDPDisplay
 	MOVE.w	#$F, Encounter_rate.w
 	JSR	loc_0000FD90
 	JSR	loc_0000F9B4
@@ -1337,7 +1340,7 @@ loc_00001B9A:
 loc_00001BB8:
 	TST.b	Fade_out_lines_mask.w
 	BNE.b	loc_00001C1A
-	JSR	loc_00000682
+	JSR	DisableVDPDisplay
 	JSR	loc_0000FE2C
 	JSR	loc_0000F9BE
 	TST.w	Saved_player_x_in_town.w
@@ -1423,7 +1426,7 @@ loc_00001CDC:
 
 loc_00001D14:
 	MOVE.b	#$FF, Player_input_blocked.w
-	JSR	loc_0001229E
+	JSR	SaveStatusBarToBuffer
 	JSR	ResetScriptAndInitDialogue
 	PRINT 	AwakenVoiceStr
 	TST.b	Frying_pan_knockout_flag.w
@@ -1568,7 +1571,7 @@ loc_00001EFE:
 loc_00001F00:
 	TST.b	Fade_out_lines_mask.w
 	BNE.b	loc_00001F40
-	JSR	loc_00000682
+	JSR	DisableVDPDisplay
 	MOVE.w	Saved_player_spawn_x.w, Player_spawn_position_x.w
 	MOVE.w	Saved_player_y_room1.w, Player_spawn_tile_y.w
 	MOVE.w	#0, Town_camera_spawn_x.w
@@ -1625,7 +1628,7 @@ loc_00001FB4:
 loc_00001FE0:
 	TST.b	Fade_out_lines_mask.w
 	BNE.b	loc_00002020
-	JSR	loc_00000682
+	JSR	DisableVDPDisplay
 	MOVE.w	Saved_player_spawn_x_room2.w, Player_spawn_position_x.w
 	MOVE.w	Saved_player_spawn_y_room2.w, Player_spawn_tile_y.w
 	MOVE.w	#0, Town_camera_spawn_x.w
@@ -1674,7 +1677,7 @@ loc_00002084:
 loc_000020B2:
 	TST.b	Fade_out_lines_mask.w
 	BNE.b	loc_00002114
-	JSR	loc_00000682
+	JSR	DisableVDPDisplay
 	JSR	loc_0000FE2C
 	JSR	loc_0000F9C8
 	TST.w	Saved_player_x_in_town.w
@@ -1746,7 +1749,7 @@ loc_000021A2:
 loc_000021DA:
 	TST.b	Fade_out_lines_mask.w
 	BNE.b	loc_0000221A
-	JSR	loc_00000682
+	JSR	DisableVDPDisplay
 	MOVE.w	Saved_player_spawn_x.w, Player_spawn_position_x.w
 	MOVE.w	Saved_player_y_room1.w, Player_spawn_tile_y.w
 	MOVE.w	#0, Town_camera_spawn_x.w
@@ -1797,7 +1800,7 @@ loc_0000227A:
 loc_000022A6:
 	TST.b	Fade_out_lines_mask.w	
 	BNE.b	loc_000022E6	
-	JSR	loc_00000682	
+	JSR	DisableVDPDisplay	
 	MOVE.w	Saved_player_spawn_x_room2.w, Player_spawn_position_x.w	
 	MOVE.w	Saved_player_spawn_y_room2.w, Player_spawn_tile_y.w	
 	MOVE.w	#0, Town_camera_spawn_x.w	
@@ -1827,9 +1830,9 @@ loc_000022E8:
 loc_00002324:
 	TST.b	Fade_out_lines_mask.w
 	BNE.w	loc_00002410
-	JSR	loc_00000682
-	JSR	loc_000002D0
-	JSR	loc_000002EA
+	JSR	DisableVDPDisplay
+	JSR	ClearVRAMPlaneA
+	JSR	ClearVRAMPlaneB
 	JSR	ClearScrollData
 	MOVE.w	Player_direction.w, Saved_player_direction.w
 	BSR.w	ClearAllEnemyEntities
@@ -2024,9 +2027,9 @@ loc_0000261E:
 	RTS
 
 loc_00002620:
-	JSR	loc_00000682
-	JSR	loc_000002D0
-	JSR	loc_000002EA
+	JSR	DisableVDPDisplay
+	JSR	ClearVRAMPlaneA
+	JSR	ClearVRAMPlaneB
 	JSR	ClearScrollData
 	CLR.w	Camera_scroll_x.w
 	CLR.w	Camera_scroll_y.w
@@ -2362,9 +2365,9 @@ loc_00002A90:
 loc_00002A92:
 	TST.b	Fade_out_lines_mask.w
 	BNE.w	loc_00002BB6
-	JSR	loc_00000682
-	JSR	loc_000002D0
-	JSR	loc_000002EA
+	JSR	DisableVDPDisplay
+	JSR	ClearVRAMPlaneA
+	JSR	ClearVRAMPlaneB
 	JSR	ClearScrollData
 	CLR.b	Player_input_blocked.w
 	CLR.w	D0
@@ -2445,7 +2448,7 @@ loc_00002BC4:
 loc_00002BCC:
 	TST.b	Fade_out_lines_mask.w
 	BNE.w	loc_00002C68
-	JSR	loc_00000682
+	JSR	DisableVDPDisplay
 	CLR.b	Is_boss_battle.w
 	CLR.b	Is_in_battle.w
 	CLR.b	Boss_max_hp.w
@@ -2465,8 +2468,8 @@ loc_00002BCC:
 	LEA	(A6,D0.w), A6
 	BCLR.b	#7, (A6)
 	JSR	loc_0000F9D2
-	JSR	loc_000002D0
-	JSR	loc_000002EA
+	JSR	ClearVRAMPlaneA
+	JSR	ClearVRAMPlaneB
 	JSR	ClearScrollData
 	MOVE.w	Saved_game_state.w, D0
 	SUBQ.w	#1, D0
@@ -2554,7 +2557,7 @@ loc_00002D20:
 	RTS
 
 loc_00002D22:
-	JSR	loc_0001229E
+	JSR	SaveStatusBarToBuffer
 	JSR	ResetScriptAndInitDialogue
 	PRINT 	InaudiosWornOffStr
 	MOVE.w	#$27, Gameplay_substate.w
@@ -2562,7 +2565,7 @@ loc_00002D22:
 	RTS
 
 loc_00002D44:
-	JSR	loc_0001229E
+	JSR	SaveStatusBarToBuffer
 	JSR	ResetScriptAndInitDialogue
 	PRINT 	PoisonedStr
 	MOVE.w	#$27, Gameplay_substate.w
@@ -3215,8 +3218,8 @@ loc_000034E0:
 	LEA	(A6,D0.w), A6
 	BCLR.b	#7, (A6)
 	JSR	loc_0000F9D2
-	JSR	loc_000002D0
-	JSR	loc_000002EA
+	JSR	ClearVRAMPlaneA
+	JSR	ClearVRAMPlaneB
 	JSR	ClearScrollData
 	CLR.w	Saved_player_x_in_town.w
 	CLR.b	Is_boss_battle.w
@@ -18613,8 +18616,8 @@ loc_000106D6:
 	BRA.w	loc_0001083A	
 loc_000106EE:
 	CLR.w	Dialog_selection.w
-	JSR	loc_000002D0
-	JSR	loc_000002EA
+	JSR	ClearVRAMPlaneA
+	JSR	ClearVRAMPlaneB
 	JSR	loc_0001168C
 	ADDQ.w	#1, File_menu_phase.w
 	RTS
@@ -20590,7 +20593,8 @@ loc_0001227A:
 	BSR.w	ReadWindowToBuffer
 	RTS
 	
-loc_0001229E:
+; SaveStatusBarToBuffer
+SaveStatusBarToBuffer:
 	TST.b	Dialog_active_flag.w
 	BEQ.b	loc_000122AE
 	MOVEA.l	Current_actor_ptr.w, A6
@@ -22385,9 +22389,9 @@ loc_00013876:
 	dc.b	$00, $00, $02, $22, $04, $44, $06, $66, $08, $88, $0A, $AA, $0C, $CC, $06, $A0, $08, $C0, $0A, $E0, $02, $22, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF 
 	dc.b	$00, $00, $0C, $CC, $0A, $AA, $08, $88, $04, $44, $00, $00, $04, $4C, $04, $6A, $06, $A8, $02, $22, $0A, $66, $0C, $88, $0C, $66, $0A, $44, $08, $22, $FF, $FF 
 loc_000150F6:
-	JSR	loc_00000682
-	JSR	loc_000002D0
-	JSR	loc_000002EA
+	JSR	DisableVDPDisplay
+	JSR	ClearVRAMPlaneA
+	JSR	ClearVRAMPlaneB
 	MOVE.w	#$0033, Palette_line_1_fade_target.w
 	MOVE.w	#$0034, Palette_line_2_fade_target.w
 	MOVE.w	#$0032, Palette_line_3_fade_target.w
@@ -22767,9 +22771,9 @@ loc_000155F2:
 
 loc_000155F4:
 	ORI	#$0700, SR
-	JSR	loc_00000682
-	JSR	loc_000002D0
-	JSR	loc_000002EA
+	JSR	DisableVDPDisplay
+	JSR	ClearVRAMPlaneA
+	JSR	ClearVRAMPlaneB
 	LEA	loc_0005DDC2, A0
 	ORI	#$0700, SR
 	MOVE.l	#$40000000, VDP_control_port
@@ -22822,9 +22826,9 @@ loc_000156BE:
 	RTS
 
 loc_000156C0:
-	JSR	loc_00000682
-	JSR	loc_000002D0
-	JSR	loc_000002EA
+	JSR	DisableVDPDisplay
+	JSR	ClearVRAMPlaneA
+	JSR	ClearVRAMPlaneB
 	MOVE.w	#$004F, Palette_line_0_fade_target.w
 	MOVE.w	#$0050, Palette_line_1_fade_target.w
 	MOVE.w	#$004F, Palette_line_2_fade_target.w
@@ -22906,8 +22910,8 @@ loc_00015778:
 	BRA.w	loc_0001590E
 	BRA.w	loc_00015956
 loc_000157F0:
-	JSR	loc_000002D0
-	JSR	loc_000002EA
+	JSR	ClearVRAMPlaneA
+	JSR	ClearVRAMPlaneB
 	BSR.w	loc_000159DE
 	MOVE.w	#$004F, Palette_line_0_fade_target.w
 	MOVE.w	#$0050, Palette_line_1_fade_target.w
@@ -22949,8 +22953,8 @@ loc_0001589E:
 	RTS
 
 loc_000158A0:
-	JSR	loc_000002D0
-	JSR	loc_000002EA
+	JSR	ClearVRAMPlaneA
+	JSR	ClearVRAMPlaneB
 	BSR.w	loc_00015A1E
 	MOVE.w	#$004F, Palette_line_0_fade_target.w
 	MOVE.w	#$0052, Palette_line_1_fade_target.w
@@ -22963,8 +22967,8 @@ loc_000158A0:
 loc_000158D2:
 	MOVE.b	#$E0, D0
 	JSR	QueueSoundEffect
-	JSR	loc_000002D0
-	JSR	loc_000002EA
+	JSR	ClearVRAMPlaneA
+	JSR	ClearVRAMPlaneB
 	BSR.w	loc_00015A94
 	MOVE.w	#$004F, Palette_line_0_fade_target.w
 	MOVE.w	#$0052, Palette_line_1_fade_target.w
@@ -24251,9 +24255,9 @@ loc_000169CE:
 
 loc_000169D0:
 	CLR.w	Intro_timer.w
-	JSR	loc_00000682
-	JSR	loc_000002D0
-	JSR	loc_000002EA
+	JSR	DisableVDPDisplay
+	JSR	ClearVRAMPlaneA
+	JSR	ClearVRAMPlaneB
 	BSR.w	loc_00016C92
 	BSR.w	loc_00016CD2
 	MOVE.l	#loc_00016A8C, $2(A5)
@@ -24711,8 +24715,8 @@ loc_00017064:
 	BGT.b	loc_0001708A
 	MOVE.w	#$00A4, D0
 	JSR	QueueSoundEffect
-	JSR	loc_000002D0
-	JSR	loc_000002EA
+	JSR	ClearVRAMPlaneA
+	JSR	ClearVRAMPlaneB
 	MOVE.w	#$00C8, Ending_timer.w
 	ADDQ.w	#1, Ending_sequence_step.w
 loc_0001708A:
@@ -24772,8 +24776,8 @@ loc_00017132:
 loc_00017134:
 	TST.b	Fade_out_lines_mask.w
 	BNE.b	loc_0001719A
-	JSR	loc_000002D0
-	JSR	loc_000002EA
+	JSR	ClearVRAMPlaneA
+	JSR	ClearVRAMPlaneB
 	MOVE.w	VDP_Reg11_cache.w, D0
 	ORI.w	#3, D0
 	MOVE.w	D0, VDP_control_port
@@ -25579,7 +25583,7 @@ loc_00017F80:
 	JSR	DrawMenuCursor
 	MOVE.w	#$00A1, D0
 	JSR	QueueSoundEffect
-	JSR	loc_0001229E
+	JSR	SaveStatusBarToBuffer
 	JSR	ResetScriptAndInitDialogue
 	TST.w	Possessed_magics_length.w
 	BGT.b	loc_00017FC8
@@ -28141,7 +28145,7 @@ loc_0001A380:
 	JSR	DrawMenuCursor
 	MOVE.w	#$00A1, D0
 	JSR	QueueSoundEffect
-	JSR	loc_0001229E
+	JSR	SaveStatusBarToBuffer
 	JSR	ResetScriptAndInitDialogue
 	TST.w	Possessed_items_length.w
 	BNE.b	loc_0001A3C6
@@ -29320,7 +29324,7 @@ DialogueStateHandlerMap:
 loc_0001B266:
 	MOVE.w	Main_menu_selection.w, Menu_cursor_index.w
 	JSR	DrawMenuCursor
-	JSR	loc_0001229E
+	JSR	SaveStatusBarToBuffer
 	JSR	ResetScriptAndInitDialogue
 	ADDQ.w	#1, Dialogue_state.w
 	TST.b	Player_in_first_person_mode.w
@@ -31410,7 +31414,7 @@ loc_0001D156:
 	MOVE.w	#$00A1, D0
 	JSR	QueueSoundEffect
 	BSR.w	loc_0001D5AC
-	JSR	loc_0001229E
+	JSR	SaveStatusBarToBuffer
 	JSR	ResetScriptAndInitDialogue
 	TST.w	Ready_equipment_list_length.w
 	BLE.b	loc_0001D1A8
@@ -31570,7 +31574,7 @@ loc_0001D3BA:
 	MOVE.w	#$00A1, D0
 	JSR	QueueSoundEffect
 	BSR.w	loc_0001D5AC
-	JSR	loc_0001229E
+	JSR	SaveStatusBarToBuffer
 	JSR	ResetScriptAndInitDialogue
 	BSR.w	loc_0001D5D8
 	TST.w	D0
@@ -32297,7 +32301,7 @@ loc_0001DCEC:
 loc_0001DCF8:
 	PRINT 	AlreadyOpenStr	
 loc_0001DD00:
-	JSR	loc_0001229E             ; Display message
+	JSR	SaveStatusBarToBuffer             ; Display message
 	JSR	ResetScriptAndInitDialogue
 	MOVE.w	#1, Open_menu_state.w    ; State 1
 	RTS
@@ -32357,7 +32361,7 @@ loc_0001DDB0:
 	SUBQ.b	#1, Open_chest_delay_timer.w	
 	BNE.w	loc_0001DDD2	
 	PRINT 	CantOpenStr	
-	JSR	loc_0001229E	
+	JSR	SaveStatusBarToBuffer	
 	JSR	ResetScriptAndInitDialogue	
 	MOVE.w	#1, Open_menu_state.w	
 loc_0001DDD2:
@@ -32367,7 +32371,7 @@ loc_0001DDD4:
 	SUBQ.b	#1, Open_chest_delay_timer.w
 	BNE.w	loc_0001DDF6
 	PRINT 	OpenedChestStr
-	JSR	loc_0001229E
+	JSR	SaveStatusBarToBuffer
 	JSR	ResetScriptAndInitDialogue
 	MOVE.w	#6, Open_menu_state.w
 loc_0001DDF6:
@@ -32539,7 +32543,7 @@ loc_0001E070:
 loc_0001E07C:
 	PRINT 	TrufflesStillThereStr	
 loc_0001E084:
-	JSR	loc_0001229E
+	JSR	SaveStatusBarToBuffer
 	JSR	ResetScriptAndInitDialogue
 	MOVE.w	#2, Dialog_selection.w
 	RTS
@@ -32549,7 +32553,7 @@ loc_0001E098:
 	RTS
 	
 loc_0001E09E:
-	JSR	loc_0001229E
+	JSR	SaveStatusBarToBuffer
 	JSR	ResetScriptAndInitDialogue
 	PRINT 	NoUnusualStr
 	ADDQ.w	#1, Dialog_selection.w
@@ -32705,7 +32709,7 @@ loc_0001E2F6: ; Regain all HP
 	dc.b	$C2, $04, $60, $00, $00, $02 
 
 loc_0001E312:
-	JSR	loc_0001229E
+	JSR	SaveStatusBarToBuffer
 	JSR	ResetScriptAndInitDialogue
 	MOVE.w	#2, Dialog_selection.w
 	RTS
@@ -32850,7 +32854,7 @@ loc_0001E4F2:
 	RTS
 	
 loc_0001E4FA:
-	JSR	loc_0001229E
+	JSR	SaveStatusBarToBuffer
 	JSR	ResetScriptAndInitDialogue
 	PRINT 	NothingToTakeStr
 	ADDQ.w	#1, Take_item_state.w
@@ -32897,7 +32901,7 @@ loc_0001E58A:
 loc_0001E590:
 	PRINT 	CantTakeBoxStr
 loc_0001E598:
-	JSR	loc_0001229E
+	JSR	SaveStatusBarToBuffer
 	JSR	ResetScriptAndInitDialogue
 	MOVE.w	#3, Take_item_state.w
 	RTS
@@ -32969,7 +32973,7 @@ loc_0001E6A0:
 	PRINT 	$FFFFC260
 	MOVE.w	#$0090, D0
 	JSR	QueueSoundEffect
-	JSR	loc_0001229E
+	JSR	SaveStatusBarToBuffer
 	JSR	ResetScriptAndInitDialogue
 	BSR.w	loc_0001EAAE
 	MOVE.w	#$000A, Take_item_state.w
@@ -32979,7 +32983,7 @@ loc_0001E6A0:
 	RTS
 	
 loc_0001E6DE:
-	JSR	loc_0001229E
+	JSR	SaveStatusBarToBuffer
 	JSR	ResetScriptAndInitDialogue
 	PRINT 	CantCarryMoreStr
 	MOVE.w	#5, Take_item_state.w
