@@ -33160,7 +33160,7 @@ loc_0001EAC6:
 loc_0001EAFE:
 	LEA	loc_0001EB0C, A1
 	MOVE.w	#1, D7
-	BRA.w	loc_0001F1BC
+	BRA.w	SelectDialogueByGameState
 loc_0001EB0C:
 	dc.l	loc_0002D494
 	dc.l	Rings_collected
@@ -33169,7 +33169,7 @@ loc_0001EB0C:
 	dc.l	loc_0002D424
 	LEA	loc_0001EB2E, A1
 	MOVE.w	#1, D7
-	BRA.w	loc_0001F1BC
+	BRA.w	SelectDialogueByGameState
 loc_0001EB2E:
 	dc.l	loc_0002D4D4
 	dc.l	Rings_collected
@@ -33178,7 +33178,7 @@ loc_0001EB2E:
 	dc.l	loc_0002D4CC
 	LEA	loc_0001EB50, A1
 	MOVE.w	#1, D7
-	BRA.w	loc_0001F1BC
+	BRA.w	SelectDialogueByGameState
 loc_0001EB50:
 	dc.l	loc_0002D4F0 
 	dc.l	Rings_collected
@@ -33189,7 +33189,7 @@ loc_0001EB50:
 	BRA.w	loc_0001F1D0
 	LEA	loc_0001EB7C, A1
 	MOVE.w	#1, D7
-	BRA.w	loc_0001F1BC
+	BRA.w	SelectDialogueByGameState
 loc_0001EB7C:
 	dc.l	loc_0002D514
 	dc.l	Rings_collected
@@ -33200,14 +33200,14 @@ loc_0001EB7C:
 	BRA.w	loc_0001F1D0
 	LEA	loc_0001EBA8, A1
 	MOVE.w	#0, D7
-	BRA.w	loc_0001F1BC
+	BRA.w	SelectDialogueByGameState
 loc_0001EBA8:
 	dc.l	loc_0002D530
 	dc.l	Rings_collected
 	dc.l	loc_0002D528
 	LEA	loc_0001EBC2, A1
 	MOVE.w	#4, D7
-	BRA.w	loc_0001F1BC
+	BRA.w	SelectDialogueByGameState
 loc_0001EBC2:
 	dc.l	loc_0002E8E8
 	dc.l	Talked_to_real_king
@@ -33232,35 +33232,35 @@ loc_0001EBC2:
 	BRA.w	loc_0001F1D0
 	LEA	loc_0001EC2E, A1
 	MOVE.w	#0, D7
-	BRA.w	loc_0001F1BC
+	BRA.w	SelectDialogueByGameState
 loc_0001EC2E:
 	dc.b	$00, $02, $E9, $64 
 	dc.l	Talked_to_real_king
 	dc.l	loc_0002E958
 	LEA	loc_0001EC48, A1
 	MOVE.w	#0, D7
-	BRA.w	loc_0001F1BC
+	BRA.w	SelectDialogueByGameState
 loc_0001EC48:
 	dc.b	$00, $02, $E9, $34 
 	dc.l	Fake_king_killed
 	dc.l	loc_0002E92C
 	LEA	loc_0001EC62, A1
 	MOVE.w	#0, D7
-	BRA.w	loc_0001F1BC
+	BRA.w	SelectDialogueByGameState
 loc_0001EC62:
 	dc.b	$00, $02, $E9, $40 
 	dc.l	Fake_king_killed
 	dc.l	loc_0002E93C
 	LEA	loc_0001EC7C, A1
 	MOVE.w	#0, D7
-	BRA.w	loc_0001F1BC
+	BRA.w	SelectDialogueByGameState
 loc_0001EC7C:
 	dc.b	$00, $02, $E9, $48 
 	dc.l	Fake_king_killed
 	dc.l	loc_0002E944
 	LEA	loc_0001EC96, A1
 	MOVE.w	#4, D7
-	BRA.w	loc_0001F1BC
+	BRA.w	SelectDialogueByGameState
 loc_0001EC96:
 	dc.l	loc_00029110
 	dc.l	Talked_to_real_king
@@ -33275,14 +33275,14 @@ loc_0001EC96:
 	dc.l	loc_00029098
 	LEA	loc_0001ECD0, A1
 	MOVE.w	#0, D7
-	BRA.w	loc_0001F1BC
+	BRA.w	SelectDialogueByGameState
 loc_0001ECD0:
 	dc.b	$00, $02, $91, $2C 
 	dc.l	$FFFFC728
 	dc.l	loc_00029128
 	LEA	loc_0001ECEA, A1
 	MOVE.w	#2, D7
-	BRA.w	loc_0001F1BC
+	BRA.w	SelectDialogueByGameState
 loc_0001ECEA:
 	dc.b	$00, $02, $E9, $54 
 	dc.l	Talked_to_real_king
@@ -33293,7 +33293,7 @@ loc_0001ECEA:
 	dc.l	loc_0002E94C
 	LEA	loc_0001ED14, A1
 	MOVE.w	#1, D7
-	BRA.w	loc_0001F1BC
+	BRA.w	SelectDialogueByGameState
 loc_0001ED14:
 	dc.l	loc_0002FD06
 	dc.l	$FFFFC72A
@@ -33302,7 +33302,7 @@ loc_0001ED14:
 	dc.l	loc_0002FCD6
 	LEA	loc_0001ED36, A1
 	MOVE.w	#1, D7
-	BRA.w	loc_0001F1BC
+	BRA.w	SelectDialogueByGameState
 loc_0001ED36:
 	dc.l	loc_0002FD26
 	dc.l	$FFFFC72A
@@ -33311,7 +33311,7 @@ loc_0001ED36:
 	dc.l	loc_0002FD1E
 	LEA	loc_0001ED58, A1
 	MOVE.w	#1, D7
-	BRA.w	loc_0001F1BC
+	BRA.w	SelectDialogueByGameState
 loc_0001ED58:
 	dc.l	loc_00030A4A
 	dc.l	$FFFFC72D
@@ -33320,7 +33320,7 @@ loc_0001ED58:
 	dc.l	loc_00030A12
 	LEA	loc_0001ED7A, A1
 	MOVE.w	#1, D7
-	BRA.w	loc_0001F1BC
+	BRA.w	SelectDialogueByGameState
 loc_0001ED7A:
 	dc.l	loc_00030A6E
 	dc.l	$FFFFC72D
@@ -33329,7 +33329,7 @@ loc_0001ED7A:
 	dc.l	loc_00030A66
 	LEA	loc_0001ED9C, A1
 	MOVE.w	#1, D7
-	BRA.w	loc_0001F1BC
+	BRA.w	SelectDialogueByGameState
 loc_0001ED9C:
 	dc.l	loc_00029C80
 	dc.l	$FFFFC72D
@@ -33343,7 +33343,7 @@ loc_0001ED9C:
 	BRA.w	loc_0001F1D0
 	LEA	loc_0001EDD2, A1
 	MOVE.w	#3, D7
-	BRA.w	loc_0001F1BC
+	BRA.w	SelectDialogueByGameState
 loc_0001EDD2:
 	dc.l	loc_000319A0
 	dc.l	$FFFFC732
@@ -33356,7 +33356,7 @@ loc_0001EDD2:
 	dc.l	loc_000318F0	
 	LEA	loc_0001EE04, A1
 	MOVE.w	#1, D7
-	BRA.w	loc_0001F1BC
+	BRA.w	SelectDialogueByGameState
 loc_0001EE04:
 	dc.l	loc_000319CC
 	dc.l	$FFFFC732
@@ -33365,7 +33365,7 @@ loc_0001EE04:
 	dc.l	loc_000319C4
 	LEA	loc_0001EE26, A1
 	MOVE.w	#4, D7
-	BRA.w	loc_0001F1BC
+	BRA.w	SelectDialogueByGameState
 loc_0001EE26:
 	dc.l	loc_0002A282
 	dc.l	$FFFFC732
@@ -33386,7 +33386,7 @@ loc_0001EE26:
 	BRA.w	loc_0001F1D0
 	LEA	loc_0001EE7E, A1
 	MOVE.w	#3, D7
-	BRA.w	loc_0001F1BC
+	BRA.w	SelectDialogueByGameState
 loc_0001EE7E:
 	dc.b	$00, $03, $2D, $C4 
 	dc.l	$FFFFC735
@@ -33401,7 +33401,7 @@ loc_0001EE7E:
 	BRA.w	loc_0001F1D0
 	LEA	loc_0001EEBA, A1
 	MOVE.w	#1, D7
-	BRA.w	loc_0001F1BC
+	BRA.w	SelectDialogueByGameState
 loc_0001EEBA:
 	dc.l	loc_00032DF8
 	dc.l	$FFFFC733
@@ -33414,7 +33414,7 @@ loc_0001EEBA:
 	BRA.w	loc_0001F1D0
 	LEA	loc_0001EEF0, A1
 	MOVE.w	#2, D7
-	BRA.w	loc_0001F1BC
+	BRA.w	SelectDialogueByGameState
 loc_0001EEF0:
 	dc.b	$00, $03, $40, $96 
 	dc.l	$FFFFC735
@@ -33425,7 +33425,7 @@ loc_0001EEF0:
 	dc.l	loc_00034012
 	LEA	loc_0001EF1A, A1
 	MOVE.w	#2, D7
-	BRA.w	loc_0001F1BC
+	BRA.w	SelectDialogueByGameState
 loc_0001EF1A:
 	dc.b	$00, $02, $AC, $F8 
 	dc.l	$FFFFC735
@@ -33438,14 +33438,14 @@ loc_0001EF1A:
 	BRA.w	loc_0001F1D0
 	LEA	loc_0001EF4E, A1
 	MOVE.w	#0, D7
-	BRA.w	loc_0001F1BC
+	BRA.w	SelectDialogueByGameState
 loc_0001EF4E:
 	dc.l	loc_00034D02
 	dc.l	$FFFFC745
 	dc.l	loc_00034CEA
 	LEA	loc_0001EF68, A1
 	MOVE.w	#1, D7
-	BRA.w	loc_0001F1BC
+	BRA.w	SelectDialogueByGameState
 loc_0001EF68:
 	dc.b	$00, $03, $4D, $26 
 	dc.l	$FFFFC754
@@ -33456,7 +33456,7 @@ loc_0001EF68:
 	BRA.w	loc_0001F1D0
 	LEA	loc_0001EF94, A1
 	MOVE.w	#1, D7
-	BRA.w	loc_0001F1BC
+	BRA.w	SelectDialogueByGameState
 loc_0001EF94:
 	dc.l	loc_00035D80
 	dc.l	$FFFFC73D
@@ -33465,7 +33465,7 @@ loc_0001EF94:
 	dc.l	loc_00035D08
 	LEA	loc_0001EFB6, A1
 	MOVE.w	#1, D7
-	BRA.w	loc_0001F1BC
+	BRA.w	SelectDialogueByGameState
 loc_0001EFB6:
 	dc.b	$00, $02, $B6, $EE 
 	dc.l	$FFFFC73D
@@ -33474,7 +33474,7 @@ loc_0001EFB6:
 	dc.l	loc_0002B6D6
 	LEA	loc_0001EFD8, A1
 	MOVE.w	#1, D7
-	BRA.w	loc_0001F1BC
+	BRA.w	SelectDialogueByGameState
 loc_0001EFD8:
 	dc.b	$00, $03, $5D, $CC 
 	dc.l	$FFFFC73D
@@ -33485,7 +33485,7 @@ loc_0001EFD8:
 	BRA.w	loc_0001F1D0
 	LEA	loc_0001F004, A1
 	MOVE.w	#1, D7
-	BRA.w	loc_0001F1BC
+	BRA.w	SelectDialogueByGameState
 loc_0001F004:
 	dc.b	$00, $03, $5D, $E0 
 	dc.l	$FFFFC73D
@@ -33494,14 +33494,14 @@ loc_0001F004:
 	dc.l	loc_00035DD8
 	LEA	loc_0001F026, A1
 	MOVE.w	#0, D7
-	BRA.w	loc_0001F1BC
+	BRA.w	SelectDialogueByGameState
 loc_0001F026:
 	dc.l	loc_00036E16
 	dc.l	$FFFFC744
 	dc.l	loc_00036DD2
 	LEA	loc_0001F040, A1
 	MOVE.w	#0, D7
-	BRA.w	loc_0001F1BC
+	BRA.w	SelectDialogueByGameState
 loc_0001F040:
 	dc.l	loc_00036E62
 	dc.l	$FFFFC744
@@ -33510,7 +33510,7 @@ loc_0001F040:
 	BRA.w	loc_0001F1D0
 	LEA	loc_0001F064, A1
 	MOVE.w	#1, D7
-	BRA.w	loc_0001F1BC
+	BRA.w	SelectDialogueByGameState
 loc_0001F064:
 	dc.l	loc_000385EC
 	dc.l	Swaffham_ruined
@@ -33519,7 +33519,7 @@ loc_0001F064:
 	dc.l	loc_00038584
 	LEA	loc_0001F086, A1
 	MOVE.w	#6, D7
-	BRA.w	loc_0001F1BC
+	BRA.w	SelectDialogueByGameState
 loc_0001F086:
 	dc.b	$00, $02, $B9, $EE 
 	dc.l	$FFFFC749
@@ -33538,7 +33538,7 @@ loc_0001F086:
 	dc.l	loc_0002B98A
 	LEA	loc_0001F0D0, A1
 	MOVE.w	#1, D7
-	BRA.w	loc_0001F1BC
+	BRA.w	SelectDialogueByGameState
 loc_0001F0D0:
 	dc.l	loc_00039550
 	dc.l	$FFFFC76B
@@ -33547,7 +33547,7 @@ loc_0001F0D0:
 	dc.l	loc_00039548	
 	LEA	loc_0001F0F2, A1
 	MOVE.w	#2, D7
-	BRA.w	loc_0001F1BC
+	BRA.w	SelectDialogueByGameState
 loc_0001F0F2:
 	dc.l	loc_0003A0B2
 	dc.l	$FFFFC752
@@ -33558,7 +33558,7 @@ loc_0001F0F2:
 	dc.l	loc_0003A03A
 	LEA	loc_0001F11C, A1
 	MOVE.w	#1, D7
-	BRA.w	loc_0001F1BC
+	BRA.w	SelectDialogueByGameState
 loc_0001F11C:
 	dc.l	loc_0003A0F6
 	dc.l	$FFFFC753
@@ -33572,7 +33572,7 @@ loc_0001F11C:
 	dc.l	$6000008E	
 	LEA	loc_0001F152, A1
 	MOVE.w	#0, D7
-	BRA.w	loc_0001F1BC
+	BRA.w	SelectDialogueByGameState
 loc_0001F152:
 	dc.b	$00, $03, $A1, $0E 
 	dc.l	$FFFFC754
@@ -33603,19 +33603,25 @@ loc_0001F192:
 loc_0001F1A4:
 	RTS
 	
-loc_0001F1A6:
+; CheckGameComplete
+; Check if game is completed (Tsarkon defeated)
+; Output: D0 = 0 if not complete, $FFFF if complete
+CheckGameComplete:
 	LEA	loc_000272AC, A0
 	TST.b	Tsarkon_is_dead.w
 	BNE.b	loc_0001F1B6
 	CLR.w	D0
 	RTS
-	
+
 loc_0001F1B6:
 	MOVE.w	#$FFFF, D0
 	RTS
-	
-loc_0001F1BC:
-	BSR.b	loc_0001F1A6
+
+; SelectDialogueByGameState
+; Select dialogue string from table based on game completion state
+; Iterates through paired pointers until finding one with matching trigger state
+SelectDialogueByGameState:
+	BSR.b	CheckGameComplete
 	BNE.b	loc_0001F1CE
 loc_0001F1C0:
 	MOVEA.l	(A1)+, A0
@@ -33628,7 +33634,7 @@ loc_0001F1CE:
 	RTS
 	
 loc_0001F1D0:
-	BSR.b	loc_0001F1A6
+	BSR.b	CheckGameComplete
 	BNE.b	loc_0001F1D6
 	MOVEA.l	A1, A0
 loc_0001F1D6:
