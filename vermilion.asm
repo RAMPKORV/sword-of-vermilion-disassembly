@@ -1019,7 +1019,7 @@ ProgramState_15:
 	CLR.b	Is_in_cave.w	
 	CLR.b	Cave_light_active.w	
 	CLR.w	Cave_light_timer.w	
-	BSR.w	loc_000034E0	
+	BSR.w	InitializeTownMode	
 	MOVE.w	#PROGRAM_STATE_0E, Program_state.w ; Transition to main game?	
 	MOVE.w	#3, Gameplay_substate.w 	 ; Entering building/town?
 	MOVE.w	Saved_town_room_1.w, Current_town_room.w	
@@ -1848,8 +1848,8 @@ loc_00002324:
 	CLR.b	Encounter_behavior_flag.w
 	JSR	LoadBattleTileGraphics
 	JSR	LoadBattleTerrainGraphics
-	BSR.w	loc_00002FCC
-	BSR.w	loc_00003024
+	BSR.w	DrawTerrainTilemap
+	BSR.w	DrawBattleStatusBar
 	CLR.w	Camera_scroll_x.w
 	CLR.w	Camera_scroll_y.w
 	JSR	LoadBattleTilesToBuffers
@@ -2084,7 +2084,7 @@ loc_000026BA: ; level up
 loc_00002706:
 	TST.b	Is_in_cave.w
 	BEQ.b	loc_00002712
-	BSR.w	loc_000036CC
+	BSR.w	PlayCaveMusic
 	BRA.b	loc_00002720
 loc_00002712:
 	MOVE.b	#$8E, D0
@@ -2311,7 +2311,7 @@ loc_000029D4:
 	MOVE.b	#$8E, D0
 	TST.b	Is_in_cave.w
 	BEQ.b	loc_000029EE
-	BSR.w	loc_000036CC
+	BSR.w	PlayCaveMusic
 	RTS
 
 loc_000029EE:
@@ -2406,8 +2406,8 @@ loc_00002AE0:
 	JSR	LoadBattleTerrainGraphics
 	JSR	LoadBattleGraphics
 	JSR	LoadBattleTilesToVram
-	BSR.w	loc_00002FCC
-	BSR.w	loc_00003024
+	BSR.w	DrawTerrainTilemap
+	BSR.w	DrawBattleStatusBar
 	CLR.w	Camera_scroll_x.w
 	CLR.w	Camera_scroll_y.w
 	JSR	LoadBossGraphics
@@ -2552,7 +2552,7 @@ loc_00002CF6:
 	MOVE.b	D3, (A0)+
 	DBF	D4, loc_00002CC0
 loc_00002D04:
-	BSR.w	loc_000034E0
+	BSR.w	InitializeTownMode
 	MOVE.w	#3, Gameplay_substate.w
 	MOVE.w	Saved_town_room_1.w, Current_town_room.w
 	JSR	LoadAndPlayAreaMusic
@@ -2715,7 +2715,8 @@ loc_00002FB8:
 	CLR.w	Dialog_timer.w
 	RTS
 
-loc_00002FCC:
+;DrawTerrainTilemap:
+DrawTerrainTilemap:
 	MOVE.l	#$60000003, D5
 	BSR.b	loc_00002FDA
 	MOVE.l	#$60280003, D5
@@ -2742,7 +2743,8 @@ loc_00003002:
 	ANDI	#$F8FF, SR
 	RTS
 
-loc_00003024:
+;DrawBattleStatusBar:
+DrawBattleStatusBar:
 	ORI	#$0700, SR
 	MOVE.l	#$6B000003, D5
 	LEA	loc_0006A5B0, A0
@@ -3211,7 +3213,8 @@ loc_000034D6:
 	MOVE.l	#NoOneHereStr, Script_talk_source.w  ; Default message
 	RTS
 
-loc_000034E0:
+;InitializeTownMode:
+InitializeTownMode:
 	BSR.w	ClearAllEnemyEntities
 	JSR	InitMenuObjects
 	MOVEA.l	Player_entity_ptr.w, A6
@@ -3345,7 +3348,8 @@ loc_00003694:
 	dc.l	loc_000005BE
 	dc.l	loc_000005CC
 
-loc_000036CC:
+;PlayCaveMusic:
+PlayCaveMusic:
 	LEA	loc_000036E8, A0
 	MOVE.w	Current_cave_room.w, D1
 	CLR.w	D0
@@ -3513,14 +3517,14 @@ loc_00003900:
 	BNE.w	loc_00003934
 	ANDI.w	#$000F, D0
 	BNE.b	loc_00003930
-	BSR.w	loc_000039AC
+	BSR.w	UpdatePlayerAnimation
 loc_00003930:
 	ASR.w	#3, D0
 	BRA.b	loc_00003940
 loc_00003934:
 	ANDI.w	#7, D0	
 	BNE.b	loc_0000393E	
-	BSR.w	loc_000039AC	
+	BSR.w	UpdatePlayerAnimation	
 loc_0000393E:
 	ASR.w	#2, D0	
 loc_00003940:
@@ -3554,7 +3558,8 @@ loc_0000397C:
 	JSR	AddSpriteToDisplayList
 	RTS
 
-loc_000039AC:
+;UpdatePlayerAnimation:
+UpdatePlayerAnimation:
 	TST.b	Player_walk_anim_toggle.w
 	BEQ.b	loc_000039B8
 	CLR.b	Player_walk_anim_toggle.w
@@ -4240,7 +4245,7 @@ InitFirstPersonView:
 	MOVE.w	#$000C, Wall_render_y_offset.w
 	BSR.w	DrawFirstPersonWalls
 	BSR.w	UpdateAreaVisibility
-	BSR.w	loc_00004BA0
+	BSR.w	ResetObjectOffscreenPositions
 	RTS
 
 loc_000043A6:
@@ -4308,7 +4313,7 @@ loc_00004478:
 loc_00004486:
 	LEA	loc_00005A2C, A0
 	BSR.w	GetMapTileInDirection
-	BSR.w	loc_00004594
+	BSR.w	HandleMapTileTransition
 	BNE.w	loc_0000457C
 loc_00004498:
 	MOVE.w	Overworld_movement_frame.w, D0
@@ -4333,7 +4338,7 @@ loc_000044C2:
 loc_000044E0:
 	LEA	loc_00005A1C, A0
 	BSR.w	GetMapTileInDirection
-	BSR.w	loc_00004594
+	BSR.w	HandleMapTileTransition
 	BNE.w	loc_0000457C
 loc_000044F2:
 	MOVE.w	Overworld_movement_frame.w, D0
@@ -4393,7 +4398,8 @@ loc_0000458E:
 loc_00004592:
 	RTS
 
-loc_00004594:
+;HandleMapTileTransition:
+HandleMapTileTransition:
 	CMPI.b	#$FF, D0
 	BEQ.w	loc_00004626
 	CMPI.b	#$10, D0
@@ -4443,13 +4449,14 @@ loc_00004626:
 	MOVE.b	#$FF, Fade_out_lines_mask.w
 	RTS
 
-loc_00004642:
+;RefreshFirstPersonView:
+RefreshFirstPersonView:
 	CLR.b	Player_move_forward_in_overworld.w
 	BSR.w	UpdateFirstPersonWallData
 	MOVE.w	#0, First_person_wall_frame.w
 	MOVE.w	#$000C, Wall_render_y_offset.w
 	BSR.w	DrawFirstPersonWalls
-	BSR.w	loc_00004BA0
+	BSR.w	ResetObjectOffscreenPositions
 	RTS
 
 loc_00004660:
@@ -4595,7 +4602,7 @@ RenderWallTileWithPalette:
 	MOVE.w	D4, D2
 	ORI.w	#$A000, D1
 	ORI.w	#$A800, D2
-	BRA.w	loc_00005174
+	BRA.w	RenderWallTile_14x10_TwoPalette
 loc_00004820:
 	LEA	loc_00006582, A1
 	LEA	loc_00006824, A3
@@ -4608,7 +4615,7 @@ loc_00004820:
 	MOVE.w	D4, D2
 	ORI.w	#$A000, D1
 	ORI.w	#$A800, D2
-	BSR.w	loc_00005288
+	BSR.w	RenderWallTile_16x11_TwoPalette
 	RTS
 
 loc_0000484C:
@@ -4649,7 +4656,7 @@ loc_00004898:
 	MOVE.w	D4, D2
 	ORI.w	#$A000, D1
 	ORI.w	#$A800, D2
-	BSR.w	loc_00005288
+	BSR.w	RenderWallTile_16x11_TwoPalette
 	RTS
 
 loc_000048C4:
@@ -4657,7 +4664,7 @@ loc_000048C4:
 	SUBQ.w	#2, Player_direction.w
 	ANDI.w	#7, Player_direction.w
 	BSR.w	ClearFirstPersonTilemap
-	BSR.w	loc_00004642
+	BSR.w	RefreshFirstPersonView
 	BSR.w	DisplayCompassToVRAM
 	TST.b	Is_in_cave.w
 	BNE.b	loc_000048EA
@@ -4675,7 +4682,7 @@ loc_000048F8:
 	ADDQ.w	#2, Player_direction.w
 	ANDI.w	#7, Player_direction.w
 	BSR.w	ClearFirstPersonTilemap
-	BSR.w	loc_00004642
+	BSR.w	RefreshFirstPersonView
 	BSR.w	DisplayCompassToVRAM
 	TST.b	Is_in_cave.w
 	BNE.b	loc_0000491E
@@ -4700,7 +4707,7 @@ loc_0000493C:
 loc_00004946:
 	JSR	LoadPalettesFromTable
 	LEA	loc_00005A1C, A0
-	BSR.w	loc_000059AE
+	BSR.w	UpdateMapSectorPosition
 	BSR.w	UpdateFirstPersonWallData
 	MOVE.w	#4, First_person_wall_frame.w
 	MOVE.w	#0, Wall_render_y_offset.w
@@ -4779,7 +4786,7 @@ loc_00004A44:
 	MOVE.w	#$000C, Wall_render_y_offset.w
 	BSR.w	DrawFirstPersonWalls
 	BSR.w	DecrementInaudiosSteps
-	BRA.w	loc_00004BA0
+	BRA.w	ResetObjectOffscreenPositions
 loc_00004A66:
 	BRA.w	loc_00004A76
 	BRA.w	loc_00004AC2
@@ -4864,15 +4871,16 @@ loc_00004B6C:
 	JSR	LoadPalettesFromTable
 	CLR.b	Player_move_backward_in_overworld.w
 	LEA	loc_00005A2C, A0
-	BSR.w	loc_000059AE
+	BSR.w	UpdateMapSectorPosition
 	BSR.w	UpdateFirstPersonWallData
 	MOVE.w	#0, First_person_wall_frame.w
 	MOVE.w	#$000C, Wall_render_y_offset.w
 	BSR.w	DrawFirstPersonWalls
 	BSR.w	UpdateAreaVisibility
 	BSR.w	DecrementInaudiosSteps
-	BRA.w	loc_00004BA0
-loc_00004BA0:
+	BRA.w	ResetObjectOffscreenPositions
+;ResetObjectOffscreenPositions:
+ResetObjectOffscreenPositions:
 	MOVEA.l	Enemy_list_ptr.w, A6
 	MOVE.l	#$00240000, $E(A6)
 	MOVE.l	#$00800000, $12(A6)
@@ -5142,14 +5150,14 @@ DrawFirstPersonWalls:
 	BLE.b	loc_0000510E
 	LEA	loc_00006774, A2
 	BSR.w	PrepareWallTileRenderData
-	BSR.w	loc_00005174
+	BSR.w	RenderWallTile_14x10_TwoPalette
 loc_0000510E:
 	CLR.w	D0
 	MOVE.b	First_person_center_wall.w, D0
 	BLE.b	loc_00005124
 	LEA	loc_00006784, A2
 	BSR.w	PrepareWallTileRenderData
-	BSR.w	loc_00005174
+	BSR.w	RenderWallTile_14x10_TwoPalette
 loc_00005124:
 	CLR.w	D0
 	MOVE.b	Fp_wall_right_2.w, D0
@@ -5180,7 +5188,8 @@ PrepareWallTileRenderData:
 	ORI.w	#$A800, D2
 	RTS
 
-loc_00005174:
+;RenderWallTile_14x10_TwoPalette:
+RenderWallTile_14x10_TwoPalette:
 	ORI	#$0700, SR
 	MOVE.w	#$000D, D7
 loc_0000517C:
@@ -5271,7 +5280,8 @@ loc_00005268:
 	ANDI	#$F8FF, SR
 	RTS
 
-loc_00005288:
+;RenderWallTile_16x11_TwoPalette:
+RenderWallTile_16x11_TwoPalette:
 	ORI	#$0700, SR
 	MOVE.w	#$0010, D7
 loc_00005290:
@@ -5794,7 +5804,8 @@ GetMapTileInDirection:
 	MOVE.b	(A0,D0.w), D0
 	RTS
 
-loc_000059AE: ; Go left from current map sector
+;UpdateMapSectorPosition:
+UpdateMapSectorPosition: ; Go left from current map sector
 	MOVE.w	Player_direction.w, D0
 	ANDI.w	#6, D0
 	ADD.w	D0, D0
@@ -6415,7 +6426,7 @@ loc_0000623A:
 	BSR.w	DecompressMapSectorRLE
 	BSR.w	loc_000063B2
 	BSR.w	UpdateAreaVisibility
-	BSR.w	loc_000063EA
+	BSR.w	RenderAreaMap
 	RTS
 
 ; ============================================================================
@@ -6495,7 +6506,7 @@ Load9SectorMapWindow:
 	BSR.w	LoadMapSectorIfInBounds
 	BSR.w	loc_00006390
 	BSR.w	UpdateAreaVisibility
-	BSR.w	loc_000063EA
+	BSR.w	RenderAreaMap
 	RTS
 
 ; ============================================================================
@@ -6645,7 +6656,8 @@ loc_000063D6:
 	DBF	D7, loc_000063D2
 	RTS
 
-loc_000063EA:
+;RenderAreaMap:
+RenderAreaMap:
 	ORI	#$0700, SR
 	MOVE.l	#$40AE0003, D5
 	LEA	Map_sector_center.w, A0
@@ -7176,7 +7188,7 @@ loc_00006C72:
 	MOVE.w	#$0140, D5
 	MOVE.w	#0, D6
 	MOVE.w	#$00E0, D7
-	BSR.w	loc_00006DB4
+	BSR.w	CheckFixedAreaCollision
 	RTS
 
 loc_00006CA8:
@@ -7224,7 +7236,7 @@ loc_00006D12:
 	MOVE.w	#$0140, D5
 	MOVE.w	#0, D6
 	MOVE.w	#$00E0, D7
-	BSR.w	loc_00006DB4
+	BSR.w	CheckFixedAreaCollision
 	RTS
 
 ;CheckObjectCollisionBounds:
@@ -7274,7 +7286,8 @@ GetBoundingBoxFromTable:
 	ADD.w	$12(A5), D3
 	RTS
 
-loc_00006DB4:
+;CheckFixedAreaCollision:
+CheckFixedAreaCollision:
 	CMP.w	D4, D1
 	BLT.b	loc_00006DCA
 	CMP.w	D5, D0
@@ -7393,7 +7406,7 @@ loc_00006F32:
 UpdateNPCSpriteFrame:
 	MOVEA.l	$2E(A5), A1
 	MOVE.b	#$FF, $25(A5)
-	BSR.w	loc_000081F0
+	BSR.w	LoadNPCAnimFrame_Static
 	MOVE.b	$27(A5), $18(A5)
 	ADDQ.b	#1, $1B(A5)
 	RTS
@@ -7405,10 +7418,10 @@ loc_00006F5E:
 	RTS
 
 loc_00006F70 
-	BSR.w	loc_0000859C
-	BSR.w	loc_00008248
+	BSR.w	ClearNPCFrozenState
+	BSR.w	UpdateNPCMovement
 	MOVEA.l	$2E(A5), A1
-	BRA.w	loc_000081F0
+	BRA.w	LoadNPCAnimFrame_Static
 	BSR.w	SetRandomDirection
 	MOVE.l	#NPCBehavior_LoadFrame, $2(A5)
 	RTS
@@ -7430,8 +7443,8 @@ loc_00006FA8
 	RTS
 
 loc_00006FBA:
-	BSR.w	loc_0000859C
-	BSR.w	loc_00008248
+	BSR.w	ClearNPCFrozenState
+	BSR.w	UpdateNPCMovement
 	MOVEA.l	$2E(A5), A1
 	BRA.w	LoadNPCAnimationFrame
 	MOVE.l	#loc_00006FD4, $2(A5)
@@ -8578,7 +8591,7 @@ loc_00007EF6:
 loc_00007EFE:
 	MOVEA.l	$2E(A5), A1
 	MOVE.b	#$FF, $25(A5)
-	BSR.w	loc_000081F0
+	BSR.w	LoadNPCAnimFrame_Static
 	MOVE.b	$27(A5), $18(A5)
 	ADDQ.b	#1, $1B(A5)
 	RTS
@@ -8620,7 +8633,7 @@ loc_00007F7C:
 
 loc_00007F96:
 	BSR.w	loc_00007FAC
-	BSR.w	loc_00008108
+	BSR.w	GetNPCAnimationOffset
 	MOVEA.l	$2E(A5), A1
 	MOVE.w	(A1,D0.w), $8(A5)
 	BRA.w	loc_00008154
@@ -8741,7 +8754,8 @@ loc_00008104:
 	ADD.w	D0, D0
 	RTS
 
-loc_00008108:
+;GetNPCAnimationOffset:
+GetNPCAnimationOffset:
 	BCLR.b	#3, $7(A5)
 	CLR.w	D1
 	MOVE.b	$18(A5), D1
@@ -8794,7 +8808,8 @@ loc_0000817C:
 	JSR	AddSpriteToDisplayList
 	RTS
 
-loc_0000819A:
+;CheckTileCollision:
+CheckTileCollision:
 	LSR.w	#1, D2
 	ANDI.w	#3, D2
 	ADD.w	D2, D2
@@ -8826,7 +8841,8 @@ loc_000081EC:
 	CLR.w	D0
 	RTS
 
-loc_000081F0:
+;LoadNPCAnimFrame_Static:
+LoadNPCAnimFrame_Static:
 	BSR.w	loc_0000809E
 	MOVE.w	(A1,D0.w), $8(A5)
 	BRA.w	loc_00008154
@@ -8834,7 +8850,7 @@ loc_000081F0:
 ; Load NPC animation frame from table
 ; Input: A1 = Animation table pointer, A5 = NPC object
 LoadNPCAnimationFrame:
-	BSR.w	loc_00008108
+	BSR.w	GetNPCAnimationOffset
 	MOVE.w	(A1,D0.w), $8(A5)
 	BRA.w	loc_00008154
 loc_0000820C:
@@ -8860,7 +8876,8 @@ SetRandomDirection:
 	MOVE.b	D0, $27(A5)
 	RTS
 
-loc_00008248:
+;UpdateNPCMovement:
+UpdateNPCMovement:
 	TST.b	$19(A5)
 	BNE.w	loc_000082F2
 	BSR.w	loc_00008376
@@ -8881,11 +8898,11 @@ loc_00008248:
 	MOVE.b	$18(A5), D6
 	ANDI.b	#7, D6
 	MOVE.b	D6, D2
-	BSR.w	loc_0000819A
+	BSR.w	CheckTileCollision
 	BNE.b	loc_000082C0
 	MOVE.b	$18(A5), D6
 	ANDI.b	#7, D6
-	BSR.w	loc_00008446
+	BSR.w	CheckNPCCollision
 	BNE.b	loc_000082C0
 	MOVE.b	#$FF, $19(A5)
 	CLR.b	$1B(A5)
@@ -8907,10 +8924,10 @@ loc_000082C0:
 loc_000082D8:
 	CLR.w	D2
 	MOVE.b	$18(A5), D2
-	BSR.w	loc_0000819A
+	BSR.w	CheckTileCollision
 	BNE.w	loc_00008340
 	MOVE.b	$18(A5), D6
-	BSR.w	loc_00008446
+	BSR.w	CheckNPCCollision
 	BNE.w	loc_00008340
 loc_000082F2:
 	CLR.w	D0
@@ -9046,7 +9063,8 @@ loc_00008442:
 	MOVEQ	#1, D0
 	RTS
 
-loc_00008446:
+;CheckNPCCollision:
+CheckNPCCollision:
 	MOVE.w	$E(A5), D0
 	ASR.w	#4, D0
 	MOVE.w	$12(A5), D1
@@ -9211,7 +9229,8 @@ SetHintTextIfTriggered:
 loc_0000859A:
 	RTS
 
-loc_0000859C:
+;ClearNPCFrozenState:
+ClearNPCFrozenState:
 	TST.b	Player_input_blocked.w
 	BNE.b	loc_000085A6
 	CLR.b	$32(A5)
@@ -11014,7 +11033,7 @@ loc_00009F50:
 
 loc_00009F6E:
 	BSR.w	InitEnemyAI
-	BSR.w	loc_0000B772
+	BSR.w	SetEnemyCollisionBounds
 	CLR.b	Enemy_direction_flag.w
 	MOVE.l	#loc_00009FB8, $2(A5)
 	MOVE.b	#$0E, $6(A6)
@@ -11023,7 +11042,7 @@ loc_00009F6E:
 
 loc_00009F92:
 	BSR.w	InitEnemyAI
-	BSR.w	loc_0000B772
+	BSR.w	SetEnemyCollisionBounds
 	MOVE.b	#$FF, Enemy_direction_flag.w
 	MOVE.l	#loc_00009FB8, $2(A5)
 	MOVE.b	#$0E, $6(A6)
@@ -12750,7 +12769,8 @@ InitEnemyProjectileSpeed:
 	MOVE.w	#$000C, $1E(A5)
 	RTS
 	
-loc_0000B772:
+;SetEnemyCollisionBounds:
+SetEnemyCollisionBounds:
 	MOVE.w	#$0019, $8(A5)
 	MOVE.b	#$0D, $6(A5)
 	MOVE.w	#$000C, $1C(A5)
