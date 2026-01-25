@@ -50,10 +50,10 @@ ClearVSRAM:
 	MOVEQ	#$00000028, D6
 	MOVEQ	#0, D5
 	MOVE.l	D7, VDP_control_port
-loc_000002AA:
+ClearVSRAM_loop:
 	MOVE.w	D5, VDP_data_port
-loc_000002B0:
-	DBF	D6, loc_000002AA
+loc_000002B0: ; Referenced by data table at line 38051
+	DBF	D6, ClearVSRAM_loop
 	RTS
 
 ClearVRAMHScroll:
@@ -258,14 +258,14 @@ ClearScrollData:
 	ORI	#$0700, SR
 	MOVE.l	#$7C000002, VDP_control_port
 	MOVE.w	#$01FF, D7
-loc_0000063A:
+ClearScrollData_hscroll_loop:
 	MOVE.w	#0, VDP_data_port
-	DBF	D7, loc_0000063A
+	DBF	D7, ClearScrollData_hscroll_loop
 	MOVE.l	#0, VDP_control_port
 	MOVE.w	#$01FF, D7
-loc_00000654:
+ClearScrollData_vscroll_loop:
 	MOVE.w	#0, VDP_data_port
-	DBF	D7, loc_00000654
+	DBF	D7, ClearScrollData_vscroll_loop
 	CLR.w	HScroll_base.w
 	CLR.w	VScroll_base.w
 	ANDI	#$F8FF, SR
@@ -3113,11 +3113,11 @@ CheckForEncounter:
 	MOVE.b	#1, Checked_for_encounter.w
 	JSR	GetRandomNumber
 	AND.w	Encounter_rate.w, D0
-	BEQ.b	loc_0000343E
+	BEQ.b	CheckForEncounter_triggered
 	CLR.w	D0
 	RTS
 
-loc_0000343E:
+CheckForEncounter_triggered:
 	MOVEQ	#1, D0
 	RTS
 
@@ -3139,30 +3139,30 @@ CheckOverworldInteractions:
 	ADD.w	D0, D0
 	MOVEA.l	(A0,D0.w), A0                        ; A0 = list for this sector
 	
-loc_0000345C:
+CheckOverworldInteractions_loop:
 	LEA	(A0), A1                             ; A1 = current entry
 	MOVE.w	(A1)+, D0                            ; D0 = sector Y
-	BLT.w	loc_00003496                         ; If < 0, end of list
+	BLT.w	CheckOverworldInteractions_end       ; If < 0, end of list
 	CMP.w	Player_map_sector_y.w, D0            ; Sector Y match?
-	BNE.w	loc_00003490
+	BNE.w	CheckOverworldInteractions_next
 	MOVE.w	(A1)+, D0                            ; D0 = X position
 	CMP.w	Player_position_x_outside_town.w, D0 ; X match?
-	BNE.w	loc_00003490
+	BNE.w	CheckOverworldInteractions_next
 	MOVE.w	(A1)+, D0                            ; D0 = Y position
 	CMP.w	Player_position_y_outside_town.w, D0 ; Y match?
-	BNE.w	loc_00003490
+	BNE.w	CheckOverworldInteractions_next
 	MOVE.w	(A1)+, D0                            ; D0 = direction flags
 	MOVE.w	Player_direction.w, D1               ; D1 = player direction
 	ASR.w	#1, D1                               ; Convert to bit index
 	BTST.l	D1, D0                               ; Direction matches?
-	BEQ.b	loc_00003490
+	BEQ.b	CheckOverworldInteractions_next
 	MOVEA.l	(A1)+, A0                            ; A0 = handler pointer
 	JMP	(A0)                                 ; Jump to handler
 	
-loc_00003490:
+CheckOverworldInteractions_next:
 	LEA	$C(A0), A0                           ; Next entry (12 bytes)
-	BRA.b	loc_0000345C
-loc_00003496:
+	BRA.b	CheckOverworldInteractions_loop
+CheckOverworldInteractions_end:
 	RTS
 
 ; ============================================================================
@@ -3182,28 +3182,28 @@ CheckCaveInteractions:
 	ADD.w	D0, D0
 	MOVEA.l	(A0,D0.w), A0                        ; A0 = list for this cave
 	
-loc_000034AA:
+CheckCaveInteractions_loop:
 	LEA	(A0), A1                             ; A1 = current entry
 	MOVE.w	(A1)+, D0                            ; D0 = X position
-	BLT.w	loc_000034D6                         ; If < 0, end of list
+	BLT.w	CheckCaveInteractions_end            ; If < 0, end of list
 	CMP.w	Player_position_x_outside_town.w, D0 ; X match?
-	BNE.b	loc_000034D0
+	BNE.b	CheckCaveInteractions_next
 	MOVE.w	(A1)+, D0                            ; D0 = Y position
 	CMP.w	Player_position_y_outside_town.w, D0 ; Y match?
-	BNE.b	loc_000034D0
+	BNE.b	CheckCaveInteractions_next
 	MOVE.w	(A1)+, D0                            ; D0 = direction flags
 	MOVE.w	Player_direction.w, D1               ; D1 = player direction
 	ASR.w	#1, D1                               ; Convert to bit index
 	BTST.l	D1, D0                               ; Direction matches?
-	BEQ.b	loc_000034D0
+	BEQ.b	CheckCaveInteractions_next
 	MOVEA.l	(A1)+, A0                            ; A0 = handler pointer
 	JMP	(A0)                                 ; Jump to handler
 	
-loc_000034D0:
+CheckCaveInteractions_next:
 	LEA	$A(A0), A0                           ; Next entry (10 bytes)
-	BRA.b	loc_000034AA
+	BRA.b	CheckCaveInteractions_loop
 	
-loc_000034D6:
+CheckCaveInteractions_end:
 	MOVE.l	#NoOneHereStr, Script_talk_source.w  ; Default message
 	RTS
 
@@ -3233,21 +3233,21 @@ InitializeTownMode:
 	CLR.b	Player_in_first_person_mode.w
 	MOVE.w	Current_town.w, D0
 	CMPI.w	#TOWN_EXCALABRIA, D0
-	BNE.b	loc_0000355C
+	BNE.b	InitializeTownMode_check_swaffham
 	MOVE.w	#TOWN_SWAFHAM, Current_town.w
 	MOVE.w	Current_town.w, D0
-loc_0000355C:
+InitializeTownMode_check_swaffham:
 	CMPI.w	#TOWN_SWAFHAM, D0
-	BNE.b	loc_00003570
+	BNE.b	InitializeTownMode_check_town_0f
 	TST.b	Swaffham_ruined.w
-	BEQ.b	loc_0000357C
+	BEQ.b	InitializeTownMode_spawn_setup
 	MOVE.w	#TOWN_HELWIG, Current_town.w
-	BRA.b	loc_0000357C
-loc_00003570:
+	BRA.b	InitializeTownMode_spawn_setup
+InitializeTownMode_check_town_0f:
 	CMPI.w	#$000F, D0
-	BNE.b	loc_0000357C
+	BNE.b	InitializeTownMode_spawn_setup
 	MOVE.w	#TOWN_HASTINGS1, Current_town.w	
-loc_0000357C:
+InitializeTownMode_spawn_setup:
 	MOVE.w	Current_town.w, D0
 	ASL.w	#3, D0
 	LEA	loc_00002DAA, A0
@@ -3304,14 +3304,14 @@ loc_0000362C:
 ; loc_0000363C
 ClearAllEnemyEntities:
 	MOVEA.l	Enemy_list_ptr.w, A6
-loc_00003640:
+ClearAllEnemyEntities_loop:
 	BCLR.b	#7, (A6)
 	CLR.w	D0
 	MOVE.b	$1(A6), D0
-	BEQ.b	loc_00003652
+	BEQ.b	ClearAllEnemyEntities_end
 	LEA	(A6,D0.w), A6
-	BRA.b	loc_00003640
-loc_00003652:
+	BRA.b	ClearAllEnemyEntities_loop
+ClearAllEnemyEntities_end:
 	RTS
 
 PlayBattleMusic:
