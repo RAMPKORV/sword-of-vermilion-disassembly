@@ -594,14 +594,14 @@ loc_00001196:
 	BEQ.b	loc_000011A2
 	JSR	loc_00011F44
 loc_000011A2:
-	TST.b	$FFFF9900.w
+	TST.b	Window_tilemap_draw_pending.w
 	BEQ.b	loc_000011AE
 	JSR	loc_00012D4C
 loc_000011AE:
-	TST.b	$FFFFC3B6.w
+	TST.b	Scene_update_flag.w
 	BEQ.b	loc_000011BC
 	BSR.w	loc_00001364
-	CLR.b	$FFFFC3B6.w
+	CLR.b	Scene_update_flag.w
 loc_000011BC:
 	BSR.w	loc_000011D4
 loc_000011C0:
@@ -620,7 +620,7 @@ loc_000011EC:
 	RTS
 
 loc_000011EE:
-	LEA	$FFFFC408.w, A0
+	LEA	Controller_current_state.w, A0
 	stopZ80
 	LEA	$00A10003, A1
 	LEA	$00A10009, A2
@@ -686,7 +686,7 @@ loc_000012C0:
 ; Output: D0.w = 1 if button was just pressed, 0 otherwise
 ; Detects 0→1 transition (button was released, now pressed)
 CheckButtonPress:
-	MOVE.b	$FFFFC408.w, D0
+	MOVE.b	Controller_current_state.w, D0
 	MOVE.b	$FFFFC409.w, D1
 	EOR.b	D1, D0
 	BTST.l	D2, D0
@@ -848,7 +848,7 @@ ProgramState_00:
 
 ;loc_0000151C:
 ProgramState_01
-	MOVE.b	$FFFFC408.w, D0
+	MOVE.b	Controller_current_state.w, D0
 	ANDI.b	#$F0, D0
 	BNE.b	loc_00001540
 	TST.b	Intro_animation_done.w
@@ -917,7 +917,7 @@ ProgramState_04:
 	MOVE.w	#$00E0, D0
 	JSR	QueueSoundEffect
 	CLR.w	Program_state.w
-	CLR.b	$FFFFC3B6.w
+	CLR.b	Scene_update_flag.w
 	JSR	ClearScrollData
 	JSR	loc_00016A72
 	MOVE.l	#HBlankObjectHandler, $12(A5)
@@ -1026,7 +1026,7 @@ ProgramState_05:
 	TST.b	Fade_out_lines_mask.w
 	BNE.b	loc_000017AA
 	JSR	loc_00000682
-	CLR.b	$FFFFC3B6.w
+	CLR.b	Scene_update_flag.w
 	JSR	ClearScrollData
 	JSR	loc_00016A72
 	MOVE.w	VDP_Reg11_cache.w, D0
@@ -1246,7 +1246,7 @@ loc_00001A4C:
 	CLR.w	Overworld_menu_state.w
 	CLR.w	Saved_player_x_in_town.w
 	JSR	EnableDisplay
-	CLR.w	$FFFFC100.w
+	CLR.w	Town_camera_move_state.w
 	CLR.b	Camera_scrolling_active.w
 	MOVE.b	#$10, Player_movement_step_counter.w
 	CLR.b	Is_in_battle.w
@@ -2571,7 +2571,7 @@ loc_00002D44:
 	RTS
 
 loc_00002D6C:
-	TST.b	$FFFF9900.w
+	TST.b	Window_tilemap_draw_pending.w
 	BNE.b	loc_00002DA8
 	TST.b	Script_text_complete.w
 	BEQ.b	loc_00002DA2
@@ -3402,7 +3402,7 @@ loc_00003782:
 	BNE.w	loc_0000385E
 	TST.b	Player_is_moving.w
 	BNE.w	loc_00003816
-	MOVE.b	$FFFFC408.w, D0
+	MOVE.b	Controller_current_state.w, D0
 	ANDI.w	#$000F, D0
 	BEQ.w	loc_0000385E
 	SUBQ.w	#1, D0
@@ -3458,7 +3458,7 @@ loc_0000388C:
 loc_00003892:
 	BRA.w	loc_00003966
 loc_00003896:
-	MOVE.w	#1, $FFFFC100.w
+	MOVE.w	#1, Town_camera_move_state.w
 	MOVE.w	$12(A5), D0
 	SUB.w	Camera_scroll_y.w, D0
 	BLE.b	loc_000038AA
@@ -3466,7 +3466,7 @@ loc_00003896:
 loc_000038AA:
 	BRA.w	loc_00003900
 loc_000038AE:
-	MOVE.w	#2, $FFFFC100.w
+	MOVE.w	#2, Town_camera_move_state.w
 	MOVE.w	$12(A5), D0
 	SUB.w	Camera_scroll_y.w, D0
 	CMPI.w	#$00E0, D0
@@ -3475,7 +3475,7 @@ loc_000038AE:
 loc_000038C6:
 	BRA.w	loc_00003900
 loc_000038CA:
-	MOVE.w	#3, $FFFFC100.w
+	MOVE.w	#3, Town_camera_move_state.w
 	MOVE.w	$E(A5), D0
 	SUB.w	Camera_scroll_x.w, D0
 	CMPI.w	#$0010, D0
@@ -3484,7 +3484,7 @@ loc_000038CA:
 loc_000038E4:
 	BRA.w	loc_00003900
 loc_000038E8:
-	MOVE.w	#4, $FFFFC100.w
+	MOVE.w	#4, Town_camera_move_state.w
 	MOVE.w	$E(A5), D0
 	SUB.w	Camera_scroll_x.w, D0
 	CMPI.w	#$0130, D0
@@ -3830,7 +3830,7 @@ loc_00003DA6:
 	BEQ.b	loc_00003DB6
 	BSR.w	loc_0000421A
 loc_00003DB6:
-	MOVE.b	$FFFFC408.w, D0
+	MOVE.b	Controller_current_state.w, D0
 	ANDI.w	#$F, D0
 	BEQ.w	loc_00003EC4
 	SUBQ.w	#1, D0
@@ -4248,7 +4248,7 @@ loc_000043A6:
 	TST.b	Player_rotate_clockwise_in_overworld.w
 	BNE.b	loc_0000441E
 	CLR.w	Overworld_movement_frame.w
-	MOVE.b	$FFFFC408.w, D0
+	MOVE.b	Controller_current_state.w, D0
 	ANDI.w	#$000F, D0
 	BEQ.w	loc_00004566
 	BTST.l	#0, D0
@@ -6944,7 +6944,7 @@ loc_00006998:
 	MOVE.b	#$FF, Player_attacking_flag.w
 	CLR.b	$28(A5)
 loc_000069C0:
-	MOVE.b	$FFFFC408.w, D0
+	MOVE.b	Controller_current_state.w, D0
 	ANDI.w	#$000F, D0
 	BEQ.w	loc_00006A3C
 	BTST.l	#1, D0
@@ -18830,7 +18830,7 @@ loc_0001095A:
 ; Handles script commands, text timing, player name insertion
 ; Main text rendering loop for dialogue windows
 ProcessScriptText:
-	TST.b	$FFFF9900.w
+	TST.b	Window_tilemap_draw_pending.w
 	BNE.w	loc_00010BE2
 	ADDQ.w	#1, Script_render_tick.w
 	MOVE.w	Script_render_tick.w, D0
@@ -19059,7 +19059,7 @@ InitDialogueWindow:
 	MOVE.w	#0, Window_tile_attrs.w
 	BSR.w	DrawWindowBorder
 	CLR.w	Window_draw_row.w
-	MOVE.b	#$FF, $FFFF9900.w
+	MOVE.b	#$FF, Window_tilemap_draw_pending.w
 	RTS
 	
 loc_00010C9E:
@@ -19088,7 +19088,7 @@ loc_00010CE2:
 	MOVE.w	#1, Window_text_x.w	
 	MOVE.w	#2, Window_text_y.w	
 	BSR.w	RenderTextToWindow	
-	LEA	$FFFF9920.w, A1	
+	LEA	Window_tilemap_buffer.w, A1	
 	CLR.w	D1	
 	MOVE.b	Message_speed.w, D1	
 	ADD.w	D1, D1	
@@ -19118,7 +19118,7 @@ loc_00010D44:
 	MOVE.w	#2, Window_text_y.w
 	BSR.w	RenderTextToWindow
 	CLR.w	Window_draw_row.w
-	MOVE.b	#$FF, $FFFF9900.w
+	MOVE.b	#$FF, Window_tilemap_draw_pending.w
 	RTS
 	
 loc_00010DA4:
@@ -19153,7 +19153,7 @@ loc_00010DA4:
 	MOVE.w	#$0093, D0
 	BSR.w	loc_00012CF6
 	CLR.w	Window_draw_row.w
-	MOVE.b	#$FF, $FFFF9900.w
+	MOVE.b	#$FF, Window_tilemap_draw_pending.w
 	RTS
 	
 loc_00010E46:
@@ -19285,7 +19285,7 @@ loc_0001106E:
 	BSR.w	loc_00011458
 	MOVE.w	#$002A, D0
 	BSR.w	loc_00012CDA
-	MOVE.b	#$FF, $FFFF9900.w
+	MOVE.b	#$FF, Window_tilemap_draw_pending.w
 	RTS
 	
 loc_000110BE:
@@ -20182,7 +20182,7 @@ loc_00011C94:
 	MOVE.w	Window_text_y.w, D1
 	MULU.w	D1, D0
 	ADD.w	Window_text_x.w, D0
-	LEA	$FFFF9920.w, A1
+	LEA	Window_tilemap_buffer.w, A1
 	LEA	(A1,D0.w), A1
 	MOVE.b	#$2A, (A1)
 loc_00011CB8:
@@ -20983,7 +20983,7 @@ loc_000127C2:
 ; HandleMenuInput
 ; Main menu input handler - processes D-pad input for cursor movement
 HandleMenuInput:
-	MOVE.b	$FFFFC408.w, D2
+	MOVE.b	Controller_current_state.w, D2
 	MOVE.b	$FFFFC409.w, D3
 	EOR.b	D2, D3
 	BEQ.w	BlinkMenuCursor
@@ -21328,7 +21328,7 @@ loc_00012C92:
 ; Fills window tilemap buffer with border tiles (corners, edges)
 ; Uses tile $E0 + offsets for different border parts
 DrawWindowBorder:
-	LEA	$FFFF9920.w, A0
+	LEA	Window_tilemap_buffer.w, A0
 	MOVE.w	Window_height.w, D7
 	CLR.w	D1
 loc_00012CA4:
@@ -21375,7 +21375,7 @@ RenderTextToWindow:
 	MULU.w	D1, D0
 	ADD.w	Window_text_x.w, D0
 loc_00012CF6:
-	LEA	$FFFF9920.w, A1
+	LEA	Window_tilemap_buffer.w, A1
 	LEA	(A1,D0.w), A1
 loc_00012CFE:
 	LEA	(A1), A2
@@ -21412,7 +21412,7 @@ loc_00012D4A:
 	RTS
 	
 loc_00012D4C:
-	LEA	$FFFF9920.w, A0
+	LEA	Window_tilemap_buffer.w, A0
 	JSR	GetScrollOffsetInTiles
 	CLR.w	D3
 loc_00012D58:
@@ -21445,11 +21445,11 @@ loc_00012D5A:
 	ADDQ.w	#1, D3
 	CMP.w	Window_height.w, D3
 	BLE.b	loc_00012D58
-	CLR.b	$FFFF9900.w
+	CLR.b	Window_tilemap_draw_pending.w
 	RTS
 
 loc_00012DB8:
-	LEA	$FFFF9920.w, A0
+	LEA	Window_tilemap_buffer.w, A0
 	MOVE.w	Window_width.w, D2
 	MOVE.w	Window_draw_row.w, D0
 	CMP.w	Window_height.w, D0
@@ -21463,7 +21463,7 @@ loc_00012DB8:
 	ANDI.w	#$003F, D1
 	ASL.w	#7, D1
 	BSR.w	loc_00012E26
-	LEA	$FFFF9920.w, A0
+	LEA	Window_tilemap_buffer.w, A0
 	MOVE.w	Window_width.w, D2
 	MOVE.w	Window_height.w, D0
 	ADDQ.w	#1, D2
@@ -22638,7 +22638,7 @@ loc_00015460:
 	RTS
 
 loc_0001548A:
-	MOVE.b	$FFFFC408.w, D0
+	MOVE.b	Controller_current_state.w, D0
 	ANDI.w	#$000F, D0
 	BEQ.w	loc_000155F2
 	MOVE.b	$FFFFC409.w, D1
@@ -23245,7 +23245,7 @@ Prologue6Str:
 	dc.b	"began his search....", $FF
 ; loc_00015E58
 MenuObjectHandler:
-	CLR.w	$FFFFC100.w
+	CLR.w	Town_camera_move_state.w
 	MOVE.l	#loc_00015E6A, $2(A5)
 	CLR.b	Camera_scrolling_active.w
 	RTS
@@ -23264,7 +23264,7 @@ loc_00015E6A:
 	BSR.w	loc_0001677C
 loc_00015E8C:
 	MOVE.b	#$FF, Camera_scrolling_active.w
-	MOVE.w	$FFFFC100.w, D0
+	MOVE.w	Town_camera_move_state.w, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
 	LEA	loc_00015EA6, A0
@@ -23281,8 +23281,8 @@ loc_00015EA6: ; suspected camera movement handling
 ; loc_00015EBA
 ResetTownCameraMovementState:
 	CLR.b	Camera_scrolling_active.w
-	CLR.w	$FFFFC100.w
-	MOVE.w	#$0010, $FFFFC102.w
+	CLR.w	Town_camera_move_state.w
+	MOVE.w	#$0010, Town_camera_move_counter.w
 	RTS
 
 loc_00015ECA:
@@ -23297,7 +23297,7 @@ loc_00015ECA:
 	BGE.b	ResetTownCameraMovementState
 	SUBQ.w	#1, VScroll_base.w
 	SUBQ.w	#1, Camera_scroll_y.w
-	SUBQ.w	#1, $FFFFC102.w
+	SUBQ.w	#1, Town_camera_move_counter.w
 	BLE.b	loc_00015EF6
 	RTS
 
@@ -23330,7 +23330,7 @@ loc_00015F1C:
 	BLE.w	ResetTownCameraMovementState
 	ADDQ.w	#1, VScroll_base.w
 	ADDQ.w	#1, Camera_scroll_y.w
-	SUBQ.w	#1, $FFFFC102.w
+	SUBQ.w	#1, Town_camera_move_counter.w
 	BLE.b	loc_00015F4E
 	RTS
 
@@ -23357,7 +23357,7 @@ loc_00015F6E:
 	BGE.w	ResetTownCameraMovementState
 	ADDQ.w	#1, HScroll_base.w
 	SUBQ.w	#1, Camera_scroll_x.w
-	SUBQ.w	#1, $FFFFC102.w
+	SUBQ.w	#1, Town_camera_move_counter.w
 	BLE.b	loc_00015F9E
 	RTS
 
@@ -23390,7 +23390,7 @@ loc_00015FC4:
 	BLE.w	ResetTownCameraMovementState
 	SUBQ.w	#1, HScroll_base.w
 	ADDQ.w	#1, Camera_scroll_x.w
-	SUBQ.w	#1, $FFFFC102.w
+	SUBQ.w	#1, Town_camera_move_counter.w
 	BLE.b	loc_00015FF8
 	RTS
 	
@@ -24293,7 +24293,7 @@ loc_00016A78:
 	RTS
 
 loc_00016A8C:
-	MOVE.b	#$FF, $FFFFC3B6.w
+	MOVE.b	#$FF, Scene_update_flag.w
 	TST.b	$FFFFC3B4.w
 	BNE.b	loc_00016AB6
 	MOVE.l	#loc_00016AB8, $2(A5)
@@ -24416,7 +24416,7 @@ loc_00016C0C:
 	RTS
 
 loc_00016C12:
-	MOVE.b	#$FF, $FFFFC3B6.w
+	MOVE.b	#$FF, Scene_update_flag.w
 	LEA	$FFFFC3B8.w, A0
 	LEA	loc_00016E4A, A1
 	MOVE.w	#$A, D7
@@ -29795,7 +29795,7 @@ loc_0001BB72:
 	RTS
 
 loc_0001BB74:
-	TST.b	$FFFF9900.w
+	TST.b	Window_tilemap_draw_pending.w
 	BNE.b	loc_0001BBA8
 	TST.b	Script_text_complete.w
 	BEQ.b	loc_0001BBA2
