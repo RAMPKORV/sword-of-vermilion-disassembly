@@ -18808,21 +18808,21 @@ loc_000109B4:
 	MOVE.b	(A0,D2.w), D3
 	MOVE.b	#$FF, Script_reading_player_name.w
 loc_000109C8: ; Text script handling
-	CMPI.b	#$FF, D3		; EOF
+	CMPI.b	#SCRIPT_END, D3
 	BEQ.w	loc_00010BBE
-	CMPI.b	#$FE, D3        ; CR
+	CMPI.b	#SCRIPT_NEWLINE, D3
 	BEQ.w	loc_00010ABC
-	CMPI.b	#$FD, D3		; Show continuation
+	CMPI.b	#SCRIPT_CONTINUE, D3
 	BEQ.w	loc_00010AC8
-	CMPI.b	#$FC, D3
+	CMPI.b	#SCRIPT_QUESTION, D3
 	BEQ.w	loc_00010BB2
-	CMPI.b	#$FB, D3		; Confirm
+	CMPI.b	#SCRIPT_YES_NO, D3
 	BEQ.w	loc_00010BA0
-	CMPI.b	#$FA, D3
+	CMPI.b	#SCRIPT_CHOICE, D3
 	BEQ.w	loc_00010B18
-	CMPI.b	#$F9, D3		; Retrieve stuff/Set event triggers
+	CMPI.b	#SCRIPT_ACTIONS, D3
 	BEQ.w	loc_00010B2E
-	CMPI.b	#$F8, D3		; Set event triggers RLE? Boss trigger?
+	CMPI.b	#SCRIPT_TRIGGERS, D3
 	BEQ.w	loc_00010B7C
 	CMPI.b	#$DE, D3
 	BEQ.w	loc_00010A6E
