@@ -297,10 +297,10 @@ BasicObjectInitTable:
 	dc.w	$0005                        ; 6 object groups
 	
 	; VBlank handler object
-	objectInitGroup 1, 8, $10, $80, loc_00001474, VBlank_object_ptr
+	objectInitGroup 1, 8, $10, $80, VBlankObjectHandler, VBlank_object_ptr
 	
-	; HBlank handler object
-	objectInitGroup 1, 8, $10, $80, loc_0000146E, HBlank_object_ptr
+	; HBlank handler (currently just NOPs and returns)
+	objectInitGroup 1, 8, $10, $80, HBlankObjectHandler, HBlank_object_ptr
 	
 	; Entity slot (appears unused in this table)
 	objectInitGroup 1, 32, $40, 0, PlayerObjectHandler, $FFFFCC08
@@ -782,12 +782,16 @@ loc_00001448:
 loc_0000146C:
 	RTS
 
-loc_0000146E:
+; loc_0000146E
+; HBlank interrupt handler - currently just placeholder NOPs
+HBlankObjectHandler:
 	NOP
 	NOP
 	RTS
 
-loc_00001474:
+; loc_00001474
+; VBlank interrupt handler - manages program state execution
+VBlankObjectHandler:
 	CLR.w	Program_state.w
 	MOVE.w	#$3C, Timer_frames_per_second.w
 	MOVE.l	#loc_00001486, $2(A5)
@@ -845,7 +849,7 @@ ProgramState_01
 	TST.b	Intro_animation_done.w
 	BEQ.b	loc_0000155A
 	MOVE.b	#$FF, Fade_out_lines_mask.w
-	MOVE.l	#loc_0000146E, $12(A5)
+	MOVE.l	#HBlankObjectHandler, $12(A5)
 	BSR.w	loc_00003304
 	BNE.b	loc_0000155A
 loc_00001540:
@@ -911,7 +915,7 @@ ProgramState_04:
 	CLR.b	$FFFFC3B6.w
 	JSR	ClearScrollData
 	JSR	loc_00016A72
-	MOVE.l	#loc_0000146E, $12(A5)
+	MOVE.l	#HBlankObjectHandler, $12(A5)
 loc_00001614:
 	RTS
 
@@ -940,7 +944,7 @@ ProgramState_0A:
 	TST.b	Fade_out_lines_mask.w
 	BNE.b	loc_0000168A
 	JSR	loc_00015966
-	MOVE.l	#loc_0000146E, $12(A5)
+	MOVE.l	#HBlankObjectHandler, $12(A5)
 	MOVE.w	#PROGRAM_STATE_0E, Program_state.w
 	CLR.w	Current_town.w
 	MOVE.w	#8, Player_position_x_outside_town.w
@@ -987,7 +991,7 @@ loc_000016F8:
 ProgramState_0D:
 	TST.b	Fade_out_lines_mask.w	
 	BNE.b	loc_00001718	
-	MOVE.l	#loc_0000146E, $12(A5)	
+	MOVE.l	#HBlankObjectHandler, $12(A5)	
 	MOVE.w	#PROGRAM_STATE_15, Program_state.w	
 	MOVE.w	#$00E0, D0	
 	JSR	loc_00010522	
@@ -1047,7 +1051,7 @@ ProgramState_07:
 	TST.b	Fade_out_lines_mask.w
 	BNE.b	loc_000017E4
 	JSR	loc_000153E2
-	MOVE.l	#loc_0000146E, $12(A5)
+	MOVE.l	#HBlankObjectHandler, $12(A5)
 	MOVE.w	#PROGRAM_STATE_08, Program_state.w
 	MOVE.w	#$00E0, D0
 	JSR	loc_00010522
