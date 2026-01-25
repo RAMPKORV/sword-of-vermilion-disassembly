@@ -4432,7 +4432,7 @@ loc_00004566:
 	BNE.b	loc_0000457C
 	TST.b	Cave_light_active.w
 	BGE.b	loc_0000457C
-	BSR.w	loc_0000651A
+	BSR.w	UpdateCaveLightTimer
 loc_0000457C:
 	RTS
 
@@ -4529,7 +4529,7 @@ loc_00004690:
 	BSR.w	loc_00005A3C
 	LEA	Map_sector_center.w, A2
 	BSR.w	UpdatePlayerMapSector
-	BSR.w	loc_00006052
+	BSR.w	RenderMapToVRAM_DualPalette_21x13
 	TST.b	Is_in_cave.w
 	BNE.b	loc_000046AA
 	BRA.w	loc_000061D8
@@ -4543,7 +4543,7 @@ loc_000046B8:
 loc_000046BE:
 	BSR.w	loc_00005C02
 	BSR.w	UpdatePlayerMapSector
-	BSR.w	loc_00006048
+	BSR.w	RenderMapToVRAM_DualPalette_21x20
 	TST.b	Is_in_cave.w
 	BNE.b	loc_000046D4
 	BRA.w	loc_000061D8
@@ -4557,7 +4557,7 @@ loc_000046E2:
 loc_000046E8:
 	BSR.w	loc_00005D86
 	BSR.w	UpdatePlayerMapSector
-	BSR.w	loc_00006060
+	BSR.w	RenderMapToVRAM_DualPalette_21x13_Alt
 	TST.b	Is_in_cave.w
 	BNE.b	loc_000046FE
 	BRA.w	loc_000061D8
@@ -6308,14 +6308,17 @@ loc_0000603C:
 DisplayCompassToVRAM:
 	LEA	loc_0006AFC0, A0
 	BRA.w	loc_0000606E
-loc_00006048:
+;RenderMapToVRAM_DualPalette_21x20:
+RenderMapToVRAM_DualPalette_21x20:
 	LEA	loc_0006B1E4, A0
 	BRA.w	loc_0000606E
-loc_00006052:
+;RenderMapToVRAM_DualPalette_21x13:
+RenderMapToVRAM_DualPalette_21x13:
 	LEA	loc_0006B0D2, A0
 	MOVE.w	#$42A4, D4
 	BRA.w	loc_000060BE
-loc_00006060:
+;RenderMapToVRAM_DualPalette_21x13_Alt:
+RenderMapToVRAM_DualPalette_21x13_Alt:
 	LEA	loc_0006B2F6, A0
 	MOVE.w	#$4AA4, D4
 	BRA.w	loc_000060BE
@@ -6475,7 +6478,7 @@ loc_0000623A:
 	ADD.w	D0, D0
 	MOVEA.l	(A0,D0.w), A1
 	BSR.w	DecompressMapSectorRLE
-	BSR.w	loc_000063B2
+	BSR.w	CheckCaveRoomMapRevealed
 	BSR.w	UpdateAreaVisibility
 	BSR.w	RenderAreaMap
 	RTS
@@ -6555,7 +6558,7 @@ Load9SectorMapWindow:
 	ADDQ.w	#1, D3
 	LEA	Map_sector_bottom_right.w, A2
 	BSR.w	LoadMapSectorIfInBounds
-	BSR.w	loc_00006390
+	BSR.w	CheckOverworldSectorMapRevealed
 	BSR.w	UpdateAreaVisibility
 	BSR.w	RenderAreaMap
 	RTS
@@ -6671,7 +6674,8 @@ loc_0000638A:
 	MOVEM.w	(A7)+, D0/D1            ; Restore registers
 	RTS
 
-loc_00006390:
+;CheckOverworldSectorMapRevealed:
+CheckOverworldSectorMapRevealed:
 	CLR.b	Area_map_revealed.w
 	MOVE.w	Player_map_sector_x.w, D0
 	MOVE.w	Player_map_sector_y.w, D1
@@ -6684,7 +6688,8 @@ loc_00006390:
 loc_000063B0:
 	RTS
 
-loc_000063B2:
+;CheckCaveRoomMapRevealed:
+CheckCaveRoomMapRevealed:
 	CLR.b	Area_map_revealed.w
 	MOVE.w	Current_cave_room.w, D0
 	ADDI.w	#$0090, D0
@@ -6809,7 +6814,8 @@ loc_00006506:
 loc_00006508:
 	dc.b	$85, $AE, $85, $AF, $85, $B0, $85, $B1, $85, $B2, $85, $B3, $85, $B4, $85, $B5, $85, $B6 
 
-loc_0000651A:
+;UpdateCaveLightTimer:
+UpdateCaveLightTimer:
 	MOVE.w	Cave_light_timer.w, D0
 	BGT.b	loc_0000653C
 	CLR.b	Cave_light_active.w
@@ -7119,7 +7125,7 @@ loc_00006ABE:
 	MOVE.b	(A0,D0.w), $24(A5)
 	MOVE.b	$1(A0,D0.w), $24(A6)
 	MOVE.b	$2(A0,D0.w), $24(A4)
-	BSR.w	loc_00006C10
+	BSR.w	DispatchBattleCollisionChecks
 	BRA.w	loc_00006B0A
 loc_00006B06:
 	CLR.b	Player_attacking_flag.w
@@ -7195,7 +7201,8 @@ loc_00006BCA:
 	JSR	AddSpriteToDisplayList
 	RTS
 
-loc_00006C10:
+;DispatchBattleCollisionChecks:
+DispatchBattleCollisionChecks:
 	LEA	loc_00006C24, A0
 	MOVE.w	Battle_type.w, D2
 	ADD.w	D2, D2
@@ -7504,7 +7511,7 @@ loc_00006FBA:
 loc_00006FD4:
 	MOVEA.l	$2E(A5), A1
 	MOVE.b	#$FF, $25(A5)
-	BSR.w	loc_0000820C
+	BSR.w	AnimateEntitySprite
 	ADDQ.b	#1, $1B(A5)
 	RTS
 
@@ -7825,7 +7832,7 @@ loc_000073D8:
 	LEA	Possessed_magics_length.w, A2
 	MOVE.w	#$0116, D4
 	BSR.w	RemoveItemFromList
-	BSR.w	loc_0000852E
+	BSR.w	BackupRingsToMapTriggers
 	MOVE.b	#$FF, Sanguios_confiscated.w
 loc_00007408:
 	BRA.w	NPCBehavior_LoadFrame
@@ -7895,7 +7902,7 @@ loc_000074D4:
 	LEA	Possessed_items_list.w, A3
 	LEA	Possessed_items_length.w, A2
 	MOVE.w	#$0025, D4
-	BSR.w	loc_000084F2
+	BSR.w	CheckItemInList
 	BNE.w	loc_00007518
 	TST.b	Received_replacement_key.w	
 	BNE.b	loc_00007518	
@@ -8683,17 +8690,18 @@ loc_00007F7C:
 	RTS
 
 loc_00007F96:
-	BSR.w	loc_00007FAC
+	BSR.w	UpdateParmaSoldierRotation
 	BSR.w	GetNPCAnimationOffset
 	MOVEA.l	$2E(A5), A1
 	MOVE.w	(A1,D0.w), $8(A5)
 	BRA.w	loc_00008154
-loc_00007FAC:
+;UpdateParmaSoldierRotation:
+UpdateParmaSoldierRotation:
 	CLR.b	$25(A5)
 	TST.b	$19(A5)
 	BNE.w	loc_00007FF4
 	MOVE.b	$27(A5), $18(A5)
-	BSR.w	loc_00008052
+	BSR.w	CheckPlayerInBoundingBox
 	BEQ.b	loc_00007FDC
 	TST.b	$2C(A5)
 	BNE.w	loc_00008050
@@ -8733,7 +8741,8 @@ loc_00008038:
 loc_00008050:
 	RTS
 
-loc_00008052: ; Check whether player is in the bounding box for Parma soldiers
+;CheckPlayerInBoundingBox:
+CheckPlayerInBoundingBox: ; Check whether player is in the bounding box for Parma soldiers
 	CLR.w	D0
 	MOVE.b	$2A(A5), D0
 	MOVE.w	D0, D1
@@ -8765,7 +8774,8 @@ loc_0000809A:
 	CLR.w	D0
 	RTS
 
-loc_0000809E:
+;GetStaticNPCAnimationOffset:
+GetStaticNPCAnimationOffset:
 	BCLR.b	#3, $7(A5)
 	CLR.w	D1
 	MOVE.b	$18(A5), D1
@@ -8894,7 +8904,7 @@ loc_000081EC:
 
 ;LoadNPCAnimFrame_Static:
 LoadNPCAnimFrame_Static:
-	BSR.w	loc_0000809E
+	BSR.w	GetStaticNPCAnimationOffset
 	MOVE.w	(A1,D0.w), $8(A5)
 	BRA.w	loc_00008154
 ; LoadNPCAnimationFrame
@@ -8904,7 +8914,8 @@ LoadNPCAnimationFrame:
 	BSR.w	GetNPCAnimationOffset
 	MOVE.w	(A1,D0.w), $8(A5)
 	BRA.w	loc_00008154
-loc_0000820C:
+;AnimateEntitySprite:
+AnimateEntitySprite:
 	MOVE.b	$1B(A5), D0
 	BTST.b	#6, $00A10001
 	BNE.w	loc_00008224
@@ -8931,10 +8942,10 @@ SetRandomDirection:
 UpdateNPCMovement:
 	TST.b	$19(A5)
 	BNE.w	loc_000082F2
-	BSR.w	loc_00008376
+	BSR.w	CheckEntityOnScreen
 	BNE.w	loc_00008374
 	MOVE.b	$27(A5), $18(A5)
-	BSR.w	loc_000083AA
+	BSR.w	CheckSurroundingTileCollision
 	BEQ.w	loc_000082D8
 	MOVE.b	#$FF, $25(A5)
 	TST.b	$32(A5)
@@ -8942,7 +8953,7 @@ UpdateNPCMovement:
 	ADDQ.b	#1, $1A(A5)
 	CMPI.b	#$78, $1A(A5)
 	BLE.w	loc_000082BE
-	BSR.w	loc_000083F8
+	BSR.w	CheckAdjacentTileCollision
 	BNE.w	loc_000082C0
 	CLR.w	D6
 	CLR.w	D2
@@ -9020,7 +9031,8 @@ loc_00008340:
 loc_00008374:
 	RTS
 
-loc_00008376:
+;CheckEntityOnScreen:
+CheckEntityOnScreen:
 	MOVE.w	$E(A5), D0
 	SUB.w	Camera_scroll_x.w, D0
 	ASR.w	#4, D0
@@ -9042,7 +9054,8 @@ loc_000083A6:
 	MOVEQ	#1, D0
 	RTS
 
-loc_000083AA:
+;CheckSurroundingTileCollision:
+CheckSurroundingTileCollision:
 	MOVE.w	Player_position_x_in_town.w, D0
 	MOVE.w	Player_position_y_in_town.w, D1
 	MOVE.w	$E(A5), D2
@@ -9078,7 +9091,8 @@ loc_000083F4:
 	MOVEQ	#1, D0
 	RTS
 
-loc_000083F8:
+;CheckAdjacentTileCollision:
+CheckAdjacentTileCollision:
 	MOVE.w	Player_position_x_in_town.w, D0
 	MOVE.w	Player_position_y_in_town.w, D1
 	MOVE.w	$E(A5), D2
@@ -9194,7 +9208,8 @@ loc_000084EC:
 loc_000084F0:
 	RTS
 
-loc_000084F2:
+;CheckItemInList:
+CheckItemInList:
 	LEA	(A2), A1
 	MOVE.w	(A2)+, D7
 	BLE.w	loc_00008516
@@ -9228,7 +9243,8 @@ loc_00008528:
 	MOVE.w	#1, D0	
 	RTS
 	
-loc_0000852E:
+;BackupRingsToMapTriggers:
+BackupRingsToMapTriggers:
 	CLR.b	Map_triggers_backup.w
 	LEA	Rings_collected.w, A0
 	MOVE.w	#7, D7
@@ -9337,7 +9353,7 @@ ProcessAllObjectSlots:
 	BSR.w	InitObjectEntity_Type6
 	MOVEA.l	Object_slot_0E_ptr.w, A6
 	BSR.w	InitObjectEntity_Type6
-	BSR.w	loc_00008830
+	BSR.w	InitMapIndicatorEntity
 	RTS
 
 loc_00008706:
@@ -9345,7 +9361,7 @@ loc_00008706:
 
 ;InitObjectChain_7Entities:
 InitObjectChain_7Entities:
-	BSR.w	loc_00008768
+	BSR.w	InitObjectEntity_Type14
 	MOVE.l	#loc_000088B4, $2(A6)
 	BSR.w	InitNextObjectEntity
 	BSET.b	#3, $7(A6)
@@ -9363,7 +9379,8 @@ InitNextObjectEntity:
 	MOVE.b	$1(A6), D0
 	LEA	(A6,D0.w), A6
 	MOVE.l	#loc_00008A98, $2(A6)
-loc_00008768:
+;InitObjectEntity_Type14:
+InitObjectEntity_Type14:
 	BSET.b	#7, (A6)
 	BCLR.b	#7, $7(A6)
 	BCLR.b	#3, $7(A6)
@@ -9408,7 +9425,8 @@ InitObjectEntity_Type6:
 	MOVE.b	#6, $6(A6)
 	RTS
 
-loc_00008830:
+;InitMapIndicatorEntity:
+InitMapIndicatorEntity:
 	MOVEA.l	Map_indicator_entity_ptr.w, A6
 	BSET.b	#7, (A6)
 	MOVE.l	#loc_00008866, $2(A6)
@@ -13028,8 +13046,8 @@ loc_0000BAAE:
 	MOVE.b	$1(A6), D0
 	LEA	(A6,D0.w), A6
 	DBF	D7, loc_0000BAAE
-	BSR.w	loc_0000CB8C
-	BSR.w	loc_0000CCB2
+	BSR.w	DrawBossPortrait
+	BSR.w	DrawBossAttackGraphic1
 	RTS
 	
 loc_0000BB02:
@@ -13039,8 +13057,8 @@ loc_0000BB02:
 	ADD.w	D0, D0
 	ADD.w	D0, D0
 	JSR	(A0,D0.w)
-	BSR.w	loc_0000CB1E
-	BSR.w	loc_0000BF14
+	BSR.w	ProcessBattleDamageAndPalette
+	BSR.w	UpdateBattleParallaxLayers
 	BSR.w	CheckEntityPlayerCollisionAndDamage
 	MOVE.w	#$00E0, D1
 	BSR.w	CheckPlayerDamageAndKnockback
@@ -13245,7 +13263,7 @@ loc_0000BDFC:
 loc_0000BE02:
 	SUBQ.b	#1, $1A(A5)
 	BGE.b	loc_0000BE24
-	BSR.w	loc_0000CE4A
+	BSR.w	SetBattleVictoryAnimFrames1
 	MOVE.l	#loc_0000BE2A, $2(A5)
 	MOVE.b	#$32, $1A(A5)
 	MOVE.w	#$00AB, D0
@@ -13257,7 +13275,7 @@ loc_0000BE24:
 loc_0000BE2A:
 	SUBQ.b	#1, $1A(A5)
 	BGE.b	loc_0000BE42
-	BSR.w	loc_0000CEA6
+	BSR.w	SetBattleVictoryAnimFrames2
 	MOVE.b	#$32, $1A(A5)
 	MOVE.l	#loc_0000BE48, $2(A5)
 loc_0000BE42:
@@ -13307,8 +13325,8 @@ loc_0000BEB6:
 	MOVE.w	#$0090, D0
 	JSR	QueueSoundEffect
 	MOVE.b	#$FF, Player_input_blocked.w
-	BSR.w	loc_0000D06A
-	BSR.w	loc_0000D094
+	BSR.w	AwardBattleRewards
+	BSR.w	DisplayBattleVictoryMessage
 	MOVE.l	#loc_0000BEE4, $2(A5)
 loc_0000BEE2:
 	RTS
@@ -13332,7 +13350,8 @@ loc_0000BF0C:
 	JSR	ProcessScriptText
 	RTS
 
-loc_0000BF14:
+;UpdateBattleParallaxLayers:
+UpdateBattleParallaxLayers:
 	ADDQ.b	#1, $1B(A5)
 	TST.b	Fade_in_lines_mask.w
 	BNE.w	loc_0000BF84
@@ -13419,7 +13438,7 @@ loc_0000C006:
 	MOVE.w	$E(A5), $A(A5)
 	MOVE.w	$12(A5), $C(A5)
 	JSR	AddSpriteToDisplayList
-	BSR.w	loc_0000CC82
+	BSR.w	UpdateBossAttackGraphic
 	RTS
 
 loc_0000C040:
@@ -13707,7 +13726,7 @@ loc_0000C444:
 	MOVE.b	#$20, $7(A6)
 	MOVE.b	#5, $6(A6)
 	MOVE.l	#loc_0000C4D6, $2(A6)
-	BSR.w	loc_0000CBCC
+	BSR.w	DrawBossNameplate
 	RTS
 	
 loc_0000C4CA:
@@ -13811,7 +13830,7 @@ loc_0000C5D4:
 	MOVE.w	$E(A5), $A(A5)
 	MOVE.w	$12(A5), $C(A5)
 	JSR	AddSpriteToDisplayList
-	BSR.w	loc_0000CD3C
+	BSR.w	AnimateBossAttackFlash
 	MOVE.w	#$00C8, D1
 	BSR.w	CheckPlayerDamageAndKnockback
 	RTS
@@ -14171,7 +14190,8 @@ CheckPlayerDamageAndKnockback:
 loc_0000CB1C:
 	RTS
 
-loc_0000CB1E:
+;ProcessBattleDamageAndPalette:
+ProcessBattleDamageAndPalette:
 	MOVEA.l	Enemy_list_ptr.w, A6
 	TST.w	$3C(A6)
 	BLE.b	loc_0000CB3A
@@ -14209,7 +14229,8 @@ ClampYPosition:
 loc_0000CB8A:
 	RTS
 
-loc_0000CB8C:
+;DrawBossPortrait:
+DrawBossPortrait:
 	ORI	#$0700, SR
 	MOVE.l	#$44B40003, D5
 	LEA	loc_0006FB60, A0
@@ -14228,7 +14249,8 @@ loc_0000CBAA:
 	ANDI	#$F8FF, SR
 	RTS
 
-loc_0000CBCC:
+;DrawBossNameplate:
+DrawBossNameplate:
 	ORI	#$0700, SR
 	MOVE.l	#$44300003, D5
 	LEA	loc_0007295C, A0
@@ -14281,7 +14303,8 @@ loc_0000CC60:
 	ANDI	#$F8FF, SR
 	RTS
 
-loc_0000CC82:
+;UpdateBossAttackGraphic:
+UpdateBossAttackGraphic:
 	CLR.w	D0
 	MOVE.b	$1B(A5), D0
 	MOVE.w	D0, D1
@@ -14295,11 +14318,12 @@ loc_0000CCA0:
 	RTS
 
 loc_0000CCA2:
-	BRA.w	loc_0000CCB2
+	BRA.w	DrawBossAttackGraphic1
 	BRA.w	loc_0000CCD4
 	BRA.w	loc_0000CCE6
 	BRA.w	loc_0000CCD4
-loc_0000CCB2:
+;DrawBossAttackGraphic1:
+DrawBossAttackGraphic1:
 	LEA	loc_0006FC08, A0
 	MOVE.l	#$43BE0003, D5
 	BSR.w	WriteTextToVRAM
@@ -14341,7 +14365,8 @@ loc_0000CD1A:
 	ANDI	#$F8FF, SR
 	RTS
 
-loc_0000CD3C:
+;AnimateBossAttackFlash:
+AnimateBossAttackFlash:
 	ADDQ.w	#1, $3A(A5)
 	MOVE.w	$3A(A5), D0
 	MOVE.w	D0, D1
@@ -14428,7 +14453,8 @@ loc_0000CE28:
 	ADDQ.w	#1, Dialog_phase.w
 	RTS
 
-loc_0000CE4A:
+;SetBattleVictoryAnimFrames1:
+SetBattleVictoryAnimFrames1:
 	MOVEA.l	Enemy_list_ptr.w, A6
 	LEA	loc_00022EE2, A0
 	MOVE.w	#5, D7
@@ -14451,7 +14477,8 @@ loc_0000CE4A:
 	BSR.w	SetEntityAnimFrames
 	RTS
 
-loc_0000CEA6:
+;SetBattleVictoryAnimFrames2:
+SetBattleVictoryAnimFrames2:
 	MOVEA.l	Enemy_list_ptr.w, A6
 	LEA	loc_00022EEE, A0
 	MOVE.w	#5, D7
@@ -14613,7 +14640,8 @@ UpdateEncounterPalette:
 loc_0000D068:
 	RTS
 
-loc_0000D06A:
+;AwardBattleRewards:
+AwardBattleRewards:
 	LEA	loc_0000D116, A2
 	MOVE.w	Battle_type.w, D6
 	ANDI.w	#$000F, D6
@@ -14624,7 +14652,8 @@ loc_0000D06A:
 	JSR	AddPaymentAmount
 	RTS
 
-loc_0000D094:
+;DisplayBattleVictoryMessage:
+DisplayBattleVictoryMessage:
 	LEA	Player_name.w, A0
 	LEA	Text_build_buffer.w, A1
 	JSR	CopyStringUntilFF
@@ -15302,7 +15331,7 @@ loc_0000D9CA:
 	RTS
 	
 loc_0000DA18:
-	BSR.w	loc_0000DC54
+	BSR.w	CheckBossDamageAndKnockback
 	TST.w	$3C(A5)
 	BLE.b	loc_0000DA62
 	SUBQ.w	#1, $3C(A5)
@@ -15324,7 +15353,7 @@ loc_0000DA18:
 	
 loc_0000DA5A:
 	ASR.w	#5, D0
-	BSR.w	loc_0000F56C
+	BSR.w	WriteTilesToVRAM
 	RTS
 	
 loc_0000DA62:
@@ -15422,9 +15451,9 @@ loc_0000DB90:
 	
 loc_0000DC1C:
 	TST.b	Boss_defeated_flag.w
-	BEQ.b	loc_0000DC54
+	BEQ.b	CheckBossDamageAndKnockback
 	TST.b	Boss_death_anim_done.w
-	BEQ.b	loc_0000DC54
+	BEQ.b	CheckBossDamageAndKnockback
 	MOVE.w	#$00B8, Palette_line_1_index.w
 	JSR	LoadPalettesFromTable
 	CLR.w	Dialog_timer.w
@@ -15433,7 +15462,8 @@ loc_0000DC1C:
 	MOVE.w	#$00C0, D0
 	JSR	QueueSoundEffect
 	MOVE.l	#loc_0000DC60, $2(A5)
-loc_0000DC54:
+;CheckBossDamageAndKnockback:
+CheckBossDamageAndKnockback:
 	MOVE.w	#$00D8, D1
 	JSR	CheckPlayerDamageAndKnockback
 	RTS
@@ -16048,7 +16078,7 @@ loc_0000E480:
 	CLR.w	D0
 	MOVE.b	$1(A5), D0
 	LEA	(A5,D0.w), A6
-	BSR.w	loc_0000F482
+	BSR.w	CalculateDirectionToEntity
 loc_0000E48E:
 	ADDQ.b	#1, $1B(A5)
 	MOVE.b	$1B(A5), D0
@@ -16057,7 +16087,7 @@ loc_0000E48E:
 	LEA	loc_00023A46, A0
 	MOVE.w	(A0,D0.w), $8(A5)
 loc_0000E4A8:
-	BSR.w	loc_0000E4DE
+	BSR.w	CalculateSineVelocity
 	MOVE.w	$32(A5), D0
 	ADD.w	$1C(A5), D0
 	MOVE.w	D0, $E(A5)
@@ -16070,7 +16100,8 @@ loc_0000E4A8:
 	JSR	AddSpriteToDisplayList
 	RTS
 
-loc_0000E4DE:
+;CalculateSineVelocity:
+CalculateSineVelocity:
 	LEA	SineTable, A0
 	MOVE.w	$20(A5), D0
 	CLR.w	D1
@@ -16151,7 +16182,8 @@ loc_0000E626:
 	DBF	D7, loc_0000E626
 	RTS
 	
-loc_0000E63C:
+;ActivateNextBossPart:
+ActivateNextBossPart:
 	MOVEA.l	Object_slot_02_ptr.w, A6
 	MOVE.w	Boss_ai_state.w, D7
 	SUBQ.w	#1, D7
@@ -16265,7 +16297,7 @@ loc_0000E7E2:
 	BNE.b	loc_0000E81A
 	TST.b	$1A(A5)
 	BNE.w	loc_0000E858
-	BSR.w	loc_0000ECC4
+	BSR.w	CheckPlayerWithinRange
 	BEQ.w	loc_0000E858
 	MOVE.b	#$FF, $19(A5)
 	MOVE.b	#$32, D1
@@ -16373,7 +16405,7 @@ loc_0000E958:
 	ASR.w	#2, D5
 	CMPI.b	#$30, D4
 	BNE.b	loc_0000E97A
-	BSR.w	loc_0000EBBE
+	BSR.w	InitBossProjectile
 	BRA.w	loc_0000E9BC
 loc_0000E97A:
 	CMPI.b	#$A0, D4
@@ -16387,7 +16419,7 @@ loc_0000E97A:
 	BGE.b	loc_0000E9B0
 	MOVEA.l	Object_slot_01_ptr.w, A6
 	MOVE.l	#loc_0000ECBA, $2(A6)
-	BSR.w	loc_0000E63C
+	BSR.w	ActivateNextBossPart
 	BRA.b	loc_0000E9BC
 loc_0000E9B0:
 	MOVEA.l	Object_slot_01_ptr.w, A6
@@ -16474,7 +16506,7 @@ loc_0000EAC0:
 	BLT.b	loc_0000EAEA
 	MOVE.l	#loc_0000EAF8, $2(A5)
 	MOVE.b	#$32, $1A(A5)
-	BSR.w	loc_0000EB9C
+	BSR.w	DeactivateBossBodyParts
 	RTS
 	
 loc_0000EAEA:
@@ -16534,7 +16566,8 @@ loc_0000EB54:
 	JSR	UpdateEncounterPalette
 	RTS
 	
-loc_0000EB9C:
+;DeactivateBossBodyParts:
+DeactivateBossBodyParts:
 	MOVEA.l	Enemy_list_ptr.w, A6
 	CLR.w	D0
 	MOVE.b	$1(A6), D0
@@ -16549,7 +16582,8 @@ loc_0000EBAA:
 loc_0000EBBC:
 	RTS
 	
-loc_0000EBBE:
+;InitBossProjectile:
+InitBossProjectile:
 	MOVEA.l	Object_slot_01_ptr.w, A6
 	BSET.b	#7, (A6)
 	MOVE.b	#$F8, $2E(A6)
@@ -16613,7 +16647,8 @@ loc_0000ECBA:
 	BCLR.b	#7, (A6)
 	RTS
 	
-loc_0000ECC4:
+;CheckPlayerWithinRange:
+CheckPlayerWithinRange:
 	MOVEA.l	Player_entity_ptr.w, A4
 	MOVE.w	$E(A5), D0
 	MOVE.w	$E(A4), D1
@@ -16837,7 +16872,7 @@ loc_0000EFBA:
 	RTS
 	
 loc_0000EFCA:
-	BSR.w	loc_0000F4C2
+	BSR.w	GetDirectionFromDeltas
 	BRA.w	loc_0000F070
 loc_0000EFD2:
 	MOVEA.l	Player_entity_ptr.w, A6
@@ -16853,7 +16888,7 @@ loc_0000EFD2:
 	RTS
 	
 loc_0000EFFA:
-	BSR.w	loc_0000F49C
+	BSR.w	CalculateDirectionToPlayer
 	BRA.w	loc_0000F070
 loc_0000F002:
 	ADDQ.b	#1, $1A(A5)
@@ -16918,7 +16953,7 @@ loc_0000F0C4:
 	MOVE.w	#$0044, $12(A5)
 loc_0000F0D2:
 	ADDQ.b	#1, $1B(A5)
-	BSR.w	loc_0000F3B8
+	BSR.w	UpdateBossBodyTiles
 	JSR	CheckEntityPlayerCollisionAndDamage
 	TST.w	$3C(A5)
 	BLE.b	loc_0000F0F8
@@ -17127,7 +17162,8 @@ loc_0000F38A:
 	JSR	AddSpriteToDisplayList
 	RTS
 	
-loc_0000F3B8:
+;UpdateBossBodyTiles:
+UpdateBossBodyTiles:
 	ORI	#$0700, SR
 	MOVE.b	$1B(A5), D0
 	ANDI.w	#$000C, D0
@@ -17185,14 +17221,16 @@ loc_0000F460:
 	ANDI	#$F8FF, SR
 	RTS
 	
-loc_0000F482:
+;CalculateDirectionToEntity:
+CalculateDirectionToEntity:
 	LEA	loc_0000F5C6, A1
 	MOVE.w	$E(A6), D0
 	SUB.w	$E(A5), D0
 	MOVE.w	$12(A6), D1
 	SUB.w	$12(A5), D1
-	BRA.w	loc_0000F4C2
-loc_0000F49C:
+	BRA.w	GetDirectionFromDeltas
+;CalculateDirectionToPlayer:
+CalculateDirectionToPlayer:
 	LEA	loc_0000F5B6, A1
 	MOVEA.l	Player_entity_ptr.w, A6
 	MOVE.w	$E(A6), D0
@@ -17203,7 +17241,8 @@ loc_0000F49C:
 	MOVE.w	$12(A5), D2
 	ADDI.w	#$0058, D2
 	SUB.w	D2, D1
-loc_0000F4C2:
+;GetDirectionFromDeltas:
+GetDirectionFromDeltas:
 	CLR.w	D2
 	TST.w	D0
 	BGE.b	loc_0000F4CE
@@ -17275,7 +17314,8 @@ loc_0000F55C:
 	dc.l	loc_000780A8
 	dc.l	loc_000780C6
 	dc.l	loc_000780C6	
-loc_0000F56C:
+;WriteTilesToVRAM:
+WriteTilesToVRAM:
 	LEA	loc_000239FE, A0
 	MOVE.w	D0, D1
 	ADD.w	D1, D1
@@ -17830,7 +17870,7 @@ loc_0000FBB2:
 	ASL.l	#8, D1
 	MOVE.b	(A0)+, D1
 	OR.l	D1, D3
-	BSR.w	loc_0000FC04
+	BSR.w	WriteMaskedTileRow
 	DBF	D0, loc_0000FBB0
 	LEA	(A2), A1
 	MOVEQ	#$00000020, D0
@@ -17868,7 +17908,8 @@ loc_0000FBF8:
 	DBF	D0, loc_0000FBF6
 	RTS
 	
-loc_0000FC04:
+;WriteMaskedTileRow:
+WriteMaskedTileRow:
 	LEA	(A2), A1
 loc_0000FC06:
 	MOVEQ	#$0000001F, D4
@@ -17884,7 +17925,8 @@ loc_0000FC16:
 	DBF	D4, loc_0000FC08
 	RTS
 	
-loc_0000FC1C:
+;DecompressFontTile:
+DecompressFontTile:
 	CLR.l	D3
 	CLR.w	D0
 	MOVE.b	(A0)+, D0
@@ -17904,7 +17946,7 @@ loc_0000FC28:
 	MOVE.b	D2, D6
 	BSR.w	ClampTileCoordinates
 	MOVE.b	D6, D2
-	BSR.w	loc_0000FCA2
+	BSR.w	WriteTileRowFromBitfield
 	DBF	D0, loc_0000FC28
 	LEA	(A2), A1
 	MOVEQ	#$00000020, D0
@@ -17947,7 +17989,8 @@ loc_0000FC7C:
 	DBF	D0, loc_0000FC7C
 	RTS
 	
-loc_0000FCA2:
+;WriteTileRowFromBitfield:
+WriteTileRowFromBitfield:
 	LEA	(A2), A1
 	MOVEQ	#$0000001F, D4
 loc_0000FCA6:
@@ -17993,7 +18036,7 @@ InitFontTiles:
 	LEA	loc_00041A90, A0
 	MOVE.w	#$00FF, D5
 loc_0000FD0A:
-	BSR.w	loc_0000FC1C
+	BSR.w	DecompressFontTile
 	LEA	$20(A2), A2
 	DBF	D5, loc_0000FD0A
 	BSR.w	TransferTilesViaDma
@@ -18144,7 +18187,7 @@ loc_0000FF24:
 	MOVE.w	#0, Terrain_tileset_index.w
 	BRA.b	loc_0000FF36
 loc_0000FF32:
-	BSR.w	loc_000104CA
+	BSR.w	DetermineTerrainTileset
 loc_0000FF36:
 	MOVE.w	Terrain_tileset_index.w, D0
 	LEA	loc_0001F662, A1
@@ -18154,7 +18197,7 @@ loc_0000FF36:
 	MOVEA.l	(A1)+, A0
 	MOVE.w	(A1)+, D5
 	MOVE.w	(A1)+, Palette_line_2_index.w
-	BSR.w	loc_0000FF74
+	BSR.w	DecompressTileLoop
 	LEA	loc_0001F5F2, A1
 	MOVE.w	Terrain_tileset_index.w, D0
 	ADD.w	D0, D0
@@ -18164,10 +18207,11 @@ loc_0000FF36:
 	JSR	LoadPalettesFromTable
 	RTS
 	
-loc_0000FF74:
+;DecompressTileLoop:
+DecompressTileLoop:
 	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
-	DBF	D5, loc_0000FF74
+	DBF	D5, DecompressTileLoop
 	RTS
 	
 ;LoadBattleTileGraphics:
@@ -18589,7 +18633,8 @@ ExtractBCDDigit:
 	SWAP	D0
 	RTS
 	
-loc_000104CA:
+;DetermineTerrainTileset:
+DetermineTerrainTileset:
 	CLR.w	Terrain_tileset_index.w
 	LEA	Map_sector_center.w, A0
 	MOVE.w	Player_position_x_outside_town.w, D0
@@ -18606,7 +18651,7 @@ loc_000104EE:
 	MOVEQ	#2, D6
 loc_000104F0:
 	MOVE.b	(A2)+, D0
-	BSR.w	loc_0001050E
+	BSR.w	CountTerrainTileType
 	DBF	D6, loc_000104F0
 	LEA	$2D(A2), A2
 	DBF	D7, loc_000104EE
@@ -18616,7 +18661,8 @@ loc_000104F0:
 loc_0001050C:
 	RTS
 	
-loc_0001050E:
+;CountTerrainTileType:
+CountTerrainTileType:
 	CMPI.b	#1, D0
 	BNE.b	loc_00010518
 	ADDQ.w	#1, D1
@@ -18880,7 +18926,7 @@ loc_000107B6:
 	
 loc_000107F6:
 	MOVEA.l	Sram_backup_ptr.w, A0	
-	BSR.w	loc_0001092E	
+	BSR.w	CopySramBackupToSlot	
 	BSR.w	LoadGameFromSave	
 	JSR	DrawSaveSuccessWindow	
 	MOVE.w	#5, File_menu_phase.w	
@@ -18996,7 +19042,8 @@ loc_0001091C:
 	CMP.w	D0, D1
 	RTS
 	
-loc_0001092E:
+;CopySramBackupToSlot:
+CopySramBackupToSlot:
 	MOVEA.l	Sram_save_slot_ptr.w, A0	
 	MOVEA.l	Sram_backup_ptr.w, A1	
 	MOVE.w	#$029F, D0	
@@ -19615,7 +19662,7 @@ loc_00011204:
 loc_0001124C:
 	MOVE.l	(A3)+, D2
 	BSR.w	FormatLongNumberToText
-	BSR.w	loc_00012CE2
+	BSR.w	RenderFormattedTextToWindow
 	ADDQ.w	#2, Window_text_y.w
 	ADDQ.w	#1, Shop_item_index.w
 	MOVE.w	Shop_item_index.w, D0
@@ -19840,7 +19887,7 @@ loc_000114C0:
 loc_000114C6:
 	TST.w	D5
 	BNE.b	loc_000114D0
-	BSR.w	loc_00011506
+	BSR.w	WriteDigitToWindowPlane3
 	BRA.b	loc_000114D2
 loc_000114D0:
 	MOVE.b	D4, (A0)+	
@@ -19866,7 +19913,8 @@ WriteDigitToWindowAndAdvance:
 	ADDQ.w	#1, Window_number_cursor_x.w
 	RTS
 
-loc_00011506:
+;WriteDigitToWindowPlane3:
+WriteDigitToWindowPlane3:
 	BSR.w	CalcWindowTileVramAddress
 	ORI.l	#$60000003, D0
 	MOVE.l	D0, VDP_control_port
@@ -20062,10 +20110,11 @@ loc_00011786:
 	LEA	$1(A0), A0
 	DBF	D7, loc_00011786
 	MOVE.w	#$FFFF, (A1)
-	BSR.b	loc_00011798
+	BSR.b	ValidateSavegameName
 	RTS
 	
-loc_00011798:
+;ValidateSavegameName:
+ValidateSavegameName:
 	LEA	Savegame_name_buffer.w, A1
 	CLR.w	D0
 loc_0001179E:
@@ -20328,7 +20377,7 @@ loc_00011B64:
 	LEA	NothingStr, A0
 	MOVE.w	Readied_magic.w, D0
 	BLT.b	loc_00011B7C
-	BSR.w	loc_00011BA4
+	BSR.w	GetMagicNamePointer
 loc_00011B7C:
 	MOVE.w	#$0115, D0
 	BSR.w	RenderTextAtOffset
@@ -20345,7 +20394,8 @@ GetEquipmentNamePointer:
 	MOVEA.l	(A1,D0.w), A0
 	RTS
 	
-loc_00011BA4:
+;GetMagicNamePointer:
+GetMagicNamePointer:
 	LEA	MagicNames, A1
 	ANDI.w	#$00FF, D0
 	ADD.w	D0, D0
@@ -21541,9 +21591,10 @@ loc_00012BD8:
 	RTS
 	
 loc_00012BE0:
-	BSR.w	loc_00012BE6	
+	BSR.w	DrawSpecialCharToVRAM	
 	BRA.b	loc_00012B70	
-loc_00012BE6:
+;DrawSpecialCharToVRAM:
+DrawSpecialCharToVRAM:
 	ADDI.w	#$04C0, D6	
 	ORI.w	#$8000, D6	
 	ORI.w	#0, D6	
@@ -21642,7 +21693,8 @@ loc_00012CCA:
 RenderTextToWindowAtPosition:
 	LEA	Window_text_scratch.w, A0
 	BRA.w	RenderTextAtOffset
-loc_00012CE2:
+;RenderFormattedTextToWindow:
+RenderFormattedTextToWindow:
 	LEA	Window_text_scratch.w, A0
 ; RenderTextToWindow
 ; Render text string to window tilemap buffer
@@ -22688,8 +22740,8 @@ loc_000150F6:
 	MOVE.w	#$0034, Palette_line_2_fade_target.w
 	MOVE.w	#$0032, Palette_line_3_fade_target.w
 	MOVE.b	#$FF, Fade_in_lines_mask.w
-	BSR.w	loc_000153FA
-	BSR.w	loc_00015442
+	BSR.w	DrawNameEntryBackground
+	BSR.w	DrawNameEntryCharGrid
 	MOVEA.l	Enemy_list_ptr.w, A6
 	BSET.b	#7, (A6)
 	BSET.b	#7, $7(A6)
@@ -22742,7 +22794,7 @@ loc_000151E0:
 	LEA	(A0,D0.w), A0	
 	BRA.w	loc_00015304	
 loc_0001521C:
-	BSR.w	loc_0001548A
+	BSR.w	HandleNameEntryDPad
 loc_00015220:
 	RTS
 
@@ -22893,7 +22945,8 @@ ClearEnemyListFlags:
 	BCLR.b	#7, (A6)
 	RTS
 
-loc_000153FA:
+;DrawNameEntryBackground:
+DrawNameEntryBackground:
 	ORI	#$0700, SR
 	MOVE.l	#$61060003, D5
 	LEA	loc_00068778, A0
@@ -22914,7 +22967,8 @@ loc_00015418:
 	ANDI	#$F8FF, SR
 	RTS
 
-loc_00015442:
+;DrawNameEntryCharGrid:
+DrawNameEntryCharGrid:
 	ORI	#$0700, SR
 	MOVE.l	#$428A0003, D5
 	LEA	loc_00068A86, A0
@@ -22935,7 +22989,8 @@ loc_00015460:
 	ANDI	#$F8FF, SR
 	RTS
 
-loc_0001548A:
+;HandleNameEntryDPad:
+HandleNameEntryDPad:
 	MOVE.b	Controller_current_state.w, D0
 	ANDI.w	#$000F, D0
 	BEQ.w	loc_000155F2
@@ -23132,7 +23187,7 @@ loc_000156C0:
 	MOVE.w	#$0032, Palette_line_2_fade_in_target.w
 	MOVE.w	#$0032, Palette_line_3_fade_in_target.w
 	CLR.w	Prologue_state.w
-	BSR.w	loc_00015968
+	BSR.w	DrawPrologueScene1and2
 	BSR.w	LoadPrologueFadeParams
 	MOVE.b	#6, Timer_seconds_bcd.w
 	JSR	EnableDisplay
@@ -23206,7 +23261,7 @@ loc_00015778:
 loc_000157F0:
 	JSR	ClearVRAMPlaneA
 	JSR	ClearVRAMPlaneB
-	BSR.w	loc_000159DE
+	BSR.w	DrawPrologueScene3
 	MOVE.w	#$004F, Palette_line_0_fade_target.w
 	MOVE.w	#$0050, Palette_line_1_fade_target.w
 	MOVE.w	#$0051, Palette_line_2_fade_target.w
@@ -23249,7 +23304,7 @@ loc_0001589E:
 loc_000158A0:
 	JSR	ClearVRAMPlaneA
 	JSR	ClearVRAMPlaneB
-	BSR.w	loc_00015A1E
+	BSR.w	DrawPrologueScene4and5
 	MOVE.w	#$004F, Palette_line_0_fade_target.w
 	MOVE.w	#$0052, Palette_line_1_fade_target.w
 	MOVE.w	#$004F, Palette_line_2_fade_target.w
@@ -23263,7 +23318,7 @@ loc_000158D2:
 	JSR	QueueSoundEffect
 	JSR	ClearVRAMPlaneA
 	JSR	ClearVRAMPlaneB
-	BSR.w	loc_00015A94
+	BSR.w	DrawPrologueScene6
 	MOVE.w	#$004F, Palette_line_0_fade_target.w
 	MOVE.w	#$0052, Palette_line_1_fade_target.w
 	MOVE.w	#$004F, Palette_line_2_fade_target.w
@@ -23315,7 +23370,8 @@ loc_00015956:
 Prologue_EmptyCallback:
 	RTS
 
-loc_00015968:
+;DrawPrologueScene1and2:
+DrawPrologueScene1and2:
 	ORI	#$0700, SR
 	MOVE.l	#$60B00003, D5
 	MOVE.w	#$A300, D4
@@ -23342,7 +23398,8 @@ loc_00015968:
 	ANDI	#$F8FF, SR
 	RTS
 
-loc_000159DE:
+;DrawPrologueScene3:
+DrawPrologueScene3:
 	ORI	#$0700, SR
 	MOVE.l	#$63B00003, D5
 	MOVE.w	#$A300, D4
@@ -23358,7 +23415,8 @@ loc_000159DE:
 	ANDI	#$F8FF, SR
 	RTS
 
-loc_00015A1E:
+;DrawPrologueScene4and5:
+DrawPrologueScene4and5:
 	ORI	#$0700, SR
 	MOVE.l	#$60840003, D5
 	MOVE.w	#$A300, D4
@@ -23385,7 +23443,8 @@ loc_00015A1E:
 	ANDI	#$F8FF, SR
 	RTS
 
-loc_00015A94:
+;DrawPrologueScene6:
+DrawPrologueScene6:
 	ORI	#$0700, SR
 	MOVE.l	#$648E0003, D5
 	LEA	Prologue6Str, A0
@@ -23610,7 +23669,7 @@ loc_00015EF6:
 	BLE.b	loc_00015F16
 	CMPI.w	#3, D0
 	BLT.b	loc_00015F10
-	BSR.w	loc_00016328
+	BSR.w	DrawTownRow_Up
 loc_00015F10:
 	SUBQ.w	#1, Town_camera_tile_y.w
 	BRA.b	loc_00015F1A
@@ -23971,7 +24030,8 @@ loc_000162F6:
 	MOVE.w	Palette_line_1_index.w, Palette_line_1_index_saved.w
 	RTS
 
-loc_00016328:
+;DrawTownRow_Up:
+DrawTownRow_Up:
 	MOVE.w	Town_camera_tile_y.w, D0
 	SUBQ.w	#3, D0
 	MOVE.w	Town_camera_tile_x.w, D6
