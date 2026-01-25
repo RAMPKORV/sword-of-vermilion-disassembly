@@ -20565,7 +20565,7 @@ loc_0001227A:
 	MOVE.w	#2, $FFFFC226.w
 	MOVE.w	#$000D, $FFFFC22C.w
 	MOVE.w	#$000A, $FFFFC22E.w
-	BSR.w	loc_000125DA
+	BSR.w	ReadWindowToBuffer
 	RTS
 	
 loc_0001229E:
@@ -20579,7 +20579,7 @@ loc_000122AE:
 	MOVE.w	#$0013, $FFFFC226.w
 	MOVE.w	#$001F, $FFFFC22C.w
 	MOVE.w	#8, $FFFFC22E.w
-	BSR.w	loc_000125DA
+	BSR.w	ReadWindowToBuffer
 	RTS
 	
 loc_000122D2:
@@ -20588,7 +20588,7 @@ loc_000122D2:
 	MOVE.w	#4, $FFFFC226.w
 	MOVE.w	#$000B, $FFFFC22C.w
 	MOVE.w	#2, $FFFFC22E.w
-	BSR.w	loc_000125DA
+	BSR.w	ReadWindowToBuffer
 	RTS
 	
 loc_000122F4:
@@ -20597,7 +20597,7 @@ loc_000122F4:
 	MOVE.w	#$000D, $FFFFC226.w
 	MOVE.w	#6, $FFFFC22C.w
 	MOVE.w	#6, $FFFFC22E.w
-	BSR.w	loc_000125DA
+	BSR.w	ReadWindowToBuffer
 	RTS
 	
 loc_00012318:
@@ -20606,7 +20606,7 @@ loc_00012318:
 	MOVE.w	#$000C, $FFFFC226.w
 	MOVE.w	#$0015, $FFFFC22C.w
 	MOVE.w	#7, $FFFFC22E.w
-	BSR.w	loc_000125DA
+	BSR.w	ReadWindowToBuffer
 	RTS
 	
 loc_0001233A:
@@ -20615,7 +20615,7 @@ loc_0001233A:
 	MOVE.w	#2, $FFFFC226.w
 	MOVE.w	#$0015, $FFFFC22C.w
 	MOVE.w	#$0015, $FFFFC22E.w
-	BSR.w	loc_000125DA
+	BSR.w	ReadWindowToBuffer
 	RTS
 	
 loc_0001235E:
@@ -20624,7 +20624,7 @@ loc_0001235E:
 	MOVE.w	#$000C, $FFFFC226.w
 	MOVE.w	#$000D, $FFFFC22C.w
 	MOVE.w	#6, $FFFFC22E.w
-	BSR.w	loc_000125DA
+	BSR.w	ReadWindowToBuffer
 	RTS
 	
 loc_00012382:
@@ -20633,7 +20633,7 @@ loc_00012382:
 	MOVE.w	#$000C, $FFFFC226.w
 	MOVE.w	#$000D, $FFFFC22C.w
 	MOVE.w	#8, $FFFFC22E.w
-	BSR.w	loc_000125DA
+	BSR.w	ReadWindowToBuffer
 	RTS
 	
 loc_000123A6:
@@ -20642,7 +20642,7 @@ loc_000123A6:
 	MOVE.w	#$000C, $FFFFC226.w
 	MOVE.w	#7, $FFFFC22C.w
 	MOVE.w	#8, $FFFFC22E.w
-	BSR.w	loc_000125DA
+	BSR.w	ReadWindowToBuffer
 	RTS
 	
 loc_000123C8:
@@ -20651,7 +20651,7 @@ loc_000123C8:
 	MOVE.w	#$000A, $FFFFC226.w
 	MOVE.w	#$0015, $FFFFC22C.w
 	MOVE.w	#$000A, $FFFFC22E.w
-	BSR.w	loc_000125DA
+	BSR.w	ReadWindowToBuffer
 	RTS
 	
 loc_000123EA:
@@ -20660,7 +20660,7 @@ loc_000123EA:
 	MOVE.w	#2, $FFFFC226.w
 	MOVE.w	#$0018, $FFFFC22C.w
 	MOVE.w	#$0011, $FFFFC22E.w
-	BSR.w	loc_000125DA
+	BSR.w	ReadWindowToBuffer
 	RTS
 	
 loc_0001240C:
@@ -20669,7 +20669,7 @@ loc_0001240C:
 	MOVE.w	#2, $FFFFC226.w
 	MOVE.w	#$0016, $FFFFC22C.w
 	MOVE.w	#$0010, $FFFFC22E.w
-	BSR.w	loc_000125DA
+	BSR.w	ReadWindowToBuffer
 	RTS
 	
 ; SaveLeftMenuTiles
@@ -20679,7 +20679,7 @@ SaveLeftMenuTiles:
 	MOVE.w	#2, $FFFFC226.w
 	MOVE.w	#9, $FFFFC22C.w
 	MOVE.w	#6, $FFFFC22E.w
-	BSR.w	loc_000125DA
+	BSR.w	ReadWindowToBuffer
 	RTS
 	
 loc_00012450:
@@ -20697,7 +20697,7 @@ loc_00012470:
 	MOVE.w	#2, $FFFFC226.w
 	MOVE.w	#$001B, $FFFFC22C.w
 	MOVE.w	#$0014, $FFFFC22E.w
-	BSR.w	loc_000125DA
+	BSR.w	ReadWindowToBuffer
 	RTS
 	
 loc_00012494:
@@ -20707,7 +20707,7 @@ loc_00012494:
 	MOVE.w	#$001A, $FFFFC22C.w
 	MOVE.w	#$000C, D0
 	MOVE.w	D0, $FFFFC22E.w
-	BSR.w	loc_000125DA
+	BSR.w	ReadWindowToBuffer
 	RTS
 	
 loc_000124BA:
@@ -20717,7 +20717,7 @@ loc_000124BA:
 	MOVE.w	#$0016, $FFFFC22C.w
 	MOVE.w	#$0014, D0
 	MOVE.w	D0, $FFFFC22E.w
-	BSR.w	loc_000125DA
+	BSR.w	ReadWindowToBuffer
 	RTS
 	
 loc_000124DE:
@@ -20727,7 +20727,7 @@ loc_000124DE:
 	MOVE.w	#$0011, $FFFFC22C.w
 	MOVE.w	#$0014, D0
 	MOVE.w	D0, $FFFFC22E.w
-	BSR.w	loc_000125DA
+	BSR.w	ReadWindowToBuffer
 	RTS
 	
 loc_00012502:
@@ -20737,7 +20737,7 @@ loc_00012502:
 	MOVE.w	#$0016, $FFFFC22C.w
 	MOVE.w	#$0014, D0
 	MOVE.w	D0, $FFFFC22E.w
-	BSR.w	loc_000125DA
+	BSR.w	ReadWindowToBuffer
 	RTS
 	
 loc_00012526:
@@ -20747,7 +20747,7 @@ loc_00012526:
 	MOVE.w	#$0011, $FFFFC22C.w
 	MOVE.w	#$0014, D0
 	MOVE.w	D0, $FFFFC22E.w
-	BSR.w	loc_000125DA
+	BSR.w	ReadWindowToBuffer
 	RTS
 	
 loc_0001254A:
@@ -20756,7 +20756,7 @@ loc_0001254A:
 	MOVE.w	#$000A, $FFFFC226.w	
 	MOVE.w	#$000E, $FFFFC22C.w	
 	MOVE.w	#$000A, $FFFFC22E.w	
-	BSR.w	loc_000125DA	
+	BSR.w	ReadWindowToBuffer	
 	RTS
 	
 	
@@ -20766,7 +20766,7 @@ loc_0001256E:
 	MOVE.w	#$000C, $FFFFC226.w
 	MOVE.w	#$000B, $FFFFC22C.w
 	MOVE.w	#8, $FFFFC22E.w
-	BSR.w	loc_000125DA
+	BSR.w	ReadWindowToBuffer
 	RTS
 	
 loc_00012592:
@@ -20775,7 +20775,7 @@ loc_00012592:
 	MOVE.w	#4, $FFFFC226.w
 	MOVE.w	#9, $FFFFC22C.w
 	MOVE.w	#8, $FFFFC22E.w
-	BSR.w	loc_000125DA
+	BSR.w	ReadWindowToBuffer
 	RTS
 	
 loc_000125B6:
@@ -20784,10 +20784,15 @@ loc_000125B6:
 	MOVE.w	#2, $FFFFC226.w
 	MOVE.w	#$0015, $FFFFC22C.w
 	MOVE.w	#$0012, $FFFFC22E.w
-	BSR.w	loc_000125DA
+	BSR.w	ReadWindowToBuffer
 	RTS
 	
-loc_000125DA:
+; ReadWindowToBuffer
+; Read window tiles from VDP into buffer (save background)
+; Input: A0 = Destination buffer
+;        $FFFFC224 = X offset, $FFFFC226 = Y offset
+;        $FFFFC22C = Width, $FFFFC22E = Height
+ReadWindowToBuffer:
 	JSR	GetScrollOffsetInTiles
 	CLR.w	D3
 loc_000125E2:
