@@ -884,7 +884,7 @@ ProgramState_03:
 	BEQ.w	loc_000015E6
 	TST.b	Window_tilemap_draw_active.w
 	BNE.w	loc_000015E6
-	MOVE.w	#7, D2
+	MOVE.w	#BUTTON_BIT_START, D2
 	JSR	CheckButtonPress
 	BEQ.w	loc_000015C0
 	TST.w	Dialog_selection.w
@@ -1444,10 +1444,10 @@ loc_00001D58:
 	BEQ.b	loc_00001D98
 	TST.b	Script_has_continuation.w
 	BNE.b	loc_00001DA0
-	MOVE.w	#4, D2
+	MOVE.w	#BUTTON_BIT_B, D2
 	JSR	CheckButtonPress
 	BNE.b	loc_00001D7E
-	MOVE.w	#5, D2
+	MOVE.w	#BUTTON_BIT_C, D2
 	JSR	CheckButtonPress
 	BNE.b	loc_00001D7E
 	RTS
@@ -1465,7 +1465,7 @@ loc_00001D98:
 	RTS
 
 loc_00001DA0:
-	MOVE.w	#5, D2
+	MOVE.w	#BUTTON_BIT_C, D2
 	JSR	CheckButtonPress
 	BEQ.b	loc_00001DB2
 	JSR	InitDialogueWindow
@@ -1538,10 +1538,10 @@ loc_00001E9C:
 	BEQ.b	loc_00001EF8
 	TST.b	Script_has_continuation.w
 	BNE.w	loc_00001EE6
-	MOVE.w	#4, D2
+	MOVE.w	#BUTTON_BIT_B, D2
 	JSR	CheckButtonPress
 	BNE.b	loc_00001EC4
-	MOVE.w	#5, D2
+	MOVE.w	#BUTTON_BIT_C, D2
 	JSR	CheckButtonPress
 	BNE.b	loc_00001EC4
 	RTS
@@ -1556,7 +1556,7 @@ loc_00001EC4:
 	RTS
 
 loc_00001EE6:
-	MOVE.w	#5, D2
+	MOVE.w	#BUTTON_BIT_C, D2
 	JSR	CheckButtonPress
 	BEQ.b	loc_00001EFE
 	JSR	InitDialogueWindow
@@ -1945,10 +1945,10 @@ loc_000024D6:
 loc_000024F8:
 	TST.b	Script_text_complete.w
 	BEQ.b	loc_0000253A
-	MOVE.w	#5, D2
+	MOVE.w	#BUTTON_BIT_C, D2
 	JSR	CheckButtonPress
 	BNE.b	loc_00002518
-	MOVE.w	#4, D2
+	MOVE.w	#BUTTON_BIT_B, D2
 	JSR	CheckButtonPress
 	BNE.b	loc_00002518
 	RTS
@@ -2257,13 +2257,13 @@ loc_0000292E:
 loc_00002930:
 	TST.b	Window_tilemap_draw_active.w
 	BNE.b	loc_00002972
-	MOVE.w	#6, D2
+	MOVE.w	#BUTTON_BIT_A, D2
 	JSR	CheckButtonPress
 	BNE.b	loc_0000295C
-	MOVE.w	#4, D2
+	MOVE.w	#BUTTON_BIT_B, D2
 	JSR	CheckButtonPress
 	BNE.b	loc_0000295C
-	MOVE.w	#5, D2
+	MOVE.w	#BUTTON_BIT_C, D2
 	JSR	CheckButtonPress
 	BNE.b	loc_0000295C
 	RTS
@@ -2575,10 +2575,10 @@ loc_00002D6C:
 	BNE.b	loc_00002DA8
 	TST.b	Script_text_complete.w
 	BEQ.b	loc_00002DA2
-	MOVE.w	#5, D2
+	MOVE.w	#BUTTON_BIT_C, D2
 	JSR	CheckButtonPress
 	BNE.b	loc_00002D92
-	MOVE.w	#4, D2
+	MOVE.w	#BUTTON_BIT_B, D2
 	JSR	CheckButtonPress
 	BNE.b	loc_00002D92
 	RTS
@@ -2778,7 +2778,7 @@ loc_00003082:
 HandleOverworldMenuInput:
 	TST.w	Overworld_menu_state.w
 	BNE.b	loc_000030EA
-	MOVE.w	#7, D2
+	MOVE.w	#BUTTON_BIT_START, D2
 	BSR.w	CheckButtonPress
 	BEQ.b	loc_000030D0
 	MOVE.w	#1, Overworld_menu_state.w	
@@ -2786,7 +2786,7 @@ HandleOverworldMenuInput:
 	JSR	QueueSoundEffect	
 	BRA.w	loc_000030EE	
 loc_000030D0:
-	MOVE.w	#5, D2
+	MOVE.w	#BUTTON_BIT_C, D2
 	BSR.w	CheckButtonPress
 	BEQ.b	loc_000030EA
 	MOVE.b	#$A0, D0
@@ -2839,7 +2839,7 @@ loc_00003142:
 loc_00003170:
 	TST.b	Window_tilemap_draw_active.w	
 	BNE.w	loc_000031EC	
-	MOVE.w	#4, D2	
+	MOVE.w	#BUTTON_BIT_B, D2	
 	BSR.w	CheckButtonPress	
 	BEQ.b	loc_000031A2	
 	MOVE.b	#$A8, D0	
@@ -2851,7 +2851,7 @@ loc_00003170:
 	RTS
 	
 loc_000031A2:
-	MOVE.w	#5, D2	
+	MOVE.w	#BUTTON_BIT_C, D2	
 	BSR.w	CheckButtonPress	
 	BEQ.b	loc_000031D4	
 	MOVE.b	#$A1, D0	
@@ -2899,7 +2899,7 @@ loc_00003208:
 loc_00003248:
 	TST.b	Window_tilemap_draw_active.w
 	BNE.w	loc_000032AC
-	MOVE.w	#4, D2
+	MOVE.w	#BUTTON_BIT_B, D2
 	BSR.w	CheckButtonPress
 	BEQ.b	loc_0000327A
 	MOVE.b	#$A8, D0
@@ -2911,7 +2911,7 @@ loc_00003248:
 	RTS
 
 loc_0000327A:
-	MOVE.w	#5, D2
+	MOVE.w	#BUTTON_BIT_C, D2
 	BSR.w	CheckButtonPress
 	BEQ.b	loc_00003294
 	MOVE.b	#$A1, D0
@@ -3811,7 +3811,7 @@ loc_00003D5A:
 loc_00003D7A:
 	TST.b	Player_attacking_flag.w
 	BNE.b	loc_00003DA6
-	MOVE.w	#5, D2
+	MOVE.w	#BUTTON_BIT_C, D2
 	JSR	CheckButtonPress
 	BEQ.b	loc_00003DA6
 	TST.w	Equipped_sword.w
@@ -3821,7 +3821,7 @@ loc_00003D7A:
 	MOVE.b	#$FF, Player_attacking_flag.w
 	CLR.b	$28(A5)
 loc_00003DA6:
-	MOVE.w	#6, D2
+	MOVE.w	#BUTTON_BIT_A, D2
 	JSR	CheckButtonPress
 	BEQ.b	loc_00003DB6
 	BSR.w	loc_0000421A
@@ -6923,7 +6923,7 @@ loc_00006978:
 loc_00006998:
 	TST.b	Player_attacking_flag.w
 	BNE.w	loc_00006ABE
-	MOVE.w	#5, D2
+	MOVE.w	#BUTTON_BIT_C, D2
 	JSR	CheckButtonPress
 	BEQ.b	loc_000069C0
 	MOVE.w	#$00B8, D0
@@ -13156,10 +13156,10 @@ loc_0000BEE2:
 loc_0000BEE4:
 	TST.b	Script_text_complete.w
 	BEQ.b	loc_0000BF0C
-	MOVE.w	#5, D2
+	MOVE.w	#BUTTON_BIT_C, D2
 	JSR	CheckButtonPress
 	BNE.b	loc_0000BF04
-	MOVE.w	#4, D2
+	MOVE.w	#BUTTON_BIT_B, D2
 	JSR	CheckButtonPress
 	BNE.b	loc_0000BF04
 	RTS
@@ -18571,7 +18571,7 @@ loc_000106EE:
 loc_0001070A:
 	TST.b	Window_tilemap_draw_active.w
 	BNE.w	loc_000107B4
-	MOVE.w	#5, D2
+	MOVE.w	#BUTTON_BIT_C, D2
 	JSR	CheckButtonPress
 	BEQ.w	loc_000107A2
 	MOVE.w	Dialog_selection.w, Menu_cursor_index.w
@@ -18623,7 +18623,7 @@ loc_000107B4:
 loc_000107B6:
 	TST.b	Window_tilemap_draw_active.w
 	BNE.w	loc_00010818
-	MOVE.w	#5, D2
+	MOVE.w	#BUTTON_BIT_C, D2
 	JSR	CheckButtonPress
 	BEQ.w	loc_00010818
 	MOVEA.l	Sram_backup_ptr.w, A0
@@ -18655,7 +18655,7 @@ loc_0001081A:
 loc_00010820:
 	TST.b	Window_tilemap_draw_active.w
 	BNE.b	loc_00010838
-	MOVE.w	#5, D2
+	MOVE.w	#BUTTON_BIT_C, D2
 	JSR	CheckButtonPress
 	BEQ.b	loc_00010838
 	MOVE.w	#0, File_menu_phase.w
@@ -18665,7 +18665,7 @@ loc_00010838:
 loc_0001083A:
 	TST.b	Window_tilemap_draw_active.w	
 	BNE.b	loc_00010852	
-	MOVE.w	#5, D2	
+	MOVE.w	#BUTTON_BIT_C, D2	
 	JSR	CheckButtonPress	
 	BEQ.b	loc_00010852	
 	MOVE.b	#$FF, File_load_complete.w	
@@ -22349,13 +22349,13 @@ loc_000150F6:
 loc_000151E0:
 	TST.b	Fade_in_lines_mask.w
 	BNE.b	loc_00015220
-	MOVE.w	#5, D2
+	MOVE.w	#BUTTON_BIT_C, D2
 	JSR	CheckButtonPress
 	BNE.b	loc_00015222
-	MOVE.w	#4, D2
+	MOVE.w	#BUTTON_BIT_B, D2
 	JSR	CheckButtonPress
 	BNE.w	loc_00015318
-	MOVE.w	#7, D2
+	MOVE.w	#BUTTON_BIT_START, D2
 	JSR	CheckButtonPress
 	BEQ.b	loc_0001521C
 	LEA	Player_name.w, A0	
@@ -25476,7 +25476,7 @@ loc_00017F1E:
 loc_00017F44:
 	TST.b	Window_tilemap_draw_active.w
 	BNE.w	loc_0001801C
-	MOVE.w	#4, D2
+	MOVE.w	#BUTTON_BIT_B, D2
 	JSR	CheckButtonPress
 	BEQ.b	loc_00017F80
 	MOVE.w	#$00A8, D0
@@ -25489,7 +25489,7 @@ loc_00017F44:
 	RTS
 
 loc_00017F80:
-	MOVE.w	#5, D2
+	MOVE.w	#BUTTON_BIT_C, D2
 	JSR	CheckButtonPress
 	BEQ.w	loc_0001801E
 	MOVE.w	Item_menu_action_mode.w, Menu_cursor_index.w
@@ -25537,10 +25537,10 @@ loc_0001801E:
 loc_00018038:
 	TST.b	Script_text_complete.w
 	BEQ.w	loc_00018078
-	MOVE.w	#5, D2
+	MOVE.w	#BUTTON_BIT_C, D2
 	JSR	CheckButtonPress
 	BNE.b	loc_0001805A
-	MOVE.w	#4, D2
+	MOVE.w	#BUTTON_BIT_B, D2
 	JSR	CheckButtonPress
 	BNE.b	loc_0001805A
 	RTS
@@ -25588,7 +25588,7 @@ loc_000180D6:
 	RTS
 
 loc_000180DE:
-	MOVE.w	#4, D2
+	MOVE.w	#BUTTON_BIT_B, D2
 	JSR	CheckButtonPress
 	BEQ.b	loc_0001810A
 	MOVE.w	#$00A8, D0	
@@ -25598,7 +25598,7 @@ loc_000180DE:
 	MOVE.w	#1, $FFFFC424.w	
 	BRA.w	loc_0001162E	
 loc_0001810A:
-	MOVE.w	#5, D2
+	MOVE.w	#BUTTON_BIT_C, D2
 	JSR	CheckButtonPress
 	BEQ.b	loc_0001813E
 	MOVE.w	Magic_list_cursor_index.w, Menu_cursor_index.w
@@ -25618,10 +25618,10 @@ loc_0001813E:
 	RTS
 
 loc_00018158:
-	MOVE.w	#4, D2
+	MOVE.w	#BUTTON_BIT_B, D2
 	JSR	CheckButtonPress
 	BNE.b	loc_000181A4
-	MOVE.w	#5, D2
+	MOVE.w	#BUTTON_BIT_C, D2
 	JSR	CheckButtonPress
 	BEQ.w	loc_00018258
 	MOVE.w	#$00A1, D0
@@ -25703,7 +25703,7 @@ loc_0001829C:
 	RTS
 
 loc_000182A4:
-	MOVE.w	#4, D2
+	MOVE.w	#BUTTON_BIT_B, D2
 	JSR	CheckButtonPress
 	BEQ.b	loc_000182D0
 	MOVE.w	#$00A8, D0
@@ -25713,7 +25713,7 @@ loc_000182A4:
 	MOVE.w	#1, $FFFFC424.w
 	BRA.w	loc_0001162E
 loc_000182D0:
-	MOVE.w	#5, D2
+	MOVE.w	#BUTTON_BIT_C, D2
 	JSR	CheckButtonPress
 	BEQ.b	loc_00018304
 	MOVE.w	Magic_list_cursor_index.w, Menu_cursor_index.w
@@ -25733,10 +25733,10 @@ loc_00018304:
 	RTS
 
 loc_0001831E:
-	MOVE.w	#4, D2
+	MOVE.w	#BUTTON_BIT_B, D2
 	JSR	CheckButtonPress
 	BNE.b	loc_00018368
-	MOVE.w	#5, D2
+	MOVE.w	#BUTTON_BIT_C, D2
 	JSR	CheckButtonPress
 	BEQ.w	loc_00018432
 	MOVE.w	#$00A1, D0
@@ -25832,7 +25832,7 @@ loc_00018490:
 	RTS
 
 loc_00018498:
-	MOVE.w	#4, D2
+	MOVE.w	#BUTTON_BIT_B, D2
 	JSR	CheckButtonPress
 	BEQ.b	loc_000184C2
 	MOVE.w	#$00A8, D0
@@ -25843,7 +25843,7 @@ loc_00018498:
 	BRA.w	loc_0001162E
 	dc.b	$4E, $75 
 loc_000184C2:
-	MOVE.w	#5, D2
+	MOVE.w	#BUTTON_BIT_C, D2
 	JSR	CheckButtonPress
 	BEQ.w	loc_0001850E
 	MOVE.w	Magic_list_cursor_index.w, Menu_cursor_index.w
@@ -25884,10 +25884,10 @@ loc_00018540:
 loc_00018548:
 	TST.b	Script_text_complete.w
 	BEQ.w	loc_00018592
-	MOVE.w	#5, D2
+	MOVE.w	#BUTTON_BIT_C, D2
 	JSR	CheckButtonPress
 	BNE.b	loc_0001856A
-	MOVE.w	#4, D2
+	MOVE.w	#BUTTON_BIT_B, D2
 	JSR	CheckButtonPress
 	BNE.b	loc_0001856A
 	RTS
@@ -25906,7 +25906,7 @@ loc_00018592:
 	RTS
 
 loc_0001859A:
-	MOVE.w	#4, D2
+	MOVE.w	#BUTTON_BIT_B, D2
 	JSR	CheckButtonPress
 	BEQ.b	loc_000185BC
 	MOVE.w	#$00A8, D0
@@ -25916,7 +25916,7 @@ loc_0001859A:
 	RTS
 
 loc_000185BC:
-	MOVE.w	#5, D2
+	MOVE.w	#BUTTON_BIT_C, D2
 	JSR	CheckButtonPress
 	BEQ.w	loc_00018642
 	MOVE.w	#$00A1, D0
@@ -28038,7 +28038,7 @@ loc_0001A322:
 loc_0001A344:
 	TST.b	Window_tilemap_draw_active.w
 	BNE.w	loc_0001A3EA
-	MOVE.w	#4, D2
+	MOVE.w	#BUTTON_BIT_B, D2
 	JSR	CheckButtonPress
 	BEQ.b	loc_0001A380
 	MOVE.w	#4, Window_draw_type.w
@@ -28051,7 +28051,7 @@ loc_0001A344:
 	RTS
 
 loc_0001A380:
-	MOVE.w	#5, D2
+	MOVE.w	#BUTTON_BIT_C, D2
 	JSR	CheckButtonPress
 	BEQ.w	loc_0001A3EC
 	MOVE.w	Item_menu_action_mode.w, Menu_cursor_index.w
@@ -28087,10 +28087,10 @@ loc_0001A3EC:
 loc_0001A406:
 	TST.b	Script_text_complete.w
 	BEQ.w	loc_0001A446
-	MOVE.w	#5, D2
+	MOVE.w	#BUTTON_BIT_C, D2
 	JSR	CheckButtonPress
 	BNE.b	loc_0001A428
-	MOVE.w	#4, D2
+	MOVE.w	#BUTTON_BIT_B, D2
 	JSR	CheckButtonPress
 	BNE.b	loc_0001A428
 	RTS
@@ -28137,7 +28137,7 @@ loc_0001A4A4:
 	RTS
 
 loc_0001A4AC:
-	MOVE.w	#4, D2
+	MOVE.w	#BUTTON_BIT_B, D2
 	JSR	CheckButtonPress
 	BEQ.b	loc_0001A4DC
 	MOVE.w	#$00A8, D0
@@ -28149,7 +28149,7 @@ loc_0001A4AC:
 	RTS
 
 loc_0001A4DC:
-	MOVE.w	#5, D2
+	MOVE.w	#BUTTON_BIT_C, D2
 	JSR	CheckButtonPress
 	BEQ.b	loc_0001A512
 	MOVE.w	Selected_item_index.w, Menu_cursor_index.w
@@ -28169,10 +28169,10 @@ loc_0001A512:
 	RTS
 
 loc_0001A52C:
-	MOVE.w	#4, D2
+	MOVE.w	#BUTTON_BIT_B, D2
 	JSR	CheckButtonPress
 	BNE.b	loc_0001A576
-	MOVE.w	#5, D2
+	MOVE.w	#BUTTON_BIT_C, D2
 	JSR	CheckButtonPress
 	BEQ.w	loc_0001A63C
 	MOVE.w	#$00A1, D0
@@ -28246,10 +28246,10 @@ loc_0001A63C:
 loc_0001A656:
 	TST.b	Script_text_complete.w
 	BEQ.w	loc_0001A696
-	MOVE.w	#4, D2
+	MOVE.w	#BUTTON_BIT_B, D2
 	JSR	CheckButtonPress
 	BNE.b	loc_0001A678
-	MOVE.w	#5, D2
+	MOVE.w	#BUTTON_BIT_C, D2
 	JSR	CheckButtonPress
 	BNE.b	loc_0001A678
 	RTS
@@ -28283,7 +28283,7 @@ loc_0001A6CA:
 	RTS
 
 loc_0001A6D2:
-	MOVE.w	#4, D2
+	MOVE.w	#BUTTON_BIT_B, D2
 	JSR	CheckButtonPress
 	BEQ.b	loc_0001A702
 	MOVE.w	#$00A8, D0
@@ -28295,7 +28295,7 @@ loc_0001A6D2:
 	RTS
 
 loc_0001A702:
-	MOVE.w	#5, D2
+	MOVE.w	#BUTTON_BIT_C, D2
 	JSR	CheckButtonPress
 	BEQ.w	loc_0001A7B8
 	MOVE.w	Selected_item_index.w, Menu_cursor_index.w
@@ -28358,7 +28358,7 @@ loc_0001A7EA:
 	RTS
 
 loc_0001A7F2:
-	MOVE.w	#5, D2
+	MOVE.w	#BUTTON_BIT_C, D2
 	JSR	CheckButtonPress
 	BEQ.b	loc_0001A828
 	JSR	ResetScriptAndInitDialogue
@@ -28381,10 +28381,10 @@ loc_0001A82A:
 	BEQ.w	loc_0001A888
 	TST.b	Script_has_continuation.w
 	BNE.w	loc_0001A890
-	MOVE.w	#5, D2
+	MOVE.w	#BUTTON_BIT_C, D2
 	JSR	CheckButtonPress
 	BNE.b	loc_0001A854
-	MOVE.w	#4, D2
+	MOVE.w	#BUTTON_BIT_B, D2
 	JSR	CheckButtonPress
 	BNE.b	loc_0001A854
 	RTS
@@ -28410,7 +28410,7 @@ loc_0001A888:
 	RTS
 
 loc_0001A890:
-	MOVE.w	#5, D2
+	MOVE.w	#BUTTON_BIT_C, D2
 	JSR	CheckButtonPress
 	BEQ.b	loc_0001A8A2
 	JSR	InitDialogueWindow
@@ -28427,10 +28427,10 @@ loc_0001A8BE:
 	RTS
 
 loc_0001A8C0:
-	MOVE.w	#5, D2
+	MOVE.w	#BUTTON_BIT_C, D2
 	JSR	CheckButtonPress
 	BNE.b	loc_0001A8DA
-	MOVE.w	#4, D2
+	MOVE.w	#BUTTON_BIT_B, D2
 	JSR	CheckButtonPress
 	BNE.b	loc_0001A8DA
 	RTS
@@ -28462,10 +28462,10 @@ loc_0001A8F4:
 	RTS
 
 loc_0001A93A:
-	MOVE.w	#5, D2
+	MOVE.w	#BUTTON_BIT_C, D2
 	JSR	CheckButtonPress
 	BNE.b	loc_0001A954
-	MOVE.w	#4, D2
+	MOVE.w	#BUTTON_BIT_B, D2
 	JSR	CheckButtonPress
 	BNE.b	loc_0001A954
 	RTS
@@ -29480,7 +29480,7 @@ loc_0001B6EE:
 loc_0001B6F0:
 	TST.b	Script_text_complete.w
 	BEQ.w	loc_0001B734
-	MOVE.w	#4, D2
+	MOVE.w	#BUTTON_BIT_B, D2
 	JSR	CheckButtonPress
 	BEQ.b	loc_0001B73A
 	JSR	ResetScriptAndInitDialogue	
@@ -29496,7 +29496,7 @@ loc_0001B6F0:
 loc_0001B734:
 	JMP	ProcessScriptText	
 loc_0001B73A:
-	MOVE.w	#5, D2
+	MOVE.w	#BUTTON_BIT_C, D2
 	JSR	CheckButtonPress
 	BEQ.b	loc_0001B770
 	MOVE.w	$FFFFC4A0.w, Menu_cursor_index.w
@@ -29562,10 +29562,10 @@ DoneMyBestStr:
 loc_0001B97E:
 	TST.b	Script_text_complete.w
 	BEQ.w	loc_0001BAEE
-	MOVE.w	#4, D2
+	MOVE.w	#BUTTON_BIT_B, D2
 	JSR	CheckButtonPress
 	BNE.w	loc_0001BAA4
-	MOVE.w	#5, D2
+	MOVE.w	#BUTTON_BIT_C, D2
 	JSR	CheckButtonPress
 	BEQ.w	loc_0001BADA
 	MOVE.w	Dialog_selection.w, Menu_cursor_index.w
@@ -29688,10 +29688,10 @@ loc_0001BB26:
 	BEQ.b	loc_0001BB6C
 	TST.b	Script_has_continuation.w
 	BNE.w	loc_0001BB5A
-	MOVE.w	#5, D2
+	MOVE.w	#BUTTON_BIT_C, D2
 	JSR	CheckButtonPress
 	BNE.b	loc_0001BB4E
-	MOVE.w	#4, D2
+	MOVE.w	#BUTTON_BIT_B, D2
 	JSR	CheckButtonPress
 	BNE.b	loc_0001BB4E
 	RTS
@@ -29702,7 +29702,7 @@ loc_0001BB4E:
 	RTS
 
 loc_0001BB5A:
-	MOVE.w	#5, D2	
+	MOVE.w	#BUTTON_BIT_C, D2	
 	JSR	CheckButtonPress	
 	BEQ.b	loc_0001BB72	
 	JSR	InitDialogueWindow	
@@ -29737,10 +29737,10 @@ loc_0001BBA8:
 	RTS
 
 loc_0001BBAA:
-	MOVE.w	#5, D2
+	MOVE.w	#BUTTON_BIT_C, D2
 	JSR	CheckButtonPress
 	BNE.b	loc_0001BBC4
-	MOVE.w	#4, D2
+	MOVE.w	#BUTTON_BIT_B, D2
 	JSR	CheckButtonPress
 	BNE.b	loc_0001BBC4
 	RTS
@@ -29754,7 +29754,7 @@ loc_0001BBC4:
 	RTS
 
 loc_0001BBE0:
-	MOVE.w	#5, D2
+	MOVE.w	#BUTTON_BIT_C, D2
 	JSR	CheckButtonPress
 	BEQ.b	loc_0001BBF8
 	JSR	InitDialogueWindow
@@ -29769,7 +29769,7 @@ loc_0001BBFA:
 	RTS
 
 loc_0001BC0C:
-	MOVE.w	#5, D2
+	MOVE.w	#BUTTON_BIT_C, D2
 	JSR	CheckButtonPress
 	BEQ.w	loc_0001BCA4
 	JSR	loc_00012670
@@ -29838,12 +29838,12 @@ loc_0001BCDE:
 	BNE.w	loc_0001BD98
 	TST.b	$FFFF9911.w
 	BNE.w	loc_0001BD98
-	MOVE.w	#4, D2
+	MOVE.w	#BUTTON_BIT_B, D2
 	JSR	CheckButtonPress
 	BEQ.b	loc_0001BCFC
 	BRA.b	loc_0001BD22
 loc_0001BCFC:
-	MOVE.w	#5, D2
+	MOVE.w	#BUTTON_BIT_C, D2
 	JSR	CheckButtonPress
 	BEQ.b	loc_0001BD86
 	MOVE.w	Shop_action_selection.w, Menu_cursor_index.w
@@ -29891,10 +29891,10 @@ loc_0001BD98:
 loc_0001BD9A:
 	TST.b	Script_text_complete.w
 	BEQ.b	loc_0001BDD2
-	MOVE.w	#5, D2
+	MOVE.w	#BUTTON_BIT_C, D2
 	JSR	CheckButtonPress
 	BNE.b	loc_0001BDBA
-	MOVE.w	#4, D2
+	MOVE.w	#BUTTON_BIT_B, D2
 	JSR	CheckButtonPress
 	BNE.b	loc_0001BDBA
 	RTS
@@ -29944,7 +29944,7 @@ loc_0001BE34:
 loc_0001BE36:
 	TST.b	Script_text_complete.w
 	BEQ.w	loc_0001BF22
-	MOVE.w	#4, D2
+	MOVE.w	#BUTTON_BIT_B, D2
 	JSR	CheckButtonPress
 	BEQ.b	loc_0001BE6E
 	MOVE.w	#$00A8, D0
@@ -29956,7 +29956,7 @@ loc_0001BE36:
 	RTS
 
 loc_0001BE6E:
-	MOVE.w	#5, D2
+	MOVE.w	#BUTTON_BIT_C, D2
 	JSR	CheckButtonPress
 	BEQ.w	loc_0001BF0E
 	MOVE.w	#$00A1, D0
@@ -30004,10 +30004,10 @@ loc_0001BF22:
 loc_0001BF28:
 	TST.b	Script_text_complete.w
 	BEQ.w	loc_0001C07C
-	MOVE.w	#4, D2
+	MOVE.w	#BUTTON_BIT_B, D2
 	JSR	CheckButtonPress
 	BNE.w	loc_0001C030
-	MOVE.w	#5, D2
+	MOVE.w	#BUTTON_BIT_C, D2
 	JSR	CheckButtonPress
 	BEQ.w	loc_0001C068
 	MOVE.w	Dialog_selection.w, Menu_cursor_index.w
@@ -30114,10 +30114,10 @@ loc_0001C0BA:
 loc_0001C0C0:
 	TST.b	Script_text_complete.w
 	BEQ.w	loc_0001C14C
-	MOVE.w	#4, D2
+	MOVE.w	#BUTTON_BIT_B, D2
 	JSR	CheckButtonPress
 	BNE.b	loc_0001C120
-	MOVE.w	#5, D2
+	MOVE.w	#BUTTON_BIT_C, D2
 	JSR	CheckButtonPress
 	BNE.b	loc_0001C0F4
 	MOVE.w	Dialog_selection.w, Menu_cursor_index.w
@@ -30215,10 +30215,10 @@ loc_0001C22E:
 loc_0001C234:
 	TST.b	Script_text_complete.w
 	BEQ.b	loc_0001C276
-	MOVE.w	#5, D2
+	MOVE.w	#BUTTON_BIT_C, D2
 	JSR	CheckButtonPress
 	BNE.b	loc_0001C254
-	MOVE.w	#4, D2
+	MOVE.w	#BUTTON_BIT_B, D2
 	JSR	CheckButtonPress
 	BNE.b	loc_0001C254
 	RTS
@@ -30238,7 +30238,7 @@ loc_0001C276:
 loc_0001C27C:
 	TST.b	Script_text_complete.w
 	BEQ.w	loc_0001C380
-	MOVE.w	#4, D2
+	MOVE.w	#BUTTON_BIT_B, D2
 	JSR	CheckButtonPress
 	BEQ.b	loc_0001C2AA
 	JSR	loc_000126B6
@@ -30248,7 +30248,7 @@ loc_0001C27C:
 	RTS
 
 loc_0001C2AA:
-	MOVE.w	#5, D2
+	MOVE.w	#BUTTON_BIT_C, D2
 	JSR	CheckButtonPress
 	BEQ.w	loc_0001C36C
 	MOVE.w	$FFFFC4A0.w, Menu_cursor_index.w
@@ -30320,10 +30320,10 @@ loc_0001C386:
 loc_0001C39E:
 	JMP	ProcessScriptText
 loc_0001C3A4:
-	MOVE.w	#4, D2
+	MOVE.w	#BUTTON_BIT_B, D2
 	JSR	CheckButtonPress
 	BNE.w	loc_0001C4B0
-	MOVE.w	#5, D2
+	MOVE.w	#BUTTON_BIT_C, D2
 	JSR	CheckButtonPress
 	BEQ.w	loc_0001C4E6
 	MOVE.w	Dialog_selection.w, Menu_cursor_index.w
@@ -30420,10 +30420,10 @@ loc_0001C4FA:
 loc_0001C50E:
 	TST.b	Script_text_complete.w
 	BEQ.w	loc_0001C59C
-	MOVE.w	#4, D2
+	MOVE.w	#BUTTON_BIT_B, D2
 	JSR	CheckButtonPress
 	BNE.b	loc_0001C56E
-	MOVE.w	#5, D2
+	MOVE.w	#BUTTON_BIT_C, D2
 	JSR	CheckButtonPress
 	BNE.b	loc_0001C542
 	MOVE.w	Dialog_selection.w, Menu_cursor_index.w
@@ -30467,7 +30467,7 @@ loc_0001C5A2:
 	RTS
 
 loc_0001C5C2:
-	MOVE.w	#5, D2
+	MOVE.w	#BUTTON_BIT_C, D2
 	JSR	CheckButtonPress
 	BEQ.b	loc_0001C5DA
 	JSR	InitDialogueWindow
@@ -30484,10 +30484,10 @@ loc_0001C5DC:
 	RTS
 
 loc_0001C5F4:
-	MOVE.w	#4, D2
+	MOVE.w	#BUTTON_BIT_B, D2
 	JSR	CheckButtonPress
 	BNE.w	loc_0001C66A
-	MOVE.w	#5, D2
+	MOVE.w	#BUTTON_BIT_C, D2
 	JSR	CheckButtonPress
 	BEQ.w	loc_0001C684
 	TST.w	Dialog_selection.w
@@ -30531,10 +30531,10 @@ loc_0001C698:
 	BEQ.b	loc_0001C6E0
 	TST.b	Script_has_continuation.w
 	BNE.b	loc_0001C6E6
-	MOVE.w	#5, D2
+	MOVE.w	#BUTTON_BIT_C, D2
 	JSR	CheckButtonPress
 	BNE.b	loc_0001C6BE
-	MOVE.w	#4, D2
+	MOVE.w	#BUTTON_BIT_B, D2
 	JSR	CheckButtonPress
 	BNE.b	loc_0001C6BE
 	RTS
@@ -30551,7 +30551,7 @@ loc_0001C6BE:
 loc_0001C6E0:
 	JMP	ProcessScriptText
 loc_0001C6E6:
-	MOVE.w	#5, D2
+	MOVE.w	#BUTTON_BIT_C, D2
 	JSR	CheckButtonPress
 	BEQ.b	loc_0001C6F8
 	JSR	InitDialogueWindow
@@ -30578,7 +30578,7 @@ loc_0001C722:
 loc_0001C72A:
 	JMP	ProcessScriptText
 loc_0001C730:
-	MOVE.w	#5, D2
+	MOVE.w	#BUTTON_BIT_C, D2
 	JSR	CheckButtonPress
 	BEQ.b	loc_0001C742
 	JSR	InitDialogueWindow
@@ -30598,10 +30598,10 @@ loc_0001C75C:
 	BNE.w	loc_0001C7DA
 	TST.b	Watling_inn_free_stay_used.w
 	BNE.w	loc_0001C7DA
-	MOVE.w	#4, D2
+	MOVE.w	#BUTTON_BIT_B, D2
 	JSR	CheckButtonPress
 	BNE.b	loc_0001C78A
-	MOVE.w	#5, D2
+	MOVE.w	#BUTTON_BIT_C, D2
 	JSR	CheckButtonPress
 	BNE.b	loc_0001C78A
 	RTS
@@ -30629,10 +30629,10 @@ loc_0001C7CC:
 	CLR.w	Watling_inn_unpaid_nights.w
 	BRA.w	loc_0001C84E
 loc_0001C7DA:
-	MOVE.w	#4, D2
+	MOVE.w	#BUTTON_BIT_B, D2
 	JSR	CheckButtonPress
 	BNE.w	loc_0001C860
-	MOVE.w	#5, D2
+	MOVE.w	#BUTTON_BIT_C, D2
 	JSR	CheckButtonPress
 	BEQ.w	loc_0001C87C
 	MOVE.w	Dialog_selection.w, Menu_cursor_index.w
@@ -30753,12 +30753,12 @@ loc_0001C996:
 	BNE.w	loc_0001CAE2
 	TST.b	$FFFF9911.w
 	BNE.w	loc_0001CAE2
-	MOVE.w	#4, D2
+	MOVE.w	#BUTTON_BIT_B, D2
 	JSR	CheckButtonPress
 	BEQ.b	loc_0001C9B4
 	BRA.b	loc_0001C9E8
 loc_0001C9B4:
-	MOVE.w	#5, D2
+	MOVE.w	#BUTTON_BIT_C, D2
 	JSR	CheckButtonPress
 	BEQ.w	loc_0001CAD0
 	MOVE.w	Church_service_selection.w, Menu_cursor_index.w
@@ -30834,10 +30834,10 @@ loc_0001CAE2:
 loc_0001CAE4:
 	TST.b	Script_text_complete.w
 	BEQ.b	loc_0001CB26
-	MOVE.w	#5, D2
+	MOVE.w	#BUTTON_BIT_C, D2
 	JSR	CheckButtonPress
 	BNE.b	loc_0001CB04
-	MOVE.w	#4, D2
+	MOVE.w	#BUTTON_BIT_B, D2
 	JSR	CheckButtonPress
 	BNE.b	loc_0001CB04
 	RTS
@@ -30887,10 +30887,10 @@ loc_0001CB92:
 	RTS
 
 loc_0001CB94:
-	MOVE.w	#4, D2
+	MOVE.w	#BUTTON_BIT_B, D2
 	JSR	CheckButtonPress
 	BNE.w	loc_0001CC24
-	MOVE.w	#5, D2
+	MOVE.w	#BUTTON_BIT_C, D2
 	JSR	CheckButtonPress
 	BEQ.w	loc_0001CC46
 	MOVE.w	Dialog_selection.w, Menu_cursor_index.w
@@ -30953,10 +30953,10 @@ loc_0001CC78:
 	RTS
 
 loc_0001CC90:
-	MOVE.w	#4, D2
+	MOVE.w	#BUTTON_BIT_B, D2
 	JSR	CheckButtonPress
 	BNE.w	loc_0001CD36
-	MOVE.w	#5, D2
+	MOVE.w	#BUTTON_BIT_C, D2
 	JSR	CheckButtonPress
 	BEQ.w	loc_0001CD56
 	MOVE.w	Dialog_selection.w, Menu_cursor_index.w
@@ -31019,10 +31019,10 @@ loc_0001CD82:
 loc_0001CD88:
 	TST.b	Window_tilemap_draw_active.w
 	BNE.b	loc_0001CDFC
-	MOVE.w	#4, D2
+	MOVE.w	#BUTTON_BIT_B, D2
 	JSR	CheckButtonPress
 	BNE.b	loc_0001CDC8
-	MOVE.w	#5, D2
+	MOVE.w	#BUTTON_BIT_C, D2
 	JSR	CheckButtonPress
 	BEQ.b	loc_0001CDEA
 	JSR	loc_0001059C
@@ -31260,10 +31260,10 @@ loc_0001D05C:
 	BNE.w	loc_0001D102
 	TST.b	$FFFF9911.w
 	BNE.w	loc_0001D102
-	MOVE.w	#4, D2
+	MOVE.w	#BUTTON_BIT_B, D2
 	JSR	CheckButtonPress
 	BNE.b	loc_0001D098
-	MOVE.w	#5, D2
+	MOVE.w	#BUTTON_BIT_C, D2
 	JSR	CheckButtonPress
 	BNE.b	loc_0001D0C0
 	MOVE.w	Ready_equipment_selection.w, Menu_cursor_index.w
@@ -31302,10 +31302,10 @@ loc_0001D102:
 loc_0001D104:
 	TST.b	Window_tilemap_draw_active.w
 	BNE.w	loc_0001D1B6
-	MOVE.w	#4, D2
+	MOVE.w	#BUTTON_BIT_B, D2
 	JSR	CheckButtonPress
 	BNE.b	loc_0001D138
-	MOVE.w	#5, D2
+	MOVE.w	#BUTTON_BIT_C, D2
 	JSR	CheckButtonPress
 	BNE.b	loc_0001D156
 	MOVE.w	Ready_equipment_category.w, Menu_cursor_index.w
@@ -31348,10 +31348,10 @@ loc_0001D1B6:
 loc_0001D1B8:
 	TST.b	Script_text_complete.w
 	BEQ.w	loc_0001D368
-	MOVE.w	#4, D2
+	MOVE.w	#BUTTON_BIT_B, D2
 	JSR	CheckButtonPress
 	BNE.b	loc_0001D1EC
-	MOVE.w	#5, D2
+	MOVE.w	#BUTTON_BIT_C, D2
 	JSR	CheckButtonPress
 	BNE.b	loc_0001D216
 	MOVE.w	Ready_equipment_cursor_index.w, Menu_cursor_index.w
@@ -31462,10 +31462,10 @@ loc_0001D368:
 	RTS
 
 loc_0001D370:
-	MOVE.w	#4, D2
+	MOVE.w	#BUTTON_BIT_B, D2
 	JSR	CheckButtonPress
 	BNE.b	loc_0001D39C
-	MOVE.w	#5, D2
+	MOVE.w	#BUTTON_BIT_C, D2
 	JSR	CheckButtonPress
 	BNE.b	loc_0001D3BA
 	MOVE.w	Ready_equipment_category.w, Menu_cursor_index.w
@@ -31533,10 +31533,10 @@ loc_0001D466:
 loc_0001D476:
 	TST.b	Script_text_complete.w
 	BEQ.b	loc_0001D4B0
-	MOVE.w	#5, D2
+	MOVE.w	#BUTTON_BIT_C, D2
 	JSR	CheckButtonPress
 	BNE.b	loc_0001D496
-	MOVE.w	#4, D2
+	MOVE.w	#BUTTON_BIT_B, D2
 	JSR	CheckButtonPress
 	BNE.b	loc_0001D496
 	RTS
@@ -31769,10 +31769,10 @@ loc_0001D6F6:
 	BNE.w	loc_0001D760
 	TST.b	$FFFF9911.w
 	BNE.w	loc_0001D760
-	MOVE.w	#5, D2
+	MOVE.w	#BUTTON_BIT_C, D2
 	JSR	CheckButtonPress
 	BNE.w	loc_0001D746
-	MOVE.w	#4, D2
+	MOVE.w	#BUTTON_BIT_B, D2
 	JSR	CheckButtonPress
 	BNE.w	loc_0001D724
 	RTS
@@ -31800,10 +31800,10 @@ loc_0001D762:
 	BNE.w	loc_0001D7CC
 	TST.b	$FFFF9911.w
 	BNE.w	loc_0001D7CC
-	MOVE.w	#5, D2
+	MOVE.w	#BUTTON_BIT_C, D2
 	JSR	CheckButtonPress
 	BNE.w	loc_0001D7B2
-	MOVE.w	#4, D2
+	MOVE.w	#BUTTON_BIT_B, D2
 	JSR	CheckButtonPress
 	BNE.w	loc_0001D790
 	RTS
@@ -31831,10 +31831,10 @@ loc_0001D7CE:
 	BNE.w	loc_0001D838
 	TST.b	$FFFF9911.w
 	BNE.w	loc_0001D838
-	MOVE.w	#5, D2
+	MOVE.w	#BUTTON_BIT_C, D2
 	JSR	CheckButtonPress
 	BNE.w	loc_0001D81E
-	MOVE.w	#4, D2
+	MOVE.w	#BUTTON_BIT_B, D2
 	JSR	CheckButtonPress
 	BNE.w	loc_0001D7FC
 	RTS
@@ -31862,10 +31862,10 @@ loc_0001D83A:
 	BNE.w	loc_0001D8A4
 	TST.b	$FFFF9911.w
 	BNE.w	loc_0001D8A4
-	MOVE.w	#5, D2
+	MOVE.w	#BUTTON_BIT_C, D2
 	JSR	CheckButtonPress
 	BNE.w	loc_0001D88A
-	MOVE.w	#4, D2
+	MOVE.w	#BUTTON_BIT_B, D2
 	JSR	CheckButtonPress
 	BNE.w	loc_0001D868
 	RTS
@@ -31893,10 +31893,10 @@ loc_0001D8A6:
 	BNE.w	loc_0001D910
 	TST.b	$FFFF9911.w
 	BNE.w	loc_0001D910
-	MOVE.w	#5, D2
+	MOVE.w	#BUTTON_BIT_C, D2
 	JSR	CheckButtonPress
 	BNE.w	loc_0001D8F6
-	MOVE.w	#4, D2
+	MOVE.w	#BUTTON_BIT_B, D2
 	JSR	CheckButtonPress
 	BNE.w	loc_0001D8D4
 	RTS
@@ -31924,10 +31924,10 @@ loc_0001D912:
 	BNE.w	loc_0001D96A
 	TST.b	$FFFF9911.w
 	BNE.w	loc_0001D96A
-	MOVE.w	#5, D2
+	MOVE.w	#BUTTON_BIT_C, D2
 	JSR	CheckButtonPress
 	BNE.w	loc_0001D940
-	MOVE.w	#4, D2
+	MOVE.w	#BUTTON_BIT_B, D2
 	JSR	CheckButtonPress
 	BNE.w	loc_0001D94A
 	RTS
@@ -32222,10 +32222,10 @@ loc_0001DD00:
 loc_0001DD14:
 	TST.b	Script_text_complete.w
 	BEQ.w	loc_0001DD48
-	MOVE.w	#5, D2
+	MOVE.w	#BUTTON_BIT_C, D2
 	JSR	CheckButtonPress
 	BNE.w	loc_0001DD3A
-	MOVE.w	#4, D2
+	MOVE.w	#BUTTON_BIT_B, D2
 	JSR	CheckButtonPress
 	BNE.w	loc_0001DD3A
 	RTS
@@ -32475,10 +32475,10 @@ loc_0001E09E:
 loc_0001E0B8:
 	TST.b	Script_text_complete.w
 	BEQ.w	loc_0001E0FA
-	MOVE.w	#5, D2
+	MOVE.w	#BUTTON_BIT_C, D2
 	JSR	CheckButtonPress
 	BNE.w	loc_0001E0DE
-	MOVE.w	#4, D2
+	MOVE.w	#BUTTON_BIT_B, D2
 	JSR	CheckButtonPress
 	BNE.w	loc_0001E0DE
 	RTS
@@ -32776,10 +32776,10 @@ loc_0001E4FA:
 loc_0001E514:
 	TST.b	Script_text_complete.w
 	BEQ.w	loc_0001E556
-	MOVE.w	#5, D2
+	MOVE.w	#BUTTON_BIT_C, D2
 	JSR	CheckButtonPress
 	BNE.w	loc_0001E53A
-	MOVE.w	#4, D2
+	MOVE.w	#BUTTON_BIT_B, D2
 	JSR	CheckButtonPress
 	BNE.w	loc_0001E53A
 	RTS
@@ -32916,10 +32916,10 @@ loc_0001E71A:
 	RTS
 	
 loc_0001E722:
-	MOVE.w	#4, D2
+	MOVE.w	#BUTTON_BIT_B, D2
 	JSR	CheckButtonPress
 	BNE.w	loc_0001E766
-	MOVE.w	#5, D2
+	MOVE.w	#BUTTON_BIT_C, D2
 	JSR	CheckButtonPress
 	BEQ.w	loc_0001E7C4
 	MOVE.w	#$00A1, D0
@@ -32995,7 +32995,7 @@ loc_0001E85A:
 	RTS
 	
 loc_0001E862:
-	MOVE.w	#4, D2
+	MOVE.w	#BUTTON_BIT_B, D2
 	JSR	CheckButtonPress
 	BEQ.w	loc_0001E896
 	MOVE.w	#$00A8, D0
@@ -33007,7 +33007,7 @@ loc_0001E862:
 	RTS
 	
 loc_0001E896:
-	MOVE.w	#5, D2
+	MOVE.w	#BUTTON_BIT_C, D2
 	JSR	CheckButtonPress
 	BEQ.w	loc_0001E8C8
 	JSR	loc_0001290C
@@ -33026,10 +33026,10 @@ loc_0001E8C8:
 	RTS
 	
 loc_0001E8E2:
-	MOVE.w	#4, D2
+	MOVE.w	#BUTTON_BIT_B, D2
 	JSR	CheckButtonPress
 	BNE.w	loc_0001E910
-	MOVE.w	#5, D2
+	MOVE.w	#BUTTON_BIT_C, D2
 	JSR	CheckButtonPress
 	BEQ.w	loc_0001EA40
 	MOVE.w	#$00A1, D0
@@ -33123,10 +33123,10 @@ loc_0001EA40:
 loc_0001EA5A:
 	TST.b	Script_text_complete.w
 	BEQ.w	loc_0001EAA6
-	MOVE.w	#5, D2
+	MOVE.w	#BUTTON_BIT_C, D2
 	JSR	CheckButtonPress
 	BNE.w	loc_0001EA80
-	MOVE.w	#4, D2
+	MOVE.w	#BUTTON_BIT_B, D2
 	JSR	CheckButtonPress
 	BNE.w	loc_0001EA80
 	RTS

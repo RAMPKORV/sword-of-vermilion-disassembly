@@ -638,6 +638,18 @@ Camera_scroll_y               = $FFFFC410
 
 Controller_current_state    = $FFFFC408
 Controller_previous_state   = $FFFFC409
+Controller_2_current_state  = $FFFFC40A
+
+; Controller Button Bit Numbers (for use with CheckButtonPress)
+; Genesis controller button bits:
+BUTTON_BIT_UP       = 0
+BUTTON_BIT_DOWN     = 1
+BUTTON_BIT_LEFT     = 2
+BUTTON_BIT_RIGHT    = 3
+BUTTON_BIT_B        = 4
+BUTTON_BIT_C        = 5
+BUTTON_BIT_A        = 6
+BUTTON_BIT_START    = 7
 
 Sprite_dma_update_pending = $FFFFC302
 Npc_load_done_flag          = $FFFFC303
@@ -1153,8 +1165,7 @@ OLD_WOMAN_POSITION_Y = $0003
 ; ============================================================
 ; Sound Effect IDs
 ; ============================================================
-; These are passed to loc_00010522 (PlaySound function)
-; to play sound effects. Use with the PlaySound macro.
+; These are passed to QueueSoundEffect to play sound effects.
 ;
 SOUND_MENU_CANCEL       = $00A8   ; Cancel/back sound (36 uses)
 SOUND_MENU_SELECT       = $00A1   ; Confirm/select sound (23 uses)
