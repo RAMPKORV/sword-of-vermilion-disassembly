@@ -7377,13 +7377,15 @@ loc_00006F70
 	MOVEA.l	$2E(A5), A1
 	BRA.w	loc_000081F0
 	BSR.w	SetRandomDirection
-	MOVE.l	#loc_00006F8E, $2(A5)
+	MOVE.l	#NPCBehavior_LoadFrame, $2(A5)
 	RTS
 
-loc_00006F8E:
+; NPCBehavior_LoadFrame
+; NPC behavior: Load animation frame and update state
+NPCBehavior_LoadFrame:
 	MOVEA.l	$2E(A5), A1
 	MOVE.b	#$FF, $25(A5)
-	BSR.w	loc_000081FE
+	BSR.w	LoadNPCAnimationFrame
 	MOVE.b	$27(A5), $18(A5)
 	ADDQ.b	#1, $1B(A5)
 	RTS
@@ -7398,7 +7400,7 @@ loc_00006FBA:
 	BSR.w	loc_0000859C
 	BSR.w	loc_00008248
 	MOVEA.l	$2E(A5), A1
-	BRA.w	loc_000081FE
+	BRA.w	LoadNPCAnimationFrame
 	MOVE.l	#loc_00006FD4, $2(A5)
 	RTS
 
@@ -7429,7 +7431,7 @@ loc_0000700C:
 	CLR.b	$25(A5)
 	TST.b	Blade_is_dead.w
 	BEQ.b	loc_00007026
-	MOVE.l	#loc_00006F8E, $2(A5)
+	MOVE.l	#NPCBehavior_LoadFrame, $2(A5)
 	RTS
 
 loc_00007026:
@@ -7441,7 +7443,7 @@ loc_00007030:
 	BEQ.b	loc_0000703E
 	MOVE.l	#FindRingStr, $1C(A5)
 loc_0000703E:
-	BRA.w	loc_00006F8E
+	BRA.w	NPCBehavior_LoadFrame
 	BSR.w	SetRandomDirection
 	CLR.b	$25(A5)
 	MOVE.l	#loc_00007054, $2(A5)
@@ -7525,7 +7527,7 @@ loc_00007144:
 	RTS
 
 loc_0000714E:
-	MOVE.l	#loc_00006F8E, $2(A5)
+	MOVE.l	#NPCBehavior_LoadFrame, $2(A5)
 	RTS
 
 loc_00007158:  
@@ -7618,7 +7620,7 @@ loc_00007264:
 	BEQ.b	loc_0000729E
 	MOVE.w	#$0109, $8(A5)
 	MOVE.l	#loc_0003DDD4, $2E(A5)
-	MOVE.l	#loc_00006F8E, $2(A5)
+	MOVE.l	#NPCBehavior_LoadFrame, $2(A5)
 	RTS
 
 loc_0000729E:
@@ -7684,7 +7686,7 @@ loc_00007352:
 	BNE.b	loc_00007374
 	TST.b	Accused_of_theft.w
 	BEQ.b	loc_00007374
-	MOVE.l	#loc_00006F8E, $2(A5)	
+	MOVE.l	#NPCBehavior_LoadFrame, $2(A5)	
 	RTS
 	
 loc_00007374:
@@ -7729,7 +7731,7 @@ loc_000073D8:
 	BSR.w	loc_0000852E
 	MOVE.b	#$FF, Sanguios_confiscated.w
 loc_00007408:
-	BRA.w	loc_00006F8E
+	BRA.w	NPCBehavior_LoadFrame
 	BSR.w	SetRandomDirection
 	CLR.b	$25(A5)
 	TST.b	Accused_of_theft.w
@@ -7851,7 +7853,7 @@ loc_0000759E:
 	RTS
 
 loc_000075A8:
-	MOVE.l	#loc_00006F8E, $2(A5)
+	MOVE.l	#NPCBehavior_LoadFrame, $2(A5)
 	RTS
 
 loc_000075B2:
@@ -7882,7 +7884,7 @@ loc_000075EC:
 loc_00007608:
 	MOVE.l	#ShowSketchStr, $1C(A5)
 loc_00007610:
-	BRA.w	loc_00006F8E
+	BRA.w	NPCBehavior_LoadFrame
 	CLR.b	Alarm_clock_rang.w
 	BSR.w	SetRandomDirection
 	CLR.b	$25(A5)
@@ -7923,7 +7925,7 @@ loc_00007688:
 	RTS
 
 loc_0000768E:
-	BRA.w	loc_00006F8E
+	BRA.w	NPCBehavior_LoadFrame
 	BSR.w	SetRandomDirection
 	CLR.b	$25(A5)
 	MOVE.l	#loc_000076A4, $2(A5)
@@ -7941,7 +7943,7 @@ loc_000076B6:
 	MOVE.w	#$002E, D5
 	BSR.w	loc_0000858A
 loc_000076CC:
-	BRA.w	loc_00006F8E
+	BRA.w	NPCBehavior_LoadFrame
 	BSR.w	SetRandomDirection
 	CLR.b	$25(A5)
 	MOVE.l	#loc_000076E2, $2(A5)
@@ -7987,7 +7989,7 @@ loc_00007750:
 	BEQ.b	loc_0000775E
 	MOVE.l	#ReturnAfterTaskStr, $1C(A5)	
 loc_0000775E:
-	BRA.w	loc_00006F8E
+	BRA.w	NPCBehavior_LoadFrame
 	BSR.w	SetRandomDirection
 	CLR.b	$25(A5)
 	MOVE.l	#loc_00007774, $2(A5)
@@ -8022,7 +8024,7 @@ loc_000077D2:
 	MOVE.w	#$001C, D5
 	BSR.w	loc_0000858A
 loc_000077E2:
-	BRA.w	loc_00006F8E
+	BRA.w	NPCBehavior_LoadFrame
 	BSR.w	SetRandomDirection
 	CLR.b	$25(A5)
 	TST.b	Pass_to_carthahena_purchased.w
@@ -8033,7 +8035,7 @@ loc_000077E2:
 	RTS
 
 loc_00007804:
-	MOVE.l	#loc_00006F8E, $2(A5)
+	MOVE.l	#NPCBehavior_LoadFrame, $2(A5)
 	RTS
 
 loc_0000780E:
@@ -8065,7 +8067,7 @@ loc_00007868:
 loc_00007872:
 	MOVE.l	#BuyPassToCartahenaStr, $1C(A5)
 loc_0000787A:
-	BRA.w	loc_00006F8E
+	BRA.w	NPCBehavior_LoadFrame
 	BSR.w	SetRandomDirection
 	CLR.b	$25(A5)
 	MOVE.l	#loc_00007890, $2(A5)
@@ -8241,7 +8243,7 @@ loc_00007ABA:
 loc_00007AC4:
 	MOVE.l	#FoundSomeoneForMeStr, $1C(A5)
 loc_00007ACC:
-	BRA.w	loc_00006F8E
+	BRA.w	NPCBehavior_LoadFrame
 	MOVE.b	#9, $6(A5)
 	MOVE.l	#loc_00007AE0, $2(A5)
 	RTS
@@ -8339,7 +8341,7 @@ loc_00007C18:
 loc_00007C28:
 	MOVE.l	#RingOfEarthQuestStr, $1C(A5)
 loc_00007C30:
-	BRA.w	loc_00006F8E
+	BRA.w	NPCBehavior_LoadFrame
 	BSR.w	SetRandomDirection
 	CLR.b	$25(A5)
 	MOVE.w	#4, D7
@@ -8365,7 +8367,7 @@ loc_00007C70:
 	CLR.b	Carthahena_soldier_1_defeated.w
 	MOVE.l	#WaitingExcalabriaStr, $1C(A5)
 loc_00007C82:
-	BRA.w	loc_00006F8E
+	BRA.w	NPCBehavior_LoadFrame
 	BSR.w	SetRandomDirection
 	CLR.b	$25(A5)
 	TST.b	Swaffham_ate_poisoned_food.w
@@ -8436,7 +8438,7 @@ loc_00007D56:
 	BNE.b	loc_00007D82
 	MOVE.l	#SeveralPeopleWaitingStr, $1C(A5)	
 loc_00007D82:
-	MOVE.l	#loc_00006F8E, $2(A5)
+	MOVE.l	#NPCBehavior_LoadFrame, $2(A5)
 	RTS
 
 loc_00007D8C:
@@ -8451,7 +8453,7 @@ loc_00007DA0:
 	BEQ.b	loc_00007DAC
 	MOVE.w	#$00F8, $E(A5)
 loc_00007DAC:
-	MOVE.l	#loc_00006F8E, $2(A5)
+	MOVE.l	#NPCBehavior_LoadFrame, $2(A5)
 	RTS
 
 loc_00007DB6:
@@ -8555,7 +8557,7 @@ loc_00007F18:
 	RTS
 
 loc_00007F2E:
-	BRA.w	loc_00006F8E
+	BRA.w	NPCBehavior_LoadFrame
 	MOVE.b	#2, $28(A5)
 	MOVE.b	#6, $29(A5)
 	BRA.w	loc_00007F4E
@@ -8795,7 +8797,10 @@ loc_000081F0:
 	BSR.w	loc_0000809E
 	MOVE.w	(A1,D0.w), $8(A5)
 	BRA.w	loc_00008154
-loc_000081FE:
+; LoadNPCAnimationFrame
+; Load NPC animation frame from table
+; Input: A1 = Animation table pointer, A5 = NPC object
+LoadNPCAnimationFrame:
 	BSR.w	loc_00008108
 	MOVE.w	(A1,D0.w), $8(A5)
 	BRA.w	loc_00008154
