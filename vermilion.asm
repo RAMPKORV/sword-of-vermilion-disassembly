@@ -617,10 +617,10 @@ loc_000011C0:
 CheckDebugMode:
 	MOVE.b	Controller_2_current_state.w, D0
 	CMPI.b	#$F0, D0
-	BNE.b	loc_000011EC
+	BNE.b	CheckDebugMode_end
 	MOVE.l	#loc_003C6E8, $42(A7)	
 	MOVE.b	#$FF, Skip_tilemap_updates.w	
-loc_000011EC:
+CheckDebugMode_end:
 	RTS
 
 ReadControllers:
@@ -767,16 +767,16 @@ FillVScrollTable:
 	MOVE.w	Ending_hscroll_offset.w, D1
 	ANDI.w	#$01FF, D1
 	MOVE.w	#$00DF, D7
-loc_00001430:
+FillVScrollTable_loop:
 	MOVE.l	D0, VDP_control_port
 	MOVE.w	D1, VDP_data_port
 	ADDI.l	#$00040000, D0
-	DBF	D7, loc_00001430
+	DBF	D7, FillVScrollTable_loop
 	RTS
 
 ProcessSoundQueue:
 	MOVE.w	Sound_queue_count.w, D0
-	BLE.b	loc_0000146C
+	BLE.b	ProcessSoundQueue_empty
 	LEA	Sound_queue_buffer.w, A0
 	MOVE.b	(A0), Sound_driver_play.w
 	LEA	$1(A0), A1
@@ -788,7 +788,7 @@ ProcessSoundQueue:
 	MOVE.b	(A1)+, (A0)+
 	MOVE.b	(A1)+, (A0)+
 	SUBQ.w	#1, Sound_queue_count.w
-loc_0000146C:
+ProcessSoundQueue_empty:
 	RTS
 
 ; loc_0000146E
@@ -803,8 +803,8 @@ HBlankObjectHandler:
 VBlankObjectHandler:
 	CLR.w	Program_state.w
 	MOVE.w	#$3C, Timer_frames_per_second.w
-	MOVE.l	#loc_00001486, $2(A5)
-loc_00001486:
+	MOVE.l	#VBlankObjectHandler_loop, $2(A5)
+VBlankObjectHandler_loop:
 	MOVE.w	Program_state.w, D0
 	ANDI.w	#$1F, D0
 	CMPI.w	#$16, D0
