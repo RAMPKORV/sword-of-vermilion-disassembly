@@ -1020,7 +1020,7 @@ ProgramState_15:
 	MOVE.w	#PROGRAM_STATE_0E, Program_state.w ; Transition to main game?	
 	MOVE.w	#3, Gameplay_substate.w 	 ; Entering building/town?
 	MOVE.w	Saved_town_room_1.w, Current_town_room.w	
-	JSR	loc_000033BE	
+	JSR	LoadAndPlayAreaMusic	
 loc_00001756:
 	RTS
 	
@@ -1224,7 +1224,7 @@ loc_000019BE:
 	JSR	loc_0001622A
 	TST.b	Skip_town_intro_after_fight.w
 	BNE.b	loc_00001A1A
-	JSR	loc_000033BE
+	JSR	LoadAndPlayAreaMusic
 loc_00001A1A:
 	CLR.b	Skip_town_intro_after_fight.w
 	MOVEA.l	Enemy_list_ptr.w, A6
@@ -1347,7 +1347,7 @@ loc_00001BB8:
 	BGT.b	loc_00001BE6
 	BSR.w	SearchTownNPCData
 	MOVE.w	Saved_town_room_1.w, Current_town_room.w
-	JSR	loc_000033BE
+	JSR	LoadAndPlayAreaMusic
 loc_00001BE6:
 	MOVE.w	Saved_player_x_in_town.w, Player_spawn_position_x.w
 	MOVE.w	Town_player_spawn_y.w, Player_spawn_tile_y.w
@@ -1487,7 +1487,7 @@ loc_00001DB4: ; Woman hitting player with frying pan
 	ADDQ.w	#1, Helwig_frypan_hit_count.w
 	PRINT 	AfraidKilledStr
 	MOVE.w	#$2A, Gameplay_substate.w
-	JSR	loc_000033BE
+	JSR	LoadAndPlayAreaMusic
 	JSR	ResetScriptAndInitDialogue
 	MOVE.w	#$0012, Palette_line_0_index.w
 	MOVE.w	Palette_line_1_index_saved.w, Palette_line_1_index.w
@@ -1684,7 +1684,7 @@ loc_000020B2:
 	BGT.b	loc_000020E0
 	BSR.w	loc_0000336E
 	MOVE.w	Saved_town_room_1.w, Current_town_room.w
-	JSR	loc_000033BE
+	JSR	LoadAndPlayAreaMusic
 loc_000020E0:
 	MOVE.w	Saved_player_x_in_town.w, Player_spawn_position_x.w
 	MOVE.w	Town_player_spawn_y.w, Player_spawn_tile_y.w
@@ -2551,7 +2551,7 @@ loc_00002D04:
 	BSR.w	loc_000034E0
 	MOVE.w	#3, Gameplay_substate.w
 	MOVE.w	Saved_town_room_1.w, Current_town_room.w
-	JSR	loc_000033BE
+	JSR	LoadAndPlayAreaMusic
 	MOVE.b	#$FF, Player_awakening_flag.w
 loc_00002D20:
 	RTS
@@ -3064,7 +3064,8 @@ loc_00003380:
 	MOVE.l	(A0), Saved_npc_data_ptr_room3.w     ; +$24: NPC ptr 3
 	RTS
 
-loc_000033BE:
+; LoadAndPlayAreaMusic
+LoadAndPlayAreaMusic:
 	LEA	loc_0001FE94, A0
 	MOVE.w	Current_town_room.w, D0
 	ANDI.w	#$00FF, D0
@@ -9089,7 +9090,7 @@ loc_000084DE:
 	MOVE.w	D7, D0
 	MOVEA.l	A3, A0
 	MOVE.w	#8, D2
-	JSR	loc_0000FB8C
+	JSR	RemoveItemFromArray
 loc_000084EC:
 	DBF	D7, loc_000084CA
 loc_000084F0:
@@ -12914,7 +12915,7 @@ loc_0000BB02:
 	JSR	(A0,D0.w)
 	BSR.w	loc_0000CB1E
 	BSR.w	loc_0000BF14
-	BSR.w	loc_0000CA10
+	BSR.w	CheckEntityPlayerCollisionAndDamage
 	MOVE.w	#$00E0, D1
 	BSR.w	loc_0000CAE8
 	RTS
@@ -13296,7 +13297,7 @@ loc_0000C006:
 	RTS
 
 loc_0000C040:
-	BSR.w	loc_0000CA10
+	BSR.w	CheckEntityPlayerCollisionAndDamage
 loc_0000c044:
 	MOVE.l	$32(A5), D0
 	MOVE.l	$36(A5), D1
@@ -13331,7 +13332,7 @@ loc_0000C09A:
 	MOVEA.l	Enemy_list_ptr.w, A6
 	TST.w	$28(A6)
 	BLE.b	loc_0000C0BC
-	BSR.w	loc_0000CA10
+	BSR.w	CheckEntityPlayerCollisionAndDamage
 loc_0000C0BC:
 	LEA	loc_00022F4A, A0
 	CLR.w	D0
@@ -13357,7 +13358,7 @@ loc_0000C0F4:
 	MOVEA.l	Enemy_list_ptr.w, A6
 	TST.w	$28(A6)
 	BLE.b	loc_0000C116
-	BSR.w	loc_0000CA10
+	BSR.w	CheckEntityPlayerCollisionAndDamage
 loc_0000C116:
 	LEA	loc_00022F4E, A0
 	CLR.w	D0
@@ -13648,7 +13649,7 @@ loc_0000C57A:
 loc_0000C5A8:
 	MOVE.w	#$00FA, $16(A5)
 loc_0000C5AE:
-	BSR.w	loc_0000CA10
+	BSR.w	CheckEntityPlayerCollisionAndDamage
 	MOVE.w	$E(A5), $A(A5)
 	MOVE.w	$12(A5), $C(A5)
 	JSR	AddSpriteToDisplayList
@@ -13955,7 +13956,8 @@ loc_0000C9FA:
 	MOVE.w	(A0,D0.w), $8(A5)
 	RTS
 
-loc_0000CA10:
+; CheckEntityPlayerCollisionAndDamage
+CheckEntityPlayerCollisionAndDamage:
 	MOVEA.l	Player_entity_ptr.w, A6
 	MOVE.w	$E(A5), D0
 	MOVE.w	D0, D1
@@ -14440,7 +14442,7 @@ loc_0000CFF2:
 	MOVE.w	D7, D0
 	LEA	Possessed_items_list.w, A0
 	MOVE.w	#8, D2
-	JSR	loc_0000FB8C
+	JSR	RemoveItemFromArray
 	DBF	D7, loc_0000CFEC
 loc_0000D006:
 	BSR.w	loc_0000D03A
@@ -14633,7 +14635,7 @@ loc_0000D2F2:
 	JSR	(A0,D0.w)
 	JSR	loc_0000D644(PC)
 	JSR	loc_0000D74C(PC)
-	JSR	loc_0000CA10(PC)
+	JSR	CheckEntityPlayerCollisionAndDamage(PC)
 loc_0000D31A:
 	RTS
 
@@ -15125,7 +15127,7 @@ loc_0000D99A:
 	ADD.l	D0, $E(A5)
 	MOVE.l	$36(A5), D0
 	ADD.l	D0, $12(A5)
-	JSR	loc_0000CA10(PC)
+	JSR	CheckEntityPlayerCollisionAndDamage(PC)
 loc_0000D9AE:
 	MOVE.w	$E(A5), $A(A5)
 	MOVE.w	$12(A5), $C(A5)
@@ -15748,7 +15750,7 @@ loc_0000E25A:
 loc_0000E292:
 	MOVE.w	$E(A5), $A(A5)
 	MOVE.w	$12(A5), $C(A5)
-	JSR	loc_0000CA10
+	JSR	CheckEntityPlayerCollisionAndDamage
 	JSR	AddSpriteToDisplayList
 	RTS
 
@@ -15767,7 +15769,7 @@ loc_0000E2C4:
 	MOVE.w	(A0,D0.w), $8(A5)
 	MOVE.w	$E(A5), $A(A5)
 	MOVE.w	$12(A5), $C(A5)
-	JSR	loc_0000CA10
+	JSR	CheckEntityPlayerCollisionAndDamage
 	JSR	AddSpriteToDisplayList
 	RTS
 
@@ -15921,7 +15923,7 @@ loc_0000E4A8:
 	MOVE.w	D0, $12(A5)
 	MOVE.w	$E(A5), $A(A5)
 	MOVE.w	$12(A5), $C(A5)
-	JSR	loc_0000CA10
+	JSR	CheckEntityPlayerCollisionAndDamage
 	JSR	AddSpriteToDisplayList
 	RTS
 
@@ -16166,7 +16168,7 @@ loc_0000E88C:
 	MOVE.w	$E(A5), $E(A6)
 	MOVE.w	$E(A5), $A(A5)
 	MOVE.w	$12(A5), $C(A5)
-	JSR	loc_0000CA10
+	JSR	CheckEntityPlayerCollisionAndDamage
 	JSR	AddSpriteToDisplayList
 	RTS
 
@@ -16268,7 +16270,7 @@ loc_0000E9BC:
 	ADD.w	(A0)+, D0
 	MOVE.w	D0, $12(A6)
 loc_0000EA04:
-	JSR	loc_0000CA10
+	JSR	CheckEntityPlayerCollisionAndDamage
 	MOVE.w	$E(A5), $A(A5)
 	MOVE.w	$12(A5), $C(A5)
 	JSR	AddSpriteToDisplayList
@@ -16451,7 +16453,7 @@ loc_0000EC74:
 loc_0000EC80:
 	MOVE.l	$32(A5), D0
 	ADD.l	D0, $E(A5)
-	JSR	loc_0000CA10
+	JSR	CheckEntityPlayerCollisionAndDamage
 	ADDQ.b	#1, $1B(A5)
 	MOVE.b	$1B(A5), D0
 	ANDI.w	#2, D0
@@ -16773,7 +16775,7 @@ loc_0000F0C4:
 loc_0000F0D2:
 	ADDQ.b	#1, $1B(A5)
 	BSR.w	loc_0000F3B8
-	JSR	loc_0000CA10
+	JSR	CheckEntityPlayerCollisionAndDamage
 	TST.w	$3C(A5)
 	BLE.b	loc_0000F0F8
 	SUBQ.w	#1, $3C(A5)
@@ -16927,7 +16929,7 @@ loc_0000F2F8:
 	RTS
 	
 loc_0000F2FA:
-	JSR	loc_0000CA10
+	JSR	CheckEntityPlayerCollisionAndDamage
 	ADDQ.b	#1, $1B(A5)
 	MOVE.b	$1B(A5), D0
 	ANDI.w	#$00F8, D0
@@ -17631,7 +17633,8 @@ loc_0000FB6E:
 	MOVEM.l	(A7)+, D1
 	RTS
 
-loc_0000FB8C:
+; RemoveItemFromArray
+RemoveItemFromArray:
 	MOVE.w	D0, D1
 	ADD.w	D0, D0
 	LEA	(A0,D0.w), A0
@@ -19274,7 +19277,8 @@ loc_00011012:
 	MOVE.b	#$FF, Window_tilemap_draw_active.w
 	RTS
 	
-loc_0001106E:
+; DrawMoneyDisplayWindow
+DrawMoneyDisplayWindow:
 	MOVE.w	#0, Window_tilemap_x.w
 	MOVE.w	#2, Window_tilemap_y.w
 	MOVE.w	#9, Window_width.w
@@ -20637,7 +20641,8 @@ loc_00012318:
 	BSR.w	ReadWindowToBuffer
 	RTS
 	
-loc_0001233A:
+; SaveCenterDialogAreaToBuffer
+SaveCenterDialogAreaToBuffer:
 	LEA	$FFFF7E52, A0
 	MOVE.w	#$000F, Window_tile_x.w
 	MOVE.w	#2, Window_tile_y.w
@@ -25664,7 +25669,7 @@ loc_000180A6:
 loc_000180A8:
 	TST.b	Script_text_complete.w
 	BEQ.b	loc_000180D6
-	JSR	loc_0001233A
+	JSR	SaveCenterDialogAreaToBuffer
 	JSR	loc_000110D0
 	JSR	loc_00012A9A
 	CLR.w	Magic_list_cursor_index.w
@@ -25767,7 +25772,7 @@ loc_000181DC:
 	LEA	Possessed_magics_list.w, A0
 	MOVE.w	Magic_list_cursor_index.w, D0
 	MOVE.w	#9, D2
-	JSR	loc_0000FB8C
+	JSR	RemoveItemFromArray
 	RTS
 
 loc_00018258:
@@ -25780,7 +25785,7 @@ loc_00018258:
 loc_00018272:
 	TST.b	Script_text_complete.w
 	BEQ.b	loc_0001829C
-	JSR	loc_0001233A
+	JSR	SaveCenterDialogAreaToBuffer
 	JSR	loc_000110D0
 	JSR	loc_00012A9A
 	CLR.w	Magic_list_cursor_index.w
@@ -25910,7 +25915,7 @@ loc_00018466:
 loc_00018468:
 	TST.b	Script_text_complete.w
 	BEQ.b	loc_00018490
-	JSR	loc_0001233A
+	JSR	SaveCenterDialogAreaToBuffer
 	JSR	loc_000110D0
 	JSR	loc_00012A9A
 	CLR.w	Magic_list_cursor_index.w
@@ -28213,7 +28218,7 @@ loc_0001A474:
 loc_0001A476:
 	TST.b	Script_text_complete.w
 	BEQ.b	loc_0001A4A4
-	JSR	loc_0001233A
+	JSR	SaveCenterDialogAreaToBuffer
 	JSR	loc_000110BE
 	JSR	loc_00012A7A
 	CLR.w	Selected_item_index.w
@@ -28321,7 +28326,7 @@ loc_0001A5D4:
 	LEA	Possessed_items_list.w, A0
 	MOVE.w	Selected_item_index.w, D0
 	MOVE.w	#9, D2
-	JSR	loc_0000FB8C
+	JSR	RemoveItemFromArray
 loc_0001A636:
 	ADDQ.w	#1, Item_menu_state.w
 	RTS
@@ -28359,7 +28364,7 @@ loc_0001A696:
 loc_0001A69E:
 	TST.b	Script_text_complete.w
 	BEQ.b	loc_0001A6CA
-	JSR	loc_0001233A
+	JSR	SaveCenterDialogAreaToBuffer
 	JSR	loc_000110BE
 	JSR	loc_00012A7A
 	CLR.w	Selected_item_index.w
@@ -29258,7 +29263,7 @@ RemoveSelectedItemFromList:
 	MOVE.w	#9, D2
 	LEA	Possessed_items_list.w, A0
 	SUBQ.w	#1, Possessed_items_length.w
-	JSR	loc_0000FB8C
+	JSR	RemoveItemFromArray
 	RTS
 
 loc_0001B17E:
@@ -29562,7 +29567,7 @@ loc_0001B6D8:
 	TST.b	Window_tilemap_draw_active.w
 	BNE.b	loc_0001B6EE
 	JSR	SaveLeftMenuTiles
-	JSR	loc_0001106E
+	JSR	DrawMoneyDisplayWindow
 	ADDQ.w	#1, Dialogue_state.w
 loc_0001B6EE:
 	RTS
@@ -29694,7 +29699,7 @@ loc_0001BA12:
 	MOVE.w	D7, D0
 	LEA	Possessed_equipment_list.w, A0
 	MOVE.w	#8, D2
-	JSR	loc_0000FB8C
+	JSR	RemoveItemFromArray
 loc_0001BA22:
 	DBF	D7, loc_0001B9FC
 	MOVE.w	(A1), D0
@@ -30026,7 +30031,7 @@ loc_0001BE1E:
 	TST.b	Window_tilemap_draw_active.w
 	BNE.b	loc_0001BE34
 	JSR	SaveLeftMenuTiles
-	JSR	loc_0001106E
+	JSR	DrawMoneyDisplayWindow
 	ADDQ.w	#1, Dialogue_state.w
 loc_0001BE34:
 	RTS
@@ -30259,7 +30264,7 @@ loc_0001C168:
 	MOVEA.l	$4(A0,D0.w), A0
 	MOVE.w	(A0), D0
 	BEQ.w	loc_0001C208
-	JSR	loc_0001233A
+	JSR	SaveCenterDialogAreaToBuffer
 	MOVE.w	Current_shop_type.w, D0
 	BEQ.b	loc_0001C1B2
 	CMPI.w	#1, D0
@@ -30283,7 +30288,7 @@ loc_0001C1CC:
 loc_0001C1E4:
 	JSR	InitMenuCursorForList
 	JSR	SaveLeftMenuTiles
-	JSR	loc_0001106E
+	JSR	DrawMoneyDisplayWindow
 	JSR	DisplayPlayerKims
 	CLR.w	Shop_selected_index.w
 	MOVE.w	#$13, Dialogue_state.w
@@ -30469,7 +30474,7 @@ loc_0001C464:
 loc_0001C474:
 	MOVE.w	Shop_selected_index.w, D0
 	MOVE.w	#8, D2
-	JSR	loc_0000FB8C
+	JSR	RemoveItemFromArray
 	JSR	DrawLeftMenuWindow
 	JSR	DrawCenterMenuWindow
 	JSR	ResetScriptAndInitDialogue
@@ -30568,7 +30573,7 @@ loc_0001C5DA:
 
 loc_0001C5DC:
 	JSR	SaveLeftMenuTiles
-	JSR	loc_0001106E
+	JSR	DrawMoneyDisplayWindow
 	JSR	DisplayPlayerKims
 	ADDQ.w	#1, Dialogue_state.w
 	RTS
@@ -30677,7 +30682,7 @@ loc_0001C742:
 
 loc_0001C744:
 	JSR	SaveLeftMenuTiles
-	JSR	loc_0001106E
+	JSR	DrawMoneyDisplayWindow
 	JSR	DisplayPlayerKims
 	ADDQ.w	#1, Dialogue_state.w
 	RTS
@@ -30820,7 +30825,7 @@ loc_0001C932:
 	JSR	LoadPalettesFromTable
 	JSR	ResetScriptAndInitDialogue
 	MOVE.w	#$1B, Dialogue_state.w
-	JSR	loc_000033BE
+	JSR	LoadAndPlayAreaMusic
 	JSR	ResetScriptAndInitDialogue
 loc_0001C968:
 	RTS
@@ -30970,7 +30975,7 @@ loc_0001CB76:
 	TST.b	Window_tilemap_draw_active.w
 	BNE.b	loc_0001CB92
 	JSR	SaveLeftMenuTiles
-	JSR	loc_0001106E
+	JSR	DrawMoneyDisplayWindow
 	JSR	DisplayPlayerKims
 	ADDQ.w	#1, Dialogue_state.w
 loc_0001CB92:
@@ -31037,7 +31042,7 @@ loc_0001CC72:
 	JMP	ProcessScriptText
 loc_0001CC78:
 	JSR	SaveLeftMenuTiles
-	JSR	loc_0001106E
+	JSR	DrawMoneyDisplayWindow
 	JSR	DisplayPlayerKims
 	ADDQ.w	#1, Dialogue_state.w
 	RTS
@@ -33054,7 +33059,7 @@ loc_0001E7C4:
 loc_0001E7DE:
 	TST.b	Script_text_complete.w
 	BEQ.w	loc_0001E85A
-	JSR	loc_0001233A
+	JSR	SaveCenterDialogAreaToBuffer
 	MOVE.w	Reward_script_type.w, D0
 	BEQ.w	loc_0001E818
 	CMPI.w	#1, D0
