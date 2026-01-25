@@ -2046,11 +2046,11 @@ loc_00002620:
 	CLR.b	Encounter_triggered.w
 	CLR.b	$FFFFC56A.w
 	CLR.b	Chest_opened_flag.w
-	CLR.b	$FFFFC56C.w
+	CLR.b	Reward_script_active.w
 	CLR.b	Herbs_available.w
 	CLR.b	Truffles_available.w
-	CLR.b	$FFFFC56F.w
-	CLR.b	$FFFFC578.w
+	CLR.b	Reward_script_available.w
+	CLR.b	Talker_present_flag.w
 	CLR.b	Chest_already_opened.w
 	CLR.w	Overworld_menu_state.w
 	BCLR.b	#0, $FFFFC60D.w
@@ -4333,11 +4333,11 @@ loc_000044F2:
 loc_00004516:
 	CLR.b	$FFFFC561.w
 	CLR.b	Chest_opened_flag.w
-	CLR.b	$FFFFC56C.w
+	CLR.b	Reward_script_active.w
 	CLR.b	Herbs_available.w
 	CLR.b	Truffles_available.w
-	CLR.b	$FFFFC56F.w
-	CLR.b	$FFFFC578.w
+	CLR.b	Reward_script_available.w
+	CLR.b	Talker_present_flag.w
 	MOVEA.l	$FFFFCC54.w, A6
 	BCLR.b	#7, (A6)
 	CLR.w	D0
@@ -9654,7 +9654,7 @@ loc_00008D2C:
 	BEQ.b	loc_00008D44
 	MOVE.l	#NoOneHereStr, Script_talk_source.w
 	BCLR.b	#7, (A5)
-	CLR.b	$FFFFC578.w
+	CLR.b	Talker_present_flag.w
 	RTS
 
 loc_00008D44:
@@ -9724,7 +9724,7 @@ loc_00008E26:
 	BEQ.b	loc_00008E3E
 	MOVE.l	#EvilDiedWithTsarkonStr, Script_talk_source.w
 	BCLR.b	#7, (A5)
-	CLR.b	$FFFFC578.w
+	CLR.b	Talker_present_flag.w
 	RTS
 
 loc_00008E3E:
@@ -9754,7 +9754,7 @@ loc_00008E88:
 	BEQ.b	loc_00008E9E
 	MOVE.l	#NoOneHereStr, Script_talk_source.w
 	BCLR.b	#7, (A5)
-	CLR.b	$FFFFC578.w
+	CLR.b	Talker_present_flag.w
 	RTS
 
 loc_00008E9E:
@@ -32267,7 +32267,7 @@ loc_0001DC7C:
 	RTS
 	
 loc_0001DC94:
-	TST.b	$FFFFC56C.w              ; Chest present?
+	TST.b	Reward_script_active.w              ; Chest present?
 	BEQ.w	loc_0001DCEC             ; No
 	TST.b	Chest_opened_flag.w      ; Already opened?
 	BNE.w	loc_0001DCE0             ; Yes
@@ -32376,7 +32376,7 @@ loc_0001DDF6:
 loc_0001DDF8:
 	TST.b	Script_text_complete.w
 	BEQ.w	loc_0001DEDC
-	TST.b	$FFFFC56F.w
+	TST.b	Reward_script_available.w
 	BNE.w	loc_0001DE14
 	PRINT 	NothingInsideStr
 	BRA.w	loc_0001DECE
@@ -32386,7 +32386,7 @@ loc_0001DE14:
 	JSR	CopyStringUntilFF
 	MOVE.b	#$FE, (A1)+
 	LEA	ShopCategoryNameTables, A0
-	MOVE.w	$FFFFC570.w, D0
+	MOVE.w	Reward_script_type.w, D0
 	CMPI.w	#4, D0
 	BEQ.w	loc_0001DE82
 	CMPI.w	#3, D0
@@ -32518,13 +32518,13 @@ loc_0001E010:
 	RTS
 	
 loc_0001E034:
-	TST.b	$FFFFC56C.w
+	TST.b	Reward_script_active.w
 	BNE.w	loc_0001E064
 	TST.b	Herbs_available.w
 	BNE.w	loc_0001E070
 	TST.b	Truffles_available.w
 	BNE.w	loc_0001E07C
-	TST.b	$FFFFC578.w
+	TST.b	Talker_present_flag.w
 	BNE.w	loc_0001E058
 	BRA.w	loc_0001E098
 loc_0001E058:
@@ -32839,7 +32839,7 @@ loc_0001E4C2:
 	BNE.w	loc_0001E4EA
 	TST.b	Herbs_available.w
 	BNE.w	loc_0001E4EA
-	TST.b	$FFFFC56C.w
+	TST.b	Reward_script_active.w
 	BEQ.w	loc_0001E4F2
 loc_0001E4EA:
 	MOVE.w	#4, Take_item_state.w
@@ -32886,7 +32886,7 @@ loc_0001E55E:
 	BNE.w	loc_0001E58A
 	TST.b	Chest_opened_flag.w
 	BEQ.w	loc_0001E590
-	TST.b	$FFFFC56F.w
+	TST.b	Reward_script_available.w
 	BNE.w	loc_0001E58A
 	PRINT 	NothingToTakeStr	
 	BRA.w	loc_0001E598	
@@ -32908,7 +32908,7 @@ loc_0001E5AC:
 	JSR	CopyStringUntilFF
 	MOVE.b	#$FE, (A1)+
 	LEA	ShopCategoryNameTables, A0
-	MOVE.w	$FFFFC570.w, D0
+	MOVE.w	Reward_script_type.w, D0
 	CMPI.w	#4, D0
 	BEQ.w	loc_0001E648
 	CMPI.w	#3, D0
@@ -32975,7 +32975,7 @@ loc_0001E6A0:
 	MOVE.w	#$000A, Take_item_state.w
 	CLR.b	Herbs_available.w
 	CLR.b	Truffles_available.w
-	CLR.b	$FFFFC56F.w
+	CLR.b	Reward_script_available.w
 	RTS
 	
 loc_0001E6DE:
@@ -33022,7 +33022,7 @@ loc_0001E766:
 	JSR	CopyStringUntilFF
 	MOVE.b	#$FE, (A1)+
 	LEA	ShopCategoryNameTables, A0
-	MOVE.w	$FFFFC570.w, D0
+	MOVE.w	Reward_script_type.w, D0
 	ASL.w	#3, D0
 	MOVEA.l	(A0,D0.w), A0
 	MOVE.w	Reward_script_value.w, D1
@@ -33048,7 +33048,7 @@ loc_0001E7DE:
 	TST.b	Script_text_complete.w
 	BEQ.w	loc_0001E85A
 	JSR	loc_0001233A
-	MOVE.w	$FFFFC570.w, D0
+	MOVE.w	Reward_script_type.w, D0
 	BEQ.w	loc_0001E818
 	CMPI.w	#1, D0
 	BEQ.w	loc_0001E834
@@ -33148,7 +33148,7 @@ loc_0001E96A:
 	LEA	PutStr, A0
 	JSR	CopyStringUntilFF
 	LEA	ShopCategoryNameTables, A0
-	MOVE.w	$FFFFC570.w, D0
+	MOVE.w	Reward_script_type.w, D0
 	ASL.w	#3, D0
 	MOVEA.l	$4(A0,D0.w), A2
 	MOVEA.l	(A0,D0.w), A0
@@ -33173,7 +33173,7 @@ loc_0001E96A:
 	LEA	TakesStr, A0
 	JSR	CopyStringUntilFF
 	LEA	ShopCategoryNameTables, A0
-	MOVE.w	$FFFFC570.w, D0
+	MOVE.w	Reward_script_type.w, D0
 	ASL.w	#3, D0
 	MOVEA.l	(A0,D0.w), A0
 	MOVE.w	Reward_script_value.w, D0
@@ -33188,7 +33188,7 @@ loc_0001E96A:
 	BSR.w	loc_0001EAAE
 	CLR.b	Herbs_available.w
 	CLR.b	Truffles_available.w
-	CLR.b	$FFFFC56F.w
+	CLR.b	Reward_script_available.w
 	MOVE.w	#$000A, Take_item_state.w
 	RTS
 	
@@ -35041,15 +35041,15 @@ loc_00020390:
 loc_0002039E:
 	TST.b	Crimson_armor_reward_enabled.w
 	BEQ.b	loc_000203D8
-	MOVE.w	#1, $FFFFC570.w
+	MOVE.w	#1, Reward_script_type.w
 	MOVE.w	#$1037, Reward_script_value.w
 	MOVE.l	#$FFFFC78B, Reward_script_flag.w
 	MOVEA.l	Reward_script_flag.w, A0
 	TST.b	(A0)
 	BNE.b	loc_000203C6
-	MOVE.b	#$FF, $FFFFC56F.w
+	MOVE.b	#$FF, Reward_script_available.w
 loc_000203C6:
-	MOVE.b	#$FF, $FFFFC56C.w
+	MOVE.b	#$FF, Reward_script_active.w
 	BSR.w	loc_00021480
 	MOVE.l	#NoOneHereStr, Script_talk_source.w
 loc_000203D8:
@@ -35131,10 +35131,10 @@ loc_00020506:
 	
 ; SetupNoOneTalker
 SetupNoOneTalker:
-	MOVE.w	#0, $FFFFC570.w
+	MOVE.w	#0, Reward_script_type.w
 	MOVE.w	#0, Reward_script_value.w
 	MOVE.l	#0, Reward_script_flag.w
-	MOVE.b	#$FF, $FFFFC56C.w
+	MOVE.b	#$FF, Reward_script_active.w
 	BSR.w	loc_00021480
 	MOVE.l	#NoOneHereStr, Script_talk_source.w
 	RTS
@@ -35652,7 +35652,7 @@ loc_00020C82:
 loc_00020C8E:
 	TST.b	Rings_collected.w
 	BNE.b	loc_00020CBA
-	MOVE.b	#$FF, $FFFFC578.w
+	MOVE.b	#$FF, Talker_present_flag.w
 	BSR.w	loc_000213CE
 	MOVE.l	#loc_00008AF8, $2(A6)
 	MOVE.l	#loc_0001F712, Talker_gfx_descriptor_ptr.w
@@ -35829,11 +35829,11 @@ CheckCaveRoomEnemyState:
 	ADDI.w	#$0090, D0
 	TST.b	(A0,D0.w)
 	BNE.b	loc_00020F84
-	MOVE.b	#$FF, $FFFFC56F.w
+	MOVE.b	#$FF, Reward_script_available.w
 loc_00020F84:
-	MOVE.w	#5, $FFFFC570.w
+	MOVE.w	#5, Reward_script_type.w
 	MOVE.w	D0, Reward_script_value.w
-	MOVE.b	#$FF, $FFFFC56C.w
+	MOVE.b	#$FF, Reward_script_active.w
 	BSR.w	loc_00021480
 	MOVE.l	#NoOneHereStr, Script_talk_source.w
 	RTS
@@ -35842,7 +35842,7 @@ loc_00020FA2:
 	TST.b	Truffle_collected.w
 	BNE.b	loc_00020FE2
 	MOVE.b	#$FF, Truffles_available.w
-	MOVE.w	#0, $FFFFC570.w
+	MOVE.w	#0, Reward_script_type.w
 	MOVE.w	#$010B, Reward_script_value.w
 	MOVE.l	#$FFFFC72C, Reward_script_flag.w
 	BSR.w	loc_000213CE
@@ -35867,7 +35867,7 @@ loc_00021004:
 loc_00021006:
 	TST.b	Girl_left_for_stow.w
 	BNE.b	loc_0002105C
-	MOVE.b	#$FF, $FFFFC578.w
+	MOVE.b	#$FF, Talker_present_flag.w
 	BSR.w	loc_000213CE
 	MOVE.l	#loc_00008ADA, $2(A6)
 	MOVE.l	#loc_0001F72E, Talker_gfx_descriptor_ptr.w
@@ -35904,7 +35904,7 @@ loc_00021082:
 	BEQ.b	loc_000210BC
 	TST.b	Bearwulf_met.w
 	BNE.b	loc_000210BC
-	MOVE.b	#$FF, $FFFFC578.w
+	MOVE.b	#$FF, Talker_present_flag.w
 	BSR.w	loc_000213CE
 	MOVE.l	#loc_00008B4C, $2(A6)
 	MOVE.l	#loc_0001F74A, Talker_gfx_descriptor_ptr.w
@@ -35929,7 +35929,7 @@ loc_000210E0:
 	BEQ.b	loc_00021128
 	TST.b	Malaga_king_crowned.w
 	BNE.b	loc_00021128
-	MOVE.b	#$FF, $FFFFC578.w
+	MOVE.b	#$FF, Talker_present_flag.w
 	BSR.w	loc_000213CE
 	MOVE.l	#loc_00008B1C, $2(A6)
 	MOVE.l	#loc_0001F712, Talker_gfx_descriptor_ptr.w
@@ -35959,7 +35959,7 @@ loc_00021160:
 	BEQ.b	loc_0002119A
 	TST.b	Imposter_killed.w
 	BNE.b	loc_0002119A
-	MOVE.b	#$FF, $FFFFC578.w
+	MOVE.b	#$FF, Talker_present_flag.w
 	BSR.w	loc_000213CE
 	MOVE.l	#loc_00008B0A, $2(A6)
 	MOVE.l	#loc_0001F7D6, Talker_gfx_descriptor_ptr.w
@@ -35985,7 +35985,7 @@ loc_000211BE:
 	TST.b	Digot_plant_received.w
 	BNE.b	loc_00021204
 	MOVE.b	#$FF, Herbs_available.w
-	MOVE.w	#0, $FFFFC570.w
+	MOVE.w	#0, Reward_script_type.w
 	MOVE.w	#$010C, Reward_script_value.w
 	MOVE.l	#$FFFFC752, Reward_script_flag.w
 	BSR.w	loc_000213CE
@@ -36053,7 +36053,7 @@ loc_000212AA:
 	RTS
 	
 loc_000212BE:
-	MOVE.w	#4, $FFFFC570.w
+	MOVE.w	#4, Reward_script_type.w
 	MOVE.w	#5, Reward_script_value.w
 	MOVE.l	#$FFFFC81D, Reward_script_flag.w
 	BSR.w	loc_00021438
@@ -36073,7 +36073,7 @@ loc_000212EE:
 	RTS
 	
 loc_00021302:
-	MOVE.w	#4, $FFFFC570.w
+	MOVE.w	#4, Reward_script_type.w
 	MOVE.w	#6, Reward_script_value.w
 	MOVE.l	#$FFFFC81E, Reward_script_flag.w
 	BSR.w	loc_00021438
@@ -36093,7 +36093,7 @@ loc_00021332:
 	RTS
 	
 loc_00021346:
-	MOVE.w	#4, $FFFFC570.w
+	MOVE.w	#4, Reward_script_type.w
 	MOVE.w	#7, Reward_script_value.w
 	MOVE.l	#$FFFFC81F, Reward_script_flag.w
 	BSR.w	loc_00021438
@@ -36105,7 +36105,7 @@ loc_00021360:
 	MOVE.w	#7, D7
 	JSR	loc_00008518
 	BNE.w	loc_000213BA
-	MOVE.b	#$FF, $FFFFC578.w
+	MOVE.b	#$FF, Talker_present_flag.w
 	BSR.w	loc_000213CE
 	MOVE.l	#loc_00008B2E, $2(A6)
 	MOVE.l	#loc_0001F7F2, Talker_gfx_descriptor_ptr.w
@@ -36165,38 +36165,38 @@ loc_000213FE:
 ; Initialize item chest (type 0)
 ; loc_0002141E
 SetupItemTreasure:
-	MOVE.w	#0, $FFFFC570.w          ; Type 0 = Item
+	MOVE.w	#0, Reward_script_type.w          ; Type 0 = Item
 	BRA.w	loc_00021438
 	
 ; Initialize equipment chest (type 1)
 ; loc_00021428
 SetupEquipmentTreasure:
-	MOVE.w	#1, $FFFFC570.w          ; Type 1 = Equipment
+	MOVE.w	#1, Reward_script_type.w          ; Type 1 = Equipment
 	BRA.w	loc_00021438
 	
 ; Initialize money chest (type 3)
 ; loc_00021432
 InitMoneyTreasure:
-	MOVE.w	#3, $FFFFC570.w          ; Type 3 = Money
+	MOVE.w	#3, Reward_script_type.w          ; Type 3 = Money
 	
 	; Common chest initialization
 loc_00021438:
 	MOVEA.l	Reward_script_flag.w, A0          ; A0 = flag byte pointer
 	TST.b	(A0)                     ; Already opened?
 	BNE.b	loc_00021446             ; Yes: skip treasure flag
-	MOVE.b	#$FF, $FFFFC56F.w        ; Mark chest contains treasure
+	MOVE.b	#$FF, Reward_script_available.w        ; Mark chest contains treasure
 	
 loc_00021446:
-	MOVE.b	#$FF, $FFFFC56C.w        ; Mark chest present
+	MOVE.b	#$FF, Reward_script_active.w        ; Mark chest present
 	BSR.w	loc_00021480             ; Spawn chest sprite
 	MOVE.l	#NoOneHereStr, Script_talk_source.w
 	RTS
 	
 loc_0002145A:
-	MOVE.w	Enemy_reward_type.w, $FFFFC570.w
+	MOVE.w	Enemy_reward_type.w, Reward_script_type.w
 	MOVE.w	Enemy_reward_value.w, Reward_script_value.w
-	MOVE.b	#$FF, $FFFFC56F.w
-	MOVE.b	#$FF, $FFFFC56C.w
+	MOVE.b	#$FF, Reward_script_available.w
+	MOVE.b	#$FF, Reward_script_active.w
 	BSR.w	loc_00021480
 	MOVE.l	#NoOneHereStr, Script_talk_source.w
 	RTS
@@ -36208,25 +36208,25 @@ loc_00021480:
 	BRA.w	loc_000213FE
 ; loc_00021498
 InitTalkerWithGfxDescriptor_1F712:
-	MOVE.b	#$FF, $FFFFC578.w
+	MOVE.b	#$FF, Talker_present_flag.w
 	BSR.w	loc_000213CE
 	MOVE.l	#loc_00008AB2, $2(A6)
 	MOVE.l	#loc_0001F712, Talker_gfx_descriptor_ptr.w
 	BRA.w	loc_000213FE
 loc_000214B6:
-	MOVE.b	#$FF, $FFFFC578.w
+	MOVE.b	#$FF, Talker_present_flag.w
 	BSR.w	loc_000213CE
 	MOVE.l	#loc_00008AB2, $2(A6)
 	MOVE.l	#loc_0001F74A, Talker_gfx_descriptor_ptr.w
 	BRA.w	loc_000213FE
 loc_000214D4:
-	MOVE.b	#$FF, $FFFFC578.w
+	MOVE.b	#$FF, Talker_present_flag.w
 	BSR.w	loc_000213CE
 	MOVE.l	#loc_00008AB2, $2(A6)
 	MOVE.l	#loc_0001F72E, Talker_gfx_descriptor_ptr.w
 	BRA.w	loc_000213FE
 loc_000214F2:
-	MOVE.b	#$FF, $FFFFC578.w
+	MOVE.b	#$FF, Talker_present_flag.w
 	BSR.w	loc_000213CE
 	MOVE.l	#loc_00008AB2, $2(A6)
 	MOVE.l	#loc_0001F766, Talker_gfx_descriptor_ptr.w
