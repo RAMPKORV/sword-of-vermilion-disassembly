@@ -17923,7 +17923,7 @@ loc_0000FEF0:
 	LEA	$20(A2), A2
 	DBF	D5, loc_0000FEF0
 	LEA	loc_0001F532, A0
-	BSR.w	loc_0001036A
+	BSR.w	ExecuteVdpDmaFromRam
 	RTS
 	
 loc_0000FF08:
@@ -17958,7 +17958,7 @@ loc_0000FF36:
 	ADD.w	D0, D0
 	ADD.w	D0, D0
 	MOVEA.l	(A1,D0.w), A0
-	BSR.w	loc_0001036A
+	BSR.w	ExecuteVdpDmaFromRam
 	JSR	LoadPalettesFromTable
 	RTS
 	
@@ -17977,7 +17977,7 @@ loc_0000FF90:
 	LEA	$20(A2), A2
 	DBF	D5, loc_0000FF90
 	LEA	loc_0001F642, A0
-	BSR.w	loc_0001036A
+	BSR.w	ExecuteVdpDmaFromRam
 	RTS
 	
 loc_0000FFA8:
@@ -17989,7 +17989,7 @@ loc_0000FFB6:
 	LEA	$20(A2), A2
 	DBF	D5, loc_0000FFB6
 	LEA	loc_0001F6F2, A0
-	BSR.w	loc_0001036A
+	BSR.w	ExecuteVdpDmaFromRam
 	RTS
 	
 loc_0000FFCE:
@@ -18002,7 +18002,7 @@ loc_0000FFDC:
 	DBF	D5, loc_0000FFDC
 loc_0000FFE8:
 	LEA	loc_0001F6E2, A0
-	BSR.w	loc_0001036A
+	BSR.w	ExecuteVdpDmaFromRam
 ; NullSpriteRoutine
 ; Used as NullSpriteRoutine-2 in enemy data tables (points to BSR instruction)
 NullSpriteRoutine:
@@ -18021,7 +18021,7 @@ loc_0001000A:
 	DBF	D5, loc_00010002
 loc_0001000E:
 	LEA	loc_0001F702, A0
-	BSR.w	loc_0001036A
+	BSR.w	ExecuteVdpDmaFromRam
 	RTS
 	
 loc_0001001A:
@@ -18033,7 +18033,7 @@ loc_00010028:
 	LEA	$20(A2), A2
 	DBF	D5, loc_00010028
 	LEA	loc_0001F682, A0
-	BSR.w	loc_0001036A
+	BSR.w	ExecuteVdpDmaFromRam
 	RTS
 	
 loc_00010040:
@@ -18045,7 +18045,7 @@ loc_0001004E:
 	LEA	$20(A2), A2
 	DBF	D5, loc_0001004E
 	LEA	loc_0001F692, A0
-	BSR.w	loc_0001036A
+	BSR.w	ExecuteVdpDmaFromRam
 	RTS
 	
 loc_00010066:
@@ -18057,7 +18057,7 @@ loc_00010074:
 	LEA	$20(A2), A2
 	DBF	D5, loc_00010074
 	LEA	loc_0001F6A2, A0
-	BSR.w	loc_0001036A
+	BSR.w	ExecuteVdpDmaFromRam
 	RTS
 	
 loc_0001008C:
@@ -18069,7 +18069,7 @@ loc_0001009A:
 	LEA	$20(A2), A2
 	DBF	D5, loc_0001009A
 	LEA	loc_0001F6C2, A0
-	BSR.w	loc_0001036A
+	BSR.w	ExecuteVdpDmaFromRam
 	RTS
 	
 loc_000100B2:
@@ -18081,7 +18081,7 @@ loc_000100C0:
 	LEA	$20(A2), A2
 	DBF	D5, loc_000100C0
 	LEA	loc_0001F6D2, A0
-	BSR.w	loc_0001036A
+	BSR.w	ExecuteVdpDmaFromRam
 	RTS
 	
 loc_000100D8:
@@ -18093,7 +18093,7 @@ loc_000100E6:
 	LEA	$20(A2), A2
 	DBF	D5, loc_000100E6
 	LEA	loc_0001F6B2, A0
-	BSR.w	loc_0001036A
+	BSR.w	ExecuteVdpDmaFromRam
 	RTS
 	
 loc_000100FE:
@@ -18106,7 +18106,7 @@ loc_0001010C:
 	LEA	$20(A2), A2
 	DBF	D5, loc_0001010C
 	LEA	loc_0001F4E2, A0
-	BSR.w	loc_0001036A
+	BSR.w	ExecuteVdpDmaFromRam
 	LEA	Tile_gfx_buffer.w, A2
 	LEA	loc_0005F262, A0
 	MOVE.w	#$00D9, D5
@@ -18115,7 +18115,7 @@ loc_00010130:
 	LEA	$20(A2), A2
 	DBF	D5, loc_00010130
 	LEA	loc_0001F4F2, A0
-	BSR.w	loc_0001036A
+	BSR.w	ExecuteVdpDmaFromRam
 	LEA	Tile_gfx_buffer.w, A2
 	LEA	loc_000607AA, A0
 	MOVE.w	#$006B, D5
@@ -18124,7 +18124,7 @@ loc_00010154:
 	LEA	$20(A2), A2
 	DBF	D5, loc_00010154
 	LEA	loc_0001F502, A0
-	BSR.w	loc_0001036A
+	BSR.w	ExecuteVdpDmaFromRam
 	LEA	Tile_gfx_buffer.w, A2
 	LEA	loc_00061A76, A0
 	MOVE.w	#$009D, D5
@@ -18133,7 +18133,7 @@ loc_00010178:
 	LEA	$20(A2), A2
 	DBF	D5, loc_00010178
 	LEA	loc_0001F512, A0
-	BSR.w	loc_0001036A
+	BSR.w	ExecuteVdpDmaFromRam
 	LEA	Tile_gfx_buffer.w, A2
 	LEA	loc_00061484, A0
 	MOVE.w	#$0029, D5
@@ -18142,7 +18142,7 @@ loc_0001019C:
 	LEA	$20(A2), A2
 	DBF	D5, loc_0001019C
 	LEA	loc_0001F522, A0
-	BSR.w	loc_0001036A
+	BSR.w	ExecuteVdpDmaFromRam
 	RTS
 	
 loc_000101B4:
@@ -18154,7 +18154,7 @@ loc_000101C2:
 	LEA	$20(A2), A2
 	DBF	D5, loc_000101C2
 	LEA	loc_0001F542, A0
-	BSR.w	loc_0001036A
+	BSR.w	ExecuteVdpDmaFromRam
 	LEA	Tile_gfx_buffer.w, A2
 	LEA	loc_00067682, A0
 	MOVE.w	#$00FF, D5
@@ -18163,7 +18163,7 @@ loc_000101E6:
 	LEA	$20(A2), A2
 	DBF	D5, loc_000101E6
 	LEA	loc_0001F552, A0
-	BSR.w	loc_0001036A
+	BSR.w	ExecuteVdpDmaFromRam
 	LEA	Tile_gfx_buffer.w, A2
 loc_00010200:
 	LEA	loc_000607AA, A0
@@ -18174,7 +18174,7 @@ loc_0001020A:
 	LEA	$20(A2), A2
 	DBF	D5, loc_0001020A
 	LEA	loc_0001F502, A0
-	BSR.w	loc_0001036A
+	BSR.w	ExecuteVdpDmaFromRam
 	LEA	Tile_gfx_buffer.w, A2
 	LEA	loc_0006803C, A0
 	MOVE.w	#$001A, D5
@@ -18183,7 +18183,7 @@ loc_0001022E:
 	LEA	$20(A2), A2
 	DBF	D5, loc_0001022E
 	LEA	loc_0001F562, A0
-	BSR.w	loc_0001036A
+	BSR.w	ExecuteVdpDmaFromRam
 	LEA	Tile_gfx_buffer.w, A2
 	LEA	loc_00067FB4, A0
 	MOVE.w	#7, D5
@@ -18192,7 +18192,7 @@ loc_00010252:
 	LEA	$20(A2), A2
 	DBF	D5, loc_00010252
 	LEA	loc_0001F572, A0
-	BSR.w	loc_0001036A
+	BSR.w	ExecuteVdpDmaFromRam
 	RTS
 	
 loc_0001026A:
@@ -18204,7 +18204,7 @@ loc_00010278:
 	LEA	$20(A2), A2
 	DBF	D5, loc_00010278
 	LEA	loc_0001F592, A0
-	BSR.w	loc_0001036A
+	BSR.w	ExecuteVdpDmaFromRam
 	LEA	loc_000633D8, A0
 	LEA	Tile_gfx_buffer.w, A2
 	MOVE.w	#$006C, D5
@@ -18213,7 +18213,7 @@ loc_0001029C:
 	LEA	$20(A2), A2
 	DBF	D5, loc_0001029C
 	LEA	loc_0001F5A2, A0
-	BSR.w	loc_0001036A
+	BSR.w	ExecuteVdpDmaFromRam
 	LEA	loc_00063ED8, A0
 	LEA	Tile_gfx_buffer.w, A2
 	MOVE.w	#$0062, D5
@@ -18222,7 +18222,7 @@ loc_000102C0:
 	LEA	$20(A2), A2
 	DBF	D5, loc_000102C0
 	LEA	loc_0001F5B2, A0
-	BSR.w	loc_0001036A
+	BSR.w	ExecuteVdpDmaFromRam
 	LEA	loc_000648FE, A0
 	LEA	Tile_gfx_buffer.w, A2
 	MOVE.w	#$004F, D5
@@ -18231,7 +18231,7 @@ loc_000102E4:
 	LEA	$20(A2), A2
 	DBF	D5, loc_000102E4
 	LEA	loc_0001F5C2, A0
-	BSR.w	loc_0001036A
+	BSR.w	ExecuteVdpDmaFromRam
 	LEA	loc_00064FB4, A0
 loc_00010300:
 	LEA	Tile_gfx_buffer.w, A2
@@ -18241,7 +18241,7 @@ loc_00010308:
 	LEA	$20(A2), A2
 	DBF	D5, loc_00010308
 	LEA	loc_0001F5D2, A0
-	BSR.w	loc_0001036A
+	BSR.w	ExecuteVdpDmaFromRam
 	LEA	loc_0006582E, A0
 	LEA	Tile_gfx_buffer.w, A2
 	MOVE.w	#5, D5
@@ -18250,7 +18250,7 @@ loc_0001032C:
 	LEA	$20(A2), A2
 	DBF	D5, loc_0001032C
 	LEA	loc_0001F5E2, A0
-	BSR.w	loc_0001036A
+	BSR.w	ExecuteVdpDmaFromRam
 	RTS
 	
 loc_00010344:
@@ -18262,10 +18262,13 @@ loc_00010352:
 	LEA	$20(A2), A2
 	DBF	D5, loc_00010352
 	LEA	loc_0001F582, A0
-	BSR.w	loc_0001036A
+	BSR.w	ExecuteVdpDmaFromRam
 	RTS
 	
-loc_0001036A:
+; ExecuteVdpDmaFromRam
+; Execute VDP DMA transfer from RAM to VRAM
+; Input: A0 = Pointer to DMA command data (destination, length, source)
+ExecuteVdpDmaFromRam:
 	ORI	#$0700, SR
 loc_0001036E:
 	stopZ80
@@ -18451,7 +18454,7 @@ loc_00010588:
 	LEA	$20(A2), A2
 	DBF	D5, loc_00010588
 	MOVEA.l	(A6), A0
-	BSR.w	loc_0001036A
+	BSR.w	ExecuteVdpDmaFromRam
 loc_0001059A:
 	RTS
 	
