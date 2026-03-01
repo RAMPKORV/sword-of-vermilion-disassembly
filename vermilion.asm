@@ -15517,7 +15517,7 @@ loc_0000DCC4:
 	MOVE.b	$1(A6), D0
 	LEA	(A6,D0.w), A6
 	DBF	D7, loc_0000DCC4
-	LEA	loc_00023A4E, A0
+	LEA	OrbitBoss_InnerSatelliteFrame, A0
 	MOVE.w	(A0), $8(A6)
 	MOVE.l	#OrbitBoss_SatelliteUpdatePosition, $2(A6)
 	MOVE.w	$E(A6), $E(A5)
@@ -15639,7 +15639,7 @@ loc_0000DE3E:
 	
 loc_0000DE74:
 	ASR.w	#3, D0
-	LEA	loc_00023A4E, A0
+	LEA	OrbitBoss_InnerSatelliteFrame, A0
 	MOVE.w	(A0,D0.w), $8(A6)
 	JSR	ProcessPlayerStrengthCheck
 	RTS
@@ -15725,7 +15725,7 @@ loc_0000DFA0:
 	MOVE.b	$1(A6), D0
 	LEA	(A6,D0.w), A6
 	DBF	D7, loc_0000DFA0
-	LEA	loc_00023A4E, A0
+	LEA	OrbitBoss_InnerSatelliteFrame, A0
 	MOVE.w	(A0), $8(A6)
 	MOVE.l	#OrbitBoss_SatelliteUpdatePosition, $2(A6)
 	MOVE.w	$E(A6), $E(A5)
@@ -15841,7 +15841,7 @@ loc_0000E104:
 	
 loc_0000E13A:
 	ASR.w	#3, D0
-	LEA	loc_00023A4E, A0
+	LEA	OrbitBoss_InnerSatelliteFrame, A0
 	MOVE.w	(A0,D0.w), $8(A6)
 	JSR	ProcessBossFightDamage
 	RTS
@@ -15919,7 +15919,7 @@ loc_0000E244:
 	MOVE.w	#$0028, D0
 loc_0000E25A:
 	ASR.w	#1, D0
-	LEA	loc_00023A5E, A0
+	LEA	OrbitBoss_ProjectileFallFrames, A0
 	MOVE.w	(A0,D0.w), $8(A5)
 	MOVE.l	$32(A5), D0
 	ADD.l	D0, $E(A5)
@@ -15948,7 +15948,7 @@ OrbitBoss_ProjectileExplode:
 
 loc_0000E2C4:
 	ASR.w	#2, D0
-	LEA	loc_00023A6A-2, A0
+	LEA	OrbitBoss_ProjectileExplodeFrames-2, A0
 	MOVE.w	(A0,D0.w), $8(A5)
 	MOVE.w	$E(A5), $A(A5)
 	MOVE.w	$12(A5), $C(A5)
@@ -16012,7 +16012,7 @@ loc_0000E39C:
 
 loc_0000E39E:
 	ASR.w	#3, D0
-	LEA	loc_00023A56, A0
+	LEA	OrbitBoss_ProjectileFrames, A0
 	MOVE.w	(A0,D0.w), $8(A6)
 	RTS
 
@@ -16076,7 +16076,7 @@ loc_0000E466:
 
 loc_0000E468:
 	ASR.w	#3, D0
-	LEA	loc_00023A56, A0
+	LEA	OrbitBoss_ProjectileFrames, A0
 	MOVE.w	(A0,D0.w), $8(A6)
 	RTS
 
@@ -16094,7 +16094,7 @@ OrbitBoss_SatelliteAnimate:
 	MOVE.b	$1B(A5), D0
 	ANDI.w	#$0018, D0
 	ASR.w	#2, D0
-	LEA	loc_00023A46, A0
+	LEA	OrbitBoss_SatelliteFrames, A0
 	MOVE.w	(A0,D0.w), $8(A5)
 OrbitBoss_SatelliteUpdatePosition:
 	BSR.w	CalculateSineVelocity
@@ -16264,7 +16264,7 @@ HydraBoss_PartIntroAnim:
 	MOVE.l	#$FFFE8000, $32(A5)
 	MOVE.l	#HydraBoss_PartIdleTick, $2(A5)
 loc_0000E764:
-	LEA	loc_00023996, A0
+	LEA	HydraBoss_BodyPartFrames, A0
 	LEA	(A0,D0.w), A0
 	MOVE.w	(A0)+, $8(A5)
 	MOVE.w	(A0), $8(A6)
@@ -16320,7 +16320,7 @@ loc_0000E81A:
 	ASL.w	#1, D0
 	CMPI.w	#$0038, D0
 	BGE.b	loc_0000E84C
-	LEA	loc_000239B6, A0
+	LEA	HydraBoss_AttackAnimFrames, A0
 	LEA	(A0,D0.w), A0
 	MOVE.w	(A0)+, $8(A5)
 	MOVE.w	(A0)+, $8(A6)
@@ -16336,7 +16336,7 @@ loc_0000E858:
 	MOVE.b	$1B(A5), D0
 	ANDI.w	#$0018, D0
 	ASR.w	#1, D0
-	LEA	loc_000239A6, A0
+	LEA	HydraBoss_AttackFrames, A0
 	LEA	(A0,D0.w), A0
 	MOVE.w	(A0)+, $8(A5)
 	MOVE.w	(A0), $8(A6)
@@ -16368,7 +16368,7 @@ HydraBoss_PartDeathAnim:
 	SUBQ.w	#1, Boss_active_parts.w
 	MOVE.l	#HydraBoss_PartDeadDisplay, $2(A5)
 loc_0000E8D6:
-	LEA	loc_000239EE, A0
+	LEA	HydraBoss_PartDeathFrames, A0
 	LEA	(A0,D0.w), A0
 	MOVE.w	(A0)+, $8(A5)
 	MOVE.w	(A0), $8(A6)
@@ -16613,7 +16613,7 @@ HydraBoss_ProjectileAnimate:
 	MOVE.b	$1B(A5), D0
 	ANDI.w	#$00F8, D0
 	ASR.w	#2, D0
-	LEA	loc_00023976-2, A0
+	LEA	HydraBoss_ProjectileSpriteFrames-2, A0
 	MOVE.w	(A0,D0.w), $8(A5)
 	MOVE.w	$E(A5), $A(A5)
 	MOVE.w	$12(A5), $C(A5)
@@ -16640,7 +16640,7 @@ loc_0000EC80:
 	ADDQ.b	#1, $1B(A5)
 	MOVE.b	$1B(A5), D0
 	ANDI.w	#2, D0
-	LEA	loc_00023992, A0
+	LEA	HydraBoss_ProjectileFallFrames, A0
 	MOVE.w	(A0,D0.w), $8(A5)
 	MOVE.w	$E(A5), $A(A5)
 	MOVE.w	$12(A5), $C(A5)
@@ -17318,7 +17318,7 @@ BossDirectionTilePtrs:
 	dc.l	loc_000780C6
 	dc.l	loc_000780C6	
 WriteTilesToVRAM:
-	LEA	loc_000239FE, A0
+	LEA	BossTileSourceTable, A0
 	MOVE.w	D0, D1
 	ADD.w	D1, D1
 	ADD.w	D1, D1
@@ -17552,7 +17552,7 @@ loc_0000F7CC:
 	RTS
 	
 LoadEncounterGraphics:
-	LEA	loc_00023A72-2, A6
+	LEA	EncounterTileData_Entry-2, A6
 	MOVE.w	(A6)+, Vdp_dma_slot_index.w
 	LEA	Tile_gfx_buffer.w, A2
 	MOVEA.l	(A6)+, A4
@@ -38460,7 +38460,8 @@ BossProjectileSpriteFrame_D:
 	dc.l	$02A10231	
 	dc.l	loc_00000000	
 	dc.l	loc_000002B0	
-loc_00023976:
+; loc_00023976
+HydraBoss_ProjectileSpriteFrames:
 	dc.l	loc_00000000	
 	dc.l	$02B402B8	
 	dc.l	$02B402B8	
@@ -38468,19 +38469,23 @@ loc_00023976:
 	dc.l	$02BC02C0	
 	dc.l	$02BC02C0	
 	dc.l	$02BC02C0	
-loc_00023992:
+; loc_00023992
+HydraBoss_ProjectileFallFrames:
 	dc.l	$02C402C8	
-loc_00023996:
+; loc_00023996
+HydraBoss_BodyPartFrames:
 	dc.l	$00F10000	
 	dc.l	$00FD0000	
 	dc.l	$01090061	
 	dc.l	$011500B1	
-loc_000239A6:
+; loc_000239A6
+HydraBoss_AttackFrames:
 	dc.l	$01210021	
 	dc.l	$012D0031	
 	dc.l	$01390041	
 	dc.l	$01450051	
-loc_000239B6:
+; loc_000239B6
+HydraBoss_AttackAnimFrames:
 	dc.l	$01450051	
 	dc.l	$F4100000	
 	dc.l	$01510071	
@@ -38495,12 +38500,14 @@ loc_000239B6:
 	dc.l	$F0100000	
 	dc.l	$01450051	
 	dc.l	$F4100000	
-loc_000239EE:
+; loc_000239EE
+HydraBoss_PartDeathFrames:
 	dc.l	$018100C1	
 	dc.l	$018D00D1	
 	dc.l	$019900E1	
 	dc.l	$01A50000	
-loc_000239FE:
+; loc_000239FE
+BossTileSourceTable:
 	dc.l	loc_0007F618
 	dc.l	$000A0003	
 	dc.l	$49360003	
@@ -38519,23 +38526,29 @@ loc_000239FE:
 	dc.l	loc_0007F716
 	dc.l	$000A0008	
 	dc.l	$46B60003	
-loc_00023A46:
+; loc_00023A46
+OrbitBoss_SatelliteFrames:
 	dc.l	$00210031	
 	dc.l	$00410051	
-loc_00023A4E:
+; loc_00023A4E
+OrbitBoss_InnerSatelliteFrame:
 	dc.l	$00610071	
 	dc.l	$00810091	
-loc_00023A56:
+; loc_00023A56
+OrbitBoss_ProjectileFrames:
 	dc.l	$00A100B1	
 	dc.l	$00C100C1	
-loc_00023A5E:
+; loc_00023A5E
+OrbitBoss_ProjectileFallFrames:
 	dc.l	$00D100DA	
 	dc.l	$00E300EC	
 	dc.l	$00F500FE	
-loc_00023A6A:
+; loc_00023A6A
+OrbitBoss_ProjectileExplodeFrames:
 	dc.l	$01070110	
 	dc.l	$01190041	
-loc_00023A72:
+; loc_00023A72
+EncounterTileData_Entry:
 	dc.l	loc_0005D7A0
 	dc.l	loc_0005DC36
 	dc.b	$00, $4F 
