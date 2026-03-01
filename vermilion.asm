@@ -38138,21 +38138,22 @@ loc_0002353A:
 	dc.b	$00, $20, $01, $59, $0F, $00, $FF, $F0, $00, $20, $01, $69, $0F, $00, $FF, $F0, $00, $20, $FF, $FF 
 ; loc_000235A0
 BattleTileDataPtrs:
-	dc.l	loc_000235D8
-	dc.l	loc_00023648
-	dc.l	loc_00023616
-	dc.l	loc_00023616
-	dc.l	loc_000236DC
-	dc.l	loc_0002369E
-	dc.l	loc_0002369E
-	dc.l	loc_0002369E
-	dc.l	loc_000235D8
-	dc.l	loc_000235D8
-	dc.l	loc_00023648
-	dc.l	loc_00023616
-	dc.l	loc_000236DC
-	dc.l	loc_00023726
-loc_000235D8:
+	dc.l	BossTileData_FakeKing
+	dc.l	BossTileData_Watling
+	dc.l	BossTileData_StowThief
+	dc.l	BossTileData_StowThief
+	dc.l	BossTileData_Imposter
+	dc.l	BossTileData_Excalabria
+	dc.l	BossTileData_Excalabria
+	dc.l	BossTileData_Excalabria
+	dc.l	BossTileData_FakeKing
+	dc.l	BossTileData_FakeKing
+	dc.l	BossTileData_Watling
+	dc.l	BossTileData_StowThief
+	dc.l	BossTileData_Imposter
+	dc.l	BossTileData_Tsarkon
+; loc_000235D8
+BossTileData_FakeKing:
 	dc.b	$00, $37 
 	dc.l	loc_0006FCDA
 	dc.l	loc_00070BFA
@@ -38169,7 +38170,8 @@ loc_000235D8:
 	dc.l	loc_00071260
 	dc.l	loc_00071774
 	dc.b	$00, $2F, $FF, $FF 
-loc_00023616:
+; loc_00023616
+BossTileData_StowThief:
 	dc.b	$00, $3D 
 	dc.l	loc_00072ABA
 	dc.l	loc_00073686
@@ -38183,7 +38185,8 @@ loc_00023616:
 	dc.l	loc_00074A6A
 	dc.l	loc_00074F1E
 	dc.b	$00, $2F, $FF, $FF 
-loc_00023648:
+; loc_00023648
+BossTileData_Watling:
 	dc.b	$00, $45 
 	dc.l	loc_00074FD2
 	dc.l	loc_0007653A
@@ -38206,7 +38209,8 @@ loc_00023648:
 	dc.l	loc_00077F10
 	dc.l	loc_00077FAC
 	dc.b	$00, $09, $FF, $FF 
-loc_0002369E:
+; loc_0002369E
+BossTileData_Excalabria:
 	dc.b	$00, $4C 
 	dc.l	loc_00079462
 	dc.l	loc_0007A182
@@ -38223,7 +38227,8 @@ loc_0002369E:
 	dc.l	loc_0007AC08
 	dc.l	loc_0007AC2C
 	dc.l	loc_00020002-3	
-loc_000236DC:
+; loc_000236DC
+BossTileData_Imposter:
 	dc.b	$00, $51 
 	dc.l	loc_0007AC34
 	dc.l	loc_0007B9B4
@@ -38243,7 +38248,8 @@ loc_000236DC:
 	dc.l	loc_0007D96C
 	dc.l	loc_0007DB80
 	dc.b	$00, $1B, $FF, $FF 
-loc_00023726:
+; loc_00023726
+BossTileData_Tsarkon:
 	dc.b	$00, $57 
 	dc.l	loc_0007DBF0
 	dc.l	loc_0007EBF4
@@ -38253,55 +38259,64 @@ loc_00023726:
 	dc.l	$0050FFFF	
 ; loc_00023740
 BattleGfxDataPtrs:
-	dc.l	loc_00023778
-	dc.l	loc_0002378C
-	dc.l	loc_00023782
-	dc.l	loc_00023782
-	dc.l	loc_0002378C
-	dc.l	loc_00023796
-	dc.l	loc_00023796
-	dc.l	loc_00023796
-	dc.l	loc_00023778
-	dc.l	loc_00023778
-	dc.l	loc_0002378C
-	dc.l	loc_00023782
-	dc.l	loc_0002378C
-	dc.l	loc_000237A0
-loc_00023778:
+	dc.l	BattleGfxData_FakeKing
+	dc.l	BattleGfxData_Null
+	dc.l	BattleGfxData_StowThief
+	dc.l	BattleGfxData_StowThief
+	dc.l	BattleGfxData_Null
+	dc.l	BattleGfxData_Excalabria
+	dc.l	BattleGfxData_Excalabria
+	dc.l	BattleGfxData_Excalabria
+	dc.l	BattleGfxData_FakeKing
+	dc.l	BattleGfxData_FakeKing
+	dc.l	BattleGfxData_Null
+	dc.l	BattleGfxData_StowThief
+	dc.l	BattleGfxData_Null
+	dc.l	BattleGfxData_Tsarkon
+; loc_00023778
+BattleGfxData_FakeKing:
 	dc.l	loc_0006E652
 	dc.b	$00, $E2 
-	dc.l	loc_000237AA
-loc_00023782:
+	dc.l	BattlePaletteData_FakeKing
+; loc_00023782
+BattleGfxData_StowThief:
 	dc.l	loc_0007182C
 	dc.b	$00, $D1 
-	dc.l	loc_000237BA
-loc_0002378C:
+	dc.l	BattlePaletteData_StowThief
+; loc_0002378C
+BattleGfxData_Null:
 	dc.l	$00000000
 	dc.b	$00, $00, $00, $00, $00, $00 
-loc_00023796:
+; loc_00023796
+BattleGfxData_Excalabria:
 	dc.l	loc_00078138
 	dc.b	$00, $C6 
-	dc.l	loc_000237CA
-loc_000237A0:
+	dc.l	BattlePaletteData_Excalabria
+; loc_000237A0
+BattleGfxData_Tsarkon:
 	dc.l	loc_0007F77A
 	dc.b	$00, $DE 
-	dc.l	loc_000237DA
-loc_000237AA:
+	dc.l	BattlePaletteData_Tsarkon
+; loc_000237AA
+BattlePaletteData_FakeKing:
 	dc.l	$940E9330	
 	dc.l	$96D09500	
 	dc.l	$977F4000	
 	dc.l	$00810000	
-loc_000237BA:
+; loc_000237BA
+BattlePaletteData_StowThief:
 	dc.l	$940D9320	
 	dc.l	$96D09500	
 	dc.l	$977F4000	
 	dc.l	$00810000	
-loc_000237CA:
+; loc_000237CA
+BattlePaletteData_Excalabria:
 	dc.l	$940C9370	
 	dc.l	$96D09500	
 	dc.l	$977F4000	
 	dc.l	$00810000	
-loc_000237DA:
+; loc_000237DA
+BattlePaletteData_Tsarkon:
 	dc.l	$940D93F0	
 	dc.l	$96D09500	
 	dc.l	$977F4000	
@@ -38316,17 +38331,18 @@ loc_000237F6:
 	dc.l	$00510FC8	
 ; loc_00023802
 EncounterEnemySpriteByDirA:
-	dc.l	loc_00023822
-	dc.l	loc_0002384A
-	dc.l	loc_00023872
-	dc.l	loc_0002384A
+	dc.l	EnemySpriteData_FacingDown
+	dc.l	EnemySpriteData_FacingSide
+	dc.l	EnemySpriteData_FacingUp
+	dc.l	EnemySpriteData_FacingSide
 ; loc_00023812
 EncounterEnemySpriteByDirB:
-	dc.l	loc_0002389A
-	dc.l	loc_000238AA
-	dc.l	loc_000238BA
-	dc.l	loc_000238AA
-loc_00023822:
+	dc.l	EnemySpriteDataB_FacingDown
+	dc.l	EnemySpriteDataB_FacingSide
+	dc.l	EnemySpriteDataB_FacingUp
+	dc.l	EnemySpriteDataB_FacingSide
+; loc_00023822
+EnemySpriteData_FacingDown:
 	dc.l	$0115050A	
 	dc.l	$0048FFFC	
 	dc.l	$00DC0A0A	
@@ -38337,7 +38353,8 @@ loc_00023822:
 	dc.l	$00380008	
 	dc.l	$00E50A0A	
 	dc.l	$001C0020	
-loc_0002384A:
+; loc_0002384A
+EnemySpriteData_FacingSide:
 	dc.l	$0122000A	
 	dc.l	$0046FFF3	
 	dc.l	$0103060A	
@@ -38348,7 +38365,8 @@ loc_0002384A:
 	dc.l	$00340018	
 	dc.l	loc_00000000	
 	dc.l	loc_00000000	
-loc_00023872:
+; loc_00023872
+EnemySpriteData_FacingUp:
 	dc.l	$010F060A	
 	dc.l	$0054FFFB	
 	dc.l	$011D050A	
@@ -38359,74 +38377,86 @@ loc_00023872:
 	dc.l	$00100010	
 	dc.l	$00B10F0A	
 	dc.l	$00200030	
-loc_0002389A:
+; loc_0002389A
+EnemySpriteDataB_FacingDown:
 	dc.l	$00F7060A	
 	dc.l	$0030FFF4	
 	dc.l	$00D30A0A	
 	dc.l	$FFFC0018	
-loc_000238AA:
+; loc_000238AA
+EnemySpriteDataB_FacingSide:
 	dc.l	$0121000A	
 	dc.l	$002EFFF3	
 	dc.l	$00FD060A	
 	dc.l	loc_00040018	
-loc_000238BA:
+; loc_000238BA
+EnemySpriteDataB_FacingUp:
 	dc.l	$0109060A	
 	dc.l	$002CFFFB	
 	dc.l	$0119050A	
 	dc.l	loc_00080010	
 ; loc_000238CA
 BossSpriteFramePtrs:
-	dc.l	loc_0002391A
-	dc.l	loc_0002391A
-	dc.l	loc_00023926-2
-	dc.l	loc_0002392E
-	dc.l	loc_0002392E
-	dc.l	loc_0002392E
-	dc.l	loc_0002392E
-	dc.l	loc_0002393A-2
-	dc.l	loc_00023942
-	dc.l	loc_00023942
-	dc.l	loc_0002394E-2
-	dc.l	loc_0002394E-2
-	dc.l	loc_0002394E-2
-	dc.l	loc_0002393A-2
-	dc.l	loc_00023926-2
-	dc.l	loc_00023926-2
+	dc.l	BossSpriteFrame_FakeKing
+	dc.l	BossSpriteFrame_FakeKing
+	dc.l	BossSpriteFrame_StowThief-2
+	dc.l	BossSpriteFrame_Asti
+	dc.l	BossSpriteFrame_Asti
+	dc.l	BossSpriteFrame_Asti
+	dc.l	BossSpriteFrame_Asti
+	dc.l	BossSpriteFrame_Excalabria3-2
+	dc.l	BossSpriteFrame_Carthahena
+	dc.l	BossSpriteFrame_Carthahena
+	dc.l	BossSpriteFrame_Luther-2
+	dc.l	BossSpriteFrame_Luther-2
+	dc.l	BossSpriteFrame_Luther-2
+	dc.l	BossSpriteFrame_Excalabria3-2
+	dc.l	BossSpriteFrame_StowThief-2
+	dc.l	BossSpriteFrame_StowThief-2
 ; loc_0002390A
 BossProjectileSpriteFramePtrs:
-	dc.l	loc_0002391A
-	dc.l	loc_00023956
-	dc.l	loc_00023962-2
-	dc.l	loc_0002396A
-loc_0002391A:
+	dc.l	BossSpriteFrame_FakeKing
+	dc.l	BossProjectileSpriteFrame_B
+	dc.l	BossProjectileSpriteFrame_C-2
+	dc.l	BossProjectileSpriteFrame_D
+; loc_0002391A
+BossSpriteFrame_FakeKing:
 	dc.l	$024101B1	
 	dc.l	loc_00000000	
 	dc.l	loc_00000250-3	
-loc_00023926:
+; loc_00023926
+BossSpriteFrame_StowThief:
 	dc.l	$01C10000	
 	dc.l	loc_00000000	
-loc_0002392E:
+; loc_0002392E
+BossSpriteFrame_Asti:
 	dc.l	$025901D1	
 	dc.l	LoadCaveTileGraphics	
 	dc.l	$FFDB0265	
-loc_0002393A:
+; loc_0002393A
+BossSpriteFrame_Excalabria3:
 	dc.l	$01E10000	
 	dc.l	$FFF6FFDB	
-loc_00023942:
+; loc_00023942
+BossSpriteFrame_Carthahena:
 	dc.l	$027101F1	
 	dc.l	loc_0000FFFA-3	
 	dc.l	$FFDC027D	
-loc_0002394E:
+; loc_0002394E
+BossSpriteFrame_Luther:
 	dc.l	$020102AD	
 	dc.l	loc_00000000	
-loc_00023956:
+; loc_00023956
+BossProjectileSpriteFrame_B:
 	dc.l	$02890211	
 	dc.l	loc_00000000	
 	dc.l	loc_00000298-3	
-loc_00023962:
+; loc_00023962
+BossProjectileSpriteFrame_C:
 	dc.l	$02210000	
 	dc.l	loc_00000000	
-loc_0002396A:
+; loc_0002396A
+BossProjectileSpriteFrame_D:
 	dc.l	$02A10231	
 	dc.l	loc_00000000	
 	dc.l	loc_000002B0	
