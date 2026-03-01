@@ -721,10 +721,36 @@ loc_00001308:
 	CLR.w	D0
 	RTS
 
-loc_0000130C:
-	dc.b	$7C, $03, $E9, $5A, $38, $02, $02, $44, $00, $0F, $0C, $44, $00, $09, $6F, $02, $5E, $44, $06, $44, $00, $30, $61, $00, $00, $08, $51, $CE, $FF, $E6, $4E, $75 
-	dc.b	$06, $44, $04, $C0, $00, $44, $80, $00, $88, $43, $30, $38, $C2, $42, $32, $38, $C2, $44, $D0, $40, $EF, $41, $D0, $41, $02, $80, $00, $00, $1F, $FF, $48, $40 
-	dc.b	$00, $80, $40, $00, $00, $03, $23, $C0, $00, $C0, $00, $04, $33, $C4, $00, $C0, $00, $00, $52, $78, $C2, $42, $4E, $75 
+loc_0000130C:					; unreferenced dead code
+	MOVEQ	#3, D6
+loc_0000130E:
+	ROL.w	#4, D2
+	MOVE.w	D2, D4
+	ANDI.w	#$000F, D4
+	CMPI.w	#$9, D4
+	BLE.b	loc_0000131E
+	ADDQ.w	#7, D4
+loc_0000131E:
+	ADDI.w	#$30, D4
+	BSR.w	loc_0000132C
+	DBF	D6, loc_0000130E
+	RTS
+loc_0000132C:
+	ADDI.w	#$4C0, D4
+	ORI.w	#$8000, D4
+	OR.w	D3, D4
+	MOVE.w	Window_number_cursor_x.w, D0
+	MOVE.w	Window_number_cursor_y.w, D1
+	ADD.w	D0, D0
+	ASL.w	#7, D1
+	ADD.w	D1, D0
+	ANDI.l	#$00001FFF, D0
+	SWAP	D0
+	ORI.l	#$40000003, D0
+	MOVE.l	D0, VDP_control_port
+	MOVE.w	D4, VDP_data_port
+	ADDQ.w	#1, Window_number_cursor_x.w
+	RTS
 
 UpdateSceneScrollBuffers:
 	TST.b	HScroll_full_update_flag.w
@@ -3454,8 +3480,9 @@ loc_00003816:
 loc_00003834:
 	RTS
 
-loc_00003836:
-	dc.b	$4E, $B9, $00, $00, $F5, $D6, $4E, $75 
+loc_00003836:					; unreferenced dead code
+	JSR	AddSpriteToDisplayList
+	RTS
 
 loc_0000383E:
 	BRA.w	loc_00003896
@@ -7354,8 +7381,16 @@ loc_00006EBE:
 loc_00006ED0:
 	RTS
 
-loc_00006ED2:
-	dc.b	$2C, $78, $CC, $14, $7E, $1D, $08, $96, $00, $07, $42, $40, $10, $2E, $00, $01, $4D, $F6, $00, $00, $51, $CF, $FF, $F0, $4E, $75 
+loc_00006ED2:					; unreferenced dead code
+	MOVEA.l	Enemy_list_ptr.w, A6
+	MOVEQ	#$1D, D7
+loc_00006ED8:
+	BCLR	#7, (A6)
+	CLR.w	D0
+	MOVE.b	$1(A6), D0
+	LEA	$0(A6,D0.w), A6
+	DBF	D7, loc_00006ED8
+	RTS
 
 loc_00006EEC:
 	MOVE.b	#9, $6(A5)
@@ -8510,9 +8545,24 @@ loc_00007DE8:
 	MOVE.l	#BestedMeStr, $1C(A5)
 loc_00007DF6:
 	BRA.w	UpdateNPCSpriteFrame
-loc_00007DFA:
-	dc.b	$61, $00, $04, $38, $42, $2D, $00, $25, $4A, $38, $C7, $58, $66, $04, $08, $95, $00, $07, $2B, $7C, $00, $00, $6F, $44, $00, $02, $4E, $75, $61, $00, $04, $1C 
-	dc.b	$42, $2D, $00, $25, $4A, $38, $C7, $58, $66, $04, $08, $95, $00, $07, $2B, $7C, $00, $00, $6F, $44, $00, $02, $4E, $75 
+loc_00007DFA:					; unreferenced dead code
+	BSR.w	SetRandomDirection
+	CLR.b	$25(A5)
+	TST.b	Tsarkon_is_dead.w
+	BNE.b	loc_00007E0C
+	BCLR	#7, (A5)
+loc_00007E0C:
+	MOVE.l	#UpdateNPCSpriteFrame, $2(A5)
+	RTS
+loc_00007E16:					; unreferenced dead code
+	BSR.w	SetRandomDirection
+	CLR.b	$25(A5)
+	TST.b	Tsarkon_is_dead.w
+	BNE.b	loc_00007E28
+	BCLR	#7, (A5)
+loc_00007E28:
+	MOVE.l	#UpdateNPCSpriteFrame, $2(A5)
+	RTS
 loc_00007E32:
 	BSR.w	SetRandomDirection
 	CLR.b	$25(A5)
@@ -9265,8 +9315,16 @@ ProcessAllObjectSlots:
 	BSR.w	InitMapIndicatorEntity
 	RTS
 
-loc_00008706:
-	dc.b	$2C, $78, $CC, $50, $3E, $3C, $00, $30, $08, $96, $00, $07, $42, $40, $10, $2E, $00, $01, $4D, $F6, $00, $00, $51, $CF, $FF, $F0, $4E, $75 
+loc_00008706:					; unreferenced dead code
+	MOVEA.l	Map_indicator_entity_ptr.w, A6
+	MOVE.w	#$0030, D7
+loc_0000870E:
+	BCLR	#7, (A6)
+	CLR.w	D0
+	MOVE.b	$1(A6), D0
+	LEA	$0(A6,D0.w), A6
+	DBF	D7, loc_0000870E
+	RTS
 
 InitObjectChain_7Entities:
 	BSR.w	InitObjectEntity_Type14
@@ -9920,8 +9978,16 @@ loc_0000905E:
 	MOVE.w	$C(A5), $16(A5)
 	RTS
 
-loc_00009072:
-	dc.b	$2C, $78, $CC, $14, $3E, $3C, $00, $17, $08, $96, $00, $07, $42, $40, $10, $2E, $00, $01, $4D, $F6, $00, $00, $51, $CF, $FF, $F0, $4E, $75 
+loc_00009072:					; unreferenced dead code
+	MOVEA.l	Enemy_list_ptr.w, A6
+	MOVE.w	#$0017, D7
+loc_0000907A:
+	BCLR	#7, (A6)
+	CLR.w	D0
+	MOVE.b	$1(A6), D0
+	LEA	$0(A6,D0.w), A6
+	DBF	D7, loc_0000907A
+	RTS
 
 CalculateVelocityFromAngle:
 	LEA	SineTable, A0
@@ -13448,8 +13514,16 @@ InitNextSpriteSlot:
 	MOVE.l	#loc_0000C192, $2(A6)
 	RTS
 
-loc_0000C1DA:
-	dc.b	$2C, $78, $CC, $14, $3E, $3C, $00, $1F, $08, $96, $00, $07, $42, $40, $10, $2E, $00, $01, $4D, $F6, $00, $00, $51, $CF, $FF, $F0, $4E, $75 
+loc_0000C1DA:					; unreferenced dead code
+	MOVEA.l	Enemy_list_ptr.w, A6
+	MOVE.w	#$001F, D7
+loc_0000C1E2:
+	BCLR	#7, (A6)
+	CLR.w	D0
+	MOVE.b	$1(A6), D0
+	LEA	$0(A6,D0.w), A6
+	DBF	D7, loc_0000C1E2
+	RTS
 CheckPlayerLeftOfScreen:
 	MOVEA.l	Player_entity_ptr.w, A6
 	MOVE.w	$E(A6), D0
@@ -15744,8 +15818,14 @@ loc_0000E15A:
 	MOVE.l	#loc_0000E21C, $2(A5)
 	RTS
 	
-loc_0000E202:
-	dc.b	$2C, $78, $CC, $1C, $08, $16, $00, $07, $66, $08, $2B, $7C, $00, $00, $DF, $96, $00, $02, $4E, $B9, $00, $00, $E3, $B6, $4E, $75 
+loc_0000E202:					; unreferenced dead code
+	MOVEA.l	Object_slot_02_ptr.w, A6
+	BTST	#7, (A6)
+	BNE.b	loc_0000E214
+	MOVE.l	#loc_0000DF96, $2(A5)
+loc_0000E214:
+	JSR	ProcessBossFightDamage
+	RTS
 loc_0000E21C:
 	MOVEA.l	Object_slot_04_ptr.w, A6
 	BTST.b	#7, (A6)
@@ -19765,8 +19845,19 @@ loc_000115A8:
 loc_000115BC:
 	RTS
 
-loc_000115BE:
-	dc.b	$41, $F8, $C6, $5C, $43, $F8, $C6, $2E, $72, $01, $83, $08, $51, $C9, $FF, $FC, $42, $B8, $C6, $5A, $4A, $78, $C6, $2C, $6C, $04, $42, $78, $C6, $2C, $4E, $75 
+loc_000115BE:					; unreferenced dead code
+	LEA	Transaction_item_quantity.w, A0
+	LEA	Player_mhp.w, A1
+	MOVEQ	#1, D1
+loc_000115C8:
+	SBCD	-(A0), -(A1)
+	DBF	D1, loc_000115C8
+	CLR.l	Transaction_amount.w
+	TST.w	Player_hp.w
+	BGE.b	loc_000115DC
+	CLR.w	Player_hp.w
+loc_000115DC:
+	RTS
 ; loc_000115DE
 DisplayPlayerKims:
 	MOVE.w	#2, Window_number_cursor_x.w
@@ -21148,8 +21239,11 @@ MenuCursorRight:
 loc_000128EC:
 	RTS
 	
-loc_000128EE:
-	dc.b	$61, $00, $00, $0E, $31, $F8, $C2, $3C, $C2, $3E, $61, $00, $00, $12, $4E, $75 
+loc_000128EE:					; unreferenced dead code
+	BSR.w	EraseMenuCursor
+	MOVE.w	Menu_cursor_last_index.w, Menu_cursor_index.w
+	BSR.w	DrawMenuCursor
+	RTS
 ; EraseMenuCursor
 EraseMenuCursor:
 	MOVE.w	#$84E0, D6
@@ -21196,15 +21290,86 @@ loc_00012930:
 	ANDI	#$F8FF, SR
 	RTS
 	
-loc_00012976:
-	dc.b	$31, $FC, $00, $0D, $C2, $20, $31, $FC, $00, $04, $C2, $22, $45, $F8, $C4, $B4, $43, $F9, $00, $02, $26, $D6, $30, $38, $C4, $A6, $E7, $40, $22, $71, $00, $00 
-	dc.b	$3E, $38, $C4, $A2, $61, $00, $00, $04, $4E, $75, $53, $47, $42, $43, $38, $1A, $02, $44, $00, $FF, $D8, $44, $D8, $44, $20, $71, $40, $00, $42, $42, $4E, $B9 
-	dc.b	$00, $00, $33, $2A, $D0, $42, $D2, $43, $D0, $78, $C2, $20, $D2, $78, $C2, $22, $02, $40, $00, $3F, $02, $41, $00, $3F, $E3, $40, $EF, $41, $D0, $41, $02, $80 
-	dc.b	$00, $00, $FF, $FF, $48, $40, $06, $80, $40, $00, $00, $03, $23, $C0, $00, $C0, $00, $04, $42, $46, $1C, $18, $0C, $06, $00, $FF, $67, $22, $0C, $06, $00, $DE 
-	dc.b	$67, $28, $0C, $06, $00, $DF, $67, $22, $06, $46, $04, $C0, $00, $46, $80, $00, $00, $46, $00, $00, $33, $C6, $00, $C0, $00, $00, $52, $42, $60, $A0, $54, $43 
-	dc.b	$B6, $78, $C2, $2A, $51, $CF, $FF, $88, $4E, $75, $61, $00, $01, $C4, $60, $8E, $31, $FC, $00, $12, $C2, $42, $31, $FC, $00, $02, $C2, $44, $43, $F9, $00, $02 
-	dc.b	$20, $B0, $30, $38, $C4, $0C, $D0, $40, $D0, $40, $D0, $78, $C4, $A6, $D0, $40, $D0, $40, $22, $71, $00, $00, $3A, $38, $C4, $A2, $53, $45, $36, $3C, $00, $00 
-	dc.b	$24, $19, $61, $00, $E9, $C6, $31, $FC, $00, $12, $C2, $42, $54, $78, $C2, $44, $51, $CD, $FF, $EE, $4E, $75 
+loc_00012976:					; unreferenced dead code
+	MOVE.w	#$000D, Window_tilemap_draw_x.w
+	MOVE.w	#$0004, Window_tilemap_draw_y.w
+	LEA	Shop_item_list.w, A2
+	LEA	ShopCategoryNameTables, A1
+	MOVE.w	Current_shop_type.w, D0
+	ASL.w	#3, D0
+	MOVEA.l	$0(A1,D0.w), A1
+	MOVE.w	Shop_item_count.w, D7
+	BSR.w	loc_000129A0
+	RTS
+loc_000129A0:
+	SUBQ.w	#1, D7
+loc_000129A2:
+	CLR.w	D3
+loc_000129A4:
+	MOVE.w	(A2)+, D4
+	ANDI.w	#$00FF, D4
+	ADD.w	D4, D4
+	ADD.w	D4, D4
+	MOVEA.l	$0(A1,D4.w), A0
+	CLR.w	D2
+loc_000129B4:
+	JSR	GetScrollOffsetInTiles
+	ADD.w	D2, D0
+	ADD.w	D3, D1
+	ADD.w	Window_tilemap_draw_x.w, D0
+	ADD.w	Window_tilemap_draw_y.w, D1
+	ANDI.w	#$003F, D0
+	ANDI.w	#$003F, D1
+	ASL.w	#1, D0
+	ASL.w	#7, D1
+	ADD.w	D1, D0
+	ANDI.l	#$0000FFFF, D0
+	SWAP	D0
+	ADDI.l	#$40000003, D0
+	MOVE.l	D0, VDP_control_port
+	CLR.w	D6
+	MOVE.b	(A0)+, D6
+	CMPI.b	#$FF, D6
+	BEQ.b	loc_00012A14
+	CMPI.b	#$DE, D6
+	BEQ.b	loc_00012A20
+	CMPI.b	#$DF, D6
+	BEQ.b	loc_00012A20
+	ADDI.w	#$4C0, D6
+	ORI.w	#$8000, D6
+	ORI.w	#$0000, D6
+	MOVE.w	D6, VDP_data_port
+	ADDQ.w	#1, D2
+	BRA.b	loc_000129B4
+loc_00012A14:
+	ADDQ.w	#2, D3
+	CMP.w	Window_tilemap_draw_height.w, D3
+	DBF	D7, loc_000129A4
+	RTS
+loc_00012A20:
+	BSR.w	DrawSpecialCharToVRAM
+	BRA.b	loc_000129B4
+loc_00012A26:					; unreferenced dead code
+	MOVE.w	#$0012, Window_number_cursor_x.w
+	MOVE.w	#$0002, Window_number_cursor_y.w
+	LEA	ShopPricesByTownAndType, A1
+	MOVE.w	Current_town.w, D0
+	ADD.w	D0, D0
+	ADD.w	D0, D0
+	ADD.w	Current_shop_type.w, D0
+	ADD.w	D0, D0
+	ADD.w	D0, D0
+	MOVEA.l	$0(A1,D0.w), A1
+	MOVE.w	Shop_item_count.w, D5
+	SUBQ.w	#1, D5
+	MOVE.w	#$0000, D3
+loc_00012A56:
+	MOVE.l	(A1)+, D2
+	BSR.w	LongToDecimalString
+	MOVE.w	#$0012, Window_number_cursor_x.w
+	ADDQ.w	#2, Window_number_cursor_y.w
+	DBF	D5, loc_00012A56
+	RTS
 ; CopyStringUntilFF
 ; Copy string from A0 to A1 until $FF terminator
 ; Input: A0 = Source string pointer, A1 = Destination pointer
@@ -32721,9 +32886,28 @@ loc_0001E1CC:
 	RTS
 	
 loc_0001E1D4:
-	dc.b	$4A, $38, $C7, $C4, $66, $00, $00, $4C, $4E, $B9, $00, $00, $85, $7E, $6C, $00, $00, $30, $45, $F9, $00, $02, $58, $F8, $61, $00, $02, $22, $61, $00, $02, $3A 
-	dc.b	$4E, $B9, $00, $00, $85, $72, $31, $BC, $00, $2B, $00, $00, $11, $FC, $00, $FF, $C7, $C4, $30, $3C, $00, $A6, $4E, $B9, $00, $01, $05, $22, $60, $00, $00, $10 
-	dc.b	$45, $F9, $00, $02, $58, $F8, $61, $00, $01, $F4, $61, $00, $02, $32, $60, $00, $00, $EE, $31, $FC, $00, $01, $C4, $28, $4E, $75 
+	TST.b	Mega_blast_acquired.w
+	BNE.w	loc_0001E226
+	JSR	CheckInventoryFull
+	BGE.w	loc_0001E214
+	LEA	MegaBlastStr, A2
+	BSR.w	DisplayFoundItemMessage
+	BSR.w	DisplayFoundItemWithName
+	JSR	AddItemToInventoryList
+	MOVE.w	#((ITEM_TYPE_DISCARDABLE<<8)|ITEM_MEGA_BLAST), (A0,D0.w)
+	MOVE.b	#$FF, Mega_blast_acquired.w
+	MOVE.w	#$00A6, D0
+	JSR	QueueSoundEffect
+	BRA.w	loc_0001E222
+loc_0001E214:
+	LEA	MegaBlastStr, A2
+	BSR.w	DisplayFoundItemMessage
+	BSR.w	DisplayInventoryFullMessage
+loc_0001E222:
+	BRA.w	loc_0001E312
+loc_0001E226:
+	MOVE.w	#1, Dialog_selection.w
+	RTS
 loc_0001E22E:
 	TST.b	Rafaels_stick_acquired.w
 	BNE.w	loc_0001E280
@@ -32767,14 +32951,21 @@ loc_0001E2C8:
 	BRA.w	loc_0001E312	
 
 loc_0001E2CC: ; Find 1kim
-	dc.b	$45, $F9 
-	dc.l	OneKimStr 
-	dc.b	$61, $00, $01, $3C, $61, $00, $01, $54, $21, $FC, $00, $00, $00, $01, $C6, $5A, $4E, $B9, $00, $01, $15, $76, $30, $3C, $00, $A6 
-	dc.b	$4E, $B9, $00, $01, $05, $22, $60, $00, $00, $1E
+	LEA	OneKimStr, A2
+	BSR.w	DisplayFoundItemMessage
+	BSR.w	DisplayFoundItemWithName
+	MOVE.l	#$00000001, Transaction_amount.w
+	JSR	AddPaymentAmount
+	MOVE.w	#$00A6, D0
+	JSR	QueueSoundEffect
+	BRA.w	loc_0001E312
 
 loc_0001E2F6: ; Regain all HP
-	dc.b	$31, $F8, $C6, $2E, $C6, $2C, $30, $3C, $00, $AE, $4E, $B9, $00, $01, $05, $22, $21, $FC, $00, $02, $6A, $A4 
-	dc.b	$C2, $04, $60, $00, $00, $02 
+	MOVE.w	Player_mhp.w, Player_hp.w
+	MOVE.w	#$00AE, D0
+	JSR	QueueSoundEffect
+	MOVE.l	#AllHitPointsStr, Script_source_base.w
+	BRA.w	loc_0001E312
 
 loc_0001E312:
 	JSR	SaveStatusBarToBuffer
@@ -33310,9 +33501,29 @@ ClearRewardScriptFlag:
 loc_0001EAC4:
 	RTS
 	
+; loc_0001EAC6
 loc_0001EAC6:
-	dc.b	$20, $18, $32, $18, $34, $18, $36, $38, $C1, $04, $E6, $43, $38, $38, $C1, $06, $E6, $44, $ED, $44, $D8, $43, $48, $44, $02, $84, $1F, $FF, $00, $00, $D0, $84 
-	dc.b	$23, $C0, $00, $C0, $00, $04, $42, $40, $10, $18, $D0, $42, $33, $C0, $00, $C0, $00, $00, $51, $C9, $FF, $F2, $4E, $75 
+	MOVE.l	(A0)+, D0
+	MOVE.w	(A0)+, D1
+	MOVE.w	(A0)+, D2
+	MOVE.w	HScroll_base.w, D3
+	ASR.w	#3, D3
+	MOVE.w	VScroll_base.w, D4
+	ASR.w	#3, D4
+	ASL.w	#6, D4
+	ADD.w	D3, D4
+	SWAP	D4
+	ANDI.l	#$1FFF0000, D4
+	ADD.l	D4, D0
+	MOVE.l	D0, VDP_control_port
+; loc_0001EAEC
+loc_0001EAEC:
+	CLR.w	D0
+	MOVE.b	(A0)+, D0
+	ADD.w	D2, D0
+	MOVE.w	D0, VDP_data_port
+	DBF	D1, loc_0001EAEC
+	RTS
 loc_0001EAFE:
 	LEA	Wyclif_Npc1_DialogueStates, A1
 	MOVE.w	#1, D7
@@ -35301,7 +35512,9 @@ loc_00020660:
 	RTS
 	
 loc_0002066E:
-	dc.b	$61, $00, $0E, $28, $21, $FC, $00, $02, $17, $3A, $C2, $50, $4E, $75 
+	BSR.w	InitTalkerWithGfxDescriptor_1F712
+	MOVE.l	#RingsHavePowerStr, Script_talk_source.w
+	RTS
 loc_0002067C:
 	BSR.w	InitTalkerWithGfxDescriptor_1F712
 	MOVE.l	#ProgressingWellStr, Script_talk_source.w
@@ -75318,8 +75531,17 @@ loc_00093286:
 	MOVEA.l	A6, A3
 	RTS
 	
-loc_0009328A:
-	dc.b	$10, $3C, $00, $80, $12, $3C, $00, $0F, $3E, $3C, $00, $03, $61, $00, $01, $84, $58, $40, $51, $CF, $FF, $F8, $4E, $75 
+; loc_0009328A
+loc_0009328A:                          ; unreferenced dead code
+	MOVE.b	#$80, D0
+	MOVE.b	#$0F, D1
+	MOVE.w	#$0003, D7
+; loc_00093296
+loc_00093296:
+	BSR.w	WriteYM2612Register
+	ADDQ.w	#4, D0
+	DBF	D7, loc_00093296
+	RTS
 InitFM_ChannelsToSilence:
 	MOVEQ	#6, D6
 	MOVE.b	#$28, D0

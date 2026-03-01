@@ -1034,6 +1034,7 @@ Deepdale_medicine_removed                   = $FFFFC7C0
 Stepfather_ring_dialog_shown                = $FFFFC7C1
 Titanias_mirror_quest_prereq                = $FFFFC7C2
 Titanias_mirror_acquired                    = $FFFFC7C3
+Mega_blast_acquired                         = $FFFFC7C4
 Rafaels_stick_acquired                      = $FFFFC7C5
 Poison_notified                             = $FFFFC7C6
 Chest_256_kims_opened                       = $FFFFC7E0
