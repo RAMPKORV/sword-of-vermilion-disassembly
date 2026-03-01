@@ -144,8 +144,16 @@ ItemChest macro value,flag
     ENDM
 
 ; Equipment chest: swords, armor, shields
-EquipChest macro value,flag
-    MOVE.w  #value, Reward_script_value.w
+; equipType: EQUIPMENT_TYPE_SWORD, EQUIPMENT_TYPE_SHIELD, or EQUIPMENT_TYPE_ARMOR
+; equipId:   Equipment ID constant (e.g. EQUIPMENT_SWORD_GRAPHITE)
+; cursed:    Optional - EQUIPMENT_FLAG_CURSED for cursed items
+; flag:      RAM address of the opened-flag byte
+EquipChest macro equipType,equipId,flag,cursed
+    if NARG>3
+    MOVE.w  #((equipType|cursed)<<8)|equipId, Reward_script_value.w
+    else
+    MOVE.w  #(equipType<<8)|equipId, Reward_script_value.w
+    endc
     MOVE.l  #flag, Reward_script_flag.w
     BSR.w   SetupEquipmentTreasure
     RTS

@@ -1215,8 +1215,8 @@ loc_000019BE:
 	MOVE.w	D0, Current_town_room.w
 	ADD.w	D0, D0
 	ADD.w	D0, D0
-	LEA	loc_0001FC88, A0
-	LEA	loc_0001FECA, A1
+	LEA	TownTilesetLoadJumpTable, A0
+	LEA	TownNpcSetupJumpTable, A1
 	JSR	(A1,D0.w)
 	JSR	(A0,D0.w)
 	JSR	LoadTownTilemaps
@@ -2392,7 +2392,7 @@ loc_00002AE0:
 	CLR.l	(A0)+
 	DBF	D7, loc_00002AE0
 	BSR.w	ClearAllEnemyEntities
-	LEA	loc_00003694, A0
+	LEA	BossBattleObjectInitPtrs, A0
 	MOVE.w	Battle_type.w, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
@@ -2719,7 +2719,7 @@ DrawTerrainTilemap:
 	MOVE.l	#$60280003, D5
 DrawTerrainTilemapHelper:
 	ORI	#$0700, SR
-	LEA	loc_0001F652, A0
+	LEA	TerrainTilemapPtrs, A0
 	MOVE.w	Terrain_tileset_index.w, D0
 	ANDI.w	#3, D0
 	ADD.w	D0, D0
@@ -2938,12 +2938,13 @@ loc_000032AE:
 	ANDI.w	#7, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
-	LEA	loc_000032C8, A0
+	LEA	OverworldMenuActionPtrs, A0
 	MOVEA.l	(A0,D0.w), A0
 	JSR	(A0)
 	RTS
 
-loc_000032C8:
+; loc_000032C8
+OverworldMenuActionPtrs:
 	dc.l	loc_0001B17E
 	dc.l	loc_0001A2CE
 	dc.l	loc_0001D67E
@@ -3013,7 +3014,7 @@ GetScrollOffsetInTiles:
 SearchTownNPCData:
 	MOVE.w	Player_position_x_in_town.w, D0 ; D0 = player X
 	MOVE.w	Player_position_y_in_town.w, D1 ; D1 = player Y
-	LEA	loc_0001FDD4, A0                 ; A0 = town jump table
+	LEA	TownNpcDataLookupJumpTable, A0                 ; A0 = town jump table
 	MOVE.w	Current_town.w, D2               ; D2 = town ID
 	ADD.w	D2, D2                           ; D2 *= 4
 	ADD.w	D2, D2
@@ -3133,7 +3134,7 @@ CheckForEncounter_triggered:
 ; loc_00003442
 CheckOverworldInteractions:
 	MOVE.l	#NoOneHereStr, Script_talk_source.w ; Default message
-	LEA	loc_000200B6, A0                     ; Interaction table base
+	LEA	OverworldSectorInteractionPtrs, A0                     ; Interaction table base
 	MOVE.w	Player_map_sector_x.w, D0            ; D0 = sector X
 	ADD.w	D0, D0                               ; D0 *= 4
 	ADD.w	D0, D0
@@ -3176,7 +3177,7 @@ CheckOverworldInteractions_end:
 ; ============================================================================
 ; loc_00003498
 CheckCaveInteractions:
-	LEA	loc_00020780, A0                     ; Cave interaction table base
+	LEA	CaveRoomInteractionPtrs, A0                     ; Cave interaction table base
 	MOVE.w	Current_cave_room.w, D0              ; D0 = cave room ID
 	ADD.w	D0, D0                               ; D0 *= 4
 	ADD.w	D0, D0
@@ -3325,7 +3326,8 @@ loc_0000366A:
 	dc.b	$88, $93, $88, $88, $93, $93, $93, $93, $88, $88, $93, $88, $93, $93 
 loc_00003678:
 	dc.w	$005F, $0077, $0068, $0068, $0081, $007E, $00B1, $00B2, $0086, $00B4, $00B3, $0087, $0088, $0082 
-loc_00003694:
+; loc_00003694
+BossBattleObjectInitPtrs:
 	dc.l	loc_00000586
 	dc.l	loc_000005A2
 	dc.l	loc_00000594
@@ -4577,7 +4579,7 @@ RenderWallTileWithPalette:
 	MOVE.w	D4, D3
 	ADD.w	D3, D3
 	ASL.w	#4, D4
-	LEA	loc_000067A4, A1
+	LEA	WallTileMidGfxPtrs, A1
 	LEA	loc_00006824, A3
 	MOVEA.l	$C(A1,D4.w), A0
 	MOVE.w	(A3,D3.w), D4
@@ -4587,7 +4589,7 @@ RenderWallTileWithPalette:
 	ORI.w	#$A800, D2
 	BRA.w	RenderWallTile_14x10_TwoPalette
 RenderWallTile_NearFrontTwoPalette:
-	LEA	loc_00006582, A1
+	LEA	WallTileGfxPtrs, A1
 	LEA	loc_00006824, A3
 	MOVE.w	D4, D3
 	ADD.w	D3, D3
@@ -4602,7 +4604,7 @@ RenderWallTile_NearFrontTwoPalette:
 	RTS
 
 RenderWallTile_MidSinglePalette:
-	LEA	loc_00006582, A1
+	LEA	WallTileGfxPtrs, A1
 	LEA	loc_00006824, A3
 	MOVE.w	D4, D3
 	ADD.w	D3, D3
@@ -4615,7 +4617,7 @@ RenderWallTile_MidSinglePalette:
 	RTS
 
 RenderWallTile_FarSinglePalette:
-	LEA	loc_00006582, A1
+	LEA	WallTileGfxPtrs, A1
 	LEA	loc_00006824, A3
 	MOVE.w	D4, D3
 	ADD.w	D3, D3
@@ -4628,7 +4630,7 @@ RenderWallTile_FarSinglePalette:
 	RTS
 
 RenderWallTile_NearTwoPalette:
-	LEA	loc_00006582, A1
+	LEA	WallTileGfxPtrs, A1
 	LEA	loc_00006824, A3
 	MOVE.w	D4, D3
 	ADD.w	D3, D3
@@ -5154,7 +5156,7 @@ PrepareWallTileRenderData:
 	ADD.w	D3, D3
 	ASL.w	#4, D0
 	ADD.w	D0, D2
-	LEA	loc_000067A4, A1
+	LEA	WallTileMidGfxPtrs, A1
 	LEA	loc_00006824, A3
 	MOVE.l	(A2,D1.w), D5
 	MOVEA.l	(A1,D2.w), A0
@@ -6751,7 +6753,8 @@ loc_00006562:
 	dc.w	$04D0
 	dc.w	$04C8
 	dc.b	$04, $C9, $04, $C1, $04, $C2, $04, $C3, $04, $C4, $04, $C5, $04, $C6, $04, $CD 
-loc_00006582:
+; loc_00006582
+WallTileGfxPtrs:
 	dc.l	loc_00080D44
 	dc.l	loc_00080E56
 	dc.l	loc_00080E00
@@ -6820,7 +6823,8 @@ loc_00006784:
 	dc.b	$63, $0C, $00, $03, $61, $8C, $00, $03, $62, $0C, $00, $03, $62, $8C, $00, $03 
 loc_00006794:
 	dc.b	$63, $22, $00, $03, $61, $9C, $00, $03, $62, $1E, $00, $03, $62, $A0, $00, $03 
-loc_000067A4:
+; loc_000067A4
+WallTileMidGfxPtrs:
 	dc.l	loc_00080AD0
 	dc.l	loc_00080B6A
 	dc.l	loc_00080C04
@@ -9581,7 +9585,7 @@ loc_00008BA6:
 	ADD.w	D0, D0
 	MOVE.w	(A6,D0.w), D1
 	MOVE.w	D1, Current_encounter_type.w
-	LEA	loc_00023E70, A6
+	LEA	EnemyGfxDataTable, A6
 	MULU.w	#$C, D1 ; Each encounter encompasses three pointers
 	MOVEA.l	(A6,D1.w), A6
 	MOVE.b	$14(A6), $6(A5)
@@ -9790,7 +9794,7 @@ loc_00008ED4:
 	ADDQ.b	#1, D0
 	DBF	D7, loc_00008ED4
 	MOVEA.l	Enemy_list_ptr.w, A6 ; Where to load enemies into
-	LEA	loc_00023E70, A0
+	LEA	EnemyGfxDataTable, A0
 	MOVE.w	Current_encounter_type.w, D0
 	MULU.w	#$C, D0
 	ADDQ.w	#4, D0
@@ -11231,9 +11235,10 @@ loc_0000A2E6:
 	ANDI.w	#3, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
-	LEA	loc_0000A300, A0
+	LEA	EnemyAiChasePauseJumpTable, A0
 	JMP	(A0,D0.w)
-loc_0000A300:
+; loc_0000A300
+EnemyAiChasePauseJumpTable:
 	BRA.w	loc_0000A310
 	BRA.w	loc_0000A342
 	BRA.w	loc_0000A310
@@ -11615,9 +11620,10 @@ loc_0000A854:
 	ANDI.w	#7, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
-	LEA	loc_0000A86E, A0
+	LEA	EnemyAiChaseFireJumpTable, A0
 	JMP	(A0,D0.w)
-loc_0000A86E:
+; loc_0000A86E
+EnemyAiChaseFireJumpTable:
 	BRA.w	loc_0000A88E
 	BRA.w	loc_0000A8EE
 	BRA.w	loc_0000A90A
@@ -11810,9 +11816,10 @@ loc_0000AB1E:
 	ANDI.w	#7, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
-	LEA	loc_0000AB38, A0
+	LEA	EnemyAiSpiralJumpTable, A0
 	JMP	(A0,D0.w)
-loc_0000AB38:
+; loc_0000AB38
+EnemyAiSpiralJumpTable:
 	BRA.w	loc_0000AB58
 	BRA.w	loc_0000ABB8
 	BRA.w	loc_0000ABDC
@@ -12721,7 +12728,7 @@ EnemyStartingPositions:
 	dc.w	$009E, $00A0
 	dc.w	$00DE, $00A0 
 InitBattleEntities:
-	LEA	loc_0000B7C4, A0
+	LEA	BattleEntityInitJumpTable, A0
 	MOVE.w	Battle_type.w, D0
 	ANDI.w	#$000F, D0
 	ADD.w	D0, D0
@@ -12729,7 +12736,8 @@ InitBattleEntities:
 	JSR	(A0,D0.w)
 	RTS
 	
-loc_0000B7C4:
+; loc_0000B7C4
+BattleEntityInitJumpTable:
 	BRA.w	loc_0000B7FC
 	BRA.w	loc_0000D186
 	BRA.w	loc_0000C20E
@@ -12916,7 +12924,7 @@ loc_0000BAAE:
 loc_0000BB02:
 	MOVE.w	Boss_ai_state.w, D0
 	ANDI.w	#$000F, D0
-	LEA	loc_0000BB2E, A0
+	LEA	BossAiStateJumpTable, A0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
 	JSR	(A0,D0.w)
@@ -12927,7 +12935,8 @@ loc_0000BB02:
 	BSR.w	CheckPlayerDamageAndKnockback
 	RTS
 	
-loc_0000BB2E:
+; loc_0000BB2E
+BossAiStateJumpTable:
 	BRA.w	loc_0000BB52
 	BRA.w	loc_0000BB66
 	BRA.w	loc_0000BBB0
@@ -13777,8 +13786,8 @@ loc_0000C746:
 	BCC.b	loc_0000C7D2
 	BSR.w	UpdateEncounterPalette
 	MOVE.l	#loc_0000C88E, $2(A5)
-	LEA	loc_00022F82, A0
-	LEA	loc_00022F92, A1
+	LEA	EnemySpriteLayoutPtrsA, A0
+	LEA	EnemySpritePositionPtrsA, A1
 	MOVEA.l	$C(A0), A0
 	MOVEA.l	$C(A1), A1
 	LEA	(A5), A6
@@ -13832,8 +13841,8 @@ loc_0000C82C:
 	ANDI.w	#$0010, D0
 	ASR.w	#2, D0
 loc_0000C83A:
-	LEA	loc_00022F82, A0
-	LEA	loc_00022F92, A1
+	LEA	EnemySpriteLayoutPtrsA, A0
+	LEA	EnemySpritePositionPtrsA, A1
 	MOVEA.l	(A0,D0.w), A0
 	MOVEA.l	(A1,D0.w), A1
 	LEA	(A5), A6
@@ -13878,8 +13887,8 @@ loc_0000C8B8:
 	SUB.w	D0, $28(A5)
 	BCC.w	loc_0000C93C
 	MOVE.l	#loc_0000C88E, $2(A5)
-	LEA	loc_00023012, A0
-	LEA	loc_00023022, A1
+	LEA	EnemySpriteLayoutPtrsB, A0
+	LEA	EnemySpritePositionPtrsB, A1
 	MOVEA.l	$C(A0), A0
 	MOVEA.l	$C(A1), A1
 	LEA	(A5), A6
@@ -13932,8 +13941,8 @@ loc_0000C998:
 	ANDI.w	#$0010, D0
 	ASR.w	#2, D0
 loc_0000C9A6:
-	LEA	loc_00023012, A0
-	LEA	loc_00023022, A1
+	LEA	EnemySpriteLayoutPtrsB, A0
+	LEA	EnemySpritePositionPtrsB, A1
 	LEA	(A5), A6
 	MOVEA.l	(A0,D0.w), A0
 	MOVEA.l	(A1,D0.w), A1
@@ -14224,12 +14233,13 @@ AnimateBossAttackFlash:
 	BNE.b	loc_0000CD5C
 	ANDI.w	#$0030, D0
 	ASR.w	#2, D0
-	LEA	loc_0000CD5E, A0
+	LEA	BossAttackFlashJumpTable, A0
 	JSR	(A0,D0.w)
 loc_0000CD5C:
 	RTS
 
-loc_0000CD5E:
+; loc_0000CD5E
+BossAttackFlashJumpTable:
 	BRA.w	loc_0000CD6E
 	BRA.w	loc_0000CD80
 	BRA.w	loc_0000CD92
@@ -14357,7 +14367,7 @@ SetEntityAnimFrames:
 	RTS
 
 ProcessBattleVictoryEvent:
-	LEA	loc_0000CF2E, A0
+	LEA	BattleVictoryEventJumpTable, A0
 	MOVE.w	Battle_type.w, D0
 	ANDI.w	#$000F, D0
 	ADD.w	D0, D0
@@ -14365,7 +14375,8 @@ ProcessBattleVictoryEvent:
 	JSR	(A0,D0.w)
 	RTS
 
-loc_0000CF2E:
+; loc_0000CF2E
+BattleVictoryEventJumpTable:
 	BRA.w	loc_0000CF66
 	BRA.w	loc_0000CF6E
 	BRA.w	loc_0000CF76
@@ -14638,7 +14649,7 @@ loc_0000D2F2:
 	ANDI.w	#7, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
-	LEA	loc_0000D31C, A0
+	LEA	BossAiDemonJumpTable, A0
 	JSR	(A0,D0.w)
 	JSR	UpdateBossFlashAndDamage(PC)
 	JSR	SpawnBossChildObjects(PC)
@@ -14646,7 +14657,8 @@ loc_0000D2F2:
 loc_0000D31A:
 	RTS
 
-loc_0000D31C:
+; loc_0000D31C
+BossAiDemonJumpTable:
 	BRA.w	loc_0000D334
 	BRA.w	loc_0000D34A
 	BRA.w	loc_0000D39E
@@ -16256,7 +16268,7 @@ loc_0000E9B0:
 	MOVEA.l	Object_slot_01_ptr.w, A6
 	MOVE.l	#loc_0000EC4C, $2(A6)
 loc_0000E9BC:
-	LEA	loc_000238CA, A0
+	LEA	BossSpriteFramePtrs, A0
 	MOVEA.l	(A0,D5.w), A0
 	MOVE.w	(A0)+, $8(A5)
 	CLR.w	D0
@@ -16307,7 +16319,7 @@ loc_0000EA1E:
 	JSR	QueueSoundEffect
 	MOVE.w	#$000C, D0
 loc_0000EA72:
-	LEA	loc_0002390A, A0
+	LEA	BossProjectileSpriteFramePtrs, A0
 	MOVEA.l	(A0,D0.w), A0
 	MOVE.w	(A0)+, $8(A5)
 	MOVE.w	(A0), $8(A6)
@@ -16382,7 +16394,7 @@ loc_0000EB54:
 	CLR.l	(A0)+
 	DBF	D7, loc_0000EB54
 	JSR	ClearAllEnemyEntities
-	LEA	loc_00003694, A0
+	LEA	BossBattleObjectInitPtrs, A0
 	MOVE.w	Battle_type.w, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
@@ -16565,7 +16577,7 @@ loc_0000EE14:
 	MOVE.b	$1B(A5), D0
 	ANDI.w	#$0030, D0
 	ASR.w	#2, D0
-	LEA	loc_00023802, A0
+	LEA	EncounterEnemySpriteByDirA, A0
 	MOVEA.l	(A0,D0.w), A0
 	MOVEA.l	Enemy_list_ptr.w, A6
 	MOVE.w	$E(A6), D0
@@ -16608,7 +16620,7 @@ loc_0000EE9A:
 	MOVE.b	$1B(A5), D0
 	ANDI.w	#$0030, D0
 	ASR.w	#2, D0
-	LEA	loc_00023812, A0
+	LEA	EncounterEnemySpriteByDirB, A0
 	MOVEA.l	(A0,D0.w), A0
 	MOVEA.l	Enemy_list_ptr.w, A6
 	MOVE.w	$E(A6), D0
@@ -16648,13 +16660,14 @@ loc_0000EF1C:
 loc_0000EF1E:
 	MOVE.w	Boss_ai_state.w, D0
 	ANDI.w	#$000F, D0
-	LEA	loc_0000EF36, A0
+	LEA	BossAiRingGuardianJumpTable, A0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
 	JSR	(A0,D0.w)
 	RTS
 	
-loc_0000EF36:
+; loc_0000EF36
+BossAiRingGuardianJumpTable:
 	BRA.w	loc_0000EF4E
 	BRA.w	loc_0000EF78
 	BRA.w	loc_0000EFD2
@@ -16994,9 +17007,9 @@ UpdateBossBodyTiles:
 	ORI	#$0700, SR
 	MOVE.b	$1B(A5), D0
 	ANDI.w	#$000C, D0
-	LEA	loc_0000F53C, A0
+	LEA	BossBodyUpperTilePtrs, A0
 	MOVEA.l	(A0,D0.w), A0
-	LEA	loc_0000F54C, A1
+	LEA	BossBodyLowerTilePtrs, A1
 	MOVEA.l	(A1,D0.w), A1
 	MOVE.l	#$43160003, D5
 	MOVE.w	#3, D7
@@ -17029,7 +17042,7 @@ loc_0000F41C:
 	
 WriteDirectionTilesForBoss:
 	ORI	#$0700, SR
-	LEA	loc_0000F55C, A0
+	LEA	BossDirectionTilePtrs, A0
 	MOVEA.l	(A0,D0.w), A0
 	MOVE.l	#$40080003, D5
 	MOVE.w	#5, D7
@@ -17122,17 +17135,20 @@ loc_0000F536:
 loc_0000F53A:
 	RTS
 	
-loc_0000F53C:
+; loc_0000F53C
+BossBodyUpperTilePtrs:
 	dc.l	loc_000780E4
 	dc.l	loc_000780F4
 	dc.l	loc_00078104
 	dc.l	loc_000780F4
-loc_0000F54C:
+; loc_0000F54C
+BossBodyLowerTilePtrs:
 	dc.l	loc_00078114
 	dc.l	loc_00078120
 	dc.l	loc_0007812C
 	dc.l	loc_00078120
-loc_0000F55C:
+; loc_0000F55C
+BossDirectionTilePtrs:
 	dc.l	loc_0007808A
 	dc.l	loc_000780A8
 	dc.l	loc_000780C6
@@ -17388,7 +17404,7 @@ LoadEncounterGraphics:
 	MOVE.w	(A6)+, D5
 	BSR.w	LoadMultipleTilesFromTable
 	BSR.w	ExecuteVdpDmaTransfer
-	LEA	loc_00023E70, A6
+	LEA	EnemyGfxDataTable, A6
 	MOVE.w	Current_encounter_type.w, D0
 	MULU.w	#$000C, D0
 	ADDQ.w	#8, D0
@@ -17420,7 +17436,7 @@ loc_0000F89E:
 	RTS
 	
 LoadMagicGraphics:
-	LEA	loc_0001FB34, A6
+	LEA	MagicGfxDataPtrs, A6
 	ADD.w	D0, D0
 	ADD.w	D0, D0
 	MOVEA.l	(A6,D0.w), A6
@@ -17447,7 +17463,7 @@ LoadEncounterTypeGraphics:
 	ADD.w	D0, D0
 	MOVE.w	(A6,D0.w), D1 ; Get the specific, of the 4 possible, encounter types
 	MOVE.w	D1, Current_encounter_type.w
-	LEA	loc_00023E70, A6
+	LEA	EnemyGfxDataTable, A6
 	MULU.w	#$C, D1
 	MOVEA.l	(A6,D1.w), A6
 	MOVE.l	A6, Current_encounter_gfx_ptr.w
@@ -17995,7 +18011,7 @@ loc_0000FF36:
 	MOVE.w	(A1)+, D5
 	MOVE.w	(A1)+, Palette_line_2_index.w
 	BSR.w	DecompressTileLoop
-	LEA	loc_0001F5F2, A1
+	LEA	TerrainTileGfxDmaPtrs, A1
 	MOVE.w	Terrain_tileset_index.w, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
@@ -18470,7 +18486,7 @@ loc_00010538:
 	RTS
 	
 LoadBattleTilesToVram:
-	LEA	loc_000235A0, A6
+	LEA	BattleTileDataPtrs, A6
 	MOVE.w	Battle_type.w, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
@@ -18490,7 +18506,7 @@ loc_00010568:
 	RTS
 	
 LoadBattleGraphics:
-	LEA	loc_00023740, A6
+	LEA	BattleGfxDataPtrs, A6
 	MOVE.w	Battle_type.w, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
@@ -18610,14 +18626,15 @@ loc_000106B2:
 	RTS
 	
 loc_000106C2:
-	LEA	loc_000106D6, A0
+	LEA	FileMenuPhaseJumpTable, A0
 	MOVE.w	File_menu_phase.w, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
 	JSR	(A0,D0.w)
 	RTS
 	
-loc_000106D6:
+; loc_000106D6
+FileMenuPhaseJumpTable:
 	BRA.w	loc_000106EE
 	BRA.w	loc_0001070A
 	BRA.w	loc_000107B6
@@ -20378,14 +20395,15 @@ loc_00011F30:
 	RTS
 	
 DispatchWindowDrawType:
-	LEA	loc_00011F58, A0
+	LEA	WindowDrawTypeJumpTable, A0
 	MOVE.w	Window_draw_type.w, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
 	JSR	(A0,D0.w)
 	RTS
 	
-loc_00011F58:
+; loc_00011F58
+WindowDrawTypeJumpTable:
 	BRA.w	loc_00011F94
 	BRA.w	loc_00011FD6
 	BRA.w	loc_000120A8	
@@ -23431,7 +23449,7 @@ loc_00016010:
 	ADDQ.w	#1, Town_camera_tile_x.w
 	BRA.w	ResetTownCameraMovementState
 LoadTownTilemaps:
-	LEA	loc_0001F1EC, A0
+	LEA	TownRoomTilemapPlaneAPtrs, A0
 	MOVE.w	Current_town_room.w, D0
 	ANDI.w	#$00FF, D0
 	ADD.w	D0, D0
@@ -23444,7 +23462,7 @@ LoadTownTilemaps:
 	LEA	Tilemap_buffer_plane_a, A6
 	CLR.w	Tilemap_plane_select.w
 	BSR.w	InitializeTilemapFromData
-	LEA	loc_0001F2C4, A0
+	LEA	TownRoomTilemapPlaneBPtrs, A0
 	MOVE.w	Current_town_room.w, D0
 	ANDI.w	#$00FF, D0
 	ADD.w	D0, D0
@@ -23561,7 +23579,7 @@ loc_0001617E:
 
 WriteTownTile2x2WithFlip:
 	MOVE.w	#$000C, D3
-	LEA	loc_0001F39C, A1
+	LEA	TownTilesetPtrs, A1
 	MOVE.w	Town_tileset_index.w, D1
 	ADD.w	D1, D1
 	ADD.w	D1, D1
@@ -23590,7 +23608,7 @@ loc_000161D6:
 	RTS
 
 WriteTownTile2x2:
-	LEA	loc_0001F39C, A1
+	LEA	TownTilesetPtrs, A1
 	MOVE.w	Town_tileset_index.w, D1
 	ADD.w	D1, D1
 	ADD.w	D1, D1
@@ -24690,14 +24708,15 @@ loc_00016F82:
 	RTS
 
 loc_00016FD8:
-	LEA	loc_00016FEC, A0
+	LEA	EndingSequenceStepJumpTable, A0
 	MOVE.w	Ending_sequence_step.w, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
 	JSR	(A0,D0.w)
 	RTS
 
-loc_00016FEC:
+; loc_00016FEC
+EndingSequenceStepJumpTable:
 	BRA.w	loc_0001703C
 	BRA.w	loc_00017064
 	BRA.w	loc_0001708C
@@ -25550,11 +25569,12 @@ loc_00017EC6:
 	ANDI.w	#$001F, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
-	LEA	loc_00017EDE, A0
+	LEA	SpellbookMenuStateJumpTable, A0
 	JSR	(A0,D0.w)
 	RTS
 
-loc_00017EDE:
+; loc_00017EDE
+SpellbookMenuStateJumpTable:
 	BRA.w	loc_00017F1E
 	BRA.w	loc_00017F44
 	BRA.w	loc_00018038
@@ -28114,11 +28134,12 @@ loc_0001A2CE:
 	ANDI.w	#$F, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
-	LEA	loc_0001A2E6, A0
+	LEA	ItemMenuStateJumpTable, A0
 	JSR	(A0,D0.w)
 	RTS
 
-loc_0001A2E6: ; Item effect routines map
+; loc_0001A2E6
+ItemMenuStateJumpTable: ; Item effect routines map
 	BRA.w	loc_0001A322
 	BRA.w	loc_0001A344
 	BRA.w	loc_0001A406 ; Close menus / "You have nothing to use"
@@ -29368,7 +29389,7 @@ loc_0001B2B6:
 	RTS
 
 loc_0001B2C6:
-	LEA	loc_0001CF7E, A0
+	LEA	FortuneTellerGreetingsByTown, A0
 	MOVE.w	Current_town.w, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
@@ -29503,7 +29524,7 @@ loc_0001B49C:
 	RTS
 
 loc_0001B4A4:
-	LEA	loc_0001B51C, A0
+	LEA	ShopGreetingStrPtrs, A0
 	CLR.w	D2
 	MOVE.w	#3, D2
 	MOVE.w	#$32, Dialogue_state.w
@@ -29540,7 +29561,8 @@ loc_0001B514:
 	DBF	D7, loc_0001B514
 	RTS
 
-loc_0001B51C:
+; loc_0001B51C
+ShopGreetingStrPtrs:
 	dc.l	WelcomeMessageStr
 	dc.l	HostileGreetingStr
 	dc.l	ExplanationStr
@@ -29907,10 +29929,10 @@ loc_0001BC50:
 loc_0001BC6C:
 	TST.w	Dialog_selection.w
 	BEQ.b	loc_0001BC7A
-	LEA	loc_0001F3B0, A0
+	LEA	DialogueChoiceNoStrPtrs, A0
 	BRA.b	loc_0001BC80
 loc_0001BC7A:
-	LEA	loc_0001F3E4, A0
+	LEA	DialogueChoiceYesStrPtrs, A0
 loc_0001BC80:
 	CLR.w	Dialog_choice_event_trigger.w
 	CLR.b	Dialogue_event_trigger_flag.w
@@ -30612,7 +30634,7 @@ loc_0001C5F4:
 	MOVE.l	D0, Transaction_amount.w
 	JSR	DeductPaymentAmount
 	JSR	DisplayPlayerKims
-	LEA	loc_0001CFBE, A0
+	LEA	FortuneTellerReadingsByTown, A0
 	MOVE.w	Current_town.w, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
@@ -31251,8 +31273,8 @@ loc_0001CEEE:
 	RTS
 
 FormatShopItemPrice:
-	LEA	loc_000221B0, A0
-	LEA	loc_000221C0, A2
+	LEA	ShopResaleValueMapPtrs, A0
+	LEA	ShopPossessionListPtrs, A2
 	MOVE.w	Current_shop_type.w, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
@@ -31301,7 +31323,8 @@ loc_0001CF64:
 
 loc_0001CF7A:
 	dc.b	$04, $06, $00, $02 
-loc_0001CF7E:
+; loc_0001CF7E
+FortuneTellerGreetingsByTown:
 	dc.l	loc_0002E3D4
 	dc.l	loc_0002FB82
 	dc.l	loc_0002FCA4	
@@ -31318,7 +31341,8 @@ loc_0001CF7E:
 	dc.l	loc_0003AD0E	
 	dc.l	loc_0003AD0E	
 	dc.l	loc_0003C12E	
-loc_0001CFBE:
+; loc_0001CFBE
+FortuneTellerReadingsByTown:
 	dc.l	loc_0002E3DE
 	dc.l	loc_0002FB68
 	dc.l	loc_0002FCA4	
@@ -31340,11 +31364,12 @@ loc_0001CFFE:
 	ANDI.w	#$001F, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
-	LEA	loc_0001D016, A0
+	LEA	ReadyEquipmentStateJumpTable, A0
 	JSR	(A0,D0.w)
 	RTS
 
-loc_0001D016:
+; loc_0001D016
+ReadyEquipmentStateJumpTable:
 	BRA.w	loc_0001D036
 	BRA.w	loc_0001D05C
 	BRA.w	loc_0001D104
@@ -31497,7 +31522,7 @@ loc_0001D216:
 	ANDI.w	#3, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
-	LEA	loc_0001D4B8, A0
+	LEA	EquipStatAddJumpTable, A0
 	JSR	(A0,D0.w)
 	LEA	ReadiedStr, A0
 	JSR	CopyStringUntilFF
@@ -31527,13 +31552,13 @@ loc_0001D29C:
 	ANDI.w	#3, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
-	LEA	loc_0001D522, A0
+	LEA	EquipStatRemoveJumpTable, A0
 	JSR	(A0,D0.w)
 	MOVE.w	Ready_equipment_category.w, D0
 	ANDI.w	#3, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
-	LEA	loc_0001D4B8, A0
+	LEA	EquipStatAddJumpTable, A0
 	JSR	(A0,D0.w)
 	LEA	RemovedStr, A0
 	JSR	CopyStringUntilFF
@@ -31609,7 +31634,7 @@ loc_0001D3BA:
 	ANDI.w	#3, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
-	LEA	loc_0001D522, A0
+	LEA	EquipStatRemoveJumpTable, A0
 	JSR	(A0,D0.w)
 	BSR.w	CopyPlayerNameToTextBuffer
 	BSR.w	GetCurrentEquippedItemID
@@ -31660,7 +31685,8 @@ loc_0001D4B0:
 	JSR	ProcessScriptText
 	RTS
 
-loc_0001D4B8:
+; loc_0001D4B8
+EquipStatAddJumpTable:
 	BRA.w	loc_0001D4C8
 	BRA.w	loc_0001D4E6
 	BRA.w	loc_0001D504
@@ -31695,7 +31721,8 @@ loc_0001D504:
 	MOVE.w	D0, Player_ac.w
 	RTS
 
-loc_0001D522:
+; loc_0001D522
+EquipStatRemoveJumpTable:
 	BRA.w	loc_0001D532
 	BRA.w	loc_0001D550
 	BRA.w	loc_0001D56E
@@ -31843,11 +31870,12 @@ loc_0001D67E:
 	ANDI.w	#$000F, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
-	LEA	loc_0001D696, A0
+	LEA	EquipListMenuStateJumpTable, A0
 	JSR	(A0,D0.w)
 	RTS
 
-loc_0001D696:
+; loc_0001D696
+EquipListMenuStateJumpTable:
 	BRA.w	loc_0001D6CE
 	BRA.w	loc_0001D6F6
 	BRA.w	loc_0001D762
@@ -32234,12 +32262,13 @@ loc_0001DBD0:
 	ANDI.w	#$000F, D0
 	ADD.w	D0, D0                       ; D0 *= 4
 	ADD.w	D0, D0
-	LEA	loc_0001DBE8, A0             ; State jump table
+	LEA	ChestOpenStateJumpTable, A0             ; State jump table
 	JSR	(A0,D0.w)                    ; Call state handler
 	RTS
 
+	; loc_0001DBE8
 	; State handler jump table
-loc_0001DBE8:
+ChestOpenStateJumpTable:
 	BRA.w	loc_0001DC04            ; State 0: Detect
 	BRA.w	loc_0001DD14            ; State 1: Message wait
 	BRA.w	loc_0001DD50            ; State 2: Close
@@ -32523,11 +32552,12 @@ loc_0001DFE8:
 	ANDI.w	#$001F, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
-	LEA	loc_0001E000, A0
+	LEA	DialogSelectionStateJumpTable, A0
 	JSR	(A0,D0.w)
 	RTS
 	
-loc_0001E000:
+; loc_0001E000
+DialogSelectionStateJumpTable:
 	BRA.w	loc_0001E010
 	BRA.w	loc_0001E09E
 	BRA.w	loc_0001E0B8
@@ -32833,11 +32863,12 @@ loc_0001E46C:
 	ANDI.w	#$001F, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
-	LEA	loc_0001E484, A0
+	LEA	TakeItemStateJumpTable, A0
 	JSR	(A0,D0.w)
 	RTS
 	
-loc_0001E484:
+; loc_0001E484
+TakeItemStateJumpTable:
 	BRA.w	loc_0001E4B0
 	BRA.w	loc_0001E4C2
 	BRA.w	loc_0001E4FA
@@ -33266,57 +33297,63 @@ loc_0001EAC6:
 	dc.b	$20, $18, $32, $18, $34, $18, $36, $38, $C1, $04, $E6, $43, $38, $38, $C1, $06, $E6, $44, $ED, $44, $D8, $43, $48, $44, $02, $84, $1F, $FF, $00, $00, $D0, $84 
 	dc.b	$23, $C0, $00, $C0, $00, $04, $42, $40, $10, $18, $D0, $42, $33, $C0, $00, $C0, $00, $00, $51, $C9, $FF, $F2, $4E, $75 
 loc_0001EAFE:
-	LEA	loc_0001EB0C, A1
+	LEA	Wyclif_Npc1_DialogueStates, A1
 	MOVE.w	#1, D7
 	BRA.w	SelectDialogueByGameState
-loc_0001EB0C:
+; loc_0001EB0C
+Wyclif_Npc1_DialogueStates:
 	dc.l	loc_0002D494
 	dc.l	Rings_collected
 	dc.l	loc_0002D45C
 	dc.l	Event_triggers_start
 	dc.l	loc_0002D424
-	LEA	loc_0001EB2E, A1
+	LEA	Wyclif_Npc2_DialogueStates, A1
 	MOVE.w	#1, D7
 	BRA.w	SelectDialogueByGameState
-loc_0001EB2E:
+; loc_0001EB2E
+Wyclif_Npc2_DialogueStates:
 	dc.l	loc_0002D4D4
 	dc.l	Rings_collected
 	dc.l	loc_0002D4D0
 	dc.l	Event_triggers_start
 	dc.l	loc_0002D4CC
-	LEA	loc_0001EB50, A1
+	LEA	Wyclif_Npc3_DialogueStates, A1
 	MOVE.w	#1, D7
 	BRA.w	SelectDialogueByGameState
-loc_0001EB50:
+; loc_0001EB50
+Wyclif_Npc3_DialogueStates:
 	dc.l	loc_0002D4F0 
 	dc.l	Rings_collected
 	dc.l	loc_0002D4E4
 	dc.l	Event_triggers_start
 	dc.l	loc_0002D4D8
 	LEA	loc_0002D4FC, A1
-	BRA.w	loc_0001F1D0
-	LEA	loc_0001EB7C, A1
+	BRA.w	SelectDialogueSimple
+	LEA	Wyclif_Npc4_DialogueStates, A1
 	MOVE.w	#1, D7
 	BRA.w	SelectDialogueByGameState
-loc_0001EB7C:
+; loc_0001EB7C
+Wyclif_Npc4_DialogueStates:
 	dc.l	loc_0002D514
 	dc.l	Rings_collected
 	dc.l	loc_0002D50C
 	dc.l	Event_triggers_start
 	dc.l	loc_0002D504	
 	LEA	loc_0002D51C, A1
-	BRA.w	loc_0001F1D0
-	LEA	loc_0001EBA8, A1
+	BRA.w	SelectDialogueSimple
+	LEA	Wyclif_Npc5_DialogueStates, A1
 	MOVE.w	#0, D7
 	BRA.w	SelectDialogueByGameState
-loc_0001EBA8:
+; loc_0001EBA8
+Wyclif_Npc5_DialogueStates:
 	dc.l	loc_0002D530
 	dc.l	Rings_collected
 	dc.l	loc_0002D528
-	LEA	loc_0001EBC2, A1
+	LEA	Parma_Npc1_DialogueStates, A1
 	MOVE.w	#4, D7
 	BRA.w	SelectDialogueByGameState
-loc_0001EBC2:
+; loc_0001EBC2
+Parma_Npc1_DialogueStates:
 	dc.l	loc_0002E8E8
 	dc.l	Talked_to_real_king
 	dc.l	loc_0002E8BC	
@@ -33329,15 +33366,15 @@ loc_0001EBC2:
 	dc.l	Treasure_of_troy_challenge_issued
 	dc.l	loc_0002E838
 	LEA	loc_0002E914, A1
-	BRA.w	loc_0001F1D0
+	BRA.w	SelectDialogueSimple
 	LEA	loc_0002E918, A1
-	BRA.w	loc_0001F1D0
+	BRA.w	SelectDialogueSimple
 	LEA	loc_0002E91C, A1
-	BRA.w	loc_0001F1D0
+	BRA.w	SelectDialogueSimple
 	LEA	loc_0002E920, A1
-	BRA.w	loc_0001F1D0
+	BRA.w	SelectDialogueSimple
 	LEA	loc_0002E924, A1
-	BRA.w	loc_0001F1D0
+	BRA.w	SelectDialogueSimple
 	LEA	loc_0001EC2E, A1
 	MOVE.w	#0, D7
 	BRA.w	SelectDialogueByGameState
@@ -33366,10 +33403,11 @@ loc_0001EC7C:
 	dc.b	$00, $02, $E9, $48 
 	dc.l	Fake_king_killed
 	dc.l	loc_0002E944
-	LEA	loc_0001EC96, A1
+	LEA	Parma_Npc2_DialogueStates, A1
 	MOVE.w	#4, D7
 	BRA.w	SelectDialogueByGameState
-loc_0001EC96:
+; loc_0001EC96
+Parma_Npc2_DialogueStates:
 	dc.l	loc_00029110
 	dc.l	Talked_to_real_king
 	dc.l	loc_000290F8
@@ -33399,46 +33437,51 @@ loc_0001ECEA:
 	dc.l	loc_0002E950
 	dc.l	Treasure_of_troy_challenge_issued
 	dc.l	loc_0002E94C
-	LEA	loc_0001ED14, A1
+	LEA	Watling_Npc1_DialogueStates, A1
 	MOVE.w	#1, D7
 	BRA.w	SelectDialogueByGameState
-loc_0001ED14:
+; loc_0001ED14
+Watling_Npc1_DialogueStates:
 	dc.l	loc_0002FD06
 	dc.l	Watling_villagers_asked_about_rings
 	dc.l	loc_0002FCEE
 	dc.l	Watling_youth_restored
 	dc.l	loc_0002FCD6
-	LEA	loc_0001ED36, A1
+	LEA	Watling_Npc2_DialogueStates, A1
 	MOVE.w	#1, D7
 	BRA.w	SelectDialogueByGameState
-loc_0001ED36:
+; loc_0001ED36
+Watling_Npc2_DialogueStates:
 	dc.l	loc_0002FD26
 	dc.l	Watling_villagers_asked_about_rings
 	dc.l	loc_0002FD22
 	dc.l	Watling_youth_restored
 	dc.l	loc_0002FD1E
-	LEA	loc_0001ED58, A1
+	LEA	Deepdale_Npc1_DialogueStates, A1
 	MOVE.w	#1, D7
 	BRA.w	SelectDialogueByGameState
-loc_0001ED58:
+; loc_0001ED58
+Deepdale_Npc1_DialogueStates:
 	dc.l	loc_00030A4A
 	dc.l	Deepdale_king_secret_kept
 	dc.l	loc_00030A2E
 	dc.l	Deepdale_truffle_quest_started
 	dc.l	loc_00030A12
-	LEA	loc_0001ED7A, A1
+	LEA	Deepdale_Npc2_DialogueStates, A1
 	MOVE.w	#1, D7
 	BRA.w	SelectDialogueByGameState
-loc_0001ED7A:
+; loc_0001ED7A
+Deepdale_Npc2_DialogueStates:
 	dc.l	loc_00030A6E
 	dc.l	Deepdale_king_secret_kept
 	dc.l	loc_00030A6A
 	dc.l	Truffle_collected
 	dc.l	loc_00030A66
-	LEA	loc_0001ED9C, A1
+	LEA	Deepdale_Npc3_DialogueStates, A1
 	MOVE.w	#1, D7
 	BRA.w	SelectDialogueByGameState
-loc_0001ED9C:
+; loc_0001ED9C
+Deepdale_Npc3_DialogueStates:
 	dc.l	loc_00029C80
 	dc.l	Deepdale_king_secret_kept
 	dc.l	loc_00029C6C
@@ -33448,11 +33491,12 @@ loc_0001ED9C:
 	dc.l	$0A726000	
 	dc.b	$04, $18 
 	LEA	loc_00030A76, A1
-	BRA.w	loc_0001F1D0
-	LEA	loc_0001EDD2, A1
+	BRA.w	SelectDialogueSimple
+	LEA	Stow_Npc1_DialogueStates, A1
 	MOVE.w	#3, D7
 	BRA.w	SelectDialogueByGameState
-loc_0001EDD2:
+; loc_0001EDD2
+Stow_Npc1_DialogueStates:
 	dc.l	loc_000319A0
 	dc.l	Stow_innocence_proven
 	dc.l	loc_0003195C
@@ -33462,19 +33506,21 @@ loc_0001EDD2:
 	dc.l	loc_00031914
 	dc.l	Sanguios_book_offered
 	dc.l	loc_000318F0	
-	LEA	loc_0001EE04, A1
+	LEA	Stow_Npc2_DialogueStates, A1
 	MOVE.w	#1, D7
 	BRA.w	SelectDialogueByGameState
-loc_0001EE04:
+; loc_0001EE04
+Stow_Npc2_DialogueStates:
 	dc.l	loc_000319CC
 	dc.l	Stow_innocence_proven
 	dc.l	loc_000319C8
 	dc.l	Girl_left_for_stow
 	dc.l	loc_000319C4
-	LEA	loc_0001EE26, A1
+	LEA	Stow_Npc3_DialogueStates, A1
 	MOVE.w	#4, D7
 	BRA.w	SelectDialogueByGameState
-loc_0001EE26:
+; loc_0001EE26
+Stow_Npc3_DialogueStates:
 	dc.l	loc_0002A282
 	dc.l	Stow_innocence_proven
 	dc.l	loc_0002A26A
@@ -33487,16 +33533,17 @@ loc_0001EE26:
 	dc.l	Sanguios_book_offered
 	dc.l	loc_0002A22E	
 	LEA	loc_000319D0, A1
-	BRA.w	loc_0001F1D0
+	BRA.w	SelectDialogueSimple
 	LEA	loc_000319D8, A1
-	BRA.w	loc_0001F1D0
+	BRA.w	SelectDialogueSimple
 	LEA	loc_000319E0, A1
-	BRA.w	loc_0001F1D0
-	LEA	loc_0001EE7E, A1
+	BRA.w	SelectDialogueSimple
+	LEA	Keltwick_Npc1_DialogueStates, A1
 	MOVE.w	#3, D7
 	BRA.w	SelectDialogueByGameState
-loc_0001EE7E:
-	dc.b	$00, $03, $2D, $C4 
+; loc_0001EE7E
+Keltwick_Npc1_DialogueStates:
+	dc.b	$00, $03, $2D, $C4
 	dc.l	Bearwulf_returned_home
 	dc.l	loc_00032D9C
 	dc.l	Bearwulf_met
@@ -33506,36 +33553,39 @@ loc_0001EE7E:
 	dc.l	Asti_monster_defeated
 	dc.l	loc_00032D24	
 	LEA	loc_00032DEC, A1
-	BRA.w	loc_0001F1D0
-	LEA	loc_0001EEBA, A1
+	BRA.w	SelectDialogueSimple
+	LEA	Keltwick_Npc2_DialogueStates, A1
 	MOVE.w	#1, D7
 	BRA.w	SelectDialogueByGameState
-loc_0001EEBA:
+; loc_0001EEBA
+Keltwick_Npc2_DialogueStates:
 	dc.l	loc_00032DF8
 	dc.l	Sent_to_malaga
 	dc.l	loc_00032DF4	
 	dc.l	Alarm_clock_rang
 	dc.l	loc_00032DF0
 	LEA	loc_00032DFC, A1
-	BRA.w	loc_0001F1D0
+	BRA.w	SelectDialogueSimple
 	LEA	loc_00032E04, A1
-	BRA.w	loc_0001F1D0
-	LEA	loc_0001EEF0, A1
+	BRA.w	SelectDialogueSimple
+	LEA	Malaga_Npc1_DialogueStates, A1
 	MOVE.w	#2, D7
 	BRA.w	SelectDialogueByGameState
-loc_0001EEF0:
-	dc.b	$00, $03, $40, $96 
+; loc_0001EEF0
+Malaga_Npc1_DialogueStates:
+	dc.b	$00, $03, $40, $96
 	dc.l	Bearwulf_returned_home
 	dc.l	loc_0003406A
 	dc.l	Barrow_map_received
 	dc.l	loc_0003403E
 	dc.l	Malaga_king_crowned
 	dc.l	loc_00034012
-	LEA	loc_0001EF1A, A1
+	LEA	Malaga_Npc2_DialogueStates, A1
 	MOVE.w	#2, D7
 	BRA.w	SelectDialogueByGameState
-loc_0001EF1A:
-	dc.b	$00, $02, $AC, $F8 
+; loc_0001EF1A
+Malaga_Npc2_DialogueStates:
+	dc.b	$00, $02, $AC, $F8
 	dc.l	Bearwulf_returned_home
 	dc.l	loc_0002ACDC
 	dc.l	Barrow_map_received
@@ -33543,93 +33593,103 @@ loc_0001EF1A:
 	dc.l	Malaga_king_crowned
 	dc.l	loc_0002ACA4
 	LEA	loc_000340C2, A1
-	BRA.w	loc_0001F1D0
-	LEA	loc_0001EF4E, A1
+	BRA.w	SelectDialogueSimple
+	LEA	Barrow_Npc1_DialogueStates, A1
 	MOVE.w	#0, D7
 	BRA.w	SelectDialogueByGameState
-loc_0001EF4E:
+; loc_0001EF4E
+Barrow_Npc1_DialogueStates:
 	dc.l	loc_00034D02
 	dc.l	Uncle_tibor_visited
 	dc.l	loc_00034CEA
-	LEA	loc_0001EF68, A1
+	LEA	Barrow_Npc2_DialogueStates, A1
 	MOVE.w	#1, D7
 	BRA.w	SelectDialogueByGameState
-loc_0001EF68:
-	dc.b	$00, $03, $4D, $26 
+; loc_0001EF68
+Barrow_Npc2_DialogueStates:
+	dc.b	$00, $03, $4D, $26
 	dc.l	Pass_to_carthahena_purchased
 	dc.l	loc_00034D22
 	dc.l	Uncle_tibor_visited
 	dc.l	loc_00034D1E
 	LEA	loc_00034D1A, A1
-	BRA.w	loc_0001F1D0
-	LEA	loc_0001EF94, A1
+	BRA.w	SelectDialogueSimple
+	LEA	Tadcaster_Npc1_DialogueStates, A1
 	MOVE.w	#1, D7
 	BRA.w	SelectDialogueByGameState
-loc_0001EF94:
+; loc_0001EF94
+Tadcaster_Npc1_DialogueStates:
 	dc.l	loc_00035D80
 	dc.l	Imposter_killed
 	dc.l	loc_00035D44
 	dc.l	Bully_first_fight_won
 	dc.l	loc_00035D08
-	LEA	loc_0001EFB6, A1
+	LEA	Tadcaster_Npc2_DialogueStates, A1
 	MOVE.w	#1, D7
 	BRA.w	SelectDialogueByGameState
-loc_0001EFB6:
-	dc.b	$00, $02, $B6, $EE 
+; loc_0001EFB6
+Tadcaster_Npc2_DialogueStates:
+	dc.b	$00, $02, $B6, $EE
 	dc.l	Imposter_killed
 	dc.l	loc_0002B6E2	
 	dc.l	Bully_first_fight_won
 	dc.l	loc_0002B6D6
-	LEA	loc_0001EFD8, A1
+	LEA	Tadcaster_Npc3_DialogueStates, A1
 	MOVE.w	#1, D7
 	BRA.w	SelectDialogueByGameState
-loc_0001EFD8:
-	dc.b	$00, $03, $5D, $CC 
+; loc_0001EFD8
+Tadcaster_Npc3_DialogueStates:
+	dc.b	$00, $03, $5D, $CC
 	dc.l	Imposter_killed
 	dc.l	loc_00035DC4	
 	dc.l	Bully_first_fight_won
 	dc.l	loc_00035DBC
 	LEA	loc_00035DD4, A1
-	BRA.w	loc_0001F1D0
-	LEA	loc_0001F004, A1
+	BRA.w	SelectDialogueSimple
+	LEA	Tadcaster_Npc4_DialogueStates, A1
 	MOVE.w	#1, D7
 	BRA.w	SelectDialogueByGameState
-loc_0001F004:
-	dc.b	$00, $03, $5D, $E0 
+; loc_0001F004
+Tadcaster_Npc4_DialogueStates:
+	dc.b	$00, $03, $5D, $E0
 	dc.l	Imposter_killed
 	dc.l	loc_00035DDC	
 	dc.l	Bully_first_fight_won
 	dc.l	loc_00035DD8
-	LEA	loc_0001F026, A1
+	LEA	Helwig_Npc1_DialogueStates, A1
 	MOVE.w	#0, D7
 	BRA.w	SelectDialogueByGameState
-loc_0001F026:
+; loc_0001F026
+Helwig_Npc1_DialogueStates:
 	dc.l	loc_00036E16
 	dc.l	Helwig_men_rescued
 	dc.l	loc_00036DD2
-	LEA	loc_0001F040, A1
+	LEA	Helwig_Npc2_DialogueStates, A1
 	MOVE.w	#0, D7
 	BRA.w	SelectDialogueByGameState
-loc_0001F040:
+; loc_0001F040
+Helwig_Npc2_DialogueStates:
 	dc.l	loc_00036E62
 	dc.l	Helwig_men_rescued
 	dc.l	loc_00036E56
 	LEA	loc_00036E6E, A1
-	BRA.w	loc_0001F1D0
-	LEA	loc_0001F064, A1
+	BRA.w	SelectDialogueSimple
+	LEA	Swaffham_Npc1_DialogueStates, A1
 	MOVE.w	#1, D7
 	BRA.w	SelectDialogueByGameState
-loc_0001F064:
+; loc_0001F064
+Swaffham_Npc1_DialogueStates:
 	dc.l	loc_000385EC
 	dc.l	Swaffham_ruined
 	dc.l	loc_000385B8
 	dc.l	Ring_of_earth_obtained
 	dc.l	loc_00038584
-	LEA	loc_0001F086, A1
+	LEA	Swaffham_Npc2_DialogueStates, A1
 	MOVE.w	#6, D7
 	BRA.w	SelectDialogueByGameState
-loc_0001F086:
-	dc.b	$00, $02, $B9, $EE 
+; loc_0001F086
+Swaffham_Npc2_DialogueStates:
+	dc.b	$00, $02, $B9, $EE
 	dc.l	Ring_of_earth_obtained
 	dc.l	loc_0002B9C6
 	dc.l	Blue_crystal_received
@@ -33644,19 +33704,21 @@ loc_0001F086:
 	dc.l	loc_0002B9DA	
 	dc.l	White_crystal_quest_started
 	dc.l	loc_0002B98A
-	LEA	loc_0001F0D0, A1
+	LEA	Excalabria_Npc1_DialogueStates, A1
 	MOVE.w	#1, D7
 	BRA.w	SelectDialogueByGameState
-loc_0001F0D0:
+; loc_0001F0D0
+Excalabria_Npc1_DialogueStates:
 	dc.l	loc_00039550
 	dc.l	Knute_informed_of_swaffham_ruin
 	dc.l	loc_0003954C
 	dc.l	Ring_of_earth_obtained
 	dc.l	loc_00039548	
-	LEA	loc_0001F0F2, A1
+	LEA	Hastings_Npc1_DialogueStates, A1
 	MOVE.w	#2, D7
 	BRA.w	SelectDialogueByGameState
-loc_0001F0F2:
+; loc_0001F0F2
+Hastings_Npc1_DialogueStates:
 	dc.l	loc_0003A0B2
 	dc.l	Digot_plant_received
 	dc.l	loc_0003A08A
@@ -33664,10 +33726,11 @@ loc_0001F0F2:
 	dc.l	loc_0003A062
 	dc.l	Ate_spy_dinner
 	dc.l	loc_0003A03A
-	LEA	loc_0001F11C, A1
+	LEA	Hastings_Npc2_DialogueStates, A1
 	MOVE.w	#1, D7
 	BRA.w	SelectDialogueByGameState
-loc_0001F11C:
+; loc_0001F11C
+Hastings_Npc2_DialogueStates:
 	dc.l	loc_0003A0F6
 	dc.l	Spy_dinner_poisoned_flag
 	dc.l	loc_0003A0F2
@@ -33678,11 +33741,12 @@ loc_0001F11C:
 	dc.l	$009843F9	
 	dc.l	loc_0003A0E2	
 	dc.l	$6000008E	
-	LEA	loc_0001F152, A1
+	LEA	Hastings_Npc3_DialogueStates, A1
 	MOVE.w	#0, D7
 	BRA.w	SelectDialogueByGameState
-loc_0001F152:
-	dc.b	$00, $03, $A1, $0E 
+; loc_0001F152
+Hastings_Npc3_DialogueStates:
+	dc.b	$00, $03, $A1, $0E
 	dc.l	Pass_to_carthahena_purchased
 	dc.l	loc_0003A0FA
 	LEA	loc_0003B820, A0
@@ -33741,7 +33805,8 @@ loc_0001F1C0:
 loc_0001F1CE:
 	RTS
 	
-loc_0001F1D0:
+; loc_0001F1D0
+SelectDialogueSimple:
 	BSR.b	CheckGameComplete
 	BNE.b	loc_0001F1D6
 	MOVEA.l	A1, A0
@@ -33754,7 +33819,8 @@ loc_0001F1D8:
 	dc.w	$0000, $0001 
 	dc.w	$0001, $0000 
 	dc.w	$0008, $0008 
-loc_0001F1EC:
+; loc_0001F1EC
+TownRoomTilemapPlaneAPtrs:
 	dc.l	loc_0002E398
 	dc.l	loc_0002F9EE
 	dc.l	loc_000307D6
@@ -33809,7 +33875,8 @@ loc_0001F1EC:
 	dc.l	loc_00028D76
 	dc.l	loc_00028D9A
 	dc.l	loc_00028DBE
-loc_0001F2C4:
+; loc_0001F2C4
+TownRoomTilemapPlaneBPtrs:
 	dc.l	loc_0002E3AA
 	dc.l	loc_0002FA00
 	dc.l	loc_000307E8
@@ -33864,13 +33931,15 @@ loc_0001F2C4:
 	dc.l	loc_00028D88
 	dc.l	loc_00028DAC
 	dc.l	loc_00028DD0
-loc_0001F39C:
+; loc_0001F39C
+TownTilesetPtrs:
 	dc.l	loc_0008B38A
 	dc.l	loc_0008DAE0
 	dc.l	loc_0008FEE6
 	dc.l	loc_00000000 
 	dc.l	loc_0009239A
-loc_0001F3B0:
+; loc_0001F3B0
+DialogueChoiceNoStrPtrs:
 	dc.l	NoChoiceStr
 	dc.l	RingOfSkyGiftStr
 	dc.l	WhyHereStr
@@ -33884,7 +33953,8 @@ loc_0001F3B0:
 	dc.l	HurryBringBackHusbandsStr
 	dc.l	BreakMothersHeartStr
 	dc.l	OneOfUsWillDieStr
-loc_0001F3E4:
+; loc_0001F3E4
+DialogueChoiceYesStrPtrs:
 	dc.l	OffYouGoStr
 	dc.l	DecideToLiveHereStr
 	dc.l	BoughtFromMeStr
@@ -34008,7 +34078,8 @@ loc_0001F5E2:
 	dc.b	$94, $00, $93, $60, $96, $D0, $95, $00 
 	dc.l	$977F6000	
 	dc.l	$00810000	
-loc_0001F5F2:
+; loc_0001F5F2
+TerrainTileGfxDmaPtrs:
 	dc.l	loc_0001F602
 	dc.l	loc_0001F612
 	dc.l	loc_0001F622
@@ -34038,7 +34109,8 @@ loc_0001F642:
 	dc.l	$96D09500	
 	dc.l	$977F7980	
 	dc.l	$00810000	
-loc_0001F652:
+; loc_0001F652
+TerrainTilemapPtrs:
 	dc.l	loc_00068CA2
 	dc.l	loc_00069592
 	dc.l	loc_00069592
@@ -34414,7 +34486,8 @@ loc_0001FA96:
 	dc.l	loc_00050CBC
 	dc.l	loc_00051414
 	dc.l	$0017FFFF	
-loc_0001FB34:
+; loc_0001FB34
+MagicGfxDataPtrs:
 	dc.l	loc_0001FB74
 	dc.l	loc_0001FB74
 	dc.l	loc_0001FB98
@@ -34517,7 +34590,8 @@ loc_0001FC74:
 loc_0001FC7E:
 	dc.b	"Cartahena", $FF
 
-loc_0001FC88: ; suspected town loading routines that set tilemap
+; loc_0001FC88
+TownTilesetLoadJumpTable: ; suspected town loading routines that set tilemap
 	BRA.w	loc_0001FCC8
 	BRA.w	loc_0001FCD0
 	BRA.w	loc_0001FCD8
@@ -34619,7 +34693,8 @@ loc_0001FD54: ; suspected town spawning location + camera?
 	dc.w	$01E8, $01F8, $0015, $0013
 	dc.w	$0118, $0198, $0008, $000D 
 	dc.w	$0108, $0218, $0007, $0015
-loc_0001FDD4: ; suspected: Town NPCs?
+; loc_0001FDD4
+TownNpcDataLookupJumpTable: ; suspected: Town NPCs?
 	BRA.w	loc_0001FE14
 	BRA.w	loc_0001FE1C
 	BRA.w	loc_0001FE24
@@ -34717,7 +34792,8 @@ loc_0001FE94:
 	dc.b	$91
 	dc.b	$91, $91, $8C, $8C, $8C, $8C, $8C, $8C, $8C 
 	dc.b	$8C
-loc_0001FECA: ; Town NPC setup scripts
+; loc_0001FECA
+TownNpcSetupJumpTable: ; Town NPC setup scripts
 	BRA.w	loc_0001FF0A
 	BRA.w	loc_0001FF14
 	BRA.w	loc_0001FF40
@@ -34839,7 +34915,8 @@ loc_0002000A:
 	BRA.w	loc_0002005A
 loc_0002000E:
 	BRA.w	loc_00020062
-loc_00020012:
+; loc_00020012
+TownStateDataJumpTable:
 	BRA.w	loc_0002003E	
 	BRA.w	loc_0002003E	
 	BRA.w	loc_0002007E
@@ -34906,7 +34983,8 @@ loc_000200A2:
 loc_000200B4:
 	RTS
 	
-loc_000200B6:
+; loc_000200B6
+OverworldSectorInteractionPtrs:
 	dc.l	loc_000200F6
 	dc.l	loc_00020140
 	dc.l	loc_00020166
@@ -35084,7 +35162,7 @@ loc_000203DA:
 	MoneyChest $100, Money_chest_256_opened
 	
 loc_000203EE:
-	MoneyChest $0300, $FFFFC78E
+	MoneyChest $0300, Money_chest_768_stow_opened
 loc_00020402:
 	MoneyChest $50, Wyclif_outskirts_chest_opened
 	
@@ -35092,35 +35170,35 @@ loc_00020416:
 	MoneyChest $300, Money_chest_768_b_opened
 	
 loc_0002042A:
-	MoneyChest $0200, $FFFFC7B4
+	MoneyChest $0200, Money_chest_512_opened
 loc_0002043E:
-	MoneyChest $0500, $FFFFC7B5
+	MoneyChest $0500, Money_chest_1280_opened
 loc_00020452:
-	MoneyChest $0700, $FFFFC7B6
+	MoneyChest $0700, Money_chest_1792_b_opened
 loc_00020466:
-	MoneyChest $5000, $FFFFC7B9
+	MoneyChest $5000, Money_chest_20480_opened
 loc_0002047A:
 	MoneyChest $1700, Chest_5888_kims_opened
 	
 loc_0002048E:	
-	MoneyChest $0360, $FFFFC7BB
+	MoneyChest $0360, Money_chest_864_opened
 loc_000204A2:
 	MoneyChest $9999, Chest_9999_kims_opened
 	
 loc_000204B6:
-	ItemChest 1, Candle_chest_3_opened
+	ItemChest ITEM_CANDLE, Candle_chest_3_opened
 	
 loc_000204CA:
-	ItemChest 2, Lantern_chest_2_opened
+	ItemChest ITEM_LANTERN, Lantern_chest_2_opened
 	
 loc_000204DE:
-	ItemChest 0, Herbs_chest_opened
+	ItemChest ITEM_HERBS, Herbs_chest_opened
 	
 loc_000204F2:
-	ItemChest 0, Herbs_chest_2_opened
+	ItemChest ITEM_HERBS, Herbs_chest_2_opened
 	
 loc_00020506:
-	EquipChest $060E, Dark_sword_chest_opened
+	EquipChest EQUIPMENT_TYPE_SWORD, EQUIPMENT_SWORD_DARK1, Dark_sword_chest_opened, EQUIPMENT_FLAG_CURSED
 	
 ; SetupNoOneTalker
 SetupNoOneTalker:
@@ -35139,7 +35217,7 @@ loc_00020542:
 	
 	
 loc_00020550:
-	ItemChest $001B, Medicine_chest_opened
+	ItemChest ITEM_MEDICINE, Medicine_chest_opened
 	
 loc_00020564:
 	BSR.w	InitTalkerWithGfxDescriptor_1F712
@@ -35147,23 +35225,23 @@ loc_00020564:
 	RTS
 	
 loc_00020572:
-	ItemChest 0, Herbs_chest_5_opened
+	ItemChest ITEM_HERBS, Herbs_chest_5_opened
 	
 loc_00020586:
-	ItemChest 0, Herbs_chest_6_opened
+	ItemChest ITEM_HERBS, Herbs_chest_6_opened
 	
 loc_0002059A:
-	ItemChest $0024, $FFFFC7B2
+	ItemChest ITEM_RUBY_BROOCH, Ruby_brooch_chest_opened
 	
 loc_000205AE:
-	EquipChest $081B, $FFFFC7BD
+	EquipChest EQUIPMENT_TYPE_SHIELD, EQUIPMENT_SHIELD_SAPPHIRE, Chest_sapphire_shield_opened
 loc_000205C2:	
-	ItemChest $0021, $FFFFC7B3
+	ItemChest ITEM_BANSHEE_POWDER, Banshee_powder_chest_opened
 loc_000205D6:
-	ItemChest $001F, $FFFFC7BE
+	ItemChest ITEM_GNOME_STONE, Chest_gnome_stone_opened
 	
 loc_000205EA:
-	EquipChest $081A, $FFFFC7BF
+	EquipChest EQUIPMENT_TYPE_SHIELD, EQUIPMENT_SHIELD_GEM, Chest_gem_shield_opened
 	
 loc_000205FE:
 	BSR.w	InitTalkerWithGfxDescriptor_1F74A
@@ -35284,7 +35362,8 @@ loc_0002074A:
 loc_0002077E:
 	RTS
 	
-loc_00020780:
+; loc_00020780
+CaveRoomInteractionPtrs:
 	dc.l	loc_00020830
 	dc.l	loc_00020864
 	dc.l	loc_00020884
@@ -35636,91 +35715,91 @@ loc_00020CBA:
 	RTS
 	
 loc_00020CBC:
-	ItemChest $0023, $FFFFC7EE
+	ItemChest ITEM_MIRROR_OF_ATLAS, Chest_mirror_of_atlas_opened
 	
 loc_00020CD0:
-	MoneyChest $100, $FFFFC7E0
+	MoneyChest $100, Chest_256_kims_opened
 	
 loc_00020CE4:
-	MoneyChest $1000, $FFFFC7EC
+	MoneyChest $1000, Chest_4096_kims_opened
 	
 loc_00020CF8:
-	EquipChest $040A, $FFFFC7E1
+	EquipChest EQUIPMENT_TYPE_SWORD, EQUIPMENT_SWORD_GRAPHITE, Chest_graphite_sword_opened
 	
 loc_00020D0C:
-	EquipChest $0411, $FFFFC7E3
+	EquipChest EQUIPMENT_TYPE_SWORD, EQUIPMENT_SWORD_CRITICAL, Chest_critical_sword_opened
 	
 loc_00020D20:
-	EquipChest $0820, $FFFFC7E2
+	EquipChest EQUIPMENT_TYPE_SHIELD, EQUIPMENT_SHIELD_GRIZZLY, Chest_grizzly_shield_opened
 loc_00020D34:
-	EquipChest $0410, $FFFFC7EF
+	EquipChest EQUIPMENT_TYPE_SWORD, EQUIPMENT_SWORD_BARBARIAN, Chest_barbarian_sword_opened
 	
 loc_00020D48:
-	EquipChest $1030, $FFFFC7E4
+	EquipChest EQUIPMENT_TYPE_ARMOR, EQUIPMENT_ARMOR_EMERALD, Chest_emerald_armor_opened
 loc_00020D5C:
-	EquipChest $1035, $FFFFC7E6
+	EquipChest EQUIPMENT_TYPE_ARMOR, EQUIPMENT_ARMOR_SECRET, Chest_secret_armor_opened
 	
 loc_00020D70:
-	EquipChest $1238, $FFFFC7E7
+	EquipChest EQUIPMENT_TYPE_ARMOR, EQUIPMENT_ARMOR_OLD_NICK, Chest_old_nick_armor_opened, EQUIPMENT_FLAG_CURSED
 loc_00020D84:	
-	EquipChest $081F, $FFFFC7E9
+	EquipChest EQUIPMENT_TYPE_SHIELD, EQUIPMENT_SHIELD_PHANTOM, Chest_phantom_shield_opened
 loc_00020D98:
-	EquipChest $060F, $FFFFC7EA
+	EquipChest EQUIPMENT_TYPE_SWORD, EQUIPMENT_SWORD_DEATH, Chest_death_sword_opened, EQUIPMENT_FLAG_CURSED
 	
 loc_00020DAC:
-	ItemChest 0, $FFFFC78D
+	ItemChest ITEM_HERBS, Herbs_chest_3_opened
 	
 loc_00020DC0:
-	ItemChest 1, $FFFFC78C
+	ItemChest ITEM_CANDLE, Candle_chest_opened
 	
 loc_00020DD4:
-	ItemChest 0, $FFFFC790
+	ItemChest ITEM_HERBS, Herbs_chest_4_opened
 	
 loc_00020DE8:
-	EquipChest $102B, $FFFFC791
+	EquipChest EQUIPMENT_TYPE_ARMOR, EQUIPMENT_ARMOR_SCALE, Scale_armor_chest_opened
 	
 loc_00020DFC:
-	ItemChest $0001, $FFFFC792
+	ItemChest ITEM_CANDLE, Candle_chest_parma_opened
 loc_00020E10:
-	MoneyChest $0300, $FFFFC793
+	MoneyChest $0300, Money_chest_768_opened
 	
 loc_00020E24:
-	MoneyChest $0600, $FFFFC794
+	MoneyChest $0600, Money_chest_1536_opened
 loc_00020E38:
-	ItemChest 1, $FFFFC796
+	ItemChest ITEM_CANDLE, Candle_chest_2_opened
 	
 loc_00020E4C:	
-	ItemChest $0000, $FFFFC797
+	ItemChest ITEM_HERBS, Herbs_chest_watling_opened
 loc_00020E60:
-	EquipChest $081E, $FFFFC79D
+	EquipChest EQUIPMENT_TYPE_SHIELD, EQUIPMENT_SHIELD_MAGIC, Magic_shield_chest_opened
 loc_00020E74:
-	MoneyChest $700, $FFFFC79E
+	MoneyChest $700, Money_chest_1792_opened
 	
 loc_00020E88:
-	EquipChest $0407, $FFFFC7E8
+	EquipChest EQUIPMENT_TYPE_SWORD, EQUIPMENT_SWORD_MIRAGE, Chest_mirage_sword_opened
 	
 loc_00020E9C:
-	EquipChest $0816, $FFFFC79F
+	EquipChest EQUIPMENT_TYPE_SHIELD, EQUIPMENT_SHIELD_LARGE, Large_shield_chest_opened
 loc_00020EB0:	
-	EquipChest $102A, $FFFFC7A0
+	EquipChest EQUIPMENT_TYPE_ARMOR, EQUIPMENT_ARMOR_METAL, Metal_armor_chest_opened
 loc_00020EC4:	
-	MoneyChest $0850, $FFFFC7A1
+	MoneyChest $0850, Money_chest_2128_opened
 loc_00020ED8:
-	ItemChest 2, $FFFFC7A2
+	ItemChest ITEM_LANTERN, Lantern_chest_opened
 	
 loc_00020EEC:
-	EquipChest $0822, $FFFFC787
+	EquipChest EQUIPMENT_TYPE_SHIELD, EQUIPMENT_SHIELD_ROYAL, Royal_shield_chest_opened
 	
 loc_00020F00:	
-	EquipChest $1036, $FFFFC7A3
+	EquipChest EQUIPMENT_TYPE_ARMOR, EQUIPMENT_ARMOR_SKELETON, Skeleton_armor_chest_opened
 loc_00020F14:
-	MoneyChest $2000, $FFFFC7A4
+	MoneyChest $2000, Money_chest_8192_opened
 	
 loc_00020F28:
-	MoneyChest $3000, $FFFFC7A5
+	MoneyChest $3000, Money_chest_12288_opened
 	
 loc_00020F3C:
-	MoneyChest $2000, $FFFFC7A6
+	MoneyChest $2000, Money_chest_8192_b_opened
 loc_00020F50:
 	TST.b	Treasure_of_troy_challenge_issued.w
 	BEQ.b	loc_00020F68
@@ -35863,7 +35942,7 @@ loc_0002114A:
 	RTS
 
 loc_0002114C:
-	MoneyChest $8000, $FFFFC73F
+	MoneyChest $8000, Tadcaster_treasure_quest_started
 loc_00021160:
 	MOVE.l	#NoOneHereStr, Script_talk_source.w
 	TST.b	Bully_first_fight_won.w
@@ -35959,12 +36038,12 @@ loc_000212A8:
 	
 loc_000212AA:
 	MOVE.w	#$0116, Reward_script_value.w
-	MOVE.l	#$FFFFC780, Reward_script_flag.w
+	MOVE.l	#Thar_bronze_key_collected, Reward_script_flag.w
 	BSR.w	SetupItemTreasure
 	RTS
 	
 loc_000212BE:
-	RingChest 4, 5, $FFFFC81D
+	RingChest 4, 5, Carthahena_soldier_1_defeated
 	
 loc_000212D8:
 	TST.b	Thar_defeated.w
@@ -35975,12 +36054,12 @@ loc_000212D8:
 	
 loc_000212EE:
 	MOVE.w	#$0117, Reward_script_value.w
-	MOVE.l	#$FFFFC781, Reward_script_flag.w
+	MOVE.l	#Thar_silver_key_collected, Reward_script_flag.w
 	BSR.w	SetupItemTreasure
 	RTS
 	
 loc_00021302:
-	RingChest 4, 6, $FFFFC81E
+	RingChest 4, 6, Carthahena_soldier_2_defeated
 	
 loc_0002131C:
 	TST.b	Luther_defeated.w
@@ -35991,12 +36070,12 @@ loc_0002131C:
 	
 loc_00021332:
 	MOVE.w	#$0118, Reward_script_value.w
-	MOVE.l	#$FFFFC782, Reward_script_flag.w
+	MOVE.l	#Luther_gold_key_collected, Reward_script_flag.w
 	BSR.w	SetupItemTreasure
 	RTS
 	
 loc_00021346:
-	RingChest 4, 7, $FFFFC81F
+	RingChest 4, 7, Carthahena_soldier_3_defeated
 	
 loc_00021360:
 	TST.b	Tsarkon_is_dead.w
@@ -36551,12 +36630,14 @@ ShopPricesByTownAndType:
 	dc.l	SwaffhamEquipmentShopPrices	
 	dc.l	HastingsMagicShopPrices	
 	dc.l	ParmaMagicShopPrices	
-loc_000221B0:
+; loc_000221B0
+ShopResaleValueMapPtrs:
 	dc.l	ItemResaleValueMap
 	dc.l	EquipmentResaleValueMap
 	dc.l	MagicResaleValueMap
 	dc.l	MagicResaleValueMap	
-loc_000221C0:
+; loc_000221C0
+ShopPossessionListPtrs:
 	dc.l	Possessed_items_list
 	dc.l	Possessed_equipment_list
 	dc.l	Possessed_magics_list
@@ -37204,12 +37285,14 @@ loc_00022F6A:
 	dc.b	$00, $18, $00, $00, $00, $30, $FF, $FA 
 loc_00022F72:
 	dc.b	$01, $06, $01, $02, $01, $02, $01, $02, $01, $02, $01, $02, $01, $04, $01, $06 
-loc_00022F82:
+; loc_00022F82
+EnemySpriteLayoutPtrsA:
 	dc.l	loc_00022FA2
 	dc.l	loc_00022FB2
 	dc.l	loc_00022FC2
 	dc.l	loc_00022FD2
-loc_00022F92:
+; loc_00022F92
+EnemySpritePositionPtrsA:
 	dc.l	loc_00022FE2
 	dc.l	loc_00022FF2
 	dc.l	loc_00023002
@@ -37249,12 +37332,14 @@ loc_00023002:
 	dc.l	$00BD0096	
 	dc.l	$00A50096	
 	dc.l	$00D1008E	
-loc_00023012:
+; loc_00023012
+EnemySpriteLayoutPtrsB:
 	dc.l	loc_00023032
 	dc.l	loc_00023042
 	dc.l	loc_00023052
 	dc.l	loc_00023062
-loc_00023022:
+; loc_00023022
+EnemySpritePositionPtrsB:
 	dc.l	loc_00023072
 	dc.l	loc_00023082
 	dc.l	loc_00023092
@@ -37636,7 +37721,8 @@ loc_0002353A:
 	dc.w	$002C
 	dc.b	$00, $02, $35, $76, $FF, $C4, $FF, $A0, $00, $2C, $01, $9D, $05, $00, $FF, $F8, $00, $10, $00, $E7, $0A, $00, $FF, $F4, $00, $18, $01, $49, $0F, $00, $FF, $F0 
 	dc.b	$00, $20, $01, $59, $0F, $00, $FF, $F0, $00, $20, $01, $69, $0F, $00, $FF, $F0, $00, $20, $FF, $FF 
-loc_000235A0:
+; loc_000235A0
+BattleTileDataPtrs:
 	dc.l	loc_000235D8
 	dc.l	loc_00023648
 	dc.l	loc_00023616
@@ -37750,7 +37836,8 @@ loc_00023726:
 	dc.l	loc_0007EE3C
 	dc.l	loc_0007F4FC
 	dc.l	$0050FFFF	
-loc_00023740:
+; loc_00023740
+BattleGfxDataPtrs:
 	dc.l	loc_00023778
 	dc.l	loc_0002378C
 	dc.l	loc_00023782
@@ -37812,12 +37899,14 @@ loc_000237F6:
 	dc.l	$00310FC8	
 	dc.l	$00410FC8	
 	dc.l	$00510FC8	
-loc_00023802:
+; loc_00023802
+EncounterEnemySpriteByDirA:
 	dc.l	loc_00023822
 	dc.l	loc_0002384A
 	dc.l	loc_00023872
 	dc.l	loc_0002384A
-loc_00023812:
+; loc_00023812
+EncounterEnemySpriteByDirB:
 	dc.l	loc_0002389A
 	dc.l	loc_000238AA
 	dc.l	loc_000238BA
@@ -37870,7 +37959,8 @@ loc_000238BA:
 	dc.l	$002CFFFB	
 	dc.l	$0119050A	
 	dc.l	loc_00080010	
-loc_000238CA:
+; loc_000238CA
+BossSpriteFramePtrs:
 	dc.l	loc_0002391A
 	dc.l	loc_0002391A
 	dc.l	loc_00023926-2
@@ -37887,7 +37977,8 @@ loc_000238CA:
 	dc.l	loc_0002393A-2
 	dc.l	loc_00023926-2
 	dc.l	loc_00023926-2
-loc_0002390A:
+; loc_0002390A
+BossProjectileSpriteFramePtrs:
 	dc.l	loc_0002391A
 	dc.l	loc_00023956
 	dc.l	loc_00023962-2
@@ -38232,7 +38323,8 @@ loc_00023E60:
 	dc.w	$0037, $0047, $0007, $003A
 loc_00023E68:
 	dc.w	$0021, $001F, $001E, $004C 
-loc_00023E70:
+; loc_00023E70
+EnemyGfxDataTable:
 	dc.l	loc_0002426C ; Appearance
 	dc.l	loc_0002471C ; Sprite mappings
 	dc.l	loc_00024FEE ; Sprites
