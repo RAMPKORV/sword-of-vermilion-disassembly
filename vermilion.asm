@@ -38853,605 +38853,655 @@ EnemyEncounterGroup_45:
 	dc.w	$0021, $001F, $001E, $004C 
 ; loc_00023E70
 EnemyGfxDataTable:
-	dc.l	loc_0002426C ; Appearance
+	dc.l	EnemyAppearance_5A ; Appearance
 	dc.l	EnemyData_Bouncing_5A ; Sprite mappings
 	dc.l	EnemySpriteSet_C ; Sprites
-	dc.l	loc_00024284
+	dc.l	EnemyAppearance_69
 	dc.l	EnemyData_Bouncing_69
 	dc.l	EnemySpriteSet_C
-	dc.l	loc_0002429C
+	dc.l	EnemyAppearance_6A
 	dc.l	EnemyData_Bouncing_6A
 	dc.l	EnemySpriteSet_C
-	dc.l	loc_000242B4	
+	dc.l	EnemyAppearance_6B	
 	dc.l	loc_0002476A	
 	dc.l	EnemySpriteSet_C	
-	dc.l	loc_000242CC
+	dc.l	EnemyAppearance_AC
 	dc.l	EnemyData_Bouncing_AC
 	dc.l	EnemySpriteSet_C
-	dc.l	loc_000242E4
+	dc.l	EnemyAppearance_AD
 	dc.l	EnemyData_Bouncing_AD
 	dc.l	EnemySpriteSet_C
-	dc.l	loc_000242FC
+	dc.l	EnemyAppearance_4E
 	dc.l	EnemyData_StalkPause_4E
 	dc.l	EnemySpriteSet_A
-	dc.l	loc_00024314
+	dc.l	EnemyAppearance_7B
 	dc.l	EnemyData_StalkPause_7B
 	dc.l	EnemySpriteSet_A
-	dc.l	loc_0002432C
+	dc.l	EnemyAppearance_7C
 	dc.l	EnemyData_StalkPause_7C
 	dc.l	EnemySpriteSet_A
-	dc.l	loc_00024344
+	dc.l	EnemyAppearance_7D
 	dc.l	EnemyData_StalkPause_7D
 	dc.l	EnemySpriteSet_A
-	dc.l	loc_0002435C
+	dc.l	EnemyAppearance_4D
 	dc.l	EnemyData_StandardMelee_4D
 	dc.l	EnemySpriteSet_B
-	dc.l	loc_00024374
+	dc.l	EnemyAppearance_6C
 	dc.l	EnemyData_StandardMelee_6C
 	dc.l	EnemySpriteSet_B
-	dc.l	loc_0002438C
+	dc.l	EnemyAppearance_6D
 	dc.l	EnemyData_StandardMelee_6D
 	dc.l	EnemySpriteSet_B
-	dc.l	loc_000243A4
+	dc.l	EnemyAppearance_6E
 	dc.l	EnemyData_StandardMelee_6E
 	dc.l	EnemySpriteSet_B
-	dc.l	loc_000243BC
+	dc.l	EnemyAppearance_5B
 	dc.l	EnemyData_FleeChase_5B
 	dc.l	EnemySpriteSet_D
-	dc.l	loc_000243D4
+	dc.l	EnemyAppearance_6F
 	dc.l	EnemyData_FleeChase_6F
 	dc.l	EnemySpriteSet_D
-	dc.l	loc_000243EC
+	dc.l	EnemyAppearance_70
 	dc.l	EnemyData_FleeChase_70
 	dc.l	EnemySpriteSet_D
-	dc.l	loc_00024404
+	dc.l	EnemyAppearance_71
 	dc.l	EnemyData_FleeChase_71
 	dc.l	EnemySpriteSet_D
-	dc.l	loc_0002441C
+	dc.l	EnemyAppearance_63
 	dc.l	EnemyData_ProjectileFire_63
 	dc.l	EnemySpriteSet_H
-	dc.l	loc_00024434
+	dc.l	EnemyAppearance_A4
 	dc.l	EnemyData_ProjectileFire_A4
 	dc.l	EnemySpriteSet_H
-	dc.l	loc_0002444C
+	dc.l	EnemyAppearance_A5
 	dc.l	EnemyData_ProjectileFire_A5
 	dc.l	EnemySpriteSet_H
-	dc.l	loc_00024464
+	dc.l	EnemyAppearance_A6
 	dc.l	EnemyData_ProjectileFire_A6
 	dc.l	EnemySpriteSet_H
-	dc.l	loc_0002447C
+	dc.l	EnemyAppearance_5C
 	dc.l	EnemyData_ProximityChase_5C
 	dc.l	EnemySpriteSet_E
-	dc.l	loc_00024494
+	dc.l	EnemyAppearance_9E
 	dc.l	EnemyData_ProximityChase_9E
 	dc.l	EnemySpriteSet_E
-	dc.l	loc_000244AC
+	dc.l	EnemyAppearance_9F
 	dc.l	EnemyData_ProximityChase_9F
 	dc.l	EnemySpriteSet_E
-	dc.l	loc_000244C4
+	dc.l	EnemyAppearance_A0
 	dc.l	EnemyData_ProximityChase_A0
 	dc.l	EnemySpriteSet_E
-	dc.l	loc_000244DC
+	dc.l	EnemyAppearance_5D
 	dc.l	EnemyData_StandardMeleeAlt_5D
 	dc.l	EnemySpriteSet_F
-	dc.l	loc_000244F4
+	dc.l	EnemyAppearance_A1
 	dc.l	EnemyData_StandardMeleeAlt_A1
 	dc.l	EnemySpriteSet_F
-	dc.l	loc_0002450C
+	dc.l	EnemyAppearance_A2
 	dc.l	EnemyData_StandardMeleeAlt_A2
 	dc.l	EnemySpriteSet_F
-	dc.l	loc_00024524
+	dc.l	EnemyAppearance_A3
 	dc.l	EnemyData_StandardMeleeAlt_A3
 	dc.l	EnemySpriteSet_F
-	dc.l	loc_0002453C
+	dc.l	EnemyAppearance_64
 	dc.l	EnemyData_StalkPauseAlt_64
 	dc.l	EnemySpriteSet_I
-	dc.l	loc_00024554
+	dc.l	EnemyAppearance_B9
 	dc.l	EnemyData_StalkPauseAlt_B9
 	dc.l	EnemySpriteSet_I
-	dc.l	loc_0002456C
+	dc.l	EnemyAppearance_BA
 	dc.l	EnemyData_StalkPauseAlt_BA
 	dc.l	EnemySpriteSet_I
-	dc.l	loc_00024584
+	dc.l	EnemyAppearance_BB
 	dc.l	EnemyData_StalkPauseAlt_BB
 	dc.l	EnemySpriteSet_I
-	dc.l	loc_0002459C
+	dc.l	EnemyAppearance_65
 	dc.l	EnemyData_HumanoidMelee_65
 	dc.l	EnemySpriteSet_J
-	dc.l	loc_000245B4
+	dc.l	EnemyAppearance_A7
 	dc.l	EnemyData_HumanoidMelee_A7
 	dc.l	EnemySpriteSet_J
-	dc.l	loc_000245CC
+	dc.l	EnemyAppearance_A8
 	dc.l	EnemyData_HumanoidMeleeAlt_A8
 	dc.l	EnemySpriteSet_J
-	dc.l	loc_000245E4
+	dc.l	EnemyAppearance_A9
 	dc.l	EnemyData_HumanoidMeleeAlt_A9
 	dc.l	EnemySpriteSet_J
-	dc.l	loc_000245FC
+	dc.l	EnemyAppearance_66
 	dc.l	EnemyData_RandomShooter_66
 	dc.l	EnemySpriteSet_K
-	dc.l	loc_00024614
+	dc.l	EnemyAppearance_AA
 	dc.l	EnemyData_RandomShooter_AA
 	dc.l	EnemySpriteSet_K
-	dc.l	loc_0002462C
+	dc.l	EnemyAppearance_AB
 	dc.l	EnemyData_RandomShooter_AB
 	dc.l	EnemySpriteSet_K
-	dc.l	loc_00024644
+	dc.l	EnemyAppearance_BC
 	dc.l	EnemyData_RandomShooter_BC
 	dc.l	EnemySpriteSet_K
-	dc.l	loc_0002465C
+	dc.l	EnemyAppearance_61
 	dc.l	EnemyData_StandardMeleeFast_61
 	dc.l	EnemySpriteSet_G
-	dc.l	loc_00024674	
+	dc.l	EnemyAppearance_BD	
 	dc.l	loc_00024B7A	
 	dc.l	EnemySpriteSet_G	
-	dc.l	loc_0002468C
+	dc.l	EnemyAppearance_BE
 	dc.l	EnemyData_StandardMeleeFast_BE
 	dc.l	EnemySpriteSet_G
-	dc.l	loc_000246A4
+	dc.l	EnemyAppearance_BF
 	dc.l	EnemyData_StandardMeleeFast_BF
 	dc.l	EnemySpriteSet_G
-	dc.l	loc_000246BC
+	dc.l	EnemyAppearance_75
 	dc.l	EnemyData_OrbShield_75
 	dc.l	EnemySpriteSet_M
-	dc.l	loc_000246D4
+	dc.l	EnemyAppearance_C0
 	dc.l	EnemyData_OrbShield_C0
 	dc.l	EnemySpriteSet_M
-	dc.l	loc_000246EC
+	dc.l	EnemyAppearance_C1
 	dc.l	EnemyData_OrbShield_C1
 	dc.l	EnemySpriteSet_M
-	dc.l	loc_00024704
+	dc.l	EnemyAppearance_C2
 	dc.l	EnemyData_OrbShield_C2
 	dc.l	EnemySpriteSet_M
-	dc.l	loc_0002441C
+	dc.l	EnemyAppearance_63
 	dc.l	EnemyData_BurstFire_63
 	dc.l	EnemySpriteSet_H
-	dc.l	loc_00024434
+	dc.l	EnemyAppearance_A4
 	dc.l	EnemyData_BurstFire_A4
 	dc.l	EnemySpriteSet_H
-	dc.l	loc_0002444C
+	dc.l	EnemyAppearance_A5
 	dc.l	EnemyData_BurstFire_A5
 	dc.l	EnemySpriteSet_H
-	dc.l	loc_00024464
+	dc.l	EnemyAppearance_A6
 	dc.l	EnemyData_BurstFire_A6
 	dc.l	EnemySpriteSet_H
-	dc.l	loc_0002453C
+	dc.l	EnemyAppearance_64
 	dc.l	EnemyData_StalkPause3_64
 	dc.l	EnemySpriteSet_I
-	dc.l	loc_00024554	
+	dc.l	EnemyAppearance_B9	
 	dc.l	loc_00024CB2	
 	dc.l	EnemySpriteSet_I	
-	dc.l	loc_0002456C
+	dc.l	EnemyAppearance_BA
 	dc.l	EnemyData_StalkPause3_BA
 	dc.l	EnemySpriteSet_I
-	dc.l	loc_00024584
+	dc.l	EnemyAppearance_BB
 	dc.l	EnemyData_StalkPause3_BB
 	dc.l	EnemySpriteSet_I
-	dc.l	loc_0002453C
+	dc.l	EnemyAppearance_64
 	dc.l	EnemyData_FastBurstShooter_64
 	dc.l	EnemySpriteSet_I
-	dc.l	loc_00024554
+	dc.l	EnemyAppearance_B9
 	dc.l	EnemyData_FastBurstShooter_B9
 	dc.l	EnemySpriteSet_I
-	dc.l	loc_0002456C
+	dc.l	EnemyAppearance_BA
 	dc.l	EnemyData_FastBurstShooter_BA
 	dc.l	EnemySpriteSet_I
-	dc.l	loc_00024584	
+	dc.l	EnemyAppearance_BB	
 	dc.l	loc_00024D4E	
 	dc.l	EnemySpriteSet_I	
-	dc.l	loc_0002453C
+	dc.l	EnemyAppearance_64
 	dc.l	EnemyData_HomingShooter_64
 	dc.l	EnemySpriteSet_I
-	dc.l	loc_00024554
+	dc.l	EnemyAppearance_B9
 	dc.l	EnemyData_HomingShooter_B9
 	dc.l	EnemySpriteSet_I
-	dc.l	loc_0002456C
+	dc.l	EnemyAppearance_BA
 	dc.l	EnemyData_HomingShooter_BA
 	dc.l	EnemySpriteSet_I
-	dc.l	loc_00024584
+	dc.l	EnemyAppearance_BB
 	dc.l	EnemyData_HomingShooter_BB
 	dc.l	EnemySpriteSet_I
-	dc.l	loc_000245FC
+	dc.l	EnemyAppearance_66
 	dc.l	EnemyData_Teleporter_66
 	dc.l	EnemySpriteSet_K
-	dc.l	loc_00024614
+	dc.l	EnemyAppearance_AA
 	dc.l	EnemyData_Teleporter_AA
 	dc.l	EnemySpriteSet_K
-	dc.l	loc_0002462C
+	dc.l	EnemyAppearance_AB
 	dc.l	EnemyData_Teleporter_AB
 	dc.l	EnemySpriteSet_K
-	dc.l	loc_00024644
+	dc.l	EnemyAppearance_BC
 	dc.l	EnemyData_Teleporter_BC
 	dc.l	EnemySpriteSet_K
-	dc.l	loc_000245FC
+	dc.l	EnemyAppearance_66
 	dc.l	EnemyData_SequentialFire_66
 	dc.l	EnemySpriteSet_L
-	dc.l	loc_00024614
+	dc.l	EnemyAppearance_AA
 	dc.l	EnemyData_SequentialFire_AA
 	dc.l	EnemySpriteSet_L
-	dc.l	loc_0002462C
+	dc.l	EnemyAppearance_AB
 	dc.l	EnemyData_SequentialFire_AB
 	dc.l	EnemySpriteSet_L
-	dc.l	loc_00024644
+	dc.l	EnemyAppearance_BC
 	dc.l	EnemyData_SequentialFire_BC
 	dc.l	EnemySpriteSet_L
-	dc.l	loc_000246BC
+	dc.l	EnemyAppearance_75
 	dc.l	EnemyData_MultiOrb_75
 	dc.l	EnemySpriteSet_M
-	dc.l	loc_000246D4
+	dc.l	EnemyAppearance_C0
 	dc.l	EnemyData_MultiOrb_C0
 	dc.l	EnemySpriteSet_M
-	dc.l	loc_000246EC
+	dc.l	EnemyAppearance_C1
 	dc.l	EnemyData_MultiOrb_C1
 	dc.l	EnemySpriteSet_M
-	dc.l	loc_00024704
+	dc.l	EnemyAppearance_C2
 	dc.l	EnemyData_MultiOrb_C2
 	dc.l	EnemySpriteSet_M
-	dc.l	loc_000246BC
+	dc.l	EnemyAppearance_75
 	dc.l	EnemyData_OrbRing_75
 	dc.l	EnemySpriteSet_M
-	dc.l	loc_000246D4
+	dc.l	EnemyAppearance_C0
 	dc.l	EnemyData_OrbRing_C0
 	dc.l	EnemySpriteSet_M
-	dc.l	loc_000246EC
+	dc.l	EnemyAppearance_C1
 	dc.l	EnemyData_OrbRing_C1
 	dc.l	EnemySpriteSet_M
-	dc.l	loc_00024704
+	dc.l	EnemyAppearance_C2
 	dc.l	EnemyData_OrbRing_C2
 	dc.l	EnemySpriteSet_M
-	dc.l	loc_00024464
+	dc.l	EnemyAppearance_A6
 	dc.l	EnemyData_SpiralBurst_A6a
 	dc.l	EnemySpriteSet_H
-	dc.l	loc_00024464
+	dc.l	EnemyAppearance_A6
 	dc.l	EnemyData_SpiralBurst_A6b
 	dc.l	EnemySpriteSet_H
-	dc.l	loc_00024314	
+	dc.l	EnemyAppearance_7B	
 	dc.l	EnemyData_StalkPause_7B_Last
 	dc.l	EnemySpriteSet_A
-loc_0002426C:
+; loc_0002426C
+EnemyAppearance_5A:
 	dc.l	loc_000544E4
 	dc.l	loc_0005490C
 	dc.l	loc_000549E4
 	dc.l	loc_00054B3E
 	dc.l	NullSpriteRoutine-2	
 	dc.l	$0E0D005A	; Appearance palette/vfx
-loc_00024284:
+; loc_00024284
+EnemyAppearance_69:
 	dc.l	loc_000544E4
 	dc.l	loc_0005490C
 	dc.l	loc_000549E4
 	dc.l	loc_00054B3E
 	dc.l	NullSpriteRoutine-2	
 	dc.l	$0E0D0069	
-loc_0002429C:
+; loc_0002429C
+EnemyAppearance_6A:
 	dc.l	loc_000544E4
 	dc.l	loc_0005490C
 	dc.l	loc_000549E4
 	dc.l	loc_00054B3E
 	dc.l	NullSpriteRoutine-2	
 	dc.l	$0E0D006A	
-loc_000242B4:
+; loc_000242B4
+EnemyAppearance_6B:
 	dc.l	loc_000544E4	
 	dc.l	loc_0005490C	
 	dc.l	loc_000549E4	
 	dc.l	loc_00054B3E	
 	dc.l	NullSpriteRoutine-2	
 	dc.l	$0E0D006B	
-loc_000242CC:
+; loc_000242CC
+EnemyAppearance_AC:
 	dc.l	loc_000544E4
 	dc.l	loc_0005490C
 	dc.l	loc_000549E4
 	dc.l	loc_00054B3E
 	dc.l	NullSpriteRoutine-2	
 	dc.l	$0E0D00AC	
-loc_000242E4:
+; loc_000242E4
+EnemyAppearance_AD:
 	dc.l	loc_000544E4
 	dc.l	loc_0005490C
 	dc.l	loc_000549E4
 	dc.l	loc_00054B3E
 	dc.l	NullSpriteRoutine-2	
 	dc.l	$0E0D00AD	
-loc_000242FC:
+; loc_000242FC
+EnemyAppearance_4E:
 	dc.l	loc_000530CE
 	dc.l	loc_00053544
 	dc.l	loc_0005276A
 	dc.l	loc_00052F8A
 	dc.l	NullSpriteRoutine-2	
 	dc.l	$0D0E004E	
-loc_00024314:
+; loc_00024314
+EnemyAppearance_7B:
 	dc.l	loc_000530CE
 	dc.l	loc_00053544
 	dc.l	loc_0005276A
 	dc.l	loc_00052F8A
 	dc.l	NullSpriteRoutine-2	
 	dc.l	$0D0E007B	
-loc_0002432C:
+; loc_0002432C
+EnemyAppearance_7C:
 	dc.l	loc_000530CE
 	dc.l	loc_00053544
 	dc.l	loc_0005276A
 	dc.l	loc_00052F8A
 	dc.l	NullSpriteRoutine-2	
 	dc.l	$0D0E007C	
-loc_00024344:
+; loc_00024344
+EnemyAppearance_7D:
 	dc.l	loc_000530CE
 	dc.l	loc_00053544
 	dc.l	loc_0005276A
 	dc.l	loc_00052F8A
 	dc.l	NullSpriteRoutine-2	
 	dc.l	$0D0E007D	
-loc_0002435C:
+; loc_0002435C
+EnemyAppearance_4D:
 	dc.l	loc_00053F92
 	dc.l	loc_00054424
 	dc.l	loc_0005360C
 	dc.l	loc_00053E2E
 	dc.l	NullSpriteRoutine-2	
 	dc.l	$0D0E004D	
-loc_00024374:
+; loc_00024374
+EnemyAppearance_6C:
 	dc.l	loc_00053F92
 	dc.l	loc_00054424
 	dc.l	loc_0005360C
 	dc.l	loc_00053E2E
 	dc.l	NullSpriteRoutine-2	
 	dc.l	$0D0E006C	
-loc_0002438C:
+; loc_0002438C
+EnemyAppearance_6D:
 	dc.l	loc_00053F92
 	dc.l	loc_00054424
 	dc.l	loc_0005360C
 	dc.l	loc_00053E2E
 	dc.l	NullSpriteRoutine-2	
 	dc.l	$0D0E006D	
-loc_000243A4:
+; loc_000243A4
+EnemyAppearance_6E:
 	dc.l	loc_00053F92
 	dc.l	loc_00054424
 	dc.l	loc_0005360C
 	dc.l	loc_00053E2E
 	dc.l	NullSpriteRoutine-2	
 	dc.l	$0D0E006E	
-loc_000243BC:
+; loc_000243BC
+EnemyAppearance_5B:
 	dc.l	loc_00055468
 	dc.l	loc_00055888
 	dc.l	loc_00054B76
 	dc.l	loc_00055300
 	dc.l	NullSpriteRoutine-2	
 	dc.l	$0D0E005B	
-loc_000243D4:
+; loc_000243D4
+EnemyAppearance_6F:
 	dc.l	loc_00055468
 	dc.l	loc_00055888
 	dc.l	loc_00054B76
 	dc.l	loc_00055300
 	dc.l	NullSpriteRoutine-2	
 	dc.l	$0D0E006F	
-loc_000243EC:
+; loc_000243EC
+EnemyAppearance_70:
 	dc.l	loc_00055468
 	dc.l	loc_00055888
 	dc.l	loc_00054B76
 	dc.l	loc_00055300
 	dc.l	NullSpriteRoutine-2	
 	dc.l	$0D0E0070	
-loc_00024404:
+; loc_00024404
+EnemyAppearance_71:
 	dc.l	loc_00055468
 	dc.l	loc_00055888
 	dc.l	loc_00054B76
 	dc.l	loc_00055300
 	dc.l	NullSpriteRoutine-2	
 	dc.l	$0D0E0071	
-loc_0002441C:
+; loc_0002441C
+EnemyAppearance_63:
 	dc.l	loc_00059BAA
 	dc.l	loc_0005A206
 	dc.l	loc_000591AC
 	dc.l	loc_00059A46
 	dc.l	loc_0000FFE8	
 	dc.l	$0E0E0063	
-loc_00024434:
+; loc_00024434
+EnemyAppearance_A4:
 	dc.l	loc_00059BAA
 	dc.l	loc_0005A206
 	dc.l	loc_000591AC
 	dc.l	loc_00059A46
 	dc.l	loc_0000FFE8	
 	dc.l	$0E0E00A4	
-loc_0002444C:
+; loc_0002444C
+EnemyAppearance_A5:
 	dc.l	loc_00059BAA
 	dc.l	loc_0005A206
 	dc.l	loc_000591AC
 	dc.l	loc_00059A46
 	dc.l	loc_0000FFE8	
 	dc.l	$0E0E00A5	
-loc_00024464:
+; loc_00024464
+EnemyAppearance_A6:
 	dc.l	loc_00059BAA
 	dc.l	loc_0005A206
 	dc.l	loc_000591AC
 	dc.l	loc_00059A46
 	dc.l	loc_0000FFE8	
 	dc.l	$0E0E00A6	
-loc_0002447C:
+; loc_0002447C
+EnemyAppearance_5C:
 	dc.l	loc_000565F6
 	dc.l	loc_000569A6
 	dc.l	loc_00055970
 	dc.l	loc_00056436
 	dc.l	NullSpriteRoutine-2	
 	dc.l	$0D0E005C	
-loc_00024494:
+; loc_00024494
+EnemyAppearance_9E:
 	dc.l	loc_000565F6
 	dc.l	loc_000569A6
 	dc.l	loc_00055970
 	dc.l	loc_00056436
 	dc.l	NullSpriteRoutine-2	
 	dc.l	$0D0E009E	
-loc_000244AC:
+; loc_000244AC
+EnemyAppearance_9F:
 	dc.l	loc_000565F6
 	dc.l	loc_000569A6
 	dc.l	loc_00055970
 	dc.l	loc_00056436
 	dc.l	NullSpriteRoutine-2	
 	dc.l	$0D0E009F	
-loc_000244C4:
+; loc_000244C4
+EnemyAppearance_A0:
 	dc.l	loc_000565F6
 	dc.l	loc_000569A6
 	dc.l	loc_00055970
 	dc.l	loc_00056436
 	dc.l	NullSpriteRoutine-2	
 	dc.l	$0D0E00A0	
-loc_000244DC:
+; loc_000244DC
+EnemyAppearance_5D:
 	dc.l	loc_00056A86
 	dc.l	loc_00057404
 	dc.l	loc_00057580
 	dc.l	loc_00057F74
 	dc.l	loc_0000FFE8	
 	dc.l	$0E0E005D	
-loc_000244F4:
+; loc_000244F4
+EnemyAppearance_A1:
 	dc.l	loc_00056A86
 	dc.l	loc_00057404
 	dc.l	loc_00057580
 	dc.l	loc_00057F74
 	dc.l	loc_0000FFE8	
 	dc.l	$0E0E00A1	
-loc_0002450C:
+; loc_0002450C
+EnemyAppearance_A2:
 	dc.l	loc_00056A86
 	dc.l	loc_00057404
 	dc.l	loc_00057580
 	dc.l	loc_00057F74
 	dc.l	loc_0000FFE8	
 	dc.l	$0E0E00A2	
-loc_00024524:
+; loc_00024524
+EnemyAppearance_A3:
 	dc.l	loc_00056A86
 	dc.l	loc_00057404
 	dc.l	loc_00057580
 	dc.l	loc_00057F74
 	dc.l	loc_0000FFE8	
 	dc.l	$0E0E00A3	
-loc_0002453C:
+; loc_0002453C
+EnemyAppearance_64:
 	dc.l	loc_0005AF6E
 	dc.l	loc_0005B674
 	dc.l	loc_0005A3C6
 	dc.l	loc_0005ADF2
 	dc.l	NullSpriteRoutine-2	
 	dc.l	$0D0E0064	
-loc_00024554:
+; loc_00024554
+EnemyAppearance_B9:
 	dc.l	loc_0005AF6E
 	dc.l	loc_0005B674
 	dc.l	loc_0005A3C6
 	dc.l	loc_0005ADF2
 	dc.l	NullSpriteRoutine-2	
 	dc.l	$0D0E00B9	
-loc_0002456C:
+; loc_0002456C
+EnemyAppearance_BA:
 	dc.l	loc_0005AF6E
 	dc.l	loc_0005B674
 	dc.l	loc_0005A3C6
 	dc.l	loc_0005ADF2
 	dc.l	NullSpriteRoutine-2	
 	dc.l	$0D0E00BA	
-loc_00024584:
+; loc_00024584
+EnemyAppearance_BB:
 	dc.l	loc_0005AF6E
 	dc.l	loc_0005B674
 	dc.l	loc_0005A3C6
 	dc.l	loc_0005ADF2
 	dc.l	NullSpriteRoutine-2	
 	dc.l	$0D0E00BB	
-loc_0002459C:
+; loc_0002459C
+EnemyAppearance_65:
 	dc.l	loc_0005C37E
 	dc.l	loc_0005C97E
 	dc.l	loc_0005B784
 	dc.l	loc_0005C1DE
 	dc.l	NullSpriteRoutine-2	
 	dc.l	$0D0E0065	
-loc_000245B4:
+; loc_000245B4
+EnemyAppearance_A7:
 	dc.l	loc_0005C37E
 	dc.l	loc_0005C97E
 	dc.l	loc_0005B784
 	dc.l	loc_0005C1DE
 	dc.l	NullSpriteRoutine-2	
 	dc.l	$0D0E00A7	
-loc_000245CC:
+; loc_000245CC
+EnemyAppearance_A8:
 	dc.l	loc_0005C37E
 	dc.l	loc_0005C97E
 	dc.l	loc_0005B784
 	dc.l	loc_0005C1DE
 	dc.l	NullSpriteRoutine-2	
 	dc.l	$0D0E00A8	
-loc_000245E4:
+; loc_000245E4
+EnemyAppearance_A9:
 	dc.l	loc_0005C37E
 	dc.l	loc_0005C97E
 	dc.l	loc_0005B784
 	dc.l	loc_0005C1DE
 	dc.l	NullSpriteRoutine-2	
 	dc.l	$0D0E00A9	
-loc_000245FC:
+; loc_000245FC
+EnemyAppearance_66:
 	dc.l	loc_0005CF78
 	dc.l	loc_0005D180
 	dc.l	loc_0005CA9A
 	dc.l	loc_0005CED4
 	dc.l	NullSpriteRoutine-2	
 	dc.l	$0D0E0066	
-loc_00024614:
+; loc_00024614
+EnemyAppearance_AA:
 	dc.l	loc_0005CF78
 	dc.l	loc_0005D180
 	dc.l	loc_0005CA9A
 	dc.l	loc_0005CED4
 	dc.l	NullSpriteRoutine-2	
 	dc.l	$0D0E00AA	
-loc_0002462C:
+; loc_0002462C
+EnemyAppearance_AB:
 	dc.l	loc_0005CF78
 	dc.l	loc_0005D180
 	dc.l	loc_0005CA9A
 	dc.l	loc_0005CED4
 	dc.l	NullSpriteRoutine-2	
 	dc.l	$0D0E00AB	
-loc_00024644:
+; loc_00024644
+EnemyAppearance_BC:
 	dc.l	loc_0005CF78
 	dc.l	loc_0005D180
 	dc.l	loc_0005CA9A
 	dc.l	loc_0005CED4
 	dc.l	NullSpriteRoutine-2	
 	dc.l	$0D0E00BC	
-loc_0002465C:
+; loc_0002465C
+EnemyAppearance_61:
 	dc.l	loc_000589B4
 	dc.l	loc_00059098
 	dc.l	loc_000580FC
 	dc.l	loc_00058858
 	dc.l	NullSpriteRoutine-2	
 	dc.l	$0D0E0061	
-loc_00024674:
+; loc_00024674
+EnemyAppearance_BD:
 	dc.l	loc_000589B4	
 	dc.l	loc_00059098	
 	dc.l	loc_000580FC	
 	dc.l	loc_00058858	
 	dc.l	NullSpriteRoutine-2	
 	dc.l	$0D0E00BD	
-loc_0002468C:
+; loc_0002468C
+EnemyAppearance_BE:
 	dc.l	loc_000589B4
 	dc.l	loc_00059098
 	dc.l	loc_000580FC
 	dc.l	loc_00058858
 	dc.l	NullSpriteRoutine-2	
 	dc.l	$0D0E00BE	
-loc_000246A4:
+; loc_000246A4
+EnemyAppearance_BF:
 	dc.l	loc_000589B4
 	dc.l	loc_00059098
 	dc.l	loc_000580FC
 	dc.l	loc_00058858
 	dc.l	NullSpriteRoutine-2	
 	dc.l	$0D0E00BF	
-loc_000246BC:
+; loc_000246BC
+EnemyAppearance_75:
 	dc.l	loc_0005D29E
 	dc.l	loc_0005D6D4
 	dc.l	loc_00000000	
 	dc.l	loc_00000000	
 	dc.l	loc_00000000	
 	dc.l	$0F000075	
-loc_000246D4:
+; loc_000246D4
+EnemyAppearance_C0:
 	dc.l	loc_0005D29E
 	dc.l	loc_0005D6D4
 	dc.l	loc_00000000	
 	dc.l	loc_00000000	
 	dc.l	loc_00000000	
 	dc.l	$0F0000C0	
-loc_000246EC:
+; loc_000246EC
+EnemyAppearance_C1:
 	dc.l	loc_0005D29E
 	dc.l	loc_0005D6D4
 	dc.l	loc_00000000	
 	dc.l	loc_00000000	
 	dc.l	loc_00000000	
 	dc.l	$0F0000C1	
-loc_00024704:
+; loc_00024704
+EnemyAppearance_C2:
 	dc.l	loc_0005D29E
 	dc.l	loc_0005D6D4
 	dc.l	$00000000
