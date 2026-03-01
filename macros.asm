@@ -121,3 +121,51 @@ tiles_to_bytes macro tiles,dest
 make_art_tile macro addr,pal,pri,dest
     MOVE.w  #((((pri)&1)<<15)|(((pal)&3)<<13)|((addr)&$7FF)), dest
     ENDM
+
+; ============================================================
+; Chest Treasure Macros
+; ============================================================
+; These macros replace the common 4-instruction treasure setup
+; pattern used for chests and reward pickups throughout the game.
+;
+; Each sets the reward value and opened-flag address, then calls
+; the appropriate setup function which checks if the chest was
+; already opened and initializes the reward dialog.
+;
+; value: Item/equipment ID or money amount (word)
+; flag:  RAM address of the opened-flag byte
+
+; Item chest: herbs, candles, lanterns, quest items, etc.
+ItemChest macro value,flag
+    MOVE.w  #value, Reward_script_value.w
+    MOVE.l  #flag, Reward_script_flag.w
+    BSR.w   SetupItemTreasure
+    RTS
+    ENDM
+
+; Equipment chest: swords, armor, shields
+EquipChest macro value,flag
+    MOVE.w  #value, Reward_script_value.w
+    MOVE.l  #flag, Reward_script_flag.w
+    BSR.w   SetupEquipmentTreasure
+    RTS
+    ENDM
+
+; Money chest: kims (gold)
+MoneyChest macro value,flag
+    MOVE.w  #value, Reward_script_value.w
+    MOVE.l  #flag, Reward_script_flag.w
+    BSR.w   InitMoneyTreasure
+    RTS
+    ENDM
+
+; Ring/special chest: rings of earth/wind, crystals, maps
+; Uses SetupChestReward directly with explicit type
+; type: Reward type (4=ring, 5=map, etc.)
+RingChest macro type,value,flag
+    MOVE.w  #type, Reward_script_type.w
+    MOVE.w  #value, Reward_script_value.w
+    MOVE.l  #flag, Reward_script_flag.w
+    BSR.w   SetupChestReward
+    RTS
+    ENDM

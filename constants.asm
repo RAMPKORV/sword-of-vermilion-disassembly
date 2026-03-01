@@ -677,6 +677,7 @@ VBlank_object_ptr            = $FFFFCC00
 HBlank_object_ptr            = $FFFFCC04
 Map_indicator_entity_ptr     = $FFFFCC50
 Menu_object_ptr              = $FFFFCC74
+Ram_clear_end                = $FFFFFD00    ; End of general RAM clear region (before stack gap)
 Stack_base                   = $FFFFFE00
 
 Area_map_revealed             = $FFFFC55F
@@ -885,6 +886,7 @@ Treasure_of_troy_found                      = $FFFFC726
 Talked_to_king_after_given_treasure_of_troy = $FFFFC727
 Player_chose_to_stay_in_parma               = $FFFFC728
 Watling_youth_restored                      = $FFFFC729
+Watling_villagers_asked_about_rings         = $FFFFC72A
 Deepdale_truffle_quest_started              = $FFFFC72B
 Truffle_collected                           = $FFFFC72C
 Deepdale_king_secret_kept                   = $FFFFC72D

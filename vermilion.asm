@@ -13,7 +13,7 @@ InitPSG:
 	RTS
 
 loc_00000214:
-	clearRAM Tilemap_buffer_plane_a, $FFFFFD00
+	clearRAM Tilemap_buffer_plane_a, Ram_clear_end
 	BSR.w	InitZ80SoundDriver
 	BSR.w	InitVDPAndClearVRAM
 	BSR.w	InitYM2612
@@ -307,7 +307,7 @@ BasicObjectInitTable:
 	objectInitGroup 1, 8, $10, $80, HBlankObjectHandler, HBlank_object_ptr
 	
 	; Entity slot (appears unused in this table)
-	objectInitGroup 1, 32, $40, 0, PlayerObjectHandler, $FFFFCC08
+	objectInitGroup 1, 32, $40, 0, PlayerObjectHandler, Player_entity_ptr
 	
 	; Battle entity slot 1
 	objectInitGroup 1, 32, $40, 0, $00000000, Battle_entity_slot_1_ptr
@@ -316,7 +316,7 @@ BasicObjectInitTable:
 	objectInitGroup 1, 32, $40, 0, $00000000, Battle_entity_slot_2_ptr
 	
 	; Additional entity slots (30 copies)
-	objectInitGroup 30, 32, $40, 0, $00000000, $FFFFCC14
+	objectInitGroup 30, 32, $40, 0, $00000000, Enemy_list_ptr
 
 ; ============================================================================
 ; Menu Object Initialization Table
@@ -329,7 +329,7 @@ MenuObjectInitTable:
 	dc.w	$0001                        ; 2 object groups
 	
 	; Entity slots (30 copies)
-	objectInitGroup 30, 32, $40, 0, $00000000, $FFFFCC14
+	objectInitGroup 30, 32, $40, 0, $00000000, Enemy_list_ptr
 	
 	; Menu handler object
 	objectInitGroup 1, 8, $10, $80, MenuObjectHandler, Menu_object_ptr
@@ -346,7 +346,7 @@ GameplayObjectInitTable:
 	
 	dc.w	$0000, $0027, $0050, $0000 
 	dc.l	$00000000
-	dc.l	$FFFFCC14
+	dc.l	Enemy_list_ptr
 	
 	dc.w	$0001, $001F, $0040, $0000 
 	dc.l	$00000000 
@@ -464,7 +464,7 @@ loc_00000B50:
 
 	dc.w	$0000, $0027, $0050, $0000 
 	dc.l	$00000000 
-	dc.l	$FFFFCC14 
+	dc.l	Enemy_list_ptr 
 
 	dc.w	$0001, $001F, $0040, $0000 
 	dc.l	$00000000 
@@ -14521,7 +14521,7 @@ DisplayBattleVictoryMessage:
 	MOVEA.l	#ExpStr, A0
 	JSR	CopyStringUntilFF
 	MOVE.b	#$FF, (A1)
-	PRINT 	$FFFFC260
+	PRINT 	Text_build_buffer
 	JSR	ResetScriptAndInitDialogue
 	RTS
 
@@ -20415,7 +20415,7 @@ loc_00011FB4:
 	MOVE.w	#2, Window_tilemap_draw_y.w
 	MOVE.w	#$001B, Window_tilemap_draw_width.w
 	MOVE.w	#$0014, Window_tilemap_draw_height.w
-	LEA	$FFFF7AB4, A0
+	LEA	Script_window_tiles_buffer, A0
 	BRA.w	DrawWindowRowFromBuffer
 loc_00011FD6:
 	MOVE.w	#2, Window_tilemap_draw_x.w
@@ -20516,7 +20516,7 @@ loc_00012150:
 	MOVE.w	#$000C, Window_tilemap_draw_y.w
 	MOVE.w	#$000B, Window_tilemap_draw_width.w
 	MOVE.w	#8, Window_tilemap_draw_height.w
-	LEA	$FFFF7CF4, A0
+	LEA	Small_menu_tiles_buffer, A0
 	BRA.w	DrawWindowRowFromBuffer
 loc_00012172:
 	MOVE.w	#$000C, Window_tilemap_draw_x.w	
@@ -20616,7 +20616,7 @@ SaveStatusBarToBuffer:
 	MOVEA.l	Current_actor_ptr.w, A6
 	BCLR.b	#7, $7(A6)
 loc_000122AE:
-	LEA	$FFFF7AB4, A0
+	LEA	Script_window_tiles_buffer, A0
 	MOVE.w	#4, Window_tile_x.w
 	MOVE.w	#$0013, Window_tile_y.w
 	MOVE.w	#$001F, Window_tile_width.w
@@ -20635,7 +20635,7 @@ SavePromptMenuToBuffer:
 	
 ; SaveRightMenuAreaToBuffer
 SaveRightMenuAreaToBuffer:
-	LEA	$FFFF7CF4, A0
+	LEA	Small_menu_tiles_buffer, A0
 	MOVE.w	#$001C, Window_tile_x.w
 	MOVE.w	#$000D, Window_tile_y.w
 	MOVE.w	#6, Window_tile_width.w
@@ -20654,7 +20654,7 @@ SaveShopSubmenuAreaToBuffer:
 	
 ; SaveCenterDialogAreaToBuffer
 SaveCenterDialogAreaToBuffer:
-	LEA	$FFFF7E52, A0
+	LEA	Large_menu_tiles_buffer, A0
 	MOVE.w	#$000F, Window_tile_x.w
 	MOVE.w	#2, Window_tile_y.w
 	MOVE.w	#$0015, Window_tile_width.w
@@ -20736,7 +20736,7 @@ SaveFullDialogAreaToBuffer:
 	LEA	(A6,D0.w), A6
 	BCLR.b	#7, $7(A6)
 loc_00012470:
-	LEA	$FFFF7AB4, A0
+	LEA	Script_window_tiles_buffer, A0
 	MOVE.w	#2, Window_tile_x.w
 	MOVE.w	#2, Window_tile_y.w
 	MOVE.w	#$001B, Window_tile_width.w
@@ -20805,7 +20805,7 @@ SaveMessageSpeedMenuToBuffer:
 	
 	
 SaveMainMenuToBuffer:
-	LEA	$FFFF7CF4, A0
+	LEA	Small_menu_tiles_buffer, A0
 	MOVE.w	#2, Window_tile_x.w
 	MOVE.w	#$000C, Window_tile_y.w
 	MOVE.w	#$000B, Window_tile_width.w
@@ -20864,7 +20864,7 @@ DrawStatusHudWindow:
 	MOVEA.l	Current_actor_ptr.w, A6
 	BSET.b	#7, $7(A6)
 loc_00012620:
-	LEA	$FFFF7AB4, A0
+	LEA	Script_window_tiles_buffer, A0
 	MOVE.w	#4, Window_tile_x.w
 	MOVE.w	#$0013, Window_tile_y.w
 	MOVE.w	#$001F, Window_tile_width.w
@@ -20888,7 +20888,7 @@ DrawPromptMenuWindow:
 ; DrawLeftMenuWindow
 ; Draw left menu window (buffer at $FFFF7CF4, 28x13 at position 6,6)
 DrawLeftMenuWindow:
-	LEA	$FFFF7CF4, A0
+	LEA	Small_menu_tiles_buffer, A0
 	MOVE.w	#$001C, Window_tile_x.w
 	MOVE.w	#$000D, Window_tile_y.w
 	MOVE.w	#6, Window_tile_width.w
@@ -20908,7 +20908,7 @@ RestoreShopSubmenuFromBuffer:
 ; DrawCenterMenuWindow
 ; Draw center menu window (buffer at $FFFF7E52, 21x21 at position 15,2)
 DrawCenterMenuWindow:
-	LEA	$FFFF7E52, A0
+	LEA	Large_menu_tiles_buffer, A0
 	MOVE.w	#$000F, Window_tile_x.w
 	MOVE.w	#2, Window_tile_y.w
 	MOVE.w	#$0015, Window_tile_width.w
@@ -25516,7 +25516,7 @@ loc_00017C1E:
 	dc.l	EmptyTextStr
 	dc.l	PlayerTextStr
 	dc.l	EmptyTextStr
-	dc.l	$FFFFC646
+	dc.l	Ending_player_name_buffer
 	dc.l	EmptyTextStr
 	dc.l	EmptyTextStr
 	dc.l	SpecialThanksTextStr
@@ -25779,7 +25779,7 @@ loc_000181DC:
 	JSR	CopyStringUntilFF
 	MOVE.b	#$2E, (A1)+
 	MOVE.b	#$FF, (A1)
-	PRINT 	$FFFFC260
+	PRINT 	Text_build_buffer
 	MOVE.w	#2, Spellbook_menu_state.w
 	SUBQ.w	#1, Possessed_magics_length.w
 	LEA	Possessed_magics_list.w, A0
@@ -25894,7 +25894,7 @@ loc_00018388:
 	LEA	BookReadyStr, A0
 	JSR	CopyStringUntilFF
 	MOVE.b	#$FF, (A1)
-	PRINT 	$FFFFC260
+	PRINT 	Text_build_buffer
 	MOVE.w	#2, Spellbook_menu_state.w
 	LEA	Possessed_magics_list.w, A0
 	MOVE.w	Magic_list_cursor_index.w, D0
@@ -28334,7 +28334,7 @@ loc_0001A5D4:
 	JSR	CopyStringUntilFF
 	MOVE.b	#$2E, (A1)+
 	MOVE.b	#$FF, (A1)
-	PRINT 	$FFFFC260
+	PRINT 	Text_build_buffer
 	SUBQ.w	#1, Possessed_items_length.w
 	LEA	Possessed_items_list.w, A0
 	MOVE.w	Selected_item_index.w, D0
@@ -28432,7 +28432,7 @@ loc_0001A702:
 	JSR	CopyStringUntilFF
 	MOVE.b	#$2E, (A1)+
 	MOVE.b	#$FD, (A1)+
-	PRINT 	$FFFFC260
+	PRINT 	Text_build_buffer
 	ADDQ.w	#1, Item_menu_state.w
 	RTS
 
@@ -28443,7 +28443,7 @@ loc_0001A794:
 	JSR	CopyStringUntilFF
 	MOVE.b	#$2E, (A1)+
 	MOVE.b	#$FF, (A1)+
-	PRINT 	$FFFFC260
+	PRINT 	Text_build_buffer
 	ADDQ.w	#1, Item_menu_state.w
 	RTS
 
@@ -29406,7 +29406,7 @@ loc_0001B312:
 	LEA	PayOrWorkStr, A0
 	JSR	CopyStringUntilFF
 	MOVE.b	#$FF, (A1)
-	PRINT 	$FFFFC260
+	PRINT 	Text_build_buffer
 	BRA.b	loc_0001B3B0
 loc_0001B35E:
 	LEA	Text_build_buffer.w, A1
@@ -29425,7 +29425,7 @@ loc_0001B35E:
 	LEA	AllRightStr, A0
 	JSR	CopyStringUntilFF
 	MOVE.b	#$FF, (A1)
-	PRINT 	$FFFFC260
+	PRINT 	Text_build_buffer
 loc_0001B3B0:
 	MOVE.w	#$1C, Dialogue_state.w
 	RTS
@@ -29448,7 +29448,7 @@ loc_0001B3B8:
 	LEA	PayFirstStr, A0
 	JSR	CopyStringUntilFF
 	MOVE.b	#$FF, (A1)
-	PRINT 	$FFFFC260
+	PRINT 	Text_build_buffer
 	MOVE.w	#$18, Dialogue_state.w
 	RTS
 
@@ -29637,7 +29637,7 @@ loc_0001B784:
 	LEA	VeryExpensiveStr, A0
 	JSR	CopyStringUntilFF
 	MOVE.b	#$FF, (A1)
-	PRINT 	$FFFFC260
+	PRINT 	Text_build_buffer
 	MOVE.w	#$30, Dialogue_state.w
 	RTS
 
@@ -30097,7 +30097,7 @@ loc_0001BE6E:
 	MOVEA.l	(A0,D0.w), A0
 	JSR	CopyStringUntilFF
 	MOVE.b	#$FF, (A1)
-	PRINT 	$FFFFC260
+	PRINT 	Text_build_buffer
 	ADDQ.w	#1, Dialogue_state.w
 	RTS
 
@@ -30390,7 +30390,7 @@ loc_0001C2FE:
 	MOVEA.l	(A0,D0.w), A0
 	JSR	CopyStringUntilFF
 	MOVE.b	#$FF, (A1)
-	PRINT 	$FFFFC260
+	PRINT 	Text_build_buffer
 	ADDQ.w	#1, Dialogue_state.w
 	RTS
 
@@ -30897,7 +30897,7 @@ loc_0001C9FA:
 	LEA	CharityAgreeStr, A0
 	JSR	CopyStringUntilFF
 	MOVE.b	#$FF, (A1)
-	PRINT 	$FFFFC260
+	PRINT 	Text_build_buffer
 	MOVE.w	#$25, Dialogue_state.w
 	BRA.w	loc_0001CACA
 loc_0001CA4C:
@@ -30920,7 +30920,7 @@ loc_0001CA5C:
 	LEA	CharityAgreeStr, A0
 	JSR	CopyStringUntilFF
 	MOVE.b	#$FF, (A1)
-	PRINT 	$FFFFC260
+	PRINT 	Text_build_buffer
 	MOVE.w	#$28, Dialogue_state.w
 	BRA.b	loc_0001CACA
 loc_0001CAAC:
@@ -31505,7 +31505,7 @@ loc_0001D216:
 	BSR.w	CopyEquipmentNameToTextBuffer
 	MOVE.b	#$2E, (A1)+
 	MOVE.b	#$FF, (A1)
-	PRINT 	$FFFFC260
+	PRINT 	Text_build_buffer
 	MOVE.w	#6, Ready_equipment_state.w
 	JSR	RestoreReadyEquipmentMenuFromBuffer
 	RTS
@@ -31551,7 +31551,7 @@ loc_0001D29C:
 	BSR.w	CopyEquipmentNameToTextBuffer
 	MOVE.b	#$2E, (A1)+
 	MOVE.b	#$FF, (A1)
-	PRINT 	$FFFFC260
+	PRINT 	Text_build_buffer
 loc_0001D342:
 	BSR.w	EquipSelectedItem
 	BRA.b	loc_0001D35A
@@ -31624,7 +31624,7 @@ loc_0001D3BA:
 	ADD.w	D0, D0
 	LEA	Equipped_sword.w, A2
 	MOVE.w	#$FFFF, (A2,D0.w)
-	PRINT 	$FFFFC260
+	PRINT 	Text_build_buffer
 	MOVE.w	#6, Ready_equipment_state.w
 	RTS
 
@@ -32429,7 +32429,7 @@ loc_0001DE14:
 	LEA	InsideStr, A0
 	JSR	CopyStringUntilFF
 	MOVE.b	#$FF, (A1)
-	PRINT 	$FFFFC260
+	PRINT 	Text_build_buffer
 	BRA.w	loc_0001DECE
 loc_0001DE82:
 	LEA	RingNames, A0
@@ -32442,7 +32442,7 @@ loc_0001DE82:
 	LEA	InsideStr, A0
 	JSR	CopyStringUntilFF
 	MOVE.b	#$FF, (A1)
-	PRINT 	$FFFFC260
+	PRINT 	Text_build_buffer
 	BRA.w	loc_0001DECE
 loc_0001DEBA:
 	print	MapInsideStr
@@ -32817,14 +32817,14 @@ DisplayFoundItemWithName:
 	JSR	CopyStringUntilFF
 	MOVE.b	#$2E, (A1)+
 	MOVE.b	#$FF, (A1)+
-	PRINT 	$FFFFC260
+	PRINT 	Text_build_buffer
 	RTS
 	
 DisplayInventoryFullMessage:
 	LEA	TooMuchToCarryStr, A0	
 	JSR	CopyStringUntilFF	
 	MOVE.b	#$FF, (A1)+	
-	PRINT 	$FFFFC260	
+	PRINT 	Text_build_buffer	
 	RTS
 	
 	
@@ -32991,7 +32991,7 @@ loc_0001E668:
 loc_0001E6A0:
 	MOVE.b	#$2E, (A1)+
 	MOVE.b	#$FF, (A1)
-	PRINT 	$FFFFC260
+	PRINT 	Text_build_buffer
 	MOVE.w	#$0090, D0
 	JSR	QueueSoundEffect
 	JSR	SaveStatusBarToBuffer
@@ -33059,7 +33059,7 @@ loc_0001E766:
 	MOVE.b	#$2E, (A1)+
 	MOVE.b	#$FF, (A1)
 	MOVE.w	#3, Take_item_state.w
-	PRINT 	$FFFFC260
+	PRINT 	Text_build_buffer
 	RTS
 	
 loc_0001E7C4:
@@ -33209,7 +33209,7 @@ loc_0001E96A:
 	JSR	CopyStringUntilFF
 	MOVE.b	#$2E, (A1)+
 	MOVE.b	#$FF, (A1)
-	PRINT 	$FFFFC260
+	PRINT 	Text_build_buffer
 	BSR.w	ClearRewardScriptFlag
 	CLR.b	Herbs_available.w
 	CLR.b	Truffles_available.w
@@ -33320,7 +33320,7 @@ loc_0001EBC2:
 	dc.l	loc_0002E8E8
 	dc.l	Talked_to_real_king
 	dc.l	loc_0002E8BC	
-	dc.l	$FFFFC728
+	dc.l	Player_chose_to_stay_in_parma
 	dc.l	loc_0002E890
 	dc.l	Fake_king_killed
 	dc.l	loc_0002E8BC
@@ -33386,7 +33386,7 @@ loc_0001EC96:
 	BRA.w	SelectDialogueByGameState
 loc_0001ECD0:
 	dc.b	$00, $02, $91, $2C 
-	dc.l	$FFFFC728
+	dc.l	Player_chose_to_stay_in_parma
 	dc.l	loc_00029128
 	LEA	loc_0001ECEA, A1
 	MOVE.w	#2, D7
@@ -33404,45 +33404,45 @@ loc_0001ECEA:
 	BRA.w	SelectDialogueByGameState
 loc_0001ED14:
 	dc.l	loc_0002FD06
-	dc.l	$FFFFC72A
+	dc.l	Watling_villagers_asked_about_rings
 	dc.l	loc_0002FCEE
-	dc.l	$FFFFC729
+	dc.l	Watling_youth_restored
 	dc.l	loc_0002FCD6
 	LEA	loc_0001ED36, A1
 	MOVE.w	#1, D7
 	BRA.w	SelectDialogueByGameState
 loc_0001ED36:
 	dc.l	loc_0002FD26
-	dc.l	$FFFFC72A
+	dc.l	Watling_villagers_asked_about_rings
 	dc.l	loc_0002FD22
-	dc.l	$FFFFC729
+	dc.l	Watling_youth_restored
 	dc.l	loc_0002FD1E
 	LEA	loc_0001ED58, A1
 	MOVE.w	#1, D7
 	BRA.w	SelectDialogueByGameState
 loc_0001ED58:
 	dc.l	loc_00030A4A
-	dc.l	$FFFFC72D
+	dc.l	Deepdale_king_secret_kept
 	dc.l	loc_00030A2E
-	dc.l	$FFFFC72B
+	dc.l	Deepdale_truffle_quest_started
 	dc.l	loc_00030A12
 	LEA	loc_0001ED7A, A1
 	MOVE.w	#1, D7
 	BRA.w	SelectDialogueByGameState
 loc_0001ED7A:
 	dc.l	loc_00030A6E
-	dc.l	$FFFFC72D
+	dc.l	Deepdale_king_secret_kept
 	dc.l	loc_00030A6A
-	dc.l	$FFFFC72C
+	dc.l	Truffle_collected
 	dc.l	loc_00030A66
 	LEA	loc_0001ED9C, A1
 	MOVE.w	#1, D7
 	BRA.w	SelectDialogueByGameState
 loc_0001ED9C:
 	dc.l	loc_00029C80
-	dc.l	$FFFFC72D
+	dc.l	Deepdale_king_secret_kept
 	dc.l	loc_00029C6C
-	dc.l	$FFFFC72B
+	dc.l	Deepdale_truffle_quest_started
 	dc.l	loc_00029C58
 	dc.l	$43F90003	
 	dc.l	$0A726000	
@@ -33454,37 +33454,37 @@ loc_0001ED9C:
 	BRA.w	SelectDialogueByGameState
 loc_0001EDD2:
 	dc.l	loc_000319A0
-	dc.l	$FFFFC732
+	dc.l	Stow_innocence_proven
 	dc.l	loc_0003195C
-	dc.l	$FFFFC75C
+	dc.l	Girl_left_for_stow
 	dc.l	loc_00031938
-	dc.l	$FFFFC72F
+	dc.l	Accused_of_theft
 	dc.l	loc_00031914
-	dc.l	$FFFFC72E
+	dc.l	Sanguios_book_offered
 	dc.l	loc_000318F0	
 	LEA	loc_0001EE04, A1
 	MOVE.w	#1, D7
 	BRA.w	SelectDialogueByGameState
 loc_0001EE04:
 	dc.l	loc_000319CC
-	dc.l	$FFFFC732
+	dc.l	Stow_innocence_proven
 	dc.l	loc_000319C8
-	dc.l	$FFFFC75C
+	dc.l	Girl_left_for_stow
 	dc.l	loc_000319C4
 	LEA	loc_0001EE26, A1
 	MOVE.w	#4, D7
 	BRA.w	SelectDialogueByGameState
 loc_0001EE26:
 	dc.l	loc_0002A282
-	dc.l	$FFFFC732
+	dc.l	Stow_innocence_proven
 	dc.l	loc_0002A26A
-	dc.l	$FFFFC731
+	dc.l	Asti_monster_defeated
 	dc.l	loc_0002A252
-	dc.l	$FFFFC75C
+	dc.l	Girl_left_for_stow
 	dc.l	loc_0002A246	
-	dc.l	$FFFFC72F
+	dc.l	Accused_of_theft
 	dc.l	loc_0002A23A
-	dc.l	$FFFFC72E
+	dc.l	Sanguios_book_offered
 	dc.l	loc_0002A22E	
 	LEA	loc_000319D0, A1
 	BRA.w	loc_0001F1D0
@@ -33497,13 +33497,13 @@ loc_0001EE26:
 	BRA.w	SelectDialogueByGameState
 loc_0001EE7E:
 	dc.b	$00, $03, $2D, $C4 
-	dc.l	$FFFFC735
+	dc.l	Bearwulf_returned_home
 	dc.l	loc_00032D9C
-	dc.l	$FFFFC734
+	dc.l	Bearwulf_met
 	dc.l	loc_00032D74
-	dc.l	$FFFFC733
+	dc.l	Sent_to_malaga
 	dc.l	loc_00032D4C
-	dc.l	$FFFFC731
+	dc.l	Asti_monster_defeated
 	dc.l	loc_00032D24	
 	LEA	loc_00032DEC, A1
 	BRA.w	loc_0001F1D0
@@ -33512,9 +33512,9 @@ loc_0001EE7E:
 	BRA.w	SelectDialogueByGameState
 loc_0001EEBA:
 	dc.l	loc_00032DF8
-	dc.l	$FFFFC733
+	dc.l	Sent_to_malaga
 	dc.l	loc_00032DF4	
-	dc.l	$FFFFC75A
+	dc.l	Alarm_clock_rang
 	dc.l	loc_00032DF0
 	LEA	loc_00032DFC, A1
 	BRA.w	loc_0001F1D0
@@ -33525,22 +33525,22 @@ loc_0001EEBA:
 	BRA.w	SelectDialogueByGameState
 loc_0001EEF0:
 	dc.b	$00, $03, $40, $96 
-	dc.l	$FFFFC735
+	dc.l	Bearwulf_returned_home
 	dc.l	loc_0003406A
-	dc.l	$FFFFC73C
+	dc.l	Barrow_map_received
 	dc.l	loc_0003403E
-	dc.l	$FFFFC73B
+	dc.l	Malaga_king_crowned
 	dc.l	loc_00034012
 	LEA	loc_0001EF1A, A1
 	MOVE.w	#2, D7
 	BRA.w	SelectDialogueByGameState
 loc_0001EF1A:
 	dc.b	$00, $02, $AC, $F8 
-	dc.l	$FFFFC735
+	dc.l	Bearwulf_returned_home
 	dc.l	loc_0002ACDC
-	dc.l	$FFFFC73C
+	dc.l	Barrow_map_received
 	dc.l	loc_0002ACC0
-	dc.l	$FFFFC73B
+	dc.l	Malaga_king_crowned
 	dc.l	loc_0002ACA4
 	LEA	loc_000340C2, A1
 	BRA.w	loc_0001F1D0
@@ -33549,16 +33549,16 @@ loc_0001EF1A:
 	BRA.w	SelectDialogueByGameState
 loc_0001EF4E:
 	dc.l	loc_00034D02
-	dc.l	$FFFFC745
+	dc.l	Uncle_tibor_visited
 	dc.l	loc_00034CEA
 	LEA	loc_0001EF68, A1
 	MOVE.w	#1, D7
 	BRA.w	SelectDialogueByGameState
 loc_0001EF68:
 	dc.b	$00, $03, $4D, $26 
-	dc.l	$FFFFC754
+	dc.l	Pass_to_carthahena_purchased
 	dc.l	loc_00034D22
-	dc.l	$FFFFC745
+	dc.l	Uncle_tibor_visited
 	dc.l	loc_00034D1E
 	LEA	loc_00034D1A, A1
 	BRA.w	loc_0001F1D0
@@ -33567,27 +33567,27 @@ loc_0001EF68:
 	BRA.w	SelectDialogueByGameState
 loc_0001EF94:
 	dc.l	loc_00035D80
-	dc.l	$FFFFC73D
+	dc.l	Imposter_killed
 	dc.l	loc_00035D44
-	dc.l	$FFFFC741
+	dc.l	Bully_first_fight_won
 	dc.l	loc_00035D08
 	LEA	loc_0001EFB6, A1
 	MOVE.w	#1, D7
 	BRA.w	SelectDialogueByGameState
 loc_0001EFB6:
 	dc.b	$00, $02, $B6, $EE 
-	dc.l	$FFFFC73D
+	dc.l	Imposter_killed
 	dc.l	loc_0002B6E2	
-	dc.l	$FFFFC741
+	dc.l	Bully_first_fight_won
 	dc.l	loc_0002B6D6
 	LEA	loc_0001EFD8, A1
 	MOVE.w	#1, D7
 	BRA.w	SelectDialogueByGameState
 loc_0001EFD8:
 	dc.b	$00, $03, $5D, $CC 
-	dc.l	$FFFFC73D
+	dc.l	Imposter_killed
 	dc.l	loc_00035DC4	
-	dc.l	$FFFFC741
+	dc.l	Bully_first_fight_won
 	dc.l	loc_00035DBC
 	LEA	loc_00035DD4, A1
 	BRA.w	loc_0001F1D0
@@ -33596,23 +33596,23 @@ loc_0001EFD8:
 	BRA.w	SelectDialogueByGameState
 loc_0001F004:
 	dc.b	$00, $03, $5D, $E0 
-	dc.l	$FFFFC73D
+	dc.l	Imposter_killed
 	dc.l	loc_00035DDC	
-	dc.l	$FFFFC741
+	dc.l	Bully_first_fight_won
 	dc.l	loc_00035DD8
 	LEA	loc_0001F026, A1
 	MOVE.w	#0, D7
 	BRA.w	SelectDialogueByGameState
 loc_0001F026:
 	dc.l	loc_00036E16
-	dc.l	$FFFFC744
+	dc.l	Helwig_men_rescued
 	dc.l	loc_00036DD2
 	LEA	loc_0001F040, A1
 	MOVE.w	#0, D7
 	BRA.w	SelectDialogueByGameState
 loc_0001F040:
 	dc.l	loc_00036E62
-	dc.l	$FFFFC744
+	dc.l	Helwig_men_rescued
 	dc.l	loc_00036E56
 	LEA	loc_00036E6E, A1
 	BRA.w	loc_0001F1D0
@@ -33623,55 +33623,55 @@ loc_0001F064:
 	dc.l	loc_000385EC
 	dc.l	Swaffham_ruined
 	dc.l	loc_000385B8
-	dc.l	$FFFFC749
+	dc.l	Ring_of_earth_obtained
 	dc.l	loc_00038584
 	LEA	loc_0001F086, A1
 	MOVE.w	#6, D7
 	BRA.w	SelectDialogueByGameState
 loc_0001F086:
 	dc.b	$00, $02, $B9, $EE 
-	dc.l	$FFFFC749
+	dc.l	Ring_of_earth_obtained
 	dc.l	loc_0002B9C6
-	dc.l	$FFFFC74F
+	dc.l	Blue_crystal_received
 	dc.l	loc_0002B9DA	
-	dc.l	$FFFFC74E
+	dc.l	Blue_crystal_quest_started
 	dc.l	loc_0002B9B2
-	dc.l	$FFFFC74D
+	dc.l	Red_crystal_received
 	dc.l	loc_0002B9DA	
-	dc.l	$FFFFC74C
+	dc.l	Red_crystal_quest_started
 	dc.l	loc_0002B99E
-	dc.l	$FFFFC74B
+	dc.l	Ring_of_wind_received
 	dc.l	loc_0002B9DA	
-	dc.l	$FFFFC74A
+	dc.l	White_crystal_quest_started
 	dc.l	loc_0002B98A
 	LEA	loc_0001F0D0, A1
 	MOVE.w	#1, D7
 	BRA.w	SelectDialogueByGameState
 loc_0001F0D0:
 	dc.l	loc_00039550
-	dc.l	$FFFFC76B
+	dc.l	Knute_informed_of_swaffham_ruin
 	dc.l	loc_0003954C
-	dc.l	$FFFFC749
+	dc.l	Ring_of_earth_obtained
 	dc.l	loc_00039548	
 	LEA	loc_0001F0F2, A1
 	MOVE.w	#2, D7
 	BRA.w	SelectDialogueByGameState
 loc_0001F0F2:
 	dc.l	loc_0003A0B2
-	dc.l	$FFFFC752
+	dc.l	Digot_plant_received
 	dc.l	loc_0003A08A
-	dc.l	$FFFFC751
+	dc.l	Swaffham_ate_poisoned_food
 	dc.l	loc_0003A062
-	dc.l	$FFFFC750
+	dc.l	Ate_spy_dinner
 	dc.l	loc_0003A03A
 	LEA	loc_0001F11C, A1
 	MOVE.w	#1, D7
 	BRA.w	SelectDialogueByGameState
 loc_0001F11C:
 	dc.l	loc_0003A0F6
-	dc.l	$FFFFC753
+	dc.l	Spy_dinner_poisoned_flag
 	dc.l	loc_0003A0F2
-	dc.l	$FFFFC750
+	dc.l	Ate_spy_dinner
 	dc.l	loc_0003A0EE
 	dc.l	$43F90003	
 	dc.l	$A0DA6000	
@@ -33683,7 +33683,7 @@ loc_0001F11C:
 	BRA.w	SelectDialogueByGameState
 loc_0001F152:
 	dc.b	$00, $03, $A1, $0E 
-	dc.l	$FFFFC754
+	dc.l	Pass_to_carthahena_purchased
 	dc.l	loc_0003A0FA
 	LEA	loc_0003B820, A0
 	TST.b	Tsarkon_is_dead.w
@@ -35068,7 +35068,7 @@ loc_0002039E:
 	BEQ.b	loc_000203D8
 	MOVE.w	#1, Reward_script_type.w
 	MOVE.w	#$1037, Reward_script_value.w
-	MOVE.l	#$FFFFC78B, Reward_script_flag.w
+	MOVE.l	#Crimson_armor_chest_opened, Reward_script_flag.w
 	MOVEA.l	Reward_script_flag.w, A0
 	TST.b	(A0)
 	BNE.b	loc_000203C6
@@ -35081,78 +35081,46 @@ loc_000203D8:
 	RTS
 	
 loc_000203DA:
-	MOVE.w	#$100, Reward_script_value.w
-	MOVE.l	#$FFFFC788, Reward_script_flag.w
-	BSR.w	InitMoneyTreasure
-	RTS
+	MoneyChest $100, Money_chest_256_opened
 	
 loc_000203EE:
-	dc.b	$31, $FC, $03, $00, $C5, $72, $21, $FC, $FF, $FF, $C7, $8E, $C5, $74, $61, $00, $10, $34, $4E, $75 
+	MoneyChest $0300, $FFFFC78E
 loc_00020402:
-	MOVE.w	#$50, Reward_script_value.w 		  ; 50 kim chest outside Wyclif
-	MOVE.l	#$FFFFC798, Reward_script_flag.w   ; $FFFFC798 is $FF if contents has been taken
-	BSR.w	InitMoneyTreasure
-	RTS
+	MoneyChest $50, Wyclif_outskirts_chest_opened
 	
 loc_00020416:
-	MOVE.w	#$300, Reward_script_value.w	
-	MOVE.l	#$FFFFC79B, Reward_script_flag.w	
-	BSR.w	InitMoneyTreasure	
-	RTS
+	MoneyChest $300, Money_chest_768_b_opened
 	
 loc_0002042A:
-	dc.b	$31, $FC, $02, $00, $C5, $72, $21, $FC, $FF, $FF, $C7, $B4, $C5, $74, $61, $00, $0F, $F8, $4E, $75
+	MoneyChest $0200, $FFFFC7B4
 loc_0002043E:
-	dc.b	$31, $FC, $05, $00, $C5, $72, $21, $FC, $FF, $FF, $C7, $B5 
-	dc.b	$C5, $74, $61, $00, $0F, $E4, $4E, $75
+	MoneyChest $0500, $FFFFC7B5
 loc_00020452:
-	dc.b	$31, $FC, $07, $00, $C5, $72, $21, $FC, $FF, $FF, $C7, $B6, $C5, $74, $61, $00, $0F, $D0, $4E, $75
+	MoneyChest $0700, $FFFFC7B6
 loc_00020466:
-	dc.b	$31, $FC, $50, $00 
-	dc.b	$C5, $72, $21, $FC, $FF, $FF, $C7, $B9, $C5, $74, $61, $00, $0F, $BC, $4E, $75 
+	MoneyChest $5000, $FFFFC7B9
 loc_0002047A:
-	MOVE.w	#$1700, Reward_script_value.w	
-	MOVE.l	#$FFFFC7BA, Reward_script_flag.w	
-	BSR.w	InitMoneyTreasure	
-	RTS
+	MoneyChest $1700, Chest_5888_kims_opened
 	
 loc_0002048E:	
-	dc.b	$31, $FC, $03, $60, $C5, $72, $21, $FC, $FF, $FF, $C7, $BB, $C5, $74, $61, $00, $0F, $94, $4E, $75 
+	MoneyChest $0360, $FFFFC7BB
 loc_000204A2:
-	MOVE.w	#$9999, Reward_script_value.w
-	MOVE.l	#$FFFFC7BC, Reward_script_flag.w
-	BSR.w	InitMoneyTreasure
-	RTS
+	MoneyChest $9999, Chest_9999_kims_opened
 	
 loc_000204B6:
-	MOVE.w	#1, Reward_script_value.w
-	MOVE.l	#$FFFFC7AE, Reward_script_flag.w
-	BSR.w	SetupItemTreasure
-	RTS
+	ItemChest 1, Candle_chest_3_opened
 	
 loc_000204CA:
-	MOVE.w	#2, Reward_script_value.w
-	MOVE.l	#$FFFFC7AF, Reward_script_flag.w
-	BSR.w	SetupItemTreasure
-	RTS
+	ItemChest 2, Lantern_chest_2_opened
 	
 loc_000204DE:
-	MOVE.w	#0, Reward_script_value.w
-	MOVE.l	#$FFFFC789, Reward_script_flag.w
-	BSR.w	SetupItemTreasure
-	RTS
+	ItemChest 0, Herbs_chest_opened
 	
 loc_000204F2:
-	MOVE.w	#0, Reward_script_value.w
-	MOVE.l	#$FFFFC78A, Reward_script_flag.w
-	BSR.w	SetupItemTreasure
-	RTS
+	ItemChest 0, Herbs_chest_2_opened
 	
 loc_00020506:
-	MOVE.w	#$060E, Reward_script_value.w
-	MOVE.l	#$FFFFC78F, Reward_script_flag.w
-	BSR.w	SetupEquipmentTreasure
-	RTS
+	EquipChest $060E, Dark_sword_chest_opened
 	
 ; SetupNoOneTalker
 SetupNoOneTalker:
@@ -35171,10 +35139,7 @@ loc_00020542:
 	
 	
 loc_00020550:
-	MOVE.w	#$001B, Reward_script_value.w
-	MOVE.l	#$FFFFC799, Reward_script_flag.w
-	BSR.w	SetupItemTreasure
-	RTS
+	ItemChest $001B, Medicine_chest_opened
 	
 loc_00020564:
 	BSR.w	InitTalkerWithGfxDescriptor_1F712
@@ -35182,39 +35147,23 @@ loc_00020564:
 	RTS
 	
 loc_00020572:
-	MOVE.w	#0, Reward_script_value.w	
-	MOVE.l	#$FFFFC79C, Reward_script_flag.w	
-	BSR.w	SetupItemTreasure	
-	RTS
+	ItemChest 0, Herbs_chest_5_opened
 	
 loc_00020586:
-	MOVE.w	#0, Reward_script_value.w	
-	MOVE.l	#$FFFFC7B0, Reward_script_flag.w	
-	BSR.w	SetupItemTreasure	
-	RTS
+	ItemChest 0, Herbs_chest_6_opened
 	
 loc_0002059A:
-	MOVE.w	#$0024, Reward_script_value.w
-	MOVE.l	#$FFFFC7B2, Reward_script_flag.w
-	BSR.w	SetupItemTreasure
-	RTS
+	ItemChest $0024, $FFFFC7B2
 	
 loc_000205AE:
-	dc.b	$31, $FC, $08, $1B, $C5, $72, $21, $FC, $FF, $FF, $C7, $BD, $C5, $74, $61, $00, $0E, $6A, $4E, $75
+	EquipChest $081B, $FFFFC7BD
 loc_000205C2:	
-	dc.b	$31, $FC, $00, $21, $C5, $72, $21, $FC, $FF, $FF, $C7, $B3 
-	dc.b	$C5, $74, $61, $00, $0E, $4C, $4E, $75 
+	ItemChest $0021, $FFFFC7B3
 loc_000205D6:
-	MOVE.w	#$001F, Reward_script_value.w
-	MOVE.l	#$FFFFC7BE, Reward_script_flag.w
-	BSR.w	SetupItemTreasure
-	RTS
+	ItemChest $001F, $FFFFC7BE
 	
 loc_000205EA:
-	MOVE.w	#$081A, Reward_script_value.w	
-	MOVE.l	#$FFFFC7BF, Reward_script_flag.w	
-	BSR.w	SetupEquipmentTreasure	
-	RTS
+	EquipChest $081A, $FFFFC7BF
 	
 loc_000205FE:
 	BSR.w	InitTalkerWithGfxDescriptor_1F74A
@@ -35687,154 +35636,91 @@ loc_00020CBA:
 	RTS
 	
 loc_00020CBC:
-	MOVE.w	#$0023, Reward_script_value.w
-	MOVE.l	#$FFFFC7EE, Reward_script_flag.w
-	BSR.w	SetupItemTreasure
-	RTS
+	ItemChest $0023, $FFFFC7EE
 	
 loc_00020CD0:
-	MOVE.w	#$100, Reward_script_value.w
-	MOVE.l	#$FFFFC7E0, Reward_script_flag.w
-	BSR.w	InitMoneyTreasure
-	RTS
+	MoneyChest $100, $FFFFC7E0
 	
 loc_00020CE4:
-	MOVE.w	#$1000, Reward_script_value.w	
-	MOVE.l	#$FFFFC7EC, Reward_script_flag.w	
-	BSR.w	InitMoneyTreasure	
-	RTS
+	MoneyChest $1000, $FFFFC7EC
 	
 loc_00020CF8:
-	MOVE.w	#$040A, Reward_script_value.w
-	MOVE.l	#$FFFFC7E1, Reward_script_flag.w
-	BSR.w	SetupEquipmentTreasure
-	RTS
+	EquipChest $040A, $FFFFC7E1
 	
 loc_00020D0C:
-	MOVE.w	#$0411, Reward_script_value.w
-	MOVE.l	#$FFFFC7E3, Reward_script_flag.w
-	BSR.w	SetupEquipmentTreasure
-	RTS
+	EquipChest $0411, $FFFFC7E3
 	
 loc_00020D20:
-	dc.b	$31, $FC, $08, $20, $C5, $72, $21, $FC, $FF, $FF, $C7, $E2, $C5, $74, $61, $00, $06, $F8, $4E, $75 
+	EquipChest $0820, $FFFFC7E2
 loc_00020D34:
-	MOVE.w	#$0410, Reward_script_value.w
-	MOVE.l	#$FFFFC7EF, Reward_script_flag.w
-	BSR.w	SetupEquipmentTreasure
-	RTS
+	EquipChest $0410, $FFFFC7EF
 	
 loc_00020D48:
-	dc.b	$31, $FC, $10, $30, $C5, $72, $21, $FC, $FF, $FF, $C7, $E4, $C5, $74, $61, $00, $06, $D0, $4E, $75 
+	EquipChest $1030, $FFFFC7E4
 loc_00020D5C:
-	MOVE.w	#$1035, Reward_script_value.w
-	MOVE.l	#$FFFFC7E6, Reward_script_flag.w
-	BSR.w	SetupEquipmentTreasure
-	RTS
+	EquipChest $1035, $FFFFC7E6
 	
 loc_00020D70:
-	dc.b	$31, $FC, $12, $38, $C5, $72, $21, $FC, $FF, $FF, $C7, $E7, $C5, $74, $61, $00, $06, $A8, $4E, $75
+	EquipChest $1238, $FFFFC7E7
 loc_00020D84:	
-	dc.b	$31, $FC, $08, $1F, $C5, $72, $21, $FC, $FF, $FF, $C7, $E9 
-	dc.b	$C5, $74, $61, $00, $06, $94, $4E, $75 
+	EquipChest $081F, $FFFFC7E9
 loc_00020D98:
-	MOVE.w	#$060F, Reward_script_value.w
-	MOVE.l	#$FFFFC7EA, Reward_script_flag.w
-	BSR.w	SetupEquipmentTreasure
-	RTS
+	EquipChest $060F, $FFFFC7EA
 	
 loc_00020DAC:
-	MOVE.w	#0, Reward_script_value.w
-	MOVE.l	#$FFFFC78D, Reward_script_flag.w
-	BSR.w	SetupItemTreasure
-	RTS
+	ItemChest 0, $FFFFC78D
 	
 loc_00020DC0:
-	MOVE.w	#1, Reward_script_value.w
-	MOVE.l	#$FFFFC78C, Reward_script_flag.w
-	BSR.w	SetupItemTreasure
-	RTS
+	ItemChest 1, $FFFFC78C
 	
 loc_00020DD4:
-	MOVE.w	#0, Reward_script_value.w
-	MOVE.l	#$FFFFC790, Reward_script_flag.w
-	BSR.w	SetupItemTreasure
-	RTS
+	ItemChest 0, $FFFFC790
 	
 loc_00020DE8:
-	MOVE.w	#$102B, Reward_script_value.w
-	MOVE.l	#$FFFFC791, Reward_script_flag.w
-	BSR.w	SetupEquipmentTreasure
-	RTS
+	EquipChest $102B, $FFFFC791
 	
 loc_00020DFC:
-	dc.b	$31, $FC, $00, $01, $C5, $72, $21, $FC, $FF, $FF, $C7, $92, $C5, $74, $61, $00, $06, $12, $4E, $75 
+	ItemChest $0001, $FFFFC792
 loc_00020E10:
-	MOVE.w	#$0300, Reward_script_value.w
-	MOVE.l	#$FFFFC793, Reward_script_flag.w
-	BSR.w	InitMoneyTreasure
-	RTS
+	MoneyChest $0300, $FFFFC793
 	
 loc_00020E24:
-	dc.b	$31, $FC, $06, $00, $C5, $72, $21, $FC, $FF, $FF, $C7, $94, $C5, $74, $61, $00, $05, $FE, $4E, $75 
+	MoneyChest $0600, $FFFFC794
 loc_00020E38:
-	MOVE.w	#1, Reward_script_value.w	
-	MOVE.l	#$FFFFC796, Reward_script_flag.w	
-	BSR.w	SetupItemTreasure	
-	RTS
+	ItemChest 1, $FFFFC796
 	
 loc_00020E4C:	
-	dc.b	$31, $FC, $00, $00, $C5, $72, $21, $FC, $FF, $FF, $C7, $97, $C5, $74, $61, $00, $05, $C2, $4E, $75
+	ItemChest $0000, $FFFFC797
 loc_00020E60:
-	dc.b	$31, $FC, $08, $1E, $C5, $72, $21, $FC, $FF, $FF, $C7, $9D 
-	dc.b	$C5, $74, $61, $00, $05, $B8, $4E, $75 
+	EquipChest $081E, $FFFFC79D
 loc_00020E74:
-	MOVE.w	#$700, Reward_script_value.w	
-	MOVE.l	#$FFFFC79E, Reward_script_flag.w	
-	BSR.w	InitMoneyTreasure	
-	RTS
+	MoneyChest $700, $FFFFC79E
 	
 loc_00020E88:
-	MOVE.w	#$0407, Reward_script_value.w
-	MOVE.l	#$FFFFC7E8, Reward_script_flag.w
-	BSR.w	SetupEquipmentTreasure
-	RTS
+	EquipChest $0407, $FFFFC7E8
 	
 loc_00020E9C:
-	dc.b	$31, $FC, $08, $16, $C5, $72, $21, $FC, $FF, $FF, $C7, $9F, $C5, $74, $61, $00, $05, $7C, $4E, $75
+	EquipChest $0816, $FFFFC79F
 loc_00020EB0:	
-	dc.b	$31, $FC, $10, $2A, $C5, $72, $21, $FC, $FF, $FF, $C7, $A0 
-	dc.b	$C5, $74, $61, $00, $05, $68, $4E, $75
+	EquipChest $102A, $FFFFC7A0
 loc_00020EC4:	
-	dc.b	$31, $FC, $08, $50, $C5, $72, $21, $FC, $FF, $FF, $C7, $A1, $C5, $74, $61, $00, $05, $5E, $4E, $75 
+	MoneyChest $0850, $FFFFC7A1
 loc_00020ED8:
-	MOVE.w	#2, Reward_script_value.w	
-	MOVE.l	#$FFFFC7A2, Reward_script_flag.w	
-	BSR.w	SetupItemTreasure	
-	RTS
+	ItemChest 2, $FFFFC7A2
 	
 loc_00020EEC:
-	MOVE.w	#$0822, Reward_script_value.w	
-	MOVE.l	#$FFFFC787, Reward_script_flag.w	
-	BSR.w	SetupEquipmentTreasure	
-	RTS
+	EquipChest $0822, $FFFFC787
 	
 loc_00020F00:	
-	dc.b	$31, $FC, $10, $36, $C5, $72, $21, $FC, $FF, $FF, $C7, $A3, $C5, $74, $61, $00, $05, $18, $4E, $75 
+	EquipChest $1036, $FFFFC7A3
 loc_00020F14:
-	MOVE.w	#$2000, Reward_script_value.w
-	MOVE.l	#$FFFFC7A4, Reward_script_flag.w
-	BSR.w	InitMoneyTreasure
-	RTS
+	MoneyChest $2000, $FFFFC7A4
 	
 loc_00020F28:
-	MOVE.w	#$3000, Reward_script_value.w	
-	MOVE.l	#$FFFFC7A5, Reward_script_flag.w	
-	BSR.w	InitMoneyTreasure	
-	RTS
+	MoneyChest $3000, $FFFFC7A5
 	
 loc_00020F3C:
-	dc.b	$31, $FC, $20, $00, $C5, $72, $21, $FC, $FF, $FF, $C7, $A6, $C5, $74, $61, $00, $04, $E6, $4E, $75 
+	MoneyChest $2000, $FFFFC7A6
 loc_00020F50:
 	TST.b	Treasure_of_troy_challenge_issued.w
 	BEQ.b	loc_00020F68
@@ -35869,7 +35755,7 @@ loc_00020FA2:
 	MOVE.b	#$FF, Truffles_available.w
 	MOVE.w	#0, Reward_script_type.w
 	MOVE.w	#$010B, Reward_script_value.w
-	MOVE.l	#$FFFFC72C, Reward_script_flag.w
+	MOVE.l	#Truffle_collected, Reward_script_flag.w
 	BSR.w	InitDialogMode
 	MOVE.l	#loc_00008B6A, $2(A6)
 	MOVE.l	#loc_0001F7BA, Talker_gfx_descriptor_ptr.w
@@ -35943,7 +35829,7 @@ loc_000210BE:
 	TST.b	Bearwulf_cave_entered.w
 	BEQ.b	loc_000210DE
 	MOVE.w	#$0823, Reward_script_value.w
-	MOVE.l	#$FFFFC769, Reward_script_flag.w
+	MOVE.l	#Bearwulf_weapon_reward_given, Reward_script_flag.w
 	BSR.w	SetupEquipmentTreasure
 loc_000210DE:
 	RTS
@@ -35971,13 +35857,13 @@ loc_0002112A:
 	TST.b	Malaga_dungeon_person_rescued.w
 	BEQ.b	loc_0002114A
 	MOVE.w	#$0114, Reward_script_value.w
-	MOVE.l	#$FFFFC75B, Reward_script_flag.w
+	MOVE.l	#Crown_received, Reward_script_flag.w
 	BSR.w	SetupItemTreasure
 loc_0002114A:
 	RTS
 
 loc_0002114C:
-	dc.b	$31, $FC, $80, $00, $C5, $72, $21, $FC, $FF, $FF, $C7, $3F, $C5, $74, $61, $00, $02, $D6, $4E, $75 
+	MoneyChest $8000, $FFFFC73F
 loc_00021160:
 	MOVE.l	#NoOneHereStr, Script_talk_source.w
 	TST.b	Bully_first_fight_won.w
@@ -36012,7 +35898,7 @@ loc_000211BE:
 	MOVE.b	#$FF, Herbs_available.w
 	MOVE.w	#0, Reward_script_type.w
 	MOVE.w	#$010C, Reward_script_value.w
-	MOVE.l	#$FFFFC752, Reward_script_flag.w
+	MOVE.l	#Digot_plant_received, Reward_script_flag.w
 	BSR.w	InitDialogMode
 	MOVE.l	#loc_00008B88, $2(A6)
 	MOVE.l	#loc_0001F79E, Talker_gfx_descriptor_ptr.w
@@ -36030,7 +35916,7 @@ loc_00021206:
 	
 loc_0002121C:
 	MOVE.w	#$010E, Reward_script_value.w
-	MOVE.l	#$FFFFC74B, Reward_script_flag.w
+	MOVE.l	#Ring_of_wind_received, Reward_script_flag.w
 	BSR.w	SetupItemTreasure
 	RTS
 	
@@ -36043,7 +35929,7 @@ loc_00021230:
 	
 loc_00021246:
 	MOVE.w	#$010F, Reward_script_value.w
-	MOVE.l	#$FFFFC74D, Reward_script_flag.w
+	MOVE.l	#Red_crystal_received, Reward_script_flag.w
 	BSR.w	SetupItemTreasure
 	RTS
 	
@@ -36056,7 +35942,7 @@ loc_0002125A:
 	
 loc_00021270:
 	MOVE.w	#$0110, Reward_script_value.w
-	MOVE.l	#$FFFFC74F, Reward_script_flag.w
+	MOVE.l	#Blue_crystal_received, Reward_script_flag.w
 	BSR.w	SetupItemTreasure
 	RTS
 	
@@ -36078,11 +35964,7 @@ loc_000212AA:
 	RTS
 	
 loc_000212BE:
-	MOVE.w	#4, Reward_script_type.w
-	MOVE.w	#5, Reward_script_value.w
-	MOVE.l	#$FFFFC81D, Reward_script_flag.w
-	BSR.w	SetupChestReward
-	RTS
+	RingChest 4, 5, $FFFFC81D
 	
 loc_000212D8:
 	TST.b	Thar_defeated.w
@@ -36098,11 +35980,7 @@ loc_000212EE:
 	RTS
 	
 loc_00021302:
-	MOVE.w	#4, Reward_script_type.w
-	MOVE.w	#6, Reward_script_value.w
-	MOVE.l	#$FFFFC81E, Reward_script_flag.w
-	BSR.w	SetupChestReward
-	RTS
+	RingChest 4, 6, $FFFFC81E
 	
 loc_0002131C:
 	TST.b	Luther_defeated.w
@@ -36118,11 +35996,7 @@ loc_00021332:
 	RTS
 	
 loc_00021346:
-	MOVE.w	#4, Reward_script_type.w
-	MOVE.w	#7, Reward_script_value.w
-	MOVE.l	#$FFFFC81F, Reward_script_flag.w
-	BSR.w	SetupChestReward
-	RTS
+	RingChest 4, 7, $FFFFC81F
 	
 loc_00021360:
 	TST.b	Tsarkon_is_dead.w
