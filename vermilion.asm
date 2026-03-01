@@ -15277,7 +15277,7 @@ OrbitBoss_MainTick:
 	BLE.b	loc_0000DA62
 	SUBQ.w	#1, $3C(A5)
 	MOVE.w	$3C(A5), D0
-	LEA	loc_00019F8E, A0
+	LEA	TerrafissiShakeDisplacementTable, A0
 	CLR.l	D1
 	MOVE.b	(A0,D0.w), D1
 	EXT.w	D1
@@ -26555,9 +26555,9 @@ CastBattleMagicMap:
 CastAero:
 	MOVEA.l	Object_slot_02_ptr.w, A6
 	BTST.b	#7, (A6)
-	BNE.w	loc_00018B12
+	BNE.w	CastAero_AlreadyActive
 	BSR.w	CheckCursedAndConsumeReadiedMagicMp
-	BNE.w	loc_00018B12
+	BNE.w	CastAero_AlreadyActive
 	BSET.b	#7, (A6)
 	BCLR.b	#7, $7(A6)
 	BCLR.b	#3, $7(A6)
@@ -26589,34 +26589,34 @@ CastAero:
 	MOVE.l	D3, $36(A6)
 	MOVE.w	$E(A5), $E(A6)
 	MOVE.w	$12(A5), $12(A6)
-	MOVE.l	#loc_00018B14, $2(A6)
+	MOVE.l	#UpdateAeroProjectile, $2(A6)
 	BSR.w	InitMagicDamageAndFlags
-loc_00018B12:
+CastAero_AlreadyActive:
 	RTS
 
-loc_00018B14:
+UpdateAeroProjectile:
 	TST.b	$19(A5)
-	BNE.w	loc_00018BA0
+	BNE.w	DeactivateProjectile
 	BSR.w	CheckProjectileHitEnemies
 	BSET.b	#3, $7(A5)
 	CMPI.b	#4, $18(A5)
-	BLE.b	loc_00018B34
+	BLE.b	AeroProjectile_SkipFlipClear
 	BCLR.b	#3, $7(A5)
-loc_00018B34:
+AeroProjectile_SkipFlipClear:
 	ADDQ.b	#1, $1B(A5)
 	MOVE.b	$1B(A5), D0
 	MOVE.b	D0, D1
 	SUBQ.b	#1, D1
 	EOR.b	D1, D0
 	BTST.l	#1, D0
-	BEQ.b	loc_00018B52
+	BEQ.b	AeroProjectile_UpdateSpriteAndMove
 	ADDQ.b	#1, $18(A5)
 	ANDI.b	#7, $18(A5)
-loc_00018B52:
+AeroProjectile_UpdateSpriteAndMove:
 	MOVE.b	$18(A5), D0
 	ANDI.w	#7, D0
 	ADD.w	D0, D0
-	LEA	loc_0003DF3C, A0
+	LEA	AeroSpriteFrameTable, A0
 	MOVE.w	(A0,D0.w), $8(A5)
 	MOVE.l	$32(A5), D0
 	SUB.l	D0, $E(A5)
@@ -26625,13 +26625,13 @@ loc_00018B52:
 	MOVE.w	$E(A5), D0
 	MOVE.w	$12(A5), D1
 	BSR.w	CheckCoordsInBounds
-	BEQ.b	loc_00018BA0
+	BEQ.b	DeactivateProjectile
 	MOVE.w	$E(A5), $A(A5)
 	MOVE.w	$12(A5), $C(A5)
 	MOVE.w	$12(A5), $16(A5)
 	JSR	AddSpriteToDisplayList
 	RTS
-loc_00018BA0:
+DeactivateProjectile:
 	BCLR.b	#7, (A5)
 	RTS
 
@@ -26639,14 +26639,14 @@ loc_00018BA0:
 CastAerios:
 	MOVEA.l	Object_slot_02_ptr.w, A6
 	BTST.b	#7, (A6)
-	BNE.w	loc_00018C62
+	BNE.w	CastAerios_Done
 	BSR.w	CheckCursedAndConsumeReadiedMagicMp
-	BNE.w	loc_00018C62
+	BNE.w	CastAerios_Done
 	BSR.w	InitMagicDamageAndFlags
 	MOVEA.l	Object_slot_02_ptr.w, A3
 	CLR.w	D1
 	MOVE.w	#7, D7
-loc_00018BC8:
+AeriosInitProjectileLoop:
 	BSET.b	#7, (A6)
 	BCLR.b	#7, $7(A6)
 	BCLR.b	#3, $7(A6)
@@ -26674,20 +26674,20 @@ loc_00018BC8:
 	MOVE.b	$1(A6), D0
 	LEA	(A6,D0.w), A6
 	ADDQ.w	#1, D1
-	DBF	D7, loc_00018BC8
+	DBF	D7, AeriosInitProjectileLoop
 	MOVEA.l	Object_slot_02_ptr.w, A6
-	MOVE.l	#loc_00018C64, $2(A6)
-loc_00018C62:
+	MOVE.l	#UpdateAeriosLeadProjectile, $2(A6)
+CastAerios_Done:
 	RTS
 
-loc_00018C64:
+UpdateAeriosLeadProjectile:
 	BSR.w	UpdateHomingProjectile
 	BSR.w	CheckMagicSlotActiveOrClearAll
 	RTS
 
 UpdateHomingProjectile:
 	TST.b	$19(A5)
-	BNE.w	loc_00018D52
+	BNE.w	MarkProjectileFinished
 	BSR.w	CheckProjectileHitEnemies
 	ADDQ.w	#1, $3A(A5)
 	MOVE.w	$3A(A5), D0
@@ -26695,35 +26695,35 @@ UpdateHomingProjectile:
 	SUBQ.b	#1, D1
 	EOR.b	D1, D0
 	BTST.l	#3, D0
-	BEQ.b	loc_00018CA2
+	BEQ.b	HomingProjectile_UpdateFlipFlag
 	TST.l	$28(A5)
-	BEQ.b	loc_00018CA2
+	BEQ.b	HomingProjectile_UpdateFlipFlag
 	MOVEA.l	$28(A5), A6
 	BTST.b	#7, (A6)
-	BEQ.b	loc_00018CA2
+	BEQ.b	HomingProjectile_UpdateFlipFlag
 	BSR.w	UpdateHomingProjectileDirection
-loc_00018CA2:
+HomingProjectile_UpdateFlipFlag:
 	BSET.b	#3, $7(A5)
 	MOVE.b	$1A(A5), D0
 	ANDI.w	#7, D0
 	CMPI.b	#4, D0
-	BLE.b	loc_00018CBC
+	BLE.b	HomingProjectile_AnimateFrame
 	BCLR.b	#3, $7(A5)
-loc_00018CBC:
+HomingProjectile_AnimateFrame:
 	ADDQ.b	#1, $1B(A5)
 	MOVE.b	$1B(A5), D0
 	MOVE.b	D0, D1
 	SUBQ.b	#1, D1
 	EOR.b	D1, D0
 	BTST.l	#1, D0
-	BEQ.b	loc_00018CDA
+	BEQ.b	HomingProjectile_ApplyVelocity
 	ADDQ.b	#1, $1A(A5)
 	ANDI.b	#7, $1A(A5)
-loc_00018CDA:
+HomingProjectile_ApplyVelocity:
 	MOVE.b	$1A(A5), D0
 	ANDI.w	#7, D0
 	ADD.w	D0, D0
-	LEA	loc_0003DF3C, A0
+	LEA	AeroSpriteFrameTable, A0
 	MOVE.w	(A0,D0.w), $8(A5)
 	LEA	SineTable, A0
 	MOVE.l	$20(A5), D0
@@ -26745,14 +26745,14 @@ loc_00018CDA:
 	MOVE.w	$E(A5), D0
 	MOVE.w	$12(A5), D1
 	BSR.w	CheckCoordsInBounds
-	BEQ.b	loc_00018D52
+	BEQ.b	MarkProjectileFinished
 	MOVE.w	$E(A5), $A(A5)
 	MOVE.w	$12(A5), $C(A5)
 	MOVE.w	$12(A5), $16(A5)
 	JSR	AddSpriteToDisplayList
 	RTS
 	
-loc_00018D52:
+MarkProjectileFinished:
 	MOVE.b	#$FF, $19(A5)
 	RTS
 
@@ -26760,9 +26760,9 @@ loc_00018D52:
 CastVolti:
 	MOVEA.l	Object_slot_02_ptr.w, A6
 	BTST.b	#7, (A6)
-	BNE.w	loc_00018DF6
+	BNE.w	CastVolti_Done
 	BSR.w	CheckCursedAndConsumeReadiedMagicMp
-	BNE.w	loc_00018DF6
+	BNE.w	CastVolti_Done
 	MOVE.w	#$00BE, D0
 	JSR	QueueSoundEffect
 	BSET.b	#7, (A6)
@@ -26791,19 +26791,19 @@ CastVolti:
 	MOVE.l	D3, $36(A6)
 	MOVE.w	$E(A5), $E(A6)
 	MOVE.w	$12(A5), $12(A6)
-	MOVE.l	#loc_00018DF8, $2(A6)
-loc_00018DF6:
+	MOVE.l	#UpdateVoltiProjectile, $2(A6)
+CastVolti_Done:
 	RTS
 
-loc_00018DF8:
+UpdateVoltiProjectile:
 	BSR.w	CheckProjectileHitEnemies
 	TST.b	$19(A5)
-	BNE.w	loc_00018E56
+	BNE.w	DeactivateVoltiProjectile
 	ADDQ.b	#1, $1B(A5)
 	MOVE.b	$1B(A5), D0
 	ANDI.w	#$000C, D0
 	ASR.w	#1, D0
-	LEA	loc_0003DFCC, A0
+	LEA	VoltiSpriteFrameTable, A0
 	MOVE.w	(A0,D0.w), $8(A5)
 	MOVE.l	$32(A5), D0
 	SUB.l	D0, $E(A5)
@@ -26812,14 +26812,14 @@ loc_00018DF8:
 	MOVE.w	$E(A5), D0
 	MOVE.w	$12(A5), D1
 	BSR.w	CheckCoordsInBounds
-	BEQ.b	loc_00018E56
+	BEQ.b	DeactivateVoltiProjectile
 	MOVE.w	$E(A5), $A(A5)
 	MOVE.w	$12(A5), $C(A5)
 	MOVE.w	$12(A5), $16(A5)
 	JSR	AddSpriteToDisplayList
 	RTS
 
-loc_00018E56:
+DeactivateVoltiProjectile:
 	BCLR.b	#7, (A5)
 	RTS
 
@@ -26827,27 +26827,27 @@ loc_00018E56:
 CastVoltio:
 	MOVEA.l	Object_slot_02_ptr.w, A6
 	BTST.b	#7, (A6)
-	BNE.w	loc_00018EBC
+	BNE.w	CastVoltio_Done
 	BSR.w	CheckCursedAndConsumeReadiedMagicMp
-	BNE.w	loc_00018EBC
+	BNE.w	CastVoltio_Done
 	MOVE.w	#$00BE, D0
 	JSR	QueueSoundEffect
 	MOVE.w	#$0245, D6
-	LEA	loc_00018FDA, A0
-	MOVE.l	#loc_00018F30, $2(A6)
+	LEA	VoltioProjectileOffsetData, A0
+	MOVE.l	#UpdateVoltioLeadOrbitProjectile, $2(A6)
 	BSR.w	InitMagicProjectile
 	MOVE.w	#2, D7
-loc_00018E94:
+VoltioInitFollowerLoop:
 	MOVE.l	#UpdateProjectileFollowPlayer, $2(A6)
 	BSR.w	InitMagicProjectile
-	DBF	D7, loc_00018E94
+	DBF	D7, VoltioInitFollowerLoop
 	MOVE.w	#$025D, D6
 	MOVE.w	#3, D7
-loc_00018EAC:
-	MOVE.l	#loc_00018FA0, $2(A6)
+VoltioInitGroundLoop:
+	MOVE.l	#UpdateVoltioGroundProjectile, $2(A6)
 	BSR.w	InitMagicProjectile
-	DBF	D7, loc_00018EAC
-loc_00018EBC:
+	DBF	D7, VoltioInitGroundLoop
+CastVoltio_Done:
 	RTS
 
 InitMagicProjectile:
@@ -26868,30 +26868,30 @@ InitMagicProjectile:
 	MOVE.w	(A0)+, $3C(A6)
 	MOVE.w	(A0)+, D0
 	BTST.l	#0, D0
-	BEQ.b	loc_00018F18
+	BEQ.b	InitMagicProjectile_SkipHFlip
 	BSET.b	#3, $7(A6)
-loc_00018F18:
+InitMagicProjectile_SkipHFlip:
 	BTST.l	#1, D0
-	BEQ.b	loc_00018F24
+	BEQ.b	InitMagicProjectile_CheckVFlip
 	BSET.b	#4, $7(A6)
-loc_00018F24:
+InitMagicProjectile_CheckVFlip:
 	CLR.w	D0
 	MOVE.b	$1(A6), D0
 	LEA	(A6,D0.w), A6
 	RTS
 
-loc_00018F30:
+UpdateVoltioLeadOrbitProjectile:
 	SUBQ.w	#1, $3A(A5)
-	BLE.b	loc_00018F54
+	BLE.b	VoltioOrbitExpired
 	ADDQ.b	#1, $1B(A5)
 	MOVE.b	$1B(A5), D0
 	ANDI.w	#6, D0
-	LEA	loc_0003DFC4, A0
+	LEA	VoltioOrbitSpriteFrameTable, A0
 	MOVE.w	(A0,D0.w), $8(A5)
 	BSR.w	UpdateProjectileFollowPlayer
 	RTS
 
-loc_00018F54:
+VoltioOrbitExpired:
 	BSR.w	ClearEnemyActiveFlags_Alt
 	RTS
 
@@ -26913,7 +26913,7 @@ UpdateProjectileFollowPlayer:
 	JSR	AddSpriteToDisplayList
 	RTS
 
-loc_00018FA0:
+UpdateVoltioGroundProjectile:
 	BSR.w	CheckProjectileHitEnemies
 	MOVEA.l	Player_entity_ptr.w, A6
 	MOVE.w	$E(A6), D0
@@ -26928,7 +26928,7 @@ loc_00018FA0:
 	JSR	AddSpriteToDisplayList
 	RTS
 
-loc_00018FDA:
+VoltioProjectileOffsetData:
 	dc.w	$FFF0 
 	dc.w	$FFF0 
 	dc.w	$FFFF 
@@ -26966,9 +26966,9 @@ loc_00018FDA:
 CastVoltios:
 	MOVEA.l	Object_slot_02_ptr.w, A6
 	BTST.b	#7, (A6)
-	BNE.b	loc_00019070
+	BNE.b	CastVoltios_Done
 	BSR.w	CheckCursedAndConsumeReadiedMagicMp
-	BNE.b	loc_00019070
+	BNE.b	CastVoltios_Done
 	MOVE.w	#$00B0, D0
 	JSR	QueueSoundEffect
 	BSET.b	#7, (A6)
@@ -26982,29 +26982,29 @@ CastVoltios:
 	MOVE.w	D0, $12(A6)
 	MOVE.w	#$000C, $1C(A6)
 	MOVE.w	#$0010, $1E(A6)
-	MOVE.l	#loc_00019072, $2(A6)
-loc_00019070:
+	MOVE.l	#UpdateVoltiosDescendPhase, $2(A6)
+CastVoltios_Done:
 	RTS
 
-loc_00019072:
+UpdateVoltiosDescendPhase:
 	CLR.w	D0
 	MOVE.b	$1(A5), D0
 	LEA	(A5,D0.w), A6
 	MOVE.w	$3A(A5), D7
 	MOVE.w	D7, D6
-	BEQ.b	loc_00019094
+	BEQ.b	VoltiosDescend_SpawnBolt
 	SUBQ.w	#1, D7
-loc_00019086:
+VoltiosDescend_SkipToSlotLoop:
 	CLR.w	D0
 	MOVE.b	$1(A6), D0
 	LEA	(A6,D0.w), A6
-	DBF	D7, loc_00019086
-loc_00019094:
+	DBF	D7, VoltiosDescend_SkipToSlotLoop
+VoltiosDescend_SpawnBolt:
 	MOVE.w	D6, D5
 	MOVE.w	$12(A5), D0
 	ASL.w	#4, D5
 	SUB.w	D5, D0
-	BLE.w	loc_00019110
+	BLE.w	VoltiosDescend_Complete
 	BSET.b	#7, (A6)
 	BCLR.b	#7, $7(A6)
 	BCLR.b	#3, $7(A6)
@@ -27022,63 +27022,63 @@ loc_00019094:
 	DIVU.w	#3, D5
 	SWAP	D5
 	ADD.w	D5, D5
-	LEA	loc_0003DFA2, A0
+	LEA	VoltiosDescendFrameTable, A0
 	MOVE.w	(A0,D5.w), $8(A6)
-	MOVE.l	#loc_000193F4, $2(A6)
+	MOVE.l	#DrawSpriteAtCurrentPosition, $2(A6)
 	ADDQ.w	#1, $3A(A5)
 	BSR.w	InitMagicDamageAndFlags
 	RTS
 
-loc_00019110:
+VoltiosDescend_Complete:
 	CLR.w	$3C(A5)
-	MOVE.l	#loc_0001911E, $2(A5)
+	MOVE.l	#UpdateVoltiosClearDescendPhase, $2(A5)
 	RTS
 
-loc_0001911E:
+UpdateVoltiosClearDescendPhase:
 	CLR.w	D0
 	MOVE.b	$1(A5), D0
 	LEA	(A5,D0.w), A6
 	MOVE.w	$3C(A5), D7
 	MOVE.w	D7, D6
-	BEQ.b	loc_00019140
+	BEQ.b	VoltiosClearDescend_DeactivateSlot
 	SUBQ.w	#1, D7
-loc_00019132:
+VoltiosClearDescend_SkipToSlotLoop:
 	CLR.w	D0
 	MOVE.b	$1(A6), D0
 	LEA	(A6,D0.w), A6
-	DBF	D7, loc_00019132
-loc_00019140:
+	DBF	D7, VoltiosClearDescend_SkipToSlotLoop
+VoltiosClearDescend_DeactivateSlot:
 	BCLR.b	#7, (A6)
 	ADDQ.w	#1, $3C(A5)
 	CMP.w	$3A(A5), D6
-	BGE.b	loc_00019150
+	BGE.b	VoltiosClearDescend_TransitionToAscend
 	RTS
 
-loc_00019150:
+VoltiosClearDescend_TransitionToAscend:
 	BSR.w	FindActiveEnemyPosition
-	MOVE.l	#loc_00019162, $2(A5)
+	MOVE.l	#UpdateVoltiosAscendPhase, $2(A5)
 	CLR.w	$3A(A5)
 	RTS
 
-loc_00019162:
+UpdateVoltiosAscendPhase:
 	CLR.w	D0
 	MOVE.b	$1(A5), D0
 	LEA	(A5,D0.w), A6
 	MOVE.w	$3A(A5), D7
 	MOVE.w	D7, D6
-	BEQ.b	loc_00019184
+	BEQ.b	VoltiosAscend_SpawnBolt
 	SUBQ.w	#1, D7
-loc_00019176:
+VoltiosAscend_SkipToSlotLoop:
 	CLR.w	D0
 	MOVE.b	$1(A6), D0
 	LEA	(A6,D0.w), A6
-	DBF	D7, loc_00019176
-loc_00019184:
+	DBF	D7, VoltiosAscend_SkipToSlotLoop
+VoltiosAscend_SpawnBolt:
 	MOVE.w	D6, D5
 	MOVE.w	$12(A5), D0
 	ASL.w	#4, D5
 	CMP.w	D0, D5
-	BGE.w	loc_000191F0
+	BGE.w	VoltiosAscend_Complete
 	BSET.b	#7, (A6)
 	BCLR.b	#7, $7(A6)
 	BCLR.b	#3, $7(A6)
@@ -27094,70 +27094,70 @@ loc_00019184:
 	DIVU.w	#3, D5
 	SWAP	D5
 	ADD.w	D5, D5
-	LEA	loc_0003DFA8, A0
+	LEA	VoltiosAscendFrameTable, A0
 	MOVE.w	(A0,D5.w), $8(A6)
-	MOVE.l	#loc_000193F4, $2(A6)
+	MOVE.l	#DrawSpriteAtCurrentPosition, $2(A6)
 	ADDQ.w	#1, $3A(A5)
 	RTS
 
-loc_000191F0:
+VoltiosAscend_Complete:
 	CLR.w	$3C(A5)
-	MOVE.l	#loc_000191FE, $2(A5)
+	MOVE.l	#UpdateVoltiosClearAscendPhase, $2(A5)
 	RTS
 
-loc_000191FE:
+UpdateVoltiosClearAscendPhase:
 	CLR.w	D0
 	MOVE.b	$1(A5), D0
 	LEA	(A5,D0.w), A6
 	MOVE.w	$3C(A5), D7
 	MOVE.w	D7, D6
-	BEQ.b	loc_00019220
+	BEQ.b	VoltiosClearAscend_UpdateSprite
 	SUBQ.w	#1, D7
-loc_00019212:
+VoltiosClearAscend_SkipToSlotLoop:
 	CLR.w	D0
 	MOVE.b	$1(A6), D0
 	LEA	(A6,D0.w), A6
-	DBF	D7, loc_00019212
-loc_00019220:
+	DBF	D7, VoltiosClearAscend_SkipToSlotLoop
+VoltiosClearAscend_UpdateSprite:
 	MOVE.w	$3C(A5), D0
 	CMP.w	$3A(A5), D0
-	BGE.b	loc_00019248
+	BGE.b	VoltiosClearAscend_TransitionToDeactivate
 	MOVEQ	#0, D5
 	MOVE.w	D6, D5
 	DIVU.w	#3, D5
 	SWAP	D5
 	ADD.w	D5, D5
-	LEA	loc_0003DFAE, A0
+	LEA	VoltiosClearFrameTable, A0
 	MOVE.w	(A0,D5.w), $8(A6)
 	ADDQ.w	#1, $3C(A5)
 	RTS
 
-loc_00019248:
+VoltiosClearAscend_TransitionToDeactivate:
 	CLR.w	$3C(A5)
-	MOVE.l	#loc_00019256, $2(A5)
+	MOVE.l	#UpdateVoltiosDeactivateAscendPhase, $2(A5)
 	RTS
 
-loc_00019256:
+UpdateVoltiosDeactivateAscendPhase:
 	CLR.w	D0
 	MOVE.b	$1(A5), D0
 	LEA	(A5,D0.w), A6
 	MOVE.w	$3C(A5), D7
 	MOVE.w	D7, D6
-	BEQ.b	loc_00019278
+	BEQ.b	VoltiosDeactivateAscend_ClearSlot
 	SUBQ.w	#1, D7
-loc_0001926A:
+VoltiosDeactivateAscend_SkipToSlotLoop:
 	CLR.w	D0
 	MOVE.b	$1(A6), D0
 	LEA	(A6,D0.w), A6
-	DBF	D7, loc_0001926A
-loc_00019278:
+	DBF	D7, VoltiosDeactivateAscend_SkipToSlotLoop
+VoltiosDeactivateAscend_ClearSlot:
 	BCLR.b	#7, (A6)
 	ADDQ.w	#1, $3C(A5)
 	CMP.w	$3A(A5), D6
-	BGE.b	loc_00019288
+	BGE.b	VoltiosSpawnExplosion
 	RTS
 
-loc_00019288:
+VoltiosSpawnExplosion:
 	CLR.w	D0
 	MOVE.b	$1(A5), D0
 	LEA	(A5,D0.w), A6
@@ -27172,7 +27172,7 @@ loc_00019288:
 	MOVE.w	$E(A5), $E(A6)
 	MOVE.w	$12(A5), $12(A6)
 	MOVE.w	$16(A5), $16(A6)
-	MOVE.l	#loc_000193F4, $2(A6)
+	MOVE.l	#DrawSpriteAtCurrentPosition, $2(A6)
 	CLR.w	D0
 	MOVE.b	$1(A6), D0
 	LEA	(A6,D0.w), A6
@@ -27189,12 +27189,12 @@ loc_00019288:
 	SUBI.w	#$0010, D0
 	MOVE.w	D0, $12(A6)
 	MOVE.w	$16(A5), $16(A6)
-	MOVE.l	#loc_000193F4, $2(A6)
+	MOVE.l	#DrawSpriteAtCurrentPosition, $2(A6)
 	CLR.w	$3C(A5)
-	MOVE.l	#loc_00019340, $2(A5)
+	MOVE.l	#UpdateVoltiosExplosion, $2(A5)
 	RTS
 
-loc_00019340:
+UpdateVoltiosExplosion:
 	CLR.w	D0
 	MOVE.b	$1(A5), D0
 	LEA	(A5,D0.w), A6
@@ -27205,33 +27205,33 @@ loc_00019340:
 	MOVE.w	$3C(A5), D0
 	ANDI.w	#$001C, D0
 	CMPI.w	#$0010, D0
-	BGE.b	loc_0001937E
-	LEA	loc_0003DFB4, A0
+	BGE.b	VoltiosExplosion_Finished
+	LEA	VoltiosExplosionFrameTable, A0
 	MOVE.w	(A0,D0.w), $8(A6)
 	MOVE.w	$2(A0,D0.w), $8(A4)
 	BSR.w	CheckProjectileHitEnemies
 	RTS
 
-loc_0001937E:
+VoltiosExplosion_Finished:
 	BSR.w	ClearEnemyActiveFlags_Alt
 	RTS
 
 FindActiveEnemyPosition:
 	MOVEA.l	Enemy_list_ptr.w, A4
 	MOVE.w	#7, D6
-loc_0001938C:
+FindActiveEnemy_CheckLoop:
 	BTST.b	#7, (A4)
-	BEQ.b	loc_000193B6
+	BEQ.b	FindActiveEnemy_NextSlot
 	BTST.b	#6, (A4)
-	BEQ.b	loc_000193B6
+	BEQ.b	FindActiveEnemy_NextSlot
 	TST.w	$28(A4)
-	BLE.b	loc_000193B6
+	BLE.b	FindActiveEnemy_NextSlot
 	MOVE.l	A4, $28(A5)
 	MOVE.w	$E(A4), $E(A5)
 	MOVE.w	$12(A4), $12(A5)
 	MOVE.w	$16(A4), $16(A5)
-	BRA.b	loc_000193F2
-loc_000193B6:
+	BRA.b	FindActiveEnemy_Done
+FindActiveEnemy_NextSlot:
 	CLR.w	D5
 	MOVE.b	$1(A4), D5
 	LEA	(A4,D5.w), A4
@@ -27241,15 +27241,15 @@ loc_000193B6:
 	CLR.w	D5
 	MOVE.b	$1(A4), D5
 	LEA	(A4,D5.w), A4
-	DBF	D6, loc_0001938C
+	DBF	D6, FindActiveEnemy_CheckLoop
 	MOVE.w	#$00A0, $E(A5)	
 	MOVE.w	#$0070, $12(A5)	
 	MOVE.w	$12(A5), $16(A5)	
 	MOVE.l	#0, $28(A5)	
-loc_000193F2:
+FindActiveEnemy_Done:
 	RTS
 
-loc_000193F4:
+DrawSpriteAtCurrentPosition:
 	MOVE.w	$E(A5), $A(A5)
 	MOVE.w	$12(A5), $C(A5)
 	JSR	AddSpriteToDisplayList
@@ -27259,9 +27259,9 @@ loc_000193F4:
 CastFerros:
 	MOVEA.l	Object_slot_02_ptr.w, A6
 	BTST.b	#7, (A6)
-	BNE.w	loc_000194A0
+	BNE.w	CastFerros_Done
 	BSR.w	CheckCursedAndConsumeReadiedMagicMp
-	BNE.w	loc_000194A0
+	BNE.w	CastFerros_Done
 	MOVE.w	#$00BC, D0
 	JSR	QueueSoundEffect
 	BSET.b	#7, (A6)
@@ -27286,22 +27286,22 @@ CastFerros:
 	MOVE.l	#$00080000, $20(A6)
 	MOVE.w	$E(A5), $E(A6)
 	MOVE.w	$12(A5), $12(A6)
-	MOVE.l	#loc_000194A2, $2(A6)
-loc_000194A0:
+	MOVE.l	#UpdateFerrosOrbit, $2(A6)
+CastFerros_Done:
 	RTS
 
-loc_000194A2:
+UpdateFerrosOrbit:
 	CMPI.l	#$00180000, $20(A5)
-	BGE.b	loc_000194B6
+	BGE.b	FerrosOrbit_CheckHitAndLifetime
 	ADDI.l	#$00010000, $20(A5)
-	BRA.b	loc_000194CA
-loc_000194B6:
+	BRA.b	FerrosOrbit_UpdatePosition
+FerrosOrbit_CheckHitAndLifetime:
 	JSR	CheckProjectileHitEnemies(PC)
 	TST.b	$19(A5)
-	BNE.w	loc_00019534
+	BNE.w	DeactivateFerrosProjectile
 	SUBQ.w	#1, $3A(A5)
-	BLE.w	loc_00019534
-loc_000194CA:
+	BLE.w	DeactivateFerrosProjectile
+FerrosOrbit_UpdatePosition:
 	SUBQ.b	#4, $18(A5)
 	LEA	SineTable, A0
 	CLR.w	D1
@@ -27323,7 +27323,7 @@ loc_000194CA:
 	MOVE.w	$E(A5), D0
 	MOVE.w	$12(A5), D1
 	BSR.w	CheckCoordsInBounds
-	BEQ.w	loc_00019534
+	BEQ.w	DeactivateFerrosProjectile
 	MOVE.w	$E(A5), $A(A5)
 	MOVE.w	$12(A5), $C(A5)
 	MOVE.w	$12(A5), $16(A5)
@@ -27331,7 +27331,7 @@ loc_000194CA:
 	JSR	AddSpriteToDisplayList
 	RTS
 
-loc_00019534:
+DeactivateFerrosProjectile:
 	BCLR.b	#7, (A5)
 	MOVE.b	#$FF, $19(A5)
 	RTS
@@ -27340,9 +27340,9 @@ loc_00019534:
 CastCopperos:
 	MOVEA.l	Object_slot_02_ptr.w, A6
 	BTST.b	#7, (A6)
-	BNE.w	loc_000195D8
+	BNE.w	CastCopperos_Done
 	BSR.w	CheckCursedAndConsumeReadiedMagicMp
-	BNE.w	loc_000195D8
+	BNE.w	CastCopperos_Done
 	MOVE.w	#$00BC, D0
 	JSR	QueueSoundEffect
 	BSET.b	#7, (A6)
@@ -27367,14 +27367,14 @@ CastCopperos:
 	MOVE.l	#$400, $20(A6)
 	MOVE.w	$E(A5), $E(A6)
 	MOVE.w	$12(A5), $12(A6)
-	MOVE.l	#loc_000195DA, $2(A6)
-loc_000195D8:
+	MOVE.l	#UpdateCopperosProjectile, $2(A6)
+CastCopperos_Done:
 	RTS
 
-loc_000195DA:
+UpdateCopperosProjectile:
 	JSR	CheckProjectileHitEnemies(PC)
 	TST.b	$19(A5)
-	BMI.w	loc_00019688
+	BMI.w	CopperosExplodeIntoFragments
 	LEA	SineTable, A0
 	MOVE.l	$20(A5), D0
 	CLR.w	D1
@@ -27395,16 +27395,16 @@ loc_000195DA:
 	MOVE.w	$E(A5), D0
 	MOVE.w	$12(A5), D1
 	BSR.w	CheckCoordsInBounds
-	BEQ.w	loc_00019682
+	BEQ.w	DeactivateCopperosProjectile
 	MOVE.w	$E(A5), $A(A5)
 	MOVE.w	$12(A5), $C(A5)
 	MOVE.w	$12(A5), $16(A5)
 	BSET.b	#3, $7(A5)
 	CMPI.b	#4, $18(A5)
-	BLE.b	loc_00019656
+	BLE.b	CopperosProjectile_AnimateSprite
 	BCLR.b	#3, $7(A5)
-loc_00019656:
-	LEA	loc_0003DF4C, A0
+CopperosProjectile_AnimateSprite:
+	LEA	MetalSpellSpriteFrameTable, A0
 	MOVEQ	#0, D1
 	MOVE.b	$18(A5), D1
 	ASL.w	#3, D1
@@ -27417,14 +27417,14 @@ loc_00019656:
 	JSR	AddSpriteToDisplayList
 	RTS
 
-loc_00019682:
+DeactivateCopperosProjectile:
 	BCLR.b	#7, (A5)
 	RTS
 
-loc_00019688:
+CopperosExplodeIntoFragments:
 	LEA	(A5), A6
 	MOVE.w	#7, D7
-loc_0001968E:
+CopperosInitFragmentLoop:
 	BSET.b	#7, (A6)
 	BCLR.b	#7, $7(A6)
 	BCLR.b	#3, $7(A6)
@@ -27453,9 +27453,9 @@ loc_0001968E:
 	CLR.w	D0
 	MOVE.b	$1(A6), D0
 	LEA	(A6,D0.w), A6
-	DBF	D7, loc_0001968E
-	MOVE.l	#loc_00019728, $2(A5)
-loc_00019728:
+	DBF	D7, CopperosInitFragmentLoop
+	MOVE.l	#UpdateCopperosFragmentsLead, $2(A5)
+UpdateCopperosFragmentsLead:
 	JSR	UpdateProjectileAscendingArc(PC)
 	JSR	CheckMagicSlotActiveOrClearAll(PC)
 	RTS
@@ -27464,14 +27464,14 @@ UpdateProjectileAscendingArc:
 	JSR	CheckProjectileHitEnemies(PC)
 	CLR.b	$19(A5)
 	TST.w	$3A(A5)
-	BLE.b	loc_00019746
+	BLE.b	AscendingArc_DecayPhase
 	SUBQ.w	#1, $3A(A5)
-	BRA.b	loc_00019756
-loc_00019746:
+	BRA.b	AscendingArc_UpdatePosition
+AscendingArc_DecayPhase:
 	ADDQ.b	#4, $18(A5)
 	SUBI.l	#$8000, $20(A5)
-	BLE.w	loc_000197D2
-loc_00019756:
+	BLE.w	DeactivateAscendingArcProjectile
+AscendingArc_UpdatePosition:
 	LEA	SineTable, A0
 	CLR.w	D1
 	MOVE.b	$18(A5), D1
@@ -27491,11 +27491,11 @@ loc_00019756:
 	MOVE.w	$E(A5), D0
 	MOVE.w	$12(A5), D1
 	BSR.w	CheckCoordsInBounds
-	BEQ.w	loc_000197D2
+	BEQ.w	DeactivateAscendingArcProjectile
 	MOVE.w	$E(A5), $A(A5)
 	MOVE.w	$12(A5), $C(A5)
 	MOVE.w	$12(A5), $16(A5)
-	LEA	loc_0003DF4C, A0
+	LEA	MetalSpellSpriteFrameTable, A0
 	ADDQ.b	#1, $1B(A5)
 	MOVE.b	$1B(A5), D0
 	ANDI.w	#$000C, D0
@@ -27505,7 +27505,7 @@ loc_00019756:
 	JSR	AddSpriteToDisplayList
 	RTS
 
-loc_000197D2:
+DeactivateAscendingArcProjectile:
 	MOVE.b	#$FF, $19(A5)
 	RTS
 
@@ -27513,13 +27513,13 @@ loc_000197D2:
 CastMercusios:
 	MOVEA.l	Object_slot_02_ptr.w, A6
 	BTST.b	#7, (A6)
-	BNE.w	loc_0001989E
+	BNE.w	CastMercusios_Done
 	BSR.w	CheckCursedAndConsumeReadiedMagicMp
-	BNE.w	loc_0001989E
+	BNE.w	CastMercusios_Done
 	MOVE.w	#$00BD, D0
 	JSR	QueueSoundEffect
 	MOVE.w	#7, D7
-loc_000197FC:
+MercusiosInitProjectileLoop:
 	BSET.b	#7, (A6)
 	BCLR.b	#7, $7(A6)
 	BCLR.b	#3, $7(A6)
@@ -27550,25 +27550,25 @@ loc_000197FC:
 	MOVE.b	$1(A6), D0
 	LEA	(A6,D0.w), A6
 	ADDQ.w	#1, D1
-	DBF	D7, loc_000197FC
+	DBF	D7, MercusiosInitProjectileLoop
 	MOVEA.l	Object_slot_02_ptr.w, A6
-	MOVE.l	#loc_000198A0, $2(A6)
-loc_0001989E:
+	MOVE.l	#UpdateMercusiosLeadProjectile, $2(A6)
+CastMercusios_Done:
 	RTS
 
-loc_000198A0:
+UpdateMercusiosLeadProjectile:
 	JSR	UpdateProjectileDescendingArc(PC)
 	JSR	CheckMagicSlotActiveOrClearAll(PC)
 	RTS
 
 UpdateProjectileDescendingArc:
 	TST.b	$19(A5)
-	BNE.w	loc_00019938
+	BNE.w	DeactivateDescendingArcProjectile
 	JSR	CheckProjectileHitEnemies(PC)
 	CMPI.w	#$0014, $3A(A5)
-	BGE.b	loc_000198C2
+	BGE.b	DescendingArc_UpdateMovement
 	ADDQ.w	#1, $3A(A5)
-loc_000198C2:
+DescendingArc_UpdateMovement:
 	ADDI.l	#$8000, $20(A5)
 	MOVE.w	$3A(A5), D0
 	ASR.w	#2, D0
@@ -27593,7 +27593,7 @@ loc_000198C2:
 	MOVE.w	$E(A5), D0
 	MOVE.w	$12(A5), D1
 	BSR.w	CheckCoordsInBounds
-	BEQ.w	loc_00019938
+	BEQ.w	DeactivateDescendingArcProjectile
 	MOVE.w	$E(A5), $A(A5)
 	MOVE.w	$12(A5), $C(A5)
 	MOVE.w	$12(A5), $16(A5)
@@ -27601,7 +27601,7 @@ loc_000198C2:
 	JSR	AddSpriteToDisplayList
 	RTS
 	
-loc_00019938:
+DeactivateDescendingArcProjectile:
 	MOVE.b	#$FF, $19(A5)
 	RTS
 
@@ -27609,9 +27609,9 @@ loc_00019938:
 CastArgentos:
 	MOVEA.l	Object_slot_02_ptr.w, A6
 	BTST.b	#7, (A6)
-	BNE.w	loc_000199E6
+	BNE.w	CastArgentos_Done
 	BSR.w	CheckCursedAndConsumeReadiedMagicMp
-	BNE.w	loc_000199E6
+	BNE.w	CastArgentos_Done
 	BSET.b	#7, (A6)
 	BCLR.b	#7, $7(A6)
 	BCLR.b	#3, $7(A6)
@@ -27637,38 +27637,38 @@ CastArgentos:
 	JSR	FindNthEnemyInList(PC)
 	MOVE.w	$E(A5), $E(A6)
 	MOVE.w	$12(A5), $12(A6)
-	MOVE.l	#loc_000199E8, $2(A6)
+	MOVE.l	#UpdateArgentosProjectile, $2(A6)
 	MOVE.w	#$00BD, D0
 	JSR	QueueSoundEffect
-loc_000199E6:
+CastArgentos_Done:
 	RTS
 
-loc_000199E8:
+UpdateArgentosProjectile:
 	TST.b	$19(A5)
 	BNE.w	CheckMagicSlotActiveOrClearAll
 	JSR	CheckProjectileHitEnemies(PC)
 	CLR.b	$19(A5)
 	SUBQ.w	#1, $3C(A5)
-	BLE.w	loc_00019B42
+	BLE.w	DeactivateArgentosProjectile
 	ADDQ.b	#1, $3A(A5)
 	MOVE.b	$3A(A5), D0
 	MOVE.b	D0, D1
 	SUBQ.b	#1, D1
 	EOR.b	D1, D0
 	BTST.l	#3, D0
-	BEQ.w	loc_00019A36
+	BEQ.w	ArgentosProjectile_ApplyMovement
 	TST.l	$28(A5)
-	BEQ.b	loc_00019A36
+	BEQ.b	ArgentosProjectile_ApplyMovement
 	MOVEA.l	$28(A5), A6
 	BTST.b	#7, (A6)
-	BNE.b	loc_00019A32
+	BNE.b	ArgentosProjectile_SteerToTarget
 	LEA	(A5), A6
 	MOVE.w	#7, D1
 	JSR	FindNthEnemyInList(PC)
-	BRA.b	loc_00019A36
-loc_00019A32:
+	BRA.b	ArgentosProjectile_ApplyMovement
+ArgentosProjectile_SteerToTarget:
 	JSR	UpdateHomingProjectileDirection(PC)
-loc_00019A36:
+ArgentosProjectile_ApplyMovement:
 	LEA	SineTable, A0
 	MOVE.l	$20(A5), D0
 	CLR.w	D1
@@ -27689,11 +27689,11 @@ loc_00019A36:
 	MOVE.w	$E(A5), D0
 	MOVE.w	$12(A5), D1
 	BSR.w	CheckCoordsInBounds
-	BEQ.w	loc_00019B42
+	BEQ.w	DeactivateArgentosProjectile
 	MOVE.w	$E(A5), $A(A5)
 	MOVE.w	$12(A5), $C(A5)
 	MOVE.w	$12(A5), $16(A5)
-	LEA	loc_0003DF8C, A0
+	LEA	ArgentosSpriteFrameTable, A0
 	ADDQ.b	#1, $1B(A5)
 	MOVE.b	$1B(A5), D0
 	ANDI.w	#$000C, D0
@@ -27702,17 +27702,17 @@ loc_00019A36:
 	JSR	AddSpriteToDisplayList
 	ADDQ.b	#1, $3B(A5)
 	CMPI.b	#6, $3B(A5)
-	BLE.w	loc_00019B40
+	BLE.w	ArgentosProjectile_NoTrailThisTick
 	CLR.b	$3B(A5)
 	MOVE.b	$1A(A5), D7
 	ADDQ.b	#1, $1A(A5)
 	ANDI.w	#7, D7
 	LEA	(A5), A6
 	CLR.w	D0
-loc_00019AD4:
+ArgentosTrail_AdvanceToSlotLoop:
 	MOVE.b	$1(A6), D0
 	LEA	(A6,D0.w), A6
-	DBF	D7, loc_00019AD4
+	DBF	D7, ArgentosTrail_AdvanceToSlotLoop
 	BSET.b	#7, (A6)
 	MOVE.b	$7(A5), $7(A6)
 	MOVE.w	$1C(A5), $1C(A6)
@@ -27729,20 +27729,20 @@ loc_00019AD4:
 	CLR.b	$1B(A6)
 	CLR.b	$19(A6)
 	MOVE.w	#$0030, $3A(A6)
-	MOVE.l	#loc_00019B4A, $2(A6)
-loc_00019B40:
+	MOVE.l	#UpdateArgentosTrailClone, $2(A6)
+ArgentosProjectile_NoTrailThisTick:
 	RTS
 
-loc_00019B42:
+DeactivateArgentosProjectile:
 	MOVE.b	#$FF, $19(A5)
 	RTS
 
-loc_00019B4A:
+UpdateArgentosTrailClone:
 	SUBQ.w	#1, $3A(A5)
-	BLE.b	loc_00019B7A
+	BLE.b	DeactivateArgentosTrailClone
 	JSR	CheckProjectileHitEnemies(PC)
 	CLR.b	$19(A5)
-	LEA	loc_0003DF8C, A0
+	LEA	ArgentosSpriteFrameTable, A0
 	ADDQ.b	#1, $1B(A5)
 	MOVE.b	$1B(A5), D0
 	ANDI.w	#$0018, D0
@@ -27751,7 +27751,7 @@ loc_00019B4A:
 	JSR	AddSpriteToDisplayList
 	RTS
 
-loc_00019B7A:
+DeactivateArgentosTrailClone:
 	BCLR.b	#7, (A5)
 	MOVE.b	#$FF, $19(A5)
 	RTS
@@ -27764,11 +27764,11 @@ UpdatePlayerSpriteFrame:
 	ASR.w	#1, D1
 	BCLR.b	#3, $7(A5)
 	BTST.l	#2, D1
-	BNE.b	loc_00019BA6
+	BNE.b	PlayerSpriteFrame_LookupAndAnimate
 	BSET.b	#3, $7(A5)
-loc_00019BA6:
+PlayerSpriteFrame_LookupAndAnimate:
 	ASL.w	#3, D1
-	LEA	loc_0003DF4C, A0
+	LEA	MetalSpellSpriteFrameTable, A0
 	ADDQ.b	#1, $1B(A5)
 	MOVE.b	$1B(A5), D0
 	ANDI.w	#$000C, D0
@@ -27779,9 +27779,9 @@ loc_00019BA6:
 	
 FindNthEnemyInList:
 	MOVEA.l	Enemy_list_ptr.w, A4
-loc_00019BCA:
+FindNthEnemy_SearchLoop:
 	BTST.b	#7, (A4)
-	BNE.w	loc_00019BFE
+	BNE.w	FindNthEnemy_Found
 	CLR.w	D5
 	MOVE.b	$1(A4), D5
 	LEA	(A4,D5.w), A4
@@ -27791,11 +27791,11 @@ loc_00019BCA:
 	CLR.w	D5
 	MOVE.b	$1(A4), D5
 	LEA	(A4,D5.w), A4
-	DBF	D1, loc_00019BCA
+	DBF	D1, FindNthEnemy_SearchLoop
 	MOVE.l	#0, $28(A6)
 	RTS
 	
-loc_00019BFE:
+FindNthEnemy_Found:
 	MOVE.l	A4, $28(A6)
 	RTS
 
@@ -27803,9 +27803,9 @@ loc_00019BFE:
 CastHydro:
 	MOVEA.l	Object_slot_02_ptr.w, A6
 	BTST.b	#7, (A6)
-	BNE.w	loc_00019C7A
+	BNE.w	CastHydro_Done
 	BSR.w	CheckCursedAndConsumeReadiedMagicMp
-	BNE.w	loc_00019C7A
+	BNE.w	CastHydro_Done
 	BSET.b	#7, (A6)
 	BCLR.b	#7, $7(A6)
 	BCLR.b	#3, $7(A6)
@@ -27822,40 +27822,40 @@ CastHydro:
 	CLR.b	$1A(A6)
 	CLR.b	$1B(A6)
 	CLR.w	$3A(A6)
-	MOVE.l	#loc_00019C7C, $2(A6)
+	MOVE.l	#UpdateHydroOpeningAnimation, $2(A6)
 	BSR.w	InitMagicDamageAndFlags
-loc_00019C7A:
+CastHydro_Done:
 	RTS
 
-loc_00019C7C:
+UpdateHydroOpeningAnimation:
 	ADDQ.b	#1, $1B(A5)
 	MOVE.b	$1B(A5), D0
 	ANDI.w	#$001C, D0
 	CMPI.w	#$0014, D0
-	BLT.b	loc_00019C98
-	MOVE.l	#loc_00019CBA, $2(A5)
-	BRA.b	loc_00019CA6
-loc_00019C98:
-	LEA	loc_0003DF94, A0
+	BLT.b	HydroOpening_LookupFrame
+	MOVE.l	#UpdateHydroSpawnIcicles, $2(A5)
+	BRA.b	HydroOpening_DrawSprite
+HydroOpening_LookupFrame:
+	LEA	HydroOpeningSpriteFrameTable, A0
 	ASR.w	#1, D0
 	MOVE.w	(A0,D0.w), $8(A5)
-loc_00019CA6:
+HydroOpening_DrawSprite:
 	MOVE.w	$E(A5), $A(A5)
 	MOVE.w	$12(A5), $C(A5)
 	JSR	AddSpriteToDisplayList
 	RTS
 
-loc_00019CBA:
+UpdateHydroSpawnIcicles:
 	SUBQ.b	#1, $1A(A5)
-	BGT.w	loc_00019D62
+	BGT.w	HydroSpawnIcicle_PlaySoundAndDraw
 	MOVE.b	#8, $1A(A5)
 	LEA	(A5), A6
 	MOVE.w	$3A(A5), D7
-loc_00019CCE:
+HydroSpawnIcicle_AdvanceToSlotLoop:
 	CLR.w	D0
 	MOVE.b	$1(A6), D0
 	LEA	(A6,D0.w), A6
-	DBF	D7, loc_00019CCE
+	DBF	D7, HydroSpawnIcicle_AdvanceToSlotLoop
 	BSET.b	#7, (A6)
 	BCLR.b	#7, $7(A6)
 	BCLR.b	#3, $7(A6)
@@ -27877,47 +27877,47 @@ loc_00019CCE:
 	ADD.w	D1, D1
 	SUB.w	D1, D0
 	MOVE.b	D0, $1A(A6)
-	MOVE.l	#loc_00019DB8, $2(A6)
+	MOVE.l	#UpdateHydroIcicleRise, $2(A6)
 	ADDQ.w	#1, $3A(A5)
 	CMPI.w	#5, $3A(A5)
-	BLE.b	loc_00019D62
-	MOVE.l	#loc_00019D84, $2(A5)
+	BLE.b	HydroSpawnIcicle_PlaySoundAndDraw
+	MOVE.l	#UpdateHydroWaitForIciclesFinish, $2(A5)
 	MOVE.w	#$0275, $8(A5)
-	BRA.b	loc_00019D6C
-loc_00019D62:
+	BRA.b	HydroSpawnIcicle_HitCheckAndDraw
+HydroSpawnIcicle_PlaySoundAndDraw:
 	MOVE.w	#$00BA, D0
 	JSR	QueueSoundEffect
-loc_00019D6C:
+HydroSpawnIcicle_HitCheckAndDraw:
 	JSR	CheckProjectileHitEnemies(PC)
 	MOVE.w	$E(A5), $A(A5)
 	MOVE.w	$12(A5), $C(A5)
 	JSR	AddSpriteToDisplayList
 	RTS
 
-loc_00019D84:
+UpdateHydroWaitForIciclesFinish:
 	LEA	(A5), A6
 	MOVE.w	$3A(A5), D7
 	SUBQ.w	#1, D7
-loc_00019D8C:
+HydroWaitIcicles_AdvanceToSlotLoop:
 	CLR.w	D0
 	MOVE.b	$1(A6), D0
 	LEA	(A6,D0.w), A6
-	DBF	D7, loc_00019D8C
+	DBF	D7, HydroWaitIcicles_AdvanceToSlotLoop
 	BTST.b	#7, (A6)
-	BNE.b	loc_00019DA4
+	BNE.b	HydroWaitIcicles_DrawBaseSprite
 	BCLR.b	#7, (A5)
-loc_00019DA4:
+HydroWaitIcicles_DrawBaseSprite:
 	MOVE.w	$E(A5), $A(A5)
 	MOVE.w	$12(A5), $C(A5)
 	JSR	AddSpriteToDisplayList
 	RTS
 
-loc_00019DB8:
+UpdateHydroIcicleRise:
 	SUBQ.b	#1, $1A(A5)
-	BGT.b	loc_00019DCA
+	BGT.b	HydroIcicleRise_MoveUp
 	CLR.b	$1B(A5)
-	MOVE.l	#loc_00019DE6, $2(A5)
-loc_00019DCA:
+	MOVE.l	#UpdateHydroIcicleExplode, $2(A5)
+HydroIcicleRise_MoveUp:
 	MOVE.l	$36(A5), D0
 	ADD.l	D0, $12(A5)
 	MOVE.w	$E(A5), $A(A5)
@@ -27925,17 +27925,17 @@ loc_00019DCA:
 	JSR	AddSpriteToDisplayList
 	RTS
 
-loc_00019DE6:
+UpdateHydroIcicleExplode:
 	ADDQ.b	#1, $1B(A5)
 	MOVE.b	$1B(A5), D0
 	ANDI.w	#$000C, D0
 	CMPI.w	#4, D0
-	BLE.b	loc_00019DFE
+	BLE.b	HydroIcicleExplode_DrawFrame
 	BCLR.b	#7, (A5)
 	RTS
 
-loc_00019DFE:
-	LEA	loc_0003DF9E, A0
+HydroIcicleExplode_DrawFrame:
+	LEA	HydroExplosionSpriteFrameTable, A0
 	ASR.w	#1, D0
 	MOVE.w	(A0,D0.w), $8(A5)
 	MOVE.w	$E(A5), $A(A5)
@@ -27946,18 +27946,18 @@ loc_00019DFE:
 SetPositionFromActiveEnemy:
 	MOVEA.l	Enemy_list_ptr.w, A4
 	MOVEQ	#7, D7
-loc_00019E26:
+SetPosFromEnemy_SearchLoop:
 	BTST.b	#7, (A4)
-	BEQ.b	loc_00019E44
+	BEQ.b	SetPosFromEnemy_NextSlot
 	BTST.b	#6, (A4)
-	BEQ.b	loc_00019E44
+	BEQ.b	SetPosFromEnemy_NextSlot
 	MOVE.w	$E(A4), $E(A6)
 	MOVE.w	$12(A4), D0
 	ADDQ.w	#8, D0
 	MOVE.w	D0, $12(A6)
 	RTS
 
-loc_00019E44:
+SetPosFromEnemy_NextSlot:
 	CLR.w	D5
 	MOVE.b	$1(A4), D5
 	LEA	(A4,D5.w), A4
@@ -27967,7 +27967,7 @@ loc_00019E44:
 	CLR.w	D5
 	MOVE.b	$1(A4), D5
 	LEA	(A4,D5.w), A4
-	DBF	D7, loc_00019E26
+	DBF	D7, SetPosFromEnemy_SearchLoop
 	MOVE.w	#$00A0, $E(A6)	
 	MOVE.w	#$0070, $12(A6)	
 	RTS
@@ -27975,46 +27975,46 @@ loc_00019E44:
 ;loc_00019E74
 CastChronos:
 	BSR.w	CheckCursedAndConsumeReadiedMagicMp
-	BNE.b	loc_00019EA0
+	BNE.b	CastChronos_Done
 	MOVEA.l	Object_slot_02_ptr.w, A6
 	BSET.b	#7, (A6)
 	MOVE.w	#$00C8, $28(A6)
-	MOVE.l	#loc_00019EA2, $2(A6)
+	MOVE.l	#UpdateChronoCountdown, $2(A6)
 	MOVE.b	#$FF, Encounter_behavior_flag.w
 	MOVE.w	#$00AE, D0
 	JSR	QueueSoundEffect
-loc_00019EA0:
+CastChronos_Done:
 	RTS
 	
-loc_00019EA2:
+UpdateChronoCountdown:
 	SUBQ.w	#1, $28(A5)
-	BGT.b	loc_00019EB0
+	BGT.b	ChronoCountdown_StillActive
 	BCLR.b	#7, (A5)
 	CLR.b	Encounter_behavior_flag.w
-loc_00019EB0:
+ChronoCountdown_StillActive:
 	RTS
 
 ;loc_00019EB2
 CastChronios:
 	BSR.w	CheckCursedAndConsumeReadiedMagicMp
-	BNE.b	loc_00019EDE
+	BNE.b	CastChronios_Done
 	MOVEA.l	Object_slot_02_ptr.w, A6
 	BSET.b	#7, (A6)
 	MOVE.w	#$01F4, $28(A6)
-	MOVE.l	#loc_00019EA2, $2(A6)
+	MOVE.l	#UpdateChronoCountdown, $2(A6)
 	MOVE.b	#$FF, Encounter_behavior_flag.w
 	MOVE.w	#$00AE, D0
 	JSR	QueueSoundEffect
-loc_00019EDE:
+CastChronios_Done:
 	RTS
 
 ;loc_00019EE0:
 CastTerrafissi:
 	MOVEA.l	Object_slot_02_ptr.w, A6
 	BTST.b	#7, (A6)
-	BNE.b	loc_00019F18
+	BNE.b	CastTerrafissi_Done
 	BSR.w	CheckCursedAndConsumeReadiedMagicMp
-	BNE.b	loc_00019F18
+	BNE.b	CastTerrafissi_Done
 	MOVE.w	#$00AF, D0
 	JSR	QueueSoundEffect
 	BSET.b	#7, (A6)
@@ -28023,17 +28023,17 @@ CastTerrafissi:
 	ASL.w	#3, D0
 	MOVE.w	D0, $3C(A6)
 	BSR.w	InitMagicDamageAndFlags
-	MOVE.l	#loc_00019F1A, $2(A6)
-loc_00019F18:
+	MOVE.l	#UpdateTerrafissiShake, $2(A6)
+CastTerrafissi_Done:
 	RTS
 
-loc_00019F1A:
+UpdateTerrafissiShake:
 	TST.w	$3C(A5)
-	BLE.b	loc_00019F4A
+	BLE.b	TerrafissiShake_Finished
 	BSR.w	ApplyScreenShakeToEnemies
 	SUBQ.w	#1, $3C(A5)
 	MOVE.w	$3C(A5), D0
-	LEA	loc_00019F8E, A0
+	LEA	TerrafissiShakeDisplacementTable, A0
 	CLR.l	D1
 	MOVE.b	(A0,D0.w), D1
 	EXT.w	D1
@@ -28043,7 +28043,7 @@ loc_00019F1A:
 	MOVE.w	$28(A5), HScroll_base.w
 	RTS
 
-loc_00019F4A:
+TerrafissiShake_Finished:
 	CLR.l	HScroll_base.w
 	BCLR.b	#7, (A5)
 	RTS
@@ -28051,12 +28051,12 @@ loc_00019F4A:
 ApplyScreenShakeToEnemies:
 	MOVEA.l	Enemy_list_ptr.w, A4
 	MOVE.w	#7, D6
-loc_00019F5C:
+ApplyShakeToEnemies_Loop:
 	BTST.b	#7, (A4)
-	BEQ.b	loc_00019F6A
+	BEQ.b	ApplyShakeToEnemies_NextSlot
 	MOVE.w	$2C(A5), D0
 	SUB.w	D0, $28(A4)
-loc_00019F6A:
+ApplyShakeToEnemies_NextSlot:
 	CLR.w	D5
 	MOVE.b	$1(A4), D5
 	LEA	(A4,D5.w), A4
@@ -28066,10 +28066,10 @@ loc_00019F6A:
 	CLR.w	D5
 	MOVE.b	$1(A4), D5
 	LEA	(A4,D5.w), A4
-	DBF	D6, loc_00019F5C
+	DBF	D6, ApplyShakeToEnemies_Loop
 	RTS
 
-loc_00019F8E:
+TerrafissiShakeDisplacementTable:
 	dc.b	$04, $04, $04, $04, $FC, $FC, $FC, $FC, $08, $08, $F8, $F8, $08, $08, $F8, $F8, $10, $F0, $10, $F0, $10, $10, $F0, $F0, $20, $E0, $20, $E0, $20, $20, $E0, $E0 
 	dc.b	$20, $E0, $20, $E0, $20, $20, $E0, $E0, $30, $D0, $30, $D0, $30, $30, $D0, $D0, $30, $D0, $30, $D0, $30, $30, $D0, $D0, $40, $C0, $40, $C0, $40, $40, $C0, $C0 
 	dc.b	$40, $C0, $40, $C0, $40, $40, $C0, $C0, $40, $C0, $40, $C0, $40, $40, $C0, $C0, $40, $C0, $40, $C0, $40, $40, $C0, $C0, $40, $C0, $40, $C0, $40, $40, $C0, $C0 
@@ -28080,29 +28080,29 @@ loc_00019F8E:
 CheckMagicSlotActiveOrClearAll:
 	MOVEA.l	Object_slot_02_ptr.w, A6
 	MOVE.w	#7, D7
-loc_0001A06C:
+CheckMagicSlotActive_Loop:
 	BTST.b	#7, (A6)
-	BEQ.b	loc_0001A078
+	BEQ.b	CheckMagicSlotActive_NextSlot
 	TST.b	$19(A6)
-	BEQ.b	loc_0001A08A
-loc_0001A078:
+	BEQ.b	CheckMagicSlotActive_FoundAlive
+CheckMagicSlotActive_NextSlot:
 	CLR.w	D0
 	MOVE.b	$1(A6), D0
 	LEA	(A6,D0.w), A6
-	DBF	D7, loc_0001A06C
+	DBF	D7, CheckMagicSlotActive_Loop
 	BSR.w	ClearEnemyActiveFlags_Alt
-loc_0001A08A:
+CheckMagicSlotActive_FoundAlive:
 	RTS
 
 ClearEnemyActiveFlags_Alt:
 	MOVEA.l	Object_slot_02_ptr.w, A6
 	MOVE.w	#$000C, D7
-loc_0001A094:
+ClearEnemyActiveFlags_Loop:
 	BCLR.b	#7, (A6)
 	CLR.w	D0
 	MOVE.b	$1(A6), D0
 	LEA	(A6,D0.w), A6
-	DBF	D7, loc_0001A094
+	DBF	D7, ClearEnemyActiveFlags_Loop
 	RTS
 
 ; loc_0001A0A8
@@ -28116,38 +28116,38 @@ CheckProjectileHitEnemies:
 	SUB.w	$1E(A5), D2
 	MOVEA.l	Enemy_list_ptr.w, A6
 	MOVE.w	#7, D7
-loc_0001A0C8:
+CheckHitEnemies_Loop:
 	BTST.b	#7, (A6)
-	BEQ.w	loc_0001A12E
+	BEQ.w	CheckHitEnemies_NextEnemy
 	BTST.b	#6, (A6)
-	BEQ.w	loc_0001A12E
+	BEQ.w	CheckHitEnemies_NextEnemy
 	TST.w	$28(A6)
-	BLE.w	loc_0001A12E
+	BLE.w	CheckHitEnemies_NextEnemy
 	MOVE.w	$E(A6), D4
 	ADD.w	$1C(A6), D4
 	CMP.w	D4, D0
-	BGT.w	loc_0001A12E
+	BGT.w	CheckHitEnemies_NextEnemy
 	MOVE.w	$E(A6), D4
 	SUB.w	$1C(A6), D4
 	CMP.w	D4, D1
-	BLT.w	loc_0001A12E
+	BLT.w	CheckHitEnemies_NextEnemy
 	MOVE.w	$12(A6), D4
 	CMP.w	D4, D2
-	BGT.w	loc_0001A12E
+	BGT.w	CheckHitEnemies_NextEnemy
 	SUB.w	$1E(A6), D4
 	CMP.w	D4, D3
-	BLT.w	loc_0001A12E
+	BLT.w	CheckHitEnemies_NextEnemy
 	MOVE.w	$2C(A5), D0
 	CLR.w	D1
 	MOVE.b	$25(A5), D1
 	MOVE.b	$25(A6), D2
 	BTST.l	D1, D2
-	BEQ.b	loc_0001A124
+	BEQ.b	CheckHitEnemies_ApplyDamage
 	ASR.w	#3, D0
-loc_0001A124:
+CheckHitEnemies_ApplyDamage:
 	SUB.w	D0, $28(A6)
 	MOVE.b	#$FF, $19(A5)
-loc_0001A12E:
+CheckHitEnemies_NextEnemy:
 	CLR.w	D5
 	MOVE.b	$1(A6), D5
 	LEA	(A6,D5.w), A6
@@ -28157,7 +28157,7 @@ loc_0001A12E:
 	CLR.w	D5
 	MOVE.b	$1(A6), D5
 	LEA	(A6,D5.w), A6
-	DBF	D7, loc_0001A0C8
+	DBF	D7, CheckHitEnemies_Loop
 	RTS
 
 UpdateHomingProjectileDirection:
@@ -28167,39 +28167,39 @@ UpdateHomingProjectileDirection:
 	MOVE.b	$18(A5), D2
 	MOVE.w	D2, D3
 	SUB.w	D0, D3
-	BNE.b	loc_0001A170
+	BNE.b	HomingDirection_CompareSigns
 	MOVE.b	D0, $18(A5)
-	BRA.w	loc_0001A19A
-loc_0001A170:
-	BGT.b	loc_0001A182
+	BRA.w	HomingDirection_WrapAngle
+HomingDirection_CompareSigns:
+	BGT.b	HomingDirection_CheckWrapRight
 	NEG.w	D3
 	MOVE.w	#8, D4
 	SUB.w	D0, D4
 	ADD.w	D2, D4
 	CMP.w	D3, D4
-	BLE.b	loc_0001A196
-	BRA.b	loc_0001A18E
-loc_0001A182:
+	BLE.b	HomingDirection_TurnCW
+	BRA.b	HomingDirection_TurnCCW
+HomingDirection_CheckWrapRight:
 	MOVE.w	#8, D4
 	SUB.w	D2, D4
 	ADD.w	D0, D4
 	CMP.w	D3, D4
-	BGE.b	loc_0001A196
-loc_0001A18E:
+	BGE.b	HomingDirection_TurnCW
+HomingDirection_TurnCCW:
 	ADDQ.b	#1, $18(A5)
-	BRA.w	loc_0001A19A
-loc_0001A196:
+	BRA.w	HomingDirection_WrapAngle
+HomingDirection_TurnCW:
 	SUBQ.b	#1, $18(A5)
-loc_0001A19A:
+HomingDirection_WrapAngle:
 	ANDI.b	#7, $18(A5)
 	RTS
 
 FindTargetEnemyForHoming:
 	MOVEA.l	Enemy_list_ptr.w, A4
 	MOVE.w	D1, D6
-	BLE.b	loc_0001A1CE
+	BLE.b	FindTargetEnemy_CheckIfActive
 	SUBQ.w	#1, D6
-loc_0001A1AC:
+FindTargetEnemy_SkipToNthLoop:
 	CLR.w	D5
 	MOVE.b	$1(A4), D5
 	LEA	(A4,D5.w), A4
@@ -28209,23 +28209,23 @@ loc_0001A1AC:
 	CLR.w	D5
 	MOVE.b	$1(A4), D5
 	LEA	(A4,D5.w), A4
-	DBF	D6, loc_0001A1AC
-loc_0001A1CE:
+	DBF	D6, FindTargetEnemy_SkipToNthLoop
+FindTargetEnemy_CheckIfActive:
 	BTST.b	#7, (A4)
-	BEQ.b	loc_0001A1E0
+	BEQ.b	FindTargetEnemy_NoTarget
 	BTST.b	#6, (A4)
-	BEQ.b	loc_0001A1E0
+	BEQ.b	FindTargetEnemy_NoTarget
 	MOVE.l	A4, $28(A6)
 	RTS
 
-loc_0001A1E0:
+FindTargetEnemy_NoTarget:
 	MOVE.l	#0, $28(A6)
 	RTS
 
 ; loc_0001A1EA
 CheckCursedAndConsumeReadiedMagicMp:
 	JSR	CheckIfCursed
-	BNE.b	loc_0001A216
+	BNE.b	ConsumeReadiedMagicMp_Fail
 	LEA	MagicMpConsumptionMap, A0
 	MOVE.w	Readied_magic.w, D0
 	ANDI.w	#$001F, D0
@@ -28233,12 +28233,12 @@ CheckCursedAndConsumeReadiedMagicMp:
 	MOVE.w	(A0,D0.w), D0
 	MOVE.w	Player_mp.w, D1
 	SUB.w	D0, D1
-	BLT.b	loc_0001A216
+	BLT.b	ConsumeReadiedMagicMp_Fail
 	SUB.w	D0, Player_mp.w
 	CLR.w	D0
 	RTS
 
-loc_0001A216:
+ConsumeReadiedMagicMp_Fail:
 	MOVE.w	#$FFFF, D0	
 	RTS
 	
@@ -28253,61 +28253,61 @@ DeductMagicMP:
 	MOVE.w	(A0,D0.w), D0
 	MOVE.w	Player_mp.w, D1
 	SUB.w	D0, D1
-	BLT.b	loc_0001A24A
+	BLT.b	DeductMagicMP_Fail
 	SUB.w	D0, Player_mp.w
 	CLR.w	D0
 	RTS
 
-loc_0001A24A:
+DeductMagicMP_Fail:
 	MOVE.w	#$FFFF, D0	
 	RTS
 	
 ; loc_0001A250
 InitMagicDamageAndFlags:
-	LEA	loc_000226AC, A4
+	LEA	MagicBaseDamageTable, A4
 	MOVE.w	Readied_magic.w, D0
 	ANDI.w	#$000F, D0
 	MOVE.w	D0, D2
 	MOVE.w	Player_int.w, D1
 	CMPI.w	#MAGIC_VOLTIO, D0
-	BEQ.b	loc_0001A28C
+	BEQ.b	InitMagicDamage_LowIntScale
 	CMPI.w	#MAGIC_COPPEROS, D0
-	BEQ.b	loc_0001A28C
+	BEQ.b	InitMagicDamage_LowIntScale
 	CMPI.w	#MAGIC_ARGENTOS, D0
-	BEQ.b	loc_0001A28C
+	BEQ.b	InitMagicDamage_LowIntScale
 	CMPI.w	#MAGIC_HYDRO, D0
-	BEQ.b	loc_0001A28C
+	BEQ.b	InitMagicDamage_LowIntScale
 	CMPI.w	#MAGIC_HYDRIOS, D0
-	BEQ.b	loc_0001A28C
+	BEQ.b	InitMagicDamage_LowIntScale
 	CMPI.w	#MAGIC_TERRAFISSI, D0
-	BEQ.b	loc_0001A28C
+	BEQ.b	InitMagicDamage_LowIntScale
 	ASR.w	#4, D1
-	BRA.b	loc_0001A28E
-loc_0001A28C:
+	BRA.b	InitMagicDamage_LookupAndStore
+InitMagicDamage_LowIntScale:
 	ASR.w	#8, D1
-loc_0001A28E:
+InitMagicDamage_LookupAndStore:
 	ADD.w	D0, D0
 	MOVE.w	(A4,D0.w), D0
 	ADD.w	D1, D0
 	MOVE.w	D0, $2C(A6)
-	LEA	loc_000226C8, A4
+	LEA	MagicElementTypeTable, A4
 	MOVE.w	Readied_magic.w, D0
 	MOVE.b	(A4,D2.w), $25(A6)
 	RTS
 
 CheckCoordsInBounds:
 	CMPI.w	#0, D0
-	BLT.b	loc_0001A2CA
+	BLT.b	CoordsOutOfBounds
 	CMPI.w	#$0140, D0
-	BGT.b	loc_0001A2CA
+	BGT.b	CoordsOutOfBounds
 	CMPI.w	#$0038, D1
-	BLT.b	loc_0001A2CA
+	BLT.b	CoordsOutOfBounds
 	CMPI.w	#$00B8, D1
-	BGT.b	loc_0001A2CA
+	BGT.b	CoordsOutOfBounds
 	MOVE.w	#$FFFF, D0
 	RTS
 
-loc_0001A2CA:
+CoordsOutOfBounds:
 	CLR.w	D0
 	RTS
 
@@ -37320,7 +37320,7 @@ MagicMpConsumptionMap:
 	dc.w	$1F 
 	dc.w	$6
 	dc.w	$2 
-loc_000226AC: ; Something indexed by battle magic
+MagicBaseDamageTable: ; Something indexed by battle magic
 	dc.b	$04, $B0
 	dc.b	$06, $A4
 	dc.b	$03, $57
@@ -37335,7 +37335,7 @@ loc_000226AC: ; Something indexed by battle magic
 	dc.b	$00, $00
 	dc.b	$00, $00 
 	dc.w	$0050
-loc_000226C8: ; Something indexed by battle magic
+MagicElementTypeTable: ; Something indexed by battle magic
 	dc.b	$00, $00, $02, $02, $02, $03, $03, $03, $03, $01, $01, $00, $00, $00
 ; loc_000226D6
 ShopCategoryNameTables:
@@ -47884,35 +47884,35 @@ loc_0003DDD4:
 	dc.b	$02, $65, $02, $59, $02, $65, $02, $71, $02, $71, $02, $71, $02, $71, $02, $59, $02, $65, $02, $59, $02, $65, $02, $AD, $02, $AD, $02, $AD, $02, $AD, $02, $89 
 	dc.b	$02, $95, $02, $89, $02, $95, $02, $A1, $02, $A1, $02, $A1, $02, $A1, $02, $89, $02, $95, $02, $89, $02, $95, $02, $35, $02, $41, $02, $4D, $02, $59, $02, $65 
 	dc.b	$02, $71, $02, $7D, $02, $89, $02, $95, $02, $A1, $00, $79, $00, $79 
-loc_0003DF3C:
+AeroSpriteFrameTable:
 	dc.b	$02, $51, $02, $57, $02, $45, $02, $5D, $02, $4B, $02, $5D, $02, $45, $02, $57 
-loc_0003DF4C:
+MetalSpellSpriteFrameTable:
 	dc.b	$02, $75, $02, $69, $02, $75, $02, $81, $02, $E1, $02, $D5, $02, $E1, $02, $ED, $02, $99, $02, $8D, $02, $99, $02, $A5, $02, $BD, $02, $B1, $02, $BD, $02, $C9 
 	dc.b	$02, $51, $02, $45, $02, $51, $02, $5D, $02, $BD, $02, $B1, $02, $BD, $02, $C9, $02, $99, $02, $8D, $02, $99, $02, $A5, $02, $E1, $02, $D5, $02, $E1, $02, $ED 
-loc_0003DF8C:
+ArgentosSpriteFrameTable:
 	dc.b	$02, $45, $02, $51, $02, $5D, $02, $69 
-loc_0003DF94:
+HydroOpeningSpriteFrameTable:
 	dc.b	$02, $45, $02, $55, $02, $65, $02, $75, $02, $85 
-loc_0003DF9E:
+HydroExplosionSpriteFrameTable:
 	dc.w	$02A5
 	dc.w	$02B5
-loc_0003DFA2:
+VoltiosDescendFrameTable:
 	dc.w	$025D
 	dc.w	$0251
 	dc.w	$0245
-loc_0003DFA8:
+VoltiosAscendFrameTable:
 	dc.w	$024B
 	dc.w	$0257
 	dc.w	$0263
-loc_0003DFAE:
+VoltiosClearFrameTable:
 	dc.w	$0245
 	dc.w	$0251
 	dc.w	$025D
-loc_0003DFB4:
+VoltiosExplosionFrameTable:
 	dc.b	$02, $75, $02, $69, $02, $7B, $02, $6F, $02, $8D, $02, $81, $02, $93, $02, $87 
-loc_0003DFC4:
+VoltioOrbitSpriteFrameTable:
 	dc.b	$02, $45, $02, $4D, $02, $45, $02, $55 
-loc_0003DFCC:
+VoltiSpriteFrameTable:
 	dc.b	$02, $45, $02, $4D, $02, $45, $02, $55 
 ;loc_0003DFD4: 
 OverworldMaps: ; 128
