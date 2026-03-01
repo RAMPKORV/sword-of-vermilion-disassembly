@@ -177,3 +177,22 @@ RingChest macro type,value,flag
     BSR.w   SetupChestReward
     RTS
     ENDM
+
+; ============================================================
+; NPC Entry Macro
+; ============================================================
+; Defines a single NPC entry in a town NPC data table.
+; Each entry is 16 bytes, read by LoadTownNPCs.
+;
+; sprite:    Sprite ID word (tile index in VRAM)
+; ypos:      Map Y coordinate (word)
+; xpos:      Map X coordinate (word)
+; dialog:    Pointer to dialog/interaction data (long)
+; tick:      Pointer to NPC tick handler function (long)
+; subtype:   Animation sub-type byte (written to entity +$07)
+; direction: Initial facing direction byte (written to entity +$2D)
+npcEntry macro sprite,ypos,xpos,dialog,tick,subtype,direction
+    dc.w    sprite, ypos, xpos
+    dc.l    dialog, tick
+    dc.b    subtype, direction
+    ENDM
