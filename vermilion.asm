@@ -3086,7 +3086,7 @@ loc_0000336C:
 	RTS                                  ; No match found
 	
 LoadTownStateData:
-	LEA	loc_0001FFFE, A0
+	LEA	TownStateDataJumpTableStart, A0
 	MOVE.w	Current_town.w, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
@@ -35136,27 +35136,29 @@ loc_0001FE94:
 	dc.b	$8C
 ; loc_0001FECA
 TownNpcSetupJumpTable: ; Town NPC setup scripts
-	BRA.w	loc_0001FF0A
-	BRA.w	loc_0001FF14
-	BRA.w	loc_0001FF40
-	BRA.w	loc_0001FF4A
-	BRA.w	loc_0001FF54
-	BRA.w	loc_0001FF74	
-	BRA.w	loc_0001FF7E
-	BRA.w	loc_0001FF88
-	BRA.w	loc_0001FF92
-	BRA.w	loc_0001FF9C
-	BRA.w	loc_0001FFA6
-	BRA.w	loc_0001FFB0
-	BRA.w	loc_0001FFC8
-	BRA.w	loc_0001FFD2
-	BRA.w	loc_0001FFDC	
-	BRA.w	loc_0001FFE6
-loc_0001FF0A:
+	BRA.w	SetupTownNpcs_Wyclif
+	BRA.w	SetupTownNpcs_Parma
+	BRA.w	SetupTownNpcs_Watling
+	BRA.w	SetupTownNpcs_Deepdale
+	BRA.w	SetupTownNpcs_Stow1
+	BRA.w	SetupTownNpcs_Stow2	
+	BRA.w	SetupTownNpcs_Keltwick
+	BRA.w	SetupTownNpcs_Malaga
+	BRA.w	SetupTownNpcs_Barrow
+	BRA.w	SetupTownNpcs_Tadcaster
+	BRA.w	SetupTownNpcs_Helwig
+	BRA.w	SetupTownNpcs_Swafham
+	BRA.w	SetupTownNpcs_Excalabria
+	BRA.w	SetupTownNpcs_Hastings1
+	BRA.w	SetupTownNpcs_Hastings2	
+	BRA.w	SetupTownNpcs_Carthahena
+; loc_0001FF0A
+SetupTownNpcs_Wyclif:
 	MOVE.l	#loc_0002D208, Town_npc_data_ptr.w
 	RTS
 	
-loc_0001FF14:
+; loc_0001FF14
+SetupTownNpcs_Parma:
 	TST.b	Talked_to_real_king.w
 	BNE.b	loc_0001FF2C
 	TST.b	Player_chose_to_stay_in_parma.w ; Locked in parma?
@@ -35173,15 +35175,18 @@ loc_0001FF36:
 	MOVE.l	#loc_0002E600, Town_npc_data_ptr.w
 	RTS
 	
-loc_0001FF40:
+; loc_0001FF40
+SetupTownNpcs_Watling:
 	MOVE.l	#loc_0002FC3E, Town_npc_data_ptr.w
 	RTS
 	
-loc_0001FF4A:
+; loc_0001FF4A
+SetupTownNpcs_Deepdale:
 	MOVE.l	#loc_000307FA, Town_npc_data_ptr.w
 	RTS
 	
-loc_0001FF54:
+; loc_0001FF54
+SetupTownNpcs_Stow1:
 	TST.b	Stow_innocence_proven.w
 	BNE.b	loc_0001FF6A
 	MOVE.l	#loc_00031644, Town_npc_data_ptr.w
@@ -35193,32 +35198,39 @@ loc_0001FF6A:
 	MOVE.l	#loc_000315AE, Town_npc_data_ptr.w
 	RTS
 	
-loc_0001FF74:
+; loc_0001FF74
+SetupTownNpcs_Stow2:
 	MOVE.l	#loc_00032B30, Town_npc_data_ptr.w	
 	RTS
 	
 	
-loc_0001FF7E:
+; loc_0001FF7E
+SetupTownNpcs_Keltwick:
 	MOVE.l	#loc_00032B30, Town_npc_data_ptr.w
 	RTS
 	
-loc_0001FF88:
+; loc_0001FF88
+SetupTownNpcs_Malaga:
 	MOVE.l	#loc_00033C64, Town_npc_data_ptr.w
 	RTS
 	
-loc_0001FF92:
+; loc_0001FF92
+SetupTownNpcs_Barrow:
 	MOVE.l	#loc_00034BB6, Town_npc_data_ptr.w
 	RTS
 	
-loc_0001FF9C:
+; loc_0001FF9C
+SetupTownNpcs_Tadcaster:
 	MOVE.l	#loc_00035B08, Town_npc_data_ptr.w
 	RTS
 	
-loc_0001FFA6:
+; loc_0001FFA6
+SetupTownNpcs_Helwig:
 	MOVE.l	#loc_00036B90, Town_npc_data_ptr.w
 	RTS
 	
-loc_0001FFB0:
+; loc_0001FFB0
+SetupTownNpcs_Swafham:
 	MOVE.l	#loc_000383BE, Town_npc_data_ptr.w
 	TST.b	Swaffham_ruined.w
 	BEQ.b	loc_0001FFC6
@@ -35226,20 +35238,24 @@ loc_0001FFB0:
 loc_0001FFC6:
 	RTS
 	
-loc_0001FFC8:
+; loc_0001FFC8
+SetupTownNpcs_Excalabria:
 	MOVE.l	#loc_00039530, Town_npc_data_ptr.w
 	RTS
 	
-loc_0001FFD2:
+; loc_0001FFD2
+SetupTownNpcs_Hastings1:
 	MOVE.l	#loc_00039DDA, Town_npc_data_ptr.w
 	RTS
 	
-loc_0001FFDC:
+; loc_0001FFDC
+SetupTownNpcs_Hastings2:
 	MOVE.l	#loc_00039DDA, Town_npc_data_ptr.w	
 	RTS
 	
 	
-loc_0001FFE6:
+; loc_0001FFE6
+SetupTownNpcs_Carthahena:
 	MOVE.l	#loc_0003B646, Town_npc_data_ptr.w
 	TST.b	Tsarkon_is_dead.w
 	BEQ.b	loc_0001FFFC
@@ -35247,34 +35263,37 @@ loc_0001FFE6:
 loc_0001FFFC:
 	RTS
 	
-loc_0001FFFE:
-	BRA.w	loc_0002003E	
+; loc_0001FFFE
+TownStateDataJumpTableStart:
+	BRA.w	LoadTownStateData_Default	
 loc_00020002:
-	BRA.w	loc_00020046
+	BRA.w	LoadTownStateData_Parma
 loc_00020006:
-	BRA.w	loc_0002003E	
+	BRA.w	LoadTownStateData_Default	
 loc_0002000A:
-	BRA.w	loc_0002005A
+	BRA.w	LoadTownStateData_Deepdale
 loc_0002000E:
-	BRA.w	loc_00020062
+	BRA.w	LoadTownStateData_Stow1
 ; loc_00020012
 TownStateDataJumpTable:
-	BRA.w	loc_0002003E	
-	BRA.w	loc_0002003E	
-	BRA.w	loc_0002007E
-	BRA.w	loc_0002003E	
-	BRA.w	loc_00020092
-	BRA.w	loc_0002003E	
-	BRA.w	loc_0002009A
-	BRA.w	loc_0002003E	
-	BRA.w	loc_0002003E	
-	BRA.w	loc_0002003E	
-	BRA.w	loc_000200A2
-loc_0002003E:
+	BRA.w	LoadTownStateData_Default	
+	BRA.w	LoadTownStateData_Default	
+	BRA.w	LoadTownStateData_Malaga
+	BRA.w	LoadTownStateData_Default	
+	BRA.w	LoadTownStateData_Tadcaster
+	BRA.w	LoadTownStateData_Default	
+	BRA.w	LoadTownStateData_Swafham
+	BRA.w	LoadTownStateData_Default	
+	BRA.w	LoadTownStateData_Default	
+	BRA.w	LoadTownStateData_Default	
+	BRA.w	LoadTownStateData_Carthahena
+; loc_0002003E
+LoadTownStateData_Default:
 	LEA	loc_00028F6E, A0	
 	RTS
 	
-loc_00020046:
+; loc_00020046
+LoadTownStateData_Parma:
 	LEA	loc_00028F92, A0
 loc_0002004C:
 	TST.b	Fake_king_killed.w
@@ -35283,11 +35302,13 @@ loc_0002004C:
 loc_00020058:
 	RTS
 	
-loc_0002005A:
+; loc_0002005A
+LoadTownStateData_Deepdale:
 	LEA	loc_00029BDE, A0
 	RTS
 	
-loc_00020062:
+; loc_00020062
+LoadTownStateData_Stow1:
 	TST.b	Stow_innocence_proven.w
 loc_00020066:
 	BNE.b	loc_00020076
@@ -35301,7 +35322,8 @@ loc_00020076:
 loc_0002007C:
 	RTS
 	
-loc_0002007E:
+; loc_0002007E
+LoadTownStateData_Malaga:
 	LEA	loc_0002ABA4, A0
 	TST.b	Barrow_map_received.w
 	BNE.b	loc_00020090
@@ -35309,15 +35331,18 @@ loc_0002007E:
 loc_00020090:
 	RTS
 	
-loc_00020092:
+; loc_00020092
+LoadTownStateData_Tadcaster:
 	LEA	loc_0002B67C, A0
 	RTS
 	
-loc_0002009A:
+; loc_0002009A
+LoadTownStateData_Swafham:
 	LEA	loc_0002B910, A0
 	RTS
 	
-loc_000200A2:
+; loc_000200A2
+LoadTownStateData_Carthahena:
 	LEA	loc_0002BFC8, A0
 	TST.b	Tsarkon_is_dead.w
 	BEQ.b	loc_000200B4
