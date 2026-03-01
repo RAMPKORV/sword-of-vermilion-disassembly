@@ -8790,7 +8790,7 @@ CheckPlayerInBoundingBox: ; Check whether player is in the bounding box for Parm
 	CLR.w	D2
 	MOVE.b	$2B(A5), D2
 	MOVE.w	D2, D3
-	LEA	loc_00008668, A0
+	LEA	ParmaSoldierBoundingBoxTable, A0
 	CLR.w	D4
 	MOVE.b	$28(A5), D4
 	ASR.w	#1, D4
@@ -9032,7 +9032,7 @@ loc_000082F2:
 	MOVE.b	$18(A5), D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
-	LEA	loc_00008648, A0
+	LEA	NPCMoveDeltaTable, A0
 	MOVE.l	$E(A5), D1
 	MOVE.l	$12(A5), D2
 	ADD.l	(A0,D0.w), D1
@@ -9103,7 +9103,7 @@ CheckSurroundingTileCollision:
 	ADD.w	D7, D7
 	ASL.w	#4, D6
 	ADD.w	D7, D6
-	LEA	loc_000085A8, A0
+	LEA	NPCCollisionOffsetTable, A0
 	LEA	(A0,D6.w), A0
 	MOVEQ	#9, D7
 loc_000083DA:
@@ -9139,7 +9139,7 @@ CheckAdjacentTileCollision:
 	ADD.w	D7, D7
 	ASL.w	#4, D6
 	ADD.w	D7, D6
-	LEA	loc_000085A8, A0
+	LEA	NPCCollisionOffsetTable, A0
 	LEA	(A0,D6.w), A0
 	MOVEQ	#3, D7
 loc_00008428:
@@ -9172,7 +9172,7 @@ CheckNPCCollision:
 	ADD.w	D7, D7
 	ASL.w	#4, D6
 	ADD.w	D7, D6
-	LEA	loc_000085A8, A0
+	LEA	NPCCollisionOffsetTable, A0
 	LEA	(A0,D6.w), A0
 	MOVEQ	#$0000001D, D7
 	MOVEA.l	Enemy_list_ptr.w, A6
@@ -9331,18 +9331,20 @@ ClearNPCFrozenState:
 loc_000085A6:
 	RTS
 
-loc_000085A8:
+; loc_000085A8
+NPCCollisionOffsetTable:
 	dc.w	 0, -2,  0, -1, -1, -1,  1, -1, -1,  0,  1,  0, -1,  1,  0,  1
 	dc.w	 1,  1,  0,  2, -2,  0, -1,  0, -1, -1, -1,  1,  0,  1,  0, -1 
 	dc.w	 1,  1,  1,  0,  1, -1,  2,  0,  0,  2,  0,  1, -1,  1,  1,  1
 	dc.w	-1, -1, -1,  0,  0, -1,  1, -1,  1,  0,  0, -2,  2,  0,  1,  0 
 	dc.w	 1, -1,  1,  1, -1, -1, -1,  0, -1,  1,  0, -1,  0,  1, -2,  0
-loc_00008648:
+; loc_00008648
+NPCMoveDeltaTable:
 	dc.l	$00000000, $FFFF8000 
 	dc.l	$FFFF8000, $00000000 
 	dc.l	$00000000, $00008000 
 	dc.l	$00008000, $00000000 
-loc_00008668: ; Parma soldiers detection area
+ParmaSoldierBoundingBoxTable: ; Parma soldiers detection area
 	dc.w -3, 0,  0, 3
 	dc.w -3, 1, -3, 3
 	dc.w -3, 1, -3, 3
@@ -9395,7 +9397,7 @@ loc_0000870E:
 
 InitObjectChain_7Entities:
 	BSR.w	InitObjectEntity_Type14
-	MOVE.l	#loc_000088B4, $2(A6)
+	MOVE.l	#ChainObjectTick_Parent, $2(A6)
 	BSR.w	InitNextObjectEntity
 	BSET.b	#3, $7(A6)
 	BSR.w	InitNextObjectEntity
@@ -9410,7 +9412,7 @@ InitNextObjectEntity:
 	CLR.w	D0
 	MOVE.b	$1(A6), D0
 	LEA	(A6,D0.w), A6
-	MOVE.l	#loc_00008A98, $2(A6)
+	MOVE.l	#ChildObjectTick, $2(A6)
 InitObjectEntity_Type14:
 	BSET.b	#7, (A6)
 	BCLR.b	#7, $7(A6)
@@ -9429,7 +9431,7 @@ InitPairedObjectEntities:
 	BSET.b	#5, $7(A6)
 	BCLR.b	#6, $7(A6)
 	MOVE.b	#$0E, $6(A6)
-	MOVE.l	#loc_000089BE, $2(A6)
+	MOVE.l	#PairedObjectTick_A, $2(A6)
 	CLR.w	D0
 	MOVE.b	$1(A6), D0
 	LEA	(A6,D0.w), A6
@@ -9440,12 +9442,12 @@ InitPairedObjectEntities:
 	BSET.b	#5, $7(A6)
 	BCLR.b	#6, $7(A6)
 	MOVE.b	#$0E, $6(A6)
-	MOVE.l	#loc_00008A98, $2(A6)
+	MOVE.l	#ChildObjectTick, $2(A6)
 	RTS
 
 InitObjectEntity_Type6:
 	BSET.b	#7, (A6)
-	MOVE.l	#loc_00008A4E, $2(A6)
+	MOVE.l	#SingleObjectTick, $2(A6)
 	BCLR.b	#7, $7(A6)
 	BCLR.b	#3, $7(A6)
 	BCLR.b	#4, $7(A6)
@@ -9457,7 +9459,7 @@ InitObjectEntity_Type6:
 InitMapIndicatorEntity:
 	MOVEA.l	Map_indicator_entity_ptr.w, A6
 	BSET.b	#7, (A6)
-	MOVE.l	#loc_00008866, $2(A6)
+	MOVE.l	#MapIndicatorEntityTick, $2(A6)
 	BSET.b	#7, $7(A6)
 	BCLR.b	#3, $7(A6)
 	BCLR.b	#4, $7(A6)
@@ -9466,7 +9468,8 @@ InitMapIndicatorEntity:
 	MOVE.b	#1, $6(A6)
 	RTS
 
-loc_00008866:
+; loc_00008866
+MapIndicatorEntityTick:
 	TST.b	Player_input_blocked.w
 	BNE.b	loc_000088AA
 	MOVE.w	Player_position_x_outside_town.w, D0
@@ -9479,7 +9482,7 @@ loc_00008866:
 	ADDI.w	#$0010, D1
 	MOVE.w	D0, $A(A5)
 	MOVE.w	D1, $C(A5)
-	LEA	loc_000088AC, A0
+	LEA	MapIndicatorTileIDs, A0
 	MOVE.w	Player_direction.w, D4
 	ANDI.w	#6, D4
 	MOVE.w	(A0,D4.w), $8(A5)
@@ -9487,13 +9490,15 @@ loc_00008866:
 loc_000088AA:
 	RTS
 
-loc_000088AC:
+; loc_000088AC
+MapIndicatorTileIDs:
 	dc.w	$04D5 
 	dc.w	$04D3 
 	dc.w	$04D7 
 	dc.w	$04D1 
 
-loc_000088B4:
+; loc_000088B4
+ChainObjectTick_Parent:
 	BSET.b	#5, $7(A5)
 	BCLR.b	#6, $7(A5)
 	TST.b	$18(A5)
@@ -9535,7 +9540,7 @@ loc_00008936:
 	LEA	(A6,D0.w), A6
 	DBF	D7, loc_00008936
 loc_0000894A:
-	LEA	loc_00008EA4, A0
+	LEA	PortraitPositionOffsets, A0
 	MOVE.w	$E(A5), D3
 	MOVE.w	$12(A5), D4
 	MOVE.w	#$001E, $16(A5)
@@ -9572,7 +9577,8 @@ loc_0000897A:
 loc_000089BC:
 	RTS
 
-loc_000089BE:
+; loc_000089BE
+PairedObjectTick_A:
 	BSET.b	#5, $7(A5)
 	BCLR.b	#6, $7(A5)
 	TST.b	$18(A5)
@@ -9613,7 +9619,8 @@ loc_00008A0C:
 loc_00008A4C:
 	RTS
 
-loc_00008A4E:
+; loc_00008A4E
+SingleObjectTick:
 	BSET.b	#5, $7(A5)
 	BCLR.b	#6, $7(A5)
 	TST.b	$18(A5)
@@ -9634,7 +9641,8 @@ loc_00008A6C:
 loc_00008A96:
 	RTS
 
-loc_00008A98:
+; loc_00008A98
+ChildObjectTick:
 	MOVE.w	$8(A5), D0
 	BEQ.b	loc_00008AB0
 	MOVE.w	$E(A5), D0
@@ -9645,75 +9653,85 @@ loc_00008A98:
 loc_00008AB0:
 	RTS
 
-loc_00008AB2:
+; loc_00008AB2
+PortraitInit_Simple:
 	MOVEA.l	Talker_gfx_descriptor_ptr.w, A6
 	BSR.w	InitTalkerPortraitSprite
 	RTS
 
-loc_00008ABC:
+; loc_00008ABC
+PortraitInit_MapGiver:
 	MOVEA.l	Talker_gfx_descriptor_ptr.w, A6
 	BSR.w	InitTalkerPortraitSprite
-	MOVE.l	#loc_00008E5C, $2(A5)
+	MOVE.l	#PortraitTick_MapGiver, $2(A5)
 	BSR.w	SetObjectActiveFlag
-	MOVE.l	#loc_00008E5C, $2(A4)
+	MOVE.l	#PortraitTick_MapGiver, $2(A4)
 	RTS
 
-loc_00008ADA:
+; loc_00008ADA
+PortraitInit_StowGirl:
 	MOVEA.l	Talker_gfx_descriptor_ptr.w, A6
 	BSR.w	InitTalkerPortraitSprite
-	MOVE.l	#loc_00008D2C, $2(A5)
+	MOVE.l	#PortraitTick_StowGirl, $2(A5)
 	BSR.w	SetObjectActiveFlag
-	MOVE.l	#loc_00008D2C, $2(A4)
+	MOVE.l	#PortraitTick_StowGirl, $2(A4)
 	RTS
 
-loc_00008AF8:
+; loc_00008AF8
+PortraitInit_RingOfWisdom:
 	MOVEA.l	Talker_gfx_descriptor_ptr.w, A6
 	BSR.w	InitTalkerPortraitSprite
-	MOVE.l	#loc_00008D18, $2(A5)
+	MOVE.l	#PortraitTick_RingOfWisdom, $2(A5)
 	RTS
 
-loc_00008B0A:
+; loc_00008B0A
+PortraitInit_ImposterGuard:
 	MOVEA.l	Talker_gfx_descriptor_ptr.w, A6
 	BSR.w	InitTalkerPortraitSprite
-	MOVE.l	#loc_00008DC6, $2(A5)
+	MOVE.l	#PortraitTick_ImposterGuard, $2(A5)
 	RTS
 
-loc_00008B1C:
+; loc_00008B1C
+PortraitInit_MalagaPrisoner:
 	MOVEA.l	Talker_gfx_descriptor_ptr.w, A6
 	BSR.w	InitTalkerPortraitSprite
-	MOVE.l	#loc_00008DDA, $2(A5)
+	MOVE.l	#PortraitTick_MalagaPrisoner, $2(A5)
 	RTS
 
-loc_00008B2E:
+; loc_00008B2E
+PortraitInit_TsarkonFinal:
 	MOVEA.l	Talker_gfx_descriptor_ptr.w, A6
 	BSR.w	InitTalkerPortraitSprite
-	MOVE.l	#loc_00008E26, $2(A5)
+	MOVE.l	#PortraitTick_TsarkonFinal, $2(A5)
 	BSR.w	SetObjectActiveFlag
-	MOVE.l	#loc_00008E26, $2(A4)
+	MOVE.l	#PortraitTick_TsarkonFinal, $2(A4)
 	RTS
 
-loc_00008B4C:
+; loc_00008B4C
+PortraitInit_Bearwulf:
 	MOVEA.l	Talker_gfx_descriptor_ptr.w, A6
 	BSR.w	InitTalkerPortraitSprite
-	MOVE.l	#loc_00008E44, $2(A5)
+	MOVE.l	#PortraitTick_Bearwulf, $2(A5)
 	BSR.w	SetObjectActiveFlag
-	MOVE.l	#loc_00008E44, $2(A4)
+	MOVE.l	#PortraitTick_Bearwulf, $2(A4)
 	RTS
 
-loc_00008B6A:
+; loc_00008B6A
+PortraitInit_TruffleGiver:
 	MOVEA.l	Talker_gfx_descriptor_ptr.w, A6
 	BSR.w	InitTalkerPortraitSprite
-	MOVE.l	#loc_00008E4C, $2(A5)
+	MOVE.l	#PortraitTick_Truffle, $2(A5)
 	BSR.w	SetObjectActiveFlag
-	MOVE.l	#loc_00008E4C, $2(A4)
+	MOVE.l	#PortraitTick_Truffle, $2(A4)
 	RTS
 
-loc_00008B88:
+; loc_00008B88
+PortraitInit_DigotGiver:
 	MOVEA.l	Talker_gfx_descriptor_ptr.w, A6
 	BSR.w	InitTalkerPortraitSprite
-	MOVE.l	#loc_00008E54, $2(A5)
+	MOVE.l	#PortraitTick_Digot, $2(A5)
 	BSR.w	SetObjectActiveFlag
-	MOVE.l	#loc_00008E54, $2(A4)
+	MOVE.l	#PortraitTick_Digot, $2(A4)
 	RTS
 
 InitEncounterPortrait:
@@ -9800,13 +9818,15 @@ loc_00008D0A:
 
 PortraitIdleLoop:
 	JMP	QueueSpriteOAMIfVisible
-loc_00008D18:
+; loc_00008D18
+PortraitTick_RingOfWisdom:
 	TST.b	Rings_collected.w
 	BEQ.b	loc_00008D26
 	MOVE.l	#OnlyYouCanSaveUsStr, Script_talk_source.w
 loc_00008D26:
 	JMP	QueueSpriteOAMIfVisible
-loc_00008D2C:
+; loc_00008D2C
+PortraitTick_StowGirl:
 	TST.b	Girl_left_for_stow.w
 	BEQ.b	loc_00008D44
 	MOVE.l	#NoOneHereStr, Script_talk_source.w
@@ -9851,13 +9871,15 @@ loc_00008DB8:
 	MOVE.l	#BuyBookSanguiosStr, Script_talk_source.w
 loc_00008DC0:
 	JMP	QueueSpriteOAMIfVisible
-loc_00008DC6:
+; loc_00008DC6
+PortraitTick_ImposterGuard:
 	TST.b	Imposter_boss_trigger.w
 	BEQ.b	loc_00008DD4
 	MOVE.l	#NoOneHereStr, Script_talk_source.w
 loc_00008DD4:
 	JMP	QueueSpriteOAMIfVisible
-loc_00008DDA:
+; loc_00008DDA
+PortraitTick_MalagaPrisoner:
 	TST.b	Malaga_king_crowned.w
 	BEQ.b	loc_00008DFC
 	LEA	Possessed_items_list.w, A3
@@ -9876,7 +9898,8 @@ loc_00008DFC:
 	MOVE.l	#WaitingForPlayerNameStr, Script_talk_source.w
 loc_00008E20:
 	JMP	QueueSpriteOAMIfVisible
-loc_00008E26:
+; loc_00008E26
+PortraitTick_TsarkonFinal:
 	TST.b	Tsarkon_is_dead.w
 	BEQ.b	loc_00008E3E
 	MOVE.l	#EvilDiedWithTsarkonStr, Script_talk_source.w
@@ -9886,16 +9909,20 @@ loc_00008E26:
 
 loc_00008E3E:
 	JMP	QueueSpriteOAMIfVisible
-loc_00008E44:
+; loc_00008E44
+PortraitTick_Bearwulf:
 	LEA	Bearwulf_met.w, A0
 	BRA.w	loc_00008E88
-loc_00008E4C:
+; loc_00008E4C
+PortraitTick_Truffle:
 	LEA	Truffle_collected.w, A0
 	BRA.w	loc_00008E88
-loc_00008E54:
+; loc_00008E54
+PortraitTick_Digot:
 	LEA	Digot_plant_received.w, A0
 	BRA.w	loc_00008E88
-loc_00008E5C:
+; loc_00008E5C
+PortraitTick_MapGiver:
 	LEA	Map_trigger_flags.w, A0
 	MOVE.w	Map_trigger_index.w, D5
 	TST.b	(A0,D5.w)
@@ -9916,7 +9943,8 @@ loc_00008E88:
 
 loc_00008E9E:
 	JMP	QueueSpriteOAMIfVisible
-loc_00008EA4:
+; loc_00008EA4
+PortraitPositionOffsets:
 	dc.w	$FFF0, $FFD0, $0010, $FFD0 
 	dc.w	$FFF0, $FFE8, $0010, $FFE8
 	dc.w	$FFF0, $0000, $0010, $0000 
@@ -35712,7 +35740,7 @@ loc_000206DE:
 	TST.b	(A0,D5.w)
 	BNE.b	loc_00020712
 	BSR.w	InitDialogMode
-	MOVE.l	#loc_00008ABC, $2(A6)
+	MOVE.l	#PortraitInit_MapGiver, $2(A6)
 	MOVE.l	#loc_0001F712, Talker_gfx_descriptor_ptr.w
 	BSR.w	InitDialogGraphics
 	MOVE.l	#LostHereIsAMapStr_Wyclif, Script_talk_source.w
@@ -35726,7 +35754,7 @@ loc_00020714:
 	TST.b	(A0,D5.w)
 	BNE.b	loc_00020748
 	BSR.w	InitDialogMode
-	MOVE.l	#loc_00008ABC, $2(A6)
+	MOVE.l	#PortraitInit_MapGiver, $2(A6)
 	MOVE.l	#loc_0001F712, Talker_gfx_descriptor_ptr.w
 	BSR.w	InitDialogGraphics
 	MOVE.l	#LostHereIsAMapStr_Deepdale, Script_talk_source.w
@@ -35740,7 +35768,7 @@ loc_0002074A:
 	TST.b	(A0,D5.w)
 	BNE.b	loc_0002077E
 	BSR.w	InitDialogMode
-	MOVE.l	#loc_00008ABC, $2(A6)
+	MOVE.l	#PortraitInit_MapGiver, $2(A6)
 	MOVE.l	#loc_0001F712, Talker_gfx_descriptor_ptr.w
 	BSR.w	InitDialogGraphics
 	MOVE.l	#LostHereIsAMapStr_Stow, Script_talk_source.w
@@ -36093,7 +36121,7 @@ CaveEvent_RingOfWisdom:
 	BNE.b	loc_00020CBA
 	MOVE.b	#$FF, Talker_present_flag.w
 	BSR.w	InitDialogMode
-	MOVE.l	#loc_00008AF8, $2(A6)
+	MOVE.l	#PortraitInit_RingOfWisdom, $2(A6)
 	MOVE.l	#loc_0001F712, Talker_gfx_descriptor_ptr.w
 	BSR.w	InitDialogGraphics
 	MOVE.l	#RingOfWisdomStr, Script_talk_source.w
@@ -36224,7 +36252,7 @@ CaveEvent_Truffle:
 	MOVE.w	#$010B, Reward_script_value.w
 	MOVE.l	#Truffle_collected, Reward_script_flag.w
 	BSR.w	InitDialogMode
-	MOVE.l	#loc_00008B6A, $2(A6)
+	MOVE.l	#PortraitInit_TruffleGiver, $2(A6)
 	MOVE.l	#loc_0001F7BA, Talker_gfx_descriptor_ptr.w
 	BSR.w	InitDialogGraphics
 	MOVE.l	#NoOneHereStr, Script_talk_source.w
@@ -36249,7 +36277,7 @@ CaveEvent_StowThief:
 	BNE.b	loc_0002105C
 	MOVE.b	#$FF, Talker_present_flag.w
 	BSR.w	InitDialogMode
-	MOVE.l	#loc_00008ADA, $2(A6)
+	MOVE.l	#PortraitInit_StowGirl, $2(A6)
 	MOVE.l	#loc_0001F72E, Talker_gfx_descriptor_ptr.w
 	BSR.w	InitDialogGraphics
 	MOVE.l	#SorryForStealingStr, Script_talk_source.w
@@ -36288,7 +36316,7 @@ CaveEvent_BearwulfMeeting:
 	BNE.b	loc_000210BC
 	MOVE.b	#$FF, Talker_present_flag.w
 	BSR.w	InitDialogMode
-	MOVE.l	#loc_00008B4C, $2(A6)
+	MOVE.l	#PortraitInit_Bearwulf, $2(A6)
 	MOVE.l	#loc_0001F74A, Talker_gfx_descriptor_ptr.w
 	BSR.w	InitDialogGraphics
 	MOVE.l	#BearwulfIntroductionStr, Script_talk_source.w
@@ -36315,7 +36343,7 @@ CaveEvent_MalagaDungeonPrisoner:
 	BNE.b	loc_00021128
 	MOVE.b	#$FF, Talker_present_flag.w
 	BSR.w	InitDialogMode
-	MOVE.l	#loc_00008B1C, $2(A6)
+	MOVE.l	#PortraitInit_MalagaPrisoner, $2(A6)
 	MOVE.l	#loc_0001F712, Talker_gfx_descriptor_ptr.w
 	BSR.w	InitDialogGraphics
 	MOVE.l	#NeverExpectedSucceedStr, Script_talk_source.w
@@ -36348,7 +36376,7 @@ CaveEvent_TadcasterBully:
 	BNE.b	loc_0002119A
 	MOVE.b	#$FF, Talker_present_flag.w
 	BSR.w	InitDialogMode
-	MOVE.l	#loc_00008B0A, $2(A6)
+	MOVE.l	#PortraitInit_ImposterGuard, $2(A6)
 	MOVE.l	#loc_0001F7D6, Talker_gfx_descriptor_ptr.w
 	BSR.w	InitDialogGraphics
 	MOVE.l	#AwaitingYouStr, Script_talk_source.w
@@ -36378,7 +36406,7 @@ CaveEvent_SwaffhamDigotPlant:
 	MOVE.w	#$010C, Reward_script_value.w
 	MOVE.l	#Digot_plant_received, Reward_script_flag.w
 	BSR.w	InitDialogMode
-	MOVE.l	#loc_00008B88, $2(A6)
+	MOVE.l	#PortraitInit_DigotGiver, $2(A6)
 	MOVE.l	#loc_0001F79E, Talker_gfx_descriptor_ptr.w
 	BSR.w	InitDialogGraphics
 	MOVE.l	#NoOneHereStr, Script_talk_source.w
@@ -36497,7 +36525,7 @@ CaveEvent_TsarkonFinalEncounter:
 	BNE.w	loc_000213BA
 	MOVE.b	#$FF, Talker_present_flag.w
 	BSR.w	InitDialogMode
-	MOVE.l	#loc_00008B2E, $2(A6)
+	MOVE.l	#PortraitInit_TsarkonFinal, $2(A6)
 	MOVE.l	#loc_0001F7F2, Talker_gfx_descriptor_ptr.w
 	BSR.w	InitDialogGraphics
 	MOVE.l	#FreedAtLastStr, Script_talk_source.w
@@ -36593,32 +36621,32 @@ SetupFoundItemReward:
 	
 InitTalkerWithGfxDescriptor_1F782:
 	BSR.w	InitDialogMode
-	MOVE.l	#loc_00008AB2, $2(A6)
+	MOVE.l	#PortraitInit_Simple, $2(A6)
 	MOVE.l	#loc_0001F782, Talker_gfx_descriptor_ptr.w
 	BRA.w	InitDialogGraphics
 ; loc_00021498
 InitTalkerWithGfxDescriptor_1F712:
 	MOVE.b	#$FF, Talker_present_flag.w
 	BSR.w	InitDialogMode
-	MOVE.l	#loc_00008AB2, $2(A6)
+	MOVE.l	#PortraitInit_Simple, $2(A6)
 	MOVE.l	#loc_0001F712, Talker_gfx_descriptor_ptr.w
 	BRA.w	InitDialogGraphics
 InitTalkerWithGfxDescriptor_1F74A:
 	MOVE.b	#$FF, Talker_present_flag.w
 	BSR.w	InitDialogMode
-	MOVE.l	#loc_00008AB2, $2(A6)
+	MOVE.l	#PortraitInit_Simple, $2(A6)
 	MOVE.l	#loc_0001F74A, Talker_gfx_descriptor_ptr.w
 	BRA.w	InitDialogGraphics
 InitMerchantDialog_Variant2:
 	MOVE.b	#$FF, Talker_present_flag.w
 	BSR.w	InitDialogMode
-	MOVE.l	#loc_00008AB2, $2(A6)
+	MOVE.l	#PortraitInit_Simple, $2(A6)
 	MOVE.l	#loc_0001F72E, Talker_gfx_descriptor_ptr.w
 	BRA.w	InitDialogGraphics
 InitMerchantDialog_Variant3:
 	MOVE.b	#$FF, Talker_present_flag.w
 	BSR.w	InitDialogMode
-	MOVE.l	#loc_00008AB2, $2(A6)
+	MOVE.l	#PortraitInit_Simple, $2(A6)
 	MOVE.l	#loc_0001F766, Talker_gfx_descriptor_ptr.w
 	BRA.w	InitDialogGraphics
 
