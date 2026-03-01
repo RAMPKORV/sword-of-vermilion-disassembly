@@ -38784,260 +38784,260 @@ loc_00023E68:
 ; loc_00023E70
 EnemyGfxDataTable:
 	dc.l	loc_0002426C ; Appearance
-	dc.l	loc_0002471C ; Sprite mappings
-	dc.l	loc_00024FEE ; Sprites
+	dc.l	EnemyData_Bouncing_5A ; Sprite mappings
+	dc.l	EnemySpriteSet_C ; Sprites
 	dc.l	loc_00024284
-	dc.l	loc_00024736
-	dc.l	loc_00024FEE
+	dc.l	EnemyData_Bouncing_69
+	dc.l	EnemySpriteSet_C
 	dc.l	loc_0002429C
-	dc.l	loc_00024750
-	dc.l	loc_00024FEE
+	dc.l	EnemyData_Bouncing_6A
+	dc.l	EnemySpriteSet_C
 	dc.l	loc_000242B4	
 	dc.l	loc_0002476A	
-	dc.l	loc_00024FEE	
+	dc.l	EnemySpriteSet_C	
 	dc.l	loc_000242CC
-	dc.l	loc_00024784
-	dc.l	loc_00024FEE
+	dc.l	EnemyData_Bouncing_AC
+	dc.l	EnemySpriteSet_C
 	dc.l	loc_000242E4
-	dc.l	loc_0002479E
-	dc.l	loc_00024FEE
+	dc.l	EnemyData_Bouncing_AD
+	dc.l	EnemySpriteSet_C
 	dc.l	loc_000242FC
-	dc.l	loc_000247B8
-	dc.l	loc_00024FBE
+	dc.l	EnemyData_StalkPause_4E
+	dc.l	EnemySpriteSet_A
 	dc.l	loc_00024314
-	dc.l	loc_000247D2
-	dc.l	loc_00024FBE
+	dc.l	EnemyData_StalkPause_7B
+	dc.l	EnemySpriteSet_A
 	dc.l	loc_0002432C
-	dc.l	loc_000247EC
-	dc.l	loc_00024FBE
+	dc.l	EnemyData_StalkPause_7C
+	dc.l	EnemySpriteSet_A
 	dc.l	loc_00024344
-	dc.l	loc_00024806
-	dc.l	loc_00024FBE
+	dc.l	EnemyData_StalkPause_7D
+	dc.l	EnemySpriteSet_A
 	dc.l	loc_0002435C
-	dc.l	loc_00024820
-	dc.l	loc_00024FD6
+	dc.l	EnemyData_StandardMelee_4D
+	dc.l	EnemySpriteSet_B
 	dc.l	loc_00024374
-	dc.l	loc_0002483A
-	dc.l	loc_00024FD6
+	dc.l	EnemyData_StandardMelee_6C
+	dc.l	EnemySpriteSet_B
 	dc.l	loc_0002438C
-	dc.l	loc_00024854
-	dc.l	loc_00024FD6
+	dc.l	EnemyData_StandardMelee_6D
+	dc.l	EnemySpriteSet_B
 	dc.l	loc_000243A4
-	dc.l	loc_0002486E
-	dc.l	loc_00024FD6
+	dc.l	EnemyData_StandardMelee_6E
+	dc.l	EnemySpriteSet_B
 	dc.l	loc_000243BC
-	dc.l	loc_00024888
-	dc.l	loc_00025006
+	dc.l	EnemyData_FleeChase_5B
+	dc.l	EnemySpriteSet_D
 	dc.l	loc_000243D4
-	dc.l	loc_000248A2
-	dc.l	loc_00025006
+	dc.l	EnemyData_FleeChase_6F
+	dc.l	EnemySpriteSet_D
 	dc.l	loc_000243EC
-	dc.l	loc_000248BC
-	dc.l	loc_00025006
+	dc.l	EnemyData_FleeChase_70
+	dc.l	EnemySpriteSet_D
 	dc.l	loc_00024404
-	dc.l	loc_000248D6
-	dc.l	loc_00025006
+	dc.l	EnemyData_FleeChase_71
+	dc.l	EnemySpriteSet_D
 	dc.l	loc_0002441C
-	dc.l	loc_000248F0
-	dc.l	loc_00025066
+	dc.l	EnemyData_ProjectileFire_63
+	dc.l	EnemySpriteSet_H
 	dc.l	loc_00024434
-	dc.l	loc_0002490A
-	dc.l	loc_00025066
+	dc.l	EnemyData_ProjectileFire_A4
+	dc.l	EnemySpriteSet_H
 	dc.l	loc_0002444C
-	dc.l	loc_00024924
-	dc.l	loc_00025066
+	dc.l	EnemyData_ProjectileFire_A5
+	dc.l	EnemySpriteSet_H
 	dc.l	loc_00024464
-	dc.l	loc_0002493E
-	dc.l	loc_00025066
+	dc.l	EnemyData_ProjectileFire_A6
+	dc.l	EnemySpriteSet_H
 	dc.l	loc_0002447C
-	dc.l	loc_00024958
-	dc.l	loc_0002501E
+	dc.l	EnemyData_ProximityChase_5C
+	dc.l	EnemySpriteSet_E
 	dc.l	loc_00024494
-	dc.l	loc_00024972
-	dc.l	loc_0002501E
+	dc.l	EnemyData_ProximityChase_9E
+	dc.l	EnemySpriteSet_E
 	dc.l	loc_000244AC
-	dc.l	loc_0002498C
-	dc.l	loc_0002501E
+	dc.l	EnemyData_ProximityChase_9F
+	dc.l	EnemySpriteSet_E
 	dc.l	loc_000244C4
-	dc.l	loc_000249A6
-	dc.l	loc_0002501E
+	dc.l	EnemyData_ProximityChase_A0
+	dc.l	EnemySpriteSet_E
 	dc.l	loc_000244DC
-	dc.l	loc_000249C0
-	dc.l	loc_00025036
+	dc.l	EnemyData_StandardMeleeAlt_5D
+	dc.l	EnemySpriteSet_F
 	dc.l	loc_000244F4
-	dc.l	loc_000249DA
-	dc.l	loc_00025036
+	dc.l	EnemyData_StandardMeleeAlt_A1
+	dc.l	EnemySpriteSet_F
 	dc.l	loc_0002450C
-	dc.l	loc_000249F4
-	dc.l	loc_00025036
+	dc.l	EnemyData_StandardMeleeAlt_A2
+	dc.l	EnemySpriteSet_F
 	dc.l	loc_00024524
-	dc.l	loc_00024A0E
-	dc.l	loc_00025036
+	dc.l	EnemyData_StandardMeleeAlt_A3
+	dc.l	EnemySpriteSet_F
 	dc.l	loc_0002453C
-	dc.l	loc_00024A28
-	dc.l	loc_00025084
+	dc.l	EnemyData_StalkPauseAlt_64
+	dc.l	EnemySpriteSet_I
 	dc.l	loc_00024554
-	dc.l	loc_00024A42
-	dc.l	loc_00025084
+	dc.l	EnemyData_StalkPauseAlt_B9
+	dc.l	EnemySpriteSet_I
 	dc.l	loc_0002456C
-	dc.l	loc_00024A5C
-	dc.l	loc_00025084
+	dc.l	EnemyData_StalkPauseAlt_BA
+	dc.l	EnemySpriteSet_I
 	dc.l	loc_00024584
-	dc.l	loc_00024A76
-	dc.l	loc_00025084
+	dc.l	EnemyData_StalkPauseAlt_BB
+	dc.l	EnemySpriteSet_I
 	dc.l	loc_0002459C
-	dc.l	loc_00024A90
-	dc.l	loc_000250A2
+	dc.l	EnemyData_HumanoidMelee_65
+	dc.l	EnemySpriteSet_J
 	dc.l	loc_000245B4
-	dc.l	loc_00024AAA
-	dc.l	loc_000250A2
+	dc.l	EnemyData_HumanoidMelee_A7
+	dc.l	EnemySpriteSet_J
 	dc.l	loc_000245CC
-	dc.l	loc_00024AC4
-	dc.l	loc_000250A2
+	dc.l	EnemyData_HumanoidMeleeAlt_A8
+	dc.l	EnemySpriteSet_J
 	dc.l	loc_000245E4
-	dc.l	loc_00024ADE
-	dc.l	loc_000250A2
+	dc.l	EnemyData_HumanoidMeleeAlt_A9
+	dc.l	EnemySpriteSet_J
 	dc.l	loc_000245FC
-	dc.l	loc_00024AF8
-	dc.l	loc_000250BA
+	dc.l	EnemyData_RandomShooter_66
+	dc.l	EnemySpriteSet_K
 	dc.l	loc_00024614
-	dc.l	loc_00024B12
-	dc.l	loc_000250BA
+	dc.l	EnemyData_RandomShooter_AA
+	dc.l	EnemySpriteSet_K
 	dc.l	loc_0002462C
-	dc.l	loc_00024B2C
-	dc.l	loc_000250BA
+	dc.l	EnemyData_RandomShooter_AB
+	dc.l	EnemySpriteSet_K
 	dc.l	loc_00024644
-	dc.l	loc_00024B46
-	dc.l	loc_000250BA
+	dc.l	EnemyData_RandomShooter_BC
+	dc.l	EnemySpriteSet_K
 	dc.l	loc_0002465C
-	dc.l	loc_00024B60
-	dc.l	loc_0002504E
+	dc.l	EnemyData_StandardMeleeFast_61
+	dc.l	EnemySpriteSet_G
 	dc.l	loc_00024674	
 	dc.l	loc_00024B7A	
-	dc.l	loc_0002504E	
+	dc.l	EnemySpriteSet_G	
 	dc.l	loc_0002468C
-	dc.l	loc_00024B94
-	dc.l	loc_0002504E
+	dc.l	EnemyData_StandardMeleeFast_BE
+	dc.l	EnemySpriteSet_G
 	dc.l	loc_000246A4
-	dc.l	loc_00024BAE
-	dc.l	loc_0002504E
+	dc.l	EnemyData_StandardMeleeFast_BF
+	dc.l	EnemySpriteSet_G
 	dc.l	loc_000246BC
-	dc.l	loc_00024BC8
-	dc.l	loc_000250F0
+	dc.l	EnemyData_OrbShield_75
+	dc.l	EnemySpriteSet_M
 	dc.l	loc_000246D4
-	dc.l	loc_00024BE2
-	dc.l	loc_000250F0
+	dc.l	EnemyData_OrbShield_C0
+	dc.l	EnemySpriteSet_M
 	dc.l	loc_000246EC
-	dc.l	loc_00024BFC
-	dc.l	loc_000250F0
+	dc.l	EnemyData_OrbShield_C1
+	dc.l	EnemySpriteSet_M
 	dc.l	loc_00024704
-	dc.l	loc_00024C16
-	dc.l	loc_000250F0
+	dc.l	EnemyData_OrbShield_C2
+	dc.l	EnemySpriteSet_M
 	dc.l	loc_0002441C
-	dc.l	loc_00024C30
-	dc.l	loc_00025066
+	dc.l	EnemyData_BurstFire_63
+	dc.l	EnemySpriteSet_H
 	dc.l	loc_00024434
-	dc.l	loc_00024C4A
-	dc.l	loc_00025066
+	dc.l	EnemyData_BurstFire_A4
+	dc.l	EnemySpriteSet_H
 	dc.l	loc_0002444C
-	dc.l	loc_00024C64
-	dc.l	loc_00025066
+	dc.l	EnemyData_BurstFire_A5
+	dc.l	EnemySpriteSet_H
 	dc.l	loc_00024464
-	dc.l	loc_00024C7E
-	dc.l	loc_00025066
+	dc.l	EnemyData_BurstFire_A6
+	dc.l	EnemySpriteSet_H
 	dc.l	loc_0002453C
-	dc.l	loc_00024C98
-	dc.l	loc_00025084
+	dc.l	EnemyData_StalkPause3_64
+	dc.l	EnemySpriteSet_I
 	dc.l	loc_00024554	
 	dc.l	loc_00024CB2	
-	dc.l	loc_00025084	
+	dc.l	EnemySpriteSet_I	
 	dc.l	loc_0002456C
-	dc.l	loc_00024CCC
-	dc.l	loc_00025084
+	dc.l	EnemyData_StalkPause3_BA
+	dc.l	EnemySpriteSet_I
 	dc.l	loc_00024584
-	dc.l	loc_00024CE6
-	dc.l	loc_00025084
+	dc.l	EnemyData_StalkPause3_BB
+	dc.l	EnemySpriteSet_I
 	dc.l	loc_0002453C
-	dc.l	loc_00024D00
-	dc.l	loc_00025084
+	dc.l	EnemyData_FastBurstShooter_64
+	dc.l	EnemySpriteSet_I
 	dc.l	loc_00024554
-	dc.l	loc_00024D1A
-	dc.l	loc_00025084
+	dc.l	EnemyData_FastBurstShooter_B9
+	dc.l	EnemySpriteSet_I
 	dc.l	loc_0002456C
-	dc.l	loc_00024D34
-	dc.l	loc_00025084
+	dc.l	EnemyData_FastBurstShooter_BA
+	dc.l	EnemySpriteSet_I
 	dc.l	loc_00024584	
 	dc.l	loc_00024D4E	
-	dc.l	loc_00025084	
+	dc.l	EnemySpriteSet_I	
 	dc.l	loc_0002453C
-	dc.l	loc_00024D68
-	dc.l	loc_00025084
+	dc.l	EnemyData_HomingShooter_64
+	dc.l	EnemySpriteSet_I
 	dc.l	loc_00024554
-	dc.l	loc_00024D82
-	dc.l	loc_00025084
+	dc.l	EnemyData_HomingShooter_B9
+	dc.l	EnemySpriteSet_I
 	dc.l	loc_0002456C
-	dc.l	loc_00024D9C
-	dc.l	loc_00025084
+	dc.l	EnemyData_HomingShooter_BA
+	dc.l	EnemySpriteSet_I
 	dc.l	loc_00024584
-	dc.l	loc_00024DB6
-	dc.l	loc_00025084
+	dc.l	EnemyData_HomingShooter_BB
+	dc.l	EnemySpriteSet_I
 	dc.l	loc_000245FC
-	dc.l	loc_00024DD0
-	dc.l	loc_000250BA
+	dc.l	EnemyData_Teleporter_66
+	dc.l	EnemySpriteSet_K
 	dc.l	loc_00024614
-	dc.l	loc_00024DEA
-	dc.l	loc_000250BA
+	dc.l	EnemyData_Teleporter_AA
+	dc.l	EnemySpriteSet_K
 	dc.l	loc_0002462C
-	dc.l	loc_00024E04
-	dc.l	loc_000250BA
+	dc.l	EnemyData_Teleporter_AB
+	dc.l	EnemySpriteSet_K
 	dc.l	loc_00024644
-	dc.l	loc_00024E1E
-	dc.l	loc_000250BA
+	dc.l	EnemyData_Teleporter_BC
+	dc.l	EnemySpriteSet_K
 	dc.l	loc_000245FC
-	dc.l	loc_00024E38
-	dc.l	loc_000250D2
+	dc.l	EnemyData_SequentialFire_66
+	dc.l	EnemySpriteSet_L
 	dc.l	loc_00024614
-	dc.l	loc_00024E52
-	dc.l	loc_000250D2
+	dc.l	EnemyData_SequentialFire_AA
+	dc.l	EnemySpriteSet_L
 	dc.l	loc_0002462C
-	dc.l	loc_00024E6C
-	dc.l	loc_000250D2
+	dc.l	EnemyData_SequentialFire_AB
+	dc.l	EnemySpriteSet_L
 	dc.l	loc_00024644
-	dc.l	loc_00024E86
-	dc.l	loc_000250D2
+	dc.l	EnemyData_SequentialFire_BC
+	dc.l	EnemySpriteSet_L
 	dc.l	loc_000246BC
-	dc.l	loc_00024EA0
-	dc.l	loc_000250F0
+	dc.l	EnemyData_MultiOrb_75
+	dc.l	EnemySpriteSet_M
 	dc.l	loc_000246D4
-	dc.l	loc_00024EBA
-	dc.l	loc_000250F0
+	dc.l	EnemyData_MultiOrb_C0
+	dc.l	EnemySpriteSet_M
 	dc.l	loc_000246EC
-	dc.l	loc_00024ED4
-	dc.l	loc_000250F0
+	dc.l	EnemyData_MultiOrb_C1
+	dc.l	EnemySpriteSet_M
 	dc.l	loc_00024704
-	dc.l	loc_00024EEE
-	dc.l	loc_000250F0
+	dc.l	EnemyData_MultiOrb_C2
+	dc.l	EnemySpriteSet_M
 	dc.l	loc_000246BC
-	dc.l	loc_00024F08
-	dc.l	loc_000250F0
+	dc.l	EnemyData_OrbRing_75
+	dc.l	EnemySpriteSet_M
 	dc.l	loc_000246D4
-	dc.l	loc_00024F22
-	dc.l	loc_000250F0
+	dc.l	EnemyData_OrbRing_C0
+	dc.l	EnemySpriteSet_M
 	dc.l	loc_000246EC
-	dc.l	loc_00024F3C
-	dc.l	loc_000250F0
+	dc.l	EnemyData_OrbRing_C1
+	dc.l	EnemySpriteSet_M
 	dc.l	loc_00024704
-	dc.l	loc_00024F56
-	dc.l	loc_000250F0
+	dc.l	EnemyData_OrbRing_C2
+	dc.l	EnemySpriteSet_M
 	dc.l	loc_00024464
-	dc.l	loc_00024F70
-	dc.l	loc_00025066
+	dc.l	EnemyData_SpiralBurst_A6a
+	dc.l	EnemySpriteSet_H
 	dc.l	loc_00024464
-	dc.l	loc_00024F8A
-	dc.l	loc_00025066
+	dc.l	EnemyData_SpiralBurst_A6b
+	dc.l	EnemySpriteSet_H
 	dc.l	loc_00024314	
-	dc.l	loc_00024FA4
-	dc.l	loc_00024FBE
+	dc.l	EnemyData_StalkPause_7B_Last
+	dc.l	EnemySpriteSet_A
 loc_0002426C:
 	dc.l	loc_000544E4
 	dc.l	loc_0005490C
@@ -39390,7 +39390,8 @@ loc_00024704:
 	dc.b	$0F
 	dc.b	$00 
 	dc.w	$00C2
-loc_0002471C:
+; loc_0002471C
+EnemyData_Bouncing_5A:
 	dc.l	InitEnemy_Bouncing
 	dc.w	$005A
 	dc.w	$0000
@@ -39401,7 +39402,8 @@ loc_0002471C:
 	dc.l	$00000150
 	dc.b	$00
 	dc.b	$02
-loc_00024736:
+; loc_00024736
+EnemyData_Bouncing_69:
 	dc.l	InitEnemy_Bouncing
 	dc.w	$0069
 	dc.w	$0000
@@ -39412,7 +39414,8 @@ loc_00024736:
 	dc.l	$00000170
 	dc.b	$00
 	dc.b	$02
-loc_00024750:
+; loc_00024750
+EnemyData_Bouncing_6A:
 	dc.l	InitEnemy_Bouncing
 	dc.w	$006A
 	dc.w	$0000
@@ -39425,7 +39428,8 @@ loc_00024750:
 	dc.b	$02
 loc_0002476A:
 	dc.b	$00, $00, $9A, $72, $00, $6B, $00, $00, $00, $26, $00, $07, $1F, $40, $00, $6E, $03, $96, $01, $00, $00, $00, $05, $50, $00, $0E 
-loc_00024784:
+; loc_00024784
+EnemyData_Bouncing_AC:
 	dc.l	InitEnemy_Bouncing
 	dc.w	$00AC
 	dc.w	$0000
@@ -39436,7 +39440,8 @@ loc_00024784:
 	dc.l	$00000280
 	dc.b	$00
 	dc.b	$02
-loc_0002479E:
+; loc_0002479E
+EnemyData_Bouncing_AD:
 	dc.l	InitEnemy_Bouncing
 	dc.w	$00AD
 	dc.w	$0000
@@ -39447,7 +39452,8 @@ loc_0002479E:
 	dc.l	$00000210
 	dc.b	$00
 	dc.b	$02
-loc_000247B8:
+; loc_000247B8
+EnemyData_StalkPause_4E:
 	dc.l	InitEnemy_StalkPause
 	dc.w	$004E
 	dc.w	$0000
@@ -39458,7 +39464,8 @@ loc_000247B8:
 	dc.l	$00000180
 	dc.b	$00
 	dc.b	$02
-loc_000247D2:
+; loc_000247D2
+EnemyData_StalkPause_7B:
 	dc.l	InitEnemy_StalkPause
 	dc.w	$007B
 	dc.w	$0001
@@ -39469,7 +39476,8 @@ loc_000247D2:
 	dc.l	$00000200
 	dc.b	$00
 	dc.b	$02
-loc_000247EC:
+; loc_000247EC
+EnemyData_StalkPause_7C:
 	dc.l	InitEnemy_StalkPause
 	dc.w	$007C
 	dc.w	$0001
@@ -39480,7 +39488,8 @@ loc_000247EC:
 	dc.l	$00000260
 	dc.b	$00
 	dc.b	$02
-loc_00024806:
+; loc_00024806
+EnemyData_StalkPause_7D:
 	dc.l	InitEnemy_StalkPause
 	dc.w	$007D
 	dc.w	$0001
@@ -39491,7 +39500,8 @@ loc_00024806:
 	dc.l	$0000012C
 	dc.b	$00
 	dc.b	$02
-loc_00024820:
+; loc_00024820
+EnemyData_StandardMelee_4D:
 	dc.l	InitEnemy_StandardMelee
 	dc.w	$004D
 	dc.w	$0001
@@ -39502,7 +39512,8 @@ loc_00024820:
 	dc.l	$00000150
 	dc.b	$00
 	dc.b	$02
-loc_0002483A:
+; loc_0002483A
+EnemyData_StandardMelee_6C:
 	dc.l	InitEnemy_StandardMelee
 	dc.w	$006C
 	dc.w	$0001
@@ -39513,7 +39524,8 @@ loc_0002483A:
 	dc.l	$00000165
 	dc.b	$00
 	dc.b	$02
-loc_00024854:
+; loc_00024854
+EnemyData_StandardMelee_6D:
 	dc.l	InitEnemy_StandardMelee
 	dc.w	$006D
 	dc.w	$0001
@@ -39524,7 +39536,8 @@ loc_00024854:
 	dc.l	$00000180
 	dc.b	$00
 	dc.b	$02
-loc_0002486E:
+; loc_0002486E
+EnemyData_StandardMelee_6E:
 	dc.l	InitEnemy_StandardMelee
 	dc.w	$006E
 	dc.w	$0001
@@ -39535,7 +39548,8 @@ loc_0002486E:
 	dc.l	$00000195
 	dc.b	$00
 	dc.b	$02
-loc_00024888:
+; loc_00024888
+EnemyData_FleeChase_5B:
 	dc.l	InitEnemy_FleeChase
 	dc.w	$005B
 	dc.w	$FFFF
@@ -39546,7 +39560,8 @@ loc_00024888:
 	dc.l	$00000200
 	dc.b	$00
 	dc.b	$02
-loc_000248A2:
+; loc_000248A2
+EnemyData_FleeChase_6F:
 	dc.l	InitEnemy_FleeChase
 	dc.w	$006F
 	dc.w	$0000
@@ -39557,7 +39572,8 @@ loc_000248A2:
 	dc.l	$00000220
 	dc.b	$00
 	dc.b	$02
-loc_000248BC:
+; loc_000248BC
+EnemyData_FleeChase_70:
 	dc.l	InitEnemy_FleeChase
 	dc.w	$0070
 	dc.w	$0000
@@ -39568,7 +39584,8 @@ loc_000248BC:
 	dc.l	$00000260
 	dc.b	$00
 	dc.b	$02
-loc_000248D6:
+; loc_000248D6
+EnemyData_FleeChase_71:
 	dc.l	InitEnemy_FleeChase
 	dc.w	$0071
 	dc.w	$0000
@@ -39579,7 +39596,8 @@ loc_000248D6:
 	dc.l	$00000300
 	dc.b	$00
 	dc.b	$02
-loc_000248F0:
+; loc_000248F0
+EnemyData_ProjectileFire_63:
 	dc.l	InitEnemy_ProjectileFire
 	dc.w	$0063
 	dc.w	$FFFF
@@ -39590,7 +39608,8 @@ loc_000248F0:
 	dc.l	$00000190
 	dc.b	$00
 	dc.b	$0A
-loc_0002490A:
+; loc_0002490A
+EnemyData_ProjectileFire_A4:
 	dc.l	InitEnemy_ProjectileFire
 	dc.w	$00A4
 	dc.w	$0000
@@ -39601,7 +39620,8 @@ loc_0002490A:
 	dc.l	$00000230
 	dc.b	$00
 	dc.b	$0A
-loc_00024924:
+; loc_00024924
+EnemyData_ProjectileFire_A5:
 	dc.l	InitEnemy_ProjectileFire
 	dc.w	$00A5
 	dc.w	$0000
@@ -39612,7 +39632,8 @@ loc_00024924:
 	dc.l	$00000250
 	dc.b	$00
 	dc.b	$0A
-loc_0002493E:
+; loc_0002493E
+EnemyData_ProjectileFire_A6:
 	dc.l	InitEnemy_ProjectileFire
 	dc.w	$00A6
 	dc.w	$0000
@@ -39623,7 +39644,8 @@ loc_0002493E:
 	dc.l	$00000300
 	dc.b	$00
 	dc.b	$0A
-loc_00024958:
+; loc_00024958
+EnemyData_ProximityChase_5C:
 	dc.l	InitEnemy_ProximityChase
 	dc.w	$005C
 	dc.w	$FFFF
@@ -39634,7 +39656,8 @@ loc_00024958:
 	dc.l	$00000200
 	dc.b	$00
 	dc.b	$06
-loc_00024972:
+; loc_00024972
+EnemyData_ProximityChase_9E:
 	dc.l	InitEnemy_ProximityChase
 	dc.w	$009E
 	dc.w	$0000
@@ -39645,7 +39668,8 @@ loc_00024972:
 	dc.l	$00000220
 	dc.b	$00
 	dc.b	$06
-loc_0002498C:
+; loc_0002498C
+EnemyData_ProximityChase_9F:
 	dc.l	InitEnemy_ProximityChase
 	dc.w	$009F
 	dc.w	$0000
@@ -39656,7 +39680,8 @@ loc_0002498C:
 	dc.l	$00000240
 	dc.b	$00
 	dc.b	$06
-loc_000249A6:
+; loc_000249A6
+EnemyData_ProximityChase_A0:
 	dc.l	InitEnemy_ProximityChase
 	dc.w	$00A0
 	dc.w	$0000
@@ -39667,7 +39692,8 @@ loc_000249A6:
 	dc.l	$00000280
 	dc.b	$00
 	dc.b	$06
-loc_000249C0:
+; loc_000249C0
+EnemyData_StandardMeleeAlt_5D:
 	dc.l	InitEnemy_StandardMeleeAlt
 	dc.w	$005D
 	dc.w	$FFFF
@@ -39678,7 +39704,8 @@ loc_000249C0:
 	dc.l	$00000180
 	dc.b	$00
 	dc.b	$02
-loc_000249DA:
+; loc_000249DA
+EnemyData_StandardMeleeAlt_A1:
 	dc.l	InitEnemy_StandardMeleeAlt
 	dc.w	$00A1
 	dc.w	$0001
@@ -39689,7 +39716,8 @@ loc_000249DA:
 	dc.l	$00000190
 	dc.b	$00
 	dc.b	$02
-loc_000249F4:
+; loc_000249F4
+EnemyData_StandardMeleeAlt_A2:
 	dc.l	InitEnemy_StandardMeleeAlt
 	dc.w	$00A2
 	dc.w	$0000
@@ -39700,7 +39728,8 @@ loc_000249F4:
 	dc.l	$00000200
 	dc.b	$00
 	dc.b	$02
-loc_00024A0E:
+; loc_00024A0E
+EnemyData_StandardMeleeAlt_A3:
 	dc.l	InitEnemy_StandardMeleeAlt
 	dc.w	$00A3
 	dc.w	$0001
@@ -39711,7 +39740,8 @@ loc_00024A0E:
 	dc.l	$00000210
 	dc.b	$00
 	dc.b	$06
-loc_00024A28:
+; loc_00024A28
+EnemyData_StalkPauseAlt_64:
 	dc.l	loc_000096EA
 	dc.w	$0064
 	dc.w	$0000
@@ -39722,7 +39752,8 @@ loc_00024A28:
 	dc.l	$00000080
 	dc.b	$01
 	dc.b	$02
-loc_00024A42:
+; loc_00024A42
+EnemyData_StalkPauseAlt_B9:
 	dc.l	loc_000096EA
 	dc.w	$00B9
 	dc.w	$0000
@@ -39733,7 +39764,8 @@ loc_00024A42:
 	dc.l	$00000120
 	dc.b	$01
 	dc.b	$02
-loc_00024A5C:
+; loc_00024A5C
+EnemyData_StalkPauseAlt_BA:
 	dc.l	loc_000096EA
 	dc.w	$00BA
 	dc.w	$0000
@@ -39744,7 +39776,8 @@ loc_00024A5C:
 	dc.l	$00000140
 	dc.b	$01
 	dc.b	$02
-loc_00024A76:
+; loc_00024A76
+EnemyData_StalkPauseAlt_BB:
 	dc.l	loc_000096EA
 	dc.w	$00BB
 	dc.w	$0000
@@ -39755,7 +39788,8 @@ loc_00024A76:
 	dc.l	$00000160
 	dc.b	$01
 	dc.b	$06
-loc_00024A90:
+; loc_00024A90
+EnemyData_HumanoidMelee_65:
 	dc.l	loc_00009F6E
 	dc.w	$0065
 	dc.w	$0001
@@ -39766,7 +39800,8 @@ loc_00024A90:
 	dc.l	$00000110
 	dc.b	$00
 	dc.b	$02
-loc_00024AAA:
+; loc_00024AAA
+EnemyData_HumanoidMelee_A7:
 	dc.l	loc_00009F6E
 	dc.w	$00A7
 	dc.w	$0001
@@ -39777,7 +39812,8 @@ loc_00024AAA:
 	dc.l	$00000150
 	dc.b	$00
 	dc.b	$02
-loc_00024AC4:
+; loc_00024AC4
+EnemyData_HumanoidMeleeAlt_A8:
 	dc.l	loc_00009F92
 	dc.w	$00A8
 	dc.w	$0001
@@ -39788,7 +39824,8 @@ loc_00024AC4:
 	dc.l	$00000170
 	dc.b	$00
 	dc.b	$0E
-loc_00024ADE:
+; loc_00024ADE
+EnemyData_HumanoidMeleeAlt_A9:
 	dc.l	loc_00009F92
 	dc.w	$00A9
 	dc.w	$0001
@@ -39799,7 +39836,8 @@ loc_00024ADE:
 	dc.l	$00000300
 	dc.b	$00
 	dc.b	$02
-loc_00024AF8:
+; loc_00024AF8
+EnemyData_RandomShooter_66:
 	dc.l	InitEnemy_RandomShooter
 	dc.w	$0066
 	dc.w	$FFFF
@@ -39810,7 +39848,8 @@ loc_00024AF8:
 	dc.l	$00000180
 	dc.b	$00
 	dc.b	$08
-loc_00024B12:
+; loc_00024B12
+EnemyData_RandomShooter_AA:
 	dc.l	InitEnemy_RandomShooter
 	dc.w	$00AA
 	dc.w	$0000
@@ -39821,7 +39860,8 @@ loc_00024B12:
 	dc.l	$00000200
 	dc.b	$00
 	dc.b	$0C
-loc_00024B2C:
+; loc_00024B2C
+EnemyData_RandomShooter_AB:
 	dc.l	InitEnemy_RandomShooter
 	dc.w	$00AB
 	dc.w	$0000
@@ -39832,7 +39872,8 @@ loc_00024B2C:
 	dc.l	$00000220
 	dc.b	$00
 	dc.b	$0C
-loc_00024B46:
+; loc_00024B46
+EnemyData_RandomShooter_BC:
 	dc.l	InitEnemy_RandomShooter
 	dc.w	$00BC
 	dc.w	$0002
@@ -39843,7 +39884,8 @@ loc_00024B46:
 	dc.l	$00000240
 	dc.b	$00
 	dc.b	$0C
-loc_00024B60:
+; loc_00024B60
+EnemyData_StandardMeleeFast_61:
 	dc.l	InitEnemy_StandardMeleeFast
 	dc.w	$0061
 	dc.w	$0001
@@ -39856,7 +39898,8 @@ loc_00024B60:
 	dc.b	$02
 loc_00024B7A:
 	dc.b	$00, $00, $95, $28, $00, $BD, $00, $01, $10, $2D, $00, $07, $08, $98, $00, $31, $02, $08, $00, $68, $00, $00, $01, $60, $01, $02 
-loc_00024B94:
+; loc_00024B94
+EnemyData_StandardMeleeFast_BE:
 	dc.l	InitEnemy_StandardMeleeFast
 	dc.w	$00BE
 	dc.w	$0001
@@ -39867,7 +39910,8 @@ loc_00024B94:
 	dc.l	$00000200
 	dc.b	$01
 	dc.b	$02
-loc_00024BAE:
+; loc_00024BAE
+EnemyData_StandardMeleeFast_BF:
 	dc.l	InitEnemy_StandardMeleeFast
 	dc.w	$00BF
 	dc.w	$0001
@@ -39878,7 +39922,8 @@ loc_00024BAE:
 	dc.l	$00000220
 	dc.b	$01
 	dc.b	$02
-loc_00024BC8:
+; loc_00024BC8
+EnemyData_OrbShield_75:
 	dc.l	InitBoss_OrbShield
 	dc.w	$0075
 	dc.w	$0000
@@ -39889,7 +39934,8 @@ loc_00024BC8:
 	dc.l	$00000160
 	dc.b	$00
 	dc.b	$02
-loc_00024BE2:
+; loc_00024BE2
+EnemyData_OrbShield_C0:
 	dc.l	InitBoss_OrbShield
 	dc.w	$00C0
 	dc.w	$0000
@@ -39900,7 +39946,8 @@ loc_00024BE2:
 	dc.l	$00000180
 	dc.b	$00
 	dc.b	$02
-loc_00024BFC:
+; loc_00024BFC
+EnemyData_OrbShield_C1:
 	dc.l	InitBoss_OrbShield
 	dc.w	$00C1
 	dc.w	$0000
@@ -39911,7 +39958,8 @@ loc_00024BFC:
 	dc.l	$00000200
 	dc.b	$00
 	dc.b	$02
-loc_00024C16:
+; loc_00024C16
+EnemyData_OrbShield_C2:
 	dc.l	InitBoss_OrbShield
 	dc.w	$00C2
 	dc.w	$0000
@@ -39922,7 +39970,8 @@ loc_00024C16:
 	dc.l	$00000220
 	dc.b	$00
 	dc.b	$02
-loc_00024C30:
+; loc_00024C30
+EnemyData_BurstFire_63:
 	dc.l	InitEnemy_BurstFire
 	dc.w	$0063
 	dc.w	$0000
@@ -39933,7 +39982,8 @@ loc_00024C30:
 	dc.l	$00000200
 	dc.b	$00
 	dc.b	$0A
-loc_00024C4A:
+; loc_00024C4A
+EnemyData_BurstFire_A4:
 	dc.l	InitEnemy_BurstFire
 	dc.w	$00A4
 	dc.w	$0000
@@ -39944,7 +39994,8 @@ loc_00024C4A:
 	dc.l	$00000220
 	dc.b	$00
 	dc.b	$0A
-loc_00024C64:
+; loc_00024C64
+EnemyData_BurstFire_A5:
 	dc.l	InitEnemy_BurstFire
 	dc.w	$00A5
 	dc.w	$0003
@@ -39955,7 +40006,8 @@ loc_00024C64:
 	dc.l	$00000240
 	dc.b	$00
 	dc.b	$0A
-loc_00024C7E:
+; loc_00024C7E
+EnemyData_BurstFire_A6:
 	dc.l	InitEnemy_BurstFire
 	dc.w	$00A6
 	dc.w	$FFFF
@@ -39966,7 +40018,8 @@ loc_00024C7E:
 	dc.l	$00000260
 	dc.b	$00
 	dc.b	$0A
-loc_00024C98:
+; loc_00024C98
+EnemyData_StalkPause3_64:
 	dc.l	loc_00009D90
 	dc.w	$0064
 	dc.w	$0000
@@ -39979,7 +40032,8 @@ loc_00024C98:
 	dc.b	$02
 loc_00024CB2:
 	dc.b	$00, $00, $9D, $90, $00, $B9, $00, $00, $00, $03, $00, $07, $03, $48, $00, $4D, $04, $16, $00, $70, $00, $00, $02, $00, $01, $02 
-loc_00024CCC:
+; loc_00024CCC
+EnemyData_StalkPause3_BA:
 	dc.l	loc_00009D90
 	dc.w	$00BA
 	dc.w	$0000
@@ -39990,7 +40044,8 @@ loc_00024CCC:
 	dc.l	$00000220
 	dc.b	$01
 	dc.b	$02
-loc_00024CE6:
+; loc_00024CE6
+EnemyData_StalkPause3_BB:
 	dc.l	loc_00009D90
 	dc.w	$00BB
 	dc.w	$0003
@@ -40001,7 +40056,8 @@ loc_00024CE6:
 	dc.l	$00000240
 	dc.b	$01
 	dc.b	$02
-loc_00024D00:
+; loc_00024D00
+EnemyData_FastBurstShooter_64:
 	dc.l	InitEnemy_FastBurstShooter
 	dc.w	$0064
 	dc.w	$0003
@@ -40012,7 +40068,8 @@ loc_00024D00:
 	dc.l	$00000180
 	dc.b	$01
 	dc.b	$02
-loc_00024D1A:
+; loc_00024D1A
+EnemyData_FastBurstShooter_B9:
 	dc.l	InitEnemy_FastBurstShooter
 	dc.w	$00B9
 	dc.w	$0000
@@ -40023,7 +40080,8 @@ loc_00024D1A:
 	dc.l	$00000180
 	dc.b	$01
 	dc.b	$02
-loc_00024D34:
+; loc_00024D34
+EnemyData_FastBurstShooter_BA:
 	dc.l	InitEnemy_FastBurstShooter
 	dc.w	$00BA
 	dc.w	$0000
@@ -40036,7 +40094,8 @@ loc_00024D34:
 	dc.b	$02
 loc_00024D4E:
 	dc.b	$00, $00, $A6, $AA, $00, $BB, $00, $00, $00, $20, $03, $01, $0A, $8C, $00, $75, $05, $44, $01, $82, $00, $00, $01, $80, $01, $02 
-loc_00024D68:
+; loc_00024D68
+EnemyData_HomingShooter_64:
 	dc.l	InitEnemy_HomingShooter
 	dc.w	$0064
 	dc.w	$0000
@@ -40047,7 +40106,8 @@ loc_00024D68:
 	dc.l	$00000180
 	dc.b	$01
 	dc.b	$02
-loc_00024D82:
+; loc_00024D82
+EnemyData_HomingShooter_B9:
 	dc.l	InitEnemy_HomingShooter
 	dc.w	$00B9
 	dc.w	$0000
@@ -40058,7 +40118,8 @@ loc_00024D82:
 	dc.l	$00000220
 	dc.b	$01
 	dc.b	$02
-loc_00024D9C:
+; loc_00024D9C
+EnemyData_HomingShooter_BA:
 	dc.l	InitEnemy_HomingShooter
 	dc.w	$00BA
 	dc.w	$0000
@@ -40069,7 +40130,8 @@ loc_00024D9C:
 	dc.l	$00000260
 	dc.b	$01
 	dc.b	$02
-loc_00024DB6:
+; loc_00024DB6
+EnemyData_HomingShooter_BB:
 	dc.l	InitEnemy_HomingShooter
 	dc.w	$00BB
 	dc.w	$0000
@@ -40080,7 +40142,8 @@ loc_00024DB6:
 	dc.l	$00000300
 	dc.b	$01
 	dc.b	$02
-loc_00024DD0:
+; loc_00024DD0
+EnemyData_Teleporter_66:
 	dc.l	InitEnemy_Teleporter
 	dc.w	$0066
 	dc.w	$0000
@@ -40091,7 +40154,8 @@ loc_00024DD0:
 	dc.l	$00000250
 	dc.b	$00
 	dc.b	$08
-loc_00024DEA:
+; loc_00024DEA
+EnemyData_Teleporter_AA:
 	dc.l	InitEnemy_Teleporter
 	dc.w	$00AA
 	dc.w	$FFFF
@@ -40102,7 +40166,8 @@ loc_00024DEA:
 	dc.l	$00000300
 	dc.b	$00
 	dc.b	$0C
-loc_00024E04:
+; loc_00024E04
+EnemyData_Teleporter_AB:
 	dc.l	InitEnemy_Teleporter
 	dc.w	$00AB
 	dc.w	$0003
@@ -40113,7 +40178,8 @@ loc_00024E04:
 	dc.l	$00000350
 	dc.b	$00
 	dc.b	$0C
-loc_00024E1E:
+; loc_00024E1E
+EnemyData_Teleporter_BC:
 	dc.l	InitEnemy_Teleporter
 	dc.w	$00BC
 	dc.w	$0002
@@ -40124,7 +40190,8 @@ loc_00024E1E:
 	dc.l	$00000400
 	dc.b	$00
 	dc.b	$0C
-loc_00024E38:
+; loc_00024E38
+EnemyData_SequentialFire_66:
 	dc.l	InitEnemy_SequentialFire
 	dc.w	$0066
 	dc.w	$0000
@@ -40135,7 +40202,8 @@ loc_00024E38:
 	dc.l	$00000160
 	dc.b	$00
 	dc.b	$08
-loc_00024E52:
+; loc_00024E52
+EnemyData_SequentialFire_AA:
 	dc.l	InitEnemy_SequentialFire
 	dc.w	$00AA
 	dc.w	$0000
@@ -40146,7 +40214,8 @@ loc_00024E52:
 	dc.l	$00000180
 	dc.b	$00
 	dc.b	$0C
-loc_00024E6C:
+; loc_00024E6C
+EnemyData_SequentialFire_AB:
 	dc.l	InitEnemy_SequentialFire
 	dc.w	$00AB
 	dc.w	$0000
@@ -40157,7 +40226,8 @@ loc_00024E6C:
 	dc.l	$00000200
 	dc.b	$00
 	dc.b	$0C
-loc_00024E86:
+; loc_00024E86
+EnemyData_SequentialFire_BC:
 	dc.l	InitEnemy_SequentialFire
 	dc.w	$00BC
 	dc.w	$0003
@@ -40168,7 +40238,8 @@ loc_00024E86:
 	dc.l	$00000220
 	dc.b	$00
 	dc.b	$04
-loc_00024EA0:
+; loc_00024EA0
+EnemyData_MultiOrb_75:
 	dc.l	InitBoss_MultiOrb
 	dc.w	$0075
 	dc.w	$0000
@@ -40179,7 +40250,8 @@ loc_00024EA0:
 	dc.l	$00000180
 	dc.b	$00
 	dc.b	$02
-loc_00024EBA:
+; loc_00024EBA
+EnemyData_MultiOrb_C0:
 	dc.l	InitBoss_MultiOrb
 	dc.w	$00C0
 	dc.w	$0000
@@ -40190,7 +40262,8 @@ loc_00024EBA:
 	dc.l	$00000185
 	dc.b	$00
 	dc.b	$02
-loc_00024ED4:
+; loc_00024ED4
+EnemyData_MultiOrb_C1:
 	dc.l	InitBoss_MultiOrb
 	dc.w	$00C1
 	dc.w	$0000
@@ -40201,7 +40274,8 @@ loc_00024ED4:
 	dc.l	$00000190
 	dc.b	$00
 	dc.b	$02
-loc_00024EEE:
+; loc_00024EEE
+EnemyData_MultiOrb_C2:
 	dc.l	InitBoss_MultiOrb
 	dc.w	$00C2
 	dc.w	$0000
@@ -40212,7 +40286,8 @@ loc_00024EEE:
 	dc.l	$00000195
 	dc.b	$00
 	dc.b	$06
-loc_00024F08:
+; loc_00024F08
+EnemyData_OrbRing_75:
 	dc.l	InitBoss_OrbRing
 	dc.w	$0075
 	dc.w	$0000
@@ -40223,7 +40298,8 @@ loc_00024F08:
 	dc.l	$00000180
 	dc.b	$00
 	dc.b	$02
-loc_00024F22:
+; loc_00024F22
+EnemyData_OrbRing_C0:
 	dc.l	InitBoss_OrbRing
 	dc.w	$00C0
 	dc.w	$0000
@@ -40234,7 +40310,8 @@ loc_00024F22:
 	dc.l	$00000200
 	dc.b	$00
 	dc.b	$02
-loc_00024F3C:
+; loc_00024F3C
+EnemyData_OrbRing_C1:
 	dc.l	InitBoss_OrbRing
 	dc.w	$00C1
 	dc.w	$0003
@@ -40245,7 +40322,8 @@ loc_00024F3C:
 	dc.l	$00000220
 	dc.b	$00
 	dc.b	$02
-loc_00024F56:
+; loc_00024F56
+EnemyData_OrbRing_C2:
 	dc.l	InitBoss_OrbRing
 	dc.w	$00C2
 	dc.w	$0000
@@ -40256,7 +40334,8 @@ loc_00024F56:
 	dc.l	$00000240
 	dc.b	$00
 	dc.b	$0A
-loc_00024F70:
+; loc_00024F70
+EnemyData_SpiralBurst_A6a:
 	dc.l	InitEnemy_SpiralBurst
 	dc.w	$00A6
 	dc.w	$0000
@@ -40267,7 +40346,8 @@ loc_00024F70:
 	dc.l	$00000260
 	dc.b	$00
 	dc.b	$0A
-loc_00024F8A:
+; loc_00024F8A
+EnemyData_SpiralBurst_A6b:
 	dc.l	InitEnemy_SpiralBurst
 	dc.w	$00A6
 	dc.w	$0000
@@ -40278,7 +40358,8 @@ loc_00024F8A:
 	dc.l	$00000360
 	dc.b	$00
 	dc.b	$0E
-loc_00024FA4:
+; loc_00024FA4
+EnemyData_StalkPause_7B_Last:
 	dc.l	InitEnemy_StalkPause
 	dc.w	$007B
 	dc.w	$0003
@@ -40288,7 +40369,8 @@ loc_00024FA4:
 	dc.l	$00000190
 	dc.b	$00
 	dc.b	$0E
-loc_00024FBE:
+; loc_00024FBE
+EnemySpriteSet_A:
 	dc.l	loc_0005276A
 	dc.l	loc_00052F8A
 	dc.b	$00, $6B 
@@ -40296,7 +40378,8 @@ loc_00024FBE:
 	dc.l	loc_00053544
 	dc.b	$00, $47 
 	dc.l	$00000000
-loc_00024FD6:
+; loc_00024FD6
+EnemySpriteSet_B:
 	dc.l	loc_0005360C
 	dc.l	loc_00053E2E
 	dc.b	$00, $6B 
@@ -40304,7 +40387,8 @@ loc_00024FD6:
 	dc.l	loc_00054424
 	dc.b	$00, $47 
 	dc.l	$00000000
-loc_00024FEE:
+; loc_00024FEE
+EnemySpriteSet_C:
 	dc.l	loc_000549E4
 	dc.l	loc_00054B3E
 	dc.b	$00, $2F 
@@ -40312,7 +40396,8 @@ loc_00024FEE:
 	dc.l	loc_0005490C
 	dc.b	$00, $47 
 	dc.l	$00000000
-loc_00025006:
+; loc_00025006
+EnemySpriteSet_D:
 	dc.l	loc_00054B76
 	dc.l	loc_00055300
 	dc.b	$00, $6B 
@@ -40320,7 +40405,8 @@ loc_00025006:
 	dc.l	loc_00055888
 	dc.b	$00, $47 
 	dc.l	$00000000
-loc_0002501E:
+; loc_0002501E
+EnemySpriteSet_E:
 	dc.l	loc_00055970
 	dc.l	loc_00056436
 	dc.b	$00, $77 
@@ -40328,7 +40414,8 @@ loc_0002501E:
 	dc.l	loc_000569A6
 	dc.b	$00, $4F 
 	dc.l	$00000000
-loc_00025036:
+; loc_00025036
+EnemySpriteSet_F:
 	dc.l	loc_00057580
 	dc.l	loc_00057F74
 	dc.b	$00, $6B 
@@ -40336,7 +40423,8 @@ loc_00025036:
 	dc.l	loc_00057404
 	dc.b	$00, $6B 
 	dc.l	$00000000
-loc_0002504E:
+; loc_0002504E
+EnemySpriteSet_G:
 	dc.l	loc_000580FC
 	dc.l	loc_00058858
 	dc.b	$00, $6B 
@@ -40344,7 +40432,8 @@ loc_0002504E:
 	dc.l	loc_00059098
 	dc.b	$00, $47 
 	dc.l	$00000000
-loc_00025066:
+; loc_00025066
+EnemySpriteSet_H:
 	dc.l	loc_000591AC
 	dc.l	loc_00059A46
 	dc.b	$00, $6B 
@@ -40354,7 +40443,8 @@ loc_00025066:
 	dc.l	loc_0005A32E
 	dc.l	loc_0005A3AE
 	dc.b	$00, $05 
-loc_00025084:
+; loc_00025084
+EnemySpriteSet_I:
 	dc.l	loc_0005A3C6
 	dc.l	loc_0005ADF2
 	dc.b	$00, $6B 
@@ -40364,7 +40454,8 @@ loc_00025084:
 	dc.l	loc_0005A32E
 	dc.l	loc_0005A3AE
 	dc.b	$00, $05 
-loc_000250A2:
+; loc_000250A2
+EnemySpriteSet_J:
 	dc.l	loc_0005B784
 	dc.l	loc_0005C1DE
 	dc.b	$00, $6B 
@@ -40372,7 +40463,8 @@ loc_000250A2:
 	dc.l	loc_0005C97E
 	dc.b	$00, $47 
 	dc.l	$00000000
-loc_000250BA:
+; loc_000250BA
+EnemySpriteSet_K:
 	dc.l	loc_0005CA9A
 	dc.l	loc_0005CED4
 	dc.b	$00, $3B 
@@ -40380,7 +40472,8 @@ loc_000250BA:
 	dc.l	loc_0005D180
 	dc.b	$00, $27 
 	dc.l	$00000000
-loc_000250D2:
+; loc_000250D2
+EnemySpriteSet_L:
 	dc.l	loc_0005CA9A
 	dc.l	loc_0005CED4
 	dc.b	$00, $3B 
@@ -40390,7 +40483,8 @@ loc_000250D2:
 	dc.l	loc_0005D1E4
 	dc.l	loc_0005D286
 	dc.b	$00, $05 
-loc_000250F0:
+; loc_000250F0
+EnemySpriteSet_M:
 	dc.l	loc_0005D29E
 	dc.l	loc_0005D6D4
 	dc.b	$00, $2F 
