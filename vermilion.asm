@@ -82,9 +82,20 @@ ClearVRAMPlaneB:
 	JSR	VDP_DMAFill
 	RTS
 
+; Unused DMA fill fragment - sets D6 only, expects D7/D5/D4 preset
 loc_00000304:
-	dc.b	$3C, $3C, $1F, $FF, $4E, $B9, $00, $01, $03, $FE, $4E, $75, $2E, $3C, $70, $00, $00, $02, $3C, $3C, $0D, $FF, $1A, $3C, $00, $00, $38, $3C, $00, $01, $4E, $B9 
-	dc.b	$00, $01, $03, $FE, $4E, $75 
+	MOVE.w	#$1FFF, D6
+	JSR	VDP_DMAFill
+	RTS
+
+; Unused - DMA fill VRAM $B000, length $0DFF (window/sprite area)
+loc_00000310:
+	MOVE.l	#$70000002, D7
+	MOVE.w	#$0DFF, D6
+	MOVE.b	#0, D5
+	MOVE.w	#1, D4
+	JSR	VDP_DMAFill
+	RTS
 
 InitYM2612:
 	MOVEQ	#$00000040, D0
@@ -120,8 +131,14 @@ loc_00000362:
 	JSR	VDP_DMAFill
 	RTS
 
+; Unused - DMA fill entire VRAM ($0000, length $FFFF)
 loc_000003BC:
-	dc.b	$2E, $3C, $40, $00, $00, $00, $3C, $3C, $FF, $FF, $1A, $3C, $00, $00, $38, $3C, $00, $01, $4E, $B9, $00, $01, $03, $FE, $4E, $75 
+	MOVE.l	#$40000000, D7
+	MOVE.w	#$FFFF, D6
+	MOVE.b	#0, D5
+	MOVE.w	#1, D4
+	JSR	VDP_DMAFill
+	RTS
 
 InitZ80SoundDriver:
 	MOVE.w	#$0100, Z80_bus_request
