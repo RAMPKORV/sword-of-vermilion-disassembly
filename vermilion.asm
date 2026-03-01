@@ -35352,23 +35352,24 @@ loc_000200B4:
 	
 ; loc_000200B6
 OverworldSectorInteractionPtrs:
-	dc.l	loc_000200F6
-	dc.l	loc_00020140
-	dc.l	loc_00020166
-	dc.l	loc_000201B0
-	dc.l	loc_000201EE
-	dc.l	loc_00020208
-	dc.l	loc_00020246
-	dc.l	loc_00020284 
-	dc.l	loc_0002029E
-	dc.l	loc_000202C4
-	dc.l	loc_000202DE
-	dc.l	loc_0002031C
-	dc.l	loc_0002032A
-	dc.l	loc_0002035C
-	dc.l	loc_00020382
-	dc.l	loc_00020390 
-loc_000200F6:
+	dc.l	OverworldInteractions_Sector0
+	dc.l	OverworldInteractions_Sector1
+	dc.l	OverworldInteractions_Sector2
+	dc.l	OverworldInteractions_Sector3
+	dc.l	OverworldInteractions_Sector4
+	dc.l	OverworldInteractions_Sector5
+	dc.l	OverworldInteractions_Sector6
+	dc.l	OverworldInteractions_Sector7 
+	dc.l	OverworldInteractions_Sector8
+	dc.l	OverworldInteractions_Sector9
+	dc.l	OverworldInteractions_Sector10
+	dc.l	OverworldInteractions_Sector11
+	dc.l	OverworldInteractions_Sector12
+	dc.l	OverworldInteractions_Sector13
+	dc.l	OverworldInteractions_Sector14
+	dc.l	OverworldInteractions_Sector15 
+; loc_000200F6
+OverworldInteractions_Sector0:
 	dc.w	$0004, $0001, $0001, $0002 
 	dc.l	loc_000203DA
 	dc.w	$0004, $000B, $0004, $0001 
@@ -35382,7 +35383,8 @@ loc_000200F6:
 	dc.w	$0007, $000C, $0001, $0001 
 	dc.l	loc_00020402
 	dc.w	$FFFF
-loc_00020140:	
+; loc_00020140
+OverworldInteractions_Sector1:	
 	dc.w	$0005, $0005, $0002, $0001 
 	dc.l	loc_000205FE
 	dc.w	$0004, $000F, $0006, $0008	
@@ -35390,7 +35392,8 @@ loc_00020140:
 	dc.w	$0002, $0005, $0006, $000A	
 	dc.l	loc_00020698
 	dc.w	$FFFF
-loc_00020166:
+; loc_00020166
+OverworldInteractions_Sector2:
 	dc.w	$0004, $0008, $000B, $0001 
 	dc.l	loc_00020506
 	dc.w	$0005, $0009, $000D, $0002	
@@ -35404,7 +35407,8 @@ loc_00020166:
 	dc.w	$0001, $000D, $0001, $0005	
 	dc.l	loc_000206DE
 	dc.w	$FFFF
-loc_000201B0:
+; loc_000201B0
+OverworldInteractions_Sector3:
 	dc.w	$0005, $0005, $0007, $0008
 	dc.l	loc_000205AE
 	dc.w	$0005, $0002, $000C, $0002
@@ -35416,13 +35420,15 @@ loc_000201B0:
 	dc.w	$0001, $0006, $000C, $0005 
 	dc.l	loc_00020714
 	dc.w	$FFFF
-loc_000201EE:
+; loc_000201EE
+OverworldInteractions_Sector4:
 	dc.w	$0005, $0002, $0001, $0001
 	dc.l	SetupNoOneTalker
 	dc.w	$0005, $0008, $0001, $0001
 	dc.l	loc_000203EE
 	dc.w	$FFFF
-loc_00020208:
+; loc_00020208
+OverworldInteractions_Sector5:
 	dc.w	$0004, $000C, $0005, $0008	
 	dc.l	loc_000205EA	
 	dc.w	$0005, $0005, $0005, $0005
@@ -35434,7 +35440,8 @@ loc_00020208:
 	dc.w	$0002, $0009, $0008, $0008	
 	dc.l	loc_000206A6
 	dc.w	$FFFF
-loc_00020246:	
+; loc_00020246
+OverworldInteractions_Sector6:	
 	dc.w	$0003, $000E, $0002, $0008 
 	dc.l	loc_00020550
 	dc.w	$0003, $000B, $0007, $0001	
@@ -35446,13 +35453,15 @@ loc_00020246:
 	dc.w	$0002, $0008, $0001, $0008
 	dc.l	loc_0002074A
 	dc.w	$FFFF
-loc_00020284:
+; loc_00020284
+OverworldInteractions_Sector7:
 	dc.w	$0001, $0001, $000C, $0002
 	dc.l	SetupNoOneTalker
 	dc.w	$0007, $0007, $0005, $0008
 	dc.l	SetupNoOneTalker
 	dc.w	$FFFF
-loc_0002029E:
+; loc_0002029E
+OverworldInteractions_Sector8:
 	dc.w	$0002, $000D, $0001, $0008
 	dc.l	loc_000204A2
 	dc.w	$0005, $000C, $0003, $000A	
@@ -35460,13 +35469,15 @@ loc_0002029E:
 	dc.w	$0006, $0007, $0003, $0008	
 	dc.l	loc_000205D6
 	dc.w	$FFFF
-loc_000202C4:	
+; loc_000202C4
+OverworldInteractions_Sector9:	
 	dc.w	$0004, $000A, $0003, $0008
 	dc.l	loc_00020466
 	dc.w	$0005, $0006, $000D, $0008 
 	dc.l	loc_000206D0
 	dc.w	$FFFF
-loc_000202DE:
+; loc_000202DE
+OverworldInteractions_Sector10:
 	dc.w	$0000, $0006, $0005, $0004
 	dc.l	loc_0002048E
 	dc.w	$0000, $0009, $000C, $000A 
@@ -35478,11 +35489,13 @@ loc_000202DE:
 	dc.w	$0007, $000F, $0004, $0008	
 	dc.l	loc_00020644	
 	dc.w	$FFFF
-loc_0002031C:
+; loc_0002031C
+OverworldInteractions_Sector11:
 	dc.w	$0002, $000B, $0001, $0008
 	dc.l	loc_000205C2
 	dc.w	$FFFF	
-loc_0002032A:
+; loc_0002032A
+OverworldInteractions_Sector12:
 	dc.w	$0001, $000B, $0002, $0008
 	dc.l	loc_0002047A	
 	dc.w	$0002, $0001, $000C, $0002	
@@ -35492,7 +35505,8 @@ loc_0002032A:
 	dc.w	$0006, $0004, $0006, $0001	
 	dc.l	loc_0002059A
 	dc.w	$FFFF
-loc_0002035C:
+; loc_0002035C
+OverworldInteractions_Sector13:
 	dc.w	$0001, $0008, $000E, $000A 
 	dc.l	loc_00020652
 	dc.w	$0006, $0009, $0003, $0008	
@@ -35500,11 +35514,13 @@ loc_0002035C:
 	dc.w	$0006, $0009, $000C, $0008	
 	dc.l	SetupNoOneTalker	
 	dc.w	$FFFF
-loc_00020382:
+; loc_00020382
+OverworldInteractions_Sector14:
 	dc.w	$0004, $000B, $0007, $0009
 	dc.l	loc_0002066E
 	dc.w	$FFFF	
-loc_00020390:
+; loc_00020390
+OverworldInteractions_Sector15:
 	dc.w	$0003, $000D, $0007, $0008	
 	dc.l	loc_0002039E
 	dc.w	$FFFF
@@ -35699,7 +35715,7 @@ loc_000206DE:
 	MOVE.l	#loc_00008ABC, $2(A6)
 	MOVE.l	#loc_0001F712, Talker_gfx_descriptor_ptr.w
 	BSR.w	InitDialogGraphics
-	MOVE.l	#loc_000218A2, Script_talk_source.w
+	MOVE.l	#LostHereIsAMapStr_Wyclif, Script_talk_source.w
 loc_00020712:
 	RTS
 	
@@ -35713,7 +35729,7 @@ loc_00020714:
 	MOVE.l	#loc_00008ABC, $2(A6)
 	MOVE.l	#loc_0001F712, Talker_gfx_descriptor_ptr.w
 	BSR.w	InitDialogGraphics
-	MOVE.l	#loc_000218DE, Script_talk_source.w
+	MOVE.l	#LostHereIsAMapStr_Deepdale, Script_talk_source.w
 loc_00020748:
 	RTS
 	
@@ -35727,7 +35743,7 @@ loc_0002074A:
 	MOVE.l	#loc_00008ABC, $2(A6)
 	MOVE.l	#loc_0001F712, Talker_gfx_descriptor_ptr.w
 	BSR.w	InitDialogGraphics
-	MOVE.l	#loc_00021914, Script_talk_source.w
+	MOVE.l	#LostHereIsAMapStr_Stow, Script_talk_source.w
 loc_0002077E:
 	RTS
 	
@@ -35779,7 +35795,7 @@ CaveRoomInteractionPtrs:
 	dc.l	loc_00020C82
 loc_00020830:
 	dc.w	$0002, $0004, $0004 ; x, y, direction
-	dc.l	loc_00020C8E
+	dc.l	CaveEvent_RingOfWisdom
 	dc.w	$000B, $000B, $0002 
 	dc.l	CheckCaveRoomEnemyState
 	dc.w	$0002, $000B, $0002 
@@ -35801,7 +35817,7 @@ loc_00020884:
 	dc.w	$000F, $000F, $0008 
 	dc.l	loc_00020DE8
 	dc.w	$000F, $0000, $0001 
-	dc.l	loc_00020F50
+	dc.l	CaveEvent_TreasureOfTroy
 	dc.w	$0002, $000C, $0002 
 	dc.l	CheckCaveRoomEnemyState
 	dc.w	$0008, $0008, $0002 
@@ -35821,7 +35837,7 @@ loc_000208CE:
 	dc.w	$000A, $0001, $0008
 	dc.l	loc_00020E4C
 	dc.w	$000C, $0001, $0002	
-	dc.l	loc_00020FE4
+	dc.l	CaveEvent_WatlingMonster
 	dc.w	$FFFF
 loc_000208EE:
 	dc.w	$0000, $0001, $0004	
@@ -35839,7 +35855,7 @@ loc_0002090E:
 	dc.w	$000C, $0004, $0002 
 	dc.l	loc_00020EB0 
 	dc.w	$0006, $0004, $0001 
-	dc.l	loc_00020FA2
+	dc.l	CaveEvent_Truffle
 	dc.w	$FFFF
 loc_00020938:
 	dc.w	$0004, $000D, $0008	
@@ -35855,7 +35871,7 @@ loc_00020958:
 	dc.w	$000F, $0000, $0001
 	dc.l	loc_00020F00
 	dc.w	$0000, $0000, $0002	
-	dc.l	loc_00021006
+	dc.l	CaveEvent_StowThief
 	dc.w	$FFFF
 loc_00020978:
 	dc.w	$0002, $000A, $0004	
@@ -35869,7 +35885,7 @@ loc_00020998:
 	dc.w	$000B, $000B, $000B	
 	dc.l	CheckCaveRoomEnemyState
 	dc.w	$0007, $0006, $0001 
-	dc.l	loc_0002105E
+	dc.l	CaveEvent_AstiMonster
 	dc.w	$FFFF
 loc_000209AE:
 	dc.w	$0004, $000D, $0004	
@@ -35877,13 +35893,13 @@ loc_000209AE:
 	dc.w	$0006, $0002, $0001
 	dc.l	loc_00020D48
 	dc.w	$000D, $0007, $0005	
-	dc.l	loc_00021082
+	dc.l	CaveEvent_BearwulfMeeting
 	dc.w	$FFFF
 loc_000209CE:
 	dc.w	$000B, $0003, $0002	
 	dc.l	CheckCaveRoomEnemyState
 	dc.w	$0001, $000E, $0004 
-	dc.l	loc_000210BE
+	dc.l	CaveEvent_BearwulfWeaponReward
 	dc.w	$0005, $000E, $0004
 	dc.l	loc_00020CE4
 	dc.w	$000B, $000B, $0001	
@@ -35897,9 +35913,9 @@ loc_00020A0C:
 	dc.w	$0005, $0002, $0002	
 	dc.l	CheckCaveRoomEnemyState
 	dc.w	$0003, $0007, $000A 
-	dc.l	loc_000210E0
+	dc.l	CaveEvent_MalagaDungeonPrisoner
 	dc.w	$000E, $0009, $0001 
-	dc.l	loc_0002112A
+	dc.l	CaveEvent_MalagaCrownReward
 	dc.w	$FFFF
 loc_00020A2C:
 	dc.w	$0009, $000A, $0008	
@@ -35925,7 +35941,7 @@ loc_00020A78:
 	dc.w	$0001, $000E, $0002	
 	dc.l	CheckCaveRoomEnemyState
 	dc.w	$0004, $0004, $0002
-	dc.l	loc_0002114C
+	dc.l	CaveEvent_TadcasterTreasureChest
 	dc.w	$0000, $0001, $0002	
 	dc.l	loc_00020CF8
 	dc.w	$000E, $0006, $0008
@@ -35947,7 +35963,7 @@ loc_00020AD6:
 	dc.w	$0000, $0000, $0001 
 	dc.l	CheckCaveRoomEnemyState
 	dc.w	$0007, $000F, $000A 
-	dc.l	loc_00021160
+	dc.l	CaveEvent_TadcasterBully
 	dc.w	$0000, $000C, $0002 
 	dc.l	loc_00020D34
 	dc.w	$FFFF
@@ -35955,7 +35971,7 @@ loc_00020AF6:
 	dc.w	$0000, $000E, $0004	
 	dc.l	CheckCaveRoomEnemyState
 	dc.w	$000A, $000E, $0008 
-	dc.l	loc_0002119C
+	dc.l	CaveEvent_HelwigMenRescued
 	dc.w	$FFFF
 loc_00020B0C:
 	dc.w	$000B, $0004, $000A	
@@ -35965,7 +35981,7 @@ loc_00020B18:
 	dc.w	$0008, $000B, $0004	
 	dc.l	CheckCaveRoomEnemyState
 	dc.w	$0000, $0007, $0005 
-	dc.l	loc_00021206
+	dc.l	CaveEvent_ExcalabriaRingGuardian1
 	dc.w	$FFFF 
 loc_00020B2E:
 	dc.w	$0003, $000C, $0004 
@@ -35995,7 +36011,7 @@ loc_00020B6E:
 	dc.w	$0009, $0007, $0001 
 	dc.l	CheckCaveRoomEnemyState 
 	dc.w	$000D, $0008, $0004 
-	dc.l	loc_000211BE
+	dc.l	CaveEvent_SwaffhamDigotPlant
 	dc.w	$0005, $000E, $0004 
 	dc.l	loc_00020D70 
 	dc.w	$FFFF 
@@ -36005,19 +36021,19 @@ loc_00020B8E:
 	dc.w	$FFFF 
 loc_00020B9A:
 	dc.w	$0005, $0003, $000A 
-	dc.l	loc_00021284
+	dc.l	CaveEvent_SwaffhamSpy
 	dc.w	$0002, $0003, $0002 
 	dc.l	loc_000212BE
 	dc.w	$000A, $000A, $0005 
-	dc.l	loc_000212D8
+	dc.l	CaveEvent_TharEncounter
 	dc.w	$000C, $0009, $0008 
 	dc.l	loc_00021302
 	dc.w	$0003, $000F, $000A 
-	dc.l	loc_0002131C
+	dc.l	CaveEvent_LutherEncounter
 	dc.w	$0000, $000F, $0002 
 	dc.l	loc_00021346
 	dc.w	$0004, $000B, $000D 
-	dc.l	loc_00021360
+	dc.l	CaveEvent_TsarkonFinalEncounter
 	dc.w	$FFFF 
 loc_00020BE2:
 	dc.w	$FFFF 
@@ -36035,7 +36051,7 @@ loc_00020C06:
 	dc.w	$000A, $000B, $000A	
 	dc.l	CheckCaveRoomEnemyState
 	dc.w	$0004, $000C, $0005 
-	dc.l	loc_0002125A
+	dc.l	CaveEvent_ExcalabriaRingGuardian3
 	dc.w	$FFFF 
 loc_00020C1C:
 	dc.w	$000C, $0003, $0008 
@@ -36059,7 +36075,7 @@ loc_00020C56:
 	dc.w	$0000, $000D, $0001	
 	dc.l	CheckCaveRoomEnemyState
 	dc.w	$000A, $000B, $0005 
-	dc.l	loc_00021230
+	dc.l	CaveEvent_ExcalabriaRingGuardian2
 	dc.w	$FFFF 
 loc_00020C6C:
 	dc.w	$0002, $000D, $0002 
@@ -36071,7 +36087,8 @@ loc_00020C82:
 	dc.w	$0001, $000E, $0004	
 	dc.l	CheckCaveRoomEnemyState
 	dc.w	$FFFF 
-loc_00020C8E:
+; loc_00020C8E
+CaveEvent_RingOfWisdom:
 	TST.b	Rings_collected.w
 	BNE.b	loc_00020CBA
 	MOVE.b	#$FF, Talker_present_flag.w
@@ -36169,7 +36186,8 @@ loc_00020F28:
 	
 loc_00020F3C:
 	MoneyChest $2000, Money_chest_8192_b_opened
-loc_00020F50:
+; loc_00020F50
+CaveEvent_TreasureOfTroy:
 	TST.b	Treasure_of_troy_challenge_issued.w
 	BEQ.b	loc_00020F68
 	MOVE.w	#$010D, Reward_script_value.w
@@ -36197,7 +36215,8 @@ loc_00020F84:
 	MOVE.l	#NoOneHereStr, Script_talk_source.w
 	RTS
 	
-loc_00020FA2:
+; loc_00020FA2
+CaveEvent_Truffle:
 	TST.b	Truffle_collected.w
 	BNE.b	loc_00020FE2
 	MOVE.b	#$FF, Truffles_available.w
@@ -36212,7 +36231,8 @@ loc_00020FA2:
 loc_00020FE2:
 	RTS
 	
-loc_00020FE4:
+; loc_00020FE4
+CaveEvent_WatlingMonster:
 	MOVE.l	#NoOneHereStr, Script_talk_source.w
 	TST.b	Watling_monster_encounter_triggered.w
 	BEQ.b	loc_00021004
@@ -36223,7 +36243,8 @@ loc_00020FE4:
 loc_00021004:
 	RTS
 	
-loc_00021006:
+; loc_00021006
+CaveEvent_StowThief:
 	TST.b	Girl_left_for_stow.w
 	BNE.b	loc_0002105C
 	MOVE.b	#$FF, Talker_present_flag.w
@@ -36244,7 +36265,8 @@ loc_00021006:
 loc_0002105C:
 	RTS
 	
-loc_0002105E:
+; loc_0002105E
+CaveEvent_AstiMonster:
 	TST.b	Girl_left_for_stow.w
 	BEQ.b	loc_00021078
 	TST.b	Asti_monster_defeated.w
@@ -36257,7 +36279,8 @@ loc_00021078:
 loc_00021080:
 	RTS
 	
-loc_00021082:
+; loc_00021082
+CaveEvent_BearwulfMeeting:
 	MOVE.l	#NoOneHereStr, Script_talk_source.w
 	TST.b	Bearwulf_cave_entered.w
 	BEQ.b	loc_000210BC
@@ -36272,7 +36295,8 @@ loc_00021082:
 loc_000210BC:
 	RTS
 
-loc_000210BE:
+; loc_000210BE
+CaveEvent_BearwulfWeaponReward:
 	MOVE.l	#NoOneHereStr, Script_talk_source.w
 	TST.b	Bearwulf_cave_entered.w
 	BEQ.b	loc_000210DE
@@ -36282,7 +36306,8 @@ loc_000210BE:
 loc_000210DE:
 	RTS
 
-loc_000210E0:
+; loc_000210E0
+CaveEvent_MalagaDungeonPrisoner:
 	MOVE.l	#NoOneHereStr, Script_talk_source.w
 	TST.b	Malaga_dungeon_person_rescued.w
 	BEQ.b	loc_00021128
@@ -36300,7 +36325,8 @@ loc_000210E0:
 loc_00021128:
 	RTS
 
-loc_0002112A:
+; loc_0002112A
+CaveEvent_MalagaCrownReward:
 	MOVE.l	#NoOneHereStr, Script_talk_source.w
 	TST.b	Malaga_dungeon_person_rescued.w
 	BEQ.b	loc_0002114A
@@ -36310,9 +36336,11 @@ loc_0002112A:
 loc_0002114A:
 	RTS
 
-loc_0002114C:
+; loc_0002114C
+CaveEvent_TadcasterTreasureChest:
 	MoneyChest $8000, Tadcaster_treasure_quest_started
-loc_00021160:
+; loc_00021160
+CaveEvent_TadcasterBully:
 	MOVE.l	#NoOneHereStr, Script_talk_source.w
 	TST.b	Bully_first_fight_won.w
 	BEQ.b	loc_0002119A
@@ -36327,7 +36355,8 @@ loc_00021160:
 loc_0002119A:
 	RTS
 
-loc_0002119C:
+; loc_0002119C
+CaveEvent_HelwigMenRescued:
 	MOVE.l	#NoOneHereStr, Script_talk_source.w
 	TST.b	Helwig_prison_entered.w
 	BEQ.b	loc_000211BC
@@ -36338,7 +36367,8 @@ loc_0002119C:
 loc_000211BC:
 	RTS
 
-loc_000211BE:
+; loc_000211BE
+CaveEvent_SwaffhamDigotPlant:
 	TST.b	Swaffham_ate_poisoned_food.w
 	BEQ.b	loc_00021204
 	TST.b	Digot_plant_received.w
@@ -36355,48 +36385,55 @@ loc_000211BE:
 loc_00021204:
 	RTS
 	
-loc_00021206:
+; loc_00021206
+CaveEvent_ExcalabriaRingGuardian1:
 	TST.b	Excalabria_boss_1_defeated.w
-	BNE.w	loc_0002121C
+	BNE.w	CaveEvent_RingOfWindReward
 	MOVE.b	#$FF, Boss_event_trigger.w
 	MOVE.b	#$FF, Ring_guardian_1_boss_trigger.w
 	RTS
 	
-loc_0002121C:
+; loc_0002121C
+CaveEvent_RingOfWindReward:
 	MOVE.w	#$010E, Reward_script_value.w
 	MOVE.l	#Ring_of_wind_received, Reward_script_flag.w
 	BSR.w	SetupItemTreasure
 	RTS
 	
-loc_00021230:
+; loc_00021230
+CaveEvent_ExcalabriaRingGuardian2:
 	TST.b	Excalabria_boss_2_defeated.w
-	BNE.w	loc_00021246
+	BNE.w	CaveEvent_RedCrystalReward
 	MOVE.b	#$FF, Boss_event_trigger.w
 	MOVE.b	#$FF, Ring_guardian_2_boss_trigger.w
 	RTS
 	
-loc_00021246:
+; loc_00021246
+CaveEvent_RedCrystalReward:
 	MOVE.w	#$010F, Reward_script_value.w
 	MOVE.l	#Red_crystal_received, Reward_script_flag.w
 	BSR.w	SetupItemTreasure
 	RTS
 	
-loc_0002125A:
+; loc_0002125A
+CaveEvent_ExcalabriaRingGuardian3:
 	TST.b	Excalabria_boss_3_defeated.w
-	BNE.w	loc_00021270
+	BNE.w	CaveEvent_BlueCrystalReward
 	MOVE.b	#$FF, Boss_event_trigger.w
 	MOVE.b	#$FF, Ring_guardian_3_boss_trigger.w
 	RTS
 	
-loc_00021270:
+; loc_00021270
+CaveEvent_BlueCrystalReward:
 	MOVE.w	#$0110, Reward_script_value.w
 	MOVE.l	#Blue_crystal_received, Reward_script_flag.w
 	BSR.w	SetupItemTreasure
 	RTS
 	
-loc_00021284:
+; loc_00021284
+CaveEvent_SwaffhamSpy:
 	TST.b	Swaffham_spy_defeated.w
-	BNE.w	loc_000212AA
+	BNE.w	CaveEvent_SwaffhamSpyKeyReward
 	BSR.w	InitMerchantDialog_Variant2
 	MOVE.l	#DieLaughStr, Script_talk_source.w
 	TST.b	Ate_spy_dinner.w
@@ -36405,7 +36442,8 @@ loc_00021284:
 loc_000212A8:
 	RTS
 	
-loc_000212AA:
+; loc_000212AA
+CaveEvent_SwaffhamSpyKeyReward:
 	MOVE.w	#$0116, Reward_script_value.w
 	MOVE.l	#Thar_bronze_key_collected, Reward_script_flag.w
 	BSR.w	SetupItemTreasure
@@ -36414,14 +36452,16 @@ loc_000212AA:
 loc_000212BE:
 	RingChest 4, 5, Carthahena_soldier_1_defeated
 	
-loc_000212D8:
+; loc_000212D8
+CaveEvent_TharEncounter:
 	TST.b	Thar_defeated.w
-	BNE.w	loc_000212EE
+	BNE.w	CaveEvent_TharKeyReward
 	BSR.w	InitTalkerWithGfxDescriptor_1F712
 	MOVE.l	#TharRevengeStr, Script_talk_source.w
 	RTS
 	
-loc_000212EE:
+; loc_000212EE
+CaveEvent_TharKeyReward:
 	MOVE.w	#$0117, Reward_script_value.w
 	MOVE.l	#Thar_silver_key_collected, Reward_script_flag.w
 	BSR.w	SetupItemTreasure
@@ -36430,14 +36470,16 @@ loc_000212EE:
 loc_00021302:
 	RingChest 4, 6, Carthahena_soldier_2_defeated
 	
-loc_0002131C:
+; loc_0002131C
+CaveEvent_LutherEncounter:
 	TST.b	Luther_defeated.w
-	BNE.w	loc_00021332
+	BNE.w	CaveEvent_LutherKeyReward
 	BSR.w	InitTalkerWithGfxDescriptor_1F712
 	MOVE.l	#LutherDevastatedSwaffhamStr, Script_talk_source.w
 	RTS
 	
-loc_00021332:
+; loc_00021332
+CaveEvent_LutherKeyReward:
 	MOVE.w	#$0118, Reward_script_value.w
 	MOVE.l	#Luther_gold_key_collected, Reward_script_flag.w
 	BSR.w	SetupItemTreasure
@@ -36446,7 +36488,8 @@ loc_00021332:
 loc_00021346:
 	RingChest 4, 7, Carthahena_soldier_3_defeated
 	
-loc_00021360:
+; loc_00021360
+CaveEvent_TsarkonFinalEncounter:
 	TST.b	Tsarkon_is_dead.w
 	BNE.w	loc_000213C4
 	MOVE.w	#7, D7
@@ -36640,7 +36683,8 @@ SawMotherInCartahenaStr:
 	dc.b	"I saw your dear mother", $FE
 	dc.b	"in Cartahena, but that", $FE
 	dc.b	"was many years ago.", $FF
-loc_000218A2:
+; loc_000218A2
+LostHereIsAMapStr_Wyclif:
 	dc.b	"Lost again? Well, here's a", $FE
 	dc.b	"map of the area."
 	dc.b	$F9, $07 ; 7 map areas
@@ -36652,7 +36696,8 @@ loc_000218A2:
 	dc.b	$01, $21
 	dc.b	$01, $22
 	dc.b	$00 ; padding
-loc_000218DE:
+; loc_000218DE
+LostHereIsAMapStr_Deepdale:
 	dc.b	"Lost again? Well, here's a", $FE
 	dc.b	"map of the area." 
 	dc.b	$F9, $04 ; 4 map areas
@@ -36661,7 +36706,8 @@ loc_000218DE:
 	dc.b	$01, $24
 	dc.b	$01, $25
 	dc.b	$00 ; padding
-loc_00021914:
+; loc_00021914
+LostHereIsAMapStr_Stow:
 	dc.b	"Lost again? Well, here's a", $FE
 	dc.b	"map of the area."
 	dc.b	$F9, $04 ; 4 map areas
