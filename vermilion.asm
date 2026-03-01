@@ -9717,7 +9717,7 @@ loc_00008B88:
 	RTS
 
 InitEncounterPortrait:
-	LEA	loc_00023B28, A1
+	LEA	EnemyEncounterGroupTable, A1
 	CLR.w	D2
 	MOVE.b	Encounter_group_index.w, D2
 	ADD.w	D2, D2
@@ -17617,7 +17617,7 @@ LoadMagicGraphics:
 	
 LoadEncounterTypeGraphics:
 	LEA	Tile_gfx_buffer.w, A2
-	LEA	loc_00023B28, A1
+	LEA	EnemyEncounterGroupTable, A1
 	CLR.w	D2
 	MOVE.b	Encounter_group_index.w, D2
 	ADD.w	D2, D2
@@ -38554,7 +38554,7 @@ EncounterTileData_Entry:
 	dc.b	$00, $4F 
 
 ;loc_00023A7C:
-EnemyEncounterTypesByMapSector:  ; Maps current map sector to pointer index at loc_00023B28
+EnemyEncounterTypesByMapSector:  ; Maps current map sector to pointer index at EnemyEncounterGroupTable
 	dc.b	$28, $28, $28, $27, $27, $27, $24, $00, $21, $23, $20, $20, $1E, $1E, $41, $00
 	dc.b	$2A, $2A, $2C, $2E, $25, $25, $24, $24, $21, $21, $00, $00, $1E, $41, $00, $00
 	dc.b	$00, $2D, $2D, $2D, $2E, $2E, $34, $36, $36, $36, $37, $37, $1B, $1C, $1C, $00
@@ -38564,222 +38564,292 @@ EnemyEncounterTypesByMapSector:  ; Maps current map sector to pointer index at l
 	dc.b	$00, $00, $0F, $00, $00, $0D, $11, $11, $12, $12, $14, $00, $16, $17, $00, $00 
 	dc.b	$00, $00, $0E, $0E, $0D, $0F, $0F, $11, $00, $12, $15, $14, $16, $00, $00, $00 
 
-;loc_00023AFC: ; Maps current cave room to pointer index at loc_00023B28
+;loc_00023AFC: ; Maps current cave room to pointer index at EnemyEncounterGroupTable
 EnemyEncounterTypesByCaveRoom:
 	dc.b	$01, $06, $06, $0C, $0C, $10, $43, $13, $13, $40, $40, $19, $19, $1D, $1D, $1F 
 	dc.b	$1F, $1F, $22, $42, $26, $26, $29, $2F, $2F, $30, $31, $31, $35, $35, $38, $38 
 	dc.b	$3E, $3E, $3E, $29, $2B, $2D, $45, $2D, $2B, $2D, $33, $44 
 
-loc_00023B28: ; Enemy encounters map
-	dc.l	loc_00023C40
-	dc.l	loc_00023C48
-	dc.l	loc_00023C50
-	dc.l	loc_00023C58
-	dc.l	loc_00023C60
-	dc.l	loc_00023C68
-	dc.l	loc_00023C70
-	dc.l	loc_00023C78
-	dc.l	loc_00023C80
-	dc.l	loc_00023C88
-	dc.l	loc_00023C90
-	dc.l	loc_00023C98
-	dc.l	loc_00023CA0
-	dc.l	loc_00023CA8
-	dc.l	loc_00023CB0
-	dc.l	loc_00023CB8
-	dc.l	loc_00023CC0
-	dc.l	loc_00023CC8
-	dc.l	loc_00023CD0
-	dc.l	loc_00023CD8
-	dc.l	loc_00023CE0
-	dc.l	loc_00023CE8
-	dc.l	loc_00023CF0
-	dc.l	loc_00023CF8
-	dc.l	loc_00023D00
-	dc.l	loc_00023D08
-	dc.l	loc_00023D10
-	dc.l	loc_00023D18
-	dc.l	loc_00023D20
-	dc.l	loc_00023D28
-	dc.l	loc_00023D30
-	dc.l	loc_00023D38
-	dc.l	loc_00023D40
-	dc.l	loc_00023D48
-	dc.l	loc_00023D50
-	dc.l	loc_00023D58
-	dc.l	loc_00023D60
-	dc.l	loc_00023D68
-	dc.l	loc_00023D70
-	dc.l	loc_00023D78
-	dc.l	loc_00023D80
-	dc.l	loc_00023D88
-	dc.l	loc_00023D90
-	dc.l	loc_00023D98
-	dc.l	loc_00023DA0
-	dc.l	loc_00023DA8
-	dc.l	loc_00023DB0
-	dc.l	loc_00023DB8
-	dc.l	loc_00023DC0
-	dc.l	loc_00023DC8
-	dc.l	loc_00023DD0
-	dc.l	loc_00023DD8
-	dc.l	loc_00023DE0
-	dc.l	loc_00023DE8	
-	dc.l	loc_00023DF0
-	dc.l	loc_00023DF8
-	dc.l	loc_00023E00
-	dc.l	loc_00023E08
-	dc.l	loc_00023E10
-	dc.l	loc_00023E18
-	dc.l	loc_00023E20
-	dc.l	loc_00023E28
-	dc.l	loc_00023E30
-	dc.l	loc_00023E38
-	dc.l	loc_00023E40
-	dc.l	loc_00023E48
-	dc.l	loc_00023E50
-	dc.l	loc_00023E58
-	dc.l	loc_00023E60
-	dc.l	loc_00023E68
-loc_00023C40: ; Each map segment or cave has a set of 4 encounter types
+; loc_00023B28
+EnemyEncounterGroupTable: ; Enemy encounters map
+	dc.l	EnemyEncounterGroup_00
+	dc.l	EnemyEncounterGroup_01
+	dc.l	EnemyEncounterGroup_02
+	dc.l	EnemyEncounterGroup_03
+	dc.l	EnemyEncounterGroup_04
+	dc.l	EnemyEncounterGroup_05
+	dc.l	EnemyEncounterGroup_06
+	dc.l	EnemyEncounterGroup_07
+	dc.l	EnemyEncounterGroup_08
+	dc.l	EnemyEncounterGroup_09
+	dc.l	EnemyEncounterGroup_0A
+	dc.l	EnemyEncounterGroup_0B
+	dc.l	EnemyEncounterGroup_0C
+	dc.l	EnemyEncounterGroup_0D
+	dc.l	EnemyEncounterGroup_0E
+	dc.l	EnemyEncounterGroup_0F
+	dc.l	EnemyEncounterGroup_10
+	dc.l	EnemyEncounterGroup_11
+	dc.l	EnemyEncounterGroup_12
+	dc.l	EnemyEncounterGroup_13
+	dc.l	EnemyEncounterGroup_14
+	dc.l	EnemyEncounterGroup_15
+	dc.l	EnemyEncounterGroup_16
+	dc.l	EnemyEncounterGroup_17
+	dc.l	EnemyEncounterGroup_18
+	dc.l	EnemyEncounterGroup_19
+	dc.l	EnemyEncounterGroup_1A
+	dc.l	EnemyEncounterGroup_1B
+	dc.l	EnemyEncounterGroup_1C
+	dc.l	EnemyEncounterGroup_1D
+	dc.l	EnemyEncounterGroup_1E
+	dc.l	EnemyEncounterGroup_1F
+	dc.l	EnemyEncounterGroup_20
+	dc.l	EnemyEncounterGroup_21
+	dc.l	EnemyEncounterGroup_22
+	dc.l	EnemyEncounterGroup_23
+	dc.l	EnemyEncounterGroup_24
+	dc.l	EnemyEncounterGroup_25
+	dc.l	EnemyEncounterGroup_26
+	dc.l	EnemyEncounterGroup_27
+	dc.l	EnemyEncounterGroup_28
+	dc.l	EnemyEncounterGroup_29
+	dc.l	EnemyEncounterGroup_2A
+	dc.l	EnemyEncounterGroup_2B
+	dc.l	EnemyEncounterGroup_2C
+	dc.l	EnemyEncounterGroup_2D
+	dc.l	EnemyEncounterGroup_2E
+	dc.l	EnemyEncounterGroup_2F
+	dc.l	EnemyEncounterGroup_30
+	dc.l	EnemyEncounterGroup_31
+	dc.l	EnemyEncounterGroup_32
+	dc.l	EnemyEncounterGroup_33
+	dc.l	EnemyEncounterGroup_34
+	dc.l	EnemyEncounterGroup_35	
+	dc.l	EnemyEncounterGroup_36
+	dc.l	EnemyEncounterGroup_37
+	dc.l	EnemyEncounterGroup_38
+	dc.l	EnemyEncounterGroup_39
+	dc.l	EnemyEncounterGroup_3A
+	dc.l	EnemyEncounterGroup_3B
+	dc.l	EnemyEncounterGroup_3C
+	dc.l	EnemyEncounterGroup_3D
+	dc.l	EnemyEncounterGroup_3E
+	dc.l	EnemyEncounterGroup_3F
+	dc.l	EnemyEncounterGroup_40
+	dc.l	EnemyEncounterGroup_41
+	dc.l	EnemyEncounterGroup_42
+	dc.l	EnemyEncounterGroup_43
+	dc.l	EnemyEncounterGroup_44
+	dc.l	EnemyEncounterGroup_45
+EnemyEncounterGroup_00: ; Each map segment or cave has a set of 4 encounter types
 	dc.w	$0000, $0000, $000A, $0001 
-loc_00023C48:
+; loc_00023C48
+EnemyEncounterGroup_01:
 	dc.w	$0006, $000A, $0001, $0001 
-loc_00023C50:
+; loc_00023C50
+EnemyEncounterGroup_02:
 	dc.w	$000A, $000A, $0001, $0000 
-loc_00023C58:
+; loc_00023C58
+EnemyEncounterGroup_03:
 	dc.w	$000E, $000A, $0001, $000A 
-loc_00023C60:
+; loc_00023C60
+EnemyEncounterGroup_04:
 	dc.w	$000E, $0012, $000A, $0001 
-loc_00023C68:
+; loc_00023C68
+EnemyEncounterGroup_05:
 	dc.w	$000E, $0026, $0012, $000A 
-loc_00023C70:
+; loc_00023C70
+EnemyEncounterGroup_06:
 	dc.w	$000E, $0006, $0006, $0016 
-loc_00023C78:
+; loc_00023C78
+EnemyEncounterGroup_07:
 	dc.w	$0005, $0012, $000E, $0016 
-loc_00023C80:
+; loc_00023C80
+EnemyEncounterGroup_08:
 	dc.w	$000B, $000A, $0012, $0005 
-loc_00023C88:
+; loc_00023C88
+EnemyEncounterGroup_09:
 	dc.w	$0032, $000B, $0012, $0016 
-loc_00023C90:
+; loc_00023C90
+EnemyEncounterGroup_0A:
 	dc.w	$002A, $0032, $0005, $000B 
-loc_00023C98:
+; loc_00023C98
+EnemyEncounterGroup_0B:
 	dc.w	$000F, $0005, $002A, $0032 
-loc_00023CA0:
+; loc_00023CA0
+EnemyEncounterGroup_0C:
 	dc.w	$002E, $0006, $0016, $0002 
-loc_00023CA8:
+; loc_00023CA8
+EnemyEncounterGroup_0D:
 	dc.w	$001A, $002A, $0032, $000F
-loc_00023CB0:
+; loc_00023CB0
+EnemyEncounterGroup_0E:
 	dc.w	$0042, $002E, $001A, $002A 
-loc_00023CB8:
+; loc_00023CB8
+EnemyEncounterGroup_0F:
 	dc.w	$004A, $002E, $001A, $0042
-loc_00023CC0:
+; loc_00023CC0
+EnemyEncounterGroup_10:
 	dc.w	$001E, $0006, $004A, $0002
-loc_00023CC8:
+; loc_00023CC8
+EnemyEncounterGroup_11:
 	dc.w	$004E, $004A, $001A, $0042 
-loc_00023CD0:
+; loc_00023CD0
+EnemyEncounterGroup_12:
 	dc.w	$0013, $004E, $001A, $0042
-loc_00023CD8:
+; loc_00023CD8
+EnemyEncounterGroup_13:
 	dc.w	$0022, $003A, $0036, $001E 
-loc_00023CE0:
+; loc_00023CE0
+EnemyEncounterGroup_14:
 	dc.w	$001B, $0004, $004E, $0013
-loc_00023CE8:
+; loc_00023CE8
+EnemyEncounterGroup_15:
 	dc.w	$0046, $0032, $001B, $0004 
-loc_00023CF0:
+; loc_00023CF0
+EnemyEncounterGroup_16:
 	dc.w	$002F, $0022, $002A, $0046 
-loc_00023CF8:
+; loc_00023CF8
+EnemyEncounterGroup_17:
 	dc.w	$0027, $000C, $0046, $004E 
-loc_00023D00:
+; loc_00023D00
+EnemyEncounterGroup_18:
 	dc.w	$002B, $0022, $001B, $001A
-loc_00023D08:
+; loc_00023D08
+EnemyEncounterGroup_19:
 	dc.w	$001F, $003E, $0010, $0007 
-loc_00023D10:
+; loc_00023D10
+EnemyEncounterGroup_1A:
 	dc.w	$0033, $0022, $001B, $002F 
-loc_00023D18:
+; loc_00023D18
+EnemyEncounterGroup_1B:
 	dc.w	$0043, $0033, $0010, $0022 
-loc_00023D20:
+; loc_00023D20
+EnemyEncounterGroup_1C:
 	dc.w	$004B, $0047, $0033, $0004 
-loc_00023D28:
+; loc_00023D28
+EnemyEncounterGroup_1D:
 	dc.w	$003B, $004B, $0047, $0022 
-loc_00023D30:
+; loc_00023D30
+EnemyEncounterGroup_1E:
 	dc.w	$001C, $0028, $0047, $0033 
-loc_00023D38:
+; loc_00023D38
+EnemyEncounterGroup_1F:
 	dc.w	$003F, $0017, $0007, $001C 
-loc_00023D40:
+; loc_00023D40
+EnemyEncounterGroup_20:
 	dc.w	$0023, $001C, $0014, $004B 
-loc_00023D48:
+; loc_00023D48
+EnemyEncounterGroup_21:
 	dc.w	$0014, $0023, $001C, $0033 
-loc_00023D50:
+; loc_00023D50
+EnemyEncounterGroup_22:
 	dc.w	$0020, $001C, $0008, $0014 
-loc_00023D58:
+; loc_00023D58
+EnemyEncounterGroup_23:
 	dc.w	$0044, $004F, $0014, $0023 
-loc_00023D60:
+; loc_00023D60
+EnemyEncounterGroup_24:
 	dc.w	$000D, $0044, $004F, $001C
-loc_00023D68:
+; loc_00023D68
+EnemyEncounterGroup_25:
 	dc.w	$0048, $0030, $0023, $001C 
-loc_00023D70:
+; loc_00023D70
+EnemyEncounterGroup_26:
 	dc.w	$003C, $0008, $0007, $0048 
-loc_00023D78:
+; loc_00023D78
+EnemyEncounterGroup_27:
 	dc.w	$0011, $000D, $0044, $0048
-loc_00023D80:
+; loc_00023D80
+EnemyEncounterGroup_28:
 	dc.w	$0034, $002C, $000D, $0011 
-loc_00023D88:
+; loc_00023D88
+EnemyEncounterGroup_29:
 	dc.w	$0040, $0011, $0008, $0030 
-loc_00023D90:
+; loc_00023D90
+EnemyEncounterGroup_2A:
 	dc.w	$0029, $0030, $0048, $0023 
-loc_00023D98:
+; loc_00023D98
+EnemyEncounterGroup_2B:
 	dc.w	$0021, $004C, $0029, $0040 
-loc_00023DA0:
+; loc_00023DA0
+EnemyEncounterGroup_2C:
 	dc.w	$0024, $0029, $0011, $0004
-loc_00023DA8:
+; loc_00023DA8
+EnemyEncounterGroup_2D:
 	dc.w	$0015, $0024, $0034, $004C 
-loc_00023DB0:
+; loc_00023DB0
+EnemyEncounterGroup_2E:
 	dc.w	$0050, $0024, $0015, $0029 
-loc_00023DB8:
+; loc_00023DB8
+EnemyEncounterGroup_2F:
 	dc.w	$0045, $0039, $0024, $0011 
-loc_00023DC0:
+; loc_00023DC0
+EnemyEncounterGroup_30:
 	dc.w	$0018, $0045, $0039, $0015 
-loc_00023DC8:
+; loc_00023DC8
+EnemyEncounterGroup_31:
 	dc.w	$0018, $0045, $0050, $0039 
-loc_00023DD0:
+; loc_00023DD0
+EnemyEncounterGroup_32:
 	dc.w	$0031, $0018, $0050, $0045
-loc_00023DD8:
+; loc_00023DD8
+EnemyEncounterGroup_33:
 	dc.w	$0053, $0050, $0018, $0045 
-loc_00023DE0:
+; loc_00023DE0
+EnemyEncounterGroup_34:
 	dc.w	$001D, $0031, $0024, $0045 
-loc_00023DE8:
+; loc_00023DE8
+EnemyEncounterGroup_35:
 	dc.w	$0009, $003D, $0018, $0050 
-loc_00023DF0:
+; loc_00023DF0
+EnemyEncounterGroup_36:
 	dc.w	$002D, $001D, $0031, $0050 
-loc_00023DF8:
+; loc_00023DF8
+EnemyEncounterGroup_37:
 	dc.w	$004D, $002D, $001D, $0004 
-loc_00023E00:
+; loc_00023E00
+EnemyEncounterGroup_38:
 	dc.w	$0019, $0041, $004D, $0009 
-loc_00023E08:
+; loc_00023E08
+EnemyEncounterGroup_39:
 	dc.w	$004D, $0019, $002D, $001D 
-loc_00023E10:
+; loc_00023E10
+EnemyEncounterGroup_3A:
 	dc.w	$0035, $002D, $004D, $0024 
-loc_00023E18:
+; loc_00023E18
+EnemyEncounterGroup_3B:
 	dc.w	$0049, $004D, $0035, $0011 
-loc_00023E20:
+; loc_00023E20
+EnemyEncounterGroup_3C:
 	dc.w	$0025, $0049, $0035, $0019 
-loc_00023E28:
+; loc_00023E28
+EnemyEncounterGroup_3D:
 	dc.w	$0025, $0049, $0035, $004D
-loc_00023E30:
+; loc_00023E30
+EnemyEncounterGroup_3E:
 	dc.w	$0051, $0025, $0049, $0052 
-loc_00023E38:
+; loc_00023E38
+EnemyEncounterGroup_3F:
 	dc.w	$0003, $0050, $0050, $0045 
-loc_00023E40:
+; loc_00023E40
+EnemyEncounterGroup_40:
 	dc.w	$003E, $0007, $003A, $0022 
-loc_00023E48:
+; loc_00023E48
+EnemyEncounterGroup_41:
 	dc.w	$0028, $0047, $0022, $004B
-loc_00023E50:
+; loc_00023E50
+EnemyEncounterGroup_42:
 	dc.w	$0038, $0008, $0004, $0023
-loc_00023E58:
+; loc_00023E58
+EnemyEncounterGroup_43:
 	dc.w	$001E, $0036, $0016, $0002
-loc_00023E60:
+; loc_00023E60
+EnemyEncounterGroup_44:
 	dc.w	$0037, $0047, $0007, $003A
-loc_00023E68:
+; loc_00023E68
+EnemyEncounterGroup_45:
 	dc.w	$0021, $001F, $001E, $004C 
 ; loc_00023E70
 EnemyGfxDataTable:
