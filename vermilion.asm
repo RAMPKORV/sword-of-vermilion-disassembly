@@ -1273,7 +1273,7 @@ loc_00001A1A:
 	CLR.b	Skip_town_intro_after_fight.w
 	MOVEA.l	Enemy_list_ptr.w, A6
 	BSET.b	#7, (A6)
-	MOVE.l	#loc_00006E1C, $2(A6)
+	MOVE.l	#LoadTownNPCs, $2(A6)
 	MOVE.w	Current_town.w, D0
 	CMPI.w	#TOWN_CARTHAHENA, D0
 	BNE.b	loc_00001A46
@@ -1692,7 +1692,7 @@ InitTownDisplay:
 	JSR	WriteTownTilemapToVRAM
 	MOVEA.l	Enemy_list_ptr.w, A6
 	BSET.b	#7, (A6)
-	MOVE.l	#loc_00006E1C, $2(A6)
+	MOVE.l	#LoadTownNPCs, $2(A6)
 	MOVE.w	#$0012, Palette_line_0_fade_target.w
 	MOVE.w	Palette_line_1_index_saved.w, Palette_line_1_fade_target.w
 	MOVE.w	Palette_line_2_cycle_base.w, Palette_line_2_fade_target.w
@@ -7285,7 +7285,7 @@ loc_00006D8C:
 	RTS
 
 GetBoundingBoxFromTable:
-	LEA	loc_00006DCC, A0
+	LEA	NPCBoundingBoxTable, A0
 	ADD.w	D0, D0
 	LEA	(A0,D0.w), A0
 	MOVE.w	(A0)+, D0
@@ -7311,7 +7311,8 @@ CheckFixedAreaCollision:
 loc_00006DCA:
 	RTS
 
-loc_00006DCC:
+; loc_00006DCC
+NPCBoundingBoxTable:
 	dc.w	$0000, $0000, $0000, $0000
 	dc.w	$0000, $0000, $0000, $0000
 	dc.w	$FFEC, $0000, $FFEE, $0000
@@ -7323,7 +7324,8 @@ loc_00006DCC:
 	dc.w	$0004, $0020, $FFE0, $FFF4
 	dc.w	$0004, $0020, $FFE0, $FFF4
 
-loc_00006E1C:
+; loc_00006E1C
+LoadTownNPCs:
 	CLR.b	Npc_load_done_flag.w
 	CLR.w	D5
 	MOVEQ	#$1D, D7                ; for $1D (29) {
@@ -7381,7 +7383,8 @@ loc_00006EBE:
 loc_00006ED0:
 	RTS
 
-loc_00006ED2:					; unreferenced dead code
+; loc_00006ED2
+ClearAllNPCSlots:					; unreferenced dead code
 	MOVEA.l	Enemy_list_ptr.w, A6
 	MOVEQ	#$1D, D7
 loc_00006ED8:
@@ -7392,18 +7395,21 @@ loc_00006ED8:
 	DBF	D7, loc_00006ED8
 	RTS
 
-loc_00006EEC:
+; loc_00006EEC
+NPCTick_Soldier_Init:
 	MOVE.b	#9, $6(A5)
-	MOVE.l	#loc_00006EFC, $2(A5)
+	MOVE.l	#NPCTick_Soldier_UpdatePos, $2(A5)
 	RTS
 
-loc_00006EFC:
-	BRA.w	loc_00008154
+; loc_00006EFC
+NPCTick_Soldier_UpdatePos:
+	BRA.w	UpdateNPCScreenPosition
 	MOVE.b	#9, $6(A5)
-	MOVE.l	#loc_00006F10, $2(A5)
+	MOVE.l	#NPCTick_StowSoldier_DoctorHint, $2(A5)
 	RTS
 
-loc_00006F10:	
+; loc_00006F10
+NPCTick_StowSoldier_DoctorHint:	
 	TST.b	Stow_innocence_proven.w
 	BNE.b	loc_00006F32
 	TST.b	Asti_monster_defeated.w
@@ -7414,7 +7420,7 @@ loc_00006F10:
 	BEQ.b	loc_00006F32
 	MOVE.l	#BringDoctorHereStr, $1C(A5)
 loc_00006F32:
-	BRA.w	loc_00008154
+	BRA.w	UpdateNPCScreenPosition
 	BSR.w	SetRandomDirection
 	MOVE.l	#UpdateNPCSpriteFrame, $2(A5)
 	RTS
@@ -7430,13 +7436,15 @@ UpdateNPCSpriteFrame:
 	ADDQ.b	#1, $1B(A5)
 	RTS
 
-loc_00006F5E:
+; loc_00006F5E
+NPCInit_WalkingStatic:
 	BSR.w	SetRandomDirection
-	MOVE.l	#loc_00006F70, $2(A5)
+	MOVE.l	#NPCTick_WalkingStatic, $2(A5)
 	CLR.b	$25(A5)
 	RTS
 
-loc_00006F70 
+; loc_00006F70
+NPCTick_WalkingStatic:
 	BSR.w	ClearNPCFrozenState
 	BSR.w	UpdateNPCMovement
 	MOVEA.l	$2E(A5), A1
@@ -7455,43 +7463,48 @@ NPCBehavior_LoadFrame:
 	ADDQ.b	#1, $1B(A5)
 	RTS
 
-loc_00006FA8
+; loc_00006FA8
+NPCInit_WalkingAnimated:
 	BSR.w	SetRandomDirection
-	MOVE.l	#loc_00006FBA, $2(A5)
+	MOVE.l	#NPCTick_WalkingAnimated, $2(A5)
 	CLR.b	$25(A5)
 	RTS
 
-loc_00006FBA:
+; loc_00006FBA
+NPCTick_WalkingAnimated:
 	BSR.w	ClearNPCFrozenState
 	BSR.w	UpdateNPCMovement
 	MOVEA.l	$2E(A5), A1
 	BRA.w	LoadNPCAnimationFrame
-	MOVE.l	#loc_00006FD4, $2(A5)
+	MOVE.l	#NPCTick_AnimateEntity, $2(A5)
 	RTS
 
-loc_00006FD4:
+; loc_00006FD4
+NPCTick_AnimateEntity:
 	MOVEA.l	$2E(A5), A1
 	MOVE.b	#$FF, $25(A5)
 	BSR.w	AnimateEntitySprite
 	ADDQ.b	#1, $1B(A5)
 	RTS
 
-loc_00006FE8:
+; loc_00006FE8
+NPCInit_ParmaFairy:
 	TST.b	Blade_is_dead.w
 	BEQ.b	loc_00006FF4
 	BCLR.b	#7, (A5)
 	RTS
 
 loc_00006FF4:
-	MOVE.l	#loc_00006FFE, $2(A5)
+	MOVE.l	#NPCTick_ParmaFairy, $2(A5)
 	RTS
 
-loc_00006FFE:
+; loc_00006FFE
+NPCTick_ParmaFairy:
 	TST.b	Blade_is_dead.w
 	BEQ.b	loc_0000700C
 	MOVE.l	#NoAnswerStr, $1C(A5)
 loc_0000700C:
-	BRA.b	loc_00006FD4
+	BRA.b	NPCTick_AnimateEntity
 	BSR.w	SetRandomDirection
 	CLR.b	$25(A5)
 	TST.b	Blade_is_dead.w
@@ -7500,10 +7513,11 @@ loc_0000700C:
 	RTS
 
 loc_00007026:
-	MOVE.l	#loc_00007030, $2(A5)
+	MOVE.l	#NPCTick_ParmaFindRing, $2(A5)
 	RTS
 
-loc_00007030:   
+; loc_00007030
+NPCTick_ParmaFindRing:   
 	TST.b	Blade_is_dead.w
 	BEQ.b	loc_0000703E
 	MOVE.l	#FindRingStr, $1C(A5)
@@ -7511,10 +7525,11 @@ loc_0000703E:
 	BRA.w	NPCBehavior_LoadFrame
 	BSR.w	SetRandomDirection
 	CLR.b	$25(A5)
-	MOVE.l	#loc_00007054, $2(A5)
+	MOVE.l	#NPCTick_Wyclif_UseMapHint1, $2(A5)
 	RTS
 
-loc_00007054:  
+; loc_00007054
+NPCTick_Wyclif_UseMapHint1:  
 	TST.b	Rings_collected.w
 	BNE.b	loc_0000706A
 	MOVE.l	#UseMapStr, Pending_hint_text.w
@@ -7524,10 +7539,11 @@ loc_0000706A:
 	BRA.w	UpdateNPCSpriteFrame
 	BSR.w	SetRandomDirection
 	CLR.b	$25(A5)
-	MOVE.l	#loc_00007080, $2(A5)
+	MOVE.l	#NPCTick_Wyclif_UseMapHint2, $2(A5)
 	RTS
 
-loc_00007080:
+; loc_00007080
+NPCTick_Wyclif_UseMapHint2:
 	TST.b	Rings_collected.w
 	BEQ.b	loc_00007096
 	MOVE.l	#UseMapStr, Pending_hint_text.w
@@ -7537,20 +7553,22 @@ loc_00007096:
 	BRA.w	UpdateNPCSpriteFrame
 	BSR.w	SetRandomDirection
 	CLR.b	$25(A5)
-	MOVE.l	#loc_000070AC, $2(A5)
+	MOVE.l	#NPCTick_Wyclif_UseMapHint3, $2(A5)
 	RTS
 
-loc_000070AC:   
+; loc_000070AC
+NPCTick_Wyclif_UseMapHint3:   
 	MOVE.l	#UseMapStr, Pending_hint_text.w
 	MOVE.w	#$0040, D5
 	BSR.w	SetHintTextIfTriggered
 	BRA.w	UpdateNPCSpriteFrame
 	BSR.w	SetRandomDirection
 	CLR.b	$25(A5)
-	MOVE.l	#loc_000070D2, $2(A5)
+	MOVE.l	#NPCTick_Parma_AdviceHint, $2(A5)
 	RTS
 
-loc_000070D2:
+; loc_000070D2
+NPCTick_Parma_AdviceHint:
 	TST.b	Talked_to_real_king.w
 	BEQ.b	loc_000070EA
 	MOVE.l	#AdviceForQuestionsStr, Pending_hint_text.w	
@@ -7588,14 +7606,15 @@ loc_00007138:
 	TST.b	Treasure_of_troy_challenge_issued.w
 	BNE.b	loc_0000714E
 loc_00007144:
-	MOVE.l	#loc_00007158, $2(A5)
+	MOVE.l	#NPCTick_Parma_TreasureQuest, $2(A5)
 	RTS
 
 loc_0000714E:
 	MOVE.l	#NPCBehavior_LoadFrame, $2(A5)
 	RTS
 
-loc_00007158:  
+; loc_00007158
+NPCTick_Parma_TreasureQuest:  
 	TST.b	Treasure_of_troy_given_to_king.w
 	BEQ.b	loc_00007178
 	MOVE.l	#NicePlaceStr, $1C(A5)
@@ -7623,10 +7642,11 @@ loc_00007196:
 	RTS
 
 loc_000071AE:
-	MOVE.l	#loc_000071B8, $2(A5)
+	MOVE.l	#NPCTick_Parma_GotRingReaction, $2(A5)
 	RTS
 
-loc_000071B8:
+; loc_000071B8
+NPCTick_Parma_GotRingReaction:
 	TST.b	Talked_to_real_king.w
 	BEQ.b	loc_000071C6
 	MOVE.l	#GotRingStr, $1C(A5)
@@ -7639,10 +7659,11 @@ loc_000071C6:
 	MOVE.w	#$0091, $8(A5)
 	MOVE.l	#loc_0003DD74, $2E(A5)
 loc_000071E6:
-	MOVE.l	#loc_00006F70, $2(A5)
+	MOVE.l	#NPCTick_WalkingStatic, $2(A5)
 	RTS
 
-loc_000071F0:
+; loc_000071F0
+NPCInit_Watling_RestoredYouth:
 	BSR.w	SetRandomDirection
 	CLR.b	$25(A5)
 	TST.b	Watling_youth_restored.w
@@ -7653,10 +7674,11 @@ loc_000071F0:
 	RTS
 
 loc_00007216:
-	MOVE.l	#loc_00007220, $2(A5)
+	MOVE.l	#NPCTick_Watling_VerlinsCaveHint, $2(A5)
 	RTS
 
-loc_00007220:       
+; loc_00007220
+NPCTick_Watling_VerlinsCaveHint:       
 	MOVE.l	#GoNorthVerlinsCaveStr, Pending_hint_text.w
 	MOVE.w	#$36, D5
 	BSR.w	SetHintTextIfTriggered
@@ -7667,14 +7689,15 @@ loc_00007220:
 	BEQ.b	loc_0000725A
 	MOVE.w	#$00CD, $8(A5)
 	MOVE.l	#loc_0003DD94, $2E(A5)
-	MOVE.l	#loc_00007264, $2(A5)
+	MOVE.l	#NPCTick_Watling_ThankYou, $2(A5)
 	RTS
 
 loc_0000725A:
 	MOVE.l	#UpdateNPCSpriteFrame, $2(A5)
 	RTS
 
-loc_00007264:
+; loc_00007264
+NPCTick_Watling_ThankYou:
 	MOVE.l	#ThankYouStrangerStr, Pending_hint_text.w
 	MOVE.w	#$65, D5
 	BSR.w	SetHintTextIfTriggered
@@ -7692,19 +7715,21 @@ loc_0000729E:
 	MOVE.l	#UpdateNPCSpriteFrame, $2(A5)
 	RTS
 
-loc_000072A8:
+; loc_000072A8
+NPCInit_Deepdale_SecretKeeper:
 	BSR.w	SetRandomDirection
 	CLR.b	$25(A5)
 	TST.b	Deepdale_king_secret_kept.w
 	BNE.b	loc_000072C0
-	MOVE.l	#loc_000072CA, $2(A5)
+	MOVE.l	#NPCTick_Deepdale_SecretKeeper, $2(A5)
 	RTS
 
 loc_000072C0:
 	MOVE.l	#UpdateNPCSpriteFrame, $2(A5)	
 	RTS
 	
-loc_000072CA:
+; loc_000072CA
+NPCTick_Deepdale_SecretKeeper:
 	TST.b	Deepdale_king_secret_kept.w
 	BEQ.b	loc_000072F4
 	MOVE.l	#KeptSecretStr, $1C(A5)
@@ -7719,10 +7744,11 @@ loc_000072F4:
 	BRA.w	UpdateNPCSpriteFrame
 	BSR.w	SetRandomDirection
 	CLR.b	$25(A5)
-	MOVE.l	#loc_0000730A, $2(A5)
+	MOVE.l	#NPCTick_Deepdale_BremensCaveHint, $2(A5)
 	RTS
 
-loc_0000730A:
+; loc_0000730A
+NPCTick_Deepdale_BremensCaveHint:
 	TST.b	Deepdale_king_secret_kept.w
 	BNE.b	loc_00007326
 	TST.b	Deepdale_truffle_quest_started.w
@@ -7734,10 +7760,11 @@ loc_00007326:
 	BRA.w	UpdateNPCSpriteFrame
 	BSR.w	SetRandomDirection
 	CLR.b	$25(A5)
-	MOVE.l	#loc_0000733C, $2(A5)
+	MOVE.l	#NPCTick_Deepdale_StowRoadWarning, $2(A5)
 	RTS
 
-loc_0000733C:
+; loc_0000733C
+NPCTick_Deepdale_StowRoadWarning:
 	TST.b	Deepdale_king_secret_kept.w
 	BEQ.b	loc_00007352
 	MOVE.l	#RoadToStowDangerousStr, Pending_hint_text.w
@@ -7755,10 +7782,11 @@ loc_00007352:
 	RTS
 	
 loc_00007374:
-	MOVE.l	#loc_0000737E, $2(A5)
+	MOVE.l	#NPCTick_Stow_SanguiosBookkeeper, $2(A5)
 	RTS
 
-loc_0000737E:
+; loc_0000737E
+NPCTick_Stow_SanguiosBookkeeper:
 	TST.b	Sent_to_malaga.w
 	BEQ.b	loc_000073AE
 	MOVE.l	#HopesWithYouStr, $1C(A5)
@@ -7805,10 +7833,11 @@ loc_00007408:
 	RTS
 
 loc_00007424:
-	MOVE.l	#loc_0000742E, $2(A5)
+	MOVE.l	#NPCTick_Stow_ThiefAccuser1, $2(A5)
 	RTS
 
-loc_0000742E:
+; loc_0000742E
+NPCTick_Stow_ThiefAccuser1:
 	TST.b	Accused_of_theft.w
 	BEQ.b	loc_0000743C
 	MOVE.l	#YoureTheThiefStr, $1C(A5)
@@ -7822,10 +7851,11 @@ loc_0000743C:
 	RTS
 
 loc_00007458:
-	MOVE.l	#loc_00007462, $2(A5)
+	MOVE.l	#NPCTick_Stow_ThiefAccuser2, $2(A5)
 	RTS
 
-loc_00007462:
+; loc_00007462
+NPCTick_Stow_ThiefAccuser2:
 	TST.b	Accused_of_theft.w
 	BEQ.b	loc_00007470
 	MOVE.l	#FaceOfCriminalStr, $1C(A5)
@@ -7842,10 +7872,11 @@ loc_00007470:
 loc_00007490:
 	CLR.b	Received_replacement_key.w
 	CLR.b	Replacement_key_enabled.w
-	MOVE.l	#loc_000074A2, $2(A5)
+	MOVE.l	#NPCTick_Malaga_DungeonKeyGiver, $2(A5)
 	RTS
 
-loc_000074A2:
+; loc_000074A2
+NPCTick_Malaga_DungeonKeyGiver:
 	TST.b	Dungeon_key_received.w
 	BNE.b	loc_000074D4
 	BSR.w	CheckInventoryFull
@@ -7883,10 +7914,11 @@ loc_0000752A:
 	BRA.w	UpdateNPCSpriteFrame
 	BSR.w	SetRandomDirection
 	CLR.b	$25(A5)
-	MOVE.l	#loc_00007540, $2(A5)
+	MOVE.l	#NPCTick_Keltwick_MalagaHint, $2(A5)
 	RTS
 
-loc_00007540:
+; loc_00007540
+NPCTick_Keltwick_MalagaHint:
 	TST.b	Sent_to_malaga.w
 	BEQ.b	loc_00007556
 	MOVE.l	#MalagaNortheastStr, Pending_hint_text.w
@@ -7896,10 +7928,11 @@ loc_00007556:
 	BRA.w	UpdateNPCSpriteFrame
 	BSR.w	SetRandomDirection
 	CLR.b	$25(A5)
-	MOVE.l	#loc_0000756C, $2(A5)
+	MOVE.l	#NPCTick_Keltwick_BlazonsCaveHint, $2(A5)
 	RTS
 
-loc_0000756C:
+; loc_0000756C
+NPCTick_Keltwick_BlazonsCaveHint:
 	TST.b	Sent_to_malaga.w
 	BEQ.b	loc_00007582
 	MOVE.l	#GoWestBlazonsCaveStr, Pending_hint_text.w
@@ -7914,14 +7947,15 @@ loc_00007582:
 	MOVE.l	#WaitingForLetterStr, $1C(A5)
 	BRA.b	loc_000075A8
 loc_0000759E:
-	MOVE.l	#loc_000075B2, $2(A5)
+	MOVE.l	#NPCTick_Keltwick_OldManSketch, $2(A5)
 	RTS
 
 loc_000075A8:
 	MOVE.l	#NPCBehavior_LoadFrame, $2(A5)
 	RTS
 
-loc_000075B2:
+; loc_000075B2
+NPCTick_Keltwick_OldManSketch:
 	TST.b	Old_man_waiting_for_letter.w
 	BEQ.w	loc_000075EC
 	TST.b	Old_mans_sketch_given.w
@@ -7972,10 +8006,11 @@ loc_0000763E:
 loc_0000764E:
 	MOVE.b	#$FF, Keltwick_girl_sleeping.w
 loc_00007654:
-	MOVE.l	#loc_0000765E, $2(A5)
+	MOVE.l	#NPCTick_Keltwick_SleepingGirl, $2(A5)
 	RTS
 
-loc_0000765E:
+; loc_0000765E
+NPCTick_Keltwick_SleepingGirl:
 	TST.b	Keltwick_girl_sleeping.w
 	BEQ.b	loc_0000768E
 	TST.b	Alarm_clock_rang.w
@@ -7993,10 +8028,11 @@ loc_0000768E:
 	BRA.w	NPCBehavior_LoadFrame
 	BSR.w	SetRandomDirection
 	CLR.b	$25(A5)
-	MOVE.l	#loc_000076A4, $2(A5)
+	MOVE.l	#NPCTick_Keltwick_WaitForPlayer, $2(A5)
 	RTS
 
-loc_000076A4:
+; loc_000076A4
+NPCTick_Keltwick_WaitForPlayer:
 	TST.b	Tsarkon_is_dead.w
 	BEQ.b	loc_000076B6
 	MOVE.l	#WillWaitForYouStr, $1C(A5)
@@ -8011,10 +8047,11 @@ loc_000076CC:
 	BRA.w	NPCBehavior_LoadFrame
 	BSR.w	SetRandomDirection
 	CLR.b	$25(A5)
-	MOVE.l	#loc_000076E2, $2(A5)
+	MOVE.l	#NPCTick_Barrow_NortheastHint, $2(A5)
 	RTS
 
-loc_000076E2:
+; loc_000076E2
+NPCTick_Barrow_NortheastHint:
 	TST.b	Barrow_map_received.w
 	BEQ.b	loc_000076F8
 	MOVE.l	#BarrowNortheastStr, Pending_hint_text.w
@@ -8028,10 +8065,11 @@ loc_000076F8:
 	BEQ.b	loc_0000770E
 	BCLR.b	#7, (A5)	
 loc_0000770E:
-	MOVE.l	#loc_00007718, $2(A5)
+	MOVE.l	#NPCTick_Barrow_QuestGuard, $2(A5)
 	RTS
 
-loc_00007718:
+; loc_00007718
+NPCTick_Barrow_QuestGuard:
 	TST.b	Barrow_quest_1_complete.w
 	BEQ.b	loc_00007728
 	TST.b	Barrow_quest_2_complete.w
@@ -8041,10 +8079,11 @@ loc_00007728:
 	BRA.w	UpdateNPCSpriteFrame
 	BSR.w	SetRandomDirection
 	CLR.b	$25(A5)
-	MOVE.l	#loc_0000773E, $2(A5)
+	MOVE.l	#NPCTick_Barrow_BearwulfQuest, $2(A5)
 	RTS
 
-loc_0000773E:
+; loc_0000773E
+NPCTick_Barrow_BearwulfQuest:
 	TST.b	Tsarkon_is_dead.w
 	BEQ.b	loc_00007750
 	MOVE.l	#JourneyToCartahenaStr, $1C(A5)
@@ -8057,20 +8096,22 @@ loc_0000775E:
 	BRA.w	NPCBehavior_LoadFrame
 	BSR.w	SetRandomDirection
 	CLR.b	$25(A5)
-	MOVE.l	#loc_00007774, $2(A5)
+	MOVE.l	#NPCTick_Barrow_TadcasterHint, $2(A5)
 	RTS
 
-loc_00007774:
+; loc_00007774
+NPCTick_Barrow_TadcasterHint:
 	MOVE.l	#ReachTadcasterStr, Pending_hint_text.w
 	MOVE.w	#$000A, D5
 	BSR.w	SetHintTextIfTriggered
 	BRA.w	UpdateNPCSpriteFrame
 	BSR.w	SetRandomDirection
 	CLR.b	$25(A5)
-	MOVE.l	#loc_0000779A, $2(A5)
+	MOVE.l	#NPCTick_Tadcaster_TreasureQuest, $2(A5)
 	RTS
 
-loc_0000779A:
+; loc_0000779A
+NPCTick_Tadcaster_TreasureQuest:
 	TST.b	Tadcaster_treasure_quest_started.w
 	BEQ.b	loc_000077D2
 	MOVE.l	#ShareTreasureStr, $1C(A5)	
@@ -8096,14 +8137,15 @@ loc_000077E2:
 	BNE.b	loc_00007804
 	TST.b	Uncle_tibor_visited.w
 	BEQ.b	loc_00007804
-	MOVE.l	#loc_0000780E, $2(A5)
+	MOVE.l	#NPCTick_Tadcaster_PassSeller, $2(A5)
 	RTS
 
 loc_00007804:
 	MOVE.l	#NPCBehavior_LoadFrame, $2(A5)
 	RTS
 
-loc_0000780E:
+; loc_0000780E
+NPCTick_Tadcaster_PassSeller:
 	TST.b	Pass_to_carthahena_purchased.w
 	BEQ.b	loc_00007844
 	TST.b	Pass_to_carthahena_given.w
@@ -8135,10 +8177,11 @@ loc_0000787A:
 	BRA.w	NPCBehavior_LoadFrame
 	BSR.w	SetRandomDirection
 	CLR.b	$25(A5)
-	MOVE.l	#loc_00007890, $2(A5)
+	MOVE.l	#NPCTick_Tadcaster_ImposterHint, $2(A5)
 	RTS
 
-loc_00007890:
+; loc_00007890
+NPCTick_Tadcaster_ImposterHint:
 	TST.b	Imposter_killed.w
 	BNE.b	loc_000078A6
 	MOVE.l	#ImposterDarmonsCaveConfirmedStr, Pending_hint_text.w
@@ -8148,10 +8191,11 @@ loc_000078A6:
 	BRA.w	UpdateNPCSpriteFrame
 	BSR.w	SetRandomDirection
 	CLR.b	$25(A5)
-	MOVE.l	#loc_000078BC, $2(A5)
+	MOVE.l	#NPCTick_Tadcaster_HelwigHint, $2(A5)
 	RTS
 
-loc_000078BC:
+; loc_000078BC
+NPCTick_Tadcaster_HelwigHint:
 	TST.b	Imposter_killed.w
 	BEQ.b	loc_000078D2
 	MOVE.l	#ReachHelwigStr, Pending_hint_text.w
@@ -8167,20 +8211,22 @@ loc_000078D2:
 	BNE.b	loc_000078F8
 loc_000078EA:
 	BCLR.b	#7, (A5)
-	MOVE.l	#loc_00006FBA, $2(A5)
+	MOVE.l	#NPCTick_WalkingAnimated, $2(A5)
 	RTS
 
 loc_000078F8:
-	MOVE.l	#loc_00006FBA, $2(A5)
+	MOVE.l	#NPCTick_WalkingAnimated, $2(A5)
 	RTS
 
-loc_00007902:
+; loc_00007902
+NPCInit_Helwig_Generic:
 	BSR.w	SetRandomDirection
 	CLR.b	$25(A5)
-	MOVE.l	#loc_00007914, $2(A5)
+	MOVE.l	#NPCTick_Helwig_CountOnYouHint, $2(A5)
 	RTS
 
-loc_00007914:
+; loc_00007914
+NPCTick_Helwig_CountOnYouHint:
 	TST.b	Helwig_men_rescued.w
 	BNE.b	loc_0000792A
 	MOVE.l	#CountOnYouStr, Pending_hint_text.w
@@ -8190,10 +8236,11 @@ loc_0000792A:
 	BRA.w	UpdateNPCSpriteFrame
 	BSR.w	SetRandomDirection
 	CLR.b	$25(A5)
-	MOVE.l	#loc_00007940, $2(A5)
+	MOVE.l	#NPCTick_Helwig_SwaffhamHint, $2(A5)
 	RTS
 
-loc_00007940:
+; loc_00007940
+NPCTick_Helwig_SwaffhamHint:
 	MOVE.l	#JourneyWestToSwaffhamStr, Pending_hint_text.w
 	MOVE.w	#3, D5
 	BSR.w	SetHintTextIfTriggered
@@ -8207,17 +8254,19 @@ loc_00007966:
 	MOVE.l	#UpdateNPCSpriteFrame, $2(A5)
 	RTS
 
-loc_00007970:
+; loc_00007970
+NPCInit_Helwig_RescuedVillager:
 	BSR.w	SetRandomDirection
 	CLR.b	$25(A5)
 	TST.b	Helwig_men_rescued.w
 	BNE.b	loc_00007982
 	BCLR.b	#7, (A5)
 loc_00007982:
-	MOVE.l	#loc_00006F70, $2(A5)
+	MOVE.l	#NPCTick_WalkingStatic, $2(A5)
 	RTS
 
-loc_0000798C:
+; loc_0000798C
+NPCInit_Helwig_KeyGiverVisibility:
 	BSR.w	SetRandomDirection
 	CLR.b	$25(A5)
 	TST.b	Helwig_men_rescued.w
@@ -8227,10 +8276,11 @@ loc_0000798C:
 	RTS
 
 loc_000079A8:
-	MOVE.l	#loc_000079B2, $2(A5)
+	MOVE.l	#NPCTick_Helwig_SecretKeyGiver, $2(A5)
 	RTS
 
-loc_000079B2:
+; loc_000079B2
+NPCTick_Helwig_SecretKeyGiver:
 	TST.b	Secret_key_received.w
 	BNE.b	loc_000079DE
 	BSR.w	CheckInventoryFull
@@ -8255,10 +8305,11 @@ loc_000079F0:
 	BEQ.b	loc_00007A0A
 	MOVE.l	#FoundSomeoneForMeStr, $1C(A5)
 loc_00007A0A:
-	MOVE.l	#loc_00007A14, $2(A5)
+	MOVE.l	#NPCTick_Helwig_OldWomanQuest, $2(A5)
 	RTS
 
-loc_00007A14:
+; loc_00007A14
+NPCTick_Helwig_OldWomanQuest:
 	TST.b	Old_man_and_woman_paired.w
 	BEQ.b	loc_00007A44
 	MOVE.l	#GetAlongFineStr, $1C(A5)
@@ -8310,21 +8361,23 @@ loc_00007AC4:
 loc_00007ACC:
 	BRA.w	NPCBehavior_LoadFrame
 	MOVE.b	#9, $6(A5)
-	MOVE.l	#loc_00007AE0, $2(A5)
+	MOVE.l	#NPCTick_Swaffham_KnuteNoAnswer, $2(A5)
 	RTS
 
-loc_00007AE0:
+; loc_00007AE0
+NPCTick_Swaffham_KnuteNoAnswer:
 	TST.b	Knute_informed_of_swaffham_ruin.w
 	BEQ.b	loc_00007AEE
 	MOVE.l	#NoAnswerStr, $1C(A5)
 loc_00007AEE:
-	BRA.w	loc_00008154
+	BRA.w	UpdateNPCScreenPosition
 	BSR.w	SetRandomDirection
 	CLR.b	$25(A5)
-	MOVE.l	#loc_00007B04, $2(A5)
+	MOVE.l	#NPCTick_Excalabria_CrystalExchange, $2(A5)
 	RTS
 
-loc_00007B04:
+; loc_00007B04
+NPCTick_Excalabria_CrystalExchange:
 	TST.b	Ring_of_earth_obtained.w
 	BEQ.w	loc_00007B38
 	LEA	Possessed_items_list.w, A3
@@ -8419,14 +8472,15 @@ loc_00007C50:
 	BNE.b	loc_00007C66
 	TST.b	Ring_of_earth_obtained.w
 	BEQ.b	loc_00007C66
-	MOVE.l	#loc_00007C70, $2(A5)
+	MOVE.l	#NPCTick_Excalabria_SwaffhamRuinWait, $2(A5)
 	RTS
 
 loc_00007C66:
 	MOVE.l	#UpdateNPCSpriteFrame, $2(A5)
 	RTS
 
-loc_00007C70:
+; loc_00007C70
+NPCTick_Excalabria_SwaffhamRuinWait:
 	TST.b	Swaffham_ruined.w
 	BEQ.b	loc_00007C82
 	CLR.b	Carthahena_soldier_1_defeated.w
@@ -8437,7 +8491,7 @@ loc_00007C82:
 	CLR.b	$25(A5)
 	TST.b	Swaffham_ate_poisoned_food.w
 	BNE.b	loc_00007C9E
-	MOVE.l	#loc_00007CAC, $2(A5)
+	MOVE.l	#NPCTick_Swaffham_SpyDinnerTrap, $2(A5)
 	RTS
 
 loc_00007C9E:
@@ -8445,7 +8499,8 @@ loc_00007C9E:
 	MOVE.l	#UpdateNPCSpriteFrame, $2(A5)
 	RTS
 
-loc_00007CAC:
+; loc_00007CAC
+NPCTick_Swaffham_SpyDinnerTrap:
 	TST.b	Swaffham_ate_poisoned_food.w
 	BEQ.b	loc_00007CBA
 	BCLR.b	#7, (A5)
@@ -8480,7 +8535,8 @@ loc_00007D32:
 loc_00007D36:
 	RTS
 
-loc_00007D38:
+; loc_00007D38
+NPCInit_Hastings_HideAfterTsarkon:
 	BSR.w	SetRandomDirection
 	CLR.b	$25(A5)
 	TST.b	Tsarkon_is_dead.w
@@ -8492,7 +8548,8 @@ loc_00007D4C:
 	MOVE.l	#UpdateNPCSpriteFrame, $2(A5)
 	RTS
 
-loc_00007D56:
+; loc_00007D56
+NPCInit_Hastings_WelcomePrince:
 	BSR.w	SetRandomDirection
 	CLR.b	$25(A5)
 	MOVE.l	#SeveralPeopleWaitingStr, $1C(A5)
@@ -8506,7 +8563,8 @@ loc_00007D82:
 	MOVE.l	#NPCBehavior_LoadFrame, $2(A5)
 	RTS
 
-loc_00007D8C:
+; loc_00007D8C
+NPCInit_Hastings_GateGuard:
 	BSR.w	SetRandomDirection
 	CLR.b	$25(A5)
 	TST.b	Tsarkon_is_dead.w
@@ -8521,7 +8579,8 @@ loc_00007DAC:
 	MOVE.l	#NPCBehavior_LoadFrame, $2(A5)
 	RTS
 
-loc_00007DB6:
+; loc_00007DB6
+NPCInit_Carthahena_BossGuard:
 	BSR.w	SetRandomDirection
 	CLR.b	$25(A5)
 	TST.b	Carthahena_boss_defeated.w
@@ -8531,10 +8590,11 @@ loc_00007DB6:
 	RTS
 	
 loc_00007DD2:
-	MOVE.l	#loc_00007DDC, $2(A5)
+	MOVE.l	#NPCTick_Carthahena_BossGuard, $2(A5)
 	RTS
 
-loc_00007DDC:
+; loc_00007DDC
+NPCTick_Carthahena_BossGuard:
 	TST.b	Carthahena_boss_defeated.w
 	BEQ.b	loc_00007DE8
 	BCLR.b	#7, (A5)
@@ -8563,19 +8623,21 @@ loc_00007E16:					; unreferenced dead code
 loc_00007E28:
 	MOVE.l	#UpdateNPCSpriteFrame, $2(A5)
 	RTS
-loc_00007E32:
+; loc_00007E32
+NPCInit_Carthahena_KingThuleKey:
 	BSR.w	SetRandomDirection
 	CLR.b	$25(A5)
 	TST.b	Tsarkon_is_dead.w
 	BNE.b	loc_00007E4A
-	MOVE.l	#loc_00007E54, $2(A5)
+	MOVE.l	#NPCTick_Carthahena_KingThuleKey, $2(A5)
 	RTS
 
 loc_00007E4A:
 	MOVE.l	#UpdateNPCSpriteFrame, $2(A5)
 	RTS
 
-loc_00007E54:
+; loc_00007E54
+NPCTick_Carthahena_KingThuleKey:
 	TST.b	Carthahena_boss_defeated.w
 	BEQ.w	loc_00007EB8
 	TST.b	Knute_informed_of_swaffham_ruin.w
@@ -8603,10 +8665,11 @@ loc_00007EB0:
 loc_00007EB8:
 	BRA.w	UpdateNPCSpriteFrame
 	BSR.w	SetRandomDirection
-	MOVE.l	#loc_00007ECA, $2(A5)
+	MOVE.l	#NPCTick_Helwig_InnFryingPan, $2(A5)
 	RTS
 
-loc_00007ECA:
+; loc_00007ECA
+NPCTick_Helwig_InnFryingPan:
 	TST.b	Helwig_men_rescued.w
 	BNE.b	loc_00007EFE
 	MOVE.w	Helwig_frypan_hit_count.w, D0
@@ -8630,13 +8693,15 @@ loc_00007EFE:
 	ADDQ.b	#1, $1B(A5)
 	RTS
 
-loc_00007F18:
+; loc_00007F18
+NPCInit_Parma_CastleSoldier:
 	MOVE.b	#4, $18(A5)
 	MOVE.b	#4, $27(A5)
-	MOVE.l	#loc_00007F2E, $2(A5)
+	MOVE.l	#NPCTick_Parma_CastleSoldierStatic, $2(A5)
 	RTS
 
-loc_00007F2E:
+; loc_00007F2E
+NPCTick_Parma_CastleSoldierStatic:
 	BRA.w	NPCBehavior_LoadFrame
 	MOVE.b	#2, $28(A5)
 	MOVE.b	#6, $29(A5)
@@ -8653,16 +8718,17 @@ loc_00007F4E:
 	MOVE.b	D0, $2B(A5)
 	MOVE.b	#4, $27(A5)
 	MOVE.b	#4, $18(A5)
-	MOVE.l	#loc_00007F7C, $2(A5)
+	MOVE.l	#NPCTick_Parma_CastleSoldierPatrol, $2(A5)
 	RTS
 
-loc_00007F7C:
+; loc_00007F7C
+NPCTick_Parma_CastleSoldierPatrol:
 	MOVE.w	Gameplay_state.w, D0
 	CMPI.w	#$000A, D0
 	BNE.b	loc_00007F96
 	TST.b	Fake_king_killed.w
 	BEQ.b	loc_00007F96
-	MOVE.l	#loc_00007F2E, $2(A5)
+	MOVE.l	#NPCTick_Parma_CastleSoldierStatic, $2(A5)
 	RTS
 
 loc_00007F96:
@@ -8670,7 +8736,7 @@ loc_00007F96:
 	BSR.w	GetNPCAnimationOffset
 	MOVEA.l	$2E(A5), A1
 	MOVE.w	(A1,D0.w), $8(A5)
-	BRA.w	loc_00008154
+	BRA.w	UpdateNPCScreenPosition
 UpdateParmaSoldierRotation:
 	CLR.b	$25(A5)
 	TST.b	$19(A5)
@@ -8820,7 +8886,8 @@ loc_00008150:
 	ADD.w	D0, D0
 	RTS
 
-loc_00008154:
+; loc_00008154
+UpdateNPCScreenPosition:
 	MOVE.w	$E(A5), D0
 	SUB.w	Camera_scroll_x.w, D0
 	MOVE.w	D0, $A(A5)
@@ -8877,14 +8944,14 @@ loc_000081EC:
 LoadNPCAnimFrame_Static:
 	BSR.w	GetStaticNPCAnimationOffset
 	MOVE.w	(A1,D0.w), $8(A5)
-	BRA.w	loc_00008154
+	BRA.w	UpdateNPCScreenPosition
 ; LoadNPCAnimationFrame
 ; Load NPC animation frame from table
 ; Input: A1 = Animation table pointer, A5 = NPC object
 LoadNPCAnimationFrame:
 	BSR.w	GetNPCAnimationOffset
 	MOVE.w	(A1,D0.w), $8(A5)
-	BRA.w	loc_00008154
+	BRA.w	UpdateNPCScreenPosition
 AnimateEntitySprite:
 	MOVE.b	$1B(A5), D0
 	BTST.b	#6, $00A10001
@@ -8897,7 +8964,7 @@ loc_00008224:
 	ANDI.w	#2, D0	
 loc_0000822A:
 	MOVE.w	(A1,D0.w), $8(A5)
-	BRA.w	loc_00008154
+	BRA.w	UpdateNPCScreenPosition
 ; SetRandomDirection
 ; Set random direction for NPC/entity
 ; Gets random number, masks to valid direction (0,2,4,6), stores in entity data
