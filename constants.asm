@@ -795,6 +795,15 @@ DIRECTION_DOWN  = 4
 DIRECTION_RIGHT = 6
 DIRECTION_ANY   = $F
 
+; NPC sprite attribute flags (entity +$07, high byte of VDP tile name word)
+; Bits 7=priority, 6-5=palette line, 4=vflip, 3=hflip
+NPC_ATTR_PAL0   = $00           ; Palette line 0 (background palette)
+NPC_ATTR_PAL3   = $60           ; Palette line 3 (character palette)
+
+; NPC collision flags (entity +$2D)
+NPC_NONSOLID    = 0             ; NPC does not block movement
+NPC_SOLID       = 1             ; NPC blocks movement
+
 Player_tile_x               = $FFFFC600
 Player_tile_y               = $FFFFC602
 Player_tilemap_offset       = $FFFFC604

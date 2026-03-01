@@ -184,15 +184,17 @@ RingChest macro type,value,flag
 ; Defines a single NPC entry in a town NPC data table.
 ; Each entry is 16 bytes, read by LoadTownNPCs.
 ;
-; sprite:    Sprite ID word (tile index in VRAM)
-; ypos:      Map Y coordinate (word)
-; xpos:      Map X coordinate (word)
-; dialog:    Pointer to dialog/interaction data (long)
-; tick:      Pointer to NPC tick handler function (long)
-; subtype:   Animation sub-type byte (written to entity +$07)
-; direction: Initial facing direction byte (written to entity +$2D)
-npcEntry macro sprite,ypos,xpos,dialog,tick,subtype,direction
-    dc.w    sprite, ypos, xpos
-    dc.l    dialog, tick
-    dc.b    subtype, direction
+; xpos:  World X position in pixels (word, stored to entity +$0E)
+; ypos:  World Y position in pixels (word, stored to entity +$12)
+; tile:  Initial VRAM sprite tile index (word, stored to entity +$08)
+; anim:  Sprite frame animation table pointer (long, stored to entity +$2E)
+; tick:  NPC init/behavior function pointer (long, stored to entity +$02)
+; attr:  Sprite attribute flags byte (palette/priority, stored to entity +$07)
+;        Use NPC_ATTR_PAL3 ($60) for character palette, NPC_ATTR_PAL0 ($00) for BG palette
+; solid: Collision flag byte (stored to entity +$2D)
+;        Use NPC_SOLID ($01) for blocking NPCs, NPC_NONSOLID ($00) for walkthrough
+npcEntry macro xpos,ypos,tile,anim,tick,attr,solid
+    dc.w    xpos, ypos, tile
+    dc.l    anim, tick
+    dc.b    attr, solid
     ENDM
