@@ -12908,7 +12908,7 @@ loc_0000B8F2:
 	MOVE.w	(A0)+, $8(A6)
 	MOVE.w	#$006E, $E(A6)
 	MOVE.w	#$006C, $12(A6)
-	MOVE.l	#loc_0000C040, $2(A6)
+	MOVE.l	#Boss1_NeckTick, $2(A6)
 	MOVE.w	#1, D7
 loc_0000B960:
 	BSR.w	InitNextSpriteSlot
@@ -12927,7 +12927,7 @@ loc_0000B960:
 	MOVE.w	(A0)+, $8(A6)
 	MOVE.w	#$00B2, $E(A6)
 	MOVE.w	#$0070, $12(A6)
-	MOVE.l	#loc_0000C09A, $2(A6)
+	MOVE.l	#Boss1_UpperBodyTick, $2(A6)
 	MOVE.b	#$F0, $2E(A6)
 	MOVE.b	#$10, $2F(A6)
 	MOVE.b	#$E0, $30(A6)
@@ -12950,7 +12950,7 @@ loc_0000B9CE:
 	MOVE.w	(A0)+, $8(A6)
 	MOVE.w	#$00C8, $E(A6)
 	MOVE.w	#$0070, $12(A6)
-	MOVE.l	#loc_0000C0F4, $2(A6)
+	MOVE.l	#Boss1_MidBodyTick, $2(A6)
 	MOVE.b	#$F0, $2E(A6)
 	MOVE.b	#$10, $2F(A6)
 	MOVE.b	#$E0, $30(A6)
@@ -12973,7 +12973,7 @@ loc_0000BA3C:
 	MOVE.w	(A0)+, $8(A6)
 	MOVE.w	#$00DA, $E(A6)
 	MOVE.w	#$0070, $12(A6)
-	MOVE.l	#loc_0000C14E, $2(A6)
+	MOVE.l	#Boss1_TailTick, $2(A6)
 	MOVE.w	#0, D7
 loc_0000BA92:
 	BSR.w	InitNextSpriteSlot
@@ -12995,7 +12995,7 @@ loc_0000BAAE:
 	MOVE.w	(A0)+, $8(A6)
 	MOVE.w	(A1)+, $A(A6)
 	MOVE.w	(A1)+, $C(A6)
-	MOVE.l	#loc_0000C192, $2(A6)
+	MOVE.l	#BossCommon_RenderOnly, $2(A6)
 	CLR.w	D0
 	MOVE.b	$1(A6), D0
 	LEA	(A6,D0.w), A6
@@ -13156,7 +13156,7 @@ Boss1_DeathSequence:
 	MOVE.l	#$8000, $36(A5)
 	MOVE.b	#0, $1B(A5)
 	MOVEA.l	Object_slot_02_ptr.w, A6
-	MOVE.l	#loc_0000C044, $2(A6)
+	MOVE.l	#Boss1_NeckTickNoCollision, $2(A6)
 	CLR.l	$32(A6)
 	MOVE.l	#$8000, $36(A6)
 	MOVEA.l	Object_slot_03_ptr.w, A6
@@ -13207,7 +13207,7 @@ loc_0000BDCC:
 loc_0000BDE2:
 	TST.w	D0
 	BNE.b	loc_0000BDFC
-	MOVE.l	#loc_0000BE02, $2(A5)
+	MOVE.l	#Boss1_VictoryPauseWait, $2(A5)
 	CLR.w	Dialog_timer.w
 	CLR.w	Dialog_phase.w
 	MOVE.b	#$32, $1A(A5)
@@ -13215,11 +13215,11 @@ loc_0000BDFC:
 	BSR.w	UpdateSpritePositionAndRender
 	RTS
 
-loc_0000BE02:
+Boss1_VictoryPauseWait:
 	SUBQ.b	#1, $1A(A5)
 	BGE.b	loc_0000BE24
 	BSR.w	SetBattleVictoryAnimFrames1
-	MOVE.l	#loc_0000BE2A, $2(A5)
+	MOVE.l	#Boss1_VictoryPose1Wait, $2(A5)
 	MOVE.b	#$32, $1A(A5)
 	MOVE.w	#$00AB, D0
 	JSR	QueueSoundEffect
@@ -13227,44 +13227,44 @@ loc_0000BE24:
 	BSR.w	UpdateSpritePositionAndRender
 	RTS
 
-loc_0000BE2A:
+Boss1_VictoryPose1Wait:
 	SUBQ.b	#1, $1A(A5)
 	BGE.b	loc_0000BE42
 	BSR.w	SetBattleVictoryAnimFrames2
 	MOVE.b	#$32, $1A(A5)
-	MOVE.l	#loc_0000BE48, $2(A5)
+	MOVE.l	#Boss1_VictoryFadeInit, $2(A5)
 loc_0000BE42:
 	BSR.w	UpdateSpritePositionAndRender
 	RTS
 
-loc_0000BE48:
+Boss1_VictoryFadeInit:
 	SUBQ.b	#1, $1A(A5)
 	BGE.b	loc_0000BE62
 	MOVE.w	#$0067, Palette_line_1_fade_in_target.w
 	MOVE.b	#2, Palette_fade_in_mask.w
-	MOVE.l	#loc_0000BE68, $2(A5)
+	MOVE.l	#Boss1_VictoryFadeWait, $2(A5)
 loc_0000BE62:
 	BSR.w	UpdateSpritePositionAndRender
 	RTS
 
-loc_0000BE68:
+Boss1_VictoryFadeWait:
 	TST.b	Palette_fade_in_mask.w
 	BNE.b	loc_0000BE80
-	MOVE.l	#loc_0000BE86, $2(A5)
+	MOVE.l	#Boss1_VictoryFlash, $2(A5)
 	MOVE.w	#$00AC, D0
 	JSR	QueueSoundEffect
 loc_0000BE80:
 	BSR.w	UpdateSpritePositionAndRender
 	RTS
 
-loc_0000BE86:
+Boss1_VictoryFlash:
 	ADDQ.w	#1, Dialog_timer.w
 	MOVE.w	Dialog_timer.w, D0
 	ANDI.w	#7, D0
 	BNE.b	loc_0000BEB0
 	CMPI.w	#8, Dialog_phase.w
 	BLT.b	loc_0000BEAC
-	MOVE.l	#loc_0000BEB6, $2(A5)
+	MOVE.l	#BossCommon_VictoryRewardSequence, $2(A5)
 	MOVE.w	#$0032, Dialog_timer.w
 	BRA.b	loc_0000BEB0
 loc_0000BEAC:
@@ -13273,7 +13273,7 @@ loc_0000BEB0:
 	BSR.w	UpdateSpritePositionAndRender
 	RTS
 
-loc_0000BEB6:
+BossCommon_VictoryRewardSequence:
 	SUBQ.w	#1, Dialog_timer.w
 	BGE.b	loc_0000BEE2
 	JSR	ClearScrollData
@@ -13282,11 +13282,11 @@ loc_0000BEB6:
 	MOVE.b	#$FF, Player_input_blocked.w
 	BSR.w	AwardBattleRewards
 	BSR.w	DisplayBattleVictoryMessage
-	MOVE.l	#loc_0000BEE4, $2(A5)
+	MOVE.l	#BossCommon_VictoryMessageWait, $2(A5)
 loc_0000BEE2:
 	RTS
 
-loc_0000BEE4:
+BossCommon_VictoryMessageWait:
 	TST.b	Script_text_complete.w
 	BEQ.b	loc_0000BF0C
 	MOVE.w	#BUTTON_BIT_C, D2
@@ -13395,9 +13395,9 @@ loc_0000C006:
 	BSR.w	UpdateBossAttackGraphic
 	RTS
 
-loc_0000C040:
+Boss1_NeckTick:
 	BSR.w	CheckEntityPlayerCollisionAndDamage
-loc_0000c044:
+Boss1_NeckTickNoCollision:
 	MOVE.l	$32(A5), D0
 	MOVE.l	$36(A5), D1
 	ADD.l	D0, $E(A5)
@@ -13422,7 +13422,7 @@ loc_0000C064:
 	JSR	AddSpriteToDisplayList
 	RTS
 
-loc_0000C09A:
+Boss1_UpperBodyTick:
 	MOVE.l	$32(A5), D0
 	MOVE.l	$36(A5), D1
 	ADD.l	D0, $E(A5)
@@ -13448,7 +13448,7 @@ loc_0000C0BC:
 	JSR	AddSpriteToDisplayList
 	RTS
 
-loc_0000C0F4:
+Boss1_MidBodyTick:
 	MOVE.l	$32(A5), D0
 	MOVE.l	$36(A5), D1
 	ADD.l	D0, $E(A5)
@@ -13474,7 +13474,7 @@ loc_0000C116:
 	JSR	AddSpriteToDisplayList
 	RTS
 
-loc_0000C14E:
+Boss1_TailTick:
 	MOVE.l	$32(A5), D0
 	MOVE.l	$36(A5), D1
 	ADD.l	D0, $E(A5)
@@ -13492,7 +13492,7 @@ loc_0000C14E:
 	MOVE.w	D0, $C(A6)
 	MOVE.w	$E(A5), $A(A5)
 	MOVE.w	$12(A5), $C(A5)
-loc_0000C192:
+BossCommon_RenderOnly:
 	JSR	AddSpriteToDisplayList
 	RTS
 
@@ -13511,7 +13511,7 @@ InitNextSpriteSlot:
 	MOVE.b	(A0)+, D0
 	MOVE.w	D0, $16(A6)
 	MOVE.w	(A0)+, $8(A6)
-	MOVE.l	#loc_0000C192, $2(A6)
+	MOVE.l	#BossCommon_RenderOnly, $2(A6)
 	RTS
 
 loc_0000C1DA:					; unreferenced dead code
@@ -13612,7 +13612,7 @@ loc_0000C30E:
 	MOVE.w	(A0)+, $8(A6)
 	MOVE.w	#$00EC, $E(A6)
 	MOVE.w	#$0087, $12(A6)
-	MOVE.l	#loc_0000C6E6, $2(A6)
+	MOVE.l	#TwoHeadedDragon_BodyTick, $2(A6)
 	MOVE.w	#0, D7
 loc_0000C36C:
 	BSR.w	InitNextSpriteSlot
@@ -13638,7 +13638,7 @@ loc_0000C36C:
 	LEA	loc_00022FE2, A1
 	MOVE.w	(A1)+, $E(A6)
 	MOVE.w	(A1), $12(A6)
-	MOVE.l	#loc_0000C724, $2(A6)
+	MOVE.l	#TwoHeadedDragon_HeadTickA, $2(A6)
 	MOVE.w	#2, D7
 loc_0000C3E4:
 	BSR.w	InitNextSpriteSlot
@@ -13660,7 +13660,7 @@ loc_0000C3E4:
 	LEA	loc_00023072, A1
 	MOVE.w	(A1)+, $E(A6)
 	MOVE.w	(A1), $12(A6)
-	MOVE.l	#loc_0000C896, $2(A6)
+	MOVE.l	#TwoHeadedDragon_HeadTickB, $2(A6)
 	MOVE.w	#2, D7
 loc_0000C444:
 	BSR.w	InitNextSpriteSlot
@@ -13675,7 +13675,7 @@ loc_0000C444:
 	CLR.w	$3C(A6)
 	MOVE.b	#$20, $7(A6)
 	MOVE.b	#5, $6(A6)
-	MOVE.l	#loc_0000C4CA, $2(A6)
+	MOVE.l	#TwoHeadedDragon_FireballTickA, $2(A6)
 	MOVEA.l	Object_slot_05_ptr.w, A6
 	BSET.b	#7, (A6)
 	MOVE.b	#$F8, $2E(A6)
@@ -13686,15 +13686,15 @@ loc_0000C444:
 	CLR.w	$3C(A6)
 	MOVE.b	#$20, $7(A6)
 	MOVE.b	#5, $6(A6)
-	MOVE.l	#loc_0000C4D6, $2(A6)
+	MOVE.l	#TwoHeadedDragon_FireballTickB, $2(A6)
 	BSR.w	DrawBossNameplate
 	RTS
 	
-loc_0000C4CA:
+TwoHeadedDragon_FireballTickA:
 	ADDQ.b	#1, $1B(A5)
 	MOVEA.l	Object_slot_02_ptr.w, A6
 	BRA.w	loc_0000C4DE
-loc_0000C4D6:
+TwoHeadedDragon_FireballTickB:
 	ADDQ.b	#1, $1B(A5)
 	MOVEA.l	Object_slot_03_ptr.w, A6
 loc_0000C4DE:
@@ -13800,13 +13800,13 @@ loc_0000C640:
 	MOVE.w	#$00B6, Palette_line_1_index.w
 	MOVE.w	#$0064, $3C(A5)
 	MOVEA.l	Enemy_list_ptr.w, A6
-	MOVE.l	#loc_0000C69A, $2(A6)
+	MOVE.l	#TwoHeadedDragon_DeathDelayTick, $2(A6)
 	MOVEA.l	Object_slot_01_ptr.w, A6
-	MOVE.l	#loc_0000C192, $2(A6)
+	MOVE.l	#BossCommon_RenderOnly, $2(A6)
 	MOVEA.l	Object_slot_02_ptr.w, A6
-	MOVE.l	#loc_0000C192, $2(A6)
+	MOVE.l	#BossCommon_RenderOnly, $2(A6)
 	MOVEA.l	Object_slot_03_ptr.w, A6
-	MOVE.l	#loc_0000C192, $2(A6)
+	MOVE.l	#BossCommon_RenderOnly, $2(A6)
 	BSR.w	ProcessBattleVictoryEvent
 	CLR.w	Dialog_timer.w
 	CLR.w	Dialog_phase.w
@@ -13815,24 +13815,24 @@ loc_0000C640:
 	JSR	LoadPalettesFromTable
 	RTS
 	
-loc_0000C69A:
+TwoHeadedDragon_DeathDelayTick:
 	SUBQ.w	#1, $3C(A5)
 	BGT.b	loc_0000C6B2
-	MOVE.l	#loc_0000C6BA, $2(A5)
+	MOVE.l	#TwoHeadedDragon_VictoryFadeoutTick, $2(A5)
 	MOVE.w	#$00AC, D0
 	JSR	QueueSoundEffect
 loc_0000C6B2:
 	JSR	AddSpriteToDisplayList
 	RTS
 	
-loc_0000C6BA:
+TwoHeadedDragon_VictoryFadeoutTick:
 	ADDQ.w	#1, Dialog_timer.w
 	MOVE.w	Dialog_timer.w, D0
 	ANDI.w	#7, D0
 	BNE.b	loc_0000C6DE
 	CMPI.w	#8, Dialog_phase.w
 	BLT.b	loc_0000C6DA
-	MOVE.l	#loc_0000BEB6, $2(A5)
+	MOVE.l	#BossCommon_VictoryRewardSequence, $2(A5)
 	BRA.b	loc_0000C6DE
 loc_0000C6DA:
 	BSR.w	ClearDialogPlane
@@ -13840,7 +13840,7 @@ loc_0000C6DE:
 	JSR	AddSpriteToDisplayList
 	RTS
 	
-loc_0000C6E6:
+TwoHeadedDragon_BodyTick:
 	LEA	loc_000230BE, A0
 	BSR.w	AnimateSpriteFromTable
 	CLR.w	D0
@@ -13857,7 +13857,7 @@ loc_0000C6E6:
 	JSR	AddSpriteToDisplayList
 	RTS
 	
-loc_0000C724:
+TwoHeadedDragon_HeadTickA:
 	TST.b	Fade_in_lines_mask.w
 	BNE.w	loc_0000C82C
 	TST.b	Battle_active_flag.w
@@ -13876,7 +13876,7 @@ loc_0000C746:
 	SUB.w	D0, $28(A5)
 	BCC.b	loc_0000C7D2
 	BSR.w	UpdateEncounterPalette
-	MOVE.l	#loc_0000C88E, $2(A5)
+	MOVE.l	#TwoHeadedDragon_DeadHeadTick, $2(A5)
 	LEA	EnemySpriteLayoutPtrsA, A0
 	LEA	EnemySpritePositionPtrsA, A1
 	MOVEA.l	$C(A0), A0
@@ -13955,11 +13955,11 @@ loc_0000C854:
 	JSR	AddSpriteToDisplayList
 	RTS
 
-loc_0000C88E:
+TwoHeadedDragon_DeadHeadTick:
 	JSR	AddSpriteToDisplayList
 	RTS
 
-loc_0000C896:
+TwoHeadedDragon_HeadTickB:
 	TST.b	Fade_in_lines_mask.w
 	BNE.w	loc_0000C998
 	TST.b	Battle_active_flag.w
@@ -13977,7 +13977,7 @@ loc_0000C8B8:
 	MOVE.w	Player_str.w, D0
 	SUB.w	D0, $28(A5)
 	BCC.w	loc_0000C93C
-	MOVE.l	#loc_0000C88E, $2(A5)
+	MOVE.l	#TwoHeadedDragon_DeadHeadTick, $2(A5)
 	LEA	EnemySpriteLayoutPtrsB, A0
 	LEA	EnemySpritePositionPtrsB, A1
 	MOVEA.l	$C(A0), A0
@@ -14710,7 +14710,7 @@ loc_0000D262:
 	BCLR.b	#3, $7(A6)
 	BCLR.b	#4, $7(A6)
 	CLR.b	$1C(A6)
-	MOVE.l	#loc_0000D820, $2(A6)
+	MOVE.l	#DemonBoss_BodySegmentTick, $2(A6)
 	DBF	D7, loc_0000D262
 	MOVEA.l	Enemy_list_ptr.w, A4
 	MOVEA.l	Object_slot_07_ptr.w, A6
@@ -14750,13 +14750,13 @@ loc_0000D31A:
 
 ; loc_0000D31C
 BossAiDemonJumpTable:
-	BRA.w	loc_0000D334
-	BRA.w	loc_0000D34A
-	BRA.w	loc_0000D39E
-	BRA.w	loc_0000D42A
-	BRA.w	loc_0000D4D2
-	BRA.w	loc_0000D574
-loc_0000D334:
+	BRA.w	DemonBossState_WaitIdle
+	BRA.w	DemonBossState_ChooseDirection
+	BRA.w	DemonBossState_Move
+	BRA.w	DemonBossState_FireProjectile
+	BRA.w	DemonBossState_AttackAnimate
+	BRA.w	DemonBossState_Cooldown
+DemonBossState_WaitIdle:
 	TST.b	Battle_active_flag.w
 	BEQ.w	loc_0000D348
 	SUBQ.w	#1, $3A(A5)
@@ -14765,7 +14765,7 @@ loc_0000D334:
 loc_0000D348:
 	RTS
 
-loc_0000D34A:
+DemonBossState_ChooseDirection:
 	JSR	GetRandomNumber(PC)
 	CMPI.w	#$0070, $E(A5)
 	BLE.b	loc_0000D36E
@@ -14791,7 +14791,7 @@ loc_0000D380:
 	ADDQ.b	#1, $42(A5)
 	RTS
 
-loc_0000D39E:
+DemonBossState_Move:
 	TST.w	$1E(A5)
 	BLE.b	loc_0000D3AC
 	SUBQ.w	#1, $1E(A5)
@@ -14834,7 +14834,7 @@ loc_0000D41E:
 loc_0000D428:
 	RTS
 
-loc_0000D42A:
+DemonBossState_FireProjectile:
 	SUBQ.w	#1, $3A(A5)
 	BGT.w	loc_0000D4D0
 	BTST.b	#0, $1D(A5)
@@ -14879,7 +14879,7 @@ loc_0000D49E:
 	MOVEA.l	Object_slot_07_ptr.w, A6
 	MOVE.l	D1, $32(A6)
 	BSET.b	#7, (A6)
-	MOVE.l	#loc_0000D838, $2(A6)
+	MOVE.l	#DemonBoss_ProjectileHeadTick, $2(A6)
 	MOVE.w	#$00BE, D0
 	JSR	QueueSoundEffect
 	MOVE.w	#$0064, $3A(A5)
@@ -14887,7 +14887,7 @@ loc_0000D49E:
 loc_0000D4D0:
 	RTS
 
-loc_0000D4D2:
+DemonBossState_AttackAnimate:
 	SUBQ.w	#1, $3A(A5)
 	MOVE.w	$3A(A5), D0
 	ASR.w	#1, D0
@@ -14931,7 +14931,7 @@ loc_0000D55E:
 loc_0000D572:
 	RTS
 
-loc_0000D574:
+DemonBossState_Cooldown:
 	SUBQ.w	#1, $3A(A5)
 	BGT.b	loc_0000D592
 	CLR.b	$27(A5)
@@ -14995,7 +14995,7 @@ loc_0000D65E:
 	MOVE.w	Player_str.w, D0
 	SUB.w	D0, $28(A5)
 	BCC.b	loc_0000D69A
-	MOVE.l	#loc_0000D6FC, $2(A5)
+	MOVE.l	#DemonBoss_DeathInit, $2(A5)
 	MOVE.b	#$B1, D0
 	JSR	QueueSoundEffect
 	RTS
@@ -15029,15 +15029,15 @@ loc_0000D6F6:
 	CLR.b	$26(A5)
 	RTS
 
-loc_0000D6FC:
-	MOVE.l	#loc_0000D718, $2(A5)
+DemonBoss_DeathInit:
+	MOVE.l	#DemonBoss_DeathSequence, $2(A5)
 	CLR.w	Dialog_timer.w
 	CLR.w	Dialog_phase.w
 	MOVE.w	#$00AC, D0
 	JSR	QueueSoundEffect
 	RTS
 
-loc_0000D718:
+DemonBoss_DeathSequence:
 	ADDQ.w	#1, Dialog_timer.w
 	MOVE.w	Dialog_timer.w, D0
 	ANDI.w	#7, D0
@@ -15045,7 +15045,7 @@ loc_0000D718:
 	CMPI.w	#8, Dialog_phase.w
 	BLT.b	loc_0000D744
 	JSR	ProcessBattleVictoryEvent
-	MOVE.l	#loc_0000BEB6, $2(A5)
+	MOVE.l	#BossCommon_VictoryRewardSequence, $2(A5)
 	MOVE.w	#$0032, Dialog_timer.w
 	RTS
 
@@ -15122,7 +15122,7 @@ loc_0000D80C:
 	DBF	D7, loc_0000D80C
 	RTS
 
-loc_0000D820:
+DemonBoss_BodySegmentTick:
 	TST.b	$1C(A5)
 	BEQ.b	loc_0000D836
 	MOVE.w	$E(A5), $A(A5)
@@ -15131,14 +15131,14 @@ loc_0000D820:
 loc_0000D836:
 	RTS
 
-loc_0000D838:
+DemonBoss_ProjectileHeadTick:
 	CMPI.b	#$FF, $1B(A5)
 	BNE.w	loc_0000D8A8
 	MOVE.w	$22(A5), D7
 	CMPI.w	#2, D7
-	BGT.w	loc_0000D928
+	BGT.w	DemonBoss_ProjectileSegmentTick
 	SUBQ.w	#1, $20(A5)
-	BGT.w	loc_0000D928
+	BGT.w	DemonBoss_ProjectileSegmentTick
 	MOVE.w	#6, $20(A5)
 	ADDQ.w	#1, $22(A5)
 	MOVEA.l	Object_slot_07_ptr.w, A6
@@ -15155,8 +15155,8 @@ loc_0000D864:
 	MOVE.w	$16(A5), $16(A6)
 	MOVE.l	$32(A5), $32(A6)
 	MOVE.l	$36(A5), $36(A6)
-	MOVE.l	#loc_0000D928, $2(A6)
-	BRA.w	loc_0000D928
+	MOVE.l	#DemonBoss_ProjectileSegmentTick, $2(A6)
+	BRA.w	DemonBoss_ProjectileSegmentTick
 loc_0000D8A8:
 	MOVEA.l	Enemy_list_ptr.w, A6
 	LEA	loc_0002353A, A1
@@ -15199,7 +15199,7 @@ loc_0000D8BE:
 	JSR	AddSpriteToDisplayList(PC)
 	RTS
 
-loc_0000D928:
+DemonBoss_ProjectileSegmentTick:
 	LEA	loc_0002353A, A1
 	MOVEA.l	(A1)+, A2
 	MOVE.w	(A1)+, D0
@@ -15300,15 +15300,15 @@ loc_0000DA5A:
 loc_0000DA62:
 	MOVE.w	#$0093, D0
 	JSR	QueueSoundEffect
-	MOVE.l	#loc_0000DA7A, $2(A5)
+	MOVE.l	#OrbitBoss_InitParts, $2(A5)
 	CLR.l	HScroll_base.w
 	RTS
 	
-loc_0000DA7A:
+OrbitBoss_InitParts:
 	MOVE.b	#4, Boss_ai_state.w
 	MOVEA.l	Object_slot_01_ptr.w, A6
 	BSET.b	#7, (A6)
-	MOVE.l	#loc_0000DC7A, $2(A6)
+	MOVE.l	#OrbitBoss_InnerExpandOrbit, $2(A6)
 	MOVE.b	#$14, $1A(A6)
 	MOVE.b	#$F0, $2E(A6)
 	MOVE.b	#$10, $2F(A6)
@@ -15343,13 +15343,13 @@ loc_0000DAC4:
 	MOVE.w	D7, D6
 	ASL.w	#2, D6
 	MOVE.b	D6, $1B(A6)
-	MOVE.l	#loc_0000E48E, $2(A6)
+	MOVE.l	#OrbitBoss_SatelliteAnimate, $2(A6)
 	ADD.w	D4, D2
 	DBF	D7, loc_0000DAC4
 	MOVE.b	#4, Boss_part_count.w
 	MOVEA.l	Object_slot_03_ptr.w, A6
 	BSET.b	#7, (A6)
-	MOVE.l	#loc_0000DF50, $2(A6)
+	MOVE.l	#OrbitBoss_OuterExpandOrbit, $2(A6)
 	MOVE.b	#$14, $1A(A6)
 	MOVE.b	#$F0, $2E(A6)
 	MOVE.b	#$10, $2F(A6)
@@ -15384,13 +15384,13 @@ loc_0000DB90:
 	MOVE.w	D7, D6
 	ASL.w	#2, D6
 	MOVE.b	D6, $1B(A6)
-	MOVE.l	#loc_0000E48E, $2(A6)
+	MOVE.l	#OrbitBoss_SatelliteAnimate, $2(A6)
 	ADD.w	D4, D2
 	DBF	D7, loc_0000DB90
-	MOVE.l	#loc_0000DC1C, $2(A5)
+	MOVE.l	#OrbitBoss_InnerCheckVictory, $2(A5)
 	RTS
 	
-loc_0000DC1C:
+OrbitBoss_InnerCheckVictory:
 	TST.b	Boss_defeated_flag.w
 	BEQ.b	CheckBossDamageAndKnockback
 	TST.b	Boss_death_anim_done.w
@@ -15402,29 +15402,29 @@ loc_0000DC1C:
 	MOVE.w	#$0080, $3A(A5)
 	MOVE.w	#$00C0, D0
 	JSR	QueueSoundEffect
-	MOVE.l	#loc_0000DC60, $2(A5)
+	MOVE.l	#OrbitBoss_InnerVictoryDelay, $2(A5)
 CheckBossDamageAndKnockback:
 	MOVE.w	#$00D8, D1
 	JSR	CheckPlayerDamageAndKnockback
 	RTS
 	
-loc_0000DC60:
+OrbitBoss_InnerVictoryDelay:
 	SUBQ.w	#1, $3A(A5)
 	BGE.b	loc_0000DC78
 	MOVE.w	#$00AC, D0
 	JSR	QueueSoundEffect
-	MOVE.l	#loc_0000F1CE, $2(A5)
+	MOVE.l	#RingGuardian_VictoryDialogContinue, $2(A5)
 loc_0000DC78:
 	RTS
 	
-loc_0000DC7A:
+OrbitBoss_InnerExpandOrbit:
 	CLR.w	D0
 	MOVE.b	$1(A5), D0
 	LEA	(A5,D0.w), A6
 	CMPI.w	#$1388, $20(A6)
 	BLT.b	loc_0000DC9A
 	CLR.b	$1B(A5)
-	MOVE.l	#loc_0000DCBA, $2(A5)
+	MOVE.l	#OrbitBoss_InnerSelectTarget, $2(A5)
 	RTS
 	
 loc_0000DC9A:
@@ -15440,7 +15440,7 @@ loc_0000DCA4:
 	DBF	D7, loc_0000DCA4
 	RTS
 	
-loc_0000DCBA:
+OrbitBoss_InnerSelectTarget:
 	LEA	(A5), A6
 	CLR.w	D7
 	MOVE.b	Boss_ai_state.w, D7
@@ -15452,7 +15452,7 @@ loc_0000DCC4:
 	DBF	D7, loc_0000DCC4
 	LEA	loc_00023A4E, A0
 	MOVE.w	(A0), $8(A6)
-	MOVE.l	#loc_0000E4A8, $2(A6)
+	MOVE.l	#OrbitBoss_SatelliteUpdatePosition, $2(A6)
 	MOVE.w	$E(A6), $E(A5)
 	MOVE.w	$12(A6), $12(A5)
 	LEA	(A5), A6
@@ -15464,16 +15464,16 @@ loc_0000DCFC:
 	CLR.w	D0
 	MOVE.b	$1(A6), D0
 	LEA	(A6,D0.w), A6
-	MOVE.l	#loc_0000E480, $2(A6)
+	MOVE.l	#OrbitBoss_SatelliteOrbitInactive, $2(A6)
 	DBF	D7, loc_0000DCFC
 loc_0000DD12:
-	MOVE.l	#loc_0000DD2C, $2(A5)
+	MOVE.l	#OrbitBoss_InnerApproach, $2(A5)
 	MOVE.w	#$0080, $3A(A5)
 	CLR.b	$41(A5)
 	JSR	ProcessPlayerStrengthCheck
 	RTS
 	
-loc_0000DD2C:
+OrbitBoss_InnerApproach:
 	LEA	(A5), A6
 	CLR.w	D7
 	MOVE.b	Boss_ai_state.w, D7
@@ -15499,7 +15499,7 @@ loc_0000DD5C:
 	JSR	GetRandomNumber
 	ANDI.b	#1, D0
 	MOVE.b	D0, Boss_attack_direction.w
-	MOVE.l	#loc_0000DDD2, $2(A5)
+	MOVE.l	#OrbitBoss_InnerCharge, $2(A5)
 	MOVE.w	#$0100, $3A(A5)
 	MOVE.b	#$FF, $41(A5)
 	RTS
@@ -15523,7 +15523,7 @@ loc_0000DDCA:
 	JSR	ProcessPlayerStrengthCheck
 	RTS
 	
-loc_0000DDD2:
+OrbitBoss_InnerCharge:
 	LEA	(A5), A6
 	CLR.w	D7
 	MOVE.b	Boss_ai_state.w, D7
@@ -15541,16 +15541,16 @@ loc_0000DDDC:
 	BGT.b	loc_0000DE2C
 	MOVE.b	#$A0, $18(A6)
 	CLR.b	$1B(A5)
-	MOVE.l	#loc_0000DE34, $2(A5)
+	MOVE.l	#OrbitBoss_InnerFireAnim, $2(A5)
 	TST.b	Boss_attack_direction.w
 	BEQ.b	loc_0000DE2C
-	MOVE.l	#loc_0000DCBA, $2(A5)
+	MOVE.l	#OrbitBoss_InnerSelectTarget, $2(A5)
 	MOVE.b	#$50, $1A(A5)
 loc_0000DE2C:
 	JSR	ProcessPlayerStrengthCheck
 	RTS
 	
-loc_0000DE34:
+OrbitBoss_InnerFireAnim:
 	LEA	(A5), A6
 	CLR.w	D7
 	MOVE.b	Boss_ai_state.w, D7
@@ -15567,7 +15567,7 @@ loc_0000DE3E:
 	ANDI.w	#$0070, D0
 	CMPI.w	#$0030, D0
 	BLE.b	loc_0000DE74
-	MOVE.l	#loc_0000DE8A, $2(A5)
+	MOVE.l	#OrbitBoss_InnerSpawnProjectile, $2(A5)
 	RTS
 	
 loc_0000DE74:
@@ -15577,7 +15577,7 @@ loc_0000DE74:
 	JSR	ProcessPlayerStrengthCheck
 	RTS
 	
-loc_0000DE8A:
+OrbitBoss_InnerSpawnProjectile:
 	LEA	(A5), A6
 	CLR.w	D7
 	MOVE.b	Boss_ai_state.w, D7
@@ -15613,25 +15613,25 @@ loc_0000DE94:
 	MOVE.w	#$00FA, $16(A4)
 	CLR.b	$1B(A4)
 	MOVE.l	#loc_0000E244, $2(A4)
-	MOVE.l	#loc_0000DF3C, $2(A5)
+	MOVE.l	#OrbitBoss_InnerWaitProjectile, $2(A5)
 	RTS
 	
-loc_0000DF3C:
+OrbitBoss_InnerWaitProjectile:
 	MOVEA.l	Object_slot_02_ptr.w, A6
 	BTST.b	#7, (A6)
 	BNE.b	loc_0000DF4E
-	MOVE.l	#loc_0000DCBA, $2(A5)
+	MOVE.l	#OrbitBoss_InnerSelectTarget, $2(A5)
 loc_0000DF4E:
 	RTS
 	
-loc_0000DF50:
+OrbitBoss_OuterExpandOrbit:
 	CLR.w	D0
 	MOVE.b	$1(A5), D0
 	LEA	(A5,D0.w), A6
 	CMPI.w	#$1388, $20(A6)
 	BLT.b	loc_0000DF70
 	CLR.b	$1B(A5)
-	MOVE.l	#loc_0000DF96, $2(A5)
+	MOVE.l	#OrbitBoss_OuterSelectTarget, $2(A5)
 	RTS
 	
 loc_0000DF70:
@@ -15648,7 +15648,7 @@ loc_0000DF7A:
 	JSR	ProcessBossFightDamage
 	RTS
 	
-loc_0000DF96:
+OrbitBoss_OuterSelectTarget:
 	LEA	(A5), A6
 	CLR.w	D7
 	MOVE.b	Boss_part_count.w, D7
@@ -15660,7 +15660,7 @@ loc_0000DFA0:
 	DBF	D7, loc_0000DFA0
 	LEA	loc_00023A4E, A0
 	MOVE.w	(A0), $8(A6)
-	MOVE.l	#loc_0000E4A8, $2(A6)
+	MOVE.l	#OrbitBoss_SatelliteUpdatePosition, $2(A6)
 	MOVE.w	$E(A6), $E(A5)
 	MOVE.w	$12(A6), $12(A5)
 	LEA	(A5), A6
@@ -15672,16 +15672,16 @@ loc_0000DFD8:
 	CLR.w	D0
 	MOVE.b	$1(A6), D0
 	LEA	(A6,D0.w), A6
-	MOVE.l	#loc_0000E480, $2(A6)
+	MOVE.l	#OrbitBoss_SatelliteOrbitInactive, $2(A6)
 	DBF	D7, loc_0000DFD8
 loc_0000DFEE:
-	MOVE.l	#loc_0000E008, $2(A5)
+	MOVE.l	#OrbitBoss_OuterApproach, $2(A5)
 	MOVE.w	#$0080, $3A(A5)
 	CLR.b	$41(A5)
 	JSR	ProcessBossFightDamage
 	RTS
 	
-loc_0000E008:
+OrbitBoss_OuterApproach:
 	LEA	(A5), A6
 	CLR.w	D7
 	MOVE.b	Boss_part_count.w, D7
@@ -15703,7 +15703,7 @@ loc_0000E038:
 	BLE.b	loc_0000E05A
 	MOVE.w	#$0100, $3A(A5)
 	MOVE.b	#$FF, $41(A5)
-	MOVE.l	#loc_0000E098, $2(A5)
+	MOVE.l	#OrbitBoss_OuterCharge, $2(A5)
 	RTS
 	
 loc_0000E05A:
@@ -15725,7 +15725,7 @@ loc_0000E090:
 	JSR	ProcessBossFightDamage
 	RTS
 	
-loc_0000E098:
+OrbitBoss_OuterCharge:
 	LEA	(A5), A6
 	CLR.w	D7
 	MOVE.b	Boss_part_count.w, D7
@@ -15743,16 +15743,16 @@ loc_0000E0A2:
 	BGT.b	loc_0000E0F2
 	MOVE.b	#$B0, $18(A6)
 	CLR.b	$1B(A5)
-	MOVE.l	#loc_0000E0FA, $2(A5)
+	MOVE.l	#OrbitBoss_OuterFireAnim, $2(A5)
 	TST.b	Boss_attack_direction.w
 	BNE.b	loc_0000E0F2
-	MOVE.l	#loc_0000DF96, $2(A5)
+	MOVE.l	#OrbitBoss_OuterSelectTarget, $2(A5)
 	MOVE.b	#$50, $1A(A5)
 loc_0000E0F2:
 	JSR	ProcessBossFightDamage
 	RTS
 	
-loc_0000E0FA:
+OrbitBoss_OuterFireAnim:
 	LEA	(A5), A6
 	CLR.w	D7
 	MOVE.b	Boss_part_count.w, D7
@@ -15769,7 +15769,7 @@ loc_0000E104:
 	ANDI.w	#$0070, D0
 	CMPI.w	#$0030, D0
 	BLE.b	loc_0000E13A
-	MOVE.l	#loc_0000E150, $2(A5)
+	MOVE.l	#OrbitBoss_OuterSpawnProjectile, $2(A5)
 	RTS
 	
 loc_0000E13A:
@@ -15779,7 +15779,7 @@ loc_0000E13A:
 	JSR	ProcessBossFightDamage
 	RTS
 	
-loc_0000E150:
+OrbitBoss_OuterSpawnProjectile:
 	LEA	(A5), A6
 	CLR.w	D7
 	MOVE.b	Boss_part_count.w, D7
@@ -15815,22 +15815,22 @@ loc_0000E15A:
 	MOVE.w	#$00FA, $16(A4)
 	CLR.b	$1B(A4)
 	MOVE.l	#loc_0000E244, $2(A4)
-	MOVE.l	#loc_0000E21C, $2(A5)
+	MOVE.l	#OrbitBoss_OuterWaitProjectile, $2(A5)
 	RTS
 	
 loc_0000E202:					; unreferenced dead code
 	MOVEA.l	Object_slot_02_ptr.w, A6
 	BTST	#7, (A6)
 	BNE.b	loc_0000E214
-	MOVE.l	#loc_0000DF96, $2(A5)
+	MOVE.l	#OrbitBoss_OuterSelectTarget, $2(A5)
 loc_0000E214:
 	JSR	ProcessBossFightDamage
 	RTS
-loc_0000E21C:
+OrbitBoss_OuterWaitProjectile:
 	MOVEA.l	Object_slot_04_ptr.w, A6
 	BTST.b	#7, (A6)
 	BNE.b	loc_0000E22E
-	MOVE.l	#loc_0000DF96, $2(A5)
+	MOVE.l	#OrbitBoss_OuterSelectTarget, $2(A5)
 loc_0000E22E:
 	JSR	ProcessBossFightDamage
 	RTS
@@ -15862,7 +15862,7 @@ loc_0000E25A:
 	BLE.b	loc_0000E292
 	MOVE.w	#$00AC, $12(A5)
 	CLR.b	$1B(A5)
-	MOVE.l	#loc_0000E2AC, $2(A5)
+	MOVE.l	#OrbitBoss_ProjectileExplode, $2(A5)
 loc_0000E292:
 	MOVE.w	$E(A5), $A(A5)
 	MOVE.w	$12(A5), $C(A5)
@@ -15870,7 +15870,7 @@ loc_0000E292:
 	JSR	AddSpriteToDisplayList
 	RTS
 
-loc_0000E2AC:
+OrbitBoss_ProjectileExplode:
 	ADDQ.b	#1, $1B(A5)
 	MOVE.b	$1B(A5), D0
 	ANDI.w	#$0038, D0
@@ -15906,7 +15906,7 @@ loc_0000E300:
 	MOVE.w	#$00B1, D0
 	JSR	QueueSoundEffect
 	CLR.b	$1B(A5)
-	MOVE.l	#loc_0000E34A, $2(A5)
+	MOVE.l	#OrbitBoss_InnerPartDeath, $2(A5)
 	RTS
 
 loc_0000E334:
@@ -15917,7 +15917,7 @@ loc_0000E344:
 	CLR.b	$26(A5)
 	RTS
 
-loc_0000E34A:
+OrbitBoss_InnerPartDeath:
 	BSR.w	UpdateEncounterPalette
 	LEA	(A5), A6
 	CLR.w	D7
@@ -15936,10 +15936,10 @@ loc_0000E358:
 	BCLR.b	#7, (A6)
 	CLR.b	$26(A5)
 	MOVE.w	#$0960, $28(A5)
-	MOVE.l	#loc_0000DCBA, $2(A5)
+	MOVE.l	#OrbitBoss_InnerSelectTarget, $2(A5)
 	SUBQ.b	#1, Boss_ai_state.w
 	BGT.b	loc_0000E39C
-	MOVE.l	#loc_0000E3AE, $2(A5)
+	MOVE.l	#OrbitBoss_InnerRingDefeated, $2(A5)
 loc_0000E39C:
 	RTS
 
@@ -15949,7 +15949,7 @@ loc_0000E39E:
 	MOVE.w	(A0,D0.w), $8(A6)
 	RTS
 
-loc_0000E3AE:
+OrbitBoss_InnerRingDefeated:
 	MOVE.b	#$FF, Boss_defeated_flag.w
 	RTS
 
@@ -15970,7 +15970,7 @@ loc_0000E3CA:
 	MOVE.w	#$00B1, D0
 	JSR	QueueSoundEffect
 	CLR.b	$1B(A5)
-	MOVE.l	#loc_0000E414, $2(A5)
+	MOVE.l	#OrbitBoss_OuterPartDeath, $2(A5)
 	RTS
 
 loc_0000E3FE:
@@ -15981,7 +15981,7 @@ loc_0000E40E:
 	CLR.b	$26(A5)
 	RTS
 
-loc_0000E414:
+OrbitBoss_OuterPartDeath:
 	BSR.w	UpdateEncounterPalette
 	LEA	(A5), A6
 	CLR.w	D7
@@ -16000,10 +16000,10 @@ loc_0000E422:
 	BCLR.b	#7, (A6)
 	CLR.b	$26(A5)
 	MOVE.w	#$0960, $28(A5)
-	MOVE.l	#loc_0000DF96, $2(A5)
+	MOVE.l	#OrbitBoss_OuterSelectTarget, $2(A5)
 	SUBQ.b	#1, Boss_part_count.w
 	BGT.b	loc_0000E466
-	MOVE.l	#loc_0000E478, $2(A5)
+	MOVE.l	#OrbitBoss_OuterRingDefeated, $2(A5)
 loc_0000E466:
 	RTS
 
@@ -16013,23 +16013,23 @@ loc_0000E468:
 	MOVE.w	(A0,D0.w), $8(A6)
 	RTS
 
-loc_0000E478:
+OrbitBoss_OuterRingDefeated:
 	MOVE.b	#$FF, Boss_death_anim_done.w
 	RTS
 
-loc_0000E480:
+OrbitBoss_SatelliteOrbitInactive:
 	CLR.w	D0
 	MOVE.b	$1(A5), D0
 	LEA	(A5,D0.w), A6
 	BSR.w	CalculateDirectionToEntity
-loc_0000E48E:
+OrbitBoss_SatelliteAnimate:
 	ADDQ.b	#1, $1B(A5)
 	MOVE.b	$1B(A5), D0
 	ANDI.w	#$0018, D0
 	ASR.w	#2, D0
 	LEA	loc_00023A46, A0
 	MOVE.w	(A0,D0.w), $8(A5)
-loc_0000E4A8:
+OrbitBoss_SatelliteUpdatePosition:
 	BSR.w	CalculateSineVelocity
 	MOVE.w	$32(A5), D0
 	ADD.w	$1C(A5), D0
@@ -16100,7 +16100,7 @@ InitHydraBoss_Common:
 	MOVE.w	#$0128, $E(A6)
 	MOVE.w	#$0094, $12(A6)
 	MOVE.w	#$00AC, $16(A6)
-	MOVE.l	#loc_0000EF04, $2(A6)
+	MOVE.l	#BossCommon_DisplaySprite, $2(A6)
 	CLR.w	D0
 	MOVE.b	$1(A6), D0
 	LEA	(A6,D0.w), A6
@@ -16112,7 +16112,7 @@ InitHydraBoss_Common:
 	MOVE.b	#2, $6(A6)
 	MOVE.w	#$0114, $E(A6)
 	MOVE.w	#$0094, $12(A6)
-	MOVE.l	#loc_0000EF04, $2(A6)
+	MOVE.l	#BossCommon_DisplaySprite, $2(A6)
 	MOVEA.l	Object_slot_02_ptr.w, A6
 	MOVE.w	#1, D7
 	MOVE.w	#$0078, D6
@@ -16160,7 +16160,7 @@ InitBossBodyPart:
 	MOVE.w	$2C(A4), $2C(A6)
 	CLR.b	$1B(A6)
 	CLR.b	$26(A6)
-	MOVE.l	#loc_0000E71E, $2(A6)
+	MOVE.l	#HydraBoss_PartIntroAnim, $2(A6)
 	CLR.w	D0
 	MOVE.b	$1(A6), D0
 	LEA	(A6,D0.w), A6
@@ -16172,13 +16172,13 @@ InitBossBodyPart:
 	MOVE.b	#$0F, $6(A6)
 	MOVE.w	D6, $E(A6)
 	MOVE.w	#$0094, $12(A6)
-	MOVE.l	#loc_0000EF04, $2(A6)
+	MOVE.l	#BossCommon_DisplaySprite, $2(A6)
 	CLR.w	D0
 	MOVE.b	$1(A6), D0
 	LEA	(A6,D0.w), A6
 	RTS
 
-loc_0000E71E:
+HydraBoss_PartIntroAnim:
 	TST.b	Fade_in_lines_mask.w
 	BNE.w	loc_0000E788
 	TST.b	Battle_active_flag.w
@@ -16195,7 +16195,7 @@ loc_0000E71E:
 	CLR.b	$1B(A5)
 	CLR.b	$19(A5)
 	MOVE.l	#$FFFE8000, $32(A5)
-	MOVE.l	#loc_0000E78A, $2(A5)
+	MOVE.l	#HydraBoss_PartIdleTick, $2(A5)
 loc_0000E764:
 	LEA	loc_00023996, A0
 	LEA	(A0,D0.w), A0
@@ -16207,7 +16207,7 @@ loc_0000E764:
 loc_0000E788:
 	RTS
 
-loc_0000E78A:
+HydraBoss_PartIdleTick:
 	CLR.w	D0
 	MOVE.b	$1(A5), D0
 	LEA	(A5,D0.w), A6
@@ -16222,7 +16222,7 @@ loc_0000E7A2:
 	MOVE.w	Player_str.w, D0
 	SUB.w	D0, $28(A5)
 	BCC.b	loc_0000E7D2
-	MOVE.l	#loc_0000E8AC, $2(A5)
+	MOVE.l	#HydraBoss_PartDeathAnim, $2(A5)
 	MOVE.w	#$00B1, D0
 	JSR	QueueSoundEffect
 	CLR.b	$1B(A5)
@@ -16288,7 +16288,7 @@ loc_0000E88C:
 	JSR	AddSpriteToDisplayList
 	RTS
 
-loc_0000E8AC:
+HydraBoss_PartDeathAnim:
 	CLR.w	D0
 	MOVE.b	$1(A5), D0
 	LEA	(A5,D0.w), A6
@@ -16299,13 +16299,13 @@ loc_0000E8AC:
 	CMPI.w	#$000C, D0
 	BLT.b	loc_0000E8D6
 	SUBQ.w	#1, Boss_active_parts.w
-	MOVE.l	#loc_0000E8E8, $2(A5)
+	MOVE.l	#HydraBoss_PartDeadDisplay, $2(A5)
 loc_0000E8D6:
 	LEA	loc_000239EE, A0
 	LEA	(A0,D0.w), A0
 	MOVE.w	(A0)+, $8(A5)
 	MOVE.w	(A0), $8(A6)
-loc_0000E8E8:
+HydraBoss_PartDeadDisplay:
 	MOVE.w	$E(A5), $A(A6)
 	MOVE.w	$E(A5), $A(A5)
 	MOVE.w	$12(A5), $C(A5)
@@ -16327,7 +16327,7 @@ loc_0000E91E:
 	MOVE.w	Player_str.w, D0
 	SUB.w	D0, $28(A5)
 	BCC.b	loc_0000E948
-	MOVE.l	#loc_0000EA1E, $2(A5)
+	MOVE.l	#HydraBoss_MainDeathAnim, $2(A5)
 	MOVE.w	#$00B1, D0
 	JSR	QueueSoundEffect
 	CLR.b	$1B(A5)
@@ -16358,12 +16358,12 @@ loc_0000E97A:
 	CMPI.w	#$00E0, $E(A6)
 	BGE.b	loc_0000E9B0
 	MOVEA.l	Object_slot_01_ptr.w, A6
-	MOVE.l	#loc_0000ECBA, $2(A6)
+	MOVE.l	#HydraBoss_DeactivateProjectile, $2(A6)
 	BSR.w	ActivateNextBossPart
 	BRA.b	loc_0000E9BC
 loc_0000E9B0:
 	MOVEA.l	Object_slot_01_ptr.w, A6
-	MOVE.l	#loc_0000EC4C, $2(A6)
+	MOVE.l	#HydraBoss_LaunchProjectile, $2(A6)
 loc_0000E9BC:
 	LEA	BossSpriteFramePtrs, A0
 	MOVEA.l	(A0,D5.w), A0
@@ -16393,7 +16393,7 @@ loc_0000EA04:
 loc_0000EA1C:
 	RTS
 	
-loc_0000EA1E:
+HydraBoss_MainDeathAnim:
 	CLR.w	D0
 	MOVE.b	$1(A5), D0
 	LEA	(A5,D0.w), A6
@@ -16410,7 +16410,7 @@ loc_0000EA1E:
 	CMPI.w	#$000C, D0
 	BLT.b	loc_0000EA72
 	SUBQ.w	#1, Boss_active_parts.w
-	MOVE.l	#loc_0000EA98, $2(A5)
+	MOVE.l	#HydraBoss_DeathPauseWait, $2(A5)
 	MOVE.b	#$28, $1B(A5)
 	MOVE.w	#$00C0, D0
 	JSR	QueueSoundEffect
@@ -16425,10 +16425,10 @@ loc_0000EA72:
 	JSR	AddSpriteToDisplayList
 	RTS
 	
-loc_0000EA98:
+HydraBoss_DeathPauseWait:
 	SUBQ.b	#1, $1B(A5)
 	BGT.b	loc_0000EAB8
-	MOVE.l	#loc_0000EAC0, $2(A5)
+	MOVE.l	#HydraBoss_DeathClearScreen, $2(A5)
 	CLR.w	Dialog_timer.w
 	CLR.w	Dialog_phase.w
 	MOVE.w	#$00AC, D0
@@ -16437,14 +16437,14 @@ loc_0000EAB8:
 	JSR	AddSpriteToDisplayList
 	RTS
 	
-loc_0000EAC0:
+HydraBoss_DeathClearScreen:
 	ADDQ.w	#1, Dialog_timer.w
 	MOVE.w	Dialog_timer.w, D0
 	ANDI.w	#7, D0
 	BNE.b	loc_0000EAF0
 	CMPI.w	#8, Dialog_phase.w
 	BLT.b	loc_0000EAEA
-	MOVE.l	#loc_0000EAF8, $2(A5)
+	MOVE.l	#HydraBoss_VictoryCheck, $2(A5)
 	MOVE.b	#$32, $1A(A5)
 	BSR.w	DeactivateBossBodyParts
 	RTS
@@ -16455,22 +16455,22 @@ loc_0000EAF0:
 	JSR	AddSpriteToDisplayList
 	RTS
 	
-loc_0000EAF8:
+HydraBoss_VictoryCheck:
 	SUBQ.b	#1, $1A(A5)
 	BNE.b	loc_0000EB20
 	BSR.w	ProcessBattleVictoryEvent
 	TST.b	Swaffham_miniboss_defeated.w
 	BNE.b	loc_0000EB18
-	MOVE.l	#loc_0000BEB6, $2(A5)
+	MOVE.l	#BossCommon_VictoryRewardSequence, $2(A5)
 	MOVE.w	#$0032, Dialog_timer.w
 	RTS
 	
 loc_0000EB18:
-	MOVE.l	#loc_0000EB22, $2(A5)
+	MOVE.l	#HydraBoss_StartNextBattle, $2(A5)
 loc_0000EB20:
 	RTS
 	
-loc_0000EB22:
+HydraBoss_StartNextBattle:
 	MOVE.b	#$FF, Boss_battle_type_marker.w
 	CLR.w	D0
 	LEA	Boss_battle_flags.w, A0
@@ -16538,10 +16538,10 @@ InitBossProjectile:
 	MOVE.w	#$00FA, $16(A6)
 	CLR.l	$32(A6)
 	CLR.b	$1B(A6)
-	MOVE.l	#loc_0000EC1E, $2(A6)
+	MOVE.l	#HydraBoss_ProjectileAnimate, $2(A6)
 	RTS
 	
-loc_0000EC1E:
+HydraBoss_ProjectileAnimate:
 	ADDQ.b	#1, $1B(A5)
 	MOVE.b	$1B(A5), D0
 	ANDI.w	#$00F8, D0
@@ -16553,19 +16553,19 @@ loc_0000EC1E:
 	JSR	AddSpriteToDisplayList
 	RTS
 	
-loc_0000EC4C:
+HydraBoss_LaunchProjectile:
 	MOVEA.l	Object_slot_01_ptr.w, A6
 	MOVE.l	#$FFFD0000, $32(A6)
 	MOVE.w	#$0114, $E(A6)
 	MOVE.w	#$0084, $12(A6)
 	MOVE.w	#$02C8, $8(A6)
-	MOVE.l	#loc_0000EC74, $2(A6)
+	MOVE.l	#HydraBoss_ProjectileFalling, $2(A6)
 	RTS
 	
-loc_0000EC74:
+HydraBoss_ProjectileFalling:
 	CMPI.w	#$FFF6, $E(A5)
 	BGE.b	loc_0000EC80
-	BRA.w	loc_0000ECBA
+	BRA.w	HydraBoss_DeactivateProjectile
 loc_0000EC80:
 	MOVE.l	$32(A5), D0
 	ADD.l	D0, $E(A5)
@@ -16580,7 +16580,7 @@ loc_0000EC80:
 	JSR	AddSpriteToDisplayList
 	RTS
 	
-loc_0000ECBA:
+HydraBoss_DeactivateProjectile:
 	MOVEA.l	Object_slot_01_ptr.w, A6
 	BCLR.b	#7, (A6)
 	RTS
@@ -16641,13 +16641,13 @@ loc_0000ED82:
 	BCLR.b	#7, $7(A4)
 	BCLR.b	#3, $7(A4)
 	BCLR.b	#4, $7(A4)
-	MOVE.l	#loc_0000EF04, $2(A4)
+	MOVE.l	#BossCommon_DisplaySprite, $2(A4)
 	CLR.w	D0
 	MOVE.b	$1(A4), D0
 	LEA	(A4,D0.w), A4
 	DBF	D7, loc_0000ED82
 	CLR.b	$1B(A6)
-	MOVE.l	#loc_0000EE0A, $2(A6)
+	MOVE.l	#RingGuardian_BodyGroupATick, $2(A6)
 	MOVEA.l	Object_slot_03_ptr.w, A6
 	LEA	(A6), A4
 	MOVE.w	#1, D7
@@ -16657,16 +16657,16 @@ loc_0000EDCA:
 	BCLR.b	#7, $7(A4)
 	BCLR.b	#3, $7(A4)
 	BCLR.b	#4, $7(A4)
-	MOVE.l	#loc_0000EF04, $2(A4)
+	MOVE.l	#BossCommon_DisplaySprite, $2(A4)
 	CLR.w	D0
 	MOVE.b	$1(A4), D0
 	LEA	(A4,D0.w), A4
 	DBF	D7, loc_0000EDCA
 	CLR.b	$1B(A6)
-	MOVE.l	#loc_0000EE90, $2(A6)
+	MOVE.l	#RingGuardian_BodyGroupBTick, $2(A6)
 	RTS
 	
-loc_0000EE0A:
+RingGuardian_BodyGroupATick:
 	TST.b	Boss_defeated_flag.w
 	BNE.b	loc_0000EE14
 	ADDQ.b	#1, $1B(A5)
@@ -16708,8 +16708,8 @@ loc_0000EE5E:
 	ADD.w	(A0)+, D4
 	MOVE.w	D4, $12(A6)
 	DBF	D7, loc_0000EE5E
-	BRA.w	loc_0000EF04
-loc_0000EE90:
+	BRA.w	BossCommon_DisplaySprite
+RingGuardian_BodyGroupBTick:
 	TST.b	Boss_defeated_flag.w
 	BNE.b	loc_0000EE9A
 	ADDQ.b	#1, $1B(A5)
@@ -16745,7 +16745,7 @@ loc_0000EE9A:
 	MOVE.w	D0, $E(A6)
 	ADD.w	(A0)+, D1
 	MOVE.w	D1, $12(A6)
-loc_0000EF04:
+BossCommon_DisplaySprite:
 	TST.w	$8(A5)
 	BEQ.b	loc_0000EF1C
 	MOVE.w	$E(A5), $A(A5)
@@ -16765,13 +16765,13 @@ RingGuardian_MainTick:
 	
 ; loc_0000EF36
 BossAiRingGuardianJumpTable:
-	BRA.w	loc_0000EF4E
-	BRA.w	loc_0000EF78
-	BRA.w	loc_0000EFD2
-	BRA.w	loc_0000F002
-	BRA.w	loc_0000F03E
-	BRA.w	loc_0000EFD2	
-loc_0000EF4E:
+	BRA.w	RingGuardianState_WaitBattleStart
+	BRA.w	RingGuardianState_Descend
+	BRA.w	RingGuardianState_ChasePlayer
+	BRA.w	RingGuardianState_AttackWindup
+	BRA.w	RingGuardianState_WaitProjectile
+	BRA.w	RingGuardianState_ChasePlayer	
+RingGuardianState_WaitBattleStart:
 	TST.b	Fade_in_lines_mask.w
 	BNE.b	loc_0000EF74
 	TST.b	Battle_active_flag.w
@@ -16783,7 +16783,7 @@ loc_0000EF4E:
 	MOVE.l	#$200, $20(A5)
 loc_0000EF74:
 	BRA.w	loc_0000F0D2
-loc_0000EF78:
+RingGuardianState_Descend:
 	SUBQ.b	#1, $1A(A5)
 	BLT.b	loc_0000EF9C
 	MOVE.w	#$00D0, D0
@@ -16800,7 +16800,7 @@ loc_0000EF9C:
 	TST.w	$28(A5)
 	BGT.b	loc_0000EFBA
 	MOVE.b	#$FF, Boss_defeated_flag.w
-	MOVE.l	#loc_0000F136, $2(A5)
+	MOVE.l	#RingGuardian_DeathFall, $2(A5)
 	MOVE.l	#$8000, $36(A5)
 	RTS
 	
@@ -16812,7 +16812,7 @@ loc_0000EFBA:
 loc_0000EFCA:
 	BSR.w	GetDirectionFromDeltas
 	BRA.w	loc_0000F070
-loc_0000EFD2:
+RingGuardianState_ChasePlayer:
 	MOVEA.l	Player_entity_ptr.w, A6
 	MOVE.w	$E(A6), D0
 	MOVE.w	$E(A5), D1
@@ -16828,7 +16828,7 @@ loc_0000EFD2:
 loc_0000EFFA:
 	BSR.w	CalculateDirectionToPlayer
 	BRA.w	loc_0000F070
-loc_0000F002:
+RingGuardianState_AttackWindup:
 	ADDQ.b	#1, $1A(A5)
 	MOVE.b	$1A(A5), D0
 	ANDI.w	#$0030, D0
@@ -16839,14 +16839,14 @@ loc_0000F002:
 	BSET.b	#7, (A6)
 	CLR.b	$1B(A6)
 	CLR.w	$3A(A6)
-	MOVE.l	#loc_0000F210, $2(A6)
+	MOVE.l	#RingGuardian_ProjectileSpawner, $2(A6)
 	MOVE.w	#4, Boss_ai_state.w
 	RTS
 	
 loc_0000F036:
 	BSR.w	WriteDirectionTilesForBoss
 	BRA.w	loc_0000F0D2
-loc_0000F03E:
+RingGuardianState_WaitProjectile:
 	MOVEA.l	Object_slot_01_ptr.w, A6
 	BTST.b	#7, (A6)
 	BNE.b	loc_0000F06C
@@ -16917,7 +16917,7 @@ loc_0000F11C:
 	MOVE.w	D0, VScroll_base.w
 	RTS
 	
-loc_0000F136:
+RingGuardian_DeathFall:
 	ADDI.l	#$8000, $36(A5)
 	MOVE.l	$36(A5), D0
 	ADD.l	D0, $12(A5)
@@ -16926,7 +16926,7 @@ loc_0000F136:
 	MOVE.w	#$0044, $12(A5)
 	MOVE.w	#$0080, Palette_line_1_index.w
 	JSR	LoadPalettesFromTable
-	MOVE.l	#loc_0000F19A, $2(A5)
+	MOVE.l	#RingGuardian_VictoryDialog, $2(A5)
 	CLR.w	Dialog_timer.w
 	CLR.w	Dialog_phase.w
 	MOVE.w	#$00C0, D0
@@ -16941,14 +16941,14 @@ loc_0000F184:
 	MOVE.w	D0, VScroll_base.w
 	RTS
 	
-loc_0000F19A:
+RingGuardian_VictoryDialog:
 	ADDQ.w	#1, Dialog_timer.w
 	MOVE.w	Dialog_timer.w, D0
 	ANDI.w	#7, D0
 	BNE.b	loc_0000F1CC
 	CMPI.w	#8, Dialog_phase.w
 	BLT.b	loc_0000F1C6
-	MOVE.l	#loc_0000BEB6, $2(A5)
+	MOVE.l	#BossCommon_VictoryRewardSequence, $2(A5)
 	MOVE.w	#$0032, Dialog_timer.w
 	JSR	ProcessBattleVictoryEvent
 	BRA.b	loc_0000F1CC
@@ -16957,14 +16957,14 @@ loc_0000F1C6:
 loc_0000F1CC:
 	RTS
 	
-loc_0000F1CE:
+RingGuardian_VictoryDialogContinue:
 	ADDQ.w	#1, Dialog_timer.w
 	MOVE.w	Dialog_timer.w, D0
 	ANDI.w	#7, D0
 	BNE.b	loc_0000F1FA
 	CMPI.w	#8, Dialog_phase.w
 	BLT.b	loc_0000F1F4
-	MOVE.l	#loc_0000F1FC, $2(A5)
+	MOVE.l	#RingGuardian_ExitWait, $2(A5)
 	MOVE.w	#$0050, Dialog_timer.w
 	BRA.b	loc_0000F1FA
 loc_0000F1F4:
@@ -16972,7 +16972,7 @@ loc_0000F1F4:
 loc_0000F1FA:
 	RTS
 	
-loc_0000F1FC:
+RingGuardian_ExitWait:
 	SUBQ.w	#1, Dialog_timer.w
 	BGT.b	loc_0000F20E
 	JSR	ProcessBattleVictoryEvent
@@ -16980,7 +16980,7 @@ loc_0000F1FC:
 loc_0000F20E:
 	RTS
 	
-loc_0000F210:
+RingGuardian_ProjectileSpawner:
 	ADDQ.b	#1, $1B(A5)
 	MOVE.b	$1B(A5), D0
 	MOVE.b	D0, D1
@@ -16992,7 +16992,7 @@ loc_0000F210:
 	MOVE.w	$3A(A5), D0
 	CMPI.w	#4, D0
 	BLE.b	loc_0000F23E
-	MOVE.l	#loc_0000F2DA, $2(A5)
+	MOVE.l	#RingGuardian_WaitChildrenDone, $2(A5)
 	RTS
 	
 loc_0000F23E:
@@ -17008,7 +17008,7 @@ loc_0000F242:
 	BCLR.b	#7, $7(A6)
 	BCLR.b	#3, $7(A6)
 	BCLR.b	#4, $7(A6)
-	MOVE.l	#loc_0000F210, $2(A6)
+	MOVE.l	#RingGuardian_ProjectileSpawner, $2(A6)
 	CLR.b	$1B(A6)
 	MOVEA.l	Enemy_list_ptr.w, A4
 	MOVE.w	$E(A4), D0
@@ -17025,13 +17025,13 @@ loc_0000F242:
 	MOVE.l	#$FFFE0000, $32(A6)
 	MOVE.l	#$00030000, $36(A6)
 	CLR.b	$1B(A6)
-	MOVE.l	#loc_0000F2FA, $2(A6)
+	MOVE.l	#RingGuardian_ChildProjectileTick, $2(A6)
 	MOVE.w	#$00BC, D0
 	JSR	QueueSoundEffect
 loc_0000F2D8:
 	RTS
 	
-loc_0000F2DA:
+RingGuardian_WaitChildrenDone:
 	LEA	(A5), A6
 	MOVE.w	#3, D7
 loc_0000F2E0:
@@ -17045,7 +17045,7 @@ loc_0000F2E0:
 loc_0000F2F8:
 	RTS
 	
-loc_0000F2FA:
+RingGuardian_ChildProjectileTick:
 	JSR	CheckEntityPlayerCollisionAndDamage
 	ADDQ.b	#1, $1B(A5)
 	MOVE.b	$1B(A5), D0
@@ -17069,7 +17069,7 @@ loc_0000F318:
 	CMPI.w	#$00AC, $12(A5)
 	BLT.b	loc_0000F35C
 	MOVE.w	#$00AC, $12(A5)
-	MOVE.l	#loc_0000F370, $2(A5)
+	MOVE.l	#RingGuardian_ChildGroundImpact, $2(A5)
 	CLR.b	$1B(A5)
 loc_0000F35C:
 	MOVE.w	$E(A5), $A(A5)
@@ -17077,7 +17077,7 @@ loc_0000F35C:
 	JSR	AddSpriteToDisplayList
 	RTS
 	
-loc_0000F370:
+RingGuardian_ChildGroundImpact:
 	ADDQ.b	#1, $1B(A5)
 	MOVE.b	$1B(A5), D0
 	ANDI.w	#$0018, D0
