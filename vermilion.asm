@@ -29560,59 +29560,59 @@ loc_0001B17E:
 
 ;loc_0001B196:
 DialogueStateHandlerMap:
-	BRA.w	loc_0001B266
-	BRA.w	loc_0001BB74
-	BRA.w	loc_0001BBAA
-	BRA.w	loc_0001BBE0
-	BRA.w	loc_0001BBFA
-	BRA.w	loc_0001BC0C
-	BRA.w	loc_0001BCB8
-	BRA.w	loc_0001BCDE
-	BRA.w	loc_0001BD9A
-	BRA.w	loc_0001BDD8
-	BRA.w	loc_0001BDFA
-	BRA.w	loc_0001BE1E
-	BRA.w	loc_0001BE36
-	BRA.w	loc_0001BF28
-	BRA.w	loc_0001C082
-	BRA.w	loc_0001C0C0
-	BRA.w	loc_0001C152
-	BRA.w	loc_0001C168
-	BRA.w	loc_0001C234
-	BRA.w	loc_0001C27C
-	BRA.w	loc_0001C386
-	BRA.w	loc_0001C3A4
-	BRA.w	loc_0001C4FA
-	BRA.w	loc_0001C50E
-	BRA.w	loc_0001C5A2
-	BRA.w	loc_0001C5DC
-	BRA.w	loc_0001C5F4
-	BRA.w	loc_0001C698
-	BRA.w	loc_0001C6FA
-	BRA.w	loc_0001C744
-	BRA.w	loc_0001C75C
-	BRA.w	loc_0001C890
-	BRA.w	loc_0001C8B8
-	BRA.w	loc_0001C96A
-	BRA.w	loc_0001C996
-	BRA.w	loc_0001CAE4
-	BRA.w	loc_0001CB2C
-	BRA.w	loc_0001CB58
-	BRA.w	loc_0001CB76
-	BRA.w	loc_0001CB94
-	BRA.w	loc_0001CC5A
-	BRA.w	loc_0001CC78
-	BRA.w	loc_0001CC90
-	BRA.w	loc_0001CD6A
-	BRA.w	loc_0001CD88
-	BRA.w	loc_0001B6B6
-	BRA.w	loc_0001B6D8
-	BRA.w	loc_0001B6F0
-	BRA.w	loc_0001B97E
-	BRA.w	loc_0001BAF6
-	BRA.w	loc_0001BB26
-	BRA.w	loc_0001B784
-loc_0001B266:
+	BRA.w	DialogState_Init
+	BRA.w	DialogState_WaitScriptThenAdvance
+	BRA.w	DialogState_WaitButtonThenCloseMenu
+	BRA.w	DialogState_WaitCThenRestartDialogue
+	BRA.w	DialogState_DrawYesNoDialog
+	BRA.w	DialogState_ProcessYesNoAnswer
+	BRA.w	DialogState_WaitScriptThenOpenShopMenu
+	BRA.w	DialogState_ShopMenuInput
+	BRA.w	DialogState_WaitScriptThenCloseToOverworld
+	BRA.w	DialogState_RedrawHudAndClose
+	BRA.w	DialogState_WaitScriptThenOpenSellListWindow
+	BRA.w	DialogState_WaitDrawThenShowMoneyWindow
+	BRA.w	DialogState_ShopSellItemSelectInput
+	BRA.w	DialogState_ShopBuyConfirmAndPurchase
+	BRA.w	DialogState_WaitScriptThenDrawSellConfirm
+	BRA.w	DialogState_SellConfirmYesNoInput
+	BRA.w	DialogState_WaitScriptThenGoToBuyMenu
+	BRA.w	DialogState_WaitScriptThenOpenInventorySellList
+	BRA.w	DialogState_WaitScriptThenReturnToSellList
+	BRA.w	DialogState_SellInventoryItemSelectInput
+	BRA.w	DialogState_WaitScriptThenDrawSellItemYesNo
+	BRA.w	DialogState_SellInventoryConfirmAndSell
+	BRA.w	DialogState_DrawSellInventoryYesNo
+	BRA.w	DialogState_SellInventoryCancelOrConfirm
+	BRA.w	DialogState_WaitScriptWithYesNoOrContinue
+	BRA.w	DialogState_DrawFortuneTellerMoneyWindow
+	BRA.w	DialogState_FortuneTellerPayAndRead
+	BRA.w	DialogState_WaitFortuneTellerScriptThenClose
+	BRA.w	DialogState_WaitScriptThenDrawInnYesNo
+	BRA.w	DialogState_DrawInnMoneyWindow
+	BRA.w	DialogState_InnPayAndSleep
+	BRA.w	DialogState_WaitScriptThenStartSleepFade
+	BRA.w	DialogState_SleepFadeAndRestore
+	BRA.w	DialogState_WaitScriptThenOpenChurchMenu
+	BRA.w	DialogState_ChurchMenuInput
+	BRA.w	DialogState_WaitScriptThenCloseChurchToHud
+	BRA.w	DialogState_WaitTileThenCloseToOverworld
+	BRA.w	DialogState_WaitScriptThenDrawCurseYesNo
+	BRA.w	DialogState_DrawCurseRemovalMoneyWindow
+	BRA.w	DialogState_CurseRemovalPayAndCure
+	BRA.w	DialogState_WaitScriptThenDrawPoisonYesNo
+	BRA.w	DialogState_DrawPoisonCureMoneyWindow
+	BRA.w	DialogState_PoisonCurePayAndCure
+	BRA.w	DialogState_WaitScriptThenOpenSaveMenu
+	BRA.w	DialogState_SaveMenuInput
+	BRA.w	DialogState_MalageWaitScriptThenOpenSellList
+	BRA.w	DialogState_MalageWaitDrawThenShowMoneySellWindow
+	BRA.w	DialogState_MalageShopSelectItemToBuy
+	BRA.w	DialogState_MalageShopConfirmOrCancel
+	BRA.w	DialogState_MalageShopGiveVermilionSword
+	BRA.w	DialogState_WaitScriptThenGoToOverworld
+	BRA.w	DialogState_MalageBlacksmithIntro
+DialogState_Init:
 	MOVE.w	Main_menu_selection.w, Menu_cursor_index.w
 	JSR	DrawMenuCursor
 	JSR	SaveStatusBarToBuffer
@@ -29836,7 +29836,7 @@ ExplanationStr:
 	dc.b	"weapon in the world! Use it", $FE
 	dc.b	"wisely, my Prince!", $FF, $00
 
-loc_0001B6B6:
+DialogState_MalageWaitScriptThenOpenSellList:
 	TST.b	Script_text_complete.w
 	BEQ.b	loc_0001B6D2
 	JSR	SaveShopListToBuffer
@@ -29847,7 +29847,7 @@ loc_0001B6B6:
 
 loc_0001B6D2:
 	JMP	ProcessScriptText
-loc_0001B6D8:
+DialogState_MalageWaitDrawThenShowMoneySellWindow:
 	TST.b	Window_tilemap_draw_active.w
 	BNE.b	loc_0001B6EE
 	JSR	SaveLeftMenuTiles
@@ -29856,7 +29856,7 @@ loc_0001B6D8:
 loc_0001B6EE:
 	RTS
 
-loc_0001B6F0:
+DialogState_MalageShopSelectItemToBuy:
 	TST.b	Script_text_complete.w
 	BEQ.w	loc_0001B734
 	MOVE.w	#BUTTON_BIT_B, D2
@@ -29893,7 +29893,7 @@ loc_0001B770:
 	MOVE.w	Menu_cursor_index.w, Shop_selected_index.w
 	RTS
 
-loc_0001B784:
+DialogState_MalageBlacksmithIntro:
 	JSR	ResetScriptAndInitDialogue
 	MOVE.w	Current_shop_type.w, D0
 	ASL.w	#3, D0
@@ -29938,7 +29938,7 @@ DoneMyBestStr:
 	dc.b	"I have done my best;", $FE
 	dc.b	"the rest is up to you.", $FF
 
-loc_0001B97E:
+DialogState_MalageShopConfirmOrCancel:
 	TST.b	Script_text_complete.w
 	BEQ.w	loc_0001BAEE
 	MOVE.w	#BUTTON_BIT_B, D2
@@ -30045,7 +30045,7 @@ loc_0001BAEE:
 	JSR	ProcessScriptText
 	RTS
 
-loc_0001BAF6:
+DialogState_MalageShopGiveVermilionSword:
 	LEA	Possessed_equipment_length.w, A0
 	MOVE.w	(A0), D0
 	CMPI.w	#8, D0 ; Max number of equipment
@@ -30062,7 +30062,7 @@ loc_0001BB1E:
 	MOVE.w	#1, Dialogue_state.w
 	RTS
 
-loc_0001BB26:
+DialogState_WaitScriptThenGoToOverworld:
 	TST.b	Script_text_complete.w
 	BEQ.b	loc_0001BB6C
 	TST.b	Script_has_continuation.w
@@ -30090,7 +30090,7 @@ loc_0001BB6C:
 loc_0001BB72:
 	RTS
 
-loc_0001BB74:
+DialogState_WaitScriptThenAdvance:
 	TST.b	Window_tilemap_draw_pending.w
 	BNE.b	loc_0001BBA8
 	TST.b	Script_text_complete.w
@@ -30115,7 +30115,7 @@ loc_0001BBA2:
 loc_0001BBA8:
 	RTS
 
-loc_0001BBAA:
+DialogState_WaitButtonThenCloseMenu:
 	MOVE.w	#BUTTON_BIT_C, D2
 	JSR	CheckButtonPress
 	BNE.b	loc_0001BBC4
@@ -30132,7 +30132,7 @@ loc_0001BBC4:
 	MOVE.b	#$FF, Window_tilemap_row_draw_pending.w
 	RTS
 
-loc_0001BBE0:
+DialogState_WaitCThenRestartDialogue:
 	MOVE.w	#BUTTON_BIT_C, D2
 	JSR	CheckButtonPress
 	BEQ.b	loc_0001BBF8
@@ -30141,13 +30141,13 @@ loc_0001BBE0:
 loc_0001BBF8:
 	RTS
 
-loc_0001BBFA:
+DialogState_DrawYesNoDialog:
 	JSR	SaveRightMenuAreaToBuffer
 	JSR	DrawYesNoDialog
 	ADDQ.w	#1, Dialogue_state.w
 	RTS
 
-loc_0001BC0C:
+DialogState_ProcessYesNoAnswer:
 	MOVE.w	#BUTTON_BIT_C, D2
 	JSR	CheckButtonPress
 	BEQ.w	loc_0001BCA4
@@ -30200,7 +30200,7 @@ loc_0001BCA4:
 	MOVE.w	Menu_cursor_index.w, Dialog_selection.w
 	RTS
 
-loc_0001BCB8:
+DialogState_WaitScriptThenOpenShopMenu:
 	TST.b	Script_text_complete.w
 	BEQ.b	loc_0001BCD8
 	CLR.b	Shop_purchase_made.w
@@ -30212,7 +30212,7 @@ loc_0001BCB8:
 
 loc_0001BCD8:
 	JMP	ProcessScriptText
-loc_0001BCDE:
+DialogState_ShopMenuInput:
 	TST.b	Window_tilemap_draw_active.w
 	BNE.w	loc_0001BD98
 	TST.b	Window_tilemap_row_draw_pending.w
@@ -30267,7 +30267,7 @@ loc_0001BD86:
 loc_0001BD98:
 	RTS
 
-loc_0001BD9A:
+DialogState_WaitScriptThenCloseToOverworld:
 	TST.b	Script_text_complete.w
 	BEQ.b	loc_0001BDD2
 	MOVE.w	#BUTTON_BIT_C, D2
@@ -30287,7 +30287,7 @@ loc_0001BDBA:
 
 loc_0001BDD2:
 	JMP	ProcessScriptText
-loc_0001BDD8:
+DialogState_RedrawHudAndClose:
 	TST.b	Window_tilemap_row_draw_pending.w
 	BNE.b	loc_0001BDF8
 	JSR	DrawStatusHudWindow
@@ -30298,7 +30298,7 @@ loc_0001BDD8:
 loc_0001BDF8:
 	RTS
 
-loc_0001BDFA:
+DialogState_WaitScriptThenOpenSellListWindow:
 	TST.b	Script_text_complete.w
 	BEQ.b	loc_0001BE16
 	JSR	SaveShopListToBuffer
@@ -30311,7 +30311,7 @@ loc_0001BE16:
 	JSR	ProcessScriptText
 	RTS
 
-loc_0001BE1E:
+DialogState_WaitDrawThenShowMoneyWindow:
 	TST.b	Window_tilemap_draw_active.w
 	BNE.b	loc_0001BE34
 	JSR	SaveLeftMenuTiles
@@ -30320,7 +30320,7 @@ loc_0001BE1E:
 loc_0001BE34:
 	RTS
 
-loc_0001BE36:
+DialogState_ShopSellItemSelectInput:
 	TST.b	Script_text_complete.w
 	BEQ.w	loc_0001BF22
 	MOVE.w	#BUTTON_BIT_B, D2
@@ -30380,7 +30380,7 @@ loc_0001BF0E:
 
 loc_0001BF22:
 	JMP	ProcessScriptText	
-loc_0001BF28:
+DialogState_ShopBuyConfirmAndPurchase:
 	TST.b	Script_text_complete.w
 	BEQ.w	loc_0001C07C
 	MOVE.w	#BUTTON_BIT_B, D2
@@ -30473,7 +30473,7 @@ loc_0001C068:
 
 loc_0001C07C:
 	JMP	ProcessScriptText
-loc_0001C082:
+DialogState_WaitScriptThenDrawSellConfirm:
 	TST.b	Script_text_complete.w
 	BEQ.b	loc_0001C0BA
 	JSR	SaveRightMenuAreaToBuffer
@@ -30490,7 +30490,7 @@ loc_0001C082:
 
 loc_0001C0BA:
 	JMP	ProcessScriptText
-loc_0001C0C0:
+DialogState_SellConfirmYesNoInput:
 	TST.b	Script_text_complete.w
 	BEQ.w	loc_0001C14C
 	MOVE.w	#BUTTON_BIT_B, D2
@@ -30529,7 +30529,7 @@ loc_0001C120:
 
 loc_0001C14C:
 	JMP	ProcessScriptText
-loc_0001C152:
+DialogState_WaitScriptThenGoToBuyMenu:
 	TST.b	Script_text_complete.w
 	BEQ.b	loc_0001C160
 	MOVE.w	#8, Dialogue_state.w
@@ -30539,7 +30539,7 @@ loc_0001C160:
 	JSR	ProcessScriptText
 	RTS
 
-loc_0001C168:
+DialogState_WaitScriptThenOpenInventorySellList:
 	TST.b	Script_text_complete.w
 	BEQ.w	loc_0001C22E
 	MOVE.w	Current_shop_type.w, D0
@@ -30591,7 +30591,7 @@ loc_0001C208:
 
 loc_0001C22E:
 	JMP	ProcessScriptText
-loc_0001C234:
+DialogState_WaitScriptThenReturnToSellList:
 	TST.b	Script_text_complete.w
 	BEQ.b	loc_0001C276
 	MOVE.w	#BUTTON_BIT_C, D2
@@ -30614,7 +30614,7 @@ loc_0001C254:
 
 loc_0001C276:
 	JMP	ProcessScriptText
-loc_0001C27C:
+DialogState_SellInventoryItemSelectInput:
 	TST.b	Script_text_complete.w
 	BEQ.w	loc_0001C380
 	MOVE.w	#BUTTON_BIT_B, D2
@@ -30688,7 +30688,7 @@ loc_0001C36C:
 
 loc_0001C380:
 	JMP	ProcessScriptText	
-loc_0001C386:
+DialogState_WaitScriptThenDrawSellItemYesNo:
 	TST.b	Script_text_complete.w
 	BEQ.b	loc_0001C39E
 	JSR	SaveRightMenuAreaToBuffer
@@ -30698,7 +30698,7 @@ loc_0001C386:
 
 loc_0001C39E:
 	JMP	ProcessScriptText
-loc_0001C3A4:
+DialogState_SellInventoryConfirmAndSell:
 	MOVE.w	#BUTTON_BIT_B, D2
 	JSR	CheckButtonPress
 	BNE.w	loc_0001C4B0
@@ -30790,13 +30790,13 @@ loc_0001C4E6:
 	MOVE.w	Menu_cursor_index.w, Dialog_selection.w
 	RTS
 
-loc_0001C4FA:
+DialogState_DrawSellInventoryYesNo:
 	JSR	SaveRightMenuAreaToBuffer
 	JSR	DrawYesNoDialog
 	MOVE.w	#$17, Dialogue_state.w
 	RTS
 
-loc_0001C50E:
+DialogState_SellInventoryCancelOrConfirm:
 	TST.b	Script_text_complete.w
 	BEQ.w	loc_0001C59C
 	MOVE.w	#BUTTON_BIT_B, D2
@@ -30835,7 +30835,7 @@ loc_0001C56E:
 
 loc_0001C59C:
 	JMP	ProcessScriptText
-loc_0001C5A2:
+DialogState_WaitScriptWithYesNoOrContinue:
 	TST.b	Script_text_complete.w
 	BEQ.b	loc_0001C5D4
 	TST.b	Script_has_continuation.w
@@ -30855,14 +30855,14 @@ loc_0001C5D4:
 loc_0001C5DA:
 	RTS
 
-loc_0001C5DC:
+DialogState_DrawFortuneTellerMoneyWindow:
 	JSR	SaveLeftMenuTiles
 	JSR	DrawMoneyDisplayWindow
 	JSR	DisplayPlayerKims
 	ADDQ.w	#1, Dialogue_state.w
 	RTS
 
-loc_0001C5F4:
+DialogState_FortuneTellerPayAndRead:
 	MOVE.w	#BUTTON_BIT_B, D2
 	JSR	CheckButtonPress
 	BNE.w	loc_0001C66A
@@ -30905,7 +30905,7 @@ loc_0001C684:
 	MOVE.w	Menu_cursor_index.w, Dialog_selection.w
 	RTS
 
-loc_0001C698:
+DialogState_WaitFortuneTellerScriptThenClose:
 	TST.b	Script_text_complete.w
 	BEQ.b	loc_0001C6E0
 	TST.b	Script_has_continuation.w
@@ -30937,7 +30937,7 @@ loc_0001C6E6:
 loc_0001C6F8:
 	RTS
 
-loc_0001C6FA:
+DialogState_WaitScriptThenDrawInnYesNo:
 	TST.b	Script_text_complete.w
 	BEQ.b	loc_0001C72A
 	TST.b	Script_has_continuation.w
@@ -30964,14 +30964,14 @@ loc_0001C730:
 loc_0001C742:
 	RTS
 
-loc_0001C744:
+DialogState_DrawInnMoneyWindow:
 	JSR	SaveLeftMenuTiles
 	JSR	DrawMoneyDisplayWindow
 	JSR	DisplayPlayerKims
 	ADDQ.w	#1, Dialogue_state.w
 	RTS
 
-loc_0001C75C:
+DialogState_InnPayAndSleep:
 	MOVE.w	Current_town.w, D0
 	CMPI.w	#TOWN_WATLING, D0
 	BNE.w	loc_0001C7DA
@@ -31054,7 +31054,7 @@ loc_0001C87C:
 	MOVE.w	Menu_cursor_index.w, Dialog_selection.w
 	RTS
 
-loc_0001C890:
+DialogState_WaitScriptThenStartSleepFade:
 	TST.b	Script_text_complete.w
 	BEQ.b	loc_0001C8B2
 	MOVE.w	#$20, Dialogue_state.w
@@ -31064,7 +31064,7 @@ loc_0001C890:
 	JMP	QueueSoundEffect
 loc_0001C8B2:
 	JMP	ProcessScriptText
-loc_0001C8B8:
+DialogState_SleepFadeAndRestore:
 	TST.b	Fade_out_lines_mask.w
 	BNE.w	loc_0001C968
 	SUBQ.w	#1, Sleep_delay_timer.w
@@ -31114,7 +31114,7 @@ loc_0001C932:
 loc_0001C968:
 	RTS
 
-loc_0001C96A:
+DialogState_WaitScriptThenOpenChurchMenu:
 	TST.b	Script_text_complete.w
 	BEQ.b	loc_0001C990
 	JSR	SaveStatusMenuAreaToBuffer_Large
@@ -31127,7 +31127,7 @@ loc_0001C96A:
 
 loc_0001C990:
 	JMP	ProcessScriptText
-loc_0001C996:
+DialogState_ChurchMenuInput:
 	TST.b	Window_tilemap_draw_active.w
 	BNE.w	loc_0001CAE2
 	TST.b	Window_tilemap_row_draw_pending.w
@@ -31210,7 +31210,7 @@ loc_0001CAD0:
 loc_0001CAE2:
 	RTS
 
-loc_0001CAE4:
+DialogState_WaitScriptThenCloseChurchToHud:
 	TST.b	Script_text_complete.w
 	BEQ.b	loc_0001CB26
 	MOVE.w	#BUTTON_BIT_C, D2
@@ -31232,7 +31232,7 @@ loc_0001CB04:
 
 loc_0001CB26:
 	JMP	ProcessScriptText
-loc_0001CB2C:
+DialogState_WaitTileThenCloseToOverworld:
 	TST.b	Window_tilemap_row_draw_pending.w
 	BNE.b	loc_0001CB56
 	JSR	DrawStatusHudWindow
@@ -31245,7 +31245,7 @@ loc_0001CB2C:
 loc_0001CB56:
 	RTS
 
-loc_0001CB58:
+DialogState_WaitScriptThenDrawCurseYesNo:
 	TST.b	Script_text_complete.w
 	BEQ.b	loc_0001CB70
 	JSR	SaveRightMenuAreaToBuffer
@@ -31255,7 +31255,7 @@ loc_0001CB58:
 
 loc_0001CB70:
 	JMP	ProcessScriptText
-loc_0001CB76:
+DialogState_DrawCurseRemovalMoneyWindow:
 	TST.b	Window_tilemap_draw_active.w
 	BNE.b	loc_0001CB92
 	JSR	SaveLeftMenuTiles
@@ -31265,7 +31265,7 @@ loc_0001CB76:
 loc_0001CB92:
 	RTS
 
-loc_0001CB94:
+DialogState_CurseRemovalPayAndCure:
 	MOVE.w	#BUTTON_BIT_B, D2
 	JSR	CheckButtonPress
 	BNE.w	loc_0001CC24
@@ -31314,7 +31314,7 @@ loc_0001CC46:
 	MOVE.w	Menu_cursor_index.w, Dialog_selection.w
 	RTS
 
-loc_0001CC5A:
+DialogState_WaitScriptThenDrawPoisonYesNo:
 	TST.b	Script_text_complete.w
 	BEQ.b	loc_0001CC72
 	JSR	SaveRightMenuAreaToBuffer
@@ -31324,14 +31324,14 @@ loc_0001CC5A:
 
 loc_0001CC72:
 	JMP	ProcessScriptText
-loc_0001CC78:
+DialogState_DrawPoisonCureMoneyWindow:
 	JSR	SaveLeftMenuTiles
 	JSR	DrawMoneyDisplayWindow
 	JSR	DisplayPlayerKims
 	ADDQ.w	#1, Dialogue_state.w
 	RTS
 
-loc_0001CC90:
+DialogState_PoisonCurePayAndCure:
 	MOVE.w	#BUTTON_BIT_B, D2
 	JSR	CheckButtonPress
 	BNE.w	loc_0001CD36
@@ -31385,7 +31385,7 @@ loc_0001CD56:
 	MOVE.w	Menu_cursor_index.w, Dialog_selection.w
 	RTS
 
-loc_0001CD6A:
+DialogState_WaitScriptThenOpenSaveMenu:
 	TST.b	Script_text_complete.w
 	BEQ.b	loc_0001CD82
 	JSR	SaveShopSubmenuAreaToBuffer
@@ -31395,7 +31395,7 @@ loc_0001CD6A:
 
 loc_0001CD82:
 	JMP	ProcessScriptText
-loc_0001CD88:
+DialogState_SaveMenuInput:
 	TST.b	Window_tilemap_draw_active.w
 	BNE.b	loc_0001CDFC
 	MOVE.w	#BUTTON_BIT_B, D2
