@@ -2254,7 +2254,7 @@ loc_00002868:
 	JSR	VDP_DMAFill
 	MOVEA.l	Current_actor_ptr.w, A6
 	BSET.b	#7, (A6)
-	MOVE.l	#loc_00008BA6, $2(A6)
+	MOVE.l	#InitEncounterPortrait, $2(A6)
 	MOVE.w	#GAMEPLAY_STATE_ENCOUNTER_GRAPHICS_FADE_IN, Gameplay_state.w
 	CLR.w	Dialog_timer.w
 	CLR.w	Dialog_phase.w
@@ -9649,7 +9649,7 @@ loc_00008B88:
 	MOVE.l	#loc_00008E54, $2(A4)
 	RTS
 
-loc_00008BA6:
+InitEncounterPortrait:
 	LEA	loc_00023B28, A1
 	CLR.w	D2
 	MOVE.b	Encounter_group_index.w, D2
@@ -9670,7 +9670,7 @@ loc_00008BA6:
 	BCLR.b	#3, $7(A5)
 	BCLR.b	#4, $7(A5)
 	MOVE.w	#$042B, $8(A5)
-	MOVE.l	#loc_00008D12, $2(A5)
+	MOVE.l	#PortraitIdleLoop, $2(A5)
 	MOVE.w	#$005C, $A(A5)
 	MOVE.w	#$00A8, $C(A5)
 	MOVE.w	$12(A6), D0
@@ -9685,7 +9685,7 @@ loc_00008BA6:
 	BCLR.b	#3, $7(A4)
 	BCLR.b	#4, $7(A4)
 	MOVE.w	#$043B, $8(A4)
-	MOVE.l	#loc_00008D12, $2(A4)
+	MOVE.l	#PortraitIdleLoop, $2(A4)
 	MOVE.w	#$005C, D0
 	ADD.w	$10(A6), D0
 	MOVE.w	D0, $A(A4)
@@ -9705,7 +9705,7 @@ InitTalkerPortraitSprite:
 	BCLR.b	#3, $7(A5)
 	BCLR.b	#4, $7(A5)
 	MOVE.w	#$042B, $8(A5)
-	MOVE.l	#loc_00008D12, $2(A5)
+	MOVE.l	#PortraitIdleLoop, $2(A5)
 	MOVE.w	#$005C, $A(A5)
 	MOVE.w	#$00A8, $C(A5)
 	MOVE.w	$16(A6), D0
@@ -9720,7 +9720,7 @@ InitTalkerPortraitSprite:
 	BCLR.b	#3, $7(A4)
 	BCLR.b	#4, $7(A4)
 	MOVE.w	#$043B, $8(A4)
-	MOVE.l	#loc_00008D12, $2(A4)
+	MOVE.l	#PortraitIdleLoop, $2(A4)
 	MOVE.w	#$005C, D0
 	ADD.w	$14(A6), D0
 	MOVE.w	D0, $A(A4)
@@ -9731,7 +9731,7 @@ loc_00008D0A:
 	JSR	LoadPalettesFromTable
 	RTS
 
-loc_00008D12:
+PortraitIdleLoop:
 	JMP	QueueSpriteOAMIfVisible
 loc_00008D18:
 	TST.b	Rings_collected.w
@@ -10050,22 +10050,22 @@ UpdateObjectScreenPosition:
 	SUB.l	$32(A5), D0
 	SWAP	D0
 	CMPI.w	#0, D0
-	BLE.w	loc_0000917A
+	BLE.w	DeactivateOffScreenObject
 	CMPI.w	#$0140, D0
-	BGE.w	loc_0000917A
+	BGE.w	DeactivateOffScreenObject
 	SWAP	D0
 	MOVE.l	D0, $E(A5)
 	MOVE.l	$12(A5), D0
 	SUB.l	$36(A5), D0
 	SWAP	D0
 	CMPI.w	#$0038, D0
-	BLE.w	loc_0000917A
+	BLE.w	DeactivateOffScreenObject
 	CMPI.w	#$00B8, D0
-	BGE.w	loc_0000917A
+	BGE.w	DeactivateOffScreenObject
 	SWAP	D0
 	MOVE.l	D0, $12(A5)
 	BRA.w	loc_00009186
-loc_0000917A:
+DeactivateOffScreenObject:
 	BCLR.b	#7, (A5)
 	CLR.l	$32(A5)
 	CLR.l	$36(A5)
@@ -10251,7 +10251,7 @@ loc_0000938C:
 loc_00009392:
 	RTS
 
-loc_00009394:
+EnemyDeathReward_OneSprite:
 	MOVE.b	#$B1, D0
 	JSR	QueueSoundEffect
 	MOVEQ	#0, D0
@@ -10264,7 +10264,7 @@ loc_00009394:
 	JSR	AddPaymentAmount
 	SUBQ.w	#1, Number_Of_Enemies.w
 	CLR.b	$1B(A5)
-	MOVE.l	#loc_0000944E, $2(A5)
+	MOVE.l	#EnemyDeathAnimation, $2(A5)
 	MOVE.b	#$60, $7(A5)
 	MOVE.b	#$0F, $6(A5)
 	CLR.w	D0
@@ -10287,7 +10287,7 @@ EnemyDeathReward_TwoSprites:
 	JSR	AddPaymentAmount
 	SUBQ.w	#1, Number_Of_Enemies.w
 	CLR.b	$1B(A5)
-	MOVE.l	#loc_0000944E, $2(A5)
+	MOVE.l	#EnemyDeathAnimation, $2(A5)
 	MOVE.b	#$60, $7(A5)
 	MOVE.b	#$0F, $6(A5)
 	CLR.w	D0
@@ -10300,7 +10300,7 @@ EnemyDeathReward_TwoSprites:
 	BCLR.b	#7, (A6)
 	RTS
 
-loc_0000944E:
+EnemyDeathAnimation:
 	ADDQ.b	#1, $1B(A5)
 	LEA	loc_0003DD24, A0
 	MOVE.b	$1B(A5), D0
@@ -10316,55 +10316,55 @@ loc_00009470:
 	JSR	AddSpriteToDisplayList
 	RTS
 
-loc_0000947E:
+InitEnemy_StandardMelee:
 	BSR.w	InitEnemyAI
 	MOVE.w	#$0019, $8(A5)
 	MOVE.b	#$0D, $6(A5)
 	MOVE.w	#$000C, $1C(A5)
 	MOVE.w	#$000A, $1E(A5)
 	CLR.b	Enemy_pair_offset_flag.w
-	MOVE.l	#loc_0000957C, $2(A5)
+	MOVE.l	#EnemyTick_StandardMelee, $2(A5)
 	MOVE.b	#$0E, $6(A6)
-	MOVE.l	#loc_0000A662, $2(A6)
+	MOVE.l	#EnemyChildSpriteTick, $2(A6)
 	MOVE.w	#$0018, Enemy_anim_frame_mask.w
 	MOVE.w	#2, Enemy_anim_frame_shift.w
 	MOVE.l	#loc_0003DB90, Enemy_anim_table_main.w
 	MOVE.l	#loc_0003DB50, Enemy_anim_table_child.w
 	RTS
 
-loc_000094D2:
+InitEnemy_StandardMeleeAlt:
 	BSR.w	InitEnemyAI
 	MOVE.w	#$0019, $8(A5)
 	MOVE.b	#$0E, $6(A5)
 	MOVE.w	#$000C, $1C(A5)
 	MOVE.w	#$000A, $1E(A5)
 	MOVE.b	#$FF, Enemy_pair_offset_flag.w
-	MOVE.l	#loc_0000957C, $2(A5)
+	MOVE.l	#EnemyTick_StandardMelee, $2(A5)
 	MOVE.b	#$0E, $6(A6)
-	MOVE.l	#loc_0000A662, $2(A6)
+	MOVE.l	#EnemyChildSpriteTick, $2(A6)
 	MOVE.w	#$0018, Enemy_anim_frame_mask.w
 	MOVE.w	#2, Enemy_anim_frame_shift.w
 	MOVE.l	#loc_0003DCB0, Enemy_anim_table_main.w
 	MOVE.l	#loc_0003DC70, Enemy_anim_table_child.w
 	RTS
 
-loc_00009528:
+InitEnemy_StandardMeleeFast:
 	BSR.w	InitEnemyAI
 	MOVE.w	#$0019, $8(A5)
 	MOVE.b	#$0D, $6(A5)
 	MOVE.w	#$000C, $1C(A5)
 	MOVE.w	#$000C, $1E(A5)
 	CLR.b	Enemy_pair_offset_flag.w
-	MOVE.l	#loc_0000957C, $2(A5)
+	MOVE.l	#EnemyTick_StandardMelee, $2(A5)
 	MOVE.b	#$0E, $6(A6)
-	MOVE.l	#loc_0000A662, $2(A6)
+	MOVE.l	#EnemyChildSpriteTick, $2(A6)
 	MOVE.w	#$000C, Enemy_anim_frame_mask.w
 	MOVE.w	#1, Enemy_anim_frame_shift.w
 	MOVE.l	#loc_0003DB90, Enemy_anim_table_main.w
 	MOVE.l	#loc_0003DB50, Enemy_anim_table_child.w
 	RTS
 
-loc_0000957C:
+EnemyTick_StandardMelee:
 	BSR.w	ProcessEnemyDamage
 	BGT.w	loc_0000958E
 	MOVE.l	#EnemyDeathReward_TwoSprites, $2(A5)
@@ -10448,15 +10448,15 @@ loc_00009692:
 	JSR	AddSpriteToDisplayList
 	RTS
 
-loc_0000969A:
+InitEnemy_StalkPause:
 	BSR.w	InitEnemyAI
 	MOVE.w	#$0019, $8(A5)
 	MOVE.b	#$0D, $6(A5)
 	MOVE.w	#$000C, $1C(A5)
 	MOVE.w	#$000A, $1E(A5)
-	MOVE.l	#loc_00009726, $2(A5)
+	MOVE.l	#EnemyTick_StalkPause, $2(A5)
 	MOVE.b	#$0E, $6(A6)
-	MOVE.l	#loc_0000A662, $2(A6)
+	MOVE.l	#EnemyChildSpriteTick, $2(A6)
 	MOVE.w	#$0018, Enemy_anim_frame_mask.w
 	MOVE.w	#2, Enemy_anim_frame_shift.w
 	MOVE.l	#loc_0003DB90, Enemy_anim_table_main.w
@@ -10466,16 +10466,16 @@ loc_0000969A:
 loc_000096EA:
 	BSR.w	InitEnemyAI
 	BSR.w	SetEnemyGraphicsParams
-	MOVE.l	#loc_00009726, $2(A5)
+	MOVE.l	#EnemyTick_StalkPause, $2(A5)
 	MOVE.b	#$0E, $6(A6)
-	MOVE.l	#loc_0000A662, $2(A6)
+	MOVE.l	#EnemyChildSpriteTick, $2(A6)
 	MOVE.w	#$000C, Enemy_anim_frame_mask.w
 	MOVE.w	#1, Enemy_anim_frame_shift.w
 	MOVE.l	#loc_0003DB90, Enemy_anim_table_main.w
 	MOVE.l	#loc_0003DB50, Enemy_anim_table_child.w
 	RTS
 
-loc_00009726:
+EnemyTick_StalkPause:
 	BSR.w	ProcessEnemyDamage
 	BGT.w	loc_00009738
 	MOVE.l	#EnemyDeathReward_TwoSprites, $2(A5)
@@ -10549,18 +10549,18 @@ loc_00009818:
 	JSR	AddSpriteToDisplayList
 	RTS
 
-loc_00009820:
+InitEnemy_ProximityChase:
 	BSR.w	InitEnemyAI
 	MOVE.w	#$0019, $8(A5)
 	MOVE.b	#$0D, $6(A5)
 	MOVE.w	#$000C, $1C(A5)
 	MOVE.w	#$000C, $1E(A5)
-	MOVE.l	#loc_00009854, $2(A5)
+	MOVE.l	#EnemyTick_ProximityChase, $2(A5)
 	MOVE.b	#$0E, $6(A6)
-	MOVE.l	#loc_0000A662, $2(A6)
+	MOVE.l	#EnemyChildSpriteTick, $2(A6)
 	RTS
 
-loc_00009854:
+EnemyTick_ProximityChase:
 	BSR.w	ProcessEnemyDamage
 	BGT.w	loc_00009866
 	MOVE.l	#EnemyDeathReward_TwoSprites, $2(A5)
@@ -10641,18 +10641,18 @@ loc_00009956:
 	JSR	AddSpriteToDisplayList
 	RTS
 
-loc_0000995E:
+InitEnemy_FleeChase:
 	BSR.w	InitEnemyAI
 	MOVE.w	#$0019, $8(A5)
 	MOVE.b	#$0D, $6(A5)
 	MOVE.w	#$000C, $1C(A5)
 	MOVE.w	#$000E, $1E(A5)
-	MOVE.l	#loc_00009992, $2(A5)
+	MOVE.l	#EnemyTick_FleeChase, $2(A5)
 	MOVE.b	#$0E, $6(A6)
-	MOVE.l	#loc_0000A662, $2(A6)
+	MOVE.l	#EnemyChildSpriteTick, $2(A6)
 	RTS
 
-loc_00009992:
+EnemyTick_FleeChase:
 	BSR.w	ProcessEnemyDamage
 	BGT.w	loc_000099A4
 	MOVE.l	#EnemyDeathReward_TwoSprites, $2(A5)
@@ -10718,18 +10718,18 @@ loc_00009A6A:
 	JSR	AddSpriteToDisplayList
 	RTS
 
-loc_00009A72:
+InitEnemy_Bouncing:
 	BSR.w	InitEnemyAI
 	MOVE.w	#$0019, $8(A5)
 	MOVE.b	#$0E, $6(A5)
 	MOVE.w	#$000C, $1C(A5)
 	MOVE.w	#$000E, $1E(A5)
-	MOVE.l	#loc_00009AA6, $2(A5)
+	MOVE.l	#EnemyTick_Bouncing, $2(A5)
 	MOVE.b	#$0D, $6(A6)
-	MOVE.l	#loc_0000A662, $2(A6)
+	MOVE.l	#EnemyChildSpriteTick, $2(A6)
 	RTS
 
-loc_00009AA6:
+EnemyTick_Bouncing:
 	BSR.w	ProcessEnemyDamage
 	BGT.w	loc_00009AB8
 	MOVE.l	#EnemyDeathReward_TwoSprites, $2(A5)
@@ -10794,15 +10794,15 @@ loc_00009B88:
 	JSR	AddSpriteToDisplayList
 	RTS
 
-loc_00009B90:
+InitEnemy_ProjectileFire:
 	BSR.w	InitEnemyAI
 	BSR.w	SetObjectBoundsType1
-	MOVE.l	#loc_00009BB0, $2(A5)
+	MOVE.l	#EnemyTick_ProjectileFire, $2(A5)
 	MOVE.b	#$0E, $6(A6)
-	MOVE.l	#loc_0000A662, $2(A6)
+	MOVE.l	#EnemyChildSpriteTick, $2(A6)
 	RTS
 
-loc_00009BB0:
+EnemyTick_ProjectileFire:
 	BSR.w	ProcessEnemyDamage
 	BGT.w	loc_00009BC2
 	MOVE.l	#EnemyDeathReward_TwoSprites, $2(A5)
@@ -10888,7 +10888,7 @@ loc_00009CAA:
 	ADD.l	D0, D0
 	MOVE.l	D0, $20(A4)
 	MOVE.b	#1, $6(A4)
-	MOVE.l	#loc_00009D56, $2(A4)
+	MOVE.l	#ProjectileTick_Linear, $2(A4)
 	MOVE.w	$2C(A5), $2C(A4)
 	MOVEA.l	Player_entity_ptr.w, A6
 	BSR.w	CalculateAngleBetweenObjects
@@ -10918,7 +10918,7 @@ loc_00009D2E:
 	JSR	AddSpriteToDisplayList
 	RTS
 
-loc_00009D56:
+ProjectileTick_Linear:
 	BSR.w	CalculateVelocityFromAngle
 	BSR.w	UpdateObjectScreenPosition
 	BSR.w	HandlePlayerTakeDamage
@@ -10940,7 +10940,7 @@ loc_00009D90:
 	BSR.w	SetEnemyGraphicsParams
 	MOVE.l	#loc_00009DB0, $2(A5)
 	MOVE.b	#$0E, $6(A6)
-	MOVE.l	#loc_0000A662, $2(A6)
+	MOVE.l	#EnemyChildSpriteTick, $2(A6)
 	RTS
 
 loc_00009DB0:
@@ -11068,7 +11068,7 @@ loc_00009F6E:
 	CLR.b	Enemy_direction_flag.w
 	MOVE.l	#loc_00009FB8, $2(A5)
 	MOVE.b	#$0E, $6(A6)
-	MOVE.l	#loc_0000A662, $2(A6)
+	MOVE.l	#EnemyChildSpriteTick, $2(A6)
 	RTS
 
 loc_00009F92:
@@ -11077,7 +11077,7 @@ loc_00009F92:
 	MOVE.b	#$FF, Enemy_direction_flag.w
 	MOVE.l	#loc_00009FB8, $2(A5)
 	MOVE.b	#$0E, $6(A6)
-	MOVE.l	#loc_0000A662, $2(A6)
+	MOVE.l	#EnemyChildSpriteTick, $2(A6)
 	RTS
 
 loc_00009FB8:
@@ -11165,15 +11165,15 @@ loc_0000A0D4:
 	JSR	AddSpriteToDisplayList
 	RTS
 	
-loc_0000A0DC:
+InitEnemy_RandomShooter:
 	BSR.w	InitEnemyAI
 	BSR.w	InitEnemyProjectileSpeed
-	MOVE.l	#loc_0000A0FC, $2(A5)
+	MOVE.l	#EnemyTick_RandomShooter, $2(A5)
 	MOVE.b	#$0E, $6(A6)
-	MOVE.l	#loc_0000A662, $2(A6)
+	MOVE.l	#EnemyChildSpriteTick, $2(A6)
 	RTS
 	
-loc_0000A0FC:
+EnemyTick_RandomShooter:
 	BSR.w	ProcessEnemyDamage
 	BGT.w	loc_0000A10E
 	MOVE.l	#EnemyDeathReward_TwoSprites, $2(A5)
@@ -11240,15 +11240,15 @@ loc_0000A1DC:
 	JSR	AddSpriteToDisplayList
 	RTS
 	
-loc_0000A1E4:
+InitEnemy_Teleporter:
 	BSR.w	InitEnemyAI
 	BSR.w	InitEnemyProjectileSpeed
-	MOVE.l	#loc_0000A204, $2(A5)
+	MOVE.l	#EnemyTick_Teleporter, $2(A5)
 	MOVE.b	#$0E, $6(A6)
-	MOVE.l	#loc_0000A662, $2(A6)
+	MOVE.l	#EnemyChildSpriteTick, $2(A6)
 	RTS
 	
-loc_0000A204:	
+EnemyTick_Teleporter:	
 	TST.w	$3C(A5)
 	BNE.w	loc_0000A236
 	CLR.w	D0
@@ -11296,20 +11296,20 @@ loc_0000A278:
 loc_0000A2A8:
 	RTS
 	
-loc_0000A2AA:
+InitEnemy_BurstFire:
 	BSR.w	InitEnemyAI
 	BSR.w	SetObjectBoundsType1
-	MOVE.l	#loc_0000A2D4, $2(A5)
+	MOVE.l	#EnemyTick_BurstFire, $2(A5)
 	MOVE.b	#$0E, $6(A5)
 	MOVE.l	#AddSpriteToDisplayList, $2(A6)
 	MOVE.b	#$0E, $6(A6)
 	BSR.w	SetRandomEnemyPosition
 	RTS
 	
-loc_0000A2D4:
+EnemyTick_BurstFire:
 	BSR.w	CheckAndUpdateBattleTimer
 	BGT.w	loc_0000A2E6
-	MOVE.l	#loc_0000B50C, $2(A5)
+	MOVE.l	#BossDeathReward_MultiSprite, $2(A5)
 	RTS
 	
 loc_0000A2E6:
@@ -11373,7 +11373,7 @@ loc_0000A390:
 	MOVE.b	D5, $6(A6)
 	MOVE.b	D6, $7(A6)
 	MOVE.b	D7, $18(A6)
-	MOVE.l	#loc_0000A446, $2(A6)
+	MOVE.l	#ProjectileTick_Straight, $2(A6)
 	DBF	D7, loc_0000A390
 	ADDQ.w	#1, $3A(A5)
 	MOVE.w	#$0028, $3C(A5)
@@ -11412,7 +11412,7 @@ loc_0000A420:
 	JSR	AddSpriteToDisplayList(PC)
 	RTS
 	
-loc_0000A446:
+ProjectileTick_Straight:
 	JSR	CalculateVelocityFromAngle(PC)
 	JSR	ClampProjectileToScreenBounds(PC)
 	BTST.b	#7, (A5)
@@ -11428,19 +11428,19 @@ loc_0000A446:
 loc_0000A476:
 	RTS
 	
-loc_0000A478:
+InitEnemy_HomingShooter:
 	BSR.w	InitEnemyAI
 	BSR.w	SetEnemyGraphicsParams
-	MOVE.l	#loc_0000A49C, $2(A5)
+	MOVE.l	#EnemyTick_HomingShooter, $2(A5)
 	MOVE.b	#$0E, $6(A6)
-	MOVE.l	#loc_0000A662, $2(A6)
+	MOVE.l	#EnemyChildSpriteTick, $2(A6)
 	BSR.w	SetRandomEnemyPosition
 	RTS
 	
-loc_0000A49C:
+EnemyTick_HomingShooter:
 	BSR.w	CheckAndUpdateBattleTimer
 	BGT.w	loc_0000A4AE
-	MOVE.l	#loc_00009394, $2(A5)
+	MOVE.l	#EnemyDeathReward_OneSprite, $2(A5)
 	RTS
 	
 loc_0000A4AE:
@@ -11486,7 +11486,7 @@ loc_0000A51E:
 	MOVE.b	D7, $18(A6)
 	MOVE.w	#$003C, $3A(A6)
 	MOVE.w	#$00B4, $3C(A6)
-	MOVE.l	#loc_0000A5DA, $2(A6)
+	MOVE.l	#ProjectileTick_Homing, $2(A6)
 	DBF	D7, loc_0000A51E
 loc_0000A55E:
 	BSR.w	HandlePlayerTakeDamage
@@ -11520,7 +11520,7 @@ loc_0000A598:
 	JSR	AddSpriteToDisplayList
 	RTS
 	
-loc_0000A5DA:
+ProjectileTick_Homing:
 	TST.w	$3C(A5)
 	BNE.w	loc_0000A5F6
 	BCLR.b	#7, (A5)
@@ -11562,7 +11562,7 @@ loc_0000A644:
 	JSR	AddSpriteToDisplayList
 	RTS
 	
-loc_0000A662:
+EnemyChildSpriteTick:
 	JSR	AddSpriteToDisplayList
 	RTS
 	
@@ -11585,19 +11585,19 @@ CopyEnemyPositionToChildObject:
 	MOVE.w	$16(A5), $16(A6)
 	RTS
 	
-loc_0000A6AA:
+InitEnemy_FastBurstShooter:
 	BSR.w	InitEnemyAI
 	BSR.w	SetEnemyGraphicsParams
-	MOVE.l	#loc_0000A6CE, $2(A5)
+	MOVE.l	#EnemyTick_FastBurstShooter, $2(A5)
 	MOVE.b	#$0E, $6(A6)
-	MOVE.l	#loc_0000A662, $2(A6)
+	MOVE.l	#EnemyChildSpriteTick, $2(A6)
 	BSR.w	SetRandomEnemyPosition
 	RTS
 	
-loc_0000A6CE:
+EnemyTick_FastBurstShooter:
 	BSR.w	CheckAndUpdateBattleTimer
 	BGT.w	loc_0000A6E0
-	MOVE.l	#loc_0000B50C, $2(A5)
+	MOVE.l	#BossDeathReward_MultiSprite, $2(A5)
 	RTS
 	
 loc_0000A6E0:
@@ -11641,7 +11641,7 @@ loc_0000A750:
 	MOVE.b	D5, $6(A6)
 	MOVE.b	D6, $7(A6)
 	MOVE.b	D7, $18(A6)
-	MOVE.l	#loc_0000A446, $2(A6)
+	MOVE.l	#ProjectileTick_Straight, $2(A6)
 	DBF	D7, loc_0000A750
 loc_0000A784:
 	BSR.w	HandlePlayerTakeDamage
@@ -11675,14 +11675,14 @@ loc_0000A7BE:
 	JSR	AddSpriteToDisplayList
 	RTS
 	
-loc_0000A800:
+InitEnemy_SequentialFire:
 	CLR.w	D0
 	MOVE.b	$1(A5), D0
 	LEA	(A5,D0.w), A6
 	BSET.b	#7, (A6)
 	JSR	GetRandomNumber
 	MOVE.b	D0, $1B(A5)
-	MOVE.l	#loc_0000A842, $2(A5)
+	MOVE.l	#EnemyTick_SequentialFire, $2(A5)
 	BSR.w	InitEnemyProjectileSpeed
 	MOVE.l	#AddSpriteToDisplayList, $2(A6)
 	MOVE.b	#$0E, $6(A6)
@@ -11691,10 +11691,10 @@ loc_0000A800:
 	MOVE.w	#$0028, $3C(A5)
 	RTS
 	
-loc_0000A842:
+EnemyTick_SequentialFire:
 	BSR.w	CheckAndUpdateBattleTimer
 	BGT.w	loc_0000A854
-	MOVE.l	#loc_00009394, $2(A5)
+	MOVE.l	#EnemyDeathReward_OneSprite, $2(A5)
 	RTS
 	
 loc_0000A854:
@@ -11775,7 +11775,7 @@ loc_0000A922:
 	ANDI.b	#7, D1
 	ASL.b	#5, D1
 	MOVE.b	D1, $18(A6)
-	MOVE.l	#loc_0000AA30, $2(A6)
+	MOVE.l	#ProjectileTick_Spiral, $2(A6)
 	SUBQ.b	#1, $3B(A5)
 	BNE.w	loc_0000A9B4
 	ADDQ.b	#1, $3A(A5)
@@ -11828,7 +11828,7 @@ loc_0000AA1A:
 	JSR	AddSpriteToDisplayList(PC)
 	RTS
 	
-loc_0000AA30:
+ProjectileTick_Spiral:
 	ADDQ.w	#1, $2A(A5)
 	ADDQ.b	#4, $18(A5)
 	LEA	SineTable, A0
@@ -11874,10 +11874,10 @@ loc_0000AA9E:
 loc_0000AAD2:
 	RTS
 	
-loc_0000AAD4:
+InitEnemy_SpiralBurst:
 	BSR.w	InitEnemyAI
 	BSR.w	SetObjectBoundsType1
-	MOVE.l	#loc_0000AB0C, $2(A5)
+	MOVE.l	#EnemyTick_SpiralBurst, $2(A5)
 	MOVE.b	#$0E, $6(A5)
 	MOVE.l	#AddSpriteToDisplayList, $2(A6)
 	MOVE.b	#$0E, $6(A6)
@@ -11887,10 +11887,10 @@ loc_0000AAD4:
 	MOVE.w	D0, $3C(A5)
 	RTS
 	
-loc_0000AB0C:
+EnemyTick_SpiralBurst:
 	BSR.w	CheckAndUpdateBattleTimer
 	BGT.w	loc_0000AB1E
-	MOVE.l	#loc_00009394, $2(A5)	
+	MOVE.l	#EnemyDeathReward_OneSprite, $2(A5)	
 	RTS
 	
 loc_0000AB1E:
@@ -11972,7 +11972,7 @@ loc_0000ABEA:
 	MOVE.w	D7, D1
 	ASL.w	#6, D1
 	MOVE.b	D1, $27(A6)
-	MOVE.l	#loc_0000ACEA, $2(A6)
+	MOVE.l	#ProjectileTick_OrbitingSpiral, $2(A6)
 	DBF	D7, loc_0000ABEA
 	ADDQ.w	#1, $3A(A5)
 	MOVE.w	#$0078, $3C(A5)
@@ -12020,7 +12020,7 @@ loc_0000ACC4:
 	JSR	AddSpriteToDisplayList(PC)
 	RTS
 	
-loc_0000ACEA:
+ProjectileTick_OrbitingSpiral:
 	CMPI.w	#$0040, $2A(A5)
 	BLT.w	loc_0000AD0C
 	JSR	CalculateVelocityFromAngle(PC)
@@ -12078,13 +12078,13 @@ loc_0000AD7E:
 loc_0000ADB2:
 	RTS
 	
-loc_0000ADB4:
+InitBoss_OrbShield:
 	JSR	GetRandomNumber
 	MOVE.b	D0, $1B(A5)
 	ANDI.b	#6, D0
 	MOVE.b	D0, $18(A5)
 	MOVE.b	#$0F, $6(A5)
-	MOVE.l	#loc_0000AE64, $2(A5)
+	MOVE.l	#BossTick_OrbShield, $2(A5)
 	BSR.w	SetObjectBoundsType2
 	CLR.w	D0
 	MOVE.b	$1(A5), D0
@@ -12097,7 +12097,7 @@ loc_0000ADB4:
 	MOVE.l	$12(A5), D1
 	SUBI.l	#$00080000, D1
 	MOVE.l	D1, $12(A6)
-	MOVE.l	#loc_0000B48C, $2(A6)
+	MOVE.l	#BossOrbTick_Static, $2(A6)
 	CLR.l	$32(A6)
 	CLR.l	$36(A6)
 	MOVE.w	#4, $1C(A6)
@@ -12116,7 +12116,7 @@ loc_0000ADB4:
 	CLR.w	$36(A5)
 	RTS
 	
-loc_0000AE64:
+BossTick_OrbShield:
 	TST.b	$1A(A5)
 	BLE.w	loc_0000AE74
 	SUBQ.b	#1, $1A(A5)	
@@ -12221,14 +12221,14 @@ loc_0000AF4A:
 	JSR	AddSpriteToDisplayList(PC)
 	RTS
 	
-loc_0000AFB6:
+InitBoss_MultiOrb:
 	JSR	GetRandomNumber
 	MOVE.b	D0, $1B(A5)
 	ANDI.b	#6, D0
 	MOVE.b	D0, $18(A5)
 	MOVE.b	#$0F, $6(A5)
 	BSR.w	SetObjectBoundsType2
-	MOVE.l	#loc_0000B06A, $2(A5)
+	MOVE.l	#BossTick_MultiOrb, $2(A5)
 	MOVE.b	$7(A5), D2
 	LEA	(A5), A6
 	MOVE.w	#8, D7
@@ -12245,7 +12245,7 @@ loc_0000AFE4:
 	MOVE.l	$12(A5), D1
 	SUBI.l	#$00080000, D1
 	MOVE.l	D1, $12(A6)
-	MOVE.l	#loc_0000B48C, $2(A6)
+	MOVE.l	#BossOrbTick_Static, $2(A6)
 	CLR.l	$32(A6)
 	CLR.l	$36(A6)
 	MOVE.w	#4, $1C(A6)
@@ -12263,7 +12263,7 @@ loc_0000AFE4:
 	CLR.w	$36(A5)
 	RTS
 	
-loc_0000B06A:
+BossTick_MultiOrb:
 	TST.b	$1A(A5)
 	BLE.w	loc_0000B07A
 	SUBQ.b	#1, $1A(A5)	
@@ -12279,7 +12279,7 @@ loc_0000B07A:
 loc_0000B09A:
 	TST.w	$28(A5)
 	BGT.w	loc_0000B0AC
-	MOVE.l	#loc_0000B50C, $2(A5)	
+	MOVE.l	#BossDeathReward_MultiSprite, $2(A5)	
 	RTS
 	
 loc_0000B0AC:
@@ -12396,13 +12396,13 @@ loc_0000B1F2:
 	JSR	AddSpriteToDisplayList(PC)
 	RTS
 	
-loc_0000B212:
+InitBoss_OrbRing:
 	JSR	GetRandomNumber
 	MOVE.b	D0, $1B(A5)
 	ANDI.b	#6, D0
 	MOVE.b	D0, $18(A5)
 	MOVE.b	#$0F, $6(A5)
-	MOVE.l	#loc_0000B32A, $2(A5)
+	MOVE.l	#BossTick_OrbRing, $2(A5)
 	BSR.w	SetObjectBoundsType2
 	CLR.w	D0
 	MOVE.b	$1(A5), D0
@@ -12418,7 +12418,7 @@ loc_0000B212:
 	MOVE.b	D2, $7(A6)
 	MOVE.w	#$0199, D3
 	MOVE.w	D3, $8(A6)
-	MOVE.l	#loc_0000B48C, $2(A6)
+	MOVE.l	#BossOrbTick_Static, $2(A6)
 	CLR.l	$32(A6)
 	CLR.l	$36(A6)
 	MOVE.w	#4, $1C(A6)
@@ -12441,7 +12441,7 @@ loc_0000B2AA:
 	ADDI.w	#$0010, D0
 	MOVE.b	D0, $3A(A6)
 	JSR	CalculateCircularPosition(PC)
-	MOVE.l	#loc_0000B48C, $2(A6)
+	MOVE.l	#BossOrbTick_Static, $2(A6)
 	CLR.l	$32(A6)
 	CLR.l	$36(A6)
 	MOVE.w	#4, $1C(A6)
@@ -12459,7 +12459,7 @@ loc_0000B2AA:
 	CLR.w	$36(A5)
 	RTS
 	
-loc_0000B32A:
+BossTick_OrbRing:
 	TST.b	$1A(A5)
 	BLE.w	loc_0000B33A
 	SUBQ.b	#1, $1A(A5)	
@@ -12475,7 +12475,7 @@ loc_0000B33A:
 loc_0000B35A:
 	TST.w	$28(A5)
 	BGT.w	loc_0000B36C
-	MOVE.l	#loc_0000B50C, $2(A5)
+	MOVE.l	#BossDeathReward_MultiSprite, $2(A5)
 	RTS
 	
 loc_0000B36C:
@@ -12571,7 +12571,7 @@ loc_0000B478:
 	JSR	AddSpriteToDisplayList(PC)
 	RTS
 
-loc_0000B48C:	
+BossOrbTick_Static:	
 	CLR.l	$32(A5)
 	CLR.l	$36(A5)
 	MOVE.w	$E(A5), $A(A5)
@@ -12610,7 +12610,7 @@ CalculateCircularPosition:
 	MOVE.w	D0, $12(A6)
 	RTS
 
-loc_0000B50C:
+BossDeathReward_MultiSprite:
 	MOVE.b	#$B1, D0
 	JSR	QueueSoundEffect
 	MOVEQ	#0, D0
@@ -12623,7 +12623,7 @@ loc_0000B50C:
 	JSR	AddPaymentAmount
 	SUBQ.w	#1, Number_Of_Enemies.w
 	CLR.b	$1B(A5)
-	MOVE.l	#loc_0000944E, $2(A5)
+	MOVE.l	#EnemyDeathAnimation, $2(A5)
 	MOVE.b	#$60, $7(A5)
 	MOVE.b	#$0F, $6(A5)
 	CLR.w	D0
@@ -12723,7 +12723,7 @@ InitEnemyAI:
 	MOVE.b	D0, $1B(A5)
 	ANDI.b	#6, D0
 	MOVE.b	D0, $18(A5)
-	MOVE.l	#loc_0000A662, $2(A6)
+	MOVE.l	#EnemyChildSpriteTick, $2(A6)
 	CLR.b	$1A(A5)
 	CLR.w	$3A(A5)
 	CLR.w	$3C(A5)
@@ -12821,21 +12821,21 @@ InitBattleEntities:
 	
 ; loc_0000B7C4
 BattleEntityInitJumpTable:
-	BRA.w	loc_0000B7FC
-	BRA.w	loc_0000D186
-	BRA.w	loc_0000C20E
-	BRA.w	loc_0000C244
-	BRA.w	loc_0000E50C
-	BRA.w	loc_0000ECE2
-	BRA.w	loc_0000ECF4
-	BRA.w	loc_0000ED06
-	BRA.w	loc_0000B824
-	BRA.w	loc_0000B84C
-	BRA.w	loc_0000D1A0
-	BRA.w	loc_0000C27A
-	BRA.w	loc_0000E520
-	BRA.w	loc_0000D9CA
-loc_0000B7FC:
+	BRA.w	InitBoss1_Normal
+	BRA.w	InitDemonBoss_Normal
+	BRA.w	InitTwoHeadedDragon_Normal
+	BRA.w	InitTwoHeadedDragon_Hard
+	BRA.w	InitHydraBoss_Normal
+	BRA.w	InitRingGuardian_Normal
+	BRA.w	InitRingGuardian_Hard
+	BRA.w	InitRingGuardian_VeryHard
+	BRA.w	InitBoss1_Hard
+	BRA.w	InitBoss1_VeryHard
+	BRA.w	InitDemonBoss_Hard
+	BRA.w	InitTwoHeadedDragon_VeryHard
+	BRA.w	InitHydraBoss_Hard
+	BRA.w	InitOrbitBoss
+InitBoss1_Normal:
 	MOVEA.l	Enemy_list_ptr.w, A6
 	MOVE.w	#$0032, $2C(A6)
 	MOVE.w	#$03E8, $28(A6)
@@ -12843,8 +12843,8 @@ loc_0000B7FC:
 	MOVE.w	#$0032, $2C(A6)
 	MOVEA.l	Object_slot_04_ptr.w, A6
 	MOVE.w	#$0032, $2C(A6)
-	BRA.w	loc_0000B870
-loc_0000B824:
+	BRA.w	InitBoss1_Common
+InitBoss1_Hard:
 	MOVEA.l	Enemy_list_ptr.w, A6
 	MOVE.w	#$0186, $2C(A6)
 	MOVE.w	#$1388, $28(A6)
@@ -12852,8 +12852,8 @@ loc_0000B824:
 	MOVE.w	#$0186, $2C(A6)
 	MOVEA.l	Object_slot_04_ptr.w, A6
 	MOVE.w	#$0186, $2C(A6)
-	BRA.w	loc_0000B870
-loc_0000B84C:
+	BRA.w	InitBoss1_Common
+InitBoss1_VeryHard:
 	MOVEA.l	Enemy_list_ptr.w, A6
 	MOVE.w	#$01D6, $2C(A6)
 	MOVE.w	#$1388, $28(A6)
@@ -12861,7 +12861,7 @@ loc_0000B84C:
 	MOVE.w	#$01D6, $2C(A6)
 	MOVEA.l	Object_slot_04_ptr.w, A6
 	MOVE.w	#$01D6, $2C(A6)
-loc_0000B870:
+InitBoss1_Common:
 	MOVEA.l	Enemy_list_ptr.w, A6
 	CLR.w	Boss_ai_state.w
 	CLR.b	$1B(A6)
@@ -12885,7 +12885,7 @@ loc_0000B870:
 	MOVE.w	(A0)+, $8(A6)
 	MOVE.w	#$006E, $E(A6)
 	MOVE.w	#$0060, $12(A6)
-	MOVE.l	#loc_0000BB02, $2(A6)
+	MOVE.l	#Boss1_MainTick, $2(A6)
 	MOVE.w	#4, D7
 loc_0000B8F2:
 	BSR.w	InitNextSpriteSlot
@@ -13004,7 +13004,7 @@ loc_0000BAAE:
 	BSR.w	DrawBossAttackGraphic1
 	RTS
 	
-loc_0000BB02:
+Boss1_MainTick:
 	MOVE.w	Boss_ai_state.w, D0
 	ANDI.w	#$000F, D0
 	LEA	BossAiStateJumpTable, A0
@@ -13020,23 +13020,23 @@ loc_0000BB02:
 	
 ; loc_0000BB2E
 BossAiStateJumpTable:
-	BRA.w	loc_0000BB52
-	BRA.w	loc_0000BB66
-	BRA.w	loc_0000BBB0
-	BRA.w	loc_0000BBCE
-	BRA.w	loc_0000BC28
-	BRA.w	loc_0000BC5C
-	BRA.w	loc_0000BC9E
-	BRA.w	loc_0000BBF6
-	BRA.w	loc_0000BC7E
-loc_0000BB52:
+	BRA.w	Boss1State_InitIdle
+	BRA.w	Boss1State_ChooseAction
+	BRA.w	Boss1State_MoveDown
+	BRA.w	Boss1State_HeadExtend
+	BRA.w	Boss1State_AttackWait
+	BRA.w	Boss1State_LungeLeft
+	BRA.w	Boss1State_ReturnHome
+	BRA.w	Boss1State_HeadRetract
+	BRA.w	Boss1State_ChargeDownLeft
+Boss1State_InitIdle:
 	JSR	GetRandomNumber
 	ANDI.w	#$003F, D0
 	MOVE.b	D0, $1A(A5)
 	ADDQ.w	#1, Boss_ai_state.w
 	RTS
 	
-loc_0000BB66:
+Boss1State_ChooseAction:
 	SUBQ.b	#1, $1A(A5)
 	BGE.w	loc_0000BBAE
 	BSR.w	CheckPlayerLeftOfScreen
@@ -13056,7 +13056,7 @@ loc_0000BB98:
 loc_0000BBAE:
 	RTS
 	
-loc_0000BBB0:
+Boss1State_MoveDown:
 	CMPI.w	#$0096, $12(A5)
 	BLE.b	loc_0000BBCC
 	MOVE.w	#3, Boss_ai_state.w
@@ -13067,7 +13067,7 @@ loc_0000BBBE:
 loc_0000BBCC:
 	RTS
 	
-loc_0000BBCE:
+Boss1State_HeadExtend:
 	SUBQ.b	#1, $1A(A5)
 	BGE.b	loc_0000BBE0
 	MOVE.w	#4, Boss_ai_state.w
@@ -13078,7 +13078,7 @@ loc_0000BBE0:
 	ADDI.l	#$4000, $12(A6)
 	RTS
 	
-loc_0000BBF6:
+Boss1State_HeadRetract:
 	SUBQ.b	#1, $1A(A5)
 	BGE.b	loc_0000BC12
 	MOVE.w	#6, Boss_ai_state.w
@@ -13090,7 +13090,7 @@ loc_0000BC12:
 	SUBI.l	#$4000, $12(A6)
 	RTS
 	
-loc_0000BC28:
+Boss1State_AttackWait:
 	SUBQ.b	#1, $1A(A5)
 	BGE.b	loc_0000BC3C
 	MOVE.b	#$28, $1A(A5)
@@ -13108,7 +13108,7 @@ loc_0000BC3C:
 loc_0000BC5A:
 	RTS
 	
-loc_0000BC5C:
+Boss1State_LungeLeft:
 	MOVE.w	$E(A5), D0
 	CMPI.w	#$005A, D0
 	BGE.b	loc_0000BC7C
@@ -13118,7 +13118,7 @@ loc_0000BC5C:
 loc_0000BC7C:
 	RTS
 
-loc_0000BC7E:
+Boss1State_ChargeDownLeft:
 	CMPI.w	#$0096, $12(A5)
 	BLE.b	loc_0000BC9C
 	MOVE.w	#6, Boss_ai_state.w
@@ -13127,7 +13127,7 @@ loc_0000BC7E:
 loc_0000BC9C:
 	RTS
 
-loc_0000BC9E:
+Boss1State_ReturnHome:
 	MOVE.w	$12(A5), D0
 	CMPI.w	#$0060, D0
 	BGT.b	loc_0000BD02
@@ -13151,7 +13151,7 @@ loc_0000BC9E:
 loc_0000BD02:
 	RTS
 
-loc_0000BD04:
+Boss1_DeathSequence:
 	CLR.l	$32(A5)
 	MOVE.l	#$8000, $36(A5)
 	MOVE.b	#0, $1B(A5)
@@ -13169,12 +13169,12 @@ loc_0000BD04:
 	CLR.l	$32(A6)
 	MOVE.l	#$8000, $36(A6)
 	BSR.w	UpdateSpritePositionAndRender
-	MOVE.l	#loc_0000BD76, $2(A5)
+	MOVE.l	#Boss1_DeathFall, $2(A5)
 	MOVE.w	#$00C0, D0
 	JSR	QueueSoundEffect
 	RTS
 
-loc_0000BD76:
+Boss1_DeathFall:
 	CLR.w	D0
 	TST.l	$36(A5)
 	BLE.b	loc_0000BD8A
@@ -13536,7 +13536,7 @@ loc_0000C20A:
 	CLR.w	D0
 	RTS
 
-loc_0000C20E:
+InitTwoHeadedDragon_Normal:
 	MOVEA.l	Enemy_list_ptr.w, A6
 	MOVE.w	#$003C, $2C(A6)
 	MOVEA.l	Object_slot_05_ptr.w, A6
@@ -13547,8 +13547,8 @@ loc_0000C20E:
 	MOVE.w	#$0AF0, $28(A6)
 	MOVEA.l	Object_slot_03_ptr.w, A6
 	MOVE.w	#$0AF0, $28(A6)
-	BRA.w	loc_0000C2AC
-loc_0000C244:
+	BRA.w	InitTwoHeadedDragon_Common
+InitTwoHeadedDragon_Hard:
 	MOVEA.l	Enemy_list_ptr.w, A6
 	MOVE.w	#$0064, $2C(A6)
 	MOVEA.l	Object_slot_05_ptr.w, A6
@@ -13559,8 +13559,8 @@ loc_0000C244:
 	MOVE.w	#$0DAC, $28(A6)
 	MOVEA.l	Object_slot_03_ptr.w, A6
 	MOVE.w	#$0DAC, $28(A6)
-	BRA.w	loc_0000C2AC
-loc_0000C27A:
+	BRA.w	InitTwoHeadedDragon_Common
+InitTwoHeadedDragon_VeryHard:
 	MOVEA.l	Enemy_list_ptr.w, A6
 	MOVE.w	#$00B4, $2C(A6)
 	MOVEA.l	Object_slot_05_ptr.w, A6
@@ -13571,7 +13571,7 @@ loc_0000C27A:
 	MOVE.w	#$1D4C, $28(A6)
 	MOVEA.l	Object_slot_03_ptr.w, A6
 	MOVE.w	#$1D4C, $28(A6)
-loc_0000C2AC:
+InitTwoHeadedDragon_Common:
 	CLR.b	Boss_defeated_flag.w
 	CLR.b	Boss_death_anim_done.w
 	MOVEA.l	Enemy_list_ptr.w, A6
@@ -13591,7 +13591,7 @@ loc_0000C2AC:
 	MOVE.w	(A0)+, $8(A6)
 	MOVE.w	#$00D1, $E(A6)
 	MOVE.w	#$007D, $12(A6)
-	MOVE.l	#loc_0000C5C6, $2(A6)
+	MOVE.l	#TwoHeadedDragon_MainTick, $2(A6)
 	MOVE.w	#1, D7
 loc_0000C30E:
 	BSR.w	InitNextSpriteSlot
@@ -13762,7 +13762,7 @@ loc_0000C5AE:
 	JSR	AddSpriteToDisplayList
 	RTS
 	
-loc_0000C5C6:
+TwoHeadedDragon_MainTick:
 	TST.b	Boss_defeated_flag.w
 	BEQ.b	loc_0000C5D4
 	TST.b	Boss_death_anim_done.w
@@ -14166,7 +14166,7 @@ loc_0000CB3A:
 	MOVE.w	Player_str.w, D0
 	SUB.w	D0, $28(A6)
 	BCC.b	loc_0000CB66
-	MOVE.l	#loc_0000BD04, $2(A6)
+	MOVE.l	#Boss1_DeathSequence, $2(A6)
 	BSR.w	ProcessBattleVictoryEvent
 	RTS
 
@@ -14657,18 +14657,18 @@ loc_0000D116:
 	dc.l	$0 
 	dc.l	$0 
 
-loc_0000D186:
+InitDemonBoss_Normal:
 	MOVEA.l	Enemy_list_ptr.w, A6
 	MOVE.w	#$05DC, $28(A6)
 	MOVE.w	#$05DC, Boss_max_hp.w
 	MOVE.w	#$0048, $2C(A6)
-	BRA.w	loc_0000D1B6
-loc_0000D1A0:
+	BRA.w	InitDemonBoss_Common
+InitDemonBoss_Hard:
 	MOVEA.l	Enemy_list_ptr.w, A6
 	MOVE.w	#$270F, $28(A6)
 	MOVE.w	#$270F, Boss_max_hp.w
 	MOVE.w	#$00C8, $2C(A6)
-loc_0000D1B6:
+InitDemonBoss_Common:
 	MOVEA.l	Enemy_list_ptr.w, A6
 	BSET.b	#7, (A6)
 	MOVE.b	#$20, $7(A6)
@@ -14698,7 +14698,7 @@ loc_0000D1B6:
 	MOVE.w	#$0050, $4A(A6)
 	MOVE.w	#$0078, $4C(A6)
 	MOVE.w	#$0096, $4E(A6)
-	MOVE.l	#loc_0000D2F2, $2(A6)
+	MOVE.l	#DemonBoss_MainTick, $2(A6)
 	MOVE.w	#$0034, D7
 loc_0000D262:
 	CLR.w	D0
@@ -14733,7 +14733,7 @@ loc_0000D2A4:
 	DBF	D7, loc_0000D2A4
 	RTS
 
-loc_0000D2F2:
+DemonBoss_MainTick:
 	TST.b	Fade_in_lines_mask.w
 	BNE.b	loc_0000D31A
 	MOVE.b	$42(A5), D0
@@ -15251,7 +15251,7 @@ loc_0000D9C0:
 	dc.w	$0010 
 	dc.w	$0018 
 	dc.w	$0020 
-loc_0000D9CA:
+InitOrbitBoss:
 	MOVEA.l	Enemy_list_ptr.w, A6
 	BSET.b	#7, (A6)
 	CLR.b	$1B(A6)
@@ -15266,12 +15266,12 @@ loc_0000D9CA:
 	ASL.w	#3, D0
 	MOVE.w	D0, $3C(A6)
 	MOVE.w	#$008C, $2C(A6)
-	MOVE.l	#loc_0000DA18, $2(A6)
+	MOVE.l	#OrbitBoss_MainTick, $2(A6)
 	CLR.b	Boss_defeated_flag.w
 	CLR.b	Boss_death_anim_done.w
 	RTS
 	
-loc_0000DA18:
+OrbitBoss_MainTick:
 	BSR.w	CheckBossDamageAndKnockback
 	TST.w	$3C(A5)
 	BLE.b	loc_0000DA62
@@ -16060,16 +16060,16 @@ CalculateSineVelocity:
 	MOVE.l	D3, $36(A5)
 	RTS
 
-loc_0000E50C:
+InitHydraBoss_Normal:
 	MOVEA.l	Enemy_list_ptr.w, A6
 	MOVE.w	#$09C4, $28(A6)
 	MOVE.w	#$0064, $2C(A6)
-	BRA.w	loc_0000E530
-loc_0000E520:
+	BRA.w	InitHydraBoss_Common
+InitHydraBoss_Hard:
 	MOVEA.l	Enemy_list_ptr.w, A6
 	MOVE.w	#$1388, $28(A6)
 	MOVE.w	#$0078, $2C(A6)
-loc_0000E530:
+InitHydraBoss_Common:
 	CLR.w	Boss_ai_state.w
 	CLR.w	Boss_active_parts.w
 	MOVEA.l	Enemy_list_ptr.w, A6
@@ -16087,7 +16087,7 @@ loc_0000E530:
 	MOVE.w	#$00AC, $12(A6)
 	MOVE.w	$12(A6), $16(A6)
 	CLR.b	$1B(A6)
-	MOVE.l	#loc_0000E902, $2(A6)
+	MOVE.l	#HydraBoss_MainTick, $2(A6)
 	CLR.w	D0
 	MOVE.b	$1(A6), D0
 	LEA	(A6,D0.w), A6
@@ -16312,7 +16312,7 @@ loc_0000E8E8:
 	JSR	AddSpriteToDisplayList
 	RTS
 	
-loc_0000E902:
+HydraBoss_MainTick:
 	TST.b	Fade_in_lines_mask.w
 	BNE.w	loc_0000EA1C
 	TST.b	Battle_active_flag.w
@@ -16599,21 +16599,21 @@ loc_0000ECDE:
 	CLR.w	D0
 	RTS
 	
-loc_0000ECE2:
+InitRingGuardian_Normal:
 	MOVEA.l	Enemy_list_ptr.w, A6
 	MOVE.w	#6500, $28(A6)
 	MOVE.w	#180, $2C(A6)
-	BRA.b	loc_0000ED16
-loc_0000ECF4:
+	BRA.b	InitRingGuardian_Common
+InitRingGuardian_Hard:
 	MOVEA.l	Enemy_list_ptr.w, A6
 	MOVE.w	#7000, $28(A6)
 	MOVE.w	#200, $2C(A6)
-	BRA.b	loc_0000ED16
-loc_0000ED06:
+	BRA.b	InitRingGuardian_Common
+InitRingGuardian_VeryHard:
 	MOVEA.l	Enemy_list_ptr.w, A6
 	MOVE.w	#7000, $28(A6)
 	MOVE.w	#200, $2C(A6)
-loc_0000ED16:
+InitRingGuardian_Common:
 	MOVE.b	#$FF, Boss_max_hp.w
 	CLR.b	Boss_defeated_flag.w
 	MOVEA.l	Enemy_list_ptr.w, A6
@@ -16630,7 +16630,7 @@ loc_0000ED16:
 	MOVE.b	#$60, $31(A6)
 	MOVE.l	#$400, $20(A6)
 	CLR.b	$18(A6)
-	MOVE.l	#loc_0000EF1E, $2(A6)
+	MOVE.l	#RingGuardian_MainTick, $2(A6)
 	CLR.w	Boss_ai_state.w
 	MOVEA.l	Object_slot_02_ptr.w, A6
 	LEA	(A6), A4
@@ -16754,7 +16754,7 @@ loc_0000EF04:
 loc_0000EF1C:
 	RTS
 	
-loc_0000EF1E:
+RingGuardian_MainTick:
 	MOVE.w	Boss_ai_state.w, D0
 	ANDI.w	#$000F, D0
 	LEA	BossAiRingGuardianJumpTable, A0
@@ -39163,7 +39163,7 @@ loc_00024704:
 	dc.b	$00 
 	dc.w	$00C2
 loc_0002471C:
-	dc.l	loc_00009A72
+	dc.l	InitEnemy_Bouncing
 	dc.w	$005A
 	dc.w	$0000
 	dc.w	$0000
@@ -39174,7 +39174,7 @@ loc_0002471C:
 	dc.b	$00
 	dc.b	$02
 loc_00024736:
-	dc.l	loc_00009A72
+	dc.l	InitEnemy_Bouncing
 	dc.w	$0069
 	dc.w	$0000
 	dc.w	$0000
@@ -39185,7 +39185,7 @@ loc_00024736:
 	dc.b	$00
 	dc.b	$02
 loc_00024750:
-	dc.l	loc_00009A72
+	dc.l	InitEnemy_Bouncing
 	dc.w	$006A
 	dc.w	$0000
 	dc.w	$001F
@@ -39198,7 +39198,7 @@ loc_00024750:
 loc_0002476A:
 	dc.b	$00, $00, $9A, $72, $00, $6B, $00, $00, $00, $26, $00, $07, $1F, $40, $00, $6E, $03, $96, $01, $00, $00, $00, $05, $50, $00, $0E 
 loc_00024784:
-	dc.l	loc_00009A72
+	dc.l	InitEnemy_Bouncing
 	dc.w	$00AC
 	dc.w	$0000
 	dc.w	$0021
@@ -39209,7 +39209,7 @@ loc_00024784:
 	dc.b	$00
 	dc.b	$02
 loc_0002479E:
-	dc.l	loc_00009A72
+	dc.l	InitEnemy_Bouncing
 	dc.w	$00AD
 	dc.w	$0000
 	dc.w	$0003
@@ -39220,7 +39220,7 @@ loc_0002479E:
 	dc.b	$00
 	dc.b	$02
 loc_000247B8:
-	dc.l	loc_0000969A
+	dc.l	InitEnemy_StalkPause
 	dc.w	$004E
 	dc.w	$0000
 	dc.w	$0001
@@ -39231,7 +39231,7 @@ loc_000247B8:
 	dc.b	$00
 	dc.b	$02
 loc_000247D2:
-	dc.l	loc_0000969A
+	dc.l	InitEnemy_StalkPause
 	dc.w	$007B
 	dc.w	$0001
 	dc.w	$060E
@@ -39242,7 +39242,7 @@ loc_000247D2:
 	dc.b	$00
 	dc.b	$02
 loc_000247EC:
-	dc.l	loc_0000969A
+	dc.l	InitEnemy_StalkPause
 	dc.w	$007C
 	dc.w	$0001
 	dc.w	$1036
@@ -39253,7 +39253,7 @@ loc_000247EC:
 	dc.b	$00
 	dc.b	$02
 loc_00024806:
-	dc.l	loc_0000969A
+	dc.l	InitEnemy_StalkPause
 	dc.w	$007D
 	dc.w	$0001
 	dc.w	$0410
@@ -39264,7 +39264,7 @@ loc_00024806:
 	dc.b	$00
 	dc.b	$02
 loc_00024820:
-	dc.l	loc_0000947E
+	dc.l	InitEnemy_StandardMelee
 	dc.w	$004D
 	dc.w	$0001
 	dc.w	$1028
@@ -39275,7 +39275,7 @@ loc_00024820:
 	dc.b	$00
 	dc.b	$02
 loc_0002483A:
-	dc.l	loc_0000947E
+	dc.l	InitEnemy_StandardMelee
 	dc.w	$006C
 	dc.w	$0001
 	dc.w	$0816
@@ -39286,7 +39286,7 @@ loc_0002483A:
 	dc.b	$00
 	dc.b	$02
 loc_00024854:
-	dc.l	loc_0000947E
+	dc.l	InitEnemy_StandardMelee
 	dc.w	$006D
 	dc.w	$0001
 	dc.w	$102A
@@ -39297,7 +39297,7 @@ loc_00024854:
 	dc.b	$00
 	dc.b	$02
 loc_0002486E:
-	dc.l	loc_0000947E
+	dc.l	InitEnemy_StandardMelee
 	dc.w	$006E
 	dc.w	$0001
 	dc.w	$1032
@@ -39308,7 +39308,7 @@ loc_0002486E:
 	dc.b	$00
 	dc.b	$02
 loc_00024888:
-	dc.l	loc_0000995E
+	dc.l	InitEnemy_FleeChase
 	dc.w	$005B
 	dc.w	$FFFF
 	dc.w	$0000
@@ -39319,7 +39319,7 @@ loc_00024888:
 	dc.b	$00
 	dc.b	$02
 loc_000248A2:
-	dc.l	loc_0000995E
+	dc.l	InitEnemy_FleeChase
 	dc.w	$006F
 	dc.w	$0000
 	dc.w	$0000
@@ -39330,7 +39330,7 @@ loc_000248A2:
 	dc.b	$00
 	dc.b	$02
 loc_000248BC:
-	dc.l	loc_0000995E
+	dc.l	InitEnemy_FleeChase
 	dc.w	$0070
 	dc.w	$0000
 	dc.w	$001B
@@ -39341,7 +39341,7 @@ loc_000248BC:
 	dc.b	$00
 	dc.b	$02
 loc_000248D6:
-	dc.l	loc_0000995E
+	dc.l	InitEnemy_FleeChase
 	dc.w	$0071
 	dc.w	$0000
 	dc.w	$0024
@@ -39352,7 +39352,7 @@ loc_000248D6:
 	dc.b	$00
 	dc.b	$02
 loc_000248F0:
-	dc.l	loc_00009B90
+	dc.l	InitEnemy_ProjectileFire
 	dc.w	$0063
 	dc.w	$FFFF
 	dc.w	$0000
@@ -39363,7 +39363,7 @@ loc_000248F0:
 	dc.b	$00
 	dc.b	$0A
 loc_0002490A:
-	dc.l	loc_00009B90
+	dc.l	InitEnemy_ProjectileFire
 	dc.w	$00A4
 	dc.w	$0000
 	dc.w	$001B
@@ -39374,7 +39374,7 @@ loc_0002490A:
 	dc.b	$00
 	dc.b	$0A
 loc_00024924:
-	dc.l	loc_00009B90
+	dc.l	InitEnemy_ProjectileFire
 	dc.w	$00A5
 	dc.w	$0000
 	dc.w	$001C
@@ -39385,7 +39385,7 @@ loc_00024924:
 	dc.b	$00
 	dc.b	$0A
 loc_0002493E:
-	dc.l	loc_00009B90
+	dc.l	InitEnemy_ProjectileFire
 	dc.w	$00A6
 	dc.w	$0000
 	dc.w	$0029
@@ -39396,7 +39396,7 @@ loc_0002493E:
 	dc.b	$00
 	dc.b	$0A
 loc_00024958:
-	dc.l	loc_00009820
+	dc.l	InitEnemy_ProximityChase
 	dc.w	$005C
 	dc.w	$FFFF
 	dc.w	$0000
@@ -39407,7 +39407,7 @@ loc_00024958:
 	dc.b	$00
 	dc.b	$06
 loc_00024972:
-	dc.l	loc_00009820
+	dc.l	InitEnemy_ProximityChase
 	dc.w	$009E
 	dc.w	$0000
 	dc.w	$001B
@@ -39418,7 +39418,7 @@ loc_00024972:
 	dc.b	$00
 	dc.b	$06
 loc_0002498C:
-	dc.l	loc_00009820
+	dc.l	InitEnemy_ProximityChase
 	dc.w	$009F
 	dc.w	$0000
 	dc.w	$0027
@@ -39429,7 +39429,7 @@ loc_0002498C:
 	dc.b	$00
 	dc.b	$06
 loc_000249A6:
-	dc.l	loc_00009820
+	dc.l	InitEnemy_ProximityChase
 	dc.w	$00A0
 	dc.w	$0000
 	dc.w	$0020
@@ -39440,7 +39440,7 @@ loc_000249A6:
 	dc.b	$00
 	dc.b	$06
 loc_000249C0:
-	dc.l	loc_000094D2
+	dc.l	InitEnemy_StandardMeleeAlt
 	dc.w	$005D
 	dc.w	$FFFF
 	dc.w	$0000
@@ -39451,7 +39451,7 @@ loc_000249C0:
 	dc.b	$00
 	dc.b	$02
 loc_000249DA:
-	dc.l	loc_000094D2
+	dc.l	InitEnemy_StandardMeleeAlt
 	dc.w	$00A1
 	dc.w	$0001
 	dc.w	$0402
@@ -39462,7 +39462,7 @@ loc_000249DA:
 	dc.b	$00
 	dc.b	$02
 loc_000249F4:
-	dc.l	loc_000094D2
+	dc.l	InitEnemy_StandardMeleeAlt
 	dc.w	$00A2
 	dc.w	$0000
 	dc.w	$0003
@@ -39473,7 +39473,7 @@ loc_000249F4:
 	dc.b	$00
 	dc.b	$02
 loc_00024A0E:
-	dc.l	loc_000094D2
+	dc.l	InitEnemy_StandardMeleeAlt
 	dc.w	$00A3
 	dc.w	$0001
 	dc.w	$0819
@@ -39572,7 +39572,7 @@ loc_00024ADE:
 	dc.b	$00
 	dc.b	$02
 loc_00024AF8:
-	dc.l	loc_0000A0DC
+	dc.l	InitEnemy_RandomShooter
 	dc.w	$0066
 	dc.w	$FFFF
 	dc.w	$0000
@@ -39583,7 +39583,7 @@ loc_00024AF8:
 	dc.b	$00
 	dc.b	$08
 loc_00024B12:
-	dc.l	loc_0000A0DC
+	dc.l	InitEnemy_RandomShooter
 	dc.w	$00AA
 	dc.w	$0000
 	dc.w	$0002
@@ -39594,7 +39594,7 @@ loc_00024B12:
 	dc.b	$00
 	dc.b	$0C
 loc_00024B2C:
-	dc.l	loc_0000A0DC
+	dc.l	InitEnemy_RandomShooter
 	dc.w	$00AB
 	dc.w	$0000
 	dc.w	$0002
@@ -39605,7 +39605,7 @@ loc_00024B2C:
 	dc.b	$00
 	dc.b	$0C
 loc_00024B46:
-	dc.l	loc_0000A0DC
+	dc.l	InitEnemy_RandomShooter
 	dc.w	$00BC
 	dc.w	$0002
 	dc.w	$0207
@@ -39616,7 +39616,7 @@ loc_00024B46:
 	dc.b	$00
 	dc.b	$0C
 loc_00024B60:
-	dc.l	loc_00009528
+	dc.l	InitEnemy_StandardMeleeFast
 	dc.w	$0061
 	dc.w	$0001
 	dc.w	$102C
@@ -39629,7 +39629,7 @@ loc_00024B60:
 loc_00024B7A:
 	dc.b	$00, $00, $95, $28, $00, $BD, $00, $01, $10, $2D, $00, $07, $08, $98, $00, $31, $02, $08, $00, $68, $00, $00, $01, $60, $01, $02 
 loc_00024B94:
-	dc.l	loc_00009528
+	dc.l	InitEnemy_StandardMeleeFast
 	dc.w	$00BE
 	dc.w	$0001
 	dc.w	$0028
@@ -39640,7 +39640,7 @@ loc_00024B94:
 	dc.b	$01
 	dc.b	$02
 loc_00024BAE:
-	dc.l	loc_00009528
+	dc.l	InitEnemy_StandardMeleeFast
 	dc.w	$00BF
 	dc.w	$0001
 	dc.w	$002B
@@ -39651,7 +39651,7 @@ loc_00024BAE:
 	dc.b	$01
 	dc.b	$02
 loc_00024BC8:
-	dc.l	loc_0000ADB4
+	dc.l	InitBoss_OrbShield
 	dc.w	$0075
 	dc.w	$0000
 	dc.w	$001B
@@ -39662,7 +39662,7 @@ loc_00024BC8:
 	dc.b	$00
 	dc.b	$02
 loc_00024BE2:
-	dc.l	loc_0000ADB4
+	dc.l	InitBoss_OrbShield
 	dc.w	$00C0
 	dc.w	$0000
 	dc.w	$001B
@@ -39673,7 +39673,7 @@ loc_00024BE2:
 	dc.b	$00
 	dc.b	$02
 loc_00024BFC:
-	dc.l	loc_0000ADB4
+	dc.l	InitBoss_OrbShield
 	dc.w	$00C1
 	dc.w	$0000
 	dc.w	$001C
@@ -39684,7 +39684,7 @@ loc_00024BFC:
 	dc.b	$00
 	dc.b	$02
 loc_00024C16:
-	dc.l	loc_0000ADB4
+	dc.l	InitBoss_OrbShield
 	dc.w	$00C2
 	dc.w	$0000
 	dc.w	$0020
@@ -39695,7 +39695,7 @@ loc_00024C16:
 	dc.b	$00
 	dc.b	$02
 loc_00024C30:
-	dc.l	loc_0000A2AA
+	dc.l	InitEnemy_BurstFire
 	dc.w	$0063
 	dc.w	$0000
 	dc.w	$0000
@@ -39706,7 +39706,7 @@ loc_00024C30:
 	dc.b	$00
 	dc.b	$0A
 loc_00024C4A:
-	dc.l	loc_0000A2AA
+	dc.l	InitEnemy_BurstFire
 	dc.w	$00A4
 	dc.w	$0000
 	dc.w	$001D
@@ -39717,7 +39717,7 @@ loc_00024C4A:
 	dc.b	$00
 	dc.b	$0A
 loc_00024C64:
-	dc.l	loc_0000A2AA
+	dc.l	InitEnemy_BurstFire
 	dc.w	$00A5
 	dc.w	$0003
 	dc.w	$3000
@@ -39728,7 +39728,7 @@ loc_00024C64:
 	dc.b	$00
 	dc.b	$0A
 loc_00024C7E:
-	dc.l	loc_0000A2AA
+	dc.l	InitEnemy_BurstFire
 	dc.w	$00A6
 	dc.w	$FFFF
 	dc.w	$0002
@@ -39774,7 +39774,7 @@ loc_00024CE6:
 	dc.b	$01
 	dc.b	$02
 loc_00024D00:
-	dc.l	loc_0000A6AA
+	dc.l	InitEnemy_FastBurstShooter
 	dc.w	$0064
 	dc.w	$0003
 	dc.w	$0500
@@ -39785,7 +39785,7 @@ loc_00024D00:
 	dc.b	$01
 	dc.b	$02
 loc_00024D1A:
-	dc.l	loc_0000A6AA
+	dc.l	InitEnemy_FastBurstShooter
 	dc.w	$00B9
 	dc.w	$0000
 	dc.w	$001C
@@ -39796,7 +39796,7 @@ loc_00024D1A:
 	dc.b	$01
 	dc.b	$02
 loc_00024D34:
-	dc.l	loc_0000A6AA
+	dc.l	InitEnemy_FastBurstShooter
 	dc.w	$00BA
 	dc.w	$0000
 	dc.w	$002B
@@ -39809,7 +39809,7 @@ loc_00024D34:
 loc_00024D4E:
 	dc.b	$00, $00, $A6, $AA, $00, $BB, $00, $00, $00, $20, $03, $01, $0A, $8C, $00, $75, $05, $44, $01, $82, $00, $00, $01, $80, $01, $02 
 loc_00024D68:
-	dc.l	loc_0000A478
+	dc.l	InitEnemy_HomingShooter
 	dc.w	$0064
 	dc.w	$0000
 	dc.w	$001B
@@ -39820,7 +39820,7 @@ loc_00024D68:
 	dc.b	$01
 	dc.b	$02
 loc_00024D82:
-	dc.l	loc_0000A478
+	dc.l	InitEnemy_HomingShooter
 	dc.w	$00B9
 	dc.w	$0000
 	dc.w	$0021
@@ -39831,7 +39831,7 @@ loc_00024D82:
 	dc.b	$01
 	dc.b	$02
 loc_00024D9C:
-	dc.l	loc_0000A478
+	dc.l	InitEnemy_HomingShooter
 	dc.w	$00BA
 	dc.w	$0000
 	dc.w	$001C
@@ -39842,7 +39842,7 @@ loc_00024D9C:
 	dc.b	$01
 	dc.b	$02
 loc_00024DB6:
-	dc.l	loc_0000A478
+	dc.l	InitEnemy_HomingShooter
 	dc.w	$00BB
 	dc.w	$0000
 	dc.w	$0026
@@ -39853,7 +39853,7 @@ loc_00024DB6:
 	dc.b	$01
 	dc.b	$02
 loc_00024DD0:
-	dc.l	loc_0000A1E4
+	dc.l	InitEnemy_Teleporter
 	dc.w	$0066
 	dc.w	$0000
 	dc.w	$0001
@@ -39864,7 +39864,7 @@ loc_00024DD0:
 	dc.b	$00
 	dc.b	$08
 loc_00024DEA:
-	dc.l	loc_0000A1E4
+	dc.l	InitEnemy_Teleporter
 	dc.w	$00AA
 	dc.w	$FFFF
 	dc.w	$0000
@@ -39875,7 +39875,7 @@ loc_00024DEA:
 	dc.b	$00
 	dc.b	$0C
 loc_00024E04:
-	dc.l	loc_0000A1E4
+	dc.l	InitEnemy_Teleporter
 	dc.w	$00AB
 	dc.w	$0003
 	dc.w	$1000
@@ -39886,7 +39886,7 @@ loc_00024E04:
 	dc.b	$00
 	dc.b	$0C
 loc_00024E1E:
-	dc.l	loc_0000A1E4
+	dc.l	InitEnemy_Teleporter
 	dc.w	$00BC
 	dc.w	$0002
 	dc.w	$0205
@@ -39897,7 +39897,7 @@ loc_00024E1E:
 	dc.b	$00
 	dc.b	$0C
 loc_00024E38:
-	dc.l	loc_0000A800
+	dc.l	InitEnemy_SequentialFire
 	dc.w	$0066
 	dc.w	$0000
 	dc.w	$0001
@@ -39908,7 +39908,7 @@ loc_00024E38:
 	dc.b	$00
 	dc.b	$08
 loc_00024E52:
-	dc.l	loc_0000A800
+	dc.l	InitEnemy_SequentialFire
 	dc.w	$00AA
 	dc.w	$0000
 	dc.w	$0001
@@ -39919,7 +39919,7 @@ loc_00024E52:
 	dc.b	$00
 	dc.b	$0C
 loc_00024E6C:
-	dc.l	loc_0000A800
+	dc.l	InitEnemy_SequentialFire
 	dc.w	$00AB
 	dc.w	$0000
 	dc.w	$0002
@@ -39930,7 +39930,7 @@ loc_00024E6C:
 	dc.b	$00
 	dc.b	$0C
 loc_00024E86:
-	dc.l	loc_0000A800
+	dc.l	InitEnemy_SequentialFire
 	dc.w	$00BC
 	dc.w	$0003
 	dc.w	$1000
@@ -39941,7 +39941,7 @@ loc_00024E86:
 	dc.b	$00
 	dc.b	$04
 loc_00024EA0:
-	dc.l	loc_0000AFB6
+	dc.l	InitBoss_MultiOrb
 	dc.w	$0075
 	dc.w	$0000
 	dc.w	$0000
@@ -39952,7 +39952,7 @@ loc_00024EA0:
 	dc.b	$00
 	dc.b	$02
 loc_00024EBA:
-	dc.l	loc_0000AFB6
+	dc.l	InitBoss_MultiOrb
 	dc.w	$00C0
 	dc.w	$0000
 	dc.w	$001C
@@ -39963,7 +39963,7 @@ loc_00024EBA:
 	dc.b	$00
 	dc.b	$02
 loc_00024ED4:
-	dc.l	loc_0000AFB6
+	dc.l	InitBoss_MultiOrb
 	dc.w	$00C1
 	dc.w	$0000
 	dc.w	$001B
@@ -39974,7 +39974,7 @@ loc_00024ED4:
 	dc.b	$00
 	dc.b	$02
 loc_00024EEE:
-	dc.l	loc_0000AFB6
+	dc.l	InitBoss_MultiOrb
 	dc.w	$00C2
 	dc.w	$0000
 	dc.w	$001C
@@ -39985,7 +39985,7 @@ loc_00024EEE:
 	dc.b	$00
 	dc.b	$06
 loc_00024F08:
-	dc.l	loc_0000B212
+	dc.l	InitBoss_OrbRing
 	dc.w	$0075
 	dc.w	$0000
 	dc.w	$001B
@@ -39996,7 +39996,7 @@ loc_00024F08:
 	dc.b	$00
 	dc.b	$02
 loc_00024F22:
-	dc.l	loc_0000B212
+	dc.l	InitBoss_OrbRing
 	dc.w	$00C0
 	dc.w	$0000
 	dc.w	$001C
@@ -40007,7 +40007,7 @@ loc_00024F22:
 	dc.b	$00
 	dc.b	$02
 loc_00024F3C:
-	dc.l	loc_0000B212
+	dc.l	InitBoss_OrbRing
 	dc.w	$00C1
 	dc.w	$0003
 	dc.w	$5000
@@ -40018,7 +40018,7 @@ loc_00024F3C:
 	dc.b	$00
 	dc.b	$02
 loc_00024F56:
-	dc.l	loc_0000B212
+	dc.l	InitBoss_OrbRing
 	dc.w	$00C2
 	dc.w	$0000
 	dc.w	$0027
@@ -40029,7 +40029,7 @@ loc_00024F56:
 	dc.b	$00
 	dc.b	$0A
 loc_00024F70:
-	dc.l	loc_0000AAD4
+	dc.l	InitEnemy_SpiralBurst
 	dc.w	$00A6
 	dc.w	$0000
 	dc.w	$0029
@@ -40040,7 +40040,7 @@ loc_00024F70:
 	dc.b	$00
 	dc.b	$0A
 loc_00024F8A:
-	dc.l	loc_0000AAD4
+	dc.l	InitEnemy_SpiralBurst
 	dc.w	$00A6
 	dc.w	$0000
 	dc.w	$0020
@@ -40051,7 +40051,7 @@ loc_00024F8A:
 	dc.b	$00
 	dc.b	$0E
 loc_00024FA4:
-	dc.l	loc_0000969A
+	dc.l	InitEnemy_StalkPause
 	dc.w	$007B
 	dc.w	$0003
 	dc.w	$3000
