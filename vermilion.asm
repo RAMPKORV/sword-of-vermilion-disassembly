@@ -12,20 +12,23 @@ InitPSG:
 	DBF	D6, InitPSG
 	RTS
 
-loc_00000214:
+; ClearRAMAndInitHardware
+ClearRAMAndInitHardware:
 	clearRAM Tilemap_buffer_plane_a, Ram_clear_end
 	BSR.w	InitZ80SoundDriver
 	BSR.w	InitVDPAndClearVRAM
 	BSR.w	InitYM2612
 	RTS
 
-loc_00000232:
+; InitPlayerInventoryDefaults
+InitPlayerInventoryDefaults:
 	MOVE.w	#0, Possessed_items_length.w
 	MOVE.w	#0, Possessed_magics_length.w
 	MOVE.w	#0, Possessed_equipment_length.w
 	MOVE.w	#$FFFF, Equipped_sword.w
 	MOVE.w	#$FFFF, Equipped_shield.w
-loc_00000250:
+; InitEquipmentAndLevel
+InitEquipmentAndLevel:
 	MOVE.w	#$FFFF, Equipped_armor.w
 	MOVE.w	#$FFFF, Readied_magic.w
 	MOVE.w	#$FFFF, Equipped_unused.w
@@ -42,7 +45,8 @@ ClearVRAMSprites:
 	MOVE.b	#0, D5
 	MOVE.w	#1, D4
 	JSR	VDP_DMAFill
-loc_00000298:
+; ClearVRAMSprites_End
+ClearVRAMSprites_End:
 	RTS
 
 ClearVSRAM:
@@ -83,13 +87,15 @@ ClearVRAMPlaneB:
 	RTS
 
 ; Unused DMA fill fragment - sets D6 only, expects D7/D5/D4 preset
-loc_00000304:
+; DMAFillPartial
+DMAFillPartial:
 	MOVE.w	#$1FFF, D6
 	JSR	VDP_DMAFill
 	RTS
 
 ; Unused - DMA fill VRAM $B000, length $0DFF (window/sprite area)
-loc_00000310:
+; DMAFillWindowSpriteArea
+DMAFillWindowSpriteArea:
 	MOVE.l	#$70000002, D7
 	MOVE.w	#$0DFF, D6
 	MOVE.b	#0, D5
@@ -107,12 +113,12 @@ InitYM2612:
 	RTS
 
 InitVDPAndClearVRAM:
-	LEA	loc_00000696, A0
+	LEA	VDPRegisterDefaults, A0
 	MOVEQ	#$0000000F, D0
 loc_00000362:
 	MOVE.w	(A0)+, VDP_control_port
 	DBF	D0, loc_00000362
-	LEA	loc_00000696, A0
+	LEA	VDPRegisterDefaults, A0
 	LEA	VDP_regs_cache.w, A1
 	MOVE.l	(A0)+, (A1)+
 	MOVE.l	(A0)+, (A1)+
@@ -132,7 +138,8 @@ loc_00000362:
 	RTS
 
 ; Unused - DMA fill entire VRAM ($0000, length $FFFF)
-loc_000003BC:
+; DMAFillEntireVRAM
+DMAFillEntireVRAM:
 	MOVE.l	#$40000000, D7
 	MOVE.w	#$FFFF, D6
 	MOVE.b	#0, D5
@@ -154,14 +161,15 @@ loc_000003F2:
 ;LoadZ80Driver:
 LoadZ80Driver: ; Send below chunk of data into Z80 RAM
 	LEA	$00A00000, A1
-	LEA	loc_0000041C, A2
+	LEA	Z80DriverBinary, A2
 	MOVE.w	#$013F, D6
 loc_00000414:
 	MOVE.b	(A2)+, (A1)+
 	DBF	D6, loc_00000414
 	RTS
 
-loc_0000041C:
+; Z80DriverBinary
+Z80DriverBinary:
 	dc.b	$F3, $F3, $31, $F0, $1F, $3E, $80, $32, $FF, $1F, $AF, $32, $FD, $1F, $C3, $68, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 
 	dc.b	$00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $ED, $4D, $00, $00, $00, $00, $00, $00 
 	dc.b	$00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 
@@ -183,36 +191,44 @@ InitGameplayObjects:
 	BRA.w	InitObjectsFromTable
 InitBattleObjects:
 	LEA	Object_table_base.w, A0
-	LEA	loc_000008AC, A1
+	LEA	BattleObjectInitTable, A1
 	BRA.w	InitObjectsFromTable
-loc_00000586:
+; InitBossObjects_TypeA
+InitBossObjects_TypeA:
 	LEA	Object_table_base.w, A0
-	LEA	loc_00000A7E, A1
+	LEA	BossObjectInitTable_A, A1
 	BRA.w	InitObjectsFromTable
-loc_00000594:
+; InitBossObjects_TypeB
+InitBossObjects_TypeB:
 	LEA	Object_table_base.w, A0
-	LEA	loc_00000B50, A1
+	LEA	BossObjectInitTable_B, A1
 	BRA.w	InitObjectsFromTable
-loc_000005A2:
+; InitBossObjects_TypeC
+InitBossObjects_TypeC:
 	LEA	Object_table_base.w, A0
-	LEA	loc_00000BF2, A1
+	LEA	BossObjectInitTable_C, A1
 	BRA.w	InitObjectsFromTable
-loc_000005B0:
+; InitBossObjects_TypeD
+InitBossObjects_TypeD:
 	LEA	Object_table_base.w, A0
-	LEA	loc_00000CE4, A1
+	LEA	BossObjectInitTable_D, A1
 	BRA.w	InitObjectsFromTable
-loc_000005BE:
+; InitBossObjects_TypeE
+InitBossObjects_TypeE:
 	LEA	Object_table_base.w, A0
-	LEA	loc_00000D56, A1
+	LEA	BossObjectInitTable_E, A1
 	BRA.w	InitObjectsFromTable
-loc_000005CC:
+; InitBossObjects_TypeF
+InitBossObjects_TypeF:
 	LEA	Object_table_base.w, A0
-	LEA	loc_00000E88, A1
+	LEA	BossObjectInitTable_F, A1
 	BRA.w	InitObjectsFromTable
-loc_000005DA:
+; InitBossObjects_InlineData
+InitBossObjects_InlineData:
 	dc.b	$41, $F8, $D0, $E0, $43, $F9, $00, $00, $0E, $FA, $60, $00, $00, $0C 
 
-loc_000005E8:
+; InitBasicObjectSlots
+InitBasicObjectSlots:
 	LEA	Object_slot_base.w, A0
 	LEA	BasicObjectInitTable, A1
 	
@@ -304,7 +320,8 @@ DisableVDPDisplay:
 	MOVE.w	D0, VDP_control_port
 	RTS
 
-loc_00000696:
+; VDPRegisterDefaults
+VDPRegisterDefaults:
 	dc.w	$8004, $8164, $9011, $8B00, $8C81, $855C, $8D2F, $8230, $8407, $8600, $8700, $8A00, $8E00, $8F02, $9100, $9200 
 
 ; ============================================================================
@@ -452,7 +469,8 @@ GameplayObjectInitTable:
 	dc.w	$000B, $001F, $0040, $0000
 	dc.l	$00000000
 	dc.l	$00000000
-loc_000008AC:
+; BattleObjectInitTable
+BattleObjectInitTable:
 	dc.b	$00, $1C, $00, $00, $00, $07, $00, $10, $00, $00, $00, $00, $00, $00, $FF, $FF, $CC, $50, $00, $00, $00, $1F, $00, $40, $00, $00, $00, $00, $00, $00, $FF, $FF 
 	dc.b	$CC, $54, $00, $00, $00, $1F, $00, $40, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $27, $00, $50, $00, $00, $00, $00, $00, $00, $FF, $FF 
 	dc.b	$CC, $14, $00, $04, $00, $1F, $00, $40, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $1F, $00, $40, $00, $00, $00, $00, $00, $00, $FF, $FF 
@@ -468,7 +486,8 @@ loc_000008AC:
 	dc.b	$CC, $3C, $00, $00, $00, $1F, $00, $40, $00, $00, $00, $00, $00, $00, $FF, $FF, $CC, $40, $00, $00, $00, $1F, $00, $40, $00, $00, $00, $00, $00, $00, $FF, $FF 
 	dc.b	$CC, $44, $00, $00, $00, $1F, $00, $40, $00, $00, $00, $00, $00, $00, $FF, $FF, $CC, $48, $00, $00, $00, $1F, $00, $40, $00, $00, $00, $00, $00, $00, $FF, $FF 
 	dc.b	$CC, $4C, $00, $00, $00, $1F, $00, $40, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 
-loc_00000A7E:
+; BossObjectInitTable_A
+BossObjectInitTable_A:
 	dc.b	$00, $0C, $00, $00, $00, $27, $00, $50, $00, $00, $00, $00, $00, $00, $FF, $FF, $CC, $14, $00, $00, $00, $1F, $00, $40, $00, $00, $00, $00, $00, $00, $FF, $FF 
 	dc.b	$CC, $18, $00, $03, $00, $1F, $00, $40, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $27, $00, $50, $00, $00, $00, $00, $00, $00, $FF, $FF 
 	dc.b	$CC, $1C, $00, $01, $00, $1F, $00, $40, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $27, $00, $50, $00, $00, $00, $00, $00, $00, $FF, $FF 
@@ -476,7 +495,8 @@ loc_00000A7E:
 	dc.b	$CC, $24, $00, $00, $00, $1F, $00, $40, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $27, $00, $50, $00, $00, $00, $00, $00, $00, $FF, $FF 
 	dc.b	$CC, $28, $00, $00, $00, $1F, $00, $40, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $27, $00, $50, $00, $00, $00, $00, $00, $00, $FF, $FF 
 	dc.b	$CC, $2C, $00, $01, $00, $1F, $00, $40, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 
-loc_00000B50:
+; BossObjectInitTable_B
+BossObjectInitTable_B:
 	dc.w	$0009
 
 	dc.w	$0000, $0027, $0050, $0000 
@@ -519,7 +539,8 @@ loc_00000B50:
 	dc.l	$00000000 
 	dc.l	$FFFFCC28 
 
-loc_00000BF2:
+; BossObjectInitTable_C
+BossObjectInitTable_C:
 	dc.b	$00, $0E, $00, $00, $00, $27, $00, $50, $00, $00, $00, $00, $00, $00, $FF, $FF, $CC, $14, $00, $00, $00, $1F, $00, $40, $00, $00, $00, $00, $00, $00, $FF, $FF 
 	dc.b	$CC, $18, $00, $04, $00, $1F, $00, $40, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $1F, $00, $40, $00, $00, $00, $00, $00, $00, $FF, $FF 
 	dc.b	$CC, $1C, $00, $07, $00, $1F, $00, $40, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $1F, $00, $40, $00, $00, $00, $00, $00, $00, $FF, $FF 
@@ -528,12 +549,14 @@ loc_00000BF2:
 	dc.b	$CC, $28, $00, $08, $00, $1F, $00, $40, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $1F, $00, $40, $00, $00, $00, $00, $00, $00, $FF, $FF 
 	dc.b	$CC, $2C, $00, $08, $00, $1F, $00, $40, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $1F, $00, $40, $00, $00, $00, $00, $00, $00, $FF, $FF 
 	dc.b	$CC, $30, $00, $02, $00, $1F, $00, $40, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 
-loc_00000CE4:
+; BossObjectInitTable_D
+BossObjectInitTable_D:
 	dc.b	$00, $06, $00, $00, $00, $27, $00, $50, $00, $00, $00, $00, $00, $00, $FF, $FF, $CC, $14, $00, $00, $00, $1F, $00, $40, $00, $00, $00, $00, $00, $00, $FF, $FF 
 	dc.b	$CC, $18, $00, $04, $00, $1F, $00, $40, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $1F, $00, $40, $00, $00, $00, $00, $00, $00, $FF, $FF 
 	dc.b	$CC, $1C, $00, $03, $00, $1F, $00, $40, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $1F, $00, $40, $00, $00, $00, $00, $00, $00, $FF, $FF 
 	dc.b	$CC, $20, $00, $00, $00, $1F, $00, $40, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 
-loc_00000D56:
+; BossObjectInitTable_E
+BossObjectInitTable_E:
 	dc.b	$00, $12, $00, $00, $00, $27, $00, $50, $00, $00, $00, $00, $00, $00, $FF, $FF, $CC, $14, $00, $01, $00, $1F, $00, $40, $00, $00, $00, $00, $00, $00, $00, $00 
 	dc.b	$00, $00, $00, $00, $00, $1F, $00, $40, $00, $00, $00, $00, $00, $00, $FF, $FF, $CC, $18, $00, $00, $00, $1F, $00, $40, $00, $00, $00, $00, $00, $00, $FF, $FF 
 	dc.b	$CC, $1C, $00, $00, $00, $1F, $00, $40, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $1F, $00, $40, $00, $00, $00, $00, $00, $00, $FF, $FF 
@@ -544,7 +567,8 @@ loc_00000D56:
 	dc.b	$CC, $30, $00, $00, $00, $1F, $00, $40, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $1F, $00, $40, $00, $00, $00, $00, $00, $00, $FF, $FF 
 	dc.b	$CC, $34, $00, $00, $00, $1F, $00, $40, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $1F, $00, $40, $00, $00, $00, $00, $00, $00, $FF, $FF 
 	dc.b	$CC, $38, $00, $00, $00, $1F, $00, $40, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 
-loc_00000E88:
+; BossObjectInitTable_F
+BossObjectInitTable_F:
 	dc.b	$00, $06, $00, $00, $00, $27, $00, $50, $00, $00, $00, $00, $00, $00, $FF, $FF, $CC, $14, $00, $00, $00, $27, $00, $50, $00, $00, $00, $00, $00, $00, $FF, $FF 
 	dc.b	$CC, $18, $00, $03, $00, $1F, $00, $40, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $1F, $00, $40, $00, $00, $00, $00, $00, $00, $FF, $FF 
 	dc.b	$CC, $1C, $00, $00, $00, $27, $00, $50, $00, $00, $00, $00, $00, $00, $FF, $FF, $CC, $20, $00, $03, $00, $1F, $00, $40, $00, $00, $00, $00, $00, $00, $00, $00 
@@ -721,7 +745,8 @@ loc_00001308:
 	CLR.w	D0
 	RTS
 
-loc_0000130C:					; unreferenced dead code
+; DisplayHexDigits
+DisplayHexDigits:					; unreferenced dead code
 	MOVEQ	#3, D6
 loc_0000130E:
 	ROL.w	#4, D2
@@ -732,10 +757,11 @@ loc_0000130E:
 	ADDQ.w	#7, D4
 loc_0000131E:
 	ADDI.w	#$30, D4
-	BSR.w	loc_0000132C
+	BSR.w	WriteDigitToVRAM
 	DBF	D6, loc_0000130E
 	RTS
-loc_0000132C:
+; WriteDigitToVRAM
+WriteDigitToVRAM:
 	ADDI.w	#$4C0, D4
 	ORI.w	#$8000, D4
 	OR.w	D3, D4
@@ -1641,7 +1667,7 @@ loc_00001F5C:
 	MOVE.b	#$A3, D0
 	JSR	QueueSoundEffect
 	MOVE.w	#GAMEPLAY_STATE_INIT_BUILDING_ENTRY, Gameplay_state.w
-	LEA	loc_0000362C, A0
+	LEA	DirectionOffsets_16Pixel, A0
 	MOVE.w	Player_direction.w, D0
 	ADD.w	D0, D0
 	LEA	(A0,D0.w), A0
@@ -1903,7 +1929,7 @@ GameState_BattleInitialize:
 	CLR.w	Overworld_menu_state.w
 	MOVE.b	#$FF, Is_in_battle.w
 	MOVEA.l	Player_entity_ptr.w, A6
-	MOVE.l	#loc_00003C7E, $2(A6)
+	MOVE.l	#InitBattlePlayerObject, $2(A6)
 	MOVEQ	#0, D0
 	MOVE.w	Player_dex.w, D0
 	ASR.l	#3, D0
@@ -2086,7 +2112,7 @@ InitBattleDisplay:
 	BSR.w	DrawBattleNametable
 	JSR	ProcessAllObjectSlots
 	MOVEA.l	Player_entity_ptr.w, A6
-	MOVE.l	#loc_00004340, $2(A6)
+	MOVE.l	#InitOverworldPlayerObject, $2(A6)
 	ADDQ.w	#1, Gameplay_state.w
 	MOVE.w	#$0036, Palette_line_0_index.w
 	MOVE.w	#$0011, Palette_line_3_index.w
@@ -2469,7 +2495,7 @@ loc_00002AE0:
 	JSR	DisplayCantUseMessage
 	CLR.b	Player_in_first_person_mode.w
 	BSR.w	PlayBattleMusic
-	LEA	loc_00003678, A0
+	LEA	BattlePaletteIndexTable, A0
 	MOVE.w	Battle_type.w, D0
 	ADD.w	D0, D0
 	MOVE.w	(A0,D0.w), Palette_line_1_fade_target.w
@@ -2641,7 +2667,8 @@ loc_00002DA2:
 loc_00002DA8:
 	RTS
 
-loc_00002DAA:
+; TownSpawnPositionData
+TownSpawnPositionData:
 	dc.w	$0208, $0138, $0016, $000B
 	dc.w	$0278, $0228, $001C, $001A
 	dc.w	$00D8, $00C8, $0003, $0004
@@ -2658,7 +2685,8 @@ loc_00002DAA:
 	dc.w	$0208, $0138, $0017, $000B
 	dc.w	$0208, $0138, $0017, $000B 
 	dc.w	$0208, $0138, $0017, $000B 
-loc_00002E2A:
+; TownPlayerPositionData
+TownPlayerPositionData:
 	dc.w	$0020, $0012, $0027, $0021 
 	dc.w	$000D, $000B, $001C, $000E 
 	dc.w	$000A, $001B, $000A, $001B
@@ -2667,7 +2695,8 @@ loc_00002E2A:
 	dc.w	$0020, $0020, $001B, $000E
 	dc.w	$001B, $000E, $0020, $0012
 	dc.w	$0020, $0012, $0020, $0012 
-loc_00002E6A: ; town teleport locations
+; TownTeleportLocationData
+TownTeleportLocationData: ; town teleport locations
 	; format:
 	; dc.w (x_in_sector), (y_in_sector), (sector_x), (sector_y)
 	dc.w	$8, $D, $0, $6 ; TOWN_WYCLIF
@@ -2686,7 +2715,8 @@ loc_00002E6A: ; town teleport locations
 	dc.w	$5, $4, $9, $2 ; TOWN_HASTINGS1
 	dc.w	$5, $4, $9, $2 ; TOWN_HASTINGS2
 	dc.w	$8, $8, $A, $5 ; TOWN_CARTHAHENA
-loc_00002EEA:
+; TownSavedPositionData
+TownSavedPositionData:
 	dc.w	$00D8, $0068 
 	dc.w	$0058, $0068
 	dc.w	$00D8, $0068 
@@ -3294,7 +3324,7 @@ InitializeTownMode_check_town_0f:
 InitializeTownMode_spawn_setup:
 	MOVE.w	Current_town.w, D0
 	ASL.w	#3, D0
-	LEA	loc_00002DAA, A0
+	LEA	TownSpawnPositionData, A0
 	LEA	(A0,D0.w), A0
 	MOVE.w	(A0)+, Town_spawn_x.w
 	MOVE.w	(A0)+, Player_spawn_tile_y_buffer.w
@@ -3303,19 +3333,19 @@ InitializeTownMode_spawn_setup:
 	MOVE.w	Current_town.w, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
-	LEA	loc_00002E2A, A0
+	LEA	TownPlayerPositionData, A0
 	LEA	(A0,D0.w), A0
 	MOVE.w	(A0)+, Player_position_x_in_town.w
 	MOVE.w	(A0)+, Player_position_y_in_town.w
 	MOVE.w	Current_town.w, D0
 	ASL.w	#3, D0
-	LEA	loc_00002E6A, A0
+	LEA	TownTeleportLocationData, A0
 	MOVE.w	(A0,D0.w), Player_position_x_outside_town.w
 	MOVE.w	$2(A0,D0.w), Player_position_y_outside_town.w
 	MOVE.w	$4(A0,D0.w), Player_map_sector_x.w
 	MOVE.w	$6(A0,D0.w), Player_map_sector_y.w
 	BSR.w	SearchTownNPCData
-	LEA	loc_00002EEA, A0
+	LEA	TownSavedPositionData, A0
 	MOVE.w	Current_town.w, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
@@ -3324,7 +3354,7 @@ InitializeTownMode_spawn_setup:
 	RTS
 
 UpdatePlayerOverworldPosition:
-	LEA	loc_0000361C, A0
+	LEA	DirectionOffsets_GateEntry, A0
 	MOVE.w	Player_direction.w, D0
 	ANDI.w	#6, D0
 	ADD.w	D0, D0
@@ -3334,12 +3364,14 @@ UpdatePlayerOverworldPosition:
 	ADD.w	D1, Player_position_y_outside_town.w
 	RTS
 
-loc_0000361C: ; Going through gates or entering caves?
+; DirectionOffsets_GateEntry
+DirectionOffsets_GateEntry: ; Going through gates or entering caves?
 	dc.w	  0,  -2		; Up
 	dc.w	 -2,   0		; Left
 	dc.w	  0,   2		; Down
 	dc.w	  2,   0		; Right
-loc_0000362C:
+; DirectionOffsets_16Pixel
+DirectionOffsets_16Pixel:
 	dc.w	  0,  16		; Up
 	dc.w	 16,   0		; Left
 	dc.w	  0, -16		; Down
@@ -3359,35 +3391,37 @@ ClearAllEnemyEntities_end:
 	RTS
 
 PlayBattleMusic:
-	LEA	loc_0000366A, A0
+	LEA	BattleMusicIdTable, A0
 	MOVE.w	Battle_type.w, D0
 	MOVE.b	(A0,D0.w), D0
 	JSR	QueueSoundEffect
 	RTS
 
-loc_0000366A:
+; BattleMusicIdTable
+BattleMusicIdTable:
 	dc.b	$88, $93, $88, $88, $93, $93, $93, $93, $88, $88, $93, $88, $93, $93 
-loc_00003678:
+; BattlePaletteIndexTable
+BattlePaletteIndexTable:
 	dc.w	$005F, $0077, $0068, $0068, $0081, $007E, $00B1, $00B2, $0086, $00B4, $00B3, $0087, $0088, $0082 
 ; loc_00003694
 BossBattleObjectInitPtrs:
-	dc.l	loc_00000586
-	dc.l	loc_000005A2
-	dc.l	loc_00000594
-	dc.l	loc_00000594
-	dc.l	loc_000005BE
-	dc.l	loc_000005B0
-	dc.l	loc_000005B0
-	dc.l	loc_000005B0
-	dc.l	loc_00000586
-	dc.l	loc_00000586
-	dc.l	loc_000005A2
-	dc.l	loc_00000594
-	dc.l	loc_000005BE
-	dc.l	loc_000005CC
+	dc.l	InitBossObjects_TypeA
+	dc.l	InitBossObjects_TypeC
+	dc.l	InitBossObjects_TypeB
+	dc.l	InitBossObjects_TypeB
+	dc.l	InitBossObjects_TypeE
+	dc.l	InitBossObjects_TypeD
+	dc.l	InitBossObjects_TypeD
+	dc.l	InitBossObjects_TypeD
+	dc.l	InitBossObjects_TypeA
+	dc.l	InitBossObjects_TypeA
+	dc.l	InitBossObjects_TypeC
+	dc.l	InitBossObjects_TypeB
+	dc.l	InitBossObjects_TypeE
+	dc.l	InitBossObjects_TypeF
 
 PlayCaveMusic:
-	LEA	loc_000036E8, A0
+	LEA	CaveMusicIdTable, A0
 	MOVE.w	Current_cave_room.w, D1
 	CLR.w	D0
 	MOVE.b	(A0,D1.w), D0
@@ -3395,7 +3429,8 @@ PlayCaveMusic:
 	JSR	QueueSoundEffect
 	RTS
 
-loc_000036E8:
+; CaveMusicIdTable
+CaveMusicIdTable:
 	dc.b	$97, $8A, $8A, $98, $98, $8A, $8A, $97, $97, $98, $98, $97, $97, $97, $97, $8A, $8A, $8A, $8A, $98, $97, $97, $98, $8A, $8A, $8A, $8A, $8A, $8A, $8A, $8A, $8A 
 	dc.b	$98, $98, $98, $98, $98, $98, $98, $98, $98, $98, $8A, $8A 
 
@@ -3409,7 +3444,7 @@ PlayerObjectHandler:
 	MOVE.b	#$0B, $6(A5)
 	MOVE.w	#1, $8(A5)
 	CLR.w	$16(A5)
-	MOVE.l	#loc_00003782, $2(A5)
+	MOVE.l	#PlayerObjectTick, $2(A5)
 	MOVE.w	#$11, Palette_line_3_index.w
 	MOVE.b	#1, $24(A5)
 	CLR.b	$1B(A5)
@@ -3425,7 +3460,8 @@ PlayerObjectHandler:
 	BCLR.b	#7, (A6)
 	RTS
 
-loc_00003782:
+; PlayerObjectTick
+PlayerObjectTick:
 	TST.b	Is_in_battle.w
 	BNE.w	loc_00003834
 	MOVE.w	$E(A5), D0
@@ -3475,7 +3511,7 @@ loc_00003816:
 	ANDI.w	#7, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
-	LEA	loc_0000383E, A0
+	LEA	PlayerMovementJumpTable, A0
 	JSR	(A0,D0.w)
 loc_00003834:
 	RTS
@@ -3484,7 +3520,8 @@ loc_00003836:					; unreferenced dead code
 	JSR	AddSpriteToDisplayList
 	RTS
 
-loc_0000383E:
+; PlayerMovementJumpTable
+PlayerMovementJumpTable:
 	BRA.w	loc_00003896
 	BRA.w	loc_00003896	
 	BRA.w	loc_000038CA
@@ -3609,7 +3646,7 @@ loc_000039BE:
 GetTileInFrontOfPlayer:
 	MOVE.w	Player_direction.w, D2
 	ADD.w	D2, D2
-	LEA	loc_00003C4E, A1
+	LEA	BattleMoveOffsets, A1
 	LEA	Tilemap_buffer_plane_b, A0
 	MOVE.w	Player_tile_x.w, D0
 	MOVE.w	Player_tile_y.w, D1
@@ -3644,7 +3681,7 @@ CheckTownEnemyCollision:
 	LSR.w	#1, D4
 	ANDI.w	#3, D4
 	ASL.w	#3, D4
-	LEA	loc_00003C5E, A1
+	LEA	BattleCollisionBoxOffsets, A1
 	MOVE.w	$E(A5), D0
 	MOVE.w	$12(A5), D2
 	MOVE.w	D0, D1
@@ -3798,18 +3835,21 @@ SetupVdpDmaCommand:
 	startZ80
 	RTS
 
-loc_00003C4E:
+; BattleMoveOffsets
+BattleMoveOffsets:
 	dc.w	$0000, $FF00
 	dc.w	$FFFC, $0000
 	dc.w	$0000, $0100
 	dc.w	$0004, $0000 
-loc_00003C5E:
+; BattleCollisionBoxOffsets
+BattleCollisionBoxOffsets:
 	dc.w	$FFF1, $000F, $FFE2, $0000
 	dc.w	$FFE2, $0000, $FFF1, $000F
 	dc.w	$FFF1, $000F, $0000, $001E
 	dc.w	$0000, $001E, $FFF1, $000F 
 
-loc_00003C7E:	
+; InitBattlePlayerObject
+InitBattlePlayerObject:	
 	BCLR.b	#7, $7(A5)
 	BCLR.b	#3, $7(A5)
 	BCLR.b	#4, $7(A5)
@@ -3821,7 +3861,7 @@ loc_00003C7E:
 	CLR.b	$1B(A5)
 	CLR.b	Player_is_moving.w
 	CLR.b	Player_attacking_flag.w
-	MOVE.l	#loc_00003D5A, $2(A5)
+	MOVE.l	#BattlePlayerInputHandler, $2(A5)
 	MOVEA.l	Battle_entity_slot_1_ptr.w, A6
 	BSET.b	#7, (A6)
 	BCLR.b	#7, $7(A6)
@@ -3832,7 +3872,7 @@ loc_00003C7E:
 	MOVE.b	#$0E, $6(A6)
 	MOVE.w	#1, $8(A6)
 	CLR.w	$16(A6)
-	MOVE.l	#loc_00004068, $2(A6)
+	MOVE.l	#BattleSlot1PositionSync, $2(A6)
 	TST.w	Equipped_sword.w
 	BLT.b	loc_00003D50
 	MOVEA.l	Battle_entity_slot_2_ptr.w, A6
@@ -3845,7 +3885,7 @@ loc_00003C7E:
 	MOVE.b	#5, $6(A6)
 	MOVE.w	#$0015, $8(A6)
 	CLR.w	$16(A6)
-	MOVE.l	#loc_00004092, $2(A6)
+	MOVE.l	#BattleSlot2WeaponHandler, $2(A6)
 	MOVE.w	#$0013, Palette_line_3_index.w
 	JSR	LoadPalettesFromTable
 	RTS
@@ -3855,7 +3895,8 @@ loc_00003D50:
 	BCLR.b	#7, (A6)
 	RTS
 
-loc_00003D5A:
+; BattlePlayerInputHandler
+BattlePlayerInputHandler:
 	TST.b	Player_input_blocked.w
 	BNE.w	loc_00003EC4
 	TST.b	Fade_out_lines_mask.w
@@ -4079,7 +4120,8 @@ loc_00004044:
 	JSR	AddSpriteToDisplayList
 	RTS
 
-loc_00004068
+; BattleSlot1PositionSync
+BattleSlot1PositionSync
 	MOVEA.l	Player_entity_ptr.w, A6
 	MOVE.b	$7(A6), $7(A5)
 	MOVE.w	$A(A6), $A(A5)
@@ -4090,7 +4132,8 @@ loc_00004068
 	JSR	AddSpriteToDisplayList
 	RTS
 
-loc_00004092 
+; BattleSlot2WeaponHandler
+BattleSlot2WeaponHandler 
 	MOVEA.l	Player_entity_ptr.w, A6
 	MOVE.b	$7(A6), $7(A5)
 	CLR.w	D0
@@ -4115,7 +4158,7 @@ loc_000040BA:
 
 ;CheckBattleAttackHitbox:
 CheckBattleAttackHitbox: ; suspected collision detection
-	LEA	loc_00004250, A0
+	LEA	AttackHitboxData, A0
 	MOVEA.l	Battle_entity_slot_1_ptr.w, A6
 	CLR.w	D0
 	MOVE.b	$24(A6), D0
@@ -4233,7 +4276,8 @@ loc_0000423C:
 	DBF	D7, loc_0000423C
 	RTS
 
-loc_00004250:
+; AttackHitboxData
+AttackHitboxData:
 	dc.w	 0,   0,   0,   0,   0,   0
 	dc.w	 0,   0,   0,   0,   0,   0
 	dc.w	 8,  16, -12,   0,   0,   0
@@ -4256,7 +4300,8 @@ loc_00004250:
 	dc.w	 0,   0,   4,  12, -20,   0
 
 	
-loc_00004340:
+; InitOverworldPlayerObject
+InitOverworldPlayerObject:
 	CLR.w	D0
 	MOVE.b	$1(A5), D0
 	LEA	(A5,D0.w), A6
@@ -4265,7 +4310,7 @@ loc_00004340:
 	MOVE.b	$1(A6), D0
 	LEA	(A6,D0.w), A6
 	MOVE.l	#loc_000052CE, $2(A6)
-	MOVE.l	#loc_000043A6, $2(A5)
+	MOVE.l	#OverworldPlayerTickHandler, $2(A5)
 	CLR.w	Overworld_movement_frame.w
 	CLR.b	Player_move_forward_in_overworld.w
 	CLR.b	Player_move_backward_in_overworld.w
@@ -4282,7 +4327,8 @@ InitFirstPersonView:
 	BSR.w	ResetObjectOffscreenPositions
 	RTS
 
-loc_000043A6:
+; OverworldPlayerTickHandler
+OverworldPlayerTickHandler:
 	TST.b	Player_input_blocked.w
 	BNE.w	loc_0000457C
 	TST.b	Encounter_triggered.w
@@ -4323,7 +4369,7 @@ loc_0000441E:
 	MOVE.b	#$FF, Player_rotate_clockwise_in_overworld.w
 	ANDI.w	#$0018, D0
 	ASR.w	#1, D0
-	LEA	loc_00004660, A0
+	LEA	RotateClockwiseJumpTable, A0
 	ADDQ.w	#1, Player_compass_frame.w
 loc_00004446:
 	JSR	(A0,D0.w)
@@ -4341,7 +4387,7 @@ loc_0000444E:
 	BGE.b	loc_00004478
 	MOVE.w	#$000F, Player_compass_frame.w
 loc_00004478:
-	LEA	loc_00004670, A0
+	LEA	RotateCounterClockwiseJumpTable, A0
 	JSR	(A0,D0.w)
 	BRA.w	loc_00004516
 loc_00004486:
@@ -4357,7 +4403,7 @@ loc_00004498:
 	BSR.w	ClearFirstPersonTilemap
 	MOVE.b	#$FF, Player_move_backward_in_overworld.w
 	ANDI.w	#$000C, D0
-	LEA	loc_00004A66, A0
+	LEA	BackwardMovementJumpTable, A0
 	JSR	(A0,D0.w)
 	BRA.w	loc_00004516
 loc_000044C2:
@@ -4382,7 +4428,7 @@ loc_000044F2:
 	BSR.w	ClearFirstPersonTilemap
 	MOVE.b	#$FF, Player_move_forward_in_overworld.w
 	ANDI.w	#$000C, D0
-	LEA	loc_0000492C, A0
+	LEA	ForwardMovementJumpTable, A0
 	JSR	(A0,D0.w)
 loc_00004516:
 	CLR.b	Dialog_active_flag.w
@@ -4490,12 +4536,14 @@ RefreshFirstPersonView:
 	BSR.w	ResetObjectOffscreenPositions
 	RTS
 
-loc_00004660:
+; RotateClockwiseJumpTable
+RotateClockwiseJumpTable:
 	BRA.w	loc_0000468A
 	BRA.w	loc_000046B8
 	BRA.w	loc_000046E2
 	BRA.w	loc_000048C4
-loc_00004670:
+; RotateCounterClockwiseJumpTable
+RotateCounterClockwiseJumpTable:
 	BRA.w	loc_000046D8
 	BRA.w	loc_000046AE
 	BRA.w	loc_00004680
@@ -4724,7 +4772,8 @@ loc_00004922:
 	BSR.w	DecrementInaudiosSteps
 	RTS
 
-loc_0000492C:
+; ForwardMovementJumpTable
+ForwardMovementJumpTable:
 	BRA.w	loc_0000493C
 	BRA.w	loc_00004974
 	BRA.w	loc_000049E2
@@ -4816,7 +4865,8 @@ loc_00004A44:
 	BSR.w	DrawFirstPersonWalls
 	BSR.w	DecrementInaudiosSteps
 	BRA.w	ResetObjectOffscreenPositions
-loc_00004A66:
+; BackwardMovementJumpTable
+BackwardMovementJumpTable:
 	BRA.w	loc_00004A76
 	BRA.w	loc_00004AC2
 	BRA.w	loc_00004B36
@@ -8960,7 +9010,7 @@ CheckTileCollision:
 	ANDI.w	#3, D2
 	ADD.w	D2, D2
 	ADD.w	D2, D2
-	LEA	loc_00003C4E, A1
+	LEA	BattleMoveOffsets, A1
 	LEA	Tilemap_buffer_plane_b, A0
 	MOVE.w	$E(A5), D0
 	ASR.w	#3, D0
@@ -14716,7 +14766,7 @@ GetNextItemSlotOffset:
 
 ; loc_0000D046
 UpdateEncounterPalette:
-	LEA	loc_00003678, A0
+	LEA	BattlePaletteIndexTable, A0
 	MOVE.w	Battle_type.w, D0
 	ADD.w	D0, D0
 	MOVE.w	(A0,D0.w), D0
@@ -38497,7 +38547,7 @@ BossProjectileSpriteFramePtrs:
 BossSpriteFrame_FakeKing:
 	dc.l	$024101B1	
 	dc.l	loc_00000000	
-	dc.l	loc_00000250-3	
+	dc.l	InitEquipmentAndLevel-3	
 ; loc_00023926
 BossSpriteFrame_StowThief:
 	dc.l	$01C10000	
@@ -38524,7 +38574,7 @@ BossSpriteFrame_Luther:
 BossProjectileSpriteFrame_B:
 	dc.l	$02890211	
 	dc.l	loc_00000000	
-	dc.l	loc_00000298-3	
+	dc.l	ClearVRAMSprites_End-3	
 ; loc_00023962
 BossProjectileSpriteFrame_C:
 	dc.l	$02210000	

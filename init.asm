@@ -1,10 +1,10 @@
 EntryPoint:
 	TST.l	$00A10008
 loc_00000F32:
-	BNE.w	loc_0000102C
+	BNE.w	StartupSequence
 	TST.w	$00A1000C
 	BNE.b	loc_00000F32
-	LEA	loc_00000FC8(PC), A5
+	LEA	BootParamTable(PC), A5
 	MOVEM.l	(A5)+, D5/D6/D7/A0/A1/A2/A3/A4
 	MOVE.w	-$1100(A1), D0
 	ANDI.w	#$0F00, D0
@@ -56,9 +56,10 @@ loc_00000FB4:
 	MOVE.w	D0, (A2)
 	MOVEM.l	(A6), D0/D1/D2/D3/D4/D5/D6/D7/A0/A1/A2/A3/A4/A5/A6
 	MOVE	#$2700, SR
-	BRA.b	loc_0000102C
+	BRA.b	StartupSequence
 
-loc_00000FC8:
+; BootParamTable
+BootParamTable:
 	dc.l	$00008000	
 	dc.l	$00003FFF	
 	dc.l	$00000100	
@@ -99,56 +100,65 @@ VDPInitValues_End:
 	dc.b	$28, $00, $F9, $77, $ED, $B0, $DD, $E1, $FD, $E1, $ED, $47, $ED, $4F, $08, $D9, $F1, $C1, $D1, $E1, $08, $D9, $F1, $D1, $E1, $F9, $F3, $ED, $56, $36, $E9, $E9 
 	dc.b	$9F, $BF, $DF, $FF 
 
-loc_0000102C:
+; StartupSequence
+StartupSequence:
 	MOVE.w	#$0100, Z80_bus_request
 	MOVE.b	$00A1000D, D0
 	MOVE.w	#0, Z80_bus_request
 	BTST.l	#6, D0
-	BNE.w	loc_00001050
+	BNE.w	StartupSequence_Init
 	JSR	InitVDP
-loc_00001050:
+; StartupSequence_Init
+StartupSequence_Init:
 	MOVE.b	$00A10001, D0
 	ANDI.b	#$0F, D0
-	BEQ.b	loc_00001066
+	BEQ.b	StartupSequence_SetupHardware
 	MOVE.l	#$53454741, $00A14000	
-loc_00001066:
+; StartupSequence_SetupHardware
+StartupSequence_SetupHardware:
 	ORI	#$0700, SR
-	JSR	loc_00000214
-	JSR	loc_000005E8
+	JSR	ClearRAMAndInitHardware
+	JSR	InitBasicObjectSlots
 	JSR	loc_0000FEE2
 	JSR	loc_0000FCDC
 	JSR	loc_000100FE
-	JSR	loc_00000232
+	JSR	InitPlayerInventoryDefaults
 	ANDI	#$F8FF, SR
-loc_00001092:
+; MainGameLoop
+MainGameLoop:
 	LEA	$FFFFFE00.w, A7
-	BSR.w	loc_000010DC
+	BSR.w	WaitForVBlank
 	CLR.b	$FFFFE002.w
 	JSR	loc_0000F7C4
 	CLR.w	$FFFFE000.w
 	LEA	$FFFFD000.w, A5
-loc_000010AC:
+; ObjectDispatchLoop
+ObjectDispatchLoop:
 	BTST.b	#7, (A5)
-	BEQ.b	loc_000010B8
+	BEQ.b	ObjectDispatchNext
 	MOVEA.l	$2(A5), A0
 	JSR	(A0)
-loc_000010B8:
+; ObjectDispatchNext
+ObjectDispatchNext:
 	CLR.w	D0
 	MOVE.b	$1(A5), D0
-	BEQ.b	loc_000010C4
+	BEQ.b	ObjectDispatchEnd
 	ADDA.w	D0, A5
-	BRA.b	loc_000010AC
-loc_000010C4:
+	BRA.b	ObjectDispatchLoop
+; ObjectDispatchEnd
+ObjectDispatchEnd:
 	TST.b	Player_in_first_person_mode.w
-	BNE.b	loc_000010D0
+	BNE.b	ObjectDispatchDone
 	JSR	loc_0000F75E
-loc_000010D0:
+; ObjectDispatchDone
+ObjectDispatchDone:
 	MOVE.b	#$FF, $FFFFE002.w
-	BRA.b	loc_00001092
+	BRA.b	MainGameLoop
 	dc.b	$42, $38, $C0, $FF 
 
-loc_000010DC:
+; WaitForVBlank
+WaitForVBlank:
 	TST.b	$FFFFC0FF.w
-	BEQ.b	loc_000010DC
+	BEQ.b	WaitForVBlank
 	CLR.b	$FFFFC0FF.w
 	RTS
