@@ -1243,7 +1243,7 @@ loc_00001994:
 	MOVE.b	#$FF, (A0,D0.w)
 	MOVE.w	Current_town.w, D0
 	ASL.w	#3, D0
-	LEA	loc_0001FD54, A0
+	LEA	TownSpawnPositionTable, A0
 	LEA	(A0,D0.w), A0
 	MOVE.w	(A0)+, Town_spawn_x.w
 	MOVE.w	(A0)+, Player_spawn_tile_y_buffer.w
@@ -34842,112 +34842,138 @@ loc_0001FBC8:
 ; ===========================================================================
 ;loc_0001FBD4:
 TownNames:
-	dc.l	loc_0001FC0C
-	dc.l	loc_0001FC14
-	dc.l	loc_0001FC1A
-	dc.l	loc_0001FC22
-	dc.l	loc_0001FC2C
-	dc.l	loc_0001FC32
-	dc.l	loc_0001FC3C
-	dc.l	loc_0001FC44
-	dc.l	loc_0001FC4C
-	dc.l	loc_0001FC56
-	dc.l	loc_0001FC5E
-	dc.l	loc_0001FC68
-	dc.l	loc_0001FC74
-	dc.l	loc_0001FC7E
-loc_0001FC0C:
+	dc.l	TownName_Wyclif
+	dc.l	TownName_Parma
+	dc.l	TownName_Watling
+	dc.l	TownName_Deepdale
+	dc.l	TownName_Stow
+	dc.l	TownName_Keltwick
+	dc.l	TownName_Malaga
+	dc.l	TownName_Barrow
+	dc.l	TownName_Tadcaster
+	dc.l	TownName_Helwig
+	dc.l	TownName_Swaffham
+	dc.l	TownName_Excalabria
+	dc.l	TownName_Hastings
+	dc.l	TownName_Carthahena
+; loc_0001FC0C
+TownName_Wyclif:
 	dc.b	"Wyclif", $FF, $00
-loc_0001FC14:
+; loc_0001FC14
+TownName_Parma:
 	dc.b	"Parma", $FF
-loc_0001FC1A:
+; loc_0001FC1A
+TownName_Watling:
 	dc.b	"Watling", $FF
-loc_0001FC22:
+; loc_0001FC22
+TownName_Deepdale:
 	dc.b	"Deepdale", $FF, $00
-loc_0001FC2C:
+; loc_0001FC2C
+TownName_Stow:
 	dc.b	"Stow", $FF, $00
-loc_0001FC32:
+; loc_0001FC32
+TownName_Keltwick:
 	dc.b	"Keltwick", $FF, $00
-loc_0001FC3C:
+; loc_0001FC3C
+TownName_Malaga:
 	dc.b	"Malaga", $FF, $00
-loc_0001FC44:
+; loc_0001FC44
+TownName_Barrow:
 	dc.b	"Barrow", $FF, $00
-loc_0001FC4C:
+; loc_0001FC4C
+TownName_Tadcaster:
 	dc.b	"Tadcaster", $FF
-loc_0001FC56:
+; loc_0001FC56
+TownName_Helwig:
 	dc.b	"Helwig", $FF, $00
-loc_0001FC5E:
+; loc_0001FC5E
+TownName_Swaffham:
 	dc.b	"Swaffham", $FF, $00
-loc_0001FC68:
+; loc_0001FC68
+TownName_Excalabria:
 	dc.b	"Excalabria", $FF, $00
-loc_0001FC74:
+; loc_0001FC74
+TownName_Hastings:
 	dc.b	"Hastings", $FF, $00
-loc_0001FC7E:
+; loc_0001FC7E
+TownName_Carthahena:
 	dc.b	"Cartahena", $FF
 
 ; loc_0001FC88
 TownTilesetLoadJumpTable: ; suspected town loading routines that set tilemap
-	BRA.w	loc_0001FCC8
-	BRA.w	loc_0001FCD0
-	BRA.w	loc_0001FCD8
-	BRA.w	loc_0001FCE0
-	BRA.w	loc_0001FCE8
-	BRA.w	loc_0001FCF0	
-	BRA.w	loc_0001FCF8
-	BRA.w	loc_0001FD00
-	BRA.w	loc_0001FD08
-	BRA.w	loc_0001FD10
-	BRA.w	loc_0001FD18
-	BRA.w	loc_0001FD20
-	BRA.w	loc_0001FD34
-	BRA.w	loc_0001FD3C
-	BRA.w	loc_0001FD44	
-	BRA.w	loc_0001FD4C
-loc_0001FCC8:
+	BRA.w	SetTileset_Wyclif
+	BRA.w	SetTileset_Parma
+	BRA.w	SetTileset_Watling
+	BRA.w	SetTileset_Deepdale
+	BRA.w	SetTileset_Stow1
+	BRA.w	SetTileset_Stow2	
+	BRA.w	SetTileset_Keltwick
+	BRA.w	SetTileset_Malaga
+	BRA.w	SetTileset_Barrow
+	BRA.w	SetTileset_Tadcaster
+	BRA.w	SetTileset_Helwig
+	BRA.w	SetTileset_Swafham
+	BRA.w	SetTileset_Excalabria
+	BRA.w	SetTileset_Hastings1
+	BRA.w	SetTileset_Hastings2	
+	BRA.w	SetTileset_Carthahena
+; loc_0001FCC8
+SetTileset_Wyclif:
 	MOVE.w	#0, Town_tileset_index.w
 	RTS
 
-loc_0001FCD0:
+; loc_0001FCD0
+SetTileset_Parma:
 	MOVE.w	#1, Town_tileset_index.w
 	RTS
 
-loc_0001FCD8:
+; loc_0001FCD8
+SetTileset_Watling:
 	MOVE.w	#0, Town_tileset_index.w
 	RTS
 
-loc_0001FCE0:
+; loc_0001FCE0
+SetTileset_Deepdale:
 	MOVE.w	#1, Town_tileset_index.w
 	RTS
 
-loc_0001FCE8:
+; loc_0001FCE8
+SetTileset_Stow1:
 	MOVE.w	#1, Town_tileset_index.w
 	RTS
 
-loc_0001FCF0:
+; loc_0001FCF0
+SetTileset_Stow2:
 	MOVE.w	#1, Town_tileset_index.w	
 	RTS
 
-loc_0001FCF8:
+; loc_0001FCF8
+SetTileset_Keltwick:
 	MOVE.w	#1, Town_tileset_index.w
 	RTS
 
-loc_0001FD00:
+; loc_0001FD00
+SetTileset_Malaga:
 	MOVE.w	#1, Town_tileset_index.w
 	RTS
 
-loc_0001FD08:
+; loc_0001FD08
+SetTileset_Barrow:
 	MOVE.w	#0, Town_tileset_index.w
 	RTS
 
-loc_0001FD10:
+; loc_0001FD10
+SetTileset_Tadcaster:
 	MOVE.w	#1, Town_tileset_index.w
 	RTS
 
-loc_0001FD18:
+; loc_0001FD18
+SetTileset_Helwig:
 	MOVE.w	#0, Town_tileset_index.w
 	RTS
 
-loc_0001FD20:
+; loc_0001FD20
+SetTileset_Swafham:
 	MOVE.w	#1, Town_tileset_index.w
 	TST.b	Swaffham_ruined.w
 	BEQ.b	loc_0001FD32
@@ -34955,23 +34981,28 @@ loc_0001FD20:
 loc_0001FD32:
 	RTS
 
-loc_0001FD34:
+; loc_0001FD34
+SetTileset_Excalabria:
 	MOVE.w	#2, Town_tileset_index.w
 	RTS
 
-loc_0001FD3C:
+; loc_0001FD3C
+SetTileset_Hastings1:
 	MOVE.w	#0, Town_tileset_index.w
 	RTS
 
-loc_0001FD44:
+; loc_0001FD44
+SetTileset_Hastings2:
 	MOVE.w	#1, Town_tileset_index.w	
 	RTS
 	
-loc_0001FD4C:
+; loc_0001FD4C
+SetTileset_Carthahena:
 	MOVE.w	#1, Town_tileset_index.w
 	RTS
 
-loc_0001FD54: ; suspected town spawning location + camera?
+; loc_0001FD54
+TownSpawnPositionTable: ; suspected town spawning location + camera?
 	dc.w	$00D8, $02B8, $0003, $001F
 	dc.w	$01E8, $0268, $0014, $001A
 	dc.w	$0138, $0218, $0009, $0015
@@ -34990,84 +35021,100 @@ loc_0001FD54: ; suspected town spawning location + camera?
 	dc.w	$0108, $0218, $0007, $0015
 ; loc_0001FDD4
 TownNpcDataLookupJumpTable: ; suspected: Town NPCs?
-	BRA.w	loc_0001FE14
-	BRA.w	loc_0001FE1C
-	BRA.w	loc_0001FE24
-	BRA.w	loc_0001FE2C
-	BRA.w	loc_0001FE34
-	BRA.w	loc_0001FE3C	
-	BRA.w	loc_0001FE44
-	BRA.w	loc_0001FE4C
-	BRA.w	loc_0001FE54
-	BRA.w	loc_0001FE5C
-	BRA.w	loc_0001FE64
-	BRA.w	loc_0001FE6C
-	BRA.w	loc_0001FE74	
-	BRA.w	loc_0001FE7C
-	BRA.w	loc_0001FE84	
-	BRA.w	loc_0001FE8C
-loc_0001FE14:
-	LEA	loc_0002D0EE, A1
+	BRA.w	LoadNpcData_Wyclif
+	BRA.w	LoadNpcData_Parma
+	BRA.w	LoadNpcData_Watling
+	BRA.w	LoadNpcData_Deepdale
+	BRA.w	LoadNpcData_Stow1
+	BRA.w	LoadNpcData_Stow2	
+	BRA.w	LoadNpcData_Keltwick
+	BRA.w	LoadNpcData_Malaga
+	BRA.w	LoadNpcData_Barrow
+	BRA.w	LoadNpcData_Tadcaster
+	BRA.w	LoadNpcData_Helwig
+	BRA.w	LoadNpcData_Swafham
+	BRA.w	LoadNpcData_Excalabria	
+	BRA.w	LoadNpcData_Hastings1
+	BRA.w	LoadNpcData_Hastings2	
+	BRA.w	LoadNpcData_Carthahena
+; loc_0001FE14
+LoadNpcData_Wyclif:
+	LEA	NpcDataTable_Wyclif, A1
 	RTS
 
-loc_0001FE1C:
-	LEA	loc_0002E408, A1
+; loc_0001FE1C
+LoadNpcData_Parma:
+	LEA	NpcDataTable_Parma, A1
 	RTS
 
-loc_0001FE24:
-	LEA	loc_0002FB9C, A1
+; loc_0001FE24
+LoadNpcData_Watling:
+	LEA	NpcDataTable_Watling, A1
 	RTS
 
-loc_0001FE2C:
-	LEA	loc_00030870, A1
+; loc_0001FE2C
+LoadNpcData_Deepdale:
+	LEA	NpcDataTable_Deepdale, A1
 	RTS
 
-loc_0001FE34:
-	LEA	loc_0003175A, A1
+; loc_0001FE34
+LoadNpcData_Stow1:
+	LEA	NpcDataTable_Stow1, A1
 	RTS
 
-loc_0001FE3C:
-	LEA	loc_00032BD6, A1	
+; loc_0001FE3C
+LoadNpcData_Stow2:
+	LEA	NpcDataTable_Stow2, A1	
 	RTS
 
-loc_0001FE44:
-	LEA	loc_00032BD6, A1
+; loc_0001FE44
+LoadNpcData_Keltwick:
+	LEA	NpcDataTable_Stow2, A1
 	RTS
 
-loc_0001FE4C:
-	LEA	loc_00033D1A, A1
+; loc_0001FE4C
+LoadNpcData_Malaga:
+	LEA	NpcDataTable_Malaga, A1
 	RTS
 
-loc_0001FE54:
-	LEA	loc_00034C1C, A1
+; loc_0001FE54
+LoadNpcData_Barrow:
+	LEA	NpcDataTable_Barrow, A1
 	RTS
 
-loc_0001FE5C:
-	LEA	loc_00035BFE, A1
+; loc_0001FE5C
+LoadNpcData_Tadcaster:
+	LEA	NpcDataTable_Tadcaster, A1
 	RTS
 
-loc_0001FE64:
-	LEA	loc_00036C96, A1
+; loc_0001FE64
+LoadNpcData_Helwig:
+	LEA	NpcDataTable_Helwig, A1
 	RTS
 
-loc_0001FE6C:
-	LEA	loc_000384BA, A1
+; loc_0001FE6C
+LoadNpcData_Swafham:
+	LEA	NpcDataTable_Swafham, A1
 	RTS
 
-loc_0001FE74:
-	LEA	loc_00039546, A1	
+; loc_0001FE74
+LoadNpcData_Excalabria:
+	LEA	NpcDataTable_Excalabria, A1	
 	RTS
 
-loc_0001FE7C:
-	LEA	loc_00039E80, A1
+; loc_0001FE7C
+LoadNpcData_Hastings1:
+	LEA	NpcDataTable_Hastings1, A1
 	RTS
 	
-loc_0001FE84:
-	LEA	loc_00039E80, A1	
+; loc_0001FE84
+LoadNpcData_Hastings2:
+	LEA	NpcDataTable_Hastings1, A1	
 	RTS
 	
-loc_0001FE8C:
-	LEA	loc_0003B732, A1
+; loc_0001FE8C
+LoadNpcData_Carthahena:
+	LEA	NpcDataTable_Carthahena, A1
 	RTS
 	
 loc_0001FE94:
@@ -43220,7 +43267,8 @@ GrieveFatherStr:
 	dc.b	$FF, $00
 GoodManStr:	
 	dc.b	"Your father was a good man.", $FF 
-loc_0002D0EE:
+; loc_0002D0EE
+NpcDataTable_Wyclif:
 	dc.b	$00, $09, $00, $0B, $00, $98, $00, $C8, $00, $00, $00, $00, $00, $04, $00, $28, $00, $02, $D2, $EE, $00, $98, $00, $58, $00, $2A, $00, $02, $D3, $04, $00, $00 
 	dc.b	$00, $00, $00, $00 
 	dc.l	$00000000
@@ -43503,7 +43551,8 @@ loc_0002E3DE:
 loc_0002E406:
 	RTS
 	
-loc_0002E408:
+; loc_0002E408
+NpcDataTable_Parma:
 	dc.b	$00, $16, $00, $22, $00, $98, $00, $C8, $00, $00, $00, $00, $00, $04, $00, $35, $00, $02, $E6, $B6, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 
 	dc.b	$00, $00, $00, $00 
 	dc.l	$00000000
@@ -43935,7 +43984,8 @@ loc_0002FB82:
 loc_0002FB9A:
 	RTS
 	
-loc_0002FB9C:
+; loc_0002FB9C
+NpcDataTable_Watling:
 	dc.b	$00, $09, $00, $19, $00, $98, $00, $C8, $00, $00, $00, $00, $00, $04, $00, $27, $00, $02, $FC, $A4, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 
 	dc.b	$00, $00, $00, $00 
 	dc.l	$00000000
@@ -44157,7 +44207,8 @@ loc_000307fa:
 	dc.b	$73, $2A, $60, $01, $02, $28, $00, $68, $00, $CD, $00, $03, $DD, $94, $00, $00, $6F, $36, $60, $01, $01, $28, $00, $68, $00, $91, $00, $03, $DD, $74, $00, $00 
 	dc.b	$6F, $5E, $60, $01, $00, $D8, $00, $C8, $01, $09, $00, $03, $DD, $D4, $00, $00, $6F, $80, $60, $01, $00, $E8, $02, $48, $01, $51, $00, $03, $DD, $F4, $00, $00 
 	dc.b	$6F, $5E, $00, $01, $00, $38, $00, $C8, $02, $05, $00, $03, $DE, $54, $00, $00, $6F, $36, $60, $01, $FF, $FF 
-loc_00030870:
+; loc_00030870
+NpcDataTable_Deepdale:
 	dc.b	$00, $08, $00, $0A, $00, $68, $00, $C8, $00, $00, $00, $00, $00, $04, $01, $32, $00, $03, $09, $8E, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 
 	dc.b	$00, $00, $00, $00 
 	dc.l	$00000000
@@ -44392,7 +44443,8 @@ loc_00031644:
 	dc.b	$00, $00, $00, $00, $00, $00, $6E, $EC, $00, $00, $01, $C8, $00, $38, $02, $8F, $00, $00, $00, $00, $00, $00, $6E, $EC, $00, $01, $00, $38, $01, $08, $02, $95 
 	dc.b	$00, $00, $00, $00, $00, $00, $6E, $EC, $00, $01, $01, $B8, $01, $28, $02, $9B, $00, $00, $00, $00, $00, $00, $6E, $EC, $60, $00, $01, $B8, $01, $38, $02, $A1 
 	dc.b	$00, $00, $00, $00, $00, $00, $6E, $EC, $60, $01, $FF, $FF 
-loc_0003175A:
+; loc_0003175A
+NpcDataTable_Stow1:
 	dc.b	$00, $07, $00, $07, $00, $68, $00, $C8, $00, $00, $00, $00, $00, $04, $01, $32, $00, $03, $09, $8E, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 
 	dc.b	$00, $00, $00, $00 
 	dc.l	$00000000
@@ -44796,7 +44848,8 @@ loc_00032B30:
 	dc.b	$6F, $80, $60, $01, $00, $48, $00, $38, $01, $51, $00, $03, $DD, $F4, $00, $00, $6F, $36, $00, $01, $00, $E8, $00, $D8, $02, $41, $00, $03, $DE, $74, $00, $00 
 	dc.b	$6F, $36, $00, $01, $01, $98, $00, $D8, $00, $19, $00, $03, $DD, $34, $00, $00, $75, $86, $60, $01, $01, $98, $00, $98, $02, $05, $00, $03, $DE, $54, $00, $00 
 	dc.b	$6F, $36, $60, $01, $FF, $FF 
-loc_00032BD6:
+; loc_00032BD6
+NpcDataTable_Stow2:
 	dc.b	$00, $08, $00, $1A, $00, $58, $00, $C8, $00, $00, $00, $00, $00, $04, $01, $32, $00, $03, $2C, $CC, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 
 	dc.b	$00, $00, $00, $00 
 	dc.l	$00000000
@@ -45104,7 +45157,8 @@ loc_00033C64:
 	dc.b	$6F, $5E, $60, $01, $00, $28, $00, $98, $00, $CD, $00, $03, $DD, $94, $00, $00, $6F, $36, $60, $01, $00, $C8, $02, $48, $00, $CD, $00, $03, $DD, $94, $00, $00 
 	dc.b	$6F, $36, $60, $01, $01, $28, $01, $E8, $00, $91, $00, $03, $DD, $74, $00, $00, $6F, $5E, $60, $01, $00, $48, $02, $48, $01, $09, $00, $03, $DD, $D4, $00, $00 
 	dc.b	$6F, $80, $60, $01, $01, $48, $00, $28, $01, $09, $00, $03, $DD, $D4, $00, $00, $6F, $A8, $60, $01, $FF, $FF 
-loc_00033D1A:
+; loc_00033D1A
+NpcDataTable_Malaga:
 	dc.b	$00, $16, $00, $22, $00, $98, $00, $C8, $00, $00, $00, $00, $00, $04, $00, $35, $00, $03, $09, $F6, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 
 	dc.b	$00, $00, $00, $00 
 	dc.l	$00000000
@@ -45408,7 +45462,8 @@ loc_00034BB6:
 	dc.b	$6F, $36, $60, $01, $00, $78, $01, $08, $00, $CD, $00, $03, $DD, $94, $00, $00, $6F, $5E, $60, $01, $00, $68, $00, $A8, $00, $CD, $00, $03, $DD, $94, $00, $00 
 	dc.b	$77, $62, $60, $01, $01, $98, $00, $C8, $01, $51, $00, $03, $DD, $F4, $00, $00, $6F, $36, $00, $01, $00, $88, $01, $F8, $00, $19, $00, $03, $DD, $34, $00, $00 
 	dc.b	$77, $88, $60, $01, $FF, $FF 
-loc_00034C1C:
+; loc_00034C1C
+NpcDataTable_Barrow:
 	dc.b	$00, $09, $00, $1B, $00, $58, $00, $C8, $00, $00, $00, $00, $00, $04, $00, $26, $00, $03, $4C, $D4, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 
 	dc.b	$00, $00, $00, $00 
 	dc.l	$00000000
@@ -45626,7 +45681,8 @@ loc_00035B08:
 	dc.b	$6F, $36, $60, $01, $01, $58, $00, $C8, $00, $19, $00, $03, $DD, $34, $00, $00, $78, $AA, $60, $01, $01, $28, $01, $A8, $01, $81, $00, $03, $DE, $14, $00, $00 
 	dc.b	$78, $D6, $60, $01, $01, $E8, $01, $18, $01, $81, $00, $03, $DE, $14, $00, $00, $78, $D6, $60, $01, $00, $C8, $01, $08, $01, $81, $00, $03, $DE, $14, $00, $00 
 	dc.b	$78, $D6, $60, $01, $01, $C8, $00, $78, $01, $81, $00, $03, $DE, $14, $00, $00, $78, $D6, $60, $01, $FF, $FF 
-loc_00035BFE:
+; loc_00035BFE
+NpcDataTable_Tadcaster:
 	dc.b	$00, $0B, $00, $0A, $00, $98, $00, $C8, $00, $00, $00, $00, $00, $04, $00, $2F, $00, $03, $5C, $F2, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 
 	dc.b	$00, $00, $00, $00 
 	dc.l	$00000000
@@ -45952,7 +46008,8 @@ loc_00036B90:
 	dc.b	$79, $54, $60, $01, $01, $18, $01, $E8, $00, $CD, $00, $03, $DD, $94, $00, $00, $79, $8C, $60, $01, $02, $78, $00, $E8, $00, $91, $00, $03, $DD, $74, $00, $00 
 	dc.b	$79, $70, $60, $01, $01, $08, $00, $38, $00, $CD, $00, $03, $DD, $94, $00, $00, $79, $70, $60, $01, $02, $08, $02, $58, $00, $91, $00, $03, $DD, $74, $00, $00 
 	dc.b	$79, $70, $60, $01, $FF, $FF 
-loc_00036C96:
+; loc_00036C96
+NpcDataTable_Helwig:
 	dc.b	$00, $0B, $00, $11, $00, $58, $00, $C8, $00, $00, $00, $00, $00, $04, $00, $26, $00, $03, $6D, $60, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 
 	dc.b	$00, $00, $00, $00 
 	dc.l	$00000000
@@ -46311,7 +46368,8 @@ loc_00038494:
     dc.b	$00, $01, $F0, $56, $01
 	dc.b 	$38, $00, $68, $02, $A7 
 	dc.b	$00, $00, $00, $00, $00, $00, $7A, $D0, $60, $01, $01, $38, $00, $78, $02, $AD, $00, $00, $00, $00, $00, $00, $7A, $D0, $60, $01, $FF, $FF 
-loc_000384BA:
+; loc_000384BA
+NpcDataTable_Swafham:
 	dc.b	$00, $07, $00, $07, $00, $68, $00, $C8, $00, $00, $00, $00, $00, $04, $01, $32, $00, $03, $09, $8E, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 
 	dc.b	$00, $00, $00, $00 
 	dc.l	$00000000
@@ -46558,7 +46616,8 @@ loc_0003952E:
 	
 loc_00039530:
 	dc.b	$00, $01, $F0, $C2, $00, $78, $00, $68, $00, $19, $00, $03, $DD, $34, $00, $00, $7C, $34, $60, $01, $FF, $FF 
-loc_00039546:
+; loc_00039546
+NpcDataTable_Excalabria:
 	dc.b	$FF, $FF 
 loc_00039548:
 	dc.l	WaitingExcalabriaStr 
@@ -46674,7 +46733,8 @@ loc_00039DDA:
 	dc.b	$6F, $80, $60, $01, $01, $18, $01, $D8, $01, $51, $00, $03, $DD, $F4, $00, $00, $6F, $5E, $00, $01, $01, $78, $01, $E8, $01, $09, $00, $03, $DD, $D4, $00, $00 
 	dc.b	$6F, $A8, $60, $01, $02, $48, $01, $98, $01, $51, $00, $03, $DD, $F4, $00, $00, $6F, $36, $00, $01, $02, $D8, $01, $58, $00, $19, $00, $03, $DD, $34, $00, $00 
 	dc.b	$7D, $56, $60, $01, $FF, $FF 
-loc_00039E80:
+; loc_00039E80
+NpcDataTable_Hastings1:
 	dc.b	$00, $09, $00, $0B, $00, $98, $00, $C8, $00, $00, $00, $00, $00, $04, $00, $27, $00, $03, $9F, $98, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 
 	dc.b	$00, $00, $00, $00 
 	dc.l	$00000000
@@ -47041,7 +47101,8 @@ loc_0003b6ac:
 	dc.b	$00, $03, $DD, $F4, $00, $00, $6F, $36, $00, $01, $00, $38, $01, $18, $01, $51, $00, $03, $DD, $F4, $00, $00, $6F, $5E, $00, $01, $00, $38, $00, $58, $00, $CD 
 	dc.b	$00, $03, $DD, $94, $00, $00, $6F, $36, $60, $01, $01, $28, $01, $38, $00, $91, $00, $03, $DD, $74, $00, $00, $6F, $5E, $60, $01, $00, $D8, $01, $28, $00, $91 
 	dc.b	$00, $03, $DD, $74, $00, $00, $6F, $36, $60, $01, $FF, $FF 
-loc_0003B732:
+; loc_0003B732
+NpcDataTable_Carthahena:
 	dc.b	$00, $08, $00, $09, $00, $98, $00, $C8, $00, $00, $00, $00, $00, $04, $00, $35, $00, $03, $B7, $D4, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 
 	dc.b	$00, $00, $00, $00 
 	dc.l	$00000000
