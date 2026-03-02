@@ -35499,7 +35499,7 @@ TownNpcSetupJumpTable: ; Town NPC setup scripts
 	BRA.w	SetupTownNpcs_Carthahena
 ; loc_0001FF0A
 SetupTownNpcs_Wyclif:
-	MOVE.l	#loc_0002D208, Town_npc_data_ptr.w
+	MOVE.l	#NpcEntryList_Wyclif, Town_npc_data_ptr.w
 	RTS
 	
 ; loc_0001FF14
@@ -35513,98 +35513,98 @@ SetupTownNpcs_Parma:
 	TST.b	Treasure_of_troy_given_to_king.w
 	BNE.b	loc_0001FF36
 loc_0001FF2C:
-	MOVE.l	#loc_0002E54A, Town_npc_data_ptr.w
+	MOVE.l	#NpcEntryList_Parma, Town_npc_data_ptr.w
 	RTS
 	
 loc_0001FF36:
-	MOVE.l	#loc_0002E600, Town_npc_data_ptr.w
+	MOVE.l	#NpcEntryList_Parma_Locked, Town_npc_data_ptr.w
 	RTS
 	
 ; loc_0001FF40
 SetupTownNpcs_Watling:
-	MOVE.l	#loc_0002FC3E, Town_npc_data_ptr.w
+	MOVE.l	#NpcEntryList_Watling, Town_npc_data_ptr.w
 	RTS
 	
 ; loc_0001FF4A
 SetupTownNpcs_Deepdale:
-	MOVE.l	#loc_000307FA, Town_npc_data_ptr.w
+	MOVE.l	#NpcEntryList_Deepdale, Town_npc_data_ptr.w
 	RTS
 	
 ; loc_0001FF54
 SetupTownNpcs_Stow1:
 	TST.b	Stow_innocence_proven.w
 	BNE.b	loc_0001FF6A
-	MOVE.l	#loc_00031644, Town_npc_data_ptr.w
+	MOVE.l	#NpcEntryList_Stow1_SoldiersPresent, Town_npc_data_ptr.w
 	TST.b	Girl_left_for_stow.w
 	BEQ.b	loc_0001FF6A
 	RTS
 	
 loc_0001FF6A:
-	MOVE.l	#loc_000315AE, Town_npc_data_ptr.w
+	MOVE.l	#NpcEntryList_Stow1, Town_npc_data_ptr.w
 	RTS
 	
 ; loc_0001FF74
 SetupTownNpcs_Stow2:
-	MOVE.l	#loc_00032B30, Town_npc_data_ptr.w	
+	MOVE.l	#NpcEntryList_Stow2AndKeltwick, Town_npc_data_ptr.w	
 	RTS
 	
 	
 ; loc_0001FF7E
 SetupTownNpcs_Keltwick:
-	MOVE.l	#loc_00032B30, Town_npc_data_ptr.w
+	MOVE.l	#NpcEntryList_Stow2AndKeltwick, Town_npc_data_ptr.w
 	RTS
 	
 ; loc_0001FF88
 SetupTownNpcs_Malaga:
-	MOVE.l	#loc_00033C64, Town_npc_data_ptr.w
+	MOVE.l	#NpcEntryList_Malaga, Town_npc_data_ptr.w
 	RTS
 	
 ; loc_0001FF92
 SetupTownNpcs_Barrow:
-	MOVE.l	#loc_00034BB6, Town_npc_data_ptr.w
+	MOVE.l	#NpcEntryList_Barrow, Town_npc_data_ptr.w
 	RTS
 	
 ; loc_0001FF9C
 SetupTownNpcs_Tadcaster:
-	MOVE.l	#loc_00035B08, Town_npc_data_ptr.w
+	MOVE.l	#NpcEntryList_Tadcaster, Town_npc_data_ptr.w
 	RTS
 	
 ; loc_0001FFA6
 SetupTownNpcs_Helwig:
-	MOVE.l	#loc_00036B90, Town_npc_data_ptr.w
+	MOVE.l	#NpcEntryList_Helwig, Town_npc_data_ptr.w
 	RTS
 	
 ; loc_0001FFB0
 SetupTownNpcs_Swafham:
-	MOVE.l	#loc_000383BE, Town_npc_data_ptr.w
+	MOVE.l	#NpcEntryList_Swafham, Town_npc_data_ptr.w
 	TST.b	Swaffham_ruined.w
 	BEQ.b	loc_0001FFC6
-	MOVE.l	#loc_00038494, Town_npc_data_ptr.w
+	MOVE.l	#NpcEntryList_Swafham_Ruined, Town_npc_data_ptr.w
 loc_0001FFC6:
 	RTS
 	
 ; loc_0001FFC8
 SetupTownNpcs_Excalabria:
-	MOVE.l	#loc_00039530, Town_npc_data_ptr.w
+	MOVE.l	#NpcEntryList_Excalabria, Town_npc_data_ptr.w
 	RTS
 	
 ; loc_0001FFD2
 SetupTownNpcs_Hastings1:
-	MOVE.l	#loc_00039DDA, Town_npc_data_ptr.w
+	MOVE.l	#NpcEntryList_Hastings, Town_npc_data_ptr.w
 	RTS
 	
 ; loc_0001FFDC
 SetupTownNpcs_Hastings2:
-	MOVE.l	#loc_00039DDA, Town_npc_data_ptr.w	
+	MOVE.l	#NpcEntryList_Hastings, Town_npc_data_ptr.w	
 	RTS
 	
 	
 ; loc_0001FFE6
 SetupTownNpcs_Carthahena:
-	MOVE.l	#loc_0003B646, Town_npc_data_ptr.w
+	MOVE.l	#NpcEntryList_Carthahena, Town_npc_data_ptr.w
 	TST.b	Tsarkon_is_dead.w
 	BEQ.b	loc_0001FFFC
-	MOVE.l	#loc_0003B6AC, Town_npc_data_ptr.w
+	MOVE.l	#NpcEntryList_Carthahena_TsarkonDead, Town_npc_data_ptr.w
 loc_0001FFFC:
 	RTS
 	
@@ -35634,22 +35634,22 @@ TownStateDataJumpTable:
 	BRA.w	LoadTownStateData_Carthahena
 ; loc_0002003E
 LoadTownStateData_Default:
-	LEA	loc_00028F6E, A0	
+	LEA	TownStateConfig_Default, A0	
 	RTS
 	
 ; loc_00020046
 LoadTownStateData_Parma:
-	LEA	loc_00028F92, A0
+	LEA	TownStateConfig_Parma, A0
 loc_0002004C:
 	TST.b	Fake_king_killed.w
 	BNE.b	loc_00020058
-	LEA	loc_00028F6E, A0
+	LEA	TownStateConfig_Default, A0
 loc_00020058:
 	RTS
 	
 ; loc_0002005A
 LoadTownStateData_Deepdale:
-	LEA	loc_00029BDE, A0
+	LEA	TownStateConfig_Deepdale, A0
 	RTS
 	
 ; loc_00020062
@@ -35657,41 +35657,41 @@ LoadTownStateData_Stow1:
 	TST.b	Stow_innocence_proven.w
 loc_00020066:
 	BNE.b	loc_00020076
-	LEA	loc_0002A16E, A0
+	LEA	TownStateConfig_Stow1_Arrested, A0
 	TST.b	Girl_left_for_stow.w
 	BEQ.b	loc_00020076
 	RTS
 	
 loc_00020076:
-	LEA	loc_0002A14A, A0
+	LEA	TownStateConfig_Stow1, A0
 loc_0002007C:
 	RTS
 	
 ; loc_0002007E
 LoadTownStateData_Malaga:
-	LEA	loc_0002ABA4, A0
+	LEA	TownStateConfig_Malaga_MapReceived, A0
 	TST.b	Barrow_map_received.w
 	BNE.b	loc_00020090
-	LEA	loc_0002AB80, A0
+	LEA	TownStateConfig_Malaga, A0
 loc_00020090:
 	RTS
 	
 ; loc_00020092
 LoadTownStateData_Tadcaster:
-	LEA	loc_0002B67C, A0
+	LEA	TownStateConfig_Tadcaster, A0
 	RTS
 	
 ; loc_0002009A
 LoadTownStateData_Swafham:
-	LEA	loc_0002B910, A0
+	LEA	TownStateConfig_Swafham, A0
 	RTS
 	
 ; loc_000200A2
 LoadTownStateData_Carthahena:
-	LEA	loc_0002BFC8, A0
+	LEA	TownStateConfig_Carthahena, A0
 	TST.b	Tsarkon_is_dead.w
 	BEQ.b	loc_000200B4
-	LEA	loc_0002BFEC, A0
+	LEA	TownStateConfig_Carthahena_TsarkonDead, A0
 loc_000200B4:
 	RTS
 	
@@ -43084,10 +43084,12 @@ LoadBuildingTilemap_2A_PlaneB:
 	MOVE.l	#BuildingTilemap_2AB_PlaneB, Tilemap_data_ptr_plane_b.w
 	RTS
 	
-loc_00028F6E:
+; loc_00028F6E
+TownStateConfig_Default:
 	dc.b	$00, $98, $01, $58, $00, $00, $00, $09, $00, $04, $00, $10, $00, $02, $8F, $B6, $00, $68, $00, $28, $00, $11, $00, $02, $90, $82, $00, $00, $00, $00, $00, $00 
 	dc.l	$00000000
-loc_00028F92:
+; loc_00028F92
+TownStateConfig_Parma:
 	dc.b	$00, $98, $01, $58, $00, $00, $00, $09, $00, $04, $00, $10, $00, $02, $90, $1C, $00, $68, $00, $28, $00, $11, $00, $02, $90, $82, $00, $00, $00, $00, $00, $00 
 	dc.l	$00000000
 	dc.b	$00, $01, $EC, $88, $00, $58, $00, $38, $01, $D5, $00, $03, $DE, $A0, $00, $00, $6F, $36, $60, $01, $00, $88, $01, $28, $00, $91, $00, $03, $DD, $74, $00, $00 
@@ -43259,7 +43261,8 @@ NoEnterRoomStr:
 	dc.b	"to enter this room.", $FF
 ShowNoMercyStr:
 	dc.b	"I show no mercy to anyone!", $FF, $00 
-loc_00029848:
+; loc_00029848
+CastleTilemapData_DefaultSmall_SetA_TgtB:
 	dc.b	$1E, $17, $02, $73, $5B, $24, $5E, $01, $5C, $24, $5D, $25, $5E, $01, $73, $2D, $00, $02, $73, $5F, $24, $61, $01, $60, $A4, $25, $61, $AF, $01, $62, $24, $64 
 	dc.b	$05, $63, $6A, $6B, $6C, $63, $25, $64, $AF, $01, $65, $24, $67, $05, $66, $6D, $6E, $6F, $66, $25, $67, $B5, $24, $66, $B4, $01, $5C, $AD, $01, $5C, $2F, $73 
 	dc.b	$02, $79, $5D, $AB, $04, $5C, $79, $73, $5C, $2B, $5D, $A3, $01, $77, $23, $5D, $25, $74, $07, $5C, $5D, $5D, $79, $75, $73, $60, $AE, $01, $7A, $23, $77, $25 
@@ -43268,11 +43271,13 @@ loc_00029848:
 	dc.b	$27, $7A, $A2, $3E, $73, $23, $5D, $09, $8F, $90, $5D, $81, $AA, $82, $5D, $8F, $90, $26, $5D, $0A, $93, $94, $5D, $81, $82, $5D, $93, $94, $5D, $5D, $A5, $09 
 	dc.b	$95, $96, $5D, $79, $7A, $7A, $5D, $95, $96, $A6, $08, $99, $9A, $5D, $79, $7A, $5D, $99, $9A, $A4, $27, $77, $A2, $2D, $77, $01, $7A, $25, $77, $A2, $3C, $7A 
 	dc.b	$A2, $25, $73, $A6, $32, $73, $26, $5D, $A6, $38, $5D, $01, $79, $B7, $3F, $00
-loc_00029938:	
+; loc_00029938
+CastleTilemapData_DefaultSmall_SetA_TgtA:	
 	dc.b	$1E, $17, $01, $A0, $2F, $20, $01, $A0, $2D, $40, $BF, $A6, $23, $B0, $BB, $29 
 	dc.b	$20, $BF, $BE, $2D, $20, $BD, $01, $A0, $BF, $BF, $BF, $B3, $02, $B0, $B0, $B8, $24, $40, $C2, $25, $40, $BF, $B2, $2B, $20, $BF, $3F, $A0, $3C, $B0, $A2, $3C 
 	dc.b	$20, $BF, $BF, $25, $A0, $A6, $38, $A0, $B9, $2F, $20, $01, $A0, $2D, $20, $3F
-loc_00029978:
+; loc_00029978
+CastleTilemapData_DefaultSmall_SetB_TgtB:
 	dc.b	$1E, $17, $02, $73, $5B, $24, $5E, $01, $5C, $24, $5D, $25, $5E, $01, $73, $2D 
 	dc.b	$00, $02, $73, $5F, $24, $61, $01, $60, $A4, $25, $61, $AF, $01, $62, $24, $64, $25, $63, $25, $64, $AF, $01, $65, $24, $67, $25, $66, $25, $67, $BF, $AE, $01 
 	dc.b	$5C, $AD, $01, $5C, $2F, $73, $02, $79, $5D, $AB, $04, $5C, $79, $73, $5C, $2B, $5D, $A3, $01, $77, $23, $5D, $25, $74, $07, $5C, $5D, $5D, $79, $75, $73, $60 
@@ -43281,50 +43286,56 @@ loc_00029978:
 	dc.b	$79, $A2, $D9, $23, $77, $BB, $27, $7A, $A2, $3E, $73, $23, $5D, $03, $8F, $90, $5D, $23, $66, $03, $5D, $8F, $90, $26, $5D, $0A, $93, $94, $5D, $7A, $7A, $5D 
 	dc.b	$93, $94, $5D, $5D, $A5, $09, $95, $96, $5D, $79, $7A, $7A, $5D, $95, $96, $A6, $04, $99, $9A, $5D, $79, $A2, $02, $99, $9A, $A4, $27, $77, $A2, $2D, $77, $01 
 	dc.b	$7A, $25, $77, $A2, $3C, $7A, $A2, $25, $73, $A6, $32, $73, $26, $5D, $A6, $38, $5D, $01, $79, $B7, $3F, $00
-loc_00029A5E:
+; loc_00029A5E
+CastleTilemapData_DefaultSmall_SetB_TgtA:
 	dc.b	$1E, $17, $01, $1A, $2F, $12, $01, $1A, $2D, $14 
 	dc.b	$BF, $2F, $02, $B5, $23, $12, $BB, $29, $02, $AF, $01, $12, $AD, $02, $12, $1A, $2D, $12, $C2, $01, $12, $AB, $01, $12, $C2, $AC, $01, $1A, $A2, $01, $02, $23 
 	dc.b	$12, $A5, $23, $12, $C3, $B0, $2D, $02, $01, $1A, $2C, $02, $BF, $BF, $A2, $01, $12, $A9, $01, $12, $A4, $01, $12, $A2, $04, $12, $22, $22, $12, $A2, $01, $12 
 	dc.b	$A5, $2D, $02, $A2, $24, $02, $02, $12, $12, $25, $02, $B7, $27, $02, $BF, $01, $1A, $2F, $0A, $01, $1A, $2C, $0A, $A2, $2F, $02, $01, $12, $2C, $02, $A2, $26 
 	dc.b	$12, $A3, $2C, $12, $A2, $25, $12, $A2, $3C, $02, $BF, $01, $1A, $25, $0A, $A6, $31, $0A, $BF, $01, $1A, $25, $12, $26, $F2, $24, $12, $01, $1A, $2D, $12, $3F 
-loc_00029AE8:
+; loc_00029AE8
+CastleTilemapData_Parma_SetA_TgtB:
 	dc.b	$14, $0E, $3F, $00, $BF, $AA, $02, $1E, $1F, $B2, $3F, $00, $BF, $AE, $06, $5D, $5D, $81, $82, $5D, $5D, $AE, $3F, $00, $BF, $BE, $3F, $00
-loc_00029B04:
+; loc_00029B04
+CastleTilemapData_Parma_SetA_TgtA:
 	dc.b	$14, $0E, $39, $40 
 	dc.b	$62, $C0, $40, $40, $A3, $01, $C0, $BF, $BF, $BF, $B5, $26, $C0, $AD, $26, $B0, $AE, $26, $40, $BF, $2A, $C0, $BE, $2F, $40, $3F
-loc_00029B22:
+; loc_00029B22
+CastleTilemapData_Parma_SetB_TgtB:
 	dc.b	$14, $0E, $25, $00, $2A, $73 
 	dc.b	$2A, $00, $04, $73, $76, $7D, $73, $25, $5D, $BF, $A4, $01, $79, $24, $77, $AC, $02, $79, $77, $A2, $24, $7A, $AD, $01, $7A, $BF, $AA, $26, $73, $AD, $02, $5D 
 	dc.b	$5D, $C2, $02, $5D, $5D, $B0, $01, $79, $B1, $23, $77, $03, $7A, $77, $77, $AC, $29, $73, $AA, $2A, $5D, $B9, $3F, $00
-loc_00029B60:
+; loc_00029B60
+CastleTilemapData_Parma_SetB_TgtA:
 	dc.b	$14, $0E, $25, $14, $2A, $12, $2A, $14 
 	dc.b	$04, $1A, $F2, $F2, $1A, $A5, $01, $1A, $AB, $02, $02, $02, $B5, $23, $02, $B4, $02, $02, $02, $BF, $B8, $25, $0A, $AE, $01, $12, $25, $02, $AF, $01, $12, $A2 
 	dc.b	$02, $12, $12, $AE, $26, $02, $AC, $28, $0A, $BF, $2A, $12, $A5, $3F 
 ; loc_00029B96
 LoadCastleTilemap_DefaultSmall_PlaneA:
-	MOVE.l	#loc_00029938, Tilemap_data_ptr_plane_a.w
-	MOVE.l	#loc_00029848, Tilemap_data_ptr_plane_b.w
+	MOVE.l	#CastleTilemapData_DefaultSmall_SetA_TgtA, Tilemap_data_ptr_plane_a.w
+	MOVE.l	#CastleTilemapData_DefaultSmall_SetA_TgtB, Tilemap_data_ptr_plane_b.w
 	RTS
 	
 ; loc_00029BA8
 LoadCastleTilemap_DefaultSmall_PlaneB:
-	MOVE.l	#loc_00029A5E, Tilemap_data_ptr_plane_a.w
-	MOVE.l	#loc_00029978, Tilemap_data_ptr_plane_b.w
+	MOVE.l	#CastleTilemapData_DefaultSmall_SetB_TgtA, Tilemap_data_ptr_plane_a.w
+	MOVE.l	#CastleTilemapData_DefaultSmall_SetB_TgtB, Tilemap_data_ptr_plane_b.w
 	RTS
 	
 ; loc_00029BBA
 LoadCastleTilemap_Parma_PlaneA:
-	MOVE.l	#loc_00029B04, Tilemap_data_ptr_plane_a.w
-	MOVE.l	#loc_00029AE8, Tilemap_data_ptr_plane_b.w
+	MOVE.l	#CastleTilemapData_Parma_SetA_TgtA, Tilemap_data_ptr_plane_a.w
+	MOVE.l	#CastleTilemapData_Parma_SetA_TgtB, Tilemap_data_ptr_plane_b.w
 	RTS
 	
 ; loc_00029BCC
 LoadCastleTilemap_Parma_PlaneB:
-	MOVE.l	#loc_00029B60, Tilemap_data_ptr_plane_a.w
-	MOVE.l	#loc_00029B22, Tilemap_data_ptr_plane_b.w
+	MOVE.l	#CastleTilemapData_Parma_SetB_TgtA, Tilemap_data_ptr_plane_a.w
+	MOVE.l	#CastleTilemapData_Parma_SetB_TgtB, Tilemap_data_ptr_plane_b.w
 	RTS
 	
-loc_00029BDE:
+; loc_00029BDE
+TownStateConfig_Deepdale:
 	dc.b	$01, $68, $01, $58, $00, $0B, $00, $09, $00, $04, $00, $13, $00, $02, $9C, $02, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 
 	dc.l	$00000000
 	dc.b	$00, $01, $ED, $8E, $00, $C8, $00, $68, $00, $91, $00, $03, $DD, $74, $00, $00, $6F, $36, $60, $01, $00, $88, $00, $88, $00, $CD, $00, $03, $DD, $94, $00, $00 
@@ -43402,16 +43413,19 @@ KingInTownStr:
 	dc.b	"The king is in", $FE
 	dc.b	"town somewhere.", SCRIPT_END, $00
 
-loc_00029F5A:
+; loc_00029F5A
+CastleTilemapData_MediumA_SetA_TgtB:
 	dc.b	$1E, $17, $3F, $00, $0B, $00 
 	dc.b	$2C, $2D, $2F, $2F, $2C, $2D, $2E, $2E, $31, $31, $B4, $08, $00, $00, $33, $33, $00, $00, $32, $32, $2A, $00, $03, $6A, $6B, $6C, $AB, $24, $00, $02, $36, $36 
 	dc.b	$AA, $03, $6D, $6E, $6F, $AF, $3F, $00, $BF, $BF, $BF, $BF, $BF, $BF, $BF, $BF, $BF, $BF, $AC, $0A, $5C, $5D, $91, $92, $5D, $81, $82, $5D, $91, $92, $26, $5D 
 	dc.b	$09, $8F, $90, $5D, $81, $AA, $82, $5D, $8F, $90, $23, $5D, $A2, $3F, $00, $BF, $BF, $BF, $BF, $B8, $3F, $00
-loc_00029FB6:	
+; loc_00029FB6
+CastleTilemapData_MediumA_SetA_TgtA:	
 	dc.b	$1E, $17, $2D, $40, $01, $C0, $2F, $40, $02, $C0 
 	dc.b	$C0, $BF, $B2, $23, $B0, $BB, $23, $20, $BB, $29, $40, $BF, $BF, $BF, $BF, $BF, $BF, $BF, $BF, $BF, $B7, $3E, $C0, $3C, $B0, $A2, $3C, $40, $BF, $BF, $32, $C0 
 	dc.b	$A5, $39, $C0, $AB, $3E, $40, $3F, $00
-loc_00029FE8:	
+; loc_00029FE8
+CastleTilemapData_MediumA_SetB_TgtB:	
 	dc.b	$1E, $17, $2E, $73, $01, $5B, $24, $5E, $01, $5C, $24, $5D, $25, $5E, $03, $73, $73, $5C, $2B, $5D, $02, $73, $5F, $24 
 	dc.b	$61, $01, $60, $A4, $25, $61, $A2, $01, $60, $AC, $01, $62, $24, $64, $25, $63, $25, $64, $A2, $01, $79, $2B, $77, $02, $73, $65, $24, $67, $25, $66, $25, $67 
 	dc.b	$A3, $2A, $7F, $01, $7A, $BF, $01, $5C, $AD, $01, $5C, $AF, $02, $79, $5D, $AB, $02, $5C, $79, $B0, $01, $77, $23, $5D, $25, $74, $05, $5C, $5D, $5D, $79, $75 
@@ -43419,7 +43433,8 @@ loc_00029FE8:
 	dc.b	$7E, $B3, $23, $7A, $A7, $23, $7A, $BF, $BF, $3E, $73, $0A, $5C, $5D, $91, $92, $5D, $7A, $7A, $5D, $91, $92, $26, $5D, $03, $8F, $90, $5D, $23, $66, $03, $5D 
 	dc.b	$8F, $90, $23, $5D, $A2, $06, $60, $5D, $97, $98, $5D, $79, $A2, $02, $97, $98, $A6, $09, $95, $96, $5D, $79, $7A, $7A, $5D, $95, $96, $A5, $01, $79, $25, $77 
 	dc.b	$01, $7A, $2D, $77, $A2, $26, $77, $A3, $3B, $7A, $A2, $32, $73, $A5, $26, $73, $33, $5D, $A5, $39, $5D, $01, $79, $AA, $3F, $00
-loc_0002A0BA:
+; loc_0002A0BA
+CastleTilemapData_MediumA_SetB_TgtA:
 	dc.b	$1E, $17, $2D, $12, $01, $1A 
 	dc.b	$2F, $12, $02, $1A, $1A, $BF, $AC, $2F, $02, $A2, $2C, $02, $A7, $23, $12, $BB, $29, $02, $AF, $01, $12, $AD, $01, $12, $AF, $02, $02, $12, $AB, $01, $12, $D2 
 	dc.b	$23, $12, $A5, $23, $12, $D1, $A2, $2D, $02, $BF, $BF, $AF, $01, $12, $A9, $01, $12, $B3, $2D, $02, $BF, $BF, $2C, $0A, $01, $1A, $2F, $0A, $A2, $2C, $02, $01 
@@ -43427,23 +43442,25 @@ loc_0002A0BA:
 
 ; loc_0002A120
 LoadCastleTilemap_MediumA_PlaneA:
-	MOVE.l	#loc_00029FB6, Tilemap_data_ptr_plane_a.w
-	MOVE.l	#loc_00029F5A, Tilemap_data_ptr_plane_b.w
+	MOVE.l	#CastleTilemapData_MediumA_SetA_TgtA, Tilemap_data_ptr_plane_a.w
+	MOVE.l	#CastleTilemapData_MediumA_SetA_TgtB, Tilemap_data_ptr_plane_b.w
 	RTS
 	
 ; loc_0002A132
 LoadCastleTilemap_MediumA_PlaneB:
-	MOVE.l	#loc_0002A0BA, Tilemap_data_ptr_plane_a.w
-	MOVE.l	#loc_00029FE8, Tilemap_data_ptr_plane_b.w
+	MOVE.l	#CastleTilemapData_MediumA_SetB_TgtA, Tilemap_data_ptr_plane_a.w
+	MOVE.l	#CastleTilemapData_MediumA_SetB_TgtB, Tilemap_data_ptr_plane_b.w
 	RTS
 	
 loc_0002A144:
 	dc.l	WyclifNpcDialogueDispatch
 	dc.b	$FF, $FF 
-loc_0002A14A:
+; loc_0002A14A
+TownStateConfig_Stow1:
 	dc.b	$01, $48, $01, $48, $00, $04, $00, $08, $00, $04, $00, $14, $00, $02, $A1, $92, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 
 	dc.l	$00000000
-loc_0002A16E:
+; loc_0002A16E
+TownStateConfig_Stow1_Arrested:
 	dc.b	$01, $48, $01, $48, $00, $04, $00, $08, $00, $04, $00, $14, $00, $02, $A1, $C8, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 
 	dc.l	$00000000
 	dc.b	$00, $01, $EE, $18, $00, $58, $01, $38, $01, $D5, $00, $03, $DE, $A0, $00, $00, $74, $0C, $60, $01, $01, $18, $00, $98, $01, $D5, $00, $03, $DE, $A0, $00, $00 
@@ -43585,18 +43602,21 @@ HopesWithYouStr:
 BringDoctorHereStr:
 	dc.b	"Please bring the", $FE
 	dc.b	"doctor here!", $FF
-loc_0002A93A:
+; loc_0002A93A
+CastleTilemapData_MediumB_SetA_TgtB:
 	dc.b	$18, $16, $3A, $00, $23, $2F, $AB, $06 
 	dc.b	$2C, $2D, $2F, $2F, $2E, $2E, $A4, $23, $33, $AB, $06, $00, $00, $33, $33, $32, $32, $A4, $27, $00, $03, $6A, $6B, $6C, $A6, $C2, $02, $36, $36, $AB, $03, $6D 
 	dc.b	$6E, $6F, $A8, $3F, $00, $B2, $02, $1E, $1F, $B2, $03, $03, $02, $03, $B5, $03, $08, $07, $08, $B5, $24, $00, $BF, $B1, $29, $00, $11, $5D, $8F, $90, $81, $AA 
 	dc.b	$82, $8F, $90, $00, $5C, $91, $92, $81, $82, $91, $92, $5D, $A7, $03, $00, $95, $96, $23, $00, $02, $95, $96, $82, $00, $00, $97, $98, $3F, $00, $B6, $2C, $5D 
 	dc.b	$AC, $3F, $00, $BF, $BF, $B8, $3F, $00
-loc_0002A9AA:	
+; loc_0002A9AA
+CastleTilemapData_MediumB_SetA_TgtA:	
 	dc.b	$18, $16, $01, $C0, $37, $40, $A6, $01, $C0, $A7, $01, $C0, $A8, $01, $C0, $BF, $A2, $23, $B0, $AF, $62, $C0, $40, $40 
 	dc.b	$23, $20, $B5, $25, $40, $BF, $02, $D0, $D0, $B2, $23, $D0, $23, $40, $B2, $26, $40, $BF, $B9, $32, $C0, $A5, $28, $B0, $01, $C0, $28, $B0, $A7, $03, $40, $20 
 	dc.b	$20, $23, $40, $02, $20, $20, $C2, $02, $20, $20, $C2, $02, $20, $20, $C8, $28, $40, $A2, $27, $40, $A5, $2B, $C0, $AC, $2C, $B0, $AC, $34, $40, $BA, $30, $C0 
 	dc.b	$A4, $34, $C0, $A7, $38, $40, $3F, $00
-loc_0002AA0A:
+; loc_0002AA0A
+CastleTilemapData_MediumB_SetB_TgtB:
 	dc.b	$18, $16, $39, $73, $01, $5C, $24, $5D, $0A, $73, $5B, $5E, $5C, $5D, $5D, $5E, $5E, $73, $5C, $27, $5D, $A2, $01, $60 
 	dc.b	$A5, $03, $5F, $61, $60, $A2, $04, $61, $61, $73, $60, $A9, $01, $79, $24, $77, $03, $73, $62, $64, $23, $63, $04, $64, $64, $73, $79, $27, $77, $A3, $07, $7A 
 	dc.b	$73, $7A, $7A, $73, $65, $67, $23, $66, $02, $67, $67, $A2, $27, $7A, $BD, $01, $79, $A2, $02, $5C, $5D, $23, $74, $02, $5C, $5D, $B1, $02, $79, $77, $23, $78 
@@ -43604,7 +43624,8 @@ loc_0002AA0A:
 	dc.b	$06, $5D, $5D, $73, $5C, $5D, $5D, $C2, $23, $5D, $AA, $03, $79, $7A, $7A, $A3, $01, $60, $A2, $01, $79, $AB, $24, $77, $A2, $04, $77, $77, $73, $79, $23, $77 
 	dc.b	$01, $7A, $23, $77, $A5, $2B, $73, $01, $79, $27, $7A, $A4, $2C, $5D, $A2, $62, $7E, $7A, $7A, $B2, $26, $7A, $A4, $2D, $77, $A9, $30, $73, $A4, $23, $73, $31 
 	dc.b	$5D, $A4, $34, $5D, $01, $79, $A6, $3F
-loc_0002AACA:
+; loc_0002AACA
+CastleTilemapData_MediumB_SetB_TgtA:
 	dc.b	$18, $16, $01, $1A, $37, $12, $A6, $01, $1A, $A7, $01, $1A, $A8, $01, $1A, $B9, $25, $02, $01, $1A, $27, $02, $01, $1A 
 	dc.b	$28, $02, $A4, $01, $0A, $A5, $23, $12, $B5, $25, $02, $AD, $01, $1A, $A3, $02, $12, $12, $A3, $02, $12, $12, $B1, $27, $02, $A7, $02, $12, $12, $B2, $23, $12 
 	dc.b	$AC, $C5, $A4, $24, $02, $AB, $26, $02, $B1, $27, $0A, $01, $1A, $26, $0A, $24, $1A, $A5, $01, $12, $27, $02, $C7, $02, $02, $02, $A8, $02, $12, $12, $A3, $03 
@@ -43612,23 +43633,25 @@ loc_0002AACA:
 	dc.b	$02, $A4, $34, $02, $A2, $30, $0A, $A4, $02, $0A, $0A, $B9, $31, $12, $24, $F2, $23, $12, $3F, $00 
 ; loc_0002AB56
 LoadCastleTilemap_MediumB_PlaneA:
-	MOVE.l	#loc_0002A9AA, Tilemap_data_ptr_plane_a.w
-	MOVE.l	#loc_0002A93A, Tilemap_data_ptr_plane_b.w
+	MOVE.l	#CastleTilemapData_MediumB_SetA_TgtA, Tilemap_data_ptr_plane_a.w
+	MOVE.l	#CastleTilemapData_MediumB_SetA_TgtB, Tilemap_data_ptr_plane_b.w
 	RTS
 	
 ; loc_0002AB68
 LoadCastleTilemap_MediumB_PlaneB:
-	MOVE.l	#loc_0002AACA, Tilemap_data_ptr_plane_a.w
-	MOVE.l	#loc_0002AA0A, Tilemap_data_ptr_plane_b.w
+	MOVE.l	#CastleTilemapData_MediumB_SetB_TgtA, Tilemap_data_ptr_plane_a.w
+	MOVE.l	#CastleTilemapData_MediumB_SetB_TgtB, Tilemap_data_ptr_plane_b.w
 	RTS
 	
 loc_0002AB7A:
 	dc.l	WyclifNpcDialogueDispatch
 	dc.b	$FF, $FF 
-loc_0002AB80:
+; loc_0002AB80
+TownStateConfig_Malaga:
 	dc.b	$01, $68, $01, $58, $00, $0D, $00, $09, $00, $04, $00, $17, $00, $02, $AB, $C8, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 
 	dc.l	$00000000
-loc_0002ABA4:
+; loc_0002ABA4
+TownStateConfig_Malaga_MapReceived:
 	dc.b	$01, $68, $01, $58, $00, $0D, $00, $09, $00, $04, $00, $17, $00, $02, $AC, $3E, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 
 	dc.l	$00000000
 	dc.b	$00, $01, $EF, $0C, $01, $68, $00, $48, $02, $59, $00, $03, $DE, $E4, $00, $00, $76, $92, $60, $01, $02, $18, $01, $48, $00, $91, $00, $03, $DD, $74, $00, $00 
@@ -43779,19 +43802,22 @@ ReturnAfterTaskStr:
 JourneyToCartahenaStr
 	dc.b	"You still must", $FE
 	dc.b	"journey to Cartahena.", $FF, $00
-loc_0002B302:
+; loc_0002B302
+CastleTilemapData_Malaga_SetA_TgtB:
 	dc.b	$2D, $17, $3F, $00, $3F, $00, $BF, $A3, $03, $6A, $6B, $6C, $AC, $03, $6A, $6B, $6C, $AC, $03, $6A, $6B, $6C, $AC, $03, $6D, $6E 
 	dc.b	$6F, $AC, $03, $6D, $6E, $6F, $AC, $03, $6D, $6E, $6F, $AC, $3F, $00, $3F, $00, $BF, $BF, $BF, $BF, $BF, $BF, $BF, $BF, $BF, $BF, $BF, $BF, $BF, $BF, $BF, $A8 
 	dc.b	$0B, $5C, $5D, $91, $92, $5D, $81, $AA, $82, $5D, $91, $92, $26, $5D, $09, $8F, $90, $5D, $81, $AA, $82, $5D, $8F, $90, $26, $5D, $0B, $93, $94, $5D, $81, $AA 
 	dc.b	$82, $5D, $93, $94, $5D, $5D, $A2, $C2, $02, $97, $98, $25, $00, $02, $97, $98, $26, $00, $02, $95, $96, $25, $00, $02, $95, $96, $26, $00, $02, $99, $9A, $25 
 	dc.b	$00, $02, $99, $9A, $3F, $00, $A5, $3F, $00, $BF, $BF, $BF, $BF, $BF, $A6, $3F
-loc_0002B38C:
+; loc_0002B38C
+CastleTilemapData_Malaga_SetA_TgtA:
 	dc.b	$2D, $17, $01, $C0, $2D, $40, $01, $C0, $2F, $40, $01, $C0, $2D, $40, $02, $C0 
 	dc.b	$C0, $BF, $B3, $23, $B0, $AC, $23, $B0, $AC, $23, $B0, $AC, $23, $20, $AC, $23, $20, $AC, $23, $20, $AC, $28, $40, $A7, $29, $40, $A6, $28, $40, $BF, $BF, $BF 
 	dc.b	$BF, $BF, $B9, $01, $40, $BF, $AD, $DF, $BF, $BF, $BF, $BF, $BF, $BF, $AA, $3F, $C0, $2E, $C0, $3F, $B0, $2C, $B0, $A2, $C2, $02, $20, $20, $25, $40, $02, $20 
 	dc.b	$20, $26, $40, $02, $20, $20, $25, $40, $02, $20, $20, $26, $40, $02, $20, $20, $25, $40, $02, $20, $20, $C4, $A2, $3F, $40, $2A, $40, $BF, $B0, $33, $C0, $A6 
 	dc.b	$3F, $C0, $BF, $A2, $3F, $40, $2E, $40, $3F, $00
-loc_0002B406:	
+; loc_0002B406
+CastleTilemapData_Malaga_SetB_TgtB:	
 	dc.b	$2D, $17, $02, $73, $5B, $23, $5E, $01, $5C, $24, $5D, $24, $5E, $02, $73, $5B, $24, $5E, $01, $5C, $24, $5D 
 	dc.b	$25, $5E, $02, $73, $5B, $23, $5E, $01, $5C, $24, $5D, $24, $5E, $03, $73, $73, $5F, $23, $61, $01, $60, $A4, $24, $61, $02, $73, $5F, $24, $61, $01, $60, $A4 
 	dc.b	$25, $61, $02, $73, $5F, $23, $61, $01, $60, $A4, $24, $61, $A2, $01, $62, $23, $64, $25, $63, $24, $64, $02, $73, $62, $24, $64, $25, $63, $25, $64, $02, $73 
@@ -43805,7 +43831,8 @@ loc_0002B406:
 	dc.b	$5D, $23, $66, $03, $5D, $8F, $90, $26, $5D, $03, $93, $94, $5D, $23, $7A, $05, $5D, $93, $94, $5D, $5D, $A2, $0B, $60, $5D, $97, $98, $5D, $79, $7A, $7A, $5D 
 	dc.b	$97, $98, $A6, $09, $95, $96, $5D, $79, $7A, $7A, $5D, $95, $96, $A6, $04, $99, $9A, $5D, $79, $A3, $02, $99, $9A, $A4, $01, $79, $25, $77, $A2, $2D, $77, $A2 
 	dc.b	$2D, $77, $A2, $25, $77, $A3, $3F, $7A, $2B, $7A, $A2, $33, $73, $A6, $33, $73, $34, $5D, $A6, $3F, $5D, $A8, $01, $79, $B8, $3F
-loc_0002B596:
+; loc_0002B596
+CastleTilemapData_Malaga_SetB_TgtA:
 	dc.b	$2D, $17, $01, $1A, $2D, $12 
 	dc.b	$01, $1A, $2F, $12, $01, $1A, $2D, $12, $02, $1A, $1A, $BF, $AE, $2D, $02, $01, $1A, $2F, $02, $01, $1A, $2D, $02, $A7, $23, $12, $AC, $23, $12, $AC, $23, $12 
 	dc.b	$AC, $28, $02, $A7, $29, $02, $A6, $28, $02, $B0, $01, $12, $AD, $01, $12, $B0, $01, $12, $AB, $01, $12, $C2, $01, $12, $AB, $01, $12, $C2, $01, $12, $AB, $01 
@@ -43815,20 +43842,21 @@ loc_0002B596:
 	dc.b	$12, $A2, $3F, $02, $2C, $02, $BF, $B0, $33, $0A, $A6, $32, $0A, $BF, $AF, $34, $12, $26, $F2, $33, $12, $3F 
 ; loc_0002B652
 LoadCastleTilemap_Malaga_PlaneA:
-	MOVE.l	#loc_0002B38C, Tilemap_data_ptr_plane_a.w
-	MOVE.l	#loc_0002B302, Tilemap_data_ptr_plane_b.w
+	MOVE.l	#CastleTilemapData_Malaga_SetA_TgtA, Tilemap_data_ptr_plane_a.w
+	MOVE.l	#CastleTilemapData_Malaga_SetA_TgtB, Tilemap_data_ptr_plane_b.w
 	RTS
 	
 ; loc_0002B664
 LoadCastleTilemap_Malaga_PlaneB:
-	MOVE.l	#loc_0002B596, Tilemap_data_ptr_plane_a.w
-	MOVE.l	#loc_0002B406, Tilemap_data_ptr_plane_b.w
+	MOVE.l	#CastleTilemapData_Malaga_SetB_TgtA, Tilemap_data_ptr_plane_a.w
+	MOVE.l	#CastleTilemapData_Malaga_SetB_TgtB, Tilemap_data_ptr_plane_b.w
 	RTS
 	
 loc_0002B676:
 	dc.l	WyclifNpcDialogueDispatch
 	dc.b	$FF, $FF 
-loc_0002B67C:
+; loc_0002B67C
+TownStateConfig_Tadcaster:
 	dc.b	$01, $68, $01, $58, $00, $0B, $00, $09, $00, $04, $00, $19, $00, $02, $B6, $A0, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 
 	dc.l	$00000000
 	dc.b	$00, $01, $EF, $A8, $00, $48, $00, $88, $01, $D5, $00, $03, $DE, $A0, $00, $00, $6F, $36, $60, $01, $01, $68, $00, $48, $02, $11, $00, $03, $DE, $C0, $00, $00 
@@ -43876,7 +43904,8 @@ BegDontTormentHusbandStr:
 	dc.b	"my husband any more,", $FE
 	dc.b	"I beg of you!"
 	dc.b	$FF, $00, $01, $EA, $FE, $FF, $FF 
-loc_0002B910:
+; loc_0002B910
+TownStateConfig_Swafham:
 	dc.b	$01, $48, $01, $48, $00, $06, $00, $08, $00, $04, $00, $1B, $00, $02, $B9, $34, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 
 	dc.l	$00000000
 	dc.b	$00, $01, $F0, $78, $01, $48, $00, $48, $01, $81, $00, $03, $DE, $14, $00, $00, $6F, $80, $60, $01, $01, $58, $00, $E8, $01, $81, $00, $03, $DE, $14, $00, $00 
@@ -43994,10 +44023,12 @@ CantGiveKeyStr:
 	dc.b	"I can't give you the", $FE
 	dc.b	"key--you're carrying", $FE
 	dc.b	"too much already.", $FF 
-loc_0002BFC8:
+; loc_0002BFC8
+TownStateConfig_Carthahena:
 	dc.b	$01, $68, $01, $58, $00, $0B, $00, $09, $00, $04, $00, $1F, $00, $02, $C0, $10, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 
 	dc.l	$00000000
-loc_0002BFEC:
+; loc_0002BFEC
+TownStateConfig_Carthahena_TsarkonDead:
 	dc.b	$01, $68, $01, $58, $00, $0B, $00, $09, $00, $04, $00, $1F, $00, $02, $C0, $26, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 
 	dc.l	$00000000
 	dc.b	$00, $01, $F1, $7E, $01, $58, $00, $48, $01, $D5, $00, $03, $DE, $A0, $00, $00, $7D, $B6, $60, $01, $FF, $FF, $00, $01, $F1, $7E, $01, $28, $00, $A8, $01, $D5 
@@ -44309,7 +44340,8 @@ NpcDataTable_Wyclif:
 	dc.b	$00, $00, $00, $00 
 	dc.l	$00000000
 	dc.b	$FF, $FF
-loc_0002d208:
+; loc_0002d208
+NpcEntryList_Wyclif:
 	dc.b	$00, $01, $EA, $FE, $02, $B8, $01, $D8, $00, $91, $00, $03, $DD, $74, $00, $00, $6F, $36, $60, $01, $02, $48, $01, $68, $00, $91, $00, $03, $DD, $74 
 	dc.b	$00, $00, $70, $42, $60, $01, $01, $B8, $00, $88, $00, $CD, $00, $03, $DD, $94, $00, $00, $6F, $5E, $60, $01, $00, $68, $02, $18, $00, $CD, $00, $03, $DD, $94 
 	dc.b	$00, $00, $70, $6E, $60, $01, $01, $58, $01, $A8, $02, $05, $00, $03, $DE, $54, $00, $00, $6F, $36, $60, $01, $01, $28, $02, $98, $02, $41, $00, $03, $DE, $74 
@@ -44413,7 +44445,8 @@ loc_0002D530:
 	dc.l	BetterThanCandlesStr
 	dc.l	NoOneHereStr 
 
-loc_0002D538:
+; loc_0002D538
+TownTilemapData_Wyclif_SetA_TgtA:
 	dc.b	$30, $2D, $3F, $20, $3F, $20, $BF, $BF, $B8, $3F, $A0, $2C, $A0, $A3, $01, $A0, $3F, $B0, $2B, $B0, $01, $A0, $25, $20 
 	dc.b	$01, $A0, $24, $20, $23, $A0, $28, $20, $23, $A0, $37, $20, $AA, $25, $A0, $A6, $25, $A0, $B6, $01, $B0, $C6, $01, $20, $29, $A0, $A2, $29, $A0, $B4, $CB, $3F 
 	dc.b	$20, $A2, $01, $A0, $62, $A0, $20, $20, $BF, $AE, $C8, $BF, $A5, $02, $B0, $B0, $A2, $DF, $AD, $24, $20, $AE, $2A, $A0, $A3, $31, $A0, $A4, $CD, $2A, $A0, $25 
@@ -44424,7 +44457,8 @@ loc_0002D538:
 	dc.b	$A0, $B5, $02, $B0, $B0, $AB, $CA, $25, $A0, $B0, $02, $B0, $B0, $A2, $2D, $20, $C8, $29, $A0, $AE, $31, $20, $A8, $3F, $20, $A7, $01, $D0, $CB, $BF, $A5, $01 
 	dc.b	$40, $C9, $BF, $A3, $43, $D0, $20, $BF, $AB, $43, $40, $20, $A6, $C9, $24, $A0, $B1, $83, $D0, $20, $D0, $20, $02, $A0, $A0, $A4, $29, $20, $B5, $83, $40, $20 
 	dc.b	$40, $20, $42, $20, $A0, $2C, $A0, $C2, $28, $A0, $A2, $3F, $A0, $BF, $A9, $3F, $20, $31, $20, $3F
-loc_0002D664:
+; loc_0002D664
+TownTilemapData_Wyclif_SetA_TgtB:
 	dc.b	$30, $2D, $3F, $00, $3F, $00, $BF, $BF, $B8, $6E, $17, $1A 
 	dc.b	$19, $01, $05, $A3, $02, $05, $1A, $6D, $22, $23, $21, $03, $22, $23, $0D, $25, $00, $01, $0E, $24, $00, $03, $65, $66, $67, $28, $00, $03, $65, $66, $67, $37 
 	dc.b	$00, $01, $14, $A5, $01, $15, $A3, $05, $65, $68, $69, $6A, $67, $A6, $05, $65, $68, $69, $6A, $67, $B6, $C7, $0A, $00, $8C, $6B, $6C, $6D, $6E, $6F, $70, $71 
@@ -44446,7 +44480,8 @@ loc_0002D664:
 	dc.b	$BF, $A6, $01, $B0, $C9, $02, $00, $7A, $A5, $01, $7D, $BA, $43, $AB, $00, $C9, $3F, $00, $A2, $43, $B0, $00, $01, $19, $A5, $C3, $A6, $04, $4F, $50, $51, $52 
 	dc.b	$B1, $83, $AB, $00, $AB, $00, $02, $21, $16, $A4, $29, $00, $04, $53, $54, $55, $53, $B1, $83, $B0, $00, $B0, $00, $03, $00, $21, $00, $2C, $58, $01, $53, $C2 
 	dc.b	$01, $53, $27, $58, $A2, $37, $58, $2C, $59, $01, $56, $A2, $01, $56, $27, $59, $A2, $37, $59, $3F, $00, $31, $00, $3F
-loc_0002D8E8:	
+; loc_0002D8E8
+TownTilemapData_Wyclif_EventAlt_TgtA:	
 	dc.b	$30, $2D, $3F, $12, $3F, $12, $BF, $A5 
 	dc.b	$01, $1A, $BF, $BF, $BD, $82, $1A, $12, $12, $12, $BF, $B0, $6D, $02, $02, $12, $01, $02, $A6, $3F, $02, $2C, $02, $BF, $B0, $C7, $01, $02, $29, $12, $A2, $29 
 	dc.b	$12, $B4, $01, $02, $A5, $C2, $A3, $23, $1A, $A8, $23, $1A, $BF, $A3, $42, $1C, $12, $A7, $42, $1C, $12, $B6, $CC, $01, $22, $24, $12, $A5, $02, $12, $22, $24 
@@ -44461,7 +44496,8 @@ loc_0002D8E8:
 	dc.b	$A3, $42, $1C, $12, $B4, $05, $04, $14, $02, $14, $04, $29, $02, $A5, $C6, $01, $22, $24, $12, $B0, $04, $04, $14, $14, $04, $25, $02, $43, $12, $02, $AC, $01 
 	dc.b	$02, $B2, $04, $04, $14, $14, $04, $2E, $02, $A4, $01, $12, $C2, $35, $02, $04, $04, $14, $14, $04, $23, $02, $83, $12, $02, $12, $02, $01, $02, $25, $12, $35 
 	dc.b	$02, $04, $04, $14, $14, $04, $33, $02, $A2, $35, $02, $04, $04, $14, $14, $04, $35, $02, $A2, $2C, $12, $02, $F2, $F2, $25, $12, $24, $14, $38, $12, $3F, $00 
-loc_0002DA90:
+; loc_0002DA90
+TownTilemapData_Wyclif_EventAlt_TgtB:
 	dc.b	$30, $2D, $70, $01, $02, $03, $04, $0A, $01, $02, $03, $6D, $0B, $0C, $0A, $09, $0B, $0C, $03, $01, $02, $02, $03, $0B, $0C, $6E, $12, $13, $11, $06, $03, $0B 
 	dc.b	$01, $02, $12, $13, $6E, $17, $18, $16, $06, $11, $03, $03, $01, $0C, $18, $6E, $1C, $1D, $1B, $C5, $01, $1D, $6E, $25, $26, $24, $C5, $01, $26, $3F, $2B, $2B 
 	dc.b	$2B, $C2, $01, $0A, $C2, $02, $2B, $32, $89, $2C, $2D, $2D, $2C, $05, $2C, $2D, $2D, $33, $1E, $C3, $19, $0A, $0B, $20, $34, $96, $97, $6D, $73, $74, $75, $6F 
@@ -44492,7 +44528,8 @@ loc_0002DA90:
 	dc.b	$04, $4A, $4B, $4D, $4E, $2D, $2B, $06, $1E, $16, $17, $1D, $1B, $1C, $C2, $01, $A6, $23, $97, $02, $A5, $A6, $23, $97, $01, $A5, $A6, $09, $30, $31, $31, $2B 
 	dc.b	$2B, $4A, $4B, $4D, $4E, $2F, $2B, $06, $24, $1B, $1C, $26, $24, $25, $C2, $31, $2F, $06, $2E, $2B, $4A, $4B, $4D, $4E, $32, $2B, $02, $24, $25, $24, $2B, $B0 
 	dc.b	$06, $38, $30, $4A, $4B, $4D, $4E, $3A, $2B, $AF, $05, $30, $4A, $4B, $4D, $4E, $38, $2B, $3F, $00
-loc_0002DE44:
+; loc_0002DE44
+TownTilemapData_Wyclif_SetB_TgtA:
 	dc.b	$30, $2D, $3F, $12, $3F, $12, $BF, $A5, $01, $1A, $BF, $BF 
 	dc.b	$BD, $82, $1A, $12, $12, $12, $BF, $B0, $6D, $02, $02, $12, $01, $02, $A6, $3F, $02, $2C, $02, $BF, $B0, $C7, $01, $02, $29, $12, $A2, $29, $12, $B4, $01, $02 
 	dc.b	$A5, $C2, $A3, $23, $1A, $A8, $23, $1A, $BF, $A3, $42, $1C, $12, $A7, $42, $1C, $12, $B6, $CC, $01, $22, $24, $12, $A5, $02, $12, $92, $24, $12, $B0, $02, $12 
@@ -44507,7 +44544,8 @@ loc_0002DE44:
 	dc.b	$04, $14, $02, $14, $04, $29, $02, $A5, $C6, $01, $92, $24, $12, $B0, $04, $04, $14, $14, $04, $25, $02, $43, $12, $02, $AC, $01, $02, $B2, $04, $04, $14, $14 
 	dc.b	$04, $2E, $02, $A4, $01, $12, $C2, $35, $02, $04, $04, $14, $14, $04, $23, $02, $83, $12, $02, $12, $02, $01, $02, $25, $12, $35, $02, $04, $04, $14, $14, $04 
 	dc.b	$33, $02, $A2, $35, $02, $04, $04, $14, $14, $04, $35, $02, $A2, $33, $12, $24, $14, $38, $12, $3F
-loc_0002DFE4:	
+; loc_0002DFE4
+TownTilemapData_Wyclif_SetB_TgtB:	
 	dc.b	$30, $2D, $70, $01, $02, $03, $04, $0A, $01, $02, $03, $6D 
 	dc.b	$0B, $0C, $0A, $09, $0B, $0C, $03, $01, $02, $02, $03, $0B, $0C, $6E, $12, $13, $11, $06, $03, $0B, $01, $02, $12, $13, $6E, $17, $18, $16, $06, $11, $03, $03 
 	dc.b	$01, $0C, $18, $6E, $1C, $1D, $1B, $C5, $01, $1D, $6E, $25, $26, $24, $C5, $01, $26, $3F, $2B, $2B, $2B, $C2, $01, $0A, $C2, $02, $2B, $32, $89, $2C, $2D, $2D 
@@ -44541,18 +44579,18 @@ loc_0002DFE4:
 	dc.b	$4A, $4B, $4D, $4E, $38, $2B, $3F, $00 
 ; loc_0002E398
 LoadTownTilemap_Wyclif_PlaneA:
-	MOVE.l	#loc_0002D538, Tilemap_data_ptr_plane_a.w
-	MOVE.l	#loc_0002D664, Tilemap_data_ptr_plane_b.w
+	MOVE.l	#TownTilemapData_Wyclif_SetA_TgtA, Tilemap_data_ptr_plane_a.w
+	MOVE.l	#TownTilemapData_Wyclif_SetA_TgtB, Tilemap_data_ptr_plane_b.w
 	RTS
 	
 ; loc_0002E3AA
 LoadTownTilemap_Wyclif_PlaneB:
-	MOVE.l	#loc_0002DE44, Tilemap_data_ptr_plane_a.w
-	MOVE.l	#loc_0002DFE4, Tilemap_data_ptr_plane_b.w
+	MOVE.l	#TownTilemapData_Wyclif_SetB_TgtA, Tilemap_data_ptr_plane_a.w
+	MOVE.l	#TownTilemapData_Wyclif_SetB_TgtB, Tilemap_data_ptr_plane_b.w
 	TST.b	Event_triggers_start.w
 	BEQ.w	loc_0002E3D2
-	MOVE.l	#loc_0002D8E8, Tilemap_data_ptr_plane_a.w
-	MOVE.l	#loc_0002DA90, Tilemap_data_ptr_plane_b.w
+	MOVE.l	#TownTilemapData_Wyclif_EventAlt_TgtA, Tilemap_data_ptr_plane_a.w
+	MOVE.l	#TownTilemapData_Wyclif_EventAlt_TgtB, Tilemap_data_ptr_plane_b.w
 loc_0002E3D2:
 	RTS
 	
@@ -44598,7 +44636,8 @@ NpcDataTable_Parma:
 	dc.b	$00, $00, $00, $00 
 	dc.l	$00000000
 	dc.b	$FF, $FF
-loc_0002e54a:
+; loc_0002e54a
+NpcEntryList_Parma:
 	dc.l	$0001EBB4
 	npcEntry $01B8, $0268, $0181, NPCSpriteFrames_Guard, NPCInit_Parma_CastleSoldier, NPC_ATTR_PAL3, NPC_SOLID
 	npcEntry $01F8, $0268, $0181, NPCSpriteFrames_Guard, NPCInit_Parma_CastleSoldier, NPC_ATTR_PAL3, NPC_SOLID
@@ -44612,7 +44651,8 @@ loc_0002e54a:
 	npcEntry $00C8, $0258, $0151, NPCSpriteFrames_Woman, NPCInit_WalkingStatic, NPC_ATTR_PAL0, NPC_SOLID
 	npcEntry $0118, $01F8, $0109, NPCSpriteFrames_VillagerC, NPCInit_WalkingStatic_LoadFrame, NPC_ATTR_PAL3, NPC_SOLID
 	dc.w	$FFFF
-loc_0002e600:
+; loc_0002e600
+NpcEntryList_Parma_Locked:
 	dc.l	$0001EBB4
 	npcEntry $01B8, $0268, $0181, NPCSpriteFrames_Guard, NPCInit_Parma_CastleSoldierFaceRight, NPC_ATTR_PAL3, NPC_SOLID
 	npcEntry $01F8, $0268, $0181, NPCSpriteFrames_Guard, NPCInit_Parma_CastleSoldierFaceDown, NPC_ATTR_PAL3, NPC_SOLID
@@ -44902,7 +44942,8 @@ WatlingMapStr:
 	dc.b	"help you get there."
 	dc.b	$F9, $0A, $01, $41, $01, $42, $01, $52, $01, $43, $01, $53, $01 
 	dc.b	$44, $01, $54, $01, $45, $01, $55, $01, $56, $00
-loc_0002F262:	
+; loc_0002F262
+TownTilemapData_ParmaAndMalaga_SetA_TgtB:	
 	dc.b	$30, $28, $01, $96, $3F, $00, $2F, $00, $02, $A0, $96, $BF, $BF, $BF, $BF, $A8, $01, $83, $B1, $01, $83, $AB 
 	dc.b	$01, $1B, $26, $1C, $AA, $03, $1D, $1E, $84, $AF, $03, $1D, $1E, $84, $A9, $03, $1D, $1E, $1F, $25, $20, $A9, $05, $1D, $21, $22, $23, $84, $AB, $09, $13, $14 
 	dc.b	$A7, $21, $22, $23, $88, $14, $15, $A3, $07, $13, $14, $A7, $21, $22, $23, $1F, $A4, $01, $15, $A5, $09, $13, $14, $A7, $21, $25, $26, $27, $23, $88, $23, $14 
@@ -44924,7 +44965,8 @@ loc_0002F262:
 	dc.b	$30, $A5, $01, $2B, $A5, $01, $86, $AC, $03, $6D, $6E, $6F, $AB, $01, $31, $AE, $01, $31, $A5, $01, $87, $AC, $26, $00, $A8, $2A, $00, $A5, $27, $00, $B9, $01 
 	dc.b	$18, $23, $19, $01, $00, $26, $19, $01, $1A, $A3, $01, $18, $23, $19, $01, $00, $23, $19, $01, $1A, $A5, $01, $18, $26, $19, $01, $00, $24, $19, $01, $1A, $A6 
 	dc.b	$3F, $00, $2D, $00, $BF, $B2, $01, $9D, $BF, $AF, $02, $9C, $9A, $BF, $AF, $01, $99, $3F
-loc_0002F4EA:
+; loc_0002F4EA
+TownTilemapData_ParmaAndMalaga_SetA_TgtA:
 	dc.b	$30, $28, $01, $A0, $3F, $20, $2F, $20, $02, $A0, $A0, $BF, $BF, $BF 
 	dc.b	$BF, $A8, $01, $A0, $B1, $01, $A0, $AB, $27, $A0, $AA, $23, $A0, $AF, $23, $A0, $A9, $28, $A0, $A9, $25, $A0, $AB, $29, $A0, $A3, $2C, $A0, $A5, $2D, $A0, $A6 
 	dc.b	$3F, $20, $2D, $20, $BF, $BF, $BF, $BF, $BF, $BF, $AE, $27, $A0, $A8, $01, $A0, $BF, $28, $A0, $A7, $23, $A0, $BB, $2C, $A0, $A3, $29, $A0, $B8, $3F, $20, $BF 
@@ -44932,7 +44974,8 @@ loc_0002F4EA:
 	dc.b	$BA, $02, $C0, $C0, $A5, $36, $20, $A5, $01, $A0, $BF, $AF, $23, $A0, $AC, $02, $D0, $D0, $BE, $25, $A0, $AB, $3B, $20, $2D, $A0, $BF, $A4, $2F, $20, $A8, $27 
 	dc.b	$A0, $A8, $01, $A0, $BF, $28, $A0, $A7, $23, $A0, $BB, $2C, $A0, $A3, $29, $A0, $B8, $3F, $20, $A4, $23, $A0, $BF, $AE, $23, $B0, $BF, $AE, $29, $20, $BF, $BF 
 	dc.b	$BF, $BF, $BF, $BF, $BF, $BF, $BF, $AA, $3F, $00
-loc_0002F5A2:	
+; loc_0002F5A2
+TownTilemapData_ParmaAndMalaga_SetB_TgtB:	
 	dc.b	$30, $28, $01, $7D, $3A, $97, $01, $9F, $23, $33, $01, $9F, $2F, $97, $02, $7A, $7D, $BF, $B1, $3F, $98, $2F 
 	dc.b	$98, $A2, $01, $A3, $3A, $A2, $A3, $01, $A3, $2F, $A2, $A2, $01, $A4, $3A, $A6, $A3, $01, $A4, $2F, $A6, $A2, $3F, $98, $2F, $98, $A3, $2B, $7D, $01, $98, $2E 
 	dc.b	$7D, $A3, $2F, $7D, $A5, $0A, $78, $79, $21, $25, $26, $27, $23, $79, $79, $7B, $A2, $0D, $78, $79, $21, $25, $26, $27, $23, $28, $29, $29, $7A, $7A, $7B, $A4 
@@ -44959,7 +45002,8 @@ loc_0002F5A2:
 	dc.b	$7E, $80, $23, $7E, $24, $7D, $A5, $03, $7F, $7E, $80, $23, $7E, $A8, $24, $7D, $04, $7F, $80, $7E, $7E, $A9, $01, $81, $23, $79, $02, $82, $81, $26, $79, $01 
 	dc.b	$82, $A2, $01, $81, $23, $79, $02, $82, $81, $23, $79, $01, $82, $A4, $01, $81, $26, $79, $02, $82, $81, $24, $79, $01, $82, $A4, $3F, $98, $2E, $98, $A2, $3A 
 	dc.b	$9E, $01, $A1, $A3, $01, $9B, $2F, $9E, $A2, $3B, $97, $01, $AF, $A2, $30, $97, $01, $7A, $3F, $00
-loc_0002F8CC:	
+; loc_0002F8CC
+TownTilemapData_ParmaAndMalaga_SetB_TgtA:	
 	dc.b	$30, $28, $3F, $12, $3F, $12, $AE, $23, $32, $B2, $3F, $04 
 	dc.b	$2F, $04, $A2, $3B, $14, $A3, $30, $14, $BF, $B3, $3F, $04, $2F, $04, $A3, $2B, $02, $01, $04, $2E, $02, $A3, $2F, $02, $A5, $29, $12, $A3, $2C, $12, $A5, $2D 
 	dc.b	$12, $A9, $23, $1A, $A9, $23, $1A, $01, $02, $BF, $27, $12, $A6, $29, $12, $A9, $23, $1A, $B0, $01, $22, $AB, $01, $22, $B0, $29, $12, $AA, $01, $02, $AB, $01 
@@ -44973,14 +45017,14 @@ loc_0002F8CC:
 
 ; loc_0002F9EE
 LoadTownTilemap_ParmaAndMalaga_PlaneA:
-	MOVE.l	#loc_0002F4EA, Tilemap_data_ptr_plane_a.w
-	MOVE.l	#loc_0002F262, Tilemap_data_ptr_plane_b.w
+	MOVE.l	#TownTilemapData_ParmaAndMalaga_SetA_TgtA, Tilemap_data_ptr_plane_a.w
+	MOVE.l	#TownTilemapData_ParmaAndMalaga_SetA_TgtB, Tilemap_data_ptr_plane_b.w
 	RTS
 	
 ; loc_0002FA00
 LoadTownTilemap_ParmaAndMalaga_PlaneB:
-	MOVE.l	#loc_0002F8CC, Tilemap_data_ptr_plane_a.w
-	MOVE.l	#loc_0002F5A2, Tilemap_data_ptr_plane_b.w
+	MOVE.l	#TownTilemapData_ParmaAndMalaga_SetB_TgtA, Tilemap_data_ptr_plane_a.w
+	MOVE.l	#TownTilemapData_ParmaAndMalaga_SetB_TgtB, Tilemap_data_ptr_plane_b.w
 	RTS
 	
 TalkToEveryoneStr:
@@ -45034,7 +45078,8 @@ NpcDataTable_Watling:
 	dc.b	$00, $00, $00, $00 
 	dc.l	$00000000
 	dc.b	$FF, $FF
-loc_0002fc3e:
+; loc_0002fc3e
+NpcEntryList_Watling:
 	dc.l	$0001ED06
 	npcEntry $00A8, $00F8, $0019, NPCSpriteFrames_Child, NPCInit_Watling_VerlinsCaveHint, NPC_ATTR_PAL3, NPC_SOLID
 	npcEntry $0158, $0178, $0019, NPCSpriteFrames_Child, NPCInit_Parma_GotRingReaction, NPC_ATTR_PAL3, NPC_SOLID
@@ -45181,7 +45226,8 @@ StoleYouthStr:
 	dc.b	"Now I'll drain your", $FE
 	dc.b	"youth as well!"
 	dc.b	$F8, $02, $F7, $E1, $00
-loc_00030288:	
+; loc_00030288
+TownTilemapData_Watling_SetA_TgtB:	
 	dc.b	$28, $23, $3F, $00, $3F, $00, $BF, $BE, $01, $13, $6B, $17, $1A, $19, $01, $05 
 	dc.b	$A4, $02, $05, $1A, $6A, $22, $23, $21, $03, $22, $23, $0D, $26, $00, $03, $0E, $00, $86, $26, $80, $03, $87, $88, $7F, $26, $80, $01, $81, $26, $00, $03, $65 
 	dc.b	$66, $67, $25, $00, $01, $14, $A6, $03, $15, $00, $00, $25, $84, $05, $89, $8A, $8B, $82, $83, $25, $84, $26, $00, $05, $65, $68, $69, $6A, $67, $A4, $C8, $02 
@@ -45195,7 +45241,8 @@ loc_00030288:
 	dc.b	$AD, $A2, $CA, $B0, $02, $B3, $B4, $A8, $02, $B1, $B2, $A2, $CA, $B0, $02, $B7, $B8, $A8, $02, $B5, $B6, $A2, $C5, $01, $04, $D4, $2E, $00, $DA, $AE, $C7, $01 
 	dc.b	$BD, $64, $05, $06, $04, $02, $05, $06, $A3, $65, $04, $05, $06, $02, $19, $02, $A5, $01, $0A, $64, $00, $BB, $BC, $03, $00, $BB, $06, $A2, $01, $0D, $65, $00 
 	dc.b	$BB, $BC, $01, $01, $A5, $2F, $00, $01, $0E, $A2, $01, $14, $3F, $00, $A5, $01, $15, $A2, $02, $19, $05, $BF, $A4, $01, $1A, $A2, $C2, $B1, $3F, $00
-loc_00030416:	
+; loc_00030416
+TownTilemapData_Watling_SetA_TgtA:	
 	dc.b	$28, $23 
 	dc.b	$3F, $20, $3F, $20, $BF, $BE, $3F, $A0, $04, $A0, $A0, $B0, $A0, $A4, $01, $A0, $3F, $B0, $03, $B0, $B0, $A0, $26, $20, $01, $A0, $C2, $30, $A0, $26, $20, $23 
 	dc.b	$A0, $25, $20, $B9, $26, $20, $25, $A0, $A4, $C8, $01, $20, $32, $A0, $A2, $29, $A0, $A2, $CA, $3E, $20, $BF, $A9, $C9, $BF, $DF, $BD, $2A, $A0, $AA, $D3, $2A 
@@ -45203,7 +45250,8 @@ loc_00030416:
 	dc.b	$A0, $BF, $A2, $29, $A0, $B6, $CC, $3C, $20, $CB, $BF, $B8, $02, $A0, $A0, $A8, $02, $A0, $A0, $A2, $DA, $AE, $DA, $02, $B0, $B0, $A8, $02, $B0, $B0, $BC, $2E 
 	dc.b	$20, $DA, $AE, $DA, $AF, $01, $A0, $A6, $2E, $A0, $A3, $2F, $A0, $C6, $A2, $65, $20, $A0, $A0, $A3, $65, $20, $A0, $A0, $A6, $2F, $20, $A5, $3F, $20, $A8, $01 
 	dc.b	$A0, $BF, $A8, $32, $20, $3F
-loc_000304BE:	
+; loc_000304BE
+TownTilemapData_Watling_SetB_TgtB:	
 	dc.b	$28, $23, $6D, $01, $02, $03, $05, $01, $0A, $01, $02, $03, $6A, $0B, $0C, $0A, $04, $0B, $0C, $03, $01, $42, $02, $03, $02, $0B 
 	dc.b	$0C, $6B, $12, $13, $11, $01, $0A, $42, $01, $02, $02, $12, $13, $6B, $17, $18, $16, $01, $11, $42, $03, $01, $02, $0C, $18, $6B, $1C, $1D, $1B, $C6, $01, $1D 
 	dc.b	$6B, $25, $26, $24, $C6, $01, $26, $3F, $2B, $02, $2B, $2B, $C3, $01, $0A, $C2, $04, $2B, $5A, $5B, $5C, $87, $2D, $2C, $2C, $2D, $02, $33, $1E, $C4, $06, $0A 
@@ -45223,7 +45271,8 @@ loc_000304BE:
 	dc.b	$C4, $01, $02, $65, $2B, $01, $2B, $A4, $64, $01, $2B, $2B, $01, $01, $C7, $65, $01, $02, $03, $01, $0B, $A4, $01, $0A, $65, $01, $02, $03, $42, $01, $02, $01 
 	dc.b	$0A, $64, $01, $02, $03, $03, $01, $02, $12, $A4, $01, $11, $65, $03, $01, $02, $42, $03, $01, $02, $02, $0A, $64, $01, $02, $03, $02, $01, $02, $A3, $01, $1E 
 	dc.b	$65, $01, $02, $03, $C2, $01, $0A, $3F
-loc_00030700:	
+; loc_00030700
+TownTilemapData_Watling_SetB_TgtA:	
 	dc.b	$28, $23, $3F, $12, $26, $12, $01, $1A, $3F, $12, $AD, $01, $1A, $BF, $BF, $BF, $BD, $6A, $02, $02, $12, $02, $02, $02 
 	dc.b	$A6, $3F, $02, $23, $02, $BF, $A8, $C8, $01, $02, $32, $12, $A2, $29, $12, $A2, $C9, $A2, $42, $14, $12, $01, $12, $23, $1A, $A2, $42, $14, $12, $A7, $23, $1A 
 	dc.b	$B0, $25, $12, $42, $14, $12, $27, $12, $A5, $42, $14, $12, $A4, $D1, $01, $22, $29, $12, $A5, $02, $12, $22, $24, $12, $A2, $CB, $A6, $01, $02, $AF, $01, $02 
@@ -45233,17 +45282,18 @@ loc_00030700:
 	dc.b	$A3, $64, $0A, $02, $02, $01, $0A, $C8, $01, $1A, $2E, $0A, $A5, $2D, $0A, $01, $1A, $A6, $2F, $0A, $B9, $30, $12, $02, $F2, $F2, $33, $12, $3F, $00 
 ; loc_000307D6
 LoadTownTilemap_Watling_PlaneA:
-	MOVE.l	#loc_00030416, Tilemap_data_ptr_plane_a.w
-	MOVE.l	#loc_00030288, Tilemap_data_ptr_plane_b.w
+	MOVE.l	#TownTilemapData_Watling_SetA_TgtA, Tilemap_data_ptr_plane_a.w
+	MOVE.l	#TownTilemapData_Watling_SetA_TgtB, Tilemap_data_ptr_plane_b.w
 	RTS
 	
 ; loc_000307E8
 LoadTownTilemap_Watling_PlaneB:
-	MOVE.l	#loc_00030700, Tilemap_data_ptr_plane_a.w
-	MOVE.l	#loc_000304BE, Tilemap_data_ptr_plane_b.w
+	MOVE.l	#TownTilemapData_Watling_SetB_TgtA, Tilemap_data_ptr_plane_a.w
+	MOVE.l	#TownTilemapData_Watling_SetB_TgtB, Tilemap_data_ptr_plane_b.w
 	RTS
 	
-loc_000307fa:
+; loc_000307fa
+NpcEntryList_Deepdale:
 	dc.l	$0001ED4A
 	npcEntry $0108, $0248, $00CD, NPCSpriteFrames_ManB, NPCInit_StowSoldier_DoctorHint, NPC_ATTR_PAL3, NPC_SOLID
 	npcEntry $0228, $0128, $0091, NPCSpriteFrames_ManA, NPCInit_Deepdale_BremensCaveHint, NPC_ATTR_PAL3, NPC_SOLID
@@ -45407,7 +45457,8 @@ loc_00030F70:
 	PRINT 	LikedItHereStr	
 	RTS
 	
-loc_00030F7A:
+; loc_00030F7A
+TownTilemapData_Deepdale_SetA_TgtB:
 	dc.b	$26, $28, $01, $96, $3F, $00, $25, $00, $02, $A0, $96, $B6, $02, $36, $37, $BF, $A5, $02, $38, $39, $BF, $A5, $02, $3A, $3B, $B5, $01, $1B, $23, $1C, $03, $B3 
 	dc.b	$B4, $1C, $A8, $02, $3C, $3D, $A3, $01, $3E, $B0, $08, $1D, $1E, $1F, $20, $20, $B5, $B6, $20, $A8, $02, $3F, $40, $A2, $03, $41, $42, $43, $AC, $0C, $13, $14 
 	dc.b	$A7, $21, $22, $23, $1F, $20, $B7, $B8, $20, $15, $A7, $08, $44, $45, $00, $41, $46, $47, $48, $43, $AB, $02, $16, $24, $28, $00, $02, $2A, $17, $A5, $0D, $13 
@@ -45424,14 +45475,16 @@ loc_00030F7A:
 	dc.b	$A6, $01, $2B, $A7, $01, $86, $AE, $02, $16, $24, $25, $00, $02, $85, $17, $BE, $01, $2B, $A5, $01, $86, $A7, $01, $31, $A7, $01, $87, $AF, $01, $31, $A5, $01 
 	dc.b	$87, $A7, $29, $00, $AF, $27, $00, $BE, $01, $18, $23, $19, $01, $00, $23, $19, $01, $1A, $A5, $01, $18, $24, $19, $01, $00, $24, $19, $01, $1A, $AD, $3E, $00 
 	dc.b	$BF, $A8, $01, $9D, $BF, $A5, $02, $9C, $9A, $BF, $A5, $01, $99, $3F
-loc_00031168:	
+; loc_00031168
+TownTilemapData_Deepdale_SetA_TgtA:	
 	dc.b	$26, $28, $01, $A0, $3F, $20, $25, $20, $02, $A0, $A0, $B6, $02, $A0, $A0, $BF, $BF, $BF 
 	dc.b	$A4, $27, $A0, $AD, $01, $A0, $B0, $28, $A0, $AC, $23, $A0, $AC, $2C, $A0, $AA, $25, $A0, $AB, $31, $20, $2D, $A0, $B9, $30, $20, $BF, $BF, $BF, $BF, $A2, $01 
 	dc.b	$A0, $AF, $23, $B0, $B2, $23, $A0, $BF, $01, $20, $29, $A0, $AB, $2A, $20, $A8, $3E, $20, $BF, $AB, $02, $D0, $D0, $B5, $27, $A0, $A8, $36, $20, $28, $A0, $BA 
 	dc.b	$2D, $A0, $AC, $27, $A0, $A6, $30, $20, $A8, $28, $A0, $BB, $2C, $A0, $BA, $3F, $20, $BF, $BF, $A5, $01, $A0, $BF, $A5, $23, $A0, $BF, $2B, $A0, $B1, $01, $A0 
 	dc.b	$A9, $30, $20, $AB, $23, $A0, $BF, $01, $20, $29, $A0, $BD, $3E, $20, $BA, $23, $A0, $BF, $A4, $2C, $20, $BF, $BF, $BF, $BF, $BF, $B3, $26, $A0, $BF, $31, $20 
 	dc.b	$01, $A0, $3F, $00
-loc_000311FE:	
+; loc_000311FE
+TownTilemapData_Deepdale_SetB_TgtB:	
 	dc.b	$26, $28, $01, $7D, $2F, $97, $01, $9F, $23, $33, $01, $9F, $30, $97, $02, $7A, $7D, $BF, $A7, $3F, $98, $25, $98, $A2, $01, $A3, $2F, $A2 
 	dc.b	$A3, $01, $A3, $30, $A2, $A2, $01, $A4, $2F, $A6, $A3, $01, $A4, $30, $A6, $A3, $3F, $98, $23, $98, $01, $A4, $A4, $2E, $7D, $A3, $2F, $7D, $A7, $0D, $78, $79 
 	dc.b	$21, $25, $26, $27, $23, $28, $B9, $BA, $7A, $7A, $7B, $B9, $0A, $7C, $7D, $25, $2C, $8C, $2E, $27, $2F, $32, $32, $A7, $0E, $78, $79, $4F, $4F, $50, $51, $52 
@@ -45453,7 +45506,8 @@ loc_000311FE:
 	dc.b	$2D, $2E, $B1, $05, $2C, $32, $33, $32, $2E, $A9, $07, $2D, $34, $34, $33, $34, $34, $2D, $B1, $05, $2D, $2D, $33, $2D, $2D, $AA, $03, $2D, $2D, $33, $23, $2D 
 	dc.b	$B1, $03, $7F, $7E, $80, $23, $7E, $A8, $04, $7F, $7E, $7E, $80, $24, $7E, $AE, $01, $81, $23, $79, $02, $82, $81, $23, $79, $01, $82, $A4, $01, $81, $24, $79 
 	dc.b	$02, $82, $81, $24, $79, $01, $82, $AB, $3C, $98, $A5, $2F, $9E, $01, $A1, $A3, $01, $9B, $30, $9E, $A2, $30, $97, $01, $AF, $A2, $31, $97, $01, $7A, $3F, $00 
-loc_0003149A:
+; loc_0003149A
+TownTilemapData_Deepdale_SetB_TgtA:
 	dc.b	$26, $28, $3F, $12, $38, $12, $23, $32, $B3, $3F, $04, $25, $04, $A2, $30, $14, $A3, $31, $14, $BF, $AA, $3F, $04, $23, $04, $02, $14, $02, $A3, $2E, $02, $A3 
 	dc.b	$2F, $02, $A2, $C3, $A2, $2C, $12, $BD, $23, $1A, $AB, $2D, $12, $AB, $29, $12, $BE, $01, $22, $BF, $A6, $01, $02, $B2, $23, $1A, $AC, $2D, $02, $B8, $31, $04 
 	dc.b	$A7, $27, $12, $AA, $2B, $02, $AB, $01, $22, $AC, $02, $0C, $0C, $A2, $29, $12, $AC, $01, $02, $AC, $01, $EC, $A6, $23, $1A, $BC, $23, $04, $A4, $26, $12, $A5 
@@ -45464,17 +45518,18 @@ loc_0003149A:
 	dc.b	$1A, $2C, $0A, $A3, $30, $0A, $01, $EA, $A2, $30, $12, $23, $F4, $32, $12, $3F 
 ; loc_0003158A
 LoadTownTilemap_Deepdale_PlaneA:
-	MOVE.l	#loc_00031168, Tilemap_data_ptr_plane_a.w
-	MOVE.l	#loc_00030F7A, Tilemap_data_ptr_plane_b.w
+	MOVE.l	#TownTilemapData_Deepdale_SetA_TgtA, Tilemap_data_ptr_plane_a.w
+	MOVE.l	#TownTilemapData_Deepdale_SetA_TgtB, Tilemap_data_ptr_plane_b.w
 	RTS
 	
 ; loc_0003159C
 LoadTownTilemap_Deepdale_PlaneB:
-	MOVE.l	#loc_0003149A, Tilemap_data_ptr_plane_a.w
-	MOVE.l	#loc_000311FE, Tilemap_data_ptr_plane_b.w
+	MOVE.l	#TownTilemapData_Deepdale_SetB_TgtA, Tilemap_data_ptr_plane_a.w
+	MOVE.l	#TownTilemapData_Deepdale_SetB_TgtB, Tilemap_data_ptr_plane_b.w
 	RTS
 	
-loc_000315AE:
+; loc_000315AE
+NpcEntryList_Stow1:
 	dc.l	$0001EDC4
 	npcEntry $0138, $01F8, $0091, NPCSpriteFrames_ManA, NPCInit_StowSoldier_DoctorHint, NPC_ATTR_PAL3, NPC_SOLID
 	npcEntry $0228, $0068, $0091, NPCSpriteFrames_ManA, NPCInit_StowSoldier_DoctorHint, NPC_ATTR_PAL3, NPC_SOLID
@@ -45486,7 +45541,8 @@ loc_000315AE:
 	npcEntry $0038, $0108, $0241, NPCSpriteFrames_Priest, NPCInit_WalkingStatic, NPC_ATTR_PAL0, NPC_SOLID
 	npcEntry $01B8, $0138, $0019, NPCSpriteFrames_Child, NPCInit_WalkingStatic_LoadFrame, NPC_ATTR_PAL3, NPC_SOLID
 	dc.w	$FFFF
-loc_00031644:	
+; loc_00031644
+NpcEntryList_Stow1_SoldiersPresent:	
 	dc.l	$0001EDC4
 	npcEntry $0138, $01E8, $027D, 0, NPCTick_Soldier_Init, NPC_ATTR_PAL3, NPC_SOLID
 	npcEntry $0138, $01F8, $0283, 0, NPCTick_Soldier_Init, NPC_ATTR_PAL3, NPC_SOLID
@@ -45809,7 +45865,8 @@ MeetAgainStr2:
 	dc.b	"me to get them."	
 	dc.b	$F8, $02, $F7, $E3, $00
 
-loc_00032532:	
+; loc_00032532
+TownTilemapData_Stow1_SetA_TgtB:	
 	dc.b	$24, $22, $01, $96, $3F, $00, $23, $00, $02, $A0, $96, $A6, $01, $1B 
 	dc.b	$23, $1C, $03, $B3, $B4, $1C, $AB, $01, $83, $B0, $08, $1D, $1E, $1F, $20, $20, $B5, $B6, $20, $AA, $03, $1D, $1E, $84, $AC, $0D, $13, $14, $A7, $21, $22, $23 
 	dc.b	$1F, $20, $B7, $B8, $20, $14, $15, $A5, $09, $13, $14, $A7, $21, $22, $23, $88, $14, $15, $A9, $02, $16, $24, $28, $00, $03, $2A, $00, $17, $A5, $02, $16, $24 
@@ -45825,13 +45882,15 @@ loc_00032532:
 	dc.b	$C2, $01, $17, $B9, $01, $24, $27, $00, $01, $85, $BB, $01, $2B, $A7, $01, $86, $AE, $03, $46, $47, $48, $BF, $A2, $03, $6D, $6E, $6F, $AA, $01, $31, $A7, $01 
 	dc.b	$87, $AE, $26, $00, $A7, $2A, $00, $BF, $AC, $01, $18, $26, $19, $01, $00, $24, $19, $01, $1A, $A5, $01, $18, $24, $19, $01, $00, $25, $19, $01, $1A, $A6, $3F 
 	dc.b	$00, $BF, $A7, $01, $9D, $BF, $A3, $02, $9C, $9A, $BF, $A3, $01, $99, $3F, $00
-loc_000326F0:	
+; loc_000326F0
+TownTilemapData_Stow1_SetA_TgtA:	
 	dc.b	$24, $22, $01, $A0, $3F, $20, $23, $20, $02, $A0, $A0, $A6, $27, $A0, $AB, $01 
 	dc.b	$A0, $B0, $28, $A0, $AA, $23, $A0, $AC, $2D, $A0, $A5, $29, $A0, $A9, $3F, $20, $BF, $BF, $A8, $02, $D0, $D0, $BF, $A3, $23, $20, $BF, $B1, $01, $A0, $BF, $A3 
 	dc.b	$23, $A0, $BE, $29, $A0, $A9, $27, $A0, $AB, $2E, $20, $2C, $A0, $B8, $2E, $20, $A3, $05, $D0, $D0, $20, $A0, $A0, $BF, $23, $20, $BF, $BF, $AF, $01, $A0, $BF 
 	dc.b	$A3, $23, $A0, $BF, $01, $20, $25, $A0, $AD, $01, $A0, $AC, $2D, $A0, $A9, $23, $A0, $AB, $32, $20, $2C, $A0, $B8, $2E, $20, $BF, $BF, $B4, $23, $A0, $BF, $A2 
 	dc.b	$23, $B0, $BF, $A2, $3A, $20, $BF, $BF, $BF, $BF, $BF, $BF, $BF, $3F
-loc_0003276E:	
+; loc_0003276E
+TownTilemapData_Stow1_SetB_TgtB:	
 	dc.b	$24, $22, $01, $7D, $2F, $97, $01, $9F, $23, $33, $01, $9F, $2E, $97, $02, $7A, $7D, $BF 
 	dc.b	$A5, $3F, $98, $23, $98, $A3, $2F, $7D, $A3, $2B, $7D, $A8, $0E, $78, $79, $21, $25, $26, $27, $23, $28, $B9, $BA, $7A, $7A, $79, $7B, $A4, $0D, $78, $79, $21 
 	dc.b	$25, $26, $27, $23, $7A, $79, $7B, $98, $A8, $A8, $A5, $0A, $7C, $7D, $25, $2C, $8C, $2E, $27, $2F, $32, $32, $A2, $01, $7D, $A5, $09, $7C, $7D, $25, $2C, $8D 
@@ -45851,7 +45910,8 @@ loc_0003276E:
 	dc.b	$AB, $08, $7F, $7E, $7E, $7D, $75, $76, $77, $7A, $23, $7D, $A8, $03, $2D, $2D, $33, $23, $2D, $AB, $24, $7D, $04, $7F, $80, $7E, $7E, $AA, $04, $7F, $7E, $7E 
 	dc.b	$80, $24, $7E, $A8, $01, $81, $26, $79, $02, $82, $81, $24, $79, $01, $82, $A4, $01, $81, $24, $79, $02, $82, $81, $25, $79, $01, $82, $A4, $3F, $98, $01, $98 
 	dc.b	$A3, $2F, $9E, $01, $A1, $A3, $01, $9B, $2E, $9E, $A2, $30, $97, $01, $AF, $A2, $2F, $97, $01, $7A, $3F, $00
-loc_000329B6:	
+; loc_000329B6
+TownTilemapData_Stow1_SetB_TgtA:	
 	dc.b	$24, $22, $3F, $12, $36, $12, $23, $32, $B1, $3F 
 	dc.b	$04, $23, $04, $A3, $2F, $02, $A3, $2B, $02, $A8, $2D, $12, $A5, $29, $12, $A2, $02, $0C, $0C, $A8, $23, $1A, $AF, $23, $1A, $AF, $03, $12, $12, $02, $AF, $26 
 	dc.b	$12, $A2, $23, $04, $A8, $01, $22, $28, $12, $A9, $01, $22, $A6, $02, $14, $14, $A9, $01, $02, $B1, $01, $02, $A6, $23, $04, $A4, $2E, $02, $A4, $2A, $02, $A7 
@@ -45862,14 +45922,14 @@ loc_000329B6:
 
 ; loc_00032A80
 LoadTownTilemap_Stow1_PlaneA:
-	MOVE.l	#loc_000326F0, Tilemap_data_ptr_plane_a.w
-	MOVE.l	#loc_00032532, Tilemap_data_ptr_plane_b.w
+	MOVE.l	#TownTilemapData_Stow1_SetA_TgtA, Tilemap_data_ptr_plane_a.w
+	MOVE.l	#TownTilemapData_Stow1_SetA_TgtB, Tilemap_data_ptr_plane_b.w
 	RTS
 	
 ; loc_00032A92
 LoadTownTilemap_Stow1_PlaneB:
-	MOVE.l	#loc_000329B6, Tilemap_data_ptr_plane_a.w
-	MOVE.l	#loc_0003276E, Tilemap_data_ptr_plane_b.w
+	MOVE.l	#TownTilemapData_Stow1_SetB_TgtA, Tilemap_data_ptr_plane_a.w
+	MOVE.l	#TownTilemapData_Stow1_SetB_TgtB, Tilemap_data_ptr_plane_b.w
 	RTS
 	
 loc_00032AA4:
@@ -45906,7 +45966,8 @@ loc_00032B0E:
 loc_00032B2E:
 	RTS
 	
-loc_00032B30:
+; loc_00032B30
+NpcEntryList_Stow2AndKeltwick:
 	dc.l	$0001EE70
 	npcEntry $0028, $00B8, $00CD, NPCSpriteFrames_ManB, NPCInit_WalkingStatic, NPC_ATTR_PAL3, NPC_SOLID
 	npcEntry $01D8, $00A8, $0091, NPCSpriteFrames_ManA, NPCInit_Malaga_DungeonKeyGiver, NPC_ATTR_PAL3, NPC_SOLID
@@ -46165,7 +46226,8 @@ loc_0003373A:
 	PRINT 	FindPoisonShieldStr	
 	RTS
 	
-loc_00033744:
+; loc_00033744
+TownTilemapData_Stow2AndKeltwick_SetA_TgtB:
 	dc.b	$23, $20, $01, $96, $3F, $00, $04, $00, $00, $A0, $96, $A9, $01, $83, $B0, $01, $83, $B0, $03, $1D, $1E, $84, $AE, $03, $1D, $1E, $84, $A9, $01, $13, $24, $14 
 	dc.b	$08, $A7, $21, $1E, $23, $88, $14, $14, $15, $A3, $01, $13, $25, $14, $07, $A7, $21, $22, $23, $88, $14, $15, $A6, $01, $16, $23, $00, $09, $1D, $21, $21, $22 
 	dc.b	$23, $23, $84, $00, $17, $A3, $01, $16, $24, $00, $01, $24, $25, $00, $02, $85, $17, $A9, $01, $24, $27, $00, $01, $85, $A9, $01, $2B, $A5, $01, $86, $AA, $01 
@@ -46179,12 +46241,14 @@ loc_00033744:
 	dc.b	$61, $63, $60, $A8, $08, $13, $14, $14, $A7, $21, $22, $23, $1F, $A4, $01, $15, $A5, $2A, $00, $A7, $03, $16, $00, $24, $28, $00, $02, $2A, $17, $A9, $03, $46 
 	dc.b	$47, $48, $AC, $01, $2B, $A8, $01, $30, $AA, $03, $6D, $6E, $6F, $AC, $01, $31, $B3, $26, $00, $A9, $2A, $00, $B7, $01, $18, $24, $19, $01, $00, $26, $19, $01 
 	dc.b	$1A, $A3, $01, $18, $26, $19, $01, $00, $24, $19, $01, $1A, $A6, $3F, $00, $BF, $A5, $01, $9D, $BF, $A2, $02, $9C, $9A, $AF, $01, $AF, $B1, $01, $99, $3F, $00 
-loc_000338E4:
+; loc_000338E4
+TownTilemapData_Stow2AndKeltwick_SetA_TgtA:
 	dc.b	$23, $20, $01, $A0, $3F, $20, $04, $20, $20, $A0, $A0, $A9, $01, $A0, $B0, $01, $A0, $B0, $23, $A0, $AE, $23, $A0, $A9, $2D, $A0, $A3, $2D, $A0, $A6, $3F, $20 
 	dc.b	$BF, $BF, $BF, $BF, $BF, $BF, $BF, $BF, $A9, $01, $A0, $A9, $02, $A0, $A0, $B6, $23, $A0, $BD, $29, $A0, $A3, $02, $D0, $D0, $A9, $02, $D0, $D0, $AA, $2E, $20 
 	dc.b	$A5, $01, $A0, $A3, $24, $20, $BA, $23, $A0, $AA, $02, $D0, $D0, $B3, $25, $A0, $A9, $30, $20, $2D, $A0, $B6, $2F, $20, $A9, $27, $A0, $BB, $28, $A0, $B7, $2D 
 	dc.b	$A0, $B6, $36, $20, $23, $A0, $BF, $01, $20, $23, $B0, $BF, $2A, $20, $BF, $BF, $BF, $BF, $BF, $BF, $A6, $01, $40, $B2, $3F, $00
-loc_0003395E:	
+; loc_0003395E
+TownTilemapData_Stow2AndKeltwick_SetB_TgtB:	
 	dc.b	$23, $20, $01, $7D, $3F, $97 
 	dc.b	$04, $97, $97, $7A, $7D, $BF, $A4, $3F, $98, $02, $98, $98, $A3, $2F, $7D, $01, $98, $2F, $7D, $A5, $01, $78, $2C, $79, $01, $7B, $A2, $01, $78, $25, $79, $08 
 	dc.b	$21, $25, $26, $27, $23, $79, $79, $7B, $A5, $01, $7C, $23, $7D, $09, $21, $21, $25, $26, $27, $23, $23, $7D, $7D, $A3, $01, $7C, $25, $7D, $07, $25, $2C, $2D 
@@ -46203,7 +46267,8 @@ loc_0003395E:
 	dc.b	$06, $2D, $2D, $33, $2D, $2D, $7A, $24, $7E, $A5, $08, $7F, $7E, $7E, $7D, $75, $76, $77, $7A, $23, $7D, $A9, $03, $7F, $7E, $80, $23, $7E, $24, $7D, $A5, $24 
 	dc.b	$7D, $04, $7F, $80, $7E, $7E, $A9, $01, $81, $24, $79, $01, $82, $27, $79, $01, $82, $A2, $01, $81, $26, $79, $02, $82, $81, $24, $79, $01, $82, $A4, $3F, $98 
 	dc.b	$A3, $2E, $9E, $01, $A1, $A3, $01, $9B, $2E, $9E, $A2, $2F, $97, $01, $AF, $A2, $2F, $97, $01, $7A, $3F, $00
-loc_00033B7A:	
+; loc_00033B7A
+TownTilemapData_Stow2AndKeltwick_SetB_TgtA:	
 	dc.b	$23, $20, $3F, $12, $3F, $12, $A9, $3F, $04, $02 
 	dc.b	$04, $04, $A3, $2F, $02, $01, $04, $2F, $02, $A5, $2D, $12, $A3, $2D, $12, $BD, $23, $1A, $BF, $27, $12, $BE, $01, $22, $B0, $23, $1A, $AF, $01, $02, $B0, $27 
 	dc.b	$12, $A3, $2E, $02, $AC, $01, $22, $A7, $30, $04, $AB, $01, $02, $AD, $42, $02, $04, $AA, $2E, $02, $A2, $02, $0C, $0C, $82, $04, $02, $02, $02, $03, $04, $0C 
@@ -46213,17 +46278,18 @@ loc_00033B7A:
 	dc.b	$02, $B0, $01, $02, $BD, $2E, $02, $A2, $2E, $02, $A4, $3F, $04, $A3, $2F, $0A, $A3, $2F, $0A, $A2, $2F, $12, $23, $F4, $30, $12, $3F, $00 
 ; loc_00033C40
 LoadTownTilemap_Stow2AndKeltwick_PlaneA:
-	MOVE.l	#loc_000338E4, Tilemap_data_ptr_plane_a.w
-	MOVE.l	#loc_00033744, Tilemap_data_ptr_plane_b.w
+	MOVE.l	#TownTilemapData_Stow2AndKeltwick_SetA_TgtA, Tilemap_data_ptr_plane_a.w
+	MOVE.l	#TownTilemapData_Stow2AndKeltwick_SetA_TgtB, Tilemap_data_ptr_plane_b.w
 	RTS
 	
 ; loc_00033C52
 LoadTownTilemap_Stow2AndKeltwick_PlaneB:
-	MOVE.l	#loc_00033B7A, Tilemap_data_ptr_plane_a.w
-	MOVE.l	#loc_0003395E, Tilemap_data_ptr_plane_b.w
+	MOVE.l	#TownTilemapData_Stow2AndKeltwick_SetB_TgtA, Tilemap_data_ptr_plane_a.w
+	MOVE.l	#TownTilemapData_Stow2AndKeltwick_SetB_TgtB, Tilemap_data_ptr_plane_b.w
 	RTS
 	
-loc_00033C64:
+; loc_00033C64
+NpcEntryList_Malaga:
 	dc.l	$0001EEE2
 	npcEntry $01F8, $0028, $0181, NPCSpriteFrames_Guard, NPCInit_WalkingStatic_LoadFrame, NPC_ATTR_PAL3, NPC_SOLID
 	npcEntry $01B8, $0248, $0019, NPCSpriteFrames_Child, NPCInit_WalkingStatic_LoadFrame, NPC_ATTR_PAL3, NPC_SOLID
@@ -46537,7 +46603,8 @@ loc_00034B9C:
 loc_00034BB4:
 	RTS
 	
-loc_00034BB6:
+; loc_00034BB6
+NpcEntryList_Barrow:
 	dc.l	$0001EF40
 	npcEntry $0108, $0228, $00CD, NPCSpriteFrames_ManB, NPCInit_StowSoldier_DoctorHint, NPC_ATTR_PAL3, NPC_SOLID
 	npcEntry $0168, $0178, $0091, NPCSpriteFrames_ManA, NPCInit_StowSoldier_DoctorHint, NPC_ATTR_PAL3, NPC_SOLID
@@ -46669,7 +46736,8 @@ loc_0003522E:
 	PRINT 	BoughtFromMeStr	
 	RTS
 	
-loc_00035238:
+; loc_00035238
+TownTilemapData_Barrow_SetA_TgtB:
 	dc.b	$39, $28, $73, $01, $02, $03, $04, $0A, $01, $02, $03, $67, $0B, $0C, $0A, $02, $0B, $0C, $64, $03, $01, $02, $01, $03, $64, $0B, $0C, $0A, $09, $0B, $0C, $03 
 	dc.b	$01, $02, $02, $03, $0B, $0C, $68, $12, $13, $11, $01, $0A, $63, $01, $02, $03, $02, $0B, $0C, $65, $12, $13, $11, $06, $0A, $01, $01, $02, $12, $13, $67, $17 
 	dc.b	$1A, $19, $04, $17, $1A, $16, $05, $63, $03, $01, $02, $02, $12, $13, $64, $17, $1A, $19, $09, $17, $1A, $16, $05, $03, $03, $01, $05, $18, $67, $22, $23, $21 
@@ -46698,7 +46766,8 @@ loc_00035238:
 	dc.b	$18, $16, $17, $D0, $02, $B7, $B8, $A2, $23, $2F, $02, $35, $21, $69, $16, $17, $18, $06, $16, $17, $1D, $1B, $1C, $23, $A9, $04, $4F, $50, $51, $52, $A2, $27 
 	dc.b	$2F, $03, $35, $24, $21, $69, $1C, $1D, $1B, $05, $1C, $26, $24, $25, $26, $A9, $04, $53, $54, $55, $53, $AA, $01, $2B, $69, $24, $25, $26, $02, $24, $25, $2D 
 	dc.b	$58, $01, $53, $C2, $01, $53, $3F, $58, $29, $58, $2D, $59, $01, $56, $A2, $01, $56, $3F, $59, $29, $59, $24, $2B, $C9, $2D, $2F, $C2, $3D, $2B, $3F
-loc_000355B6:	
+; loc_000355B6
+TownTilemapData_Barrow_SetA_TgtA:	
 	dc.b	$39, $28 
 	dc.b	$3C, $20, $01, $A0, $3A, $20, $01, $A0, $3D, $20, $BF, $01, $A0, $BF, $BA, $38, $A0, $01, $B0, $AA, $2E, $A0, $01, $20, $23, $A0, $A4, $38, $B0, $01, $A0, $AB 
 	dc.b	$2F, $B0, $A6, $01, $A0, $37, $20, $AC, $01, $A0, $26, $20, $23, $A0, $25, $20, $BE, $CD, $A5, $25, $A0, $A4, $01, $B0, $A5, $01, $B0, $A3, $31, $A0, $A3, $CD 
@@ -46710,7 +46779,8 @@ loc_000355B6:
 	dc.b	$CA, $AE, $DF, $A2, $C5, $BF, $A7, $01, $A0, $BF, $A2, $02, $A0, $A0, $A2, $01, $B0, $32, $20, $AE, $D0, $83, $A0, $A0, $20, $20, $BD, $D0, $A4, $02, $B0, $B0 
 	dc.b	$BF, $B4, $02, $B0, $B0, $A2, $24, $20, $BF, $B2, $28, $20, $01, $B0, $BF, $02, $A0, $B0, $A9, $24, $A0, $AA, $02, $20, $B0, $BF, $2A, $20, $AF, $32, $20, $A5 
 	dc.b	$01, $A0, $A3, $02, $A0, $20, $2E, $A0, $C2, $38, $A0, $BF, $BF, $A6, $3F, $20, $35, $20, $AB, $3F
-loc_000356EC:	
+; loc_000356EC
+TownTilemapData_Barrow_SetB_TgtB:	
 	dc.b	$39, $28, $73, $01, $02, $03, $04, $0A, $01, $02, $03, $67 
 	dc.b	$0B, $0C, $0A, $02, $0B, $0C, $64, $03, $01, $02, $01, $03, $64, $0B, $0C, $0A, $09, $0B, $0C, $03, $01, $02, $02, $03, $0B, $0C, $68, $12, $13, $11, $01, $0A 
 	dc.b	$63, $01, $02, $03, $02, $0B, $0C, $65, $12, $13, $11, $06, $0A, $01, $01, $02, $12, $13, $68, $17, $18, $16, $01, $11, $63, $03, $01, $02, $02, $12, $13, $65 
@@ -46732,7 +46802,8 @@ loc_000356EC:
 	dc.b	$A3, $A8, $DF, $C4, $01, $A6, $23, $97, $02, $A5, $A6, $28, $97, $01, $A5, $A7, $01, $2B, $DF, $C3, $35, $2F, $A2, $DF, $C3, $B6, $DE, $01, $0C, $C4, $B6, $01 
 	dc.b	$24, $69, $0A, $01, $0C, $04, $0A, $01, $13, $11, $DB, $69, $12, $13, $11, $04, $12, $18, $16, $17, $D9, $69, $16, $17, $18, $05, $16, $17, $1D, $1B, $1C, $D9 
 	dc.b	$69, $1B, $1C, $1D, $05, $1B, $1C, $26, $24, $25, $D9, $69, $24, $25, $26, $02, $24, $25, $24, $2B, $B8, $3F, $2B, $BF, $BF, $BF, $B3, $3F
-loc_00035974:	
+; loc_00035974
+TownTilemapData_Barrow_SetB_TgtA:	
 	dc.b	$39, $28, $3F, $12 
 	dc.b	$27, $12, $01, $1A, $30, $12, $01, $1A, $3F, $12, $BD, $3A, $1A, $BF, $42, $1A, $12, $68, $12, $1A, $12, $BF, $38, $12, $BF, $A3, $67, $02, $02, $12, $01, $02 
 	dc.b	$AE, $64, $02, $02, $12, $01, $02, $A6, $39, $02, $AB, $30, $02, $BD, $CC, $AF, $C7, $B7, $01, $02, $2B, $1A, $01, $12, $A3, $29, $12, $A2, $01, $02, $A5, $39 
@@ -46748,17 +46819,18 @@ loc_00035974:
 	dc.b	$02, $F2, $F2, $3E, $12, $C2, $42, $02, $12, $A5, $3F, $00 
 ; loc_00035AE4
 LoadTownTilemap_Barrow_PlaneA:
-	MOVE.l	#loc_000355B6, Tilemap_data_ptr_plane_a.w
-	MOVE.l	#loc_00035238, Tilemap_data_ptr_plane_b.w
+	MOVE.l	#TownTilemapData_Barrow_SetA_TgtA, Tilemap_data_ptr_plane_a.w
+	MOVE.l	#TownTilemapData_Barrow_SetA_TgtB, Tilemap_data_ptr_plane_b.w
 	RTS
 	
 ; loc_00035AF6
 LoadTownTilemap_Barrow_PlaneB:
-	MOVE.l	#loc_00035974, Tilemap_data_ptr_plane_a.w
-	MOVE.l	#loc_000356EC, Tilemap_data_ptr_plane_b.w
+	MOVE.l	#TownTilemapData_Barrow_SetB_TgtA, Tilemap_data_ptr_plane_a.w
+	MOVE.l	#TownTilemapData_Barrow_SetB_TgtB, Tilemap_data_ptr_plane_b.w
 	RTS
 	
-loc_00035B08:
+; loc_00035B08
+NpcEntryList_Tadcaster:
 	dc.l	$0001EF86
 	npcEntry $0108, $01B8, $0109, NPCSpriteFrames_VillagerC, NPCInit_WalkingStatic_LoadFrame, NPC_ATTR_PAL3, NPC_SOLID
 	npcEntry $01F8, $01A8, $0151, NPCSpriteFrames_Woman, NPCInit_WalkingStatic, NPC_ATTR_PAL0, NPC_SOLID
@@ -47021,7 +47093,8 @@ AwaitingYouStr
 	dc.b	"but I have something even", $FE
 	dc.b	"better for you...."
 	dc.b	$F8, $02, $F7, $E4
-loc_00036706:
+; loc_00036706
+TownTilemapData_Tadcaster_SetA_TgtB:
 	dc.b	$25, $1F, $01, $96, $3F, $00, $24, $00, $02, $A0, $96, $BF, $BF, $BF, $BC, $01, $83, $BF, $A4, $03, $1D, $1E 
 	dc.b	$84, $AD, $01, $1B, $26, $1C, $AB, $09, $13, $14, $A7, $21, $22, $23, $88, $14, $15, $A9, $03, $1D, $1E, $1F, $25, $20, $AB, $02, $16, $24, $25, $00, $02, $85 
 	dc.b	$17, $A6, $07, $13, $14, $A7, $21, $22, $23, $1F, $A4, $01, $15, $AB, $01, $2B, $A5, $01, $86, $A7, $02, $16, $24, $28, $00, $02, $2A, $17, $AB, $01, $31, $A5 
@@ -47033,13 +47106,15 @@ loc_00036706:
 	dc.b	$16, $24, $28, $00, $02, $2A, $17, $A8, $C2, $07, $5F, $60, $61, $62, $61, $63, $60, $A9, $01, $2B, $A8, $01, $30, $A9, $2A, $00, $A8, $01, $31, $B6, $03, $46 
 	dc.b	$47, $48, $AB, $2A, $00, $AD, $03, $6D, $6E, $6F, $AA, $01, $18, $23, $19, $01, $00, $26, $19, $01, $1A, $AC, $26, $00, $A7, $2E, $00, $BF, $AA, $01, $18, $26 
 	dc.b	$19, $01, $00, $24, $19, $01, $1A, $B8, $3F, $00, $BF, $A9, $01, $9D, $BF, $A4, $02, $9C, $9A, $BF, $A4, $01, $99, $3F
-loc_00036854:
+; loc_00036854
+TownTilemapData_Tadcaster_SetA_TgtA:
 	dc.b	$25, $1F, $01, $A0, $3F, $20, $24, $20 
 	dc.b	$02, $A0, $A0, $BF, $BF, $BF, $BC, $01, $A0, $BF, $A4, $23, $A0, $AD, $27, $A0, $AB, $29, $A0, $A9, $28, $A0, $AB, $2F, $20, $2C, $A0, $B9, $2E, $20, $BF, $BF 
 	dc.b	$B2, $02, $A0, $A0, $BF, $BF, $BF, $B5, $01, $A0, $A7, $02, $C0, $C0, $BA, $23, $A0, $A6, $02, $D0, $D0, $B9, $25, $A0, $A5, $02, $40, $40, $A6, $27, $A0, $A7 
 	dc.b	$2D, $A0, $A2, $27, $20, $28, $A0, $A7, $33, $20, $2C, $A0, $B9, $2E, $20, $BF, $BF, $B6, $23, $A0, $BF, $A3, $23, $B0, $BF, $A3, $3B, $20, $BF, $BF, $BF, $BF 
 	dc.b	$BF, $BF, $BF, $A6, $3F, $00
-loc_000368C2:
+; loc_000368C2
+TownTilemapData_Tadcaster_SetB_TgtB:
 	dc.b	$25, $1F, $01, $7D, $2F, $97, $01, $9F, $24, $33, $01, $9F, $2E, $97, $02, $7A, $7D, $BF, $A6, $3F, $98, $24, $98, $A2, $01, $A3 
 	dc.b	$2F, $A2, $A4, $01, $A3, $2E, $A2, $A2, $01, $A4, $2F, $A6, $A4, $01, $A4, $2E, $A6, $A6, $3F, $98, $A7, $2C, $7D, $A2, $2F, $7D, $A9, $0A, $78, $79, $21, $25 
 	dc.b	$26, $27, $23, $7A, $79, $7B, $BB, $09, $7C, $7D, $25, $2C, $8E, $2E, $27, $7A, $7D, $A6, $0D, $78, $79, $21, $25, $26, $27, $23, $28, $29, $29, $7A, $7A, $7B 
@@ -47054,7 +47129,8 @@ loc_000368C2:
 	dc.b	$7A, $7E, $72, $73, $74, $7A, $7E, $7E, $A7, $01, $81, $23, $79, $02, $82, $81, $26, $79, $01, $82, $A7, $08, $7F, $7E, $7E, $7D, $75, $76, $77, $7A, $23, $7D 
 	dc.b	$A6, $2D, $7D, $A7, $24, $7D, $04, $7F, $80, $7E, $7E, $A4, $24, $98, $B3, $01, $81, $26, $79, $02, $82, $81, $24, $79, $01, $82, $B6, $3F, $98, $23, $98, $A2 
 	dc.b	$2F, $9E, $01, $A1, $A4, $01, $9B, $2E, $9E, $A2, $30, $97, $01, $AF, $A3, $2F, $97, $01, $7A, $3F
-loc_00036A70:	
+; loc_00036A70
+TownTilemapData_Tadcaster_SetB_TgtA:	
 	dc.b	$25, $1F, $3F, $12, $37, $12, $24, $32, $B1, $3F, $04, $24 
 	dc.b	$04, $A2, $30, $14, $A4, $2F, $14, $BF, $AC, $3F, $04, $A7, $2C, $02, $A2, $2F, $02, $A9, $29, $12, $BF, $23, $1A, $A9, $23, $12, $01, $02, $28, $12, $AD, $26 
 	dc.b	$12, $A9, $23, $1A, $B4, $01, $22, $AD, $29, $12, $AE, $01, $02, $AE, $01, $22, $B1, $2A, $02, $24, $04, $A5, $01, $02, $BA, $82, $04, $04, $02, $02, $2B, $02 
@@ -47063,14 +47139,14 @@ loc_00036A70:
 	dc.b	$02, $BF, $AC, $24, $04, $B3, $2E, $02, $B6, $3F, $04, $23, $04, $A2, $30, $0A, $A4, $2F, $0A, $A2, $30, $12, $24, $F4, $30, $12, $3F, $00 
 ; loc_00036B18
 LoadTownTilemap_Tadcaster_PlaneA:
-	MOVE.l	#loc_00036854, Tilemap_data_ptr_plane_a.w
-	MOVE.l	#loc_00036706, Tilemap_data_ptr_plane_b.w
+	MOVE.l	#TownTilemapData_Tadcaster_SetA_TgtA, Tilemap_data_ptr_plane_a.w
+	MOVE.l	#TownTilemapData_Tadcaster_SetA_TgtB, Tilemap_data_ptr_plane_b.w
 	RTS
 	
 ; loc_00036B2A
 LoadTownTilemap_Tadcaster_PlaneB:
-	MOVE.l	#loc_00036A70, Tilemap_data_ptr_plane_a.w
-	MOVE.l	#loc_000368C2, Tilemap_data_ptr_plane_b.w
+	MOVE.l	#TownTilemapData_Tadcaster_SetB_TgtA, Tilemap_data_ptr_plane_a.w
+	MOVE.l	#TownTilemapData_Tadcaster_SetB_TgtB, Tilemap_data_ptr_plane_b.w
 	RTS
 	
 loc_00036B3C:
@@ -47095,7 +47171,8 @@ loc_00036B66:
 loc_00036B8E:
 	RTS
 	
-loc_00036B90:
+; loc_00036B90
+NpcEntryList_Helwig:
 	dc.l	$0001F018
 	npcEntry $0148, $0278, $0109, NPCSpriteFrames_VillagerC, NPCInit_WalkingStatic_LoadFrame, NPC_ATTR_PAL3, NPC_SOLID
 	npcEntry $0268, $0188, $0151, NPCSpriteFrames_Woman, NPCInit_Helwig_CountOnYouHint, NPC_ATTR_PAL0, NPC_SOLID
@@ -47365,7 +47442,8 @@ FreeAtLastStr:
 	dc.b	"Please join us for the", $FE
 	dc.b	"celebrations."
 	dc.b	$F8, $01, $24
-loc_00037A22:
+; loc_00037A22
+TownTilemapData_Helwig_SetA_TgtB:
 	dc.b	$30, $2D, $2C, $00, $3F, $58, $05, $58, $58, $19, $05, $03 
 	dc.b	$A3, $28, $3F, $01, $00, $3F, $59, $05, $59, $59, $0D, $01, $02, $AC, $33, $00, $03, $65, $66, $67, $2B, $00, $03, $14, $0A, $0B, $AA, $01, $BA, $B3, $05, $65 
 	dc.b	$68, $69, $6A, $67, $AA, $CD, $29, $00, $03, $65, $66, $67, $A4, $0B, $49, $45, $8C, $6B, $6C, $6D, $6E, $6F, $70, $71, $85, $A8, $CA, $2B, $00, $05, $65, $68 
@@ -47395,7 +47473,8 @@ loc_00037A22:
 	dc.b	$13, $19, $12, $1A, $00, $A7, $01, $A6, $23, $97, $02, $A5, $A6, $23, $97, $01, $A5, $B8, $06, $19, $17, $1A, $21, $22, $23, $A8, $29, $00, $04, $4F, $50, $51 
 	dc.b	$52, $B5, $03, $21, $22, $23, $25, $00, $AF, $04, $53, $54, $55, $53, $B5, $03, $24, $25, $26, $34, $58, $01, $53, $C2, $01, $53, $38, $58, $34, $59, $01, $56 
 	dc.b	$A2, $01, $56, $38, $59, $25, $00, $CF, $37, $00, $C2, $23, $00, $3F
-loc_00037D9C:
+; loc_00037D9C
+TownTilemapData_Helwig_SetA_TgtA:
 	dc.b	$30, $2D, $3F, $20, $2E, $20, $02, $B0, $A0, $24, $20, $28, $40, $BF, $A3, $01, $A0, $BF 
 	dc.b	$A2, $23, $A0, $BF, $AD, $25, $A0, $AA, $CD, $29, $20, $23, $A0, $A6, $29, $A0, $A8, $CA, $2B, $20, $25, $A0, $A5, $31, $20, $A8, $2B, $20, $29, $A0, $B4, $C6 
 	dc.b	$3C, $20, $42, $40, $20, $AA, $C6, $BC, $2E, $20, $B6, $42, $40, $20, $B6, $C5, $02, $A0, $A0, $AF, $3A, $20, $C5, $A8, $2A, $A0, $BF, $A6, $2A, $A0, $3A, $20 
@@ -47405,7 +47484,8 @@ loc_00037D9C:
 	dc.b	$A0, $A3, $CA, $24, $40, $3F, $20, $AB, $24, $40, $31, $20, $23, $40, $A7, $23, $40, $A6, $C7, $23, $40, $27, $20, $23, $A0, $A9, $25, $20, $42, $40, $20, $2A 
 	dc.b	$20, $CA, $A6, $25, $A0, $AD, $2E, $20, $AE, $29, $A0, $B9, $C7, $A7, $3F, $20, $A3, $D0, $BF, $B2, $42, $40, $20, $BB, $C6, $AB, $3F, $20, $23, $A0, $BF, $B1 
 	dc.b	$23, $A0, $3F, $20, $AE, $23, $B0, $B1, $24, $A0, $B6, $02, $B0, $B0, $34, $20, $B9, $23, $20, $35, $A0, $C2, $3F, $A0, $BF, $AB, $3F, $20, $31, $20, $3F, $00 
-loc_00037EAE:
+; loc_00037EAE
+TownTilemapData_Helwig_SetB_TgtB:
 	dc.b	$30, $2D, $2B, $3F, $02, $BA, $40, $3F, $2F, $04, $35, $2B, $11, $03, $AC, $01, $44, $BF, $04, $35, $1E, $01, $02, $AB, $01, $40, $3F, $2F, $A2, $03, $24, $0A 
 	dc.b	$0B, $AA, $02, $BA, $44, $BF, $A2, $CD, $01, $40, $2F, $2F, $01, $49, $26, $45, $AC, $CA, $04, $B9, $BA, $43, $44, $AF, $0C, $46, $2F, $96, $97, $6D, $73, $74 
 	dc.b	$75, $6F, $9E, $98, $99, $A7, $C9, $03, $BA, $BA, $40, $2B, $2F, $26, $45, $A2, $09, $9A, $2F, $73, $77, $62, $79, $75, $9E, $9B, $A8, $C9, $03, $BA, $43, $44 
@@ -47434,7 +47514,8 @@ loc_00037EAE:
 	dc.b	$7C, $78, $78, $BB, $06, $1E, $0B, $0C, $11, $12, $1F, $C8, $05, $A0, $A1, $A2, $A2, $A4, $23, $A2, $01, $A3, $B9, $06, $24, $12, $13, $16, $17, $25, $C8, $01 
 	dc.b	$A6, $23, $97, $02, $A5, $A6, $23, $97, $01, $A5, $B8, $06, $2B, $17, $18, $1B, $1C, $20, $C8, $3F, $2F, $A3, $06, $1E, $1F, $1D, $24, $25, $26, $BF, $AB, $03 
 	dc.b	$24, $25, $26, $25, $2B, $BF, $A9, $28, $2B, $BF, $BF, $BD, $3F, $00
-loc_0003821C:	
+; loc_0003821C
+TownTilemapData_Helwig_SetB_TgtA:	
 	dc.b	$30, $2D, $2D, $14, $3F, $12, $24, $12, $BF, $BD, $3F, $02, $23, $02, $01, $1A, $BF, $BD 
 	dc.b	$3F, $02, $A3, $01, $12, $AC, $01, $04, $B1, $29, $12, $A8, $CC, $33, $02, $A3, $23, $1A, $B6, $01, $04, $A7, $29, $12, $A6, $42, $14, $12, $AA, $CA, $29, $02 
 	dc.b	$A3, $23, $1A, $A9, $02, $12, $22, $24, $12, $A8, $C9, $01, $04, $AC, $42, $14, $12, $A9, $01, $02, $B4, $2B, $02, $A3, $02, $12, $22, $24, $12, $A3, $31, $02 
@@ -47450,21 +47531,22 @@ loc_0003821C:
 	dc.b	$3F, $00 
 ; loc_00038390
 LoadTownTilemap_Helwig_PlaneA:
-	MOVE.l	#loc_00037D9C, Tilemap_data_ptr_plane_a.w
-	MOVE.l	#loc_00037A22, Tilemap_data_ptr_plane_b.w
+	MOVE.l	#TownTilemapData_Helwig_SetA_TgtA, Tilemap_data_ptr_plane_a.w
+	MOVE.l	#TownTilemapData_Helwig_SetA_TgtB, Tilemap_data_ptr_plane_b.w
 	RTS
 	
 ; loc_000383A2
 LoadTownTilemap_Helwig_PlaneB:
-	MOVE.l	#loc_0003821C, Tilemap_data_ptr_plane_a.w
-	MOVE.l	#loc_00037EAE, Tilemap_data_ptr_plane_b.w
+	MOVE.l	#TownTilemapData_Helwig_SetB_TgtA, Tilemap_data_ptr_plane_a.w
+	MOVE.l	#TownTilemapData_Helwig_SetB_TgtB, Tilemap_data_ptr_plane_b.w
 	RTS
 	
 loc_000383B4:
 	PRINT 	WhatsWrongHereStr
 	RTS
 	
-loc_000383BE:
+; loc_000383BE
+NpcEntryList_Swafham:
 	dc.l	$0001F056
 	npcEntry $0118, $0108, $0091, NPCSpriteFrames_ManA, NPCInit_StowSoldier_DoctorHint, NPC_ATTR_PAL3, NPC_SOLID
 	npcEntry $0108, $0158, $00CD, NPCSpriteFrames_ManB, NPCInit_StowSoldier_DoctorHint, NPC_ATTR_PAL3, NPC_SOLID
@@ -47480,7 +47562,8 @@ loc_000383BE:
 	npcEntry $0148, $0058, $0019, NPCSpriteFrames_Child, NPCInit_WalkingStatic_LoadFrame, NPC_ATTR_PAL3, NPC_SOLID
 	npcEntry $0208, $0128, $0061, NPCSpriteFrames_VillagerB, NPCInit_StowSoldier_DoctorHint, NPC_ATTR_PAL3, NPC_SOLID
 	dc.w	$FFFF
-loc_00038494:
+; loc_00038494
+NpcEntryList_Swafham_Ruined:
 	dc.l	$0001F056
 	npcEntry $0138, $0068, $02A7, 0, NPCInit_Helwig_OldWomanQuest, NPC_ATTR_PAL3, NPC_SOLID
 	npcEntry $0138, $0078, $02AD, 0, NPCInit_Helwig_OldWomanQuest, NPC_ATTR_PAL3, NPC_SOLID
@@ -47624,7 +47707,8 @@ loc_00038BE2:
 	PRINT 	SomethingStrangeHappenStr
 	RTS
 	
-loc_00038BEC:
+; loc_00038BEC
+TownTilemapData_Swafham_SetA_TgtB:
 	dc.b	$24, $1D, $01, $96, $3F, $00, $23, $00, $02, $A0, $96, $A6, $01, $1B, $23, $1C, $03, $B3, $B4, $1C, $A8, $02, $36, $37, $B2, $08, $1D, $1E, $1F, $20, $20, $B5 
 	dc.b	$B6, $20, $A8, $02, $38, $39, $AF, $0C, $13, $14, $A7, $21, $22, $23, $1F, $20, $B7, $B8, $20, $15, $A7, $02, $3A, $3B, $AF, $02, $16, $24, $28, $00, $02, $2A 
 	dc.b	$17, $A7, $02, $3C, $3D, $A3, $01, $3E, $AC, $01, $2B, $A8, $01, $30, $A8, $02, $3F, $40, $A2, $03, $41, $42, $43, $AB, $01, $31, $B1, $08, $44, $45, $00, $41 
@@ -47637,12 +47721,14 @@ loc_00038BEC:
 	dc.b	$A7, $01, $2B, $A8, $01, $30, $A7, $01, $2B, $A5, $01, $86, $AC, $01, $31, $B0, $01, $31, $A5, $01, $87, $AC, $2A, $00, $A7, $2B, $00, $A7, $01, $18, $23, $19 
 	dc.b	$01, $00, $26, $19, $01, $1A, $A5, $01, $18, $23, $19, $01, $00, $27, $19, $01, $1A, $A6, $3F, $00, $BF, $A7, $01, $9D, $BF, $A3, $02, $9C, $9A, $BF, $A3, $01 
 	dc.b	$99, $3F
-loc_00038D4E:	
+; loc_00038D4E
+TownTilemapData_Swafham_SetA_TgtA:	
 	dc.b	$24, $1D, $01, $A0, $3F, $20, $24, $20, $A7, $27, $A0, $A8, $02, $A0, $A0, $B2, $28, $A0, $B9, $2C, $A0, $B8, $33, $20, $A5, $01, $A0, $BF, $A3, $23 
 	dc.b	$A0, $BF, $01, $20, $25, $A0, $BA, $2D, $A0, $B7, $30, $20, $AA, $01, $A0, $BF, $A3, $23, $A0, $BE, $29, $A0, $BB, $34, $20, $23, $A0, $BF, $A2, $23, $B0, $BF 
 	dc.b	$A2, $2A, $20, $BF, $BF, $B1, $27, $A0, $AA, $28, $A0, $AA, $28, $A0, $A9, $29, $A0, $A7, $2C, $A0, $A5, $2D, $A0, $A6, $39, $20, $A3, $25, $20, $BF, $BF, $BF 
 	dc.b	$A7, $28, $20, $BF, $BF, $BF, $B0, $2F, $A0, $A3, $30, $A0, $A2, $3F, $20, $24, $20, $3F
-loc_00038DBE:	
+; loc_00038DBE
+TownTilemapData_Swafham_SetB_TgtB:	
 	dc.b	$24, $1D, $01, $7D, $2E, $97, $01, $9F, $23, $33, $01, $9F, $2F, $97 
 	dc.b	$02, $7A, $7D, $BF, $A5, $3F, $98, $23, $98, $A3, $2E, $7D, $A3, $2F, $7D, $A5, $0D, $78, $79, $21, $25, $26, $27, $23, $28, $B9, $BA, $7A, $7A, $7B, $B7, $0A 
 	dc.b	$7C, $7D, $25, $2C, $8C, $2E, $27, $2F, $34, $34, $BC, $08, $2C, $34, $33, $34, $2E, $35, $2D, $2D, $BC, $06, $2D, $2D, $33, $2D, $2D, $7A, $24, $7E, $BA, $03 
@@ -47658,24 +47744,28 @@ loc_00038DBE:
 	dc.b	$05, $2D, $2D, $33, $2D, $2D, $AE, $03, $7F, $7E, $80, $23, $7E, $24, $7D, $A7, $03, $7F, $7E, $80, $23, $7E, $AB, $01, $81, $23, $79, $02, $82, $81, $26, $79 
 	dc.b	$01, $82, $A4, $01, $81, $23, $79, $02, $82, $81, $27, $79, $01, $82, $A4, $3F, $98, $01, $98, $A3, $2E, $9E, $01, $A1, $A3, $01, $9B, $2F, $9E, $A2, $2F, $97 
 	dc.b	$01, $AF, $A2, $30, $97, $01, $7A, $3F
-loc_00038F74:	
+; loc_00038F74
+TownTilemapData_Swafham_SetB_TgtA:	
 	dc.b	$24, $1D, $3F, $12, $35, $12, $23, $32, $B2, $3F, $04, $23, $04, $A3, $2E, $02, $A3, $2F, $02, $A5, $2C, $12, $BB, $23 
 	dc.b	$1A, $BF, $A2, $29, $12, $BC, $01, $22, $BF, $A4, $01, $02, $AC, $2D, $12, $A6, $2D, $02, $B6, $31, $04, $B3, $2E, $02, $BA, $29, $12, $BE, $23, $1A, $BF, $A2 
 	dc.b	$26, $12, $AC, $01, $22, $B2, $01, $22, $B0, $01, $02, $B2, $01, $02, $BF, $2A, $02, $A4, $2E, $02, $A4, $3F, $04, $01, $04, $A4, $2E, $02, $A3, $2F, $02, $A5 
 	dc.b	$2C, $12, $A5, $2D, $12, $A9, $23, $1A, $AE, $23, $1A, $B0, $29, $12, $A8, $2A, $12, $AA, $01, $22, $B0, $01, $22, $B2, $01, $02, $B0, $01, $02, $AE, $2D, $02 
 	dc.b	$A4, $2E, $02, $A4, $3F, $04, $01, $04, $A3, $2F, $0A, $A3, $30, $0A, $A2, $2F, $12, $23, $F4, $31, $12, $3F
-loc_00039002:	
+; loc_00039002
+TownTilemapData_Swafham_Ruined_TgtB:	
 	dc.b	$24, $1E, $01, $73, $3F, $00, $23, $00, $02, $72 
 	dc.b	$73, $BF, $BF, $AE, $08, $01, $02, $03, $04, $05, $03, $04, $06, $BC, $3E, $00, $BF, $BF, $BF, $BF, $BF, $BF, $B0, $03, $30, $31, $32, $43, $32, $31, $01, $33 
 	dc.b	$AD, $05, $01, $03, $02, $04, $06, $A8, $2E, $00, $A9, $3B, $00, $BF, $BF, $BF, $BF, $BF, $BF, $BF, $A5, $08, $01, $03, $02, $03, $04, $05, $03, $06, $A9, $05 
 	dc.b	$01, $03, $04, $02, $06, $AE, $3E, $00, $BF, $BF, $BF, $BF, $BF, $BF, $BF, $10, $81, $6B, $6C, $6D, $6A, $6A, $6E, $6C, $6D, $6A, $6E, $6A, $6A, $6B, $6A, $6C 
 	dc.b	$A3, $01, $6D, $23, $6A, $11, $6B, $6C, $6D, $6E, $6E, $6C, $6D, $6A, $6A, $6B, $6E, $6A, $82, $84, $71, $6F, $70, $23, $71, $02, $6F, $70, $26, $71, $01, $6F 
 	dc.b	$A3, $01, $70, $24, $71, $82, $6F, $70, $71, $71, $23, $71, $01, $83, $3F, $00, $25, $00, $3F, $00
-loc_000390A0:	
+; loc_000390A0
+TownTilemapData_Swafham_Ruined_TgtA:	
 	dc.b	$24, $1E, $01, $A0, $3F, $20, $23, $20, $02, $A0, $A0, $BF 
 	dc.b	$BF, $AE, $28, $B0, $BC, $3E, $20, $BF, $BF, $BF, $BF, $BF, $BF, $B0, $2A, $B0, $AD, $25, $B0, $A8, $2E, $20, $A9, $3B, $20, $BF, $BF, $BF, $BF, $BF, $BF, $BF 
 	dc.b	$A5, $28, $B0, $A9, $25, $B0, $AE, $3E, $20, $BF, $BF, $BF, $BF, $BF, $BF, $BF, $30, $A0, $A3, $3F, $A0, $B6, $3F, $20, $25, $20, $3F, $00
-loc_000390E8:	
+; loc_000390E8
+TownTilemapData_Swafham_Ruined_SetB_TgtB:	
 	dc.b	$24, $1E, $01, $10 
 	dc.b	$25, $5B, $02, $5C, $5F, $25, $5B, $03, $60, $5B, $5C, $23, $5D, $02, $5E, $5F, $23, $5B, $05, $60, $5B, $5B, $5C, $5F, $26, $5B, $02, $10, $10, $A5, $29, $5B 
 	dc.b	$05, $61, $62, $63, $64, $65, $2F, $5B, $A2, $01, $80, $23, $87, $02, $57, $58, $24, $87, $02, $57, $58, $23, $87, $04, $66, $67, $68, $69, $24, $87, $02, $57 
@@ -47704,7 +47794,8 @@ loc_000390E8:
 	dc.b	$A2, $04, $2F, $2D, $2E, $5A, $C2, $03, $56, $2D, $2D, $25, $2E, $08, $2F, $2E, $56, $2F, $2E, $2E, $56, $80, $A2, $2E, $88, $23, $80, $2F, $88, $01, $80, $A3 
 	dc.b	$3F, $80, $23, $80, $BF, $A6, $1E, $26, $27, $28, $29, $2A, $2B, $26, $27, $28, $29, $2A, $2B, $26, $27, $28, $29, $54, $55, $56, $27, $28, $29, $2A, $2B, $26 
 	dc.b	$27, $28, $29, $2A, $2B, $06, $26, $27, $28, $29, $2A, $2B, $3F, $00
-loc_0003943A:	
+; loc_0003943A
+TownTilemapData_Swafham_Ruined_SetB_TgtA:	
 	dc.b	$24, $1E, $3F, $12, $3F, $12, $AB, $2F, $04, $23, $14, $30, $04, $A3, $2E, $02, $23, $04 
 	dc.b	$2F, $02, $A7, $28, $12, $BD, $26, $02, $BF, $A3, $23, $12, $BD, $02, $12, $02, $C2, $26, $02, $B9, $2B, $02, $BF, $BB, $24, $04, $01, $02, $25, $04, $A2, $25 
 	dc.b	$04, $B3, $2E, $02, $A5, $2A, $12, $AD, $25, $12, $BF, $82, $12, $02, $02, $02, $BF, $AC, $23, $02, $42, $12, $02, $24, $02, $AB, $02, $12, $02, $CA, $25, $02 
@@ -47713,27 +47804,28 @@ loc_0003943A:
 	dc.b	$BF, $A9, $3F, $04, $01, $04, $BF, $BF, $AD, $2F, $12, $23, $F2, $31, $12, $3F 
 ; loc_000394DC
 LoadTownTilemap_Swafham_PlaneA:
-	MOVE.l	#loc_00038D4E, Tilemap_data_ptr_plane_a.w
-	MOVE.l	#loc_00038BEC, Tilemap_data_ptr_plane_b.w
+	MOVE.l	#TownTilemapData_Swafham_SetA_TgtA, Tilemap_data_ptr_plane_a.w
+	MOVE.l	#TownTilemapData_Swafham_SetA_TgtB, Tilemap_data_ptr_plane_b.w
 	TST.b	Swaffham_ruined.w
 	BEQ.w	loc_00039504
-	MOVE.l	#loc_000390A0, Tilemap_data_ptr_plane_a.w
-	MOVE.l	#loc_00039002, Tilemap_data_ptr_plane_b.w
+	MOVE.l	#TownTilemapData_Swafham_Ruined_TgtA, Tilemap_data_ptr_plane_a.w
+	MOVE.l	#TownTilemapData_Swafham_Ruined_TgtB, Tilemap_data_ptr_plane_b.w
 loc_00039504:
 	RTS
 	
 ; loc_00039506
 LoadTownTilemap_Swafham_PlaneB:
-	MOVE.l	#loc_00038F74, Tilemap_data_ptr_plane_a.w
-	MOVE.l	#loc_00038DBE, Tilemap_data_ptr_plane_b.w
+	MOVE.l	#TownTilemapData_Swafham_SetB_TgtA, Tilemap_data_ptr_plane_a.w
+	MOVE.l	#TownTilemapData_Swafham_SetB_TgtB, Tilemap_data_ptr_plane_b.w
 	TST.b	Swaffham_ruined.w
 	BEQ.w	loc_0003952E
-	MOVE.l	#loc_0003943A, Tilemap_data_ptr_plane_a.w
-	MOVE.l	#loc_000390E8, Tilemap_data_ptr_plane_b.w
+	MOVE.l	#TownTilemapData_Swafham_Ruined_SetB_TgtA, Tilemap_data_ptr_plane_a.w
+	MOVE.l	#TownTilemapData_Swafham_Ruined_SetB_TgtB, Tilemap_data_ptr_plane_b.w
 loc_0003952E:
 	RTS
 	
-loc_00039530:
+; loc_00039530
+NpcEntryList_Excalabria:
 	dc.l	$0001F0C2
 	npcEntry $0078, $0068, $0019, NPCSpriteFrames_Child, NPCInit_Excalabria_CrystalExchange, NPC_ATTR_PAL3, NPC_SOLID
 	dc.w	$FFFF
@@ -47788,18 +47880,21 @@ loc_0003986E:
 	PRINT 	WaitingExcalabriaStr	
 	RTS
 	
-loc_00039878:
+; loc_00039878
+TownTilemapData_Excalabria_SetA_TgtB:
 	dc.b	$24, $1E, $01, $73, $3F, $00, $23, $00, $02, $72, $73, $BF, $BF, $AE, $05, $01, $02, $04, $03, $06, $AB, $01, $30, $42, $31, $32, $42, $32, $31, $01, $33, $AA 
 	dc.b	$3E, $00, $BF, $BF, $BF, $BF, $BF, $BF, $BF, $A8, $05, $01, $02, $03, $05, $06, $A9, $01, $01, $62, $03, $02, $05, $01, $06, $AE, $3B, $00, $BF, $BF, $BF, $BF 
 	dc.b	$BF, $BF, $BF, $A5, $08, $01, $02, $05, $03, $02, $04, $03, $06, $A9, $05, $01, $02, $03, $05, $06, $AE, $3E, $00, $AB, $03, $74, $75, $76, $BF, $A2, $39, $00 
 	dc.b	$BF, $BF, $BF, $BF, $B5, $10, $81, $6A, $6B, $6A, $6A, $6C, $6D, $6E, $6A, $6A, $6E, $6B, $6C, $6D, $6E, $6C, $A3, $12, $6D, $6A, $6C, $6D, $6E, $6A, $6A, $6E 
 	dc.b	$6B, $6C, $6D, $6E, $6A, $6C, $6D, $6A, $82, $84, $24, $71, $02, $6F, $70, $25, $71, $04, $6F, $70, $71, $6F, $A3, $04, $70, $71, $6F, $70, $25, $71, $08, $6F 
 	dc.b	$70, $71, $71, $6F, $70, $71, $83, $3F, $00, $25, $00, $3F
-loc_00039924:	
+; loc_00039924
+TownTilemapData_Excalabria_SetA_TgtA:	
 	dc.b	$24, $1E, $01, $A0, $3F, $20, $23, $20, $02, $A0, $A0, $BF, $BF, $AE, $25, $B0, $AB, $2A, $B0, $AA 
 	dc.b	$3E, $20, $BF, $BF, $BF, $BF, $BF, $BF, $BF, $A8, $25, $B0, $A9, $28, $B0, $AE, $3B, $20, $BF, $BF, $BF, $BF, $BF, $BF, $BF, $A5, $28, $B0, $A9, $25, $B0, $AE 
 	dc.b	$3E, $20, $AB, $23, $B0, $BF, $A2, $39, $20, $BF, $BF, $BF, $BF, $B6, $2F, $A0, $A3, $3F, $A0, $B6, $3F, $20, $25, $20, $3F, $00
-loc_00039972:
+; loc_00039972
+TownTilemapData_Excalabria_SetB_TgtB:
 	dc.b	$24, $1E, $01, $20, $25, $5B 
 	dc.b	$02, $5C, $5F, $25, $5B, $03, $60, $5B, $5C, $23, $5D, $02, $5E, $5F, $23, $5B, $05, $60, $5B, $5B, $5C, $5F, $26, $5B, $02, $10, $20, $A5, $29, $5B, $05, $61 
 	dc.b	$62, $63, $64, $65, $2F, $5B, $A2, $01, $80, $23, $87, $02, $57, $58, $24, $87, $02, $57, $58, $23, $87, $04, $66, $67, $68, $69, $24, $87, $02, $57, $58, $24 
@@ -47830,7 +47925,8 @@ loc_00039972:
 	dc.b	$2F, $2E, $56, $2F, $2E, $2E, $56, $80, $A2, $2E, $88, $23, $80, $2F, $88, $01, $80, $A3, $2F, $80, $04, $7C, $80, $80, $7D, $2F, $80, $B1, $33, $80, $1E, $10 
 	dc.b	$26, $27, $26, $28, $29, $2B, $2B, $26, $27, $26, $28, $29, $2B, $2B, $26, $27, $26, $28, $29, $2B, $2B, $26, $27, $26, $28, $29, $2B, $2B, $26, $07, $27, $26 
 	dc.b	$28, $29, $2B, $2B, $2A, $3F
-loc_00039CFE:	
+; loc_00039CFE
+TownTilemapData_Excalabria_SetB_TgtA:	
 	dc.b	$24, $1E, $3F, $12, $3F, $12, $AB, $2F, $04, $23, $14, $30, $04, $A3, $2E, $02, $23, $04, $2F, $02, $A7, $25, $12, $AB, $2A, $12 
 	dc.b	$AB, $23, $02, $BF, $BF, $A7, $02, $12, $02, $CF, $23, $02, $42, $12, $02, $24, $02, $A7, $2B, $02, $A5, $25, $02, $BF, $A5, $28, $02, $A4, $24, $04, $01, $02 
 	dc.b	$25, $04, $A2, $28, $04, $01, $02, $23, $04, $A2, $25, $04, $A5, $2E, $02, $A3, $2F, $02, $AA, $25, $12, $A9, $28, $12, $AF, $23, $02, $AB, $26, $02, $BF, $A2 
@@ -47839,17 +47935,18 @@ loc_00039CFE:
 	dc.b	$12, $24, $02, $A7, $02, $12, $02, $D0, $2B, $02, $A6, $2C, $02, $BF, $A9, $3F, $04, $01, $04, $BF, $BF, $AD, $2F, $12, $23, $F2, $31, $12, $3F, $00 
 ; loc_00039DB6
 LoadTownTilemap_Excalabria_PlaneA:
-	MOVE.l	#loc_00039924, Tilemap_data_ptr_plane_a.w
-	MOVE.l	#loc_00039878, Tilemap_data_ptr_plane_b.w
+	MOVE.l	#TownTilemapData_Excalabria_SetA_TgtA, Tilemap_data_ptr_plane_a.w
+	MOVE.l	#TownTilemapData_Excalabria_SetA_TgtB, Tilemap_data_ptr_plane_b.w
 	RTS
 	
 ; loc_00039DC8
 LoadTownTilemap_Excalabria_PlaneB:
-	MOVE.l	#loc_00039CFE, Tilemap_data_ptr_plane_a.w
-	MOVE.l	#loc_00039972, Tilemap_data_ptr_plane_b.w
+	MOVE.l	#TownTilemapData_Excalabria_SetB_TgtA, Tilemap_data_ptr_plane_a.w
+	MOVE.l	#TownTilemapData_Excalabria_SetB_TgtB, Tilemap_data_ptr_plane_b.w
 	RTS
 	
-loc_00039DDA:
+; loc_00039DDA
+NpcEntryList_Hastings:
 	dc.l	$0001F0E4
 	npcEntry $00F8, $01B8, $00CD, NPCSpriteFrames_ManB, NPCInit_StowSoldier_DoctorHint, NPC_ATTR_PAL3, NPC_SOLID
 	npcEntry $02A8, $01C8, $0019, NPCSpriteFrames_Child, NPCInit_WalkingStatic_LoadFrame, NPC_ATTR_PAL3, NPC_SOLID
@@ -48129,7 +48226,8 @@ loc_0003AD0E:
 	PRINT 	NotHungryCantHelpStr	
 	RTS
 	
-loc_0003AD18:
+; loc_0003AD18
+TownTilemapData_Hastings_SetA_TgtB:
 	dc.b	$32, $21, $70, $01, $02, $03, $06, $01, $02, $0A, $01, $02, $03, $67, $0B, $0C, $0A, $68, $01, $02, $03, $05, $0B, $02, $03, $0B, $0C, $67, $12, $13, $11, $04 
 	dc.b	$0A, $0B, $0C, $0A, $67, $01, $02, $03, $C2, $02, $12, $13, $67, $17, $1A, $19, $05, $11, $12, $13, $11, $0A, $67, $01, $02, $03, $03, $01, $05, $18, $67, $22 
 	dc.b	$23, $21, $06, $19, $17, $1A, $19, $11, $0A, $67, $01, $02, $03, $03, $0B, $0E, $25, $23, $00, $03, $65, $66, $67, $23, $00, $02, $26, $24, $23, $00, $03, $65 
@@ -48160,7 +48258,8 @@ loc_0003AD18:
 	dc.b	$30, $31, $23, $2B, $02, $B7, $B8, $A3, $08, $21, $19, $00, $21, $22, $23, $2B, $34, $2F, $45, $04, $49, $45, $45, $46, $25, $45, $04, $4F, $50, $51, $52, $A4 
 	dc.b	$02, $2F, $2E, $A3, $25, $2B, $06, $24, $21, $22, $24, $25, $26, $A2, $38, $2F, $04, $53, $54, $55, $53, $A4, $01, $30, $2A, $2B, $02, $24, $25, $3D, $58, $04 
 	dc.b	$53, $00, $00, $53, $31, $58, $3D, $59, $01, $56, $A2, $01, $56, $31, $59, $24, $2B, $D9, $02, $2F, $2F, $42, $37, $38, $02, $37, $2E, $2D, $2B, $3F
-loc_0003B0D6:
+; loc_0003B0D6
+TownTilemapData_Hastings_SetA_TgtA:
 	dc.b	$32, $21 
 	dc.b	$3F, $20, $3F, $20, $BF, $A9, $3A, $A0, $BF, $BF, $AE, $35, $B0, $A3, $02, $A0, $A0, $B8, $24, $20, $23, $A0, $25, $20, $29, $A0, $24, $B0, $02, $A0, $A0, $BA 
 	dc.b	$25, $A0, $AD, $24, $20, $01, $B0, $26, $A0, $B1, $02, $B0, $20, $29, $A0, $AF, $02, $20, $B0, $A5, $2D, $A0, $A4, $C5, $37, $20, $24, $B0, $BF, $AF, $24, $20 
@@ -48169,7 +48268,8 @@ loc_0003B0D6:
 	dc.b	$30, $20, $CB, $2A, $A0, $A4, $29, $A0, $B6, $C4, $2A, $A0, $25, $20, $B9, $C8, $2E, $A0, $BC, $CB, $3F, $20, $AE, $C4, $A6, $42, $40, $20, $BE, $C8, $A3, $42 
 	dc.b	$40, $20, $3E, $20, $02, $A0, $A0, $A3, $C6, $A5, $3F, $20, $AE, $01, $B0, $BF, $A7, $02, $B0, $B0, $A6, $23, $A0, $3F, $20, $A8, $25, $20, $01, $B0, $A2, $23 
 	dc.b	$B0, $BA, $24, $A0, $AE, $03, $20, $B0, $B0, $3D, $20, $B3, $01, $20, $C4, $3B, $A0, $C2, $3F, $A0, $BF, $A6, $3F, $20, $33, $20, $3F, $00
-loc_0003B1B4:	
+; loc_0003B1B4
+TownTilemapData_Hastings_SetB_TgtB:	
 	dc.b	$32, $21, $70, $01 
 	dc.b	$02, $03, $06, $01, $02, $0A, $01, $02, $03, $67, $0B, $0C, $0A, $68, $01, $02, $03, $05, $0B, $02, $03, $0B, $0C, $67, $12, $13, $11, $04, $0A, $0B, $0C, $0A 
 	dc.b	$67, $01, $02, $03, $C2, $02, $12, $13, $67, $17, $18, $16, $05, $11, $12, $13, $11, $0A, $67, $01, $02, $03, $03, $01, $0C, $18, $67, $1C, $1D, $1B, $06, $16 
@@ -48197,7 +48297,8 @@ loc_0003B1B4:
 	dc.b	$97, $02, $A5, $A6, $28, $97, $01, $A5, $A2, $01, $A6, $23, $97, $02, $A5, $A6, $23, $97, $01, $A5, $A5, $02, $30, $31, $28, $2B, $06, $1E, $16, $17, $1B, $1C 
 	dc.b	$20, $C2, $2F, $45, $04, $49, $45, $45, $46, $28, $45, $01, $48, $A4, $02, $2F, $2E, $A8, $06, $24, $1B, $1C, $24, $25, $26, $A2, $3F, $2F, $02, $2F, $30, $2A 
 	dc.b	$2B, $02, $24, $25, $24, $2B, $BF, $04, $2F, $37, $38, $2E, $A9, $26, $2B, $BF, $01, $30, $32, $2B, $BB, $42, $37, $38, $02, $37, $2E, $AD, $3F, $00
-loc_0003B4F6:	
+; loc_0003B4F6
+TownTilemapData_Hastings_SetB_TgtA:	
 	dc.b	$32, $21 
 	dc.b	$3F, $12, $3F, $12, $BF, $A9, $3A, $1A, $B9, $67, $12, $1A, $12, $01, $12, $BD, $36, $12, $01, $1A, $39, $12, $A3, $67, $02, $02, $12, $3A, $12, $A2, $36, $02 
 	dc.b	$03, $12, $02, $02, $A3, $24, $1A, $B1, $3B, $02, $A3, $23, $12, $2D, $1A, $A4, $02, $12, $02, $29, $12, $A2, $29, $12, $A5, $01, $02, $25, $12, $65, $1A, $12 
@@ -48211,17 +48312,18 @@ loc_0003B4F6:
 	dc.b	$A7, $3D, $12, $02, $F2, $F2, $32, $12, $3F, $00 
 ; loc_0003B622
 LoadTownTilemap_Hastings_PlaneA:
-	MOVE.l	#loc_0003B0D6, Tilemap_data_ptr_plane_a.w
-	MOVE.l	#loc_0003AD18, Tilemap_data_ptr_plane_b.w
+	MOVE.l	#TownTilemapData_Hastings_SetA_TgtA, Tilemap_data_ptr_plane_a.w
+	MOVE.l	#TownTilemapData_Hastings_SetA_TgtB, Tilemap_data_ptr_plane_b.w
 	RTS
 	
 ; loc_0003B634
 LoadTownTilemap_Hastings_PlaneB:
-	MOVE.l	#loc_0003B4F6, Tilemap_data_ptr_plane_a.w
-	MOVE.l	#loc_0003B1B4, Tilemap_data_ptr_plane_b.w
+	MOVE.l	#TownTilemapData_Hastings_SetB_TgtA, Tilemap_data_ptr_plane_a.w
+	MOVE.l	#TownTilemapData_Hastings_SetB_TgtB, Tilemap_data_ptr_plane_b.w
 	RTS
 	
-loc_0003B646:
+; loc_0003B646
+NpcEntryList_Carthahena:
 	dc.l	$0001F15E
 	npcEntry $00A8, $00B8, $0241, NPCSpriteFrames_Priest, NPCInit_WalkingAnimated_Animate, NPC_ATTR_PAL0, NPC_SOLID
 	npcEntry $01E8, $0028, $0151, NPCSpriteFrames_Woman, NPCInit_WalkingAnimated_Animate, NPC_ATTR_PAL0, NPC_SOLID
@@ -48230,7 +48332,8 @@ loc_0003B646:
 	npcEntry $0038, $0118, $0151, NPCSpriteFrames_Woman, NPCInit_WalkingAnimated_Animate, NPC_ATTR_PAL0, NPC_SOLID
 	npcEntry $0108, $01D8, $0181, NPCSpriteFrames_Guard, NPCInit_Hastings_GateGuard, NPC_ATTR_PAL3, NPC_SOLID
 	dc.w	$FFFF
-loc_0003b6ac:	
+; loc_0003b6ac
+NpcEntryList_Carthahena_TsarkonDead:	
 	dc.l	$0001F15E
 	npcEntry $00A8, $00B8, $0241, NPCSpriteFrames_Priest, NPCInit_StowSoldier_DoctorHint, NPC_ATTR_PAL0, NPC_SOLID
 	npcEntry $01E8, $0028, $0151, NPCSpriteFrames_Woman, NPCInit_WalkingStatic, NPC_ATTR_PAL0, NPC_SOLID
@@ -48426,7 +48529,8 @@ loc_0003C12E:
 	PRINT 	MotherAwaitsStr	
 	RTS
 	
-loc_0003C138:
+; loc_0003C138
+TownTilemapData_Carthahena_SetA_TgtB:
 	dc.b	$21, $23, $01, $96, $2D, $97, $01, $9F, $23, $33, $01, $9F, $2D, $97, $02, $A0, $96, $BF, $A2, $3F, $98, $A2, $03, $A3, $A2, $A2, $24, $00, $01, $83, $24, $00 
 	dc.b	$23, $A2, $04, $98, $A3, $A2, $A2, $24, $00, $01, $83, $24, $00, $23, $A2, $A2, $03, $A4, $98, $98, $A3, $03, $1D, $1E, $84, $A3, $01, $98, $42, $98, $A4, $02 
 	dc.b	$98, $98, $A3, $03, $1D, $1E, $84, $A3, $03, $98, $98, $A4, $A4, $0B, $7D, $13, $14, $A7, $21, $22, $23, $88, $14, $15, $7D, $A5, $0B, $7D, $13, $14, $A7, $21 
@@ -48446,14 +48550,16 @@ loc_0003C138:
 	dc.b	$03, $98, $A9, $AA, $23, $98, $04, $A9, $AA, $98, $A4, $B8, $03, $AB, $AC, $AF, $A2, $03, $AB, $AC, $AF, $B9, $03, $AD, $AE, $B1, $A2, $03, $AD, $AE, $B1, $B9 
 	dc.b	$02, $B0, $B2, $23, $98, $02, $B0, $B2, $CD, $01, $9D, $2D, $9E, $01, $A1, $A3, $01, $9B, $2D, $9E, $02, $9C, $9A, $2E, $97, $01, $AF, $A2, $2E, $97, $01, $99 
 	dc.b	$3F, $00
-loc_0003C37A:	
+; loc_0003C37A
+TownTilemapData_Carthahena_SetA_TgtA:	
 	dc.b	$21, $23, $01, $A0, $3F, $20, $02, $A0, $A0, $BF, $A2, $3F, $40, $A5, $24, $20, $01, $A0, $24, $20, $A7, $24, $20, $01, $A0, $24, $20, $AB, $23, $A0 
 	dc.b	$AD, $23, $A0, $AA, $01, $20, $29, $A0, $01, $20, $A5, $01, $20, $29, $A0, $01, $20, $A7, $2A, $20, $A6, $2A, $20, $AA, $23, $A0, $AD, $23, $A0, $AE, $27, $20 
 	dc.b	$A9, $27, $20, $BF, $BF, $BF, $AC, $3D, $40, $BF, $BF, $A9, $24, $20, $01, $A0, $24, $20, $A7, $24, $20, $01, $A0, $24, $20, $AB, $23, $A0, $AD, $23, $A0, $AA 
 	dc.b	$01, $20, $29, $A0, $01, $20, $A5, $01, $20, $29, $A0, $01, $20, $A7, $2A, $20, $A6, $2A, $20, $AA, $23, $A0, $AD, $23, $A0, $AE, $27, $20, $A9, $27, $20, $BF 
 	dc.b	$BF, $BF, $AC, $3D, $40, $BF, $BF, $BF, $B4, $02, $C0, $C0, $A3, $02, $C0, $C0, $BF, $BC, $02, $D0, $D0, $A3, $02, $D0, $D0, $BA, $33, $40, $BF, $A4, $2E, $A0 
 	dc.b	$A3, $30, $A0, $2E, $20, $A3, $2E, $20, $01, $A0, $3F, $00
-loc_0003C424:	
+; loc_0003C424
+TownTilemapData_Carthahena_SetB_TgtB:	
 	dc.b	$21, $23, $01, $7D, $2D, $97, $01, $9F, $23, $33, $01, $9F, $2D, $97, $02, $7A, $7D, $BF, $A2, $3F 
 	dc.b	$98, $A2, $01, $A3, $2E, $A2, $02, $98, $A3, $2E, $A2, $A2, $01, $A4, $2D, $98, $42, $A4, $98, $2C, $98, $01, $A4, $A4, $2B, $7D, $A5, $2B, $7D, $A7, $0A, $78 
 	dc.b	$79, $21, $25, $26, $27, $23, $79, $79, $7B, $A6, $0A, $78, $79, $21, $25, $26, $27, $23, $79, $79, $7B, $A7, $09, $7C, $7D, $25, $2C, $2D, $2E, $27, $7A, $7D 
@@ -48469,7 +48575,8 @@ loc_0003C424:
 	dc.b	$A3, $27, $A2, $01, $A5, $B4, $02, $A8, $A8, $A2, $03, $A4, $A8, $A8, $2C, $A6, $AD, $03, $98, $A9, $AA, $23, $98, $04, $A9, $AA, $98, $A4, $B8, $03, $AB, $AC 
 	dc.b	$AF, $A2, $03, $AB, $AC, $AF, $B9, $03, $AD, $AE, $B1, $A2, $03, $AD, $AE, $B1, $B9, $02, $B0, $B2, $23, $98, $02, $B0, $B2, $CE, $2D, $9E, $01, $A1, $A3, $01 
 	dc.b	$9B, $2D, $9E, $A2, $2E, $97, $01, $AF, $A2, $2E, $97, $01, $7A, $3F
-loc_0003C5E6:	
+; loc_0003C5E6
+TownTilemapData_Carthahena_SetB_TgtA:	
 	dc.b	$21, $23, $3F, $12, $31, $12, $23, $32, $B0, $3F, $04, $A2, $2F, $14, $01, $04, $2F, $14 
 	dc.b	$A3, $2D, $04, $A3, $2D, $04, $A5, $2B, $02, $A5, $2B, $02, $A7, $29, $12, $A7, $29, $12, $AB, $23, $1A, $AD, $23, $1A, $AE, $26, $12, $A2, $24, $04, $A4, $26 
 	dc.b	$12, $AC, $01, $22, $A6, $23, $14, $A6, $01, $22, $B0, $01, $02, $AF, $01, $02, $AC, $2A, $02, $A6, $2A, $02, $A6, $2C, $04, $A4, $2C, $04, $A4, $36, $14, $01 
@@ -48480,14 +48587,14 @@ loc_0003C5E6:
 	dc.b	$0A, $01, $EA, $A2, $2E, $12, $23, $F4, $2F, $12, $3F, $00 
 ; loc_0003C6C4
 LoadTownTilemap_Carthahena_PlaneA:
-	MOVE.l	#loc_0003C37A, Tilemap_data_ptr_plane_a.w
-	MOVE.l	#loc_0003C138, Tilemap_data_ptr_plane_b.w
+	MOVE.l	#TownTilemapData_Carthahena_SetA_TgtA, Tilemap_data_ptr_plane_a.w
+	MOVE.l	#TownTilemapData_Carthahena_SetA_TgtB, Tilemap_data_ptr_plane_b.w
 	RTS
 	
 ; loc_0003C6D6
 LoadTownTilemap_Carthahena_PlaneB:
-	MOVE.l	#loc_0003C5E6, Tilemap_data_ptr_plane_a.w
-	MOVE.l	#loc_0003C424, Tilemap_data_ptr_plane_b.w
+	MOVE.l	#TownTilemapData_Carthahena_SetB_TgtA, Tilemap_data_ptr_plane_a.w
+	MOVE.l	#TownTilemapData_Carthahena_SetB_TgtB, Tilemap_data_ptr_plane_b.w
 	RTS
 	
 loc_003C6E8: ; Seems like there are many references to loc_0001EAC6 here. TODO: Organize data
