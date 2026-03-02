@@ -1540,11 +1540,14 @@ obj_world_y         equ $12   ; word: world Y position (pixels)
 vobj_hblank_fn      equ $12   ; long: HBlank handler fn ptr (VBlank/HBlank handler objects only)
 obj_sort_key        equ $16   ; word: sprite priority sort value (low byte used)
 obj_direction       equ $18   ; byte: facing direction (0=up,2=left,4=down,6=right)
+obj_npc_busy_flag   equ $19   ; byte: NPC busy/interacting flag ($FF = busy, $00 = free)
 obj_invuln_timer    equ $1A   ; byte: invulnerability frame countdown
 obj_move_counter    equ $1B   ; byte: movement/animation step counter
-; NOTE: $1C is context-dependent — NPC: longword script pointer;
-;       enemy: word hitbox half-width. Not globally renamed.
-obj_hitbox_half_h   equ $1E   ; word: hitbox half-height (enemy only)
+; NOTE: $1C is context-dependent — NPC: longword hint-text/script pointer (obj_npc_str_ptr);
+;       enemy/projectile: word hitbox half-width (obj_hitbox_half_w). Not globally renamed.
+obj_npc_str_ptr     equ $1C   ; long: NPC hint-text / script string pointer (NPC only)
+obj_hitbox_half_w   equ $1C   ; word: hitbox half-width (enemy/projectile only, same offset)
+obj_hitbox_half_h   equ $1E   ; word: hitbox half-height (enemy/projectile only)
 obj_pos_x_fixed     equ $20   ; long: fixed-point world X position (first-person movement)
 obj_sprite_frame    equ $24   ; byte: current sprite frame index
 obj_behavior_flag   equ $25   ; byte: NPC conditional behavior flag ($FF = triggered)
@@ -1553,7 +1556,13 @@ obj_hp              equ $28   ; word: current hit points (enemy only)
 obj_xp_reward       equ $2A   ; word: experience points awarded on kill (enemy only)
 obj_max_hp          equ $2C   ; word: maximum hit points (enemy only)
 obj_collidable      equ $2D   ; byte: NPC solid/collision flag ($01 = solid, NPC only)
-; $2E-$31: enemy hitbox extents (signed bytes, enemy only) — see note above
+; NOTE: $2E is context-dependent — NPC: longword animation table pointer (obj_anim_ptr);
+;       enemy: four signed hitbox extent bytes at $2E/$2F/$30/$31. Not globally renamed.
+obj_anim_ptr        equ $2E   ; long: NPC animation table pointer (NPC only)
+obj_hitbox_x_neg    equ $2E   ; byte: hitbox left extent, signed (enemy only, same offset)
+obj_hitbox_x_pos    equ $2F   ; byte: hitbox right extent, signed (enemy only)
+obj_hitbox_y_neg    equ $30   ; byte: hitbox top extent, signed (enemy only)
+obj_hitbox_y_pos    equ $31   ; byte: hitbox bottom extent, signed (enemy only)
 obj_vel_x           equ $32   ; long: X velocity fixed-point (enemy only)
 obj_vel_y           equ $36   ; long: Y velocity fixed-point (enemy only)
 obj_attack_timer    equ $3A   ; word: attack/AI cooldown frame counter (enemy only)
