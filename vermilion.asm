@@ -31848,7 +31848,7 @@ NpcFacingDirectionLookup:
 FortuneTellerGreetingsByTown:
 	dc.l	FortuneTellerGreeting_Wyclif
 	dc.l	FortuneTellerGreeting_Watling
-	dc.l	TownDialogTable_Watling_State0	
+	dc.l	NpcSubRoomData_Watling	
 	dc.l	FortuneTellerGreeting_Deepdale	
 	dc.l	FortuneTellerGreeting_Stow
 	dc.l	FortuneTellerGreeting_Keltwick	
@@ -31866,7 +31866,7 @@ FortuneTellerGreetingsByTown:
 FortuneTellerReadingsByTown:
 	dc.l	FortuneTellerReading_Wyclif
 	dc.l	FortuneTellerReading_Watling
-	dc.l	TownDialogTable_Watling_State0	
+	dc.l	NpcSubRoomData_Watling	
 	dc.l	FortuneTellerGreeting_Deepdale	
 	dc.l	FortuneTellerReading_Keltwick
 	dc.l	FortuneTellerGreeting_Keltwick	
@@ -44766,38 +44766,48 @@ NpcEntryList_Parma_Locked:
 	npcEntry $00C8, $0258, $0151, NPCSpriteFrames_Woman, NPCInit_WalkingStatic, NPC_ATTR_PAL0, NPC_SOLID
 	npcEntry $0118, $01F8, $0109, NPCSpriteFrames_VillagerC, NPCInit_WalkingStatic_LoadFrame, NPC_ATTR_PAL3, NPC_SOLID
 	dc.w	$FFFF
-	
-	dc.b	$00, $01, $EC, $DC, $00, $78, $00, $48, $00, $91, $00, $03, $DD, $74, $00, $00, $70, $C0 
-	dc.b	$60, $01, $FF, $FF
-	
-	dc.b	$00, $01, $EB, $F8, $00, $38, $00, $B8, $00, $91, $00, $03, $DD, $74, $00, $00, $6F, $5E, $60, $01, $00, $58, $00, $48, $02, $4D, $00, $03 
-	dc.b	$DF, $28, $00, $00, $6F, $CA, $60, $01, $FF, $FF
-	
-	dc.b	$00, $01, $EC, $16, $00, $48, $00, $A8, $00, $91, $00, $03, $DD, $74, $00, $00, $6F, $5E, $60, $01, $00, $C8 
-	dc.b	$00, $78, $00, $CD, $00, $03, $DD, $94, $00, $00, $6F, $36, $60, $01, $00, $48, $00, $48, $02, $35, $00, $03, $DF, $24, $00, $00, $6F, $CA, $60, $01, $FF, $FF 
-	dc.b	$00, $01, $EC, $02, $00, $38, $00, $98, $01, $51, $00, $03, $DD, $F4, $00, $00, $6F, $36, $00, $01, $00, $68, $00, $48, $02, $7D, $00, $03, $DF, $30, $00, $00 
-	dc.b	$6F, $CA, $60, $01, $FF, $FF
-	
-	dc.b	$00, $01, $EC, $0C, $00, $D8, $00, $88, $01, $09, $00, $03, $DD, $D4, $00, $00, $6F, $A8, $60, $01, $FF, $FF
-	
-	dc.b	$00, $01, $EB, $20 
-	dc.b	$00, $88, $00, $58, $02, $95, $00, $03, $DF, $34, $00, $00, $6F, $CA, $60, $01, $FF, $FF
-	
-	dc.b	$00, $01, $EC, $20, $00, $F8, $00, $78, $00, $91, $00, $03, $DD, $74 
-	dc.b	$00, $00, $6F, $5E, $60, $01, $00, $38, $00, $A8, $01, $51, $00, $03, $DD, $F4, $00, $00, $6F, $36, $00, $01, $00, $48, $00, $58, $02, $4D, $00, $03, $DF, $28 
-	dc.b	$00, $00, $6F, $CA, $60, $01, $FF, $FF
-	
-	dc.b	$00, $01, $EC, $3A, $00, $F8, $00, $68, $00, $CD, $00, $03, $DD, $94, $00, $00, $6F, $5E, $60, $01, $00, $48, $00, $88 
-	dc.b	$01, $51, $00, $03, $DD, $F4, $00, $00, $6F, $36, $00, $01, $00, $58, $00, $48, $02, $05, $00, $03, $DE, $94, $00, $00, $6F, $CA, $60, $01, $FF, $FF
-	
-	dc.b	$00, $01 
-	dc.b	$EC, $54, $00, $68, $00, $58, $01, $D5, $00, $03, $DE, $34, $00, $00, $6F, $5E, $60, $01, $FF, $FF
-	
-	dc.b	$00, $01, $EC, $6E, $00, $B8, $00, $68, $01, $D5, $00, $03 
-	dc.b	$DE, $34, $00, $00, $6F, $36, $60, $01, $FF, $FF
-	
-	dc.b	$00, $01, $EB, $EE, $00, $B8, $00, $A8, $01, $51, $00, $03, $DD, $F4, $00, $00, $6F, $36, $00, $01, $00, $A8 
-	dc.b	$00, $48, $02, $65, $00, $03, $DF, $2C, $00, $00, $6F, $CA, $00, $01, $FF, $FF 
+	dc.l	$0001ECDC
+	npcEntry $0078, $0048, $0091, NPCSpriteFrames_ManA, $000070C0, NPC_ATTR_PAL3, NPC_SOLID
+	dc.w	$FFFF
+	dc.l	$0001EBF8
+	npcEntry $0038, $00B8, $0091, NPCSpriteFrames_ManA, NPCInit_WalkingStatic, NPC_ATTR_PAL3, NPC_SOLID
+	npcEntry $0058, $0048, $024D, $0003DF28, NPCInit_WalkingAnimated_Animate, NPC_ATTR_PAL3, NPC_SOLID
+	dc.w	$FFFF
+	dc.l	$0001EC16
+	npcEntry $0048, $00A8, $0091, NPCSpriteFrames_ManA, NPCInit_WalkingStatic, NPC_ATTR_PAL3, NPC_SOLID
+	npcEntry $00C8, $0078, $00CD, NPCSpriteFrames_ManB, NPCInit_StowSoldier_DoctorHint, NPC_ATTR_PAL3, NPC_SOLID
+	npcEntry $0048, $0048, $0235, $0003DF24, NPCInit_WalkingAnimated_Animate, NPC_ATTR_PAL3, NPC_SOLID
+	dc.w	$FFFF
+	dc.l	$0001EC02
+	npcEntry $0038, $0098, $0151, NPCSpriteFrames_Woman, NPCInit_StowSoldier_DoctorHint, NPC_ATTR_PAL0, NPC_SOLID
+	npcEntry $0068, $0048, $027D, $0003DF30, NPCInit_WalkingAnimated_Animate, NPC_ATTR_PAL3, NPC_SOLID
+	dc.w	$FFFF
+	dc.l	$0001EC0C
+	npcEntry $00D8, $0088, $0109, NPCSpriteFrames_VillagerC, NPCInit_WalkingAnimated, NPC_ATTR_PAL3, NPC_SOLID
+	dc.w	$FFFF
+	dc.l	$0001EB20
+	npcEntry $0088, $0058, $0295, $0003DF34, NPCInit_WalkingAnimated_Animate, NPC_ATTR_PAL3, NPC_SOLID
+	dc.w	$FFFF
+	dc.l	$0001EC20
+	npcEntry $00F8, $0078, $0091, NPCSpriteFrames_ManA, NPCInit_WalkingStatic, NPC_ATTR_PAL3, NPC_SOLID
+	npcEntry $0038, $00A8, $0151, NPCSpriteFrames_Woman, NPCInit_StowSoldier_DoctorHint, NPC_ATTR_PAL0, NPC_SOLID
+	npcEntry $0048, $0058, $024D, $0003DF28, NPCInit_WalkingAnimated_Animate, NPC_ATTR_PAL3, NPC_SOLID
+	dc.w	$FFFF
+	dc.l	$0001EC3A
+	npcEntry $00F8, $0068, $00CD, NPCSpriteFrames_ManB, NPCInit_WalkingStatic, NPC_ATTR_PAL3, NPC_SOLID
+	npcEntry $0048, $0088, $0151, NPCSpriteFrames_Woman, NPCInit_StowSoldier_DoctorHint, NPC_ATTR_PAL0, NPC_SOLID
+	npcEntry $0058, $0048, $0205, $0003DE94, NPCInit_WalkingAnimated_Animate, NPC_ATTR_PAL3, NPC_SOLID
+	dc.w	$FFFF
+	dc.l	$0001EC54
+	npcEntry $0068, $0058, $01D5, $0003DE34, NPCInit_WalkingStatic, NPC_ATTR_PAL3, NPC_SOLID
+	dc.w	$FFFF
+	dc.l	$0001EC6E
+	npcEntry $00B8, $0068, $01D5, $0003DE34, NPCInit_StowSoldier_DoctorHint, NPC_ATTR_PAL3, NPC_SOLID
+	dc.w	$FFFF
+	dc.l	$0001EBEE
+	npcEntry $00B8, $00A8, $0151, NPCSpriteFrames_Woman, NPCInit_StowSoldier_DoctorHint, NPC_ATTR_PAL0, NPC_SOLID
+	npcEntry $00A8, $0048, $0265, $0003DF2C, NPCInit_WalkingAnimated_Animate, NPC_ATTR_PAL0, NPC_SOLID
+	dc.w	$FFFF
 ; loc_0002E838
 TownDialogTable_Parma_State0:
 	dc.l	WelcomeParmaStr
@@ -45207,9 +45217,15 @@ NpcEntryList_Watling:
 	npcEntry $00A8, $0128, $0061, NPCSpriteFrames_VillagerB, NPCInit_Watling_ThankYou, NPC_ATTR_PAL3, NPC_SOLID
 	dc.w	$FFFF
 ; loc_0002FCA4
-TownDialogTable_Watling_State0:
-	dc.b	$00, $01, $ED, $28, $FF, $FF, $00, $01, $ED, $28, $00, $A8, $00, $A8, $00, $19, $00, $03, $DD, $34, $00, $00, $71, $F0, $60, $01, $FF, $FF, $00, $01, $ED, $28 
-	dc.b	$00, $D8, $00, $48, $02, $05, $00, $03, $DE, $94, $00, $00, $6F, $CA, $60, $01, $FF, $FF 
+NpcSubRoomData_Watling:
+	dc.l	$0001ED28
+	dc.w	$FFFF
+	dc.l	$0001ED28
+	npcEntry $00A8, $00A8, $0019, NPCSpriteFrames_Child, NPCInit_Watling_RestoredYouth, NPC_ATTR_PAL3, NPC_SOLID
+	dc.w	$FFFF
+	dc.l	$0001ED28
+	npcEntry $00D8, $0048, $0205, $0003DE94, NPCInit_WalkingAnimated_Animate, NPC_ATTR_PAL3, NPC_SOLID
+	dc.w	$FFFF
 ; loc_0002FCD6
 TownDialogTable_Watling_State1:
 	dc.l	WhatIsThisStr 
@@ -45448,12 +45464,31 @@ NpcDataTable_Deepdale:
 	dc.b	$00, $1C, $00, $0E, $00, $D8, $00, $A8, $00, $00, $00, $00, $00, $04, $00, $2B, $00, $03, $09, $BA, $01, $08, $00, $38, $00, $2C, $00, $03, $09, $F6, $00, $78 
 	dc.b	$00, $38, $00, $2D 
 	dc.l	$000309F6
-	dc.b	$FF, $FF, $00, $01, $ED, $6C, $00, $88, $00, $48, $00, $91, $00, $03, $DD, $74, $00, $00, $72, $A8, $60, $01, $FF, $FF, $00, $01, $ED, $6C, $00, $58, $00, $48 
-	dc.b	$02, $4D, $00, $03, $DF, $28, $00, $00, $6F, $CA, $60, $01, $FF, $FF, $00, $01, $ED, $6C, $00, $48, $00, $48, $02, $35, $00, $03, $DF, $24, $00, $00, $6F, $CA 
-	dc.b	$60, $01, $FF, $FF, $00, $01, $ED, $6C, $00, $68, $00, $48, $02, $7D, $00, $03, $DF, $30, $00, $00, $6F, $CA, $60, $01, $FF, $FF, $00, $01, $ED, $BA, $00, $F8 
-	dc.b	$00, $68, $00, $91, $00, $03, $DD, $74, $00, $00, $6F, $5E, $60, $01, $00, $58, $00, $48, $02, $05, $00, $03, $DE, $94, $00, $00, $6F, $CA, $60, $01, $FF, $FF 
-	dc.b	$00, $01, $ED, $6C, $00, $58, $00, $48, $02, $05, $00, $03, $DE, $94, $00, $00, $6F, $CA, $60, $01, $FF, $FF, $00, $01, $ED, $6C, $FF, $FF, $00, $01, $ED, $6C 
-	dc.b	$00, $A8, $00, $48, $02, $65, $00, $03, $DF, $2C, $00, $00, $6F, $CA, $00, $01, $FF, $FF 
+	dc.w	$FFFF
+	dc.l	$0001ED6C
+	npcEntry $0088, $0048, $0091, NPCSpriteFrames_ManA, NPCInit_Deepdale_SecretKeeper, NPC_ATTR_PAL3, NPC_SOLID
+	dc.w	$FFFF
+	dc.l	$0001ED6C
+	npcEntry $0058, $0048, $024D, $0003DF28, NPCInit_WalkingAnimated_Animate, NPC_ATTR_PAL3, NPC_SOLID
+	dc.w	$FFFF
+	dc.l	$0001ED6C
+	npcEntry $0048, $0048, $0235, $0003DF24, NPCInit_WalkingAnimated_Animate, NPC_ATTR_PAL3, NPC_SOLID
+	dc.w	$FFFF
+	dc.l	$0001ED6C
+	npcEntry $0068, $0048, $027D, $0003DF30, NPCInit_WalkingAnimated_Animate, NPC_ATTR_PAL3, NPC_SOLID
+	dc.w	$FFFF
+	dc.l	$0001EDBA
+	npcEntry $00F8, $0068, $0091, NPCSpriteFrames_ManA, NPCInit_WalkingStatic, NPC_ATTR_PAL3, NPC_SOLID
+	npcEntry $0058, $0048, $0205, $0003DE94, NPCInit_WalkingAnimated_Animate, NPC_ATTR_PAL3, NPC_SOLID
+	dc.w	$FFFF
+	dc.l	$0001ED6C
+	npcEntry $0058, $0048, $0205, $0003DE94, NPCInit_WalkingAnimated_Animate, NPC_ATTR_PAL3, NPC_SOLID
+	dc.w	$FFFF
+	dc.l	$0001ED6C
+	dc.w	$FFFF
+	dc.l	$0001ED6C
+	npcEntry $00A8, $0048, $0265, $0003DF2C, NPCInit_WalkingAnimated_Animate, NPC_ATTR_PAL0, NPC_SOLID
+	dc.w	$FFFF
 ; loc_00030A12
 TownDialogTable_Deepdale_State0:
 	dc.l	EnjoyStayDeepdaleStr
@@ -45715,12 +45750,27 @@ NpcDataTable_Stow1:
 	dc.b	$00, $19, $00, $07, $00, $A8, $00, $C8, $00, $00, $00, $00, $00, $04, $04, $31, $00, $03, $09, $FC, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 
 	dc.b	$00, $00, $00, $00 
 	dc.l	$00000000
-	dc.b	$FF, $FF, $00, $01, $ED, $F6, $00, $D8, $00, $88, $01, $81, $00, $03, $DE, $14, $00, $00, $6F, $80, $60, $01, $FF, $FF, $00, $01, $ED, $F6, $00, $88, $00, $58 
-	dc.b	$02, $95, $00, $03, $DF, $34, $00, $00, $6F, $CA, $60, $01, $FF, $FF, $00, $01, $ED, $F6, $00, $48, $00, $58, $02, $4D, $00, $03, $DF, $28, $00, $00, $6F, $CA 
-	dc.b	$60, $01, $FF, $FF, $00, $01, $EE, $52, $00, $F8, $00, $88, $01, $D5, $00, $03, $DE, $34, $00, $00, $6F, $5E, $60, $01, $00, $58, $00, $48, $02, $05, $00, $03 
-	dc.b	$DE, $94, $00, $00, $6F, $CA, $60, $01, $FF, $FF, $00, $01, $EE, $5C, $00, $A8, $00, $88, $01, $D5, $00, $03, $DE, $34, $00, $00, $6F, $5E, $60, $01, $00, $68 
-	dc.b	$00, $58, $01, $D5, $00, $03, $DE, $34, $00, $00, $6F, $36, $60, $01, $FF, $FF, $00, $01, $EE, $66, $00, $B8, $00, $68, $01, $D5, $00, $03, $DE, $34, $00, $00 
-	dc.b	$6F, $36, $60, $01, $FF, $FF 
+	dc.w	$FFFF
+	dc.l	$0001EDF6
+	npcEntry $00D8, $0088, $0181, NPCSpriteFrames_Guard, NPCInit_WalkingStatic_LoadFrame, NPC_ATTR_PAL3, NPC_SOLID
+	dc.w	$FFFF
+	dc.l	$0001EDF6
+	npcEntry $0088, $0058, $0295, $0003DF34, NPCInit_WalkingAnimated_Animate, NPC_ATTR_PAL3, NPC_SOLID
+	dc.w	$FFFF
+	dc.l	$0001EDF6
+	npcEntry $0048, $0058, $024D, $0003DF28, NPCInit_WalkingAnimated_Animate, NPC_ATTR_PAL3, NPC_SOLID
+	dc.w	$FFFF
+	dc.l	$0001EE52
+	npcEntry $00F8, $0088, $01D5, $0003DE34, NPCInit_WalkingStatic, NPC_ATTR_PAL3, NPC_SOLID
+	npcEntry $0058, $0048, $0205, $0003DE94, NPCInit_WalkingAnimated_Animate, NPC_ATTR_PAL3, NPC_SOLID
+	dc.w	$FFFF
+	dc.l	$0001EE5C
+	npcEntry $00A8, $0088, $01D5, $0003DE34, NPCInit_WalkingStatic, NPC_ATTR_PAL3, NPC_SOLID
+	npcEntry $0068, $0058, $01D5, $0003DE34, NPCInit_StowSoldier_DoctorHint, NPC_ATTR_PAL3, NPC_SOLID
+	dc.w	$FFFF
+	dc.l	$0001EE66
+	npcEntry $00B8, $0068, $01D5, $0003DE34, NPCInit_StowSoldier_DoctorHint, NPC_ATTR_PAL3, NPC_SOLID
+	dc.w	$FFFF
 ; loc_000318F0
 TownDialogTable_Stow1_State0:
 	dc.l	ThisIsStowStr
@@ -46143,11 +46193,25 @@ NpcDataTable_Stow2:
 	dc.b	$00, $1A, $00, $19, $00, $D8, $00, $A8, $00, $00, $00, $00, $00, $04, $00, $2B, $00, $03, $2C, $F2, $01, $08, $00, $38, $00, $2C, $00, $03, $2D, $08, $00, $78 
 	dc.b	$00, $38, $00, $2D 
 	dc.l	$00032D0E
-	dc.b	$FF, $FF, $00, $01, $EE, $A2, $00, $D8, $00, $98, $00, $91, $00, $03, $DD, $74, $00, $00, $74, $74, $60, $01, $FF, $FF, $00, $01, $EE, $AC, $00, $D8, $00, $88 
-	dc.b	$00, $CD, $00, $03, $DD, $B4, $00, $00, $76, $14, $60, $01, $FF, $FF, $00, $01, $EE, $CE, $00, $B8, $00, $88, $00, $91, $00, $03, $DD, $74, $00, $00, $6F, $5E 
-	dc.b	$60, $01, $00, $48, $00, $48, $02, $35, $00, $03, $DF, $24, $00, $00, $6F, $CA, $60, $01, $FF, $FF, $00, $01, $EE, $D8, $00, $58, $00, $48, $02, $05, $00, $03 
-	dc.b	$DE, $94, $00, $00, $6F, $CA, $60, $01, $FF, $FF, $00, $01, $EE, $D8, $FF, $FF, $00, $01, $EE, $D8, $00, $B8, $00, $48, $01, $D5, $00, $03, $DE, $34, $00, $00 
-	dc.b	$6F, $36, $60, $01, $FF, $FF 
+	dc.w	$FFFF
+	dc.l	$0001EEA2
+	npcEntry $00D8, $0098, $0091, NPCSpriteFrames_ManA, $00007474, NPC_ATTR_PAL3, NPC_SOLID
+	dc.w	$FFFF
+	dc.l	$0001EEAC
+	npcEntry $00D8, $0088, $00CD, $0003DDB4, $00007614, NPC_ATTR_PAL3, NPC_SOLID
+	dc.w	$FFFF
+	dc.l	$0001EECE
+	npcEntry $00B8, $0088, $0091, NPCSpriteFrames_ManA, NPCInit_WalkingStatic, NPC_ATTR_PAL3, NPC_SOLID
+	npcEntry $0048, $0048, $0235, $0003DF24, NPCInit_WalkingAnimated_Animate, NPC_ATTR_PAL3, NPC_SOLID
+	dc.w	$FFFF
+	dc.l	$0001EED8
+	npcEntry $0058, $0048, $0205, $0003DE94, NPCInit_WalkingAnimated_Animate, NPC_ATTR_PAL3, NPC_SOLID
+	dc.w	$FFFF
+	dc.l	$0001EED8
+	dc.w	$FFFF
+	dc.l	$0001EED8
+	npcEntry $00B8, $0048, $01D5, $0003DE34, NPCInit_StowSoldier_DoctorHint, NPC_ATTR_PAL3, NPC_SOLID
+	dc.w	$FFFF
 ; loc_00032D24
 TownDialogTable_Keltwick_State0:
 	dc.l	ThisIsKeltwickStr
@@ -46486,20 +46550,36 @@ NpcDataTable_Malaga:
 	dc.b	$00, $16, $00, $12, $00, $98, $00, $C8, $00, $00, $00, $00, $00, $04, $04, $31, $00, $03, $09, $FC, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 
 	dc.b	$00, $00, $00, $00 
 	dc.l	$00000000
-	dc.b	$FF, $FF, $00, $01, $EF, $36, $00, $28, $00, $88, $00, $91, $00, $03, $DD, $74, $00, $00, $6F, $36, $60, $01, $00, $E8, $00, $48, $00, $91, $00, $03, $DD, $74 
-	dc.b	$00, $00, $6F, $5E, $60, $01, $01, $08, $00, $68, $00, $91, $00, $03, $DD, $74, $00, $00, $6F, $36, $60, $01, $00, $E8, $00, $58, $00, $91, $00, $03, $DD, $74 
-	dc.b	$00, $00, $6F, $36, $60, $01, $00, $78, $00, $A8, $00, $91, $00, $03, $DD, $74, $00, $00, $6F, $5E, $60, $01, $01, $18, $00, $48, $00, $91, $00, $03, $DD, $74 
-	dc.b	$00, $00, $6F, $36, $60, $01, $00, $68, $00, $78, $00, $CD, $00, $03, $DD, $94, $00, $00, $6F, $36, $60, $01, $00, $68, $00, $B8, $00, $CD, $00, $03, $DD, $94 
-	dc.b	$00, $00, $6F, $36, $60, $01, $00, $38, $00, $78, $00, $CD, $00, $03, $DD, $94, $00, $00, $6F, $36, $60, $01, $00, $C8, $00, $58, $00, $CD, $00, $03, $DD, $94 
-	dc.b	$00, $00, $6F, $36, $60, $01, $00, $98, $00, $68, $00, $CD, $00, $03, $DD, $94, $00, $00, $6F, $36, $60, $01, $00, $F8, $00, $88, $00, $CD, $00, $03, $DD, $94 
-	dc.b	$00, $00, $6F, $36, $60, $01, $00, $C8, $00, $48, $00, $CD, $00, $03, $DD, $94, $00, $00, $6F, $5E, $60, $01, $01, $08, $00, $88, $01, $09, $00, $03, $DD, $D4 
-	dc.b	$00, $00, $6F, $80, $60, $01, $00, $C8, $00, $78, $01, $09, $00, $03, $DD, $D4, $00, $00, $6F, $A8, $60, $01, $00, $78, $00, $48, $01, $09, $00, $03, $DD, $D4 
-	dc.b	$00, $00, $6F, $80, $60, $01, $00, $98, $00, $48, $01, $09, $00, $03, $DD, $D4, $00, $00, $6F, $A8, $60, $01, $00, $48, $00, $B8, $01, $09, $00, $03, $DD, $D4 
-	dc.b	$00, $00, $6F, $80, $60, $01, $00, $28, $00, $A8, $01, $09, $00, $03, $DD, $D4, $00, $00, $6F, $80, $60, $01, $00, $98, $00, $98, $01, $09, $00, $03, $DD, $D4 
-	dc.b	$00, $00, $6F, $80, $60, $01, $00, $F8, $00, $58, $01, $51, $00, $03, $DD, $F4, $00, $00, $6F, $36, $00, $01, $00, $88, $00, $78, $01, $51, $00, $03, $DD, $F4 
-	dc.b	$00, $00, $6F, $5E, $00, $01, $00, $88, $00, $68, $01, $51, $00, $03, $DD, $F4, $00, $00, $6F, $36, $00, $01, $00, $88, $00, $C8, $01, $51, $00, $03, $DD, $F4 
-	dc.b	$00, $00, $6F, $5E, $00, $01, $00, $28, $00, $C8, $01, $51, $00, $03, $DD, $F4, $00, $00, $6F, $36, $00, $01, $00, $B8, $00, $58, $01, $51, $00, $03, $DD, $F4 
-	dc.b	$00, $00, $6F, $36, $00, $01, $00, $48, $00, $58, $02, $4D, $00, $03, $DF, $28, $00, $00, $6F, $CA, $60, $01, $FF, $FF 
+	dc.w	$FFFF
+	dc.l	$0001EF36
+	npcEntry $0028, $0088, $0091, NPCSpriteFrames_ManA, NPCInit_StowSoldier_DoctorHint, NPC_ATTR_PAL3, NPC_SOLID
+	npcEntry $00E8, $0048, $0091, NPCSpriteFrames_ManA, NPCInit_WalkingStatic, NPC_ATTR_PAL3, NPC_SOLID
+	npcEntry $0108, $0068, $0091, NPCSpriteFrames_ManA, NPCInit_StowSoldier_DoctorHint, NPC_ATTR_PAL3, NPC_SOLID
+	npcEntry $00E8, $0058, $0091, NPCSpriteFrames_ManA, NPCInit_StowSoldier_DoctorHint, NPC_ATTR_PAL3, NPC_SOLID
+	npcEntry $0078, $00A8, $0091, NPCSpriteFrames_ManA, NPCInit_WalkingStatic, NPC_ATTR_PAL3, NPC_SOLID
+	npcEntry $0118, $0048, $0091, NPCSpriteFrames_ManA, NPCInit_StowSoldier_DoctorHint, NPC_ATTR_PAL3, NPC_SOLID
+	npcEntry $0068, $0078, $00CD, NPCSpriteFrames_ManB, NPCInit_StowSoldier_DoctorHint, NPC_ATTR_PAL3, NPC_SOLID
+	npcEntry $0068, $00B8, $00CD, NPCSpriteFrames_ManB, NPCInit_StowSoldier_DoctorHint, NPC_ATTR_PAL3, NPC_SOLID
+	npcEntry $0038, $0078, $00CD, NPCSpriteFrames_ManB, NPCInit_StowSoldier_DoctorHint, NPC_ATTR_PAL3, NPC_SOLID
+	npcEntry $00C8, $0058, $00CD, NPCSpriteFrames_ManB, NPCInit_StowSoldier_DoctorHint, NPC_ATTR_PAL3, NPC_SOLID
+	npcEntry $0098, $0068, $00CD, NPCSpriteFrames_ManB, NPCInit_StowSoldier_DoctorHint, NPC_ATTR_PAL3, NPC_SOLID
+	npcEntry $00F8, $0088, $00CD, NPCSpriteFrames_ManB, NPCInit_StowSoldier_DoctorHint, NPC_ATTR_PAL3, NPC_SOLID
+	npcEntry $00C8, $0048, $00CD, NPCSpriteFrames_ManB, NPCInit_WalkingStatic, NPC_ATTR_PAL3, NPC_SOLID
+	npcEntry $0108, $0088, $0109, NPCSpriteFrames_VillagerC, NPCInit_WalkingStatic_LoadFrame, NPC_ATTR_PAL3, NPC_SOLID
+	npcEntry $00C8, $0078, $0109, NPCSpriteFrames_VillagerC, NPCInit_WalkingAnimated, NPC_ATTR_PAL3, NPC_SOLID
+	npcEntry $0078, $0048, $0109, NPCSpriteFrames_VillagerC, NPCInit_WalkingStatic_LoadFrame, NPC_ATTR_PAL3, NPC_SOLID
+	npcEntry $0098, $0048, $0109, NPCSpriteFrames_VillagerC, NPCInit_WalkingAnimated, NPC_ATTR_PAL3, NPC_SOLID
+	npcEntry $0048, $00B8, $0109, NPCSpriteFrames_VillagerC, NPCInit_WalkingStatic_LoadFrame, NPC_ATTR_PAL3, NPC_SOLID
+	npcEntry $0028, $00A8, $0109, NPCSpriteFrames_VillagerC, NPCInit_WalkingStatic_LoadFrame, NPC_ATTR_PAL3, NPC_SOLID
+	npcEntry $0098, $0098, $0109, NPCSpriteFrames_VillagerC, NPCInit_WalkingStatic_LoadFrame, NPC_ATTR_PAL3, NPC_SOLID
+	npcEntry $00F8, $0058, $0151, NPCSpriteFrames_Woman, NPCInit_StowSoldier_DoctorHint, NPC_ATTR_PAL0, NPC_SOLID
+	npcEntry $0088, $0078, $0151, NPCSpriteFrames_Woman, NPCInit_WalkingStatic, NPC_ATTR_PAL0, NPC_SOLID
+	npcEntry $0088, $0068, $0151, NPCSpriteFrames_Woman, NPCInit_StowSoldier_DoctorHint, NPC_ATTR_PAL0, NPC_SOLID
+	npcEntry $0088, $00C8, $0151, NPCSpriteFrames_Woman, NPCInit_WalkingStatic, NPC_ATTR_PAL0, NPC_SOLID
+	npcEntry $0028, $00C8, $0151, NPCSpriteFrames_Woman, NPCInit_StowSoldier_DoctorHint, NPC_ATTR_PAL0, NPC_SOLID
+	npcEntry $00B8, $0058, $0151, NPCSpriteFrames_Woman, NPCInit_StowSoldier_DoctorHint, NPC_ATTR_PAL0, NPC_SOLID
+	npcEntry $0048, $0058, $024D, $0003DF28, NPCInit_WalkingAnimated_Animate, NPC_ATTR_PAL3, NPC_SOLID
+	dc.w	$FFFF
 ; loc_00034012
 TownDialogTable_Malaga_State0:
 	dc.l	PrincessWaitingStr2
@@ -46790,8 +46870,13 @@ NpcDataTable_Barrow:
 	dc.b	$00, $2F, $00, $0B, $00, $98, $00, $C8, $00, $00, $00, $00, $00, $04, $00, $27, $00, $03, $4C, $BE, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 
 	dc.b	$00, $00, $00, $00 
 	dc.l	$00000000
-	dc.b	$FF, $FF, $00, $01, $EF, $5A, $00, $88, $00, $48, $00, $19, $00, $03, $DD, $34, $00, $00, $77, $E6, $60, $01, $FF, $FF, $00, $01, $EF, $7C, $00, $48, $00, $58 
-	dc.b	$02, $7D, $00, $03, $DF, $30, $00, $00, $6F, $CA, $60, $01, $FF, $FF 
+	dc.w	$FFFF
+	dc.l	$0001EF5A
+	npcEntry $0088, $0048, $0019, NPCSpriteFrames_Child, $000077E6, NPC_ATTR_PAL3, NPC_SOLID
+	dc.w	$FFFF
+	dc.l	$0001EF7C
+	npcEntry $0048, $0058, $027D, $0003DF30, NPCInit_WalkingAnimated_Animate, NPC_ATTR_PAL3, NPC_SOLID
+	dc.w	$FFFF
 ; loc_00034CEA
 TownDialogTable_Barrow_State0:
 	dc.l	WelcomeToBarrowStr
@@ -47031,10 +47116,20 @@ NpcDataTable_Tadcaster:
 	dc.b	$00, $1A, $00, $16, $00, $58, $00, $C8, $00, $00, $00, $00, $00, $04, $00, $2E, $00, $03, $5C, $CC, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 
 	dc.b	$00, $00, $00, $00 
 	dc.l	$00000000
-	dc.b	$FF, $FF, $00, $01, $EF, $EC, $00, $68, $00, $58, $00, $CD, $00, $03, $DD, $94, $00, $00, $6F, $5E, $60, $01, $FF, $FF, $00, $01, $EF, $F6, $00, $B8, $00, $68 
-	dc.b	$01, $D5, $00, $03, $DE, $34, $00, $00, $6F, $36, $60, $01, $FF, $FF, $00, $01, $EF, $CA, $00, $48, $00, $58, $02, $4D, $00, $03, $DF, $28, $00, $00, $6F, $CA 
-	dc.b	$60, $01, $00, $F8, $00, $78, $00, $CD, $00, $03, $DD, $94, $00, $00, $6F, $36, $60, $01, $FF, $FF, $00, $01, $EB, $20, $00, $88, $00, $58, $02, $95, $00, $03 
-	dc.b	$DF, $34, $00, $00, $6F, $CA, $60, $01, $FF, $FF 
+	dc.w	$FFFF
+	dc.l	$0001EFEC
+	npcEntry $0068, $0058, $00CD, NPCSpriteFrames_ManB, NPCInit_WalkingStatic, NPC_ATTR_PAL3, NPC_SOLID
+	dc.w	$FFFF
+	dc.l	$0001EFF6
+	npcEntry $00B8, $0068, $01D5, $0003DE34, NPCInit_StowSoldier_DoctorHint, NPC_ATTR_PAL3, NPC_SOLID
+	dc.w	$FFFF
+	dc.l	$0001EFCA
+	npcEntry $0048, $0058, $024D, $0003DF28, NPCInit_WalkingAnimated_Animate, NPC_ATTR_PAL3, NPC_SOLID
+	npcEntry $00F8, $0078, $00CD, NPCSpriteFrames_ManB, NPCInit_StowSoldier_DoctorHint, NPC_ATTR_PAL3, NPC_SOLID
+	dc.w	$FFFF
+	dc.l	$0001EB20
+	npcEntry $0088, $0058, $0295, $0003DF34, NPCInit_WalkingAnimated_Animate, NPC_ATTR_PAL3, NPC_SOLID
+	dc.w	$FFFF
 ; loc_00035D08
 TownDialogTable_Tadcaster_State0:
 	dc.l	TadcasterBegsForMercyStr
@@ -47387,10 +47482,19 @@ NpcDataTable_Helwig:
 	dc.b	$00, $0F, $00, $25, $00, $A8, $00, $C8, $00, $00, $00, $00, $00, $04, $04, $23, $00, $03, $6D, $BC, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 
 	dc.b	$00, $00, $00, $00 
 	dc.l	$00000000
-	dc.b	$FF, $FF, $00, $01, $F0, $32, $00, $48, $00, $58, $00, $61, $00, $03, $DF, $38, $00, $00, $6F, $CA, $60, $01, $01, $18, $00, $68, $01, $51, $00, $03, $DD, $F4 
-	dc.b	$00, $00, $7E, $BC, $00, $01, $01, $18, $00, $58, $00, $91, $00, $03, $DD, $74, $00, $00, $79, $54, $60, $01, $FF, $FF, $00, $01, $F0, $4C, $00, $28, $00, $48 
-	dc.b	$01, $09, $00, $03, $DD, $D4, $00, $00, $6F, $A8, $60, $01, $00, $D8, $00, $48, $02, $05, $00, $03, $DE, $94, $00, $00, $6F, $CA, $60, $01, $FF, $FF, $00, $01 
-	dc.b	$EB, $20, $00, $88, $00, $58, $02, $65, $00, $03, $DF, $2C, $00, $00, $6F, $CA, $00, $01, $FF, $FF 
+	dc.w	$FFFF
+	dc.l	$0001F032
+	npcEntry $0048, $0058, $0061, $0003DF38, NPCInit_WalkingAnimated_Animate, NPC_ATTR_PAL3, NPC_SOLID
+	npcEntry $0118, $0068, $0151, NPCSpriteFrames_Woman, $00007EBC, NPC_ATTR_PAL0, NPC_SOLID
+	npcEntry $0118, $0058, $0091, NPCSpriteFrames_ManA, NPCInit_Helwig_SwaffhamHint, NPC_ATTR_PAL3, NPC_SOLID
+	dc.w	$FFFF
+	dc.l	$0001F04C
+	npcEntry $0028, $0048, $0109, NPCSpriteFrames_VillagerC, NPCInit_WalkingAnimated, NPC_ATTR_PAL3, NPC_SOLID
+	npcEntry $00D8, $0048, $0205, $0003DE94, NPCInit_WalkingAnimated_Animate, NPC_ATTR_PAL3, NPC_SOLID
+	dc.w	$FFFF
+	dc.l	$0001EB20
+	npcEntry $0088, $0058, $0265, $0003DF2C, NPCInit_WalkingAnimated_Animate, NPC_ATTR_PAL0, NPC_SOLID
+	dc.w	$FFFF
 ; loc_00036DD2
 TownDialogTable_Helwig_State0:
 	dc.l	YouAreInHelwigStr
@@ -48168,13 +48272,26 @@ NpcDataTable_Hastings1:
 	dc.b	$00, $1A, $00, $19, $00, $98, $00, $C8, $00, $00, $00, $00, $00, $04, $04, $23, $00, $03, $6D, $BC, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 
 	dc.b	$00, $00, $00, $00 
 	dc.l	$00000000
-	dc.b	$FF, $FF, $00, $01, $F1, $30, $00, $D8, $00, $78, $00, $19, $00, $03, $DD, $34, $00, $00, $6F, $A8, $60, $01, $00, $48, $00, $58, $02, $7D, $00, $03, $DF, $30 
-	dc.b	$00, $00, $6F, $CA, $60, $01, $FF, $FF, $00, $01, $F1, $0E, $00, $78, $00, $68, $01, $51, $00, $03, $DD, $F4, $00, $00, $7C, $86, $00, $01, $FF, $FF, $00, $01 
-	dc.b	$F1, $44, $00, $D8, $00, $48, $02, $05, $00, $03, $DE, $94, $00, $00, $6F, $CA, $60, $01, $00, $38, $00, $48, $01, $D5, $00, $03, $DE, $34, $00, $00, $7D, $38 
-	dc.b	$60, $01, $00, $68, $00, $58, $01, $D5, $00, $03, $DE, $34, $00, $00, $7D, $38, $60, $01, $01, $58, $00, $58, $01, $D5, $00, $03, $DE, $34, $00, $00, $7D, $38 
-	dc.b	$60, $01, $01, $88, $00, $48, $01, $D5, $00, $03, $DE, $34, $00, $00, $7D, $38, $60, $01, $FF, $FF, $00, $01, $F1, $3A, $00, $78, $00, $A8, $00, $CD, $00, $03 
-	dc.b	$DD, $94, $00, $00, $6F, $36, $60, $01, $00, $E8, $00, $88, $00, $91, $00, $03, $DD, $74, $00, $00, $6F, $5E, $60, $01, $00, $48, $00, $58, $02, $4D, $00, $03 
-	dc.b	$DF, $28, $00, $00, $6F, $CA, $60, $01, $FF, $FF 
+	dc.w	$FFFF
+	dc.l	$0001F130
+	npcEntry $00D8, $0078, $0019, NPCSpriteFrames_Child, NPCInit_WalkingAnimated, NPC_ATTR_PAL3, NPC_SOLID
+	npcEntry $0048, $0058, $027D, $0003DF30, NPCInit_WalkingAnimated_Animate, NPC_ATTR_PAL3, NPC_SOLID
+	dc.w	$FFFF
+	dc.l	$0001F10E
+	npcEntry $0078, $0068, $0151, NPCSpriteFrames_Woman, $00007C86, NPC_ATTR_PAL0, NPC_SOLID
+	dc.w	$FFFF
+	dc.l	$0001F144
+	npcEntry $00D8, $0048, $0205, $0003DE94, NPCInit_WalkingAnimated_Animate, NPC_ATTR_PAL3, NPC_SOLID
+	npcEntry $0038, $0048, $01D5, $0003DE34, NPCInit_Hastings_HideAfterTsarkon, NPC_ATTR_PAL3, NPC_SOLID
+	npcEntry $0068, $0058, $01D5, $0003DE34, NPCInit_Hastings_HideAfterTsarkon, NPC_ATTR_PAL3, NPC_SOLID
+	npcEntry $0158, $0058, $01D5, $0003DE34, NPCInit_Hastings_HideAfterTsarkon, NPC_ATTR_PAL3, NPC_SOLID
+	npcEntry $0188, $0048, $01D5, $0003DE34, NPCInit_Hastings_HideAfterTsarkon, NPC_ATTR_PAL3, NPC_SOLID
+	dc.w	$FFFF
+	dc.l	$0001F13A
+	npcEntry $0078, $00A8, $00CD, NPCSpriteFrames_ManB, NPCInit_StowSoldier_DoctorHint, NPC_ATTR_PAL3, NPC_SOLID
+	npcEntry $00E8, $0088, $0091, NPCSpriteFrames_ManA, NPCInit_WalkingStatic, NPC_ATTR_PAL3, NPC_SOLID
+	npcEntry $0048, $0058, $024D, $0003DF28, NPCInit_WalkingAnimated_Animate, NPC_ATTR_PAL3, NPC_SOLID
+	dc.w	$FFFF
 ; loc_0003A03A
 TownDialogTable_Hastings_State0:
 	dc.l	ShopInSwaffhamStr
@@ -48553,7 +48670,12 @@ NpcDataTable_Carthahena:
 	dc.b	$00, $18, $00, $15, $00, $98, $00, $C8, $00, $00, $00, $00, $00, $04, $00, $35, $00, $03, $B7, $DA, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 
 	dc.b	$00, $00, $00, $00 
 	dc.l	$00000000
-	dc.b	$FF, $FF, $00, $01, $F1, $92, $FF, $FF, $00, $01, $F1, $92, $00, $88, $00, $48, $00, $91, $00, $03, $DD, $74, $00, $00, $7E, $32, $60, $01, $FF, $FF 
+	dc.w	$FFFF
+	dc.l	$0001F192
+	dc.w	$FFFF
+	dc.l	$0001F192
+	npcEntry $0088, $0048, $0091, NPCSpriteFrames_ManA, NPCInit_Carthahena_KingThuleKey, NPC_ATTR_PAL3, NPC_SOLID
+	dc.w	$FFFF
 loc_0003B7F0:
 	dc.l	SheNeverAnsweredStr
 	dc.l	SheNeverAnsweredStr
