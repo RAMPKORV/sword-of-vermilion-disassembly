@@ -44851,7 +44851,7 @@ NpcDataTable_Parma:
 	dc.l	$00000000
 	dc.b	$00, $27, $00, $21, $00, $D8, $00, $A8, $00, $00, $00, $00, $00, $04, $00, $2B, $00, $02, $E7, $B0, $01, $08, $00, $38, $00, $2C, $00, $02, $E7, $E6, $00, $78 
 	dc.b	$00, $38, $00, $2D 
-	dc.l	$0002E7FC
+	dc.l	NpcEntryList_Parma_CondD
 	dc.b	$00, $10, $00, $1A, $00, $58, $00, $C8, $00, $00, $00, $00, $00, $04, $00, $2E, $00, $02, $E7, $7A, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 
 	dc.b	$00, $00, $00, $00 
 	dc.l	$00000000
@@ -44924,6 +44924,8 @@ NpcEntryList_Parma_Locked:
 	dc.l	Parma_Npc1_ConditionC_Dispatch
 	npcEntry $0068, $0058, $01D5, NPCSpriteFrames_Soldier, NPCInit_WalkingStatic, NPC_ATTR_PAL3, NPC_SOLID
 	dc.w	$FFFF
+; loc_0002E7FC
+NpcEntryList_Parma_CondD:
 	dc.l	Parma_Npc1_ConditionD_Dispatch
 	npcEntry $00B8, $0068, $01D5, NPCSpriteFrames_Soldier, NPCInit_StowSoldier_DoctorHint, NPC_ATTR_PAL3, NPC_SOLID
 	dc.w	$FFFF
@@ -45586,7 +45588,7 @@ NpcDataTable_Deepdale:
 	dc.l	$00000000
 	dc.b	$00, $1C, $00, $0E, $00, $D8, $00, $A8, $00, $00, $00, $00, $00, $04, $00, $2B, $00, $03, $09, $BA, $01, $08, $00, $38, $00, $2C, $00, $03, $09, $F6, $00, $78 
 	dc.b	$00, $38, $00, $2D 
-	dc.l	$000309F6
+	dc.l	NpcEntryList_Deepdale_Npc2_CondB
 	dc.w	$FFFF
 	dc.l	Deepdale_Npc2_Dispatch
 	npcEntry $0088, $0048, $0091, NPCSpriteFrames_ManA, NPCInit_Deepdale_SecretKeeper, NPC_ATTR_PAL3, NPC_SOLID
@@ -45607,6 +45609,8 @@ NpcDataTable_Deepdale:
 	dc.l	Deepdale_Npc2_Dispatch
 	npcEntry $0058, $0048, $0205, NPCSpriteFrames_Shopkeeper, NPCInit_WalkingAnimated_Animate, NPC_ATTR_PAL3, NPC_SOLID
 	dc.w	$FFFF
+; loc_000309F6
+NpcEntryList_Deepdale_Npc2_CondB:
 	dc.l	Deepdale_Npc2_Dispatch
 	dc.w	$FFFF
 	dc.l	Deepdale_Npc2_Dispatch
@@ -45863,7 +45867,7 @@ NpcDataTable_Stow1:
 	dc.l	$00000000
 	dc.b	$00, $0A, $00, $1B, $00, $D8, $00, $A8, $00, $00, $00, $00, $00, $04, $00, $2B, $00, $03, $18, $8E, $01, $08, $00, $38, $00, $2C, $00, $03, $18, $B4, $00, $78 
 	dc.b	$00, $38, $00, $2D 
-	dc.l	$000318DA
+	dc.l	NpcEntryList_Stow1_CondD
 	dc.b	$00, $1A, $00, $1C, $00, $98, $00, $C8, $00, $00, $00, $00, $00, $04, $00, $33, $00, $03, $09, $A4, $00, $68, $00, $38, $00, $34, $00, $03, $18, $4C, $00, $00 
 	dc.b	$00, $00, $00, $00 
 	dc.l	$00000000
@@ -45891,6 +45895,8 @@ NpcDataTable_Stow1:
 	npcEntry $00A8, $0088, $01D5, NPCSpriteFrames_Soldier, NPCInit_WalkingStatic, NPC_ATTR_PAL3, NPC_SOLID
 	npcEntry $0068, $0058, $01D5, NPCSpriteFrames_Soldier, NPCInit_StowSoldier_DoctorHint, NPC_ATTR_PAL3, NPC_SOLID
 	dc.w	$FFFF
+; loc_000318DA
+NpcEntryList_Stow1_CondD:
 	dc.l	Stow_Npc3_State10_Dispatch
 	npcEntry $00B8, $0068, $01D5, NPCSpriteFrames_Soldier, NPCInit_StowSoldier_DoctorHint, NPC_ATTR_PAL3, NPC_SOLID
 	dc.w	$FFFF
@@ -46315,7 +46321,7 @@ NpcDataTable_Stow2:
 	dc.l	$00000000
 	dc.b	$00, $1A, $00, $19, $00, $D8, $00, $A8, $00, $00, $00, $00, $00, $04, $00, $2B, $00, $03, $2C, $F2, $01, $08, $00, $38, $00, $2C, $00, $03, $2D, $08, $00, $78 
 	dc.b	$00, $38, $00, $2D 
-	dc.l	$00032D0E
+	dc.l	NpcEntryList_Keltwick_CondD
 	dc.w	$FFFF
 	dc.l	Keltwick_Npc1_State4_Dispatch
 	npcEntry $00D8, $0098, $0091, NPCSpriteFrames_ManA, NPCInit_Malaga_DungeonKeySetup, NPC_ATTR_PAL3, NPC_SOLID
@@ -46332,6 +46338,8 @@ NpcDataTable_Stow2:
 	dc.w	$FFFF
 	dc.l	Keltwick_Npc2_State9_Dispatch
 	dc.w	$FFFF
+; loc_00032D0E
+NpcEntryList_Keltwick_CondD:
 	dc.l	Keltwick_Npc2_State9_Dispatch
 	npcEntry $00B8, $0048, $01D5, NPCSpriteFrames_Soldier, NPCInit_StowSoldier_DoctorHint, NPC_ATTR_PAL3, NPC_SOLID
 	dc.w	$FFFF
@@ -46666,7 +46674,7 @@ NpcDataTable_Malaga:
 	dc.l	$00000000
 	dc.b	$00, $27, $00, $21, $00, $D8, $00, $A8, $00, $00, $00, $00, $00, $04, $00, $2B, $00, $03, $09, $E0, $01, $08, $00, $38, $00, $2C, $00, $03, $09, $F6, $00, $78 
 	dc.b	$00, $38, $00, $2D 
-	dc.l	$000309F6
+	dc.l	NpcEntryList_Deepdale_Npc2_CondB
 	dc.b	$00, $10, $00, $1A, $00, $58, $00, $C8, $00, $00, $00, $00, $00, $04, $00, $2E, $00, $03, $3E, $5C, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 
 	dc.b	$00, $00, $00, $00 
 	dc.l	$00000000
@@ -47235,7 +47243,7 @@ NpcDataTable_Tadcaster:
 	dc.l	$00000000
 	dc.b	$00, $0A, $00, $18, $00, $D8, $00, $A8, $00, $00, $00, $00, $00, $04, $00, $2B, $00, $03, $09, $E0, $01, $08, $00, $38, $00, $2C, $00, $03, $5C, $A0, $00, $78 
 	dc.b	$00, $38, $00, $2D 
-	dc.l	$00035CB6
+	dc.l	NpcEntryList_Tadcaster_CondD
 	dc.b	$00, $1A, $00, $16, $00, $58, $00, $C8, $00, $00, $00, $00, $00, $04, $00, $2E, $00, $03, $5C, $CC, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 
 	dc.b	$00, $00, $00, $00 
 	dc.l	$00000000
@@ -47243,6 +47251,8 @@ NpcDataTable_Tadcaster:
 	dc.l	Tadcaster_Npc3_State5_Dispatch
 	npcEntry $0068, $0058, $00CD, NPCSpriteFrames_ManB, NPCInit_WalkingStatic, NPC_ATTR_PAL3, NPC_SOLID
 	dc.w	$FFFF
+; loc_00035CB6
+NpcEntryList_Tadcaster_CondD:
 	dc.l	Tadcaster_Npc4_Dispatch
 	npcEntry $00B8, $0068, $01D5, NPCSpriteFrames_Soldier, NPCInit_StowSoldier_DoctorHint, NPC_ATTR_PAL3, NPC_SOLID
 	dc.w	$FFFF
@@ -47993,7 +48003,7 @@ NpcDataTable_Swafham:
 	dc.l	$00000000
 	dc.b	$00, $1B, $00, $0E, $00, $D8, $00, $A8, $00, $00, $00, $00, $00, $04, $00, $2B, $00, $03, $09, $E0, $01, $08, $00, $38, $00, $2C, $00, $03, $09, $F6, $00, $78 
 	dc.b	$00, $38, $00, $2D 
-	dc.l	$000309F6
+	dc.l	NpcEntryList_Deepdale_Npc2_CondB
 	dc.b	$00, $18, $00, $17, $00, $98, $00, $C8, $00, $00, $00, $00, $00, $04, $00, $2F, $00, $03, $18, $62, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 
 	dc.b	$00, $00, $00, $00 
 	dc.l	$00000000
