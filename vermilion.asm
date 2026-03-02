@@ -3484,16 +3484,16 @@ PlayerObjectTick:
 	ADD.w	D1, D0
 	MOVE.w	D0, Player_tilemap_offset.w
 	TST.b	Player_input_blocked.w
-	BNE.w	loc_0000385E
+	BNE.w	TownMovement_UpdateIdleSprite
 	TST.b	Fade_in_lines_mask.w
-	BNE.w	loc_0000385E
+	BNE.w	TownMovement_UpdateIdleSprite
 	TST.b	Fade_out_lines_mask.w
-	BNE.w	loc_0000385E
+	BNE.w	TownMovement_UpdateIdleSprite
 	TST.b	Player_is_moving.w
 	BNE.w	loc_00003816
 	MOVE.b	Controller_current_state.w, D0
 	ANDI.w	#$000F, D0
-	BEQ.w	loc_0000385E
+	BEQ.w	TownMovement_UpdateIdleSprite
 	SUBQ.w	#1, D0
 	ADD.w	D0, D0
 	LEA	BattleSpriteIndexTableB, A0
@@ -3503,11 +3503,11 @@ PlayerObjectTick:
 	CLR.b	Town_movement_blocked.w
 	BSR.w	GetTileInFrontOfPlayer
 	TST.b	Town_movement_blocked.w
-	BNE.w	loc_0000385E
+	BNE.w	TownMovement_UpdateIdleSprite
 	BSR.w	CheckTownEnemyCollision
 loc_00003816:
 	TST.b	Town_movement_blocked.w
-	BNE.w	loc_0000385E
+	BNE.w	TownMovement_UpdateIdleSprite
 	MOVE.w	Player_direction.w, D0
 	ANDI.w	#7, D0
 	ADD.w	D0, D0
@@ -3531,7 +3531,8 @@ PlayerMovementJumpTable:
 	BRA.w	loc_000038AE	
 	BRA.w	loc_000038E8
 	BRA.w	loc_000038E8	
-loc_0000385E:
+; TownMovement_UpdateIdleSprite
+TownMovement_UpdateIdleSprite:
 	LEA	loc_0003D9E8, A0
 	MOVE.w	Player_direction.w, D1
 	BCLR.l	#0, D1
@@ -3661,19 +3662,20 @@ GetTileInFrontOfPlayer:
 	MOVE.w	(A0,D0.w), D0
 	MOVE.w	D0, D1
 	ANDI.w	#$F000, D0
-	BEQ.b	loc_00003A1C
+	BEQ.b	TownMovement_Unblocked
 	CMPI.w	#$2000, D0
-	BEQ.b	loc_00003A1C
+	BEQ.b	TownMovement_Unblocked
 	CMPI.w	#$3000, D0
-	BEQ.b	loc_00003A1C
+	BEQ.b	TownMovement_Unblocked
 	CMPI.w	#$E000, D0
-	BEQ.b	loc_00003A1C
+	BEQ.b	TownMovement_Unblocked
 	CMPI.w	#$F000, D0
-	BEQ.b	loc_00003A1C
+	BEQ.b	TownMovement_Unblocked
 	MOVE.b	#$FF, Town_movement_blocked.w
 	RTS
 
-loc_00003A1C:
+; loc_00003A1C
+TownMovement_Unblocked:
 	CLR.b	Town_movement_blocked.w
 	RTS
 
@@ -3697,21 +3699,22 @@ loc_00003A56:
 	BTST.b	#7, (A6)
 	BEQ.b	loc_00003A90
 	TST.b	$2D(A6)
-	BEQ.b	loc_00003A82
+	BEQ.b	TownEnemyCollision_NextEnemy
 	MOVE.w	$E(A6), D4
 	CMP.w	D0, D4
-	BLE.b	loc_00003A82
+	BLE.b	TownEnemyCollision_NextEnemy
 	CMP.w	D1, D4
-	BGE.b	loc_00003A82
+	BGE.b	TownEnemyCollision_NextEnemy
 	MOVE.w	$12(A6), D4
 	CMP.w	D2, D4
-	BLE.b	loc_00003A82
+	BLE.b	TownEnemyCollision_NextEnemy
 	CMP.w	D3, D4
-	BGE.b	loc_00003A82
+	BGE.b	TownEnemyCollision_NextEnemy
 	MOVE.b	#$FF, Town_movement_blocked.w
 	RTS
 
-loc_00003A82:
+; loc_00003A82
+TownEnemyCollision_NextEnemy:
 	CLR.w	D4
 	MOVE.b	$1(A6), D4
 	LEA	(A6,D4.w), A6
@@ -4089,7 +4092,7 @@ loc_00003FCE:
 	BLT.w	loc_00004036
 	CMPI.w	#$00B8, D1
 	BGT.w	loc_0000403E
-	BRA.w	loc_00004044
+	BRA.w	PlayerSpritePositionClamp_Done
 loc_00004000:
 	MOVE.w	$E(A5), D0
 	MOVE.w	$12(A5), D1
@@ -4101,19 +4104,20 @@ loc_00004000:
 	BLT.b	loc_00004036
 	CMPI.w	#$00B8, D1
 	BGT.b	loc_0000403E
-	BRA.b	loc_00004044
+	BRA.b	PlayerSpritePositionClamp_Done
 loc_00004026:
 	MOVE.w	#0, $E(A5)	
-	BRA.b	loc_00004044	
+	BRA.b	PlayerSpritePositionClamp_Done	
 loc_0000402E:
 	MOVE.w	#$0140, $E(A5)
-	BRA.b	loc_00004044
+	BRA.b	PlayerSpritePositionClamp_Done
 loc_00004036:
 	MOVE.w	#$0038, $12(A5)
-	BRA.b	loc_00004044
+	BRA.b	PlayerSpritePositionClamp_Done
 loc_0000403E:
 	MOVE.w	#$00B8, $12(A5)
-loc_00004044:
+; PlayerSpritePositionClamp_Done
+PlayerSpritePositionClamp_Done:
 	MOVE.b	#$FF, Sprite_dma_update_pending.w
 	MOVE.w	$E(A5), $A(A5)
 	MOVE.w	$12(A5), D0
@@ -4190,23 +4194,23 @@ loc_0000411A:
 	MOVE.w	#9, D7
 loc_0000412E:
 	BTST.b	#7, (A6)
-	BEQ.w	loc_0000419E
+	BEQ.w	NpcProximityCheck_NextSlot
 	BTST.b	#6, (A6)
-	BEQ.w	loc_0000419E
+	BEQ.w	NpcProximityCheck_NextSlot
 	MOVE.w	$E(A6), D4
 	ADD.w	$1C(A6), D4
 	CMP.w	D4, D0
-	BGT.w	loc_0000419E
+	BGT.w	NpcProximityCheck_NextSlot
 	MOVE.w	$E(A6), D4
 	SUB.w	$1C(A6), D4
 	CMP.w	D4, D1
-	BLT.w	loc_0000419E
+	BLT.w	NpcProximityCheck_NextSlot
 	MOVE.w	$12(A6), D4
 	CMP.w	D4, D2
-	BGT.w	loc_0000419E
+	BGT.w	NpcProximityCheck_NextSlot
 	SUB.w	$1E(A6), D4
 	CMP.w	D4, D3
-	BLT.b	loc_0000419E
+	BLT.b	NpcProximityCheck_NextSlot
 	MOVE.b	#$FF, $26(A6)
 	MOVEA.l	Object_slot_01_ptr.w, A4
 	BSET.b	#7, (A4)
@@ -4218,7 +4222,8 @@ loc_0000412E:
 	MOVE.w	$16(A6), D4
 	ADDQ.w	#1, D4
 	MOVE.w	D4, $16(A4)
-loc_0000419E:
+; NpcProximityCheck_NextSlot
+NpcProximityCheck_NextSlot:
 	CLR.w	D5
 	MOVE.b	$1(A6), D5
 	LEA	(A6,D5.w), A6
@@ -4334,15 +4339,15 @@ InitFirstPersonView:
 ; OverworldPlayerTickHandler
 OverworldPlayerTickHandler:
 	TST.b	Player_input_blocked.w
-	BNE.w	loc_0000457C
+	BNE.w	OverworldTick_Return
 	TST.b	Encounter_triggered.w
-	BNE.w	loc_0000457C
+	BNE.w	OverworldTick_Return
 	TST.b	Dialog_state_flag.w
-	BNE.w	loc_0000457C
+	BNE.w	OverworldTick_Return
 	TST.b	Fade_out_lines_mask.w
-	BNE.w	loc_0000457C
+	BNE.w	OverworldTick_Return
 	TST.b	Player_in_first_person_mode.w
-	BEQ.w	loc_0000457C
+	BEQ.w	OverworldTick_Return
 	TST.b	Player_move_forward_in_overworld.w
 	BNE.w	loc_000044F2
 	TST.b	Player_move_backward_in_overworld.w
@@ -4354,7 +4359,7 @@ OverworldPlayerTickHandler:
 	CLR.w	Overworld_movement_frame.w
 	MOVE.b	Controller_current_state.w, D0
 	ANDI.w	#$000F, D0
-	BEQ.w	loc_00004566
+	BEQ.w	OverworldTick_CaveLightCheck
 	BTST.l	#0, D0
 	BNE.w	loc_000044C2
 	BTST.l	#1, D0
@@ -4363,12 +4368,12 @@ OverworldPlayerTickHandler:
 	BNE.w	loc_0000444E
 	BTST.l	#3, D0
 	BNE.b	loc_0000441E
-	BRA.w	loc_0000457C	
+	BRA.w	OverworldTick_Return	
 loc_0000441E:
 	MOVE.w	Overworld_movement_frame.w, D0
 	MOVE.w	D0, D1
 	ANDI.w	#7, D1
-	BNE.w	loc_00004516
+	BNE.w	OverworldTick_ClearInteractionFlags
 	BSR.w	ClearFirstPersonTilemap
 	MOVE.b	#$FF, Player_rotate_clockwise_in_overworld.w
 	ANDI.w	#$0018, D0
@@ -4378,12 +4383,12 @@ loc_0000441E:
 ; loc_00004446
 OverworldRotateDispatch:
 	JSR	(A0,D0.w)
-	BRA.w	loc_00004516
+	BRA.w	OverworldTick_ClearInteractionFlags
 loc_0000444E:
 	MOVE.w	Overworld_movement_frame.w, D0
 	MOVE.w	D0, D1
 	ANDI.w	#7, D1
-	BNE.w	loc_00004516
+	BNE.w	OverworldTick_ClearInteractionFlags
 	BSR.w	ClearFirstPersonTilemap
 	MOVE.b	#$FF, Player_rotate_counter_clockwise_in_overworld.w
 	ANDI.w	#$0018, D0
@@ -4394,23 +4399,23 @@ loc_0000444E:
 loc_00004478:
 	LEA	RotateCounterClockwiseJumpTable, A0
 	JSR	(A0,D0.w)
-	BRA.w	loc_00004516
+	BRA.w	OverworldTick_ClearInteractionFlags
 loc_00004486:
 	LEA	FpDirectionDeltaBackward, A0
 	BSR.w	GetMapTileInDirection
 	BSR.w	HandleMapTileTransition
-	BNE.w	loc_0000457C
+	BNE.w	OverworldTick_Return
 loc_00004498:
 	MOVE.w	Overworld_movement_frame.w, D0
 	MOVE.w	D0, D1
 	ANDI.w	#3, D1
-	BNE.w	loc_00004516
+	BNE.w	OverworldTick_ClearInteractionFlags
 	BSR.w	ClearFirstPersonTilemap
 	MOVE.b	#$FF, Player_move_backward_in_overworld.w
 	ANDI.w	#$000C, D0
 	LEA	BackwardMovementJumpTable, A0
 	JSR	(A0,D0.w)
-	BRA.w	loc_00004516
+	BRA.w	OverworldTick_ClearInteractionFlags
 loc_000044C2:
 	TST.b	Chest_already_opened.w
 	BEQ.b	loc_000044E0
@@ -4424,18 +4429,19 @@ loc_000044E0:
 	LEA	FpDirectionDeltaForward, A0
 	BSR.w	GetMapTileInDirection
 	BSR.w	HandleMapTileTransition
-	BNE.w	loc_0000457C
+	BNE.w	OverworldTick_Return
 loc_000044F2:
 	MOVE.w	Overworld_movement_frame.w, D0
 	MOVE.w	D0, D1
 	ANDI.w	#3, D1
-	BNE.b	loc_00004516
+	BNE.b	OverworldTick_ClearInteractionFlags
 	BSR.w	ClearFirstPersonTilemap
 	MOVE.b	#$FF, Player_move_forward_in_overworld.w
 	ANDI.w	#$000C, D0
 	LEA	ForwardMovementJumpTable, A0
 	JSR	(A0,D0.w)
-loc_00004516:
+; OverworldTick_ClearInteractionFlags
+OverworldTick_ClearInteractionFlags:
 	CLR.b	Dialog_active_flag.w
 	CLR.b	Chest_opened_flag.w
 	CLR.b	Reward_script_active.w
@@ -4459,15 +4465,17 @@ loc_0000455C:
 	ADDQ.w	#1, Overworld_movement_frame.w
 	RTS
 
-loc_00004566:
+; OverworldTick_CaveLightCheck
+OverworldTick_CaveLightCheck:
 	TST.b	Is_in_cave.w
-	BEQ.b	loc_0000457C
+	BEQ.b	OverworldTick_Return
 	TST.b	Chest_already_opened.w
-	BNE.b	loc_0000457C
+	BNE.b	OverworldTick_Return
 	TST.b	Cave_light_active.w
-	BGE.b	loc_0000457C
+	BGE.b	OverworldTick_Return
 	BSR.w	UpdateCaveLightTimer
-loc_0000457C:
+; OverworldTick_Return
+OverworldTick_Return:
 	RTS
 
 DecrementInaudiosSteps:
@@ -10351,7 +10359,7 @@ loc_00009186:
 ; Checks collision with enemy hitbox, applies damage, poison chance, and knockback
 HandlePlayerTakeDamage:
 	TST.b	Fade_out_lines_mask.w
-	BNE.w	loc_0000926E
+	BNE.w	HandlePlayerTakeDamage_Return
 	MOVEA.l	Player_entity_ptr.w, A6
 	MOVE.l	$E(A5), D0
 	SUB.l	$32(A5), D0
@@ -10362,11 +10370,11 @@ HandlePlayerTakeDamage:
 	MOVE.w	$E(A6), D2
 	ADDQ.w	#8, D2
 	CMP.w	D0, D2
-	BLT.w	loc_0000926E
+	BLT.w	HandlePlayerTakeDamage_Return
 	MOVE.w	$E(A6), D2
 	SUBQ.w	#8, D2
 	CMP.w	D1, D2
-	BGT.w	loc_0000926E
+	BGT.w	HandlePlayerTakeDamage_Return
 	MOVE.l	$12(A5), D0
 	SUB.l	$36(A5), D0
 	SWAP	D0
@@ -10374,12 +10382,12 @@ HandlePlayerTakeDamage:
 	SUB.w	$1E(A5), D1
 	MOVE.w	$12(A6), D2
 	CMP.w	D1, D2
-	BLT.w	loc_0000926E
+	BLT.w	HandlePlayerTakeDamage_Return
 	SUBQ.w	#8, D2
 	CMP.w	D0, D2
-	BGT.w	loc_0000926E
+	BGT.w	HandlePlayerTakeDamage_Return
 	TST.b	Player_invulnerable.w
-	BNE.w	loc_0000926E
+	BNE.w	HandlePlayerTakeDamage_Return
 	MOVE.b	#$FF, Player_invulnerable.w
 	MOVE.b	#$10, $1A(A6)
 	BSR.w	ApplyDamageToPlayer
@@ -10408,7 +10416,8 @@ loc_00009244:
 	ADD.w	D1, $12(A6)
 	CLR.l	$32(A5)
 	CLR.l	$36(A5)
-loc_0000926E:
+; HandlePlayerTakeDamage_Return
+HandlePlayerTakeDamage_Return:
 	RTS
 
 CalculateAngleToObjectCentered:
@@ -10491,9 +10500,9 @@ CheckEnemyCollision:
 	SUB.w	$1E(A5), D5
 loc_0000933A:
 	CMPA.l	A5, A6
-	BEQ.w	loc_0000938C
+	BEQ.w	EnemyCollision_NextEnemy
 	BTST.b	#7, (A6)
-	BEQ.w	loc_0000938C
+	BEQ.w	EnemyCollision_NextEnemy
 loc_00009348:
 	BTST.b	#6, (A6)
 	BNE.w	loc_00009354
@@ -10503,20 +10512,21 @@ loc_00009354:
 	MOVE.w	$E(A6), D1
 	ADD.w	$1C(A6), D1
 	CMP.w	D2, D1
-	BLT.w	loc_0000938C
+	BLT.w	EnemyCollision_NextEnemy
 	MOVE.w	$E(A6), D1
 	SUB.w	$1C(A6), D1
 	CMP.w	D3, D1
-	BGT.w	loc_0000938C
+	BGT.w	EnemyCollision_NextEnemy
 	MOVE.w	$12(A6), D1
 	CMP.w	D5, D1
-	BLT.w	loc_0000938C
+	BLT.w	EnemyCollision_NextEnemy
 	SUB.w	$1E(A6), D1
 	CMP.w	D4, D1
-	BGT.w	loc_0000938C
+	BGT.w	EnemyCollision_NextEnemy
 	CLR.l	$32(A5)
 	CLR.l	$36(A5)
-loc_0000938C:
+; EnemyCollision_NextEnemy
+EnemyCollision_NextEnemy:
 	ADDA.w	D6, A6
 	DBF	D7, loc_0000933A
 loc_00009392:
@@ -12005,7 +12015,7 @@ loc_0000A8A6:
 	CLR.l	$36(A5)
 	ADDQ.b	#1, $3A(A5)
 	MOVE.w	#$0028, $3C(A5)
-	BRA.w	loc_0000A9B4
+	BRA.w	ProjectileTick_PostCollision
 loc_0000A8BC:
 	TST.w	$3C(A5)
 	BEQ.w	loc_0000A8D8
@@ -12019,17 +12029,17 @@ loc_0000A8D8:
 	CLR.l	$36(A5)	
 	ADDQ.b	#1, $3A(A5)	
 	MOVE.w	#$0028, $3C(A5)	
-	BRA.w	loc_0000A9B4	
+	BRA.w	ProjectileTick_PostCollision	
 loc_0000A8EE:
 	SUBQ.w	#1, $3C(A5)
-	BNE.w	loc_0000A9B4
+	BNE.w	ProjectileTick_PostCollision
 	ADDQ.b	#1, $3A(A5)
 	MOVE.b	#8, $3B(A5)
 	MOVE.w	#$001E, $3C(A5)
-	BRA.w	loc_0000A9B4
+	BRA.w	ProjectileTick_PostCollision
 loc_0000A90A:
 	SUBQ.w	#1, $3C(A5)
-	BNE.w	loc_0000A9B4
+	BNE.w	ProjectileTick_PostCollision
 	MOVE.w	#8, $3C(A5)
 	MOVEQ	#0, D7
 	MOVE.b	$3B(A5), D7
@@ -12055,23 +12065,24 @@ loc_0000A922:
 	MOVE.b	D1, $18(A6)
 	MOVE.l	#ProjectileTick_Spiral, $2(A6)
 	SUBQ.b	#1, $3B(A5)
-	BNE.w	loc_0000A9B4
+	BNE.w	ProjectileTick_PostCollision
 	ADDQ.b	#1, $3A(A5)
 	MOVE.w	#$005A, $3C(A5)
-	BRA.w	loc_0000A9B4
+	BRA.w	ProjectileTick_PostCollision
 loc_0000A98A:
 	SUBQ.w	#1, $3C(A5)
-	BNE.w	loc_0000A9B4
+	BNE.w	ProjectileTick_PostCollision
 	ADDQ.b	#1, $3A(A5)
 	JSR	GetRandomNumber
 	ANDI.w	#$00F0, D0
 	ADDI.w	#$003C, D0
 	MOVE.w	D0, $3C(A5)
-	BRA.w	loc_0000A9B4
+	BRA.w	ProjectileTick_PostCollision
 loc_0000A9AC:
 	BSR.w	CalculateVelocityFromAngle
 	BSR.w	CheckEnemyCollision
-loc_0000A9B4:
+; ProjectileTick_PostCollision
+ProjectileTick_PostCollision:
 	BSR.w	HandlePlayerTakeDamage
 	BSR.w	CheckObjectOnScreen
 	CLR.w	D0
@@ -12201,7 +12212,7 @@ loc_0000AB70:
 	CLR.l	$36(A5)
 	ADDQ.w	#1, $3A(A5)
 	MOVE.w	#$0028, $3C(A5)
-	BRA.w	loc_0000AC7E
+	BRA.w	ProjectileTick2_PostCollision
 loc_0000AB86:
 	TST.w	$3C(A5)	
 	BEQ.w	loc_0000ABA2	
@@ -12215,7 +12226,7 @@ loc_0000ABA2:
 	CLR.l	$36(A5)	
 	ADDQ.b	#1, $3A(A5)	
 	MOVE.w	#$0028, $3C(A5)	
-	BRA.w	loc_0000AC7E	
+	BRA.w	ProjectileTick2_PostCollision	
 loc_0000ABB8:
 	TST.w	$3C(A5)
 	BEQ.w	loc_0000ABD4
@@ -12223,10 +12234,10 @@ loc_0000ABB8:
 	MOVEA.l	Player_entity_ptr.w, A6
 	JSR	CalculateAngleBetweenObjects(PC)
 	MOVE.b	D0, $18(A5)
-	BRA.w	loc_0000AC7E
+	BRA.w	ProjectileTick2_PostCollision
 loc_0000ABD4:
 	ADDQ.w	#1, $3A(A5)
-	BRA.w	loc_0000AC7E
+	BRA.w	ProjectileTick2_PostCollision
 loc_0000ABDC:
 	MOVE.w	#3, D7
 	CLR.w	D0
@@ -12254,20 +12265,21 @@ loc_0000ABEA:
 	DBF	D7, loc_0000ABEA
 	ADDQ.w	#1, $3A(A5)
 	MOVE.w	#$0078, $3C(A5)
-	BRA.w	loc_0000AC7E
+	BRA.w	ProjectileTick2_PostCollision
 loc_0000AC54:
 	SUBQ.w	#1, $3C(A5)
-	BNE.w	loc_0000AC7E
+	BNE.w	ProjectileTick2_PostCollision
 	CLR.w	$3A(A5)	
 	JSR	GetRandomNumber	
 	ANDI.w	#$00F0, D0	
 	ADDI.w	#$003C, D0	
 	MOVE.w	D0, $3C(A5)	
-	BRA.w	loc_0000AC7E	
+	BRA.w	ProjectileTick2_PostCollision	
 loc_0000AC76:
 	BSR.w	CalculateVelocityFromAngle
 	BSR.w	CheckEnemyCollision
-loc_0000AC7E:
+; ProjectileTick2_PostCollision
+ProjectileTick2_PostCollision:
 	BSR.w	HandlePlayerTakeDamage
 	BSR.w	CheckObjectOnScreen
 	MOVE.l	$32(A5), D0
@@ -23431,32 +23443,32 @@ PrologueStateDispatcher:
 PrologueStateJumpTable:
 	BRA.w	PrologueWaitAndAdvanceState
 	BRA.w	PrologueWaitAndAdvanceState
-	BRA.w	loc_00015944
+	BRA.w	PrologueTick_WaitTimer
 	BRA.w	loc_00015934
 	BRA.w	PrologueWaitAndAdvanceState
 	BRA.w	PrologueWaitAndAdvanceState
-	BRA.w	loc_00015944
+	BRA.w	PrologueTick_WaitTimer
 	BRA.w	loc_00015934
 	BRA.w	loc_0001590E
 	BRA.w	loc_000157F0
 	BRA.w	PrologueWaitAndAdvanceState
 	BRA.w	PrologueWaitAndAdvanceState
-	BRA.w	loc_00015944
+	BRA.w	PrologueTick_WaitTimer
 	BRA.w	loc_00015934
 	BRA.w	loc_0001590E
 	BRA.w	loc_000158A0
 	BRA.w	PrologueWaitAndAdvanceState
 	BRA.w	PrologueWaitAndAdvanceState
-	BRA.w	loc_00015944
+	BRA.w	PrologueTick_WaitTimer
 	BRA.w	loc_00015934
 	BRA.w	PrologueWaitAndAdvanceState
 	BRA.w	PrologueWaitAndAdvanceState
-	BRA.w	loc_00015944
+	BRA.w	PrologueTick_WaitTimer
 	BRA.w	loc_00015934
 	BRA.w	loc_0001590E
 	BRA.w	loc_000158D2
 	BRA.w	PrologueWaitAndAdvanceState
-	BRA.w	loc_00015944
+	BRA.w	PrologueTick_WaitTimer
 	BRA.w	loc_0001590E
 	BRA.w	loc_00015956
 loc_000157F0:
@@ -23554,7 +23566,8 @@ loc_00015934:
 loc_00015942:
 	RTS
 
-loc_00015944:
+; PrologueTick_WaitTimer
+PrologueTick_WaitTimer:
 	JSR	DecrementTimerBCD
 	BEQ.b	loc_0001594E
 	RTS
@@ -26679,9 +26692,9 @@ CastFieldMagicNotAllowed:
 ;loc_0001870E
 CastInaudios:
 	JSR	CheckIfCursed
-	BNE.w	loc_000189AC
+	BNE.w	SpellMenu_CursedError
 	BSR.w	DeductMagicMP
-	BNE.w	loc_00018996
+	BNE.w	SpellMenu_NotEnoughMp
 	TST.b	Player_in_first_person_mode.w
 	BEQ.b	loc_00018752
 	TST.b	Is_in_cave.w
@@ -26703,9 +26716,9 @@ loc_00018752:
 ;loc_00018768
 CastLuminos:
 	JSR	CheckIfCursed
-	BNE.w	loc_000189AC
+	BNE.w	SpellMenu_CursedError
 	BSR.w	DeductMagicMP
-	BNE.w	loc_00018996
+	BNE.w	SpellMenu_NotEnoughMp
 	TST.b	Is_in_cave.w
 	BEQ.b	loc_000187B4
 	TST.b	Cave_light_active.w
@@ -26729,9 +26742,9 @@ loc_000187B4:
 ;loc_000187CA
 CastSangua:
 	JSR	CheckIfCursed
-	BNE.w	loc_000189AC
+	BNE.w	SpellMenu_CursedError
 	BSR.w	DeductMagicMP
-	BNE.w	loc_00018996
+	BNE.w	SpellMenu_NotEnoughMp
 	MOVE.w	#$0032, D0
 	MOVE.w	Player_int.w, D1
 	ASR.w	#3, D1
@@ -26742,9 +26755,9 @@ CastSangua:
 ;loc_000187F0:
 CastSanguia:
 	JSR	CheckIfCursed
-	BNE.w	loc_000189AC
+	BNE.w	SpellMenu_CursedError
 	BSR.w	DeductMagicMP
-	BNE.w	loc_00018996
+	BNE.w	SpellMenu_NotEnoughMp
 	MOVE.w	#$00B4, D0
 	MOVE.w	Player_int.w, D1
 	ASR.w	#3, D1
@@ -26769,9 +26782,9 @@ loc_00018834:
 ;loc_0001884C
 CastSanguio:
 	JSR	CheckIfCursed
-	BNE.w	loc_000189AC
+	BNE.w	SpellMenu_CursedError
 	BSR.w	DeductMagicMP
-	BNE.w	loc_00018996
+	BNE.w	SpellMenu_NotEnoughMp
 	MOVE.w	Player_mhp.w, Player_hp.w
 	PRINT 	AllHitPointsStr
 	MOVE.w	#$00AE, D0
@@ -26783,9 +26796,9 @@ CastSanguio:
 ;loc_00018884
 CastToxios:
 	JSR	CheckIfCursed
-	BNE.w	loc_000189AC
+	BNE.w	SpellMenu_CursedError
 	BSR.w	DeductMagicMP
-	BNE.w	loc_00018996
+	BNE.w	SpellMenu_NotEnoughMp
 	PRINT 	PoisonPurgedStr
 	TST.w	Player_poisoned.w
 	BNE.b	loc_000188AE
@@ -26809,9 +26822,9 @@ loc_000188D0:
 ;loc_000188DE
 CastAries:
 	JSR	CheckIfCursed
-	BNE.w	loc_000189AC
+	BNE.w	SpellMenu_CursedError
 	BSR.w	DeductMagicMP
-	BNE.w	loc_00018996
+	BNE.w	SpellMenu_NotEnoughMp
 	TST.b	Player_in_first_person_mode.w
 	BEQ.b	loc_00018912
 	TST.b	Is_in_cave.w
@@ -26829,9 +26842,9 @@ loc_00018912:
 ;loc_00018928
 CastExtrios:
 	JSR	CheckIfCursed
-	BNE.w	loc_000189AC
+	BNE.w	SpellMenu_CursedError
 	BSR.w	DeductMagicMP
-	BNE.w	loc_00018996
+	BNE.w	SpellMenu_NotEnoughMp
 	TST.b	Is_in_cave.w
 	BEQ.b	loc_00018982
 	MOVE.w	Player_cave_position_x.w, Player_position_x_outside_town.w
@@ -26854,13 +26867,15 @@ loc_00018982:
 	ADDQ.w	#2, Spellbook_menu_state.w
 	RTS
 
-loc_00018996:
+; SpellMenu_NotEnoughMp
+SpellMenu_NotEnoughMp:
 	PRINT 	NotEnoughMpStr	
 	JSR	ResetScriptAndInitDialogue	
 	MOVE.w	#9, Spellbook_menu_state.w	
 	RTS
 	
-loc_000189AC:
+; SpellMenu_CursedError
+SpellMenu_CursedError:
 	PRINT 	SorryYouAreCursedStr
 	JSR	ResetScriptAndInitDialogue
 	MOVE.w	#9, Spellbook_menu_state.w
@@ -33243,7 +33258,7 @@ loc_0001E1BA:
 	BSR.w	DisplayFoundItemMessage	
 	BSR.w	DisplayInventoryFullMessage	
 loc_0001E1C8:
-	BRA.w	loc_0001E312	
+	BRA.w	SeekHandler_DisplayAndReturn	
 loc_0001E1CC:
 	MOVE.w	#1, Dialog_selection.w
 	RTS
@@ -33268,7 +33283,7 @@ loc_0001E214:
 	BSR.w	DisplayFoundItemMessage
 	BSR.w	DisplayInventoryFullMessage
 loc_0001E222:
-	BRA.w	loc_0001E312
+	BRA.w	SeekHandler_DisplayAndReturn
 loc_0001E226:
 	MOVE.w	#1, Dialog_selection.w
 	RTS
@@ -33292,7 +33307,7 @@ loc_0001E26E:
 	BSR.w	DisplayFoundItemMessage	
 	BSR.w	DisplayInventoryFullMessage	
 loc_0001E27C:
-	BRA.w	loc_0001E312
+	BRA.w	SeekHandler_DisplayAndReturn
 loc_0001E280:
 	MOVE.w	#1, Dialog_selection.w	
 	RTS
@@ -33314,7 +33329,7 @@ loc_0001E2BA:
 	BSR.w	DisplayFoundItemMessage	
 	BSR.w	DisplayInventoryFullMessage	
 loc_0001E2C8:
-	BRA.w	loc_0001E312	
+	BRA.w	SeekHandler_DisplayAndReturn	
 
 ; loc_0001E2CC
 SeekHandler_FindOneKim: ; Find 1kim
@@ -33325,7 +33340,7 @@ SeekHandler_FindOneKim: ; Find 1kim
 	JSR	AddPaymentAmount
 	MOVE.w	#$00A6, D0
 	JSR	QueueSoundEffect
-	BRA.w	loc_0001E312
+	BRA.w	SeekHandler_DisplayAndReturn
 
 ; loc_0001E2F6
 SeekHandler_RegainAllHp: ; Regain all HP
@@ -33333,9 +33348,10 @@ SeekHandler_RegainAllHp: ; Regain all HP
 	MOVE.w	#$00AE, D0
 	JSR	QueueSoundEffect
 	MOVE.l	#AllHitPointsStr, Script_source_base.w
-	BRA.w	loc_0001E312
+	BRA.w	SeekHandler_DisplayAndReturn
 
-loc_0001E312:
+; SeekHandler_DisplayAndReturn
+SeekHandler_DisplayAndReturn:
 	JSR	SaveStatusBarToBuffer
 	JSR	ResetScriptAndInitDialogue
 	MOVE.w	#2, Dialog_selection.w
