@@ -11766,11 +11766,12 @@ loc_0000A2E6:
 	JMP	(A0,D0.w)
 ; loc_0000A300
 EnemyAiChasePauseJumpTable:
-	BRA.w	loc_0000A310
+	BRA.w	EnemyAiChasePause_Tick
 	BRA.w	loc_0000A342
-	BRA.w	loc_0000A310
+	BRA.w	EnemyAiChasePause_Tick
 	BRA.w	loc_0000A368
-loc_0000A310:
+; loc_0000A310
+EnemyAiChasePause_Tick:
 	TST.w	$3C(A5)
 	BEQ.w	loc_0000A334
 	SUBQ.w	#1, $3C(A5)
@@ -11790,11 +11791,11 @@ loc_0000A342:
 	MOVEA.l	Player_entity_ptr.w, A6
 	JSR	CalculateAngleToObjectCentered(PC)
 	MOVE.b	D0, $18(A5)
-	BRA.w	loc_0000A3D2
+	BRA.w	EnemyAiChasePause_Move
 loc_0000A35A:
 	ADDQ.w	#1, $3A(A5)
 	MOVE.w	#$0028, $3C(A5)
-	BRA.w	loc_0000A3D2
+	BRA.w	EnemyAiChasePause_Move
 loc_0000A368:
 	MOVE.l	$E(A5), D1
 	MOVE.l	$12(A5), D2
@@ -11822,7 +11823,8 @@ loc_0000A390:
 	ADDQ.w	#1, $3A(A5)
 	MOVE.w	#$0028, $3C(A5)
 	BRA.w	EnemyAiChasePause_HandleDamage
-loc_0000A3D2:
+; loc_0000A3D2
+EnemyAiChasePause_Move:
 	BSR.w	CalculateVelocityFromAngle
 	BSR.w	CheckEnemyCollision
 ; loc_0000A3DA
@@ -11898,7 +11900,7 @@ loc_0000A4AE:
 	BSR.w	CalculateAngleBetweenObjects
 	MOVE.b	D0, $18(A5)
 	BTST.b	#7, (A4)
-	BNE.w	loc_0000A55E
+	BNE.w	EnemyMultiProjectile_UpdateSprite
 	JSR	GetRandomNumber
 	MOVE.w	D0, D1
 	ANDI.w	#$007F, D0
@@ -11906,7 +11908,7 @@ loc_0000A4AE:
 	CLR.b	$19(A4)
 	CLR.l	$32(A4)
 	CLR.l	$36(A4)
-	BRA.w	loc_0000A55E
+	BRA.w	EnemyMultiProjectile_UpdateSprite
 loc_0000A4F6:
 	MOVE.l	$E(A5), D1
 	MOVE.l	$12(A5), D2
@@ -11933,7 +11935,8 @@ loc_0000A51E:
 	MOVE.w	#$00B4, $3C(A6)
 	MOVE.l	#ProjectileTick_Homing, $2(A6)
 	DBF	D7, loc_0000A51E
-loc_0000A55E:
+; loc_0000A55E
+EnemyMultiProjectile_UpdateSprite:
 	BSR.w	HandlePlayerTakeDamage
 	BSR.w	CheckObjectOnScreen
 	CLR.w	D0
@@ -11982,14 +11985,15 @@ loc_0000A5F6:
 	SUBQ.w	#1, D1
 	EOR.w	D0, D1
 	BTST.l	#4, D1
-	BEQ.w	loc_0000A628
+	BEQ.w	EnemyChase_Move
 	MOVEA.l	Player_entity_ptr.w, A6
 	BSR.w	CalculateAngleBetweenObjects
 	MOVE.b	D0, $18(A5)
-	BRA.w	loc_0000A628
+	BRA.w	EnemyChase_Move
 loc_0000A624:
 	SUBQ.w	#1, $3A(A5)
-loc_0000A628:
+; loc_0000A628
+EnemyChase_Move:
 	BSR.w	CalculateVelocityFromAngle
 	BSR.w	UpdateObjectScreenPosition
 loc_0000A630:
@@ -12055,7 +12059,7 @@ loc_0000A6E0:
 	BSR.w	CalculateAngleBetweenObjects
 	MOVE.b	D0, $18(A5)
 	BTST.b	#7, (A4)
-	BNE.w	loc_0000A784
+	BNE.w	EnemySpreadShot_UpdateSprite
 	JSR	GetRandomNumber
 	MOVE.w	D0, D1
 	ANDI.w	#$007F, D0
@@ -12063,7 +12067,7 @@ loc_0000A6E0:
 	CLR.b	$19(A4)
 	CLR.l	$32(A4)
 	CLR.l	$36(A4)
-	BRA.w	loc_0000A784
+	BRA.w	EnemySpreadShot_UpdateSprite
 loc_0000A728:
 	MOVE.l	$E(A5), D1
 	MOVE.l	$12(A5), D2
@@ -12088,7 +12092,8 @@ loc_0000A750:
 	MOVE.b	D7, $18(A6)
 	MOVE.l	#ProjectileTick_Straight, $2(A6)
 	DBF	D7, loc_0000A750
-loc_0000A784:
+; loc_0000A784
+EnemySpreadShot_UpdateSprite:
 	BSR.w	HandlePlayerTakeDamage
 	BSR.w	CheckObjectOnScreen
 	CLR.w	D0
@@ -12153,20 +12158,20 @@ loc_0000A854:
 ; loc_0000A86E
 EnemyAiChaseFireJumpTable:
 	BRA.w	loc_0000A88E
-	BRA.w	loc_0000A8EE
-	BRA.w	loc_0000A90A
-	BRA.w	loc_0000A98A
+	BRA.w	ProjectileTick_Phase1
+	BRA.w	ProjectileTick_Phase2
+	BRA.w	ProjectileTick_Phase3
 	BRA.w	loc_0000A8BC
-	BRA.w	loc_0000A8EE	
-	BRA.w	loc_0000A90A	
-	BRA.w	loc_0000A98A	
+	BRA.w	ProjectileTick_Phase1	
+	BRA.w	ProjectileTick_Phase2	
+	BRA.w	ProjectileTick_Phase3	
 loc_0000A88E:
 	SUBQ.w	#1, $3C(A5)
 	BLE.w	loc_0000A8A6
 	MOVEA.l	Player_entity_ptr.w, A6
 	JSR	CalculateAngleToObjectCentered(PC)
 	MOVE.b	D0, $18(A5)
-	BRA.w	loc_0000A9AC
+	BRA.w	ProjectileTick_Move
 loc_0000A8A6:
 	CLR.l	$32(A5)
 	CLR.l	$36(A5)
@@ -12180,21 +12185,23 @@ loc_0000A8BC:
 	MOVEA.l	Player_entity_ptr.w, A6
 	BSR.w	CalculateAngleBetweenObjects
 	MOVE.b	D0, $18(A5)
-	BRA.w	loc_0000A9AC
+	BRA.w	ProjectileTick_Move
 loc_0000A8D8:
 	CLR.l	$32(A5)	
 	CLR.l	$36(A5)	
 	ADDQ.b	#1, $3A(A5)	
 	MOVE.w	#$0028, $3C(A5)	
 	BRA.w	ProjectileTick_PostCollision	
-loc_0000A8EE:
+; loc_0000A8EE
+ProjectileTick_Phase1:
 	SUBQ.w	#1, $3C(A5)
 	BNE.w	ProjectileTick_PostCollision
 	ADDQ.b	#1, $3A(A5)
 	MOVE.b	#8, $3B(A5)
 	MOVE.w	#$001E, $3C(A5)
 	BRA.w	ProjectileTick_PostCollision
-loc_0000A90A:
+; loc_0000A90A
+ProjectileTick_Phase2:
 	SUBQ.w	#1, $3C(A5)
 	BNE.w	ProjectileTick_PostCollision
 	MOVE.w	#8, $3C(A5)
@@ -12226,7 +12233,8 @@ loc_0000A922:
 	ADDQ.b	#1, $3A(A5)
 	MOVE.w	#$005A, $3C(A5)
 	BRA.w	ProjectileTick_PostCollision
-loc_0000A98A:
+; loc_0000A98A
+ProjectileTick_Phase3:
 	SUBQ.w	#1, $3C(A5)
 	BNE.w	ProjectileTick_PostCollision
 	ADDQ.b	#1, $3A(A5)
@@ -12235,7 +12243,8 @@ loc_0000A98A:
 	ADDI.w	#$003C, D0
 	MOVE.w	D0, $3C(A5)
 	BRA.w	ProjectileTick_PostCollision
-loc_0000A9AC:
+; loc_0000A9AC
+ProjectileTick_Move:
 	BSR.w	CalculateVelocityFromAngle
 	BSR.w	CheckEnemyCollision
 ; ProjectileTick_PostCollision
@@ -12351,20 +12360,20 @@ loc_0000AB1E:
 ; loc_0000AB38
 EnemyAiSpiralJumpTable:
 	BRA.w	loc_0000AB58
-	BRA.w	loc_0000ABB8
-	BRA.w	loc_0000ABDC
-	BRA.w	loc_0000AC54
+	BRA.w	ProjectileTick2_Phase1
+	BRA.w	ProjectileTick2_Phase2
+	BRA.w	ProjectileTick2_Phase3
 	BRA.w	loc_0000AB86	
-	BRA.w	loc_0000ABB8	
-	BRA.w	loc_0000ABDC	
-	BRA.w	loc_0000AC54	
+	BRA.w	ProjectileTick2_Phase1	
+	BRA.w	ProjectileTick2_Phase2	
+	BRA.w	ProjectileTick2_Phase3	
 loc_0000AB58:
 	SUBQ.w	#1, $3C(A5)
 	BLE.w	loc_0000AB70
 	MOVEA.l	Player_entity_ptr.w, A6
 	JSR	CalculateAngleToObjectCentered(PC)
 	MOVE.b	D0, $18(A5)
-	BRA.w	loc_0000AC76
+	BRA.w	ProjectileTick2_Move
 loc_0000AB70:
 	CLR.l	$32(A5)
 	CLR.l	$36(A5)
@@ -12378,14 +12387,15 @@ loc_0000AB86:
 	MOVEA.l	Player_entity_ptr.w, A6	
 	BSR.w	CalculateAngleBetweenObjects	
 	MOVE.b	D0, $18(A5)	
-	BRA.w	loc_0000AC76	
+	BRA.w	ProjectileTick2_Move	
 loc_0000ABA2:
 	CLR.l	$32(A5)	
 	CLR.l	$36(A5)	
 	ADDQ.b	#1, $3A(A5)	
 	MOVE.w	#$0028, $3C(A5)	
 	BRA.w	ProjectileTick2_PostCollision	
-loc_0000ABB8:
+; loc_0000ABB8
+ProjectileTick2_Phase1:
 	TST.w	$3C(A5)
 	BEQ.w	loc_0000ABD4
 	SUBQ.w	#1, $3C(A5)
@@ -12396,7 +12406,8 @@ loc_0000ABB8:
 loc_0000ABD4:
 	ADDQ.w	#1, $3A(A5)
 	BRA.w	ProjectileTick2_PostCollision
-loc_0000ABDC:
+; loc_0000ABDC
+ProjectileTick2_Phase2:
 	MOVE.w	#3, D7
 	CLR.w	D0
 	MOVE.b	$1(A5), D0
@@ -12424,7 +12435,8 @@ loc_0000ABEA:
 	ADDQ.w	#1, $3A(A5)
 	MOVE.w	#$0078, $3C(A5)
 	BRA.w	ProjectileTick2_PostCollision
-loc_0000AC54:
+; loc_0000AC54
+ProjectileTick2_Phase3:
 	SUBQ.w	#1, $3C(A5)
 	BNE.w	ProjectileTick2_PostCollision
 	CLR.w	$3A(A5)	
@@ -12433,7 +12445,8 @@ loc_0000AC54:
 	ADDI.w	#$003C, D0	
 	MOVE.w	D0, $3C(A5)	
 	BRA.w	ProjectileTick2_PostCollision	
-loc_0000AC76:
+; loc_0000AC76
+ProjectileTick2_Move:
 	BSR.w	CalculateVelocityFromAngle
 	BSR.w	CheckEnemyCollision
 ; ProjectileTick2_PostCollision
@@ -12569,16 +12582,17 @@ BossTick_OrbShield:
 	TST.b	$1A(A5)
 	BLE.w	loc_0000AE74
 	SUBQ.b	#1, $1A(A5)	
-	BRA.w	loc_0000AE94	
+	BRA.w	EnemyTakeDamage2_CheckDeath	
 loc_0000AE74:
 	TST.b	$26(A5)
-	BEQ.w	loc_0000AE94
+	BEQ.w	EnemyTakeDamage2_CheckDeath
 	MOVE.b	#$B5, D0	
 	JSR	QueueSoundEffect	
 	MOVE.w	Player_str.w, D0	
 	SUB.w	D0, $28(A5)	
 	MOVE.b	#$10, $1A(A5)	
-loc_0000AE94:
+; loc_0000AE94
+EnemyTakeDamage2_CheckDeath:
 	TST.w	$28(A5)
 	BGT.w	loc_0000AEA6
 	MOVE.l	#EnemyDeathReward_TwoSprites, $2(A5)
@@ -12716,16 +12730,17 @@ BossTick_MultiOrb:
 	TST.b	$1A(A5)
 	BLE.w	loc_0000B07A
 	SUBQ.b	#1, $1A(A5)	
-	BRA.w	loc_0000B09A	
+	BRA.w	BossTakeDamage_CheckDeath	
 loc_0000B07A:
 	TST.b	$26(A5)
-	BEQ.w	loc_0000B09A
+	BEQ.w	BossTakeDamage_CheckDeath
 	MOVE.b	#$B5, D0	
 	JSR	QueueSoundEffect	
 	MOVE.w	Player_str.w, D0	
 	SUB.w	D0, $28(A5)	
 	MOVE.b	#$10, $1A(A5)	
-loc_0000B09A:
+; loc_0000B09A
+BossTakeDamage_CheckDeath:
 	TST.w	$28(A5)
 	BGT.w	loc_0000B0AC
 	MOVE.l	#BossDeathReward_MultiSprite, $2(A5)	
@@ -12912,16 +12927,17 @@ BossTick_OrbRing:
 	TST.b	$1A(A5)
 	BLE.w	loc_0000B33A
 	SUBQ.b	#1, $1A(A5)	
-	BRA.w	loc_0000B35A	
+	BRA.w	BossTakeDamage2_CheckDeath	
 loc_0000B33A:
 	TST.b	$26(A5)
-	BEQ.w	loc_0000B35A
+	BEQ.w	BossTakeDamage2_CheckDeath
 	MOVE.b	#$B5, D0	
 	JSR	QueueSoundEffect	
 	MOVE.w	Player_str.w, D0	
 	SUB.w	D0, $28(A5)	
 	MOVE.b	#$10, $1A(A5)	
-loc_0000B35A:
+; loc_0000B35A
+BossTakeDamage2_CheckDeath:
 	TST.w	$28(A5)
 	BGT.w	loc_0000B36C
 	MOVE.l	#BossDeathReward_MultiSprite, $2(A5)
@@ -13188,17 +13204,18 @@ ProcessEnemyDamage:
 	TST.b	$1A(A5)
 	BLE.w	loc_0000B6A8
 	SUBQ.b	#1, $1A(A5)
-	BRA.w	loc_0000B6CE
+	BRA.w	EnemyTakeDamage_Done
 loc_0000B6A8:
 	TST.b	$26(A5)
-	BEQ.w	loc_0000B6CE
+	BEQ.w	EnemyTakeDamage_Done
 	MOVE.b	#$B5, D0
 	JSR	QueueSoundEffect
 	MOVE.w	#$0078, $3C(A5)
 	MOVE.w	Player_str.w, D0
 	SUB.w	D0, $28(A5)
 	MOVE.b	#$10, $1A(A5)
-loc_0000B6CE:
+; loc_0000B6CE
+EnemyTakeDamage_Done:
 	TST.w	$28(A5)
 	RTS
 	
@@ -13206,16 +13223,17 @@ CheckAndUpdateBattleTimer:
 	TST.b	$1A(A5)
 	BLE.w	loc_0000B6E4
 	SUBQ.b	#1, $1A(A5)
-	BRA.w	loc_0000B704
+	BRA.w	EnemyTakeDamage3_Done
 loc_0000B6E4:
 	TST.b	$26(A5)
-	BEQ.w	loc_0000B704
+	BEQ.w	EnemyTakeDamage3_Done
 	MOVE.b	#$B5, D0
 	JSR	QueueSoundEffect
 	MOVE.w	Player_str.w, D0
 	SUB.w	D0, $28(A5)
 	MOVE.b	#$10, $1A(A5)
-loc_0000B704:
+; loc_0000B704
+EnemyTakeDamage3_Done:
 	TST.w	$28(A5)
 	RTS
 	
@@ -13494,16 +13512,17 @@ Boss1State_ChooseAction:
 	SUBQ.b	#1, $1A(A5)
 	BGE.w	loc_0000BBAE
 	BSR.w	CheckPlayerLeftOfScreen
-	BEQ.b	loc_0000BB98
+	BEQ.b	Boss1State_MoveRight
 	JSR	GetRandomNumber
 	ANDI.w	#3, D0
-	BEQ.b	loc_0000BB98
+	BEQ.b	Boss1State_MoveRight
 	MOVE.w	#8, Boss_ai_state.w
 	MOVE.l	#$FFFF8000, $32(A5)
 	MOVE.l	#$00020000, $36(A5)
 	RTS
 	
-loc_0000BB98:
+; loc_0000BB98
+Boss1State_MoveRight:
 	MOVE.w	#2, Boss_ai_state.w
 	MOVE.l	#$4000, $32(A5)
 	MOVE.l	#$8000, $36(A5)
@@ -13716,15 +13735,16 @@ Boss1_VictoryFlash:
 	ADDQ.w	#1, Dialog_timer.w
 	MOVE.w	Dialog_timer.w, D0
 	ANDI.w	#7, D0
-	BNE.b	loc_0000BEB0
+	BNE.b	BossCommon_SpriteUpdate
 	CMPI.w	#8, Dialog_phase.w
 	BLT.b	loc_0000BEAC
 	MOVE.l	#BossCommon_VictoryRewardSequence, $2(A5)
 	MOVE.w	#$0032, Dialog_timer.w
-	BRA.b	loc_0000BEB0
+	BRA.b	BossCommon_SpriteUpdate
 loc_0000BEAC:
 	BSR.w	ClearDialogPlane
-loc_0000BEB0:
+; loc_0000BEB0
+BossCommon_SpriteUpdate:
 	BSR.w	UpdateSpritePositionAndRender
 	RTS
 
@@ -13746,13 +13766,14 @@ BossCommon_VictoryMessageWait:
 	BEQ.b	loc_0000BF0C
 	MOVE.w	#BUTTON_BIT_C, D2
 	JSR	CheckButtonPress
-	BNE.b	loc_0000BF04
+	BNE.b	BossBattle_SetExitFlag
 	MOVE.w	#BUTTON_BIT_B, D2
 	JSR	CheckButtonPress
-	BNE.b	loc_0000BF04
+	BNE.b	BossBattle_SetExitFlag
 	RTS
 
-loc_0000BF04:
+; loc_0000BF04
+BossBattle_SetExitFlag:
 	MOVE.b	#$FF, Boss_battle_exit_flag.w
 	RTS
 
@@ -13763,9 +13784,9 @@ loc_0000BF0C:
 UpdateBattleParallaxLayers:
 	ADDQ.b	#1, $1B(A5)
 	TST.b	Fade_in_lines_mask.w
-	BNE.w	loc_0000BF84
+	BNE.w	UpdateBattleParallax_ClearSlots
 	TST.b	Battle_active_flag.w
-	BEQ.w	loc_0000BF84
+	BEQ.w	UpdateBattleParallax_ClearSlots
 	MOVE.l	$32(A5), D0
 	MOVE.l	$36(A5), D1
 	MOVEA.l	Object_slot_02_ptr.w, A6
@@ -13797,7 +13818,8 @@ UpdateBattleParallaxLayers:
 	MOVE.l	D2, $32(A6)
 	MOVE.l	D3, $36(A6)
 	BRA.w	UpdateSpritePositionAndRender
-loc_0000BF84:
+; loc_0000BF84
+UpdateBattleParallax_ClearSlots:
 	MOVEA.l	Object_slot_02_ptr.w, A6
 	CLR.l	$32(A6)
 	CLR.l	$36(A6)
@@ -13810,7 +13832,7 @@ loc_0000BF84:
 	MOVEA.l	Object_slot_05_ptr.w, A6
 	CLR.l	$32(A6)
 	CLR.l	$36(A6)
-	BRA.w	loc_0000BFE0
+	BRA.w	BossBody_SpriteUpdate
 ; UpdateSpritePositionAndRender
 UpdateSpritePositionAndRender:
 	MOVE.l	$32(A5), D0
@@ -13819,11 +13841,12 @@ UpdateSpritePositionAndRender:
 	ADD.l	D1, $12(A5)
 	MOVE.w	$12(A5), D0
 	CMPI.w	#$00A8, D0
-	BLT.b	loc_0000BFE0
+	BLT.b	BossBody_SpriteUpdate
 	MOVE.w	#$00A8, $12(A5)
 	CLR.l	$32(A5)
 	CLR.l	$36(A5)
-loc_0000BFE0:
+; loc_0000BFE0
+BossBody_SpriteUpdate:
 	MOVEA.l	Object_slot_01_ptr.w, A6
 	LEA	EnemySpriteFrameDataA_12, A0
 	CLR.w	D0
@@ -14285,14 +14308,15 @@ TwoHeadedDragon_VictoryFadeoutTick:
 	ADDQ.w	#1, Dialog_timer.w
 	MOVE.w	Dialog_timer.w, D0
 	ANDI.w	#7, D0
-	BNE.b	loc_0000C6DE
+	BNE.b	TwoHeadedDragon_SpriteUpdate
 	CMPI.w	#8, Dialog_phase.w
 	BLT.b	loc_0000C6DA
 	MOVE.l	#BossCommon_VictoryRewardSequence, $2(A5)
-	BRA.b	loc_0000C6DE
+	BRA.b	TwoHeadedDragon_SpriteUpdate
 loc_0000C6DA:
 	BSR.w	ClearDialogPlane
-loc_0000C6DE:
+; loc_0000C6DE
+TwoHeadedDragon_SpriteUpdate:
 	JSR	AddSpriteToDisplayList
 	RTS
 	
@@ -14322,10 +14346,10 @@ TwoHeadedDragon_HeadTickA:
 	BLE.b	loc_0000C746
 	SUBQ.w	#1, $3C(A5)
 	BSR.w	UpdateEncounterPalette
-	BRA.w	loc_0000C7D8
+	BRA.w	DragonHeadA_IdleTick
 loc_0000C746:
 	TST.b	$26(A5)
-	BEQ.w	loc_0000C7D8
+	BEQ.w	DragonHeadA_IdleTick
 	MOVE.w	#$00B5, Palette_line_1_index.w
 	JSR	LoadPalettesFromTable
 	MOVE.w	Player_str.w, D0
@@ -14361,7 +14385,8 @@ loc_0000C78A:
 
 loc_0000C7D2:
 	MOVE.w	#$0010, $3C(A5)
-loc_0000C7D8:
+; loc_0000C7D8
+DragonHeadA_IdleTick:
 	CLR.b	$26(A5)
 	TST.b	$19(A5)
 	BNE.b	loc_0000C826
@@ -14425,10 +14450,10 @@ TwoHeadedDragon_HeadTickB:
 	BLE.b	loc_0000C8B8
 	SUBQ.w	#1, $3C(A5)
 	BSR.w	UpdateEncounterPalette
-	BRA.w	loc_0000C942
+	BRA.w	DragonHeadB_IdleTick
 loc_0000C8B8:
 	TST.b	$26(A5)
-	BEQ.w	loc_0000C942
+	BEQ.w	DragonHeadB_IdleTick
 	MOVE.w	#$00B5, Palette_line_1_index.w
 	JSR	LoadPalettesFromTable
 	MOVE.w	Player_str.w, D0
@@ -14462,7 +14487,8 @@ loc_0000C8FA:
 
 loc_0000C93C:
 	MOVE.w	#$0010, $3C(A5)
-loc_0000C942:
+; loc_0000C942
+DragonHeadB_IdleTick:
 	CLR.b	$26(A5)
 	TST.b	$19(A5)
 	BNE.w	loc_0000C992
@@ -14597,16 +14623,17 @@ CheckPlayerDamageAndKnockback:
 	MOVEA.l	Player_entity_ptr.w, A6
 	MOVE.w	$E(A6), D0
 	CMP.w	D1, D0
-	BLT.b	loc_0000CB1C
+	BLT.b	BattleHit_Return
 	TST.b	Player_invulnerable.w
-	BNE.b	loc_0000CB1C
+	BNE.b	BattleHit_Return
 	MOVE.b	#$FF, Player_invulnerable.w
 	MOVE.b	#$10, $1A(A6)
 	JSR	ApplyDamageToPlayer
 	SUBI.w	#$0014, $E(A6)
 	MOVE.w	#$00B2, D0
 	JSR	QueueSoundEffect
-loc_0000CB1C:
+; loc_0000CB1C
+BattleHit_Return:
 	RTS
 
 ProcessBattleDamageAndPalette:
@@ -14616,11 +14643,11 @@ ProcessBattleDamageAndPalette:
 	SUBQ.w	#1, $3C(A6)
 	MOVE.w	#$0062, Palette_line_1_index.w
 	JSR	LoadPalettesFromTable
-	BRA.b	loc_0000CB6C
+	BRA.b	ProcessBattleDamage_Return
 loc_0000CB3A:
 	BSR.w	UpdateEncounterPalette
 	TST.b	$26(A6)
-	BEQ.b	loc_0000CB6C
+	BEQ.b	ProcessBattleDamage_Return
 	MOVE.w	#$00B5, D0
 	JSR	QueueSoundEffect
 	MOVE.w	Player_str.w, D0
@@ -14632,7 +14659,8 @@ loc_0000CB3A:
 
 loc_0000CB66:
 	MOVE.w	#$0010, $3C(A6)
-loc_0000CB6C:
+; loc_0000CB6C
+ProcessBattleDamage_Return:
 	CLR.b	$26(A6)
 	RTS
 	
@@ -14733,9 +14761,9 @@ loc_0000CCA0:
 ; BossAttackGfxJumpTable
 BossAttackGfxJumpTable:
 	BRA.w	DrawBossAttackGraphic1
-	BRA.w	loc_0000CCD4
+	BRA.w	DrawDialogTextLine_Alt1
 	BRA.w	loc_0000CCE6
-	BRA.w	loc_0000CCD4
+	BRA.w	DrawDialogTextLine_Alt1
 DrawBossAttackGraphic1:
 	LEA	loc_0006FC08, A0
 	MOVE.l	#$43BE0003, D5
@@ -14745,7 +14773,8 @@ DrawBossAttackGraphic1:
 	BSR.w	WriteTextToVRAM
 	RTS
 
-loc_0000CCD4:
+; loc_0000CCD4
+DrawDialogTextLine_Alt1:
 	LEA	loc_0006FC32, A0
 	MOVE.l	#$43BE0003, D5
 	BSR.w	WriteTextToVRAM
@@ -14793,16 +14822,17 @@ loc_0000CD5C:
 ; loc_0000CD5E
 BossAttackFlashJumpTable:
 	BRA.w	loc_0000CD6E
-	BRA.w	loc_0000CD80
+	BRA.w	DrawDialogTextLine_Alt2
 	BRA.w	loc_0000CD92
-	BRA.w	loc_0000CD80
+	BRA.w	DrawDialogTextLine_Alt2
 loc_0000CD6E:
 	LEA	loc_00072A12, A0
 	MOVE.l	#$46420003, D5
 	BSR.w	Write7x8TilesToVRAM
 	RTS
 
-loc_0000CD80:
+; loc_0000CD80
+DrawDialogTextLine_Alt2:
 	LEA	loc_00072A4A, A0
 	MOVE.l	#$46420003, D5
 	BSR.w	Write7x8TilesToVRAM
@@ -15234,28 +15264,31 @@ BossAiDemonJumpTable:
 	BRA.w	DemonBossState_Cooldown
 DemonBossState_WaitIdle:
 	TST.b	Battle_active_flag.w
-	BEQ.w	loc_0000D348
+	BEQ.w	DemonBossState_WaitReturn
 	SUBQ.w	#1, $3A(A5)
-	BGT.w	loc_0000D348
+	BGT.w	DemonBossState_WaitReturn
 	ADDQ.b	#1, $42(A5)
-loc_0000D348:
+; loc_0000D348
+DemonBossState_WaitReturn:
 	RTS
 
 DemonBossState_ChooseDirection:
 	JSR	GetRandomNumber(PC)
 	CMPI.w	#$0070, $E(A5)
-	BLE.b	loc_0000D36E
+	BLE.b	DemonBoss_MoveLeft
 	CMPI.w	#$0120, $E(A5)
-	BGE.b	loc_0000D378
+	BGE.b	DemonBoss_MoveRight
 	CMPI.b	#$FF, $27(A5)
-	BEQ.b	loc_0000D36E
+	BEQ.b	DemonBoss_MoveLeft
 	MOVE.w	D0, D1
 	ANDI.w	#3, D0
-	BNE.b	loc_0000D378
-loc_0000D36E:
+	BNE.b	DemonBoss_MoveRight
+; loc_0000D36E
+DemonBoss_MoveLeft:
 	MOVE.l	#$0000C000, $20(A5)
 	BRA.b	loc_0000D380
-loc_0000D378:
+; loc_0000D378
+DemonBoss_MoveRight:
 	MOVE.l	#Player_overworld_gfx_buffer, $20(A5)
 loc_0000D380:
 	CLR.b	$27(A5)
@@ -15295,12 +15328,13 @@ loc_0000D3DE:
 	SUBQ.w	#1, $38(A5)
 	BLE.b	DemonBossState_Move_Rebound
 	CMPI.b	#$FF, $27(A5)
-	BNE.b	loc_0000D410
+	BNE.b	DemonBossState_Move_BounceCheck
 	CLR.b	$27(A5)
 	TST.l	$20(A5)
-	BGE.b	loc_0000D410
+	BGE.b	DemonBossState_Move_BounceCheck
 	NEG.l	$20(A5)
-loc_0000D410:
+; loc_0000D410
+DemonBossState_Move_BounceCheck:
 	MOVE.w	#$001E, $1E(A5)
 	MOVE.w	#$0010, $36(A5)
 	BRA.b	DemonBossState_Move_Return
@@ -15318,14 +15352,15 @@ DemonBossState_FireProjectile:
 	BTST.b	#0, $1D(A5)
 	BEQ.b	loc_0000D44C
 	BTST.b	#1, $1D(A5)
-	BEQ.b	loc_0000D454
+	BEQ.b	DemonBoss_SetFireFlag
 	JSR	GetRandomNumber(PC)
 	BTST.l	#5, D0
-	BEQ.b	loc_0000D454
+	BEQ.b	DemonBoss_SetFireFlag
 loc_0000D44C:
 	BCLR.b	#2, $1D(A5)
 	BRA.b	loc_0000D45A
-loc_0000D454:
+; loc_0000D454
+DemonBoss_SetFireFlag:
 	BSET.b	#2, $1D(A5)
 loc_0000D45A:
 	MOVE.b	#1, $41(A5)
@@ -15344,12 +15379,13 @@ loc_0000D47A:
 	CMPI.l	#$000CE000, D1
 	BLE.b	loc_0000D490
 	MOVE.l	#$000CE000, D1
-	BRA.b	loc_0000D49E
+	BRA.b	DemonBoss_LaunchProjectile
 loc_0000D490:
 	CMPI.l	#$0005E000, D1
-	BGE.b	loc_0000D49E
+	BGE.b	DemonBoss_LaunchProjectile
 	MOVE.l	#$0005E000, D1	
-loc_0000D49E:
+; loc_0000D49E
+DemonBoss_LaunchProjectile:
 	DIVU.w	#$002C, D1
 	EXT.l	D1
 	ASL.l	#4, D1
@@ -15392,7 +15428,7 @@ loc_0000D52E:
 	BNE.b	DemonBossState_AttackAnimate_UpdateFrame
 	MOVE.b	#0, $41(A5)
 	JSR	SetEntityCoordFromDirection(PC)
-	BRA.b	loc_0000D572
+	BRA.b	DemonBossState_FireReturn
 ; loc_0000D542
 DemonBossState_AttackAnimate_UpdateFrame:
 	MOVEA.l	Object_slot_07_ptr.w, A6
@@ -15401,13 +15437,14 @@ DemonBossState_AttackAnimate_UpdateFrame:
 	ANDI.w	#$003E, D0
 	LEA	DemonBossProjectileFrames, A0
 	MOVE.w	(A0,D0.w), $3C(A6)
-	BRA.b	loc_0000D572
+	BRA.b	DemonBossState_FireReturn
 loc_0000D55E:
 	MOVE.b	#2, $41(A5)
 	JSR	SetEntityCoordFromDirection(PC)
 	MOVE.w	#$0028, $3A(A5)
 	ADDQ.b	#1, $42(A5)
-loc_0000D572:
+; loc_0000D572
+DemonBossState_FireReturn:
 	RTS
 
 DemonBossState_Cooldown:
@@ -15468,11 +15505,11 @@ UpdateBossFlashAndDamage:
 	SUBQ.w	#1, $3C(A5)
 	MOVE.w	#$0026, Palette_line_1_index.w
 	JSR	LoadPalettesFromTable
-	BRA.w	loc_0000D6F6
+	BRA.w	DemonBoss_AbilityReturn
 loc_0000D65E:
 	JSR	UpdateEncounterPalette
 	TST.b	$26(A5)
-	BEQ.w	loc_0000D6F6
+	BEQ.w	DemonBoss_AbilityReturn
 	MOVE.b	#$FF, $27(A5)
 	MOVE.w	#$00B5, D0
 	JSR	QueueSoundEffect
@@ -15510,7 +15547,8 @@ loc_0000D6E4:
 ; BossTick_AbilityCheck_Done
 BossTick_AbilityCheck_Done:
 	MOVE.w	#$0010, $3C(A5)
-loc_0000D6F6:
+; loc_0000D6F6
+DemonBoss_AbilityReturn:
 	CLR.b	$26(A5)
 	RTS
 
@@ -15576,7 +15614,7 @@ SpawnChildObjects:
 	SUBQ.w	#1, D7
 loc_0000D7C0:
 	CMPI.w	#$FFFF, (A2)
-	BEQ.w	loc_0000D80C
+	BEQ.w	DemonBoss_ClearBodySegment
 	MOVE.w	(A2)+, $8(A6)
 	MOVE.b	(A2)+, $6(A6)
 	MOVE.b	(A2)+, D3
@@ -15599,12 +15637,13 @@ loc_0000D7C0:
 	DBF	D7, loc_0000D7C0
 	RTS
 
-loc_0000D80C:
+; loc_0000D80C
+DemonBoss_ClearBodySegment:
 	CLR.b	$1C(A6)
 	CLR.w	D6
 	MOVE.b	$1(A6), D6
 	LEA	(A6,D6.w), A6
-	DBF	D7, loc_0000D80C
+	DBF	D7, DemonBoss_ClearBodySegment
 	RTS
 
 DemonBoss_BodySegmentTick:
@@ -15974,14 +16013,14 @@ loc_0000DD36:
 	TST.b	$1A(A5)
 	BLE.b	loc_0000DD5C
 	SUBQ.b	#1, $1A(A5)
-	BRA.b	loc_0000DD94
+	BRA.b	OrbitBoss_InnerApproach_Tick
 loc_0000DD5C:
 	MOVEA.l	Player_entity_ptr.w, A4
 	MOVE.w	$E(A5), D0
 	SUBI.w	#$0046, D0
 	MOVE.w	$E(A4), D1
 	CMP.w	D0, D1
-	BLE.b	loc_0000DD94
+	BLE.b	OrbitBoss_InnerApproach_Tick
 	JSR	GetRandomNumber
 	ANDI.b	#1, D0
 	MOVE.b	D0, Boss_attack_direction.w
@@ -15990,7 +16029,8 @@ loc_0000DD5C:
 	MOVE.b	#$FF, $41(A5)
 	RTS
 	
-loc_0000DD94:
+; loc_0000DD94
+OrbitBoss_InnerApproach_Tick:
 	BSR.w	GetSignedVelocity
 	ADD.w	D0, $18(A6)
 	TST.b	$41(A5)
@@ -16025,15 +16065,16 @@ loc_0000DDDC:
 	BSR.w	GetSignedVelocity
 	ADD.w	D0, $18(A6)
 	CMPI.b	#$A0, $18(A6)
-	BGT.b	loc_0000DE2C
+	BGT.b	OrbitBoss_InnerFireWait
 	MOVE.b	#$A0, $18(A6)
 	CLR.b	$1B(A5)
 	MOVE.l	#OrbitBoss_InnerFireAnim, $2(A5)
 	TST.b	Boss_attack_direction.w
-	BEQ.b	loc_0000DE2C
+	BEQ.b	OrbitBoss_InnerFireWait
 	MOVE.l	#OrbitBoss_InnerSelectTarget, $2(A5)
 	MOVE.b	#$50, $1A(A5)
-loc_0000DE2C:
+; loc_0000DE2C
+OrbitBoss_InnerFireWait:
 	JSR	ProcessPlayerStrengthCheck
 	RTS
 	
@@ -16183,17 +16224,18 @@ loc_0000E012:
 	TST.b	$1A(A5)
 	BLE.b	loc_0000E038
 	SUBQ.b	#1, $1A(A5)
-	BRA.b	loc_0000E05A
+	BRA.b	OrbitBoss_OuterApproach_Tick
 loc_0000E038:
 	MOVEA.l	Player_entity_ptr.w, A4
 	CMPI.w	#$0046, $E(A4)
-	BLE.b	loc_0000E05A
+	BLE.b	OrbitBoss_OuterApproach_Tick
 	MOVE.w	#$0100, $3A(A5)
 	MOVE.b	#$FF, $41(A5)
 	MOVE.l	#OrbitBoss_OuterCharge, $2(A5)
 	RTS
 	
-loc_0000E05A:
+; loc_0000E05A
+OrbitBoss_OuterApproach_Tick:
 	BSR.w	GetSignedVelocity
 	ADD.w	D0, $18(A6)
 	TST.b	$41(A5)
@@ -16228,15 +16270,16 @@ loc_0000E0A2:
 	BSR.w	GetSignedVelocity
 	ADD.w	D0, $18(A6)
 	CMPI.b	#$B0, $18(A6)
-	BGT.b	loc_0000E0F2
+	BGT.b	OrbitBoss_OuterFireWait
 	MOVE.b	#$B0, $18(A6)
 	CLR.b	$1B(A5)
 	MOVE.l	#OrbitBoss_OuterFireAnim, $2(A5)
 	TST.b	Boss_attack_direction.w
-	BNE.b	loc_0000E0F2
+	BNE.b	OrbitBoss_OuterFireWait
 	MOVE.l	#OrbitBoss_OuterSelectTarget, $2(A5)
 	MOVE.b	#$50, $1A(A5)
-loc_0000E0F2:
+; loc_0000E0F2
+OrbitBoss_OuterFireWait:
 	JSR	ProcessBossFightDamage
 	RTS
 	
@@ -16383,10 +16426,10 @@ ProcessPlayerStrengthCheck:
 	BLE.b	loc_0000E300
 	SUBQ.w	#1, $3C(A5)
 	JSR	UpdateEncounterPalette
-	BRA.w	loc_0000E344
+	BRA.w	OrbitBoss_InnerPartHit_Return
 loc_0000E300:
 	TST.b	$26(A5)
-	BEQ.b	loc_0000E344
+	BEQ.b	OrbitBoss_InnerPartHit_Return
 	MOVE.w	#$00B7, Palette_line_1_index.w
 	JSR	LoadPalettesFromTable
 	MOVE.w	Player_str.w, D0
@@ -16402,7 +16445,8 @@ loc_0000E334:
 	MOVE.w	#$00B5, D0
 	JSR	QueueSoundEffect
 	MOVE.w	#$0010, $3C(A5)
-loc_0000E344:
+; loc_0000E344
+OrbitBoss_InnerPartHit_Return:
 	CLR.b	$26(A5)
 	RTS
 
@@ -16447,10 +16491,10 @@ ProcessBossFightDamage:
 	BLE.b	loc_0000E3CA
 	SUBQ.w	#1, $3C(A5)
 	JSR	UpdateEncounterPalette
-	BRA.w	loc_0000E40E
+	BRA.w	OrbitBoss_OuterPartHit_Return
 loc_0000E3CA:
 	TST.b	$26(A5)
-	BEQ.b	loc_0000E40E
+	BEQ.b	OrbitBoss_OuterPartHit_Return
 	MOVE.w	#$00B7, Palette_line_1_index.w
 	JSR	LoadPalettesFromTable
 	MOVE.w	Player_str.w, D0
@@ -16466,7 +16510,8 @@ loc_0000E3FE:
 	MOVE.w	#$00B5, D0
 	JSR	QueueSoundEffect
 	MOVE.w	#$0010, $3C(A5)
-loc_0000E40E:
+; loc_0000E40E
+OrbitBoss_OuterPartHit_Return:
 	CLR.b	$26(A5)
 	RTS
 
@@ -16669,9 +16714,9 @@ InitBossBodyPart:
 
 HydraBoss_PartIntroAnim:
 	TST.b	Fade_in_lines_mask.w
-	BNE.w	loc_0000E788
+	BNE.w	HydraBoss_PartSpriteDone
 	TST.b	Battle_active_flag.w
-	BEQ.w	loc_0000E788
+	BEQ.w	HydraBoss_PartSpriteDone
 	CLR.w	D0
 	MOVE.b	$1(A5), D0
 	LEA	(A5,D0.w), A6
@@ -16693,7 +16738,8 @@ loc_0000E764:
 	MOVE.w	$E(A5), $A(A5)
 	MOVE.w	$12(A5), $C(A5)
 	JSR	AddSpriteToDisplayList
-loc_0000E788:
+; loc_0000E788
+HydraBoss_PartSpriteDone:
 	RTS
 
 HydraBoss_PartIdleTick:
@@ -16703,10 +16749,10 @@ HydraBoss_PartIdleTick:
 	TST.w	$3C(A5)
 	BLE.b	loc_0000E7A2
 	SUBQ.w	#1, $3C(A5)
-	BRA.w	loc_0000E7E2
+	BRA.w	HydraBoss_PartIdleTick_Check
 loc_0000E7A2:
 	TST.b	$26(A5)
-	BEQ.b	loc_0000E7E2
+	BEQ.b	HydraBoss_PartIdleTick_Check
 	ADDI.w	#$0014, $E(A5)
 	MOVE.w	Player_str.w, D0
 	SUB.w	D0, $28(A5)
@@ -16720,14 +16766,15 @@ loc_0000E7D2:
 	MOVE.w	#$00B4, D0
 	JSR	QueueSoundEffect
 	MOVE.w	#$0010, $3C(A5)
-loc_0000E7E2:
+; loc_0000E7E2
+HydraBoss_PartIdleTick_Check:
 	CLR.b	$26(A5)
 	TST.b	$19(A5)
 	BNE.b	loc_0000E81A
 	TST.b	$1A(A5)
-	BNE.w	loc_0000E858
+	BNE.w	HydraBoss_PartAttackTick
 	BSR.w	CheckPlayerWithinRange
-	BEQ.w	loc_0000E858
+	BEQ.w	HydraBoss_PartAttackTick
 	MOVE.b	#$FF, $19(A5)
 	MOVE.b	#$32, D1
 	JSR	GetRandomNumber
@@ -16753,7 +16800,8 @@ loc_0000E84C:
 	CLR.b	$1B(A5)
 	CLR.b	$19(A5)
 	BRA.w	HydraBoss_PartIdleTick_UpdatePos
-loc_0000E858:
+; loc_0000E858
+HydraBoss_PartAttackTick:
 	ADDQ.b	#1, $1B(A5)
 	MOVE.b	$1B(A5), D0
 	ANDI.w	#$0018, D0
@@ -16804,16 +16852,16 @@ HydraBoss_PartDeadDisplay:
 	
 HydraBoss_MainTick:
 	TST.b	Fade_in_lines_mask.w
-	BNE.w	loc_0000EA1C
+	BNE.w	HydraBoss_MainTick_Return
 	TST.b	Battle_active_flag.w
-	BEQ.w	loc_0000EA1C
+	BEQ.w	HydraBoss_MainTick_Return
 	TST.w	$3C(A5)
 	BLE.b	loc_0000E91E
 	SUBQ.w	#1, $3C(A5)
-	BRA.b	loc_0000E958
+	BRA.b	HydraBoss_MainTick_Animate
 loc_0000E91E:
 	TST.b	$26(A5)
-	BEQ.b	loc_0000E958
+	BEQ.b	HydraBoss_MainTick_Animate
 	MOVE.w	Player_str.w, D0
 	SUB.w	D0, $28(A5)
 	BCC.b	loc_0000E948
@@ -16821,12 +16869,13 @@ loc_0000E91E:
 	MOVE.w	#$00B1, D0
 	JSR	QueueSoundEffect
 	CLR.b	$1B(A5)
-	BRA.w	loc_0000EA04
+	BRA.w	HydraBoss_MainTick_SpriteUpdate
 loc_0000E948:
 	MOVE.w	#$00B5, D0
 	JSR	QueueSoundEffect
 	MOVE.w	#$0010, $3C(A5)
-loc_0000E958:
+; loc_0000E958
+HydraBoss_MainTick_Animate:
 	CLR.b	$26(A5)
 	ADDQ.b	#1, $1B(A5)
 	MOVE.b	$1B(A5), D5
@@ -16870,19 +16919,21 @@ HydraBoss_MainTick_UpdateFrame:
 	MOVE.w	(A0)+, $8(A6)
 	MOVEA.l	Object_slot_01_ptr.w, A6
 	TST.l	$32(A6)
-	BNE.b	loc_0000EA04
+	BNE.b	HydraBoss_MainTick_SpriteUpdate
 	MOVE.w	$E(A5), D0
 	ADD.w	(A0)+, D0
 	MOVE.w	D0, $E(A6)
 	MOVE.w	$12(A5), D0
 	ADD.w	(A0)+, D0
 	MOVE.w	D0, $12(A6)
-loc_0000EA04:
+; loc_0000EA04
+HydraBoss_MainTick_SpriteUpdate:
 	JSR	CheckEntityPlayerCollisionAndDamage
 	MOVE.w	$E(A5), $A(A5)
 	MOVE.w	$12(A5), $C(A5)
 	JSR	AddSpriteToDisplayList
-loc_0000EA1C:
+; loc_0000EA1C
+HydraBoss_MainTick_Return:
 	RTS
 	
 HydraBoss_MainDeathAnim:
@@ -17284,11 +17335,11 @@ RingGuardianState_Descend:
 	BGE.b	loc_0000EF92
 	MOVE.w	#8, D1	
 	SUB.w	$12(A5), D1	
-	BRA.b	loc_0000EFCA	
+	BRA.b	RingGuardianState_Patrol_GetDir	
 loc_0000EF92:
 	MOVE.w	#8, D1
 	SUB.w	$12(A5), D1
-	BLT.b	loc_0000EFCA
+	BLT.b	RingGuardianState_Patrol_GetDir
 loc_0000EF9C:
 	TST.w	$28(A5)
 	BGT.b	loc_0000EFBA
@@ -17302,25 +17353,27 @@ loc_0000EFBA:
 	MOVE.l	#$400, $20(A5)
 	RTS
 	
-loc_0000EFCA:
+; loc_0000EFCA
+RingGuardianState_Patrol_GetDir:
 	BSR.w	GetDirectionFromDeltas
-	BRA.w	loc_0000F070
+	BRA.w	RingGuardianState_ApplyVelocity
 RingGuardianState_ChasePlayer:
 	MOVEA.l	Player_entity_ptr.w, A6
 	MOVE.w	$E(A6), D0
 	MOVE.w	$E(A5), D1
 	SUBI.w	#$0018, D1
 	CMP.w	D0, D1
-	BGT.b	loc_0000EFFA
+	BGT.b	RingGuardianState_Chase_GetDir
 	CMPI.w	#$0044, $12(A5)
-	BLT.b	loc_0000EFFA
+	BLT.b	RingGuardianState_Chase_GetDir
 	MOVE.w	#3, Boss_ai_state.w
 	CLR.b	$1A(A5)
 	RTS
 	
-loc_0000EFFA:
+; loc_0000EFFA
+RingGuardianState_Chase_GetDir:
 	BSR.w	CalculateDirectionToPlayer
-	BRA.w	loc_0000F070
+	BRA.w	RingGuardianState_ApplyVelocity
 RingGuardianState_AttackWindup:
 	ADDQ.b	#1, $1A(A5)
 	MOVE.b	$1A(A5), D0
@@ -17352,7 +17405,8 @@ RingGuardianState_WaitProjectile:
 	BSR.w	WriteDirectionTilesForBoss
 loc_0000F06C:
 	BRA.w	BossMoveTick_Clamped
-loc_0000F070:
+; loc_0000F070
+RingGuardianState_ApplyVelocity:
 	LEA	SineTable, A0
 	MOVE.l	$20(A5), D0
 	CLR.w	D1
@@ -17392,17 +17446,18 @@ BossMoveTick_Clamped:
 	SUBQ.w	#1, $3C(A5)
 	MOVE.w	#$007F, Palette_line_1_index.w
 	JSR	LoadPalettesFromTable
-	BRA.b	loc_0000F11C
+	BRA.b	RingGuardian_TakeDamage_Return
 loc_0000F0F8:
 	JSR	UpdateEncounterPalette
 	TST.b	$26(A5)
-	BEQ.b	loc_0000F11C
+	BEQ.b	RingGuardian_TakeDamage_Return
 	MOVE.w	#$00B5, D0
 	JSR	QueueSoundEffect
 	MOVE.w	Player_str.w, D0
 	SUB.w	D0, $28(A5)
 	MOVE.w	#$0010, $3C(A5)
-loc_0000F11C:
+; loc_0000F11C
+RingGuardian_TakeDamage_Return:
 	CLR.b	$26(A5)
 	MOVE.w	$E(A5), D0
 	MOVE.w	D0, HScroll_base.w
@@ -17439,31 +17494,33 @@ RingGuardian_VictoryDialog:
 	ADDQ.w	#1, Dialog_timer.w
 	MOVE.w	Dialog_timer.w, D0
 	ANDI.w	#7, D0
-	BNE.b	loc_0000F1CC
+	BNE.b	RingGuardian_VictoryWait
 	CMPI.w	#8, Dialog_phase.w
 	BLT.b	loc_0000F1C6
 	MOVE.l	#BossCommon_VictoryRewardSequence, $2(A5)
 	MOVE.w	#$0032, Dialog_timer.w
 	JSR	ProcessBattleVictoryEvent
-	BRA.b	loc_0000F1CC
+	BRA.b	RingGuardian_VictoryWait
 loc_0000F1C6:
 	JSR	ClearDialogPlane
-loc_0000F1CC:
+; loc_0000F1CC
+RingGuardian_VictoryWait:
 	RTS
 	
 RingGuardian_VictoryDialogContinue:
 	ADDQ.w	#1, Dialog_timer.w
 	MOVE.w	Dialog_timer.w, D0
 	ANDI.w	#7, D0
-	BNE.b	loc_0000F1FA
+	BNE.b	RingGuardian_DialogReturn
 	CMPI.w	#8, Dialog_phase.w
 	BLT.b	loc_0000F1F4
 	MOVE.l	#RingGuardian_ExitWait, $2(A5)
 	MOVE.w	#$0050, Dialog_timer.w
-	BRA.b	loc_0000F1FA
+	BRA.b	RingGuardian_DialogReturn
 loc_0000F1F4:
 	JSR	ClearDialogPlane
-loc_0000F1FA:
+; loc_0000F1FA
+RingGuardian_DialogReturn:
 	RTS
 	
 RingGuardian_ExitWait:
@@ -17702,7 +17759,7 @@ loc_0000F4EE:
 	SUB.w	D0, D3
 	BNE.b	loc_0000F508
 	MOVE.b	D0, $18(A5)
-	BRA.w	loc_0000F53A
+	BRA.w	BossBody_AngleReturn
 loc_0000F508:
 	BGT.w	loc_0000F520
 	NEG.w	D3
@@ -17710,20 +17767,22 @@ loc_0000F508:
 	SUB.w	D0, D4
 	ADD.w	D2, D4
 	CMP.w	D3, D4
-	BLE.w	loc_0000F536
+	BLE.w	BossBody_AngleDecrease
 	BRA.w	loc_0000F52E
 loc_0000F520:
 	MOVE.w	#$0100, D4
 	SUB.w	D2, D4
 	ADD.w	D0, D4
 	CMP.w	D3, D4
-	BGE.w	loc_0000F536
+	BGE.w	BossBody_AngleDecrease
 loc_0000F52E:
 	ADDQ.b	#1, $18(A5)
-	BRA.w	loc_0000F53A
-loc_0000F536:
+	BRA.w	BossBody_AngleReturn
+; loc_0000F536
+BossBody_AngleDecrease:
 	SUBQ.b	#1, $18(A5)
-loc_0000F53A:
+; loc_0000F53A
+BossBody_AngleReturn:
 	RTS
 	
 ; loc_0000F53C
@@ -18478,12 +18537,13 @@ TransferTilesViaDma:
 LoadTownTileGraphics:
 	LEA	Tile_gfx_buffer.w, A2
 	TST.b	Swaffham_ruined.w
-	BEQ.b	loc_0000FDAA
+	BEQ.b	LoadTownTileGfx_LookupTable
 	CMPI.w	#TOWN_SWAFHAM, Current_town.w
-	BNE.b	loc_0000FDAA
+	BNE.b	LoadTownTileGfx_LookupTable
 	MOVEA.l	loc_0001F4B8, A0
 	BRA.b	loc_0000FDC0
-loc_0000FDAA:
+; loc_0000FDAA
+LoadTownTileGfx_LookupTable:
 	LEA	TownTileGfxTable, A1
 	MOVE.w	Current_town.w, D0 
 	MOVE.w	D0, D1  
@@ -18501,13 +18561,14 @@ loc_0000FDC4:
 	BSR.w	ExecuteVdpDmaFromPointer
 	LEA	Tile_gfx_buffer.w, A2
 	TST.b	Swaffham_ruined.w
-	BEQ.b	loc_0000FDFA
+	BEQ.b	LoadTownObjectGfx_LookupTable
 	CMPI.w	#TOWN_SWAFHAM, Current_town.w
-	BNE.b	loc_0000FDFA
+	BNE.b	LoadTownObjectGfx_LookupTable
 	MOVEA.l	loc_0001F4BC, A0
 	MOVE.w	loc_0001F4C0, D5
-	BRA.b	loc_0000FE14
-loc_0000FDFA:
+	BRA.b	LoadTownObjectGfx_DecompressLoop
+; loc_0000FDFA
+LoadTownObjectGfx_LookupTable:
 	LEA	TownTileGfxTable, A1
 	MOVE.w	Current_town.w, D0
 	MOVE.w	D0, D1
@@ -18516,10 +18577,11 @@ loc_0000FDFA:
 	ADD.w	D1, D0
 	MOVEA.l	$4(A1,D0.w), A0
 	MOVE.w	$8(A1,D0.w), D5
-loc_0000FE14:
+; loc_0000FE14
+LoadTownObjectGfx_DecompressLoop:
 	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
-	DBF	D5, loc_0000FE14
+	DBF	D5, LoadTownObjectGfx_DecompressLoop
 	LEA	DmaCmd_TownTileset_Parma, A0
 	BSR.w	ExecuteVdpDmaFromPointer
 	RTS
@@ -19067,12 +19129,13 @@ CountTerrainTileType:
 	CMPI.b	#1, D0
 	BNE.b	loc_00010518
 	ADDQ.w	#1, D1
-	BRA.b	loc_00010520
+	BRA.b	CountDialogBytes_Return
 loc_00010518:
 	CMPI.b	#2, D0
-	BNE.b	loc_00010520
+	BNE.b	CountDialogBytes_Return
 	ADDQ.w	#1, D2
-loc_00010520:
+; loc_00010520
+CountDialogBytes_Return:
 	RTS
 	
 ; QueueSoundEffect
@@ -19309,10 +19372,10 @@ loc_000107B4:
 	
 loc_000107B6:
 	TST.b	Window_tilemap_draw_active.w
-	BNE.w	loc_00010818
+	BNE.w	FileSave_Return
 	MOVE.w	#BUTTON_BIT_C, D2
 	JSR	CheckButtonPress
-	BEQ.w	loc_00010818
+	BEQ.w	FileSave_Return
 	MOVEA.l	Sram_backup_ptr.w, A0
 	BSR.w	VerifySaveChecksum
 	BEQ.b	loc_000107F6
@@ -19332,7 +19395,8 @@ loc_000107F6:
 	MOVE.w	#5, File_menu_phase.w	
 	MOVE.w	#$0086, D0	
 	JSR	QueueSoundEffect	
-loc_00010818:
+; loc_00010818
+FileSave_Return:
 	RTS
 	
 loc_0001081A:
@@ -19341,22 +19405,24 @@ loc_0001081A:
 	
 loc_00010820:
 	TST.b	Window_tilemap_draw_active.w
-	BNE.b	loc_00010838
+	BNE.b	FileMenuSaveConfirm_Return
 	MOVE.w	#BUTTON_BIT_C, D2
 	JSR	CheckButtonPress
-	BEQ.b	loc_00010838
+	BEQ.b	FileMenuSaveConfirm_Return
 	MOVE.w	#0, File_menu_phase.w
-loc_00010838:
+; loc_00010838
+FileMenuSaveConfirm_Return:
 	RTS
 	
 loc_0001083A:
 	TST.b	Window_tilemap_draw_active.w	
-	BNE.b	loc_00010852	
+	BNE.b	FileMenuLoad_Return	
 	MOVE.w	#BUTTON_BIT_C, D2	
 	JSR	CheckButtonPress	
-	BEQ.b	loc_00010852	
+	BEQ.b	FileMenuLoad_Return	
 	MOVE.b	#$FF, File_load_complete.w	
-loc_00010852:
+; loc_00010852
+FileMenuLoad_Return:
 	RTS
 	
 LoadGameFromSave:
@@ -19504,7 +19570,7 @@ loc_000109C8: ; Text script handling
 	CMPI.b	#SCRIPT_CONTINUE, D3
 	BEQ.w	loc_00010AC8
 	CMPI.b	#SCRIPT_QUESTION, D3
-	BEQ.w	loc_00010BB2
+	BEQ.w	ScriptDecode_SetResponse
 	CMPI.b	#SCRIPT_YES_NO, D3
 	BEQ.w	loc_00010BA0
 	CMPI.b	#SCRIPT_CHOICE, D3
@@ -19514,9 +19580,9 @@ loc_000109C8: ; Text script handling
 	CMPI.b	#SCRIPT_TRIGGERS, D3
 	BEQ.w	loc_00010B7C
 	CMPI.b	#$DE, D3
-	BEQ.w	loc_00010A6E
+	BEQ.w	ScriptRender_PortraitTile
 	CMPI.b	#$DF, D3
-	BEQ.w	loc_00010A6E
+	BEQ.w	ScriptRender_PortraitTile
 	ADDI.w	#$04C0, D3
 	ORI.w	#$8000, D3
 	OR.w	Script_tile_attrs.w, D3
@@ -19538,7 +19604,8 @@ loc_000109C8: ; Text script handling
 	ANDI	#$F8FF, SR
 	ADDQ.w	#1, Script_output_x.w
 	BRA.w	ScriptDecode_AdvanceOffset
-loc_00010A6E:
+; loc_00010A6E
+ScriptRender_PortraitTile:
 	ADDI.w	#$04C0, D3	
 	ORI.w	#$8000, D3	
 	OR.w	Script_tile_attrs.w, D3	
@@ -19588,7 +19655,7 @@ loc_00010B18:
 	MOVE.b	$2(A0,D2.w), Quest_choice_expected_answer.w	
 	MOVE.b	$3(A0,D2.w), Quest_choice_map_trigger.w	
 	MOVE.b	#$FF, Quest_choice_pending.w	
-	BRA.w	loc_00010BB2	
+	BRA.w	ScriptDecode_SetResponse	
 loc_00010B2E:
 	CLR.l	D4
 	CLR.l	D5
@@ -19633,7 +19700,8 @@ loc_00010BA0:
 	MOVE.b	$2(A0,D2.w), Dialog_choice_event_trigger.w
 	MOVE.b	$3(A0,D2.w), Dialog_choice_extended_trigger.w
 	MOVE.b	#$FF, Dialogue_event_trigger_flag.w
-loc_00010BB2:
+; loc_00010BB2
+ScriptDecode_SetResponse:
 	MOVE.b	$1(A0,D2.w), Dialog_response_index.w
 	MOVE.b	#$FF, Script_has_yes_no_question.w
 ; ScriptDecode_Done
@@ -20969,9 +21037,9 @@ loc_00011E62:
 	MOVE.w	#2, Window_tilemap_y.w
 	MOVE.w	#$0011, Window_width.w
 	TST.w	D0
-	BLE.w	loc_00011EF8
+	BLE.w	RingsInventory_EmptyDisplay
 	TST.b	All_rings_collected.w
-	BNE.w	loc_00011EF8
+	BNE.w	RingsInventory_EmptyDisplay
 	ADD.w	D0, D0
 	ADDQ.w	#3, D0
 	MOVE.w	D0, Window_height.w
@@ -20988,22 +21056,24 @@ loc_00011E62:
 	LEA	Rings_collected.w, A3
 	MOVE.w	Possessed_rings_count.w, D7
 	SUBQ.w	#1, D7
-loc_00011ED0:
+; loc_00011ED0
+RingsInventory_NextEntry:
 	ADDQ.w	#1, D4
 	MOVE.b	(A3)+, D0
-	BEQ.b	loc_00011ED0
+	BEQ.b	RingsInventory_NextEntry
 	MOVE.w	D4, D3
 	ADD.w	D3, D3
 	ADD.w	D3, D3
 	MOVEA.l	(A4,D3.w), A0
 	BSR.w	RenderTextToWindow
 	ADDQ.w	#2, Window_text_y.w
-	DBF	D7, loc_00011ED0
+	DBF	D7, RingsInventory_NextEntry
 	CLR.w	Window_draw_row.w
 	MOVE.b	#$FF, Window_tilemap_draw_active.w
 	RTS
 	
-loc_00011EF8:
+; loc_00011EF8
+RingsInventory_EmptyDisplay:
 	MOVE.w	#5, Window_height.w	
 	MOVE.w	#0, Window_tile_attrs.w	
 	BSR.w	DrawWindowBorder	
@@ -21034,7 +21104,7 @@ DispatchWindowDrawType:
 WindowDrawTypeJumpTable:
 	BRA.w	loc_00011F94
 	BRA.w	loc_00011FD6
-	BRA.w	loc_000120A8	
+	BRA.w	DrawWindowRow_MessageSpeed	
 	BRA.w	loc_000120CA
 	BRA.w	loc_000120EC
 	BRA.w	loc_00012130
@@ -21045,7 +21115,7 @@ WindowDrawTypeJumpTable:
 	BRA.w	loc_00012024
 	BRA.w	loc_00012050
 	BRA.w	loc_0001207C
-	BRA.w	loc_000120A8	
+	BRA.w	DrawWindowRow_MessageSpeed	
 	BRA.w	loc_0001210E
 loc_00011F94:
 	TST.b	Dialog_active_flag.w
@@ -21122,7 +21192,8 @@ loc_00012098:
 	MOVE.w	D0, Window_tilemap_draw_height.w
 	LEA	Rings_list_tiles_buffer.w, A0
 	BRA.w	DrawWindowRowFromBuffer
-loc_000120A8:
+; loc_000120A8
+DrawWindowRow_MessageSpeed:
 	MOVE.w	#$000A, Window_tilemap_draw_x.w	
 	MOVE.w	#$000A, Window_tilemap_draw_y.w	
 	MOVE.w	#$000E, Window_tilemap_draw_width.w	
@@ -21207,12 +21278,13 @@ loc_000121E2:
 	ADDI.l	#$40000003, D5
 	MOVE.w	#$85A6, D4
 	TST.w	D2
-	BEQ.b	loc_00012214
+	BEQ.b	DrawWindowTilemap_WriteVDP
 	ADDQ.w	#1, D4
 	CMP.w	Window_tilemap_draw_width.w, D2
-	BNE.b	loc_00012214
+	BNE.b	DrawWindowTilemap_WriteVDP
 	ADDQ.w	#1, D4
-loc_00012214:
+; loc_00012214
+DrawWindowTilemap_WriteVDP:
 	MOVE.l	D5, VDP_control_port
 	MOVE.w	D4, VDP_data_port
 	ADDQ.w	#1, D2
@@ -21662,23 +21734,26 @@ HandleMenuInput:
 	MOVE.w	#$00A9, D0
 	JSR	QueueSoundEffect
 	BTST.l	#0, D3
-	BEQ.b	loc_0001281A
+	BEQ.b	MenuCursor_CheckUp
 	BTST.l	#0, D2
-	BEQ.b	loc_0001281A
+	BEQ.b	MenuCursor_CheckUp
 	BRA.w	MenuCursorUp
-loc_0001281A:
+; loc_0001281A
+MenuCursor_CheckUp:
 	BTST.l	#1, D3
-	BEQ.b	loc_0001282A
+	BEQ.b	MenuCursor_CheckDown
 	BTST.l	#1, D2
-	BEQ.b	loc_0001282A
+	BEQ.b	MenuCursor_CheckDown
 	BRA.w	MenuCursorDown
-loc_0001282A:
+; loc_0001282A
+MenuCursor_CheckDown:
 	BTST.l	#2, D3
-	BEQ.b	loc_0001283A
+	BEQ.b	MenuCursor_CheckLeft
 	BTST.l	#2, D2
-	BEQ.b	loc_0001283A
+	BEQ.b	MenuCursor_CheckLeft
 	BRA.w	MenuCursorLeft
-loc_0001283A:
+; loc_0001283A
+MenuCursor_CheckLeft:
 	BTST.l	#3, D3
 	BEQ.b	BlinkMenuCursor
 	BTST.l	#3, D2
