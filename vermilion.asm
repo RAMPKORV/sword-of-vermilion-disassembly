@@ -34401,38 +34401,38 @@ TalkDirectionDeltaTable:
 	dc.w	$0008, $0008 
 ; loc_0001F1EC
 TownRoomTilemapPlaneAPtrs:
-	dc.l	loc_0002E398
-	dc.l	loc_0002F9EE
-	dc.l	loc_000307D6
-	dc.l	loc_0003158A
-	dc.l	loc_00032A80
-	dc.l	loc_00033C40	
-	dc.l	loc_00033C40
-	dc.l	loc_0002F9EE
-	dc.l	loc_00035AE4
-	dc.l	loc_00036B18
-	dc.l	loc_00038390
-	dc.l	loc_000394DC
-	dc.l	loc_00039DB6
-	dc.l	loc_0003B622
-	dc.l	loc_0003B622	
-	dc.l	loc_0003C6C4
-	dc.l	loc_00029B96
-	dc.l	loc_00029BBA
-	dc.l	loc_0002A120	
-	dc.l	loc_0002A120
-	dc.l	loc_0002AB56
-	dc.l	loc_00029B96	
-	dc.l	loc_00029B96	
-	dc.l	loc_0002B652
-	dc.l	loc_00029B96	
-	dc.l	loc_0002A120
-	dc.l	loc_00029B96	
-	dc.l	loc_0002AB56
-	dc.l	loc_00029B96	
-	dc.l	loc_00029B96	
-	dc.l	loc_00029B96	
-	dc.l	loc_0002A120
+	dc.l	LoadTownTilemap_Wyclif_PlaneA
+	dc.l	LoadTownTilemap_ParmaAndMalaga_PlaneA
+	dc.l	LoadTownTilemap_Watling_PlaneA
+	dc.l	LoadTownTilemap_Deepdale_PlaneA
+	dc.l	LoadTownTilemap_Stow1_PlaneA
+	dc.l	LoadTownTilemap_Stow2AndKeltwick_PlaneA	
+	dc.l	LoadTownTilemap_Stow2AndKeltwick_PlaneA
+	dc.l	LoadTownTilemap_ParmaAndMalaga_PlaneA
+	dc.l	LoadTownTilemap_Barrow_PlaneA
+	dc.l	LoadTownTilemap_Tadcaster_PlaneA
+	dc.l	LoadTownTilemap_Helwig_PlaneA
+	dc.l	LoadTownTilemap_Swafham_PlaneA
+	dc.l	LoadTownTilemap_Excalabria_PlaneA
+	dc.l	LoadTownTilemap_Hastings_PlaneA
+	dc.l	LoadTownTilemap_Hastings_PlaneA	
+	dc.l	LoadTownTilemap_Carthahena_PlaneA
+	dc.l	LoadCastleTilemap_DefaultSmall_PlaneA
+	dc.l	LoadCastleTilemap_Parma_PlaneA
+	dc.l	LoadCastleTilemap_MediumA_PlaneA	
+	dc.l	LoadCastleTilemap_MediumA_PlaneA
+	dc.l	LoadCastleTilemap_MediumB_PlaneA
+	dc.l	LoadCastleTilemap_DefaultSmall_PlaneA	
+	dc.l	LoadCastleTilemap_DefaultSmall_PlaneA	
+	dc.l	LoadCastleTilemap_Malaga_PlaneA
+	dc.l	LoadCastleTilemap_DefaultSmall_PlaneA	
+	dc.l	LoadCastleTilemap_MediumA_PlaneA
+	dc.l	LoadCastleTilemap_DefaultSmall_PlaneA	
+	dc.l	LoadCastleTilemap_MediumB_PlaneA
+	dc.l	LoadCastleTilemap_DefaultSmall_PlaneA	
+	dc.l	LoadCastleTilemap_DefaultSmall_PlaneA	
+	dc.l	LoadCastleTilemap_DefaultSmall_PlaneA	
+	dc.l	LoadCastleTilemap_MediumA_PlaneA
 	dc.l	LoadBuildingTilemap_20_PlaneA
 	dc.l	LoadBuildingTilemap_21_PlaneA
 	dc.l	LoadBuildingTilemap_22_PlaneA
@@ -34457,38 +34457,38 @@ TownRoomTilemapPlaneAPtrs:
 	dc.l	LoadBuildingTilemap_35_PlaneA
 ; loc_0001F2C4
 TownRoomTilemapPlaneBPtrs:
-	dc.l	loc_0002E3AA
-	dc.l	loc_0002FA00
-	dc.l	loc_000307E8
-	dc.l	loc_0003159C
-	dc.l	loc_00032A92
-	dc.l	loc_00033C52	
-	dc.l	loc_00033C52
-	dc.l	loc_0002FA00
-	dc.l	loc_00035AF6
-	dc.l	loc_00036B2A
-	dc.l	loc_000383A2
-	dc.l	loc_00039506
-	dc.l	loc_00039DC8
-	dc.l	loc_0003B634
-	dc.l	loc_0003B634	
-	dc.l	loc_0003C6D6
-	dc.l	loc_00029BA8
-	dc.l	loc_00029BCC
-	dc.l	loc_0002A132	
-	dc.l	loc_0002A132
-	dc.l	loc_0002AB68
-	dc.l	loc_00029BA8	
-	dc.l	loc_00029BA8	
-	dc.l	loc_0002B664
-	dc.l	loc_00029BA8	
-	dc.l	loc_0002A132
-	dc.l	loc_00029BA8	
-	dc.l	loc_0002AB68
-	dc.l	loc_00029BA8	
-	dc.l	loc_00029BA8	
-	dc.l	loc_00029BA8	
-	dc.l	loc_0002A132
+	dc.l	LoadTownTilemap_Wyclif_PlaneB
+	dc.l	LoadTownTilemap_ParmaAndMalaga_PlaneB
+	dc.l	LoadTownTilemap_Watling_PlaneB
+	dc.l	LoadTownTilemap_Deepdale_PlaneB
+	dc.l	LoadTownTilemap_Stow1_PlaneB
+	dc.l	LoadTownTilemap_Stow2AndKeltwick_PlaneB	
+	dc.l	LoadTownTilemap_Stow2AndKeltwick_PlaneB
+	dc.l	LoadTownTilemap_ParmaAndMalaga_PlaneB
+	dc.l	LoadTownTilemap_Barrow_PlaneB
+	dc.l	LoadTownTilemap_Tadcaster_PlaneB
+	dc.l	LoadTownTilemap_Helwig_PlaneB
+	dc.l	LoadTownTilemap_Swafham_PlaneB
+	dc.l	LoadTownTilemap_Excalabria_PlaneB
+	dc.l	LoadTownTilemap_Hastings_PlaneB
+	dc.l	LoadTownTilemap_Hastings_PlaneB	
+	dc.l	LoadTownTilemap_Carthahena_PlaneB
+	dc.l	LoadCastleTilemap_DefaultSmall_PlaneB
+	dc.l	LoadCastleTilemap_Parma_PlaneB
+	dc.l	LoadCastleTilemap_MediumA_PlaneB	
+	dc.l	LoadCastleTilemap_MediumA_PlaneB
+	dc.l	LoadCastleTilemap_MediumB_PlaneB
+	dc.l	LoadCastleTilemap_DefaultSmall_PlaneB	
+	dc.l	LoadCastleTilemap_DefaultSmall_PlaneB	
+	dc.l	LoadCastleTilemap_Malaga_PlaneB
+	dc.l	LoadCastleTilemap_DefaultSmall_PlaneB	
+	dc.l	LoadCastleTilemap_MediumA_PlaneB
+	dc.l	LoadCastleTilemap_DefaultSmall_PlaneB	
+	dc.l	LoadCastleTilemap_MediumB_PlaneB
+	dc.l	LoadCastleTilemap_DefaultSmall_PlaneB	
+	dc.l	LoadCastleTilemap_DefaultSmall_PlaneB	
+	dc.l	LoadCastleTilemap_DefaultSmall_PlaneB	
+	dc.l	LoadCastleTilemap_MediumA_PlaneB
 	dc.l	LoadBuildingTilemap_20_PlaneB
 	dc.l	LoadBuildingTilemap_21_PlaneB
 	dc.l	LoadBuildingTilemap_22_PlaneB
@@ -36086,51 +36086,52 @@ loc_0002077E:
 	
 ; loc_00020780
 CaveRoomInteractionPtrs:
-	dc.l	loc_00020830
-	dc.l	loc_00020864
-	dc.l	loc_00020884
-	dc.l	loc_000208AE
-	dc.l	loc_000208CE
-	dc.l	loc_000208EE
-	dc.l	loc_0002090E
-	dc.l	loc_00020938
-	dc.l	loc_00020958
-	dc.l	loc_00020978
-	dc.l	loc_00020998
-	dc.l	loc_000209AE
-	dc.l	loc_000209CE
-	dc.l	loc_00020A0C
-	dc.l	loc_00020A2C
-	dc.l	loc_00020A42 
-	dc.l	loc_00020A58
-	dc.l	loc_00020A78
-	dc.l	loc_00020AC0
-	dc.l	loc_00020AD6
-	dc.l	loc_00020AF6
-	dc.l	loc_00020B0C
-	dc.l	loc_00020B18
-	dc.l	loc_00020B2E 
-	dc.l	loc_00020B3A
-	dc.l	loc_00020B46
-	dc.l	loc_00020B52
-	dc.l	loc_00020B5E
-	dc.l	loc_00020B6A
-	dc.l	loc_00020B6C
-	dc.l	loc_00020B6E
-	dc.l	loc_00020B8E 
-	dc.l	loc_00020B9A
-	dc.l	loc_00020BE2
-	dc.l	loc_00020BE4
-	dc.l	loc_00020BFA
-	dc.l	loc_00020C06
-	dc.l	loc_00020C1C
-	dc.l	loc_00020C28
-	dc.l	loc_00020C34 
-	dc.l	loc_00020C4A
-	dc.l	loc_00020C56
-	dc.l	loc_00020C6C
-	dc.l	loc_00020C82
-loc_00020830:
+	dc.l	CaveRoomInteractions_00
+	dc.l	CaveRoomInteractions_01
+	dc.l	CaveRoomInteractions_02
+	dc.l	CaveRoomInteractions_03
+	dc.l	CaveRoomInteractions_04
+	dc.l	CaveRoomInteractions_05
+	dc.l	CaveRoomInteractions_06
+	dc.l	CaveRoomInteractions_07
+	dc.l	CaveRoomInteractions_08
+	dc.l	CaveRoomInteractions_09
+	dc.l	CaveRoomInteractions_0A
+	dc.l	CaveRoomInteractions_0B
+	dc.l	CaveRoomInteractions_0C
+	dc.l	CaveRoomInteractions_0D
+	dc.l	CaveRoomInteractions_0E
+	dc.l	CaveRoomInteractions_0F 
+	dc.l	CaveRoomInteractions_10
+	dc.l	CaveRoomInteractions_11
+	dc.l	CaveRoomInteractions_12
+	dc.l	CaveRoomInteractions_13
+	dc.l	CaveRoomInteractions_14
+	dc.l	CaveRoomInteractions_15
+	dc.l	CaveRoomInteractions_16
+	dc.l	CaveRoomInteractions_17 
+	dc.l	CaveRoomInteractions_18
+	dc.l	CaveRoomInteractions_19
+	dc.l	CaveRoomInteractions_1A
+	dc.l	CaveRoomInteractions_1B
+	dc.l	CaveRoomInteractions_1C
+	dc.l	CaveRoomInteractions_1D
+	dc.l	CaveRoomInteractions_1E
+	dc.l	CaveRoomInteractions_1F 
+	dc.l	CaveRoomInteractions_20
+	dc.l	CaveRoomInteractions_21
+	dc.l	CaveRoomInteractions_22
+	dc.l	CaveRoomInteractions_23
+	dc.l	CaveRoomInteractions_24
+	dc.l	CaveRoomInteractions_25
+	dc.l	CaveRoomInteractions_26
+	dc.l	CaveRoomInteractions_27 
+	dc.l	CaveRoomInteractions_28
+	dc.l	CaveRoomInteractions_29
+	dc.l	CaveRoomInteractions_2A
+	dc.l	CaveRoomInteractions_2B
+; loc_00020830
+CaveRoomInteractions_00:
 	dc.w	$0002, $0004, $0004 ; x, y, direction
 	dc.l	CaveEvent_RingOfWisdom
 	dc.w	$000B, $000B, $0002 
@@ -36142,7 +36143,8 @@ loc_00020830:
 	dc.w	$000A, $0005, $0004 
 	dc.l	loc_00020DC0
 	dc.w	$FFFF
-loc_00020864:
+; loc_00020864
+CaveRoomInteractions_01:
 	dc.w	$0003, $000D, $0004	
 	dc.l	CheckCaveRoomEnemyState
 	dc.w	$0002, $0003, $0004 
@@ -36150,7 +36152,8 @@ loc_00020864:
 	dc.w	$0008, $0000, $0001 
 	dc.l	loc_00020DFC 
 	dc.w	$FFFF 
-loc_00020884:
+; loc_00020884
+CaveRoomInteractions_02:
 	dc.w	$000F, $000F, $0008 
 	dc.l	loc_00020DE8
 	dc.w	$000F, $0000, $0001 
@@ -36160,7 +36163,8 @@ loc_00020884:
 	dc.w	$0008, $0008, $0002 
 	dc.l	loc_00020E10
 	dc.w	$FFFF
-loc_000208AE:
+; loc_000208AE
+CaveRoomInteractions_03:
 	dc.w	$0003, $0006, $0008	
 	dc.l	CheckCaveRoomEnemyState
 	dc.w	$0000, $000E, $0001
@@ -36168,7 +36172,8 @@ loc_000208AE:
 	dc.w	$000B, $0000, $0002
 	dc.l	loc_00020E38	
 	dc.w	$FFFF
-loc_000208CE:
+; loc_000208CE
+CaveRoomInteractions_04:
 	dc.w	$0000, $0007, $0001	
 	dc.l	CheckCaveRoomEnemyState
 	dc.w	$000A, $0001, $0008
@@ -36176,7 +36181,8 @@ loc_000208CE:
 	dc.w	$000C, $0001, $0002	
 	dc.l	CaveEvent_WatlingMonster
 	dc.w	$FFFF
-loc_000208EE:
+; loc_000208EE
+CaveRoomInteractions_05:
 	dc.w	$0000, $0001, $0004	
 	dc.l	CheckCaveRoomEnemyState
 	dc.w	$000B, $0004, $0008
@@ -36184,7 +36190,8 @@ loc_000208EE:
 	dc.w	$0008, $000F, $0008	
 	dc.l	loc_00020E74	
 	dc.w	$FFFF
-loc_0002090E:
+; loc_0002090E
+CaveRoomInteractions_06:
 	dc.w	$0003, $000C, $0002	
 	dc.l	CheckCaveRoomEnemyState
 	dc.w	$000E, $000F, $0004 
@@ -36194,7 +36201,8 @@ loc_0002090E:
 	dc.w	$0006, $0004, $0001 
 	dc.l	CaveEvent_Truffle
 	dc.w	$FFFF
-loc_00020938:
+; loc_00020938
+CaveRoomInteractions_07:
 	dc.w	$0004, $000D, $0008	
 	dc.l	CheckCaveRoomEnemyState	
 	dc.w	$0008, $000F, $0002
@@ -36202,7 +36210,8 @@ loc_00020938:
 	dc.w	$0007, $0005, $0004	
 	dc.l	loc_00020ED8	
 	dc.w	$FFFF
-loc_00020958:
+; loc_00020958
+CaveRoomInteractions_08:
 	dc.w	$000D, $000B, $0004	
 	dc.l	CheckCaveRoomEnemyState	
 	dc.w	$000F, $0000, $0001
@@ -36210,7 +36219,8 @@ loc_00020958:
 	dc.w	$0000, $0000, $0002	
 	dc.l	CaveEvent_StowThief
 	dc.w	$FFFF
-loc_00020978:
+; loc_00020978
+CaveRoomInteractions_09:
 	dc.w	$0002, $000A, $0004	
 	dc.l	CheckCaveRoomEnemyState	
 	dc.w	$0002, $000F, $0008
@@ -36218,13 +36228,15 @@ loc_00020978:
 	dc.w	$0002, $0003, $0004	
 	dc.l	loc_00020EEC	
 	dc.w	$FFFF
-loc_00020998:
+; loc_00020998
+CaveRoomInteractions_0A:
 	dc.w	$000B, $000B, $000B	
 	dc.l	CheckCaveRoomEnemyState
 	dc.w	$0007, $0006, $0001 
 	dc.l	CaveEvent_AstiMonster
 	dc.w	$FFFF
-loc_000209AE:
+; loc_000209AE
+CaveRoomInteractions_0B:
 	dc.w	$0004, $000D, $0004	
 	dc.l	CheckCaveRoomEnemyState
 	dc.w	$0006, $0002, $0001
@@ -36232,7 +36244,8 @@ loc_000209AE:
 	dc.w	$000D, $0007, $0005	
 	dc.l	CaveEvent_BearwulfMeeting
 	dc.w	$FFFF
-loc_000209CE:
+; loc_000209CE
+CaveRoomInteractions_0C:
 	dc.w	$000B, $0003, $0002	
 	dc.l	CheckCaveRoomEnemyState
 	dc.w	$0001, $000E, $0004 
@@ -36246,7 +36259,8 @@ loc_000209CE:
 	dc.w	$0007, $000E, $0004	
 	dc.l	loc_00020E88
 	dc.w	$FFFF
-loc_00020A0C:
+; loc_00020A0C
+CaveRoomInteractions_0D:
 	dc.w	$0005, $0002, $0002	
 	dc.l	CheckCaveRoomEnemyState
 	dc.w	$0003, $0007, $000A 
@@ -36254,19 +36268,22 @@ loc_00020A0C:
 	dc.w	$000E, $0009, $0001 
 	dc.l	CaveEvent_MalagaCrownReward
 	dc.w	$FFFF
-loc_00020A2C:
+; loc_00020A2C
+CaveRoomInteractions_0E:
 	dc.w	$0009, $000A, $0008	
 	dc.l	CheckCaveRoomEnemyState
 	dc.w	$0009, $0000, $0002 
 	dc.l	loc_00020D84 
 	dc.w	$FFFF 
-loc_00020A42:
+; loc_00020A42
+CaveRoomInteractions_0F:
 	dc.w	$0003, $0003, $0002 
 	dc.l	CheckCaveRoomEnemyState
 	dc.w	$0008, $0004, $0002 
 	dc.l	loc_00020F14
 	dc.w	$FFFF
-loc_00020A58:
+; loc_00020A58
+CaveRoomInteractions_10:
 	dc.w	$0000, $0000, $0002	
 	dc.l	CheckCaveRoomEnemyState
 	dc.w	$0003, $0004, $0002
@@ -36274,7 +36291,8 @@ loc_00020A58:
 	dc.w	$0003, $000C, $0004	
 	dc.l	loc_00020F28	
 	dc.w	$FFFF
-loc_00020A78:
+; loc_00020A78
+CaveRoomInteractions_11:
 	dc.w	$0001, $000E, $0002	
 	dc.l	CheckCaveRoomEnemyState
 	dc.w	$0004, $0004, $0002
@@ -36290,13 +36308,15 @@ loc_00020A78:
 	dc.w	$000D, $0003, $0008	
 	dc.l	loc_00020F14	
 	dc.w	$FFFF
-loc_00020AC0:
+; loc_00020AC0
+CaveRoomInteractions_12:
 	dc.w	$000A, $0007, $0004	
 	dc.l	CheckCaveRoomEnemyState
 	dc.w	$0000, $0000, $0002 
 	dc.l	loc_00020D20 
 	dc.w	$FFFF 
-loc_00020AD6:
+; loc_00020AD6
+CaveRoomInteractions_13:
 	dc.w	$0000, $0000, $0001 
 	dc.l	CheckCaveRoomEnemyState
 	dc.w	$0007, $000F, $000A 
@@ -36304,47 +36324,58 @@ loc_00020AD6:
 	dc.w	$0000, $000C, $0002 
 	dc.l	loc_00020D34
 	dc.w	$FFFF
-loc_00020AF6:
+; loc_00020AF6
+CaveRoomInteractions_14:
 	dc.w	$0000, $000E, $0004	
 	dc.l	CheckCaveRoomEnemyState
 	dc.w	$000A, $000E, $0008 
 	dc.l	CaveEvent_HelwigMenRescued
 	dc.w	$FFFF
-loc_00020B0C:
+; loc_00020B0C
+CaveRoomInteractions_15:
 	dc.w	$000B, $0004, $000A	
 	dc.l	CheckCaveRoomEnemyState
 	dc.w	$FFFF
-loc_00020B18:
+; loc_00020B18
+CaveRoomInteractions_16:
 	dc.w	$0008, $000B, $0004	
 	dc.l	CheckCaveRoomEnemyState
 	dc.w	$0000, $0007, $0005 
 	dc.l	CaveEvent_ExcalabriaRingGuardian1
 	dc.w	$FFFF 
-loc_00020B2E:
+; loc_00020B2E
+CaveRoomInteractions_17:
 	dc.w	$0003, $000C, $0004 
 	dc.l	CheckCaveRoomEnemyState
 	dc.w	$FFFF 
-loc_00020B3A:
+; loc_00020B3A
+CaveRoomInteractions_18:
 	dc.w	$0004, $0007, $0002 
 	dc.l	CheckCaveRoomEnemyState
 	dc.w	$FFFF 
-loc_00020B46:
+; loc_00020B46
+CaveRoomInteractions_19:
 	dc.w	$0001, $0005, $0001 
 	dc.l	CheckCaveRoomEnemyState
 	dc.w	$FFFF 
-loc_00020B52:
+; loc_00020B52
+CaveRoomInteractions_1A:
 	dc.w	$000B, $000E, $0004 
 	dc.l	CheckCaveRoomEnemyState
 	dc.w	$FFFF 
-loc_00020B5E:	
+; loc_00020B5E
+CaveRoomInteractions_1B:	
 	dc.w	$000A, $0006, $0008 
 	dc.l	CheckCaveRoomEnemyState
 	dc.w	$FFFF 
-loc_00020B6A:
+; loc_00020B6A
+CaveRoomInteractions_1C:
 	dc.w	$FFFF 
-loc_00020B6C:
+; loc_00020B6C
+CaveRoomInteractions_1D:
 	dc.w	$FFFF 
-loc_00020B6E:
+; loc_00020B6E
+CaveRoomInteractions_1E:
 	dc.w	$0009, $0007, $0001 
 	dc.l	CheckCaveRoomEnemyState 
 	dc.w	$000D, $0008, $0004 
@@ -36352,11 +36383,13 @@ loc_00020B6E:
 	dc.w	$0005, $000E, $0004 
 	dc.l	loc_00020D70 
 	dc.w	$FFFF 
-loc_00020B8E:
+; loc_00020B8E
+CaveRoomInteractions_1F:
 	dc.w	$0003, $0007, $0001 
 	dc.l	CheckCaveRoomEnemyState 
 	dc.w	$FFFF 
-loc_00020B9A:
+; loc_00020B9A
+CaveRoomInteractions_20:
 	dc.w	$0005, $0003, $000A 
 	dc.l	CaveEvent_SwaffhamSpy
 	dc.w	$0002, $0003, $0002 
@@ -36372,55 +36405,66 @@ loc_00020B9A:
 	dc.w	$0004, $000B, $000D 
 	dc.l	CaveEvent_TsarkonFinalEncounter
 	dc.w	$FFFF 
-loc_00020BE2:
+; loc_00020BE2
+CaveRoomInteractions_21:
 	dc.w	$FFFF 
-loc_00020BE4:
+; loc_00020BE4
+CaveRoomInteractions_22:
 	dc.w	$0009, $000F, $0008 
 	dc.l	loc_00020D5C
 	dc.w	$0009, $0000, $0008 
 	dc.l	loc_00020CBC
 	dc.w	$FFFF
-loc_00020BFA:
+; loc_00020BFA
+CaveRoomInteractions_23:
 	dc.w	$0009, $0005, $0001	
 	dc.l	CheckCaveRoomEnemyState
 	dc.w	$FFFF
-loc_00020C06:
+; loc_00020C06
+CaveRoomInteractions_24:
 	dc.w	$000A, $000B, $000A	
 	dc.l	CheckCaveRoomEnemyState
 	dc.w	$0004, $000C, $0005 
 	dc.l	CaveEvent_ExcalabriaRingGuardian3
 	dc.w	$FFFF 
-loc_00020C1C:
+; loc_00020C1C
+CaveRoomInteractions_25:
 	dc.w	$000C, $0003, $0008 
 	dc.l	CheckCaveRoomEnemyState
 	dc.w	$FFFF 
-loc_00020C28:
+; loc_00020C28
+CaveRoomInteractions_26:
 	dc.w	$000F, $000C, $0008 
 	dc.l	CheckCaveRoomEnemyState
 	dc.w	$FFFF 
-loc_00020C34:
+; loc_00020C34
+CaveRoomInteractions_27:
 	dc.w	$0009, $0009, $0002 
 	dc.l	CheckCaveRoomEnemyState
 	dc.w	$0001, $0001, $0001 
 	dc.l	loc_00020D0C
 	dc.w	$FFFF
-loc_00020C4A:
+; loc_00020C4A
+CaveRoomInteractions_28:
 	dc.w	$0008, $0000, $0002	
 	dc.l	CheckCaveRoomEnemyState
 	dc.w	$FFFF
-loc_00020C56:
+; loc_00020C56
+CaveRoomInteractions_29:
 	dc.w	$0000, $000D, $0001	
 	dc.l	CheckCaveRoomEnemyState
 	dc.w	$000A, $000B, $0005 
 	dc.l	CaveEvent_ExcalabriaRingGuardian2
 	dc.w	$FFFF 
-loc_00020C6C:
+; loc_00020C6C
+CaveRoomInteractions_2A:
 	dc.w	$0002, $000D, $0002 
 	dc.l	CheckCaveRoomEnemyState 
 	dc.w	$000F, $0007, $0001 
 	dc.l	loc_00020D98
 	dc.w	$FFFF
-loc_00020C82:
+; loc_00020C82
+CaveRoomInteractions_2B:
 	dc.w	$0001, $000E, $0004	
 	dc.l	CheckCaveRoomEnemyState
 	dc.w	$FFFF 
@@ -43087,22 +43131,26 @@ loc_00029B60:
 	dc.b	$14, $0E, $25, $14, $2A, $12, $2A, $14 
 	dc.b	$04, $1A, $F2, $F2, $1A, $A5, $01, $1A, $AB, $02, $02, $02, $B5, $23, $02, $B4, $02, $02, $02, $BF, $B8, $25, $0A, $AE, $01, $12, $25, $02, $AF, $01, $12, $A2 
 	dc.b	$02, $12, $12, $AE, $26, $02, $AC, $28, $0A, $BF, $2A, $12, $A5, $3F 
-loc_00029B96:
+; loc_00029B96
+LoadCastleTilemap_DefaultSmall_PlaneA:
 	MOVE.l	#loc_00029938, Tilemap_data_ptr_plane_a.w
 	MOVE.l	#loc_00029848, Tilemap_data_ptr_plane_b.w
 	RTS
 	
-loc_00029BA8:
+; loc_00029BA8
+LoadCastleTilemap_DefaultSmall_PlaneB:
 	MOVE.l	#loc_00029A5E, Tilemap_data_ptr_plane_a.w
 	MOVE.l	#loc_00029978, Tilemap_data_ptr_plane_b.w
 	RTS
 	
-loc_00029BBA:
+; loc_00029BBA
+LoadCastleTilemap_Parma_PlaneA:
 	MOVE.l	#loc_00029B04, Tilemap_data_ptr_plane_a.w
 	MOVE.l	#loc_00029AE8, Tilemap_data_ptr_plane_b.w
 	RTS
 	
-loc_00029BCC:
+; loc_00029BCC
+LoadCastleTilemap_Parma_PlaneB:
 	MOVE.l	#loc_00029B60, Tilemap_data_ptr_plane_a.w
 	MOVE.l	#loc_00029B22, Tilemap_data_ptr_plane_b.w
 	RTS
@@ -43208,12 +43256,14 @@ loc_0002A0BA:
 	dc.b	$23, $12, $A5, $23, $12, $D1, $A2, $2D, $02, $BF, $BF, $AF, $01, $12, $A9, $01, $12, $B3, $2D, $02, $BF, $BF, $2C, $0A, $01, $1A, $2F, $0A, $A2, $2C, $02, $01 
 	dc.b	$12, $2F, $02, $A2, $25, $12, $A2, $2C, $12, $A3, $26, $12, $A2, $3C, $02, $BF, $01, $1A, $32, $0A, $A5, $25, $0A, $BF, $33, $12, $25, $F2, $26, $12, $3F, $00 
 
-loc_0002A120:
+; loc_0002A120
+LoadCastleTilemap_MediumA_PlaneA:
 	MOVE.l	#loc_00029FB6, Tilemap_data_ptr_plane_a.w
 	MOVE.l	#loc_00029F5A, Tilemap_data_ptr_plane_b.w
 	RTS
 	
-loc_0002A132:
+; loc_0002A132
+LoadCastleTilemap_MediumA_PlaneB:
 	MOVE.l	#loc_0002A0BA, Tilemap_data_ptr_plane_a.w
 	MOVE.l	#loc_00029FE8, Tilemap_data_ptr_plane_b.w
 	RTS
@@ -43391,12 +43441,14 @@ loc_0002AACA:
 	dc.b	$AC, $C5, $A4, $24, $02, $AB, $26, $02, $B1, $27, $0A, $01, $1A, $26, $0A, $24, $1A, $A5, $01, $12, $27, $02, $C7, $02, $02, $02, $A8, $02, $12, $12, $A3, $03 
 	dc.b	$12, $12, $1A, $23, $12, $A2, $23, $12, $A7, $28, $02, $01, $1A, $28, $02, $A5, $2A, $0A, $AD, $01, $12, $2A, $02, $63, $12, $02, $02, $A5, $2B, $12, $A2, $26 
 	dc.b	$02, $A4, $34, $02, $A2, $30, $0A, $A4, $02, $0A, $0A, $B9, $31, $12, $24, $F2, $23, $12, $3F, $00 
-loc_0002AB56:
+; loc_0002AB56
+LoadCastleTilemap_MediumB_PlaneA:
 	MOVE.l	#loc_0002A9AA, Tilemap_data_ptr_plane_a.w
 	MOVE.l	#loc_0002A93A, Tilemap_data_ptr_plane_b.w
 	RTS
 	
-loc_0002AB68:
+; loc_0002AB68
+LoadCastleTilemap_MediumB_PlaneB:
 	MOVE.l	#loc_0002AACA, Tilemap_data_ptr_plane_a.w
 	MOVE.l	#loc_0002AA0A, Tilemap_data_ptr_plane_b.w
 	RTS
@@ -43592,12 +43644,14 @@ loc_0002B596:
 	dc.b	$C3, $BF, $AE, $01, $12, $A9, $01, $12, $A4, $01, $12, $A9, $01, $12, $A4, $01, $12, $A9, $01, $12, $A4, $2C, $02, $A3, $2D, $02, $A2, $2C, $02, $BF, $BF, $BE 
 	dc.b	$2D, $0A, $01, $1A, $2F, $0A, $01, $1A, $2D, $0A, $A2, $2D, $02, $01, $12, $2F, $02, $01, $12, $2D, $02, $A2, $25, $12, $A3, $2C, $12, $A3, $2C, $12, $A3, $25 
 	dc.b	$12, $A2, $3F, $02, $2C, $02, $BF, $B0, $33, $0A, $A6, $32, $0A, $BF, $AF, $34, $12, $26, $F2, $33, $12, $3F 
-loc_0002B652:
+; loc_0002B652
+LoadCastleTilemap_Malaga_PlaneA:
 	MOVE.l	#loc_0002B38C, Tilemap_data_ptr_plane_a.w
 	MOVE.l	#loc_0002B302, Tilemap_data_ptr_plane_b.w
 	RTS
 	
-loc_0002B664:
+; loc_0002B664
+LoadCastleTilemap_Malaga_PlaneB:
 	MOVE.l	#loc_0002B596, Tilemap_data_ptr_plane_a.w
 	MOVE.l	#loc_0002B406, Tilemap_data_ptr_plane_b.w
 	RTS
@@ -44316,12 +44370,14 @@ loc_0002DFE4:
 	dc.b	$1B, $1C, $C2, $01, $A6, $23, $97, $02, $A5, $A6, $23, $97, $01, $A5, $A6, $09, $30, $31, $31, $2B, $2B, $4A, $4B, $4D, $4E, $2F, $2B, $06, $24, $1B, $1C, $26 
 	dc.b	$24, $25, $C2, $31, $2F, $06, $2E, $2B, $4A, $4B, $4D, $4E, $32, $2B, $02, $24, $25, $24, $2B, $B0, $06, $38, $30, $4A, $4B, $4D, $4E, $3A, $2B, $AF, $05, $30 
 	dc.b	$4A, $4B, $4D, $4E, $38, $2B, $3F, $00 
-loc_0002E398:
+; loc_0002E398
+LoadTownTilemap_Wyclif_PlaneA:
 	MOVE.l	#loc_0002D538, Tilemap_data_ptr_plane_a.w
 	MOVE.l	#loc_0002D664, Tilemap_data_ptr_plane_b.w
 	RTS
 	
-loc_0002E3AA:
+; loc_0002E3AA
+LoadTownTilemap_Wyclif_PlaneB:
 	MOVE.l	#loc_0002DE44, Tilemap_data_ptr_plane_a.w
 	MOVE.l	#loc_0002DFE4, Tilemap_data_ptr_plane_b.w
 	TST.b	Event_triggers_start.w
@@ -44746,12 +44802,14 @@ loc_0002F8CC:
 	dc.b	$1A, $BE, $29, $12, $A6, $26, $12, $AC, $01, $22, $AF, $01, $22, $AE, $01, $22, $B0, $01, $02, $AF, $01, $02, $AE, $01, $02, $BC, $2D, $02, $A2, $2A, $02, $A4 
 	dc.b	$2E, $02, $A4, $3F, $04, $2E, $04, $A2, $3B, $0A, $A3, $30, $0A, $A2, $3B, $12, $23, $F4, $31, $12, $3F, $00 
 
-loc_0002F9EE:
+; loc_0002F9EE
+LoadTownTilemap_ParmaAndMalaga_PlaneA:
 	MOVE.l	#loc_0002F4EA, Tilemap_data_ptr_plane_a.w
 	MOVE.l	#loc_0002F262, Tilemap_data_ptr_plane_b.w
 	RTS
 	
-loc_0002FA00:
+; loc_0002FA00
+LoadTownTilemap_ParmaAndMalaga_PlaneB:
 	MOVE.l	#loc_0002F8CC, Tilemap_data_ptr_plane_a.w
 	MOVE.l	#loc_0002F5A2, Tilemap_data_ptr_plane_b.w
 	RTS
@@ -45004,12 +45062,14 @@ loc_00030700:
 	dc.b	$22, $29, $12, $B3, $27, $02, $A4, $01, $02, $B2, $D1, $38, $02, $A6, $3F, $02, $AB, $29, $12, $B6, $C9, $A3, $23, $1A, $B9, $C9, $A3, $42, $14, $12, $BF, $A5 
 	dc.b	$02, $12, $22, $24, $12, $B6, $CC, $02, $12, $02, $BA, $C9, $31, $02, $02, $12, $12, $A8, $02, $12, $12, $BC, $2E, $02, $C9, $BF, $DA, $B6, $65, $0A, $02, $02 
 	dc.b	$A3, $64, $0A, $02, $02, $01, $0A, $C8, $01, $1A, $2E, $0A, $A5, $2D, $0A, $01, $1A, $A6, $2F, $0A, $B9, $30, $12, $02, $F2, $F2, $33, $12, $3F, $00 
-loc_000307D6:
+; loc_000307D6
+LoadTownTilemap_Watling_PlaneA:
 	MOVE.l	#loc_00030416, Tilemap_data_ptr_plane_a.w
 	MOVE.l	#loc_00030288, Tilemap_data_ptr_plane_b.w
 	RTS
 	
-loc_000307E8:
+; loc_000307E8
+LoadTownTilemap_Watling_PlaneB:
 	MOVE.l	#loc_00030700, Tilemap_data_ptr_plane_a.w
 	MOVE.l	#loc_000304BE, Tilemap_data_ptr_plane_b.w
 	RTS
@@ -45233,12 +45293,14 @@ loc_0003149A:
 	dc.b	$01, $04, $23, $14, $A5, $2D, $02, $A4, $2B, $12, $A9, $31, $04, $B4, $23, $14, $01, $04, $2B, $02, $BC, $29, $12, $BF, $01, $12, $23, $1A, $AC, $23, $1A, $B4 
 	dc.b	$26, $12, $A9, $23, $12, $01, $02, $B4, $01, $22, $AE, $01, $22, $25, $12, $B1, $01, $02, $AE, $01, $02, $B2, $2A, $02, $A4, $2C, $02, $AB, $3C, $04, $A5, $24 
 	dc.b	$1A, $2C, $0A, $A3, $30, $0A, $01, $EA, $A2, $30, $12, $23, $F4, $32, $12, $3F 
-loc_0003158A:
+; loc_0003158A
+LoadTownTilemap_Deepdale_PlaneA:
 	MOVE.l	#loc_00031168, Tilemap_data_ptr_plane_a.w
 	MOVE.l	#loc_00030F7A, Tilemap_data_ptr_plane_b.w
 	RTS
 	
-loc_0003159C:
+; loc_0003159C
+LoadTownTilemap_Deepdale_PlaneB:
 	MOVE.l	#loc_0003149A, Tilemap_data_ptr_plane_a.w
 	MOVE.l	#loc_000311FE, Tilemap_data_ptr_plane_b.w
 	RTS
@@ -45629,12 +45691,14 @@ loc_000329B6:
 	dc.b	$B6, $2F, $04, $A4, $2D, $12, $A4, $2E, $02, $B7, $2C, $12, $BF, $BF, $BF, $BF, $AC, $23, $1A, $B0, $03, $02, $12, $22, $AE, $28, $12, $AB, $C2, $01, $02, $AF 
 	dc.b	$01, $22, $BF, $A4, $01, $02, $AC, $2E, $02, $A4, $2D, $02, $A4, $3F, $04, $01, $04, $A3, $30, $0A, $A3, $2F, $0A, $A2, $30, $12, $23, $F4, $30, $12, $3F, $00 
 
-loc_00032A80:
+; loc_00032A80
+LoadTownTilemap_Stow1_PlaneA:
 	MOVE.l	#loc_000326F0, Tilemap_data_ptr_plane_a.w
 	MOVE.l	#loc_00032532, Tilemap_data_ptr_plane_b.w
 	RTS
 	
-loc_00032A92:
+; loc_00032A92
+LoadTownTilemap_Stow1_PlaneB:
 	MOVE.l	#loc_000329B6, Tilemap_data_ptr_plane_a.w
 	MOVE.l	#loc_0003276E, Tilemap_data_ptr_plane_b.w
 	RTS
@@ -45978,12 +46042,14 @@ loc_00033B7A:
 	dc.b	$14, $AD, $23, $1A, $A6, $25, $04, $A3, $27, $04, $A4, $23, $04, $A4, $26, $12, $A8, $2A, $04, $A4, $02, $14, $14, $A6, $01, $22, $A6, $2F, $02, $A5, $23, $04 
 	dc.b	$A5, $01, $02, $A7, $2D, $12, $AA, $2A, $02, $B8, $2C, $04, $B3, $2F, $02, $B5, $2D, $12, $BA, $23, $1A, $BF, $2A, $12, $AA, $01, $22, $B0, $01, $22, $B1, $01 
 	dc.b	$02, $B0, $01, $02, $BD, $2E, $02, $A2, $2E, $02, $A4, $3F, $04, $A3, $2F, $0A, $A3, $2F, $0A, $A2, $2F, $12, $23, $F4, $30, $12, $3F, $00 
-loc_00033C40:
+; loc_00033C40
+LoadTownTilemap_Stow2AndKeltwick_PlaneA:
 	MOVE.l	#loc_000338E4, Tilemap_data_ptr_plane_a.w
 	MOVE.l	#loc_00033744, Tilemap_data_ptr_plane_b.w
 	RTS
 	
-loc_00033C52:
+; loc_00033C52
+LoadTownTilemap_Stow2AndKeltwick_PlaneB:
 	MOVE.l	#loc_00033B7A, Tilemap_data_ptr_plane_a.w
 	MOVE.l	#loc_0003395E, Tilemap_data_ptr_plane_b.w
 	RTS
@@ -46511,12 +46577,14 @@ loc_00035974:
 	dc.b	$12, $12, $B8, $28, $02, $B3, $02, $12, $12, $A2, $25, $02, $B5, $42, $12, $02, $B7, $29, $02, $B5, $28, $02, $BC, $01, $02, $A7, $63, $02, $02, $12, $01, $02 
 	dc.b	$A2, $01, $12, $A2, $01, $1A, $23, $12, $01, $1A, $A3, $01, $12, $BF, $A4, $28, $02, $01, $0A, $24, $02, $BF, $BA, $05, $12, $12, $72, $12, $12, $A4, $2B, $12 
 	dc.b	$02, $F2, $F2, $3E, $12, $C2, $42, $02, $12, $A5, $3F, $00 
-loc_00035AE4:
+; loc_00035AE4
+LoadTownTilemap_Barrow_PlaneA:
 	MOVE.l	#loc_000355B6, Tilemap_data_ptr_plane_a.w
 	MOVE.l	#loc_00035238, Tilemap_data_ptr_plane_b.w
 	RTS
 	
-loc_00035AF6:
+; loc_00035AF6
+LoadTownTilemap_Barrow_PlaneB:
 	MOVE.l	#loc_00035974, Tilemap_data_ptr_plane_a.w
 	MOVE.l	#loc_000356EC, Tilemap_data_ptr_plane_b.w
 	RTS
@@ -46824,12 +46892,14 @@ loc_00036A70:
 	dc.b	$B3, $C4, $B1, $30, $04, $A5, $2E, $04, $A3, $2E, $02, $A2, $02, $14, $14, $A2, $2D, $02, $B3, $04, $04, $02, $02, $04, $B3, $2D, $12, $01, $02, $24, $04, $2E 
 	dc.b	$02, $B3, $01, $02, $A2, $02, $02, $02, $2C, $12, $BC, $23, $1A, $BF, $A3, $29, $12, $BD, $01, $22, $BF, $A5, $01, $02, $B4, $01, $22, $AB, $2D, $02, $AC, $01 
 	dc.b	$02, $BF, $AC, $24, $04, $B3, $2E, $02, $B6, $3F, $04, $23, $04, $A2, $30, $0A, $A4, $2F, $0A, $A2, $30, $12, $24, $F4, $30, $12, $3F, $00 
-loc_00036B18:
+; loc_00036B18
+LoadTownTilemap_Tadcaster_PlaneA:
 	MOVE.l	#loc_00036854, Tilemap_data_ptr_plane_a.w
 	MOVE.l	#loc_00036706, Tilemap_data_ptr_plane_b.w
 	RTS
 	
-loc_00036B2A:
+; loc_00036B2A
+LoadTownTilemap_Tadcaster_PlaneB:
 	MOVE.l	#loc_00036A70, Tilemap_data_ptr_plane_a.w
 	MOVE.l	#loc_000368C2, Tilemap_data_ptr_plane_b.w
 	RTS
@@ -47209,12 +47279,14 @@ loc_0003821C:
 	dc.b	$22, $29, $12, $A3, $C8, $BB, $01, $02, $BA, $29, $12, $A3, $36, $02, $CE, $A3, $23, $1A, $BC, $CE, $A3, $42, $14, $12, $BF, $AD, $02, $12, $22, $24, $12, $B9 
 	dc.b	$C6, $AC, $01, $02, $BD, $C5, $01, $12, $A8, $3F, $02, $BF, $B5, $24, $12, $3F, $02, $B0, $3F, $02, $AE, $01, $02, $BF, $B3, $34, $12, $02, $F2, $F2, $39, $12 
 	dc.b	$3F, $00 
-loc_00038390:
+; loc_00038390
+LoadTownTilemap_Helwig_PlaneA:
 	MOVE.l	#loc_00037D9C, Tilemap_data_ptr_plane_a.w
 	MOVE.l	#loc_00037A22, Tilemap_data_ptr_plane_b.w
 	RTS
 	
-loc_000383A2:
+; loc_000383A2
+LoadTownTilemap_Helwig_PlaneB:
 	MOVE.l	#loc_0003821C, Tilemap_data_ptr_plane_a.w
 	MOVE.l	#loc_00037EAE, Tilemap_data_ptr_plane_b.w
 	RTS
@@ -47470,7 +47542,8 @@ loc_0003943A:
 	dc.b	$B2, $28, $02, $AA, $28, $02, $BF, $A9, $23, $04, $01, $02, $23, $04, $A2, $29, $04, $A2, $26, $04, $01, $02, $26, $04, $A3, $2E, $02, $A3, $2F, $02, $A7, $28 
 	dc.b	$12, $A9, $25, $12, $AF, $25, $02, $01, $E2, $AB, $23, $02, $B4, $23, $12, $BD, $02, $12, $02, $C2, $26, $02, $A7, $02, $12, $02, $D0, $2B, $02, $A6, $2C, $02 
 	dc.b	$BF, $A9, $3F, $04, $01, $04, $BF, $BF, $AD, $2F, $12, $23, $F2, $31, $12, $3F 
-loc_000394DC:
+; loc_000394DC
+LoadTownTilemap_Swafham_PlaneA:
 	MOVE.l	#loc_00038D4E, Tilemap_data_ptr_plane_a.w
 	MOVE.l	#loc_00038BEC, Tilemap_data_ptr_plane_b.w
 	TST.b	Swaffham_ruined.w
@@ -47480,7 +47553,8 @@ loc_000394DC:
 loc_00039504:
 	RTS
 	
-loc_00039506:
+; loc_00039506
+LoadTownTilemap_Swafham_PlaneB:
 	MOVE.l	#loc_00038F74, Tilemap_data_ptr_plane_a.w
 	MOVE.l	#loc_00038DBE, Tilemap_data_ptr_plane_b.w
 	TST.b	Swaffham_ruined.w
@@ -47594,12 +47668,14 @@ loc_00039CFE:
 	dc.b	$24, $12, $AF, $02, $12, $02, $CD, $01, $02, $C2, $27, $02, $AA, $28, $02, $A6, $2C, $02, $BF, $A9, $23, $04, $01, $02, $23, $04, $A2, $29, $04, $A2, $26, $04 
 	dc.b	$01, $02, $26, $04, $A3, $2E, $02, $A3, $2F, $02, $A7, $28, $12, $A9, $25, $12, $AF, $26, $02, $AB, $23, $02, $B4, $23, $12, $BD, $02, $12, $02, $C2, $02, $E2 
 	dc.b	$12, $24, $02, $A7, $02, $12, $02, $D0, $2B, $02, $A6, $2C, $02, $BF, $A9, $3F, $04, $01, $04, $BF, $BF, $AD, $2F, $12, $23, $F2, $31, $12, $3F, $00 
-loc_00039DB6:
+; loc_00039DB6
+LoadTownTilemap_Excalabria_PlaneA:
 	MOVE.l	#loc_00039924, Tilemap_data_ptr_plane_a.w
 	MOVE.l	#loc_00039878, Tilemap_data_ptr_plane_b.w
 	RTS
 	
-loc_00039DC8:
+; loc_00039DC8
+LoadTownTilemap_Excalabria_PlaneB:
 	MOVE.l	#loc_00039CFE, Tilemap_data_ptr_plane_a.w
 	MOVE.l	#loc_00039972, Tilemap_data_ptr_plane_b.w
 	RTS
@@ -47964,12 +48040,14 @@ loc_0003B4F6:
 	dc.b	$14, $12, $A8, $23, $1A, $B9, $C2, $A3, $42, $14, $12, $27, $12, $A6, $03, $04, $12, $14, $B3, $CC, $01, $22, $29, $12, $A6, $02, $12, $22, $24, $12, $B0, $C5 
 	dc.b	$01, $12, $A6, $01, $02, $B0, $01, $02, $BC, $3F, $02, $A6, $02, $12, $12, $A4, $24, $12, $3F, $02, $A9, $26, $02, $BF, $B3, $01, $02, $A2, $3F, $02, $BF, $BF 
 	dc.b	$A7, $3D, $12, $02, $F2, $F2, $32, $12, $3F, $00 
-loc_0003B622:
+; loc_0003B622
+LoadTownTilemap_Hastings_PlaneA:
 	MOVE.l	#loc_0003B0D6, Tilemap_data_ptr_plane_a.w
 	MOVE.l	#loc_0003AD18, Tilemap_data_ptr_plane_b.w
 	RTS
 	
-loc_0003B634:
+; loc_0003B634
+LoadTownTilemap_Hastings_PlaneB:
 	MOVE.l	#loc_0003B4F6, Tilemap_data_ptr_plane_a.w
 	MOVE.l	#loc_0003B1B4, Tilemap_data_ptr_plane_b.w
 	RTS
@@ -48231,12 +48309,14 @@ loc_0003C5E6:
 	dc.b	$A6, $2A, $02, $A6, $2C, $04, $A4, $2C, $04, $A4, $36, $14, $01, $04, $27, $14, $B1, $29, $04, $B9, $2F, $14, $AE, $02, $1C, $1C, $A3, $02, $1C, $1C, $B9, $03 
 	dc.b	$04, $0C, $0C, $23, $04, $03, $0C, $0C, $04, $B9, $28, $04, $B9, $02, $14, $14, $A3, $02, $14, $14, $BA, $28, $04, $AD, $25, $0A, $01, $EA, $28, $0A, $A3, $2D 
 	dc.b	$0A, $01, $EA, $A2, $2E, $12, $23, $F4, $2F, $12, $3F, $00 
-loc_0003C6C4:
+; loc_0003C6C4
+LoadTownTilemap_Carthahena_PlaneA:
 	MOVE.l	#loc_0003C37A, Tilemap_data_ptr_plane_a.w
 	MOVE.l	#loc_0003C138, Tilemap_data_ptr_plane_b.w
 	RTS
 	
-loc_0003C6D6:
+; loc_0003C6D6
+LoadTownTilemap_Carthahena_PlaneB:
 	MOVE.l	#loc_0003C5E6, Tilemap_data_ptr_plane_a.w
 	MOVE.l	#loc_0003C424, Tilemap_data_ptr_plane_b.w
 	RTS
