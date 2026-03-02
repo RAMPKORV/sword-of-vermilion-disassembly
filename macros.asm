@@ -14,7 +14,7 @@ print macro strPtr
 ;        PlaySound $00A8
 PlaySound macro soundId
     MOVE.w  #soundId, D0
-    JSR     loc_00010522
+    JSR     QueueSoundEffect
     ENDM
 
 ; ============================================================
