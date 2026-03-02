@@ -34117,6 +34117,8 @@ Deepdale_Npc1_DialogueStates:
 	dc.l	TownDialogTable_Deepdale_State1
 	dc.l	Deepdale_truffle_quest_started
 	dc.l	TownDialogTable_Deepdale_State0
+; loc_0001ED6C
+Deepdale_Npc2_Dispatch:
 	LEA	Deepdale_Npc2_DialogueStates, A1
 	MOVE.w	#1, D7
 	BRA.w	SelectDialogueByGameState
@@ -34140,6 +34142,8 @@ Deepdale_Npc3_DialogueStates:
 	dc.l	$43F90003	
 	dc.l	$0A726000	
 	dc.b	$04, $18 
+; loc_0001EDBA
+Deepdale_Npc3_SimpleDispatch:
 	LEA	TownDialogTable_Deepdale_State6, A1
 	BRA.w	SelectDialogueSimple
 ; loc_0001EDC4
@@ -34158,6 +34162,8 @@ Stow_Npc1_DialogueStates:
 	dc.l	TownDialogTable_Stow1_State1
 	dc.l	Sanguios_book_offered
 	dc.l	TownDialogTable_Stow1_State0	
+; loc_0001EDF6
+Stow_Npc2_Dispatch:
 	LEA	Stow_Npc2_DialogueStates, A1
 	MOVE.w	#1, D7
 	BRA.w	SelectDialogueByGameState
@@ -34184,10 +34190,16 @@ Stow_Npc3_DialogueStates:
 	dc.l	CastleDialogTable_Stow_State1
 	dc.l	Sanguios_book_offered
 	dc.l	CastleDialogTable_Stow_State0	
+; loc_0001EE52
+Stow_Npc3_State8_Dispatch:
 	LEA	TownDialogTable_Stow1_State8, A1
 	BRA.w	SelectDialogueSimple
+; loc_0001EE5C
+Stow_Npc3_State9_Dispatch:
 	LEA	TownDialogTable_Stow1_State9, A1
 	BRA.w	SelectDialogueSimple
+; loc_0001EE66
+Stow_Npc3_State10_Dispatch:
 	LEA	TownDialogTable_Stow1_State10, A1
 	BRA.w	SelectDialogueSimple
 ; loc_0001EE70
@@ -34206,8 +34218,12 @@ Keltwick_Npc1_DialogueStates:
 	dc.l	TownDialogTable_Keltwick_State1
 	dc.l	Asti_monster_defeated
 	dc.l	TownDialogTable_Keltwick_State0	
+; loc_0001EEA2
+Keltwick_Npc1_State4_Dispatch:
 	LEA	TownDialogTable_Keltwick_State4, A1
 	BRA.w	SelectDialogueSimple
+; loc_0001EEAC
+Keltwick_Npc2_Dispatch:
 	LEA	Keltwick_Npc2_DialogueStates, A1
 	MOVE.w	#1, D7
 	BRA.w	SelectDialogueByGameState
@@ -34218,8 +34234,12 @@ Keltwick_Npc2_DialogueStates:
 	dc.l	TownDialogTable_Keltwick_State6	
 	dc.l	Alarm_clock_rang
 	dc.l	TownDialogTable_Keltwick_State5
+; loc_0001EECE
+Keltwick_Npc2_State8_Dispatch:
 	LEA	TownDialogTable_Keltwick_State8, A1
 	BRA.w	SelectDialogueSimple
+; loc_0001EED8
+Keltwick_Npc2_State9_Dispatch:
 	LEA	TownDialogTable_Keltwick_State9, A1
 	BRA.w	SelectDialogueSimple
 ; loc_0001EEE2
@@ -34248,6 +34268,8 @@ Malaga_Npc2_DialogueStates:
 	dc.l	CastleDialogTable_Malaga_State1
 	dc.l	Malaga_king_crowned
 	dc.l	CastleDialogTable_Malaga_State0
+; loc_0001EF36
+Malaga_Npc2_SimpleDispatch:
 	LEA	TownDialogTable_Malaga_State3, A1
 	BRA.w	SelectDialogueSimple
 ; loc_0001EF40
@@ -34260,6 +34282,8 @@ Barrow_Npc1_DialogueStates:
 	dc.l	TownDialogTable_Barrow_State1
 	dc.l	Uncle_tibor_visited
 	dc.l	TownDialogTable_Barrow_State0
+; loc_0001EF5A
+Barrow_Npc2_Dispatch:
 	LEA	Barrow_Npc2_DialogueStates, A1
 	MOVE.w	#1, D7
 	BRA.w	SelectDialogueByGameState
@@ -34270,6 +34294,8 @@ Barrow_Npc2_DialogueStates:
 	dc.l	TownDialogTable_Barrow_State4
 	dc.l	Uncle_tibor_visited
 	dc.l	TownDialogTable_Barrow_State3
+; loc_0001EF7C
+Barrow_Npc2_SimpleDispatch:
 	LEA	TownDialogTable_Barrow_State2, A1
 	BRA.w	SelectDialogueSimple
 ; loc_0001EF86
@@ -34294,6 +34320,8 @@ Tadcaster_Npc2_DialogueStates:
 	dc.l	CastleDialogTable_Tadcaster_State1	
 	dc.l	Bully_first_fight_won
 	dc.l	CastleDialogTable_Tadcaster_State0
+; loc_0001EFCA
+Tadcaster_Npc3_Dispatch:
 	LEA	Tadcaster_Npc3_DialogueStates, A1
 	MOVE.w	#1, D7
 	BRA.w	SelectDialogueByGameState
@@ -34304,8 +34332,12 @@ Tadcaster_Npc3_DialogueStates:
 	dc.l	TownDialogTable_Tadcaster_State4	
 	dc.l	Bully_first_fight_won
 	dc.l	TownDialogTable_Tadcaster_State3
+; loc_0001EFEC
+Tadcaster_Npc3_State5_Dispatch:
 	LEA	TownDialogTable_Tadcaster_State5, A1
 	BRA.w	SelectDialogueSimple
+; loc_0001EFF6
+Tadcaster_Npc4_Dispatch:
 	LEA	Tadcaster_Npc4_DialogueStates, A1
 	MOVE.w	#1, D7
 	BRA.w	SelectDialogueByGameState
@@ -34326,6 +34358,8 @@ Helwig_Npc1_DialogueStates:
 	dc.l	TownDialogTable_Helwig_State1
 	dc.l	Helwig_men_rescued
 	dc.l	TownDialogTable_Helwig_State0
+; loc_0001F032
+Helwig_Npc2_Dispatch:
 	LEA	Helwig_Npc2_DialogueStates, A1
 	MOVE.w	#0, D7
 	BRA.w	SelectDialogueByGameState
@@ -34334,6 +34368,8 @@ Helwig_Npc2_DialogueStates:
 	dc.l	TownDialogTable_Helwig_State3
 	dc.l	Helwig_men_rescued
 	dc.l	TownDialogTable_Helwig_State2
+; loc_0001F04C
+Helwig_Npc2_SimpleDispatch:
 	LEA	TownDialogTable_Helwig_State4, A1
 	BRA.w	SelectDialogueSimple
 ; loc_0001F056
@@ -34394,6 +34430,8 @@ Hastings_Npc1_DialogueStates:
 	dc.l	TownDialogTable_Hastings_State1
 	dc.l	Ate_spy_dinner
 	dc.l	TownDialogTable_Hastings_State0
+; loc_0001F10E
+Hastings_Npc2_Dispatch:
 	LEA	Hastings_Npc2_DialogueStates, A1
 	MOVE.w	#1, D7
 	BRA.w	SelectDialogueByGameState
@@ -34404,11 +34442,18 @@ Hastings_Npc2_DialogueStates:
 	dc.l	loc_0003A0F2
 	dc.l	Ate_spy_dinner
 	dc.l	loc_0003A0EE
+; loc_0001F130
+Hastings_Npc2_SubDispatch_A:
 	dc.l	$43F90003	
 	dc.l	$A0DA6000	
-	dc.l	$009843F9	
+	dc.w	$0098
+; loc_0001F13A
+Hastings_Npc2_SubDispatch_B:
+	dc.w	$43F9
 	dc.l	loc_0003A0E2	
 	dc.l	$6000008E	
+; loc_0001F144
+Hastings_Npc3_Dispatch:
 	LEA	Hastings_Npc3_DialogueStates, A1
 	MOVE.w	#0, D7
 	BRA.w	SelectDialogueByGameState
@@ -34437,7 +34482,7 @@ loc_0001F17E:
 loc_0001F190:
 	RTS
 	
-loc_0001F192:
+CarthahenaaNpcSubDispatch:
 	LEA	loc_0003B848, A0
 	TST.b	Tsarkon_is_dead.w
 	BNE.b	loc_0001F1A4
@@ -45543,28 +45588,28 @@ NpcDataTable_Deepdale:
 	dc.b	$00, $38, $00, $2D 
 	dc.l	$000309F6
 	dc.w	$FFFF
-	dc.l	$0001ED6C
+	dc.l	Deepdale_Npc2_Dispatch
 	npcEntry $0088, $0048, $0091, NPCSpriteFrames_ManA, NPCInit_Deepdale_SecretKeeper, NPC_ATTR_PAL3, NPC_SOLID
 	dc.w	$FFFF
-	dc.l	$0001ED6C
+	dc.l	Deepdale_Npc2_Dispatch
 	npcEntry $0058, $0048, $024D, NPCSpriteFrames_IndoorNpcB, NPCInit_WalkingAnimated_Animate, NPC_ATTR_PAL3, NPC_SOLID
 	dc.w	$FFFF
-	dc.l	$0001ED6C
+	dc.l	Deepdale_Npc2_Dispatch
 	npcEntry $0048, $0048, $0235, NPCSpriteFrames_IndoorNpcA, NPCInit_WalkingAnimated_Animate, NPC_ATTR_PAL3, NPC_SOLID
 	dc.w	$FFFF
-	dc.l	$0001ED6C
+	dc.l	Deepdale_Npc2_Dispatch
 	npcEntry $0068, $0048, $027D, NPCSpriteFrames_IndoorNpcD, NPCInit_WalkingAnimated_Animate, NPC_ATTR_PAL3, NPC_SOLID
 	dc.w	$FFFF
-	dc.l	$0001EDBA
+	dc.l	Deepdale_Npc3_SimpleDispatch
 	npcEntry $00F8, $0068, $0091, NPCSpriteFrames_ManA, NPCInit_WalkingStatic, NPC_ATTR_PAL3, NPC_SOLID
 	npcEntry $0058, $0048, $0205, NPCSpriteFrames_Shopkeeper, NPCInit_WalkingAnimated_Animate, NPC_ATTR_PAL3, NPC_SOLID
 	dc.w	$FFFF
-	dc.l	$0001ED6C
+	dc.l	Deepdale_Npc2_Dispatch
 	npcEntry $0058, $0048, $0205, NPCSpriteFrames_Shopkeeper, NPCInit_WalkingAnimated_Animate, NPC_ATTR_PAL3, NPC_SOLID
 	dc.w	$FFFF
-	dc.l	$0001ED6C
+	dc.l	Deepdale_Npc2_Dispatch
 	dc.w	$FFFF
-	dc.l	$0001ED6C
+	dc.l	Deepdale_Npc2_Dispatch
 	npcEntry $00A8, $0048, $0265, NPCSpriteFrames_IndoorNpcC, NPCInit_WalkingAnimated_Animate, NPC_ATTR_PAL0, NPC_SOLID
 	dc.w	$FFFF
 ; loc_00030A12
@@ -45829,24 +45874,24 @@ NpcDataTable_Stow1:
 	dc.b	$00, $00, $00, $00 
 	dc.l	$00000000
 	dc.w	$FFFF
-	dc.l	$0001EDF6
+	dc.l	Stow_Npc2_Dispatch
 	npcEntry $00D8, $0088, $0181, NPCSpriteFrames_Guard, NPCInit_WalkingStatic_LoadFrame, NPC_ATTR_PAL3, NPC_SOLID
 	dc.w	$FFFF
-	dc.l	$0001EDF6
+	dc.l	Stow_Npc2_Dispatch
 	npcEntry $0088, $0058, $0295, NPCSpriteFrames_IndoorNpcE, NPCInit_WalkingAnimated_Animate, NPC_ATTR_PAL3, NPC_SOLID
 	dc.w	$FFFF
-	dc.l	$0001EDF6
+	dc.l	Stow_Npc2_Dispatch
 	npcEntry $0048, $0058, $024D, NPCSpriteFrames_IndoorNpcB, NPCInit_WalkingAnimated_Animate, NPC_ATTR_PAL3, NPC_SOLID
 	dc.w	$FFFF
-	dc.l	$0001EE52
+	dc.l	Stow_Npc3_State8_Dispatch
 	npcEntry $00F8, $0088, $01D5, NPCSpriteFrames_Soldier, NPCInit_WalkingStatic, NPC_ATTR_PAL3, NPC_SOLID
 	npcEntry $0058, $0048, $0205, NPCSpriteFrames_Shopkeeper, NPCInit_WalkingAnimated_Animate, NPC_ATTR_PAL3, NPC_SOLID
 	dc.w	$FFFF
-	dc.l	$0001EE5C
+	dc.l	Stow_Npc3_State9_Dispatch
 	npcEntry $00A8, $0088, $01D5, NPCSpriteFrames_Soldier, NPCInit_WalkingStatic, NPC_ATTR_PAL3, NPC_SOLID
 	npcEntry $0068, $0058, $01D5, NPCSpriteFrames_Soldier, NPCInit_StowSoldier_DoctorHint, NPC_ATTR_PAL3, NPC_SOLID
 	dc.w	$FFFF
-	dc.l	$0001EE66
+	dc.l	Stow_Npc3_State10_Dispatch
 	npcEntry $00B8, $0068, $01D5, NPCSpriteFrames_Soldier, NPCInit_StowSoldier_DoctorHint, NPC_ATTR_PAL3, NPC_SOLID
 	dc.w	$FFFF
 ; loc_000318F0
@@ -46272,22 +46317,22 @@ NpcDataTable_Stow2:
 	dc.b	$00, $38, $00, $2D 
 	dc.l	$00032D0E
 	dc.w	$FFFF
-	dc.l	$0001EEA2
+	dc.l	Keltwick_Npc1_State4_Dispatch
 	npcEntry $00D8, $0098, $0091, NPCSpriteFrames_ManA, NPCInit_Malaga_DungeonKeySetup, NPC_ATTR_PAL3, NPC_SOLID
 	dc.w	$FFFF
-	dc.l	$0001EEAC
+	dc.l	Keltwick_Npc2_Dispatch
 	npcEntry $00D8, $0088, $00CD, NPCSpriteFrames_ManD, NPCInit_Keltwick_AlarmClock, NPC_ATTR_PAL3, NPC_SOLID
 	dc.w	$FFFF
-	dc.l	$0001EECE
+	dc.l	Keltwick_Npc2_State8_Dispatch
 	npcEntry $00B8, $0088, $0091, NPCSpriteFrames_ManA, NPCInit_WalkingStatic, NPC_ATTR_PAL3, NPC_SOLID
 	npcEntry $0048, $0048, $0235, NPCSpriteFrames_IndoorNpcA, NPCInit_WalkingAnimated_Animate, NPC_ATTR_PAL3, NPC_SOLID
 	dc.w	$FFFF
-	dc.l	$0001EED8
+	dc.l	Keltwick_Npc2_State9_Dispatch
 	npcEntry $0058, $0048, $0205, NPCSpriteFrames_Shopkeeper, NPCInit_WalkingAnimated_Animate, NPC_ATTR_PAL3, NPC_SOLID
 	dc.w	$FFFF
-	dc.l	$0001EED8
+	dc.l	Keltwick_Npc2_State9_Dispatch
 	dc.w	$FFFF
-	dc.l	$0001EED8
+	dc.l	Keltwick_Npc2_State9_Dispatch
 	npcEntry $00B8, $0048, $01D5, NPCSpriteFrames_Soldier, NPCInit_StowSoldier_DoctorHint, NPC_ATTR_PAL3, NPC_SOLID
 	dc.w	$FFFF
 ; loc_00032D24
@@ -46629,7 +46674,7 @@ NpcDataTable_Malaga:
 	dc.b	$00, $00, $00, $00 
 	dc.l	$00000000
 	dc.w	$FFFF
-	dc.l	$0001EF36
+	dc.l	Malaga_Npc2_SimpleDispatch
 	npcEntry $0028, $0088, $0091, NPCSpriteFrames_ManA, NPCInit_StowSoldier_DoctorHint, NPC_ATTR_PAL3, NPC_SOLID
 	npcEntry $00E8, $0048, $0091, NPCSpriteFrames_ManA, NPCInit_WalkingStatic, NPC_ATTR_PAL3, NPC_SOLID
 	npcEntry $0108, $0068, $0091, NPCSpriteFrames_ManA, NPCInit_StowSoldier_DoctorHint, NPC_ATTR_PAL3, NPC_SOLID
@@ -46949,10 +46994,10 @@ NpcDataTable_Barrow:
 	dc.b	$00, $00, $00, $00 
 	dc.l	$00000000
 	dc.w	$FFFF
-	dc.l	$0001EF5A
+	dc.l	Barrow_Npc2_Dispatch
 	npcEntry $0088, $0048, $0019, NPCSpriteFrames_Child, NPCInit_Tadcaster_PassSellerSetup, NPC_ATTR_PAL3, NPC_SOLID
 	dc.w	$FFFF
-	dc.l	$0001EF7C
+	dc.l	Barrow_Npc2_SimpleDispatch
 	npcEntry $0048, $0058, $027D, NPCSpriteFrames_IndoorNpcD, NPCInit_WalkingAnimated_Animate, NPC_ATTR_PAL3, NPC_SOLID
 	dc.w	$FFFF
 ; loc_00034CEA
@@ -47195,17 +47240,17 @@ NpcDataTable_Tadcaster:
 	dc.b	$00, $00, $00, $00 
 	dc.l	$00000000
 	dc.w	$FFFF
-	dc.l	$0001EFEC
+	dc.l	Tadcaster_Npc3_State5_Dispatch
 	npcEntry $0068, $0058, $00CD, NPCSpriteFrames_ManB, NPCInit_WalkingStatic, NPC_ATTR_PAL3, NPC_SOLID
 	dc.w	$FFFF
-	dc.l	$0001EFF6
+	dc.l	Tadcaster_Npc4_Dispatch
 	npcEntry $00B8, $0068, $01D5, NPCSpriteFrames_Soldier, NPCInit_StowSoldier_DoctorHint, NPC_ATTR_PAL3, NPC_SOLID
 	dc.w	$FFFF
-	dc.l	$0001EFCA
+	dc.l	Tadcaster_Npc3_Dispatch
 	npcEntry $0048, $0058, $024D, NPCSpriteFrames_IndoorNpcB, NPCInit_WalkingAnimated_Animate, NPC_ATTR_PAL3, NPC_SOLID
 	npcEntry $00F8, $0078, $00CD, NPCSpriteFrames_ManB, NPCInit_StowSoldier_DoctorHint, NPC_ATTR_PAL3, NPC_SOLID
 	dc.w	$FFFF
-	dc.l	$0001EB20
+	dc.l	Wyclif_Npc2_Dispatch
 	npcEntry $0088, $0058, $0295, NPCSpriteFrames_IndoorNpcE, NPCInit_WalkingAnimated_Animate, NPC_ATTR_PAL3, NPC_SOLID
 	dc.w	$FFFF
 ; loc_00035D08
@@ -47561,16 +47606,16 @@ NpcDataTable_Helwig:
 	dc.b	$00, $00, $00, $00 
 	dc.l	$00000000
 	dc.w	$FFFF
-	dc.l	$0001F032
+	dc.l	Helwig_Npc2_Dispatch
 	npcEntry $0048, $0058, $0061, NPCSpriteFrames_IndoorNpcF, NPCInit_WalkingAnimated_Animate, NPC_ATTR_PAL3, NPC_SOLID
 	npcEntry $0118, $0068, $0151, NPCSpriteFrames_Woman, NPCInit_Helwig_InnFryingPan, NPC_ATTR_PAL0, NPC_SOLID
 	npcEntry $0118, $0058, $0091, NPCSpriteFrames_ManA, NPCInit_Helwig_SwaffhamHint, NPC_ATTR_PAL3, NPC_SOLID
 	dc.w	$FFFF
-	dc.l	$0001F04C
+	dc.l	Helwig_Npc2_SimpleDispatch
 	npcEntry $0028, $0048, $0109, NPCSpriteFrames_VillagerC, NPCInit_WalkingAnimated, NPC_ATTR_PAL3, NPC_SOLID
 	npcEntry $00D8, $0048, $0205, NPCSpriteFrames_Shopkeeper, NPCInit_WalkingAnimated_Animate, NPC_ATTR_PAL3, NPC_SOLID
 	dc.w	$FFFF
-	dc.l	$0001EB20
+	dc.l	Wyclif_Npc2_Dispatch
 	npcEntry $0088, $0058, $0265, NPCSpriteFrames_IndoorNpcC, NPCInit_WalkingAnimated_Animate, NPC_ATTR_PAL0, NPC_SOLID
 	dc.w	$FFFF
 ; loc_00036DD2
@@ -48351,21 +48396,21 @@ NpcDataTable_Hastings1:
 	dc.b	$00, $00, $00, $00 
 	dc.l	$00000000
 	dc.w	$FFFF
-	dc.l	$0001F130
+	dc.l	Hastings_Npc2_SubDispatch_A
 	npcEntry $00D8, $0078, $0019, NPCSpriteFrames_Child, NPCInit_WalkingAnimated, NPC_ATTR_PAL3, NPC_SOLID
 	npcEntry $0048, $0058, $027D, NPCSpriteFrames_IndoorNpcD, NPCInit_WalkingAnimated_Animate, NPC_ATTR_PAL3, NPC_SOLID
 	dc.w	$FFFF
-	dc.l	$0001F10E
+	dc.l	Hastings_Npc2_Dispatch
 	npcEntry $0078, $0068, $0151, NPCSpriteFrames_Woman, NPCInit_Swaffham_SpyDinnerTrap, NPC_ATTR_PAL0, NPC_SOLID
 	dc.w	$FFFF
-	dc.l	$0001F144
+	dc.l	Hastings_Npc3_Dispatch
 	npcEntry $00D8, $0048, $0205, NPCSpriteFrames_Shopkeeper, NPCInit_WalkingAnimated_Animate, NPC_ATTR_PAL3, NPC_SOLID
 	npcEntry $0038, $0048, $01D5, NPCSpriteFrames_Soldier, NPCInit_Hastings_HideAfterTsarkon, NPC_ATTR_PAL3, NPC_SOLID
 	npcEntry $0068, $0058, $01D5, NPCSpriteFrames_Soldier, NPCInit_Hastings_HideAfterTsarkon, NPC_ATTR_PAL3, NPC_SOLID
 	npcEntry $0158, $0058, $01D5, NPCSpriteFrames_Soldier, NPCInit_Hastings_HideAfterTsarkon, NPC_ATTR_PAL3, NPC_SOLID
 	npcEntry $0188, $0048, $01D5, NPCSpriteFrames_Soldier, NPCInit_Hastings_HideAfterTsarkon, NPC_ATTR_PAL3, NPC_SOLID
 	dc.w	$FFFF
-	dc.l	$0001F13A
+	dc.l	Hastings_Npc2_SubDispatch_B
 	npcEntry $0078, $00A8, $00CD, NPCSpriteFrames_ManB, NPCInit_StowSoldier_DoctorHint, NPC_ATTR_PAL3, NPC_SOLID
 	npcEntry $00E8, $0088, $0091, NPCSpriteFrames_ManA, NPCInit_WalkingStatic, NPC_ATTR_PAL3, NPC_SOLID
 	npcEntry $0048, $0058, $024D, NPCSpriteFrames_IndoorNpcB, NPCInit_WalkingAnimated_Animate, NPC_ATTR_PAL3, NPC_SOLID
@@ -48749,9 +48794,9 @@ NpcDataTable_Carthahena:
 	dc.b	$00, $00, $00, $00 
 	dc.l	$00000000
 	dc.w	$FFFF
-	dc.l	$0001F192
+	dc.l	CarthahenaaNpcSubDispatch
 	dc.w	$FFFF
-	dc.l	$0001F192
+	dc.l	CarthahenaaNpcSubDispatch
 	npcEntry $0088, $0048, $0091, NPCSpriteFrames_ManA, NPCInit_Carthahena_KingThuleKey, NPC_ATTR_PAL3, NPC_SOLID
 	dc.w	$FFFF
 loc_0003B7F0:
