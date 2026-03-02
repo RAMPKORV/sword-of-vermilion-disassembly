@@ -3143,7 +3143,7 @@ loc_00003380:
 
 ; LoadAndPlayAreaMusic
 LoadAndPlayAreaMusic:
-	LEA	loc_0001FE94, A0
+	LEA	AreaMusicIdByRoom, A0
 	MOVE.w	Current_town_room.w, D0
 	ANDI.w	#$00FF, D0
 	CMPI.w	#4, D0
@@ -35462,7 +35462,8 @@ LoadNpcData_Carthahena:
 	LEA	NpcDataTable_Carthahena, A1
 	RTS
 	
-loc_0001FE94:
+; loc_0001FE94
+AreaMusicIdByRoom:
 	dc.b	$87, $8F, $8B, $8F, $8F, $8F, $8F, $8F, $8B, $8F, $8B, $8F, $83, $8B, $87 
 	dc.b	$9A
 	dc.b	$96
@@ -39400,7 +39401,7 @@ EnemyGfxDataTable:
 	dc.l	EnemyData_Bouncing_6A
 	dc.l	EnemySpriteSet_C
 	dc.l	EnemyAppearance_6B	
-	dc.l	loc_0002476A	
+	dc.l	EnemyData_Bouncing_6B	
 	dc.l	EnemySpriteSet_C	
 	dc.l	EnemyAppearance_AC
 	dc.l	EnemyData_Bouncing_AC
@@ -39520,7 +39521,7 @@ EnemyGfxDataTable:
 	dc.l	EnemyData_StandardMeleeFast_61
 	dc.l	EnemySpriteSet_G
 	dc.l	EnemyAppearance_BD	
-	dc.l	loc_00024B7A	
+	dc.l	EnemyData_StandardMeleeFast_BD	
 	dc.l	EnemySpriteSet_G	
 	dc.l	EnemyAppearance_BE
 	dc.l	EnemyData_StandardMeleeFast_BE
@@ -39556,7 +39557,7 @@ EnemyGfxDataTable:
 	dc.l	EnemyData_StalkPause3_64
 	dc.l	EnemySpriteSet_I
 	dc.l	EnemyAppearance_B9	
-	dc.l	loc_00024CB2	
+	dc.l	EnemyData_StationaryShooter_B9	
 	dc.l	EnemySpriteSet_I	
 	dc.l	EnemyAppearance_BA
 	dc.l	EnemyData_StalkPause3_BA
@@ -39574,7 +39575,7 @@ EnemyGfxDataTable:
 	dc.l	EnemyData_FastBurstShooter_BA
 	dc.l	EnemySpriteSet_I
 	dc.l	EnemyAppearance_BB	
-	dc.l	loc_00024D4E	
+	dc.l	EnemyData_FastBurstShooter_BB	
 	dc.l	EnemySpriteSet_I	
 	dc.l	EnemyAppearance_64
 	dc.l	EnemyData_HomingShooter_64
@@ -40083,7 +40084,8 @@ EnemyData_Bouncing_6A:
 	dc.l	$00000240
 	dc.b	$00
 	dc.b	$02
-loc_0002476A:
+; loc_0002476A
+EnemyData_Bouncing_6B:
 	dc.b	$00, $00, $9A, $72, $00, $6B, $00, $00, $00, $26, $00, $07, $1F, $40, $00, $6E, $03, $96, $01, $00, $00, $00, $05, $50, $00, $0E 
 ; loc_00024784
 EnemyData_Bouncing_AC:
@@ -40553,7 +40555,8 @@ EnemyData_StandardMeleeFast_61:
 	dc.l	$00000120
 	dc.b	$01
 	dc.b	$02
-loc_00024B7A:
+; loc_00024B7A
+EnemyData_StandardMeleeFast_BD:
 	dc.b	$00, $00, $95, $28, $00, $BD, $00, $01, $10, $2D, $00, $07, $08, $98, $00, $31, $02, $08, $00, $68, $00, $00, $01, $60, $01, $02 
 ; loc_00024B94
 EnemyData_StandardMeleeFast_BE:
@@ -40687,7 +40690,8 @@ EnemyData_StalkPause3_64:
 	dc.l	$00000180
 	dc.b	$01
 	dc.b	$02
-loc_00024CB2:
+; loc_00024CB2
+EnemyData_StationaryShooter_B9:
 	dc.b	$00, $00, $9D, $90, $00, $B9, $00, $00, $00, $03, $00, $07, $03, $48, $00, $4D, $04, $16, $00, $70, $00, $00, $02, $00, $01, $02 
 ; loc_00024CCC
 EnemyData_StalkPause3_BA:
@@ -40749,7 +40753,8 @@ EnemyData_FastBurstShooter_BA:
 	dc.l	$00000180
 	dc.b	$01
 	dc.b	$02
-loc_00024D4E:
+; loc_00024D4E
+EnemyData_FastBurstShooter_BB:
 	dc.b	$00, $00, $A6, $AA, $00, $BB, $00, $00, $00, $20, $03, $01, $0A, $8C, $00, $75, $05, $44, $01, $82, $00, $00, $01, $80, $01, $02 
 ; loc_00024D68
 EnemyData_HomingShooter_64:
