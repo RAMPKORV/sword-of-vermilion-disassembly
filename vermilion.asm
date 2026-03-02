@@ -49920,7 +49920,7 @@ OverworldMaps: ; 128
 	dc.l	loc_0003E6DA
 	dc.l	loc_0003EC84
 	dc.l	loc_0003EF12
-	dc.l	loc_0003F1AC
+	dc.l	OverworldMapSector_F1AC
 	dc.l	loc_0003F33E
 	dc.l	loc_0003F4DA
 	dc.l	loc_0003F70A
@@ -49936,7 +49936,7 @@ OverworldMaps: ; 128
 	dc.l	loc_0003EB22
 	dc.l	loc_0003ECA2
 	dc.l	loc_0003EF60
-	dc.l	loc_0003F1AC
+	dc.l	OverworldMapSector_F1AC
 	dc.l	loc_0003F33E
 	dc.l	loc_0003F574
 	dc.l	loc_0003F70A
@@ -49952,7 +49952,7 @@ OverworldMaps: ; 128
 	dc.l	loc_0003EB4E
 	dc.l	loc_0003ECEA
 	dc.l	loc_0003EFDA
-	dc.l	loc_0003F1AC
+	dc.l	OverworldMapSector_F1AC
 	dc.l	loc_0003F33E
 	dc.l	loc_0003F5DC
 	dc.l	loc_0003F70A
@@ -49968,7 +49968,7 @@ OverworldMaps: ; 128
 	dc.l	loc_0003EBA4
 	dc.l	loc_0003ED68
 	dc.l	loc_0003F05A
-	dc.l	loc_0003F1AC
+	dc.l	OverworldMapSector_F1AC
 	dc.l	loc_0003F388
 	dc.l	loc_0003F61E
 	dc.l	loc_0003F76E
@@ -50191,7 +50191,8 @@ loc_0003F134:
 loc_0003F188:
 	dc.b	$E9, $02, $82, $00, $8C, $02, $00, $01, $00, $8A, $02, $82, $00, $01, $83, $00, $87, $02, $00, $86, $01, $87, $02, $00, $01, $85, $02, $88, $00, $01, $85, $02 
 	dc.b	$89, $01, $B5, $02 
-loc_0003F1AC:
+; OverworldMapSector_F1AC
+OverworldMapSector_F1AC:
 	dc.b	$8F, $02, $81, $00, $8E, $02, $00, $8E, $02, $00, $82, $02, $87, $00, $83, $02, $00, $82, $02, $00, $81, $02, $83, $01, $81, $00, $82, $02, $84, $00, $81, $02 
 	dc.b	$84, $01, $82, $00, $84, $02, $81, $00, $82, $02, $85, $01, $85, $02, $82, $00, $02, $85, $01, $87, $02, $00, $81, $02, $84, $01, $87, $02, $00, $81, $02, $84 
 	dc.b	$01, $87, $02, $00, $02, $85, $01, $87, $02, $00, $02, $85, $01, $87, $02, $00, $02, $85, $01, $88, $00, $02, $85, $01, $89, $02, $85, $01, $89, $02, $85, $01 
