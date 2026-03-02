@@ -1297,6 +1297,22 @@ PALETTE_IDX_ENDING_FIRE     = $0095   ; Ending sequence fire palette
 
 
 
+
+; ============================================================
+; Movement Constants
+; ============================================================
+; The player moves one tile at a time.  Each tile is 16 pixels,
+; so the movement step counter counts down from 16 to 0.
+;
+PLAYER_MOVE_STEPS   = $10     ; Steps (pixels) per tile movement (16)
+
+; ============================================================
+; VDP DMA Control Words
+; ============================================================
+; Pre-built VDP control port command words for DMA operations.
+; Written to Vdp_dma_cmd before triggering a DMA transfer.
+;
+VDP_DMA_CMD_CRAM    = $C0000080 ; DMA write to CRAM (palette RAM) at offset 0
 ; ============================================================
 ; Boolean Flag Values
 ; ============================================================
