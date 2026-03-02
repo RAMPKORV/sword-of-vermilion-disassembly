@@ -1294,6 +1294,25 @@ PALETTE_IDX_ALL_WHITE       = $0084   ; All-white flash palette (ending/lightnin
 PALETTE_IDX_ALL_BLACK       = $0094   ; All-black palette (ending screen blanks)
 PALETTE_IDX_ENDING_FIRE     = $0095   ; Ending sequence fire palette
 
+
+; ============================================================
+; Tile Type Values (Current_tile_type)
+; ============================================================
+; Stored in Current_tile_type after GetCurrentTileType masks the
+; tilemap word with $F000.  The upper nibble encodes what kind of
+; tile transition the player is standing on.
+;
+TILE_TYPE_ENTRANCE  = $2000   ; Building / cave entrance tile (go deeper)
+TILE_TYPE_CASTLE    = $3000   ; Castle door tile (enter castle)
+TILE_TYPE_EXIT      = $F000   ; Exit tile (return to overworld / higher floor)
+
+; ============================================================
+; VDP Tile Attribute Constants
+; ============================================================
+; OR'd into tile index words when writing tiles to VRAM.
+; $6000 = priority bit set + palette line 3 (used for dialogue/script tiles).
+;
+VDP_ATTR_SCRIPT     = $6000   ; VDP tile attributes for script/dialogue rendering
 ; ============================================================
 ; Sound Effect IDs
 ; ============================================================
