@@ -21778,14 +21778,15 @@ loc_0001286A:
 ; Handle UP button - move cursor up in menu
 MenuCursorUp:
 	MOVE.w	Menu_cursor_index.w, D0
-	BLE.b	loc_00012886
+	BLE.b	MenuCursorUp_Return
 	SUB.w	Menu_cursor_column_break.w, D0
 	SUBQ.w	#1, D0
-	BEQ.b	loc_00012886
+	BEQ.b	MenuCursorUp_Return
 	BSR.w	EraseMenuCursor
 	SUBQ.w	#1, Menu_cursor_index.w
 	BSR.w	DrawMenuCursor
-loc_00012886:
+; loc_00012886
+MenuCursorUp_Return:
 	RTS
 	
 ; loc_00012888
@@ -21793,13 +21794,14 @@ loc_00012886:
 MenuCursorDown:
 	MOVE.w	Menu_cursor_index.w, D0
 	CMP.w	Menu_cursor_column_break.w, D0
-	BEQ.b	loc_000128A4
+	BEQ.b	MenuCursorDown_Return
 	CMP.w	Menu_cursor_last_index.w, D0
-	BEQ.b	loc_000128A4
+	BEQ.b	MenuCursorDown_Return
 	BSR.w	EraseMenuCursor
 	ADDQ.w	#1, Menu_cursor_index.w
 	BSR.w	DrawMenuCursor
-loc_000128A4:
+; loc_000128A4
+MenuCursorDown_Return:
 	RTS
 	
 ; loc_000128A6
@@ -21821,17 +21823,18 @@ loc_000128C2:
 MenuCursorRight:
 	MOVE.w	Menu_cursor_index.w, D0
 	CMP.w	Menu_cursor_column_break.w, D0
-	BGT.b	loc_000128EC
+	BGT.b	MenuCursorRight_Return
 	ADD.w	Menu_cursor_column_break.w, D0
 	ADDQ.w	#1, D0
 	CMP.w	Menu_cursor_last_index.w, D0
-	BGT.b	loc_000128EC
+	BGT.b	MenuCursorRight_Return
 	BSR.w	EraseMenuCursor
 	MOVE.w	Menu_cursor_column_break.w, D0
 	ADDQ.w	#1, D0
 	ADD.w	D0, Menu_cursor_index.w
 	BSR.w	DrawMenuCursor
-loc_000128EC:
+; loc_000128EC
+MenuCursorRight_Return:
 	RTS
 	
 loc_000128EE:					; unreferenced dead code
@@ -21908,7 +21911,8 @@ loc_000129A4:
 	ADD.w	D4, D4
 	MOVEA.l	$0(A1,D4.w), A0
 	CLR.w	D2
-loc_000129B4:
+; loc_000129B4
+DrawWindowChar_WriteVDP:
 	JSR	GetScrollOffsetInTiles
 	ADD.w	D2, D0
 	ADD.w	D3, D1
@@ -21928,23 +21932,24 @@ loc_000129B4:
 	CMPI.b	#$FF, D6
 	BEQ.b	loc_00012A14
 	CMPI.b	#$DE, D6
-	BEQ.b	loc_00012A20
+	BEQ.b	DrawWindowChar_Special
 	CMPI.b	#$DF, D6
-	BEQ.b	loc_00012A20
+	BEQ.b	DrawWindowChar_Special
 	ADDI.w	#$4C0, D6
 	ORI.w	#$8000, D6
 	ORI.w	#$0000, D6
 	MOVE.w	D6, VDP_data_port
 	ADDQ.w	#1, D2
-	BRA.b	loc_000129B4
+	BRA.b	DrawWindowChar_WriteVDP
 loc_00012A14:
 	ADDQ.w	#2, D3
 	CMP.w	Window_tilemap_draw_height.w, D3
 	DBF	D7, loc_000129A4
 	RTS
-loc_00012A20:
+; loc_00012A20
+DrawWindowChar_Special:
 	BSR.w	DrawSpecialCharToVRAM
-	BRA.b	loc_000129B4
+	BRA.b	DrawWindowChar_WriteVDP
 loc_00012A26:					; unreferenced dead code
 	MOVE.w	#$0012, Window_number_cursor_x.w
 	MOVE.w	#$0002, Window_number_cursor_y.w
@@ -22046,7 +22051,8 @@ loc_00012B60:
 	ADD.w	D4, D4
 	MOVEA.l	(A1,D4.w), A0
 	CLR.w	D2
-loc_00012B70:
+; loc_00012B70
+DrawWindowChar2_WriteVDP:
 	JSR	GetScrollOffsetInTiles
 	ADD.w	D2, D0
 	ADD.w	D3, D1
@@ -22065,9 +22071,9 @@ loc_00012B70:
 	CMPI.b	#$FF, D6
 	BEQ.b	loc_00012BD8
 	CMPI.b	#$DE, D6
-	BEQ.b	loc_00012BE0
+	BEQ.b	DrawWindowChar2_Special
 	CMPI.b	#$DF, D6
-	BEQ.b	loc_00012BE0
+	BEQ.b	DrawWindowChar2_Special
 	ADDI.w	#$04C0, D6
 	ORI.w	#$8000, D6
 	ORI.w	#0, D6
@@ -22076,15 +22082,16 @@ loc_00012B70:
 	MOVE.w	D6, VDP_data_port
 	ANDI	#$F8FF, SR
 	ADDQ.w	#1, D2
-	BRA.b	loc_00012B70
+	BRA.b	DrawWindowChar2_WriteVDP
 loc_00012BD8:
 	ADDQ.w	#2, D3
 	DBF	D7, loc_00012B60
 	RTS
 	
-loc_00012BE0:
+; loc_00012BE0
+DrawWindowChar2_Special:
 	BSR.w	DrawSpecialCharToVRAM	
-	BRA.b	loc_00012B70	
+	BRA.b	DrawWindowChar2_WriteVDP	
 DrawSpecialCharToVRAM:
 	ADDI.w	#$04C0, D6	
 	ORI.w	#$8000, D6	
@@ -22199,7 +22206,8 @@ RenderTextAtOffset:
 	LEA	(A1,D0.w), A1
 loc_00012CFE:
 	LEA	(A1), A2
-loc_00012D00:
+; loc_00012D00
+WindowTextDecode_Next:
 	CLR.w	D6
 	MOVE.b	(A0)+, D6
 	CMPI.b	#$FF, D6
@@ -22207,27 +22215,28 @@ loc_00012D00:
 	CMPI.b	#$FE, D6
 	BEQ.w	loc_00012D2E
 	CMPI.b	#$DE, D6
-	BEQ.b	loc_00012D3C
+	BEQ.b	WindowTextDecode_Special
 	CMPI.b	#$DF, D6
-	BEQ.b	loc_00012D3C
+	BEQ.b	WindowTextDecode_Special
 	CMPI.b	#$20, D6
 	BNE.b	loc_00012D2A
 	MOVE.b	#$E4, D6
 loc_00012D2A:
 	MOVE.b	D6, (A2)+
-	BRA.b	loc_00012D00
+	BRA.b	WindowTextDecode_Next
 loc_00012D2E:
 	MOVE.w	Window_width.w, D0
 	ADDQ.w	#1, D0
 	ADD.w	D0, D0
 	LEA	(A1,D0.w), A1
 	BRA.b	loc_00012CFE
-loc_00012D3C:
+; loc_00012D3C
+WindowTextDecode_Special:
 	MOVE.w	Window_width.w, D0	
 	ADDQ.w	#1, D0	
 	NEG.w	D0	
 	MOVE.b	D6, -$1(A2,D0.w)	
-	BRA.b	loc_00012D00	
+	BRA.b	WindowTextDecode_Next	
 loc_00012D4A:
 	RTS
 	
@@ -22438,7 +22447,8 @@ loc_00013076:
 	MOVE.l	#$4D360003, D5
 loc_00013088:
 	CLR.w	D2
-loc_0001308A:
+; loc_0001308A
+TitleBarText_Next:
 	MOVE.w	D2, D3
 	ANDI.l	#$0000FFFF, D3
 	ADD.w	D3, D3
@@ -22449,23 +22459,24 @@ loc_0001308A:
 	CMPI.b	#$FF, D0
 	BEQ.w	loc_000130E8
 	CMPI.b	#$DE, D0
-	BEQ.b	loc_000130C8
+	BEQ.b	TitleBarText_SpecialChar
 	CMPI.b	#$DF, D0
-	BEQ.b	loc_000130C8
+	BEQ.b	TitleBarText_SpecialChar
 	ADDI.w	#$84C0, D0
 	MOVE.l	D3, VDP_control_port
 	MOVE.w	D0, VDP_data_port
 	ANDI	#$F8FF, SR
 	ADDQ.w	#1, D2
-	BRA.b	loc_0001308A
-loc_000130C8:
+	BRA.b	TitleBarText_Next
+; loc_000130C8
+TitleBarText_SpecialChar:
 	ADDI.w	#$84C0, D0	
 	SUBI.l	#$00820000, D3	
 	ORI	#$0700, SR	
 	MOVE.l	D3, VDP_control_port	
 	MOVE.w	D0, VDP_data_port	
 	ANDI	#$F8FF, SR	
-	BRA.b	loc_0001308A	
+	BRA.b	TitleBarText_Next	
 loc_000130E8:
 	RTS
 
@@ -22598,7 +22609,7 @@ loc_000132AC:
 	SUBQ.w	#1, D1
 	EOR.w	D0, D1
 	BTST.l	#3, D1
-	BEQ.w	loc_0001330C
+	BEQ.w	FadeOutPalette_WriteVDP
 	ADDQ.w	#1, Palette_fade_step_counter.w
 	CMPI.w	#8, Palette_fade_step_counter.w
 	BGE.w	loc_000133B2
@@ -22619,10 +22630,11 @@ loc_000132F0:
 	BSR.w	DecrementPaletteRGBValues
 loc_000132FE:
 	BTST.l	#3, D3
-	BEQ.b	loc_0001330C
+	BEQ.b	FadeOutPalette_WriteVDP
 	LEA	Palette_line_3_buffer.w, A1
 	BSR.w	DecrementPaletteRGBValues
-loc_0001330C:
+; loc_0001330C
+FadeOutPalette_WriteVDP:
 	stopZ80
 	JSR	InitVdpDmaRamRoutine
 	MOVE.w	#2, D4
@@ -22646,7 +22658,7 @@ DecrementPaletteRGBValues:
 	MOVEQ	#$0000000F, D2
 loc_00013382:
 	MOVE.w	(A1), D0
-	BEQ.w	loc_000133AA
+	BEQ.w	BuildFadeTable_Store
 	MOVE.w	D0, D1
 	ANDI.w	#$0F00, D1
 	BEQ.b	loc_00013394
@@ -22659,9 +22671,10 @@ loc_00013394:
 loc_000133A0:
 	MOVE.w	D0, D1
 	ANDI.w	#$000F, D1
-	BEQ.b	loc_000133AA
+	BEQ.b	BuildFadeTable_Store
 	SUBQ.w	#2, D0
-loc_000133AA:
+; loc_000133AA
+BuildFadeTable_Store:
 	MOVE.w	D0, (A1)+
 	DBF	D2, loc_00013382
 	RTS
@@ -22698,7 +22711,7 @@ loc_0001343E:
 	SUBQ.w	#1, D1
 	EOR.w	D0, D1
 	BTST.l	#3, D1
-	BEQ.w	loc_000134AE
+	BEQ.w	FadeInPalette_WriteVDP
 	ADDQ.w	#1, Palette_fade_in_step.w
 	CMPI.w	#8, Palette_fade_in_step.w
 	BGE.w	loc_0001357C
@@ -22722,11 +22735,12 @@ loc_0001348A:
 	BSR.w	ShiftPaletteTowardsTarget
 loc_0001349C:
 	BTST.l	#3, D3
-	BEQ.b	loc_000134AE
+	BEQ.b	FadeInPalette_WriteVDP
 	LEA	Palette_line_3_buffer.w, A1
 	MOVE.w	Palette_line_3_fade_target.w, D1
 	BSR.w	ShiftPaletteTowardsTarget
-loc_000134AE:
+; loc_000134AE
+FadeInPalette_WriteVDP:
 	MOVE.w	#$0100, Z80_bus_request
 loc_000134B6:
 	BTST.b	#0, Z80_bus_request
@@ -22758,7 +22772,7 @@ loc_00013530:
 	MOVE.w	(A3)+, D4
 	MOVE.w	(A1), D0
 	CMP.w	D4, D0
-	BEQ.w	loc_00013574
+	BEQ.w	BuildFadeInTable_Store
 	MOVE.w	D0, D1
 	ANDI.w	#$0F00, D1
 	MOVE.w	D4, D5
@@ -22780,9 +22794,10 @@ loc_00013562:
 	MOVE.w	D4, D5
 	ANDI.w	#$000F, D5
 	CMP.w	D5, D1
-	BGE.b	loc_00013574
+	BGE.b	BuildFadeInTable_Store
 	ADDQ.w	#2, D0
-loc_00013574:
+; loc_00013574
+BuildFadeInTable_Store:
 	MOVE.w	D0, (A1)+
 	DBF	D7, loc_00013530
 	RTS
@@ -22836,7 +22851,7 @@ loc_0001362C:
 	SUBQ.w	#1, D1
 	EOR.w	D0, D1
 	BTST.l	#3, D1
-	BEQ.w	loc_000136C4
+	BEQ.w	FadePaletteLine3_WriteVDP
 	ADDQ.w	#1, Palette_fade_in_step_counter.w
 	CMPI.w	#8, Palette_fade_in_step_counter.w
 	BGE.w	loc_000137C6
@@ -22876,11 +22891,12 @@ loc_000136A8:
 	BEQ.b	loc_000136BC
 	MOVE.w	Palette_line_3_fade_in_target.w, D1
 	BSR.w	FadePaletteTowardsTarget
-	BRA.b	loc_000136C4
+	BRA.b	FadePaletteLine3_WriteVDP
 loc_000136BC:
 	MOVE.w	Palette_line_3_index.w, D1
 	BSR.w	LoadPaletteByIndex
-loc_000136C4:
+; loc_000136C4
+FadePaletteLine3_WriteVDP:
 	MOVE.w	#$0100, Z80_bus_request
 loc_000136CC:
 	BTST.b	#0, Z80_bus_request
@@ -22932,25 +22948,27 @@ loc_00013764:
 	MOVE.w	D4, D5
 	ANDI.w	#$0F00, D5
 	CMP.w	D5, D1
-	BEQ.b	loc_0001378A
+	BEQ.b	ShiftColorGreenComponent
 	BLT.b	loc_00013786
 	SUBI.w	#$0200, D0
-	BRA.b	loc_0001378A
+	BRA.b	ShiftColorGreenComponent
 loc_00013786:
 	ADDI.w	#$0200, D0
-loc_0001378A:
+; loc_0001378A
+ShiftColorGreenComponent:
 	MOVE.w	D0, D1
 	ANDI.w	#$00F0, D1
 	MOVE.w	D4, D5
 	ANDI.w	#$00F0, D5
 	CMP.w	D5, D1
-	BEQ.b	loc_000137A6
+	BEQ.b	ShiftColorBlueComponent
 	BLT.b	loc_000137A2
 	SUBI.w	#$0020, D0
-	BRA.b	loc_000137A6
+	BRA.b	ShiftColorBlueComponent
 loc_000137A2:
 	ADDI.w	#$0020, D0
-loc_000137A6:
+; loc_000137A6
+ShiftColorBlueComponent:
 	MOVE.w	D0, D1
 	ANDI.w	#$000F, D1
 	MOVE.w	D4, D5
@@ -23270,7 +23288,7 @@ NameEntryScreen_InputHandler:
 	LEA	Player_name.w, A0	
 	MOVE.w	Name_input_cursor_pos.w, D0	
 	LEA	(A0,D0.w), A0	
-	BRA.w	loc_00015304	
+	BRA.w	NameEntry_ConfirmDone	
 loc_0001521C:
 	BSR.w	HandleNameEntryDPad
 loc_00015220:
@@ -23294,7 +23312,7 @@ loc_00015222:
 	ADD.w	Name_entry_cursor_x.w, D2
 	MOVE.b	(A1,D2.w), D3
 	CMPI.b	#$FE, D3
-	BEQ.w	loc_00015304
+	BEQ.w	NameEntry_ConfirmDone
 	CMPI.w	#5, Name_entry_cursor_column.w
 	BLE.b	loc_00015272
 	RTS
@@ -23340,7 +23358,8 @@ loc_000152E2:
 	MOVE.b	#$DF, $1(A0)	
 	RTS
 	
-loc_00015304:
+; loc_00015304
+NameEntry_ConfirmDone:
 	MOVE.b	#$FF, (A0)
 	MOVE.b	#$FF, Name_entry_complete.w
 	MOVE.l	#NameEntryScreen_Done, $2(A5)
@@ -23403,16 +23422,17 @@ NameEntryGridCursor_Tick:
 NameEntryTextCursor_Tick:
 	MOVE.w	Name_entry_cursor_column.w, D0
 	CMPI.w	#5, D0
-	BGT.b	loc_000153E0
+	BGT.b	EnemySprite_BlinkReturn
 	ASL.w	#3, D0
 	ADDI.w	#$008C, D0
 	MOVE.w	D0, $A(A5)
 	ADDQ.b	#1, $1B(A5)
 	MOVE.b	$1B(A5), D0
 	BTST.l	#3, D0
-	BEQ.b	loc_000153E0
+	BEQ.b	EnemySprite_BlinkReturn
 	JSR	AddSpriteToDisplayList
-loc_000153E0:
+; loc_000153E0
+EnemySprite_BlinkReturn:
 	RTS
 
 ClearEnemyListFlags:
@@ -23476,76 +23496,83 @@ HandleNameEntryDPad:
 	BEQ.w	loc_0001558E
 	CLR.b	Name_entry_key_repeat_counter.w
 	BTST.l	#0, D0
-	BNE.w	loc_0001553E
+	BNE.w	NameEntryCursor_Up_Sound
 	BTST.l	#1, D0
-	BNE.w	loc_00015514
+	BNE.w	NameEntryCursor_Down_Sound
 	BTST.l	#2, D0
-	BNE.w	loc_000154EA
+	BNE.w	NameEntryCursor_Left_Sound
 loc_000154C0:
 	MOVE.w	#$00A9, D0
 	JSR	QueueSoundEffect
-loc_000154CA:
+; loc_000154CA
+NameEntryCursor_Right:
 	CMPI.w	#$001D, Name_entry_cursor_x.w
 	BGE.b	loc_000154DE
 	ADDQ.w	#1, Name_entry_cursor_x.w
 	BSR.w	CheckNameEntryCharValid
-	BNE.b	loc_000154CA
+	BNE.b	NameEntryCursor_Right
 	RTS
 	
 loc_000154DE:
 	CLR.w	Name_entry_cursor_x.w
 	BSR.w	CheckNameEntryCharValid
-	BNE.b	loc_000154CA
+	BNE.b	NameEntryCursor_Right
 	RTS
 	
-loc_000154EA:
+; loc_000154EA
+NameEntryCursor_Left_Sound:
 	MOVE.w	#$00A9, D0
 	JSR	QueueSoundEffect
-loc_000154F4:
+; loc_000154F4
+NameEntryCursor_Left:
 	TST.w	Name_entry_cursor_x.w
 	BLE.b	loc_00015506
 	SUBQ.w	#1, Name_entry_cursor_x.w
 	BSR.w	CheckNameEntryCharValid
-	BNE.b	loc_000154F4
+	BNE.b	NameEntryCursor_Left
 	RTS
 loc_00015506:
 	MOVE.w	#$001D, Name_entry_cursor_x.w
 	BSR.w	CheckNameEntryCharValid
-	BNE.b	loc_000154F4
+	BNE.b	NameEntryCursor_Left
 	RTS
 	
-loc_00015514:
+; loc_00015514
+NameEntryCursor_Down_Sound:
 	MOVE.w	#$00A9, D0
 	JSR	QueueSoundEffect
-loc_0001551E:
+; loc_0001551E
+NameEntryCursor_Down:
 	CMPI.w	#$0010, Name_entry_cursor_row.w
 	BGE.b	loc_00015532
 	ADDQ.w	#2, Name_entry_cursor_row.w
 	BSR.w	CheckNameEntryCharValid
-	BNE.b	loc_0001551E
+	BNE.b	NameEntryCursor_Down
 	RTS
 	
 loc_00015532:
 	CLR.w	Name_entry_cursor_row.w
 	BSR.w	CheckNameEntryCharValid
-	BNE.b	loc_0001551E
+	BNE.b	NameEntryCursor_Down
 	RTS
 
-loc_0001553E:
+; loc_0001553E
+NameEntryCursor_Up_Sound:
 	MOVE.w	#$00A9, D0
 	JSR	QueueSoundEffect
-loc_00015548:
+; loc_00015548
+NameEntryCursor_Up:
 	TST.w	Name_entry_cursor_row.w
 	BLE.b	loc_0001555A
 	SUBQ.w	#2, Name_entry_cursor_row.w
 	BSR.w	CheckNameEntryCharValid
-	BNE.b	loc_00015548
+	BNE.b	NameEntryCursor_Up
 	RTS
 	
 loc_0001555A:
 	MOVE.w	#$0010, Name_entry_cursor_row.w
 	BSR.w	CheckNameEntryCharValid
-	BNE.b	loc_00015548
+	BNE.b	NameEntryCursor_Up
 	RTS
 	
 ; CheckNameEntryCharValid
@@ -23580,17 +23607,17 @@ loc_000155BC:
 	CMPI.b	#8, Name_entry_key_repeat_counter.w
 	BLT.w	HandleNameEntryDPad_Return
 	CLR.b	Name_entry_key_repeat_counter.w
-	BRA.w	loc_000154EA
+	BRA.w	NameEntryCursor_Left_Sound
 loc_000155CE:
 	CMPI.b	#8, Name_entry_key_repeat_counter.w
 	BLT.w	HandleNameEntryDPad_Return
 	CLR.b	Name_entry_key_repeat_counter.w
-	BRA.w	loc_0001553E
+	BRA.w	NameEntryCursor_Up_Sound
 loc_000155E0:
 	CMPI.b	#8, Name_entry_key_repeat_counter.w
 	BLT.w	HandleNameEntryDPad_Return
 	CLR.b	Name_entry_key_repeat_counter.w
-	BRA.w	loc_00015514
+	BRA.w	NameEntryCursor_Down_Sound
 ; HandleNameEntryDPad_Return
 HandleNameEntryDPad_Return:
 	RTS
@@ -23636,11 +23663,11 @@ SegaLogoScreen_FadeIn:
 	BTST.b	#6, $00A10001
 	BNE.w	loc_0001569C
 	ANDI.w	#7, Frame_delay_counter.w
-	BNE.b	loc_000156BE
+	BNE.b	ProloguePaletteStep_Return
 	BRA.b	loc_000156A4
 loc_0001569C:
 	ANDI.w	#3, Frame_delay_counter.w	
-	BNE.b	loc_000156BE	
+	BNE.b	ProloguePaletteStep_Return	
 loc_000156A4:
 	CMPI.w	#$0010, Palette_line_0_index.w
 	BLT.b	loc_000156B4
@@ -23650,7 +23677,8 @@ loc_000156B4:
 	ADDQ.w	#1, Palette_line_0_index.w
 loc_000156B8:
 	JSR	LoadPalettesFromTable
-loc_000156BE:
+; loc_000156BE
+ProloguePaletteStep_Return:
 	RTS
 
 ; loc_000156C0
@@ -23752,11 +23780,11 @@ loc_000157F0:
 	ADDQ.w	#1, Prologue_state.w
 	BSR.w	LoadPrologueFadeParams
 	CMPI.l	#$8F84DE76, Player_name.w
-	BNE.b	loc_0001589E
+	BNE.b	DebugMaxStats_Return
 	MOVE.b	Controller_2_current_state.w, D0	
 	MOVE.b	D0, D1	
 	ANDI.w	#1, D0	
-	BEQ.b	loc_0001589E	
+	BEQ.b	DebugMaxStats_Return	
 	ANDI.w	#$0020, D1	
 	BEQ.b	loc_0001584E	
 	MOVE.w	#$0023, D7	
@@ -23781,7 +23809,8 @@ loc_00015856: ; god mode?
 	MOVE.w	#MAX_PLAYER_INT, Player_int.w	
 	MOVE.w	#MAX_PLAYER_LUK, Player_luk.w	
 	MOVE.l	#MAX_PLAYER_KIMS, Player_kims.w	
-loc_0001589E:
+; loc_0001589E
+DebugMaxStats_Return:
 	RTS
 
 loc_000158A0:
@@ -23969,7 +23998,8 @@ loc_00015AF0:
 DrawVerticalText:
 	MOVE.l	D5, VDP_control_port
 	MOVE.l	D5, D3
-loc_00015B14:
+; loc_00015B14
+DrawVerticalText_Next:
 	CLR.w	D0
 	MOVE.b	(A0)+, D0
 	CMPI.b	#$FE, D0
@@ -23977,21 +24007,22 @@ loc_00015B14:
 	CMPI.b	#$FF, D0
 	BEQ.w	loc_00015B6E
 	CMPI.b	#$DE, D0
-	BEQ.b	loc_00015B44
+	BEQ.b	DrawVerticalText_NewLine
 	CMPI.b	#$DF, D0
-	BEQ.b	loc_00015B44
+	BEQ.b	DrawVerticalText_NewLine
 	ADD.w	D4, D0
 	MOVE.w	D0, VDP_data_port
 	ADDI.l	#$00020000, D3
-	BRA.b	loc_00015B14
-loc_00015B44:
+	BRA.b	DrawVerticalText_Next
+; loc_00015B44
+DrawVerticalText_NewLine:
 	SUBI.l	#$00820000, D3	
 	MOVE.l	D3, VDP_control_port	
 	ADD.w	D4, D0	
 	MOVE.w	D0, VDP_data_port	
 	ADDI.l	#$00820000, D3	
 	MOVE.l	D3, VDP_control_port	
-	BRA.b	loc_00015B14	
+	BRA.b	DrawVerticalText_Next	
 loc_00015B66:
 	ADDI.l	#$01000000, D5
 	BRA.b	DrawVerticalText
@@ -24147,13 +24178,14 @@ loc_00015ECA:
 loc_00015EF6:
 	MOVE.w	Town_tilemap_height.w, D1
 	CMPI.w	#$0010, D1
-	BLE.b	loc_00015F10
+	BLE.b	TownCameraScrollUp_TileStep
 	MOVE.w	Town_camera_tile_y.w, D0
 	BLE.b	loc_00015F16
 	CMPI.w	#3, D0
-	BLT.b	loc_00015F10
+	BLT.b	TownCameraScrollUp_TileStep
 	BSR.w	DrawTownRow_Up
-loc_00015F10:
+; loc_00015F10
+TownCameraScrollUp_TileStep:
 	SUBQ.w	#1, Town_camera_tile_y.w
 	BRA.b	loc_00015F1A
 loc_00015F16:
@@ -24180,12 +24212,13 @@ loc_00015F1C:
 loc_00015F4E:
 	MOVE.w	Town_tilemap_height.w, D1
 	CMPI.w	#$0010, D1
-	BLE.b	loc_00015F66
+	BLE.b	TownCameraScrollDown_TileStep
 	SUBI.w	#$001C, D1
 	CMP.w	Town_camera_tile_y.w, D1
-	BLE.b	loc_00015F66
+	BLE.b	TownCameraScrollDown_TileStep
 	BSR.w	DrawTownRow_Bottom
-loc_00015F66:
+; loc_00015F66
+TownCameraScrollDown_TileStep:
 	ADDQ.w	#1, Town_camera_tile_y.w
 	BRA.w	ResetTownCameraMovementState
 loc_00015F6E:
@@ -24207,13 +24240,14 @@ loc_00015F6E:
 loc_00015F9E:
 	MOVE.w	Town_tilemap_width.w, D1
 	CMPI.w	#$0010, D1
-	BLE.b	loc_00015FB6
+	BLE.b	TownCameraScrollLeft_TileStep
 	MOVE.w	Town_camera_tile_x.w, D0
 	BLE.b	loc_00015FBC
 	SUBQ.w	#3, D0
-	BLT.b	loc_00015FB6
+	BLT.b	TownCameraScrollLeft_TileStep
 	BSR.w	DrawTownColumn_Left
-loc_00015FB6:
+; loc_00015FB6
+TownCameraScrollLeft_TileStep:
 	SUBQ.w	#1, Town_camera_tile_x.w
 	BRA.b	loc_00015FC0
 loc_00015FBC:
@@ -24240,12 +24274,13 @@ loc_00015FC4:
 loc_00015FF8:
 	MOVE.w	Town_tilemap_width.w, D1
 	CMPI.w	#$0010, D1
-	BLE.b	loc_00016010
+	BLE.b	TownCameraScrollRight_TileStep
 	SUBI.w	#$001C, D1
 	CMP.w	Town_camera_tile_x.w, D1
-	BLE.b	loc_00016010
+	BLE.b	TownCameraScrollRight_TileStep
 	BSR.w	DrawTownColumn_Right
-loc_00016010:
+; loc_00016010
+TownCameraScrollRight_TileStep:
 	ADDQ.w	#1, Town_camera_tile_x.w
 	BRA.w	ResetTownCameraMovementState
 LoadTownTilemaps:
@@ -24351,9 +24386,9 @@ loc_0001613A:
 	ADD.w	D1, D0
 	LEA	(A6,D0.w), A2
 	TST.b	Tilemap_row_overflow_flag.w
-	BNE.b	loc_00016170
+	BNE.b	WriteTownTilemap_ClearTile
 	CMP.w	Town_tilemap_width.w, D5
-	BGE.b	loc_00016170
+	BGE.b	WriteTownTilemap_ClearTile
 	MOVE.w	(A3)+, D0
 	TST.w	Tilemap_plane_select.w
 	BEQ.b	loc_0001616A
@@ -24363,7 +24398,8 @@ loc_0001616A:
 	BSR.w	WriteTownTile2x2WithFlip
 loc_0001616E:
 	BRA.b	loc_0001617E
-loc_00016170:
+; loc_00016170
+WriteTownTilemap_ClearTile:
 	MOVE.l	#0, (A2)
 	MOVE.l	#0, $80(A2)
 loc_0001617E:
@@ -24463,11 +24499,11 @@ loc_00016272:
 	LEA	TownPaletteConfigTable, A0
 	MOVE.w	Current_town_room.w, D0
 	CMPI.w	#$000F, D0
-	BLE.w	loc_000162EA
+	BLE.w	LoadTownTilesetPalette
 	CMPI.w	#$001F, D0
 	BLE.b	loc_000162C6
 	CMPI.w	#$002A, D0
-	BLE.w	loc_000162EA
+	BLE.w	LoadTownTilesetPalette
 	CMPI.w	#$002D, D0
 	BLE.b	loc_000162C0
 	MOVE.w	#6, D0
@@ -24489,7 +24525,8 @@ WriteTownTilemapToVRAM_SetPalette:
 	MOVE.w	(A0)+, Palette_line_2_cycle_index_2.w
 	RTS
 
-loc_000162EA:
+; loc_000162EA
+LoadTownTilesetPalette:
 	MOVE.w	Town_tileset_index.w, D0
 	CMPI.w	#1, D0
 	BEQ.b	loc_000162F6
@@ -24865,9 +24902,9 @@ UpdatePaletteCycle:
 	SUBQ.b	#1, D1
 	EOR.b	D0, D1
 	BTST.l	#3, D1
-	BEQ.w	loc_000167CE
+	BEQ.w	TownPaletteCycle_Return
 	BTST.l	#3, D0
-	BEQ.w	loc_000167CE
+	BEQ.w	TownPaletteCycle_Return
 	ADDQ.b	#1, Palette_line_2_cycle_step.w
 	CMPI.b	#2, Palette_line_2_cycle_step.w
 	BLE.b	loc_000167AA
@@ -24884,7 +24921,8 @@ loc_000167AA:
 loc_000167C4:
 	MOVE.w	D0, Palette_line_2_index.w
 	JSR	LoadPalettesFromTable
-loc_000167CE:
+; loc_000167CE
+TownPaletteCycle_Return:
 	RTS
 
 ; loc_000167D0
@@ -24956,7 +24994,7 @@ DecompressTilemap:
 	MULU.w	D1, D0
 	ADD.w	D0, D0
 	MOVE.w	D0, Tilemap_buffer_size.w
-	BRA.w	loc_000168B6
+	BRA.w	DecompressTilemap_Next
 DecompressTilemap_WithOffset:
 	CLR.w	D6
 	CLR.w	D0
@@ -24971,7 +25009,8 @@ DecompressTilemap_WithOffset:
 	ADD.w	D0, D0
 	MOVE.w	D0, Tilemap_buffer_size.w
 	ADDQ.w	#1, A2
-loc_000168B6:
+; loc_000168B6
+DecompressTilemap_Next:
 	CLR.w	D0
 	CMP.w	Tilemap_buffer_size.w, D6
 	BGE.w	loc_000169CE
@@ -24982,7 +25021,7 @@ loc_000168B6:
 	MOVE.w	D1, D2
 	ASL.w	#2, D2
 	JSR	TilemapDecompression_JumpTable(PC,D2.w)
-	BRA.b	loc_000168B6
+	BRA.b	DecompressTilemap_Next
 TilemapDecompression_JumpTable:
 	BRA.w	loc_000168F2
 	BRA.w	loc_00016906
@@ -25210,17 +25249,18 @@ loc_00016B3E:
 	MOVE.w	#$0030, Palette_line_0_index.w
 	MOVE.w	#$0027, Palette_line_3_index.w
 	ADDQ.w	#1, Intro_animation_frame.w
-	BRA.b	loc_00016B82
+	BRA.b	TitleScreen_LoadPalette
 loc_00016B5C:
 	MOVE.w	#$0084, Palette_line_0_index.w
 	MOVE.w	#$0029, Palette_line_3_index.w
 	ADDQ.w	#1, Intro_animation_frame.w
-	BRA.b	loc_00016B82
+	BRA.b	TitleScreen_LoadPalette
 loc_00016B6E:
 	MOVE.w	#$0030, Palette_line_0_index.w
 	MOVE.w	#$0027, Palette_line_3_index.w
 	MOVE.l	#TitleScreen_ShowPressStart, $2(A5)
-loc_00016B82:
+; loc_00016B82
+TitleScreen_LoadPalette:
 	JSR	LoadPalettesFromTable
 loc_00016B88:
 	RTS
@@ -25557,15 +25597,16 @@ EndingSequenceStepJumpTable:
 	BRA.w	EndingSequence_CommonUpdate
 loc_0001703C:
 	TST.b	Palette_fade_in_mask.w
-	BNE.b	loc_00017062
+	BNE.b	EndingStep_Return1
 	SUBQ.w	#1, Ending_timer.w
-	BGT.b	loc_00017062
+	BGT.b	EndingStep_Return1
 	JSR	ClearScrollData
 	MOVE.w	#$00A5, D0
 	JSR	QueueSoundEffect
 	MOVE.w	#$00C8, Ending_timer.w
 	ADDQ.w	#1, Ending_sequence_step.w
-loc_00017062:
+; loc_00017062
+EndingStep_Return1:
 	RTS
 
 loc_00017064:
@@ -25596,13 +25637,14 @@ loc_000170BE:
 
 loc_000170C0:
 	TST.b	Palette_fade_in_mask.w
-	BNE.b	loc_000170DC
+	BNE.b	EndingStep_Return2
 	SUBQ.w	#1, Ending_timer.w
-	BGT.b	loc_000170DC
+	BGT.b	EndingStep_Return2
 	MOVE.w	#$0084, Palette_line_0_fade_in_target.w
 	MOVE.b	#1, Palette_fade_in_mask.w
 	ADDQ.w	#1, Ending_sequence_step.w
-loc_000170DC:
+; loc_000170DC
+EndingStep_Return2:
 	RTS
 
 loc_000170DE:
@@ -25622,13 +25664,14 @@ loc_00017114:
 
 loc_00017116:
 	TST.b	Palette_fade_in_mask.w
-	BNE.b	loc_00017132
+	BNE.b	EndingStep_Return3
 	SUBQ.w	#1, Ending_timer.w
-	BGT.b	loc_00017132
+	BGT.b	EndingStep_Return3
 	MOVE.w	#$0084, Palette_line_0_fade_in_target.w
 	MOVE.b	#$FF, Fade_out_lines_mask.w
 	ADDQ.w	#1, Ending_sequence_step.w
-loc_00017132:
+; loc_00017132
+EndingStep_Return3:
 	RTS
 
 loc_00017134:
@@ -25678,13 +25721,14 @@ EndingSequenceStep_Done:
 	BRA.w	EndingSequence_CommonUpdate
 loc_000171E6:
 	TST.b	Palette_fade_in_mask.w
-	BNE.b	loc_00017202
+	BNE.b	EndingStep_Return4
 	SUBQ.w	#1, Ending_timer.w
-	BGT.b	loc_00017202
+	BGT.b	EndingStep_Return4
 	ADDQ.w	#1, Ending_sequence_step.w
 	MOVE.w	#$0094, Palette_line_0_fade_in_target.w
 	MOVE.b	#1, Palette_fade_in_mask.w
-loc_00017202:
+; loc_00017202
+EndingStep_Return4:
 	BRA.w	EndingSequence_CommonUpdate
 loc_00017206:
 	TST.b	Palette_fade_in_mask.w
@@ -25702,13 +25746,14 @@ loc_0001723C:
 	BRA.w	EndingSequence_CommonUpdate
 loc_00017240:
 	TST.b	Palette_fade_in_mask.w
-	BNE.b	loc_0001725C
+	BNE.b	EndingStep_Return5
 	SUBQ.w	#1, Ending_timer.w
-	BGT.b	loc_0001725C
+	BGT.b	EndingStep_Return5
 	ADDQ.w	#1, Ending_sequence_step.w
 	MOVE.w	#$0094, Palette_line_0_fade_in_target.w
 	MOVE.b	#1, Palette_fade_in_mask.w
-loc_0001725C:
+; loc_0001725C
+EndingStep_Return5:
 	BRA.w	EndingSequence_CommonUpdate
 loc_00017260:
 	TST.b	Palette_fade_in_mask.w
