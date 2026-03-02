@@ -4573,7 +4573,7 @@ loc_00004690:
 	BSR.w	RenderMapToVRAM_DualPalette_21x13
 	TST.b	Is_in_cave.w
 	BNE.b	loc_000046AA
-	BRA.w	loc_000061D8
+	BRA.w	DrawCompassTiles
 loc_000046AA:
 	BRA.w	DisplayStatsToVRAM_SinglePalette
 loc_000046AE:
@@ -4587,7 +4587,7 @@ loc_000046BE:
 	BSR.w	RenderMapToVRAM_DualPalette_21x20
 	TST.b	Is_in_cave.w
 	BNE.b	loc_000046D4
-	BRA.w	loc_000061D8
+	BRA.w	DrawCompassTiles
 loc_000046D4:
 	BRA.w	DisplayStatsToVRAM
 loc_000046D8:
@@ -4601,7 +4601,7 @@ loc_000046E8:
 	BSR.w	RenderMapToVRAM_DualPalette_21x13_Alt
 	TST.b	Is_in_cave.w
 	BNE.b	loc_000046FE
-	BRA.w	loc_000061D8
+	BRA.w	DrawCompassTiles
 loc_000046FE:
 	BRA.w	DisplayStatsToVRAM_AltPalette
 UpdatePlayerMapSector:
@@ -6475,14 +6475,15 @@ UpdateCompassDisplay:
 	CMPI.w	#6, D0
 	BNE.b	loc_000061D2
 	MOVE.w	#4, Player_compass_frame.w
-	BRA.w	loc_000061D8
+	BRA.w	DrawCompassTiles
 loc_000061C8:
 	MOVE.w	#$000C, Player_compass_frame.w
-	BRA.w	loc_000061D8
+	BRA.w	DrawCompassTiles
 loc_000061D2:
 	ADD.w	D0, D0
 	MOVE.w	D0, Player_compass_frame.w
-loc_000061D8:
+; loc_000061D8
+DrawCompassTiles:
 	MOVE.w	Player_compass_frame.w, D0
 	MULU.w	#5, D0
 	LEA	loc_0006A6A0, A0
@@ -7375,33 +7376,34 @@ BossCollision_FinalBoss:
 
 CheckObjectCollisionBounds:
 	BTST.b	#7, (A6)
-	BEQ.b	loc_00006D8C
+	BEQ.b	ObjectCollisionBounds_Done
 	CLR.w	D4
 	MOVE.b	$2F(A6), D4
 	EXT.w	D4
 	ADD.w	$E(A6), D4
 	CMP.w	D0, D4
-	BLT.b	loc_00006D8C
+	BLT.b	ObjectCollisionBounds_Done
 	CLR.w	D4
 	MOVE.b	$2E(A6), D4
 	EXT.w	D4
 	ADD.w	$E(A6), D4
 	CMP.w	D1, D4
-	BGT.b	loc_00006D8C
+	BGT.b	ObjectCollisionBounds_Done
 	CLR.w	D4
 	MOVE.b	$31(A6), D4
 	EXT.w	D4
 	ADD.w	$12(A6), D4
 	CMP.w	D2, D4
-	BLT.b	loc_00006D8C
+	BLT.b	ObjectCollisionBounds_Done
 	CLR.w	D4
 	MOVE.b	$30(A6), D4
 	EXT.w	D4
 	ADD.w	$12(A6), D4
 	CMP.w	D3, D4
-	BGT.b	loc_00006D8C
+	BGT.b	ObjectCollisionBounds_Done
 	MOVE.b	#$FF, $26(A6)
-loc_00006D8C:
+; ObjectCollisionBounds_Done
+ObjectCollisionBounds_Done:
 	RTS
 
 GetBoundingBoxFromTable:
@@ -8029,11 +8031,11 @@ NPCTick_Malaga_DungeonKeyGiver:
 	BGE.w	loc_00007522
 	MOVE.l	#MalagaNorthKeyStr, $1C(A5)
 	TST.b	Malaga_key_dialog_shown.w
-	BEQ.w	loc_0000752A
+	BEQ.w	NPCTick_SetMessage_Done
 	BSR.w	AddItemToInventoryList
 	MOVE.w	#$0025, (A0,D0.w)
 	MOVE.b	#$FF, Dungeon_key_received.w
-	BRA.w	loc_0000752A
+	BRA.w	NPCTick_SetMessage_Done
 loc_000074D4:
 	BSR.w	CheckInventoryFull
 	BGE.w	loc_00007518
@@ -8046,17 +8048,18 @@ loc_000074D4:
 	BNE.b	loc_00007518	
 	MOVE.l	#LostKeyStr, $1C(A5)	
 	TST.b	Replacement_key_enabled.w	
-	BEQ.w	loc_0000752A	
+	BEQ.w	NPCTick_SetMessage_Done	
 	BSR.w	AddItemToInventoryList	
 	MOVE.w	#$0025, (A0,D0.w)	
 	MOVE.b	#$FF, Received_replacement_key.w	
-	BRA.b	loc_0000752A	
+	BRA.b	NPCTick_SetMessage_Done	
 loc_00007518:
 	MOVE.l	#FindPoisonShieldStr, $1C(A5)
-	BRA.b	loc_0000752A
+	BRA.b	NPCTick_SetMessage_Done
 loc_00007522:
 	MOVE.l	#ComeBackLessGearStr, $1C(A5)	
-loc_0000752A:
+; NPCTick_SetMessage_Done
+NPCTick_SetMessage_Done:
 	BRA.w	UpdateNPCSpriteFrame
 ; loc_0000752E
 NPCInit_Malaga_DungeonKeyGiver:
@@ -8817,7 +8820,7 @@ loc_00007E4A:
 ; loc_00007E54
 NPCTick_Carthahena_KingThuleKey:
 	TST.b	Carthahena_boss_defeated.w
-	BEQ.w	loc_00007EB8
+	BEQ.w	NPCTick_SetMessage2_Done
 	TST.b	Knute_informed_of_swaffham_ruin.w
 	BEQ.w	loc_00007EB0
 	MOVE.w	#4, D7
@@ -8825,22 +8828,23 @@ NPCTick_Carthahena_KingThuleKey:
 	BNE.w	loc_00007EB0
 	MOVE.l	#TsarkonFledEastwardStr, $1C(A5)
 	TST.b	Thule_key_received.w
-	BNE.w	loc_00007EB8
+	BNE.w	NPCTick_SetMessage2_Done
 	BSR.w	CheckInventoryFull
 	BGE.b	loc_00007EA6
 	MOVE.l	#TsarkonFledEastStr, $1C(A5)
 	TST.b	Knute_thule_key_dialog_shown.w
-	BEQ.b	loc_00007EB8
+	BEQ.b	NPCTick_SetMessage2_Done
 	BSR.w	AddItemToInventoryList
 	MOVE.w	#((ITEM_TYPE_NON_DISCARDABLE<<8)|ITEM_THULE_KEY), (A0,D0.w)
 	MOVE.b	#$FF, Thule_key_received.w
-	BRA.b	loc_00007EB8
+	BRA.b	NPCTick_SetMessage2_Done
 loc_00007EA6:
 	MOVE.l	#ComeBackLessGearStr3, $1C(A5)
-	BRA.b	loc_00007EB8
+	BRA.b	NPCTick_SetMessage2_Done
 loc_00007EB0:
 	MOVE.l	#MustHaveAllRingsStr, $1C(A5)	
-loc_00007EB8:
+; NPCTick_SetMessage2_Done
+NPCTick_SetMessage2_Done:
 	BRA.w	UpdateNPCSpriteFrame
 ; loc_00007EBC
 NPCInit_Helwig_InnFryingPan:
@@ -8929,16 +8933,16 @@ UpdateParmaSoldierRotation:
 	BSR.w	CheckPlayerInBoundingBox
 	BEQ.b	loc_00007FDC
 	TST.b	$2C(A5)
-	BNE.w	loc_00008050
+	BNE.w	ParmaSoldierRotation_Return
 	MOVE.b	#$FF, $19(A5)
 	MOVE.b	$28(A5), $18(A5)
-	BNE.w	loc_00008050
+	BNE.w	ParmaSoldierRotation_Return
 loc_00007FDC:
 	TST.b	$2C(A5)
-	BEQ.w	loc_00008050
+	BEQ.w	ParmaSoldierRotation_Return
 	MOVE.b	#$FF, $19(A5)
 	MOVE.b	$29(A5), $18(A5)
-	BNE.w	loc_00008050
+	BNE.w	ParmaSoldierRotation_Return
 loc_00007FF4:
 	CMPI.b	#2, $18(A5)
 	BLE.b	loc_00008006
@@ -8951,7 +8955,7 @@ loc_0000800E:
 	ADDQ.b	#1, $26(A5)
 	ADDQ.b	#1, $1B(A5)
 	CMPI.b	#$20, $26(A5)
-	BLT.b	loc_00008050
+	BLT.b	ParmaSoldierRotation_Return
 	CLR.b	$2C(A5)
 	MOVE.b	$18(A5), D0
 	CMP.b	$28(A5), D0
@@ -8963,7 +8967,8 @@ loc_00008038:
 	CLR.b	$19(A5)
 	MOVE.b	#4, $18(A5)
 	MOVE.b	#4, $27(A5)
-loc_00008050:
+; ParmaSoldierRotation_Return
+ParmaSoldierRotation_Return:
 	RTS
 
 ;CheckPlayerInBoundingBox:
