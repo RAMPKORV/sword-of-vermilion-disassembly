@@ -3495,7 +3495,7 @@ PlayerObjectTick:
 	BEQ.w	loc_0000385E
 	SUBQ.w	#1, D0
 	ADD.w	D0, D0
-	LEA	loc_0002291C, A0
+	LEA	BattleSpriteIndexTableB, A0
 	MOVE.w	(A0,D0.w), D0
 	ANDI.w	#$000E, D0
 	MOVE.w	D0, Player_direction.w
@@ -3929,7 +3929,7 @@ loc_00003DB6:
 	BEQ.w	loc_00003EC4
 	SUBQ.w	#1, D0
 	ADD.w	D0, D0
-	LEA	loc_000228FE, A0
+	LEA	BattleSpriteIndexTableA, A0
 	MOVE.w	(A0,D0.w), Player_direction.w
 	LEA	SineTable, A0
 	MOVE.l	$20(A5), D0
@@ -13115,7 +13115,7 @@ InitBoss1_Common:
 	MOVEA.l	Enemy_list_ptr.w, A6
 	CLR.w	Boss_ai_state.w
 	CLR.b	$1B(A6)
-	LEA	loc_00022ECA, A0
+	LEA	EnemySpriteFrameDataA_00, A0
 	BSET.b	#7, (A6)
 	MOVE.b	#$20, $7(A6)
 	BCLR.b	#7, $7(A6)
@@ -13141,7 +13141,7 @@ loc_0000B8F2:
 	BSR.w	InitNextSpriteSlot
 	DBF	D7, loc_0000B8F2
 	MOVEA.l	Object_slot_02_ptr.w, A6
-	LEA	loc_00022EFA, A0
+	LEA	EnemySpriteFrameDataA_03, A0
 	BSET.b	#7, (A6)
 	MOVE.b	#$20, $7(A6)
 	BCLR.b	#7, $7(A6)
@@ -13164,7 +13164,7 @@ loc_0000B960:
 	BSR.w	InitNextSpriteSlot
 	DBF	D7, loc_0000B960
 	MOVEA.l	Object_slot_03_ptr.w, A6
-	LEA	loc_00022F2A, A0
+	LEA	EnemySpriteFrameDataA_08, A0
 	BSET.b	#7, (A6)
 	MOVE.b	#$20, $7(A6)
 	BCLR.b	#7, $7(A6)
@@ -13187,7 +13187,7 @@ loc_0000B9CE:
 	BSR.w	InitNextSpriteSlot
 	DBF	D7, loc_0000B9CE
 	MOVEA.l	Object_slot_04_ptr.w, A6
-	LEA	loc_00022F32, A0
+	LEA	EnemySpriteFrameDataA_09, A0
 	BSET.b	#7, (A6)
 	MOVE.b	#$20, $7(A6)
 	BCLR.b	#7, $7(A6)
@@ -13210,7 +13210,7 @@ loc_0000BA3C:
 	BSR.w	InitNextSpriteSlot
 	DBF	D7, loc_0000BA3C
 	MOVEA.l	Object_slot_05_ptr.w, A6
-	LEA	loc_00022F3A, A0
+	LEA	EnemySpriteFrameDataA_0A, A0
 	BSET.b	#7, (A6)
 	MOVE.b	#$20, $7(A6)
 	BCLR.b	#7, $7(A6)
@@ -13229,8 +13229,8 @@ loc_0000BA92:
 	BSR.w	InitNextSpriteSlot
 	DBF	D7, loc_0000BA92
 	MOVEA.l	Object_slot_06_ptr.w, A6
-	LEA	loc_00022F12, A0
-	LEA	loc_00022F1E, A1
+	LEA	EnemySpriteFrameDataA_06, A0
+	LEA	EnemySpriteFrameDataA_07, A1
 	MOVE.w	#2, D7
 loc_0000BAAE:
 	BSET.b	#7, (A6)
@@ -13621,13 +13621,13 @@ UpdateSpritePositionAndRender:
 	CLR.l	$36(A5)
 loc_0000BFE0:
 	MOVEA.l	Object_slot_01_ptr.w, A6
-	LEA	loc_00022F72, A0
+	LEA	EnemySpriteFrameDataA_12, A0
 	CLR.w	D0
 	MOVE.b	$1B(A5), D0
 	ANDI.w	#$0070, D0
 	ASR.w	#3, D0
 	MOVE.w	(A0,D0.w), $8(A6)
-	LEA	loc_00022F56, A0
+	LEA	EnemySpriteFrameDataA_10, A0
 	MOVE.w	#4, D7
 loc_0000C006:
 	MOVE.w	$E(A5), D0
@@ -13654,7 +13654,7 @@ Boss1_NeckTickNoCollision:
 	ADD.l	D0, $E(A5)
 	ADD.l	D1, $12(A5)
 	BSR.w	ClampYPosition
-	LEA	loc_00022F6A, A0
+	LEA	EnemySpriteFrameDataA_11, A0
 	LEA	(A5), A6
 	MOVE.w	#1, D7
 loc_0000C064:
@@ -13684,7 +13684,7 @@ Boss1_UpperBodyTick:
 	BLE.b	loc_0000C0BC
 	BSR.w	CheckEntityPlayerCollisionAndDamage
 loc_0000C0BC:
-	LEA	loc_00022F4A, A0
+	LEA	EnemySpriteFrameDataA_0D, A0
 	CLR.w	D0
 	MOVE.b	$1(A5), D0
 	LEA	(A5,D0.w), A6
@@ -13710,7 +13710,7 @@ Boss1_MidBodyTick:
 	BLE.b	loc_0000C116
 	BSR.w	CheckEntityPlayerCollisionAndDamage
 loc_0000C116:
-	LEA	loc_00022F4E, A0
+	LEA	EnemySpriteFrameDataA_0E, A0
 	CLR.w	D0
 	MOVE.b	$1(A5), D0
 	LEA	(A5,D0.w), A6
@@ -13731,7 +13731,7 @@ Boss1_TailTick:
 	ADD.l	D0, $E(A5)
 	ADD.l	D1, $12(A5)
 	BSR.w	ClampYPosition
-	LEA	loc_00022F52, A0
+	LEA	EnemySpriteFrameDataA_0F, A0
 	CLR.w	D0
 	MOVE.b	$1(A5), D0
 	LEA	(A5,D0.w), A6
@@ -13829,7 +13829,7 @@ InitTwoHeadedDragon_Common:
 	CLR.b	$1B(A6)
 	CLR.w	$3A(A6)
 	CLR.w	$3C(A6)
-	LEA	loc_000230A2, A0
+	LEA	BossSpriteLayoutData_A, A0
 	BSET.b	#7, (A6)
 	MOVE.b	#$20, $7(A6)
 	BCLR.b	#7, $7(A6)
@@ -13850,7 +13850,7 @@ loc_0000C30E:
 	MOVEA.l	Object_slot_01_ptr.w, A6
 	CLR.b	$1B(A6)
 	CLR.w	$3C(A6)
-	LEA	loc_000230B6, A0
+	LEA	BossSpriteLayoutData_C, A0
 	BSET.b	#7, (A6)
 	MOVE.b	#$20, $7(A6)
 	BCLR.b	#7, $7(A6)
@@ -13872,7 +13872,7 @@ loc_0000C36C:
 	BSET.b	#7, (A6)
 	CLR.b	$1B(A6)
 	CLR.w	$3C(A6)
-	LEA	loc_00022FA2, A0
+	LEA	EnemySpriteLayoutA_Frame0, A0
 	MOVE.b	#$20, $7(A6)
 	BCLR.b	#7, $7(A6)
 	BCLR.b	#3, $7(A6)
@@ -13886,7 +13886,7 @@ loc_0000C36C:
 	MOVE.b	(A0)+, D0
 	MOVE.w	D0, $16(A6)
 	MOVE.w	(A0)+, $8(A6)
-	LEA	loc_00022FE2, A1
+	LEA	EnemySpritePositionA_Frame0, A1
 	MOVE.w	(A1)+, $E(A6)
 	MOVE.w	(A1), $12(A6)
 	MOVE.l	#TwoHeadedDragon_HeadTickA, $2(A6)
@@ -13898,7 +13898,7 @@ loc_0000C3E4:
 	BSET.b	#7, (A6)
 	CLR.b	$1B(A6)
 	CLR.w	$3C(A6)
-	LEA	loc_00023032, A0
+	LEA	EnemySpriteLayoutB_Frame0, A0
 	MOVE.b	#$20, $7(A6)
 	BCLR.b	#7, $7(A6)
 	BCLR.b	#3, $7(A6)
@@ -13908,7 +13908,7 @@ loc_0000C3E4:
 	MOVE.b	(A0)+, D0
 	MOVE.w	D0, $16(A6)
 	MOVE.w	(A0)+, $8(A6)
-	LEA	loc_00023072, A1
+	LEA	EnemySpritePositionB_Frame0, A1
 	MOVE.w	(A1)+, $E(A6)
 	MOVE.w	(A1), $12(A6)
 	MOVE.l	#TwoHeadedDragon_HeadTickB, $2(A6)
@@ -13955,7 +13955,7 @@ loc_0000C4DE:
 	ANDI.w	#$0038, D0
 	MOVE.b	#5, $6(A5)
 	ASR.w	#2, D0
-	LEA	loc_000230C6, A0
+	LEA	BossSpriteLayoutData_E, A0
 	MOVE.w	(A0,D0.w), $8(A5)
 	CLR.w	D0
 	MOVE.b	$1(A6), D0
@@ -13996,7 +13996,7 @@ loc_0000C57A:
 	MOVE.b	$1B(A5), D0
 	ANDI.w	#8, D0
 	ASR.w	#2, D0
-	LEA	loc_000230D6, A0
+	LEA	BossSpriteLayoutData_F, A0
 	MOVE.w	(A0,D0.w), $8(A5)
 	MOVE.l	$32(A5), D0
 	ADD.l	D0, $E(A5)
@@ -14019,7 +14019,7 @@ TwoHeadedDragon_MainTick:
 	TST.b	Boss_death_anim_done.w
 	BNE.w	loc_0000C640
 loc_0000C5D4:
-	LEA	loc_000230AE, A0
+	LEA	BossSpriteLayoutData_B, A0
 	BSR.w	AnimateSpriteFromTable
 	CLR.w	D0
 	MOVE.b	$1(A5), D0
@@ -14092,7 +14092,7 @@ loc_0000C6DE:
 	RTS
 	
 TwoHeadedDragon_BodyTick:
-	LEA	loc_000230BE, A0
+	LEA	BossSpriteLayoutData_D, A0
 	BSR.w	AnimateSpriteFromTable
 	CLR.w	D0
 	MOVE.b	$1(A5), D0
@@ -14656,46 +14656,46 @@ loc_0000CE28:
 
 SetBattleVictoryAnimFrames1:
 	MOVEA.l	Enemy_list_ptr.w, A6
-	LEA	loc_00022EE2, A0
+	LEA	EnemySpriteFrameDataA_01, A0
 	MOVE.w	#5, D7
 	BSR.w	SetEntityAnimFrames
 	MOVEA.l	Object_slot_02_ptr.w, A6
-	LEA	loc_00022F06, A0
+	LEA	EnemySpriteFrameDataA_04, A0
 	MOVE.w	#2, D7
 	BSR.w	SetEntityAnimFrames
 	MOVEA.l	Object_slot_03_ptr.w, A6
-	LEA	loc_00022F42, A0
+	LEA	EnemySpriteFrameDataA_0B, A0
 	MOVE.w	#1, D7
 	BSR.w	SetEntityAnimFrames
 	MOVEA.l	Object_slot_04_ptr.w, A6
-	LEA	loc_00022F42, A0
+	LEA	EnemySpriteFrameDataA_0B, A0
 	MOVE.w	#1, D7
 	BSR.w	SetEntityAnimFrames
 	MOVEA.l	Object_slot_05_ptr.w, A6
-	LEA	loc_00022F42, A0
+	LEA	EnemySpriteFrameDataA_0B, A0
 	MOVE.w	#1, D7
 	BSR.w	SetEntityAnimFrames
 	RTS
 
 SetBattleVictoryAnimFrames2:
 	MOVEA.l	Enemy_list_ptr.w, A6
-	LEA	loc_00022EEE, A0
+	LEA	EnemySpriteFrameDataA_02, A0
 	MOVE.w	#5, D7
 	BSR.w	SetEntityAnimFrames
 	MOVEA.l	Object_slot_02_ptr.w, A6
-	LEA	loc_00022F0C, A0
+	LEA	EnemySpriteFrameDataA_05, A0
 	MOVE.w	#2, D7
 	BSR.w	SetEntityAnimFrames
 	MOVEA.l	Object_slot_03_ptr.w, A6
-	LEA	loc_00022F46, A0
+	LEA	EnemySpriteFrameDataA_0C, A0
 	MOVE.w	#1, D7
 	BSR.w	SetEntityAnimFrames
 	MOVEA.l	Object_slot_04_ptr.w, A6
-	LEA	loc_00022F46, A0
+	LEA	EnemySpriteFrameDataA_0C, A0
 	MOVE.w	#1, D7
 	BSR.w	SetEntityAnimFrames
 	MOVEA.l	Object_slot_05_ptr.w, A6
-	LEA	loc_00022F46, A0
+	LEA	EnemySpriteFrameDataA_0C, A0
 	MOVE.w	#1, D7
 	BSR.w	SetEntityAnimFrames
 	RTS
@@ -15354,7 +15354,7 @@ SpawnBossChildObjects:
 	RTS
 	
 SpawnChildObjects:
-	LEA	loc_000230DA, A1
+	LEA	EncounterSpriteDescTable, A1
 	ADDA.w	D0, A1
 	MOVEA.l	(A1)+, A2
 	MOVE.w	(A1)+, D0
@@ -15431,7 +15431,7 @@ loc_0000D864:
 	BRA.w	DemonBoss_ProjectileSegmentTick
 loc_0000D8A8:
 	MOVEA.l	Enemy_list_ptr.w, A6
-	LEA	loc_0002353A, A1
+	LEA	EncounterSpriteList_Hydra, A1
 	BTST.b	#2, $1D(A6)
 	BNE.b	loc_0000D8BE
 	ADDA.w	#$001E, A1
@@ -15472,7 +15472,7 @@ loc_0000D8BE:
 	RTS
 
 DemonBoss_ProjectileSegmentTick:
-	LEA	loc_0002353A, A1
+	LEA	EncounterSpriteList_Hydra, A1
 	MOVEA.l	(A1)+, A2
 	MOVE.w	(A1)+, D0
 	MOVE.w	(A1)+, D1
@@ -17329,7 +17329,7 @@ RingGuardian_ChildProjectileTick:
 	BLE.b	loc_0000F318
 	MOVE.w	#8, D0	
 loc_0000F318:
-	LEA	loc_000237EA, A0
+	LEA	BattleVDPCmds_EnemySmall, A0
 	LEA	(A0,D0.w), A0
 	MOVE.w	(A0)+, $8(A5)
 	MOVE.b	(A0)+, $6(A5)
@@ -17362,7 +17362,7 @@ RingGuardian_ChildGroundImpact:
 	RTS
 	
 loc_0000F38A:
-	LEA	loc_000237F6, A0
+	LEA	BattleVDPCmds_EnemyLarge, A0
 	LEA	(A0,D0.w), A0
 	MOVE.w	(A0)+, $8(A5)
 	MOVE.b	(A0)+, $6(A5)
@@ -17992,7 +17992,7 @@ ExecuteVdpDmaTransfer:
 	MOVE.w	VDP_Reg1_cache.w, D4
 	BSET.l	#4, D4
 	MOVE.w	D4, VDP_control_port
-	LEA	loc_0002293A, A0
+	LEA	BattleSpriteDMACommands, A0
 	MOVE.w	Vdp_dma_slot_index.w, D0
 	ASL.w	#4, D0
 	LEA	(A0,D0.w), A0
@@ -19736,7 +19736,7 @@ DrawReadyEquipmentMenuBorders:
 	RTS
 	
 DrawListTopBorders:
-	LEA	loc_00021DA2, A0
+	LEA	UIBorder_SmallTop, A0
 	MOVE.w	#$000F, Window_tilemap_draw_x.w
 	MOVE.w	#2, Window_tilemap_draw_y.w
 	MOVE.w	#$0015, Window_tilemap_draw_width.w
@@ -19747,7 +19747,7 @@ DrawListTopBorders:
 	ADDQ.w	#1, D7
 	MOVEQ	#1, D6
 loc_00011134:
-	LEA	loc_00021DB8, A0
+	LEA	UIBorder_SmallMiddle, A0
 	MOVE.w	#$000F, Window_tilemap_draw_x.w
 	MOVE.w	#2, D0
 	ADD.w	D6, D0
@@ -19761,7 +19761,7 @@ loc_00011134:
 	RTS
 	
 DrawListBottomBorder:
-	LEA	loc_00021DE4, A0
+	LEA	UIBorder_LargeBox, A0
 	ADDQ.w	#1, D0
 	ADD.w	D0, D0
 	MOVE.w	#$000F, Window_tilemap_draw_x.w
@@ -22019,7 +22019,7 @@ loc_00012E28:
 
 ; loc_00012E68
 LoadLevelUpBannerTiles:
-	LEA	loc_00021EE4, A0
+	LEA	UIBorder_LevelUp, A0
 	MOVE.l	#$420A0003, D5
 	ORI	#$0700, SR
 	MOVE.w	#2, D7
@@ -30003,7 +30003,7 @@ loc_0001B44C:
 	BEQ.b	loc_0001B45C
 	MOVE.w	#SHOP_TYPE_MAGIC, Current_shop_type.w
 loc_0001B45C:
-	LEA	loc_00026028, A0
+	LEA	ShopDialog_Welcome, A0
 	MOVE.w	Current_shop_type.w, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
@@ -30493,10 +30493,10 @@ loc_0001BD22:
 	MOVE.w	Current_shop_type.w, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
-	LEA	loc_00025FA4, A0
+	LEA	ShopDialog_NextTime, A0
 	TST.b	Shop_purchase_made.w
 	BEQ.b	loc_0001BD3C
-	LEA	loc_00025FC8, A0	
+	LEA	ShopDialog_BusinessThanks, A0	
 loc_0001BD3C:
 	MOVE.l	(A0,D0.w), Script_source_base.w
 	MOVE.w	#8, Dialogue_state.w
@@ -30505,7 +30505,7 @@ loc_0001BD4A:
 	MOVE.w	Current_shop_type.w, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
-	LEA	loc_00025FF8, A0
+	LEA	ShopDialog_BuyPrompt, A0
 	MOVE.l	(A0,D0.w), Script_source_base.w
 	MOVE.w	#$A, Dialogue_state.w
 	BRA.b	loc_0001BD80
@@ -30513,7 +30513,7 @@ loc_0001BD66:
 	MOVE.w	Current_shop_type.w, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
-	LEA	loc_00026010, A0
+	LEA	ShopDialog_SellPrompt, A0
 	MOVE.l	(A0,D0.w), Script_source_base.w
 	MOVE.w	#$11, Dialogue_state.w
 loc_0001BD80:
@@ -30622,7 +30622,7 @@ loc_0001BE6E:
 	MOVE.w	Current_shop_type.w, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
-	LEA	loc_00026004, A0
+	LEA	ShopDialog_Ok, A0
 	MOVEA.l	(A0,D0.w), A0
 	JSR	CopyStringUntilFF
 	MOVE.b	#$FF, (A1)
@@ -30692,7 +30692,7 @@ loc_0001BFD2:
 	MOVE.w	Current_shop_type.w, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
-	LEA	loc_00025FB0, A0
+	LEA	ShopDialog_ThankYou, A0
 	MOVE.l	(A0,D0.w), Script_source_base.w
 	MOVE.l	Shop_selected_price.w, Transaction_amount.w
 	JSR	DeductPaymentAmount
@@ -30702,7 +30702,7 @@ loc_0001C010:
 	MOVE.w	Current_shop_type.w, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
-	LEA	loc_00025FEC, A0
+	LEA	ShopDialog_GivingAway, A0
 	MOVE.l	(A0,D0.w), Script_source_base.w
 loc_0001C024:
 	JSR	RestoreShopListFromBuffer
@@ -30719,7 +30719,7 @@ loc_0001C030:
 	MOVE.w	Current_shop_type.w, D0	
 	ADD.w	D0, D0	
 	ADD.w	D0, D0	
-	LEA	loc_00025FF8, A0	
+	LEA	ShopDialog_BuyPrompt, A0	
 	MOVE.l	(A0,D0.w), Script_source_base.w	
 	RTS
 	
@@ -30740,7 +30740,7 @@ DialogState_WaitScriptThenDrawSellConfirm:
 	MOVE.w	Current_shop_type.w, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
-	LEA	loc_00025FBC, A0
+	LEA	ShopDialog_AnythingElse, A0
 	MOVE.l	(A0,D0.w), Script_source_base.w
 	MOVE.b	#$FF, Shop_purchase_made.w
 	JSR	DrawYesNoDialog
@@ -30780,7 +30780,7 @@ loc_0001C120:
 	MOVE.w	Current_shop_type.w, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
-	LEA	loc_00025FC8, A0
+	LEA	ShopDialog_BusinessThanks, A0
 	MOVE.l	(A0,D0.w), Script_source_base.w
 	ADDQ.w	#1, Dialogue_state.w
 	RTS
@@ -30842,7 +30842,7 @@ loc_0001C208:
 	MOVE.w	Current_shop_type.w, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
-	LEA	loc_00025FD4, A0
+	LEA	ShopDialog_SellAnything, A0
 	MOVE.l	(A0,D0.w), Script_source_base.w
 	ADDQ.w	#1, Dialogue_state.w
 	RTS
@@ -30865,7 +30865,7 @@ loc_0001C254:
 	MOVE.w	Current_shop_type.w, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
-	LEA	loc_00025FBC, A0
+	LEA	ShopDialog_AnythingElse, A0
 	MOVE.l	(A0,D0.w), Script_source_base.w
 	MOVE.w	#$16, Dialogue_state.w
 	RTS
@@ -30915,7 +30915,7 @@ loc_0001C2FE:
 	MOVE.w	Current_shop_type.w, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
-	LEA	loc_0002601C, A0
+	LEA	ShopDialog_AllRight, A0
 	MOVEA.l	(A0,D0.w), A0
 	JSR	CopyStringUntilFF
 	MOVE.b	#$FF, (A1)
@@ -30930,7 +30930,7 @@ loc_0001C344:
 	MOVE.w	Current_shop_type.w, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
-	LEA	loc_00025FE0, A0
+	LEA	ShopDialog_NoNeed, A0
 	MOVE.l	(A0,D0.w), Script_source_base.w
 loc_0001C358:
 	JSR	DrawCenterMenuWindow
@@ -31023,7 +31023,7 @@ loc_0001C474:
 	MOVE.w	Current_shop_type.w, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
-	LEA	loc_00025FB0, A0
+	LEA	ShopDialog_ThankYou, A0
 	MOVE.l	(A0,D0.w), Script_source_base.w
 	MOVE.w	#$E, Dialogue_state.w
 	RTS
@@ -31038,7 +31038,7 @@ loc_0001C4B0:
 	MOVE.w	Current_shop_type.w, D0	
 	ADD.w	D0, D0	
 	ADD.w	D0, D0	
-	LEA	loc_00026010, A0	
+	LEA	ShopDialog_SellPrompt, A0	
 	MOVE.l	(A0,D0.w), Script_source_base.w	
 	RTS
 	
@@ -31086,7 +31086,7 @@ loc_0001C56E:
 	MOVE.w	Current_shop_type.w, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
-	LEA	loc_00025FC8, A0
+	LEA	ShopDialog_BusinessThanks, A0
 	MOVE.l	(A0,D0.w), Script_source_base.w
 	MOVE.w	#$10, Dialogue_state.w
 	RTS
@@ -34358,7 +34358,7 @@ loc_0001F1A4:
 ; Check if game is completed (Tsarkon defeated)
 ; Output: D0 = 0 if not complete, $FFFF if complete
 CheckGameComplete:
-	LEA	loc_000272AC, A0
+	LEA	EndingCelebrationStrings, A0
 	TST.b	Tsarkon_is_dead.w
 	BNE.b	loc_0001F1B6
 	CLR.w	D0
@@ -35120,58 +35120,66 @@ GfxLoadList_WorldBattle:
 	dc.l	$0017FFFF	
 ; loc_0001FB34
 MagicGfxDataPtrs:
-	dc.l	loc_0001FB74
-	dc.l	loc_0001FB74
-	dc.l	loc_0001FB98
-	dc.l	loc_0001FBA4
-	dc.l	loc_0001FBB0
-	dc.l	loc_0001FB80
-	dc.l	loc_0001FB80
-	dc.l	loc_0001FB80
-	dc.l	loc_0001FB8C
-	dc.l	loc_0001FBBC
-	dc.l	loc_0001FBBC
-	dc.l	loc_0001FBC8
-	dc.l	loc_0001FBC8
-	dc.l	loc_0001FBC8
-	dc.l	loc_0001FBC8	
-	dc.l	loc_0001FBC8	
-loc_0001FB74:
+	dc.l	MagicGfxData_WyclifParma
+	dc.l	MagicGfxData_WyclifParma
+	dc.l	MagicGfxData_Barrow
+	dc.l	MagicGfxData_Tadcaster
+	dc.l	MagicGfxData_Helwig
+	dc.l	MagicGfxData_DeepdaleStow
+	dc.l	MagicGfxData_DeepdaleStow
+	dc.l	MagicGfxData_DeepdaleStow
+	dc.l	MagicGfxData_Keltwick
+	dc.l	MagicGfxData_SwaffhamExcalabria
+	dc.l	MagicGfxData_SwaffhamExcalabria
+	dc.l	MagicGfxData_HastingsCarthahena
+	dc.l	MagicGfxData_HastingsCarthahena
+	dc.l	MagicGfxData_HastingsCarthahena
+	dc.l	MagicGfxData_HastingsCarthahena	
+	dc.l	MagicGfxData_HastingsCarthahena	
+; loc_0001FB74
+MagicGfxData_WyclifParma:
 	dc.l	loc_0004A8F4
 	dc.l	loc_0004AA82
 	dc.w	$001D
 	dc.w	$0036	
-loc_0001FB80:
+; loc_0001FB80
+MagicGfxData_DeepdaleStow:
 	dc.l	loc_00048EFE
 	dc.l	loc_000498D0
 	dc.w	$00B3
 	dc.w	$0073	
-loc_0001FB8C:
+; loc_0001FB8C
+MagicGfxData_Keltwick:
 	dc.l	loc_00049AD8
 	dc.l	loc_00049E3C
 	dc.w	$002F
 	dc.w	$0073	
-loc_0001FB98:
+; loc_0001FB98
+MagicGfxData_Barrow:
 	dc.l	loc_0004A77A
 	dc.l	loc_0004A8B8
 	dc.w	$0017
 	dc.w	$0076	
-loc_0001FBA4:
+; loc_0001FBA4
+MagicGfxData_Tadcaster:
 	dc.l	loc_0004A548
 	dc.l	loc_0004A70E
 	dc.w	$001F
 	dc.w	$0076	
-loc_0001FBB0:
+; loc_0001FBB0
+MagicGfxData_Helwig:
 	dc.l	loc_00049ECC
 	dc.l	loc_0004A42C
 	dc.w	$0053
 	dc.w	$007A	
-loc_0001FBBC:
+; loc_0001FBBC
+MagicGfxData_SwaffhamExcalabria:
 	dc.l	loc_0004AAD6
 	dc.l	loc_0004B1E6
 	dc.w	$007F
 	dc.w	$0074	
-loc_0001FBC8:
+; loc_0001FBC8
+MagicGfxData_HastingsCarthahena:
 	dc.l	loc_0004A77A
 	dc.l	loc_0004A8B8
 	dc.w	$0017
@@ -35708,87 +35716,87 @@ OverworldSectorInteractionPtrs:
 ; loc_000200F6
 OverworldInteractions_Sector0:
 	dc.w	$0004, $0001, $0001, $0002 
-	dc.l	loc_000203DA
+	dc.l	OverworldChest_Money256
 	dc.w	$0004, $000B, $0004, $0001 
-	dc.l	loc_000204DE
+	dc.l	OverworldChest_Herbs
 	dc.w	$0005, $0009, $000A, $0002 
-	dc.l	loc_000204F2
+	dc.l	OverworldChest_Herbs2
 	dc.w	$0005, $0007, $000E, $0004 
 	dc.l	SetupNoOneTalker
 	dc.w	$0005, $0002, $000E, $0004 
-	dc.l	loc_000204B6
+	dc.l	OverworldChest_Candle3
 	dc.w	$0007, $000C, $0001, $0001 
-	dc.l	loc_00020402
+	dc.l	OverworldChest_Money80_Wyclif
 	dc.w	$FFFF
 ; loc_00020140
 OverworldInteractions_Sector1:	
 	dc.w	$0005, $0005, $0002, $0001 
-	dc.l	loc_000205FE
+	dc.l	OverworldNpc_MerchantFromParma
 	dc.w	$0004, $000F, $0006, $0008	
-	dc.l	loc_0002060C
+	dc.l	OverworldNpc_PreparedForTask
 	dc.w	$0002, $0005, $0006, $000A	
-	dc.l	loc_00020698
+	dc.l	OverworldNpc_UseBansheePowder
 	dc.w	$FFFF
 ; loc_00020166
 OverworldInteractions_Sector2:
 	dc.w	$0004, $0008, $000B, $0001 
-	dc.l	loc_00020506
+	dc.l	OverworldChest_DarkSword
 	dc.w	$0005, $0009, $000D, $0002	
-	dc.l	loc_00020416	
+	dc.l	OverworldChest_Money768B	
 	dc.w	$0005, $000E, $0002, $0008	
-	dc.l	loc_00020542	
+	dc.l	OverworldNpc_LongDangerousRoad	
 	dc.w	$0006, $000E, $0009, $0008	
-	dc.l	loc_00020572
+	dc.l	OverworldChest_Herbs5
 	dc.w	$0000, $000B, $0006, $000A	
-	dc.l	loc_000206B4
+	dc.l	OverworldNpc_SpendWealthWisely
 	dc.w	$0001, $000D, $0001, $0005	
-	dc.l	loc_000206DE
+	dc.l	OverworldNpc_MapGiver_Wyclif
 	dc.w	$FFFF
 ; loc_000201B0
 OverworldInteractions_Sector3:
 	dc.w	$0005, $0005, $0007, $0008
-	dc.l	loc_000205AE
+	dc.l	OverworldChest_SapphireShield
 	dc.w	$0005, $0002, $000C, $0002
-	dc.l	loc_0002042A 
+	dc.l	OverworldChest_Money512 
 	dc.w	$0007, $000E, $0006, $0008
-	dc.l	loc_0002043E 
+	dc.l	OverworldChest_Money1280 
 	dc.w	$0007, $0004, $000E, $0008
-	dc.l	loc_00020452 
+	dc.l	OverworldChest_Money1792B 
 	dc.w	$0001, $0006, $000C, $0005 
-	dc.l	loc_00020714
+	dc.l	OverworldNpc_MapGiver_Deepdale
 	dc.w	$FFFF
 ; loc_000201EE
 OverworldInteractions_Sector4:
 	dc.w	$0005, $0002, $0001, $0001
 	dc.l	SetupNoOneTalker
 	dc.w	$0005, $0008, $0001, $0001
-	dc.l	loc_000203EE
+	dc.l	OverworldChest_Money768_Stow
 	dc.w	$FFFF
 ; loc_00020208
 OverworldInteractions_Sector5:
 	dc.w	$0004, $000C, $0005, $0008	
-	dc.l	loc_000205EA	
+	dc.l	OverworldChest_GemShield	
 	dc.w	$0005, $0005, $0005, $0005
-	dc.l	loc_0002061A
+	dc.l	OverworldNpc_HeadedToWatling
 	dc.w	$0007, $0002, $0002, $0002	
-	dc.l	loc_00020628
+	dc.l	OverworldNpc_WayToDeepdale
 	dc.w	$0007, $000A, $000A, $0008	
-	dc.l	loc_00020636
+	dc.l	OverworldNpc_LongWayToStow
 	dc.w	$0002, $0009, $0008, $0008	
-	dc.l	loc_000206A6
+	dc.l	OverworldNpc_TsarkonPawnOfEvil
 	dc.w	$FFFF
 ; loc_00020246
 OverworldInteractions_Sector6:	
 	dc.w	$0003, $000E, $0002, $0008 
-	dc.l	loc_00020550
+	dc.l	OverworldChest_Medicine
 	dc.w	$0003, $000B, $0007, $0001	
-	dc.l	loc_00020564
+	dc.l	OverworldNpc_WrongRoad
 	dc.w	$0004, $0002, $000C, $0004	
-	dc.l	loc_000204CA
+	dc.l	OverworldChest_Lantern2
 	dc.w	$0007, $000D, $000E, $0004	
-	dc.l	loc_00020586	
+	dc.l	OverworldChest_Herbs6	
 	dc.w	$0002, $0008, $0001, $0008
-	dc.l	loc_0002074A
+	dc.l	OverworldNpc_MapGiver_Stow
 	dc.w	$FFFF
 ; loc_00020284
 OverworldInteractions_Sector7:
@@ -35800,52 +35808,52 @@ OverworldInteractions_Sector7:
 ; loc_0002029E
 OverworldInteractions_Sector8:
 	dc.w	$0002, $000D, $0001, $0008
-	dc.l	loc_000204A2
+	dc.l	OverworldChest_Money9999
 	dc.w	$0005, $000C, $0003, $000A	
-	dc.l	loc_000206C2
+	dc.l	OverworldNpc_LearnFromMistakes
 	dc.w	$0006, $0007, $0003, $0008	
-	dc.l	loc_000205D6
+	dc.l	OverworldChest_GnomeStone
 	dc.w	$FFFF
 ; loc_000202C4
 OverworldInteractions_Sector9:	
 	dc.w	$0004, $000A, $0003, $0008
-	dc.l	loc_00020466
+	dc.l	OverworldChest_Money20480
 	dc.w	$0005, $0006, $000D, $0008 
-	dc.l	loc_000206D0
+	dc.l	OverworldNpc_SawMotherInCarthahena
 	dc.w	$FFFF
 ; loc_000202DE
 OverworldInteractions_Sector10:
 	dc.w	$0000, $0006, $0005, $0004
-	dc.l	loc_0002048E
+	dc.l	OverworldChest_Money864
 	dc.w	$0000, $0009, $000C, $000A 
-	dc.l	loc_0002067C
+	dc.l	OverworldNpc_ProgressingWell
 	dc.w	$0002, $0003, $000A, $0001	
-	dc.l	loc_0002068A	
+	dc.l	OverworldNpc_TharFashionsEvil	
 	dc.w	$0006, $000E, $0005, $0008
 	dc.l	SetupNoOneTalker	
 	dc.w	$0007, $000F, $0004, $0008	
-	dc.l	loc_00020644	
+	dc.l	OverworldNpc_GreetingsWarrior	
 	dc.w	$FFFF
 ; loc_0002031C
 OverworldInteractions_Sector11:
 	dc.w	$0002, $000B, $0001, $0008
-	dc.l	loc_000205C2
+	dc.l	OverworldChest_BansheePowder
 	dc.w	$FFFF	
 ; loc_0002032A
 OverworldInteractions_Sector12:
 	dc.w	$0001, $000B, $0002, $0008
-	dc.l	loc_0002047A	
+	dc.l	OverworldChest_Money5888	
 	dc.w	$0002, $0001, $000C, $0002	
-	dc.l	loc_00020660	
+	dc.l	OverworldNpc_AppearancesDeceive	
 	dc.w	$0006, $0006, $0004, $0001	
 	dc.l	SetupNoOneTalker	
 	dc.w	$0006, $0004, $0006, $0001	
-	dc.l	loc_0002059A
+	dc.l	OverworldChest_RubyBrooch
 	dc.w	$FFFF
 ; loc_0002035C
 OverworldInteractions_Sector13:
 	dc.w	$0001, $0008, $000E, $000A 
-	dc.l	loc_00020652
+	dc.l	OverworldNpc_EvilFlourishes
 	dc.w	$0006, $0009, $0003, $0008	
 	dc.l	SetupNoOneTalker	
 	dc.w	$0006, $0009, $000C, $0008	
@@ -35854,14 +35862,15 @@ OverworldInteractions_Sector13:
 ; loc_00020382
 OverworldInteractions_Sector14:
 	dc.w	$0004, $000B, $0007, $0009
-	dc.l	loc_0002066E
+	dc.l	OverworldNpc_RingsHavePower
 	dc.w	$FFFF	
 ; loc_00020390
 OverworldInteractions_Sector15:
 	dc.w	$0003, $000D, $0007, $0008	
-	dc.l	loc_0002039E
+	dc.l	OverworldChest_CrimsonArmor
 	dc.w	$FFFF
-loc_0002039E:
+; loc_0002039E
+OverworldChest_CrimsonArmor:
 	TST.b	Crimson_armor_reward_enabled.w
 	BEQ.b	loc_000203D8
 	MOVE.w	#1, Reward_script_type.w
@@ -35878,46 +35887,62 @@ loc_000203C6:
 loc_000203D8:
 	RTS
 	
-loc_000203DA:
+; loc_000203DA
+OverworldChest_Money256:
 	MoneyChest $100, Money_chest_256_opened
 	
-loc_000203EE:
+; loc_000203EE
+OverworldChest_Money768_Stow:
 	MoneyChest $0300, Money_chest_768_stow_opened
-loc_00020402:
+; loc_00020402
+OverworldChest_Money80_Wyclif:
 	MoneyChest $50, Wyclif_outskirts_chest_opened
 	
-loc_00020416:
+; loc_00020416
+OverworldChest_Money768B:
 	MoneyChest $300, Money_chest_768_b_opened
 	
-loc_0002042A:
+; loc_0002042A
+OverworldChest_Money512:
 	MoneyChest $0200, Money_chest_512_opened
-loc_0002043E:
+; loc_0002043E
+OverworldChest_Money1280:
 	MoneyChest $0500, Money_chest_1280_opened
-loc_00020452:
+; loc_00020452
+OverworldChest_Money1792B:
 	MoneyChest $0700, Money_chest_1792_b_opened
-loc_00020466:
+; loc_00020466
+OverworldChest_Money20480:
 	MoneyChest $5000, Money_chest_20480_opened
-loc_0002047A:
+; loc_0002047A
+OverworldChest_Money5888:
 	MoneyChest $1700, Chest_5888_kims_opened
 	
-loc_0002048E:	
+; loc_0002048E
+OverworldChest_Money864:	
 	MoneyChest $0360, Money_chest_864_opened
-loc_000204A2:
+; loc_000204A2
+OverworldChest_Money9999:
 	MoneyChest $9999, Chest_9999_kims_opened
 	
-loc_000204B6:
+; loc_000204B6
+OverworldChest_Candle3:
 	ItemChest ITEM_CANDLE, Candle_chest_3_opened
 	
-loc_000204CA:
+; loc_000204CA
+OverworldChest_Lantern2:
 	ItemChest ITEM_LANTERN, Lantern_chest_2_opened
 	
-loc_000204DE:
+; loc_000204DE
+OverworldChest_Herbs:
 	ItemChest ITEM_HERBS, Herbs_chest_opened
 	
-loc_000204F2:
+; loc_000204F2
+OverworldChest_Herbs2:
 	ItemChest ITEM_HERBS, Herbs_chest_2_opened
 	
-loc_00020506:
+; loc_00020506
+OverworldChest_DarkSword:
 	EquipChest EQUIPMENT_TYPE_SWORD, EQUIPMENT_SWORD_DARK1, Dark_sword_chest_opened, EQUIPMENT_FLAG_CURSED
 	
 ; SetupNoOneTalker
@@ -35930,119 +35955,146 @@ SetupNoOneTalker:
 	MOVE.l	#NoOneHereStr, Script_talk_source.w
 	RTS
 	
-loc_00020542:
+; loc_00020542
+OverworldNpc_LongDangerousRoad:
 	BSR.w	InitTalkerWithGfxDescriptor_1F712	
 	MOVE.l	#LongDangerousRoadAheadStr, Script_talk_source.w	
 	RTS
 	
 	
-loc_00020550:
+; loc_00020550
+OverworldChest_Medicine:
 	ItemChest ITEM_MEDICINE, Medicine_chest_opened
 	
-loc_00020564:
+; loc_00020564
+OverworldNpc_WrongRoad:
 	BSR.w	InitTalkerWithGfxDescriptor_1F712
 	MOVE.l	#WrongRoadStr, Script_talk_source.w
 	RTS
 	
-loc_00020572:
+; loc_00020572
+OverworldChest_Herbs5:
 	ItemChest ITEM_HERBS, Herbs_chest_5_opened
 	
-loc_00020586:
+; loc_00020586
+OverworldChest_Herbs6:
 	ItemChest ITEM_HERBS, Herbs_chest_6_opened
 	
-loc_0002059A:
+; loc_0002059A
+OverworldChest_RubyBrooch:
 	ItemChest ITEM_RUBY_BROOCH, Ruby_brooch_chest_opened
 	
-loc_000205AE:
+; loc_000205AE
+OverworldChest_SapphireShield:
 	EquipChest EQUIPMENT_TYPE_SHIELD, EQUIPMENT_SHIELD_SAPPHIRE, Chest_sapphire_shield_opened
-loc_000205C2:	
+; loc_000205C2
+OverworldChest_BansheePowder:	
 	ItemChest ITEM_BANSHEE_POWDER, Banshee_powder_chest_opened
-loc_000205D6:
+; loc_000205D6
+OverworldChest_GnomeStone:
 	ItemChest ITEM_GNOME_STONE, Chest_gnome_stone_opened
 	
-loc_000205EA:
+; loc_000205EA
+OverworldChest_GemShield:
 	EquipChest EQUIPMENT_TYPE_SHIELD, EQUIPMENT_SHIELD_GEM, Chest_gem_shield_opened
 	
-loc_000205FE:
+; loc_000205FE
+OverworldNpc_MerchantFromParma:
 	BSR.w	InitTalkerWithGfxDescriptor_1F74A
 	MOVE.l	#MerchantFromParmaStr, Script_talk_source.w
 	RTS
 	
-loc_0002060C:
+; loc_0002060C
+OverworldNpc_PreparedForTask:
 	BSR.w	InitTalkerWithGfxDescriptor_1F74A
 	MOVE.l	#PreparedForTaskStr, Script_talk_source.w
 	RTS
 	
-loc_0002061A:
+; loc_0002061A
+OverworldNpc_HeadedToWatling:
 	BSR.w	InitTalkerWithGfxDescriptor_1F74A
 	MOVE.l	#HeadedToWatlingStr, Script_talk_source.w
 	RTS
 	
-loc_00020628:
+; loc_00020628
+OverworldNpc_WayToDeepdale:
 	BSR.w	InitTalkerWithGfxDescriptor_1F74A
 	MOVE.l	#WayToDeepdaleStr, Script_talk_source.w
 	RTS
 	
-loc_00020636:
+; loc_00020636
+OverworldNpc_LongWayToStow:
 	BSR.w	InitTalkerWithGfxDescriptor_1F712
 	MOVE.l	#LongWayToStowStr, Script_talk_source.w
 	RTS
 	
-loc_00020644:
+; loc_00020644
+OverworldNpc_GreetingsWarrior:
 	BSR.w	InitTalkerWithGfxDescriptor_1F712	
 	MOVE.l	#GreetingsWarriorStr, Script_talk_source.w	
 	RTS
 	
-loc_00020652:
+; loc_00020652
+OverworldNpc_EvilFlourishes:
 	BSR.w	InitTalkerWithGfxDescriptor_1F74A
 	MOVE.l	#EvilFlourishesStr, Script_talk_source.w
 	RTS
 	
-loc_00020660:
+; loc_00020660
+OverworldNpc_AppearancesDeceive:
 	BSR.w	InitTalkerWithGfxDescriptor_1F712	
 	MOVE.l	#AppearancesDeceiveStr, Script_talk_source.w	
 	RTS
 	
-loc_0002066E:
+; loc_0002066E
+OverworldNpc_RingsHavePower:
 	BSR.w	InitTalkerWithGfxDescriptor_1F712
 	MOVE.l	#RingsHavePowerStr, Script_talk_source.w
 	RTS
-loc_0002067C:
+; loc_0002067C
+OverworldNpc_ProgressingWell:
 	BSR.w	InitTalkerWithGfxDescriptor_1F712
 	MOVE.l	#ProgressingWellStr, Script_talk_source.w
 	RTS
 	
-loc_0002068A:
+; loc_0002068A
+OverworldNpc_TharFashionsEvil:
 	BSR.w	InitTalkerWithGfxDescriptor_1F712	
 	MOVE.l	#TharFashionsEvilStr, Script_talk_source.w	
 	RTS
 	
-loc_00020698:
+; loc_00020698
+OverworldNpc_UseBansheePowder:
 	BSR.w	InitTalkerWithGfxDescriptor_1F712
 	MOVE.l	#UseBansheePowderStr, Script_talk_source.w
 	RTS
 	
-loc_000206A6:
+; loc_000206A6
+OverworldNpc_TsarkonPawnOfEvil:
 	BSR.w	InitTalkerWithGfxDescriptor_1F712
 	MOVE.l	#TsarkonPawnOfEvilStr, Script_talk_source.w
 	RTS
 	
-loc_000206B4:
+; loc_000206B4
+OverworldNpc_SpendWealthWisely:
 	BSR.w	InitTalkerWithGfxDescriptor_1F712
 	MOVE.l	#SpendWealthWiselyStr, Script_talk_source.w
 	RTS
 	
-loc_000206C2:
+; loc_000206C2
+OverworldNpc_LearnFromMistakes:
 	BSR.w	InitTalkerWithGfxDescriptor_1F712
 	MOVE.l	#LearnFromMistakesStr, Script_talk_source.w
 	RTS
 	
-loc_000206D0:
+; loc_000206D0
+OverworldNpc_SawMotherInCarthahena:
 	BSR.w	InitTalkerWithGfxDescriptor_1F712
 	MOVE.l	#SawMotherInCartahenaStr, Script_talk_source.w
 	RTS
 	
-loc_000206DE:
+; loc_000206DE
+OverworldNpc_MapGiver_Wyclif:
 	LEA	Map_trigger_flags.w, A0
 	MOVE.w	#$0011, Map_trigger_index.w
 	MOVE.w	Map_trigger_index.w, D5
@@ -36056,7 +36108,8 @@ loc_000206DE:
 loc_00020712:
 	RTS
 	
-loc_00020714:
+; loc_00020714
+OverworldNpc_MapGiver_Deepdale:
 	LEA	Map_trigger_flags.w, A0
 	MOVE.w	#$0013, Map_trigger_index.w
 	MOVE.w	Map_trigger_index.w, D5
@@ -36070,7 +36123,8 @@ loc_00020714:
 loc_00020748:
 	RTS
 	
-loc_0002074A:
+; loc_0002074A
+OverworldNpc_MapGiver_Stow:
 	LEA	Map_trigger_flags.w, A0
 	MOVE.w	#$0028, Map_trigger_index.w
 	MOVE.w	Map_trigger_index.w, D5
@@ -36137,47 +36191,47 @@ CaveRoomInteractions_00:
 	dc.w	$000B, $000B, $0002 
 	dc.l	CheckCaveRoomEnemyState
 	dc.w	$0002, $000B, $0002 
-	dc.l	loc_00020CD0
+	dc.l	CaveChest_Money256
 	dc.w	$0003, $0009, $0008 
-	dc.l	loc_00020DAC
+	dc.l	CaveChest_Herbs3
 	dc.w	$000A, $0005, $0004 
-	dc.l	loc_00020DC0
+	dc.l	CaveChest_Candle
 	dc.w	$FFFF
 ; loc_00020864
 CaveRoomInteractions_01:
 	dc.w	$0003, $000D, $0004	
 	dc.l	CheckCaveRoomEnemyState
 	dc.w	$0002, $0003, $0004 
-	dc.l	loc_00020DD4
+	dc.l	CaveChest_Herbs4
 	dc.w	$0008, $0000, $0001 
-	dc.l	loc_00020DFC 
+	dc.l	CaveChest_Candle_Parma 
 	dc.w	$FFFF 
 ; loc_00020884
 CaveRoomInteractions_02:
 	dc.w	$000F, $000F, $0008 
-	dc.l	loc_00020DE8
+	dc.l	CaveChest_ScaleArmor
 	dc.w	$000F, $0000, $0001 
 	dc.l	CaveEvent_TreasureOfTroy
 	dc.w	$0002, $000C, $0002 
 	dc.l	CheckCaveRoomEnemyState
 	dc.w	$0008, $0008, $0002 
-	dc.l	loc_00020E10
+	dc.l	CaveChest_Money768
 	dc.w	$FFFF
 ; loc_000208AE
 CaveRoomInteractions_03:
 	dc.w	$0003, $0006, $0008	
 	dc.l	CheckCaveRoomEnemyState
 	dc.w	$0000, $000E, $0001
-	dc.l	loc_00020E24
+	dc.l	CaveChest_Money1536
 	dc.w	$000B, $0000, $0002
-	dc.l	loc_00020E38	
+	dc.l	CaveChest_Candle2	
 	dc.w	$FFFF
 ; loc_000208CE
 CaveRoomInteractions_04:
 	dc.w	$0000, $0007, $0001	
 	dc.l	CheckCaveRoomEnemyState
 	dc.w	$000A, $0001, $0008
-	dc.l	loc_00020E4C
+	dc.l	CaveChest_Herbs_Watling
 	dc.w	$000C, $0001, $0002	
 	dc.l	CaveEvent_WatlingMonster
 	dc.w	$FFFF
@@ -36186,18 +36240,18 @@ CaveRoomInteractions_05:
 	dc.w	$0000, $0001, $0004	
 	dc.l	CheckCaveRoomEnemyState
 	dc.w	$000B, $0004, $0008
-	dc.l	loc_00020E9C
+	dc.l	CaveChest_LargeShield
 	dc.w	$0008, $000F, $0008	
-	dc.l	loc_00020E74	
+	dc.l	CaveChest_Money1792	
 	dc.w	$FFFF
 ; loc_0002090E
 CaveRoomInteractions_06:
 	dc.w	$0003, $000C, $0002	
 	dc.l	CheckCaveRoomEnemyState
 	dc.w	$000E, $000F, $0004 
-	dc.l	loc_00020E60 
+	dc.l	CaveChest_MagicShield 
 	dc.w	$000C, $0004, $0002 
-	dc.l	loc_00020EB0 
+	dc.l	CaveChest_MetalArmor 
 	dc.w	$0006, $0004, $0001 
 	dc.l	CaveEvent_Truffle
 	dc.w	$FFFF
@@ -36206,16 +36260,16 @@ CaveRoomInteractions_07:
 	dc.w	$0004, $000D, $0008	
 	dc.l	CheckCaveRoomEnemyState	
 	dc.w	$0008, $000F, $0002
-	dc.l	loc_00020EC4
+	dc.l	CaveChest_Money2128
 	dc.w	$0007, $0005, $0004	
-	dc.l	loc_00020ED8	
+	dc.l	CaveChest_Lantern	
 	dc.w	$FFFF
 ; loc_00020958
 CaveRoomInteractions_08:
 	dc.w	$000D, $000B, $0004	
 	dc.l	CheckCaveRoomEnemyState	
 	dc.w	$000F, $0000, $0001
-	dc.l	loc_00020F00
+	dc.l	CaveChest_SkeletonArmor
 	dc.w	$0000, $0000, $0002	
 	dc.l	CaveEvent_StowThief
 	dc.w	$FFFF
@@ -36224,9 +36278,9 @@ CaveRoomInteractions_09:
 	dc.w	$0002, $000A, $0004	
 	dc.l	CheckCaveRoomEnemyState	
 	dc.w	$0002, $000F, $0008
-	dc.l	loc_00020F00
+	dc.l	CaveChest_SkeletonArmor
 	dc.w	$0002, $0003, $0004	
-	dc.l	loc_00020EEC	
+	dc.l	CaveChest_RoyalShield	
 	dc.w	$FFFF
 ; loc_00020998
 CaveRoomInteractions_0A:
@@ -36240,7 +36294,7 @@ CaveRoomInteractions_0B:
 	dc.w	$0004, $000D, $0004	
 	dc.l	CheckCaveRoomEnemyState
 	dc.w	$0006, $0002, $0001
-	dc.l	loc_00020D48
+	dc.l	CaveChest_EmeraldArmor
 	dc.w	$000D, $0007, $0005	
 	dc.l	CaveEvent_BearwulfMeeting
 	dc.w	$FFFF
@@ -36251,13 +36305,13 @@ CaveRoomInteractions_0C:
 	dc.w	$0001, $000E, $0004 
 	dc.l	CaveEvent_BearwulfWeaponReward
 	dc.w	$0005, $000E, $0004
-	dc.l	loc_00020CE4
+	dc.l	CaveChest_Money4096
 	dc.w	$000B, $000B, $0001	
-	dc.l	loc_00020CE4	
+	dc.l	CaveChest_Money4096	
 	dc.w	$0009, $0007, $0004
-	dc.l	loc_00020CE4
+	dc.l	CaveChest_Money4096
 	dc.w	$0007, $000E, $0004	
-	dc.l	loc_00020E88
+	dc.l	CaveChest_MirageSword
 	dc.w	$FFFF
 ; loc_00020A0C
 CaveRoomInteractions_0D:
@@ -36273,14 +36327,14 @@ CaveRoomInteractions_0E:
 	dc.w	$0009, $000A, $0008	
 	dc.l	CheckCaveRoomEnemyState
 	dc.w	$0009, $0000, $0002 
-	dc.l	loc_00020D84 
+	dc.l	CaveChest_PhantomShield 
 	dc.w	$FFFF 
 ; loc_00020A42
 CaveRoomInteractions_0F:
 	dc.w	$0003, $0003, $0002 
 	dc.l	CheckCaveRoomEnemyState
 	dc.w	$0008, $0004, $0002 
-	dc.l	loc_00020F14
+	dc.l	CaveChest_Money8192
 	dc.w	$FFFF
 ; loc_00020A58
 CaveRoomInteractions_10:
@@ -36289,7 +36343,7 @@ CaveRoomInteractions_10:
 	dc.w	$0003, $0004, $0002
 	dc.l	SetupNoOneTalker
 	dc.w	$0003, $000C, $0004	
-	dc.l	loc_00020F28	
+	dc.l	CaveChest_Money12288	
 	dc.w	$FFFF
 ; loc_00020A78
 CaveRoomInteractions_11:
@@ -36298,22 +36352,22 @@ CaveRoomInteractions_11:
 	dc.w	$0004, $0004, $0002
 	dc.l	CaveEvent_TadcasterTreasureChest
 	dc.w	$0000, $0001, $0002	
-	dc.l	loc_00020CF8
+	dc.l	CaveChest_GraphiteSword
 	dc.w	$000E, $0006, $0008
-	dc.l	loc_00020F3C
+	dc.l	CaveChest_Money8192B
 	dc.w	$0001, $000C, $0008	
-	dc.l	loc_00020F28	
+	dc.l	CaveChest_Money12288	
 	dc.w	$000E, $0008, $0008
-	dc.l	loc_00020F14
+	dc.l	CaveChest_Money8192
 	dc.w	$000D, $0003, $0008	
-	dc.l	loc_00020F14	
+	dc.l	CaveChest_Money8192	
 	dc.w	$FFFF
 ; loc_00020AC0
 CaveRoomInteractions_12:
 	dc.w	$000A, $0007, $0004	
 	dc.l	CheckCaveRoomEnemyState
 	dc.w	$0000, $0000, $0002 
-	dc.l	loc_00020D20 
+	dc.l	CaveChest_GrizzlyShield 
 	dc.w	$FFFF 
 ; loc_00020AD6
 CaveRoomInteractions_13:
@@ -36322,7 +36376,7 @@ CaveRoomInteractions_13:
 	dc.w	$0007, $000F, $000A 
 	dc.l	CaveEvent_TadcasterBully
 	dc.w	$0000, $000C, $0002 
-	dc.l	loc_00020D34
+	dc.l	CaveChest_BarbarianSword
 	dc.w	$FFFF
 ; loc_00020AF6
 CaveRoomInteractions_14:
@@ -36381,7 +36435,7 @@ CaveRoomInteractions_1E:
 	dc.w	$000D, $0008, $0004 
 	dc.l	CaveEvent_SwaffhamDigotPlant
 	dc.w	$0005, $000E, $0004 
-	dc.l	loc_00020D70 
+	dc.l	CaveChest_OldNickArmor 
 	dc.w	$FFFF 
 ; loc_00020B8E
 CaveRoomInteractions_1F:
@@ -36393,15 +36447,15 @@ CaveRoomInteractions_20:
 	dc.w	$0005, $0003, $000A 
 	dc.l	CaveEvent_SwaffhamSpy
 	dc.w	$0002, $0003, $0002 
-	dc.l	loc_000212BE
+	dc.l	CaveChest_RingSoldier1
 	dc.w	$000A, $000A, $0005 
 	dc.l	CaveEvent_TharEncounter
 	dc.w	$000C, $0009, $0008 
-	dc.l	loc_00021302
+	dc.l	CaveChest_RingSoldier2
 	dc.w	$0003, $000F, $000A 
 	dc.l	CaveEvent_LutherEncounter
 	dc.w	$0000, $000F, $0002 
-	dc.l	loc_00021346
+	dc.l	CaveChest_RingSoldier3
 	dc.w	$0004, $000B, $000D 
 	dc.l	CaveEvent_TsarkonFinalEncounter
 	dc.w	$FFFF 
@@ -36411,9 +36465,9 @@ CaveRoomInteractions_21:
 ; loc_00020BE4
 CaveRoomInteractions_22:
 	dc.w	$0009, $000F, $0008 
-	dc.l	loc_00020D5C
+	dc.l	CaveChest_SecretArmor
 	dc.w	$0009, $0000, $0008 
-	dc.l	loc_00020CBC
+	dc.l	CaveChest_MirrorOfAtlas
 	dc.w	$FFFF
 ; loc_00020BFA
 CaveRoomInteractions_23:
@@ -36442,7 +36496,7 @@ CaveRoomInteractions_27:
 	dc.w	$0009, $0009, $0002 
 	dc.l	CheckCaveRoomEnemyState
 	dc.w	$0001, $0001, $0001 
-	dc.l	loc_00020D0C
+	dc.l	CaveChest_CriticalSword
 	dc.w	$FFFF
 ; loc_00020C4A
 CaveRoomInteractions_28:
@@ -36461,7 +36515,7 @@ CaveRoomInteractions_2A:
 	dc.w	$0002, $000D, $0002 
 	dc.l	CheckCaveRoomEnemyState 
 	dc.w	$000F, $0007, $0001 
-	dc.l	loc_00020D98
+	dc.l	CaveChest_DeathSword
 	dc.w	$FFFF
 ; loc_00020C82
 CaveRoomInteractions_2B:
@@ -36481,91 +36535,124 @@ CaveEvent_RingOfWisdom:
 loc_00020CBA:
 	RTS
 	
-loc_00020CBC:
+; loc_00020CBC
+CaveChest_MirrorOfAtlas:
 	ItemChest ITEM_MIRROR_OF_ATLAS, Chest_mirror_of_atlas_opened
 	
-loc_00020CD0:
+; loc_00020CD0
+CaveChest_Money256:
 	MoneyChest $100, Chest_256_kims_opened
 	
-loc_00020CE4:
+; loc_00020CE4
+CaveChest_Money4096:
 	MoneyChest $1000, Chest_4096_kims_opened
 	
-loc_00020CF8:
+; loc_00020CF8
+CaveChest_GraphiteSword:
 	EquipChest EQUIPMENT_TYPE_SWORD, EQUIPMENT_SWORD_GRAPHITE, Chest_graphite_sword_opened
 	
-loc_00020D0C:
+; loc_00020D0C
+CaveChest_CriticalSword:
 	EquipChest EQUIPMENT_TYPE_SWORD, EQUIPMENT_SWORD_CRITICAL, Chest_critical_sword_opened
 	
-loc_00020D20:
+; loc_00020D20
+CaveChest_GrizzlyShield:
 	EquipChest EQUIPMENT_TYPE_SHIELD, EQUIPMENT_SHIELD_GRIZZLY, Chest_grizzly_shield_opened
-loc_00020D34:
+; loc_00020D34
+CaveChest_BarbarianSword:
 	EquipChest EQUIPMENT_TYPE_SWORD, EQUIPMENT_SWORD_BARBARIAN, Chest_barbarian_sword_opened
 	
-loc_00020D48:
+; loc_00020D48
+CaveChest_EmeraldArmor:
 	EquipChest EQUIPMENT_TYPE_ARMOR, EQUIPMENT_ARMOR_EMERALD, Chest_emerald_armor_opened
-loc_00020D5C:
+; loc_00020D5C
+CaveChest_SecretArmor:
 	EquipChest EQUIPMENT_TYPE_ARMOR, EQUIPMENT_ARMOR_SECRET, Chest_secret_armor_opened
 	
-loc_00020D70:
+; loc_00020D70
+CaveChest_OldNickArmor:
 	EquipChest EQUIPMENT_TYPE_ARMOR, EQUIPMENT_ARMOR_OLD_NICK, Chest_old_nick_armor_opened, EQUIPMENT_FLAG_CURSED
-loc_00020D84:	
+; loc_00020D84
+CaveChest_PhantomShield:	
 	EquipChest EQUIPMENT_TYPE_SHIELD, EQUIPMENT_SHIELD_PHANTOM, Chest_phantom_shield_opened
-loc_00020D98:
+; loc_00020D98
+CaveChest_DeathSword:
 	EquipChest EQUIPMENT_TYPE_SWORD, EQUIPMENT_SWORD_DEATH, Chest_death_sword_opened, EQUIPMENT_FLAG_CURSED
 	
-loc_00020DAC:
+; loc_00020DAC
+CaveChest_Herbs3:
 	ItemChest ITEM_HERBS, Herbs_chest_3_opened
 	
-loc_00020DC0:
+; loc_00020DC0
+CaveChest_Candle:
 	ItemChest ITEM_CANDLE, Candle_chest_opened
 	
-loc_00020DD4:
+; loc_00020DD4
+CaveChest_Herbs4:
 	ItemChest ITEM_HERBS, Herbs_chest_4_opened
 	
-loc_00020DE8:
+; loc_00020DE8
+CaveChest_ScaleArmor:
 	EquipChest EQUIPMENT_TYPE_ARMOR, EQUIPMENT_ARMOR_SCALE, Scale_armor_chest_opened
 	
-loc_00020DFC:
+; loc_00020DFC
+CaveChest_Candle_Parma:
 	ItemChest ITEM_CANDLE, Candle_chest_parma_opened
-loc_00020E10:
+; loc_00020E10
+CaveChest_Money768:
 	MoneyChest $0300, Money_chest_768_opened
 	
-loc_00020E24:
+; loc_00020E24
+CaveChest_Money1536:
 	MoneyChest $0600, Money_chest_1536_opened
-loc_00020E38:
+; loc_00020E38
+CaveChest_Candle2:
 	ItemChest ITEM_CANDLE, Candle_chest_2_opened
 	
-loc_00020E4C:	
+; loc_00020E4C
+CaveChest_Herbs_Watling:	
 	ItemChest ITEM_HERBS, Herbs_chest_watling_opened
-loc_00020E60:
+; loc_00020E60
+CaveChest_MagicShield:
 	EquipChest EQUIPMENT_TYPE_SHIELD, EQUIPMENT_SHIELD_MAGIC, Magic_shield_chest_opened
-loc_00020E74:
+; loc_00020E74
+CaveChest_Money1792:
 	MoneyChest $700, Money_chest_1792_opened
 	
-loc_00020E88:
+; loc_00020E88
+CaveChest_MirageSword:
 	EquipChest EQUIPMENT_TYPE_SWORD, EQUIPMENT_SWORD_MIRAGE, Chest_mirage_sword_opened
 	
-loc_00020E9C:
+; loc_00020E9C
+CaveChest_LargeShield:
 	EquipChest EQUIPMENT_TYPE_SHIELD, EQUIPMENT_SHIELD_LARGE, Large_shield_chest_opened
-loc_00020EB0:	
+; loc_00020EB0
+CaveChest_MetalArmor:	
 	EquipChest EQUIPMENT_TYPE_ARMOR, EQUIPMENT_ARMOR_METAL, Metal_armor_chest_opened
-loc_00020EC4:	
+; loc_00020EC4
+CaveChest_Money2128:	
 	MoneyChest $0850, Money_chest_2128_opened
-loc_00020ED8:
+; loc_00020ED8
+CaveChest_Lantern:
 	ItemChest ITEM_LANTERN, Lantern_chest_opened
 	
-loc_00020EEC:
+; loc_00020EEC
+CaveChest_RoyalShield:
 	EquipChest EQUIPMENT_TYPE_SHIELD, EQUIPMENT_SHIELD_ROYAL, Royal_shield_chest_opened
 	
-loc_00020F00:	
+; loc_00020F00
+CaveChest_SkeletonArmor:	
 	EquipChest EQUIPMENT_TYPE_ARMOR, EQUIPMENT_ARMOR_SKELETON, Skeleton_armor_chest_opened
-loc_00020F14:
+; loc_00020F14
+CaveChest_Money8192:
 	MoneyChest $2000, Money_chest_8192_opened
 	
-loc_00020F28:
+; loc_00020F28
+CaveChest_Money12288:
 	MoneyChest $3000, Money_chest_12288_opened
 	
-loc_00020F3C:
+; loc_00020F3C
+CaveChest_Money8192B:
 	MoneyChest $2000, Money_chest_8192_b_opened
 ; loc_00020F50
 CaveEvent_TreasureOfTroy:
@@ -36830,7 +36917,8 @@ CaveEvent_SwaffhamSpyKeyReward:
 	BSR.w	SetupItemTreasure
 	RTS
 	
-loc_000212BE:
+; loc_000212BE
+CaveChest_RingSoldier1:
 	RingChest 4, 5, Carthahena_soldier_1_defeated
 	
 ; loc_000212D8
@@ -36848,7 +36936,8 @@ CaveEvent_TharKeyReward:
 	BSR.w	SetupItemTreasure
 	RTS
 	
-loc_00021302:
+; loc_00021302
+CaveChest_RingSoldier2:
 	RingChest 4, 6, Carthahena_soldier_2_defeated
 	
 ; loc_0002131C
@@ -36866,7 +36955,8 @@ CaveEvent_LutherKeyReward:
 	BSR.w	SetupItemTreasure
 	RTS
 	
-loc_00021346:
+; loc_00021346
+CaveChest_RingSoldier3:
 	RingChest 4, 7, Carthahena_soldier_3_defeated
 	
 ; loc_00021360
@@ -37224,12 +37314,15 @@ SavedGameOptionsStr:
 	dc.b	$E2, $00, $E3, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E5, $E3, $E4, $E4, $E4, $E4
 	dc.b	$E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E5, $E6, $E7, $E7, $E7, $E7, $E7, $E7, $E7, $E7, $E7, $E7, $E7
 	dc.b	$E7, $E7, $E7, $E7, $E7, $E7, $E7, $E7, $E7, $E7, $E7, $E7, $E8, $00
-loc_00021DA2:
+; loc_00021DA2
+UIBorder_SmallTop:
 	dc.b	$E0, $E1, $E1, $E1, $E1, $E1, $E1, $E1, $E1, $E1, $E1, $E1, $E1, $E1, $E1, $E1, $E1, $E1, $E1, $E1, $E1, $E2
-loc_00021DB8:
+; loc_00021DB8
+UIBorder_SmallMiddle:
 	dc.b	$E3, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E5, $E3, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4
 	dc.b	$E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E5
-loc_00021DE4:
+; loc_00021DE4
+UIBorder_LargeBox:
 	dc.b	$E6, $E7, $E7, $E7, $E7, $E7, $E7, $E7, $E7, $E7, $E7, $E7, $E7, $E7, $E7, $E7, $E7, $E7, $E7, $E7, $E7, $E8, $E0, $E1, $E1, $E1, $E1, $E1, $E1, $E1, $E1, $E1
 	dc.b	$E1, $E1, $E1, $E1, $E1, $E1, $E1, $E1, $E1, $E1, $E1, $E1, $E1, $E1, $E1, $E2, $E3, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4
 	dc.b	$E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E5, $E3, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4
@@ -37238,7 +37331,8 @@ loc_00021DE4:
 	dc.b	$E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E5, $E3, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4
 	dc.b	$E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E5, $E3, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4
 	dc.b	$E4, $E4, $E4, $E4, $E4, $E5, $E6, $E7, $E7, $E7, $E7, $E7, $E7, $E7, $E7, $E7, $E7, $E7, $E7, $E7, $E7, $E7, $E7, $E7, $E7, $E7, $E7, $E7, $E7, $E7, $E7, $E8
-loc_00021EE4:
+; loc_00021EE4
+UIBorder_LevelUp:
 	dc.b	$E0, $E1, $E1, $E1, $E1, $E1, $E1, $E1, $E1, $E1, $E1, $E2, $E3, $E4, $4C, $45, $56, $45, $4C, $E4, $55, $50, $E4, $E5, $E6, $E7, $E7, $E7, $E7, $E7, $E7, $E7
 	dc.b	$E7, $E7, $E7, $E8
 
@@ -37965,7 +38059,8 @@ SineTable:
 	dc.b	$5A, $5C, $5E, $60, $62, $64, $66, $68, $6A, $6C, $6D, $6F, $70, $72, $73, $75, $76, $77, $78, $79, $7A, $7B, $7C, $7C, $7D, $7E, $7E, $7F, $7F, $7F, $7F, $7F 
 	dc.b	$7F, $7F, $7F, $7F, $7F, $7F, $7E, $7E, $7D, $7C, $7C, $7B, $7A, $79, $78, $77, $76, $75, $73, $72, $70, $6F, $6D, $6C, $6A, $68, $66, $64, $62, $60, $5E, $5C 
 	dc.b	$5A, $58, $55, $53, $51, $4E, $4C, $49, $47, $44, $41, $3F, $3C, $39, $36, $33, $30, $2E, $2B, $28, $25, $22, $1F, $1C, $18, $15, $12, $0F, $0C, $09, $06, $03 
-loc_000228FE:
+; loc_000228FE
+BattleSpriteIndexTableA:
 	dc.w	$0000
 	dc.w	$0004
 	dc.w	$0004 
@@ -37981,7 +38076,8 @@ loc_000228FE:
 	dc.w	$0005
 	dc.w	$0005
 	dc.w	$0005 
-loc_0002291C:
+; loc_0002291C
+BattleSpriteIndexTableB:
 	dc.w	$0000
 	dc.w	$0004
 	dc.w	$0004 
@@ -37997,7 +38093,8 @@ loc_0002291C:
 	dc.w	$0005
 	dc.w	$0005
 	dc.w	$0005 
-loc_0002293A:
+; loc_0002293A
+BattleSpriteDMACommands:
 	dc.b	$94, $04, $93, $80, $96, $D0, $95, $00, $97, $7F, $43, $20, $00, $80, $00, $00, $94, $03, $93, $00, $96, $D0, $95, $00, $97, $7F, $4C, $20, $00, $80, $00, $00 
 	dc.b	$94, $03, $93, $C0, $96, $D0, $95, $00, $97, $7F, $52, $20, $00, $80, $00, $00, $94, $03, $93, $C0, $96, $D0, $95, $00, $97, $7F, $59, $A0, $00, $80, $00, $00 
 	dc.b	$94, $04, $93, $80, $96, $D0, $95, $00, $97, $7F, $61, $20, $00, $80, $00, $00, $94, $03, $93, $00, $96, $D0, $95, $00, $97, $7F, $6A, $20, $00, $80, $00, $00 
@@ -38043,208 +38140,249 @@ loc_0002293A:
 	dc.b	$94, $06, $93, $C0, $96, $D0, $95, $00, $97, $7F, $48, $20, $00, $81, $00, $00, $94, $00, $93, $30, $96, $D0, $95, $00, $97, $7F, $55, $A0, $00, $81, $00, $00 
 	dc.b	$94, $01, $93, $C0, $96, $D0, $95, $00, $97, $7F, $56, $00, $00, $81, $00, $00, $94, $0B, $93, $00, $96, $D0, $95, $00, $97, $7F, $44, $20, $00, $80, $00, $00 
 	dc.b	$94, $05, $93, $10, $96, $D0, $95, $00, $97, $7F, $5A, $20, $00, $80, $00, $00 
-loc_00022ECA:
+; loc_00022ECA
+EnemySpriteFrameDataA_00:
 	dc.b	$0A, $0A, $00, $21, $04, $14, $01, $02, $0A, $0A, $00, $2A, $0A, $0A, $00, $33, $0A, $0A, $00, $3C, $05, $0A, $00, $F6 
-loc_00022EE2:
+; loc_00022EE2
+EnemySpriteFrameDataA_01:
 	dc.b	$00, $45, $01, $06, $00, $4E, $00, $57, $00, $60, $00, $F6 
-loc_00022EEE:
+; loc_00022EEE
+EnemySpriteFrameDataA_02:
 	dc.b	$00, $69, $01, $06, $00, $72, $00, $7B, $00, $84, $00, $F6 
-loc_00022EFA:
+; loc_00022EFA
+EnemySpriteFrameDataA_03:
 	dc.b	$0A, $09, $00, $8D, $0A, $09, $00, $96, $0A, $09, $00, $9F 
-loc_00022F06:
+; loc_00022F06
+EnemySpriteFrameDataA_04:
 	dc.b	$00, $A8, $00, $B1, $00, $BA 
-loc_00022F0C:
+; loc_00022F0C
+EnemySpriteFrameDataA_05:
 	dc.b	$00, $C3, $00, $CC, $00, $D5 
-loc_00022F12:
+; loc_00022F12
+EnemySpriteFrameDataA_06:
 	dc.b	$05, $C8, $00, $FE, $05, $C8, $00, $FA, $0E, $C8, $01, $2C 
-loc_00022F1E:
+; loc_00022F1E
+EnemySpriteFrameDataA_07:
 	dc.b	$00, $F0, $00, $A0, $00, $F0, $00, $90, $00, $E8, $00, $B8 
-loc_00022F2A:
+; loc_00022F2A
+EnemySpriteFrameDataA_08:
 	dc.b	$0E, $08, $01, $08, $0D, $08, $00, $DE 
-loc_00022F32:
+; loc_00022F32
+EnemySpriteFrameDataA_09:
 	dc.b	$0E, $07, $01, $08, $0D, $07, $00, $DE 
-loc_00022F3A:
+; loc_00022F3A
+EnemySpriteFrameDataA_0A:
 	dc.b	$0E, $06, $01, $08, $0D, $06, $00, $DE 
-loc_00022F42:
+; loc_00022F42
+EnemySpriteFrameDataA_0B:
 	dc.b	$01, $14, $00, $E6 
-loc_00022F46:
+; loc_00022F46
+EnemySpriteFrameDataA_0C:
 	dc.b	$01, $20, $00, $EE 
-loc_00022F4A:
+; loc_00022F4A
+EnemySpriteFrameDataA_0D:
 	dc.b	$00, $00, $FF, $E8 
-loc_00022F4E:
+; loc_00022F4E
+EnemySpriteFrameDataA_0E:
 	dc.b	$00, $00, $FF, $E8 
-loc_00022F52:
+; loc_00022F52
+EnemySpriteFrameDataA_0F:
 	dc.b	$00, $00, $FF, $E8 
-loc_00022F56:
+; loc_00022F56
+EnemySpriteFrameDataA_10:
 	dc.b	$00, $24, $FF, $F4, $00, $18, $00, $00, $00, $30, $FF, $F0, $00, $30, $00, $08, $00, $44, $FF, $F8 
-loc_00022F6A:
+; loc_00022F6A
+EnemySpriteFrameDataA_11:
 	dc.b	$00, $18, $00, $00, $00, $30, $FF, $FA 
-loc_00022F72:
+; loc_00022F72
+EnemySpriteFrameDataA_12:
 	dc.b	$01, $06, $01, $02, $01, $02, $01, $02, $01, $02, $01, $02, $01, $04, $01, $06 
 ; loc_00022F82
 EnemySpriteLayoutPtrsA:
-	dc.l	loc_00022FA2
-	dc.l	loc_00022FB2
-	dc.l	loc_00022FC2
-	dc.l	loc_00022FD2
+	dc.l	EnemySpriteLayoutA_Frame0
+	dc.l	EnemySpriteLayoutA_Frame1
+	dc.l	EnemySpriteLayoutA_Frame2
+	dc.l	EnemySpriteLayoutA_Frame3
 ; loc_00022F92
 EnemySpritePositionPtrsA:
-	dc.l	loc_00022FE2
-	dc.l	loc_00022FF2
-	dc.l	loc_00023002
-	dc.l	loc_00023002
-loc_00022FA2:
+	dc.l	EnemySpritePositionA_Frame0
+	dc.l	EnemySpritePositionA_Frame1
+	dc.l	EnemySpritePositionA_Frame23
+	dc.l	EnemySpritePositionA_Frame23
+; loc_00022FA2
+EnemySpriteLayoutA_Frame0:
 	dc.l	$0B0A0045	
 	dc.l	$0B0A0099	
 	dc.l	$050A00B5	
 	dc.l	$050A00C5	
-loc_00022FB2:
+; loc_00022FB2
+EnemySpriteLayoutA_Frame1:
 	dc.l	$0B0A0045	
 	dc.l	$0B0A008D	
 	dc.l	$050A00B1	
 	dc.l	$050A00C1	
-loc_00022FC2:
+; loc_00022FC2
+EnemySpriteLayoutA_Frame2:
 	dc.l	$0B0A0045	
 	dc.l	$0A0A012B	
 	dc.l	$0A0A0122	
 	dc.l	$050A00BD	
-loc_00022FD2:
+; loc_00022FD2
+EnemySpriteLayoutA_Frame3:
 	dc.l	$0B0A0051	
 	dc.l	$0A0A013D	
 	dc.l	$0A0A0134	
 	dc.l	$050A00BD	
-loc_00022FE2:
+; loc_00022FE2
+EnemySpritePositionA_Frame0:
 	dc.l	$00CD008A	
 	dc.l	$00BD009E	
 	dc.l	$00B900AE	
 	dc.l	$00D1008E	
-loc_00022FF2:
+; loc_00022FF2
+EnemySpritePositionA_Frame1:
 	dc.l	$00CD008A	
 	dc.l	$00BD009E	
 	dc.l	$00B900AE	
 	dc.l	$00D1008E	
-loc_00023002:
+; loc_00023002
+EnemySpritePositionA_Frame23:
 	dc.l	$00CD008A	
 	dc.l	$00BD0096	
 	dc.l	$00A50096	
 	dc.l	$00D1008E	
 ; loc_00023012
 EnemySpriteLayoutPtrsB:
-	dc.l	loc_00023032
-	dc.l	loc_00023042
-	dc.l	loc_00023052
-	dc.l	loc_00023062
+	dc.l	EnemySpriteLayoutB_Frame0
+	dc.l	EnemySpriteLayoutB_Frame1
+	dc.l	EnemySpriteLayoutB_Frame2
+	dc.l	EnemySpriteLayoutB_Frame3
 ; loc_00023022
 EnemySpritePositionPtrsB:
-	dc.l	loc_00023072
-	dc.l	loc_00023082
-	dc.l	loc_00023092
-	dc.l	loc_00023092
-loc_00023032:
+	dc.l	EnemySpritePositionB_Frame0
+	dc.l	EnemySpritePositionB_Frame1
+	dc.l	EnemySpritePositionB_Frame23
+	dc.l	EnemySpritePositionB_Frame23
+; loc_00023032
+EnemySpriteLayoutB_Frame0:
 	dc.l	$0B280021	
 	dc.l	$0B280069	
 	dc.l	$052800B9	
 	dc.l	$052800F1	
-loc_00023042:
+; loc_00023042
+EnemySpriteLayoutB_Frame1:
 	dc.l	$0B28002D	
 	dc.l	$0B2800A5	
 	dc.l	$0A280146	
 	dc.l	$052800F1	
-loc_00023052:
+; loc_00023052
+EnemySpriteLayoutB_Frame2:
 	dc.l	$0B280039	
 	dc.l	$0B280081	
 	dc.l	$0A280110	
 	dc.l	$052800C9	
-loc_00023062:
+; loc_00023062
+EnemySpriteLayoutB_Frame3:
 	dc.l	$0B28005D	
 	dc.l	$0B280075	
 	dc.l	$0A280119	
 	dc.l	$052800ED	
-loc_00023072:
+; loc_00023072
+EnemySpritePositionB_Frame0:
 	dc.l	$01050082	
 	dc.l	$010700A2	
 	dc.l	$010300B2	
 	dc.l	loc_00000000	
-loc_00023082:
+; loc_00023082
+EnemySpritePositionB_Frame1:
 	dc.l	$01050082	
 	dc.l	$010A00A2	
 	dc.l	$010200B2	
 	dc.l	loc_00000000	
-loc_00023092:
+; loc_00023092
+EnemySpritePositionB_Frame23:
 	dc.l	$01050082	
 	dc.l	$010800A2	
 	dc.l	$00F800B2	
 	dc.l	$00F4009A	
-loc_000230A2:
+; loc_000230A2
+BossSpriteLayoutData_A:
 	dc.l	$0E140173	
 	dc.l	$051400E5	
 	dc.l	$051400E9	
-loc_000230AE:
+; loc_000230AE
+BossSpriteLayoutData_B:
 	dc.l	$018B017F	
 	dc.l	$0173017F	
-loc_000230B6:
+; loc_000230B6
+BossSpriteLayoutData_C:
 	dc.l	$0A1E00F5	
 	dc.l	$0E1E0197	
-loc_000230BE:
+; loc_000230BE
+BossSpriteLayoutData_D:
 	dc.l	$00F500FE	
 	dc.l	$010700FE	
-loc_000230C6:
+; loc_000230C6
+BossSpriteLayoutData_E:
 	dc.l	$00CD00D1	
 	dc.l	$00D500D9	
 	dc.l	$00DD00D9	
 	dc.l	$00D500D1	
-loc_000230D6:
+; loc_000230D6
+BossSpriteLayoutData_F:
 	dc.l	$014F0158	
-loc_000230DA:
-	dc.l	loc_0002317A
+; loc_000230DA
+EncounterSpriteDescTable:
+	dc.l	EncounterSpriteList_00A
 	dc.b	$FF, $E8, $FF, $A8 
 	dc.w	$000C
-	dc.l	loc_000231A4
+	dc.l	EncounterSpriteList_00B
 	dc.b	$FF, $E8, $FF, $A8 
 	dc.w	$000C
-	dc.l	loc_000231CE
+	dc.l	EncounterSpriteList_00C
 	dc.b	$FF, $E8, $FF, $A8 
 	dc.w	$000C
-	dc.l	loc_000231F8
+	dc.l	EncounterSpriteList_01A
 	dc.b	$00, $00, $FF, $C0 
 	dc.w	$0000
-	dc.l	loc_00023242
+	dc.l	EncounterSpriteList_02A
 	dc.b	$FF, $E8, $FF, $90 
 	dc.w	$FFDC
-	dc.l	loc_0002327C
+	dc.l	EncounterSpriteList_03A
 	dc.b	$FF, $E8, $FF, $90 
 	dc.w	$FFDC
-	dc.l	loc_000232C6
+	dc.l	EncounterSpriteList_03B
 	dc.b	$FF, $F0, $FF, $90 
 	dc.w	$FFDC
-	dc.l	loc_00023308
+	dc.l	EncounterSpriteList_04A
 	dc.b	$FF, $E8, $FF, $90 
 	dc.w	$FFDC
-	dc.l	loc_00023342
+	dc.l	EncounterSpriteList_04B
 	dc.b	$00, $10, $FF, $88 
 	dc.w	$0024
-	dc.l	loc_0002337C
+	dc.l	EncounterSpriteList_05A
 	dc.b	$00, $10, $FF, $88 
 	dc.w	$0024
-	dc.l	loc_000233C6
+	dc.l	EncounterSpriteList_05B
 	dc.b	$00, $08, $FF, $88 
 	dc.w	$0024
-	dc.l	loc_00023408
+	dc.l	EncounterSpriteList_06A
 	dc.b	$00, $10, $FF, $88 
 	dc.w	$0024
-	dc.l	loc_00023442
+	dc.l	EncounterSpriteList_07A
 	dc.b	$00, $00, $FF, $AD 
 	dc.w	$FFF4
-	dc.l	loc_0002346C
+	dc.l	EncounterSpriteList_07B
 	dc.b	$00, $00, $FF, $AD 
 	dc.w	$FFF4
-	dc.l	loc_000234BE
+	dc.l	EncounterSpriteList_08A
 	dc.b	$00, $10, $FF, $B0 
 	dc.w	$0018
-	dc.l	loc_000234E8
+	dc.l	EncounterSpriteList_08B
 	dc.b	$00, $10, $FF, $B0 
 	dc.w	$0018
-loc_0002317A:
+; loc_0002317A
+EncounterSpriteList_00A:
 	dc.w	$0119
 	dc.b	$0F, $00, $FF, $FC, $FF, $F8 
 	dc.w	$01B1
@@ -38256,7 +38394,8 @@ loc_0002317A:
 	dc.w	$01DD
 	dc.b	$00, $04, $FF, $F8, $FF, $F9 
 	dc.w	$FFFF
-loc_000231A4:
+; loc_000231A4
+EncounterSpriteList_00B:
 	dc.w	$0129
 	dc.b	$0F, $00, $FF, $FC, $FF, $F8 
 	dc.w	$01B1
@@ -38268,7 +38407,8 @@ loc_000231A4:
 	dc.w	$01DD
 	dc.b	$00, $04, $FF, $F8, $FF, $F9 
 	dc.w	$FFFF
-loc_000231CE:
+; loc_000231CE
+EncounterSpriteList_00C:
 	dc.w	$0139
 	dc.b	$0F, $00, $FF, $FC, $FF, $F8 
 	dc.w	$01B1
@@ -38280,7 +38420,8 @@ loc_000231CE:
 	dc.w	$01DD
 	dc.b	$00, $04, $FF, $F8, $FF, $F9 
 	dc.w	$FFFF
-loc_000231F8:
+; loc_000231F8
+EncounterSpriteList_01A:
 	dc.w	$00CC
 	dc.b	$0A, $00, $00, $08, $FF, $D8 
 	dc.w	$00D5
@@ -38300,7 +38441,8 @@ loc_000231F8:
 	dc.w	$01D9
 	dc.b	$00, $08, $00, $18, $FF, $E8
 	dc.w	$FFFF 
-loc_00023242:
+; loc_00023242
+EncounterSpriteList_02A:
 	dc.w	$0021
 	dc.b	$0A, $FA, $00, $00, $00, $18 
 	dc.w	$002A
@@ -38316,7 +38458,8 @@ loc_00023242:
 	dc.w	$00F9
 	dc.b	$0F, $00, $00, $04, $00, $58 
 	dc.w	$FFFF
-loc_0002327C:
+; loc_0002327C
+EncounterSpriteList_03A:
 	dc.w	$0033
 	dc.b	$0A, $F8, $00, $00, $00, $18 
 	dc.w	$003C
@@ -38336,7 +38479,8 @@ loc_0002327C:
 	dc.w	$007B
 	dc.b	$0A, $00, $00, $08, $00, $30
 	dc.w	$FFFF 
-loc_000232C6:
+; loc_000232C6
+EncounterSpriteList_03B:
 	dc.w	$0057
 	dc.b	$0A, $FF, $00, $00, $00, $18 
 	dc.w	$0060
@@ -38354,7 +38498,8 @@ loc_000232C6:
 	dc.w	$007B
 	dc.b	$0A, $00, $FF, $B8, $00, $20 
 	dc.w	$FFFF
-loc_00023308:
+; loc_00023308
+EncounterSpriteList_04A:
 	dc.w	$0084
 	dc.b	$0A, $FA, $00, $00, $00, $18 
 	dc.w	$008D
@@ -38370,7 +38515,8 @@ loc_00023308:
 	dc.w	$0179
 	dc.b	$0F, $00, $00, $04, $00, $58 
 	dc.w	$FFFF
-loc_00023342:
+; loc_00023342
+EncounterSpriteList_04B:
 	dc.w	$0021
 	dc.b	$0A, $00, $00, $00, $00, $18 
 	dc.w	$002A
@@ -38386,7 +38532,8 @@ loc_00023342:
 	dc.w	$0109
 	dc.b	$0F, $06, $00, $04, $00, $58 
 	dc.w	$FFFF
-loc_0002337C:
+; loc_0002337C
+EncounterSpriteList_05A:
 	dc.w	$0033
 	dc.b	$0A, $00, $00, $00, $00, $18 
 	dc.w	$003C
@@ -38406,7 +38553,8 @@ loc_0002337C:
 	dc.w	$0072
 	dc.b	$0A, $08, $00, $08, $00, $30
 	dc.w	$FFFF 
-loc_000233C6:
+; loc_000233C6
+EncounterSpriteList_05B:
 	dc.w	$0057
 	dc.b	$0A, $06, $00, $00, $00, $18 
 	dc.w	$0060
@@ -38424,7 +38572,8 @@ loc_000233C6:
 	dc.w	$0072
 	dc.b	$0A, $07, $FF, $B8, $00, $20 
 	dc.w	$FFFF
-loc_00023408:
+; loc_00023408
+EncounterSpriteList_06A:
 	dc.w	$0084
 	dc.b	$0A, $06, $00, $00, $00, $18 
 	dc.w	$008D
@@ -38440,7 +38589,8 @@ loc_00023408:
 	dc.w	$0179
 	dc.b	$0F, $00, $00, $04, $00, $58 
 	dc.w	$FFFF
-loc_00023442:
+; loc_00023442
+EncounterSpriteList_07A:
 	dc.w	$0096
 	dc.b	$0A, $FC, $00, $00, $00, $18 
 	dc.w	$009F
@@ -38452,7 +38602,8 @@ loc_00023442:
 	dc.w	$01A8
 	dc.b	$08, $00, $00, $00, $00, $50 
 	dc.w	$FFFF
-loc_0002346C:
+; loc_0002346C
+EncounterSpriteList_07B:
 	dc.w	$00B1
 	dc.b	$0A, $F7, $00, $00, $00, $18 
 	dc.w	$00BA
@@ -38474,7 +38625,8 @@ loc_0002346C:
 	dc.w	$01D7
 	dc.b	$00, $00, $FF, $E8, $00, $38
 	dc.w	$FFFF 
-loc_000234BE:
+; loc_000234BE
+EncounterSpriteList_08A:
 	dc.w	$0096
 	dc.b	$0A, $00, $00, $00, $00, $18 
 	dc.w	$009F
@@ -38486,7 +38638,8 @@ loc_000234BE:
 	dc.w	$01A8
 	dc.b	$08, $04, $00, $00, $00, $50 
 	dc.w	$FFFF
-loc_000234E8:
+; loc_000234E8
+EncounterSpriteList_08B:
 	dc.w	$00B1
 	dc.b	$0A, $00, $00, $00, $00, $18 
 	dc.w	$00BA
@@ -38508,7 +38661,8 @@ loc_000234E8:
 	dc.w	$01D7
 	dc.b	$00, $09, $FF, $E8, $00, $38
 	dc.w	$FFFF 
-loc_0002353A:
+; loc_0002353A
+EncounterSpriteList_Hydra:
 	dc.b	$00, $02, $35, $76, $FF, $E4, $FF, $DC 
 	dc.w	$FFD8
 	dc.b	$00, $02, $35, $76, $FF, $F0, $FF, $B8 
@@ -38702,11 +38856,13 @@ BattlePaletteData_Tsarkon:
 	dc.l	$96D09500	
 	dc.l	$977F4000	
 	dc.l	$00810000	
-loc_000237EA:
+; loc_000237EA
+BattleVDPCmds_EnemySmall:
 	dc.l	$00C10AC8	
 	dc.l	$00CA0AC8	
 	dc.l	$00210FC8	
-loc_000237F6:
+; loc_000237F6
+BattleVDPCmds_EnemyLarge:
 	dc.l	$00310FC8	
 	dc.l	$00410FC8	
 	dc.l	$00510FC8	
@@ -41775,51 +41931,63 @@ EquipmentNames:
 	dc.l	SkeletonArmorStr	
 	dc.l	CrimsonArmorStr
 	dc.l	OldNickArmorStr	
-loc_00025FA4:
+; loc_00025FA4
+ShopDialog_NextTime:
 	dc.l	NextTimeStr	
 	dc.l	NextTimeStr	
 	dc.l	NextTimeStr	
-loc_00025FB0:
+; loc_00025FB0
+ShopDialog_ThankYou:
 	dc.l	ThankYouStr	
 	dc.l	ThankYouStr	
 	dc.l	ThankYouStr	
-loc_00025FBC:
+; loc_00025FBC
+ShopDialog_AnythingElse:
 	dc.l	AnythingElseStr	
 	dc.l	AnythingElseStr	
 	dc.l	AnythingElseStr	
-loc_00025FC8:
+; loc_00025FC8
+ShopDialog_BusinessThanks:
 	dc.l	BusinessThanksStr	
 	dc.l	BusinessThanksStr	
 	dc.l	BusinessThanksStr	
-loc_00025FD4:
+; loc_00025FD4
+ShopDialog_SellAnything:
 	dc.l	SellAnythingStr	
 	dc.l	SellAnythingStr	
 	dc.l	SellAnythingStr	
-loc_00025FE0:
+; loc_00025FE0
+ShopDialog_NoNeed:
 	dc.l	NoNeedStr	
 	dc.l	NoNeedStr	
 	dc.l	NoNeedStr	
-loc_00025FEC:
+; loc_00025FEC
+ShopDialog_GivingAway:
 	dc.l	GivingAwayStr	
 	dc.l	GivingAwayStr	
 	dc.l	GivingAwayStr	
-loc_00025FF8:
+; loc_00025FF8
+ShopDialog_BuyPrompt:
 	dc.l	BuyPromptStr	
 	dc.l	BuyPromptStr	
 	dc.l	BuyPromptStr	
-loc_00026004:
+; loc_00026004
+ShopDialog_Ok:
 	dc.l	OkStr
 	dc.l	OkStr
 	dc.l	OkStr
-loc_00026010:
+; loc_00026010
+ShopDialog_SellPrompt:
 	dc.l	SellPromptStr	
 	dc.l	SellPromptStr	
 	dc.l	SellPromptStr	
-loc_0002601C:
+; loc_0002601C
+ShopDialog_AllRight:
 	dc.l	AllRightStr
 	dc.l	AllRightStr
 	dc.l	AllRightStr
-loc_00026028:
+; loc_00026028
+ShopDialog_Welcome:
 	dc.l	ShopWelcomeStr
 	dc.l	WeaponsArmorStr
 	dc.l	SpellBooksStr
@@ -42166,7 +42334,8 @@ LongLiveKingStr:
 BanishedEvilStr:
 	dc.b	"You've banished", $FE
 	dc.b	"evil from our land!", $FF 
-loc_000272AC:
+; loc_000272AC
+EndingCelebrationStrings:
 	dc.l	ThankYouStr2
 	dc.l	LongLiveKingStr
 	dc.l	BanishedEvilStr
