@@ -1285,6 +1285,8 @@ PALETTE_IDX_TITLE_LIGHTNING = $0030   ; Title screen lightning flash (line 0)
 ; Prologue / Name Entry
 PALETTE_IDX_PROLOGUE_BG     = $004F   ; Prologue screen background (lines 0, 2)
 PALETTE_IDX_PROLOGUE_SCENE  = $0052   ; Prologue scene tile palette (lines 1, 3)
+PALETTE_IDX_PROLOGUE_LINE1  = $0050   ; Prologue palette line 1 fade target
+PALETTE_IDX_PROLOGUE_LINE2  = $0051   ; Prologue palette line 2 fade target
 PALETTE_IDX_NAMEENTRY_BG    = $0032   ; Name entry screen background
 PALETTE_IDX_NAMEENTRY_GLOW1 = $0033   ; Name entry glow animation 1
 PALETTE_IDX_NAMEENTRY_GLOW2 = $0034   ; Name entry glow animation 2
@@ -1293,6 +1295,9 @@ PALETTE_IDX_NAMEENTRY_GLOW2 = $0034   ; Name entry glow animation 2
 PALETTE_IDX_ALL_WHITE       = $0084   ; All-white flash palette (ending/lightning effect)
 PALETTE_IDX_ALL_BLACK       = $0094   ; All-black palette (ending screen blanks)
 PALETTE_IDX_ENDING_FIRE     = $0095   ; Ending sequence fire palette
+PALETTE_IDX_ENDING_TEXT_BG  = $0085   ; Ending outro text background (fade-in target for text)
+PALETTE_IDX_ENDING_CURSOR_MIN = $0096 ; Ending cursor blink palette range start
+PALETTE_IDX_ENDING_CURSOR_MAX = $009D ; Ending cursor blink palette range end
 
 
 
@@ -1475,4 +1480,16 @@ POISONED_DURATION           = $FFFF   ; Player_poisoned: indefinite/permanent po
 ; ============================================================
 PALETTE_IDX_BOSS_FLASH_A    = $00B5   ; Boss hit flash palette A (two-headed dragon) (2 uses)
 PALETTE_IDX_BOSS_FLASH_B    = $00B7   ; Boss hit flash palette B (orbit/ring boss) (2 uses)
+
+; ============================================================
+; Ending Sequence Timer Durations (Ending_timer)
+; ============================================================
+; Frame counts used during the ending sequence steps.
+; At 60 fps: $0032=50f, $00C8=200f, $012C=300f, $0190=400f, $01F4=500f.
+;
+ENDING_DELAY_BRIEF          = $0032   ; Very short ending delay (1 use)
+ENDING_DELAY_NORMAL         = $00C8   ; Standard ending step duration (5 uses)
+ENDING_DELAY_LONG           = $012C   ; Long ending step duration (2 uses)
+ENDING_DELAY_SCROLL         = $0190   ; Ending scroll phase duration (1 use)
+ENDING_DELAY_LONGER         = $01F4   ; Extended ending step duration (2 uses)
 
