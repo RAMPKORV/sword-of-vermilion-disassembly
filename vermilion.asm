@@ -3556,14 +3556,14 @@ loc_00003836:					; unreferenced dead code
 
 ; PlayerMovementJumpTable
 PlayerMovementJumpTable:
-	BRA.w	loc_00003896
-	BRA.w	loc_00003896	
-	BRA.w	loc_000038CA
-	BRA.w	loc_000038CA	
-	BRA.w	loc_000038AE
-	BRA.w	loc_000038AE	
-	BRA.w	loc_000038E8
-	BRA.w	loc_000038E8	
+	BRA.w	TownMovement_CameraUp
+	BRA.w	TownMovement_CameraUp	
+	BRA.w	TownMovement_CameraLeft
+	BRA.w	TownMovement_CameraLeft	
+	BRA.w	TownMovement_CameraDown
+	BRA.w	TownMovement_CameraDown	
+	BRA.w	TownMovement_CameraRight
+	BRA.w	TownMovement_CameraRight	
 ; TownMovement_UpdateIdleSprite
 TownMovement_UpdateIdleSprite:
 	LEA	loc_0003D9E8, A0
@@ -3581,8 +3581,9 @@ TownMovement_UpdateIdleSprite:
 loc_0000388C:
 	MOVE.b	#$FF, Player_walk_anim_toggle.w
 loc_00003892:
-	BRA.w	loc_00003966
-loc_00003896:
+	BRA.w	TownMovementTick_UpdateFlags
+; loc_00003896
+TownMovement_CameraUp:
 	MOVE.w	#1, Town_camera_move_state.w
 	MOVE.w	$12(A5), D0
 	SUB.w	Camera_scroll_y.w, D0
@@ -3590,7 +3591,8 @@ loc_00003896:
 	SUBQ.w	#1, $12(A5)
 loc_000038AA:
 	BRA.w	TownMovement_UpdateWalkAnim
-loc_000038AE:
+; loc_000038AE
+TownMovement_CameraDown:
 	MOVE.w	#2, Town_camera_move_state.w
 	MOVE.w	$12(A5), D0
 	SUB.w	Camera_scroll_y.w, D0
@@ -3599,7 +3601,8 @@ loc_000038AE:
 	ADDQ.w	#1, $12(A5)
 loc_000038C6:
 	BRA.w	TownMovement_UpdateWalkAnim
-loc_000038CA:
+; loc_000038CA
+TownMovement_CameraLeft:
 	MOVE.w	#3, Town_camera_move_state.w
 	MOVE.w	$E(A5), D0
 	SUB.w	Camera_scroll_x.w, D0
@@ -3608,7 +3611,8 @@ loc_000038CA:
 	SUBQ.w	#1, $E(A5)
 loc_000038E4:
 	BRA.w	TownMovement_UpdateWalkAnim
-loc_000038E8:
+; loc_000038E8
+TownMovement_CameraRight:
 	MOVE.w	#4, Town_camera_move_state.w
 	MOVE.w	$E(A5), D0
 	SUB.w	Camera_scroll_x.w, D0
@@ -3647,10 +3651,11 @@ loc_00003948:
 	LEA	loc_0003D9E8, A0
 	MOVE.b	(A0,D0.w), $24(A5)
 	SUBQ.b	#1, Player_movement_step_counter.w
-	BGT.b	loc_00003966
+	BGT.b	TownMovementTick_UpdateFlags
 	MOVE.b	#$10, Player_movement_step_counter.w
 	CLR.b	Player_is_moving.w
-loc_00003966:
+; loc_00003966
+TownMovementTick_UpdateFlags:
 	BCLR.b	#3, $7(A5)
 	MOVE.w	Player_direction.w, D1
 	CMPI.w	#4, D1
@@ -3940,11 +3945,12 @@ BattlePlayerInputHandler:
 	TST.b	Fade_out_lines_mask.w
 	BNE.w	BattlePlayerInputHandler_UpdateSprite
 	TST.b	Player_invulnerable.w
-	BEQ.b	loc_00003D7A
+	BEQ.b	BattlePlayerInputHandler_AttackCheck
 	SUBQ.b	#1, $1A(A5)
-	BGT.b	loc_00003D7A
+	BGT.b	BattlePlayerInputHandler_AttackCheck
 	CLR.b	Player_invulnerable.w
-loc_00003D7A:
+; loc_00003D7A
+BattlePlayerInputHandler_AttackCheck:
 	TST.b	Player_attacking_flag.w
 	BNE.b	BattlePlayerInputHandler_ProcessMovement
 	MOVE.w	#BUTTON_BIT_C, D2
@@ -4056,7 +4062,7 @@ BattlePlayerInputHandler_UpdateSprite:
 	MOVE.b	$2(A0,D1.w), $24(A4)
 	MOVE.b	#$10, Player_movement_step_counter.w
 	CLR.b	Player_is_moving.w
-	BRA.w	loc_00003F58
+	BRA.w	BattleMovement_AttackCheck
 loc_00003EF8:
 	MOVE.b	#$FF, Player_is_moving.w
 	MOVE.w	Player_direction.w, D1
@@ -4080,12 +4086,13 @@ loc_00003F28:
 	MOVE.b	$1(A0,D0.w), $24(A6)
 	MOVE.b	$2(A0,D0.w), $24(A4)
 	SUBQ.b	#1, Player_movement_step_counter.w
-	BGT.b	loc_00003F58
+	BGT.b	BattleMovement_AttackCheck
 	MOVE.b	#$10, Player_movement_step_counter.w
 	CLR.b	Player_is_moving.w
-loc_00003F58:
+; loc_00003F58
+BattleMovement_AttackCheck:
 	TST.b	Player_attacking_flag.w
-	BEQ.w	loc_00003FA2
+	BEQ.w	BattleMovement_UpdateSprite
 	MOVEA.l	Battle_entity_slot_1_ptr.w, A6
 	MOVEA.l	Battle_entity_slot_2_ptr.w, A4
 	ADDQ.b	#1, $28(A5)
@@ -4101,10 +4108,11 @@ loc_00003F58:
 	MOVE.b	$1(A0,D0.w), $24(A6)
 	MOVE.b	$2(A0,D0.w), $24(A4)
 	BSR.w	CheckBattleAttackHitbox
-	BRA.w	loc_00003FA2
+	BRA.w	BattleMovement_UpdateSprite
 loc_00003F9E:
 	CLR.b	Player_attacking_flag.w
-loc_00003FA2:
+; loc_00003FA2
+BattleMovement_UpdateSprite:
 	BSET.b	#3, $7(A5)
 	MOVE.w	Player_direction.w, D1
 	CMPI.w	#5, D1
@@ -4127,9 +4135,9 @@ loc_00003FCE:
 	CMPI.w	#$0140, D0
 	BGT.w	loc_0000402E
 	CMPI.w	#$0038, D1
-	BLT.w	loc_00004036
+	BLT.w	PlayerSpritePositionClamp_TopEdge
 	CMPI.w	#$00B8, D1
-	BGT.w	loc_0000403E
+	BGT.w	PlayerSpritePositionClamp_BottomEdge
 	BRA.w	PlayerSpritePositionClamp_Done
 loc_00004000:
 	MOVE.w	$E(A5), D0
@@ -4139,9 +4147,9 @@ loc_00004000:
 	CMPI.w	#$0140, D0
 	BGT.w	BattlePostVictory_ResetEntities
 	CMPI.w	#$0038, D1
-	BLT.b	loc_00004036
+	BLT.b	PlayerSpritePositionClamp_TopEdge
 	CMPI.w	#$00B8, D1
-	BGT.b	loc_0000403E
+	BGT.b	PlayerSpritePositionClamp_BottomEdge
 	BRA.b	PlayerSpritePositionClamp_Done
 loc_00004026:
 	MOVE.w	#0, $E(A5)	
@@ -4149,10 +4157,12 @@ loc_00004026:
 loc_0000402E:
 	MOVE.w	#$0140, $E(A5)
 	BRA.b	PlayerSpritePositionClamp_Done
-loc_00004036:
+; loc_00004036
+PlayerSpritePositionClamp_TopEdge:
 	MOVE.w	#$0038, $12(A5)
 	BRA.b	PlayerSpritePositionClamp_Done
-loc_0000403E:
+; loc_0000403E
+PlayerSpritePositionClamp_BottomEdge:
 	MOVE.w	#$00B8, $12(A5)
 ; PlayerSpritePositionClamp_Done
 PlayerSpritePositionClamp_Done:
@@ -4391,9 +4401,9 @@ OverworldPlayerTickHandler:
 	TST.b	Player_move_backward_in_overworld.w
 	BNE.w	loc_00004498
 	TST.b	Player_rotate_counter_clockwise_in_overworld.w
-	BNE.w	loc_0000444E
+	BNE.w	OverworldTick_RotateCounterClockwise
 	TST.b	Player_rotate_clockwise_in_overworld.w
-	BNE.b	loc_0000441E
+	BNE.b	OverworldTick_RotateClockwise
 	CLR.w	Overworld_movement_frame.w
 	MOVE.b	Controller_current_state.w, D0
 	ANDI.w	#$000F, D0
@@ -4403,11 +4413,12 @@ OverworldPlayerTickHandler:
 	BTST.l	#1, D0
 	BNE.w	loc_00004486
 	BTST.l	#2, D0
-	BNE.w	loc_0000444E
+	BNE.w	OverworldTick_RotateCounterClockwise
 	BTST.l	#3, D0
-	BNE.b	loc_0000441E
+	BNE.b	OverworldTick_RotateClockwise
 	BRA.w	OverworldTick_Return	
-loc_0000441E:
+; loc_0000441E
+OverworldTick_RotateClockwise:
 	MOVE.w	Overworld_movement_frame.w, D0
 	MOVE.w	D0, D1
 	ANDI.w	#7, D1
@@ -4422,7 +4433,8 @@ loc_0000441E:
 OverworldRotateDispatch:
 	JSR	(A0,D0.w)
 	BRA.w	OverworldTick_ClearInteractionFlags
-loc_0000444E:
+; loc_0000444E
+OverworldTick_RotateCounterClockwise:
 	MOVE.w	Overworld_movement_frame.w, D0
 	MOVE.w	D0, D1
 	ANDI.w	#7, D1
@@ -4654,74 +4666,86 @@ UpdatePlayerMapSector:
 
 ; loc_0000471E
 RotateCW_NorthJumpTable:
-	BRA.w	loc_0000479C
-	BRA.w	loc_0000477E
-	BRA.w	loc_00004788
-	BRA.w	loc_00004792
+	BRA.w	RenderFpWall_UpLeft
+	BRA.w	RenderFpWall_DownRight
+	BRA.w	RenderFpWall_DownLeft
+	BRA.w	RenderFpWall_UpRight
 ; loc_0000472E
 RotateCW_EastJumpTable:
-	BRA.w	loc_000047C4
-	BRA.w	loc_000047A6
-	BRA.w	loc_000047B0
-	BRA.w	loc_000047BA
+	BRA.w	RenderFpWall_LeftUp
+	BRA.w	RenderFpWall_RightDown
+	BRA.w	RenderFpWall_RightUp
+	BRA.w	RenderFpWall_LeftDown
 ; loc_0000473E
 RotateCW_SouthJumpTable:
-	BRA.w	loc_000047EC
-	BRA.w	loc_000047CE
-	BRA.w	loc_000047D8
-	BRA.w	loc_000047E2
+	BRA.w	RenderFpWall_FarLeft
+	BRA.w	RenderFpWall_FarDownRight
+	BRA.w	RenderFpWall_FarUpLeft
+	BRA.w	RenderFpWall_FarRight
 ; loc_0000474E
 RotateCCW_WestJumpTable:
-	BRA.w	loc_0000477E
-	BRA.w	loc_00004788
-	BRA.w	loc_00004792
-	BRA.w	loc_0000479C
+	BRA.w	RenderFpWall_DownRight
+	BRA.w	RenderFpWall_DownLeft
+	BRA.w	RenderFpWall_UpRight
+	BRA.w	RenderFpWall_UpLeft
 ; loc_0000475E
 RotateCCW_EastJumpTable:
-	BRA.w	loc_000047A6
-	BRA.w	loc_000047B0
-	BRA.w	loc_000047BA
-	BRA.w	loc_000047C4
+	BRA.w	RenderFpWall_RightDown
+	BRA.w	RenderFpWall_RightUp
+	BRA.w	RenderFpWall_LeftDown
+	BRA.w	RenderFpWall_LeftUp
 ; loc_0000476E
 RotateCCW_SouthJumpTable:
-	BRA.w	loc_000047CE
-	BRA.w	loc_000047D8
-	BRA.w	loc_000047E2
-	BRA.w	loc_000047EC
-loc_0000477E:
+	BRA.w	RenderFpWall_FarDownRight
+	BRA.w	RenderFpWall_FarUpLeft
+	BRA.w	RenderFpWall_FarRight
+	BRA.w	RenderFpWall_FarLeft
+; loc_0000477E
+RenderFpWall_DownRight:
 	LEA	WallTileOffsets_DownRight, A4
 	BRA.w	RenderFpSector_Near
-loc_00004788:
+; loc_00004788
+RenderFpWall_DownLeft:
 	LEA	WallTileOffsets_DownLeft, A4
 	BRA.w	RenderFpSector_Near
-loc_00004792:
+; loc_00004792
+RenderFpWall_UpRight:
 	LEA	WallTileOffsets_UpRight, A4
 	BRA.w	RenderFpSector_Near
-loc_0000479C:
+; loc_0000479C
+RenderFpWall_UpLeft:
 	LEA	WallTileOffsets_UpLeft, A4
 	BRA.w	RenderFpSector_Near
-loc_000047A6:
+; loc_000047A6
+RenderFpWall_RightDown:
 	LEA	WallTileOffsets_RightDown, A4
 	BRA.w	RenderFpSector_Far
-loc_000047B0:
+; loc_000047B0
+RenderFpWall_RightUp:
 	LEA	WallTileOffsets_RightUp, A4
 	BRA.w	RenderFpSector_Far
-loc_000047BA:
+; loc_000047BA
+RenderFpWall_LeftDown:
 	LEA	WallTileOffsets_LeftDown, A4
 	BRA.w	RenderFpSector_Far
-loc_000047C4:
+; loc_000047C4
+RenderFpWall_LeftUp:
 	LEA	WallTileOffsets_LeftUp, A4
 	BRA.w	RenderFpSector_Far
-loc_000047CE:
+; loc_000047CE
+RenderFpWall_FarDownRight:
 	LEA	WallTileOffsets_FarDownRight, A4
 	BRA.w	RenderFpSector_Mid
-loc_000047D8:
+; loc_000047D8
+RenderFpWall_FarUpLeft:
 	LEA	WallTileOffsets_FarUpLeft, A4
 	BRA.w	RenderFpSector_Mid
-loc_000047E2:
+; loc_000047E2
+RenderFpWall_FarRight:
 	LEA	WallTileOffsets_FarRight, A4
 	BRA.w	RenderFpSector_Mid
-loc_000047EC:
+; loc_000047EC
+RenderFpWall_FarLeft:
 	LEA	WallTileOffsets_FarLeft, A4
 	BRA.w	RenderFpSector_Mid
 RenderWallTileWithPalette:
@@ -4849,7 +4873,7 @@ loc_00004946:
 	BSR.w	DrawFirstPersonWalls
 	BSR.w	UpdateAreaVisibility
 	CLR.w	D7
-	BRA.w	loc_00004CCE
+	BRA.w	CaveBossStartPositions_Alt
 loc_00004974:
 	TST.w	Palette_line_2_index.w
 	BEQ.b	loc_0000497E
@@ -4904,15 +4928,16 @@ loc_00004A14:
 	TST.b	Is_in_cave.w
 	BEQ.b	loc_00004A30
 	CMPI.w	#$0047, Palette_line_2_index.w
-	BNE.b	loc_00004A40
+	BNE.b	DungeonForwardMove_PaletteStep
 	MOVE.w	#$0040, Palette_line_2_index.w
 	BRA.b	DungeonForwardMove_LoadPaletteDraw
 loc_00004A30:
 	CMPI.w	#$003F, Palette_line_2_index.w
-	BNE.b	loc_00004A40
+	BNE.b	DungeonForwardMove_PaletteStep
 	MOVE.w	#$0038, Palette_line_2_index.w
 	BRA.b	DungeonForwardMove_LoadPaletteDraw
-loc_00004A40:
+; loc_00004A40
+DungeonForwardMove_PaletteStep:
 	ADDQ.w	#1, Palette_line_2_index.w
 ; loc_00004A44
 DungeonForwardMove_LoadPaletteDraw:
@@ -4935,15 +4960,16 @@ loc_00004A76:
 	TST.b	Is_in_cave.w
 	BEQ.b	loc_00004A92
 	CMPI.w	#$0040, Palette_line_2_index.w
-	BNE.b	loc_00004AA2
+	BNE.b	DungeonBackwardMove_PaletteStep
 	MOVE.w	#$0047, Palette_line_2_index.w
 	BRA.b	DungeonBackwardMove_LoadPaletteDraw
 loc_00004A92:
 	CMPI.w	#$0038, Palette_line_2_index.w
-	BNE.b	loc_00004AA2
+	BNE.b	DungeonBackwardMove_PaletteStep
 	MOVE.w	#$003F, Palette_line_2_index.w
 	BRA.b	DungeonBackwardMove_LoadPaletteDraw
-loc_00004AA2:
+; loc_00004AA2
+DungeonBackwardMove_PaletteStep:
 	SUBQ.w	#1, Palette_line_2_index.w
 ; loc_00004AA6
 DungeonBackwardMove_LoadPaletteDraw:
@@ -5000,7 +5026,7 @@ loc_00004B40:
 	MOVE.w	#0, Wall_render_y_offset.w
 	BSR.w	DrawFirstPersonWalls
 	MOVEQ	#1, D7
-	BRA.w	loc_00004CCE
+	BRA.w	CaveBossStartPositions_Alt
 loc_00004B62:
 	TST.w	Palette_line_2_index.w
 	BEQ.b	loc_00004B6C
@@ -5065,7 +5091,8 @@ ResetObjectOffscreenPositions:
 	MOVE.l	#$00580000, $12(A6)
 	RTS
 
-loc_00004CCE:
+; loc_00004CCE
+CaveBossStartPositions_Alt:
 	MOVEA.l	Enemy_list_ptr.w, A6
 	MOVE.l	#$00360000, $E(A6)
 	MOVE.l	#$006E0000, $12(A6)
@@ -6363,7 +6390,7 @@ loc_00005FFE:
 ValidateDungeonTileType:
 	CLR.b	$18(A6)
 	TST.b	D4
-	BEQ.b	loc_0000603C
+	BEQ.b	RenderMapToVRAM_Return
 	BGT.b	loc_00006016
 	CMPI.b	#$90, D4
 	BLT.b	loc_0000602E
@@ -6372,7 +6399,7 @@ ValidateDungeonTileType:
 
 loc_00006016:
 	CMPI.b	#6, D4
-	BLE.b	loc_0000603C
+	BLE.b	RenderMapToVRAM_Return
 	CMPI.b	#$10, D4
 	BLT.b	loc_0000603A
 	TST.b	Is_in_cave.w
@@ -6390,24 +6417,26 @@ loc_00006034:
 
 loc_0000603A:
 	CLR.w	D4
-loc_0000603C:
+; loc_0000603C
+RenderMapToVRAM_Return:
 	RTS
 
 DisplayCompassToVRAM:
 	LEA	loc_0006AFC0, A0
-	BRA.w	loc_0000606E
+	BRA.w	RenderMapToVRAM_NoPalette
 RenderMapToVRAM_DualPalette_21x20:
 	LEA	loc_0006B1E4, A0
-	BRA.w	loc_0000606E
+	BRA.w	RenderMapToVRAM_NoPalette
 RenderMapToVRAM_DualPalette_21x13:
 	LEA	loc_0006B0D2, A0
 	MOVE.w	#$42A4, D4
-	BRA.w	loc_000060BE
+	BRA.w	RenderMapToVRAM_WithPalette
 RenderMapToVRAM_DualPalette_21x13_Alt:
 	LEA	loc_0006B2F6, A0
 	MOVE.w	#$4AA4, D4
-	BRA.w	loc_000060BE
-loc_0000606E:
+	BRA.w	RenderMapToVRAM_WithPalette
+; loc_0000606E
+RenderMapToVRAM_NoPalette:
 	ORI	#$0700, SR
 	MOVE.l	#$44820003, D5
 	MOVE.w	#$000C, D7
@@ -6432,7 +6461,8 @@ loc_0000609C:
 	ANDI	#$F8FF, SR
 	RTS
 
-loc_000060BE:
+; loc_000060BE
+RenderMapToVRAM_WithPalette:
 	ORI	#$0700, SR
 	MOVE.l	#$44820003, D5
 	MOVE.w	#$000C, D7
@@ -6452,22 +6482,23 @@ loc_000060D6:
 
 DisplayKimsToVRAM:
 	LEA	loc_0006CED2, A0
-	BRA.w	loc_00006126
+	BRA.w	DisplayStatsToVRAM_NoPalette
 ; DisplayStatsToVRAM
 DisplayStatsToVRAM:
 	LEA	loc_0006D022, A0
-	BRA.w	loc_00006126
+	BRA.w	DisplayStatsToVRAM_NoPalette
 ; DisplayStatsToVRAM_SinglePalette
 DisplayStatsToVRAM_SinglePalette:
 	LEA	loc_0006CF7A, A0
 	MOVE.w	#$4770, D4
-	BRA.w	loc_00006176
+	BRA.w	DisplayStatsToVRAM_WithPalette
 ; DisplayStatsToVRAM_AltPalette
 DisplayStatsToVRAM_AltPalette:
 	LEA	loc_0006D0CA, A0
 	MOVE.w	#$4F70, D4
-	BRA.w	loc_00006176
-loc_00006126:
+	BRA.w	DisplayStatsToVRAM_WithPalette
+; loc_00006126
+DisplayStatsToVRAM_NoPalette:
 	ORI	#$0700, SR
 	MOVE.l	#$40820003, D5
 	MOVE.w	#7, D7
@@ -6492,7 +6523,8 @@ loc_00006154:
 	ANDI	#$F8FF, SR
 	RTS
 
-loc_00006176:
+; loc_00006176
+DisplayStatsToVRAM_WithPalette:
 	ORI	#$0700, SR
 	MOVE.l	#$40820003, D5
 	MOVE.w	#7, D7
@@ -6722,10 +6754,11 @@ DecompressMapSectorRLE:
 loc_00006348:
 	MOVE.w	D0, D2                  ; Check if at end of row (every 16 tiles)
 	ANDI.w	#$000F, D2              ; D2 = tile counter % 16
-	BNE.b	loc_00006354            ; If not multiple of 16, continue
+	BNE.b	DecompressMapTile_Next            ; If not multiple of 16, continue
 	LEA	$20(A3), A3             ; Skip $20 bytes to next row
 	
-loc_00006354:
+; loc_00006354
+DecompressMapTile_Next:
 	MOVE.b	(A1)+, D1               ; Read next compressed byte
 	CMPI.w	#$80, D1                ; Check if RLE marker (>= $80)
 	BLT.b	loc_00006380            ; If < $80, it's a literal tile
@@ -6747,7 +6780,7 @@ loc_00006372:
 	BGE.b	loc_0000638A            ; Yes: exit
 	DBF	D1, loc_00006362        ; Loop while repeat count > 0
 	CLR.w	D1
-	BRA.b	loc_00006354            ; Read next byte
+	BRA.b	DecompressMapTile_Next            ; Read next byte
 	
 	; Literal tile handling
 loc_00006380:
@@ -6842,12 +6875,13 @@ UpdateAreaVisibility:
 	TST.b	Area_map_revealed.w
 	BEQ.b	loc_0000646C
 	TST.b	Is_in_cave.w
-	BEQ.b	loc_00006470
+	BEQ.b	RenderCaveDarknessTilemap
 	TST.b	Cave_light_active.w
-	BNE.b	loc_00006470
+	BNE.b	RenderCaveDarknessTilemap
 loc_0000646C:
 	MOVE.w	#$85B7, D4
-loc_00006470:
+; loc_00006470
+RenderCaveDarknessTilemap:
 	ORI	#$0700, SR
 	MOVE.l	#$60AE0003, D5
 	MOVEQ	#$0000000F, D7
@@ -6862,11 +6896,11 @@ loc_00006484:
 	DBF	D7, loc_0000647C
 	ANDI	#$F8FF, SR
 	TST.b	Area_map_revealed.w
-	BNE.w	loc_00006506
+	BNE.w	RenderCaveWallTiles_Return
 	TST.b	Is_in_cave.w
 	BEQ.b	loc_000064B6
 	TST.b	Cave_light_active.w
-	BEQ.w	loc_00006506
+	BEQ.w	RenderCaveWallTiles_Return
 loc_000064B6:
 	LEA	CaveWallTileIndices, A0
 	MOVE.l	#$60AE0003, D5
@@ -6892,7 +6926,8 @@ loc_000064EE:
 	ADDI.l	#$00800000, D5
 	DBF	D7, loc_000064E6
 	ANDI	#$F8FF, SR
-loc_00006506:
+; loc_00006506
+RenderCaveWallTiles_Return:
 	RTS
 
 ; CaveWallTileIndices
@@ -7140,11 +7175,12 @@ BossBattlePlayerTick_Active:
 	TST.b	Fade_out_lines_mask.w
 	BNE.w	BossBattle_PlayerIdle
 	TST.b	Player_invulnerable.w
-	BEQ.b	loc_00006998
+	BEQ.b	BossBattle_AttackCheck
 	SUBQ.b	#1, $1A(A5)
-	BGT.b	loc_00006998
+	BGT.b	BossBattle_AttackCheck
 	CLR.b	Player_invulnerable.w
-loc_00006998:
+; loc_00006998
+BossBattle_AttackCheck:
 	TST.b	Player_attacking_flag.w
 	BNE.w	BossBattle_MoveDone
 	MOVE.w	#BUTTON_BIT_C, D2
@@ -7179,14 +7215,14 @@ loc_00006A08:
 	SUB.l	D0, $E(A5)
 	MOVE.w	#2, Player_direction.w
 	LEA	loc_0003DB08, A0
-	BRA.w	loc_00006A6A
+	BRA.w	BossBattle_ApplyMovement
 loc_00006A22:
 	MOVE.l	$20(A5), D0
 	ASL.l	#7, D0
 	ADD.l	D0, $E(A5)
 	MOVE.w	#4, Player_direction.w
 	LEA	loc_0003DB18, A0
-	BRA.w	loc_00006A6A
+	BRA.w	BossBattle_ApplyMovement
 ; BossBattle_PlayerIdle
 BossBattle_PlayerIdle:
 	MOVE.w	#$0030, $1E(A5)
@@ -7198,7 +7234,8 @@ BossBattle_PlayerIdle:
 	MOVE.b	#$10, Player_movement_step_counter.w
 	CLR.b	Player_is_moving.w
 	BRA.w	BossBattle_MoveDone
-loc_00006A6A:
+; loc_00006A6A
+BossBattle_ApplyMovement:
 	MOVE.w	#$0030, $1E(A5)
 	MOVE.b	#$FF, Player_is_moving.w
 	ADDQ.b	#1, $1B(A5)
@@ -7248,12 +7285,13 @@ BossBattle_PostAttack_ClampAndDisplay:
 	CMPI.w	#$0010, D0
 	BGE.b	loc_00006B1C
 	MOVE.w	#$0010, $E(A5)
-	BRA.b	loc_00006B28
+	BRA.b	BossBattle_SpriteUpdate
 loc_00006B1C:
 	CMPI.w	#$0128, D0
-	BLT.b	loc_00006B28
+	BLT.b	BossBattle_SpriteUpdate
 	MOVE.w	#$0128, $E(A5)	
-loc_00006B28:
+; loc_00006B28
+BossBattle_SpriteUpdate:
 	TST.b	Boss_battle_exit_flag.w
 	BNE.w	BossBattleExitCleanup
 	MOVE.b	#$FF, Sprite_dma_update_pending.w
@@ -7505,11 +7543,11 @@ LoadTownNPCs:
 	MOVE.l	(A0)+, Npc_init_routine_ptr.w
 loc_00006E32:
 	TST.b	Npc_load_done_flag.w
-	BNE.w	loc_00006E92
+	BNE.w	NpcInit_ClearActiveFlag
 	MOVE.w	(A0)+, D0
 	BPL.w	loc_00006E4A
 	MOVE.b	#$FF, Npc_load_done_flag.w
-	BRA.w	loc_00006E92
+	BRA.w	NpcInit_ClearActiveFlag
 loc_00006E4A:
 	MOVE.w	D0, $E(A6)
 	ADDQ.w	#1, D5
@@ -7529,7 +7567,8 @@ loc_00006E4A:
 	MOVE.b	(A0)+, $7(A6)
 	MOVE.b	(A0)+, $2D(A6)
 	BRA.b	loc_00006E96
-loc_00006E92:
+; loc_00006E92
+NpcInit_ClearActiveFlag:
 	BCLR.b	#7, (A6)
 loc_00006E96:
 	CLR.b	$26(A6)
@@ -7761,14 +7800,15 @@ NPCTick_Parma_AdviceHint:
 	MOVE.l	#AdviceForQuestionsStr, Pending_hint_text.w	
 	MOVE.w	#$0044, D5	
 	BSR.w	SetHintTextIfTriggered	
-	BRA.b	loc_00007100	
+	BRA.b	NPCTick_Parma_HintDone	
 loc_000070EA:
 	TST.b	Treasure_of_troy_challenge_issued.w
-	BEQ.b	loc_00007100
+	BEQ.b	NPCTick_Parma_HintDone
 	MOVE.l	#AdviceForQuestionsStr, Pending_hint_text.w
 	MOVE.w	#$0052, D5
 	BSR.w	SetHintTextIfTriggered
-loc_00007100:
+; loc_00007100
+NPCTick_Parma_HintDone:
 	BRA.w	UpdateNPCSpriteFrame
 	BSR.w	SetRandomDirection
 	CLR.b	$25(A5)
@@ -7926,16 +7966,17 @@ loc_000072C0:
 ; loc_000072CA
 NPCTick_Deepdale_SecretKeeper:
 	TST.b	Deepdale_king_secret_kept.w
-	BEQ.b	loc_000072F4
+	BEQ.b	NPCTick_Deepdale_MedicineDone
 	MOVE.l	#KeptSecretStr, $1C(A5)
 	TST.b	Deepdale_medicine_removed.w
-	BNE.b	loc_000072F4
+	BNE.b	NPCTick_Deepdale_MedicineDone
 	LEA	Possessed_items_list.w, A3
 	LEA	Possessed_items_length.w, A2
 	MOVE.w	#$010B, D4
 	BSR.w	RemoveItemFromList
 	MOVE.b	#$FF, Deepdale_medicine_removed.w
-loc_000072F4:
+; loc_000072F4
+NPCTick_Deepdale_MedicineDone:
 	BRA.w	UpdateNPCSpriteFrame
 	BSR.w	SetRandomDirection
 	CLR.b	$25(A5)
@@ -7945,13 +7986,14 @@ loc_000072F4:
 ; loc_0000730A
 NPCTick_Deepdale_BremensCaveHint:
 	TST.b	Deepdale_king_secret_kept.w
-	BNE.b	loc_00007326
+	BNE.b	NPCTick_Deepdale_CaveHintDone
 	TST.b	Deepdale_truffle_quest_started.w
-	BEQ.b	loc_00007326
+	BEQ.b	NPCTick_Deepdale_CaveHintDone
 	MOVE.l	#BremensCaveNorthwestStr, Pending_hint_text.w
 	MOVE.w	#$62, D5
 	BSR.w	SetHintTextIfTriggered
-loc_00007326:
+; loc_00007326
+NPCTick_Deepdale_CaveHintDone:
 	BRA.w	UpdateNPCSpriteFrame
 ; loc_0000732A
 NPCInit_Deepdale_BremensCaveHint:
@@ -7972,13 +8014,14 @@ loc_00007352:
 	BSR.w	SetRandomDirection
 	CLR.b	$25(A5)
 	TST.b	Stow_innocence_proven.w
-	BNE.b	loc_00007374
+	BNE.b	NPCTick_Stow_SetBookkeeperTick
 	TST.b	Accused_of_theft.w
-	BEQ.b	loc_00007374
+	BEQ.b	NPCTick_Stow_SetBookkeeperTick
 	MOVE.l	#NPCBehavior_LoadFrame, $2(A5)	
 	RTS
 	
-loc_00007374:
+; loc_00007374
+NPCTick_Stow_SetBookkeeperTick:
 	MOVE.l	#NPCTick_Stow_SanguiosBookkeeper, $2(A5)
 	RTS
 
@@ -8224,9 +8267,9 @@ NPCInit_Keltwick_SleepingGirl_Done:
 ; loc_0000765E
 NPCTick_Keltwick_SleepingGirl:
 	TST.b	Keltwick_girl_sleeping.w
-	BEQ.b	loc_0000768E
+	BEQ.b	NPCTick_Keltwick_Done
 	TST.b	Alarm_clock_rang.w
-	BEQ.b	loc_0000768E
+	BEQ.b	NPCTick_Keltwick_Done
 	MOVE.l	#ReadyToLeaveStowStr, $1C(A5)
 	TST.b	Stow_innocence_proven.w
 	BNE.b	loc_00007688
@@ -8236,7 +8279,8 @@ loc_00007688:
 	BSR.w	UpdateNPCSpriteFrame
 	RTS
 
-loc_0000768E:
+; loc_0000768E
+NPCTick_Keltwick_Done:
 	BRA.w	NPCBehavior_LoadFrame
 	BSR.w	SetRandomDirection
 	CLR.b	$25(A5)
@@ -8248,14 +8292,15 @@ NPCTick_Keltwick_WaitForPlayer:
 	TST.b	Tsarkon_is_dead.w
 	BEQ.b	loc_000076B6
 	MOVE.l	#WillWaitForYouStr, $1C(A5)
-	BRA.w	loc_000076CC
+	BRA.w	NPCTick_Barrow_HintDone
 loc_000076B6:
 	TST.b	Malaga_king_crowned.w
-	BNE.b	loc_000076CC
+	BNE.b	NPCTick_Barrow_HintDone
 	MOVE.l	#HopeReturnSafelyStr, Pending_hint_text.w
 	MOVE.w	#$002E, D5
 	BSR.w	SetHintTextIfTriggered
-loc_000076CC:
+; loc_000076CC
+NPCTick_Barrow_HintDone:
 	BRA.w	NPCBehavior_LoadFrame
 	BSR.w	SetRandomDirection
 	CLR.b	$25(A5)
@@ -8283,11 +8328,12 @@ loc_0000770E:
 ; loc_00007718
 NPCTick_Barrow_QuestGuard:
 	TST.b	Barrow_quest_1_complete.w
-	BEQ.b	loc_00007728
+	BEQ.b	NPCTick_Barrow_BearwulfDone
 	TST.b	Barrow_quest_2_complete.w
-	BEQ.b	loc_00007728
+	BEQ.b	NPCTick_Barrow_BearwulfDone
 	BCLR.b	#7, (A5)
-loc_00007728:
+; loc_00007728
+NPCTick_Barrow_BearwulfDone:
 	BRA.w	UpdateNPCSpriteFrame
 	BSR.w	SetRandomDirection
 	CLR.b	$25(A5)
@@ -8299,12 +8345,13 @@ NPCTick_Barrow_BearwulfQuest:
 	TST.b	Tsarkon_is_dead.w
 	BEQ.b	loc_00007750
 	MOVE.l	#JourneyToCartahenaStr, $1C(A5)
-	BRA.w	loc_0000775E
+	BRA.w	NPCTick_Barrow_SetNextTick
 loc_00007750:
 	TST.b	Bearwulf_returned_home.w
-	BEQ.b	loc_0000775E
+	BEQ.b	NPCTick_Barrow_SetNextTick
 	MOVE.l	#ReturnAfterTaskStr, $1C(A5)	
-loc_0000775E:
+; loc_0000775E
+NPCTick_Barrow_SetNextTick:
 	BRA.w	NPCBehavior_LoadFrame
 ; loc_00007762
 NPCInit_Barrow_BearwulfQuest:
@@ -8332,7 +8379,7 @@ NPCTick_Tadcaster_TreasureQuest:
 	BEQ.b	loc_000077D2
 	MOVE.l	#ShareTreasureStr, $1C(A5)	
 	TST.b	Tadcaster_treasure_found.w	
-	BEQ.b	loc_000077E2	
+	BEQ.b	NPCTick_Tadcaster_HintDone	
 	TST.b	Tadcaster_treasure_kims_received.w	
 	BNE.b	loc_000077C8	
 	MOVE.l	#$7500, Transaction_amount.w	
@@ -8340,25 +8387,27 @@ NPCTick_Tadcaster_TreasureQuest:
 	MOVE.b	#$FF, Tadcaster_treasure_kims_received.w	
 loc_000077C8:
 	MOVE.l	#DontSpendAllWealthStr, $1C(A5)	
-	BRA.b	loc_000077E2	
+	BRA.b	NPCTick_Tadcaster_HintDone	
 loc_000077D2:
 	MOVE.l	#TreasureInCaveStr, Pending_hint_text.w
 	MOVE.w	#$001C, D5
 	BSR.w	SetHintTextIfTriggered
-loc_000077E2:
+; loc_000077E2
+NPCTick_Tadcaster_HintDone:
 	BRA.w	NPCBehavior_LoadFrame
 ; loc_000077E6
 NPCInit_Tadcaster_PassSellerSetup:
 	BSR.w	SetRandomDirection
 	CLR.b	$25(A5)
 	TST.b	Pass_to_carthahena_purchased.w
-	BNE.b	loc_00007804
+	BNE.b	NPCInit_PassSeller_SetStatic
 	TST.b	Uncle_tibor_visited.w
-	BEQ.b	loc_00007804
+	BEQ.b	NPCInit_PassSeller_SetStatic
 	MOVE.l	#NPCTick_Tadcaster_PassSeller, $2(A5)
 	RTS
 
-loc_00007804:
+; loc_00007804
+NPCInit_PassSeller_SetStatic:
 	MOVE.l	#NPCBehavior_LoadFrame, $2(A5)
 	RTS
 
@@ -8796,12 +8845,13 @@ NPCInit_Hastings_WelcomePrince:
 	CLR.b	$25(A5)
 	MOVE.l	#SeveralPeopleWaitingStr, $1C(A5)
 	TST.b	Player_has_received_sword_of_vermilion.w
-	BNE.b	loc_00007D82
+	BNE.b	NPCTick_Hastings_SetStaticBehavior
 	MOVE.l	#WelcomePrinceStr, $1C(A5)
 	TST.b	Sword_stolen_by_blacksmith.w
-	BNE.b	loc_00007D82
+	BNE.b	NPCTick_Hastings_SetStaticBehavior
 	MOVE.l	#SeveralPeopleWaitingStr, $1C(A5)	
-loc_00007D82:
+; loc_00007D82
+NPCTick_Hastings_SetStaticBehavior:
 	MOVE.l	#NPCBehavior_LoadFrame, $2(A5)
 	RTS
 
@@ -8812,12 +8862,13 @@ NPCInit_Hastings_GateGuard:
 	TST.b	Tsarkon_is_dead.w
 	BEQ.b	loc_00007DA0
 	BCLR.b	#7, (A5)	
-	BRA.b	loc_00007DAC	
+	BRA.b	NPCInit_Hastings_SetBehavior	
 loc_00007DA0:
 	TST.b	Pass_to_carthahena_purchased.w
-	BEQ.b	loc_00007DAC
+	BEQ.b	NPCInit_Hastings_SetBehavior
 	MOVE.w	#$00F8, $E(A5)
-loc_00007DAC:
+; loc_00007DAC
+NPCInit_Hastings_SetBehavior:
 	MOVE.l	#NPCBehavior_LoadFrame, $2(A5)
 	RTS
 
@@ -8840,12 +8891,13 @@ NPCTick_Carthahena_BossGuard:
 	TST.b	Carthahena_boss_defeated.w
 	BEQ.b	loc_00007DE8
 	BCLR.b	#7, (A5)
-	BRA.b	loc_00007DF6
+	BRA.b	NPCTick_CarthahenaFinalBoss_Done
 loc_00007DE8:
 	TST.b	Carthahena_boss_met.w
-	BEQ.b	loc_00007DF6
+	BEQ.b	NPCTick_CarthahenaFinalBoss_Done
 	MOVE.l	#BestedMeStr, $1C(A5)
-loc_00007DF6:
+; loc_00007DF6
+NPCTick_CarthahenaFinalBoss_Done:
 	BRA.w	UpdateNPCSpriteFrame
 loc_00007DFA:					; unreferenced dead code
 	BSR.w	SetRandomDirection
@@ -8883,10 +8935,10 @@ NPCTick_Carthahena_KingThuleKey:
 	TST.b	Carthahena_boss_defeated.w
 	BEQ.w	NPCTick_SetMessage2_Done
 	TST.b	Knute_informed_of_swaffham_ruin.w
-	BEQ.w	loc_00007EB0
+	BEQ.w	NPCTick_Helwig_SetRingsMessage
 	MOVE.w	#4, D7
 	BSR.w	CheckRingsCollected
-	BNE.w	loc_00007EB0
+	BNE.w	NPCTick_Helwig_SetRingsMessage
 	MOVE.l	#TsarkonFledEastwardStr, $1C(A5)
 	TST.b	Thule_key_received.w
 	BNE.w	NPCTick_SetMessage2_Done
@@ -8902,7 +8954,8 @@ NPCTick_Carthahena_KingThuleKey:
 loc_00007EA6:
 	MOVE.l	#ComeBackLessGearStr3, $1C(A5)
 	BRA.b	NPCTick_SetMessage2_Done
-loc_00007EB0:
+; loc_00007EB0
+NPCTick_Helwig_SetRingsMessage:
 	MOVE.l	#MustHaveAllRingsStr, $1C(A5)	
 ; NPCTick_SetMessage2_Done
 NPCTick_SetMessage2_Done:
@@ -8975,13 +9028,14 @@ loc_00007F4E:
 NPCTick_Parma_CastleSoldierPatrol:
 	MOVE.w	Gameplay_state.w, D0
 	CMPI.w	#$000A, D0
-	BNE.b	loc_00007F96
+	BNE.b	NPCTick_ParmaSoldier_Rotate
 	TST.b	Fake_king_killed.w
-	BEQ.b	loc_00007F96
+	BEQ.b	NPCTick_ParmaSoldier_Rotate
 	MOVE.l	#NPCTick_Parma_CastleSoldierStatic, $2(A5)
 	RTS
 
-loc_00007F96:
+; loc_00007F96
+NPCTick_ParmaSoldier_Rotate:
 	BSR.w	UpdateParmaSoldierRotation
 	BSR.w	GetNPCAnimationOffset
 	MOVEA.l	$2E(A5), A1
@@ -9095,11 +9149,12 @@ loc_000080E0:
 loc_000080E6:
 	ADD.w	D1, D0
 	TST.b	$18(A5)
-	BEQ.b	loc_000080F8
+	BEQ.b	GetStaticNPCAnimOffset_FlipCheck
 	CMPI.b	#4, $18(A5)
-	BEQ.b	loc_000080F8
+	BEQ.b	GetStaticNPCAnimOffset_FlipCheck
 	BRA.b	GetStaticNPCAnimationOffset_Return
-loc_000080F8:
+; loc_000080F8
+GetStaticNPCAnimOffset_FlipCheck:
 	BTST.l	#0, D0
 	BNE.b	GetStaticNPCAnimationOffset_Return
 	BSET.b	#3, $7(A5)
@@ -9145,15 +9200,17 @@ UpdateNPCScreenPosition:
 	SUB.w	Camera_scroll_x.w, D0
 	MOVE.w	D0, $A(A5)
 	TST.b	$18(A5)
-	BEQ.b	loc_00008170
+	BEQ.b	NPCScreenPosition_FlipCheck
 	CMPI.b	#4, $18(A5)
-	BEQ.b	loc_00008170
-	BRA.b	loc_0000817C
-loc_00008170:
+	BEQ.b	NPCScreenPosition_FlipCheck
+	BRA.b	NPCScreenPosition_UpdateY
+; loc_00008170
+NPCScreenPosition_FlipCheck:
 	BTST.b	#3, $7(A5)
-	BEQ.b	loc_0000817C
+	BEQ.b	NPCScreenPosition_UpdateY
 	SUBQ.w	#1, $A(A5)
-loc_0000817C:
+; loc_0000817C
+NPCScreenPosition_UpdateY:
 	MOVE.w	$12(A5), D0
 	SUB.w	Camera_scroll_y.w, D0
 	ADDI.w	#0, D0
@@ -9172,10 +9229,10 @@ CheckTileCollision:
 	MOVE.w	$E(A5), D0
 	ASR.w	#3, D0
 	CMPI.w	#1, D0
-	BLE.w	loc_000081E6
+	BLE.w	CheckTileCollision_NoMatch
 	MOVE.w	$12(A5), D1
 	ASR.w	#3, D1
-	BLE.b	loc_000081E6
+	BLE.b	CheckTileCollision_NoMatch
 	ASL.w	#7, D1
 	ASL.w	#1, D0
 	ADD.w	(A1,D2.w), D0
@@ -9186,7 +9243,8 @@ CheckTileCollision:
 	MOVE.w	(A0,D0.w), D0
 	ANDI.w	#$F000, D0
 	BEQ.b	loc_000081EC
-loc_000081E6:
+; loc_000081E6
+CheckTileCollision_NoMatch:
 	MOVE.w	#$FFFF, D0
 	RTS
 
@@ -9232,7 +9290,7 @@ UpdateNPCMovement:
 	TST.b	$19(A5)
 	BNE.w	loc_000082F2
 	BSR.w	CheckEntityOnScreen
-	BNE.w	loc_00008374
+	BNE.w	NPCWander_Return
 	MOVE.b	$27(A5), $18(A5)
 	BSR.w	CheckSurroundingTileCollision
 	BEQ.w	loc_000082D8
@@ -9277,10 +9335,10 @@ loc_000082D8:
 	CLR.w	D2
 	MOVE.b	$18(A5), D2
 	BSR.w	CheckTileCollision
-	BNE.w	loc_00008340
+	BNE.w	NPCWander_UpdateDirection
 	MOVE.b	$18(A5), D6
 	BSR.w	CheckNPCCollision
-	BNE.w	loc_00008340
+	BNE.w	NPCWander_UpdateDirection
 loc_000082F2:
 	CLR.w	D0
 	MOVE.b	$18(A5), D0
@@ -9304,11 +9362,12 @@ loc_000082F2:
 loc_0000833E:
 	RTS
 
-loc_00008340:
+; loc_00008340
+NPCWander_UpdateDirection:
 	CLR.b	$25(A5)
 	ADDQ.b	#1, $1A(A5)
 	CMPI.b	#$32, $1A(A5)
-	BLE.b	loc_00008374
+	BLE.b	NPCWander_Return
 	CLR.b	$1A(A5)
 	CLR.b	$1B(A5)
 	MOVE.b	$18(A5), D1
@@ -9318,7 +9377,8 @@ loc_00008340:
 	ANDI.b	#7, D1
 	MOVE.b	D1, $18(A5)
 	MOVE.b	D1, $27(A5)
-loc_00008374:
+; loc_00008374
+NPCWander_Return:
 	RTS
 
 CheckEntityOnScreen:
@@ -9367,11 +9427,12 @@ loc_000083DA:
 	ADD.w	(A0)+, D3
 	ADD.w	(A0)+, D5
 	CMP.w	D3, D0
-	BNE.b	loc_000083EC
+	BNE.b	CheckEntityOverlap_NoMatch
 	CMP.w	D5, D1
-	BNE.b	loc_000083EC
+	BNE.b	CheckEntityOverlap_NoMatch
 	BRA.b	loc_000083F4
-loc_000083EC:
+; loc_000083EC
+CheckEntityOverlap_NoMatch:
 	DBF	D7, loc_000083DA
 	CLR.w	D0
 	RTS
@@ -9403,11 +9464,12 @@ loc_00008428:
 	ADD.w	(A0)+, D3
 	ADD.w	(A0)+, D5
 	CMP.w	D3, D0
-	BNE.b	loc_0000843A
+	BNE.b	CheckAdjacentTileCollision_NoMatch
 	CMP.w	D5, D1
-	BNE.b	loc_0000843A
+	BNE.b	CheckAdjacentTileCollision_NoMatch
 	BRA.b	loc_00008442
-loc_0000843A:
+; loc_0000843A
+CheckAdjacentTileCollision_NoMatch:
 	DBF	D7, loc_00008428
 	CLR.w	D0
 	RTS
@@ -9436,9 +9498,9 @@ loc_0000846E:
 	BTST.b	#7, (A6)
 	BEQ.w	loc_000084B8
 	CMPA.l	A5, A6
-	BEQ.w	loc_000084AA
+	BEQ.w	CheckNPCCollision_NextEntity
 	TST.b	$2D(A6)
-	BEQ.w	loc_000084AA
+	BEQ.w	CheckNPCCollision_NextEntity
 	MOVEQ	#3, D6
 	MOVE.w	$E(A6), D4
 	ASR.w	#4, D4
@@ -9450,13 +9512,15 @@ loc_00008494:
 	ADD.w	(A1)+, D2
 	ADD.w	(A1)+, D3
 	CMP.w	D2, D4
-	BNE.b	loc_000084A6
+	BNE.b	CheckNPCCollision_NoEntityMatch
 	CMP.w	D3, D5
-	BNE.b	loc_000084A6
+	BNE.b	CheckNPCCollision_NoEntityMatch
 	BRA.b	loc_000084BC
-loc_000084A6:
+; loc_000084A6
+CheckNPCCollision_NoEntityMatch:
 	DBF	D6, loc_00008494
-loc_000084AA:
+; loc_000084AA
+CheckNPCCollision_NextEntity:
 	CLR.w	D2
 	MOVE.b	$1(A6), D2
 	LEA	(A6,D2.w), A6
@@ -9498,7 +9562,7 @@ loc_000084F0:
 CheckItemInList:
 	LEA	(A2), A1
 	MOVE.w	(A2)+, D7
-	BLE.w	loc_00008516
+	BLE.w	CheckCollision_Return
 	SUBQ.w	#1, D7
 loc_000084FC:
 	MOVE.w	D7, D1
@@ -9509,10 +9573,11 @@ loc_000084FC:
 	BEQ.b	loc_00008512
 	DBF	D7, loc_000084FC	
 	CLR.w	D0	
-	BRA.b	loc_00008516	
+	BRA.b	CheckCollision_Return	
 loc_00008512:
 	MOVE.w	#$FFFF, D0
-loc_00008516:
+; loc_00008516
+CheckCollision_Return:
 	RTS
 
 ;CheckRingsCollected:
@@ -10234,16 +10299,17 @@ loc_00008ED4:
 	TST.b	Soldier_fight_event_trigger.w
 	BEQ.w	loc_00008F04
 	MOVE.w	#4, D7
-	BRA.w	loc_00008F1C
+	BRA.w	EncounterInit_FinalizeEnemyCount
 loc_00008F04:
 	JSR	GetRandomNumber
 	ANDI.w	#7, D0
 	MOVE.w	D0, D7
 	MOVE.b	$B(A0), D0
 	CMP.w	D0, D7
-	BLE.w	loc_00008F1C
+	BLE.w	EncounterInit_FinalizeEnemyCount
 	MOVE.w	D0, D7
-loc_00008F1C:
+; loc_00008F1C
+EncounterInit_FinalizeEnemyCount:
 	MOVE.w	D7, Number_Of_Enemies.w
 	LEA	Enemy_position_indices.w, A1
 	MOVE.w	#7, D7
@@ -10734,7 +10800,7 @@ EnemyTick_StandardMelee:
 loc_0000958E:
 	CLR.b	$26(A5)
 	TST.b	Encounter_behavior_flag.w
-	BNE.w	loc_00009692
+	BNE.w	EnemyTick_UpdateSprite
 	TST.w	$3C(A5)
 	BEQ.w	loc_000095BC
 	SUBQ.w	#1, $3C(A5)
@@ -10803,10 +10869,11 @@ loc_00009666:
 	TST.b	Enemy_pair_offset_flag.w
 	BNE.w	loc_0000968E
 	BSR.w	CopyPositionToLinkedSprite
-	BRA.w	loc_00009692
+	BRA.w	EnemyTick_UpdateSprite
 loc_0000968E:
 	BSR.w	CopyEnemyPositionToChildObject
-loc_00009692:
+; loc_00009692
+EnemyTick_UpdateSprite:
 	JSR	AddSpriteToDisplayList
 	RTS
 
@@ -11228,18 +11295,19 @@ loc_00009C62:
 	LEA	(A6,D0.w), A4
 	MOVEA.l	Player_entity_ptr.w, A6
 	BTST.b	#7, (A4)
-	BNE.w	loc_00009D00
+	BNE.w	EnemySplit_UpdateSprite
 	MOVE.w	$E(A5), D0
 	CMP.w	$E(A6), D0
-	BEQ.w	loc_00009CAA
+	BEQ.w	EnemySplit_SpawnChild
 	MOVE.w	$12(A5), D0
 	CMP.w	$12(A6), D0
-	BEQ.w	loc_00009CAA
+	BEQ.w	EnemySplit_SpawnChild
 	CLR.b	$19(A4)
 	CLR.l	$32(A4)
 	CLR.l	$36(A4)
-	BRA.w	loc_00009D00
-loc_00009CAA:
+	BRA.w	EnemySplit_UpdateSprite
+; loc_00009CAA
+EnemySplit_SpawnChild:
 	BSET.b	#7, (A4)
 	JSR	GetRandomNumber
 	MOVE.b	D0, $1B(A4)
@@ -11258,7 +11326,8 @@ loc_00009CAA:
 	BSR.w	CalculateAngleBetweenObjects
 	MOVE.b	D0, $18(A4)
 	MOVE.b	D0, $18(A5)
-loc_00009D00:
+; loc_00009D00
+EnemySplit_UpdateSprite:
 	CLR.w	D0
 	MOVE.b	$1(A5), D0
 	LEA	(A5,D0.w), A6
@@ -11313,16 +11382,17 @@ EnemyTick_StationaryShooter:
 	TST.b	$1A(A5)
 	BLE.w	loc_00009DC0
 	SUBQ.b	#1, $1A(A5)	
-	BRA.w	loc_00009DE0	
+	BRA.w	EnemyTakeDamage_CheckDeath	
 loc_00009DC0:
 	TST.b	$26(A5)
-	BEQ.w	loc_00009DE0
+	BEQ.w	EnemyTakeDamage_CheckDeath
 	MOVE.b	#$B5, D0	
 	JSR	QueueSoundEffect	
 	MOVE.w	Player_str.w, D0	
 	SUB.w	D0, $28(A5)	
 	MOVE.b	#$10, $1A(A5)	
-loc_00009DE0:
+; loc_00009DE0
+EnemyTakeDamage_CheckDeath:
 	TST.w	$28(A5)
 	BGT.w	loc_00009DF2
 	MOVE.l	#EnemyDeathReward_TwoSprites, $2(A5)	
@@ -11338,7 +11408,7 @@ loc_00009DF2:
 	BSR.w	CalculateAngleBetweenObjects
 	MOVE.b	D0, $18(A5)
 	BTST.b	#7, (A4)
-	BNE.w	loc_00009E7A
+	BNE.w	EnemyHoming_UpdateSprite
 	JSR	GetRandomNumber
 	MOVE.w	D0, D1
 	ANDI.w	#$007F, D0
@@ -11346,7 +11416,7 @@ loc_00009DF2:
 	CLR.b	$19(A4)
 	CLR.l	$32(A4)
 	CLR.l	$36(A4)
-	BRA.w	loc_00009E7A
+	BRA.w	EnemyHoming_UpdateSprite
 loc_00009E3A:
 	BSET.b	#7, (A4)
 	JSR	GetRandomNumber
@@ -11359,7 +11429,8 @@ loc_00009E3A:
 	MOVE.b	#1, $6(A4)
 	MOVE.l	#ProjectileTick_HomingAlt, $2(A4)
 	MOVE.w	$2C(A5), $2C(A4)
-loc_00009E7A:
+; loc_00009E7A
+EnemyHoming_UpdateSprite:
 	BSR.w	HandlePlayerTakeDamage
 	BSR.w	CheckObjectOnScreen
 	CLR.w	D0
@@ -11506,12 +11577,13 @@ loc_0000A062:
 	BSR.w	CheckObjectOnScreen
 	MOVE.l	$32(A5), D0
 	OR.l	$36(A5), D0
-	BEQ.w	loc_0000A086
+	BEQ.w	EnemyCharge_UpdateSprite
 	MOVE.w	$3A(A5), D0
 	CMPI.w	#$0028, D0
-	BLE.w	loc_0000A086
+	BLE.w	EnemyCharge_UpdateSprite
 	ADDQ.b	#1, $1B(A5)
-loc_0000A086:
+; loc_0000A086
+EnemyCharge_UpdateSprite:
 	CLR.w	D0
 	MOVE.b	$1(A5), D0
 	LEA	(A5,D0.w), A6
