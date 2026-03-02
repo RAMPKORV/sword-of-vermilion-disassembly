@@ -18,6 +18,9 @@ SCRIPT_CHOICE           = $FA   ; Quest choice - expects answer and map trigger
 SCRIPT_ACTIONS          = $F9   ; Execute actions (give items/money, set triggers)
 SCRIPT_TRIGGERS         = $F8   ; Set multiple event triggers (simpler format)
 Script_player_name      = $F7   ; Insert player's name
+; Wide character markers (occupy 2 display columns instead of 1):
+SCRIPT_WIDE_CHAR_LO     = $DE   ; Wide character — low surrogate byte  (name validation counts 2 per pair)
+SCRIPT_WIDE_CHAR_HI     = $DF   ; Wide character — high surrogate byte
 ;
 ; $F9 (SCRIPT_ACTIONS) Format:
 ; --------------------------
@@ -347,6 +350,17 @@ GAMEPLAY_STATE_READ_FRYING_PAN_MESSAGE = $2A
 GAMEPLAY_STATE_SOLDIER_TAUNT = $2B
 GAMEPLAY_STATE_READ_SOLDIER_TAUNT = $2C
 GAMEPLAY_STATE_SHOW_POISON_NOTIFICATION = $2D
+
+; ============================================================
+; Battle / Overworld Play-Field Boundaries (pixels)
+; ============================================================
+; The battle and overworld play-field is 320×184 pixels but the
+; top 56 pixels are reserved for the HUD, leaving a 320×128 active
+; area. Entity world-space coordinates are clamped to these limits.
+;
+BATTLE_FIELD_WIDTH      = $0140   ; Play-field width  (320 px)
+BATTLE_FIELD_TOP        = $0038   ; Top    boundary   ( 56 px — below HUD)
+BATTLE_FIELD_BOTTOM     = $00B8   ; Bottom boundary   (184 px)
 
 ;RAM
 
@@ -1507,6 +1521,9 @@ SOUND_BOMB                  = $00BF   ; Explosion/bomb sound (DemonBoss attack, 
 SOUND_MERCUSIOS             = $00BD   ; Mercusios magic projectile launch sound (2 uses)
 SOUND_TERRAFISSI            = $00AF   ; Terrafissi spell / DemonBoss projectile activation sound (2 uses)
 SOUND_BATTLE_START          = $0092   ; Sound played when battle initializes (1 use)
+
+; Sound script byte threshold: bytes < $E0 are note values; bytes >= $E0 are commands.
+SOUND_SCRIPT_CMD_THRESHOLD  = $E0   ; BCS/BCC boundary in SoundChannel_NoteLoop
 
 
 ; ============================================================
