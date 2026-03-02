@@ -1299,6 +1299,28 @@ PALETTE_IDX_ENDING_FIRE     = $0095   ; Ending sequence fire palette
 
 
 
+
+; ============================================================
+; Window Draw Type IDs (Window_draw_type)
+; ============================================================
+; WindowDrawTypeJumpTable dispatches on Window_draw_type to choose
+; which tile buffer and screen region to flush to the VDP tilemap.
+;
+WINDOW_DRAW_SCRIPT          = $00   ; Script/dialogue window (Script_window_tiles_buffer)
+WINDOW_DRAW_FULL_MENU       = $01   ; Full menu area (Full_menu_tiles_buffer)
+WINDOW_DRAW_MSG_SPEED       = $02   ; Message speed menu (Message_speed_menu_tiles_buffer)
+WINDOW_DRAW_MSG_SPEED_ALT   = $03   ; Message speed menu alternate position
+WINDOW_DRAW_ITEM_LIST_SHORT = $04   ; Item list, 6-row height (Item_list_tiles_buffer)
+WINDOW_DRAW_ITEM_LIST_TALL  = $05   ; Item list, 8-row height (Item_list_tiles_buffer)
+WINDOW_DRAW_STATUS_MENU     = $06   ; Character status menu (Status_menu_tiles_buffer)
+WINDOW_DRAW_SMALL_MENU      = $07   ; Small menu panel (Small_menu_tiles_buffer)
+WINDOW_DRAW_RIGHT_MENU      = $08   ; Right-side menu panel (Right_menu_tiles_buffer)
+WINDOW_DRAW_EQUIP_LIST      = $09   ; Equipment list (Equipment_list_tiles_buffer)
+WINDOW_DRAW_MAGIC_LIST      = $0A   ; Magic/spell list (Magic_list_tiles_buffer)
+WINDOW_DRAW_ITEM_RIGHT      = $0B   ; Item list right panel (Item_list_right_tiles_buffer)
+WINDOW_DRAW_RING_LIST       = $0C   ; Ring list (Rings_list_tiles_buffer)
+WINDOW_DRAW_SELL_LIST       = $0D   ; Sell list / item list (Message_speed draw path)
+WINDOW_DRAW_ITEM_SELL_TALL  = $0E   ; Item/sell list, 8-row (Item_list_tiles_buffer tall)
 ; ============================================================
 ; Dialogue State Machine IDs (Dialogue_state)
 ; ============================================================
