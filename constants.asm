@@ -1295,6 +1295,17 @@ PALETTE_IDX_ALL_BLACK       = $0094   ; All-black palette (ending screen blanks)
 PALETTE_IDX_ENDING_FIRE     = $0095   ; Ending sequence fire palette
 
 
+
+; ============================================================
+; Sentinel / "None" Constants
+; ============================================================
+; $FFFF is used as a sentinel meaning "none / not set" across
+; several fields.
+;
+MENU_CURSOR_NONE    = $FFFF   ; Menu_cursor_last_index: no previous position (force redraw)
+TILEMAP_PLANE_B     = $FFFF   ; Tilemap_plane_select: non-zero means use plane B
+EQUIP_NONE          = $FFFF   ; Equipped_*: slot is empty / nothing equipped
+MAGIC_NONE          = $FFFF   ; Readied_magic: no spell is readied
 ; ============================================================
 ; Tile Type Values (Current_tile_type)
 ; ============================================================
