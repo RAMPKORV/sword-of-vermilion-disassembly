@@ -2986,7 +2986,7 @@ DrawTerrainTilemapHelper_Done2:
 DrawBattleStatusBar:
 	ORI	#$0700, SR
 	MOVE.l	#$6B000003, D5
-	LEA	loc_0006A5B0, A0
+	LEA	DrawBattleStatusBar_Data, A0
 	MOVE.w	#5, D7
 ; DrawBattleStatusBar_Done
 DrawBattleStatusBar_Done:
@@ -3007,7 +3007,7 @@ DrawBattleStatusBar_Done2:
 DrawBattleNametable:
 	ORI	#$0700, SR
 	MOVE.l	#$40000003, D5
-	LEA	loc_0006A240, A0
+	LEA	DrawBattleNametable_Data, A0
 	MOVE.w	#$001B, D7
 ; DrawBattleNametable_Done
 DrawBattleNametable_Done:
@@ -4300,7 +4300,7 @@ BattleMovement_AttackCheck:
 	ADD.w	D0, D0
 	ADD.w	D0, D0
 	ADD.w	D1, D0
-	LEA	loc_0003DA88, A0
+	LEA	BattleMovement_AttackCheck_Data, A0
 	MOVE.b	(A0,D0.w), $24(A5)
 	MOVE.b	$1(A0,D0.w), $24(A6)
 	MOVE.b	$2(A0,D0.w), $24(A4)
@@ -4398,7 +4398,7 @@ BattleSlot2WeaponHandler
 	MOVE.b	$24(A5), D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
-	LEA	loc_0003D930, A0
+	LEA	PlayerSpritePositionClamp_Done_Data, A0
 	MOVE.w	(A0,D0.w), D1
 	BTST.b	#3, $7(A5)
 	BEQ.b	PlayerSpritePositionClamp_Done_Loop
@@ -6736,17 +6736,17 @@ RenderMapToVRAM_Return:
 	RTS
 
 DisplayCompassToVRAM:
-	LEA	loc_0006AFC0, A0
+	LEA	DisplayCompassToVRAM_Data, A0
 	BRA.w	RenderMapToVRAM_NoPalette
 RenderMapToVRAM_DualPalette_21x20:
-	LEA	loc_0006B1E4, A0
+	LEA	RenderMapToVRAM_DualPalette_21x20_Data, A0
 	BRA.w	RenderMapToVRAM_NoPalette
 RenderMapToVRAM_DualPalette_21x13:
-	LEA	loc_0006B0D2, A0
+	LEA	RenderMapToVRAM_DualPalette_21x13_Data, A0
 	MOVE.w	#$42A4, D4
 	BRA.w	RenderMapToVRAM_WithPalette
 RenderMapToVRAM_DualPalette_21x13_Alt:
-	LEA	loc_0006B2F6, A0
+	LEA	RenderMapToVRAM_DualPalette_21x13_Alt_Data, A0
 	MOVE.w	#$4AA4, D4
 	BRA.w	RenderMapToVRAM_WithPalette
 ; loc_0000606E
@@ -6800,20 +6800,20 @@ RenderMapToVRAM_WithPalette_Done2:
 	RTS
 
 DisplayKimsToVRAM:
-	LEA	loc_0006CED2, A0
+	LEA	DisplayKimsToVRAM_Data, A0
 	BRA.w	DisplayStatsToVRAM_NoPalette
 ; DisplayStatsToVRAM
 DisplayStatsToVRAM:
-	LEA	loc_0006D022, A0
+	LEA	DisplayStatsToVRAM_Data, A0
 	BRA.w	DisplayStatsToVRAM_NoPalette
 ; DisplayStatsToVRAM_SinglePalette
 DisplayStatsToVRAM_SinglePalette:
-	LEA	loc_0006CF7A, A0
+	LEA	DisplayStatsToVRAM_SinglePalette_Data, A0
 	MOVE.w	#$4770, D4
 	BRA.w	DisplayStatsToVRAM_WithPalette
 ; DisplayStatsToVRAM_AltPalette
 DisplayStatsToVRAM_AltPalette:
-	LEA	loc_0006D0CA, A0
+	LEA	DisplayStatsToVRAM_AltPalette_Data, A0
 	MOVE.w	#$4F70, D4
 	BRA.w	DisplayStatsToVRAM_WithPalette
 ; loc_00006126
@@ -6886,7 +6886,7 @@ UpdateCompassDisplay_Loop2:
 DrawCompassTiles:
 	MOVE.w	Player_compass_frame.w, D0
 	MULU.w	#5, D0
-	LEA	loc_0006A6A0, A0
+	LEA	DrawCompassTiles_Data, A0
 	LEA	(A0,D0.w), A0
 	ORI	#$0700, SR
 	MOVE.l	#$40820003, D5
@@ -7571,7 +7571,7 @@ BossBattle_AttackCheck_Loop3:
 	ASL.l	#7, D0
 	SUB.l	D0, $E(A5)
 	MOVE.w	#2, Player_direction.w
-	LEA	loc_0003DB08, A0
+	LEA	BossBattle_AttackCheck_Loop3_Data, A0
 	BRA.w	BossBattle_ApplyMovement
 ; BossBattle_AttackCheck_Loop4
 BossBattle_AttackCheck_Loop4:
@@ -7579,7 +7579,7 @@ BossBattle_AttackCheck_Loop4:
 	ASL.l	#7, D0
 	ADD.l	D0, $E(A5)
 	MOVE.w	#4, Player_direction.w
-	LEA	loc_0003DB18, A0
+	LEA	BossBattle_AttackCheck_Loop4_Data, A0
 	BRA.w	BossBattle_ApplyMovement
 ; BossBattle_PlayerIdle
 BossBattle_PlayerIdle:
@@ -7631,7 +7631,7 @@ BossBattle_MoveDone:
 	ANDI.w	#$000F, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
-	LEA	loc_0003DB28, A0
+	LEA	BossBattle_MoveDone_Data, A0
 	MOVE.b	(A0,D0.w), $24(A5)
 	MOVE.b	$1(A0,D0.w), $24(A6)
 	MOVE.b	$2(A0,D0.w), $24(A4)
@@ -7707,7 +7707,7 @@ BossBattleShieldTick:
 	MOVE.b	$24(A6), D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
-	LEA	loc_0003D9A8, A0
+	LEA	BossBattleShieldTick_Data, A0
 	MOVE.w	(A0,D0.w), D1
 	MOVE.w	$A(A6), D2
 	ADD.w	D1, D2
@@ -11284,7 +11284,7 @@ EnemyDeathReward_TwoSprites:
 
 EnemyDeathAnimation:
 	ADDQ.b	#1, $1B(A5)
-	LEA	loc_0003DD24, A0
+	LEA	EnemyDeathAnimation_Data, A0
 	MOVE.b	$1B(A5), D0
 	ANDI.w	#$001C, D0
 	ASR.w	#1, D0
@@ -11646,8 +11646,8 @@ EnemyTick_ProximityChase_Loop10:
 EnemyTick_ProximityChase_Loop11:
 	ASL.w	#3, D1
 	ADD.w	D0, D1
-	LEA	loc_0003DBF0, A0
-	LEA	loc_0003DC30, A1
+	LEA	EnemyTick_ProximityChase_Loop11_Data, A0
+	LEA	EnemyTick_ProximityChase_Loop11_Data2, A1
 	MOVE.w	(A0,D1.w), $8(A5)
 	MOVE.w	(A1,D1.w), $8(A6)
 	BSR.w	CopyPositionToLinkedSprite
@@ -11808,8 +11808,8 @@ EnemyTick_Bouncing_Loop6:
 	MOVE.b	$1B(A5), D0
 	ANDI.w	#$001C, D0
 	ASR.w	#1, D0
-	LEA	loc_0003DBD0, A0
-	LEA	loc_0003DBE0, A1
+	LEA	EnemyTick_Bouncing_Loop6_Data, A0
+	LEA	EnemyTick_Bouncing_Loop6_Data2, A1
 	MOVE.w	(A0,D0.w), $8(A5)
 	MOVE.w	(A1,D0.w), $8(A6)
 	MOVE.b	$7(A5), $7(A6)
@@ -12937,8 +12937,8 @@ ProjectileTick_PostCollision_Loop:
 	BRA.b	ProjectileTick_PostCollision_Loop3
 ; ProjectileTick_PostCollision_Loop2
 ProjectileTick_PostCollision_Loop2:
-	LEA	loc_0003DD0C, A0
-	LEA	loc_0003DD14, A1
+	LEA	ProjectileTick_PostCollision_Loop2_Data, A0
+	LEA	ProjectileTick_PostCollision_Loop2_Data2, A1
 	MOVE.b	$1B(A5), D0
 	ANDI.w	#$000C, D0
 	ASR.w	#1, D0
@@ -15458,7 +15458,7 @@ ClampYPosition_Loop:
 DrawBossPortrait:
 	ORI	#$0700, SR
 	MOVE.l	#$44B40003, D5
-	LEA	loc_0006FB60, A0
+	LEA	DrawBossPortrait_Data, A0
 	MOVE.w	#$000D, D7
 ; DrawBossPortrait_Done
 DrawBossPortrait_Done:
@@ -15479,7 +15479,7 @@ DrawBossPortrait_Done2:
 DrawBossNameplate:
 	ORI	#$0700, SR
 	MOVE.l	#$44300003, D5
-	LEA	loc_0007295C, A0
+	LEA	DrawBossNameplate_Data, A0
 	MOVE.w	#$000D, D7
 ; DrawBossNameplate_Done
 DrawBossNameplate_Done:
@@ -15500,7 +15500,7 @@ DrawBossNameplate_Done2:
 DrawBossHealthBar:
 	ORI	#$0700, SR
 	MOVE.l	#$40000003, D5
-	LEA	loc_00077FD4, A0
+	LEA	DrawBossHealthBar_Data, A0
 	MOVE.w	#$000C, D7
 ; DrawBossHealthBar_Done
 DrawBossHealthBar_Done:
@@ -15555,27 +15555,27 @@ BossAttackGfxJumpTable:
 	BRA.w	DrawDialogTextLine_Alt1_Loop
 	BRA.w	DrawDialogTextLine_Alt1
 DrawBossAttackGraphic1:
-	LEA	loc_0006FC08, A0
+	LEA	DrawBossAttackGraphic1_Data, A0
 	MOVE.l	#$43BE0003, D5
 	BSR.w	WriteTextToVRAM
-	LEA	loc_0006FC86, A0
+	LEA	DrawBossAttackGraphic1_Data2, A0
 	MOVE.l	#$48C20003, D5
 	BSR.w	WriteTextToVRAM
 	RTS
 
 ; loc_0000CCD4
 DrawDialogTextLine_Alt1:
-	LEA	loc_0006FC32, A0
+	LEA	DrawDialogTextLine_Alt1_Data, A0
 	MOVE.l	#$43BE0003, D5
 	BSR.w	WriteTextToVRAM
 	RTS
 
 ; DrawDialogTextLine_Alt1_Loop
 DrawDialogTextLine_Alt1_Loop:
-	LEA	loc_0006FC5C, A0
+	LEA	DrawDialogTextLine_Alt1_Loop_Data, A0
 	MOVE.l	#$43BE0003, D5
 	BSR.w	WriteTextToVRAM
-	LEA	loc_0006FCB0, A0
+	LEA	DrawDialogTextLine_Alt1_Loop_Data2, A0
 	MOVE.l	#$48C20003, D5
 	BSR.w	WriteTextToVRAM
 	RTS
@@ -15621,21 +15621,21 @@ BossAttackFlashJumpTable:
 	BRA.w	DrawDialogTextLine_Alt2
 ; BossAttackFlashJumpTable_Loop
 BossAttackFlashJumpTable_Loop:
-	LEA	loc_00072A12, A0
+	LEA	BossAttackFlashJumpTable_Loop_Data, A0
 	MOVE.l	#$46420003, D5
 	BSR.w	Write7x8TilesToVRAM
 	RTS
 
 ; loc_0000CD80
 DrawDialogTextLine_Alt2:
-	LEA	loc_00072A4A, A0
+	LEA	DrawDialogTextLine_Alt2_Data, A0
 	MOVE.l	#$46420003, D5
 	BSR.w	Write7x8TilesToVRAM
 	RTS
 
 ; DrawDialogTextLine_Alt2_Loop
 DrawDialogTextLine_Alt2_Loop:
-	LEA	loc_00072A82, A0
+	LEA	DrawDialogTextLine_Alt2_Loop_Data, A0
 	MOVE.l	#$46420003, D5
 	BSR.w	Write7x8TilesToVRAM
 	RTS
@@ -19147,50 +19147,50 @@ LoadWorldBattleGraphics:
 	LEA	GfxLoadList_WorldBattle, A6
 	BRA.w	ProcessGraphicsLoadList
 LoadPlayerOverworldGraphics:
-	LEA	loc_00045F44, A3
+	LEA	LoadPlayerOverworldGraphics_Data2, A3
 	LEA	Player_overworld_gfx_buffer, A2
-	LEA	loc_0004567E, A4
+	LEA	LoadPlayerOverworldGraphics_Data, A4
 	MOVE.w	#$006B, D5
 	BSR.w	LoadMultipleTilesFromTable
 	RTS
 	
 LoadBattleTilesToBuffers:
 	LEA	Tilemap_buffer_plane_a, A2
-	LEA	loc_00042E28, A4
-	LEA	loc_0004367A, A3
+	LEA	LoadBattleTilesToBuffers_Data3, A4
+	LEA	LoadBattleTilesToBuffers_Data4, A3
 	MOVE.w	#$00A7, D5
 	BSR.w	LoadMultipleTilesFromTable
 	LEA	Battle_gfx_slot_1_buffer, A2
-	LEA	loc_000437DE, A4
-	LEA	loc_00045286, A3
+	LEA	LoadBattleTilesToBuffers_Data5, A4
+	LEA	LoadBattleTilesToBuffers_Data6, A3
 	MOVE.w	#$0167, D5
 	BSR.w	LoadMultipleTilesFromTable
 	LEA	Battle_gfx_slot_2_buffer, A2
-	LEA	loc_00042978, A4
-	LEA	loc_00042D44, A3
+	LEA	LoadBattleTilesToBuffers_Data, A4
+	LEA	LoadBattleTilesToBuffers_Data2, A3
 	MOVE.w	#$0077, D5
 	BSR.w	LoadMultipleTilesFromTable
 	RTS
 	
 LoadBossGraphics:
 	LEA	Tilemap_buffer_plane_a, A2
-	LEA	loc_000460D8, A4
-	LEA	loc_0004720C, A3
+	LEA	LoadBossGraphics_Data, A4
+	LEA	LoadBossGraphics_Data2, A3
 	MOVE.w	#$00BF, D5
 	BSR.w	LoadMultipleTilesFromTable
 	LEA	Boss_gfx_slot_1_buffer, A2
-	LEA	loc_000474BC, A4
-	LEA	loc_00048872, A3
+	LEA	LoadBossGraphics_Data3, A4
+	LEA	LoadBossGraphics_Data4, A3
 	MOVE.w	#$00EF, D5
 	BSR.w	LoadMultipleTilesFromTable
 	LEA	Boss_gfx_extra_buffer, A2
-	LEA	loc_00048B4E, A4
-	LEA	loc_00048D9C, A3
+	LEA	LoadBossGraphics_Data5, A4
+	LEA	LoadBossGraphics_Data6, A3
 	MOVE.w	#$001F, D5
 	BSR.w	LoadMultipleTilesFromTable
 	LEA	Boss_gfx_slot_2_buffer, A2
-	LEA	loc_00048DEC, A4
-	LEA	loc_00048ECA, A3
+	LEA	LoadBossGraphics_Data7, A4
+	LEA	LoadBossGraphics_Data8, A3
 	MOVE.w	#$001B, D5
 	BSR.w	LoadMultipleTilesFromTable
 	RTS
@@ -19528,7 +19528,7 @@ LoadTownTileGraphics:
 	BEQ.b	LoadTownTileGfx_LookupTable
 	CMPI.w	#TOWN_SWAFHAM, Current_town.w
 	BNE.b	LoadTownTileGfx_LookupTable
-	MOVEA.l	loc_0001F4B8, A0
+	MOVEA.l	LoadTownTileGraphics_Data, A0
 	BRA.b	LoadTownTileGfx_LookupTable_Loop
 ; loc_0000FDAA
 LoadTownTileGfx_LookupTable:
@@ -19554,8 +19554,8 @@ LoadTownTileGfx_LookupTable_Loop_Done:
 	BEQ.b	LoadTownObjectGfx_LookupTable
 	CMPI.w	#TOWN_SWAFHAM, Current_town.w
 	BNE.b	LoadTownObjectGfx_LookupTable
-	MOVEA.l	loc_0001F4BC, A0
-	MOVE.w	loc_0001F4C0, D5
+	MOVEA.l	LoadTownTileGfx_LookupTable_Loop_Done_Data, A0
+	MOVE.w	LoadTownTileGfx_LookupTable_Loop_Done_Data2, D5
 	BRA.b	LoadTownObjectGfx_DecompressLoop
 ; loc_0000FDFA
 LoadTownObjectGfx_LookupTable:
@@ -19578,7 +19578,7 @@ LoadTownObjectGfx_DecompressLoop:
 	
 LoadBattleHudGraphics:
 	LEA	Tile_gfx_buffer.w, A2
-	LEA	loc_0009032E, A0
+	LEA	LoadBattleHudGraphics_Data, A0
 	MOVE.w	#$00FF, D5
 ; LoadBattleHudGraphics_Done
 LoadBattleHudGraphics_Done:
@@ -19588,7 +19588,7 @@ LoadBattleHudGraphics_Done:
 	LEA	DmaCmd_TownTileset_Wyclif, A0
 	BSR.w	ExecuteVdpDmaFromPointer
 	LEA	Tile_gfx_buffer.w, A2
-	LEA	loc_00091CBC, A0
+	LEA	LoadBattleHudGraphics_Done_Data, A0
 	MOVE.w	#$0039, D5
 ; LoadBattleHudGraphics_Done2
 LoadBattleHudGraphics_Done2:
@@ -19622,7 +19622,7 @@ ExecuteVdpDmaFromPointer:
 	RTS
 	
 loc_0000FEE2:
-	LEA	loc_0005DDFE, A0
+	LEA	ExecuteVdpDmaFromPointer_Data, A0
 	LEA	Tile_gfx_buffer.w, A2
 	MOVE.w	#$0039, D5
 ; ExecuteVdpDmaFromPointer_Done
@@ -19681,7 +19681,7 @@ DecompressTileLoop:
 	RTS
 	
 LoadBattleTileGraphics:
-	LEA	loc_00069F7C, A0
+	LEA	LoadBattleTileGraphics_Data, A0
 	LEA	Tile_gfx_buffer.w, A2
 	MOVE.w	#$001A, D5
 ; LoadBattleTileGraphics_Done
@@ -19694,7 +19694,7 @@ LoadBattleTileGraphics_Done:
 	RTS
 	
 LoadBattleUiTileGraphics:
-	LEA	loc_0006A9C0, A0
+	LEA	LoadBattleUiTileGraphics_Data, A0
 	LEA	Tile_gfx_buffer.w, A2
 	MOVE.w	#$003C, D5
 ; LoadBattleUiTileGraphics_Done
@@ -19707,7 +19707,7 @@ LoadBattleUiTileGraphics_Done:
 	RTS
 	
 LoadWorldMapTileGraphics:
-	LEA	loc_0006B408, A0
+	LEA	LoadWorldMapTileGraphics_Data, A0
 	LEA	Tile_gfx_buffer.w, A2
 	MOVE.w	#$00EA, D5
 ; LoadWorldMapTileGraphics_Done
@@ -19725,7 +19725,7 @@ NullSpriteRoutine:
 	RTS
 	
 LoadCaveTileGraphics:
-	LEA	loc_0006D172, A0
+	LEA	LoadCaveTileGraphics_Data, A0
 ; LoadCaveTileGfxToBuffer
 LoadCaveTileGfxToBuffer:
 	LEA	Tile_gfx_buffer.w, A2
@@ -19743,7 +19743,7 @@ loc_0001000E:
 	RTS
 	
 LoadBattleGroundTileGraphics:
-	LEA	loc_00080EAC, A0
+	LEA	LoadBattleGroundTileGraphics_Data, A0
 	LEA	Tile_gfx_buffer.w, A2
 	MOVE.w	#$0064, D5
 ; LoadBattleGroundTileGraphics_Done
@@ -19769,7 +19769,7 @@ LoadBattleEnemyTileGraphics_Done:
 	RTS
 	
 LoadBattleStatusTileGraphics:
-	LEA	loc_000844CA, A0
+	LEA	LoadBattleStatusTileGraphics_Data, A0
 	LEA	Tile_gfx_buffer.w, A2
 	MOVE.w	#$0058, D5
 ; LoadBattleStatusTileGraphics_Done
@@ -19795,7 +19795,7 @@ LoadCaveEnemyTileGraphics_Done:
 	RTS
 	
 LoadCaveItemTileGraphics:
-	LEA	loc_000876DE, A0
+	LEA	LoadCaveItemTileGraphics_Data, A0
 	LEA	Tile_gfx_buffer.w, A2
 	MOVE.w	#$005D, D5
 ; LoadCaveItemTileGraphics_Done
@@ -19808,7 +19808,7 @@ LoadCaveItemTileGraphics_Done:
 	RTS
 	
 LoadBattlePlayerTileGraphics:
-	LEA	loc_00085BE8, A0
+	LEA	LoadBattlePlayerTileGraphics_Data, A0
 	LEA	Tile_gfx_buffer.w, A2
 	MOVE.w	#$004F, D5
 ; LoadBattlePlayerTileGraphics_Done
@@ -19822,7 +19822,7 @@ LoadBattlePlayerTileGraphics_Done:
 	
 ; LoadTownTileGfxSet1
 LoadTownTileGfxSet1:
-	LEA	loc_0005E4AC, A0
+	LEA	LoadTownTileGfxSet1_Data, A0
 ; LoadTownTileGfxToBuffer
 LoadTownTileGfxToBuffer:
 	LEA	Tile_gfx_buffer.w, A2
@@ -19835,7 +19835,7 @@ LoadTownTileGfxToBuffer_Done:
 	LEA	DmaCmd_TownTileGfxSet1_A, A0
 	BSR.w	ExecuteVdpDmaFromRam
 	LEA	Tile_gfx_buffer.w, A2
-	LEA	loc_0005F262, A0
+	LEA	LoadTownTileGfxToBuffer_Done_Data, A0
 	MOVE.w	#$00D9, D5
 ; LoadTownTileGfxToBuffer_Done2
 LoadTownTileGfxToBuffer_Done2:
@@ -19855,7 +19855,7 @@ LoadTownTileGfxToBuffer_Done3:
 	LEA	DmaCmd_TownNpcGfx, A0
 	BSR.w	ExecuteVdpDmaFromRam
 	LEA	Tile_gfx_buffer.w, A2
-	LEA	loc_00061A76, A0
+	LEA	LoadTownTileGfxToBuffer_Done3_Data, A0
 	MOVE.w	#$009D, D5
 ; LoadTownTileGfxToBuffer_Done4
 LoadTownTileGfxToBuffer_Done4:
@@ -19865,7 +19865,7 @@ LoadTownTileGfxToBuffer_Done4:
 	LEA	DmaCmd_TownTileGfxSet1_D, A0
 	BSR.w	ExecuteVdpDmaFromRam
 	LEA	Tile_gfx_buffer.w, A2
-	LEA	loc_00061484, A0
+	LEA	LoadTownTileGfxToBuffer_Done4_Data, A0
 	MOVE.w	#$0029, D5
 ; LoadTownTileGfxToBuffer_Done5
 LoadTownTileGfxToBuffer_Done5:
@@ -19878,7 +19878,7 @@ LoadTownTileGfxToBuffer_Done5:
 	
 LoadMenuTileGraphics:
 	LEA	Tile_gfx_buffer.w, A2
-	LEA	loc_00065EF2, A0
+	LEA	LoadMenuTileGraphics_Data, A0
 	MOVE.w	#$00FF, D5
 ; LoadMenuTileGraphics_Done
 LoadMenuTileGraphics_Done:
@@ -19888,7 +19888,7 @@ LoadMenuTileGraphics_Done:
 	LEA	DmaCmd_MenuTilesA, A0
 	BSR.w	ExecuteVdpDmaFromRam
 	LEA	Tile_gfx_buffer.w, A2
-	LEA	loc_00067682, A0
+	LEA	LoadMenuTileGraphics_Done_Data, A0
 	MOVE.w	#$00FF, D5
 ; LoadMenuTileGraphics_Done2
 LoadMenuTileGraphics_Done2:
@@ -19912,7 +19912,7 @@ LoadMenuTileGfxSet3_Done:
 	LEA	DmaCmd_TownNpcGfx, A0
 	BSR.w	ExecuteVdpDmaFromRam
 	LEA	Tile_gfx_buffer.w, A2
-	LEA	loc_0006803C, A0
+	LEA	LoadMenuTileGfxSet3_Done_Data, A0
 	MOVE.w	#$001A, D5
 ; LoadMenuTileGfxSet3_Done2
 LoadMenuTileGfxSet3_Done2:
@@ -19922,7 +19922,7 @@ LoadMenuTileGfxSet3_Done2:
 	LEA	DmaCmd_MenuMiscTilesA, A0
 	BSR.w	ExecuteVdpDmaFromRam
 	LEA	Tile_gfx_buffer.w, A2
-	LEA	loc_00067FB4, A0
+	LEA	LoadMenuTileGfxSet3_Done2_Data, A0
 	MOVE.w	#7, D5
 ; LoadMenuTileGfxSet3_Done3
 LoadMenuTileGfxSet3_Done3:
@@ -19934,7 +19934,7 @@ LoadMenuTileGfxSet3_Done3:
 	RTS
 	
 LoadTitleScreenGraphics:
-	LEA	loc_00062AAA, A0
+	LEA	LoadTitleScreenGraphics_Data, A0
 	LEA	Tile_gfx_buffer.w, A2
 	MOVE.w	#$004D, D5
 ; LoadTitleScreenGraphics_Done
@@ -19944,7 +19944,7 @@ LoadTitleScreenGraphics_Done:
 	DBF	D5, LoadTitleScreenGraphics_Done
 	LEA	DmaCmd_TitleScreenTilesA, A0
 	BSR.w	ExecuteVdpDmaFromRam
-	LEA	loc_000633D8, A0
+	LEA	LoadTitleScreenGraphics_Done_Data, A0
 	LEA	Tile_gfx_buffer.w, A2
 	MOVE.w	#$006C, D5
 ; LoadTitleScreenGraphics_Done2
@@ -19954,7 +19954,7 @@ LoadTitleScreenGraphics_Done2:
 	DBF	D5, LoadTitleScreenGraphics_Done2
 	LEA	DmaCmd_TitleScreenTilesB, A0
 	BSR.w	ExecuteVdpDmaFromRam
-	LEA	loc_00063ED8, A0
+	LEA	LoadTitleScreenGraphics_Done2_Data, A0
 	LEA	Tile_gfx_buffer.w, A2
 	MOVE.w	#$0062, D5
 ; LoadTitleScreenGraphics_Done3
@@ -19964,7 +19964,7 @@ LoadTitleScreenGraphics_Done3:
 	DBF	D5, LoadTitleScreenGraphics_Done3
 	LEA	DmaCmd_TitleScreenTilesC, A0
 	BSR.w	ExecuteVdpDmaFromRam
-	LEA	loc_000648FE, A0
+	LEA	LoadTitleScreenGraphics_Done3_Data, A0
 	LEA	Tile_gfx_buffer.w, A2
 	MOVE.w	#$004F, D5
 ; LoadTitleScreenGraphics_Done4
@@ -19974,7 +19974,7 @@ LoadTitleScreenGraphics_Done4:
 	DBF	D5, LoadTitleScreenGraphics_Done4
 	LEA	DmaCmd_TitleScreenTilesD, A0
 	BSR.w	ExecuteVdpDmaFromRam
-	LEA	loc_00064FB4, A0
+	LEA	LoadTitleScreenGraphics_Done4_Data, A0
 ; loc_00010300
 LoadTitleScreenTileGfx:
 	LEA	Tile_gfx_buffer.w, A2
@@ -19986,7 +19986,7 @@ LoadTitleScreenTileGfx_Done:
 	DBF	D5, LoadTitleScreenTileGfx_Done
 	LEA	DmaCmd_TitleScreenTilesE, A0
 	BSR.w	ExecuteVdpDmaFromRam
-	LEA	loc_0006582E, A0
+	LEA	LoadTitleScreenTileGfx_Done_Data, A0
 	LEA	Tile_gfx_buffer.w, A2
 	MOVE.w	#5, D5
 ; LoadTitleScreenTileGfx_Done2
@@ -19999,7 +19999,7 @@ LoadTitleScreenTileGfx_Done2:
 	RTS
 	
 LoadOptionsMenuGraphics:
-	LEA	loc_00068236, A0
+	LEA	LoadOptionsMenuGraphics_Data, A0
 	LEA	Tile_gfx_buffer.w, A2
 	MOVE.w	#$003C, D5
 ; LoadOptionsMenuGraphics_Done
@@ -24701,7 +24701,7 @@ ClearEnemyListFlags:
 DrawNameEntryBackground:
 	ORI	#$0700, SR
 	MOVE.l	#$61060003, D5
-	LEA	loc_00068778, A0
+	LEA	DrawNameEntryBackground_Data, A0
 	MOVE.w	#$0016, D7
 ; DrawNameEntryBackground_Done
 DrawNameEntryBackground_Done:
@@ -24896,7 +24896,7 @@ SegaLogoScreen_Init:
 	JSR	DisableVDPDisplay
 	JSR	ClearVRAMPlaneA
 	JSR	ClearVRAMPlaneB
-	LEA	loc_0005DDC2, A0
+	LEA	SegaLogoScreen_Init_Data, A0
 	ORI	#$0700, SR
 	MOVE.l	#$40000000, VDP_control_port
 	MOVEQ	#$0000001F, D7
@@ -25178,7 +25178,7 @@ DrawPrologueScene1and2:
 	MOVE.w	#$A300, D4
 	BSR.w	DrawTilemapBlock_15x12
 	MOVE.l	#$61320003, D5
-	LEA	loc_00062A28, A0
+	LEA	DrawPrologueScene1and2_Data, A0
 	MOVE.w	#$A080, D4
 	BSR.w	DrawTilemapBlock_13x10
 	MOVE.l	#$61060003, D5
@@ -25189,7 +25189,7 @@ DrawPrologueScene1and2:
 	MOVE.w	#$E300, D4
 	BSR.w	DrawTilemapBlock_15x12
 	MOVE.l	#$68060003, D5
-	LEA	loc_00063356, A0
+	LEA	DrawPrologueScene1and2_Data2, A0
 	MOVE.w	#$E100, D4
 	BSR.w	DrawTilemapBlock_13x10
 	MOVE.l	#$67A40003, D5
@@ -25205,7 +25205,7 @@ DrawPrologueScene3:
 	MOVE.w	#$A300, D4
 	BSR.w	DrawTilemapBlock_15x12
 	MOVE.l	#$64320003, D5
-	LEA	loc_00063E56, A0
+	LEA	DrawPrologueScene3_Data, A0
 	MOVE.w	#$C180, D4
 	BSR.w	DrawTilemapBlock_13x10
 	MOVE.l	#$61820003, D5
@@ -25221,7 +25221,7 @@ DrawPrologueScene4and5:
 	MOVE.w	#$A300, D4
 	BSR.w	DrawTilemapBlock_15x12
 	MOVE.l	#$61060003, D5
-	LEA	loc_0006487C, A0
+	LEA	DrawPrologueScene4and5_Data, A0
 	MOVE.w	#$A200, D4
 	BSR.w	DrawTilemapBlock_13x10
 	MOVE.l	#$61A40003, D5
@@ -25232,7 +25232,7 @@ DrawPrologueScene4and5:
 	MOVE.w	#$E300, D4
 	BSR.w	DrawTilemapBlock_15x12
 	MOVE.l	#$68320003, D5
-	LEA	loc_00064F32, A0
+	LEA	DrawPrologueScene4and5_Data2, A0
 	MOVE.w	#$E280, D4
 	BSR.w	DrawTilemapBlock_13x10
 	MOVE.l	#$68840003, D5
@@ -25252,7 +25252,7 @@ DrawPrologueScene6:
 	RTS
 
 DrawTilemapBlock_15x12:
-	LEA	loc_0006577A, A0
+	LEA	DrawTilemapBlock_15x12_Data, A0
 	MOVE.w	#$000B, D7
 ; DrawTilemapBlock_15x12_Done
 DrawTilemapBlock_15x12_Done:
@@ -26645,7 +26645,7 @@ TitleScreen_ShowPressStart_Loop2:
 ; TitleScreen_ShowPressStart_Loop
 TitleScreen_ShowPressStart_Loop:
 	MOVE.w	#$0029, Palette_line_1_index.w
-	LEA	loc_00062782, A0
+	LEA	TitleScreen_ShowPressStart_Loop_Data, A0
 	BSR.w	DrawTilemapToVRAM_PlaneA
 	MOVE.w	#$00FF, Prologue_state.w
 	MOVE.w	#$02FF, Prologue_scroll_offset.w
@@ -26727,7 +26727,7 @@ UpdatePrologueScrollVRAM_WriteVDP:
 DrawIntroBackground:
 	ORI	#$0700, SR
 	MOVE.l	#$49000003, D5
-	LEA	loc_0006181A, A0
+	LEA	DrawIntroBackground_Data, A0
 	MOVE.w	#9, D7
 ; DrawIntroBackground_Done
 DrawIntroBackground_Done:
@@ -26748,7 +26748,7 @@ DrawIntroBackground_Done2:
 DrawIntroGraphics:
 	ORI	#$0700, SR
 	MOVE.l	#$61800003, D5
-	LEA	loc_000616DE, A0
+	LEA	DrawIntroGraphics_Data, A0
 	MOVE.w	#$000E, D7
 ; DrawIntroGraphics_Done
 DrawIntroGraphics_Done:
@@ -27373,7 +27373,7 @@ ClearEndingTextArea_Done2:
 	ADDI.l	#$000E0000, D5
 	ANDI.l	#$5FFF0003, D5
 	ORI.l	#$40000003, D5
-	LEA	loc_00068020, A0
+	LEA	ClearEndingTextArea_Done2_Data, A0
 	MOVE.w	#2, D7
 ; ClearEndingTextArea_Done3
 ClearEndingTextArea_Done3:
@@ -27425,7 +27425,7 @@ InitEndingCreditsScreen_Done2:
 	ADDI.l	#$00800000, D5
 	DBF	D7, InitEndingCreditsScreen_Done
 	MOVE.l	#$40040003, D5
-	LEA	loc_000658D2, A0
+	LEA	InitEndingCreditsScreen_Done2_Data, A0
 	MOVE.w	#$0019, D7
 ; InitEndingCreditsScreen_Done3
 InitEndingCreditsScreen_Done3:
@@ -27440,7 +27440,7 @@ InitEndingCreditsScreen_Done4:
 	ADDI.l	#$00800000, D5
 	DBF	D7, InitEndingCreditsScreen_Done3
 	MOVE.l	#$60000003, D5
-	LEA	loc_00067CBC, A0
+	LEA	InitEndingCreditsScreen_Done4_Data, A0
 	MOVE.w	#$001B, D7
 ; InitEndingCreditsScreen_Done5
 InitEndingCreditsScreen_Done5:
@@ -35173,7 +35173,7 @@ OpenChestMenu_ExitToHud_Loop2:
 	BNE.w	ChestAnimation_Return
 	CMPI.w	#4, Chest_animation_frame.w
 	BGE.w	ChestAnimation_Return_Loop4
-	LEA	loc_000827C4, A0
+	LEA	OpenChestMenu_ExitToHud_Loop2_Data, A0
 	MOVE.w	Chest_animation_frame.w, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
@@ -36794,13 +36794,13 @@ Hastings_Npc3_DialogueStates:
 	dc.l	loc_0003A0FA
 ; loc_0001F15E
 CarthahenaaNpcDialogueDispatch:
-	LEA	loc_0003B820, A0
+	LEA	CarthahenaaNpcDialogueDispatch_Data3, A0
 	TST.b	Tsarkon_is_dead.w
 	BNE.b	SelectCastleDialog_Carthahena_Return
-	LEA	loc_0003B808, A0
+	LEA	CarthahenaaNpcDialogueDispatch_Data2, A0
 	TST.b	Pass_to_carthahena_purchased.w
 	BNE.b	SelectCastleDialog_Carthahena_Return
-	LEA	loc_0003B7F0, A0	
+	LEA	CarthahenaaNpcDialogueDispatch_Data, A0	
 ; loc_0001F17C
 SelectCastleDialog_Carthahena_Return:
 	RTS
@@ -36815,10 +36815,10 @@ SelectCastleDialog_Carthahena_Return_Loop:
 	RTS
 	
 CarthahenaaNpcSubDispatch:
-	LEA	loc_0003B848, A0
+	LEA	CarthahenaaNpcSubDispatch_Data2, A0
 	TST.b	Tsarkon_is_dead.w
 	BNE.b	CarthahenaaNpcSubDispatch_Loop
-	LEA	loc_0003B844, A0
+	LEA	CarthahenaaNpcSubDispatch_Data, A0
 ; CarthahenaaNpcSubDispatch_Loop
 CarthahenaaNpcSubDispatch_Loop:
 	RTS
@@ -37086,11 +37086,14 @@ TownTileGfxTable: ; Tile mappings + graphics by town
 	dc.l	TownTileSet_B_Mappings
 	dc.l	TownTileSet_B_Gfx
 	dc.w	$0039
-loc_0001F4B8:
+; LoadTownTileGraphics_Data
+LoadTownTileGraphics_Data:
 	dc.l	SpriteGfxData_8E0C8
-loc_0001F4BC:
+; LoadTownTileGfx_LookupTable_Loop_Done_Data
+LoadTownTileGfx_LookupTable_Loop_Done_Data:
 	dc.l	SpriteGfxData_8FB08
-loc_0001F4C0:
+; LoadTownTileGfx_LookupTable_Loop_Done_Data2
+LoadTownTileGfx_LookupTable_Loop_Done_Data2:
 	dc.w	$001E
 ; loc_0001F4C2
 DmaCmd_TownTileset_Wyclif:
@@ -51195,21 +51198,24 @@ NpcDataTable_Carthahena:
 	dc.l	CarthahenaaNpcSubDispatch
 	npcEntry $0088, $0048, $0091, NPCSpriteFrames_ManA, NPCInit_Carthahena_KingThuleKey, NPC_ATTR_PAL3, NPC_SOLID
 	dc.w	$FFFF
-loc_0003B7F0:
+; CarthahenaaNpcDialogueDispatch_Data
+CarthahenaaNpcDialogueDispatch_Data:
 	dc.l	SheNeverAnsweredStr
 	dc.l	SheNeverAnsweredStr
 	dc.l	SheNeverAnsweredStr
 	dc.l	SheNeverAnsweredStr
 	dc.l	SheNeverAnsweredStr
 	dc.l	CannotEnterWithoutPassStr 
-loc_0003B808:
+; CarthahenaaNpcDialogueDispatch_Data2
+CarthahenaaNpcDialogueDispatch_Data2:
 	dc.l	SheNeverAnsweredStr
 	dc.l	SheNeverAnsweredStr
 	dc.l	SheNeverAnsweredStr
 	dc.l	SheNeverAnsweredStr
 	dc.l	SheNeverAnsweredStr
 	dc.l	PassGrantsAdmittanceStr 
-loc_0003B820:
+; CarthahenaaNpcDialogueDispatch_Data3
+CarthahenaaNpcDialogueDispatch_Data3:
 	dc.l	ThankYouForBeatingStr
 	dc.l	WorldWaitedLongEnoughStr
 	dc.l	MotherAwaitsStr
@@ -51219,9 +51225,11 @@ loc_0003B820:
 	dc.l	ChangedIntoMonsterStr
 	dc.l	ToysForTsarkonStr 
 	dc.l	NoOneHereStr 
-loc_0003B844:
+; CarthahenaaNpcSubDispatch_Data
+CarthahenaaNpcSubDispatch_Data:
 	dc.l	MenTurnedIntoMonstersStr 
-loc_0003B848:
+; CarthahenaaNpcSubDispatch_Data2
+CarthahenaaNpcSubDispatch_Data2:
 	dc.l	FailedToKillTsarkonStr
 SheNeverAnsweredStr:
 	dc.b	"She never answered.", $FF 
@@ -51727,12 +51735,14 @@ loc_003C6E8: ; Seems like there are many references to BossParallaxEntry_Start h
 	dc.b	$00, $90, $00, $AB, $00, $AC, $00, $AF, $00, $99, $00, $9A, $00, $9B, $00, $BB, $00, $B3, $00, $9C, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 
 	dc.b	$00, $B0, $00, $B7, $00, $B1, $00, $C0, $00, $B2, $00, $B9, $00, $B4, $00, $B5, $00, $B6, $00, $B8, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 
 	dc.b	$00, $00, $00, $00, $00, $00, $00, $00 
-loc_0003D930:
+; PlayerSpritePositionClamp_Done_Data
+PlayerSpritePositionClamp_Done_Data:
 	dc.b	$00, $02, $FF, $FD, $00, $01, $FF, $FB, $00, $03, $FF, $FC, $FF, $FF, $FF, $ED, $FF, $FB, $FF, $E2, $FF, $FF, $00, $01, $00, $09, $FF, $FC, $00, $09, $FF, $FB 
 	dc.b	$00, $04, $FF, $FB, $00, $0E, $FF, $ED, $00, $09, $FF, $DF, $00, $00, $00, $00, $00, $09, $FF, $FD, $00, $03, $FF, $FD, $00, $0F, $FF, $F7, $00, $11, $FF, $EB 
 	dc.b	$00, $05, $FF, $E2, $00, $0F, $FF, $F6, $00, $04, $FF, $FD, $FF, $FF, $FF, $FC, $00, $0E, $FF, $FC, $00, $0F, $FF, $ED, $00, $05, $FF, $E3, $00, $0C, $FF, $ED 
 	dc.b	$00, $0F, $FF, $FD, $00, $0A, $FF, $FE, $00, $11, $FF, $FC, $00, $0E, $FF, $E8, $00, $07, $FF, $E1, $00, $0F, $FF, $EB 
-loc_0003D9A8:
+; BossBattleShieldTick_Data
+BossBattleShieldTick_Data:
 	dc.b	$00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $FF, $E9, $FF, $FF, $00, $18, $00, $08, $00, $19, $FF, $DA, $FF, $F7, $FF, $C8 
 	dc.b	$00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $17, $FF, $F6, $00, $17, $00, $00, $00, $17, $FF, $F5, $00, $17, $FF, $F6, $00, $17, $FF, $F5 
 ; loc_0003D9E8
@@ -51868,7 +51878,8 @@ OverworldMapSector_DA08:
 	dc.b	$17
 	dc.b	$1A
 	dc.b	$00 
-loc_0003DA88:
+; BattleMovement_AttackCheck_Data
+BattleMovement_AttackCheck_Data:
 	dc.b	$09
 	dc.b	$12
 	dc.b	$09
@@ -51965,7 +51976,8 @@ loc_0003DA88:
 	dc.b	$1B
 	dc.b	$1B
 	dc.b	$00, $14, $17, $1A, $00 
-loc_0003DB08:
+; BossBattle_AttackCheck_Loop3_Data
+BossBattle_AttackCheck_Loop3_Data:
 	dc.b	$0D
 	dc.b	$0D
 	dc.b	$04
@@ -51982,7 +51994,8 @@ loc_0003DB08:
 	dc.b	$0E
 	dc.b	$04
 	dc.b	$00 
-loc_0003DB18:
+; BossBattle_AttackCheck_Loop4_Data
+BossBattle_AttackCheck_Loop4_Data:
 	dc.b	$00
 	dc.b	$00
 	dc.b	$06
@@ -51999,7 +52012,8 @@ loc_0003DB18:
 	dc.b	$03
 	dc.b	$06
 	dc.b	$00 
-loc_0003DB28:
+; BossBattle_MoveDone_Data
+BossBattle_MoveDone_Data:
 	dc.b	$09
 	dc.b	$09
 	dc.b	$06
@@ -52048,14 +52062,18 @@ EnemyAnimFrames_MeleeA_Child:
 EnemyAnimFrames_MeleeA_Main:
 	dc.b	$00, $31, $00, $39, $00, $31, $00, $41, $00, $31, $00, $39, $00, $31, $00, $41, $00, $51, $00, $51, $00, $49, $00, $59, $00, $51, $00, $51, $00, $49, $00, $59 
 	dc.b	$00, $19, $00, $21, $00, $19, $00, $29, $00, $19, $00, $21, $00, $19, $00, $29, $00, $51, $00, $51, $00, $49, $00, $59, $00, $51, $00, $51, $00, $49, $00, $59 
-loc_0003DBD0:
+; EnemyTick_Bouncing_Loop6_Data
+EnemyTick_Bouncing_Loop6_Data:
 	dc.b	$00, $19, $00, $25, $00, $19, $00, $25, $00, $31, $00, $3D, $00, $49, $00, $55 
-loc_0003DBE0:
+; EnemyTick_Bouncing_Loop6_Data2
+EnemyTick_Bouncing_Loop6_Data2:
 	dc.b	$00, $D9, $00, $E1, $00, $D9, $00, $E1, $00, $E9, $00, $F1, $00, $F9, $01, $01 
-loc_0003DBF0:
+; EnemyTick_ProximityChase_Loop11_Data
+EnemyTick_ProximityChase_Loop11_Data:
 	dc.b	$00, $39, $00, $61, $00, $39, $00, $61, $00, $31, $00, $59, $00, $31, $00, $59, $00, $29, $00, $51, $00, $29, $00, $51, $00, $21, $00, $49, $00, $21, $00, $49 
 	dc.b	$00, $19, $00, $41, $00, $19, $00, $41, $00, $21, $00, $49, $00, $21, $00, $49, $00, $29, $00, $51, $00, $29, $00, $51, $00, $31, $00, $59, $00, $31, $00, $59 
-loc_0003DC30:
+; EnemyTick_ProximityChase_Loop11_Data2
+EnemyTick_ProximityChase_Loop11_Data2:
 	dc.b	$01, $09, $01, $45, $01, $09, $01, $45, $00, $FD, $01, $39, $00, $FD, $01, $39, $00, $F1, $01, $2D, $00, $F1, $01, $2D, $00, $E5, $01, $21, $00, $E5, $01, $21 
 	dc.b	$00, $D9, $01, $15, $00, $D9, $01, $15, $00, $E5, $01, $21, $00, $E5, $01, $21, $00, $F1, $01, $2D, $00, $F1, $01, $2D, $00, $FD, $01, $39, $00, $FD, $01, $39 
 ; EnemyAnimFrames_MeleeB_Child
@@ -52075,14 +52093,17 @@ EnemyAnimFrames_Fireball_B:
 ; loc_0003DD02
 EnemyAnimFrames_Fireball_C:
 	dc.b	$00, $D9, $00, $E5, $00, $F1, $00, $FD, $01, $09 
-loc_0003DD0C:
+; ProjectileTick_PostCollision_Loop2_Data
+ProjectileTick_PostCollision_Loop2_Data:
 	dc.b	$00, $21, $00, $39, $00, $21, $00, $39 
-loc_0003DD14:
+; ProjectileTick_PostCollision_Loop2_Data2
+ProjectileTick_PostCollision_Loop2_Data2:
 	dc.b	$00, $E5, $01, $09, $00, $E5, $01, $09 
 ; loc_0003DD1C
 EnemyAnimFrames_Fireball_D:
 	dc.b	$00, $E9, $00, $D9, $00, $E9, $00, $F9 
-loc_0003DD24:
+; EnemyDeathAnimation_Data
+EnemyDeathAnimation_Data:
 	dc.b	$01, $E9, $01, $F9, $02, $09, $02, $19, $02, $29 
 NPCSpriteFrames_Base:
 	dc.b	$02, $39, $02, $3D, $02, $41
@@ -53171,7 +53192,8 @@ CompressedFontTileData:
 	dc.b	$F6, $33, $33, $02, $00, $EE, $EC, $C8, $00, $33, $01, $11, $33, $7F, $03, $03, $03, $03, $01, $33, $FF, $FF, $FF, $FF, $01, $00, $FF, $FF, $FF, $FF, $01, $00 
 	dc.b	$FF, $FF, $FF, $FF, $01, $00, $FF, $FF, $FF, $FF, $01, $00, $FF, $FF, $FF, $FF, $01, $00, $FF, $FF, $FF, $FF, $01, $00, $FF, $FF, $FF, $FF, $01, $00, $FF, $FF 
 	dc.b	$FF, $FF, $01, $00, $FF, $FF, $FF, $FF 
-loc_00042978:
+; LoadBattleTilesToBuffers_Data
+LoadBattleTilesToBuffers_Data:
 	dc.b	$00, $02, $01, $03, $04, $05, $01, $01, $06, $01, $07, $01, $08, $09, $01, $0A, $0B, $0C, $01, $01, $0D, $0E, $01, $01, $0F, $01, $01, $01, $10, $01, $01, $01 
 	dc.b	$11, $01, $12, $01, $13, $01, $01, $01, $14, $15, $01, $01, $01, $01, $01, $01, $16, $01, $17, $01, $18, $01, $19, $01, $1A, $01, $1B, $01, $1C, $1D, $01, $01 
 	dc.b	$1E, $20, $1F, $21, $22, $24, $23, $01, $25, $01, $26, $01, $27, $20, $1F, $28, $29, $01, $2A, $01, $2B, $2D, $2C, $01, $2E, $20, $1F, $2F, $30, $20, $1F, $31 
@@ -53290,7 +53312,8 @@ loc_00042D2C:
 	dc.b	$01, $00, $77, $FF, $FF, $FF, $BA, $A0 
 loc_00042D34:
 	dc.b	$01, $00, $73, $39, $9F, $FF, $0A, $AB, $A0, $0A, $BA, $AB, $A0, $0A, $A0, $00 
-loc_00042D44:
+; LoadBattleTilesToBuffers_Data2
+LoadBattleTilesToBuffers_Data2:
 	dc.l	loc_000429F0
 	dc.l	loc_00042A08
 	dc.l	loc_00042A0E
@@ -53348,7 +53371,8 @@ loc_00042D44:
 	dc.l	loc_00042D1C
 	dc.l	loc_00042D2C
 	dc.l	loc_00042D34
-loc_00042E28:
+; LoadBattleTilesToBuffers_Data3
+LoadBattleTilesToBuffers_Data3:
 	dc.b	$00, $00, $01, $03, $02, $04, $00, $00, $00, $00, $05, $07, $06, $08, $00, $00, $00, $00, $09, $0B, $0A, $0C, $00, $00, $00, $00, $0D, $03, $0E, $04, $00, $00 
 	dc.b	$00, $00, $0F, $11, $10, $08, $00, $00, $00, $00, $12, $14, $13, $0C, $00, $00, $00, $00, $15, $17, $16, $18, $00, $00, $00, $00, $19, $1B, $1A, $1C, $00, $00 
 	dc.b	$00, $00, $1D, $1F, $1E, $20, $00, $00, $00, $00, $21, $23, $22, $24, $00, $00, $00, $00, $25, $27, $26, $28, $00, $00, $00, $00, $29, $2B, $2A, $2C, $00, $00 
@@ -53545,7 +53569,8 @@ loc_0004365A:
 	dc.b	$01, $00, $00, $8F, $FF, $FF, $99, $42, $34, $49, $09, $94, $33, $44, $09, $44, $34, $00 
 loc_0004366C:
 	dc.b	$01, $00, $11, $3F, $FF, $FF, $99, $99, $99, $99, $99, $90, $99, $90 
-loc_0004367A:
+; LoadBattleTilesToBuffers_Data4
+LoadBattleTilesToBuffers_Data4:
 	dc.l	loc_00042ED0
 	dc.l	loc_00042ED6
 	dc.l	loc_00042EF8
@@ -53635,7 +53660,8 @@ loc_0004367A:
 	dc.l	loc_00043642
 	dc.l	loc_0004365A
 	dc.l	loc_0004366C
-loc_000437DE:
+; LoadBattleTilesToBuffers_Data5
+LoadBattleTilesToBuffers_Data5:
 	dc.b	$00, $04, $08, $01, $05, $09, $02, $06, $0A, $03, $07, $0B, $0C, $10, $14, $0D, $11, $15, $0E, $12, $16, $0F, $13, $17, $18, $1C, $20, $19, $1D, $21, $1A, $1E 
 	dc.b	$22, $1B, $1F, $23, $24, $24, $24, $25, $27, $2A, $26, $28, $2B, $24, $29, $2C, $24, $24, $24, $2D, $30, $33, $2E, $31, $34, $2F, $32, $24, $24, $24, $24, $35 
 	dc.b	$37, $39, $36, $38, $3A, $24, $24, $24, $00, $3D, $24, $3B, $3E, $41, $3C, $3F, $42, $03, $40, $43, $44, $47, $24, $45, $48, $4B, $46, $49, $4C, $0F, $4A, $4D 
@@ -54252,7 +54278,8 @@ loc_0004525E:
 	dc.b	$02, $44, $A1, $01, $A4, $00, $00, $00, $00, $13, $33, $43, $54, $34, $33, $34, $43, $22, $34, $43, $43, $22, $34, $33, $45, $55, $50, $55, $50, $00 
 loc_0004527C:
 	dc.b	$01, $00, $77, $7F, $FF, $FF, $40, $40, $40, $00 
-loc_00045286:
+; LoadBattleTilesToBuffers_Data6
+LoadBattleTilesToBuffers_Data6:
 	dc.l	loc_00043946
 	dc.l	loc_0004394E
 	dc.l	loc_00043966
@@ -54507,7 +54534,8 @@ loc_00045286:
 	dc.l	loc_00045254
 	dc.l	loc_0004525E
 	dc.l	loc_0004527C
-loc_0004567E:
+; LoadPlayerOverworldGraphics_Data
+LoadPlayerOverworldGraphics_Data:
 	dc.b	$00, $03, $06, $09, $01, $04, $07, $0A, $02, $05, $08, $0B, $0C, $0F, $12, $15, $0D, $10, $13, $16, $0E, $11, $14, $17, $18, $1B, $1E, $21, $19, $1C, $1F, $22 
 	dc.b	$1A, $1D, $20, $23, $24, $27, $2A, $2D, $25, $28, $2B, $2E, $26, $29, $2C, $2F, $30, $32, $35, $38, $25, $33, $36, $39, $31, $34, $37, $3A, $3B, $3D, $40, $43 
 	dc.b	$25, $3E, $41, $44, $3C, $3F, $42, $45, $46, $49, $4C, $4F, $47, $4A, $4D, $50, $48, $4B, $4E, $51, $46, $54, $54, $59, $52, $55, $57, $5A, $53, $56, $58, $5B 
@@ -54725,7 +54753,8 @@ loc_00045F18:
 	dc.b	$01, $55, $00, $06, $FF, $FF, $45, $00, $32, $24, $34, $00, $03, $34, $34, $00, $00, $43, $34, $54 
 loc_00045F2C:
 	dc.b	$01, $00, $73, $33, $11, $33, $33, $22, $30, $22, $30, $32, $44, $44, $34, $50, $33, $34, $50, $34, $55, $55, $50, $00 
-loc_00045F44:
+; LoadPlayerOverworldGraphics_Data2
+LoadPlayerOverworldGraphics_Data2:
 	dc.l	loc_000456EA
 	dc.l	loc_000456FA
 	dc.l	loc_0004571C
@@ -54827,7 +54856,8 @@ loc_00045F44:
 	dc.l	loc_00045F06
 	dc.l	loc_00045F18
 	dc.l	loc_00045F2C
-loc_000460D8:
+; LoadBossGraphics_Data
+LoadBossGraphics_Data:
 	dc.b	$00, $04, $08, $01, $05, $09, $02, $06, $0A, $03, $07, $07, $0B, $07, $11, $0C, $0F, $12, $0D, $10, $13, $0E, $07, $14, $15, $19, $1D, $16, $1A, $1E, $17, $1B 
 	dc.b	$1F, $18, $1C, $20, $21, $25, $29, $22, $26, $2A, $23, $27, $2B, $24, $28, $2C, $2D, $31, $35, $2E, $32, $36, $2F, $33, $37, $30, $34, $38, $39, $3D, $41, $3A 
 	dc.b	$3E, $42, $3B, $3F, $43, $3C, $40, $44, $39, $3D, $41, $3A, $3E, $49, $45, $47, $4A, $46, $48, $4B, $39, $3D, $41, $3A, $3E, $4D, $45, $4C, $4E, $46, $48, $4F 
@@ -55197,7 +55227,8 @@ loc_000471DE:
 loc_000471EA:
 	dc.b	$00, $54, $44, $50, $00, $43, $34, $50, $00, $53, $34, $50, $00, $65, $66, $66, $B0, $54, $34, $56, $BB, $54, $43, $46, $BB, $65, $55, $56, $B0, $06, $66, $6B 
 	dc.b	$00, $00 
-loc_0004720C:
+; LoadBossGraphics_Data2
+LoadBossGraphics_Data2:
 	dc.l	loc_00046198
 	dc.l	loc_000461B0
 	dc.l	loc_000461D0
@@ -55370,7 +55401,8 @@ loc_0004720C:
 	dc.l	loc_000471CA
 	dc.l	loc_000471DE
 	dc.l	loc_000471EA
-loc_000474BC:
+; LoadBossGraphics_Data3
+LoadBossGraphics_Data3:
 	dc.b	$00, $04, $08, $0C, $01, $05, $09, $0D, $02, $06, $0A, $0E, $03, $07, $0B, $0F, $00, $11, $15, $19, $01, $12, $16, $1A, $10, $13, $17, $1B, $00, $14, $18, $1C 
 	dc.b	$00, $1E, $22, $26, $01, $1F, $23, $27, $1D, $20, $24, $28, $03, $21, $25, $29, $00, $2C, $30, $34, $01, $2D, $31, $35, $2A, $2E, $32, $36, $2B, $2F, $33, $37 
 	dc.b	$00, $3A, $3E, $42, $38, $3B, $3F, $43, $39, $3C, $40, $44, $00, $3D, $41, $45, $00, $3A, $49, $4D, $46, $3B, $4A, $4E, $39, $47, $4B, $4F, $00, $48, $4C, $50 
@@ -55793,7 +55825,8 @@ loc_0004883A:
 	dc.b	$01, $66, $00, $00, $7E, $E8, $34, $56, $54, $33, $23, $46, $54, $45, $33, $46, $55, $55, $45, $56, $55, $55, $55, $60, $00, $65, $55, $50 
 loc_00048856:
 	dc.b	$02, $64, $44, $44, $44, $44, $00, $11, $11, $11, $11, $56, $21, $56, $21, $66, $22, $66, $32, $66, $32, $66, $33, $66, $30, $06, $30, $00 
-loc_00048872:
+; LoadBossGraphics_Data4
+LoadBossGraphics_Data4:
 	dc.l	loc_000475AC
 	dc.l	loc_000475B2
 	dc.l	loc_000475C6
@@ -55977,7 +56010,8 @@ loc_00048872:
 	dc.l	loc_00048820
 	dc.l	loc_0004883A
 	dc.l	loc_00048856
-loc_00048B4E:
+; LoadBossGraphics_Data5
+LoadBossGraphics_Data5:
 	dc.b	$00, $04, $08, $0C, $01, $05, $09, $0D, $02, $06, $0A, $0E, $03, $07, $0B, $0F, $00, $04, $08, $0C, $10, $12, $09, $0D, $11, $13, $0A, $0E, $03, $07, $0B, $0F 
 loc_00048B6E:
 	dc.b	$01, $00, $FF, $FF, $FF, $FF 
@@ -56027,7 +56061,8 @@ loc_00048D58:
 loc_00048D7A:
 	dc.b	$00, $CD, $50, $04, $44, $DD, $60, $06, $66, $ED, $54, $44, $46, $D5, $64, $23, $34, $46, $65, $12, $33, $66, $44, $42, $33, $54, $33, $43, $33, $43, $33, $45 
 	dc.b	$44, $00 
-loc_00048D9C:
+; LoadBossGraphics_Data6
+LoadBossGraphics_Data6:
 	dc.l	loc_00048B6E
 	dc.l	loc_00048B74
 	dc.l	loc_00048B92
@@ -56048,7 +56083,8 @@ loc_00048D9C:
 	dc.l	loc_00048D44
 	dc.l	loc_00048D58
 	dc.l	loc_00048D7A
-loc_00048DEC:
+; LoadBossGraphics_Data7
+LoadBossGraphics_Data7:
 	dc.b	$00, $00, $00, $01, $02, $03, $00, $00, $04, $06, $05, $00, $00, $07, $00, $08, $09, $00, $0A, $00, $00, $0B, $00, $0C, $00, $00, $00, $00 
 loc_00048E08:
 	dc.b	$01, $00, $FF, $FF, $FF, $FF 
@@ -56076,7 +56112,8 @@ loc_00048EB0:
 	dc.b	$02, $00, $FF, $FF, $00, $0F, $99, $00, $00, $F0, $F0, $AA, $AA, $AA, $AA, $00 
 loc_00048EC0:
 	dc.b	$01, $00, $FF, $FF, $77, $7F, $90, $99, $90, $00 
-loc_00048ECA:
+; LoadBossGraphics_Data8
+LoadBossGraphics_Data8:
 	dc.l	loc_00048E08
 	dc.l	loc_00048E0E
 	dc.l	loc_00048E1C
@@ -66390,10 +66427,12 @@ loc_0005DD9E:
 	dc.l	loc_0005DD7E
 	dc.l	loc_0005DD86
 	dc.l	loc_0005DD8E
-loc_0005DDC2:
+; SegaLogoScreen_Init_Data
+SegaLogoScreen_Init_Data:
 	dc.b	$00, $01, $02, $03, $04, $05, $06, $07, $08, $09, $0A, $0B, $0C, $0D, $0E, $0F, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $1A, $1B, $1C, $1D, $1E, $1F 
 	dc.b	$20, $21, $22, $23, $24, $25, $26, $27, $28, $29, $2A, $2B, $1D, $2C, $2D, $2E, $2F, $30, $31, $32, $33, $34, $35, $36, $37, $38, $39, $1D 
-loc_0005DDFE:
+; ExecuteVdpDmaFromPointer_Data
+ExecuteVdpDmaFromPointer_Data:
 	dc.b	$01, $00, $EC, $88, $00, $00, $0F, $0F, $FF, $0F, $FF, $77, $FF, $66, $77, $0F, $F5, $66, $67, $0F, $55, $66, $67, $FF, $55, $56, $66, $F4, $55, $56, $6F, $01 
 	dc.b	$FF, $F0, $00, $07, $80, $88, $89, $99, $AA, $78, $88, $99, $9A, $78, $88, $99, $9A, $77, $88, $89, $99, $77, $78, $88, $99, $77, $78, $88, $99, $01, $FF, $F0 
 	dc.b	$00, $0F, $00, $AB, $BB, $CC, $CD, $AA, $BB, $BC, $CC, $AA, $BB, $BC, $CC, $AA, $AB, $BB, $CC, $9A, $AA, $BB, $BC, $9A, $AA, $BB, $BC, $01, $FF, $80, $12, $4C 
@@ -66448,7 +66487,8 @@ loc_0005DDFE:
 	dc.b	$F5, $66, $44, $F0, $F5, $66, $FF, $F0, $FF, $FF, $00, $00, $00, $00, $01, $FF, $0F, $00, $00, $F0, $77, $88, $89, $9F, $77, $78, $88, $99, $77, $78, $88, $99 
 	dc.b	$67, $77, $88, $89, $67, $77, $88, $89, $00, $00, $00, $00, $00, $AA, $AB, $BF, $00, $AA, $AB, $BF, $00, $9A, $AA, $BF, $F0, $9A, $AA, $BB, $F0, $99, $AA, $AB 
 	dc.b	$F0, $99, $AA, $AB, $F0, $FF, $FF, $FF, $F0, $00, $00, $00, $00, $00 
-loc_0005E4AC:
+; LoadTownTileGfxSet1_Data
+LoadTownTileGfxSet1_Data:
 	dc.b	$01, $00, $FF, $FF, $FF, $FF, $01, $00, $FF, $FF, $FC, $88, $02, $22, $22, $22, $22, $02, $22, $22, $01, $00, $FF, $FF, $80, $00, $22, $20, $40, $22, $24, $44 
 	dc.b	$40, $22, $22, $32, $25, $23, $32, $44, $45, $01, $00, $FF, $FF, $10, $40, $04, $45, $55, $50, $50, $05, $50, $54, $55, $05, $54, $55, $55, $50, $01, $00, $FF 
 	dc.b	$FF, $F7, $F3, $55, $55, $55, $01, $00, $FF, $FF, $FA, $00, $30, $33, $33, $23, $33, $33, $32, $35, $52, $22, $01, $00, $FF, $FF, $FF, $10, $03, $33, $50, $44 
@@ -66559,7 +66599,8 @@ loc_0005E4AC:
 	dc.b	$57, $87, $70, $45, $55, $78, $77, $45, $55, $57, $77, $33, $56, $47, $77, $33, $34, $55, $77, $33, $33, $45, $55, $23, $33, $55, $54, $01, $00, $FF, $F7, $77 
 	dc.b	$73, $70, $70, $77, $77, $77, $70, $01, $00, $FF, $FF, $FF, $EE, $03, $03, $01, $00, $FF, $FF, $33, $10, $03, $30, $33, $33, $33, $33, $50, $34, $43, $56, $70 
 	dc.b	$01, $00, $33, $33, $33, $33, $EF, $E0, $EF, $E0, $EF, $E0, $EF, $E0, $EF, $E0, $EF, $E0, $DF, $D0, $DF, $D0 
-loc_0005F262:
+; LoadTownTileGfxToBuffer_Done_Data
+LoadTownTileGfxToBuffer_Done_Data:
 	dc.b	$01, $00, $FF, $FF, $FF, $FF, $01, $00, $CE, $EE, $EE, $EE, $02, $22, $22, $22, $02, $02, $02, $02, $02, $01, $22, $FC, $CC, $8C, $88, $23, $32, $23, $44, $33 
 	dc.b	$44, $23, $33, $45, $33, $44, $23, $34, $44, $23, $24, $44, $00, $23, $33, $44, $56, $22, $33, $33, $45, $32, $22, $33, $45, $47, $22, $23, $34, $57, $72, $22 
 	dc.b	$33, $57, $77, $22, $23, $55, $57, $72, $23, $45, $56, $72, $22, $00, $48, $77, $00, $00, $58, $87, $70, $00, $45, $88, $70, $00, $46, $55, $77, $00, $45, $46 
@@ -66853,7 +66894,8 @@ SpriteGfxData_607AA:
 	dc.b	$CC, $CC, $CC, $CC, $BC, $AC, $AA, $BB, $BB, $BA, $BA, $BA, $AA, $AA, $AA, $AA, $BC, $BB, $DC, $DD, $CC, $CC, $CD, $DE, $00, $CC, $BC, $CB, $CC, $BB, $BB, $BB 
 	dc.b	$BA, $AA, $BB, $AA, $BB, $AA, $AB, $BA, $BA, $BB, $BA, $AB, $AB, $CD, $CC, $DD, $CC, $EE, $DE, $EE, $DD, $EE, $ED, $DD, $DD, $00, $CC, $CC, $CC, $CB, $BB, $BB 
 	dc.b	$BB, $BB, $AA, $BA, $BA, $BA, $AB, $AA, $BA, $AB, $AB, $AB, $AA, $AA, $CA, $BB, $AB, $BB, $CC, $BC, $BC, $BC, $ED, $DD, $DD, $DE 
-loc_00061484:
+; LoadTownTileGfxToBuffer_Done4_Data
+LoadTownTileGfxToBuffer_Done4_Data:
 	dc.b	$01, $00, $FF, $FF, $FF, $FF, $01, $00, $99, $9B, $BB, $37, $01, $80, $01, $80, $01, $80, $18, $18, $10, $81, $80, $18, $01, $00, $EE, $EF, $FF, $FF, $01, $01 
 	dc.b	$01, $01, $00, $77, $77, $39, $99, $80, $80, $80, $18, $81, $12, $81, $20, $01, $20, $01, $20, $01, $00, $FF, $FF, $FF, $EE, $01, $11, $01, $00, $9D, $DD, $91 
 	dc.b	$11, $01, $20, $12, $12, $12, $01, $20, $11, $12, $90, $22, $29, $90, $20, $02, $90, $01, $00, $FF, $FF, $FE, $EE, $02, $22, $22, $01, $00, $EE, $CC, $11, $77 
@@ -66873,7 +66915,8 @@ loc_00061484:
 	dc.b	$01, $00, $9B, $33, $33, $33, $56, $60, $56, $05, $60, $05, $60, $05, $60, $05, $60, $05, $60, $05, $66, $01, $00, $99, $9D, $DD, $91, $56, $60, $05, $60, $05 
 	dc.b	$66, $56, $56, $56, $0D, $66, $0D, $D6, $60, $01, $00, $EC, $CC, $CC, $CC, $66, $06, $66, $06, $6D, $0D, $66, $DD, $60, $D6, $60, $D6, $60, $66, $60, $01, $00 
 	dc.b	$37, $7F, $FF, $FF, $66, $66, $D0, $D0, $01, $00, $D9, $13, $77, $77, $67, $66, $77, $06, $77, $70, $06, $77, $06, $67, $67, $60 
-loc_000616DE:
+; DrawIntroGraphics_Data
+DrawIntroGraphics_Data:
 	dc.b	$00, $00, $01, $02, $03, $04, $00, $05, $06, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $07, $08, $09, $0A, $0B, $0C, $0D, $0E, $0F, $10, $11 
 	dc.b	$00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $12, $13, $14, $15, $16, $17, $18, $19, $1A, $1B, $1C, $1D, $1E, $00, $00, $00, $00, $00, $00, $00, $00, $15 
 	dc.b	$1F, $20, $21, $22, $23, $24, $25, $26, $27, $28, $29, $2A, $2B, $2C, $00, $00, $00, $00, $00, $00, $15, $2D, $2E, $2F, $30, $31, $15, $15, $32, $33, $34, $35 
@@ -66884,7 +66927,8 @@ loc_000616DE:
 	dc.b	$8D, $8E, $8F, $00, $00, $00, $00, $00, $00, $00, $00, $90, $91, $15, $15, $92, $93, $94, $95, $96, $97, $98, $99, $9A, $00, $00, $00, $00, $00, $00, $00, $00 
 	dc.b	$9B, $9C, $9D, $9E, $9F, $A0, $A1, $A2, $00, $00, $00, $00, $00, $00, $00, $00, $A3, $00, $A4, $A5, $A6, $A7, $00, $00, $A8, $A9, $AA, $AB, $00, $00, $00, $00 
 	dc.b	$00, $00, $00, $00, $AC, $AD, $00, $AE, $00, $00, $00, $00, $00, $AF, $B0, $B1, $B2, $B3, $00, $00, $00, $00, $00, $B4, $B5, $00, $B6, $00 
-loc_0006181A:
+; DrawIntroBackground_Data
+DrawIntroBackground_Data:
 	dc.b	$00, $00, $00, $00, $00, $00, $00, $00, $01, $02, $03, $04, $05, $06, $00, $00, $00, $07, $08, $09, $0A, $0B, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 
 	dc.b	$00, $00, $00, $00, $00, $00, $00, $0C, $0D, $0E, $0F, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $1A, $1B, $1C, $1D, $1E, $1F, $20, $21, $00, $00, $00 
 	dc.b	$00, $00, $00, $00, $00, $00, $22, $23, $24, $25, $26, $27, $28, $29, $2A, $2B, $2C, $2D, $2E, $2F, $30, $31, $32, $33, $34, $35, $36, $37, $37, $38, $39, $3A 
@@ -66909,7 +66953,8 @@ SpriteTileIndexTable_619EA:
 	dc.b	$14, $15, $16, $00, $17, $18, $00, $00, $19, $1A, $1B, $00, $00, $00, $1C, $1D, $00, $1E, $1F, $20, $21, $00, $00, $00, $22, $00, $00, $23, $24, $00, $00, $00 
 	dc.b	$00, $00, $00, $00, $00, $25, $00, $00, $00, $00, $00, $00, $00, $00, $00, $26, $00, $00, $00, $00, $00, $00, $00, $00, $27, $28, $00, $00, $00, $00, $00, $00 
 	dc.b	$00, $00, $29, $00, $00, $00, $00, $00, $00, $00, $00, $00 
-loc_00061A76:
+; LoadTownTileGfxToBuffer_Done3_Data
+LoadTownTileGfxToBuffer_Done3_Data:
 	dc.b	$01, $00, $EC, $C8, $89, $98, $08, $08, $81, $81, $13, $08, $13, $88, $08, $15, $80, $81, $18, $81, $18, $81, $15, $80, $01, $00, $60, $08, $CD, $FF, $88, $80 
 	dc.b	$11, $88, $08, $18, $88, $11, $81, $88, $88, $11, $80, $81, $80, $08, $01, $00, $20, $00, $99, $99, $08, $88, $08, $81, $14, $80, $81, $18, $81, $48, $18, $80 
 	dc.b	$08, $18, $80, $08, $18, $08, $18, $81, $38, $81, $80, $00, $88, $00, $88, $88, $14, $88, $15, $42, $81, $48, $61, $14, $08, $18, $71, $15, $08, $18, $81, $28 
@@ -67015,7 +67060,8 @@ loc_00061A76:
 	dc.b	$FF, $FF, $EE, $ED, $F0, $FF, $FE, $EE, $D0, $0F, $01, $00, $66, $FF, $FF, $FF, $DF, $FF, $FD, $0F, $02, $FF, $FF, $00, $00, $00, $00, $00, $FF, $FF, $FF, $01 
 	dc.b	$00, $08, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $0F, $FF, $FF, $01, $00, $37, $FF, $FF, $FF, $FF, $FF, $F0, $01, $00, $EE, $FF, $FF, $FF, $FF, $0F, $01, $00, $EF 
 	dc.b	$FF, $FF, $FF, $0E, $01, $00, $77, $FF, $FF, $FF, $DD, $E0 
-loc_00062782:
+; TitleScreen_ShowPressStart_Loop_Data
+TitleScreen_ShowPressStart_Loop_Data:
 	dc.b	$00, $01, $02, $03, $04, $05, $06, $07, $08, $09, $0A, $05, $0B, $0C, $0D, $0D, $0D, $0D, $0D, $0D, $0D, $0D, $0D, $0D, $0D, $0D, $0D, $0D, $0D, $0D, $0D, $0D 
 	dc.b	$0D, $0E, $0F, $10, $11, $12, $13, $14, $15, $16, $17, $12, $13, $18, $19, $0D, $0D, $0D, $0D, $0D, $0D, $0D, $0D, $0D, $0D, $0D, $0D, $0D, $0D, $0D, $0D, $0D 
 	dc.b	$0D, $0D, $1A, $1B, $1C, $1D, $1E, $1F, $20, $21, $22, $23, $24, $25, $20, $0D, $0D, $0D, $0D, $0D, $0D, $0D, $0D, $0D, $0D, $0D, $0D, $0D, $0D, $0D, $0D, $0D 
@@ -67122,13 +67168,15 @@ loc_00062A08:
 	dc.l	loc_000629AC-2
 	dc.l	loc_000629C8
 	dc.l	loc_000629E8
-loc_00062A28:
+; DrawPrologueScene1and2_Data
+DrawPrologueScene1and2_Data:
 	dc.b	$00, $01, $02, $03, $03, $04, $05, $03, $03, $03, $06, $07, $08, $09, $0A, $0B, $0C, $0D, $0E, $0B, $0B, $0B, $0B, $0B, $0F, $10, $09, $11, $11, $12, $13, $14 
 	dc.b	$11, $11, $11, $11, $11, $11, $10, $09, $11, $11, $15, $16, $17, $18, $19, $11, $1A, $11, $11, $10, $09, $1B, $1B, $1C, $1D, $1E, $1F, $20, $11, $21, $1C, $1D 
 	dc.b	$10, $09, $22, $22, $23, $24, $25, $26, $27, $28, $29, $23, $24, $10, $09, $2A, $2B, $2C, $2D, $2E, $2F, $30, $31, $32, $2C, $2D, $10, $09, $33, $34, $35, $36 
 	dc.b	$37, $38, $39, $3A, $3B, $35, $36, $10, $09, $3C, $3D, $3E, $3F, $40, $41, $42, $43, $44, $3E, $3F, $10, $09, $45, $46, $47, $48, $49, $4A, $4B, $4C, $4D, $47 
 	dc.b	$48, $10 
-loc_00062AAA:
+; LoadTitleScreenGraphics_Data
+LoadTitleScreenGraphics_Data:
 	dc.b	$00, $6D, $ED, $DC, $C5, $6E, $ED, $DC, $C5, $5D, $CC, $CB, $B5, $54, $44, $44, $45, $66, $66, $66, $66, $54, $44, $44, $45, $DD, $CC, $CC, $B5, $EE, $ED, $DC 
 	dc.b	$D5, $00, $5E, $EE, $EE, $E7, $4E, $DE, $DE, $D7, $4E, $DE, $DD, $C7, $44, $44, $44, $47, $66, $66, $66, $66, $44, $44, $44, $47, $4E, $DC, $CF, $F7, $4E, $CC 
 	dc.b	$FF, $F7, $01, $FF, $02, $60, $00, $66, $7E, $EE, $CC, $C7, $5D, $CC, $F7, $5C, $F7, $55, $55, $55, $57, $66, $66, $66, $66, $55, $55, $55, $57, $5F, $F7, $5F 
@@ -67199,13 +67247,15 @@ loc_00062AAA:
 	dc.b	$C7, $CD, $D7, $D7, $8C, $D6, $DD, $8D, $C7, $8D, $00, $6D, $69, $99, $98, $65, $66, $69, $98, $D6, $C6, $66, $68, $67, $67, $7D, $68, $C7, $86, $DC, $68, $6C 
 	dc.b	$76, $C7, $C8, $C8, $DD, $7D, $78, $78, $D8, $D6, $8D, $00, $66, $9A, $99, $98, $65, $A9, $99, $98, $66, $98, $68, $68, $66, $98, $C8, $C8, $69, $88, $6D, $68 
 	dc.b	$68, $9D, $C8, $C8, $66, $7D, $8D, $D8, $66, $68, $88, $68 
-loc_00063356:
+; DrawPrologueScene1and2_Data2
+DrawPrologueScene1and2_Data2:
 	dc.b	$00, $01, $00, $00, $02, $03, $04, $05, $06, $00, $07, $08, $00, $09, $0A, $00, $01, $0B, $0C, $0D, $0E, $0F, $10, $11, $12, $00, $13, $14, $09, $0A, $15, $16 
 	dc.b	$17, $18, $19, $1A, $1B, $1C, $1D, $1E, $1F, $20, $21, $22, $23, $24, $25, $26, $27, $28, $29, $2A, $2B, $2C, $2D, $2E, $2F, $30, $31, $31, $32, $33, $34, $35 
 	dc.b	$35, $36, $37, $38, $39, $3A, $31, $31, $3B, $3C, $3D, $3E, $3F, $3F, $40, $41, $42, $43, $44, $45, $46, $47, $48, $49, $4A, $4B, $4C, $4D, $4E, $4F, $50, $51 
 	dc.b	$52, $53, $54, $55, $56, $57, $58, $59, $5A, $5B, $5C, $5D, $5E, $5F, $60, $31, $61, $62, $63, $64, $65, $66, $66, $67, $68, $69, $68, $6A, $6B, $6C, $65, $65 
 	dc.b	$65, $31 
-loc_000633D8:
+; LoadTitleScreenGraphics_Done_Data
+LoadTitleScreenGraphics_Done_Data:
 	dc.b	$01, $FF, $FF, $FF, $FF, $FF, $01, $FF, $D9, $88, $88, $88, $4F, $F4, $14, $F4, $13, $4F, $F4, $13, $4F, $F4, $13, $4F, $F4, $13, $4F, $F4, $13, $4F, $F5, $13 
 	dc.b	$5F, $01, $FF, $FF, $FF, $FF, $FC, $F4, $33, $01, $FF, $FF, $FF, $FF, $10, $43, $33, $4F, $48, $88, $88, $99, $00, $FF, $88, $88, $88, $F8, $88, $55, $88, $88 
 	dc.b	$54, $35, $57, $75, $43, $33, $47, $74, $55, $35, $47, $54, $45, $35, $58, $55, $45, $34, $48, $55, $43, $54, $5F, $01, $FF, $F7, $77, $77, $FF, $8F, $8F, $8F 
@@ -67290,13 +67340,15 @@ loc_000633D8:
 	dc.b	$67, $66, $56, $76, $77, $66, $66, $76, $77, $76, $67, $77, $99, $77, $77, $77, $89, $99, $99, $99, $78, $88, $88, $88, $01, $77, $8E, $E8, $00, $5F, $66, $76 
 	dc.b	$6A, $76, $99, $99, $99, $87, $99, $88, $88, $88, $88, $88, $87, $78, $88, $87, $02, $A9, $C0, $C0, $70, $30, $99, $33, $11, $01, $04, $9A, $9A, $AA, $AA, $9A 
 	dc.b	$9A, $7A, $87, $AA, $9A, $77, $8A, $77, $AA, $AA, $03, $98, $44, $85, $28, $30, $89, $0A, $70, $50, $00, $99, $00, $0A, $87, $CF, $88, $88, $88, $88 
-loc_00063E56:
+; DrawPrologueScene3_Data
+DrawPrologueScene3_Data:
 	dc.b	$00, $00, $00, $01, $02, $03, $04, $05, $06, $07, $08, $00, $00, $00, $00, $01, $02, $03, $04, $09, $09, $0A, $0B, $0C, $0D, $00, $0E, $0F, $10, $11, $04, $12 
 	dc.b	$13, $14, $15, $16, $17, $18, $0D, $19, $1A, $1B, $1C, $12, $1D, $1E, $1F, $20, $21, $22, $23, $24, $25, $00, $26, $27, $28, $29, $2A, $27, $2B, $2C, $2D, $2E 
 	dc.b	$2F, $30, $31, $32, $33, $34, $35, $27, $36, $37, $38, $39, $3A, $3B, $3C, $3D, $3E, $3F, $40, $41, $42, $43, $44, $00, $45, $46, $47, $48, $48, $49, $4A, $4B 
 	dc.b	$4C, $4D, $4E, $4F, $50, $51, $52, $53, $48, $48, $54, $55, $56, $57, $58, $59, $00, $5A, $5B, $5C, $53, $48, $48, $5D, $00, $5E, $5F, $60, $00, $00, $5A, $61 
 	dc.b	$62, $53 
-loc_00063ED8:
+; LoadTitleScreenGraphics_Done2_Data
+LoadTitleScreenGraphics_Done2_Data:
 	dc.b	$01, $99, $FF, $FF, $FF, $FF, $01, $99, $FF, $FF, $FE, $EC, $98, $89, $98, $98, $01, $8E, $01, $03, $07, $0E, $99, $99, $89, $88, $99, $98, $98, $99, $89, $88 
 	dc.b	$E8, $98, $98, $89, $88, $E8, $E8, $98, $88, $E8, $E8, $EE, $EE, $00, $E8, $E8, $EE, $ED, $8E, $8E, $EE, $DD, $E8, $EE, $ED, $DC, $8E, $EE, $DD, $CB, $EE, $ED 
 	dc.b	$DC, $BC, $EE, $DD, $CB, $CD, $ED, $DC, $BC, $DD, $DD, $CB, $CD, $DD, $01, $DD, $33, $77, $FF, $CC, $DC, $BC, $CB, $CD, $BC, $CD, $DC, $DC, $CD, $DC, $01, $DD 
@@ -67375,13 +67427,15 @@ loc_00063ED8:
 	dc.b	$88, $88, $08, $88, $99, $73, $31, $03, $33, $98, $98, $76, $67, $67, $65, $56, $76, $98, $98, $98, $01, $99, $DF, $EF, $FF, $FF, $98, $89, $02, $E9, $22, $22 
 	dc.b	$22, $22, $99, $01, $11, $11, $11, $4A, $C4, $89, $4B, $C4, $4B, $CD, $4B, $CD, $4C, $DD, $4D, $DD, $4D, $DD, $DD, $DD, $01, $99, $3B, $BF, $7F, $7F, $89, $9E 
 	dc.b	$89, $89, $98, $89 
-loc_0006487C:
+; DrawPrologueScene4and5_Data
+DrawPrologueScene4and5_Data:
 	dc.b	$00, $01, $02, $03, $04, $05, $06, $07, $08, $09, $0A, $00, $00, $0B, $0C, $0D, $0E, $0F, $10, $11, $12, $13, $14, $15, $16, $00, $17, $18, $19, $1A, $1B, $1C 
 	dc.b	$1D, $1E, $1F, $20, $21, $22, $00, $21, $23, $24, $25, $25, $25, $25, $26, $27, $28, $29, $2A, $00, $2B, $2C, $2D, $25, $25, $25, $25, $2E, $2F, $30, $30, $31 
 	dc.b	$32, $30, $33, $25, $25, $25, $25, $25, $25, $25, $34, $35, $36, $37, $38, $39, $25, $25, $25, $25, $25, $25, $25, $25, $25, $30, $30, $25, $25, $25, $25, $25 
 	dc.b	$25, $25, $3A, $3B, $3C, $3D, $3E, $3F, $40, $41, $25, $3A, $3B, $3C, $42, $43, $44, $45, $46, $47, $48, $49, $49, $4A, $4B, $4C, $4D, $4E, $4F, $4F, $4F, $4F 
 	dc.b	$4F, $4F 
-loc_000648FE:
+; LoadTitleScreenGraphics_Done3_Data
+LoadTitleScreenGraphics_Done3_Data:
 	dc.b	$01, $11, $FF, $FF, $FF, $FF, $01, $11, $FF, $FF, $F9, $A3, $12, $22, $22, $21, $12, $21, $01, $11, $FE, $EF, $EE, $EE, $12, $12, $12, $12, $22, $23, $02, $11 
 	dc.b	$76, $CC, $46, $44, $12, $00, $23, $31, $10, $22, $22, $22, $21, $21, $22, $22, $21, $22, $21, $13, $01, $11, $B9, $90, $00, $00, $12, $12, $21, $23, $32, $21 
 	dc.b	$23, $44, $22, $12, $23, $43, $21, $13, $23, $44, $31, $13, $23, $34, $43, $13, $22, $33, $44, $02, $11, $FA, $A2, $22, $00, $99, $00, $04, $44, $CC, $91, $12 
@@ -67432,13 +67486,15 @@ loc_000648FE:
 	dc.b	$77, $76, $67, $87, $77, $77, $77, $78, $78, $78, $78, $87, $87, $87, $87, $78, $78, $02, $77, $98, $2D, $00, $00, $88, $00, $00, $AF, $FF, $76, $66, $66, $67 
 	dc.b	$76, $87, $76, $66, $87, $87, $78, $01, $88, $00, $5B, $FF, $FF, $77, $77, $77, $66, $66, $77, $87, $77, $78, $78, $78, $01, $88, $33, $37, $FF, $FF, $67, $77 
 	dc.b	$77, $77, $77, $78, $78, $01, $88, $CF, $FF, $FF, $FF, $86, $67, $01, $88, $FF, $FF, $FF, $FF, $00 
-loc_00064F32:
+; DrawPrologueScene4and5_Data2
+DrawPrologueScene4and5_Data2:
 	dc.b	$00, $00, $00, $01, $02, $03, $04, $05, $06, $07, $08, $08, $08, $09, $09, $09, $09, $0A, $0B, $0C, $0D, $0E, $0F, $10, $08, $08, $09, $09, $09, $09, $09, $11 
 	dc.b	$12, $13, $14, $15, $16, $08, $08, $09, $09, $09, $09, $09, $09, $17, $18, $19, $1A, $1B, $08, $08, $09, $09, $09, $09, $1C, $1D, $1E, $1F, $20, $21, $22, $23 
 	dc.b	$24, $09, $09, $09, $25, $26, $27, $28, $29, $2A, $2B, $2C, $2D, $2E, $2F, $2F, $2F, $30, $31, $32, $33, $34, $35, $36, $37, $38, $39, $3A, $3A, $3A, $3B, $3C 
 	dc.b	$3D, $3E, $3F, $40, $41, $42, $43, $08, $08, $08, $08, $08, $44, $45, $46, $47, $48, $49, $4A, $4B, $08, $08, $08, $08, $08, $08, $4C, $4D, $4E, $4E, $4F, $50 
 	dc.b	$51, $08 
-loc_00064FB4:
+; LoadTitleScreenGraphics_Done4_Data
+LoadTitleScreenGraphics_Done4_Data:
 	dc.b	$02, $22, $89, $C2, $30, $00, $11, $00, $00, $CF, $FF, $33, $33, $32, $23, $33, $33, $32, $21, $12, $23, $01, $33, $89, $97, $32, $10, $44, $44, $43, $44, $44 
 	dc.b	$34, $44, $23, $22, $22, $22, $22, $32, $11, $12, $22, $11, $11, $11, $22, $02, $44, $77, $62, $00, $00, $33, $00, $89, $F6, $22, $34, $34, $43, $34, $22, $32 
 	dc.b	$22, $23, $22, $22, $22, $22, $02, $44, $B3, $31, $10, $00, $33, $0C, $CC, $67, $77, $43, $34, $23, $22, $22, $12, $02, $44, $FF, $EC, $C0, $00, $33, $00, $11 
@@ -67502,21 +67558,24 @@ loc_00064FB4:
 	dc.b	$A7, $77, $78, $89, $99, $78, $99, $9A, $01, $AA, $FF, $FF, $FF, $FF, $02, $AA, $CC, $88, $0C, $08, $A8, $30, $60, $E0, $C1, $8A, $88, $87, $8A, $88, $87, $7A 
 	dc.b	$88, $7A, $88, $7A, $8A, $87, $01, $88, $06, $77, $FF, $FF, $8A, $99, $99, $8A, $7A, $99, $A8, $A8, $01, $88, $00, $1F, $FF, $FF, $A8, $AA, $A9, $99, $99, $99 
 	dc.b	$99, $98, $99, $99, $98, $00 
-loc_0006577A:
+; DrawTilemapBlock_15x12_Data
+DrawTilemapBlock_15x12_Data:
 	dc.b	$00, $01, $02, $02, $02, $02, $02, $02, $02, $02, $02, $02, $02, $01, $00, $01, $03, $03, $03, $03, $03, $03, $03, $03, $03, $03, $03, $03, $03, $01, $04, $03 
 	dc.b	$03, $03, $03, $03, $03, $03, $03, $03, $03, $03, $03, $03, $04, $04, $03, $03, $03, $03, $03, $03, $03, $03, $03, $03, $03, $03, $03, $04, $04, $03, $03, $03 
 	dc.b	$03, $03, $03, $03, $03, $03, $03, $03, $03, $03, $04, $04, $03, $03, $03, $03, $03, $03, $03, $03, $03, $03, $03, $03, $03, $04, $04, $03, $03, $03, $03, $03 
 	dc.b	$03, $03, $03, $03, $03, $03, $03, $03, $04, $04, $03, $03, $03, $03, $03, $03, $03, $03, $03, $03, $03, $03, $03, $04, $04, $03, $03, $03, $03, $03, $03, $03 
 	dc.b	$03, $03, $03, $03, $03, $03, $04, $04, $03, $03, $03, $03, $03, $03, $03, $03, $03, $03, $03, $03, $03, $04, $01, $03, $03, $03, $03, $03, $03, $03, $03, $03 
 	dc.b	$03, $03, $03, $03, $01, $00, $01, $05, $05, $05, $05, $05, $05, $05, $05, $05, $05, $05, $01, $00 
-loc_0006582E:
+; LoadTitleScreenTileGfx_Done_Data
+LoadTitleScreenTileGfx_Done_Data:
 	dc.b	$00, $EE, $DC, $BD, $EE, $ED, $AA, $AA, $DE, $DA, $75, $57, $AD, $BA, $52, $F5, $AB, $CA, $54, $25, $AC, $DA, $75, $57, $AD, $ED, $AA, $AA, $DE, $EE, $DC, $BD 
 	dc.b	$EE, $01, $AA, $F9, $00, $00, $9F, $DC, $CD, $AD, $CB, $BC, $DA, $AC, $B2, $FB, $CA, $AC, $B2, $2B, $CA, $AD, $CB, $BC, $DA, $DC, $CD, $00, $DC, $DE, $DC, $DE 
 	dc.b	$ED, $EC, $ED, $EC, $CE, $CB, $CE, $CB, $BE, $BC, $BE, $BC, $CB, $CD, $CB, $CD, $DC, $DE, $DC, $DE, $ED, $EE, $ED, $EE, $DC, $BB, $BC, $CC, $01, $00, $FF, $FF 
 	dc.b	$FF, $FF, $00, $DE, $DC, $BC, $ED, $CD, $CB, $EE, $DC, $BE, $DC, $BC, $ED, $BE, $ED, $CB, $CE, $BE, $DC, $BC, $ED, $CD, $CB, $EE, $DC, $CE, $DC, $BC, $ED, $CE 
 	dc.b	$ED, $CB, $CE, $00, $DC, $BB, $BC, $CC, $ED, $EE, $ED, $EE, $DC, $DE, $DC, $DE, $CB, $CD, $CB, $CD, $BE, $BC, $BE, $BC, $CE, $CB, $CE, $CB, $ED, $EC, $ED, $EC 
 	dc.b	$DC, $DE, $DC, $DE 
-loc_000658D2:
+; InitEndingCreditsScreen_Done2_Data
+InitEndingCreditsScreen_Done2_Data:
 	dc.b	$00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $01, $00, $02, $00, $03, $00, $03, $00, $03, $00, $03, $00, $03, $00, $03 
 	dc.b	$00, $03, $00, $03, $00, $03, $00, $03, $00, $03, $00, $04, $00, $05, $00, $06, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 
 	dc.b	$00, $00, $00, $00, $00, $00, $00, $07, $00, $08, $00, $03, $00, $03, $00, $03, $00, $03, $00, $03, $00, $03, $00, $03, $00, $03, $00, $03, $00, $03, $00, $03 
@@ -67566,7 +67625,8 @@ loc_000658D2:
 	dc.b	$01, $2C, $01, $2D, $01, $2E, $01, $2F, $01, $30, $01, $31, $01, $32, $01, $33, $01, $34, $01, $35, $01, $36, $01, $37, $00, $03, $00, $03, $00, $03, $00, $03 
 	dc.b	$00, $03, $00, $20, $00, $21, $00, $22, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $2A, $00, $03, $01, $38, $01, $39, $01, $3A, $01, $3A, $01, $3B 
 	dc.b	$01, $3C, $01, $3D, $01, $3E, $01, $3F, $01, $3A, $01, $40, $01, $41, $01, $42, $00, $03, $00, $03, $00, $03, $00, $03, $00, $03, $00, $27, $00, $28, $00, $29 
-loc_00065EF2:
+; LoadMenuTileGraphics_Data
+LoadMenuTileGraphics_Data:
 	dc.b	$01, $EE, $FF, $FF, $FF, $FF, $01, $EE, $FF, $FF, $FF, $EE, $E0, $00, $02, $EE, $FE, $E8, $00, $00, $00, $00, $13, $FF, $FF, $E0, $E0, $01, $00, $FF, $FF, $FF 
 	dc.b	$FF, $01, $00, $08, $CF, $EE, $FF, $11, $11, $11, $EE, $11, $11, $1E, $01, $11, $01, $01, $02, $EE, $FF, $77, $70, $00, $11, $00, $00, $8E, $77, $1E, $1E, $1E 
 	dc.b	$01, $00, $01, $EE, $FF, $FF, $FF, $77, $1E, $1E, $01, $EE, $FF, $FF, $FE, $EE, $E0, $E0, $00, $01, $00, $33, $37, $7F, $FF, $EE, $EE, $EE, $EE, $EE, $E0, $EE 
@@ -67756,7 +67816,8 @@ loc_00065EF2:
 	dc.b	$C6, $77, $00, $21, $32, $21, $32, $32, $32, $33, $23, $34, $32, $33, $33, $34, $02, $11, $FF, $FF, $70, $00, $22, $00, $00, $8F, $30, $33, $33, $43, $33, $33 
 	dc.b	$33, $02, $11, $FF, $FE, $80, $00, $22, $00, $00, $7E, $80, $12, $23, $23, $33, $33, $33, $33, $33, $44, $01, $11, $FF, $F0, $00, $00, $22, $22, $21, $12, $22 
 	dc.b	$23, $32, $22, $33, $33, $33, $23, $44, $44, $43, $33, $45, $44, $54, $33, $00 
-loc_00067682:
+; LoadMenuTileGraphics_Done_Data
+LoadMenuTileGraphics_Done_Data:
 	dc.b	$02, $11, $EC, $C2, $22, $01, $22, $01, $31, $9C, $44, $21, $12, $21, $21, $21, $12, $32, $21, $12, $33, $21, $01, $22, $08, $FF, $F3, $18, $11, $1A, $AB, $BB 
 	dc.b	$11, $2A, $AA, $23, $32, $23, $33, $33, $33, $33, $32, $01, $22, $13, $3F, $FF, $FF, $BB, $CB, $B2, $AB, $BA, $AA, $AA, $01, $00, $77, $77, $77, $77, $20, $20 
 	dc.b	$20, $20, $22, $22, $22, $22, $01, $00, $FF, $FF, $EE, $EE, $04, $04, $04, $44, $01, $33, $77, $08, $00, $00, $08, $38, $38, $83, $34, $44, $49, $44, $45, $44 
@@ -67807,7 +67868,8 @@ loc_00067682:
 	dc.b	$00, $00, $FF, $FF, $44, $45, $54, $44, $44, $44, $45, $55, $33, $33, $33, $33, $22, $22, $22, $22, $01, $11, $00, $00, $FF, $FF, $44, $44, $44, $44, $54, $44 
 	dc.b	$44, $33, $33, $33, $33, $32, $22, $22, $22, $22, $01, $11, $00, $3F, $FF, $FF, $43, $33, $32, $21, $33, $32, $22, $21, $22, $21, $01, $22, $67, $77, $77, $77 
 	dc.b	$12, $11, $12, $12, $12, $12, $11, $11, $11, $01, $22, $77, $FF, $FF, $FF, $11, $11, $01, $22, $EE, $EF, $FF, $FF, $20, $20, $20 
-loc_00067CBC:
+; InitEndingCreditsScreen_Done4_Data
+InitEndingCreditsScreen_Done4_Data:
 	dc.b	$00, $00, $00, $00, $00, $01, $00, $00, $00, $00, $00, $00, $00, $02, $00, $00, $00, $03, $00, $00, $00, $00, $00, $00, $00, $00, $00, $02, $00, $00, $00, $00 
 	dc.b	$00, $00, $00, $00, $00, $01, $00, $00, $00, $00, $00, $00, $00, $00, $00, $03, $01, $00, $00, $00, $00, $00, $00, $02, $00, $00, $00, $01, $00, $00, $00, $00 
 	dc.b	$00, $00, $00, $00, $00, $04, $00, $00, $00, $00, $02, $00, $00, $00, $02, $00, $00, $00, $05, $00, $00, $06, $00, $00, $00, $06, $00, $01, $00, $00, $00, $00 
@@ -67832,14 +67894,17 @@ loc_00067CBC:
 	dc.b	$00, $02, $00, $00, $00, $07, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 
 	dc.b	$00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $02, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 
 	dc.b	$00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 
-loc_00067FB4:
+; LoadMenuTileGfxSet3_Done2_Data
+LoadMenuTileGfxSet3_Done2_Data:
 	dc.b	$01, $00, $FF, $FF, $FF, $FF, $01, $00, $EC, $EF, $FF, $FF, $10, $01, $31, $10, $01, $00, $FF, $FD, $D8, $DD, $01, $02, $01, $23, $21, $02, $01, $01, $00, $FF 
 	dc.b	$FB, $B1, $BB, $10, $20, $12, $32, $10, $20, $10, $01, $00, $B1, $90, $91, $BF, $04, $07, $05, $07, $86, $80, $45, $6F, $65, $40, $86, $80, $07, $05, $07, $04 
 	dc.b	$01, $00, $B1, $90, $91, $BF, $09, $0C, $0A, $0C, $DB, $D0, $9A, $BE, $BA, $90, $DB, $D0, $0C, $0A, $0C, $09, $01, $00, $B3, $BF, $FF, $FF, $10, $01, $31, $10 
 	dc.b	$01, $00, $FF, $FB, $B1, $BF, $10, $20, $12, $32, $10, $20 
-loc_00068020:
+; ClearEndingTextArea_Done2_Data
+ClearEndingTextArea_Done2_Data:
 	dc.b	$00, $01, $02, $03, $04, $05, $06, $07, $08, $09, $0A, $0B, $0C, $0D, $0E, $0F, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $1A, $00 
-loc_0006803C:
+; LoadMenuTileGfxSet3_Done_Data
+LoadMenuTileGfxSet3_Done_Data:
 	dc.b	$03, $00, $8C, $CC, $CC, $CC, $0F, $40, $22, $22, $22, $ED, $01, $11, $11, $11, $FF, $FF, $FE, $01, $00, $00, $77, $77, $77, $FF, $FF, $FF, $FF, $DD, $DD, $DD 
 	dc.b	$DD, $CB, $CB, $CB, $CB, $CB, $CB, $01, $00, $23, $BB, $BF, $FF, $FF, $FF, $FF, $DD, $DB, $DB, $0B, $0B, $01, $ED, $00, $44, $44, $54, $FF, $FF, $F0, $00, $FE 
 	dc.b	$DD, $DB, $00, $0F, $DB, $00, $0F, $DD, $B0, $0F, $DD, $DB, $0F, $EE, $DB, $0F, $BF, $0F, $B0, $FE, $01, $00, $8C, $EE, $EE, $66, $0F, $FF, $FF, $0F, $ED, $FE 
@@ -67856,7 +67921,8 @@ loc_0006803C:
 	dc.b	$00, $CC, $CE, $EE, $FF, $FE, $DD, $FE, $DD, $0F, $ED, $FE, $FE, $0F, $02, $00, $66, $66, $66, $66, $0F, $11, $11, $11, $11, $DB, $DB, $DB, $DB, $DB, $EB, $FB 
 	dc.b	$FB, $02, $ED, $88, $88, $88, $80, $00, $33, $33, $33, $00, $CB, $CB, $CB, $CB, $CB, $CB, $DC, $FF, $FF, $BB, $BB, $BB, $BB, $01, $00, $EE, $EE, $C8, $13, $0F 
 	dc.b	$0F, $FE, $FE, $0F, $ED, $0F, $FE, $BB, $FF, $FF, $BB, $BB, $BB, $01, $00, $33, $77, $7F, $FF, $ED, $B0, $ED, $B0, $DB, $DB, $B0 
-loc_00068236:
+; LoadOptionsMenuGraphics_Data
+LoadOptionsMenuGraphics_Data:
 	dc.b	$01, $00, $FF, $FF, $FF, $FF, $01, $00, $FF, $CC, $C8, $88, $0D, $EF, $DE, $FF, $DE, $FF, $0D, $EF, $FF, $0D, $EF, $FF, $DE, $FF, $FF, $02, $00, $FF, $30, $00 
 	dc.b	$00, $FF, $00, $8E, $FF, $FF, $F0, $F0, $01, $00, $FF, $CC, $40, $00, $01, $11, $01, $22, $FF, $01, $23, $FF, $FF, $E1, $23, $FF, $FE, $D1, $23, $FF, $FE, $D1 
 	dc.b	$23, $02, $00, $FF, $00, $00, $00, $33, $00, $00, $FF, $FF, $11, $11, $11, $11, $22, $22, $22, $22, $01, $00, $FF, $33, $20, $00, $11, $40, $23, $50, $34, $50 
@@ -67900,7 +67966,8 @@ loc_00068236:
 	dc.b	$0F, $66, $66, $66, $66, $33, $33, $33, $33, $44, $44, $44, $44, $01, $55, $CC, $C8, $48, $07, $66, $54, $56, $54, $66, $54, $66, $65, $44, $66, $54, $43, $44 
 	dc.b	$43, $33, $54, $44, $44, $44, $65, $01, $33, $EE, $88, $8C, $00, $45, $45, $56, $53, $45, $66, $63, $45, $56, $53, $45, $34, $45, $44, $44, $44, $55, $55, $55 
 	dc.b	$55, $50 
-loc_00068778:
+; DrawNameEntryBackground_Data
+DrawNameEntryBackground_Data:
 	dc.b	$00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $01, $02, $03, $04, $04, $04, $04, $04, $04, $05, $06, $07, $00, $00, $00, $00, $00, $00, $00, $00, $00 
 	dc.b	$00, $00, $08, $09, $0A, $0A, $0A, $0A, $0A, $0B, $0C, $0D, $0E, $0F, $10, $11, $12, $12, $12, $12, $12, $12, $13, $14, $15, $16, $17, $18, $19, $0A, $0A, $0A 
 	dc.b	$0A, $0A, $1A, $1B, $1C, $1D, $1E, $1E, $1E, $1E, $1F, $20, $21, $22, $23, $24, $25, $26, $0A, $0A, $0A, $0A, $0A, $0A, $27, $28, $29, $2A, $2B, $2C, $2D, $2E 
@@ -68103,7 +68170,8 @@ SpriteGfxData_6974A:
 	dc.b	$47, $43, $44, $64, $74, $54, $44, $57, $55, $46, $66, $88, $78, $77, $77, $00, $43, $44, $67, $33, $44, $36, $73, $34, $46, $67, $46, $56, $87, $88, $87, $87 
 	dc.b	$43, $34, $45, $48, $35, $45, $56, $84, $44, $66, $68, $43, $78, $87, $87, $88, $00, $33, $34, $68, $43, $45, $45, $74, $34, $65, $57, $64, $56, $87, $77, $77 
 	dc.b	$77, $43, $33, $44, $57, $34, $34, $56, $76, $65, $65, $68, $56, $77, $77, $77, $68, $00 
-loc_00069F7C:
+; LoadBattleTileGraphics_Data
+LoadBattleTileGraphics_Data:
 	dc.b	$00, $4D, $EF, $FE, $D4, $DE, $4B, $44, $ED, $E4, $B7, $BB, $4E, $F4, $B7, $97, $BF, $FB, $77, $7B, $4F, $E4, $BB, $7B, $4E, $DE, $44, $B4, $ED, $4D, $EF, $FE 
 	dc.b	$D4, $00, $33, $34, $4C, $C4, $34, $4C, $CD, $DC, $4D, $CD, $DE, $ED, $CE, $EF, $FF, $FE, $CE, $DE, $EF, $FE, $4D, $CD, $DE, $ED, $34, $4C, $CD, $DC, $33, $34 
 	dc.b	$4C, $C4, $00, $4C, $C4, $4C, $C4, $C4, $DD, $C4, $DD, $ED, $4E, $ED, $4E, $FF, $EC, $FF, $EC, $CF, $FE, $CF, $FE, $D4, $EE, $D4, $EE, $DC, $4D, $DC, $4D, $CC 
@@ -68127,7 +68195,8 @@ loc_00069F7C:
 	dc.b	$DF, $DF, $D4, $FF, $3F, $D4, $FD, $33, $33, $FD, $4D, $FF, $F4, $FF, $3F, $F4, $DF, $DF, $D4, $3D, $FF, $FD, $02, $3F, $88, $22, $AA, $80, $F4, $45, $54, $45 
 	dc.b	$54, $33, $DF, $3D, $3D, $3D, $D4, $D4, $3D, $3D, $33, $DF, $01, $33, $31, $9F, $99, $02, $FF, $D4, $3D, $FD, $43, $FD, $43, $FF, $43, $FF, $43, $3D, $FD, $43 
 	dc.b	$FF, $FF, $D4, $DF 
-loc_0006A240:
+; DrawBattleNametable_Data
+DrawBattleNametable_Data:
 	dc.b	$00, $01, $02, $02, $02, $02, $02, $02, $02, $03, $00, $04, $00, $01, $02, $02, $02, $02, $02, $02, $02, $03, $00, $01, $02, $02, $02, $02, $02, $02, $02, $02 
 	dc.b	$02, $02, $02, $02, $02, $02, $03, $00, $05, $06, $06, $06, $06, $06, $06, $06, $06, $06, $06, $06, $06, $06, $06, $06, $06, $06, $06, $06, $06, $06, $05, $06 
 	dc.b	$06, $06, $06, $06, $06, $06, $06, $06, $06, $06, $06, $06, $06, $06, $06, $05, $07, $06, $06, $06, $06, $06, $06, $06, $06, $06, $06, $06, $06, $06, $06, $06 
@@ -68156,7 +68225,8 @@ loc_0006A240:
 	dc.b	$07, $06, $06, $06, $06, $06, $06, $06, $06, $06, $06, $06, $06, $06, $06, $06, $06, $06, $06, $06, $06, $06, $07, $0B, $10, $11, $12, $13, $0B, $0B, $0B, $0B 
 	dc.b	$0B, $0B, $0B, $0B, $0B, $0B, $0B, $07, $0A, $06, $06, $06, $06, $06, $06, $06, $06, $06, $06, $06, $06, $06, $06, $06, $06, $06, $06, $06, $06, $06, $0A, $0B 
 	dc.b	$0B, $0B, $0B, $0B, $0B, $0B, $0B, $0B, $0B, $0B, $0B, $0B, $0B, $0B, $0B, $0A 
-loc_0006A5B0:
+; DrawBattleStatusBar_Data
+DrawBattleStatusBar_Data:
 	dc.b	$04, $01, $02, $02, $02, $02, $02, $02, $02, $03, $04, $00, $04, $01, $02, $02, $02, $02, $02, $02, $02, $03, $04, $01, $02, $02, $02, $02, $02, $02, $02, $02 
 	dc.b	$02, $02, $02, $02, $02, $02, $03, $04, $05, $0B, $0B, $0B, $14, $12, $13, $0B, $0B, $0B, $0B, $0B, $0B, $0B, $0B, $0B, $0B, $0B, $0B, $0B, $0B, $0B, $05, $0B 
 	dc.b	$0B, $0B, $0B, $0B, $0B, $0B, $0B, $0B, $0B, $0B, $0B, $0B, $0B, $0B, $0B, $05, $07, $0B, $0B, $0B, $0B, $0B, $0B, $0B, $0B, $0B, $0B, $0B, $15, $0B, $0B, $0B 
@@ -68165,7 +68235,8 @@ loc_0006A5B0:
 	dc.b	$0A, $0B, $0B, $0B, $0B, $0B, $0B, $0B, $0B, $0B, $0B, $0B, $15, $0B, $0B, $0B, $0B, $0B, $0B, $0B, $0B, $0B, $0A, $0B, $0B, $0B, $0B, $0B, $0B, $0B, $0B, $0B 
 	dc.b	$0B, $0B, $0B, $0B, $0B, $0B, $0B, $0A, $00, $01, $02, $02, $02, $02, $02, $02, $02, $03, $00, $04, $00, $01, $02, $02, $02, $02, $02, $02, $02, $03, $00, $01 
 	dc.b	$02, $02, $02, $02, $02, $02, $02, $02, $02, $02, $02, $02, $02, $02, $03, $00 
-loc_0006A6A0:
+; DrawCompassTiles_Data
+DrawCompassTiles_Data:
 	dc.b	$00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $01, $02, $03, $04, $05, $06, $07, $00, $00, $00, $00, $0B, $0C, $0D, $0E, $0F, $10, $11, $00, $00, $00 
 	dc.b	$00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $01, $02, $03, $04, $05, $06, $07, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $01 
 	dc.b	$02, $03, $04, $05, $06, $07, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $01 
@@ -68191,7 +68262,8 @@ loc_0006A6A0:
 	dc.b	$26, $27, $28, $29, $2A, $2B, $2C, $2D, $2E, $2F, $30, $31, $32, $33, $34, $35, $36, $37, $25, $26, $27, $28, $34, $38, $29, $2A, $2B, $2C, $2D, $2E, $2F, $30 
 	dc.b	$31, $32, $33, $34, $35, $39, $22, $23, $34, $35, $39, $39, $39, $39, $39, $22, $23, $34, $3B, $37, $25, $26, $27, $2E, $2F, $30, $2B, $33, $34, $35, $22, $29 
 	dc.b	$2A, $2B, $25, $26, $27, $28, $34, $35, $36, $3C, $23, $34, $22, $23, $34, $35, $22, $23, $24, $25, $26, $27, $28, $29, $2A, $2B, $2C, $2D, $2E, $2F, $30, $31 
-loc_0006A9C0:
+; LoadBattleUiTileGraphics_Data
+LoadBattleUiTileGraphics_Data:
 	dc.b	$01, $FF, $FF, $FF, $FF, $FF, $02, $FF, $80, $08, $CE, $FF, $EE, $04, $67, $30, $00, $DD, $DC, $CC, $FE, $ED, $DD, $FE, $ED, $FE, $01, $EE, $00, $08, $CF, $30 
 	dc.b	$BC, $BB, $BC, $BB, $DC, $CB, $CB, $BC, $DD, $DC, $CC, $CB, $DD, $DD, $DC, $ED, $DD, $FF, $FF, $FF, $FF, $FF, $FF, $01, $DD, $00, $00, $FF, $00, $BA, $BB, $BA 
 	dc.b	$AB, $BB, $BB, $BB, $BB, $CB, $CB, $CC, $CC, $CC, $CC, $CD, $CD, $EE, $EE, $EE, $EE, $FF, $FF, $FF, $FF, $00, $BB, $BB, $BB, $BB, $CB, $CB, $CC, $CB, $CC, $CC 
@@ -68240,7 +68312,8 @@ loc_0006A9C0:
 	dc.b	$AB, $AB, $AB, $BA, $BA, $BA, $BA, $01, $DD, $0F, $E0, $01, $00, $DE, $DE, $DE, $DE, $DF, $DC, $DC, $DE, $FF, $CD, $CE, $FF, $FD, $DE, $EF, $FF, $BF, $FF, $FC 
 	dc.b	$FB, $BB, $FF, $FF, $FC, $01, $BB, $00, $FF, $00, $00, $BC, $BC, $BC, $BC, $CB, $CB, $CB, $CB, $AB, $AD, $DC, $CB, $BD, $DE, $DE, $DC, $DE, $EE, $EF, $FF, $ED 
 	dc.b	$DF, $FF, $FE, $01, $FF, $00, $01, $16, $CF, $BC, $BC, $BC, $BC, $CB, $CB, $CB, $CB, $BB, $BB, $BB, $BB, $BB, $BB, $BE, $AB, $EE, $EF, $EE, $FE, $FE, $EF, $00 
-loc_0006AFC0:
+; DisplayCompassToVRAM_Data
+DisplayCompassToVRAM_Data:
 	dc.b	$01, $02, $03, $04, $05, $06, $07, $08, $09, $0A, $0B, $0A, $09, $08, $07, $06, $05, $04, $03, $02, $01, $0C, $0D, $0E, $0F, $10, $11, $12, $13, $14, $15, $16 
 	dc.b	$15, $14, $13, $12, $11, $10, $0F, $0E, $0D, $0C, $17, $18, $19, $1A, $1B, $1C, $1D, $1E, $1F, $20, $21, $20, $1F, $1E, $1D, $1C, $1B, $1A, $19, $18, $17, $22 
 	dc.b	$23, $24, $25, $26, $27, $28, $29, $2A, $2B, $2C, $2B, $2A, $29, $28, $27, $26, $25, $24, $23, $22, $2D, $2E, $2F, $30, $31, $32, $33, $34, $35, $36, $37, $36 
@@ -68250,7 +68323,8 @@ loc_0006AFC0:
 	dc.b	$5E, $5D, $5D, $5F, $60, $61, $61, $61, $61, $61, $60, $5F, $5D, $5D, $5E, $5D, $5C, $5B, $62, $41, $41, $63, $41, $64, $65, $66, $67, $66, $67, $66, $67, $66 
 	dc.b	$65, $64, $41, $63, $41, $41, $62, $51, $51, $68, $51, $51, $69, $6A, $6B, $6C, $6B, $6C, $6B, $6C, $6B, $6A, $69, $51, $51, $68, $51, $51, $6D, $6D, $6D, $6D 
 	dc.b	$6D, $6E, $6F, $70, $71, $58, $72, $58, $71, $70, $6F, $6E, $6D, $6D, $6D, $6D, $6D, $00 
-loc_0006B0D2:
+; RenderMapToVRAM_DualPalette_21x13_Data
+RenderMapToVRAM_DualPalette_21x13_Data:
 	dc.b	$73, $74, $75, $76, $77, $78, $78, $78, $79, $01, $02, $03, $04, $05, $01, $02, $01, $02, $03, $04, $05, $7B, $7C, $7D, $7E, $7F, $80, $81, $0C, $0C, $0C, $82 
 	dc.b	$0C, $0D, $0C, $0C, $0D, $0E, $83, $84, $77, $78, $8A, $8A, $8A, $8A, $8A, $8A, $8B, $8C, $8D, $8E, $8F, $8F, $8F, $8F, $8F, $90, $90, $8A, $8A, $8A, $91, $96 
 	dc.b	$97, $98, $98, $96, $97, $99, $98, $9A, $9B, $9B, $96, $61, $61, $61, $61, $98, $9C, $9D, $96, $97, $8F, $A6, $8A, $8A, $A7, $8F, $8F, $A8, $A9, $8A, $A7, $8A 
@@ -68260,7 +68334,8 @@ loc_0006B0D2:
 	dc.b	$DA, $D9, $DA, $D9, $DB, $87, $87, $87, $87, $87, $88, $89, $D9, $DA, $D9, $DA, $DB, $89, $DF, $E0, $E1, $46, $E1, $46, $E1, $E1, $C6, $DF, $C9, $E2, $DF, $E2 
 	dc.b	$E2, $C4, $E1, $46, $46, $46, $46, $E6, $6B, $6B, $6C, $6B, $6B, $6B, $6C, $E7, $68, $51, $68, $51, $51, $69, $E8, $C5, $6B, $6B, $6B, $6C, $D7, $55, $56, $57 
 	dc.b	$55, $56, $55, $56, $57, $6D, $6D, $6D, $6D, $6D, $6E, $D7, $D7, $D5, $D5, $D2, $EA, $00 
-loc_0006B1E4:
+; RenderMapToVRAM_DualPalette_21x20_Data
+RenderMapToVRAM_DualPalette_21x20_Data:
 	dc.b	$7A, $7A, $7A, $7A, $7A, $7A, $7A, $7A, $7A, $7A, $7A, $7A, $7A, $7A, $7A, $7A, $7A, $7A, $7A, $7A, $7A, $85, $86, $87, $87, $87, $87, $87, $87, $87, $88, $89 
 	dc.b	$88, $87, $87, $87, $87, $87, $87, $87, $86, $85, $92, $92, $92, $92, $91, $91, $91, $91, $93, $94, $95, $94, $93, $91, $91, $91, $91, $92, $92, $92, $92, $96 
 	dc.b	$9E, $46, $46, $9F, $A0, $A1, $A2, $A3, $A4, $A5, $A4, $A3, $A2, $A1, $A0, $9F, $46, $46, $9E, $96, $AB, $AC, $AD, $AE, $AF, $B0, $B1, $B1, $B1, $6B, $6C, $6B 
@@ -68270,7 +68345,8 @@ loc_0006B1E4:
 	dc.b	$88, $88, $88, $88, $89, $DD, $D9, $DE, $D9, $DD, $89, $88, $88, $88, $88, $87, $87, $DC, $C6, $E3, $E4, $C9, $C9, $C9, $C9, $C9, $C3, $E5, $46, $E5, $C3, $C9 
 	dc.b	$C9, $C9, $C9, $C9, $E4, $E3, $C6, $D5, $E9, $E6, $E9, $E6, $68, $51, $51, $69, $69, $EA, $69, $69, $51, $51, $68, $E6, $E9, $E6, $E9, $D5, $D5, $D5, $D2, $EA 
 	dc.b	$D5, $6D, $6D, $6D, $6E, $6E, $CD, $6E, $6E, $6D, $6D, $6D, $D5, $EA, $D2, $D5, $D5, $00 
-loc_0006B2F6:
+; RenderMapToVRAM_DualPalette_21x13_Alt_Data
+RenderMapToVRAM_DualPalette_21x13_Alt_Data:
 	dc.b	$05, $04, $03, $02, $01, $02, $01, $05, $04, $03, $02, $01, $79, $78, $78, $78, $77, $76, $75, $74, $73, $78, $77, $84, $83, $0E, $0D, $0C, $0C, $0D, $0C, $82 
 	dc.b	$0C, $0C, $0C, $81, $80, $7F, $7E, $7D, $7C, $7B, $91, $8A, $8A, $8A, $90, $90, $8F, $8F, $8F, $8F, $8F, $8E, $8D, $8C, $8B, $8A, $8A, $8A, $8A, $8A, $8A, $97 
 	dc.b	$96, $9D, $9C, $98, $61, $61, $61, $61, $96, $9B, $9B, $9A, $98, $99, $97, $96, $98, $98, $97, $96, $91, $8A, $8A, $8A, $91, $AA, $A9, $A8, $8F, $8A, $A7, $8A 
@@ -68280,7 +68356,8 @@ loc_0006B2F6:
 	dc.b	$D9, $DA, $D9, $89, $88, $87, $87, $87, $87, $87, $DB, $D9, $DA, $D9, $DA, $D9, $D8, $87, $46, $46, $46, $46, $E1, $C4, $E2, $E2, $DF, $E2, $C9, $DF, $C6, $E1 
 	dc.b	$E1, $46, $E1, $46, $E1, $E0, $DF, $6C, $6B, $6B, $6B, $C5, $E8, $69, $51, $51, $68, $51, $68, $E7, $6C, $6B, $6B, $6B, $6C, $6B, $6B, $E6, $EA, $D2, $D5, $D5 
 	dc.b	$D7, $D7, $6E, $6D, $6D, $6D, $6D, $6D, $57, $56, $55, $56, $55, $57, $56, $55, $D7, $00 
-loc_0006B408:
+; LoadWorldMapTileGraphics_Data
+LoadWorldMapTileGraphics_Data:
 	dc.b	$01, $FF, $FF, $FF, $FF, $FF, $00, $99, $91, $91, $99, $79, $79, $79, $99, $19, $11, $94, $91, $19, $64, $69, $99, $96, $96, $22, $94, $29, $29, $99, $29, $92 
 	dc.b	$92, $92, $99, $89, $89, $29, $89, $00, $91, $91, $99, $91, $79, $79, $79, $79, $94, $92, $94, $94, $29, $69, $64, $69, $99, $96, $96, $22, $29, $29, $49, $29 
 	dc.b	$92, $92, $92, $92, $89, $89, $89, $89, $00, $91, $94, $91, $91, $99, $79, $79, $79, $94, $94, $49, $94, $69, $49, $69, $69, $96, $92, $46, $99, $29, $29, $29 
@@ -68496,35 +68573,40 @@ loc_0006B408:
 	dc.b	$22, $02, $19, $C0, $60, $A0, $B0, $91, $08, $01, $0B, $0D, $59, $29, $95, $96, $95, $15, $65, $51, $11, $95, $15, $12, $71, $17, $97, $02, $19, $D0, $60, $A0 
 	dc.b	$50, $91, $0A, $00, $0A, $0D, $59, $95, $95, $11, $15, $51, $11, $95, $71, $75, $11, $97, $97, $17, $79, $77, $02, $89, $D0, $F0, $F0, $D0, $98, $02, $0F, $06 
 	dc.b	$0E, $82, $22, $28, $22, $93, $38, $39, $93, $00 
-loc_0006CED2:
+; DisplayKimsToVRAM_Data
+DisplayKimsToVRAM_Data:
 	dc.b	$36, $37, $38, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $38, $37, $36, $05, $3C, $3D, $3E, $06, $06, $06, $06, $06, $06, $06 
 	dc.b	$06, $06, $06, $06, $06, $06, $3E, $3D, $3C, $05, $08, $08, $08, $41, $42, $43, $09, $09, $09, $09, $09, $09, $09, $09, $09, $43, $42, $41, $08, $08, $08, $0C 
 	dc.b	$0C, $0C, $0C, $44, $45, $0D, $0D, $0D, $0D, $0D, $0D, $0D, $0D, $0D, $45, $44, $0C, $0C, $0C, $0C, $47, $48, $48, $48, $48, $49, $4A, $14, $14, $14, $14, $14 
 	dc.b	$14, $14, $4A, $49, $48, $48, $48, $48, $47, $4F, $4F, $50, $1B, $1B, $1B, $51, $52, $53, $1D, $1D, $1D, $53, $52, $51, $1B, $1B, $1B, $50, $4F, $4F, $5D, $5D 
 	dc.b	$5D, $5D, $5E, $5F, $60, $61, $62, $63, $27, $63, $62, $61, $60, $5F, $5E, $5D, $5D, $5D, $5D, $6C, $6C, $6C, $6C, $6C, $6C, $6D, $6E, $6F, $70, $71, $70, $6F 
 	dc.b	$6E, $6D, $6C, $6C, $6C, $6C, $6C, $6C 
-loc_0006CF7A:
+; DisplayStatsToVRAM_SinglePalette_Data
+DisplayStatsToVRAM_SinglePalette_Data:
 	dc.b	$00, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $02, $03, $00, $00, $00, $05, $06, $06, $06, $06, $06, $06, $06, $06, $06, $06 
 	dc.b	$06, $06, $06, $06, $07, $05, $05, $05, $05, $05, $08, $09, $09, $09, $09, $09, $09, $09, $09, $09, $09, $09, $0A, $0B, $08, $08, $08, $08, $08, $08, $08, $0C 
 	dc.b	$0D, $0D, $0D, $0D, $0D, $0D, $0D, $0D, $0D, $0E, $0F, $0C, $0C, $0C, $0C, $0C, $0C, $0C, $10, $11, $12, $13, $14, $14, $14, $14, $14, $14, $15, $16, $12, $12 
 	dc.b	$12, $17, $12, $12, $18, $19, $1A, $14, $14, $1B, $1C, $1D, $1D, $1D, $1D, $1E, $1F, $1B, $1B, $1B, $20, $21, $22, $23, $24, $1D, $1D, $1D, $1D, $1D, $25, $26 
 	dc.b	$27, $27, $28, $29, $2A, $2B, $2C, $2D, $2E, $27, $27, $27, $27, $27, $27, $27, $27, $27, $27, $2F, $30, $31, $32, $33, $34, $35, $35, $35, $35, $35, $35, $35 
 	dc.b	$35, $35, $35, $35, $35, $35, $35, $35 
-loc_0006D022:
+; DisplayStatsToVRAM_Data
+DisplayStatsToVRAM_Data:
 	dc.b	$00, $00, $00, $39, $3A, $3B, $01, $01, $01, $01, $01, $01, $01, $01, $01, $3B, $3A, $39, $00, $00, $00, $05, $3F, $0E, $40, $06, $06, $06, $06, $06, $06, $06 
 	dc.b	$06, $06, $06, $06, $06, $06, $40, $0E, $3F, $05, $15, $16, $09, $09, $09, $09, $09, $09, $09, $09, $09, $09, $09, $09, $09, $09, $09, $09, $09, $16, $15, $0D 
 	dc.b	$0D, $0D, $0D, $0D, $0D, $0D, $0D, $46, $0F, $0C, $0F, $46, $0D, $0D, $0D, $0D, $0D, $0D, $0D, $0D, $14, $14, $14, $4B, $4C, $4D, $4E, $12, $12, $12, $12, $12 
 	dc.b	$12, $12, $4E, $4D, $4C, $4B, $14, $14, $14, $54, $55, $56, $1B, $57, $58, $59, $5A, $5B, $5C, $5C, $5C, $5B, $5A, $59, $58, $57, $1B, $56, $55, $54, $64, $65 
 	dc.b	$57, $58, $66, $67, $68, $68, $69, $6A, $6B, $6A, $69, $68, $68, $67, $66, $58, $57, $65, $64, $72, $73, $73, $73, $73, $74, $74, $75, $75, $75, $75, $75, $75 
 	dc.b	$75, $74, $74, $73, $73, $73, $73, $72 
-loc_0006D0CA:
+; DisplayStatsToVRAM_AltPalette_Data
+DisplayStatsToVRAM_AltPalette_Data:
 	dc.b	$00, $00, $00, $03, $02, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $00, $05, $05, $05, $05, $05, $07, $06, $06, $06, $06, $06 
 	dc.b	$06, $06, $06, $06, $06, $06, $06, $06, $06, $05, $08, $08, $08, $08, $08, $08, $08, $0B, $0A, $09, $09, $09, $09, $09, $09, $09, $09, $09, $09, $09, $08, $11 
 	dc.b	$10, $0C, $0C, $0C, $0C, $0C, $0C, $0C, $0F, $0E, $0D, $0D, $0D, $0D, $0D, $0D, $0D, $0D, $0D, $0C, $14, $14, $1A, $19, $18, $12, $12, $17, $12, $12, $12, $16 
 	dc.b	$15, $14, $14, $14, $14, $14, $14, $13, $12, $1D, $1D, $1D, $1D, $1D, $24, $23, $22, $21, $20, $1B, $1B, $1B, $1F, $1E, $1D, $1D, $1D, $1D, $1C, $1B, $27, $27 
 	dc.b	$27, $27, $27, $27, $27, $27, $27, $27, $2E, $2D, $2C, $2B, $2A, $29, $28, $27, $27, $26, $25, $35, $35, $35, $35, $35, $35, $35, $35, $35, $35, $35, $35, $35 
 	dc.b	$35, $35, $34, $33, $32, $31, $30, $2F 
-loc_0006D172:
+; LoadCaveTileGraphics_Data
+LoadCaveTileGraphics_Data:
 	dc.b	$01, $59, $0D, $0A, $04, $02, $95, $15, $15, $15, $95, $95, $55, $95, $99, $35, $53, $33, $53, $53, $53, $55, $35, $55, $93, $93, $53, $93, $35, $39, $39, $02 
 	dc.b	$96, $F0, $F0, $90, $20, $69, $05, $05, $0B, $00, $64, $66, $64, $49, $94, $94, $64, $94, $66, $94, $49, $46, $49, $46, $02, $96, $F0, $B0, $A0, $40, $69, $0F 
 	dc.b	$06, $06, $0A, $94, $49, $49, $94, $94, $49, $59, $94, $34, $36, $59, $59, $02, $96, $F0, $70, $00, $40, $59, $01, $05, $0B, $0F, $69, $69, $69, $94, $69, $49 
@@ -68865,26 +68947,32 @@ loc_0006E652:
 	dc.b	$00, $07, $00, $00, $00, $00, $01, $77, $00, $00, $1F, $C0, $44, $43, $43, $44, $45, $44, $33, $54, $54, $54, $54, $55, $54, $54, $55, $55, $55, $55, $55, $70 
 	dc.b	$00, $00, $00, $00, $00, $03, $55, $7E, $C8, $00, $00, $77, $00, $17, $E8, $00, $00, $00, $00, $17, $FF, $45, $57, $57, $02, $77, $7E, $C0, $00, $00, $00, $00 
 	dc.b	$37, $FF, $FF, $55, $70, $70, $01, $00, $7F, $FF, $FF, $FF, $70, $00 
-loc_0006FB60:
+; DrawBossPortrait_Data
+DrawBossPortrait_Data:
 	dc.b	$00, $00, $00, $01, $02, $00, $00, $00, $00, $00, $00, $00, $00, $00, $07, $08, $09, $00, $00, $00, $00, $00, $00, $00, $00, $13, $14, $15, $16, $00, $00, $00 
 	dc.b	$00, $00, $00, $00, $00, $22, $23, $24, $25, $00, $00, $00, $00, $00, $00, $00, $00, $30, $31, $32, $33, $34, $35, $36, $37, $38, $39, $00, $00, $44, $45, $46 
 	dc.b	$47, $48, $49, $4A, $4B, $4C, $4D, $4E, $00, $00, $59, $5A, $5B, $5C, $5D, $5E, $5F, $60, $61, $62, $00, $00, $6E, $6F, $70, $71, $72, $73, $74, $75, $76, $77 
 	dc.b	$00, $85, $86, $87, $88, $89, $8A, $00, $00, $00, $00, $00, $00, $98, $99, $9A, $00, $9B, $9C, $00, $00, $00, $00, $00, $AB, $AC, $AD, $AE, $AF, $B0, $B1, $00 
 	dc.b	$00, $00, $00, $00, $BF, $C0, $C1, $C2, $C3, $C4, $C5, $00, $00, $00, $00, $00, $00, $00, $00, $00, $D2, $D3, $D4, $00, $00, $00, $00, $00, $00, $00, $00, $00 
 	dc.b	$00, $DB, $DC, $00, $00, $00, $00, $00 
-loc_0006FC08:
+; DrawBossAttackGraphic1_Data
+DrawBossAttackGraphic1_Data:
 	dc.b	$00, $03, $04, $00, $00, $00, $00, $0A, $0B, $0C, $0D, $00, $00, $00, $17, $18, $19, $1A, $1B, $00, $00, $26, $27, $28, $29, $2A, $00, $00, $3A, $3B, $3C, $3D 
 	dc.b	$3E, $00, $00, $4F, $50, $51, $52, $53, $54, $00 
-loc_0006FC32:
+; DrawDialogTextLine_Alt1_Data
+DrawDialogTextLine_Alt1_Data:
 	dc.b	$00, $05, $06, $00, $00, $00, $00, $0E, $0F, $10, $11, $12, $00, $00, $1C, $1D, $1E, $1F, $20, $21, $00, $26, $2B, $2C, $2D, $2E, $2F, $00, $3A, $3F, $40, $41 
 	dc.b	$42, $43, $00, $4F, $55, $56, $57, $58, $54, $00 
-loc_0006FC5C:
+; DrawDialogTextLine_Alt1_Loop_Data
+DrawDialogTextLine_Alt1_Loop_Data:
 	dc.b	$00, $63, $64, $65, $66, $67, $00, $78, $79, $7A, $7B, $7C, $7D, $7E, $8D, $8E, $8F, $90, $91, $92, $93, $26, $A0, $A1, $A2, $A3, $A4, $00, $3A, $B5, $B6, $B7 
 	dc.b	$B8, $00, $00, $4F, $55, $CB, $CC, $CD, $54, $00 
-loc_0006FC86:
+; DrawBossAttackGraphic1_Data2
+DrawBossAttackGraphic1_Data2:
 	dc.b	$68, $69, $6A, $6B, $8B, $8C, $00, $7F, $80, $81, $9D, $9E, $9F, $00, $94, $00, $00, $B2, $B3, $B4, $00, $A5, $C6, $C7, $C8, $C9, $CA, $00, $D5, $D6, $D7, $D8 
 	dc.b	$D9, $DA, $00, $DD, $DE, $DF, $E0, $E1, $E2, $00 
-loc_0006FCB0:
+; DrawDialogTextLine_Alt1_Loop_Data2
+DrawDialogTextLine_Alt1_Loop_Data2:
 	dc.b	$68, $69, $6A, $6B, $6C, $6D, $00, $7F, $80, $81, $82, $83, $84, $00, $94, $00, $00, $95, $96, $97, $00, $A5, $A6, $A7, $A8, $A9, $AA, $00, $B9, $BA, $BB, $BC 
 	dc.b	$BD, $BE, $00, $CE, $CF, $D0, $D1, $00, $00, $00 
 loc_0006FCDA:
@@ -69836,20 +69924,24 @@ loc_0007182C:
 	dc.b	$EF, $88, $64, $45, $80, $05, $45, $06, $55, $55, $65, $76, $06, $01, $00, $77, $77, $77, $FF, $66, $66, $60, $60, $60, $60, $01, $00, $EC, $CC, $DB, $FF, $54 
 	dc.b	$07, $54, $06, $67, $66, $88, $78, $08, $01, $00, $13, $7F, $FF, $FF, $47, $88, $88, $68, $88, $88, $01, $00, $88, $03, $FF, $FF, $06, $45, $67, $65, $66, $78 
 	dc.b	$07, $66, $77, $88, $77, $88, $01, $00, $17, $FF, $FF, $FF, $78, $88, $80, $88 
-loc_0007295C:
+; DrawBossNameplate_Data
+DrawBossNameplate_Data:
 	dc.b	$00, $01, $02, $03, $04, $00, $00, $05, $06, $07, $00, $00, $00, $08, $09, $0A, $0B, $00, $00, $00, $0C, $0D, $0E, $0F, $00, $00, $10, $11, $12, $13, $14, $15 
 	dc.b	$16, $17, $18, $19, $1A, $00, $00, $00, $1B, $1C, $1D, $1E, $1F, $20, $21, $22, $23, $24, $00, $00, $00, $25, $26, $27, $28, $29, $2A, $2B, $2C, $2D, $2E, $2F 
 	dc.b	$30, $00, $32, $33, $34, $35, $36, $37, $38, $39, $3A, $3B, $3C, $3D, $00, $3F, $40, $41, $42, $43, $44, $45, $46, $47, $48, $49, $4A, $00, $00, $4D, $4E, $4F 
 	dc.b	$50, $51, $52, $53, $54, $55, $56, $57, $5A, $5B, $5C, $5D, $5E, $5F, $60, $61, $62, $63, $64, $65, $66, $6A, $6B, $6C, $6D, $6E, $6F, $70, $71, $72, $73, $74 
 	dc.b	$75, $00, $79, $7A, $7B, $7C, $7D, $7E, $7F, $80, $81, $82, $83, $00, $00, $85, $86, $87, $88, $89, $8A, $8B, $8C, $8D, $8E, $00, $00, $00, $8F, $90, $91, $92 
 	dc.b	$93, $00, $00, $94, $95, $96, $97, $98, $99, $9A, $9B, $9C, $9D, $9E, $9F, $A0, $A1, $A1, $A2, $A3, $A4, $A5 
-loc_00072A12:
+; BossAttackFlashJumpTable_Loop_Data
+BossAttackFlashJumpTable_Loop_Data:
 	dc.b	$2D, $A9, $AA, $AB, $00, $00, $00, $00, $3A, $B0, $B1, $B2, $00, $00, $00, $00, $47, $B8, $B9, $BA, $BB, $BC, $00, $00, $54, $55, $C1, $C2, $C3, $C4, $C5, $00 
 	dc.b	$63, $64, $65, $CA, $CB, $CC, $CD, $00, $73, $74, $75, $D0, $D1, $00, $00, $00, $82, $83, $00, $00, $00, $00, $00, $00 
-loc_00072A4A:
+; DrawDialogTextLine_Alt2_Data
+DrawDialogTextLine_Alt2_Data:
 	dc.b	$2D, $00, $A6, $A7, $A8, $00, $00, $00, $3A, $AC, $AD, $AE, $AF, $00, $00, $00, $B3, $B4, $B5, $B6, $B7, $00, $00, $00, $54, $55, $56, $BD, $BE, $BF, $C0, $00 
 	dc.b	$63, $64, $65, $66, $C6, $C7, $C8, $C9, $73, $74, $75, $00, $CE, $CF, $00, $00, $82, $83, $00, $00, $00, $00, $00, $00 
-loc_00072A82:
+; DrawDialogTextLine_Alt2_Loop_Data
+DrawDialogTextLine_Alt2_Loop_Data:
 	dc.b	$2D, $2E, $2F, $30, $31, $00, $00, $00, $3A, $3B, $3C, $3D, $3E, $00, $00, $00, $47, $48, $49, $4A, $4B, $4C, $00, $00, $54, $55, $56, $57, $58, $59, $00, $00 
 	dc.b	$63, $64, $65, $66, $67, $68, $69, $00, $73, $74, $75, $00, $76, $77, $78, $00, $82, $83, $00, $00, $84, $00, $00, $00 
 loc_00072ABA:
@@ -72284,7 +72376,8 @@ loc_00077FAC:
 	dc.l	loc_00077F80
 	dc.l	loc_00077F94
 	dc.l	loc_00077FA4-2
-loc_00077FD4:
+; DrawBossHealthBar_Data
+DrawBossHealthBar_Data:
 	dc.b	$00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $09, $0A, $00, $00, $00, $00, $00, $0B, $0C, $0D, $0E, $0F, $00, $00, $17, $18 
 	dc.b	$00, $00, $00, $00, $00, $19, $1A, $1B, $1C, $1D, $00, $00, $00, $00, $00, $00, $00, $00, $00, $27, $28, $29, $2A, $2B, $00, $00, $00, $00, $00, $00, $00, $00 
 	dc.b	$00, $3B, $3C, $00, $3D, $3E, $00, $00, $00, $00, $00, $00, $00, $00, $00, $4E, $4F, $50, $51, $00, $00, $00, $00, $00, $60, $61, $62, $63, $64, $65, $66, $00 
@@ -75515,7 +75608,8 @@ loc_00080E56:
 	dc.b	$02, $00, $00, $00, $00, $06, $05, $00, $00, $00, $03, $09, $00, $00, $00, $03, $03, $0B, $00, $00, $07, $03, $12, $00, $00, $07, $18, $03, $19, $00, $21, $20 
 	dc.b	$1E, $22, $00, $27, $26, $26, $03, $00, $03, $2B, $07, $07, $2C, $03, $27, $1E, $07, $32, $07, $03, $07, $03, $39, $03, $07, $07, $03, $39, $03, $07, $07, $03 
 	dc.b	$39, $07, $1E, $1E, $07, $41, $1E, $1E, $1E, $1E, $46, $4C, $4B, $4C, $4B, $00, $00, $00, $00, $00, $00, $00 
-loc_00080EAC:
+; LoadBattleGroundTileGraphics_Data
+LoadBattleGroundTileGraphics_Data:
 	dc.b	$01, $00, $FF, $FF, $FF, $FF, $01, $00, $FF, $FE, $EC, $CC, $0D, $DC, $0D, $CD, $DB, $AC, $DA, $AC, $01, $00, $FF, $EE, $EC, $CC, $DD, $DD, $DB, $DD, $AA, $DD 
 	dc.b	$BC, $DD, $BC, $00, $DD, $B9, $9D, $DB, $DB, $BA, $BB, $CA, $AA, $CA, $BC, $CB, $BC, $CD, $BD, $BB, $CA, $CC, $CA, $AA, $BC, $DB, $9A, $99, $AC, $CB, $A9, $AB 
 	dc.b	$CC, $AB, $A9, $AB, $00, $00, $DD, $DD, $00, $0D, $CA, $AC, $D0, $DB, $DA, $AD, $BD, $CC, $CC, $CC, $CC, $AC, $BC, $CB, $CA, $CB, $DA, $AD, $BC, $AA, $9A, $A9 
@@ -75969,7 +76063,8 @@ loc_0008276E:
 	dc.b	$00, $00, $00, $00, $00, $05, $04, $03, $02, $01, $11, $10, $0F, $0E, $0D, $17, $16, $15, $14, $19, $11, $10, $0F, $0E, $0D, $17, $16, $15, $14, $19, $17, $16 
 	dc.b	$15, $14, $19, $11, $10, $0F, $0E, $0D, $35, $35, $34, $14, $19, $37, $37, $36, $0E, $0D, $37, $37, $38, $14, $19, $37, $37, $3C, $0E, $0D, $37, $37, $38, $14 
 	dc.b	$19, $45, $45, $3C, $0E, $0D, $45, $45, $34, $14, $19, $45, $45, $34, $14, $2D, $53, $53, $52, $2F, $2E, $00 
-loc_000827C4:
+; OpenChestMenu_ExitToHud_Loop2_Data
+OpenChestMenu_ExitToHud_Loop2_Data:
 	dc.l	loc_000827D4
 	dc.l	loc_000827FE
 	dc.l	loc_00082828
@@ -76527,7 +76622,8 @@ loc_0008447E:
 	dc.b	$00, $00, $00, $00, $00, $02, $01, $00, $00, $00, $08, $07, $06, $00, $00, $16, $15, $14, $13, $12, $10, $0F, $0E, $0D, $0C, $1B, $1B, $1A, $19, $18, $1B, $1B 
 	dc.b	$1A, $19, $20, $26, $25, $24, $23, $20, $37, $2E, $2D, $2C, $2C, $37, $35, $34, $33, $33, $37, $35, $34, $33, $33, $37, $45, $2D, $2C, $43, $4B, $4B, $34, $33 
 	dc.b	$49, $37, $35, $34, $33, $33, $37, $35, $3E, $3D, $33, $00 
-loc_000844CA:
+; LoadBattleStatusTileGraphics_Data
+LoadBattleStatusTileGraphics_Data:
 	dc.b	$01, $00, $FF, $FF, $FF, $FF, $01, $00, $FF, $FF, $FE, $EE, $06, $06, $06, $01, $00, $FF, $FE, $00, $00, $66, $66, $66, $66, $56, $65, $55, $55, $55, $55, $44 
 	dc.b	$44, $44, $54, $43, $33, $43, $01, $00, $FF, $E0, $00, $00, $06, $66, $66, $66, $66, $55, $66, $55, $66, $55, $55, $55, $56, $44, $44, $44, $56, $43, $34, $34 
 	dc.b	$56, $00, $00, $00, $00, $00, $66, $66, $66, $66, $66, $56, $55, $56, $65, $54, $44, $44, $65, $44, $33, $33, $65, $43, $53, $34, $66, $53, $33, $33, $65, $44 
@@ -76984,7 +77080,8 @@ loc_00085B92:
 	dc.b	$05, $04, $06, $05, $04, $08, $07, $09, $08, $07, $0E, $0D, $0C, $0B, $0A, $12, $12, $11, $10, $0F, $13, $13, $11, $10, $0F, $13, $13, $11, $10, $0F, $13, $13 
 	dc.b	$11, $10, $0F, $13, $13, $11, $10, $0F, $29, $28, $11, $10, $0F, $13, $13, $11, $10, $0F, $32, $31, $11, $10, $0F, $00, $36, $11, $10, $0F, $00, $36, $11, $10 
 	dc.b	$0F, $00, $36, $11, $10, $0F, $00, $36, $11, $10, $0F, $00, $36, $11, $10, $0F, $00, $4A, $4F, $4E, $4D, $00 
-loc_00085BE8:
+; LoadBattlePlayerTileGraphics_Data
+LoadBattlePlayerTileGraphics_Data:
 	dc.b	$01, $00, $FF, $FF, $FF, $FF, $00, $44, $44, $44, $44, $63, $33, $33, $33, $65, $23, $22, $22, $65, $22, $23, $32, $65, $23, $22, $22, $65, $22, $23, $32, $65 
 	dc.b	$32, $42, $34, $65, $34, $33, $33, $02, $33, $0F, $00, $00, $13, $23, $00, $63, $63, $C0, $44, $44, $44, $44, $22, $22, $12, $22, $22, $22, $12, $22, $32, $32 
 	dc.b	$34, $02, $33, $0E, $04, $04, $0C, $22, $00, $C2, $C2, $40, $44, $44, $44, $44, $36, $32, $56, $23, $56, $32, $56, $23, $56, $43, $23, $56, $43, $56, $01, $65 
@@ -77435,7 +77532,8 @@ loc_00087688:
 	dc.b	$47, $46, $45, $44, $00, $1D, $1C, $49, $48, $00, $00, $13, $0E, $00, $00, $00, $13, $0E, $00, $00, $1D, $1C, $0E, $00, $00, $00, $13, $0E, $00, $00, $00, $13 
 	dc.b	$0E, $00, $00, $1D, $1C, $0E, $00, $00, $00, $13, $0E, $00, $00, $00, $13, $0E, $00, $00, $1D, $1C, $0E, $00, $00, $00, $5D, $59, $00, $00, $00, $00, $00, $00 
 	dc.b	$00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 
-loc_000876DE:
+; LoadCaveItemTileGraphics_Data
+LoadCaveItemTileGraphics_Data:
 	dc.b	$01, $00, $FF, $FF, $FF, $FF, $01, $00, $FF, $F3, $11, $11, $03, $33, $33, $33, $30, $33, $33, $50, $31, $34, $50, $31, $34, $50, $04, $31, $88, $88, $88, $88 
 	dc.b	$34, $44, $44, $44, $44, $50, $22, $22, $22, $22, $00, $11, $11, $11, $11, $01, $00, $CC, $CC, $CC, $CC, $03, $30, $33, $33, $33, $35, $31, $45, $31, $45, $31 
 	dc.b	$45, $31, $45, $31, $45, $02, $31, $88, $88, $88, $88, $34, $44, $44, $44, $44, $50, $00, $50, $00, $50, $00, $50, $00, $50, $00, $50, $00, $53, $33, $11, $11 
@@ -78799,7 +78897,8 @@ loc_00090008:
 	dc.b	$00, $BD, $00, $BD, $00, $BF, $00, $00, $01, $19, $00, $00, $00, $C0, $01, $1A, $00, $00, $00, $C0, $00, $00, $00, $C0, $00, $00, $00, $C0, $00, $00, $00, $00 
 	dc.b	$00, $C0, $00, $00, $00, $C0, $01, $1B, $00, $BD, $01, $1C, $00, $BF, $00, $BF, $01, $1D, $00, $BD, $01, $1E, $00, $BF, $00, $BD, $00, $BA, $00, $BB, $00, $B8 
 	dc.b	$00, $B9, $00, $BD, $00, $BF 
-loc_0009032E:
+; LoadBattleHudGraphics_Data
+LoadBattleHudGraphics_Data:
 	dc.b	$01, $00, $FF, $FF, $FF, $FF, $02, $B5, $41, $60, $16, $00, $5B, $04, $17, $41, $00, $65, $BB, $55, $6B, $55, $65, $65, $6B, $55, $65, $65, $55, $55, $55, $64 
 	dc.b	$66, $66, $66, $01, $55, $08, $40, $84, $E0, $BB, $5B, $5B, $B6, $B5, $B5, $56, $5B, $BB, $56, $B5, $BB, $5B, $B6, $B5, $B5, $56, $5B, $BB, $56, $56, $66, $66 
 	dc.b	$66, $46, $02, $64, $88, $88, $88, $88, $DD, $75, $50, $00, $00, $1D, $2D, $D1, $A3, $44, $1A, $22, $34, $D3, $33, $44, $66, $66, $66, $55, $55, $55, $02, $DD 
@@ -79005,7 +79104,8 @@ loc_0009032E:
 	dc.b	$44, $44, $55, $55, $54, $EE, $EE, $E4, $EE, $EE, $E4, $EE, $CC, $C4, $EE, $66, $64, $CC, $55, $54, $66, $44, $44, $01, $44, $F0, $00, $00, $07, $55, $55, $55 
 	dc.b	$54, $5E, $EE, $EE, $E4, $5E, $EE, $EE, $E4, $5C, $CC, $CC, $C4, $56, $66, $66, $64, $55, $55, $55, $54, $54, $02, $45, $88, $88, $88, $88, $EE, $66, $66, $64 
 	dc.b	$40, $E4, $E4, $E4, $E4, $E4, $CC, $C4, $66, $64, $CC, $55, $54, $00 
-loc_00091CBC:
+; LoadBattleHudGraphics_Done_Data
+LoadBattleHudGraphics_Done_Data:
 	dc.b	$01, $EE, $66, $66, $60, $00, $5E, $E4, $5E, $E4, $5E, $E4, $5E, $E4, $5E, $E4, $5C, $CC, $CC, $C4, $56, $66, $66, $64, $55, $55, $55, $54, $01, $45, $11, $11 
 	dc.b	$11, $11, $44, $44, $44, $55, $55, $55, $5E, $EE, $EE, $5E, $EE, $EE, $5C, $CC, $CC, $56, $66, $66, $55, $55, $55, $54, $44, $44, $02, $EE, $66, $66, $60, $00 
 	dc.b	$45, $11, $11, $11, $11, $5E, $5E, $5E, $5E, $5E, $5C, $CC, $CC, $56, $66, $66, $55, $55, $55, $01, $DD, $D0, $F0, $00, $00, $D4, $BB, $11, $1B, $BB, $99, $9A 
@@ -79149,7 +79249,7 @@ ProcessFMSoundChannels_Loop2:
 ProcessSoundChannel_FM:
 	MOVE.b	$1(A3), D7
 	BPL.w	ProcessSoundChannel_FM_Loop
-	JMP	loc_00093554
+	JMP	ProcessSoundChannel_FM_Data
 ; ProcessSoundChannel_FM_Loop
 ProcessSoundChannel_FM_Loop:
 	BTST.l	#4, D7
@@ -79171,7 +79271,7 @@ SoundChannel_NoteLoop:
 SoundChannel_NoteLoop_Loop:
 	BTST.b	#4, $1(A3)
 	BNE.b	SoundChannel_NoteLoop_Loop2
-	MOVE.l	#loc_00092A74, -(A7)
+	MOVE.l	#SoundChannel_NoteLoop_Loop_Data, -(A7)
 	BRA.w	SoundChannel_NoteLoop2
 ; SoundChannel_NoteLoop_Loop2
 SoundChannel_NoteLoop_Loop2:
@@ -79235,7 +79335,8 @@ SetSoundNote_Positive_Loop:
 	SUBQ.w	#1, $A(A3)
 	BNE.w	SetSoundNote_Positive_Loop3
 	BSR.w	LoadNextSoundNote
-loc_00092A74:
+; SoundChannel_NoteLoop_Loop_Data
+SoundChannel_NoteLoop_Loop_Data:
 	BSR.w	ProcessPSGChannelNoteSequence
 	BSR.w	UpdateYM2612KeyOff
 	RTS
@@ -79550,7 +79651,7 @@ SoundScript_NopCommand_Loop5:
 	BEQ.w	LoadDAC_SampleToZ80_Loop
 	MOVE.b	D0, $13(A3)
 LoadDAC_SampleToZ80:
-	LEA	loc_00099C9C, A0
+	LEA	LoadDAC_SampleToZ80_Data, A0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
 	MOVEA.l	(A0,D0.w), A6
@@ -79801,7 +79902,7 @@ SetPSGNoteFrequency_Loop:
 ; SetPSGNoteFrequency_Loop2
 SetPSGNoteFrequency_Loop2:
 	ANDI.w	#$007F, D5
-	LEA	loc_000934AC, A0
+	LEA	SetPSGNoteFrequency_Loop2_Data, A0
 	LSL.w	#1, D5
 	MOVE.w	(A0,D5.w), $C(A3)
 	RTS
@@ -79837,7 +79938,7 @@ SoundCommand_JumpTable_Loop2:
 	MOVE.w	D0, -(A7)
 	MOVE.w	(A7)+, D0
 	SUBI.b	#$A0, D0
-	LEA	loc_00093B6E, A0
+	LEA	SoundCommand_JumpTable_Loop2_Data, A0
 	BSR.w	GetSoundDataPointer
 	CLR.w	D0
 	BTST.b	#4, $2(A0)
@@ -79851,7 +79952,7 @@ SoundCommand_JumpTable_Loop2_Done:
 	MOVE.b	$1(A0), D0
 	SUBQ.b	#2, D0
 	LSL.b	#2, D0
-	LEA	loc_000930EE, A1
+	LEA	SoundCommand_JumpTable_Loop2_Done_Data, A1
 	MOVEA.l	(A1,D0.w), A2
 	BSET.b	#2, $0(A2)
 	ADDA.l	#$00000150, A2
@@ -79890,7 +79991,8 @@ SoundCommand_JumpTable_Loop3_Done:
 	MOVE.w	#1, $A(A1)
 	MOVE.b	#$C0, $21(A1)
 	BRA.w	SoundInit_Done
-loc_000930EE:
+; SoundCommand_JumpTable_Loop2_Done_Data
+SoundCommand_JumpTable_Loop2_Done_Data:
 	dc.l	$00FFF490
 	dc.l	$00FFF4C0	
 	dc.l	$00FFF4C0
@@ -79906,10 +80008,10 @@ SoundCommand_JumpTable_Loop:
 	MOVE.l	D0, -(A7)
 	BSR.w	StopAllActiveSounds
 	MOVE.l	(A7)+, D0
-	LEA	loc_000938EE, A0
+	LEA	SoundCommand_JumpTable_Loop_Data, A0
 	MOVE.b	(A0,D0.w), $00FFF402
 	MOVE.b	(A0,D0.w), $00FFF401
-	LEA	loc_00093B36, A0
+	LEA	SoundCommand_JumpTable_Loop_Data2, A0
 	BSR.w	GetSoundDataPointer
 	MOVEQ	#0, D5
 	MOVE.b	(A0)+, D5
@@ -80053,13 +80155,14 @@ InitFM_ChannelsToSilence_Done:
 	MOVE.w	#5, D7
 ; InitFM_ChannelsToSilence_Done2
 InitFM_ChannelsToSilence_Done2:
-	LEA	loc_000932D4, A0
+	LEA	InitFM_ChannelsToSilence_Done2_Data, A0
 	BSR.w	WriteFM_ChannelRegisters
 	ADDA.w	#$0030, A3
 	DBF	D7, InitFM_ChannelsToSilence_Done2
 	RTS
 	
-loc_000932D4:
+; InitFM_ChannelsToSilence_Done2_Data
+InitFM_ChannelsToSilence_Done2_Data:
 	dc.b	$F8, $3F, $3F, $3F, $3F, $00, $00, $00, $00, $1F, $1F, $1F, $1F, $1F, $1F, $1F, $1F, $1F, $1F, $1F, $1F, $FF, $FF, $FF, $FF, $00 
 MutePSG_AllChannels:
 	MOVE.b	#$9F, $00C00011
@@ -80079,7 +80182,7 @@ LoadFM_AlgorithmData_Done:
 	DBF	D6, LoadFM_AlgorithmData_Done
 	SUBQ.w	#5, A0
 WriteFM_ChannelRegisters:
-	MOVEA.l	#loc_00093358, A2
+	MOVEA.l	#WriteFM_ChannelRegisters_Data, A2
 	MOVE.w	#$0018, D6
 ; WriteFM_ChannelRegisters_Done
 WriteFM_ChannelRegisters_Done:
@@ -80097,7 +80200,8 @@ WriteFM_ChannelRegisters_Done:
 WriteFM_ChannelRegisters_Loop:
 	RTS
 	
-loc_00093358:
+; WriteFM_ChannelRegisters_Data
+WriteFM_ChannelRegisters_Data:
 	dc.b	$B0, $40, $48, $44, $4C, $30, $38, $34, $3C, $50, $58, $54, $5C, $60, $68, $64, $6C, $70, $78, $74, $7C, $80, $88, $84, $8C, $00 
 UpdateFM_TotalLevelRegisters:
 	BTST.b	#7, $1(A3)
@@ -80219,14 +80323,16 @@ WaitYM2612Ready_Done:
 WaitYM2612Ready_Loop:
 	RTS
 	
-loc_000934AC:
+; SetPSGNoteFrequency_Loop2_Data
+SetPSGNoteFrequency_Loop2_Data:
 	dc.b	$00, $00, $0A, $83, $0A, $AA, $0A, $D3, $0A, $FF, $0B, $2D, $0B, $5E, $0B, $92, $0B, $C9, $0C, $03, $0C, $41, $0C, $82, $12, $5F, $12, $85, $12, $AA, $12, $D3 
 	dc.b	$12, $FF, $13, $2D, $13, $5C, $13, $8F, $13, $C7, $13, $FD, $14, $3B, $14, $7C, $1A, $60, $1A, $84, $1A, $AB, $1A, $D2, $1A, $FF, $1B, $2C, $1B, $5C, $1B, $8F 
 	dc.b	$1B, $C6, $1B, $FF, $1C, $3C, $1C, $7D, $22, $61, $22, $85, $22, $AB, $22, $D2, $22, $FF, $23, $2C, $23, $5C, $23, $8F, $23, $C6, $23, $FF, $24, $3C, $24, $7C 
 	dc.b	$2A, $61, $2A, $83, $2A, $A9, $2A, $D5, $2A, $FD, $2B, $2A, $2B, $5C, $2B, $90, $2B, $C6, $2B, $FB, $2C, $3C, $2C, $7B, $32, $61, $32, $83, $32, $A9, $32, $D4 
 	dc.b	$32, $FC, $33, $2A, $33, $5C, $33, $90, $33, $C9, $34, $03, $34, $33, $34, $7B, $3A, $5D, $3A, $83, $3A, $AA, $3A, $D3, $3A, $FD, $3B, $2A, $3B, $5C, $3B, $8E 
 	dc.b	$3B, $C5, $3C, $01, $3C, $3B, $3C, $7C 
-loc_00093554:
+; ProcessSoundChannel_FM_Data
+ProcessSoundChannel_FM_Data:
 	BTST.b	#5, $0(A3)
 	BNE.w	WaitYM2612Ready_Loop2
 	SUBQ.w	#1, $A(A3)
@@ -80317,7 +80423,7 @@ SetSoundNoteFrequency_Loop:
 ; SetSoundNoteFrequency_Loop2
 SetSoundNoteFrequency_Loop2:
 	ANDI.w	#$00FF, D5
-	LEA	loc_00093844, A0
+	LEA	SetSoundNoteFrequency_Loop2_Data, A0
 	LSL.w	#1, D5
 	MOVE.w	(A0,D5.w), $C(A3)
 	RTS
@@ -80434,7 +80540,7 @@ ProcessSoundCommand_Loop:
 	BEQ.w	FMArpeggio_ReadNote_Loop
 	CLR.w	D0
 	MOVE.b	D7, D0
-	LEA	loc_00099BBA, A0
+	LEA	ProcessSoundCommand_Loop_Data, A0
 	BSR.w	GetSoundDataPointer
 	CLR.w	D0
 	MOVE.b	$13(A3), D0
@@ -80520,7 +80626,8 @@ UpdateYM2612Channel_Loop2:
 	MOVE.b	D4, $00C00011
 	RTS
 	
-loc_00093844:
+; SetSoundNoteFrequency_Loop2_Data
+SetSoundNoteFrequency_Loop2_Data:
 	dc.w	$0000
 	dc.b	$00
 	dc.b	$00, $00, $00, $00, $00, $00, $00 
@@ -80530,7 +80637,8 @@ loc_00093844:
 	dc.b	$00, $CA, $00, $BE, $00, $B4, $00, $AA, $00, $A0, $00, $97, $00, $8F, $00, $87, $00, $7F, $00, $78, $00, $71, $00, $6B, $00, $65, $00, $5F, $00, $5A, $00, $55 
 	dc.b	$00, $50, $00, $4B, $00, $47, $00, $43, $00, $40, $00, $3C, $00, $38, $00, $36, $00, $33, $00, $30, $00, $2D, $00, $2B, $00, $28, $00, $25, $00, $23, $00, $21 
 	dc.b	$00, $1F, $00, $1E, $00, $1B, $00, $1A, $00, $19, $00, $17, $00, $16, $00, $15, $00, $14, $00, $13, $00, $12, $00, $11, $00, $00, $00, $00, $00, $00 
-loc_000938EE:
+; SoundCommand_JumpTable_Loop_Data
+SoundCommand_JumpTable_Loop_Data:
 	dc.b	$03, $05, $0A, $10, $00, $00, $06, $02, $14, $0A, $08, $09, $26, $18, $05, $0A, $05, $06, $16, $03, $03, $0B, $0B, $05, $05, $07, $06, $08, $00, $00, $00, $00 
 ; loc_0009390E
 SoundLFO_PointerTable:
@@ -80684,10 +80792,12 @@ loc_00093B32:
 	dc.b	$F2, $81 
 loc_00093B34:
 	dc.b	$F1, $81 
-loc_00093B36:
+; SoundCommand_JumpTable_Loop_Data2
+SoundCommand_JumpTable_Loop_Data2:
 	dc.b	$4E, $92, $00, $00, $03, $92, $06, $B4, $07, $48, $07, $D6, $09, $08, $0B, $80, $0F, $70, $0F, $F0, $13, $C8, $19, $3A, $1C, $3E, $1D, $38, $20, $60, $26, $34 
 	dc.b	$26, $FC, $29, $14, $2C, $E2, $2F, $EE, $31, $12, $32, $A8, $37, $5E, $38, $42, $39, $D0, $40, $D4, $48, $08, $50, $F2 
-loc_00093B6E:
+; SoundCommand_JumpTable_Loop2_Data
+SoundCommand_JumpTable_Loop2_Data:
 	dc.b	$52, $6E, $52, $82, $52, $94, $52, $A6, $52, $C2, $52, $EC, $53, $34, $53, $5E, $53, $78, $53, $8C, $53, $9C, $53, $C4, $54, $06, $54, $4C, $54, $6E, $54, $9A 
 	dc.b	$54, $C8, $54, $DE, $54, $F0, $55, $02, $55, $22, $55, $34, $55, $46, $55, $58, $55, $6E, $55, $84, $55, $96, $55, $B8, $55, $F8, $56, $08, $56, $18, $56, $2E 
 	dc.b	$56, $76, $56, $88, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF 
@@ -82794,7 +82904,8 @@ FM_FrequencyTable:
 	dc.b	$05, $00, $F3, $19, $13, $1B, $00, $12, $01, $03, $01, $1F, $1F, $14, $15, $05, $0F, $0B, $0A, $00, $07, $06, $00, $12, $32, $22, $06, $00, $C7, $00, $00, $0A 
 	dc.b	$00, $71, $74, $7E, $11, $1F, $1F, $5F, $1F, $14, $14, $10, $14, $07, $0B, $15, $07, $27, $27, $F6, $27, $00, $D2, $1B, $2B, $15, $00, $00, $08, $00, $01, $1F 
 	dc.b	$1F, $1F, $1F, $1F, $0C, $0E, $0B, $00, $0C, $0A, $09, $0A, $8B, $38, $1C, $00 
-loc_00099BBA:
+; ProcessSoundCommand_Loop_Data
+ProcessSoundCommand_Loop_Data:
 	dc.b	$00, $00 
 	dc.w	$5FD4
 	dc.w	$5FE0
@@ -82805,7 +82916,8 @@ loc_00099BBA:
 	dc.b	$03, $03, $02, $03, $02, $02, $01, $02, $01, $01, $81, $00, $04, $03, $02, $01, $00, $00, $00, $01, $01, $01, $01, $01, $02, $01, $02, $02, $81, $00, $03, $02 
 	dc.b	$01, $00, $00, $00, $00, $00, $81, $00, $0A, $0B, $0A, $0A, $09, $0A, $09, $09, $08, $09, $08, $08, $07, $08, $07, $07, $06, $07, $06, $06, $05, $06, $05, $05 
 	dc.b	$04, $05, $04, $04, $03, $04, $03, $03, $02, $03, $02, $02, $01, $02, $01, $01, $81, $00, $04, $03, $02, $01, $00, $00, $00, $00, $81, $00 
-loc_00099C9C:
+; LoadDAC_SampleToZ80_Data
+LoadDAC_SampleToZ80_Data:
 	dc.l	$00000000 
 	dc.l	loc_00099CC8
 	dc.l	loc_0009AAB4
