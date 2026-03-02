@@ -18494,7 +18494,7 @@ loc_0000FCDA:
 
 loc_0000FCDC:
 	LEA	Tile_gfx_buffer.w, A2
-	LEA	loc_00041A90, A0
+	LEA	CompressedFontTileData, A0
 	MOVE.w	#$00FF, D5
 loc_0000FCEA:
 	BSR.w	DecompressTileGraphics
@@ -18505,7 +18505,7 @@ loc_0000FCEA:
 
 InitFontTiles:
 	LEA	Tile_gfx_buffer.w, A2
-	LEA	loc_00041A90, A0
+	LEA	CompressedFontTileData, A0
 	MOVE.w	#$00FF, D5
 loc_0000FD0A:
 	BSR.w	DecompressFontTile
@@ -51141,7 +51141,8 @@ loc_0004198E:
 	dc.b	$FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF 
 	dc.b	$FF, $FF 
 
-loc_00041A90: ; Music or sound data?
+; loc_00041A90
+CompressedFontTileData:
 	dc.b	$01, $00, $FF, $FF, $FF, $FF, $01, $55, $FF, $EC, $CC, $C8, $F5, $F5, $ED, $ED, $ED, $ED, $ED, $ED, $CC, $FF, $CC, $C8, $01, $55, $90, $99, $80, $00, $FF, $E5 
 	dc.b	$5F, $EE, $EE, $E5, $DC, $DC, $ED, $ED, $ED, $ED, $C8, $C5, $CC, $CC, $85, $88, $88, $88, $5D, $DC, $EC, $5E, $58, $01, $55, $FF, $33, $33, $10, $F5, $F5, $ED 
 	dc.b	$E5, $ED, $ED, $ED, $ED, $CC, $EC, $C5, $58, $CC, $5F, $F5, $01, $55, $08, $88, $88, $DF, $5F, $EE, $FE, $88, $DC, $EE, $E5, $ED, $DC, $5F, $ED, $ED, $88, $CC 
