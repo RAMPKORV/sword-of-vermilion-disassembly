@@ -25771,13 +25771,14 @@ loc_00017296:
 	BRA.w	EndingSequence_CommonUpdate
 loc_0001729A:
 	TST.b	Palette_fade_in_mask.w
-	BNE.b	loc_000172B6
+	BNE.b	EndingStep_Return6
 	SUBQ.w	#1, Ending_timer.w
-	BGT.b	loc_000172B6
+	BGT.b	EndingStep_Return6
 	ADDQ.w	#1, Ending_sequence_step.w
 	MOVE.w	#$0094, Palette_line_0_fade_in_target.w
 	MOVE.b	#1, Palette_fade_in_mask.w
-loc_000172B6:
+; loc_000172B6
+EndingStep_Return6:
 	BRA.w	EndingSequence_CommonUpdate
 loc_000172BA:
 	TST.b	Palette_fade_in_mask.w
@@ -25789,17 +25790,18 @@ loc_000172CE:
 	BRA.w	EndingSequence_CommonUpdate
 loc_000172D2:
 	SUBQ.w	#1, Ending_timer.w
-	BGT.b	loc_000172F6
+	BGT.b	EndingStep_Return7
 	TST.w	Ending_hscroll_offset.w
 	BLT.b	loc_000172F2
 	ADDQ.w	#1, Ending_sequence_step.w
 	CLR.w	Dialog_timer.w
 	CLR.w	Dialog_phase.w
 	MOVE.w	#$0190, Ending_timer.w
-	BRA.b	loc_000172F6
+	BRA.b	EndingStep_Return7
 loc_000172F2:
 	ADDQ.w	#1, Ending_hscroll_offset.w
-loc_000172F6:
+; loc_000172F6
+EndingStep_Return7:
 	BRA.w	EndingSequence_CommonUpdate
 loc_000172FA:
 	SUBQ.w	#1, Ending_timer.w
@@ -25894,35 +25896,38 @@ loc_00017422:
 	DBF	D7, loc_00017422
 	ANDI	#$F8FF, SR
 	ORI	#$0700, SR
-loc_00017434:
+; loc_00017434
+DrawEndingCreditsText_Next:
 	CLR.w	D0
 	MOVE.b	(A0)+, D0
-	BEQ.b	loc_00017494
+	BEQ.b	DrawEndingCreditsText_Return
 	CMPI.b	#$DE, D0
-	BEQ.b	loc_0001746A
+	BEQ.b	DrawEndingCreditsText_NewLine
 	CMPI.b	#$DF, D0
-	BEQ.b	loc_0001746A
+	BEQ.b	DrawEndingCreditsText_NewLine
 	CMPI.b	#$FF, D0
-	BEQ.b	loc_00017494
+	BEQ.b	DrawEndingCreditsText_Return
 	CMPI.b	#$FE, D0
 	BEQ.b	loc_00017488
 	ADDI.w	#$04C0, D0
 	MOVE.l	D5, VDP_control_port
 	MOVE.w	D0, VDP_data_port
 	ADDI.l	#$00020000, D5
-	BRA.b	loc_00017434
-loc_0001746A:
+	BRA.b	DrawEndingCreditsText_Next
+; loc_0001746A
+DrawEndingCreditsText_NewLine:
 	SUBI.l	#$00820000, D5	
 	ADDI.w	#$04C0, D0	
 	MOVE.l	D5, VDP_control_port	
 	MOVE.w	D0, VDP_data_port	
 	ADDI.l	#$00820000, D5	
-	BRA.b	loc_00017434	
+	BRA.b	DrawEndingCreditsText_Next	
 loc_00017488:
 	ADDQ.w	#1, Ending_sequence_step.w
 	CLR.w	Ending_timer.w
 	BSR.w	ClearEndingTextArea
-loc_00017494:
+; loc_00017494
+DrawEndingCreditsText_Return:
 	ANDI	#$F8FF, SR
 	RTS
 
@@ -26536,13 +26541,14 @@ loc_00018038:
 	BEQ.w	loc_00018078
 	MOVE.w	#BUTTON_BIT_C, D2
 	JSR	CheckButtonPress
-	BNE.b	loc_0001805A
+	BNE.b	SpellMenu_ScriptDoneShowStatus
 	MOVE.w	#BUTTON_BIT_B, D2
 	JSR	CheckButtonPress
-	BNE.b	loc_0001805A
+	BNE.b	SpellMenu_ScriptDoneShowStatus
 	RTS
 
-loc_0001805A:
+; loc_0001805A
+SpellMenu_ScriptDoneShowStatus:
 	JSR	DrawStatusHudWindow
 	MOVE.w	#$000A, Spellbook_menu_state.w
 	MOVE.w	#$000E, Window_draw_type.w
@@ -26880,25 +26886,27 @@ loc_00018540:
 	
 loc_00018548:
 	TST.b	Script_text_complete.w
-	BEQ.w	loc_00018592
+	BEQ.w	SpellMenu_ScriptDoneShowHpMp
 	MOVE.w	#BUTTON_BIT_C, D2
 	JSR	CheckButtonPress
-	BNE.b	loc_0001856A
+	BNE.b	SpellMenu_ScriptDoneShowStatus2
 	MOVE.w	#BUTTON_BIT_B, D2
 	JSR	CheckButtonPress
-	BNE.b	loc_0001856A
+	BNE.b	SpellMenu_ScriptDoneShowStatus2
 	RTS
 
-loc_0001856A:
+; loc_0001856A
+SpellMenu_ScriptDoneShowStatus2:
 	JSR	DrawStatusHudWindow
 	MOVE.w	#$000A, Spellbook_menu_state.w
 	MOVE.w	#$000E, Window_draw_type.w
 	CLR.w	Window_text_row.w
 	MOVE.b	#$FF, Window_tilemap_row_draw_pending.w
 	TST.b	Player_in_first_person_mode.w
-	BEQ.b	loc_00018592
+	BEQ.b	SpellMenu_ScriptDoneShowHpMp
 	JSR	DisplayPlayerHpMp
-loc_00018592:
+; loc_00018592
+SpellMenu_ScriptDoneShowHpMp:
 	JSR	ProcessScriptText
 	RTS
 
@@ -27021,9 +27029,9 @@ CastInaudios:
 	BSR.w	DeductMagicMP
 	BNE.w	SpellMenu_NotEnoughMp
 	TST.b	Player_in_first_person_mode.w
-	BEQ.b	loc_00018752
+	BEQ.b	SpellMenu_CantUseHere1
 	TST.b	Is_in_cave.w
-	BNE.b	loc_00018752
+	BNE.b	SpellMenu_CantUseHere1
 	MOVE.w	#$001E, Inaudios_steps_remaining.w
 	MOVE.w	#$00AE, D0
 	JSR	QueueSoundEffect
@@ -27032,7 +27040,8 @@ CastInaudios:
 	MOVE.w	#9, Spellbook_menu_state.w
 	RTS
 
-loc_00018752:
+; loc_00018752
+SpellMenu_CantUseHere1:
 	JSR	ResetScriptAndInitDialogue	
 	PRINT 	CantUseHereStr	
 	MOVE.w	#9, Spellbook_menu_state.w	
@@ -27045,9 +27054,9 @@ CastLuminos:
 	BSR.w	DeductMagicMP
 	BNE.w	SpellMenu_NotEnoughMp
 	TST.b	Is_in_cave.w
-	BEQ.b	loc_000187B4
+	BEQ.b	SpellMenu_CantUseHere2
 	TST.b	Cave_light_active.w
-	BNE.b	loc_000187B4
+	BNE.b	SpellMenu_CantUseHere2
 	MOVE.w	#$000F, Spellbook_menu_state.w
 	MOVE.w	#$0048, Palette_line_1_fade_target.w
 	MOVE.w	#$0040, Palette_line_2_fade_target.w
@@ -27058,7 +27067,8 @@ CastLuminos:
 	JSR	QueueSoundEffect
 	RTS
 
-loc_000187B4:
+; loc_000187B4
+SpellMenu_CantUseHere2:
 	JSR	ResetScriptAndInitDialogue
 	PRINT 	BrightPlaceStr
 	MOVE.w	#9, Spellbook_menu_state.w
@@ -27128,13 +27138,14 @@ CastToxios:
 	TST.w	Player_poisoned.w
 	BNE.b	loc_000188AE
 	PRINT 	NotPoisonousStr
-	BRA.b	loc_000188BE
+	BRA.b	UseAntidote_RemovePoison
 loc_000188AE:
 	TST.b	Player_greatly_poisoned.w
-	BEQ.b	loc_000188BE
+	BEQ.b	UseAntidote_RemovePoison
 	PRINT 	PoisonTooStrongStr
 	BRA.b	loc_000188D0
-loc_000188BE:
+; loc_000188BE
+UseAntidote_RemovePoison:
 	CLR.w	Player_poisoned.w
 	CLR.b	Poison_notified.w
 	MOVE.w	#$00AE, D0
@@ -27151,14 +27162,15 @@ CastAries:
 	BSR.w	DeductMagicMP
 	BNE.w	SpellMenu_NotEnoughMp
 	TST.b	Player_in_first_person_mode.w
-	BEQ.b	loc_00018912
+	BEQ.b	SpellMenu_CantUseHere3
 	TST.b	Is_in_cave.w
-	BNE.w	loc_00018912
+	BNE.w	SpellMenu_CantUseHere3
 	JSR	SaveStatusMenuTiles
 	JSR	DrawTownListWindow
 	MOVE.w	#$000B, Spellbook_menu_state.w
 	RTS
-loc_00018912:
+; loc_00018912
+SpellMenu_CantUseHere3:
 	PRINT 	CantUseHereStr
 	JSR	ResetScriptAndInitDialogue
 	MOVE.w	#9, Spellbook_menu_state.w
@@ -29093,13 +29105,14 @@ loc_0001A406:
 	BEQ.w	loc_0001A446
 	MOVE.w	#BUTTON_BIT_C, D2
 	JSR	CheckButtonPress
-	BNE.b	loc_0001A428
+	BNE.b	ItemMenu_ScriptDone
 	MOVE.w	#BUTTON_BIT_B, D2
 	JSR	CheckButtonPress
-	BNE.b	loc_0001A428
+	BNE.b	ItemMenu_ScriptDone
 	RTS
 
-loc_0001A428:
+; loc_0001A428
+ItemMenu_ScriptDone:
 	JSR	DrawStatusHudWindow
 	MOVE.w	#3, Item_menu_state.w
 	MOVE.w	#4, Window_draw_type.w
@@ -29113,15 +29126,16 @@ loc_0001A446:
 
 loc_0001A44E:
 	TST.b	Window_tilemap_row_draw_pending.w
-	BNE.b	loc_0001A474
+	BNE.b	ItemMenu_ItemUsed_Return
 	CLR.w	Overworld_menu_state.w
 	MOVE.w	#3, Window_draw_type.w
 	CLR.w	Window_text_row.w
 	MOVE.b	#$FF, Window_tilemap_row_draw_pending.w
 	TST.b	Sixteen_rings_used_at_throne.w
-	BEQ.b	loc_0001A474
+	BEQ.b	ItemMenu_ItemUsed_Return
 	MOVE.w	#PROGRAM_STATE_12, Program_state.w
-loc_0001A474:
+; loc_0001A474
+ItemMenu_ItemUsed_Return:
 	RTS
 
 loc_0001A476:
@@ -29252,13 +29266,14 @@ loc_0001A656:
 	BEQ.w	loc_0001A696
 	MOVE.w	#BUTTON_BIT_B, D2
 	JSR	CheckButtonPress
-	BNE.b	loc_0001A678
+	BNE.b	ItemMenu_ScriptDone2
 	MOVE.w	#BUTTON_BIT_C, D2
 	JSR	CheckButtonPress
-	BNE.b	loc_0001A678
+	BNE.b	ItemMenu_ScriptDone2
 	RTS
 
-loc_0001A678:
+; loc_0001A678
+ItemMenu_ScriptDone2:
 	JSR	DrawStatusHudWindow
 	MOVE.w	#4, Window_draw_type.w
 	CLR.w	Window_text_row.w
@@ -29319,9 +29334,9 @@ loc_0001A702:
 	MOVE.w	(A2,D0.w), D0
 	ANDI.w	#$00FF, D0
 	CMPI.w	#$001D, D0
-	BEQ.w	loc_0001A794
+	BEQ.w	UseItemDescription_Build
 	CMPI.w	#$001F, D0
-	BEQ.w	loc_0001A794
+	BEQ.w	UseItemDescription_Build
 	ADD.w	D0, D0
 	ADD.w	D0, D0
 	MOVEA.l	(A0,D0.w), A0
@@ -29332,7 +29347,8 @@ loc_0001A702:
 	ADDQ.w	#1, Item_menu_state.w
 	RTS
 
-loc_0001A794:
+; loc_0001A794
+UseItemDescription_Build:
 	ADD.w	D0, D0
 	ADD.w	D0, D0
 	MOVEA.l	(A0,D0.w), A0
@@ -29387,13 +29403,14 @@ loc_0001A82A:
 	BNE.w	loc_0001A890
 	MOVE.w	#BUTTON_BIT_C, D2
 	JSR	CheckButtonPress
-	BNE.b	loc_0001A854
+	BNE.b	ItemMenu_ScriptDoneCheckCave
 	MOVE.w	#BUTTON_BIT_B, D2
 	JSR	CheckButtonPress
-	BNE.b	loc_0001A854
+	BNE.b	ItemMenu_ScriptDoneCheckCave
 	RTS
 
-loc_0001A854:
+; loc_0001A854
+ItemMenu_ScriptDoneCheckCave:
 	JSR	DrawStatusHudWindow
 	TST.b	Player_in_first_person_mode.w
 	BEQ.b	loc_0001A870
@@ -29433,13 +29450,14 @@ loc_0001A8BE:
 loc_0001A8C0:
 	MOVE.w	#BUTTON_BIT_C, D2
 	JSR	CheckButtonPress
-	BNE.b	loc_0001A8DA
+	BNE.b	UseExtrios_Warp
 	MOVE.w	#BUTTON_BIT_B, D2
 	JSR	CheckButtonPress
-	BNE.b	loc_0001A8DA
+	BNE.b	UseExtrios_Warp
 	RTS
 
-loc_0001A8DA:
+; loc_0001A8DA
+UseExtrios_Warp:
 	LEA	TownOverworldCoords, A0
 	MOVE.w	Current_town.w, D0
 	CMPI.w	#TOWN_STOW1, D0
@@ -29468,13 +29486,14 @@ loc_0001A8F4:
 loc_0001A93A:
 	MOVE.w	#BUTTON_BIT_C, D2
 	JSR	CheckButtonPress
-	BNE.b	loc_0001A954
+	BNE.b	UseExtrios_CaveReturn
 	MOVE.w	#BUTTON_BIT_B, D2
 	JSR	CheckButtonPress
-	BNE.b	loc_0001A954
+	BNE.b	UseExtrios_CaveReturn
 	RTS
 
-loc_0001A954:
+; loc_0001A954
+UseExtrios_CaveReturn:
 	MOVE.w	Player_cave_position_x.w, Player_position_x_outside_town.w
 	MOVE.w	Player_cave_position_y.w, Player_position_y_outside_town.w
 	MOVE.w	Player_cave_map_sector_x.w, Player_map_sector_x.w
@@ -29720,12 +29739,13 @@ loc_0001AC74:
 ;loc_0001AC84
 UseGriffinWing:
 	TST.b	Player_in_first_person_mode.w
-	BEQ.b	loc_0001AC9A
+	BEQ.b	UseItem_NothingHappened1
 	TST.b	Is_in_cave.w
-	BNE.b	loc_0001AC9A
+	BNE.b	UseItem_NothingHappened1
 	BSR.w	RemoveSelectedItemFromList
 	MOVE.w	#$D, Item_menu_state.w
-loc_0001AC9A:
+; loc_0001AC9A
+UseItem_NothingHappened1:
 	PRINT 	NothingHappenedStr
 	RTS
 
@@ -29748,15 +29768,16 @@ loc_0001ACCE:
 ;loc_0001ACD4
 UseTitaniasMirror:
 	TST.b	Player_in_first_person_mode.w	
-	BEQ.b	loc_0001ACF6	
+	BEQ.b	UseItem_NothingHappened2	
 	TST.b	Is_in_cave.w	
-	BNE.b	loc_0001ACF6	
+	BNE.b	UseItem_NothingHappened2	
 	MOVE.b	#$FF, Area_map_revealed.w	
 	JSR	UpdateAreaVisibility	
 	PRINT 	GlowingMapStr	
 	RTS
 	
-loc_0001ACF6:
+; loc_0001ACF6
+UseItem_NothingHappened2:
 	PRINT 	NothingHappenedStr	
 	RTS
 	
@@ -29783,22 +29804,23 @@ UsePoisonBalm:
 	PRINT 	PoisonPurgedStr
 	MOVE.w	#$00AE, D0
 	JSR	QueueSoundEffect
-	BRA.b	loc_0001AD56
+	BRA.b	UseHerbs_Done
 loc_0001AD44:
 	PRINT 	NotPoisonousStr
-	BRA.b	loc_0001AD56
+	BRA.b	UseHerbs_Done
 loc_0001AD4E:
 	PRINT 	PoisonTooStrongStr	
-loc_0001AD56:
+; loc_0001AD56
+UseHerbs_Done:
 	BSR.w	RemoveSelectedItemFromList
 	RTS
 
 ;loc_0001AD5C:
 UseCandle:
 	TST.b	Is_in_cave.w
-	BEQ.b	loc_0001AD9C
+	BEQ.b	UseCandle_BrightPlace
 	TST.b	Cave_light_active.w
-	BNE.b	loc_0001AD9C
+	BNE.b	UseCandle_BrightPlace
 	MOVE.w	#$C, Item_menu_state.w
 	MOVE.w	#$48, Palette_line_1_fade_target.w
 	MOVE.w	#$40, Palette_line_2_fade_target.w
@@ -29810,7 +29832,8 @@ UseCandle:
 	JSR	QueueSoundEffect
 	RTS
 
-loc_0001AD9C:
+; loc_0001AD9C
+UseCandle_BrightPlace:
 	BSR.w	RemoveSelectedItemFromList
 	PRINT 	BrightPlaceStr
 	RTS
@@ -29818,9 +29841,9 @@ loc_0001AD9C:
 ;loc_0001ADAA:
 UseLantern:
 	TST.b	Is_in_cave.w
-	BEQ.b	loc_0001ADE8
+	BEQ.b	UseLantern_BrightPlace
 	TST.b	Cave_light_active.w
-	BNE.b	loc_0001ADE8
+	BNE.b	UseLantern_BrightPlace
 	MOVE.w	#$C, Item_menu_state.w
 	MOVE.w	#$48, Palette_line_1_fade_target.w
 	MOVE.w	#$40, Palette_line_2_fade_target.w
@@ -29832,7 +29855,8 @@ UseLantern:
 	JSR	QueueSoundEffect
 	RTS
 
-loc_0001ADE8:
+; loc_0001ADE8
+UseLantern_BrightPlace:
 	BSR.w	RemoveSelectedItemFromList	
 	PRINT 	BrightPlaceStr	
 	RTS
@@ -29866,14 +29890,15 @@ loc_0001AE40:
 	ADD.w	D2, D0
 	MOVE.w	(A0,D0.w), D2
 	CMP.w	$A(A6), D2
-	BNE.b	loc_0001AE68
+	BNE.b	UseAlarmClock_NextNPC
 	MOVE.w	$2(A0,D0.w), D2
 	CMP.w	$C(A6), D2
-	BNE.b	loc_0001AE68
+	BNE.b	UseAlarmClock_NextNPC
 	MOVE.w	$4(A0,D0.w), D2
 	CMP.w	Player_direction.w, D2
 	BEQ.b	loc_0001AE78
-loc_0001AE68:
+; loc_0001AE68
+UseAlarmClock_NextNPC:
 	ADDQ.w	#1, D1
 	DBF	D7, loc_0001AE40
 ; AlarmClockCheck_Return
@@ -29927,10 +29952,10 @@ UseSmallBomb:
 UseOldWomansSketch:
 	MOVE.w	Current_town.w, D0
 	CMPI.w	#TOWN_KELTWICK, D0
-	BNE.w	loc_0001AF1E
+	BNE.w	UseSketch_OldManWrongDir
 	MOVE.w	Gameplay_state.w, D0
 	CMPI.w	#2, D0
-	BNE.w	loc_0001AF1E
+	BNE.w	UseSketch_OldManWrongDir
 	CLR.w	D0
 	CLR.w	D1
 	LEA	OldManSketchPositionData, A0
@@ -29938,17 +29963,19 @@ UseOldWomansSketch:
 loc_0001AEFA:
 	MOVE.w	(A0), D0
 	CMP.w	Player_position_x_in_town.w, D0
-	BNE.b	loc_0001AF16
+	BNE.b	UseSketch_OldManNextEntry
 	MOVE.w	$2(A0), D0
 	CMP.w	Player_position_y_in_town.w, D0
-	BNE.b	loc_0001AF16
+	BNE.b	UseSketch_OldManNextEntry
 	MOVE.w	$4(A0), D0
 	CMP.w	Player_direction.w, D0
 	BEQ.b	loc_0001AF28
-loc_0001AF16:
+; loc_0001AF16
+UseSketch_OldManNextEntry:
 	LEA	$6(A0), A0	
 	DBF	D7, loc_0001AEFA	
-loc_0001AF1E:
+; loc_0001AF1E
+UseSketch_OldManWrongDir:
 	PRINT 	YoungerBeautifulStr	
 	RTS
 	
@@ -29979,10 +30006,10 @@ OldManSketchPositionData:
 UseOldMansSketch
 	MOVE.w	Current_town.w, D0
 	CMPI.w	#TOWN_HELWIG, D0
-	BNE.w	loc_0001AFA2
+	BNE.w	UseSketch_OldWomanWrongDir
 	MOVE.w	Gameplay_state.w, D0
 	TST.b	Player_in_first_person_mode.w
-	BNE.w	loc_0001AFA2
+	BNE.w	UseSketch_OldWomanWrongDir
 	CLR.w	D0
 	CLR.w	D1
 	MOVEA.l	Player_entity_ptr.w, A6
@@ -29991,17 +30018,19 @@ UseOldMansSketch
 loc_0001AF7E:
 	MOVE.w	(A0), D0
 	CMP.w	Player_position_x_in_town.w, D0
-	BNE.b	loc_0001AF9A
+	BNE.b	UseSketch_OldWomanNextEntry
 	MOVE.w	$2(A0), D0
 	CMP.w	Player_position_y_in_town.w, D0
-	BNE.b	loc_0001AF9A
+	BNE.b	UseSketch_OldWomanNextEntry
 	MOVE.w	$4(A0), D0
 	CMP.w	Player_direction.w, D0
 	BEQ.b	loc_0001AFAC
-loc_0001AF9A:
+; loc_0001AF9A
+UseSketch_OldWomanNextEntry:
 	LEA	$6(A0), A0
 	DBF	D7, loc_0001AF7E
-loc_0001AFA2:
+; loc_0001AFA2
+UseSketch_OldWomanWrongDir:
 	PRINT 	MeanLookStr	
 	RTS
 	
@@ -30112,12 +30141,12 @@ UseGeneric:
 	JSR	GetTileInFrontOfPlayer	
 	CMPI.w	#$9000, D0	
 	BEQ.w	loc_0001B15C	
-	BRA.w	loc_0001B148	
+	BRA.w	UseKey_NoDoor	
 loc_0001B0AC:
 	LEA	FpDirectionDeltaForward, A0
 	JSR	GetMapTileInDirection
 	CMPI.b	#6, D0
-	BNE.w	loc_0001B148
+	BNE.w	UseKey_NoDoor
 	LEA	FpDirectionDeltaForward, A2
 	MOVE.w	Player_position_x_outside_town.w, D3
 	MOVE.w	Player_position_y_outside_town.w, D4
@@ -30161,7 +30190,8 @@ loc_0001B13E:
 	PRINT 	NoKeyholeStr	
 	RTS
 	
-loc_0001B148:
+; loc_0001B148
+UseKey_NoDoor:
 	PRINT 	NoDoorStr	
 	RTS
 	
@@ -30288,7 +30318,7 @@ loc_0001B2DC:
 	PRINT 	CustomerStayHereStr
 	TST.b	Watling_youth_restored.w
 	BNE.b	loc_0001B302
-	BRA.w	loc_0001B3B0
+	BRA.w	FortuneTeller_EnterState
 loc_0001B302:
 	TST.w	Watling_inn_unpaid_nights.w
 	BNE.b	loc_0001B312
@@ -30310,7 +30340,7 @@ loc_0001B312:
 	JSR	CopyStringUntilFF
 	MOVE.b	#$FF, (A1)
 	PRINT 	Text_build_buffer
-	BRA.b	loc_0001B3B0
+	BRA.b	FortuneTeller_EnterState
 ; loc_0001B35E
 InnDialog_ShowPricePrompt:
 	LEA	Text_build_buffer.w, A1
@@ -30330,7 +30360,8 @@ InnDialog_ShowPricePrompt:
 	JSR	CopyStringUntilFF
 	MOVE.b	#$FF, (A1)
 	PRINT 	Text_build_buffer
-loc_0001B3B0:
+; loc_0001B3B0
+FortuneTeller_EnterState:
 	MOVE.w	#$1C, Dialogue_state.w
 	RTS
 
@@ -30579,14 +30610,14 @@ DialogState_MalageShopConfirmOrCancel:
 	BEQ.w	loc_0001BAEE
 	MOVE.w	#BUTTON_BIT_B, D2
 	JSR	CheckButtonPress
-	BNE.w	loc_0001BAA4
+	BNE.w	ShopBuy_CancelReturn
 	MOVE.w	#BUTTON_BIT_C, D2
 	JSR	CheckButtonPress
 	BEQ.w	loc_0001BADA
 	MOVE.w	Dialog_selection.w, Menu_cursor_index.w
 	JSR	DrawMenuCursor
 	TST.w	Dialog_selection.w
-	BNE.w	loc_0001BAA4
+	BNE.w	ShopBuy_CancelReturn
 	MOVE.w	#$00A1, D0
 	JSR	QueueSoundEffect
 	JSR	DrawLeftMenuWindow
@@ -30596,14 +30627,14 @@ DialogState_MalageShopConfirmOrCancel:
 	CMPI.w	#8, D0
 	BLT.b	loc_0001B9E4
 	PRINT 	CantCarryMoreStr2	
-	BRA.w	loc_0001BA8A	
+	BRA.w	ShopBuy_RestoreAndReturn	
 loc_0001B9E4:
 	CLR.b	Script_text_complete.w
 	PRINT 	NotEnoughMoneyStr
 	LEA	Possessed_equipment_length.w, A2
 	LEA	(A2), A1
 	MOVE.w	(A2)+, D7
-	BLE.b	loc_0001BA38
+	BLE.b	ShopBuy_ConfirmBuy
 	SUBQ.w	#1, D7
 loc_0001B9FC:
 	MOVE.w	D7, D1
@@ -30624,10 +30655,11 @@ loc_0001BA22:
 	DBF	D7, loc_0001B9FC
 	MOVE.w	(A1), D0
 	CMPI.w	#8, D0
-	BLT.b	loc_0001BA38
+	BLT.b	ShopBuy_ConfirmBuy
 	PRINT 	InsufficientFundsStr	
-	BRA.b	loc_0001BA8A	
-loc_0001BA38:
+	BRA.b	ShopBuy_RestoreAndReturn	
+; loc_0001BA38
+ShopBuy_ConfirmBuy:
 	MOVE.w	(A1), D0
 	ADDQ.w	#1, (A1)+
 	ADD.w	D0, D0
@@ -30652,14 +30684,16 @@ loc_0001BA5E:
 	ADD.w	D1, D1
 	MOVE.w	(A1,D1.w), D1
 	MOVE.w	D1, (A0,D0.w)
-loc_0001BA8A:
+; loc_0001BA8A
+ShopBuy_RestoreAndReturn:
 	JSR	RestoreLeftMenuFromBuffer
 	JSR	RestoreShopListFromBuffer
 	JSR	ResetScriptAndInitDialogue
 	MOVE.w	#1, Dialogue_state.w
 	RTS
 
-loc_0001BAA4:
+; loc_0001BAA4
+ShopBuy_CancelReturn:
 	MOVE.w	#$00A8, D0
 	JSR	QueueSoundEffect
 	JSR	DrawLeftMenuWindow
@@ -30705,13 +30739,14 @@ DialogState_WaitScriptThenGoToOverworld:
 	BNE.w	loc_0001BB5A
 	MOVE.w	#BUTTON_BIT_C, D2
 	JSR	CheckButtonPress
-	BNE.b	loc_0001BB4E
+	BNE.b	DialogWait_ClearRow
 	MOVE.w	#BUTTON_BIT_B, D2
 	JSR	CheckButtonPress
-	BNE.b	loc_0001BB4E
+	BNE.b	DialogWait_ClearRow
 	RTS
 
-loc_0001BB4E:
+; loc_0001BB4E
+DialogWait_ClearRow:
 	CLR.w	Window_text_row.w
 	MOVE.w	#9, Dialogue_state.w
 	RTS
@@ -30754,13 +30789,14 @@ loc_0001BBA8:
 DialogState_WaitButtonThenCloseMenu:
 	MOVE.w	#BUTTON_BIT_C, D2
 	JSR	CheckButtonPress
-	BNE.b	loc_0001BBC4
+	BNE.b	DialogWait_CloseToOverworld
 	MOVE.w	#BUTTON_BIT_B, D2
 	JSR	CheckButtonPress
-	BNE.b	loc_0001BBC4
+	BNE.b	DialogWait_CloseToOverworld
 	RTS
 
-loc_0001BBC4:
+; loc_0001BBC4
+DialogWait_CloseToOverworld:
 	CLR.w	Overworld_menu_state.w
 	JSR	DrawStatusHudWindow
 	MOVE.w	#3, Window_draw_type.w
@@ -30851,9 +30887,9 @@ loc_0001BCD8:
 	JMP	ProcessScriptText
 DialogState_ShopMenuInput:
 	TST.b	Window_tilemap_draw_active.w
-	BNE.w	loc_0001BD98
+	BNE.w	ShopSell_ListReturn
 	TST.b	Window_tilemap_row_draw_pending.w
-	BNE.w	loc_0001BD98
+	BNE.w	ShopSell_ListReturn
 	MOVE.w	#BUTTON_BIT_B, D2
 	JSR	CheckButtonPress
 	BEQ.b	loc_0001BCFC
@@ -30879,7 +30915,7 @@ loc_0001BD22:
 loc_0001BD3C:
 	MOVE.l	(A0,D0.w), Script_source_base.w
 	MOVE.w	#8, Dialogue_state.w
-	BRA.b	loc_0001BD80
+	BRA.b	ShopSell_ShowPrompt
 loc_0001BD4A:
 	MOVE.w	Current_shop_type.w, D0
 	ADD.w	D0, D0
@@ -30887,7 +30923,7 @@ loc_0001BD4A:
 	LEA	ShopDialog_BuyPrompt, A0
 	MOVE.l	(A0,D0.w), Script_source_base.w
 	MOVE.w	#$A, Dialogue_state.w
-	BRA.b	loc_0001BD80
+	BRA.b	ShopSell_ShowPrompt
 loc_0001BD66:
 	MOVE.w	Current_shop_type.w, D0
 	ADD.w	D0, D0
@@ -30895,13 +30931,15 @@ loc_0001BD66:
 	LEA	ShopDialog_SellPrompt, A0
 	MOVE.l	(A0,D0.w), Script_source_base.w
 	MOVE.w	#$11, Dialogue_state.w
-loc_0001BD80:
+; loc_0001BD80
+ShopSell_ShowPrompt:
 	JMP	ResetScriptAndInitDialogue
 loc_0001BD86:
 	MOVE.w	Shop_action_selection.w, Menu_cursor_index.w
 	JSR	HandleMenuInput
 	MOVE.w	Menu_cursor_index.w, Shop_action_selection.w
-loc_0001BD98:
+; loc_0001BD98
+ShopSell_ListReturn:
 	RTS
 
 DialogState_WaitScriptThenCloseToOverworld:
@@ -30909,13 +30947,14 @@ DialogState_WaitScriptThenCloseToOverworld:
 	BEQ.b	loc_0001BDD2
 	MOVE.w	#BUTTON_BIT_C, D2
 	JSR	CheckButtonPress
-	BNE.b	loc_0001BDBA
+	BNE.b	DialogState_ShowWindowReturn
 	MOVE.w	#BUTTON_BIT_B, D2
 	JSR	CheckButtonPress
-	BNE.b	loc_0001BDBA
+	BNE.b	DialogState_ShowWindowReturn
 	RTS
 
-loc_0001BDBA:
+; loc_0001BDBA
+DialogState_ShowWindowReturn:
 	MOVE.w	#5, Window_draw_type.w
 	CLR.w	Window_text_row.w
 	MOVE.b	#$FF, Window_tilemap_row_draw_pending.w
@@ -31022,14 +31061,14 @@ DialogState_ShopBuyConfirmAndPurchase:
 	BEQ.w	loc_0001C07C
 	MOVE.w	#BUTTON_BIT_B, D2
 	JSR	CheckButtonPress
-	BNE.w	loc_0001C030
+	BNE.w	ShopCancel_RedrawBuyPrompt
 	MOVE.w	#BUTTON_BIT_C, D2
 	JSR	CheckButtonPress
 	BEQ.w	loc_0001C068
 	MOVE.w	Dialog_selection.w, Menu_cursor_index.w
 	JSR	DrawMenuCursor
 	TST.w	Dialog_selection.w
-	BNE.w	loc_0001C030
+	BNE.w	ShopCancel_RedrawBuyPrompt
 	MOVE.w	#$00A1, D0
 	JSR	QueueSoundEffect
 	JSR	DrawLeftMenuWindow
@@ -31059,7 +31098,7 @@ DialogState_ShopBuyConfirmAndPurchase:
 	CMPI.w	#8, D0
 	BLT.b	loc_0001BFD2
 	PRINT 	CantCarryMoreStr2
-	BRA.b	loc_0001C024
+	BRA.b	ShopGiveaway_RestoreList
 loc_0001BFD2:
 	ADDQ.w	#1, (A0)+
 	ADD.w	D0, D0
@@ -31076,19 +31115,21 @@ loc_0001BFD2:
 	MOVE.l	Shop_selected_price.w, Transaction_amount.w
 	JSR	DeductPaymentAmount
 	JSR	DisplayPlayerKims
-	BRA.b	loc_0001C024
+	BRA.b	ShopGiveaway_RestoreList
 loc_0001C010:
 	MOVE.w	Current_shop_type.w, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
 	LEA	ShopDialog_GivingAway, A0
 	MOVE.l	(A0,D0.w), Script_source_base.w
-loc_0001C024:
+; loc_0001C024
+ShopGiveaway_RestoreList:
 	JSR	RestoreShopListFromBuffer
 	ADDQ.w	#1, Dialogue_state.w
 	RTS
 
-loc_0001C030:
+; loc_0001C030
+ShopCancel_RedrawBuyPrompt:
 	MOVE.w	#$00A8, D0	
 	JSR	QueueSoundEffect	
 	JSR	DrawLeftMenuWindow	
@@ -31132,7 +31173,7 @@ DialogState_SellConfirmYesNoInput:
 	BEQ.w	loc_0001C14C
 	MOVE.w	#BUTTON_BIT_B, D2
 	JSR	CheckButtonPress
-	BNE.b	loc_0001C120
+	BNE.b	ShopBuyDone_ThankYou
 	MOVE.w	#BUTTON_BIT_C, D2
 	JSR	CheckButtonPress
 	BNE.b	loc_0001C0F4
@@ -31145,14 +31186,15 @@ loc_0001C0F4:
 	MOVE.w	Dialog_selection.w, Menu_cursor_index.w
 	JSR	DrawMenuCursor
 	TST.w	Dialog_selection.w
-	BNE.b	loc_0001C120
+	BNE.b	ShopBuyDone_ThankYou
 	JSR	DrawShopMenuWindow
 	JSR	RestoreLeftMenuFromBuffer
 	JSR	DrawLeftMenuWindow
 	MOVE.w	#7, Dialogue_state.w
 	RTS
 
-loc_0001C120:
+; loc_0001C120
+ShopBuyDone_ThankYou:
 	JSR	RestoreLeftMenuFromBuffer
 	JSR	DrawLeftMenuWindow
 	JSR	ResetScriptAndInitDialogue
@@ -31194,19 +31236,20 @@ DialogState_WaitScriptThenOpenInventorySellList:
 	JSR	DrawMagicListWithMP
 	MOVE.l	#Possessed_magics_list, Active_inventory_list_ptr.w
 	MOVE.w	Possessed_magics_length.w, D0
-	BRA.b	loc_0001C1E4
+	BRA.b	ShopEquip_InitCursor
 loc_0001C1B2:
 	JSR	DrawItemListBorders
 	JSR	DrawItemListNames
 	MOVE.l	#Possessed_items_list, Active_inventory_list_ptr.w
 	MOVE.w	Possessed_items_length.w, D0
-	BRA.b	loc_0001C1E4
+	BRA.b	ShopEquip_InitCursor
 loc_0001C1CC:
 	JSR	DrawEquipmentListWindow
 	JSR	DrawPossessedEquipmentList
 	MOVE.l	#Possessed_equipment_list, Active_inventory_list_ptr.w
 	MOVE.w	Possessed_equipment_length.w, D0
-loc_0001C1E4:
+; loc_0001C1E4
+ShopEquip_InitCursor:
 	JSR	InitMenuCursorForList
 	JSR	SaveLeftMenuTiles
 	JSR	DrawMoneyDisplayWindow
@@ -31233,13 +31276,14 @@ DialogState_WaitScriptThenReturnToSellList:
 	BEQ.b	loc_0001C276
 	MOVE.w	#BUTTON_BIT_C, D2
 	JSR	CheckButtonPress
-	BNE.b	loc_0001C254
+	BNE.b	DialogWait_ShowAnythingElse
 	MOVE.w	#BUTTON_BIT_B, D2
 	JSR	CheckButtonPress
-	BNE.b	loc_0001C254
+	BNE.b	DialogWait_ShowAnythingElse
 	RTS
 
-loc_0001C254:
+; loc_0001C254
+DialogWait_ShowAnythingElse:
 	JSR	ResetScriptAndInitDialogue
 	MOVE.w	Current_shop_type.w, D0
 	ADD.w	D0, D0
@@ -31279,14 +31323,15 @@ loc_0001C2AA:
 	BTST.l	D1, D0
 	BNE.w	loc_0001C344
 	CMPI.w	#SHOP_TYPE_EQUIPMENT, Current_shop_type.w
-	BNE.b	loc_0001C2FE
+	BNE.b	ShopBuy_ScanItem
 	MOVE.w	#9, D1
 	BTST.l	D1, D0
-	BEQ.b	loc_0001C2FE
+	BEQ.b	ShopBuy_ScanItem
 	MOVE.w	#$000F, D1
 	BTST.l	D1, D0
 	BNE.b	loc_0001C33A
-loc_0001C2FE:
+; loc_0001C2FE
+ShopBuy_ScanItem:
 	MOVE.w	D0, D2
 	LEA	IsStr, A0
 	JSR	CopyStringUntilFF
