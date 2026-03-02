@@ -1298,6 +1298,66 @@ PALETTE_IDX_ENDING_FIRE     = $0095   ; Ending sequence fire palette
 
 
 
+
+; ============================================================
+; Dialogue State Machine IDs (Dialogue_state)
+; ============================================================
+; DialogueStateMachine dispatches on Dialogue_state & $3F via
+; DialogueStateHandlerMap.  Each constant names the handler that
+; will be called on the next tick.
+;
+DIALOG_STATE_INIT                                 = $00   ; -> DialogState_Init
+DIALOG_STATE_WAIT_SCRIPT_THEN_ADVANCE             = $01   ; -> DialogState_WaitScriptThenAdvance
+DIALOG_STATE_WAIT_BUTTON_THEN_CLOSE_MENU          = $02   ; -> DialogState_WaitButtonThenCloseMenu
+DIALOG_STATE_WAIT_C_THEN_RESTART_DIALOGUE         = $03   ; -> DialogState_WaitCThenRestartDialogue
+DIALOG_STATE_DRAW_YES_NO_DIALOG                   = $04   ; -> DialogState_DrawYesNoDialog
+DIALOG_STATE_PROCESS_YES_NO_ANSWER                = $05   ; -> DialogState_ProcessYesNoAnswer
+DIALOG_STATE_WAIT_SCRIPT_THEN_OPEN_SHOP_MENU      = $06   ; -> DialogState_WaitScriptThenOpenShopMenu
+DIALOG_STATE_SHOP_MENU_INPUT                      = $07   ; -> DialogState_ShopMenuInput
+DIALOG_STATE_WAIT_SCRIPT_THEN_CLOSE_TO_OVERWORLD  = $08   ; -> DialogState_WaitScriptThenCloseToOverworld
+DIALOG_STATE_REDRAW_HUD_AND_CLOSE                 = $09   ; -> DialogState_RedrawHudAndClose
+DIALOG_STATE_WAIT_SCRIPT_THEN_OPEN_SELL_LIST_WINDOW= $0A   ; -> DialogState_WaitScriptThenOpenSellListWindow
+DIALOG_STATE_WAIT_DRAW_THEN_SHOW_MONEY_WINDOW     = $0B   ; -> DialogState_WaitDrawThenShowMoneyWindow
+DIALOG_STATE_SHOP_SELL_ITEM_SELECT_INPUT          = $0C   ; -> DialogState_ShopSellItemSelectInput
+DIALOG_STATE_SHOP_BUY_CONFIRM_AND_PURCHASE        = $0D   ; -> DialogState_ShopBuyConfirmAndPurchase
+DIALOG_STATE_WAIT_SCRIPT_THEN_DRAW_SELL_CONFIRM   = $0E   ; -> DialogState_WaitScriptThenDrawSellConfirm
+DIALOG_STATE_SELL_CONFIRM_YES_NO_INPUT            = $0F   ; -> DialogState_SellConfirmYesNoInput
+DIALOG_STATE_WAIT_SCRIPT_THEN_GO_TO_BUY_MENU      = $10   ; -> DialogState_WaitScriptThenGoToBuyMenu
+DIALOG_STATE_WAIT_SCRIPT_THEN_OPEN_INVENTORY_SELL_LIST= $11   ; -> DialogState_WaitScriptThenOpenInventorySellList
+DIALOG_STATE_WAIT_SCRIPT_THEN_RETURN_TO_SELL_LIST = $12   ; -> DialogState_WaitScriptThenReturnToSellList
+DIALOG_STATE_SELL_INVENTORY_ITEM_SELECT_INPUT     = $13   ; -> DialogState_SellInventoryItemSelectInput
+DIALOG_STATE_WAIT_SCRIPT_THEN_DRAW_SELL_ITEM_YES_NO= $14   ; -> DialogState_WaitScriptThenDrawSellItemYesNo
+DIALOG_STATE_SELL_INVENTORY_CONFIRM_AND_SELL      = $15   ; -> DialogState_SellInventoryConfirmAndSell
+DIALOG_STATE_DRAW_SELL_INVENTORY_YES_NO           = $16   ; -> DialogState_DrawSellInventoryYesNo
+DIALOG_STATE_SELL_INVENTORY_CANCEL_OR_CONFIRM     = $17   ; -> DialogState_SellInventoryCancelOrConfirm
+DIALOG_STATE_WAIT_SCRIPT_WITH_YES_NO_OR_CONTINUE  = $18   ; -> DialogState_WaitScriptWithYesNoOrContinue
+DIALOG_STATE_DRAW_FORTUNE_TELLER_MONEY_WINDOW     = $19   ; -> DialogState_DrawFortuneTellerMoneyWindow
+DIALOG_STATE_FORTUNE_TELLER_PAY_AND_READ          = $1A   ; -> DialogState_FortuneTellerPayAndRead
+DIALOG_STATE_WAIT_FORTUNE_TELLER_SCRIPT_THEN_CLOSE= $1B   ; -> DialogState_WaitFortuneTellerScriptThenClose
+DIALOG_STATE_WAIT_SCRIPT_THEN_DRAW_INN_YES_NO     = $1C   ; -> DialogState_WaitScriptThenDrawInnYesNo
+DIALOG_STATE_DRAW_INN_MONEY_WINDOW                = $1D   ; -> DialogState_DrawInnMoneyWindow
+DIALOG_STATE_INN_PAY_AND_SLEEP                    = $1E   ; -> DialogState_InnPayAndSleep
+DIALOG_STATE_WAIT_SCRIPT_THEN_START_SLEEP_FADE    = $1F   ; -> DialogState_WaitScriptThenStartSleepFade
+DIALOG_STATE_SLEEP_FADE_AND_RESTORE               = $20   ; -> DialogState_SleepFadeAndRestore
+DIALOG_STATE_WAIT_SCRIPT_THEN_OPEN_CHURCH_MENU    = $21   ; -> DialogState_WaitScriptThenOpenChurchMenu
+DIALOG_STATE_CHURCH_MENU_INPUT                    = $22   ; -> DialogState_ChurchMenuInput
+DIALOG_STATE_WAIT_SCRIPT_THEN_CLOSE_CHURCH_TO_HUD = $23   ; -> DialogState_WaitScriptThenCloseChurchToHud
+DIALOG_STATE_WAIT_TILE_THEN_CLOSE_TO_OVERWORLD    = $24   ; -> DialogState_WaitTileThenCloseToOverworld
+DIALOG_STATE_WAIT_SCRIPT_THEN_DRAW_CURSE_YES_NO   = $25   ; -> DialogState_WaitScriptThenDrawCurseYesNo
+DIALOG_STATE_DRAW_CURSE_REMOVAL_MONEY_WINDOW      = $26   ; -> DialogState_DrawCurseRemovalMoneyWindow
+DIALOG_STATE_CURSE_REMOVAL_PAY_AND_CURE           = $27   ; -> DialogState_CurseRemovalPayAndCure
+DIALOG_STATE_WAIT_SCRIPT_THEN_DRAW_POISON_YES_NO  = $28   ; -> DialogState_WaitScriptThenDrawPoisonYesNo
+DIALOG_STATE_DRAW_POISON_CURE_MONEY_WINDOW        = $29   ; -> DialogState_DrawPoisonCureMoneyWindow
+DIALOG_STATE_POISON_CURE_PAY_AND_CURE             = $2A   ; -> DialogState_PoisonCurePayAndCure
+DIALOG_STATE_WAIT_SCRIPT_THEN_OPEN_SAVE_MENU      = $2B   ; -> DialogState_WaitScriptThenOpenSaveMenu
+DIALOG_STATE_SAVE_MENU_INPUT                      = $2C   ; -> DialogState_SaveMenuInput
+DIALOG_STATE_MALAGE_WAIT_SCRIPT_THEN_OPEN_SELL_LIST= $2D   ; -> DialogState_MalageWaitScriptThenOpenSellList
+DIALOG_STATE_MALAGE_WAIT_DRAW_THEN_SHOW_MONEY_SELL_WINDOW= $2E   ; -> DialogState_MalageWaitDrawThenShowMoneySellWindow
+DIALOG_STATE_MALAGE_SHOP_SELECT_ITEM_TO_BUY       = $2F   ; -> DialogState_MalageShopSelectItemToBuy
+DIALOG_STATE_MALAGE_SHOP_CONFIRM_OR_CANCEL        = $30   ; -> DialogState_MalageShopConfirmOrCancel
+DIALOG_STATE_MALAGE_SHOP_GIVE_VERMILION_SWORD     = $31   ; -> DialogState_MalageShopGiveVermilionSword
+DIALOG_STATE_WAIT_SCRIPT_THEN_GO_TO_OVERWORLD     = $32   ; -> DialogState_WaitScriptThenGoToOverworld
+DIALOG_STATE_MALAGE_BLACKSMITH_INTRO              = $33   ; -> DialogState_MalageBlacksmithIntro
 ; ============================================================
 ; Movement Constants
 ; ============================================================
