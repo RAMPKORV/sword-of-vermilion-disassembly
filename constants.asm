@@ -1296,6 +1296,14 @@ PALETTE_IDX_ENDING_FIRE     = $0095   ; Ending sequence fire palette
 
 
 
+
+; ============================================================
+; Boolean Flag Values
+; ============================================================
+; Boolean flag fields throughout the game use $FF as "true/active"
+; and 0 (CLR) as "false/inactive".  TST.b is used to read them.
+;
+FLAG_TRUE           = $FF     ; Set a boolean flag to true / active
 ; ============================================================
 ; Sentinel / "None" Constants
 ; ============================================================
