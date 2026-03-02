@@ -1507,3 +1507,55 @@ SOUND_BOMB                  = $00BF   ; Explosion/bomb sound (DemonBoss attack, 
 SOUND_MERCUSIOS             = $00BD   ; Mercusios magic projectile launch sound (2 uses)
 SOUND_TERRAFISSI            = $00AF   ; Terrafissi spell / DemonBoss projectile activation sound (2 uses)
 SOUND_BATTLE_START          = $0092   ; Sound played when battle initializes (1 use)
+
+
+; ============================================================
+; Object/Entity Struct Field Offsets
+; ============================================================
+; A5 and A6 both point into the object pool. A5 = primary entity
+; (player, enemy body, NPC), A6 = secondary sprite slot (child
+; part, linked via obj_next_offset).
+;
+; Usage: MOVE.w obj_world_x(A5), D0
+;        MOVE.b obj_direction(A5), D1
+;
+; Fields marked (enemy only) or (NPC only) differ by object type.
+; Fields at $2E-$31 are not globally renamed: NPC structs store a
+; longword animation pointer at $2E, while enemy structs store four
+; signed hitbox-extent bytes at $2E/$2F/$30/$31.
+;
+obj_active          equ $00   ; byte: bit 7 = active flag (BSET/BCLR #7)
+obj_next_offset     equ $01   ; byte: linked-list next-slot stride (LEA (A6,D0.w),A6)
+obj_tick_fn         equ $02   ; long: tick/behavior function pointer
+obj_sprite_size     equ $06   ; byte: sprite size (bits 0-1 used)
+obj_sprite_flags    equ $07   ; byte: flip/attribute flags (bit3=H-flip, bit4=V-flip)
+obj_tile_index      equ $08   ; word: VRAM tile index for sprite
+obj_screen_x        equ $0A   ; word: on-screen X position (pixels)
+obj_screen_y        equ $0C   ; word: on-screen Y position (pixels)
+obj_world_x         equ $0E   ; word: world X position (pixels)
+obj_world_y         equ $12   ; word: world Y position (pixels)
+; NOTE: obj_world_y ($12) is also used as the HBlank handler function pointer
+;       in the VBlank/HBlank mini-objects (8-word slots). Those uses are named
+;       vobj_hblank_fn below.
+vobj_hblank_fn      equ $12   ; long: HBlank handler fn ptr (VBlank/HBlank handler objects only)
+obj_sort_key        equ $16   ; word: sprite priority sort value (low byte used)
+obj_direction       equ $18   ; byte: facing direction (0=up,2=left,4=down,6=right)
+obj_invuln_timer    equ $1A   ; byte: invulnerability frame countdown
+obj_move_counter    equ $1B   ; byte: movement/animation step counter
+; NOTE: $1C is context-dependent — NPC: longword script pointer;
+;       enemy: word hitbox half-width. Not globally renamed.
+obj_hitbox_half_h   equ $1E   ; word: hitbox half-height (enemy only)
+obj_pos_x_fixed     equ $20   ; long: fixed-point world X position (first-person movement)
+obj_sprite_frame    equ $24   ; byte: current sprite frame index
+obj_behavior_flag   equ $25   ; byte: NPC conditional behavior flag ($FF = triggered)
+obj_hit_flag        equ $26   ; byte: collision/hit flag ($FF = hit this frame)
+obj_hp              equ $28   ; word: current hit points (enemy only)
+obj_xp_reward       equ $2A   ; word: experience points awarded on kill (enemy only)
+obj_max_hp          equ $2C   ; word: maximum hit points (enemy only)
+obj_collidable      equ $2D   ; byte: NPC solid/collision flag ($01 = solid, NPC only)
+; $2E-$31: enemy hitbox extents (signed bytes, enemy only) — see note above
+obj_vel_x           equ $32   ; long: X velocity fixed-point (enemy only)
+obj_vel_y           equ $36   ; long: Y velocity fixed-point (enemy only)
+obj_attack_timer    equ $3A   ; word: attack/AI cooldown frame counter (enemy only)
+obj_knockback_timer equ $3C   ; word: knockback/stun frame countdown (enemy only)
+obj_kim_reward      equ $3E   ; word: gold (kims) awarded on kill (enemy only)
