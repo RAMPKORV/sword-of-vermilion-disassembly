@@ -1493,3 +1493,17 @@ ENDING_DELAY_LONG           = $012C   ; Long ending step duration (2 uses)
 ENDING_DELAY_SCROLL         = $0190   ; Ending scroll phase duration (1 use)
 ENDING_DELAY_LONGER         = $01F4   ; Extended ending step duration (2 uses)
 
+
+; ============================================================
+; Sound Effect IDs (additional)
+; ============================================================
+SOUND_TRANSITION            = $00A3   ; Screen/room fade transition sound (19 uses)
+SOUND_SLEEP                 = $0085   ; Sleep/frying-pan sound effect (3 uses)
+SOUND_LEVEL_UP_BANNER       = $0086   ; Sound played when level-up banner triggers (2 uses)
+SOUND_NAME_ENTRY            = $008D   ; Sound played when entering name-entry or load-save screen (2 uses)
+SOUND_OVERWORLD_RETURN      = $00B3   ; Sound when returning to overworld from dungeon/after chest (2 uses)
+SOUND_PLAYER_HIT            = $00B2   ; Sound when player takes damage in overworld or battle (2 uses)
+SOUND_BOMB                  = $00BF   ; Explosion/bomb sound (DemonBoss attack, SmallBomb item) (2 uses)
+SOUND_MERCUSIOS             = $00BD   ; Mercusios magic projectile launch sound (2 uses)
+SOUND_TERRAFISSI            = $00AF   ; Terrafissi spell / DemonBoss projectile activation sound (2 uses)
+SOUND_BATTLE_START          = $0092   ; Sound played when battle initializes (1 use)
