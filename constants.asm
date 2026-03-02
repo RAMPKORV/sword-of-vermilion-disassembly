@@ -1453,3 +1453,26 @@ SOUND_SAVE              = $00BC   ; Save game (3 uses)
 SOUND_FOOTSTEP          = $0089   ; Footstep/walk (3 uses)
 SOUND_ENEMY_DEATH       = $00AD   ; Enemy death (3 uses)
 
+; ============================================================
+; Boss & Encounter Timing Constants
+; ============================================================
+; Frame-count delays used during boss fights and encounters.
+;
+BOSS_VICTORY_DELAY_FRAMES   = $0032   ; Frames to wait before boss reward sequence (4 uses)
+ENCOUNTER_FADE_PHASES       = $000A   ; Number of fade-in phases for encounter/dialogue intro (2 uses)
+SLEEP_DELAY_FRAMES          = $012C   ; Frames of sleep animation delay (2 uses)
+; ============================================================
+; Name Entry Grid Constants
+; ============================================================
+NAME_ENTRY_LAST_ROW         = $0010   ; Last valid row index in name entry grid (wraps to 0) (3 uses)
+NAME_ENTRY_LAST_COL         = $001D   ; Last valid column index in name entry grid (wraps to 0) (2 uses)
+; ============================================================
+; Poison Duration
+; ============================================================
+POISONED_DURATION           = $FFFF   ; Player_poisoned: indefinite/permanent poison (2 uses)
+; ============================================================
+; Boss Hit Flash Palette Indices
+; ============================================================
+PALETTE_IDX_BOSS_FLASH_A    = $00B5   ; Boss hit flash palette A (two-headed dragon) (2 uses)
+PALETTE_IDX_BOSS_FLASH_B    = $00B7   ; Boss hit flash palette B (orbit/ring boss) (2 uses)
+
