@@ -601,7 +601,7 @@ loc_00001112:
 loc_00001122:
 	BSR.w	ProcessSoundQueue
 	BTST.b	#6, $00A10001
-	BEQ.b	loc_0000115C
+	BEQ.b	VBlank_ProcessPalette
 	ADDQ.w	#1, Vblank_frame_counter.w	
 	MOVE.w	Vblank_frame_counter.w, D4	
 	ANDI.w	#3, D4	
@@ -611,13 +611,14 @@ loc_00001122:
 loc_0000114A:
 	NOP	
 	DBF	D7, loc_0000114A	
-	BRA.b	loc_0000115C	
+	BRA.b	VBlank_ProcessPalette	
 loc_00001152:
 	MOVE.w	#$0657, D7	
 loc_00001156:
 	NOP	
 	DBF	D7, loc_00001156	
-loc_0000115C:
+; loc_0000115C
+VBlank_ProcessPalette:
 	JSR	UpdatePaletteBuffer
 	TST.b	Skip_tilemap_updates.w
 	BNE.w	loc_000011C0
@@ -735,13 +736,14 @@ CheckButtonPress:
 	MOVE.b	Controller_previous_state.w, D1
 	EOR.b	D1, D0
 	BTST.l	D2, D0
-	BEQ.b	loc_00001308
+	BEQ.b	CheckButtonPress_NotPressed
 	BTST.l	D2, D1
-	BNE.b	loc_00001308
+	BNE.b	CheckButtonPress_NotPressed
 	MOVEQ	#1, D0
 	RTS
 
-loc_00001308:
+; loc_00001308
+CheckButtonPress_NotPressed:
 	CLR.w	D0
 	RTS
 
@@ -877,12 +879,12 @@ VBlankObjectHandler_loop:
 	MOVE.w	Program_state.w, D0
 	ANDI.w	#$1F, D0
 	CMPI.w	#$16, D0
-	BGE.w	loc_00001500
+	BGE.w	VBlankObjectHandler_Return
 	ADD.w	D0, D0
 	ADD.w	D0, D0
 	LEA	ProgramStateMap, A0
 	JSR	(A0,D0.w)
-	BRA.w	loc_00001500
+	BRA.w	VBlankObjectHandler_Return
 
 ;loc_000014A8:
 ProgramStateMap:
@@ -908,7 +910,8 @@ ProgramStateMap:
 	BRA.w	ProgramState_13_and_14 	; $13 
 	BRA.w	ProgramState_13_and_14 	; $14
 	BRA.w	ProgramState_15 		; $15
-loc_00001500:
+; loc_00001500
+VBlankObjectHandler_Return:
 	RTS
 
 ;loc_00001502:
@@ -925,18 +928,19 @@ ProgramState_01
 	ANDI.b	#$F0, D0
 	BNE.b	loc_00001540
 	TST.b	Intro_animation_done.w
-	BEQ.b	loc_0000155A
+	BEQ.b	ProgramState_01_Return
 	MOVE.b	#$FF, Fade_out_lines_mask.w
 	MOVE.l	#HBlankObjectHandler, $12(A5)
 	BSR.w	DecrementTimerBCD
-	BNE.b	loc_0000155A
+	BNE.b	ProgramState_01_Return
 loc_00001540:
 	MOVE.w	#PROGRAM_STATE_02, Program_state.w
 	CLR.b	Fade_out_lines_mask.w
 	CLR.w	Palette_fade_step_counter.w
 	MOVE.w	#0, Palette_line_0_index.w
 	JSR	LoadPalettesFromTable
-loc_0000155A:
+; loc_0000155A
+ProgramState_01_Return:
 	RTS
 
 ;loc_0000155C:
@@ -1162,15 +1166,16 @@ loc_00001818:
 ;loc_0000181A
 ProgramState_0F_and_11:
 	TST.b	Player_is_moving.w
-	BNE.b	loc_00001838
+	BNE.b	ProgramState_0F_Return
 	TST.b	Camera_scrolling_active.w
-	BNE.b	loc_00001838
+	BNE.b	ProgramState_0F_Return
 	MOVE.w	Gameplay_state.w, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
 	LEA	GameStateMap, A0
 	JSR	(A0,D0.w)
-loc_00001838:
+; loc_00001838
+ProgramState_0F_Return:
 	RTS
 
 ;loc_0000183A: ; $FFFFC410 - $FFFFC414
@@ -1303,12 +1308,13 @@ loc_00001A1A:
 	MOVE.l	#LoadTownNPCs, $2(A6)
 	MOVE.w	Current_town.w, D0
 	CMPI.w	#TOWN_CARTHAHENA, D0
-	BNE.b	loc_00001A46
+	BNE.b	GameState_InitTownEntry_NormalPalette
 	TST.b	Tsarkon_is_dead.w
-	BNE.b	loc_00001A46
+	BNE.b	GameState_InitTownEntry_NormalPalette
 	MOVE.w	#$0083, Palette_line_0_fade_target.w
 	BRA.b	loc_00001A4C
-loc_00001A46:
+; loc_00001A46
+GameState_InitTownEntry_NormalPalette:
 	MOVE.w	#$0012, Palette_line_0_fade_target.w
 loc_00001A4C:
 	MOVE.w	Palette_line_1_index_saved.w, Palette_line_1_fade_target.w
@@ -1436,11 +1442,11 @@ GameState_BuildingInterior:
 	TST.b	Player_awakening_flag.w
 	BNE.w	loc_00001D14
 	TST.b	Helwig_inn_wakeup_trigger.w
-	BEQ.b	loc_00001C56
+	BEQ.b	GameState_BuildingInterior_NoBossEvent
 	CLR.b	Helwig_inn_wakeup_trigger.w
 	MOVE.w	Current_town.w, D0
 	CMPI.w	#TOWN_HELWIG, D0
-	BNE.b	loc_00001C56
+	BNE.b	GameState_BuildingInterior_NoBossEvent
 	MOVE.b	#$FF, Fade_out_lines_mask.w
 	MOVE.w	#$012C, Sleep_delay_timer.w
 	MOVE.b	#$85, D0
@@ -1448,7 +1454,8 @@ GameState_BuildingInterior:
 	MOVE.w	#GAMEPLAY_STATE_FRYING_PAN_DELAY, Gameplay_state.w
 	RTS
 
-loc_00001C56:
+; loc_00001C56
+GameState_BuildingInterior_NoBossEvent:
 	TST.b	Boss_event_trigger.w
 	BEQ.b	loc_00001C96
 	MOVEA.l	Player_entity_ptr.w, A6	
@@ -1504,12 +1511,13 @@ loc_00001D14:
 	BEQ.b	loc_00001D42
 	PRINT 	CarelessWarningStr	
 	CLR.b	Frying_pan_knockout_flag.w	
-	BRA.b	loc_00001D50	
+	BRA.b	GameState_AwakeningMessage_SetState	
 loc_00001D42:
 	TST.b	Banshee_powder_active.w
-	BNE.b	loc_00001D50
+	BNE.b	GameState_AwakeningMessage_SetState
 	PRINT 	AriseWarriorStr
-loc_00001D50:
+; loc_00001D50
+GameState_AwakeningMessage_SetState:
 	MOVE.w	#GAMEPLAY_STATE_READ_AWAKENING_MESSAGE, Gameplay_state.w
 	RTS
 
@@ -1520,13 +1528,14 @@ GameState_ReadAwakeningMessage:
 	BNE.b	loc_00001DA0
 	MOVE.w	#BUTTON_BIT_B, D2
 	JSR	CheckButtonPress
-	BNE.b	loc_00001D7E
+	BNE.b	GameState_ReadAwakening_Dismiss
 	MOVE.w	#BUTTON_BIT_C, D2
 	JSR	CheckButtonPress
-	BNE.b	loc_00001D7E
+	BNE.b	GameState_ReadAwakening_Dismiss
 	RTS
 
-loc_00001D7E:
+; loc_00001D7E
+GameState_ReadAwakening_Dismiss:
 	JSR	DrawStatusHudWindow
 	CLR.b	Player_input_blocked.w
 	CLR.b	Player_awakening_flag.w
@@ -1549,9 +1558,9 @@ loc_00001DB2:
 ;GameState_FryingPanDelay:
 GameState_FryingPanDelay: ; Woman hitting player with frying pan
 	TST.b	Fade_out_lines_mask.w
-	BNE.b	loc_00001E08
+	BNE.b	GameState_FryingPanDelay_Return
 	SUBQ.w	#1, Sleep_delay_timer.w
-	BGE.b	loc_00001E08
+	BGE.b	GameState_FryingPanDelay_Return
 	MOVE.w	Player_hp.w, D0
 	LSR.w	#1, D0
 	BLE.b	loc_00001E0A
@@ -1566,7 +1575,8 @@ GameState_FryingPanDelay: ; Woman hitting player with frying pan
 	MOVE.w	Palette_line_2_cycle_base.w, Palette_line_2_index.w
 	MOVE.w	#$0011, Palette_line_3_index.w
 	JSR	LoadPalettesFromTable
-loc_00001E08:
+; loc_00001E08
+GameState_FryingPanDelay_Return:
 	RTS
 
 loc_00001E0A:
@@ -1615,13 +1625,14 @@ GameState_ReadFryingPanMessage:
 	BNE.w	loc_00001EE6
 	MOVE.w	#BUTTON_BIT_B, D2
 	JSR	CheckButtonPress
-	BNE.b	loc_00001EC4
+	BNE.b	GameState_ReadFryingPan_Dismiss
 	MOVE.w	#BUTTON_BIT_C, D2
 	JSR	CheckButtonPress
-	BNE.b	loc_00001EC4
+	BNE.b	GameState_ReadFryingPan_Dismiss
 	RTS
 
-loc_00001EC4:
+; loc_00001EC4
+GameState_ReadFryingPan_Dismiss:
 	JSR	DrawStatusHudWindow
 	CLR.w	Overworld_menu_state.w
 	MOVE.w	#3, Window_draw_type.w
@@ -1982,10 +1993,10 @@ loc_0000245A:
 	MOVE.b	#8, Fade_out_lines_mask.w	
 	CLR.w	Player_hp.w	
 	JSR	DisplayPlayerHpMp	
-	BRA.w	loc_000024D4	
+	BRA.w	GameState_BeginResurrection_Return	
 loc_0000247E:
 	TST.b	Fade_out_lines_mask.w
-	BNE.w	loc_000024D4
+	BNE.w	GameState_BeginResurrection_Return
 	MOVE.w	Saved_player_direction.w, Player_direction.w
 	CLR.b	Is_in_battle.w
 	TST.b	Soldier_fight_event_trigger.w
@@ -2006,7 +2017,8 @@ loc_000024BE:
 	CLR.w	Sprite_attr_count.w
 	JSR	FlushSpriteAttributesToVDP
 	MOVE.b	#$FF, Player_in_first_person_mode.w
-loc_000024D4:
+; loc_000024D4
+GameState_BeginResurrection_Return:
 	RTS
 
 GameState_SoldierTaunt:
@@ -2022,13 +2034,14 @@ GameState_ReadSoldierTaunt:
 	BEQ.b	loc_0000253A
 	MOVE.w	#BUTTON_BIT_C, D2
 	JSR	CheckButtonPress
-	BNE.b	loc_00002518
+	BNE.b	GameState_ReadSoldierTaunt_Dismiss
 	MOVE.w	#BUTTON_BIT_B, D2
 	JSR	CheckButtonPress
-	BNE.b	loc_00002518
+	BNE.b	GameState_ReadSoldierTaunt_Dismiss
 	RTS
 
-loc_00002518:
+; loc_00002518
+GameState_ReadSoldierTaunt_Dismiss:
 	MOVE.w	#GAMEPLAY_STATE_BATTLE_EXIT, Gameplay_state.w
 	MOVE.b	#$A3, D0
 	JSR	QueueSoundEffect
@@ -2135,10 +2148,10 @@ InitBattleDisplay:
 ;CheckLevelUpAndRestoreMusic:
 CheckLevelUpAndRestoreMusic: ; level up
 	CMPI.w	#MAX_PLAYER_LEVEL, Player_level.w
-	BGE.b	loc_00002706
+	BGE.b	GameState_LevelUpComplete_Check
 	MOVE.l	Player_experience.w, D0
 	CMP.l	Player_next_level_experience.w, D0
-	BLT.b	loc_00002706
+	BLT.b	GameState_LevelUpComplete_Check
 	MOVE.w	Gameplay_state.w, Saved_game_state.w
 	MOVE.b	#$FF, Player_input_blocked.w
 	MOVE.w	#GAMEPLAY_STATE_LEVEL_UP_BANNER_DISPLAY, Gameplay_state.w
@@ -2150,7 +2163,8 @@ CheckLevelUpAndRestoreMusic: ; level up
 	JSR	SavePromptMenuToBuffer
 	JSR	LoadLevelUpBannerTiles
 	BRA.b	loc_00002724
-loc_00002706:
+; loc_00002706
+GameState_LevelUpComplete_Check:
 	TST.b	Is_in_cave.w
 	BEQ.b	loc_00002712
 	BSR.w	PlayCaveMusic
@@ -2170,13 +2184,14 @@ loc_00002724:
 
 GameState_CaveExploration:
 	TST.w	Player_poisoned.w
-	BEQ.b	loc_00002752
+	BEQ.b	GameState_CaveExploration_CheckDeath
 	TST.b	Poison_notified.w
-	BNE.b	loc_00002752
+	BNE.b	GameState_CaveExploration_CheckDeath
 	MOVE.w	#GAMEPLAY_STATE_SHOW_POISON_NOTIFICATION, Gameplay_state.w
 	RTS
 
-loc_00002752:
+; loc_00002752
+GameState_CaveExploration_CheckDeath:
 	BSR.w	CheckPlayerDeath
 	BEQ.b	loc_0000275A
 	RTS
@@ -2225,10 +2240,10 @@ OverworldMovementTick_HandleMenu:
 	TST.w	Inaudios_steps_remaining.w
 	BGE.b	OverworldMovementTick_Return
 	BSR.w	CheckForEncounter
-	BNE.b	loc_000027FE
+	BNE.b	OverworldMovementTick_TriggerEncounter
 	ADDQ.b	#1, Steps_since_last_encounter.w
 	CMPI.b	#MAX_STEPS_BETWEEN_ENCOUNTERS, Steps_since_last_encounter.w
-	BEQ.b	loc_000027FE
+	BEQ.b	OverworldMovementTick_TriggerEncounter
 	BRA.b	OverworldMovementTick_Return
 ; OverworldMovementTick_ClearEncounterCheck
 OverworldMovementTick_ClearEncounterCheck:
@@ -2237,7 +2252,8 @@ OverworldMovementTick_ClearEncounterCheck:
 OverworldMovementTick_Return:
 	RTS
 
-loc_000027FE:
+; loc_000027FE
+OverworldMovementTick_TriggerEncounter:
 	CLR.b	Steps_since_last_encounter.w
 	CLR.b	Player_input_blocked.w
 	MOVE.w	#GAMEPLAY_STATE_ENCOUNTER_INITIALIZE, Gameplay_state.w
@@ -2362,10 +2378,10 @@ GameState_LevelUpComplete:
 	BNE.w	loc_000029F8
 	JSR	DrawPromptMenuWindow
 	CMPI.w	#MAX_PLAYER_LEVEL, Player_level.w
-	BGE.b	loc_000029D4
+	BGE.b	GameState_LevelUpComplete_Exit
 	MOVE.l	Player_experience.w, D0
 	CMP.l	Player_next_level_experience.w, D0
-	BLT.b	loc_000029D4
+	BLT.b	GameState_LevelUpComplete_Exit
 	MOVE.w	#GAMEPLAY_STATE_LEVEL_UP_BANNER_DISPLAY, Gameplay_state.w
 	MOVE.b	#$86, D0
 	JSR	QueueSoundEffect
@@ -2379,7 +2395,8 @@ GameState_LevelUpComplete:
 	JSR	DisplayPlayerKimsAndExperience
 	RTS
 
-loc_000029D4:
+; loc_000029D4
+GameState_LevelUpComplete_Exit:
 	CLR.b	Player_input_blocked.w
 	MOVE.w	Saved_game_state.w, Gameplay_state.w
 	MOVE.b	#$8E, D0
@@ -2659,13 +2676,14 @@ GameState_WaitForNotificationDismiss:
 	BEQ.b	loc_00002DA2
 	MOVE.w	#BUTTON_BIT_C, D2
 	JSR	CheckButtonPress
-	BNE.b	loc_00002D92
+	BNE.b	GameState_WaitNotification_Dismiss
 	MOVE.w	#BUTTON_BIT_B, D2
 	JSR	CheckButtonPress
-	BNE.b	loc_00002D92
+	BNE.b	GameState_WaitNotification_Dismiss
 	RTS
 
-loc_00002D92:
+; loc_00002D92
+GameState_WaitNotification_Dismiss:
 	JSR	DrawStatusHudWindow
 	MOVE.w	#GAMEPLAY_STATE_OVERWORLD_ACTIVE, Gameplay_state.w
 	CLR.b	Player_input_blocked.w
@@ -2863,28 +2881,30 @@ loc_00003082:
 ; loc_000030AC
 HandleOverworldMenuInput:
 	TST.w	Overworld_menu_state.w
-	BNE.b	loc_000030EA
+	BNE.b	HandleOverworldMenuInput_DispatchMenu
 	MOVE.w	#BUTTON_BIT_START, D2
 	BSR.w	CheckButtonPress
 	BEQ.b	loc_000030D0
 	MOVE.w	#1, Overworld_menu_state.w	
 	MOVE.b	#$A0, D0	
 	JSR	QueueSoundEffect	
-	BRA.w	loc_000030EE	
+	BRA.w	HandleOverworldMenuInput_Dispatch	
 loc_000030D0:
 	MOVE.w	#BUTTON_BIT_C, D2
 	BSR.w	CheckButtonPress
-	BEQ.b	loc_000030EA
+	BEQ.b	HandleOverworldMenuInput_DispatchMenu
 	MOVE.b	#$A0, D0
 	JSR	QueueSoundEffect
 	MOVE.w	#3, Overworld_menu_state.w
-loc_000030EA:
-	BRA.w	loc_000030EE
-loc_000030EE:
+; loc_000030EA
+HandleOverworldMenuInput_DispatchMenu:
+	BRA.w	HandleOverworldMenuInput_Dispatch
+; loc_000030EE
+HandleOverworldMenuInput_Dispatch:
 	TST.b	Window_tilemap_draw_active.w
-	BNE.b	loc_00003116
+	BNE.b	HandleOverworldMenuInput_Return
 	TST.b	Window_tilemap_row_draw_pending.w
-	BNE.b	loc_00003116
+	BNE.b	HandleOverworldMenuInput_Return
 	MOVE.b	#$FF, Player_input_blocked.w
 	MOVE.w	Overworld_menu_state.w, D0
 	ANDI.w	#7, D0
@@ -2892,7 +2912,8 @@ loc_000030EE:
 	ADD.w	D0, D0
 	LEA	OverworldMenuStateJumpTable, A0
 	JSR	(A0,D0.w)
-loc_00003116:
+; loc_00003116
+HandleOverworldMenuInput_Return:
 	RTS
 
 ; loc_00003118
@@ -2905,11 +2926,12 @@ OverworldMenuStateJumpTable:
 	BRA.w	loc_000032AE
 loc_00003130:
 	TST.b	Window_tilemap_draw_active.w
-	BNE.b	loc_00003140
+	BNE.b	OverworldMenuState0_Return
 	TST.b	Window_tilemap_row_draw_pending.w
-	BNE.b	loc_00003140
+	BNE.b	OverworldMenuState0_Return
 	CLR.b	Player_input_blocked.w
-loc_00003140:
+; loc_00003140
+OverworldMenuState0_Return:
 	RTS
 
 loc_00003142:
@@ -3083,7 +3105,7 @@ GetScrollOffsetInTiles:
 ; Town Data Structure (40 bytes/$28 per entry):
 ;   +$00 (word): Player X position trigger
 ;   +$02 (word): Player Y position trigger
-;   +$04-$27: Town state data (see loc_00003380 for details)
+;   +$04-$27: Town state data (see LoadTownStateData_Store for details)
 ;
 ; Input:
 ;   Player_position_x_in_town, Player_position_y_in_town
@@ -3108,15 +3130,16 @@ loc_00003352:
 	BLE.b	loc_0000336C                     ; If <= 0, end of list
 	CMP.w	D2, D0                           ; X match?
 	BEQ.b	loc_0000335E                     ; Yes: check Y
-	BRA.b	loc_00003366                     ; No: next entry
+	BRA.b	FindTownStateEntry_NextEntry                     ; No: next entry
 	
 loc_0000335E:
 	MOVE.w	(A0)+, D2                        ; D2 = entry Y
 	CMP.w	D2, D1                           ; Y match?
-	BNE.b	loc_00003366                     ; No: next entry
-	BRA.b	loc_00003380                     ; Yes: load data
+	BNE.b	FindTownStateEntry_NextEntry                     ; No: next entry
+	BRA.b	LoadTownStateData_Store                     ; Yes: load data
 	
-loc_00003366:
+; loc_00003366
+FindTownStateEntry_NextEntry:
 	LEA	$28(A1), A1                      ; Skip to next entry
 	BRA.b	loc_00003352
 	
@@ -3131,7 +3154,8 @@ LoadTownStateData:
 	JSR	(A0,D0.w)
 	
 	; Load town state data (40-byte structure)
-loc_00003380:
+; loc_00003380
+LoadTownStateData_Store:
 	MOVE.w	(A0)+, Saved_player_x_in_town.w      ; +$04: X in town
 	MOVE.w	(A0)+, Town_player_spawn_y.w         ; +$06: Spawn Y
 	MOVE.w	(A0)+, Town_saved_camera_x.w         ; +$08: Camera X
@@ -3158,14 +3182,15 @@ LoadAndPlayAreaMusic:
 	BEQ.b	loc_000033DE
 	CMPI.w	#$B, D0
 	BEQ.b	loc_000033F6
-loc_000033D8:
+; loc_000033D8
+LoadAndPlayAreaMusic_LookupRoom:
 	MOVE.b	(A0,D0.w), D0
 	BRA.b	LoadAndPlayAreaMusic_Queue
 loc_000033DE:
 	TST.b	Stow_innocence_proven.w
 	BNE.b	loc_000033F0
 	TST.b	Girl_left_for_stow.w
-	BEQ.b	loc_000033D8
+	BEQ.b	LoadAndPlayAreaMusic_LookupRoom
 	MOVE.w	#$0087, D0
 	BRA.b	LoadAndPlayAreaMusic_Queue
 loc_000033F0:
@@ -3173,7 +3198,7 @@ loc_000033F0:
 	BRA.b	LoadAndPlayAreaMusic_Queue
 loc_000033F6:
 	TST.b	Swaffham_ruined.w
-	BEQ.b	loc_000033D8
+	BEQ.b	LoadAndPlayAreaMusic_LookupRoom
 	MOVE.w	#$0083, D0
 ; loc_00003400
 LoadAndPlayAreaMusic_Queue:
