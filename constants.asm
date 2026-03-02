@@ -1252,6 +1252,49 @@ OLD_WOMAN_POSITION_X = $0027
 OLD_WOMAN_POSITION_Y = $0003
 
 ; ============================================================
+; Palette Data Table Indices
+; ============================================================
+; These are indices into PaletteDataTable, used with Palette_line_X_index
+; and related RAM fields. Each entry is 32 bytes (16 Genesis colors).
+;
+; Town / Overworld
+PALETTE_IDX_TOWN_TILES      = $0012   ; Town tile palette (line 0): torches, walls, floor
+PALETTE_IDX_TOWN_HUD        = $0011   ; Town HUD palette (line 3): player sprite, status bar
+PALETTE_IDX_TOWN_DARK       = $0083   ; Carthahena dark palette (line 0): under Tsarkon rule
+PALETTE_IDX_BATTLE_OUTDOOR  = $0013   ; Outdoor battle terrain (line 0): grass/field ground
+
+; Overworld Map
+PALETTE_IDX_OVERWORLD_LINE1 = $0037   ; Overworld map palette (line 1)
+PALETTE_IDX_OVERWORLD_LINE2 = $0038   ; Overworld map palette (line 2): fire animation base
+
+; Cave / Dungeon (first-person view)
+PALETTE_IDX_CAVE_WALLS      = $0036   ; Cave wall tile palette (line 0)
+PALETTE_IDX_CAVE_FLOOR      = $0038   ; Cave floor palette (line 2) / overworld map line 2 base
+PALETTE_IDX_CAVE_FLOOR_LIT  = $0048   ; Cave floor with light spell active (line 1)
+PALETTE_IDX_CAVE_ANIM_BASE  = $0040   ; Cave torch/fire animation start (line 2 cycle)
+PALETTE_IDX_CAVE_ANIM_END   = $0047   ; Cave torch/fire animation end (forward loop limit)
+PALETTE_IDX_CAVE_ANIM_ALT   = $003F   ; Cave torch/fire animation alt end (reverse loop)
+PALETTE_IDX_CAVE_POISON     = $0072   ; Cave poison tint (line 0, when player is poisoned)
+
+; Title Screen
+PALETTE_IDX_TITLE_LOGO      = $0029   ; Title screen logo palette (line 1)
+PALETTE_IDX_TITLE_TILES     = $0027   ; Title screen tile palette (line 3)
+PALETTE_IDX_TITLE_BG        = $0028   ; Title screen background palette (line 2)
+PALETTE_IDX_TITLE_LIGHTNING = $0030   ; Title screen lightning flash (line 0)
+
+; Prologue / Name Entry
+PALETTE_IDX_PROLOGUE_BG     = $004F   ; Prologue screen background (lines 0, 2)
+PALETTE_IDX_PROLOGUE_SCENE  = $0052   ; Prologue scene tile palette (lines 1, 3)
+PALETTE_IDX_NAMEENTRY_BG    = $0032   ; Name entry screen background
+PALETTE_IDX_NAMEENTRY_GLOW1 = $0033   ; Name entry glow animation 1
+PALETTE_IDX_NAMEENTRY_GLOW2 = $0034   ; Name entry glow animation 2
+
+; Ending / Special
+PALETTE_IDX_ALL_WHITE       = $0084   ; All-white flash palette (ending/lightning effect)
+PALETTE_IDX_ALL_BLACK       = $0094   ; All-black palette (ending screen blanks)
+PALETTE_IDX_ENDING_FIRE     = $0095   ; Ending sequence fire palette
+
+; ============================================================
 ; Sound Effect IDs
 ; ============================================================
 ; These are passed to QueueSoundEffect to play sound effects.
