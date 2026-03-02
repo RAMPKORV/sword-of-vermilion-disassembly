@@ -914,7 +914,7 @@ loc_00001500:
 ;loc_00001502:
 ProgramState_00:
 	MOVE.b	#2, Timer_seconds_bcd.w
-	MOVE.l	#loc_000155F4, $12(A5)
+	MOVE.l	#SegaLogoScreen_Init, $12(A5)
 	MOVE.w	#PROGRAM_STATE_01, Program_state.w
 	CLR.b	Intro_animation_done.w
 	RTS
@@ -946,7 +946,7 @@ ProgramState_02:
 	BEQ.b	loc_00001572
 	MOVE.b	#$37, Timer_seconds_bcd.w	
 loc_00001572:
-	MOVE.l	#loc_000169D0, $12(A5)
+	MOVE.l	#TitleScreen_Init, $12(A5)
 	MOVE.w	#PROGRAM_STATE_03, Program_state.w
 	CLR.b	Title_intro_complete.w
 	RTS
@@ -1002,7 +1002,7 @@ ProgramState_08:
 	TST.b	Fade_out_lines_mask.w
 	BNE.b	loc_00001634
 	JSR	LoadTitleScreenGraphics
-	MOVE.l	#loc_000156C0, $12(A5)
+	MOVE.l	#PrologueScreen_Init, $12(A5)
 	MOVE.w	#PROGRAM_STATE_09, Program_state.w
 	CLR.b	Prologue_complete_flag.w
 loc_00001634:
@@ -1045,7 +1045,7 @@ ProgramState_0B:
 	MOVE.w	VDP_Reg11_cache.w, D0
 	ANDI.w	#$FFF8, D0
 	MOVE.w	D0, VDP_control_port
-	MOVE.l	#loc_000106C2, $12(A5)
+	MOVE.l	#FileMenuPhaseDispatch, $12(A5)
 	CLR.w	File_menu_phase.w
 	CLR.b	File_load_complete.w
 	MOVE.w	#$0012, Palette_line_0_index.w
@@ -1107,7 +1107,7 @@ ProgramState_05:
 	MOVE.w	D0, VDP_control_port
 	JSR	LoadOptionsMenuGraphics
 	JSR	EnableDisplay
-	MOVE.l	#loc_000150F6, $12(A5)
+	MOVE.l	#NameEntryScreen_Init, $12(A5)
 	MOVE.w	#PROGRAM_STATE_06, Program_state.w
 	CLR.b	Name_entry_complete.w
 	MOVE.b	#$8D, D0
@@ -1138,7 +1138,7 @@ loc_000017E4:
 
 ;loc_000017E6
 ProgramState_12:
-	MOVE.l	#loc_00016F82, $12(A5)
+	MOVE.l	#EndingSequence_Init, $12(A5)
 	MOVE.w	#PROGRAM_STATE_13, Program_state.w
 	RTS
 
@@ -3018,14 +3018,14 @@ loc_000032AE:
 
 ; loc_000032C8
 OverworldMenuActionPtrs:
-	dc.l	loc_0001B17E
-	dc.l	loc_0001A2CE
-	dc.l	loc_0001D67E
+	dc.l	DialogueStateMachine
+	dc.l	ItemMenuStateMachine
+	dc.l	EquipListMenuStateMachine
 	dc.l	ChestOpeningStateMachine
-	dc.l	loc_00017EC6
-	dc.l	loc_0001CFFE
-	dc.l	loc_0001DFE8
-	dc.l	loc_0001E46C
+	dc.l	SpellbookMenuStateMachine
+	dc.l	ReadyEquipmentStateMachine
+	dc.l	DialogSelectionStateMachine
+	dc.l	TakeItemStateMachine
 
 ; GetCurrentTileType
 GetCurrentTileType:
@@ -15073,7 +15073,7 @@ loc_0000D3AC:
 	ANDI.w	#1, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
-	LEA	loc_0000D5CC, A0
+	LEA	DemonBossWingFrameData, A0
 	MOVE.w	(A0,D0.w), $4C(A5)
 	MOVE.w	$2(A0,D0.w), $4E(A5)
 loc_0000D3DE:
@@ -15159,7 +15159,7 @@ DemonBossState_AttackAnimate:
 	MOVE.w	$3A(A5), D0
 	ASR.w	#1, D0
 	ANDI.w	#$003E, D0
-	LEA	loc_0000D5E0, A0
+	LEA	DemonBossAttackYOffsets, A0
 	MOVE.w	(A0,D0.w), $44(A5)
 	TST.w	$3A(A5)
 	BEQ.w	loc_0000D55E
@@ -15187,7 +15187,7 @@ loc_0000D542:
 	MOVE.w	$3A(A5), D0
 	ASR.w	#1, D0
 	ANDI.w	#$003E, D0
-	LEA	loc_0000D612, A0
+	LEA	DemonBossProjectileFrames, A0
 	MOVE.w	(A0,D0.w), $3C(A6)
 	BRA.b	loc_0000D572
 loc_0000D55E:
@@ -15212,14 +15212,14 @@ loc_0000D592:
 SetEntityCoordFromDirection:
 	BTST.b	#2, $1D(A5)
 	BNE.b	loc_0000D5B4
-	LEA	loc_0000D5DA, A0
+	LEA	EntityDirectionYOffsets, A0
 	MOVE.b	$41(A5), D0
 	ANDI.w	#3, D0
 	ADD.w	D0, D0
 	MOVE.w	(A0,D0.w), $4A(A5)
 	BRA.b	loc_0000D5CA
 loc_0000D5B4:
-	LEA	loc_0000D5D4, A0
+	LEA	EntityDirectionXOffsets, A0
 	MOVE.b	$41(A5), D0
 	ANDI.w	#3, D0
 	ADD.w	D0, D0
@@ -15227,21 +15227,26 @@ loc_0000D5B4:
 loc_0000D5CA:
 	RTS
 
-loc_0000D5CC:
+; loc_0000D5CC
+DemonBossWingFrameData:
 	dc.w	$0078, $0096
 	dc.w	$0082, $008C 
-loc_0000D5D4:
+; loc_0000D5D4
+EntityDirectionXOffsets:
 	dc.w	$0028
 	dc.w	$0032
 	dc.w	$003C
-loc_0000D5DA:
+; loc_0000D5DA
+EntityDirectionYOffsets:
 	dc.w	$0050
 	dc.w	$005A
 	dc.w	$0064
-loc_0000D5E0:
+; loc_0000D5E0
+DemonBossAttackYOffsets:
 	dc.b	$00, $00, $00, $00, $00, $00, $00, $0A, $00, $14, $00, $0A, $00, $00, $00, $0A, $00, $14, $00, $0A, $00, $00, $00, $0A, $00, $0A, $00, $14, $00, $14, $00, $0A 
 	dc.b	$00, $0A, $00, $00, $00, $00, $00, $0A, $00, $0A, $00, $14, $00, $14, $00, $0A, $00, $0A 
-loc_0000D612:
+; loc_0000D612
+DemonBossProjectileFrames:
 	dc.b	$00, $00, $00, $08, $00, $10, $00, $18, $00, $20, $00, $00, $00, $08, $00, $10, $00, $18, $00, $20, $00, $00, $00, $08, $00, $10, $00, $18, $00, $20, $00, $00 
 	dc.b	$00, $08, $00, $10, $00, $18, $00, $20, $00, $00, $00, $08, $00, $10, $00, $18, $00, $20 
 
@@ -15487,7 +15492,7 @@ loc_0000D95E:
 	MOVE.w	$3A(A5), D0
 	ASR.w	#1, D0
 	ANDI.w	#$000E, D0
-	LEA	loc_0000D9C0, A0
+	LEA	DemonBossProjectileTileFrames, A0
 	MOVE.w	(A0,D0.w), $3C(A5)
 	BRA.w	loc_0000D9AE
 loc_0000D978:
@@ -15497,7 +15502,7 @@ loc_0000D978:
 	MOVE.w	$3A(A5), D0
 	ASR.w	#1, D0
 	ANDI.w	#$000E, D0
-	LEA	loc_0000D9C0, A0
+	LEA	DemonBossProjectileTileFrames, A0
 	MOVE.w	(A0,D0.w), $3C(A5)
 loc_0000D99A:
 	MOVE.l	$32(A5), D0
@@ -15512,7 +15517,8 @@ loc_0000D9AE:
 loc_0000D9BE:
 	RTS
 
-loc_0000D9C0:
+; loc_0000D9C0
+DemonBossProjectileTileFrames:
 	dc.w	$0000
 	dc.w	$0008 
 	dc.w	$0010 
@@ -15879,7 +15885,7 @@ loc_0000DE94:
 	MOVE.w	D0, $12(A4)
 	MOVE.w	#$00FA, $16(A4)
 	CLR.b	$1B(A4)
-	MOVE.l	#loc_0000E244, $2(A4)
+	MOVE.l	#OrbitBossProjectileFallTick, $2(A4)
 	MOVE.l	#OrbitBoss_InnerWaitProjectile, $2(A5)
 	RTS
 	
@@ -16081,7 +16087,7 @@ loc_0000E15A:
 	MOVE.w	D0, $12(A4)
 	MOVE.w	#$00FA, $16(A4)
 	CLR.b	$1B(A4)
-	MOVE.l	#loc_0000E244, $2(A4)
+	MOVE.l	#OrbitBossProjectileFallTick, $2(A4)
 	MOVE.l	#OrbitBoss_OuterWaitProjectile, $2(A5)
 	RTS
 	
@@ -16110,7 +16116,8 @@ GetSignedVelocity:
 loc_0000E242:
 	RTS
 
-loc_0000E244:
+; loc_0000E244
+OrbitBossProjectileFallTick:
 	ADDQ.b	#1, $1B(A5)
 	MOVE.b	$1B(A5), D0
 	ANDI.w	#$001C, D0
@@ -17425,14 +17432,14 @@ loc_0000F460:
 	RTS
 	
 CalculateDirectionToEntity:
-	LEA	loc_0000F5C6, A1
+	LEA	DirectionToEntityLookup, A1
 	MOVE.w	$E(A6), D0
 	SUB.w	$E(A5), D0
 	MOVE.w	$12(A6), D1
 	SUB.w	$12(A5), D1
 	BRA.w	GetDirectionFromDeltas
 CalculateDirectionToPlayer:
-	LEA	loc_0000F5B6, A1
+	LEA	DirectionToPlayerLookup, A1
 	MOVEA.l	Player_entity_ptr.w, A6
 	MOVE.w	$E(A6), D0
 	MOVE.w	$E(A5), D1
@@ -17544,13 +17551,15 @@ loc_0000F594:
 	ANDI	#$F8FF, SR
 	RTS
 	
-loc_0000F5B6:
+; loc_0000F5B6
+DirectionToPlayerLookup:
 	dc.b	$C0, $A0, $A0, $80, $C0, $E0, $E0, $00, $40 
 	dc.b	$60
 	dc.b	$60
 	dc.b	$80
 	dc.b	$40, $20, $20, $00 
-loc_0000F5C6:
+; loc_0000F5C6
+DirectionToEntityLookup:
 	dc.b	$40, $60, $60, $00, $40, $60, $60 
 	dc.b	$80
 	dc.b	$C0
@@ -17760,7 +17769,7 @@ LoadEncounterGraphics:
 	MOVE.w	(A6)+, D5
 	BSR.w	LoadMultipleTilesFromTable
 	BSR.w	ExecuteVdpDmaTransfer
-	LEA	loc_0001F810-2, A6
+	LEA	GfxLoadList_OverworldBattle-2, A6
 	MOVE.w	(A6)+, Vdp_dma_slot_index.w
 	LEA	Tile_gfx_buffer.w, A2
 	MOVEA.l	(A6)+, A4
@@ -17865,7 +17874,7 @@ loc_0000F970:
 	RTS
 	
 LoadFirstPersonGraphics:
-	LEA	loc_0001F81C-2, A6
+	LEA	GfxLoadList_FirstPerson-2, A6
 	BSR.w	ProcessGraphicsLoadList
 	MOVE.l	#$40000000, D7
 	MOVE.w	#$01FF, D6
@@ -17875,24 +17884,24 @@ LoadFirstPersonGraphics:
 	RTS
 	
 LoadFirstPersonBattleGraphics:
-	LEA	loc_0001F8AC, A6
+	LEA	GfxLoadList_FirstPersonBattle, A6
 	BSR.w	ProcessGraphicsLoadList
 	RTS
 	
 LoadIntroSegalogGraphics:
-	LEA	loc_0001F93E, A6
+	LEA	GfxLoadList_IntroSegalogo, A6
 	BRA.w	ProcessGraphicsLoadList
 LoadIntroTitleGraphics:
-	LEA	loc_0001F94C, A6
+	LEA	GfxLoadList_IntroTitle, A6
 	BRA.w	ProcessGraphicsLoadList
 LoadTownGraphics:
-	LEA	loc_0001F95A, A6
+	LEA	GfxLoadList_Town, A6
 	BRA.w	ProcessGraphicsLoadList
 LoadTownBattleGraphics:
-	LEA	loc_0001F9E0, A6
+	LEA	GfxLoadList_TownBattle, A6
 	BRA.w	ProcessGraphicsLoadList
 LoadWorldBattleGraphics:
-	LEA	loc_0001FA96, A6
+	LEA	GfxLoadList_WorldBattle, A6
 	BRA.w	ProcessGraphicsLoadList
 LoadPlayerOverworldGraphics:
 	LEA	loc_00045F44, A3
@@ -18253,7 +18262,7 @@ LoadTownTileGraphics:
 	MOVEA.l	loc_0001F4B8, A0
 	BRA.b	loc_0000FDC0
 loc_0000FDAA:
-	LEA	loc_0001F418, A1
+	LEA	TownTileGfxTable, A1
 	MOVE.w	Current_town.w, D0 
 	MOVE.w	D0, D1  
 	ADD.w	D1, D1  
@@ -18266,7 +18275,7 @@ loc_0000FDC4:
 	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
 	DBF	D5, loc_0000FDC4
-	LEA	loc_0001F4C2, A0
+	LEA	DmaCmd_TownTileset_Wyclif, A0
 	BSR.w	ExecuteVdpDmaFromPointer
 	LEA	Tile_gfx_buffer.w, A2
 	TST.b	Swaffham_ruined.w
@@ -18277,7 +18286,7 @@ loc_0000FDC4:
 	MOVE.w	loc_0001F4C0, D5
 	BRA.b	loc_0000FE14
 loc_0000FDFA:
-	LEA	loc_0001F418, A1
+	LEA	TownTileGfxTable, A1
 	MOVE.w	Current_town.w, D0
 	MOVE.w	D0, D1
 	ADD.w	D1, D1
@@ -18289,7 +18298,7 @@ loc_0000FE14:
 	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
 	DBF	D5, loc_0000FE14
-	LEA	loc_0001F4D2, A0
+	LEA	DmaCmd_TownTileset_Parma, A0
 	BSR.w	ExecuteVdpDmaFromPointer
 	RTS
 	
@@ -18301,7 +18310,7 @@ loc_0000FE3A:
 	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
 	DBF	D5, loc_0000FE3A
-	LEA	loc_0001F4C2, A0
+	LEA	DmaCmd_TownTileset_Wyclif, A0
 	BSR.w	ExecuteVdpDmaFromPointer
 	LEA	Tile_gfx_buffer.w, A2
 	LEA	loc_00091CBC, A0
@@ -18310,7 +18319,7 @@ loc_0000FE5E:
 	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
 	DBF	D5, loc_0000FE5E
-	LEA	loc_0001F4D2, A0
+	LEA	DmaCmd_TownTileset_Parma, A0
 	BSR.w	ExecuteVdpDmaFromPointer
 	RTS
 	
@@ -18344,7 +18353,7 @@ loc_0000FEF0:
 	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
 	DBF	D5, loc_0000FEF0
-	LEA	loc_0001F532, A0
+	LEA	DmaCmd_OverworldStatusTiles, A0
 	BSR.w	ExecuteVdpDmaFromRam
 	RTS
 	
@@ -18367,7 +18376,7 @@ loc_0000FF32:
 	BSR.w	DetermineTerrainTileset
 loc_0000FF36:
 	MOVE.w	Terrain_tileset_index.w, D0
-	LEA	loc_0001F662, A1
+	LEA	TerrainTilemapMetadata, A1
 	ASL.w	#3, D0
 	LEA	(A1,D0.w), A1
 	LEA	Tile_gfx_buffer.w, A2
@@ -18398,7 +18407,7 @@ loc_0000FF90:
 	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
 	DBF	D5, loc_0000FF90
-	LEA	loc_0001F642, A0
+	LEA	DmaCmd_BattleTiles, A0
 	BSR.w	ExecuteVdpDmaFromRam
 	RTS
 	
@@ -18410,7 +18419,7 @@ loc_0000FFB6:
 	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
 	DBF	D5, loc_0000FFB6
-	LEA	loc_0001F6F2, A0
+	LEA	DmaCmd_BattleUiTiles, A0
 	BSR.w	ExecuteVdpDmaFromRam
 	RTS
 	
@@ -18422,8 +18431,9 @@ loc_0000FFDC:
 	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
 	DBF	D5, loc_0000FFDC
-loc_0000FFE8:
-	LEA	loc_0001F6E2, A0
+; loc_0000FFE8
+ExecuteWorldMapDma:
+	LEA	DmaCmd_WorldMapTiles, A0
 	BSR.w	ExecuteVdpDmaFromRam
 ; NullSpriteRoutine
 ; Used as NullSpriteRoutine-2 in enemy data tables (points to BSR instruction)
@@ -18443,7 +18453,7 @@ loc_00010006:
 loc_0001000A:
 	DBF	D5, loc_00010002
 loc_0001000E:
-	LEA	loc_0001F702, A0
+	LEA	DmaCmd_CaveTiles, A0
 	BSR.w	ExecuteVdpDmaFromRam
 	RTS
 	
@@ -18455,7 +18465,7 @@ loc_00010028:
 	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
 	DBF	D5, loc_00010028
-	LEA	loc_0001F682, A0
+	LEA	DmaCmd_BattleGroundGfx, A0
 	BSR.w	ExecuteVdpDmaFromRam
 	RTS
 	
@@ -18467,7 +18477,7 @@ loc_0001004E:
 	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
 	DBF	D5, loc_0001004E
-	LEA	loc_0001F692, A0
+	LEA	DmaCmd_BattleEnemyGfx, A0
 	BSR.w	ExecuteVdpDmaFromRam
 	RTS
 	
@@ -18479,7 +18489,7 @@ loc_00010074:
 	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
 	DBF	D5, loc_00010074
-	LEA	loc_0001F6A2, A0
+	LEA	DmaCmd_BattleStatusGfx, A0
 	BSR.w	ExecuteVdpDmaFromRam
 	RTS
 	
@@ -18491,7 +18501,7 @@ loc_0001009A:
 	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
 	DBF	D5, loc_0001009A
-	LEA	loc_0001F6C2, A0
+	LEA	DmaCmd_CaveEnemyGfx, A0
 	BSR.w	ExecuteVdpDmaFromRam
 	RTS
 	
@@ -18503,7 +18513,7 @@ loc_000100C0:
 	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
 	DBF	D5, loc_000100C0
-	LEA	loc_0001F6D2, A0
+	LEA	DmaCmd_CaveItemGfx, A0
 	BSR.w	ExecuteVdpDmaFromRam
 	RTS
 	
@@ -18515,7 +18525,7 @@ loc_000100E6:
 	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
 	DBF	D5, loc_000100E6
-	LEA	loc_0001F6B2, A0
+	LEA	DmaCmd_BattlePlayerGfx, A0
 	BSR.w	ExecuteVdpDmaFromRam
 	RTS
 	
@@ -18530,7 +18540,7 @@ loc_0001010C:
 	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
 	DBF	D5, loc_0001010C
-	LEA	loc_0001F4E2, A0
+	LEA	DmaCmd_TownTileGfxSet1_A, A0
 	BSR.w	ExecuteVdpDmaFromRam
 	LEA	Tile_gfx_buffer.w, A2
 	LEA	loc_0005F262, A0
@@ -18539,7 +18549,7 @@ loc_00010130:
 	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
 	DBF	D5, loc_00010130
-	LEA	loc_0001F4F2, A0
+	LEA	DmaCmd_TownTileGfxSet1_B, A0
 	BSR.w	ExecuteVdpDmaFromRam
 	LEA	Tile_gfx_buffer.w, A2
 	LEA	loc_000607AA, A0
@@ -18548,7 +18558,7 @@ loc_00010154:
 	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
 	DBF	D5, loc_00010154
-	LEA	loc_0001F502, A0
+	LEA	DmaCmd_TownNpcGfx, A0
 	BSR.w	ExecuteVdpDmaFromRam
 	LEA	Tile_gfx_buffer.w, A2
 	LEA	loc_00061A76, A0
@@ -18557,7 +18567,7 @@ loc_00010178:
 	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
 	DBF	D5, loc_00010178
-	LEA	loc_0001F512, A0
+	LEA	DmaCmd_TownTileGfxSet1_D, A0
 	BSR.w	ExecuteVdpDmaFromRam
 	LEA	Tile_gfx_buffer.w, A2
 	LEA	loc_00061484, A0
@@ -18566,7 +18576,7 @@ loc_0001019C:
 	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
 	DBF	D5, loc_0001019C
-	LEA	loc_0001F522, A0
+	LEA	DmaCmd_TownTileGfxSet1_E, A0
 	BSR.w	ExecuteVdpDmaFromRam
 	RTS
 	
@@ -18578,7 +18588,7 @@ loc_000101C2:
 	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
 	DBF	D5, loc_000101C2
-	LEA	loc_0001F542, A0
+	LEA	DmaCmd_MenuTilesA, A0
 	BSR.w	ExecuteVdpDmaFromRam
 	LEA	Tile_gfx_buffer.w, A2
 	LEA	loc_00067682, A0
@@ -18587,18 +18597,20 @@ loc_000101E6:
 	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
 	DBF	D5, loc_000101E6
-	LEA	loc_0001F552, A0
+	LEA	DmaCmd_MenuTilesB, A0
 	BSR.w	ExecuteVdpDmaFromRam
 	LEA	Tile_gfx_buffer.w, A2
-loc_00010200:
+; loc_00010200
+LoadMenuTileGfxSet2:
 	LEA	loc_000607AA, A0
-loc_00010206:
+; loc_00010206
+LoadMenuTileGfxSet3:
 	MOVE.w	#$006B, D5
 loc_0001020A:
 	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
 	DBF	D5, loc_0001020A
-	LEA	loc_0001F502, A0
+	LEA	DmaCmd_TownNpcGfx, A0
 	BSR.w	ExecuteVdpDmaFromRam
 	LEA	Tile_gfx_buffer.w, A2
 	LEA	loc_0006803C, A0
@@ -18607,7 +18619,7 @@ loc_0001022E:
 	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
 	DBF	D5, loc_0001022E
-	LEA	loc_0001F562, A0
+	LEA	DmaCmd_MenuMiscTilesA, A0
 	BSR.w	ExecuteVdpDmaFromRam
 	LEA	Tile_gfx_buffer.w, A2
 	LEA	loc_00067FB4, A0
@@ -18616,7 +18628,7 @@ loc_00010252:
 	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
 	DBF	D5, loc_00010252
-	LEA	loc_0001F572, A0
+	LEA	DmaCmd_MenuMiscTilesB, A0
 	BSR.w	ExecuteVdpDmaFromRam
 	RTS
 	
@@ -18628,7 +18640,7 @@ loc_00010278:
 	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
 	DBF	D5, loc_00010278
-	LEA	loc_0001F592, A0
+	LEA	DmaCmd_TitleScreenTilesA, A0
 	BSR.w	ExecuteVdpDmaFromRam
 	LEA	loc_000633D8, A0
 	LEA	Tile_gfx_buffer.w, A2
@@ -18637,7 +18649,7 @@ loc_0001029C:
 	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
 	DBF	D5, loc_0001029C
-	LEA	loc_0001F5A2, A0
+	LEA	DmaCmd_TitleScreenTilesB, A0
 	BSR.w	ExecuteVdpDmaFromRam
 	LEA	loc_00063ED8, A0
 	LEA	Tile_gfx_buffer.w, A2
@@ -18646,7 +18658,7 @@ loc_000102C0:
 	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
 	DBF	D5, loc_000102C0
-	LEA	loc_0001F5B2, A0
+	LEA	DmaCmd_TitleScreenTilesC, A0
 	BSR.w	ExecuteVdpDmaFromRam
 	LEA	loc_000648FE, A0
 	LEA	Tile_gfx_buffer.w, A2
@@ -18655,17 +18667,18 @@ loc_000102E4:
 	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
 	DBF	D5, loc_000102E4
-	LEA	loc_0001F5C2, A0
+	LEA	DmaCmd_TitleScreenTilesD, A0
 	BSR.w	ExecuteVdpDmaFromRam
 	LEA	loc_00064FB4, A0
-loc_00010300:
+; loc_00010300
+LoadTitleScreenTileGfx:
 	LEA	Tile_gfx_buffer.w, A2
 	MOVE.w	#$0051, D5
 loc_00010308:
 	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
 	DBF	D5, loc_00010308
-	LEA	loc_0001F5D2, A0
+	LEA	DmaCmd_TitleScreenTilesE, A0
 	BSR.w	ExecuteVdpDmaFromRam
 	LEA	loc_0006582E, A0
 	LEA	Tile_gfx_buffer.w, A2
@@ -18674,7 +18687,7 @@ loc_0001032C:
 	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
 	DBF	D5, loc_0001032C
-	LEA	loc_0001F5E2, A0
+	LEA	DmaCmd_TitleScreenTilesF, A0
 	BSR.w	ExecuteVdpDmaFromRam
 	RTS
 	
@@ -18686,7 +18699,7 @@ loc_00010352:
 	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
 	DBF	D5, loc_00010352
-	LEA	loc_0001F582, A0
+	LEA	DmaCmd_OptionsMenuTiles, A0
 	BSR.w	ExecuteVdpDmaFromRam
 	RTS
 	
@@ -18718,7 +18731,7 @@ loc_0001036E:
 	
 ; loc_000103D6
 InitVdpDmaRamRoutine:
-	LEA	loc_000103EC, A2
+	LEA	VdpDmaRoutineTemplate, A2
 loc_000103DC:
 	LEA	Vdp_dma_ram_routine.w, A3
 	MOVE.l	(A2)+, (A3)+
@@ -18728,7 +18741,8 @@ loc_000103DC:
 	MOVE.w	(A2)+, (A3)+
 	RTS
 	
-loc_000103EC:
+; loc_000103EC
+VdpDmaRoutineTemplate:
 	dc.l	$33F8C18C
 	dc.l	$00C00004
 	dc.l	$33F8C18E
@@ -18893,8 +18907,8 @@ loc_0001059A:
 	RTS
 	
 SaveGameToSram:
-	LEA	loc_0001094A, A0
-	LEA	loc_0001095A, A1
+	LEA	SramSaveSlotAddresses, A0
+	LEA	SramBackupSlotAddresses, A1
 	MOVE.w	Dialog_selection.w, D0
 	ANDI.w	#3, D0
 	ADD.w	D0, D0
@@ -18992,7 +19006,8 @@ loc_000106B2:
 	DBF	D0, loc_000106B2
 	RTS
 	
-loc_000106C2:
+; loc_000106C2
+FileMenuPhaseDispatch:
 	LEA	FileMenuPhaseJumpTable, A0
 	MOVE.w	File_menu_phase.w, D0
 	ADD.w	D0, D0
@@ -19024,8 +19039,8 @@ loc_0001070A:
 	BEQ.w	loc_000107A2
 	MOVE.w	Dialog_selection.w, Menu_cursor_index.w
 	JSR	DrawMenuCursor
-	LEA	loc_0001094A, A0
-	LEA	loc_0001095A, A1
+	LEA	SramSaveSlotAddresses, A0
+	LEA	SramBackupSlotAddresses, A1
 	MOVE.w	Dialog_selection.w, D0
 	ANDI.w	#3, D0
 	ADD.w	D0, D0
@@ -19212,12 +19227,14 @@ loc_0001093A:
 	DBF	D0, loc_0001093A	
 	RTS
 	
-loc_0001094A:
+; loc_0001094A
+SramSaveSlotAddresses:
 	dc.l	$00200001
 	dc.l	$00200A81
 	dc.l	$00201501
 	dc.l	$00200001 
-loc_0001095A:
+; loc_0001095A
+SramBackupSlotAddresses:
 	dc.l	$00200541
 	dc.l	$00200FC1
 	dc.l	$00201A41
@@ -22244,7 +22261,7 @@ LoadPalettesFromTable:
 	BNE.w	loc_000132AA
 	LEA	Palette_line_0_buffer.w, A1
 	LEA	Palette_line_0_index.w, A0
-	LEA	loc_00013876, A2
+	LEA	PaletteDataTable, A2
 	MOVEQ	#3, D2
 loc_00013286:
 	MOVEQ	#0, D1
@@ -22423,7 +22440,7 @@ loc_000134B6:
 	RTS
 
 ShiftPaletteTowardsTarget:
-	LEA	loc_00013876, A3
+	LEA	PaletteDataTable, A3
 	ASL.w	#5, D1
 	LEA	(A3,D1.w), A3
 	MOVEQ	#$0000000F, D7
@@ -22577,7 +22594,7 @@ loc_000136CC:
 	RTS
 
 LoadPaletteByIndex:
-	LEA	loc_00013876, A2
+	LEA	PaletteDataTable, A2
 	ASL.w	#5, D1
 	LEA	(A2,D1.w), A3
 	MOVE.l	(A3)+, (A1)+
@@ -22591,7 +22608,7 @@ LoadPaletteByIndex:
 	RTS
 
 FadePaletteTowardsTarget:
-	LEA	loc_00013876, A3
+	LEA	PaletteDataTable, A3
 	ASL.w	#5, D1
 	LEA	(A3,D1.w), A3
 	MOVEQ	#$0000000F, D7
@@ -22682,7 +22699,8 @@ loc_0001380A:
 	MOVE.w	#0, Z80_bus_request
 	RTS
 	
-loc_00013876:
+; loc_00013876
+PaletteDataTable:
 	dc.b	$00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 
 	dc.b	$00, $00, $0E, $A0, $0E, $80, $0E, $60, $0E, $40, $0E, $20, $0E, $00, $0C, $00, $0A, $00, $08, $00, $06, $00, $08, $00, $0A, $00, $0C, $00, $00, $00, $0E, $EE 
 	dc.b	$00, $00, $0E, $C0, $0E, $A0, $0E, $80, $0E, $60, $0E, $40, $0E, $20, $0E, $00, $0C, $00, $0A, $00, $08, $00, $06, $00, $08, $00, $0A, $00, $00, $00, $0E, $EE 
@@ -22879,7 +22897,8 @@ loc_00013876:
 	dc.b	$00, $00, $00, $22, $00, $44, $00, $66, $00, $88, $00, $AA, $00, $CC, $06, $A0, $08, $C0, $0A, $E0, $02, $22, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF 
 	dc.b	$00, $00, $02, $22, $04, $44, $06, $66, $08, $88, $0A, $AA, $0C, $CC, $06, $A0, $08, $C0, $0A, $E0, $02, $22, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF 
 	dc.b	$00, $00, $0C, $CC, $0A, $AA, $08, $88, $04, $44, $00, $00, $04, $4C, $04, $6A, $06, $A8, $02, $22, $0A, $66, $0C, $88, $0C, $66, $0A, $44, $08, $22, $FF, $FF 
-loc_000150F6:
+; loc_000150F6
+NameEntryScreen_Init:
 	JSR	DisableVDPDisplay
 	JSR	ClearVRAMPlaneA
 	JSR	ClearVRAMPlaneB
@@ -22902,7 +22921,7 @@ loc_000150F6:
 	MOVE.w	#0, $C(A6)
 	MOVE.w	#$04DA, $8(A6)
 	MOVE.b	#0, $6(A6)
-	MOVE.l	#loc_00015394, $2(A6)
+	MOVE.l	#NameEntryGridCursor_Tick, $2(A6)
 	CLR.w	D0
 	MOVE.b	$1(A6), D0
 	LEA	(A6,D0.w), A6
@@ -22917,14 +22936,15 @@ loc_000150F6:
 	MOVE.w	#$0020, $C(A6)
 	MOVE.w	#$04DB, $8(A6)
 	MOVE.b	#0, $6(A6)
-	MOVE.l	#loc_000153B8, $2(A6)
+	MOVE.l	#NameEntryTextCursor_Tick, $2(A6)
 	JSR	EnableDisplay
-	MOVE.l	#loc_000151E0, $2(A5)
+	MOVE.l	#NameEntryScreen_InputHandler, $2(A5)
 	CLR.w	Name_input_cursor_pos.w
 	CLR.w	Name_entry_cursor_column.w
 	RTS
 
-loc_000151E0:
+; loc_000151E0
+NameEntryScreen_InputHandler:
 	TST.b	Fade_in_lines_mask.w
 	BNE.b	loc_00015220
 	MOVE.w	#BUTTON_BIT_C, D2
@@ -23012,7 +23032,7 @@ loc_000152E2:
 loc_00015304:
 	MOVE.b	#$FF, (A0)
 	MOVE.b	#$FF, Name_entry_complete.w
-	MOVE.l	#loc_00015392, $2(A5)
+	MOVE.l	#NameEntryScreen_Done, $2(A5)
 	RTS
 
 loc_00015318:
@@ -23051,10 +23071,12 @@ loc_00015378:
 	MOVE.w	#$E04E, VDP_data_port
 loc_00015390:
 	RTS
-loc_00015392:
+; loc_00015392
+NameEntryScreen_Done:
 	RTS
 
-loc_00015394:
+; loc_00015394
+NameEntryGridCursor_Tick:
 	MOVE.w	Name_entry_cursor_x.w, D0
 	ASL.w	#3, D0
 	ADDI.w	#$002C, D0
@@ -23066,7 +23088,8 @@ loc_00015394:
 	JSR	AddSpriteToDisplayList
 	RTS
 
-loc_000153B8:
+; loc_000153B8
+NameEntryTextCursor_Tick:
 	MOVE.w	Name_entry_cursor_column.w, D0
 	CMPI.w	#5, D0
 	BGT.b	loc_000153E0
@@ -23260,7 +23283,8 @@ loc_000155E0:
 loc_000155F2:
 	RTS
 
-loc_000155F4:
+; loc_000155F4
+SegaLogoScreen_Init:
 	ORI	#$0700, SR
 	JSR	DisableVDPDisplay
 	JSR	ClearVRAMPlaneA
@@ -23290,11 +23314,12 @@ loc_00015640:
 	ANDI	#$F8FF, SR
 	JSR	EnableDisplay
 	MOVE.w	#1, Palette_line_0_index.w
-	MOVE.l	#loc_00015682, $2(A5)
+	MOVE.l	#SegaLogoScreen_FadeIn, $2(A5)
 	JSR	LoadPalettesFromTable
 	RTS
 
-loc_00015682:
+; loc_00015682
+SegaLogoScreen_FadeIn:
 	ADDQ.w	#1, Frame_delay_counter.w
 	BTST.b	#6, $00A10001
 	BNE.w	loc_0001569C
@@ -23316,7 +23341,8 @@ loc_000156B8:
 loc_000156BE:
 	RTS
 
-loc_000156C0:
+; loc_000156C0
+PrologueScreen_Init:
 	JSR	DisableVDPDisplay
 	JSR	ClearVRAMPlaneA
 	JSR	ClearVRAMPlaneB
@@ -23335,12 +23361,12 @@ loc_000156C0:
 	JSR	EnableDisplay
 	MOVE.b	#$81, D0
 	JSR	QueueSoundEffect
-	MOVE.l	#loc_00015764, $2(A5)
+	MOVE.l	#PrologueStateDispatcher, $2(A5)
 	RTS
 
 ; LoadPrologueFadeParams
 LoadPrologueFadeParams:
-	LEA	loc_00015B70, A0
+	LEA	PrologueFadeParamData, A0
 	MOVE.w	Prologue_state.w, D0
 	ADD.w	D0, D0
 	LEA	(A0,D0.w), A0
@@ -23361,15 +23387,17 @@ loc_00015758:
 loc_00015762:
 	RTS
 
-loc_00015764:
+; loc_00015764
+PrologueStateDispatcher:
 	MOVE.w	Prologue_state.w, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
-	LEA	loc_00015778, A0
+	LEA	PrologueStateJumpTable, A0
 	JSR	(A0,D0.w)
 	RTS
 
-loc_00015778:
+; loc_00015778
+PrologueStateJumpTable:
 	BRA.w	PrologueWaitAndAdvanceState
 	BRA.w	PrologueWaitAndAdvanceState
 	BRA.w	loc_00015944
@@ -23654,7 +23682,8 @@ loc_00015B66:
 loc_00015B6E:
 	RTS
 
-loc_00015B70: ; Fade animation data during prologue
+; loc_00015B70
+PrologueFadeParamData: ; Fade animation data during prologue
 	dc.b	$01 
 	dc.b	$02
 	dc.b	$01 
@@ -23741,11 +23770,12 @@ Prologue6Str:
 ; loc_00015E58
 MenuObjectHandler:
 	CLR.w	Town_camera_move_state.w
-	MOVE.l	#loc_00015E6A, $2(A5)
+	MOVE.l	#TownCameraAndPaletteUpdate, $2(A5)
 	CLR.b	Camera_scrolling_active.w
 	RTS
 
-loc_00015E6A:
+; loc_00015E6A
+TownCameraAndPaletteUpdate:
 	TST.b	Is_in_battle.w
 	BNE.b	loc_00015EA4
 	TST.b	Player_in_first_person_mode.w
@@ -23762,12 +23792,13 @@ loc_00015E8C:
 	MOVE.w	Town_camera_move_state.w, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
-	LEA	loc_00015EA6, A0
+	LEA	CameraMovementJumpTable, A0
 	JSR	(A0,D0.w)
 loc_00015EA4:
 	RTS
 
-loc_00015EA6: ; suspected camera movement handling
+; loc_00015EA6
+CameraMovementJumpTable: ; suspected camera movement handling
 	BRA.w	ResetTownCameraMovementState
 	BRA.w	loc_00015ECA
 	BRA.w	loc_00015F1C
@@ -24112,7 +24143,7 @@ loc_00016272:
 	MOVE.w	D2, VDP_data_port
 	DBF	D4, loc_00016272
 	ANDI	#$F8FF, SR
-	LEA	loc_000167D0, A0
+	LEA	TownPaletteConfigTable, A0
 	MOVE.w	Current_town_room.w, D0
 	CMPI.w	#$000F, D0
 	BLE.w	loc_000162EA
@@ -24153,7 +24184,7 @@ loc_000162F6:
 	MOVE.w	(A0)+, Palette_line_2_cycle_base.w
 	MOVE.w	(A0)+, Palette_line_2_cycle_index_1.w
 	MOVE.w	(A0)+, Palette_line_2_cycle_index_2.w
-	LEA	loc_00016810, A0
+	LEA	TownPaletteLine1IndexTable, A0
 	MOVE.w	Current_town.w, D0
 	ADD.w	D0, D0
 	MOVE.w	(A0,D0.w), Palette_line_1_index.w
@@ -24538,7 +24569,8 @@ loc_000167C4:
 loc_000167CE:
 	RTS
 
-loc_000167D0:
+; loc_000167D0
+TownPaletteConfigTable:
 	dc.w	$0015
 	dc.w	$0016
 	dc.b	$00, $17, $00, $18, $00, $19 
@@ -24559,7 +24591,8 @@ loc_000167D0:
 	dc.w	$0023
 	dc.w	$001E
 	dc.b	$00, $1F, $00, $20 
-loc_00016810:
+; loc_00016810
+TownPaletteLine1IndexTable:
 	dc.b	$00, $15 
 	dc.w	$002A
 	dc.b	$00, $15 
@@ -24744,14 +24777,15 @@ loc_000169BE:
 loc_000169CE:
 	RTS
 
-loc_000169D0:
+; loc_000169D0
+TitleScreen_Init:
 	CLR.w	Intro_timer.w
 	JSR	DisableVDPDisplay
 	JSR	ClearVRAMPlaneA
 	JSR	ClearVRAMPlaneB
 	BSR.w	DrawIntroBackground
 	BSR.w	DrawIntroGraphics
-	MOVE.l	#loc_00016A8C, $2(A5)
+	MOVE.l	#TitleScreen_WaitForHScroll, $2(A5)
 	MOVE.w	#0, Palette_line_0_index.w
 	MOVE.w	#$0029, Palette_line_1_index.w
 	MOVE.w	#0, Palette_line_2_index.w
@@ -24787,11 +24821,12 @@ loc_00016A78:
 	DBF	D7, loc_00016A78
 	RTS
 
-loc_00016A8C:
+; loc_00016A8C
+TitleScreen_WaitForHScroll:
 	MOVE.b	#$FF, Scene_update_flag.w
 	TST.b	HScroll_update_busy.w
 	BNE.b	loc_00016AB6
-	MOVE.l	#loc_00016AB8, $2(A5)
+	MOVE.l	#TitleScreen_FadeAndAnimate, $2(A5)
 	MOVE.b	#4, Fade_in_lines_mask.w
 	MOVE.w	#$0028, Palette_line_2_fade_target.w
 	MOVE.b	#$82, D0
@@ -24799,7 +24834,8 @@ loc_00016A8C:
 loc_00016AB6:
 	RTS
 
-loc_00016AB8:
+; loc_00016AB8
+TitleScreen_FadeAndAnimate:
 	BSR.w	UpdateEndingHScrollValues
 	TST.b	Fade_in_lines_mask.w
 	BNE.b	loc_00016B12
@@ -24825,11 +24861,12 @@ loc_00016AF8:
 	CMPI.w	#$0091, D0
 	BLE.b	loc_00016B12
 	CLR.w	Intro_animation_frame.w
-	MOVE.l	#loc_00016B14, $2(A5)
+	MOVE.l	#TitleScreen_LightningFlash, $2(A5)
 loc_00016B12:
 	RTS
 
-loc_00016B14:
+; loc_00016B14
+TitleScreen_LightningFlash:
 	BSR.w	UpdateEndingHScrollValues
 	ADDQ.w	#1, Intro_timer.w
 	MOVE.w	Intro_timer.w, D0
@@ -24863,13 +24900,14 @@ loc_00016B5C:
 loc_00016B6E:
 	MOVE.w	#$0030, Palette_line_0_index.w
 	MOVE.w	#$0027, Palette_line_3_index.w
-	MOVE.l	#loc_00016B8A, $2(A5)
+	MOVE.l	#TitleScreen_ShowPressStart, $2(A5)
 loc_00016B82:
 	JSR	LoadPalettesFromTable
 loc_00016B88:
 	RTS
 
-loc_00016B8A:
+; loc_00016B8A
+TitleScreen_ShowPressStart:
 	BSR.w	UpdateEndingHScrollValues
 	TST.b	Intro_text_pending.w
 	BEQ.b	loc_00016BB0
@@ -24888,32 +24926,34 @@ loc_00016BB0:
 	BSR.w	DrawTilemapToVRAM_PlaneA
 	MOVE.w	#$00FF, Prologue_state.w
 	MOVE.w	#$02FF, Prologue_scroll_offset.w
-	MOVE.l	#loc_00016BE0, $2(A5)
+	MOVE.l	#TitleScreen_ScrollAndWait, $2(A5)
 	BSR.w	SpawnIntroSwordSprite
 	JSR	LoadPalettesFromTable
 	RTS
 
-loc_00016BE0:
+; loc_00016BE0
+TitleScreen_ScrollAndWait:
 	MOVE.w	Prologue_state.w, D1
 	CMPI.w	#$03FF, D1
 	BLT.b	loc_00016C02
 	MOVE.b	#$FF, Title_intro_complete.w
 	JSR	DrawStartContinueMenu
 	BSR.w	SpawnMenuCursorSprites
-	MOVE.l	#loc_00016C0C, $2(A5)
+	MOVE.l	#TitleScreen_IdleWithScroll, $2(A5)
 loc_00016C02:
 	BSR.w	UpdateEndingHScrollValues
 	BSR.w	UpdatePrologueScrollVRAM
 	RTS
 	
-loc_00016C0C:
+; loc_00016C0C
+TitleScreen_IdleWithScroll:
 	BSR.w	UpdateEndingHScrollValues
 	RTS
 
 UpdateEndingHScrollValues:
 	MOVE.b	#$FF, Scene_update_flag.w
 	LEA	HScroll_run_table.w, A0
-	LEA	loc_00016E4A, A1
+	LEA	EndingHScrollSpeedTable, A1
 	MOVE.w	#$A, D7
 loc_00016C26:
 	MOVE.l	(A1)+, D0
@@ -25058,10 +25098,11 @@ SpawnIntroSwordSprite:
 	CLR.w	$16(A6)
 	MOVE.w	#$0483, $8(A6)
 	MOVE.b	#0, $6(A6)
-	MOVE.l	#loc_00016E1E, $2(A6)
+	MOVE.l	#IntroSwordSprite_Tick, $2(A6)
 	RTS
 
-loc_00016E1E:
+; loc_00016E1E
+IntroSwordSprite_Tick:
 	ADDQ.b	#1, $1B(A5)
 	MOVE.b	$1B(A5), D0
 	ANDI.w	#$0078, D0
@@ -25070,15 +25111,17 @@ loc_00016E1E:
 	BLE.b	loc_00016E36
 	MOVE.w	#$E, D0
 loc_00016E36:
-	LEA	loc_00016E76, A0
+	LEA	IntroSwordFrameTable, A0
 	MOVE.w	(A0,D0.w), $8(A5)
 	JSR	AddSpriteToDisplayList
 	RTS
 
-loc_00016E4A:
+; loc_00016E4A
+EndingHScrollSpeedTable:
 	dc.b	$00, $00, $40, $00, $00, $00, $60, $00, $00, $00, $80, $00, $00, $00, $A0, $00, $00, $00, $C0, $00, $00, $01, $00, $00, $00, $01, $40, $00, $00, $01, $80, $00 
 	dc.b	$00, $01, $A0, $00, $00, $02, $00, $00, $00, $02, $40, $00 
-loc_00016E76:
+; loc_00016E76
+IntroSwordFrameTable:
 	dc.b	$04, $83, $04, $84, $04, $85, $04, $86, $04, $85, $04, $86, $04, $84, $00, $00 
 SpawnMenuCursorSprites:
 	MOVEA.l	Enemy_list_ptr.w, A6
@@ -25097,7 +25140,7 @@ SpawnMenuCursorSprites:
 	CLR.w	$16(A6)
 	MOVE.w	#$0487, $8(A6)
 	MOVE.b	#$0C, $6(A6)
-	MOVE.l	#loc_00016F34, $2(A6)
+	MOVE.l	#MenuCursorSprite_Tick, $2(A6)
 	CLR.w	D0
 	MOVE.b	$1(A6), D0
 	LEA	(A6,D0.w), A6
@@ -25113,10 +25156,11 @@ SpawnMenuCursorSprites:
 	CLR.w	$16(A6)
 	MOVE.w	#$048B, $8(A6)
 	MOVE.b	#$0C, $6(A6)
-	MOVE.l	#loc_00016F34, $2(A6)
+	MOVE.l	#MenuCursorSprite_Tick, $2(A6)
 	RTS
 
-loc_00016F34:
+; loc_00016F34
+MenuCursorSprite_Tick:
 	JSR	AddSpriteToDisplayList
 	RTS
 
@@ -25140,7 +25184,8 @@ loc_00016F60:
 	ANDI	#$F8FF, SR
 	RTS
 
-loc_00016F82:
+; loc_00016F82
+EndingSequence_Init:
 	MOVE.w	#$0084, Palette_line_0_fade_in_target.w
 	MOVE.w	#$0084, Palette_line_1_fade_in_target.w
 	MOVE.w	#$0084, Palette_line_2_fade_in_target.w
@@ -25155,11 +25200,12 @@ loc_00016F82:
 	MOVEA.l	Battle_entity_slot_2_ptr.w, A6
 	BCLR.b	#7, (A6)
 	MOVE.w	#$0032, Ending_timer.w
-	MOVE.l	#loc_00016FD8, $2(A5)
+	MOVE.l	#EndingSequence_StepDispatcher, $2(A5)
 	MOVE.b	#$FF, HScroll_full_update_flag.w
 	RTS
 
-loc_00016FD8:
+; loc_00016FD8
+EndingSequence_StepDispatcher:
 	LEA	EndingSequenceStepJumpTable, A0
 	MOVE.w	Ending_sequence_step.w, D0
 	ADD.w	D0, D0
@@ -25460,7 +25506,7 @@ EndingSequence_CommonUpdate:
 	RTS
 
 DisplayEndingTextLine:
-	LEA	loc_00017C1E, A0
+	LEA	CreditsTextPtrTable, A0
 	MOVEQ	#0, D1
 	MOVE.w	D0, D1
 	ADD.w	D0, D0
@@ -25842,9 +25888,11 @@ AndPushAbcStartTextStr:
 ; Empty string used in credits/text tables
 EmptyTextStr:
 	dc.b	$00, $00
-loc_00017C1C:
+; loc_00017C1C
+CreditsTextListTerminator:
 	dc.b	$FE, $00
-loc_00017C1E:
+; loc_00017C1E
+CreditsTextPtrTable:
 	dc.l	EmptyTextStr
 	dc.l	StaffTextStr
 	dc.l	EmptyTextStr
@@ -26015,8 +26063,9 @@ loc_00017C1E:
 	dc.l	EmptyTextStr
 	dc.l	EmptyTextStr
 	dc.l	EmptyTextStr
-	dc.l	loc_00017C1C
-loc_00017EC6:
+	dc.l	CreditsTextListTerminator
+; loc_00017EC6
+SpellbookMenuStateMachine:
 	MOVE.w	Spellbook_menu_state.w, D0
 	ANDI.w	#$001F, D0
 	ADD.w	D0, D0
@@ -26508,7 +26557,7 @@ loc_000185BC:
 	MOVE.b	(A0,D0.w), D1
 	BEQ.w	loc_00018642
 	JSR	DrawStatusMenuWindow
-	LEA	loc_000189C2, A0
+	LEA	TownOverworldCoords, A0
 	MOVE.w	Aries_selected_town.w, D0
 	ANDI.w	#$000F, D0
 	ASL.w	#3, D0
@@ -26786,7 +26835,8 @@ loc_000189AC:
 	MOVE.w	#9, Spellbook_menu_state.w
 	RTS
 
-loc_000189C2: ; Town locations. Without duplicates.
+; loc_000189C2
+TownOverworldCoords: ; Town locations. Without duplicates.
 	; format:
 	; dc.w (x_in_sector), (y_in_sector), (sector_x), (sector_y)
 	dc.w	$0008, $000D, $0000, $0006 ; TOWN_WYCLIF
@@ -28581,7 +28631,8 @@ CoordsOutOfBounds:
 	CLR.w	D0
 	RTS
 
-loc_0001A2CE:
+; loc_0001A2CE
+ItemMenuStateMachine:
 	MOVE.w	Item_menu_state.w, D0
 	ANDI.w	#$F, D0
 	ADD.w	D0, D0
@@ -29017,7 +29068,7 @@ loc_0001A8C0:
 	RTS
 
 loc_0001A8DA:
-	LEA	loc_000189C2, A0
+	LEA	TownOverworldCoords, A0
 	MOVE.w	Current_town.w, D0
 	CMPI.w	#TOWN_STOW1, D0
 	BLE.b	loc_0001A8F4
@@ -29433,7 +29484,7 @@ UseAlarmClock:
 	CLR.w	D1
 	CLR.w	D2
 	MOVEA.l	Player_entity_ptr.w, A6
-	LEA	loc_0001AE88, A0
+	LEA	AlarmClockPositionData, A0
 	MOVE.w	#3, D7
 loc_0001AE40:
 	MOVE.w	D1, D0
@@ -29462,7 +29513,8 @@ loc_0001AE78:
 	PRINT 	BrrrnnnggStr
 	RTS
 
-loc_0001AE88:
+; loc_0001AE88
+AlarmClockPositionData:
 	dc.w	$00D8
 	dc.w	$0098
 	dc.w	$0000 
@@ -29508,7 +29560,7 @@ UseOldWomansSketch:
 	BNE.w	loc_0001AF1E
 	CLR.w	D0
 	CLR.w	D1
-	LEA	loc_0001AF3C, A0
+	LEA	OldManSketchPositionData, A0
 	MOVE.w	#3, D7
 loc_0001AEFA:
 	MOVE.w	(A0), D0
@@ -29532,7 +29584,8 @@ loc_0001AF28:
 	PRINT 	OldManTookStr
 	BSR.w	RemoveSelectedItemFromList
 	RTS
-loc_0001AF3C:
+; loc_0001AF3C
+OldManSketchPositionData:
 	dc.w	OLD_MAN_POSITION_X
 	dc.w	OLD_MAN_POSITION_Y+1
 	dc.w	DIRECTION_UP
@@ -29560,7 +29613,7 @@ UseOldMansSketch
 	CLR.w	D0
 	CLR.w	D1
 	MOVEA.l	Player_entity_ptr.w, A6
-	LEA	loc_0001AFC0, A0
+	LEA	OldWomanSketchPositionData, A0
 	MOVE.w	#3, D7
 loc_0001AF7E:
 	MOVE.w	(A0), D0
@@ -29585,7 +29638,8 @@ loc_0001AFAC:
 	BSR.w	RemoveSelectedItemFromList
 	RTS
 
-loc_0001AFC0:
+; loc_0001AFC0
+OldWomanSketchPositionData:
 	dc.w	OLD_WOMAN_POSITION_X
 	dc.w	OLD_WOMAN_POSITION_Y+1
 	dc.w	DIRECTION_UP
@@ -29697,7 +29751,7 @@ loc_0001B0AC:
 	ADD.w	D0, D0
 	ADD.w	(A2,D0.w), D3
 	ADD.w	$2(A2,D0.w), D4
-	LEA	loc_0001DF86, A0
+	LEA	LockedDoorDataTable, A0
 loc_0001B0E2:
 	LEA	(A0), A1
 	MOVE.w	(A1)+, D0
@@ -29752,7 +29806,8 @@ RemoveSelectedItemFromList:
 	JSR	RemoveItemFromArray
 	RTS
 
-loc_0001B17E:
+; loc_0001B17E
+DialogueStateMachine:
 	MOVE.w	Dialogue_state.w, D0
 	ANDI.w	#$003F, D0
 	ADD.w	D0, D0
@@ -31689,7 +31744,7 @@ CheckPlayerTalkToNPC:
 	MOVE.w	Player_direction.w, D2
 	BCLR.l	#0, D2
 	ADD.w	D2, D2
-	LEA	loc_0001F1D8, A1
+	LEA	TalkDirectionDeltaTable, A1
 	MOVE.w	Player_position_x_in_town.w, D0
 	MOVE.w	Player_position_y_in_town.w, D1
 	ADD.w	(A1,D2.w), D0
@@ -31709,7 +31764,7 @@ loc_0001CEA6:
 	BNE.b	loc_0001CEE0
 	MOVE.w	Player_direction.w, D0
 	ASR.w	#1, D0
-	LEA	loc_0001CF7A, A0
+	LEA	NpcFacingDirectionLookup, A0
 	MOVE.b	(A0,D0.w), $27(A6)
 	MOVE.l	$1C(A6), Script_source_base.w
 	MOVE.b	#$FF, $32(A6)
@@ -31773,7 +31828,8 @@ loc_0001CF64:
 	MOVE.b	#$73, (A1)+
 	RTS
 
-loc_0001CF7A:
+; loc_0001CF7A
+NpcFacingDirectionLookup:
 	dc.b	$04, $06, $00, $02 
 ; loc_0001CF7E
 FortuneTellerGreetingsByTown:
@@ -31811,7 +31867,8 @@ FortuneTellerReadingsByTown:
 	dc.l	loc_0003AD04	
 	dc.l	loc_0003AD04	
 	dc.l	loc_0003C12E	
-loc_0001CFFE:
+; loc_0001CFFE
+ReadyEquipmentStateMachine:
 	MOVE.w	Ready_equipment_state.w, D0
 	ANDI.w	#$001F, D0
 	ADD.w	D0, D0
@@ -32317,7 +32374,8 @@ CopyEquipmentNameToTextBuffer:
 	JSR	CopyStringUntilFF
 	RTS
 
-loc_0001D67E:
+; loc_0001D67E
+EquipListMenuStateMachine:
 	MOVE.w	Equip_list_menu_state.w, D0
 	ANDI.w	#$000F, D0
 	ADD.w	D0, D0
@@ -32972,7 +33030,7 @@ CheckIfDoorIsLocked:
 	ADD.w	D0, D0
 	ADD.w	(A2,D0.w), D3
 	ADD.w	$2(A2,D0.w), D4
-	LEA	loc_0001DF86, A0
+	LEA	LockedDoorDataTable, A0
 loc_0001DF56:
 	LEA	(A0), A1
 	MOVE.w	(A1)+, D0
@@ -32994,12 +33052,14 @@ loc_0001DF7E:
 	MOVE.b	#$FF, Door_unlocked_flag.w
 	RTS
 	
-loc_0001DF86:
+; loc_0001DF86
+LockedDoorDataTable:
 	dc.b	$00, $16, $00, $0B, $00, $0D, $01, $11, $00, $28, $00, $02, $00, $05, $01, $12, $00, $23, $00, $03, $00, $0D, $01, $13, $00, $20, $00, $0C, $00, $0E, $01, $19 
 	dc.b	$00, $20, $00, $03, $00, $03, $01, $16, $00, $20, $00, $0B, $00, $09, $01, $17, $00, $20, $00, $01, $00, $0F, $01, $18, $00, $22, $00, $01, $00, $05, $01, $16 
 	dc.b	$00, $21, $00, $01, $00, $08, $01, $17, $00, $20, $00, $03, $00, $0B, $01, $18, $00, $2A, $00, $07, $00, $0D, $00, $1A, $00, $2B, $00, $0A, $00, $0A, $00, $25 
 	dc.b	$FF, $FF 
-loc_0001DFE8:
+; loc_0001DFE8
+DialogSelectionStateMachine:
 	MOVE.w	Dialog_selection.w, D0
 	ANDI.w	#$001F, D0
 	ADD.w	D0, D0
@@ -33086,7 +33146,7 @@ loc_0001E0FA:
 	RTS
 	
 loc_0001E102:
-	LEA	loc_0001E326, A0
+	LEA	SeekCoordsByTown, A0
 	MOVE.w	Current_town.w, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
@@ -33125,11 +33185,13 @@ loc_0001E160:
 	MOVE.w	#$FFFF, D0
 	RTS
 	
-loc_0001E166:
+; loc_0001E166
+SeekHandler_Tombstone:
 	dc.b	$21, $FC 
 	dc.l	TombstoneStr
 	dc.b	$C2, $04, $60, $00, $01, $A2 
-loc_0001E172:
+; loc_0001E172
+SeekHandler_TitaniasMirror:
 	TST.b	Titanias_mirror_quest_prereq.w
 	BEQ.w	loc_0001E1CC
 	TST.b	Titanias_mirror_acquired.w	
@@ -33155,7 +33217,8 @@ loc_0001E1CC:
 	MOVE.w	#1, Dialog_selection.w
 	RTS
 	
-loc_0001E1D4:
+; loc_0001E1D4
+SeekHandler_MegaBlast:
 	TST.b	Mega_blast_acquired.w
 	BNE.w	loc_0001E226
 	JSR	CheckInventoryFull
@@ -33178,7 +33241,8 @@ loc_0001E222:
 loc_0001E226:
 	MOVE.w	#1, Dialog_selection.w
 	RTS
-loc_0001E22E:
+; loc_0001E22E
+SeekHandler_RafaelsStick:
 	TST.b	Rafaels_stick_acquired.w
 	BNE.w	loc_0001E280
 	JSR	CheckInventoryFull
@@ -33202,7 +33266,8 @@ loc_0001E280:
 	MOVE.w	#1, Dialog_selection.w	
 	RTS
 	
-loc_0001E288:
+; loc_0001E288
+SeekHandler_Herbs:
 	JSR	CheckInventoryFull	
 	BGE.w	loc_0001E2BA	
 	LEA	HerbsStr, A2	
@@ -33220,7 +33285,8 @@ loc_0001E2BA:
 loc_0001E2C8:
 	BRA.w	loc_0001E312	
 
-loc_0001E2CC: ; Find 1kim
+; loc_0001E2CC
+SeekHandler_FindOneKim: ; Find 1kim
 	LEA	OneKimStr, A2
 	BSR.w	DisplayFoundItemMessage
 	BSR.w	DisplayFoundItemWithName
@@ -33230,7 +33296,8 @@ loc_0001E2CC: ; Find 1kim
 	JSR	QueueSoundEffect
 	BRA.w	loc_0001E312
 
-loc_0001E2F6: ; Regain all HP
+; loc_0001E2F6
+SeekHandler_RegainAllHp: ; Regain all HP
 	MOVE.w	Player_mhp.w, Player_hp.w
 	MOVE.w	#$00AE, D0
 	JSR	QueueSoundEffect
@@ -33243,59 +33310,65 @@ loc_0001E312:
 	MOVE.w	#2, Dialog_selection.w
 	RTS
 	
-loc_0001E326: ; "Seek" coordinates by town
+; loc_0001E326
+SeekCoordsByTown: ; "Seek" coordinates by town
 	dc.l	SeekData_BladesGrave
 	dc.l	SeekData_BladesGrave
 	dc.l	SeekData_BladesGrave
-	dc.l	loc_0001E372 
+	dc.l	SeekData_Deepdale 
 	dc.l	SeekData_BladesGrave
 	dc.l	SeekData_BladesGrave 
 	dc.l	SeekData_BladesGrave
 	dc.l	SeekData_BladesGrave
-	dc.l	loc_0001E388 
+	dc.l	SeekData_Tadcaster 
 	dc.l	SeekData_BladesGrave 
 	dc.l	SeekData_BladesGrave
-	dc.l	loc_0001E394
-	dc.l	loc_0001E3A0
+	dc.l	SeekData_Excalabria
+	dc.l	SeekData_Hastings
 	dc.l	SeekData_BladesGrave 
 	dc.l	SeekData_BladesGrave
-	dc.l	loc_0001E3AC
+	dc.l	SeekData_Swafham
 ; loc_0001E366
 SeekData_BladesGrave: ; Blade's grave
 	dc.w	$2B, $24
 	dc.w	DIRECTION_DOWN
-	dc.l	loc_0001E166
+	dc.l	SeekHandler_Tombstone
 	dc.w	$FFFF
-loc_0001E372:
+; loc_0001E372
+SeekData_Deepdale:
 	dc.w	$24, $26
 	dc.w	DIRECTION_ANY
-	dc.l	loc_0001E2F6
+	dc.l	SeekHandler_RegainAllHp
 	dc.w	$3, $10
 	dc.w	DIRECTION_ANY
-	dc.l	loc_0001E2CC
+	dc.l	SeekHandler_FindOneKim
 	dc.w	$FFFF
-loc_0001E388:
+; loc_0001E388
+SeekData_Tadcaster:
 	dc.w	$21, $F
 	dc.w	DIRECTION_ANY
-	dc.l	loc_0001E1D4 
+	dc.l	SeekHandler_MegaBlast 
 	dc.w	$FFFF
-loc_0001E394:
+; loc_0001E394
+SeekData_Excalabria:
 	dc.w	$B, $15
 	dc.w	DIRECTION_ANY
-	dc.l	loc_0001E22E
+	dc.l	SeekHandler_RafaelsStick
 	dc.w	$FFFF
-loc_0001E3A0:
+; loc_0001E3A0
+SeekData_Hastings:
 	dc.w	$A, $17
 	dc.w	DIRECTION_ANY
-	dc.l	loc_0001E172
+	dc.l	SeekHandler_TitaniasMirror
 	dc.w	$FFFF
-loc_0001E3AC:
+; loc_0001E3AC
+SeekData_Swafham:
 	dc.w	$1F, $21
 	dc.w	DIRECTION_ANY
-	dc.l	loc_0001E288
+	dc.l	SeekHandler_Herbs
 	dc.w	$6, $21
 	dc.w	DIRECTION_ANY
-	dc.l	loc_0001E2F6
+	dc.l	SeekHandler_RegainAllHp
 	dc.w	$FFFF
 
 FoundItemStr:
@@ -33336,7 +33409,8 @@ DisplayInventoryFullMessage:
 	RTS
 	
 	
-loc_0001E46C:
+; loc_0001E46C
+TakeItemStateMachine:
 	MOVE.w	Take_item_state.w, D0
 	ANDI.w	#$001F, D0
 	ADD.w	D0, D0
@@ -33794,7 +33868,8 @@ loc_0001EAEC:
 	MOVE.w	D0, VDP_data_port
 	DBF	D1, loc_0001EAEC
 	RTS
-loc_0001EAFE:
+; loc_0001EAFE
+WyclifNpcDialogueDispatch:
 	LEA	Wyclif_Npc1_DialogueStates, A1
 	MOVE.w	#1, D7
 	BRA.w	SelectDialogueByGameState
@@ -33873,31 +33948,35 @@ Parma_Npc1_DialogueStates:
 	BRA.w	SelectDialogueSimple
 	LEA	loc_0002E924, A1
 	BRA.w	SelectDialogueSimple
-	LEA	loc_0001EC2E, A1
+	LEA	ParmaNpc1_ConditionData_A, A1
 	MOVE.w	#0, D7
 	BRA.w	SelectDialogueByGameState
-loc_0001EC2E:
+; loc_0001EC2E
+ParmaNpc1_ConditionData_A:
 	dc.b	$00, $02, $E9, $64 
 	dc.l	Talked_to_real_king
 	dc.l	loc_0002E958
-	LEA	loc_0001EC48, A1
+	LEA	ParmaNpc1_ConditionData_B, A1
 	MOVE.w	#0, D7
 	BRA.w	SelectDialogueByGameState
-loc_0001EC48:
+; loc_0001EC48
+ParmaNpc1_ConditionData_B:
 	dc.b	$00, $02, $E9, $34 
 	dc.l	Fake_king_killed
 	dc.l	loc_0002E92C
-	LEA	loc_0001EC62, A1
+	LEA	ParmaNpc1_ConditionData_C, A1
 	MOVE.w	#0, D7
 	BRA.w	SelectDialogueByGameState
-loc_0001EC62:
+; loc_0001EC62
+ParmaNpc1_ConditionData_C:
 	dc.b	$00, $02, $E9, $40 
 	dc.l	Fake_king_killed
 	dc.l	loc_0002E93C
-	LEA	loc_0001EC7C, A1
+	LEA	ParmaNpc1_ConditionData_D, A1
 	MOVE.w	#0, D7
 	BRA.w	SelectDialogueByGameState
-loc_0001EC7C:
+; loc_0001EC7C
+ParmaNpc1_ConditionData_D:
 	dc.b	$00, $02, $E9, $48 
 	dc.l	Fake_king_killed
 	dc.l	loc_0002E944
@@ -33917,17 +33996,19 @@ Parma_Npc2_DialogueStates:
 	dc.l	loc_000290B0
 	dc.l	Treasure_of_troy_challenge_issued
 	dc.l	loc_00029098
-	LEA	loc_0001ECD0, A1
+	LEA	ParmaNpc3_ConditionData, A1
 	MOVE.w	#0, D7
 	BRA.w	SelectDialogueByGameState
-loc_0001ECD0:
+; loc_0001ECD0
+ParmaNpc3_ConditionData:
 	dc.b	$00, $02, $91, $2C 
 	dc.l	Player_chose_to_stay_in_parma
 	dc.l	loc_00029128
-	LEA	loc_0001ECEA, A1
+	LEA	ParmaNpc4_ConditionData, A1
 	MOVE.w	#2, D7
 	BRA.w	SelectDialogueByGameState
-loc_0001ECEA:
+; loc_0001ECEA
+ParmaNpc4_ConditionData:
 	dc.b	$00, $02, $E9, $54 
 	dc.l	Talked_to_real_king
 	dc.l	loc_0002E94C
@@ -34311,7 +34392,8 @@ SelectDialogueSimple:
 loc_0001F1D6:
 	RTS
 	
-loc_0001F1D8:
+; loc_0001F1D8
+TalkDirectionDeltaTable:
 	dc.w	$0000, $FFFF 
 	dc.w	$FFFF, $0000 
 	dc.w	$0000, $0001 
@@ -34466,7 +34548,8 @@ DialogueChoiceYesStrPtrs:
 	dc.l	LazySlugStr
 	dc.l	ChaosReignStr
 	dc.l	ChaosReignStr
-loc_0001F418: ; Tile mappings + graphics by town
+; loc_0001F418
+TownTileGfxTable: ; Tile mappings + graphics by town
 	dc.l	loc_0008863E
 	dc.l	loc_0008A34A
 	dc.w	$0097
@@ -34536,73 +34619,97 @@ loc_0001F4BC:
 	dc.l	loc_0008FB08
 loc_0001F4C0:
 	dc.w	$001E
-loc_0001F4C2:
+; loc_0001F4C2
+DmaCmd_TownTileset_Wyclif:
 	dc.b	$94, $10, $93, $00, $96, $D0, $95, $00, $97, $7F, $60, $00, $00, $81, $00, $00 
-loc_0001F4D2:
+; loc_0001F4D2
+DmaCmd_TownTileset_Parma:
 	dc.b	$94, $0C, $93, $00, $96, $D0, $95, $00, $97, $7F, $40, $00, $00, $82, $00, $00 
-loc_0001F4E2:
+; loc_0001F4E2
+DmaCmd_TownTileGfxSet1_A:
 	dc.b	$94, $0B, $93, $70, $96, $D0, $95, $00, $97, $7F, $47, $80, $00, $80, $00, $00 
-loc_0001F4F2:
+; loc_0001F4F2
+DmaCmd_TownTileGfxSet1_B:
 	dc.b	$94, $0D, $93, $A0, $96, $D0, $95, $00, $97, $7F, $5E, $60, $00, $80, $00, $00 
-loc_0001F502:
+; loc_0001F502
+DmaCmd_TownNpcGfx:
 	dc.b	$94, $06, $93, $C0, $96, $D0, $95, $00, $97, $7F, $79, $A0, $00, $80, $00, $00 
-loc_0001F512:
+; loc_0001F512
+DmaCmd_TownTileGfxSet1_D:
 	dc.b	$94, $09, $93, $E0, $96, $D0, $95, $00, $97, $7F, $4C, $60, $00, $81, $00, $00 
-loc_0001F522:
+; loc_0001F522
+DmaCmd_TownTileGfxSet1_E:
 	dc.b	$94, $02, $93, $A0, $96, $D0, $95, $00, $97, $7F, $47, $20, $00, $81, $00, $00 
-loc_0001F532:
+; loc_0001F532
+DmaCmd_OverworldStatusTiles:
 	dc.b	$94, $03, $93, $A0, $96, $D0, $95, $00, $97, $7F, $40, $40, $00, $80, $00, $00 
-loc_0001F542:
+; loc_0001F542
+DmaCmd_MenuTilesA:
 	dc.b	$94, $10, $93, $00, $96, $D0, $95, $00, $97, $7F, $50, $00, $00, $80, $00, $00 
-loc_0001F552:
+; loc_0001F552
+DmaCmd_MenuTilesB:
 	dc.b	$94, $04, $93, $30, $96, $D0, $95, $00, $97, $7F, $70, $00, $00, $80, $00, $00 
-loc_0001F562:
+; loc_0001F562
+DmaCmd_MenuMiscTilesA:
 	dc.b	$94, $01, $93, $B0, $96, $D0, $95, $00, $97, $7F, $40, $40, $00, $80, $00, $00 
-loc_0001F572:
+; loc_0001F572
+DmaCmd_MenuMiscTilesB:
 	dc.b	$94, $00, $93, $80, $96, $D0, $95, $00, $97, $7F, $43, $A0, $00, $80, $00, $00 
-loc_0001F582:
+; loc_0001F582
+DmaCmd_OptionsMenuTiles:
 	dc.b	$94, $03, $93, $D0, $96, $D0, $95, $00, $97, $7F, $47, $80, $00, $80, $00, $00 
-loc_0001F592:
+; loc_0001F592
+DmaCmd_TitleScreenTilesA:
 	dc.b	$94, $04, $93, $E0, $96, $D0, $95, $00, $97, $7F, $50, $00, $00, $80, $00, $00 
-loc_0001F5A2:
+; loc_0001F5A2
+DmaCmd_TitleScreenTilesB:
 	dc.b	$94, $06, $93, $D0, $96, $D0, $95, $00, $97, $7F, $60, $00, $00, $80, $00, $00 
-loc_0001F5B2:
+; loc_0001F5B2
+DmaCmd_TitleScreenTilesC:
 	dc.b	$94, $06, $93, $30, $96, $D0, $95, $00, $97, $7F, $70, $00, $00, $80, $00, $00 
-loc_0001F5C2:
+; loc_0001F5C2
+DmaCmd_TitleScreenTilesD:
 	dc.b	$94, $05, $93, $00, $96, $D0, $95, $00, $97, $7F, $40, $00, $00, $81, $00, $00 
-loc_0001F5D2:
+; loc_0001F5D2
+DmaCmd_TitleScreenTilesE:
 	dc.b	$94, $05, $93, $20, $96, $D0, $95, $00, $97, $7F, $50, $00, $00, $81, $00, $00 
-loc_0001F5E2:
+; loc_0001F5E2
+DmaCmd_TitleScreenTilesF:
 	dc.b	$94, $00, $93, $60, $96, $D0, $95, $00 
 	dc.l	$977F6000	
 	dc.l	$00810000	
 ; loc_0001F5F2
 TerrainTileGfxDmaPtrs:
-	dc.l	loc_0001F602
-	dc.l	loc_0001F612
-	dc.l	loc_0001F622
-	dc.l	loc_0001F632
-loc_0001F602:
+	dc.l	DmaCmd_TerrainTileset_0
+	dc.l	DmaCmd_TerrainTileset_1
+	dc.l	DmaCmd_TerrainTileset_2
+	dc.l	DmaCmd_TerrainTileset_3
+; loc_0001F602
+DmaCmd_TerrainTileset_0:
 	dc.l	$94049330	
 	dc.l	$96D09500	
 	dc.l	$977F6000	
 	dc.l	$00810000	
-loc_0001F612:
+; loc_0001F612
+DmaCmd_TerrainTileset_1:
 	dc.l	$94049350	
 	dc.l	$96D09500	
 	dc.l	$977F6000	
 	dc.l	$00810000	
-loc_0001F622:
+; loc_0001F622
+DmaCmd_TerrainTileset_2:
 	dc.l	$94049350	
 	dc.l	$96D09500	
 	dc.l	$977F6000	
 	dc.l	$00810000	
-loc_0001F632:
+; loc_0001F632
+DmaCmd_TerrainTileset_3:
 	dc.l	$94039390	
 	dc.l	$96D09500	
 	dc.l	$977F6000	
 	dc.l	$00810000	
-loc_0001F642:
+; loc_0001F642
+DmaCmd_BattleTiles:
 	dc.l	$940193B0	
 	dc.l	$96D09500	
 	dc.l	$977F7980	
@@ -34613,7 +34720,8 @@ TerrainTilemapPtrs:
 	dc.l	loc_00069592
 	dc.l	loc_00069592
 	dc.l	loc_0006E028
-loc_0001F662:
+; loc_0001F662
+TerrainTilemapMetadata:
 	dc.l	loc_00068E5A
 	dc.l	$00430049	
 	dc.l	loc_0006974A
@@ -34622,52 +34730,62 @@ loc_0001F662:
 	dc.l	$0045004B	
 	dc.l	loc_0006E1E0
 	dc.l	$0039005E	
-loc_0001F682:
+; loc_0001F682
+DmaCmd_BattleGroundGfx:
 	dc.l	$94069350	
 	dc.l	$96D09500	
 	dc.l	$977F4980	
 	dc.l	$00820000	
-loc_0001F692:
+; loc_0001F692
+DmaCmd_BattleEnemyGfx:
 	dc.l	$94059370	
 	dc.l	$96D09500	
 	dc.l	$977F4400	
 	dc.l	$00810000	
-loc_0001F6A2:
+; loc_0001F6A2
+DmaCmd_BattleStatusGfx:
 	dc.l	$94059390	
 	dc.l	$96D09500	
 	dc.l	$977F4E00	
 	dc.l	$00830000	
-loc_0001F6B2:
+; loc_0001F6B2
+DmaCmd_BattlePlayerGfx:
 	dc.l	$94059300	
 	dc.l	$96D09500	
 	dc.l	$977F6E00	
 	dc.l	$00830000	
-loc_0001F6C2:
+; loc_0001F6C2
+DmaCmd_CaveEnemyGfx:
 	dc.l	$94059370	
 	dc.l	$96D09500	
 	dc.l	$977F4980	
 	dc.l	$00820000	
-loc_0001F6D2:
+; loc_0001F6D2
+DmaCmd_CaveItemGfx:
 	dc.l	$940593E0	
 	dc.l	$96D09500	
 	dc.l	$977F4E00	
 	dc.l	$00830000	
-loc_0001F6E2:
+; loc_0001F6E2
+DmaCmd_WorldMapTiles:
 	dc.l	$940E93B0	
 	dc.l	$96D09500	
 	dc.l	$977F5480	
 	dc.l	$00810000	
-loc_0001F6F2:
+; loc_0001F6F2
+DmaCmd_BattleUiTiles:
 	dc.l	$940393D0	
 	dc.l	$96D09500	
 	dc.l	$977F71E0	
 	dc.l	$00810000	
-loc_0001F702:
+; loc_0001F702
+DmaCmd_CaveTiles:
 	dc.l	$94079360	
 	dc.l	$96D09500	
 	dc.l	$977F6E00	
 	dc.l	$00830000	
-loc_0001F712:
+; loc_0001F712
+TalkerGfxDesc_MapGiver:
 	dc.l	loc_00051E44
 	dc.l	TalkerPortraitTileDataPtrs
 	dc.w	$0007
@@ -34679,7 +34797,8 @@ loc_0001F712:
 	dc.b	$0D
 	dc.b	$0F
 	dc.w	$0011
-loc_0001F72E:
+; loc_0001F72E
+TalkerGfxDesc_StowGirl:
 	dc.l	loc_00051E4C
 	dc.l	TalkerPortraitTileDataPtrs
 	dc.w	$0007
@@ -34691,7 +34810,8 @@ loc_0001F72E:
 	dc.b	$0D
 	dc.b	$0F
 	dc.w	$0012
-loc_0001F74A:
+; loc_0001F74A
+TalkerGfxDesc_Bearwulf:
 	dc.l	loc_00051E54
 	dc.l	TalkerPortraitTileDataPtrs
 	dc.w	$0007
@@ -34703,7 +34823,8 @@ loc_0001F74A:
 	dc.b	$0D
 	dc.b	$0F
 	dc.w	$0011
-loc_0001F766:
+; loc_0001F766
+TalkerGfxDesc_Merchant:
 	dc.l	loc_00051E5C
 	dc.l	TalkerPortraitTileDataPtrs
 	dc.w	$0007
@@ -34715,7 +34836,8 @@ loc_0001F766:
 	dc.b	$0D
 	dc.b	$0F
 	dc.w	$0011
-loc_0001F782:
+; loc_0001F782
+TalkerGfxDesc_GenericNpc:
 	dc.l	loc_00051EA4
 	dc.l	TalkerPortraitTileDataPtrs
 	dc.w	$0007
@@ -34727,7 +34849,8 @@ loc_0001F782:
 	dc.b	$0D
 	dc.b	$0D
 	dc.w	$0079
-loc_0001F79E:
+; loc_0001F79E
+TalkerGfxDesc_DigotGiver:
 	dc.l	loc_00051E8C
 	dc.l	TalkerPortraitTileDataPtrs
 	dc.w	$0007
@@ -34739,7 +34862,8 @@ loc_0001F79E:
 	dc.b	$0D
 	dc.b	$0D
 	dc.w	$0078
-loc_0001F7BA:
+; loc_0001F7BA
+TalkerGfxDesc_TruffleGiver:
 	dc.l	loc_00051E7C
 	dc.l	TalkerPortraitTileDataPtrs
 	dc.w	$0007
@@ -34751,7 +34875,8 @@ loc_0001F7BA:
 	dc.b	$0D
 	dc.b	$0D
 	dc.w	$0078
-loc_0001F7D6:
+; loc_0001F7D6
+TalkerGfxDesc_ImposterGuard:
 	dc.l	loc_00051E64
 	dc.l	TalkerPortraitTileDataPtrs
 	dc.w	$0007
@@ -34763,7 +34888,8 @@ loc_0001F7D6:
 	dc.b	$0D
 	dc.b	$0F
 	dc.w	$00C3
-loc_0001F7F2:
+; loc_0001F7F2
+TalkerGfxDesc_Tsarkon:
 	dc.l	loc_00051E6C
 	dc.l	TalkerPortraitTileDataPtrs
 	dc.w	$0007
@@ -34772,11 +34898,13 @@ loc_0001F7F2:
 	dc.l	$000F0000	
 	dc.l	$FFF00D0F	
 	dc.l	$00AE0042	
-loc_0001F810:
+; loc_0001F810
+GfxLoadList_OverworldBattle:
 	dc.l	loc_0005DD16
 	dc.l	loc_0005DD9E
 	dc.l	$000B0010	
-loc_0001F81C:
+; loc_0001F81C
+GfxLoadList_FirstPerson:
 	dc.l	loc_00081782
 	dc.l	loc_00081E28
 	dc.l	$00470011	
@@ -34813,7 +34941,8 @@ loc_0001F81C:
 	dc.l	loc_00086DEC
 	dc.l	loc_00086F12
 	dc.b	$00, $0B, $FF, $FF 
-loc_0001F8AC:
+; loc_0001F8AC
+GfxLoadList_FirstPersonBattle:
 	dc.b	$00, $1C 
 	dc.l	loc_00083108
 	dc.l	loc_00083D90
@@ -34851,17 +34980,20 @@ loc_0001F8AC:
 	dc.l	loc_000885B0
 	dc.l	loc_00088622
 	dc.b	$00, $0B, $FF, $FF 
-loc_0001F93E:
+; loc_0001F93E
+GfxLoadList_IntroSegalogo:
 	dc.b	$00, $0D 
 	dc.l	loc_000628CC
 	dc.l	loc_00062900
 	dc.b	$00, $03, $FF, $FF 
-loc_0001F94C:
+; loc_0001F94C
+GfxLoadList_IntroTitle:
 	dc.b	$00, $0E 
 	dc.l	loc_00062910
 	dc.l	loc_00062A08
 	dc.b	$00, $07, $FF, $FF 
-loc_0001F95A:
+; loc_0001F95A
+GfxLoadList_Town:
 	dc.b	$00, $00 
 	dc.l	loc_0004B302
 	dc.l	loc_0004B894
@@ -34896,7 +35028,8 @@ loc_0001F95A:
 	dc.l	loc_00050C86
 	dc.l	loc_00051414
 	dc.b	$00, $35, $FF, $FF 
-loc_0001F9E0:
+; loc_0001F9E0
+GfxLoadList_TownBattle:
 	dc.b	$00, $00 
 	dc.l	loc_0004B302
 	dc.l	loc_0004B894
@@ -34943,7 +35076,8 @@ loc_0001F9E0:
 	dc.l	loc_00050860
 	dc.l	loc_00050A20
 	dc.b	$00, $17, $FF, $FF 
-loc_0001FA96:
+; loc_0001FA96
+GfxLoadList_WorldBattle:
 	dc.b	$00, $00 
 	dc.l	loc_0004B302
 	dc.l	loc_0004B894
@@ -35916,7 +36050,7 @@ loc_000206DE:
 	BNE.b	loc_00020712
 	BSR.w	InitDialogMode
 	MOVE.l	#PortraitInit_MapGiver, $2(A6)
-	MOVE.l	#loc_0001F712, Talker_gfx_descriptor_ptr.w
+	MOVE.l	#TalkerGfxDesc_MapGiver, Talker_gfx_descriptor_ptr.w
 	BSR.w	InitDialogGraphics
 	MOVE.l	#LostHereIsAMapStr_Wyclif, Script_talk_source.w
 loc_00020712:
@@ -35930,7 +36064,7 @@ loc_00020714:
 	BNE.b	loc_00020748
 	BSR.w	InitDialogMode
 	MOVE.l	#PortraitInit_MapGiver, $2(A6)
-	MOVE.l	#loc_0001F712, Talker_gfx_descriptor_ptr.w
+	MOVE.l	#TalkerGfxDesc_MapGiver, Talker_gfx_descriptor_ptr.w
 	BSR.w	InitDialogGraphics
 	MOVE.l	#LostHereIsAMapStr_Deepdale, Script_talk_source.w
 loc_00020748:
@@ -35944,7 +36078,7 @@ loc_0002074A:
 	BNE.b	loc_0002077E
 	BSR.w	InitDialogMode
 	MOVE.l	#PortraitInit_MapGiver, $2(A6)
-	MOVE.l	#loc_0001F712, Talker_gfx_descriptor_ptr.w
+	MOVE.l	#TalkerGfxDesc_MapGiver, Talker_gfx_descriptor_ptr.w
 	BSR.w	InitDialogGraphics
 	MOVE.l	#LostHereIsAMapStr_Stow, Script_talk_source.w
 loc_0002077E:
@@ -36297,7 +36431,7 @@ CaveEvent_RingOfWisdom:
 	MOVE.b	#$FF, Talker_present_flag.w
 	BSR.w	InitDialogMode
 	MOVE.l	#PortraitInit_RingOfWisdom, $2(A6)
-	MOVE.l	#loc_0001F712, Talker_gfx_descriptor_ptr.w
+	MOVE.l	#TalkerGfxDesc_MapGiver, Talker_gfx_descriptor_ptr.w
 	BSR.w	InitDialogGraphics
 	MOVE.l	#RingOfWisdomStr, Script_talk_source.w
 loc_00020CBA:
@@ -36428,7 +36562,7 @@ CaveEvent_Truffle:
 	MOVE.l	#Truffle_collected, Reward_script_flag.w
 	BSR.w	InitDialogMode
 	MOVE.l	#PortraitInit_TruffleGiver, $2(A6)
-	MOVE.l	#loc_0001F7BA, Talker_gfx_descriptor_ptr.w
+	MOVE.l	#TalkerGfxDesc_TruffleGiver, Talker_gfx_descriptor_ptr.w
 	BSR.w	InitDialogGraphics
 	MOVE.l	#NoOneHereStr, Script_talk_source.w
 loc_00020FE2:
@@ -36453,7 +36587,7 @@ CaveEvent_StowThief:
 	MOVE.b	#$FF, Talker_present_flag.w
 	BSR.w	InitDialogMode
 	MOVE.l	#PortraitInit_StowGirl, $2(A6)
-	MOVE.l	#loc_0001F72E, Talker_gfx_descriptor_ptr.w
+	MOVE.l	#TalkerGfxDesc_StowGirl, Talker_gfx_descriptor_ptr.w
 	BSR.w	InitDialogGraphics
 	MOVE.l	#SorryForStealingStr, Script_talk_source.w
 	TST.b	Stow_thief_defeated.w
@@ -36492,7 +36626,7 @@ CaveEvent_BearwulfMeeting:
 	MOVE.b	#$FF, Talker_present_flag.w
 	BSR.w	InitDialogMode
 	MOVE.l	#PortraitInit_Bearwulf, $2(A6)
-	MOVE.l	#loc_0001F74A, Talker_gfx_descriptor_ptr.w
+	MOVE.l	#TalkerGfxDesc_Bearwulf, Talker_gfx_descriptor_ptr.w
 	BSR.w	InitDialogGraphics
 	MOVE.l	#BearwulfIntroductionStr, Script_talk_source.w
 loc_000210BC:
@@ -36519,7 +36653,7 @@ CaveEvent_MalagaDungeonPrisoner:
 	MOVE.b	#$FF, Talker_present_flag.w
 	BSR.w	InitDialogMode
 	MOVE.l	#PortraitInit_MalagaPrisoner, $2(A6)
-	MOVE.l	#loc_0001F712, Talker_gfx_descriptor_ptr.w
+	MOVE.l	#TalkerGfxDesc_MapGiver, Talker_gfx_descriptor_ptr.w
 	BSR.w	InitDialogGraphics
 	MOVE.l	#NeverExpectedSucceedStr, Script_talk_source.w
 	TST.b	Crown_received.w
@@ -36552,7 +36686,7 @@ CaveEvent_TadcasterBully:
 	MOVE.b	#$FF, Talker_present_flag.w
 	BSR.w	InitDialogMode
 	MOVE.l	#PortraitInit_ImposterGuard, $2(A6)
-	MOVE.l	#loc_0001F7D6, Talker_gfx_descriptor_ptr.w
+	MOVE.l	#TalkerGfxDesc_ImposterGuard, Talker_gfx_descriptor_ptr.w
 	BSR.w	InitDialogGraphics
 	MOVE.l	#AwaitingYouStr, Script_talk_source.w
 loc_0002119A:
@@ -36582,7 +36716,7 @@ CaveEvent_SwaffhamDigotPlant:
 	MOVE.l	#Digot_plant_received, Reward_script_flag.w
 	BSR.w	InitDialogMode
 	MOVE.l	#PortraitInit_DigotGiver, $2(A6)
-	MOVE.l	#loc_0001F79E, Talker_gfx_descriptor_ptr.w
+	MOVE.l	#TalkerGfxDesc_DigotGiver, Talker_gfx_descriptor_ptr.w
 	BSR.w	InitDialogGraphics
 	MOVE.l	#NoOneHereStr, Script_talk_source.w
 loc_00021204:
@@ -36701,7 +36835,7 @@ CaveEvent_TsarkonFinalEncounter:
 	MOVE.b	#$FF, Talker_present_flag.w
 	BSR.w	InitDialogMode
 	MOVE.l	#PortraitInit_TsarkonFinal, $2(A6)
-	MOVE.l	#loc_0001F7F2, Talker_gfx_descriptor_ptr.w
+	MOVE.l	#TalkerGfxDesc_Tsarkon, Talker_gfx_descriptor_ptr.w
 	BSR.w	InitDialogGraphics
 	MOVE.l	#FreedAtLastStr, Script_talk_source.w
 	TST.b	All_rings_collected.w
@@ -36797,32 +36931,32 @@ SetupFoundItemReward:
 InitTalkerWithGfxDescriptor_1F782:
 	BSR.w	InitDialogMode
 	MOVE.l	#PortraitInit_Simple, $2(A6)
-	MOVE.l	#loc_0001F782, Talker_gfx_descriptor_ptr.w
+	MOVE.l	#TalkerGfxDesc_GenericNpc, Talker_gfx_descriptor_ptr.w
 	BRA.w	InitDialogGraphics
 ; loc_00021498
 InitTalkerWithGfxDescriptor_1F712:
 	MOVE.b	#$FF, Talker_present_flag.w
 	BSR.w	InitDialogMode
 	MOVE.l	#PortraitInit_Simple, $2(A6)
-	MOVE.l	#loc_0001F712, Talker_gfx_descriptor_ptr.w
+	MOVE.l	#TalkerGfxDesc_MapGiver, Talker_gfx_descriptor_ptr.w
 	BRA.w	InitDialogGraphics
 InitTalkerWithGfxDescriptor_1F74A:
 	MOVE.b	#$FF, Talker_present_flag.w
 	BSR.w	InitDialogMode
 	MOVE.l	#PortraitInit_Simple, $2(A6)
-	MOVE.l	#loc_0001F74A, Talker_gfx_descriptor_ptr.w
+	MOVE.l	#TalkerGfxDesc_Bearwulf, Talker_gfx_descriptor_ptr.w
 	BRA.w	InitDialogGraphics
 InitMerchantDialog_Variant2:
 	MOVE.b	#$FF, Talker_present_flag.w
 	BSR.w	InitDialogMode
 	MOVE.l	#PortraitInit_Simple, $2(A6)
-	MOVE.l	#loc_0001F72E, Talker_gfx_descriptor_ptr.w
+	MOVE.l	#TalkerGfxDesc_StowGirl, Talker_gfx_descriptor_ptr.w
 	BRA.w	InitDialogGraphics
 InitMerchantDialog_Variant3:
 	MOVE.b	#$FF, Talker_present_flag.w
 	BSR.w	InitDialogMode
 	MOVE.l	#PortraitInit_Simple, $2(A6)
-	MOVE.l	#loc_0001F766, Talker_gfx_descriptor_ptr.w
+	MOVE.l	#TalkerGfxDesc_Merchant, Talker_gfx_descriptor_ptr.w
 	BRA.w	InitDialogGraphics
 
 LongDangerousRoadAheadStr:
@@ -39461,7 +39595,7 @@ EnemyAppearance_63:
 	dc.l	loc_0005A206
 	dc.l	loc_000591AC
 	dc.l	loc_00059A46
-	dc.l	loc_0000FFE8	
+	dc.l	ExecuteWorldMapDma	
 	dc.l	$0E0E0063	
 ; loc_00024434
 EnemyAppearance_A4:
@@ -39469,7 +39603,7 @@ EnemyAppearance_A4:
 	dc.l	loc_0005A206
 	dc.l	loc_000591AC
 	dc.l	loc_00059A46
-	dc.l	loc_0000FFE8	
+	dc.l	ExecuteWorldMapDma	
 	dc.l	$0E0E00A4	
 ; loc_0002444C
 EnemyAppearance_A5:
@@ -39477,7 +39611,7 @@ EnemyAppearance_A5:
 	dc.l	loc_0005A206
 	dc.l	loc_000591AC
 	dc.l	loc_00059A46
-	dc.l	loc_0000FFE8	
+	dc.l	ExecuteWorldMapDma	
 	dc.l	$0E0E00A5	
 ; loc_00024464
 EnemyAppearance_A6:
@@ -39485,7 +39619,7 @@ EnemyAppearance_A6:
 	dc.l	loc_0005A206
 	dc.l	loc_000591AC
 	dc.l	loc_00059A46
-	dc.l	loc_0000FFE8	
+	dc.l	ExecuteWorldMapDma	
 	dc.l	$0E0E00A6	
 ; loc_0002447C
 EnemyAppearance_5C:
@@ -39525,7 +39659,7 @@ EnemyAppearance_5D:
 	dc.l	loc_00057404
 	dc.l	loc_00057580
 	dc.l	loc_00057F74
-	dc.l	loc_0000FFE8	
+	dc.l	ExecuteWorldMapDma	
 	dc.l	$0E0E005D	
 ; loc_000244F4
 EnemyAppearance_A1:
@@ -39533,7 +39667,7 @@ EnemyAppearance_A1:
 	dc.l	loc_00057404
 	dc.l	loc_00057580
 	dc.l	loc_00057F74
-	dc.l	loc_0000FFE8	
+	dc.l	ExecuteWorldMapDma	
 	dc.l	$0E0E00A1	
 ; loc_0002450C
 EnemyAppearance_A2:
@@ -39541,7 +39675,7 @@ EnemyAppearance_A2:
 	dc.l	loc_00057404
 	dc.l	loc_00057580
 	dc.l	loc_00057F74
-	dc.l	loc_0000FFE8	
+	dc.l	ExecuteWorldMapDma	
 	dc.l	$0E0E00A2	
 ; loc_00024524
 EnemyAppearance_A3:
@@ -39549,7 +39683,7 @@ EnemyAppearance_A3:
 	dc.l	loc_00057404
 	dc.l	loc_00057580
 	dc.l	loc_00057F74
-	dc.l	loc_0000FFE8	
+	dc.l	ExecuteWorldMapDma	
 	dc.l	$0E0E00A3	
 ; loc_0002453C
 EnemyAppearance_64:
@@ -42955,7 +43089,7 @@ loc_0002A132:
 	RTS
 	
 loc_0002A144:
-	dc.l	loc_0001EAFE
+	dc.l	WyclifNpcDialogueDispatch
 	dc.b	$FF, $FF 
 loc_0002A14A:
 	dc.b	$01, $48, $01, $48, $00, $04, $00, $08, $00, $04, $00, $14, $00, $02, $A1, $92, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 
@@ -43138,7 +43272,7 @@ loc_0002AB68:
 	RTS
 	
 loc_0002AB7A:
-	dc.l	loc_0001EAFE
+	dc.l	WyclifNpcDialogueDispatch
 	dc.b	$FF, $FF 
 loc_0002AB80:
 	dc.b	$01, $68, $01, $58, $00, $0D, $00, $09, $00, $04, $00, $17, $00, $02, $AB, $C8, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 
@@ -43339,7 +43473,7 @@ loc_0002B664:
 	RTS
 	
 loc_0002B676:
-	dc.l	loc_0001EAFE
+	dc.l	WyclifNpcDialogueDispatch
 	dc.b	$FF, $FF 
 loc_0002B67C:
 	dc.b	$01, $68, $01, $58, $00, $0B, $00, $09, $00, $04, $00, $19, $00, $02, $B6, $A0, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 
@@ -61027,7 +61161,7 @@ loc_0005A206:
 	dc.l	loc_0005A1DA
 	dc.l	loc_0005A1F8
 loc_0005A32E:
-	dc.l	loc_00010206-3	
+	dc.l	LoadMenuTileGfxSet3-3	
 	dc.l	$04050100	
 loc_0005A336:
 	dc.l	$FF98889F	
@@ -63452,7 +63586,7 @@ loc_00062900:
 	dc.l	loc_000628E2
 	dc.l	loc_000628F0
 loc_00062910:
-	dc.l	loc_00010206-3	
+	dc.l	LoadMenuTileGfxSet3-3	
 	dc.l	$04050607	
 loc_00062918:
 	dc.l	loc_00004446-2	
@@ -68630,7 +68764,7 @@ loc_00077EC4:
 	dc.l	loc_00077EA8
 	dc.l	loc_00077EB0
 loc_00077F10:
-	dc.l	loc_00010206-3	
+	dc.l	LoadMenuTileGfxSet3-3	
 	dc.l	$04050607	
 	dc.l	$08090100	
 loc_00077F1C:
@@ -70867,7 +71001,7 @@ loc_0007D844:
 	dc.l	loc_0007D804
 	dc.l	loc_0007D826
 loc_0007D920:
-	dc.l	loc_00010200	
+	dc.l	LoadMenuTileGfxSet2	
 loc_0007D924:
 	dc.l	$0100FFFF	
 	dc.l	$30001240	
@@ -72206,7 +72340,7 @@ loc_00081E28:
 	dc.l	loc_00081DFC
 	dc.l	loc_00081E0C
 loc_00081F24:
-	dc.l	loc_00010300	
+	dc.l	LoadTitleScreenTileGfx	
 	dc.l	$02040507	
 	dc.l	$0906080A	
 loc_00081F30:
@@ -73248,7 +73382,7 @@ loc_000855C0:
 	dc.l	loc_00085582
 	dc.l	loc_000855A2
 loc_000856F8:
-	dc.l	loc_00010300	
+	dc.l	LoadTitleScreenTileGfx	
 	dc.l	$02040507	
 	dc.l	$0906080A	
 loc_00085704:
