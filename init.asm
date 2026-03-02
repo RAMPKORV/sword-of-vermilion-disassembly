@@ -1,26 +1,29 @@
 EntryPoint:
 	TST.l	$00A10008
-loc_00000F32:
+; loc_00000F32
+EntryPoint_RegionCheck:
 	BNE.w	StartupSequence
 	TST.w	$00A1000C
-	BNE.b	loc_00000F32
+	BNE.b	EntryPoint_RegionCheck
 	LEA	BootParamTable(PC), A5
 	MOVEM.l	(A5)+, D5/D6/D7/A0/A1/A2/A3/A4
 	MOVE.w	-$1100(A1), D0
 	ANDI.w	#$0F00, D0
-	BEQ.b	loc_00000F58
+	BEQ.b	EntryPoint_SkipSega
 	MOVE.l	#'SEGA', $2F00(A1)	
-loc_00000F58:
+; loc_00000F58
+EntryPoint_SkipSega:
 	MOVE.w	(A4), D0
 	MOVEQ	#0, D0
 	MOVEA.l	D0, A6
 	MOVE.l	A6, USP
 	MOVEQ	#VDPInitValues_End-VDPInitValues-1, D1
-loc_00000F62:
+; loc_00000F62
+EntryPoint_VdpInitLoop:
 	MOVE.b	(A5)+, D5
 	MOVE.w	D5, (A4)
 	ADD.w	D7, D5
-	DBF	D1, loc_00000F62
+	DBF	D1, EntryPoint_VdpInitLoop
 	MOVE.l	#$40000080, (A4)
 	MOVE.w	D0, (A3)
 	MOVE.w	D7, (A1)
@@ -29,30 +32,35 @@ WaitForZ80:
 	BTST.b	D0, (A1)
 	BNE.b	WaitForZ80
 	MOVEQ	#$00000027, D2
-loc_00000F7E:
+; loc_00000F7E
+EntryPoint_Z80DriverCopyLoop:
 	MOVE.b	(A5)+, (A0)+
-	DBF	D2, loc_00000F7E
+	DBF	D2, EntryPoint_Z80DriverCopyLoop
 	MOVE.w	D0, (A2)
 	MOVE.w	D0, (A1)
 	MOVE.w	D7, (A2)
-loc_00000F8A:
+; loc_00000F8A
+EntryPoint_ClearRamLoop:
 	MOVE.l	D0, -(A6)
-	DBF	D6, loc_00000F8A
+	DBF	D6, EntryPoint_ClearRamLoop
 	MOVE.l	#$81048F02, (A4)
 	MOVE.l	#$C0000000, (A4)
 	MOVEQ	#$0000001F, D3
-loc_00000F9E:
+; loc_00000F9E
+EntryPoint_VsramClearLoop:
 	MOVE.l	D0, (A3)
-	DBF	D3, loc_00000F9E
+	DBF	D3, EntryPoint_VsramClearLoop
 	MOVE.l	#$40000010, (A4)
 	MOVEQ	#$00000013, D4
-loc_00000FAC:
+; loc_00000FAC
+EntryPoint_HscrollClearLoop:
 	MOVE.l	D0, (A3)
-	DBF	D4, loc_00000FAC
+	DBF	D4, EntryPoint_HscrollClearLoop
 	MOVEQ	#3, D5
-loc_00000FB4:
+; loc_00000FB4
+EntryPoint_Z80InitLoop:
 	MOVE.b	(A5)+, $10(A3)
-	DBF	D5, loc_00000FB4
+	DBF	D5, EntryPoint_Z80InitLoop
 	MOVE.w	D0, (A2)
 	MOVEM.l	(A6), D0/D1/D2/D3/D4/D5/D6/D7/A0/A1/A2/A3/A4/A5/A6
 	MOVE	#$2700, SR
@@ -119,8 +127,8 @@ StartupSequence_SetupHardware:
 	ORI	#$0700, SR
 	JSR	ClearRAMAndInitHardware
 	JSR	InitBasicObjectSlots
-	JSR	loc_0000FEE2
-	JSR	loc_0000FCDC
+	JSR	ExecuteVdpDmaFromPointer_Setup
+	JSR	LoadAndDecompressTileGfx
 	JSR	LoadTownTileGfxSet1
 	JSR	InitPlayerInventoryDefaults
 	ANDI	#$F8FF, SR
@@ -129,7 +137,7 @@ MainGameLoop:
 	LEA	$FFFFFE00.w, A7
 	BSR.w	WaitForVBlank
 	CLR.b	$FFFFE002.w
-	JSR	loc_0000F7C4
+	JSR	SortAndUploadSpriteOAM_Alt
 	CLR.w	$FFFFE000.w
 	LEA	$FFFFD000.w, A5
 ; ObjectDispatchLoop
@@ -149,7 +157,7 @@ ObjectDispatchNext:
 ObjectDispatchEnd:
 	TST.b	Player_in_first_person_mode.w
 	BNE.b	ObjectDispatchDone
-	JSR	loc_0000F75E
+	JSR	SortAndUploadSpriteOAM
 ; ObjectDispatchDone
 ObjectDispatchDone:
 	MOVE.b	#$FF, $FFFFE002.w
