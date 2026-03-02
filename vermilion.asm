@@ -2484,7 +2484,7 @@ loc_00002AE0:
 	CLR.w	Overworld_menu_state.w
 	MOVE.b	#$FF, Is_in_battle.w
 	MOVEA.l	Player_entity_ptr.w, A6
-	MOVE.l	#loc_00006834, $2(A6)
+	MOVE.l	#BossBattlePlayerInit, $2(A6)
 	MOVEQ	#0, D0
 	MOVE.w	Player_dex.w, D0
 	ASR.l	#4, D0
@@ -4391,7 +4391,7 @@ loc_00004478:
 	JSR	(A0,D0.w)
 	BRA.w	loc_00004516
 loc_00004486:
-	LEA	loc_00005A2C, A0
+	LEA	FpDirectionDeltaBackward, A0
 	BSR.w	GetMapTileInDirection
 	BSR.w	HandleMapTileTransition
 	BNE.w	loc_0000457C
@@ -4416,7 +4416,7 @@ loc_000044C2:
 	RTS
 
 loc_000044E0:
-	LEA	loc_00005A1C, A0
+	LEA	FpDirectionDeltaForward, A0
 	BSR.w	GetMapTileInDirection
 	BSR.w	HandleMapTileTransition
 	BNE.w	loc_0000457C
@@ -4562,7 +4562,7 @@ loc_00004690:
 	BNE.b	loc_000046AA
 	BRA.w	loc_000061D8
 loc_000046AA:
-	BRA.w	loc_0000610A
+	BRA.w	DisplayStatsToVRAM_SinglePalette
 loc_000046AE:
 	LEA	loc_0000475E, A0
 	BRA.w	loc_000046BE
@@ -4576,7 +4576,7 @@ loc_000046BE:
 	BNE.b	loc_000046D4
 	BRA.w	loc_000061D8
 loc_000046D4:
-	BRA.w	loc_00006100
+	BRA.w	DisplayStatsToVRAM
 loc_000046D8:
 	LEA	loc_0000476E, A0
 	BRA.w	loc_000046E8
@@ -4590,7 +4590,7 @@ loc_000046E8:
 	BNE.b	loc_000046FE
 	BRA.w	loc_000061D8
 loc_000046FE:
-	BRA.w	loc_00006118
+	BRA.w	DisplayStatsToVRAM_AltPalette
 UpdatePlayerMapSector:
 	LEA	Map_sector_center.w, A2
 	MOVE.w	Player_position_x_outside_town.w, D0
@@ -4632,47 +4632,47 @@ loc_0000476E:
 	BRA.w	loc_000047E2
 	BRA.w	loc_000047EC
 loc_0000477E:
-	LEA	loc_00006656, A4
-	BRA.w	loc_00005B2E
+	LEA	WallTileOffsets_DownRight, A4
+	BRA.w	RenderFpSector_Near
 loc_00004788:
-	LEA	loc_0000663A, A4
-	BRA.w	loc_00005B2E
+	LEA	WallTileOffsets_DownLeft, A4
+	BRA.w	RenderFpSector_Near
 loc_00004792:
-	LEA	loc_0000661E, A4
-	BRA.w	loc_00005B2E
+	LEA	WallTileOffsets_UpRight, A4
+	BRA.w	RenderFpSector_Near
 loc_0000479C:
-	LEA	loc_00006602, A4
-	BRA.w	loc_00005B2E
+	LEA	WallTileOffsets_UpLeft, A4
+	BRA.w	RenderFpSector_Near
 loc_000047A6:
-	LEA	loc_000066AE, A4
-	BRA.w	loc_00005C90
+	LEA	WallTileOffsets_RightDown, A4
+	BRA.w	RenderFpSector_Far
 loc_000047B0:
-	LEA	loc_0000669A, A4
-	BRA.w	loc_00005C90
+	LEA	WallTileOffsets_RightUp, A4
+	BRA.w	RenderFpSector_Far
 loc_000047BA:
-	LEA	loc_00006686, A4
-	BRA.w	loc_00005C90
+	LEA	WallTileOffsets_LeftDown, A4
+	BRA.w	RenderFpSector_Far
 loc_000047C4:
-	LEA	loc_00006672, A4
-	BRA.w	loc_00005C90
+	LEA	WallTileOffsets_LeftUp, A4
+	BRA.w	RenderFpSector_Far
 loc_000047CE:
-	LEA	loc_00006716, A4
-	BRA.w	loc_00005E78
+	LEA	WallTileOffsets_FarDownRight, A4
+	BRA.w	RenderFpSector_Mid
 loc_000047D8:
-	LEA	loc_000066FA, A4
-	BRA.w	loc_00005E78
+	LEA	WallTileOffsets_FarUpLeft, A4
+	BRA.w	RenderFpSector_Mid
 loc_000047E2:
-	LEA	loc_000066DE, A4
-	BRA.w	loc_00005E78
+	LEA	WallTileOffsets_FarRight, A4
+	BRA.w	RenderFpSector_Mid
 loc_000047EC:
-	LEA	loc_000066C2, A4
-	BRA.w	loc_00005E78
+	LEA	WallTileOffsets_FarLeft, A4
+	BRA.w	RenderFpSector_Mid
 RenderWallTileWithPalette:
 	MOVE.w	D4, D3
 	ADD.w	D3, D3
 	ASL.w	#4, D4
 	LEA	WallTileMidGfxPtrs, A1
-	LEA	loc_00006824, A3
+	LEA	FpSpritePositionTable, A3
 	MOVEA.l	$C(A1,D4.w), A0
 	MOVE.w	(A3,D3.w), D4
 	MOVE.w	D4, D1
@@ -4682,7 +4682,7 @@ RenderWallTileWithPalette:
 	BRA.w	RenderWallTile_14x10_TwoPalette
 RenderWallTile_NearFrontTwoPalette:
 	LEA	WallTileGfxPtrs, A1
-	LEA	loc_00006824, A3
+	LEA	FpSpritePositionTable, A3
 	MOVE.w	D4, D3
 	ADD.w	D3, D3
 	ASL.w	#4, D4
@@ -4697,7 +4697,7 @@ RenderWallTile_NearFrontTwoPalette:
 
 RenderWallTile_MidSinglePalette:
 	LEA	WallTileGfxPtrs, A1
-	LEA	loc_00006824, A3
+	LEA	FpSpritePositionTable, A3
 	MOVE.w	D4, D3
 	ADD.w	D3, D3
 	ASL.w	#4, D4
@@ -4710,7 +4710,7 @@ RenderWallTile_MidSinglePalette:
 
 RenderWallTile_FarSinglePalette:
 	LEA	WallTileGfxPtrs, A1
-	LEA	loc_00006824, A3
+	LEA	FpSpritePositionTable, A3
 	MOVE.w	D4, D3
 	ADD.w	D3, D3
 	ASL.w	#4, D4
@@ -4723,7 +4723,7 @@ RenderWallTile_FarSinglePalette:
 
 RenderWallTile_NearTwoPalette:
 	LEA	WallTileGfxPtrs, A1
-	LEA	loc_00006824, A3
+	LEA	FpSpritePositionTable, A3
 	MOVE.w	D4, D3
 	ADD.w	D3, D3
 	ASL.w	#4, D4
@@ -4784,7 +4784,7 @@ loc_0000493C:
 	ADDQ.w	#1, Palette_line_2_index.w
 loc_00004946:
 	JSR	LoadPalettesFromTable
-	LEA	loc_00005A1C, A0
+	LEA	FpDirectionDeltaForward, A0
 	BSR.w	UpdateMapSectorPosition
 	BSR.w	UpdateFirstPersonWallData
 	MOVE.w	#4, First_person_wall_frame.w
@@ -4949,7 +4949,7 @@ loc_00004B62:
 loc_00004B6C:
 	JSR	LoadPalettesFromTable
 	CLR.b	Player_move_backward_in_overworld.w
-	LEA	loc_00005A2C, A0
+	LEA	FpDirectionDeltaBackward, A0
 	BSR.w	UpdateMapSectorPosition
 	BSR.w	UpdateFirstPersonWallData
 	MOVE.w	#0, First_person_wall_frame.w
@@ -5222,21 +5222,21 @@ DrawFirstPersonWalls:
 	CLR.w	D0
 	MOVE.b	First_person_wall_right.w, D0
 	BLE.b	loc_0000510E
-	LEA	loc_00006774, A2
+	LEA	WallRenderVdpParams_Near, A2
 	BSR.w	PrepareWallTileRenderData
 	BSR.w	RenderWallTile_14x10_TwoPalette
 loc_0000510E:
 	CLR.w	D0
 	MOVE.b	First_person_center_wall.w, D0
 	BLE.b	loc_00005124
-	LEA	loc_00006784, A2
+	LEA	WallRenderVdpParams_Mid, A2
 	BSR.w	PrepareWallTileRenderData
 	BSR.w	RenderWallTile_14x10_TwoPalette
 loc_00005124:
 	CLR.w	D0
 	MOVE.b	Fp_wall_right_2.w, D0
 	BLE.b	loc_0000513A
-	LEA	loc_00006794, A2
+	LEA	WallRenderVdpParams_Far, A2
 	BSR.w	PrepareWallTileRenderData
 	BSR.w	RenderWallTile_14x10_TwoPalette_RightWall
 loc_0000513A:
@@ -5251,7 +5251,7 @@ PrepareWallTileRenderData:
 	ASL.w	#4, D0
 	ADD.w	D0, D2
 	LEA	WallTileMidGfxPtrs, A1
-	LEA	loc_00006824, A3
+	LEA	FpSpritePositionTable, A3
 	MOVE.l	(A2,D1.w), D5
 	MOVEA.l	(A1,D2.w), A0
 	MOVE.w	(A3,D3.w), D4
@@ -5394,7 +5394,7 @@ loc_000052E8:
 
 UpdateFirstPersonWallData:
 	LEA	Map_sector_center.w, A0
-	LEA	loc_00005326, A2
+	LEA	UpdateFpWallJumpTable, A2
 	MOVE.w	Player_position_x_outside_town.w, D0
 	MOVE.w	Player_position_y_outside_town.w, D1
 	MOVE.w	Player_direction.w, D4
@@ -5403,12 +5403,14 @@ UpdateFirstPersonWallData:
 	JSR	(A2,D4.w)
 	RTS
 
-loc_00005326:
-	BRA.w	loc_000057F2
-	BRA.w	loc_00005336
-	BRA.w	loc_000054C8
-	BRA.w	loc_00005660
-loc_00005336:
+; UpdateFpWallJumpTable
+UpdateFpWallJumpTable:
+	BRA.w	UpdateFpWalls_FacingUp
+	BRA.w	UpdateFpWalls_FacingLeft
+	BRA.w	UpdateFpWalls_FacingDown
+	BRA.w	UpdateFpWalls_FacingRight
+; UpdateFpWalls_FacingLeft
+UpdateFpWalls_FacingLeft:
 	SUBQ.w	#1, D0
 	MULU.w	#$0030, D1
 	ADD.w	D0, D1
@@ -5422,7 +5424,7 @@ loc_00005336:
 	MOVE.b	$30(A2), D4
 	BSR.w	ValidateDungeonTileType
 	MOVE.b	D4, First_person_wall_right.w
-	LEA	loc_00006732, A1
+	LEA	FpObjectTileTable_Near, A1
 	LEA	-$1(A2), A2
 	MOVEA.l	Object_slot_04_ptr.w, A6
 	CLR.w	D4
@@ -5455,7 +5457,7 @@ loc_00005336:
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), $8(A6)
 	LEA	-$1(A2), A2
-	LEA	loc_00006748, A1
+	LEA	FpObjectTileTable_Mid, A1
 	MOVEA.l	Object_slot_09_ptr.w, A6
 	CLR.w	D4
 	MOVE.b	-$60(A2), D4
@@ -5487,7 +5489,7 @@ loc_00005336:
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), $8(A6)
 	LEA	-$1(A2), A2
-	LEA	loc_0000675E, A1
+	LEA	FpObjectTileTable_Far, A1
 	MOVEA.l	Object_slot_0E_ptr.w, A6
 	CLR.w	D4
 	MOVE.b	-$60(A2), D4
@@ -5520,7 +5522,8 @@ loc_00005336:
 	MOVE.w	(A1,D4.w), $8(A6)
 	RTS
 
-loc_000054C8:
+; UpdateFpWalls_FacingDown
+UpdateFpWalls_FacingDown:
 	ADDQ.w	#1, D1
 	MULU.w	#$0030, D1
 	ADD.w	D0, D1
@@ -5535,7 +5538,7 @@ loc_000054C8:
 	BSR.w	ValidateDungeonTileType
 	MOVE.b	D4, First_person_wall_right.w
 	LEA	$30(A2), A2
-	LEA	loc_00006732, A1
+	LEA	FpObjectTileTable_Near, A1
 	MOVEA.l	Object_slot_04_ptr.w, A6
 	CLR.w	D4
 	MOVE.b	-$2(A2), D4
@@ -5567,7 +5570,7 @@ loc_000054C8:
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), $8(A6)
 	LEA	$30(A2), A2
-	LEA	loc_00006748, A1
+	LEA	FpObjectTileTable_Mid, A1
 	MOVEA.l	Object_slot_09_ptr.w, A6
 	CLR.w	D4
 	MOVE.b	-$2(A2), D4
@@ -5599,14 +5602,14 @@ loc_000054C8:
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), $8(A6)
 	LEA	$30(A2), A2
-	LEA	loc_0000675E, A1
+	LEA	FpObjectTileTable_Far, A1
 	MOVEA.l	Object_slot_0E_ptr.w, A6
 	CLR.w	D4
 	MOVE.b	-$2(A2), D4
 	BSR.w	ValidateDungeonTileType
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), $8(A6)
-	LEA	loc_0000675E, A1
+	LEA	FpObjectTileTable_Far, A1
 	MOVEA.l	Object_slot_0B_ptr.w, A6
 	CLR.w	D4
 	MOVE.b	-$1(A2), D4
@@ -5633,7 +5636,8 @@ loc_000054C8:
 	MOVE.w	(A1,D4.w), $8(A6)
 	RTS
 
-loc_00005660:
+; UpdateFpWalls_FacingRight
+UpdateFpWalls_FacingRight:
 	ADDQ.w	#1, D0
 	MULU.w	#$0030, D1
 	ADD.w	D1, D0
@@ -5648,7 +5652,7 @@ loc_00005660:
 	BSR.w	ValidateDungeonTileType
 	MOVE.b	D4, Fp_wall_right_2.w
 	LEA	$1(A2), A2
-	LEA	loc_00006732, A1
+	LEA	FpObjectTileTable_Near, A1
 	MOVEA.l	Object_slot_03_ptr.w, A6
 	CLR.w	D4
 	MOVE.b	-$60(A2), D4
@@ -5680,7 +5684,7 @@ loc_00005660:
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), $8(A6)
 	LEA	$1(A2), A2
-	LEA	loc_00006748, A1
+	LEA	FpObjectTileTable_Mid, A1
 	MOVEA.l	Object_slot_08_ptr.w, A6
 	CLR.w	D4
 	MOVE.b	-$60(A2), D4
@@ -5712,7 +5716,7 @@ loc_00005660:
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), $8(A6)
 	LEA	$1(A2), A2
-	LEA	loc_0000675E, A1
+	LEA	FpObjectTileTable_Far, A1
 	MOVEA.l	Object_slot_0D_ptr.w, A6
 	CLR.w	D4
 	MOVE.b	-$60(A2), D4
@@ -5745,7 +5749,8 @@ loc_00005660:
 	MOVE.w	(A1,D4.w), $8(A6)
 	RTS
 
-loc_000057F2:
+; UpdateFpWalls_FacingUp
+UpdateFpWalls_FacingUp:
 	MOVE.w	D0, D2
 	MOVE.w	D1, D3
 	SUBQ.w	#1, D3
@@ -5762,7 +5767,7 @@ loc_000057F2:
 	BSR.w	ValidateDungeonTileType
 	MOVE.b	D4, Fp_wall_right_2.w
 	LEA	-$30(A2), A2
-	LEA	loc_00006732, A1
+	LEA	FpObjectTileTable_Near, A1
 	MOVEA.l	Object_slot_03_ptr.w, A6
 	CLR.w	D4
 	MOVE.b	-$2(A2), D4
@@ -5794,7 +5799,7 @@ loc_000057F2:
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), $8(A6)
 	LEA	-$30(A2), A2
-	LEA	loc_00006748, A1
+	LEA	FpObjectTileTable_Mid, A1
 	MOVEA.l	Object_slot_08_ptr.w, A6
 	CLR.w	D4
 	MOVE.b	-$2(A2), D4
@@ -5826,7 +5831,7 @@ loc_000057F2:
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), $8(A6)
 	LEA	-$30(A2), A2
-	LEA	loc_0000675E, A1
+	LEA	FpObjectTileTable_Far, A1
 	MOVEA.l	Object_slot_0D_ptr.w, A6
 	CLR.w	D4
 	MOVE.b	-$2(A2), D4
@@ -5908,9 +5913,11 @@ loc_00005A06: ; Go down from current map sector
 loc_00005A1A:
 	RTS
 
-loc_00005A1C:
+; FpDirectionDeltaForward
+FpDirectionDeltaForward:
 	dc.b	0,  0, -1, -1, -1, -1,  0,  0,  0,  0,  0,  1,  0,  1,  0,  0
-loc_00005A2C:
+; FpDirectionDeltaBackward
+FpDirectionDeltaBackward:
 	dc.b	0,  0,  0,  1,  0,  1,  0,  0,  0,  0, -1, -1, -1, -1,  0,  0
 
 InitObjectPositions_21x13:
@@ -5952,7 +5959,8 @@ InitObjectPositions_21x13:
 	MOVE.l	#$00580000, $12(A6)
 	RTS
 
-loc_00005B2E:
+; RenderFpSector_Near
+RenderFpSector_Near:
 	MULU.w	#$0030, D1
 	ADD.w	D1, D0
 	MOVE.w	D0, Map_tile_base_index.w
@@ -5975,14 +5983,14 @@ loc_00005B52:
 	MOVE.l	#$63180003, D5
 	BSR.w	RenderWallTileWithPalette
 loc_00005B70:
-	LEA	loc_00006732, A0
+	LEA	FpObjectTileTable_Near, A0
 	MOVEA.l	Enemy_list_ptr.w, A6
 	BSR.w	LoadMapTileGfxIndex
 	MOVEA.l	Object_slot_02_ptr.w, A6
 	BSR.w	LoadMapTileGfxIndex
 	MOVEA.l	Object_slot_01_ptr.w, A6
 	BSR.w	LoadMapTileGfxIndex
-	LEA	loc_00006748, A0
+	LEA	FpObjectTileTable_Mid, A0
 	MOVEA.l	Object_slot_05_ptr.w, A6
 	BSR.w	LoadMapTileGfxIndex
 	MOVEA.l	Object_slot_07_ptr.w, A6
@@ -5991,7 +5999,7 @@ loc_00005B70:
 	BSR.w	LoadMapTileGfxIndex
 	MOVEA.l	Object_slot_09_ptr.w, A6
 	BSR.w	LoadMapTileGfxIndex
-	LEA	loc_0000675E, A0
+	LEA	FpObjectTileTable_Far, A0
 	MOVEA.l	Object_slot_0D_ptr.w, A6
 	BSR.w	LoadMapTileGfxIndex
 	MOVEA.l	Object_slot_0A_ptr.w, A6
@@ -6034,7 +6042,8 @@ InitObjectPositions_21x20:
 	MOVE.l	#$00580000, $12(A6)
 	RTS
 
-loc_00005C90:
+; RenderFpSector_Far
+RenderFpSector_Far:
 	MULU.w	#$0030, D1
 	ADD.w	D1, D0
 	MOVE.w	D0, Map_tile_base_index.w
@@ -6067,7 +6076,7 @@ loc_00005CD2:
 	MOVE.l	#$63020003, D5
 	BSR.w	RenderWallTile_MidSinglePalette
 loc_00005CF0:
-	LEA	loc_00006732, A0
+	LEA	FpObjectTileTable_Near, A0
 	MOVEA.l	Enemy_list_ptr.w, A6
 	BSR.w	LoadMapTileGfxIndex
 	MOVEA.l	Object_slot_03_ptr.w, A6
@@ -6078,7 +6087,7 @@ loc_00005CF0:
 	BSR.w	LoadMapTileGfxIndex
 	MOVEA.l	Object_slot_04_ptr.w, A6
 	BSR.w	LoadMapTileGfxIndexAlt1
-	LEA	loc_00006748, A0
+	LEA	FpObjectTileTable_Mid, A0
 	MOVEA.l	Object_slot_05_ptr.w, A6
 	BSR.w	LoadMapTileGfxIndexAlt2
 	MOVEA.l	Object_slot_06_ptr.w, A6
@@ -6140,7 +6149,8 @@ InitObjectPositions_21x13Alt:
 	MOVE.l	#$00580000, $12(A6)
 	RTS
 
-loc_00005E78:
+; RenderFpSector_Mid
+RenderFpSector_Mid:
 	MULU.w	#$0030, D1
 	ADD.w	D1, D0
 	MOVE.w	D0, Map_tile_base_index.w
@@ -6163,14 +6173,14 @@ loc_00005E9C:
 	MOVE.l	#$63000003, D5
 	BSR.w	RenderWallTileWithPalette
 loc_00005EBA:
-	LEA	loc_00006732, A0
+	LEA	FpObjectTileTable_Near, A0
 	MOVEA.l	Object_slot_01_ptr.w, A6
 	BSR.w	LoadMapTileGfxIndex
 	MOVEA.l	Object_slot_02_ptr.w, A6
 	BSR.w	LoadMapTileGfxIndex
 	MOVEA.l	Enemy_list_ptr.w, A6
 	BSR.w	LoadMapTileGfxIndex
-	LEA	loc_00006748, A0
+	LEA	FpObjectTileTable_Mid, A0
 	MOVEA.l	Object_slot_06_ptr.w, A6
 	BSR.w	LoadMapTileGfxIndex
 	MOVEA.l	Object_slot_07_ptr.w, A6
@@ -6179,7 +6189,7 @@ loc_00005EBA:
 	BSR.w	LoadMapTileGfxIndex
 	MOVEA.l	Object_slot_08_ptr.w, A6
 	BSR.w	LoadMapTileGfxIndex
-	LEA	loc_0000675E, A0
+	LEA	FpObjectTileTable_Far, A0
 	MOVEA.l	Object_slot_0E_ptr.w, A6
 	BSR.w	LoadMapTileGfxIndex
 	MOVEA.l	Object_slot_0B_ptr.w, A6
@@ -6381,14 +6391,17 @@ loc_000060D6:
 DisplayKimsToVRAM:
 	LEA	loc_0006CED2, A0
 	BRA.w	loc_00006126
-loc_00006100:
+; DisplayStatsToVRAM
+DisplayStatsToVRAM:
 	LEA	loc_0006D022, A0
 	BRA.w	loc_00006126
-loc_0000610A:
+; DisplayStatsToVRAM_SinglePalette
+DisplayStatsToVRAM_SinglePalette:
 	LEA	loc_0006CF7A, A0
 	MOVE.w	#$4770, D4
 	BRA.w	loc_00006176
-loc_00006118:
+; DisplayStatsToVRAM_AltPalette
+DisplayStatsToVRAM_AltPalette:
 	LEA	loc_0006D0CA, A0
 	MOVE.w	#$4F70, D4
 	BRA.w	loc_00006176
@@ -6724,10 +6737,10 @@ RenderAreaMap:
 	ORI	#$0700, SR
 	MOVE.l	#$40AE0003, D5
 	LEA	Map_sector_center.w, A0
-	LEA	loc_00006542, A2
+	LEA	WallTilemap_NearFront, A2
 	TST.b	Is_in_cave.w
 	BEQ.b	loc_0000640A
-	LEA	loc_00006562, A2
+	LEA	WallTilemap_NearSide, A2
 loc_0000640A:
 	MOVEQ	#$F, D7
 loc_0000640C:
@@ -6790,7 +6803,7 @@ loc_00006484:
 	TST.b	Cave_light_active.w
 	BEQ.w	loc_00006506
 loc_000064B6:
-	LEA	loc_00006508, A0
+	LEA	CaveWallTileIndices, A0
 	MOVE.l	#$60AE0003, D5
 	MOVEQ	#0, D0
 	MOVEQ	#0, D1
@@ -6817,7 +6830,8 @@ loc_000064EE:
 loc_00006506:
 	RTS
 
-loc_00006508:
+; CaveWallTileIndices
+CaveWallTileIndices:
 	dc.b	$85, $AE, $85, $AF, $85, $B0, $85, $B1, $85, $B2, $85, $B3, $85, $B4, $85, $B5, $85, $B6 
 
 UpdateCaveLightTimer:
@@ -6835,10 +6849,12 @@ loc_0000653C:
 	SUBQ.w	#1, Cave_light_timer.w
 	RTS
 
-loc_00006542:
+; WallTilemap_NearFront
+WallTilemap_NearFront:
 	dc.b	$04, $CA, $04, $CB, $04, $CE, $04, $CC, $04, $D1, $04, $CB, $04, $D0, $04, $C8, $04, $C9, $04, $C1, $04, $C2, $04, $C3, $04, $C4, $04, $C5, $04, $C6 
 	dc.w	$04CD
-loc_00006562:
+; WallTilemap_NearSide
+WallTilemap_NearSide:
 	dc.w	$04C7
 	dc.b	$04, $CB, $04, $CE 
 	dc.w	$04C9
@@ -6881,41 +6897,59 @@ WallTileGfxPtrs:
 	dc.l	loc_000872B8
 	dc.l	loc_00087262
 	dc.l	loc_00000000	
-loc_00006602:
+; WallTileOffsets_UpLeft
+WallTileOffsets_UpLeft:
 	dc.b	$FF, $D0, $FF, $D1, $FF, $A0, $FF, $A1, $FF, $A2, $FF, $70, $FF, $71, $FF, $72, $FF, $73, $FF, $3F, $FF, $40, $FF, $41, $FF, $42, $FF, $43 
-loc_0000661E:
+; WallTileOffsets_UpRight
+WallTileOffsets_UpRight:
 	dc.b	$00, $01, $00, $31, $00, $02, $00, $32, $00, $62, $00, $03, $00, $33, $00, $63, $00, $93, $FF, $D4, $00, $04, $00, $34, $00, $64, $00, $94 
-loc_0000663A:
+; WallTileOffsets_DownLeft
+WallTileOffsets_DownLeft:
 	dc.b	$00, $30, $00, $2F, $00, $60, $00, $5F, $00, $5E, $00, $90, $00, $8F, $00, $8E, $00, $8D, $00, $C1, $00, $C0, $00, $BF, $00, $BE, $00, $BD 
-loc_00006656:
+; WallTileOffsets_DownRight
+WallTileOffsets_DownRight:
 	dc.b	$FF, $FF, $FF, $CF, $FF, $FE, $FF, $CE, $FF, $9E, $FF, $FD, $FF, $9E, $FF, $6E, $FF, $6D, $00, $2C, $FF, $FC, $FF, $CC, $FF, $9C, $FF, $6C 
-loc_00006672:
+; WallTileOffsets_LeftUp
+WallTileOffsets_LeftUp:
 	dc.b	$00, $01, $FF, $D1, $FF, $D0, $FF, $A1, $FF, $72, $FF, $A2, $FF, $D2, $FF, $A3, $FF, $43, $FF, $74 
-loc_00006686:
+; WallTileOffsets_LeftDown
+WallTileOffsets_LeftDown:
 	dc.b	$00, $30, $00, $31, $00, $01, $00, $32, $00, $63, $00, $62, $00, $61, $00, $92, $00, $94, $00, $C3 
-loc_0000669A:
+; WallTileOffsets_RightUp
+WallTileOffsets_RightUp:
 	dc.b	$FF, $FF, $00, $2F, $00, $30, $00, $5F, $00, $8E, $00, $5E, $00, $2E, $00, $5D, $00, $BD, $00, $8C 
-loc_000066AE:
+; WallTileOffsets_RightDown
+WallTileOffsets_RightDown:
 	dc.b	$FF, $D0, $FF, $CF, $FF, $FF, $FF, $CE, $FF, $9D, $FF, $9E, $FF, $9F, $FF, $6E, $FF, $6C, $FF, $3D 
-loc_000066C2:
+; WallTileOffsets_FarLeft
+WallTileOffsets_FarLeft:
 	dc.b	$00, $01, $FF, $D1, $00, $02, $FF, $D2, $FF, $A2, $00, $03, $FF, $D3, $FF, $A3, $FF, $73, $00, $34, $00, $04, $FF, $D4, $FF, $74, $FF, $74 
-loc_000066DE:
+; WallTileOffsets_FarRight
+WallTileOffsets_FarRight:
 	dc.b	$00, $30, $00, $31, $00, $60, $00, $61, $00, $62, $00, $90, $00, $91, $00, $92, $00, $93, $00, $BF, $00, $C0, $00, $C1, $00, $C2, $00, $C3 
-loc_000066FA:
+; WallTileOffsets_FarUpLeft
+WallTileOffsets_FarUpLeft:
 	dc.b	$FF, $FF, $00, $2F, $FF, $FE, $00, $2E, $00, $5E, $FF, $FD, $00, $2D, $00, $5D, $00, $8D, $FF, $CC, $FF, $FC, $00, $2C, $00, $5C, $00, $8C 
-loc_00006716:
+; WallTileOffsets_FarDownRight
+WallTileOffsets_FarDownRight:
 	dc.b	$FF, $D0, $FF, $CF, $FF, $A0, $FF, $9F, $FF, $9E, $FF, $70, $FF, $6F, $FF, $6E, $FF, $6D, $FF, $41, $FF, $40, $FF, $3F, $FF, $3E, $FF, $3D 
-loc_00006732:
+; FpObjectTileTable_Near
+FpObjectTileTable_Near:
 	dc.b	$00, $00, $00, $34, $00, $B8, $01, $C0, $01, $3C, $00, $34, $00, $B8, $01, $3C, $01, $C0, $00, $00, $00, $00 
-loc_00006748:
+; FpObjectTileTable_Mid
+FpObjectTileTable_Mid:
 	dc.b	$00, $00, $00, $70, $00, $F4, $01, $FC, $01, $78, $00, $70, $00, $F4, $01, $78, $01, $FC, $00, $00, $00, $00 
-loc_0000675E:
+; FpObjectTileTable_Far
+FpObjectTileTable_Far:
 	dc.b	$00, $00, $00, $8E, $01, $12, $02, $1A, $01, $96, $00, $8E, $01, $12, $01, $96, $02, $1A, $00, $00, $00, $00 
-loc_00006774:
+; WallRenderVdpParams_Near
+WallRenderVdpParams_Near:
 	dc.b	$62, $F6, $00, $03, $61, $7C, $00, $03, $61, $FA, $00, $03, $62, $78, $00, $03 
-loc_00006784:
+; WallRenderVdpParams_Mid
+WallRenderVdpParams_Mid:
 	dc.b	$63, $0C, $00, $03, $61, $8C, $00, $03, $62, $0C, $00, $03, $62, $8C, $00, $03 
-loc_00006794:
+; WallRenderVdpParams_Far
+WallRenderVdpParams_Far:
 	dc.b	$63, $22, $00, $03, $61, $9C, $00, $03, $62, $1E, $00, $03, $62, $A0, $00, $03 
 ; loc_000067A4
 WallTileMidGfxPtrs:
@@ -6951,10 +6985,12 @@ WallTileMidGfxPtrs:
 	dc.l	loc_00086FD8
 	dc.l	loc_00087072
 	dc.l	loc_0008710C
-loc_00006824:
+; FpSpritePositionTable
+FpSpritePositionTable:
 	dc.b	$04, $4C, $02, $20, $06, $70, $07, $70, $04, $4C, $04, $4C, $06, $70, $06, $70 
 
-loc_00006834:
+; BossBattlePlayerInit
+BossBattlePlayerInit:
 	BCLR.b	#7, $7(A5)
 	BCLR.b	#3, $7(A5)
 	BCLR.b	#4, $7(A5)
@@ -6968,7 +7004,7 @@ loc_00006834:
 	CLR.b	$1B(A5)
 	CLR.b	Player_is_moving.w
 	CLR.b	Battle_active_flag.w
-	MOVE.l	#loc_00006908, $2(A5)
+	MOVE.l	#BossBattlePlayerTick_Intro, $2(A5)
 	MOVEA.l	Battle_entity_slot_1_ptr.w, A6
 	BSET.b	#7, (A6)
 	BCLR.b	#7, $7(A6)
@@ -6979,7 +7015,7 @@ loc_00006834:
 	MOVE.b	#$0F, $6(A6)
 	MOVE.w	#1, $8(A6)
 	CLR.w	$16(A6)
-	MOVE.l	#loc_00006BA0, $2(A6)
+	MOVE.l	#BossBattleWeaponTick, $2(A6)
 	MOVEA.l	Battle_entity_slot_2_ptr.w, A6
 	BSET.b	#7, (A6)
 	BCLR.b	#7, $7(A6)
@@ -6990,12 +7026,13 @@ loc_00006834:
 	MOVE.b	#5, $6(A6)
 	MOVE.w	#$001D, $8(A6)
 	CLR.w	$16(A6)
-	MOVE.l	#loc_00006BCA, $2(A6)
+	MOVE.l	#BossBattleShieldTick, $2(A6)
 	CLR.b	Boss_battle_exit_flag.w
 	CLR.b	Player_attacking_flag.w
 	RTS
 
-loc_00006908:
+; BossBattlePlayerTick_Intro
+BossBattlePlayerTick_Intro:
 	TST.b	Fade_in_lines_mask.w
 	BNE.b	loc_0000694C
 	ADDQ.b	#1, $1B(A5)
@@ -7012,25 +7049,27 @@ loc_00006930:
 	CMPI.w	#2, D0
 	BLT.b	loc_0000694E
 	CLR.b	$1B(A5)
-	MOVE.l	#loc_00006978, $2(A5)
+	MOVE.l	#BossBattlePlayerTick_Active, $2(A5)
 	MOVE.b	#$FF, Battle_active_flag.w
 	BRA.w	loc_00006ABE
 loc_0000694C:
 	CLR.w	D0
 loc_0000694E:
 	MOVEA.l	Battle_entity_slot_1_ptr.w, A6
-	LEA	loc_00006976, A0
+	LEA	BossBattleIntroFrameData, A0
 	MOVE.b	(A0,D0.w), $24(A6)
 	MOVE.b	#8, $24(A5)
 	MOVEA.l	Battle_entity_slot_2_ptr.w, A4
 	MOVE.b	#6, $24(A4)
 	CLR.b	Player_is_moving.w
 	BRA.w	loc_00006B0A
-loc_00006976:
+; BossBattleIntroFrameData
+BossBattleIntroFrameData:
 	dc.b	$0F
 	dc.b	$10
 
-loc_00006978:
+; BossBattlePlayerTick_Active
+BossBattlePlayerTick_Active:
 	TST.b	Player_input_blocked.w
 	BNE.w	loc_00006A3C
 	TST.b	Fade_out_lines_mask.w
@@ -7148,7 +7187,7 @@ loc_00006B1C:
 	MOVE.w	#$0128, $E(A5)	
 loc_00006B28:
 	TST.b	Boss_battle_exit_flag.w
-	BNE.w	loc_00006B50
+	BNE.w	BossBattleExitCleanup
 	MOVE.b	#$FF, Sprite_dma_update_pending.w
 	MOVE.w	$E(A5), $A(A5)
 	MOVE.w	$12(A5), $C(A5)
@@ -7156,28 +7195,31 @@ loc_00006B28:
 	JSR	AddSpriteToDisplayList
 	RTS
 
-loc_00006B50:
+; BossBattleExitCleanup
+BossBattleExitCleanup:
 	MOVEA.l	Player_entity_ptr.w, A6
-	MOVE.l	#loc_00006B98, $2(A6)
+	MOVE.l	#BossBattleEntityNullTick, $2(A6)
 	CLR.w	D0
 	MOVE.b	$1(A6), D0
 	LEA	(A6,D0.w), A6
-	MOVE.l	#loc_00006B98, $2(A6)
+	MOVE.l	#BossBattleEntityNullTick, $2(A6)
 	CLR.w	D0
 	MOVE.b	$1(A6), D0
 	LEA	(A6,D0.w), A6
-	MOVE.l	#loc_00006B98, $2(A6)
+	MOVE.l	#BossBattleEntityNullTick, $2(A6)
 	MOVE.w	#GAMEPLAY_STATE_RETURN_FROM_BOSS_BATTLE, Gameplay_state.w
 	MOVE.b	#$FF, Fade_out_lines_mask.w
 	CLR.b	Player_is_moving.w
 	JSR	AddSpriteToDisplayList
 	RTS
 
-loc_00006B98:
+; BossBattleEntityNullTick
+BossBattleEntityNullTick:
 	JSR	AddSpriteToDisplayList
 	RTS
 
-loc_00006BA0:
+; BossBattleWeaponTick
+BossBattleWeaponTick:
 	MOVEA.l	Player_entity_ptr.w, A6
 	MOVE.b	$7(A6), $7(A5)
 	MOVE.w	$A(A6), $A(A5)
@@ -7188,7 +7230,8 @@ loc_00006BA0:
 	JSR	AddSpriteToDisplayList
 	RTS
 
-loc_00006BCA: 
+; BossBattleShieldTick
+BossBattleShieldTick: 
 	MOVEA.l	Player_entity_ptr.w, A6
 	MOVE.b	$7(A6), $7(A5)
 	MOVEA.l	Player_entity_ptr.w, A6
@@ -7209,29 +7252,31 @@ loc_00006BCA:
 	RTS
 
 DispatchBattleCollisionChecks:
-	LEA	loc_00006C24, A0
+	LEA	BossCollisionJumpTable, A0
 	MOVE.w	Battle_type.w, D2
 	ADD.w	D2, D2
 	ADD.w	D2, D2
 	JSR	(A0,D2.w)
 	RTS
 
-loc_00006C24:
-	BRA.w	loc_00006C5C
-	BRA.w	loc_00006CA8
-	BRA.w	loc_00006C72
-	BRA.w	loc_00006C72
-	BRA.w	loc_00006CC4
-	BRA.w	loc_00006CB6
-	BRA.w	loc_00006CB6
-	BRA.w	loc_00006CB6
-	BRA.w	loc_00006C5C
-	BRA.w	loc_00006C5C
-	BRA.w	loc_00006CA8
-	BRA.w	loc_00006C72
-	BRA.w	loc_00006CC4
-	BRA.w	loc_00006D12
-loc_00006C5C:
+; BossCollisionJumpTable
+BossCollisionJumpTable:
+	BRA.w	BossCollision_Standard
+	BRA.w	BossCollision_SingleTarget
+	BRA.w	BossCollision_MultiBody
+	BRA.w	BossCollision_MultiBody
+	BRA.w	BossCollision_MultiBodyAll
+	BRA.w	BossCollision_SingleTargetAlt
+	BRA.w	BossCollision_SingleTargetAlt
+	BRA.w	BossCollision_SingleTargetAlt
+	BRA.w	BossCollision_Standard
+	BRA.w	BossCollision_Standard
+	BRA.w	BossCollision_SingleTarget
+	BRA.w	BossCollision_MultiBody
+	BRA.w	BossCollision_MultiBodyAll
+	BRA.w	BossCollision_FinalBoss
+; BossCollision_Standard
+BossCollision_Standard:
 	BSR.w	GetBoundingBoxFromTable
 	MOVEA.l	Enemy_list_ptr.w, A6
 	BSR.w	CheckObjectCollisionBounds
@@ -7239,7 +7284,8 @@ loc_00006C5C:
 	BSR.w	CheckObjectCollisionBounds
 	RTS
 
-loc_00006C72:
+; BossCollision_MultiBody
+BossCollision_MultiBody:
 	BSR.w	GetBoundingBoxFromTable
 	MOVEA.l	Object_slot_02_ptr.w, A6
 	BSR.w	CheckObjectCollisionBounds
@@ -7255,19 +7301,22 @@ loc_00006C72:
 	BSR.w	CheckFixedAreaCollision
 	RTS
 
-loc_00006CA8:
+; BossCollision_SingleTarget
+BossCollision_SingleTarget:
 	BSR.w	GetBoundingBoxFromTable
 	MOVEA.l	Enemy_list_ptr.w, A6
 	BSR.w	CheckObjectCollisionBounds
 	RTS
 
-loc_00006CB6:
+; BossCollision_SingleTargetAlt
+BossCollision_SingleTargetAlt:
 	BSR.w	GetBoundingBoxFromTable
 	MOVEA.l	Enemy_list_ptr.w, A6
 	BSR.w	CheckObjectCollisionBounds
 	RTS
 
-loc_00006CC4:
+; BossCollision_MultiBodyAll
+BossCollision_MultiBodyAll:
 	BSR.w	GetBoundingBoxFromTable
 	MOVEA.l	Enemy_list_ptr.w, A6
 	BSR.w	CheckObjectCollisionBounds
@@ -7289,7 +7338,8 @@ loc_00006CC4:
 	BSR.w	CheckObjectCollisionBounds
 	RTS
 
-loc_00006D12:
+; BossCollision_FinalBoss
+BossCollision_FinalBoss:
 	BSR.w	GetBoundingBoxFromTable
 	MOVEA.l	Object_slot_01_ptr.w, A6
 	BSR.w	CheckObjectCollisionBounds
@@ -10321,7 +10371,7 @@ loc_00009244:
 	ANDI.w	#7, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
-	LEA	loc_0000B588, A0
+	LEA	EnemyPositionOffsetTable, A0
 	MOVE.w	(A0,D0.w), D1
 	ADD.w	D1, $E(A6)
 	MOVE.w	$2(A0,D0.w), D1
@@ -10382,7 +10432,7 @@ loc_000092E0:
 	BGE.w	loc_000092EA
 	ORI.w	#1, D2
 loc_000092EA:
-	LEA	loc_0000B578, A1
+	LEA	EnemyDirectionAnimTable, A1
 	ADDA.w	D2, A1
 	MOVE.b	(A1), D0
 	RTS
@@ -10654,7 +10704,8 @@ InitEnemy_StalkPause:
 	MOVE.l	#loc_0003DB50, Enemy_anim_table_child.w
 	RTS
 
-loc_000096EA:
+; InitEnemy_StalkPauseAlt
+InitEnemy_StalkPauseAlt:
 	BSR.w	InitEnemyAI
 	BSR.w	SetEnemyGraphicsParams
 	MOVE.l	#EnemyTick_StalkPause, $2(A5)
@@ -11126,15 +11177,17 @@ loc_00009D72:
 	JSR	AddSpriteToDisplayList
 	RTS
 
-loc_00009D90:
+; InitEnemy_StationaryShooter
+InitEnemy_StationaryShooter:
 	BSR.w	InitEnemyAI
 	BSR.w	SetEnemyGraphicsParams
-	MOVE.l	#loc_00009DB0, $2(A5)
+	MOVE.l	#EnemyTick_StationaryShooter, $2(A5)
 	MOVE.b	#$0E, $6(A6)
 	MOVE.l	#EnemyChildSpriteTick, $2(A6)
 	RTS
 
-loc_00009DB0:
+; EnemyTick_StationaryShooter
+EnemyTick_StationaryShooter:
 	TST.b	$1A(A5)
 	BLE.w	loc_00009DC0
 	SUBQ.b	#1, $1A(A5)	
@@ -11182,7 +11235,7 @@ loc_00009E3A:
 	MOVE.l	$20(A5), $20(A4)
 	MOVE.w	#$0096, $3A(A4)
 	MOVE.b	#1, $6(A4)
-	MOVE.l	#loc_00009EF6, $2(A4)
+	MOVE.l	#ProjectileTick_HomingAlt, $2(A4)
 	MOVE.w	$2C(A5), $2C(A4)
 loc_00009E7A:
 	BSR.w	HandlePlayerTakeDamage
@@ -11216,7 +11269,8 @@ loc_00009EB4:
 	JSR	AddSpriteToDisplayList
 	RTS
 
-loc_00009EF6:
+; loc_00009EF6
+ProjectileTick_HomingAlt:
 	TST.w	$3A(A5)
 	BNE.w	loc_00009F12
 	BCLR.b	#7, (A5)
@@ -11253,25 +11307,28 @@ loc_00009F50:
 	JSR	AddSpriteToDisplayList
 	RTS
 
-loc_00009F6E:
+; InitEnemy_IntermittentChase_Random
+InitEnemy_IntermittentChase_Random:
 	BSR.w	InitEnemyAI
 	BSR.w	SetEnemyCollisionBounds
 	CLR.b	Enemy_direction_flag.w
-	MOVE.l	#loc_00009FB8, $2(A5)
+	MOVE.l	#EnemyTick_IntermittentChase, $2(A5)
 	MOVE.b	#$0E, $6(A6)
 	MOVE.l	#EnemyChildSpriteTick, $2(A6)
 	RTS
 
-loc_00009F92:
+; InitEnemy_IntermittentChase_Homing
+InitEnemy_IntermittentChase_Homing:
 	BSR.w	InitEnemyAI
 	BSR.w	SetEnemyCollisionBounds
 	MOVE.b	#$FF, Enemy_direction_flag.w
-	MOVE.l	#loc_00009FB8, $2(A5)
+	MOVE.l	#EnemyTick_IntermittentChase, $2(A5)
 	MOVE.b	#$0E, $6(A6)
 	MOVE.l	#EnemyChildSpriteTick, $2(A6)
 	RTS
 
-loc_00009FB8:
+; EnemyTick_IntermittentChase
+EnemyTick_IntermittentChase:
 	BSR.w	ProcessEnemyDamage
 	BGT.w	loc_00009FCA
 	MOVE.l	#EnemyDeathReward_TwoSprites, $2(A5)
@@ -12830,9 +12887,11 @@ loc_0000B564:
 	DBF	D6, loc_0000B564
 	RTS
 
-loc_0000B578:
+; EnemyDirectionAnimTable
+EnemyDirectionAnimTable:
 	dc.b	$06, $05, $05, $04, $06, $07, $07, $00, $02, $03, $03, $04, $02, $01, $01, $00 
-loc_0000B588:
+; EnemyPositionOffsetTable
+EnemyPositionOffsetTable:
 	dc.w	$0000, $FFF0
 	dc.w	$FFF8, $FFF8 
 	dc.w	$FFF0, $0000 
@@ -13251,7 +13310,8 @@ Boss1State_MoveDown:
 	CMPI.w	#$0096, $12(A5)
 	BLE.b	loc_0000BBCC
 	MOVE.w	#3, Boss_ai_state.w
-loc_0000BBBE:
+; Boss1State_PauseAndReset
+Boss1State_PauseAndReset:
 	MOVE.b	#$28, $1A(A5)
 	CLR.l	$32(A5)
 	CLR.l	$36(A5)
@@ -14456,12 +14516,13 @@ UpdateBossAttackGraphic:
 	BNE.b	loc_0000CCA0
 	ANDI.w	#$0030, D0
 	ASR.w	#2, D0
-	LEA	loc_0000CCA2, A0
+	LEA	BossAttackGfxJumpTable, A0
 	JSR	(A0,D0.w)
 loc_0000CCA0:
 	RTS
 
-loc_0000CCA2:
+; BossAttackGfxJumpTable
+BossAttackGfxJumpTable:
 	BRA.w	DrawBossAttackGraphic1
 	BRA.w	loc_0000CCD4
 	BRA.w	loc_0000CCE6
@@ -14659,75 +14720,89 @@ ProcessBattleVictoryEvent:
 
 ; loc_0000CF2E
 BattleVictoryEventJumpTable:
-	BRA.w	loc_0000CF66
-	BRA.w	loc_0000CF6E
-	BRA.w	loc_0000CF76
-	BRA.w	loc_0000CF7E
-	BRA.w	loc_0000CF92
-	BRA.w	loc_0000CF9A
-	BRA.w	loc_0000CFA2
-	BRA.w	loc_0000CFAA
-	BRA.w	loc_0000CFB2
-	BRA.w	loc_0000CFBA
-	BRA.w	loc_0000CFC2
-	BRA.w	loc_0000CFCA
-	BRA.w	loc_0000CFD2
-	BRA.w	loc_0000CFDA
-loc_0000CF66:
+	BRA.w	BossVictoryEvent_FakeKing
+	BRA.w	BossVictoryEvent_Watling
+	BRA.w	BossVictoryEvent_StowThief
+	BRA.w	BossVictoryEvent_Asti
+	BRA.w	BossVictoryEvent_Imposter
+	BRA.w	BossVictoryEvent_Excalabria1
+	BRA.w	BossVictoryEvent_Excalabria2
+	BRA.w	BossVictoryEvent_Excalabria3
+	BRA.w	BossVictoryEvent_Carthahena
+	BRA.w	BossVictoryEvent_SwaffhamSpy
+	BRA.w	BossVictoryEvent_Luther
+	BRA.w	BossVictoryEvent_Thar
+	BRA.w	BossVictoryEvent_SwaffhamMiniboss
+	BRA.w	BossVictoryEvent_Tsarkon
+; BossVictoryEvent_FakeKing
+BossVictoryEvent_FakeKing:
 	MOVE.b	#$FF, Fake_king_killed.w
 	RTS
 	
-loc_0000CF6E:
+; BossVictoryEvent_Watling
+BossVictoryEvent_Watling:
 	MOVE.b	#$FF, Watling_youth_restored.w
 	RTS
 	
-loc_0000CF76:
+; BossVictoryEvent_StowThief
+BossVictoryEvent_StowThief:
 	MOVE.b	#$FF, Stow_thief_defeated.w
 	RTS
 	
-loc_0000CF7E:
+; BossVictoryEvent_Asti
+BossVictoryEvent_Asti:
 	MOVE.b	#$FF, Asti_monster_defeated.w
 	JSR	RestoreRingsFromBackup
 	MOVE.b	#$FF, Asti_monster_battle_complete.w
 	RTS
 	
-loc_0000CF92:
+; BossVictoryEvent_Imposter
+BossVictoryEvent_Imposter:
 	MOVE.b	#$FF, Imposter_killed.w
 	RTS
 	
-loc_0000CF9A:
+; BossVictoryEvent_Excalabria1
+BossVictoryEvent_Excalabria1:
 	MOVE.b	#$FF, Excalabria_boss_1_defeated.w
 	RTS
 	
-loc_0000CFA2:
+; BossVictoryEvent_Excalabria2
+BossVictoryEvent_Excalabria2:
 	MOVE.b	#$FF, Excalabria_boss_2_defeated.w
 	RTS
 	
-loc_0000CFAA:
+; BossVictoryEvent_Excalabria3
+BossVictoryEvent_Excalabria3:
 	MOVE.b	#$FF, Excalabria_boss_3_defeated.w
 	RTS
 	
-loc_0000CFB2:
+; BossVictoryEvent_Carthahena
+BossVictoryEvent_Carthahena:
 	MOVE.b	#$FF, Carthahena_boss_met.w
 	RTS
 	
-loc_0000CFBA:
+; BossVictoryEvent_SwaffhamSpy
+BossVictoryEvent_SwaffhamSpy:
 	MOVE.b	#$FF, Swaffham_spy_defeated.w
 	RTS
 	
-loc_0000CFC2:
+; BossVictoryEvent_Luther
+BossVictoryEvent_Luther:
 	MOVE.b	#$FF, Luther_defeated.w
 	RTS
 	
-loc_0000CFCA:
+; BossVictoryEvent_Thar
+BossVictoryEvent_Thar:
 	MOVE.b	#$FF, Thar_defeated.w
 	RTS
 	
-loc_0000CFD2:
+; BossVictoryEvent_SwaffhamMiniboss
+BossVictoryEvent_SwaffhamMiniboss:
 	MOVE.b	#$FF, Swaffham_miniboss_defeated.w
 	RTS
 	
-loc_0000CFDA:
+; BossVictoryEvent_Tsarkon
+BossVictoryEvent_Tsarkon:
 	MOVE.b	#$FF, All_rings_collected.w
 	LEA	Possessed_items_length.w, A2
 	LEA	(A2), A1
@@ -14778,7 +14853,7 @@ loc_0000D068:
 	RTS
 
 AwardBattleRewards:
-	LEA	loc_0000D116, A2
+	LEA	BattleRewardTable, A2
 	MOVE.w	Battle_type.w, D6
 	ANDI.w	#$000F, D6
 	ASL.w	#3, D6
@@ -14797,7 +14872,7 @@ DisplayBattleVictoryMessage:
 	JSR	CopyStringUntilFF
 	MOVE.w	Battle_type.w, D6
 	ASL.w	#3, D6
-	LEA	loc_0000D116, A2
+	LEA	BattleRewardTable, A2
 	MOVE.l	(A2,D6.w), D0
 	JSR	FormatKimsAmount
 	MOVE.b	#$FE, (A1)+
@@ -14807,7 +14882,7 @@ DisplayBattleVictoryMessage:
 	MOVE.b	#$20, (A1)+
 	MOVE.w	Battle_type.w, D6
 	ASL.w	#3, D6
-	LEA	loc_0000D116, A2
+	LEA	BattleRewardTable, A2
 	MOVE.l	$4(A2,D6.w), D0
 	JSR	FormatKimsAmount
 	LEA	-$4(A1), A1
@@ -14818,7 +14893,8 @@ DisplayBattleVictoryMessage:
 	JSR	ResetScriptAndInitDialogue
 	RTS
 
-loc_0000D116:
+; BattleRewardTable
+BattleRewardTable:
 	dc.l	$500
 	dc.l	$500
 	dc.l	$1000 
@@ -18356,7 +18432,8 @@ NullSpriteRoutine:
 	
 LoadCaveTileGraphics:
 	LEA	loc_0006D172, A0
-loc_0000FFFA:
+; LoadCaveTileGfxToBuffer
+LoadCaveTileGfxToBuffer:
 	LEA	Tile_gfx_buffer.w, A2
 	MOVE.w	#$0075, D5
 loc_00010002:
@@ -18442,9 +18519,11 @@ loc_000100E6:
 	BSR.w	ExecuteVdpDmaFromRam
 	RTS
 	
-loc_000100FE:
+; LoadTownTileGfxSet1
+LoadTownTileGfxSet1:
 	LEA	loc_0005E4AC, A0
-loc_00010104:
+; LoadTownTileGfxToBuffer
+LoadTownTileGfxToBuffer:
 	LEA	Tile_gfx_buffer.w, A2
 	MOVE.w	#$00B6, D5
 loc_0001010C:
@@ -29607,11 +29686,11 @@ UseGeneric:
 	BEQ.w	loc_0001B15C	
 	BRA.w	loc_0001B148	
 loc_0001B0AC:
-	LEA	loc_00005A1C, A0
+	LEA	FpDirectionDeltaForward, A0
 	JSR	GetMapTileInDirection
 	CMPI.b	#6, D0
 	BNE.w	loc_0001B148
-	LEA	loc_00005A1C, A2
+	LEA	FpDirectionDeltaForward, A2
 	MOVE.w	Player_position_x_outside_town.w, D3
 	MOVE.w	Player_position_y_outside_town.w, D4
 	MOVE.w	Player_direction.w, D0
@@ -32667,7 +32746,7 @@ loc_0001DC04:
 loc_0001DC2A:
 	TST.b	Chest_already_opened.w       ; Already opened?
 	BNE.w	loc_0001DCF8             ; Yes: "Already open"
-	LEA	loc_00005A1C, A0
+	LEA	FpDirectionDeltaForward, A0
 	JSR	GetMapTileInDirection             ; Search for object
 	CMPI.b	#6, D0                   ; Type 6 = chest sprite?
 	BNE.w	loc_0001DC94
@@ -32886,7 +32965,7 @@ loc_0001DF12:
 	RTS
 	
 CheckIfDoorIsLocked:
-	LEA	loc_00005A1C, A2
+	LEA	FpDirectionDeltaForward, A2
 	MOVE.w	Player_position_x_outside_town.w, D3
 	MOVE.w	Player_position_y_outside_town.w, D4
 	MOVE.w	Player_direction.w, D0
@@ -38564,7 +38643,7 @@ BossSpriteFrame_Excalabria3:
 ; loc_00023942
 BossSpriteFrame_Carthahena:
 	dc.l	$027101F1	
-	dc.l	loc_0000FFFA-3	
+	dc.l	LoadCaveTileGfxToBuffer-3	
 	dc.l	$FFDC027D	
 ; loc_0002394E
 BossSpriteFrame_Luther:
@@ -39986,7 +40065,7 @@ EnemyData_StandardMeleeAlt_A3:
 	dc.b	$06
 ; loc_00024A28
 EnemyData_StalkPauseAlt_64:
-	dc.l	loc_000096EA
+	dc.l	InitEnemy_StalkPauseAlt
 	dc.w	$0064
 	dc.w	$0000
 	dc.w	$001B
@@ -39998,7 +40077,7 @@ EnemyData_StalkPauseAlt_64:
 	dc.b	$02
 ; loc_00024A42
 EnemyData_StalkPauseAlt_B9:
-	dc.l	loc_000096EA
+	dc.l	InitEnemy_StalkPauseAlt
 	dc.w	$00B9
 	dc.w	$0000
 	dc.w	$001F
@@ -40010,7 +40089,7 @@ EnemyData_StalkPauseAlt_B9:
 	dc.b	$02
 ; loc_00024A5C
 EnemyData_StalkPauseAlt_BA:
-	dc.l	loc_000096EA
+	dc.l	InitEnemy_StalkPauseAlt
 	dc.w	$00BA
 	dc.w	$0000
 	dc.w	$001C
@@ -40022,7 +40101,7 @@ EnemyData_StalkPauseAlt_BA:
 	dc.b	$02
 ; loc_00024A76
 EnemyData_StalkPauseAlt_BB:
-	dc.l	loc_000096EA
+	dc.l	InitEnemy_StalkPauseAlt
 	dc.w	$00BB
 	dc.w	$0000
 	dc.w	$002A
@@ -40034,7 +40113,7 @@ EnemyData_StalkPauseAlt_BB:
 	dc.b	$06
 ; loc_00024A90
 EnemyData_HumanoidMelee_65:
-	dc.l	loc_00009F6E
+	dc.l	InitEnemy_IntermittentChase_Random
 	dc.w	$0065
 	dc.w	$0001
 	dc.w	$1028
@@ -40046,7 +40125,7 @@ EnemyData_HumanoidMelee_65:
 	dc.b	$02
 ; loc_00024AAA
 EnemyData_HumanoidMelee_A7:
-	dc.l	loc_00009F6E
+	dc.l	InitEnemy_IntermittentChase_Random
 	dc.w	$00A7
 	dc.w	$0001
 	dc.w	$102A
@@ -40058,7 +40137,7 @@ EnemyData_HumanoidMelee_A7:
 	dc.b	$02
 ; loc_00024AC4
 EnemyData_HumanoidMeleeAlt_A8:
-	dc.l	loc_00009F92
+	dc.l	InitEnemy_IntermittentChase_Homing
 	dc.w	$00A8
 	dc.w	$0001
 	dc.w	$081E
@@ -40070,7 +40149,7 @@ EnemyData_HumanoidMeleeAlt_A8:
 	dc.b	$0E
 ; loc_00024ADE
 EnemyData_HumanoidMeleeAlt_A9:
-	dc.l	loc_00009F92
+	dc.l	InitEnemy_IntermittentChase_Homing
 	dc.w	$00A9
 	dc.w	$0001
 	dc.w	$002A
@@ -40264,7 +40343,7 @@ EnemyData_BurstFire_A6:
 	dc.b	$0A
 ; loc_00024C98
 EnemyData_StalkPause3_64:
-	dc.l	loc_00009D90
+	dc.l	InitEnemy_StationaryShooter
 	dc.w	$0064
 	dc.w	$0000
 	dc.w	$001B
@@ -40278,7 +40357,7 @@ loc_00024CB2:
 	dc.b	$00, $00, $9D, $90, $00, $B9, $00, $00, $00, $03, $00, $07, $03, $48, $00, $4D, $04, $16, $00, $70, $00, $00, $02, $00, $01, $02 
 ; loc_00024CCC
 EnemyData_StalkPause3_BA:
-	dc.l	loc_00009D90
+	dc.l	InitEnemy_StationaryShooter
 	dc.w	$00BA
 	dc.w	$0000
 	dc.w	$001C
@@ -40290,7 +40369,7 @@ EnemyData_StalkPause3_BA:
 	dc.b	$02
 ; loc_00024CE6
 EnemyData_StalkPause3_BB:
-	dc.l	loc_00009D90
+	dc.l	InitEnemy_StationaryShooter
 	dc.w	$00BB
 	dc.w	$0003
 	dc.w	$3000
@@ -60973,7 +61052,7 @@ loc_0005A372:
 	dc.l	$88880888	
 	dc.l	$88808888	
 loc_0005A37E:
-	dc.l	loc_0000BBBE-3	
+	dc.l	Boss1State_PauseAndReset-3	
 	dc.l	$000BCCCC	
 	dc.l	$B00CCDDC	
 	dc.l	$BB0CDCCC	
@@ -62472,7 +62551,7 @@ loc_0005D6D4:
 	dc.l	loc_0005D696
 	dc.l	loc_0005D6B8
 loc_0005D764:
-	dc.l	loc_00010104-4	
+	dc.l	LoadTownTileGfxToBuffer-4	
 loc_0005D768:
 	dc.l	$FF900000	
 	dc.l	$44540376	
@@ -62670,7 +62749,7 @@ loc_0005DC36:
 	dc.l	loc_0005DC1E
 	dc.l	loc_0005DC26
 loc_0005DD16:
-	dc.l	loc_00010104-3	
+	dc.l	LoadTownTileGfxToBuffer-3	
 	dc.l	$02040305	
 	dc.l	$01070608	
 loc_0005DD22:
@@ -69499,7 +69578,7 @@ loc_0007ABD8:
 	dc.l	loc_0007AB9E
 	dc.l	loc_0007ABBA
 loc_0007AC08:
-	dc.l	loc_00010104-4	
+	dc.l	LoadTownTileGfxToBuffer-4	
 loc_0007AC0C:
 	dc.l	$FFF90088	
 	dc.l	$05550553	

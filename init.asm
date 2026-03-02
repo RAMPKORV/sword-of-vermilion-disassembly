@@ -121,7 +121,7 @@ StartupSequence_SetupHardware:
 	JSR	InitBasicObjectSlots
 	JSR	loc_0000FEE2
 	JSR	loc_0000FCDC
-	JSR	loc_000100FE
+	JSR	LoadTownTileGfxSet1
 	JSR	InitPlayerInventoryDefaults
 	ANDI	#$F8FF, SR
 ; MainGameLoop
