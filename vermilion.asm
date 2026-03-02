@@ -115,9 +115,10 @@ InitYM2612:
 InitVDPAndClearVRAM:
 	LEA	VDPRegisterDefaults, A0
 	MOVEQ	#$0000000F, D0
-loc_00000362:
+; InitVDPAndClearVRAM_Done
+InitVDPAndClearVRAM_Done:
 	MOVE.w	(A0)+, VDP_control_port
-	DBF	D0, loc_00000362
+	DBF	D0, InitVDPAndClearVRAM_Done
 	LEA	VDPRegisterDefaults, A0
 	LEA	VDP_regs_cache.w, A1
 	MOVE.l	(A0)+, (A1)+
@@ -152,8 +153,9 @@ InitZ80SoundDriver:
 	MOVE.w	#$0100, $00A11200
 	MOVE.w	#0, $00A11200
 	MOVE.w	#$0013, D7
-loc_000003F2:
-	DBF	D7, loc_000003F2
+; InitZ80SoundDriver_Done
+InitZ80SoundDriver_Done:
+	DBF	D7, InitZ80SoundDriver_Done
 	MOVE.w	#$0100, $00A11200
 	BSR.w	LoadZ80Driver
 	RTS
@@ -163,9 +165,10 @@ LoadZ80Driver: ; Send below chunk of data into Z80 RAM
 	LEA	$00A00000, A1
 	LEA	Z80DriverBinary, A2
 	MOVE.w	#$013F, D6
-loc_00000414:
+; LoadZ80Driver_Done
+LoadZ80Driver_Done:
 	MOVE.b	(A2)+, (A1)+
-	DBF	D6, loc_00000414
+	DBF	D6, LoadZ80Driver_Done
 	RTS
 
 ; Z80DriverBinary
@@ -612,16 +615,18 @@ VerticalInterrupt_Loop4:
 	BNE.w	VerticalInterrupt_Loop5	
 	JSR	UpdateBattleEntities	
 	MOVE.w	#$021D, D7	
-loc_0000114A:
+; VerticalInterrupt_Loop4_Done
+VerticalInterrupt_Loop4_Done:
 	NOP	
-	DBF	D7, loc_0000114A	
+	DBF	D7, VerticalInterrupt_Loop4_Done	
 	BRA.b	VBlank_ProcessPalette	
 ; VerticalInterrupt_Loop5
 VerticalInterrupt_Loop5:
 	MOVE.w	#$0657, D7	
-loc_00001156:
+; VerticalInterrupt_Loop5_Done
+VerticalInterrupt_Loop5_Done:
 	NOP	
-	DBF	D7, loc_00001156	
+	DBF	D7, VerticalInterrupt_Loop5_Done	
 ; loc_0000115C
 VBlank_ProcessPalette:
 	JSR	UpdatePaletteBuffer
@@ -763,7 +768,8 @@ CheckButtonPress_NotPressed:
 ; DisplayHexDigits
 DisplayHexDigits:					; unreferenced dead code
 	MOVEQ	#3, D6
-loc_0000130E:
+; DisplayHexDigits_Done
+DisplayHexDigits_Done:
 	ROL.w	#4, D2
 	MOVE.w	D2, D4
 	ANDI.w	#$000F, D4
@@ -774,7 +780,7 @@ loc_0000130E:
 DisplayHexDigits_Loop:
 	ADDI.w	#$30, D4
 	BSR.w	WriteDigitToVRAM
-	DBF	D6, loc_0000130E
+	DBF	D6, DisplayHexDigits_Done
 	RTS
 ; WriteDigitToVRAM
 WriteDigitToVRAM:
@@ -2584,12 +2590,13 @@ GameState_BossBattleInit:
 	CLR.w	D0
 	LEA	Boss_battle_flags.w, A0
 	MOVE.w	#$000F, D7
-loc_00002AC0:
+; GameState_BossBattleInit_Done
+GameState_BossBattleInit_Done:
 	MOVE.b	(A0)+, D1
 	TST.b	D1
 	BNE.b	GameState_BossBattleInit_Loop2
 	ADDQ.w	#1, D0
-	DBF	D7, loc_00002AC0
+	DBF	D7, GameState_BossBattleInit_Done
 ; GameState_BossBattleInit_Loop2
 GameState_BossBattleInit_Loop2:
 	CLR.b	Boss_event_trigger.w
@@ -2597,9 +2604,10 @@ GameState_BossBattleInit_Loop2:
 	MOVE.w	D0, Battle_type.w
 	LEA	Boss_battle_flags.w, A0
 	MOVE.w	#3, D7
-loc_00002AE0:
+; GameState_BossBattleInit_Loop2_Done
+GameState_BossBattleInit_Loop2_Done:
 	CLR.l	(A0)+
-	DBF	D7, loc_00002AE0
+	DBF	D7, GameState_BossBattleInit_Loop2_Done
 	BSR.w	ClearAllEnemyEntities
 	LEA	BossBattleObjectInitPtrs, A0
 	MOVE.w	Battle_type.w, D0
@@ -2732,7 +2740,8 @@ GameState_ProcessResurrection_Loop2: ; ressurected in church?
 	LEA	Player_kims.w, A0
 	CLR.l	D2
 	MOVE.w	#3, D4
-loc_00002CC0:
+; GameState_ProcessResurrection_Loop2_Done
+GameState_ProcessResurrection_Loop2_Done:
 	CLR.l	D0
 	MOVE.b	(A0), D0
 	CLR.l	D1
@@ -2769,7 +2778,7 @@ GameState_ProcessResurrection_Loop7:
 	SWAP	D2
 	OR.b	D1, D3
 	MOVE.b	D3, (A0)+
-	DBF	D4, loc_00002CC0
+	DBF	D4, GameState_ProcessResurrection_Loop2_Done
 ; GameState_ProcessResurrection_Loop3
 GameState_ProcessResurrection_Loop3:
 	BSR.w	InitializeTownMode
@@ -2916,7 +2925,8 @@ UpdateDialogTileColumn:
 	ADD.l	D0, D5
 	MOVE.w	#$0066, D7
 	ORI	#$0700, SR
-loc_00002F72:
+; UpdateDialogTileColumn_Done
+UpdateDialogTileColumn_Done:
 	MOVE.l	D5, VDP_control_port
 	CLR.w	D0
 	MOVE.b	(A0), D0
@@ -2924,7 +2934,7 @@ loc_00002F72:
 	MOVE.w	D0, VDP_data_port
 	ADDI.l	#$000A0000, D5
 	LEA	$A(A0), A0
-	DBF	D7, loc_00002F72
+	DBF	D7, UpdateDialogTileColumn_Done
 	ANDI	#$F8FF, SR
 	ADDQ.w	#1, Dialog_phase.w
 	RTS
@@ -2936,9 +2946,10 @@ FlushDialogTileBuffer:
 	MOVE.l	D5, VDP_control_port
 	MOVE.w	#$01FF, D7
 	ORI	#$0700, SR
-loc_00002FB8:
+; FlushDialogTileBuffer_Done
+FlushDialogTileBuffer_Done:
 	MOVE.w	(A0)+, VDP_data_port
-	DBF	D7, loc_00002FB8
+	DBF	D7, FlushDialogTileBuffer_Done
 	ANDI	#$F8FF, SR
 	CLR.w	Dialog_timer.w
 	RTS
@@ -2956,17 +2967,19 @@ DrawTerrainTilemapHelper:
 	ADD.w	D0, D0
 	MOVEA.l	(A0,D0.w), A0
 	MOVE.w	#$0015, D7
-loc_00002FF8:
+; DrawTerrainTilemapHelper_Done
+DrawTerrainTilemapHelper_Done:
 	MOVE.l	D5, VDP_control_port
 	MOVE.w	#$0013, D6
-loc_00003002:
+; DrawTerrainTilemapHelper_Done2
+DrawTerrainTilemapHelper_Done2:
 	CLR.w	D0
 	MOVE.b	(A0)+, D0
 	ADDI.w	#$4300, D0
 	MOVE.w	D0, VDP_data_port
-	DBF	D6, loc_00003002
+	DBF	D6, DrawTerrainTilemapHelper_Done2
 	ADDI.l	#$00800000, D5
-	DBF	D7, loc_00002FF8
+	DBF	D7, DrawTerrainTilemapHelper_Done
 	ANDI	#$F8FF, SR
 	RTS
 
@@ -2975,17 +2988,19 @@ DrawBattleStatusBar:
 	MOVE.l	#$6B000003, D5
 	LEA	loc_0006A5B0, A0
 	MOVE.w	#5, D7
-loc_00003038:
+; DrawBattleStatusBar_Done
+DrawBattleStatusBar_Done:
 	MOVE.l	D5, VDP_control_port
 	MOVE.w	#$0027, D6
-loc_00003042:
+; DrawBattleStatusBar_Done2
+DrawBattleStatusBar_Done2:
 	CLR.w	D0
 	MOVE.b	(A0)+, D0
 	ADDI.w	#$83CC, D0
 	MOVE.w	D0, VDP_data_port
-	DBF	D6, loc_00003042
+	DBF	D6, DrawBattleStatusBar_Done2
 	ADDI.l	#$00800000, D5
-	DBF	D7, loc_00003038
+	DBF	D7, DrawBattleStatusBar_Done
 	ANDI	#$F8FF, SR
 	RTS
 
@@ -2994,19 +3009,21 @@ DrawBattleNametable:
 	MOVE.l	#$40000003, D5
 	LEA	loc_0006A240, A0
 	MOVE.w	#$001B, D7
-loc_00003078:
+; DrawBattleNametable_Done
+DrawBattleNametable_Done:
 	MOVE.l	D5, VDP_control_port
 	MOVE.w	#$0027, D6
-loc_00003082:
+; DrawBattleNametable_Done2
+DrawBattleNametable_Done2:
 	CLR.w	D0
 	MOVE.b	(A0)+, D0
 	ORI.w	#$8000, D0
 	ORI.w	#0, D0
 	ADDI.w	#$03CC, D0
 	MOVE.w	D0, VDP_data_port
-	DBF	D6, loc_00003082
+	DBF	D6, DrawBattleNametable_Done2
 	ADDI.l	#$00800000, D5
-	DBF	D7, loc_00003078
+	DBF	D7, DrawBattleNametable_Done
 	ANDI	#$F8FF, SR
 	RTS
 
@@ -3271,7 +3288,8 @@ SearchTownNPCData:
 	JSR	(A0,D2.w)                        ; Get town data array in A1
 	
 	; Search for position match
-loc_00003352:
+; SearchTownNPCData_Done
+SearchTownNPCData_Done:
 	LEA	(A1), A0                         ; A0 = current entry
 	MOVE.w	(A0)+, D2                        ; D2 = entry X
 	BLE.b	FindTownStateEntry_NextEntry_Loop                     ; If <= 0, end of list
@@ -3289,7 +3307,7 @@ SearchTownNPCData_Loop:
 ; loc_00003366
 FindTownStateEntry_NextEntry:
 	LEA	$28(A1), A1                      ; Skip to next entry
-	BRA.b	loc_00003352
+	BRA.b	SearchTownNPCData_Done
 	
 ; FindTownStateEntry_NextEntry_Loop
 FindTownStateEntry_NextEntry_Loop:
@@ -3901,7 +3919,8 @@ CheckTownEnemyCollision:
 	ADD.w	$6(A1,D4.w), D3
 	MOVEQ	#$1D, D7
 	MOVEA.l	Enemy_list_ptr.w, A6
-loc_00003A56:
+; CheckTownEnemyCollision_Done
+CheckTownEnemyCollision_Done:
 	BTST.b	#7, (A6)
 	BEQ.b	TownEnemyCollision_NextEnemy_Loop
 	TST.b	$2D(A6)
@@ -3924,7 +3943,7 @@ TownEnemyCollision_NextEnemy:
 	CLR.w	D4
 	MOVE.b	$1(A6), D4
 	LEA	(A6,D4.w), A6
-	DBF	D7, loc_00003A56
+	DBF	D7, CheckTownEnemyCollision_Done
 ; TownEnemyCollision_NextEnemy_Loop
 TownEnemyCollision_NextEnemy_Loop:
 	RTS
@@ -4427,7 +4446,8 @@ CheckBattleAttackHitbox_Loop2:
 	ADD.w	$12(A5), D3
 	MOVEA.l	Enemy_list_ptr.w, A6
 	MOVE.w	#9, D7
-loc_0000412E:
+; CheckBattleAttackHitbox_Loop2_Done
+CheckBattleAttackHitbox_Loop2_Done:
 	BTST.b	#7, (A6)
 	BEQ.w	NpcProximityCheck_NextSlot
 	BTST.b	#6, (A6)
@@ -4468,7 +4488,7 @@ NpcProximityCheck_NextSlot:
 	CLR.w	D5
 	MOVE.b	$1(A6), D5
 	LEA	(A6,D5.w), A6
-	DBF	D7, loc_0000412E
+	DBF	D7, CheckBattleAttackHitbox_Loop2_Done
 	RTS
 
 ; loc_000041C2
@@ -4516,12 +4536,13 @@ DispatchBattleMagic_Loop:
 ClearObjectActiveFlags:
 	MOVEA.l	Object_slot_02_ptr.w, A6
 	MOVE.w	#$000B, D7
-loc_0000423C:
+; ClearObjectActiveFlags_Done
+ClearObjectActiveFlags_Done:
 	BCLR.b	#7, (A6)
 	CLR.w	D0
 	MOVE.b	$1(A6), D0
 	LEA	(A6,D0.w), A6
-	DBF	D7, loc_0000423C
+	DBF	D7, ClearObjectActiveFlags_Done
 	RTS
 
 ; AttackHitboxData
@@ -5609,43 +5630,49 @@ PrepareWallTileRenderData:
 RenderWallTile_14x10_TwoPalette:
 	ORI	#$0700, SR
 	MOVE.w	#$000D, D7
-loc_0000517C:
+; RenderWallTile_14x10_TwoPalette_Done
+RenderWallTile_14x10_TwoPalette_Done:
 	MOVE.l	D5, VDP_control_port
 	MOVE.w	#5, D6
-loc_00005186:
+; RenderWallTile_14x10_TwoPalette_Done2
+RenderWallTile_14x10_TwoPalette_Done2:
 	CLR.w	D0
 	MOVE.b	(A0)+, D0
 	ADD.w	D1, D0
 	MOVE.w	D0, VDP_data_port
-	DBF	D6, loc_00005186
+	DBF	D6, RenderWallTile_14x10_TwoPalette_Done2
 	MOVE.w	#4, D6
-loc_0000519A:
+; RenderWallTile_14x10_TwoPalette_Done3
+RenderWallTile_14x10_TwoPalette_Done3:
 	CLR.w	D0
 	MOVE.b	(A0)+, D0
 	ADD.w	D2, D0
 	MOVE.w	D0, VDP_data_port
-	DBF	D6, loc_0000519A
+	DBF	D6, RenderWallTile_14x10_TwoPalette_Done3
 	ADDI.l	#$00800000, D5
-	DBF	D7, loc_0000517C
+	DBF	D7, RenderWallTile_14x10_TwoPalette_Done
 	ANDI	#$F8FF, SR
 	RTS
 
 RenderWallTile_14x10_TwoPalette_RightWall:
 	ORI	#$0700, SR
 	MOVE.w	#$000D, D7
-loc_000051C2:
+; RenderWallTile_14x10_TwoPalette_RightWall_Done
+RenderWallTile_14x10_TwoPalette_RightWall_Done:
 	MOVE.l	D5, D4
 	MOVE.w	#5, D6
-loc_000051C8:
+; RenderWallTile_14x10_TwoPalette_RightWall_Done2
+RenderWallTile_14x10_TwoPalette_RightWall_Done2:
 	MOVE.l	D4, VDP_control_port
 	CLR.w	D0
 	MOVE.b	(A0)+, D0
 	ADD.w	D1, D0
 	MOVE.w	D0, VDP_data_port
 	ADDI.l	#$00020000, D4
-	DBF	D6, loc_000051C8
+	DBF	D6, RenderWallTile_14x10_TwoPalette_RightWall_Done2
 	MOVE.w	#4, D6
-loc_000051E8:
+; RenderWallTile_14x10_TwoPalette_RightWall_Done3
+RenderWallTile_14x10_TwoPalette_RightWall_Done3:
 	MOVE.l	D4, VDP_control_port
 	CLR.w	D0
 	MOVE.b	(A0)+, D0
@@ -5658,67 +5685,74 @@ loc_000051E8:
 ; RenderWallTile_14x10_TwoPalette_RightWall_Loop
 RenderWallTile_14x10_TwoPalette_RightWall_Loop:
 	ADDI.l	#$00020000, D4
-	DBF	D6, loc_000051E8
+	DBF	D6, RenderWallTile_14x10_TwoPalette_RightWall_Done3
 	ADDI.l	#$00800000, D5
-	DBF	D7, loc_000051C2
+	DBF	D7, RenderWallTile_14x10_TwoPalette_RightWall_Done
 	ANDI	#$F8FF, SR
 	RTS
 
 RenderWallTile_16x5_Palette1:
 	ORI	#$0700, SR
 	MOVE.w	#$000F, D7
-loc_0000522C:
+; RenderWallTile_16x5_Palette1_Done
+RenderWallTile_16x5_Palette1_Done:
 	MOVE.l	D5, VDP_control_port
 	MOVE.w	#4, D6
-loc_00005236:
+; RenderWallTile_16x5_Palette1_Done2
+RenderWallTile_16x5_Palette1_Done2:
 	CLR.w	D0
 	MOVE.b	(A0)+, D0
 	ADD.w	D1, D0
 	MOVE.w	D0, VDP_data_port
-	DBF	D6, loc_00005236
+	DBF	D6, RenderWallTile_16x5_Palette1_Done2
 	ADDI.l	#$00800000, D5
-	DBF	D7, loc_0000522C
+	DBF	D7, RenderWallTile_16x5_Palette1_Done
 	ANDI	#$F8FF, SR
 	RTS
 
 RenderWallTile_16x5_Palette0:
 	ORI	#$0700, SR
 	MOVE.w	#$000F, D7
-loc_0000525E:
+; RenderWallTile_16x5_Palette0_Done
+RenderWallTile_16x5_Palette0_Done:
 	MOVE.l	D5, VDP_control_port
 	MOVE.w	#4, D6
-loc_00005268:
+; RenderWallTile_16x5_Palette0_Done2
+RenderWallTile_16x5_Palette0_Done2:
 	CLR.w	D0
 	MOVE.b	(A0)+, D0
 	ADD.w	D1, D0
 	MOVE.w	D0, VDP_data_port
-	DBF	D6, loc_00005268
+	DBF	D6, RenderWallTile_16x5_Palette0_Done2
 	ADDI.l	#$00800000, D5
-	DBF	D7, loc_0000525E
+	DBF	D7, RenderWallTile_16x5_Palette0_Done
 	ANDI	#$F8FF, SR
 	RTS
 
 RenderWallTile_16x11_TwoPalette:
 	ORI	#$0700, SR
 	MOVE.w	#$0010, D7
-loc_00005290:
+; RenderWallTile_16x11_TwoPalette_Done
+RenderWallTile_16x11_TwoPalette_Done:
 	MOVE.l	D5, VDP_control_port
 	MOVE.w	#5, D6
-loc_0000529A:
+; RenderWallTile_16x11_TwoPalette_Done2
+RenderWallTile_16x11_TwoPalette_Done2:
 	CLR.w	D0
 	MOVE.b	(A0)+, D0
 	ADD.w	D1, D0
 	MOVE.w	D0, VDP_data_port
-	DBF	D6, loc_0000529A
+	DBF	D6, RenderWallTile_16x11_TwoPalette_Done2
 	MOVE.w	#4, D6
-loc_000052AE:
+; RenderWallTile_16x11_TwoPalette_Done3
+RenderWallTile_16x11_TwoPalette_Done3:
 	CLR.w	D0
 	MOVE.b	(A0)+, D0
 	ADD.w	D2, D0
 	MOVE.w	D0, VDP_data_port
-	DBF	D6, loc_000052AE
+	DBF	D6, RenderWallTile_16x11_TwoPalette_Done3
 	ADDI.l	#$00800000, D5
-	DBF	D7, loc_00005290
+	DBF	D7, RenderWallTile_16x11_TwoPalette_Done
 	ANDI	#$F8FF, SR
 	RTS
 ; loc_000052CE
@@ -5728,14 +5762,16 @@ ClearFirstPersonTilemap:
 	ORI	#$0700, SR
 	MOVE.l	#$60820003, D5
 	MOVE.w	#$0014, D7
-loc_000052DE:
+; ClearFirstPersonTilemap_Done
+ClearFirstPersonTilemap_Done:
 	MOVE.l	D5, VDP_control_port
 	MOVE.w	#$0014, D6
-loc_000052E8:
+; ClearFirstPersonTilemap_Done2
+ClearFirstPersonTilemap_Done2:
 	MOVE.w	#0, VDP_data_port
-	DBF	D6, loc_000052E8
+	DBF	D6, ClearFirstPersonTilemap_Done2
 	ADDI.l	#$00800000, D5
-	DBF	D7, loc_000052DE
+	DBF	D7, ClearFirstPersonTilemap_Done
 	ANDI	#$F8FF, SR
 	RTS
 
@@ -6718,24 +6754,27 @@ RenderMapToVRAM_NoPalette:
 	ORI	#$0700, SR
 	MOVE.l	#$44820003, D5
 	MOVE.w	#$000C, D7
-loc_0000607C:
+; RenderMapToVRAM_NoPalette_Done
+RenderMapToVRAM_NoPalette_Done:
 	MOVE.l	D5, VDP_control_port
 	MOVE.w	#$000A, D6
-loc_00006086:
+; RenderMapToVRAM_NoPalette_Done2
+RenderMapToVRAM_NoPalette_Done2:
 	CLR.w	D0
 	MOVE.b	(A0)+, D0
 	ADDI.w	#$42A4, D0
 	MOVE.w	D0, VDP_data_port
-	DBF	D6, loc_00006086
+	DBF	D6, RenderMapToVRAM_NoPalette_Done2
 	MOVE.w	#9, D6
-loc_0000609C:
+; RenderMapToVRAM_NoPalette_Done3
+RenderMapToVRAM_NoPalette_Done3:
 	CLR.w	D0
 	MOVE.b	(A0)+, D0
 	ADDI.w	#$4AA4, D0
 	MOVE.w	D0, VDP_data_port
-	DBF	D6, loc_0000609C
+	DBF	D6, RenderMapToVRAM_NoPalette_Done3
 	ADDI.l	#$00800000, D5
-	DBF	D7, loc_0000607C
+	DBF	D7, RenderMapToVRAM_NoPalette_Done
 	ANDI	#$F8FF, SR
 	RTS
 
@@ -6744,17 +6783,19 @@ RenderMapToVRAM_WithPalette:
 	ORI	#$0700, SR
 	MOVE.l	#$44820003, D5
 	MOVE.w	#$000C, D7
-loc_000060CC:
+; RenderMapToVRAM_WithPalette_Done
+RenderMapToVRAM_WithPalette_Done:
 	MOVE.l	D5, VDP_control_port
 	MOVE.w	#$0014, D6
-loc_000060D6:
+; RenderMapToVRAM_WithPalette_Done2
+RenderMapToVRAM_WithPalette_Done2:
 	CLR.w	D0
 	MOVE.b	(A0)+, D0
 	ADD.w	D4, D0
 	MOVE.w	D0, VDP_data_port
-	DBF	D6, loc_000060D6
+	DBF	D6, RenderMapToVRAM_WithPalette_Done2
 	ADDI.l	#$00800000, D5
-	DBF	D7, loc_000060CC
+	DBF	D7, RenderMapToVRAM_WithPalette_Done
 	ANDI	#$F8FF, SR
 	RTS
 
@@ -6780,24 +6821,27 @@ DisplayStatsToVRAM_NoPalette:
 	ORI	#$0700, SR
 	MOVE.l	#$40820003, D5
 	MOVE.w	#7, D7
-loc_00006134:
+; DisplayStatsToVRAM_NoPalette_Done
+DisplayStatsToVRAM_NoPalette_Done:
 	MOVE.l	D5, VDP_control_port
 	MOVE.w	#$000A, D6
-loc_0000613E:
+; DisplayStatsToVRAM_NoPalette_Done2
+DisplayStatsToVRAM_NoPalette_Done2:
 	CLR.w	D0
 	MOVE.b	(A0)+, D0
 	ADDI.w	#$4770, D0
 	MOVE.w	D0, VDP_data_port
-	DBF	D6, loc_0000613E
+	DBF	D6, DisplayStatsToVRAM_NoPalette_Done2
 	MOVE.w	#9, D6
-loc_00006154:
+; DisplayStatsToVRAM_NoPalette_Done3
+DisplayStatsToVRAM_NoPalette_Done3:
 	CLR.w	D0
 	MOVE.b	(A0)+, D0
 	ADDI.w	#$4F70, D0
 	MOVE.w	D0, VDP_data_port
-	DBF	D6, loc_00006154
+	DBF	D6, DisplayStatsToVRAM_NoPalette_Done3
 	ADDI.l	#$00800000, D5
-	DBF	D7, loc_00006134
+	DBF	D7, DisplayStatsToVRAM_NoPalette_Done
 	ANDI	#$F8FF, SR
 	RTS
 
@@ -6806,17 +6850,19 @@ DisplayStatsToVRAM_WithPalette:
 	ORI	#$0700, SR
 	MOVE.l	#$40820003, D5
 	MOVE.w	#7, D7
-loc_00006184:
+; DisplayStatsToVRAM_WithPalette_Done
+DisplayStatsToVRAM_WithPalette_Done:
 	MOVE.l	D5, VDP_control_port
 	MOVE.w	#$0014, D6
-loc_0000618E:
+; DisplayStatsToVRAM_WithPalette_Done2
+DisplayStatsToVRAM_WithPalette_Done2:
 	CLR.w	D0
 	MOVE.b	(A0)+, D0
 	ADD.w	D4, D0
 	MOVE.w	D0, VDP_data_port
-	DBF	D6, loc_0000618E
+	DBF	D6, DisplayStatsToVRAM_WithPalette_Done2
 	ADDI.l	#$00800000, D5
-	DBF	D7, loc_00006184
+	DBF	D7, DisplayStatsToVRAM_WithPalette_Done
 	ANDI	#$F8FF, SR
 	RTS
 
@@ -6845,19 +6891,21 @@ DrawCompassTiles:
 	ORI	#$0700, SR
 	MOVE.l	#$40820003, D5
 	MOVE.w	#7, D7
-loc_000061F8:
+; DrawCompassTiles_Done
+DrawCompassTiles_Done:
 	LEA	(A0), A1
 	MOVE.l	D5, VDP_control_port
 	MOVE.w	#$0014, D6
-loc_00006204:
+; DrawCompassTiles_Done2
+DrawCompassTiles_Done2:
 	CLR.w	D0
 	MOVE.b	(A1)+, D0
 	ADDI.w	#$438F, D0
 	MOVE.w	D0, VDP_data_port
-	DBF	D6, loc_00006204
+	DBF	D6, DrawCompassTiles_Done2
 	ADDI.l	#$00800000, D5
 	LEA	$64(A0), A0
-	DBF	D7, loc_000061F8
+	DBF	D7, DrawCompassTiles_Done
 	ANDI	#$F8FF, SR
 	RTS
 
@@ -6866,9 +6914,10 @@ LoadMapSectors:
 	BEQ.w	Load9SectorMapWindow
 	LEA	Map_sector_top_left.w, A2
 	MOVE.w	#$023F, D7
-loc_0000623A:
+; LoadMapSectors_Done
+LoadMapSectors_Done:
 	MOVE.l	#$05050505, (A2)+ ; Fill up map data with cave rocks
-	DBF	D7, loc_0000623A
+	DBF	D7, LoadMapSectors_Done
 	LEA	Map_sector_center.w, A3
 	LEA	CaveMaps, A0
 	MOVE.w	Current_cave_room.w, D0
@@ -7031,7 +7080,8 @@ DecompressMapSectorRLE:
 	MOVE.w	D0, D1                  ; D1 = repeat counter for RLE runs
 	
 	; Main decompression loop
-loc_00006348:
+; DecompressMapSectorRLE_Done
+DecompressMapSectorRLE_Done:
 	MOVE.w	D0, D2                  ; Check if at end of row (every 16 tiles)
 	ANDI.w	#$000F, D2              ; D2 = tile counter % 16
 	BNE.b	DecompressMapTile_Next            ; If not multiple of 16, continue
@@ -7047,7 +7097,8 @@ DecompressMapTile_Next:
 	SUBI.w	#$80, D1                ; D1 = repeat count
 	MOVE.b	(A1)+, D3               ; D3 = tile value to repeat
 	
-loc_00006362:
+; DecompressMapTile_Next_Done
+DecompressMapTile_Next_Done:
 	MOVE.b	D3, (A3)+               ; Write tile value
 	ADDQ.w	#1, D0                  ; Increment tile counter
 	MOVE.w	D0, D2                  ; Check if end of row
@@ -7059,7 +7110,7 @@ loc_00006362:
 DecompressMapTile_Next_Loop2:
 	CMPI.w	#$0100, D0              ; 256 tiles written?
 	BGE.b	DecompressMapTile_Next_Loop3            ; Yes: exit
-	DBF	D1, loc_00006362        ; Loop while repeat count > 0
+	DBF	D1, DecompressMapTile_Next_Done        ; Loop while repeat count > 0
 	CLR.w	D1
 	BRA.b	DecompressMapTile_Next            ; Read next byte
 	
@@ -7069,7 +7120,7 @@ DecompressMapTile_Next_Loop:
 	MOVE.b	D1, (A3)+               ; Write tile directly
 	ADDQ.w	#1, D0                  ; Increment counter
 	CMPI.w	#$0100, D0              ; 256 tiles written?
-	BLT.b	loc_00006348            ; No: continue
+	BLT.b	DecompressMapSectorRLE_Done            ; No: continue
 	
 ; DecompressMapTile_Next_Loop3
 DecompressMapTile_Next_Loop3:
@@ -7105,14 +7156,16 @@ CheckCaveRoomMapRevealed_Loop:
 ; LoadMapSector_FillDefault
 LoadMapSector_FillDefault:
 	MOVEQ	#$F, D7
-loc_000063D2:
+; LoadMapSector_FillDefault_Done
+LoadMapSector_FillDefault_Done:
 	LEA	(A2), A3
 	MOVEQ	#3, D6
-loc_000063D6:
+; LoadMapSector_FillDefault_Done2
+LoadMapSector_FillDefault_Done2:
 	MOVE.l	#$01010101, (A3)+ ; Fill map data with trees
-	DBF	D6, loc_000063D6
+	DBF	D6, LoadMapSector_FillDefault_Done2
 	LEA	$30(A2), A2
-	DBF	D7, loc_000063D2
+	DBF	D7, LoadMapSector_FillDefault_Done
 	RTS
 
 RenderAreaMap:
@@ -7126,11 +7179,13 @@ RenderAreaMap:
 ; RenderAreaMap_Loop
 RenderAreaMap_Loop:
 	MOVEQ	#$F, D7
-loc_0000640C:
+; RenderAreaMap_Loop_Done
+RenderAreaMap_Loop_Done:
 	LEA	(A0), A1
 	MOVE.l	D5, VDP_control_port
 	MOVEQ	#$F, D6
-loc_00006416:
+; RenderAreaMap_Loop_Done2
+RenderAreaMap_Loop_Done2:
 	CLR.w	D0
 	MOVE.b	(A1)+, D0
 	BLT.b	RenderAreaMap_Loop2
@@ -7151,10 +7206,10 @@ RenderAreaMap_Loop3:
 RenderAreaMap_WriteTile:
 	ADD.w	D0, D0
 	MOVE.w	(A2,D0.w), VDP_data_port
-	DBF	D6, loc_00006416
+	DBF	D6, RenderAreaMap_Loop_Done2
 	LEA	$30(A0), A0
 	ADDI.l	#$00800000, D5
-	DBF	D7, loc_0000640C
+	DBF	D7, RenderAreaMap_Loop_Done
 	ANDI	#$F8FF, SR
 	RTS
 
@@ -7174,15 +7229,17 @@ RenderCaveDarknessTilemap:
 	ORI	#$0700, SR
 	MOVE.l	#$60AE0003, D5
 	MOVEQ	#$0000000F, D7
-loc_0000647C:
+; RenderCaveDarknessTilemap_Done
+RenderCaveDarknessTilemap_Done:
 	MOVE.l	D5, VDP_control_port
 	MOVEQ	#$0000000F, D6
-loc_00006484:
+; RenderCaveDarknessTilemap_Done2
+RenderCaveDarknessTilemap_Done2:
 	MOVE.w	D4, VDP_data_port
-	DBF	D6, loc_00006484
+	DBF	D6, RenderCaveDarknessTilemap_Done2
 	LEA	$30(A0), A0
 	ADDI.l	#$00800000, D5
-	DBF	D7, loc_0000647C
+	DBF	D7, RenderCaveDarknessTilemap_Done
 	ANDI	#$F8FF, SR
 	TST.b	Area_map_revealed.w
 	BNE.w	RenderCaveWallTiles_Return
@@ -7207,14 +7264,16 @@ RenderCaveDarknessTilemap_Loop:
 	SUBI.l	#$00820000, D5
 	ORI	#$0700, SR
 	MOVEQ	#2, D7
-loc_000064E6:
+; RenderCaveDarknessTilemap_Loop_Done
+RenderCaveDarknessTilemap_Loop_Done:
 	MOVE.l	D5, VDP_control_port
 	MOVEQ	#2, D6
-loc_000064EE:
+; RenderCaveDarknessTilemap_Loop_Done2
+RenderCaveDarknessTilemap_Loop_Done2:
 	MOVE.w	(A0)+, VDP_data_port
-	DBF	D6, loc_000064EE
+	DBF	D6, RenderCaveDarknessTilemap_Loop_Done2
 	ADDI.l	#$00800000, D5
-	DBF	D7, loc_000064E6
+	DBF	D7, RenderCaveDarknessTilemap_Loop_Done
 	ANDI	#$F8FF, SR
 ; loc_00006506
 RenderCaveWallTiles_Return:
@@ -7844,7 +7903,8 @@ LoadTownNPCs:
 	MOVEA.l	Enemy_list_ptr.w, A6
 	MOVEA.l	Town_npc_data_ptr.w, A0
 	MOVE.l	(A0)+, Npc_init_routine_ptr.w
-loc_00006E32:
+; LoadTownNPCs_Done
+LoadTownNPCs_Done:
 	TST.b	Npc_load_done_flag.w
 	BNE.w	NpcInit_ClearActiveFlag
 	MOVE.w	(A0)+, D0
@@ -7880,7 +7940,7 @@ NpcInit_ClearActiveFlag_Loop:
 	CLR.w	D0
 	MOVE.b	$1(A6), D0
 	LEA	(A6,D0.w), A6
-	DBF	D7, loc_00006E32			; }
+	DBF	D7, LoadTownNPCs_Done			; }
 	MOVE.w	D5, Npc_count.w
 	MOVEA.l	Npc_init_routine_ptr.w, A0
 	JSR	(A0)
@@ -7888,12 +7948,13 @@ NpcInit_ClearActiveFlag_Loop:
 	SUBQ.w	#1, D7
 	BLT.b	NpcInit_ClearActiveFlag_Loop2
 	MOVEA.l	Enemy_list_ptr.w, A6
-loc_00006EBE:
+; NpcInit_ClearActiveFlag_Loop_Done
+NpcInit_ClearActiveFlag_Loop_Done:
 	MOVE.l	(A0)+, $1C(A6)
 	CLR.w	D0
 	MOVE.b	$1(A6), D0
 	LEA	(A6,D0.w), A6
-	DBF	D7, loc_00006EBE
+	DBF	D7, NpcInit_ClearActiveFlag_Loop_Done
 ; NpcInit_ClearActiveFlag_Loop2
 NpcInit_ClearActiveFlag_Loop2:
 	RTS
@@ -7902,12 +7963,13 @@ NpcInit_ClearActiveFlag_Loop2:
 ClearAllNPCSlots:					; unreferenced dead code
 	MOVEA.l	Enemy_list_ptr.w, A6
 	MOVEQ	#$1D, D7
-loc_00006ED8:
+; ClearAllNPCSlots_Done
+ClearAllNPCSlots_Done:
 	BCLR	#7, (A6)
 	CLR.w	D0
 	MOVE.b	$1(A6), D0
 	LEA	$0(A6,D0.w), A6
-	DBF	D7, loc_00006ED8
+	DBF	D7, ClearAllNPCSlots_Done
 	RTS
 
 ; loc_00006EEC
@@ -9848,7 +9910,8 @@ CheckSurroundingTileCollision:
 	LEA	NPCCollisionOffsetTable, A0
 	LEA	(A0,D6.w), A0
 	MOVEQ	#9, D7
-loc_000083DA:
+; CheckSurroundingTileCollision_Done
+CheckSurroundingTileCollision_Done:
 	MOVE.w	D2, D3
 	MOVE.w	D4, D5
 	ADD.w	(A0)+, D3
@@ -9860,7 +9923,7 @@ loc_000083DA:
 	BRA.b	CheckEntityOverlap_NoMatch_Loop
 ; loc_000083EC
 CheckEntityOverlap_NoMatch:
-	DBF	D7, loc_000083DA
+	DBF	D7, CheckSurroundingTileCollision_Done
 	CLR.w	D0
 	RTS
 
@@ -9886,7 +9949,8 @@ CheckAdjacentTileCollision:
 	LEA	NPCCollisionOffsetTable, A0
 	LEA	(A0,D6.w), A0
 	MOVEQ	#3, D7
-loc_00008428:
+; CheckAdjacentTileCollision_Done
+CheckAdjacentTileCollision_Done:
 	MOVE.w	D2, D3
 	MOVE.w	D4, D5
 	ADD.w	(A0)+, D3
@@ -9898,7 +9962,7 @@ loc_00008428:
 	BRA.b	CheckAdjacentTileCollision_NoMatch_Loop
 ; loc_0000843A
 CheckAdjacentTileCollision_NoMatch:
-	DBF	D7, loc_00008428
+	DBF	D7, CheckAdjacentTileCollision_Done
 	CLR.w	D0
 	RTS
 
@@ -9922,7 +9986,8 @@ CheckNPCCollision:
 	LEA	(A0,D6.w), A0
 	MOVEQ	#$0000001D, D7
 	MOVEA.l	Enemy_list_ptr.w, A6
-loc_0000846E:
+; CheckNPCCollision_Done
+CheckNPCCollision_Done:
 	LEA	(A0), A1
 	BTST.b	#7, (A6)
 	BEQ.w	CheckNPCCollision_NextEntity_Loop
@@ -9935,7 +10000,8 @@ loc_0000846E:
 	ASR.w	#4, D4
 	MOVE.w	$12(A6), D5
 	ASR.w	#4, D5
-loc_00008494:
+; CheckNPCCollision_Done2
+CheckNPCCollision_Done2:
 	MOVE.w	D0, D2
 	MOVE.w	D1, D3
 	ADD.w	(A1)+, D2
@@ -9947,13 +10013,13 @@ loc_00008494:
 	BRA.b	CheckNPCCollision_NextEntity_Loop2
 ; loc_000084A6
 CheckNPCCollision_NoEntityMatch:
-	DBF	D6, loc_00008494
+	DBF	D6, CheckNPCCollision_Done2
 ; loc_000084AA
 CheckNPCCollision_NextEntity:
 	CLR.w	D2
 	MOVE.b	$1(A6), D2
 	LEA	(A6,D2.w), A6
-	DBF	D7, loc_0000846E
+	DBF	D7, CheckNPCCollision_Done
 ; CheckNPCCollision_NextEntity_Loop
 CheckNPCCollision_NextEntity_Loop:
 	CLR.w	D0
@@ -9970,7 +10036,8 @@ RemoveItemFromList:
 	MOVE.w	(A2)+, D7
 	BLE.w	RemoveItemFromList_Loop
 	SUBQ.w	#1, D7
-loc_000084CA:
+; RemoveItemFromList_Done
+RemoveItemFromList_Done:
 	MOVE.w	D7, D1
 	ADD.w	D1, D1
 	MOVE.w	(A2,D1.w), D3
@@ -9988,7 +10055,7 @@ RemoveItemFromList_Loop3:
 	JSR	RemoveItemFromArray
 ; RemoveItemFromList_Loop2
 RemoveItemFromList_Loop2:
-	DBF	D7, loc_000084CA
+	DBF	D7, RemoveItemFromList_Done
 ; RemoveItemFromList_Loop
 RemoveItemFromList_Loop:
 	RTS
@@ -9998,14 +10065,15 @@ CheckItemInList:
 	MOVE.w	(A2)+, D7
 	BLE.w	CheckCollision_Return
 	SUBQ.w	#1, D7
-loc_000084FC:
+; CheckItemInList_Done
+CheckItemInList_Done:
 	MOVE.w	D7, D1
 	ADD.w	D1, D1
 	MOVE.w	(A2,D1.w), D3
 	MOVE.w	D4, D0
 	CMP.w	D0, D3
 	BEQ.b	CheckItemInList_Loop
-	DBF	D7, loc_000084FC	
+	DBF	D7, CheckItemInList_Done	
 	CLR.w	D0	
 	BRA.b	CheckCollision_Return	
 ; CheckItemInList_Loop
@@ -10018,10 +10086,11 @@ CheckCollision_Return:
 ;CheckRingsCollected:
 CheckRingsCollected: ; Check that we have D7 consecutive number of flags set starting from A0
 	LEA	Rings_collected.w, A0
-loc_0000851C:
+; CheckRingsCollected_Done
+CheckRingsCollected_Done:
 	TST.b	(A0)+
 	BEQ.b	CheckRingsCollected_Loop
-	DBF	D7, loc_0000851C
+	DBF	D7, CheckRingsCollected_Done
 	CLR.w	D0
 	RTS
 
@@ -10034,7 +10103,8 @@ BackupRingsToMapTriggers:
 	CLR.b	Map_triggers_backup.w
 	LEA	Rings_collected.w, A0
 	MOVE.w	#7, D7
-loc_0000853A:
+; BackupRingsToMapTriggers_Done
+BackupRingsToMapTriggers_Done:
 	TST.b	(A0)
 	BEQ.b	BackupRingsToMapTriggers_Loop
 	BSET.b	D7, Map_triggers_backup.w
@@ -10042,13 +10112,14 @@ loc_0000853A:
 BackupRingsToMapTriggers_Loop:
 	CLR.b	(A0)
 	ADDA.l	#1, A0
-	DBF	D7, loc_0000853A
+	DBF	D7, BackupRingsToMapTriggers_Done
 	RTS
 
 RestoreRingsFromBackup:
 	LEA	Rings_collected.w, A0
 	MOVE.w	#7, D7
-loc_00008558:
+; RestoreRingsFromBackup_Done
+RestoreRingsFromBackup_Done:
 	BTST.b	D7, Map_triggers_backup.w
 	BEQ.b	RestoreRingsFromBackup_Loop
 	MOVE.b	#$FF, (A0)
@@ -10056,7 +10127,7 @@ loc_00008558:
 RestoreRingsFromBackup_Loop:
 	BCLR.b	D7, Map_triggers_backup.w
 	ADDA.l	#1, A0
-	DBF	D7, loc_00008558
+	DBF	D7, RestoreRingsFromBackup_Done
 	RTS
 
 ; loc_00008572
@@ -10147,12 +10218,13 @@ ProcessAllObjectSlots:
 loc_00008706:					; unreferenced dead code
 	MOVEA.l	Map_indicator_entity_ptr.w, A6
 	MOVE.w	#$0030, D7
-loc_0000870E:
+; ProcessAllObjectSlots_Done
+ProcessAllObjectSlots_Done:
 	BCLR	#7, (A6)
 	CLR.w	D0
 	MOVE.b	$1(A6), D0
 	LEA	$0(A6,D0.w), A6
-	DBF	D7, loc_0000870E
+	DBF	D7, ProcessAllObjectSlots_Done
 	RTS
 
 InitObjectChain_7Entities:
@@ -10278,7 +10350,8 @@ ChainObjectTick_Parent_Loop:
 	BSET.b	#3, $7(A6)
 	MOVE.w	D6, $8(A6)
 	MOVEQ	#1, D7
-loc_000088FA:
+; ChainObjectTick_Parent_Loop_Done
+ChainObjectTick_Parent_Loop_Done:
 	ADDI.w	#$000C, D6
 	CLR.w	D0
 	MOVE.b	$1(A6), D0
@@ -10291,17 +10364,18 @@ loc_000088FA:
 	MOVE.w	D6, $8(A6)
 	MOVE.b	$7(A5), $7(A6)
 	BSET.b	#3, $7(A6)
-	DBF	D7, loc_000088FA
+	DBF	D7, ChainObjectTick_Parent_Loop_Done
 	BRA.w	ChainObjectTick_Parent_Loop3
 ; ChainObjectTick_Parent_Loop2
 ChainObjectTick_Parent_Loop2:
 	MOVEQ	#4, D7
-loc_00008936:
+; ChainObjectTick_Parent_Loop2_Done
+ChainObjectTick_Parent_Loop2_Done:
 	MOVE.w	#0, $8(A6)
 	CLR.w	D0
 	MOVE.b	$1(A6), D0
 	LEA	(A6,D0.w), A6
-	DBF	D7, loc_00008936
+	DBF	D7, ChainObjectTick_Parent_Loop2_Done
 ; ChainObjectTick_Parent_Loop3
 ChainObjectTick_Parent_Loop3:
 	LEA	PortraitPositionOffsets, A0
@@ -10318,7 +10392,8 @@ ChainObjectTick_Parent_Loop3:
 	MOVE.w	D1, $A(A5)
 	MOVE.w	D2, $C(A5)
 	MOVEQ	#4, D7
-loc_0000897A:
+; ChainObjectTick_Parent_Loop3_Done
+ChainObjectTick_Parent_Loop3_Done:
 	MOVE.w	D3, D1
 	MOVE.w	D4, D2
 	ADD.w	(A0)+, D1
@@ -10330,7 +10405,7 @@ loc_0000897A:
 	CLR.w	D0
 	MOVE.b	$1(A6), D0
 	LEA	(A6,D0.w), A6
-	DBF	D7, loc_0000897A
+	DBF	D7, ChainObjectTick_Parent_Loop3_Done
 	TST.w	$8(A5)
 	BEQ.b	ChainObjectTick_Parent_Return
 	MOVE.w	$E(A5), D0
@@ -10747,10 +10822,11 @@ InitializeEncounter:
 	LEA	Enemy_position_indices.w, A1
 	CLR.w	D0
 	MOVE.w	#7, D7
-loc_00008ED4:
+; InitializeEncounter_Done
+InitializeEncounter_Done:
 	MOVE.b	D0, (A1)+
 	ADDQ.b	#1, D0
-	DBF	D7, loc_00008ED4
+	DBF	D7, InitializeEncounter_Done
 	MOVEA.l	Enemy_list_ptr.w, A6 ; Where to load enemies into
 	LEA	EnemyGfxDataTable, A0
 	MOVE.w	Current_encounter_type.w, D0
@@ -10775,7 +10851,8 @@ EncounterInit_FinalizeEnemyCount:
 	MOVE.w	D7, Number_Of_Enemies.w
 	LEA	Enemy_position_indices.w, A1
 	MOVE.w	#7, D7
-loc_00008F28:
+; EncounterInit_FinalizeEnemyCount_Done
+EncounterInit_FinalizeEnemyCount_Done:
 	JSR	GetRandomNumber
 	ANDI.w	#7, D0
 	MOVE.w	D0, D1
@@ -10785,10 +10862,11 @@ loc_00008F28:
 	MOVE.b	(A1,D0.w), D3
 	MOVE.b	D3, (A1,D1.w)
 	MOVE.b	D2, (A1,D0.w)
-	DBF	D7, loc_00008F28
+	DBF	D7, EncounterInit_FinalizeEnemyCount_Done
 	LEA	Enemy_position_indices.w, A1
 	MOVE.w	Number_Of_Enemies.w, D7
-loc_00008F5A: ; Loop number of enemies
+; EncounterInit_FinalizeEnemyCount_Done2
+EncounterInit_FinalizeEnemyCount_Done2: ; Loop number of enemies
 	BSET.b	#7, (A6)
 	BSET.b	#6, (A6)
 	BCLR.b	#7, $7(A6)
@@ -10827,10 +10905,11 @@ loc_00008F5A: ; Loop number of enemies
 	MOVE.b	$1(A6,D0.w), D1
 	ADD.w	D1, D0
 	ADD.w	D1, D0
-loc_00009006:
+; EncounterInit_FinalizeEnemyCount_Done3
+EncounterInit_FinalizeEnemyCount_Done3:
 	LEA	(A6,D0.w), A6
-	DBF	D6, loc_00009006
-	DBF	D7, loc_00008F5A
+	DBF	D6, EncounterInit_FinalizeEnemyCount_Done3
+	DBF	D7, EncounterInit_FinalizeEnemyCount_Done2
 	JSR	LoadPalettesFromTable
 	JSR	LoadEncounterGraphics
 	RTS
@@ -10868,12 +10947,13 @@ ClampProjectile_Kill_Loop:
 loc_00009072:					; unreferenced dead code
 	MOVEA.l	Enemy_list_ptr.w, A6
 	MOVE.w	#$0017, D7
-loc_0000907A:
+; ClampProjectile_Kill_Loop_Done
+ClampProjectile_Kill_Loop_Done:
 	BCLR	#7, (A6)
 	CLR.w	D0
 	MOVE.b	$1(A6), D0
 	LEA	$0(A6,D0.w), A6
-	DBF	D7, loc_0000907A
+	DBF	D7, ClampProjectile_Kill_Loop_Done
 	RTS
 
 CalculateVelocityFromAngle:
@@ -11115,16 +11195,18 @@ CheckEnemyCollision:
 	SWAP	D4
 	MOVE.w	D4, D5
 	SUB.w	$1E(A5), D5
-loc_0000933A:
+; CheckEnemyCollision_Done
+CheckEnemyCollision_Done:
 	CMPA.l	A5, A6
 	BEQ.w	EnemyCollision_NextEnemy
 	BTST.b	#7, (A6)
 	BEQ.w	EnemyCollision_NextEnemy
-loc_00009348:
+; CheckEnemyCollision_Done2
+CheckEnemyCollision_Done2:
 	BTST.b	#6, (A6)
 	BNE.w	CheckEnemyCollision_Loop
 	ADDA.w	D6, A6
-	BRA.b	loc_00009348
+	BRA.b	CheckEnemyCollision_Done2
 ; CheckEnemyCollision_Loop
 CheckEnemyCollision_Loop:
 	MOVE.w	$E(A6), D1
@@ -11146,7 +11228,7 @@ CheckEnemyCollision_Loop:
 ; EnemyCollision_NextEnemy
 EnemyCollision_NextEnemy:
 	ADDA.w	D6, A6
-	DBF	D7, loc_0000933A
+	DBF	D7, CheckEnemyCollision_Done
 ; EnemyCollision_NextEnemy_Loop
 EnemyCollision_NextEnemy_Loop:
 	RTS
@@ -12367,7 +12449,8 @@ EnemyAiChasePause_Tick_Loop2:
 	CLR.w	D0
 	MOVE.b	$1(A5), D0
 	LEA	(A5,D0.w), A6
-loc_0000A390:
+; EnemyAiChasePause_Tick_Loop2_Done
+EnemyAiChasePause_Tick_Loop2_Done:
 	MOVE.b	$1(A6), D0
 	LEA	(A6,D0.w), A6
 	BSET.b	#7, (A6)
@@ -12379,7 +12462,7 @@ loc_0000A390:
 	MOVE.b	D6, $7(A6)
 	MOVE.b	D7, $18(A6)
 	MOVE.l	#ProjectileTick_Straight, $2(A6)
-	DBF	D7, loc_0000A390
+	DBF	D7, EnemyAiChasePause_Tick_Loop2_Done
 	ADDQ.w	#1, $3A(A5)
 	MOVE.w	#$0028, $3C(A5)
 	BRA.w	EnemyAiChasePause_HandleDamage
@@ -12485,7 +12568,8 @@ EnemyTick_HomingShooter_Loop2:
 	CLR.w	D0
 	MOVE.b	$1(A5), D0
 	LEA	(A5,D0.w), A6
-loc_0000A51E:
+; EnemyTick_HomingShooter_Loop2_Done
+EnemyTick_HomingShooter_Loop2_Done:
 	MOVE.b	$1(A6), D0
 	LEA	(A6,D0.w), A6
 	BSET.b	#7, (A6)
@@ -12499,7 +12583,7 @@ loc_0000A51E:
 	MOVE.w	#$003C, $3A(A6)
 	MOVE.w	#$00B4, $3C(A6)
 	MOVE.l	#ProjectileTick_Homing, $2(A6)
-	DBF	D7, loc_0000A51E
+	DBF	D7, EnemyTick_HomingShooter_Loop2_Done
 ; loc_0000A55E
 EnemyMultiProjectile_UpdateSprite:
 	BSR.w	HandlePlayerTakeDamage
@@ -12651,7 +12735,8 @@ EnemyTick_FastBurstShooter_Loop2:
 	CLR.w	D0
 	MOVE.b	$1(A5), D0
 	LEA	(A5,D0.w), A6
-loc_0000A750:
+; EnemyTick_FastBurstShooter_Loop2_Done
+EnemyTick_FastBurstShooter_Loop2_Done:
 	MOVE.b	$1(A6), D0
 	LEA	(A6,D0.w), A6
 	BSET.b	#7, (A6)
@@ -12663,7 +12748,7 @@ loc_0000A750:
 	MOVE.b	D6, $7(A6)
 	MOVE.b	D7, $18(A6)
 	MOVE.l	#ProjectileTick_Straight, $2(A6)
-	DBF	D7, loc_0000A750
+	DBF	D7, EnemyTick_FastBurstShooter_Loop2_Done
 ; loc_0000A784
 EnemySpreadShot_UpdateSprite:
 	BSR.w	HandlePlayerTakeDamage
@@ -12787,10 +12872,11 @@ ProjectileTick_Phase2:
 	MOVE.b	$3B(A5), D7
 	CLR.w	D0
 	LEA	(A5), A6
-loc_0000A922:
+; ProjectileTick_Phase2_Done
+ProjectileTick_Phase2_Done:
 	MOVE.b	$1(A6), D0
 	LEA	(A6,D0.w), A6
-	DBF	D7, loc_0000A922
+	DBF	D7, ProjectileTick_Phase2_Done
 	BSET.b	#7, (A6)
 	MOVE.w	$E(A5), $20(A6)
 	MOVE.w	$12(A5), D1
@@ -13001,7 +13087,8 @@ ProjectileTick2_Phase2:
 	CLR.w	D0
 	MOVE.b	$1(A5), D0
 	LEA	(A5,D0.w), A6
-loc_0000ABEA:
+; ProjectileTick2_Phase2_Done
+ProjectileTick2_Phase2_Done:
 	MOVE.b	$1(A6), D0
 	LEA	(A6,D0.w), A6
 	BSET.b	#7, (A6)
@@ -13020,7 +13107,7 @@ loc_0000ABEA:
 	ASL.w	#6, D1
 	MOVE.b	D1, $27(A6)
 	MOVE.l	#ProjectileTick_OrbitingSpiral, $2(A6)
-	DBF	D7, loc_0000ABEA
+	DBF	D7, ProjectileTick2_Phase2_Done
 	ADDQ.w	#1, $3A(A5)
 	MOVE.w	#$0078, $3C(A5)
 	BRA.w	ProjectileTick2_PostCollision
@@ -13296,7 +13383,8 @@ InitBoss_MultiOrb:
 	MOVE.b	$7(A5), D2
 	LEA	(A5), A6
 	MOVE.w	#8, D7
-loc_0000AFE4:
+; InitBoss_MultiOrb_Done
+InitBoss_MultiOrb_Done:
 	LEA	(A6), A4
 	CLR.w	D0
 	MOVE.b	$1(A4), D0
@@ -13319,7 +13407,7 @@ loc_0000AFE4:
 	MOVE.w	$E(A6), $A(A6)
 	MOVE.w	$12(A6), $C(A6)
 	MOVE.w	$12(A6), $16(A6)
-	DBF	D7, loc_0000AFE4
+	DBF	D7, InitBoss_MultiOrb_Done
 	CLR.b	$1A(A5)
 	CLR.w	$3A(A5)
 	CLR.w	$3C(A5)
@@ -13389,7 +13477,8 @@ BossTakeDamage_CheckDeath_Loop3:
 	BSR.w	CheckObjectOnScreen
 	MOVE.w	#8, D7
 	LEA	(A5), A4
-loc_0000B12E:
+; BossTakeDamage_CheckDeath_Loop3_Done
+BossTakeDamage_CheckDeath_Loop3_Done:
 	CLR.w	D0
 	MOVE.b	$1(A4), D0
 	LEA	(A4,D0.w), A4
@@ -13397,7 +13486,7 @@ loc_0000B12E:
 	MOVE.l	$12(A5), D0
 	SUBI.l	#$00080000, D0
 	MOVE.l	D0, $12(A4)
-	DBF	D7, loc_0000B12E
+	DBF	D7, BossTakeDamage_CheckDeath_Loop3_Done
 	BRA.w	BossTakeDamage_CheckDeath_Loop5
 ; BossTakeDamage_CheckDeath_Loop4
 BossTakeDamage_CheckDeath_Loop4:
@@ -13427,7 +13516,8 @@ BossTakeDamage_CheckDeath_Loop6:
 	ADD.w	D6, D6
 	MOVE.w	D6, D3
 	LEA	(A5), A6
-loc_0000B194:
+; BossTakeDamage_CheckDeath_Loop6_Done
+BossTakeDamage_CheckDeath_Loop6_Done:
 	LEA	(A6), A4
 	MOVE.w	D6, D1
 	CLR.w	D0
@@ -13452,7 +13542,7 @@ loc_0000B194:
 	SUBI.l	#$00080000, D0
 	MOVE.l	D0, $12(A6)
 	ADD.w	D3, D6
-	DBF	D7, loc_0000B194
+	DBF	D7, BossTakeDamage_CheckDeath_Loop6_Done
 	LEA	(A0), A5
 	BSR.w	CheckEnemyCollision
 	BSR.w	HandlePlayerTakeDamage
@@ -13500,7 +13590,8 @@ InitBoss_OrbRing:
 	MOVE.w	$12(A6), $C(A6)
 	MOVE.w	$12(A6), $16(A6)
 	MOVE.w	#7, D7
-loc_0000B2AA:
+; InitBoss_OrbRing_Done
+InitBoss_OrbRing_Done:
 	LEA	(A6), A4
 	CLR.w	D0
 	MOVE.b	$1(A4), D0
@@ -13523,7 +13614,7 @@ loc_0000B2AA:
 	MOVE.w	$E(A6), $A(A6)
 	MOVE.w	$12(A6), $C(A6)
 	MOVE.w	$12(A6), $16(A6)
-	DBF	D7, loc_0000B2AA
+	DBF	D7, InitBoss_OrbRing_Done
 	CLR.b	$1A(A5)
 	CLR.w	$3A(A5)
 	CLR.w	$3C(A5)
@@ -13608,7 +13699,8 @@ BossTakeDamage2_CheckDeath_Loop3:
 	BSET.b	#7, (A6)
 	CLR.w	D6
 	MOVE.w	#7, D7
-loc_0000B424:
+; BossTakeDamage2_CheckDeath_Loop3_Done
+BossTakeDamage2_CheckDeath_Loop3_Done:
 	MOVE.b	$1B(A0), D0
 	ANDI.b	#7, D0
 	CMPI.b	#6, D0
@@ -13646,7 +13738,7 @@ BossTakeDamage2_CheckDeath_Loop6:
 BossTakeDamage2_CheckDeath_Loop4:
 	JSR	CalculateCircularPosition(PC)
 	BSET.b	#7, (A6)
-	DBF	D7, loc_0000B424
+	DBF	D7, BossTakeDamage2_CheckDeath_Loop3_Done
 	LEA	(A0), A5
 	JSR	AddSpriteToDisplayList(PC)
 	RTS
@@ -13712,12 +13804,13 @@ BossDeathReward_MultiSprite:
 	LEA	(A5,D0.w), A6
 	BCLR.b	#7, (A6)
 	MOVE.w	#8, D6
-loc_0000B564:
+; BossDeathReward_MultiSprite_Done
+BossDeathReward_MultiSprite_Done:
 	CLR.w	D0
 	MOVE.b	$1(A6), D0
 	LEA	(A6,D0.w), A6
 	BCLR.b	#7, (A6)
-	DBF	D6, loc_0000B564
+	DBF	D6, BossDeathReward_MultiSprite_Done
 	RTS
 
 ; EnemyDirectionAnimTable
@@ -13981,9 +14074,10 @@ InitBoss1_Common:
 	MOVE.w	#$0060, $12(A6)
 	MOVE.l	#Boss1_MainTick, $2(A6)
 	MOVE.w	#4, D7
-loc_0000B8F2:
+; InitBoss1_Common_Done
+InitBoss1_Common_Done:
 	BSR.w	InitNextSpriteSlot
-	DBF	D7, loc_0000B8F2
+	DBF	D7, InitBoss1_Common_Done
 	MOVEA.l	Object_slot_02_ptr.w, A6
 	LEA	EnemySpriteFrameDataA_03, A0
 	BSET.b	#7, (A6)
@@ -14004,9 +14098,10 @@ loc_0000B8F2:
 	MOVE.w	#$006C, $12(A6)
 	MOVE.l	#Boss1_NeckTick, $2(A6)
 	MOVE.w	#1, D7
-loc_0000B960:
+; InitBoss1_Common_Done2
+InitBoss1_Common_Done2:
 	BSR.w	InitNextSpriteSlot
-	DBF	D7, loc_0000B960
+	DBF	D7, InitBoss1_Common_Done2
 	MOVEA.l	Object_slot_03_ptr.w, A6
 	LEA	EnemySpriteFrameDataA_08, A0
 	BSET.b	#7, (A6)
@@ -14027,9 +14122,10 @@ loc_0000B960:
 	MOVE.b	#$E0, $30(A6)
 	MOVE.b	#0, $31(A6)
 	MOVE.w	#0, D7
-loc_0000B9CE:
+; InitBoss1_Common_Done3
+InitBoss1_Common_Done3:
 	BSR.w	InitNextSpriteSlot
-	DBF	D7, loc_0000B9CE
+	DBF	D7, InitBoss1_Common_Done3
 	MOVEA.l	Object_slot_04_ptr.w, A6
 	LEA	EnemySpriteFrameDataA_09, A0
 	BSET.b	#7, (A6)
@@ -14050,9 +14146,10 @@ loc_0000B9CE:
 	MOVE.b	#$E0, $30(A6)
 	MOVE.b	#0, $31(A6)
 	MOVE.w	#0, D7
-loc_0000BA3C:
+; InitBoss1_Common_Done4
+InitBoss1_Common_Done4:
 	BSR.w	InitNextSpriteSlot
-	DBF	D7, loc_0000BA3C
+	DBF	D7, InitBoss1_Common_Done4
 	MOVEA.l	Object_slot_05_ptr.w, A6
 	LEA	EnemySpriteFrameDataA_0A, A0
 	BSET.b	#7, (A6)
@@ -14069,14 +14166,16 @@ loc_0000BA3C:
 	MOVE.w	#$0070, $12(A6)
 	MOVE.l	#Boss1_TailTick, $2(A6)
 	MOVE.w	#0, D7
-loc_0000BA92:
+; InitBoss1_Common_Done5
+InitBoss1_Common_Done5:
 	BSR.w	InitNextSpriteSlot
-	DBF	D7, loc_0000BA92
+	DBF	D7, InitBoss1_Common_Done5
 	MOVEA.l	Object_slot_06_ptr.w, A6
 	LEA	EnemySpriteFrameDataA_06, A0
 	LEA	EnemySpriteFrameDataA_07, A1
 	MOVE.w	#2, D7
-loc_0000BAAE:
+; InitBoss1_Common_Done6
+InitBoss1_Common_Done6:
 	BSET.b	#7, (A6)
 	MOVE.b	#$20, $7(A6)
 	BCLR.b	#7, $7(A6)
@@ -14093,7 +14192,7 @@ loc_0000BAAE:
 	CLR.w	D0
 	MOVE.b	$1(A6), D0
 	LEA	(A6,D0.w), A6
-	DBF	D7, loc_0000BAAE
+	DBF	D7, InitBoss1_Common_Done6
 	BSR.w	DrawBossPortrait
 	BSR.w	DrawBossAttackGraphic1
 	RTS
@@ -14500,7 +14599,8 @@ BossBody_SpriteUpdate:
 	MOVE.w	(A0,D0.w), $8(A6)
 	LEA	EnemySpriteFrameDataA_10, A0
 	MOVE.w	#4, D7
-loc_0000C006:
+; BossBody_SpriteUpdate_Done
+BossBody_SpriteUpdate_Done:
 	MOVE.w	$E(A5), D0
 	ADD.w	(A0)+, D0
 	MOVE.w	D0, $A(A6)
@@ -14510,7 +14610,7 @@ loc_0000C006:
 	CLR.w	D0
 	MOVE.b	$1(A6), D0
 	LEA	(A6,D0.w), A6
-	DBF	D7, loc_0000C006
+	DBF	D7, BossBody_SpriteUpdate_Done
 	MOVE.w	$E(A5), $A(A5)
 	MOVE.w	$12(A5), $C(A5)
 	JSR	AddSpriteToDisplayList
@@ -14528,7 +14628,8 @@ Boss1_NeckTickNoCollision:
 	LEA	EnemySpriteFrameDataA_11, A0
 	LEA	(A5), A6
 	MOVE.w	#1, D7
-loc_0000C064:
+; Boss1_NeckTickNoCollision_Done
+Boss1_NeckTickNoCollision_Done:
 	CLR.w	D0
 	MOVE.b	$1(A6), D0
 	LEA	(A6,D0.w), A6
@@ -14538,7 +14639,7 @@ loc_0000C064:
 	MOVE.w	$12(A5), D0
 	ADD.w	(A0)+, D0
 	MOVE.w	D0, $C(A6)
-	DBF	D7, loc_0000C064
+	DBF	D7, Boss1_NeckTickNoCollision_Done
 	MOVE.w	$E(A5), $A(A5)
 	MOVE.w	$12(A5), $C(A5)
 	JSR	AddSpriteToDisplayList
@@ -14641,12 +14742,13 @@ InitNextSpriteSlot:
 loc_0000C1DA:					; unreferenced dead code
 	MOVEA.l	Enemy_list_ptr.w, A6
 	MOVE.w	#$001F, D7
-loc_0000C1E2:
+; InitNextSpriteSlot_Done
+InitNextSpriteSlot_Done:
 	BCLR	#7, (A6)
 	CLR.w	D0
 	MOVE.b	$1(A6), D0
 	LEA	$0(A6,D0.w), A6
-	DBF	D7, loc_0000C1E2
+	DBF	D7, InitNextSpriteSlot_Done
 	RTS
 CheckPlayerLeftOfScreen:
 	MOVEA.l	Player_entity_ptr.w, A6
@@ -14718,9 +14820,10 @@ InitTwoHeadedDragon_Common:
 	MOVE.w	#$007D, $12(A6)
 	MOVE.l	#TwoHeadedDragon_MainTick, $2(A6)
 	MOVE.w	#1, D7
-loc_0000C30E:
+; InitTwoHeadedDragon_Common_Done
+InitTwoHeadedDragon_Common_Done:
 	BSR.w	InitNextSpriteSlot
-	DBF	D7, loc_0000C30E
+	DBF	D7, InitTwoHeadedDragon_Common_Done
 	MOVEA.l	Object_slot_01_ptr.w, A6
 	CLR.b	$1B(A6)
 	CLR.w	$3C(A6)
@@ -14739,9 +14842,10 @@ loc_0000C30E:
 	MOVE.w	#$0087, $12(A6)
 	MOVE.l	#TwoHeadedDragon_BodyTick, $2(A6)
 	MOVE.w	#0, D7
-loc_0000C36C:
+; InitTwoHeadedDragon_Common_Done2
+InitTwoHeadedDragon_Common_Done2:
 	BSR.w	InitNextSpriteSlot
-	DBF	D7, loc_0000C36C
+	DBF	D7, InitTwoHeadedDragon_Common_Done2
 	MOVEA.l	Object_slot_02_ptr.w, A6
 	BSET.b	#7, (A6)
 	CLR.b	$1B(A6)
@@ -14765,9 +14869,10 @@ loc_0000C36C:
 	MOVE.w	(A1), $12(A6)
 	MOVE.l	#TwoHeadedDragon_HeadTickA, $2(A6)
 	MOVE.w	#2, D7
-loc_0000C3E4:
+; InitTwoHeadedDragon_Common_Done3
+InitTwoHeadedDragon_Common_Done3:
 	BSR.w	InitNextSpriteSlot
-	DBF	D7, loc_0000C3E4
+	DBF	D7, InitTwoHeadedDragon_Common_Done3
 	MOVEA.l	Object_slot_03_ptr.w, A6
 	BSET.b	#7, (A6)
 	CLR.b	$1B(A6)
@@ -14787,9 +14892,10 @@ loc_0000C3E4:
 	MOVE.w	(A1), $12(A6)
 	MOVE.l	#TwoHeadedDragon_HeadTickB, $2(A6)
 	MOVE.w	#2, D7
-loc_0000C444:
+; InitTwoHeadedDragon_Common_Done4
+InitTwoHeadedDragon_Common_Done4:
 	BSR.w	InitNextSpriteSlot
-	DBF	D7, loc_0000C444
+	DBF	D7, InitTwoHeadedDragon_Common_Done4
 	MOVEA.l	Object_slot_04_ptr.w, A6
 	BSET.b	#7, (A6)
 	MOVE.b	#$F8, $2E(A6)
@@ -15021,7 +15127,8 @@ TwoHeadedDragon_HeadTickA_Loop:
 	MOVEA.l	$C(A1), A1
 	LEA	(A5), A6
 	MOVE.w	#3, D7
-loc_0000C78A:
+; TwoHeadedDragon_HeadTickA_Loop_Done
+TwoHeadedDragon_HeadTickA_Loop_Done:
 	MOVE.b	(A0)+, $6(A6)
 	CLR.w	D0
 	MOVE.b	(A0)+, D0
@@ -15034,7 +15141,7 @@ loc_0000C78A:
 	CLR.w	D0
 	MOVE.b	$1(A6), D0
 	LEA	(A6,D0.w), A6
-	DBF	D7, loc_0000C78A
+	DBF	D7, TwoHeadedDragon_HeadTickA_Loop_Done
 	MOVEA.l	Object_slot_04_ptr.w, A6
 	BCLR.b	#7, (A6)
 	MOVE.w	#$012C, $3C(A5)
@@ -15081,7 +15188,8 @@ BossTick_Anim_A_Loop:
 	MOVEA.l	(A1,D0.w), A1
 	LEA	(A5), A6
 	MOVE.w	#3, D7
-loc_0000C854:
+; BossTick_Anim_A_Loop_Done
+BossTick_Anim_A_Loop_Done:
 	MOVE.b	(A0)+, $6(A6)
 	CLR.w	D0
 	MOVE.b	(A0)+, D0
@@ -15094,7 +15202,7 @@ loc_0000C854:
 	CLR.w	D0
 	MOVE.b	$1(A6), D0
 	LEA	(A6,D0.w), A6
-	DBF	D7, loc_0000C854
+	DBF	D7, BossTick_Anim_A_Loop_Done
 	JSR	AddSpriteToDisplayList
 	RTS
 
@@ -15128,7 +15236,8 @@ TwoHeadedDragon_HeadTickB_Loop:
 	MOVEA.l	$C(A1), A1
 	LEA	(A5), A6
 	MOVE.w	#3, D7
-loc_0000C8FA:
+; TwoHeadedDragon_HeadTickB_Loop_Done
+TwoHeadedDragon_HeadTickB_Loop_Done:
 	MOVE.b	(A0)+, $6(A6)
 	CLR.w	D0
 	MOVE.b	(A0)+, D0
@@ -15141,7 +15250,7 @@ loc_0000C8FA:
 	CLR.w	D0
 	MOVE.b	$1(A6), D0
 	LEA	(A6,D0.w), A6
-	DBF	D7, loc_0000C8FA
+	DBF	D7, TwoHeadedDragon_HeadTickB_Loop_Done
 	MOVEA.l	Object_slot_05_ptr.w, A6
 	BCLR.b	#7, (A6)
 	MOVE.b	#$FF, Boss_death_anim_done.w
@@ -15187,7 +15296,8 @@ BossTick_Anim_B_Loop:
 	MOVEA.l	(A0,D0.w), A0
 	MOVEA.l	(A1,D0.w), A1
 	MOVE.w	#3, D7
-loc_0000C9C0:
+; BossTick_Anim_B_Loop_Done
+BossTick_Anim_B_Loop_Done:
 	MOVE.b	(A0)+, $6(A6)
 	CLR.w	D0
 	MOVE.b	(A0)+, D0
@@ -15200,7 +15310,7 @@ loc_0000C9C0:
 	CLR.w	D0
 	MOVE.b	$1(A6), D0
 	LEA	(A6,D0.w), A6
-	DBF	D7, loc_0000C9C0
+	DBF	D7, BossTick_Anim_B_Loop_Done
 	JSR	AddSpriteToDisplayList
 	RTS
 
@@ -15350,17 +15460,19 @@ DrawBossPortrait:
 	MOVE.l	#$44B40003, D5
 	LEA	loc_0006FB60, A0
 	MOVE.w	#$000D, D7
-loc_0000CBA0:
+; DrawBossPortrait_Done
+DrawBossPortrait_Done:
 	MOVE.l	D5, VDP_control_port
 	MOVE.w	#$000B, D6
-loc_0000CBAA:
+; DrawBossPortrait_Done2
+DrawBossPortrait_Done2:
 	CLR.w	D0
 	MOVE.b	(A0)+, D0
 	ADDI.w	#$2200, D0
 	MOVE.w	D0, VDP_data_port
-	DBF	D6, loc_0000CBAA
+	DBF	D6, DrawBossPortrait_Done2
 	ADDI.l	#$00800000, D5
-	DBF	D7, loc_0000CBA0
+	DBF	D7, DrawBossPortrait_Done
 	ANDI	#$F8FF, SR
 	RTS
 
@@ -15369,17 +15481,19 @@ DrawBossNameplate:
 	MOVE.l	#$44300003, D5
 	LEA	loc_0007295C, A0
 	MOVE.w	#$000D, D7
-loc_0000CBE0:
+; DrawBossNameplate_Done
+DrawBossNameplate_Done:
 	MOVE.l	D5, VDP_control_port
 	MOVE.w	#$000C, D6
-loc_0000CBEA:
+; DrawBossNameplate_Done2
+DrawBossNameplate_Done2:
 	CLR.w	D0
 	MOVE.b	(A0)+, D0
 	ADDI.w	#$2200, D0
 	MOVE.w	D0, VDP_data_port
-	DBF	D6, loc_0000CBEA
+	DBF	D6, DrawBossNameplate_Done2
 	ADDI.l	#$00800000, D5
-	DBF	D7, loc_0000CBE0
+	DBF	D7, DrawBossNameplate_Done
 	ANDI	#$F8FF, SR
 	RTS
 
@@ -15388,31 +15502,35 @@ DrawBossHealthBar:
 	MOVE.l	#$40000003, D5
 	LEA	loc_00077FD4, A0
 	MOVE.w	#$000C, D7
-loc_0000CC20:
+; DrawBossHealthBar_Done
+DrawBossHealthBar_Done:
 	MOVE.l	D5, VDP_control_port
 	MOVE.w	#$000D, D6
-loc_0000CC2A:
+; DrawBossHealthBar_Done2
+DrawBossHealthBar_Done2:
 	CLR.w	D0
 	MOVE.b	(A0)+, D0
 	ADDI.w	#$A200, D0
 	MOVE.w	D0, VDP_data_port
-	DBF	D6, loc_0000CC2A
+	DBF	D6, DrawBossHealthBar_Done2
 	ADDI.l	#$00800000, D5
-	DBF	D7, loc_0000CC20
+	DBF	D7, DrawBossHealthBar_Done
 	MOVE.l	#$40080003, D5
 	LEA	SpriteMetaTileTable_7808A, A0
 	MOVE.w	#5, D7
-loc_0000CC56:
+; DrawBossHealthBar_Done3
+DrawBossHealthBar_Done3:
 	MOVE.l	D5, VDP_control_port
 	MOVE.w	#4, D6
-loc_0000CC60:
+; DrawBossHealthBar_Done4
+DrawBossHealthBar_Done4:
 	CLR.w	D0
 	MOVE.b	(A0)+, D0
 	ADDI.w	#$A200, D0
 	MOVE.w	D0, VDP_data_port
-	DBF	D6, loc_0000CC60
+	DBF	D6, DrawBossHealthBar_Done4
 	ADDI.l	#$00800000, D5
-	DBF	D7, loc_0000CC56
+	DBF	D7, DrawBossHealthBar_Done3
 	ANDI	#$F8FF, SR
 	RTS
 
@@ -15465,17 +15583,19 @@ DrawDialogTextLine_Alt1_Loop:
 WriteTextToVRAM:
 	ORI	#$0700, SR
 	MOVE.w	#5, D7
-loc_0000CD10:
+; WriteTextToVRAM_Done
+WriteTextToVRAM_Done:
 	MOVE.l	D5, VDP_control_port
 	MOVE.w	#6, D6
-loc_0000CD1A:
+; WriteTextToVRAM_Done2
+WriteTextToVRAM_Done2:
 	CLR.w	D0
 	MOVE.b	(A0)+, D0
 	ADDI.w	#$2200, D0
 	MOVE.w	D0, VDP_data_port
-	DBF	D6, loc_0000CD1A
+	DBF	D6, WriteTextToVRAM_Done2
 	ADDI.l	#$00800000, D5
-	DBF	D7, loc_0000CD10
+	DBF	D7, WriteTextToVRAM_Done
 	ANDI	#$F8FF, SR
 	RTS
 
@@ -15523,17 +15643,19 @@ DrawDialogTextLine_Alt2_Loop:
 Write7x8TilesToVRAM:
 	ORI	#$0700, SR
 	MOVE.w	#6, D7
-loc_0000CDAC:
+; Write7x8TilesToVRAM_Done
+Write7x8TilesToVRAM_Done:
 	MOVE.l	D5, VDP_control_port
 	MOVE.w	#7, D6
-loc_0000CDB6:
+; Write7x8TilesToVRAM_Done2
+Write7x8TilesToVRAM_Done2:
 	CLR.w	D0
 	MOVE.b	(A0)+, D0
 	ADDI.w	#$2200, D0
 	MOVE.w	D0, VDP_data_port
-	DBF	D6, loc_0000CDB6
+	DBF	D6, Write7x8TilesToVRAM_Done2
 	ADDI.l	#$00800000, D5
-	DBF	D7, loc_0000CDAC
+	DBF	D7, Write7x8TilesToVRAM_Done
 	ANDI	#$F8FF, SR
 	RTS
 
@@ -15546,11 +15668,12 @@ ClearDialogPlane:
 	ADD.l	D0, D5
 	MOVE.w	#$03BD, D7
 	ORI	#$0700, SR
-loc_0000CDF2:
+; ClearDialogPlane_Done
+ClearDialogPlane_Done:
 	MOVE.l	D5, VDP_control_port
 	MOVE.w	#0, VDP_data_port
 	ADDI.l	#$00100000, D5
-	DBF	D7, loc_0000CDF2
+	DBF	D7, ClearDialogPlane_Done
 	ANDI	#$F8FF, SR
 	MOVE.l	#$40000001, D5
 	MOVEQ	#0, D0
@@ -15560,11 +15683,12 @@ loc_0000CDF2:
 	ADD.l	D0, D5
 	MOVE.w	#$01FF, D7
 	ORI	#$0700, SR
-loc_0000CE28:
+; ClearDialogPlane_Done2
+ClearDialogPlane_Done2:
 	MOVE.l	D5, VDP_control_port
 	MOVE.w	#0, VDP_data_port
 	ADDI.l	#$00100000, D5
-	DBF	D7, loc_0000CE28
+	DBF	D7, ClearDialogPlane_Done2
 	ANDI	#$F8FF, SR
 	ADDQ.w	#1, Dialog_phase.w
 	RTS
@@ -15724,7 +15848,8 @@ BossVictoryEvent_Tsarkon:
 	MOVE.w	(A2)+, D7
 	BLE.b	BossVictoryEvent_Tsarkon_Loop
 	SUBQ.w	#1, D7
-loc_0000CFEC:
+; BossVictoryEvent_Tsarkon_Done
+BossVictoryEvent_Tsarkon_Done:
 	SUBQ.w	#1, (A1)
 	BGE.b	BossVictoryEvent_Tsarkon_Loop2
 	CLR.w	(A1)	
@@ -15734,7 +15859,7 @@ BossVictoryEvent_Tsarkon_Loop2:
 	LEA	Possessed_items_list.w, A0
 	MOVE.w	#8, D2
 	JSR	RemoveItemFromArray
-	DBF	D7, loc_0000CFEC
+	DBF	D7, BossVictoryEvent_Tsarkon_Done
 ; BossVictoryEvent_Tsarkon_Loop
 BossVictoryEvent_Tsarkon_Loop:
 	BSR.w	GetNextItemSlotOffset
@@ -15885,7 +16010,8 @@ InitDemonBoss_Common:
 	MOVE.w	#$0096, $4E(A6)
 	MOVE.l	#DemonBoss_MainTick, $2(A6)
 	MOVE.w	#$0034, D7
-loc_0000D262:
+; InitDemonBoss_Common_Done
+InitDemonBoss_Common_Done:
 	CLR.w	D0
 	MOVE.b	$1(A6), D0
 	LEA	(A6,D0.w), A6
@@ -15896,11 +16022,12 @@ loc_0000D262:
 	BCLR.b	#4, $7(A6)
 	CLR.b	$1C(A6)
 	MOVE.l	#DemonBoss_BodySegmentTick, $2(A6)
-	DBF	D7, loc_0000D262
+	DBF	D7, InitDemonBoss_Common_Done
 	MOVEA.l	Enemy_list_ptr.w, A4
 	MOVEA.l	Object_slot_07_ptr.w, A6
 	MOVE.w	#3, D7
-loc_0000D2A4:
+; InitDemonBoss_Common_Done2
+InitDemonBoss_Common_Done2:
 	CLR.w	$3C(A6)
 	CLR.b	$1B(A6)
 	MOVE.b	#$20, $7(A6)
@@ -15915,7 +16042,7 @@ loc_0000D2A4:
 	CLR.w	D0
 	MOVE.b	$1(A6), D0
 	LEA	(A6,D0.w), A6
-	DBF	D7, loc_0000D2A4
+	DBF	D7, InitDemonBoss_Common_Done2
 	RTS
 
 DemonBoss_MainTick:
@@ -16310,7 +16437,8 @@ SpawnChildObjects:
 	MOVE.w	(A1)+, D1
 	MOVE.w	(A1), D2
 	SUBQ.w	#1, D7
-loc_0000D7C0:
+; SpawnChildObjects_Done
+SpawnChildObjects_Done:
 	CMPI.w	#$FFFF, (A2)
 	BEQ.w	DemonBoss_ClearBodySegment
 	MOVE.w	(A2)+, $8(A6)
@@ -16332,7 +16460,7 @@ loc_0000D7C0:
 	CLR.w	D6
 	MOVE.b	$1(A6), D6
 	LEA	(A6,D6.w), A6
-	DBF	D7, loc_0000D7C0
+	DBF	D7, SpawnChildObjects_Done
 	RTS
 
 ; loc_0000D80C
@@ -16365,11 +16493,12 @@ DemonBoss_ProjectileHeadTick:
 	MOVE.w	#6, $20(A5)
 	ADDQ.w	#1, $22(A5)
 	MOVEA.l	Object_slot_07_ptr.w, A6
-loc_0000D864:
+; DemonBoss_ProjectileHeadTick_Done
+DemonBoss_ProjectileHeadTick_Done:
 	CLR.w	D0
 	MOVE.b	$1(A6), D0
 	LEA	(A6,D0.w), A6
-	DBF	D7, loc_0000D864
+	DBF	D7, DemonBoss_ProjectileHeadTick_Done
 	BSET.b	#7, (A6)
 	CLR.w	$3A(A6)
 	CLR.w	$3C(A6)
@@ -16552,7 +16681,8 @@ OrbitBoss_InitParts:
 	MOVE.w	#$0032, D4
 	MOVE.w	D4, D2
 	MOVE.w	#3, D7
-loc_0000DAC4:
+; OrbitBoss_InitParts_Done
+OrbitBoss_InitParts_Done:
 	CLR.w	D0
 	MOVE.b	$1(A6), D0
 	LEA	(A6,D0.w), A6
@@ -16578,7 +16708,7 @@ loc_0000DAC4:
 	MOVE.b	D6, $1B(A6)
 	MOVE.l	#OrbitBoss_SatelliteAnimate, $2(A6)
 	ADD.w	D4, D2
-	DBF	D7, loc_0000DAC4
+	DBF	D7, OrbitBoss_InitParts_Done
 	MOVE.b	#4, Boss_part_count.w
 	MOVEA.l	Object_slot_03_ptr.w, A6
 	BSET.b	#7, (A6)
@@ -16593,7 +16723,8 @@ loc_0000DAC4:
 	MOVE.w	#$0032, D4
 	MOVE.w	D4, D2
 	MOVE.w	#3, D7
-loc_0000DB90:
+; OrbitBoss_InitParts_Done2
+OrbitBoss_InitParts_Done2:
 	CLR.w	D0
 	MOVE.b	$1(A6), D0
 	LEA	(A6,D0.w), A6
@@ -16619,7 +16750,7 @@ loc_0000DB90:
 	MOVE.b	D6, $1B(A6)
 	MOVE.l	#OrbitBoss_SatelliteAnimate, $2(A6)
 	ADD.w	D4, D2
-	DBF	D7, loc_0000DB90
+	DBF	D7, OrbitBoss_InitParts_Done2
 	MOVE.l	#OrbitBoss_InnerCheckVictory, $2(A5)
 	RTS
 	
@@ -16666,13 +16797,14 @@ OrbitBoss_InnerExpandOrbit_Loop:
 	MOVE.w	#$0032, D4
 	MOVE.w	D4, D2
 	MOVE.w	#3, D7
-loc_0000DCA4:
+; OrbitBoss_InnerExpandOrbit_Loop_Done
+OrbitBoss_InnerExpandOrbit_Loop_Done:
 	ADD.w	D2, $20(A6)
 	ADD.w	D4, D2
 	CLR.w	D0
 	MOVE.b	$1(A6), D0
 	LEA	(A6,D0.w), A6
-	DBF	D7, loc_0000DCA4
+	DBF	D7, OrbitBoss_InnerExpandOrbit_Loop_Done
 	RTS
 	
 OrbitBoss_InnerSelectTarget:
@@ -16680,11 +16812,12 @@ OrbitBoss_InnerSelectTarget:
 	CLR.w	D7
 	MOVE.b	Boss_ai_state.w, D7
 	SUBQ.w	#1, D7
-loc_0000DCC4:
+; OrbitBoss_InnerSelectTarget_Done
+OrbitBoss_InnerSelectTarget_Done:
 	CLR.w	D0
 	MOVE.b	$1(A6), D0
 	LEA	(A6,D0.w), A6
-	DBF	D7, loc_0000DCC4
+	DBF	D7, OrbitBoss_InnerSelectTarget_Done
 	LEA	OrbitBoss_InnerSatelliteFrame, A0
 	MOVE.w	(A0), $8(A6)
 	MOVE.l	#OrbitBoss_SatelliteUpdatePosition, $2(A6)
@@ -16695,12 +16828,13 @@ loc_0000DCC4:
 	MOVE.b	Boss_ai_state.w, D7
 	SUBQ.w	#2, D7
 	BLT.b	OrbitBoss_InnerSelectTarget_Loop
-loc_0000DCFC:
+; OrbitBoss_InnerSelectTarget_Done2
+OrbitBoss_InnerSelectTarget_Done2:
 	CLR.w	D0
 	MOVE.b	$1(A6), D0
 	LEA	(A6,D0.w), A6
 	MOVE.l	#OrbitBoss_SatelliteOrbitInactive, $2(A6)
-	DBF	D7, loc_0000DCFC
+	DBF	D7, OrbitBoss_InnerSelectTarget_Done2
 ; OrbitBoss_InnerSelectTarget_Loop
 OrbitBoss_InnerSelectTarget_Loop:
 	MOVE.l	#OrbitBoss_InnerApproach, $2(A5)
@@ -16714,11 +16848,12 @@ OrbitBoss_InnerApproach:
 	CLR.w	D7
 	MOVE.b	Boss_ai_state.w, D7
 	SUBQ.w	#1, D7
-loc_0000DD36:
+; OrbitBoss_InnerApproach_Done
+OrbitBoss_InnerApproach_Done:
 	CLR.w	D0
 	MOVE.b	$1(A6), D0
 	LEA	(A6,D0.w), A6
-	DBF	D7, loc_0000DD36
+	DBF	D7, OrbitBoss_InnerApproach_Done
 	MOVE.w	$E(A6), $E(A5)
 	MOVE.w	$12(A6), $12(A5)
 	TST.b	$1A(A5)
@@ -16768,11 +16903,12 @@ OrbitBoss_InnerCharge:
 	CLR.w	D7
 	MOVE.b	Boss_ai_state.w, D7
 	SUBQ.w	#1, D7
-loc_0000DDDC:
+; OrbitBoss_InnerCharge_Done
+OrbitBoss_InnerCharge_Done:
 	CLR.w	D0
 	MOVE.b	$1(A6), D0
 	LEA	(A6,D0.w), A6
-	DBF	D7, loc_0000DDDC
+	DBF	D7, OrbitBoss_InnerCharge_Done
 	MOVE.w	$E(A6), $E(A5)
 	MOVE.w	$12(A6), $12(A5)
 	BSR.w	GetSignedVelocity
@@ -16796,11 +16932,12 @@ OrbitBoss_InnerFireAnim:
 	CLR.w	D7
 	MOVE.b	Boss_ai_state.w, D7
 	SUBQ.w	#1, D7
-loc_0000DE3E:
+; OrbitBoss_InnerFireAnim_Done
+OrbitBoss_InnerFireAnim_Done:
 	CLR.w	D0
 	MOVE.b	$1(A6), D0
 	LEA	(A6,D0.w), A6
-	DBF	D7, loc_0000DE3E
+	DBF	D7, OrbitBoss_InnerFireAnim_Done
 	MOVE.w	$E(A6), $E(A5)
 	MOVE.w	$12(A6), $12(A5)
 	ADDQ.b	#1, $1B(A5)
@@ -16824,11 +16961,12 @@ OrbitBoss_InnerSpawnProjectile:
 	CLR.w	D7
 	MOVE.b	Boss_ai_state.w, D7
 	SUBQ.w	#1, D7
-loc_0000DE94:
+; OrbitBoss_InnerSpawnProjectile_Done
+OrbitBoss_InnerSpawnProjectile_Done:
 	CLR.w	D0
 	MOVE.b	$1(A6), D0
 	LEA	(A6,D0.w), A6
-	DBF	D7, loc_0000DE94
+	DBF	D7, OrbitBoss_InnerSpawnProjectile_Done
 	MOVE.w	$E(A6), $E(A5)
 	MOVE.w	$12(A6), $12(A5)
 	MOVEA.l	Object_slot_02_ptr.w, A4
@@ -16882,13 +17020,14 @@ OrbitBoss_OuterExpandOrbit_Loop:
 	MOVE.w	#$0032, D4
 	MOVE.w	D4, D2
 	MOVE.w	#3, D7
-loc_0000DF7A:
+; OrbitBoss_OuterExpandOrbit_Loop_Done
+OrbitBoss_OuterExpandOrbit_Loop_Done:
 	ADD.w	D2, $20(A6)
 	ADD.w	D4, D2
 	CLR.w	D0
 	MOVE.b	$1(A6), D0
 	LEA	(A6,D0.w), A6
-	DBF	D7, loc_0000DF7A
+	DBF	D7, OrbitBoss_OuterExpandOrbit_Loop_Done
 	JSR	ProcessBossFightDamage
 	RTS
 	
@@ -16897,11 +17036,12 @@ OrbitBoss_OuterSelectTarget:
 	CLR.w	D7
 	MOVE.b	Boss_part_count.w, D7
 	SUBQ.w	#1, D7
-loc_0000DFA0:
+; OrbitBoss_OuterSelectTarget_Done
+OrbitBoss_OuterSelectTarget_Done:
 	CLR.w	D0
 	MOVE.b	$1(A6), D0
 	LEA	(A6,D0.w), A6
-	DBF	D7, loc_0000DFA0
+	DBF	D7, OrbitBoss_OuterSelectTarget_Done
 	LEA	OrbitBoss_InnerSatelliteFrame, A0
 	MOVE.w	(A0), $8(A6)
 	MOVE.l	#OrbitBoss_SatelliteUpdatePosition, $2(A6)
@@ -16912,12 +17052,13 @@ loc_0000DFA0:
 	MOVE.b	Boss_part_count.w, D7
 	SUBQ.w	#2, D7
 	BLT.b	OrbitBoss_OuterSelectTarget_Loop
-loc_0000DFD8:
+; OrbitBoss_OuterSelectTarget_Done2
+OrbitBoss_OuterSelectTarget_Done2:
 	CLR.w	D0
 	MOVE.b	$1(A6), D0
 	LEA	(A6,D0.w), A6
 	MOVE.l	#OrbitBoss_SatelliteOrbitInactive, $2(A6)
-	DBF	D7, loc_0000DFD8
+	DBF	D7, OrbitBoss_OuterSelectTarget_Done2
 ; OrbitBoss_OuterSelectTarget_Loop
 OrbitBoss_OuterSelectTarget_Loop:
 	MOVE.l	#OrbitBoss_OuterApproach, $2(A5)
@@ -16931,11 +17072,12 @@ OrbitBoss_OuterApproach:
 	CLR.w	D7
 	MOVE.b	Boss_part_count.w, D7
 	SUBQ.w	#1, D7
-loc_0000E012:
+; OrbitBoss_OuterApproach_Done
+OrbitBoss_OuterApproach_Done:
 	CLR.w	D0
 	MOVE.b	$1(A6), D0
 	LEA	(A6,D0.w), A6
-	DBF	D7, loc_0000E012
+	DBF	D7, OrbitBoss_OuterApproach_Done
 	MOVE.w	$E(A6), $E(A5)
 	MOVE.w	$12(A6), $12(A5)
 	TST.b	$1A(A5)
@@ -16979,11 +17121,12 @@ OrbitBoss_OuterCharge:
 	CLR.w	D7
 	MOVE.b	Boss_part_count.w, D7
 	SUBQ.w	#1, D7
-loc_0000E0A2:
+; OrbitBoss_OuterCharge_Done
+OrbitBoss_OuterCharge_Done:
 	CLR.w	D0
 	MOVE.b	$1(A6), D0
 	LEA	(A6,D0.w), A6
-	DBF	D7, loc_0000E0A2
+	DBF	D7, OrbitBoss_OuterCharge_Done
 	MOVE.w	$E(A6), $E(A5)
 	MOVE.w	$12(A6), $12(A5)
 	BSR.w	GetSignedVelocity
@@ -17007,11 +17150,12 @@ OrbitBoss_OuterFireAnim:
 	CLR.w	D7
 	MOVE.b	Boss_part_count.w, D7
 	SUBQ.w	#1, D7
-loc_0000E104:
+; OrbitBoss_OuterFireAnim_Done
+OrbitBoss_OuterFireAnim_Done:
 	CLR.w	D0
 	MOVE.b	$1(A6), D0
 	LEA	(A6,D0.w), A6
-	DBF	D7, loc_0000E104
+	DBF	D7, OrbitBoss_OuterFireAnim_Done
 	MOVE.w	$E(A6), $E(A5)
 	MOVE.w	$12(A6), $12(A5)
 	ADDQ.b	#1, $1B(A5)
@@ -17035,11 +17179,12 @@ OrbitBoss_OuterSpawnProjectile:
 	CLR.w	D7
 	MOVE.b	Boss_part_count.w, D7
 	SUBQ.w	#1, D7
-loc_0000E15A:
+; OrbitBoss_OuterSpawnProjectile_Done
+OrbitBoss_OuterSpawnProjectile_Done:
 	CLR.w	D0
 	MOVE.b	$1(A6), D0
 	LEA	(A6,D0.w), A6
-	DBF	D7, loc_0000E15A
+	DBF	D7, OrbitBoss_OuterSpawnProjectile_Done
 	MOVE.w	$E(A6), $E(A5)
 	MOVE.w	$12(A6), $12(A5)
 	MOVEA.l	Object_slot_04_ptr.w, A4
@@ -17184,11 +17329,12 @@ OrbitBoss_InnerPartDeath:
 	CLR.w	D7
 	MOVE.b	Boss_ai_state.w, D7
 	SUBQ.w	#1, D7
-loc_0000E358:
+; OrbitBoss_InnerPartDeath_Done
+OrbitBoss_InnerPartDeath_Done:
 	CLR.w	D0
 	MOVE.b	$1(A6), D0
 	LEA	(A6,D0.w), A6
-	DBF	D7, loc_0000E358
+	DBF	D7, OrbitBoss_InnerPartDeath_Done
 	ADDQ.b	#1, $1B(A5)
 	MOVE.b	$1B(A5), D0
 	ANDI.w	#$0070, D0
@@ -17253,11 +17399,12 @@ OrbitBoss_OuterPartDeath:
 	CLR.w	D7
 	MOVE.b	Boss_part_count.w, D7
 	SUBQ.w	#1, D7
-loc_0000E422:
+; OrbitBoss_OuterPartDeath_Done
+OrbitBoss_OuterPartDeath_Done:
 	CLR.w	D0
 	MOVE.b	$1(A6), D0
 	LEA	(A6,D0.w), A6
-	DBF	D7, loc_0000E422
+	DBF	D7, OrbitBoss_OuterPartDeath_Done
 	ADDQ.b	#1, $1B(A5)
 	MOVE.b	$1B(A5), D0
 	ANDI.w	#$0070, D0
@@ -17384,26 +17531,28 @@ InitHydraBoss_Common:
 	MOVEA.l	Object_slot_02_ptr.w, A6
 	MOVE.w	#1, D7
 	MOVE.w	#$0078, D6
-loc_0000E626:
+; InitHydraBoss_Common_Done
+InitHydraBoss_Common_Done:
 	BSR.w	InitBossBodyPart
 	ADDI.w	#$0050, D6
 	ADDQ.w	#1, Boss_ai_state.w
 	ADDQ.w	#1, Boss_active_parts.w
-	DBF	D7, loc_0000E626
+	DBF	D7, InitHydraBoss_Common_Done
 	RTS
 	
 ActivateNextBossPart:
 	MOVEA.l	Object_slot_02_ptr.w, A6
 	MOVE.w	Boss_ai_state.w, D7
 	SUBQ.w	#1, D7
-loc_0000E646:
+; ActivateNextBossPart_Done
+ActivateNextBossPart_Done:
 	CLR.w	D0
 	MOVE.b	$1(A6), D0
 	LEA	(A6,D0.w), A6
 	CLR.w	D0
 	MOVE.b	$1(A6), D0
 	LEA	(A6,D0.w), A6
-	DBF	D7, loc_0000E646
+	DBF	D7, ActivateNextBossPart_Done
 	MOVE.w	#$0100, D6
 	BSR.w	InitBossBodyPart
 	ADDQ.w	#1, Boss_ai_state.w
@@ -17768,12 +17917,13 @@ HydraBoss_StartNextBattle:
 	CLR.w	D0
 	LEA	Boss_battle_flags.w, A0
 	MOVE.w	#$000F, D7
-loc_0000EB32:
+; HydraBoss_StartNextBattle_Done
+HydraBoss_StartNextBattle_Done:
 	MOVE.b	(A0)+, D1
 	TST.b	D1
 	BNE.w	HydraBoss_StartNextBattle_Loop
 	ADDQ.w	#1, D0
-	DBF	D7, loc_0000EB32
+	DBF	D7, HydraBoss_StartNextBattle_Done
 ; HydraBoss_StartNextBattle_Loop
 HydraBoss_StartNextBattle_Loop:
 	CLR.b	Boss_event_trigger.w
@@ -17781,9 +17931,10 @@ HydraBoss_StartNextBattle_Loop:
 	MOVE.w	D0, Battle_type.w
 	LEA	Boss_battle_flags.w, A0
 	MOVE.w	#3, D7
-loc_0000EB54:
+; HydraBoss_StartNextBattle_Loop_Done
+HydraBoss_StartNextBattle_Loop_Done:
 	CLR.l	(A0)+
-	DBF	D7, loc_0000EB54
+	DBF	D7, HydraBoss_StartNextBattle_Loop_Done
 	JSR	ClearAllEnemyEntities
 	LEA	BossBattleObjectInitPtrs, A0
 	MOVE.w	Battle_type.w, D0
@@ -17805,13 +17956,14 @@ DeactivateBossBodyParts:
 	CLR.w	D0
 	MOVE.b	$1(A6), D0
 	LEA	(A6,D0.w), A6
-loc_0000EBAA:
+; DeactivateBossBodyParts_Done
+DeactivateBossBodyParts_Done:
 	BCLR.b	#7, (A6)
 	CLR.w	D0
 	MOVE.b	$1(A6), D0
 	BEQ.b	DeactivateBossBodyParts_Loop
 	LEA	(A6,D0.w), A6
-	BRA.b	loc_0000EBAA
+	BRA.b	DeactivateBossBodyParts_Done
 ; DeactivateBossBodyParts_Loop
 DeactivateBossBodyParts_Loop:
 	RTS
@@ -17932,7 +18084,8 @@ InitRingGuardian_Common:
 	MOVEA.l	Object_slot_02_ptr.w, A6
 	LEA	(A6), A4
 	MOVE.w	#4, D7
-loc_0000ED82:
+; InitRingGuardian_Common_Done
+InitRingGuardian_Common_Done:
 	BSET.b	#7, (A4)
 	MOVE.b	#$20, $7(A4)
 	BCLR.b	#7, $7(A4)
@@ -17942,13 +18095,14 @@ loc_0000ED82:
 	CLR.w	D0
 	MOVE.b	$1(A4), D0
 	LEA	(A4,D0.w), A4
-	DBF	D7, loc_0000ED82
+	DBF	D7, InitRingGuardian_Common_Done
 	CLR.b	$1B(A6)
 	MOVE.l	#RingGuardian_BodyGroupATick, $2(A6)
 	MOVEA.l	Object_slot_03_ptr.w, A6
 	LEA	(A6), A4
 	MOVE.w	#1, D7
-loc_0000EDCA:
+; InitRingGuardian_Common_Done2
+InitRingGuardian_Common_Done2:
 	BSET.b	#7, (A4)
 	MOVE.b	#$20, $7(A4)
 	BCLR.b	#7, $7(A4)
@@ -17958,7 +18112,7 @@ loc_0000EDCA:
 	CLR.w	D0
 	MOVE.b	$1(A4), D0
 	LEA	(A4,D0.w), A4
-	DBF	D7, loc_0000EDCA
+	DBF	D7, InitRingGuardian_Common_Done2
 	CLR.b	$1B(A6)
 	MOVE.l	#RingGuardian_BodyGroupBTick, $2(A6)
 	RTS
@@ -17990,7 +18144,8 @@ RingGuardian_BodyGroupATick_Loop:
 	MOVE.w	$E(A5), D0
 	MOVE.w	$12(A5), D1
 	MOVE.w	#3, D7
-loc_0000EE5E:
+; RingGuardian_BodyGroupATick_Loop_Done
+RingGuardian_BodyGroupATick_Loop_Done:
 	CLR.w	D2
 	MOVE.b	$1(A6), D2
 	LEA	(A6,D2.w), A6
@@ -18005,7 +18160,7 @@ loc_0000EE5E:
 	MOVE.w	D1, D4
 	ADD.w	(A0)+, D4
 	MOVE.w	D4, $12(A6)
-	DBF	D7, loc_0000EE5E
+	DBF	D7, RingGuardian_BodyGroupATick_Loop_Done
 	BRA.w	BossCommon_DisplaySprite
 RingGuardian_BodyGroupBTick:
 	TST.b	Boss_defeated_flag.w
@@ -18320,11 +18475,12 @@ RingGuardian_ProjectileSpawner:
 RingGuardian_ProjectileSpawner_Loop2:
 	LEA	(A5), A6
 	SUBQ.w	#1, D0
-loc_0000F242:
+; RingGuardian_ProjectileSpawner_Loop2_Done
+RingGuardian_ProjectileSpawner_Loop2_Done:
 	CLR.w	D1
 	MOVE.b	$1(A6), D1
 	LEA	(A6,D1.w), A6
-	DBF	D0, loc_0000F242
+	DBF	D0, RingGuardian_ProjectileSpawner_Loop2_Done
 	BSET.b	#7, (A6)
 	MOVE.b	#$20, $7(A6)
 	BCLR.b	#7, $7(A6)
@@ -18357,11 +18513,12 @@ RingGuardian_ProjectileSpawner_Loop:
 RingGuardian_WaitChildrenDone:
 	LEA	(A5), A6
 	MOVE.w	#3, D7
-loc_0000F2E0:
+; RingGuardian_WaitChildrenDone_Done
+RingGuardian_WaitChildrenDone_Done:
 	CLR.w	D0
 	MOVE.b	$1(A6), D0
 	LEA	(A6,D0.w), A6
-	DBF	D7, loc_0000F2E0
+	DBF	D7, RingGuardian_WaitChildrenDone_Done
 	BTST.b	#7, (A6)
 	BNE.b	RingGuardian_WaitChildrenDone_Loop
 	BCLR.b	#7, (A5)
@@ -18437,30 +18594,34 @@ UpdateBossBodyTiles:
 	MOVEA.l	(A1,D0.w), A1
 	MOVE.l	#$43160003, D5
 	MOVE.w	#3, D7
-loc_0000F3E2:
+; UpdateBossBodyTiles_Done
+UpdateBossBodyTiles_Done:
 	MOVE.l	D5, VDP_control_port
 	MOVE.w	#3, D6
-loc_0000F3EC:
+; UpdateBossBodyTiles_Done2
+UpdateBossBodyTiles_Done2:
 	CLR.w	D0
 	MOVE.b	(A0)+, D0
 	ADDI.w	#$A200, D0
 	MOVE.w	D0, VDP_data_port
-	DBF	D6, loc_0000F3EC
+	DBF	D6, UpdateBossBodyTiles_Done2
 	ADDI.l	#$00800000, D5
-	DBF	D7, loc_0000F3E2
+	DBF	D7, UpdateBossBodyTiles_Done
 	MOVE.l	#$41800003, D5
 	MOVE.w	#2, D7
-loc_0000F412:
+; UpdateBossBodyTiles_Done3
+UpdateBossBodyTiles_Done3:
 	MOVE.l	D5, VDP_control_port
 	MOVE.w	#3, D6
-loc_0000F41C:
+; UpdateBossBodyTiles_Done4
+UpdateBossBodyTiles_Done4:
 	CLR.w	D0
 	MOVE.b	(A1)+, D0
 	ADDI.w	#$A200, D0
 	MOVE.w	D0, VDP_data_port
-	DBF	D6, loc_0000F41C
+	DBF	D6, UpdateBossBodyTiles_Done4
 	ADDI.l	#$00800000, D5
-	DBF	D7, loc_0000F412
+	DBF	D7, UpdateBossBodyTiles_Done3
 	ANDI	#$F8FF, SR
 	RTS
 	
@@ -18470,17 +18631,19 @@ WriteDirectionTilesForBoss:
 	MOVEA.l	(A0,D0.w), A0
 	MOVE.l	#$40080003, D5
 	MOVE.w	#5, D7
-loc_0000F456:
+; WriteDirectionTilesForBoss_Done
+WriteDirectionTilesForBoss_Done:
 	MOVE.l	D5, VDP_control_port
 	MOVE.w	#4, D6
-loc_0000F460:
+; WriteDirectionTilesForBoss_Done2
+WriteDirectionTilesForBoss_Done2:
 	CLR.w	D0
 	MOVE.b	(A0)+, D0
 	ADDI.w	#$A200, D0
 	MOVE.w	D0, VDP_data_port
-	DBF	D6, loc_0000F460
+	DBF	D6, WriteDirectionTilesForBoss_Done2
 	ADDI.l	#$00800000, D5
-	DBF	D7, loc_0000F456
+	DBF	D7, WriteDirectionTilesForBoss_Done
 	ANDI	#$F8FF, SR
 	RTS
 	
@@ -18600,17 +18763,19 @@ WriteTilesToVRAM:
 	MOVE.w	(A0)+, D7
 	MOVE.l	(A0)+, D5
 	ORI	#$0700, SR
-loc_0000F58C:
+; WriteTilesToVRAM_Done
+WriteTilesToVRAM_Done:
 	MOVE.l	D5, VDP_control_port
 	MOVE.w	D6, D4
-loc_0000F594:
+; WriteTilesToVRAM_Done2
+WriteTilesToVRAM_Done2:
 	CLR.w	D0
 	MOVE.b	(A1)+, D0
 	ADDI.w	#$2200, D0
 	MOVE.w	D0, VDP_data_port
-	DBF	D4, loc_0000F594
+	DBF	D4, WriteTilesToVRAM_Done2
 	ADDI.l	#$00800000, D5
-	DBF	D7, loc_0000F58C
+	DBF	D7, WriteTilesToVRAM_Done
 	ANDI	#$F8FF, SR
 	RTS
 	
@@ -18677,11 +18842,12 @@ AddSpriteToDisplayList:
 	SUB.w	D0, D7
 	ASL.w	#4, D7
 	ADDA.w	D7, A0
-loc_0000F65E:
+; AddSpriteToDisplayList_Done
+AddSpriteToDisplayList_Done:
 	CMPI.b	#$0F, (A0)
 	BLT.b	AddSpriteToDisplayList_Loop
 	LEA	$10(A0), A0
-	DBF	D0, loc_0000F65E
+	DBF	D0, AddSpriteToDisplayList_Done
 	BRA.b	AddSpriteToDisplayList_Return	
 ; AddSpriteToDisplayList_Loop
 AddSpriteToDisplayList_Loop:
@@ -18702,12 +18868,13 @@ FlushSpriteAttributesToVDP:
 	SUBQ.w	#1, D0
 	BLT.b	FlushSpriteAttributesToVDP_Loop
 	LEA	Sprite_attr_buffer.w, A2
-loc_0000F69E:
+; FlushSpriteAttributesToVDP_Done
+FlushSpriteAttributesToVDP_Done:
 	MOVE.w	(A2)+, VDP_data_port
 	MOVE.w	(A2)+, VDP_data_port
 	MOVE.w	(A2)+, VDP_data_port
 	MOVE.w	(A2)+, VDP_data_port
-	DBF	D0, loc_0000F69E
+	DBF	D0, FlushSpriteAttributesToVDP_Done
 ; FlushSpriteAttributesToVDP_Loop
 FlushSpriteAttributesToVDP_Loop:
 	MOVE.w	#0, VDP_data_port
@@ -18772,7 +18939,8 @@ loc_0000F75E:
 	CLR.w	D1
 	MOVE.w	#$0010, D5
 	MOVE.w	#$00FF, D0
-loc_0000F780:
+; QueueSpriteOAM_Return_Done
+QueueSpriteOAM_Return_Done:
 	ADDA.w	D5, A1
 	TST.b	(A1)
 	BEQ.w	QueueSpriteOAM_Return_Loop2
@@ -18781,7 +18949,8 @@ loc_0000F780:
 	ANDI.w	#$000F, D6
 	SUBQ.w	#1, D6
 	BLT.w	QueueSpriteOAM_Return_Loop3
-loc_0000F796:
+; QueueSpriteOAM_Return_Done2
+QueueSpriteOAM_Return_Done2:
 	MOVE.b	$1(A1,D6.w), D4
 	ANDI.w	#$007F, D4
 	ASL.w	#3, D4
@@ -18793,11 +18962,11 @@ loc_0000F796:
 	MOVE.w	D2, (A4)+
 	MOVE.w	(A3)+, (A4)+
 	MOVE.w	(A3), (A4)+
-	DBF	D6, loc_0000F796
+	DBF	D6, QueueSpriteOAM_Return_Done2
 	CLR.b	(A1)
 ; QueueSpriteOAM_Return_Loop2
 QueueSpriteOAM_Return_Loop2:
-	DBF	D0, loc_0000F780
+	DBF	D0, QueueSpriteOAM_Return_Done
 ; QueueSpriteOAM_Return_Loop
 QueueSpriteOAM_Return_Loop:
 	ANDI	#$F8FF, SR
@@ -18809,7 +18978,8 @@ QueueSpriteOAM_Return_Loop3:
 loc_0000F7C4:
 	MOVE.w	#$001F, D7
 	LEA	Sprite_priority_slots.w, A0
-loc_0000F7CC:
+; QueueSpriteOAM_Return_Loop3_Done
+QueueSpriteOAM_Return_Loop3_Done:
 	CLR.b	(A0)
 	LEA	$10(A0), A0
 	CLR.b	(A0)
@@ -18826,7 +18996,7 @@ loc_0000F7CC:
 	LEA	$10(A0), A0
 	CLR.b	(A0)
 	LEA	$10(A0), A0
-	DBF	D7, loc_0000F7CC
+	DBF	D7, QueueSpriteOAM_Return_Loop3_Done
 	ANDI	#$F8FF, SR
 	RTS
 	
@@ -19112,9 +19282,10 @@ RemoveItemFromArray:
 	SUB.w	D1, D2
 	BEQ.b	RemoveItemFromArray_Loop
 	SUBQ.w	#1, D2
-loc_0000FB9A:
+; RemoveItemFromArray_Done
+RemoveItemFromArray_Done:
 	MOVE.w	$2(A0), (A0)+
-	DBF	D2, loc_0000FB9A
+	DBF	D2, RemoveItemFromArray_Done
 ; RemoveItemFromArray_Loop
 RemoveItemFromArray_Loop:
 	RTS
@@ -19130,7 +19301,8 @@ loc_0000FBA6:
 	MOVE.b	(A0)+, D0
 	BEQ.w	DecompressTileGraphics_Loop
 	SUBQ.w	#1, D0
-loc_0000FBB0:
+; DecompressTileGraphics_Done
+DecompressTileGraphics_Done:
 	CLR.w	D2
 loc_0000FBB2:
 	MOVE.b	(A0)+, D2
@@ -19143,15 +19315,17 @@ loc_0000FBB2:
 	MOVE.b	(A0)+, D1
 	OR.l	D1, D3
 	BSR.w	WriteMaskedTileRow
-	DBF	D0, loc_0000FBB0
+	DBF	D0, DecompressTileGraphics_Done
 	LEA	(A2), A1
 	MOVEQ	#$00000020, D0
 	MOVE.l	D3, D1
-loc_0000FBD2:
+; DecompressTileGraphics_Done2
+DecompressTileGraphics_Done2:
 	CMPI.l	#$FFFFFFFF, D3
 loc_0000FBD8:
 	BEQ.b	DecompressTileGraphics_Loop2
-loc_0000FBDA:
+; DecompressTileGraphics_Done3
+DecompressTileGraphics_Done3:
 	ROL.l	#1, D1
 loc_0000FBDC:
 	SUBQ.w	#1, D0
@@ -19159,12 +19333,12 @@ loc_0000FBDC:
 	BNE.b	DecompressTileGraphics_Loop3
 	MOVE.b	(A0)+, (A1)+
 	BSET.l	D0, D3
-	BRA.b	loc_0000FBD2
+	BRA.b	DecompressTileGraphics_Done2
 ; DecompressTileGraphics_Loop3
 DecompressTileGraphics_Loop3:
 	LEA	$1(A1), A1
 loc_0000FBEE:
-	BRA.b	loc_0000FBDA
+	BRA.b	DecompressTileGraphics_Done3
 ; DecompressTileGraphics_Loop2
 DecompressTileGraphics_Loop2:
 	RTS
@@ -19174,20 +19348,22 @@ DecompressTileGraphics_Loop:
 	LEA	(A2), A1
 loc_0000FBF4:
 	MOVEQ	#7, D0
-loc_0000FBF6:
+; DecompressTileGraphics_Loop_Done
+DecompressTileGraphics_Loop_Done:
 	MOVE.b	(A0)+, (A1)+
 loc_0000FBF8:
 	MOVE.b	(A0)+, (A1)+
 	MOVE.b	(A0)+, (A1)+
 	MOVE.b	(A0)+, (A1)+
-	DBF	D0, loc_0000FBF6
+	DBF	D0, DecompressTileGraphics_Loop_Done
 	RTS
 	
 WriteMaskedTileRow:
 	LEA	(A2), A1
 loc_0000FC06:
 	MOVEQ	#$0000001F, D4
-loc_0000FC08:
+; WriteMaskedTileRow_Done
+WriteMaskedTileRow_Done:
 	ROL.l	#1, D1
 loc_0000FC0A:
 	BTST.l	#0, D1
@@ -19197,7 +19373,7 @@ loc_0000FC0A:
 WriteMaskedTileRow_Loop:
 	LEA	$1(A1), A1
 loc_0000FC16:
-	DBF	D4, loc_0000FC08
+	DBF	D4, WriteMaskedTileRow_Done
 	RTS
 	
 DecompressFontTile:
@@ -19206,7 +19382,8 @@ DecompressFontTile:
 	MOVE.b	(A0)+, D0
 	BEQ.w	DecompressFontTile_Loop
 	SUBQ.w	#1, D0
-loc_0000FC28:
+; DecompressFontTile_Done
+DecompressFontTile_Done:
 	CLR.w	D2
 	MOVE.b	(A0)+, D2
 	MOVE.b	(A0)+, D1
@@ -19221,14 +19398,16 @@ loc_0000FC28:
 	BSR.w	ClampTileCoordinates
 	MOVE.b	D6, D2
 	BSR.w	WriteTileRowFromBitfield
-	DBF	D0, loc_0000FC28
+	DBF	D0, DecompressFontTile_Done
 	LEA	(A2), A1
 	MOVEQ	#$00000020, D0
 	MOVE.l	D3, D1
-loc_0000FC52:
+; DecompressFontTile_Done2
+DecompressFontTile_Done2:
 	CMPI.l	#$FFFFFFFF, D3
 	BEQ.b	DecompressFontTile_Loop2
-loc_0000FC5A:
+; DecompressFontTile_Done3
+DecompressFontTile_Done3:
 	ROL.l	#1, D1
 	SUBQ.w	#1, D0
 	BTST.l	#0, D1
@@ -19237,11 +19416,11 @@ loc_0000FC5A:
 	BSR.w	ClampTileCoordinates
 	MOVE.b	D6, (A1)+
 	BSET.l	D0, D3
-	BRA.b	loc_0000FC52
+	BRA.b	DecompressFontTile_Done2
 ; DecompressFontTile_Loop3
 DecompressFontTile_Loop3:
 	LEA	$1(A1), A1
-	BRA.b	loc_0000FC5A
+	BRA.b	DecompressFontTile_Done3
 ; DecompressFontTile_Loop2
 DecompressFontTile_Loop2:
 	RTS
@@ -19250,7 +19429,8 @@ DecompressFontTile_Loop2:
 DecompressFontTile_Loop:
 	LEA	(A2), A1
 	MOVEQ	#7, D0
-loc_0000FC7C:
+; DecompressFontTile_Loop_Done
+DecompressFontTile_Loop_Done:
 	MOVE.b	(A0)+, D6
 	BSR.w	ClampTileCoordinates
 	MOVE.b	D6, (A1)+
@@ -19263,13 +19443,14 @@ loc_0000FC7C:
 	MOVE.b	(A0)+, D6
 	BSR.w	ClampTileCoordinates
 	MOVE.b	D6, (A1)+
-	DBF	D0, loc_0000FC7C
+	DBF	D0, DecompressFontTile_Loop_Done
 	RTS
 	
 WriteTileRowFromBitfield:
 	LEA	(A2), A1
 	MOVEQ	#$0000001F, D4
-loc_0000FCA6:
+; WriteTileRowFromBitfield_Done
+WriteTileRowFromBitfield_Done:
 	ROL.l	#1, D1
 	BTST.l	#0, D1
 	BEQ.b	WriteTileRowFromBitfield_Loop
@@ -19277,7 +19458,7 @@ loc_0000FCA6:
 ; WriteTileRowFromBitfield_Loop
 WriteTileRowFromBitfield_Loop:
 	LEA	$1(A1), A1
-	DBF	D4, loc_0000FCA6
+	DBF	D4, WriteTileRowFromBitfield_Done
 	RTS
 	
 ClampTileCoordinates:
@@ -19301,10 +19482,11 @@ loc_0000FCDC:
 	LEA	Tile_gfx_buffer.w, A2
 	LEA	CompressedFontTileData, A0
 	MOVE.w	#$00FF, D5
-loc_0000FCEA:
+; ClampTileCoordinates_Loop2_Done
+ClampTileCoordinates_Loop2_Done:
 	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
-	DBF	D5, loc_0000FCEA
+	DBF	D5, ClampTileCoordinates_Loop2_Done
 	BSR.w	TransferTilesViaDma
 	RTS
 
@@ -19312,10 +19494,11 @@ InitFontTiles:
 	LEA	Tile_gfx_buffer.w, A2
 	LEA	CompressedFontTileData, A0
 	MOVE.w	#$00FF, D5
-loc_0000FD0A:
+; InitFontTiles_Done
+InitFontTiles_Done:
 	BSR.w	DecompressFontTile
 	LEA	$20(A2), A2
-	DBF	D5, loc_0000FD0A
+	DBF	D5, InitFontTiles_Done
 	BSR.w	TransferTilesViaDma
 	RTS
 
@@ -19359,10 +19542,11 @@ LoadTownTileGfx_LookupTable:
 ; LoadTownTileGfx_LookupTable_Loop
 LoadTownTileGfx_LookupTable_Loop:
 	MOVE.w	#$00FF, D5
-loc_0000FDC4:
+; LoadTownTileGfx_LookupTable_Loop_Done
+LoadTownTileGfx_LookupTable_Loop_Done:
 	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
-	DBF	D5, loc_0000FDC4
+	DBF	D5, LoadTownTileGfx_LookupTable_Loop_Done
 	LEA	DmaCmd_TownTileset_Wyclif, A0
 	BSR.w	ExecuteVdpDmaFromPointer
 	LEA	Tile_gfx_buffer.w, A2
@@ -19396,19 +19580,21 @@ LoadBattleHudGraphics:
 	LEA	Tile_gfx_buffer.w, A2
 	LEA	loc_0009032E, A0
 	MOVE.w	#$00FF, D5
-loc_0000FE3A:
+; LoadBattleHudGraphics_Done
+LoadBattleHudGraphics_Done:
 	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
-	DBF	D5, loc_0000FE3A
+	DBF	D5, LoadBattleHudGraphics_Done
 	LEA	DmaCmd_TownTileset_Wyclif, A0
 	BSR.w	ExecuteVdpDmaFromPointer
 	LEA	Tile_gfx_buffer.w, A2
 	LEA	loc_00091CBC, A0
 	MOVE.w	#$0039, D5
-loc_0000FE5E:
+; LoadBattleHudGraphics_Done2
+LoadBattleHudGraphics_Done2:
 	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
-	DBF	D5, loc_0000FE5E
+	DBF	D5, LoadBattleHudGraphics_Done2
 	LEA	DmaCmd_TownTileset_Parma, A0
 	BSR.w	ExecuteVdpDmaFromPointer
 	RTS
@@ -19439,10 +19625,11 @@ loc_0000FEE2:
 	LEA	loc_0005DDFE, A0
 	LEA	Tile_gfx_buffer.w, A2
 	MOVE.w	#$0039, D5
-loc_0000FEF0:
+; ExecuteVdpDmaFromPointer_Done
+ExecuteVdpDmaFromPointer_Done:
 	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
-	DBF	D5, loc_0000FEF0
+	DBF	D5, ExecuteVdpDmaFromPointer_Done
 	LEA	DmaCmd_OverworldStatusTiles, A0
 	BSR.w	ExecuteVdpDmaFromRam
 	RTS
@@ -19497,10 +19684,11 @@ LoadBattleTileGraphics:
 	LEA	loc_00069F7C, A0
 	LEA	Tile_gfx_buffer.w, A2
 	MOVE.w	#$001A, D5
-loc_0000FF90:
+; LoadBattleTileGraphics_Done
+LoadBattleTileGraphics_Done:
 	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
-	DBF	D5, loc_0000FF90
+	DBF	D5, LoadBattleTileGraphics_Done
 	LEA	DmaCmd_BattleTiles, A0
 	BSR.w	ExecuteVdpDmaFromRam
 	RTS
@@ -19509,10 +19697,11 @@ LoadBattleUiTileGraphics:
 	LEA	loc_0006A9C0, A0
 	LEA	Tile_gfx_buffer.w, A2
 	MOVE.w	#$003C, D5
-loc_0000FFB6:
+; LoadBattleUiTileGraphics_Done
+LoadBattleUiTileGraphics_Done:
 	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
-	DBF	D5, loc_0000FFB6
+	DBF	D5, LoadBattleUiTileGraphics_Done
 	LEA	DmaCmd_BattleUiTiles, A0
 	BSR.w	ExecuteVdpDmaFromRam
 	RTS
@@ -19521,10 +19710,11 @@ LoadWorldMapTileGraphics:
 	LEA	loc_0006B408, A0
 	LEA	Tile_gfx_buffer.w, A2
 	MOVE.w	#$00EA, D5
-loc_0000FFDC:
+; LoadWorldMapTileGraphics_Done
+LoadWorldMapTileGraphics_Done:
 	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
-	DBF	D5, loc_0000FFDC
+	DBF	D5, LoadWorldMapTileGraphics_Done
 ; loc_0000FFE8
 ExecuteWorldMapDma:
 	LEA	DmaCmd_WorldMapTiles, A0
@@ -19540,12 +19730,13 @@ LoadCaveTileGraphics:
 LoadCaveTileGfxToBuffer:
 	LEA	Tile_gfx_buffer.w, A2
 	MOVE.w	#$0075, D5
-loc_00010002:
+; LoadCaveTileGfxToBuffer_Done
+LoadCaveTileGfxToBuffer_Done:
 	BSR.w	DecompressTileGraphics
 loc_00010006:
 	LEA	$20(A2), A2
 loc_0001000A:
-	DBF	D5, loc_00010002
+	DBF	D5, LoadCaveTileGfxToBuffer_Done
 loc_0001000E:
 	LEA	DmaCmd_CaveTiles, A0
 	BSR.w	ExecuteVdpDmaFromRam
@@ -19555,10 +19746,11 @@ LoadBattleGroundTileGraphics:
 	LEA	loc_00080EAC, A0
 	LEA	Tile_gfx_buffer.w, A2
 	MOVE.w	#$0064, D5
-loc_00010028:
+; LoadBattleGroundTileGraphics_Done
+LoadBattleGroundTileGraphics_Done:
 	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
-	DBF	D5, loc_00010028
+	DBF	D5, LoadBattleGroundTileGraphics_Done
 	LEA	DmaCmd_BattleGroundGfx, A0
 	BSR.w	ExecuteVdpDmaFromRam
 	RTS
@@ -19567,10 +19759,11 @@ LoadBattleEnemyTileGraphics:
 	LEA	SpriteGfxData_8287C, A0
 	LEA	Tile_gfx_buffer.w, A2
 	MOVE.w	#$0056, D5
-loc_0001004E:
+; LoadBattleEnemyTileGraphics_Done
+LoadBattleEnemyTileGraphics_Done:
 	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
-	DBF	D5, loc_0001004E
+	DBF	D5, LoadBattleEnemyTileGraphics_Done
 	LEA	DmaCmd_BattleEnemyGfx, A0
 	BSR.w	ExecuteVdpDmaFromRam
 	RTS
@@ -19579,10 +19772,11 @@ LoadBattleStatusTileGraphics:
 	LEA	loc_000844CA, A0
 	LEA	Tile_gfx_buffer.w, A2
 	MOVE.w	#$0058, D5
-loc_00010074:
+; LoadBattleStatusTileGraphics_Done
+LoadBattleStatusTileGraphics_Done:
 	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
-	DBF	D5, loc_00010074
+	DBF	D5, LoadBattleStatusTileGraphics_Done
 	LEA	DmaCmd_BattleStatusGfx, A0
 	BSR.w	ExecuteVdpDmaFromRam
 	RTS
@@ -19591,10 +19785,11 @@ LoadCaveEnemyTileGraphics:
 	LEA	SpriteGfxData_8287C, A0
 	LEA	Tile_gfx_buffer.w, A2
 	MOVE.w	#$0056, D5
-loc_0001009A:
+; LoadCaveEnemyTileGraphics_Done
+LoadCaveEnemyTileGraphics_Done:
 	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
-	DBF	D5, loc_0001009A
+	DBF	D5, LoadCaveEnemyTileGraphics_Done
 	LEA	DmaCmd_CaveEnemyGfx, A0
 	BSR.w	ExecuteVdpDmaFromRam
 	RTS
@@ -19603,10 +19798,11 @@ LoadCaveItemTileGraphics:
 	LEA	loc_000876DE, A0
 	LEA	Tile_gfx_buffer.w, A2
 	MOVE.w	#$005D, D5
-loc_000100C0:
+; LoadCaveItemTileGraphics_Done
+LoadCaveItemTileGraphics_Done:
 	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
-	DBF	D5, loc_000100C0
+	DBF	D5, LoadCaveItemTileGraphics_Done
 	LEA	DmaCmd_CaveItemGfx, A0
 	BSR.w	ExecuteVdpDmaFromRam
 	RTS
@@ -19615,10 +19811,11 @@ LoadBattlePlayerTileGraphics:
 	LEA	loc_00085BE8, A0
 	LEA	Tile_gfx_buffer.w, A2
 	MOVE.w	#$004F, D5
-loc_000100E6:
+; LoadBattlePlayerTileGraphics_Done
+LoadBattlePlayerTileGraphics_Done:
 	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
-	DBF	D5, loc_000100E6
+	DBF	D5, LoadBattlePlayerTileGraphics_Done
 	LEA	DmaCmd_BattlePlayerGfx, A0
 	BSR.w	ExecuteVdpDmaFromRam
 	RTS
@@ -19630,46 +19827,51 @@ LoadTownTileGfxSet1:
 LoadTownTileGfxToBuffer:
 	LEA	Tile_gfx_buffer.w, A2
 	MOVE.w	#$00B6, D5
-loc_0001010C:
+; LoadTownTileGfxToBuffer_Done
+LoadTownTileGfxToBuffer_Done:
 	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
-	DBF	D5, loc_0001010C
+	DBF	D5, LoadTownTileGfxToBuffer_Done
 	LEA	DmaCmd_TownTileGfxSet1_A, A0
 	BSR.w	ExecuteVdpDmaFromRam
 	LEA	Tile_gfx_buffer.w, A2
 	LEA	loc_0005F262, A0
 	MOVE.w	#$00D9, D5
-loc_00010130:
+; LoadTownTileGfxToBuffer_Done2
+LoadTownTileGfxToBuffer_Done2:
 	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
-	DBF	D5, loc_00010130
+	DBF	D5, LoadTownTileGfxToBuffer_Done2
 	LEA	DmaCmd_TownTileGfxSet1_B, A0
 	BSR.w	ExecuteVdpDmaFromRam
 	LEA	Tile_gfx_buffer.w, A2
 	LEA	SpriteGfxData_607AA, A0
 	MOVE.w	#$006B, D5
-loc_00010154:
+; LoadTownTileGfxToBuffer_Done3
+LoadTownTileGfxToBuffer_Done3:
 	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
-	DBF	D5, loc_00010154
+	DBF	D5, LoadTownTileGfxToBuffer_Done3
 	LEA	DmaCmd_TownNpcGfx, A0
 	BSR.w	ExecuteVdpDmaFromRam
 	LEA	Tile_gfx_buffer.w, A2
 	LEA	loc_00061A76, A0
 	MOVE.w	#$009D, D5
-loc_00010178:
+; LoadTownTileGfxToBuffer_Done4
+LoadTownTileGfxToBuffer_Done4:
 	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
-	DBF	D5, loc_00010178
+	DBF	D5, LoadTownTileGfxToBuffer_Done4
 	LEA	DmaCmd_TownTileGfxSet1_D, A0
 	BSR.w	ExecuteVdpDmaFromRam
 	LEA	Tile_gfx_buffer.w, A2
 	LEA	loc_00061484, A0
 	MOVE.w	#$0029, D5
-loc_0001019C:
+; LoadTownTileGfxToBuffer_Done5
+LoadTownTileGfxToBuffer_Done5:
 	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
-	DBF	D5, loc_0001019C
+	DBF	D5, LoadTownTileGfxToBuffer_Done5
 	LEA	DmaCmd_TownTileGfxSet1_E, A0
 	BSR.w	ExecuteVdpDmaFromRam
 	RTS
@@ -19678,19 +19880,21 @@ LoadMenuTileGraphics:
 	LEA	Tile_gfx_buffer.w, A2
 	LEA	loc_00065EF2, A0
 	MOVE.w	#$00FF, D5
-loc_000101C2:
+; LoadMenuTileGraphics_Done
+LoadMenuTileGraphics_Done:
 	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
-	DBF	D5, loc_000101C2
+	DBF	D5, LoadMenuTileGraphics_Done
 	LEA	DmaCmd_MenuTilesA, A0
 	BSR.w	ExecuteVdpDmaFromRam
 	LEA	Tile_gfx_buffer.w, A2
 	LEA	loc_00067682, A0
 	MOVE.w	#$00FF, D5
-loc_000101E6:
+; LoadMenuTileGraphics_Done2
+LoadMenuTileGraphics_Done2:
 	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
-	DBF	D5, loc_000101E6
+	DBF	D5, LoadMenuTileGraphics_Done2
 	LEA	DmaCmd_MenuTilesB, A0
 	BSR.w	ExecuteVdpDmaFromRam
 	LEA	Tile_gfx_buffer.w, A2
@@ -19700,28 +19904,31 @@ LoadMenuTileGfxSet2:
 ; loc_00010206
 LoadMenuTileGfxSet3:
 	MOVE.w	#$006B, D5
-loc_0001020A:
+; LoadMenuTileGfxSet3_Done
+LoadMenuTileGfxSet3_Done:
 	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
-	DBF	D5, loc_0001020A
+	DBF	D5, LoadMenuTileGfxSet3_Done
 	LEA	DmaCmd_TownNpcGfx, A0
 	BSR.w	ExecuteVdpDmaFromRam
 	LEA	Tile_gfx_buffer.w, A2
 	LEA	loc_0006803C, A0
 	MOVE.w	#$001A, D5
-loc_0001022E:
+; LoadMenuTileGfxSet3_Done2
+LoadMenuTileGfxSet3_Done2:
 	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
-	DBF	D5, loc_0001022E
+	DBF	D5, LoadMenuTileGfxSet3_Done2
 	LEA	DmaCmd_MenuMiscTilesA, A0
 	BSR.w	ExecuteVdpDmaFromRam
 	LEA	Tile_gfx_buffer.w, A2
 	LEA	loc_00067FB4, A0
 	MOVE.w	#7, D5
-loc_00010252:
+; LoadMenuTileGfxSet3_Done3
+LoadMenuTileGfxSet3_Done3:
 	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
-	DBF	D5, loc_00010252
+	DBF	D5, LoadMenuTileGfxSet3_Done3
 	LEA	DmaCmd_MenuMiscTilesB, A0
 	BSR.w	ExecuteVdpDmaFromRam
 	RTS
@@ -19730,37 +19937,41 @@ LoadTitleScreenGraphics:
 	LEA	loc_00062AAA, A0
 	LEA	Tile_gfx_buffer.w, A2
 	MOVE.w	#$004D, D5
-loc_00010278:
+; LoadTitleScreenGraphics_Done
+LoadTitleScreenGraphics_Done:
 	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
-	DBF	D5, loc_00010278
+	DBF	D5, LoadTitleScreenGraphics_Done
 	LEA	DmaCmd_TitleScreenTilesA, A0
 	BSR.w	ExecuteVdpDmaFromRam
 	LEA	loc_000633D8, A0
 	LEA	Tile_gfx_buffer.w, A2
 	MOVE.w	#$006C, D5
-loc_0001029C:
+; LoadTitleScreenGraphics_Done2
+LoadTitleScreenGraphics_Done2:
 	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
-	DBF	D5, loc_0001029C
+	DBF	D5, LoadTitleScreenGraphics_Done2
 	LEA	DmaCmd_TitleScreenTilesB, A0
 	BSR.w	ExecuteVdpDmaFromRam
 	LEA	loc_00063ED8, A0
 	LEA	Tile_gfx_buffer.w, A2
 	MOVE.w	#$0062, D5
-loc_000102C0:
+; LoadTitleScreenGraphics_Done3
+LoadTitleScreenGraphics_Done3:
 	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
-	DBF	D5, loc_000102C0
+	DBF	D5, LoadTitleScreenGraphics_Done3
 	LEA	DmaCmd_TitleScreenTilesC, A0
 	BSR.w	ExecuteVdpDmaFromRam
 	LEA	loc_000648FE, A0
 	LEA	Tile_gfx_buffer.w, A2
 	MOVE.w	#$004F, D5
-loc_000102E4:
+; LoadTitleScreenGraphics_Done4
+LoadTitleScreenGraphics_Done4:
 	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
-	DBF	D5, loc_000102E4
+	DBF	D5, LoadTitleScreenGraphics_Done4
 	LEA	DmaCmd_TitleScreenTilesD, A0
 	BSR.w	ExecuteVdpDmaFromRam
 	LEA	loc_00064FB4, A0
@@ -19768,19 +19979,21 @@ loc_000102E4:
 LoadTitleScreenTileGfx:
 	LEA	Tile_gfx_buffer.w, A2
 	MOVE.w	#$0051, D5
-loc_00010308:
+; LoadTitleScreenTileGfx_Done
+LoadTitleScreenTileGfx_Done:
 	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
-	DBF	D5, loc_00010308
+	DBF	D5, LoadTitleScreenTileGfx_Done
 	LEA	DmaCmd_TitleScreenTilesE, A0
 	BSR.w	ExecuteVdpDmaFromRam
 	LEA	loc_0006582E, A0
 	LEA	Tile_gfx_buffer.w, A2
 	MOVE.w	#5, D5
-loc_0001032C:
+; LoadTitleScreenTileGfx_Done2
+LoadTitleScreenTileGfx_Done2:
 	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
-	DBF	D5, loc_0001032C
+	DBF	D5, LoadTitleScreenTileGfx_Done2
 	LEA	DmaCmd_TitleScreenTilesF, A0
 	BSR.w	ExecuteVdpDmaFromRam
 	RTS
@@ -19789,10 +20002,11 @@ LoadOptionsMenuGraphics:
 	LEA	loc_00068236, A0
 	LEA	Tile_gfx_buffer.w, A2
 	MOVE.w	#$003C, D5
-loc_00010352:
+; LoadOptionsMenuGraphics_Done
+LoadOptionsMenuGraphics_Done:
 	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
-	DBF	D5, loc_00010352
+	DBF	D5, LoadOptionsMenuGraphics_Done
 	LEA	DmaCmd_OptionsMenuTiles, A0
 	BSR.w	ExecuteVdpDmaFromRam
 	RTS
@@ -19862,10 +20076,11 @@ VDP_DMAFill:
 	MOVE.w	Vdp_dma_cmd.w, VDP_control_port
 	MOVE.w	Vdp_dma_cmd_hi.w, VDP_control_port
 	MOVE.b	D5, VDP_data_port
-loc_00010458:
+; VDP_DMAFill_Done
+VDP_DMAFill_Done:
 	MOVE.w	VDP_control_port, D4
 	BTST.l	#1, D4
-	BNE.b	loc_00010458
+	BNE.b	VDP_DMAFill_Done
 	MOVE.w	VDP_Reg1_cache.w, D4
 	BCLR.l	#4, D4
 	MOVE.w	D4, VDP_control_port
@@ -19920,14 +20135,16 @@ DetermineTerrainTileset:
 	CLR.w	D1
 	CLR.w	D2
 	MOVEQ	#2, D7
-loc_000104EE:
+; DetermineTerrainTileset_Done
+DetermineTerrainTileset_Done:
 	MOVEQ	#2, D6
-loc_000104F0:
+; DetermineTerrainTileset_Done2
+DetermineTerrainTileset_Done2:
 	MOVE.b	(A2)+, D0
 	BSR.w	CountTerrainTileType
-	DBF	D6, loc_000104F0
+	DBF	D6, DetermineTerrainTileset_Done2
 	LEA	$2D(A2), A2
-	DBF	D7, loc_000104EE
+	DBF	D7, DetermineTerrainTileset_Done
 	CMP.w	D2, D1
 	BGE.b	DetermineTerrainTileset_Loop
 	MOVE.w	#1, Terrain_tileset_index.w
@@ -19970,7 +20187,8 @@ LoadBattleTilesToVram:
 	ADD.w	D0, D0
 	ADD.w	D0, D0
 	MOVEA.l	(A6,D0.w), A6
-loc_0001054C:
+; LoadBattleTilesToVram_Done
+LoadBattleTilesToVram_Done:
 	MOVE.w	(A6)+, D0
 	BLT.b	LoadBattleTilesToVram_Loop
 	MOVE.w	D0, Vdp_dma_slot_index.w
@@ -19980,7 +20198,7 @@ loc_0001054C:
 	MOVE.w	(A6)+, D5
 	BSR.w	LoadMultipleTilesFromTable
 	BSR.w	ExecuteVdpDmaTransfer
-	BRA.b	loc_0001054C
+	BRA.b	LoadBattleTilesToVram_Done
 ; LoadBattleTilesToVram_Loop
 LoadBattleTilesToVram_Loop:
 	RTS
@@ -19996,10 +20214,11 @@ LoadBattleGraphics:
 	MOVEA.l	(A6)+, A0
 	LEA	Tile_gfx_buffer.w, A2
 	MOVE.w	(A6)+, D5
-loc_00010588:
+; LoadBattleGraphics_Done
+LoadBattleGraphics_Done:
 	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
-	DBF	D5, loc_00010588
+	DBF	D5, LoadBattleGraphics_Done
 	MOVEA.l	(A6), A0
 	BSR.w	ExecuteVdpDmaFromRam
 ; LoadBattleGraphics_Loop
@@ -20018,54 +20237,64 @@ SaveGameToSram:
 	MOVEA.l	Sram_save_slot_ptr.w, A0
 	LEA	Player_name.w, A1
 	MOVE.w	#$000D, D7
-loc_000105CC:
+; SaveGameToSram_Done
+SaveGameToSram_Done:
 	BSR.w	CopyByteToSram
-	DBF	D7, loc_000105CC
+	DBF	D7, SaveGameToSram_Done
 	LEA	Current_town.w, A1
 	MOVE.w	#1, D7
-loc_000105DC:
+; SaveGameToSram_Done2
+SaveGameToSram_Done2:
 	BSR.w	CopyByteToSram
-	DBF	D7, loc_000105DC
+	DBF	D7, SaveGameToSram_Done2
 	LEA	Towns_visited.w, A1
 	MOVE.w	#$000D, D7
-loc_000105EC:
+; SaveGameToSram_Done3
+SaveGameToSram_Done3:
 	BSR.w	CopyByteToSram
-	DBF	D7, loc_000105EC
+	DBF	D7, SaveGameToSram_Done3
 	LEA	Player_position_x_outside_town.w, A1
 	MOVE.w	#7, D7
-loc_000105FC:
+; SaveGameToSram_Done4
+SaveGameToSram_Done4:
 	BSR.w	CopyByteToSram
-	DBF	D7, loc_000105FC
+	DBF	D7, SaveGameToSram_Done4
 	LEA	Possessed_items_length.w, A1
 	MOVE.w	#$0015, D7
-loc_0001060C:
+; SaveGameToSram_Done5
+SaveGameToSram_Done5:
 	BSR.w	CopyByteToSram
-	DBF	D7, loc_0001060C
+	DBF	D7, SaveGameToSram_Done5
 	LEA	Possessed_magics_length.w, A1
 	MOVE.w	#$0015, D7
-loc_0001061C:
+; SaveGameToSram_Done6
+SaveGameToSram_Done6:
 	BSR.w	CopyByteToSram
-	DBF	D7, loc_0001061C
+	DBF	D7, SaveGameToSram_Done6
 	LEA	Possessed_equipment_length.w, A1
 	MOVE.w	#$0015, D7
-loc_0001062C:
+; SaveGameToSram_Done7
+SaveGameToSram_Done7:
 	BSR.w	CopyByteToSram
-	DBF	D7, loc_0001062C
+	DBF	D7, SaveGameToSram_Done7
 	LEA	Equipped_sword.w, A1
 	MOVE.w	#$000F, D7
-loc_0001063C:
+; SaveGameToSram_Done8
+SaveGameToSram_Done8:
 	BSR.w	CopyByteToSram
-	DBF	D7, loc_0001063C
+	DBF	D7, SaveGameToSram_Done8
 	LEA	Player_kims.w, A1
 	MOVE.w	#$002F, D7
-loc_0001064C:
+; SaveGameToSram_Done9
+SaveGameToSram_Done9:
 	BSR.w	CopyByteToSram
-	DBF	D7, loc_0001064C
+	DBF	D7, SaveGameToSram_Done9
 	LEA	Event_triggers_start.w, A1
 	MOVE.w	#$01FF, D7
-loc_0001065C:
+; SaveGameToSram_Done10
+SaveGameToSram_Done10:
 	BSR.w	CopyByteToSram
-	DBF	D7, loc_0001065C
+	DBF	D7, SaveGameToSram_Done10
 	JSR	CalculateChecksumAndBackupSram
 	RTS
 
@@ -20079,7 +20308,8 @@ CalculateChecksumAndBackupSram:
 	MOVEA.l	Sram_save_slot_ptr.w, A0
 	MOVE.w	#$014E, D7
 	MOVEQ	#0, D1
-loc_0001067E:
+; CalculateChecksumAndBackupSram_Done
+CalculateChecksumAndBackupSram_Done:
 	MOVE.b	(A0)+, D2
 	ASL.w	#8, D2
 	LEA	$1(A0), A0
@@ -20091,7 +20321,7 @@ loc_0001067E:
 	EORI.w	#$8810, D1
 ; CalculateChecksumAndBackupSram_Loop
 CalculateChecksumAndBackupSram_Loop:
-	DBF	D7, loc_0001067E
+	DBF	D7, CalculateChecksumAndBackupSram_Done
 	MOVE.w	D1, D0
 	ASR.w	#8, D1
 	MOVE.b	D1, (A0)+
@@ -20100,11 +20330,12 @@ CalculateChecksumAndBackupSram_Loop:
 	MOVEA.l	Sram_save_slot_ptr.w, A1
 	MOVEA.l	Sram_backup_ptr.w, A0
 	MOVE.w	#$029F, D0
-loc_000106B2:
+; CalculateChecksumAndBackupSram_Loop_Done
+CalculateChecksumAndBackupSram_Loop_Done:
 	MOVE.b	(A1)+, (A0)+
 	LEA	$1(A0), A0
 	LEA	$1(A1), A1
-	DBF	D0, loc_000106B2
+	DBF	D0, CalculateChecksumAndBackupSram_Loop_Done
 	RTS
 	
 ; loc_000106C2
@@ -20254,54 +20485,64 @@ FileMenuLoad_Return:
 LoadGameFromSave:
 	LEA	Player_name.w, A1	
 	MOVE.w	#$000D, D7	
-loc_0001085C:
+; LoadGameFromSave_Done
+LoadGameFromSave_Done:
 	BSR.w	CopyByteFromInterleavedSave	
-	DBF	D7, loc_0001085C	
+	DBF	D7, LoadGameFromSave_Done	
 	LEA	Current_town.w, A1	
 	MOVE.w	#1, D7	
-loc_0001086C:
+; LoadGameFromSave_Done2
+LoadGameFromSave_Done2:
 	BSR.w	CopyByteFromInterleavedSave	
-	DBF	D7, loc_0001086C	
+	DBF	D7, LoadGameFromSave_Done2	
 	LEA	Towns_visited.w, A1	
 	MOVE.w	#$000D, D7	
-loc_0001087C:
+; LoadGameFromSave_Done3
+LoadGameFromSave_Done3:
 	BSR.w	CopyByteFromInterleavedSave	
-	DBF	D7, loc_0001087C	
+	DBF	D7, LoadGameFromSave_Done3	
 	LEA	Player_position_x_outside_town.w, A1	
 	MOVE.w	#7, D7	
-loc_0001088C:
+; LoadGameFromSave_Done4
+LoadGameFromSave_Done4:
 	BSR.w	CopyByteFromInterleavedSave	
-	DBF	D7, loc_0001088C	
+	DBF	D7, LoadGameFromSave_Done4	
 	LEA	Possessed_items_length.w, A1	
 	MOVE.w	#$0015, D7	
-loc_0001089C:
+; LoadGameFromSave_Done5
+LoadGameFromSave_Done5:
 	BSR.w	CopyByteFromInterleavedSave	
-	DBF	D7, loc_0001089C	
+	DBF	D7, LoadGameFromSave_Done5	
 	LEA	Possessed_magics_length.w, A1	
 	MOVE.w	#$0015, D7	
-loc_000108AC:
+; LoadGameFromSave_Done6
+LoadGameFromSave_Done6:
 	BSR.w	CopyByteFromInterleavedSave	
-	DBF	D7, loc_000108AC	
+	DBF	D7, LoadGameFromSave_Done6	
 	LEA	Possessed_equipment_length.w, A1	
 	MOVE.w	#$0015, D7	
-loc_000108BC:
+; LoadGameFromSave_Done7
+LoadGameFromSave_Done7:
 	BSR.w	CopyByteFromInterleavedSave	
-	DBF	D7, loc_000108BC	
+	DBF	D7, LoadGameFromSave_Done7	
 	LEA	Equipped_sword.w, A1	
 	MOVE.w	#$000F, D7	
-loc_000108CC:
+; LoadGameFromSave_Done8
+LoadGameFromSave_Done8:
 	BSR.w	CopyByteFromInterleavedSave	
-	DBF	D7, loc_000108CC	
+	DBF	D7, LoadGameFromSave_Done8	
 	LEA	Player_kims.w, A1	
 	MOVE.w	#$002F, D7	
-loc_000108DC:
+; LoadGameFromSave_Done9
+LoadGameFromSave_Done9:
 	BSR.w	CopyByteFromInterleavedSave	
-	DBF	D7, loc_000108DC	
+	DBF	D7, LoadGameFromSave_Done9	
 	LEA	Event_triggers_start.w, A1	
 	MOVE.w	#$01FF, D7	
-loc_000108EC:
+; LoadGameFromSave_Done10
+LoadGameFromSave_Done10:
 	BSR.w	CopyByteFromInterleavedSave	
-	DBF	D7, loc_000108EC	
+	DBF	D7, LoadGameFromSave_Done10	
 	RTS
 	
 ; CopyByteFromInterleavedSave
@@ -20313,7 +20554,8 @@ CopyByteFromInterleavedSave:
 VerifySaveChecksum:
 	MOVE.w	#$014E, D7
 	MOVEQ	#0, D1
-loc_00010904:
+; VerifySaveChecksum_Done
+VerifySaveChecksum_Done:
 	MOVE.b	(A0)+, D2
 	ASL.w	#8, D2
 	LEA	$1(A0), A0
@@ -20325,7 +20567,7 @@ loc_00010904:
 	EORI.w	#$8810, D1
 ; VerifySaveChecksum_Loop
 VerifySaveChecksum_Loop:
-	DBF	D7, loc_00010904
+	DBF	D7, VerifySaveChecksum_Done
 	MOVE.b	(A0)+, D0
 	LEA	$1(A0), A0
 	ASL.w	#8, D0
@@ -20337,11 +20579,12 @@ CopySramBackupToSlot:
 	MOVEA.l	Sram_save_slot_ptr.w, A0	
 	MOVEA.l	Sram_backup_ptr.w, A1	
 	MOVE.w	#$029F, D0	
-loc_0001093A:
+; CopySramBackupToSlot_Done
+CopySramBackupToSlot_Done:
 	MOVE.b	(A1)+, (A0)+	
 	LEA	$1(A0), A0	
 	LEA	$1(A1), A1	
-	DBF	D0, loc_0001093A	
+	DBF	D0, CopySramBackupToSlot_Done	
 	RTS
 	
 ; loc_0001094A
@@ -20497,7 +20740,8 @@ ScriptRender_PortraitTile_Loop5:
 	ADDA.w	D2, A0
 	LEA	$2(A0), A4
 	SUBQ.b	#1, D4
-loc_00010B42:
+; ScriptRender_PortraitTile_Loop5_Done
+ScriptRender_PortraitTile_Loop5_Done:
 	MOVE.b	(A4)+, D5 ; Read next to D5
 	CMPI.b	#2, D5
 	BEQ.b	ScriptRender_PortraitTile_Loop7
@@ -20514,7 +20758,7 @@ ScriptRender_PortraitTile_Loop7:
 	BSR.w	AddPaymentAmount
 ; ScriptRender_PortraitTile_Loop8
 ScriptRender_PortraitTile_Loop8:
-	DBF	D4, loc_00010B42
+	DBF	D4, ScriptRender_PortraitTile_Loop5_Done
 	MOVE.w	#$00A6, D0
 	JSR	QueueSoundEffect
 	BRA.w	ScriptDecode_Done
@@ -20527,10 +20771,11 @@ ScriptRender_PortraitTile_Loop6:
 	ADDA.w	D2, A0
 	LEA	$2(A0), A4
 	SUBQ.b	#1, D4
-loc_00010B90:
+; ScriptRender_PortraitTile_Loop6_Done
+ScriptRender_PortraitTile_Loop6_Done:
 	MOVE.b	(A4)+, D5
 	MOVE.b	#$FF, (A2,D5.w)
-	DBF	D4, loc_00010B90
+	DBF	D4, ScriptRender_PortraitTile_Loop6_Done
 	BRA.w	ScriptDecode_Done
 ; ScriptRender_PortraitTile_Loop3
 ScriptRender_PortraitTile_Loop3:
@@ -20880,7 +21125,8 @@ DrawListTopBorders:
 	ADD.w	D7, D7
 	ADDQ.w	#1, D7
 	MOVEQ	#1, D6
-loc_00011134:
+; DrawListTopBorders_Done
+DrawListTopBorders_Done:
 	LEA	UIBorder_SmallMiddle, A0
 	MOVE.w	#$000F, Window_tilemap_draw_x.w
 	MOVE.w	#2, D0
@@ -20891,7 +21137,7 @@ loc_00011134:
 	MOVE.w	#0, Script_tile_attrs.w
 	BSR.w	RenderTextToTilemap
 	ADDQ.w	#1, D6
-	DBF	D7, loc_00011134
+	DBF	D7, DrawListTopBorders_Done
 	RTS
 	
 DrawListBottomBorder:
@@ -20933,7 +21179,8 @@ DrawShopItemListWindow:
 	MOVEA.l	(A4,D0.w), A4
 	MOVE.w	Shop_item_count.w, D7
 	SUBQ.w	#1, D7
-loc_00011204:
+; DrawShopItemListWindow_Done
+DrawShopItemListWindow_Done:
 	MOVE.w	(A3)+, D4
 	ANDI.w	#$00FF, D4
 	ADD.w	D4, D4
@@ -20941,7 +21188,7 @@ loc_00011204:
 	MOVEA.l	(A4,D4.w), A0
 	BSR.w	RenderTextToWindow
 	ADDQ.w	#2, Window_text_y.w
-	DBF	D7, loc_00011204
+	DBF	D7, DrawShopItemListWindow_Done
 	MOVE.w	#$0012, Window_text_x.w
 	MOVE.w	#2, Window_text_y.w
 	LEA	ShopPricesByTownAndType, A3
@@ -20954,7 +21201,8 @@ loc_00011204:
 	MOVEA.l	(A3,D0.w), A3
 	CLR.w	Shop_item_index.w
 	MOVE.w	#0, D3
-loc_0001124C:
+; DrawShopItemListWindow_Done2
+DrawShopItemListWindow_Done2:
 	MOVE.l	(A3)+, D2
 	BSR.w	FormatLongNumberToText
 	BSR.w	RenderFormattedTextToWindow
@@ -20962,7 +21210,7 @@ loc_0001124C:
 	ADDQ.w	#1, Shop_item_index.w
 	MOVE.w	Shop_item_index.w, D0
 	CMP.w	Shop_item_count.w, D0
-	BLT.b	loc_0001124C
+	BLT.b	DrawShopItemListWindow_Done2
 	CLR.w	Window_draw_row.w
 	MOVE.b	#$FF, Window_tilemap_draw_active.w
 	RTS
@@ -20992,7 +21240,8 @@ DrawShopSellListWindow:
 	MOVEA.l	(A4,D0.w), A4
 	MOVE.w	Shop_item_count.w, D7
 	SUBQ.w	#1, D7
-loc_000112DE:
+; DrawShopSellListWindow_Done
+DrawShopSellListWindow_Done:
 	MOVE.w	(A3)+, D4
 	ANDI.w	#$00FF, D4
 	ADD.w	D4, D4
@@ -21000,7 +21249,7 @@ loc_000112DE:
 	MOVEA.l	(A4,D4.w), A0
 	BSR.w	RenderTextToWindow
 	ADDQ.w	#2, Window_text_y.w
-	DBF	D7, loc_000112DE
+	DBF	D7, DrawShopSellListWindow_Done
 	CLR.w	Window_draw_row.w
 	MOVE.b	#$FF, Window_tilemap_draw_active.w
 	RTS
@@ -21024,7 +21273,8 @@ DrawTownListWindow:
 	LEA	$1C(A4), A4
 	LEA	$7(A6), A6
 	MOVE.w	#6, D7
-loc_00011364:
+; DrawTownListWindow_Done
+DrawTownListWindow_Done:
 	MOVEA.l	(A4)+, A0
 	MOVE.b	(A6)+, D0
 	BEQ.b	DrawTownListWindow_Loop
@@ -21032,13 +21282,14 @@ loc_00011364:
 ; DrawTownListWindow_Loop
 DrawTownListWindow_Loop:
 	ADDQ.w	#2, Window_text_y.w
-	DBF	D7, loc_00011364
+	DBF	D7, DrawTownListWindow_Done
 	MOVE.w	#2, Window_text_x.w
 	MOVE.w	#2, Window_text_y.w
 	LEA	TownNames, A4
 	LEA	Towns_visited.w, A6
 	MOVE.w	#6, D7
-loc_00011390:
+; DrawTownListWindow_Loop_Done
+DrawTownListWindow_Loop_Done:
 	MOVEA.l	(A4)+, A0
 	MOVE.b	(A6)+, D0
 	BEQ.b	DrawTownListWindow_Loop2
@@ -21046,7 +21297,7 @@ loc_00011390:
 ; DrawTownListWindow_Loop2
 DrawTownListWindow_Loop2:
 	ADDQ.w	#2, Window_text_y.w
-	DBF	D7, loc_00011390
+	DBF	D7, DrawTownListWindow_Loop_Done
 	CLR.w	Window_draw_row.w
 	MOVE.b	#$FF, Window_tilemap_draw_active.w
 	RTS
@@ -21054,9 +21305,11 @@ DrawTownListWindow_Loop2:
 RenderTextToTilemap:
 	JSR	GetScrollOffsetInTiles
 	CLR.w	D3
-loc_000113B6:
+; RenderTextToTilemap_Done
+RenderTextToTilemap_Done:
 	CLR.w	D2
-loc_000113B8:
+; RenderTextToTilemap_Done2
+RenderTextToTilemap_Done2:
 	MOVE.w	D2, D4
 	MOVE.w	D3, D5
 	ADD.w	D0, D4
@@ -21082,10 +21335,10 @@ loc_000113B8:
 	ANDI	#$F8FF, SR
 	ADDQ.w	#1, D2
 	CMP.w	Window_tilemap_draw_width.w, D2
-	BLE.b	loc_000113B8
+	BLE.b	RenderTextToTilemap_Done2
 	ADDQ.w	#1, D3
 	CMP.w	Window_tilemap_draw_height.w, D3
-	BLE.b	loc_000113B6
+	BLE.b	RenderTextToTilemap_Done
 	RTS
 	
 loc_0001141A:
@@ -21094,7 +21347,8 @@ LongToDecimalString:
 	MOVEQ	#0, D7
 	ROL.l	#8, D2
 	MOVEQ	#5, D6
-loc_00011426:
+; LongToDecimalString_Done
+LongToDecimalString_Done:
 	ROL.l	#4, D2
 	MOVE.l	D2, D4
 	ANDI.l	#$0000000F, D4
@@ -21120,7 +21374,7 @@ LongToDecimalString_EncodeDigit_Loop2:
 	MOVE.b	D4, (A0)+
 ; LongToDecimalString_EncodeDigit_Loop3
 LongToDecimalString_EncodeDigit_Loop3:
-	DBF	D6, loc_00011426
+	DBF	D6, LongToDecimalString_Done
 	RTS
 	
 FormatLongNumberToText:
@@ -21136,7 +21390,8 @@ loc_0001146A:
 ConvertNumberToTextDigits:
 	MOVEQ	#0, D7
 	MOVEQ	#3, D6
-loc_00011474:
+; ConvertNumberToTextDigits_Done
+ConvertNumberToTextDigits_Done:
 	ROL.w	#4, D2
 	MOVE.w	D2, D4
 	ANDI.w	#$000F, D4
@@ -21162,13 +21417,14 @@ ConvertNumberToTextDigits_EncodeDigit_Loop2:
 	MOVE.b	D4, (A0)+
 ; ConvertNumberToTextDigits_EncodeDigit_Loop3
 ConvertNumberToTextDigits_EncodeDigit_Loop3:
-	DBF	D6, loc_00011474
+	DBF	D6, ConvertNumberToTextDigits_Done
 	RTS
 	
 WordToDecimalString_NoPad:
 	MOVEQ	#0, D7
 	MOVEQ	#3, D6
-loc_000114A8:
+; WordToDecimalString_NoPad_Done
+WordToDecimalString_NoPad_Done:
 	ROL.w	#4, D2
 	MOVE.w	D2, D4
 	ANDI.w	#$000F, D4
@@ -21194,7 +21450,7 @@ WordToDecimalString_NoPad_EncodeDigit_Loop2:
 	MOVE.b	D4, (A0)+	
 ; WordToDecimalString_NoPad_EncodeDigit_Loop3
 WordToDecimalString_NoPad_EncodeDigit_Loop3:
-	DBF	D6, loc_000114A8
+	DBF	D6, WordToDecimalString_NoPad_Done
 	RTS
 	
 ; loc_000114D8
@@ -21241,9 +21497,10 @@ AddExperiencePoints:
 	LEA	Transaction_amount_end.w, A0
 	LEA	Player_next_level_experience.w, A1
 	MOVEQ	#3, D1
-loc_00011558:
+; AddExperiencePoints_Done
+AddExperiencePoints_Done:
 	ABCD	-(A0), -(A1)
-	DBF	D1, loc_00011558
+	DBF	D1, AddExperiencePoints_Done
 	CLR.l	Transaction_amount.w
 	CMPI.l	#SUP_PLAYER_EXP, Player_experience.w
 	BLT.b	AddExperiencePoints_Loop
@@ -21256,9 +21513,10 @@ AddPaymentAmount:
 	LEA	Transaction_amount_end.w, A0
 	LEA	(Player_kims+4).w, A1
 	MOVEQ	#3, D1
-loc_00011580:
+; AddPaymentAmount_Done
+AddPaymentAmount_Done:
 	ABCD	-(A0), -(A1)
-	DBF	D1, loc_00011580
+	DBF	D1, AddPaymentAmount_Done
 	CLR.l	Transaction_amount.w
 	CMPI.l	#SUP_PLAYER_KIMS, Player_kims.w
 	BLT.b	AddPaymentAmount_Loop
@@ -21272,9 +21530,10 @@ DeductPaymentAmount:
 	LEA	Transaction_amount_end.w, A0
 	LEA	(Player_kims+4).w, A1
 	MOVEQ	#3, D1
-loc_000115A8:
+; DeductPaymentAmount_Done
+DeductPaymentAmount_Done:
 	SBCD	-(A0), -(A1)
-	DBF	D1, loc_000115A8
+	DBF	D1, DeductPaymentAmount_Done
 	CLR.l	Transaction_amount.w
 	TST.l	Player_kims.w
 	BGE.b	DeductPaymentAmount_Loop
@@ -21287,9 +21546,10 @@ loc_000115BE:					; unreferenced dead code
 	LEA	Transaction_item_quantity.w, A0
 	LEA	Player_mhp.w, A1
 	MOVEQ	#1, D1
-loc_000115C8:
+; DeductPaymentAmount_Loop_Done
+DeductPaymentAmount_Loop_Done:
 	SBCD	-(A0), -(A1)
-	DBF	D1, loc_000115C8
+	DBF	D1, DeductPaymentAmount_Loop_Done
 	CLR.l	Transaction_amount.w
 	TST.w	Player_hp.w
 	BGE.b	DeductPaymentAmount_Loop2
@@ -21413,10 +21673,11 @@ LoadSavegameNameToBuffer:
 ; LoadSavegameName_Copy
 LoadSavegameName_Copy:
 	MOVE.w	#$000D, D7
-loc_00011786:
+; LoadSavegameName_Copy_Done
+LoadSavegameName_Copy_Done:
 	MOVE.b	(A0)+, (A1)+
 	LEA	$1(A0), A0
-	DBF	D7, loc_00011786
+	DBF	D7, LoadSavegameName_Copy_Done
 	MOVE.w	#$FFFF, (A1)
 	BSR.b	ValidateSavegameName
 	RTS
@@ -21731,7 +21992,8 @@ DrawGearCombatWindow:
 	LEA	EquipmentNames, A4
 	MOVE.w	Possessed_equipment_length.w, D7
 	SUBQ.w	#1, D7
-loc_00011C0E:
+; DrawGearCombatWindow_Done
+DrawGearCombatWindow_Done:
 	MOVE.w	(A3)+, D4
 	ANDI.w	#$00FF, D4
 	ADD.w	D4, D4
@@ -21739,7 +22001,7 @@ loc_00011C0E:
 	MOVEA.l	(A4,D4.w), A0
 	BSR.w	RenderTextToWindow
 	ADDQ.w	#2, Window_text_y.w
-	DBF	D7, loc_00011C0E
+	DBF	D7, DrawGearCombatWindow_Done
 	MOVE.w	#$0014, Window_text_x.w
 	MOVE.w	#4, Window_text_y.w
 	LEA	Possessed_equipment_list.w, A2
@@ -21769,7 +22031,8 @@ DrawEquippedMarkers:
 	MOVE.w	Window_height.w, D7
 	SUBQ.w	#1, D7
 	CLR.w	D3
-loc_00011C94:
+; DrawEquippedMarkers_Done
+DrawEquippedMarkers_Done:
 	MOVE.w	(A2)+, D4
 	ANDI.w	#$8000, D4
 	BEQ.b	DrawEquippedMarkers_Loop
@@ -21784,7 +22047,7 @@ loc_00011C94:
 ; DrawEquippedMarkers_Loop
 DrawEquippedMarkers_Loop:
 	ADDQ.w	#2, Window_text_y.w
-	DBF	D7, loc_00011C94
+	DBF	D7, DrawEquippedMarkers_Done
 	RTS
 	
 DrawMagicListWindow:
@@ -21807,7 +22070,8 @@ DrawMagicListWindow:
 	LEA	MagicNames, A4
 	MOVE.w	Possessed_magics_length.w, D7
 	SUBQ.w	#1, D7
-loc_00011D18:
+; DrawMagicListWindow_Done
+DrawMagicListWindow_Done:
 	MOVE.w	(A3)+, D4
 	ANDI.w	#$00FF, D4
 	ADD.w	D4, D4
@@ -21815,7 +22079,7 @@ loc_00011D18:
 	MOVEA.l	(A4,D4.w), A0
 	BSR.w	RenderTextToWindow
 	ADDQ.w	#2, Window_text_y.w
-	DBF	D7, loc_00011D18
+	DBF	D7, DrawMagicListWindow_Done
 	MOVE.w	#$0021, Window_text_x.w
 	MOVE.w	#3, Window_text_y.w
 	LEA	Possessed_magics_list.w, A2
@@ -21861,7 +22125,8 @@ DrawItemsListWindow:
 	LEA	ItemNames, A4
 	MOVE.w	Possessed_items_length.w, D7
 	SUBQ.w	#1, D7
-loc_00011DEC:
+; DrawItemsListWindow_Done
+DrawItemsListWindow_Done:
 	MOVE.w	(A3)+, D4
 	ANDI.w	#$00FF, D4
 	ADD.w	D4, D4
@@ -21869,7 +22134,7 @@ loc_00011DEC:
 	MOVEA.l	(A4,D4.w), A0
 	BSR.w	RenderTextToWindow
 	ADDQ.w	#2, Window_text_y.w
-	DBF	D7, loc_00011DEC
+	DBF	D7, DrawItemsListWindow_Done
 	CLR.w	Window_draw_row.w
 	MOVE.b	#$FF, Window_tilemap_draw_active.w
 	RTS
@@ -21893,13 +22158,14 @@ DrawRingsListWindow:
 	LEA	Rings_collected.w, A0
 	CLR.w	D0
 	MOVE.w	#7, D7
-loc_00011E5C:
+; DrawRingsListWindow_Done
+DrawRingsListWindow_Done:
 	TST.b	(A0)+
 	BEQ.b	DrawRingsListWindow_Loop
 	ADDQ.w	#1, D0
 ; DrawRingsListWindow_Loop
 DrawRingsListWindow_Loop:
-	DBF	D7, loc_00011E5C
+	DBF	D7, DrawRingsListWindow_Done
 	MOVE.w	D0, Possessed_rings_count.w
 	MOVE.w	#9, Window_tilemap_x.w
 	MOVE.w	#2, Window_tilemap_y.w
@@ -22152,7 +22418,8 @@ DrawWindowRowFromBuffer:
 	ANDI.w	#$003F, D1
 	ASL.w	#7, D1
 	CLR.w	D2
-loc_000121E2:
+; DrawWindowRowFromBuffer_Done
+DrawWindowRowFromBuffer_Done:
 	MOVE.w	D2, D4
 	ADD.w	D0, D4
 	MOVE.w	D1, D5
@@ -22176,7 +22443,7 @@ DrawWindowTilemap_WriteVDP:
 	MOVE.w	D4, VDP_data_port
 	ADDQ.w	#1, D2
 	CMP.w	Window_tilemap_draw_width.w, D2
-	BLE.b	loc_000121E2
+	BLE.b	DrawWindowRowFromBuffer_Done
 	BRA.b	DrawWindowTilemap_WriteVDP_Loop2
 ; DrawWindowTilemap_WriteVDP_Loop
 DrawWindowTilemap_WriteVDP_Loop:
@@ -22188,7 +22455,8 @@ DrawWindowTilemap_WriteVDP_Loop2:
 	ANDI.w	#$003F, D1
 	ASL.w	#7, D1
 	CLR.w	D2
-loc_00012240:
+; DrawWindowTilemap_WriteVDP_Loop2_Done
+DrawWindowTilemap_WriteVDP_Loop2_Done:
 	MOVE.w	D2, D4
 	ADD.w	D0, D4
 	MOVE.w	D1, D5
@@ -22203,7 +22471,7 @@ loc_00012240:
 	MOVE.w	(A0)+, VDP_data_port
 	ADDQ.w	#1, D2
 	CMP.w	Window_tilemap_draw_width.w, D2
-	BLE.b	loc_00012240
+	BLE.b	DrawWindowTilemap_WriteVDP_Loop2_Done
 	ADDQ.w	#1, Window_text_row.w
 	RTS
 	
@@ -22448,9 +22716,11 @@ SaveReadyEquipmentMenuToBuffer:
 ReadWindowToBuffer:
 	JSR	GetScrollOffsetInTiles
 	CLR.w	D3
-loc_000125E2:
+; ReadWindowToBuffer_Done
+ReadWindowToBuffer_Done:
 	CLR.w	D2
-loc_000125E4:
+; ReadWindowToBuffer_Done2
+ReadWindowToBuffer_Done2:
 	BSR.w	CalculateVDPAddress
 	ADDQ.l	#3, D5
 	ORI	#$0700, SR
@@ -22459,10 +22729,10 @@ loc_000125E4:
 	ANDI	#$F8FF, SR
 	ADDQ.w	#1, D2
 	CMP.w	Window_tile_width.w, D2
-	BLE.b	loc_000125E4
+	BLE.b	ReadWindowToBuffer_Done2
 	ADDQ.w	#1, D3
 	CMP.w	Window_tile_height.w, D3
-	BLE.b	loc_000125E2
+	BLE.b	ReadWindowToBuffer_Done
 	RTS
 	
 ; DrawStatusHudWindow
@@ -22582,9 +22852,11 @@ RestoreLeftMenuFromBuffer:
 DrawWindowFromBuffer:
 	JSR	GetScrollOffsetInTiles
 	CLR.w	D3
-loc_00012790:
+; DrawWindowFromBuffer_Done
+DrawWindowFromBuffer_Done:
 	CLR.w	D2
-loc_00012792:
+; DrawWindowFromBuffer_Done2
+DrawWindowFromBuffer_Done2:
 	BSR.w	CalculateVDPAddress
 	ADDI.l	#$40000003, D5
 	ORI	#$0700, SR
@@ -22593,10 +22865,10 @@ loc_00012792:
 	ANDI	#$F8FF, SR
 	ADDQ.w	#1, D2
 	CMP.w	Window_tile_width.w, D2
-	BLE.b	loc_00012792
+	BLE.b	DrawWindowFromBuffer_Done2
 	ADDQ.w	#1, D3
 	CMP.w	Window_tile_height.w, D3
-	BLE.b	loc_00012790
+	BLE.b	DrawWindowFromBuffer_Done
 	RTS
 	
 CalculateVDPAddress:
@@ -22800,7 +23072,8 @@ DrawShopItemNames:
 	SUBQ.w	#1, D7
 loc_000129A2:
 	CLR.w	D3
-loc_000129A4:
+; DrawShopItemNames_Done
+DrawShopItemNames_Done:
 	MOVE.w	(A2)+, D4
 	ANDI.w	#$00FF, D4
 	ADD.w	D4, D4
@@ -22841,7 +23114,7 @@ DrawWindowChar_WriteVDP:
 DrawWindowChar_WriteVDP_Loop:
 	ADDQ.w	#2, D3
 	CMP.w	Window_tilemap_draw_height.w, D3
-	DBF	D7, loc_000129A4
+	DBF	D7, DrawShopItemNames_Done
 	RTS
 ; loc_00012A20
 DrawWindowChar_Special:
@@ -22861,12 +23134,13 @@ loc_00012A26:					; unreferenced dead code
 	MOVE.w	Shop_item_count.w, D5
 	SUBQ.w	#1, D5
 	MOVE.w	#$0000, D3
-loc_00012A56:
+; DrawWindowChar_Special_Done
+DrawWindowChar_Special_Done:
 	MOVE.l	(A1)+, D2
 	BSR.w	LongToDecimalString
 	MOVE.w	#$0012, Window_number_cursor_x.w
 	ADDQ.w	#2, Window_number_cursor_y.w
-	DBF	D5, loc_00012A56
+	DBF	D5, DrawWindowChar_Special_Done
 	RTS
 ; CopyStringUntilFF
 ; Copy string from A0 to A1 until $FF terminator
@@ -22942,7 +23216,8 @@ DrawReadyEquipmentList:
 DrawListItems:
 	SUBQ.w	#1, D7
 	CLR.w	D3
-loc_00012B60:
+; DrawListItems_Done
+DrawListItems_Done:
 	MOVE.w	(A2)+, D4
 	ANDI.w	#$00FF, D4
 	ADD.w	D4, D4
@@ -22984,7 +23259,7 @@ DrawWindowChar2_WriteVDP:
 ; DrawWindowChar2_WriteVDP_Loop
 DrawWindowChar2_WriteVDP_Loop:
 	ADDQ.w	#2, D3
-	DBF	D7, loc_00012B60
+	DBF	D7, DrawListItems_Done
 	RTS
 	
 ; loc_00012BE0
@@ -23021,7 +23296,8 @@ DrawSpecialCharToVRAM:
 DrawInventorySelectionMarkers:
 	SUBQ.w	#1, D7
 	CLR.w	D3
-loc_00012C42:
+; DrawInventorySelectionMarkers_Done
+DrawInventorySelectionMarkers_Done:
 	MOVE.w	(A2)+, D4
 	ANDI.w	#$8000, D4
 	BEQ.w	DrawInventorySelectionMarkers_Loop
@@ -23047,7 +23323,7 @@ loc_00012C42:
 ; DrawInventorySelectionMarkers_Loop
 DrawInventorySelectionMarkers_Loop:
 	ADDQ.w	#2, D3
-	DBF	D7, loc_00012C42
+	DBF	D7, DrawInventorySelectionMarkers_Done
 	RTS
 
 ; DrawWindowBorder
@@ -23058,10 +23334,12 @@ DrawWindowBorder:
 	LEA	Window_tilemap_buffer.w, A0
 	MOVE.w	Window_height.w, D7
 	CLR.w	D1
-loc_00012CA4:
+; DrawWindowBorder_Done
+DrawWindowBorder_Done:
 	MOVE.w	Window_width.w, D6
 	CLR.w	D0
-loc_00012CAA:
+; DrawWindowBorder_Done2
+DrawWindowBorder_Done2:
 	MOVE.b	#$E0, D2
 	TST.w	D1
 	BEQ.b	DrawWindowBorder_Loop
@@ -23085,9 +23363,9 @@ DrawWindowBorder_Loop4:
 DrawWindowBorder_Loop3:
 	MOVE.b	D2, (A0)+
 	ADDQ.w	#1, D0
-	DBF	D6, loc_00012CAA
+	DBF	D6, DrawWindowBorder_Done2
 	ADDQ.w	#1, D1
-	DBF	D7, loc_00012CA4
+	DBF	D7, DrawWindowBorder_Done
 	RTS
 
 RenderTextToWindowAtPosition:
@@ -23108,7 +23386,8 @@ RenderTextToWindow:
 RenderTextAtOffset:
 	LEA	Window_tilemap_buffer.w, A1
 	LEA	(A1,D0.w), A1
-loc_00012CFE:
+; RenderTextAtOffset_Done
+RenderTextAtOffset_Done:
 	LEA	(A1), A2
 ; loc_00012D00
 WindowTextDecode_Next:
@@ -23135,7 +23414,7 @@ WindowTextDecode_Next_Loop:
 	ADDQ.w	#1, D0
 	ADD.w	D0, D0
 	LEA	(A1,D0.w), A1
-	BRA.b	loc_00012CFE
+	BRA.b	RenderTextAtOffset_Done
 ; loc_00012D3C
 WindowTextDecode_Special:
 	MOVE.w	Window_width.w, D0	
@@ -23151,9 +23430,11 @@ DrawWindowTilemapFull:
 	LEA	Window_tilemap_buffer.w, A0
 	JSR	GetScrollOffsetInTiles
 	CLR.w	D3
-loc_00012D58:
+; DrawWindowTilemapFull_Done
+DrawWindowTilemapFull_Done:
 	CLR.w	D2
-loc_00012D5A:
+; DrawWindowTilemapFull_Done2
+DrawWindowTilemapFull_Done2:
 	MOVE.w	D2, D4
 	MOVE.w	D3, D5
 	ADD.w	D0, D4
@@ -23177,10 +23458,10 @@ loc_00012D5A:
 	MOVE.w	D4, VDP_data_port
 	ADDQ.w	#1, D2
 	CMP.w	Window_width.w, D2
-	BLE.b	loc_00012D5A
+	BLE.b	DrawWindowTilemapFull_Done2
 	ADDQ.w	#1, D3
 	CMP.w	Window_height.w, D3
-	BLE.b	loc_00012D58
+	BLE.b	DrawWindowTilemapFull_Done
 	CLR.b	Window_tilemap_draw_pending.w
 	RTS
 
@@ -23222,7 +23503,8 @@ DrawWindowTilemapRow_Loop:
 
 WriteWindowRowToVDP:
 	CLR.w	D2
-loc_00012E28:
+; WriteWindowRowToVDP_Done
+WriteWindowRowToVDP_Done:
 	MOVE.w	D2, D4
 	ADD.w	D0, D4
 	MOVE.w	D1, D5
@@ -23240,7 +23522,7 @@ loc_00012E28:
 	MOVE.w	D4, VDP_data_port
 	ADDQ.w	#1, D2
 	CMP.w	Window_width.w, D2
-	BLE.b	loc_00012E28
+	BLE.b	WriteWindowRowToVDP_Done
 	RTS
 
 ; loc_00012E68
@@ -23249,17 +23531,19 @@ LoadLevelUpBannerTiles:
 	MOVE.l	#$420A0003, D5
 	ORI	#$0700, SR
 	MOVE.w	#2, D7
-loc_00012E7C:
+; LoadLevelUpBannerTiles_Done
+LoadLevelUpBannerTiles_Done:
 	MOVE.l	D5, VDP_control_port
 	MOVE.w	#$000B, D6
-loc_00012E86:
+; LoadLevelUpBannerTiles_Done2
+LoadLevelUpBannerTiles_Done2:
 	CLR.w	D0
 	MOVE.b	(A0)+, D0
 	ADDI.w	#$84C0, D0
 	MOVE.w	D0, VDP_data_port
-	DBF	D6, loc_00012E86
+	DBF	D6, LoadLevelUpBannerTiles_Done2
 	ADDI.l	#$00800000, D5
-	DBF	D7, loc_00012E7C
+	DBF	D7, LoadLevelUpBannerTiles_Done
 	ANDI	#$F8FF, SR
 	RTS
 
@@ -23319,14 +23603,16 @@ DisplayCantUseMessage:
 	ORI	#$0700, SR
 	MOVE.l	#$6CB60003, VDP_control_port
 	MOVE.w	#9, D7
-loc_00012FF8:
+; DisplayCantUseMessage_Done
+DisplayCantUseMessage_Done:
 	MOVE.w	#$84E0, VDP_data_port
-	DBF	D7, loc_00012FF8
+	DBF	D7, DisplayCantUseMessage_Done
 	MOVE.l	#$6D360003, VDP_control_port
 	MOVE.w	#9, D7
-loc_00013012:
+; DisplayCantUseMessage_Done2
+DisplayCantUseMessage_Done2:
 	MOVE.w	#$84E0, VDP_data_port
-	DBF	D7, loc_00013012
+	DBF	D7, DisplayCantUseMessage_Done2
 	MOVE.l	#$6D360003, D5
 	BRA.w	DisplayReadiedMagicName_Loop
 DisplayReadiedMagicName:
@@ -23346,14 +23632,16 @@ DisplayReadiedMagicName_Loop3:
 	ORI	#$0700, SR
 	MOVE.l	#$4CB60003, VDP_control_port
 	MOVE.w	#9, D7
-loc_0001305C:
+; DisplayReadiedMagicName_Loop3_Done
+DisplayReadiedMagicName_Loop3_Done:
 	MOVE.w	#$84E0, VDP_data_port
-	DBF	D7, loc_0001305C
+	DBF	D7, DisplayReadiedMagicName_Loop3_Done
 	MOVE.l	#$4D360003, VDP_control_port
 	MOVE.w	#9, D7
-loc_00013076:
+; DisplayReadiedMagicName_Loop3_Done2
+DisplayReadiedMagicName_Loop3_Done2:
 	MOVE.w	#$84E0, VDP_data_port
-	DBF	D7, loc_00013076
+	DBF	D7, DisplayReadiedMagicName_Loop3_Done2
 	MOVE.l	#$4D360003, D5
 ; DisplayReadiedMagicName_Loop
 DisplayReadiedMagicName_Loop:
@@ -23496,7 +23784,8 @@ LoadPalettesFromTable:
 	LEA	Palette_line_0_index.w, A0
 	LEA	PaletteDataTable, A2
 	MOVEQ	#3, D2
-loc_00013286:
+; LoadPalettesFromTable_Done
+LoadPalettesFromTable_Done:
 	MOVEQ	#0, D1
 	MOVE.w	(A0)+, D1
 	ASL.w	#5, D1
@@ -23509,7 +23798,7 @@ loc_00013286:
 	MOVE.l	(A3)+, (A1)+
 	MOVE.l	(A3)+, (A1)+
 	MOVE.l	(A3)+, (A1)+
-	DBF	D2, loc_00013286
+	DBF	D2, LoadPalettesFromTable_Done
 	BSET.b	#7, Palette_buffer_dirty.w
 ; loc_000132AA
 LoadPalettesFromTable_Return:
@@ -23573,7 +23862,8 @@ FadeOutPalette_WriteVDP:
 
 DecrementPaletteRGBValues:
 	MOVEQ	#$0000000F, D2
-loc_00013382:
+; DecrementPaletteRGBValues_Done
+DecrementPaletteRGBValues_Done:
 	MOVE.w	(A1), D0
 	BEQ.w	BuildFadeTable_Store
 	MOVE.w	D0, D1
@@ -23595,7 +23885,7 @@ DecrementPaletteRGBValues_Loop2:
 ; loc_000133AA
 BuildFadeTable_Store:
 	MOVE.w	D0, (A1)+
-	DBF	D2, loc_00013382
+	DBF	D2, DecrementPaletteRGBValues_Done
 	RTS
 
 ; BuildFadeTable_Store_Loop2
@@ -23666,9 +23956,10 @@ BuildFadeTable_Store_Loop5:
 ; loc_000134AE
 FadeInPalette_WriteVDP:
 	MOVE.w	#$0100, Z80_bus_request
-loc_000134B6:
+; FadeInPalette_WriteVDP_Done
+FadeInPalette_WriteVDP_Done:
 	BTST.b	#0, Z80_bus_request
-	BNE.b	loc_000134B6
+	BNE.b	FadeInPalette_WriteVDP_Done
 	JSR	InitVdpDmaRamRoutine
 	MOVE.w	#2, D4
 	ORI.w	#$8F00, D4
@@ -23692,7 +23983,8 @@ ShiftPaletteTowardsTarget:
 	ASL.w	#5, D1
 	LEA	(A3,D1.w), A3
 	MOVEQ	#$0000000F, D7
-loc_00013530:
+; ShiftPaletteTowardsTarget_Done
+ShiftPaletteTowardsTarget_Done:
 	MOVE.w	(A3)+, D4
 	MOVE.w	(A1), D0
 	CMP.w	D4, D0
@@ -23725,7 +24017,7 @@ ShiftPaletteTowardsTarget_Loop2:
 ; loc_00013574
 BuildFadeInTable_Store:
 	MOVE.w	D0, (A1)+
-	DBF	D7, loc_00013530
+	DBF	D7, ShiftPaletteTowardsTarget_Done
 	RTS
 
 ; BuildFadeInTable_Store_Loop2
@@ -23754,9 +24046,10 @@ BuildFadeInTable_Store_Loop6:
 	CLR.b	Fade_in_lines_mask.w
 	CLR.w	Palette_fade_in_step.w
 	MOVE.w	#$0100, Z80_bus_request
-loc_000135C0:
+; BuildFadeInTable_Store_Loop6_Done
+BuildFadeInTable_Store_Loop6_Done:
 	BTST.b	#0, Z80_bus_request
-	BNE.b	loc_000135C0
+	BNE.b	BuildFadeInTable_Store_Loop6_Done
 	JSR	InitVdpDmaRamRoutine
 	MOVE.w	#2, D4
 	ORI.w	#$8F00, D4
@@ -23837,9 +24130,10 @@ BuildFadeInTable_Store_Loop13:
 ; loc_000136C4
 FadePaletteLine3_WriteVDP:
 	MOVE.w	#$0100, Z80_bus_request
-loc_000136CC:
+; FadePaletteLine3_WriteVDP_Done
+FadePaletteLine3_WriteVDP_Done:
 	BTST.b	#0, Z80_bus_request
-	BNE.b	loc_000136CC
+	BNE.b	FadePaletteLine3_WriteVDP_Done
 	JSR	InitVdpDmaRamRoutine
 	MOVE.w	#2, D4
 	ORI.w	#$8F00, D4
@@ -23877,7 +24171,8 @@ FadePaletteTowardsTarget:
 	ASL.w	#5, D1
 	LEA	(A3,D1.w), A3
 	MOVEQ	#$0000000F, D7
-loc_00013764:
+; FadePaletteTowardsTarget_Done
+FadePaletteTowardsTarget_Done:
 	MOVE.w	(A3)+, D4
 	MOVE.w	(A1), D0
 	CMP.w	D4, D0
@@ -23925,7 +24220,7 @@ ShiftColorBlueComponent_Loop:
 ; loc_000137BE
 FadePaletteTowardsTarget_NextEntry:
 	MOVE.w	D0, (A1)+
-	DBF	D7, loc_00013764
+	DBF	D7, FadePaletteTowardsTarget_Done
 	RTS
 
 ; FadePaletteTowardsTarget_NextEntry_Loop
@@ -23954,9 +24249,10 @@ FadePaletteTowardsTarget_NextEntry_Loop5:
 	CLR.b	Palette_fade_in_mask.w
 	CLR.w	Palette_fade_in_step_counter.w
 	MOVE.w	#$0100, Z80_bus_request
-loc_0001380A:
+; FadePaletteTowardsTarget_NextEntry_Loop5_Done
+FadePaletteTowardsTarget_NextEntry_Loop5_Done:
 	BTST.b	#0, Z80_bus_request
-	BNE.b	loc_0001380A
+	BNE.b	FadePaletteTowardsTarget_NextEntry_Loop5_Done
 	JSR	InitVdpDmaRamRoutine
 	MOVE.w	#2, D4
 	ORI.w	#$8F00, D4
@@ -24407,19 +24703,21 @@ DrawNameEntryBackground:
 	MOVE.l	#$61060003, D5
 	LEA	loc_00068778, A0
 	MOVE.w	#$0016, D7
-loc_0001540E:
+; DrawNameEntryBackground_Done
+DrawNameEntryBackground_Done:
 	MOVE.l	D5, VDP_control_port
 	MOVE.w	#$0021, D6
-loc_00015418:
+; DrawNameEntryBackground_Done2
+DrawNameEntryBackground_Done2:
 	CLR.w	D0
 	MOVE.b	(A0)+, D0
 	ANDI.w	#$7FFF, D0
 	ORI.w	#$6000, D0
 	ADDI.w	#$003C, D0
 	MOVE.w	D0, VDP_data_port
-	DBF	D6, loc_00015418
+	DBF	D6, DrawNameEntryBackground_Done2
 	ADDI.l	#$00800000, D5
-	DBF	D7, loc_0001540E
+	DBF	D7, DrawNameEntryBackground_Done
 	ANDI	#$F8FF, SR
 	RTS
 
@@ -24428,19 +24726,21 @@ DrawNameEntryCharGrid:
 	MOVE.l	#$428A0003, D5
 	LEA	NameEntryCharacterTable, A0
 	MOVE.w	#$0011, D7
-loc_00015456:
+; DrawNameEntryCharGrid_Done
+DrawNameEntryCharGrid_Done:
 	MOVE.l	D5, VDP_control_port
 	MOVE.w	#$001D, D6
-loc_00015460:
+; DrawNameEntryCharGrid_Done2
+DrawNameEntryCharGrid_Done2:
 	CLR.w	D0
 	MOVE.b	(A0)+, D0
 	ORI.w	#$8000, D0
 	ORI.w	#$2000, D0
 	ADDI.w	#$04C0, D0
 	MOVE.w	D0, VDP_data_port
-	DBF	D6, loc_00015460
+	DBF	D6, DrawNameEntryCharGrid_Done2
 	ADDI.l	#$00800000, D5
-	DBF	D7, loc_00015456
+	DBF	D7, DrawNameEntryCharGrid_Done
 	ANDI	#$F8FF, SR
 	RTS
 
@@ -24459,7 +24759,8 @@ HandleNameEntryDPad:
 	BNE.w	NameEntryCursor_Down_Sound
 	BTST.l	#2, D0
 	BNE.w	NameEntryCursor_Left_Sound
-loc_000154C0:
+; HandleNameEntryDPad_Done
+HandleNameEntryDPad_Done:
 	MOVE.w	#$00A9, D0
 	JSR	QueueSoundEffect
 ; loc_000154CA
@@ -24566,7 +24867,7 @@ CheckNameEntryCharValid_Loop:
 	CMPI.b	#8, Name_entry_key_repeat_counter.w
 	BLT.w	HandleNameEntryDPad_Return
 	CLR.b	Name_entry_key_repeat_counter.w
-	BRA.w	loc_000154C0
+	BRA.w	HandleNameEntryDPad_Done
 ; CheckNameEntryCharValid_Loop5
 CheckNameEntryCharValid_Loop5:
 	CMPI.b	#8, Name_entry_key_repeat_counter.w
@@ -24599,24 +24900,27 @@ SegaLogoScreen_Init:
 	ORI	#$0700, SR
 	MOVE.l	#$40000000, VDP_control_port
 	MOVEQ	#$0000001F, D7
-loc_00015620:
+; SegaLogoScreen_Init_Done
+SegaLogoScreen_Init_Done:
 	MOVE.w	#0, VDP_data_port
-	DBF	D7, loc_00015620
+	DBF	D7, SegaLogoScreen_Init_Done
 	MOVE.l	#$46180003, D5
 	MOVE.w	#3, D7
-loc_00015636:
+; SegaLogoScreen_Init_Done2
+SegaLogoScreen_Init_Done2:
 	MOVE.l	D5, VDP_control_port
 	MOVE.w	#$000E, D6
-loc_00015640:
+; SegaLogoScreen_Init_Done3
+SegaLogoScreen_Init_Done3:
 	CLR.w	D0
 	MOVE.b	(A0)+, D0
 	ORI.w	#$8000, D0
 	ORI.w	#0, D0
 	ADDQ.w	#2, D0
 	MOVE.w	D0, VDP_data_port
-	DBF	D6, loc_00015640
+	DBF	D6, SegaLogoScreen_Init_Done3
 	ADDI.l	#$00800000, D5
-	DBF	D7, loc_00015636
+	DBF	D7, SegaLogoScreen_Init_Done2
 	ANDI	#$F8FF, SR
 	JSR	EnableDisplay
 	MOVE.w	#1, Palette_line_0_index.w
@@ -24763,16 +25067,18 @@ PrologueStateJumpTable_Loop:
 	BEQ.b	PrologueStateJumpTable_Loop2	
 	MOVE.w	#$0023, D7	
 	LEA	Event_triggers_start.w, A0	
-loc_00015844:
+; PrologueStateJumpTable_Loop_Done
+PrologueStateJumpTable_Loop_Done:
 	MOVE.l	#$FFFFFFFF, (A0)+ ; Fill all event triggers
-	DBF	D7, loc_00015844	
+	DBF	D7, PrologueStateJumpTable_Loop_Done	
 ; PrologueStateJumpTable_Loop2
 PrologueStateJumpTable_Loop2:
 	LEA	Towns_visited.w, A0	
 	MOVE.w	#TOWN_HASTINGS1, D7	
-loc_00015856: ; god mode?
+; PrologueStateJumpTable_Loop2_Done
+PrologueStateJumpTable_Loop2_Done: ; god mode?
 	MOVE.b	#$FF, (A0)+	
-	DBF	D7, loc_00015856	
+	DBF	D7, PrologueStateJumpTable_Loop2_Done	
 	MOVE.w	#1, Possessed_magics_length.w	
 	LEA	Possessed_magics_list.w, A0	
 	MOVE.w	#((MAGIC_TYPE_FIELD<<8)|MAGIC_ARIES), (A0)	
@@ -24948,32 +25254,36 @@ DrawPrologueScene6:
 DrawTilemapBlock_15x12:
 	LEA	loc_0006577A, A0
 	MOVE.w	#$000B, D7
-loc_00015ABC:
+; DrawTilemapBlock_15x12_Done
+DrawTilemapBlock_15x12_Done:
 	MOVE.l	D5, VDP_control_port
 	MOVE.w	#$000E, D6
-loc_00015AC6:
+; DrawTilemapBlock_15x12_Done2
+DrawTilemapBlock_15x12_Done2:
 	CLR.w	D0
 	MOVE.b	(A0)+, D0
 	ADD.w	D4, D0
 	MOVE.w	D0, VDP_data_port
-	DBF	D6, loc_00015AC6
+	DBF	D6, DrawTilemapBlock_15x12_Done2
 	ADDI.l	#$00800000, D5
-	DBF	D7, loc_00015ABC
+	DBF	D7, DrawTilemapBlock_15x12_Done
 	RTS
 
 DrawTilemapBlock_13x10:
 	MOVE.w	#9, D7
-loc_00015AE6:
+; DrawTilemapBlock_13x10_Done
+DrawTilemapBlock_13x10_Done:
 	MOVE.l	D5, VDP_control_port
 	MOVE.w	#$000C, D6
-loc_00015AF0:
+; DrawTilemapBlock_13x10_Done2
+DrawTilemapBlock_13x10_Done2:
 	CLR.w	D0
 	MOVE.b	(A0)+, D0
 	ADD.w	D4, D0
 	MOVE.w	D0, VDP_data_port
-	DBF	D6, loc_00015AF0
+	DBF	D6, DrawTilemapBlock_13x10_Done2
 	ADDI.l	#$00800000, D5
-	DBF	D7, loc_00015AE6
+	DBF	D7, DrawTilemapBlock_13x10_Done
 	RTS
 	
 ; loc_00015B0C
@@ -25362,7 +25672,8 @@ InitializeTilemapFromData_Loop2:
 	LEA	(A0,D0.w), A0
 	MOVEQ	#$1F, D7
 	MOVE.w	D1, D4
-loc_0001611C:
+; InitializeTilemapFromData_Loop2_Done
+InitializeTilemapFromData_Loop2_Done:
 	CMP.w	Town_tilemap_height.w, D4
 	BLT.b	InitializeTilemapFromData_Loop3
 	MOVE.b	#$FF, Tilemap_row_overflow_flag.w
@@ -25377,7 +25688,8 @@ InitializeTilemapFromData_Loop3:
 InitializeTilemapFromData_Loop4:
 	SUBQ.w	#3, D5
 	LEA	(A0), A3
-loc_0001613A:
+; InitializeTilemapFromData_Loop4_Done
+InitializeTilemapFromData_Loop4_Done:
 	MOVE.w	D4, D0
 	MOVE.w	D5, D1
 	ANDI.w	#$1F, D0
@@ -25408,13 +25720,13 @@ WriteTownTilemap_ClearTile:
 ; WriteTownTilemap_ClearTile_Loop
 WriteTownTilemap_ClearTile_Loop:
 	ADDQ.w	#1, D5
-	DBF	D6, loc_0001613A
+	DBF	D6, InitializeTilemapFromData_Loop4_Done
 	ADDQ.w	#1, D4
 	MOVE.w	Town_tilemap_width.w, D0
 	ADD.w	D0, D0
 	LEA	(A0,D0.w), A0
 	LEA	$80(A2), A2
-	DBF	D7, loc_0001611C
+	DBF	D7, InitializeTilemapFromData_Loop2_Done
 	RTS
 
 WriteTownTile2x2WithFlip:
@@ -25478,7 +25790,8 @@ WriteTownTilemapToVRAM:
 	MOVE.l	#$40000003, VDP_control_port
 	LEA	Tilemap_buffer_plane_a, A0
 	MOVE.w	#$0FFF, D4
-loc_00016242:
+; WriteTownTilemapToVRAM_Done
+WriteTownTilemapToVRAM_Done:
 	MOVE.w	(A0)+, D1
 	MOVE.w	D1, D2
 	ANDI.w	#$01FF, D1
@@ -25486,11 +25799,12 @@ loc_00016242:
 	OR.w	D1, D2
 	ADDI.w	#$0300, D2
 	MOVE.w	D2, VDP_data_port
-	DBF	D4, loc_00016242
+	DBF	D4, WriteTownTilemapToVRAM_Done
 	MOVE.l	#$60000003, VDP_control_port
 	LEA	Tilemap_buffer_plane_b, A0
 	MOVE.w	#$0FFF, D4
-loc_00016272:
+; WriteTownTilemapToVRAM_Done2
+WriteTownTilemapToVRAM_Done2:
 	MOVE.w	(A0)+, D1
 	MOVE.w	D1, D2
 	ANDI.w	#$01FF, D1
@@ -25499,7 +25813,7 @@ loc_00016272:
 	OR.w	D1, D2
 	ADDI.w	#$0300, D2
 	MOVE.w	D2, VDP_data_port
-	DBF	D4, loc_00016272
+	DBF	D4, WriteTownTilemapToVRAM_Done2
 	ANDI	#$F8FF, SR
 	LEA	TownPaletteConfigTable, A0
 	MOVE.w	Current_town_room.w, D0
@@ -25733,7 +26047,8 @@ DrawTownTilemapRow:
 	ASL.w	#1, D6
 	MOVE.w	D2, D4
 	ADD.w	D6, D2
-loc_000165B0:
+; DrawTownTilemapRow_Done
+DrawTownTilemapRow_Done:
 	ANDI.w	#$1FFF, D2
 	LEA	(A3,D2.w), A2
 	MOVE.w	(A0,D7.w), D0
@@ -25757,7 +26072,7 @@ DrawTownTilemapRow_Loop2:
 	CLR.w	D2
 	MOVE.w	D4, D2
 	ADD.w	D6, D2
-	DBF	D5, loc_000165B0
+	DBF	D5, DrawTownTilemapRow_Done
 	RTS
 
 DrawTownTilemapColumn:
@@ -25775,7 +26090,8 @@ DrawTownTilemapColumn:
 	ADDQ.w	#4, D0
 	MOVE.w	D0, D7
 	ADD.w	D6, D2
-loc_0001660E:
+; DrawTownTilemapColumn_Done
+DrawTownTilemapColumn_Done:
 	ANDI.w	#$1FFF, D2
 	LEA	(A3,D2.w), A2
 	MOVE.w	(A0,D7.w), D0
@@ -25798,7 +26114,7 @@ DrawTownTilemapColumn_Loop2:
 	CLR.w	D2
 	MOVE.w	D4, D2
 	ADD.w	D6, D2
-	DBF	D5, loc_0001660E
+	DBF	D5, DrawTownTilemapColumn_Done
 	RTS
 
 UpdateTownTilemapRow:
@@ -25828,7 +26144,8 @@ WriteTilemapRowToVDP:
 	ADD.w	D1, D0
 	MOVE.l	D0, VDP_control_port
 	MOVEQ	#$7F, D5
-loc_0001669E:
+; WriteTilemapRowToVDP_Done
+WriteTilemapRowToVDP_Done:
 	MOVE.w	(A0)+, D1
 	MOVE.w	D1, D2
 	ANDI.w	#$01FF, D1
@@ -25845,7 +26162,7 @@ WriteTilemapRowToVDP_Loop2:
 	OR.w	D1, D2
 	ADD.w	Town_vram_tile_base.w, D2
 	MOVE.w	D2, VDP_data_port
-	DBF	D5, loc_0001669E
+	DBF	D5, WriteTilemapRowToVDP_Done
 	RTS
 
 UpdateTownTilemapColumn:
@@ -25874,7 +26191,8 @@ WriteTilemapColumnToVDP:
 	LSR.w	D2, D1
 	ADD.w	D1, D0
 	MOVEQ	#$3F, D5
-loc_00016714:
+; WriteTilemapColumnToVDP_Done
+WriteTilemapColumnToVDP_Done:
 	MOVE.l	D0, VDP_control_port
 	MOVE.w	(A0), D1
 	MOVE.w	D1, D2
@@ -25910,7 +26228,7 @@ WriteTilemapColumnToVDP_Loop4:
 	MOVE.w	D2, VDP_data_port
 	LEA	$80(A0), A0
 	ADDI.l	#$00800000, D0
-	DBF	D5, loc_00016714
+	DBF	D5, WriteTilemapColumnToVDP_Done
 	RTS
 
 UpdatePaletteCycle:
@@ -26055,11 +26373,12 @@ TilemapDecompression_JumpTable:
 TilemapDecompression_JumpTable_Loop2:
 	ANDI.w	#$001F, D0
 	SUBQ.w	#1, D0
-loc_000168F8:
+; TilemapDecompression_JumpTable_Loop2_Done
+TilemapDecompression_JumpTable_Loop2_Done:
 	MOVE.b	(A1)+, D1
 	MOVE.b	D1, (A2,D6.w)
 	ADDQ.w	#2, D6
-	DBF	D0, loc_000168F8
+	DBF	D0, TilemapDecompression_JumpTable_Loop2_Done
 	RTS
 
 ; TilemapDecompression_JumpTable_Loop3
@@ -26067,10 +26386,11 @@ TilemapDecompression_JumpTable_Loop3:
 	ANDI.w	#$001F, D0
 	SUBQ.w	#1, D0
 	MOVE.b	(A1)+, D1
-loc_0001690E:
+; TilemapDecompression_JumpTable_Loop3_Done
+TilemapDecompression_JumpTable_Loop3_Done:
 	MOVE.b	D1, (A2,D6.w)
 	ADDQ.w	#2, D6
-	DBF	D0, loc_0001690E
+	DBF	D0, TilemapDecompression_JumpTable_Loop3_Done
 	RTS
 	
 ; TilemapDecompression_JumpTable_Loop4
@@ -26079,12 +26399,13 @@ TilemapDecompression_JumpTable_Loop4:
 	SUBQ.w	#1, D0
 	MOVE.b	(A1)+, D1
 	MOVE.b	(A1)+, D2
-loc_00016924:
+; TilemapDecompression_JumpTable_Loop4_Done
+TilemapDecompression_JumpTable_Loop4_Done:
 	MOVE.b	D1, (A2,D6.w)
 	ADDQ.w	#2, D6
 	MOVE.b	D2, (A2,D6.w)
 	ADDQ.w	#2, D6
-	DBF	D0, loc_00016924
+	DBF	D0, TilemapDecompression_JumpTable_Loop4_Done
 	RTS
 	
 ; TilemapDecompression_JumpTable_Loop5
@@ -26094,14 +26415,15 @@ TilemapDecompression_JumpTable_Loop5:
 	MOVE.b	(A1)+, D1
 	MOVE.b	(A1)+, D2
 	MOVE.b	(A1)+, D3
-loc_00016942:
+; TilemapDecompression_JumpTable_Loop5_Done
+TilemapDecompression_JumpTable_Loop5_Done:
 	MOVE.b	D1, (A2,D6.w)
 	ADDQ.w	#2, D6
 	MOVE.b	D2, (A2,D6.w)
 	ADDQ.w	#2, D6
 	MOVE.b	D3, (A2,D6.w)
 	ADDQ.w	#2, D6
-	DBF	D0, loc_00016942
+	DBF	D0, TilemapDecompression_JumpTable_Loop5_Done
 	RTS
 	
 ; TilemapDecompression_JumpTable_Loop6
@@ -26112,7 +26434,8 @@ TilemapDecompression_JumpTable_Loop6:
 	MOVE.b	(A1)+, D2
 	MOVE.b	(A1)+, D3
 	MOVE.b	(A1)+, D4
-loc_00016968:
+; TilemapDecompression_JumpTable_Loop6_Done
+TilemapDecompression_JumpTable_Loop6_Done:
 	MOVE.b	D1, (A2,D6.w)
 	ADDQ.w	#2, D6
 	MOVE.b	D2, (A2,D6.w)
@@ -26121,7 +26444,7 @@ loc_00016968:
 	ADDQ.w	#2, D6
 	MOVE.b	D4, (A2,D6.w)
 	ADDQ.w	#2, D6
-	DBF	D0, loc_00016968
+	DBF	D0, TilemapDecompression_JumpTable_Loop6_Done
 	RTS
 	
 ; TilemapDecompression_JumpTable_Loop7
@@ -26133,11 +26456,12 @@ TilemapDecompression_JumpTable_Loop7:
 	MOVE.b	Tilemap_width.w, D3
 	SUB.w	D3, D2
 	SUB.w	D3, D2
-loc_00016998:
+; TilemapDecompression_JumpTable_Loop7_Done
+TilemapDecompression_JumpTable_Loop7_Done:
 	MOVE.b	(A2,D2.w), (A2,D6.w)
 	ADDQ.w	#2, D2
 	ADDQ.w	#2, D6
-	DBF	D0, loc_00016998
+	DBF	D0, TilemapDecompression_JumpTable_Loop7_Done
 	RTS
 	
 ; TilemapDecompression_JumpTable_Loop8
@@ -26151,11 +26475,12 @@ TilemapDecompression_JumpTable_Loop8:
 	SUB.w	D3, D2
 	SUB.w	D3, D2
 	SUB.w	D3, D2
-loc_000169BE:
+; TilemapDecompression_JumpTable_Loop8_Done
+TilemapDecompression_JumpTable_Loop8_Done:
 	MOVE.b	(A2,D2.w), (A2,D6.w)
 	ADDQ.w	#2, D2
 	ADDQ.w	#2, D6
-	DBF	D0, loc_000169BE
+	DBF	D0, TilemapDecompression_JumpTable_Loop8_Done
 	RTS
 	
 ; TilemapDecompression_JumpTable_Loop
@@ -26198,12 +26523,13 @@ TitleScreen_Init:
 ClearEnemyActiveFlags:
 	MOVEA.l	Enemy_list_ptr.w, A6
 	MOVEQ	#$13, D7
-loc_00016A78:
+; ClearEnemyActiveFlags_Done
+ClearEnemyActiveFlags_Done:
 	BCLR.b	#7, (A6)
 	CLR.w	D0
 	MOVE.b	$1(A6), D0
 	LEA	(A6,D0.w), A6
-	DBF	D7, loc_00016A78
+	DBF	D7, ClearEnemyActiveFlags_Done
 	RTS
 
 ; loc_00016A8C
@@ -26353,10 +26679,11 @@ UpdateEndingHScrollValues:
 	LEA	HScroll_run_table.w, A0
 	LEA	EndingHScrollSpeedTable, A1
 	MOVE.w	#$A, D7
-loc_00016C26:
+; UpdateEndingHScrollValues_Done
+UpdateEndingHScrollValues_Done:
 	MOVE.l	(A1)+, D0
 	ADD.l	D0, (A0)+
-	DBF	D7, loc_00016C26
+	DBF	D7, UpdateEndingHScrollValues_Done
 	RTS
 
 UpdatePrologueScrollVRAM:
@@ -26366,7 +26693,8 @@ UpdatePrologueScrollVRAM:
 	LEA	Prologue_scroll_offset.w, A1
 	SUBI.l	#$000A0000, (A1)
 	MOVE.w	#$0054, D7
-loc_00016C4E:
+; UpdatePrologueScrollVRAM_Done
+UpdatePrologueScrollVRAM_Done:
 	BTST.l	#0, D7
 	BNE.b	UpdatePrologueScrollVRAM_Loop
 	MOVE.w	(A0), D1
@@ -26393,7 +26721,7 @@ UpdatePrologueScrollVRAM_WriteVDP:
 	MOVE.l	D0, VDP_control_port
 	MOVE.w	D1, VDP_data_port
 	ADDI.l	#$00040000, D0
-	DBF	D7, loc_00016C4E
+	DBF	D7, UpdatePrologueScrollVRAM_Done
 	RTS
 
 DrawIntroBackground:
@@ -26401,17 +26729,19 @@ DrawIntroBackground:
 	MOVE.l	#$49000003, D5
 	LEA	loc_0006181A, A0
 	MOVE.w	#9, D7
-loc_00016CA6:
+; DrawIntroBackground_Done
+DrawIntroBackground_Done:
 	MOVE.l	D5, VDP_control_port
 	MOVE.w	#$001F, D6
-loc_00016CB0:
+; DrawIntroBackground_Done2
+DrawIntroBackground_Done2:
 	CLR.w	D0
 	MOVE.b	(A0)+, D0
 	ADDI.w	#$E0F3, D0
 	MOVE.w	D0, VDP_data_port
-	DBF	D6, loc_00016CB0
+	DBF	D6, DrawIntroBackground_Done2
 	ADDI.l	#$00800000, D5
-	DBF	D7, loc_00016CA6
+	DBF	D7, DrawIntroBackground_Done
 	ANDI	#$F8FF, SR
 	RTS
 
@@ -26420,51 +26750,58 @@ DrawIntroGraphics:
 	MOVE.l	#$61800003, D5
 	LEA	loc_000616DE, A0
 	MOVE.w	#$000E, D7
-loc_00016CE6:
+; DrawIntroGraphics_Done
+DrawIntroGraphics_Done:
 	MOVE.l	D5, VDP_control_port
 	MOVE.w	#$0014, D6
-loc_00016CF0:
+; DrawIntroGraphics_Done2
+DrawIntroGraphics_Done2:
 	CLR.w	D0
 	MOVE.b	(A0)+, D0
 	ADDI.w	#$603C, D0
 	MOVE.w	D0, VDP_data_port
-	DBF	D6, loc_00016CF0
+	DBF	D6, DrawIntroGraphics_Done2
 	ADDI.l	#$00800000, D5
-	DBF	D7, loc_00016CE6
+	DBF	D7, DrawIntroGraphics_Done
 	MOVE.l	#$69800003, D4
 	MOVE.l	#$60AA0003, D5
 	LEA	SpriteTileIndexTable_619EA, A0
 	MOVE.w	#$000D, D7
-loc_00016D22:
+; DrawIntroGraphics_Done3
+DrawIntroGraphics_Done3:
 	MOVE.l	D5, VDP_control_port
 	MOVE.w	#9, D6
-loc_00016D2C:
+; DrawIntroGraphics_Done4
+DrawIntroGraphics_Done4:
 	CLR.w	D0
 	MOVE.b	(A0)+, D0
 	ADDI.w	#$0239, D0
 	MOVE.w	D0, VDP_data_port
-	DBF	D6, loc_00016D2C
+	DBF	D6, DrawIntroGraphics_Done4
 	ADDI.l	#$00800000, D5
-	DBF	D7, loc_00016D22
+	DBF	D7, DrawIntroGraphics_Done3
 	MOVE.l	#$69800003, D4
 	MOVE.w	#3, D7
-loc_00016D52:
+; DrawIntroGraphics_Done5
+DrawIntroGraphics_Done5:
 	LEA	SpriteTileIndexTable_6195A, A0
 	MOVE.w	#8, D6
 	MOVE.l	D4, D3
-loc_00016D5E:
+; DrawIntroGraphics_Done6
+DrawIntroGraphics_Done6:
 	MOVE.w	#$F, D5
 	MOVE.l	D3, VDP_control_port
-loc_00016D68:
+; DrawIntroGraphics_Done7
+DrawIntroGraphics_Done7:
 	CLR.w	D0
 	MOVE.b	(A0)+, D0
 	ADDI.w	#$41CD, D0
 	MOVE.w	D0, VDP_data_port
-	DBF	D5, loc_00016D68
+	DBF	D5, DrawIntroGraphics_Done7
 	ADDI.l	#$00800000, D3
-	DBF	D6, loc_00016D5E
+	DBF	D6, DrawIntroGraphics_Done6
 	ADDI.l	#$00200000, D4
-	DBF	D7, loc_00016D52
+	DBF	D7, DrawIntroGraphics_Done5
 	ANDI	#$F8FF, SR
 	RTS
 
@@ -26472,17 +26809,19 @@ DrawTilemapToVRAM_PlaneA:
 	ORI	#$0700, SR
 	MOVE.l	#$41880003, D5
 	MOVE.w	#9, D7
-loc_00016DA2:
+; DrawTilemapToVRAM_PlaneA_Done
+DrawTilemapToVRAM_PlaneA_Done:
 	MOVE.l	D5, VDP_control_port
 	MOVE.w	#$0020, D6
-loc_00016DAC:
+; DrawTilemapToVRAM_PlaneA_Done2
+DrawTilemapToVRAM_PlaneA_Done2:
 	CLR.w	D0
 	MOVE.b	(A0)+, D0
 	ADDI.w	#$A263, D0
 	MOVE.w	D0, VDP_data_port
-	DBF	D6, loc_00016DAC
+	DBF	D6, DrawTilemapToVRAM_PlaneA_Done2
 	ADDI.l	#$00800000, D5
-	DBF	D7, loc_00016DA2
+	DBF	D7, DrawTilemapToVRAM_PlaneA_Done
 	ANDI	#$F8FF, SR
 	RTS
 
@@ -26573,17 +26912,19 @@ DrawPressStartText:
 	MOVE.l	#$60AA0003, D5
 	LEA	SpriteTileIndexTable_619EA, A0
 	MOVE.w	#$D, D7
-loc_00016F56:
+; DrawPressStartText_Done
+DrawPressStartText_Done:
 	MOVE.l	D5, VDP_control_port
 	MOVE.w	#9, D6
-loc_00016F60:
+; DrawPressStartText_Done2
+DrawPressStartText_Done2:
 	CLR.w	D0
 	MOVE.b	(A0), D0
 	ADDI.w	#$0239, D0
 	MOVE.w	D0, VDP_data_port
-	DBF	D6, loc_00016F60
+	DBF	D6, DrawPressStartText_Done2
 	ADDI.l	#$00800000, D5
-	DBF	D7, loc_00016F56
+	DBF	D7, DrawPressStartText_Done
 	ANDI	#$F8FF, SR
 	RTS
 
@@ -26909,9 +27250,10 @@ EndingStep_Return7_Loop5:
 	JSR	LoadPalettesFromTable
 	LEA	Ending_player_name_buffer.w, A0
 	MOVE.w	#5, D7
-loc_00017378:
+; EndingStep_Return7_Loop5_Done
+EndingStep_Return7_Loop5_Done:
 	MOVE.b	#$20, (A0)+
-	DBF	D7, loc_00017378
+	DBF	D7, EndingStep_Return7_Loop5_Done
 	BRA.w	EndingSequence_ScrollText_Done
 ; EndingStep_Return7_Loop6
 EndingStep_Return7_Loop6:
@@ -26968,9 +27310,10 @@ DisplayEndingTextLine:
 	MOVE.l	D5, VDP_control_port
 	MOVE.w	#$04E0, D0
 	MOVE.w	#$0027, D7
-loc_00017422:
+; DisplayEndingTextLine_Done
+DisplayEndingTextLine_Done:
 	MOVE.w	D0, VDP_data_port
-	DBF	D7, loc_00017422
+	DBF	D7, DisplayEndingTextLine_Done
 	ANDI	#$F8FF, SR
 	ORI	#$0700, SR
 ; loc_00017434
@@ -27015,49 +27358,55 @@ ClearEndingTextArea:
 	ANDI.l	#$5FFF0003, D4
 	ORI.l	#$40000003, D4
 	MOVE.w	#2, D7
-loc_000174AE:
+; ClearEndingTextArea_Done
+ClearEndingTextArea_Done:
 	MOVE.l	D4, VDP_control_port
 	MOVE.w	#$0019, D6
-loc_000174B8:
+; ClearEndingTextArea_Done2
+ClearEndingTextArea_Done2:
 	MOVE.w	D0, VDP_data_port
-	DBF	D6, loc_000174B8
+	DBF	D6, ClearEndingTextArea_Done2
 	ADDI.l	#$00800000, D4
 	ANDI.l	#$5FFF0003, D4
 	ORI.l	#$40000003, D4
-	DBF	D7, loc_000174AE
+	DBF	D7, ClearEndingTextArea_Done
 	ADDI.l	#$000E0000, D5
 	ANDI.l	#$5FFF0003, D5
 	ORI.l	#$40000003, D5
 	LEA	loc_00068020, A0
 	MOVE.w	#2, D7
-loc_000174F4:
+; ClearEndingTextArea_Done3
+ClearEndingTextArea_Done3:
 	MOVE.l	D5, VDP_control_port
 	MOVE.w	#8, D6
-loc_000174FE:
+; ClearEndingTextArea_Done4
+ClearEndingTextArea_Done4:
 	CLR.w	D0
 	MOVE.b	(A0)+, D0
 	ADDI.w	#$4002, D0
 	MOVE.w	D0, VDP_data_port
-	DBF	D6, loc_000174FE
+	DBF	D6, ClearEndingTextArea_Done4
 	ADDI.l	#$00800000, D5
 	ANDI.l	#$5FFF0003, D5
 	ORI.l	#$40000003, D5
-	DBF	D7, loc_000174F4
+	DBF	D7, ClearEndingTextArea_Done3
 	SUBI.l	#$000E0000, D5
 	ANDI.l	#$5FFF0003, D5
 	ORI.l	#$40000003, D5
 	MOVE.w	#$000E, D7
-loc_0001753C:
+; ClearEndingTextArea_Done5
+ClearEndingTextArea_Done5:
 	MOVE.l	D5, VDP_control_port
 	MOVE.w	#$0018, D6
-loc_00017546:
+; ClearEndingTextArea_Done6
+ClearEndingTextArea_Done6:
 	CLR.w	D0
 	MOVE.w	D0, VDP_data_port
-	DBF	D6, loc_00017546
+	DBF	D6, ClearEndingTextArea_Done6
 	ADDI.l	#$00800000, D5
 	ANDI.l	#$5FFF0003, D5
 	ORI.l	#$40000003, D5
-	DBF	D7, loc_0001753C
+	DBF	D7, ClearEndingTextArea_Done5
 	RTS
 
 InitEndingCreditsScreen:
@@ -27065,41 +27414,47 @@ InitEndingCreditsScreen:
 	MOVE.l	#$40000003, D5
 	MOVE.w	#$A080, D4
 	MOVE.w	#$003F, D7
-loc_0001757C:
+; InitEndingCreditsScreen_Done
+InitEndingCreditsScreen_Done:
 	MOVE.l	D5, VDP_control_port
 	MOVE.w	#$003F, D6
-loc_00017586:
+; InitEndingCreditsScreen_Done2
+InitEndingCreditsScreen_Done2:
 	MOVE.w	D4, VDP_data_port
-	DBF	D6, loc_00017586
+	DBF	D6, InitEndingCreditsScreen_Done2
 	ADDI.l	#$00800000, D5
-	DBF	D7, loc_0001757C
+	DBF	D7, InitEndingCreditsScreen_Done
 	MOVE.l	#$40040003, D5
 	LEA	loc_000658D2, A0
 	MOVE.w	#$0019, D7
-loc_000175AA:
+; InitEndingCreditsScreen_Done3
+InitEndingCreditsScreen_Done3:
 	MOVE.l	D5, VDP_control_port
 	MOVE.w	#$001B, D6
-loc_000175B4:
+; InitEndingCreditsScreen_Done4
+InitEndingCreditsScreen_Done4:
 	MOVE.w	(A0)+, D0
 	ADDI.w	#$A080, D0
 	MOVE.w	D0, VDP_data_port
-	DBF	D6, loc_000175B4
+	DBF	D6, InitEndingCreditsScreen_Done4
 	ADDI.l	#$00800000, D5
-	DBF	D7, loc_000175AA
+	DBF	D7, InitEndingCreditsScreen_Done3
 	MOVE.l	#$60000003, D5
 	LEA	loc_00067CBC, A0
 	MOVE.w	#$001B, D7
-loc_000175DE:
+; InitEndingCreditsScreen_Done5
+InitEndingCreditsScreen_Done5:
 	MOVE.l	D5, VDP_control_port
 	MOVE.w	#$0027, D6
-loc_000175E8:
+; InitEndingCreditsScreen_Done6
+InitEndingCreditsScreen_Done6:
 	CLR.w	D0
 	MOVE.b	(A0)+, D0
 	ADDI.w	#$601D, D0
 	MOVE.w	D0, VDP_data_port
-	DBF	D6, loc_000175E8
+	DBF	D6, InitEndingCreditsScreen_Done6
 	ADDI.l	#$00800000, D5
-	DBF	D7, loc_000175DE
+	DBF	D7, InitEndingCreditsScreen_Done5
 	ANDI	#$F8FF, SR
 	RTS
 
@@ -27107,23 +27462,26 @@ DrawCreditsStaffNames:
 	ORI	#$0700, SR
 	MOVE.l	#$69800003, D4
 	MOVE.w	#3, D7
-loc_00017618:
+; DrawCreditsStaffNames_Done
+DrawCreditsStaffNames_Done:
 	LEA	SpriteTileIndexTable_6195A, A0
 	MOVE.w	#8, D6
 	MOVE.l	D4, D3
-loc_00017624:
+; DrawCreditsStaffNames_Done2
+DrawCreditsStaffNames_Done2:
 	MOVE.w	#$000F, D5
 	MOVE.l	D3, VDP_control_port
-loc_0001762E:
+; DrawCreditsStaffNames_Done3
+DrawCreditsStaffNames_Done3:
 	CLR.w	D0
 	MOVE.b	(A0)+, D0
 	ADDI.w	#$41CD, D0
 	MOVE.w	D0, VDP_data_port
-	DBF	D5, loc_0001762E
+	DBF	D5, DrawCreditsStaffNames_Done3
 	ADDI.l	#$00800000, D3
-	DBF	D6, loc_00017624
+	DBF	D6, DrawCreditsStaffNames_Done2
 	ADDI.l	#$00200000, D4
-	DBF	D7, loc_00017618
+	DBF	D7, DrawCreditsStaffNames_Done
 	ANDI	#$F8FF, SR
 	RTS
 
@@ -27132,28 +27490,32 @@ DrawEndingBorderPattern:
 	MOVE.w	#$84E0, D4
 	MOVE.w	#5, D7
 	ORI	#$0700, SR
-loc_0001766C:
+; DrawEndingBorderPattern_Done
+DrawEndingBorderPattern_Done:
 	MOVE.w	#$0017, D6
 	MOVE.l	D5, VDP_control_port
-loc_00017676:
+; DrawEndingBorderPattern_Done2
+DrawEndingBorderPattern_Done2:
 	MOVE.w	D4, VDP_data_port
-	DBF	D6, loc_00017676
+	DBF	D6, DrawEndingBorderPattern_Done2
 	ADDI.l	#$00800000, D5
-	DBF	D7, loc_0001766C
+	DBF	D7, DrawEndingBorderPattern_Done
 	ANDI	#$F8FF, SR
 	RTS
 
 FillDialogAreaWithPattern:
 	MOVE.l	#$40BC0003, D5
 	MOVE.w	#$0019, D7
-loc_0001769A:
+; FillDialogAreaWithPattern_Done
+FillDialogAreaWithPattern_Done:
 	MOVE.w	#$0014, D6
 	MOVE.l	D5, VDP_control_port
-loc_000176A4:
+; FillDialogAreaWithPattern_Done2
+FillDialogAreaWithPattern_Done2:
 	MOVE.w	#$A080, VDP_data_port
-	DBF	D6, loc_000176A4
+	DBF	D6, FillDialogAreaWithPattern_Done2
 	ADDI.l	#$00800000, D5
-	DBF	D7, loc_0001769A
+	DBF	D7, FillDialogAreaWithPattern_Done
 	RTS
 
 ClearDialogSprites:
@@ -27165,11 +27527,12 @@ ClearDialogSprites:
 	ADD.l	D0, D5
 	MOVE.w	#$028F, D7
 	ORI	#$0700, SR
-loc_000176D6:
+; ClearDialogSprites_Done
+ClearDialogSprites_Done:
 	MOVE.l	D5, VDP_control_port
 	MOVE.w	#0, VDP_data_port
 	ADDI.l	#$00100000, D5
-	DBF	D7, loc_000176D6
+	DBF	D7, ClearDialogSprites_Done
 	ANDI	#$F8FF, SR
 	ADDQ.w	#1, Dialog_phase.w
 	RTS
@@ -28088,7 +28451,8 @@ CheckAnyMagicReady:
 	MOVE.w	Possessed_magics_length.w, D7
 	SUBQ.w	#1, D7
 	LEA	Possessed_magics_list.w, A0
-loc_0001866C:
+; CheckAnyMagicReady_Done
+CheckAnyMagicReady_Done:
 	MOVE.w	(A0)+, D0
 	MOVE.w	#9, D1
 	BTST.l	D1, D0
@@ -28097,7 +28461,7 @@ loc_0001866C:
 
 ; CheckAnyMagicReady_Loop
 CheckAnyMagicReady_Loop:
-	DBF	D7, loc_0001866C
+	DBF	D7, CheckAnyMagicReady_Done
 	CLR.w	D0	
 	RTS
 	
@@ -28105,12 +28469,13 @@ ClearMagicReadyFlags:
 	MOVE.w	Possessed_magics_length.w, D7
 	SUBQ.w	#1, D7
 	LEA	Possessed_magics_list.w, A0
-loc_0001868A:
+; ClearMagicReadyFlags_Done
+ClearMagicReadyFlags_Done:
 	MOVE.w	#$000F, D1
 	MOVE.w	(A0), D0
 	BCLR.l	D1, D0
 	MOVE.w	D0, (A0)+
-	DBF	D7, loc_0001868A
+	DBF	D7, ClearMagicReadyFlags_Done
 	CLR.w	D0
 	RTS
 
@@ -30948,9 +31313,10 @@ UseMirrorOfAtlas:
 	PRINT 	WorldMapsStr
 	LEA	Map_trigger_flags.w, A0
 	MOVE.w	#$FF, D7
-loc_0001ACB4:
+; UseMirrorOfAtlas_Done
+UseMirrorOfAtlas_Done:
 	MOVE.b	#$FF, (A0)+ ; Fill 255 entries with $FF
-	DBF	D7, loc_0001ACB4
+	DBF	D7, UseMirrorOfAtlas_Done
 	TST.b	Player_in_first_person_mode.w
 	BEQ.b	UseMirrorOfAtlas_Loop
 	MOVE.b	#$FF, Area_map_revealed.w
@@ -31080,7 +31446,8 @@ UseAlarmClock:
 	MOVEA.l	Player_entity_ptr.w, A6
 	LEA	AlarmClockPositionData, A0
 	MOVE.w	#3, D7
-loc_0001AE40:
+; UseAlarmClock_Done
+UseAlarmClock_Done:
 	MOVE.w	D1, D0
 	ADD.w	D0, D0
 	MOVE.w	D0, D2
@@ -31098,7 +31465,7 @@ loc_0001AE40:
 ; loc_0001AE68
 UseAlarmClock_NextNPC:
 	ADDQ.w	#1, D1
-	DBF	D7, loc_0001AE40
+	DBF	D7, UseAlarmClock_Done
 ; AlarmClockCheck_Return
 AlarmClockCheck_Return:
 	PRINT 	NoisyStr
@@ -31159,7 +31526,8 @@ UseOldWomansSketch:
 	CLR.w	D1
 	LEA	OldManSketchPositionData, A0
 	MOVE.w	#3, D7
-loc_0001AEFA:
+; UseOldWomansSketch_Done
+UseOldWomansSketch_Done:
 	MOVE.w	(A0), D0
 	CMP.w	Player_position_x_in_town.w, D0
 	BNE.b	UseSketch_OldManNextEntry
@@ -31172,7 +31540,7 @@ loc_0001AEFA:
 ; loc_0001AF16
 UseSketch_OldManNextEntry:
 	LEA	$6(A0), A0	
-	DBF	D7, loc_0001AEFA	
+	DBF	D7, UseOldWomansSketch_Done	
 ; loc_0001AF1E
 UseSketch_OldManWrongDir:
 	PRINT 	YoungerBeautifulStr	
@@ -31215,7 +31583,8 @@ UseOldMansSketch
 	MOVEA.l	Player_entity_ptr.w, A6
 	LEA	OldWomanSketchPositionData, A0
 	MOVE.w	#3, D7
-loc_0001AF7E:
+; OldManSketchPositionData_Done
+OldManSketchPositionData_Done:
 	MOVE.w	(A0), D0
 	CMP.w	Player_position_x_in_town.w, D0
 	BNE.b	UseSketch_OldWomanNextEntry
@@ -31228,7 +31597,7 @@ loc_0001AF7E:
 ; loc_0001AF9A
 UseSketch_OldWomanNextEntry:
 	LEA	$6(A0), A0
-	DBF	D7, loc_0001AF7E
+	DBF	D7, OldManSketchPositionData_Done
 ; loc_0001AFA2
 UseSketch_OldWomanWrongDir:
 	PRINT 	MeanLookStr	
@@ -31359,7 +31728,8 @@ UseGeneric_Loop:
 	ADD.w	(A2,D0.w), D3
 	ADD.w	$2(A2,D0.w), D4
 	LEA	LockedDoorDataTable, A0
-loc_0001B0E2:
+; UseGeneric_Loop_Done
+UseGeneric_Loop_Done:
 	LEA	(A0), A1
 	MOVE.w	(A1)+, D0
 	BLT.w	CheckLockedDoor_NextEntry_Loop
@@ -31389,7 +31759,7 @@ loc_0001B0E2:
 ; loc_0001B138
 CheckLockedDoor_NextEntry:
 	LEA	$8(A0), A0
-	BRA.b	loc_0001B0E2
+	BRA.b	UseGeneric_Loop_Done
 ; CheckLockedDoor_NextEntry_Loop
 CheckLockedDoor_NextEntry_Loop:
 	PRINT 	NoKeyholeStr	
@@ -31641,9 +32011,10 @@ ShopInit_LoadAssortment:
 	MOVE.w	(A1)+, D7
 	MOVE.w	D7, Shop_item_count.w
 	SUBQ.w	#1, D7
-loc_0001B48E:
+; ShopInit_LoadAssortment_Done
+ShopInit_LoadAssortment_Done:
 	MOVE.w	(A1)+, (A2)+
-	DBF	D7, loc_0001B48E
+	DBF	D7, ShopInit_LoadAssortment_Done
 	RTS
 
 ; ShopInit_LoadAssortment_Loop2
@@ -31691,9 +32062,10 @@ MalagaShop_LoadAssortment:
 	MOVE.w	(A1)+, D7
 	MOVE.w	D7, Shop_item_count.w
 	SUBQ.w	#1, D7
-loc_0001B514:
+; MalagaShop_LoadAssortment_Done
+MalagaShop_LoadAssortment_Done:
 	MOVE.w	(A1)+, (A2)+
-	DBF	D7, loc_0001B514
+	DBF	D7, MalagaShop_LoadAssortment_Done
 	RTS
 
 ; loc_0001B51C
@@ -31861,7 +32233,8 @@ DialogState_MalageShopConfirmOrCancel_Loop:
 	MOVE.w	(A2)+, D7
 	BLE.b	ShopBuy_ConfirmBuy
 	SUBQ.w	#1, D7
-loc_0001B9FC:
+; DialogState_MalageShopConfirmOrCancel_Loop_Done
+DialogState_MalageShopConfirmOrCancel_Loop_Done:
 	MOVE.w	D7, D1
 	ADD.w	D1, D1
 	MOVE.w	(A2,D1.w), D3
@@ -31879,7 +32252,7 @@ DialogState_MalageShopConfirmOrCancel_Loop3:
 	JSR	RemoveItemFromArray
 ; DialogState_MalageShopConfirmOrCancel_Loop2
 DialogState_MalageShopConfirmOrCancel_Loop2:
-	DBF	D7, loc_0001B9FC
+	DBF	D7, DialogState_MalageShopConfirmOrCancel_Loop_Done
 	MOVE.w	(A1), D0
 	CMPI.w	#8, D0
 	BLT.b	ShopBuy_ConfirmBuy
@@ -32692,12 +33065,13 @@ DialogState_SellInventoryConfirmAndSell_Loop:
 	MOVE.w	D0, D2
 	MOVE.w	#$000A, D1
 	ASR.w	D1, D0
-loc_0001C42C:
+; DialogState_SellInventoryConfirmAndSell_Loop_Done
+DialogState_SellInventoryConfirmAndSell_Loop_Done:
 	BTST.l	#0, D0
 	BNE.b	DialogState_SellInventoryConfirmAndSell_Loop2
 	LEA	$2(A2), A2
 	ASR.w	#1, D0
-	BRA.b	loc_0001C42C
+	BRA.b	DialogState_SellInventoryConfirmAndSell_Loop_Done
 ; DialogState_SellInventoryConfirmAndSell_Loop2
 DialogState_SellInventoryConfirmAndSell_Loop2:
 	MOVE.w	#$FFFF, (A2)
@@ -32977,14 +33351,15 @@ InnWatling_CreditNight:
 	BEQ.w	InnWatling_SetRestState
 	MOVE.w	Watling_inn_unpaid_nights.w, D7
 	SUBQ.w	#1, D7
-loc_0001C79C:
+; InnWatling_CreditNight_Done
+InnWatling_CreditNight_Done:
 	MOVE.l	Player_kims.w, D1
 	ANDI.l	#$00FFFFFF, D1
 	CMPI.l	#$400, D1
 	BLT.b	InnWatling_CreditNight_Loop
 	MOVE.l	#$400, Transaction_amount.w
 	JSR	DeductPaymentAmount
-	DBF	D7, loc_0001C79C
+	DBF	D7, InnWatling_CreditNight_Done
 	BRA.b	InnWatling_CreditNight_Loop2
 ; InnWatling_CreditNight_Loop
 InnWatling_CreditNight_Loop:
@@ -33464,7 +33839,8 @@ DialogState_SaveMenuInput_Loop:
 CheckIfCursed:
 	MOVE.w	#2, D7
 	LEA	Equipped_items.w, A0
-loc_0001CE06:
+; CheckIfCursed_Done
+CheckIfCursed_Done:
 	MOVE.w	(A0)+, D3
 	BLT.b	ScanInventory_NotFound
 	MOVE.w	#9, D0
@@ -33474,7 +33850,7 @@ loc_0001CE06:
 	BRA.b	ScanInventory_NotFound_Loop
 ; loc_0001CE18
 ScanInventory_NotFound:
-	DBF	D7, loc_0001CE06
+	DBF	D7, CheckIfCursed_Done
 	CLR.w	D0
 ; ScanInventory_NotFound_Loop
 ScanInventory_NotFound_Loop:
@@ -33484,7 +33860,8 @@ ScanInventory_NotFound_Loop:
 RemoveCursedEquipment:
 	MOVE.w	#2, D7
 	LEA	Equipped_items.w, A0
-loc_0001CE28:
+; RemoveCursedEquipment_Done
+RemoveCursedEquipment_Done:
 	MOVE.w	(A0)+, D3
 	MOVE.w	#9, D0
 	BTST.l	D0, D3
@@ -33505,10 +33882,11 @@ RemoveCursedEquipment_Loop:
 	SUB.w	D1, Player_ac.w	
 ; loc_0001CE5C
 RecalcArmorClass_NextItem:
-	DBF	D7, loc_0001CE28
+	DBF	D7, RemoveCursedEquipment_Done
 	LEA	Possessed_equipment_list.w, A0
 	MOVE.w	Possessed_equipment_length.w, D7
-loc_0001CE68:
+; RecalcArmorClass_NextItem_Done
+RecalcArmorClass_NextItem_Done:
 	MOVE.w	(A0)+, D3
 	MOVE.w	#9, D0
 	BTST.l	D0, D3
@@ -33517,7 +33895,7 @@ loc_0001CE68:
 	MOVE.w	D3, -$2(A0)
 ; RecalcArmorClass_NextItem_Loop
 RecalcArmorClass_NextItem_Loop:
-	DBF	D7, loc_0001CE68
+	DBF	D7, RecalcArmorClass_NextItem_Done
 	RTS
 
 CheckPlayerTalkToNPC:
@@ -33531,7 +33909,8 @@ CheckPlayerTalkToNPC:
 	ADD.w	$2(A1,D2.w), D1
 	MOVEQ	#$0000001D, D7
 	MOVEA.l	Enemy_list_ptr.w, A6
-loc_0001CEA6:
+; CheckPlayerTalkToNPC_Done
+CheckPlayerTalkToNPC_Done:
 	BTST.b	#7, (A6)
 	BEQ.b	FindNpcByScript_NextEntry_Loop
 	MOVE.w	$E(A6), D2
@@ -33555,7 +33934,7 @@ FindNpcByScript_NextEntry:
 	CLR.w	D2
 	MOVE.b	$1(A6), D2
 	LEA	(A6,D2.w), A6
-	DBF	D7, loc_0001CEA6
+	DBF	D7, CheckPlayerTalkToNPC_Done
 ; FindNpcByScript_NextEntry_Loop
 FindNpcByScript_NextEntry_Loop:
 	PRINT 	NoOneHereStr
@@ -34088,7 +34467,8 @@ UnequipItemByID:
 	LEA	Possessed_equipment_length.w, A1
 	MOVE.w	(A1)+, D7
 	SUBQ.w	#1, D7
-loc_0001D594:
+; UnequipItemByID_Done
+UnequipItemByID_Done:
 	MOVE.w	(A1)+, D1
 	CMP.b	D0, D1
 	BNE.b	FindEquipSlot_Done
@@ -34098,7 +34478,7 @@ loc_0001D594:
 	BRA.b	FindEquipSlot_Done_Loop
 ; loc_0001D5A6
 FindEquipSlot_Done:
-	DBF	D7, loc_0001D594
+	DBF	D7, UnequipItemByID_Done
 ; FindEquipSlot_Done_Loop
 FindEquipSlot_Done_Loop:
 	RTS
@@ -34112,7 +34492,8 @@ BuildEquipmentListForCategory:
 	MOVE.w	(A1)+, D7
 	BLE.b	BuildEquipmentListForCategory_Loop
 	SUBQ.w	#1, D7
-loc_0001D5C4:
+; BuildEquipmentListForCategory_Done
+BuildEquipmentListForCategory_Done:
 	MOVE.w	(A1)+, D1
 	BTST.l	D0, D1
 	BEQ.b	BuildEquipmentListForCategory_Loop2
@@ -34120,7 +34501,7 @@ loc_0001D5C4:
 	ADDQ.w	#1, D2
 ; BuildEquipmentListForCategory_Loop2
 BuildEquipmentListForCategory_Loop2:
-	DBF	D7, loc_0001D5C4
+	DBF	D7, BuildEquipmentListForCategory_Done
 ; BuildEquipmentListForCategory_Loop
 BuildEquipmentListForCategory_Loop:
 	MOVE.w	D2, Ready_equipment_list_length.w
@@ -34149,7 +34530,8 @@ EquipSelectedItem:
 	MOVE.w	D1, (A2,D2.w)
 	LEA	Possessed_equipment_list.w, A2
 	MOVE.w	Possessed_equipment_length.w, D7
-loc_0001D614:
+; EquipSelectedItem_Done
+EquipSelectedItem_Done:
 	MOVE.w	(A2)+, D3
 	CMP.b	D3, D1
 	BNE.b	EquipSelectedItem_Loop
@@ -34158,7 +34540,7 @@ loc_0001D614:
 	BRA.b	EquipSelectedItem_Loop2
 ; EquipSelectedItem_Loop
 EquipSelectedItem_Loop:
-	DBF	D7, loc_0001D614
+	DBF	D7, EquipSelectedItem_Done
 ; EquipSelectedItem_Loop2
 EquipSelectedItem_Loop2:
 	RTS
@@ -34166,7 +34548,8 @@ EquipSelectedItem_Loop2:
 ClearEquipmentCursedFlag:
 	LEA	Possessed_equipment_list.w, A0
 	MOVE.w	Possessed_equipment_length.w, D7
-loc_0001D632:
+; ClearEquipmentCursedFlag_Done
+ClearEquipmentCursedFlag_Done:
 	MOVE.w	(A0)+, D3
 	MOVE.w	D3, D4
 	CMP.b	D3, D0
@@ -34178,7 +34561,7 @@ loc_0001D632:
 	BRA.b	FindUnequipSlot_Done_Loop
 ; loc_0001D64A
 FindUnequipSlot_Done:
-	DBF	D7, loc_0001D632
+	DBF	D7, ClearEquipmentCursedFlag_Done
 ; FindUnequipSlot_Done_Loop
 FindUnequipSlot_Done_Loop:
 	RTS
@@ -34902,24 +35285,27 @@ WriteChestAnimationToVRAM:
 	MOVE.l	#$67100003, D5
 	ORI	#$0700, SR
 	MOVE.w	#5, D7
-loc_0001DEF2:
+; WriteChestAnimationToVRAM_Done
+WriteChestAnimationToVRAM_Done:
 	MOVE.l	D5, VDP_control_port
 	MOVE.w	#3, D6
-loc_0001DEFC:
+; WriteChestAnimationToVRAM_Done2
+WriteChestAnimationToVRAM_Done2:
 	CLR.w	D0
 	MOVE.b	(A0)+, D0
 	ADDI.w	#$A44C, D0
 	MOVE.w	D0, VDP_data_port
-	DBF	D6, loc_0001DEFC
+	DBF	D6, WriteChestAnimationToVRAM_Done2
 	MOVE.w	#2, D6
-loc_0001DF12:
+; WriteChestAnimationToVRAM_Done3
+WriteChestAnimationToVRAM_Done3:
 	CLR.w	D0
 	MOVE.b	(A0)+, D0
 	ADDI.w	#$AC4C, D0
 	MOVE.w	D0, VDP_data_port
-	DBF	D6, loc_0001DF12
+	DBF	D6, WriteChestAnimationToVRAM_Done3
 	ADDI.l	#$00800000, D5
-	DBF	D7, loc_0001DEF2
+	DBF	D7, WriteChestAnimationToVRAM_Done
 	ANDI	#$F8FF, SR
 	RTS
 	
@@ -34932,7 +35318,8 @@ CheckIfDoorIsLocked:
 	ADD.w	(A2,D0.w), D3
 	ADD.w	$2(A2,D0.w), D4
 	LEA	LockedDoorDataTable, A0
-loc_0001DF56:
+; CheckIfDoorIsLocked_Done
+CheckIfDoorIsLocked_Done:
 	LEA	(A0), A1
 	MOVE.w	(A1)+, D0
 	BLT.w	CheckBlockedDoor_NextEntry_Loop
@@ -34949,7 +35336,7 @@ loc_0001DF56:
 ; loc_0001DF78
 CheckBlockedDoor_NextEntry:
 	LEA	$8(A0), A0
-	BRA.b	loc_0001DF56
+	BRA.b	CheckIfDoorIsLocked_Done
 ; CheckBlockedDoor_NextEntry_Loop
 CheckBlockedDoor_NextEntry_Loop:
 	MOVE.b	#$FF, Door_unlocked_flag.w
@@ -35067,7 +35454,8 @@ DialogClose_RestoreHud_Loop:
 	ADD.w	D0, D0
 	ADD.w	D0, D0
 	MOVEA.l	(A0,D0.w), A0
-loc_0001E114:
+; DialogClose_RestoreHud_Loop_Done
+DialogClose_RestoreHud_Loop_Done:
 	LEA	(A0), A1
 	MOVE.w	(A1)+, D0
 	BLT.w	DialogSelectState2_Wait_Loop
@@ -35086,7 +35474,7 @@ loc_0001E114:
 ; loc_0001E140
 DialogSelectState2_Wait:
 	LEA	$A(A0), A0
-	BRA.b	loc_0001E114
+	BRA.b	DialogClose_RestoreHud_Loop_Done
 ; DialogSelectState2_Wait_Loop
 DialogSelectState2_Wait_Loop:
 	MOVE.w	#1, Dialog_selection.w
@@ -36456,12 +36844,13 @@ CheckGameComplete_Loop:
 SelectDialogueByGameState:
 	BSR.b	CheckGameComplete
 	BNE.b	SelectDialogTable_Found
-loc_0001F1C0:
+; SelectDialogueByGameState_Done
+SelectDialogueByGameState_Done:
 	MOVEA.l	(A1)+, A0
 	MOVEA.l	(A1)+, A2
 	TST.b	(A2)
 	BNE.b	SelectDialogTable_Found
-	DBF	D7, loc_0001F1C0
+	DBF	D7, SelectDialogueByGameState_Done
 	MOVEA.l	(A1), A0
 ; loc_0001F1CE
 SelectDialogTable_Found:
@@ -78730,7 +79119,8 @@ ProcessFMSoundChannels:
 	MOVE.b	#0, $00FFF421
 	MOVE.w	#8, D6
 	LEA	$00FFF430, A3
-loc_0009292A:
+; ProcessFMSoundChannels_Done
+ProcessFMSoundChannels_Done:
 	MOVE.l	D6, -(A7)
 	BTST.b	#7, (A3)
 	BEQ.b	ProcessFMSoundChannels_Loop
@@ -78739,11 +79129,12 @@ loc_0009292A:
 ProcessFMSoundChannels_Loop:
 	ADDA.w	#$0030, A3
 	MOVE.l	(A7)+, D6
-	DBF	D6, loc_0009292A
+	DBF	D6, ProcessFMSoundChannels_Done
 	MOVE.b	#$80, $00FFF421
 	MOVE.w	#3, D6
 	LEA	$00FFF5E0, A3
-loc_00092952:
+; ProcessFMSoundChannels_Loop_Done
+ProcessFMSoundChannels_Loop_Done:
 	MOVE.l	D6, -(A7)
 	BTST.b	#7, (A3)
 	BEQ.b	ProcessFMSoundChannels_Loop2
@@ -78752,7 +79143,7 @@ loc_00092952:
 ProcessFMSoundChannels_Loop2:
 	ADDA.w	#$0030, A3
 	MOVE.l	(A7)+, D6
-	DBF	D6, loc_00092952
+	DBF	D6, ProcessFMSoundChannels_Loop_Done
 	RTS
 	
 ProcessSoundChannel_FM:
@@ -78870,7 +79261,8 @@ SoundChannel_NoteLoop2_Loop:
 	BNE.w	SoundChannel_NoteLoop
 	BTST.b	#5, $0(A3)
 	BNE.w	LoadNextSoundNote_WithPitchSlide_Loop
-loc_00092AB2:
+; SoundChannel_NoteLoop2_Loop_Done
+SoundChannel_NoteLoop2_Loop_Done:
 	BSR.w	WriteFMChannelRegisters
 	TST.b	D5
 	BPL.w	SetSoundNote_Positive2
@@ -78907,15 +79299,16 @@ LoadNextSoundNote_WithPitchSlide:
 	BCLR.b	#1, $0(A3)
 	BSR.w	LoadSoundScriptPointer
 	MOVE.b	(A4)+, D5
-loc_00092B04:
+; LoadNextSoundNote_WithPitchSlide_Done
+LoadNextSoundNote_WithPitchSlide_Done:
 	CMPI.b	#$E0, D5
 	BCS.w	LoadNextSoundNote_WithPitchSlide_Loop2
 	BSR.w	ProcessSoundScriptCommand
-	BRA.b	loc_00092B04
+	BRA.b	LoadNextSoundNote_WithPitchSlide_Done
 ; LoadNextSoundNote_WithPitchSlide_Loop2
 LoadNextSoundNote_WithPitchSlide_Loop2:
 	BTST.b	#5, $0(A3)
-	BEQ.w	loc_00092AB2
+	BEQ.w	SoundChannel_NoteLoop2_Loop_Done
 ; LoadNextSoundNote_WithPitchSlide_Loop
 LoadNextSoundNote_WithPitchSlide_Loop:
 	BSR.w	WriteFMChannelRegisters
@@ -79168,7 +79561,8 @@ LoadDAC_SampleToZ80:
 	ASR.w	#4, D6
 	MOVE.w	#$0100, Z80_bus_request
 	LEA	$00A00200, A5
-loc_00092D9C:
+; LoadDAC_SampleToZ80_Done
+LoadDAC_SampleToZ80_Done:
 	MOVE.b	(A6)+, (A5)+
 	MOVE.b	(A6)+, (A5)+
 	MOVE.b	(A6)+, (A5)+
@@ -79185,7 +79579,7 @@ loc_00092D9C:
 	MOVE.b	(A6)+, (A5)+
 	MOVE.b	(A6)+, (A5)+
 	MOVE.b	(A6)+, (A5)+
-	DBF	D6, loc_00092D9C
+	DBF	D6, LoadDAC_SampleToZ80_Done
 	MOVE.w	#0, Z80_bus_request
 	MOVE.b	$21(A3), D1
 	MOVE.b	#$B4, D0
@@ -79451,7 +79845,8 @@ SoundCommand_JumpTable_Loop2:
 	MOVE.w	#0, D5
 	MOVE.b	(A0)+, D5
 	SUBQ.b	#1, D5
-loc_00093062:
+; SoundCommand_JumpTable_Loop2_Done
+SoundCommand_JumpTable_Loop2_Done:
 	CLR.w	D0
 	MOVE.b	$1(A0), D0
 	SUBQ.b	#2, D0
@@ -79463,19 +79858,21 @@ loc_00093062:
 	MOVEA.l	A2, A1
 	MOVEQ	#0, D0
 	MOVEQ	#$0000000B, D6
-loc_00093088:
+; SoundCommand_JumpTable_Loop2_Done2
+SoundCommand_JumpTable_Loop2_Done2:
 	MOVE.l	D0, (A1)+
-	DBF	D6, loc_00093088
+	DBF	D6, SoundCommand_JumpTable_Loop2_Done2
 	MOVEA.l	A0, A3
 	MOVEA.l	A2, A1
 	MOVE.w	#8, D6
-loc_00093096:
+; SoundCommand_JumpTable_Loop2_Done3
+SoundCommand_JumpTable_Loop2_Done3:
 	MOVE.b	(A0)+, (A1)+
-	DBF	D6, loc_00093096
+	DBF	D6, SoundCommand_JumpTable_Loop2_Done3
 	MOVE.b	#$C0, $21(A2)
 	MOVE.w	#1, $A(A2)
 	ADDA.w	#$0030, A2
-	DBF	D5, loc_00093062
+	DBF	D5, SoundCommand_JumpTable_Loop2_Done
 	BRA.w	SoundInit_Done
 ; SoundCommand_JumpTable_Loop3
 SoundCommand_JumpTable_Loop3:
@@ -79484,9 +79881,10 @@ SoundCommand_JumpTable_Loop3:
 	MOVE.b	(A0)+, D0
 	LEA	$00FFF670, A1
 	MOVE.w	#8, D6
-loc_000930CC:
+; SoundCommand_JumpTable_Loop3_Done
+SoundCommand_JumpTable_Loop3_Done:
 	MOVE.b	(A0)+, (A1)+
-	DBF	D6, loc_000930CC
+	DBF	D6, SoundCommand_JumpTable_Loop3_Done
 	LEA	$00FFF670, A1
 	MOVE.b	#$C0, $21(A1)
 	MOVE.w	#1, $A(A1)
@@ -79517,17 +79915,19 @@ SoundCommand_JumpTable_Loop:
 	MOVE.b	(A0)+, D5
 	SUBQ.b	#1, D5
 	LEA	$00FFF430, A2
-loc_0009314A:
+; SoundCommand_JumpTable_Loop_Done
+SoundCommand_JumpTable_Loop_Done:
 	MOVEA.l	A2, A1
 	MOVE.w	#8, D6
-loc_00093150:
+; SoundCommand_JumpTable_Loop_Done2
+SoundCommand_JumpTable_Loop_Done2:
 	MOVE.b	(A0)+, (A1)+
-	DBF	D6, loc_00093150
+	DBF	D6, SoundCommand_JumpTable_Loop_Done2
 	MOVE.b	#$C0, $21(A2)
 	MOVE.b	#$30, $9(A2)
 	MOVE.w	#1, $A(A2)
 	ADDA.l	#$00000030, A2
-	DBF	D5, loc_0009314A
+	DBF	D5, SoundCommand_JumpTable_Loop_Done
 	BRA.w	SoundInit_Done
 ; SoundInit_StopAndConfigure
 SoundInit_StopAndConfigure:
@@ -79552,9 +79952,10 @@ StopAllActiveSounds:
 	MOVEA.l	(A7)+, A3
 	LEA	$00FFF400, A6
 	MOVE.w	#$009B, D6
-loc_000931B0:
+; StopAllActiveSounds_Done
+StopAllActiveSounds_Done:
 	MOVE.l	#0, (A6)+
-	DBF	D6, loc_000931B0
+	DBF	D6, StopAllActiveSounds_Done
 	BSR.w	MutePSG_AllChannels
 	RTS
 	
@@ -79568,10 +79969,11 @@ ProcessSound_TempoCounter:
 	MOVE.b	(A0), (A1)
 	LEA	$00FFF430, A0
 	MOVE.w	#8, D6
-loc_000931E2:
+; ProcessSound_TempoCounter_Done
+ProcessSound_TempoCounter_Done:
 	ADDQ.w	#1, $A(A0)
 	ADDA.l	#$30, A0
-	DBF	D6, loc_000931E2
+	DBF	D6, ProcessSound_TempoCounter_Done
 ; loc_000931F0
 SoundObjTick_Return:
 	RTS
@@ -79599,12 +80001,13 @@ ProcessSound_FadeOut_Loop2:
 	MOVE.b	#2, $00FFF41D
 	LEA	$00FFF430, A3
 	MOVE.w	#8, D6
-loc_00093242:
+; ProcessSound_FadeOut_Loop2_Done
+ProcessSound_FadeOut_Loop2_Done:
 	ADDQ.b	#1, $8(A3)
 	MOVE.b	$8(A3), D3
 	BSR.w	UpdateFM_TotalLevelRegisters
 	ADDA.w	#$0030, A3
-	DBF	D6, loc_00093242
+	DBF	D6, ProcessSound_FadeOut_Loop2_Done
 ; ProcessSound_FadeOut_Loop
 ProcessSound_FadeOut_Loop:
 	RTS
@@ -79641,17 +80044,19 @@ InitFM_ChannelsToSilence:
 	MOVEQ	#6, D6
 	MOVE.b	#$28, D0
 	MOVE.b	#0, D1
-loc_000932AC:
+; InitFM_ChannelsToSilence_Done
+InitFM_ChannelsToSilence_Done:
 	BSR.w	WriteYM2612Register
 	ADDQ.b	#1, D1
-	DBF	D6, loc_000932AC
+	DBF	D6, InitFM_ChannelsToSilence_Done
 	LEA	$00FFF430, A3
 	MOVE.w	#5, D7
-loc_000932C0:
+; InitFM_ChannelsToSilence_Done2
+InitFM_ChannelsToSilence_Done2:
 	LEA	loc_000932D4, A0
 	BSR.w	WriteFM_ChannelRegisters
 	ADDA.w	#$0030, A3
-	DBF	D7, loc_000932C0
+	DBF	D7, InitFM_ChannelsToSilence_Done2
 	RTS
 	
 loc_000932D4:
@@ -79667,19 +80072,21 @@ MutePSG_AllChannels:
 LoadFM_AlgorithmData:
 	MOVE.w	#4, D6
 	CLR.w	D0
-loc_0009331E:
+; LoadFM_AlgorithmData_Done
+LoadFM_AlgorithmData_Done:
 	MOVE.b	(A0)+, $1C(A3,D0.w)
 	ADDQ.b	#1, D0
-	DBF	D6, loc_0009331E
+	DBF	D6, LoadFM_AlgorithmData_Done
 	SUBQ.w	#5, A0
 WriteFM_ChannelRegisters:
 	MOVEA.l	#loc_00093358, A2
 	MOVE.w	#$0018, D6
-loc_00093334:
+; WriteFM_ChannelRegisters_Done
+WriteFM_ChannelRegisters_Done:
 	MOVE.b	(A2)+, D0
 	MOVE.b	(A0)+, D1
 	BSR.w	WriteYM2612Register
-	DBF	D6, loc_00093334
+	DBF	D6, WriteFM_ChannelRegisters_Done
 	MOVE.b	#$B4, D0
 	MOVE.b	$21(A3), D1
 	BSR.w	WriteYM2612Register
@@ -79795,9 +80202,10 @@ WriteYM2612Register_Part1_Loop:
 	
 WaitYM2612Ready:
 	MOVE.w	#$0100, Z80_bus_request
-loc_00093482:
+; WaitYM2612Ready_Done
+WaitYM2612Ready_Done:
 	BTST.b	#0, Z80_bus_request
-	BNE.b	loc_00093482
+	BNE.b	WaitYM2612Ready_Done
 	BTST.b	#7, $00A01FFD
 	BEQ.b	WaitYM2612Ready_Loop
 	MOVE.w	#0, Z80_bus_request
@@ -79853,11 +80261,12 @@ loc_00093594:
 ProcessSoundScriptNote:
 	BSR.w	LoadSoundScriptPointer
 	MOVE.b	(A4)+, D5
-loc_000935A8:
+; ProcessSoundScriptNote_Done
+ProcessSoundScriptNote_Done:
 	CMPI.b	#$E0, D5
 	BCS.w	ProcessSoundScriptNote_Loop
 	BSR.w	ProcessSoundScriptCommand
-	BRA.b	loc_000935A8
+	BRA.b	ProcessSoundScriptNote_Done
 ; ProcessSoundScriptNote_Loop
 ProcessSoundScriptNote_Loop:
 	TST.b	D5
@@ -79878,11 +80287,12 @@ SoundChannel_NoteLoop3:
 loc_000935DA:
 	BSR.w	LoadSoundScriptPointer	
 	MOVE.b	(A4)+, D5	
-loc_000935E0:
+; SoundChannel_NoteLoop3_Done
+SoundChannel_NoteLoop3_Done:
 	CMPI.b	#$E0, D5	
 	BCS.w	SoundChannel_NoteLoop3_Loop	
 	BSR.w	ProcessSoundScriptCommand	
-	BRA.b	loc_000935E0	
+	BRA.b	SoundChannel_NoteLoop3_Done	
 ; SoundChannel_NoteLoop3_Loop
 SoundChannel_NoteLoop3_Loop:
 	BSR.w	SetSoundNoteFrequency	
