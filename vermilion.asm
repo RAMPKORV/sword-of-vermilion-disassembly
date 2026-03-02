@@ -10633,8 +10633,8 @@ InitEnemy_StandardMelee:
 	MOVE.l	#EnemyChildSpriteTick, $2(A6)
 	MOVE.w	#$0018, Enemy_anim_frame_mask.w
 	MOVE.w	#2, Enemy_anim_frame_shift.w
-	MOVE.l	#loc_0003DB90, Enemy_anim_table_main.w
-	MOVE.l	#loc_0003DB50, Enemy_anim_table_child.w
+	MOVE.l	#EnemyAnimFrames_MeleeA_Main, Enemy_anim_table_main.w
+	MOVE.l	#EnemyAnimFrames_MeleeA_Child, Enemy_anim_table_child.w
 	RTS
 
 InitEnemy_StandardMeleeAlt:
@@ -10649,8 +10649,8 @@ InitEnemy_StandardMeleeAlt:
 	MOVE.l	#EnemyChildSpriteTick, $2(A6)
 	MOVE.w	#$0018, Enemy_anim_frame_mask.w
 	MOVE.w	#2, Enemy_anim_frame_shift.w
-	MOVE.l	#loc_0003DCB0, Enemy_anim_table_main.w
-	MOVE.l	#loc_0003DC70, Enemy_anim_table_child.w
+	MOVE.l	#EnemyAnimFrames_MeleeB_Main, Enemy_anim_table_main.w
+	MOVE.l	#EnemyAnimFrames_MeleeB_Child, Enemy_anim_table_child.w
 	RTS
 
 InitEnemy_StandardMeleeFast:
@@ -10665,8 +10665,8 @@ InitEnemy_StandardMeleeFast:
 	MOVE.l	#EnemyChildSpriteTick, $2(A6)
 	MOVE.w	#$000C, Enemy_anim_frame_mask.w
 	MOVE.w	#1, Enemy_anim_frame_shift.w
-	MOVE.l	#loc_0003DB90, Enemy_anim_table_main.w
-	MOVE.l	#loc_0003DB50, Enemy_anim_table_child.w
+	MOVE.l	#EnemyAnimFrames_MeleeA_Main, Enemy_anim_table_main.w
+	MOVE.l	#EnemyAnimFrames_MeleeA_Child, Enemy_anim_table_child.w
 	RTS
 
 EnemyTick_StandardMelee:
@@ -10764,8 +10764,8 @@ InitEnemy_StalkPause:
 	MOVE.l	#EnemyChildSpriteTick, $2(A6)
 	MOVE.w	#$0018, Enemy_anim_frame_mask.w
 	MOVE.w	#2, Enemy_anim_frame_shift.w
-	MOVE.l	#loc_0003DB90, Enemy_anim_table_main.w
-	MOVE.l	#loc_0003DB50, Enemy_anim_table_child.w
+	MOVE.l	#EnemyAnimFrames_MeleeA_Main, Enemy_anim_table_main.w
+	MOVE.l	#EnemyAnimFrames_MeleeA_Child, Enemy_anim_table_child.w
 	RTS
 
 ; InitEnemy_StalkPauseAlt
@@ -10777,8 +10777,8 @@ InitEnemy_StalkPauseAlt:
 	MOVE.l	#EnemyChildSpriteTick, $2(A6)
 	MOVE.w	#$000C, Enemy_anim_frame_mask.w
 	MOVE.w	#1, Enemy_anim_frame_shift.w
-	MOVE.l	#loc_0003DB90, Enemy_anim_table_main.w
-	MOVE.l	#loc_0003DB50, Enemy_anim_table_child.w
+	MOVE.l	#EnemyAnimFrames_MeleeA_Main, Enemy_anim_table_main.w
+	MOVE.l	#EnemyAnimFrames_MeleeA_Child, Enemy_anim_table_child.w
 	RTS
 
 EnemyTick_StalkPause:
@@ -11015,8 +11015,8 @@ loc_00009A1C:
 loc_00009A4A:
 	ASL.w	#3, D1
 	ADD.w	D0, D1
-	LEA	loc_0003DB90, A0
-	LEA	loc_0003DB50, A1
+	LEA	EnemyAnimFrames_MeleeA_Main, A0
+	LEA	EnemyAnimFrames_MeleeA_Child, A1
 	MOVE.w	(A0,D1.w), $8(A5)
 	MOVE.w	(A1,D1.w), $8(A6)
 	BSR.w	CopyPositionToLinkedSprite
@@ -11216,8 +11216,8 @@ loc_00009D00:
 loc_00009D2E:
 	ASL.w	#3, D1
 	ADD.w	D0, D1
-	LEA	loc_0003DCB0, A0
-	LEA	loc_0003DC70, A1
+	LEA	EnemyAnimFrames_MeleeB_Main, A0
+	LEA	EnemyAnimFrames_MeleeB_Child, A1
 	MOVE.w	(A0,D1.w), $8(A5)
 	MOVE.w	(A1,D1.w), $8(A6)
 	BSR.w	CopyEnemyPositionToChildObject
@@ -11236,7 +11236,7 @@ loc_00009D72:
 	MOVE.b	$1B(A5), D0
 	ANDI.w	#$000C, D0
 	ASR.w	#1, D0
-	LEA	loc_0003DCF0, A2
+	LEA	EnemyAnimFrames_Fireball, A2
 	MOVE.w	(A2,D0.w), $8(A5)
 	JSR	AddSpriteToDisplayList
 	RTS
@@ -11320,8 +11320,8 @@ loc_00009E7A:
 loc_00009EB4:
 	ASL.w	#3, D1
 	ADD.w	D0, D1
-	LEA	loc_0003DB90, A0
-	LEA	loc_0003DB50, A1
+	LEA	EnemyAnimFrames_MeleeA_Main, A0
+	LEA	EnemyAnimFrames_MeleeA_Child, A1
 	MOVE.w	(A0,D1.w), $8(A5)
 	MOVE.w	(A1,D1.w), $8(A6)
 	MOVE.b	$7(A5), $7(A6)
@@ -11366,7 +11366,7 @@ loc_00009F50:
 	MOVE.b	$1B(A5), D0
 	ANDI.w	#$0018, D0
 	ASR.w	#2, D0
-	LEA	loc_0003DCF0, A2
+	LEA	EnemyAnimFrames_Fireball, A2
 	MOVE.w	(A2,D0.w), $8(A5)
 	JSR	AddSpriteToDisplayList
 	RTS
@@ -11468,8 +11468,8 @@ loc_0000A086:
 loc_0000A0B4:
 	ASL.w	#3, D1
 	ADD.w	D0, D1
-	LEA	loc_0003DB90, A0
-	LEA	loc_0003DB50, A1
+	LEA	EnemyAnimFrames_MeleeA_Main, A0
+	LEA	EnemyAnimFrames_MeleeA_Child, A1
 	MOVE.w	(A0,D1.w), $8(A5)
 	MOVE.w	(A1,D1.w), $8(A6)
 	BSR.w	CopyPositionToLinkedSprite
@@ -11716,8 +11716,8 @@ loc_0000A3F2:
 loc_0000A420:
 	ASL.w	#3, D1
 	ADD.w	D0, D1
-	LEA	loc_0003DCB0, A0
-	LEA	loc_0003DC70, A1
+	LEA	EnemyAnimFrames_MeleeB_Main, A0
+	LEA	EnemyAnimFrames_MeleeB_Child, A1
 	MOVE.w	(A0,D1.w), $8(A5)
 	MOVE.w	(A1,D1.w), $8(A6)
 	BSR.w	CopyEnemyPositionToChildObject
@@ -11734,7 +11734,7 @@ ProjectileTick_Straight:
 	MOVE.b	$1B(A5), D0
 	ANDI.w	#$000C, D0
 	ASR.w	#1, D0
-	LEA	loc_0003DCF0, A2
+	LEA	EnemyAnimFrames_Fireball, A2
 	MOVE.w	(A2,D0.w), $8(A5)
 	JSR	AddSpriteToDisplayList(PC)
 loc_0000A476:
@@ -11819,8 +11819,8 @@ loc_0000A55E:
 loc_0000A598:
 	ASL.w	#3, D1
 	ADD.w	D0, D1
-	LEA	loc_0003DB90, A0
-	LEA	loc_0003DB50, A1
+	LEA	EnemyAnimFrames_MeleeA_Main, A0
+	LEA	EnemyAnimFrames_MeleeA_Child, A1
 	MOVE.w	(A0,D1.w), $8(A5)
 	MOVE.w	(A1,D1.w), $8(A6)
 	MOVE.b	$7(A5), $7(A6)
@@ -11869,7 +11869,7 @@ loc_0000A644:
 	MOVE.b	$1B(A5), D0
 	ANDI.w	#$000C, D0
 	ASR.w	#1, D0
-	LEA	loc_0003DCF0, A2
+	LEA	EnemyAnimFrames_Fireball, A2
 	MOVE.w	(A2,D0.w), $8(A5)
 	JSR	AddSpriteToDisplayList
 	RTS
@@ -11974,8 +11974,8 @@ loc_0000A784:
 loc_0000A7BE:
 	ASL.w	#3, D1
 	ADD.w	D0, D1
-	LEA	loc_0003DB90, A0
-	LEA	loc_0003DB50, A1
+	LEA	EnemyAnimFrames_MeleeA_Main, A0
+	LEA	EnemyAnimFrames_MeleeA_Child, A1
 	MOVE.w	(A0,D1.w), $8(A5)
 	MOVE.w	(A1,D1.w), $8(A6)
 	MOVE.b	$7(A5), $7(A6)
@@ -12181,7 +12181,7 @@ loc_0000AA9E:
 	MOVE.b	$1B(A5), D0
 	ANDI.w	#$000C, D0
 	ASR.w	#1, D0
-	LEA	loc_0003DCF0, A2
+	LEA	EnemyAnimFrames_Fireball, A2
 	MOVE.w	(A2,D0.w), $8(A5)
 	JSR	AddSpriteToDisplayList(PC)
 loc_0000AAD2:
@@ -12326,8 +12326,8 @@ loc_0000AC96:
 loc_0000ACC4:
 	ASL.w	#3, D1
 	ADD.w	D0, D1
-	LEA	loc_0003DCB0, A0
-	LEA	loc_0003DC70, A1
+	LEA	EnemyAnimFrames_MeleeB_Main, A0
+	LEA	EnemyAnimFrames_MeleeB_Child, A1
 	MOVE.w	(A0,D1.w), $8(A5)
 	MOVE.w	(A1,D1.w), $8(A6)
 	BSR.w	CopyEnemyPositionToChildObject
@@ -12386,7 +12386,7 @@ loc_0000AD7E:
 	MOVE.b	$1B(A5), D0
 	ANDI.w	#$000C, D0
 	ASR.w	#1, D0
-	LEA	loc_0003DCF0, A2
+	LEA	EnemyAnimFrames_Fireball, A2
 	MOVE.w	(A2,D0.w), $8(A5)
 	JSR	AddSpriteToDisplayList(PC)
 loc_0000ADB2:
@@ -49719,10 +49719,12 @@ loc_0003DB28:
 	dc.b	$0B
 	dc.b	$04
 	dc.b	$00 
-loc_0003DB50:
+; EnemyAnimFrames_MeleeA_Child
+EnemyAnimFrames_MeleeA_Child:
 	dc.b	$00, $FD, $01, $09, $00, $FD, $01, $15, $00, $FD, $01, $09, $00, $FD, $01, $15, $01, $21, $01, $2D, $01, $21, $01, $39, $01, $21, $01, $2D, $01, $21, $01, $39 
 	dc.b	$00, $D9, $00, $E5, $00, $D9, $00, $F1, $00, $D9, $00, $E5, $00, $D9, $00, $F1, $01, $21, $01, $2D, $01, $21, $01, $39, $01, $21, $01, $2D, $01, $21, $01, $39 
-loc_0003DB90:
+; EnemyAnimFrames_MeleeA_Main
+EnemyAnimFrames_MeleeA_Main:
 	dc.b	$00, $31, $00, $39, $00, $31, $00, $41, $00, $31, $00, $39, $00, $31, $00, $41, $00, $51, $00, $51, $00, $49, $00, $59, $00, $51, $00, $51, $00, $49, $00, $59 
 	dc.b	$00, $19, $00, $21, $00, $19, $00, $29, $00, $19, $00, $21, $00, $19, $00, $29, $00, $51, $00, $51, $00, $49, $00, $59, $00, $51, $00, $51, $00, $49, $00, $59 
 loc_0003DBD0:
@@ -49735,13 +49737,16 @@ loc_0003DBF0:
 loc_0003DC30:
 	dc.b	$01, $09, $01, $45, $01, $09, $01, $45, $00, $FD, $01, $39, $00, $FD, $01, $39, $00, $F1, $01, $2D, $00, $F1, $01, $2D, $00, $E5, $01, $21, $00, $E5, $01, $21 
 	dc.b	$00, $D9, $01, $15, $00, $D9, $01, $15, $00, $E5, $01, $21, $00, $E5, $01, $21, $00, $F1, $01, $2D, $00, $F1, $01, $2D, $00, $FD, $01, $39, $00, $FD, $01, $39 
-loc_0003DC70:
+; EnemyAnimFrames_MeleeB_Child
+EnemyAnimFrames_MeleeB_Child:
 	dc.b	$00, $FD, $01, $09, $00, $FD, $01, $15, $00, $FD, $01, $09, $00, $FD, $01, $15, $01, $21, $01, $2D, $01, $21, $01, $39, $01, $21, $01, $2D, $01, $21, $01, $39 
 	dc.b	$00, $D9, $00, $E5, $00, $D9, $00, $F1, $00, $D9, $00, $E5, $00, $D9, $00, $F1, $01, $21, $01, $2D, $01, $21, $01, $39, $01, $21, $01, $2D, $01, $21, $01, $39 
-loc_0003DCB0:
+; EnemyAnimFrames_MeleeB_Main
+EnemyAnimFrames_MeleeB_Main:
 	dc.b	$00, $3D, $00, $49, $00, $3D, $00, $55, $00, $3D, $00, $49, $00, $3D, $00, $55, $00, $6D, $00, $6D, $00, $61, $00, $79, $00, $6D, $00, $6D, $00, $61, $00, $79 
 	dc.b	$00, $19, $00, $25, $00, $19, $00, $31, $00, $19, $00, $25, $00, $19, $00, $31, $00, $6D, $00, $6D, $00, $61, $00, $79, $00, $6D, $00, $6D, $00, $61, $00, $79 
-loc_0003DCF0:
+; EnemyAnimFrames_Fireball
+EnemyAnimFrames_Fireball:
 	dc.b	$01, $99, $01, $9B, $01, $99, $01, $9D 
 loc_0003DCF8:
 	dc.b	$00, $19, $00, $21, $00, $29, $00, $31, $00, $39 
