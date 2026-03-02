@@ -2883,12 +2883,13 @@ loc_000030EE:
 	ANDI.w	#7, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
-	LEA	loc_00003118, A0
+	LEA	OverworldMenuStateJumpTable, A0
 	JSR	(A0,D0.w)
 loc_00003116:
 	RTS
 
-loc_00003118:
+; loc_00003118
+OverworldMenuStateJumpTable:
 	BRA.w	loc_00003130
 	BRA.w	loc_00003142	
 	BRA.w	loc_00003170	
@@ -3944,7 +3945,8 @@ loc_00003DB6:
 	SUB.l	D2, $E(A5)
 	SUB.l	D3, $12(A5)
 	BRA.w	loc_00003EF8
-loc_00003DFE:
+; loc_00003DFE
+BattlePostVictoryTickHandler:
 	SUBQ.b	#1, $1A(A5)
 	BGE.w	loc_00003E3A
 	TST.w	Enemy_reward_type.w
@@ -3970,15 +3972,15 @@ loc_00003E3A:
 
 loc_00003E48:
 	MOVEA.l	Player_entity_ptr.w, A6
-	MOVE.l	#loc_00003EBC, $2(A6)
+	MOVE.l	#BattleEntityIdleTickHandler, $2(A6)
 	CLR.w	D0
 	MOVE.b	$1(A6), D0
 	LEA	(A6,D0.w), A6
-	MOVE.l	#loc_00003EBC, $2(A6)
+	MOVE.l	#BattleEntityIdleTickHandler, $2(A6)
 	CLR.w	D0
 	MOVE.b	$1(A6), D0
 	LEA	(A6,D0.w), A6
-	MOVE.l	#loc_00003EBC, $2(A6)
+	MOVE.l	#BattleEntityIdleTickHandler, $2(A6)
 	BSR.w	ClearObjectActiveFlags
 	TST.b	Soldier_fight_event_trigger.w
 	BEQ.b	loc_00003E8A
@@ -3997,7 +3999,8 @@ loc_00003EAA:
 	JSR	AddSpriteToDisplayList
 	RTS
 
-loc_00003EBC:
+; loc_00003EBC
+BattleEntityIdleTickHandler:
 	JSR	AddSpriteToDisplayList
 	RTS
 
@@ -4070,7 +4073,7 @@ loc_00003FB8:
 	TST.w	Number_Of_Enemies.w
 	BGE.b	loc_00003FCE
 	MOVE.b	#$3C, $1A(A5)
-	MOVE.l	#loc_00003DFE, $2(A5)
+	MOVE.l	#BattlePostVictoryTickHandler, $2(A5)
 	RTS
 
 loc_00003FCE:
@@ -4207,7 +4210,7 @@ loc_0000412E:
 	MOVE.b	#$FF, $26(A6)
 	MOVEA.l	Object_slot_01_ptr.w, A4
 	BSET.b	#7, (A4)
-	MOVE.l	#loc_000041C2, $2(A4)
+	MOVE.l	#NPCInteractionTickHandler, $2(A4)
 	MOVE.w	$E(A6), $E(A4)
 	MOVE.w	$12(A6), D4
 	SUBI.w	#$0010, D4
@@ -4228,7 +4231,8 @@ loc_0000419E:
 	DBF	D7, loc_0000412E
 	RTS
 
-loc_000041C2:
+; loc_000041C2
+NPCInteractionTickHandler:
 	ADDQ.b	#1, $1B(A5)
 	MOVE.b	#$60, $7(A5)
 	MOVE.b	#5, $6(A5)
@@ -4305,11 +4309,11 @@ InitOverworldPlayerObject:
 	CLR.w	D0
 	MOVE.b	$1(A5), D0
 	LEA	(A5,D0.w), A6
-	MOVE.l	#loc_000052CE, $2(A6)
+	MOVE.l	#NullTickHandler, $2(A6)
 	CLR.w	D0
 	MOVE.b	$1(A6), D0
 	LEA	(A6,D0.w), A6
-	MOVE.l	#loc_000052CE, $2(A6)
+	MOVE.l	#NullTickHandler, $2(A6)
 	MOVE.l	#OverworldPlayerTickHandler, $2(A5)
 	CLR.w	Overworld_movement_frame.w
 	CLR.b	Player_move_forward_in_overworld.w
@@ -4371,7 +4375,8 @@ loc_0000441E:
 	ASR.w	#1, D0
 	LEA	RotateClockwiseJumpTable, A0
 	ADDQ.w	#1, Player_compass_frame.w
-loc_00004446:
+; loc_00004446
+OverworldRotateDispatch:
 	JSR	(A0,D0.w)
 	BRA.w	loc_00004516
 loc_0000444E:
@@ -4549,10 +4554,10 @@ RotateCounterClockwiseJumpTable:
 	BRA.w	loc_00004680
 	BRA.w	loc_000048F8
 loc_00004680:
-	LEA	loc_0000474E, A0
+	LEA	RotateCCW_WestJumpTable, A0
 	BRA.w	loc_00004690
 loc_0000468A:
-	LEA	loc_0000471E, A0
+	LEA	RotateCW_NorthJumpTable, A0
 loc_00004690:
 	BSR.w	InitObjectPositions_21x13
 	LEA	Map_sector_center.w, A2
@@ -4564,10 +4569,10 @@ loc_00004690:
 loc_000046AA:
 	BRA.w	DisplayStatsToVRAM_SinglePalette
 loc_000046AE:
-	LEA	loc_0000475E, A0
+	LEA	RotateCCW_EastJumpTable, A0
 	BRA.w	loc_000046BE
 loc_000046B8:
-	LEA	loc_0000472E, A0
+	LEA	RotateCW_EastJumpTable, A0
 loc_000046BE:
 	BSR.w	InitObjectPositions_21x20
 	BSR.w	UpdatePlayerMapSector
@@ -4578,10 +4583,10 @@ loc_000046BE:
 loc_000046D4:
 	BRA.w	DisplayStatsToVRAM
 loc_000046D8:
-	LEA	loc_0000476E, A0
+	LEA	RotateCCW_SouthJumpTable, A0
 	BRA.w	loc_000046E8
 loc_000046E2:
-	LEA	loc_0000473E, A0
+	LEA	RotateCW_SouthJumpTable, A0
 loc_000046E8:
 	BSR.w	InitObjectPositions_21x13Alt
 	BSR.w	UpdatePlayerMapSector
@@ -4601,32 +4606,38 @@ UpdatePlayerMapSector:
 	JSR	(A0,D4.w)
 	RTS
 
-loc_0000471E:
+; loc_0000471E
+RotateCW_NorthJumpTable:
 	BRA.w	loc_0000479C
 	BRA.w	loc_0000477E
 	BRA.w	loc_00004788
 	BRA.w	loc_00004792
-loc_0000472E:
+; loc_0000472E
+RotateCW_EastJumpTable:
 	BRA.w	loc_000047C4
 	BRA.w	loc_000047A6
 	BRA.w	loc_000047B0
 	BRA.w	loc_000047BA
-loc_0000473E:
+; loc_0000473E
+RotateCW_SouthJumpTable:
 	BRA.w	loc_000047EC
 	BRA.w	loc_000047CE
 	BRA.w	loc_000047D8
 	BRA.w	loc_000047E2
-loc_0000474E:
+; loc_0000474E
+RotateCCW_WestJumpTable:
 	BRA.w	loc_0000477E
 	BRA.w	loc_00004788
 	BRA.w	loc_00004792
 	BRA.w	loc_0000479C
-loc_0000475E:
+; loc_0000475E
+RotateCCW_EastJumpTable:
 	BRA.w	loc_000047A6
 	BRA.w	loc_000047B0
 	BRA.w	loc_000047BA
 	BRA.w	loc_000047C4
-loc_0000476E:
+; loc_0000476E
+RotateCCW_SouthJumpTable:
 	BRA.w	loc_000047CE
 	BRA.w	loc_000047D8
 	BRA.w	loc_000047E2
@@ -5375,7 +5386,8 @@ loc_000052AE:
 	DBF	D7, loc_00005290
 	ANDI	#$F8FF, SR
 	RTS
-loc_000052CE:
+; loc_000052CE
+NullTickHandler:
 	RTS
 ClearFirstPersonTilemap:
 	ORI	#$0700, SR
@@ -21586,9 +21598,10 @@ loc_00012976:					; unreferenced dead code
 	ASL.w	#3, D0
 	MOVEA.l	$0(A1,D0.w), A1
 	MOVE.w	Shop_item_count.w, D7
-	BSR.w	loc_000129A0
+	BSR.w	DrawShopItemNames
 	RTS
-loc_000129A0:
+; loc_000129A0
+DrawShopItemNames:
 	SUBQ.w	#1, D7
 loc_000129A2:
 	CLR.w	D3
@@ -64224,7 +64237,7 @@ loc_00062910:
 	dc.l	LoadMenuTileGfxSet3-3	
 	dc.l	$04050607	
 loc_00062918:
-	dc.l	loc_00004446-2	
+	dc.l	OverworldRotateDispatch-2	
 	dc.l	$80038000	
 	dc.l	$38280228	
 	dc.l	$02181800	
