@@ -7623,6 +7623,8 @@ NPCTick_ParmaFairy:
 	MOVE.l	#NoAnswerStr, $1C(A5)
 loc_0000700C:
 	BRA.b	NPCTick_AnimateEntity
+; loc_0000700E
+NPCInit_Wyclif_ParmaFindRing:
 	BSR.w	SetRandomDirection
 	CLR.b	$25(A5)
 	TST.b	Blade_is_dead.w
@@ -7641,6 +7643,8 @@ NPCTick_ParmaFindRing:
 	MOVE.l	#FindRingStr, $1C(A5)
 loc_0000703E:
 	BRA.w	NPCBehavior_LoadFrame
+; loc_00007042
+NPCInit_Wyclif_UseMapHint1:
 	BSR.w	SetRandomDirection
 	CLR.b	$25(A5)
 	MOVE.l	#NPCTick_Wyclif_UseMapHint1, $2(A5)
@@ -7655,6 +7659,8 @@ NPCTick_Wyclif_UseMapHint1:
 	BSR.w	SetHintTextIfTriggered
 loc_0000706A:
 	BRA.w	UpdateNPCSpriteFrame
+; loc_0000706E
+NPCInit_Wyclif_UseMapHint2Init:
 	BSR.w	SetRandomDirection
 	CLR.b	$25(A5)
 	MOVE.l	#NPCTick_Wyclif_UseMapHint2, $2(A5)
@@ -7682,6 +7688,8 @@ NPCTick_Wyclif_UseMapHint3:
 	MOVE.w	#$0040, D5
 	BSR.w	SetHintTextIfTriggered
 	BRA.w	UpdateNPCSpriteFrame
+; loc_000070C0
+NPCInit_Parma_AdviceHint:
 	BSR.w	SetRandomDirection
 	CLR.b	$25(A5)
 	MOVE.l	#NPCTick_Parma_AdviceHint, $2(A5)
@@ -7989,6 +7997,8 @@ NPCTick_Stow_ThiefAccuser2:
 	MOVE.l	#FaceOfCriminalStr, $1C(A5)
 loc_00007470:
 	BRA.w	UpdateNPCSpriteFrame
+; loc_00007474
+NPCInit_Malaga_DungeonKeySetup:
 	BSR.w	SetRandomDirection
 	CLR.b	$25(A5)
 	TST.b	Bearwulf_met.w
@@ -8118,6 +8128,8 @@ loc_00007608:
 	MOVE.l	#ShowSketchStr, $1C(A5)
 loc_00007610:
 	BRA.w	NPCBehavior_LoadFrame
+; loc_00007614
+NPCInit_Keltwick_AlarmClock:
 	CLR.b	Alarm_clock_rang.w
 	BSR.w	SetRandomDirection
 	CLR.b	$25(A5)
@@ -8269,6 +8281,8 @@ loc_000077D2:
 	BSR.w	SetHintTextIfTriggered
 loc_000077E2:
 	BRA.w	NPCBehavior_LoadFrame
+; loc_000077E6
+NPCInit_Tadcaster_PassSellerSetup:
 	BSR.w	SetRandomDirection
 	CLR.b	$25(A5)
 	TST.b	Pass_to_carthahena_purchased.w
@@ -8641,6 +8655,8 @@ NPCTick_Excalabria_SwaffhamRuinWait:
 	MOVE.l	#WaitingExcalabriaStr, $1C(A5)
 loc_00007C82:
 	BRA.w	NPCBehavior_LoadFrame
+; loc_00007C86
+NPCInit_Swaffham_SpyDinnerTrap:
 	BSR.w	SetRandomDirection
 	CLR.b	$25(A5)
 	TST.b	Swaffham_ate_poisoned_food.w
@@ -8818,6 +8834,8 @@ loc_00007EB0:
 	MOVE.l	#MustHaveAllRingsStr, $1C(A5)	
 loc_00007EB8:
 	BRA.w	UpdateNPCSpriteFrame
+; loc_00007EBC
+NPCInit_Helwig_InnFryingPan:
 	BSR.w	SetRandomDirection
 	MOVE.l	#NPCTick_Helwig_InnFryingPan, $2(A5)
 	RTS
@@ -44393,16 +44411,16 @@ NpcDataTable_Wyclif:
 NpcEntryList_Wyclif:
 	dc.l	$0001EAFE
 	npcEntry $02B8, $01D8, $0091, NPCSpriteFrames_ManA, NPCInit_StowSoldier_DoctorHint, NPC_ATTR_PAL3, NPC_SOLID
-	npcEntry $0248, $0168, $0091, NPCSpriteFrames_ManA, $00007042, NPC_ATTR_PAL3, NPC_SOLID
+	npcEntry $0248, $0168, $0091, NPCSpriteFrames_ManA, NPCInit_Wyclif_UseMapHint1, NPC_ATTR_PAL3, NPC_SOLID
 	npcEntry $01B8, $0088, $00CD, NPCSpriteFrames_ManB, NPCInit_WalkingStatic, NPC_ATTR_PAL3, NPC_SOLID
-	npcEntry $0068, $0218, $00CD, NPCSpriteFrames_ManB, $0000706E, NPC_ATTR_PAL3, NPC_SOLID
+	npcEntry $0068, $0218, $00CD, NPCSpriteFrames_ManB, NPCInit_Wyclif_UseMapHint2Init, NPC_ATTR_PAL3, NPC_SOLID
 	npcEntry $0158, $01A8, $0205, NPCSpriteFrames_Elder, NPCInit_StowSoldier_DoctorHint, NPC_ATTR_PAL3, NPC_SOLID
 	npcEntry $0128, $0298, $0241, NPCSpriteFrames_Priest, NPCInit_WalkingStatic, NPC_ATTR_PAL0, NPC_SOLID
 	npcEntry $0178, $0238, $0151, NPCSpriteFrames_Woman, NPCInit_WalkingStatic, NPC_ATTR_PAL0, NPC_SOLID
 	npcEntry $0238, $0208, $0109, NPCSpriteFrames_VillagerC, NPCInit_WalkingStatic_LoadFrame, NPC_ATTR_PAL3, NPC_SOLID
 	npcEntry $0168, $0118, $0151, NPCSpriteFrames_Woman, NPCInit_StowSoldier_DoctorHint, NPC_ATTR_PAL0, NPC_SOLID
 	npcEntry $00E8, $0168, $0109, NPCSpriteFrames_VillagerC, NPCInit_WalkingAnimated, NPC_ATTR_PAL3, NPC_SOLID
-	npcEntry $02B8, $0268, $01D5, $0003DE34, NPCInit_StowSoldier_DoctorHint, NPC_ATTR_PAL3, NPC_SOLID
+	npcEntry $02B8, $0268, $01D5, NPCSpriteFrames_Soldier, NPCInit_StowSoldier_DoctorHint, NPC_ATTR_PAL3, NPC_SOLID
 	npcEntry $0068, $0128, $0019, NPCSpriteFrames_Child, NPCInit_WalkingAnimated, NPC_ATTR_PAL3, NPC_SOLID
 	npcEntry $02B8, $0128, $0019, NPCSpriteFrames_Child, NPCInit_WalkingStatic_LoadFrame, NPC_ATTR_PAL3, NPC_SOLID
 	npcEntry $00F8, $0078, $0061, NPCSpriteFrames_VillagerB, NPCInit_StowSoldier_DoctorHint, NPC_ATTR_PAL3, NPC_SOLID
@@ -44411,35 +44429,35 @@ NpcEntryList_Wyclif:
 	npcEntry $00C8, $0088, $0151, NPCSpriteFrames_Woman, NPCInit_StowSoldier_DoctorHint, NPC_ATTR_PAL0, NPC_SOLID
 	dc.w	$FFFF
 	dc.l	$0001EB42
-	npcEntry $00B8, $0068, $0109, NPCSpriteFrames_VillagerC, $0000700E, NPC_ATTR_PAL3, NPC_SOLID
-	npcEntry $0098, $0088, $021D, $0003DE98, NPCInit_ParmaFairy, NPC_ATTR_PAL3, NPC_SOLID
-	npcEntry $00A8, $0088, $0229, $0003DE9C, NPCInit_ParmaFairy, NPC_ATTR_PAL3, NPC_SOLID
+	npcEntry $00B8, $0068, $0109, NPCSpriteFrames_VillagerC, NPCInit_Wyclif_ParmaFindRing, NPC_ATTR_PAL3, NPC_SOLID
+	npcEntry $0098, $0088, $021D, NPCSpriteFrames_FairyA, NPCInit_ParmaFairy, NPC_ATTR_PAL3, NPC_SOLID
+	npcEntry $00A8, $0088, $0229, NPCSpriteFrames_FairyB, NPCInit_ParmaFairy, NPC_ATTR_PAL3, NPC_SOLID
 	dc.w	$FFFF
 	dc.l	$0001EB64
-	npcEntry $0048, $0058, $024D, $0003DF28, NPCInit_WalkingAnimated_Animate, NPC_ATTR_PAL3, NPC_SOLID
+	npcEntry $0048, $0058, $024D, NPCSpriteFrames_IndoorNpcB, NPCInit_WalkingAnimated_Animate, NPC_ATTR_PAL3, NPC_SOLID
 	npcEntry $0108, $0038, $00CD, NPCSpriteFrames_ManB, NPCInit_WalkingStatic, NPC_ATTR_PAL3, NPC_SOLID
 	dc.w	$FFFF
 	dc.l	$0001EB6E
 	npcEntry $00D8, $0088, $0091, NPCSpriteFrames_ManA, NPCInit_WalkingStatic, NPC_ATTR_PAL3, NPC_SOLID
-	npcEntry $0098, $0058, $024D, $0003DF28, NPCInit_WalkingAnimated_Animate, NPC_ATTR_PAL3, NPC_SOLID
+	npcEntry $0098, $0058, $024D, NPCSpriteFrames_IndoorNpcB, NPCInit_WalkingAnimated_Animate, NPC_ATTR_PAL3, NPC_SOLID
 	dc.w	$FFFF
 	dc.l	$0001EB9A
 	npcEntry $00C8, $0088, $0091, NPCSpriteFrames_ManA, NPCInit_WalkingStatic, NPC_ATTR_PAL3, NPC_SOLID
-	npcEntry $0088, $0058, $0235, $0003DF24, NPCInit_WalkingAnimated_Animate, NPC_ATTR_PAL3, NPC_SOLID
+	npcEntry $0088, $0058, $0235, NPCSpriteFrames_IndoorNpcA, NPCInit_WalkingAnimated_Animate, NPC_ATTR_PAL3, NPC_SOLID
 	dc.w	$FFFF
 	dc.l	$0001EAFE
-	npcEntry $0088, $0058, $0235, $0003DF24, NPCInit_WalkingAnimated_Animate, NPC_ATTR_PAL3, NPC_SOLID
+	npcEntry $0088, $0058, $0235, NPCSpriteFrames_IndoorNpcA, NPCInit_WalkingAnimated_Animate, NPC_ATTR_PAL3, NPC_SOLID
 	dc.w	$FFFF
 	dc.l	$0001EAFE
-	npcEntry $0048, $0058, $027D, $0003DF30, NPCInit_WalkingAnimated_Animate, NPC_ATTR_PAL3, NPC_SOLID
+	npcEntry $0048, $0058, $027D, NPCSpriteFrames_IndoorNpcD, NPCInit_WalkingAnimated_Animate, NPC_ATTR_PAL3, NPC_SOLID
 	dc.w	$FFFF
 	dc.l	$0001EAFE
-	npcEntry $0088, $0058, $0295, $0003DF34, NPCInit_WalkingAnimated_Animate, NPC_ATTR_PAL3, NPC_SOLID
+	npcEntry $0088, $0058, $0295, NPCSpriteFrames_IndoorNpcE, NPCInit_WalkingAnimated_Animate, NPC_ATTR_PAL3, NPC_SOLID
 	dc.w	$FFFF
 	dc.l	$0001EB90
 	npcEntry $0028, $0048, $0109, NPCSpriteFrames_VillagerC, NPCInit_WalkingAnimated, NPC_ATTR_PAL3, NPC_SOLID
-	npcEntry $0168, $0048, $01D5, $0003DE34, NPCInit_StowSoldier_DoctorHint, NPC_ATTR_PAL3, NPC_SOLID
-	npcEntry $00D8, $0048, $0205, $0003DE94, NPCInit_WalkingAnimated_Animate, NPC_ATTR_PAL3, NPC_SOLID
+	npcEntry $0168, $0048, $01D5, NPCSpriteFrames_Soldier, NPCInit_StowSoldier_DoctorHint, NPC_ATTR_PAL3, NPC_SOLID
+	npcEntry $00D8, $0048, $0205, NPCSpriteFrames_Shopkeeper, NPCInit_WalkingAnimated_Animate, NPC_ATTR_PAL3, NPC_SOLID
 	dc.w	$FFFF
 ; loc_0002D424
 TownDialogTable_Wyclif_State0:
@@ -44767,46 +44785,46 @@ NpcEntryList_Parma_Locked:
 	npcEntry $0118, $01F8, $0109, NPCSpriteFrames_VillagerC, NPCInit_WalkingStatic_LoadFrame, NPC_ATTR_PAL3, NPC_SOLID
 	dc.w	$FFFF
 	dc.l	$0001ECDC
-	npcEntry $0078, $0048, $0091, NPCSpriteFrames_ManA, $000070C0, NPC_ATTR_PAL3, NPC_SOLID
+	npcEntry $0078, $0048, $0091, NPCSpriteFrames_ManA, NPCInit_Parma_AdviceHint, NPC_ATTR_PAL3, NPC_SOLID
 	dc.w	$FFFF
 	dc.l	$0001EBF8
 	npcEntry $0038, $00B8, $0091, NPCSpriteFrames_ManA, NPCInit_WalkingStatic, NPC_ATTR_PAL3, NPC_SOLID
-	npcEntry $0058, $0048, $024D, $0003DF28, NPCInit_WalkingAnimated_Animate, NPC_ATTR_PAL3, NPC_SOLID
+	npcEntry $0058, $0048, $024D, NPCSpriteFrames_IndoorNpcB, NPCInit_WalkingAnimated_Animate, NPC_ATTR_PAL3, NPC_SOLID
 	dc.w	$FFFF
 	dc.l	$0001EC16
 	npcEntry $0048, $00A8, $0091, NPCSpriteFrames_ManA, NPCInit_WalkingStatic, NPC_ATTR_PAL3, NPC_SOLID
 	npcEntry $00C8, $0078, $00CD, NPCSpriteFrames_ManB, NPCInit_StowSoldier_DoctorHint, NPC_ATTR_PAL3, NPC_SOLID
-	npcEntry $0048, $0048, $0235, $0003DF24, NPCInit_WalkingAnimated_Animate, NPC_ATTR_PAL3, NPC_SOLID
+	npcEntry $0048, $0048, $0235, NPCSpriteFrames_IndoorNpcA, NPCInit_WalkingAnimated_Animate, NPC_ATTR_PAL3, NPC_SOLID
 	dc.w	$FFFF
 	dc.l	$0001EC02
 	npcEntry $0038, $0098, $0151, NPCSpriteFrames_Woman, NPCInit_StowSoldier_DoctorHint, NPC_ATTR_PAL0, NPC_SOLID
-	npcEntry $0068, $0048, $027D, $0003DF30, NPCInit_WalkingAnimated_Animate, NPC_ATTR_PAL3, NPC_SOLID
+	npcEntry $0068, $0048, $027D, NPCSpriteFrames_IndoorNpcD, NPCInit_WalkingAnimated_Animate, NPC_ATTR_PAL3, NPC_SOLID
 	dc.w	$FFFF
 	dc.l	$0001EC0C
 	npcEntry $00D8, $0088, $0109, NPCSpriteFrames_VillagerC, NPCInit_WalkingAnimated, NPC_ATTR_PAL3, NPC_SOLID
 	dc.w	$FFFF
 	dc.l	$0001EB20
-	npcEntry $0088, $0058, $0295, $0003DF34, NPCInit_WalkingAnimated_Animate, NPC_ATTR_PAL3, NPC_SOLID
+	npcEntry $0088, $0058, $0295, NPCSpriteFrames_IndoorNpcE, NPCInit_WalkingAnimated_Animate, NPC_ATTR_PAL3, NPC_SOLID
 	dc.w	$FFFF
 	dc.l	$0001EC20
 	npcEntry $00F8, $0078, $0091, NPCSpriteFrames_ManA, NPCInit_WalkingStatic, NPC_ATTR_PAL3, NPC_SOLID
 	npcEntry $0038, $00A8, $0151, NPCSpriteFrames_Woman, NPCInit_StowSoldier_DoctorHint, NPC_ATTR_PAL0, NPC_SOLID
-	npcEntry $0048, $0058, $024D, $0003DF28, NPCInit_WalkingAnimated_Animate, NPC_ATTR_PAL3, NPC_SOLID
+	npcEntry $0048, $0058, $024D, NPCSpriteFrames_IndoorNpcB, NPCInit_WalkingAnimated_Animate, NPC_ATTR_PAL3, NPC_SOLID
 	dc.w	$FFFF
 	dc.l	$0001EC3A
 	npcEntry $00F8, $0068, $00CD, NPCSpriteFrames_ManB, NPCInit_WalkingStatic, NPC_ATTR_PAL3, NPC_SOLID
 	npcEntry $0048, $0088, $0151, NPCSpriteFrames_Woman, NPCInit_StowSoldier_DoctorHint, NPC_ATTR_PAL0, NPC_SOLID
-	npcEntry $0058, $0048, $0205, $0003DE94, NPCInit_WalkingAnimated_Animate, NPC_ATTR_PAL3, NPC_SOLID
+	npcEntry $0058, $0048, $0205, NPCSpriteFrames_Shopkeeper, NPCInit_WalkingAnimated_Animate, NPC_ATTR_PAL3, NPC_SOLID
 	dc.w	$FFFF
 	dc.l	$0001EC54
-	npcEntry $0068, $0058, $01D5, $0003DE34, NPCInit_WalkingStatic, NPC_ATTR_PAL3, NPC_SOLID
+	npcEntry $0068, $0058, $01D5, NPCSpriteFrames_Soldier, NPCInit_WalkingStatic, NPC_ATTR_PAL3, NPC_SOLID
 	dc.w	$FFFF
 	dc.l	$0001EC6E
-	npcEntry $00B8, $0068, $01D5, $0003DE34, NPCInit_StowSoldier_DoctorHint, NPC_ATTR_PAL3, NPC_SOLID
+	npcEntry $00B8, $0068, $01D5, NPCSpriteFrames_Soldier, NPCInit_StowSoldier_DoctorHint, NPC_ATTR_PAL3, NPC_SOLID
 	dc.w	$FFFF
 	dc.l	$0001EBEE
 	npcEntry $00B8, $00A8, $0151, NPCSpriteFrames_Woman, NPCInit_StowSoldier_DoctorHint, NPC_ATTR_PAL0, NPC_SOLID
-	npcEntry $00A8, $0048, $0265, $0003DF2C, NPCInit_WalkingAnimated_Animate, NPC_ATTR_PAL0, NPC_SOLID
+	npcEntry $00A8, $0048, $0265, NPCSpriteFrames_IndoorNpcC, NPCInit_WalkingAnimated_Animate, NPC_ATTR_PAL0, NPC_SOLID
 	dc.w	$FFFF
 ; loc_0002E838
 TownDialogTable_Parma_State0:
@@ -45224,7 +45242,7 @@ NpcSubRoomData_Watling:
 	npcEntry $00A8, $00A8, $0019, NPCSpriteFrames_Child, NPCInit_Watling_RestoredYouth, NPC_ATTR_PAL3, NPC_SOLID
 	dc.w	$FFFF
 	dc.l	$0001ED28
-	npcEntry $00D8, $0048, $0205, $0003DE94, NPCInit_WalkingAnimated_Animate, NPC_ATTR_PAL3, NPC_SOLID
+	npcEntry $00D8, $0048, $0205, NPCSpriteFrames_Shopkeeper, NPCInit_WalkingAnimated_Animate, NPC_ATTR_PAL3, NPC_SOLID
 	dc.w	$FFFF
 ; loc_0002FCD6
 TownDialogTable_Watling_State1:
@@ -45469,25 +45487,25 @@ NpcDataTable_Deepdale:
 	npcEntry $0088, $0048, $0091, NPCSpriteFrames_ManA, NPCInit_Deepdale_SecretKeeper, NPC_ATTR_PAL3, NPC_SOLID
 	dc.w	$FFFF
 	dc.l	$0001ED6C
-	npcEntry $0058, $0048, $024D, $0003DF28, NPCInit_WalkingAnimated_Animate, NPC_ATTR_PAL3, NPC_SOLID
+	npcEntry $0058, $0048, $024D, NPCSpriteFrames_IndoorNpcB, NPCInit_WalkingAnimated_Animate, NPC_ATTR_PAL3, NPC_SOLID
 	dc.w	$FFFF
 	dc.l	$0001ED6C
-	npcEntry $0048, $0048, $0235, $0003DF24, NPCInit_WalkingAnimated_Animate, NPC_ATTR_PAL3, NPC_SOLID
+	npcEntry $0048, $0048, $0235, NPCSpriteFrames_IndoorNpcA, NPCInit_WalkingAnimated_Animate, NPC_ATTR_PAL3, NPC_SOLID
 	dc.w	$FFFF
 	dc.l	$0001ED6C
-	npcEntry $0068, $0048, $027D, $0003DF30, NPCInit_WalkingAnimated_Animate, NPC_ATTR_PAL3, NPC_SOLID
+	npcEntry $0068, $0048, $027D, NPCSpriteFrames_IndoorNpcD, NPCInit_WalkingAnimated_Animate, NPC_ATTR_PAL3, NPC_SOLID
 	dc.w	$FFFF
 	dc.l	$0001EDBA
 	npcEntry $00F8, $0068, $0091, NPCSpriteFrames_ManA, NPCInit_WalkingStatic, NPC_ATTR_PAL3, NPC_SOLID
-	npcEntry $0058, $0048, $0205, $0003DE94, NPCInit_WalkingAnimated_Animate, NPC_ATTR_PAL3, NPC_SOLID
+	npcEntry $0058, $0048, $0205, NPCSpriteFrames_Shopkeeper, NPCInit_WalkingAnimated_Animate, NPC_ATTR_PAL3, NPC_SOLID
 	dc.w	$FFFF
 	dc.l	$0001ED6C
-	npcEntry $0058, $0048, $0205, $0003DE94, NPCInit_WalkingAnimated_Animate, NPC_ATTR_PAL3, NPC_SOLID
+	npcEntry $0058, $0048, $0205, NPCSpriteFrames_Shopkeeper, NPCInit_WalkingAnimated_Animate, NPC_ATTR_PAL3, NPC_SOLID
 	dc.w	$FFFF
 	dc.l	$0001ED6C
 	dc.w	$FFFF
 	dc.l	$0001ED6C
-	npcEntry $00A8, $0048, $0265, $0003DF2C, NPCInit_WalkingAnimated_Animate, NPC_ATTR_PAL0, NPC_SOLID
+	npcEntry $00A8, $0048, $0265, NPCSpriteFrames_IndoorNpcC, NPCInit_WalkingAnimated_Animate, NPC_ATTR_PAL0, NPC_SOLID
 	dc.w	$FFFF
 ; loc_00030A12
 TownDialogTable_Deepdale_State0:
@@ -45755,21 +45773,21 @@ NpcDataTable_Stow1:
 	npcEntry $00D8, $0088, $0181, NPCSpriteFrames_Guard, NPCInit_WalkingStatic_LoadFrame, NPC_ATTR_PAL3, NPC_SOLID
 	dc.w	$FFFF
 	dc.l	$0001EDF6
-	npcEntry $0088, $0058, $0295, $0003DF34, NPCInit_WalkingAnimated_Animate, NPC_ATTR_PAL3, NPC_SOLID
+	npcEntry $0088, $0058, $0295, NPCSpriteFrames_IndoorNpcE, NPCInit_WalkingAnimated_Animate, NPC_ATTR_PAL3, NPC_SOLID
 	dc.w	$FFFF
 	dc.l	$0001EDF6
-	npcEntry $0048, $0058, $024D, $0003DF28, NPCInit_WalkingAnimated_Animate, NPC_ATTR_PAL3, NPC_SOLID
+	npcEntry $0048, $0058, $024D, NPCSpriteFrames_IndoorNpcB, NPCInit_WalkingAnimated_Animate, NPC_ATTR_PAL3, NPC_SOLID
 	dc.w	$FFFF
 	dc.l	$0001EE52
-	npcEntry $00F8, $0088, $01D5, $0003DE34, NPCInit_WalkingStatic, NPC_ATTR_PAL3, NPC_SOLID
-	npcEntry $0058, $0048, $0205, $0003DE94, NPCInit_WalkingAnimated_Animate, NPC_ATTR_PAL3, NPC_SOLID
+	npcEntry $00F8, $0088, $01D5, NPCSpriteFrames_Soldier, NPCInit_WalkingStatic, NPC_ATTR_PAL3, NPC_SOLID
+	npcEntry $0058, $0048, $0205, NPCSpriteFrames_Shopkeeper, NPCInit_WalkingAnimated_Animate, NPC_ATTR_PAL3, NPC_SOLID
 	dc.w	$FFFF
 	dc.l	$0001EE5C
-	npcEntry $00A8, $0088, $01D5, $0003DE34, NPCInit_WalkingStatic, NPC_ATTR_PAL3, NPC_SOLID
-	npcEntry $0068, $0058, $01D5, $0003DE34, NPCInit_StowSoldier_DoctorHint, NPC_ATTR_PAL3, NPC_SOLID
+	npcEntry $00A8, $0088, $01D5, NPCSpriteFrames_Soldier, NPCInit_WalkingStatic, NPC_ATTR_PAL3, NPC_SOLID
+	npcEntry $0068, $0058, $01D5, NPCSpriteFrames_Soldier, NPCInit_StowSoldier_DoctorHint, NPC_ATTR_PAL3, NPC_SOLID
 	dc.w	$FFFF
 	dc.l	$0001EE66
-	npcEntry $00B8, $0068, $01D5, $0003DE34, NPCInit_StowSoldier_DoctorHint, NPC_ATTR_PAL3, NPC_SOLID
+	npcEntry $00B8, $0068, $01D5, NPCSpriteFrames_Soldier, NPCInit_StowSoldier_DoctorHint, NPC_ATTR_PAL3, NPC_SOLID
 	dc.w	$FFFF
 ; loc_000318F0
 TownDialogTable_Stow1_State0:
@@ -46195,22 +46213,22 @@ NpcDataTable_Stow2:
 	dc.l	$00032D0E
 	dc.w	$FFFF
 	dc.l	$0001EEA2
-	npcEntry $00D8, $0098, $0091, NPCSpriteFrames_ManA, $00007474, NPC_ATTR_PAL3, NPC_SOLID
+	npcEntry $00D8, $0098, $0091, NPCSpriteFrames_ManA, NPCInit_Malaga_DungeonKeySetup, NPC_ATTR_PAL3, NPC_SOLID
 	dc.w	$FFFF
 	dc.l	$0001EEAC
-	npcEntry $00D8, $0088, $00CD, $0003DDB4, $00007614, NPC_ATTR_PAL3, NPC_SOLID
+	npcEntry $00D8, $0088, $00CD, NPCSpriteFrames_ManD, NPCInit_Keltwick_AlarmClock, NPC_ATTR_PAL3, NPC_SOLID
 	dc.w	$FFFF
 	dc.l	$0001EECE
 	npcEntry $00B8, $0088, $0091, NPCSpriteFrames_ManA, NPCInit_WalkingStatic, NPC_ATTR_PAL3, NPC_SOLID
-	npcEntry $0048, $0048, $0235, $0003DF24, NPCInit_WalkingAnimated_Animate, NPC_ATTR_PAL3, NPC_SOLID
+	npcEntry $0048, $0048, $0235, NPCSpriteFrames_IndoorNpcA, NPCInit_WalkingAnimated_Animate, NPC_ATTR_PAL3, NPC_SOLID
 	dc.w	$FFFF
 	dc.l	$0001EED8
-	npcEntry $0058, $0048, $0205, $0003DE94, NPCInit_WalkingAnimated_Animate, NPC_ATTR_PAL3, NPC_SOLID
+	npcEntry $0058, $0048, $0205, NPCSpriteFrames_Shopkeeper, NPCInit_WalkingAnimated_Animate, NPC_ATTR_PAL3, NPC_SOLID
 	dc.w	$FFFF
 	dc.l	$0001EED8
 	dc.w	$FFFF
 	dc.l	$0001EED8
-	npcEntry $00B8, $0048, $01D5, $0003DE34, NPCInit_StowSoldier_DoctorHint, NPC_ATTR_PAL3, NPC_SOLID
+	npcEntry $00B8, $0048, $01D5, NPCSpriteFrames_Soldier, NPCInit_StowSoldier_DoctorHint, NPC_ATTR_PAL3, NPC_SOLID
 	dc.w	$FFFF
 ; loc_00032D24
 TownDialogTable_Keltwick_State0:
@@ -46578,7 +46596,7 @@ NpcDataTable_Malaga:
 	npcEntry $0088, $00C8, $0151, NPCSpriteFrames_Woman, NPCInit_WalkingStatic, NPC_ATTR_PAL0, NPC_SOLID
 	npcEntry $0028, $00C8, $0151, NPCSpriteFrames_Woman, NPCInit_StowSoldier_DoctorHint, NPC_ATTR_PAL0, NPC_SOLID
 	npcEntry $00B8, $0058, $0151, NPCSpriteFrames_Woman, NPCInit_StowSoldier_DoctorHint, NPC_ATTR_PAL0, NPC_SOLID
-	npcEntry $0048, $0058, $024D, $0003DF28, NPCInit_WalkingAnimated_Animate, NPC_ATTR_PAL3, NPC_SOLID
+	npcEntry $0048, $0058, $024D, NPCSpriteFrames_IndoorNpcB, NPCInit_WalkingAnimated_Animate, NPC_ATTR_PAL3, NPC_SOLID
 	dc.w	$FFFF
 ; loc_00034012
 TownDialogTable_Malaga_State0:
@@ -46872,10 +46890,10 @@ NpcDataTable_Barrow:
 	dc.l	$00000000
 	dc.w	$FFFF
 	dc.l	$0001EF5A
-	npcEntry $0088, $0048, $0019, NPCSpriteFrames_Child, $000077E6, NPC_ATTR_PAL3, NPC_SOLID
+	npcEntry $0088, $0048, $0019, NPCSpriteFrames_Child, NPCInit_Tadcaster_PassSellerSetup, NPC_ATTR_PAL3, NPC_SOLID
 	dc.w	$FFFF
 	dc.l	$0001EF7C
-	npcEntry $0048, $0058, $027D, $0003DF30, NPCInit_WalkingAnimated_Animate, NPC_ATTR_PAL3, NPC_SOLID
+	npcEntry $0048, $0058, $027D, NPCSpriteFrames_IndoorNpcD, NPCInit_WalkingAnimated_Animate, NPC_ATTR_PAL3, NPC_SOLID
 	dc.w	$FFFF
 ; loc_00034CEA
 TownDialogTable_Barrow_State0:
@@ -47121,14 +47139,14 @@ NpcDataTable_Tadcaster:
 	npcEntry $0068, $0058, $00CD, NPCSpriteFrames_ManB, NPCInit_WalkingStatic, NPC_ATTR_PAL3, NPC_SOLID
 	dc.w	$FFFF
 	dc.l	$0001EFF6
-	npcEntry $00B8, $0068, $01D5, $0003DE34, NPCInit_StowSoldier_DoctorHint, NPC_ATTR_PAL3, NPC_SOLID
+	npcEntry $00B8, $0068, $01D5, NPCSpriteFrames_Soldier, NPCInit_StowSoldier_DoctorHint, NPC_ATTR_PAL3, NPC_SOLID
 	dc.w	$FFFF
 	dc.l	$0001EFCA
-	npcEntry $0048, $0058, $024D, $0003DF28, NPCInit_WalkingAnimated_Animate, NPC_ATTR_PAL3, NPC_SOLID
+	npcEntry $0048, $0058, $024D, NPCSpriteFrames_IndoorNpcB, NPCInit_WalkingAnimated_Animate, NPC_ATTR_PAL3, NPC_SOLID
 	npcEntry $00F8, $0078, $00CD, NPCSpriteFrames_ManB, NPCInit_StowSoldier_DoctorHint, NPC_ATTR_PAL3, NPC_SOLID
 	dc.w	$FFFF
 	dc.l	$0001EB20
-	npcEntry $0088, $0058, $0295, $0003DF34, NPCInit_WalkingAnimated_Animate, NPC_ATTR_PAL3, NPC_SOLID
+	npcEntry $0088, $0058, $0295, NPCSpriteFrames_IndoorNpcE, NPCInit_WalkingAnimated_Animate, NPC_ATTR_PAL3, NPC_SOLID
 	dc.w	$FFFF
 ; loc_00035D08
 TownDialogTable_Tadcaster_State0:
@@ -47484,16 +47502,16 @@ NpcDataTable_Helwig:
 	dc.l	$00000000
 	dc.w	$FFFF
 	dc.l	$0001F032
-	npcEntry $0048, $0058, $0061, $0003DF38, NPCInit_WalkingAnimated_Animate, NPC_ATTR_PAL3, NPC_SOLID
-	npcEntry $0118, $0068, $0151, NPCSpriteFrames_Woman, $00007EBC, NPC_ATTR_PAL0, NPC_SOLID
+	npcEntry $0048, $0058, $0061, NPCSpriteFrames_IndoorNpcF, NPCInit_WalkingAnimated_Animate, NPC_ATTR_PAL3, NPC_SOLID
+	npcEntry $0118, $0068, $0151, NPCSpriteFrames_Woman, NPCInit_Helwig_InnFryingPan, NPC_ATTR_PAL0, NPC_SOLID
 	npcEntry $0118, $0058, $0091, NPCSpriteFrames_ManA, NPCInit_Helwig_SwaffhamHint, NPC_ATTR_PAL3, NPC_SOLID
 	dc.w	$FFFF
 	dc.l	$0001F04C
 	npcEntry $0028, $0048, $0109, NPCSpriteFrames_VillagerC, NPCInit_WalkingAnimated, NPC_ATTR_PAL3, NPC_SOLID
-	npcEntry $00D8, $0048, $0205, $0003DE94, NPCInit_WalkingAnimated_Animate, NPC_ATTR_PAL3, NPC_SOLID
+	npcEntry $00D8, $0048, $0205, NPCSpriteFrames_Shopkeeper, NPCInit_WalkingAnimated_Animate, NPC_ATTR_PAL3, NPC_SOLID
 	dc.w	$FFFF
 	dc.l	$0001EB20
-	npcEntry $0088, $0058, $0265, $0003DF2C, NPCInit_WalkingAnimated_Animate, NPC_ATTR_PAL0, NPC_SOLID
+	npcEntry $0088, $0058, $0265, NPCSpriteFrames_IndoorNpcC, NPCInit_WalkingAnimated_Animate, NPC_ATTR_PAL0, NPC_SOLID
 	dc.w	$FFFF
 ; loc_00036DD2
 TownDialogTable_Helwig_State0:
@@ -48275,22 +48293,22 @@ NpcDataTable_Hastings1:
 	dc.w	$FFFF
 	dc.l	$0001F130
 	npcEntry $00D8, $0078, $0019, NPCSpriteFrames_Child, NPCInit_WalkingAnimated, NPC_ATTR_PAL3, NPC_SOLID
-	npcEntry $0048, $0058, $027D, $0003DF30, NPCInit_WalkingAnimated_Animate, NPC_ATTR_PAL3, NPC_SOLID
+	npcEntry $0048, $0058, $027D, NPCSpriteFrames_IndoorNpcD, NPCInit_WalkingAnimated_Animate, NPC_ATTR_PAL3, NPC_SOLID
 	dc.w	$FFFF
 	dc.l	$0001F10E
-	npcEntry $0078, $0068, $0151, NPCSpriteFrames_Woman, $00007C86, NPC_ATTR_PAL0, NPC_SOLID
+	npcEntry $0078, $0068, $0151, NPCSpriteFrames_Woman, NPCInit_Swaffham_SpyDinnerTrap, NPC_ATTR_PAL0, NPC_SOLID
 	dc.w	$FFFF
 	dc.l	$0001F144
-	npcEntry $00D8, $0048, $0205, $0003DE94, NPCInit_WalkingAnimated_Animate, NPC_ATTR_PAL3, NPC_SOLID
-	npcEntry $0038, $0048, $01D5, $0003DE34, NPCInit_Hastings_HideAfterTsarkon, NPC_ATTR_PAL3, NPC_SOLID
-	npcEntry $0068, $0058, $01D5, $0003DE34, NPCInit_Hastings_HideAfterTsarkon, NPC_ATTR_PAL3, NPC_SOLID
-	npcEntry $0158, $0058, $01D5, $0003DE34, NPCInit_Hastings_HideAfterTsarkon, NPC_ATTR_PAL3, NPC_SOLID
-	npcEntry $0188, $0048, $01D5, $0003DE34, NPCInit_Hastings_HideAfterTsarkon, NPC_ATTR_PAL3, NPC_SOLID
+	npcEntry $00D8, $0048, $0205, NPCSpriteFrames_Shopkeeper, NPCInit_WalkingAnimated_Animate, NPC_ATTR_PAL3, NPC_SOLID
+	npcEntry $0038, $0048, $01D5, NPCSpriteFrames_Soldier, NPCInit_Hastings_HideAfterTsarkon, NPC_ATTR_PAL3, NPC_SOLID
+	npcEntry $0068, $0058, $01D5, NPCSpriteFrames_Soldier, NPCInit_Hastings_HideAfterTsarkon, NPC_ATTR_PAL3, NPC_SOLID
+	npcEntry $0158, $0058, $01D5, NPCSpriteFrames_Soldier, NPCInit_Hastings_HideAfterTsarkon, NPC_ATTR_PAL3, NPC_SOLID
+	npcEntry $0188, $0048, $01D5, NPCSpriteFrames_Soldier, NPCInit_Hastings_HideAfterTsarkon, NPC_ATTR_PAL3, NPC_SOLID
 	dc.w	$FFFF
 	dc.l	$0001F13A
 	npcEntry $0078, $00A8, $00CD, NPCSpriteFrames_ManB, NPCInit_StowSoldier_DoctorHint, NPC_ATTR_PAL3, NPC_SOLID
 	npcEntry $00E8, $0088, $0091, NPCSpriteFrames_ManA, NPCInit_WalkingStatic, NPC_ATTR_PAL3, NPC_SOLID
-	npcEntry $0048, $0058, $024D, $0003DF28, NPCInit_WalkingAnimated_Animate, NPC_ATTR_PAL3, NPC_SOLID
+	npcEntry $0048, $0058, $024D, NPCSpriteFrames_IndoorNpcB, NPCInit_WalkingAnimated_Animate, NPC_ATTR_PAL3, NPC_SOLID
 	dc.w	$FFFF
 ; loc_0003A03A
 TownDialogTable_Hastings_State0:
@@ -49569,8 +49587,10 @@ NPCSpriteFrames_ManA:
 	dc.b	$00, $91, $00, $9D, $00, $A9 
 NPCSpriteFrames_ManB:
 	dc.b	$00, $FD, $00, $FD, $00, $FD, $00, $FD, $00, $D9, $00, $CD, $00, $D9, $00, $E5, $00, $F1, $00, $F1, $00, $F1, $00, $F1, $00, $D9 
-	dc.b	$00, $CD, $00, $D9, $00, $E5, $00, $FD, $00, $FD, $00, $FD, $00, $FD, $00, $D9, $00, $D9, $00, $D9, $00, $D9, $00, $F1, $00, $F1, $00, $F1, $00, $F1, $00, $D9 
-	dc.b	$00, $D9, $00, $D9, $00, $D9
+	dc.b	$00, $CD, $00, $D9, $00, $E5
+; loc_0003DDB4
+NPCSpriteFrames_ManD:
+	dc.b	$00, $FD, $00, $FD, $00, $FD, $00, $FD, $00, $D9, $00, $D9, $00, $D9, $00, $D9, $00, $F1, $00, $F1, $00, $F1, $00, $F1, $00, $D9, $00, $D9, $00, $D9, $00, $D9
 NPCSpriteFrames_VillagerC:	
 	dc.b	$01, $39, $01, $45, $01, $39, $01, $45, $01, $09, $01, $15, $01, $09, $01, $15, $01, $21, $01, $2D, $01, $21, $01, $2D, $01, $09 
 	dc.b	$01, $15, $01, $09, $01, $15
@@ -49581,8 +49601,10 @@ NPCSpriteFrames_Woman:
 ; loc_0003DE14
 NPCSpriteFrames_Guard:
 	dc.b	$01, $BD, $01, $C9, $01, $BD, $01, $C9, $01, $8D, $01, $81, $01, $8D, $01, $99, $01, $A5, $01, $B1, $01, $A5, $01, $B1, $01, $8D
-	dc.b	$01, $81, $01, $8D, $01, $99, $01, $F9, $01, $F9, $01, $F9, $01, $F9, $01, $D5, $01, $E1, $01, $D5, $01, $E1, $01, $ED, $01, $ED, $01, $ED, $01, $ED, $01, $D5 
-	dc.b	$01, $E1, $01, $D5, $01, $E1
+	dc.b	$01, $81, $01, $8D, $01, $99
+; loc_0003DE34
+NPCSpriteFrames_Soldier:
+	dc.b	$01, $F9, $01, $F9, $01, $F9, $01, $F9, $01, $D5, $01, $E1, $01, $D5, $01, $E1, $01, $ED, $01, $ED, $01, $ED, $01, $ED, $01, $D5, $01, $E1, $01, $D5, $01, $E1
 ; loc_0003DE54
 NPCSpriteFrames_Elder:
 	dc.b	$02, $35, $02, $35, $02, $35, $02, $35, $02, $11, $02, $05, $02, $11, $02, $1D, $02, $29, $02, $29, $02, $29, $02, $29, $02, $11
@@ -49590,12 +49612,39 @@ NPCSpriteFrames_Elder:
 ; loc_0003DE74
 NPCSpriteFrames_Priest:
 	dc.b	$02, $71, $02, $71, $02, $71, $02, $71, $02, $4D, $02, $41, $02, $4D, $02, $59, $02, $65, $02, $65, $02, $65, $02, $65, $02, $4D
-	dc.b	$02, $41, $02, $4D, $02, $59, $02, $05, $02, $11, $02, $1D, $02, $1D, $02, $29, $02, $29, $02, $05, $02, $05, $02, $05, $02, $05, $01, $E1, $01, $D5, $01, $E1 
+	dc.b	$02, $41, $02, $4D, $02, $59
+; loc_0003DE94
+NPCSpriteFrames_Shopkeeper:
+	dc.b	$02, $05, $02, $11
+; loc_0003DE98
+NPCSpriteFrames_FairyA:
+	dc.b	$02, $1D, $02, $1D
+; loc_0003DE9C
+NPCSpriteFrames_FairyB:
+	dc.b	$02, $29, $02, $29, $02, $05, $02, $05, $02, $05, $02, $05, $01, $E1, $01, $D5, $01, $E1
 	dc.b	$01, $ED, $01, $F9, $01, $F9, $01, $F9, $01, $F9, $01, $E1, $01, $D5, $01, $E1, $01, $ED, $02, $35, $02, $35, $02, $35, $02, $35, $02, $11, $02, $1D, $02, $11 
 	dc.b	$02, $1D, $02, $29, $02, $29, $02, $29, $02, $29, $02, $11, $02, $1D, $02, $11, $02, $1D, $02, $4D, $02, $4D, $02, $7D, $02, $7D, $02, $7D, $02, $7D, $02, $59 
 	dc.b	$02, $65, $02, $59, $02, $65, $02, $71, $02, $71, $02, $71, $02, $71, $02, $59, $02, $65, $02, $59, $02, $65, $02, $AD, $02, $AD, $02, $AD, $02, $AD, $02, $89 
-	dc.b	$02, $95, $02, $89, $02, $95, $02, $A1, $02, $A1, $02, $A1, $02, $A1, $02, $89, $02, $95, $02, $89, $02, $95, $02, $35, $02, $41, $02, $4D, $02, $59, $02, $65 
-	dc.b	$02, $71, $02, $7D, $02, $89, $02, $95, $02, $A1, $00, $79, $00, $79 
+	dc.b	$02, $95, $02, $89, $02, $95, $02, $A1, $02, $A1, $02, $A1, $02, $A1, $02, $89, $02, $95, $02, $89, $02, $95
+; loc_0003DF24
+NPCSpriteFrames_IndoorNpcA:
+	dc.b	$02, $35, $02, $41
+; loc_0003DF28
+NPCSpriteFrames_IndoorNpcB:
+	dc.b	$02, $4D, $02, $59
+; loc_0003DF2C
+NPCSpriteFrames_IndoorNpcC:
+	dc.b	$02, $65
+	dc.b	$02, $71
+; loc_0003DF30
+NPCSpriteFrames_IndoorNpcD:
+	dc.b	$02, $7D, $02, $89
+; loc_0003DF34
+NPCSpriteFrames_IndoorNpcE:
+	dc.b	$02, $95, $02, $A1
+; loc_0003DF38
+NPCSpriteFrames_IndoorNpcF:
+	dc.b	$00, $79, $00, $79
 AeroSpriteFrameTable:
 	dc.b	$02, $51, $02, $57, $02, $45, $02, $5D, $02, $4B, $02, $5D, $02, $45, $02, $57 
 MetalSpellSpriteFrameTable:
