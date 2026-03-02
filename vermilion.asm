@@ -34751,68 +34751,68 @@ DialogueChoiceYesStrPtrs:
 	dc.l	ChaosReignStr
 ; loc_0001F418
 TownTileGfxTable: ; Tile mappings + graphics by town
-	dc.l	loc_0008863E
-	dc.l	loc_0008A34A
+	dc.l	TownTileSet_A_Mappings
+	dc.l	TownTileSet_A_Gfx
 	dc.w	$0097
 
-	dc.l	loc_0008B97A
-	dc.l	loc_0008D48C
+	dc.l	TownTileSet_B_Mappings
+	dc.l	TownTileSet_B_Gfx
 	dc.w	$0039
 
-	dc.l	loc_0008863E
-	dc.l	loc_0008A34A
+	dc.l	TownTileSet_A_Mappings
+	dc.l	TownTileSet_A_Gfx
 	dc.w	$0097
 
-	dc.l	loc_0008B97A
-	dc.l	loc_0008D48C
+	dc.l	TownTileSet_B_Mappings
+	dc.l	TownTileSet_B_Gfx
 	dc.w	$0039
 
-	dc.l	loc_0008B97A
-	dc.l	loc_0008D48C
+	dc.l	TownTileSet_B_Mappings
+	dc.l	TownTileSet_B_Gfx
 	dc.w	$0039
 
-	dc.l	loc_0008B97A
-	dc.l	loc_0008D48C
+	dc.l	TownTileSet_B_Mappings
+	dc.l	TownTileSet_B_Gfx
 	dc.w	$0039	
 
-	dc.l	loc_0008B97A
-	dc.l	loc_0008D48C
+	dc.l	TownTileSet_B_Mappings
+	dc.l	TownTileSet_B_Gfx
 	dc.w	$0039
 
-	dc.l	loc_0008B97A
-	dc.l	loc_0008D48C
+	dc.l	TownTileSet_B_Mappings
+	dc.l	TownTileSet_B_Gfx
 	dc.w	$0039
 
-	dc.l	loc_0008863E
-	dc.l	loc_0008A34A
+	dc.l	TownTileSet_A_Mappings
+	dc.l	TownTileSet_A_Gfx
 	dc.w	$0097
 
-	dc.l	loc_0008B97A
-	dc.l	loc_0008D48C
+	dc.l	TownTileSet_B_Mappings
+	dc.l	TownTileSet_B_Gfx
 	dc.w	$0039
 
-	dc.l	loc_0008863E
-	dc.l	loc_0008A34A
+	dc.l	TownTileSet_A_Mappings
+	dc.l	TownTileSet_A_Gfx
 	dc.w	$0097
 
-	dc.l	loc_0008B97A
-	dc.l	loc_0008D48C
+	dc.l	TownTileSet_B_Mappings
+	dc.l	TownTileSet_B_Gfx
 	dc.w	$0039
 
 	dc.l	loc_0008E0C8
 	dc.l	loc_0008FB08
 	dc.w	$001E
 
-	dc.l	loc_0008863E
-	dc.l	loc_0008A34A
+	dc.l	TownTileSet_A_Mappings
+	dc.l	TownTileSet_A_Gfx
 	dc.w	$0097
 
-	dc.l	loc_0008B97A
-	dc.l	loc_0008D48C
+	dc.l	TownTileSet_B_Mappings
+	dc.l	TownTileSet_B_Gfx
 	dc.w	$0039	
 
-	dc.l	loc_0008B97A
-	dc.l	loc_0008D48C
+	dc.l	TownTileSet_B_Mappings
+	dc.l	TownTileSet_B_Gfx
 	dc.w	$0039
 loc_0001F4B8:
 	dc.l	loc_0008E0C8
@@ -34991,7 +34991,7 @@ TalkerGfxDesc_MapGiver:
 	dc.l	TalkerPortraitTileDataPtrs
 	dc.w	$0007
 	dc.l	loc_00051534
-	dc.l	loc_00051D18
+	dc.l	TalkerSpriteFrameTable
 	dc.w	$000F
 	dc.w	$0000
 	dc.w	$FFF0
@@ -35004,7 +35004,7 @@ TalkerGfxDesc_StowGirl:
 	dc.l	TalkerPortraitTileDataPtrs
 	dc.w	$0007
 	dc.l	loc_00051544
-	dc.l	loc_00051D18
+	dc.l	TalkerSpriteFrameTable
 	dc.w	$000F
 	dc.w	$0000
 	dc.w	$FFF0
@@ -35017,7 +35017,7 @@ TalkerGfxDesc_Bearwulf:
 	dc.l	TalkerPortraitTileDataPtrs
 	dc.w	$0007
 	dc.l	loc_00051554
-	dc.l	loc_00051D18
+	dc.l	TalkerSpriteFrameTable
 	dc.w	$000F
 	dc.w	$0000
 	dc.w	$FFF0
@@ -35030,7 +35030,7 @@ TalkerGfxDesc_Merchant:
 	dc.l	TalkerPortraitTileDataPtrs
 	dc.w	$0007
 	dc.l	loc_00051564
-	dc.l	loc_00051D18
+	dc.l	TalkerSpriteFrameTable
 	dc.w	$000F
 	dc.w	$0000
 	dc.w	$FFF0
@@ -35082,7 +35082,7 @@ TalkerGfxDesc_ImposterGuard:
 	dc.l	TalkerPortraitTileDataPtrs
 	dc.w	$0007
 	dc.l	loc_00051574
-	dc.l	loc_00051D18
+	dc.l	TalkerSpriteFrameTable
 	dc.w	$000F
 	dc.w	$0000
 	dc.w	$FFF0
@@ -35095,7 +35095,7 @@ TalkerGfxDesc_Tsarkon:
 	dc.l	TalkerPortraitTileDataPtrs
 	dc.w	$0007
 	dc.l	loc_00051584
-	dc.l	loc_00051D18
+	dc.l	TalkerSpriteFrameTable
 	dc.l	$000F0000	
 	dc.l	$FFF00D0F	
 	dc.l	$00AE0042	
@@ -35116,10 +35116,10 @@ GfxLoadList_FirstPerson:
 	dc.l	loc_00082004
 	dc.l	$000B0013	
 	dc.l	loc_00083108
-	dc.l	loc_00083D90
+	dc.l	FPDungeonSpriteFrameTable
 	dc.l	$00470014	
 	dc.l	loc_00083150
-	dc.l	loc_00083D90
+	dc.l	FPDungeonSpriteFrameTable
 	dc.l	$002F0015	
 	dc.l	loc_00083F24
 	dc.l	loc_000840D6
@@ -35146,19 +35146,19 @@ GfxLoadList_FirstPerson:
 GfxLoadList_FirstPersonBattle:
 	dc.b	$00, $1C 
 	dc.l	loc_00083108
-	dc.l	loc_00083D90
+	dc.l	FPDungeonSpriteFrameTable
 	dc.l	$0047001D	
 	dc.l	loc_00083150
-	dc.l	loc_00083D90
+	dc.l	FPDungeonSpriteFrameTable
 	dc.l	$002F001E	
 	dc.l	loc_00083F24
 	dc.l	loc_000840D6
 	dc.l	$000B001F	
 	dc.l	loc_00083180
-	dc.l	loc_00083D90
+	dc.l	FPDungeonSpriteFrameTable
 	dc.l	$00470020	
 	dc.l	loc_000831C8
-	dc.l	loc_00083D90
+	dc.l	FPDungeonSpriteFrameTable
 	dc.l	$002F0021	
 	dc.l	loc_00083F30
 	dc.l	loc_000840D6
@@ -39851,400 +39851,400 @@ EnemyGfxDataTable:
 	dc.l	EnemySpriteSet_A
 ; loc_0002426C
 EnemyAppearance_5A:
-	dc.l	loc_000544E4
-	dc.l	loc_0005490C
-	dc.l	loc_000549E4
-	dc.l	loc_00054B3E
+	dc.l	EnemyGfxFrameTable_OrbMain
+	dc.l	EnemyGfxData_OrbMain
+	dc.l	EnemyGfxFrameTable_OrbChild
+	dc.l	EnemyGfxData_OrbChild
 	dc.l	NullSpriteRoutine-2	
 	dc.l	$0E0D005A	; Appearance palette/vfx
 ; loc_00024284
 EnemyAppearance_69:
-	dc.l	loc_000544E4
-	dc.l	loc_0005490C
-	dc.l	loc_000549E4
-	dc.l	loc_00054B3E
+	dc.l	EnemyGfxFrameTable_OrbMain
+	dc.l	EnemyGfxData_OrbMain
+	dc.l	EnemyGfxFrameTable_OrbChild
+	dc.l	EnemyGfxData_OrbChild
 	dc.l	NullSpriteRoutine-2	
 	dc.l	$0E0D0069	
 ; loc_0002429C
 EnemyAppearance_6A:
-	dc.l	loc_000544E4
-	dc.l	loc_0005490C
-	dc.l	loc_000549E4
-	dc.l	loc_00054B3E
+	dc.l	EnemyGfxFrameTable_OrbMain
+	dc.l	EnemyGfxData_OrbMain
+	dc.l	EnemyGfxFrameTable_OrbChild
+	dc.l	EnemyGfxData_OrbChild
 	dc.l	NullSpriteRoutine-2	
 	dc.l	$0E0D006A	
 ; loc_000242B4
 EnemyAppearance_6B:
-	dc.l	loc_000544E4	
-	dc.l	loc_0005490C	
-	dc.l	loc_000549E4	
-	dc.l	loc_00054B3E	
+	dc.l	EnemyGfxFrameTable_OrbMain	
+	dc.l	EnemyGfxData_OrbMain	
+	dc.l	EnemyGfxFrameTable_OrbChild	
+	dc.l	EnemyGfxData_OrbChild	
 	dc.l	NullSpriteRoutine-2	
 	dc.l	$0E0D006B	
 ; loc_000242CC
 EnemyAppearance_AC:
-	dc.l	loc_000544E4
-	dc.l	loc_0005490C
-	dc.l	loc_000549E4
-	dc.l	loc_00054B3E
+	dc.l	EnemyGfxFrameTable_OrbMain
+	dc.l	EnemyGfxData_OrbMain
+	dc.l	EnemyGfxFrameTable_OrbChild
+	dc.l	EnemyGfxData_OrbChild
 	dc.l	NullSpriteRoutine-2	
 	dc.l	$0E0D00AC	
 ; loc_000242E4
 EnemyAppearance_AD:
-	dc.l	loc_000544E4
-	dc.l	loc_0005490C
-	dc.l	loc_000549E4
-	dc.l	loc_00054B3E
+	dc.l	EnemyGfxFrameTable_OrbMain
+	dc.l	EnemyGfxData_OrbMain
+	dc.l	EnemyGfxFrameTable_OrbChild
+	dc.l	EnemyGfxData_OrbChild
 	dc.l	NullSpriteRoutine-2	
 	dc.l	$0E0D00AD	
 ; loc_000242FC
 EnemyAppearance_4E:
-	dc.l	loc_000530CE
-	dc.l	loc_00053544
-	dc.l	loc_0005276A
-	dc.l	loc_00052F8A
+	dc.l	EnemyGfxFrameTable_DragonMain
+	dc.l	EnemyGfxData_DragonMain
+	dc.l	EnemyGfxFrameTable_DragonChild
+	dc.l	EnemyGfxData_DragonChild
 	dc.l	NullSpriteRoutine-2	
 	dc.l	$0D0E004E	
 ; loc_00024314
 EnemyAppearance_7B:
-	dc.l	loc_000530CE
-	dc.l	loc_00053544
-	dc.l	loc_0005276A
-	dc.l	loc_00052F8A
+	dc.l	EnemyGfxFrameTable_DragonMain
+	dc.l	EnemyGfxData_DragonMain
+	dc.l	EnemyGfxFrameTable_DragonChild
+	dc.l	EnemyGfxData_DragonChild
 	dc.l	NullSpriteRoutine-2	
 	dc.l	$0D0E007B	
 ; loc_0002432C
 EnemyAppearance_7C:
-	dc.l	loc_000530CE
-	dc.l	loc_00053544
-	dc.l	loc_0005276A
-	dc.l	loc_00052F8A
+	dc.l	EnemyGfxFrameTable_DragonMain
+	dc.l	EnemyGfxData_DragonMain
+	dc.l	EnemyGfxFrameTable_DragonChild
+	dc.l	EnemyGfxData_DragonChild
 	dc.l	NullSpriteRoutine-2	
 	dc.l	$0D0E007C	
 ; loc_00024344
 EnemyAppearance_7D:
-	dc.l	loc_000530CE
-	dc.l	loc_00053544
-	dc.l	loc_0005276A
-	dc.l	loc_00052F8A
+	dc.l	EnemyGfxFrameTable_DragonMain
+	dc.l	EnemyGfxData_DragonMain
+	dc.l	EnemyGfxFrameTable_DragonChild
+	dc.l	EnemyGfxData_DragonChild
 	dc.l	NullSpriteRoutine-2	
 	dc.l	$0D0E007D	
 ; loc_0002435C
 EnemyAppearance_4D:
-	dc.l	loc_00053F92
-	dc.l	loc_00054424
-	dc.l	loc_0005360C
-	dc.l	loc_00053E2E
+	dc.l	EnemyGfxFrameTable_QuadrupedMain
+	dc.l	EnemyGfxData_QuadrupedMain
+	dc.l	EnemyGfxFrameTable_QuadrupedChild
+	dc.l	EnemyGfxData_QuadrupedChild
 	dc.l	NullSpriteRoutine-2	
 	dc.l	$0D0E004D	
 ; loc_00024374
 EnemyAppearance_6C:
-	dc.l	loc_00053F92
-	dc.l	loc_00054424
-	dc.l	loc_0005360C
-	dc.l	loc_00053E2E
+	dc.l	EnemyGfxFrameTable_QuadrupedMain
+	dc.l	EnemyGfxData_QuadrupedMain
+	dc.l	EnemyGfxFrameTable_QuadrupedChild
+	dc.l	EnemyGfxData_QuadrupedChild
 	dc.l	NullSpriteRoutine-2	
 	dc.l	$0D0E006C	
 ; loc_0002438C
 EnemyAppearance_6D:
-	dc.l	loc_00053F92
-	dc.l	loc_00054424
-	dc.l	loc_0005360C
-	dc.l	loc_00053E2E
+	dc.l	EnemyGfxFrameTable_QuadrupedMain
+	dc.l	EnemyGfxData_QuadrupedMain
+	dc.l	EnemyGfxFrameTable_QuadrupedChild
+	dc.l	EnemyGfxData_QuadrupedChild
 	dc.l	NullSpriteRoutine-2	
 	dc.l	$0D0E006D	
 ; loc_000243A4
 EnemyAppearance_6E:
-	dc.l	loc_00053F92
-	dc.l	loc_00054424
-	dc.l	loc_0005360C
-	dc.l	loc_00053E2E
+	dc.l	EnemyGfxFrameTable_QuadrupedMain
+	dc.l	EnemyGfxData_QuadrupedMain
+	dc.l	EnemyGfxFrameTable_QuadrupedChild
+	dc.l	EnemyGfxData_QuadrupedChild
 	dc.l	NullSpriteRoutine-2	
 	dc.l	$0D0E006E	
 ; loc_000243BC
 EnemyAppearance_5B:
-	dc.l	loc_00055468
-	dc.l	loc_00055888
-	dc.l	loc_00054B76
-	dc.l	loc_00055300
+	dc.l	EnemyGfxFrameTable_SerpentMain
+	dc.l	EnemyGfxData_SerpentMain
+	dc.l	EnemyGfxFrameTable_SerpentChild
+	dc.l	EnemyGfxData_SerpentChild
 	dc.l	NullSpriteRoutine-2	
 	dc.l	$0D0E005B	
 ; loc_000243D4
 EnemyAppearance_6F:
-	dc.l	loc_00055468
-	dc.l	loc_00055888
-	dc.l	loc_00054B76
-	dc.l	loc_00055300
+	dc.l	EnemyGfxFrameTable_SerpentMain
+	dc.l	EnemyGfxData_SerpentMain
+	dc.l	EnemyGfxFrameTable_SerpentChild
+	dc.l	EnemyGfxData_SerpentChild
 	dc.l	NullSpriteRoutine-2	
 	dc.l	$0D0E006F	
 ; loc_000243EC
 EnemyAppearance_70:
-	dc.l	loc_00055468
-	dc.l	loc_00055888
-	dc.l	loc_00054B76
-	dc.l	loc_00055300
+	dc.l	EnemyGfxFrameTable_SerpentMain
+	dc.l	EnemyGfxData_SerpentMain
+	dc.l	EnemyGfxFrameTable_SerpentChild
+	dc.l	EnemyGfxData_SerpentChild
 	dc.l	NullSpriteRoutine-2	
 	dc.l	$0D0E0070	
 ; loc_00024404
 EnemyAppearance_71:
-	dc.l	loc_00055468
-	dc.l	loc_00055888
-	dc.l	loc_00054B76
-	dc.l	loc_00055300
+	dc.l	EnemyGfxFrameTable_SerpentMain
+	dc.l	EnemyGfxData_SerpentMain
+	dc.l	EnemyGfxFrameTable_SerpentChild
+	dc.l	EnemyGfxData_SerpentChild
 	dc.l	NullSpriteRoutine-2	
 	dc.l	$0D0E0071	
 ; loc_0002441C
 EnemyAppearance_63:
-	dc.l	loc_00059BAA
-	dc.l	loc_0005A206
-	dc.l	loc_000591AC
-	dc.l	loc_00059A46
+	dc.l	EnemyGfxFrameTable_WorldMapMain
+	dc.l	EnemyGfxData_WorldMapMain
+	dc.l	EnemyGfxFrameTable_WorldMapChild
+	dc.l	EnemyGfxData_WorldMapChild
 	dc.l	ExecuteWorldMapDma	
 	dc.l	$0E0E0063	
 ; loc_00024434
 EnemyAppearance_A4:
-	dc.l	loc_00059BAA
-	dc.l	loc_0005A206
-	dc.l	loc_000591AC
-	dc.l	loc_00059A46
+	dc.l	EnemyGfxFrameTable_WorldMapMain
+	dc.l	EnemyGfxData_WorldMapMain
+	dc.l	EnemyGfxFrameTable_WorldMapChild
+	dc.l	EnemyGfxData_WorldMapChild
 	dc.l	ExecuteWorldMapDma	
 	dc.l	$0E0E00A4	
 ; loc_0002444C
 EnemyAppearance_A5:
-	dc.l	loc_00059BAA
-	dc.l	loc_0005A206
-	dc.l	loc_000591AC
-	dc.l	loc_00059A46
+	dc.l	EnemyGfxFrameTable_WorldMapMain
+	dc.l	EnemyGfxData_WorldMapMain
+	dc.l	EnemyGfxFrameTable_WorldMapChild
+	dc.l	EnemyGfxData_WorldMapChild
 	dc.l	ExecuteWorldMapDma	
 	dc.l	$0E0E00A5	
 ; loc_00024464
 EnemyAppearance_A6:
-	dc.l	loc_00059BAA
-	dc.l	loc_0005A206
-	dc.l	loc_000591AC
-	dc.l	loc_00059A46
+	dc.l	EnemyGfxFrameTable_WorldMapMain
+	dc.l	EnemyGfxData_WorldMapMain
+	dc.l	EnemyGfxFrameTable_WorldMapChild
+	dc.l	EnemyGfxData_WorldMapChild
 	dc.l	ExecuteWorldMapDma	
 	dc.l	$0E0E00A6	
 ; loc_0002447C
 EnemyAppearance_5C:
-	dc.l	loc_000565F6
-	dc.l	loc_000569A6
-	dc.l	loc_00055970
-	dc.l	loc_00056436
+	dc.l	EnemyGfxFrameTable_InsectMain
+	dc.l	EnemyGfxData_InsectMain
+	dc.l	EnemyGfxFrameTable_InsectChild
+	dc.l	EnemyGfxData_InsectChild
 	dc.l	NullSpriteRoutine-2	
 	dc.l	$0D0E005C	
 ; loc_00024494
 EnemyAppearance_9E:
-	dc.l	loc_000565F6
-	dc.l	loc_000569A6
-	dc.l	loc_00055970
-	dc.l	loc_00056436
+	dc.l	EnemyGfxFrameTable_InsectMain
+	dc.l	EnemyGfxData_InsectMain
+	dc.l	EnemyGfxFrameTable_InsectChild
+	dc.l	EnemyGfxData_InsectChild
 	dc.l	NullSpriteRoutine-2	
 	dc.l	$0D0E009E	
 ; loc_000244AC
 EnemyAppearance_9F:
-	dc.l	loc_000565F6
-	dc.l	loc_000569A6
-	dc.l	loc_00055970
-	dc.l	loc_00056436
+	dc.l	EnemyGfxFrameTable_InsectMain
+	dc.l	EnemyGfxData_InsectMain
+	dc.l	EnemyGfxFrameTable_InsectChild
+	dc.l	EnemyGfxData_InsectChild
 	dc.l	NullSpriteRoutine-2	
 	dc.l	$0D0E009F	
 ; loc_000244C4
 EnemyAppearance_A0:
-	dc.l	loc_000565F6
-	dc.l	loc_000569A6
-	dc.l	loc_00055970
-	dc.l	loc_00056436
+	dc.l	EnemyGfxFrameTable_InsectMain
+	dc.l	EnemyGfxData_InsectMain
+	dc.l	EnemyGfxFrameTable_InsectChild
+	dc.l	EnemyGfxData_InsectChild
 	dc.l	NullSpriteRoutine-2	
 	dc.l	$0D0E00A0	
 ; loc_000244DC
 EnemyAppearance_5D:
-	dc.l	loc_00056A86
-	dc.l	loc_00057404
-	dc.l	loc_00057580
-	dc.l	loc_00057F74
+	dc.l	EnemyGfxFrameTable_GolemMain
+	dc.l	EnemyGfxData_GolemMain
+	dc.l	EnemyGfxFrameTable_GolemChild
+	dc.l	EnemyGfxData_GolemChild
 	dc.l	ExecuteWorldMapDma	
 	dc.l	$0E0E005D	
 ; loc_000244F4
 EnemyAppearance_A1:
-	dc.l	loc_00056A86
-	dc.l	loc_00057404
-	dc.l	loc_00057580
-	dc.l	loc_00057F74
+	dc.l	EnemyGfxFrameTable_GolemMain
+	dc.l	EnemyGfxData_GolemMain
+	dc.l	EnemyGfxFrameTable_GolemChild
+	dc.l	EnemyGfxData_GolemChild
 	dc.l	ExecuteWorldMapDma	
 	dc.l	$0E0E00A1	
 ; loc_0002450C
 EnemyAppearance_A2:
-	dc.l	loc_00056A86
-	dc.l	loc_00057404
-	dc.l	loc_00057580
-	dc.l	loc_00057F74
+	dc.l	EnemyGfxFrameTable_GolemMain
+	dc.l	EnemyGfxData_GolemMain
+	dc.l	EnemyGfxFrameTable_GolemChild
+	dc.l	EnemyGfxData_GolemChild
 	dc.l	ExecuteWorldMapDma	
 	dc.l	$0E0E00A2	
 ; loc_00024524
 EnemyAppearance_A3:
-	dc.l	loc_00056A86
-	dc.l	loc_00057404
-	dc.l	loc_00057580
-	dc.l	loc_00057F74
+	dc.l	EnemyGfxFrameTable_GolemMain
+	dc.l	EnemyGfxData_GolemMain
+	dc.l	EnemyGfxFrameTable_GolemChild
+	dc.l	EnemyGfxData_GolemChild
 	dc.l	ExecuteWorldMapDma	
 	dc.l	$0E0E00A3	
 ; loc_0002453C
 EnemyAppearance_64:
-	dc.l	loc_0005AF6E
-	dc.l	loc_0005B674
-	dc.l	loc_0005A3C6
-	dc.l	loc_0005ADF2
+	dc.l	EnemyGfxFrameTable_BeastMain
+	dc.l	EnemyGfxData_BeastMain
+	dc.l	EnemyGfxFrameTable_BeastChild
+	dc.l	EnemyGfxData_BeastChild
 	dc.l	NullSpriteRoutine-2	
 	dc.l	$0D0E0064	
 ; loc_00024554
 EnemyAppearance_B9:
-	dc.l	loc_0005AF6E
-	dc.l	loc_0005B674
-	dc.l	loc_0005A3C6
-	dc.l	loc_0005ADF2
+	dc.l	EnemyGfxFrameTable_BeastMain
+	dc.l	EnemyGfxData_BeastMain
+	dc.l	EnemyGfxFrameTable_BeastChild
+	dc.l	EnemyGfxData_BeastChild
 	dc.l	NullSpriteRoutine-2	
 	dc.l	$0D0E00B9	
 ; loc_0002456C
 EnemyAppearance_BA:
-	dc.l	loc_0005AF6E
-	dc.l	loc_0005B674
-	dc.l	loc_0005A3C6
-	dc.l	loc_0005ADF2
+	dc.l	EnemyGfxFrameTable_BeastMain
+	dc.l	EnemyGfxData_BeastMain
+	dc.l	EnemyGfxFrameTable_BeastChild
+	dc.l	EnemyGfxData_BeastChild
 	dc.l	NullSpriteRoutine-2	
 	dc.l	$0D0E00BA	
 ; loc_00024584
 EnemyAppearance_BB:
-	dc.l	loc_0005AF6E
-	dc.l	loc_0005B674
-	dc.l	loc_0005A3C6
-	dc.l	loc_0005ADF2
+	dc.l	EnemyGfxFrameTable_BeastMain
+	dc.l	EnemyGfxData_BeastMain
+	dc.l	EnemyGfxFrameTable_BeastChild
+	dc.l	EnemyGfxData_BeastChild
 	dc.l	NullSpriteRoutine-2	
 	dc.l	$0D0E00BB	
 ; loc_0002459C
 EnemyAppearance_65:
-	dc.l	loc_0005C37E
-	dc.l	loc_0005C97E
-	dc.l	loc_0005B784
-	dc.l	loc_0005C1DE
+	dc.l	EnemyGfxFrameTable_SkeletonMain
+	dc.l	EnemyGfxData_SkeletonMain
+	dc.l	EnemyGfxFrameTable_SkeletonChild
+	dc.l	EnemyGfxData_SkeletonChild
 	dc.l	NullSpriteRoutine-2	
 	dc.l	$0D0E0065	
 ; loc_000245B4
 EnemyAppearance_A7:
-	dc.l	loc_0005C37E
-	dc.l	loc_0005C97E
-	dc.l	loc_0005B784
-	dc.l	loc_0005C1DE
+	dc.l	EnemyGfxFrameTable_SkeletonMain
+	dc.l	EnemyGfxData_SkeletonMain
+	dc.l	EnemyGfxFrameTable_SkeletonChild
+	dc.l	EnemyGfxData_SkeletonChild
 	dc.l	NullSpriteRoutine-2	
 	dc.l	$0D0E00A7	
 ; loc_000245CC
 EnemyAppearance_A8:
-	dc.l	loc_0005C37E
-	dc.l	loc_0005C97E
-	dc.l	loc_0005B784
-	dc.l	loc_0005C1DE
+	dc.l	EnemyGfxFrameTable_SkeletonMain
+	dc.l	EnemyGfxData_SkeletonMain
+	dc.l	EnemyGfxFrameTable_SkeletonChild
+	dc.l	EnemyGfxData_SkeletonChild
 	dc.l	NullSpriteRoutine-2	
 	dc.l	$0D0E00A8	
 ; loc_000245E4
 EnemyAppearance_A9:
-	dc.l	loc_0005C37E
-	dc.l	loc_0005C97E
-	dc.l	loc_0005B784
-	dc.l	loc_0005C1DE
+	dc.l	EnemyGfxFrameTable_SkeletonMain
+	dc.l	EnemyGfxData_SkeletonMain
+	dc.l	EnemyGfxFrameTable_SkeletonChild
+	dc.l	EnemyGfxData_SkeletonChild
 	dc.l	NullSpriteRoutine-2	
 	dc.l	$0D0E00A9	
 ; loc_000245FC
 EnemyAppearance_66:
-	dc.l	loc_0005CF78
-	dc.l	loc_0005D180
-	dc.l	loc_0005CA9A
-	dc.l	loc_0005CED4
+	dc.l	EnemyGfxFrameTable_HumanoidMain
+	dc.l	EnemyGfxData_HumanoidMain
+	dc.l	EnemyGfxFrameTable_HumanoidChild
+	dc.l	EnemyGfxData_HumanoidChild
 	dc.l	NullSpriteRoutine-2	
 	dc.l	$0D0E0066	
 ; loc_00024614
 EnemyAppearance_AA:
-	dc.l	loc_0005CF78
-	dc.l	loc_0005D180
-	dc.l	loc_0005CA9A
-	dc.l	loc_0005CED4
+	dc.l	EnemyGfxFrameTable_HumanoidMain
+	dc.l	EnemyGfxData_HumanoidMain
+	dc.l	EnemyGfxFrameTable_HumanoidChild
+	dc.l	EnemyGfxData_HumanoidChild
 	dc.l	NullSpriteRoutine-2	
 	dc.l	$0D0E00AA	
 ; loc_0002462C
 EnemyAppearance_AB:
-	dc.l	loc_0005CF78
-	dc.l	loc_0005D180
-	dc.l	loc_0005CA9A
-	dc.l	loc_0005CED4
+	dc.l	EnemyGfxFrameTable_HumanoidMain
+	dc.l	EnemyGfxData_HumanoidMain
+	dc.l	EnemyGfxFrameTable_HumanoidChild
+	dc.l	EnemyGfxData_HumanoidChild
 	dc.l	NullSpriteRoutine-2	
 	dc.l	$0D0E00AB	
 ; loc_00024644
 EnemyAppearance_BC:
-	dc.l	loc_0005CF78
-	dc.l	loc_0005D180
-	dc.l	loc_0005CA9A
-	dc.l	loc_0005CED4
+	dc.l	EnemyGfxFrameTable_HumanoidMain
+	dc.l	EnemyGfxData_HumanoidMain
+	dc.l	EnemyGfxFrameTable_HumanoidChild
+	dc.l	EnemyGfxData_HumanoidChild
 	dc.l	NullSpriteRoutine-2	
 	dc.l	$0D0E00BC	
 ; loc_0002465C
 EnemyAppearance_61:
-	dc.l	loc_000589B4
-	dc.l	loc_00059098
-	dc.l	loc_000580FC
-	dc.l	loc_00058858
+	dc.l	EnemyGfxFrameTable_GargoyleMain
+	dc.l	EnemyGfxData_GargoyleMain
+	dc.l	EnemyGfxFrameTable_GargoyleChild
+	dc.l	EnemyGfxData_GargoyleChild
 	dc.l	NullSpriteRoutine-2	
 	dc.l	$0D0E0061	
 ; loc_00024674
 EnemyAppearance_BD:
-	dc.l	loc_000589B4	
-	dc.l	loc_00059098	
-	dc.l	loc_000580FC	
-	dc.l	loc_00058858	
+	dc.l	EnemyGfxFrameTable_GargoyleMain	
+	dc.l	EnemyGfxData_GargoyleMain	
+	dc.l	EnemyGfxFrameTable_GargoyleChild	
+	dc.l	EnemyGfxData_GargoyleChild	
 	dc.l	NullSpriteRoutine-2	
 	dc.l	$0D0E00BD	
 ; loc_0002468C
 EnemyAppearance_BE:
-	dc.l	loc_000589B4
-	dc.l	loc_00059098
-	dc.l	loc_000580FC
-	dc.l	loc_00058858
+	dc.l	EnemyGfxFrameTable_GargoyleMain
+	dc.l	EnemyGfxData_GargoyleMain
+	dc.l	EnemyGfxFrameTable_GargoyleChild
+	dc.l	EnemyGfxData_GargoyleChild
 	dc.l	NullSpriteRoutine-2	
 	dc.l	$0D0E00BE	
 ; loc_000246A4
 EnemyAppearance_BF:
-	dc.l	loc_000589B4
-	dc.l	loc_00059098
-	dc.l	loc_000580FC
-	dc.l	loc_00058858
+	dc.l	EnemyGfxFrameTable_GargoyleMain
+	dc.l	EnemyGfxData_GargoyleMain
+	dc.l	EnemyGfxFrameTable_GargoyleChild
+	dc.l	EnemyGfxData_GargoyleChild
 	dc.l	NullSpriteRoutine-2	
 	dc.l	$0D0E00BF	
 ; loc_000246BC
 EnemyAppearance_75:
-	dc.l	loc_0005D29E
-	dc.l	loc_0005D6D4
+	dc.l	EnemyGfxFrameTable_BossMain
+	dc.l	EnemyGfxData_BossMain
 	dc.l	loc_00000000	
 	dc.l	loc_00000000	
 	dc.l	loc_00000000	
 	dc.l	$0F000075	
 ; loc_000246D4
 EnemyAppearance_C0:
-	dc.l	loc_0005D29E
-	dc.l	loc_0005D6D4
+	dc.l	EnemyGfxFrameTable_BossMain
+	dc.l	EnemyGfxData_BossMain
 	dc.l	loc_00000000	
 	dc.l	loc_00000000	
 	dc.l	loc_00000000	
 	dc.l	$0F0000C0	
 ; loc_000246EC
 EnemyAppearance_C1:
-	dc.l	loc_0005D29E
-	dc.l	loc_0005D6D4
+	dc.l	EnemyGfxFrameTable_BossMain
+	dc.l	EnemyGfxData_BossMain
 	dc.l	loc_00000000	
 	dc.l	loc_00000000	
 	dc.l	loc_00000000	
 	dc.l	$0F0000C1	
 ; loc_00024704
 EnemyAppearance_C2:
-	dc.l	loc_0005D29E
-	dc.l	loc_0005D6D4
+	dc.l	EnemyGfxFrameTable_BossMain
+	dc.l	EnemyGfxData_BossMain
 	dc.l	$00000000
 	dc.b	$00, $00, $00, $00, $00, $00 
 	dc.w	$0000
@@ -41236,125 +41236,125 @@ EnemyData_StalkPause_7B_Last:
 	dc.b	$0E
 ; loc_00024FBE
 EnemySpriteSet_A:
-	dc.l	loc_0005276A
-	dc.l	loc_00052F8A
+	dc.l	EnemyGfxFrameTable_DragonChild
+	dc.l	EnemyGfxData_DragonChild
 	dc.b	$00, $6B 
-	dc.l	loc_000530CE
-	dc.l	loc_00053544
+	dc.l	EnemyGfxFrameTable_DragonMain
+	dc.l	EnemyGfxData_DragonMain
 	dc.b	$00, $47 
 	dc.l	$00000000
 ; loc_00024FD6
 EnemySpriteSet_B:
-	dc.l	loc_0005360C
-	dc.l	loc_00053E2E
+	dc.l	EnemyGfxFrameTable_QuadrupedChild
+	dc.l	EnemyGfxData_QuadrupedChild
 	dc.b	$00, $6B 
-	dc.l	loc_00053F92
-	dc.l	loc_00054424
+	dc.l	EnemyGfxFrameTable_QuadrupedMain
+	dc.l	EnemyGfxData_QuadrupedMain
 	dc.b	$00, $47 
 	dc.l	$00000000
 ; loc_00024FEE
 EnemySpriteSet_C:
-	dc.l	loc_000549E4
-	dc.l	loc_00054B3E
+	dc.l	EnemyGfxFrameTable_OrbChild
+	dc.l	EnemyGfxData_OrbChild
 	dc.b	$00, $2F 
-	dc.l	loc_000544E4
-	dc.l	loc_0005490C
+	dc.l	EnemyGfxFrameTable_OrbMain
+	dc.l	EnemyGfxData_OrbMain
 	dc.b	$00, $47 
 	dc.l	$00000000
 ; loc_00025006
 EnemySpriteSet_D:
-	dc.l	loc_00054B76
-	dc.l	loc_00055300
+	dc.l	EnemyGfxFrameTable_SerpentChild
+	dc.l	EnemyGfxData_SerpentChild
 	dc.b	$00, $6B 
-	dc.l	loc_00055468
-	dc.l	loc_00055888
+	dc.l	EnemyGfxFrameTable_SerpentMain
+	dc.l	EnemyGfxData_SerpentMain
 	dc.b	$00, $47 
 	dc.l	$00000000
 ; loc_0002501E
 EnemySpriteSet_E:
-	dc.l	loc_00055970
-	dc.l	loc_00056436
+	dc.l	EnemyGfxFrameTable_InsectChild
+	dc.l	EnemyGfxData_InsectChild
 	dc.b	$00, $77 
-	dc.l	loc_000565F6
-	dc.l	loc_000569A6
+	dc.l	EnemyGfxFrameTable_InsectMain
+	dc.l	EnemyGfxData_InsectMain
 	dc.b	$00, $4F 
 	dc.l	$00000000
 ; loc_00025036
 EnemySpriteSet_F:
-	dc.l	loc_00057580
-	dc.l	loc_00057F74
+	dc.l	EnemyGfxFrameTable_GolemChild
+	dc.l	EnemyGfxData_GolemChild
 	dc.b	$00, $6B 
-	dc.l	loc_00056A86
-	dc.l	loc_00057404
+	dc.l	EnemyGfxFrameTable_GolemMain
+	dc.l	EnemyGfxData_GolemMain
 	dc.b	$00, $6B 
 	dc.l	$00000000
 ; loc_0002504E
 EnemySpriteSet_G:
-	dc.l	loc_000580FC
-	dc.l	loc_00058858
+	dc.l	EnemyGfxFrameTable_GargoyleChild
+	dc.l	EnemyGfxData_GargoyleChild
 	dc.b	$00, $6B 
-	dc.l	loc_000589B4
-	dc.l	loc_00059098
+	dc.l	EnemyGfxFrameTable_GargoyleMain
+	dc.l	EnemyGfxData_GargoyleMain
 	dc.b	$00, $47 
 	dc.l	$00000000
 ; loc_00025066
 EnemySpriteSet_H:
-	dc.l	loc_000591AC
-	dc.l	loc_00059A46
+	dc.l	EnemyGfxFrameTable_WorldMapChild
+	dc.l	EnemyGfxData_WorldMapChild
 	dc.b	$00, $6B 
-	dc.l	loc_00059BAA
-	dc.l	loc_0005A206
+	dc.l	EnemyGfxFrameTable_WorldMapMain
+	dc.l	EnemyGfxData_WorldMapMain
 	dc.b	$00, $6B 
 	dc.l	loc_0005A32E
 	dc.l	loc_0005A3AE
 	dc.b	$00, $05 
 ; loc_00025084
 EnemySpriteSet_I:
-	dc.l	loc_0005A3C6
-	dc.l	loc_0005ADF2
+	dc.l	EnemyGfxFrameTable_BeastChild
+	dc.l	EnemyGfxData_BeastChild
 	dc.b	$00, $6B 
-	dc.l	loc_0005AF6E
-	dc.l	loc_0005B674
+	dc.l	EnemyGfxFrameTable_BeastMain
+	dc.l	EnemyGfxData_BeastMain
 	dc.b	$00, $47 
 	dc.l	loc_0005A32E
 	dc.l	loc_0005A3AE
 	dc.b	$00, $05 
 ; loc_000250A2
 EnemySpriteSet_J:
-	dc.l	loc_0005B784
-	dc.l	loc_0005C1DE
+	dc.l	EnemyGfxFrameTable_SkeletonChild
+	dc.l	EnemyGfxData_SkeletonChild
 	dc.b	$00, $6B 
-	dc.l	loc_0005C37E
-	dc.l	loc_0005C97E
+	dc.l	EnemyGfxFrameTable_SkeletonMain
+	dc.l	EnemyGfxData_SkeletonMain
 	dc.b	$00, $47 
 	dc.l	$00000000
 ; loc_000250BA
 EnemySpriteSet_K:
-	dc.l	loc_0005CA9A
-	dc.l	loc_0005CED4
+	dc.l	EnemyGfxFrameTable_HumanoidChild
+	dc.l	EnemyGfxData_HumanoidChild
 	dc.b	$00, $3B 
-	dc.l	loc_0005CF78
-	dc.l	loc_0005D180
+	dc.l	EnemyGfxFrameTable_HumanoidMain
+	dc.l	EnemyGfxData_HumanoidMain
 	dc.b	$00, $27 
 	dc.l	$00000000
 ; loc_000250D2
 EnemySpriteSet_L:
-	dc.l	loc_0005CA9A
-	dc.l	loc_0005CED4
+	dc.l	EnemyGfxFrameTable_HumanoidChild
+	dc.l	EnemyGfxData_HumanoidChild
 	dc.b	$00, $3B 
-	dc.l	loc_0005CF78
-	dc.l	loc_0005D180
+	dc.l	EnemyGfxFrameTable_HumanoidMain
+	dc.l	EnemyGfxData_HumanoidMain
 	dc.b	$00, $27 
 	dc.l	loc_0005D1E4
 	dc.l	loc_0005D286
 	dc.b	$00, $05 
 ; loc_000250F0
 EnemySpriteSet_M:
-	dc.l	loc_0005D29E
-	dc.l	loc_0005D6D4
+	dc.l	EnemyGfxFrameTable_BossMain
+	dc.l	EnemyGfxData_BossMain
 	dc.b	$00, $2F 
-	dc.l	loc_0005CF78
-	dc.l	loc_0005D180
+	dc.l	EnemyGfxFrameTable_HumanoidMain
+	dc.l	EnemyGfxData_HumanoidMain
 	dc.b	$00, $27 
 	dc.l	loc_0005D764
 	dc.l	loc_0005D798
@@ -49880,7 +49880,7 @@ OverworldMaps: ; 128
 	dc.l	loc_0003FAF0
 	dc.l	loc_0003FD42
 	dc.l	loc_0003FF68
-	dc.l	loc_00040082
+	dc.l	OverworldMapSector_Empty
 	dc.l	loc_0003E21E
 	dc.l	loc_0003E498
 	dc.l	loc_0003E618
@@ -49896,7 +49896,7 @@ OverworldMaps: ; 128
 	dc.l	loc_0003FB28
 	dc.l	loc_0003FD8A
 	dc.l	loc_0003FFA0
-	dc.l	loc_00040082
+	dc.l	OverworldMapSector_Empty
 	dc.l	loc_0003E21E
 	dc.l	loc_0003E4DA
 	dc.l	loc_0003E684
@@ -49912,7 +49912,7 @@ OverworldMaps: ; 128
 	dc.l	loc_0003FB70
 	dc.l	loc_0003FE08
 	dc.l	loc_0003FFA0
-	dc.l	loc_00040082
+	dc.l	OverworldMapSector_Empty
 	dc.l	loc_0003E21E
 	dc.l	loc_0003E508
 	dc.l	loc_0003E6DA
@@ -49928,7 +49928,7 @@ OverworldMaps: ; 128
 	dc.l	loc_0003FBD2
 	dc.l	loc_0003FE5E
 	dc.l	loc_0003FFD6
-	dc.l	loc_00040082
+	dc.l	OverworldMapSector_Empty
 	dc.l	loc_0003E23C
 	dc.l	loc_0003E512
 	dc.l	loc_0003E6E2
@@ -49959,7 +49959,7 @@ OverworldMaps: ; 128
 	dc.l	loc_0003F992
 	dc.l	loc_0003FC6A
 	dc.l	loc_0003FEB6
-	dc.l	loc_00040082
+	dc.l	OverworldMapSector_Empty
 	dc.l	CaveMaps
 	dc.l	loc_0003E35C
 	dc.l	loc_0003E5FC
@@ -49975,7 +49975,7 @@ OverworldMaps: ; 128
 	dc.l	loc_0003FA54
 	dc.l	loc_0003FCB2
 	dc.l	loc_0003FF24
-	dc.l	loc_00040082
+	dc.l	OverworldMapSector_Empty
 	dc.l	CaveMaps	
 	dc.l	loc_0003E3B8
 	dc.l	loc_0003E5FC
@@ -49991,7 +49991,7 @@ OverworldMaps: ; 128
 	dc.l	loc_0003FA54
 	dc.l	loc_0003FD10
 	dc.l	loc_0003FF68
-	dc.l	loc_00040082	
+	dc.l	OverworldMapSector_Empty	
 	dc.l	CaveMaps	
 loc_0003E1D4:
 	dc.b	$C9, $02, $84, $00, $8A, $02, $00, $89, $02, $85, $00, $89, $02, $00, $8A, $02, $84, $00, $8A, $02, $00, $82, $02, $00, $02, $83, $00, $85, $02, $81, $00, $81 
@@ -50390,7 +50390,8 @@ loc_00040028:
 	dc.b	$81, $01, $87, $02, $00, $84, $02, $81, $01, $87, $02, $00, $84, $02, $82, $01, $82, $0F, $83, $02, $00, $84, $02, $82, $01, $82, $0F, $81, $02, $82, $00, $84 
 	dc.b	$02, $83, $01, $80, $86, $82, $02, $00, $82, $01, $83, $02, $88, $00, $82, $01, $83, $02, $83, $01, $00, $87, $01, $82, $02, $83, $01, $87, $00, $8D, $01, $81 
 	dc.b	$00, $8D, $01, $81, $00, $8D, $01, $81, $00, $8D, $01, $00, $8D, $01, $81, $00, $89, $01, $84, $00, $85, $01, $86, $00, $98, $01 
-loc_00040082:
+; OverworldMapSector_Empty
+OverworldMapSector_Empty:
 	dc.b	$8F, $02, $88, $00, $83, $02, $1D, $89, $02, $85, $00, $B1, $02, $85, $00, $8E, $02, $88, $00, $01, $02, $85, $00, $F9, $02, $00 
 
 ;loc_0004009C: 
@@ -58077,7 +58078,8 @@ loc_00051CE0:
 	dc.b	$01, $77, $5C, $02, $80, $91, $76, $88, $AD, $87, $DA, $DA, $D7, $76, $AD, $AD, $7A, $DD, $A7, $7A, $67, $D7, $D7, $7D, $A7, $A7, $66, $D7, $D7, $00 
 loc_00051CFE:
 	dc.b	$01, $00, $11, $13, $33, $33, $66, $55, $60, $66, $55, $70, $76, $56, $70, $D7, $67, $D7, $67, $D7, $67, $76, $70, $76, $70, $00 
-loc_00051D18:
+; TalkerSpriteFrameTable
+TalkerSpriteFrameTable:
 	dc.l	loc_00051594
 	dc.l	loc_0005159A
 	dc.l	loc_000515B6
@@ -58434,7 +58436,8 @@ TalkerPortraitTileDataPtrs:
 	dc.l	loc_000525CE
 	dc.l	loc_000525E8
 	dc.l	loc_00052604
-loc_0005276A:
+; EnemyGfxFrameTable_DragonChild
+EnemyGfxFrameTable_DragonChild:
 	dc.b	$00, $04, $08, $01, $05, $09, $02, $06, $0A, $03, $07, $0B, $0C, $0E, $12, $0D, $0F, $13, $02, $10, $14, $03, $11, $15, $03, $03, $1A, $01, $17, $1B, $16, $18 
 	dc.b	$1C, $03, $19, $1D, $03, $21, $25, $1E, $22, $26, $1F, $23, $27, $20, $24, $28, $03, $2B, $2F, $1E, $2C, $30, $29, $2D, $31, $2A, $2E, $32, $03, $33, $36, $1E 
 	dc.b	$34, $37, $1F, $35, $38, $03, $03, $03, $39, $3C, $08, $3A, $3D, $40, $3B, $3E, $41, $03, $3F, $42, $03, $44, $03, $3A, $45, $48, $43, $46, $49, $03, $47, $03 
@@ -58630,7 +58633,8 @@ loc_00052F5E:
 	dc.b	$00, $00 
 loc_00052F80:
 	dc.b	$01, $00, $37, $7F, $FF, $FF, $55, $43, $25, $40 
-loc_00052F8A:
+; EnemyGfxData_DragonChild
+EnemyGfxData_DragonChild:
 	dc.l	loc_000527D6
 	dc.l	loc_000527E2
 	dc.l	loc_000527F6
@@ -58712,7 +58716,8 @@ loc_00052F8A:
 	dc.l	loc_00052F40
 	dc.l	loc_00052F5E
 	dc.l	loc_00052F80
-loc_000530CE:
+; EnemyGfxFrameTable_DragonMain
+EnemyGfxFrameTable_DragonMain:
 	dc.b	$00, $00, $01, $04, $02, $05, $03, $06, $00, $00, $07, $0A, $08, $0B, $09, $0C, $0D, $10, $0E, $11, $0F, $12, $00, $00, $13, $00, $14, $16, $15, $17, $00, $00 
 	dc.b	$18, $00, $19, $1B, $1A, $1C, $00, $00, $00, $00, $1D, $20, $1E, $21, $1F, $00, $00, $00, $22, $24, $23, $25, $00, $26, $00, $00, $27, $29, $28, $2A, $00, $2B 
 	dc.b	$00, $2E, $2C, $2F, $2D, $30, $00, $31 
@@ -58819,7 +58824,8 @@ loc_00053520:
 	dc.b	$02, $00, $CE, $C0, $00, $01, $EE, $00, $0C, $FD, $FE, $05, $56, $55, $06, $66, $E6, $55, $E6, $00 
 loc_00053534:
 	dc.b	$01, $00, $77, $73, $33, $FF, $60, $66, $60, $66, $60, $E6, $66, $66, $60, $00 
-loc_00053544:
+; EnemyGfxData_DragonMain
+EnemyGfxData_DragonMain:
 	dc.l	loc_00053116
 	dc.l	loc_0005311C
 	dc.l	loc_00053134
@@ -58870,7 +58876,8 @@ loc_00053544:
 	dc.l	loc_00053504
 	dc.l	loc_00053520
 	dc.l	loc_00053534
-loc_0005360C:
+; EnemyGfxFrameTable_QuadrupedChild
+EnemyGfxFrameTable_QuadrupedChild:
 	dc.b	$00, $03, $07, $01, $04, $08, $02, $05, $09, $00, $06, $0A, $0B, $0D, $11, $0C, $0E, $12, $02, $0F, $13, $00, $10, $14, $00, $16, $1A, $01, $17, $1B, $15, $18 
 	dc.b	$1C, $00, $19, $1D, $00, $20, $24, $1E, $21, $25, $1F, $22, $26, $00, $23, $27, $00, $2A, $2E, $28, $2B, $2F, $29, $2C, $30, $00, $2D, $31, $00, $35, $39, $32 
 	dc.b	$36, $3A, $33, $37, $3B, $34, $38, $3C, $00, $3F, $43, $3D, $40, $44, $3E, $41, $45, $00, $42, $46, $00, $00, $4A, $3D, $47, $4B, $3E, $48, $4C, $00, $49, $4D 
@@ -59083,7 +59090,8 @@ loc_00053DF4:
 	dc.b	$02, $33, $4C, $00, $09, $90, $44, $22, $C1, $44, $00, $32, $55, $55, $45, $54, $00, $55, $55, $04, $54, $43, $54, $45, $55, $34, $66, $65, $54, $00 
 loc_00053E12:
 	dc.b	$01, $00, $11, $11, $13, $33, $77, $99, $87, $50, $78, $98, $55, $68, $97, $45, $79, $70, $34, $79, $70, $34, $97, $37, $87, $47, $97, $00 
-loc_00053E2E:
+; EnemyGfxData_QuadrupedChild
+EnemyGfxData_QuadrupedChild:
 	dc.l	loc_00053678
 	dc.l	loc_0005367E
 	dc.l	loc_0005368E
@@ -59173,7 +59181,8 @@ loc_00053E2E:
 	dc.l	loc_00053DE4
 	dc.l	loc_00053DF4
 	dc.l	loc_00053E12
-loc_00053F92:
+; EnemyGfxFrameTable_QuadrupedMain
+EnemyGfxFrameTable_QuadrupedMain:
 	dc.b	$00, $00, $01, $03, $02, $04, $00, $00, $00, $00, $05, $07, $06, $08, $00, $00, $09, $0C, $0A, $0D, $0B, $0E, $00, $00, $00, $00, $0F, $11, $10, $12, $00, $13 
 	dc.b	$00, $00, $14, $17, $15, $18, $16, $00, $00, $00, $19, $1B, $1A, $1C, $00, $00, $00, $00, $1D, $20, $1E, $21, $1F, $22, $23, $00, $24, $27, $25, $28, $26, $29 
 	dc.b	$00, $00, $2A, $2D, $2B, $2E, $2C, $2F 
@@ -59277,7 +59286,8 @@ loc_000543F4:
 	dc.b	$02, $00, $64, $00, $00, $17, $EE, $00, $03, $33, $E0, $70, $07, $76, $0E, $77, $87, $6E, $E7, $76, $87, $76, $77, $66, $76, $66, $E0, $00 
 loc_00054410:
 	dc.b	$01, $00, $31, $11, $3F, $FF, $76, $66, $76, $6E, $60, $6E, $EE, $EE, $EE, $EE, $EE, $EE, $E0, $00 
-loc_00054424:
+; EnemyGfxData_QuadrupedMain
+EnemyGfxData_QuadrupedMain:
 	dc.l	loc_00053FDA
 	dc.l	loc_00053FE0
 	dc.l	loc_00053FFA
@@ -59326,7 +59336,8 @@ loc_00054424:
 	dc.l	loc_000543DC
 	dc.l	loc_000543F4
 	dc.l	loc_00054410
-loc_000544E4:
+; EnemyGfxFrameTable_OrbMain
+EnemyGfxFrameTable_OrbMain:
 	dc.b	$00, $03, $07, $01, $04, $08, $02, $05, $09, $00, $06, $0A, $0B, $0E, $12, $0C, $0F, $13, $0D, $10, $14, $00, $11, $15, $16, $1A, $1E, $17, $1B, $1F, $18, $1C 
 	dc.b	$20, $19, $1D, $21, $22, $26, $2A, $23, $27, $2B, $24, $28, $2C, $25, $29, $2D, $2E, $00, $33, $2F, $31, $34, $30, $32, $34, $00, $00, $35, $2E, $00, $33, $2F 
 	dc.b	$31, $34, $30, $32, $34, $00, $00, $35 
@@ -59442,7 +59453,8 @@ loc_000548F6:
 	dc.b	$01, $99, $FF, $FF, $FF, $FF 
 loc_000548FC:
 	dc.b	$02, $99, $88, $88, $88, $80, $00, $73, $33, $33, $7F, $90, $90, $90, $90, $90 
-loc_0005490C:
+; EnemyGfxData_OrbMain
+EnemyGfxData_OrbMain:
 	dc.l	loc_0005452C
 	dc.l	loc_00054532
 	dc.l	loc_0005453E
@@ -59497,7 +59509,8 @@ loc_0005490C:
 	dc.l	loc_000548E6
 	dc.l	loc_000548F6
 	dc.l	loc_000548FC
-loc_000549E4:
+; EnemyGfxFrameTable_OrbChild
+EnemyGfxFrameTable_OrbChild:
 	dc.b	$00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $01, $00, $02, $00, $03, $00, $04 
 	dc.b	$00, $07, $05, $08, $06, $09, $00, $00, $00, $00, $0A, $0C, $0B, $0D, $00, $00 
 loc_00054A14:
@@ -59528,7 +59541,8 @@ loc_00054B00:
 	dc.b	$01, $88, $33, $32, $00, $00, $00, $67, $05, $67, $05, $67, $55, $57, $66, $45, $57, $87, $66, $45, $56, $76, $55, $44, $56, $76, $44, $34, $56, $76, $44, $00 
 loc_00054B20:
 	dc.b	$01, $55, $00, $22, $2E, $62, $87, $76, $65, $00, $87, $76, $65, $00, $77, $76, $00, $66, $66, $50, $66, $65, $40, $40, $44, $40, $44, $45, $40, $00 
-loc_00054B3E:
+; EnemyGfxData_OrbChild
+EnemyGfxData_OrbChild:
 	dc.l	loc_00054A14
 	dc.l	loc_00054A1A
 	dc.l	loc_00054A28
@@ -59543,7 +59557,8 @@ loc_00054B3E:
 	dc.l	loc_00054AF0
 	dc.l	loc_00054B00
 	dc.l	loc_00054B20
-loc_00054B76:
+; EnemyGfxFrameTable_SerpentChild
+EnemyGfxFrameTable_SerpentChild:
 	dc.b	$00, $04, $08, $01, $05, $09, $02, $06, $0A, $03, $07, $0B, $00, $0E, $12, $0C, $0F, $13, $0D, $10, $14, $00, $11, $15, $16, $19, $1D, $17, $1A, $1E, $18, $1B 
 	dc.b	$1F, $03, $1C, $20, $00, $22, $26, $21, $23, $27, $02, $24, $28, $03, $25, $29, $00, $2C, $30, $2A, $2D, $31, $2B, $2E, $32, $00, $2F, $33, $16, $34, $38, $17 
 	dc.b	$35, $39, $18, $36, $3A, $03, $37, $3B, $00, $3E, $42, $3C, $3F, $43, $3D, $40, $44, $00, $41, $45, $00, $48, $4C, $46, $49, $4D, $47, $4A, $4E, $00, $4B, $4F 
@@ -59739,7 +59754,8 @@ loc_000552D2:
 	dc.b	$01, $66, $FF, $FF, $44, $02, $56, $60, $60, $45, $60, $00, $44, $56, $60, $00, $54, $56, $00, $00 
 loc_000552E6:
 	dc.b	$01, $00, $11, $11, $99, $9D, $66, $53, $40, $66, $54, $30, $66, $65, $30, $06, $65, $44, $66, $54, $06, $54, $05, $54, $54, $00 
-loc_00055300:
+; EnemyGfxData_SerpentChild
+EnemyGfxData_SerpentChild:
 	dc.l	loc_00054BE2
 	dc.l	loc_00054BE8
 	dc.l	loc_00054BF0
@@ -59830,7 +59846,8 @@ loc_00055300:
 	dc.l	loc_000552B4
 	dc.l	loc_000552D2
 	dc.l	loc_000552E6
-loc_00055468:
+; EnemyGfxFrameTable_SerpentMain
+EnemyGfxFrameTable_SerpentMain:
 	dc.b	$00, $04, $01, $05, $02, $06, $03, $07, $08, $0C, $09, $0D, $0A, $0E, $0B, $0F, $10, $04, $11, $14, $12, $15, $13, $04, $16, $04, $17, $1A, $18, $1B, $19, $07 
 	dc.b	$1C, $20, $1D, $21, $1E, $22, $1F, $23, $04, $04, $24, $27, $25, $28, $26, $04, $04, $2C, $29, $2D, $2A, $2E, $2B, $04, $04, $32, $2F, $33, $30, $34, $31, $07 
 	dc.b	$04, $04, $35, $38, $36, $39, $37, $04 
@@ -59951,7 +59968,8 @@ loc_0005586C:
 	dc.b	$02, $00, $FF, $F8, $00, $8F, $EE, $00, $03, $7F, $70, $0E, $0E, $00 
 loc_0005587A:
 	dc.b	$02, $00, $FF, $F1, $01, $3F, $EE, $00, $0C, $EE, $C0, $E0, $E0, $00 
-loc_00055888:
+; EnemyGfxData_SerpentMain
+EnemyGfxData_SerpentMain:
 	dc.l	loc_000554B0
 	dc.l	loc_000554B8
 	dc.l	loc_000554D4
@@ -60010,7 +60028,8 @@ loc_00055888:
 	dc.l	loc_00055862
 	dc.l	loc_0005586C
 	dc.l	loc_0005587A
-loc_00055970:
+; EnemyGfxFrameTable_InsectChild
+EnemyGfxFrameTable_InsectChild:
 	dc.b	$00, $04, $08, $01, $05, $09, $02, $06, $0A, $03, $07, $0B, $00, $0E, $12, $0C, $0F, $13, $0D, $10, $14, $03, $11, $15, $16, $1A, $1E, $17, $1B, $1F, $18, $1C 
 	dc.b	$20, $19, $1D, $21, $22, $26, $2A, $23, $27, $2B, $24, $28, $2C, $25, $29, $2D, $2E, $31, $35, $2F, $32, $36, $30, $33, $37, $00, $34, $38, $00, $3C, $40, $39 
 	dc.b	$3D, $41, $3A, $3E, $42, $3B, $3F, $43, $16, $47, $4B, $44, $48, $4C, $45, $49, $4D, $46, $4A, $4E, $22, $52, $56, $4F, $53, $57, $50, $54, $58, $51, $55, $59 
@@ -60263,7 +60282,8 @@ loc_00056404:
 	dc.b	$00, $00 
 loc_00056426:
 	dc.b	$01, $00, $33, $33, $77, $FF, $B5, $45, $54, $45, $44, $55, $44, $50, $55, $60 
-loc_00056436:
+; EnemyGfxData_InsectChild
+EnemyGfxData_InsectChild:
 	dc.l	loc_000559E8
 	dc.l	loc_000559EE
 	dc.l	loc_00055A06
@@ -60376,7 +60396,8 @@ loc_00056436:
 	dc.l	loc_000563E2
 	dc.l	loc_00056404
 	dc.l	loc_00056426
-loc_000565F6:
+; EnemyGfxFrameTable_InsectMain
+EnemyGfxFrameTable_InsectMain:
 	dc.b	$00, $03, $01, $04, $02, $05, $00, $06, $00, $03, $07, $0A, $08, $0B, $09, $06, $00, $03, $0C, $0A, $0D, $0F, $0E, $06, $00, $03, $0C, $0A, $10, $0F, $11, $12 
 	dc.b	$00, $15, $13, $16, $14, $17, $00, $18, $00, $1B, $19, $1C, $1A, $1D, $00, $1E, $00, $22, $1F, $23, $20, $24, $21, $25, $00, $28, $1F, $29, $26, $2A, $27, $2B 
 	dc.b	$00, $2F, $2C, $30, $2D, $2A, $2E, $31, $00, $34, $32, $35, $33, $36, $00, $37 
@@ -60492,7 +60513,8 @@ loc_00056988:
 	dc.b	$01, $EE, $27, $7F, $FF, $C0, $DC, $CE, $00, $DC, $DE, $E0, $00, $00, $00, $00, $00, $00 
 loc_0005699A:
 	dc.b	$01, $00, $F7, $33, $7F, $FF, $E0, $EE, $E0, $EE, $E0, $EE 
-loc_000569A6:
+; EnemyGfxData_InsectMain
+EnemyGfxData_InsectMain:
 	dc.l	loc_00056646
 	dc.l	loc_0005664C
 	dc.l	loc_0005665C
@@ -60549,7 +60571,8 @@ loc_000569A6:
 	dc.l	loc_00056978
 	dc.l	loc_00056988
 	dc.l	loc_0005699A
-loc_00056A86:
+; EnemyGfxFrameTable_GolemMain
+EnemyGfxFrameTable_GolemMain:
 	dc.b	$00, $04, $08, $01, $05, $09, $02, $06, $0A, $03, $07, $0B, $0C, $04, $12, $01, $0F, $13, $0D, $10, $14, $0E, $11, $15, $16, $19, $1D, $01, $1A, $1E, $17, $1B 
 	dc.b	$1F, $18, $1C, $20, $21, $1C, $28, $22, $25, $29, $23, $26, $2A, $24, $27, $2B, $2C, $1C, $32, $2D, $30, $33, $2E, $31, $34, $2F, $27, $35, $36, $1C, $3C, $37 
 	dc.b	$3A, $3D, $38, $3B, $3E, $39, $27, $3F, $40, $44, $48, $41, $45, $49, $42, $46, $4A, $43, $47, $4B, $4C, $44, $52, $4D, $45, $49, $4E, $50, $53, $4F, $51, $54 
@@ -60758,7 +60781,8 @@ loc_000573D0:
 	dc.b	$02, $44, $0B, $04, $31, $00, $BB, $00, $00, $08, $FF, $43, $33, $33, $55, $33, $55, $54, $43, $33, $54, $33, $33, $55, $54, $B5, $55, $00 
 loc_000573EC:
 	dc.b	$02, $00, $11, $13, $10, $03, $BB, $00, $00, $6F, $EC, $33, $44, $55, $34, $45, $50, $44, $55, $50, $45, $55, $5B, $B0 
-loc_00057404:
+; EnemyGfxData_GolemMain
+EnemyGfxData_GolemMain:
 	dc.l	loc_00056AF2
 	dc.l	loc_00056B08
 	dc.l	loc_00056B2A
@@ -60854,7 +60878,8 @@ loc_00057404:
 	dc.l	loc_000573BE
 	dc.l	loc_000573D0
 	dc.l	loc_000573EC
-loc_00057580:
+; EnemyGfxFrameTable_GolemChild
+EnemyGfxFrameTable_GolemChild:
 	dc.b	$00, $04, $08, $01, $05, $09, $02, $06, $0A, $03, $07, $0B, $0C, $10, $14, $0D, $11, $09, $0E, $12, $0A, $0F, $13, $15, $16, $1A, $1E, $17, $1B, $09, $18, $1C 
 	dc.b	$1F, $19, $1D, $20, $21, $25, $29, $22, $26, $2A, $23, $27, $2B, $24, $28, $2C, $2D, $31, $35, $2E, $32, $36, $2F, $33, $37, $30, $34, $38, $39, $3D, $41, $3A 
 	dc.b	$3E, $42, $3B, $3F, $43, $3C, $40, $44, $45, $49, $4D, $46, $4A, $4E, $47, $4B, $4F, $48, $4C, $4C, $50, $53, $56, $51, $54, $57, $52, $55, $58, $4C, $4C, $4C 
@@ -61077,7 +61102,8 @@ loc_00057F34:
 	dc.b	$36, $00 
 loc_00057F56:
 	dc.b	$01, $00, $11, $11, $11, $11, $44, $33, $40, $43, $23, $34, $32, $23, $34, $43, $23, $34, $43, $33, $44, $54, $44, $44, $54, $43, $35, $54, $32, $23 
-loc_00057F74:
+; EnemyGfxData_GolemChild
+EnemyGfxData_GolemChild:
 	dc.l	loc_000575EC
 	dc.l	loc_00057600
 	dc.l	loc_00057620
@@ -61176,7 +61202,8 @@ loc_00057F74:
 	dc.l	loc_00057F1A
 	dc.l	loc_00057F34
 	dc.l	loc_00057F56
-loc_000580FC:
+; EnemyGfxFrameTable_GargoyleChild
+EnemyGfxFrameTable_GargoyleChild:
 	dc.b	$00, $00, $07, $01, $04, $08, $02, $05, $09, $03, $06, $0A, $00, $00, $0F, $0B, $0D, $10, $0C, $0E, $11, $00, $00, $12, $00, $15, $18, $13, $16, $19, $14, $17 
 	dc.b	$1A, $00, $00, $1B, $00, $1E, $22, $1C, $1F, $23, $1D, $20, $24, $00, $21, $25, $00, $28, $2C, $26, $29, $2D, $27, $2A, $2E, $00, $2B, $2F, $00, $32, $36, $30 
 	dc.b	$33, $37, $31, $34, $24, $00, $35, $38, $00, $00, $3E, $39, $3C, $3F, $3A, $00, $40, $3B, $3D, $41, $00, $45, $48, $42, $46, $49, $43, $00, $4A, $44, $47, $4B 
@@ -61368,7 +61395,8 @@ loc_0005881A:
 	dc.b	$22, $00 
 loc_0005883C:
 	dc.b	$01, $00, $11, $11, $33, $31, $01, $11, $11, $22, $11, $10, $22, $11, $10, $32, $21, $10, $22, $11, $32, $11, $23, $55, $34, $13, $40, $00 
-loc_00058858:
+; EnemyGfxData_GargoyleChild
+EnemyGfxData_GargoyleChild:
 	dc.l	loc_00058168
 	dc.l	loc_0005816E
 	dc.l	loc_00058186
@@ -61456,7 +61484,8 @@ loc_00058858:
 	dc.l	loc_00058806
 	dc.l	loc_0005881A
 	dc.l	loc_0005883C
-loc_000589B4:
+; EnemyGfxFrameTable_GargoyleMain
+EnemyGfxFrameTable_GargoyleMain:
 	dc.b	$00, $04, $01, $05, $02, $06, $03, $07, $08, $0C, $09, $0D, $0A, $0E, $0B, $0F, $10, $13, $09, $14, $11, $15, $12, $16, $17, $1B, $18, $1C, $19, $1D, $1A, $1E 
 	dc.b	$1F, $23, $20, $24, $21, $1D, $22, $25, $26, $2A, $27, $2B, $28, $2C, $29, $2D, $2E, $32, $2F, $33, $30, $34, $31, $35, $36, $3A, $37, $3B, $38, $3C, $39, $3D 
 	dc.b	$3E, $41, $37, $42, $3F, $43, $40, $44 
@@ -61607,7 +61636,8 @@ loc_00059072:
 	dc.b	$01, $00, $00, $19, $9F, $FF, $21, $61, $66, $66, $16, $61, $66, $66, $66, $61, $66, $01, $60, $01, $60, $00 
 loc_00059088:
 	dc.b	$01, $00, $11, $9D, $FF, $FF, $66, $66, $01, $66, $66, $01, $66, $61, $61, $00 
-loc_00059098:
+; EnemyGfxData_GargoyleMain
+EnemyGfxData_GargoyleMain:
 	dc.l	loc_000589FC
 	dc.l	loc_00058A1A
 	dc.l	loc_00058A3C
@@ -61677,7 +61707,8 @@ loc_00059098:
 	dc.l	loc_0005905A
 	dc.l	loc_00059072
 	dc.l	loc_00059088
-loc_000591AC:
+; EnemyGfxFrameTable_WorldMapChild
+EnemyGfxFrameTable_WorldMapChild:
 	dc.b	$00, $03, $07, $01, $04, $08, $02, $05, $09, $00, $06, $0A, $00, $0D, $11, $0B, $0E, $12, $0C, $0F, $13, $00, $10, $14, $00, $17, $1B, $15, $18, $1C, $16, $19 
 	dc.b	$1D, $00, $1A, $1E, $00, $21, $24, $1F, $22, $25, $20, $23, $26, $00, $06, $27, $00, $2A, $2D, $28, $2B, $2E, $29, $2C, $2F, $00, $06, $30, $00, $33, $37, $31 
 	dc.b	$34, $38, $32, $35, $39, $00, $36, $3A, $3B, $3E, $41, $3C, $3F, $42, $3D, $40, $43, $00, $00, $44, $45, $48, $4B, $46, $49, $4C, $47, $4A, $4D, $00, $00, $4E 
@@ -61872,7 +61903,8 @@ loc_00059A20:
 	dc.b	$02, $33, $44, $26, $D4, $63, $22, $21, $10, $21, $88, $43, $21, $44, $32, $44, $44, $44, $32, $23, $32, $32, $23, $00 
 loc_00059A38:
 	dc.b	$01, $00, $F7, $77, $77, $77, $10, $20, $20, $20, $21, $21, $22, $00 
-loc_00059A46:
+; EnemyGfxData_WorldMapChild
+EnemyGfxData_WorldMapChild:
 	dc.l	loc_00059218
 	dc.l	loc_0005921E
 	dc.l	loc_0005922C
@@ -61962,7 +61994,8 @@ loc_00059A46:
 	dc.l	loc_00059A02
 	dc.l	loc_00059A20
 	dc.l	loc_00059A38
-loc_00059BAA:
+; EnemyGfxFrameTable_WorldMapMain
+EnemyGfxFrameTable_WorldMapMain:
 	dc.b	$00, $04, $08, $01, $05, $09, $02, $06, $0A, $03, $07, $0B, $0C, $10, $14, $0D, $11, $15, $0E, $12, $16, $0F, $13, $17, $0C, $1A, $1E, $18, $1B, $1F, $19, $1C 
 	dc.b	$20, $17, $1D, $17, $21, $25, $08, $22, $26, $29, $23, $27, $0A, $24, $28, $0B, $2A, $2E, $14, $2B, $2F, $15, $2C, $30, $16, $2D, $31, $17, $32, $36, $1E, $33 
 	dc.b	$37, $1F, $34, $38, $20, $35, $39, $17, $21, $25, $08, $22, $26, $29, $23, $27, $0A, $24, $28, $0B, $3A, $3E, $14, $3B, $3F, $15, $3C, $40, $16, $3D, $41, $17 
@@ -62125,7 +62158,8 @@ loc_0005A1DA:
 	dc.b	$01, $00, $00, $00, $01, $BF, $33, $23, $33, $34, $43, $22, $23, $33, $44, $32, $22, $22, $44, $32, $22, $12, $22, $33, $21, $10, $12, $22, $11, $12 
 loc_0005A1F8:
 	dc.b	$01, $00, $33, $37, $FF, $FF, $33, $22, $33, $10, $31, $10, $11, $00 
-loc_0005A206:
+; EnemyGfxData_WorldMapMain
+EnemyGfxData_WorldMapMain:
 	dc.l	loc_00059C16
 	dc.l	loc_00059C26
 	dc.l	loc_00059C40
@@ -62246,7 +62280,8 @@ loc_0005A3AE:
 	dc.l	loc_0005A372-2
 	dc.l	loc_0005A37E
 	dc.l	loc_0005A3A2-2
-loc_0005A3C6:
+; EnemyGfxFrameTable_BeastChild
+EnemyGfxFrameTable_BeastChild:
 	dc.b	$00, $03, $07, $01, $04, $08, $02, $05, $09, $00, $06, $0A, $00, $0D, $11, $0B, $0E, $12, $0C, $0F, $13, $00, $10, $14, $15, $19, $1D, $16, $1A, $1E, $17, $1B 
 	dc.b	$1F, $18, $1C, $20, $00, $23, $27, $21, $24, $28, $22, $25, $29, $00, $26, $2A, $00, $2D, $31, $2B, $2E, $32, $2C, $2F, $33, $00, $30, $34, $35, $39, $3D, $36 
 	dc.b	$3A, $3E, $37, $3B, $3F, $38, $3C, $40, $00, $43, $47, $41, $44, $48, $42, $45, $49, $00, $46, $4A, $00, $4D, $51, $4B, $4E, $52, $4C, $4F, $53, $00, $50, $54 
@@ -62478,7 +62513,8 @@ loc_0005ADBA:
 	dc.b	$00, $00 
 loc_0005ADDC:
 	dc.b	$01, $00, $11, $11, $37, $FF, $64, $32, $10, $25, $32, $21, $13, $32, $21, $12, $22, $11, $21, $11, $11, $00 
-loc_0005ADF2:
+; EnemyGfxData_BeastChild
+EnemyGfxData_BeastChild:
 	dc.l	loc_0005A432
 	dc.l	loc_0005A438
 	dc.l	loc_0005A44E
@@ -62574,7 +62610,8 @@ loc_0005ADF2:
 	dc.l	loc_0005AD98
 	dc.l	loc_0005ADBA
 	dc.l	loc_0005ADDC
-loc_0005AF6E:
+; EnemyGfxFrameTable_BeastMain
+EnemyGfxFrameTable_BeastMain:
 	dc.b	$00, $04, $01, $05, $02, $06, $03, $07, $08, $0C, $09, $0D, $0A, $0E, $0B, $0F, $10, $12, $01, $13, $02, $14, $11, $15, $16, $1A, $17, $1B, $18, $1C, $19, $1D 
 	dc.b	$1E, $22, $1F, $23, $20, $24, $21, $25, $26, $2A, $27, $2B, $28, $2C, $29, $2D, $2E, $32, $2F, $33, $30, $34, $31, $35, $36, $3A, $37, $3B, $38, $3C, $39, $3D 
 	dc.b	$3E, $40, $2F, $41, $30, $42, $3F, $43 
@@ -62728,7 +62765,8 @@ loc_0005B63C:
 	dc.b	$00, $00 
 loc_0005B65E:
 	dc.b	$01, $00, $11, $07, $37, $7F, $FF, $FF, $F0, $A9, $9A, $AF, $9A, $AA, $AA, $A0, $9F, $9A, $AA, $BA, $0B, $00 
-loc_0005B674:
+; EnemyGfxData_BeastMain
+EnemyGfxData_BeastMain:
 	dc.l	loc_0005AFB6
 	dc.l	loc_0005AFCC
 	dc.l	loc_0005AFEE
@@ -62797,7 +62835,8 @@ loc_0005B674:
 	dc.l	loc_0005B61A
 	dc.l	loc_0005B63C
 	dc.l	loc_0005B65E
-loc_0005B784:
+; EnemyGfxFrameTable_SkeletonChild
+EnemyGfxFrameTable_SkeletonChild:
 	dc.b	$00, $04, $08, $01, $05, $09, $02, $06, $0A, $03, $07, $0B, $0C, $10, $14, $0D, $11, $15, $0E, $12, $16, $0F, $13, $17, $18, $1C, $20, $19, $1D, $21, $1A, $1E 
 	dc.b	$22, $1B, $1F, $23, $24, $28, $2C, $25, $29, $2D, $26, $2A, $2E, $27, $2B, $2F, $30, $34, $38, $31, $35, $39, $32, $36, $3A, $33, $37, $3B, $3C, $40, $44, $3D 
 	dc.b	$41, $45, $3E, $42, $46, $3F, $43, $47, $48, $4B, $4F, $49, $4C, $50, $4A, $4D, $51, $3C, $4E, $52, $53, $56, $5A, $54, $57, $5B, $55, $58, $5C, $3C, $59, $5D 
@@ -63027,7 +63066,8 @@ loc_0005C1B4:
 	dc.b	$01, $22, $00, $22, $CE, $D8, $21, $23, $33, $21, $21, $23, $32, $21, $11, $33, $11, $12, $32, $11, $11, $11, $11, $33, $23, $34, $32, $00 
 loc_0005C1D0:
 	dc.b	$02, $11, $CC, $88, $80, $08, $00, $33, $37, $77, $77, $10, $10, $10 
-loc_0005C1DE:
+; EnemyGfxData_SkeletonChild
+EnemyGfxData_SkeletonChild:
 	dc.l	loc_0005B7F0
 	dc.l	loc_0005B7FA
 	dc.l	loc_0005B810
@@ -63132,7 +63172,8 @@ loc_0005C1DE:
 	dc.l	loc_0005C196
 	dc.l	loc_0005C1B4
 	dc.l	loc_0005C1D0
-loc_0005C37E:
+; EnemyGfxFrameTable_SkeletonMain
+EnemyGfxFrameTable_SkeletonMain:
 	dc.b	$00, $04, $01, $05, $02, $06, $03, $07, $08, $0C, $09, $0D, $0A, $0E, $0B, $0F, $10, $14, $11, $15, $12, $16, $13, $17, $18, $1C, $19, $1D, $1A, $1E, $1B, $1F 
 	dc.b	$14, $23, $20, $24, $21, $25, $22, $26, $27, $2B, $28, $2C, $29, $2D, $2A, $2E, $2F, $33, $30, $34, $31, $35, $32, $36, $37, $3B, $38, $3C, $39, $3D, $3A, $3E 
 	dc.b	$3F, $43, $40, $44, $41, $45, $42, $46 
@@ -63281,7 +63322,8 @@ loc_0005C954:
 	dc.b	$02, $00, $08, $EC, $40, $00, $11, $07, $10, $24, $46, $23, $32, $23, $32, $01, $12, $90, $12, $99, $22, $21, $91, $21, $19, $99, $99, $00 
 loc_0005C970:
 	dc.b	$01, $00, $33, $77, $FF, $77, $11, $10, $11, $10, $22, $20, $99, $90 
-loc_0005C97E:
+; EnemyGfxData_SkeletonMain
+EnemyGfxData_SkeletonMain:
 	dc.l	loc_0005C3C6
 	dc.l	loc_0005C3E2
 	dc.l	loc_0005C3FE
@@ -63353,7 +63395,8 @@ loc_0005C97E:
 	dc.l	loc_0005C93C
 	dc.l	loc_0005C954
 	dc.l	loc_0005C970
-loc_0005CA9A:
+; EnemyGfxFrameTable_HumanoidChild
+EnemyGfxFrameTable_HumanoidChild:
 	dc.b	$00, $04, $08, $01, $05, $09, $02, $06, $0A, $03, $07, $0B, $0C, $0F, $12, $0D, $10, $13, $0E, $11, $14, $03, $03, $03, $03, $03, $03, $15, $17, $19, $16, $18 
 	dc.b	$1A, $03, $03, $03, $03, $03, $03, $1B, $1D, $1F, $1C, $1E, $20, $03, $03, $03, $03, $03, $00, $21, $23, $26, $22, $24, $27, $03, $25, $28 
 loc_0005CAD6:
@@ -63454,7 +63497,8 @@ loc_0005CEA6:
 	dc.b	$33, $00 
 loc_0005CEC8:
 	dc.b	$01, $00, $77, $FF, $77, $7F, $40, $40, $30, $30, $30, $00 
-loc_0005CED4:
+; EnemyGfxData_HumanoidChild
+EnemyGfxData_HumanoidChild:
 	dc.l	loc_0005CAD6
 	dc.l	loc_0005CADE
 	dc.l	loc_0005CAEA
@@ -63496,7 +63540,8 @@ loc_0005CED4:
 	dc.l	loc_0005CE84
 	dc.l	loc_0005CEA6
 	dc.l	loc_0005CEC8
-loc_0005CF78:
+; EnemyGfxFrameTable_HumanoidMain
+EnemyGfxFrameTable_HumanoidMain:
 	dc.b	$00, $04, $01, $05, $02, $06, $03, $07, $08, $07, $09, $0B, $0A, $0C, $07, $07, $07, $07, $0D, $0F, $0E, $10, $07, $07, $07, $07, $11, $13, $12, $14, $07, $07 
 	dc.b	$07, $07, $15, $17, $16, $18, $07, $07 
 loc_0005CFA0:
@@ -63552,7 +63597,8 @@ loc_0005D162:
 	dc.b	$02, $00, $EF, $FF, $80, $8C, $99, $00, $00, $37, $73, $02, $09, $09 
 loc_0005D170:
 	dc.b	$02, $00, $3F, $FF, $31, $13, $99, $00, $00, $8C, $EC, $22, $20, $90, $90, $00 
-loc_0005D180:
+; EnemyGfxData_HumanoidMain
+EnemyGfxData_HumanoidMain:
 	dc.l	loc_0005CFA0
 	dc.l	loc_0005CFB4
 	dc.l	loc_0005CFD6
@@ -63599,7 +63645,8 @@ loc_0005D286:
 	dc.l	loc_0005D238
 	dc.l	loc_0005D252
 	dc.l	loc_0005D268
-loc_0005D29E:
+; EnemyGfxFrameTable_BossMain
+EnemyGfxFrameTable_BossMain:
 	dc.b	$00, $04, $08, $0C, $01, $05, $09, $0D, $02, $06, $0A, $0E, $03, $07, $0B, $0F, $00, $10, $12, $16, $01, $05, $13, $17, $02, $06, $14, $18, $03, $11, $15, $19 
 	dc.b	$00, $1B, $1D, $20, $01, $05, $1E, $21, $02, $06, $0A, $22, $1A, $1C, $1F, $23 
 loc_0005D2CE:
@@ -63687,7 +63734,8 @@ loc_0005D696:
 	dc.b	$00, $00 
 loc_0005D6B8:
 	dc.b	$01, $00, $02, $33, $31, $13, $12, $33, $AA, $A2, $A2, $23, $A2, $A2, $23, $A2, $23, $02, $2A, $02, $2A, $A0, $02, $2A, $A0, $02, $AA, $00 
-loc_0005D6D4:
+; EnemyGfxData_BossMain
+EnemyGfxData_BossMain:
 	dc.l	loc_0005D2CE
 	dc.l	loc_0005D2DC
 	dc.l	loc_0005D2F6
@@ -73888,7 +73936,8 @@ loc_00083D62:
 	dc.b	$01, $88, $00, $00, $01, $FF, $33, $53, $77, $84, $23, $35, $77, $84, $44, $55, $77, $84, $44, $52, $77, $84, $55, $33, $77, $84, $55, $54, $77, $00 
 loc_00083D80:
 	dc.b	$03, $58, $AA, $AA, $AA, $00, $84, $55, $55, $51, $00, $88, $00, $00, $04, $FF 
-loc_00083D90:
+; FPDungeonSpriteFrameTable
+FPDungeonSpriteFrameTable:
 	dc.l	loc_000831F8
 	dc.l	loc_000831FE
 	dc.l	loc_00083218
@@ -75335,7 +75384,8 @@ loc_00088622:
 	dc.l	loc_000885EE
 	dc.l	loc_000885FA
 	dc.l	loc_0008860E
-loc_0008863E:
+; TownTileSet_A_Mappings
+TownTileSet_A_Mappings:
 	dc.b	$01, $00, $FF, $FF, $FF, $FF, $02, $BB, $82, $A3, $20, $20, $BA, $1D, $04, $00, $45, $AB, $AA, $B9, $AA, $AA, $9B, $99, $AA, $AB, $A9, $99, $AB, $AB, $B9, $9A 
 	dc.b	$B9, $01, $BD, $03, $22, $04, $11, $AA, $BB, $DD, $DA, $A9, $AA, $AA, $AB, $AB, $AA, $AB, $BA, $9B, $DA, $BB, $AD, $BB, $BA, $BB, $BA, $BB, $DD, $BB, $AA, $BA 
 	dc.b	$01, $9B, $04, $50, $A0, $03, $AA, $BA, $B9, $AB, $A9, $B9, $A9, $A9, $AB, $AA, $BB, $AB, $BB, $A9, $9A, $9A, $AA, $AB, $BB, $BA, $BB, $AB, $BA, $BB, $B9, $01 
@@ -75569,7 +75619,8 @@ loc_0008863E:
 	dc.b	$DD, $DF, $F3, $DE, $88, $ED, $F3, $8E, $77, $8E, $D3, $77, $DD, $8E, $D3, $DD, $D8, $E7, $D3, $D8, $E7, $7D, $F3, $87, $7D, $DF, $F3, $01, $FF, $64, $40, $11 
 	dc.b	$30, $CF, $D8, $CF, $FD, $87, $CF, $D8, $7D, $CF, $FD, $87, $DF, $CF, $D8, $7D, $CD, $87, $DF, $CF, $DD, $C3, $33, $33, $33, $02, $FF, $26, $EE, $EE, $E0, $F3 
 	dc.b	$11, $11, $11, $10, $7D, $DF, $DF, $33, $33, $33, $33, $00 
-loc_0008A34A:
+; TownTileSet_A_Gfx
+TownTileSet_A_Gfx:
 	dc.b	$01, $CF, $08, $88, $88, $88, $CC, $CC, $CC, $CC, $FF, $FF, $DD, $FF, $FD, $22, $FF, $D2, $FF, $FD, $2F, $FC, $FD, $2F, $CC, $FD, $2F, $FC, $FD, $22, $FF, $01 
 	dc.b	$F3, $01, $11, $11, $11, $CC, $CC, $CC, $CC, $DD, $FF, $FF, $22, $DF, $FF, $F2, $3D, $FF, $FF, $23, $DF, $CF, $23, $DF, $FF, $23, $DF, $F2, $23, $DF, $00, $CF 
 	dc.b	$FD, $D3, $22, $CF, $D7, $77, $33, $CD, $7E, $88, $77, $CD, $7E, $88, $88, $CD, $77, $EE, $EE, $CF, $DD, $77, $77, $CF, $FF, $DD, $DD, $C3, $33, $33, $33, $00 
@@ -75749,7 +75800,8 @@ loc_0008B38A:
 	dc.b	$01, $89, $01, $8A, $01, $8B, $01, $8C, $01, $8D, $01, $8E, $00, $00, $00, $00, $01, $8F, $01, $90, $00, $00, $00, $00, $00, $00, $01, $91, $00, $00, $00, $00 
 	dc.b	$01, $92, $00, $00, $00, $00, $00, $00, $00, $9E, $00, $9B, $00, $9E, $01, $93, $00, $9E, $00, $9B, $00, $9E, $01, $94, $01, $95, $00, $0F, $00, $07, $00, $11 
 	dc.b	$00, $00, $00, $21, $01, $96, $00, $23, $00, $35, $00, $36, $00, $31, $01, $97 
-loc_0008B97A:
+; TownTileSet_B_Mappings
+TownTileSet_B_Mappings:
 	dc.b	$01, $00, $FF, $FF, $FF, $FF, $02, $88, $0E, $E0, $0B, $B0, $99, $00, $0F, $00, $0F, $77, $77, $77, $79, $89, $89, $77, $79, $77, $77, $89, $89, $01, $88, $0E 
 	dc.b	$E0, $08, $80, $77, $77, $77, $79, $89, $89, $99, $99, $99, $9D, $77, $79, $77, $DB, $89, $8D, $DB, $89, $8D, $BB, $99, $99, $DB, $BF, $01, $88, $0E, $C0, $08 
 	dc.b	$80, $77, $77, $77, $7D, $DB, $8D, $BA, $99, $99, $DB, $AB, $77, $7D, $BB, $BB, $8D, $BA, $FF, $DB, $BB, $FB, $99, $DB, $FF, $AB, $00, $D7, $77, $77, $79, $BD 
@@ -75967,7 +76019,8 @@ loc_0008B97A:
 	dc.b	$A2, $33, $A2, $44, $44, $4A, $4A, $02, $55, $07, $00, $00, $F0, $DD, $00, $33, $00, $0F, $54, $44, $44, $44, $54, $54, $6D, $54, $6D, $54, $66, $66, $66, $54 
 	dc.b	$44, $44, $44, $03, $44, $F0, $00, $0F, $00, $55, $0F, $00, $00, $F0, $DD, $00, $FF, $00, $0F, $66, $66, $66, $66, $02, $DD, $44, $CC, $00, $0F, $5D, $11, $11 
 	dc.b	$11, $10, $45, $64, $55, $64, $64, $64, $66, $66, $64, $44, $44, $44, $55, $55, $55, $00 
-loc_0008D48C:
+; TownTileSet_B_Gfx
+TownTileSet_B_Gfx:
 	dc.b	$01, $DD, $44, $55, $40, $0F, $45, $64, $44, $45, $65, $55, $45, $6D, $45, $6D, $45, $66, $66, $44, $44, $44, $44, $55, $55, $55, $55, $01, $D6, $88, $84, $08 
 	dc.b	$84, $D5, $54, $D4, $D5, $54, $D5, $D5, $54, $D5, $DD, $65, $56, $D5, $65, $D4, $45, $65, $D4, $45, $65, $D4, $45, $DD, $65, $56, $01, $DD, $11, $13, $11, $13 
 	dc.b	$55, $D5, $66, $55, $D6, $66, $55, $D6, $66, $66, $6D, $D4, $56, $D5, $D5, $56, $D6, $D5, $56, $D6, $66, $6D, $02, $55, $0E, $00, $00, $F0, $DD, $00, $CC, $00 
@@ -77301,7 +77354,7 @@ loc_00093020:
 	ANDI.l	#$000000FF, D0
 	LSL.w	#2, D0
 	JSR	SoundCommand_JumpTable(PC,D0.w)
-	BRA.w	loc_0009317A
+	BRA.w	SoundInit_Done
 SoundCommand_JumpTable:
 	BRA.w	loc_000931F2
 	dc.b	$60, $00, $01, $3C 
@@ -77342,7 +77395,7 @@ loc_00093096:
 	MOVE.w	#1, $A(A2)
 	ADDA.w	#$0030, A2
 	DBF	D5, loc_00093062
-	BRA.w	loc_0009317A
+	BRA.w	SoundInit_Done
 loc_000930B4:
 	LEA	$00FFF520, A2
 	BSET.b	#2, $0(A2)
@@ -77356,7 +77409,7 @@ loc_000930CC:
 	MOVE.b	#$C0, $21(A1)
 	MOVE.w	#1, $A(A1)
 	MOVE.b	#$C0, $21(A1)
-	BRA.w	loc_0009317A
+	BRA.w	SoundInit_Done
 loc_000930EE:
 	dc.l	$00FFF490
 	dc.l	$00FFF4C0	
@@ -77368,7 +77421,7 @@ loc_000930EE:
 	dc.l	$00FFF5B0	
 loc_0009310E:
 	SUBI.b	#$81, D0
-	BCS.w	loc_0009317A
+	BCS.w	SoundInit_Done
 	MOVE.l	D0, -(A7)
 	BSR.w	StopAllActiveSounds
 	MOVE.l	(A7)+, D0
@@ -77392,11 +77445,12 @@ loc_00093150:
 	MOVE.w	#1, $A(A2)
 	ADDA.l	#$00000030, A2
 	DBF	D5, loc_0009314A
-	BRA.w	loc_0009317A
+	BRA.w	SoundInit_Done
 ; SoundInit_StopAndConfigure
 SoundInit_StopAndConfigure:
 	BSR.w	StopAllActiveSounds
-loc_0009317A:
+; SoundInit_Done
+SoundInit_Done:
 	MOVE.b	#$80, $00FFF404
 	RTS
 	
@@ -77947,11 +78001,11 @@ loc_0009390E:
 	dc.l	loc_000939EE
 	dc.l	loc_000939FC
 	dc.l	loc_00093A0C
-	dc.l	loc_00093A22	
-	dc.l	loc_00093A22	
-	dc.l	loc_00093A22	
-	dc.l	loc_00093A22	
-	dc.l	loc_00093A22	
+	dc.l	SoundLFO_NullEntry	
+	dc.l	SoundLFO_NullEntry	
+	dc.l	SoundLFO_NullEntry	
+	dc.l	SoundLFO_NullEntry	
+	dc.l	SoundLFO_NullEntry	
 	dc.l	loc_00093A60
 	dc.l	loc_00093A8E	
 	dc.l	loc_00093AA6
@@ -78002,7 +78056,8 @@ loc_00093A0C:
 	dc.b	$D0
 	dc.b	$F0
 	dc.b	$00, $00, $00, $01, $01, $02, $01, $00, $00, $FF, $FF, $FE, $FF, $FF, $84, $01, $85, $03, $00 
-loc_00093A22:
+; SoundLFO_NullEntry
+SoundLFO_NullEntry:
 	dc.b	$00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $01, $01, $02, $02 
 	dc.b	$03, $03, $04, $04, $03, $03, $02, $02, $01, $01, $00, $00, $FF, $FF, $FE, $FE, $FD, $FD, $FC, $FC, $FD, $FD, $FE, $FE, $FF, $FF, $00, $00, $85, $20 
 loc_00093A60:
