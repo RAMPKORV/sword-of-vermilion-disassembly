@@ -954,9 +954,9 @@ loc_00001572:
 ;loc_00001586:
 ProgramState_03:
 	TST.b	Title_intro_complete.w
-	BEQ.w	loc_000015E6
+	BEQ.w	ProgramState_03_Return
 	TST.b	Window_tilemap_draw_active.w
-	BNE.w	loc_000015E6
+	BNE.w	ProgramState_03_Return
 	MOVE.w	#BUTTON_BIT_START, D2
 	JSR	CheckButtonPress
 	BEQ.w	loc_000015C0
@@ -975,12 +975,13 @@ loc_000015C0:
 	JSR	HandleMenuInput
 	MOVE.w	Menu_cursor_index.w, Dialog_selection.w
 	BSR.w	DecrementTimerBCD
-	BNE.b	loc_000015E6
+	BNE.b	ProgramState_03_Return
 	MOVE.w	#PROGRAM_STATE_04, Program_state.w
 	MOVE.b	#$FF, Fade_out_lines_mask.w
 	RTS
 
-loc_000015E6:
+; loc_000015E6
+ProgramState_03_Return:
 	RTS
 
 ;loc_000015E8:
