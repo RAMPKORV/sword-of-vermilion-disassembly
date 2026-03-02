@@ -31833,37 +31833,37 @@ NpcFacingDirectionLookup:
 	dc.b	$04, $06, $00, $02 
 ; loc_0001CF7E
 FortuneTellerGreetingsByTown:
-	dc.l	loc_0002E3D4
-	dc.l	loc_0002FB82
-	dc.l	loc_0002FCA4	
-	dc.l	loc_00030F70	
-	dc.l	loc_00032ACE
-	dc.l	loc_0003373A	
-	dc.l	loc_0003373A	
-	dc.l	loc_00034B9C
-	dc.l	loc_0003522E	
-	dc.l	loc_00036B66
-	dc.l	loc_000383B4	
-	dc.l	loc_00038BE2	
-	dc.l	loc_0003986E	
+	dc.l	FortuneTellerGreeting_Wyclif
+	dc.l	FortuneTellerGreeting_Watling
+	dc.l	TownDialogTable_Watling_State0	
+	dc.l	FortuneTellerGreeting_Deepdale	
+	dc.l	FortuneTellerGreeting_Stow
+	dc.l	FortuneTellerGreeting_Keltwick	
+	dc.l	FortuneTellerGreeting_Keltwick	
+	dc.l	FortuneTellerGreeting_Malaga
+	dc.l	FortuneTellerGreeting_Barrow	
+	dc.l	FortuneTellerGreeting_Helwig
+	dc.l	FortuneTellerGreeting_Swafham	
+	dc.l	FortuneTellerGreeting_Excalabria	
+	dc.l	FortuneTellerGreeting_ExcalabriaCastle	
 	dc.l	loc_0003AD0E	
 	dc.l	loc_0003AD0E	
 	dc.l	loc_0003C12E	
 ; loc_0001CFBE
 FortuneTellerReadingsByTown:
-	dc.l	loc_0002E3DE
-	dc.l	loc_0002FB68
-	dc.l	loc_0002FCA4	
-	dc.l	loc_00030F70	
-	dc.l	loc_00032AA4
-	dc.l	loc_0003373A	
-	dc.l	loc_0003373A	
-	dc.l	loc_00034B92
-	dc.l	loc_0003522E	
-	dc.l	loc_00036B3C
-	dc.l	loc_000383B4
-	dc.l	loc_00038BE2
-	dc.l	loc_0003986E	
+	dc.l	FortuneTellerReading_Wyclif
+	dc.l	FortuneTellerReading_Watling
+	dc.l	TownDialogTable_Watling_State0	
+	dc.l	FortuneTellerGreeting_Deepdale	
+	dc.l	FortuneTellerReading_Keltwick
+	dc.l	FortuneTellerGreeting_Keltwick	
+	dc.l	FortuneTellerGreeting_Keltwick	
+	dc.l	FortuneTellerReading_Malaga
+	dc.l	FortuneTellerGreeting_Barrow	
+	dc.l	FortuneTellerReading_Helwig
+	dc.l	FortuneTellerGreeting_Swafham
+	dc.l	FortuneTellerGreeting_Excalabria
+	dc.l	FortuneTellerGreeting_ExcalabriaCastle	
 	dc.l	loc_0003AD04	
 	dc.l	loc_0003AD04	
 	dc.l	loc_0003C12E	
@@ -33875,78 +33875,78 @@ WyclifNpcDialogueDispatch:
 	BRA.w	SelectDialogueByGameState
 ; loc_0001EB0C
 Wyclif_Npc1_DialogueStates:
-	dc.l	loc_0002D494
+	dc.l	TownDialogTable_Wyclif_State2
 	dc.l	Rings_collected
-	dc.l	loc_0002D45C
+	dc.l	TownDialogTable_Wyclif_State1
 	dc.l	Event_triggers_start
-	dc.l	loc_0002D424
+	dc.l	TownDialogTable_Wyclif_State0
 	LEA	Wyclif_Npc2_DialogueStates, A1
 	MOVE.w	#1, D7
 	BRA.w	SelectDialogueByGameState
 ; loc_0001EB2E
 Wyclif_Npc2_DialogueStates:
-	dc.l	loc_0002D4D4
+	dc.l	TownDialogTable_Wyclif_State5
 	dc.l	Rings_collected
-	dc.l	loc_0002D4D0
+	dc.l	TownDialogTable_Wyclif_State4
 	dc.l	Event_triggers_start
-	dc.l	loc_0002D4CC
+	dc.l	TownDialogTable_Wyclif_State3
 	LEA	Wyclif_Npc3_DialogueStates, A1
 	MOVE.w	#1, D7
 	BRA.w	SelectDialogueByGameState
 ; loc_0001EB50
 Wyclif_Npc3_DialogueStates:
-	dc.l	loc_0002D4F0 
+	dc.l	TownDialogTable_Wyclif_State8 
 	dc.l	Rings_collected
-	dc.l	loc_0002D4E4
+	dc.l	TownDialogTable_Wyclif_State7
 	dc.l	Event_triggers_start
-	dc.l	loc_0002D4D8
-	LEA	loc_0002D4FC, A1
+	dc.l	TownDialogTable_Wyclif_State6
+	LEA	TownDialogTable_Wyclif_State9, A1
 	BRA.w	SelectDialogueSimple
 	LEA	Wyclif_Npc4_DialogueStates, A1
 	MOVE.w	#1, D7
 	BRA.w	SelectDialogueByGameState
 ; loc_0001EB7C
 Wyclif_Npc4_DialogueStates:
-	dc.l	loc_0002D514
+	dc.l	TownDialogTable_Wyclif_State12
 	dc.l	Rings_collected
-	dc.l	loc_0002D50C
+	dc.l	TownDialogTable_Wyclif_State11
 	dc.l	Event_triggers_start
-	dc.l	loc_0002D504	
-	LEA	loc_0002D51C, A1
+	dc.l	TownDialogTable_Wyclif_State10	
+	LEA	TownDialogTable_Wyclif_State13, A1
 	BRA.w	SelectDialogueSimple
 	LEA	Wyclif_Npc5_DialogueStates, A1
 	MOVE.w	#0, D7
 	BRA.w	SelectDialogueByGameState
 ; loc_0001EBA8
 Wyclif_Npc5_DialogueStates:
-	dc.l	loc_0002D530
+	dc.l	TownDialogTable_Wyclif_State15
 	dc.l	Rings_collected
-	dc.l	loc_0002D528
+	dc.l	TownDialogTable_Wyclif_State14
 	LEA	Parma_Npc1_DialogueStates, A1
 	MOVE.w	#4, D7
 	BRA.w	SelectDialogueByGameState
 ; loc_0001EBC2
 Parma_Npc1_DialogueStates:
-	dc.l	loc_0002E8E8
+	dc.l	TownDialogTable_Parma_State4
 	dc.l	Talked_to_real_king
-	dc.l	loc_0002E8BC	
+	dc.l	TownDialogTable_Parma_State3	
 	dc.l	Player_chose_to_stay_in_parma
-	dc.l	loc_0002E890
+	dc.l	TownDialogTable_Parma_State2
 	dc.l	Fake_king_killed
-	dc.l	loc_0002E8BC
+	dc.l	TownDialogTable_Parma_State3
 	dc.l	Treasure_of_troy_given_to_king
-	dc.l	loc_0002E864
+	dc.l	TownDialogTable_Parma_State1
 	dc.l	Treasure_of_troy_challenge_issued
-	dc.l	loc_0002E838
-	LEA	loc_0002E914, A1
+	dc.l	TownDialogTable_Parma_State0
+	LEA	TownDialogTable_Parma_State5, A1
 	BRA.w	SelectDialogueSimple
-	LEA	loc_0002E918, A1
+	LEA	TownDialogTable_Parma_State6, A1
 	BRA.w	SelectDialogueSimple
-	LEA	loc_0002E91C, A1
+	LEA	TownDialogTable_Parma_State7, A1
 	BRA.w	SelectDialogueSimple
-	LEA	loc_0002E920, A1
+	LEA	TownDialogTable_Parma_State8, A1
 	BRA.w	SelectDialogueSimple
-	LEA	loc_0002E924, A1
+	LEA	TownDialogTable_Parma_State9, A1
 	BRA.w	SelectDialogueSimple
 	LEA	ParmaNpc1_ConditionData_A, A1
 	MOVE.w	#0, D7
@@ -33955,7 +33955,7 @@ Parma_Npc1_DialogueStates:
 ParmaNpc1_ConditionData_A:
 	dc.b	$00, $02, $E9, $64 
 	dc.l	Talked_to_real_king
-	dc.l	loc_0002E958
+	dc.l	TownDialogTable_Parma_State15
 	LEA	ParmaNpc1_ConditionData_B, A1
 	MOVE.w	#0, D7
 	BRA.w	SelectDialogueByGameState
@@ -33963,7 +33963,7 @@ ParmaNpc1_ConditionData_A:
 ParmaNpc1_ConditionData_B:
 	dc.b	$00, $02, $E9, $34 
 	dc.l	Fake_king_killed
-	dc.l	loc_0002E92C
+	dc.l	TownDialogTable_Parma_State10
 	LEA	ParmaNpc1_ConditionData_C, A1
 	MOVE.w	#0, D7
 	BRA.w	SelectDialogueByGameState
@@ -33971,7 +33971,7 @@ ParmaNpc1_ConditionData_B:
 ParmaNpc1_ConditionData_C:
 	dc.b	$00, $02, $E9, $40 
 	dc.l	Fake_king_killed
-	dc.l	loc_0002E93C
+	dc.l	TownDialogTable_Parma_State11
 	LEA	ParmaNpc1_ConditionData_D, A1
 	MOVE.w	#0, D7
 	BRA.w	SelectDialogueByGameState
@@ -33979,23 +33979,23 @@ ParmaNpc1_ConditionData_C:
 ParmaNpc1_ConditionData_D:
 	dc.b	$00, $02, $E9, $48 
 	dc.l	Fake_king_killed
-	dc.l	loc_0002E944
+	dc.l	TownDialogTable_Parma_State12
 	LEA	Parma_Npc2_DialogueStates, A1
 	MOVE.w	#4, D7
 	BRA.w	SelectDialogueByGameState
 ; loc_0001EC96
 Parma_Npc2_DialogueStates:
-	dc.l	loc_00029110
+	dc.l	CastleDialogTable_Parma_State5
 	dc.l	Talked_to_real_king
-	dc.l	loc_000290F8
+	dc.l	CastleDialogTable_Parma_State4
 	dc.l	Fake_king_killed
-	dc.l	loc_000290E0
+	dc.l	CastleDialogTable_Parma_State3
 	dc.l	Treasure_of_troy_given_to_king
-	dc.l	loc_000290C8
+	dc.l	CastleDialogTable_Parma_State2
 	dc.l	Treasure_of_troy_found
-	dc.l	loc_000290B0
+	dc.l	CastleDialogTable_Parma_State1
 	dc.l	Treasure_of_troy_challenge_issued
-	dc.l	loc_00029098
+	dc.l	CastleDialogTable_Parma_State0
 	LEA	ParmaNpc3_ConditionData, A1
 	MOVE.w	#0, D7
 	BRA.w	SelectDialogueByGameState
@@ -34003,7 +34003,7 @@ Parma_Npc2_DialogueStates:
 ParmaNpc3_ConditionData:
 	dc.b	$00, $02, $91, $2C 
 	dc.l	Player_chose_to_stay_in_parma
-	dc.l	loc_00029128
+	dc.l	CastleDialogTable_Parma_State6
 	LEA	ParmaNpc4_ConditionData, A1
 	MOVE.w	#2, D7
 	BRA.w	SelectDialogueByGameState
@@ -34011,111 +34011,111 @@ ParmaNpc3_ConditionData:
 ParmaNpc4_ConditionData:
 	dc.b	$00, $02, $E9, $54 
 	dc.l	Talked_to_real_king
-	dc.l	loc_0002E94C
+	dc.l	TownDialogTable_Parma_State13
 	dc.l	Treasure_of_troy_found
-	dc.l	loc_0002E950
+	dc.l	TownDialogTable_Parma_State14
 	dc.l	Treasure_of_troy_challenge_issued
-	dc.l	loc_0002E94C
+	dc.l	TownDialogTable_Parma_State13
 	LEA	Watling_Npc1_DialogueStates, A1
 	MOVE.w	#1, D7
 	BRA.w	SelectDialogueByGameState
 ; loc_0001ED14
 Watling_Npc1_DialogueStates:
-	dc.l	loc_0002FD06
+	dc.l	TownDialogTable_Watling_State3
 	dc.l	Watling_villagers_asked_about_rings
-	dc.l	loc_0002FCEE
+	dc.l	TownDialogTable_Watling_State2
 	dc.l	Watling_youth_restored
-	dc.l	loc_0002FCD6
+	dc.l	TownDialogTable_Watling_State1
 	LEA	Watling_Npc2_DialogueStates, A1
 	MOVE.w	#1, D7
 	BRA.w	SelectDialogueByGameState
 ; loc_0001ED36
 Watling_Npc2_DialogueStates:
-	dc.l	loc_0002FD26
+	dc.l	TownDialogTable_Watling_State6
 	dc.l	Watling_villagers_asked_about_rings
-	dc.l	loc_0002FD22
+	dc.l	TownDialogTable_Watling_State5
 	dc.l	Watling_youth_restored
-	dc.l	loc_0002FD1E
+	dc.l	TownDialogTable_Watling_State4
 	LEA	Deepdale_Npc1_DialogueStates, A1
 	MOVE.w	#1, D7
 	BRA.w	SelectDialogueByGameState
 ; loc_0001ED58
 Deepdale_Npc1_DialogueStates:
-	dc.l	loc_00030A4A
+	dc.l	TownDialogTable_Deepdale_State2
 	dc.l	Deepdale_king_secret_kept
-	dc.l	loc_00030A2E
+	dc.l	TownDialogTable_Deepdale_State1
 	dc.l	Deepdale_truffle_quest_started
-	dc.l	loc_00030A12
+	dc.l	TownDialogTable_Deepdale_State0
 	LEA	Deepdale_Npc2_DialogueStates, A1
 	MOVE.w	#1, D7
 	BRA.w	SelectDialogueByGameState
 ; loc_0001ED7A
 Deepdale_Npc2_DialogueStates:
-	dc.l	loc_00030A6E
+	dc.l	TownDialogTable_Deepdale_State5
 	dc.l	Deepdale_king_secret_kept
-	dc.l	loc_00030A6A
+	dc.l	TownDialogTable_Deepdale_State4
 	dc.l	Truffle_collected
-	dc.l	loc_00030A66
+	dc.l	TownDialogTable_Deepdale_State3
 	LEA	Deepdale_Npc3_DialogueStates, A1
 	MOVE.w	#1, D7
 	BRA.w	SelectDialogueByGameState
 ; loc_0001ED9C
 Deepdale_Npc3_DialogueStates:
-	dc.l	loc_00029C80
+	dc.l	CastleDialogTable_Deepdale_State2
 	dc.l	Deepdale_king_secret_kept
-	dc.l	loc_00029C6C
+	dc.l	CastleDialogTable_Deepdale_State1
 	dc.l	Deepdale_truffle_quest_started
-	dc.l	loc_00029C58
+	dc.l	CastleDialogTable_Deepdale_State0
 	dc.l	$43F90003	
 	dc.l	$0A726000	
 	dc.b	$04, $18 
-	LEA	loc_00030A76, A1
+	LEA	TownDialogTable_Deepdale_State6, A1
 	BRA.w	SelectDialogueSimple
 	LEA	Stow_Npc1_DialogueStates, A1
 	MOVE.w	#3, D7
 	BRA.w	SelectDialogueByGameState
 ; loc_0001EDD2
 Stow_Npc1_DialogueStates:
-	dc.l	loc_000319A0
+	dc.l	TownDialogTable_Stow1_State4
 	dc.l	Stow_innocence_proven
-	dc.l	loc_0003195C
+	dc.l	TownDialogTable_Stow1_State3
 	dc.l	Girl_left_for_stow
-	dc.l	loc_00031938
+	dc.l	TownDialogTable_Stow1_State2
 	dc.l	Accused_of_theft
-	dc.l	loc_00031914
+	dc.l	TownDialogTable_Stow1_State1
 	dc.l	Sanguios_book_offered
-	dc.l	loc_000318F0	
+	dc.l	TownDialogTable_Stow1_State0	
 	LEA	Stow_Npc2_DialogueStates, A1
 	MOVE.w	#1, D7
 	BRA.w	SelectDialogueByGameState
 ; loc_0001EE04
 Stow_Npc2_DialogueStates:
-	dc.l	loc_000319CC
+	dc.l	TownDialogTable_Stow1_State7
 	dc.l	Stow_innocence_proven
-	dc.l	loc_000319C8
+	dc.l	TownDialogTable_Stow1_State6
 	dc.l	Girl_left_for_stow
-	dc.l	loc_000319C4
+	dc.l	TownDialogTable_Stow1_State5
 	LEA	Stow_Npc3_DialogueStates, A1
 	MOVE.w	#4, D7
 	BRA.w	SelectDialogueByGameState
 ; loc_0001EE26
 Stow_Npc3_DialogueStates:
-	dc.l	loc_0002A282
+	dc.l	CastleDialogTable_Stow_State5
 	dc.l	Stow_innocence_proven
-	dc.l	loc_0002A26A
+	dc.l	CastleDialogTable_Stow_State4
 	dc.l	Asti_monster_defeated
-	dc.l	loc_0002A252
+	dc.l	CastleDialogTable_Stow_State3
 	dc.l	Girl_left_for_stow
-	dc.l	loc_0002A246	
+	dc.l	CastleDialogTable_Stow_State2	
 	dc.l	Accused_of_theft
-	dc.l	loc_0002A23A
+	dc.l	CastleDialogTable_Stow_State1
 	dc.l	Sanguios_book_offered
-	dc.l	loc_0002A22E	
-	LEA	loc_000319D0, A1
+	dc.l	CastleDialogTable_Stow_State0	
+	LEA	TownDialogTable_Stow1_State8, A1
 	BRA.w	SelectDialogueSimple
-	LEA	loc_000319D8, A1
+	LEA	TownDialogTable_Stow1_State9, A1
 	BRA.w	SelectDialogueSimple
-	LEA	loc_000319E0, A1
+	LEA	TownDialogTable_Stow1_State10, A1
 	BRA.w	SelectDialogueSimple
 	LEA	Keltwick_Npc1_DialogueStates, A1
 	MOVE.w	#3, D7
@@ -34124,28 +34124,28 @@ Stow_Npc3_DialogueStates:
 Keltwick_Npc1_DialogueStates:
 	dc.b	$00, $03, $2D, $C4
 	dc.l	Bearwulf_returned_home
-	dc.l	loc_00032D9C
+	dc.l	TownDialogTable_Keltwick_State3
 	dc.l	Bearwulf_met
-	dc.l	loc_00032D74
+	dc.l	TownDialogTable_Keltwick_State2
 	dc.l	Sent_to_malaga
-	dc.l	loc_00032D4C
+	dc.l	TownDialogTable_Keltwick_State1
 	dc.l	Asti_monster_defeated
-	dc.l	loc_00032D24	
-	LEA	loc_00032DEC, A1
+	dc.l	TownDialogTable_Keltwick_State0	
+	LEA	TownDialogTable_Keltwick_State4, A1
 	BRA.w	SelectDialogueSimple
 	LEA	Keltwick_Npc2_DialogueStates, A1
 	MOVE.w	#1, D7
 	BRA.w	SelectDialogueByGameState
 ; loc_0001EEBA
 Keltwick_Npc2_DialogueStates:
-	dc.l	loc_00032DF8
+	dc.l	TownDialogTable_Keltwick_State7
 	dc.l	Sent_to_malaga
-	dc.l	loc_00032DF4	
+	dc.l	TownDialogTable_Keltwick_State6	
 	dc.l	Alarm_clock_rang
-	dc.l	loc_00032DF0
-	LEA	loc_00032DFC, A1
+	dc.l	TownDialogTable_Keltwick_State5
+	LEA	TownDialogTable_Keltwick_State8, A1
 	BRA.w	SelectDialogueSimple
-	LEA	loc_00032E04, A1
+	LEA	TownDialogTable_Keltwick_State9, A1
 	BRA.w	SelectDialogueSimple
 	LEA	Malaga_Npc1_DialogueStates, A1
 	MOVE.w	#2, D7
@@ -34154,11 +34154,11 @@ Keltwick_Npc2_DialogueStates:
 Malaga_Npc1_DialogueStates:
 	dc.b	$00, $03, $40, $96
 	dc.l	Bearwulf_returned_home
-	dc.l	loc_0003406A
+	dc.l	TownDialogTable_Malaga_State2
 	dc.l	Barrow_map_received
-	dc.l	loc_0003403E
+	dc.l	TownDialogTable_Malaga_State1
 	dc.l	Malaga_king_crowned
-	dc.l	loc_00034012
+	dc.l	TownDialogTable_Malaga_State0
 	LEA	Malaga_Npc2_DialogueStates, A1
 	MOVE.w	#2, D7
 	BRA.w	SelectDialogueByGameState
@@ -34166,21 +34166,21 @@ Malaga_Npc1_DialogueStates:
 Malaga_Npc2_DialogueStates:
 	dc.b	$00, $02, $AC, $F8
 	dc.l	Bearwulf_returned_home
-	dc.l	loc_0002ACDC
+	dc.l	CastleDialogTable_Malaga_State2
 	dc.l	Barrow_map_received
-	dc.l	loc_0002ACC0
+	dc.l	CastleDialogTable_Malaga_State1
 	dc.l	Malaga_king_crowned
-	dc.l	loc_0002ACA4
-	LEA	loc_000340C2, A1
+	dc.l	CastleDialogTable_Malaga_State0
+	LEA	TownDialogTable_Malaga_State3, A1
 	BRA.w	SelectDialogueSimple
 	LEA	Barrow_Npc1_DialogueStates, A1
 	MOVE.w	#0, D7
 	BRA.w	SelectDialogueByGameState
 ; loc_0001EF4E
 Barrow_Npc1_DialogueStates:
-	dc.l	loc_00034D02
+	dc.l	TownDialogTable_Barrow_State1
 	dc.l	Uncle_tibor_visited
-	dc.l	loc_00034CEA
+	dc.l	TownDialogTable_Barrow_State0
 	LEA	Barrow_Npc2_DialogueStates, A1
 	MOVE.w	#1, D7
 	BRA.w	SelectDialogueByGameState
@@ -34188,21 +34188,21 @@ Barrow_Npc1_DialogueStates:
 Barrow_Npc2_DialogueStates:
 	dc.b	$00, $03, $4D, $26
 	dc.l	Pass_to_carthahena_purchased
-	dc.l	loc_00034D22
+	dc.l	TownDialogTable_Barrow_State4
 	dc.l	Uncle_tibor_visited
-	dc.l	loc_00034D1E
-	LEA	loc_00034D1A, A1
+	dc.l	TownDialogTable_Barrow_State3
+	LEA	TownDialogTable_Barrow_State2, A1
 	BRA.w	SelectDialogueSimple
 	LEA	Tadcaster_Npc1_DialogueStates, A1
 	MOVE.w	#1, D7
 	BRA.w	SelectDialogueByGameState
 ; loc_0001EF94
 Tadcaster_Npc1_DialogueStates:
-	dc.l	loc_00035D80
+	dc.l	TownDialogTable_Tadcaster_State2
 	dc.l	Imposter_killed
-	dc.l	loc_00035D44
+	dc.l	TownDialogTable_Tadcaster_State1
 	dc.l	Bully_first_fight_won
-	dc.l	loc_00035D08
+	dc.l	TownDialogTable_Tadcaster_State0
 	LEA	Tadcaster_Npc2_DialogueStates, A1
 	MOVE.w	#1, D7
 	BRA.w	SelectDialogueByGameState
@@ -34210,9 +34210,9 @@ Tadcaster_Npc1_DialogueStates:
 Tadcaster_Npc2_DialogueStates:
 	dc.b	$00, $02, $B6, $EE
 	dc.l	Imposter_killed
-	dc.l	loc_0002B6E2	
+	dc.l	CastleDialogTable_Tadcaster_State1	
 	dc.l	Bully_first_fight_won
-	dc.l	loc_0002B6D6
+	dc.l	CastleDialogTable_Tadcaster_State0
 	LEA	Tadcaster_Npc3_DialogueStates, A1
 	MOVE.w	#1, D7
 	BRA.w	SelectDialogueByGameState
@@ -34220,10 +34220,10 @@ Tadcaster_Npc2_DialogueStates:
 Tadcaster_Npc3_DialogueStates:
 	dc.b	$00, $03, $5D, $CC
 	dc.l	Imposter_killed
-	dc.l	loc_00035DC4	
+	dc.l	TownDialogTable_Tadcaster_State4	
 	dc.l	Bully_first_fight_won
-	dc.l	loc_00035DBC
-	LEA	loc_00035DD4, A1
+	dc.l	TownDialogTable_Tadcaster_State3
+	LEA	TownDialogTable_Tadcaster_State5, A1
 	BRA.w	SelectDialogueSimple
 	LEA	Tadcaster_Npc4_DialogueStates, A1
 	MOVE.w	#1, D7
@@ -34232,37 +34232,37 @@ Tadcaster_Npc3_DialogueStates:
 Tadcaster_Npc4_DialogueStates:
 	dc.b	$00, $03, $5D, $E0
 	dc.l	Imposter_killed
-	dc.l	loc_00035DDC	
+	dc.l	TownDialogTable_Tadcaster_State7	
 	dc.l	Bully_first_fight_won
-	dc.l	loc_00035DD8
+	dc.l	TownDialogTable_Tadcaster_State6
 	LEA	Helwig_Npc1_DialogueStates, A1
 	MOVE.w	#0, D7
 	BRA.w	SelectDialogueByGameState
 ; loc_0001F026
 Helwig_Npc1_DialogueStates:
-	dc.l	loc_00036E16
+	dc.l	TownDialogTable_Helwig_State1
 	dc.l	Helwig_men_rescued
-	dc.l	loc_00036DD2
+	dc.l	TownDialogTable_Helwig_State0
 	LEA	Helwig_Npc2_DialogueStates, A1
 	MOVE.w	#0, D7
 	BRA.w	SelectDialogueByGameState
 ; loc_0001F040
 Helwig_Npc2_DialogueStates:
-	dc.l	loc_00036E62
+	dc.l	TownDialogTable_Helwig_State3
 	dc.l	Helwig_men_rescued
-	dc.l	loc_00036E56
-	LEA	loc_00036E6E, A1
+	dc.l	TownDialogTable_Helwig_State2
+	LEA	TownDialogTable_Helwig_State4, A1
 	BRA.w	SelectDialogueSimple
 	LEA	Swaffham_Npc1_DialogueStates, A1
 	MOVE.w	#1, D7
 	BRA.w	SelectDialogueByGameState
 ; loc_0001F064
 Swaffham_Npc1_DialogueStates:
-	dc.l	loc_000385EC
+	dc.l	TownDialogTable_Swafham_State2
 	dc.l	Swaffham_ruined
-	dc.l	loc_000385B8
+	dc.l	TownDialogTable_Swafham_State1
 	dc.l	Ring_of_earth_obtained
-	dc.l	loc_00038584
+	dc.l	TownDialogTable_Swafham_State0
 	LEA	Swaffham_Npc2_DialogueStates, A1
 	MOVE.w	#6, D7
 	BRA.w	SelectDialogueByGameState
@@ -34270,29 +34270,29 @@ Swaffham_Npc1_DialogueStates:
 Swaffham_Npc2_DialogueStates:
 	dc.b	$00, $02, $B9, $EE
 	dc.l	Ring_of_earth_obtained
-	dc.l	loc_0002B9C6
+	dc.l	CastleDialogTable_Swafham_State3
 	dc.l	Blue_crystal_received
-	dc.l	loc_0002B9DA	
+	dc.l	CastleDialogTable_Swafham_State4	
 	dc.l	Blue_crystal_quest_started
-	dc.l	loc_0002B9B2
+	dc.l	CastleDialogTable_Swafham_State2
 	dc.l	Red_crystal_received
-	dc.l	loc_0002B9DA	
+	dc.l	CastleDialogTable_Swafham_State4	
 	dc.l	Red_crystal_quest_started
-	dc.l	loc_0002B99E
+	dc.l	CastleDialogTable_Swafham_State1
 	dc.l	Ring_of_wind_received
-	dc.l	loc_0002B9DA	
+	dc.l	CastleDialogTable_Swafham_State4	
 	dc.l	White_crystal_quest_started
-	dc.l	loc_0002B98A
+	dc.l	CastleDialogTable_Swafham_State0
 	LEA	Excalabria_Npc1_DialogueStates, A1
 	MOVE.w	#1, D7
 	BRA.w	SelectDialogueByGameState
 ; loc_0001F0D0
 Excalabria_Npc1_DialogueStates:
-	dc.l	loc_00039550
+	dc.l	TownDialogTable_Excalabria_State2
 	dc.l	Knute_informed_of_swaffham_ruin
-	dc.l	loc_0003954C
+	dc.l	TownDialogTable_Excalabria_State1
 	dc.l	Ring_of_earth_obtained
-	dc.l	loc_00039548	
+	dc.l	TownDialogTable_Excalabria_State0	
 	LEA	Hastings_Npc1_DialogueStates, A1
 	MOVE.w	#2, D7
 	BRA.w	SelectDialogueByGameState
@@ -34302,9 +34302,9 @@ Hastings_Npc1_DialogueStates:
 	dc.l	Digot_plant_received
 	dc.l	loc_0003A08A
 	dc.l	Swaffham_ate_poisoned_food
-	dc.l	loc_0003A062
+	dc.l	TownDialogTable_Hastings_State1
 	dc.l	Ate_spy_dinner
-	dc.l	loc_0003A03A
+	dc.l	TownDialogTable_Hastings_State0
 	LEA	Hastings_Npc2_DialogueStates, A1
 	MOVE.w	#1, D7
 	BRA.w	SelectDialogueByGameState
@@ -34339,10 +34339,10 @@ loc_0001F17C:
 	RTS
 	
 loc_0001F17E:
-	LEA	loc_0002C090, A0
+	LEA	CastleDialogTable_Carthahena_State1, A0
 	TST.b	Tsarkon_is_dead.w
 	BNE.b	loc_0001F190
-	LEA	loc_0002C07C, A0
+	LEA	CastleDialogTable_Carthahena_State0, A0
 loc_0001F190:
 	RTS
 	
@@ -43100,49 +43100,56 @@ TownStateConfig_Parma:
 	dc.b	$00, $03, $DE, $14, $00, $00, $7F, $18, $60, $01, $01, $88, $01, $28, $01, $81, $00, $03, $DE, $14, $00, $00, $7F, $18, $60, $01, $00, $88, $00, $48, $02, $11 
 	dc.b	$00, $03, $DE, $C0, $00, $00, $71, $04, $60, $01, $FF, $FF, $00, $01, $EC, $C2, $00, $C8, $00, $68, $02, $11, $00, $03, $DE, $C0, $00, $00, $71, $9A, $60, $01 
 	dc.b	$FF, $FF 
-loc_00029098:
+; loc_00029098
+CastleDialogTable_Parma_State0:
 	dc.l	TalkKingStr
 	dc.l	DeliverMealStr
 	dc.l	KingPersonalityChangeStr
 	dc.l	CannotPassStr
 	dc.l	NoEnterRoomStr
 	dc.l	RingOfferStr 
-loc_000290B0:
+; loc_000290B0
+CastleDialogTable_Parma_State1:
 	dc.l	TalkKingStr
 	dc.l	KingEatsMoreStr
 	dc.l	KingPersonalityChangeStr
 	dc.l	CannotPassStr
 	dc.l	NoEnterRoomStr
 	dc.l	FindTreasureStr 
-loc_000290C8:
+; loc_000290C8
+CastleDialogTable_Parma_State2:
 	dc.l	TalkKingStr
 	dc.l	KingEatsMoreStr
 	dc.l	KingPersonalityChangeStr
 	dc.l	CannotPassStr
 	dc.l	NoEnterRoomStr
 	dc.l	TreasureReturnedStr 
-loc_000290E0:
+; loc_000290E0
+CastleDialogTable_Parma_State3:
 	dc.l	TalkKingStr
 	dc.l	KingEatsMoreStr
 	dc.l	KingPersonalityChangeStr
 	dc.l	CannotPassStr
 	dc.l	NoEnterRoomStr
 	dc.l	NicePlaceStr 
-loc_000290F8:
+; loc_000290F8
+CastleDialogTable_Parma_State4:
 	dc.l	NotHaveKnownStr
 	dc.l	KingMonsterStr
 	dc.l	KingImposterStr
 	dc.l	ShowNoMercyStr
 	dc.l	ShowNoMercyStr
 	dc.l	NoOneHereStr 
-loc_00029110:
+; loc_00029110
+CastleDialogTable_Parma_State5:
 	dc.l	SuspicionsRightStr
 	dc.l	TrueKingBackStr
 	dc.l	TrueKingBackStr
 	dc.l	SavedCountryStr
 	dc.l	SavedCountryStr
 	dc.l	NoOneHereStr 
-loc_00029128:
+; loc_00029128
+CastleDialogTable_Parma_State6:
 	dc.l	CartahenaBeastStr
 	dc.l	ReallyLiveHereStr
 RingOfferStr:
@@ -43341,19 +43348,22 @@ TownStateConfig_Deepdale:
 	dc.b	$00, $01, $ED, $8E, $00, $C8, $00, $68, $00, $91, $00, $03, $DD, $74, $00, $00, $6F, $36, $60, $01, $00, $88, $00, $88, $00, $CD, $00, $03, $DD, $94, $00, $00 
 	dc.b	$72, $F8, $60, $01, $00, $88, $01, $28, $01, $51, $00, $03, $DD, $F4, $00, $00, $6F, $5E, $00, $01, $01, $38, $00, $B8, $01, $D5, $00, $03, $DE, $A0, $00, $00 
 	dc.b	$6F, $5E, $60, $01, $01, $A8, $00, $58, $01, $D5, $00, $03, $DE, $A0, $00, $00, $6F, $36, $60, $01, $FF, $FF 
-loc_00029C58:
+; loc_00029C58
+CastleDialogTable_Deepdale_State0:
 	dc.l	KingDisguiseMasterStr
 	dc.l	KingPeaceProsperityStr
 	dc.l	KingThinksOfPeopleStr
 	dc.l	KingNotHereStr
 	dc.l	KingNotSeeingVisitorsStr 
-loc_00029C6C:
+; loc_00029C6C
+CastleDialogTable_Deepdale_State1:
 	dc.l	KingDisguiseMasterStr
 	dc.l	KingLikesTrufflesStr
 	dc.l	KingDisguiseOrdinaryStr
 	dc.l	KingNotHereStr
 	dc.l	KingNotSeeingVisitorsStr 
-loc_00029C80:
+; loc_00029C80
+CastleDialogTable_Deepdale_State2:
 	dc.l	SeeThroughDisguiseStr 
 	dc.l	MeetKingStr 
 	dc.l	MeetKingStr 
@@ -43452,7 +43462,8 @@ LoadCastleTilemap_MediumA_PlaneB:
 	MOVE.l	#CastleTilemapData_MediumA_SetB_TgtB, Tilemap_data_ptr_plane_b.w
 	RTS
 	
-loc_0002A144:
+; loc_0002A144
+CastleNpcDispatch_Stow:
 	dc.l	WyclifNpcDialogueDispatch
 	dc.b	$FF, $FF 
 ; loc_0002A14A
@@ -43468,33 +43479,39 @@ TownStateConfig_Stow1_Arrested:
 	dc.b	$00, $00, $00, $00, $00, $00, $6E, $EC, $60, $00, $00, $58, $01, $38, $02, $BF, $00, $00, $00, $00, $00, $00, $6E, $EC, $60, $01, $01, $18, $00, $88, $02, $B9 
 	dc.b	$00, $00, $00, $00, $00, $00, $6E, $EC, $60, $00, $01, $18, $00, $98, $02, $BF, $00, $00, $00, $00, $00, $00, $6E, $EC, $60, $01, $00, $B8, $00, $58, $02, $C5 
 	dc.b	$00, $00, $00, $00, $00, $00, $6F, $00, $60, $01, $00, $B8, $00, $68, $02, $CB, $00, $00, $00, $00, $00, $00, $6F, $00, $60, $01, $FF, $FF 
-loc_0002A22E:
+; loc_0002A22E
+CastleDialogTable_Stow_State0:
 	dc.l	BusyNowStr
 	dc.l	BusyNowStr
 	dc.l	BusyNowStr 
-loc_0002A23A:
+; loc_0002A23A
+CastleDialogTable_Stow_State1:
 	dc.l	KingKnowsRingsStr
 	dc.l	HonestLookingFellowStr
 	dc.l	HeardOfYouStr 
-loc_0002A246:
+; loc_0002A246
+CastleDialogTable_Stow_State2:
 	dc.l	YoureTheThiefStr
 	dc.l	FaceOfCriminalStr
 	dc.l	ReturnWhenInnocentStr 
-loc_0002A252:
+; loc_0002A252
+CastleDialogTable_Stow_State3:
 	dc.l	AttackedWithoutWarningStr
 	dc.l	AttackedWithoutWarningStr
 	dc.l	MonsterTooPowerfulStr
 	dc.l	MonsterTooPowerfulStr
 	dc.l	MonsterLittleGirlStr
 	dc.l	MonsterLittleGirlStr 
-loc_0002A26A:
+; loc_0002A26A
+CastleDialogTable_Stow_State4:
 	dc.l	AttackedWithoutWarningStr
 	dc.l	AttackedWithoutWarningStr
 	dc.l	MonsterTooPowerfulStr
 	dc.l	MonsterTooPowerfulStr
 	dc.l	RingsAreSafeStr
 	dc.l	RingsAreSafeStr 
-loc_0002A282:
+; loc_0002A282
+CastleDialogTable_Stow_State5:
 	dc.l	TrueHeroStr
 	dc.l	KingOverjoyedStr
 	dc.l	BookSanguiaEffortsStr
@@ -43643,7 +43660,8 @@ LoadCastleTilemap_MediumB_PlaneB:
 	MOVE.l	#CastleTilemapData_MediumB_SetB_TgtB, Tilemap_data_ptr_plane_b.w
 	RTS
 	
-loc_0002AB7A:
+; loc_0002AB7A
+CastleNpcDispatch_Malaga:
 	dc.l	WyclifNpcDialogueDispatch
 	dc.b	$FF, $FF 
 ; loc_0002AB80
@@ -43661,7 +43679,8 @@ TownStateConfig_Malaga_MapReceived:
 	dc.b	$00, $03, $DE, $E4, $00, $00, $76, $92, $60, $01, $02, $18, $01, $48, $00, $91, $00, $03, $DD, $74, $00, $00, $76, $D0, $60, $01, $00, $A8, $01, $38, $00, $CD 
 	dc.b	$00, $03, $DD, $94, $00, $00, $6F, $36, $60, $01, $01, $C8, $00, $98, $00, $19, $00, $03, $DD, $34, $00, $00, $6F, $80, $60, $01, $01, $28, $00, $D8, $01, $09 
 	dc.b	$00, $03, $DD, $D4, $00, $00, $6F, $80, $60, $01, $01, $48, $00, $78, $00, $19, $00, $03, $DD, $34, $00, $00, $77, $2C, $60, $01, $FF, $FF 
-loc_0002ACA4:
+; loc_0002ACA4
+CastleDialogTable_Malaga_State0:
 	dc.l	HelpInTimeOfNeedStr 
 	dc.l	BrunoLoyalServantStr 
 	dc.l	ReceiveRingMarryStr 
@@ -43669,7 +43688,8 @@ loc_0002ACA4:
 	dc.l	BrunoWaitingStr 
 	dc.l	BrunoInHarmonyCaveStr 
 	dc.l	BrunoNotRightStr 
-loc_0002ACC0:
+; loc_0002ACC0
+CastleDialogTable_Malaga_State1:
 	dc.l	ReturnAfterQuestStr 
 	dc.l	WelcomeToCastleStr 
 	dc.l	MeetMinistersStr
@@ -43677,7 +43697,8 @@ loc_0002ACC0:
 	dc.l	MeetMinistersStr 
 	dc.l	DontForgetFaceStr 
 	dc.l	MeetAgainStr 
-loc_0002ACDC:
+; loc_0002ACDC
+CastleDialogTable_Malaga_State2:
 	dc.l	ReturnAfterQuestStr 
 	dc.l	JourneyNortheastBarrowStr 
 	dc.l	PrincessWaitingStr 
@@ -43852,7 +43873,8 @@ LoadCastleTilemap_Malaga_PlaneB:
 	MOVE.l	#CastleTilemapData_Malaga_SetB_TgtB, Tilemap_data_ptr_plane_b.w
 	RTS
 	
-loc_0002B676:
+; loc_0002B676
+CastleNpcDispatch_Tadcaster:
 	dc.l	WyclifNpcDialogueDispatch
 	dc.b	$FF, $FF 
 ; loc_0002B67C
@@ -43861,11 +43883,13 @@ TownStateConfig_Tadcaster:
 	dc.l	$00000000
 	dc.b	$00, $01, $EF, $A8, $00, $48, $00, $88, $01, $D5, $00, $03, $DE, $A0, $00, $00, $6F, $36, $60, $01, $01, $68, $00, $48, $02, $11, $00, $03, $DE, $C0, $00, $00 
 	dc.b	$6F, $36, $60, $01, $01, $28, $00, $38, $02, $89, $00, $03, $DF, $04, $00, $00, $6F, $80, $00, $01, $FF, $FF 
-loc_0002B6D6:
+; loc_0002B6D6
+CastleDialogTable_Tadcaster_State0:
 	dc.l	WhyAreYouHereStr
 	dc.l	GreetingsHighnessStr
 	dc.l	DontTormentHusbandStr 
-loc_0002B6E2:
+; loc_0002B6E2
+CastleDialogTable_Tadcaster_State1:
 	dc.l	DoNotJudgeKingStr
 	dc.l	KnowImposterStr
 	dc.l	BegDontTormentHusbandStr
@@ -43911,31 +43935,36 @@ TownStateConfig_Swafham:
 	dc.b	$00, $01, $F0, $78, $01, $48, $00, $48, $01, $81, $00, $03, $DE, $14, $00, $00, $6F, $80, $60, $01, $01, $58, $00, $E8, $01, $81, $00, $03, $DE, $14, $00, $00 
 	dc.b	$6F, $80, $60, $01, $00, $28, $00, $88, $01, $81, $00, $03, $DE, $14, $00, $00, $6F, $A8, $60, $01, $01, $38, $00, $88, $01, $81, $00, $03, $DE, $14, $00, $00 
 	dc.b	$6F, $A8, $60, $01, $00, $B8, $00, $58, $02, $11, $00, $03, $DE, $C0, $00, $00, $7A, $F2, $60, $01, $FF, $FF 
-loc_0002B98A:
+; loc_0002B98A
+CastleDialogTable_Swafham_State0:
 	dc.l	KingWorryingCartahenansStr
 	dc.l	BoredJobStr
 	dc.l	DullJobLousyWagesStr
 	dc.l	LookingForJobStr
 	dc.l	RingOfEarthQuestStr 
-loc_0002B99E:
+; loc_0002B99E
+CastleDialogTable_Swafham_State1:
 	dc.l	KingWorryingCartahenansStr
 	dc.l	BoredJobStr
 	dc.l	DullJobLousyWagesStr
 	dc.l	LookingForJobStr
 	dc.l	GiveWhiteCrystalStr 
-loc_0002B9B2:
+; loc_0002B9B2
+CastleDialogTable_Swafham_State2:
 	dc.l	KingWorryingCartahenansStr
 	dc.l	BoredJobStr
 	dc.l	DullJobLousyWagesStr
 	dc.l	LookingForJobStr
 	dc.l	RedCrystalTaskStr 
-loc_0002B9C6:
+; loc_0002B9C6
+CastleDialogTable_Swafham_State3:
 	dc.l	KingWorryingCartahenansStr
 	dc.l	BoredJobStr
 	dc.l	DullJobLousyWagesStr
 	dc.l	LookingForJobStr
 	dc.l	ThreeCrystalsStr 
-loc_0002B9DA:
+; loc_0002B9DA
+CastleDialogTable_Swafham_State4:
 	dc.l	KingWorryingCartahenansStr
 	dc.l	BoredJobStr
 	dc.l	DullJobLousyWagesStr
@@ -44035,13 +44064,15 @@ TownStateConfig_Carthahena_TsarkonDead:
 	dc.b	$00, $03, $DE, $A0, $00, $00, $6F, $36, $60, $01, $01, $88, $00, $A8, $01, $D5, $00, $03, $DE, $A0, $00, $00, $6F, $36, $60, $01, $01, $28, $00, $C8, $01, $D5 
 	dc.b	$00, $03, $DE, $A0, $00, $00, $6F, $36, $60, $01, $01, $88, $00, $C8, $01, $D5, $00, $03, $DE, $A0, $00, $00, $6F, $36, $60, $01, $01, $98, $00, $58, $02, $89 
 	dc.b	$00, $03, $DF, $04, $00, $00, $6F, $36, $00, $01, $FF, $FF 
-loc_0002C07C:
+; loc_0002C07C
+CastleDialogTable_Carthahena_State0:
 	dc.l	WelcomeFoolStr
 	dc.l	NoOneHereStr
 	dc.l	NoOneHereStr
 	dc.l	NoOneHereStr
 	dc.l	NoOneHereStr 
-loc_0002C090:
+; loc_0002C090
+CastleDialogTable_Carthahena_State1:
 	dc.l	UseRingsStr
 	dc.l	BanishEvilsStr
 	dc.l	UniteRingsStr
@@ -44359,7 +44390,8 @@ NpcEntryList_Wyclif:
 	dc.b	$00, $48, $00, $58, $02, $7D, $00, $03, $DF, $30, $00, $00, $6F, $CA, $60, $01, $FF, $FF, $00, $01, $EA, $FE, $00, $88, $00, $58, $02, $95, $00, $03, $DF, $34 
 	dc.b	$00, $00, $6F, $CA, $60, $01, $FF, $FF, $00, $01, $EB, $90, $00, $28, $00, $48, $01, $09, $00, $03, $DD, $D4, $00, $00, $6F, $A8, $60, $01, $01, $68, $00, $48 
 	dc.b	$01, $D5, $00, $03, $DE, $34, $00, $00, $6F, $36, $60, $01, $00, $D8, $00, $48, $02, $05, $00, $03, $DE, $94, $00, $00, $6F, $CA, $60, $01, $FF, $FF 
-loc_0002D424:
+; loc_0002D424
+TownDialogTable_Wyclif_State0:
 	dc.l	GoodPersonStr
 	dc.l	FatherCallingStr
 	dc.l	SorryAboutBladeStr
@@ -44374,7 +44406,8 @@ loc_0002D424:
 	dc.l	BewareWorldStr
 	dc.l	BewareWorldStr
 	dc.l	BladeWoundsStr 
-loc_0002D45C:
+; loc_0002D45C
+TownDialogTable_Wyclif_State1:
 	dc.l	GoodPersonStr
 	dc.l	RingInCaveStr
 	dc.l	EvilRoamsStr
@@ -44389,7 +44422,8 @@ loc_0002D45C:
 	dc.l	EvilSoldiersStr
 	dc.l	EvilSoldiersStr
 	dc.l	BladeWoundsStr 
-loc_0002D494:
+; loc_0002D494
+TownDialogTable_Wyclif_State2:
 	dc.l	KingRingStr
 	dc.l	SurprisedAliveStr
 	dc.l	DontLoiterStr
@@ -44404,44 +44438,57 @@ loc_0002D494:
 	dc.l	RingPropertyStr
 	dc.l	FortunetellerAdviceStr
 	dc.l	PeopleSayStr 
-loc_0002D4CC:
+; loc_0002D4CC
+TownDialogTable_Wyclif_State3:
 	dc.l	FatherCallingStr2 
-loc_0002D4D0:
+; loc_0002D4D0
+TownDialogTable_Wyclif_State4:
 	dc.l	BladeDeadStr 
-loc_0002D4D4:
+; loc_0002D4D4
+TownDialogTable_Wyclif_State5:
 	dc.l	FatherProudStr 
-loc_0002D4D8:
+; loc_0002D4D8
+TownDialogTable_Wyclif_State6:
 	dc.l	BladeHealthStr
 	dc.l	IAmNotYourRealFatherStr
 	dc.l	NoOneHereStr 
-loc_0002D4E4:
+; loc_0002D4E4
+TownDialogTable_Wyclif_State7:
 	dc.l	FatherGraveStr
 	dc.l	NoAnswerStr
 	dc.l	NoOneHereStr
-loc_0002D4F0:
+; loc_0002D4F0
+TownDialogTable_Wyclif_State8:
 	dc.l	FatherGraveStr
 	dc.l	NoAnswerStr
 	dc.l	NoOneHereStr 
-loc_0002D4FC:
+; loc_0002D4FC
+TownDialogTable_Wyclif_State9:
 	dc.l	MissFatherStr
 	dc.l	CastAsideGriefStr 
-loc_0002D504:
+; loc_0002D504
+TownDialogTable_Wyclif_State10:
 	dc.l	EquipWeaponStr
 	dc.l	NoOneHereStr 
-loc_0002D50C:
+; loc_0002D50C
+TownDialogTable_Wyclif_State11:
 	dc.l	EquipWeaponStr
 	dc.l	NoOneHereStr 
-loc_0002D514:
+; loc_0002D514
+TownDialogTable_Wyclif_State12:
 	dc.l	FineWeaponStr
 	dc.l	NoOneHereStr 
-loc_0002D51C:
+; loc_0002D51C
+TownDialogTable_Wyclif_State13:
 	dc.l	GrieveFatherStr
 	dc.l	GoodManStr
 	dc.l	NoOneHereStr 
-loc_0002D528:
+; loc_0002D528
+TownDialogTable_Wyclif_State14:
 	dc.l	EnterCaveWithoutCandlesStr
 	dc.l	NoOneHereStr 
-loc_0002D530:
+; loc_0002D530
+TownDialogTable_Wyclif_State15:
 	dc.l	BetterThanCandlesStr
 	dc.l	NoOneHereStr 
 
@@ -44594,11 +44641,13 @@ LoadTownTilemap_Wyclif_PlaneB:
 loc_0002E3D2:
 	RTS
 	
-loc_0002E3D4:
+; loc_0002E3D4
+FortuneTellerGreeting_Wyclif:
 	PRINT 	MissFatherStr
 	RTS
 	
-loc_0002E3DE:
+; loc_0002E3DE
+FortuneTellerReading_Wyclif:
 	PRINT 	GreatManStr
 	TST.b	Fake_king_killed.w
 	BNE.w	loc_0002E406
@@ -44698,7 +44747,8 @@ NpcEntryList_Parma_Locked:
 	
 	dc.b	$00, $01, $EB, $EE, $00, $B8, $00, $A8, $01, $51, $00, $03, $DD, $F4, $00, $00, $6F, $36, $00, $01, $00, $A8 
 	dc.b	$00, $48, $02, $65, $00, $03, $DF, $2C, $00, $00, $6F, $CA, $00, $01, $FF, $FF 
-loc_0002E838:
+; loc_0002E838
+TownDialogTable_Parma_State0:
 	dc.l	WelcomeParmaStr
 	dc.l	WelcomeParmaStr
 	dc.l	WelcomeParmaStr
@@ -44710,7 +44760,8 @@ loc_0002E838:
 	dc.l	KingBehavingOddlyStr
 	dc.l	AskKingAboutRingStr
 	dc.l	BewareSlanderingKingStr 
-loc_0002E864:
+; loc_0002E864
+TownDialogTable_Parma_State1:
 	dc.l	WelcomeParmaStr
 	dc.l	WelcomeParmaStr
 	dc.l	WelcomeParmaStr
@@ -44722,7 +44773,8 @@ loc_0002E864:
 	dc.l	CarefulInCaveStr
 	dc.l	DontAngerKingStr
 	dc.l	GnostanEvilStr 
-loc_0002E890:
+; loc_0002E890
+TownDialogTable_Parma_State2:
 	dc.l	WelcomeParmaStr
 	dc.l	WelcomeParmaStr
 	dc.l	WelcomeParmaStr
@@ -44734,7 +44786,8 @@ loc_0002E890:
 	dc.l	InYourDebtStr
 	dc.l	VeryBraveStr
 	dc.l	GnostanEvilStr 
-loc_0002E8BC:
+; loc_0002E8BC
+TownDialogTable_Parma_State3:
 	dc.l	CannotLeaveStr
 	dc.l	CannotLeaveStr
 	dc.l	CannotLeaveStr
@@ -44746,7 +44799,8 @@ loc_0002E8BC:
 	dc.l	NoDangerTownStr
 	dc.l	StayHereStr
 	dc.l	GnostanEvilStr 
-loc_0002E8E8:
+; loc_0002E8E8
+TownDialogTable_Parma_State4:
 	dc.l	WelcomeParmaStr
 	dc.l	WelcomeParmaStr
 	dc.l	WelcomeParmaStr
@@ -44758,34 +44812,45 @@ loc_0002E8E8:
 	dc.l	InYourDebtStr
 	dc.l	VeryBraveStr
 	dc.l	WelcomeBackStr 
-loc_0002E914:
+; loc_0002E914
+TownDialogTable_Parma_State5:
 	dc.l	BooksOfSpellsStr 
-loc_0002E918:
+; loc_0002E918
+TownDialogTable_Parma_State6:
 	dc.l	GoodThingsCostStr 
-loc_0002E91C:
+; loc_0002E91C
+TownDialogTable_Parma_State7:
 	dc.l	NotReallyPeopleStr 
-loc_0002E920:
+; loc_0002E920
+TownDialogTable_Parma_State8:
 	dc.l	NotReallyPeopleStr 
-loc_0002E924:
+; loc_0002E924
+TownDialogTable_Parma_State9:
 	dc.l	LanternCostStr
 	dc.l	ManyCandlesStr 
-loc_0002E92C:
+; loc_0002E92C
+TownDialogTable_Parma_State10:
 	dc.l	GnostanDonationsStr
 	dc.l	ConvertToGnostanStr 
 	dc.l	GoodToBeFreeStr
 	dc.l	BelieveInGoodStr 
-loc_0002E93C:
+; loc_0002E93C
+TownDialogTable_Parma_State11:
 	dc.l	KingForcesGnostanStr
 	dc.l	ThanksForFreeingUsStr 
-loc_0002E944:
+; loc_0002E944
+TownDialogTable_Parma_State12:
 	dc.l	ConvertForMoneyStr
 	dc.l	SavedFromEvilStr 
-loc_0002E94C:
+; loc_0002E94C
+TownDialogTable_Parma_State13:
 	dc.l	AdviceForQuestionsStr 
-loc_0002E950:
+; loc_0002E950
+TownDialogTable_Parma_State14:
 	dc.l	CaveOfTroyMapStr
 	dc.l	WatlingMapStr 
-loc_0002E958:
+; loc_0002E958
+TownDialogTable_Parma_State15:
 	dc.l	ExploringCavesStr
 	dc.l	GoWestStr
 	dc.l	NoOneHereStr 
@@ -45048,14 +45113,16 @@ NotOurKingStr:
 	dc.b	"So he wasn't our", $FE
 	dc.b	"king after all!", $FF, $00 
 
-loc_0002FB68:
+; loc_0002FB68
+FortuneTellerReading_Watling:
 	PRINT 	TalkToEveryoneStr
 	TST.b	Talked_to_real_king.w
 	BEQ.w	loc_0002FB80
 	PRINT 	CrystalBallMonsterStr	
 loc_0002FB80:
 	RTS
-loc_0002FB82:
+; loc_0002FB82
+FortuneTellerGreeting_Watling:
 	PRINT 	NotOurKingStr
 	TST.b	Talked_to_real_king.w
 	BNE.w	loc_0002FB9A
@@ -45088,35 +45155,42 @@ NpcEntryList_Watling:
 	npcEntry $0148, $0198, $0061, NPCSpriteFrames_VillagerB, NPCInit_Watling_ThankYou, NPC_ATTR_PAL3, NPC_SOLID
 	npcEntry $00A8, $0128, $0061, NPCSpriteFrames_VillagerB, NPCInit_Watling_ThankYou, NPC_ATTR_PAL3, NPC_SOLID
 	dc.w	$FFFF
-loc_0002FCA4:
+; loc_0002FCA4
+TownDialogTable_Watling_State0:
 	dc.b	$00, $01, $ED, $28, $FF, $FF, $00, $01, $ED, $28, $00, $A8, $00, $A8, $00, $19, $00, $03, $DD, $34, $00, $00, $71, $F0, $60, $01, $FF, $FF, $00, $01, $ED, $28 
 	dc.b	$00, $D8, $00, $48, $02, $05, $00, $03, $DE, $94, $00, $00, $6F, $CA, $60, $01, $FF, $FF 
-loc_0002FCD6:
+; loc_0002FCD6
+TownDialogTable_Watling_State1:
 	dc.l	WhatIsThisStr 
 	dc.l	WhatIsThisStr 
 	dc.l	HowAreYouStr 
 	dc.l	HowAreYouStr 
 	dc.l	HowAreYouStr 
 	dc.l	WhatIsThisStr 
-loc_0002FCEE:
+; loc_0002FCEE
+TownDialogTable_Watling_State2:
 	dc.l	ThankYouStrangerStr 
 	dc.l	BecomeYoungerStr 
 	dc.l	BecomeYoungerStr 
 	dc.l	OldStillStr 
 	dc.l	NightmareStr 
 	dc.l	NightmareStr 
-loc_0002FD06:
+; loc_0002FD06
+TownDialogTable_Watling_State3:
 	dc.l	HelpMapRegionStr
 	dc.l	SearchingForRingsStr
 	dc.l	GoSouthwestDeepdaleStr
 	dc.l	RingsGoodEvilStr
 	dc.l	DeepdaleClosestTownStr
 	dc.l	SixteenRingsTotalStr 
-loc_0002FD1E:
+; loc_0002FD1E
+TownDialogTable_Watling_State4:
 	dc.l	NoYoungPeopleStr 
-loc_0002FD22:
+; loc_0002FD22
+TownDialogTable_Watling_State5:
 	dc.l	ThankYouHelpStr 
-loc_0002FD26:
+; loc_0002FD26
+TownDialogTable_Watling_State6:
 	dc.l	KnowledgeablePeopleStr
 WhatIsThisStr:
 	dc.b	"What is this?", $FF
@@ -45329,7 +45403,8 @@ NpcDataTable_Deepdale:
 	dc.b	$00, $68, $00, $91, $00, $03, $DD, $74, $00, $00, $6F, $5E, $60, $01, $00, $58, $00, $48, $02, $05, $00, $03, $DE, $94, $00, $00, $6F, $CA, $60, $01, $FF, $FF 
 	dc.b	$00, $01, $ED, $6C, $00, $58, $00, $48, $02, $05, $00, $03, $DE, $94, $00, $00, $6F, $CA, $60, $01, $FF, $FF, $00, $01, $ED, $6C, $FF, $FF, $00, $01, $ED, $6C 
 	dc.b	$00, $A8, $00, $48, $02, $65, $00, $03, $DF, $2C, $00, $00, $6F, $CA, $00, $01, $FF, $FF 
-loc_00030A12:
+; loc_00030A12
+TownDialogTable_Deepdale_State0:
 	dc.l	EnjoyStayDeepdaleStr
 	dc.l	AmazinglyPeacefulStr
 	dc.l	RingOfWindStr
@@ -45337,7 +45412,8 @@ loc_00030A12:
 	dc.l	KingNotEasyMeetStr
 	dc.l	KindKingStr
 	dc.l	SwellGuyStr 
-loc_00030A2E:
+; loc_00030A2E
+TownDialogTable_Deepdale_State1:
 	dc.l	EnjoyStayDeepdaleStr
 	dc.l	AmazinglyPeacefulStr
 	dc.l	RingOfWindStr
@@ -45345,7 +45421,8 @@ loc_00030A2E:
 	dc.l	CheckCastleStr
 	dc.l	KindKingStr
 	dc.l	SwellGuyStr 
-loc_00030A4A:
+; loc_00030A4A
+TownDialogTable_Deepdale_State2:
 	dc.l	EnjoyStayDeepdaleStr
 	dc.l	MapToStowStr
 	dc.l	VisitStowFirstStr
@@ -45353,14 +45430,18 @@ loc_00030A4A:
 	dc.l	CaveToStowStr
 	dc.l	BringingTrufflesStr
 	dc.l	KingInCastleStr 
-loc_00030A66:
+; loc_00030A66
+TownDialogTable_Deepdale_State3:
 	dc.l	VisitorToTownStr 
-loc_00030A6A:
+; loc_00030A6A
+TownDialogTable_Deepdale_State4:
 	dc.l	RingOfWindRewardStr 
-loc_00030A6E:
+; loc_00030A6E
+TownDialogTable_Deepdale_State5:
 	dc.l	KeptSecretStr
 	dc.l	LikedItHereStr 
-loc_00030A76:
+; loc_00030A76
+TownDialogTable_Deepdale_State6:
 	dc.l	TellPriestsStr
 EnjoyStayDeepdaleStr:
 	dc.b	"Enjoy your stay in", $FE
@@ -45453,7 +45534,8 @@ TellPriestsStr:
 	dc.b	"priests of your adventures.", $FD
 	dc.b	"That way that your deeds", $FE
 	dc.b	"will be remembered.", $FF, $00 
-loc_00030F70:
+; loc_00030F70
+FortuneTellerGreeting_Deepdale:
 	PRINT 	LikedItHereStr	
 	RTS
 	
@@ -45588,7 +45670,8 @@ NpcDataTable_Stow1:
 	dc.b	$DE, $94, $00, $00, $6F, $CA, $60, $01, $FF, $FF, $00, $01, $EE, $5C, $00, $A8, $00, $88, $01, $D5, $00, $03, $DE, $34, $00, $00, $6F, $5E, $60, $01, $00, $68 
 	dc.b	$00, $58, $01, $D5, $00, $03, $DE, $34, $00, $00, $6F, $36, $60, $01, $FF, $FF, $00, $01, $EE, $66, $00, $B8, $00, $68, $01, $D5, $00, $03, $DE, $34, $00, $00 
 	dc.b	$6F, $36, $60, $01, $FF, $FF 
-loc_000318F0:
+; loc_000318F0
+TownDialogTable_Stow1_State0:
 	dc.l	ThisIsStowStr
 	dc.l	LookingForButtonStr
 	dc.l	RingOfFireFoundStr
@@ -45598,7 +45681,8 @@ loc_000318F0:
 	dc.l	SawShadowCastleStr
 	dc.l	PlayAGameStr 
 	dc.l	DontHearWellStr 
-loc_00031914:
+; loc_00031914
+TownDialogTable_Stow1_State1:
 	dc.l	ThisIsStowStr
 	dc.l	BookOfSpellsWhereStr
 	dc.l	RingOfFireFoundStr
@@ -45608,7 +45692,8 @@ loc_00031914:
 	dc.l	SawShadowCastleStr
 	dc.l	PlayAGameStr 
 	dc.l	DontHearWellStr 
-loc_00031938:
+; loc_00031938
+TownDialogTable_Stow1_State2:
 	dc.l	ThisIsStowStr
 	dc.l	ReallyInnocentStr
 	dc.l	ProveInnocenceStr
@@ -45618,7 +45703,8 @@ loc_00031938:
 	dc.l	SawShadowCastleStr
 	dc.l	PlayAGameStr 
 	dc.l	DontHearWellStr 
-loc_0003195C:
+; loc_0003195C
+TownDialogTable_Stow1_State3:
 	dc.l	HappenInStowStr
 	dc.l	HappenInStowStr
 	dc.l	ThankHeavensStr
@@ -45636,7 +45722,8 @@ loc_0003195C:
 	dc.l	MakeMonsterGoAwayStr
 	dc.l	MonsterKillUsStr2 
 	dc.l	MonsterKillUsStr2 
-loc_000319A0:
+; loc_000319A0
+TownDialogTable_Stow1_State4:
 	dc.l	ThisIsStowStr
 	dc.l	FeelBetterStr
 	dc.l	EveryoneBetterStr
@@ -45646,19 +45733,25 @@ loc_000319A0:
 	dc.l	DoctorHealedAllStr
 	dc.l	MonsterKillUsStr 
 	dc.l	ThankYouLivesStr 
-loc_000319C4:
+; loc_000319C4
+TownDialogTable_Stow1_State5:
 	dc.l	DozedOffStr 
-loc_000319C8:
+; loc_000319C8
+TownDialogTable_Stow1_State6:
 	dc.l	AfraidMonsterStr 
-loc_000319CC:
+; loc_000319CC
+TownDialogTable_Stow1_State7:
 	dc.l	AtoneCowardiceStr 
-loc_000319D0:
+; loc_000319D0
+TownDialogTable_Stow1_State8:
 	dc.l	GoodMorningStr
 	dc.l	NoOneHereStr 
-loc_000319D8:
+; loc_000319D8
+TownDialogTable_Stow1_State9:
 	dc.l	GoodMorningStr 
 	dc.l	GoodMorningStr 
-loc_000319E0:
+; loc_000319E0
+TownDialogTable_Stow1_State10:
 	dc.l	MetAcolytesStr
 ThisIsStowStr:
 	dc.b	"This is Stow.", $FF
@@ -45932,7 +46025,8 @@ LoadTownTilemap_Stow1_PlaneB:
 	MOVE.l	#TownTilemapData_Stow1_SetB_TgtB, Tilemap_data_ptr_plane_b.w
 	RTS
 	
-loc_00032AA4:
+; loc_00032AA4
+FortuneTellerReading_Keltwick:
 	PRINT 	TooBusyTalkStr2
 	TST.b	Stow_innocence_proven.w
 	BNE.w	loc_00032ACC
@@ -45943,7 +46037,8 @@ loc_00032AA4:
 loc_00032ACC:
 	RTS
 	
-loc_00032ACE:
+; loc_00032ACE
+FortuneTellerGreeting_Stow:
 	PRINT 	LandSafeStr
 	TST.b	Stow_innocence_proven.w
 	BNE.w	loc_00032B2E
@@ -46002,7 +46097,8 @@ NpcDataTable_Stow2:
 	dc.b	$60, $01, $00, $48, $00, $48, $02, $35, $00, $03, $DF, $24, $00, $00, $6F, $CA, $60, $01, $FF, $FF, $00, $01, $EE, $D8, $00, $58, $00, $48, $02, $05, $00, $03 
 	dc.b	$DE, $94, $00, $00, $6F, $CA, $60, $01, $FF, $FF, $00, $01, $EE, $D8, $FF, $FF, $00, $01, $EE, $D8, $00, $B8, $00, $48, $01, $D5, $00, $03, $DE, $34, $00, $00 
 	dc.b	$6F, $36, $60, $01, $FF, $FF 
-loc_00032D24:
+; loc_00032D24
+TownDialogTable_Keltwick_State0:
 	dc.l	ThisIsKeltwickStr
 	dc.l	ExploreKeltwickStr
 	dc.l	ExploreKeltwickStr
@@ -46013,7 +46109,8 @@ loc_00032D24:
 	dc.l	WhatsYourNameStr 
 	dc.l	IntroduceMeToSomeoneStr
 	dc.l	WhatsYourNameStr 
-loc_00032D4C:
+; loc_00032D4C
+TownDialogTable_Keltwick_State1:
 	dc.l	ThisIsKeltwickStr
 	dc.l	BasilFineDoctorStr
 	dc.l	BasilNappingStr
@@ -46024,7 +46121,8 @@ loc_00032D4C:
 	dc.l	WhatsYourNameStr 
 	dc.l	IntroduceMeToSomeoneStr
 	dc.l	WhatsYourNameStr 
-loc_00032D74:
+; loc_00032D74
+TownDialogTable_Keltwick_State2:
 	dc.l	ThisIsKeltwickStr
 	dc.l	MapToMalagaStr
 	dc.l	BearwulfWantsToSeeYouStr
@@ -46035,7 +46133,8 @@ loc_00032D74:
 	dc.l	PoorAnselmStr 
 	dc.l	IntroduceMeToSomeoneStr
 	dc.l	AnselmIntroductionStr 
-loc_00032D9C:
+; loc_00032D9C
+TownDialogTable_Keltwick_State3:
 	dc.l	ThisIsKeltwickStr
 	dc.l	MapToMalagaStr
 	dc.l	BearwulfLivesWithSonStr
@@ -46056,18 +46155,24 @@ loc_00032D9C:
 	dc.l	HasFatherReturnedStr
 	dc.l	IntroduceMeToSomeoneStr
 	dc.l	ThankYouForFindingHimStr 
-loc_00032DEC:
+; loc_00032DEC
+TownDialogTable_Keltwick_State4:
 	dc.l	FindPoisonShieldStr 
-loc_00032DF0:
+; loc_00032DF0
+TownDialogTable_Keltwick_State5:
 	dc.l	TroubleWakingUpStr 
-loc_00032DF4:
+; loc_00032DF4
+TownDialogTable_Keltwick_State6:
 	dc.l	WhatsWrongStowStr 
-loc_00032DF8:
+; loc_00032DF8
+TownDialogTable_Keltwick_State7:
 	dc.l	GettingReadyForBedStr 
-loc_00032DFC:
+; loc_00032DFC
+TownDialogTable_Keltwick_State8:
 	dc.l	BearwulfLivesWithSonStr
 	dc.l	NoOneHereStr 
-loc_00032E04:
+; loc_00032E04
+TownDialogTable_Keltwick_State9:
 	dc.l	GreetingsYoungManStr
 ThisIsKeltwickStr:
 	dc.b	"This is Keltwick.", $FF
@@ -46222,7 +46327,8 @@ BearwulfIntroductionStr:
 	dc.b	"Anselm in Keltwick.", $FD
 	dc.b	"Try to find the Poison", $FE
 	dc.b	$53, $68, $69, $65, $6C, $64, $2D, $2D, $79, $6F, $75, $27, $6C, $6C, $20, $6E, $65, $65, $64, $20, $69, $74, $21, $F8, $01, $14 
-loc_0003373A:
+; loc_0003373A
+FortuneTellerGreeting_Keltwick:
 	PRINT 	FindPoisonShieldStr	
 	RTS
 	
@@ -46343,7 +46449,8 @@ NpcDataTable_Malaga:
 	dc.b	$00, $00, $6F, $5E, $00, $01, $00, $88, $00, $68, $01, $51, $00, $03, $DD, $F4, $00, $00, $6F, $36, $00, $01, $00, $88, $00, $C8, $01, $51, $00, $03, $DD, $F4 
 	dc.b	$00, $00, $6F, $5E, $00, $01, $00, $28, $00, $C8, $01, $51, $00, $03, $DD, $F4, $00, $00, $6F, $36, $00, $01, $00, $B8, $00, $58, $01, $51, $00, $03, $DD, $F4 
 	dc.b	$00, $00, $6F, $36, $00, $01, $00, $48, $00, $58, $02, $4D, $00, $03, $DF, $28, $00, $00, $6F, $CA, $60, $01, $FF, $FF 
-loc_00034012:
+; loc_00034012
+TownDialogTable_Malaga_State0:
 	dc.l	PrincessWaitingStr2
 	dc.l	WelcomeMalagaStr
 	dc.l	SoldierOfTharStr 
@@ -46355,7 +46462,8 @@ loc_00034012:
 	dc.l	RuinLandStr
 	dc.l	KingDiedYearsAgoStr 
 	dc.l	KingWorriedPrincessStr 
-loc_0003403E:
+; loc_0003403E
+TownDialogTable_Malaga_State1:
 	dc.l	PrincessWaitingStr2 
 	dc.l	WelcomeMalagaStr 
 	dc.l	SecretlyHatedTharStr 
@@ -46367,7 +46475,8 @@ loc_0003403E:
 	dc.l	GladLutherNotKingStr 
 	dc.l	TharLutherHateYouStr 
 	dc.l	NewKingQuestionStr 
-loc_0003406A:
+; loc_0003406A
+TownDialogTable_Malaga_State2:
 	dc.l	BrunoComingBackStr 
 	dc.l	WelcomeMalagaStr
 	dc.l	SecretlyHatedTharStr 
@@ -46390,7 +46499,8 @@ loc_0003406A:
 	dc.l	GladLutherNotKingStr 
 	dc.l	VillageOfBarrowStr 
 	dc.l	HopeYouSucceedStr 
-loc_000340C2:
+; loc_000340C2
+TownDialogTable_Malaga_State3:
 	dc.l	FoodPriceBestStr 
 	dc.l	FoodPriceBestStr
 	dc.l	ComeHereOftenStr 
@@ -46591,11 +46701,13 @@ NeverExpectedSucceedStr:
 ReturnToMalagaStr:
 	dc.b	"Please return to Malaga.", $FF, $00 
 
-loc_00034B92:
+; loc_00034B92
+FortuneTellerReading_Malaga:
 	PRINT 	ShopOwnerVisionStr
 	RTS
 	
-loc_00034B9C:
+; loc_00034B9C
+FortuneTellerGreeting_Malaga:
 	PRINT 	EverythingOnHouseStr
 	TST.b	Malaga_king_crowned.w
 	BNE.w	loc_00034BB4
@@ -46629,25 +46741,30 @@ NpcDataTable_Barrow:
 	dc.l	$00000000
 	dc.b	$FF, $FF, $00, $01, $EF, $5A, $00, $88, $00, $48, $00, $19, $00, $03, $DD, $34, $00, $00, $77, $E6, $60, $01, $FF, $FF, $00, $01, $EF, $7C, $00, $48, $00, $58 
 	dc.b	$02, $7D, $00, $03, $DF, $30, $00, $00, $6F, $CA, $60, $01, $FF, $FF 
-loc_00034CEA:
+; loc_00034CEA
+TownDialogTable_Barrow_State0:
 	dc.l	WelcomeToBarrowStr
 	dc.l	TadcasterDangerStr
 	dc.l	TadcasterDangerStr
 	dc.l	MapToTadcasterStr
 	dc.l	HeadTowardTadcasterStr
 	dc.l	TreasureLegendStr 
-loc_00034D02:
+; loc_00034D02
+TownDialogTable_Barrow_State1:
 	dc.l	WelcomeToBarrowStr
 	dc.l	UncleTiborStr
 	dc.l	UncleTiborForestStr
 	dc.l	MapToTadcasterStr
 	dc.l	HiddenRoadForestStr
 	dc.l	TreasureLegendStr 
-loc_00034D1A:
+; loc_00034D1A
+TownDialogTable_Barrow_State2:
 	dc.l	NoOneHereStr 
-loc_00034D1E:
+; loc_00034D1E
+TownDialogTable_Barrow_State3:
 	dc.l	GoAwayStr 
-loc_00034D22:
+; loc_00034D22
+TownDialogTable_Barrow_State4:
 	dc.l	BuyPassToCartahenaStr
 	dc.l	GoAwayStr
 WelcomeToBarrowStr:	
@@ -46732,7 +46849,8 @@ BuyPassToCartahenaStr3:
 TooMuchGearStr:
 	dc.b	"You have too much gear", $FE
 	dc.b	"to carry this pass.", $FF, $00 
-loc_0003522E:
+; loc_0003522E
+FortuneTellerGreeting_Barrow:
 	PRINT 	BoughtFromMeStr	
 	RTS
 	
@@ -46866,7 +46984,8 @@ NpcDataTable_Tadcaster:
 	dc.b	$01, $D5, $00, $03, $DE, $34, $00, $00, $6F, $36, $60, $01, $FF, $FF, $00, $01, $EF, $CA, $00, $48, $00, $58, $02, $4D, $00, $03, $DF, $28, $00, $00, $6F, $CA 
 	dc.b	$60, $01, $00, $F8, $00, $78, $00, $CD, $00, $03, $DD, $94, $00, $00, $6F, $36, $60, $01, $FF, $FF, $00, $01, $EB, $20, $00, $88, $00, $58, $02, $95, $00, $03 
 	dc.b	$DF, $34, $00, $00, $6F, $CA, $60, $01, $FF, $FF 
-loc_00035D08:
+; loc_00035D08
+TownDialogTable_Tadcaster_State0:
 	dc.l	TadcasterBegsForMercyStr
 	dc.l	PleaseDontTormentStr
 	dc.l	DontHarmChildrenStr
@@ -46882,7 +47001,8 @@ loc_00035D08:
 	dc.l	ImposterConfrontationStr
 	dc.l	ImposterConfrontationStr
 	dc.l	ImposterConfrontationStr 
-loc_00035D44:
+; loc_00035D44
+TownDialogTable_Tadcaster_State1:
 	dc.l	TadcasterBegsForMercyStr
 	dc.l	NastyGuyStr
 	dc.l	NastyGuyStr
@@ -46898,7 +47018,8 @@ loc_00035D44:
 	dc.l	NoOneHereStr
 	dc.l	NoOneHereStr
 	dc.l	NoOneHereStr 
-loc_00035D80:
+; loc_00035D80
+TownDialogTable_Tadcaster_State2:
 	dc.l	TadcasterBegsForMercyStr
 	dc.l	CartahenanArmyCruelStr
 	dc.l	CartahenanArmyCruelStr
@@ -46914,19 +47035,24 @@ loc_00035D80:
 	dc.l	NoOneHereStr
 	dc.l	NoOneHereStr
 	dc.l	NoOneHereStr 
-loc_00035DBC:
+; loc_00035DBC
+TownDialogTable_Tadcaster_State3:
 	dc.l	WelcomeToTavernStr
 	dc.l	WouldLikeToEatStr 
-loc_00035DC4:
+; loc_00035DC4
+TownDialogTable_Tadcaster_State4:
 	dc.l	BulliesAteFoodStr
 	dc.l	HungryNoMoneyStr
 	dc.l	CelebrateTriumphStr 
 	dc.l	TavernkeeperGreatGuyStr 
-loc_00035DD4:
+; loc_00035DD4
+TownDialogTable_Tadcaster_State5:
 	dc.l	TsarkonErikRingsStr 
-loc_00035DD8:
+; loc_00035DD8
+TownDialogTable_Tadcaster_State6:
 	dc.l	WhyEvilStr 
-loc_00035DDC:
+; loc_00035DDC
+TownDialogTable_Tadcaster_State7:
 	dc.l	TryToBeGoodStr 
 	dc.l	TryToBeGoodStr
 TadcasterBegsForMercyStr
@@ -47149,7 +47275,8 @@ LoadTownTilemap_Tadcaster_PlaneB:
 	MOVE.l	#TownTilemapData_Tadcaster_SetB_TgtB, Tilemap_data_ptr_plane_b.w
 	RTS
 	
-loc_00036B3C:
+; loc_00036B3C
+FortuneTellerReading_Helwig:
 	PRINT 	TakeTaskStepByStepStr
 	TST.b	Helwig_men_rescued.w
 	BNE.w	loc_00036B64
@@ -47160,7 +47287,8 @@ loc_00036B3C:
 loc_00036B64:
 	RTS
 	
-loc_00036B66:
+; loc_00036B66
+FortuneTellerGreeting_Helwig:
 	PRINT 	CelebrateTriumphStr
 	TST.b	Imposter_killed.w
 	BNE.w	loc_00036B8E
@@ -47212,7 +47340,8 @@ NpcDataTable_Helwig:
 	dc.b	$00, $00, $7E, $BC, $00, $01, $01, $18, $00, $58, $00, $91, $00, $03, $DD, $74, $00, $00, $79, $54, $60, $01, $FF, $FF, $00, $01, $F0, $4C, $00, $28, $00, $48 
 	dc.b	$01, $09, $00, $03, $DD, $D4, $00, $00, $6F, $A8, $60, $01, $00, $D8, $00, $48, $02, $05, $00, $03, $DE, $94, $00, $00, $6F, $CA, $60, $01, $FF, $FF, $00, $01 
 	dc.b	$EB, $20, $00, $88, $00, $58, $02, $65, $00, $03, $DF, $2C, $00, $00, $6F, $CA, $00, $01, $FF, $FF 
-loc_00036DD2:
+; loc_00036DD2
+TownDialogTable_Helwig_State0:
 	dc.l	YouAreInHelwigStr
 	dc.l	OnlyWomenRemainStr
 	dc.l	HusbandCapturedStr
@@ -47230,7 +47359,8 @@ loc_00036DD2:
 	dc.l	NoOneHereStr
 	dc.l	NoOneHereStr 
 	dc.l	NoOneHereStr 
-loc_00036E16:
+; loc_00036E16
+TownDialogTable_Helwig_State1:
 	dc.l	YouAreInHelwigStr
 	dc.l	JourneyWestToSwaffhamMapStr
 	dc.l	HusbandReturnedStr
@@ -47247,15 +47377,18 @@ loc_00036E16:
 	dc.l	RememberedAsHeroStr
 	dc.l	DragonShieldVillageStr
 	dc.l	KingOfSwaffhamStingyStr 
-loc_00036E56:
+; loc_00036E56
+TownDialogTable_Helwig_State2:
 	dc.l	NoOneHereStr
 	dc.l	SleepInSoftBedStr
 	dc.l	NoOneHereStr 
-loc_00036E62:
+; loc_00036E62
+TownDialogTable_Helwig_State3:
 	dc.l	NoOneHereStr
 	dc.l	AppreciateYouStr
 	dc.l	StopByForFoodStr 
-loc_00036E6E:
+; loc_00036E6E
+TownDialogTable_Helwig_State4:
 	dc.l	MinisterTrickedSoldiersStr
 	dc.l	NoOneHereStr
 YouAreInHelwigStr:
@@ -47541,7 +47674,8 @@ LoadTownTilemap_Helwig_PlaneB:
 	MOVE.l	#TownTilemapData_Helwig_SetB_TgtB, Tilemap_data_ptr_plane_b.w
 	RTS
 	
-loc_000383B4:
+; loc_000383B4
+FortuneTellerGreeting_Swafham:
 	PRINT 	WhatsWrongHereStr
 	RTS
 	
@@ -47586,7 +47720,8 @@ NpcDataTable_Swafham:
 	dc.b	$00, $00, $00, $00 
 	dc.l	$00000000
 	dc.b	$FF, $FF 
-loc_00038584:
+; loc_00038584
+TownDialogTable_Swafham_State0:
 	dc.l	MapsHardToFindStr 
 	dc.l	YoureInSwaffhamStr 
 	dc.l	AskKingForGoldStr 
@@ -47600,7 +47735,8 @@ loc_00038584:
 	dc.l	TownDestroyedLongAgoStr 
 	dc.l	TerribleMonsterCaveStr 
 	dc.l	ExcalabriaDestroyedStr 
-loc_000385B8:
+; loc_000385B8
+TownDialogTable_Swafham_State1:
 	dc.l	MapsHardToFindStr 
 	dc.l	YoureInSwaffhamStr 
 	dc.l	KingGaveRingStr 
@@ -47614,7 +47750,8 @@ loc_000385B8:
 	dc.l	TownDestroyedLongAgoStr 
 	dc.l	ThreeCavesToRuinsStr 
 	dc.l	ExcalabriaDestroyedStr 
-loc_000385EC:
+; loc_000385EC
+TownDialogTable_Swafham_State2:
 	dc.l	CartahenaDestroyedSwaffhamStr 
 	dc.l	CartahenaDestroyedSwaffhamStr
 	dc.l	TaxesHighStr
@@ -47703,7 +47840,8 @@ SomethingStrangeHappenStr:
 	dc.b	"I feel that something", $FE 
 	dc.b	"strange is going to happen.", $FE
 	dc.b	"I'm not sure what it is.", $FF, $00 
-loc_00038BE2:
+; loc_00038BE2
+FortuneTellerGreeting_Excalabria:
 	PRINT 	SomethingStrangeHappenStr
 	RTS
 	
@@ -47832,11 +47970,14 @@ NpcEntryList_Excalabria:
 ; loc_00039546
 NpcDataTable_Excalabria:
 	dc.b	$FF, $FF 
-loc_00039548:
+; loc_00039548
+TownDialogTable_Excalabria_State0:
 	dc.l	WaitingExcalabriaStr 
-loc_0003954C:
+; loc_0003954C
+TownDialogTable_Excalabria_State1:
 	dc.l	LongWaitedForYouStr 
-loc_00039550:
+; loc_00039550
+TownDialogTable_Excalabria_State2:
 	dc.l	TerribleNewsStr
 WaitingExcalabriaStr:
 	dc.b	"I've been waiting for you,", $FE 
@@ -47876,7 +48017,8 @@ GetAllRingsStr:
 	dc.b	"You must have all the", $FE 
 	dc.b	"rings! Visit each town one", $FE 
 	dc.b	"more time to get the rings.", $FF, $00 
-loc_0003986E:
+; loc_0003986E
+FortuneTellerGreeting_ExcalabriaCastle:
 	PRINT 	WaitingExcalabriaStr	
 	RTS
 	
@@ -47982,7 +48124,8 @@ NpcDataTable_Hastings1:
 	dc.b	$60, $01, $01, $88, $00, $48, $01, $D5, $00, $03, $DE, $34, $00, $00, $7D, $38, $60, $01, $FF, $FF, $00, $01, $F1, $3A, $00, $78, $00, $A8, $00, $CD, $00, $03 
 	dc.b	$DD, $94, $00, $00, $6F, $36, $60, $01, $00, $E8, $00, $88, $00, $91, $00, $03, $DD, $74, $00, $00, $6F, $5E, $60, $01, $00, $48, $00, $58, $02, $4D, $00, $03 
 	dc.b	$DF, $28, $00, $00, $6F, $CA, $60, $01, $FF, $FF 
-loc_0003A03A:
+; loc_0003A03A
+TownDialogTable_Hastings_State0:
 	dc.l	ShopInSwaffhamStr
 	dc.l	EscapedDestructionExcalabriaStr
 	dc.l	VillageOfHastingsStr
@@ -47993,7 +48136,8 @@ loc_0003A03A:
 	dc.l	SoldiersLookingForYouStr 
 	dc.l	WhyAreYouHereStr2
 	dc.l	SeveralPeopleWaitingStr 
-loc_0003A062:
+; loc_0003A062
+TownDialogTable_Hastings_State1:
 	dc.l	ShopInSwaffhamStr
 	dc.l	EscapedDestructionExcalabriaStr
 	dc.l	VillageOfHastingsStr
