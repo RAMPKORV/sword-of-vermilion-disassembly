@@ -7937,14 +7937,14 @@ NPCTick_Stow_SanguiosBookkeeper:
 	BEQ.b	loc_000073AE
 	MOVE.l	#HopesWithYouStr, $1C(A5)
 	TST.b	Sanguia_learned_from_book.w
-	BNE.w	loc_00007408
+	BNE.w	NPCTick_Stow_Bookkeeper_Done
 	LEA	Possessed_magics_length.w, A0
 	MOVE.w	(A0), D0
 	ADDQ.w	#1, (A0)+
 	ADD.w	D0, D0
 	MOVE.w	#((MAGIC_TYPE_FIELD<<8)|MAGIC_SANGUIA), (A0,D0.w)
 	MOVE.b	#$FF, Sanguia_learned_from_book.w
-	BRA.w	loc_00007408
+	BRA.w	NPCTick_Stow_Bookkeeper_Done
 loc_000073AE:
 	TST.b	Stow_innocence_proven.w
 	BEQ.b	loc_000073D8
@@ -7953,23 +7953,24 @@ loc_000073AE:
 	CMPI.w	#8, D0
 	BLT.b	loc_000073CC
 	MOVE.l	#DiscardBookSpellsStr, $1C(A5)
-	BRA.w	loc_00007408
+	BRA.w	NPCTick_Stow_Bookkeeper_Done
 loc_000073CC:
 	MOVE.l	#BookSanguiaEffortsStr, $1C(A5)
-	BRA.w	loc_00007408
+	BRA.w	NPCTick_Stow_Bookkeeper_Done
 loc_000073D8:
 	TST.b	Accused_of_theft.w
-	BEQ.w	loc_00007408
+	BEQ.w	NPCTick_Stow_Bookkeeper_Done
 	MOVE.l	#ReturnWhenInnocentStr, $1C(A5)
 	TST.b	Sanguios_confiscated.w
-	BNE.b	loc_00007408
+	BNE.b	NPCTick_Stow_Bookkeeper_Done
 	LEA	Possessed_magics_list.w, A3
 	LEA	Possessed_magics_length.w, A2
 	MOVE.w	#$0116, D4
 	BSR.w	RemoveItemFromList
 	BSR.w	BackupRingsToMapTriggers
 	MOVE.b	#$FF, Sanguios_confiscated.w
-loc_00007408:
+; NPCTick_Stow_Bookkeeper_Done
+NPCTick_Stow_Bookkeeper_Done:
 	BRA.w	NPCBehavior_LoadFrame
 	BSR.w	SetRandomDirection
 	CLR.b	$25(A5)
@@ -8489,14 +8490,14 @@ NPCTick_Helwig_OldWomanQuest:
 	BEQ.b	loc_00007A44
 	MOVE.l	#GetAlongFineStr, $1C(A5)
 	TST.b	Dragon_shield_received.w
-	BNE.w	loc_00007ACC
+	BNE.w	NPCTick_Helwig_OldWomanQuest_Done
 	LEA	Possessed_equipment_length.w, A0
 	MOVE.w	(A0), D0
 	ADDQ.w	#1, (A0)+
 	ADD.w	D0, D0
 	MOVE.w	#((EQUIPMENT_TYPE_SHIELD<<8)|EQUIPMENT_SHIELD_DRAGON), (A0,D0.w)
 	MOVE.b	#$FF, Dragon_shield_received.w
-	BRA.w	loc_00007ACC
+	BRA.w	NPCTick_Helwig_OldWomanQuest_Done
 loc_00007A44:
 	TST.b	Old_woman_has_received_sketch.w
 	BEQ.w	loc_00007A82
@@ -8508,10 +8509,10 @@ loc_00007A62:
 	LEA	Possessed_equipment_length.w, A0
 	MOVE.w	(A0), D0
 	CMPI.w	#8, D0
-	BLT.w	loc_00007ACC
+	BLT.w	NPCTick_Helwig_OldWomanQuest_Done
 	MOVE.l	#FriendGiftDragonShieldStr, $1C(A5)
 	MOVE.b	#$FF, Dragon_shield_offered_to_player.w
-	BRA.w	loc_00007ACC
+	BRA.w	NPCTick_Helwig_OldWomanQuest_Done
 loc_00007A82:
 	TST.b	Helwig_old_woman_quest_started.w
 	BEQ.b	loc_00007AA4
@@ -8520,20 +8521,21 @@ loc_00007A82:
 	BSR.w	AddItemToInventoryList
 	MOVE.w	#((ITEM_TYPE_NON_DISCARDABLE<<8)|ITEM_OLD_WOMANS_SKETCH), (A0,D0.w)
 	MOVE.b	#$FF, Player_has_received_old_womans_sketch.w
-	BRA.w	loc_00007ACC
+	BRA.w	NPCTick_Helwig_OldWomanQuest_Done
 loc_00007AA4:
 	TST.b	Helwig_men_rescued.w
-	BEQ.b	loc_00007ACC
+	BEQ.b	NPCTick_Helwig_OldWomanQuest_Done
 	BSR.w	CheckInventoryFull
 	BLT.b	loc_00007ABA
 	MOVE.l	#ComeBackLessGearStr2, $1C(A5)
-	BRA.b	loc_00007ACC
+	BRA.b	NPCTick_Helwig_OldWomanQuest_Done
 loc_00007ABA:
 	MOVE.l	#FindSomeoneForMeStr, $1C(A5)
-	BRA.b	loc_00007ACC
+	BRA.b	NPCTick_Helwig_OldWomanQuest_Done
 loc_00007AC4:
 	MOVE.l	#FoundSomeoneForMeStr, $1C(A5)
-loc_00007ACC:
+; NPCTick_Helwig_OldWomanQuest_Done
+NPCTick_Helwig_OldWomanQuest_Done:
 	BRA.w	NPCBehavior_LoadFrame
 ; loc_00007AD0
 NPCInit_Helwig_OldWomanQuest:
@@ -8566,11 +8568,11 @@ NPCTick_Excalabria_CrystalExchange:
 	MOVE.w	#$0113, D4
 	BSR.w	RemoveItemFromList
 	MOVE.l	#BegoneNothingMoreStr, $1C(A5)
-	BRA.w	loc_00007C30
+	BRA.w	NPCTick_Excalabria_CrystalExchange_Done
 loc_00007B38:
 	TST.b	Blue_crystal_received.w
 	BEQ.b	loc_00007B42
-	BRA.w	loc_00007C30
+	BRA.w	NPCTick_Excalabria_CrystalExchange_Done
 loc_00007B42:
 	TST.b	Blue_crystal_quest_started.w
 	BEQ.w	loc_00007B8E
@@ -8589,11 +8591,11 @@ loc_00007B42:
 	MOVE.b	#$FF, Blue_key_received.w
 loc_00007B82:
 	MOVE.l	#BackSoSoonStr, $1C(A5)
-	BRA.w	loc_00007C30
+	BRA.w	NPCTick_Excalabria_CrystalExchange_Done
 loc_00007B8E:
 	TST.b	Red_crystal_received.w
 	BEQ.w	loc_00007B9A
-	BRA.w	loc_00007C30
+	BRA.w	NPCTick_Excalabria_CrystalExchange_Done
 loc_00007B9A:
 	TST.b	Red_crystal_quest_started.w
 	BEQ.w	loc_00007BE6
@@ -8612,11 +8614,11 @@ loc_00007B9A:
 	MOVE.b	#$FF, Red_key_received.w
 loc_00007BDA:
 	MOVE.l	#BackSoSoonStr, $1C(A5)
-	BRA.w	loc_00007C30
+	BRA.w	NPCTick_Excalabria_CrystalExchange_Done
 loc_00007BE6:
 	TST.b	Ring_of_wind_received.w
 	BEQ.b	loc_00007BF0
-	BRA.w	loc_00007C30
+	BRA.w	NPCTick_Excalabria_CrystalExchange_Done
 loc_00007BF0:
 	TST.b	White_crystal_quest_started.w
 	BEQ.b	loc_00007C18
@@ -8627,15 +8629,16 @@ loc_00007BF0:
 	MOVE.b	#$FF, White_crystal_received.w
 loc_00007C0C:
 	MOVE.l	#BackSoSoonStr, $1C(A5)
-	BRA.w	loc_00007C30
+	BRA.w	NPCTick_Excalabria_CrystalExchange_Done
 loc_00007C18:
 	BSR.w	CheckInventoryFull
 	BLT.b	loc_00007C28
 	MOVE.l	#CantGiveKeyStr, $1C(A5)	
-	BRA.b	loc_00007C30	
+	BRA.b	NPCTick_Excalabria_CrystalExchange_Done	
 loc_00007C28:
 	MOVE.l	#RingOfEarthQuestStr, $1C(A5)
-loc_00007C30:
+; NPCTick_Excalabria_CrystalExchange_Done
+NPCTick_Excalabria_CrystalExchange_Done:
 	BRA.w	NPCBehavior_LoadFrame
 ; loc_00007C34
 NPCInit_Excalabria_CrystalExchange:
@@ -14015,7 +14018,7 @@ loc_0000C4DE:
 	MOVE.w	$16(A6), D0
 	SUBQ.w	#1, D0
 	MOVE.w	D0, $16(A5)
-	BRA.w	loc_0000C5AE
+	BRA.w	BossFireball_RenderDone
 loc_0000C52E:
 	TST.b	$26(A5)
 	BEQ.b	loc_0000C57A
@@ -14025,20 +14028,20 @@ loc_0000C52E:
 	BLE.b	loc_0000C556
 	MOVE.w	$3C(A5), D0
 	CMPI.b	#$0A, D0
-	BGE.w	loc_0000C5AE
+	BGE.w	BossFireball_RenderDone
 	MOVE.w	#$016A, $8(A5)
-	BRA.w	loc_0000C5AE
+	BRA.w	BossFireball_RenderDone
 loc_0000C556:
 	CLR.w	$3C(A5)
 	CLR.b	$26(A5)
 	CLR.b	$1B(A5)
 	CLR.b	$19(A6)
-	BRA.b	loc_0000C5AE
+	BRA.b	BossFireball_RenderDone
 loc_0000C568:
 	CLR.l	$32(A5)
 	MOVE.w	#$0161, $8(A5)
 	MOVE.w	#$0014, $3C(A5)
-	BRA.b	loc_0000C5AE
+	BRA.b	BossFireball_RenderDone
 loc_0000C57A:
 	MOVE.b	$1B(A5), D0
 	ANDI.w	#8, D0
@@ -14053,7 +14056,8 @@ loc_0000C57A:
 	CLR.b	$1B(A5)
 loc_0000C5A8:
 	MOVE.w	#$00FA, $16(A5)
-loc_0000C5AE:
+; BossFireball_RenderDone
+BossFireball_RenderDone:
 	BSR.w	CheckEntityPlayerCollisionAndDamage
 	MOVE.w	$E(A5), $A(A5)
 	MOVE.w	$12(A5), $C(A5)
@@ -14377,11 +14381,11 @@ CheckEntityPlayerCollisionAndDamage:
 	MOVE.w	$E(A6), D2
 	ADDI.w	#$000C, D2
 	CMP.w	D0, D2
-	BLT.w	loc_0000CAE6
+	BLT.w	CheckEntityPlayerCollisionAndDamage_Return
 	MOVE.w	$E(A6), D2
 	SUBI.w	#$000C, D2
 	CMP.w	D1, D2
-	BGT.w	loc_0000CAE6
+	BGT.w	CheckEntityPlayerCollisionAndDamage_Return
 	MOVE.w	$12(A5), D0
 	MOVE.w	D0, D1
 	CLR.w	D2
@@ -14394,12 +14398,12 @@ CheckEntityPlayerCollisionAndDamage:
 	ADD.w	D2, D1
 	MOVE.w	$12(A6), D2
 	CMP.w	D0, D2
-	BLT.w	loc_0000CAE6
+	BLT.w	CheckEntityPlayerCollisionAndDamage_Return
 	SUB.w	$1E(A6), D2
 	CMP.w	D1, D2
-	BGT.w	loc_0000CAE6
+	BGT.w	CheckEntityPlayerCollisionAndDamage_Return
 	TST.b	Player_invulnerable.w
-	BNE.w	loc_0000CAE6
+	BNE.w	CheckEntityPlayerCollisionAndDamage_Return
 	MOVE.w	#$00B2, D0
 	JSR	QueueSoundEffect
 	MOVE.b	#$FF, Player_invulnerable.w
@@ -14410,25 +14414,27 @@ CheckEntityPlayerCollisionAndDamage:
 	CMPI.l	#$FFFF8000, D0
 	BLE.b	loc_0000CAB2
 	MOVE.l	#$FFFF8000, D0
-	BRA.b	loc_0000CAE0
+	BRA.b	CheckEntityCollision_ClampVelocity
 loc_0000CAB2:
 	CMPI.l	#$FFFE0000, D0
-	BGE.b	loc_0000CAE0
+	BGE.b	CheckEntityCollision_ClampVelocity
 	MOVE.l	#$FFFE0000, D0
-	BRA.b	loc_0000CAE0
+	BRA.b	CheckEntityCollision_ClampVelocity
 loc_0000CAC2:
 	CMPI.l	#$8000, D0
 	BGE.b	loc_0000CAD2
 	MOVE.l	#$8000, D0
-	BRA.b	loc_0000CAE0
+	BRA.b	CheckEntityCollision_ClampVelocity
 loc_0000CAD2:
 	CMPI.l	#$00020000, D0	
-	BLE.b	loc_0000CAE0	
+	BLE.b	CheckEntityCollision_ClampVelocity	
 	MOVE.l	#$00020000, D0	
-loc_0000CAE0:
+; CheckEntityCollision_ClampVelocity
+CheckEntityCollision_ClampVelocity:
 	ASL.l	#4, D0
 	ADD.l	D0, $E(A6)
-loc_0000CAE6:
+; CheckEntityPlayerCollisionAndDamage_Return
+CheckEntityPlayerCollisionAndDamage_Return:
 	RTS
 
 CheckPlayerDamageAndKnockback:
@@ -17619,7 +17625,7 @@ DirectionToEntityLookup:
 AddSpriteToDisplayList:
 	ORI	#$0700, SR
 	MOVE.w	$C(A5), D5
-	BLE.w	loc_0000F682
+	BLE.w	AddSpriteToDisplayList_Return
 	MOVE.b	$6(A5), D0
 	MOVE.b	D0, D1
 	ANDI.w	#3, D0
@@ -17627,16 +17633,16 @@ AddSpriteToDisplayList:
 	ASL.w	#3, D0
 	SUB.w	D0, D5
 	CMPI.w	#$00E0, D5
-	BGE.w	loc_0000F682
+	BGE.w	AddSpriteToDisplayList_Return
 	ANDI.w	#$000C, D1
 	ADDQ.w	#4, D1
 	MOVE.w	$A(A5), D6
 	MOVE.w	D6, D4
 	ADD.w	D1, D4
-	BLE.w	loc_0000F682
+	BLE.w	AddSpriteToDisplayList_Return
 	SUB.w	D1, D6
 	CMPI.w	#$0140, D6
-	BGE.w	loc_0000F682
+	BGE.w	AddSpriteToDisplayList_Return
 	LEA	Sprite_sort_buffer.w, A0
 	MOVE.w	Sprite_attr_count.w, D0
 	ASL.w	#3, D0
@@ -17666,7 +17672,7 @@ loc_0000F65E:
 	BLT.b	loc_0000F66E
 	LEA	$10(A0), A0
 	DBF	D0, loc_0000F65E
-	BRA.b	loc_0000F682	
+	BRA.b	AddSpriteToDisplayList_Return	
 loc_0000F66E:
 	ADDQ.b	#1, (A0)
 	MOVE.b	(A0), D0
@@ -17674,7 +17680,8 @@ loc_0000F66E:
 	MOVE.w	Sprite_attr_count.w, D1
 	MOVE.b	D1, (A0,D0.w)
 	ADDQ.w	#1, Sprite_attr_count.w
-loc_0000F682:
+; AddSpriteToDisplayList_Return
+AddSpriteToDisplayList_Return:
 	ANDI	#$F8FF, SR
 	RTS
 	
@@ -23206,7 +23213,7 @@ loc_00015460:
 HandleNameEntryDPad:
 	MOVE.b	Controller_current_state.w, D0
 	ANDI.w	#$000F, D0
-	BEQ.w	loc_000155F2
+	BEQ.w	HandleNameEntryDPad_Return
 	MOVE.b	Controller_previous_state.w, D1
 	ANDI.w	#$000F, D1
 	EOR.b	D0, D1
@@ -23310,25 +23317,26 @@ loc_0001558E:
 	BTST.l	#2, D0
 	BNE.w	loc_000155BC
 	CMPI.b	#8, Name_entry_key_repeat_counter.w
-	BLT.w	loc_000155F2
+	BLT.w	HandleNameEntryDPad_Return
 	CLR.b	Name_entry_key_repeat_counter.w
 	BRA.w	loc_000154C0
 loc_000155BC:
 	CMPI.b	#8, Name_entry_key_repeat_counter.w
-	BLT.w	loc_000155F2
+	BLT.w	HandleNameEntryDPad_Return
 	CLR.b	Name_entry_key_repeat_counter.w
 	BRA.w	loc_000154EA
 loc_000155CE:
 	CMPI.b	#8, Name_entry_key_repeat_counter.w
-	BLT.w	loc_000155F2
+	BLT.w	HandleNameEntryDPad_Return
 	CLR.b	Name_entry_key_repeat_counter.w
 	BRA.w	loc_0001553E
 loc_000155E0:
 	CMPI.b	#8, Name_entry_key_repeat_counter.w
-	BLT.w	loc_000155F2
+	BLT.w	HandleNameEntryDPad_Return
 	CLR.b	Name_entry_key_repeat_counter.w
 	BRA.w	loc_00015514
-loc_000155F2:
+; HandleNameEntryDPad_Return
+HandleNameEntryDPad_Return:
 	RTS
 
 ; loc_000155F4
@@ -23449,27 +23457,27 @@ PrologueStateJumpTable:
 	BRA.w	PrologueWaitAndAdvanceState
 	BRA.w	PrologueWaitAndAdvanceState
 	BRA.w	PrologueTick_WaitTimer
-	BRA.w	loc_00015934
+	BRA.w	PrologueTick_WaitFadeIn
 	BRA.w	PrologueWaitAndAdvanceState
 	BRA.w	PrologueWaitAndAdvanceState
 	BRA.w	PrologueTick_WaitTimer
-	BRA.w	loc_00015934
+	BRA.w	PrologueTick_WaitFadeIn
 	BRA.w	loc_0001590E
 	BRA.w	loc_000157F0
 	BRA.w	PrologueWaitAndAdvanceState
 	BRA.w	PrologueWaitAndAdvanceState
 	BRA.w	PrologueTick_WaitTimer
-	BRA.w	loc_00015934
+	BRA.w	PrologueTick_WaitFadeIn
 	BRA.w	loc_0001590E
 	BRA.w	loc_000158A0
 	BRA.w	PrologueWaitAndAdvanceState
 	BRA.w	PrologueWaitAndAdvanceState
 	BRA.w	PrologueTick_WaitTimer
-	BRA.w	loc_00015934
+	BRA.w	PrologueTick_WaitFadeIn
 	BRA.w	PrologueWaitAndAdvanceState
 	BRA.w	PrologueWaitAndAdvanceState
 	BRA.w	PrologueTick_WaitTimer
-	BRA.w	loc_00015934
+	BRA.w	PrologueTick_WaitFadeIn
 	BRA.w	loc_0001590E
 	BRA.w	loc_000158D2
 	BRA.w	PrologueWaitAndAdvanceState
@@ -23563,7 +23571,8 @@ PrologueWaitAndAdvanceState:
 loc_00015932:
 	RTS
 
-loc_00015934:
+; PrologueTick_WaitFadeIn
+PrologueTick_WaitFadeIn:
 	TST.b	Palette_fade_in_mask.w
 	BNE.b	loc_00015942
 	ADDQ.w	#1, Prologue_state.w
@@ -26153,7 +26162,7 @@ loc_00017F1E:
 
 loc_00017F44:
 	TST.b	Window_tilemap_draw_active.w
-	BNE.w	loc_0001801C
+	BNE.w	SpellbookMenu_Return
 	MOVE.w	#BUTTON_BIT_B, D2
 	JSR	CheckButtonPress
 	BEQ.b	loc_00017F80
@@ -26180,7 +26189,7 @@ loc_00017F80:
 	BGT.b	loc_00017FC8
 	PRINT 	NoBooksOfSpellsStr
 	MOVE.w	#2, Spellbook_menu_state.w
-	BRA.w	loc_0001801C
+	BRA.w	SpellbookMenu_Return
 loc_00017FC8:
 	TST.w	Item_menu_action_mode.w
 	BEQ.w	loc_0001800E
@@ -26188,21 +26197,22 @@ loc_00017FC8:
 	BEQ.b	loc_00017FE8
 	PRINT 	PutDownBookStr
 	MOVE.w	#3, Spellbook_menu_state.w
-	BRA.b	loc_0001801C
+	BRA.b	SpellbookMenu_Return
 loc_00017FE8:
 	BSR.w	CheckAnyMagicReady
 	BEQ.b	loc_00017FFE
 	PRINT 	ReadyBookCombatStr
 	MOVE.w	#$000C, Spellbook_menu_state.w
-	BRA.b	loc_0001801C
+	BRA.b	SpellbookMenu_Return
 loc_00017FFE:
 	PRINT 	NoCombatBooksStr	
 	MOVE.w	#2, Spellbook_menu_state.w	
-	BRA.b	loc_0001801C	
+	BRA.b	SpellbookMenu_Return	
 loc_0001800E:
 	PRINT 	CastSpellBookStr
 	MOVE.w	#6, Spellbook_menu_state.w
-loc_0001801C:
+; SpellbookMenu_Return
+SpellbookMenu_Return:
 	RTS
 
 loc_0001801E:
@@ -31460,7 +31470,7 @@ loc_0001C9B4:
 loc_0001C9E8:
 	PRINT 	NeverGiveUpStr
 	MOVE.w	#$23, Dialogue_state.w
-	BRA.w	loc_0001CACA
+	BRA.w	ChurchService_InitDialogue
 loc_0001C9FA:
 	BSR.w	CheckIfCursed
 	BEQ.b	loc_0001CA4C
@@ -31479,11 +31489,11 @@ loc_0001C9FA:
 	MOVE.b	#$FF, (A1)
 	PRINT 	Text_build_buffer
 	MOVE.w	#$25, Dialogue_state.w
-	BRA.w	loc_0001CACA
+	BRA.w	ChurchService_InitDialogue
 loc_0001CA4C:
 	PRINT 	NoCurseStr
 	MOVE.w	#$23, Dialogue_state.w
-	BRA.b	loc_0001CACA
+	BRA.b	ChurchService_InitDialogue
 loc_0001CA5C:
 	MOVE.w	Player_poisoned.w, D0
 	BEQ.b	loc_0001CAAC
@@ -31502,15 +31512,16 @@ loc_0001CA5C:
 	MOVE.b	#$FF, (A1)
 	PRINT 	Text_build_buffer
 	MOVE.w	#$28, Dialogue_state.w
-	BRA.b	loc_0001CACA
+	BRA.b	ChurchService_InitDialogue
 loc_0001CAAC:
 	PRINT 	NotPoisonedStr
 	MOVE.w	#$23, Dialogue_state.w
-	BRA.b	loc_0001CACA
+	BRA.b	ChurchService_InitDialogue
 loc_0001CABC:
 	PRINT 	SaveNumberStr
 	MOVE.w	#$2B, Dialogue_state.w
-loc_0001CACA:
+; ChurchService_InitDialogue
+ChurchService_InitDialogue:
 	JMP	ResetScriptAndInitDialogue
 loc_0001CAD0:
 	MOVE.w	Church_service_selection.w, Menu_cursor_index.w
@@ -76935,28 +76946,28 @@ ProcessSoundScriptCommand:
 	RTS
 	
 SoundScriptCommandJumpTable:
-	BRA.w	loc_00092D22	
-	BRA.w	loc_00092D22	
-	BRA.w	loc_00092D22	
-	BRA.w	loc_00092D22	
+	BRA.w	SoundScript_NopCommand	
+	BRA.w	SoundScript_NopCommand	
+	BRA.w	SoundScript_NopCommand	
+	BRA.w	SoundScript_NopCommand	
 	BRA.w	loc_00092D24	
 	BRA.w	loc_00092D36
 	BRA.w	loc_00092D3E
-	BRA.w	loc_00092D22	
+	BRA.w	SoundScript_NopCommand	
 	BRA.w	loc_00092D50
 	BRA.w	loc_00092D68
 	BRA.w	loc_00092DD6	
 	BRA.w	loc_00092DD6	
 	BRA.w	loc_00092F7A
 	BRA.w	loc_00092DD6
-	BRA.w	loc_00092D22	
+	BRA.w	SoundScript_NopCommand	
 	BRA.w	loc_00092E0A
 	BRA.w	loc_00092E38	
-	BRA.w	loc_00092D22	
+	BRA.w	SoundScript_NopCommand	
 	BRA.w	loc_00092E42
 	BRA.w	loc_00092EDE	
 	BRA.w	loc_00092EEC
-	BRA.w	loc_00092D22	
+	BRA.w	SoundScript_NopCommand	
 	BRA.w	loc_00092EF2
 	BRA.w	loc_00092F0A
 	BRA.w	loc_00092F2A
@@ -76967,7 +76978,8 @@ SoundScriptCommandJumpTable:
 	BRA.w	loc_00092F88
 	BRA.w	loc_00092F98
 	BRA.w	loc_00092FA8
-loc_00092D22:
+; SoundScript_NopCommand
+SoundScript_NopCommand:
 	RTS
 	
 loc_00092D24:
