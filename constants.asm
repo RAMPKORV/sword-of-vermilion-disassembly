@@ -1185,6 +1185,10 @@ Steps_since_last_encounter      = $FFFFC685
 Current_encounter_type          = $FFFFC68A
 
 Encounter_rate                  = $FFFFC69C
+; Encounter_rate mask values (AND'd with random number to check for encounter)
+ENCOUNTER_RATE_TOWN     = $0F   ; Town overworld: 1-in-16 chance per step
+ENCOUNTER_RATE_CAVE     = $1F   ; Cave/dungeon: 1-in-32 chance per step
+ENCOUNTER_RATE_BROOCH   = $7F   ; Ruby Brooch active: 1-in-128 chance per step
 Enemy_position_indices          = $FFFFC6A0
 Dialog_choice_event_trigger     = $FFFFC700
 Dialog_choice_extended_trigger  = $FFFFC701
