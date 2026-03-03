@@ -683,6 +683,21 @@ NPC_ROTATION_FRAMES     = $20     ; 32 frames — NPC rotation/turn animation fr
 NPC_WANDER_DELAY        = $32     ; 50 ticks  — NPC wander direction change delay
 NPC_STUCK_THRESHOLD     = $78     ; 120 ticks — NPC stuck-repath trigger threshold
 
+; Boss part hit stun: written to obj_knockback_timer on all boss body-part entities
+; immediately after they take a hit. The part is paused for this many frames before
+; resuming its AI. Distinct from ENEMY_KNOCKBACK_DURATION (standard field enemies).
+BOSS_HIT_STUN_FRAMES    = $0010   ; 16 frames — boss body-part post-hit pause duration (9 write sites)
+
+; Boss state-transition delay: written to obj_invuln_timer on OrbitBoss inner/outer
+; parts and RingGuardian when transitioning back to the "select target / choose action"
+; state. Acts as a cool-down between attack phases (80 ticks ≈ 1.3 s at 60 Hz).
+BOSS_STATE_DELAY        = $50     ; 80 ticks — boss inter-phase cool-down delay (4 write sites)
+
+; Boss victory/death inter-phase pause: written to obj_invuln_timer during the
+; post-battle victory sequence (death fall → victory pose → fade) and HydraBoss
+; death clear-screen. Controls the dwell time between each cutscene phase (50 ticks).
+BOSS_VICTORY_PAUSE      = $32     ; 50 ticks — boss victory/death sequence phase dwell time (4 write sites)
+
 ; Death-scatter projectile spread: enemy/boss death handlers cycle an angle index
 ; from 0 to (DEATH_SCATTER_ANGLE_COUNT-1) = 34 before resetting direction.
 DEATH_SCATTER_ANGLE_COUNT = $23   ; 35 — number of spread angles in the death scatter loop
