@@ -2,6 +2,20 @@
 
 This document provides guidance for AI coding agents working on this Sega Genesis/Mega Drive ROM disassembly project.
 
+## CRITICAL: Working Directory Safety
+
+**NEVER run commands that traverse outside `E:\Romhacking\vermilion\`.** All file operations (dir, ls, find, glob, grep, etc.) MUST be scoped to this project directory. Do NOT use recursive directory listings, file searches, or any command that could escape to parent directories or other drives. Always use explicit paths rooted in the project directory.
+
+Examples of what NOT to do:
+- `dir /s /b *.bin` (may traverse outside project)
+- `find / -name "*.asm"` (traverses entire filesystem)
+- Any command without an explicit project-scoped path
+
+Examples of correct usage:
+- `dir /s /b E:\Romhacking\vermilion\data\*.bin`
+- Glob with `path` set to `E:\Romhacking\vermilion`
+- `rg "pattern" E:\Romhacking\vermilion\vermilion.asm`
+
 ## Project Overview
 
 This is a reverse-engineered disassembly of **Sword of Vermilion** for the Sega Genesis. The codebase is written in Motorola 68000 assembly language using the ASM68K assembler.

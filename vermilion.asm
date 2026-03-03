@@ -51863,218 +51863,107 @@ LoadPlayerOverworldGraphics_Data:
 	dc.b	$25, $3E, $41, $44, $3C, $3F, $42, $45, $46, $49, $4C, $4F, $47, $4A, $4D, $50, $48, $4B, $4E, $51, $46, $54, $54, $59, $52, $55, $57, $5A, $53, $56, $58, $5B 
 	dc.b	$46, $54, $5F, $62, $5C, $5D, $60, $63, $53, $5E, $61, $64 
 LoadPlayerOverworldGraphics_Data2_Gfx_456EA:
-	dc.b	$01, $00, $FF, $FE, $EC, $88, $0E, $0D, $33, $DD, $03, $23, $3E, $02, $22, $33 
-LoadPlayerOverworldGraphics_Data2_Gfx_456FA:
-	dc.b	$00, $0E, $DC, $DE, $00, $ED, $CC, $CD, $E0, $EE, $EE, $DD, $E0, $DE, $78, $8E, $DD, $E7, $88, $87, $ED, $E7, $E8, $E7, $E4, $47, $88, $87, $43, $46, $78, $86 
-	dc.b	$44, $00 
-LoadPlayerOverworldGraphics_Data2_Gfx_4571C:
-	dc.b	$01, $00, $FF, $FF, $33, $33, $32, $30, $22, $23, $11, $22, $21, $23 
-LoadPlayerOverworldGraphics_Data2_Gfx_4572A:
-	dc.b	$01, $00, $88, $8C, $CC, $88, $02, $11, $24, $02, $12, $24, $03, $23, $44, $44, $54, $55, $54, $55, $54, $03, $33, $50, $04, $22, $34, $00 
-LoadPlayerOverworldGraphics_Data2_Gfx_45746:
-	dc.b	$00, $34, $77, $74, $34, $33, $44, $43, $33, $21, $23, $32, $33, $31, $11, $22, $33, $32, $22, $12, $33, $43, $22, $23, $34, $44, $44, $44, $44, $43, $22, $23 
-	dc.b	$44, $00 
-LoadPlayerOverworldGraphics_Data2_Gfx_45768:
-	dc.b	$01, $00, $33, $33, $33, $33, $43, $33, $44, $40, $55, $50, $55, $54, $44, $43, $43, $33, $03, $34, $44, $40 
-LoadPlayerOverworldGraphics_Data2_Gfx_4577E:
-	dc.b	$01, $00, $88, $CC, $EE, $EE, $04, $11, $34, $04, $11, $25, $31, $45, $04, $33, $43, $05, $04, $04 
-LoadPlayerOverworldGraphics_Data2_Gfx_45792:
-	dc.b	$01, $55, $00, $1F, $CC, $40, $32, $11, $12, $34, $43, $22, $23, $45, $54, $33, $34, $54, $34, $42, $11, $44, $31, $12, $22, $45, $44, $44 
-LoadPlayerOverworldGraphics_Data2_Gfx_457AE:
-	dc.b	$01, $00, $3F, $FF, $FF, $FF, $03, $30 
-LoadPlayerOverworldGraphics_Data2_Gfx_457B6:
-	dc.b	$01, $00, $FF, $FE, $EE, $FF, $05, $55, $05, $00 
-LoadPlayerOverworldGraphics_Data2_Gfx_457C0:
-	dc.b	$01, $55, $00, $0C, $CC, $40, $42, $45, $43, $24, $42, $35, $32, $14, $04, $45, $41, $24, $44, $44, $42, $14, $42, $12, $05, $42, $22, $00, $00, $54, $44, $00 
-LoadPlayerOverworldGraphics_Data2_Gfx_457E0:
-	dc.b	$01, $00, $FF, $F7, $33, $77, $55, $55, $50, $55, $50, $55, $50, $00 
-LoadPlayerOverworldGraphics_Data2_Gfx_457EE:
-	dc.b	$01, $00, $FF, $FE, $EC, $88, $0E, $0D, $33, $ED, $03, $22, $2E, $02, $21, $13 
-LoadPlayerOverworldGraphics_Data2_Gfx_457FE:
-	dc.b	$00, $0E, $DC, $DE, $00, $ED, $CC, $CD, $E0, $EE, $EE, $DD, $E0, $DE, $78, $8E, $DD, $E7, $88, $87, $ED, $E7, $E8, $E7, $EE, $47, $88, $87, $E3, $46, $78, $86 
-	dc.b	$43, $00 
-LoadPlayerOverworldGraphics_Data2_Gfx_45820:
-	dc.b	$01, $00, $FF, $FF, $F3, $33, $E3, $30, $22, $23, $21, $12 
-LoadPlayerOverworldGraphics_Data2_Gfx_4582C:
-	dc.b	$01, $00, $88, $CC, $88, $88, $03, $21, $23, $03, $33, $34, $44, $54, $55, $54, $04, $45, $04, $02, $23, $44, $02, $23, $44, $03, $24, $44 
-LoadPlayerOverworldGraphics_Data2_Gfx_45848:
-	dc.b	$01, $34, $91, $11, $10, $91, $77, $74, $43, $44, $43, $22, $23, $32, $21, $12, $22, $22, $11, $12, $42, $22, $23, $44, $44, $44, $32, $22, $23, $00 
-LoadPlayerOverworldGraphics_Data2_Gfx_45866:
-	dc.b	$01, $00, $33, $33, $33, $33, $21, $12, $32, $23, $54, $40, $55, $50, $05, $44, $43, $22, $43, $22, $44, $23 
-LoadPlayerOverworldGraphics_Data2_Gfx_4587C:
-	dc.b	$01, $00, $8C, $CF, $FE, $EE, $04, $44, $04, $33, $45, $44, $45, $04, $04, $04 
-LoadPlayerOverworldGraphics_Data2_Gfx_4588C:
-	dc.b	$01, $55, $00, $1F, $60, $00, $32, $11, $12, $34, $42, $21, $12, $45, $54, $33, $34, $44, $44, $12, $45, $54, $21, $21, $34, $43, $12, $32, $34, $43, $24, $00 
-LoadPlayerOverworldGraphics_Data2_Gfx_458AC:
-	dc.b	$01, $00, $33, $3F, $F7, $7F, $04, $44, $43, $30, $44, $40, $40, $40 
-LoadPlayerOverworldGraphics_Data2_Gfx_458BA:
-	dc.b	$01, $00, $FF, $FE, $CC, $CE, $55, $05, $55, $05, $54, $05, $55, $55 
-LoadPlayerOverworldGraphics_Data2_Gfx_458C8:
-	dc.b	$01, $44, $F0, $07, $00, $00, $31, $34, $43, $13, $42, $24, $42, $24, $54, $32, $34, $42, $23, $32, $35, $53, $22, $53, $45, $54, $35, $55, $50, $05, $55, $00 
-LoadPlayerOverworldGraphics_Data2_Gfx_458E8:
-	dc.b	$01, $00, $FF, $F7, $33, $37, $55, $55, $50, $45, $50, $45, $50, $55 
-LoadPlayerOverworldGraphics_Data2_Gfx_458F6:
-	dc.b	$01, $00, $FF, $FE, $C8, $88, $0E, $33, $ED, $03, $22, $2D, $02, $21, $1E, $03, $21, $23 
-LoadPlayerOverworldGraphics_Data2_Gfx_45908:
-	dc.b	$00, $0E, $DC, $DE, $00, $ED, $CC, $CD, $E0, $EE, $EE, $DD, $E0, $DE, $78, $8E, $DE, $E7, $88, $87, $ED, $E7, $E8, $E7, $ED, $47, $88, $87, $EE, $46, $78, $86 
-	dc.b	$43, $00 
-LoadPlayerOverworldGraphics_Data2_Gfx_4592A:
-	dc.b	$01, $00, $FF, $FF, $F3, $33, $E3, $30, $32, $23, $22, $23 
-LoadPlayerOverworldGraphics_Data2_Gfx_45936:
-	dc.b	$02, $00, $8C, $C8, $88, $8C, $44, $03, $00, $31, $03, $03, $33, $34, $55, $54, $04, $55, $54, $03, $03, $33, $04, $33, $04, $00 
-LoadPlayerOverworldGraphics_Data2_Gfx_45950:
-	dc.b	$01, $34, $91, $01, $10, $91, $77, $74, $32, $44, $43, $21, $23, $32, $24, $21, $12, $22, $32, $11, $12, $43, $22, $23, $44, $44, $44, $32, $22, $22 
-LoadPlayerOverworldGraphics_Data2_Gfx_4596E:
-	dc.b	$01, $00, $33, $33, $33, $33, $21, $22, $21, $12, $43, $23, $54, $40, $55, $50, $55, $50, $53, $33, $32, $23 
-LoadPlayerOverworldGraphics_Data2_Gfx_45984:
-	dc.b	$01, $00, $CE, $EE, $EE, $EE, $33, $04, $05, $05, $05, $04, $01, $02, $04, $00 
-LoadPlayerOverworldGraphics_Data2_Gfx_45994:
-	dc.b	$01, $55, $00, $1E, $63, $00, $32, $11, $12, $34, $43, $22, $23, $45, $54, $33, $34, $53, $34, $53, $12, $45, $11, $35, $54, $44, $44, $45, $42, $24 
-LoadPlayerOverworldGraphics_Data2_Gfx_459B2:
-	dc.b	$01, $00, $33, $37, $7F, $FF, $31, $13, $21, $14, $41, $30, $34, $40 
-LoadPlayerOverworldGraphics_Data2_Gfx_459C0:
-	dc.b	$01, $00, $EE, $EE, $CC, $EE, $04, $04, $04, $54, $05, $54, $05, $52, $52, $04 
-LoadPlayerOverworldGraphics_Data2_Gfx_459D0:
-	dc.b	$01, $55, $00, $03, $33, $60, $23, $45, $42, $40, $12, $35, $32, $40, $21, $45, $44, $00, $44, $45, $12, $45, $12, $45, $24, $00, $44, $50, $00, $00 
-LoadPlayerOverworldGraphics_Data2_Gfx_459EE:
-	dc.b	$01, $00, $FF, $FF, $7F, $FF, $50, $00 
-LoadPlayerOverworldGraphics_Data2_Gfx_459F6:
-	dc.b	$01, $00, $FF, $FF, $FE, $C8, $0E, $22, $3E, $02, $22, $1E 
-LoadPlayerOverworldGraphics_Data2_Gfx_45A02:
-	dc.b	$01, $DD, $44, $04, $08, $86, $00, $E0, $00, $0E, $DE, $00, $ED, $DC, $CD, $E0, $DC, $DC, $D0, $DC, $CD, $CC, $DE, $CC, $CD, $DE, $CC, $CD, $DE, $ED, $EE, $00 
-LoadPlayerOverworldGraphics_Data2_Gfx_45A22:
-	dc.b	$01, $00, $FF, $FF, $F7, $33, $32, $12, $20, $11, $23, $00 
-LoadPlayerOverworldGraphics_Data2_Gfx_45A2E:
-	dc.b	$01, $00, $88, $8C, $CC, $CC, $03, $21, $14, $02, $11, $24, $03, $22, $34, $33, $44, $05, $55, $45, $55, $34, $44, $22, $34, $00 
-LoadPlayerOverworldGraphics_Data2_Gfx_45A48:
-	dc.b	$00, $EE, $DD, $DE, $E4, $3E, $EE, $EE, $24, $23, $EE, $E2, $23, $21, $22, $21, $23, $21, $11, $12, $24, $43, $22, $23, $44, $44, $44, $44, $44, $43, $22, $23 
-	dc.b	$34, $00 
-LoadPlayerOverworldGraphics_Data2_Gfx_45A6A:
-	dc.b	$01, $00, $33, $33, $33, $33, $22, $23, $33, $34, $44, $50, $55, $50, $05, $44, $04, $33, $43, $22, $43, $24 
-LoadPlayerOverworldGraphics_Data2_Gfx_45A80:
-	dc.b	$01, $00, $CC, $CC, $CF, $FF, $21, $24, $32, $14, $43, $34, $34, $40, $03, $40 
-LoadPlayerOverworldGraphics_Data2_Gfx_45A90:
-	dc.b	$01, $55, $00, $00, $F7, $20, $32, $11, $12, $23, $32, $11, $11, $23, $43, $22, $12, $34, $54, $33, $33, $45, $44, $43, $45, $43, $43, $34, $44, $33 
-LoadPlayerOverworldGraphics_Data2_Gfx_45AAE:
-	dc.b	$01, $00, $37, $7F, $F7, $77, $44, $40, $44, $40, $40, $40, $40, $00 
-LoadPlayerOverworldGraphics_Data2_Gfx_45ABC:
-	dc.b	$01, $00, $FF, $FE, $EF, $FF, $05, $05 
-LoadPlayerOverworldGraphics_Data2_Gfx_45AC4:
-	dc.b	$01, $55, $00, $88, $88, $43, $03, $34, $43, $23, $04, $34, $21, $14, $44, $11, $14, $54, $21, $24, $54, $23, $43, $54, $21, $34, $00, $44, $45, $00, $00, $00 
-LoadPlayerOverworldGraphics_Data2_Gfx_45AE4:
-	dc.b	$01, $00, $7F, $F7, $33, $7F, $40, $55, $55, $50, $55, $50, $55, $00 
-LoadPlayerOverworldGraphics_Data2_Gfx_45AF2:
-	dc.b	$01, $00, $FF, $FF, $FC, $C8, $02, $4E, $21, $2E, $02, $11, $3E, $00 
-LoadPlayerOverworldGraphics_Data2_Gfx_45B00:
-	dc.b	$01, $00, $FF, $FF, $F7, $33, $42, $21, $20, $21, $12, $00 
-LoadPlayerOverworldGraphics_Data2_Gfx_45B0C:
-	dc.b	$01, $00, $88, $8C, $C8, $88, $03, $22, $34, $04, $33, $34, $04, $43, $44, $55, $53, $55, $53, $04, $33, $50, $03, $23, $44, $03, $23, $44 
-LoadPlayerOverworldGraphics_Data2_Gfx_45B28:
-	dc.b	$00, $EE, $DD, $DE, $E4, $3E, $EE, $EE, $24, $23, $EE, $E2, $23, $21, $22, $21, $23, $21, $11, $12, $23, $32, $22, $22, $34, $44, $44, $44, $44, $32, $22, $22 
-	dc.b	$34, $00 
-LoadPlayerOverworldGraphics_Data2_Gfx_45B4A:
-	dc.b	$01, $00, $33, $33, $33, $33, $32, $23, $33, $34, $43, $44, $55, $50, $55, $55, $04, $34, $43, $23, $43, $23 
-LoadPlayerOverworldGraphics_Data2_Gfx_45B60:
-	dc.b	$01, $00, $8C, $CC, $FE, $EE, $04, $33, $44, $44, $54, $34, $55, $04, $40, $04, $04, $04 
-LoadPlayerOverworldGraphics_Data2_Gfx_45B72:
-	dc.b	$01, $55, $00, $00, $FF, $60, $32, $11, $11, $23, $32, $11, $12, $23, $43, $22, $12, $34, $54, $33, $33, $45, $45, $54, $34, $45, $54, $43 
-LoadPlayerOverworldGraphics_Data2_Gfx_45B8E:
-	dc.b	$01, $00, $33, $37, $F7, $77, $43, $34, $54, $44, $54, $30, $44, $40, $40, $40 
-LoadPlayerOverworldGraphics_Data2_Gfx_45B9E:
-	dc.b	$01, $00, $FF, $FE, $CC, $EE, $55, $05, $54, $05, $55, $55, $05, $00 
-LoadPlayerOverworldGraphics_Data2_Gfx_45BAC:
-	dc.b	$01, $55, $00, $00, $00, $FB, $42, $34, $43, $24, $42, $34, $42, $24, $41, $24, $42, $14, $34, $34, $43, $44, $32, $24, $42, $23, $43, $34, $43, $34, $50, $00 
-LoadPlayerOverworldGraphics_Data2_Gfx_45BCC:
-	dc.b	$02, $00, $FF, $F7, $31, $37, $55, $00, $08, $4C, $C8, $45, $50, $00 
-LoadPlayerOverworldGraphics_Data2_Gfx_45BDA:
-	dc.b	$01, $00, $FF, $FF, $CC, $88, $02, $2E, $23, $3E, $02, $22, $3E, $03, $22, $3E 
-LoadPlayerOverworldGraphics_Data2_Gfx_45BEA:
-	dc.b	$01, $00, $FF, $FF, $FF, $33, $33, $30, $22, $23 
-LoadPlayerOverworldGraphics_Data2_Gfx_45BF4:
-	dc.b	$01, $00, $8C, $CC, $88, $8C, $03, $33, $44, $34, $44, $55, $54, $55, $54, $04, $45, $54, $03, $34, $44, $02, $23, $44, $23, $44 
-LoadPlayerOverworldGraphics_Data2_Gfx_45C0E:
-	dc.b	$00, $EE, $DD, $DE, $E4, $3E, $EE, $EE, $24, $22, $EE, $E2, $23, $21, $22, $22, $23, $32, $11, $12, $34, $33, $22, $23, $44, $44, $44, $44, $44, $43, $22, $23 
-	dc.b	$34, $00 
-LoadPlayerOverworldGraphics_Data2_Gfx_45C30:
-	dc.b	$01, $00, $11, $13, $33, $33, $21, $12, $30, $32, $12, $30, $43, $32, $30, $44, $43, $55, $50, $55, $55, $04, $33, $43, $22, $00 
-LoadPlayerOverworldGraphics_Data2_Gfx_45C4A:
-	dc.b	$01, $00, $CC, $FF, $FF, $EE, $04, $40, $03, $44, $04, $04 
-LoadPlayerOverworldGraphics_Data2_Gfx_45C56:
-	dc.b	$01, $55, $00, $00, $F6, $40, $32, $11, $11, $23, $32, $11, $12, $23, $43, $21, $12, $34, $54, $33, $33, $45, $45, $44, $34, $54, $34, $33, $44, $43, $24, $00 
-LoadPlayerOverworldGraphics_Data2_Gfx_45C76:
-	dc.b	$01, $00, $33, $33, $3F, $FF, $43, $22, $43, $23, $53, $34, $04, $43, $04, $30 
-LoadPlayerOverworldGraphics_Data2_Gfx_45C86:
-	dc.b	$01, $00, $EF, $EC, $CE, $EF, $04, $55, $05, $55, $05, $54, $55, $05 
-LoadPlayerOverworldGraphics_Data2_Gfx_45C94:
-	dc.b	$01, $55, $00, $13, $33, $24, $32, $33, $42, $30, $42, $22, $43, $40, $42, $22, $44, $43, $22, $34, $43, $43, $22, $54, $33, $50, $05, $50, $00, $00 
-LoadPlayerOverworldGraphics_Data2_Gfx_45CB2:
-	dc.b	$01, $00, $FF, $77, $77, $FF, $50, $55, $55, $50 
-LoadPlayerOverworldGraphics_Data2_Gfx_45CBC:
-	dc.b	$01, $00, $FF, $FE, $EE, $FF, $0E, $0E, $0E, $00 
-LoadPlayerOverworldGraphics_Data2_Gfx_45CC6:
-	dc.b	$01, $EE, $40, $19, $40, $32, $00, $E0, $00, $ED, $DD, $DE, $E0, $ED, $DC, $DD, $ED, $CD, $66, $DC, $DE, $87, $6E, $DD, $DE, $58, $6E, $88, $76, $33 
-LoadPlayerOverworldGraphics_Data2_Gfx_45CE4:
-	dc.b	$01, $00, $FF, $FF, $77, $77, $E0, $E0, $EE, $3E 
-LoadPlayerOverworldGraphics_Data2_Gfx_45CEE:
-	dc.b	$01, $00, $EE, $EE, $EE, $CC, $04, $33, $33, $43, $04, $44, $03, $23, $32, $24 
-LoadPlayerOverworldGraphics_Data2_Gfx_45CFE:
-	dc.b	$00, $77, $66, $43, $22, $66, $43, $42, $11, $43, $33, $42, $12, $22, $12, $34, $33, $21, $12, $23, $44, $32, $21, $33, $34, $44, $33, $33, $44, $22, $34, $44 
-	dc.b	$34, $00 
-LoadPlayerOverworldGraphics_Data2_Gfx_45D20:
-	dc.b	$01, $00, $73, $37, $33, $33, $23, $23, $30, $23, $40, $34, $55, $50, $55, $50, $54, $44, $04, $32 
-LoadPlayerOverworldGraphics_Data2_Gfx_45D34:
-	dc.b	$01, $00, $88, $CE, $FE, $EE, $03, $43, $33, $03, $34, $43, $30, $04, $04, $02, $03, $04 
-LoadPlayerOverworldGraphics_Data2_Gfx_45D46:
-	dc.b	$01, $55, $00, $00, $E6, $62, $11, $23, $43, $33, $22, $23, $43, $33, $33, $33, $44, $44, $44, $44, $54, $40, $50, $34, $00, $34, $50, $44, $45, $44 
-LoadPlayerOverworldGraphics_Data2_Gfx_45D64:
-	dc.b	$01, $00, $33, $33, $37, $FF, $44, $32, $44, $32, $44, $33, $43, $44, $33, $40, $44, $00 
-LoadPlayerOverworldGraphics_Data2_Gfx_45D76:
-	dc.b	$01, $00, $EE, $E8, $88, $CC, $33, $22, $23, $04, $44, $33, $43, $33, $44, $04, $33, $34, $44, $44, $05, $55 
-LoadPlayerOverworldGraphics_Data2_Gfx_45D8C:
-	dc.b	$01, $55, $00, $06, $4F, $FC, $33, $45, $54, $34, $34, $00, $43, $33, $44, $00, $04, $33, $40, $44, $45, $54, $33, $00, $00, $00 
-LoadPlayerOverworldGraphics_Data2_Gfx_45DA6:
-	dc.b	$01, $00, $77, $33, $33, $7F, $40, $40, $34, $50, $34, $55, $45, $55, $55, $40, $40, $00 
-LoadPlayerOverworldGraphics_Data2_Gfx_45DB8:
-	dc.b	$01, $EE, $40, $19, $40, $30, $00, $E0, $00, $ED, $DD, $DE, $E0, $ED, $DC, $DD, $ED, $CD, $66, $DC, $DE, $87, $6E, $DD, $DE, $58, $6E, $88, $76, $E4, $34, $00 
-LoadPlayerOverworldGraphics_Data2_Gfx_45DD8:
-	dc.b	$01, $00, $FF, $FF, $77, $77, $E0, $E0, $EE, $EE 
-LoadPlayerOverworldGraphics_Data2_Gfx_45DE2:
-	dc.b	$01, $00, $FF, $FF, $FF, $FF 
-LoadPlayerOverworldGraphics_Data2_Gfx_45DE8:
-	dc.b	$00, $87, $74, $32, $12, $77, $43, $31, $12, $04, $34, $32, $23, $03, $24, $33, $34, $32, $12, $44, $55, $32, $22, $45, $55, $43, $33, $34, $33, $33, $44, $43 
-	dc.b	$22, $00 
-LoadPlayerOverworldGraphics_Data2_Gfx_45E0A:
-	dc.b	$01, $00, $33, $77, $77, $77, $4E, $E0, $3E, $E0, $3E, $4E, $50, $40, $30, $23 
-LoadPlayerOverworldGraphics_Data2_Gfx_45E1A:
-	dc.b	$00, $22, $34, $43, $22, $21, $24, $54, $32, $22, $34, $43, $44, $33, $44, $32, $35, $04, $44, $43, $45, $33, $43, $34, $55, $03, $43, $23, $45, $04, $44, $33 
-	dc.b	$45, $00 
-LoadPlayerOverworldGraphics_Data2_Gfx_45E3C:
-	dc.b	$01, $00, $77, $7F, $FF, $FF, $33, $30, $40, $00 
-LoadPlayerOverworldGraphics_Data2_Gfx_45E46:
-	dc.b	$01, $00, $FF, $FE, $EE, $FF, $54, $53, $05, $00 
-LoadPlayerOverworldGraphics_Data2_Gfx_45E50:
-	dc.b	$01, $34, $05, $40, $A1, $20, $03, $44, $44, $55, $02, $32, $44, $32, $23, $23, $45, $43, $33, $54, $45, $55, $32, $23, $05, $33, $55, $00, $55, $55, $50, $00 
-LoadPlayerOverworldGraphics_Data2_Gfx_45E70:
-	dc.b	$01, $00, $FF, $77, $37, $7F, $50, $55, $55, $50, $55, $50 
-LoadPlayerOverworldGraphics_Data2_Gfx_45E7C:
-	dc.b	$00, $00, $EE, $E0, $00, $ED, $DD, $DE, $E0, $ED, $DC, $DD, $EE, $EE, $ED, $CD, $DE, $66, $EE, $DC, $CD, $87, $6E, $DD, $CD, $58, $6E, $EE, $ED, $88, $74, $33 
-	dc.b	$4E, $00 
-LoadPlayerOverworldGraphics_Data2_Gfx_45E9E:
-	dc.b	$01, $43, $40, $0C, $09, $18, $87, $21, $34, $74, $32, $11, $23, $04, $33, $22, $23, $33, $34, $42, $24, $54, $44, $45, $55, $34, $33, $55, $22, $34, $44, $00 
-LoadPlayerOverworldGraphics_Data2_Gfx_45EBE:
-	dc.b	$01, $00, $77, $77, $77, $7F, $EE, $EE, $EE, $E0, $30, $30, $30, $00 
-LoadPlayerOverworldGraphics_Data2_Gfx_45ECC:
-	dc.b	$01, $00, $EC, $CE, $FE, $EE, $44, $04, $34, $04, $33, $44, $03, $32, $43, $00 
-LoadPlayerOverworldGraphics_Data2_Gfx_45EDC:
-	dc.b	$01, $55, $00, $04, $CF, $50, $32, $23, $35, $54, $32, $23, $45, $43, $43, $34, $53, $22, $44, $43, $22, $54, $33, $34, $54, $35, $50, $32, $35, $00 
-LoadPlayerOverworldGraphics_Data2_Gfx_45EFA:
-	dc.b	$01, $00, $77, $77, $7F, $F7, $40, $30, $30, $30, $40, $50 
-LoadPlayerOverworldGraphics_Data2_Gfx_45F06:
-	dc.b	$01, $00, $EE, $EE, $C8, $CE, $34, $23, $32, $43, $22, $34, $03, $33, $34, $55, $55, $55 
-LoadPlayerOverworldGraphics_Data2_Gfx_45F18:
-	dc.b	$01, $55, $00, $06, $FF, $FF, $45, $00, $32, $24, $34, $00, $03, $34, $34, $00, $00, $43, $34, $54 
-LoadPlayerOverworldGraphics_Data2_Gfx_45F2C:
-	dc.b	$01, $00, $73, $33, $11, $33, $33, $22, $30, $22, $30, $32, $44, $44, $34, $50, $33, $34, $50, $34, $55, $55, $50, $00 
+	incbin "data/art/tiles/player/overworld_gfx.bin"
+LoadPlayerOverworldGraphics_Data2_Gfx_456FA equ LoadPlayerOverworldGraphics_Data2_Gfx_456EA+$10
+LoadPlayerOverworldGraphics_Data2_Gfx_4571C equ LoadPlayerOverworldGraphics_Data2_Gfx_456EA+$32
+LoadPlayerOverworldGraphics_Data2_Gfx_4572A equ LoadPlayerOverworldGraphics_Data2_Gfx_456EA+$40
+LoadPlayerOverworldGraphics_Data2_Gfx_45746 equ LoadPlayerOverworldGraphics_Data2_Gfx_456EA+$5C
+LoadPlayerOverworldGraphics_Data2_Gfx_45768 equ LoadPlayerOverworldGraphics_Data2_Gfx_456EA+$7E
+LoadPlayerOverworldGraphics_Data2_Gfx_4577E equ LoadPlayerOverworldGraphics_Data2_Gfx_456EA+$94
+LoadPlayerOverworldGraphics_Data2_Gfx_45792 equ LoadPlayerOverworldGraphics_Data2_Gfx_456EA+$A8
+LoadPlayerOverworldGraphics_Data2_Gfx_457AE equ LoadPlayerOverworldGraphics_Data2_Gfx_456EA+$C4
+LoadPlayerOverworldGraphics_Data2_Gfx_457B6 equ LoadPlayerOverworldGraphics_Data2_Gfx_456EA+$CC
+LoadPlayerOverworldGraphics_Data2_Gfx_457C0 equ LoadPlayerOverworldGraphics_Data2_Gfx_456EA+$D6
+LoadPlayerOverworldGraphics_Data2_Gfx_457E0 equ LoadPlayerOverworldGraphics_Data2_Gfx_456EA+$F6
+LoadPlayerOverworldGraphics_Data2_Gfx_457EE equ LoadPlayerOverworldGraphics_Data2_Gfx_456EA+$104
+LoadPlayerOverworldGraphics_Data2_Gfx_457FE equ LoadPlayerOverworldGraphics_Data2_Gfx_456EA+$114
+LoadPlayerOverworldGraphics_Data2_Gfx_45820 equ LoadPlayerOverworldGraphics_Data2_Gfx_456EA+$136
+LoadPlayerOverworldGraphics_Data2_Gfx_4582C equ LoadPlayerOverworldGraphics_Data2_Gfx_456EA+$142
+LoadPlayerOverworldGraphics_Data2_Gfx_45848 equ LoadPlayerOverworldGraphics_Data2_Gfx_456EA+$15E
+LoadPlayerOverworldGraphics_Data2_Gfx_45866 equ LoadPlayerOverworldGraphics_Data2_Gfx_456EA+$17C
+LoadPlayerOverworldGraphics_Data2_Gfx_4587C equ LoadPlayerOverworldGraphics_Data2_Gfx_456EA+$192
+LoadPlayerOverworldGraphics_Data2_Gfx_4588C equ LoadPlayerOverworldGraphics_Data2_Gfx_456EA+$1A2
+LoadPlayerOverworldGraphics_Data2_Gfx_458AC equ LoadPlayerOverworldGraphics_Data2_Gfx_456EA+$1C2
+LoadPlayerOverworldGraphics_Data2_Gfx_458BA equ LoadPlayerOverworldGraphics_Data2_Gfx_456EA+$1D0
+LoadPlayerOverworldGraphics_Data2_Gfx_458C8 equ LoadPlayerOverworldGraphics_Data2_Gfx_456EA+$1DE
+LoadPlayerOverworldGraphics_Data2_Gfx_458E8 equ LoadPlayerOverworldGraphics_Data2_Gfx_456EA+$1FE
+LoadPlayerOverworldGraphics_Data2_Gfx_458F6 equ LoadPlayerOverworldGraphics_Data2_Gfx_456EA+$20C
+LoadPlayerOverworldGraphics_Data2_Gfx_45908 equ LoadPlayerOverworldGraphics_Data2_Gfx_456EA+$21E
+LoadPlayerOverworldGraphics_Data2_Gfx_4592A equ LoadPlayerOverworldGraphics_Data2_Gfx_456EA+$240
+LoadPlayerOverworldGraphics_Data2_Gfx_45936 equ LoadPlayerOverworldGraphics_Data2_Gfx_456EA+$24C
+LoadPlayerOverworldGraphics_Data2_Gfx_45950 equ LoadPlayerOverworldGraphics_Data2_Gfx_456EA+$266
+LoadPlayerOverworldGraphics_Data2_Gfx_4596E equ LoadPlayerOverworldGraphics_Data2_Gfx_456EA+$284
+LoadPlayerOverworldGraphics_Data2_Gfx_45984 equ LoadPlayerOverworldGraphics_Data2_Gfx_456EA+$29A
+LoadPlayerOverworldGraphics_Data2_Gfx_45994 equ LoadPlayerOverworldGraphics_Data2_Gfx_456EA+$2AA
+LoadPlayerOverworldGraphics_Data2_Gfx_459B2 equ LoadPlayerOverworldGraphics_Data2_Gfx_456EA+$2C8
+LoadPlayerOverworldGraphics_Data2_Gfx_459C0 equ LoadPlayerOverworldGraphics_Data2_Gfx_456EA+$2D6
+LoadPlayerOverworldGraphics_Data2_Gfx_459D0 equ LoadPlayerOverworldGraphics_Data2_Gfx_456EA+$2E6
+LoadPlayerOverworldGraphics_Data2_Gfx_459EE equ LoadPlayerOverworldGraphics_Data2_Gfx_456EA+$304
+LoadPlayerOverworldGraphics_Data2_Gfx_459F6 equ LoadPlayerOverworldGraphics_Data2_Gfx_456EA+$30C
+LoadPlayerOverworldGraphics_Data2_Gfx_45A02 equ LoadPlayerOverworldGraphics_Data2_Gfx_456EA+$318
+LoadPlayerOverworldGraphics_Data2_Gfx_45A22 equ LoadPlayerOverworldGraphics_Data2_Gfx_456EA+$338
+LoadPlayerOverworldGraphics_Data2_Gfx_45A2E equ LoadPlayerOverworldGraphics_Data2_Gfx_456EA+$344
+LoadPlayerOverworldGraphics_Data2_Gfx_45A48 equ LoadPlayerOverworldGraphics_Data2_Gfx_456EA+$35E
+LoadPlayerOverworldGraphics_Data2_Gfx_45A6A equ LoadPlayerOverworldGraphics_Data2_Gfx_456EA+$380
+LoadPlayerOverworldGraphics_Data2_Gfx_45A80 equ LoadPlayerOverworldGraphics_Data2_Gfx_456EA+$396
+LoadPlayerOverworldGraphics_Data2_Gfx_45A90 equ LoadPlayerOverworldGraphics_Data2_Gfx_456EA+$3A6
+LoadPlayerOverworldGraphics_Data2_Gfx_45AAE equ LoadPlayerOverworldGraphics_Data2_Gfx_456EA+$3C4
+LoadPlayerOverworldGraphics_Data2_Gfx_45ABC equ LoadPlayerOverworldGraphics_Data2_Gfx_456EA+$3D2
+LoadPlayerOverworldGraphics_Data2_Gfx_45AC4 equ LoadPlayerOverworldGraphics_Data2_Gfx_456EA+$3DA
+LoadPlayerOverworldGraphics_Data2_Gfx_45AE4 equ LoadPlayerOverworldGraphics_Data2_Gfx_456EA+$3FA
+LoadPlayerOverworldGraphics_Data2_Gfx_45AF2 equ LoadPlayerOverworldGraphics_Data2_Gfx_456EA+$408
+LoadPlayerOverworldGraphics_Data2_Gfx_45B00 equ LoadPlayerOverworldGraphics_Data2_Gfx_456EA+$416
+LoadPlayerOverworldGraphics_Data2_Gfx_45B0C equ LoadPlayerOverworldGraphics_Data2_Gfx_456EA+$422
+LoadPlayerOverworldGraphics_Data2_Gfx_45B28 equ LoadPlayerOverworldGraphics_Data2_Gfx_456EA+$43E
+LoadPlayerOverworldGraphics_Data2_Gfx_45B4A equ LoadPlayerOverworldGraphics_Data2_Gfx_456EA+$460
+LoadPlayerOverworldGraphics_Data2_Gfx_45B60 equ LoadPlayerOverworldGraphics_Data2_Gfx_456EA+$476
+LoadPlayerOverworldGraphics_Data2_Gfx_45B72 equ LoadPlayerOverworldGraphics_Data2_Gfx_456EA+$488
+LoadPlayerOverworldGraphics_Data2_Gfx_45B8E equ LoadPlayerOverworldGraphics_Data2_Gfx_456EA+$4A4
+LoadPlayerOverworldGraphics_Data2_Gfx_45B9E equ LoadPlayerOverworldGraphics_Data2_Gfx_456EA+$4B4
+LoadPlayerOverworldGraphics_Data2_Gfx_45BAC equ LoadPlayerOverworldGraphics_Data2_Gfx_456EA+$4C2
+LoadPlayerOverworldGraphics_Data2_Gfx_45BCC equ LoadPlayerOverworldGraphics_Data2_Gfx_456EA+$4E2
+LoadPlayerOverworldGraphics_Data2_Gfx_45BDA equ LoadPlayerOverworldGraphics_Data2_Gfx_456EA+$4F0
+LoadPlayerOverworldGraphics_Data2_Gfx_45BEA equ LoadPlayerOverworldGraphics_Data2_Gfx_456EA+$500
+LoadPlayerOverworldGraphics_Data2_Gfx_45BF4 equ LoadPlayerOverworldGraphics_Data2_Gfx_456EA+$50A
+LoadPlayerOverworldGraphics_Data2_Gfx_45C0E equ LoadPlayerOverworldGraphics_Data2_Gfx_456EA+$524
+LoadPlayerOverworldGraphics_Data2_Gfx_45C30 equ LoadPlayerOverworldGraphics_Data2_Gfx_456EA+$546
+LoadPlayerOverworldGraphics_Data2_Gfx_45C4A equ LoadPlayerOverworldGraphics_Data2_Gfx_456EA+$560
+LoadPlayerOverworldGraphics_Data2_Gfx_45C56 equ LoadPlayerOverworldGraphics_Data2_Gfx_456EA+$56C
+LoadPlayerOverworldGraphics_Data2_Gfx_45C76 equ LoadPlayerOverworldGraphics_Data2_Gfx_456EA+$58C
+LoadPlayerOverworldGraphics_Data2_Gfx_45C86 equ LoadPlayerOverworldGraphics_Data2_Gfx_456EA+$59C
+LoadPlayerOverworldGraphics_Data2_Gfx_45C94 equ LoadPlayerOverworldGraphics_Data2_Gfx_456EA+$5AA
+LoadPlayerOverworldGraphics_Data2_Gfx_45CB2 equ LoadPlayerOverworldGraphics_Data2_Gfx_456EA+$5C8
+LoadPlayerOverworldGraphics_Data2_Gfx_45CBC equ LoadPlayerOverworldGraphics_Data2_Gfx_456EA+$5D2
+LoadPlayerOverworldGraphics_Data2_Gfx_45CC6 equ LoadPlayerOverworldGraphics_Data2_Gfx_456EA+$5DC
+LoadPlayerOverworldGraphics_Data2_Gfx_45CE4 equ LoadPlayerOverworldGraphics_Data2_Gfx_456EA+$5FA
+LoadPlayerOverworldGraphics_Data2_Gfx_45CEE equ LoadPlayerOverworldGraphics_Data2_Gfx_456EA+$604
+LoadPlayerOverworldGraphics_Data2_Gfx_45CFE equ LoadPlayerOverworldGraphics_Data2_Gfx_456EA+$614
+LoadPlayerOverworldGraphics_Data2_Gfx_45D20 equ LoadPlayerOverworldGraphics_Data2_Gfx_456EA+$636
+LoadPlayerOverworldGraphics_Data2_Gfx_45D34 equ LoadPlayerOverworldGraphics_Data2_Gfx_456EA+$64A
+LoadPlayerOverworldGraphics_Data2_Gfx_45D46 equ LoadPlayerOverworldGraphics_Data2_Gfx_456EA+$65C
+LoadPlayerOverworldGraphics_Data2_Gfx_45D64 equ LoadPlayerOverworldGraphics_Data2_Gfx_456EA+$67A
+LoadPlayerOverworldGraphics_Data2_Gfx_45D76 equ LoadPlayerOverworldGraphics_Data2_Gfx_456EA+$68C
+LoadPlayerOverworldGraphics_Data2_Gfx_45D8C equ LoadPlayerOverworldGraphics_Data2_Gfx_456EA+$6A2
+LoadPlayerOverworldGraphics_Data2_Gfx_45DA6 equ LoadPlayerOverworldGraphics_Data2_Gfx_456EA+$6BC
+LoadPlayerOverworldGraphics_Data2_Gfx_45DB8 equ LoadPlayerOverworldGraphics_Data2_Gfx_456EA+$6CE
+LoadPlayerOverworldGraphics_Data2_Gfx_45DD8 equ LoadPlayerOverworldGraphics_Data2_Gfx_456EA+$6EE
+LoadPlayerOverworldGraphics_Data2_Gfx_45DE2 equ LoadPlayerOverworldGraphics_Data2_Gfx_456EA+$6F8
+LoadPlayerOverworldGraphics_Data2_Gfx_45DE8 equ LoadPlayerOverworldGraphics_Data2_Gfx_456EA+$6FE
+LoadPlayerOverworldGraphics_Data2_Gfx_45E0A equ LoadPlayerOverworldGraphics_Data2_Gfx_456EA+$720
+LoadPlayerOverworldGraphics_Data2_Gfx_45E1A equ LoadPlayerOverworldGraphics_Data2_Gfx_456EA+$730
+LoadPlayerOverworldGraphics_Data2_Gfx_45E3C equ LoadPlayerOverworldGraphics_Data2_Gfx_456EA+$752
+LoadPlayerOverworldGraphics_Data2_Gfx_45E46 equ LoadPlayerOverworldGraphics_Data2_Gfx_456EA+$75C
+LoadPlayerOverworldGraphics_Data2_Gfx_45E50 equ LoadPlayerOverworldGraphics_Data2_Gfx_456EA+$766
+LoadPlayerOverworldGraphics_Data2_Gfx_45E70 equ LoadPlayerOverworldGraphics_Data2_Gfx_456EA+$786
+LoadPlayerOverworldGraphics_Data2_Gfx_45E7C equ LoadPlayerOverworldGraphics_Data2_Gfx_456EA+$792
+LoadPlayerOverworldGraphics_Data2_Gfx_45E9E equ LoadPlayerOverworldGraphics_Data2_Gfx_456EA+$7B4
+LoadPlayerOverworldGraphics_Data2_Gfx_45EBE equ LoadPlayerOverworldGraphics_Data2_Gfx_456EA+$7D4
+LoadPlayerOverworldGraphics_Data2_Gfx_45ECC equ LoadPlayerOverworldGraphics_Data2_Gfx_456EA+$7E2
+LoadPlayerOverworldGraphics_Data2_Gfx_45EDC equ LoadPlayerOverworldGraphics_Data2_Gfx_456EA+$7F2
+LoadPlayerOverworldGraphics_Data2_Gfx_45EFA equ LoadPlayerOverworldGraphics_Data2_Gfx_456EA+$810
+LoadPlayerOverworldGraphics_Data2_Gfx_45F06 equ LoadPlayerOverworldGraphics_Data2_Gfx_456EA+$81C
+LoadPlayerOverworldGraphics_Data2_Gfx_45F18 equ LoadPlayerOverworldGraphics_Data2_Gfx_456EA+$82E
+LoadPlayerOverworldGraphics_Data2_Gfx_45F2C equ LoadPlayerOverworldGraphics_Data2_Gfx_456EA+$842
 LoadPlayerOverworldGraphics_Data2:
 	dc.l	LoadPlayerOverworldGraphics_Data2_Gfx_456EA
 	dc.l	LoadPlayerOverworldGraphics_Data2_Gfx_456FA
