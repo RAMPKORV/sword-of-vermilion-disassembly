@@ -580,6 +580,15 @@ BOSS_HP_ORBIT_HARD      = $270F   ; 9999 HP — OrbitBoss hard difficulty
 ; against this threshold gives a 50% probability split (0-127 vs 128-255).
 RANDOM_HALF_THRESHOLD   = $0080   ; 50% RNG threshold (128 of 256)
 
+; Player post-hit invulnerability frame countdown.
+; Written to obj_invuln_timer(player entity) in every player damage handler.
+PLAYER_HIT_INVULN_FRAMES = $10   ; 16 frames — player invulnerability after taking damage
+
+; Standard enemy knockback timer duration.
+; Written to obj_knockback_timer(A5) after an enemy is hit, controlling
+; the knockback-and-pause phase before the enemy resumes its AI.
+ENEMY_KNOCKBACK_DURATION = $0028  ; 40 frames — standard enemy knockback duration
+
 ; Tile-space visibility radius used by CheckEntityOnScreen.
 ; Entity tile coordinate (world_coord - camera) >> 4 is compared against this.
 ENTITY_VISIBLE_TILE_RADIUS = $0019  ; 25 tiles — entity considered off-screen if >= this
