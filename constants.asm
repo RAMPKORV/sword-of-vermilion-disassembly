@@ -607,6 +607,29 @@ BOSS_ANIM_PHASE_END     = $000C   ; 12 — animation cycle complete when phase r
 ; compared against this to decide when to spawn a fire projectile.
 ORBIT_BOSS_FIRE_PHASE   = $0030   ; 48 — fire phase threshold within move_counter cycle
 
+; DemonBoss horizontal patrol/fire-zone limits (obj_world_x comparisons).
+DEMON_BOSS_X_LEFT_BOUND = $0070   ; 112 px — left  edge of DemonBoss patrol/fire zone
+DEMON_BOSS_X_RIGHT_BOUND= $0120   ; 288 px — right edge of DemonBoss patrol/fire zone
+
+; DemonBoss projectile Y floor — segment deactivates below this Y.
+DEMON_BOSS_PROJ_Y_FLOOR = $00B0   ; 176 px — projectile segment Y deactivation threshold
+
+; Falling projectile Y floor shared by OrbitBoss and RingGuardian child projectiles.
+; Projectiles clamp to and impact at this Y.
+ORBIT_PROJ_Y_FLOOR      = $00AC   ; 172 px — falling projectile floor Y (OrbitBoss & RingGuardian)
+
+; RingGuardian (Boss 1) horizontal position clamps during attack charge.
+RING_GUARDIAN_X_LEFT    = $0018   ; 24 px  — RingGuardian left X clamp
+RING_GUARDIAN_X_RIGHT   = $00E8   ; 232 px — RingGuardian right X clamp
+
+; RingGuardian head-extend Y threshold: boss triggers head attack when player Y >= this.
+RING_GUARDIAN_HEAD_Y    = $0044   ; 68 px  — RingGuardian head-extend activation Y
+
+; NPC behavior timing thresholds (used via obj_hit_flag / obj_invuln_timer as counters).
+NPC_ROTATION_FRAMES     = $20     ; 32 frames — NPC rotation/turn animation frame count
+NPC_WANDER_DELAY        = $32     ; 50 ticks  — NPC wander direction change delay
+NPC_STUCK_THRESHOLD     = $78     ; 120 ticks — NPC stuck-repath trigger threshold
+
 ; SetRandomEnemyPosition spawn-zone boundaries.
 ; These define where enemies may be placed in the battle field.
 ; The "safe zone" is a central area near the player where enemies are
