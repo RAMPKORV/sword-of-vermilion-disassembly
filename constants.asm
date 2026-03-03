@@ -1794,8 +1794,10 @@ SOUND_ENEMY_DEATH       = $00AD   ; Enemy death (3 uses)
 ; Frame-count delays used during boss fights and encounters.
 ;
 BOSS_VICTORY_DELAY_FRAMES   = $0032   ; Frames to wait before boss reward sequence (4 uses)
+BOSS_EXIT_DELAY_FRAMES      = $50     ; Frames to wait before processing battle victory event (1 use)
 BOSS_VICTORY_FADE_PHASES    = 8       ; Dialog_phase threshold for boss victory fadeout complete (7 uses)
 ENCOUNTER_FADE_PHASES       = $000A   ; Number of fade-in phases for encounter/dialogue intro (2 uses)
+ENCOUNTER_PAUSE_FRAMES      = $0064   ; Frames to pause before battle begins after encounter (1 use)
 SLEEP_DELAY_FRAMES          = $012C   ; Frames of sleep animation delay (2 uses)
 ; ============================================================
 ; Name Entry Grid Constants
