@@ -907,6 +907,7 @@ Chest_already_opened         = $FFFFC584
 Chest_animation_frame        = $FFFFC580
 Chest_animation_timer        = $FFFFC582
 Open_chest_delay_timer       = $FFFFC585
+CHEST_OPEN_DELAY_FRAMES      = $50  ; 80 frames: chest lid animation delay before menu opens
 Door_unlocked_flag           = $FFFFC586
 Encounter_triggered          = $FFFFC550
 Level_up_timer               = $FFFFC55C
