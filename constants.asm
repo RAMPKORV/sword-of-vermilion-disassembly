@@ -366,6 +366,10 @@ BATTLE_FIELD_BOTTOM     = $00B8   ; Bottom boundary   (184 px)
 ; against this threshold gives a 50% probability split (0-127 vs 128-255).
 RANDOM_HALF_THRESHOLD   = $0080   ; 50% RNG threshold (128 of 256)
 
+; Tile-space visibility radius used by CheckEntityOnScreen.
+; Entity tile coordinate (world_coord - camera) >> 4 is compared against this.
+ENTITY_VISIBLE_TILE_RADIUS = $0019  ; 25 tiles — entity considered off-screen if >= this
+
 ;RAM
 
 Fade_out_lines_mask     = $FFFFC08E
@@ -407,6 +411,11 @@ Camera_scrolling_active = $FFFFC10C
 Tilemap_row_overflow_flag = $FFFFC10D
 Town_tilemap_width      = $FFFFC110
 Town_tilemap_height     = $FFFFC112
+
+; Town tilemap scroll guard: if the map dimension (width or height in tiles)
+; is <= this value, the camera scroll routine skips tile-row/column updates.
+TOWN_MAP_MIN_SCROLL_TILES = $0010   ; 16 tiles — minimum map size for scrolling
+
 Town_tilemap_update_row = $FFFFC120
 Town_tilemap_update_column = $FFFFC122
 Town_tilemap_row_update_pending = $FFFFC124
@@ -1498,6 +1507,11 @@ POISONED_DURATION           = $FFFF   ; Player_poisoned: indefinite/permanent po
 ; ============================================================
 PALETTE_IDX_BOSS_FLASH_A    = $00B5   ; Boss hit flash palette A (two-headed dragon) (2 uses)
 PALETTE_IDX_BOSS_FLASH_B    = $00B7   ; Boss hit flash palette B (orbit/ring boss) (2 uses)
+
+; VRAM tile index of the two-headed dragon boss head in its idle/resting frame.
+; Compared against obj_tile_index(A6) to detect when the head sprite is at rest
+; before triggering a random attack animation.
+DRAGON_HEAD_IDLE_TILE       = $00DD   ; Dragon head idle-frame tile index (2 uses)
 
 ; ============================================================
 ; Ending Sequence Timer Durations (Ending_timer)
