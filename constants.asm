@@ -654,6 +654,9 @@ ORBIT_BOSS_MAX_RADIUS   = $1388   ; 5000 — orbit radius ceiling for OrbitBoss 
 ; value the boss transitions to its fire state.
 ORBIT_BOSS_DIRECTION_WRAP = $A0   ; 160 — OrbitBoss charge direction wraparound threshold
 
+; OrbitBoss outer approach: only initiates charge if player X is above this value.
+ORBIT_BOSS_CHARGE_X_MIN = $0046   ; 70 px — minimum player X for OrbitBoss outer charge
+
 ; OrbitingSpiral projectile orbit cycle count (stored in obj_xp_reward as scratch counter).
 ; When the counter reaches this value, the projectile transitions to straight-line travel.
 ORBITING_SPIRAL_ORBIT_COUNT = $0040  ; 64 — OrbitingSpiral orbit cycles before breaking out
@@ -665,6 +668,16 @@ BATTLE_PROJ_Y_TOP       = $0020   ; 32 px — projectile upper boundary (spiral/
 ; Projectile off-screen left boundary (X).
 ; TwoHeadedDragon and HydraBoss projectiles deactivate when obj_world_x < this.
 PROJ_OFFSCREEN_X_LEFT   = $FFF6   ; -10 px — projectile left-edge deactivation threshold
+
+; HydraBoss split X threshold: boss activates its second head only when player X < this.
+HYDRA_BOSS_SPLIT_X      = $00E0   ; 224 px — HydraBoss second-head activation player X threshold
+
+; Ferros spell orbit: orbit radius expands (via obj_pos_x_fixed) until it reaches this
+; 16.16 fixed-point value before the projectile begins hitting enemies.
+FERROS_ORBIT_MAX_RADIUS = $00180000  ; 24.0 (fixed 16.16) — Ferros orbit expansion ceiling
+
+; DescendingArc projectile: attack timer counts up from 0; gravity fully engages at this value.
+DESCENDING_ARC_GRAVITY_ONSET = $0014  ; 20 ticks — DescendingArc timer threshold for full gravity
 
 ; SetRandomEnemyPosition spawn-zone boundaries.
 ; These define where enemies may be placed in the battle field.
