@@ -451,6 +451,15 @@ TOWN_TILE_CHEST         = $9000   ; Chest tile
 TOWN_TILE_PASSABLE_E    = $E000   ; Passable tile group E (empty/open)
 TOWN_TILE_PASSABLE_F    = $F000   ; Passable tile group F
 
+; Overworld map tile type thresholds (raw byte values in the overworld tile array).
+; Values $00-$0F are passable ground tiles (no transition).
+; Values $10-$7F are cave/dungeon entrance tiles; the room index = tile - $10.
+; Values $80-$8F ($80 | town_id) are town entrance tiles.
+; Values $90-$FE map to cave entrances after BCLR #7 (clears the high bit).
+; Value $FF is the cave/dungeon exit.
+OVERWORLD_TILE_CAVE_MIN       = $10  ; byte: cave entrance tile lower bound
+OVERWORLD_TILE_UPPER_CAVE_MIN = $90  ; byte (signed): upper-range cave/town boundary
+
 Town_tilemap_update_row = $FFFFC120
 Town_tilemap_update_column = $FFFFC122
 Town_tilemap_row_update_pending = $FFFFC124
