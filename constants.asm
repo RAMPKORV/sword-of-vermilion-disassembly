@@ -630,6 +630,26 @@ NPC_ROTATION_FRAMES     = $20     ; 32 frames — NPC rotation/turn animation fr
 NPC_WANDER_DELAY        = $32     ; 50 ticks  — NPC wander direction change delay
 NPC_STUCK_THRESHOLD     = $78     ; 120 ticks — NPC stuck-repath trigger threshold
 
+; Death-scatter projectile spread: enemy/boss death handlers cycle an angle index
+; from 0 to (DEATH_SCATTER_ANGLE_COUNT-1) = 34 before resetting direction.
+DEATH_SCATTER_ANGLE_COUNT = $23   ; 35 — number of spread angles in the death scatter loop
+
+; RingGuardian (Boss 1) lower Y limit for state transitions.
+; Boss deactivates or changes state when obj_world_y > this value.
+RING_GUARDIAN_Y_LOWER   = $0096   ; 150 px — RingGuardian lower Y boundary for state change
+
+; OrbitBoss maximum orbit radius (stored in obj_pos_x_fixed of orbit child).
+; Orbit-expand functions continue until radius reaches this value.
+ORBIT_BOSS_MAX_RADIUS   = $1388   ; 5000 — orbit radius ceiling for OrbitBoss expand phase
+
+; Projectile top-of-field boundary (Y). Spiral and OrbitingSpiral projectiles
+; deactivate when obj_world_y <= this, which is above the HUD (BATTLE_FIELD_TOP = $0038).
+BATTLE_PROJ_Y_TOP       = $0020   ; 32 px — projectile upper boundary (spiral/orbiting projectiles)
+
+; Projectile off-screen left boundary (X).
+; TwoHeadedDragon and HydraBoss projectiles deactivate when obj_world_x < this.
+PROJ_OFFSCREEN_X_LEFT   = $FFF6   ; -10 px — projectile left-edge deactivation threshold
+
 ; SetRandomEnemyPosition spawn-zone boundaries.
 ; These define where enemies may be placed in the battle field.
 ; The "safe zone" is a central area near the player where enemies are
