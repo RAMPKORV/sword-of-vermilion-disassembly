@@ -386,6 +386,17 @@ BOSS_ANIM_PHASE_END     = $000C   ; 12 — animation cycle complete when phase r
 ; compared against this to decide when to spawn a fire projectile.
 ORBIT_BOSS_FIRE_PHASE   = $0030   ; 48 — fire phase threshold within move_counter cycle
 
+; SetRandomEnemyPosition spawn-zone boundaries.
+; These define where enemies may be placed in the battle field.
+; The "safe zone" is a central area near the player where enemies are
+; NOT allowed to spawn (the function re-rolls if the result lands inside it).
+SPAWN_ZONE_X_MAX        = $013F   ; 319 px — maximum random X before wrapping
+SPAWN_ZONE_Y_MIN        = $0039   ; 57 px  — minimum valid Y position
+SPAWN_ZONE_Y_MAX        = $00B7   ; 183 px — maximum valid Y before wrapping
+SPAWN_SAFE_X_MIN        = $0088   ; 136 px — safe-zone left X (no-spawn center begins here)
+SPAWN_SAFE_Y_MIN        = $004C   ; 76 px  — safe-zone top Y
+SPAWN_SAFE_Y_MAX        = $006C   ; 108 px — safe-zone bottom Y
+
 ;RAM
 
 Fade_out_lines_mask     = $FFFFC08E
@@ -1722,3 +1733,10 @@ demon_seg5_y        equ $4E   ; word: body segment 5 initial Y world coord
 ; Defined here for documentation; NOT globally replaced due to conflicting semantics.
 demon_fire_dir      equ $41   ; DemonBoss: fire direction (0=straight,1=left,2=right)
 orbit_charge_dir    equ $41   ; OrbitBoss: charge direction flag ($FF=positive clamp, $00=negative)
+;
+; Additional DemonBoss-exclusive scratch fields:
+demon_move_steps    equ $38   ; word: horizontal bounce step counter (set 1–4, decremented each step until rebound)
+demon_wing_anim     equ $40   ; byte: wing animation frame toggle (bit0 used; incremented each frame when vel_y==8)
+
+; Parma Castle Soldier exclusive scratch field:
+soldier_home_tile_y equ $2B   ; byte: saved tile Y row of the soldier's home/patrol origin
