@@ -1,7 +1,68 @@
 ; ======================================================================
 ; src/gameplay.asm
-; Gameplay state machine: town, overworld, cave, battle, encounter states
+; Gameplay state machine dispatcher for all in-game states.
+;
+; The main game loop calls the handler indexed by Gameplay_state each
+; frame.  State IDs are defined in constants.asm as GAMEPLAY_STATE_*.
+;
+; State index:
+;   $00  GameState_InitTownEntry          - Clear VRAM, load player gfx
+;   $01  GameState_LoadTown               - Load tilemap, NPCs, music
+;   $1F  GameState_FadeInComplete         - Wait for palette fade; restore state
+;   $02  GameState_TownExploration        - Town walk, event dispatch
+;   $03  GameState_InitBuildingEntry      - Enter building room
+;   $04  GameState_BuildingInterior       - Building walk, inn/boss/event dispatch
+;   $29  GameState_FryingPanDelay         - Woman hits player with frying pan
+;   $2A  GameState_ReadFryingPanMessage   - Display frying-pan dialog
+;   $28  GameState_ReadAwakeningMessage   - Inn wakeup dialog (set from $04)
+;   $05  GameState_TransitionToSecondFloor - Load 2nd floor tilemap
+;   $06  GameState_SecondFloorActive      - 2nd floor walk
+;   $07  GameState_TransitionToThirdFloor - Load 3rd floor tilemap
+;   $08  GameState_ThirdFloorActive       - 3rd floor walk
+;   $09  GameState_TransitionToCastleMain - Load castle main room
+;   $0A  GameState_CastleRoom1Active      - Castle room 1 walk
+;   $0B  GameState_LoadCastleRoom2        - Load castle room 2
+;   $0C  GameState_CastleRoom2Active      - Castle room 2 walk
+;   $0D  GameState_LoadCastleRoom3        - Load castle room 3
+;   $0E  GameState_CaveEntrance           - Enter cave from overworld
+;   $0F  GameState_BattleInitialize       - Set up field battle
+;   $10  GameState_BattleActive           - Field battle tick
+;   $11  GameState_BattleExit             - Tear down field battle
+;   $2B  GameState_SoldierTaunt           - Carthahenian soldier event setup
+;   $2C  GameState_ReadSoldierTaunt       - Soldier taunt dialog
+;   $12  GameState_OverworldReload        - Reload overworld after battle
+;   $13  GameState_OverworldActive        - Alias: BRA GameState_CaveExploration
+;   $14  GameState_TownFadeInComplete     - Fade done after town exit; re-enter town
+;   $15  GameState_EnteringCave           - Load cave gfx and palettes
+;   $16  GameState_CaveExploration        - First-person overworld/cave tick
+;   $17  GameState_CaveFadeOutComplete    - Cave fade done; start encounter
+;   $18  GameState_EncounterInitialize    - Choose enemy group, load portrait
+;   $19  GameState_EncounterGraphicsFadeIn - Slide portrait in column by column
+;   $1A  GameState_EncounterPauseBeforeBattle - Brief pause before battle starts
+;   $1B  GameState_LevelUpBannerDisplay   - Show level-up banner for N frames
+;   $1C  GameState_LevelUpStatsWaitInput  - Show new stats; wait for A/B/C
+;   $1D  GameState_LevelUpComplete        - Check for another level; restore state
+;   $1E  GameState_ReturnToFirstPersonView - Post-battle fade; restore cave view
+;   $20  GameState_DialogDisplay          - NPC portrait slide-in animation
+;   $21  GameState_BossBattleInit         - Scan boss flags, load boss objects
+;   $22  GameState_BossBattleActive       - Boss battle per-frame tick
+;   $23  GameState_ReturnFromBossBattle   - Post-boss cleanup, restore state
+;   $24  GameState_BeginResurrection      - Player died: trigger fade-out
+;   $25  GameState_ProcessResurrection    - Halve kims, warp to church
+;   $26  GameState_NotifyInaudiosExpired  - Print Inaudios-worn-off message
+;   $27  GameState_WaitForNotificationDismiss - Wait for B/C to dismiss popup
+;   $2D  GameState_ShowPoisonNotification - First-time poison warning
 ; ======================================================================
+
+; ======================================================================
+; Town Entry State Handlers
+; ======================================================================
+
+; --- GameState_InitTownEntry ($00) ---
+; First half of the two-state town-load sequence.  Waits for any active
+; fade to clear, then disables the VDP display and resets all objects and
+; VRAM so the town loader ($01) can start clean.
+; Increments Gameplay_state to $01 on completion.
 GameState_InitTownEntry:
 	TST.b	Fade_out_lines_mask.w
 	BNE.w	GameState_InitTownEntry_Loop
