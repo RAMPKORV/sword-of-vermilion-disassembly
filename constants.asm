@@ -365,6 +365,12 @@ BATTLE_FIELD_BOTTOM     = $00B8   ; Bottom boundary   (184 px)
 ; are off the visible arena. Also used as boss-body Y floor clamp.
 BATTLE_ARENA_EDGE       = $00A8   ; 168 px — right edge / boss Y floor of battle arena
 
+; Boss battle arena X boundaries for the player entity and spawning.
+; The 320 px play-field runs from pixel 0 to $013F, but entities are
+; clamped to a tighter 16–296 px range so sprites never clip the HUD frame.
+BOSS_BATTLE_PLAYER_X_MIN = $0010  ; 16 px  — leftmost allowed player/entity X in boss arena
+BOSS_BATTLE_PLAYER_X_MAX = $0128  ; 296 px — rightmost allowed player/entity X in boss arena
+
 ; After masking a random number to 8 bits (ANDI.w #$00FF), comparing
 ; against this threshold gives a 50% probability split (0-127 vs 128-255).
 RANDOM_HALF_THRESHOLD   = $0080   ; 50% RNG threshold (128 of 256)
