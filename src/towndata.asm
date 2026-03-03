@@ -2157,7 +2157,6 @@ MagicGfxData_HastingsCarthahena:
 	dc.w	$0017
 	dc.w	$0036	
 ; ===========================================================================
-;loc_0001FBD4:
 TownNames:
 	dc.l	TownName_Wyclif
 	dc.l	TownName_Parma

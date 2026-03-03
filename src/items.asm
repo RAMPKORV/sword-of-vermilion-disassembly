@@ -8,14 +8,12 @@ UseVase:
 	RTS
 	
 
-;loc_0001AEAE:
 UseJokeBook:
 	PRINT 	KnockJokesStr	
 	BSR.w	RemoveSelectedItemFromList	
 	RTS
 	
 
-;loc_0001AEBC:
 UseSmallBomb:
 	PRINT 	LoudRoarStr
 	BSR.w	RemoveSelectedItemFromList
@@ -23,7 +21,6 @@ UseSmallBomb:
 	JSR	QueueSoundEffect
 	RTS
 
-;loc_0001AED4:
 UseOldWomansSketch:
 	MOVE.w	Current_town.w, D0
 	CMPI.w	#TOWN_KELTWICK, D0
@@ -74,7 +71,6 @@ OldManSketchPositionData:
 	dc.w	OLD_MAN_POSITION_Y-1
 	dc.w	DIRECTION_DOWN
 
-;loc_0001AF54:
 UseOldMansSketch
 	MOVE.w	Current_town.w, D0
 	CMPI.w	#TOWN_HELWIG, D0
@@ -127,17 +123,14 @@ OldWomanSketchPositionData:
 	dc.w	OLD_WOMAN_POSITION_Y-1
 	dc.w	DIRECTION_DOWN
 
-;loc_0001AFD8:
 UseTreasureOfTroy:
 	PRINT 	IncredibleTreasureStr	
 	RTS
 	
-;loc_0001AFE2:
 UseTruffle:
 	PRINT 	RoastDuckStr	
 	RTS
 	
-;loc_0001AFEC:
 UseDigotPlant:
 	TST.w	Player_poisoned.w
 	BEQ.b	UseDigotPlant_Loop
@@ -152,7 +145,6 @@ UseDigotPlant_Loop2:
 	BSR.w	RemoveSelectedItemFromList
 	RTS
 
-;loc_0001B016:
 UsePassToCarthahena:
 	PRINT 	PowerSurgeStr	
 	RTS
@@ -262,7 +254,6 @@ UseKey_NoDoor_Loop:
 	PRINT 	EffortsFutileStr	
 	RTS
 	
-;loc_0001B166:
 RemoveSelectedItemFromList:
 	MOVE.w	Selected_item_index.w, D0
 	MOVE.w	#9, D2
@@ -280,7 +271,6 @@ DialogueStateMachine:
 	JSR	(A0,D0.w)
 	RTS
 
-;loc_0001B196:
 DialogueStateHandlerMap:
 	BRA.w	DialogState_Init
 	BRA.w	DialogState_WaitScriptThenAdvance
@@ -2148,7 +2138,6 @@ DialogState_SaveMenuInput_Loop3:
 DialogState_SaveMenuInput_Loop:
 	RTS
 
-;loc_0001CDFE:
 CheckIfCursed:
 	MOVE.w	#2, D7
 	LEA	Equipped_items.w, A0
@@ -2166,7 +2155,6 @@ ScanInventory_NotFound:
 ScanInventory_NotFound_Loop:
 	RTS
 
-;loc_0001CE20:
 RemoveCursedEquipment:
 	MOVE.w	#2, D7
 	LEA	Equipped_items.w, A0
@@ -3125,7 +3113,6 @@ EquipListMenu_CursorReady_Return_Loop5:
 EquipListMenu_CursorReady_Return_Loop10:
 	RTS
 
-;loc_0001DA8E:
 UpgradeLevelStats:
 	MOVE.w	Player_level.w, D7
 	ADD.w	D7, D7

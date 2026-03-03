@@ -2846,7 +2846,6 @@ SetEnemyCollisionBounds:
 	MOVE.w	#$000C, obj_hitbox_half_h(A5)
 	RTS
 	
-;loc_0000B78C:
 EnemyStartingPositions:
 	dc.w	$1E, $40
 	dc.w	$5E, $40

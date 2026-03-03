@@ -9,7 +9,6 @@ ProgramState_SegaLogoInit:
 	CLR.b	Intro_animation_done.w
 	RTS
 
-;loc_0000151C:
 ProgramState_SegaLogo
 	MOVE.b	Controller_current_state.w, D0
 	ANDI.b	#$F0, D0
@@ -29,7 +28,6 @@ ProgramState_00_Loop:
 ProgramState_01_Return:
 	RTS
 
-;loc_0000155C:
 ProgramState_TitleInit:
 	MOVE.b	#$45, Timer_seconds_bcd.w
 	BTST.b	#6, $00A10001
@@ -41,7 +39,6 @@ ProgramState_02_Loop:
 	CLR.b	Title_intro_complete.w
 	RTS
 
-;loc_00001586:
 ProgramState_TitleScreen:
 	TST.b	Title_intro_complete.w
 	BEQ.w	ProgramState_03_Return
@@ -73,7 +70,6 @@ ProgramState_03_Loop:
 ProgramState_03_Return:
 	RTS
 
-;loc_000015E8:
 ProgramState_TitleDemo:
 	TST.b	Fade_out_lines_mask.w
 	BNE.b	ProgramState_04_Loop
@@ -87,7 +83,6 @@ ProgramState_TitleDemo:
 ProgramState_04_Loop:
 	RTS
 
-;loc_00001616:
 ProgramState_PrologueInit:
 	TST.b	Fade_out_lines_mask.w
 	BNE.b	ProgramState_08_Loop
@@ -98,7 +93,6 @@ ProgramState_PrologueInit:
 ProgramState_08_Loop:
 	RTS
 
-;loc_00001636:
 ProgramState_Prologue:
 	TST.b	Prologue_complete_flag.w
 	BEQ.b	ProgramState_09_Loop
@@ -107,7 +101,6 @@ ProgramState_Prologue:
 ProgramState_09_Loop:
 	RTS
 
-;loc_0000164A:
 ProgramState_PrologueToGame:
 	TST.b	Fade_out_lines_mask.w
 	BNE.b	ProgramState_0A_Loop
@@ -124,7 +117,6 @@ ProgramState_PrologueToGame:
 ProgramState_0A_Loop:
 	RTS
 
-;loc_0000168C:
 ProgramState_LoadSaveInit:
 	TST.b	Fade_out_lines_mask.w
 	BNE.b	ProgramState_0B_Loop
@@ -146,7 +138,6 @@ ProgramState_LoadSaveInit:
 ProgramState_0B_Loop:
 	RTS
 
-;loc_000016E6:
 ProgramState_LoadSave:
 	TST.b	File_load_complete.w
 	BEQ.b	ProgramState_0C_Loop
@@ -155,7 +146,6 @@ ProgramState_LoadSave:
 ProgramState_0C_Loop:
 	RTS
 
-;loc_000016FA:
 ProgramState_LoadSaveDone:
 	TST.b	Fade_out_lines_mask.w	
 	BNE.b	ProgramState_0D_Loop	
@@ -166,7 +156,6 @@ ProgramState_LoadSaveDone:
 ProgramState_0D_Loop:
 	RTS
 	
-;loc_0000171A:
 ProgramState_LoadSavedGame:
 	TST.b	Fade_out_lines_mask.w	
 	BNE.b	ProgramState_15_Loop	
@@ -184,7 +173,6 @@ ProgramState_LoadSavedGame:
 ProgramState_15_Loop:
 	RTS
 	
-;loc_00001758:
 ProgramState_NameEntryInit:
 	TST.b	Fade_out_lines_mask.w
 	BNE.b	ProgramState_05_Loop
@@ -205,7 +193,6 @@ ProgramState_NameEntryInit:
 ProgramState_05_Loop:
 	RTS
 
-;loc_000017AC:
 ProgramState_NameEntry:
 	TST.b	Name_entry_complete.w
 	BEQ.b	ProgramState_06_Loop
@@ -214,7 +201,6 @@ ProgramState_NameEntry:
 ProgramState_06_Loop:
 	RTS
 
-;loc_000017C0:
 ProgramState_NameEntryDone:
 	TST.b	Fade_out_lines_mask.w
 	BNE.b	ProgramState_07_Loop
@@ -234,7 +220,6 @@ ProgramState_EndingInit:
 ProgramState_Ending:
 	RTS
 
-;loc_000017F8:
 ProgramState_GameFadeIn:
 	TST.b	Fade_out_lines_mask.w
 	BNE.w	ProgramState_0E_and_10_Loop
@@ -259,7 +244,7 @@ ProgramState_GameActive:
 ProgramState_0F_Return:
 	RTS
 
-;loc_0000183A: ; $FFFFC410 - $FFFFC414
+; $FFFFC410 - $FFFFC414
 GameStateMap:
 	BRA.w	GameState_InitTownEntry ; $00
 	BRA.w	GameState_LoadTown ; $01 Exiting building

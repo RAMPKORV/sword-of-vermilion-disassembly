@@ -1145,7 +1145,6 @@ CastSangua:
 	ADD.w	D0, Player_hp.w
 	BRA.w	CastSanguia_Loop
 
-;loc_000187F0:
 CastSanguia:
 	JSR	CheckIfCursed
 	BNE.w	SpellMenu_CursedError
@@ -1302,7 +1301,6 @@ CastBattleMagicMap:
 	BRA.w	CastChronios
 	BRA.w	CastTerrafissi
 
-;loc_00018A6A:
 CastAero:
 	MOVEA.l	Object_slot_02_ptr.w, A6
 	BTST.b	#7, (A6)

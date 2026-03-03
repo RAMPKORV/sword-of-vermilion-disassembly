@@ -2,7 +2,6 @@
 ; Shop & Economy Data
 ; Inn/church prices, shop assortments, item prices, magic cost/element tables
 ; ===========================================================================
-;loc_00021F08:
 InnAndFortuneTellerPricesByTown:
 	dc.l	$10
 	dc.l	$13 
@@ -19,7 +18,6 @@ InnAndFortuneTellerPricesByTown:
 	dc.l	$224
 	dc.l	$250
 
-;loc_00021F40:
 ChurchCurseRemovalPricesByTown:
 	dc.l	$100
 	dc.l	$110
@@ -36,7 +34,6 @@ ChurchCurseRemovalPricesByTown:
 	dc.l	$220
 	dc.l	$230
 
-;loc_00021F78:
 ChurchPoisonCurePricesByTown:
 	dc.l	$2
 	dc.l	$4
@@ -53,7 +50,6 @@ ChurchPoisonCurePricesByTown:
 	dc.l	$26
 	dc.l	$28
 
-;loc_00021FB0:
 ShopAssortmentByTownAndShopType:
 	dc.l	WyclifItemShopAssortment
 	dc.l	WyclifEquipmentShopAssortment
@@ -120,7 +116,6 @@ ShopAssortmentByTownAndShopType:
 	dc.l	HastingsMagicShopAssortment	
 	dc.l	ParmaMagicShopAssortment	
 
-;loc_000220B0:
 ShopPricesByTownAndType:
 	dc.l	WyclifItemShopPrices
 	dc.l	WyclifEquipmentShopPrices
@@ -592,7 +587,6 @@ EquipmentResaleValueMap:
 	dc.l	$2
 	dc.l	$30000 
 
-;loc_00022622:
 MagicResaleValueMap:
 	dc.l	$1500
 	dc.l	$5500
@@ -617,7 +611,6 @@ MagicResaleValueMap:
 	dc.l	$14500 
 	dc.l	$4400
 	dc.l	$0
-;loc_0002267E:
 MagicMpConsumptionMap:
 	dc.w	$3
 	dc.w	$9

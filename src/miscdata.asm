@@ -729,4 +729,3 @@ VoltioOrbitSpriteFrameTable:
 	dc.b	$02, $45, $02, $4D, $02, $45, $02, $55 
 VoltiSpriteFrameTable:
 	dc.b	$02, $45, $02, $4D, $02, $45, $02, $55 
-;loc_0003DFD4: 

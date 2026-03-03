@@ -873,7 +873,6 @@ AddPaymentAmount_Done:
 AddPaymentAmount_Loop:
 	RTS
 	
-;loc_0001159E:
 DeductPaymentAmount:
 	LEA	Transaction_amount_end.w, A0
 	LEA	(Player_kims+4).w, A1

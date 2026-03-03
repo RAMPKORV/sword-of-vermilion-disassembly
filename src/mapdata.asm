@@ -324,7 +324,6 @@ OverworldMapSector_40028:
 OverworldMapSector_Empty:
 	incbin "data/maps/overworld/sector_15_0.bin"
 
-;loc_0004009C: 
 CaveMaps: ; 44 pointers
 	dc.l	CaveMaps_Map_4014C
 	dc.l	CaveMaps_Map_401BC

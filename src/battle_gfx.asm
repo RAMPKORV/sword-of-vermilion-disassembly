@@ -591,7 +591,6 @@ ExecuteVdpDmaTransfer:
 	ANDI	#$F8FF, SR
 	RTS
 
-;loc_0000FB5C:
 GetRandomNumber:
 	MOVEM.l	D1, -(A7)
 	MOVE.l	Rng_state.w, D1

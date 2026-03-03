@@ -161,7 +161,6 @@ RingsStr:
 	dc.b	"Rings", $FF
 
 ; ===========================================================================
-;loc_00021B32: 
 RingNames:
 	dc.l	RingWisdomStr
 	dc.l	RingSkyStr

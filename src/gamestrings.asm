@@ -336,7 +336,6 @@ CantPutDownStr:
 CantCarryMoreStr2:
 	dc.b	"You can't carry any more.", $FF
 ; ===========================================================================
-;loc_00025DB4:
 ItemNames:
 	dc.l	HerbsStr
 	dc.l	CandleStr
@@ -408,7 +407,6 @@ MagicNames:
 	dc.l	ToxiosStr
 	dc.l	SanguiosStr
 ; ===========================================================================
-;loc_00025EC0:
 EquipmentNames:
 	dc.l	BronzeSwordStr
 	dc.l	IronSwordStr

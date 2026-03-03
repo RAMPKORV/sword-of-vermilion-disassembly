@@ -582,7 +582,6 @@ VBlankObjectHandler_loop:
 	JSR	(A0,D0.w)
 	BRA.w	VBlankObjectHandler_Return
 
-;loc_000014A8:
 ProgramStateMap:
 	BRA.w	ProgramState_SegaLogoInit		; $00 Initialize Sega logo
 	BRA.w	ProgramState_SegaLogo			; $01 Sega logo display
@@ -609,4 +608,3 @@ ProgramStateMap:
 VBlankObjectHandler_Return:
 	RTS
 
-;loc_00001502:

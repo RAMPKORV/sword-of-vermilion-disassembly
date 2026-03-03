@@ -968,7 +968,6 @@ EncounterTileData_Entry:
 	dc.l	EncounterTileData_Entry_Gfx_5DC36
 	dc.b	$00, $4F 
 
-;loc_00023A7C:
 EnemyEncounterTypesByMapSector:  ; Maps current map sector to pointer index at EnemyEncounterGroupTable
 	dc.b	$28, $28, $28, $27, $27, $27, $24, $00, $21, $23, $20, $20, $1E, $1E, $41, $00
 	dc.b	$2A, $2A, $2C, $2E, $25, $25, $24, $24, $21, $21, $00, $00, $1E, $41, $00, $00
@@ -979,7 +978,7 @@ EnemyEncounterTypesByMapSector:  ; Maps current map sector to pointer index at E
 	dc.b	$00, $00, $0F, $00, $00, $0D, $11, $11, $12, $12, $14, $00, $16, $17, $00, $00 
 	dc.b	$00, $00, $0E, $0E, $0D, $0F, $0F, $11, $00, $12, $15, $14, $16, $00, $00, $00 
 
-;loc_00023AFC: ; Maps current cave room to pointer index at EnemyEncounterGroupTable
+; Maps current cave room to pointer index at EnemyEncounterGroupTable
 EnemyEncounterTypesByCaveRoom:
 	dc.b	$01, $06, $06, $0C, $0C, $10, $43, $13, $13, $40, $40, $19, $19, $1D, $1D, $1F 
 	dc.b	$1F, $1F, $22, $42, $26, $26, $29, $2F, $2F, $30, $31, $31, $35, $35, $38, $38 

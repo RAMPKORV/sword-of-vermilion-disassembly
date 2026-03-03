@@ -1298,7 +1298,6 @@ CastChronios:
 CastChronios_Done:
 	RTS
 
-;loc_00019EE0:
 CastTerrafissi:
 	MOVEA.l	Object_slot_02_ptr.w, A6
 	BTST.b	#7, (A6)
@@ -2082,7 +2081,6 @@ UseExtrios_CaveReturn:
 	JSR	QueueSoundEffect
 	RTS
 
-;loc_0001A996:
 UseItemMap:
 	BRA.w	UseHerbs
 	BRA.w	UseCandle
@@ -2145,7 +2143,6 @@ UseRubyBrooch_Loop2:
 UseRubyBrooch_Loop3:
 	RTS
 
-;loc_0001AA74:
 UseBansheePowder:
 	TST.b	Player_in_first_person_mode.w
 	BNE.b	UseBansheePowder_Loop
@@ -2349,7 +2346,6 @@ UseGnomeStone_Loop:
 	PRINT 	NothingHappenedStr
 	RTS
 
-;loc_0001AD1C:
 UsePoisonBalm:
 	TST.w	Player_poisoned.w
 	BEQ.b	UsePoisonBalm_Loop
@@ -2370,7 +2366,6 @@ UseHerbs_Done:
 	BSR.w	RemoveSelectedItemFromList
 	RTS
 
-;loc_0001AD5C:
 UseCandle:
 	TST.b	Is_in_cave.w
 	BEQ.b	UseCandle_BrightPlace
@@ -2392,7 +2387,6 @@ UseCandle_BrightPlace:
 	PRINT 	BrightPlaceStr
 	RTS
 
-;loc_0001ADAA:
 UseLantern:
 	TST.b	Is_in_cave.w
 	BEQ.b	UseLantern_BrightPlace
@@ -2414,7 +2408,6 @@ UseLantern_BrightPlace:
 	PRINT 	BrightPlaceStr	
 	RTS
 	
-;loc_0001ADF6:
 UseAlarmClock:
 	MOVE.w	#SOUND_ALARM_CLOCK, D0
 	JSR	QueueSoundEffect
@@ -2476,4 +2469,3 @@ AlarmClockPositionData:
 	dc.w	$78
 	dc.w	$4 
 
-;loc_0001AEA0:
