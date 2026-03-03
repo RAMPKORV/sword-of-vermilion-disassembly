@@ -2029,6 +2029,7 @@ demon_fire_dir      equ $41   ; DemonBoss: fire direction (0=straight,1=left,2=r
 orbit_charge_dir    equ $41   ; OrbitBoss: charge direction flag ($FF=positive clamp, $00=negative)
 ;
 ; Additional DemonBoss-exclusive scratch fields:
+demon_seg_active    equ $1C   ; byte: body-segment visible flag ($FF = active/visible, $00 = inactive)
 demon_move_steps    equ $38   ; word: horizontal bounce step counter (set 1–4, decremented each step until rebound)
 demon_wing_anim     equ $40   ; byte: wing animation frame toggle (bit0 used; incremented each frame when vel_y==8)
 
