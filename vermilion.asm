@@ -50527,119 +50527,63 @@ LoadBattleTilesToBuffers_Data:
 	dc.b	$1E, $20, $1F, $21, $22, $24, $23, $01, $25, $01, $26, $01, $27, $20, $1F, $28, $29, $01, $2A, $01, $2B, $2D, $2C, $01, $2E, $20, $1F, $2F, $30, $20, $1F, $31 
 	dc.b	$32, $01, $01, $01, $33, $01, $34, $01, $35, $01, $01, $01, $36, $01, $01, $01, $2E, $20, $1F, $37, $38, $01, $01, $01 
 LoadBattleTilesToBuffers_Data2_Gfx_429F0:
-	dc.b	$01, $00, $73, $33, $19, $8C, $0A, $AB, $A0, $AB, $AA, $0A, $BA, $0A, $BB, $A0, $AB, $BA, $0A, $BB, $A0, $AB, $AA, $00 
-LoadBattleTilesToBuffers_Data2_Gfx_42A08:
-	dc.b	$01, $00, $FF, $FF, $FF, $FF 
-LoadBattleTilesToBuffers_Data2_Gfx_42A0E:
-	dc.b	$01, $00, $CE, $EF, $FF, $FF, $0A, $BA, $AB, $0A 
-LoadBattleTilesToBuffers_Data2_Gfx_42A18:
-	dc.b	$01, $00, $F7, $77, $7F, $FF, $A0, $BA, $AB, $0A 
-LoadBattleTilesToBuffers_Data2_Gfx_42A22:
-	dc.b	$01, $00, $73, $33, $3B, $B9, $0A, $AB, $A0, $AB, $A0, $0B, $A0, $0A, $BA, $BA, $AB, $0B, $A0, $00 
-LoadBattleTilesToBuffers_Data2_Gfx_42A36:
-	dc.b	$01, $00, $9D, $DD, $FF, $FF, $0A, $B0, $BA, $AA, $0B, $00 
-LoadBattleTilesToBuffers_Data2_Gfx_42A42:
-	dc.b	$01, $00, $F3, $10, $8E, $FF, $0A, $A0, $AB, $BB, $A0, $AA, $AB, $BB, $AA, $0A, $AA, $BB, $0A, $00 
-LoadBattleTilesToBuffers_Data2_Gfx_42A56:
-	dc.b	$01, $00, $FF, $FF, $31, $8C, $BB, $A0, $AB, $BB, $A0, $AA, $BB, $A0, $0A, $AA 
-LoadBattleTilesToBuffers_Data2_Gfx_42A66:
-	dc.b	$01, $00, $73, $33, $19, $99, $AA, $AB, $A0, $AB, $BA, $0A, $BA, $0A, $BB, $A0, $AB, $A0, $AB, $BA, $0A, $BA 
-LoadBattleTilesToBuffers_Data2_Gfx_42A7C:
-	dc.b	$01, $00, $8C, $CC, $CE, $EF, $0A, $BB, $A0, $AB, $A0, $AB, $BA, $0A, $BA, $0A, $BB, $AB, $AB, $00 
-LoadBattleTilesToBuffers_Data2_Gfx_42A90:
-	dc.b	$01, $00, $FF, $FF, $77, $FF, $A0, $A0 
-LoadBattleTilesToBuffers_Data2_Gfx_42A98:
-	dc.b	$01, $00, $73, $33, $39, $99, $AA, $AB, $A0, $AB, $A0, $0A, $BA, $0A, $BB, $AB, $A0, $AB, $B0, $0B, $BA, $00 
-LoadBattleTilesToBuffers_Data2_Gfx_42AAE:
-	dc.b	$01, $00, $9C, $CC, $CF, $FF, $0A, $BA, $AB, $A0, $AB, $A0, $0B, $BA, $0A, $BA 
-LoadBattleTilesToBuffers_Data2_Gfx_42ABE:
-	dc.b	$01, $00, $CC, $CC, $99, $99, $0A, $AA, $0A, $BA, $AB, $A0, $AB, $A0, $0A, $BA, $0A, $BA, $0B, $B0, $AB, $A0 
-LoadBattleTilesToBuffers_Data2_Gfx_42AD4:
-	dc.b	$01, $00, $B3, $33, $7F, $FF, $BB, $0A, $BA, $0B, $B0, $AB, $A0, $AA 
-LoadBattleTilesToBuffers_Data2_Gfx_42AE2:
-	dc.b	$01, $00, $FF, $DD, $FF, $FF, $BA, $AA 
-LoadBattleTilesToBuffers_Data2_Gfx_42AEA:
-	dc.b	$01, $00, $FF, $FD, $99, $BF, $A0, $0A, $BA, $0B, $A0, $0A 
-LoadBattleTilesToBuffers_Data2_Gfx_42AF6:
-	dc.b	$01, $00, $FF, $FF, $FF, $77, $A0, $A0 
-LoadBattleTilesToBuffers_Data2_Gfx_42AFE:
-	dc.b	$01, $00, $BB, $FF, $FF, $FF, $A0, $A0 
-LoadBattleTilesToBuffers_Data2_Gfx_42B06:
-	dc.b	$01, $00, $B3, $3F, $FF, $FF, $B0, $0A, $B0, $AB, $B0, $00 
-LoadBattleTilesToBuffers_Data2_Gfx_42B12:
-	dc.b	$01, $00, $EC, $CD, $99, $93, $A0, $0A, $A0, $AB, $A0, $AA, $0A, $BA, $0A, $A0, $AB, $A0, $0A, $BA 
-LoadBattleTilesToBuffers_Data2_Gfx_42B26:
-	dc.b	$01, $00, $33, $3F, $FF, $FF, $0A, $BA, $AB, $A0, $AA, $A0 
-LoadBattleTilesToBuffers_Data2_Gfx_42B32:
-	dc.b	$02, $AA, $78, $70, $00, $00, $00, $00, $0F, $FF, $FF, $0A, $BB, $BB, $BB, $0A 
-LoadBattleTilesToBuffers_Data2_Gfx_42B42:
-	dc.b	$01, $00, $10, $1F, $FF, $FF, $AA, $AA, $AA, $BB, $BB, $BA, $A0, $AA, $AA, $AA 
-LoadBattleTilesToBuffers_Data2_Gfx_42B52:
-	dc.b	$01, $00, $73, $08, $CF, $FF, $0A, $0B, $AA, $AA, $BB, $BA, $A0, $AA, $AB, $BB, $0A, $AA 
-LoadBattleTilesToBuffers_Data2_Gfx_42B64:
-	dc.b	$01, $00, $FF, $F7, $31, $CF, $AA, $BB, $BA, $0A, $AB, $BB, $AA, $A0 
-LoadBattleTilesToBuffers_Data2_Gfx_42B72:
-	dc.b	$01, $00, $EC, $80, $13, $7F, $0A, $0A, $AB, $0A, $AB, $BA, $AA, $AB, $BA, $A0, $0B, $BA, $A0, $0B, $A0, $AA 
-LoadBattleTilesToBuffers_Data2_Gfx_42B88:
-	dc.b	$01, $00, $77, $FF, $FF, $FF, $A0, $A0 
-LoadBattleTilesToBuffers_Data2_Gfx_42B90:
-	dc.b	$01, $00, $EC, $CC, $C9, $99, $A0, $0A, $BA, $0A, $BA, $AB, $A0, $AB, $A0, $0A, $BA, $0A, $BA, $AB, $A0, $00 
-LoadBattleTilesToBuffers_Data2_Gfx_42BA6:
-	dc.b	$01, $00, $91, $33, $3B, $FF, $AB, $A0, $0A, $BB, $A0, $0A, $BA, $AA, $BA, $AB, $A0, $A0 
-LoadBattleTilesToBuffers_Data2_Gfx_42BB8:
-	dc.b	$01, $00, $73, $39, $9C, $CE, $AA, $AB, $A0, $0A, $BA, $AB, $A0, $0A, $BA, $AB, $A0, $0A, $BA, $AB 
-LoadBattleTilesToBuffers_Data2_Gfx_42BCC:
-	dc.b	$01, $00, $FF, $FF, $FF, $F7, $A0, $00 
-LoadBattleTilesToBuffers_Data2_Gfx_42BD4:
-	dc.b	$01, $00, $EF, $FF, $FF, $FF, $0A, $00 
-LoadBattleTilesToBuffers_Data2_Gfx_42BDC:
-	dc.b	$01, $00, $73, $3F, $FF, $FF, $BA, $AB, $AA, $0A, $B0, $00 
-LoadBattleTilesToBuffers_Data2_Gfx_42BE8:
-	dc.b	$01, $00, $FF, $FF, $EC, $01, $AA, $AA, $BB, $0A, $AA, $BB, $AA, $AA, $BB, $A0 
-LoadBattleTilesToBuffers_Data2_Gfx_42BF8:
-	dc.b	$01, $00, $FC, $81, $37, $FF, $0A, $AA, $0A, $AB, $A0, $0A, $AB, $BA, $BB, $AA, $AA, $00 
-LoadBattleTilesToBuffers_Data2_Gfx_42C0A:
-	dc.b	$01, $00, $3F, $FF, $FF, $FF, $0A, $A0 
-LoadBattleTilesToBuffers_Data2_Gfx_42C12:
-	dc.b	$01, $00, $73, $18, $CE, $FF, $0A, $AB, $AA, $AA, $BB, $A0, $AA, $BB, $A0, $AA, $BB, $AA 
-LoadBattleTilesToBuffers_Data2_Gfx_42C24:
-	dc.b	$01, $00, $FF, $FF, $73, $39, $A0, $BA, $A0, $AA, $BA, $AA, $A0, $00 
-LoadBattleTilesToBuffers_Data2_Gfx_42C32:
-	dc.b	$01, $00, $73, $31, $9C, $CE, $0A, $0A, $A0, $AA, $BA, $0A, $AB, $A0, $0A, $BA, $AB, $A0, $0A, $BA, $AB, $00 
-LoadBattleTilesToBuffers_Data2_Gfx_42C48:
-	dc.b	$01, $00, $7F, $FF, $FF, $FF, $A0, $00 
-LoadBattleTilesToBuffers_Data2_Gfx_42C50:
-	dc.b	$02, $AA, $70, $F0, $00, $00, $00, $00, $0F, $FF, $FF, $0A, $0A, $AB, $BB, $BB 
-LoadBattleTilesToBuffers_Data2_Gfx_42C60:
-	dc.b	$01, $00, $33, $3F, $FF, $FF, $AA, $A0, $BB, $BA, $AA, $A0 
-LoadBattleTilesToBuffers_Data2_Gfx_42C6C:
-	dc.b	$01, $00, $FF, $FE, $EC, $C8, $0A, $AB, $0A, $BB, $AB, $BA, $0A, $BB, $A0, $00 
-LoadBattleTilesToBuffers_Data2_Gfx_42C7C:
-	dc.b	$01, $00, $B3, $33, $77, $FF, $AA, $0A, $BA, $AB, $BA, $BB, $A0, $BA, $A0, $00 
-LoadBattleTilesToBuffers_Data2_Gfx_42C8C:
-	dc.b	$01, $00, $91, $33, $7F, $FF, $AB, $BA, $0A, $BB, $A0, $0A, $BA, $AA, $A0, $0A 
-LoadBattleTilesToBuffers_Data2_Gfx_42C9C:
-	dc.b	$01, $00, $73, $39, $9C, $CE, $AA, $AA, $A0, $0A, $BA, $AB, $A0, $0A, $BA, $AB, $A0, $0A, $BA, $AB 
-LoadBattleTilesToBuffers_Data2_Gfx_42CB0:
-	dc.b	$01, $00, $73, $7F, $FF, $FF, $BA, $AB, $A0, $0A 
-LoadBattleTilesToBuffers_Data2_Gfx_42CBA:
-	dc.b	$01, $00, $73, $39, $9C, $CE, $0A, $0A, $A0, $AA, $BA, $AB, $A0, $0A, $BA, $AB, $A0, $0A, $BA, $AB 
-LoadBattleTilesToBuffers_Data2_Gfx_42CCE:
-	dc.b	$01, $00, $73, $3F, $FF, $FF, $BA, $AB, $A0, $0A, $A0, $00 
-LoadBattleTilesToBuffers_Data2_Gfx_42CDA:
-	dc.b	$01, $00, $77, $33, $99, $DF, $0A, $0A, $AB, $A0, $AA, $BA, $AB, $A0, $0A, $AA, $AA, $00 
-LoadBattleTilesToBuffers_Data2_Gfx_42CEC:
-	dc.b	$01, $00, $BB, $19, $8C, $EF, $A0, $AA, $AA, $BB, $A0, $AB, $BA, $0A, $AB, $A0, $0A, $AA, $AA, $00 
-LoadBattleTilesToBuffers_Data2_Gfx_42D00:
-	dc.b	$01, $00, $FF, $FF, $FF, $77, $A0, $AA 
-LoadBattleTilesToBuffers_Data2_Gfx_42D08:
-	dc.b	$01, $00, $33, $19, $CC, $FF, $0A, $A0, $AA, $BA, $0A, $AB, $A0, $0A, $BA, $AB, $A0, $0A, $A0, $00 
-LoadBattleTilesToBuffers_Data2_Gfx_42D1C:
-	dc.b	$01, $00, $BB, $33, $37, $7F, $AA, $BA, $0A, $BA, $0B, $A0, $AB, $A0, $AB, $BA 
-LoadBattleTilesToBuffers_Data2_Gfx_42D2C:
-	dc.b	$01, $00, $77, $FF, $FF, $FF, $BA, $A0 
-LoadBattleTilesToBuffers_Data2_Gfx_42D34:
-	dc.b	$01, $00, $73, $39, $9F, $FF, $0A, $AB, $A0, $0A, $BA, $AB, $A0, $0A, $A0, $00 
+	incbin "data/art/tiles/battle/data2_gfx.bin"
+LoadBattleTilesToBuffers_Data2_Gfx_42A08 equ LoadBattleTilesToBuffers_Data2_Gfx_429F0+$18
+LoadBattleTilesToBuffers_Data2_Gfx_42A0E equ LoadBattleTilesToBuffers_Data2_Gfx_429F0+$1E
+LoadBattleTilesToBuffers_Data2_Gfx_42A18 equ LoadBattleTilesToBuffers_Data2_Gfx_429F0+$28
+LoadBattleTilesToBuffers_Data2_Gfx_42A22 equ LoadBattleTilesToBuffers_Data2_Gfx_429F0+$32
+LoadBattleTilesToBuffers_Data2_Gfx_42A36 equ LoadBattleTilesToBuffers_Data2_Gfx_429F0+$46
+LoadBattleTilesToBuffers_Data2_Gfx_42A42 equ LoadBattleTilesToBuffers_Data2_Gfx_429F0+$52
+LoadBattleTilesToBuffers_Data2_Gfx_42A56 equ LoadBattleTilesToBuffers_Data2_Gfx_429F0+$66
+LoadBattleTilesToBuffers_Data2_Gfx_42A66 equ LoadBattleTilesToBuffers_Data2_Gfx_429F0+$76
+LoadBattleTilesToBuffers_Data2_Gfx_42A7C equ LoadBattleTilesToBuffers_Data2_Gfx_429F0+$8C
+LoadBattleTilesToBuffers_Data2_Gfx_42A90 equ LoadBattleTilesToBuffers_Data2_Gfx_429F0+$A0
+LoadBattleTilesToBuffers_Data2_Gfx_42A98 equ LoadBattleTilesToBuffers_Data2_Gfx_429F0+$A8
+LoadBattleTilesToBuffers_Data2_Gfx_42AAE equ LoadBattleTilesToBuffers_Data2_Gfx_429F0+$BE
+LoadBattleTilesToBuffers_Data2_Gfx_42ABE equ LoadBattleTilesToBuffers_Data2_Gfx_429F0+$CE
+LoadBattleTilesToBuffers_Data2_Gfx_42AD4 equ LoadBattleTilesToBuffers_Data2_Gfx_429F0+$E4
+LoadBattleTilesToBuffers_Data2_Gfx_42AE2 equ LoadBattleTilesToBuffers_Data2_Gfx_429F0+$F2
+LoadBattleTilesToBuffers_Data2_Gfx_42AEA equ LoadBattleTilesToBuffers_Data2_Gfx_429F0+$FA
+LoadBattleTilesToBuffers_Data2_Gfx_42AF6 equ LoadBattleTilesToBuffers_Data2_Gfx_429F0+$106
+LoadBattleTilesToBuffers_Data2_Gfx_42AFE equ LoadBattleTilesToBuffers_Data2_Gfx_429F0+$10E
+LoadBattleTilesToBuffers_Data2_Gfx_42B06 equ LoadBattleTilesToBuffers_Data2_Gfx_429F0+$116
+LoadBattleTilesToBuffers_Data2_Gfx_42B12 equ LoadBattleTilesToBuffers_Data2_Gfx_429F0+$122
+LoadBattleTilesToBuffers_Data2_Gfx_42B26 equ LoadBattleTilesToBuffers_Data2_Gfx_429F0+$136
+LoadBattleTilesToBuffers_Data2_Gfx_42B32 equ LoadBattleTilesToBuffers_Data2_Gfx_429F0+$142
+LoadBattleTilesToBuffers_Data2_Gfx_42B42 equ LoadBattleTilesToBuffers_Data2_Gfx_429F0+$152
+LoadBattleTilesToBuffers_Data2_Gfx_42B52 equ LoadBattleTilesToBuffers_Data2_Gfx_429F0+$162
+LoadBattleTilesToBuffers_Data2_Gfx_42B64 equ LoadBattleTilesToBuffers_Data2_Gfx_429F0+$174
+LoadBattleTilesToBuffers_Data2_Gfx_42B72 equ LoadBattleTilesToBuffers_Data2_Gfx_429F0+$182
+LoadBattleTilesToBuffers_Data2_Gfx_42B88 equ LoadBattleTilesToBuffers_Data2_Gfx_429F0+$198
+LoadBattleTilesToBuffers_Data2_Gfx_42B90 equ LoadBattleTilesToBuffers_Data2_Gfx_429F0+$1A0
+LoadBattleTilesToBuffers_Data2_Gfx_42BA6 equ LoadBattleTilesToBuffers_Data2_Gfx_429F0+$1B6
+LoadBattleTilesToBuffers_Data2_Gfx_42BB8 equ LoadBattleTilesToBuffers_Data2_Gfx_429F0+$1C8
+LoadBattleTilesToBuffers_Data2_Gfx_42BCC equ LoadBattleTilesToBuffers_Data2_Gfx_429F0+$1DC
+LoadBattleTilesToBuffers_Data2_Gfx_42BD4 equ LoadBattleTilesToBuffers_Data2_Gfx_429F0+$1E4
+LoadBattleTilesToBuffers_Data2_Gfx_42BDC equ LoadBattleTilesToBuffers_Data2_Gfx_429F0+$1EC
+LoadBattleTilesToBuffers_Data2_Gfx_42BE8 equ LoadBattleTilesToBuffers_Data2_Gfx_429F0+$1F8
+LoadBattleTilesToBuffers_Data2_Gfx_42BF8 equ LoadBattleTilesToBuffers_Data2_Gfx_429F0+$208
+LoadBattleTilesToBuffers_Data2_Gfx_42C0A equ LoadBattleTilesToBuffers_Data2_Gfx_429F0+$21A
+LoadBattleTilesToBuffers_Data2_Gfx_42C12 equ LoadBattleTilesToBuffers_Data2_Gfx_429F0+$222
+LoadBattleTilesToBuffers_Data2_Gfx_42C24 equ LoadBattleTilesToBuffers_Data2_Gfx_429F0+$234
+LoadBattleTilesToBuffers_Data2_Gfx_42C32 equ LoadBattleTilesToBuffers_Data2_Gfx_429F0+$242
+LoadBattleTilesToBuffers_Data2_Gfx_42C48 equ LoadBattleTilesToBuffers_Data2_Gfx_429F0+$258
+LoadBattleTilesToBuffers_Data2_Gfx_42C50 equ LoadBattleTilesToBuffers_Data2_Gfx_429F0+$260
+LoadBattleTilesToBuffers_Data2_Gfx_42C60 equ LoadBattleTilesToBuffers_Data2_Gfx_429F0+$270
+LoadBattleTilesToBuffers_Data2_Gfx_42C6C equ LoadBattleTilesToBuffers_Data2_Gfx_429F0+$27C
+LoadBattleTilesToBuffers_Data2_Gfx_42C7C equ LoadBattleTilesToBuffers_Data2_Gfx_429F0+$28C
+LoadBattleTilesToBuffers_Data2_Gfx_42C8C equ LoadBattleTilesToBuffers_Data2_Gfx_429F0+$29C
+LoadBattleTilesToBuffers_Data2_Gfx_42C9C equ LoadBattleTilesToBuffers_Data2_Gfx_429F0+$2AC
+LoadBattleTilesToBuffers_Data2_Gfx_42CB0 equ LoadBattleTilesToBuffers_Data2_Gfx_429F0+$2C0
+LoadBattleTilesToBuffers_Data2_Gfx_42CBA equ LoadBattleTilesToBuffers_Data2_Gfx_429F0+$2CA
+LoadBattleTilesToBuffers_Data2_Gfx_42CCE equ LoadBattleTilesToBuffers_Data2_Gfx_429F0+$2DE
+LoadBattleTilesToBuffers_Data2_Gfx_42CDA equ LoadBattleTilesToBuffers_Data2_Gfx_429F0+$2EA
+LoadBattleTilesToBuffers_Data2_Gfx_42CEC equ LoadBattleTilesToBuffers_Data2_Gfx_429F0+$2FC
+LoadBattleTilesToBuffers_Data2_Gfx_42D00 equ LoadBattleTilesToBuffers_Data2_Gfx_429F0+$310
+LoadBattleTilesToBuffers_Data2_Gfx_42D08 equ LoadBattleTilesToBuffers_Data2_Gfx_429F0+$318
+LoadBattleTilesToBuffers_Data2_Gfx_42D1C equ LoadBattleTilesToBuffers_Data2_Gfx_429F0+$32C
+LoadBattleTilesToBuffers_Data2_Gfx_42D2C equ LoadBattleTilesToBuffers_Data2_Gfx_429F0+$33C
+LoadBattleTilesToBuffers_Data2_Gfx_42D34 equ LoadBattleTilesToBuffers_Data2_Gfx_429F0+$344
 LoadBattleTilesToBuffers_Data2:
 	dc.l	LoadBattleTilesToBuffers_Data2_Gfx_429F0
 	dc.l	LoadBattleTilesToBuffers_Data2_Gfx_42A08
@@ -50706,195 +50650,95 @@ LoadBattleTilesToBuffers_Data3:
 	dc.b	$00, $00, $42, $44, $43, $45, $00, $35, $00, $00, $46, $48, $47, $49, $00, $4A, $00, $00, $4B, $4D, $4C, $4E, $00, $00, $4F, $52, $50, $53, $51, $54, $00, $00 
 	dc.b	$00, $00, $55, $57, $56, $58, $00, $00 
 LoadBattleTilesToBuffers_Data4_Gfx_42ED0:
-	dc.b	$01, $00, $FF, $FF, $FF, $FF 
-LoadBattleTilesToBuffers_Data4_Gfx_42ED6:
-	dc.b	$00, $00, $32, $13, $55, $00, $32, $22, $55, $00, $04, $33, $35, $00, $00, $32, $25, $00, $99, $33, $35, $09, $99, $44, $35, $99, $92, $12, $35, $99, $92, $12 
-	dc.b	$39, $00 
-LoadBattleTilesToBuffers_Data4_Gfx_42EF8:
-	dc.b	$01, $00, $11, $33, $11, $00, $53, $12, $30, $52, $22, $30, $33, $34, $22, $30, $33, $39, $90, $34, $49, $99, $32, $12, $99, $90, $32, $12, $99, $90 
-LoadBattleTilesToBuffers_Data4_Gfx_42F16:
-	dc.b	$02, $99, $97, $30, $00, $00, $00, $00, $CF, $FF, $FF, $92, $22, $09 
-LoadBattleTilesToBuffers_Data4_Gfx_42F24:
-	dc.b	$01, $00, $01, $3F, $FF, $FF, $93, $33, $99, $90, $99, $99, $99, $99, $99, $00 
-LoadBattleTilesToBuffers_Data4_Gfx_42F34:
-	dc.b	$00, $00, $43, $35, $55, $00, $42, $23, $55, $00, $42, $12, $55, $00, $43, $23, $45, $00, $04, $43, $35, $00, $94, $33, $45, $09, $94, $22, $45, $99, $93, $11 
-	dc.b	$35, $00 
-LoadBattleTilesToBuffers_Data4_Gfx_42F56:
-	dc.b	$01, $00, $13, $33, $11, $00, $55, $55, $50, $53, $35, $43, $30, $44, $40, $32, $99, $90, $43, $39, $99, $54, $49, $99, $90, $99, $99, $99, $90, $00 
-LoadBattleTilesToBuffers_Data4_Gfx_42F74:
-	dc.b	$02, $99, $89, $72, $00, $00, $00, $00, $0C, $FF, $FF, $92, $12, $39, $93, $23, $09, $90 
-LoadBattleTilesToBuffers_Data4_Gfx_42F86:
-	dc.b	$02, $99, $EE, $C0, $00, $00, $00, $01, $3F, $FF, $FF, $90 
-LoadBattleTilesToBuffers_Data4_Gfx_42F92:
-	dc.b	$01, $99, $00, $00, $44, $CF, $00, $43, $34, $55, $00, $32, $23, $55, $00, $03, $33, $45, $00, $09, $32, $45, $00, $33, $35, $09, $43, $35, $44, $55 
-LoadBattleTilesToBuffers_Data4_Gfx_42FB0:
-	dc.b	$01, $00, $33, $33, $31, $10, $55, $55, $54, $45, $42, $24, $33, $33, $22, $30, $23, $39, $90, $34, $49, $99, $43, $13, $99, $90 
-LoadBattleTilesToBuffers_Data4_Gfx_42FCA:
-	dc.b	$02, $99, $F7, $30, $00, $00, $00, $00, $CE, $FF, $FF, $09, $09, $00 
-LoadBattleTilesToBuffers_Data4_Gfx_42FD8:
-	dc.b	$02, $99, $22, $EC, $00, $00, $00, $00, $13, $FF, $FF, $32, $12, $90, $53, $33, $90, $00 
-LoadBattleTilesToBuffers_Data4_Gfx_42FEA:
-	dc.b	$00, $00, $31, $13, $55, $00, $32, $23, $55, $00, $03, $33, $35, $00, $03, $22, $35, $00, $99, $44, $45, $09, $99, $22, $45, $99, $92, $12, $35, $99, $92, $12 
-	dc.b	$35, $00 
-LoadBattleTilesToBuffers_Data4_Gfx_4300C:
-	dc.b	$01, $00, $11, $33, $11, $00, $51, $12, $30, $52, $22, $30, $33, $33, $22, $30, $44, $49, $90, $42, $29, $99, $32, $12, $99, $90, $32, $12, $99, $90 
-LoadBattleTilesToBuffers_Data4_Gfx_4302A:
-	dc.b	$00, $00, $33, $35, $55, $00, $31, $13, $55, $00, $32, $23, $40, $00, $03, $33, $34, $00, $03, $22, $34, $00, $99, $44, $44, $09, $99, $22, $44, $99, $92, $12 
-	dc.b	$35, $00 
-LoadBattleTilesToBuffers_Data4_Gfx_4304C:
-	dc.b	$00, $05, $53, $30, $00, $05, $33, $33, $00, $04, $33, $43, $00, $54, $44, $40, $00, $53, $33, $90, $00, $95, $44, $49, $00, $99, $99, $99, $90, $99, $99, $99 
-	dc.b	$90, $00 
-LoadBattleTilesToBuffers_Data4_Gfx_4306E:
-	dc.b	$02, $99, $89, $72, $00, $00, $00, $00, $0C, $FF, $FF, $92, $12, $39, $92, $22, $09, $90 
-LoadBattleTilesToBuffers_Data4_Gfx_43080:
-	dc.b	$01, $99, $00, $00, $04, $CF, $54, $45, $53, $35, $43, $34, $55, $55, $32, $23, $55, $55, $04, $33, $44, $55, $00, $94, $44, $45, $09, $43, $45, $44, $55, $00 
-LoadBattleTilesToBuffers_Data4_Gfx_430A0:
-	dc.b	$01, $00, $11, $13, $31, $10, $55, $33, $30, $51, $12, $30, $52, $22, $30, $33, $33, $22, $30, $44, $49, $90, $42, $29, $99, $32, $12, $99, $90, $00 
-LoadBattleTilesToBuffers_Data4_Gfx_430BE:
-	dc.b	$02, $99, $77, $30, $00, $00, $00, $08, $CE, $FF, $FF, $09, $09, $00 
-LoadBattleTilesToBuffers_Data4_Gfx_430CC:
-	dc.b	$00, $00, $35, $55, $55, $00, $03, $55, $45, $00, $03, $22, $25, $00, $99, $31, $25, $09, $94, $42, $25, $99, $94, $34, $45, $99, $94, $32, $25, $99, $94, $32 
-	dc.b	$29, $00 
-LoadBattleTilesToBuffers_Data4_Gfx_430EE:
-	dc.b	$01, $00, $13, $31, $10, $00, $55, $55, $30, $45, $53, $22, $20, $21, $39, $90, $22, $44, $99, $44, $34, $99, $90, $22, $34, $99, $90, $22, $34, $99, $90, $00 
-LoadBattleTilesToBuffers_Data4_Gfx_4310E:
-	dc.b	$01, $00, $0C, $FF, $FF, $FF, $09, $99, $43, $49, $99, $99 
-LoadBattleTilesToBuffers_Data4_Gfx_4311A:
-	dc.b	$01, $00, $13, $FF, $FF, $FF, $43, $49, $99, $99, $99, $00 
-LoadBattleTilesToBuffers_Data4_Gfx_43126:
-	dc.b	$00, $00, $00, $55, $55, $00, $03, $55, $55, $00, $03, $35, $53, $00, $09, $32, $23, $00, $99, $32, $23, $09, $99, $32, $13, $99, $94, $42, $23, $99, $94, $24 
-	dc.b	$44, $00 
-LoadBattleTilesToBuffers_Data4_Gfx_43148:
-	dc.b	$02, $00, $33, $11, $00, $01, $99, $00, $02, $26, $66, $55, $40, $44, $40, $43, $39, $90, $43, $39, $33, $59, $90, $55, $90, $59, $90, $59 
-LoadBattleTilesToBuffers_Data4_Gfx_43164:
-	dc.b	$01, $00, $00, $8F, $FF, $FF, $99, $94, $22, $13, $09, $99, $43, $24, $09, $94, $44, $00 
-LoadBattleTilesToBuffers_Data4_Gfx_43176:
-	dc.b	$01, $00, $13, $7F, $FF, $FF, $59, $99, $99, $99, $99, $90 
-LoadBattleTilesToBuffers_Data4_Gfx_43182:
-	dc.b	$01, $99, $00, $04, $4E, $EE, $00, $00, $45, $55, $00, $00, $34, $45, $00, $09, $43, $44, $00, $43, $43, $09, $94, $43, $53, $53, $54, $00 
-LoadBattleTilesToBuffers_Data4_Gfx_4319E:
-	dc.b	$01, $00, $33, $31, $11, $00, $55, $55, $55, $53, $55, $33, $23, $39, $90, $22, $39, $99, $12, $39, $99, $22, $44, $99, $90, $44, $24, $99, $90, $00 
-LoadBattleTilesToBuffers_Data4_Gfx_431BC:
-	dc.b	$01, $00, $0C, $EF, $FF, $FF, $09, $99, $99, $53, $99, $94, $04, $00 
-LoadBattleTilesToBuffers_Data4_Gfx_431CA:
-	dc.b	$01, $00, $01, $3F, $FF, $FF, $12, $24, $99, $90, $22, $49, $99, $44, $99, $00 
-LoadBattleTilesToBuffers_Data4_Gfx_431DA:
-	dc.b	$00, $00, $05, $54, $44, $00, $35, $55, $55, $00, $34, $55, $55, $00, $03, $44, $45, $00, $03, $33, $30, $00, $93, $32, $39, $09, $94, $22, $39, $99, $43, $21 
-	dc.b	$29, $00 
-LoadBattleTilesToBuffers_Data4_Gfx_431FC:
-	dc.b	$01, $00, $31, $13, $31, $10, $44, $55, $55, $55, $30, $55, $54, $30, $44, $43, $33, $33, $32, $33, $90, $32, $24, $49, $21, $23, $49, $90 
-LoadBattleTilesToBuffers_Data4_Gfx_43218:
-	dc.b	$01, $00, $00, $0C, $FF, $FF, $99, $43, $22, $49, $99, $94, $22, $49, $09, $99, $44, $49, $99, $99 
-LoadBattleTilesToBuffers_Data4_Gfx_4322C:
-	dc.b	$01, $00, $00, $13, $FF, $FF, $42, $22, $49, $90, $42, $14, $49, $90, $44, $49, $99, $99, $99, $00 
-LoadBattleTilesToBuffers_Data4_Gfx_43240:
-	dc.b	$02, $00, $88, $88, $88, $80, $55, $47, $73, $00, $00, $54, $44, $05, $05, $53, $34, $03, $32, $23, $94, $32, $12, $09, $99, $42, $21, $00 
-LoadBattleTilesToBuffers_Data4_Gfx_4325C:
-	dc.b	$01, $00, $33, $33, $31, $00, $44, $45, $55, $50, $55, $50, $55, $30, $33, $30, $33, $39, $99, $44, $99, $99, $90, $33, $99, $99, $90, $00 
-LoadBattleTilesToBuffers_Data4_Gfx_43278:
-	dc.b	$02, $99, $CE, $C4, $00, $00, $00, $00, $00, $8F, $FF, $94, $22, $43, $94, $22, $09, $43, $22, $09, $44, $33 
-LoadBattleTilesToBuffers_Data4_Gfx_4328E:
-	dc.b	$02, $99, $66, $64, $00, $00, $00, $00, $11, $3F, $FF, $39, $90, $44, $90, $14, $33, $90, $49, $90 
-LoadBattleTilesToBuffers_Data4_Gfx_432A2:
-	dc.b	$01, $00, $88, $CC, $C8, $00, $02, $54, $44, $02, $45, $55, $34, $44, $23, $34, $02, $33, $99, $34, $44, $09, $99, $93, $34, $99, $99, $99, $93, $00 
-LoadBattleTilesToBuffers_Data4_Gfx_432C0:
-	dc.b	$01, $00, $11, $11, $13, $10, $44, $45, $50, $55, $55, $50, $55, $55, $50, $55, $55, $30, $43, $34, $30, $32, $33, $22, $33, $90, $12, $39, $99, $90 
-LoadBattleTilesToBuffers_Data4_Gfx_432DE:
-	dc.b	$02, $99, $EE, $63, $00, $00, $00, $00, $0C, $EF, $FF, $93, $33, $09, $33, $09 
-LoadBattleTilesToBuffers_Data4_Gfx_432EE:
-	dc.b	$02, $99, $33, $22, $C0, $00, $00, $00, $01, $3F, $FF, $12, $39, $44, $29, $22, $32, $90, $33, $32 
-LoadBattleTilesToBuffers_Data4_Gfx_43302:
-	dc.b	$01, $00, $CC, $CC, $C8, $00, $04, $45, $05, $53, $05, $44, $04, $32, $93, $22, $99, $92, $21, $09, $99, $93, $22, $99, $99, $99, $44, $00 
-LoadBattleTilesToBuffers_Data4_Gfx_4331E:
-	dc.b	$01, $00, $33, $33, $11, $00, $34, $44, $22, $43, $23, $43, $44, $40, $24, $99, $90, $34, $49, $99, $34, $44, $99, $90, $49, $99, $99, $90 
-LoadBattleTilesToBuffers_Data4_Gfx_4333A:
-	dc.b	$02, $99, $E6, $73, $00, $00, $00, $00, $8C, $FF, $FF, $22, $09, $32 
-LoadBattleTilesToBuffers_Data4_Gfx_43348:
-	dc.b	$01, $00, $01, $13, $FF, $FF, $33, $39, $99, $90, $22, $33, $99, $99, $99, $90, $99, $90 
-LoadBattleTilesToBuffers_Data4_Gfx_4335A:
-	dc.b	$01, $00, $CC, $C8, $80, $00, $05, $55, $05, $55, $54, $44, $05, $33, $34, $03, $32, $40, $09, $33, $34, $49, $99, $34, $43, $34, $99, $99, $34, $49 
-LoadBattleTilesToBuffers_Data4_Gfx_43378:
-	dc.b	$00, $55, $54, $40, $00, $55, $33, $34, $00, $55, $22, $34, $00, $53, $32, $34, $00, $53, $34, $40, $00, $53, $22, $40, $00, $94, $22, $39, $90, $94, $32, $24 
-	dc.b	$99, $00 
-LoadBattleTilesToBuffers_Data4_Gfx_4339A:
-	dc.b	$02, $99, $F7, $73, $00, $00, $00, $00, $8C, $FF, $FF, $09 
-LoadBattleTilesToBuffers_Data4_Gfx_433A6:
-	dc.b	$02, $99, $88, $8F, $00, $00, $00, $00, $00, $FF, $FF, $43, $43, $39, $44, $33, $22, $93, $22, $23 
-LoadBattleTilesToBuffers_Data4_Gfx_433BA:
-	dc.b	$01, $00, $77, $7F, $FF, $FF, $90, $90, $90, $00 
-LoadBattleTilesToBuffers_Data4_Gfx_433C4:
-	dc.b	$01, $00, $FF, $FF, $FF, $EE, $04, $09 
-LoadBattleTilesToBuffers_Data4_Gfx_433CC:
-	dc.b	$00, $00, $00, $54, $44, $00, $00, $55, $55, $00, $05, $55, $55, $00, $33, $33, $22, $03, $22, $23, $12, $33, $21, $29, $99, $44, $32, $99, $99, $32, $44, $99 
-	dc.b	$99, $00 
-LoadBattleTilesToBuffers_Data4_Gfx_433EE:
-	dc.b	$00, $55, $55, $55, $20, $50, $55, $43, $20, $20, $04, $34, $30, $20, $04, $32, $40, $00, $03, $22, $30, $99, $43, $24, $43, $99, $93, $43, $33, $99, $99, $33 
-	dc.b	$33, $00 
-LoadBattleTilesToBuffers_Data4_Gfx_43410:
-	dc.b	$01, $00, $FF, $FF, $FF, $77, $30, $39 
-LoadBattleTilesToBuffers_Data4_Gfx_43418:
-	dc.b	$01, $00, $EE, $EF, $FF, $FF, $99, $99, $09, $00 
-LoadBattleTilesToBuffers_Data4_Gfx_43422:
-	dc.b	$02, $99, $3B, $F7, $00, $00, $00, $00, $08, $FF, $FF, $93, $23, $32 
-LoadBattleTilesToBuffers_Data4_Gfx_43430:
-	dc.b	$02, $99, $FF, $FE, $00, $00, $00, $00, $01, $FF, $FF, $00 
-LoadBattleTilesToBuffers_Data4_Gfx_4343C:
-	dc.b	$01, $00, $77, $FF, $FF, $FF, $99, $90 
-LoadBattleTilesToBuffers_Data4_Gfx_43444:
-	dc.b	$01, $00, $CC, $CC, $C8, $00, $55, $55, $55, $54, $45, $43, $44, $32, $44, $23, $99, $43, $23, $09, $99, $43, $34, $99, $99, $43, $42, $00 
-LoadBattleTilesToBuffers_Data4_Gfx_43460:
-	dc.b	$01, $00, $11, $13, $31, $00, $55, $55, $40, $45, $54, $30, $35, $43, $30, $34, $33, $44, $32, $44, $34, $40, $44, $42, $39, $90, $39, $43, $23, $99 
-LoadBattleTilesToBuffers_Data4_Gfx_4347E:
-	dc.b	$02, $99, $C6, $63, $00, $00, $00, $00, $8C, $FF, $FF, $94, $32, $09, $43, $94 
-LoadBattleTilesToBuffers_Data4_Gfx_4348E:
-	dc.b	$02, $99, $17, $7F, $00, $00, $00, $00, $00, $FF, $FF, $23, $94, $44, $33, $44 
-LoadBattleTilesToBuffers_Data4_Gfx_4349E:
-	dc.b	$02, $00, $EE, $EE, $80, $00, $99, $00, $00, $04, $EE, $55, $05, $05, $44, $09, $94, $44, $09, $94, $44, $44, $94, $00 
-LoadBattleTilesToBuffers_Data4_Gfx_434B6:
-	dc.b	$01, $00, $31, $11, $11, $00, $55, $55, $54, $44, $40, $43, $33, $40, $42, $13, $40, $32, $24, $40, $33, $34, $90, $43, $34, $99, $90, $34, $44, $99, $99, $00 
-LoadBattleTilesToBuffers_Data4_Gfx_434D6:
-	dc.b	$02, $99, $E6, $73, $00, $00, $00, $00, $8C, $FF, $FF, $94, $09, $94 
-LoadBattleTilesToBuffers_Data4_Gfx_434E4:
-	dc.b	$01, $00, $00, $00, $FF, $FF, $42, $23, $49, $99, $43, $32, $34, $99, $44, $44, $44, $99, $99, $94, $44, $99 
-LoadBattleTilesToBuffers_Data4_Gfx_434FA:
-	dc.b	$00, $00, $00, $54, $44, $00, $00, $55, $55, $00, $05, $55, $55, $00, $44, $54, $44, $04, $33, $23, $30, $43, $22, $34, $99, $43, $44, $99, $99, $94, $33, $39 
-	dc.b	$99, $00 
-LoadBattleTilesToBuffers_Data4_Gfx_4351C:
-	dc.b	$01, $00, $18, $88, $81, $10, $05, $44, $55, $55, $54, $40, $55, $42, $40, $54, $32, $40, $43, $33, $40, $90, $42, $34, $99, $42, $24, $99, $32, $34, $90, $00 
-LoadBattleTilesToBuffers_Data4_Gfx_4353C:
-	dc.b	$02, $99, $97, $73, $00, $00, $00, $00, $8C, $FF, $FF, $44, $49, $09 
-LoadBattleTilesToBuffers_Data4_Gfx_4354A:
-	dc.b	$02, $99, $88, $CF, $00, $00, $00, $00, $00, $FF, $FF, $43, $43, $49, $94, $43, $34, $44, $44, $00 
-LoadBattleTilesToBuffers_Data4_Gfx_4355E:
-	dc.b	$01, $00, $F7, $7F, $FF, $FF, $90, $90 
-LoadBattleTilesToBuffers_Data4_Gfx_43566:
-	dc.b	$01, $44, $04, $22, $26, $22, $00, $45, $55, $55, $00, $55, $45, $00, $43, $33, $00, $43, $32, $09, $43, $32, $99, $32, $99, $34, $43, $99, $43, $34 
-LoadBattleTilesToBuffers_Data4_Gfx_43584:
-	dc.b	$01, $00, $33, $33, $11, $10, $55, $40, $54, $30, $44, $30, $33, $49, $23, $99, $90, $24, $99, $99, $34, $44, $99, $43, $34, $99, $90, $00 
-LoadBattleTilesToBuffers_Data4_Gfx_435A0:
-	dc.b	$01, $00, $08, $CF, $FF, $FF, $09, $94, $49, $43, $99, $99, $94, $99, $99, $00 
-LoadBattleTilesToBuffers_Data4_Gfx_435B0:
-	dc.b	$01, $00, $11, $3F, $FF, $FF, $33, $39, $99, $33, $99, $90, $99, $90 
-LoadBattleTilesToBuffers_Data4_Gfx_435BE:
-	dc.b	$01, $00, $FF, $FE, $EE, $EE, $04, $44, $33, $42, $04, $00 
-LoadBattleTilesToBuffers_Data4_Gfx_435CA:
-	dc.b	$01, $99, $00, $01, $33, $73, $04, $55, $55, $00, $43, $35, $54, $00, $43, $24, $44, $00, $32, $34, $49, $23, $34, $44, $49, $24, $33, $49 
-LoadBattleTilesToBuffers_Data4_Gfx_435E6:
-	dc.b	$01, $99, $00, $08, $89, $FE, $00, $55, $43, $40, $00, $44, $33, $00, $00, $43, $34, $00, $43, $34, $00, $43, $33, $40, $94, $44, $90, $00 
-LoadBattleTilesToBuffers_Data4_Gfx_43602:
-	dc.b	$01, $00, $EE, $FF, $FF, $FF, $09, $09 
-LoadBattleTilesToBuffers_Data4_Gfx_4360A:
-	dc.b	$02, $99, $3F, $70, $00, $00, $00, $00, $0F, $FF, $FF, $44, $49, $09 
-LoadBattleTilesToBuffers_Data4_Gfx_43618:
-	dc.b	$01, $00, $13, $FF, $FF, $FF, $99, $99, $90, $99, $90, $00 
-LoadBattleTilesToBuffers_Data4_Gfx_43624:
-	dc.b	$01, $00, $CC, $CC, $00, $00, $05, $55, $05, $55, $04, $55, $04, $44, $09, $99, $44, $43, $99, $94, $43, $33, $99, $94, $32, $34, $99, $44, $43, $39 
-LoadBattleTilesToBuffers_Data4_Gfx_43642:
-	dc.b	$02, $00, $33, $33, $11, $10, $99, $00, $00, $46, $6E, $55, $50, $55, $40, $54, $40, $44, $40, $34, $90, $44, $49, $90 
-LoadBattleTilesToBuffers_Data4_Gfx_4365A:
-	dc.b	$01, $00, $00, $8F, $FF, $FF, $99, $42, $34, $49, $09, $94, $33, $44, $09, $44, $34, $00 
-LoadBattleTilesToBuffers_Data4_Gfx_4366C:
-	dc.b	$01, $00, $11, $3F, $FF, $FF, $99, $99, $99, $99, $99, $90, $99, $90 
+	incbin "data/art/tiles/battle/data4_gfx.bin"
+LoadBattleTilesToBuffers_Data4_Gfx_42ED6 equ LoadBattleTilesToBuffers_Data4_Gfx_42ED0+$6
+LoadBattleTilesToBuffers_Data4_Gfx_42EF8 equ LoadBattleTilesToBuffers_Data4_Gfx_42ED0+$28
+LoadBattleTilesToBuffers_Data4_Gfx_42F16 equ LoadBattleTilesToBuffers_Data4_Gfx_42ED0+$46
+LoadBattleTilesToBuffers_Data4_Gfx_42F24 equ LoadBattleTilesToBuffers_Data4_Gfx_42ED0+$54
+LoadBattleTilesToBuffers_Data4_Gfx_42F34 equ LoadBattleTilesToBuffers_Data4_Gfx_42ED0+$64
+LoadBattleTilesToBuffers_Data4_Gfx_42F56 equ LoadBattleTilesToBuffers_Data4_Gfx_42ED0+$86
+LoadBattleTilesToBuffers_Data4_Gfx_42F74 equ LoadBattleTilesToBuffers_Data4_Gfx_42ED0+$A4
+LoadBattleTilesToBuffers_Data4_Gfx_42F86 equ LoadBattleTilesToBuffers_Data4_Gfx_42ED0+$B6
+LoadBattleTilesToBuffers_Data4_Gfx_42F92 equ LoadBattleTilesToBuffers_Data4_Gfx_42ED0+$C2
+LoadBattleTilesToBuffers_Data4_Gfx_42FB0 equ LoadBattleTilesToBuffers_Data4_Gfx_42ED0+$E0
+LoadBattleTilesToBuffers_Data4_Gfx_42FCA equ LoadBattleTilesToBuffers_Data4_Gfx_42ED0+$FA
+LoadBattleTilesToBuffers_Data4_Gfx_42FD8 equ LoadBattleTilesToBuffers_Data4_Gfx_42ED0+$108
+LoadBattleTilesToBuffers_Data4_Gfx_42FEA equ LoadBattleTilesToBuffers_Data4_Gfx_42ED0+$11A
+LoadBattleTilesToBuffers_Data4_Gfx_4300C equ LoadBattleTilesToBuffers_Data4_Gfx_42ED0+$13C
+LoadBattleTilesToBuffers_Data4_Gfx_4302A equ LoadBattleTilesToBuffers_Data4_Gfx_42ED0+$15A
+LoadBattleTilesToBuffers_Data4_Gfx_4304C equ LoadBattleTilesToBuffers_Data4_Gfx_42ED0+$17C
+LoadBattleTilesToBuffers_Data4_Gfx_4306E equ LoadBattleTilesToBuffers_Data4_Gfx_42ED0+$19E
+LoadBattleTilesToBuffers_Data4_Gfx_43080 equ LoadBattleTilesToBuffers_Data4_Gfx_42ED0+$1B0
+LoadBattleTilesToBuffers_Data4_Gfx_430A0 equ LoadBattleTilesToBuffers_Data4_Gfx_42ED0+$1D0
+LoadBattleTilesToBuffers_Data4_Gfx_430BE equ LoadBattleTilesToBuffers_Data4_Gfx_42ED0+$1EE
+LoadBattleTilesToBuffers_Data4_Gfx_430CC equ LoadBattleTilesToBuffers_Data4_Gfx_42ED0+$1FC
+LoadBattleTilesToBuffers_Data4_Gfx_430EE equ LoadBattleTilesToBuffers_Data4_Gfx_42ED0+$21E
+LoadBattleTilesToBuffers_Data4_Gfx_4310E equ LoadBattleTilesToBuffers_Data4_Gfx_42ED0+$23E
+LoadBattleTilesToBuffers_Data4_Gfx_4311A equ LoadBattleTilesToBuffers_Data4_Gfx_42ED0+$24A
+LoadBattleTilesToBuffers_Data4_Gfx_43126 equ LoadBattleTilesToBuffers_Data4_Gfx_42ED0+$256
+LoadBattleTilesToBuffers_Data4_Gfx_43148 equ LoadBattleTilesToBuffers_Data4_Gfx_42ED0+$278
+LoadBattleTilesToBuffers_Data4_Gfx_43164 equ LoadBattleTilesToBuffers_Data4_Gfx_42ED0+$294
+LoadBattleTilesToBuffers_Data4_Gfx_43176 equ LoadBattleTilesToBuffers_Data4_Gfx_42ED0+$2A6
+LoadBattleTilesToBuffers_Data4_Gfx_43182 equ LoadBattleTilesToBuffers_Data4_Gfx_42ED0+$2B2
+LoadBattleTilesToBuffers_Data4_Gfx_4319E equ LoadBattleTilesToBuffers_Data4_Gfx_42ED0+$2CE
+LoadBattleTilesToBuffers_Data4_Gfx_431BC equ LoadBattleTilesToBuffers_Data4_Gfx_42ED0+$2EC
+LoadBattleTilesToBuffers_Data4_Gfx_431CA equ LoadBattleTilesToBuffers_Data4_Gfx_42ED0+$2FA
+LoadBattleTilesToBuffers_Data4_Gfx_431DA equ LoadBattleTilesToBuffers_Data4_Gfx_42ED0+$30A
+LoadBattleTilesToBuffers_Data4_Gfx_431FC equ LoadBattleTilesToBuffers_Data4_Gfx_42ED0+$32C
+LoadBattleTilesToBuffers_Data4_Gfx_43218 equ LoadBattleTilesToBuffers_Data4_Gfx_42ED0+$348
+LoadBattleTilesToBuffers_Data4_Gfx_4322C equ LoadBattleTilesToBuffers_Data4_Gfx_42ED0+$35C
+LoadBattleTilesToBuffers_Data4_Gfx_43240 equ LoadBattleTilesToBuffers_Data4_Gfx_42ED0+$370
+LoadBattleTilesToBuffers_Data4_Gfx_4325C equ LoadBattleTilesToBuffers_Data4_Gfx_42ED0+$38C
+LoadBattleTilesToBuffers_Data4_Gfx_43278 equ LoadBattleTilesToBuffers_Data4_Gfx_42ED0+$3A8
+LoadBattleTilesToBuffers_Data4_Gfx_4328E equ LoadBattleTilesToBuffers_Data4_Gfx_42ED0+$3BE
+LoadBattleTilesToBuffers_Data4_Gfx_432A2 equ LoadBattleTilesToBuffers_Data4_Gfx_42ED0+$3D2
+LoadBattleTilesToBuffers_Data4_Gfx_432C0 equ LoadBattleTilesToBuffers_Data4_Gfx_42ED0+$3F0
+LoadBattleTilesToBuffers_Data4_Gfx_432DE equ LoadBattleTilesToBuffers_Data4_Gfx_42ED0+$40E
+LoadBattleTilesToBuffers_Data4_Gfx_432EE equ LoadBattleTilesToBuffers_Data4_Gfx_42ED0+$41E
+LoadBattleTilesToBuffers_Data4_Gfx_43302 equ LoadBattleTilesToBuffers_Data4_Gfx_42ED0+$432
+LoadBattleTilesToBuffers_Data4_Gfx_4331E equ LoadBattleTilesToBuffers_Data4_Gfx_42ED0+$44E
+LoadBattleTilesToBuffers_Data4_Gfx_4333A equ LoadBattleTilesToBuffers_Data4_Gfx_42ED0+$46A
+LoadBattleTilesToBuffers_Data4_Gfx_43348 equ LoadBattleTilesToBuffers_Data4_Gfx_42ED0+$478
+LoadBattleTilesToBuffers_Data4_Gfx_4335A equ LoadBattleTilesToBuffers_Data4_Gfx_42ED0+$48A
+LoadBattleTilesToBuffers_Data4_Gfx_43378 equ LoadBattleTilesToBuffers_Data4_Gfx_42ED0+$4A8
+LoadBattleTilesToBuffers_Data4_Gfx_4339A equ LoadBattleTilesToBuffers_Data4_Gfx_42ED0+$4CA
+LoadBattleTilesToBuffers_Data4_Gfx_433A6 equ LoadBattleTilesToBuffers_Data4_Gfx_42ED0+$4D6
+LoadBattleTilesToBuffers_Data4_Gfx_433BA equ LoadBattleTilesToBuffers_Data4_Gfx_42ED0+$4EA
+LoadBattleTilesToBuffers_Data4_Gfx_433C4 equ LoadBattleTilesToBuffers_Data4_Gfx_42ED0+$4F4
+LoadBattleTilesToBuffers_Data4_Gfx_433CC equ LoadBattleTilesToBuffers_Data4_Gfx_42ED0+$4FC
+LoadBattleTilesToBuffers_Data4_Gfx_433EE equ LoadBattleTilesToBuffers_Data4_Gfx_42ED0+$51E
+LoadBattleTilesToBuffers_Data4_Gfx_43410 equ LoadBattleTilesToBuffers_Data4_Gfx_42ED0+$540
+LoadBattleTilesToBuffers_Data4_Gfx_43418 equ LoadBattleTilesToBuffers_Data4_Gfx_42ED0+$548
+LoadBattleTilesToBuffers_Data4_Gfx_43422 equ LoadBattleTilesToBuffers_Data4_Gfx_42ED0+$552
+LoadBattleTilesToBuffers_Data4_Gfx_43430 equ LoadBattleTilesToBuffers_Data4_Gfx_42ED0+$560
+LoadBattleTilesToBuffers_Data4_Gfx_4343C equ LoadBattleTilesToBuffers_Data4_Gfx_42ED0+$56C
+LoadBattleTilesToBuffers_Data4_Gfx_43444 equ LoadBattleTilesToBuffers_Data4_Gfx_42ED0+$574
+LoadBattleTilesToBuffers_Data4_Gfx_43460 equ LoadBattleTilesToBuffers_Data4_Gfx_42ED0+$590
+LoadBattleTilesToBuffers_Data4_Gfx_4347E equ LoadBattleTilesToBuffers_Data4_Gfx_42ED0+$5AE
+LoadBattleTilesToBuffers_Data4_Gfx_4348E equ LoadBattleTilesToBuffers_Data4_Gfx_42ED0+$5BE
+LoadBattleTilesToBuffers_Data4_Gfx_4349E equ LoadBattleTilesToBuffers_Data4_Gfx_42ED0+$5CE
+LoadBattleTilesToBuffers_Data4_Gfx_434B6 equ LoadBattleTilesToBuffers_Data4_Gfx_42ED0+$5E6
+LoadBattleTilesToBuffers_Data4_Gfx_434D6 equ LoadBattleTilesToBuffers_Data4_Gfx_42ED0+$606
+LoadBattleTilesToBuffers_Data4_Gfx_434E4 equ LoadBattleTilesToBuffers_Data4_Gfx_42ED0+$614
+LoadBattleTilesToBuffers_Data4_Gfx_434FA equ LoadBattleTilesToBuffers_Data4_Gfx_42ED0+$62A
+LoadBattleTilesToBuffers_Data4_Gfx_4351C equ LoadBattleTilesToBuffers_Data4_Gfx_42ED0+$64C
+LoadBattleTilesToBuffers_Data4_Gfx_4353C equ LoadBattleTilesToBuffers_Data4_Gfx_42ED0+$66C
+LoadBattleTilesToBuffers_Data4_Gfx_4354A equ LoadBattleTilesToBuffers_Data4_Gfx_42ED0+$67A
+LoadBattleTilesToBuffers_Data4_Gfx_4355E equ LoadBattleTilesToBuffers_Data4_Gfx_42ED0+$68E
+LoadBattleTilesToBuffers_Data4_Gfx_43566 equ LoadBattleTilesToBuffers_Data4_Gfx_42ED0+$696
+LoadBattleTilesToBuffers_Data4_Gfx_43584 equ LoadBattleTilesToBuffers_Data4_Gfx_42ED0+$6B4
+LoadBattleTilesToBuffers_Data4_Gfx_435A0 equ LoadBattleTilesToBuffers_Data4_Gfx_42ED0+$6D0
+LoadBattleTilesToBuffers_Data4_Gfx_435B0 equ LoadBattleTilesToBuffers_Data4_Gfx_42ED0+$6E0
+LoadBattleTilesToBuffers_Data4_Gfx_435BE equ LoadBattleTilesToBuffers_Data4_Gfx_42ED0+$6EE
+LoadBattleTilesToBuffers_Data4_Gfx_435CA equ LoadBattleTilesToBuffers_Data4_Gfx_42ED0+$6FA
+LoadBattleTilesToBuffers_Data4_Gfx_435E6 equ LoadBattleTilesToBuffers_Data4_Gfx_42ED0+$716
+LoadBattleTilesToBuffers_Data4_Gfx_43602 equ LoadBattleTilesToBuffers_Data4_Gfx_42ED0+$732
+LoadBattleTilesToBuffers_Data4_Gfx_4360A equ LoadBattleTilesToBuffers_Data4_Gfx_42ED0+$73A
+LoadBattleTilesToBuffers_Data4_Gfx_43618 equ LoadBattleTilesToBuffers_Data4_Gfx_42ED0+$748
+LoadBattleTilesToBuffers_Data4_Gfx_43624 equ LoadBattleTilesToBuffers_Data4_Gfx_42ED0+$754
+LoadBattleTilesToBuffers_Data4_Gfx_43642 equ LoadBattleTilesToBuffers_Data4_Gfx_42ED0+$772
+LoadBattleTilesToBuffers_Data4_Gfx_4365A equ LoadBattleTilesToBuffers_Data4_Gfx_42ED0+$78A
+LoadBattleTilesToBuffers_Data4_Gfx_4366C equ LoadBattleTilesToBuffers_Data4_Gfx_42ED0+$79C
 LoadBattleTilesToBuffers_Data4:
 	dc.l	LoadBattleTilesToBuffers_Data4_Gfx_42ED0
 	dc.l	LoadBattleTilesToBuffers_Data4_Gfx_42ED6
@@ -50999,609 +50843,263 @@ LoadBattleTilesToBuffers_Data5:
 	dc.b	$E8, $24, $24, $24, $E9, $EA, $ED, $BC, $EB, $EE, $BD, $EC, $EF, $24, $C1, $24, $C5, $C8, $CB, $BC, $F2, $F5, $F0, $F3, $F6, $F1, $F4, $24, $F7, $F8, $FB, $BC 
 	dc.b	$F9, $D7, $D0, $D4, $FC, $D1, $FA, $FD 
 LoadBattleTilesToBuffers_Data6_Gfx_43946:
-	dc.b	$01, $00, $FF, $FF, $FF, $EE, $03, $32 
-LoadBattleTilesToBuffers_Data6_Gfx_4394E:
-	dc.b	$01, $00, $FE, $CC, $C8, $00, $CD, $0D, $CC, $ED, $DC, $DD, $DD, $0D, $D6, $78, $33, $EE, $D6, $88, $23, $4E, $97, $D8 
-LoadBattleTilesToBuffers_Data6_Gfx_43966:
-	dc.b	$01, $00, $F7, $33, $22, $00, $DE, $CD, $E0, $DD, $E0, $DD, $DE, $0A, $7E, $DE, $A4, $87, $ED, $E4, $A4, $D7, $9E, $44, $A4, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_43980:
-	dc.b	$01, $00, $FF, $FF, $73, $33, $A1, $32, $10, $32, $11, $32, $1A, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_4398E:
-	dc.b	$01, $00, $CC, $CC, $EE, $EE, $03, $22, $03, $21, $03, $21, $03, $22, $33, $54, $55, $33 
-LoadBattleTilesToBuffers_Data6_Gfx_439A0:
-	dc.b	$00, $22, $34, $97, $88, $12, $34, $56, $88, $22, $44, $45, $67, $33, $43, $23, $55, $34, $42, $12, $33, $45, $42, $11, $22, $55, $02, $21, $11, $50, $04, $32 
-	dc.b	$22, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_439C2:
-	dc.b	$00, $87, $94, $33, $4A, $86, $54, $43, $4A, $65, $44, $43, $4A, $54, $34, $44, $44, $33, $33, $44, $54, $22, $23, $55, $55, $22, $24, $05, $55, $23, $34, $00 
-	dc.b	$53, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_439E4:
-	dc.b	$01, $00, $11, $11, $11, $11, $32, $1A, $B0, $32, $1A, $B0, $43, $11, $AA, $A4, $21, $1A, $A4, $32, $22, $4A, $33, $22, $54, $A3, $33, $34, $4A, $43 
-LoadBattleTilesToBuffers_Data6_Gfx_43A02:
-	dc.b	$01, $00, $CC, $CE, $EE, $EF, $02, $22, $02, $12, $02, $11, $22, $44, $03, $03 
-LoadBattleTilesToBuffers_Data6_Gfx_43A12:
-	dc.b	$00, $20, $45, $43, $33, $34, $33, $44, $44, $34, $33, $43, $33, $45, $34, $31, $22, $45, $54, $32, $12, $34, $55, $43, $22, $34, $55, $54, $44, $00, $33, $35 
-	dc.b	$55, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_43A34:
-	dc.b	$00, $33, $45, $40, $32, $44, $53, $34, $31, $34, $43, $34, $32, $33, $34, $34, $42, $23, $34, $40, $44, $33, $45, $44, $33, $44, $55, $04, $33, $55, $33, $30 
-	dc.b	$00, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_43A56:
-	dc.b	$01, $00, $17, $77, $7F, $FF, $22, $04, $AA, $22, $12, $22, $40, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_43A64:
-	dc.b	$01, $00, $FF, $FF, $FE, $EC, $03, $32, $03, $22 
-LoadBattleTilesToBuffers_Data6_Gfx_43A6E:
-	dc.b	$01, $00, $FE, $CC, $80, $00, $CD, $0D, $CC, $ED, $DC, $0E, $ED, $DD, $33, $EE, $D6, $78, $23, $4E, $D7, $88, $22, $3E, $97, $D8 
-LoadBattleTilesToBuffers_Data6_Gfx_43A88:
-	dc.b	$01, $00, $F7, $33, $32, $00, $DD, $CD, $E0, $DD, $D0, $DD, $DE, $7D, $DE, $0A, $87, $ED, $E0, $A4, $D7, $9E, $E4, $A4 
-LoadBattleTilesToBuffers_Data6_Gfx_43AA0:
-	dc.b	$01, $00, $FF, $FF, $F7, $33, $A1, $32, $10, $32, $11, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_43AAC:
-	dc.b	$01, $00, $CC, $CE, $EE, $CC, $03, $21, $03, $21, $03, $22, $33, $55, $44, $04, $33, $03, $22, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_43AC0:
-	dc.b	$00, $12, $34, $E7, $88, $22, $34, $46, $88, $33, $34, $35, $67, $34, $43, $23, $55, $55, $32, $12, $33, $50, $42, $11, $22, $40, $02, $21, $11, $40, $54, $32 
-	dc.b	$22, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_43AE2:
-	dc.b	$00, $87, $95, $43, $A4, $86, $54, $32, $4A, $65, $44, $32, $4A, $54, $34, $32, $4A, $33, $23, $43, $24, $22, $22, $34, $34, $22, $23, $45, $44, $22, $34, $05 
-	dc.b	$55, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_43B04:
-	dc.b	$01, $00, $31, $11, $11, $11, $32, $1A, $32, $1A, $B0, $32, $1A, $B0, $43, $11, $AA, $A4, $21, $1A, $A4, $32, $22, $4A, $33, $22, $54, $A3, $33, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_43B22:
-	dc.b	$01, $00, $CC, $EE, $EF, $FF, $03, $22, $04, $32, $43, $44, $04, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_43B30:
-	dc.b	$00, $45, $34, $43, $33, $34, $33, $44, $44, $44, $33, $43, $33, $34, $34, $31, $22, $44, $45, $32, $12, $00, $55, $43, $22, $00, $05, $54, $44, $00, $05, $55 
-	dc.b	$55, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_43B52:
-	dc.b	$00, $33, $44, $00, $55, $45, $53, $40, $33, $33, $43, $44, $22, $33, $34, $43, $21, $23, $34, $43, $22, $33, $43, $14, $22, $44, $52, $22, $43, $55, $55, $33 
-	dc.b	$00, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_43B74:
-	dc.b	$01, $00, $11, $77, $77, $FF, $50, $4A, $43, $24, $04, $AA, $12, $23, $20, $30 
-LoadBattleTilesToBuffers_Data6_Gfx_43B84:
-	dc.b	$01, $00, $FF, $FF, $FF, $FE, $03, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_43B8C:
-	dc.b	$01, $00, $FE, $CC, $C8, $80, $CD, $0D, $CC, $DD, $DC, $DD, $DD, $0D, $D6, $78, $EE, $D7, $88, $33, $4E, $97, $D8, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_43BA4:
-	dc.b	$01, $00, $F7, $32, $20, $00, $DD, $CD, $E0, $DD, $D0, $0A, $DD, $DD, $A4, $7E, $DD, $E3, $A4, $87, $ED, $43, $A4, $D7, $9E, $32, $4A, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_43BC0:
-	dc.b	$01, $00, $FF, $F7, $33, $31, $A1, $32, $10, $32, $11, $32, $1A, $32, $1A, $B0 
-LoadBattleTilesToBuffers_Data6_Gfx_43BD0:
-	dc.b	$01, $00, $EC, $CC, $CE, $EE, $32, $03, $22, $03, $21, $03, $21, $03, $22, $33, $54, $55 
-LoadBattleTilesToBuffers_Data6_Gfx_43BE2:
-	dc.b	$00, $23, $34, $47, $88, $22, $33, $46, $88, $12, $34, $45, $67, $23, $43, $23, $55, $33, $42, $12, $33, $34, $42, $11, $22, $44, $42, $21, $11, $55, $04, $32 
-	dc.b	$22, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_43C04:
-	dc.b	$00, $87, $54, $32, $4A, $86, $54, $32, $4A, $65, $44, $33, $24, $54, $23, $44, $34, $33, $23, $44, $44, $22, $23, $45, $55, $22, $23, $40, $54, $22, $33, $40 
-	dc.b	$44, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_43C26:
-	dc.b	$01, $00, $11, $11, $11, $11, $32, $1A, $B0, $43, $11, $AA, $A4, $21, $1A, $A4, $32, $22, $4A, $33, $22, $54, $A3, $33, $44, $4A, $43, $33, $04, $AA 
-LoadBattleTilesToBuffers_Data6_Gfx_43C44:
-	dc.b	$01, $00, $EC, $CC, $EE, $EF, $55, $04, $33, $03, $21, $03, $21, $32, $43, $04 
-LoadBattleTilesToBuffers_Data6_Gfx_43C54:
-	dc.b	$01, $44, $03, $04, $40, $0D, $50, $04, $43, $33, $40, $33, $34, $33, $43, $33, $23, $31, $22, $24, $32, $12, $43, $34, $43, $22, $33, $45, $54, $33, $45, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_43C74:
-	dc.b	$00, $34, $44, $44, $43, $44, $54, $34, $32, $33, $43, $24, $44, $33, $34, $45, $43, $23, $34, $40, $44, $33, $45, $00, $00, $34, $55, $00, $00, $45, $55, $00 
-	dc.b	$00, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_43C96:
-	dc.b	$01, $00, $77, $77, $FF, $FF, $23, $33, $30, $40 
-LoadBattleTilesToBuffers_Data6_Gfx_43CA0:
-	dc.b	$01, $00, $FF, $FF, $FF, $FF 
-LoadBattleTilesToBuffers_Data6_Gfx_43CA6:
-	dc.b	$01, $00, $FE, $C8, $88, $88, $DD, $EE, $DC, $0E, $EC, $CD, $0D, $CD, $DD, $ED, $DD, $EE, $DD, $EE, $DE, $DE, $ED, $E7 
-LoadBattleTilesToBuffers_Data6_Gfx_43CBE:
-	dc.b	$01, $00, $F7, $33, $33, $33, $EE, $DD, $E0, $DE, $EE, $E6, $6E, $78, $77, $78, $D7, $78, $88, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_43CD2:
-	dc.b	$01, $EE, $64, $C8, $00, $40, $0E, $E7, $0E, $E3, $23, $21, $12, $E3, $11, $22, $0E, $E3, $21, $22, $0E, $E4, $33, $33, $00, $44, $44, $00, $00, $44, $55, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_43CF2:
-	dc.b	$00, $78, $87, $40, $00, $48, $87, $44, $00, $34, $75, $54, $00, $34, $34, $55, $40, $34, $33, $55, $40, $44, $23, $45, $40, $55, $22, $44, $40, $55, $54, $44 
-	dc.b	$44, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_43D14:
-	dc.b	$01, $00, $FF, $FF, $FF, $F7, $40, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_43D1C:
-	dc.b	$01, $00, $CC, $CC, $CC, $CC, $04, $45, $04, $44, $43, $34, $43, $23, $43, $22, $43, $32, $44, $33, $04, $44 
-LoadBattleTilesToBuffers_Data6_Gfx_43D32:
-	dc.b	$01, $00, $00, $00, $13, $33, $55, $43, $33, $43, $53, $22, $23, $42, $43, $33, $33, $43, $34, $44, $44, $44, $23, $34, $40, $23, $44, $34, $44, $44, $43, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_43D52:
-	dc.b	$01, $00, $77, $7F, $FF, $FF, $24, $34, $40, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_43D5C:
-	dc.b	$01, $00, $FE, $C8, $88, $88, $ED, $EE, $DD, $0E, $DD, $CD, $0E, $DC, $DE, $ED, $DC, $DE, $ED, $CD, $EE, $ED, $DE, $EE 
-LoadBattleTilesToBuffers_Data6_Gfx_43D74:
-	dc.b	$01, $00, $F7, $33, $22, $20, $DE, $DD, $E0, $DE, $EE, $E6, $6E, $03, $68, $77, $32, $78, $D8, $43, $78, $88, $43, $43 
-LoadBattleTilesToBuffers_Data6_Gfx_43D8C:
-	dc.b	$01, $00, $FF, $FF, $77, $73, $30, $23, $33, $44, $40, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_43D98:
-	dc.b	$00, $0E, $EE, $EE, $E6, $0E, $43, $23, $E5, $E4, $21, $12, $35, $E4, $21, $12, $35, $04, $21, $22, $35, $04, $32, $33, $45, $00, $43, $44, $45, $00, $04, $44 
-	dc.b	$44, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_43DBA:
-	dc.b	$00, $78, $84, $32, $34, $77, $43, $22, $34, $55, $32, $23, $44, $55, $32, $34, $44, $55, $44, $45, $53, $55, $54, $55, $54, $54, $43, $55, $54, $32, $33, $45 
-	dc.b	$40, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_43DDC:
-	dc.b	$01, $00, $33, $37, $77, $FF, $43, $44, $43, $44, $44, $40, $34, $40, $40, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_43DEC:
-	dc.b	$01, $00, $CC, $C8, $88, $CC, $44, $43, $55, $44, $43, $22, $04, $32, $22, $04, $32, $22, $04, $43, $33, $44, $44, $05, $55, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_43E06:
-	dc.b	$01, $00, $01, $11, $11, $33, $33, $34, $55, $40, $44, $44, $54, $43, $23, $40, $34, $32, $30, $34, $33, $20, $44, $44, $30, $44, $55, $55, $50, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_43E24:
-	dc.b	$01, $00, $FE, $C8, $88, $88, $ED, $EE, $DD, $0E, $DD, $CD, $0E, $DC, $DD, $ED, $DC, $EE, $ED, $CD, $DE, $ED, $DD, $E6 
-LoadBattleTilesToBuffers_Data6_Gfx_43E3C:
-	dc.b	$01, $00, $F7, $33, $33, $33, $DE, $DD, $E0, $DE, $EE, $E6, $6E, $68, $77, $78, $D7, $78, $88, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_43E50:
-	dc.b	$00, $00, $ED, $DE, $E6, $0E, $ED, $EE, $22, $0E, $DE, $E2, $21, $0E, $EE, $32, $11, $0E, $DE, $32, $12, $0E, $EE, $42, $23, $00, $E5, $54, $34, $00, $05, $55 
-	dc.b	$44, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_43E72:
-	dc.b	$00, $78, $87, $40, $00, $38, $87, $44, $00, $23, $65, $54, $00, $23, $44, $55, $40, $33, $43, $45, $40, $34, $33, $45, $40, $44, $34, $45, $40, $44, $34, $44 
-	dc.b	$40, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_43E94:
-	dc.b	$01, $00, $88, $C8, $88, $8C, $05, $55, $55, $05, $55, $44, $54, $43, $04, $34, $33, $04, $32, $44, $04, $32, $14, $04, $33, $21, $43, $33 
-LoadBattleTilesToBuffers_Data6_Gfx_43EB0:
-	dc.b	$00, $44, $44, $34, $40, $43, $44, $34, $00, $23, $34, $44, $00, $22, $23, $43, $40, $32, $24, $43, $40, $43, $43, $33, $40, $34, $43, $44, $40, $45, $54, $40 
-	dc.b	$00, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_43ED2:
-	dc.b	$01, $00, $FE, $CC, $C8, $00, $EE, $0E, $DC, $ED, $DC, $DD, $DD, $0E, $D6, $88, $33, $EE, $D7, $88, $23, $4E, $97, $D8 
-LoadBattleTilesToBuffers_Data6_Gfx_43EEA:
-	dc.b	$01, $00, $F7, $33, $22, $00, $DE, $CD, $E0, $DD, $E0, $DD, $DE, $0A, $8E, $DE, $A4, $87, $ED, $E3, $A4, $D7, $9E, $43, $A4, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_43F04:
-	dc.b	$01, $00, $CC, $CC, $EE, $EE, $03, $22, $03, $22, $03, $22, $03, $23, $33, $54, $05, $05 
-LoadBattleTilesToBuffers_Data6_Gfx_43F16:
-	dc.b	$00, $22, $35, $97, $88, $22, $35, $46, $88, $23, $44, $45, $67, $33, $43, $23, $55, $34, $32, $12, $33, $45, $43, $11, $22, $55, $43, $21, $11, $55, $54, $32 
-	dc.b	$22, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_43F38:
-	dc.b	$00, $87, $95, $32, $4A, $86, $54, $32, $4A, $65, $44, $33, $4A, $54, $34, $43, $34, $33, $33, $45, $44, $22, $23, $45, $55, $22, $34, $55, $55, $23, $34, $55 
-	dc.b	$50, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_43F5A:
-	dc.b	$01, $00, $11, $11, $11, $19, $32, $1A, $B0, $32, $1A, $B0, $43, $11, $AA, $A4, $21, $1A, $A4, $32, $22, $4A, $33, $22, $04, $A3, $33, $4A, $43, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_43F78:
-	dc.b	$00, $55, $44, $43, $33, $04, $43, $44, $34, $04, $32, $34, $44, $05, $33, $23, $44, $00, $54, $34, $33, $00, $55, $44, $33, $00, $05, $54, $44, $00, $33, $35 
-	dc.b	$55, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_43F9A:
-	dc.b	$01, $00, $01, $11, $11, $31, $34, $43, $45, $50, $33, $22, $34, $32, $22, $34, $42, $23, $45, $43, $44, $50, $44, $45, $40, $44, $55, $55, $33, $30 
-LoadBattleTilesToBuffers_Data6_Gfx_43FB8:
-	dc.b	$01, $00, $9F, $FF, $FF, $FF, $04, $AA 
-LoadBattleTilesToBuffers_Data6_Gfx_43FC0:
-	dc.b	$01, $00, $FF, $FF, $FE, $EC, $03, $32, $03, $21 
-LoadBattleTilesToBuffers_Data6_Gfx_43FCA:
-	dc.b	$01, $00, $EC, $C8, $80, $00, $EE, $0E, $DC, $ED, $CD, $0E, $EE, $DD, $EE, $E6, $78, $33, $EE, $D7, $88, $34, $4E, $D7, $D8, $42, $23, $97, $88, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_43FE8:
-	dc.b	$01, $00, $73, $33, $30, $00, $EE, $CE, $E0, $DD, $E0, $DD, $DE, $6D, $DE, $87, $DE, $E0, $0A, $D7, $ED, $E0, $A4, $87, $9E, $E3, $A4, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_44004:
-	dc.b	$01, $00, $CC, $EC, $CC, $EF, $03, $24, $03, $33, $32, $04, $22, $04, $22, $04, $33, $44 
-LoadBattleTilesToBuffers_Data6_Gfx_44016:
-	dc.b	$00, $32, $34, $46, $88, $24, $22, $45, $67, $24, $24, $33, $34, $34, $45, $32, $22, $34, $43, $43, $22, $44, $42, $34, $32, $00, $42, $23, $43, $00, $43, $32 
-	dc.b	$23, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_44038:
-	dc.b	$00, $86, $95, $43, $A4, $65, $44, $33, $4A, $43, $43, $32, $4A, $34, $44, $32, $3A, $23, $55, $43, $34, $34, $55, $54, $44, $34, $55, $55, $00, $44, $55, $40 
-	dc.b	$00, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_4405A:
-	dc.b	$01, $00, $31, $11, $11, $11, $32, $1A, $32, $1A, $B0, $32, $1A, $B0, $43, $11, $AA, $A4, $21, $1A, $A4, $32, $22, $4A, $33, $22, $04, $A3, $33, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_44078:
-	dc.b	$00, $00, $44, $33, $33, $04, $33, $44, $44, $04, $33, $44, $33, $04, $34, $41, $23, $04, $45, $32, $12, $00, $45, $43, $22, $00, $05, $54, $44, $00, $05, $55 
-	dc.b	$55, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_4409A:
-	dc.b	$01, $00, $11, $11, $11, $11, $33, $34, $40, $44, $44, $40, $33, $43, $34, $33, $34, $34, $23, $34, $44, $33, $45, $54, $44, $55, $50, $55, $55, $50 
-LoadBattleTilesToBuffers_Data6_Gfx_440B8:
-	dc.b	$01, $00, $99, $FF, $FF, $FF, $4A, $43, $04, $AA 
-LoadBattleTilesToBuffers_Data6_Gfx_440C2:
-	dc.b	$01, $00, $FF, $CC, $88, $80, $0E, $EE, $EE, $DC, $0E, $ED, $CD, $0E, $DD, $DD, $EE, $D6, $78, $33, $4E, $97, $88, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_440DA:
-	dc.b	$01, $00, $FF, $76, $20, $00, $E0, $DE, $0A, $DD, $EE, $A4, $DE, $DE, $E3, $A4, $6E, $ED, $43, $A4, $87, $9E, $32, $4A 
-LoadBattleTilesToBuffers_Data6_Gfx_440F2:
-	dc.b	$01, $00, $EC, $CC, $CE, $EE, $32, $03, $22, $03, $21, $03, $21, $03, $22, $43, $54, $05 
-LoadBattleTilesToBuffers_Data6_Gfx_44104:
-	dc.b	$00, $23, $35, $47, $D8, $22, $35, $47, $88, $12, $44, $46, $88, $23, $43, $33, $67, $34, $42, $12, $55, $34, $43, $11, $22, $45, $43, $21, $11, $55, $54, $32 
-	dc.b	$22, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_44126:
-	dc.b	$00, $D7, $55, $42, $4A, $87, $55, $42, $4A, $86, $44, $43, $34, $65, $34, $44, $34, $54, $33, $44, $44, $22, $23, $45, $55, $22, $23, $45, $55, $22, $34, $55 
-	dc.b	$55, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_44148:
-	dc.b	$01, $00, $11, $11, $11, $99, $32, $1A, $B0, $43, $11, $AA, $A4, $21, $1A, $A4, $32, $22, $4A, $33, $22, $04, $A3, $33, $4A, $43, $04, $A0 
-LoadBattleTilesToBuffers_Data6_Gfx_44164:
-	dc.b	$01, $00, $EF, $EF, $FF, $FF, $05, $03 
-LoadBattleTilesToBuffers_Data6_Gfx_4416C:
-	dc.b	$00, $55, $54, $43, $33, $55, $34, $44, $44, $32, $23, $44, $33, $33, $12, $34, $23, $03, $31, $34, $44, $05, $33, $43, $42, $05, $54, $32, $34, $05, $55, $32 
-	dc.b	$23, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_4418E:
-	dc.b	$01, $00, $00, $01, $13, $33, $33, $43, $33, $50, $44, $33, $22, $20, $43, $32, $12, $30, $43, $31, $23, $33, $43, $30, $22, $34, $21, $35, $55, $55 
-LoadBattleTilesToBuffers_Data6_Gfx_441AC:
-	dc.b	$01, $00, $FE, $CC, $88, $88, $ED, $0E, $DD, $ED, $CD, $0E, $DC, $DE, $0D, $DC, $D6, $ED, $CD, $E6, $ED, $DE, $57, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_441C4:
-	dc.b	$01, $00, $F7, $33, $33, $31, $EE, $DD, $D0, $E6, $7E, $67, $88, $78, $88, $7D, $8D, $88, $88, $44 
-LoadBattleTilesToBuffers_Data6_Gfx_441D8:
-	dc.b	$00, $0E, $EE, $EE, $56, $0E, $32, $23, $56, $E3, $21, $12, $35, $E2, $21, $12, $24, $03, $21, $22, $34, $04, $32, $33, $34, $05, $54, $33, $43, $55, $55, $54 
-	dc.b	$43, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_441FA:
-	dc.b	$00, $88, $87, $44, $40, $78, $87, $45, $44, $66, $74, $44, $54, $43, $33, $44, $54, $32, $23, $34, $54, $21, $22, $34, $54, $21, $12, $35, $54, $22, $23, $44 
-	dc.b	$44, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_4421C:
-	dc.b	$00, $33, $55, $44, $43, $23, $33, $44, $44, $21, $23, $43, $32, $21, $23, $43, $22, $22, $34, $43, $23, $03, $42, $43, $33, $03, $34, $44, $44, $00, $40, $55 
-	dc.b	$54, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_4423E:
-	dc.b	$00, $33, $34, $42, $40, $44, $44, $43, $40, $43, $23, $43, $40, $33, $22, $34, $40, $43, $22, $24, $00, $43, $33, $34, $00, $43, $33, $40, $00, $44, $44, $40 
-	dc.b	$00, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_44260:
-	dc.b	$01, $00, $FF, $FF, $EE, $EE, $05, $05, $55, $34 
-LoadBattleTilesToBuffers_Data6_Gfx_4426A:
-	dc.b	$00, $0E, $EE, $EE, $56, $E3, $32, $35, $56, $33, $11, $23, $55, $42, $11, $22, $44, $42, $22, $23, $44, $54, $33, $33, $43, $55, $43, $34, $33, $55, $50, $44 
-	dc.b	$33, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_4428C:
-	dc.b	$00, $88, $87, $45, $44, $78, $87, $44, $54, $66, $74, $44, $45, $43, $33, $44, $45, $32, $23, $34, $45, $21, $22, $34, $55, $21, $12, $35, $55, $22, $23, $45 
-	dc.b	$44, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_442AE:
-	dc.b	$01, $00, $F7, $77, $77, $77, $40, $40, $40, $40, $40, $40, $30, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_442BC:
-	dc.b	$01, $00, $EE, $CC, $CE, $FF, $33, $32, $03, $43, $03, $34, $03, $34, $44, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_442CC:
-	dc.b	$00, $44, $00, $44, $43, $33, $00, $44, $44, $34, $04, $42, $33, $40, $43, $31, $23, $40, $43, $32, $23, $00, $43, $33, $34, $00, $04, $33, $44, $00, $00, $44 
-	dc.b	$45, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_442EE:
-	dc.b	$01, $43, $10, $B8, $88, $00, $33, $34, $45, $44, $44, $44, $42, $23, $12, $34, $03, $21, $24, $00, $33, $34, $00, $44, $33, $40, $00, $44, $44, $40, $00, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_4430E:
-	dc.b	$01, $00, $77, $33, $37, $FF, $23, $23, $23, $30, $32, $30, $32, $30, $03, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_4431E:
-	dc.b	$00, $0E, $EE, $EE, $56, $0E, $E3, $22, $35, $EE, $32, $11, $33, $EE, $21, $11, $23, $0E, $22, $12, $33, $00, $43, $33, $34, $00, $04, $44, $45, $00, $05, $55 
-	dc.b	$55, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_44340:
-	dc.b	$01, $40, $11, $11, $01, $11, $88, $87, $55, $78, $87, $45, $56, $74, $44, $43, $33, $44, $32, $23, $34, $50, $21, $22, $34, $21, $12, $35, $22, $23, $45, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_44360:
-	dc.b	$01, $00, $8C, $88, $88, $88, $05, $55, $55, $55, $53, $04, $44, $31, $04, $34, $32, $43, $22, $43, $43, $22, $34, $43, $33, $34, $04, $43, $34, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_4437E:
-	dc.b	$00, $44, $34, $44, $00, $23, $44, $44, $00, $22, $34, $44, $40, $11, $34, $34, $40, $33, $42, $43, $40, $34, $21, $34, $40, $43, $32, $35, $00, $44, $33, $45 
-	dc.b	$00, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_443A0:
-	dc.b	$01, $00, $FF, $FE, $CC, $88, $A4, $02, $3A, $12, $3A, $0A, $12, $3A, $0A, $12, $A4, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_443B2:
-	dc.b	$01, $00, $EC, $CC, $00, $00, $EE, $0E, $DD, $EE, $DC, $ED, $CD, $40, $0E, $ED, $CC, $43, $EE, $EC, $CD, $43, $4E, $DD, $DD, $43, $3E, $ED, $DD, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_443D0:
-	dc.b	$01, $00, $73, $33, $30, $00, $DD, $DD, $E0, $DD, $D0, $DC, $DE, $CD, $DE, $CC, $DE, $E3, $33, $DD, $DE, $43, $22, $DD, $EE, $32, $12, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_443EC:
-	dc.b	$01, $00, $FF, $FF, $FF, $77, $30, $33 
-LoadBattleTilesToBuffers_Data6_Gfx_443F4:
-	dc.b	$00, $00, $A1, $23, $A4, $00, $A1, $23, $A4, $0A, $11, $2A, $44, $0A, $12, $4A, $44, $02, $23, $A4, $55, $03, $34, $A4, $55, $03, $4A, $40, $34, $0A, $A4, $02 
-	dc.b	$22, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_44416:
-	dc.b	$00, $33, $3E, $EE, $DD, $33, $44, $EE, $EE, $34, $44, $E4, $EE, $44, $42, $12, $34, $44, $42, $21, $22, $55, $03, $22, $11, $50, $04, $33, $22, $40, $44, $43 
-	dc.b	$33, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_44438:
-	dc.b	$00, $ED, $EE, $42, $12, $ED, $EE, $43, $31, $EE, $4E, $44, $33, $E3, $34, $44, $43, $22, $23, $34, $44, $23, $34, $05, $55, $23, $44, $00, $54, $34, $44, $40 
-	dc.b	$42, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_4445A:
-	dc.b	$01, $00, $77, $77, $77, $77, $23, $23, $33, $40, $50, $50, $30, $22 
-LoadBattleTilesToBuffers_Data6_Gfx_44468:
-	dc.b	$01, $00, $CC, $EE, $EE, $FF, $02, $12, $02, $11, $22, $44, $03, $04 
-LoadBattleTilesToBuffers_Data6_Gfx_44476:
-	dc.b	$00, $34, $33, $44, $44, $34, $23, $43, $22, $45, $34, $32, $22, $50, $44, $32, $12, $34, $44, $33, $22, $55, $05, $43, $33, $00, $05, $54, $44, $00, $45, $55 
-	dc.b	$55, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_44498:
-	dc.b	$00, $44, $43, $34, $32, $33, $43, $24, $31, $23, $34, $35, $32, $23, $34, $55, $44, $33, $34, $45, $33, $33, $45, $00, $54, $44, $55, $00, $00, $55, $55, $40 
-	dc.b	$00, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_444BA:
-	dc.b	$01, $00, $77, $77, $7F, $FF, $12, $12, $33, $30, $40, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_444C6:
-	dc.b	$01, $00, $FF, $EC, $C8, $88, $A4, $02, $3A, $22, $3A, $0A, $12, $3A, $0A, $12, $A4, $A1, $23, $A4 
-LoadBattleTilesToBuffers_Data6_Gfx_444DA:
-	dc.b	$01, $00, $EC, $C4, $00, $00, $EE, $0E, $DD, $EE, $DC, $40, $ED, $CD, $43, $EE, $ED, $CC, $43, $4E, $EC, $CD, $42, $3E, $DD, $DD, $12, $3E, $ED, $DD 
-LoadBattleTilesToBuffers_Data6_Gfx_444F8:
-	dc.b	$01, $00, $73, $33, $31, $00, $DD, $DD, $E0, $DD, $D0, $DC, $DE, $CD, $DE, $CC, $DE, $E0, $DD, $DE, $E3, $33, $DD, $EE, $43, $22 
-LoadBattleTilesToBuffers_Data6_Gfx_44512:
-	dc.b	$01, $00, $FF, $FF, $FF, $F7, $30, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_4451A:
-	dc.b	$00, $00, $A1, $23, $A4, $0A, $11, $2A, $44, $0A, $12, $4A, $43, $02, $23, $A4, $44, $03, $34, $A4, $55, $03, $4A, $45, $55, $0A, $A4, $04, $55, $00, $00, $03 
-	dc.b	$22, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_4453C:
-	dc.b	$00, $23, $4E, $EE, $DD, $34, $44, $EE, $EE, $34, $43, $E4, $EE, $44, $42, $22, $34, $50, $42, $11, $22, $54, $03, $21, $11, $34, $44, $33, $22, $34, $44, $44 
-	dc.b	$33, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_4455E:
-	dc.b	$00, $ED, $EE, $32, $22, $ED, $EE 
+	incbin "data/art/tiles/battle/data6_gfx_1.bin"
+LoadBattleTilesToBuffers_Data6_Gfx_4394E equ LoadBattleTilesToBuffers_Data6_Gfx_43946+$8
+LoadBattleTilesToBuffers_Data6_Gfx_43966 equ LoadBattleTilesToBuffers_Data6_Gfx_43946+$20
+LoadBattleTilesToBuffers_Data6_Gfx_43980 equ LoadBattleTilesToBuffers_Data6_Gfx_43946+$3A
+LoadBattleTilesToBuffers_Data6_Gfx_4398E equ LoadBattleTilesToBuffers_Data6_Gfx_43946+$48
+LoadBattleTilesToBuffers_Data6_Gfx_439A0 equ LoadBattleTilesToBuffers_Data6_Gfx_43946+$5A
+LoadBattleTilesToBuffers_Data6_Gfx_439C2 equ LoadBattleTilesToBuffers_Data6_Gfx_43946+$7C
+LoadBattleTilesToBuffers_Data6_Gfx_439E4 equ LoadBattleTilesToBuffers_Data6_Gfx_43946+$9E
+LoadBattleTilesToBuffers_Data6_Gfx_43A02 equ LoadBattleTilesToBuffers_Data6_Gfx_43946+$BC
+LoadBattleTilesToBuffers_Data6_Gfx_43A12 equ LoadBattleTilesToBuffers_Data6_Gfx_43946+$CC
+LoadBattleTilesToBuffers_Data6_Gfx_43A34 equ LoadBattleTilesToBuffers_Data6_Gfx_43946+$EE
+LoadBattleTilesToBuffers_Data6_Gfx_43A56 equ LoadBattleTilesToBuffers_Data6_Gfx_43946+$110
+LoadBattleTilesToBuffers_Data6_Gfx_43A64 equ LoadBattleTilesToBuffers_Data6_Gfx_43946+$11E
+LoadBattleTilesToBuffers_Data6_Gfx_43A6E equ LoadBattleTilesToBuffers_Data6_Gfx_43946+$128
+LoadBattleTilesToBuffers_Data6_Gfx_43A88 equ LoadBattleTilesToBuffers_Data6_Gfx_43946+$142
+LoadBattleTilesToBuffers_Data6_Gfx_43AA0 equ LoadBattleTilesToBuffers_Data6_Gfx_43946+$15A
+LoadBattleTilesToBuffers_Data6_Gfx_43AAC equ LoadBattleTilesToBuffers_Data6_Gfx_43946+$166
+LoadBattleTilesToBuffers_Data6_Gfx_43AC0 equ LoadBattleTilesToBuffers_Data6_Gfx_43946+$17A
+LoadBattleTilesToBuffers_Data6_Gfx_43AE2 equ LoadBattleTilesToBuffers_Data6_Gfx_43946+$19C
+LoadBattleTilesToBuffers_Data6_Gfx_43B04 equ LoadBattleTilesToBuffers_Data6_Gfx_43946+$1BE
+LoadBattleTilesToBuffers_Data6_Gfx_43B22 equ LoadBattleTilesToBuffers_Data6_Gfx_43946+$1DC
+LoadBattleTilesToBuffers_Data6_Gfx_43B30 equ LoadBattleTilesToBuffers_Data6_Gfx_43946+$1EA
+LoadBattleTilesToBuffers_Data6_Gfx_43B52 equ LoadBattleTilesToBuffers_Data6_Gfx_43946+$20C
+LoadBattleTilesToBuffers_Data6_Gfx_43B74 equ LoadBattleTilesToBuffers_Data6_Gfx_43946+$22E
+LoadBattleTilesToBuffers_Data6_Gfx_43B84 equ LoadBattleTilesToBuffers_Data6_Gfx_43946+$23E
+LoadBattleTilesToBuffers_Data6_Gfx_43B8C equ LoadBattleTilesToBuffers_Data6_Gfx_43946+$246
+LoadBattleTilesToBuffers_Data6_Gfx_43BA4 equ LoadBattleTilesToBuffers_Data6_Gfx_43946+$25E
+LoadBattleTilesToBuffers_Data6_Gfx_43BC0 equ LoadBattleTilesToBuffers_Data6_Gfx_43946+$27A
+LoadBattleTilesToBuffers_Data6_Gfx_43BD0 equ LoadBattleTilesToBuffers_Data6_Gfx_43946+$28A
+LoadBattleTilesToBuffers_Data6_Gfx_43BE2 equ LoadBattleTilesToBuffers_Data6_Gfx_43946+$29C
+LoadBattleTilesToBuffers_Data6_Gfx_43C04 equ LoadBattleTilesToBuffers_Data6_Gfx_43946+$2BE
+LoadBattleTilesToBuffers_Data6_Gfx_43C26 equ LoadBattleTilesToBuffers_Data6_Gfx_43946+$2E0
+LoadBattleTilesToBuffers_Data6_Gfx_43C44 equ LoadBattleTilesToBuffers_Data6_Gfx_43946+$2FE
+LoadBattleTilesToBuffers_Data6_Gfx_43C54 equ LoadBattleTilesToBuffers_Data6_Gfx_43946+$30E
+LoadBattleTilesToBuffers_Data6_Gfx_43C74 equ LoadBattleTilesToBuffers_Data6_Gfx_43946+$32E
+LoadBattleTilesToBuffers_Data6_Gfx_43C96 equ LoadBattleTilesToBuffers_Data6_Gfx_43946+$350
+LoadBattleTilesToBuffers_Data6_Gfx_43CA0 equ LoadBattleTilesToBuffers_Data6_Gfx_43946+$35A
+LoadBattleTilesToBuffers_Data6_Gfx_43CA6 equ LoadBattleTilesToBuffers_Data6_Gfx_43946+$360
+LoadBattleTilesToBuffers_Data6_Gfx_43CBE equ LoadBattleTilesToBuffers_Data6_Gfx_43946+$378
+LoadBattleTilesToBuffers_Data6_Gfx_43CD2 equ LoadBattleTilesToBuffers_Data6_Gfx_43946+$38C
+LoadBattleTilesToBuffers_Data6_Gfx_43CF2 equ LoadBattleTilesToBuffers_Data6_Gfx_43946+$3AC
+LoadBattleTilesToBuffers_Data6_Gfx_43D14 equ LoadBattleTilesToBuffers_Data6_Gfx_43946+$3CE
+LoadBattleTilesToBuffers_Data6_Gfx_43D1C equ LoadBattleTilesToBuffers_Data6_Gfx_43946+$3D6
+LoadBattleTilesToBuffers_Data6_Gfx_43D32 equ LoadBattleTilesToBuffers_Data6_Gfx_43946+$3EC
+LoadBattleTilesToBuffers_Data6_Gfx_43D52 equ LoadBattleTilesToBuffers_Data6_Gfx_43946+$40C
+LoadBattleTilesToBuffers_Data6_Gfx_43D5C equ LoadBattleTilesToBuffers_Data6_Gfx_43946+$416
+LoadBattleTilesToBuffers_Data6_Gfx_43D74 equ LoadBattleTilesToBuffers_Data6_Gfx_43946+$42E
+LoadBattleTilesToBuffers_Data6_Gfx_43D8C equ LoadBattleTilesToBuffers_Data6_Gfx_43946+$446
+LoadBattleTilesToBuffers_Data6_Gfx_43D98 equ LoadBattleTilesToBuffers_Data6_Gfx_43946+$452
+LoadBattleTilesToBuffers_Data6_Gfx_43DBA equ LoadBattleTilesToBuffers_Data6_Gfx_43946+$474
+LoadBattleTilesToBuffers_Data6_Gfx_43DDC equ LoadBattleTilesToBuffers_Data6_Gfx_43946+$496
+LoadBattleTilesToBuffers_Data6_Gfx_43DEC equ LoadBattleTilesToBuffers_Data6_Gfx_43946+$4A6
+LoadBattleTilesToBuffers_Data6_Gfx_43E06 equ LoadBattleTilesToBuffers_Data6_Gfx_43946+$4C0
+LoadBattleTilesToBuffers_Data6_Gfx_43E24 equ LoadBattleTilesToBuffers_Data6_Gfx_43946+$4DE
+LoadBattleTilesToBuffers_Data6_Gfx_43E3C equ LoadBattleTilesToBuffers_Data6_Gfx_43946+$4F6
+LoadBattleTilesToBuffers_Data6_Gfx_43E50 equ LoadBattleTilesToBuffers_Data6_Gfx_43946+$50A
+LoadBattleTilesToBuffers_Data6_Gfx_43E72 equ LoadBattleTilesToBuffers_Data6_Gfx_43946+$52C
+LoadBattleTilesToBuffers_Data6_Gfx_43E94 equ LoadBattleTilesToBuffers_Data6_Gfx_43946+$54E
+LoadBattleTilesToBuffers_Data6_Gfx_43EB0 equ LoadBattleTilesToBuffers_Data6_Gfx_43946+$56A
+LoadBattleTilesToBuffers_Data6_Gfx_43ED2 equ LoadBattleTilesToBuffers_Data6_Gfx_43946+$58C
+LoadBattleTilesToBuffers_Data6_Gfx_43EEA equ LoadBattleTilesToBuffers_Data6_Gfx_43946+$5A4
+LoadBattleTilesToBuffers_Data6_Gfx_43F04 equ LoadBattleTilesToBuffers_Data6_Gfx_43946+$5BE
+LoadBattleTilesToBuffers_Data6_Gfx_43F16 equ LoadBattleTilesToBuffers_Data6_Gfx_43946+$5D0
+LoadBattleTilesToBuffers_Data6_Gfx_43F38 equ LoadBattleTilesToBuffers_Data6_Gfx_43946+$5F2
+LoadBattleTilesToBuffers_Data6_Gfx_43F5A equ LoadBattleTilesToBuffers_Data6_Gfx_43946+$614
+LoadBattleTilesToBuffers_Data6_Gfx_43F78 equ LoadBattleTilesToBuffers_Data6_Gfx_43946+$632
+LoadBattleTilesToBuffers_Data6_Gfx_43F9A equ LoadBattleTilesToBuffers_Data6_Gfx_43946+$654
+LoadBattleTilesToBuffers_Data6_Gfx_43FB8 equ LoadBattleTilesToBuffers_Data6_Gfx_43946+$672
+LoadBattleTilesToBuffers_Data6_Gfx_43FC0 equ LoadBattleTilesToBuffers_Data6_Gfx_43946+$67A
+LoadBattleTilesToBuffers_Data6_Gfx_43FCA equ LoadBattleTilesToBuffers_Data6_Gfx_43946+$684
+LoadBattleTilesToBuffers_Data6_Gfx_43FE8 equ LoadBattleTilesToBuffers_Data6_Gfx_43946+$6A2
+LoadBattleTilesToBuffers_Data6_Gfx_44004 equ LoadBattleTilesToBuffers_Data6_Gfx_43946+$6BE
+LoadBattleTilesToBuffers_Data6_Gfx_44016 equ LoadBattleTilesToBuffers_Data6_Gfx_43946+$6D0
+LoadBattleTilesToBuffers_Data6_Gfx_44038 equ LoadBattleTilesToBuffers_Data6_Gfx_43946+$6F2
+LoadBattleTilesToBuffers_Data6_Gfx_4405A equ LoadBattleTilesToBuffers_Data6_Gfx_43946+$714
+LoadBattleTilesToBuffers_Data6_Gfx_44078 equ LoadBattleTilesToBuffers_Data6_Gfx_43946+$732
+LoadBattleTilesToBuffers_Data6_Gfx_4409A equ LoadBattleTilesToBuffers_Data6_Gfx_43946+$754
+LoadBattleTilesToBuffers_Data6_Gfx_440B8 equ LoadBattleTilesToBuffers_Data6_Gfx_43946+$772
+LoadBattleTilesToBuffers_Data6_Gfx_440C2 equ LoadBattleTilesToBuffers_Data6_Gfx_43946+$77C
+LoadBattleTilesToBuffers_Data6_Gfx_440DA equ LoadBattleTilesToBuffers_Data6_Gfx_43946+$794
+LoadBattleTilesToBuffers_Data6_Gfx_440F2 equ LoadBattleTilesToBuffers_Data6_Gfx_43946+$7AC
+LoadBattleTilesToBuffers_Data6_Gfx_44104 equ LoadBattleTilesToBuffers_Data6_Gfx_43946+$7BE
+LoadBattleTilesToBuffers_Data6_Gfx_44126 equ LoadBattleTilesToBuffers_Data6_Gfx_43946+$7E0
+LoadBattleTilesToBuffers_Data6_Gfx_44148 equ LoadBattleTilesToBuffers_Data6_Gfx_43946+$802
+LoadBattleTilesToBuffers_Data6_Gfx_44164 equ LoadBattleTilesToBuffers_Data6_Gfx_43946+$81E
+LoadBattleTilesToBuffers_Data6_Gfx_4416C equ LoadBattleTilesToBuffers_Data6_Gfx_43946+$826
+LoadBattleTilesToBuffers_Data6_Gfx_4418E equ LoadBattleTilesToBuffers_Data6_Gfx_43946+$848
+LoadBattleTilesToBuffers_Data6_Gfx_441AC equ LoadBattleTilesToBuffers_Data6_Gfx_43946+$866
+LoadBattleTilesToBuffers_Data6_Gfx_441C4 equ LoadBattleTilesToBuffers_Data6_Gfx_43946+$87E
+LoadBattleTilesToBuffers_Data6_Gfx_441D8 equ LoadBattleTilesToBuffers_Data6_Gfx_43946+$892
+LoadBattleTilesToBuffers_Data6_Gfx_441FA equ LoadBattleTilesToBuffers_Data6_Gfx_43946+$8B4
+LoadBattleTilesToBuffers_Data6_Gfx_4421C equ LoadBattleTilesToBuffers_Data6_Gfx_43946+$8D6
+LoadBattleTilesToBuffers_Data6_Gfx_4423E equ LoadBattleTilesToBuffers_Data6_Gfx_43946+$8F8
+LoadBattleTilesToBuffers_Data6_Gfx_44260 equ LoadBattleTilesToBuffers_Data6_Gfx_43946+$91A
+LoadBattleTilesToBuffers_Data6_Gfx_4426A equ LoadBattleTilesToBuffers_Data6_Gfx_43946+$924
+LoadBattleTilesToBuffers_Data6_Gfx_4428C equ LoadBattleTilesToBuffers_Data6_Gfx_43946+$946
+LoadBattleTilesToBuffers_Data6_Gfx_442AE equ LoadBattleTilesToBuffers_Data6_Gfx_43946+$968
+LoadBattleTilesToBuffers_Data6_Gfx_442BC equ LoadBattleTilesToBuffers_Data6_Gfx_43946+$976
+LoadBattleTilesToBuffers_Data6_Gfx_442CC equ LoadBattleTilesToBuffers_Data6_Gfx_43946+$986
+LoadBattleTilesToBuffers_Data6_Gfx_442EE equ LoadBattleTilesToBuffers_Data6_Gfx_43946+$9A8
+LoadBattleTilesToBuffers_Data6_Gfx_4430E equ LoadBattleTilesToBuffers_Data6_Gfx_43946+$9C8
+LoadBattleTilesToBuffers_Data6_Gfx_4431E equ LoadBattleTilesToBuffers_Data6_Gfx_43946+$9D8
+LoadBattleTilesToBuffers_Data6_Gfx_44340 equ LoadBattleTilesToBuffers_Data6_Gfx_43946+$9FA
+LoadBattleTilesToBuffers_Data6_Gfx_44360 equ LoadBattleTilesToBuffers_Data6_Gfx_43946+$A1A
+LoadBattleTilesToBuffers_Data6_Gfx_4437E equ LoadBattleTilesToBuffers_Data6_Gfx_43946+$A38
+LoadBattleTilesToBuffers_Data6_Gfx_443A0 equ LoadBattleTilesToBuffers_Data6_Gfx_43946+$A5A
+LoadBattleTilesToBuffers_Data6_Gfx_443B2 equ LoadBattleTilesToBuffers_Data6_Gfx_43946+$A6C
+LoadBattleTilesToBuffers_Data6_Gfx_443D0 equ LoadBattleTilesToBuffers_Data6_Gfx_43946+$A8A
+LoadBattleTilesToBuffers_Data6_Gfx_443EC equ LoadBattleTilesToBuffers_Data6_Gfx_43946+$AA6
+LoadBattleTilesToBuffers_Data6_Gfx_443F4 equ LoadBattleTilesToBuffers_Data6_Gfx_43946+$AAE
+LoadBattleTilesToBuffers_Data6_Gfx_44416 equ LoadBattleTilesToBuffers_Data6_Gfx_43946+$AD0
+LoadBattleTilesToBuffers_Data6_Gfx_44438 equ LoadBattleTilesToBuffers_Data6_Gfx_43946+$AF2
+LoadBattleTilesToBuffers_Data6_Gfx_4445A equ LoadBattleTilesToBuffers_Data6_Gfx_43946+$B14
+LoadBattleTilesToBuffers_Data6_Gfx_44468 equ LoadBattleTilesToBuffers_Data6_Gfx_43946+$B22
+LoadBattleTilesToBuffers_Data6_Gfx_44476 equ LoadBattleTilesToBuffers_Data6_Gfx_43946+$B30
+LoadBattleTilesToBuffers_Data6_Gfx_44498 equ LoadBattleTilesToBuffers_Data6_Gfx_43946+$B52
+LoadBattleTilesToBuffers_Data6_Gfx_444BA equ LoadBattleTilesToBuffers_Data6_Gfx_43946+$B74
+LoadBattleTilesToBuffers_Data6_Gfx_444C6 equ LoadBattleTilesToBuffers_Data6_Gfx_43946+$B80
+LoadBattleTilesToBuffers_Data6_Gfx_444DA equ LoadBattleTilesToBuffers_Data6_Gfx_43946+$B94
+LoadBattleTilesToBuffers_Data6_Gfx_444F8 equ LoadBattleTilesToBuffers_Data6_Gfx_43946+$BB2
+LoadBattleTilesToBuffers_Data6_Gfx_44512 equ LoadBattleTilesToBuffers_Data6_Gfx_43946+$BCC
+LoadBattleTilesToBuffers_Data6_Gfx_4451A equ LoadBattleTilesToBuffers_Data6_Gfx_43946+$BD4
+LoadBattleTilesToBuffers_Data6_Gfx_4453C equ LoadBattleTilesToBuffers_Data6_Gfx_43946+$BF6
+LoadBattleTilesToBuffers_Data6_Gfx_4455E equ LoadBattleTilesToBuffers_Data6_Gfx_43946+$C18
 SpriteFramePointerTable_855C0_Frame_44565:
 	dc.b	$42, $11, $EE, $4E, $53, $31, $E4, $33, $44, $33, $22, $23, $44, $43, $22, $23, $45, $44, $23, $34, $05, $55, $34, $44, $00, $54, $00 
 LoadBattleTilesToBuffers_Data6_Gfx_44580:
-	dc.b	$01, $00, $77, $77, $77, $77, $33, $23, $23, $33, $44, $50, $50, $40 
-LoadBattleTilesToBuffers_Data6_Gfx_4458E:
-	dc.b	$01, $00, $EE, $EF, $FF, $FF, $22, $32, $03, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_44598:
-	dc.b	$00, $34, $53, $44, $44, $34, $53, $43, $22, $34, $54, $32, $22, $30, $04, $22, $12, $00, $04, $32, $21, $00, $05, $43, $33, $00, $00, $54, $44, $00, $00, $55 
-	dc.b	$55, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_445BA:
-	dc.b	$00, $44, $53, $40, $43, $33, $34, $44, $32, $22, $33, $45, $32, $22, $33, $45, $22, $22, $33, $05, $32, $33, $34, $03, $54, $44, $40, $04, $33, $55, $50, $00 
-	dc.b	$34, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_445DC:
-	dc.b	$01, $00, $77, $77, $77, $FF, $34, $23, $12, $12, $20, $40 
-LoadBattleTilesToBuffers_Data6_Gfx_445E8:
-	dc.b	$01, $00, $FF, $FF, $EC, $C8, $A4, $02, $3A, $12, $3A, $0A, $12, $3A 
-LoadBattleTilesToBuffers_Data6_Gfx_445F6:
-	dc.b	$01, $00, $EC, $CC, $80, $00, $EE, $0E, $DD, $EE, $DC, $ED, $CD, $0E, $ED, $CC, $40, $EE, $EC, $CD, $43, $4E, $DD, $DD, $43, $3E, $ED, $DD 
-LoadBattleTilesToBuffers_Data6_Gfx_44612:
-	dc.b	$01, $00, $73, $33, $00, $00, $DD, $DD, $E0, $DD, $D0, $DC, $DE, $CD, $DE, $E3, $33, $CC, $DE, $43, $22, $DD, $DE, $32, $22, $DD, $EE, $42, $11, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_44630:
-	dc.b	$01, $00, $FF, $FF, $F7, $77, $30, $33, $23, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_4463A:
-	dc.b	$00, $00, $0A, $12, $A4, $00, $A1, $23, $A4, $00, $A1, $23, $A4, $0A, $11, $2A, $44, $0A, $12, $4A, $43, $02, $23, $A4, $44, $03, $34, $A4, $55, $03, $4A, $40 
-	dc.b	$44, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_4465C:
-	dc.b	$00, $42, $3E, $EE, $DD, $12, $44, $EE, $EE, $23, $43, $E4, $EE, $34, $42, $22, $44, $34, $42, $11, $22, $45, $02, $21, $11, $55, $04, $32, $22, $50, $04, $43 
-	dc.b	$33, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_4467E:
-	dc.b	$00, $ED, $EE, $43, $31, $ED, $EE, $44, $33, $EE, $4E, $44, $43, $E4, $33, $45, $44, $22, $23, $05, $55, $22, $32, $00, $54, $23, $34, $40, $44, $33, $44, $34 
-	dc.b	$43, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_446A0:
-	dc.b	$01, $00, $77, $77, $77, $77, $23, $33, $30, $50, $50, $44, $34, $24 
-LoadBattleTilesToBuffers_Data6_Gfx_446AE:
-	dc.b	$01, $00, $0C, $CC, $EE, $EE, $0A, $A4, $03, $33, $02, $21, $03, $21, $03, $22, $32, $44, $03, $03 
-LoadBattleTilesToBuffers_Data6_Gfx_446C2:
-	dc.b	$00, $40, $43, $44, $44, $35, $34, $43, $33, $24, $44, $31, $23, $24, $44, $32, $12, $25, $05, $43, $22, $53, $00, $54, $44, $33, $00, $55, $55, $30, $00, $55 
-	dc.b	$55, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_446E4:
-	dc.b	$00, $44, $53, $34, $43, $33, $43, $34, $44, $33, $34, $44, $43, $23, $34, $40, $44, $33, $45, $50, $00, $44, $55, $50, $00, $55, $55, $00, $00, $55, $55, $00 
-	dc.b	$00, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_44706:
-	dc.b	$01, $00, $77, $7F, $FF, $FF, $24, $40, $40, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_44710:
-	dc.b	$00, $0E, $EE, $EE, $66, $0E, $43, $23, $56, $04, $31, $12, $35, $03, $21, $12, $24, $04, $21, $22, $35, $04, $32, $33, $35, $00, $43, $33, $55, $00, $04, $55 
-	dc.b	$55, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_44732:
-	dc.b	$00, $88, $87, $44, $40, $78, $87, $45, $44, $56, $74, $44, $54, $43, $33, $44, $54, $32, $23, $44, $54, $53, $22, $35, $54, $54, $32, $34, $54, $43, $44, $43 
-	dc.b	$34, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_44754:
-	dc.b	$01, $00, $CC, $C8, $88, $8C, $45, $54, $44, $44, $43, $34, $04, $33, $23, $04, $33, $23, $04, $33, $33, $04, $43, $34, $54, $44 
-LoadBattleTilesToBuffers_Data6_Gfx_4476E:
-	dc.b	$01, $44, $03, $2B, $00, $A4, $22, $33, $43, $24, $22, $23, $33, $34, $33, $43, $43, $33, $34, $00, $43, $33, $34, $00, $33, $00, $54, $40, $00, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_4478C:
-	dc.b	$01, $00, $F7, $77, $FF, $FF, $40, $40, $40, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_44796:
-	dc.b	$01, $00, $F7, $33, $22, $00, $EE, $DD, $D0, $E6, $6E, $67, $88, $04, $78, $88, $32, $7D, $8D, $03, $22, $88, $88, $33, $43, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_447B0:
-	dc.b	$01, $00, $FF, $FF, $F7, $77, $30, $23, $34, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_447BA:
-	dc.b	$00, $0E, $EE, $EE, $66, $0E, $33, $23, $56, $03, $22, $23, $45, $02, $11, $23, $45, $02, $21, $23, $55, $04, $33, $44, $55, $00, $44, $44, $55, $00, $00, $45 
-	dc.b	$53, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_447DC:
-	dc.b	$00, $88, $83, $22, $34, $78, $32, $12, $24, $64, $21, $22, $34, $54, $32, $23, $44, $54, $33, $34, $54, $55, $44, $45, $55, $55, $52, $35, $54, $22, $23, $45 
-	dc.b	$44, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_447FE:
-	dc.b	$01, $00, $77, $77, $77, $FF, $43, $44, $34, $34, $44, $40 
-LoadBattleTilesToBuffers_Data6_Gfx_4480A:
-	dc.b	$01, $00, $CC, $88, $88, $8C, $44, $43, $44, $44, $04, $42, $33, $43, $31, $23, $43, $32, $23, $43, $33, $34, $04, $33, $44, $44, $45, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_44826:
-	dc.b	$01, $00, $01, $11, $11, $11, $33, $34, $45, $40, $44, $44, $44, $43, $23, $43, $43, $12, $34, $43, $21, $24, $43, $33, $34, $44, $33, $40, $44, $44, $40, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_44846:
-	dc.b	$00, $0E, $EE, $EE, $66, $0E, $32, $23, $56, $E3, $21, $13, $35, $E2, $11, $12, $34, $02, $21, $23, $34, $04, $33, $33, $44, $00, $44, $44, $53, $00, $55, $55 
-	dc.b	$54, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_44868:
-	dc.b	$00, $88, $87, $44, $40, $78, $87, $45, $40, $56, $74, $44, $54, $43, $33, $44, $54, $32, $23, $34, $54, $21, $22, $34, $44, $21, $12, $35, $44, $22, $23, $45 
-	dc.b	$44, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_4488A:
-	dc.b	$01, $00, $88, $88, $88, $88, $55, $55, $54, $05, $55, $43, $04, $44, $32, $04, $43, $21, $43, $44, $32, $43, $24, $44, $43, $33, $34, $04, $43, $34 
-LoadBattleTilesToBuffers_Data6_Gfx_448A8:
-	dc.b	$00, $43, $34, $44, $40, $44, $44, $32, $40, $34, $43, $12, $40, $23, $34, $12, $00, $13, $42, $44, $00, $34, $21, $34, $00, $43, $32, $35, $00, $44, $33, $45 
-	dc.b	$00, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_448CA:
-	dc.b	$01, $00, $FF, $FF, $FE, $CC, $2A, $02, $23, $11, $23, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_448D6:
-	dc.b	$01, $00, $FF, $EC, $C4, $00, $EE, $0E, $DD, $EE, $DC, $40, $ED, $CD, $A4, $0E, $ED, $CC, $A4, $4E, $EC, $CD 
-LoadBattleTilesToBuffers_Data6_Gfx_448EC:
-	dc.b	$01, $00, $FF, $73, $33, $30, $DD, $DD, $E0, $DD, $D0, $DC, $DE, $CD, $DE, $CC, $DE, $E3, $33, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_44900:
-	dc.b	$01, $00, $CC, $88, $88, $88, $A1, $23, $A1, $2A, $0A, $12, $3A, $0A, $12, $3A, $A1, $12, $A4, $A1, $24, $A4, $22, $3A, $44, $33, $4A, $45 
-LoadBattleTilesToBuffers_Data6_Gfx_4491C:
-	dc.b	$00, $A4, $3E, $DD, $DD, $43, $4E, $ED, $DD, $43, $3E, $EE, $DD, $43, $44, $EE, $EE, $44, $43, $E3, $EE, $44, $42, $12, $33, $55, $42, $21, $22, $55, $53, $21 
-	dc.b	$11, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_4493E:
-	dc.b	$00, $DD, $DE, $43, $22, $DD, $EE, $32, $22, $ED, $EE, $42, $11, $ED, $EE, $53, $31, $EE, $3E, $44, $33, $E3, $33, $44, $43, $22, $23, $45, $44, $22, $22, $55 
-	dc.b	$55, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_44960:
-	dc.b	$01, $00, $77, $77, $77, $77, $30, $33, $23, $23, $33, $30, $50, $50 
-LoadBattleTilesToBuffers_Data6_Gfx_4496E:
-	dc.b	$01, $00, $89, $FF, $FF, $FF, $34, $A4, $05, $AA, $40, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_4497A:
-	dc.b	$00, $55, $54, $32, $22, $55, $44, $43, $22, $04, $33, $44, $44, $04, $34, $44, $33, $04, $34, $31, $23, $00, $44, $32, $12, $00, $44, $33, $22, $00, $05, $43 
-	dc.b	$33, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_4499C:
-	dc.b	$01, $34, $40, $22, $64, $40, $23, $55, $55, $33, $44, $45, $55, $44, $43, $50, $33, $44, $00, $33, $00, $23, $40, $00, $33, $40, $00, $33, $45, $00, $00, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_449BC:
-	dc.b	$01, $00, $FF, $FF, $CC, $88, $02, $A4, $22, $3A, $01, $12, $3A, $0A, $12, $3A 
-LoadBattleTilesToBuffers_Data6_Gfx_449CC:
-	dc.b	$01, $00, $FE, $EC, $C0, $00, $04, $EE, $0E, $DD, $ED, $DC, $40, $55, $ED, $CD, $43, $EE, $ED, $CC, $43, $4E, $EC, $CD 
-LoadBattleTilesToBuffers_Data6_Gfx_449E4:
-	dc.b	$01, $00, $77, $33, $11, $11, $40, $40, $DD, $44, $DD, $E3, $DD, $D3, $30, $DC, $DE, $30, $CD, $DE, $33, $CC, $DE, $E5 
-LoadBattleTilesToBuffers_Data6_Gfx_449FC:
-	dc.b	$00, $00, $0A, $12, $A4, $00, $A1, $23, $A4, $00, $A1, $23, $A4, $0A, $11, $2A, $44, $0A, $12, $4A, $44, $02, $23, $A4, $40, $03, $34, $A4, $00, $03, $4A, $40 
-	dc.b	$00, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_44A1E:
-	dc.b	$00, $44, $3E, $DD, $DD, $42, $3E, $ED, $DD, $43, $3E, $EE, $DD, $33, $44, $EE, $EE, $44, $43, $E3, $EE, $44, $32, $22, $33, $00, $33, $21, $12, $00, $43, $22 
-	dc.b	$11, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_44A40:
-	dc.b	$00, $DD, $DE, $E3, $33, $DD, $EE, $43, $12, $ED, $EE, $32, $21, $ED, $EE, $43, $22, $EE, $3E, $53, $33, $E3, $33, $44, $33, $22, $23, $44, $44, $22, $33, $40 
-	dc.b	$00, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_44A62:
-	dc.b	$01, $00, $F7, $77, $77, $FF, $30, $33, $33, $34, $40, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_44A6E:
-	dc.b	$01, $00, $3F, $FF, $FF, $FF, $0A, $A4 
-LoadBattleTilesToBuffers_Data6_Gfx_44A76:
-	dc.b	$00, $00, $04, $33, $32, $00, $04, $43, $34, $00, $43, $44, $44, $04, $33, $44, $33, $04, $34, $31, $23, $04, $34, $32, $12, $05, $44, $33, $22, $00, $54, $43 
-	dc.b	$33, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_44A98:
-	dc.b	$02, $00, $13, $11, $11, $11, $44, $0C, $84, $22, $04, $23, $34, $40, $53, $40, $33, $40, $33, $34, $23, $34, $33, $34, $40, $33, $50, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_44AB4:
-	dc.b	$01, $00, $FF, $FF, $FF, $CC, $02, $A4, $22, $3A 
-LoadBattleTilesToBuffers_Data6_Gfx_44ABE:
-	dc.b	$01, $00, $FF, $EC, $CC, $80, $EE, $0E, $DD, $EE, $DC, $ED, $CD, $0E, $ED, $CC, $40, $EE, $EC, $CD 
-LoadBattleTilesToBuffers_Data6_Gfx_44AD2:
-	dc.b	$01, $00, $FF, $73, $33, $00, $DD, $DD, $E0, $DD, $D0, $DC, $DE, $CD, $DE, $E3, $33, $CC, $DE, $E3, $22, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_44AE8:
-	dc.b	$00, $00, $01, $12, $3A, $00, $0A, $12, $3A, $00, $0A, $12, $A4, $00, $A1, $23, $A4, $00, $A1, $23, $A4, $0A, $11, $2A, $44, $0A, $12, $4A, $43, $02, $23, $A4 
-	dc.b	$44, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_44B0A:
-	dc.b	$00, $43, $4E, $DD, $DD, $43, $3E, $ED, $DD, $42, $3E, $EE, $DD, $12, $44, $EE, $EE, $23, $43, $E3, $EE, $34, $42, $12, $33, $34, $42, $11, $22, $45, $52, $21 
-	dc.b	$11, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_44B2C:
-	dc.b	$00, $DD, $DE, $43, $22, $DD, $EE, $43, $11, $ED, $EE, $43, $31, $ED, $EE, $44, $33, $EE, $3E, $44, $44, $E3, $33, $45, $54, $22, $23, $55, $55, $22, $32, $55 
-	dc.b	$55, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_44B4E:
-	dc.b	$01, $00, $77, $77, $7F, $FF, $33, $23, $23, $33, $40, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_44B5A:
-	dc.b	$01, $00, $01, $3E, $EF, $FF, $03, $34, $A4, $05, $03, $4A, $40, $0A, $A4, $03, $03, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_44B6C:
-	dc.b	$01, $33, $03, $10, $88, $21, $55, $53, $32, $22, $55, $54, $55, $43, $43, $53, $43, $44, $44, $44, $41, $23, $54, $32, $12, $00, $04, $22, $00, $04, $43, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_44B8C:
-	dc.b	$01, $33, $48, $08, $A2, $88, $23, $45, $50, $35, $44, $50, $44, $34, $44, $00, $43, $34, $00, $43, $00, $23, $34, $00, $34, $40, $00, $34, $50, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_44BAA:
-	dc.b	$01, $00, $FF, $EC, $C8, $88, $23, $02, $3A, $A2, $A4, $0A, $12, $A4, $0A, $1A, $44, $01, $2A, $43 
-LoadBattleTilesToBuffers_Data6_Gfx_44BBE:
-	dc.b	$00, $00, $00, $00, $EE, $00, $00, $0E, $DD, $AA, $A0, $EE, $DC, $44, $44, $ED, $CD, $43, $4E, $ED, $CC, $33, $4E, $EC, $CD, $32, $3E, $DD, $DD, $12, $3E, $ED 
-	dc.b	$DD, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_44BE0:
-	dc.b	$01, $00, $73, $33, $31, $10, $DD, $DD, $E0, $DD, $D0, $DC, $DE, $CD, $DE, $CC, $DE, $E0, $DD, $DE, $E0, $DD, $E4, $43, $23, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_44BFA:
-	dc.b	$01, $00, $88, $88, $88, $8C, $A1, $A4, $43, $A2, $A4, $43, $12, $A4, $44, $22, $A4, $45, $23, $A4, $45, $03, $A4, $45, $04, $44, $45, $44, $32, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_44C18:
-	dc.b	$00, $23, $4E, $EE, $DD, $34, $44, $EE, $EE, $44, $43, $E4, $EE, $54, $42, $22, $34, $55, $42, $11, $22, $54, $43, $21, $11, $33, $44, $33, $22, $34, $34, $44 
-	dc.b	$33, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_44C3A:
-	dc.b	$00, $ED, $44, $32, $22, $ED, $43, $22, $11, $EE, $43, $22, $12, $E4, $43, $32, $23, $22, $44, $33, $34, $22, $23, $44, $45, $23, $34, $55, $55, $34, $44, $55 
-	dc.b	$55, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_44C5C:
-	dc.b	$01, $00, $77, $77, $FF, $FF, $30, $20, $30, $40 
-LoadBattleTilesToBuffers_Data6_Gfx_44C66:
-	dc.b	$01, $00, $CE, $EF, $FF, $FF, $44, $32, $32, $03 
-LoadBattleTilesToBuffers_Data6_Gfx_44C70:
-	dc.b	$00, $33, $33, $34, $44, $43, $32, $22, $23, $43, $22, $11, $23, $33, $32, $21, $23, $04, $32, $22, $33, $05, $43, $33, $34, $00, $54, $44, $45, $00, $55, $55 
-	dc.b	$55, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_44C92:
-	dc.b	$00, $44, $43, $45, $43, $34, $32, $42, $23, $43, $24, $32, $12, $43, $24, $32, $12, $44, $34, $33, $33, $45, $44, $44, $30, $55, $50, $44, $30, $55, $40, $33 
-	dc.b	$00, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_44CB4:
-	dc.b	$01, $00, $FF, $EE, $CC, $CC, $02, $23, $0A, $2A, $01, $2A, $A1, $A4, $12, $A4 
-LoadBattleTilesToBuffers_Data6_Gfx_44CC4:
-	dc.b	$00, $00, $00, $00, $EE, $00, $00, $0E, $DD, $3A, $AA, $EE, $DC, $A4, $44, $ED, $CD, $44, $4E, $ED, $CC, $43, $4E, $EC, $CD, $32, $3E, $DD, $DD, $33, $3E, $ED 
-	dc.b	$DD, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_44CE6:
-	dc.b	$01, $00, $73, $33, $31, $11, $DD, $DD, $E0, $DD, $D0, $DC, $DE, $CD, $DE, $CC, $DE, $E0, $DD, $DE, $E0, $DE, $44, $40 
-LoadBattleTilesToBuffers_Data6_Gfx_44CFE:
-	dc.b	$01, $00, $C8, $88, $8C, $CC, $2A, $44, $0A, $2A, $44, $02, $2A, $45, $03, $2A, $45, $03, $2A, $45, $33, $45, $3A, $45, $03, $44 
-LoadBattleTilesToBuffers_Data6_Gfx_44D18:
-	dc.b	$00, $43, $4E, $EE, $DD, $54, $44, $EE, $EE, $54, $43, $E4, $EE, $55, $42, $22, $E4, $55, $43, $11, $22, $55, $43, $21, $11, $55, $43, $33, $22, $54, $34, $33 
-	dc.b	$33, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_44D3A:
-	dc.b	$00, $E4, $43, $33, $00, $43, $33, $22, $30, $43, $32, $21, $20, $43, $32, $21, $20, $24, $33, $22, $30, $54, $43, $33, $30, $55, $44, $44, $00, $55, $55, $40 
-	dc.b	$00, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_44D5C:
-	dc.b	$01, $00, $CE, $EF, $FF, $FF, $03, $A4, $34, $03 
-LoadBattleTilesToBuffers_Data6_Gfx_44D66:
-	dc.b	$00, $44, $33, $34, $44, $43, $32, $22, $44, $03, $22, $11, $33, $03, $32, $21, $33, $04, $32, $22, $34, $00, $43, $33, $34, $00, $55, $44, $44, $00, $55, $55 
-	dc.b	$04, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_44D88:
-	dc.b	$00, $45, $55, $40, $00, $33, $44, $40, $00, $32, $34, $30, $00, $32, $34, $30, $00, $33, $34, $40, $00, $44, $45, $54, $00, $33, $45, $54, $40, $44, $45, $43 
-	dc.b	$40, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_44DAA:
-	dc.b	$01, $00, $FF, $EC, $C8, $88, $23, $02, $3A, $A2, $A4, $0A, $12, $44, $0A, $1A, $44, $01, $24, $43 
-LoadBattleTilesToBuffers_Data6_Gfx_44DBE:
-	dc.b	$00, $00, $00, $00, $EE, $00, $00, $0E, $DD, $AA, $A0, $EE, $DC, $44, $44, $ED, $CD, $43, $4E, $ED, $CC, $33, $4E, $EC, $CD, $32, $4E, $DD, $DD, $12, $4E, $ED 
-	dc.b	$DD, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_44DE0:
-	dc.b	$01, $00, $73, $33, $31, $00, $DD, $DD, $E0, $DD, $D0, $DC, $DE, $CD, $DE, $CC, $DE, $E0, $DD, $DE, $44, $32, $DD, $EE, $43, $22 
-LoadBattleTilesToBuffers_Data6_Gfx_44DFA:
-	dc.b	$01, $00, $FF, $FF, $FF, $F7, $20, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_44E02:
-	dc.b	$01, $00, $88, $88, $88, $88, $A1, $A4, $43, $A2, $44, $43, $2A, $45, $54, $34, $55, $55, $44, $55, $55, $04, $44, $55, $04, $34, $44, $03, $33, $40 
-LoadBattleTilesToBuffers_Data6_Gfx_44E20:
-	dc.b	$00, $23, $4E, $EE, $DD, $34, $44, $EE, $EE, $44, $43, $E4, $EE, $44, $33, $22, $34, $04, $32, $11, $22, $00, $33, $21, $11, $00, $44, $32, $22, $04, $34, $43 
-	dc.b	$33, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_44E42:
-	dc.b	$00, $ED, $E4, $32, $21, $ED, $E3, $32, $21, $EE, $44, $33, $22, $E4, $34, $43, $33, $22, $24, $44, $44, $22, $23, $54, $44, $23, $34, $55, $55, $34, $44, $45 
-	dc.b	$55, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_44E64:
-	dc.b	$01, $00, $77, $77, $77, $77, $12, $23, $34, $40, $50, $50, $40, $44 
-LoadBattleTilesToBuffers_Data6_Gfx_44E72:
-	dc.b	$01, $00, $88, $8D, $FF, $FF, $03, $34, $40, $04, $43, $40, $04, $33, $40, $44 
-LoadBattleTilesToBuffers_Data6_Gfx_44E82:
-	dc.b	$00, $03, $33, $34, $44, $43, $32, $22, $23, $43, $22, $11, $23, $43, $32, $21, $23, $04, $32, $22, $33, $00, $43, $33, $34, $00, $05, $44, $45, $00, $00, $55 
-	dc.b	$55, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_44EA4:
-	dc.b	$00, $44, $43, $45, $54, $34, $33, $35, $43, $43, $22, $34, $43, $43, $22, $34, $04, $44, $33, $34, $04, $45, $44, $40, $00, $55, $50, $00, $00, $55, $50, $00 
-	dc.b	$00, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_44EC6:
-	dc.b	$01, $00, $73, $33, $37, $FF, $34, $23, $40, $32, $30, $44, $30, $33, $30, $44 
-LoadBattleTilesToBuffers_Data6_Gfx_44ED6:
-	dc.b	$01, $00, $F7, $33, $33, $33, $DE, $DD, $E0, $DE, $EE, $E6, $6E, $68, $77, $78, $D8, $78, $88, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_44EEA:
-	dc.b	$01, $EE, $64, $C8, $00, $40, $0E, $E7, $0E, $E3, $23, $21, $12, $E3, $11, $22, $0E, $E3, $21, $22, $0E, $E4, $33, $33, $00, $44, $43, $00, $05, $55, $54, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_44F0A:
-	dc.b	$00, $78, $87, $40, $00, $48, $87, $44, $00, $34, $75, $54, $00, $34, $34, $55, $40, $34, $33, $55, $40, $34, $23, $55, $40, $42, $22, $55, $40, $32, $23, $55 
-	dc.b	$40, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_44F2C:
-	dc.b	$01, $00, $88, $88, $CC, $CC, $04, $55, $53, $02, $33, $44, $02, $13, $44, $03, $23, $34, $33, $55, $55, $32, $03, $22, $03, $34 
-LoadBattleTilesToBuffers_Data6_Gfx_44F46:
-	dc.b	$01, $00, $00, $11, $11, $33, $32, $34, $45, $40, $33, $43, $45, $40, $44, $43, $44, $32, $34, $34, $22, $24, $30, $42, $24, $40, $42, $34, $43, $44 
-LoadBattleTilesToBuffers_Data6_Gfx_44F64:
-	dc.b	$00, $0E, $EE, $EE, $E6, $0E, $43, $23, $E5, $E4, $21, $12, $35, $E4, $21, $12, $24, $04, $21, $22, $24, $04, $42, $22, $34, $55, $54, $33, $43, $55, $55, $44 
-	dc.b	$43, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_44F86:
-	dc.b	$00, $78, $87, $40, $00, $77, $86, $54, $00, $56, $64, $54, $00, $43, $44, $55, $40, $32, $23, $45, $40, $21, $23, $45, $40, $21, $12, $33, $40, $22, $23, $42 
-	dc.b	$30, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_44FA8:
-	dc.b	$01, $00, $EE, $EE, $EF, $FF, $03, $02, $02, $02, $04, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_44FB4:
-	dc.b	$01, $33, $00, $12, $21, $58, $35, $50, $44, $43, $23, $30, $55, $44, $12, $35, $43, $12, $34, $23, $22, $44, $22, $44, $34, $43, $32, $04, $30, $05, $44, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_44FD4:
-	dc.b	$01, $44, $0C, $30, $88, $C0, $33, $34, $43, $23, $53, $34, $43, $23, $33, $22, $34, $43, $32, $24, $04, $33, $34, $00, $40, $00, $55, $55, $00, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_44FF2:
-	dc.b	$01, $00, $F7, $77, $7F, $FF, $40, $32, $23, $40 
-LoadBattleTilesToBuffers_Data6_Gfx_44FFC:
-	dc.b	$00, $00, $ED, $DE, $E6, $0E, $ED, $EE, $22, $0E, $DE, $E2, $21, $0E, $EE, $32, $11, $0E, $DE, $32, $12, $0E, $EE, $42, $23, $00, $EE, $43, $34, $00, $04, $44 
-	dc.b	$55, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_4501E:
-	dc.b	$01, $00, $11, $11, $11, $11, $78, $87, $40, $38, $87, $40, $23, $65, $54, $23, $44, $54, $33, $43, $54, $34, $32, $44, $44, $32, $44, $54, $33, $44 
-LoadBattleTilesToBuffers_Data6_Gfx_4503C:
-	dc.b	$01, $00, $CC, $C8, $88, $8C, $45, $55, $45, $54, $34, $53, $04, $34, $44, $04, $32, $23, $04, $32, $12, $04, $33, $21, $43, $33 
-LoadBattleTilesToBuffers_Data6_Gfx_45056:
-	dc.b	$00, $43, $44, $44, $00, $12, $34, $40, $00, $21, $23, $34, $00, $32, $13, $42, $20, $44, $44, $32, $30, $34, $45, $24, $00, $34, $55, $54, $00, $45, $55, $50 
-	dc.b	$00, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_45078:
-	dc.b	$01, $00, $FF, $EC, $C8, $88, $23, $02, $3A, $A2, $A4, $0A, $12, $A4, $0A, $1A, $44, $02, $2A, $43 
-LoadBattleTilesToBuffers_Data6_Gfx_4508C:
-	dc.b	$01, $00, $88, $88, $88, $8C, $A2, $A4, $43, $A3, $A4, $43, $33, $A4, $44, $43, $A4, $54, $43, $A4, $55, $03, $A4, $55, $04, $34, $55, $34, $45, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_450AA:
-	dc.b	$00, $23, $4E, $EE, $DD, $34, $44, $EE, $EE, $44, $43, $E4, $EE, $44, $32, $22, $34, $54, $32, $11, $22, $54, $32, $21, $11, $55, $43, $32, $22, $54, $34, $43 
-	dc.b	$33, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_450CC:
-	dc.b	$00, $ED, $44, $32, $22, $ED, $43, $22, $11, $EE, $43, $22, $12, $E4, $43, $32, $23, $22, $44, $33, $34, $22, $23, $44, $45, $23, $34, $55, $54, $34, $44, $55 
-	dc.b	$44, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_450EE:
-	dc.b	$01, $00, $CE, $FF, $FF, $FF, $43, $45, $44, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_450F8:
-	dc.b	$00, $54, $33, $34, $44, $43, $32, $22, $23, $43, $22, $11, $23, $43, $32, $21, $23, $04, $32, $22, $33, $05, $43, $33, $34, $00, $54, $44, $45, $00, $55, $55 
-	dc.b	$55, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_4511A:
-	dc.b	$01, $00, $00, $11, $13, $33, $44, $43, $44, $43, $34, $32, $34, $30, $43, $22, $30, $43, $22, $30, $44, $33, $40, $45, $44, $55, $50, $55, $40, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_45138:
-	dc.b	$00, $DD, $00, $00, $00, $DD, $E0, $00, $00, $DD, $D0, $04, $44, $DC, $DE, $44, $43, $CD, $DE, $44, $32, $CC, $DE, $E4, $32, $DD, $DE, $E4, $43, $DE, $44, $44 
-	dc.b	$55, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_4515A:
-	dc.b	$01, $00, $FF, $77, $77, $77, $40, $30, $20, $23, $23, $33 
-LoadBattleTilesToBuffers_Data6_Gfx_45166:
-	dc.b	$00, $33, $3E, $EE, $DD, $43, $44, $EE, $EE, $44, $43, $E4, $EE, $54, $42, $22, $E4, $55, $43, $11, $22, $55, $43, $21, $11, $55, $43, $33, $22, $54, $34, $33 
-	dc.b	$33, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_45188:
-	dc.b	$00, $E4, $43, $33, $45, $43, $33, $22, $35, $43, $32, $21, $25, $43, $32, $23, $40, $24, $33, $34, $00, $34, $44, $40, $00, $33, $44, $00, $00, $33, $44, $00 
-	dc.b	$00, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_451AA:
-	dc.b	$01, $00, $77, $FF, $FF, $FF, $53, $50 
-LoadBattleTilesToBuffers_Data6_Gfx_451B2:
-	dc.b	$00, $44, $33, $34, $44, $43, $32, $22, $23, $03, $22, $11, $12, $03, $32, $21, $11, $04, $32, $22, $32, $00, $43, $33, $33, $00, $55, $44, $44, $00, $55, $55 
-	dc.b	$00, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_451D4:
-	dc.b	$01, $00, $31, $11, $11, $11, $44, $44, $34, $33, $40, $33, $22, $30, $33, $22, $30, $33, $33, $40, $34, $45, $54, $45, $55, $54, $05, $55, $54, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_451F2:
-	dc.b	$01, $00, $FF, $EC, $C8, $88, $23, $02, $33, $A2, $A3, $0A, $12, $34, $0A, $1A, $44, $01, $23, $43 
-LoadBattleTilesToBuffers_Data6_Gfx_45206:
-	dc.b	$01, $00, $88, $88, $88, $88, $A1, $A4, $43, $A2, $34, $43, $1A, $44, $54, $2A, $44, $45, $2A, $44, $45, $23, $44, $45, $0A, $44, $45, $03, $34, $44 
-LoadBattleTilesToBuffers_Data6_Gfx_45224:
-	dc.b	$00, $23, $4E, $EE, $DD, $34, $44, $EE, $EE, $44, $43, $E4, $EE, $44, $33, $22, $34, $54, $32, $11, $22, $55, $33, $21, $11, $55, $44, $32, $22, $54, $34, $43 
-	dc.b	$33, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_45246:
-	dc.b	$01, $00, $77, $77, $77, $F7, $12, $23, $34, $40, $50, $50, $40, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_45254:
-	dc.b	$01, $00, $CC, $FF, $FF, $FF, $A4, $44, $04, $40 
-LoadBattleTilesToBuffers_Data6_Gfx_4525E:
-	dc.b	$02, $44, $A1, $01, $A4, $00, $00, $00, $00, $13, $33, $43, $54, $34, $33, $34, $43, $22, $34, $43, $43, $22, $34, $33, $45, $55, $50, $55, $50, $00 
-LoadBattleTilesToBuffers_Data6_Gfx_4527C:
-	dc.b	$01, $00, $77, $7F, $FF, $FF, $40, $40, $40, $00 
+	incbin "data/art/tiles/battle/data6_gfx_2.bin"
+LoadBattleTilesToBuffers_Data6_Gfx_4458E equ LoadBattleTilesToBuffers_Data6_Gfx_44580+$E
+LoadBattleTilesToBuffers_Data6_Gfx_44598 equ LoadBattleTilesToBuffers_Data6_Gfx_44580+$18
+LoadBattleTilesToBuffers_Data6_Gfx_445BA equ LoadBattleTilesToBuffers_Data6_Gfx_44580+$3A
+LoadBattleTilesToBuffers_Data6_Gfx_445DC equ LoadBattleTilesToBuffers_Data6_Gfx_44580+$5C
+LoadBattleTilesToBuffers_Data6_Gfx_445E8 equ LoadBattleTilesToBuffers_Data6_Gfx_44580+$68
+LoadBattleTilesToBuffers_Data6_Gfx_445F6 equ LoadBattleTilesToBuffers_Data6_Gfx_44580+$76
+LoadBattleTilesToBuffers_Data6_Gfx_44612 equ LoadBattleTilesToBuffers_Data6_Gfx_44580+$92
+LoadBattleTilesToBuffers_Data6_Gfx_44630 equ LoadBattleTilesToBuffers_Data6_Gfx_44580+$B0
+LoadBattleTilesToBuffers_Data6_Gfx_4463A equ LoadBattleTilesToBuffers_Data6_Gfx_44580+$BA
+LoadBattleTilesToBuffers_Data6_Gfx_4465C equ LoadBattleTilesToBuffers_Data6_Gfx_44580+$DC
+LoadBattleTilesToBuffers_Data6_Gfx_4467E equ LoadBattleTilesToBuffers_Data6_Gfx_44580+$FE
+LoadBattleTilesToBuffers_Data6_Gfx_446A0 equ LoadBattleTilesToBuffers_Data6_Gfx_44580+$120
+LoadBattleTilesToBuffers_Data6_Gfx_446AE equ LoadBattleTilesToBuffers_Data6_Gfx_44580+$12E
+LoadBattleTilesToBuffers_Data6_Gfx_446C2 equ LoadBattleTilesToBuffers_Data6_Gfx_44580+$142
+LoadBattleTilesToBuffers_Data6_Gfx_446E4 equ LoadBattleTilesToBuffers_Data6_Gfx_44580+$164
+LoadBattleTilesToBuffers_Data6_Gfx_44706 equ LoadBattleTilesToBuffers_Data6_Gfx_44580+$186
+LoadBattleTilesToBuffers_Data6_Gfx_44710 equ LoadBattleTilesToBuffers_Data6_Gfx_44580+$190
+LoadBattleTilesToBuffers_Data6_Gfx_44732 equ LoadBattleTilesToBuffers_Data6_Gfx_44580+$1B2
+LoadBattleTilesToBuffers_Data6_Gfx_44754 equ LoadBattleTilesToBuffers_Data6_Gfx_44580+$1D4
+LoadBattleTilesToBuffers_Data6_Gfx_4476E equ LoadBattleTilesToBuffers_Data6_Gfx_44580+$1EE
+LoadBattleTilesToBuffers_Data6_Gfx_4478C equ LoadBattleTilesToBuffers_Data6_Gfx_44580+$20C
+LoadBattleTilesToBuffers_Data6_Gfx_44796 equ LoadBattleTilesToBuffers_Data6_Gfx_44580+$216
+LoadBattleTilesToBuffers_Data6_Gfx_447B0 equ LoadBattleTilesToBuffers_Data6_Gfx_44580+$230
+LoadBattleTilesToBuffers_Data6_Gfx_447BA equ LoadBattleTilesToBuffers_Data6_Gfx_44580+$23A
+LoadBattleTilesToBuffers_Data6_Gfx_447DC equ LoadBattleTilesToBuffers_Data6_Gfx_44580+$25C
+LoadBattleTilesToBuffers_Data6_Gfx_447FE equ LoadBattleTilesToBuffers_Data6_Gfx_44580+$27E
+LoadBattleTilesToBuffers_Data6_Gfx_4480A equ LoadBattleTilesToBuffers_Data6_Gfx_44580+$28A
+LoadBattleTilesToBuffers_Data6_Gfx_44826 equ LoadBattleTilesToBuffers_Data6_Gfx_44580+$2A6
+LoadBattleTilesToBuffers_Data6_Gfx_44846 equ LoadBattleTilesToBuffers_Data6_Gfx_44580+$2C6
+LoadBattleTilesToBuffers_Data6_Gfx_44868 equ LoadBattleTilesToBuffers_Data6_Gfx_44580+$2E8
+LoadBattleTilesToBuffers_Data6_Gfx_4488A equ LoadBattleTilesToBuffers_Data6_Gfx_44580+$30A
+LoadBattleTilesToBuffers_Data6_Gfx_448A8 equ LoadBattleTilesToBuffers_Data6_Gfx_44580+$328
+LoadBattleTilesToBuffers_Data6_Gfx_448CA equ LoadBattleTilesToBuffers_Data6_Gfx_44580+$34A
+LoadBattleTilesToBuffers_Data6_Gfx_448D6 equ LoadBattleTilesToBuffers_Data6_Gfx_44580+$356
+LoadBattleTilesToBuffers_Data6_Gfx_448EC equ LoadBattleTilesToBuffers_Data6_Gfx_44580+$36C
+LoadBattleTilesToBuffers_Data6_Gfx_44900 equ LoadBattleTilesToBuffers_Data6_Gfx_44580+$380
+LoadBattleTilesToBuffers_Data6_Gfx_4491C equ LoadBattleTilesToBuffers_Data6_Gfx_44580+$39C
+LoadBattleTilesToBuffers_Data6_Gfx_4493E equ LoadBattleTilesToBuffers_Data6_Gfx_44580+$3BE
+LoadBattleTilesToBuffers_Data6_Gfx_44960 equ LoadBattleTilesToBuffers_Data6_Gfx_44580+$3E0
+LoadBattleTilesToBuffers_Data6_Gfx_4496E equ LoadBattleTilesToBuffers_Data6_Gfx_44580+$3EE
+LoadBattleTilesToBuffers_Data6_Gfx_4497A equ LoadBattleTilesToBuffers_Data6_Gfx_44580+$3FA
+LoadBattleTilesToBuffers_Data6_Gfx_4499C equ LoadBattleTilesToBuffers_Data6_Gfx_44580+$41C
+LoadBattleTilesToBuffers_Data6_Gfx_449BC equ LoadBattleTilesToBuffers_Data6_Gfx_44580+$43C
+LoadBattleTilesToBuffers_Data6_Gfx_449CC equ LoadBattleTilesToBuffers_Data6_Gfx_44580+$44C
+LoadBattleTilesToBuffers_Data6_Gfx_449E4 equ LoadBattleTilesToBuffers_Data6_Gfx_44580+$464
+LoadBattleTilesToBuffers_Data6_Gfx_449FC equ LoadBattleTilesToBuffers_Data6_Gfx_44580+$47C
+LoadBattleTilesToBuffers_Data6_Gfx_44A1E equ LoadBattleTilesToBuffers_Data6_Gfx_44580+$49E
+LoadBattleTilesToBuffers_Data6_Gfx_44A40 equ LoadBattleTilesToBuffers_Data6_Gfx_44580+$4C0
+LoadBattleTilesToBuffers_Data6_Gfx_44A62 equ LoadBattleTilesToBuffers_Data6_Gfx_44580+$4E2
+LoadBattleTilesToBuffers_Data6_Gfx_44A6E equ LoadBattleTilesToBuffers_Data6_Gfx_44580+$4EE
+LoadBattleTilesToBuffers_Data6_Gfx_44A76 equ LoadBattleTilesToBuffers_Data6_Gfx_44580+$4F6
+LoadBattleTilesToBuffers_Data6_Gfx_44A98 equ LoadBattleTilesToBuffers_Data6_Gfx_44580+$518
+LoadBattleTilesToBuffers_Data6_Gfx_44AB4 equ LoadBattleTilesToBuffers_Data6_Gfx_44580+$534
+LoadBattleTilesToBuffers_Data6_Gfx_44ABE equ LoadBattleTilesToBuffers_Data6_Gfx_44580+$53E
+LoadBattleTilesToBuffers_Data6_Gfx_44AD2 equ LoadBattleTilesToBuffers_Data6_Gfx_44580+$552
+LoadBattleTilesToBuffers_Data6_Gfx_44AE8 equ LoadBattleTilesToBuffers_Data6_Gfx_44580+$568
+LoadBattleTilesToBuffers_Data6_Gfx_44B0A equ LoadBattleTilesToBuffers_Data6_Gfx_44580+$58A
+LoadBattleTilesToBuffers_Data6_Gfx_44B2C equ LoadBattleTilesToBuffers_Data6_Gfx_44580+$5AC
+LoadBattleTilesToBuffers_Data6_Gfx_44B4E equ LoadBattleTilesToBuffers_Data6_Gfx_44580+$5CE
+LoadBattleTilesToBuffers_Data6_Gfx_44B5A equ LoadBattleTilesToBuffers_Data6_Gfx_44580+$5DA
+LoadBattleTilesToBuffers_Data6_Gfx_44B6C equ LoadBattleTilesToBuffers_Data6_Gfx_44580+$5EC
+LoadBattleTilesToBuffers_Data6_Gfx_44B8C equ LoadBattleTilesToBuffers_Data6_Gfx_44580+$60C
+LoadBattleTilesToBuffers_Data6_Gfx_44BAA equ LoadBattleTilesToBuffers_Data6_Gfx_44580+$62A
+LoadBattleTilesToBuffers_Data6_Gfx_44BBE equ LoadBattleTilesToBuffers_Data6_Gfx_44580+$63E
+LoadBattleTilesToBuffers_Data6_Gfx_44BE0 equ LoadBattleTilesToBuffers_Data6_Gfx_44580+$660
+LoadBattleTilesToBuffers_Data6_Gfx_44BFA equ LoadBattleTilesToBuffers_Data6_Gfx_44580+$67A
+LoadBattleTilesToBuffers_Data6_Gfx_44C18 equ LoadBattleTilesToBuffers_Data6_Gfx_44580+$698
+LoadBattleTilesToBuffers_Data6_Gfx_44C3A equ LoadBattleTilesToBuffers_Data6_Gfx_44580+$6BA
+LoadBattleTilesToBuffers_Data6_Gfx_44C5C equ LoadBattleTilesToBuffers_Data6_Gfx_44580+$6DC
+LoadBattleTilesToBuffers_Data6_Gfx_44C66 equ LoadBattleTilesToBuffers_Data6_Gfx_44580+$6E6
+LoadBattleTilesToBuffers_Data6_Gfx_44C70 equ LoadBattleTilesToBuffers_Data6_Gfx_44580+$6F0
+LoadBattleTilesToBuffers_Data6_Gfx_44C92 equ LoadBattleTilesToBuffers_Data6_Gfx_44580+$712
+LoadBattleTilesToBuffers_Data6_Gfx_44CB4 equ LoadBattleTilesToBuffers_Data6_Gfx_44580+$734
+LoadBattleTilesToBuffers_Data6_Gfx_44CC4 equ LoadBattleTilesToBuffers_Data6_Gfx_44580+$744
+LoadBattleTilesToBuffers_Data6_Gfx_44CE6 equ LoadBattleTilesToBuffers_Data6_Gfx_44580+$766
+LoadBattleTilesToBuffers_Data6_Gfx_44CFE equ LoadBattleTilesToBuffers_Data6_Gfx_44580+$77E
+LoadBattleTilesToBuffers_Data6_Gfx_44D18 equ LoadBattleTilesToBuffers_Data6_Gfx_44580+$798
+LoadBattleTilesToBuffers_Data6_Gfx_44D3A equ LoadBattleTilesToBuffers_Data6_Gfx_44580+$7BA
+LoadBattleTilesToBuffers_Data6_Gfx_44D5C equ LoadBattleTilesToBuffers_Data6_Gfx_44580+$7DC
+LoadBattleTilesToBuffers_Data6_Gfx_44D66 equ LoadBattleTilesToBuffers_Data6_Gfx_44580+$7E6
+LoadBattleTilesToBuffers_Data6_Gfx_44D88 equ LoadBattleTilesToBuffers_Data6_Gfx_44580+$808
+LoadBattleTilesToBuffers_Data6_Gfx_44DAA equ LoadBattleTilesToBuffers_Data6_Gfx_44580+$82A
+LoadBattleTilesToBuffers_Data6_Gfx_44DBE equ LoadBattleTilesToBuffers_Data6_Gfx_44580+$83E
+LoadBattleTilesToBuffers_Data6_Gfx_44DE0 equ LoadBattleTilesToBuffers_Data6_Gfx_44580+$860
+LoadBattleTilesToBuffers_Data6_Gfx_44DFA equ LoadBattleTilesToBuffers_Data6_Gfx_44580+$87A
+LoadBattleTilesToBuffers_Data6_Gfx_44E02 equ LoadBattleTilesToBuffers_Data6_Gfx_44580+$882
+LoadBattleTilesToBuffers_Data6_Gfx_44E20 equ LoadBattleTilesToBuffers_Data6_Gfx_44580+$8A0
+LoadBattleTilesToBuffers_Data6_Gfx_44E42 equ LoadBattleTilesToBuffers_Data6_Gfx_44580+$8C2
+LoadBattleTilesToBuffers_Data6_Gfx_44E64 equ LoadBattleTilesToBuffers_Data6_Gfx_44580+$8E4
+LoadBattleTilesToBuffers_Data6_Gfx_44E72 equ LoadBattleTilesToBuffers_Data6_Gfx_44580+$8F2
+LoadBattleTilesToBuffers_Data6_Gfx_44E82 equ LoadBattleTilesToBuffers_Data6_Gfx_44580+$902
+LoadBattleTilesToBuffers_Data6_Gfx_44EA4 equ LoadBattleTilesToBuffers_Data6_Gfx_44580+$924
+LoadBattleTilesToBuffers_Data6_Gfx_44EC6 equ LoadBattleTilesToBuffers_Data6_Gfx_44580+$946
+LoadBattleTilesToBuffers_Data6_Gfx_44ED6 equ LoadBattleTilesToBuffers_Data6_Gfx_44580+$956
+LoadBattleTilesToBuffers_Data6_Gfx_44EEA equ LoadBattleTilesToBuffers_Data6_Gfx_44580+$96A
+LoadBattleTilesToBuffers_Data6_Gfx_44F0A equ LoadBattleTilesToBuffers_Data6_Gfx_44580+$98A
+LoadBattleTilesToBuffers_Data6_Gfx_44F2C equ LoadBattleTilesToBuffers_Data6_Gfx_44580+$9AC
+LoadBattleTilesToBuffers_Data6_Gfx_44F46 equ LoadBattleTilesToBuffers_Data6_Gfx_44580+$9C6
+LoadBattleTilesToBuffers_Data6_Gfx_44F64 equ LoadBattleTilesToBuffers_Data6_Gfx_44580+$9E4
+LoadBattleTilesToBuffers_Data6_Gfx_44F86 equ LoadBattleTilesToBuffers_Data6_Gfx_44580+$A06
+LoadBattleTilesToBuffers_Data6_Gfx_44FA8 equ LoadBattleTilesToBuffers_Data6_Gfx_44580+$A28
+LoadBattleTilesToBuffers_Data6_Gfx_44FB4 equ LoadBattleTilesToBuffers_Data6_Gfx_44580+$A34
+LoadBattleTilesToBuffers_Data6_Gfx_44FD4 equ LoadBattleTilesToBuffers_Data6_Gfx_44580+$A54
+LoadBattleTilesToBuffers_Data6_Gfx_44FF2 equ LoadBattleTilesToBuffers_Data6_Gfx_44580+$A72
+LoadBattleTilesToBuffers_Data6_Gfx_44FFC equ LoadBattleTilesToBuffers_Data6_Gfx_44580+$A7C
+LoadBattleTilesToBuffers_Data6_Gfx_4501E equ LoadBattleTilesToBuffers_Data6_Gfx_44580+$A9E
+LoadBattleTilesToBuffers_Data6_Gfx_4503C equ LoadBattleTilesToBuffers_Data6_Gfx_44580+$ABC
+LoadBattleTilesToBuffers_Data6_Gfx_45056 equ LoadBattleTilesToBuffers_Data6_Gfx_44580+$AD6
+LoadBattleTilesToBuffers_Data6_Gfx_45078 equ LoadBattleTilesToBuffers_Data6_Gfx_44580+$AF8
+LoadBattleTilesToBuffers_Data6_Gfx_4508C equ LoadBattleTilesToBuffers_Data6_Gfx_44580+$B0C
+LoadBattleTilesToBuffers_Data6_Gfx_450AA equ LoadBattleTilesToBuffers_Data6_Gfx_44580+$B2A
+LoadBattleTilesToBuffers_Data6_Gfx_450CC equ LoadBattleTilesToBuffers_Data6_Gfx_44580+$B4C
+LoadBattleTilesToBuffers_Data6_Gfx_450EE equ LoadBattleTilesToBuffers_Data6_Gfx_44580+$B6E
+LoadBattleTilesToBuffers_Data6_Gfx_450F8 equ LoadBattleTilesToBuffers_Data6_Gfx_44580+$B78
+LoadBattleTilesToBuffers_Data6_Gfx_4511A equ LoadBattleTilesToBuffers_Data6_Gfx_44580+$B9A
+LoadBattleTilesToBuffers_Data6_Gfx_45138 equ LoadBattleTilesToBuffers_Data6_Gfx_44580+$BB8
+LoadBattleTilesToBuffers_Data6_Gfx_4515A equ LoadBattleTilesToBuffers_Data6_Gfx_44580+$BDA
+LoadBattleTilesToBuffers_Data6_Gfx_45166 equ LoadBattleTilesToBuffers_Data6_Gfx_44580+$BE6
+LoadBattleTilesToBuffers_Data6_Gfx_45188 equ LoadBattleTilesToBuffers_Data6_Gfx_44580+$C08
+LoadBattleTilesToBuffers_Data6_Gfx_451AA equ LoadBattleTilesToBuffers_Data6_Gfx_44580+$C2A
+LoadBattleTilesToBuffers_Data6_Gfx_451B2 equ LoadBattleTilesToBuffers_Data6_Gfx_44580+$C32
+LoadBattleTilesToBuffers_Data6_Gfx_451D4 equ LoadBattleTilesToBuffers_Data6_Gfx_44580+$C54
+LoadBattleTilesToBuffers_Data6_Gfx_451F2 equ LoadBattleTilesToBuffers_Data6_Gfx_44580+$C72
+LoadBattleTilesToBuffers_Data6_Gfx_45206 equ LoadBattleTilesToBuffers_Data6_Gfx_44580+$C86
+LoadBattleTilesToBuffers_Data6_Gfx_45224 equ LoadBattleTilesToBuffers_Data6_Gfx_44580+$CA4
+LoadBattleTilesToBuffers_Data6_Gfx_45246 equ LoadBattleTilesToBuffers_Data6_Gfx_44580+$CC6
+LoadBattleTilesToBuffers_Data6_Gfx_45254 equ LoadBattleTilesToBuffers_Data6_Gfx_44580+$CD4
+LoadBattleTilesToBuffers_Data6_Gfx_4525E equ LoadBattleTilesToBuffers_Data6_Gfx_44580+$CDE
+LoadBattleTilesToBuffers_Data6_Gfx_4527C equ LoadBattleTilesToBuffers_Data6_Gfx_44580+$CFC
 LoadBattleTilesToBuffers_Data6:
 	dc.l	LoadBattleTilesToBuffers_Data6_Gfx_43946
 	dc.l	LoadBattleTilesToBuffers_Data6_Gfx_4394E
@@ -52074,368 +51572,178 @@ LoadBossGraphics_Data:
 	dc.b	$6F, $68, $6C, $70, $71, $75, $79, $72, $76, $7A, $73, $77, $7B, $74, $78, $7C, $7D, $81, $85, $7E, $82, $86, $7F, $83, $87, $80, $84, $88, $89, $8D, $91, $8A 
 	dc.b	$8E, $92, $8B, $8F, $93, $8C, $90, $94, $95, $99, $9D, $96, $9A, $9E, $97, $9B, $9F, $98, $9C, $A0, $A1, $A4, $A8, $8A, $A5, $A9, $A2, $A6, $AA, $A3, $A7, $AB 
 LoadBossGraphics_Data2_Gfx_46198:
-	dc.b	$01, $00, $CE, $C8, $01, $9F, $06, $32, $32, $03, $42, $44, $34, $53, $04, $33, $45, $02, $04, $34, $50, $45, $50, $00 
-LoadBossGraphics_Data2_Gfx_461B0:
-	dc.b	$01, $66, $10, $07, $C4, $00, $35, $63, $44, $34, $56, $34, $56, $23, $46, $63, $46, $36, $65, $44, $00, $54, $44, $00, $05, $54, $21, $00, $05, $43, $21, $00 
-LoadBossGraphics_Data2_Gfx_461D0:
-	dc.b	$01, $66, $2E, $EE, $E4, $00, $55, $55, $00, $00, $00, $00, $00, $36, $55, $00, $14, $65, $54, $40, $14, $65, $53, $40 
-LoadBossGraphics_Data2_Gfx_461E8:
-	dc.b	$01, $00, $C8, $DF, $FF, $FF, $55, $30, $05, $53, $40, $44 
-LoadBossGraphics_Data2_Gfx_461F4:
-	dc.b	$01, $00, $FF, $FE, $EE, $CC, $06, $06, $65, $06, $65, $06, $65, $00 
-LoadBossGraphics_Data2_Gfx_46202:
-	dc.b	$00, $00, $66, $54, $22, $06, $65, $66, $66, $66, $55, $44, $45, $55, $44, $23, $46, $54, $32, $23, $66, $54, $32, $30, $65, $55, $44, $00, $65, $33, $40, $06 
-	dc.b	$65, $00 
-LoadBossGraphics_Data2_Gfx_46224:
-	dc.b	$01, $00, $00, $11, $11, $33, $26, $65, $43, $40, $66, $65, $54, $40, $66, $66, $55, $65, $43, $33, $54, $33, $30, $54, $33, $30, $43, $33, $43, $30 
-LoadBossGraphics_Data2_Gfx_46242:
-	dc.b	$01, $00, $FF, $FF, $FF, $FF 
-LoadBossGraphics_Data2_Gfx_46248:
-	dc.b	$01, $00, $CC, $EE, $CC, $CE, $06, $65, $06, $65, $66, $66, $0B, $B6, $BB, $BB, $0B, $BB, $0B, $00 
-LoadBossGraphics_Data2_Gfx_4625C:
-	dc.b	$01, $BB, $00, $00, $02, $FF, $32, $20, $06, $65, $32, $20, $06, $55, $43, $30, $66, $65, $64, $40, $66, $55, $66, $6B, $B6, $54, $66, $6B, $66, $00 
-LoadBossGraphics_Data2_Gfx_4627A:
-	dc.b	$01, $00, $33, $73, $00, $01, $43, $30, $44, $40, $55, $43, $30, $43, $33, $BB, $B0, $54, $44, $6B, $BB, $66, $66, $BB, $B0, $BB, $BB, $BB 
-LoadBossGraphics_Data2_Gfx_46296:
-	dc.b	$01, $00, $8C, $C8, $01, $9F, $06, $55, $33, $66, $32, $05, $32, $44, $45, $53, $04, $33, $45, $02, $04, $34, $50, $45, $50, $00 
-LoadBossGraphics_Data2_Gfx_462B0:
-	dc.b	$01, $66, $11, $15, $73, $22, $45, $34, $34, $34, $53, $45, $23, $43, $44, $30, $34, $60, $00, $06, $00, $06, $64, $00, $00, $54 
-LoadBossGraphics_Data2_Gfx_462CA:
-	dc.b	$02, $66, $2E, $EE, $E2, $20, $00, $01, $11, $11, $11, $55, $55, $06, $44, $46, $43, $34, $33, $22, $65, $00 
-LoadBossGraphics_Data2_Gfx_462E0:
-	dc.b	$01, $00, $0C, $FF, $FF, $FF, $60, $05, $55, $53, $53, $40 
-LoadBossGraphics_Data2_Gfx_462EC:
-	dc.b	$01, $00, $CC, $EC, $CC, $88, $06, $44, $06, $54, $66, $66, $54, $66, $54, $66, $54, $05, $66, $54, $06, $66, $65, $00 
-LoadBossGraphics_Data2_Gfx_46304:
-	dc.b	$01, $00, $11, $11, $33, $33, $32, $12, $54, $32, $26, $54, $65, $55, $54, $43, $35, $50, $32, $15, $32, $15, $32, $20, $32, $30 
-LoadBossGraphics_Data2_Gfx_4631E:
-	dc.b	$01, $00, $FF, $FF, $EE, $EF, $0B, $BB, $0B, $00 
-LoadBossGraphics_Data2_Gfx_46328:
-	dc.b	$02, $66, $20, $76, $31, $00, $BB, $00, $00, $8C, $E7, $00, $06, $65, $00, $06, $56, $65, $00, $00, $64, $B6, $B6, $B6, $0B, $00 
-LoadBossGraphics_Data2_Gfx_46342:
-	dc.b	$02, $00, $33, $33, $00, $00, $BB, $00, $00, $11, $1F, $44, $40, $66, $60, $64, $40, $33, $33, $44, $44, $3B, $66, $66, $66, $66, $66, $6B 
-LoadBossGraphics_Data2_Gfx_4635E:
-	dc.b	$01, $00, $FF, $FF, $F7, $7F, $B0, $B0 
-LoadBossGraphics_Data2_Gfx_46366:
-	dc.b	$01, $00, $CC, $C8, $01, $9F, $55, $33, $06, $32, $05, $32, $44, $45, $53, $04, $33, $45, $02, $04, $34, $50, $45, $50 
-LoadBossGraphics_Data2_Gfx_4637E:
-	dc.b	$01, $66, $11, $15, $FF, $44, $45, $34, $34, $34, $53, $45, $23, $43, $44, $36, $34, $06, $65, $44, $06, $54, $34, $00 
-LoadBossGraphics_Data2_Gfx_46396:
-	dc.b	$01, $66, $3F, $FF, $FF, $64, $65, $55, $60, $55, $40, $65, $54, $00 
-LoadBossGraphics_Data2_Gfx_463A4:
-	dc.b	$01, $00, $01, $FF, $77, $77, $66, $55, $55, $50, $66, $05, $53, $60, $50, $44, $34, $00 
-LoadBossGraphics_Data2_Gfx_463B6:
-	dc.b	$01, $00, $FF, $FF, $EE, $EE, $06, $06, $06, $06 
-LoadBossGraphics_Data2_Gfx_463C0:
-	dc.b	$01, $66, $00, $8B, $81, $03, $00, $65, $54, $22, $06, $65, $42, $12, $65, $44, $24, $55, $54, $44, $60, $65, $44, $36, $65, $43, $46, $06, $65, $43 
-LoadBossGraphics_Data2_Gfx_463DE:
-	dc.b	$00, $40, $06, $65, $43, $40, $66, $66, $54, $06, $66, $55, $66, $66, $55, $44, $55, $65, $44, $43, $50, $65, $44, $34, $00, $54, $44, $40, $00, $55, $44, $00 
-	dc.b	$00, $00 
-LoadBossGraphics_Data2_Gfx_46400:
-	dc.b	$01, $00, $77, $FF, $FF, $FF, $35, $30 
-LoadBossGraphics_Data2_Gfx_46408:
-	dc.b	$01, $00, $EE, $EC, $88, $8C, $66, $66, $65, $06, $66, $0B, $BB, $66, $BB, $BB, $B6, $0B, $BB, $BB, $0B, $BB 
-LoadBossGraphics_Data2_Gfx_4641E:
-	dc.b	$01, $66, $33, $30, $9F, $60, $54, $33, $54, $44, $65, $56, $65, $43, $36, $65, $54, $33, $B6, $6B, $BB, $BB, $BB, $BB 
-LoadBossGraphics_Data2_Gfx_46436:
-	dc.b	$02, $00, $33, $31, $00, $01, $BB, $00, $00, $11, $FE, $55, $55, $66, $60, $54, $40, $44, $33, $30, $66, $66, $6B, $66, $66, $66 
-LoadBossGraphics_Data2_Gfx_46450:
-	dc.b	$01, $00, $FF, $FF, $F7, $FF, $B0, $00 
-LoadBossGraphics_Data2_Gfx_46458:
-	dc.b	$01, $00, $CE, $EE, $C8, $8C, $06, $66, $06, $04, $43, $43, $33, $04, $32, $40, $04, $22, $46, $34, $06, $00 
-LoadBossGraphics_Data2_Gfx_4646E:
-	dc.b	$01, $66, $01, $16, $E8, $00, $53, $25, $45, $63, $45, $54, $46, $34, $55, $56, $46, $60, $60, $55, $55, $60, $65, $44, $44, $40, $54, $43, $32, $30 
-LoadBossGraphics_Data2_Gfx_4648C:
-	dc.b	$01, $66, $6E, $FE, $44, $40, $56, $60, $60, $54, $06, $65, $42, $06, $64, $22, $00, $65, $42, $00, $06, $65, $54, $00 
-LoadBossGraphics_Data2_Gfx_464A4:
-	dc.b	$01, $00, $FF, $F7, $77, $77, $20, $20, $23, $23, $33, $00 
-LoadBossGraphics_Data2_Gfx_464B0:
-	dc.b	$01, $00, $EE, $EE, $EE, $CC, $06, $06, $66, $66, $66, $65, $06, $64, $06, $64 
-LoadBossGraphics_Data2_Gfx_464C0:
-	dc.b	$01, $00, $11, $13, $33, $33, $54, $33, $22, $54, $33, $20, $66, $66, $60, $55, $44, $43, $33, $32, $12, $32, $22, $22, $20, $00 
-LoadBossGraphics_Data2_Gfx_464DA:
-	dc.b	$01, $00, $C8, $88, $88, $80, $66, $54, $06, $66, $65, $06, $65, $54, $66, $54, $32, $66, $43, $23, $65, $43, $23, $64, $43, $30, $06, $65, $44, $40 
-LoadBossGraphics_Data2_Gfx_464F8:
-	dc.b	$01, $00, $7F, $77, $FF, $FF, $40, $40, $40, $00 
-LoadBossGraphics_Data2_Gfx_46502:
-	dc.b	$01, $00, $CC, $CC, $C8, $CE, $05, $65, $65, $66, $66, $65, $66, $65, $B6, $66, $0B, $BB, $66, $BB, $B6, $BB 
-LoadBossGraphics_Data2_Gfx_46518:
-	dc.b	$02, $00, $37, $32, $00, $00, $BB, $00, $00, $33, $3F, $33, $30, $66, $43, $40, $43, $30, $0B, $54, $44, $65, $55, $66, $66, $00 
-LoadBossGraphics_Data2_Gfx_46532:
-	dc.b	$02, $66, $6C, $C4, $31, $00, $BB, $00, $00, $8C, $FF, $56, $00, $55, $40, $54, $43, $B6, $55, $44, $B6, $B6 
-LoadBossGraphics_Data2_Gfx_46548:
-	dc.b	$01, $00, $FF, $F3, $33, $7F, $3B, $B0, $66, $BB, $6B, $B0, $BB, $00 
-LoadBossGraphics_Data2_Gfx_46556:
-	dc.b	$01, $00, $88, $88, $8C, $FF, $06, $65, $45, $06, $46, $54, $66, $54, $55, $64, $55, $44, $06, $45, $55, $64, $45, $00 
-LoadBossGraphics_Data2_Gfx_4656E:
-	dc.b	$01, $55, $CC, $18, $08, $00, $43, $33, $54, $44, $44, $45, $65, $52, $66, $66, $45, $53, $26, $44, $66, $32, $66, $06, $67, $73, $26, $06, $78, $77, $32, $00 
-LoadBossGraphics_Data2_Gfx_4658E:
-	dc.b	$01, $66, $04, $80, $09, $3F, $45, $65, $54, $34, $46, $43, $33, $45, $54, $34, $64, $63, $65, $45, $46, $46, $56, $55, $34, $56, $64, $36 
-LoadBossGraphics_Data2_Gfx_465AA:
-	dc.b	$02, $00, $33, $33, $10, $00, $66, $00, $04, $CC, $88, $55, $50, $56, $50, $56, $56, $56, $65, $54, $30, $65, $43, $22, $65, $43, $22, $00 
-LoadBossGraphics_Data2_Gfx_465C6:
-	dc.b	$01, $00, $FF, $EE, $CC, $88, $08, $89, $08, $9A, $8A, $A9, $08, $AA, $98, $8A, $A9, $85 
-LoadBossGraphics_Data2_Gfx_465D8:
-	dc.b	$00, $08, $88, $87, $33, $88, $98, $75, $55, $99, $88, $54, $44, $99, $85, $54, $43, $98, $65, $54, $33, $86, $56, $55, $54, $65, $45, $56, $60, $54, $44, $55 
-	dc.b	$00, $00 
-LoadBossGraphics_Data2_Gfx_465FA:
-	dc.b	$02, $00, $46, $66, $4C, $CC, $66, $30, $01, $11, $23, $20, $40, $06, $34, $06, $34, $30, $06, $06, $65, $00 
-LoadBossGraphics_Data2_Gfx_46610:
-	dc.b	$01, $00, $00, $11, $13, $37, $66, $65, $44, $33, $66, $65, $54, $40, $66, $56, $66, $65, $55, $55, $65, $44, $40, $54, $33, $53, $30, $66 
-LoadBossGraphics_Data2_Gfx_4662C:
-	dc.b	$00, $08, $AA, $98, $55, $9A, $A9, $86, $54, $A9, $98, $65, $65, $99, $65, $54, $56, $96, $65, $44, $45, $06, $66, $54, $5B, $BB, $66, $66, $6B, $0B, $B6, $66 
-	dc.b	$BB, $00 
-LoadBossGraphics_Data2_Gfx_4664E:
-	dc.b	$02, $00, $11, $37, $C0, $01, $BB, $00, $00, $3F, $FE, $44, $33, $34, $43, $33, $40, $54, $44, $60 
-LoadBossGraphics_Data2_Gfx_46662:
-	dc.b	$02, $00, $88, $C0, $00, $1F, $BB, $00, $06, $FF, $C0, $06, $66, $65, $06, $66, $66, $66, $66, $0B, $B6, $B0 
-LoadBossGraphics_Data2_Gfx_46678:
-	dc.b	$01, $00, $31, $11, $01, $FF, $54, $32, $54, $33, $30, $65, $44, $55, $66, $55, $66, $66, $66, $6B, $B0, $BB, $BB, $BB 
-LoadBossGraphics_Data2_Gfx_46690:
-	dc.b	$01, $00, $CC, $88, $88, $CF, $34, $65, $63, $34, $06, $36, $54, $66, $33, $66, $63, $66, $34, $06, $34, $66, $66, $44 
-LoadBossGraphics_Data2_Gfx_466A8:
-	dc.b	$01, $66, $08, $01, $93, $77, $54, $44, $44, $56, $55, $44, $56, $44, $46, $55, $56, $55, $54, $45, $65, $55, $64, $56, $55, $06 
-LoadBossGraphics_Data2_Gfx_466C2:
-	dc.b	$01, $66, $94, $00, $88, $8F, $54, $45, $56, $56, $55, $55, $46, $65, $53, $65, $44, $35, $55, $54, $43, $22, $55, $42, $33, $65, $23, $56 
-LoadBossGraphics_Data2_Gfx_466DE:
-	dc.b	$01, $00, $31, $13, $31, $00, $55, $55, $33, $52, $20, $55, $23, $30, $22, $33, $37, $76, $77, $77, $55, $78, $87, $54, $30, $78, $88, $43, $30, $00 
-LoadBossGraphics_Data2_Gfx_466FC:
-	dc.b	$01, $00, $FF, $FF, $FE, $EC, $06, $06, $66, $66 
-LoadBossGraphics_Data2_Gfx_46706:
-	dc.b	$01, $66, $33, $66, $68, $00, $00, $06, $00, $00, $00, $65, $06, $65, $06, $65, $55, $55, $65, $65, $54, $55, $56, $55, $44, $44, $56, $00 
-LoadBossGraphics_Data2_Gfx_46722:
-	dc.b	$01, $66, $F1, $01, $33, $66, $55, $55, $06, $44, $44, $00, $06, $43, $33, $06, $43, $33, $54, $40, $50, $65, $06, $55 
-LoadBossGraphics_Data2_Gfx_4673A:
-	dc.b	$00, $68, $99, $34, $30, $68, $99, $84, $40, $66, $9A, $95, $00, $65, $8A, $98, $00, $55, $89, $A9, $00, $54, $48, $A9, $80, $54, $38, $9A, $90, $40, $03, $9A 
-	dc.b	$98, $00 
-LoadBossGraphics_Data2_Gfx_4675C:
-	dc.b	$00, $00, $00, $66, $65, $00, $06, $66, $65, $00, $06, $66, $55, $00, $66, $55, $65, $06, $65, $44, $46, $06, $65, $43, $34, $0B, $66, $54, $34, $0B, $B6, $66 
-	dc.b	$6B, $00 
-LoadBossGraphics_Data2_Gfx_4677E:
-	dc.b	$02, $00, $01, $37, $60, $00, $BB, $00, $00, $17, $FE, $44, $33, $34, $50, $43, $33, $40, $43, $40, $54, $60, $6B, $B0 
-LoadBossGraphics_Data2_Gfx_46796:
-	dc.b	$02, $66, $64, $63, $00, $00, $BB, $00, $00, $EF, $F0, $06, $65, $06, $65, $55, $06, $65, $00, $0B, $B6, $00, $00, $00, $00, $00 
-LoadBossGraphics_Data2_Gfx_467B0:
-	dc.b	$00, $65, $00, $8A, $A9, $43, $00, $89, $A9, $54, $34, $08, $A9, $65, $55, $68, $9A, $66, $66, $B3, $9A, $BB, $BB, $BB, $39, $BB, $B0, $00, $33, $00, $00, $00 
-	dc.b	$03, $00 
-LoadBossGraphics_Data2_Gfx_467D2:
-	dc.b	$01, $66, $00, $00, $88, $8F, $55, $44, $44, $34, $55, $44, $33, $23, $55, $43, $32, $22, $65, $44, $32, $33, $54, $43, $34, $55, $44, $45, $65, $55, $56, $00 
-LoadBossGraphics_Data2_Gfx_467F2:
-	dc.b	$01, $00, $73, $33, $31, $00, $56, $55, $50, $56, $50, $56, $56, $56, $66, $66, $66, $55, $66, $66, $54, $30, $66, $65, $43, $30 
-LoadBossGraphics_Data2_Gfx_4680C:
-	dc.b	$01, $66, $F1, $11, $33, $22, $55, $55, $06, $44, $44, $00, $43, $33, $06, $43, $33, $54, $40, $50, $06, $65, $00, $06, $55, $00 
-LoadBossGraphics_Data2_Gfx_46826:
-	dc.b	$01, $00, $00, $11, $33, $37, $66, $65, $44, $30, $66, $65, $54, $40, $66, $66, $55, $65, $55, $60, $55, $44, $54, $43, $54, $30, $40, $00 
-LoadBossGraphics_Data2_Gfx_46842:
-	dc.b	$02, $00, $01, $37, $40, $00, $BB, $00, $00, $37, $FF, $44, $33, $34, $50, $43, $33, $40, $43, $40, $54, $60, $6B, $00 
-LoadBossGraphics_Data2_Gfx_4685A:
-	dc.b	$02, $66, $74, $63, $00, $00, $BB, $00, $08, $EF, $F8, $00, $00, $65, $55, $00, $55, $B6, $B6, $B0, $00, $00 
-LoadBossGraphics_Data2_Gfx_46870:
-	dc.b	$01, $00, $73, $31, $11, $3F, $65, $43, $30, $54, $34, $55, $55, $60, $66, $66, $60, $B6, $66, $B0, $BB, $BB 
-LoadBossGraphics_Data2_Gfx_46886:
-	dc.b	$01, $66, $F1, $11, $33, $22, $55, $55, $06, $44, $44, $00, $43, $33, $06, $43, $33, $54, $40, $50, $00, $65, $00, $00, $55, $00 
-LoadBossGraphics_Data2_Gfx_468A0:
-	dc.b	$01, $BB, $00, $00, $37, $FE, $44, $33, $34, $50, $43, $33, $40, $00, $43, $40, $00, $00, $54, $00, $00, $0B, $60, $0B, $6B, $B0 
-LoadBossGraphics_Data2_Gfx_468BA:
-	dc.b	$02, $00, $88, $80, $00, $1F, $BB, $00, $0C, $EF, $E0, $06, $66, $66, $06, $66, $55, $06, $66, $65, $66, $66, $B6, $00 
-LoadBossGraphics_Data2_Gfx_468D2:
-	dc.b	$01, $00, $73, $31, $01, $FF, $65, $43, $30, $54, $34, $65, $55, $6B, $66, $66, $BB, $B0, $BB, $BB, $BB, $00 
-LoadBossGraphics_Data2_Gfx_468E8:
-	dc.b	$01, $00, $CC, $C8, $00, $8E, $06, $32, $06, $32, $03, $42, $44, $34, $53, $04, $33, $45, $62, $04, $34, $50, $66, $45, $50, $66, $66, $00 
-LoadBossGraphics_Data2_Gfx_46904:
-	dc.b	$01, $66, $10, $06, $E8, $00, $35, $63, $44, $34, $56, $34, $56, $23, $46, $63, $46, $36, $06, $00, $55, $55, $00, $65, $44, $44, $40, $54, $43, $32, $30, $00 
-LoadBossGraphics_Data2_Gfx_46924:
-	dc.b	$01, $66, $32, $FF, $E4, $44, $55, $55, $65, $56, $60, $54, $06, $65, $42, $06, $64, $22, $00, $64, $22, $00 
-LoadBossGraphics_Data2_Gfx_4693A:
-	dc.b	$01, $00, $48, $DF, $77, $77, $60, $55, $30, $05, $53, $40, $44, $40, $20, $23, $23, $00 
-LoadBossGraphics_Data2_Gfx_4694C:
-	dc.b	$01, $00, $11, $13, $33, $33, $54, $33, $22, $54, $33, $20, $66, $66, $60, $65, $55, $43, $33, $32, $12, $32, $22, $22, $20, $00 
-LoadBossGraphics_Data2_Gfx_46966:
-	dc.b	$01, $00, $88, $88, $88, $88, $66, $65, $44, $66, $66, $54, $06, $66, $65, $06, $65, $54, $66, $54, $32, $66, $43, $23, $65, $43, $23, $64, $43, $30 
-LoadBossGraphics_Data2_Gfx_46984:
-	dc.b	$01, $00, $77, $F7, $7F, $FF, $33, $40, $40, $40 
-LoadBossGraphics_Data2_Gfx_4698E:
-	dc.b	$01, $00, $CC, $CC, $CC, $8C, $05, $65, $05, $66, $06, $65, $06, $64, $06, $65, $BB, $66, $0B, $BB, $B6, $0B, $BB, $00 
-LoadBossGraphics_Data2_Gfx_469A6:
-	dc.b	$02, $00, $37, $33, $30, $00, $BB, $00, $00, $03, $3F, $33, $30, $66, $43, $40, $33, $30, $44, $44, $55, $55, $66, $66 
-LoadBossGraphics_Data2_Gfx_469BE:
-	dc.b	$02, $66, $06, $44, $43, $10, $BB, $00, $00, $08, $CF, $06, $65, $44, $40, $06, $00, $06, $55, $40, $06, $54, $43, $06, $55, $44, $B6, $B6 
-LoadBossGraphics_Data2_Gfx_469DA:
-	dc.b	$01, $00, $FF, $FF, $73, $33, $30, $6B, $B0, $BB, $BB, $BB, $B0, $00 
-LoadBossGraphics_Data2_Gfx_469E8:
-	dc.b	$01, $00, $CC, $CE, $EE, $EE, $06, $66, $06, $66, $06, $06, $06, $06, $66, $66, $66, $00 
-LoadBossGraphics_Data2_Gfx_469FA:
-	dc.b	$01, $66, $CC, $CC, $E0, $00, $54, $34, $65, $34, $65, $32, $65, $33, $65, $65, $55, $56, $60, $54, $44, $45, $00, $44, $33, $45, $00, $00 
-LoadBossGraphics_Data2_Gfx_46A16:
-	dc.b	$01, $66, $22, $77, $E4, $44, $55, $56, $60, $55, $56, $60, $46, $46, $54, $06, $65, $42, $06, $64, $22, $00, $64, $22 
-LoadBossGraphics_Data2_Gfx_46A2E:
-	dc.b	$01, $00, $7F, $FF, $77, $77, $66, $40, $20, $23, $23, $00 
-LoadBossGraphics_Data2_Gfx_46A3A:
-	dc.b	$01, $00, $EE, $EE, $EE, $EE, $65, $66, $06, $66, $65, $64, $64, $64 
-LoadBossGraphics_Data2_Gfx_46A48:
-	dc.b	$01, $00, $11, $11, $11, $33, $43, $33, $45, $54, $34, $45, $66, $66, $60, $55, $55, $60, $43, $34, $60, $32, $14, $60, $32, $24, $22, $34 
-LoadBossGraphics_Data2_Gfx_46A64:
-	dc.b	$01, $00, $EE, $CC, $CC, $8C, $65, $66, $06, $65, $06, $64, $06, $65, $BB, $66, $0B, $BB, $B6, $0B, $BB, $00 
-LoadBossGraphics_Data2_Gfx_46A7A:
-	dc.b	$02, $00, $33, $33, $30, $00, $BB, $00, $00, $03, $3F, $33, $36, $66, $60, $43, $40, $33, $36, $44, $44, $55, $55, $66, $66, $00 
-LoadBossGraphics_Data2_Gfx_46A94:
-	dc.b	$02, $66, $06, $44, $47, $30, $BB, $00, $00, $08, $CF, $06, $65, $44, $40, $06, $00, $06, $55, $40, $06, $54, $43, $06, $55, $44 
-LoadBossGraphics_Data2_Gfx_46AAE:
-	dc.b	$01, $00, $FF, $FF, $73, $13, $30, $66, $BB, $66, $BB, $B0, $BB, $BB 
-LoadBossGraphics_Data2_Gfx_46ABC:
-	dc.b	$02, $00, $88, $88, $88, $8C, $66, $00, $05, $32, $62, $06, $55, $65, $06, $65, $56, $06, $56, $56, $55, $65, $65, $65, $54, $44 
-LoadBossGraphics_Data2_Gfx_46AD6:
-	dc.b	$01, $66, $48, $CC, $C2, $20, $56, $55, $55, $65, $55, $45, $54, $54, $65, $44, $65, $54, $55, $56, $55, $44, $45, $05, $33, $45, $60, $00 
-LoadBossGraphics_Data2_Gfx_46AF2:
-	dc.b	$01, $55, $C0, $00, $0A, $C8, $56, $65, $45, $44, $56, $66, $44, $33, $45, $66, $43, $33, $45, $66, $44, $43, $45, $66, $44, $65, $56, $64, $56, $66, $64, $00 
-LoadBossGraphics_Data2_Gfx_46B12:
-	dc.b	$01, $00, $33, $33, $33, $33, $55, $60, $65, $50, $66, $50, $66, $50, $54, $40, $42, $20, $22, $23, $22, $23 
-LoadBossGraphics_Data2_Gfx_46B28:
-	dc.b	$01, $00, $CC, $CC, $CC, $CC, $65, $43, $66, $54, $06, $66, $66, $55, $65, $43, $64, $32, $64, $32, $64, $22 
-LoadBossGraphics_Data2_Gfx_46B3E:
-	dc.b	$01, $00, $33, $33, $33, $77, $33, $45, $34, $45, $66, $60, $55, $60, $34, $60, $14, $60, $24, $34 
-LoadBossGraphics_Data2_Gfx_46B52:
-	dc.b	$01, $00, $8C, $EC, $CC, $CC, $66, $66, $65, $66, $66, $66, $06, $65, $06, $54, $66, $43, $65, $43, $64, $43 
-LoadBossGraphics_Data2_Gfx_46B68:
-	dc.b	$01, $00, $33, $33, $33, $37, $44, $33, $54, $46, $65, $66, $54, $45, $32, $43, $23, $30, $23, $30, $34, $00 
-LoadBossGraphics_Data2_Gfx_46B7E:
-	dc.b	$01, $00, $CC, $88, $88, $08, $65, $33, $66, $66, $06, $65, $43, $06, $64, $33, $06, $65, $44, $BB, $66, $55, $0B, $BB, $66, $66, $BB, $BB, $BB, $00 
-LoadBossGraphics_Data2_Gfx_46B9C:
-	dc.b	$02, $00, $77, $77, $70, $00, $BB, $00, $00, $07, $7F, $36, $60, $40, $36, $44, $55, $66 
-LoadBossGraphics_Data2_Gfx_46BAE:
-	dc.b	$02, $00, $C8, $88, $C0, $00, $BB, $00, $00, $0C, $EF, $65, $44, $06, $66, $66, $06, $66, $55, $06, $66, $54, $66, $55, $B6, $66, $B6, $00 
-LoadBossGraphics_Data2_Gfx_46BCA:
-	dc.b	$01, $00, $77, $33, $10, $00, $46, $66, $46, $60, $43, $33, $44, $34, $40, $55, $55, $5B, $B0, $66, $66, $BB, $BB, $BB, $BB, $BB, $B0, $00 
-LoadBossGraphics_Data2_Gfx_46BE6:
-	dc.b	$02, $00, $8C, $88, $80, $08, $66, $20, $02, $22, $77, $05, $55, $65, $44, $05, $65, $44, $55, $54, $56, $65, $05, $56, $65, $05 
-LoadBossGraphics_Data2_Gfx_46C00:
-	dc.b	$00, $45, $65, $54, $43, $44, $56, $55, $43, $34, $56, $65, $44, $33, $45, $66, $55, $43, $35, $56, $55, $54, $44, $56, $66, $55, $44, $56, $66, $66, $55, $56 
-	dc.b	$55, $00 
-LoadBossGraphics_Data2_Gfx_46C22:
-	dc.b	$00, $45, $65, $45, $54, $35, $65, $44, $55, $46, $55, $44, $56, $45, $35, $44, $66, $56, $24, $55, $66, $56, $24, $57, $78, $66, $42, $47, $88, $55, $52, $47 
-	dc.b	$77, $00 
-LoadBossGraphics_Data2_Gfx_46C44:
-	dc.b	$02, $00, $99, $10, $00, $11, $99, $00, $01, $49, $E0, $66, $40, $06, $40, $60, $06, $40, $60, $06, $89, $88, $AA, $AA, $9A, $AA, $88, $66, $60, $00 
-LoadBossGraphics_Data2_Gfx_46C62:
-	dc.b	$01, $66, $76, $22, $11, $03, $00, $06, $64, $55, $56, $63, $44, $45, $62, $33, $44, $56, $22, $34, $56, $33, $34, $56, $60, $54, $45, $00 
-LoadBossGraphics_Data2_Gfx_46C7E:
-	dc.b	$01, $00, $00, $02, $6F, $FF, $66, $65, $66, $55, $46, $53, $65, $66, $45, $53, $35, $56, $32, $55, $55, $26, $50, $00 
-LoadBossGraphics_Data2_Gfx_46C96:
-	dc.b	$02, $66, $05, $5B, $00, $00, $00, $00, $00, $CD, $EE, $55, $53, $25, $76, $55, $25, $65, $62, $06, $60, $06, $60, $06, $06, $00 
-LoadBossGraphics_Data2_Gfx_46CB0:
-	dc.b	$01, $00, $11, $11, $11, $11, $66, $65, $50, $66, $54, $45, $66, $54, $33, $65, $43, $32, $66, $54, $33, $66, $55, $43, $65, $66, $60, $65, $55, $50 
-LoadBossGraphics_Data2_Gfx_46CCE:
-	dc.b	$01, $66, $51, $01, $31, $24, $06, $55, $00, $44, $44, $00, $03, $34, $56, $00, $06, $34, $03, $35, $43, $44, $56, $64, $45, $6B, $B6, $6B, $BB, $00 
-LoadBossGraphics_Data2_Gfx_46CEC:
-	dc.b	$02, $00, $FF, $F7, $70, $01, $BB, $00, $00, $0F, $FE, $60, $60, $00 
-LoadBossGraphics_Data2_Gfx_46CFA:
-	dc.b	$02, $00, $EE, $EE, $80, $0E, $BB, $00, $00, $6E, $F0, $06, $06, $66, $66, $66, $B6, $0B 
-LoadBossGraphics_Data2_Gfx_46D0C:
-	dc.b	$01, $00, $13, $31, $10, $00, $64, $44, $40, $54, $33, $54, $33, $65, $66, $50, $66, $54, $34, $65, $54, $43, $B0, $66, $65, $55, $6B, $B6, $66, $66, $BB, $00 
-LoadBossGraphics_Data2_Gfx_46D2C:
-	dc.b	$02, $00, $88, $88, $CC, $C8, $66, $11, $11, $11, $10, $04, $45, $03, $35, $02, $34, $03, $45, $55, $36, $63, $06, $36, $55, $00 
-LoadBossGraphics_Data2_Gfx_46D46:
-	dc.b	$01, $66, $FF, $EF, $F0, $30, $55, $65, $55, $65, $56, $53, $35, $43, $24, $65, $56, $00 
-LoadBossGraphics_Data2_Gfx_46D58:
-	dc.b	$01, $66, $1F, $24, $AC, $EF, $54, $55, $56, $55, $55, $65, $55, $56, $65, $65, $54, $65, $54, $65 
-LoadBossGraphics_Data2_Gfx_46D6C:
-	dc.b	$00, $55, $66, $65, $40, $54, $45, $55, $54, $43, $44, $55, $34, $43, $44, $65, $43, $34, $46, $65, $43, $44, $56, $65, $44, $45, $66, $66, $55, $66, $66, $55 
-	dc.b	$60, $00 
-LoadBossGraphics_Data2_Gfx_46D8E:
-	dc.b	$02, $00, $88, $8C, $E8, $00, $66, $42, $12, $07, $FD, $33, $65, $63, $35, $06, $34, $44, $06, $65 
-LoadBossGraphics_Data2_Gfx_46DA2:
-	dc.b	$01, $66, $01, $11, $91, $F9, $43, $33, $46, $56, $43, $23, $46, $54, $32, $46, $54, $32, $34, $43, $34, $06, $44, $44, $64, $46 
-LoadBossGraphics_Data2_Gfx_46DBC:
-	dc.b	$02, $66, $CC, $8A, $EC, $C8, $60, $00, $44, $13, $30, $65, $44, $65, $33, $65, $44, $56, $65, $00, $06, $00 
-LoadBossGraphics_Data2_Gfx_46DD2:
-	dc.b	$01, $66, $C8, $88, $88, $8C, $54, $50, $65, $43, $40, $65, $43, $40, $55, $43, $00, $54, $34, $00, $54, $30, $00, $54, $40, $00, $00, $00 
-LoadBossGraphics_Data2_Gfx_46DEE:
-	dc.b	$01, $55, $58, $00, $74, $00, $65, $65, $45, $65, $44, $54, $45, $65, $54, $64, $6B, $BB, $B6, $BB, $0B, $44, $44, $00, $44, $4B, $BB, $00, $BB, $BB, $BB, $00 
-LoadBossGraphics_Data2_Gfx_46E0E:
-	dc.b	$00, $66, $44, $34, $66, $56, $42, $34, $65, $46, $43, $24, $66, $66, $66, $44, $64, $55, $55, $44, $34, $44, $44, $43, $47, $BB, $BB, $B3, $47, $BB, $BB, $34 
-	dc.b	$BB, $00 
-LoadBossGraphics_Data2_Gfx_46E30:
-	dc.b	$01, $BB, $00, $26, $00, $0F, $65, $44, $00, $06, $54, $44, $00, $B6, $54, $4B, $B6, $5B, $B6, $77, $77, $88, $88, $78, $88, $88, $99, $77, $77, $78, $88, $00 
-LoadBossGraphics_Data2_Gfx_46E50:
-	dc.b	$01, $66, $88, $8F, $00, $00, $65, $50, $00, $54, $45, $60, $55, $45, $56, $88, $89, $99, $99, $99, $AA, $AA, $AA, $88, $88, $99, $99, $BB, $B0, $00, $00, $00 
-LoadBossGraphics_Data2_Gfx_46E70:
-	dc.b	$01, $00, $88, $CC, $88, $8A, $56, $54, $44, $06, $54, $43, $55, $43, $56, $54, $05, $56, $55, $05, $66, $65, $05, $60, $65, $06, $66, $00 
-LoadBossGraphics_Data2_Gfx_46E8C:
-	dc.b	$01, $65, $04, $02, $12, $2A, $45, $55, $44, $34, $45, $54, $33, $34, $56, $54, $44, $33, $45, $55, $44, $45, $66, $54, $45, $56, $54, $55, $45, $56, $44, $00 
-LoadBossGraphics_Data2_Gfx_46EAC:
-	dc.b	$00, $56, $54, $44, $50, $55, $54, $44, $50, $64, $54, $45, $60, $62, $45, $56, $60, $62, $45, $77, $88, $64, $24, $78, $89, $55, $24, $78, $89, $55, $35, $55 
-	dc.b	$78, $00 
-LoadBossGraphics_Data2_Gfx_46ECE:
-	dc.b	$01, $00, $3B, $A8, $00, $17, $06, $64, $64, $64, $88, $68, $88, $99, $88, $9A, $AA, $AA, $99, $AA, $A9, $88, $99, $98, $80, $88 
-LoadBossGraphics_Data2_Gfx_46EE8:
-	dc.b	$01, $00, $CC, $CC, $CC, $CC, $06, $44, $06, $33, $06, $43, $06, $55, $66, $66, $66, $66, $55, $55, $54, $34 
-LoadBossGraphics_Data2_Gfx_46EFE:
-	dc.b	$02, $66, $80, $44, $C8, $04, $00, $00, $11, $33, $33, $36, $54, $34, $65, $33, $53, $45, $55, $65, $56, $60, $60, $56, $60, $45 
-LoadBossGraphics_Data2_Gfx_46F18:
-	dc.b	$00, $66, $66, $54, $45, $66, $65, $43, $34, $06, $65, $32, $34, $00, $65, $43, $34, $00, $06, $54, $45, $00, $06, $65, $55, $00, $66, $55, $55, $00, $66, $54 
-	dc.b	$45, $00 
-LoadBossGraphics_Data2_Gfx_46F3A:
-	dc.b	$01, $00, $F7, $77, $77, $FF, $50, $50, $50, $60, $60, $00 
-LoadBossGraphics_Data2_Gfx_46F46:
-	dc.b	$01, $00, $CE, $FF, $EC, $CC, $04, $33, $55, $05, $0B, $65, $BB, $66, $0B, $BB 
-LoadBossGraphics_Data2_Gfx_46F56:
-	dc.b	$01, $BB, $00, $00, $11, $3F, $45, $55, $60, $00, $54, $45, $50, $00, $55, $55, $56, $00, $65, $55, $66, $00, $44, $45, $66, $55, $56, $6B, $66, $6B 
-LoadBossGraphics_Data2_Gfx_46F74:
-	dc.b	$00, $00, $65, $44, $44, $00, $65, $33, $44, $00, $66, $53, $45, $00, $66, $56, $60, $BB, $66, $44, $34, $BB, $B6, $54, $43, $BB, $BB, $65, $55, $00, $0B, $B6 
-	dc.b	$66, $00 
-LoadBossGraphics_Data2_Gfx_46F96:
-	dc.b	$01, $00, $FF, $FF, $73, $13, $5B, $45, $BB, $55, $BB, $B0, $66, $BB 
-LoadBossGraphics_Data2_Gfx_46FA4:
-	dc.b	$01, $00, $08, $8C, $88, $88, $03, $45, $65, $54, $56, $54, $44, $06, $54, $43, $55, $43, $05, $66, $54, $05, $66, $55, $05, $66, $65, $05, $66, $65 
-LoadBossGraphics_Data2_Gfx_46FC2:
-	dc.b	$01, $45, $18, $80, $44, $41, $55, $54, $44, $55, $44, $34, $65, $54, $33, $34, $56, $54, $44, $33, $65, $55, $44, $66, $65, $54, $65, $56, $54, $55, $65, $00 
-LoadBossGraphics_Data2_Gfx_46FE2:
-	dc.b	$00, $56, $54, $45, $50, $56, $54, $44, $50, $55, $54, $44, $50, $64, $54, $45, $66, $62, $45, $56, $66, $62, $45, $77, $88, $64, $24, $78, $89, $55, $24, $78 
-	dc.b	$89, $00 
-LoadBossGraphics_Data2_Gfx_47004:
-	dc.b	$01, $00, $13, $BA, $80, $01, $06, $64, $30, $06, $64, $64, $64, $88, $68, $88, $99, $88, $9A, $AA, $AA, $99, $AA, $A9, $88, $99, $98, $80 
-LoadBossGraphics_Data2_Gfx_47020:
-	dc.b	$01, $00, $8C, $CC, $CC, $88, $06, $06, $66, $06, $44, $66, $33, $66, $34, $66, $55, $55, $56, $05, $44, $45, $05, $43, $44, $00 
-LoadBossGraphics_Data2_Gfx_4703A:
-	dc.b	$01, $00, $00, $01, $33, $73, $65, $56, $65, $44, $66, $36, $54, $34, $65, $33, $53, $45, $55, $66, $05, $56, $60, $66, $60, $66, $56, $60 
-LoadBossGraphics_Data2_Gfx_47056:
-	dc.b	$00, $55, $32, $57, $78, $56, $66, $54, $44, $06, $66, $54, $33, $06, $65, $43, $23, $00, $66, $44, $33, $00, $06, $65, $44, $00, $06, $66, $55, $00, $00, $65 
-	dc.b	$54, $00 
-LoadBossGraphics_Data2_Gfx_47078:
-	dc.b	$01, $00, $77, $77, $77, $77, $88, $50, $45, $45, $45, $56, $55, $45 
-LoadBossGraphics_Data2_Gfx_47086:
-	dc.b	$01, $00, $8C, $EF, $EC, $CC, $05, $33, $33, $55, $55, $55, $44, $06, $55, $06, $66, $0B, $BB, $00 
-LoadBossGraphics_Data2_Gfx_4709A:
-	dc.b	$01, $BB, $00, $00, $11, $7E, $55, $66, $00, $00, $45, $66, $00, $00, $56, $66, $60, $00, $55, $56, $66, $00, $44, $45, $66, $55, $56, $6B, $66, $B0 
-LoadBossGraphics_Data2_Gfx_470B8:
-	dc.b	$02, $00, $CC, $C8, $00, $0C, $BB, $00, $02, $EE, $E3, $65, $44, $05, $33, $06, $53, $0B, $56, $64, $65, $B6 
-LoadBossGraphics_Data2_Gfx_470CE:
-	dc.b	$01, $00, $33, $33, $31, $01, $44, $50, $44, $50, $45, $50, $66, $66, $34, $56, $43, $45, $6B, $55, $55, $6B, $B0, $66, $66, $BB 
-LoadBossGraphics_Data2_Gfx_470E8:
-	dc.b	$01, $00, $88, $88, $88, $88, $56, $54, $44, $05, $54, $43, $05, $65, $43, $56, $66, $54, $56, $66, $55, $56, $66, $65, $56, $66, $65, $06, $66, $66 
-LoadBossGraphics_Data2_Gfx_47106:
-	dc.b	$00, $56, $54, $44, $50, $55, $54, $44, $50, $64, $54, $45, $66, $62, $45, $56, $66, $62, $45, $77, $88, $64, $24, $78, $89, $55, $24, $78, $89, $55, $32, $57 
-	dc.b	$78, $00 
-LoadBossGraphics_Data2_Gfx_47128:
-	dc.b	$01, $00, $3B, $A8, $00, $13, $06, $64, $64, $64, $88, $68, $88, $99, $88, $9A, $AA, $AA, $99, $AA, $A9, $88, $99, $98, $80, $55, $50, $00 
-LoadBossGraphics_Data2_Gfx_47144:
-	dc.b	$00, $00, $06, $66, $44, $00, $06, $66, $34, $00, $66, $66, $24, $00, $55, $55, $43, $04, $44, $45, $55, $03, $33, $44, $56, $02, $23, $44, $56, $03, $44, $45 
-	dc.b	$56, $00 
-LoadBossGraphics_Data2_Gfx_47166:
-	dc.b	$01, $00, $00, $17, $7F, $77, $66, $36, $54, $34, $65, $33, $53, $45, $55, $50, $05, $26, $60, $60, $60, $00 
-LoadBossGraphics_Data2_Gfx_4717C:
-	dc.b	$01, $00, $08, $8C, $EE, $EE, $56, $62, $57, $65, $66, $26, $65, $06, $66, $54, $06, $64, $66, $06, $06, $06 
-LoadBossGraphics_Data2_Gfx_47192:
-	dc.b	$01, $00, $33, $31, $11, $11, $44, $40, $43, $34, $32, $34, $43, $34, $50, $54, $45, $60, $66, $55, $50, $55, $44, $50, $54, $44, $50, $00 
-LoadBossGraphics_Data2_Gfx_471AE:
-	dc.b	$01, $00, $8C, $CC, $88, $88, $06, $66, $65, $44, $55, $54, $55, $35, $65, $03, $34, $56, $64, $44, $56, $B6, $66, $66, $0B, $BB, $BB, $00 
-LoadBossGraphics_Data2_Gfx_471CA:
-	dc.b	$02, $00, $77, $30, $00, $1F, $BB, $00, $02, $77, $E0, $60, $66, $66, $60, $66, $6B, $B0, $66, $6B 
-LoadBossGraphics_Data2_Gfx_471DE:
-	dc.b	$02, $00, $FF, $F8, $00, $CF, $BB, $00, $07, $FF, $10, $0B 
-LoadBossGraphics_Data2_Gfx_471EA:
-	dc.b	$00, $54, $44, $50, $00, $43, $34, $50, $00, $53, $34, $50, $00, $65, $66, $66, $B0, $54, $34, $56, $BB, $54, $43, $46, $BB, $65, $55, $56, $B0, $06, $66, $6B 
-	dc.b	$00, $00 
+	incbin "data/art/tiles/boss/data2_gfx.bin"
+LoadBossGraphics_Data2_Gfx_461B0 equ LoadBossGraphics_Data2_Gfx_46198+$18
+LoadBossGraphics_Data2_Gfx_461D0 equ LoadBossGraphics_Data2_Gfx_46198+$38
+LoadBossGraphics_Data2_Gfx_461E8 equ LoadBossGraphics_Data2_Gfx_46198+$50
+LoadBossGraphics_Data2_Gfx_461F4 equ LoadBossGraphics_Data2_Gfx_46198+$5C
+LoadBossGraphics_Data2_Gfx_46202 equ LoadBossGraphics_Data2_Gfx_46198+$6A
+LoadBossGraphics_Data2_Gfx_46224 equ LoadBossGraphics_Data2_Gfx_46198+$8C
+LoadBossGraphics_Data2_Gfx_46242 equ LoadBossGraphics_Data2_Gfx_46198+$AA
+LoadBossGraphics_Data2_Gfx_46248 equ LoadBossGraphics_Data2_Gfx_46198+$B0
+LoadBossGraphics_Data2_Gfx_4625C equ LoadBossGraphics_Data2_Gfx_46198+$C4
+LoadBossGraphics_Data2_Gfx_4627A equ LoadBossGraphics_Data2_Gfx_46198+$E2
+LoadBossGraphics_Data2_Gfx_46296 equ LoadBossGraphics_Data2_Gfx_46198+$FE
+LoadBossGraphics_Data2_Gfx_462B0 equ LoadBossGraphics_Data2_Gfx_46198+$118
+LoadBossGraphics_Data2_Gfx_462CA equ LoadBossGraphics_Data2_Gfx_46198+$132
+LoadBossGraphics_Data2_Gfx_462E0 equ LoadBossGraphics_Data2_Gfx_46198+$148
+LoadBossGraphics_Data2_Gfx_462EC equ LoadBossGraphics_Data2_Gfx_46198+$154
+LoadBossGraphics_Data2_Gfx_46304 equ LoadBossGraphics_Data2_Gfx_46198+$16C
+LoadBossGraphics_Data2_Gfx_4631E equ LoadBossGraphics_Data2_Gfx_46198+$186
+LoadBossGraphics_Data2_Gfx_46328 equ LoadBossGraphics_Data2_Gfx_46198+$190
+LoadBossGraphics_Data2_Gfx_46342 equ LoadBossGraphics_Data2_Gfx_46198+$1AA
+LoadBossGraphics_Data2_Gfx_4635E equ LoadBossGraphics_Data2_Gfx_46198+$1C6
+LoadBossGraphics_Data2_Gfx_46366 equ LoadBossGraphics_Data2_Gfx_46198+$1CE
+LoadBossGraphics_Data2_Gfx_4637E equ LoadBossGraphics_Data2_Gfx_46198+$1E6
+LoadBossGraphics_Data2_Gfx_46396 equ LoadBossGraphics_Data2_Gfx_46198+$1FE
+LoadBossGraphics_Data2_Gfx_463A4 equ LoadBossGraphics_Data2_Gfx_46198+$20C
+LoadBossGraphics_Data2_Gfx_463B6 equ LoadBossGraphics_Data2_Gfx_46198+$21E
+LoadBossGraphics_Data2_Gfx_463C0 equ LoadBossGraphics_Data2_Gfx_46198+$228
+LoadBossGraphics_Data2_Gfx_463DE equ LoadBossGraphics_Data2_Gfx_46198+$246
+LoadBossGraphics_Data2_Gfx_46400 equ LoadBossGraphics_Data2_Gfx_46198+$268
+LoadBossGraphics_Data2_Gfx_46408 equ LoadBossGraphics_Data2_Gfx_46198+$270
+LoadBossGraphics_Data2_Gfx_4641E equ LoadBossGraphics_Data2_Gfx_46198+$286
+LoadBossGraphics_Data2_Gfx_46436 equ LoadBossGraphics_Data2_Gfx_46198+$29E
+LoadBossGraphics_Data2_Gfx_46450 equ LoadBossGraphics_Data2_Gfx_46198+$2B8
+LoadBossGraphics_Data2_Gfx_46458 equ LoadBossGraphics_Data2_Gfx_46198+$2C0
+LoadBossGraphics_Data2_Gfx_4646E equ LoadBossGraphics_Data2_Gfx_46198+$2D6
+LoadBossGraphics_Data2_Gfx_4648C equ LoadBossGraphics_Data2_Gfx_46198+$2F4
+LoadBossGraphics_Data2_Gfx_464A4 equ LoadBossGraphics_Data2_Gfx_46198+$30C
+LoadBossGraphics_Data2_Gfx_464B0 equ LoadBossGraphics_Data2_Gfx_46198+$318
+LoadBossGraphics_Data2_Gfx_464C0 equ LoadBossGraphics_Data2_Gfx_46198+$328
+LoadBossGraphics_Data2_Gfx_464DA equ LoadBossGraphics_Data2_Gfx_46198+$342
+LoadBossGraphics_Data2_Gfx_464F8 equ LoadBossGraphics_Data2_Gfx_46198+$360
+LoadBossGraphics_Data2_Gfx_46502 equ LoadBossGraphics_Data2_Gfx_46198+$36A
+LoadBossGraphics_Data2_Gfx_46518 equ LoadBossGraphics_Data2_Gfx_46198+$380
+LoadBossGraphics_Data2_Gfx_46532 equ LoadBossGraphics_Data2_Gfx_46198+$39A
+LoadBossGraphics_Data2_Gfx_46548 equ LoadBossGraphics_Data2_Gfx_46198+$3B0
+LoadBossGraphics_Data2_Gfx_46556 equ LoadBossGraphics_Data2_Gfx_46198+$3BE
+LoadBossGraphics_Data2_Gfx_4656E equ LoadBossGraphics_Data2_Gfx_46198+$3D6
+LoadBossGraphics_Data2_Gfx_4658E equ LoadBossGraphics_Data2_Gfx_46198+$3F6
+LoadBossGraphics_Data2_Gfx_465AA equ LoadBossGraphics_Data2_Gfx_46198+$412
+LoadBossGraphics_Data2_Gfx_465C6 equ LoadBossGraphics_Data2_Gfx_46198+$42E
+LoadBossGraphics_Data2_Gfx_465D8 equ LoadBossGraphics_Data2_Gfx_46198+$440
+LoadBossGraphics_Data2_Gfx_465FA equ LoadBossGraphics_Data2_Gfx_46198+$462
+LoadBossGraphics_Data2_Gfx_46610 equ LoadBossGraphics_Data2_Gfx_46198+$478
+LoadBossGraphics_Data2_Gfx_4662C equ LoadBossGraphics_Data2_Gfx_46198+$494
+LoadBossGraphics_Data2_Gfx_4664E equ LoadBossGraphics_Data2_Gfx_46198+$4B6
+LoadBossGraphics_Data2_Gfx_46662 equ LoadBossGraphics_Data2_Gfx_46198+$4CA
+LoadBossGraphics_Data2_Gfx_46678 equ LoadBossGraphics_Data2_Gfx_46198+$4E0
+LoadBossGraphics_Data2_Gfx_46690 equ LoadBossGraphics_Data2_Gfx_46198+$4F8
+LoadBossGraphics_Data2_Gfx_466A8 equ LoadBossGraphics_Data2_Gfx_46198+$510
+LoadBossGraphics_Data2_Gfx_466C2 equ LoadBossGraphics_Data2_Gfx_46198+$52A
+LoadBossGraphics_Data2_Gfx_466DE equ LoadBossGraphics_Data2_Gfx_46198+$546
+LoadBossGraphics_Data2_Gfx_466FC equ LoadBossGraphics_Data2_Gfx_46198+$564
+LoadBossGraphics_Data2_Gfx_46706 equ LoadBossGraphics_Data2_Gfx_46198+$56E
+LoadBossGraphics_Data2_Gfx_46722 equ LoadBossGraphics_Data2_Gfx_46198+$58A
+LoadBossGraphics_Data2_Gfx_4673A equ LoadBossGraphics_Data2_Gfx_46198+$5A2
+LoadBossGraphics_Data2_Gfx_4675C equ LoadBossGraphics_Data2_Gfx_46198+$5C4
+LoadBossGraphics_Data2_Gfx_4677E equ LoadBossGraphics_Data2_Gfx_46198+$5E6
+LoadBossGraphics_Data2_Gfx_46796 equ LoadBossGraphics_Data2_Gfx_46198+$5FE
+LoadBossGraphics_Data2_Gfx_467B0 equ LoadBossGraphics_Data2_Gfx_46198+$618
+LoadBossGraphics_Data2_Gfx_467D2 equ LoadBossGraphics_Data2_Gfx_46198+$63A
+LoadBossGraphics_Data2_Gfx_467F2 equ LoadBossGraphics_Data2_Gfx_46198+$65A
+LoadBossGraphics_Data2_Gfx_4680C equ LoadBossGraphics_Data2_Gfx_46198+$674
+LoadBossGraphics_Data2_Gfx_46826 equ LoadBossGraphics_Data2_Gfx_46198+$68E
+LoadBossGraphics_Data2_Gfx_46842 equ LoadBossGraphics_Data2_Gfx_46198+$6AA
+LoadBossGraphics_Data2_Gfx_4685A equ LoadBossGraphics_Data2_Gfx_46198+$6C2
+LoadBossGraphics_Data2_Gfx_46870 equ LoadBossGraphics_Data2_Gfx_46198+$6D8
+LoadBossGraphics_Data2_Gfx_46886 equ LoadBossGraphics_Data2_Gfx_46198+$6EE
+LoadBossGraphics_Data2_Gfx_468A0 equ LoadBossGraphics_Data2_Gfx_46198+$708
+LoadBossGraphics_Data2_Gfx_468BA equ LoadBossGraphics_Data2_Gfx_46198+$722
+LoadBossGraphics_Data2_Gfx_468D2 equ LoadBossGraphics_Data2_Gfx_46198+$73A
+LoadBossGraphics_Data2_Gfx_468E8 equ LoadBossGraphics_Data2_Gfx_46198+$750
+LoadBossGraphics_Data2_Gfx_46904 equ LoadBossGraphics_Data2_Gfx_46198+$76C
+LoadBossGraphics_Data2_Gfx_46924 equ LoadBossGraphics_Data2_Gfx_46198+$78C
+LoadBossGraphics_Data2_Gfx_4693A equ LoadBossGraphics_Data2_Gfx_46198+$7A2
+LoadBossGraphics_Data2_Gfx_4694C equ LoadBossGraphics_Data2_Gfx_46198+$7B4
+LoadBossGraphics_Data2_Gfx_46966 equ LoadBossGraphics_Data2_Gfx_46198+$7CE
+LoadBossGraphics_Data2_Gfx_46984 equ LoadBossGraphics_Data2_Gfx_46198+$7EC
+LoadBossGraphics_Data2_Gfx_4698E equ LoadBossGraphics_Data2_Gfx_46198+$7F6
+LoadBossGraphics_Data2_Gfx_469A6 equ LoadBossGraphics_Data2_Gfx_46198+$80E
+LoadBossGraphics_Data2_Gfx_469BE equ LoadBossGraphics_Data2_Gfx_46198+$826
+LoadBossGraphics_Data2_Gfx_469DA equ LoadBossGraphics_Data2_Gfx_46198+$842
+LoadBossGraphics_Data2_Gfx_469E8 equ LoadBossGraphics_Data2_Gfx_46198+$850
+LoadBossGraphics_Data2_Gfx_469FA equ LoadBossGraphics_Data2_Gfx_46198+$862
+LoadBossGraphics_Data2_Gfx_46A16 equ LoadBossGraphics_Data2_Gfx_46198+$87E
+LoadBossGraphics_Data2_Gfx_46A2E equ LoadBossGraphics_Data2_Gfx_46198+$896
+LoadBossGraphics_Data2_Gfx_46A3A equ LoadBossGraphics_Data2_Gfx_46198+$8A2
+LoadBossGraphics_Data2_Gfx_46A48 equ LoadBossGraphics_Data2_Gfx_46198+$8B0
+LoadBossGraphics_Data2_Gfx_46A64 equ LoadBossGraphics_Data2_Gfx_46198+$8CC
+LoadBossGraphics_Data2_Gfx_46A7A equ LoadBossGraphics_Data2_Gfx_46198+$8E2
+LoadBossGraphics_Data2_Gfx_46A94 equ LoadBossGraphics_Data2_Gfx_46198+$8FC
+LoadBossGraphics_Data2_Gfx_46AAE equ LoadBossGraphics_Data2_Gfx_46198+$916
+LoadBossGraphics_Data2_Gfx_46ABC equ LoadBossGraphics_Data2_Gfx_46198+$924
+LoadBossGraphics_Data2_Gfx_46AD6 equ LoadBossGraphics_Data2_Gfx_46198+$93E
+LoadBossGraphics_Data2_Gfx_46AF2 equ LoadBossGraphics_Data2_Gfx_46198+$95A
+LoadBossGraphics_Data2_Gfx_46B12 equ LoadBossGraphics_Data2_Gfx_46198+$97A
+LoadBossGraphics_Data2_Gfx_46B28 equ LoadBossGraphics_Data2_Gfx_46198+$990
+LoadBossGraphics_Data2_Gfx_46B3E equ LoadBossGraphics_Data2_Gfx_46198+$9A6
+LoadBossGraphics_Data2_Gfx_46B52 equ LoadBossGraphics_Data2_Gfx_46198+$9BA
+LoadBossGraphics_Data2_Gfx_46B68 equ LoadBossGraphics_Data2_Gfx_46198+$9D0
+LoadBossGraphics_Data2_Gfx_46B7E equ LoadBossGraphics_Data2_Gfx_46198+$9E6
+LoadBossGraphics_Data2_Gfx_46B9C equ LoadBossGraphics_Data2_Gfx_46198+$A04
+LoadBossGraphics_Data2_Gfx_46BAE equ LoadBossGraphics_Data2_Gfx_46198+$A16
+LoadBossGraphics_Data2_Gfx_46BCA equ LoadBossGraphics_Data2_Gfx_46198+$A32
+LoadBossGraphics_Data2_Gfx_46BE6 equ LoadBossGraphics_Data2_Gfx_46198+$A4E
+LoadBossGraphics_Data2_Gfx_46C00 equ LoadBossGraphics_Data2_Gfx_46198+$A68
+LoadBossGraphics_Data2_Gfx_46C22 equ LoadBossGraphics_Data2_Gfx_46198+$A8A
+LoadBossGraphics_Data2_Gfx_46C44 equ LoadBossGraphics_Data2_Gfx_46198+$AAC
+LoadBossGraphics_Data2_Gfx_46C62 equ LoadBossGraphics_Data2_Gfx_46198+$ACA
+LoadBossGraphics_Data2_Gfx_46C7E equ LoadBossGraphics_Data2_Gfx_46198+$AE6
+LoadBossGraphics_Data2_Gfx_46C96 equ LoadBossGraphics_Data2_Gfx_46198+$AFE
+LoadBossGraphics_Data2_Gfx_46CB0 equ LoadBossGraphics_Data2_Gfx_46198+$B18
+LoadBossGraphics_Data2_Gfx_46CCE equ LoadBossGraphics_Data2_Gfx_46198+$B36
+LoadBossGraphics_Data2_Gfx_46CEC equ LoadBossGraphics_Data2_Gfx_46198+$B54
+LoadBossGraphics_Data2_Gfx_46CFA equ LoadBossGraphics_Data2_Gfx_46198+$B62
+LoadBossGraphics_Data2_Gfx_46D0C equ LoadBossGraphics_Data2_Gfx_46198+$B74
+LoadBossGraphics_Data2_Gfx_46D2C equ LoadBossGraphics_Data2_Gfx_46198+$B94
+LoadBossGraphics_Data2_Gfx_46D46 equ LoadBossGraphics_Data2_Gfx_46198+$BAE
+LoadBossGraphics_Data2_Gfx_46D58 equ LoadBossGraphics_Data2_Gfx_46198+$BC0
+LoadBossGraphics_Data2_Gfx_46D6C equ LoadBossGraphics_Data2_Gfx_46198+$BD4
+LoadBossGraphics_Data2_Gfx_46D8E equ LoadBossGraphics_Data2_Gfx_46198+$BF6
+LoadBossGraphics_Data2_Gfx_46DA2 equ LoadBossGraphics_Data2_Gfx_46198+$C0A
+LoadBossGraphics_Data2_Gfx_46DBC equ LoadBossGraphics_Data2_Gfx_46198+$C24
+LoadBossGraphics_Data2_Gfx_46DD2 equ LoadBossGraphics_Data2_Gfx_46198+$C3A
+LoadBossGraphics_Data2_Gfx_46DEE equ LoadBossGraphics_Data2_Gfx_46198+$C56
+LoadBossGraphics_Data2_Gfx_46E0E equ LoadBossGraphics_Data2_Gfx_46198+$C76
+LoadBossGraphics_Data2_Gfx_46E30 equ LoadBossGraphics_Data2_Gfx_46198+$C98
+LoadBossGraphics_Data2_Gfx_46E50 equ LoadBossGraphics_Data2_Gfx_46198+$CB8
+LoadBossGraphics_Data2_Gfx_46E70 equ LoadBossGraphics_Data2_Gfx_46198+$CD8
+LoadBossGraphics_Data2_Gfx_46E8C equ LoadBossGraphics_Data2_Gfx_46198+$CF4
+LoadBossGraphics_Data2_Gfx_46EAC equ LoadBossGraphics_Data2_Gfx_46198+$D14
+LoadBossGraphics_Data2_Gfx_46ECE equ LoadBossGraphics_Data2_Gfx_46198+$D36
+LoadBossGraphics_Data2_Gfx_46EE8 equ LoadBossGraphics_Data2_Gfx_46198+$D50
+LoadBossGraphics_Data2_Gfx_46EFE equ LoadBossGraphics_Data2_Gfx_46198+$D66
+LoadBossGraphics_Data2_Gfx_46F18 equ LoadBossGraphics_Data2_Gfx_46198+$D80
+LoadBossGraphics_Data2_Gfx_46F3A equ LoadBossGraphics_Data2_Gfx_46198+$DA2
+LoadBossGraphics_Data2_Gfx_46F46 equ LoadBossGraphics_Data2_Gfx_46198+$DAE
+LoadBossGraphics_Data2_Gfx_46F56 equ LoadBossGraphics_Data2_Gfx_46198+$DBE
+LoadBossGraphics_Data2_Gfx_46F74 equ LoadBossGraphics_Data2_Gfx_46198+$DDC
+LoadBossGraphics_Data2_Gfx_46F96 equ LoadBossGraphics_Data2_Gfx_46198+$DFE
+LoadBossGraphics_Data2_Gfx_46FA4 equ LoadBossGraphics_Data2_Gfx_46198+$E0C
+LoadBossGraphics_Data2_Gfx_46FC2 equ LoadBossGraphics_Data2_Gfx_46198+$E2A
+LoadBossGraphics_Data2_Gfx_46FE2 equ LoadBossGraphics_Data2_Gfx_46198+$E4A
+LoadBossGraphics_Data2_Gfx_47004 equ LoadBossGraphics_Data2_Gfx_46198+$E6C
+LoadBossGraphics_Data2_Gfx_47020 equ LoadBossGraphics_Data2_Gfx_46198+$E88
+LoadBossGraphics_Data2_Gfx_4703A equ LoadBossGraphics_Data2_Gfx_46198+$EA2
+LoadBossGraphics_Data2_Gfx_47056 equ LoadBossGraphics_Data2_Gfx_46198+$EBE
+LoadBossGraphics_Data2_Gfx_47078 equ LoadBossGraphics_Data2_Gfx_46198+$EE0
+LoadBossGraphics_Data2_Gfx_47086 equ LoadBossGraphics_Data2_Gfx_46198+$EEE
+LoadBossGraphics_Data2_Gfx_4709A equ LoadBossGraphics_Data2_Gfx_46198+$F02
+LoadBossGraphics_Data2_Gfx_470B8 equ LoadBossGraphics_Data2_Gfx_46198+$F20
+LoadBossGraphics_Data2_Gfx_470CE equ LoadBossGraphics_Data2_Gfx_46198+$F36
+LoadBossGraphics_Data2_Gfx_470E8 equ LoadBossGraphics_Data2_Gfx_46198+$F50
+LoadBossGraphics_Data2_Gfx_47106 equ LoadBossGraphics_Data2_Gfx_46198+$F6E
+LoadBossGraphics_Data2_Gfx_47128 equ LoadBossGraphics_Data2_Gfx_46198+$F90
+LoadBossGraphics_Data2_Gfx_47144 equ LoadBossGraphics_Data2_Gfx_46198+$FAC
+LoadBossGraphics_Data2_Gfx_47166 equ LoadBossGraphics_Data2_Gfx_46198+$FCE
+LoadBossGraphics_Data2_Gfx_4717C equ LoadBossGraphics_Data2_Gfx_46198+$FE4
+LoadBossGraphics_Data2_Gfx_47192 equ LoadBossGraphics_Data2_Gfx_46198+$FFA
+LoadBossGraphics_Data2_Gfx_471AE equ LoadBossGraphics_Data2_Gfx_46198+$1016
+LoadBossGraphics_Data2_Gfx_471CA equ LoadBossGraphics_Data2_Gfx_46198+$1032
+LoadBossGraphics_Data2_Gfx_471DE equ LoadBossGraphics_Data2_Gfx_46198+$1046
+LoadBossGraphics_Data2_Gfx_471EA equ LoadBossGraphics_Data2_Gfx_46198+$1052
 LoadBossGraphics_Data2:
 	dc.l	LoadBossGraphics_Data2_Gfx_46198
 	dc.l	LoadBossGraphics_Data2_Gfx_461B0
@@ -52619,419 +51927,189 @@ LoadBossGraphics_Data3:
 	dc.b	$00, $00, $99, $9D, $00, $00, $9A, $9E, $00, $00, $9B, $9F, $00, $98, $9C, $A0, $00, $A1, $A4, $A8, $00, $A2, $A5, $A9, $00, $A3, $A6, $AA, $00, $00, $A7, $AB 
 	dc.b	$00, $AC, $AF, $B3, $00, $AD, $B0, $B4, $00, $AE, $B1, $B5, $00, $00, $B2, $B6 
 LoadBossGraphics_Data4_Gfx_475AC:
-	dc.b	$01, $00, $FF, $FF, $FF, $FF 
-LoadBossGraphics_Data4_Gfx_475B2:
-	dc.b	$01, $00, $FF, $EC, $C8, $88, $30, $04, $43, $55, $43, $05, $54, $32, $05, $43, $26, $54, $32, $11 
-LoadBossGraphics_Data4_Gfx_475C6:
-	dc.b	$01, $00, $FF, $FF, $77, $72, $30, $23, $16, $61, $30, $43 
-LoadBossGraphics_Data4_Gfx_475D2:
-	dc.b	$01, $00, $FF, $FF, $FF, $F7, $30, $00 
-LoadBossGraphics_Data4_Gfx_475DA:
-	dc.b	$01, $00, $FF, $88, $00, $00, $04, $43, $44, $43, $22, $34, $04, $31, $12, $35, $05, $32, $12, $33, $04, $43, $33, $33, $03, $34, $33, $34 
-LoadBossGraphics_Data4_Gfx_475F6:
-	dc.b	$00, $00, $44, $21, $16, $00, $66, $64, $32, $66, $65, $45, $64, $65, $36, $54, $64, $56, $43, $66, $56, $56, $54, $36, $66, $56, $54, $44, $55, $56, $55, $44 
-	dc.b	$44, $00 
-LoadBossGraphics_Data4_Gfx_47618:
-	dc.b	$00, $11, $60, $04, $44, $36, $40, $06, $66, $33, $44, $44, $46, $34, $64, $23, $34, $46, $65, $12, $33, $66, $44, $42, $33, $54, $33, $43, $33, $43, $33, $45 
-	dc.b	$44, $00 
-LoadBossGraphics_Data4_Gfx_4763A:
-	dc.b	$01, $00, $33, $11, $11, $11, $43, $20, $64, $32, $66, $43, $20, $66, $64, $20, $46, $64, $32, $36, $66, $42, $34, $66, $43, $34, $66, $43 
-LoadBossGraphics_Data4_Gfx_47656:
-	dc.b	$01, $66, $00, $37, $66, $70, $00, $53, $44, $45, $00, $05, $33, $54, $00, $06, $00, $00, $65, $04, $60, $34, $45, $65, $55, $56 
-LoadBossGraphics_Data4_Gfx_47670:
-	dc.b	$01, $66, $08, $08, $08, $96, $56, $55, $44, $43, $54, $43, $33, $65, $54, $44, $33, $65, $44, $44, $65, $56, $65, $55, $65, $54, $44, $44, $56, $55, $55, $00 
-LoadBossGraphics_Data4_Gfx_47690:
-	dc.b	$00, $32, $23, $45, $66, $32, $23, $45, $66, $43, $34, $45, $66, $55, $44, $56, $66, $45, $55, $56, $68, $44, $44, $56, $89, $55, $44, $58, $9A, $55, $55, $89 
-	dc.b	$AA, $00 
-LoadBossGraphics_Data4_Gfx_476B2:
-	dc.b	$00, $46, $66, $89, $99, $66, $68, $9A, $A9, $68, $99, $AA, $90, $89, $AA, $A9, $20, $9A, $AA, $93, $20, $AA, $A9, $63, $30, $A9, $96, $63, $00, $99, $06, $63 
-	dc.b	$00, $00 
-LoadBossGraphics_Data4_Gfx_476D4:
-	dc.b	$01, $00, $08, $88, $88, $8C, $05, $55, $44, $55, $54, $33, $45, $54, $32, $46, $54, $31, $34, $54, $31, $13, $05, $43, $13, $06, $44, $36, $65, $52 
-LoadBossGraphics_Data4_Gfx_476F2:
-	dc.b	$00, $66, $65, $55, $44, $65, $65, $55, $55, $66, $56, $55, $53, $66, $66, $54, $78, $64, $45, $47, $89, $53, $45, $78, $8A, $66, $34, $78, $88, $36, $33, $47 
-	dc.b	$77, $00 
-LoadBossGraphics_Data4_Gfx_47714:
-	dc.b	$00, $55, $88, $9A, $99, $48, $9A, $A9, $94, $89, $AA, $99, $46, $9A, $A9, $96, $66, $A9, $98, $56, $00, $98, $75, $56, $60, $87, $55, $56, $60, $55, $55, $56 
-	dc.b	$66, $00 
-LoadBossGraphics_Data4_Gfx_47736:
-	dc.b	$01, $00, $13, $11, $11, $8C, $46, $60, $63, $66, $55, $66, $54, $50, $54, $43, $30, $65, $44, $24, $06, $55, $42, $06, $66, $50, $64, $40 
-LoadBossGraphics_Data4_Gfx_47752:
-	dc.b	$01, $00, $FF, $FF, $77, $73, $30, $23, $16, $61, $30, $00 
-LoadBossGraphics_Data4_Gfx_4775E:
-	dc.b	$01, $00, $FF, $88, $00, $00, $03, $33, $54, $32, $23, $35, $03, $21, $23, $35, $43, $12, $33, $34, $44, $43, $33, $45, $43, $34, $33, $45 
-LoadBossGraphics_Data4_Gfx_4777A:
-	dc.b	$00, $00, $44, $21, $16, $00, $66, $64, $32, $35, $65, $45, $64, $65, $56, $54, $64, $65, $43, $66, $56, $66, $44, $36, $66, $66, $54, $44, $55, $65, $54, $44 
-	dc.b	$44, $00 
-LoadBossGraphics_Data4_Gfx_4779C:
-	dc.b	$00, $11, $60, $00, $04, $36, $20, $00, $44, $22, $30, $00, $56, $33, $63, $55, $44, $46, $65, $53, $33, $66, $45, $43, $22, $54, $34, $32, $11, $43, $23, $43 
-	dc.b	$32, $00 
-LoadBossGraphics_Data4_Gfx_477BE:
-	dc.b	$01, $00, $73, $11, $10, $00, $43, $44, $32, $66, $43, $20, $66, $64, $32, $46, $66, $43, $34, $66, $53, $20, $23, $56, $64, $20, $23, $46, $64, $30 
-LoadBossGraphics_Data4_Gfx_477DC:
-	dc.b	$01, $66, $00, $37, $66, $60, $05, $53, $44, $45, $00, $55, $33, $56, $00, $06, $00, $00, $65, $06, $60, $06, $00, $45, $65, $56, $06, $00 
-LoadBossGraphics_Data4_Gfx_477F8:
-	dc.b	$01, $55, $88, $88, $40, $09, $54, $43, $33, $54, $33, $33, $44, $43, $34, $44, $44, $45, $65, $45, $54, $66, $65, $54, $44, $66, $44, $56, $66, $66, $66, $00 
-LoadBossGraphics_Data4_Gfx_47818:
-	dc.b	$00, $32, $23, $55, $44, $22, $23, $45, $66, $33, $34, $45, $66, $54, $44, $56, $66, $55, $55, $56, $66, $44, $44, $56, $66, $55, $44, $56, $68, $55, $55, $68 
-	dc.b	$89, $00 
-LoadBossGraphics_Data4_Gfx_4783A:
-	dc.b	$00, $33, $46, $64, $30, $44, $66, $64, $30, $66, $66, $88, $99, $66, $68, $99, $AA, $66, $89, $AA, $A9, $89, $9A, $AA, $90, $9A, $A9, $96, $30, $AA, $99, $66 
-	dc.b	$30, $00 
-LoadBossGraphics_Data4_Gfx_4785C:
-	dc.b	$00, $56, $55, $56, $05, $55, $53, $45, $05, $05, $33, $34, $56, $04, $32, $24, $55, $04, $43, $23, $45, $00, $43, $22, $45, $00, $63, $32, $46, $00, $06, $34 
-	dc.b	$53, $00 
-LoadBossGraphics_Data4_Gfx_4787E:
-	dc.b	$00, $66, $65, $55, $44, $65, $65, $55, $54, $66, $56, $55, $44, $66, $66, $54, $78, $34, $56, $77, $89, $34, $47, $78, $98, $63, $47, $88, $88, $45, $34, $77 
-	dc.b	$74, $00 
-LoadBossGraphics_Data4_Gfx_478A0:
-	dc.b	$00, $44, $43, $89, $AA, $44, $88, $AA, $98, $89, $9A, $99, $86, $9A, $A9, $86, $60, $A9, $94, $55, $60, $88, $45, $55, $66, $45, $55, $56, $66, $55, $55, $56 
-	dc.b	$66, $00 
-LoadBossGraphics_Data4_Gfx_478C2:
-	dc.b	$00, $98, $65, $56, $30, $36, $54, $44, $00, $65, $54, $34, $00, $06, $53, $35, $50, $00, $54, $23, $40, $00, $05, $62, $44, $00, $00, $36, $53, $60, $05, $34 
-	dc.b	$43, $00 
-LoadBossGraphics_Data4_Gfx_478E4:
-	dc.b	$01, $00, $FF, $FF, $77, $72, $30, $23, $16, $61, $30, $44 
-LoadBossGraphics_Data4_Gfx_478F0:
-	dc.b	$01, $00, $FF, $C8, $00, $00, $43, $44, $43, $22, $34, $04, $31, $12, $35, $05, $32, $12, $33, $04, $43, $33, $33, $43, $34, $33, $45, $00 
-LoadBossGraphics_Data4_Gfx_4790C:
-	dc.b	$00, $00, $44, $21, $16, $00, $66, $64, $32, $66, $65, $45, $64, $65, $36, $54, $64, $56, $43, $66, $56, $56, $54, $36, $66, $56, $54, $44, $55, $65, $54, $44 
-	dc.b	$44, $00 
-LoadBossGraphics_Data4_Gfx_4792E:
-	dc.b	$00, $11, $60, $04, $44, $36, $40, $05, $66, $33, $44, $44, $66, $34, $64, $23, $34, $46, $65, $12, $33, $66, $44, $42, $23, $54, $33, $43, $23, $43, $23, $43 
-	dc.b	$33, $00 
-LoadBossGraphics_Data4_Gfx_47950:
-	dc.b	$01, $00, $33, $11, $11, $11, $43, $20, $64, $32, $66, $43, $20, $66, $64, $30, $46, $64, $32, $36, $66, $43, $34, $66, $43, $34, $66, $43 
-LoadBossGraphics_Data4_Gfx_4796C:
-	dc.b	$01, $66, $00, $76, $66, $70, $05, $53, $44, $45, $00, $55, $33, $56, $00, $00, $65, $06, $65, $04, $60, $34, $45, $65, $55, $56 
-LoadBossGraphics_Data4_Gfx_47986:
-	dc.b	$01, $55, $88, $88, $40, $09, $54, $43, $33, $54, $33, $33, $44, $43, $33, $44, $44, $44, $65, $45, $54, $66, $65, $54, $44, $66, $44, $56, $66, $66, $66, $00 
-LoadBossGraphics_Data4_Gfx_479A6:
-	dc.b	$00, $32, $23, $55, $44, $22, $23, $45, $66, $43, $34, $45, $66, $55, $44, $56, $66, $45, $55, $56, $66, $44, $44, $56, $66, $55, $44, $56, $69, $55, $55, $68 
-	dc.b	$9A, $00 
-LoadBossGraphics_Data4_Gfx_479C8:
-	dc.b	$01, $66, $44, $CC, $80, $00, $44, $43, $00, $46, $43, $00, $48, $99, $99, $AA, $89, $AA, $A9, $89, $AA, $A9, $80, $9A, $A9, $98, $00, $AA, $98, $40, $00, $00 
-LoadBossGraphics_Data4_Gfx_479E8:
-	dc.b	$01, $00, $00, $88, $88, $8C, $45, $55, $44, $55, $05, $54, $33, $45, $54, $33, $46, $54, $32, $34, $54, $32, $34, $05, $33, $24, $05, $33, $35, $54, $53, $00 
-LoadBossGraphics_Data4_Gfx_47A08:
-	dc.b	$00, $66, $65, $55, $44, $65, $65, $55, $54, $66, $56, $55, $44, $66, $66, $54, $88, $34, $56, $78, $89, $34, $47, $88, $99, $63, $47, $78, $88, $45, $34, $77 
-	dc.b	$74, $00 
-LoadBossGraphics_Data4_Gfx_47A2A:
-	dc.b	$00, $44, $48, $99, $AA, $48, $89, $AA, $98, $89, $AA, $99, $86, $9A, $99, $88, $66, $A9, $88, $55, $66, $98, $45, $55, $66, $45, $55, $55, $66, $55, $55, $56 
-	dc.b	$66, $00 
-LoadBossGraphics_Data4_Gfx_47A4C:
-	dc.b	$01, $00, $11, $33, $11, $00, $98, $66, $40, $86, $56, $40, $65, $50, $66, $53, $66, $54, $20, $66, $65, $64, $66, $65, $36, $50, $60, $65, $34, $40 
-LoadBossGraphics_Data4_Gfx_47A6A:
-	dc.b	$01, $00, $FF, $FF, $77, $60, $30, $23, $16, $44, $61, $30, $04, $44 
-LoadBossGraphics_Data4_Gfx_47A78:
-	dc.b	$01, $00, $FF, $FF, $FF, $73, $20, $43, $20, $00 
-LoadBossGraphics_Data4_Gfx_47A82:
-	dc.b	$01, $00, $FF, $EC, $88, $00, $02, $44, $34, $03, $33, $33, $53, $11, $23, $05, $42, $12, $22, $04, $44, $33, $33, $00 
-LoadBossGraphics_Data4_Gfx_47A9A:
-	dc.b	$00, $00, $44, $21, $16, $00, $66, $64, $32, $33, $65, $45, $64, $53, $66, $54, $64, $45, $53, $66, $56, $45, $54, $36, $66, $44, $65, $44, $55, $45, $65, $55 
-	dc.b	$44, $00 
-LoadBossGraphics_Data4_Gfx_47ABC:
-	dc.b	$01, $33, $00, $A1, $11, $44, $11, $60, $46, $66, $26, $43, $36, $66, $44, $36, $34, $64, $23, $46, $65, $12, $66, $44, $42, $54, $43, $44, $43, $45, $55, $00 
-LoadBossGraphics_Data4_Gfx_47ADC:
-	dc.b	$01, $00, $33, $11, $00, $01, $44, $22, $66, $32, $66, $43, $20, $66, $63, $30, $36, $64, $99, $90, $46, $69, $AA, $90, $46, $9A, $A9, $90, $69, $AA, $98, $00 
-LoadBossGraphics_Data4_Gfx_47AFC:
-	dc.b	$00, $03, $34, $33, $34, $00, $53, $44, $45, $00, $05, $33, $35, $00, $06, $66, $66, $00, $45, $66, $65, $02, $34, $56, $60, $03, $34, $66, $66, $04, $45, $66 
-	dc.b	$56, $00 
-LoadBossGraphics_Data4_Gfx_47B1E:
-	dc.b	$02, $44, $32, $31, $01, $40, $66, $00, $0C, $08, $96, $55, $65, $54, $65, $33, $46, $55, $54, $65, $56, $65, $55, $65, $54, $56, $55, $54 
-LoadBossGraphics_Data4_Gfx_47B3A:
-	dc.b	$00, $33, $23, $55, $66, $32, $23, $56, $68, $44, $44, $66, $8A, $45, $55, $68, $AA, $54, $56, $8A, $A9, $44, $48, $AA, $98, $55, $89, $A9, $86, $48, $9A, $98 
-	dc.b	$30, $00 
-LoadBossGraphics_Data4_Gfx_47B5C:
-	dc.b	$01, $00, $11, $11, $11, $13, $9A, $A9, $82, $AA, $98, $42, $A9, $86, $42, $98, $66, $42, $86, $65, $40, $66, $65, $30, $66, $64, $20, $66, $64, $00 
-LoadBossGraphics_Data4_Gfx_47B7A:
-	dc.b	$01, $00, $88, $88, $C8, $8C, $56, $54, $45, $06, $43, $34, $04, $32, $23, $05, $42, $22, $54, $33, $06, $65, $44, $06, $54, $65, $65, $56 
-LoadBossGraphics_Data4_Gfx_47B96:
-	dc.b	$00, $66, $65, $55, $44, $65, $65, $54, $47, $56, $56, $54, $78, $45, $34, $57, $78, $45, $63, $47, $77, $54, $46, $34, $77, $33, $23, $53, $46, $32, $23, $55 
-	dc.b	$34, $00 
-LoadBossGraphics_Data4_Gfx_47BB8:
-	dc.b	$00, $89, $A9, $84, $30, $9A, $98, $54, $43, $99, $85, $65, $54, $87, $45, $56, $55, $74, $44, $56, $66, $44, $44, $54, $66, $55, $45, $56, $06, $66, $55, $66 
-	dc.b	$03, $00 
-LoadBossGraphics_Data4_Gfx_47BDA:
-	dc.b	$01, $00, $33, $F7, $77, $77, $46, $64, $06, $64, $30, $33, $66, $60, $30, $00 
-LoadBossGraphics_Data4_Gfx_47BEA:
-	dc.b	$01, $00, $FF, $FD, $CC, $C8, $03, $04, $33, $05, $43, $55, $32, $05, $54, $31 
-LoadBossGraphics_Data4_Gfx_47BFA:
-	dc.b	$01, $00, $FF, $FF, $77, $33, $30, $33, $26, $30, $12, $63 
-LoadBossGraphics_Data4_Gfx_47C06:
-	dc.b	$01, $00, $FF, $FF, $EE, $EE, $05, $05, $55, $54 
-LoadBossGraphics_Data4_Gfx_47C10:
-	dc.b	$00, $00, $55, $44, $22, $00, $54, $43, $32, $00, $54, $44, $44, $56, $65, $45, $55, $55, $55, $56, $55, $54, $44, $45, $66, $43, $33, $34, $45, $32, $12, $34 
-	dc.b	$44, $00 
-LoadBossGraphics_Data4_Gfx_47C32:
-	dc.b	$00, $16, $23, $00, $00, $11, $63, $00, $33, $32, $23, $04, $44, $44, $33, $06, $66, $56, $45, $54, $36, $66, $45, $43, $33, $56, $55, $54, $44, $54, $66, $54 
-	dc.b	$55, $00 
-LoadBossGraphics_Data4_Gfx_47C54:
-	dc.b	$01, $00, $F7, $33, $11, $11, $20, $33, $20, $54, $32, $66, $43, $20, $66, $54, $30, $46, $65, $32, $56, $66, $43, $00 
-LoadBossGraphics_Data4_Gfx_47C6C:
-	dc.b	$01, $00, $EE, $EE, $EE, $EE, $54, $43, $44, $44, $05, $05, $06, $06 
-LoadBossGraphics_Data4_Gfx_47C7A:
-	dc.b	$01, $66, $00, $04, $6E, $EE, $32, $33, $23, $44, $34, $44, $32, $45, $55, $55, $54, $44, $56, $55, $44, $56, $46, $65, $65, $55 
-LoadBossGraphics_Data4_Gfx_47C94:
-	dc.b	$01, $66, $17, $11, $10, $23, $53, $65, $55, $56, $55, $55, $56, $55, $44, $56, $54, $34, $56, $43, $24, $56, $65, $43, $35, $65, $55, $56 
-LoadBossGraphics_Data4_Gfx_47CB0:
-	dc.b	$01, $66, $4C, $CC, $62, $22, $56, $53, $00, $64, $20, $65, $30, $65, $40, $55, $40, $44, $06, $40, $43, $04, $40, $50, $00, $40 
-LoadBossGraphics_Data4_Gfx_47CCA:
-	dc.b	$01, $00, $EE, $EE, $EC, $C8, $02, $02, $03, $06, $55, $05, $44, $66, $54, $06, $54, $65 
-LoadBossGraphics_Data4_Gfx_47CDC:
-	dc.b	$01, $66, $77, $48, $00, $00, $46, $24, $46, $44, $64, $64, $34, $55, $64, $33, $33, $45, $54, $32, $22, $34, $45, $43, $22, $34, $54, $54, $33, $33 
-LoadBossGraphics_Data4_Gfx_47CFA:
-	dc.b	$00, $66, $66, $44, $46, $66, $65, $43, $34, $56, $65, $42, $33, $66, $64, $22, $33, $56, $54, $22, $33, $56, $54, $33, $34, $55, $53, $33, $45, $45, $54, $44 
-	dc.b	$45, $00 
-LoadBossGraphics_Data4_Gfx_47D1C:
-	dc.b	$01, $00, $45, $73, $33, $77, $60, $46, $40, $40, $04, $40, $43, $23, $42, $32, $42, $43, $44, $56 
-LoadBossGraphics_Data4_Gfx_47D30:
-	dc.b	$01, $00, $FF, $FD, $CC, $C8, $04, $04, $33, $05, $43, $55, $32, $05, $54, $31 
-LoadBossGraphics_Data4_Gfx_47D40:
-	dc.b	$00, $16, $23, $03, $30, $11, $63, $34, $43, $32, $23, $66, $66, $44, $33, $54, $46, $54, $44, $54, $34, $66, $45, $43, $33, $56, $56, $54, $44, $54, $66, $64 
-	dc.b	$55, $00 
-LoadBossGraphics_Data4_Gfx_47D62:
-	dc.b	$01, $00, $F7, $33, $11, $10, $30, $43, $30, $64, $33, $66, $44, $30, $46, $64, $43, $46, $66, $43, $66, $66, $63, $30 
-LoadBossGraphics_Data4_Gfx_47D7A:
-	dc.b	$01, $00, $EE, $EE, $EE, $EF, $54, $43, $44, $44, $05, $05, $06, $00 
-LoadBossGraphics_Data4_Gfx_47D88:
-	dc.b	$01, $66, $00, $04, $6F, $FF, $32, $33, $23, $44, $34, $44, $32, $45, $55, $55, $54, $44, $56, $55, $44, $56, $46, $00 
-LoadBossGraphics_Data4_Gfx_47DA0:
-	dc.b	$01, $66, $41, $11, $11, $11, $53, $65, $56, $56, $65, $56, $56, $54, $45, $65, $44, $44, $55, $43, $44, $55, $44, $44, $55, $44, $46, $65, $55, $56 
-LoadBossGraphics_Data4_Gfx_47DBE:
-	dc.b	$01, $66, $CE, $62, $20, $80, $64, $30, $30, $06, $43, $60, $06, $43, $60, $00, $64, $60, $00, $06, $64, $00, $06, $64, $55, $00, $00, $64 
-LoadBossGraphics_Data4_Gfx_47DDA:
-	dc.b	$01, $00, $FF, $FE, $EC, $CC, $06, $55, $05, $44, $66, $54, $06, $53 
-LoadBossGraphics_Data4_Gfx_47DE8:
-	dc.b	$01, $66, $11, $88, $86, $67, $06, $55, $56, $06, $54, $56, $44, $45, $65, $44, $45, $55, $64, $56, $54, $56, $54, $45, $65, $34 
-LoadBossGraphics_Data4_Gfx_47E02:
-	dc.b	$00, $65, $55, $56, $65, $66, $65, $66, $54, $55, $56, $66, $55, $45, $55, $66, $65, $43, $45, $56, $65, $32, $34, $56, $65, $43, $23, $45, $66, $64, $32, $34 
-	dc.b	$56, $00 
-LoadBossGraphics_Data4_Gfx_47E24:
-	dc.b	$01, $00, $23, $33, $33, $73, $43, $30, $44, $32, $30, $32, $30, $32, $40, $43, $50, $45, $60, $66, $65, $55 
-LoadBossGraphics_Data4_Gfx_47E3A:
-	dc.b	$01, $00, $FF, $FF, $DC, $88, $03, $44, $30, $05, $54, $33, $55, $44, $22, $00 
-LoadBossGraphics_Data4_Gfx_47E4A:
-	dc.b	$01, $00, $FF, $FF, $FF, $77, $30, $63 
-LoadBossGraphics_Data4_Gfx_47E52:
-	dc.b	$01, $00, $FF, $FF, $FE, $EE, $05, $55, $54, $00 
-LoadBossGraphics_Data4_Gfx_47E5C:
-	dc.b	$00, $00, $55, $42, $21, $05, $54, $33, $22, $05, $54, $53, $32, $06, $66, $66, $65, $56, $55, $55, $66, $54, $33, $33, $44, $43, $11, $23, $34, $32, $12, $34 
-	dc.b	$46, $00 
-LoadBossGraphics_Data4_Gfx_47E7E:
-	dc.b	$01, $00, $33, $33, $33, $31, $12, $60, $16, $23, $11, $63, $21, $33, $65, $30, $66, $40, $46, $43, $66, $54, $43, $00 
-LoadBossGraphics_Data4_Gfx_47E96:
-	dc.b	$01, $00, $FF, $FF, $FF, $88, $02, $20, $07, $03, $32, $78 
-LoadBossGraphics_Data4_Gfx_47EA2:
-	dc.b	$01, $00, $EE, $EE, $EE, $EF, $54, $54, $55, $45, $04, $05, $05, $00 
-LoadBossGraphics_Data4_Gfx_47EB0:
-	dc.b	$01, $66, $00, $11, $11, $34, $32, $23, $44, $56, $33, $23, $45, $56, $44, $33, $45, $44, $33, $45, $55, $44, $45, $45, $55, $55, $56, $55, $55, $65, $56, $00 
-LoadBossGraphics_Data4_Gfx_47ED0:
-	dc.b	$01, $66, $CC, $EE, $88, $88, $54, $30, $65, $43, $54, $53, $65, $56, $54, $54, $35, $64, $54, $35, $65, $53, $34, $65 
-LoadBossGraphics_Data4_Gfx_47EE8:
-	dc.b	$00, $00, $00, $33, $27, $00, $00, $06, $32, $00, $66, $43, $63, $43, $46, $64, $36, $33, $34, $64, $30, $33, $34, $66, $40, $33, $34, $64, $40, $44, $56, $46 
-	dc.b	$00, $00 
-LoadBossGraphics_Data4_Gfx_47F0A:
-	dc.b	$01, $00, $FF, $FF, $EE, $CC, $04, $55, $05, $34, $06, $53 
-LoadBossGraphics_Data4_Gfx_47F16:
-	dc.b	$00, $55, $55, $54, $55, $05, $43, $23, $44, $55, $43, $32, $33, $55, $54, $43, $33, $36, $65, $54, $44, $33, $46, $65, $55, $66, $44, $45, $66, $34, $66, $66 
-	dc.b	$66, $00 
-LoadBossGraphics_Data4_Gfx_47F38:
-	dc.b	$02, $66, $81, $71, $00, $E0, $55, $04, $06, $0C, $06, $54, $45, $65, $56, $56, $45, $34, $33, $44, $45, $65, $54, $60, $64, $65, $44, $00 
-LoadBossGraphics_Data4_Gfx_47F54:
-	dc.b	$02, $00, $11, $13, $3F, $F7, $66, $0C, $CC, $80, $00, $56, $64, $64, $40, $60, $60, $50 
-LoadBossGraphics_Data4_Gfx_47F66:
-	dc.b	$01, $00, $CF, $FF, $FF, $FF, $89, $99 
-LoadBossGraphics_Data4_Gfx_47F6E:
-	dc.b	$01, $00, $00, $CF, $FC, $88, $99, $9A, $AA, $A9, $08, $89, $99, $9A, $08, $87, $44, $30, $05, $44, $33, $55, $44, $43 
-LoadBossGraphics_Data4_Gfx_47F86:
-	dc.b	$00, $98, $80, $04, $20, $99, $87, $74, $22, $78, $77, $43, $42, $07, $77, $43, $66, $00, $04, $20, $64, $00, $04, $20, $43, $30, $04, $20, $43, $33, $00, $00 
-	dc.b	$04, $00 
-LoadBossGraphics_Data4_Gfx_47FA8:
-	dc.b	$01, $00, $F9, $00, $11, $11, $40, $40, $33, $43, $43, $30, $63, $44, $43, $33, $44, $63, $34, $23, $56, $63, $32, $35, $44, $33, $44, $54 
-LoadBossGraphics_Data4_Gfx_47FC4:
-	dc.b	$00, $00, $55, $54, $44, $05, $55, $32, $23, $05, $53, $21, $24, $05, $42, $12, $34, $55, $42, $23, $34, $55, $43, $33, $44, $55, $44, $34, $44, $55, $54, $44 
-	dc.b	$45, $00 
-LoadBossGraphics_Data4_Gfx_47FE6:
-	dc.b	$01, $66, $00, $37, $77, $65, $44, $60, $00, $04, $44, $55, $00, $06, $45, $55, $56, $56, $45, $55, $65, $56, $65, $00 
-LoadBossGraphics_Data4_Gfx_47FFE:
-	dc.b	$01, $66, $E8, $00, $08, $C8, $40, $44, $46, $40, $65, $43, $33, $40, $65, $43, $22, $40, $65, $44, $33, $60, $54, $46, $60, $33, $30, $64, $32, $30 
-LoadBossGraphics_Data4_Gfx_4801C:
-	dc.b	$01, $55, $3A, $8F, $00, $00, $56, $65, $66, $56, $56, $66, $66, $05, $44, $44, $44, $05, $44, $43, $33, $00, $54, $33, $23, $00, $54, $43, $22, $00 
-LoadBossGraphics_Data4_Gfx_4803A:
-	dc.b	$01, $56, $11, $11, $11, $11, $66, $55, $55, $65, $55, $44, $55, $44, $43, $54, $34, $33, $33, $34, $34, $43, $43, $43, $34, $43, $33, $23, $33, $34 
-LoadBossGraphics_Data4_Gfx_48058:
-	dc.b	$02, $66, $88, $C8, $8C, $CC, $00, $01, $31, $11, $10, $65, $43, $30, $65, $54, $64, $30, $64, $30, $43, $63, $63, $30 
-LoadBossGraphics_Data4_Gfx_48070:
-	dc.b	$01, $00, $FF, $FF, $EE, $CC, $06, $55, $05, $34, $06, $53 
-LoadBossGraphics_Data4_Gfx_4807C:
-	dc.b	$01, $66, $00, $02, $80, $97, $00, $55, $43, $33, $00, $55, $44, $33, $55, $56, $54, $44, $55, $56, $65, $65, $55, $56, $33, $46, $65, $55, $44, $45, $34, $00 
-LoadBossGraphics_Data4_Gfx_4809C:
-	dc.b	$01, $66, $10, $02, $E0, $E0, $22, $23, $34, $33, $44, $55, $00, $44, $45, $56, $00, $55, $56, $00, $60, $55, $55, $54, $60, $64, $65, $55, $55, $44 
-LoadBossGraphics_Data4_Gfx_480BA:
-	dc.b	$02, $66, $EE, $20, $00, $00, $00, $00, $9F, $FF, $F7, $30, $30, $06, $50, $00 
-LoadBossGraphics_Data4_Gfx_480CA:
-	dc.b	$00, $46, $66, $49, $99, $66, $69, $9A, $A9, $66, $9A, $AA, $90, $69, $AA, $A9, $20, $9A, $AA, $93, $20, $AA, $A9, $63, $30, $A9, $96, $63, $00, $99, $06, $63 
-	dc.b	$00, $00 
-LoadBossGraphics_Data4_Gfx_480EC:
-	dc.b	$00, $66, $65, $55, $44, $65, $65, $55, $55, $66, $56, $55, $58, $66, $66, $54, $89, $64, $45, $48, $99, $53, $45, $78, $88, $66, $34, $77, $87, $36, $33, $47 
-	dc.b	$74, $00 
-LoadBossGraphics_Data4_Gfx_4810E:
-	dc.b	$00, $55, $99, $9A, $99, $49, $9A, $98, $84, $9A, $A9, $84, $46, $AA, $98, $46, $66, $98, $84, $56, $66, $83, $45, $56, $60, $45, $55, $56, $66, $55, $55, $56 
-	dc.b	$66, $00 
-LoadBossGraphics_Data4_Gfx_48130:
-	dc.b	$01, $00, $13, $11, $11, $8C, $46, $60, $63, $66, $55, $66, $54, $50, $54, $43, $30, $65, $44, $24, $06, $55, $42, $66, $66, $50, $64, $40 
-LoadBossGraphics_Data4_Gfx_4814C:
-	dc.b	$01, $00, $FB, $99, $9D, $DC, $09, $0A, $90, $09, $90, $09, $A9, $A9, $99, $9A, $90, $00 
-LoadBossGraphics_Data4_Gfx_4815E:
-	dc.b	$01, $00, $CC, $C8, $80, $00, $0A, $90, $09, $90, $09, $A9, $04, $48, $99, $43, $25, $9A, $04, $31, $14, $8A, $05, $32, $12, $59, $04, $43, $33, $48 
-LoadBossGraphics_Data4_Gfx_4817C:
-	dc.b	$01, $44, $40, $00, $04, $67, $00, $21, $16, $00, $66, $64, $32, $06, $65, $45, $64, $55, $36, $54, $64, $65, $53, $66, $56, $96, $36, $66, $96, $55, $A8, $00 
-LoadBossGraphics_Data4_Gfx_4819C:
-	dc.b	$00, $11, $60, $00, $43, $36, $40, $04, $44, $33, $40, $46, $66, $34, $64, $43, $43, $46, $65, $12, $33, $66, $44, $42, $33, $54, $33, $43, $33, $43, $33, $45 
-	dc.b	$44, $00 
-LoadBossGraphics_Data4_Gfx_481BE:
-	dc.b	$01, $00, $73, $31, $11, $11, $30, $44, $30, $66, $43, $66, $64, $20, $36, $64, $30, $33, $66, $42, $34, $66, $43, $34, $66, $43 
-LoadBossGraphics_Data4_Gfx_481D8:
-	dc.b	$01, $66, $00, $03, $23, $30, $03, $34, $33, $35, $00, $53, $44, $45, $00, $05, $33, $55, $00, $06, $00, $56, $65, $00, $56, $04, $56, $05, $65, $55, $56, $00 
-LoadBossGraphics_Data4_Gfx_481F8:
-	dc.b	$00, $A9, $54, $44, $43, $9A, $54, $43, $33, $89, $84, $43, $33, $89, $85, $44, $44, $68, $86, $65, $55, $68, $88, $54, $44, $66, $78, $54, $44, $25, $77, $75 
-	dc.b	$55, $00 
-LoadBossGraphics_Data4_Gfx_4821A:
-	dc.b	$03, $44, $22, $24, $0C, $40, $66, $11, $11, $11, $13, $55, $00, $08, $42, $AC, $32, $23, $32, $23, $43, $34, $45, $45, $45, $00 
-LoadBossGraphics_Data4_Gfx_48234:
-	dc.b	$02, $66, $4C, $CC, $CC, $80, $00, $11, $11, $11, $11, $46, $53, $54, $64, $64, $64, $64, $55, $64, $55, $44, $44, $00 
-LoadBossGraphics_Data4_Gfx_4824C:
-	dc.b	$01, $00, $00, $88, $8C, $CC, $06, $65, $44, $55, $06, $54, $33, $45, $54, $32, $34, $64, $32, $23, $05, $43, $33, $44, $45, $06, $66, $06, $66, $00 
-LoadBossGraphics_Data4_Gfx_4826A:
-	dc.b	$00, $62, $24, $45, $54, $65, $52, $23, $45, $53, $33, $53, $22, $52, $12, $35, $35, $53, $23, $53, $55, $55, $33, $35, $35, $66, $55, $53, $55, $66, $66, $55 
-	dc.b	$55, $00 
-LoadBossGraphics_Data4_Gfx_4828C:
-	dc.b	$01, $56, $22, $48, $08, $0A, $44, $66, $65, $55, $55, $55, $55, $66, $54, $64, $34, $64, $53, $34, $33, $65, $63, $43, $45, $54, $35, $34, $46, $63, $66, $00 
-LoadBossGraphics_Data4_Gfx_482AC:
-	dc.b	$01, $00, $11, $11, $37, $77, $54, $43, $44, $44, $32, $30, $43, $22, $30, $33, $23, $50, $44, $50, $50, $60, $66, $00 
-LoadBossGraphics_Data4_Gfx_482C4:
-	dc.b	$01, $00, $BB, $99, $99, $9D, $99, $A9, $0A, $90, $0A, $90, $0A, $A0, $09, $A0, $09, $A9, $9A, $00 
-LoadBossGraphics_Data4_Gfx_482D8:
-	dc.b	$01, $00, $FF, $FF, $EE, $CC, $03, $44, $05, $54, $55, $43 
-LoadBossGraphics_Data4_Gfx_482E4:
-	dc.b	$01, $00, $FF, $FF, $F7, $73, $30, $33, $22, $30 
-LoadBossGraphics_Data4_Gfx_482EE:
-	dc.b	$01, $00, $DC, $CC, $88, $00, $9A, $9A, $90, $0A, $90, $09, $90, $04, $49, $99, $43, $38, $99, $04, $33, $28, $99, $43, $31, $18, $89, $00 
-LoadBossGraphics_Data4_Gfx_4830A:
-	dc.b	$00, $00, $00, $54, $32, $00, $05, $43, $21, $00, $04, $42, $11, $34, $06, $66, $43, $54, $36, $54, $56, $53, $43, $65, $46, $66, $45, $36, $65, $86, $54, $36 
-	dc.b	$66, $00 
-LoadBossGraphics_Data4_Gfx_4832C:
-	dc.b	$01, $00, $33, $32, $20, $00, $61, $60, $16, $13, $61, $16, $23, $63, $04, $33, $33, $46, $43, $34, $43, $66, $63, $46, $44, $43, $66, $66, $54, $32 
-LoadBossGraphics_Data4_Gfx_4834A:
-	dc.b	$01, $00, $FF, $F3, $11, $10, $43, $20, $64, $43, $20, $66, $64, $32, $66, $64, $43, $36, $66, $43, $20, $00 
-LoadBossGraphics_Data4_Gfx_48360:
-	dc.b	$00, $43, $32, $33, $78, $04, $33, $35, $78, $04, $44, $55, $77, $06, $55, $55, $55, $66, $65, $53, $33, $66, $65, $44, $55, $66, $65, $42, $22, $44, $46, $43 
-	dc.b	$35, $00 
-LoadBossGraphics_Data4_Gfx_48382:
-	dc.b	$01, $55, $50, $08, $0C, $90, $86, $44, $75, $43, $34, $44, $75, $43, $34, $43, $54, $43, $33, $46, $65, $53, $33, $64, $44, $66, $65, $66, $43, $46, $65, $00 
-LoadBossGraphics_Data4_Gfx_483A2:
-	dc.b	$01, $44, $28, $02, $2E, $40, $56, $64, $32, $43, $45, $33, $32, $23, $45, $43, $32, $23, $54, $43, $34, $55, $65, $45, $56, $66, $55, $55, $66, $66 
-LoadBossGraphics_Data4_Gfx_483C0:
-	dc.b	$02, $66, $44, $00, $44, $CC, $30, $01, $11, $11, $11, $23, $44, $20, $23, $44, $33, $46, $64, $44, $46, $64, $44, $64, $56, $64, $64, $64 
-LoadBossGraphics_Data4_Gfx_483DC:
-	dc.b	$01, $00, $00, $00, $CC, $CC, $43, $36, $55, $55, $43, $33, $46, $65, $55, $34, $56, $66, $05, $56, $06, $66, $06, $65, $66, $66, $65, $55, $66, $55 
-LoadBossGraphics_Data4_Gfx_483FA:
-	dc.b	$01, $66, $18, $08, $06, $34, $33, $43, $36, $34, $34, $46, $43, $53, $43, $35, $35, $63, $35, $64, $46, $64, $45, $44, $65, $64, $46, $55, $65, $55 
-LoadBossGraphics_Data4_Gfx_48418:
-	dc.b	$02, $66, $91, $00, $0E, $F2, $55, $4A, $00, $80, $0D, $56, $44, $44, $44, $45, $65, $54, $44, $45, $64, $45, $56, $54, $54, $00 
-LoadBossGraphics_Data4_Gfx_48432:
-	dc.b	$02, $66, $C4, $44, $44, $88, $00, $11, $11, $13, $77, $64, $55, $63, $44, $63, $43, $40, $36, $60, $60, $00 
-LoadBossGraphics_Data4_Gfx_48448:
-	dc.b	$01, $00, $FF, $FF, $FF, $EC, $44, $44, $33, $00 
-LoadBossGraphics_Data4_Gfx_48452:
-	dc.b	$01, $00, $FF, $EC, $CC, $80, $55, $05, $55, $05, $55, $05, $54, $56, $65, $44, $46, $56, $65, $64 
-LoadBossGraphics_Data4_Gfx_48466:
-	dc.b	$01, $00, $73, $31, $11, $11, $04, $44, $40, $44, $32, $54, $32, $20, $44, $32, $60, $43, $36, $12, $33, $22, $16, $43, $21, $62 
-LoadBossGraphics_Data4_Gfx_48480:
-	dc.b	$00, $00, $04, $32, $23, $00, $43, $21, $23, $04, $43, $22, $12, $04, $34, $32, $23, $05, $43, $44, $33, $00, $54, $33, $44, $00, $66, $55, $35, $00, $06, $66 
-	dc.b	$55, $00 
-LoadBossGraphics_Data4_Gfx_484A2:
-	dc.b	$01, $56, $11, $54, $10, $80, $44, $65, $65, $34, $66, $65, $34, $66, $34, $55, $66, $45, $66, $55, $35, $65, $54, $45, $65, $44, $44, $66, $54, $44, $33, $00 
-LoadBossGraphics_Data4_Gfx_484C2:
-	dc.b	$00, $44, $32, $12, $04, $54, $33, $62, $06, $65, $43, $20, $06, $66, $44, $54, $45, $66, $66, $54, $43, $55, $56, $64, $33, $44, $45, $64, $32, $33, $45, $65 
-	dc.b	$43, $00 
-LoadBossGraphics_Data4_Gfx_484E4:
-	dc.b	$01, $00, $33, $11, $10, $00, $43, $30, $63, $33, $66, $42, $20, $56, $63, $12, $56, $64, $21, $25, $64, $31, $20, $25, $66, $31, $10, $35, $66, $42, $10, $00 
-LoadBossGraphics_Data4_Gfx_48504:
-	dc.b	$01, $66, $33, $33, $31, $11, $00, $06, $00, $06, $00, $06, $00, $56, $05, $45, $04, $34, $56, $03, $34, $56, $00, $34, $56, $00 
-LoadBossGraphics_Data4_Gfx_4851E:
-	dc.b	$01, $55, $08, $8F, $00, $78, $65, $54, $33, $33, $44, $43, $32, $54, $44, $44, $66, $66, $65, $56, $65, $56, $66, $66, $66, $65, $44, $44 
-LoadBossGraphics_Data4_Gfx_4853A:
-	dc.b	$01, $66, $00, $03, $FF, $E0, $22, $34, $65, $44, $33, $34, $65, $55, $44, $55, $65, $55, $55, $56, $60, $55, $65, $55, $50, $00 
-LoadBossGraphics_Data4_Gfx_48554:
-	dc.b	$01, $66, $44, $4C, $44, $44, $55, $42, $10, $56, $42, $20, $56, $43, $20, $43, $20, $06, $43, $30, $06, $43, $00, $00, $43, $00, $00, $43, $00, $00 
-LoadBossGraphics_Data4_Gfx_48572:
-	dc.b	$01, $00, $FF, $FF, $FF, $F7, $05, $00 
-LoadBossGraphics_Data4_Gfx_4857A:
-	dc.b	$01, $00, $FF, $FF, $FF, $FE, $05, $00 
-LoadBossGraphics_Data4_Gfx_48582:
-	dc.b	$02, $00, $FF, $FF, $80, $00, $55, $00, $00, $06, $F9, $06, $66, $66, $06, $56, $44, $44 
-LoadBossGraphics_Data4_Gfx_48594:
-	dc.b	$01, $55, $13, $66, $40, $08, $00, $00, $00, $00, $05, $00, $66, $06, $54, $66, $54, $44, $66, $56, $44, $33, $56, $66, $53, $32, $66, $44, $35, $00 
-LoadBossGraphics_Data4_Gfx_485B2:
-	dc.b	$01, $00, $73, $11, $00, $00, $55, $64, $30, $44, $35, $40, $43, $36, $54, $32, $26, $64, $30, $22, $56, $64, $30, $25, $26, $66, $30, $22, $36, $66, $43, $00 
-LoadBossGraphics_Data4_Gfx_485D2:
-	dc.b	$01, $00, $EE, $EE, $EE, $CC, $05, $55, $54, $54, $55, $65, $06, $66, $56, $66 
-LoadBossGraphics_Data4_Gfx_485E2:
-	dc.b	$01, $44, $11, $01, $43, $10, $54, $43, $33, $43, $33, $33, $32, $12, $33, $34, $42, $33, $23, $54, $32, $45, $65, $55, $66, $65, $54, $66, $66, $55, $56, $00 
-LoadBossGraphics_Data4_Gfx_48602:
-	dc.b	$01, $56, $08, $40, $99, $10, $66, $65, $54, $32, $66, $55, $45, $54, $55, $44, $53, $55, $66, $66, $34, $44, $43, $45, $65, $44, $45, $55, $45, $55, $66, $00 
-LoadBossGraphics_Data4_Gfx_48622:
-	dc.b	$01, $66, $22, $2A, $EC, $CC, $25, $46, $43, $34, $56, $64, $65, $56, $64, $56, $64, $54, $55, $55, $54, $34, $54, $34 
-LoadBossGraphics_Data4_Gfx_4863A:
-	dc.b	$01, $00, $FF, $FF, $FF, $C8, $04, $40, $04, $43, $34, $00 
-LoadBossGraphics_Data4_Gfx_48646:
-	dc.b	$01, $00, $FE, $CC, $CC, $00, $04, $05, $54, $55, $55, $55, $54, $55, $44, $05, $66, $54, $43, $65, $66, $56, $44, $00 
-LoadBossGraphics_Data4_Gfx_4865E:
-	dc.b	$01, $00, $77, $33, $31, $11, $40, $44, $43, $20, $43, $22, $43, $26, $33, $61, $20, $32, $21, $60, $32, $16, $20, $00 
-LoadBossGraphics_Data4_Gfx_48676:
-	dc.b	$00, $00, $43, $22, $34, $04, $32, $12, $33, $44, $32, $21, $23, $43, $43, $22, $33, $54, $34, $43, $34, $05, $43, $34, $43, $06, $65, $53, $55, $00, $66, $65 
-	dc.b	$56, $00 
-LoadBossGraphics_Data4_Gfx_48698:
-	dc.b	$00, $46, $56, $55, $64, $46, $66, $55, $65, $45, $66, $65, $66, $45, $65, $56, $66, $56, $65, $55, $66, $56, $55, $44, $55, $66, $54, $44, $44, $65, $44, $43 
-	dc.b	$33, $00 
-LoadBossGraphics_Data4_Gfx_486BA:
-	dc.b	0,'C! DC6 fT2',0,'fdEDUfeD5UfC2DVC"4VT' 
-	dc.b	'3',0 
-LoadBossGraphics_Data4_Gfx_486DC:
-	dc.b	$01, $00, $73, $31, $11, $11, $33, $33, $30, $64, $22, $66, $31, $20, $66, $42, $10, $56, $43, $12, $56, $63, $11, $56, $64, $21 
-LoadBossGraphics_Data4_Gfx_486F6:
-	dc.b	$01, $66, $76, $66, $33, $20, $00, $06, $65, $06, $65, $05, $65, $54, $56, $43, $45, $33, $45, $65, $03, $45, $65, $54 
-LoadBossGraphics_Data4_Gfx_4870E:
-	dc.b	$02, $55, $80, $8C, $70, $F8, $44, $04, $73, $00, $02, $43, $33, $32, $54, $33, $23, $65, $56, $66, $66, $66, $54, $45 
-LoadBossGraphics_Data4_Gfx_48726:
-	dc.b	$01, $66, $00, $07, $EE, $80, $23, $46, $54, $45, $33, $46, $55, $55, $45, $56, $55, $55, $55, $60, $00, $65, $55, $50, $56, $54, $45, $50 
-LoadBossGraphics_Data4_Gfx_48742:
-	dc.b	$02, $64, $44, $44, $44, $44, $00, $11, $11, $11, $11, $56, $21, $66, $22, $66, $32, $66, $32, $66, $33, $66, $30, $06, $30, $06, $30, $00 
-LoadBossGraphics_Data4_Gfx_4875E:
-	dc.b	$01, $00, $FF, $FF, $FF, $FC, $04, $40 
-LoadBossGraphics_Data4_Gfx_48766:
-	dc.b	$01, $00, $FF, $EC, $CC, $C0, $04, $05, $54, $55, $55, $55, $54, $55, $44, $05, $66, $54, $43, $00 
-LoadBossGraphics_Data4_Gfx_4877A:
-	dc.b	$01, $00, $F7, $73, $33, $11, $40, $44, $43, $20, $43, $22, $43, $26, $33, $61, $20, $32, $21, $60 
-LoadBossGraphics_Data4_Gfx_4878E:
-	dc.b	$01, $43, $24, $00, $C2, $50, $00, $04, $34, $00, $22, $34, $04, $32, $12, $33, $44, $32, $21, $23, $22, $33, $54, $34, $34, $05, $34, $06, $65, $53, $55, $00 
-LoadBossGraphics_Data4_Gfx_487AE:
-	dc.b	$01, $66, $40, $45, $11, $08, $65, $56, $44, $46, $56, $55, $64, $46, $55, $65, $45, $65, $45, $65, $56, $56, $65, $55, $56, $55, $44, $55, $54, $44, $44, $00 
-LoadBossGraphics_Data4_Gfx_487CE:
-	dc.b	$00, $32, $16, $20, $00, $43, $21, $20, $44, $43, $36, $20, $66, $54, $32, $00, $66, $64, $45, $44, $55, $66, $65, $44, $35, $55, $66, $43, $32, $44, $56, $43 
-	dc.b	$22, $00 
-LoadBossGraphics_Data4_Gfx_487F0:
-	dc.b	$01, $00, $F7, $33, $11, $11, $33, $33, $30, $64, $22, $66, $31, $20, $66, $42, $10, $56, $43, $12, $56, $63, $11, $00 
-LoadBossGraphics_Data4_Gfx_48808:
-	dc.b	$01, $66, $47, $66, $63, $32, $00, $65, $56, $00, $06, $65, $06, $65, $05, $65, $54, $56, $43, $45, $33, $45, $65, $00 
-LoadBossGraphics_Data4_Gfx_48820:
-	dc.b	$02, $44, $40, $47, $30, $00, $55, $08, $08, $C7, $0F, $65, $43, $33, $43, $33, $32, $54, $33, $23, $65, $56, $66, $66, $66, $00 
-LoadBossGraphics_Data4_Gfx_4883A:
-	dc.b	$01, $66, $00, $00, $7E, $E8, $34, $56, $54, $33, $23, $46, $54, $45, $33, $46, $55, $55, $45, $56, $55, $55, $55, $60, $00, $65, $55, $50 
-LoadBossGraphics_Data4_Gfx_48856:
-	dc.b	$02, $64, $44, $44, $44, $44, $00, $11, $11, $11, $11, $56, $21, $56, $21, $66, $22, $66, $32, $66, $32, $66, $33, $66, $30, $06, $30, $00 
+	incbin "data/art/tiles/boss/data4_gfx.bin"
+LoadBossGraphics_Data4_Gfx_475B2 equ LoadBossGraphics_Data4_Gfx_475AC+$6
+LoadBossGraphics_Data4_Gfx_475C6 equ LoadBossGraphics_Data4_Gfx_475AC+$1A
+LoadBossGraphics_Data4_Gfx_475D2 equ LoadBossGraphics_Data4_Gfx_475AC+$26
+LoadBossGraphics_Data4_Gfx_475DA equ LoadBossGraphics_Data4_Gfx_475AC+$2E
+LoadBossGraphics_Data4_Gfx_475F6 equ LoadBossGraphics_Data4_Gfx_475AC+$4A
+LoadBossGraphics_Data4_Gfx_47618 equ LoadBossGraphics_Data4_Gfx_475AC+$6C
+LoadBossGraphics_Data4_Gfx_4763A equ LoadBossGraphics_Data4_Gfx_475AC+$8E
+LoadBossGraphics_Data4_Gfx_47656 equ LoadBossGraphics_Data4_Gfx_475AC+$AA
+LoadBossGraphics_Data4_Gfx_47670 equ LoadBossGraphics_Data4_Gfx_475AC+$C4
+LoadBossGraphics_Data4_Gfx_47690 equ LoadBossGraphics_Data4_Gfx_475AC+$E4
+LoadBossGraphics_Data4_Gfx_476B2 equ LoadBossGraphics_Data4_Gfx_475AC+$106
+LoadBossGraphics_Data4_Gfx_476D4 equ LoadBossGraphics_Data4_Gfx_475AC+$128
+LoadBossGraphics_Data4_Gfx_476F2 equ LoadBossGraphics_Data4_Gfx_475AC+$146
+LoadBossGraphics_Data4_Gfx_47714 equ LoadBossGraphics_Data4_Gfx_475AC+$168
+LoadBossGraphics_Data4_Gfx_47736 equ LoadBossGraphics_Data4_Gfx_475AC+$18A
+LoadBossGraphics_Data4_Gfx_47752 equ LoadBossGraphics_Data4_Gfx_475AC+$1A6
+LoadBossGraphics_Data4_Gfx_4775E equ LoadBossGraphics_Data4_Gfx_475AC+$1B2
+LoadBossGraphics_Data4_Gfx_4777A equ LoadBossGraphics_Data4_Gfx_475AC+$1CE
+LoadBossGraphics_Data4_Gfx_4779C equ LoadBossGraphics_Data4_Gfx_475AC+$1F0
+LoadBossGraphics_Data4_Gfx_477BE equ LoadBossGraphics_Data4_Gfx_475AC+$212
+LoadBossGraphics_Data4_Gfx_477DC equ LoadBossGraphics_Data4_Gfx_475AC+$230
+LoadBossGraphics_Data4_Gfx_477F8 equ LoadBossGraphics_Data4_Gfx_475AC+$24C
+LoadBossGraphics_Data4_Gfx_47818 equ LoadBossGraphics_Data4_Gfx_475AC+$26C
+LoadBossGraphics_Data4_Gfx_4783A equ LoadBossGraphics_Data4_Gfx_475AC+$28E
+LoadBossGraphics_Data4_Gfx_4785C equ LoadBossGraphics_Data4_Gfx_475AC+$2B0
+LoadBossGraphics_Data4_Gfx_4787E equ LoadBossGraphics_Data4_Gfx_475AC+$2D2
+LoadBossGraphics_Data4_Gfx_478A0 equ LoadBossGraphics_Data4_Gfx_475AC+$2F4
+LoadBossGraphics_Data4_Gfx_478C2 equ LoadBossGraphics_Data4_Gfx_475AC+$316
+LoadBossGraphics_Data4_Gfx_478E4 equ LoadBossGraphics_Data4_Gfx_475AC+$338
+LoadBossGraphics_Data4_Gfx_478F0 equ LoadBossGraphics_Data4_Gfx_475AC+$344
+LoadBossGraphics_Data4_Gfx_4790C equ LoadBossGraphics_Data4_Gfx_475AC+$360
+LoadBossGraphics_Data4_Gfx_4792E equ LoadBossGraphics_Data4_Gfx_475AC+$382
+LoadBossGraphics_Data4_Gfx_47950 equ LoadBossGraphics_Data4_Gfx_475AC+$3A4
+LoadBossGraphics_Data4_Gfx_4796C equ LoadBossGraphics_Data4_Gfx_475AC+$3C0
+LoadBossGraphics_Data4_Gfx_47986 equ LoadBossGraphics_Data4_Gfx_475AC+$3DA
+LoadBossGraphics_Data4_Gfx_479A6 equ LoadBossGraphics_Data4_Gfx_475AC+$3FA
+LoadBossGraphics_Data4_Gfx_479C8 equ LoadBossGraphics_Data4_Gfx_475AC+$41C
+LoadBossGraphics_Data4_Gfx_479E8 equ LoadBossGraphics_Data4_Gfx_475AC+$43C
+LoadBossGraphics_Data4_Gfx_47A08 equ LoadBossGraphics_Data4_Gfx_475AC+$45C
+LoadBossGraphics_Data4_Gfx_47A2A equ LoadBossGraphics_Data4_Gfx_475AC+$47E
+LoadBossGraphics_Data4_Gfx_47A4C equ LoadBossGraphics_Data4_Gfx_475AC+$4A0
+LoadBossGraphics_Data4_Gfx_47A6A equ LoadBossGraphics_Data4_Gfx_475AC+$4BE
+LoadBossGraphics_Data4_Gfx_47A78 equ LoadBossGraphics_Data4_Gfx_475AC+$4CC
+LoadBossGraphics_Data4_Gfx_47A82 equ LoadBossGraphics_Data4_Gfx_475AC+$4D6
+LoadBossGraphics_Data4_Gfx_47A9A equ LoadBossGraphics_Data4_Gfx_475AC+$4EE
+LoadBossGraphics_Data4_Gfx_47ABC equ LoadBossGraphics_Data4_Gfx_475AC+$510
+LoadBossGraphics_Data4_Gfx_47ADC equ LoadBossGraphics_Data4_Gfx_475AC+$530
+LoadBossGraphics_Data4_Gfx_47AFC equ LoadBossGraphics_Data4_Gfx_475AC+$550
+LoadBossGraphics_Data4_Gfx_47B1E equ LoadBossGraphics_Data4_Gfx_475AC+$572
+LoadBossGraphics_Data4_Gfx_47B3A equ LoadBossGraphics_Data4_Gfx_475AC+$58E
+LoadBossGraphics_Data4_Gfx_47B5C equ LoadBossGraphics_Data4_Gfx_475AC+$5B0
+LoadBossGraphics_Data4_Gfx_47B7A equ LoadBossGraphics_Data4_Gfx_475AC+$5CE
+LoadBossGraphics_Data4_Gfx_47B96 equ LoadBossGraphics_Data4_Gfx_475AC+$5EA
+LoadBossGraphics_Data4_Gfx_47BB8 equ LoadBossGraphics_Data4_Gfx_475AC+$60C
+LoadBossGraphics_Data4_Gfx_47BDA equ LoadBossGraphics_Data4_Gfx_475AC+$62E
+LoadBossGraphics_Data4_Gfx_47BEA equ LoadBossGraphics_Data4_Gfx_475AC+$63E
+LoadBossGraphics_Data4_Gfx_47BFA equ LoadBossGraphics_Data4_Gfx_475AC+$64E
+LoadBossGraphics_Data4_Gfx_47C06 equ LoadBossGraphics_Data4_Gfx_475AC+$65A
+LoadBossGraphics_Data4_Gfx_47C10 equ LoadBossGraphics_Data4_Gfx_475AC+$664
+LoadBossGraphics_Data4_Gfx_47C32 equ LoadBossGraphics_Data4_Gfx_475AC+$686
+LoadBossGraphics_Data4_Gfx_47C54 equ LoadBossGraphics_Data4_Gfx_475AC+$6A8
+LoadBossGraphics_Data4_Gfx_47C6C equ LoadBossGraphics_Data4_Gfx_475AC+$6C0
+LoadBossGraphics_Data4_Gfx_47C7A equ LoadBossGraphics_Data4_Gfx_475AC+$6CE
+LoadBossGraphics_Data4_Gfx_47C94 equ LoadBossGraphics_Data4_Gfx_475AC+$6E8
+LoadBossGraphics_Data4_Gfx_47CB0 equ LoadBossGraphics_Data4_Gfx_475AC+$704
+LoadBossGraphics_Data4_Gfx_47CCA equ LoadBossGraphics_Data4_Gfx_475AC+$71E
+LoadBossGraphics_Data4_Gfx_47CDC equ LoadBossGraphics_Data4_Gfx_475AC+$730
+LoadBossGraphics_Data4_Gfx_47CFA equ LoadBossGraphics_Data4_Gfx_475AC+$74E
+LoadBossGraphics_Data4_Gfx_47D1C equ LoadBossGraphics_Data4_Gfx_475AC+$770
+LoadBossGraphics_Data4_Gfx_47D30 equ LoadBossGraphics_Data4_Gfx_475AC+$784
+LoadBossGraphics_Data4_Gfx_47D40 equ LoadBossGraphics_Data4_Gfx_475AC+$794
+LoadBossGraphics_Data4_Gfx_47D62 equ LoadBossGraphics_Data4_Gfx_475AC+$7B6
+LoadBossGraphics_Data4_Gfx_47D7A equ LoadBossGraphics_Data4_Gfx_475AC+$7CE
+LoadBossGraphics_Data4_Gfx_47D88 equ LoadBossGraphics_Data4_Gfx_475AC+$7DC
+LoadBossGraphics_Data4_Gfx_47DA0 equ LoadBossGraphics_Data4_Gfx_475AC+$7F4
+LoadBossGraphics_Data4_Gfx_47DBE equ LoadBossGraphics_Data4_Gfx_475AC+$812
+LoadBossGraphics_Data4_Gfx_47DDA equ LoadBossGraphics_Data4_Gfx_475AC+$82E
+LoadBossGraphics_Data4_Gfx_47DE8 equ LoadBossGraphics_Data4_Gfx_475AC+$83C
+LoadBossGraphics_Data4_Gfx_47E02 equ LoadBossGraphics_Data4_Gfx_475AC+$856
+LoadBossGraphics_Data4_Gfx_47E24 equ LoadBossGraphics_Data4_Gfx_475AC+$878
+LoadBossGraphics_Data4_Gfx_47E3A equ LoadBossGraphics_Data4_Gfx_475AC+$88E
+LoadBossGraphics_Data4_Gfx_47E4A equ LoadBossGraphics_Data4_Gfx_475AC+$89E
+LoadBossGraphics_Data4_Gfx_47E52 equ LoadBossGraphics_Data4_Gfx_475AC+$8A6
+LoadBossGraphics_Data4_Gfx_47E5C equ LoadBossGraphics_Data4_Gfx_475AC+$8B0
+LoadBossGraphics_Data4_Gfx_47E7E equ LoadBossGraphics_Data4_Gfx_475AC+$8D2
+LoadBossGraphics_Data4_Gfx_47E96 equ LoadBossGraphics_Data4_Gfx_475AC+$8EA
+LoadBossGraphics_Data4_Gfx_47EA2 equ LoadBossGraphics_Data4_Gfx_475AC+$8F6
+LoadBossGraphics_Data4_Gfx_47EB0 equ LoadBossGraphics_Data4_Gfx_475AC+$904
+LoadBossGraphics_Data4_Gfx_47ED0 equ LoadBossGraphics_Data4_Gfx_475AC+$924
+LoadBossGraphics_Data4_Gfx_47EE8 equ LoadBossGraphics_Data4_Gfx_475AC+$93C
+LoadBossGraphics_Data4_Gfx_47F0A equ LoadBossGraphics_Data4_Gfx_475AC+$95E
+LoadBossGraphics_Data4_Gfx_47F16 equ LoadBossGraphics_Data4_Gfx_475AC+$96A
+LoadBossGraphics_Data4_Gfx_47F38 equ LoadBossGraphics_Data4_Gfx_475AC+$98C
+LoadBossGraphics_Data4_Gfx_47F54 equ LoadBossGraphics_Data4_Gfx_475AC+$9A8
+LoadBossGraphics_Data4_Gfx_47F66 equ LoadBossGraphics_Data4_Gfx_475AC+$9BA
+LoadBossGraphics_Data4_Gfx_47F6E equ LoadBossGraphics_Data4_Gfx_475AC+$9C2
+LoadBossGraphics_Data4_Gfx_47F86 equ LoadBossGraphics_Data4_Gfx_475AC+$9DA
+LoadBossGraphics_Data4_Gfx_47FA8 equ LoadBossGraphics_Data4_Gfx_475AC+$9FC
+LoadBossGraphics_Data4_Gfx_47FC4 equ LoadBossGraphics_Data4_Gfx_475AC+$A18
+LoadBossGraphics_Data4_Gfx_47FE6 equ LoadBossGraphics_Data4_Gfx_475AC+$A3A
+LoadBossGraphics_Data4_Gfx_47FFE equ LoadBossGraphics_Data4_Gfx_475AC+$A52
+LoadBossGraphics_Data4_Gfx_4801C equ LoadBossGraphics_Data4_Gfx_475AC+$A70
+LoadBossGraphics_Data4_Gfx_4803A equ LoadBossGraphics_Data4_Gfx_475AC+$A8E
+LoadBossGraphics_Data4_Gfx_48058 equ LoadBossGraphics_Data4_Gfx_475AC+$AAC
+LoadBossGraphics_Data4_Gfx_48070 equ LoadBossGraphics_Data4_Gfx_475AC+$AC4
+LoadBossGraphics_Data4_Gfx_4807C equ LoadBossGraphics_Data4_Gfx_475AC+$AD0
+LoadBossGraphics_Data4_Gfx_4809C equ LoadBossGraphics_Data4_Gfx_475AC+$AF0
+LoadBossGraphics_Data4_Gfx_480BA equ LoadBossGraphics_Data4_Gfx_475AC+$B0E
+LoadBossGraphics_Data4_Gfx_480CA equ LoadBossGraphics_Data4_Gfx_475AC+$B1E
+LoadBossGraphics_Data4_Gfx_480EC equ LoadBossGraphics_Data4_Gfx_475AC+$B40
+LoadBossGraphics_Data4_Gfx_4810E equ LoadBossGraphics_Data4_Gfx_475AC+$B62
+LoadBossGraphics_Data4_Gfx_48130 equ LoadBossGraphics_Data4_Gfx_475AC+$B84
+LoadBossGraphics_Data4_Gfx_4814C equ LoadBossGraphics_Data4_Gfx_475AC+$BA0
+LoadBossGraphics_Data4_Gfx_4815E equ LoadBossGraphics_Data4_Gfx_475AC+$BB2
+LoadBossGraphics_Data4_Gfx_4817C equ LoadBossGraphics_Data4_Gfx_475AC+$BD0
+LoadBossGraphics_Data4_Gfx_4819C equ LoadBossGraphics_Data4_Gfx_475AC+$BF0
+LoadBossGraphics_Data4_Gfx_481BE equ LoadBossGraphics_Data4_Gfx_475AC+$C12
+LoadBossGraphics_Data4_Gfx_481D8 equ LoadBossGraphics_Data4_Gfx_475AC+$C2C
+LoadBossGraphics_Data4_Gfx_481F8 equ LoadBossGraphics_Data4_Gfx_475AC+$C4C
+LoadBossGraphics_Data4_Gfx_4821A equ LoadBossGraphics_Data4_Gfx_475AC+$C6E
+LoadBossGraphics_Data4_Gfx_48234 equ LoadBossGraphics_Data4_Gfx_475AC+$C88
+LoadBossGraphics_Data4_Gfx_4824C equ LoadBossGraphics_Data4_Gfx_475AC+$CA0
+LoadBossGraphics_Data4_Gfx_4826A equ LoadBossGraphics_Data4_Gfx_475AC+$CBE
+LoadBossGraphics_Data4_Gfx_4828C equ LoadBossGraphics_Data4_Gfx_475AC+$CE0
+LoadBossGraphics_Data4_Gfx_482AC equ LoadBossGraphics_Data4_Gfx_475AC+$D00
+LoadBossGraphics_Data4_Gfx_482C4 equ LoadBossGraphics_Data4_Gfx_475AC+$D18
+LoadBossGraphics_Data4_Gfx_482D8 equ LoadBossGraphics_Data4_Gfx_475AC+$D2C
+LoadBossGraphics_Data4_Gfx_482E4 equ LoadBossGraphics_Data4_Gfx_475AC+$D38
+LoadBossGraphics_Data4_Gfx_482EE equ LoadBossGraphics_Data4_Gfx_475AC+$D42
+LoadBossGraphics_Data4_Gfx_4830A equ LoadBossGraphics_Data4_Gfx_475AC+$D5E
+LoadBossGraphics_Data4_Gfx_4832C equ LoadBossGraphics_Data4_Gfx_475AC+$D80
+LoadBossGraphics_Data4_Gfx_4834A equ LoadBossGraphics_Data4_Gfx_475AC+$D9E
+LoadBossGraphics_Data4_Gfx_48360 equ LoadBossGraphics_Data4_Gfx_475AC+$DB4
+LoadBossGraphics_Data4_Gfx_48382 equ LoadBossGraphics_Data4_Gfx_475AC+$DD6
+LoadBossGraphics_Data4_Gfx_483A2 equ LoadBossGraphics_Data4_Gfx_475AC+$DF6
+LoadBossGraphics_Data4_Gfx_483C0 equ LoadBossGraphics_Data4_Gfx_475AC+$E14
+LoadBossGraphics_Data4_Gfx_483DC equ LoadBossGraphics_Data4_Gfx_475AC+$E30
+LoadBossGraphics_Data4_Gfx_483FA equ LoadBossGraphics_Data4_Gfx_475AC+$E4E
+LoadBossGraphics_Data4_Gfx_48418 equ LoadBossGraphics_Data4_Gfx_475AC+$E6C
+LoadBossGraphics_Data4_Gfx_48432 equ LoadBossGraphics_Data4_Gfx_475AC+$E86
+LoadBossGraphics_Data4_Gfx_48448 equ LoadBossGraphics_Data4_Gfx_475AC+$E9C
+LoadBossGraphics_Data4_Gfx_48452 equ LoadBossGraphics_Data4_Gfx_475AC+$EA6
+LoadBossGraphics_Data4_Gfx_48466 equ LoadBossGraphics_Data4_Gfx_475AC+$EBA
+LoadBossGraphics_Data4_Gfx_48480 equ LoadBossGraphics_Data4_Gfx_475AC+$ED4
+LoadBossGraphics_Data4_Gfx_484A2 equ LoadBossGraphics_Data4_Gfx_475AC+$EF6
+LoadBossGraphics_Data4_Gfx_484C2 equ LoadBossGraphics_Data4_Gfx_475AC+$F16
+LoadBossGraphics_Data4_Gfx_484E4 equ LoadBossGraphics_Data4_Gfx_475AC+$F38
+LoadBossGraphics_Data4_Gfx_48504 equ LoadBossGraphics_Data4_Gfx_475AC+$F58
+LoadBossGraphics_Data4_Gfx_4851E equ LoadBossGraphics_Data4_Gfx_475AC+$F72
+LoadBossGraphics_Data4_Gfx_4853A equ LoadBossGraphics_Data4_Gfx_475AC+$F8E
+LoadBossGraphics_Data4_Gfx_48554 equ LoadBossGraphics_Data4_Gfx_475AC+$FA8
+LoadBossGraphics_Data4_Gfx_48572 equ LoadBossGraphics_Data4_Gfx_475AC+$FC6
+LoadBossGraphics_Data4_Gfx_4857A equ LoadBossGraphics_Data4_Gfx_475AC+$FCE
+LoadBossGraphics_Data4_Gfx_48582 equ LoadBossGraphics_Data4_Gfx_475AC+$FD6
+LoadBossGraphics_Data4_Gfx_48594 equ LoadBossGraphics_Data4_Gfx_475AC+$FE8
+LoadBossGraphics_Data4_Gfx_485B2 equ LoadBossGraphics_Data4_Gfx_475AC+$1006
+LoadBossGraphics_Data4_Gfx_485D2 equ LoadBossGraphics_Data4_Gfx_475AC+$1026
+LoadBossGraphics_Data4_Gfx_485E2 equ LoadBossGraphics_Data4_Gfx_475AC+$1036
+LoadBossGraphics_Data4_Gfx_48602 equ LoadBossGraphics_Data4_Gfx_475AC+$1056
+LoadBossGraphics_Data4_Gfx_48622 equ LoadBossGraphics_Data4_Gfx_475AC+$1076
+LoadBossGraphics_Data4_Gfx_4863A equ LoadBossGraphics_Data4_Gfx_475AC+$108E
+LoadBossGraphics_Data4_Gfx_48646 equ LoadBossGraphics_Data4_Gfx_475AC+$109A
+LoadBossGraphics_Data4_Gfx_4865E equ LoadBossGraphics_Data4_Gfx_475AC+$10B2
+LoadBossGraphics_Data4_Gfx_48676 equ LoadBossGraphics_Data4_Gfx_475AC+$10CA
+LoadBossGraphics_Data4_Gfx_48698 equ LoadBossGraphics_Data4_Gfx_475AC+$10EC
+LoadBossGraphics_Data4_Gfx_486BA equ LoadBossGraphics_Data4_Gfx_475AC+$110E
+LoadBossGraphics_Data4_Gfx_486DC equ LoadBossGraphics_Data4_Gfx_475AC+$1130
+LoadBossGraphics_Data4_Gfx_486F6 equ LoadBossGraphics_Data4_Gfx_475AC+$114A
+LoadBossGraphics_Data4_Gfx_4870E equ LoadBossGraphics_Data4_Gfx_475AC+$1162
+LoadBossGraphics_Data4_Gfx_48726 equ LoadBossGraphics_Data4_Gfx_475AC+$117A
+LoadBossGraphics_Data4_Gfx_48742 equ LoadBossGraphics_Data4_Gfx_475AC+$1196
+LoadBossGraphics_Data4_Gfx_4875E equ LoadBossGraphics_Data4_Gfx_475AC+$11B2
+LoadBossGraphics_Data4_Gfx_48766 equ LoadBossGraphics_Data4_Gfx_475AC+$11BA
+LoadBossGraphics_Data4_Gfx_4877A equ LoadBossGraphics_Data4_Gfx_475AC+$11CE
+LoadBossGraphics_Data4_Gfx_4878E equ LoadBossGraphics_Data4_Gfx_475AC+$11E2
+LoadBossGraphics_Data4_Gfx_487AE equ LoadBossGraphics_Data4_Gfx_475AC+$1202
+LoadBossGraphics_Data4_Gfx_487CE equ LoadBossGraphics_Data4_Gfx_475AC+$1222
+LoadBossGraphics_Data4_Gfx_487F0 equ LoadBossGraphics_Data4_Gfx_475AC+$1244
+LoadBossGraphics_Data4_Gfx_48808 equ LoadBossGraphics_Data4_Gfx_475AC+$125C
+LoadBossGraphics_Data4_Gfx_48820 equ LoadBossGraphics_Data4_Gfx_475AC+$1274
+LoadBossGraphics_Data4_Gfx_4883A equ LoadBossGraphics_Data4_Gfx_475AC+$128E
+LoadBossGraphics_Data4_Gfx_48856 equ LoadBossGraphics_Data4_Gfx_475AC+$12AA
 LoadBossGraphics_Data4:
 	dc.l	LoadBossGraphics_Data4_Gfx_475AC
 	dc.l	LoadBossGraphics_Data4_Gfx_475B2
@@ -53219,53 +52297,26 @@ LoadBossGraphics_Data4:
 LoadBossGraphics_Data5:
 	dc.b	$00, $04, $08, $0C, $01, $05, $09, $0D, $02, $06, $0A, $0E, $03, $07, $0B, $0F, $00, $04, $08, $0C, $10, $12, $09, $0D, $11, $13, $0A, $0E, $03, $07, $0B, $0F 
 LoadBossGraphics_Data6_Gfx_48B6E:
-	dc.b	$01, $00, $FF, $FF, $FF, $FF 
-LoadBossGraphics_Data6_Gfx_48B74:
-	dc.b	$01, $00, $FC, $88, $80, $00, $44, $44, $04, $44, $44, $44, $44, $66, $46, $56, $33, $04, $65, $53, $66, $04, $65, $46, $CC, $05, $54, $6C, $CC, $00 
-LoadBossGraphics_Data6_Gfx_48B92:
-	dc.b	$01, $00, $F7, $33, $33, $32, $40, $44, $40, $66, $64, $36, $64, $63, $04, $C6, $50, $CC, $50, $43 
-LoadBossGraphics_Data6_Gfx_48BA6:
-	dc.b	$01, $00, $FF, $FF, $FF, $F7, $30, $00 
-LoadBossGraphics_Data6_Gfx_48BAE:
-	dc.b	$01, $00, $FF, $88, $00, $00, $04, $43, $44, $43, $22, $34, $04, $31, $12, $35, $05, $32, $12, $33, $04, $43, $33, $33, $03, $34, $33, $34 
-LoadBossGraphics_Data6_Gfx_48BCA:
-	dc.b	$00, $05, $44, $6C, $DE, $00, $65, $6D, $EE, $66, $65, $6D, $DE, $65, $36, $56, $DD, $56, $43, $65, $54, $56, $54, $36, $66, $56, $54, $44, $55, $56, $55, $44 
-	dc.b	$44, $00 
-LoadBossGraphics_Data6_Gfx_48BEC:
-	dc.b	$00, $DD, $50, $04, $44, $ED, $60, $06, $66, $ED, $54, $44, $46, $E5, $64, $23, $34, $46, $65, $12, $33, $66, $44, $42, $33, $54, $33, $43, $33, $43, $33, $45 
-	dc.b	$44, $00 
-LoadBossGraphics_Data6_Gfx_48C0E:
-	dc.b	$01, $00, $33, $11, $11, $11, $43, $20, $64, $32, $66, $43, $20, $66, $64, $20, $46, $64, $32, $36, $66, $42, $34, $66, $43, $34, $66, $43 
-LoadBossGraphics_Data6_Gfx_48C2A:
-	dc.b	$01, $66, $00, $37, $66, $70, $00, $53, $44, $45, $00, $05, $33, $54, $00, $06, $00, $00, $65, $04, $60, $34, $45, $65, $55, $56 
-LoadBossGraphics_Data6_Gfx_48C44:
-	dc.b	$01, $66, $08, $08, $08, $96, $56, $55, $44, $43, $54, $43, $33, $65, $54, $44, $33, $65, $44, $44, $65, $56, $65, $55, $65, $54, $44, $44, $56, $55, $55, $00 
-LoadBossGraphics_Data6_Gfx_48C64:
-	dc.b	$00, $32, $23, $45, $66, $32, $23, $45, $66, $43, $34, $45, $66, $55, $44, $56, $66, $45, $55, $56, $68, $44, $44, $56, $89, $55, $44, $58, $9A, $55, $55, $89 
-	dc.b	$AA, $00 
-LoadBossGraphics_Data6_Gfx_48C86:
-	dc.b	$00, $46, $66, $49, $99, $66, $69, $9A, $A9, $66, $9A, $AA, $90, $69, $AA, $A9, $20, $9A, $AA, $93, $20, $AA, $A9, $63, $30, $A9, $96, $63, $00, $99, $06, $63 
-	dc.b	$00, $00 
-LoadBossGraphics_Data6_Gfx_48CA8:
-	dc.b	$01, $00, $08, $88, $88, $8C, $05, $55, $44, $55, $54, $33, $45, $54, $32, $46, $54, $31, $34, $54, $31, $13, $05, $43, $13, $06, $44, $36, $65, $52 
-LoadBossGraphics_Data6_Gfx_48CC6:
-	dc.b	$00, $66, $65, $55, $44, $65, $65, $55, $55, $66, $56, $55, $58, $66, $66, $54, $89, $64, $45, $48, $99, $53, $45, $78, $88, $66, $34, $77, $87, $36, $33, $47 
-	dc.b	$74, $00 
-LoadBossGraphics_Data6_Gfx_48CE8:
-	dc.b	$00, $55, $99, $9A, $99, $49, $9A, $98, $84, $9A, $A9, $84, $46, $AA, $98, $46, $66, $98, $84, $56, $66, $83, $45, $56, $60, $45, $55, $56, $66, $55, $55, $56 
-	dc.b	$66, $00 
-LoadBossGraphics_Data6_Gfx_48D0A:
-	dc.b	$01, $00, $13, $11, $11, $8C, $46, $60, $63, $66, $55, $66, $54, $50, $54, $43, $30, $65, $44, $24, $06, $55, $42, $66, $66, $50, $64, $40 
-LoadBossGraphics_Data6_Gfx_48D26:
-	dc.b	$01, $00, $EC, $88, $80, $00, $21, $43, $52, $04, $35, $35, $43, $33, $22, $43, $33, $33, $04, $33, $34, $43, $04, $34, $45, $55, $05, $55, $66, $65 
-LoadBossGraphics_Data6_Gfx_48D44:
-	dc.b	$01, $00, $F7, $73, $33, $32, $10, $15, $21, $20, $22, $20, $33, $30, $55, $33, $55, $53, $43, $00 
-LoadBossGraphics_Data6_Gfx_48D58:
-	dc.b	$00, $05, $55, $65, $CC, $00, $65, $6D, $DE, $66, $65, $6D, $EE, $65, $36, $56, $DE, $56, $43, $65, $54, $56, $54, $36, $66, $56, $54, $44, $55, $56, $55, $44 
-	dc.b	$44, $00 
-LoadBossGraphics_Data6_Gfx_48D7A:
-	dc.b	$00, $CD, $50, $04, $44, $DD, $60, $06, $66, $ED, $54, $44, $46, $D5, $64, $23, $34, $46, $65, $12, $33, $66, $44, $42, $33, $54, $33, $43, $33, $43, $33, $45 
-	dc.b	$44, $00 
+	incbin "data/art/tiles/boss/data6_gfx.bin"
+LoadBossGraphics_Data6_Gfx_48B74 equ LoadBossGraphics_Data6_Gfx_48B6E+$6
+LoadBossGraphics_Data6_Gfx_48B92 equ LoadBossGraphics_Data6_Gfx_48B6E+$24
+LoadBossGraphics_Data6_Gfx_48BA6 equ LoadBossGraphics_Data6_Gfx_48B6E+$38
+LoadBossGraphics_Data6_Gfx_48BAE equ LoadBossGraphics_Data6_Gfx_48B6E+$40
+LoadBossGraphics_Data6_Gfx_48BCA equ LoadBossGraphics_Data6_Gfx_48B6E+$5C
+LoadBossGraphics_Data6_Gfx_48BEC equ LoadBossGraphics_Data6_Gfx_48B6E+$7E
+LoadBossGraphics_Data6_Gfx_48C0E equ LoadBossGraphics_Data6_Gfx_48B6E+$A0
+LoadBossGraphics_Data6_Gfx_48C2A equ LoadBossGraphics_Data6_Gfx_48B6E+$BC
+LoadBossGraphics_Data6_Gfx_48C44 equ LoadBossGraphics_Data6_Gfx_48B6E+$D6
+LoadBossGraphics_Data6_Gfx_48C64 equ LoadBossGraphics_Data6_Gfx_48B6E+$F6
+LoadBossGraphics_Data6_Gfx_48C86 equ LoadBossGraphics_Data6_Gfx_48B6E+$118
+LoadBossGraphics_Data6_Gfx_48CA8 equ LoadBossGraphics_Data6_Gfx_48B6E+$13A
+LoadBossGraphics_Data6_Gfx_48CC6 equ LoadBossGraphics_Data6_Gfx_48B6E+$158
+LoadBossGraphics_Data6_Gfx_48CE8 equ LoadBossGraphics_Data6_Gfx_48B6E+$17A
+LoadBossGraphics_Data6_Gfx_48D0A equ LoadBossGraphics_Data6_Gfx_48B6E+$19C
+LoadBossGraphics_Data6_Gfx_48D26 equ LoadBossGraphics_Data6_Gfx_48B6E+$1B8
+LoadBossGraphics_Data6_Gfx_48D44 equ LoadBossGraphics_Data6_Gfx_48B6E+$1D6
+LoadBossGraphics_Data6_Gfx_48D58 equ LoadBossGraphics_Data6_Gfx_48B6E+$1EA
+LoadBossGraphics_Data6_Gfx_48D7A equ LoadBossGraphics_Data6_Gfx_48B6E+$20C
 LoadBossGraphics_Data6:
 	dc.l	LoadBossGraphics_Data6_Gfx_48B6E
 	dc.l	LoadBossGraphics_Data6_Gfx_48B74
@@ -53290,31 +52341,19 @@ LoadBossGraphics_Data6:
 LoadBossGraphics_Data7:
 	dc.b	$00, $00, $00, $01, $02, $03, $00, $00, $04, $06, $05, $00, $00, $07, $00, $08, $09, $00, $0A, $00, $00, $0B, $00, $0C, $00, $00, $00, $00 
 LoadBossGraphics_Data8_Gfx_48E08:
-	dc.b	$01, $00, $FF, $FF, $FF, $FF 
-LoadBossGraphics_Data8_Gfx_48E0E:
-	dc.b	$01, $00, $FF, $EE, $CC, $CF, $09, $9A, $09, $AA, $09, $A9, $09, $90 
-LoadBossGraphics_Data8_Gfx_48E1C:
-	dc.b	$01, $00, $F7, $77, $73, $33, $90, $90, $A9, $A9, $AA, $90, $9A, $90, $9A, $A9 
-LoadBossGraphics_Data8_Gfx_48E2C:
-	dc.b	$01, $00, $33, $FF, $FF, $FF, $99, $A9, $09, $99 
-LoadBossGraphics_Data8_Gfx_48E36:
-	dc.b	$01, $00, $FF, $FF, $EE, $CC, $09, $9A, $08, $9A, $89, $A9 
-LoadBossGraphics_Data8_Gfx_48E42:
-	dc.b	$01, $00, $99, $11, $33, $77, $09, $AA, $9A, $AA, $09, $AA, $A9, $9A, $AA, $90, $AA, $A9, $A9, $90, $99, $80 
-LoadBossGraphics_Data8_Gfx_48E58:
-	dc.b	$01, $00, $88, $11, $33, $77, $08, $9A, $98, $89, $A9, $80, $07, $8A, $98, $78, $99, $80, $77, $88, $77, $70, $77, $70 
-LoadBossGraphics_Data8_Gfx_48E70:
-	dc.b	$01, $00, $FF, $FF, $F0, $08, $9A, $A9, $98, $80, $99, $AA, $AA, $99, $99, $9A, $AA, $00 
-LoadBossGraphics_Data8_Gfx_48E82:
-	dc.b	$01, $00, $FF, $FF, $FF, $30, $88, $80, $A9, $99, $88, $90 
-LoadBossGraphics_Data8_Gfx_48E8E:
-	dc.b	$01, $00, $FF, $FC, $80, $13, $09, $99, $99, $9A, $AA, $99, $AA, $AA, $99, $AA, $A9, $99, $98, $80 
-LoadBossGraphics_Data8_Gfx_48EA2:
-	dc.b	$01, $00, $FF, $33, $37, $FF, $99, $99, $AA, $A9, $A9, $90, $90, $00 
-LoadBossGraphics_Data8_Gfx_48EB0:
-	dc.b	$02, $00, $FF, $FF, $00, $0F, $99, $00, $00, $F0, $F0, $AA, $AA, $AA, $AA, $00 
-LoadBossGraphics_Data8_Gfx_48EC0:
-	dc.b	$01, $00, $FF, $FF, $77, $7F, $90, $99, $90, $00 
+	incbin "data/art/tiles/boss/data8_gfx.bin"
+LoadBossGraphics_Data8_Gfx_48E0E equ LoadBossGraphics_Data8_Gfx_48E08+$6
+LoadBossGraphics_Data8_Gfx_48E1C equ LoadBossGraphics_Data8_Gfx_48E08+$14
+LoadBossGraphics_Data8_Gfx_48E2C equ LoadBossGraphics_Data8_Gfx_48E08+$24
+LoadBossGraphics_Data8_Gfx_48E36 equ LoadBossGraphics_Data8_Gfx_48E08+$2E
+LoadBossGraphics_Data8_Gfx_48E42 equ LoadBossGraphics_Data8_Gfx_48E08+$3A
+LoadBossGraphics_Data8_Gfx_48E58 equ LoadBossGraphics_Data8_Gfx_48E08+$50
+LoadBossGraphics_Data8_Gfx_48E70 equ LoadBossGraphics_Data8_Gfx_48E08+$68
+LoadBossGraphics_Data8_Gfx_48E82 equ LoadBossGraphics_Data8_Gfx_48E08+$7A
+LoadBossGraphics_Data8_Gfx_48E8E equ LoadBossGraphics_Data8_Gfx_48E08+$86
+LoadBossGraphics_Data8_Gfx_48EA2 equ LoadBossGraphics_Data8_Gfx_48E08+$9A
+LoadBossGraphics_Data8_Gfx_48EB0 equ LoadBossGraphics_Data8_Gfx_48E08+$A8
+LoadBossGraphics_Data8_Gfx_48EC0 equ LoadBossGraphics_Data8_Gfx_48E08+$B8
 LoadBossGraphics_Data8:
 	dc.l	LoadBossGraphics_Data8_Gfx_48E08
 	dc.l	LoadBossGraphics_Data8_Gfx_48E0E
@@ -54204,7 +53243,7 @@ SpriteFramePointerTable_4A8B8:
 	dc.l	SpriteFramePointerTable_4A8B8_Frame_4A89C
 	dc.l	SpriteFramePointerTable_4A8B8_Frame_4A8AA
 MagicGfxData_WyclifParma_Gfx_4A8F4:
-	dc.b	$00, $02, $03, $01, $02, $04, $05, $02, $07, $06, $02, $08, $09, $02, $0B, $0A, $02, $0C, $0D, $02, $0F, $0E, $02, $10, $11, $02, $13, $12, $02, $14 
+	incbin "data/art/tiles/boss/magic_wyclifparma_gfx.bin"
 SpriteFramePointerTable_4A8B8_Frame_4A912:
 	dc.b	$01, $00, $9C, $EF, $FF, $C8, $22, $22, $33, $22, $03, $02, $21, $01, $11, $10 
 SpriteFramePointerTable_4A8B8_Frame_4A922:
@@ -54502,134 +53541,65 @@ FPEnemyTileLayout_A:
 	dc.b	$00, $18, $1B, $1E, $00, $1F, $22, $25, $15, $20, $23, $26, $00, $21, $24, $27, $00, $29, $2C, $2F, $28, $2A, $2D, $30, $00, $2B, $2E, $31, $00, $32, $35, $38 
 	dc.b	$28, $33, $36, $39, $00, $34, $37, $3A 
 FPEnemyTileLayout_B_Gfx_4B34A:
-	dc.b	$01, $00, $FF, $FF, $FF, $FF 
-FPEnemyTileLayout_B_Gfx_4B350:
-	dc.b	$01, $00, $FF, $F9, $00, $00, $32, $22, $03, $12, $12, $20, $01, $21, $21, $12, $22, $23, $21, $12, $44, $33, $31, $12 
-FPEnemyTileLayout_B_Gfx_4B368:
-	dc.b	$01, $00, $FF, $FF, $FF, $F7, $20, $00 
-FPEnemyTileLayout_B_Gfx_4B370:
-	dc.b	$01, $00, $FE, $FE, $FF, $C8, $08, $04, $88, $77, $08, $86, $76, $00 
-FPEnemyTileLayout_B_Gfx_4B37E:
-	dc.b	$00, $75, $64, $32, $22, $87, $63, $33, $22, $37, $63, $43, $44, $63, $34, $49, $99, $86, $32, $9A, $AA, $23, $29, $AB, $AA, $33, $99, $AA, $BB, $6A, $A9, $AB 
-	dc.b	$BA, $00 
-FPEnemyTileLayout_B_Gfx_4B3A0:
-	dc.b	$01, $00, $77, $77, $73, $33, $30, $33, $43, $94, $99, $A9, $90, $A9, $90, $A9, $90, $00 
-FPEnemyTileLayout_B_Gfx_4B3B2:
-	dc.b	$01, $00, $88, $89, $99, $DD, $08, $64, $67, $06, $44, $45, $04, $33, $40, $04, $33, $03, $23, $03, $24, $24, $24, $00 
-FPEnemyTileLayout_B_Gfx_4B3CA:
-	dc.b	$00, $AB, $BA, $AB, $BB, $9A, $BB, $BB, $BA, $9A, $AB, $BB, $AA, $99, $AA, $AA, $A9, $59, $99, $99, $9A, $59, $99, $99, $9A, $59, $99, $9A, $AA, $59, $9A, $AA 
-	dc.b	$BB, $00 
-FPEnemyTileLayout_B_Gfx_4B3EC:
-	dc.b	$02, $A9, $88, $08, $88, $88, $00, $33, $13, $33, $33, $98, $97, $99, $97, $80, $96, $90, $90, $90, $90, $00 
-FPEnemyTileLayout_B_Gfx_4B402:
-	dc.b	$01, $00, $DD, $CC, $CC, $DD, $34, $34, $34, $09, $35, $99, $35, $59, $35, $05, $45, $50 
-FPEnemyTileLayout_B_Gfx_4B414:
-	dc.b	$01, $99, $88, $82, $09, $50, $AA, $AB, $BB, $AA, $AA, $BB, $AB, $9A, $AB, $9A, $BA, $AA, $AA, $AB, $A9, $9A, $AA, $A9, $55, $A9, $00, $05, $55, $55 
-FPEnemyTileLayout_B_Gfx_4B432:
-	dc.b	$01, $00, $33, $11, $11, $37, $A9, $90, $BA, $99, $AA, $99, $50, $A9, $A9, $55, $AA, $95, $55, $95, $55, $50, $55, $50, $50, $00 
-FPEnemyTileLayout_B_Gfx_4B44C:
-	dc.b	$01, $00, $FE, $FE, $F8, $88, $08, $04, $08, $87, $77, $86, $46, $76, $64, $44, $76, $00 
-FPEnemyTileLayout_B_Gfx_4B45E:
-	dc.b	$00, $75, $64, $32, $22, $87, $63, $33, $22, $37, $63, $43, $44, $63, $34, $49, $99, $86, $32, $9A, $A9, $23, $29, $AB, $AA, $53, $59, $AB, $BA, $65, $99, $AB 
-	dc.b	$BA, $00 
-FPEnemyTileLayout_B_Gfx_4B480:
-	dc.b	$01, $00, $77, $77, $77, $33, $30, $33, $43, $43, $94, $99, $99, $90, $99, $90 
-FPEnemyTileLayout_B_Gfx_4B490:
-	dc.b	$01, $00, $88, $99, $99, $99, $43, $34, $56, $42, $34, $05, $32, $30, $32, $40, $02, $40, $02, $40, $03, $40, $03, $40 
-FPEnemyTileLayout_B_Gfx_4B4A8:
-	dc.b	$02, $AA, $01, $60, $01, $26, $99, $00, $89, $76, $00, $59, $BA, $BB, $BA, $9A, $AB, $BB, $A9, $9A, $A9, $59, $59, $59, $9A, $BB, $59, $BB 
-FPEnemyTileLayout_B_Gfx_4B4C4:
-	dc.b	$01, $00, $33, $13, $33, $33, $99, $98, $99, $97, $99, $97, $80, $99, $96, $A9, $90, $A9, $90, $A9, $90, $A9, $95, $00 
-FPEnemyTileLayout_B_Gfx_4B4DC:
-	dc.b	$01, $00, $99, $88, $8A, $FF, $03, $40, $03, $50, $03, $50, $09, $03, $55, $99, $04, $55, $9A, $05, $55, $00 
-FPEnemyTileLayout_B_Gfx_4B4F2:
-	dc.b	$02, $99, $88, $01, $1D, $30, $AA, $60, $28, $C2, $00, $AB, $AB, $BA, $AB, $9A, $BB, $9A, $AB, $A9, $BA, $55, $59, $00, $00, $55, $55, $00 
-FPEnemyTileLayout_B_Gfx_4B50E:
-	dc.b	$01, $00, $10, $00, $13, $37, $B9, $95, $55, $BA, $95, $55, $50, $BB, $A9, $55, $50, $AA, $A9, $55, $50, $AA, $95, $55, $99, $95, $55, $50, $50, $00 
-FPEnemyTileLayout_B_Gfx_4B52C:
-	dc.b	$01, $00, $FF, $F9, $10, $00, $32, $30, $03, $22, $12, $02, $12, $11, $20, $21, $13, $11, $20, $13, $46, $43, $14, $00 
-FPEnemyTileLayout_B_Gfx_4B544:
-	dc.b	$01, $00, $EE, $EC, $CC, $88, $03, $43, $43, $09, $94, $9A, $AA, $AB, $BA, $09, $BA, $AB, $09, $AA, $9A, $00 
-FPEnemyTileLayout_B_Gfx_4B55A:
-	dc.b	$00, $36, $58, $56, $33, $47, $81, $87, $33, $47, $17, $17, $43, $42, $76, $71, $44, $93, $43, $43, $99, $A4, $21, $24, $99, $A9, $42, $49, $99, $A6, $88, $76 
-	dc.b	$AA, $00 
-FPEnemyTileLayout_B_Gfx_4B57C:
-	dc.b	$01, $00, $F7, $77, $33, $33, $90, $A9, $BA, $AB, $A0, $AA, $AA, $9A, $BA, $BB, $A9, $00 
-FPEnemyTileLayout_B_Gfx_4B58E:
-	dc.b	$01, $00, $88, $CE, $EE, $CC, $09, $99, $9A, $09, $99, $9A, $99, $9A, $9A, $AA, $AA, $0A, $BA, $0A, $BA, $00 
-FPEnemyTileLayout_B_Gfx_4B5A4:
-	dc.b	$00, $A8, $87, $79, $9A, $97, $77, $99, $99, $29, $99, $94, $99, $33, $44, $34, $9A, $94, $42, $34, $9A, $94, $33, $49, $AA, $93, $34, $9A, $BB, $A3, $49, $AB 
-	dc.b	$BB, $00 
-FPEnemyTileLayout_B_Gfx_4B5C6:
-	dc.b	$01, $00, $33, $77, $77, $73, $AA, $99, $A9, $90, $99, $90, $90, $90, $99, $A9, $90, $00 
-FPEnemyTileLayout_B_Gfx_4B5D8:
-	dc.b	$01, $00, $C8, $88, $CE, $FF, $AB, $BA, $05, $AB, $BA, $05, $5A, $AB, $05, $59, $AA, $55, $9A, $55 
-FPEnemyTileLayout_B_Gfx_4B5EC:
-	dc.b	$00, $92, $4A, $AA, $AB, $92, $4A, $A9, $AA, $92, $4A, $99, $9A, $A3, $4A, $99, $9A, $A3, $49, $99, $95, $53, $45, $55, $55, $03, $45, $00, $00, $05, $50, $00 
-	dc.b	$00, $00 
-FPEnemyTileLayout_B_Gfx_4B60E:
-	dc.b	$01, $00, $33, $33, $7F, $FF, $B9, $90, $BA, $95, $AA, $95, $A9, $50, $55, $00 
-FPEnemyTileLayout_B_Gfx_4B61E:
-	dc.b	$01, $00, $EE, $EC, $CC, $88, $03, $43, $43, $09, $94, $9A, $B9, $AB, $AA, $09, $BA, $AA, $09, $BA, $AA, $00 
-FPEnemyTileLayout_B_Gfx_4B634:
-	dc.b	$00, $36, $58, $56, $33, $47, $81, $87, $33, $47, $17, $17, $43, $42, $76, $71, $44, $93, $43, $43, $99, $96, $88, $76, $99, $98, $77, $79, $9A, $57, $77, $69 
-	dc.b	$9A, $00 
-FPEnemyTileLayout_B_Gfx_4B656:
-	dc.b	$01, $00, $F7, $73, $33, $33, $90, $99, $BA, $90, $9B, $A0, $AA, $B9, $BB, $A9, $BA, $99 
-FPEnemyTileLayout_B_Gfx_4B668:
-	dc.b	$01, $00, $88, $CE, $EE, $EC, $09, $AA, $9A, $09, $99, $9A, $99, $99, $9A, $9A, $9A, $AB, $09, $AB 
-FPEnemyTileLayout_B_Gfx_4B67C:
-	dc.b	$00, $29, $99, $54, $99, $33, $45, $34, $99, $94, $42, $34, $99, $94, $33, $49, $99, $93, $34, $99, $A9, $A3, $49, $9A, $A9, $A2, $49, $AA, $B9, $A2, $49, $AA 
-	dc.b	$BA, $00 
-FPEnemyTileLayout_B_Gfx_4B69E:
-	dc.b	$01, $00, $37, $77, $77, $73, $99, $90, $99, $90, $90, $90, $90, $AA, $9A, $A0 
-FPEnemyTileLayout_B_Gfx_4B6AE:
-	dc.b	$01, $00, $CC, $CC, $EF, $FF, $9A, $BB, $9A, $BB, $99, $AA, $59, $99, $59, $00 
-FPEnemyTileLayout_B_Gfx_4B6BE:
-	dc.b	$00, $A2, $49, $AB, $BA, $A2, $49, $AA, $BB, $B2, $49, $99, $AB, $93, $49, $99, $9A, $93, $49, $99, $99, $55, $55, $95, $55, $00, $05, $55, $50, $00, $00, $00 
-	dc.b	$00, $00 
-FPEnemyTileLayout_B_Gfx_4B6E0:
-	dc.b	$01, $00, $33, $33, $77, $FF, $A9, $A9, $99, $95, $A9, $50, $A9, $50, $95, $50 
-FPEnemyTileLayout_B_Gfx_4B6F0:
-	dc.b	$01, $00, $FF, $F9, $10, $00, $33, $30, $03, $22, $12, $02, $12, $11, $20, $21, $11, $11, $20, $12, $21, $12, $14, $00 
-FPEnemyTileLayout_B_Gfx_4B708:
-	dc.b	$01, $00, $EE, $EC, $CC, $88, $03, $43, $44, $09, $94, $9A, $BB, $AB, $AA, $09, $BA, $AA, $09, $AA, $9A, $00 
-FPEnemyTileLayout_B_Gfx_4B71E:
-	dc.b	$00, $32, $21, $22, $33, $33, $22, $32, $33, $33, $23, $32, $43, $43, $33, $33, $34, $43, $43, $34, $49, $A4, $A4, $4A, $99, $AA, $99, $99, $99, $AA, $67, $69 
-	dc.b	$99, $00 
-FPEnemyTileLayout_B_Gfx_4B740:
-	dc.b	$01, $00, $F7, $73, $33, $33, $90, $99, $BA, $90, $AB, $A0, $9A, $A9, $99, $B9, $AB, $B9 
-FPEnemyTileLayout_B_Gfx_4B752:
-	dc.b	$02, $00, $88, $CE, $EE, $EE, $9A, $11, $11, $11, $10, $09, $99, $09, $99, $99, $AB, $00 
-FPEnemyTileLayout_B_Gfx_4B764:
-	dc.b	$01, $99, $01, $9F, $75, $00, $96, $88, $79, $9A, $97, $78, $79, $77, $69, $A9, $AA, $A9, $BA, $9A, $A9, $A9, $BA, $AB, $AA, $9A 
-FPEnemyTileLayout_B_Gfx_4B77E:
-	dc.b	$01, $00, $33, $77, $77, $73, $AA, $A9, $A9, $90, $99, $90, $90, $90, $A9, $A9, $50, $00 
-FPEnemyTileLayout_B_Gfx_4B790:
-	dc.b	$01, $00, $CC, $CC, $CE, $FF, $09, $AB, $9A, $BB, $9A, $AA, $59, $9A, $05, $99, $05, $00 
-FPEnemyTileLayout_B_Gfx_4B7A2:
-	dc.b	$01, $00, $00, $00, $00, $FF, $BA, $AB, $BA, $99, $A9, $AB, $BA, $99, $99, $AB, $BA, $A9, $99, $BB, $AA, $99, $99, $BA, $A9, $95, $55, $55, $55, $55 
-FPEnemyTileLayout_B_Gfx_4B7C0:
-	dc.b	$01, $00, $33, $33, $7F, $FF, $AA, $95, $99, $55, $99, $55, $95, $50, $55, $00 
-FPEnemyTileLayout_B_Gfx_4B7D0:
-	dc.b	$01, $00, $EE, $EC, $CC, $88, $03, $43, $44, $09, $B4, $9B, $BA, $BA, $AA, $0A, $AA, $AA, $09, $A9, $9A, $00 
-FPEnemyTileLayout_B_Gfx_4B7E6:
-	dc.b	$00, $32, $21, $22, $33, $33, $22, $32, $33, $33, $23, $32, $43, $43, $33, $33, $34, $43, $43, $34, $49, $A4, $94, $4A, $99, $AA, $A9, $A9, $99, $A9, $67, $69 
-	dc.b	$99, $00 
-FPEnemyTileLayout_B_Gfx_4B808:
-	dc.b	$01, $00, $FF, $77, $33, $33, $90, $AA, $BA, $A0, $AB, $A9, $9A, $B9, $AB, $B9 
-FPEnemyTileLayout_B_Gfx_4B818:
-	dc.b	$01, $00, $8C, $EE, $EE, $EC, $09, $99, $9A, $99, $9A, $9A, $9A, $9A, $9B, $AB, $05, $BB 
-FPEnemyTileLayout_B_Gfx_4B82A:
-	dc.b	$01, $99, $01, $17, $75, $00, $A6, $88, $79, $9A, $97, $78, $69, $A9, $77, $69, $A9, $A9, $AA, $A9, $AA, $9A, $A9, $A9, $9A, $AB, $AA, $AA 
-FPEnemyTileLayout_B_Gfx_4B846:
-	dc.b	$01, $00, $33, $77, $77, $73, $AA, $A9, $A9, $90, $99, $90, $90, $90, $99, $99, $50, $00 
-FPEnemyTileLayout_B_Gfx_4B858:
-	dc.b	$01, $00, $CC, $CC, $EF, $FF, $5A, $BA, $5A, $A9, $59, $9A, $05, $99, $55, $00 
-FPEnemyTileLayout_B_Gfx_4B868:
-	dc.b	$02, $AA, $A2, $3E, $00, $00, $00, $00, $00, $00, $FF, $BB, $9A, $AB, $BB, $99, $BB, $BA, $A9, $59, $9A, $A9, $99, $05, $55, $55, $55, $00 
-FPEnemyTileLayout_B_Gfx_4B884:
-	dc.b	$01, $00, $33, $33, $7F, $FF, $A9, $95, $99, $95, $99, $55, $95, $50, $55, $00 
+	incbin "data/art/tiles/enemy/fpenemy_b_gfx.bin"
+FPEnemyTileLayout_B_Gfx_4B350 equ FPEnemyTileLayout_B_Gfx_4B34A+$6
+FPEnemyTileLayout_B_Gfx_4B368 equ FPEnemyTileLayout_B_Gfx_4B34A+$1E
+FPEnemyTileLayout_B_Gfx_4B370 equ FPEnemyTileLayout_B_Gfx_4B34A+$26
+FPEnemyTileLayout_B_Gfx_4B37E equ FPEnemyTileLayout_B_Gfx_4B34A+$34
+FPEnemyTileLayout_B_Gfx_4B3A0 equ FPEnemyTileLayout_B_Gfx_4B34A+$56
+FPEnemyTileLayout_B_Gfx_4B3B2 equ FPEnemyTileLayout_B_Gfx_4B34A+$68
+FPEnemyTileLayout_B_Gfx_4B3CA equ FPEnemyTileLayout_B_Gfx_4B34A+$80
+FPEnemyTileLayout_B_Gfx_4B3EC equ FPEnemyTileLayout_B_Gfx_4B34A+$A2
+FPEnemyTileLayout_B_Gfx_4B402 equ FPEnemyTileLayout_B_Gfx_4B34A+$B8
+FPEnemyTileLayout_B_Gfx_4B414 equ FPEnemyTileLayout_B_Gfx_4B34A+$CA
+FPEnemyTileLayout_B_Gfx_4B432 equ FPEnemyTileLayout_B_Gfx_4B34A+$E8
+FPEnemyTileLayout_B_Gfx_4B44C equ FPEnemyTileLayout_B_Gfx_4B34A+$102
+FPEnemyTileLayout_B_Gfx_4B45E equ FPEnemyTileLayout_B_Gfx_4B34A+$114
+FPEnemyTileLayout_B_Gfx_4B480 equ FPEnemyTileLayout_B_Gfx_4B34A+$136
+FPEnemyTileLayout_B_Gfx_4B490 equ FPEnemyTileLayout_B_Gfx_4B34A+$146
+FPEnemyTileLayout_B_Gfx_4B4A8 equ FPEnemyTileLayout_B_Gfx_4B34A+$15E
+FPEnemyTileLayout_B_Gfx_4B4C4 equ FPEnemyTileLayout_B_Gfx_4B34A+$17A
+FPEnemyTileLayout_B_Gfx_4B4DC equ FPEnemyTileLayout_B_Gfx_4B34A+$192
+FPEnemyTileLayout_B_Gfx_4B4F2 equ FPEnemyTileLayout_B_Gfx_4B34A+$1A8
+FPEnemyTileLayout_B_Gfx_4B50E equ FPEnemyTileLayout_B_Gfx_4B34A+$1C4
+FPEnemyTileLayout_B_Gfx_4B52C equ FPEnemyTileLayout_B_Gfx_4B34A+$1E2
+FPEnemyTileLayout_B_Gfx_4B544 equ FPEnemyTileLayout_B_Gfx_4B34A+$1FA
+FPEnemyTileLayout_B_Gfx_4B55A equ FPEnemyTileLayout_B_Gfx_4B34A+$210
+FPEnemyTileLayout_B_Gfx_4B57C equ FPEnemyTileLayout_B_Gfx_4B34A+$232
+FPEnemyTileLayout_B_Gfx_4B58E equ FPEnemyTileLayout_B_Gfx_4B34A+$244
+FPEnemyTileLayout_B_Gfx_4B5A4 equ FPEnemyTileLayout_B_Gfx_4B34A+$25A
+FPEnemyTileLayout_B_Gfx_4B5C6 equ FPEnemyTileLayout_B_Gfx_4B34A+$27C
+FPEnemyTileLayout_B_Gfx_4B5D8 equ FPEnemyTileLayout_B_Gfx_4B34A+$28E
+FPEnemyTileLayout_B_Gfx_4B5EC equ FPEnemyTileLayout_B_Gfx_4B34A+$2A2
+FPEnemyTileLayout_B_Gfx_4B60E equ FPEnemyTileLayout_B_Gfx_4B34A+$2C4
+FPEnemyTileLayout_B_Gfx_4B61E equ FPEnemyTileLayout_B_Gfx_4B34A+$2D4
+FPEnemyTileLayout_B_Gfx_4B634 equ FPEnemyTileLayout_B_Gfx_4B34A+$2EA
+FPEnemyTileLayout_B_Gfx_4B656 equ FPEnemyTileLayout_B_Gfx_4B34A+$30C
+FPEnemyTileLayout_B_Gfx_4B668 equ FPEnemyTileLayout_B_Gfx_4B34A+$31E
+FPEnemyTileLayout_B_Gfx_4B67C equ FPEnemyTileLayout_B_Gfx_4B34A+$332
+FPEnemyTileLayout_B_Gfx_4B69E equ FPEnemyTileLayout_B_Gfx_4B34A+$354
+FPEnemyTileLayout_B_Gfx_4B6AE equ FPEnemyTileLayout_B_Gfx_4B34A+$364
+FPEnemyTileLayout_B_Gfx_4B6BE equ FPEnemyTileLayout_B_Gfx_4B34A+$374
+FPEnemyTileLayout_B_Gfx_4B6E0 equ FPEnemyTileLayout_B_Gfx_4B34A+$396
+FPEnemyTileLayout_B_Gfx_4B6F0 equ FPEnemyTileLayout_B_Gfx_4B34A+$3A6
+FPEnemyTileLayout_B_Gfx_4B708 equ FPEnemyTileLayout_B_Gfx_4B34A+$3BE
+FPEnemyTileLayout_B_Gfx_4B71E equ FPEnemyTileLayout_B_Gfx_4B34A+$3D4
+FPEnemyTileLayout_B_Gfx_4B740 equ FPEnemyTileLayout_B_Gfx_4B34A+$3F6
+FPEnemyTileLayout_B_Gfx_4B752 equ FPEnemyTileLayout_B_Gfx_4B34A+$408
+FPEnemyTileLayout_B_Gfx_4B764 equ FPEnemyTileLayout_B_Gfx_4B34A+$41A
+FPEnemyTileLayout_B_Gfx_4B77E equ FPEnemyTileLayout_B_Gfx_4B34A+$434
+FPEnemyTileLayout_B_Gfx_4B790 equ FPEnemyTileLayout_B_Gfx_4B34A+$446
+FPEnemyTileLayout_B_Gfx_4B7A2 equ FPEnemyTileLayout_B_Gfx_4B34A+$458
+FPEnemyTileLayout_B_Gfx_4B7C0 equ FPEnemyTileLayout_B_Gfx_4B34A+$476
+FPEnemyTileLayout_B_Gfx_4B7D0 equ FPEnemyTileLayout_B_Gfx_4B34A+$486
+FPEnemyTileLayout_B_Gfx_4B7E6 equ FPEnemyTileLayout_B_Gfx_4B34A+$49C
+FPEnemyTileLayout_B_Gfx_4B808 equ FPEnemyTileLayout_B_Gfx_4B34A+$4BE
+FPEnemyTileLayout_B_Gfx_4B818 equ FPEnemyTileLayout_B_Gfx_4B34A+$4CE
+FPEnemyTileLayout_B_Gfx_4B82A equ FPEnemyTileLayout_B_Gfx_4B34A+$4E0
+FPEnemyTileLayout_B_Gfx_4B846 equ FPEnemyTileLayout_B_Gfx_4B34A+$4FC
+FPEnemyTileLayout_B_Gfx_4B858 equ FPEnemyTileLayout_B_Gfx_4B34A+$50E
+FPEnemyTileLayout_B_Gfx_4B868 equ FPEnemyTileLayout_B_Gfx_4B34A+$51E
+FPEnemyTileLayout_B_Gfx_4B884 equ FPEnemyTileLayout_B_Gfx_4B34A+$53A
 ; loc_0004B894
 FPEnemyTileLayout_B:
 	dc.l	FPEnemyTileLayout_B_Gfx_4B34A
@@ -54696,81 +53666,41 @@ FPEnemyTileLayout_C:
 	dc.b	$00, $00, $05, $08, $01, $03, $06, $09, $02, $04, $07, $0A, $00, $00, $0C, $0F, $01, $0B, $0D, $10, $02, $04, $0E, $11, $00, $13, $16, $19, $12, $14, $17, $1A 
 	dc.b	$00, $15, $18, $1B, $00, $1D, $20, $19, $1C, $1E, $21, $1A, $00, $1F, $22, $1B 
 FPEnemyTileLayout_D_Gfx_4B9B0:
-	dc.b	$01, $00, $FF, $FF, $FF, $FF 
-FPEnemyTileLayout_D_Gfx_4B9B6:
-	dc.b	$01, $00, $FF, $FF, $F8, $00, $32, $33, $30, $02, $22, $12, $23, $22, $32, $11, $22, $00 
-FPEnemyTileLayout_D_Gfx_4B9C8:
-	dc.b	$01, $00, $FF, $FF, $FF, $F7, $20, $00 
-FPEnemyTileLayout_D_Gfx_4B9D0:
-	dc.b	$00, $23, $33, $32, $12, $34, $43, $33, $32, $47, $74, $33, $33, $47, $58, $44, $33, $07, $88, $84, $33, $07, $87, $79, $44, $00, $77, $99, $AA, $99, $99, $9A 
-	dc.b	$BB, $00 
-FPEnemyTileLayout_D_Gfx_4B9F2:
-	dc.b	$01, $00, $73, $33, $31, $11, $23, $22, $30, $22, $30, $22, $23, $22, $23, $32, $22, $30, $43, $33, $30, $A4, $33, $40 
-FPEnemyTileLayout_D_Gfx_4BA0A:
-	dc.b	$01, $00, $EE, $EE, $FF, $FF, $09, $09, $09, $09 
-FPEnemyTileLayout_D_Gfx_4BA14:
-	dc.b	$02, $AA, $78, $00, $41, $37, $99, $00, $09, $96, $40, $9A, $BA, $AB, $A9, $9A, $BB, $BA, $A9, $AB, $BA, $A9, $09, $09, $0A, $00 
-FPEnemyTileLayout_D_Gfx_4BA2E:
-	dc.b	$02, $00, $33, $33, $33, $33, $A9, $04, $44, $44, $44, $BA, $44, $AA, $9A, $AA, $AA, $AA, $AA, $AA 
-FPEnemyTileLayout_D_Gfx_4BA42:
-	dc.b	$01, $00, $FE, $EE, $EF, $FF, $09, $0A, $05, $05 
-FPEnemyTileLayout_D_Gfx_4BA4C:
-	dc.b	$01, $BA, $50, $55, $12, $00, $9B, $AA, $9A, $AB, $AB, $AA, $9A, $AB, $AB, $AB, $9A, $BB, $BB, $59, $9A, $A9, $05, $55, $55, $55, $00, $00, $00, $00 
-FPEnemyTileLayout_D_Gfx_4BA6A:
-	dc.b	$01, $00, $11, $11, $13, $7F, $BB, $A9, $90, $BB, $A9, $A0, $AA, $BA, $A5, $9A, $AA, $A5, $95, $95, $50, $95, $50, $50 
-FPEnemyTileLayout_D_Gfx_4BA82:
-	dc.b	$00, $23, $33, $32, $12, $34, $43, $33, $32, $47, $74, $33, $33, $47, $58, $44, $33, $07, $88, $84, $33, $07, $87, $74, $43, $00, $77, $99, $A4, $99, $99, $9B 
-	dc.b	$BA, $00 
-FPEnemyTileLayout_D_Gfx_4BAA4:
-	dc.b	$01, $00, $EE, $EE, $FF, $FF, $09, $0A, $09, $09 
-FPEnemyTileLayout_D_Gfx_4BAAE:
-	dc.b	$01, $AA, $C5, $00, $41, $27, $BA, $AB, $AB, $BA, $AB, $BB, $BA, $9A, $9A, $BB, $A9, $9A, $99, $A9, $9A, $09, $99, $99, $09, $99, $AB, $0A 
-FPEnemyTileLayout_D_Gfx_4BACA:
-	dc.b	$02, $00, $33, $33, $33, $33, $A9, $04, $44, $44, $44, $BA, $44, $BB, $AA, $AA, $AA, $BA, $BA, $BA 
-FPEnemyTileLayout_D_Gfx_4BADE:
-	dc.b	$01, $00, $FE, $EE, $EF, $FF, $09, $0A, $0A, $05 
-FPEnemyTileLayout_D_Gfx_4BAE8:
-	dc.b	$00, $9B, $BA, $AA, $BB, $AA, $BA, $AB, $AB, $AB, $AA, $BB, $AB, $BB, $AB, $BA, $AA, $AB, $BB, $BA, $AA, $5A, $AA, $A9, $99, $05, $55, $55, $55, $00, $00, $00 
-	dc.b	$00, $00 
-FPEnemyTileLayout_D_Gfx_4BB0A:
-	dc.b	$01, $00, $31, $11, $13, $7F, $BA, $A9, $BB, $A9, $A0, $BB, $AA, $A5, $AB, $BB, $A5, $A9, $95, $50, $55, $50, $50, $00 
-FPEnemyTileLayout_D_Gfx_4BB22:
-	dc.b	$01, $00, $FF, $FF, $F0, $00, $03, $21, $12, $30, $32, $11, $11, $23, $22, $12, $22, $13 
-FPEnemyTileLayout_D_Gfx_4BB34:
-	dc.b	$01, $00, $EE, $EE, $EC, $CC, $03, $03, $04, $04, $99, $09, $AA, $0A, $AB, $AA, $BA, $00 
-FPEnemyTileLayout_D_Gfx_4BB46:
-	dc.b	$00, $21, $23, $33, $12, $23, $33, $43, $32, $34, $66, $66, $43, $46, $65, $85, $64, $A6, $78, $88, $74, $A9, $78, $88, $79, $A9, $97, $87, $99, $AA, $99, $99 
-	dc.b	$9A, $00 
-FPEnemyTileLayout_D_Gfx_4BB68:
-	dc.b	$01, $00, $77, $77, $73, $33, $30, $30, $40, $40, $99, $AA, $90, $AB, $A0, $AA, $BA, $00 
-FPEnemyTileLayout_D_Gfx_4BB7A:
-	dc.b	$01, $00, $CC, $CC, $CE, $EC, $AA, $BA, $AA, $AB, $99, $AA, $99, $9A, $09, $99, $99, $9A, $09, $9A 
-FPEnemyTileLayout_D_Gfx_4BB8E:
-	dc.b	$01, $99, $00, $06, $D9, $00, $A9, $77, $67, $79, $B6, $87, $67, $86, $A6, $76, $96, $76, $AA, $9A, $A9, $9A, $AA, $9E, $ED, $DD, $EE, $AA, $A9, $9A, $9A, $00 
-FPEnemyTileLayout_D_Gfx_4BBAE:
-	dc.b	$01, $00, $33, $33, $37, $73, $AA, $BA, $AB, $AA, $AA, $A9, $AA, $99, $99, $90, $99, $A9, $A9, $90 
-FPEnemyTileLayout_D_Gfx_4BBC2:
-	dc.b	$01, $00, $CC, $CC, $CE, $FF, $09, $9B, $99, $AB, $9A, $BA, $5A, $AA, $05, $95, $55, $00 
-FPEnemyTileLayout_D_Gfx_4BBD4:
-	dc.b	$00, $BA, $BA, $AA, $BB, $BA, $AB, $AB, $AA, $AA, $BB, $AA, $BA, $9A, $BB, $AA, $BB, $9A, $BB, $BB, $BA, $99, $AA, $BA, $99, $55, $55, $55, $55, $00, $00, $00 
-	dc.b	$00, $00 
-FPEnemyTileLayout_D_Gfx_4BBF6:
-	dc.b	$01, $00, $33, $33, $37, $FF, $BA, $90, $BB, $A9, $9A, $A9, $A5, $95, $95, $50, $55, $00 
-FPEnemyTileLayout_D_Gfx_4BC08:
-	dc.b	$01, $00, $FF, $FF, $F0, $00, $04, $31, $12, $30, $42, $11, $11, $23, $32, $12, $21, $13 
-FPEnemyTileLayout_D_Gfx_4BC1A:
-	dc.b	$01, $00, $EE, $EE, $EC, $CC, $03, $03, $04, $04, $99, $09, $AA, $0A, $BB, $AB, $BA, $00 
-FPEnemyTileLayout_D_Gfx_4BC2C:
-	dc.b	$01, $33, $00, $90, $06, $62, $21, $12, $11, $12, $22, $11, $11, $22, $21, $12, $43, $32, $22, $34, $43, $32, $23, $34, $44, $44, $44, $44, $94, $43, $49, $00 
-FPEnemyTileLayout_D_Gfx_4BC4C:
-	dc.b	$01, $00, $77, $77, $73, $33, $30, $30, $40, $40, $99, $9A, $90, $9B, $A0, $AA, $BA, $00 
-FPEnemyTileLayout_D_Gfx_4BC5E:
-	dc.b	$01, $00, $CC, $CC, $CE, $EC, $AA, $AA, $AA, $AA, $99, $AA, $99, $9A, $09, $9A, $99, $9A, $09, $9A 
-FPEnemyTileLayout_D_Gfx_4BC72:
-	dc.b	$00, $A4, $44, $44, $49, $A9, $44, $44, $9A, $BA, $94, $49, $AB, $BB, $A9, $9A, $BB, $AB, $BA, $AB, $AA, $99, $AA, $AA, $99, $9E, $ED, $DD, $EE, $AA, $A9, $9A 
-	dc.b	$9A, $00 
-FPEnemyTileLayout_D_Gfx_4BC94:
-	dc.b	$01, $00, $33, $33, $37, $73, $AA, $BA, $AA, $AA, $B9, $A9, $A9, $99, $99, $90, $99, $A9, $A9, $90 
+	incbin "data/art/tiles/enemy/fpenemy_d_gfx.bin"
+FPEnemyTileLayout_D_Gfx_4B9B6 equ FPEnemyTileLayout_D_Gfx_4B9B0+$6
+FPEnemyTileLayout_D_Gfx_4B9C8 equ FPEnemyTileLayout_D_Gfx_4B9B0+$18
+FPEnemyTileLayout_D_Gfx_4B9D0 equ FPEnemyTileLayout_D_Gfx_4B9B0+$20
+FPEnemyTileLayout_D_Gfx_4B9F2 equ FPEnemyTileLayout_D_Gfx_4B9B0+$42
+FPEnemyTileLayout_D_Gfx_4BA0A equ FPEnemyTileLayout_D_Gfx_4B9B0+$5A
+FPEnemyTileLayout_D_Gfx_4BA14 equ FPEnemyTileLayout_D_Gfx_4B9B0+$64
+FPEnemyTileLayout_D_Gfx_4BA2E equ FPEnemyTileLayout_D_Gfx_4B9B0+$7E
+FPEnemyTileLayout_D_Gfx_4BA42 equ FPEnemyTileLayout_D_Gfx_4B9B0+$92
+FPEnemyTileLayout_D_Gfx_4BA4C equ FPEnemyTileLayout_D_Gfx_4B9B0+$9C
+FPEnemyTileLayout_D_Gfx_4BA6A equ FPEnemyTileLayout_D_Gfx_4B9B0+$BA
+FPEnemyTileLayout_D_Gfx_4BA82 equ FPEnemyTileLayout_D_Gfx_4B9B0+$D2
+FPEnemyTileLayout_D_Gfx_4BAA4 equ FPEnemyTileLayout_D_Gfx_4B9B0+$F4
+FPEnemyTileLayout_D_Gfx_4BAAE equ FPEnemyTileLayout_D_Gfx_4B9B0+$FE
+FPEnemyTileLayout_D_Gfx_4BACA equ FPEnemyTileLayout_D_Gfx_4B9B0+$11A
+FPEnemyTileLayout_D_Gfx_4BADE equ FPEnemyTileLayout_D_Gfx_4B9B0+$12E
+FPEnemyTileLayout_D_Gfx_4BAE8 equ FPEnemyTileLayout_D_Gfx_4B9B0+$138
+FPEnemyTileLayout_D_Gfx_4BB0A equ FPEnemyTileLayout_D_Gfx_4B9B0+$15A
+FPEnemyTileLayout_D_Gfx_4BB22 equ FPEnemyTileLayout_D_Gfx_4B9B0+$172
+FPEnemyTileLayout_D_Gfx_4BB34 equ FPEnemyTileLayout_D_Gfx_4B9B0+$184
+FPEnemyTileLayout_D_Gfx_4BB46 equ FPEnemyTileLayout_D_Gfx_4B9B0+$196
+FPEnemyTileLayout_D_Gfx_4BB68 equ FPEnemyTileLayout_D_Gfx_4B9B0+$1B8
+FPEnemyTileLayout_D_Gfx_4BB7A equ FPEnemyTileLayout_D_Gfx_4B9B0+$1CA
+FPEnemyTileLayout_D_Gfx_4BB8E equ FPEnemyTileLayout_D_Gfx_4B9B0+$1DE
+FPEnemyTileLayout_D_Gfx_4BBAE equ FPEnemyTileLayout_D_Gfx_4B9B0+$1FE
+FPEnemyTileLayout_D_Gfx_4BBC2 equ FPEnemyTileLayout_D_Gfx_4B9B0+$212
+FPEnemyTileLayout_D_Gfx_4BBD4 equ FPEnemyTileLayout_D_Gfx_4B9B0+$224
+FPEnemyTileLayout_D_Gfx_4BBF6 equ FPEnemyTileLayout_D_Gfx_4B9B0+$246
+FPEnemyTileLayout_D_Gfx_4BC08 equ FPEnemyTileLayout_D_Gfx_4B9B0+$258
+FPEnemyTileLayout_D_Gfx_4BC1A equ FPEnemyTileLayout_D_Gfx_4B9B0+$26A
+FPEnemyTileLayout_D_Gfx_4BC2C equ FPEnemyTileLayout_D_Gfx_4B9B0+$27C
+FPEnemyTileLayout_D_Gfx_4BC4C equ FPEnemyTileLayout_D_Gfx_4B9B0+$29C
+FPEnemyTileLayout_D_Gfx_4BC5E equ FPEnemyTileLayout_D_Gfx_4B9B0+$2AE
+FPEnemyTileLayout_D_Gfx_4BC72 equ FPEnemyTileLayout_D_Gfx_4B9B0+$2C2
+FPEnemyTileLayout_D_Gfx_4BC94 equ FPEnemyTileLayout_D_Gfx_4B9B0+$2E4
 ; loc_0004BCA8
 FPEnemyTileLayout_D:
 	dc.l	FPEnemyTileLayout_D_Gfx_4B9B0
@@ -54813,123 +53743,57 @@ FPEnemyTileLayout_E:
 	dc.b	$00, $03, $06, $09, $01, $04, $07, $0A, $02, $05, $08, $0B, $00, $0D, $10, $13, $0C, $0E, $11, $14, $02, $0F, $12, $15, $00, $16, $19, $1C, $0C, $17, $1A, $1D 
 	dc.b	$02, $18, $1B, $1E, $1F, $22, $25, $28, $20, $23, $26, $29, $21, $24, $27, $2A, $02, $2C, $2F, $28, $2B, $2D, $30, $32, $21, $2E, $31, $2A 
 FPEnemyTileLayout_F_Gfx_4BD70:
-	dc.b	$01, $00, $FF, $FE, $FF, $FE, $09, $08 
-FPEnemyTileLayout_F_Gfx_4BD78:
-	dc.b	$00, $00, $AA, $A9, $00, $0A, $AB, $BA, $90, $9A, $BB, $BB, $A9, $AA, $AB, $BB, $A9, $9A, $AA, $AA, $A9, $77, $99, $AA, $99, $98, $79, $99, $90, $88, $87, $69 
-	dc.b	$90, $00 
-FPEnemyTileLayout_F_Gfx_4BD9A:
-	dc.b	$01, $00, $FF, $FF, $FF, $FF 
-FPEnemyTileLayout_F_Gfx_4BDA0:
-	dc.b	$01, $00, $EF, $FF, $FE, $EE, $08, $0A, $0A, $4A 
-FPEnemyTileLayout_F_Gfx_4BDAA:
-	dc.b	$00, $88, $76, $69, $90, $77, $66, $99, $99, $06, $94, $AA, $AA, $AA, $33, $AB, $A9, $A9, $2A, $BB, $94, $A2, $3A, $B9, $43, $92, $3A, $AA, $32, $93, $AB, $B9 
-	dc.b	$43, $00 
-FPEnemyTileLayout_F_Gfx_4BDCC:
-	dc.b	$01, $00, $FF, $77, $77, $33, $90, $90, $39, $23, $12, $30, $11, $20 
-FPEnemyTileLayout_F_Gfx_4BDDA:
-	dc.b	$01, $00, $CC, $8D, $FF, $FE, $04, $3A, $66, $3A, $07, $76, $49, $77, $0E, $00 
-FPEnemyTileLayout_F_Gfx_4BDEA:
-	dc.b	$00, $93, $AB, $BA, $99, $94, $9B, $BB, $A9, $9E, $9A, $AA, $A9, $0E, $E9, $99, $99, $0E, $DD, $DD, $EE, $ED, $CC, $DE, $EE, $ED, $CD, $EE, $55, $DC, $EE, $5E 
-	dc.b	$EE, $00 
-FPEnemyTileLayout_F_Gfx_4BE0C:
-	dc.b	$01, $00, $33, $33, $3F, $FF, $21, $20, $32, $23, $93, $33, $96, $67, $56, $70 
-FPEnemyTileLayout_F_Gfx_4BE1C:
-	dc.b	$01, $00, $EE, $EE, $CC, $CE, $0E, $09, $0A, $0B, $0A, $BB, $59, $AB, $55, $99, $55, $00 
-FPEnemyTileLayout_F_Gfx_4BE2E:
-	dc.b	$01, $55, $00, $00, $24, $7C, $DD, $EE, $ED, $CE, $DE, $E0, $0D, $DE, $99, $90, $00, $EA, $BA, $90, $00, $09, $BA, $90, $9A, $A9, $59, $99, $99, $50, $00, $00 
-FPEnemyTileLayout_F_Gfx_4BE4E:
-	dc.b	$01, $00, $77, $33, $33, $7F, $E0, $99, $AA, $90, $AA, $90, $A9, $55, $55, $55, $55, $00 
-FPEnemyTileLayout_F_Gfx_4BE60:
-	dc.b	$00, $00, $AA, $A9, $00, $0A, $AA, $BA, $90, $9A, $BB, $BB, $A9, $AA, $BA, $BB, $A9, $9A, $AA, $AA, $A9, $77, $99, $AA, $99, $97, $79, $99, $90, $87, $77, $66 
-	dc.b	$90, $00 
-FPEnemyTileLayout_F_Gfx_4BE82:
-	dc.b	$01, $00, $EF, $FF, $FF, $EE, $08, $0A, $09, $00 
-FPEnemyTileLayout_F_Gfx_4BE8C:
-	dc.b	$00, $78, $87, $69, $90, $78, $76, $99, $99, $07, $94, $9A, $AA, $09, $49, $AB, $A9, $93, $9A, $BA, $94, $92, $9A, $B9, $43, $32, $99, $A9, $42, $39, $AA, $99 
-	dc.b	$43, $00 
-FPEnemyTileLayout_F_Gfx_4BEAE:
-	dc.b	$01, $00, $FF, $77, $77, $77, $90, $90, $39, $29, $23, $12 
-FPEnemyTileLayout_F_Gfx_4BEBA:
-	dc.b	$01, $00, $EE, $EF, $FF, $FF, $09, $09, $09, $00 
-FPEnemyTileLayout_F_Gfx_4BEC4:
-	dc.b	$00, $29, $AA, $AA, $93, $39, $AA, $BB, $43, $49, $AA, $AA, $43, $9E, $99, $9A, $64, $0D, $EE, $E6, $67, $0E, $DD, $DE, $66, $0E, $DC, $CD, $EE, $00, $ED, $CD 
-	dc.b	$DE, $00 
-FPEnemyTileLayout_F_Gfx_4BEE6:
-	dc.b	$01, $00, $77, $77, $7F, $FF, $12, $22, $23, $44, $70, $00 
-FPEnemyTileLayout_F_Gfx_4BEF2:
-	dc.b	$01, $00, $FF, $FF, $FE, $EF, $55, $05 
-FPEnemyTileLayout_F_Gfx_4BEFA:
-	dc.b	$00, $00, $EE, $DC, $DE, $00, $99, $9D, $DE, $00, $A9, $A9, $99, $0B, $A9, $BA, $A9, $BA, $99, $BA, $A9, $99, $AB, $AA, $99, $55, $AA, $99, $95, $00, $55, $55 
-	dc.b	$55, $00 
-FPEnemyTileLayout_F_Gfx_4BF1C:
-	dc.b	$01, $00, $FF, $FF, $73, $37, $50, $55, $50, $55, $50, $55 
-FPEnemyTileLayout_F_Gfx_4BF28:
-	dc.b	$01, $00, $EF, $FF, $FF, $FF, $08, $00 
-FPEnemyTileLayout_F_Gfx_4BF30:
-	dc.b	$00, $78, $87, $69, $90, $78, $76, $99, $99, $07, $99, $BA, $AA, $09, $9B, $A9, $9A, $0A, $BA, $94, $49, $AA, $A9, $43, $34, $A9, $94, $32, $23, $94, $33, $22 
-	dc.b	$34, $00 
-FPEnemyTileLayout_F_Gfx_4BF52:
-	dc.b	$01, $00, $FF, $77, $77, $77, $90, $A0, $A9, $A9, $99, $99 
-FPEnemyTileLayout_F_Gfx_4BF5E:
-	dc.b	$01, $00, $EC, $CE, $FE, $EE, $07, $07, $76, $06, $76, $66, $0D, $0D, $DD, $00 
-FPEnemyTileLayout_F_Gfx_4BF6E:
-	dc.b	$00, $43, $22, $33, $49, $44, $33, $34, $99, $44, $49, $99, $99, $EE, $99, $99, $9E, $DD, $DD, $DD, $EE, $DC, $DD, $CC, $DE, $CD, $ED, $DC, $DE, $DE, $E5, $DC 
-	dc.b	$DE, $00 
-FPEnemyTileLayout_F_Gfx_4BF90:
-	dc.b	$01, $00, $77, $77, $77, $FF, $99, $90, $90, $E0, $E0, $E0 
-FPEnemyTileLayout_F_Gfx_4BF9C:
-	dc.b	$01, $00, $EE, $EC, $8C, $CE, $DD, $9D, $BA, $AB, $BA, $09, $9A, $AA, $59, $99, $55, $59, $55, $00 
-FPEnemyTileLayout_F_Gfx_4BFB0:
-	dc.b	$01, $55, $00, $00, $26, $FE, $DE, $E0, $DC, $CD, $EE, $00, $ED, $CA, $99, $00, $0E, $9A, $A9, $00, $00, $09, $90, $05, $9A, $95, $99, $00 
-FPEnemyTileLayout_F_Gfx_4BFCC:
-	dc.b	$01, $00, $77, $31, $11, $3F, $E0, $A9, $BB, $99, $AA, $A9, $50, $AA, $95, $55, $99, $55, $55, $55, $55, $00 
-FPEnemyTileLayout_F_Gfx_4BFE2:
-	dc.b	$01, $00, $FF, $FF, $FF, $FE, $0A, $00 
-FPEnemyTileLayout_F_Gfx_4BFEA:
-	dc.b	$00, $0A, $AB, $BA, $00, $AB, $BB, $BB, $A0, $AB, $BB, $BB, $90, $9A, $BB, $AA, $90, $99, $AA, $A9, $90, $69, $99, $99, $60, $67, $98, $97, $60, $67, $88, $87 
-	dc.b	$6A, $00 
-FPEnemyTileLayout_F_Gfx_4C00C:
-	dc.b	$01, $00, $FF, $FF, $FF, $F7, $A0, $00 
-FPEnemyTileLayout_F_Gfx_4C014:
-	dc.b	$01, $00, $EC, $CC, $CC, $CC, $AA, $0A, $BB, $0A, $BB, $49, $BB, $34, $9A, $32, $49, $21, $3A, $21, $2B, $00 
-FPEnemyTileLayout_F_Gfx_4C02A:
-	dc.b	$00, $97, $87, $87, $9A, $A6, $78, $86, $AB, $A9, $67, $99, $BB, $B9, $44, $49, $BA, $A9, $33, $39, $AA, $99, $12, $19, $99, $A9, $11, $19, $AB, $B9, $11, $29 
-	dc.b	$BB, $00 
-FPEnemyTileLayout_F_Gfx_4C04C:
-	dc.b	$01, $00, $77, $33, $33, $33, $AA, $A9, $94, $40, $93, $40, $93, $40, $A3, $40, $A4, $40, $A4, $60 
-FPEnemyTileLayout_F_Gfx_4C060:
-	dc.b	$01, $00, $CC, $CC, $EE, $FF, $21, $19, $32, $13, $03, $34, $04, $66, $77, $77 
-FPEnemyTileLayout_F_Gfx_4C070:
-	dc.b	$00, $A9, $22, $39, $AA, $99, $33, $49, $99, $99, $EE, $EE, $99, $DD, $DC, $CD, $DE, $7C, $DD, $CC, $DE, $DD, $ED, $DC, $CE, $DD, $EE, $DC, $CE, $DD, $E5, $EC 
-	dc.b	$DE, $00 
-FPEnemyTileLayout_F_Gfx_4C092:
-	dc.b	$01, $00, $37, $FF, $FF, $FF, $96, $60, $96, $00 
-FPEnemyTileLayout_F_Gfx_4C09C:
-	dc.b	$01, $00, $FF, $FE, $EF, $FF, $05, $05 
-FPEnemyTileLayout_F_Gfx_4C0A4:
-	dc.b	$00, $EE, $EE, $ED, $DE, $0E, $E9, $EE, $E5, $55, $99, $9A, $95, $59, $99, $AB, $A5, $55, $59, $AB, $B5, $55, $55, $9A, $B9, $00, $05, $99, $A5, $00, $00, $59 
-	dc.b	$55, $00 
-FPEnemyTileLayout_F_Gfx_4C0C6:
-	dc.b	$01, $00, $FF, $77, $77, $7F, $50, $55, $55, $55, $50, $00 
-FPEnemyTileLayout_F_Gfx_4C0D2:
-	dc.b	$01, $99, $00, $00, $8E, $64, $0A, $AB, $BA, $00, $AA, $BB, $BB, $A0, $9B, $BB, $BB, $90, $9A, $BB, $BA, $90, $AA, $A9, $90, $90, $69, $60, $96, $96, $9A, $00 
-FPEnemyTileLayout_F_Gfx_4C0F2:
-	dc.b	$01, $00, $EC, $CC, $CC, $CC, $AA, $0A, $AA, $0A, $AB, $99, $AB, $49, $9A, $34, $49, $32, $49, $32, $39, $00 
-FPEnemyTileLayout_F_Gfx_4C108:
-	dc.b	$00, $96, $77, $76, $9A, $A9, $66, $69, $AB, $BA, $99, $9A, $BB, $BB, $BA, $AB, $BA, $BB, $BB, $BB, $A9, $AA, $BB, $BA, $A9, $99, $AA, $AA, $99, $A9, $99, $99 
-	dc.b	$A9, $00 
-FPEnemyTileLayout_F_Gfx_4C12A:
-	dc.b	$01, $00, $73, $33, $33, $33, $A4, $A4, $30, $93, $30, $92, $30, $92, $40, $93, $40, $94, $40, $94, $40, $00 
-FPEnemyTileLayout_F_Gfx_4C140:
-	dc.b	$01, $00, $CC, $CC, $CC, $FF, $32, $39, $32, $39, $34, $4E, $46, $6E, $77, $70, $07, $70 
-FPEnemyTileLayout_F_Gfx_4C152:
-	dc.b	$00, $AB, $BB, $BB, $A9, $9A, $BB, $BA, $A9, $99, $AA, $AA, $99, $DE, $99, $99, $9E, $ED, $CC, $CC, $DE, $EE, $DD, $CC, $CE, $0E, $EE, $ED, $CE, $0E, $E5, $DC 
-	dc.b	$CE, $00 
-FPEnemyTileLayout_F_Gfx_4C174:
-	dc.b	$01, $00, $7F, $FF, $FF, $FF, $99, $00 
-FPEnemyTileLayout_F_Gfx_4C17C:
-	dc.b	$00, $0E, $EE, $DD, $DE, $09, $95, $EE, $E5, $55, $95, $9A, $95, $55, $59, $AB, $A5, $55, $59, $AB, $A5, $55, $59, $AB, $99, $00, $59, $AA, $95, $00, $05, $9A 
-	dc.b	$55, $00 
+	incbin "data/art/tiles/enemy/fpenemy_f_gfx.bin"
+FPEnemyTileLayout_F_Gfx_4BD78 equ FPEnemyTileLayout_F_Gfx_4BD70+$8
+FPEnemyTileLayout_F_Gfx_4BD9A equ FPEnemyTileLayout_F_Gfx_4BD70+$2A
+FPEnemyTileLayout_F_Gfx_4BDA0 equ FPEnemyTileLayout_F_Gfx_4BD70+$30
+FPEnemyTileLayout_F_Gfx_4BDAA equ FPEnemyTileLayout_F_Gfx_4BD70+$3A
+FPEnemyTileLayout_F_Gfx_4BDCC equ FPEnemyTileLayout_F_Gfx_4BD70+$5C
+FPEnemyTileLayout_F_Gfx_4BDDA equ FPEnemyTileLayout_F_Gfx_4BD70+$6A
+FPEnemyTileLayout_F_Gfx_4BDEA equ FPEnemyTileLayout_F_Gfx_4BD70+$7A
+FPEnemyTileLayout_F_Gfx_4BE0C equ FPEnemyTileLayout_F_Gfx_4BD70+$9C
+FPEnemyTileLayout_F_Gfx_4BE1C equ FPEnemyTileLayout_F_Gfx_4BD70+$AC
+FPEnemyTileLayout_F_Gfx_4BE2E equ FPEnemyTileLayout_F_Gfx_4BD70+$BE
+FPEnemyTileLayout_F_Gfx_4BE4E equ FPEnemyTileLayout_F_Gfx_4BD70+$DE
+FPEnemyTileLayout_F_Gfx_4BE60 equ FPEnemyTileLayout_F_Gfx_4BD70+$F0
+FPEnemyTileLayout_F_Gfx_4BE82 equ FPEnemyTileLayout_F_Gfx_4BD70+$112
+FPEnemyTileLayout_F_Gfx_4BE8C equ FPEnemyTileLayout_F_Gfx_4BD70+$11C
+FPEnemyTileLayout_F_Gfx_4BEAE equ FPEnemyTileLayout_F_Gfx_4BD70+$13E
+FPEnemyTileLayout_F_Gfx_4BEBA equ FPEnemyTileLayout_F_Gfx_4BD70+$14A
+FPEnemyTileLayout_F_Gfx_4BEC4 equ FPEnemyTileLayout_F_Gfx_4BD70+$154
+FPEnemyTileLayout_F_Gfx_4BEE6 equ FPEnemyTileLayout_F_Gfx_4BD70+$176
+FPEnemyTileLayout_F_Gfx_4BEF2 equ FPEnemyTileLayout_F_Gfx_4BD70+$182
+FPEnemyTileLayout_F_Gfx_4BEFA equ FPEnemyTileLayout_F_Gfx_4BD70+$18A
+FPEnemyTileLayout_F_Gfx_4BF1C equ FPEnemyTileLayout_F_Gfx_4BD70+$1AC
+FPEnemyTileLayout_F_Gfx_4BF28 equ FPEnemyTileLayout_F_Gfx_4BD70+$1B8
+FPEnemyTileLayout_F_Gfx_4BF30 equ FPEnemyTileLayout_F_Gfx_4BD70+$1C0
+FPEnemyTileLayout_F_Gfx_4BF52 equ FPEnemyTileLayout_F_Gfx_4BD70+$1E2
+FPEnemyTileLayout_F_Gfx_4BF5E equ FPEnemyTileLayout_F_Gfx_4BD70+$1EE
+FPEnemyTileLayout_F_Gfx_4BF6E equ FPEnemyTileLayout_F_Gfx_4BD70+$1FE
+FPEnemyTileLayout_F_Gfx_4BF90 equ FPEnemyTileLayout_F_Gfx_4BD70+$220
+FPEnemyTileLayout_F_Gfx_4BF9C equ FPEnemyTileLayout_F_Gfx_4BD70+$22C
+FPEnemyTileLayout_F_Gfx_4BFB0 equ FPEnemyTileLayout_F_Gfx_4BD70+$240
+FPEnemyTileLayout_F_Gfx_4BFCC equ FPEnemyTileLayout_F_Gfx_4BD70+$25C
+FPEnemyTileLayout_F_Gfx_4BFE2 equ FPEnemyTileLayout_F_Gfx_4BD70+$272
+FPEnemyTileLayout_F_Gfx_4BFEA equ FPEnemyTileLayout_F_Gfx_4BD70+$27A
+FPEnemyTileLayout_F_Gfx_4C00C equ FPEnemyTileLayout_F_Gfx_4BD70+$29C
+FPEnemyTileLayout_F_Gfx_4C014 equ FPEnemyTileLayout_F_Gfx_4BD70+$2A4
+FPEnemyTileLayout_F_Gfx_4C02A equ FPEnemyTileLayout_F_Gfx_4BD70+$2BA
+FPEnemyTileLayout_F_Gfx_4C04C equ FPEnemyTileLayout_F_Gfx_4BD70+$2DC
+FPEnemyTileLayout_F_Gfx_4C060 equ FPEnemyTileLayout_F_Gfx_4BD70+$2F0
+FPEnemyTileLayout_F_Gfx_4C070 equ FPEnemyTileLayout_F_Gfx_4BD70+$300
+FPEnemyTileLayout_F_Gfx_4C092 equ FPEnemyTileLayout_F_Gfx_4BD70+$322
+FPEnemyTileLayout_F_Gfx_4C09C equ FPEnemyTileLayout_F_Gfx_4BD70+$32C
+FPEnemyTileLayout_F_Gfx_4C0A4 equ FPEnemyTileLayout_F_Gfx_4BD70+$334
+FPEnemyTileLayout_F_Gfx_4C0C6 equ FPEnemyTileLayout_F_Gfx_4BD70+$356
+FPEnemyTileLayout_F_Gfx_4C0D2 equ FPEnemyTileLayout_F_Gfx_4BD70+$362
+FPEnemyTileLayout_F_Gfx_4C0F2 equ FPEnemyTileLayout_F_Gfx_4BD70+$382
+FPEnemyTileLayout_F_Gfx_4C108 equ FPEnemyTileLayout_F_Gfx_4BD70+$398
+FPEnemyTileLayout_F_Gfx_4C12A equ FPEnemyTileLayout_F_Gfx_4BD70+$3BA
+FPEnemyTileLayout_F_Gfx_4C140 equ FPEnemyTileLayout_F_Gfx_4BD70+$3D0
+FPEnemyTileLayout_F_Gfx_4C152 equ FPEnemyTileLayout_F_Gfx_4BD70+$3E2
+FPEnemyTileLayout_F_Gfx_4C174 equ FPEnemyTileLayout_F_Gfx_4BD70+$404
+FPEnemyTileLayout_F_Gfx_4C17C equ FPEnemyTileLayout_F_Gfx_4BD70+$40C
 ; loc_0004C19E
 FPEnemyTileLayout_F:
 	dc.l	FPEnemyTileLayout_F_Gfx_4BD70
@@ -54988,108 +53852,52 @@ FPEnemyTileLayout_G:
 	dc.b	$00, $03, $06, $09, $01, $04, $07, $0A, $02, $05, $08, $0B, $00, $00, $00, $10, $01, $0C, $0E, $11, $02, $0D, $0F, $12, $00, $00, $15, $18, $01, $13, $16, $19 
 	dc.b	$02, $14, $17, $1A, $1B, $1D, $20, $10, $1C, $1E, $21, $23, $00, $1F, $22, $24, $00, $26, $29, $10, $25, $27, $2A, $2C, $00, $28, $2B, $2D 
 FPEnemyTileLayout_H_Gfx_4C2A6:
-	dc.b	$01, $00, $FF, $FF, $FF, $FF 
-FPEnemyTileLayout_H_Gfx_4C2AC:
-	dc.b	$01, $00, $FF, $80, $00, $00, $AB, $BA, $A0, $0B, $BB, $AB, $AA, $BB, $BB, $BB, $BA, $BA, $AA, $BB, $BA, $A7, $69, $AB, $BB, $08, $96, $9A, $AB, $00 
-FPEnemyTileLayout_H_Gfx_4C2CA:
-	dc.b	$01, $00, $FF, $FF, $F7, $77, $A0, $90, $90, $00 
-FPEnemyTileLayout_H_Gfx_4C2D4:
-	dc.b	$01, $00, $FF, $FF, $FF, $EE, $0E, $EE 
-FPEnemyTileLayout_H_Gfx_4C2DC:
-	dc.b	$00, $88, $77, $69, $AA, $78, $77, $69, $ED, $07, $66, $9E, $DD, $0E, $44, $EE, $DC, $EE, $33, $DE, $DC, $E4, $22, $DE, $DD, $E4, $21, $DE, $ED, $E4, $22, $DD 
-	dc.b	$E4, $00 
-FPEnemyTileLayout_H_Gfx_4C2FE:
-	dc.b	$01, $00, $77, $73, $33, $31, $90, $D0, $DE, $CD, $E0, $CC, $D0, $CC, $CE, $D3, $34, $34, $CD, $E0 
-FPEnemyTileLayout_H_Gfx_4C312:
-	dc.b	$01, $00, $CC, $CC, $FF, $FE, $0E, $EE, $6E, $EE, $76, $EE, $76, $60, $0D, $00 
-FPEnemyTileLayout_H_Gfx_4C322:
-	dc.b	$01, $EE, $01, $42, $10, $33, $E4, $32, $ED, $DE, $EA, $AA, $9E, $0E, $59, $99, $0E, $DD, $55, $0D, $CD, $E5, $DC, $CD, $DE, $55, $CC, $DD, $CD, $DE 
-FPEnemyTileLayout_H_Gfx_4C340:
-	dc.b	$01, $00, $11, $11, $37, $FF, $ED, $CC, $D0, $ED, $CC, $D0, $EE, $DD, $E0, $56, $67, $70, $55, $77, $50, $00 
-FPEnemyTileLayout_H_Gfx_4C356:
-	dc.b	$01, $00, $EE, $EE, $CC, $CE, $0D, $0D, $0A, $0B, $0A, $AB, $09, $BB, $05, $99, $05, $00 
-FPEnemyTileLayout_H_Gfx_4C368:
-	dc.b	$01, $55, $00, $00, $26, $7E, $DD, $EE, $0E, $EE, $DE, $E0, $0E, $EE, $BA, $E0, $00, $EA, $BA, $90, $00, $09, $BA, $95, $9A, $A9, $59, $99, $50, $00 
-FPEnemyTileLayout_H_Gfx_4C386:
-	dc.b	$01, $00, $77, $33, $33, $3F, $E0, $BA, $BB, $A0, $AB, $A9, $BA, $95, $A9, $55, $55, $50 
-FPEnemyTileLayout_H_Gfx_4C398:
-	dc.b	$00, $88, $77, $69, $AA, $78, $77, $69, $ED, $07, $66, $9E, $DC, $03, $34, $EE, $DC, $03, $2E, $DE, $DC, $32, $1D, $DE, $DD, $42, $2D, $DD, $ED, $43, $2D, $DD 
-	dc.b	$E4, $00 
-FPEnemyTileLayout_H_Gfx_4C3BA:
-	dc.b	$01, $00, $77, $77, $33, $33, $90, $E0, $DE, $CD, $CC, $E0, $CD, $E0, $D3, $40, $3D, $E0 
-FPEnemyTileLayout_H_Gfx_4C3CC:
-	dc.b	$00, $44, $4D, $EE, $EE, $5A, $AA, $A9, $9E, $EE, $E5, $55, $ED, $E5, $EE, $EE, $A6, $0E, $E5, $55, $A7, $0D, $ED, $DE, $EE, $0D, $DE, $CD, $DE, $00, $CE, $DC 
-	dc.b	$DE, $00 
-FPEnemyTileLayout_H_Gfx_4C3EE:
-	dc.b	$01, $00, $33, $77, $77, $FF, $DD, $E0, $DC, $E0, $CE, $76, $70, $E0 
-FPEnemyTileLayout_H_Gfx_4C3FC:
-	dc.b	$01, $00, $FF, $FF, $EE, $FF, $05, $05 
-FPEnemyTileLayout_H_Gfx_4C404:
-	dc.b	$00, $00, $DE, $DC, $DE, $00, $AA, $DD, $EE, $0A, $BA, $9A, $A9, $AB, $BA, $9A, $BA, $99, $99, $5B, $BA, $55, $55, $AB, $A9, $55, $55, $99, $95, $00, $55, $55 
-	dc.b	$50, $00 
-FPEnemyTileLayout_H_Gfx_4C426:
-	dc.b	$01, $00, $FF, $F7, $33, $7F, $55, $55, $50, $55, $50, $55 
-FPEnemyTileLayout_H_Gfx_4C432:
-	dc.b	$00, $88, $77, $69, $AA, $78, $77, $69, $EE, $07, $66, $9E, $DD, $00, $44, $4D, $CC, $04, $33, $ED, $CC, $03, $2D, $DC, $CC, $02, $3C, $CC, $CD, $ED, $D3, $DD 
-	dc.b	$DE, $00 
-FPEnemyTileLayout_H_Gfx_4C454:
-	dc.b	$01, $00, $77, $77, $77, $77, $90, $E0, $D0, $DE, $DE, $DE, $EE, $ED 
-FPEnemyTileLayout_H_Gfx_4C462:
-	dc.b	$01, $00, $EC, $EF, $FE, $EE, $77, $07, $77, $77, $0D, $0C, $DC, $00 
-FPEnemyTileLayout_H_Gfx_4C470:
-	dc.b	$00, $DD, $CD, $4D, $EE, $ED, $DE, $59, $99, $6E, $DD, $EE, $EE, $E5, $EE, $ED, $DE, $DD, $E5, $5E, $E5, $CD, $EE, $E5, $5E, $CD, $DE, $DC, $DD, $DD, $EE, $DC 
-	dc.b	$CD, $00 
-FPEnemyTileLayout_H_Gfx_4C492:
-	dc.b	$01, $00, $77, $77, $77, $77, $DD, $99, $EE, $E5, $50, $E0, $E0, $DE 
-FPEnemyTileLayout_H_Gfx_4C4A0:
-	dc.b	$01, $00, $EE, $E8, $88, $CE, $DD, $9D, $9B, $09, $AB, $BB, $09, $9A, $BA, $05, $59, $99, $55, $55, $55, $00 
-FPEnemyTileLayout_H_Gfx_4C4B6:
-	dc.b	$01, $55, $00, $03, $76, $FE, $DE, $E0, $ED, $CC, $EE, $00, $0E, $ED, $A9, $00, $00, $09, $A9, $00, $95, $95, $59, $50 
-FPEnemyTileLayout_H_Gfx_4C4CE:
-	dc.b	$01, $00, $33, $31, $11, $3F, $DE, $E0, $E9, $90, $AB, $A9, $9B, $A9, $90, $9A, $B9, $90, $AB, $95, $50, $99, $50, $00 
-FPEnemyTileLayout_H_Gfx_4C4E6:
-	dc.b	$01, $00, $FF, $FF, $FE, $EE, $0A, $0A, $09, $00 
-FPEnemyTileLayout_H_Gfx_4C4F0:
-	dc.b	$01, $00, $FF, $10, $00, $00, $0A, $BA, $BA, $AB, $AB, $BB, $A0, $AB, $BA, $BB, $A0, $BA, $A9, $99, $BA, $99, $88, $89, $9A, $67, $98, $97, $69, $00 
-FPEnemyTileLayout_H_Gfx_4C50E:
-	dc.b	$01, $00, $EE, $CC, $CC, $CC, $09, $EE, $0E, $DD, $0D, $CC, $ED, $CC, $EC, $CD, $EC, $DD, $33, $4E 
-FPEnemyTileLayout_H_Gfx_4C522:
-	dc.b	$00, $97, $88, $87, $99, $E6, $77, $76, $EE, $DE, $67, $6E, $ED, $D3, $99, $93, $ED, $D3, $23, $33, $DD, $E3, $12, $23, $DD, $E3, $11, $13, $DD, $E3, $21, $13 
-	dc.b	$DE, $00 
-FPEnemyTileLayout_H_Gfx_4C544:
-	dc.b	$01, $00, $F7, $77, $33, $33, $D0, $DE, $DD, $DE, $E0, $E4, $E0, $EE, $E0, $EE, $E0, $00 
-FPEnemyTileLayout_H_Gfx_4C556:
-	dc.b	$01, $00, $CC, $CC, $CE, $FF, $EE, $DD, $EE, $ED, $EE, $99, $09, $77, $06, $77, $66, $00 
-FPEnemyTileLayout_H_Gfx_4C568:
-	dc.b	$00, $93, $32, $23, $99, $99, $99, $99, $95, $EE, $EE, $EE, $EE, $95, $EE, $E5, $55, $DD, $DD, $CC, $DE, $DC, $DD, $DC, $CE, $DC, $DE, $DC, $CE, $DC, $EE, $DC 
-	dc.b	$DE, $00 
-FPEnemyTileLayout_H_Gfx_4C58A:
-	dc.b	$01, $00, $33, $7F, $FF, $FF, $E9, $E0, $99, $90, $99, $00 
-FPEnemyTileLayout_H_Gfx_4C596:
-	dc.b	$00, $ED, $EE, $DC, $EE, $0E, $EE, $EE, $E0, $09, $A9, $AB, $90, $59, $99, $AB, $95, $59, $99, $BB, $95, $55, $59, $BB, $B9, $55, $59, $9A, $B9, $00, $55, $99 
-	dc.b	$95, $00 
-FPEnemyTileLayout_H_Gfx_4C5B8:
-	dc.b	$01, $00, $FF, $F7, $77, $7F, $50, $55, $55, $50 
-FPEnemyTileLayout_H_Gfx_4C5C2:
-	dc.b	$01, $00, $FF, $10, $00, $00, $0A, $AB, $AA, $AA, $BB, $BA, $A0, $AB, $BA, $BB, $A0, $AB, $AA, $AB, $A0, $9A, $BB, $BA, $A0, $9A, $AB, $AA, $90, $00 
-FPEnemyTileLayout_H_Gfx_4C5E0:
-	dc.b	$01, $00, $FE, $CC, $CC, $CC, $EE, $0E, $ED, $0E, $DC, $EE, $DD, $ED, $DD, $ED, $CE, $E3, $34, $00 
-FPEnemyTileLayout_H_Gfx_4C5F4:
-	dc.b	$01, $CC, $00, $08, $EE, $60, $99, $AA, $A9, $E0, $EE, $99, $9E, $EE, $CD, $DE, $ED, $DC, $CD, $DC, $CD, $CD, $CE, $DC, $DE, $ED, $DC, $CD, $DE, $00 
-FPEnemyTileLayout_H_Gfx_4C612:
-	dc.b	$01, $00, $F7, $77, $33, $33, $E0, $DE, $DD, $DD, $E0, $DD, $E0, $ED, $E0, $EE, $E0, $00 
-FPEnemyTileLayout_H_Gfx_4C624:
-	dc.b	$01, $00, $CC, $CC, $CE, $FF, $ED, $CE, $ED, $CE, $0D, $DE, $0E, $DE, $07, $99, $79, $00 
-FPEnemyTileLayout_H_Gfx_4C636:
-	dc.b	$00, $EE, $DD, $DD, $EE, $99, $96, $76, $65, $55, $55, $55, $5E, $DC, $CC, $CC, $DE, $E5, $55, $55, $55, $ED, $CC, $CC, $DE, $EE, $ED, $DC, $CE, $EE, $EE, $DC 
-	dc.b	$CE, $00 
-FPEnemyTileLayout_H_Gfx_4C658:
-	dc.b	$01, $00, $77, $FF, $FF, $FF, $EE, $E0 
-FPEnemyTileLayout_H_Gfx_4C660:
-	dc.b	$00, $EE, $EE, $DC, $CE, $0E, $EE, $ED, $CE, $09, $99, $9A, $B9, $59, $99, $9A, $B9, $55, $99, $9B, $B9, $55, $55, $9B, $BB, $55, $55, $9B, $A9, $05, $55, $59 
-	dc.b	$95, $00 
-FPEnemyTileLayout_H_Gfx_4C682:
-	dc.b	$01, $00, $FF, $FF, $73, $77, $55, $55, $50, $55, $50, $00 
+	incbin "data/art/tiles/enemy/fpenemy_h_gfx.bin"
+FPEnemyTileLayout_H_Gfx_4C2AC equ FPEnemyTileLayout_H_Gfx_4C2A6+$6
+FPEnemyTileLayout_H_Gfx_4C2CA equ FPEnemyTileLayout_H_Gfx_4C2A6+$24
+FPEnemyTileLayout_H_Gfx_4C2D4 equ FPEnemyTileLayout_H_Gfx_4C2A6+$2E
+FPEnemyTileLayout_H_Gfx_4C2DC equ FPEnemyTileLayout_H_Gfx_4C2A6+$36
+FPEnemyTileLayout_H_Gfx_4C2FE equ FPEnemyTileLayout_H_Gfx_4C2A6+$58
+FPEnemyTileLayout_H_Gfx_4C312 equ FPEnemyTileLayout_H_Gfx_4C2A6+$6C
+FPEnemyTileLayout_H_Gfx_4C322 equ FPEnemyTileLayout_H_Gfx_4C2A6+$7C
+FPEnemyTileLayout_H_Gfx_4C340 equ FPEnemyTileLayout_H_Gfx_4C2A6+$9A
+FPEnemyTileLayout_H_Gfx_4C356 equ FPEnemyTileLayout_H_Gfx_4C2A6+$B0
+FPEnemyTileLayout_H_Gfx_4C368 equ FPEnemyTileLayout_H_Gfx_4C2A6+$C2
+FPEnemyTileLayout_H_Gfx_4C386 equ FPEnemyTileLayout_H_Gfx_4C2A6+$E0
+FPEnemyTileLayout_H_Gfx_4C398 equ FPEnemyTileLayout_H_Gfx_4C2A6+$F2
+FPEnemyTileLayout_H_Gfx_4C3BA equ FPEnemyTileLayout_H_Gfx_4C2A6+$114
+FPEnemyTileLayout_H_Gfx_4C3CC equ FPEnemyTileLayout_H_Gfx_4C2A6+$126
+FPEnemyTileLayout_H_Gfx_4C3EE equ FPEnemyTileLayout_H_Gfx_4C2A6+$148
+FPEnemyTileLayout_H_Gfx_4C3FC equ FPEnemyTileLayout_H_Gfx_4C2A6+$156
+FPEnemyTileLayout_H_Gfx_4C404 equ FPEnemyTileLayout_H_Gfx_4C2A6+$15E
+FPEnemyTileLayout_H_Gfx_4C426 equ FPEnemyTileLayout_H_Gfx_4C2A6+$180
+FPEnemyTileLayout_H_Gfx_4C432 equ FPEnemyTileLayout_H_Gfx_4C2A6+$18C
+FPEnemyTileLayout_H_Gfx_4C454 equ FPEnemyTileLayout_H_Gfx_4C2A6+$1AE
+FPEnemyTileLayout_H_Gfx_4C462 equ FPEnemyTileLayout_H_Gfx_4C2A6+$1BC
+FPEnemyTileLayout_H_Gfx_4C470 equ FPEnemyTileLayout_H_Gfx_4C2A6+$1CA
+FPEnemyTileLayout_H_Gfx_4C492 equ FPEnemyTileLayout_H_Gfx_4C2A6+$1EC
+FPEnemyTileLayout_H_Gfx_4C4A0 equ FPEnemyTileLayout_H_Gfx_4C2A6+$1FA
+FPEnemyTileLayout_H_Gfx_4C4B6 equ FPEnemyTileLayout_H_Gfx_4C2A6+$210
+FPEnemyTileLayout_H_Gfx_4C4CE equ FPEnemyTileLayout_H_Gfx_4C2A6+$228
+FPEnemyTileLayout_H_Gfx_4C4E6 equ FPEnemyTileLayout_H_Gfx_4C2A6+$240
+FPEnemyTileLayout_H_Gfx_4C4F0 equ FPEnemyTileLayout_H_Gfx_4C2A6+$24A
+FPEnemyTileLayout_H_Gfx_4C50E equ FPEnemyTileLayout_H_Gfx_4C2A6+$268
+FPEnemyTileLayout_H_Gfx_4C522 equ FPEnemyTileLayout_H_Gfx_4C2A6+$27C
+FPEnemyTileLayout_H_Gfx_4C544 equ FPEnemyTileLayout_H_Gfx_4C2A6+$29E
+FPEnemyTileLayout_H_Gfx_4C556 equ FPEnemyTileLayout_H_Gfx_4C2A6+$2B0
+FPEnemyTileLayout_H_Gfx_4C568 equ FPEnemyTileLayout_H_Gfx_4C2A6+$2C2
+FPEnemyTileLayout_H_Gfx_4C58A equ FPEnemyTileLayout_H_Gfx_4C2A6+$2E4
+FPEnemyTileLayout_H_Gfx_4C596 equ FPEnemyTileLayout_H_Gfx_4C2A6+$2F0
+FPEnemyTileLayout_H_Gfx_4C5B8 equ FPEnemyTileLayout_H_Gfx_4C2A6+$312
+FPEnemyTileLayout_H_Gfx_4C5C2 equ FPEnemyTileLayout_H_Gfx_4C2A6+$31C
+FPEnemyTileLayout_H_Gfx_4C5E0 equ FPEnemyTileLayout_H_Gfx_4C2A6+$33A
+FPEnemyTileLayout_H_Gfx_4C5F4 equ FPEnemyTileLayout_H_Gfx_4C2A6+$34E
+FPEnemyTileLayout_H_Gfx_4C612 equ FPEnemyTileLayout_H_Gfx_4C2A6+$36C
+FPEnemyTileLayout_H_Gfx_4C624 equ FPEnemyTileLayout_H_Gfx_4C2A6+$37E
+FPEnemyTileLayout_H_Gfx_4C636 equ FPEnemyTileLayout_H_Gfx_4C2A6+$390
+FPEnemyTileLayout_H_Gfx_4C658 equ FPEnemyTileLayout_H_Gfx_4C2A6+$3B2
+FPEnemyTileLayout_H_Gfx_4C660 equ FPEnemyTileLayout_H_Gfx_4C2A6+$3BA
+FPEnemyTileLayout_H_Gfx_4C682 equ FPEnemyTileLayout_H_Gfx_4C2A6+$3DC
 ; loc_0004C68E
 FPEnemyTileLayout_H:
 	dc.l	FPEnemyTileLayout_H_Gfx_4C2A6
@@ -55144,143 +53952,69 @@ FPEnemyTileLayout_I:
 	dc.b	$02, $1B, $1E, $21, $17, $22, $25, $28, $18, $23, $26, $29, $02, $24, $27, $2A, $02, $2D, $30, $1F, $2B, $2E, $31, $33, $2C, $2F, $32, $34, $02, $37, $3A, $28 
 	dc.b	$35, $38, $3B, $3D, $36, $39, $3C, $3E 
 FPEnemyTileLayout_J_Gfx_4C78E:
-	dc.b	$01, $00, $FF, $FF, $FE, $EE, $02, $23, $33, $00 
-FPEnemyTileLayout_J_Gfx_4C798:
-	dc.b	$02, $00, $FF, $91, $00, $00, $11, $00, $06, $6E, $70, $02, $20, $02, $21, $20, $20, $43, $46, $31, $21, $21 
-FPEnemyTileLayout_J_Gfx_4C7AE:
-	dc.b	$01, $00, $FF, $FF, $FF, $FF 
-FPEnemyTileLayout_J_Gfx_4C7B4:
-	dc.b	$01, $00, $EE, $FE, $EE, $EE, $33, $03, $03, $34, $0E, $0E, $0E, $00 
-FPEnemyTileLayout_J_Gfx_4C7C2:
-	dc.b	$00, $47, $31, $22, $22, $48, $72, $12, $21, $47, $83, $23, $44, $44, $66, $34, $DD, $47, $63, $34, $CC, $E8, $73, $4D, $DC, $ED, $74, $EE, $DD, $DD, $DE, $EE 
-	dc.b	$66, $00 
-FPEnemyTileLayout_J_Gfx_4C7E4:
-	dc.b	$01, $00, $77, $73, $37, $77, $30, $12, $21, $D3, $20, $DD, $20, $DD, $DD, $EE 
-FPEnemyTileLayout_J_Gfx_4C7F4:
-	dc.b	$01, $00, $EE, $EE, $EC, $CC, $67, $77, $76, $61, $33, $03, $22, $02, $22, $32, $21, $00 
-FPEnemyTileLayout_J_Gfx_4C806:
-	dc.b	$00, $DE, $DD, $E7, $76, $ED, $EE, $66, $87, $E6, $77, $88, $76, $67, $77, $77, $64, $16, $66, $66, $43, $21, $22, $23, $33, $21, $21, $11, $22, $12, $11, $11 
-	dc.b	$22, $00 
-FPEnemyTileLayout_J_Gfx_4C828:
-	dc.b	$01, $00, $7F, $77, $33, $31, $E0, $40, $44, $33, $40, $33, $34, $22, $34, $22, $22, $50 
-FPEnemyTileLayout_J_Gfx_4C83A:
-	dc.b	$01, $00, $CC, $CC, $CC, $CE, $32, $22, $33, $22, $B3, $12, $BB, $B2, $33, $BB, $53, $33, $05, $53, $05, $00 
-FPEnemyTileLayout_J_Gfx_4C850:
-	dc.b	$01, $11, $6E, $E6, $00, $00, $12, $12, $12, $12, $12, $12, $B2, $B2, $BB, $B2, $BB, $BB, $B2, $BB, $33, $22, $22, $35, $55, $55, $55, $55 
-FPEnemyTileLayout_J_Gfx_4C86C:
-	dc.b	$02, $55, $22, $22, $24, $80, $00, $10, $00, $11, $3F, $12, $2B, $12, $BB, $50, $12, $B3, $50, $BB, $33, $50, $B2, $35, $25, $50, $50, $00 
-FPEnemyTileLayout_J_Gfx_4C888:
-	dc.b	$01, $00, $FF, $FF, $FE, $EE, $02, $34, $34, $00 
-FPEnemyTileLayout_J_Gfx_4C892:
-	dc.b	$02, $00, $FF, $91, $00, $00, $11, $00, $06, $6E, $44, $02, $20, $02, $21, $20, $20, $22, $12, $12, $42, $22, $12, $00 
-FPEnemyTileLayout_J_Gfx_4C8AA:
-	dc.b	$01, $00, $EE, $FE, $EE, $EE, $33, $03, $03, $04, $0E, $0E, $0E, $00 
-FPEnemyTileLayout_J_Gfx_4C8B8:
-	dc.b	$00, $42, $21, $12, $21, $48, $23, $22, $21, $47, $23, $33, $33, $44, $63, $44, $43, $47, $34, $DD, $C4, $E8, $4D, $DD, $DC, $E7, $DD, $ED, $DD, $EE, $EE, $EE 
-	dc.b	$EE, $00 
-FPEnemyTileLayout_J_Gfx_4C8DA:
-	dc.b	$01, $00, $77, $73, $37, $77, $30, $22, $12, $33, $20, $33, $20, $44, $D4, $E0 
-FPEnemyTileLayout_J_Gfx_4C8EA:
-	dc.b	$01, $00, $FE, $CC, $EC, $CC, $66, $07, $77, $07, $77, $66, $03, $22, $02, $22, $32, $22 
-FPEnemyTileLayout_J_Gfx_4C8FC:
-	dc.b	$00, $EE, $78, $76, $ED, $E7, $87, $6E, $CD, $78, $76, $EC, $DE, $87, $6E, $EE, $E4, $66, $64, $44, $43, $22, $21, $23, $33, $22, $21, $12, $11, $22, $11, $11 
-	dc.b	$11, $00 
-FPEnemyTileLayout_J_Gfx_4C91E:
-	dc.b	$01, $00, $FF, $77, $33, $33, $40, $44, $33, $40, $23, $34, $22, $34, $21, $22 
-FPEnemyTileLayout_J_Gfx_4C92E:
-	dc.b	$01, $00, $CC, $CC, $CC, $EF, $32, $22, $B2, $22, $3B, $22, $33, $BB, $53, $3B, $05, $33, $55, $00 
-FPEnemyTileLayout_J_Gfx_4C942:
-	dc.b	$00, $22, $21, $11, $21, $12, $21, $11, $12, $12, $11, $11, $12, $1B, $11, $11, $12, $BB, $BB, $1B, $B2, $32, $33, $B2, $BB, $53, $32, $22, $23, $55, $55, $55 
-	dc.b	$55, $00 
-FPEnemyTileLayout_J_Gfx_4C964:
-	dc.b	$02, $00, $11, $00, $01, $37, $55, $02, $22, $22, $48, $12, $1B, $50, $12, $1B, $11, $BB, $50, $BB, $B3, $50, $B2, $33, $50, $23, $35, $35 
-FPEnemyTileLayout_J_Gfx_4C980:
-	dc.b	$01, $00, $FF, $FF, $FE, $EE, $02, $24, $24, $00 
-FPEnemyTileLayout_J_Gfx_4C98A:
-	dc.b	$01, $00, $FF, $90, $00, $00, $21, $12, $02, $11, $12, $20, $11, $21, $11, $20, $24, $44, $42, $22, $44, $78, $82, $23, $46, $98, $94, $23 
-FPEnemyTileLayout_J_Gfx_4C9A6:
-	dc.b	$01, $00, $EE, $EC, $CC, $CC, $02, $02, $31, $02, $31, $03, $22, $DD, $33, $DD, $EE, $DE, $EE, $00 
-FPEnemyTileLayout_J_Gfx_4C9BA:
-	dc.b	$00, $47, $88, $84, $22, $47, $87, $84, $13, $46, $78, $75, $13, $44, $66, $64, $42, $47, $78, $87, $44, $E8, $88, $88, $8E, $E8, $88, $78, $EE, $EE, $87, $7E 
-	dc.b	$DE, $00 
-FPEnemyTileLayout_J_Gfx_4C9DC:
-	dc.b	$01, $00, $77, $77, $33, $77, $30, $30, $33, $2D, $DD, $D0, $DD, $D0, $D7, $77 
-FPEnemyTileLayout_J_Gfx_4C9EC:
-	dc.b	$01, $00, $CC, $CC, $CC, $CC, $07, $EE, $08, $7E, $08, $7E, $07, $86, $07, $87, $03, $78, $32, $37, $32, $31 
-FPEnemyTileLayout_J_Gfx_4CA02:
-	dc.b	$00, $DD, $DD, $DD, $DD, $DD, $CE, $DD, $CD, $EC, $DE, $EC, $D6, $EE, $EE, $EE, $68, $66, $6B, $B7, $87, $77, $22, $17, $87, $71, $12, $11, $23, $11, $11, $11 
-	dc.b	$22, $00 
-FPEnemyTileLayout_J_Gfx_4CA24:
-	dc.b	$01, $00, $77, $73, $33, $31, $78, $68, $86, $76, $40, $73, $30, $33, $34, $22, $32, $12, $2B, $55 
-FPEnemyTileLayout_J_Gfx_4CA38:
-	dc.b	$01, $00, $CC, $CC, $8C, $CE, $22, $21, $21, $21, $B1, $21, $BB, $B2, $05, $33, $BB, $53, $33, $05, $53, $05 
-FPEnemyTileLayout_J_Gfx_4CA4E:
-	dc.b	$01, $11, $CC, $9A, $00, $40, $21, $12, $22, $12, $12, $13, $13, $B1, $B1, $12, $BB, $B1, $BB, $BB, $B2, $2B, $32, $12, $25, $55, $55, $55, $55, $00 
-FPEnemyTileLayout_J_Gfx_4CA6C:
-	dc.b	$02, $55, $22, $22, $24, $80, $00, $00, $00, $11, $3F, $12, $BB, $50, $21, $B3, $50, $B1, $33, $50, $BB, $35, $50, $32, $35, $25, $50, $50 
-FPEnemyTileLayout_J_Gfx_4CA88:
-	dc.b	$01, $00, $EE, $CC, $CC, $CC, $02, $02, $02, $31, $0D, $21, $0D, $D2, $DD, $DE, $DE, $EE, $07, $EE 
-FPEnemyTileLayout_J_Gfx_4CA9C:
-	dc.b	$00, $47, $88, $84, $22, $47, $87, $84, $13, $46, $78, $75, $13, $44, $66, $64, $22, $47, $78, $87, $42, $E8, $88, $88, $8E, $E8, $88, $78, $EE, $EE, $87, $7E 
-	dc.b	$DE, $00 
-FPEnemyTileLayout_J_Gfx_4CABE:
-	dc.b	$01, $00, $77, $77, $73, $37, $30, $30, $30, $33, $33, $2D, $D0, $DD, $D0, $E6 
-FPEnemyTileLayout_J_Gfx_4CACE:
-	dc.b	$01, $00, $CC, $CC, $CC, $CC, $08, $7E, $07, $86, $07, $87, $03, $78, $03, $37, $03, $22, $32, $22, $B2, $22 
-FPEnemyTileLayout_J_Gfx_4CAE4:
-	dc.b	$00, $DD, $DD, $DD, $DD, $DD, $CE, $DD, $CD, $6C, $DE, $EC, $DE, $7E, $EE, $EE, $EE, $76, $6B, $BB, $66, $22, $22, $27, $68, $22, $12, $17, $87, $12, $12, $11 
-	dc.b	$11, $00 
-FPEnemyTileLayout_J_Gfx_4CB06:
-	dc.b	$01, $00, $77, $77, $33, $31, $67, $78, $68, $68, $86, $40, $77, $30, $72, $34, $22, $33, $50, $00 
-FPEnemyTileLayout_J_Gfx_4CB1A:
-	dc.b	$01, $00, $CC, $CC, $CC, $EF, $B2, $22, $3B, $B2, $03, $BB, $53, $33, $55, $33, $05, $55, $05, $00 
-FPEnemyTileLayout_J_Gfx_4CB2E:
-	dc.b	$01, $11, $57, $32, $00, $60, $12, $21, $22, $B2, $12, $BB, $12, $21, $32, $B1, $BB, $B1, $32, $BB, $B2, $BB, $55, $13, $05, $55, $55, $55 
-FPEnemyTileLayout_J_Gfx_4CB4A:
-	dc.b	$02, $55, $22, $22, $22, $40, $00, $10, $00, $01, $37, $12, $12, $12, $1B, $50, $12, $1B, $50, $12, $B3, $50, $BB, $33, $50, $B2, $35, $35, $50, $00 
-FPEnemyTileLayout_J_Gfx_4CB68:
-	dc.b	$02, $00, $FF, $90, $00, $00, $11, $00, $02, $66, $C4, $22, $22, $02, $21, $20, $02, $22, $21, $12, $21, $13, $12, $22, $13, $00 
-FPEnemyTileLayout_J_Gfx_4CB82:
-	dc.b	$01, $00, $FF, $FF, $F7, $77, $20, $22, $22, $00 
-FPEnemyTileLayout_J_Gfx_4CB8C:
-	dc.b	$01, $00, $EE, $EE, $EE, $CC, $02, $01, $01, $32, $32, $D3, $0D, $DD, $0D, $DE 
-FPEnemyTileLayout_J_Gfx_4CB9C:
-	dc.b	$00, $12, $12, $32, $21, $13, $11, $33, $31, $23, $31, $34, $32, $23, $31, $34, $32, $34, $32, $33, $33, $34, $31, $23, $34, $E4, $32, $13, $4E, $5E, $E2, $2E 
-	dc.b	$EE, $00 
-FPEnemyTileLayout_J_Gfx_4CBBE:
-	dc.b	$01, $00, $77, $73, $33, $33, $20, $20, $23, $2D, $D0, $EE, $DD, $EE, $ED, $EE, $70, $57, $70, $00 
-FPEnemyTileLayout_J_Gfx_4CBD2:
-	dc.b	$01, $00, $EE, $EE, $CC, $CC, $8E, $87, $76, $66, $04, $44, $03, $31, $43, $22, $32, $21 
-FPEnemyTileLayout_J_Gfx_4CBE4:
-	dc.b	$01, $11, $00, $00, $48, $AE, $5E, $EE, $EE, $EE, $ED, $DE, $EE, $EE, $9E, $DD, $DD, $E9, $99, $AB, $BA, $94, $31, $13, $33, $22, $12, $23, $21, $22, $22, $00 
-FPEnemyTileLayout_J_Gfx_4CC04:
-	dc.b	$01, $00, $33, $33, $33, $11, $57, $70, $66, $70, $46, $60, $34, $90, $33, $40, $32, $35, $22, $23, $50, $12, $2B, $55 
-FPEnemyTileLayout_J_Gfx_4CC1C:
-	dc.b	$01, $11, $EC, $DA, $40, $60, $12, $12, $12, $12, $12, $B1, $B1, $BB, $B1, $BB, $BB, $B2, $1B, $32, $15, $55, $55, $55, $55, $00 
-FPEnemyTileLayout_J_Gfx_4CC36:
-	dc.b	$01, $00, $00, $00, $13, $7F, $12, $BB, $55, $50, $21, $B3, $55, $50, $B1, $33, $55, $50, $BB, $35, $55, $50, $22, $35, $55, $25, $55, $50 
-FPEnemyTileLayout_J_Gfx_4CC52:
-	dc.b	$02, $00, $FF, $90, $00, $00, $11, $00, $02, $64, $E4, $22, $22, $02, $21, $20, $02, $21, $21, $12, $21, $31, $12, $21, $32, $00 
-FPEnemyTileLayout_J_Gfx_4CC6C:
-	dc.b	$01, $00, $FF, $FF, $F7, $77, $10, $12, $12, $00 
-FPEnemyTileLayout_J_Gfx_4CC76:
-	dc.b	$01, $00, $EE, $EE, $CC, $EE, $02, $01, $21, $D2, $0D, $DD, $0D, $DD, $7E, $87 
-FPEnemyTileLayout_J_Gfx_4CC86:
-	dc.b	$00, $12, $12, $21, $12, $13, $11, $32, $11, $33, $31, $32, $21, $43, $11, $33, $21, $43, $21, $33, $32, $43, $11, $23, $32, $E4, $31, $34, $4E, $5E, $32, $2E 
-	dc.b	$EE, $00 
-FPEnemyTileLayout_J_Gfx_4CCA8:
-	dc.b	$01, $00, $77, $73, $33, $33, $20, $20, $23, $22, $30, $23, $30, $3D, $DD, $EE, $ED, $5E, $70, $00 
-FPEnemyTileLayout_J_Gfx_4CCBC:
-	dc.b	$01, $00, $EE, $EE, $CC, $CC, $76, $66, $69, $43, $04, $33, $03, $33, $43, $22, $B2, $22 
-FPEnemyTileLayout_J_Gfx_4CCCE:
-	dc.b	$00, $5E, $EE, $EE, $EE, $ED, $DE, $EE, $EE, $9E, $DD, $DD, $E9, $49, $AB, $BA, $94, $31, $11, $11, $33, $11, $11, $22, $13, $21, $11, $21, $12, $12, $11, $21 
-	dc.b	$12, $00 
-FPEnemyTileLayout_J_Gfx_4CCF0:
-	dc.b	$01, $00, $33, $33, $33, $33, $57, $70, $67, $80, $67, $80, $46, $60, $34, $40, $32, $30, $22, $23, $12, $33 
-FPEnemyTileLayout_J_Gfx_4CD06:
-	dc.b	$01, $11, $67, $32, $00, $60, $12, $12, $22, $B2, $12, $BB, $12, $21, $32, $B1, $BB, $B1, $32, $BB, $B2, $BB, $55, $13, $05, $55, $55, $55 
-FPEnemyTileLayout_J_Gfx_4CD22:
-	dc.b	$01, $55, $02, $22, $22, $68, $12, $12, $50, $00, $12, $1B, $00, $12, $1B, $50, $12, $B3, $50, $BB, $33, $50, $B2, $35, $50, $35, $00, $50, $00, $00 
+	incbin "data/art/tiles/enemy/fpenemy_j_gfx.bin"
+FPEnemyTileLayout_J_Gfx_4C798 equ FPEnemyTileLayout_J_Gfx_4C78E+$A
+FPEnemyTileLayout_J_Gfx_4C7AE equ FPEnemyTileLayout_J_Gfx_4C78E+$20
+FPEnemyTileLayout_J_Gfx_4C7B4 equ FPEnemyTileLayout_J_Gfx_4C78E+$26
+FPEnemyTileLayout_J_Gfx_4C7C2 equ FPEnemyTileLayout_J_Gfx_4C78E+$34
+FPEnemyTileLayout_J_Gfx_4C7E4 equ FPEnemyTileLayout_J_Gfx_4C78E+$56
+FPEnemyTileLayout_J_Gfx_4C7F4 equ FPEnemyTileLayout_J_Gfx_4C78E+$66
+FPEnemyTileLayout_J_Gfx_4C806 equ FPEnemyTileLayout_J_Gfx_4C78E+$78
+FPEnemyTileLayout_J_Gfx_4C828 equ FPEnemyTileLayout_J_Gfx_4C78E+$9A
+FPEnemyTileLayout_J_Gfx_4C83A equ FPEnemyTileLayout_J_Gfx_4C78E+$AC
+FPEnemyTileLayout_J_Gfx_4C850 equ FPEnemyTileLayout_J_Gfx_4C78E+$C2
+FPEnemyTileLayout_J_Gfx_4C86C equ FPEnemyTileLayout_J_Gfx_4C78E+$DE
+FPEnemyTileLayout_J_Gfx_4C888 equ FPEnemyTileLayout_J_Gfx_4C78E+$FA
+FPEnemyTileLayout_J_Gfx_4C892 equ FPEnemyTileLayout_J_Gfx_4C78E+$104
+FPEnemyTileLayout_J_Gfx_4C8AA equ FPEnemyTileLayout_J_Gfx_4C78E+$11C
+FPEnemyTileLayout_J_Gfx_4C8B8 equ FPEnemyTileLayout_J_Gfx_4C78E+$12A
+FPEnemyTileLayout_J_Gfx_4C8DA equ FPEnemyTileLayout_J_Gfx_4C78E+$14C
+FPEnemyTileLayout_J_Gfx_4C8EA equ FPEnemyTileLayout_J_Gfx_4C78E+$15C
+FPEnemyTileLayout_J_Gfx_4C8FC equ FPEnemyTileLayout_J_Gfx_4C78E+$16E
+FPEnemyTileLayout_J_Gfx_4C91E equ FPEnemyTileLayout_J_Gfx_4C78E+$190
+FPEnemyTileLayout_J_Gfx_4C92E equ FPEnemyTileLayout_J_Gfx_4C78E+$1A0
+FPEnemyTileLayout_J_Gfx_4C942 equ FPEnemyTileLayout_J_Gfx_4C78E+$1B4
+FPEnemyTileLayout_J_Gfx_4C964 equ FPEnemyTileLayout_J_Gfx_4C78E+$1D6
+FPEnemyTileLayout_J_Gfx_4C980 equ FPEnemyTileLayout_J_Gfx_4C78E+$1F2
+FPEnemyTileLayout_J_Gfx_4C98A equ FPEnemyTileLayout_J_Gfx_4C78E+$1FC
+FPEnemyTileLayout_J_Gfx_4C9A6 equ FPEnemyTileLayout_J_Gfx_4C78E+$218
+FPEnemyTileLayout_J_Gfx_4C9BA equ FPEnemyTileLayout_J_Gfx_4C78E+$22C
+FPEnemyTileLayout_J_Gfx_4C9DC equ FPEnemyTileLayout_J_Gfx_4C78E+$24E
+FPEnemyTileLayout_J_Gfx_4C9EC equ FPEnemyTileLayout_J_Gfx_4C78E+$25E
+FPEnemyTileLayout_J_Gfx_4CA02 equ FPEnemyTileLayout_J_Gfx_4C78E+$274
+FPEnemyTileLayout_J_Gfx_4CA24 equ FPEnemyTileLayout_J_Gfx_4C78E+$296
+FPEnemyTileLayout_J_Gfx_4CA38 equ FPEnemyTileLayout_J_Gfx_4C78E+$2AA
+FPEnemyTileLayout_J_Gfx_4CA4E equ FPEnemyTileLayout_J_Gfx_4C78E+$2C0
+FPEnemyTileLayout_J_Gfx_4CA6C equ FPEnemyTileLayout_J_Gfx_4C78E+$2DE
+FPEnemyTileLayout_J_Gfx_4CA88 equ FPEnemyTileLayout_J_Gfx_4C78E+$2FA
+FPEnemyTileLayout_J_Gfx_4CA9C equ FPEnemyTileLayout_J_Gfx_4C78E+$30E
+FPEnemyTileLayout_J_Gfx_4CABE equ FPEnemyTileLayout_J_Gfx_4C78E+$330
+FPEnemyTileLayout_J_Gfx_4CACE equ FPEnemyTileLayout_J_Gfx_4C78E+$340
+FPEnemyTileLayout_J_Gfx_4CAE4 equ FPEnemyTileLayout_J_Gfx_4C78E+$356
+FPEnemyTileLayout_J_Gfx_4CB06 equ FPEnemyTileLayout_J_Gfx_4C78E+$378
+FPEnemyTileLayout_J_Gfx_4CB1A equ FPEnemyTileLayout_J_Gfx_4C78E+$38C
+FPEnemyTileLayout_J_Gfx_4CB2E equ FPEnemyTileLayout_J_Gfx_4C78E+$3A0
+FPEnemyTileLayout_J_Gfx_4CB4A equ FPEnemyTileLayout_J_Gfx_4C78E+$3BC
+FPEnemyTileLayout_J_Gfx_4CB68 equ FPEnemyTileLayout_J_Gfx_4C78E+$3DA
+FPEnemyTileLayout_J_Gfx_4CB82 equ FPEnemyTileLayout_J_Gfx_4C78E+$3F4
+FPEnemyTileLayout_J_Gfx_4CB8C equ FPEnemyTileLayout_J_Gfx_4C78E+$3FE
+FPEnemyTileLayout_J_Gfx_4CB9C equ FPEnemyTileLayout_J_Gfx_4C78E+$40E
+FPEnemyTileLayout_J_Gfx_4CBBE equ FPEnemyTileLayout_J_Gfx_4C78E+$430
+FPEnemyTileLayout_J_Gfx_4CBD2 equ FPEnemyTileLayout_J_Gfx_4C78E+$444
+FPEnemyTileLayout_J_Gfx_4CBE4 equ FPEnemyTileLayout_J_Gfx_4C78E+$456
+FPEnemyTileLayout_J_Gfx_4CC04 equ FPEnemyTileLayout_J_Gfx_4C78E+$476
+FPEnemyTileLayout_J_Gfx_4CC1C equ FPEnemyTileLayout_J_Gfx_4C78E+$48E
+FPEnemyTileLayout_J_Gfx_4CC36 equ FPEnemyTileLayout_J_Gfx_4C78E+$4A8
+FPEnemyTileLayout_J_Gfx_4CC52 equ FPEnemyTileLayout_J_Gfx_4C78E+$4C4
+FPEnemyTileLayout_J_Gfx_4CC6C equ FPEnemyTileLayout_J_Gfx_4C78E+$4DE
+FPEnemyTileLayout_J_Gfx_4CC76 equ FPEnemyTileLayout_J_Gfx_4C78E+$4E8
+FPEnemyTileLayout_J_Gfx_4CC86 equ FPEnemyTileLayout_J_Gfx_4C78E+$4F8
+FPEnemyTileLayout_J_Gfx_4CCA8 equ FPEnemyTileLayout_J_Gfx_4C78E+$51A
+FPEnemyTileLayout_J_Gfx_4CCBC equ FPEnemyTileLayout_J_Gfx_4C78E+$52E
+FPEnemyTileLayout_J_Gfx_4CCCE equ FPEnemyTileLayout_J_Gfx_4C78E+$540
+FPEnemyTileLayout_J_Gfx_4CCF0 equ FPEnemyTileLayout_J_Gfx_4C78E+$562
+FPEnemyTileLayout_J_Gfx_4CD06 equ FPEnemyTileLayout_J_Gfx_4C78E+$578
+FPEnemyTileLayout_J_Gfx_4CD22 equ FPEnemyTileLayout_J_Gfx_4C78E+$594
 ; loc_0004CD40
 FPEnemyTileLayout_J:
 	dc.l	FPEnemyTileLayout_J_Gfx_4C78E
@@ -55351,95 +54085,48 @@ FPEnemyTileLayout_K:
 	dc.b	$00, $03, $06, $09, $01, $04, $07, $0A, $02, $05, $08, $0B, $00, $03, $0F, $12, $0C, $0D, $10, $13, $02, $0E, $11, $14, $15, $17, $1A, $1D, $16, $18, $1B, $1E 
 	dc.b	$03, $19, $1C, $1F, $15, $21, $24, $27, $20, $22, $25, $28, $03, $23, $26, $29 
 FPEnemyTileLayout_L_Gfx_4CE6C:
-	dc.b	$01, $00, $FF, $FF, $FE, $EE, $08, $09, $08, $00 
-FPEnemyTileLayout_L_Gfx_4CE76:
-	dc.b	$01, $00, $FF, $91, $00, $00, $98, $90, $88, $99, $98, $89, $98, $99, $80, $88, $98, $99, $88, $86, $99, $89, $98, $67, $89, $99, $99, $00 
-FPEnemyTileLayout_L_Gfx_4CE92:
-	dc.b	$01, $00, $FF, $FF, $FF, $F7, $80, $00 
-FPEnemyTileLayout_L_Gfx_4CE9A:
-	dc.b	$01, $00, $FF, $FF, $FF, $FF 
-FPEnemyTileLayout_L_Gfx_4CEA0:
-	dc.b	$00, $67, $47, $88, $99, $07, $77, $68, $89, $86, $76, $68, $88, $88, $66, $86, $AA, $8E, $77, $7A, $AB, $0D, $AA, $DA, $BC, $DB, $BD, $BA, $BB, $DD, $EB, $AA 
-	dc.b	$AA, $00 
-FPEnemyTileLayout_L_Gfx_4CEC2:
-	dc.b	$01, $00, $77, $33, $33, $33, $98, $98, $89, $80, $A9, $80, $CB, $80, $BB, $A0, $AA, $A0, $A6, $A0 
-FPEnemyTileLayout_L_Gfx_4CED6:
-	dc.b	$01, $00, $FF, $EE, $CC, $CC, $66, $6E, $06, $ED, $0E, $DD, $0D, $DD, $DD, $DD 
-FPEnemyTileLayout_L_Gfx_4CEE6:
-	dc.b	$00, $DD, $EB, $BA, $A5, $DD, $EA, $AA, $A6, $ED, $EA, $A5, $56, $E6, $65, $67, $77, $67, $77, $77, $65, $E7, $7E, $AA, $AA, $DE, $EE, $BB, $BB, $DD, $DE, $BB 
-	dc.b	$BB, $00 
-FPEnemyTileLayout_L_Gfx_4CF08:
-	dc.b	$01, $00, $77, $77, $77, $33, $66, $76, $76, $60, $AA, $BB, $CB, $A0, $CC, $B0 
-FPEnemyTileLayout_L_Gfx_4CF18:
-	dc.b	$01, $00, $CC, $C8, $8C, $CE, $ED, $DD, $ED, $DD, $AE, $DD, $04, $AA, $BE, $04, $AA, $AB, $44, $AA, $04, $44, $04, $00 
-FPEnemyTileLayout_L_Gfx_4CF30:
-	dc.b	$01, $BB, $00, $00, $D7, $60, $DD, $DE, $BC, $CC, $DD, $DE, $BC, $CC, $DD, $EB, $BC, $CC, $DE, $EB, $CC, $CB, $CB, $AB, $AA, $A4, $44, $44, $44, $44 
-FPEnemyTileLayout_L_Gfx_4CF4E:
-	dc.b	$02, $00, $31, $11, $11, $37, $44, $00, $22, $24, $C8, $BC, $BA, $BC, $BA, $40, $BC, $BA, $CB, $B4, $BB, $A4, $A4, $40 
-FPEnemyTileLayout_L_Gfx_4CF66:
-	dc.b	$01, $00, $FF, $91, $00, $00, $98, $90, $88, $99, $98, $89, $98, $99, $80, $98, $98, $99, $88, $96, $99, $89, $98, $67, $89, $99, $99, $00 
-FPEnemyTileLayout_L_Gfx_4CF82:
-	dc.b	$00, $67, $47, $88, $99, $07, $77, $68, $89, $86, $76, $68, $88, $88, $66, $86, $AA, $8E, $77, $7A, $BC, $0E, $BE, $AB, $CB, $DE, $DB, $AB, $BB, $DD, $BB, $AA 
-	dc.b	$AA, $00 
-FPEnemyTileLayout_L_Gfx_4CFA4:
-	dc.b	$01, $00, $77, $33, $37, $77, $98, $98, $89, $80, $A9, $80, $BB, $80, $BA, $AA, $AA, $00 
-FPEnemyTileLayout_L_Gfx_4CFB6:
-	dc.b	$01, $00, $FF, $FF, $EE, $CC, $06, $EE, $0E, $DD, $0D, $DD 
-FPEnemyTileLayout_L_Gfx_4CFC2:
-	dc.b	$01, $AA, $66, $40, $03, $00, $DD, $56, $DD, $67, $EE, $56, $67, $66, $56, $77, $77, $77, $67, $66, $6A, $77, $6E, $EE, $EE, $AB, $BB, $DD, $DD, $AB, $BB, $00 
-FPEnemyTileLayout_L_Gfx_4CFE2:
-	dc.b	$01, $00, $77, $77, $77, $33, $60, $60, $60, $A0, $AA, $BA, $BB, $A0, $BC, $A0 
-FPEnemyTileLayout_L_Gfx_4CFF2:
-	dc.b	$01, $00, $CC, $88, $CC, $CE, $AD, $DD, $AE, $DD, $04, $AA, $ED, $04, $AA, $BE, $4A, $AB, $44, $AA, $04, $4A, $44, $00 
-FPEnemyTileLayout_L_Gfx_4D00A:
-	dc.b	$01, $BB, $02, $00, $D7, $60, $DD, $DE, $AB, $CC, $DD, $DE, $CC, $DD, $EA, $BC, $CC, $EE, $AB, $CC, $CC, $CC, $AB, $AA, $AB, $44, $44, $44, $44, $00 
-FPEnemyTileLayout_L_Gfx_4D028:
-	dc.b	$01, $00, $31, $11, $11, $37, $BC, $BA, $CC, $BA, $40, $CC, $BA, $44, $CB, $BA, $44, $BB, $A4, $44, $AB, $A4, $40, $A4, $44, $44 
-FPEnemyTileLayout_L_Gfx_4D042:
-	dc.b	$01, $00, $FF, $FF, $FF, $EE, $05, $08 
-FPEnemyTileLayout_L_Gfx_4D04A:
-	dc.b	$01, $00, $FF, $91, $00, $00, $88, $80, $08, $99, $98, $89, $98, $99, $80, $99, $98, $89, $90, $99, $67, $69, $98, $96, $47, $46, $89, $00 
-FPEnemyTileLayout_L_Gfx_4D066:
-	dc.b	$01, $00, $EE, $CC, $CC, $CC, $59, $89, $0A, $88, $AB, $55, $AB, $CA, $0B, $BB, $06, $6B, $07, $6A 
-FPEnemyTileLayout_L_Gfx_4D07A:
-	dc.b	$00, $86, $77, $76, $98, $86, $77, $76, $89, $55, $77, $75, $58, $5E, $56, $5E, $55, $AE, $77, $7E, $5A, $BE, $A7, $AE, $BB, $BD, $BA, $BD, $BB, $BD, $DD, $DD 
-	dc.b	$BA, $00 
-FPEnemyTileLayout_L_Gfx_4D09C:
-	dc.b	$01, $00, $77, $77, $33, $77, $50, $80, $80, $AA, $BC, $A0, $BB, $B0, $AB, $67 
-FPEnemyTileLayout_L_Gfx_4D0AC:
-	dc.b	$01, $00, $CC, $EE, $CC, $CC, $07, $76, $05, $77, $77, $56, $0A, $A5, $0A, $AE, $AA, $EE, $AA, $ED 
-FPEnemyTileLayout_L_Gfx_4D0C0:
-	dc.b	$00, $ED, $DD, $DD, $EA, $8E, $DD, $DE, $8A, $68, $89, $88, $66, $77, $7E, $67, $77, $77, $77, $77, $75, $E5, $67, $55, $5E, $DE, $EE, $EE, $ED, $DD, $DE, $ED 
-	dc.b	$DD, $00 
-FPEnemyTileLayout_L_Gfx_4D0E2:
-	dc.b	$01, $00, $77, $77, $33, $33, $67, $67, $75, $5A, $AA, $A0, $AA, $A0, $EA, $AA, $DE, $BA 
-FPEnemyTileLayout_L_Gfx_4D0F4:
-	dc.b	$01, $00, $CC, $C8, $8C, $CE, $AE, $DD, $AE, $DE, $AA, $DE, $04, $AA, $EE, $04, $AA, $AE, $4A, $AA, $04, $4A, $04, $00 
-FPEnemyTileLayout_L_Gfx_4D10C:
-	dc.b	$01, $DD, $FF, $BC, $00, $00, $DE, $ED, $DE, $EE, $DE, $EE, $EA, $AB, $BB, $BB, $BB, $AA, $BB, $BB, $AA, $44, $44, $44, $44, $00 
-FPEnemyTileLayout_L_Gfx_4D126:
-	dc.b	$01, $00, $33, $11, $13, $37, $DE, $AA, $EE, $BB, $EA, $BC, $A0, $AA, $BB, $A0, $BB, $AA, $40, $AA, $A4, $A4, $40, $44 
-FPEnemyTileLayout_L_Gfx_4D13E:
-	dc.b	$01, $00, $FF, $91, $00, $00, $88, $80, $08, $98, $88, $89, $99, $89, $80, $89, $99, $89, $80, $99, $89, $98, $98, $98, $99, $98, $99, $00 
-FPEnemyTileLayout_L_Gfx_4D15A:
-	dc.b	$01, $00, $EE, $CC, $CC, $CC, $59, $89, $0A, $88, $AB, $A8, $AC, $BA, $0B, $BB, $06, $6B, $07, $6A 
-FPEnemyTileLayout_L_Gfx_4D16E:
-	dc.b	$01, $88, $80, $3F, $60, $00, $98, $99, $89, $89, $98, $99, $89, $89, $89, $AE, $8A, $BE, $AA, $AB, $EB, $BD, $BB, $BB, $EB, $BD, $BB, $BB, $DA, $00 
-FPEnemyTileLayout_L_Gfx_4D18C:
-	dc.b	$01, $00, $77, $77, $33, $77, $50, $80, $80, $AA, $BC, $A0, $BC, $B0, $AB, $67 
-FPEnemyTileLayout_L_Gfx_4D19C:
-	dc.b	$01, $00, $CC, $CC, $CC, $CC, $07, $76, $06, $76, $06, $6A, $0A, $AA, $0A, $BB, $0A, $BB, $AB, $BB, $AB, $CC 
-FPEnemyTileLayout_L_Gfx_4D1B2:
-	dc.b	$00, $BD, $AA, $AA, $DA, $EE, $AA, $AA, $EE, $AE, $DD, $DE, $AA, $AD, $BD, $BB, $DA, $DB, $BE, $DB, $BD, $DD, $DB, $BD, $DB, $BB, $DB, $BD, $BB, $BD, $BB, $BB 
-	dc.b	$DB, $00 
-FPEnemyTileLayout_L_Gfx_4D1D4:
-	dc.b	$01, $00, $77, $77, $73, $33, $77, $77, $76, $66, $AA, $AA, $A0, $AA, $A0, $BB, $AA, $00 
-FPEnemyTileLayout_L_Gfx_4D1E6:
-	dc.b	$01, $00, $CC, $C8, $8C, $CE, $AB, $CB, $AC, $BB, $AC, $BB, $04, $AB, $BB, $04, $AA, $AB, $4A, $AA, $04, $4A, $04, $00 
-FPEnemyTileLayout_L_Gfx_4D1FE:
-	dc.b	$01, $BB, $7C, $12, $02, $60, $BE, $CB, $BC, $AB, $BC, $CB, $AA, $BC, $AB, $AB, $CC, $CB, $AB, $AB, $CB, $AB, $AA, $AA, $44, $44, $44, $44 
-FPEnemyTileLayout_L_Gfx_4D21A:
-	dc.b	$01, $00, $33, $31, $13, $37, $BB, $AA, $BB, $AA, $CB, $AA, $CB, $BA, $40, $CB, $A4, $40, $AA, $44, $44, $40, $40, $00 
+	incbin "data/art/tiles/enemy/fpenemy_l_gfx.bin"
+FPEnemyTileLayout_L_Gfx_4CE76 equ FPEnemyTileLayout_L_Gfx_4CE6C+$A
+FPEnemyTileLayout_L_Gfx_4CE92 equ FPEnemyTileLayout_L_Gfx_4CE6C+$26
+FPEnemyTileLayout_L_Gfx_4CE9A equ FPEnemyTileLayout_L_Gfx_4CE6C+$2E
+FPEnemyTileLayout_L_Gfx_4CEA0 equ FPEnemyTileLayout_L_Gfx_4CE6C+$34
+FPEnemyTileLayout_L_Gfx_4CEC2 equ FPEnemyTileLayout_L_Gfx_4CE6C+$56
+FPEnemyTileLayout_L_Gfx_4CED6 equ FPEnemyTileLayout_L_Gfx_4CE6C+$6A
+FPEnemyTileLayout_L_Gfx_4CEE6 equ FPEnemyTileLayout_L_Gfx_4CE6C+$7A
+FPEnemyTileLayout_L_Gfx_4CF08 equ FPEnemyTileLayout_L_Gfx_4CE6C+$9C
+FPEnemyTileLayout_L_Gfx_4CF18 equ FPEnemyTileLayout_L_Gfx_4CE6C+$AC
+FPEnemyTileLayout_L_Gfx_4CF30 equ FPEnemyTileLayout_L_Gfx_4CE6C+$C4
+FPEnemyTileLayout_L_Gfx_4CF4E equ FPEnemyTileLayout_L_Gfx_4CE6C+$E2
+FPEnemyTileLayout_L_Gfx_4CF66 equ FPEnemyTileLayout_L_Gfx_4CE6C+$FA
+FPEnemyTileLayout_L_Gfx_4CF82 equ FPEnemyTileLayout_L_Gfx_4CE6C+$116
+FPEnemyTileLayout_L_Gfx_4CFA4 equ FPEnemyTileLayout_L_Gfx_4CE6C+$138
+FPEnemyTileLayout_L_Gfx_4CFB6 equ FPEnemyTileLayout_L_Gfx_4CE6C+$14A
+FPEnemyTileLayout_L_Gfx_4CFC2 equ FPEnemyTileLayout_L_Gfx_4CE6C+$156
+FPEnemyTileLayout_L_Gfx_4CFE2 equ FPEnemyTileLayout_L_Gfx_4CE6C+$176
+FPEnemyTileLayout_L_Gfx_4CFF2 equ FPEnemyTileLayout_L_Gfx_4CE6C+$186
+FPEnemyTileLayout_L_Gfx_4D00A equ FPEnemyTileLayout_L_Gfx_4CE6C+$19E
+FPEnemyTileLayout_L_Gfx_4D028 equ FPEnemyTileLayout_L_Gfx_4CE6C+$1BC
+FPEnemyTileLayout_L_Gfx_4D042 equ FPEnemyTileLayout_L_Gfx_4CE6C+$1D6
+FPEnemyTileLayout_L_Gfx_4D04A equ FPEnemyTileLayout_L_Gfx_4CE6C+$1DE
+FPEnemyTileLayout_L_Gfx_4D066 equ FPEnemyTileLayout_L_Gfx_4CE6C+$1FA
+FPEnemyTileLayout_L_Gfx_4D07A equ FPEnemyTileLayout_L_Gfx_4CE6C+$20E
+FPEnemyTileLayout_L_Gfx_4D09C equ FPEnemyTileLayout_L_Gfx_4CE6C+$230
+FPEnemyTileLayout_L_Gfx_4D0AC equ FPEnemyTileLayout_L_Gfx_4CE6C+$240
+FPEnemyTileLayout_L_Gfx_4D0C0 equ FPEnemyTileLayout_L_Gfx_4CE6C+$254
+FPEnemyTileLayout_L_Gfx_4D0E2 equ FPEnemyTileLayout_L_Gfx_4CE6C+$276
+FPEnemyTileLayout_L_Gfx_4D0F4 equ FPEnemyTileLayout_L_Gfx_4CE6C+$288
+FPEnemyTileLayout_L_Gfx_4D10C equ FPEnemyTileLayout_L_Gfx_4CE6C+$2A0
+FPEnemyTileLayout_L_Gfx_4D126 equ FPEnemyTileLayout_L_Gfx_4CE6C+$2BA
+FPEnemyTileLayout_L_Gfx_4D13E equ FPEnemyTileLayout_L_Gfx_4CE6C+$2D2
+FPEnemyTileLayout_L_Gfx_4D15A equ FPEnemyTileLayout_L_Gfx_4CE6C+$2EE
+FPEnemyTileLayout_L_Gfx_4D16E equ FPEnemyTileLayout_L_Gfx_4CE6C+$302
+FPEnemyTileLayout_L_Gfx_4D18C equ FPEnemyTileLayout_L_Gfx_4CE6C+$320
+FPEnemyTileLayout_L_Gfx_4D19C equ FPEnemyTileLayout_L_Gfx_4CE6C+$330
+FPEnemyTileLayout_L_Gfx_4D1B2 equ FPEnemyTileLayout_L_Gfx_4CE6C+$346
+FPEnemyTileLayout_L_Gfx_4D1D4 equ FPEnemyTileLayout_L_Gfx_4CE6C+$368
+FPEnemyTileLayout_L_Gfx_4D1E6 equ FPEnemyTileLayout_L_Gfx_4CE6C+$37A
+FPEnemyTileLayout_L_Gfx_4D1FE equ FPEnemyTileLayout_L_Gfx_4CE6C+$392
+FPEnemyTileLayout_L_Gfx_4D21A equ FPEnemyTileLayout_L_Gfx_4CE6C+$3AE
 ; loc_0004D232
 FPEnemyTileLayout_L:
 	dc.l	FPEnemyTileLayout_L_Gfx_4CE6C
@@ -55727,183 +54414,89 @@ FPEnemyTileLayout_M:
 	dc.b	$19, $1C, $1F, $22, $23, $26, $29, $2C, $24, $27, $2A, $2D, $25, $28, $2B, $2E, $2F, $32, $35, $38, $30, $33, $36, $39, $31, $34, $37, $3A, $3B, $3E, $41, $44 
 	dc.b	$3C, $3F, $42, $45, $3D, $40, $43, $46, $47, $4A, $4D, $50, $48, $4B, $4E, $51, $49, $4C, $4F, $52 
 FPEnemyTileLayout_N_Gfx_4DA12:
-	dc.b	$02, $00, $DC, $CC, $CC, $CC, $30, $01, $11, $11, $11, $02, $31, $31, $31, $31, $31, $32, $32, $00 
-FPEnemyTileLayout_N_Gfx_4DA26:
-	dc.b	$00, $00, $0D, $DE, $00, $00, $DC, $CD, $E0, $0D, $CC, $3C, $DE, $0E, $C3, $3C, $DE, $0E, $C3, $CC, $EE, $0E, $EC, $CD, $EE, $0E, $CC, $DE, $ED, $0E, $CD, $EE 
-	dc.b	$DC, $00 
-FPEnemyTileLayout_N_Gfx_4DA48:
-	dc.b	$01, $00, $FF, $FF, $FF, $73, $DE, $CD, $E0, $00 
-FPEnemyTileLayout_N_Gfx_4DA52:
-	dc.b	$01, $00, $C8, $CC, $CC, $CC, $43, $40, $04, $43, $44, $44, $40, $EE, $E0, $ED, $DE, $0E, $EE, $05, $5E, $05, $5E, $00 
-FPEnemyTileLayout_N_Gfx_4DA6A:
-	dc.b	$01, $EE, $62, $00, $00, $99, $00, $C3, $0D, $CC, $DC, $DC, $3C, $DE, $ED, $DC, $CD, $EC, $DE, $ED, $DE, $DC, $3D, $ED, $ED, $ED, $DE, $3C, $DE, $CC, $DE, $00 
-FPEnemyTileLayout_N_Gfx_4DA8A:
-	dc.b	$01, $00, $33, $77, $77, $FF, $3C, $E0, $CD, $E0, $DE, $EE, $E0, $E0 
-FPEnemyTileLayout_N_Gfx_4DA98:
-	dc.b	$01, $00, $CC, $CC, $CC, $CC, $05, $5E, $0D, $5C, $0D, $5E, $0C, $55, $0C, $50, $0C, $53, $0C, $5C, $0C, $5E 
-FPEnemyTileLayout_N_Gfx_4DAAE:
-	dc.b	$01, $EE, $00, $4C, $F3, $59, $3E, $DD, $ED, $DE, $CC, $ED, $D3, $CD, $DD, $DC, $CD, $ED, $DE, $DE, $E0, $DE, $DD, $ED, $3C, $00 
-FPEnemyTileLayout_N_Gfx_4DAC8:
-	dc.b	$01, $00, $77, $77, $7F, $F7, $E0, $E0, $E0, $E0, $E0, $E0 
-FPEnemyTileLayout_N_Gfx_4DAD4:
-	dc.b	$01, $00, $CC, $CC, $C8, $8C, $0C, $5C, $0D, $5C, $0D, $5C, $05, $EE, $EC, $CD, $0E, $DC, $CE, $05, $EE, $EE, $55, $55 
-FPEnemyTileLayout_N_Gfx_4DAEC:
-	dc.b	$02, $00, $04, $66, $70, $00, $55, $00, $00, $07, $FF, $DE, $0D, $CC, $ED, $DE, $DD, $DC, $DE, $DC, $EE, $0E, $EE, $EE 
-FPEnemyTileLayout_N_Gfx_4DB04:
-	dc.b	$01, $00, $73, $31, $11, $11, $DE, $DD, $E0, $3C, $DE, $DD, $EE, $E0, $EE, $ED, $E0, $E3, $CD, $E0, $CC, $DE, $55, $5E, $E5, $55 
-FPEnemyTileLayout_N_Gfx_4DB1E:
-	dc.b	$01, $00, $FD, $99, $99, $99, $20, $03, $13, $03, $13, $03, $13, $03, $13, $03, $23, $03, $23, $00 
-FPEnemyTileLayout_N_Gfx_4DB32:
-	dc.b	$01, $00, $FF, $FF, $FF, $73, $CD, $33, $C0, $00 
-FPEnemyTileLayout_N_Gfx_4DB3C:
-	dc.b	$01, $00, $99, $89, $88, $CC, $03, $23, $04, $34, $44, $34, $40, $04, $44, $0E, $EE, $E0, $0E, $DD, $5E, $EE, $5E, $55, $0E, $00 
-FPEnemyTileLayout_N_Gfx_4DB56:
-	dc.b	$01, $EE, $62, $11, $19, $22, $00, $DC, $0D, $DD, $ED, $DD, $CC, $CD, $DC, $C3, $CD, $DD, $DC, $CD, $ED, $DE, $EC, $CE, $ED, $DC, $CD, $ED 
-FPEnemyTileLayout_N_Gfx_4DB72:
-	dc.b	$01, $00, $33, $33, $33, $37, $CC, $D0, $DD, $E0, $EE, $E0, $DC, $C0, $DC, $C0, $ED, $D0, $DE, $E0, $CD, $00 
-FPEnemyTileLayout_N_Gfx_4DB88:
-	dc.b	$01, $00, $DD, $DD, $DD, $DD, $55, $55, $D5, $D5, $C5, $C5, $C5, $C5 
-FPEnemyTileLayout_N_Gfx_4DB96:
-	dc.b	$01, $EE, $20, $10, $75, $01, $C3, $CD, $DC, $CC, $DE, $DE, $ED, $DD, $ED, $CC, $0E, $ED, $C3, $DE, $0C, $00, $DD, $00, $ED, $C3, $DE, $00, $ED, $CC 
-FPEnemyTileLayout_N_Gfx_4DBB4:
-	dc.b	$01, $00, $77, $FF, $FF, $FF, $DE, $E0 
-FPEnemyTileLayout_N_Gfx_4DBBC:
-	dc.b	$01, $00, $DD, $DD, $CC, $FF, $C5, $C5, $D5, $D5, $55, $55, $05, $55 
-FPEnemyTileLayout_N_Gfx_4DBCA:
-	dc.b	$00, $00, $CE, $EE, $DD, $00, $0D, $ED, $CC, $00, $0D, $EE, $C3, $00, $CC, $DE, $DC, $5C, $CD, $EE, $EE, $5E, $EE, $EC, $CD, $55, $5E, $CC, $CD, $00, $55, $55 
-	dc.b	$55, $00 
-FPEnemyTileLayout_N_Gfx_4DBEC:
-	dc.b	$01, $00, $77, $77, $33, $77, $E0, $E0, $DE, $CE, $EE, $E0, $DE, $50, $E5, $50 
-FPEnemyTileLayout_N_Gfx_4DBFC:
-	dc.b	$02, $00, $B9, $99, $99, $99, $30, $02, $22, $22, $22, $02, $31, $31, $31, $31, $32, $32, $32, $00 
-FPEnemyTileLayout_N_Gfx_4DC10:
-	dc.b	$00, $00, $0D, $DE, $00, $00, $DC, $CD, $E0, $0D, $CC, $3C, $DE, $0E, $C3, $3C, $DE, $0E, $C3, $CC, $EE, $0E, $EC, $CD, $EE, $0E, $CC, $DE, $ED, $0E, $CE, $EE 
-	dc.b	$DD, $00 
-FPEnemyTileLayout_N_Gfx_4DC32:
-	dc.b	$01, $00, $FF, $FF, $FF, $33, $CC, $D0, $33, $CD 
-FPEnemyTileLayout_N_Gfx_4DC3C:
-	dc.b	$01, $00, $91, $98, $88, $88, $43, $40, $04, $43, $44, $44, $40, $EE, $EE, $E0, $ED, $DE, $EE, $0E, $EE, $DD, $05, $50, $EE, $05, $50, $0E 
-FPEnemyTileLayout_N_Gfx_4DC58:
-	dc.b	$01, $EE, $60, $10, $8D, $30, $00, $DD, $0D, $DC, $CD, $ED, $DD, $CC, $3C, $DD, $CC, $3C, $DE, $DC, $CC, $DE, $DE, $ED, $DE, $DC, $CD, $ED, $CD, $00 
-FPEnemyTileLayout_N_Gfx_4DC76:
-	dc.b	$01, $00, $33, $33, $11, $11, $C3, $CD, $CC, $CD, $DD, $DE, $EE, $EE, $EE, $DC, $E0, $0D, $CE, $D0, $EE, $DC, $D0, $ED, $C3, $C0 
-FPEnemyTileLayout_N_Gfx_4DC90:
-	dc.b	$02, $00, $99, $99, $99, $99, $50, $22, $22, $22, $22, $05, $0D, $0D, $0C, $0C, $0C, $0C, $0C, $00 
-FPEnemyTileLayout_N_Gfx_4DCA4:
-	dc.b	$01, $EE, $00, $27, $00, $F2, $C3, $CD, $EC, $C3, $CC, $DD, $ED, $CC, $DD, $DE, $DD, $0E, $CC, $DE, $ED, $E0, $C3, $CE, $ED, $E0, $DD, $DE, $DD, $00 
-FPEnemyTileLayout_N_Gfx_4DCC2:
-	dc.b	$01, $00, $11, $11, $3F, $F7, $ED, $C3, $C0, $ED, $DC, $C0, $E0, $EE, $E0, $0E, $CC, $D0, $0C, $CD, $E0, $00 
-FPEnemyTileLayout_N_Gfx_4DCD8:
-	dc.b	$01, $00, $88, $88, $88, $8C, $0C, $50, $0E, $0C, $50, $0C, $0D, $50, $DC, $0D, $CE, $ED, $ED, $DC, $EE, $EE, $ED, $DD, $05, $5E, $EE, $05, $55, $00 
-FPEnemyTileLayout_N_Gfx_4DCF6:
-	dc.b	$01, $55, $00, $07, $66, $FC, $CC, $D0, $DE, $DC, $3C, $D0, $00, $EC, $CD, $00, $00, $0E, $DE, $E5, $5E, $E5, $ED, $00, $00, $00 
-FPEnemyTileLayout_N_Gfx_4DD10:
-	dc.b	$01, $00, $73, $33, $11, $3F, $DE, $CD, $E0, $ED, $EE, $EE, $EE, $DC, $EE, $50, $DE, $E5, $50, $55, $55, $00 
-FPEnemyTileLayout_N_Gfx_4DD26:
-	dc.b	$01, $00, $FD, $99, $99, $88, $20, $03, $13, $03, $13, $03, $13, $03, $13, $03, $13, $ED, $03, $23, $DC, $00 
-FPEnemyTileLayout_N_Gfx_4DD3C:
-	dc.b	$00, $00, $0E, $DD, $E0, $00, $ED, $CC, $DE, $00, $DC, $3C, $CE, $00, $DC, $C3, $CE, $00, $CC, $E3, $CE, $0E, $CC, $EC, $CE, $EE, $DE, $EE, $DE, $DE, $DC, $EC 
-	dc.b	$EE, $00 
-FPEnemyTileLayout_N_Gfx_4DD5E:
-	dc.b	$01, $00, $FF, $FF, $31, $11, $ED, $DD, $DC, $CC, $D0, $CC, $3C, $D0, $DC, $CD, $D0, $00 
-FPEnemyTileLayout_N_Gfx_4DD70:
-	dc.b	$01, $00, $88, $88, $CC, $88, $03, $23, $CC, $04, $34, $CD, $44, $34, $DE, $04, $44, $EE, $55, $EE, $EE, $EE, $0D, $DD, $EE, $0D, $CD, $E0 
-FPEnemyTileLayout_N_Gfx_4DD8C:
-	dc.b	$01, $ED, $49, $88, $04, $98, $DE, $CD, $EE, $DE, $EE, $CC, $CC, $DD, $C3, $3C, $CD, $EE, $DC, $CC, $DE, $0E, $DD, $DE, $EE, $EE, $DC, $CC, $DD, $00 
-FPEnemyTileLayout_N_Gfx_4DDAA:
-	dc.b	$02, $00, $33, $11, $11, $13, $EE, $0C, $C8, $80, $88, $ED, $DD, $E0, $DD, $E0, $DC, $D0, $E0, $C3, $C0, $CC, $D0, $DD 
-FPEnemyTileLayout_N_Gfx_4DDC2:
-	dc.b	$01, $00, $9D, $DD, $DD, $DD, $0E, $EE, $EE, $D5, $D5, $D5, $D5, $D5, $D5, $00 
-FPEnemyTileLayout_N_Gfx_4DDD2:
-	dc.b	$00, $ED, $C3, $3C, $CD, $ED, $CC, $3C, $CD, $0E, $DC, $CC, $DE, $0E, $ED, $DD, $EE, $0E, $EE, $EE, $DC, $EE, $EE, $ED, $C3, $EC, $DE, $ED, $CC, $03, $CE, $EE 
-	dc.b	$DD, $00 
-FPEnemyTileLayout_N_Gfx_4DDF4:
-	dc.b	$01, $00, $33, $77, $77, $7F, $EE, $EE, $E0, $E0, $E0, $E0, $D0, $C0, $D0, $00 
-FPEnemyTileLayout_N_Gfx_4DE04:
-	dc.b	$01, $00, $DD, $DD, $DC, $CF, $D5, $D5, $D5, $D5, $D5, $D5, $05, $55, $55, $00 
-FPEnemyTileLayout_N_Gfx_4DE14:
-	dc.b	$00, $0D, $DE, $EE, $DD, $00, $EE, $ED, $C3, $00, $EE, $ED, $CC, $00, $5E, $EE, $EE, $05, $55, $5D, $CC, $55, $55, $5D, $C3, $50, $05, $5E, $DC, $00, $00, $05 
-	dc.b	$EE, $00 
-FPEnemyTileLayout_N_Gfx_4DE36:
-	dc.b	$01, $00, $77, $73, $33, $77, $D0, $D0, $D5, $E5, $50, $E5, $50, $D5, $50, $E5, $E5, $00 
-FPEnemyTileLayout_N_Gfx_4DE48:
-	dc.b	$01, $00, $D9, $99, $88, $88, $20, $02, $12, $03, $13, $03, $13, $03, $13, $DD, $03, $13, $CC, $03, $13, $CD, $03, $23, $DD, $00 
-FPEnemyTileLayout_N_Gfx_4DE62:
-	dc.b	$00, $00, $0E, $DD, $E0, $00, $ED, $CC, $DE, $00, $DC, $3C, $CE, $00, $DC, $C3, $CE, $D0, $CC, $E3, $CE, $DE, $CC, $EC, $CE, $DE, $DE, $EE, $DE, $EE, $DC, $EC 
-	dc.b	$EE, $00 
-FPEnemyTileLayout_N_Gfx_4DE84:
-	dc.b	$01, $00, $FF, $FF, $F3, $11, $ED, $DD, $EC, $CD, $D0, $DC, $CC, $D0 
-FPEnemyTileLayout_N_Gfx_4DE92:
-	dc.b	$01, $00, $88, $8C, $88, $DD, $04, $34, $EE, $44, $34, $ED, $04, $44, $DD, $EE, $ED, $0D, $DD, $EE, $0D, $CD, $E0, $EE, $55, $00 
-FPEnemyTileLayout_N_Gfx_4DEAC:
-	dc.b	$00, $EE, $ED, $CD, $EE, $ED, $DE, $EE, $DE, $ED, $CC, $CC, $DD, $ED, $C3, $3C, $CD, $0D, $DC, $CC, $CD, $00, $ED, $DD, $DE, $0E, $EE, $EE, $EE, $ED, $DC, $CC 
-	dc.b	$DD, $00 
-FPEnemyTileLayout_N_Gfx_4DECE:
-	dc.b	$02, $00, $13, $11, $11, $11, $EE, $00, $C8, $A4, $80, $DC, $CD, $E0, $ED, $DE, $E0, $DD, $E0, $ED, $E0, $DD, $CC, $CD, $EC, $C3, $C0, $00 
-FPEnemyTileLayout_N_Gfx_4DEEA:
-	dc.b	$02, $00, $DD, $DD, $DD, $DD, $D5, $22, $22, $22, $22, $00 
-FPEnemyTileLayout_N_Gfx_4DEF6:
-	dc.b	$00, $ED, $C3, $3C, $CD, $ED, $CC, $3C, $CD, $0E, $DC, $CC, $DE, $0E, $ED, $DD, $EE, $DC, $DE, $EE, $ED, $CC, $CD, $EE, $DD, $DC, $CD, $EE, $DD, $0E, $EE, $EE 
-	dc.b	$DE, $00 
-FPEnemyTileLayout_N_Gfx_4DF18:
-	dc.b	$01, $00, $13, $33, $77, $77, $EC, $3C, $D0, $EE, $ED, $DD, $E0, $ED, $E0, $EE, $E0, $E0, $E0, $00 
-FPEnemyTileLayout_N_Gfx_4DF2C:
-	dc.b	$01, $00, $DD, $DD, $CE, $EF, $D5, $D5, $D5, $D5, $55, $55, $05, $05 
-FPEnemyTileLayout_N_Gfx_4DF3A:
-	dc.b	$00, $0D, $DD, $DE, $EE, $0D, $CC, $DE, $EE, $0D, $CC, $DE, $E5, $5E, $EE, $E5, $55, $5E, $CC, $D5, $55, $5D, $CC, $E5, $55, $5E, $DD, $E5, $55, $5E, $EE, $55 
-	dc.b	$50, $00 
-FPEnemyTileLayout_N_Gfx_4DF5C:
-	dc.b	$01, $00, $FF, $73, $37, $FF, $55, $55, $50, $55, $50, $55 
-FPEnemyTileLayout_N_Gfx_4DF68:
-	dc.b	$01, $00, $FF, $FF, $FC, $88, $CD, $D0, $0D, $CC, $CD, $0D, $C3, $CD 
-FPEnemyTileLayout_N_Gfx_4DF76:
-	dc.b	$00, $0E, $DD, $E0, $00, $ED, $CC, $DE, $00, $DC, $3C, $CE, $00, $DC, $33, $CE, $00, $DC, $CC, $CE, $0E, $ED, $CC, $DE, $ED, $EE, $DD, $DE, $DC, $EE, $EE, $EE 
-	dc.b	$DD, $00 
-FPEnemyTileLayout_N_Gfx_4DF98:
-	dc.b	$01, $00, $B9, $99, $11, $11, $02, $21, $20, $31, $30, $31, $30, $DD, $31, $30, $3C, $D1, $30, $CC, $D1, $30, $DD, $D3, $40, $00 
-FPEnemyTileLayout_N_Gfx_4DFB2:
-	dc.b	$01, $00, $88, $CC, $C8, $88, $0E, $DC, $CD, $0E, $ED, $DE, $EE, $EE, $ED, $DE, $ED, $DE, $0E, $EE, $EE, $0D, $CD, $E0, $0C, $3C, $EE, $00 
-FPEnemyTileLayout_N_Gfx_4DFCE:
-	dc.b	$01, $EE, $11, $10, $01, $F1, $ED, $DD, $DE, $DC, $CC, $CD, $DC, $33, $CC, $DC, $C3, $CC, $DE, $ED, $CC, $CD, $DE, $ED, $DD, $DE, $DD, $CC, $DD, $00 
-FPEnemyTileLayout_N_Gfx_4DFEC:
-	dc.b	$01, $00, $11, $13, $11, $B3, $EE, $43, $40, $DD, $E3, $44, $DC, $D4, $40, $ED, $C5, $EE, $EE, $E0, $05, $ED, $E0, $5E, $E0, $55 
-FPEnemyTileLayout_N_Gfx_4E006:
-	dc.b	$01, $00, $88, $CC, $EF, $FF, $0D, $3C, $DE, $0E, $DC, $DE, $ED, $EE, $0E, $EE, $0E, $00 
-FPEnemyTileLayout_N_Gfx_4E018:
-	dc.b	$01, $EE, $11, $1B, $CC, $13, $DC, $33, $CD, $DC, $C3, $CD, $ED, $CC, $DE, $DD, $ED, $DE, $DC, $DE, $ED, $DE, $DD, $EC, $CE, $00 
-FPEnemyTileLayout_N_Gfx_4E032:
-	dc.b	$01, $00, $33, $BB, $BB, $BB, $E0, $55, $E0, $55, $5D, $5D, $5D, $5D, $5D, $5D 
-FPEnemyTileLayout_N_Gfx_4E042:
-	dc.b	$01, $00, $FF, $FE, $EE, $FF, $05, $55, $05, $00 
-FPEnemyTileLayout_N_Gfx_4E04C:
-	dc.b	$01, $55, $00, $08, $CC, $43, $ED, $C5, $EE, $E0, $0E, $D5, $DD, $D0, $0E, $E5, $DC, $D5, $E5, $DC, $D5, $DC, $DE, $DD, $DE, $05, $ED, $E5, $00, $00 
-FPEnemyTileLayout_N_Gfx_4E06A:
-	dc.b	$01, $00, $BB, $B3, $33, $7F, $5D, $5D, $5D, $55, $5D, $55, $55, $55, $50, $50 
-FPEnemyTileLayout_N_Gfx_4E07A:
-	dc.b	$01, $00, $FF, $FF, $C8, $88, $DD, $DE, $0D, $CC, $CD, $0D, $C3, $CD, $0E, $DC, $CD, $00 
-FPEnemyTileLayout_N_Gfx_4E08C:
-	dc.b	$00, $0E, $DD, $E0, $00, $ED, $CC, $DE, $00, $DC, $3C, $CE, $00, $DC, $33, $CE, $00, $DC, $CC, $CE, $00, $ED, $CC, $DE, $E0, $EE, $DD, $DE, $ED, $EE, $EE, $EE 
-	dc.b	$DC, $00 
-FPEnemyTileLayout_N_Gfx_4E0AE:
-	dc.b	$01, $00, $FB, $99, $99, $11, $02, $21, $20, $31, $30, $31, $30, $31, $30, $CD, $31, $30, $3C, $D2, $30, $00 
-FPEnemyTileLayout_N_Gfx_4E0C4:
-	dc.b	$01, $00, $8C, $C8, $88, $CC, $0E, $ED, $DE, $EE, $EE, $ED, $ED, $0E, $DD, $ED, $0E, $DD, $EE, $0E, $EE, $EE, $ED, $DE, $0E, $EE 
-FPEnemyTileLayout_N_Gfx_4E0DE:
-	dc.b	$02, $DD, $C2, $00, $24, $0A, $EE, $00, $11, $11, $D0, $DE, $ED, $CC, $CC, $ED, $C3, $3C, $CD, $CC, $3C, $CD, $DC, $CC, $ED, $DE, $ED, $CC, $DE, $00 
-FPEnemyTileLayout_N_Gfx_4E0FC:
-	dc.b	$01, $00, $11, $11, $33, $11, $CC, $D3, $40, $DD, $D3, $40, $EE, $43, $44, $ED, $54, $40, $DC, $D5, $DC, $D5, $ED, $5D, $E0, $0E, $DC, $D0 
-FPEnemyTileLayout_N_Gfx_4E118:
-	dc.b	$02, $00, $EE, $EE, $FE, $EE, $0E, $11, $11, $01, $11, $00 
-FPEnemyTileLayout_N_Gfx_4E124:
-	dc.b	$01, $DE, $10, $21, $11, $64, $DC, $33, $CD, $DC, $C3, $CD, $EE, $ED, $CC, $EE, $EE, $DD, $ED, $DD, $EE, $DC, $DD, $EE, $CD, $DD, $E0, $ED, $ED, $E0 
-FPEnemyTileLayout_N_Gfx_4E142:
-	dc.b	$01, $00, $33, $BB, $BB, $BB, $E0, $DD, $E0, $55, $55, $55, $5D, $5D, $5D, $5D 
-FPEnemyTileLayout_N_Gfx_4E152:
-	dc.b	$01, $00, $FE, $EE, $EC, $EE, $05, $05, $55, $5E, $05, $5E, $55, $05 
-FPEnemyTileLayout_N_Gfx_4E160:
-	dc.b	$01, $55, $00, $01, $33, $38, $EE, $E5, $DD, $E0, $DD, $E5, $DC, $E5, $DC, $D5, $DD, $E5, $DC, $D5, $EE, $DC, $D5, $DD, $D5, $ED, $E5, $50, $00, $00 
-FPEnemyTileLayout_N_Gfx_4E17E:
-	dc.b	$01, $00, $BB, $33, $33, $BF, $5D, $5D, $50, $5D, $55, $5D, $55, $5D, $55, $5D, $55, $00 
+	incbin "data/art/tiles/enemy/fpenemy_n_gfx.bin"
+FPEnemyTileLayout_N_Gfx_4DA26 equ FPEnemyTileLayout_N_Gfx_4DA12+$14
+FPEnemyTileLayout_N_Gfx_4DA48 equ FPEnemyTileLayout_N_Gfx_4DA12+$36
+FPEnemyTileLayout_N_Gfx_4DA52 equ FPEnemyTileLayout_N_Gfx_4DA12+$40
+FPEnemyTileLayout_N_Gfx_4DA6A equ FPEnemyTileLayout_N_Gfx_4DA12+$58
+FPEnemyTileLayout_N_Gfx_4DA8A equ FPEnemyTileLayout_N_Gfx_4DA12+$78
+FPEnemyTileLayout_N_Gfx_4DA98 equ FPEnemyTileLayout_N_Gfx_4DA12+$86
+FPEnemyTileLayout_N_Gfx_4DAAE equ FPEnemyTileLayout_N_Gfx_4DA12+$9C
+FPEnemyTileLayout_N_Gfx_4DAC8 equ FPEnemyTileLayout_N_Gfx_4DA12+$B6
+FPEnemyTileLayout_N_Gfx_4DAD4 equ FPEnemyTileLayout_N_Gfx_4DA12+$C2
+FPEnemyTileLayout_N_Gfx_4DAEC equ FPEnemyTileLayout_N_Gfx_4DA12+$DA
+FPEnemyTileLayout_N_Gfx_4DB04 equ FPEnemyTileLayout_N_Gfx_4DA12+$F2
+FPEnemyTileLayout_N_Gfx_4DB1E equ FPEnemyTileLayout_N_Gfx_4DA12+$10C
+FPEnemyTileLayout_N_Gfx_4DB32 equ FPEnemyTileLayout_N_Gfx_4DA12+$120
+FPEnemyTileLayout_N_Gfx_4DB3C equ FPEnemyTileLayout_N_Gfx_4DA12+$12A
+FPEnemyTileLayout_N_Gfx_4DB56 equ FPEnemyTileLayout_N_Gfx_4DA12+$144
+FPEnemyTileLayout_N_Gfx_4DB72 equ FPEnemyTileLayout_N_Gfx_4DA12+$160
+FPEnemyTileLayout_N_Gfx_4DB88 equ FPEnemyTileLayout_N_Gfx_4DA12+$176
+FPEnemyTileLayout_N_Gfx_4DB96 equ FPEnemyTileLayout_N_Gfx_4DA12+$184
+FPEnemyTileLayout_N_Gfx_4DBB4 equ FPEnemyTileLayout_N_Gfx_4DA12+$1A2
+FPEnemyTileLayout_N_Gfx_4DBBC equ FPEnemyTileLayout_N_Gfx_4DA12+$1AA
+FPEnemyTileLayout_N_Gfx_4DBCA equ FPEnemyTileLayout_N_Gfx_4DA12+$1B8
+FPEnemyTileLayout_N_Gfx_4DBEC equ FPEnemyTileLayout_N_Gfx_4DA12+$1DA
+FPEnemyTileLayout_N_Gfx_4DBFC equ FPEnemyTileLayout_N_Gfx_4DA12+$1EA
+FPEnemyTileLayout_N_Gfx_4DC10 equ FPEnemyTileLayout_N_Gfx_4DA12+$1FE
+FPEnemyTileLayout_N_Gfx_4DC32 equ FPEnemyTileLayout_N_Gfx_4DA12+$220
+FPEnemyTileLayout_N_Gfx_4DC3C equ FPEnemyTileLayout_N_Gfx_4DA12+$22A
+FPEnemyTileLayout_N_Gfx_4DC58 equ FPEnemyTileLayout_N_Gfx_4DA12+$246
+FPEnemyTileLayout_N_Gfx_4DC76 equ FPEnemyTileLayout_N_Gfx_4DA12+$264
+FPEnemyTileLayout_N_Gfx_4DC90 equ FPEnemyTileLayout_N_Gfx_4DA12+$27E
+FPEnemyTileLayout_N_Gfx_4DCA4 equ FPEnemyTileLayout_N_Gfx_4DA12+$292
+FPEnemyTileLayout_N_Gfx_4DCC2 equ FPEnemyTileLayout_N_Gfx_4DA12+$2B0
+FPEnemyTileLayout_N_Gfx_4DCD8 equ FPEnemyTileLayout_N_Gfx_4DA12+$2C6
+FPEnemyTileLayout_N_Gfx_4DCF6 equ FPEnemyTileLayout_N_Gfx_4DA12+$2E4
+FPEnemyTileLayout_N_Gfx_4DD10 equ FPEnemyTileLayout_N_Gfx_4DA12+$2FE
+FPEnemyTileLayout_N_Gfx_4DD26 equ FPEnemyTileLayout_N_Gfx_4DA12+$314
+FPEnemyTileLayout_N_Gfx_4DD3C equ FPEnemyTileLayout_N_Gfx_4DA12+$32A
+FPEnemyTileLayout_N_Gfx_4DD5E equ FPEnemyTileLayout_N_Gfx_4DA12+$34C
+FPEnemyTileLayout_N_Gfx_4DD70 equ FPEnemyTileLayout_N_Gfx_4DA12+$35E
+FPEnemyTileLayout_N_Gfx_4DD8C equ FPEnemyTileLayout_N_Gfx_4DA12+$37A
+FPEnemyTileLayout_N_Gfx_4DDAA equ FPEnemyTileLayout_N_Gfx_4DA12+$398
+FPEnemyTileLayout_N_Gfx_4DDC2 equ FPEnemyTileLayout_N_Gfx_4DA12+$3B0
+FPEnemyTileLayout_N_Gfx_4DDD2 equ FPEnemyTileLayout_N_Gfx_4DA12+$3C0
+FPEnemyTileLayout_N_Gfx_4DDF4 equ FPEnemyTileLayout_N_Gfx_4DA12+$3E2
+FPEnemyTileLayout_N_Gfx_4DE04 equ FPEnemyTileLayout_N_Gfx_4DA12+$3F2
+FPEnemyTileLayout_N_Gfx_4DE14 equ FPEnemyTileLayout_N_Gfx_4DA12+$402
+FPEnemyTileLayout_N_Gfx_4DE36 equ FPEnemyTileLayout_N_Gfx_4DA12+$424
+FPEnemyTileLayout_N_Gfx_4DE48 equ FPEnemyTileLayout_N_Gfx_4DA12+$436
+FPEnemyTileLayout_N_Gfx_4DE62 equ FPEnemyTileLayout_N_Gfx_4DA12+$450
+FPEnemyTileLayout_N_Gfx_4DE84 equ FPEnemyTileLayout_N_Gfx_4DA12+$472
+FPEnemyTileLayout_N_Gfx_4DE92 equ FPEnemyTileLayout_N_Gfx_4DA12+$480
+FPEnemyTileLayout_N_Gfx_4DEAC equ FPEnemyTileLayout_N_Gfx_4DA12+$49A
+FPEnemyTileLayout_N_Gfx_4DECE equ FPEnemyTileLayout_N_Gfx_4DA12+$4BC
+FPEnemyTileLayout_N_Gfx_4DEEA equ FPEnemyTileLayout_N_Gfx_4DA12+$4D8
+FPEnemyTileLayout_N_Gfx_4DEF6 equ FPEnemyTileLayout_N_Gfx_4DA12+$4E4
+FPEnemyTileLayout_N_Gfx_4DF18 equ FPEnemyTileLayout_N_Gfx_4DA12+$506
+FPEnemyTileLayout_N_Gfx_4DF2C equ FPEnemyTileLayout_N_Gfx_4DA12+$51A
+FPEnemyTileLayout_N_Gfx_4DF3A equ FPEnemyTileLayout_N_Gfx_4DA12+$528
+FPEnemyTileLayout_N_Gfx_4DF5C equ FPEnemyTileLayout_N_Gfx_4DA12+$54A
+FPEnemyTileLayout_N_Gfx_4DF68 equ FPEnemyTileLayout_N_Gfx_4DA12+$556
+FPEnemyTileLayout_N_Gfx_4DF76 equ FPEnemyTileLayout_N_Gfx_4DA12+$564
+FPEnemyTileLayout_N_Gfx_4DF98 equ FPEnemyTileLayout_N_Gfx_4DA12+$586
+FPEnemyTileLayout_N_Gfx_4DFB2 equ FPEnemyTileLayout_N_Gfx_4DA12+$5A0
+FPEnemyTileLayout_N_Gfx_4DFCE equ FPEnemyTileLayout_N_Gfx_4DA12+$5BC
+FPEnemyTileLayout_N_Gfx_4DFEC equ FPEnemyTileLayout_N_Gfx_4DA12+$5DA
+FPEnemyTileLayout_N_Gfx_4E006 equ FPEnemyTileLayout_N_Gfx_4DA12+$5F4
+FPEnemyTileLayout_N_Gfx_4E018 equ FPEnemyTileLayout_N_Gfx_4DA12+$606
+FPEnemyTileLayout_N_Gfx_4E032 equ FPEnemyTileLayout_N_Gfx_4DA12+$620
+FPEnemyTileLayout_N_Gfx_4E042 equ FPEnemyTileLayout_N_Gfx_4DA12+$630
+FPEnemyTileLayout_N_Gfx_4E04C equ FPEnemyTileLayout_N_Gfx_4DA12+$63A
+FPEnemyTileLayout_N_Gfx_4E06A equ FPEnemyTileLayout_N_Gfx_4DA12+$658
+FPEnemyTileLayout_N_Gfx_4E07A equ FPEnemyTileLayout_N_Gfx_4DA12+$668
+FPEnemyTileLayout_N_Gfx_4E08C equ FPEnemyTileLayout_N_Gfx_4DA12+$67A
+FPEnemyTileLayout_N_Gfx_4E0AE equ FPEnemyTileLayout_N_Gfx_4DA12+$69C
+FPEnemyTileLayout_N_Gfx_4E0C4 equ FPEnemyTileLayout_N_Gfx_4DA12+$6B2
+FPEnemyTileLayout_N_Gfx_4E0DE equ FPEnemyTileLayout_N_Gfx_4DA12+$6CC
+FPEnemyTileLayout_N_Gfx_4E0FC equ FPEnemyTileLayout_N_Gfx_4DA12+$6EA
+FPEnemyTileLayout_N_Gfx_4E118 equ FPEnemyTileLayout_N_Gfx_4DA12+$706
+FPEnemyTileLayout_N_Gfx_4E124 equ FPEnemyTileLayout_N_Gfx_4DA12+$712
+FPEnemyTileLayout_N_Gfx_4E142 equ FPEnemyTileLayout_N_Gfx_4DA12+$730
+FPEnemyTileLayout_N_Gfx_4E152 equ FPEnemyTileLayout_N_Gfx_4DA12+$740
+FPEnemyTileLayout_N_Gfx_4E160 equ FPEnemyTileLayout_N_Gfx_4DA12+$74E
+FPEnemyTileLayout_N_Gfx_4E17E equ FPEnemyTileLayout_N_Gfx_4DA12+$76C
 ; loc_0004E190
 FPEnemyTileLayout_N:
 	dc.l	FPEnemyTileLayout_N_Gfx_4DA12
@@ -56185,8 +54778,7 @@ SpriteFramePointerTable_4E890:
 	dc.l	SpriteFramePointerTable_4E890_Frame_4E866
 	dc.l	SpriteFramePointerTable_4E890_Frame_4E880
 GfxLoadList_WorldBattle_Gfx_4E924:
-	dc.b	$00, $00, $05, $08, $01, $03, $06, $09, $02, $04, $07, $0A, $00, $0B, $0E, $11, $01, $0C, $0F, $12, $02, $0D, $10, $13, $14, $17, $1A, $1D, $15, $18, $1B, $1E 
-	dc.b	$16, $19, $1C, $1F, $20, $23, $26, $29, $21, $24, $27, $2A, $22, $25, $28, $2B 
+	incbin "data/art/tiles/misc/gfxlist_worldbattle_gfx.bin"
 SpriteFramePointerTable_4E890_Frame_4E954:
 	dc.b	$01, $00, $FF, $FF, $FF, $FF 
 SpriteFramePointerTable_4E890_Frame_4E95A:
@@ -57492,17 +56084,12 @@ SpriteFramePointerTable_51414:
 	dc.l	SpriteFramePointerTable_51414_Frame_513DA
 	dc.l	SpriteFramePointerTable_51414_Frame_513F8
 TalkerGfxDesc_MapGiver_Gfx_51534:
-	dc.b	$00, $00, $03, $07, $00, $01, $04, $08, $00, $02, $05, $09, $00, $00, $06, $0A 
-TalkerGfxDesc_StowGirl_Gfx_51544:
-	dc.b	$00, $00, $00, $00, $00, $0B, $0D, $0F, $00, $0C, $0E, $10, $00, $00, $00, $00 
-TalkerGfxDesc_Bearwulf_Gfx_51554:
-	dc.b	$00, $13, $17, $1B, $11, $14, $18, $1C, $12, $15, $19, $1D, $00, $16, $1A, $1E 
-TalkerGfxDesc_Merchant_Gfx_51564:
-	dc.b	$00, $21, $25, $29, $1F, $22, $26, $2A, $20, $23, $27, $2B, $00, $24, $28, $2C 
-TalkerGfxDesc_ImposterGuard_Gfx_51574:
-	dc.b	'-159.26:/37;048<'
-TalkerGfxDesc_Tsarkon_Gfx_51584:
-	dc.b	0,'?CG=@DH>AEI',0,'BFJ' 
+	incbin "data/art/tiles/npc/talker_portrait_51534_gfx.bin"
+TalkerGfxDesc_StowGirl_Gfx_51544 equ TalkerGfxDesc_MapGiver_Gfx_51534+$10
+TalkerGfxDesc_Bearwulf_Gfx_51554 equ TalkerGfxDesc_MapGiver_Gfx_51534+$20
+TalkerGfxDesc_Merchant_Gfx_51564 equ TalkerGfxDesc_MapGiver_Gfx_51534+$30
+TalkerGfxDesc_ImposterGuard_Gfx_51574 equ TalkerGfxDesc_MapGiver_Gfx_51534+$40
+TalkerGfxDesc_Tsarkon_Gfx_51584 equ TalkerGfxDesc_MapGiver_Gfx_51534+$50
 TalkerSpriteFrameTable_Frame_51594:
 	dc.b	$01, $00, $FF, $FF, $FF, $FF 
 TalkerSpriteFrameTable_Frame_5159A:
@@ -57758,203 +56345,99 @@ TalkerSpriteFrameTable:
 	dc.l	TalkerSpriteFrameTable_Frame_51CE0
 	dc.l	TalkerSpriteFrameTable_Frame_51CFE
 TalkerGfxDesc_MapGiver_Gfx_51E44:
-	dc.b	$00, $04, $01, $05, $02, $06, $03, $07 
-TalkerGfxDesc_StowGirl_Gfx_51E4C:
-	dc.b	$08, $08, $09, $0B, $0A, $0C, $08, $08 
-TalkerGfxDesc_Bearwulf_Gfx_51E54:
-	dc.b	$08, $0F, $0D, $10, $0E, $11, $08, $12 
-TalkerGfxDesc_Merchant_Gfx_51E5C:
-	dc.b	$08, $15, $13, $16, $14, $17, $08, $18 
-TalkerGfxDesc_ImposterGuard_Gfx_51E64:
-	dc.b	$19, $1C, $1A, $1D, $1B, $1E, $08, $1F 
-TalkerGfxDesc_Tsarkon_Gfx_51E6C:
-	dc.b	$08, $23, $20, $24, $21, $25, $22, $26 
-TalkerGfxDesc_TruffleGiver_Gfx_51E74:
-	dc.b	$08, $27, $08, $28, $08, $29, $08, $2A 
-TalkerGfxDesc_TruffleGiver_Gfx_51E7C:
-	dc.b	$2B, $08, $2C, $2F, $2D, $30, $2E, $08 
-TalkerGfxDesc_DigotGiver_Gfx_51E84:
-	dc.b	$08, $31, $08, $32, $08, $33, $08, $34 
-TalkerGfxDesc_DigotGiver_Gfx_51E8C:
-	dc.b	'596:7;8<'
-TalkerGfxDesc_GenericNpc_Gfx_51E94:
-	dc.b	$08, $3D, $08, $3E, $08, $3F, $08, $40, $49, $4D, $4A, $4E, $4B, $4F, $4C, $50 
-TalkerGfxDesc_GenericNpc_Gfx_51EA4:
-	dc.b	'AEBFCGDH' 
-TalkerPortraitTileDataPtrs_Gfx_51EAC:
-	dc.b	$01, $00, $FF, $FE, $EE, $EC, $09, $09, $09, $99, $05, $99 
-TalkerPortraitTileDataPtrs_Gfx_51EB8:
-	dc.b	$00, $99, $9A, $54, $34, $99, $A5, $43, $33, $99, $95, $54, $44, $99, $A9, $52, $22, $9A, $A9, $21, $12, $9A, $BA, $21, $11, $9B, $AA, $22, $12, $AA, $BA, $A2 
-	dc.b	$22, $00 
-TalkerPortraitTileDataPtrs_Gfx_51EDA:
-	dc.b	$01, $99, $41, $65, $40, $02, $5A, $95, $59, $45, $55, $59, $55, $A9, $5A, $A9, $2A, $AA, $A9, $2A, $A9, $9A, $AA, $2A, $A9, $9A, $AA, $AA, $A9, $9A 
-TalkerPortraitTileDataPtrs_Gfx_51EF8:
-	dc.b	$01, $00, $FF, $FF, $F7, $77, $90, $A9, $AA, $00 
-TalkerPortraitTileDataPtrs_Gfx_51F02:
-	dc.b	$01, $00, $C8, $88, $CC, $EF, $59, $9A, $05, $59, $9A, $05, $59, $9A, $05, $59, $99, $55, $99, $05, $55, $05 
-TalkerPortraitTileDataPtrs_Gfx_51F18:
-	dc.b	$01, $55, $00, $30, $20, $F3, $AB, $A9, $54, $34, $BA, $A9, $54, $34, $AB, $A9, $9A, $A9, $95, $5A, $9A, $99, $AB, $99, $95, $AA, $BA, $00, $05, $00 
-TalkerPortraitTileDataPtrs_Gfx_51F36:
-	dc.b	$01, $55, $00, $10, $03, $FC, $5A, $AA, $95, $A9, $5A, $AA, $95, $59, $5A, $AA, $A9, $BA, $AA, $99, $99, $AB, $A9, $99, $95, $A9, $99, $50, $00, $00 
-TalkerPortraitTileDataPtrs_Gfx_51F54:
-	dc.b	$01, $00, $33, $33, $37, $FF, $99, $50, $99, $55, $95, $55, $55, $55, $55, $50, $55, $00 
-TalkerPortraitTileDataPtrs_Gfx_51F66:
-	dc.b	$01, $00, $FF, $FF, $FF, $FF 
-TalkerPortraitTileDataPtrs_Gfx_51F6C:
-	dc.b	$00, $AA, $A6, $67, $77, $AA, $BA, $A6, $66, $AB, $BB, $BA, $AA, $AB, $BC, $BB, $BB, $0B, $BB, $CC, $CC, $00, $0B, $BB, $BB, $00, $00, $55, $50, $00, $00, $77 
-	dc.b	$60, $00 
-TalkerPortraitTileDataPtrs_Gfx_51F8E:
-	dc.b	$00, $57, $76, $6A, $AA, $66, $6A, $AB, $AA, $AA, $AB, $BB, $BA, $BB, $BB, $CB, $BA, $CC, $CC, $BB, $B0, $BB, $BB, $B0, $00, $05, $55, $00, $00, $06, $77, $00 
-	dc.b	$00, $00 
-TalkerPortraitTileDataPtrs_Gfx_51FB0:
-	dc.b	$01, $44, $00, $08, $89, $72, $00, $00, $77, $60, $00, $04, $77, $54, $04, $4B, $5B, $A4, $4B, $5B, $A4, $AB, $BB, $A4, $AA, $AA, $04, $00, $04, $40 
-TalkerPortraitTileDataPtrs_Gfx_51FCE:
-	dc.b	$01, $44, $00, $01, $19, $E4, $06, $77, $00, $00, $46, $77, $40, $00, $4A, $BA, $B4, $40, $4A, $BA, $B4, $4A, $BB, $BA, $AA, $AA, $40, $04, $40, $00 
-TalkerPortraitTileDataPtrs_Gfx_51FEC:
-	dc.b	$00, $0E, $DC, $DD, $D5, $0E, $DD, $CD, $E5, $0E, $DC, $CC, $E5, $0E, $DD, $CC, $E5, $00, $EC, $CD, $E5, $00, $EE, $DE, $E5, $00, $EE, $EE, $E5, $00, $09, $AA 
-	dc.b	$90, $00 
-TalkerPortraitTileDataPtrs_Gfx_5200E:
-	dc.b	$00, $ED, $DD, $CD, $E0, $ED, $DC, $CD, $E0, $ED, $CC, $DD, $E0, $ED, $CC, $DE, $E0, $ED, $DC, $DE, $00, $EE, $DD, $E5, $00, $EE, $EE, $E5, $00, $09, $AA, $90 
-	dc.b	$00, $00 
-TalkerPortraitTileDataPtrs_Gfx_52030:
-	dc.b	$01, $00, $FF, $EE, $EE, $EF, $05, $55, $55, $55, $05, $00 
-TalkerPortraitTileDataPtrs_Gfx_5203C:
-	dc.b	$01, $55, $00, $88, $89, $F6, $00, $0A, $BB, $A0, $05, $5A, $BB, $A0, $5A, $BB, $A5, $9A, $BA, $95, $AB, $AA, $95, $AA, $A9, $05, $50, $00 
-TalkerPortraitTileDataPtrs_Gfx_52058:
-	dc.b	$01, $55, $01, $11, $19, $F7, $0A, $BB, $A0, $00, $0A, $BB, $A5, $5A, $BB, $A5, $59, $AB, $A9, $59, $AA, $BA, $9A, $AA, $05, $00 
-TalkerPortraitTileDataPtrs_Gfx_52072:
-	dc.b	$01, $00, $FF, $73, $33, $7F, $55, $55, $50, $55, $50, $55, $50, $55 
-TalkerPortraitTileDataPtrs_Gfx_52080:
-	dc.b	$02, $00, $88, $88, $88, $88, $E5, $11, $11, $11, $10, $EC, $DD, $EC, $DD, $EE, $DC, $EE, $CD, $0E, $EE, $0E, $EE, $0E, $EE, $0A, $AA, $A0 
-TalkerPortraitTileDataPtrs_Gfx_5209C:
-	dc.b	$02, $00, $11, $11, $11, $11, $EE, $00, $22, $8C, $C0, $ED, $CD, $CE, $ED, $CD, $CE, $ED, $CC, $ED, $DE, $DE, $E0, $E0, $E0, $0A, $AA, $A0 
-TalkerPortraitTileDataPtrs_Gfx_520B8:
-	dc.b	$01, $00, $FF, $FF, $EE, $FF, $05, $05 
-TalkerPortraitTileDataPtrs_Gfx_520C0:
-	dc.b	$01, $55, $00, $08, $89, $F6, $00, $0A, $BB, $A0, $00, $0A, $BB, $A0, $00, $5A, $BB, $A0, $9A, $BA, $95, $AB, $AA, $95, $AA, $A9, $00, $50 
-TalkerPortraitTileDataPtrs_Gfx_520DC:
-	dc.b	$01, $55, $00, $01, $19, $F6, $0A, $BB, $A0, $00, $0A, $BB, $A0, $00, $0A, $BB, $A5, $00, $59, $AB, $A9, $59, $AA, $BA, $9A, $AA, $05, $00 
-TalkerPortraitTileDataPtrs_Gfx_520F8:
-	dc.b	$01, $00, $FF, $FF, $77, $FF, $50, $50 
-TalkerPortraitTileDataPtrs_Gfx_52100:
-	dc.b	$01, $00, $EE, $FF, $FF, $FF, $AB, $0A 
-TalkerPortraitTileDataPtrs_Gfx_52108:
-	dc.b	$00, $BA, $44, $59, $59, $BB, $A3, $49, $59, $AB, $BA, $34, $55, $AB, $BA, $34, $55, $0A, $BB, $A3, $55, $05, $AB, $BA, $54, $05, $4A, $BB, $A4, $05, $44, $AB 
-	dc.b	$BA, $00 
-TalkerPortraitTileDataPtrs_Gfx_5212A:
-	dc.b	$01, $00, $01, $11, $13, $33, $93, $33, $04, $40, $31, $22, $30, $21, $12, $30, $21, $12, $30, $32, $23, $30, $33, $33, $43, $45, $44, $45 
-TalkerPortraitTileDataPtrs_Gfx_52146:
-	dc.b	$02, $00, $FE, $CC, $CC, $CF, $99, $00, $13, $33, $10, $09, $09, $09 
-TalkerPortraitTileDataPtrs_Gfx_52154:
-	dc.b	$01, $99, $08, $00, $03, $FF, $00, $55, $5A, $BB, $55, $5A, $BB, $93, $12, $34, $AB, $32, $23, $44, $9A, $32, $33, $44, $94, $44, $44, $00 
-TalkerPortraitTileDataPtrs_Gfx_52170:
-	dc.b	$01, $99, $02, $31, $11, $FC, $A5, $50, $00, $00, $A5, $59, $00, $BA, $34, $BA, $22, $49, $AA, $33, $49, $44, $44, $49, $90, $00 
-TalkerPortraitTileDataPtrs_Gfx_5218A:
-	dc.b	$01, $00, $FF, $F7, $77, $FF, $90, $90, $90, $00 
-TalkerPortraitTileDataPtrs_Gfx_52194:
-	dc.b	$01, $66, $55, $01, $11, $10, $07, $56, $07, $54, $07, $65, $44, $65, $07, $65, $44, $76, $55, $43, $76, $55, $34, $76, $55, $33, $76, $56, $33, $56 
-TalkerPortraitTileDataPtrs_Gfx_521B2:
-	dc.b	$00, $66, $D7, $A7, $67, $46, $A7, $D7, $67, $46, $D7, $76, $67, $34, $76, $65, $67, $34, $45, $65, $66, $43, $45, $55, $56, $54, $34, $45, $56, $55, $34, $45 
-	dc.b	$56, $00 
-TalkerPortraitTileDataPtrs_Gfx_521D4:
-	dc.b	$01, $00, $7F, $FF, $77, $77, $77, $70, $70, $70, $70, $00 
-TalkerPortraitTileDataPtrs_Gfx_521E0:
-	dc.b	$01, $00, $EE, $EE, $EE, $EF, $07, $07, $07, $57, $55, $55, $05, $00 
-TalkerPortraitTileDataPtrs_Gfx_521EE:
-	dc.b	$00, $65, $54, $44, $56, $65, $64, $34, $56, $66, $54, $35, $56, $65, $55, $55, $65, $76, $65, $56, $66, $76, $76, $66, $67, $88, $77, $77, $77, $05, $85, $55 
-	dc.b	$58, $00 
-TalkerPortraitTileDataPtrs_Gfx_52210:
-	dc.b	$01, $55, $01, $16, $01, $03, $65, $33, $45, $56, $65, $33, $44, $65, $53, $44, $66, $56, $66, $66, $56, $66, $77, $76, $66, $77, $77, $77, $77, $88, $75, $00 
-TalkerPortraitTileDataPtrs_Gfx_52230:
-	dc.b	$01, $00, $77, $73, $33, $7F, $67, $67, $67, $67, $50, $55, $50, $55, $50, $55 
-TalkerPortraitTileDataPtrs_Gfx_52240:
-	dc.b	$01, $00, $FF, $FE, $EC, $CC, $03, $33, $05, $32, $54, $32, $54, $43 
-TalkerPortraitTileDataPtrs_Gfx_5224E:
-	dc.b	$02, $22, $01, $20, $82, $49, $11, $00, $13, $75, $00, $00, $00, $00, $33, $00, $03, $33, $03, $32, $32, $21, $21, $21, $53, $21, $25, $53 
-TalkerPortraitTileDataPtrs_Gfx_5226A:
-	dc.b	$02, $22, $08, $42, $11, $06, $11, $00, $8C, $CC, $C8, $33, $00, $00, $00, $33, $30, $00, $23, $30, $23, $12, $12, $12, $25, $24 
-TalkerPortraitTileDataPtrs_Gfx_52284:
-	dc.b	$01, $00, $FF, $F7, $73, $33, $30, $23, $23, $50, $23, $45, $53, $45 
-TalkerPortraitTileDataPtrs_Gfx_52292:
-	dc.b	$01, $00, $CC, $FF, $FF, $FF, $55, $44, $05, $55 
-TalkerPortraitTileDataPtrs_Gfx_5229C:
-	dc.b	$01, $00, $00, $0C, $CC, $CC, $33, $35, $43, $22, $44, $45, $44, $33, $55, $05, $44, $44, $55, $55, $05, $44, $03, $23, $03, $23, $03, $23 
-TalkerPortraitTileDataPtrs_Gfx_522B8:
-	dc.b	$01, $00, $00, $03, $77, $77, $22, $22, $33, $44, $33, $33, $44, $45, $44, $44, $55, $55, $55, $55, $50, $40, $40, $34 
-TalkerPortraitTileDataPtrs_Gfx_522D0:
-	dc.b	$01, $00, $33, $FF, $FF, $FF, $54, $55, $55, $50 
-TalkerPortraitTileDataPtrs_Gfx_522DA:
-	dc.b	$01, $00, $CC, $CC, $CC, $CC, $32, $23, $32, $22, $32, $22, $32, $22, $43, $22, $54, $33, $D5, $44, $0D, $DD 
-TalkerPortraitTileDataPtrs_Gfx_522F0:
-	dc.b	$01, $00, $77, $33, $31, $13, $34, $34, $33, $40, $23, $40, $33, $4D, $34, $5D, $D0, $45, $DD, $D0, $DD, $DD 
-TalkerPortraitTileDataPtrs_Gfx_52306:
-	dc.b	$01, $00, $FF, $EE, $EF, $FF, $0B, $BC, $0A, $00 
-TalkerPortraitTileDataPtrs_Gfx_52310:
-	dc.b	$01, $00, $FF, $E2, $08, $C8, $0B, $A0, $0B, $70, $07, $BC, $A0, $70, $0A, $07, $0B, $07, $BC, $B0, $07, $0A 
-TalkerPortraitTileDataPtrs_Gfx_52326:
-	dc.b	$01, $00, $F7, $66, $89, $24, $B0, $CA, $0B, $A0, $BC, $0B, $07, $0A, $BC, $A7, $A7, $0A, $B0, $07, $0B, $CA 
-TalkerPortraitTileDataPtrs_Gfx_5233C:
-	dc.b	$01, $00, $FF, $F7, $FF, $FF, $A0, $00 
-TalkerPortraitTileDataPtrs_Gfx_52344:
-	dc.b	$01, $00, $EC, $EF, $FF, $EE, $B0, $0B, $CA, $A0, $07, $78 
-TalkerPortraitTileDataPtrs_Gfx_52350:
-	dc.b	$00, $0B, $BA, $00, $70, $00, $A0, $70, $70, $77, $00, $67, $66, $00, $67, $77, $76, $00, $77, $88, $77, $06, $78, $98, $78, $76, $79, $87, $88, $76, $79, $87 
-	dc.b	$88, $00 
-TalkerPortraitTileDataPtrs_Gfx_52372:
-	dc.b	$00, $0B, $00, $70, $A0, $BC, $A7, $00, $00, $7A, $67, $66, $06, $66, $76, $67, $77, $77, $66, $78, $88, $88, $76, $77, $88, $88, $76, $78, $77, $88, $76, $78 
-	dc.b	$88, $00 
-TalkerPortraitTileDataPtrs_Gfx_52394:
-	dc.b	$01, $00, $73, $7F, $77, $73, $0B, $BC, $A0, $0A, $70, $87, $87, $78, $70, $00 
-TalkerPortraitTileDataPtrs_Gfx_523A4:
-	dc.b	$01, $00, $EC, $CC, $DF, $FF, $78, $07, $87, $07, $78, $07, $88, $07 
-TalkerPortraitTileDataPtrs_Gfx_523B2:
-	dc.b	$01, $00, $00, $00, $0E, $EF, $76, $78, $78, $88, $87, $67, $78, $87, $97, $67, $77, $76, $78, $76, $77, $06, $07, $66, $70, $66, $06, $06 
-TalkerPortraitTileDataPtrs_Gfx_523CE:
-	dc.b	$01, $00, $00, $86, $77, $77, $87, $67, $99, $98, $76, $78, $88, $89, $77, $77, $78, $06, $07, $66, $60, $60, $60, $00 
-TalkerPortraitTileDataPtrs_Gfx_523E6:
-	dc.b	$01, $00, $33, $33, $3B, $FF, $87, $70, $87, $70, $88, $70, $88, $70, $07, $70, $70, $00 
-TalkerPortraitTileDataPtrs_Gfx_523F8:
-	dc.b	$01, $00, $FF, $80, $00, $00, $BF, $EF, $FE, $0B, $EE, $DE, $ED, $0B, $FD, $ED, $ED, $0B, $FE, $EE, $EE, $0A, $CF, $FE, $FF, $09, $AC, $FF, $FF, $00 
-TalkerPortraitTileDataPtrs_Gfx_52416:
-	dc.b	$01, $00, $FF, $00, $00, $00, $FF, $FE, $FE, $FF, $EE, $ED, $ED, $EE, $DE, $DE, $DD, $ED, $EE, $EF, $FF, $FE, $EF, $FA, $AA, $BF, $FF, $A9, $99, $AB 
-TalkerPortraitTileDataPtrs_Gfx_52434:
-	dc.b	$02, $00, $FF, $00, $00, $00, $EE, $00, $15, $1F, $00, $EF, $FE, $FF, $ED, $DE, $ED, $DE, $DD, $FE, $FF, $EF, $EF, $FF, $FF, $FF, $FA, $00 
-TalkerPortraitTileDataPtrs_Gfx_52450:
-	dc.b	$01, $00, $FF, $11, $11, $11, $FB, $CC, $C0, $BC, $FF, $FC, $BC, $FF, $FC, $BC, $FF, $FC, $AB, $FF, $FB, $9B, $BC, $BB 
-TalkerPortraitTileDataPtrs_Gfx_52468:
-	dc.b	$01, $FD, $00, $15, $44, $54, $09, $9A, $BB, $BB, $09, $AB, $FF, $FF, $0A, $BF, $ED, $0B, $DD, $0B, $EE, $8D, $0B, $DE, $8D, $0B, $ED, $0B, $EE, $8D 
-TalkerPortraitTileDataPtrs_Gfx_52486:
-	dc.b	$00, $BB, $CA, $8A, $BC, $FF, $A9, $89, $AB, $DE, $A9, $89, $AB, $DE, $FA, $9A, $B8, $ED, $FD, $AB, $E8, $EE, $8D, $EE, $E8, $ED, $FD, $EE, $DF, $DE, $8D, $EE 
-	dc.b	$E8, $00 
-TalkerPortraitTileDataPtrs_Gfx_524A8:
-	dc.b	$01, $DE, $00, $80, $A2, $A8, $BB, $BB, $BB, $A9, $FF, $FF, $FF, $BA, $DF, $DD, $EB, $DD, $DF, $DD, $EF, $E8, $DF, $DD, $E8, $E8, $DF, $DF, $E8, $DD, $E8, $00 
-TalkerPortraitTileDataPtrs_Gfx_524C8:
-	dc.b	$02, $00, $11, $11, $11, $11, $FF, $04, $44, $44, $44, $9B, $BB, $CB, $9B, $FB, $AC, $FC, $BC, $FC, $BC, $FC, $BC, $FC, $BC, $FC, $BC, $FC 
-TalkerPortraitTileDataPtrs_Gfx_524E4:
-	dc.b	$01, $88, $00, $00, $00, $7F, $0B, $FD, $ED, $FD, $0B, $FD, $DE, $FD, $0B, $FD, $EE, $8D, $0A, $BF, $ED, $8D, $09, $AB, $FF, $FE, $09, $9A, $BB, $BB, $08, $00 
-TalkerPortraitTileDataPtrs_Gfx_52504:
-	dc.b	$01, $88, $00, $00, $00, $FF, $EE, $FD, $ED, $DF, $DE, $FD, $EE, $E8, $EE, $FD, $ED, $EF, $ED, $8D, $DE, $D8, $EE, $8E, $EF, $F8, $BB, $BB, $BB, $BB 
-TalkerPortraitTileDataPtrs_Gfx_52522:
-	dc.b	$01, $88, $00, $00, $00, $FF, $DE, $DF, $DE, $EF, $DD, $EF, $DD, $EF, $DE, $E8, $DE, $EF, $DE, $D8, $DE, $D8, $EE, $FF, $EF, $EA, $BB, $BB, $BB, $A9 
-TalkerPortraitTileDataPtrs_Gfx_52540:
-	dc.b	$01, $88, $00, $13, $26, $CC, $BC, $FF, $FB, $00, $BC, $FF, $CB, $00, $BC, $FF, $B8, $AB, $BC, $9B, $B8, $80, $9B, $00, $80, $00, $00, $00 
-TalkerPortraitTileDataPtrs_Gfx_5255C:
-	dc.b	$01, $00, $FF, $FE, $C8, $8C, $BD, $BB, $EE, $0C, $CC, $CC, $0C, $88, $88, $C8, $88, $00 
-TalkerPortraitTileDataPtrs_Gfx_5256E:
-	dc.b	$01, $00, $FF, $F0, $00, $00, $DD, $DD, $DD, $DD, $EE, $EE, $EA, $AA, $CC, $CC, $A9, $99, $88, $FF, $FF, $FF, $88, $8E, $EF, $EE 
-TalkerPortraitTileDataPtrs_Gfx_52588:
-	dc.b	$01, $00, $FF, $F0, $00, $00, $DD, $DD, $DD, $DD, $EE, $EE, $EE, $EE, $AC, $CC, $CC, $CC, $FF, $FF, $FF, $FF, $FE, $EF, $EE, $FE 
-TalkerPortraitTileDataPtrs_Gfx_525A2:
-	dc.b	$01, $00, $FF, $F3, $10, $00, $DD, $BB, $EB, $FF, $CC, $CC, $FF, $FF, $C0, $FC, $FF, $FF, $C0, $FE, $CF, $FF, $FC, $00 
-TalkerPortraitTileDataPtrs_Gfx_525BA:
-	dc.b	$01, $00, $CC, $CE, $EE, $C8, $C8, $88, $0C, $88, $0C, $88, $C8, $C8, $0C, $0C, $C8, $0C, $C8, $88 
-TalkerPortraitTileDataPtrs_Gfx_525CE:
-	dc.b	$01, $88, $88, $88, $00, $FF, $8F, $FE, $FE, $8D, $ED, $DE, $ED, $DE, $DD, $ED, $ED, $ED, $8D, $DD, $DD, $DD, $CC, $CC, $CC, $CC 
-TalkerPortraitTileDataPtrs_Gfx_525E8:
-	dc.b	$02, $DD, $09, $40, $F0, $00, $88, $00, $00, $00, $FF, $EF, $EE, $FE, $EF, $ED, $DE, $EE, $ED, $ED, $ED, $ED, $EE, $DE, $CC, $CC, $CC, $CC 
-TalkerPortraitTileDataPtrs_Gfx_52604:
-	dc.b	$00, $EF, $CF, $FF, $FC, $ED, $EC, $FF, $FC, $DE, $DC, $FF, $C0, $DE, $ED, $CF, $C0, $DD, $DD, $CF, $C0, $CC, $CC, $CC, $00, $88, $88, $8B, $00, $88, $8C, $BB 
-	dc.b	$00, $00 
+	incbin "data/art/tiles/npc/talker_portrait_51e44_gfx.bin"
+TalkerGfxDesc_StowGirl_Gfx_51E4C equ TalkerGfxDesc_MapGiver_Gfx_51E44+$8
+TalkerGfxDesc_Bearwulf_Gfx_51E54 equ TalkerGfxDesc_MapGiver_Gfx_51E44+$10
+TalkerGfxDesc_Merchant_Gfx_51E5C equ TalkerGfxDesc_MapGiver_Gfx_51E44+$18
+TalkerGfxDesc_ImposterGuard_Gfx_51E64 equ TalkerGfxDesc_MapGiver_Gfx_51E44+$20
+TalkerGfxDesc_Tsarkon_Gfx_51E6C equ TalkerGfxDesc_MapGiver_Gfx_51E44+$28
+TalkerGfxDesc_TruffleGiver_Gfx_51E74 equ TalkerGfxDesc_MapGiver_Gfx_51E44+$30
+TalkerGfxDesc_TruffleGiver_Gfx_51E7C equ TalkerGfxDesc_MapGiver_Gfx_51E44+$38
+TalkerGfxDesc_DigotGiver_Gfx_51E84 equ TalkerGfxDesc_MapGiver_Gfx_51E44+$40
+TalkerGfxDesc_DigotGiver_Gfx_51E8C equ TalkerGfxDesc_MapGiver_Gfx_51E44+$48
+TalkerGfxDesc_GenericNpc_Gfx_51E94 equ TalkerGfxDesc_MapGiver_Gfx_51E44+$50
+TalkerGfxDesc_GenericNpc_Gfx_51EA4 equ TalkerGfxDesc_MapGiver_Gfx_51E44+$60
+TalkerPortraitTileDataPtrs_Gfx_51EAC equ TalkerGfxDesc_MapGiver_Gfx_51E44+$68
+TalkerPortraitTileDataPtrs_Gfx_51EB8 equ TalkerGfxDesc_MapGiver_Gfx_51E44+$74
+TalkerPortraitTileDataPtrs_Gfx_51EDA equ TalkerGfxDesc_MapGiver_Gfx_51E44+$96
+TalkerPortraitTileDataPtrs_Gfx_51EF8 equ TalkerGfxDesc_MapGiver_Gfx_51E44+$B4
+TalkerPortraitTileDataPtrs_Gfx_51F02 equ TalkerGfxDesc_MapGiver_Gfx_51E44+$BE
+TalkerPortraitTileDataPtrs_Gfx_51F18 equ TalkerGfxDesc_MapGiver_Gfx_51E44+$D4
+TalkerPortraitTileDataPtrs_Gfx_51F36 equ TalkerGfxDesc_MapGiver_Gfx_51E44+$F2
+TalkerPortraitTileDataPtrs_Gfx_51F54 equ TalkerGfxDesc_MapGiver_Gfx_51E44+$110
+TalkerPortraitTileDataPtrs_Gfx_51F66 equ TalkerGfxDesc_MapGiver_Gfx_51E44+$122
+TalkerPortraitTileDataPtrs_Gfx_51F6C equ TalkerGfxDesc_MapGiver_Gfx_51E44+$128
+TalkerPortraitTileDataPtrs_Gfx_51F8E equ TalkerGfxDesc_MapGiver_Gfx_51E44+$14A
+TalkerPortraitTileDataPtrs_Gfx_51FB0 equ TalkerGfxDesc_MapGiver_Gfx_51E44+$16C
+TalkerPortraitTileDataPtrs_Gfx_51FCE equ TalkerGfxDesc_MapGiver_Gfx_51E44+$18A
+TalkerPortraitTileDataPtrs_Gfx_51FEC equ TalkerGfxDesc_MapGiver_Gfx_51E44+$1A8
+TalkerPortraitTileDataPtrs_Gfx_5200E equ TalkerGfxDesc_MapGiver_Gfx_51E44+$1CA
+TalkerPortraitTileDataPtrs_Gfx_52030 equ TalkerGfxDesc_MapGiver_Gfx_51E44+$1EC
+TalkerPortraitTileDataPtrs_Gfx_5203C equ TalkerGfxDesc_MapGiver_Gfx_51E44+$1F8
+TalkerPortraitTileDataPtrs_Gfx_52058 equ TalkerGfxDesc_MapGiver_Gfx_51E44+$214
+TalkerPortraitTileDataPtrs_Gfx_52072 equ TalkerGfxDesc_MapGiver_Gfx_51E44+$22E
+TalkerPortraitTileDataPtrs_Gfx_52080 equ TalkerGfxDesc_MapGiver_Gfx_51E44+$23C
+TalkerPortraitTileDataPtrs_Gfx_5209C equ TalkerGfxDesc_MapGiver_Gfx_51E44+$258
+TalkerPortraitTileDataPtrs_Gfx_520B8 equ TalkerGfxDesc_MapGiver_Gfx_51E44+$274
+TalkerPortraitTileDataPtrs_Gfx_520C0 equ TalkerGfxDesc_MapGiver_Gfx_51E44+$27C
+TalkerPortraitTileDataPtrs_Gfx_520DC equ TalkerGfxDesc_MapGiver_Gfx_51E44+$298
+TalkerPortraitTileDataPtrs_Gfx_520F8 equ TalkerGfxDesc_MapGiver_Gfx_51E44+$2B4
+TalkerPortraitTileDataPtrs_Gfx_52100 equ TalkerGfxDesc_MapGiver_Gfx_51E44+$2BC
+TalkerPortraitTileDataPtrs_Gfx_52108 equ TalkerGfxDesc_MapGiver_Gfx_51E44+$2C4
+TalkerPortraitTileDataPtrs_Gfx_5212A equ TalkerGfxDesc_MapGiver_Gfx_51E44+$2E6
+TalkerPortraitTileDataPtrs_Gfx_52146 equ TalkerGfxDesc_MapGiver_Gfx_51E44+$302
+TalkerPortraitTileDataPtrs_Gfx_52154 equ TalkerGfxDesc_MapGiver_Gfx_51E44+$310
+TalkerPortraitTileDataPtrs_Gfx_52170 equ TalkerGfxDesc_MapGiver_Gfx_51E44+$32C
+TalkerPortraitTileDataPtrs_Gfx_5218A equ TalkerGfxDesc_MapGiver_Gfx_51E44+$346
+TalkerPortraitTileDataPtrs_Gfx_52194 equ TalkerGfxDesc_MapGiver_Gfx_51E44+$350
+TalkerPortraitTileDataPtrs_Gfx_521B2 equ TalkerGfxDesc_MapGiver_Gfx_51E44+$36E
+TalkerPortraitTileDataPtrs_Gfx_521D4 equ TalkerGfxDesc_MapGiver_Gfx_51E44+$390
+TalkerPortraitTileDataPtrs_Gfx_521E0 equ TalkerGfxDesc_MapGiver_Gfx_51E44+$39C
+TalkerPortraitTileDataPtrs_Gfx_521EE equ TalkerGfxDesc_MapGiver_Gfx_51E44+$3AA
+TalkerPortraitTileDataPtrs_Gfx_52210 equ TalkerGfxDesc_MapGiver_Gfx_51E44+$3CC
+TalkerPortraitTileDataPtrs_Gfx_52230 equ TalkerGfxDesc_MapGiver_Gfx_51E44+$3EC
+TalkerPortraitTileDataPtrs_Gfx_52240 equ TalkerGfxDesc_MapGiver_Gfx_51E44+$3FC
+TalkerPortraitTileDataPtrs_Gfx_5224E equ TalkerGfxDesc_MapGiver_Gfx_51E44+$40A
+TalkerPortraitTileDataPtrs_Gfx_5226A equ TalkerGfxDesc_MapGiver_Gfx_51E44+$426
+TalkerPortraitTileDataPtrs_Gfx_52284 equ TalkerGfxDesc_MapGiver_Gfx_51E44+$440
+TalkerPortraitTileDataPtrs_Gfx_52292 equ TalkerGfxDesc_MapGiver_Gfx_51E44+$44E
+TalkerPortraitTileDataPtrs_Gfx_5229C equ TalkerGfxDesc_MapGiver_Gfx_51E44+$458
+TalkerPortraitTileDataPtrs_Gfx_522B8 equ TalkerGfxDesc_MapGiver_Gfx_51E44+$474
+TalkerPortraitTileDataPtrs_Gfx_522D0 equ TalkerGfxDesc_MapGiver_Gfx_51E44+$48C
+TalkerPortraitTileDataPtrs_Gfx_522DA equ TalkerGfxDesc_MapGiver_Gfx_51E44+$496
+TalkerPortraitTileDataPtrs_Gfx_522F0 equ TalkerGfxDesc_MapGiver_Gfx_51E44+$4AC
+TalkerPortraitTileDataPtrs_Gfx_52306 equ TalkerGfxDesc_MapGiver_Gfx_51E44+$4C2
+TalkerPortraitTileDataPtrs_Gfx_52310 equ TalkerGfxDesc_MapGiver_Gfx_51E44+$4CC
+TalkerPortraitTileDataPtrs_Gfx_52326 equ TalkerGfxDesc_MapGiver_Gfx_51E44+$4E2
+TalkerPortraitTileDataPtrs_Gfx_5233C equ TalkerGfxDesc_MapGiver_Gfx_51E44+$4F8
+TalkerPortraitTileDataPtrs_Gfx_52344 equ TalkerGfxDesc_MapGiver_Gfx_51E44+$500
+TalkerPortraitTileDataPtrs_Gfx_52350 equ TalkerGfxDesc_MapGiver_Gfx_51E44+$50C
+TalkerPortraitTileDataPtrs_Gfx_52372 equ TalkerGfxDesc_MapGiver_Gfx_51E44+$52E
+TalkerPortraitTileDataPtrs_Gfx_52394 equ TalkerGfxDesc_MapGiver_Gfx_51E44+$550
+TalkerPortraitTileDataPtrs_Gfx_523A4 equ TalkerGfxDesc_MapGiver_Gfx_51E44+$560
+TalkerPortraitTileDataPtrs_Gfx_523B2 equ TalkerGfxDesc_MapGiver_Gfx_51E44+$56E
+TalkerPortraitTileDataPtrs_Gfx_523CE equ TalkerGfxDesc_MapGiver_Gfx_51E44+$58A
+TalkerPortraitTileDataPtrs_Gfx_523E6 equ TalkerGfxDesc_MapGiver_Gfx_51E44+$5A2
+TalkerPortraitTileDataPtrs_Gfx_523F8 equ TalkerGfxDesc_MapGiver_Gfx_51E44+$5B4
+TalkerPortraitTileDataPtrs_Gfx_52416 equ TalkerGfxDesc_MapGiver_Gfx_51E44+$5D2
+TalkerPortraitTileDataPtrs_Gfx_52434 equ TalkerGfxDesc_MapGiver_Gfx_51E44+$5F0
+TalkerPortraitTileDataPtrs_Gfx_52450 equ TalkerGfxDesc_MapGiver_Gfx_51E44+$60C
+TalkerPortraitTileDataPtrs_Gfx_52468 equ TalkerGfxDesc_MapGiver_Gfx_51E44+$624
+TalkerPortraitTileDataPtrs_Gfx_52486 equ TalkerGfxDesc_MapGiver_Gfx_51E44+$642
+TalkerPortraitTileDataPtrs_Gfx_524A8 equ TalkerGfxDesc_MapGiver_Gfx_51E44+$664
+TalkerPortraitTileDataPtrs_Gfx_524C8 equ TalkerGfxDesc_MapGiver_Gfx_51E44+$684
+TalkerPortraitTileDataPtrs_Gfx_524E4 equ TalkerGfxDesc_MapGiver_Gfx_51E44+$6A0
+TalkerPortraitTileDataPtrs_Gfx_52504 equ TalkerGfxDesc_MapGiver_Gfx_51E44+$6C0
+TalkerPortraitTileDataPtrs_Gfx_52522 equ TalkerGfxDesc_MapGiver_Gfx_51E44+$6DE
+TalkerPortraitTileDataPtrs_Gfx_52540 equ TalkerGfxDesc_MapGiver_Gfx_51E44+$6FC
+TalkerPortraitTileDataPtrs_Gfx_5255C equ TalkerGfxDesc_MapGiver_Gfx_51E44+$718
+TalkerPortraitTileDataPtrs_Gfx_5256E equ TalkerGfxDesc_MapGiver_Gfx_51E44+$72A
+TalkerPortraitTileDataPtrs_Gfx_52588 equ TalkerGfxDesc_MapGiver_Gfx_51E44+$744
+TalkerPortraitTileDataPtrs_Gfx_525A2 equ TalkerGfxDesc_MapGiver_Gfx_51E44+$75E
+TalkerPortraitTileDataPtrs_Gfx_525BA equ TalkerGfxDesc_MapGiver_Gfx_51E44+$776
+TalkerPortraitTileDataPtrs_Gfx_525CE equ TalkerGfxDesc_MapGiver_Gfx_51E44+$78A
+TalkerPortraitTileDataPtrs_Gfx_525E8 equ TalkerGfxDesc_MapGiver_Gfx_51E44+$7A4
+TalkerPortraitTileDataPtrs_Gfx_52604 equ TalkerGfxDesc_MapGiver_Gfx_51E44+$7C0
 ; loc_00052626
 TalkerPortraitTileDataPtrs:
 	dc.l	TalkerPortraitTileDataPtrs_Gfx_51EAC
@@ -58044,196 +56527,87 @@ EnemyGfxFrameTable_DragonChild:
 	dc.b	$34, $37, $1F, $35, $38, $03, $03, $03, $39, $3C, $08, $3A, $3D, $40, $3B, $3E, $41, $03, $3F, $42, $03, $44, $03, $3A, $45, $48, $43, $46, $49, $03, $47, $03 
 	dc.b	$03, $03, $4D, $3A, $4A, $4E, $3B, $4B, $4F, $03, $4C, $50 
 EnemyGfxData_DragonChild_Gfx_527D6:
-	dc.b	$01, $00, $FF, $FF, $F9, $99, $0C, $C0, $0C, $9C, $0C, $9C 
-EnemyGfxData_DragonChild_Gfx_527E2:
-	dc.b	$01, $00, $FE, $CC, $CC, $CC, $22, $02, $21, $21, $13, $23, $53, $35, $54, $44, $31, $05, $26, $00 
-EnemyGfxData_DragonChild_Gfx_527F6:
-	dc.b	$01, $00, $F3, $33, $33, $33, $23, $40, $23, $34, $23, $45, $65, $45, $56, $45, $54, $56, $45, $60 
-EnemyGfxData_DragonChild_Gfx_5280A:
-	dc.b	$01, $00, $FF, $FF, $FF, $FF 
-EnemyGfxData_DragonChild_Gfx_52810:
-	dc.b	$01, $00, $8C, $CC, $CC, $CC, $0C, $9C, $C0, $C9, $C0, $C9, $C0, $C9, $CC, $0C, $9C, $0C, $9C, $0C, $99, $0C, $99, $00 
-EnemyGfxData_DragonChild_Gfx_52828:
-	dc.b	$00, $00, $43, $44, $13, $05, $34, $65, $32, $03, $52, $65, $53, $03, $45, $23, $45, $06, $32, $65, $33, $05, $64, $24, $64, $C5, $43, $63, $34, $C0, $64, $24 
-	dc.b	$63, $00 
-EnemyGfxData_DragonChild_Gfx_5284A:
-	dc.b	$00, $34, $64, $45, $00, $35, $66, $54, $50, $56, $65, $45, $50, $42, $33, $55, $AA, $25, $66, $A9, $88, $56, $5A, $99, $BA, $63, $58, $8A, $99, $56, $A7, $A9 
-	dc.b	$98, $00 
-EnemyGfxData_DragonChild_Gfx_5286C:
-	dc.b	$01, $00, $FF, $F7, $31, $11, $AA, $77, $CA, $AA, $CB, $A0, $87, $AB, $B0, $77, $CA, $BA 
-EnemyGfxData_DragonChild_Gfx_5287E:
-	dc.b	$01, $00, $EE, $EE, $EE, $FF, $C9, $C9, $BB, $44, $43, $04 
-EnemyGfxData_DragonChild_Gfx_5288A:
-	dc.b	$00, $C6, $65, $63, $36, $B6, $65, $36, $64, $A6, $65, $02, $64, $66, $50, $55, $03, $44, $05, $32, $45, $40, $06, $43, $23, $00, $00, $65, $33, $00, $00, $66 
-	dc.b	$54, $00 
-EnemyGfxData_DragonChild_Gfx_528AC:
-	dc.b	$00, $43, $A7, $A8, $8A, $56, $A7, $A8, $A7, $56, $AC, $A7, $7A, $50, $AC, $A7, $77, $35, $AB, $A7, $7A, $34, $5B, $BA, $CC, $33, $4A, $BB, $AA, $34, $56, $AB 
-	dc.b	$BA, $00 
-EnemyGfxData_DragonChild_Gfx_528CE:
-	dc.b	$02, $AA, $2A, $66, $24, $CC, $00, $11, $11, $11, $13, $77, $CA, $CA, $7C, $AC, $AC, $CA, $CC, $A0, $A0, $00 
-EnemyGfxData_DragonChild_Gfx_528E4:
-	dc.b	$01, $00, $FF, $FF, $EE, $CC, $0C, $C9, $0C, $99, $49, $9C 
-EnemyGfxData_DragonChild_Gfx_528F0:
-	dc.b	$00, $00, $0C, $CC, $00, $00, $C9, $9C, $22, $0C, $99, $C2, $21, $C9, $9C, $21, $13, $99, $C0, $23, $53, $9C, $00, $35, $54, $C0, $00, $44, $31, $00, $44, $05 
-	dc.b	$26, $00 
-EnemyGfxData_DragonChild_Gfx_52912:
-	dc.b	$01, $00, $88, $89, $DC, $CC, $04, $55, $C0, $03, $45, $50, $03, $55, $50, $04, $45, $35, $35, $05, $35, $54, $34, $54 
-EnemyGfxData_DragonChild_Gfx_5292A:
-	dc.b	$00, $04, $33, $44, $13, $05, $32, $65, $32, $03, $53, $25, $53, $54, $45, $33, $45, $55, $32, $65, $33, $45, $64, $24, $64, $45, $43, $63, $34, $50, $54, $24 
-	dc.b	$63, $00 
-EnemyGfxData_DragonChild_Gfx_5294C:
-	dc.b	$00, $34, $60, $00, $00, $35, $66, $53, $40, $56, $65, $43, $35, $44, $33, $54, $45, $23, $65, $4A, $AA, $56, $3A, $98, $87, $34, $A9, $9B, $AA, $54, $88, $A9 
-	dc.b	$98, $00 
-EnemyGfxData_DragonChild_Gfx_5296E:
-	dc.b	$01, $00, $FF, $FF, $73, $33, $AB, $7C, $A0, $AC, $BA, $7A, $BB, $00 
-EnemyGfxData_DragonChild_Gfx_5297C:
-	dc.b	$01, $00, $CC, $CF, $FF, $FF, $33, $45, $22, $30, $23, $40 
-EnemyGfxData_DragonChild_Gfx_52988:
-	dc.b	$01, $00, $88, $8C, $88, $CC, $55, $63, $36, $44, $36, $64, $06, $02, $64, $55, $03, $05, $32, $45, $06, $43, $23, $65, $33, $46, $54, $00 
-EnemyGfxData_DragonChild_Gfx_529A4:
-	dc.b	$00, $3A, $7A, $99, $87, $5A, $7A, $88, $A7, $5A, $7A, $8A, $7A, $5A, $CA, $77, $A7, $3A, $CA, $77, $7A, $3A, $BA, $77, $AA, $35, $BB, $AC, $CC, $34, $AB, $BA 
-	dc.b	$AA, $00 
-EnemyGfxData_DragonChild_Gfx_529C6:
-	dc.b	$02, $00, $11, $11, $11, $33, $AA, $04, $44, $44, $4C, $7C, $AB, $A0, $7C, $A0, $AC, $A0, $CA, $A0, $CA, $A0, $CC, $A0, $CA, $00 
-EnemyGfxData_DragonChild_Gfx_529E0:
-	dc.b	$01, $00, $F3, $33, $33, $30, $23, $40, $23, $34, $23, $45, $65, $45, $56, $45, $54, $56, $45, $60, $33, $40 
-EnemyGfxData_DragonChild_Gfx_529F6:
-	dc.b	$00, $00, $00, $44, $13, $00, $44, $65, $32, $04, $32, $65, $53, $03, $45, $23, $45, $04, $32, $65, $33, $04, $64, $24, $64, $00, $43, $63, $34, $05, $54, $24 
-	dc.b	$63, $00 
-EnemyGfxData_DragonChild_Gfx_52A18:
-	dc.b	$00, $34, $65, $43, $34, $35, $65, $35, $54, $56, $43, $35, $5A, $42, $36, $6A, $98, $25, $65, $A9, $9B, $56, $54, $88, $A9, $63, $4A, $7A, $99, $56, $5A, $7A 
-	dc.b	$88, $00 
-EnemyGfxData_DragonChild_Gfx_52A3A:
-	dc.b	$01, $00, $FF, $31, $11, $00, $AA, $A0, $87, $7C, $A0, $AA, $AC, $BA, $98, $7A, $BB, $87, $7C, $AB, $A0, $A7, $7C, $AA, $A0, $00 
-EnemyGfxData_DragonChild_Gfx_52A54:
-	dc.b	$01, $00, $FF, $FF, $FE, $EE, $05, $05, $05, $00 
-EnemyGfxData_DragonChild_Gfx_52A5E:
-	dc.b	$01, $55, $40, $0A, $C8, $88, $05, $63, $36, $05, $44, $36, $64, $05, $66, $02, $64, $50, $03, $32, $45, $56, $43, $23, $00, $65, $33, $00, $06, $54 
-EnemyGfxData_DragonChild_Gfx_52A7C:
-	dc.b	$00, $43, $4A, $7A, $8A, $56, $5A, $CA, $77, $56, $4A, $CA, $77, $50, $5A, $BA, $77, $35, $55, $BB, $AC, $34, $54, $AB, $BA, $33, $45, $6A, $BB, $34, $56, $45 
-	dc.b	$AA, $00 
-EnemyGfxData_DragonChild_Gfx_52A9E:
-	dc.b	$01, $AA, $22, $2A, $2E, $C8, $7A, $AC, $A0, $A7, $CA, $A0, $7A, $CA, $A0, $CC, $A0, $CC, $CA, $00, $00, $A0, $00, $A0, $00, $00 
-EnemyGfxData_DragonChild_Gfx_52AB8:
-	dc.b	$01, $00, $FE, $CC, $CC, $CC, $22, $02, $11, $32, $21, $33, $22, $43, $33, $54, $43, $05, $44, $00 
-EnemyGfxData_DragonChild_Gfx_52ACC:
-	dc.b	$01, $00, $F7, $33, $33, $33, $23, $12, $30, $11, $23, $22, $34, $33, $44, $44, $40, $44, $50, $00 
-EnemyGfxData_DragonChild_Gfx_52AE0:
-	dc.b	$01, $00, $FF, $FF, $FF, $F7, $C0, $00 
-EnemyGfxData_DragonChild_Gfx_52AE8:
-	dc.b	$02, $00, $FF, $FE, $C8, $88, $66, $00, $00, $13, $33, $BA, $CB, $0C, $0B, $B6 
-EnemyGfxData_DragonChild_Gfx_52AF8:
-	dc.b	$00, $00, $54, $46, $55, $05, $33, $46, $65, $03, $22, $34, $65, $A3, $32, $34, $23, $65, $43, $34, $54, $65, $54, $44, $33, $64, $45, $45, $66, $64, $35, $64 
-	dc.b	$33, $00 
-EnemyGfxData_DragonChild_Gfx_52B1A:
-	dc.b	$00, $45, $54, $45, $0C, $35, $66, $33, $5C, $35, $54, $32, $3C, $54, $33, $22, $3C, $23, $53, $33, $45, $46, $44, $34, $55, $23, $36, $55, $43, $36, $42, $46 
-	dc.b	$43, $00 
-EnemyGfxData_DragonChild_Gfx_52B3C:
-	dc.b	$01, $00, $77, $77, $77, $77, $9C, $9C, $9C, $9C, $9C, $9C, $CC, $5C 
-EnemyGfxData_DragonChild_Gfx_52B4A:
-	dc.b	$02, $00, $88, $88, $88, $8C, $66, $20, $02, $23, $31, $B6, $55, $B6, $65, $45, $A6, $65, $44, $A6, $53, $A6, $64, $0A, $0A, $AA 
-EnemyGfxData_DragonChild_Gfx_52B64:
-	dc.b	$00, $63, $45, $45, $64, $53, $56, $44, $45, $34, $66, $55, $65, $23, $56, $60, $05, $34, $54, $32, $53, $66, $54, $33, $23, $66, $65, $43, $33, $66, $6A, $65 
-	dc.b	$43, $00 
-EnemyGfxData_DragonChild_Gfx_52B86:
-	dc.b	$01, $00, $00, $22, $11, $13, $23, $36, $50, $43, $46, $63, $50, $54, $46, $20, $53, $30, $54, $04, $54, $23, $40, $32, $34, $40, $33, $44, $60, $44, $66, $00 
-EnemyGfxData_DragonChild_Gfx_52BA6:
-	dc.b	$01, $00, $77, $77, $7F, $FF, $3C, $35, $32, $23, $40, $00 
-EnemyGfxData_DragonChild_Gfx_52BB2:
-	dc.b	$01, $00, $C4, $02, $22, $23, $0C, $C0, $23, $0C, $9C, $12, $30, $0C, $9C, $11, $23, $C9, $22, $34, $C9, $33, $44, $0C, $44, $40, $0C, $44, $50, $00 
-EnemyGfxData_DragonChild_Gfx_52BD0:
-	dc.b	$01, $00, $FF, $F7, $77, $73, $C0, $C0, $9C, $9C, $C9, $C0 
-EnemyGfxData_DragonChild_Gfx_52BDC:
-	dc.b	$01, $00, $FF, $FF, $C8, $88, $0B, $AA, $0C, $B6, $66, $C6, $66, $66, $B6, $66, $66, $00 
-EnemyGfxData_DragonChild_Gfx_52BEE:
-	dc.b	$00, $00, $54, $46, $55, $05, $33, $46, $65, $03, $22, $34, $65, $03, $32, $34, $23, $A5, $43, $34, $54, $65, $54, $44, $33, $65, $54, $44, $66, $63, $35, $64 
-	dc.b	$33, $00 
-EnemyGfxData_DragonChild_Gfx_52C10:
-	dc.b	$00, $45, $50, $00, $00, $35, $64, $45, $00, $35, $56, $33, $50, $54, $34, $32, $35, $23, $53, $22, $35, $46, $43, $33, $44, $23, $34, $34, $54, $36, $46, $55 
-	dc.b	$66, $00 
-EnemyGfxData_DragonChild_Gfx_52C32:
-	dc.b	$01, $00, $33, $33, $33, $33, $C9, $C0, $0C, $95, $5C, $55, $55, $55, $05, $50, $55, $40, $45, $40, $33, $40 
-EnemyGfxData_DragonChild_Gfx_52C48:
-	dc.b	$01, $66, $44, $46, $67, $33, $0B, $65, $56, $0B, $54, $55, $0B, $54, $43, $0A, $54, $0A, $65, $0A, $00, $A6, $00, $A6 
-EnemyGfxData_DragonChild_Gfx_52C60:
-	dc.b	$00, $53, $45, $45, $64, $34, $56, $44, $45, $23, $66, $55, $65, $34, $56, $60, $05, $66, $65, $42, $53, $66, $65, $33, $23, $66, $65, $43, $33, $66, $6A, $54 
-	dc.b	$43, $00 
-EnemyGfxData_DragonChild_Gfx_52C82:
-	dc.b	$01, $00, $01, $33, $11, $11, $23, $36, $50, $05, $46, $63, $50, $46, $20, $30, $55, $54, $44, $50, $33, $34, $50, $33, $45, $60, $33, $56, $60, $00 
-EnemyGfxData_DragonChild_Gfx_52CA0:
-	dc.b	$01, $00, $7F, $FF, $FF, $FF, $44, $00 
-EnemyGfxData_DragonChild_Gfx_52CA8:
-	dc.b	$02, $00, $FF, $EC, $88, $88, $66, $00, $01, $33, $32, $BA, $CB, $0C, $0B, $B6, $B6, $55 
-EnemyGfxData_DragonChild_Gfx_52CBA:
-	dc.b	$00, $00, $00, $06, $55, $00, $54, $46, $65, $A5, $33, $46, $65, $63, $22, $34, $23, $63, $32, $34, $54, $65, $43, $34, $33, $65, $54, $44, $66, $64, $35, $64 
-	dc.b	$33, $00 
-EnemyGfxData_DragonChild_Gfx_52CDC:
-	dc.b	$00, $45, $54, $40, $00, $35, $66, $44, $40, $35, $54, $33, $45, $54, $33, $22, $35, $23, $53, $33, $45, $46, $44, $34, $50, $23, $36, $55, $50, $36, $42, $45 
-	dc.b	$50, $00 
-EnemyGfxData_DragonChild_Gfx_52CFE:
-	dc.b	$02, $00, $88, $88, $88, $CE, $66, $00, $22, $33, $10, $B6, $65, $45, $A6, $65, $44, $A6, $53, $A6, $64, $0A, $0A, $AA, $AA, $00 
-EnemyGfxData_DragonChild_Gfx_52D18:
-	dc.b	$00, $53, $45, $45, $64, $33, $56, $44, $45, $24, $66, $55, $65, $33, $56, $66, $05, $64, $54, $44, $53, $66, $54, $43, $33, $66, $65, $43, $33, $AA, $A0, $65 
-	dc.b	$43, $00 
-EnemyGfxData_DragonChild_Gfx_52D3A:
-	dc.b	$00, $23, $36, $55, $45, $46, $63, $55, $45, $46, $25, $54, $45, $30, $55, $05, $50, $54, $23, $55, $50, $32, $34, $65, $50, $33, $46, $55, $C0, $44, $66, $55 
-	dc.b	$9C, $00 
-EnemyGfxData_DragonChild_Gfx_52D5C:
-	dc.b	$01, $00, $FF, $FF, $FF, $99, $0C, $C0, $0C, $9C 
-EnemyGfxData_DragonChild_Gfx_52D66:
-	dc.b	$01, $00, $FE, $CC, $C8, $88, $22, $01, $12, $12, $23, $25, $32, $04, $24, $53, $05, $33, $34, $02, $34, $54 
-EnemyGfxData_DragonChild_Gfx_52D7C:
-	dc.b	$01, $00, $F7, $33, $33, $33, $33, $33, $30, $34, $34, $44, $44, $45, $55, $45, $55, $45, $60, $00 
-EnemyGfxData_DragonChild_Gfx_52D90:
-	dc.b	$01, $00, $99, $CC, $CC, $CC, $0C, $9C, $0C, $9C, $C9, $C0, $C9, $C0, $C9, $C0, $0C, $9C, $0C, $9C, $0C, $99 
-EnemyGfxData_DragonChild_Gfx_52DA6:
-	dc.b	$01, $00, $88, $9F, $E8, $80, $04, $55, $44, $03, $34, $45, $04, $45, $04, $0C, $C0, $04, $09, $7C, $B4, $C0, $09, $87, $BA, $00 
-EnemyGfxData_DragonChild_Gfx_52DC0:
-	dc.b	$00, $55, $60, $00, $00, $66, $56, $53, $40, $05, $23, $45, $34, $42, $44, $54, $53, $23, $66, $53, $45, $56, $63, $54, $55, $33, $35, $55, $34, $56, $53, $55 
-	dc.b	$43, $00 
-EnemyGfxData_DragonChild_Gfx_52DE2:
-	dc.b	$01, $00, $FF, $F7, $7F, $F7, $40, $40, $40, $00 
-EnemyGfxData_DragonChild_Gfx_52DEC:
-	dc.b	$00, $C6, $08, $98, $BA, $B6, $0C, $B8, $7B, $A6, $58, $9B, $87, $66, $4C, $88, $B7, $45, $5C, $B8, $BC, $40, $00, $B8, $7B, $00, $00, $BC, $7B, $00, $00, $0B 
-	dc.b	$7B, $00 
-EnemyGfxData_DragonChild_Gfx_52E0E:
-	dc.b	$00, $44, $35, $35, $55, $A6, $53, $45, $54, $A4, $45, $55, $45, $BA, $55, $43, $34, $BA, $54, $33, $40, $CB, $A5, $45, $50, $CB, $A5, $54, $40, $CB, $A5, $44 
-	dc.b	$50, $00 
-EnemyGfxData_DragonChild_Gfx_52E30:
-	dc.b	$01, $00, $77, $7F, $FF, $FF, $54, $43, $33, $00 
-EnemyGfxData_DragonChild_Gfx_52E3A:
-	dc.b	$01, $00, $91, $13, $33, $33, $0B, $CC, $33, $B8, $9C, $33, $39, $C0, $34, $34, $44, $44, $45, $55, $45, $55, $45, $60 
-EnemyGfxData_DragonChild_Gfx_52E52:
-	dc.b	$01, $00, $FF, $FE, $EE, $EF, $04, $45, $54, $55 
-EnemyGfxData_DragonChild_Gfx_52E5C:
-	dc.b	$01, $00, $88, $13, $33, $20, $04, $55, $44, $C3, $34, $45, $0C, $94, $45, $4C, $9C, $45, $C0, $54, $50, $5C, $C5, $04, $59, $7C, $A5, $45 
-EnemyGfxData_DragonChild_Gfx_52E78:
-	dc.b	$00, $55, $60, $00, $00, $66, $56, $54, $00, $06, $43, $43, $40, $05, $24, $55, $34, $42, $66, $53, $53, $26, $63, $54, $54, $66, $35, $55, $34, $33, $53, $55 
-	dc.b	$23, $00 
-EnemyGfxData_DragonChild_Gfx_52E9A:
-	dc.b	$01, $00, $FF, $FF, $77, $FF, $40, $40 
-EnemyGfxData_DragonChild_Gfx_52EA2:
-	dc.b	$00, $09, $87, $BA, $55, $08, $98, $BA, $55, $0C, $B8, $7B, $A6, $08, $9B, $87, $A5, $0C, $88, $B7, $BA, $0C, $B8, $BC, $BA, $00, $B8, $7B, $CB, $00, $BC, $7B 
-	dc.b	$CB, $00 
-EnemyGfxData_DragonChild_Gfx_52EC4:
-	dc.b	$00, $55, $35, $44, $25, $33, $54, $54, $30, $55, $55, $55, $50, $44, $44, $54, $30, $43, $22, $35, $40, $44, $55, $55, $50, $A5, $44, $44, $00, $A5, $45, $45 
-	dc.b	$00, $00 
-EnemyGfxData_DragonChild_Gfx_52EE6:
-	dc.b	$01, $00, $88, $9F, $FC, $CC, $04, $55, $44, $03, $34, $45, $04, $45, $0C, $C0, $09, $7C, $09, $87 
-EnemyGfxData_DragonChild_Gfx_52EFA:
-	dc.b	$00, $55, $60, $44, $00, $66, $66, $33, $40, $05, $53, $45, $33, $04, $24, $54, $54, $43, $66, $53, $43, $54, $56, $65, $54, $B3, $34, $45, $65, $BA, $56, $54 
-	dc.b	$60, $00 
-EnemyGfxData_DragonChild_Gfx_52F1C:
-	dc.b	$01, $00, $FF, $F7, $77, $33, $40, $20, $32, $43, $50, $55, $42, $00 
-EnemyGfxData_DragonChild_Gfx_52F2A:
-	dc.b	$01, $00, $73, $10, $8C, $EF, $CC, $99, $CC, $C9, $99, $CC, $0C, $C9, $99, $CC, $0C, $C9, $99, $0C, $C9, $0C 
-EnemyGfxData_DragonChild_Gfx_52F40:
-	dc.b	$01, $00, $CC, $CC, $40, $00, $08, $98, $0C, $B8, $08, $9B, $0C, $88, $CC, $0C, $B8, $99, $CB, $45, $B8, $CC, $C4, $45, $BC, $0B, $B5, $50, $0B, $00 
-EnemyGfxData_DragonChild_Gfx_52F5E:
-	dc.b	$00, $BA, $44, $46, $66, $7B, $A6, $54, $64, $87, $A4, $45, $42, $B7, $BA, $53, $30, $BC, $BA, $53, $40, $7B, $CB, $A5, $50, $7B, $CB, $A4, $00, $7B, $CB, $A5 
-	dc.b	$00, $00 
-EnemyGfxData_DragonChild_Gfx_52F80:
-	dc.b	$01, $00, $37, $7F, $FF, $FF, $55, $43, $25, $40 
+	incbin "data/art/tiles/enemy/dragon_child_gfx.bin"
+EnemyGfxData_DragonChild_Gfx_527E2 equ EnemyGfxData_DragonChild_Gfx_527D6+$C
+EnemyGfxData_DragonChild_Gfx_527F6 equ EnemyGfxData_DragonChild_Gfx_527D6+$20
+EnemyGfxData_DragonChild_Gfx_5280A equ EnemyGfxData_DragonChild_Gfx_527D6+$34
+EnemyGfxData_DragonChild_Gfx_52810 equ EnemyGfxData_DragonChild_Gfx_527D6+$3A
+EnemyGfxData_DragonChild_Gfx_52828 equ EnemyGfxData_DragonChild_Gfx_527D6+$52
+EnemyGfxData_DragonChild_Gfx_5284A equ EnemyGfxData_DragonChild_Gfx_527D6+$74
+EnemyGfxData_DragonChild_Gfx_5286C equ EnemyGfxData_DragonChild_Gfx_527D6+$96
+EnemyGfxData_DragonChild_Gfx_5287E equ EnemyGfxData_DragonChild_Gfx_527D6+$A8
+EnemyGfxData_DragonChild_Gfx_5288A equ EnemyGfxData_DragonChild_Gfx_527D6+$B4
+EnemyGfxData_DragonChild_Gfx_528AC equ EnemyGfxData_DragonChild_Gfx_527D6+$D6
+EnemyGfxData_DragonChild_Gfx_528CE equ EnemyGfxData_DragonChild_Gfx_527D6+$F8
+EnemyGfxData_DragonChild_Gfx_528E4 equ EnemyGfxData_DragonChild_Gfx_527D6+$10E
+EnemyGfxData_DragonChild_Gfx_528F0 equ EnemyGfxData_DragonChild_Gfx_527D6+$11A
+EnemyGfxData_DragonChild_Gfx_52912 equ EnemyGfxData_DragonChild_Gfx_527D6+$13C
+EnemyGfxData_DragonChild_Gfx_5292A equ EnemyGfxData_DragonChild_Gfx_527D6+$154
+EnemyGfxData_DragonChild_Gfx_5294C equ EnemyGfxData_DragonChild_Gfx_527D6+$176
+EnemyGfxData_DragonChild_Gfx_5296E equ EnemyGfxData_DragonChild_Gfx_527D6+$198
+EnemyGfxData_DragonChild_Gfx_5297C equ EnemyGfxData_DragonChild_Gfx_527D6+$1A6
+EnemyGfxData_DragonChild_Gfx_52988 equ EnemyGfxData_DragonChild_Gfx_527D6+$1B2
+EnemyGfxData_DragonChild_Gfx_529A4 equ EnemyGfxData_DragonChild_Gfx_527D6+$1CE
+EnemyGfxData_DragonChild_Gfx_529C6 equ EnemyGfxData_DragonChild_Gfx_527D6+$1F0
+EnemyGfxData_DragonChild_Gfx_529E0 equ EnemyGfxData_DragonChild_Gfx_527D6+$20A
+EnemyGfxData_DragonChild_Gfx_529F6 equ EnemyGfxData_DragonChild_Gfx_527D6+$220
+EnemyGfxData_DragonChild_Gfx_52A18 equ EnemyGfxData_DragonChild_Gfx_527D6+$242
+EnemyGfxData_DragonChild_Gfx_52A3A equ EnemyGfxData_DragonChild_Gfx_527D6+$264
+EnemyGfxData_DragonChild_Gfx_52A54 equ EnemyGfxData_DragonChild_Gfx_527D6+$27E
+EnemyGfxData_DragonChild_Gfx_52A5E equ EnemyGfxData_DragonChild_Gfx_527D6+$288
+EnemyGfxData_DragonChild_Gfx_52A7C equ EnemyGfxData_DragonChild_Gfx_527D6+$2A6
+EnemyGfxData_DragonChild_Gfx_52A9E equ EnemyGfxData_DragonChild_Gfx_527D6+$2C8
+EnemyGfxData_DragonChild_Gfx_52AB8 equ EnemyGfxData_DragonChild_Gfx_527D6+$2E2
+EnemyGfxData_DragonChild_Gfx_52ACC equ EnemyGfxData_DragonChild_Gfx_527D6+$2F6
+EnemyGfxData_DragonChild_Gfx_52AE0 equ EnemyGfxData_DragonChild_Gfx_527D6+$30A
+EnemyGfxData_DragonChild_Gfx_52AE8 equ EnemyGfxData_DragonChild_Gfx_527D6+$312
+EnemyGfxData_DragonChild_Gfx_52AF8 equ EnemyGfxData_DragonChild_Gfx_527D6+$322
+EnemyGfxData_DragonChild_Gfx_52B1A equ EnemyGfxData_DragonChild_Gfx_527D6+$344
+EnemyGfxData_DragonChild_Gfx_52B3C equ EnemyGfxData_DragonChild_Gfx_527D6+$366
+EnemyGfxData_DragonChild_Gfx_52B4A equ EnemyGfxData_DragonChild_Gfx_527D6+$374
+EnemyGfxData_DragonChild_Gfx_52B64 equ EnemyGfxData_DragonChild_Gfx_527D6+$38E
+EnemyGfxData_DragonChild_Gfx_52B86 equ EnemyGfxData_DragonChild_Gfx_527D6+$3B0
+EnemyGfxData_DragonChild_Gfx_52BA6 equ EnemyGfxData_DragonChild_Gfx_527D6+$3D0
+EnemyGfxData_DragonChild_Gfx_52BB2 equ EnemyGfxData_DragonChild_Gfx_527D6+$3DC
+EnemyGfxData_DragonChild_Gfx_52BD0 equ EnemyGfxData_DragonChild_Gfx_527D6+$3FA
+EnemyGfxData_DragonChild_Gfx_52BDC equ EnemyGfxData_DragonChild_Gfx_527D6+$406
+EnemyGfxData_DragonChild_Gfx_52BEE equ EnemyGfxData_DragonChild_Gfx_527D6+$418
+EnemyGfxData_DragonChild_Gfx_52C10 equ EnemyGfxData_DragonChild_Gfx_527D6+$43A
+EnemyGfxData_DragonChild_Gfx_52C32 equ EnemyGfxData_DragonChild_Gfx_527D6+$45C
+EnemyGfxData_DragonChild_Gfx_52C48 equ EnemyGfxData_DragonChild_Gfx_527D6+$472
+EnemyGfxData_DragonChild_Gfx_52C60 equ EnemyGfxData_DragonChild_Gfx_527D6+$48A
+EnemyGfxData_DragonChild_Gfx_52C82 equ EnemyGfxData_DragonChild_Gfx_527D6+$4AC
+EnemyGfxData_DragonChild_Gfx_52CA0 equ EnemyGfxData_DragonChild_Gfx_527D6+$4CA
+EnemyGfxData_DragonChild_Gfx_52CA8 equ EnemyGfxData_DragonChild_Gfx_527D6+$4D2
+EnemyGfxData_DragonChild_Gfx_52CBA equ EnemyGfxData_DragonChild_Gfx_527D6+$4E4
+EnemyGfxData_DragonChild_Gfx_52CDC equ EnemyGfxData_DragonChild_Gfx_527D6+$506
+EnemyGfxData_DragonChild_Gfx_52CFE equ EnemyGfxData_DragonChild_Gfx_527D6+$528
+EnemyGfxData_DragonChild_Gfx_52D18 equ EnemyGfxData_DragonChild_Gfx_527D6+$542
+EnemyGfxData_DragonChild_Gfx_52D3A equ EnemyGfxData_DragonChild_Gfx_527D6+$564
+EnemyGfxData_DragonChild_Gfx_52D5C equ EnemyGfxData_DragonChild_Gfx_527D6+$586
+EnemyGfxData_DragonChild_Gfx_52D66 equ EnemyGfxData_DragonChild_Gfx_527D6+$590
+EnemyGfxData_DragonChild_Gfx_52D7C equ EnemyGfxData_DragonChild_Gfx_527D6+$5A6
+EnemyGfxData_DragonChild_Gfx_52D90 equ EnemyGfxData_DragonChild_Gfx_527D6+$5BA
+EnemyGfxData_DragonChild_Gfx_52DA6 equ EnemyGfxData_DragonChild_Gfx_527D6+$5D0
+EnemyGfxData_DragonChild_Gfx_52DC0 equ EnemyGfxData_DragonChild_Gfx_527D6+$5EA
+EnemyGfxData_DragonChild_Gfx_52DE2 equ EnemyGfxData_DragonChild_Gfx_527D6+$60C
+EnemyGfxData_DragonChild_Gfx_52DEC equ EnemyGfxData_DragonChild_Gfx_527D6+$616
+EnemyGfxData_DragonChild_Gfx_52E0E equ EnemyGfxData_DragonChild_Gfx_527D6+$638
+EnemyGfxData_DragonChild_Gfx_52E30 equ EnemyGfxData_DragonChild_Gfx_527D6+$65A
+EnemyGfxData_DragonChild_Gfx_52E3A equ EnemyGfxData_DragonChild_Gfx_527D6+$664
+EnemyGfxData_DragonChild_Gfx_52E52 equ EnemyGfxData_DragonChild_Gfx_527D6+$67C
+EnemyGfxData_DragonChild_Gfx_52E5C equ EnemyGfxData_DragonChild_Gfx_527D6+$686
+EnemyGfxData_DragonChild_Gfx_52E78 equ EnemyGfxData_DragonChild_Gfx_527D6+$6A2
+EnemyGfxData_DragonChild_Gfx_52E9A equ EnemyGfxData_DragonChild_Gfx_527D6+$6C4
+EnemyGfxData_DragonChild_Gfx_52EA2 equ EnemyGfxData_DragonChild_Gfx_527D6+$6CC
+EnemyGfxData_DragonChild_Gfx_52EC4 equ EnemyGfxData_DragonChild_Gfx_527D6+$6EE
+EnemyGfxData_DragonChild_Gfx_52EE6 equ EnemyGfxData_DragonChild_Gfx_527D6+$710
+EnemyGfxData_DragonChild_Gfx_52EFA equ EnemyGfxData_DragonChild_Gfx_527D6+$724
+EnemyGfxData_DragonChild_Gfx_52F1C equ EnemyGfxData_DragonChild_Gfx_527D6+$746
+EnemyGfxData_DragonChild_Gfx_52F2A equ EnemyGfxData_DragonChild_Gfx_527D6+$754
+EnemyGfxData_DragonChild_Gfx_52F40 equ EnemyGfxData_DragonChild_Gfx_527D6+$76A
+EnemyGfxData_DragonChild_Gfx_52F5E equ EnemyGfxData_DragonChild_Gfx_527D6+$788
+EnemyGfxData_DragonChild_Gfx_52F80 equ EnemyGfxData_DragonChild_Gfx_527D6+$7AA
 EnemyGfxData_DragonChild:
 	dc.l	EnemyGfxData_DragonChild_Gfx_527D6
 	dc.l	EnemyGfxData_DragonChild_Gfx_527E2
@@ -58321,108 +56695,56 @@ EnemyGfxFrameTable_DragonMain:
 	dc.b	$18, $00, $19, $1B, $1A, $1C, $00, $00, $00, $00, $1D, $20, $1E, $21, $1F, $00, $00, $00, $22, $24, $23, $25, $00, $26, $00, $00, $27, $29, $28, $2A, $00, $2B 
 	dc.b	$00, $2E, $2C, $2F, $2D, $30, $00, $31 
 EnemyGfxData_DragonMain_Gfx_53116:
-	dc.b	$01, $00, $FF, $FF, $FF, $FF 
-EnemyGfxData_DragonMain_Gfx_5311C:
-	dc.b	$01, $00, $CC, $CC, $88, $CC, $04, $46, $43, $45, $33, $50, $35, $50, $02, $24, $60, $03, $34, $50, $45, $60, $04, $55 
-EnemyGfxData_DragonMain_Gfx_53134:
-	dc.b	$01, $00, $09, $99, $99, $99, $05, $65, $6A, $AA, $54, $46, $65, $34, $05, $34, $05, $22, $04, $33, $06, $44, $05, $60 
-EnemyGfxData_DragonMain_Gfx_5314C:
-	dc.b	$01, $00, $7F, $FF, $FF, $FF, $AA, $00 
-EnemyGfxData_DragonMain_Gfx_53154:
-	dc.b	$02, $00, $EE, $C0, $00, $09, $EE, $00, $00, $8D, $72, $45, $55, $E6, $66, $0E, $E3, $54, $56, $35, $35, $6E, $56, $0E, $0E, $00 
-EnemyGfxData_DragonMain_Gfx_5316E:
-	dc.b	$01, $EE, $00, $88, $CC, $73, $00, $55, $50, $00, $50, $45, $00, $00, $E6, $64, $00, $E6, $45, $4E, $63, $53, $E6, $36, $0E, $00, $0E, $00 
-EnemyGfxData_DragonMain_Gfx_5318A:
-	dc.b	$01, $00, $FF, $FF, $77, $7F, $E0, $EE, $EE, $00 
-EnemyGfxData_DragonMain_Gfx_53194:
-	dc.b	$01, $00, $C8, $89, $99, $99, $33, $46, $04, $24, $56, $03, $24, $50, $03, $35, $22, $40, $22, $25, $33, $35, $05, $55 
-EnemyGfxData_DragonMain_Gfx_531AC:
-	dc.b	$01, $00, $00, $11, $99, $93, $45, $6A, $BB, $AA, $66, $55, $AA, $AA, $06, $65, $50, $06, $65, $50, $65, $40, $65, $40, $66, $50, $06, $65 
-EnemyGfxData_DragonMain_Gfx_531C8:
-	dc.b	$01, $00, $37, $FF, $FF, $FF, $AA, $A0, $A0, $00 
-EnemyGfxData_DragonMain_Gfx_531D2:
-	dc.b	$01, $00, $9C, $CC, $88, $80, $04, $55, $45, $50, $44, $5E, $E4, $5E, $0E, $EE, $66, $EE, $45, $46, $E3, $53, $56, $0E, $35, $E5, $6E, $00 
-EnemyGfxData_DragonMain_Gfx_531EE:
-	dc.b	$01, $EE, $88, $9C, $FF, $C0, $60, $00, $00, $56, $4E, $E0, $E4, $5E, $E6, $6E, $E0, $00, $E0, $00, $00, $00 
-EnemyGfxData_DragonMain_Gfx_53204:
-	dc.b	$01, $00, $FF, $F7, $7F, $FF, $E0, $E0 
-EnemyGfxData_DragonMain_Gfx_5320C:
-	dc.b	$01, $00, $EE, $EC, $CC, $C8, $0C, $C9, $C9, $0C, $99, $0C, $9C, $C9, $9C, $C9, $C0, $0C, $99, $C0 
-EnemyGfxData_DragonMain_Gfx_53220:
-	dc.b	$01, $00, $44, $44, $CC, $CC, $BB, $05, $66, $CB, $05, $66, $C0, $05, $66, $C0, $55, $66, $44, $60, $45, $60, $56, $60, $05, $66 
-EnemyGfxData_DragonMain_Gfx_5323A:
-	dc.b	$01, $00, $11, $98, $C8, $89, $46, $64, $55, $66, $65, $45, $54, $34, $05, $33, $40, $42, $20, $05, $22, $20, $05, $33, $30, $05, $54, $00 
-EnemyGfxData_DragonMain_Gfx_53256:
-	dc.b	$01, $00, $99, $9B, $FF, $FF, $0C, $9C, $C9, $9C, $C9, $C0, $0C, $00 
-EnemyGfxData_DragonMain_Gfx_53264:
-	dc.b	$02, $00, $EC, $80, $08, $CF, $EE, $00, $53, $73, $10, $6E, $46, $4E, $54, $0E, $6E, $0E, $0E, $0E 
-EnemyGfxData_DragonMain_Gfx_53278:
-	dc.b	$00, $E0, $05, $44, $00, $E0, $55, $43, $00, $EE, $54, $30, $00, $EE, $54, $30, $00, $E6, $6E, $EE, $00, $E6, $45, $4E, $E0, $E6, $53, $53, $E0, $EE, $65, $E5 
-	dc.b	$3E, $00 
-EnemyGfxData_DragonMain_Gfx_5329A:
-	dc.b	$01, $00, $EF, $FF, $FF, $FF, $AA, $00 
-EnemyGfxData_DragonMain_Gfx_532A2:
-	dc.b	$01, $00, $0C, $CC, $CC, $CC, $AA, $A0, $56, $54, $06, $60, $06, $60, $05, $60, $05, $60, $45, $50, $56, $60, $06, $60 
-EnemyGfxData_DragonMain_Gfx_532BA:
-	dc.b	$01, $00, $33, $33, $33, $33, $45, $66, $06, $50, $06, $60, $06, $50, $05, $50, $05, $54, $06, $65, $06, $50 
-EnemyGfxData_DragonMain_Gfx_532D0:
-	dc.b	$01, $00, $C8, $00, $08, $FF, $04, $60, $66, $64, $5E, $E6, $66, $44, $5E, $66, $E6, $45, $5E, $66, $EE, $64, $4E, $E6, $66, $6E 
-EnemyGfxData_DragonMain_Gfx_532EA:
-	dc.b	$01, $00, $31, $00, $01, $FF, $05, $40, $E5, $46, $E0, $E5, $44, $66, $60, $E5, $54, $6E, $6E, $E4, $4E, $EE, $E0, $EE, $EE, $EE 
-EnemyGfxData_DragonMain_Gfx_53304:
-	dc.b	$01, $00, $8C, $FF, $FF, $FF, $0A, $A6, $66, $0A, $AA, $00 
-EnemyGfxData_DragonMain_Gfx_53310:
-	dc.b	$01, $00, $04, $CC, $CC, $CC, $66, $A0, $66, $44, $AA, $66, $64, $06, $60, $06, $60, $06, $60, $65, $60, $55, $50, $34, $50, $00 
-EnemyGfxData_DragonMain_Gfx_5332A:
-	dc.b	$01, $00, $33, $33, $33, $33, $35, $66, $66, $66, $06, $60, $06, $60, $06, $56, $05, $65, $05, $55, $06, $50 
-EnemyGfxData_DragonMain_Gfx_53340:
-	dc.b	$00, $00, $00, $34, $56, $00, $00, $63, $46, $00, $06, $63, $46, $0E, $66, $64, $34, $E6, $66, $44, $34, $E6, $66, $34, $44, $EE, $E6, $64, $34, $0E, $EE, $EE 
-	dc.b	$E6, $00 
-EnemyGfxData_DragonMain_Gfx_53362:
-	dc.b	$02, $66, $84, $44, $C8, $00, $00, $33, $11, $33, $37, $50, $65, $E6, $60, $E6, $60, $60, $6E, $E0, $E0, $00 
-EnemyGfxData_DragonMain_Gfx_53378:
-	dc.b	$01, $00, $CC, $CC, $CC, $CC, $56, $54, $06, $66, $06, $60, $56, $60, $65, $60, $56, $50, $05, $50, $05, $56 
-EnemyGfxData_DragonMain_Gfx_5338E:
-	dc.b	$00, $45, $66, $0C, $9C, $06, $60, $0C, $9C, $06, $60, $0C, $9C, $06, $60, $00, $C9, $06, $50, $00, $C9, $06, $55, $00, $C9, $06, $43, $00, $0C, $64, $44, $00 
-	dc.b	$0C, $00 
-EnemyGfxData_DragonMain_Gfx_533B0:
-	dc.b	$01, $00, $FF, $77, $77, $7F, $C0, $C0, $C0, $C0, $C0, $00 
-EnemyGfxData_DragonMain_Gfx_533BC:
-	dc.b	$02, $00, $88, $88, $CC, $EF, $66, $14, $63, $11, $00, $06, $56, $65, $56, $E6, $06, $06, $0E, $E6 
-EnemyGfxData_DragonMain_Gfx_533D0:
-	dc.b	$01, $00, $33, $10, $00, $0F, $64, $46, $63, $46, $43, $46, $60, $43, $44, $66, $60, $43, $34, $66, $E6, $34, $46, $EE, $E6, $EE, $EE, $EE, $60, $00 
-EnemyGfxData_DragonMain_Gfx_533EE:
-	dc.b	$01, $00, $CE, $EE, $EE, $EE, $0B, $CA, $CA, $0B, $05, $04, $55, $33, $54, $00 
-EnemyGfxData_DragonMain_Gfx_533FE:
-	dc.b	$01, $00, $11, $13, $37, $73, $CB, $A4, $44, $BB, $A5, $60, $BB, $A5, $60, $AA, $A6, $45, $60, $45, $56, $56, $60, $00 
-EnemyGfxData_DragonMain_Gfx_53416:
-	dc.b	$01, $00, $EE, $C8, $08, $8E, $66, $06, $0E, $66, $E6, $6E, $66, $0E, $66, $66, $6E, $EE, $E6, $EE, $0E, $EE, $EE, $EE 
-EnemyGfxData_DragonMain_Gfx_5342E:
-	dc.b	$01, $EE, $00, $29, $91, $3E, $44, $66, $00, $00, $35, $46, $00, $00, $E3, $55, $00, $34, $5E, $E5, $5E, $E5, $53, $46, $54, $35, $00, $00 
-EnemyGfxData_DragonMain_Gfx_5344A:
-	dc.b	$01, $00, $FF, $FF, $77, $FF, $E0, $E0 
-EnemyGfxData_DragonMain_Gfx_53452:
-	dc.b	$01, $00, $88, $CC, $88, $DD, $0B, $7B, $CB, $0B, $CA, $CB, $CA, $BB, $5B, $BB, $05, $45, $AA, $04, $45, $50, $55, $45 
-EnemyGfxData_DragonMain_Gfx_5346A:
-	dc.b	$01, $00, $11, $11, $19, $99, $A5, $55, $50, $A5, $44, $50, $A5, $43, $50, $A0, $52, $50, $A0, $53, $50, $03, $45, $05, $55, $03, $35, $00 
-EnemyGfxData_DragonMain_Gfx_53486:
-	dc.b	$01, $00, $CC, $C8, $00, $8F, $54, $50, $04, $50, $04, $56, $EE, $55, $55, $0E, $54, $44, $55, $0E, $66, $66, $EE, $0E, $EE, $EE 
-EnemyGfxData_DragonMain_Gfx_534A0:
-	dc.b	$02, $00, $8C, $E2, $00, $08, $EE, $00, $08, $FF, $C2, $04, $35, $40, $04, $40, $53, $E0, $04, $E6, $44, $0E, $66, $00 
-EnemyGfxData_DragonMain_Gfx_534B8:
-	dc.b	$01, $00, $FF, $73, $33, $33, $35, $25, $50, $54, $50, $45, $66, $56, $66, $66, $60, $00 
-EnemyGfxData_DragonMain_Gfx_534CA:
-	dc.b	$01, $00, $AC, $C8, $89, $99, $44, $4B, $04, $45, $43, $56, $55, $35, $66, $36, $56, $60, $35, $66, $54, $56, $05, $56 
-EnemyGfxData_DragonMain_Gfx_534E2:
-	dc.b	$01, $00, $11, $11, $99, $9C, $CA, $CB, $A5, $CA, $BB, $A6, $6B, $BB, $A6, $06, $AA, $A0, $06, $60, $06, $66, $06, $66, $65, $66 
-EnemyGfxData_DragonMain_Gfx_534FC:
-	dc.b	$01, $00, $FF, $FF, $EE, $FF, $E5, $EE 
-EnemyGfxData_DragonMain_Gfx_53504:
-	dc.b	$01, $00, $99, $90, $00, $8E, $03, $56, $03, $56, $04, $5E, $54, $35, $5E, $66, $33, $44, $66, $6E, $EE, $EE, $E6, $EE, $0E, $EE, $EE, $EE 
-EnemyGfxData_DragonMain_Gfx_53520:
-	dc.b	$02, $00, $CE, $C0, $00, $01, $EE, $00, $0C, $FD, $FE, $05, $56, $55, $06, $66, $E6, $55, $E6, $00 
-EnemyGfxData_DragonMain_Gfx_53534:
-	dc.b	$01, $00, $77, $73, $33, $FF, $60, $66, $60, $66, $60, $E6, $66, $66, $60, $00 
+	incbin "data/art/tiles/enemy/dragon_main_gfx.bin"
+EnemyGfxData_DragonMain_Gfx_5311C equ EnemyGfxData_DragonMain_Gfx_53116+$6
+EnemyGfxData_DragonMain_Gfx_53134 equ EnemyGfxData_DragonMain_Gfx_53116+$1E
+EnemyGfxData_DragonMain_Gfx_5314C equ EnemyGfxData_DragonMain_Gfx_53116+$36
+EnemyGfxData_DragonMain_Gfx_53154 equ EnemyGfxData_DragonMain_Gfx_53116+$3E
+EnemyGfxData_DragonMain_Gfx_5316E equ EnemyGfxData_DragonMain_Gfx_53116+$58
+EnemyGfxData_DragonMain_Gfx_5318A equ EnemyGfxData_DragonMain_Gfx_53116+$74
+EnemyGfxData_DragonMain_Gfx_53194 equ EnemyGfxData_DragonMain_Gfx_53116+$7E
+EnemyGfxData_DragonMain_Gfx_531AC equ EnemyGfxData_DragonMain_Gfx_53116+$96
+EnemyGfxData_DragonMain_Gfx_531C8 equ EnemyGfxData_DragonMain_Gfx_53116+$B2
+EnemyGfxData_DragonMain_Gfx_531D2 equ EnemyGfxData_DragonMain_Gfx_53116+$BC
+EnemyGfxData_DragonMain_Gfx_531EE equ EnemyGfxData_DragonMain_Gfx_53116+$D8
+EnemyGfxData_DragonMain_Gfx_53204 equ EnemyGfxData_DragonMain_Gfx_53116+$EE
+EnemyGfxData_DragonMain_Gfx_5320C equ EnemyGfxData_DragonMain_Gfx_53116+$F6
+EnemyGfxData_DragonMain_Gfx_53220 equ EnemyGfxData_DragonMain_Gfx_53116+$10A
+EnemyGfxData_DragonMain_Gfx_5323A equ EnemyGfxData_DragonMain_Gfx_53116+$124
+EnemyGfxData_DragonMain_Gfx_53256 equ EnemyGfxData_DragonMain_Gfx_53116+$140
+EnemyGfxData_DragonMain_Gfx_53264 equ EnemyGfxData_DragonMain_Gfx_53116+$14E
+EnemyGfxData_DragonMain_Gfx_53278 equ EnemyGfxData_DragonMain_Gfx_53116+$162
+EnemyGfxData_DragonMain_Gfx_5329A equ EnemyGfxData_DragonMain_Gfx_53116+$184
+EnemyGfxData_DragonMain_Gfx_532A2 equ EnemyGfxData_DragonMain_Gfx_53116+$18C
+EnemyGfxData_DragonMain_Gfx_532BA equ EnemyGfxData_DragonMain_Gfx_53116+$1A4
+EnemyGfxData_DragonMain_Gfx_532D0 equ EnemyGfxData_DragonMain_Gfx_53116+$1BA
+EnemyGfxData_DragonMain_Gfx_532EA equ EnemyGfxData_DragonMain_Gfx_53116+$1D4
+EnemyGfxData_DragonMain_Gfx_53304 equ EnemyGfxData_DragonMain_Gfx_53116+$1EE
+EnemyGfxData_DragonMain_Gfx_53310 equ EnemyGfxData_DragonMain_Gfx_53116+$1FA
+EnemyGfxData_DragonMain_Gfx_5332A equ EnemyGfxData_DragonMain_Gfx_53116+$214
+EnemyGfxData_DragonMain_Gfx_53340 equ EnemyGfxData_DragonMain_Gfx_53116+$22A
+EnemyGfxData_DragonMain_Gfx_53362 equ EnemyGfxData_DragonMain_Gfx_53116+$24C
+EnemyGfxData_DragonMain_Gfx_53378 equ EnemyGfxData_DragonMain_Gfx_53116+$262
+EnemyGfxData_DragonMain_Gfx_5338E equ EnemyGfxData_DragonMain_Gfx_53116+$278
+EnemyGfxData_DragonMain_Gfx_533B0 equ EnemyGfxData_DragonMain_Gfx_53116+$29A
+EnemyGfxData_DragonMain_Gfx_533BC equ EnemyGfxData_DragonMain_Gfx_53116+$2A6
+EnemyGfxData_DragonMain_Gfx_533D0 equ EnemyGfxData_DragonMain_Gfx_53116+$2BA
+EnemyGfxData_DragonMain_Gfx_533EE equ EnemyGfxData_DragonMain_Gfx_53116+$2D8
+EnemyGfxData_DragonMain_Gfx_533FE equ EnemyGfxData_DragonMain_Gfx_53116+$2E8
+EnemyGfxData_DragonMain_Gfx_53416 equ EnemyGfxData_DragonMain_Gfx_53116+$300
+EnemyGfxData_DragonMain_Gfx_5342E equ EnemyGfxData_DragonMain_Gfx_53116+$318
+EnemyGfxData_DragonMain_Gfx_5344A equ EnemyGfxData_DragonMain_Gfx_53116+$334
+EnemyGfxData_DragonMain_Gfx_53452 equ EnemyGfxData_DragonMain_Gfx_53116+$33C
+EnemyGfxData_DragonMain_Gfx_5346A equ EnemyGfxData_DragonMain_Gfx_53116+$354
+EnemyGfxData_DragonMain_Gfx_53486 equ EnemyGfxData_DragonMain_Gfx_53116+$370
+EnemyGfxData_DragonMain_Gfx_534A0 equ EnemyGfxData_DragonMain_Gfx_53116+$38A
+EnemyGfxData_DragonMain_Gfx_534B8 equ EnemyGfxData_DragonMain_Gfx_53116+$3A2
+EnemyGfxData_DragonMain_Gfx_534CA equ EnemyGfxData_DragonMain_Gfx_53116+$3B4
+EnemyGfxData_DragonMain_Gfx_534E2 equ EnemyGfxData_DragonMain_Gfx_53116+$3CC
+EnemyGfxData_DragonMain_Gfx_534FC equ EnemyGfxData_DragonMain_Gfx_53116+$3E6
+EnemyGfxData_DragonMain_Gfx_53504 equ EnemyGfxData_DragonMain_Gfx_53116+$3EE
+EnemyGfxData_DragonMain_Gfx_53520 equ EnemyGfxData_DragonMain_Gfx_53116+$40A
+EnemyGfxData_DragonMain_Gfx_53534 equ EnemyGfxData_DragonMain_Gfx_53116+$41E
 EnemyGfxData_DragonMain:
 	dc.l	EnemyGfxData_DragonMain_Gfx_53116
 	dc.l	EnemyGfxData_DragonMain_Gfx_5311C
@@ -58480,213 +56802,95 @@ EnemyGfxFrameTable_QuadrupedChild:
 	dc.b	$36, $3A, $33, $37, $3B, $34, $38, $3C, $00, $3F, $43, $3D, $40, $44, $3E, $41, $45, $00, $42, $46, $00, $00, $4A, $3D, $47, $4B, $3E, $48, $4C, $00, $49, $4D 
 	dc.b	$4E, $51, $55, $4F, $52, $56, $50, $53, $57, $00, $54, $58 
 EnemyGfxData_QuadrupedChild_Gfx_53678:
-	dc.b	$01, $00, $FF, $FF, $FF, $FF 
-EnemyGfxData_QuadrupedChild_Gfx_5367E:
-	dc.b	$01, $00, $FF, $FF, $B8, $88, $6A, $06, $A0, $99, $07, $79, $AA, $06, $69, $9A 
-EnemyGfxData_QuadrupedChild_Gfx_5368E:
-	dc.b	$01, $00, $FF, $FF, $93, $33, $0A, $70, $90, $A7, $A9, $77, $99, $67 
-EnemyGfxData_QuadrupedChild_Gfx_5369C:
-	dc.b	$01, $00, $FE, $EC, $CC, $EE, $03, $32, $03, $21, $03, $24, $04, $46, $67, $07 
-EnemyGfxData_QuadrupedChild_Gfx_536AC:
-	dc.b	$00, $00, $00, $66, $88, $33, $C3, $76, $16, $2C, $DC, $77, $9A, $2C, $DC, $77, $A6, $4C, $BC, $58, $76, $6C, $BC, $48, $66, $7C, $BC, $34, $89, $7C, $BC, $22 
-	dc.b	$44, $00 
-EnemyGfxData_QuadrupedChild_Gfx_536CE:
-	dc.b	$00, $88, $60, $00, $00, $16, $65, $54, $44, $97, $75, $43, $22, $A7, $75, $42, $11, $78, $55, $54, $32, $68, $54, $56, $53, $84, $34, $46, $66, $42, $23, $56 
-	dc.b	$88, $00 
-EnemyGfxData_QuadrupedChild_Gfx_536F0:
-	dc.b	$01, $00, $FF, $77, $77, $77, $40, $34, $24, $24, $43, $60 
-EnemyGfxData_QuadrupedChild_Gfx_536FC:
-	dc.b	$01, $00, $EE, $EE, $EE, $EF, $77, $77, $97, $77, $68, $06, $06, $00 
-EnemyGfxData_QuadrupedChild_Gfx_5370A:
-	dc.b	$00, $7C, $BC, $21, $23, $7C, $BC, $42, $34, $7C, $DC, $34, $43, $9C, $DC, $53, $33, $9C, $C6, $35, $55, $89, $86, $54, $44, $89, $86, $54, $22, $66, $66, $54 
-	dc.b	$32, $00 
-EnemyGfxData_QuadrupedChild_Gfx_5372C:
-	dc.b	$00, $32, $12, $56, $68, $43, $24, $55, $66, $34, $45, $50, $66, $33, $54, $45, $08, $55, $43, $34, $59, $44, $54, $34, $78, $34, $55, $55, $98, $24, $56, $09 
-	dc.b	$98, $00 
-EnemyGfxData_QuadrupedChild_Gfx_5374E:
-	dc.b	$01, $00, $77, $77, $77, $77, $80, $77, $77, $98, $98, $87, $70, $70 
-EnemyGfxData_QuadrupedChild_Gfx_5375C:
-	dc.b	$01, $00, $FF, $EE, $EE, $EE, $0C, $0C, $0C, $0C, $0C, $0C 
-EnemyGfxData_QuadrupedChild_Gfx_53768:
-	dc.b	$01, $00, $F7, $77, $30, $00, $C0, $DC, $BC, $BC, $6A, $BC, $06, $A0, $99, $BC, $07, $79, $AA, $DC, $06, $69, $9A, $00 
-EnemyGfxData_QuadrupedChild_Gfx_53780:
-	dc.b	$01, $00, $EC, $CE, $EC, $CC, $3C, $03, $39, $03, $3A, $49, $68, $06, $88, $06, $88, $06, $88, $00 
-EnemyGfxData_QuadrupedChild_Gfx_53794:
-	dc.b	$00, $8C, $00, $66, $88, $A9, $35, $66, $16, $A8, $45, $77, $9A, $A8, $45, $77, $A6, $88, $55, $58, $76, $86, $54, $44, $89, $86, $64, $33, $44, $86, $54, $22 
-	dc.b	$33, $00 
-EnemyGfxData_QuadrupedChild_Gfx_537B6:
-	dc.b	$00, $88, $60, $00, $00, $16, $70, $00, $00, $97, $75, $54, $44, $A7, $75, $43, $22, $78, $45, $42, $21, $84, $44, $54, $21, $44, $34, $45, $43, $32, $23, $46 
-	dc.b	$65, $00 
-EnemyGfxData_QuadrupedChild_Gfx_537D8:
-	dc.b	$01, $00, $FF, $F7, $77, $77, $40, $24, $24, $34, $54, $00 
-EnemyGfxData_QuadrupedChild_Gfx_537E4:
-	dc.b	$01, $00, $CE, $FF, $FF, $FF, $06, $79, $66, $00 
-EnemyGfxData_QuadrupedChild_Gfx_537EE:
-	dc.b	$00, $60, $54, $21, $34, $00, $54, $43, $44, $00, $04, $44, $33, $00, $55, $53, $32, $05, $43, $45, $55, $05, $32, $54, $33, $05, $44, $54, $22, $05, $58, $54 
-	dc.b	$31, $00 
-EnemyGfxData_QuadrupedChild_Gfx_53810:
-	dc.b	$00, $42, $13, $46, $66, $44, $34, $55, $66, $33, $44, $00, $68, $34, $55, $50, $88, $55, $42, $35, $89, $44, $53, $27, $98, $33, $54, $49, $87, $24, $55, $99 
-	dc.b	$77, $00 
-EnemyGfxData_QuadrupedChild_Gfx_53832:
-	dc.b	$01, $00, $77, $77, $77, $FF, $60, $70, $86, $87, $87, $70 
-EnemyGfxData_QuadrupedChild_Gfx_5383E:
-	dc.b	$01, $00, $FF, $FF, $93, $33, $0A, $70, $90, $A6, $A9, $86, $99, $67 
-EnemyGfxData_QuadrupedChild_Gfx_5384C:
-	dc.b	$01, $00, $FF, $EE, $CC, $CC, $03, $32, $03, $21, $04, $21, $05, $44, $05, $56 
-EnemyGfxData_QuadrupedChild_Gfx_5385C:
-	dc.b	$00, $00, $00, $66, $88, $00, $00, $76, $16, $34, $55, $77, $9A, $22, $45, $77, $A6, $14, $45, $48, $76, $44, $54, $44, $89, $56, $44, $34, $44, $66, $53, $33 
-	dc.b	$33, $00 
-EnemyGfxData_QuadrupedChild_Gfx_5387E:
-	dc.b	$00, $88, $60, $43, $23, $16, $65, $32, $22, $97, $75, $43, $22, $A7, $75, $44, $44, $78, $45, $55, $55, $84, $45, $66, $66, $43, $24, $66, $66, $32, $23, $55 
-	dc.b	$68, $00 
-EnemyGfxData_QuadrupedChild_Gfx_538A0:
-	dc.b	$01, $00, $F7, $77, $77, $77, $30, $34, $45, $50, $60, $60, $86, $00 
-EnemyGfxData_QuadrupedChild_Gfx_538AE:
-	dc.b	$01, $00, $EE, $CC, $CC, $EE, $66, $76, $06, $88, $07, $88, $07, $8A, $07, $8A, $8A, $78 
-EnemyGfxData_QuadrupedChild_Gfx_538C0:
-	dc.b	$00, $66, $53, $21, $24, $60, $54, $33, $44, $60, $04, $44, $33, $80, $55, $53, $22, $85, $43, $45, $55, $75, $32, $53, $22, $85, $34, $53, $12, $A0, $56, $53 
-	dc.b	$21, $00 
-EnemyGfxData_QuadrupedChild_Gfx_538E2:
-	dc.b	$00, $32, $13, $50, $89, $43, $34, $50, $88, $34, $44, $00, $98, $34, $55, $56, $97, $55, $33, $37, $86, $33, $52, $37, $76, $23, $55, $55, $66, $33, $58, $70 
-	dc.b	$00, $00 
-EnemyGfxData_QuadrupedChild_Gfx_53904:
-	dc.b	$01, $00, $77, $77, $FF, $FF, $76, $60, $60, $60 
-EnemyGfxData_QuadrupedChild_Gfx_5390E:
-	dc.b	$01, $00, $FF, $FF, $9C, $CC, $06, $A0, $6A, $09, $77, $9A, $66, $99 
-EnemyGfxData_QuadrupedChild_Gfx_5391C:
-	dc.b	$01, $00, $FF, $FF, $D1, $11, $A6, $99, $0A, $60, $AA, $97, $70, $A9, $96, $60 
-EnemyGfxData_QuadrupedChild_Gfx_5392C:
-	dc.b	$01, $00, $FF, $EE, $EE, $EE, $04, $43, $42, $42, $34, $06 
-EnemyGfxData_QuadrupedChild_Gfx_53938:
-	dc.b	$00, $00, $00, $06, $88, $44, $45, $56, $68, $22, $34, $55, $79, $11, $24, $54, $79, $23, $45, $75, $47, $35, $67, $97, $54, $66, $69, $99, $75, $88, $67, $97 
-	dc.b	$53, $00 
-EnemyGfxData_QuadrupedChild_Gfx_5395A:
-	dc.b	$00, $88, $66, $00, $00, $98, $67, $54, $33, $A9, $75, $54, $32, $99, $75, $55, $42, $97, $35, $77, $54, $73, $57, $97, $66, $35, $79, $99, $67, $54, $79, $97 
-	dc.b	$67, $00 
-EnemyGfxData_QuadrupedChild_Gfx_5397C:
-	dc.b	$01, $00, $F7, $73, $33, $77, $30, $23, $12, $30, $42, $30, $54, $40, $70, $70 
-EnemyGfxData_QuadrupedChild_Gfx_5398C:
-	dc.b	$01, $00, $EE, $EE, $EE, $EE, $08, $77, $77, $89, $88, $77, $77, $07 
-EnemyGfxData_QuadrupedChild_Gfx_5399A:
-	dc.b	$00, $86, $65, $55, $37, $66, $05, $53, $79, $66, $00, $55, $54, $80, $05, $53, $54, $80, $55, $45, $55, $88, $53, $45, $44, $88, $54, $45, $43, $88, $54, $55 
-	dc.b	$43, $00 
-EnemyGfxData_QuadrupedChild_Gfx_539BC:
-	dc.b	$00, $75, $47, $95, $66, $97, $54, $35, $66, $44, $55, $45, $66, $33, $43, $56, $67, $55, $55, $45, $67, $33, $45, $43, $06, $23, $45, $33, $30, $23, $45, $43 
-	dc.b	$34, $00 
-EnemyGfxData_QuadrupedChild_Gfx_539DE:
-	dc.b	$01, $00, $77, $77, $77, $FF, $86, $88, $88, $87, $86, $60 
-EnemyGfxData_QuadrupedChild_Gfx_539EA:
-	dc.b	$01, $00, $FF, $FF, $9C, $CC, $06, $A0, $6A, $09, $68, $9A, $66, $99 
-EnemyGfxData_QuadrupedChild_Gfx_539F8:
-	dc.b	$01, $00, $FF, $FF, $D1, $11, $A6, $99, $0A, $60, $AA, $97, $60, $A9, $96, $60 
-EnemyGfxData_QuadrupedChild_Gfx_53A08:
-	dc.b	$01, $00, $EE, $EE, $FF, $FE, $03, $33, $33, $44, $06, $00 
-EnemyGfxData_QuadrupedChild_Gfx_53A14:
-	dc.b	$00, $32, $33, $06, $88, $22, $23, $56, $68, $22, $34, $55, $79, $44, $44, $54, $79, $55, $55, $75, $47, $66, $66, $97, $53, $66, $69, $99, $74, $66, $67, $97 
-	dc.b	$42, $00 
-EnemyGfxData_QuadrupedChild_Gfx_53A36:
-	dc.b	$00, $88, $66, $00, $00, $98, $67, $00, $00, $A9, $77, $54, $33, $99, $75, $54, $22, $97, $35, $55, $41, $73, $57, $75, $54, $25, $79, $97, $65, $52, $79, $99 
-	dc.b	$66, $00 
-EnemyGfxData_QuadrupedChild_Gfx_53A58:
-	dc.b	$01, $00, $FF, $77, $33, $37, $40, $24, $12, $40, $12, $40, $44, $50, $55, $00 
-EnemyGfxData_QuadrupedChild_Gfx_53A68:
-	dc.b	$01, $00, $EE, $EE, $FF, $FF, $66, $88, $88, $08 
-EnemyGfxData_QuadrupedChild_Gfx_53A72:
-	dc.b	$00, $66, $05, $74, $25, $76, $05, $43, $57, $76, $00, $45, $55, $87, $65, $54, $53, $88, $55, $45, $55, $77, $54, $45, $43, $06, $54, $55, $42, $00, $55, $65 
-	dc.b	$42, $00 
-EnemyGfxData_QuadrupedChild_Gfx_53A94:
-	dc.b	$00, $77, $27, $97, $66, $99, $73, $45, $06, $55, $55, $50, $00, $22, $45, $45, $00, $55, $55, $45, $00, $33, $44, $33, $50, $33, $34, $43, $58, $33, $34, $55 
-	dc.b	$5A, $00 
-EnemyGfxData_QuadrupedChild_Gfx_53AB6:
-	dc.b	$01, $00, $73, $33, $33, $77, $66, $68, $80, $68, $88, $88, $98, $89, $90, $89, $70, $99, $99, $00 
-EnemyGfxData_QuadrupedChild_Gfx_53ACA:
-	dc.b	$01, $00, $FF, $FF, $9C, $CC, $06, $A0, $6A, $09, $77, $9A, $76, $99 
-EnemyGfxData_QuadrupedChild_Gfx_53AD8:
-	dc.b	$02, $00, $EE, $EE, $C0, $00, $CB, $01, $11, $11, $11, $0C, $A6, $99, $0A, $60, $AA, $97, $70, $A9, $96, $60 
-EnemyGfxData_QuadrupedChild_Gfx_53AEE:
-	dc.b	$02, $00, $F7, $77, $77, $77, $C0, $08, $88, $88, $88, $00 
-EnemyGfxData_QuadrupedChild_Gfx_53AFA:
-	dc.b	$01, $00, $FF, $FE, $EE, $EE, $04, $42, $42, $53, $55, $00 
-EnemyGfxData_QuadrupedChild_Gfx_53B06:
-	dc.b	$00, $00, $00, $06, $88, $04, $43, $57, $68, $43, $34, $55, $79, $22, $24, $54, $79, $11, $45, $75, $37, $14, $57, $97, $53, $46, $67, $99, $75, $66, $67, $97 
-	dc.b	$52, $00 
-EnemyGfxData_QuadrupedChild_Gfx_53B28:
-	dc.b	$00, $88, $86, $00, $54, $98, $66, $55, $43, $A9, $75, $54, $43, $99, $75, $54, $44, $97, $45, $75, $55, $73, $57, $97, $68, $25, $79, $97, $68, $52, $79, $97 
-	dc.b	$68, $00 
-EnemyGfxData_QuadrupedChild_Gfx_53B4A:
-	dc.b	$01, $00, $73, $33, $73, $33, $44, $34, $40, $33, $40, $44, $50, $55, $87, $60, $88, $60, $98, $80 
-EnemyGfxData_QuadrupedChild_Gfx_53B5E:
-	dc.b	$01, $00, $EE, $EE, $EE, $FF, $06, $67, $87, $08, $08, $08 
-EnemyGfxData_QuadrupedChild_Gfx_53B6A:
-	dc.b	$00, $66, $65, $74, $25, $66, $00, $54, $57, $86, $00, $55, $55, $88, $05, $54, $52, $98, $85, $35, $55, $89, $84, $35, $44, $78, $84, $45, $43, $87, $55, $55 
-	dc.b	$43, $00 
-EnemyGfxData_QuadrupedChild_Gfx_53B8C:
-	dc.b	$00, $77, $37, $97, $57, $99, $74, $75, $00, $55, $55, $55, $00, $22, $45, $45, $50, $55, $55, $54, $45, $34, $45, $53, $34, $33, $45, $54, $33, $23, $45, $55 
-	dc.b	$44, $00 
-EnemyGfxData_QuadrupedChild_Gfx_53BAE:
-	dc.b	$01, $00, $33, $FF, $FF, $FF, $99, $70, $88, $70 
-EnemyGfxData_QuadrupedChild_Gfx_53BB8:
-	dc.b	$01, $00, $FF, $FD, $DC, $C8, $A0, $A9, $A9, $A9, $AA, $97, $08, $88, $98, $00 
-EnemyGfxData_QuadrupedChild_Gfx_53BC8:
-	dc.b	$01, $00, $FF, $FF, $37, $77, $A9, $60, $76, $77, $66, $00 
-EnemyGfxData_QuadrupedChild_Gfx_53BD4:
-	dc.b	$01, $00, $FF, $FF, $31, $18, $0C, $CC, $0C, $DD, $C0, $0C, $DB, $DC, $CD, $BD, $C0, $00 
-EnemyGfxData_QuadrupedChild_Gfx_53BE6:
-	dc.b	$01, $00, $88, $00, $0E, $EE, $06, $16, $88, $AA, $A9, $98, $0A, $A9, $98, $99, $69, $88, $99, $77, $07, $78, $77, $76, $07, $05, $04, $00 
-EnemyGfxData_QuadrupedChild_Gfx_53C02:
-	dc.b	$00, $87, $75, $43, $34, $76, $74, $32, $23, $76, $54, $32, $22, $76, $54, $32, $22, $75, $54, $33, $33, $65, $55, $43, $35, $54, $44, $55, $55, $43, $33, $45 
-	dc.b	$66, $00 
-EnemyGfxData_QuadrupedChild_Gfx_53C24:
-	dc.b	$01, $00, $F7, $77, $77, $73, $30, $34, $33, $35, $56, $66, $66, $60 
-EnemyGfxData_QuadrupedChild_Gfx_53C32:
-	dc.b	$01, $00, $8C, $CE, $EF, $FF, $0C, $DB, $DC, $CD, $BD, $0C, $DB, $CD, $0C, $00 
-EnemyGfxData_QuadrupedChild_Gfx_53C42:
-	dc.b	$02, $00, $E6, $40, $01, $3F, $66, $00, $11, $36, $40, $03, $C0, $64, $DC, $08, $BD, $C8, $86, $DB, $C8, $6C, $06, $00 
-EnemyGfxData_QuadrupedChild_Gfx_53C5A:
-	dc.b	$00, $32, $23, $45, $56, $33, $33, $45, $56, $43, $34, $55, $55, $65, $45, $55, $44, $05, $55, $54, $47, $33, $45, $54, $99, $23, $45, $78, $98, $33, $55, $68 
-	dc.b	$77, $00 
-EnemyGfxData_QuadrupedChild_Gfx_53C7C:
-	dc.b	$01, $00, $33, $33, $33, $33, $88, $60, $68, $76, $68, $87, $79, $87, $99, $77, $87, $50, $74, $50, $74, $40 
-EnemyGfxData_QuadrupedChild_Gfx_53C92:
-	dc.b	$01, $00, $88, $00, $0E, $EE, $06, $16, $88, $AA, $A9, $98, $0A, $A9, $98, $99, $69, $88, $99, $77, $07, $78, $77, $76, $07, $55, $54, $00 
-EnemyGfxData_QuadrupedChild_Gfx_53CAE:
-	dc.b	$00, $87, $75, $43, $30, $76, $74, $32, $23, $76, $53, $32, $22, $76, $53, $33, $23, $75, $53, $33, $33, $65, $55, $33, $34, $54, $46, $55, $55, $43, $36, $66 
-	dc.b	$66, $00 
-EnemyGfxData_QuadrupedChild_Gfx_53CD0:
-	dc.b	$01, $00, $FF, $77, $77, $7F, $30, $30, $30, $30, $50, $00 
-EnemyGfxData_QuadrupedChild_Gfx_53CDC:
-	dc.b	$01, $00, $FF, $FF, $31, $00, $0C, $C0, $CD, $DC, $CC, $CB, $BB, $DD, $CC, $0C, $CB, $BB, $BD, $00 
-EnemyGfxData_QuadrupedChild_Gfx_53CF0:
-	dc.b	$01, $00, $EE, $10, $04, $60, $03, $04, $07, $89, $70, $77, $78, $89, $99, $67, $77, $77, $88, $66, $77, $77, $C0, $57, $DC, $CC, $C6, $53 
-EnemyGfxData_QuadrupedChild_Gfx_53D0C:
-	dc.b	$00, $32, $77, $77, $65, $33, $68, $77, $45, $46, $87, $76, $45, $98, $87, $75, $55, $88, $77, $54, $44, $78, $77, $54, $33, $77, $45, $55, $33, $34, $45, $65 
-	dc.b	$54, $00 
-EnemyGfxData_QuadrupedChild_Gfx_53D2E:
-	dc.b	$01, $00, $FF, $77, $77, $77, $50, $50, $45, $34, $34, $44 
-EnemyGfxData_QuadrupedChild_Gfx_53D3A:
-	dc.b	$01, $00, $FF, $FF, $FF, $EC, $CC, $8C, $DB, $00 
-EnemyGfxData_QuadrupedChild_Gfx_53D44:
-	dc.b	$01, $00, $FF, $EC, $80, $00, $CC, $AC, $DB, $CC, $A9, $BD, $CC, $DB, $A9, $A9, $DB, $BD, $AA, $97, $BB, $D8, $88, $98 
-EnemyGfxData_QuadrupedChild_Gfx_53D5C:
-	dc.b	$01, $00, $F3, $33, $37, $77, $CC, $C0, $DB, $DC, $BD, $C0, $A9, $60, $76, $77, $66, $00 
-EnemyGfxData_QuadrupedChild_Gfx_53D6E:
-	dc.b	$01, $00, $88, $99, $8C, $CE, $08, $98, $BB, $89, $98, $CC, $98, $77, $88, $87, $07, $77, $70, $77, $77, $07, $77, $77 
-EnemyGfxData_QuadrupedChild_Gfx_53D86:
-	dc.b	$00, $DC, $C6, $16, $88, $C0, $AA, $A9, $98, $0A, $A9, $98, $99, $69, $88, $99, $97, $77, $79, $77, $76, $08, $87, $77, $67, $66, $66, $66, $55, $77, $66, $66 
-	dc.b	$54, $00 
-EnemyGfxData_QuadrupedChild_Gfx_53DA8:
-	dc.b	$00, $87, $75, $53, $34, $76, $74, $32, $23, $76, $53, $32, $22, $75, $53, $33, $23, $75, $53, $33, $33, $55, $45, $33, $35, $54, $44, $55, $55, $43, $33, $45 
-	dc.b	$66, $00 
-EnemyGfxData_QuadrupedChild_Gfx_53DCA:
-	dc.b	$01, $00, $F7, $77, $73, $31, $30, $34, $33, $35, $56, $60, $68, $86, $68, $98, $70, $00 
-EnemyGfxData_QuadrupedChild_Gfx_53DDC:
-	dc.b	$01, $00, $EE, $FF, $FF, $FF, $77, $07 
-EnemyGfxData_QuadrupedChild_Gfx_53DE4:
-	dc.b	$01, $00, $02, $FF, $FF, $EE, $77, $66, $60, $53, $66, $60, $04, $04, $03, $00 
-EnemyGfxData_QuadrupedChild_Gfx_53DF4:
-	dc.b	$02, $33, $4C, $00, $09, $90, $44, $22, $C1, $44, $00, $32, $55, $55, $45, $54, $00, $55, $55, $04, $54, $43, $54, $45, $55, $34, $66, $65, $54, $00 
-EnemyGfxData_QuadrupedChild_Gfx_53E12:
-	dc.b	$01, $00, $11, $11, $13, $33, $77, $99, $87, $50, $78, $98, $55, $68, $97, $45, $79, $70, $34, $79, $70, $34, $97, $37, $87, $47, $97, $00 
+	incbin "data/art/tiles/enemy/quadruped_child_gfx.bin"
+EnemyGfxData_QuadrupedChild_Gfx_5367E equ EnemyGfxData_QuadrupedChild_Gfx_53678+$6
+EnemyGfxData_QuadrupedChild_Gfx_5368E equ EnemyGfxData_QuadrupedChild_Gfx_53678+$16
+EnemyGfxData_QuadrupedChild_Gfx_5369C equ EnemyGfxData_QuadrupedChild_Gfx_53678+$24
+EnemyGfxData_QuadrupedChild_Gfx_536AC equ EnemyGfxData_QuadrupedChild_Gfx_53678+$34
+EnemyGfxData_QuadrupedChild_Gfx_536CE equ EnemyGfxData_QuadrupedChild_Gfx_53678+$56
+EnemyGfxData_QuadrupedChild_Gfx_536F0 equ EnemyGfxData_QuadrupedChild_Gfx_53678+$78
+EnemyGfxData_QuadrupedChild_Gfx_536FC equ EnemyGfxData_QuadrupedChild_Gfx_53678+$84
+EnemyGfxData_QuadrupedChild_Gfx_5370A equ EnemyGfxData_QuadrupedChild_Gfx_53678+$92
+EnemyGfxData_QuadrupedChild_Gfx_5372C equ EnemyGfxData_QuadrupedChild_Gfx_53678+$B4
+EnemyGfxData_QuadrupedChild_Gfx_5374E equ EnemyGfxData_QuadrupedChild_Gfx_53678+$D6
+EnemyGfxData_QuadrupedChild_Gfx_5375C equ EnemyGfxData_QuadrupedChild_Gfx_53678+$E4
+EnemyGfxData_QuadrupedChild_Gfx_53768 equ EnemyGfxData_QuadrupedChild_Gfx_53678+$F0
+EnemyGfxData_QuadrupedChild_Gfx_53780 equ EnemyGfxData_QuadrupedChild_Gfx_53678+$108
+EnemyGfxData_QuadrupedChild_Gfx_53794 equ EnemyGfxData_QuadrupedChild_Gfx_53678+$11C
+EnemyGfxData_QuadrupedChild_Gfx_537B6 equ EnemyGfxData_QuadrupedChild_Gfx_53678+$13E
+EnemyGfxData_QuadrupedChild_Gfx_537D8 equ EnemyGfxData_QuadrupedChild_Gfx_53678+$160
+EnemyGfxData_QuadrupedChild_Gfx_537E4 equ EnemyGfxData_QuadrupedChild_Gfx_53678+$16C
+EnemyGfxData_QuadrupedChild_Gfx_537EE equ EnemyGfxData_QuadrupedChild_Gfx_53678+$176
+EnemyGfxData_QuadrupedChild_Gfx_53810 equ EnemyGfxData_QuadrupedChild_Gfx_53678+$198
+EnemyGfxData_QuadrupedChild_Gfx_53832 equ EnemyGfxData_QuadrupedChild_Gfx_53678+$1BA
+EnemyGfxData_QuadrupedChild_Gfx_5383E equ EnemyGfxData_QuadrupedChild_Gfx_53678+$1C6
+EnemyGfxData_QuadrupedChild_Gfx_5384C equ EnemyGfxData_QuadrupedChild_Gfx_53678+$1D4
+EnemyGfxData_QuadrupedChild_Gfx_5385C equ EnemyGfxData_QuadrupedChild_Gfx_53678+$1E4
+EnemyGfxData_QuadrupedChild_Gfx_5387E equ EnemyGfxData_QuadrupedChild_Gfx_53678+$206
+EnemyGfxData_QuadrupedChild_Gfx_538A0 equ EnemyGfxData_QuadrupedChild_Gfx_53678+$228
+EnemyGfxData_QuadrupedChild_Gfx_538AE equ EnemyGfxData_QuadrupedChild_Gfx_53678+$236
+EnemyGfxData_QuadrupedChild_Gfx_538C0 equ EnemyGfxData_QuadrupedChild_Gfx_53678+$248
+EnemyGfxData_QuadrupedChild_Gfx_538E2 equ EnemyGfxData_QuadrupedChild_Gfx_53678+$26A
+EnemyGfxData_QuadrupedChild_Gfx_53904 equ EnemyGfxData_QuadrupedChild_Gfx_53678+$28C
+EnemyGfxData_QuadrupedChild_Gfx_5390E equ EnemyGfxData_QuadrupedChild_Gfx_53678+$296
+EnemyGfxData_QuadrupedChild_Gfx_5391C equ EnemyGfxData_QuadrupedChild_Gfx_53678+$2A4
+EnemyGfxData_QuadrupedChild_Gfx_5392C equ EnemyGfxData_QuadrupedChild_Gfx_53678+$2B4
+EnemyGfxData_QuadrupedChild_Gfx_53938 equ EnemyGfxData_QuadrupedChild_Gfx_53678+$2C0
+EnemyGfxData_QuadrupedChild_Gfx_5395A equ EnemyGfxData_QuadrupedChild_Gfx_53678+$2E2
+EnemyGfxData_QuadrupedChild_Gfx_5397C equ EnemyGfxData_QuadrupedChild_Gfx_53678+$304
+EnemyGfxData_QuadrupedChild_Gfx_5398C equ EnemyGfxData_QuadrupedChild_Gfx_53678+$314
+EnemyGfxData_QuadrupedChild_Gfx_5399A equ EnemyGfxData_QuadrupedChild_Gfx_53678+$322
+EnemyGfxData_QuadrupedChild_Gfx_539BC equ EnemyGfxData_QuadrupedChild_Gfx_53678+$344
+EnemyGfxData_QuadrupedChild_Gfx_539DE equ EnemyGfxData_QuadrupedChild_Gfx_53678+$366
+EnemyGfxData_QuadrupedChild_Gfx_539EA equ EnemyGfxData_QuadrupedChild_Gfx_53678+$372
+EnemyGfxData_QuadrupedChild_Gfx_539F8 equ EnemyGfxData_QuadrupedChild_Gfx_53678+$380
+EnemyGfxData_QuadrupedChild_Gfx_53A08 equ EnemyGfxData_QuadrupedChild_Gfx_53678+$390
+EnemyGfxData_QuadrupedChild_Gfx_53A14 equ EnemyGfxData_QuadrupedChild_Gfx_53678+$39C
+EnemyGfxData_QuadrupedChild_Gfx_53A36 equ EnemyGfxData_QuadrupedChild_Gfx_53678+$3BE
+EnemyGfxData_QuadrupedChild_Gfx_53A58 equ EnemyGfxData_QuadrupedChild_Gfx_53678+$3E0
+EnemyGfxData_QuadrupedChild_Gfx_53A68 equ EnemyGfxData_QuadrupedChild_Gfx_53678+$3F0
+EnemyGfxData_QuadrupedChild_Gfx_53A72 equ EnemyGfxData_QuadrupedChild_Gfx_53678+$3FA
+EnemyGfxData_QuadrupedChild_Gfx_53A94 equ EnemyGfxData_QuadrupedChild_Gfx_53678+$41C
+EnemyGfxData_QuadrupedChild_Gfx_53AB6 equ EnemyGfxData_QuadrupedChild_Gfx_53678+$43E
+EnemyGfxData_QuadrupedChild_Gfx_53ACA equ EnemyGfxData_QuadrupedChild_Gfx_53678+$452
+EnemyGfxData_QuadrupedChild_Gfx_53AD8 equ EnemyGfxData_QuadrupedChild_Gfx_53678+$460
+EnemyGfxData_QuadrupedChild_Gfx_53AEE equ EnemyGfxData_QuadrupedChild_Gfx_53678+$476
+EnemyGfxData_QuadrupedChild_Gfx_53AFA equ EnemyGfxData_QuadrupedChild_Gfx_53678+$482
+EnemyGfxData_QuadrupedChild_Gfx_53B06 equ EnemyGfxData_QuadrupedChild_Gfx_53678+$48E
+EnemyGfxData_QuadrupedChild_Gfx_53B28 equ EnemyGfxData_QuadrupedChild_Gfx_53678+$4B0
+EnemyGfxData_QuadrupedChild_Gfx_53B4A equ EnemyGfxData_QuadrupedChild_Gfx_53678+$4D2
+EnemyGfxData_QuadrupedChild_Gfx_53B5E equ EnemyGfxData_QuadrupedChild_Gfx_53678+$4E6
+EnemyGfxData_QuadrupedChild_Gfx_53B6A equ EnemyGfxData_QuadrupedChild_Gfx_53678+$4F2
+EnemyGfxData_QuadrupedChild_Gfx_53B8C equ EnemyGfxData_QuadrupedChild_Gfx_53678+$514
+EnemyGfxData_QuadrupedChild_Gfx_53BAE equ EnemyGfxData_QuadrupedChild_Gfx_53678+$536
+EnemyGfxData_QuadrupedChild_Gfx_53BB8 equ EnemyGfxData_QuadrupedChild_Gfx_53678+$540
+EnemyGfxData_QuadrupedChild_Gfx_53BC8 equ EnemyGfxData_QuadrupedChild_Gfx_53678+$550
+EnemyGfxData_QuadrupedChild_Gfx_53BD4 equ EnemyGfxData_QuadrupedChild_Gfx_53678+$55C
+EnemyGfxData_QuadrupedChild_Gfx_53BE6 equ EnemyGfxData_QuadrupedChild_Gfx_53678+$56E
+EnemyGfxData_QuadrupedChild_Gfx_53C02 equ EnemyGfxData_QuadrupedChild_Gfx_53678+$58A
+EnemyGfxData_QuadrupedChild_Gfx_53C24 equ EnemyGfxData_QuadrupedChild_Gfx_53678+$5AC
+EnemyGfxData_QuadrupedChild_Gfx_53C32 equ EnemyGfxData_QuadrupedChild_Gfx_53678+$5BA
+EnemyGfxData_QuadrupedChild_Gfx_53C42 equ EnemyGfxData_QuadrupedChild_Gfx_53678+$5CA
+EnemyGfxData_QuadrupedChild_Gfx_53C5A equ EnemyGfxData_QuadrupedChild_Gfx_53678+$5E2
+EnemyGfxData_QuadrupedChild_Gfx_53C7C equ EnemyGfxData_QuadrupedChild_Gfx_53678+$604
+EnemyGfxData_QuadrupedChild_Gfx_53C92 equ EnemyGfxData_QuadrupedChild_Gfx_53678+$61A
+EnemyGfxData_QuadrupedChild_Gfx_53CAE equ EnemyGfxData_QuadrupedChild_Gfx_53678+$636
+EnemyGfxData_QuadrupedChild_Gfx_53CD0 equ EnemyGfxData_QuadrupedChild_Gfx_53678+$658
+EnemyGfxData_QuadrupedChild_Gfx_53CDC equ EnemyGfxData_QuadrupedChild_Gfx_53678+$664
+EnemyGfxData_QuadrupedChild_Gfx_53CF0 equ EnemyGfxData_QuadrupedChild_Gfx_53678+$678
+EnemyGfxData_QuadrupedChild_Gfx_53D0C equ EnemyGfxData_QuadrupedChild_Gfx_53678+$694
+EnemyGfxData_QuadrupedChild_Gfx_53D2E equ EnemyGfxData_QuadrupedChild_Gfx_53678+$6B6
+EnemyGfxData_QuadrupedChild_Gfx_53D3A equ EnemyGfxData_QuadrupedChild_Gfx_53678+$6C2
+EnemyGfxData_QuadrupedChild_Gfx_53D44 equ EnemyGfxData_QuadrupedChild_Gfx_53678+$6CC
+EnemyGfxData_QuadrupedChild_Gfx_53D5C equ EnemyGfxData_QuadrupedChild_Gfx_53678+$6E4
+EnemyGfxData_QuadrupedChild_Gfx_53D6E equ EnemyGfxData_QuadrupedChild_Gfx_53678+$6F6
+EnemyGfxData_QuadrupedChild_Gfx_53D86 equ EnemyGfxData_QuadrupedChild_Gfx_53678+$70E
+EnemyGfxData_QuadrupedChild_Gfx_53DA8 equ EnemyGfxData_QuadrupedChild_Gfx_53678+$730
+EnemyGfxData_QuadrupedChild_Gfx_53DCA equ EnemyGfxData_QuadrupedChild_Gfx_53678+$752
+EnemyGfxData_QuadrupedChild_Gfx_53DDC equ EnemyGfxData_QuadrupedChild_Gfx_53678+$764
+EnemyGfxData_QuadrupedChild_Gfx_53DE4 equ EnemyGfxData_QuadrupedChild_Gfx_53678+$76C
+EnemyGfxData_QuadrupedChild_Gfx_53DF4 equ EnemyGfxData_QuadrupedChild_Gfx_53678+$77C
+EnemyGfxData_QuadrupedChild_Gfx_53E12 equ EnemyGfxData_QuadrupedChild_Gfx_53678+$79A
 EnemyGfxData_QuadrupedChild:
 	dc.l	EnemyGfxData_QuadrupedChild_Gfx_53678
 	dc.l	EnemyGfxData_QuadrupedChild_Gfx_5367E
@@ -58782,105 +56986,54 @@ EnemyGfxFrameTable_QuadrupedMain:
 	dc.b	$00, $00, $14, $17, $15, $18, $16, $00, $00, $00, $19, $1B, $1A, $1C, $00, $00, $00, $00, $1D, $20, $1E, $21, $1F, $22, $23, $00, $24, $27, $25, $28, $26, $29 
 	dc.b	$00, $00, $2A, $2D, $2B, $2E, $2C, $2F 
 EnemyGfxData_QuadrupedMain_Gfx_53FDA:
-	dc.b	$01, $00, $FF, $FF, $FF, $FF 
-EnemyGfxData_QuadrupedMain_Gfx_53FE0:
-	dc.b	$01, $00, $88, $89, $99, $98, $67, $75, $44, $77, $86, $55, $78, $86, $60, $89, $96, $9A, $86, $89, $77, $77, $76, $07, $76, $60 
-EnemyGfxData_QuadrupedMain_Gfx_53FFA:
-	dc.b	$01, $00, $01, $11, $19, $13, $45, $76, $67, $77, $56, $87, $68, $66, $78, $80, $06, $69, $90, $06, $78, $A0, $77, $90, $07, $77, $70, $67, $77, $00 
-EnemyGfxData_QuadrupedMain_Gfx_54018:
-	dc.b	$02, $00, $CC, $80, $00, $09, $EE, $00, $04, $99, $76, $76, $60, $78, $60, $0E, $88, $6E, $0E, $98, $6E, $E9, $87, $E7, $76, $0E 
-EnemyGfxData_QuadrupedMain_Gfx_54032:
-	dc.b	$01, $00, $33, $11, $00, $19, $67, $70, $66, $80, $67, $87, $E0, $67, $98, $EE, $E6, $79, $7E, $E0, $EE, $67, $7E, $E0, $EE, $EE, $EE, $EE, $E0, $00 
-EnemyGfxData_QuadrupedMain_Gfx_54050:
-	dc.b	$01, $00, $80, $88, $18, $88, $78, $85, $44, $06, $89, $97, $55, $99, $87, $60, $89, $76, $60, $06, $78, $76, $67, $66, $06, $66, $66, $06, $06, $66, $66, $00 
-EnemyGfxData_QuadrupedMain_Gfx_54070:
-	dc.b	$02, $66, $44, $44, $C8, $00, $00, $00, $11, $33, $73, $45, $97, $70, $56, $67, $70, $06, $60, $06, $60, $60, $68, $78, $70, $00 
-EnemyGfxData_QuadrupedMain_Gfx_5408A:
-	dc.b	$02, $00, $88, $00, $00, $8F, $EE, $04, $44, $81, $60, $06, $66, $7E, $67, $86, $0E, $88, $87, $0E, $88, $76, $E8, $87, $6E, $0E, $E6, $66, $E0, $00 
-EnemyGfxData_QuadrupedMain_Gfx_540A8:
-	dc.b	$01, $00, $31, $13, $7F, $FF, $78, $7E, $E7, $6E, $E0, $EE, $EE, $E0, $EE, $EE, $E0, $00 
-EnemyGfxData_QuadrupedMain_Gfx_540BA:
-	dc.b	$02, $00, $EE, $EE, $EE, $EE, $0C, $01, $11, $11, $11, $78 
-EnemyGfxData_QuadrupedMain_Gfx_540C6:
-	dc.b	$01, $66, $00, $26, $23, $10, $C7, $67, $65, $33, $DC, $77, $76, $55, $DC, $67, $00, $BC, $00, $BC, $06, $60, $BC, $00, $BC, $00, $08, $BC, $00, $78, $76, $00 
-EnemyGfxData_QuadrupedMain_Gfx_540E6:
-	dc.b	$01, $00, $11, $11, $11, $13, $35, $88, $70, $67, $99, $86, $67, $89, $90, $66, $79, $80, $06, $78, $76, $06, $67, $60, $06, $66, $60, $66, $66, $00 
-EnemyGfxData_QuadrupedMain_Gfx_54104:
-	dc.b	$01, $00, $EE, $EF, $FF, $FF, $0C, $0C, $0C, $00 
-EnemyGfxData_QuadrupedMain_Gfx_5410E:
-	dc.b	$01, $00, $00, $04, $EE, $FF, $BC, $0E, $78, $7E, $DC, $EE, $67, $E6, $DC, $EE, $EE, $E7, $C0, $EE, $E6, $EE, $0E, $00 
-EnemyGfxData_QuadrupedMain_Gfx_54126:
-	dc.b	$02, $00, $11, $00, $00, $1F, $EE, $02, $22, $32, $E0, $76, $66, $E0, $87, $6E, $88, $8E, $E0, $78, $8E, $E0, $67, $88, $E6, $66, $E0, $00 
-EnemyGfxData_QuadrupedMain_Gfx_54142:
-	dc.b	$01, $00, $0C, $88, $88, $CC, $77, $05, $56, $54, $66, $55, $06, $66, $65, $06, $66, $66, $06, $66, $66, $06, $76, $60, $77, $60, $67, $76 
-EnemyGfxData_QuadrupedMain_Gfx_5415E:
-	dc.b	$02, $66, $00, $26, $66, $00, $00, $00, $11, $98, $99, $34, $45, $55, $44, $44, $55, $65, $50, $55, $56, $06, $60, $06, $76, $67, $76, $00 
-EnemyGfxData_QuadrupedMain_Gfx_5417A:
-	dc.b	$01, $00, $CC, $C8, $08, $CF, $68, $76, $08, $87, $07, $97, $EE, $79, $99, $0E, $EE, $78, $99, $EE, $E6, $88, $EE, $EE 
-EnemyGfxData_QuadrupedMain_Gfx_54192:
-	dc.b	$02, $00, $99, $90, $00, $1F, $EE, $00, $01, $33, $E0, $67, $70, $68, $80, $78, $97, $E7, $89, $97, $77, $89, $77, $87 
-EnemyGfxData_QuadrupedMain_Gfx_541AA:
-	dc.b	$01, $00, $FF, $FF, $7F, $FF, $E0, $00 
-EnemyGfxData_QuadrupedMain_Gfx_541B2:
-	dc.b	$02, $00, $88, $88, $88, $8C, $66, $42, $23, $32, $20, $65, $43, $06, $54, $06, $65, $06, $06, $06, $60, $06, $60, $77, $67, $00 
-EnemyGfxData_QuadrupedMain_Gfx_541CC:
-	dc.b	$00, $33, $45, $05, $78, $44, $55, $00, $88, $55, $66, $70, $C8, $06, $66, $6C, $DD, $06, $66, $6D, $BC, $06, $66, $DB, $C0, $06, $86, $DC, $00, $07, $87, $C0 
-	dc.b	$00, $00 
-EnemyGfxData_QuadrupedMain_Gfx_541EE:
-	dc.b	$01, $00, $77, $77, $FF, $FF, $89, $88, $80, $C0 
-EnemyGfxData_QuadrupedMain_Gfx_541F8:
-	dc.b	$02, $00, $CC, $80, $00, $88, $EE, $00, $44, $44, $43, $77, $76, $78, $86, $E8, $97, $0E, $87, $98, $0E, $78, $99, $0E, $69, $99, $E8, $98, $0E, $00 
-EnemyGfxData_QuadrupedMain_Gfx_54216:
-	dc.b	$02, $00, $11, $11, $13, $77, $EE, $0A, $E6, $40, $00, $07, $87, $E0, $76, $6E, $7E, $E0, $7E, $E0, $7E, $E0 
-EnemyGfxData_QuadrupedMain_Gfx_5422C:
-	dc.b	$01, $00, $8C, $CC, $CC, $CC, $05, $56, $54, $66, $55, $76, $65, $67, $66, $66, $66, $66, $66, $07, $76, $07, $87, $00 
-EnemyGfxData_QuadrupedMain_Gfx_54244:
-	dc.b	$01, $00, $01, $11, $19, $91, $33, $45, $56, $50, $44, $45, $76, $55, $57, $66, $06, $66, $66, $06, $66, $66, $67, $76, $68, $70, $06, $88, $80, $00 
-EnemyGfxData_QuadrupedMain_Gfx_54262:
-	dc.b	$02, $00, $88, $88, $CC, $EF, $EE, $06, $73, $31, $10, $0E, $E7, $87, $7E, $0E, $0E, $00 
-EnemyGfxData_QuadrupedMain_Gfx_54274:
-	dc.b	$01, $EE, $00, $22, $31, $8E, $08, $88, $60, $00, $68, $88, $60, $00, $68, $99, $00, $68, $98, $E0, $67, $99, $E8, $98, $8E, $66, $6E, $E0, $00, $00 
-EnemyGfxData_QuadrupedMain_Gfx_54292:
-	dc.b	$01, $00, $FF, $FF, $EE, $EF, $06, $06, $06, $00 
-EnemyGfxData_QuadrupedMain_Gfx_5429C:
-	dc.b	$00, $45, $56, $66, $77, $55, $66, $76, $66, $76, $78, $88, $77, $66, $99, $87, $77, $79, $98, $87, $60, $79, $88, $76, $00, $88, $86, $00, $00, $88, $87, $70 
-	dc.b	$00, $00 
-EnemyGfxData_QuadrupedMain_Gfx_542BE:
-	dc.b	$01, $00, $37, $7F, $FF, $FF, $54, $40, $55, $60 
-EnemyGfxData_QuadrupedMain_Gfx_542C8:
-	dc.b	$02, $00, $FF, $FE, $C8, $8C, $EE, $00, $01, $22, $33, $E8, $0E, $77, $0E, $00 
-EnemyGfxData_QuadrupedMain_Gfx_542D8:
-	dc.b	$01, $66, $84, $63, $24, $00, $87, $70, $00, $06, $67, $00, $0E, $7E, $78, $77, $87, $76, $67, $77, $77, $88, $EE, $EE, $78, $87, $EE, $EE, $EE, $EE 
-EnemyGfxData_QuadrupedMain_Gfx_542F6:
-	dc.b	$01, $00, $FF, $73, $33, $33, $EE, $76, $E0, $87, $7E, $87, $EE, $7E, $EE, $EE, $E0, $00 
-EnemyGfxData_QuadrupedMain_Gfx_54308:
-	dc.b	$01, $00, $8E, $FF, $FF, $FF, $0C, $CC, $BB, $CC 
-EnemyGfxData_QuadrupedMain_Gfx_54312:
-	dc.b	$00, $BB, $DD, $76, $55, $CB, $B8, $87, $65, $0C, $89, $97, $66, $00, $99, $76, $66, $08, $98, $76, $60, $08, $87, $66, $00, $00, $76, $66, $60, $00, $00, $66 
-	dc.b	$66, $00 
-EnemyGfxData_QuadrupedMain_Gfx_54334:
-	dc.b	$00, $55, $56, $66, $55, $55, $66, $76, $66, $66, $06, $88, $77, $60, $07, $98, $77, $00, $08, $98, $70, $00, $09, $98, $70, $00, $09, $98, $76, $00, $00, $77 
-	dc.b	$77, $00 
-EnemyGfxData_QuadrupedMain_Gfx_54356:
-	dc.b	$01, $00, $7F, $FF, $FF, $F7, $55, $67 
-EnemyGfxData_QuadrupedMain_Gfx_5435E:
-	dc.b	$01, $00, $CC, $80, $08, $FF, $07, $66, $77, $66, $77, $77, $66, $07, $77, $76, $66, $E6, $66, $66, $6E, $EE, $EE, $EE 
-EnemyGfxData_QuadrupedMain_Gfx_54376:
-	dc.b	$02, $00, $63, $00, $00, $0F, $EE, $08, $FF, $FF, $70, $60, $07, $E0, $0E, $00 
-EnemyGfxData_QuadrupedMain_Gfx_54386:
-	dc.b	$01, $00, $31, $11, $13, $7F, $77, $76, $67, $76, $70, $EE, $67, $76, $E6, $77, $6E, $66, $76, $E0, $EE, $EE, $EE, $00 
-EnemyGfxData_QuadrupedMain_Gfx_5439E:
-	dc.b	$01, $00, $EF, $EE, $CC, $CC, $05, $07, $79, $07, $9A, $79, $99, $68, $78, $06, $77, $00 
-EnemyGfxData_QuadrupedMain_Gfx_543B0:
-	dc.b	$01, $66, $61, $32, $40, $10, $56, $55, $67, $87, $76, $79, $87, $A9, $76, $60, $98, $76, $60, $76, $06, $77, $60, $00, $06, $77, $60, $00, $67, $77 
-EnemyGfxData_QuadrupedMain_Gfx_543CE:
-	dc.b	$01, $00, $11, $BF, $FF, $F7, $68, $88, $60, $66, $88, $60, $66, $66 
-EnemyGfxData_QuadrupedMain_Gfx_543DC:
-	dc.b	$01, $00, $EE, $C8, $88, $8C, $77, $07, $0E, $E8, $0E, $EE, $78, $E7, $88, $88, $E7, $77, $77, $0E, $EE, $EE, $EE, $EE 
-EnemyGfxData_QuadrupedMain_Gfx_543F4:
-	dc.b	$02, $00, $64, $00, $00, $17, $EE, $00, $03, $33, $E0, $70, $07, $76, $0E, $77, $87, $6E, $E7, $76, $87, $76, $77, $66, $76, $66, $E0, $00 
-EnemyGfxData_QuadrupedMain_Gfx_54410:
-	dc.b	$01, $00, $31, $11, $3F, $FF, $76, $66, $76, $6E, $60, $6E, $EE, $EE, $EE, $EE, $EE, $EE, $E0, $00 
+	incbin "data/art/tiles/enemy/quadruped_main_gfx.bin"
+EnemyGfxData_QuadrupedMain_Gfx_53FE0 equ EnemyGfxData_QuadrupedMain_Gfx_53FDA+$6
+EnemyGfxData_QuadrupedMain_Gfx_53FFA equ EnemyGfxData_QuadrupedMain_Gfx_53FDA+$20
+EnemyGfxData_QuadrupedMain_Gfx_54018 equ EnemyGfxData_QuadrupedMain_Gfx_53FDA+$3E
+EnemyGfxData_QuadrupedMain_Gfx_54032 equ EnemyGfxData_QuadrupedMain_Gfx_53FDA+$58
+EnemyGfxData_QuadrupedMain_Gfx_54050 equ EnemyGfxData_QuadrupedMain_Gfx_53FDA+$76
+EnemyGfxData_QuadrupedMain_Gfx_54070 equ EnemyGfxData_QuadrupedMain_Gfx_53FDA+$96
+EnemyGfxData_QuadrupedMain_Gfx_5408A equ EnemyGfxData_QuadrupedMain_Gfx_53FDA+$B0
+EnemyGfxData_QuadrupedMain_Gfx_540A8 equ EnemyGfxData_QuadrupedMain_Gfx_53FDA+$CE
+EnemyGfxData_QuadrupedMain_Gfx_540BA equ EnemyGfxData_QuadrupedMain_Gfx_53FDA+$E0
+EnemyGfxData_QuadrupedMain_Gfx_540C6 equ EnemyGfxData_QuadrupedMain_Gfx_53FDA+$EC
+EnemyGfxData_QuadrupedMain_Gfx_540E6 equ EnemyGfxData_QuadrupedMain_Gfx_53FDA+$10C
+EnemyGfxData_QuadrupedMain_Gfx_54104 equ EnemyGfxData_QuadrupedMain_Gfx_53FDA+$12A
+EnemyGfxData_QuadrupedMain_Gfx_5410E equ EnemyGfxData_QuadrupedMain_Gfx_53FDA+$134
+EnemyGfxData_QuadrupedMain_Gfx_54126 equ EnemyGfxData_QuadrupedMain_Gfx_53FDA+$14C
+EnemyGfxData_QuadrupedMain_Gfx_54142 equ EnemyGfxData_QuadrupedMain_Gfx_53FDA+$168
+EnemyGfxData_QuadrupedMain_Gfx_5415E equ EnemyGfxData_QuadrupedMain_Gfx_53FDA+$184
+EnemyGfxData_QuadrupedMain_Gfx_5417A equ EnemyGfxData_QuadrupedMain_Gfx_53FDA+$1A0
+EnemyGfxData_QuadrupedMain_Gfx_54192 equ EnemyGfxData_QuadrupedMain_Gfx_53FDA+$1B8
+EnemyGfxData_QuadrupedMain_Gfx_541AA equ EnemyGfxData_QuadrupedMain_Gfx_53FDA+$1D0
+EnemyGfxData_QuadrupedMain_Gfx_541B2 equ EnemyGfxData_QuadrupedMain_Gfx_53FDA+$1D8
+EnemyGfxData_QuadrupedMain_Gfx_541CC equ EnemyGfxData_QuadrupedMain_Gfx_53FDA+$1F2
+EnemyGfxData_QuadrupedMain_Gfx_541EE equ EnemyGfxData_QuadrupedMain_Gfx_53FDA+$214
+EnemyGfxData_QuadrupedMain_Gfx_541F8 equ EnemyGfxData_QuadrupedMain_Gfx_53FDA+$21E
+EnemyGfxData_QuadrupedMain_Gfx_54216 equ EnemyGfxData_QuadrupedMain_Gfx_53FDA+$23C
+EnemyGfxData_QuadrupedMain_Gfx_5422C equ EnemyGfxData_QuadrupedMain_Gfx_53FDA+$252
+EnemyGfxData_QuadrupedMain_Gfx_54244 equ EnemyGfxData_QuadrupedMain_Gfx_53FDA+$26A
+EnemyGfxData_QuadrupedMain_Gfx_54262 equ EnemyGfxData_QuadrupedMain_Gfx_53FDA+$288
+EnemyGfxData_QuadrupedMain_Gfx_54274 equ EnemyGfxData_QuadrupedMain_Gfx_53FDA+$29A
+EnemyGfxData_QuadrupedMain_Gfx_54292 equ EnemyGfxData_QuadrupedMain_Gfx_53FDA+$2B8
+EnemyGfxData_QuadrupedMain_Gfx_5429C equ EnemyGfxData_QuadrupedMain_Gfx_53FDA+$2C2
+EnemyGfxData_QuadrupedMain_Gfx_542BE equ EnemyGfxData_QuadrupedMain_Gfx_53FDA+$2E4
+EnemyGfxData_QuadrupedMain_Gfx_542C8 equ EnemyGfxData_QuadrupedMain_Gfx_53FDA+$2EE
+EnemyGfxData_QuadrupedMain_Gfx_542D8 equ EnemyGfxData_QuadrupedMain_Gfx_53FDA+$2FE
+EnemyGfxData_QuadrupedMain_Gfx_542F6 equ EnemyGfxData_QuadrupedMain_Gfx_53FDA+$31C
+EnemyGfxData_QuadrupedMain_Gfx_54308 equ EnemyGfxData_QuadrupedMain_Gfx_53FDA+$32E
+EnemyGfxData_QuadrupedMain_Gfx_54312 equ EnemyGfxData_QuadrupedMain_Gfx_53FDA+$338
+EnemyGfxData_QuadrupedMain_Gfx_54334 equ EnemyGfxData_QuadrupedMain_Gfx_53FDA+$35A
+EnemyGfxData_QuadrupedMain_Gfx_54356 equ EnemyGfxData_QuadrupedMain_Gfx_53FDA+$37C
+EnemyGfxData_QuadrupedMain_Gfx_5435E equ EnemyGfxData_QuadrupedMain_Gfx_53FDA+$384
+EnemyGfxData_QuadrupedMain_Gfx_54376 equ EnemyGfxData_QuadrupedMain_Gfx_53FDA+$39C
+EnemyGfxData_QuadrupedMain_Gfx_54386 equ EnemyGfxData_QuadrupedMain_Gfx_53FDA+$3AC
+EnemyGfxData_QuadrupedMain_Gfx_5439E equ EnemyGfxData_QuadrupedMain_Gfx_53FDA+$3C4
+EnemyGfxData_QuadrupedMain_Gfx_543B0 equ EnemyGfxData_QuadrupedMain_Gfx_53FDA+$3D6
+EnemyGfxData_QuadrupedMain_Gfx_543CE equ EnemyGfxData_QuadrupedMain_Gfx_53FDA+$3F4
+EnemyGfxData_QuadrupedMain_Gfx_543DC equ EnemyGfxData_QuadrupedMain_Gfx_53FDA+$402
+EnemyGfxData_QuadrupedMain_Gfx_543F4 equ EnemyGfxData_QuadrupedMain_Gfx_53FDA+$41A
+EnemyGfxData_QuadrupedMain_Gfx_54410 equ EnemyGfxData_QuadrupedMain_Gfx_53FDA+$436
 EnemyGfxData_QuadrupedMain:
 	dc.l	EnemyGfxData_QuadrupedMain_Gfx_53FDA
 	dc.l	EnemyGfxData_QuadrupedMain_Gfx_53FE0
@@ -58935,117 +57088,60 @@ EnemyGfxFrameTable_OrbMain:
 	dc.b	$20, $19, $1D, $21, $22, $26, $2A, $23, $27, $2B, $24, $28, $2C, $25, $29, $2D, $2E, $00, $33, $2F, $31, $34, $30, $32, $34, $00, $00, $35, $2E, $00, $33, $2F 
 	dc.b	$31, $34, $30, $32, $34, $00, $00, $35 
 EnemyGfxData_OrbMain_Gfx_5452C:
-	dc.b	$01, $00, $FF, $FF, $FF, $FF 
-EnemyGfxData_OrbMain_Gfx_54532:
-	dc.b	$01, $00, $FF, $FF, $FF, $C8, $66, $77, $66, $67, $77, $00 
-EnemyGfxData_OrbMain_Gfx_5453E:
-	dc.b	$01, $00, $FF, $FF, $FF, $10, $77, $66, $50, $77, $76, $65, $50, $00 
-EnemyGfxData_OrbMain_Gfx_5454C:
-	dc.b	$01, $00, $FF, $EE, $EE, $EE, $04, $04, $44, $44, $44, $44 
-EnemyGfxData_OrbMain_Gfx_54558:
-	dc.b	$00, $05, $66, $77, $88, $45, $66, $78, $88, $45, $66, $78, $88, $45, $66, $78, $87, $55, $66, $78, $76, $55, $65, $67, $65, $55, $55, $67, $64, $55, $44, $46 
-	dc.b	$63, $00 
-EnemyGfxData_OrbMain_Gfx_5457A:
-	dc.b	$02, $66, $22, $22, $E0, $00, $55, $11, $00, $0F, $10, $88, $76, $88, $77, $87, $77, $65, $77, $67, $65, $65, $44, $44, $44, $33, $33, $44, $45, $00 
-EnemyGfxData_OrbMain_Gfx_54598:
-	dc.b	$01, $00, $F7, $73, $33, $33, $40, $44, $44, $40, $54, $40, $54, $40, $54, $40, $54, $30 
-EnemyGfxData_OrbMain_Gfx_545AA:
-	dc.b	$01, $00, $EE, $EE, $EF, $FF, $34, $93, $93, $99, $09, $00 
-EnemyGfxData_OrbMain_Gfx_545B6:
-	dc.b	$03, $44, $48, $72, $10, $00, $33, $33, $8C, $43, $00, $99, $00, $00, $8C, $73, $45, $45, $45, $34, $09, $00, $09, $00 
-EnemyGfxData_OrbMain_Gfx_545CE:
-	dc.b	$02, $33, $EC, $01, $2C, $00, $99, $00, $00, $01, $FE, $44, $44, $54, $44, $45, $54, $44, $55, $54, $43, $44, $44, $39, $39, $00 
-EnemyGfxData_OrbMain_Gfx_545E8:
-	dc.b	$01, $00, $33, $37, $77, $FF, $43, $30, $43, $90, $33, $90, $39, $99, $90, $00 
-EnemyGfxData_OrbMain_Gfx_545F8:
-	dc.b	$01, $00, $FF, $FF, $FF, $FE, $04, $00 
-EnemyGfxData_OrbMain_Gfx_54600:
-	dc.b	$01, $00, $FF, $FF, $FF, $80, $05, $56, $65, $45, $66, $87, $66, $00 
-EnemyGfxData_OrbMain_Gfx_5460E:
-	dc.b	$01, $00, $FF, $FF, $FF, $10, $66, $55, $55, $66, $76, $65, $55, $00 
-EnemyGfxData_OrbMain_Gfx_5461C:
-	dc.b	$01, $00, $EC, $88, $88, $8C, $45, $44, $56, $04, $45, $56, $04, $55, $66, $04, $56, $56, $04, $45, $55, $04, $45, $54, $44, $55 
-EnemyGfxData_OrbMain_Gfx_54636:
-	dc.b	$00, $66, $67, $88, $88, $66, $67, $88, $77, $66, $67, $87, $66, $66, $56, $76, $55, $65, $56, $76, $44, $54, $33, $66, $43, $43, $33, $35, $53, $44, $43, $33 
-	dc.b	$33, $00 
-EnemyGfxData_OrbMain_Gfx_54658:
-	dc.b	$01, $55, $10, $0F, $33, $22, $77, $76, $66, $76, $76, $66, $66, $66, $66, $66, $65, $44, $45, $34, $45, $33, $44, $44, $33, $34, $54, $00 
-EnemyGfxData_OrbMain_Gfx_54674:
-	dc.b	$01, $00, $73, $31, $11, $13, $44, $55, $40, $55, $54, $65, $54, $40, $55, $55, $40, $55, $54, $40, $54, $54, $40, $44, $44, $00 
-EnemyGfxData_OrbMain_Gfx_5468E:
-	dc.b	$01, $00, $CC, $88, $8C, $EF, $43, $45, $93, $34, $09, $93, $34, $09, $99, $33, $09, $99, $93, $99, $99, $99 
-EnemyGfxData_OrbMain_Gfx_546A4:
-	dc.b	$03, $44, $CD, $94, $60, $00, $33, $32, $00, $97, $00, $99, $00, $00, $00, $F7, $46, $54, $34, $55, $45, $93, $09, $00 
-EnemyGfxData_OrbMain_Gfx_546BC:
-	dc.b	$01, $99, $00, $00, $1F, $C8, $34, $45, $55, $44, $44, $55, $54, $44, $45, $54, $44, $43, $54, $44, $33, $33, $33, $33, $39, $90, $00, $00, $00, $00 
-EnemyGfxData_OrbMain_Gfx_546DA:
-	dc.b	$01, $00, $31, $33, $37, $FF, $43, $39, $33, $39, $90, $33, $99, $39, $99, $99, $90, $90 
-EnemyGfxData_OrbMain_Gfx_546EC:
-	dc.b	$01, $00, $FF, $FE, $EC, $CC, $05, $45, $04, $55, $44, $55, $44, $45 
-EnemyGfxData_OrbMain_Gfx_546FA:
-	dc.b	$00, $00, $00, $07, $77, $00, $66, $77, $77, $05, $67, $78, $88, $56, $67, $88, $88, $56, $67, $88, $88, $56, $67, $88, $77, $56, $67, $87, $66, $56, $56, $76 
-	dc.b	$55, $00 
-EnemyGfxData_OrbMain_Gfx_5471C:
-	dc.b	$02, $66, $04, $40, $22, $E0, $55, $02, $01, $11, $1F, $76, $65, $00, $00, $77, $00, $87, $65, $50, $87, $76, $65, $77, $76, $76, $76, $00 
-EnemyGfxData_OrbMain_Gfx_54738:
-	dc.b	$01, $00, $FF, $FF, $77, $33, $54, $54, $54, $40, $54, $40 
-EnemyGfxData_OrbMain_Gfx_54744:
-	dc.b	$01, $00, $CC, $CC, $EE, $EC, $44, $55, $44, $45, $03, $44, $03, $34, $33, $34, $93, $09, $99, $00 
-EnemyGfxData_OrbMain_Gfx_54758:
-	dc.b	$01, $44, $14, $08, $72, $30, $55, $56, $76, $54, $66, $33, $54, $43, $35, $53, $53, $33, $33, $34, $34, $34, $55, $33, $43, $93, $33, $33, $34, $00 
-EnemyGfxData_OrbMain_Gfx_54776:
-	dc.b	$02, $44, $C2, $11, $A4, $C8, $33, $08, $C8, $00, $13, $45, $55, $34, $55, $34, $34, $45, $55, $43, $55, $43, $43, $43, $43, $00 
-EnemyGfxData_OrbMain_Gfx_54790:
-	dc.b	$01, $00, $33, $77, $77, $73, $44, $40, $44, $40, $44, $43, $33, $30, $39, $99, $90, $00 
-EnemyGfxData_OrbMain_Gfx_547A2:
-	dc.b	$02, $00, $CC, $CC, $CE, $FF, $99, $33, $33, $11, $00, $09 
-EnemyGfxData_OrbMain_Gfx_547AE:
-	dc.b	$01, $99, $8F, $FF, $FF, $F7, $93, $33, $33, $00 
-EnemyGfxData_OrbMain_Gfx_547B8:
-	dc.b	$01, $99, $1F, $FF, $FF, $FE, $33, $33, $39, $00 
-EnemyGfxData_OrbMain_Gfx_547C2:
-	dc.b	$02, $99, $CC, $CC, $88, $00, $00, $33, $33, $37, $FF, $90 
-EnemyGfxData_OrbMain_Gfx_547CE:
-	dc.b	$01, $00, $CC, $CC, $EE, $EF, $04, $45, $04, $45, $03, $44, $03, $44, $34, $33, $03, $00 
-EnemyGfxData_OrbMain_Gfx_547E0:
-	dc.b	$02, $44, $14, $08, $7E, $70, $33, $01, $03, $00, $87, $55, $56, $76, $54, $66, $54, $43, $35, $53, $53, $34, $55, $03 
-EnemyGfxData_OrbMain_Gfx_547F8:
-	dc.b	$02, $44, $C2, $11, $B7, $C0, $33, $08, $C8, $00, $1F, $45, $55, $34, $55, $34, $34, $45, $55, $55, $43, $00 
-EnemyGfxData_OrbMain_Gfx_5480E:
-	dc.b	$01, $00, $77, $77, $77, $7F, $44, $43, $33, $43, $33, $30, $30, $00 
-EnemyGfxData_OrbMain_Gfx_5481C:
-	dc.b	$01, $00, $FF, $FF, $FF, $FE, $99, $00 
-EnemyGfxData_OrbMain_Gfx_54824:
-	dc.b	$02, $00, $8F, $FF, $FF, $00, $99, $00, $00, $00, $7F, $03, $33, $33, $09, $00 
-EnemyGfxData_OrbMain_Gfx_54834:
-	dc.b	$02, $00, $1F, $FF, $FF, $00, $99, $00, $00, $00, $EF, $33, $33, $30, $90, $00 
-EnemyGfxData_OrbMain_Gfx_54844:
-	dc.b	$01, $00, $FF, $FF, $FF, $F7, $99, $00 
-EnemyGfxData_OrbMain_Gfx_5484C:
-	dc.b	$02, $00, $CC, $CC, $CC, $EF, $99, $13, $33, $31, $00, $09, $09, $09 
-EnemyGfxData_OrbMain_Gfx_5485A:
-	dc.b	$01, $99, $FF, $FF, $FF, $F7, $09, $00 
-EnemyGfxData_OrbMain_Gfx_54862:
-	dc.b	$01, $99, $FF, $FF, $FF, $FE, $90, $00 
-EnemyGfxData_OrbMain_Gfx_5486A:
-	dc.b	$02, $99, $8C, $CC, $C8, $00, $00, $33, $33, $33, $7F, $90, $90, $90 
-EnemyGfxData_OrbMain_Gfx_54878:
-	dc.b	$01, $00, $EE, $EE, $EE, $FF, $05, $04, $04, $04, $04, $06 
-EnemyGfxData_OrbMain_Gfx_54884:
-	dc.b	$01, $54, $4C, $04, $44, $20, $55, $66, $43, $45, $53, $55, $44, $43, $33, $45, $43, $33, $45, $43, $33, $45, $44, $33, $34, $45, $44, $03, $44, $55, $66, $00 
-EnemyGfxData_OrbMain_Gfx_548A4:
-	dc.b	$00, $34, $45, $66, $55, $33, $45, $56, $54, $33, $45, $65, $54, $33, $45, $66, $54, $33, $45, $65, $44, $34, $46, $65, $44, $45, $55, $54, $46, $66, $64, $44 
-	dc.b	$30, $00 
-EnemyGfxData_OrbMain_Gfx_548C6:
-	dc.b	$01, $00, $88, $FF, $FF, $F0, $34, $44, $44, $03, $33, $33, $99, $99, $99, $99 
-EnemyGfxData_OrbMain_Gfx_548D6:
-	dc.b	$01, $00, $13, $FF, $FF, $F0, $44, $44, $33, $33, $33, $99, $99, $99, $99, $00 
-EnemyGfxData_OrbMain_Gfx_548E6:
-	dc.b	$02, $00, $EC, $CC, $CC, $EF, $99, $11, $11, $11, $10, $09, $09, $09, $09, $09 
-EnemyGfxData_OrbMain_Gfx_548F6:
-	dc.b	$01, $99, $FF, $FF, $FF, $FF 
-EnemyGfxData_OrbMain_Gfx_548FC:
-	dc.b	$02, $99, $88, $88, $88, $80, $00, $73, $33, $33, $7F, $90, $90, $90, $90, $90 
+	incbin "data/art/tiles/enemy/orb_main_gfx.bin"
+EnemyGfxData_OrbMain_Gfx_54532 equ EnemyGfxData_OrbMain_Gfx_5452C+$6
+EnemyGfxData_OrbMain_Gfx_5453E equ EnemyGfxData_OrbMain_Gfx_5452C+$12
+EnemyGfxData_OrbMain_Gfx_5454C equ EnemyGfxData_OrbMain_Gfx_5452C+$20
+EnemyGfxData_OrbMain_Gfx_54558 equ EnemyGfxData_OrbMain_Gfx_5452C+$2C
+EnemyGfxData_OrbMain_Gfx_5457A equ EnemyGfxData_OrbMain_Gfx_5452C+$4E
+EnemyGfxData_OrbMain_Gfx_54598 equ EnemyGfxData_OrbMain_Gfx_5452C+$6C
+EnemyGfxData_OrbMain_Gfx_545AA equ EnemyGfxData_OrbMain_Gfx_5452C+$7E
+EnemyGfxData_OrbMain_Gfx_545B6 equ EnemyGfxData_OrbMain_Gfx_5452C+$8A
+EnemyGfxData_OrbMain_Gfx_545CE equ EnemyGfxData_OrbMain_Gfx_5452C+$A2
+EnemyGfxData_OrbMain_Gfx_545E8 equ EnemyGfxData_OrbMain_Gfx_5452C+$BC
+EnemyGfxData_OrbMain_Gfx_545F8 equ EnemyGfxData_OrbMain_Gfx_5452C+$CC
+EnemyGfxData_OrbMain_Gfx_54600 equ EnemyGfxData_OrbMain_Gfx_5452C+$D4
+EnemyGfxData_OrbMain_Gfx_5460E equ EnemyGfxData_OrbMain_Gfx_5452C+$E2
+EnemyGfxData_OrbMain_Gfx_5461C equ EnemyGfxData_OrbMain_Gfx_5452C+$F0
+EnemyGfxData_OrbMain_Gfx_54636 equ EnemyGfxData_OrbMain_Gfx_5452C+$10A
+EnemyGfxData_OrbMain_Gfx_54658 equ EnemyGfxData_OrbMain_Gfx_5452C+$12C
+EnemyGfxData_OrbMain_Gfx_54674 equ EnemyGfxData_OrbMain_Gfx_5452C+$148
+EnemyGfxData_OrbMain_Gfx_5468E equ EnemyGfxData_OrbMain_Gfx_5452C+$162
+EnemyGfxData_OrbMain_Gfx_546A4 equ EnemyGfxData_OrbMain_Gfx_5452C+$178
+EnemyGfxData_OrbMain_Gfx_546BC equ EnemyGfxData_OrbMain_Gfx_5452C+$190
+EnemyGfxData_OrbMain_Gfx_546DA equ EnemyGfxData_OrbMain_Gfx_5452C+$1AE
+EnemyGfxData_OrbMain_Gfx_546EC equ EnemyGfxData_OrbMain_Gfx_5452C+$1C0
+EnemyGfxData_OrbMain_Gfx_546FA equ EnemyGfxData_OrbMain_Gfx_5452C+$1CE
+EnemyGfxData_OrbMain_Gfx_5471C equ EnemyGfxData_OrbMain_Gfx_5452C+$1F0
+EnemyGfxData_OrbMain_Gfx_54738 equ EnemyGfxData_OrbMain_Gfx_5452C+$20C
+EnemyGfxData_OrbMain_Gfx_54744 equ EnemyGfxData_OrbMain_Gfx_5452C+$218
+EnemyGfxData_OrbMain_Gfx_54758 equ EnemyGfxData_OrbMain_Gfx_5452C+$22C
+EnemyGfxData_OrbMain_Gfx_54776 equ EnemyGfxData_OrbMain_Gfx_5452C+$24A
+EnemyGfxData_OrbMain_Gfx_54790 equ EnemyGfxData_OrbMain_Gfx_5452C+$264
+EnemyGfxData_OrbMain_Gfx_547A2 equ EnemyGfxData_OrbMain_Gfx_5452C+$276
+EnemyGfxData_OrbMain_Gfx_547AE equ EnemyGfxData_OrbMain_Gfx_5452C+$282
+EnemyGfxData_OrbMain_Gfx_547B8 equ EnemyGfxData_OrbMain_Gfx_5452C+$28C
+EnemyGfxData_OrbMain_Gfx_547C2 equ EnemyGfxData_OrbMain_Gfx_5452C+$296
+EnemyGfxData_OrbMain_Gfx_547CE equ EnemyGfxData_OrbMain_Gfx_5452C+$2A2
+EnemyGfxData_OrbMain_Gfx_547E0 equ EnemyGfxData_OrbMain_Gfx_5452C+$2B4
+EnemyGfxData_OrbMain_Gfx_547F8 equ EnemyGfxData_OrbMain_Gfx_5452C+$2CC
+EnemyGfxData_OrbMain_Gfx_5480E equ EnemyGfxData_OrbMain_Gfx_5452C+$2E2
+EnemyGfxData_OrbMain_Gfx_5481C equ EnemyGfxData_OrbMain_Gfx_5452C+$2F0
+EnemyGfxData_OrbMain_Gfx_54824 equ EnemyGfxData_OrbMain_Gfx_5452C+$2F8
+EnemyGfxData_OrbMain_Gfx_54834 equ EnemyGfxData_OrbMain_Gfx_5452C+$308
+EnemyGfxData_OrbMain_Gfx_54844 equ EnemyGfxData_OrbMain_Gfx_5452C+$318
+EnemyGfxData_OrbMain_Gfx_5484C equ EnemyGfxData_OrbMain_Gfx_5452C+$320
+EnemyGfxData_OrbMain_Gfx_5485A equ EnemyGfxData_OrbMain_Gfx_5452C+$32E
+EnemyGfxData_OrbMain_Gfx_54862 equ EnemyGfxData_OrbMain_Gfx_5452C+$336
+EnemyGfxData_OrbMain_Gfx_5486A equ EnemyGfxData_OrbMain_Gfx_5452C+$33E
+EnemyGfxData_OrbMain_Gfx_54878 equ EnemyGfxData_OrbMain_Gfx_5452C+$34C
+EnemyGfxData_OrbMain_Gfx_54884 equ EnemyGfxData_OrbMain_Gfx_5452C+$358
+EnemyGfxData_OrbMain_Gfx_548A4 equ EnemyGfxData_OrbMain_Gfx_5452C+$378
+EnemyGfxData_OrbMain_Gfx_548C6 equ EnemyGfxData_OrbMain_Gfx_5452C+$39A
+EnemyGfxData_OrbMain_Gfx_548D6 equ EnemyGfxData_OrbMain_Gfx_5452C+$3AA
+EnemyGfxData_OrbMain_Gfx_548E6 equ EnemyGfxData_OrbMain_Gfx_5452C+$3BA
+EnemyGfxData_OrbMain_Gfx_548F6 equ EnemyGfxData_OrbMain_Gfx_5452C+$3CA
+EnemyGfxData_OrbMain_Gfx_548FC equ EnemyGfxData_OrbMain_Gfx_5452C+$3D0
 EnemyGfxData_OrbMain:
 	dc.l	EnemyGfxData_OrbMain_Gfx_5452C
 	dc.l	EnemyGfxData_OrbMain_Gfx_54532
@@ -59105,33 +57201,20 @@ EnemyGfxFrameTable_OrbChild:
 	dc.b	$00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $01, $00, $02, $00, $03, $00, $04 
 	dc.b	$00, $07, $05, $08, $06, $09, $00, $00, $00, $00, $0A, $0C, $0B, $0D, $00, $00 
 EnemyGfxData_OrbChild_Gfx_54A14:
-	dc.b	$01, $00, $FF, $FF, $FF, $FF 
-EnemyGfxData_OrbChild_Gfx_54A1A:
-	dc.b	$01, $00, $FF, $FE, $EE, $CC, $04, $44, $44, $04, $45, $04, $45, $00 
-EnemyGfxData_OrbChild_Gfx_54A28:
-	dc.b	$01, $56, $00, $88, $88, $8C, $00, $06, $67, $77, $06, $66, $77, $77, $67, $78, $88, $67, $88, $88, $67, $88, $88, $67, $88, $77, $67, $87, $66, $76, $55, $00 
-EnemyGfxData_OrbChild_Gfx_54A48:
-	dc.b	$01, $66, $04, $40, $22, $E0, $76, $65, $00, $00, $77, $55, $00, $87, $65, $50, $87, $76, $65, $54, $77, $76, $54, $76, $76, $54, $55, $55, $55, $55, $55, $00 
-EnemyGfxData_OrbChild_Gfx_54A68:
-	dc.b	$01, $00, $FF, $FF, $77, $77, $40, $45, $44, $44 
-EnemyGfxData_OrbChild_Gfx_54A72:
-	dc.b	$01, $00, $FF, $FF, $88, $00, $06, $77, $77, $66, $67, $77, $06, $66, $77, $77, $56, $67, $78, $88 
-EnemyGfxData_OrbChild_Gfx_54A86:
-	dc.b	$01, $00, $FF, $FF, $31, $10, $77, $66, $76, $65, $60, $77, $66, $55, $87, $66, $65, $50 
-EnemyGfxData_OrbChild_Gfx_54A98:
-	dc.b	$02, $00, $FE, $EE, $EE, $EE, $05, $01, $11, $11, $11, $00 
-EnemyGfxData_OrbChild_Gfx_54AA4:
-	dc.b	$02, $56, $88, $88, $8C, $44, $88, $33, $32, $00, $00, $67, $67, $67, $67, $77, $67, $87, $66, $76, $55, $55, $76, $44, $55, $76, $44, $00 
-EnemyGfxData_OrbChild_Gfx_54AC0:
-	dc.b	$01, $66, $00, $22, $E2, $20, $87, $76, $65, $50, $87, $76, $65, $55, $77, $76, $55, $76, $76, $55, $65, $55, $55, $65, $44, $55, $65, $44, $45, $56, $65, $00 
-EnemyGfxData_OrbChild_Gfx_54AE0:
-	dc.b	$01, $00, $FF, $FF, $EC, $88, $55, $67, $77, $06, $77, $77, $57, $78, $88, $00 
-EnemyGfxData_OrbChild_Gfx_54AF0:
-	dc.b	$01, $00, $FF, $FF, $73, $11, $55, $76, $65, $77, $66, $50, $87, $66, $50, $00 
-EnemyGfxData_OrbChild_Gfx_54B00:
-	dc.b	$01, $88, $33, $32, $00, $00, $00, $67, $05, $67, $05, $67, $55, $57, $66, $45, $57, $87, $66, $45, $56, $76, $55, $44, $56, $76, $44, $34, $56, $76, $44, $00 
-EnemyGfxData_OrbChild_Gfx_54B20:
-	dc.b	$01, $55, $00, $22, $2E, $62, $87, $76, $65, $00, $87, $76, $65, $00, $77, $76, $00, $66, $66, $50, $66, $65, $40, $40, $44, $40, $44, $45, $40, $00 
+	incbin "data/art/tiles/enemy/orb_child_gfx.bin"
+EnemyGfxData_OrbChild_Gfx_54A1A equ EnemyGfxData_OrbChild_Gfx_54A14+$6
+EnemyGfxData_OrbChild_Gfx_54A28 equ EnemyGfxData_OrbChild_Gfx_54A14+$14
+EnemyGfxData_OrbChild_Gfx_54A48 equ EnemyGfxData_OrbChild_Gfx_54A14+$34
+EnemyGfxData_OrbChild_Gfx_54A68 equ EnemyGfxData_OrbChild_Gfx_54A14+$54
+EnemyGfxData_OrbChild_Gfx_54A72 equ EnemyGfxData_OrbChild_Gfx_54A14+$5E
+EnemyGfxData_OrbChild_Gfx_54A86 equ EnemyGfxData_OrbChild_Gfx_54A14+$72
+EnemyGfxData_OrbChild_Gfx_54A98 equ EnemyGfxData_OrbChild_Gfx_54A14+$84
+EnemyGfxData_OrbChild_Gfx_54AA4 equ EnemyGfxData_OrbChild_Gfx_54A14+$90
+EnemyGfxData_OrbChild_Gfx_54AC0 equ EnemyGfxData_OrbChild_Gfx_54A14+$AC
+EnemyGfxData_OrbChild_Gfx_54AE0 equ EnemyGfxData_OrbChild_Gfx_54A14+$CC
+EnemyGfxData_OrbChild_Gfx_54AF0 equ EnemyGfxData_OrbChild_Gfx_54A14+$DC
+EnemyGfxData_OrbChild_Gfx_54B00 equ EnemyGfxData_OrbChild_Gfx_54A14+$EC
+EnemyGfxData_OrbChild_Gfx_54B20 equ EnemyGfxData_OrbChild_Gfx_54A14+$10C
 EnemyGfxData_OrbChild:
 	dc.l	EnemyGfxData_OrbChild_Gfx_54A14
 	dc.l	EnemyGfxData_OrbChild_Gfx_54A1A
@@ -59153,196 +57236,96 @@ EnemyGfxFrameTable_SerpentChild:
 	dc.b	$35, $39, $18, $36, $3A, $03, $37, $3B, $00, $3E, $42, $3C, $3F, $43, $3D, $40, $44, $00, $41, $45, $00, $48, $4C, $46, $49, $4D, $47, $4A, $4E, $00, $4B, $4F 
 	dc.b	$00, $52, $56, $50, $53, $57, $51, $54, $58, $00, $55, $59 
 EnemyGfxData_SerpentChild_Gfx_54BE2:
-	dc.b	$01, $00, $FF, $FF, $FF, $FF 
-EnemyGfxData_SerpentChild_Gfx_54BE8:
-	dc.b	$01, $00, $FF, $FF, $FF, $77, $05, $55 
-EnemyGfxData_SerpentChild_Gfx_54BF0:
-	dc.b	$01, $00, $FF, $FF, $FF, $EE, $05, $05 
-EnemyGfxData_SerpentChild_Gfx_54BF8:
-	dc.b	$01, $00, $FF, $FF, $FF, $F7, $50, $00 
-EnemyGfxData_SerpentChild_Gfx_54C00:
-	dc.b	$01, $00, $FE, $EE, $CC, $CC, $05, $56, $66, $05, $66, $05, $66, $06, $66, $56, $66, $00 
-EnemyGfxData_SerpentChild_Gfx_54C12:
-	dc.b	$01, $66, $08, $8C, $CC, $EE, $55, $50, $00, $00, $32, $20, $00, $54, $53, $20, $45, $34, $45, $53, $64, $53, $43, $54 
-EnemyGfxData_SerpentChild_Gfx_54C2A:
-	dc.b	$01, $66, $00, $01, $13, $33, $00, $00, $00, $55, $00, $00, $22, $26, $00, $23, $54, $56, $04, $25, $44, $32, $55, $46, $22, $54, $33, $46, $44, $56 
-EnemyGfxData_SerpentChild_Gfx_54C48:
-	dc.b	$02, $00, $77, $33, $33, $31, $66, $00, $88, $88, $CC, $50, $65, $50, $60, $65, $65, $50 
-EnemyGfxData_SerpentChild_Gfx_54C5A:
-	dc.b	$01, $00, $CC, $CD, $CC, $CE, $56, $66, $66, $66, $66, $06, $66, $06, $04, $06, $04, $06, $05, $05 
-EnemyGfxData_SerpentChild_Gfx_54C6E:
-	dc.b	$00, $66, $66, $66, $75, $00, $60, $66, $54, $00, $00, $46, $43, $45, $00, $45, $63, $44, $50, $45, $64, $55, $55, $44, $56, $46, $66, $54, $45, $45, $66, $54 
-	dc.b	$44, $00 
-EnemyGfxData_SerpentChild_Gfx_54C90:
-	dc.b	$01, $66, $30, $00, $44, $F2, $55, $76, $44, $56, $60, $60, $33, $46, $60, $00, $23, $56, $60, $00, $44, $60, $04, $46, $65, $54, $45, $56, $65, $00 
-EnemyGfxData_SerpentChild_Gfx_54CAE:
-	dc.b	$01, $00, $11, $11, $33, $37, $66, $66, $60, $66, $66, $60, $06, $66, $60, $06, $06, $60, $50, $06, $45, $06, $45, $06, $45, $00 
-EnemyGfxData_SerpentChild_Gfx_54CC8:
-	dc.b	$01, $00, $FF, $FF, $FD, $DD, $05, $55, $55, $00 
-EnemyGfxData_SerpentChild_Gfx_54CD2:
-	dc.b	$01, $00, $FF, $FF, $FB, $99, $05, $05, $50, $05, $50, $00 
-EnemyGfxData_SerpentChild_Gfx_54CDE:
-	dc.b	$01, $00, $FF, $FF, $FF, $EE, $06, $06 
-EnemyGfxData_SerpentChild_Gfx_54CE6:
-	dc.b	$01, $66, $02, $00, $4C, $CE, $00, $05, $65, $50, $00, $56, $50, $00, $32, $25, $50, $06, $64, $53, $25, $06, $45, $34, $45, $53, $64, $53, $43, $00 
-EnemyGfxData_SerpentChild_Gfx_54D04:
-	dc.b	$01, $66, $02, $00, $11, $33, $00, $55, $65, $00, $00, $56, $50, $00, $55, $22, $20, $05, $23, $54, $56, $04, $25, $44, $32, $55, $46, $22, $54, $33, $46, $00 
-EnemyGfxData_SerpentChild_Gfx_54D24:
-	dc.b	$01, $00, $FF, $FF, $77, $77, $60, $60, $66, $66 
-EnemyGfxData_SerpentChild_Gfx_54D2E:
-	dc.b	$01, $00, $EE, $EE, $EE, $EE, $06, $56, $66, $66, $65, $64, $64, $05 
-EnemyGfxData_SerpentChild_Gfx_54D3C:
-	dc.b	$01, $66, $EE, $E0, $00, $04, $54, $75, $54, $50, $60, $46, $43, $45, $50, $45, $63, $44, $55, $45, $64, $55, $55, $44, $56, $56, $54, $45 
-EnemyGfxData_SerpentChild_Gfx_54D58:
-	dc.b	$01, $66, $33, $33, $04, $4D, $44, $56, $55, $76, $44, $56, $33, $46, $23, $56, $60, $60, $44, $60, $04, $46, $65, $55, $56, $00 
-EnemyGfxData_SerpentChild_Gfx_54D72:
-	dc.b	$01, $00, $73, $33, $33, $33, $66, $66, $60, $66, $60, $66, $60, $66, $60, $46, $60, $44, $60, $54, $50, $00 
-EnemyGfxData_SerpentChild_Gfx_54D88:
-	dc.b	$01, $00, $FF, $FF, $FF, $FE, $05, $00 
-EnemyGfxData_SerpentChild_Gfx_54D90:
-	dc.b	$01, $00, $FF, $FF, $FF, $77, $50, $55 
-EnemyGfxData_SerpentChild_Gfx_54D98:
-	dc.b	$01, $00, $FF, $FF, $FF, $EE, $05, $55 
-EnemyGfxData_SerpentChild_Gfx_54DA0:
-	dc.b	$02, $00, $EE, $CC, $CC, $88, $66, $00, $11, $33, $32, $05, $56, $06, $06, $06, $06, $06 
-EnemyGfxData_SerpentChild_Gfx_54DB2:
-	dc.b	$01, $66, $88, $CC, $CE, $E2, $32, $20, $00, $54, $53, $20, $45, $34, $45, $53, $64, $53, $43, $54, $60, $06, $75, $00 
-EnemyGfxData_SerpentChild_Gfx_54DCA:
-	dc.b	$01, $66, $00, $11, $33, $33, $00, $00, $22, $25, $00, $23, $54, $56, $04, $25, $44, $32, $55, $46, $22, $54, $33, $46, $44, $56, $55, $76 
-EnemyGfxData_SerpentChild_Gfx_54DE6:
-	dc.b	$02, $00, $73, $33, $11, $11, $66, $08, $CC, $CC, $EE, $55, $50, $60, $60, $00 
-EnemyGfxData_SerpentChild_Gfx_54DF6:
-	dc.b	$01, $00, $8B, $BE, $EE, $EF, $06, $60, $06, $06, $06, $04, $04, $05, $05, $00 
-EnemyGfxData_SerpentChild_Gfx_54E06:
-	dc.b	$00, $00, $00, $66, $54, $00, $00, $46, $43, $45, $00, $45, $63, $44, $50, $45, $64, $55, $55, $44, $56, $46, $66, $54, $45, $45, $66, $54, $44, $54, $66, $65 
-	dc.b	$55, $00 
-EnemyGfxData_SerpentChild_Gfx_54E28:
-	dc.b	$01, $66, $20, $04, $4F, $26, $44, $56, $00, $33, $46, $60, $00, $23, $56, $60, $00, $44, $60, $04, $46, $65, $54, $45, $56, $65, $56, $65 
-EnemyGfxData_SerpentChild_Gfx_54E44:
-	dc.b	$01, $00, $15, $D5, $77, $7F, $66, $06, $66, $06, $66, $06, $50, $06, $45, $45, $50, $00 
-EnemyGfxData_SerpentChild_Gfx_54E56:
-	dc.b	$01, $00, $FF, $FF, $FF, $77, $04, $43 
-EnemyGfxData_SerpentChild_Gfx_54E5E:
-	dc.b	$01, $00, $FE, $EE, $CC, $CC, $04, $43, $32, $04, $22, $03, $22, $02, $22, $32, $23, $00 
-EnemyGfxData_SerpentChild_Gfx_54E70:
-	dc.b	$01, $44, $00, $44, $62, $26, $43, $50, $00, $00, $32, $45, $50, $00, $23, $55, $50, $23, $45, $54, $33, $55, $33, $34, $55, $33, $34, $45, $33, $45 
-EnemyGfxData_SerpentChild_Gfx_54E8E:
-	dc.b	$00, $00, $00, $00, $45, $00, $00, $54, $44, $00, $55, $54, $33, $04, $54, $43, $23, $55, $44, $32, $23, $54, $43, $22, $23, $54, $43, $23, $34, $54, $44, $44 
-	dc.b	$34, $00 
-EnemyGfxData_SerpentChild_Gfx_54EB0:
-	dc.b	$01, $00, $77, $33, $33, $31, $50, $55, $45, $50, $45, $50, $44, $55, $44, $55, $44, $55, $54, $55, $50, $00 
-EnemyGfxData_SerpentChild_Gfx_54EC6:
-	dc.b	$01, $00, $CC, $CD, $CC, $CE, $32, $33, $32, $33, $43, $03, $43, $04, $04, $04, $04, $04, $05, $05 
-EnemyGfxData_SerpentChild_Gfx_54EDA:
-	dc.b	$01, $54, $21, $22, $22, $20, $55, $45, $55, $00, $50, $55, $00, $00, $43, $45, $00, $33, $44, $50, $34, $55, $55, $44, $46, $66, $44, $45, $66, $65, $44, $00 
-EnemyGfxData_SerpentChild_Gfx_54EFA:
-	dc.b	$01, $66, $24, $40, $00, $76, $55, $46, $55, $56, $60, $50, $45, $60, $00, $45, $56, $60, $00, $45, $56, $60, $04, $45, $56, $65, $54, $55, $45, $65 
-EnemyGfxData_SerpentChild_Gfx_54F18:
-	dc.b	$01, $00, $11, $11, $13, $37, $54, $55, $50, $55, $55, $50, $05, $55, $50, $05, $05, $50, $50, $05, $50, $45, $05, $45, $05, $45 
-EnemyGfxData_SerpentChild_Gfx_54F32:
-	dc.b	$01, $00, $FF, $FF, $FD, $DD, $04, $44, $44, $00 
-EnemyGfxData_SerpentChild_Gfx_54F3C:
-	dc.b	$01, $00, $FF, $FF, $FB, $99, $05, $04, $50, $04, $50, $00 
-EnemyGfxData_SerpentChild_Gfx_54F48:
-	dc.b	$01, $00, $FF, $FF, $FF, $EE, $04, $04 
-EnemyGfxData_SerpentChild_Gfx_54F50:
-	dc.b	$00, $00, $03, $45, $50, $00, $43, $45, $50, $00, $33, $45, $50, $04, $23, $45, $65, $02, $24, $55, $65, $42, $34, $55, $65, $32, $34, $55, $66, $23, $34, $55 
-	dc.b	$66, $00 
-EnemyGfxData_SerpentChild_Gfx_54F72:
-	dc.b	$00, $00, $54, $55, $00, $00, $43, $45, $50, $00, $43, $24, $50, $05, $43, $24, $55, $04, $32, $23, $45, $44, $32, $23, $45, $54, $33, $22, $45, $54, $43, $22 
-	dc.b	$45, $00 
-EnemyGfxData_SerpentChild_Gfx_54F94:
-	dc.b	$01, $00, $FF, $FF, $77, $77, $50, $50, $55, $55 
-EnemyGfxData_SerpentChild_Gfx_54F9E:
-	dc.b	$01, $00, $EE, $EE, $EE, $EE, $04, $42, $33, $35, $45, $54, $54, $05 
-EnemyGfxData_SerpentChild_Gfx_54FAC:
-	dc.b	$00, $23, $44, $56, $66, $23, $45, $56, $66, $44, $45, $56, $66, $50, $55, $65, $65, $45, $50, $66, $54, $44, $56, $64, $54, $55, $55, $54, $44, $56, $65, $54 
-	dc.b	$44, $00 
-EnemyGfxData_SerpentChild_Gfx_54FCE:
-	dc.b	$00, $54, $43, $33, $44, $55, $43, $44, $54, $55, $44, $54, $54, $54, $55, $65, $55, $45, $66, $60, $50, $45, $66, $60, $04, $44, $56, $65, $55, $45, $56, $56 
-	dc.b	$66, $00 
-EnemyGfxData_SerpentChild_Gfx_54FF0:
-	dc.b	$02, $00, $73, $33, $33, $33, $50, $04, $44, $44, $44, $55, $55, $55, $55, $55, $45, $44, $54, $00 
-EnemyGfxData_SerpentChild_Gfx_55004:
-	dc.b	$01, $00, $EE, $CC, $CC, $88, $04, $54, $05, $43, $04, $32, $53, $22, $43, $33, $05, $34, $54, $04, $45, $05 
-EnemyGfxData_SerpentChild_Gfx_5501A:
-	dc.b	$00, $55, $54, $40, $00, $44, $56, $54, $40, $34, $55, $65, $44, $33, $45, $66, $56, $33, $45, $56, $55, $33, $44, $56, $55, $45, $55, $56, $55, $50, $05, $56 
-	dc.b	$54, $00 
-EnemyGfxData_SerpentChild_Gfx_5503C:
-	dc.b	$01, $44, $14, $08, $08, $98, $00, $00, $45, $00, $54, $34, $04, $45, $43, $33, $55, $43, $23, $55, $54, $32, $23, $43, $32, $33, $43, $33, $43, $55, $54, $00 
-EnemyGfxData_SerpentChild_Gfx_5505C:
-	dc.b	$02, $55, $80, $44, $44, $66, $00, $73, $33, $11, $11, $45, $50, $45, $44, $34, $50, $44, $50, $44, $45, $00 
-EnemyGfxData_SerpentChild_Gfx_55072:
-	dc.b	$01, $00, $8B, $BE, $EE, $FF, $04, $50, $05, $05, $05, $04, $04, $05 
-EnemyGfxData_SerpentChild_Gfx_55080:
-	dc.b	$00, $00, $00, $56, $54, $00, $00, $65, $44, $45, $00, $65, $43, $44, $50, $65, $42, $55, $55, $54, $32, $46, $66, $54, $33, $55, $66, $65, $54, $05, $66, $66 
-	dc.b	$55, $00 
-EnemyGfxData_SerpentChild_Gfx_550A2:
-	dc.b	$01, $34, $88, $88, $88, $80, $44, $66, $00, $55, $60, $00, $45, $60, $00, $45, $60, $04, $45, $65, $54, $55, $66, $66, $45, $56, $65, $54, $55, $66, $64, $00 
-EnemyGfxData_SerpentChild_Gfx_550C2:
-	dc.b	$01, $00, $15, $D5, $77, $77, $55, $05, $55, $05, $55, $05, $50, $05, $45, $45, $45, $50 
-EnemyGfxData_SerpentChild_Gfx_550D4:
-	dc.b	$01, $00, $FF, $FF, $FF, $BD, $06, $66 
-EnemyGfxData_SerpentChild_Gfx_550DC:
-	dc.b	$01, $00, $FF, $FF, $FF, $33, $05, $40, $05, $54 
-EnemyGfxData_SerpentChild_Gfx_550E6:
-	dc.b	$01, $00, $FF, $FF, $FF, $EE, $03, $05 
-EnemyGfxData_SerpentChild_Gfx_550EE:
-	dc.b	$01, $00, $CC, $CC, $80, $00, $66, $60, $06, $33, $02, $35, $42, $55, $03, $25, $54, $03, $33, $25, $46, $44, $43, $44, $65, $75, $44, $55, $65, $00 
-EnemyGfxData_SerpentChild_Gfx_5510C:
-	dc.b	$01, $66, $04, $44, $66, $66, $05, $65, $40, $00, $45, $54, $00, $55, $54, $40, $56, $65, $44, $56, $54, $56, $54, $56, $55, $56, $55, $00 
-EnemyGfxData_SerpentChild_Gfx_55128:
-	dc.b	$01, $00, $FF, $FF, $F7, $77, $40, $40, $44, $00 
-EnemyGfxData_SerpentChild_Gfx_55132:
-	dc.b	$01, $00, $EC, $CE, $FF, $FF, $34, $03, $34, $05, $45, $55 
-EnemyGfxData_SerpentChild_Gfx_5513E:
-	dc.b	$01, $00, $00, $00, $CC, $C8, $54, $44, $56, $55, $45, $55, $56, $66, $55, $56, $66, $66, $56, $66, $66, $66, $65, $45, $53, $34, $43, $23, $06, $54, $34, $00 
-EnemyGfxData_SerpentChild_Gfx_5515E:
-	dc.b	$01, $66, $EE, $EE, $F5, $40, $65, $65, $65, $65, $56, $06, $45, $60, $60, $44, $56, $60, $00, $00 
-EnemyGfxData_SerpentChild_Gfx_55172:
-	dc.b	$01, $00, $77, $33, $33, $37, $44, $44, $44, $40, $54, $40, $54, $40, $54, $40, $54, $40, $54, $00 
-EnemyGfxData_SerpentChild_Gfx_55186:
-	dc.b	$01, $00, $FF, $FF, $EC, $CC, $05, $40, $05, $54, $40, $05, $54, $00 
-EnemyGfxData_SerpentChild_Gfx_55194:
-	dc.b	$01, $00, $FF, $FF, $77, $33, $40, $54, $54, $40, $55, $44 
-EnemyGfxData_SerpentChild_Gfx_551A0:
-	dc.b	$01, $00, $FF, $FF, $FF, $FE, $03, $00 
-EnemyGfxData_SerpentChild_Gfx_551A8:
-	dc.b	$01, $00, $CE, $EC, $C8, $00, $05, $55, $55, $33, $02, $35, $42, $55, $03, $25, $54, $03, $33, $25, $46, $44, $43, $44, $65, $00 
-EnemyGfxData_SerpentChild_Gfx_551C2:
-	dc.b	$00, $45, $44, $30, $00, $45, $54, $33, $00, $45, $54, $33, $00, $55, $65, $33, $30, $56, $65, $43, $30, $56, $65, $54, $34, $56, $66, $54, $33, $56, $66, $54 
-	dc.b	$33, $00 
-EnemyGfxData_SerpentChild_Gfx_551E4:
-	dc.b	$01, $00, $FF, $FF, $FF, $F7, $40, $00 
-EnemyGfxData_SerpentChild_Gfx_551EC:
-	dc.b	$01, $00, $EE, $CC, $EF, $FF, $05, $34, $03, $34, $05, $45, $55, $00 
-EnemyGfxData_SerpentChild_Gfx_551FA:
-	dc.b	$00, $75, $44, $55, $65, $54, $44, $56, $55, $45, $55, $56, $66, $55, $56, $66, $66, $56, $66, $66, $66, $00, $00, $05, $44, $00, $00, $54, $33, $00, $00, $43 
-	dc.b	$23, $00 
-EnemyGfxData_SerpentChild_Gfx_5521C:
-	dc.b	$01, $66, $4C, $CC, $E6, $20, $56, $55, $33, $65, $43, $65, $43, $65, $43, $43, $56, $44, $45, $56, $54, $34, $56, $60, $54, $00 
-EnemyGfxData_SerpentChild_Gfx_55236:
-	dc.b	$01, $00, $77, $77, $77, $77, $40, $30, $34, $34, $34, $34, $34, $40 
-EnemyGfxData_SerpentChild_Gfx_55244:
-	dc.b	$01, $00, $FF, $FF, $FF, $9C, $06, $60, $66, $60 
-EnemyGfxData_SerpentChild_Gfx_5524E:
-	dc.b	$01, $00, $FF, $FF, $FF, $39, $04, $44, $65, $44 
-EnemyGfxData_SerpentChild_Gfx_55258:
-	dc.b	$01, $00, $FF, $FF, $FE, $EE, $03, $05, $34, $00 
-EnemyGfxData_SerpentChild_Gfx_55262:
-	dc.b	$01, $00, $CC, $C8, $00, $00, $06, $33, $02, $35, $42, $55, $03, $25, $54, $03, $33, $25, $46, $44, $43, $44, $65, $75, $44, $55, $65, $54, $44, $56, $55, $00 
-EnemyGfxData_SerpentChild_Gfx_55282:
-	dc.b	$01, $66, $44, $66, $77, $7F, $40, $54, $40, $55, $65, $44, $56, $54, $56, $65, $56, $56, $56, $00 
-EnemyGfxData_SerpentChild_Gfx_55296:
-	dc.b	$01, $00, $FF, $77, $33, $31, $40, $34, $53, $40, $54, $34, $65, $33, $65, $43, $40, $00 
-EnemyGfxData_SerpentChild_Gfx_552A8:
-	dc.b	$01, $00, $CC, $EF, $FF, $FF, $03, $34, $05, $45, $55, $00 
-EnemyGfxData_SerpentChild_Gfx_552B4:
-	dc.b	$02, $66, $13, $70, $00, $40, $00, $00, $0C, $C8, $88, $45, $55, $56, $55, $56, $56, $65, $45, $53, $34, $06, $43, $23, $54, $34, $56, $54, $35, $00 
-EnemyGfxData_SerpentChild_Gfx_552D2:
-	dc.b	$01, $66, $FF, $FF, $44, $02, $56, $60, $60, $45, $60, $00, $44, $56, $60, $00, $54, $56, $00, $00 
-EnemyGfxData_SerpentChild_Gfx_552E6:
-	dc.b	$01, $00, $11, $11, $99, $9D, $66, $53, $40, $66, $54, $30, $66, $65, $30, $06, $65, $44, $66, $54, $06, $54, $05, $54, $54, $00 
+	incbin "data/art/tiles/enemy/serpent_child_gfx.bin"
+EnemyGfxData_SerpentChild_Gfx_54BE8 equ EnemyGfxData_SerpentChild_Gfx_54BE2+$6
+EnemyGfxData_SerpentChild_Gfx_54BF0 equ EnemyGfxData_SerpentChild_Gfx_54BE2+$E
+EnemyGfxData_SerpentChild_Gfx_54BF8 equ EnemyGfxData_SerpentChild_Gfx_54BE2+$16
+EnemyGfxData_SerpentChild_Gfx_54C00 equ EnemyGfxData_SerpentChild_Gfx_54BE2+$1E
+EnemyGfxData_SerpentChild_Gfx_54C12 equ EnemyGfxData_SerpentChild_Gfx_54BE2+$30
+EnemyGfxData_SerpentChild_Gfx_54C2A equ EnemyGfxData_SerpentChild_Gfx_54BE2+$48
+EnemyGfxData_SerpentChild_Gfx_54C48 equ EnemyGfxData_SerpentChild_Gfx_54BE2+$66
+EnemyGfxData_SerpentChild_Gfx_54C5A equ EnemyGfxData_SerpentChild_Gfx_54BE2+$78
+EnemyGfxData_SerpentChild_Gfx_54C6E equ EnemyGfxData_SerpentChild_Gfx_54BE2+$8C
+EnemyGfxData_SerpentChild_Gfx_54C90 equ EnemyGfxData_SerpentChild_Gfx_54BE2+$AE
+EnemyGfxData_SerpentChild_Gfx_54CAE equ EnemyGfxData_SerpentChild_Gfx_54BE2+$CC
+EnemyGfxData_SerpentChild_Gfx_54CC8 equ EnemyGfxData_SerpentChild_Gfx_54BE2+$E6
+EnemyGfxData_SerpentChild_Gfx_54CD2 equ EnemyGfxData_SerpentChild_Gfx_54BE2+$F0
+EnemyGfxData_SerpentChild_Gfx_54CDE equ EnemyGfxData_SerpentChild_Gfx_54BE2+$FC
+EnemyGfxData_SerpentChild_Gfx_54CE6 equ EnemyGfxData_SerpentChild_Gfx_54BE2+$104
+EnemyGfxData_SerpentChild_Gfx_54D04 equ EnemyGfxData_SerpentChild_Gfx_54BE2+$122
+EnemyGfxData_SerpentChild_Gfx_54D24 equ EnemyGfxData_SerpentChild_Gfx_54BE2+$142
+EnemyGfxData_SerpentChild_Gfx_54D2E equ EnemyGfxData_SerpentChild_Gfx_54BE2+$14C
+EnemyGfxData_SerpentChild_Gfx_54D3C equ EnemyGfxData_SerpentChild_Gfx_54BE2+$15A
+EnemyGfxData_SerpentChild_Gfx_54D58 equ EnemyGfxData_SerpentChild_Gfx_54BE2+$176
+EnemyGfxData_SerpentChild_Gfx_54D72 equ EnemyGfxData_SerpentChild_Gfx_54BE2+$190
+EnemyGfxData_SerpentChild_Gfx_54D88 equ EnemyGfxData_SerpentChild_Gfx_54BE2+$1A6
+EnemyGfxData_SerpentChild_Gfx_54D90 equ EnemyGfxData_SerpentChild_Gfx_54BE2+$1AE
+EnemyGfxData_SerpentChild_Gfx_54D98 equ EnemyGfxData_SerpentChild_Gfx_54BE2+$1B6
+EnemyGfxData_SerpentChild_Gfx_54DA0 equ EnemyGfxData_SerpentChild_Gfx_54BE2+$1BE
+EnemyGfxData_SerpentChild_Gfx_54DB2 equ EnemyGfxData_SerpentChild_Gfx_54BE2+$1D0
+EnemyGfxData_SerpentChild_Gfx_54DCA equ EnemyGfxData_SerpentChild_Gfx_54BE2+$1E8
+EnemyGfxData_SerpentChild_Gfx_54DE6 equ EnemyGfxData_SerpentChild_Gfx_54BE2+$204
+EnemyGfxData_SerpentChild_Gfx_54DF6 equ EnemyGfxData_SerpentChild_Gfx_54BE2+$214
+EnemyGfxData_SerpentChild_Gfx_54E06 equ EnemyGfxData_SerpentChild_Gfx_54BE2+$224
+EnemyGfxData_SerpentChild_Gfx_54E28 equ EnemyGfxData_SerpentChild_Gfx_54BE2+$246
+EnemyGfxData_SerpentChild_Gfx_54E44 equ EnemyGfxData_SerpentChild_Gfx_54BE2+$262
+EnemyGfxData_SerpentChild_Gfx_54E56 equ EnemyGfxData_SerpentChild_Gfx_54BE2+$274
+EnemyGfxData_SerpentChild_Gfx_54E5E equ EnemyGfxData_SerpentChild_Gfx_54BE2+$27C
+EnemyGfxData_SerpentChild_Gfx_54E70 equ EnemyGfxData_SerpentChild_Gfx_54BE2+$28E
+EnemyGfxData_SerpentChild_Gfx_54E8E equ EnemyGfxData_SerpentChild_Gfx_54BE2+$2AC
+EnemyGfxData_SerpentChild_Gfx_54EB0 equ EnemyGfxData_SerpentChild_Gfx_54BE2+$2CE
+EnemyGfxData_SerpentChild_Gfx_54EC6 equ EnemyGfxData_SerpentChild_Gfx_54BE2+$2E4
+EnemyGfxData_SerpentChild_Gfx_54EDA equ EnemyGfxData_SerpentChild_Gfx_54BE2+$2F8
+EnemyGfxData_SerpentChild_Gfx_54EFA equ EnemyGfxData_SerpentChild_Gfx_54BE2+$318
+EnemyGfxData_SerpentChild_Gfx_54F18 equ EnemyGfxData_SerpentChild_Gfx_54BE2+$336
+EnemyGfxData_SerpentChild_Gfx_54F32 equ EnemyGfxData_SerpentChild_Gfx_54BE2+$350
+EnemyGfxData_SerpentChild_Gfx_54F3C equ EnemyGfxData_SerpentChild_Gfx_54BE2+$35A
+EnemyGfxData_SerpentChild_Gfx_54F48 equ EnemyGfxData_SerpentChild_Gfx_54BE2+$366
+EnemyGfxData_SerpentChild_Gfx_54F50 equ EnemyGfxData_SerpentChild_Gfx_54BE2+$36E
+EnemyGfxData_SerpentChild_Gfx_54F72 equ EnemyGfxData_SerpentChild_Gfx_54BE2+$390
+EnemyGfxData_SerpentChild_Gfx_54F94 equ EnemyGfxData_SerpentChild_Gfx_54BE2+$3B2
+EnemyGfxData_SerpentChild_Gfx_54F9E equ EnemyGfxData_SerpentChild_Gfx_54BE2+$3BC
+EnemyGfxData_SerpentChild_Gfx_54FAC equ EnemyGfxData_SerpentChild_Gfx_54BE2+$3CA
+EnemyGfxData_SerpentChild_Gfx_54FCE equ EnemyGfxData_SerpentChild_Gfx_54BE2+$3EC
+EnemyGfxData_SerpentChild_Gfx_54FF0 equ EnemyGfxData_SerpentChild_Gfx_54BE2+$40E
+EnemyGfxData_SerpentChild_Gfx_55004 equ EnemyGfxData_SerpentChild_Gfx_54BE2+$422
+EnemyGfxData_SerpentChild_Gfx_5501A equ EnemyGfxData_SerpentChild_Gfx_54BE2+$438
+EnemyGfxData_SerpentChild_Gfx_5503C equ EnemyGfxData_SerpentChild_Gfx_54BE2+$45A
+EnemyGfxData_SerpentChild_Gfx_5505C equ EnemyGfxData_SerpentChild_Gfx_54BE2+$47A
+EnemyGfxData_SerpentChild_Gfx_55072 equ EnemyGfxData_SerpentChild_Gfx_54BE2+$490
+EnemyGfxData_SerpentChild_Gfx_55080 equ EnemyGfxData_SerpentChild_Gfx_54BE2+$49E
+EnemyGfxData_SerpentChild_Gfx_550A2 equ EnemyGfxData_SerpentChild_Gfx_54BE2+$4C0
+EnemyGfxData_SerpentChild_Gfx_550C2 equ EnemyGfxData_SerpentChild_Gfx_54BE2+$4E0
+EnemyGfxData_SerpentChild_Gfx_550D4 equ EnemyGfxData_SerpentChild_Gfx_54BE2+$4F2
+EnemyGfxData_SerpentChild_Gfx_550DC equ EnemyGfxData_SerpentChild_Gfx_54BE2+$4FA
+EnemyGfxData_SerpentChild_Gfx_550E6 equ EnemyGfxData_SerpentChild_Gfx_54BE2+$504
+EnemyGfxData_SerpentChild_Gfx_550EE equ EnemyGfxData_SerpentChild_Gfx_54BE2+$50C
+EnemyGfxData_SerpentChild_Gfx_5510C equ EnemyGfxData_SerpentChild_Gfx_54BE2+$52A
+EnemyGfxData_SerpentChild_Gfx_55128 equ EnemyGfxData_SerpentChild_Gfx_54BE2+$546
+EnemyGfxData_SerpentChild_Gfx_55132 equ EnemyGfxData_SerpentChild_Gfx_54BE2+$550
+EnemyGfxData_SerpentChild_Gfx_5513E equ EnemyGfxData_SerpentChild_Gfx_54BE2+$55C
+EnemyGfxData_SerpentChild_Gfx_5515E equ EnemyGfxData_SerpentChild_Gfx_54BE2+$57C
+EnemyGfxData_SerpentChild_Gfx_55172 equ EnemyGfxData_SerpentChild_Gfx_54BE2+$590
+EnemyGfxData_SerpentChild_Gfx_55186 equ EnemyGfxData_SerpentChild_Gfx_54BE2+$5A4
+EnemyGfxData_SerpentChild_Gfx_55194 equ EnemyGfxData_SerpentChild_Gfx_54BE2+$5B2
+EnemyGfxData_SerpentChild_Gfx_551A0 equ EnemyGfxData_SerpentChild_Gfx_54BE2+$5BE
+EnemyGfxData_SerpentChild_Gfx_551A8 equ EnemyGfxData_SerpentChild_Gfx_54BE2+$5C6
+EnemyGfxData_SerpentChild_Gfx_551C2 equ EnemyGfxData_SerpentChild_Gfx_54BE2+$5E0
+EnemyGfxData_SerpentChild_Gfx_551E4 equ EnemyGfxData_SerpentChild_Gfx_54BE2+$602
+EnemyGfxData_SerpentChild_Gfx_551EC equ EnemyGfxData_SerpentChild_Gfx_54BE2+$60A
+EnemyGfxData_SerpentChild_Gfx_551FA equ EnemyGfxData_SerpentChild_Gfx_54BE2+$618
+EnemyGfxData_SerpentChild_Gfx_5521C equ EnemyGfxData_SerpentChild_Gfx_54BE2+$63A
+EnemyGfxData_SerpentChild_Gfx_55236 equ EnemyGfxData_SerpentChild_Gfx_54BE2+$654
+EnemyGfxData_SerpentChild_Gfx_55244 equ EnemyGfxData_SerpentChild_Gfx_54BE2+$662
+EnemyGfxData_SerpentChild_Gfx_5524E equ EnemyGfxData_SerpentChild_Gfx_54BE2+$66C
+EnemyGfxData_SerpentChild_Gfx_55258 equ EnemyGfxData_SerpentChild_Gfx_54BE2+$676
+EnemyGfxData_SerpentChild_Gfx_55262 equ EnemyGfxData_SerpentChild_Gfx_54BE2+$680
+EnemyGfxData_SerpentChild_Gfx_55282 equ EnemyGfxData_SerpentChild_Gfx_54BE2+$6A0
+EnemyGfxData_SerpentChild_Gfx_55296 equ EnemyGfxData_SerpentChild_Gfx_54BE2+$6B4
+EnemyGfxData_SerpentChild_Gfx_552A8 equ EnemyGfxData_SerpentChild_Gfx_54BE2+$6C6
+EnemyGfxData_SerpentChild_Gfx_552B4 equ EnemyGfxData_SerpentChild_Gfx_54BE2+$6D2
+EnemyGfxData_SerpentChild_Gfx_552D2 equ EnemyGfxData_SerpentChild_Gfx_54BE2+$6F0
+EnemyGfxData_SerpentChild_Gfx_552E6 equ EnemyGfxData_SerpentChild_Gfx_54BE2+$704
 EnemyGfxData_SerpentChild:
 	dc.l	EnemyGfxData_SerpentChild_Gfx_54BE2
 	dc.l	EnemyGfxData_SerpentChild_Gfx_54BE8
@@ -59439,122 +57422,64 @@ EnemyGfxFrameTable_SerpentMain:
 	dc.b	$1C, $20, $1D, $21, $1E, $22, $1F, $23, $04, $04, $24, $27, $25, $28, $26, $04, $04, $2C, $29, $2D, $2A, $2E, $2B, $04, $04, $32, $2F, $33, $30, $34, $31, $07 
 	dc.b	$04, $04, $35, $38, $36, $39, $37, $04 
 EnemyGfxData_SerpentMain_Gfx_554B0:
-	dc.b	$01, $00, $FF, $FF, $FF, $EE, $06, $06 
-EnemyGfxData_SerpentMain_Gfx_554B8:
-	dc.b	$01, $00, $02, $88, $82, $37, $54, $60, $65, $55, $05, $56, $66, $56, $60, $05, $05, $66, $05, $66, $60, $05, $06, $66, $05, $65, $60, $06 
-EnemyGfxData_SerpentMain_Gfx_554D4:
-	dc.b	$02, $66, $48, $80, $09, $50, $00, $02, $44, $44, $28, $56, $60, $64, $60, $64, $06, $45, $60, $56, $50, $60, $06, $60, $05, $56, $06, $60, $06, $00 
-EnemyGfxData_SerpentMain_Gfx_554F2:
-	dc.b	$01, $00, $77, $FF, $FF, $77, $50, $50, $56, $05 
-EnemyGfxData_SerpentMain_Gfx_554FC:
-	dc.b	$01, $00, $FF, $FF, $FF, $FF 
-EnemyGfxData_SerpentMain_Gfx_55502:
-	dc.b	$02, $00, $7F, $F8, $00, $8F, $EE, $00, $03, $7F, $70, $06, $0E, $0E 
-EnemyGfxData_SerpentMain_Gfx_55510:
-	dc.b	$02, $00, $CF, $F0, $00, $1F, $EE, $00, $0E, $FF, $E0, $60, $06, $E0 
-EnemyGfxData_SerpentMain_Gfx_5551E:
-	dc.b	$01, $00, $FF, $FF, $7F, $FF, $E0, $00 
-EnemyGfxData_SerpentMain_Gfx_55526:
-	dc.b	$01, $00, $EF, $FF, $FF, $FE, $05, $66 
-EnemyGfxData_SerpentMain_Gfx_5552E:
-	dc.b	$01, $00, $00, $2A, $83, $37, $45, $66, $54, $44, $55, $60, $65, $55, $05, $50, $66, $56, $05, $56, $60, $05, $06, $66, $66, $60, $56, $00 
-EnemyGfxData_SerpentMain_Gfx_5554A:
-	dc.b	$02, $66, $24, $88, $81, $04, $00, $00, $26, $46, $20, $45, $56, $65, $56, $60, $04, $60, $04, $45, $06, $56, $56, $56, $60, $56, $05, $60, $06, $00 
-EnemyGfxData_SerpentMain_Gfx_55568:
-	dc.b	$01, $00, $37, $7F, $FF, $73, $44, $50, $55, $50, $60, $65, $60, $00 
-EnemyGfxData_SerpentMain_Gfx_55576:
-	dc.b	$01, $00, $EF, $FF, $FE, $FF, $60, $0E 
-EnemyGfxData_SerpentMain_Gfx_5557E:
-	dc.b	$02, $00, $77, $F8, $00, $0F, $EE, $00, $07, $FF, $70, $60, $60, $0E 
-EnemyGfxData_SerpentMain_Gfx_5558C:
-	dc.b	$02, $00, $DD, $F0, $00, $0F, $EE, $00, $0F, $FF, $E0, $66, $06, $E0 
-EnemyGfxData_SerpentMain_Gfx_5559A:
-	dc.b	$01, $00, $37, $FF, $77, $FF, $60, $50, $60, $EE, $E0, $00 
-EnemyGfxData_SerpentMain_Gfx_555A6:
-	dc.b	$01, $00, $FF, $FF, $EE, $FF, $06, $06 
-EnemyGfxData_SerpentMain_Gfx_555AE:
-	dc.b	$01, $00, $88, $82, $26, $6F, $56, $60, $66, $06, $66, $05, $65, $60, $56, $06, $66, $56, $66, $60, $56, $05, $55, $06, $05, $00 
-EnemyGfxData_SerpentMain_Gfx_555C8:
-	dc.b	$01, $00, $01, $4C, $C6, $63, $66, $66, $66, $50, $66, $60, $56, $60, $66, $50, $06, $60, $06, $66, $60, $60, $56, $60, $55, $50 
-EnemyGfxData_SerpentMain_Gfx_555E2:
-	dc.b	$01, $00, $FF, $FF, $77, $FF, $50, $50 
-EnemyGfxData_SerpentMain_Gfx_555EA:
-	dc.b	$02, $00, $FF, $FC, $80, $8F, $EE, $00, $03, $77, $30, $0E, $0E, $00 
-EnemyGfxData_SerpentMain_Gfx_555F8:
-	dc.b	$02, $00, $9F, $F1, $00, $1F, $EE, $00, $0E, $FE, $C0, $56, $50, $E0, $E0, $00 
-EnemyGfxData_SerpentMain_Gfx_55608:
-	dc.b	$01, $00, $FF, $FF, $FF, $EE, $06, $05 
-EnemyGfxData_SerpentMain_Gfx_55610:
-	dc.b	$01, $00, $02, $29, $B2, $05, $54, $60, $65, $54, $54, $60, $66, $05, $46, $06, $56, $50, $66, $06, $65, $05, $56, $60, $05, $44, $06, $54 
-EnemyGfxData_SerpentMain_Gfx_5562C:
-	dc.b	$01, $00, $00, $41, $44, $6E, $55, $66, $60, $64, $54, $60, $06, $55, $54, $66, $50, $54, $06, $65, $54, $66, $60, $45, $06, $66, $50, $65, $06, $00 
-EnemyGfxData_SerpentMain_Gfx_5564A:
-	dc.b	$01, $00, $7F, $FF, $FF, $77, $50, $66, $06, $00 
-EnemyGfxData_SerpentMain_Gfx_55654:
-	dc.b	$02, $00, $5F, $F8, $00, $8F, $EE, $00, $03, $7F, $70, $06, $50, $0E, $0E, $00 
-EnemyGfxData_SerpentMain_Gfx_55664:
-	dc.b	$02, $00, $EF, $F0, $00, $1F, $EE, $00, $0E, $FF, $E0, $06, $E0, $00 
-EnemyGfxData_SerpentMain_Gfx_55672:
-	dc.b	$01, $00, $EE, $FF, $FF, $FE, $05, $05, $65, $00 
-EnemyGfxData_SerpentMain_Gfx_5567C:
-	dc.b	$02, $66, $43, $10, $00, $9A, $00, $04, $62, $22, $24, $45, $55, $44, $54, $54, $05, $40, $06, $06, $56, $06, $06, $60, $06, $50, $65, $00 
-EnemyGfxData_SerpentMain_Gfx_55698:
-	dc.b	$01, $00, $00, $24, $44, $6E, $45, $66, $66, $65, $55, $55, $60, $65, $66, $60, $55, $65, $06, $50, $65, $66, $50, $50, $06, $66, $50, $66, $06, $00 
-EnemyGfxData_SerpentMain_Gfx_556B6:
-	dc.b	$01, $00, $37, $FF, $FF, $73, $44, $50, $50, $60, $56, $60 
-EnemyGfxData_SerpentMain_Gfx_556C2:
-	dc.b	$01, $00, $EF, $FF, $FE, $FF, $50, $0E 
-EnemyGfxData_SerpentMain_Gfx_556CA:
-	dc.b	$02, $00, $13, $F8, $00, $0F, $EE, $00, $07, $FF, $70, $60, $06, $60, $60, $06, $0E, $00 
-EnemyGfxData_SerpentMain_Gfx_556DC:
-	dc.b	$02, $00, $FF, $F0, $00, $0F, $EE, $00, $0F, $FF, $E0, $E0 
-EnemyGfxData_SerpentMain_Gfx_556E8:
-	dc.b	$01, $00, $37, $FF, $77, $FF, $60, $60, $60, $EE, $E0, $00 
-EnemyGfxData_SerpentMain_Gfx_556F4:
-	dc.b	$01, $00, $88, $9B, $33, $AE, $56, $66, $66, $06, $50, $66, $56, $60, $66, $56, $66, $50, $60, $60, $06, $55 
-EnemyGfxData_SerpentMain_Gfx_5570A:
-	dc.b	$01, $00, $01, $00, $22, $67, $54, $60, $66, $50, $65, $06, $66, $66, $50, $65, $60, $06, $50, $06, $66, $06, $50, $66, $65, $50, $05, $55, $06, $50 
-EnemyGfxData_SerpentMain_Gfx_55728:
-	dc.b	$01, $00, $FF, $FF, $77, $FF, $66, $06 
-EnemyGfxData_SerpentMain_Gfx_55730:
-	dc.b	$02, $00, $CF, $FC, $80, $8F, $EE, $00, $03, $77, $30, $56, $50, $0E, $0E, $00 
-EnemyGfxData_SerpentMain_Gfx_55740:
-	dc.b	$02, $00, $FF, $F1, $00, $1F, $EE, $00, $0E, $FE, $C0, $E0, $E0, $00 
-EnemyGfxData_SerpentMain_Gfx_5574E:
-	dc.b	$01, $00, $88, $8C, $EC, $C9, $56, $54, $35, $56, $66, $43, $05, $56, $64, $05, $66, $66, $04, $60, $45, $60, $05, $66 
-EnemyGfxData_SerpentMain_Gfx_55766:
-	dc.b	$01, $00, $11, $11, $11, $04, $54, $56, $60, $55, $65, $60, $56, $66, $56, $46, $06, $56, $04, $60, $55, $04, $40, $65, $04, $40, $65, $50, $44, $06, $55, $00 
-EnemyGfxData_SerpentMain_Gfx_55786:
-	dc.b	$01, $00, $77, $7F, $FF, $F7, $54, $50, $50, $60 
-EnemyGfxData_SerpentMain_Gfx_55790:
-	dc.b	$01, $00, $FF, $FF, $FE, $FF, $0E, $00 
-EnemyGfxData_SerpentMain_Gfx_55798:
-	dc.b	$02, $00, $8C, $F8, $00, $0F, $EE, $00, $07, $FF, $70, $50, $60, $04, $60, $04, $0E, $00 
-EnemyGfxData_SerpentMain_Gfx_557AA:
-	dc.b	$02, $00, $77, $F1, $00, $1F, $EE, $00, $0E, $FE, $C0, $44, $04, $E0, $E0, $00 
-EnemyGfxData_SerpentMain_Gfx_557BA:
-	dc.b	$01, $00, $88, $88, $CC, $D9, $05, $54, $33, $56, $54, $33, $56, $66, $43, $05, $56, $44, $05, $64, $06, $60, $46, $04, $66, $00 
-EnemyGfxData_SerpentMain_Gfx_557D4:
-	dc.b	$00, $54, $55, $60, $54, $45, $45, $60, $54, $35, $45, $60, $54, $35, $56, $66, $04, $45, $06, $56, $05, $44, $00, $56, $50, $44, $50, $05, $55, $04, $40, $00 
-	dc.b	$05, $00 
-EnemyGfxData_SerpentMain_Gfx_557F6:
-	dc.b	$01, $00, $77, $7F, $FF, $F7, $40, $40, $40, $55 
-EnemyGfxData_SerpentMain_Gfx_55800:
-	dc.b	$01, $00, $FF, $FF, $EE, $FF, $0E, $EE 
-EnemyGfxData_SerpentMain_Gfx_55808:
-	dc.b	$02, $00, $9D, $E0, $00, $0F, $EE, $00, $06, $FF, $F0, $40, $60, $60, $04, $0E, $E4, $00 
-EnemyGfxData_SerpentMain_Gfx_5581A:
-	dc.b	$02, $00, $37, $70, $00, $1F, $EE, $00, $06, $FF, $E0, $04, $40, $44, $04, $E4, $E0, $00 
-EnemyGfxData_SerpentMain_Gfx_5582C:
-	dc.b	$01, $00, $8C, $EC, $C9, $8C, $05, $56, $43, $05, $64, $66, $04, $60, $45, $60, $05, $45, $50, $60, $04, $60, $04, $00 
-EnemyGfxData_SerpentMain_Gfx_55844:
-	dc.b	$01, $00, $00, $02, $26, $67, $55, $66, $56, $50, $56, $66, $55, $60, $46, $66, $05, $55, $04, $60, $56, $04, $40, $55, $44, $05, $44, $05, $04, $00 
-EnemyGfxData_SerpentMain_Gfx_55862:
-	dc.b	$01, $00, $DD, $FF, $FF, $77, $40, $40, $50, $55 
-EnemyGfxData_SerpentMain_Gfx_5586C:
-	dc.b	$02, $00, $FF, $F8, $00, $8F, $EE, $00, $03, $7F, $70, $0E, $0E, $00 
-EnemyGfxData_SerpentMain_Gfx_5587A:
-	dc.b	$02, $00, $FF, $F1, $01, $3F, $EE, $00, $0C, $EE, $C0, $E0, $E0, $00 
+	incbin "data/art/tiles/enemy/serpent_main_gfx.bin"
+EnemyGfxData_SerpentMain_Gfx_554B8 equ EnemyGfxData_SerpentMain_Gfx_554B0+$8
+EnemyGfxData_SerpentMain_Gfx_554D4 equ EnemyGfxData_SerpentMain_Gfx_554B0+$24
+EnemyGfxData_SerpentMain_Gfx_554F2 equ EnemyGfxData_SerpentMain_Gfx_554B0+$42
+EnemyGfxData_SerpentMain_Gfx_554FC equ EnemyGfxData_SerpentMain_Gfx_554B0+$4C
+EnemyGfxData_SerpentMain_Gfx_55502 equ EnemyGfxData_SerpentMain_Gfx_554B0+$52
+EnemyGfxData_SerpentMain_Gfx_55510 equ EnemyGfxData_SerpentMain_Gfx_554B0+$60
+EnemyGfxData_SerpentMain_Gfx_5551E equ EnemyGfxData_SerpentMain_Gfx_554B0+$6E
+EnemyGfxData_SerpentMain_Gfx_55526 equ EnemyGfxData_SerpentMain_Gfx_554B0+$76
+EnemyGfxData_SerpentMain_Gfx_5552E equ EnemyGfxData_SerpentMain_Gfx_554B0+$7E
+EnemyGfxData_SerpentMain_Gfx_5554A equ EnemyGfxData_SerpentMain_Gfx_554B0+$9A
+EnemyGfxData_SerpentMain_Gfx_55568 equ EnemyGfxData_SerpentMain_Gfx_554B0+$B8
+EnemyGfxData_SerpentMain_Gfx_55576 equ EnemyGfxData_SerpentMain_Gfx_554B0+$C6
+EnemyGfxData_SerpentMain_Gfx_5557E equ EnemyGfxData_SerpentMain_Gfx_554B0+$CE
+EnemyGfxData_SerpentMain_Gfx_5558C equ EnemyGfxData_SerpentMain_Gfx_554B0+$DC
+EnemyGfxData_SerpentMain_Gfx_5559A equ EnemyGfxData_SerpentMain_Gfx_554B0+$EA
+EnemyGfxData_SerpentMain_Gfx_555A6 equ EnemyGfxData_SerpentMain_Gfx_554B0+$F6
+EnemyGfxData_SerpentMain_Gfx_555AE equ EnemyGfxData_SerpentMain_Gfx_554B0+$FE
+EnemyGfxData_SerpentMain_Gfx_555C8 equ EnemyGfxData_SerpentMain_Gfx_554B0+$118
+EnemyGfxData_SerpentMain_Gfx_555E2 equ EnemyGfxData_SerpentMain_Gfx_554B0+$132
+EnemyGfxData_SerpentMain_Gfx_555EA equ EnemyGfxData_SerpentMain_Gfx_554B0+$13A
+EnemyGfxData_SerpentMain_Gfx_555F8 equ EnemyGfxData_SerpentMain_Gfx_554B0+$148
+EnemyGfxData_SerpentMain_Gfx_55608 equ EnemyGfxData_SerpentMain_Gfx_554B0+$158
+EnemyGfxData_SerpentMain_Gfx_55610 equ EnemyGfxData_SerpentMain_Gfx_554B0+$160
+EnemyGfxData_SerpentMain_Gfx_5562C equ EnemyGfxData_SerpentMain_Gfx_554B0+$17C
+EnemyGfxData_SerpentMain_Gfx_5564A equ EnemyGfxData_SerpentMain_Gfx_554B0+$19A
+EnemyGfxData_SerpentMain_Gfx_55654 equ EnemyGfxData_SerpentMain_Gfx_554B0+$1A4
+EnemyGfxData_SerpentMain_Gfx_55664 equ EnemyGfxData_SerpentMain_Gfx_554B0+$1B4
+EnemyGfxData_SerpentMain_Gfx_55672 equ EnemyGfxData_SerpentMain_Gfx_554B0+$1C2
+EnemyGfxData_SerpentMain_Gfx_5567C equ EnemyGfxData_SerpentMain_Gfx_554B0+$1CC
+EnemyGfxData_SerpentMain_Gfx_55698 equ EnemyGfxData_SerpentMain_Gfx_554B0+$1E8
+EnemyGfxData_SerpentMain_Gfx_556B6 equ EnemyGfxData_SerpentMain_Gfx_554B0+$206
+EnemyGfxData_SerpentMain_Gfx_556C2 equ EnemyGfxData_SerpentMain_Gfx_554B0+$212
+EnemyGfxData_SerpentMain_Gfx_556CA equ EnemyGfxData_SerpentMain_Gfx_554B0+$21A
+EnemyGfxData_SerpentMain_Gfx_556DC equ EnemyGfxData_SerpentMain_Gfx_554B0+$22C
+EnemyGfxData_SerpentMain_Gfx_556E8 equ EnemyGfxData_SerpentMain_Gfx_554B0+$238
+EnemyGfxData_SerpentMain_Gfx_556F4 equ EnemyGfxData_SerpentMain_Gfx_554B0+$244
+EnemyGfxData_SerpentMain_Gfx_5570A equ EnemyGfxData_SerpentMain_Gfx_554B0+$25A
+EnemyGfxData_SerpentMain_Gfx_55728 equ EnemyGfxData_SerpentMain_Gfx_554B0+$278
+EnemyGfxData_SerpentMain_Gfx_55730 equ EnemyGfxData_SerpentMain_Gfx_554B0+$280
+EnemyGfxData_SerpentMain_Gfx_55740 equ EnemyGfxData_SerpentMain_Gfx_554B0+$290
+EnemyGfxData_SerpentMain_Gfx_5574E equ EnemyGfxData_SerpentMain_Gfx_554B0+$29E
+EnemyGfxData_SerpentMain_Gfx_55766 equ EnemyGfxData_SerpentMain_Gfx_554B0+$2B6
+EnemyGfxData_SerpentMain_Gfx_55786 equ EnemyGfxData_SerpentMain_Gfx_554B0+$2D6
+EnemyGfxData_SerpentMain_Gfx_55790 equ EnemyGfxData_SerpentMain_Gfx_554B0+$2E0
+EnemyGfxData_SerpentMain_Gfx_55798 equ EnemyGfxData_SerpentMain_Gfx_554B0+$2E8
+EnemyGfxData_SerpentMain_Gfx_557AA equ EnemyGfxData_SerpentMain_Gfx_554B0+$2FA
+EnemyGfxData_SerpentMain_Gfx_557BA equ EnemyGfxData_SerpentMain_Gfx_554B0+$30A
+EnemyGfxData_SerpentMain_Gfx_557D4 equ EnemyGfxData_SerpentMain_Gfx_554B0+$324
+EnemyGfxData_SerpentMain_Gfx_557F6 equ EnemyGfxData_SerpentMain_Gfx_554B0+$346
+EnemyGfxData_SerpentMain_Gfx_55800 equ EnemyGfxData_SerpentMain_Gfx_554B0+$350
+EnemyGfxData_SerpentMain_Gfx_55808 equ EnemyGfxData_SerpentMain_Gfx_554B0+$358
+EnemyGfxData_SerpentMain_Gfx_5581A equ EnemyGfxData_SerpentMain_Gfx_554B0+$36A
+EnemyGfxData_SerpentMain_Gfx_5582C equ EnemyGfxData_SerpentMain_Gfx_554B0+$37C
+EnemyGfxData_SerpentMain_Gfx_55844 equ EnemyGfxData_SerpentMain_Gfx_554B0+$394
+EnemyGfxData_SerpentMain_Gfx_55862 equ EnemyGfxData_SerpentMain_Gfx_554B0+$3B2
+EnemyGfxData_SerpentMain_Gfx_5586C equ EnemyGfxData_SerpentMain_Gfx_554B0+$3BC
+EnemyGfxData_SerpentMain_Gfx_5587A equ EnemyGfxData_SerpentMain_Gfx_554B0+$3CA
 EnemyGfxData_SerpentMain:
 	dc.l	EnemyGfxData_SerpentMain_Gfx_554B0
 	dc.l	EnemyGfxData_SerpentMain_Gfx_554B8
@@ -59620,253 +57545,118 @@ EnemyGfxFrameTable_InsectChild:
 	dc.b	$3D, $41, $3A, $3E, $42, $3B, $3F, $43, $16, $47, $4B, $44, $48, $4C, $45, $49, $4D, $46, $4A, $4E, $22, $52, $56, $4F, $53, $57, $50, $54, $58, $51, $55, $59 
 	dc.b	$22, $5D, $61, $5A, $5E, $62, $5B, $5F, $63, $5C, $60, $64, $22, $68, $6C, $65, $69, $6D, $66, $6A, $6E, $67, $6B, $6F 
 EnemyGfxData_InsectChild_Gfx_559E8:
-	dc.b	$01, $00, $FF, $FF, $FF, $FF 
-EnemyGfxData_InsectChild_Gfx_559EE:
-	dc.b	$01, $00, $FF, $FC, $80, $00, $43, $33, $43, $33, $33, $04, $33, $32, $22, $D4, $32, $21, $11, $C3, $32, $11, $21, $00 
-EnemyGfxData_InsectChild_Gfx_55A06:
-	dc.b	$01, $00, $FF, $F1, $00, $00, $3D, $44, $50, $C4, $33, $3D, $50, $C4, $22, $33, $C5, $1B, $42, $2B, $54, $1B, $42, $2B, $54, $00 
-EnemyGfxData_InsectChild_Gfx_55A20:
-	dc.b	$01, $00, $FF, $FF, $FF, $77, $50, $50 
-EnemyGfxData_InsectChild_Gfx_55A28:
-	dc.b	$01, $00, $EE, $EE, $EE, $EE, $04, $0C, $0C, $5B, $5B, $5B, $54, $54 
-EnemyGfxData_InsectChild_Gfx_55A36:
-	dc.b	$00, $C3, $22, $11, $12, $4B, $22, $22, $22, $44, $B2, $32, $23, $43, $43, $33, $34, $32, $33, $45, $55, $32, $33, $57, $88, $B3, $35, $78, $99, $43, $45, $89 
-	dc.b	$9A, $00 
-EnemyGfxData_InsectChild_Gfx_55A58:
-	dc.b	$00, $22, $22, $23, $C4, $32, $22, $2B, $4C, $33, $32, $3B, $43, $44, $44, $33, $33, $55, $54, $33, $34, $88, $75, $44, $3B, $99, $97, $54, $44, $A9, $98, $65 
-	dc.b	$44, $00 
-EnemyGfxData_InsectChild_Gfx_55A7A:
-	dc.b	$01, $00, $77, $33, $33, $33, $45, $45, $B4, $50, $B4, $50, $44, $50, $44, $50, $45, $60, $56, $60 
-EnemyGfxData_InsectChild_Gfx_55A8E:
-	dc.b	$01, $00, $EE, $EF, $FF, $FF, $55, $05, $06, $00 
-EnemyGfxData_InsectChild_Gfx_55A98:
-	dc.b	$00, $44, $48, $99, $A3, $54, $58, $9A, $A3, $55, $58, $9A, $98, $65, $57, $99, $98, $66, $56, $89, $98, $06, $66, $68, $88, $00, $66, $66, $77, $00, $00, $66 
-	dc.b	$66, $00 
-EnemyGfxData_InsectChild_Gfx_55ABA:
-	dc.b	$01, $76, $02, $22, $68, $C0, $AA, $99, $75, $45, $77, $99, $55, $66, $78, $56, $E6, $67, $66, $77, $66, $77, $66, $6E, $6E, $E0, $66, $6E, $E0, $00 
-EnemyGfxData_InsectChild_Gfx_55AD8:
-	dc.b	$01, $00, $33, $77, $7F, $FF, $56, $60, $66, $60, $66, $66, $E0, $00 
-EnemyGfxData_InsectChild_Gfx_55AE6:
-	dc.b	$01, $00, $FF, $FC, $80, $00, $43, $33, $33, $33, $33, $03, $32, $22, $2C, $32, $21, $2B, $B3, $32, $11, $13, $32, $00 
-EnemyGfxData_InsectChild_Gfx_55AFE:
-	dc.b	$01, $00, $FF, $F1, $00, $00, $3D, $DD, $50, $C4, $33, $35, $50, $42, $22, $33, $CD, $22, $22, $2B, $54, $22, $BB, $BC, $44, $00 
-EnemyGfxData_InsectChild_Gfx_55B18:
-	dc.b	$01, $00, $EE, $EE, $EE, $EE, $03, $03, $04, $54, $54, $55, $55, $57 
-EnemyGfxData_InsectChild_Gfx_55B26:
-	dc.b	$00, $22, $12, $12, $22, $22, $22, $22, $22, $32, $23, $33, $33, $33, $34, $44, $43, $57, $77, $75, $54, $79, $99, $87, $75, $9A, $AA, $98, $76, $A3, $AA, $A9 
-	dc.b	$77, $00 
-EnemyGfxData_InsectChild_Gfx_55B48:
-	dc.b	$01, $33, $00, $8B, $76, $40, $22, $B4, $2C, $44, $3B, $22, $2C, $44, $3C, $C4, $43, $34, $43, $43, $CC, $54, $34, $44, $54, $34, $34, $4D 
-EnemyGfxData_InsectChild_Gfx_55B64:
-	dc.b	$01, $00, $77, $33, $33, $33, $45, $45, $44, $50, $44, $D0, $4D, $50, $CD, $50, $DD, $60, $5D, $60 
-EnemyGfxData_InsectChild_Gfx_55B78:
-	dc.b	$01, $00, $EE, $EE, $FF, $FF, $57, $07, $07, $06 
-EnemyGfxData_InsectChild_Gfx_55B82:
-	dc.b	$02, $77, $11, $13, $26, $00, $66, $00, $04, $01, $73, $A3, $99, $99, $96, $78, $99, $7E, $68, $88, $76, $67, $67, $76, $06, $00, $00, $00 
-EnemyGfxData_InsectChild_Gfx_55B9E:
-	dc.b	$01, $66, $00, $01, $9E, $C8, $65, $44, $44, $5D, $65, $44, $DD, $D5, $65, $44, $55, $56, $65, $54, $55, $55, $56, $6E, $6E, $ED, $6E, $ED, $DD, $00 
-EnemyGfxData_InsectChild_Gfx_55BBC:
-	dc.b	$01, $00, $33, $77, $77, $F7, $5D, $60, $6D, $60, $66, $66, $E0, $D0, $D0, $00 
-EnemyGfxData_InsectChild_Gfx_55BCC:
-	dc.b	$01, $00, $FF, $FF, $FF, $FE, $03, $00 
-EnemyGfxData_InsectChild_Gfx_55BD4:
-	dc.b	$01, $00, $FF, $FC, $80, $00, $43, $33, $33, $33, $33, $03, $32, $22, $CC, $32, $21, $BB, $33, $22, $11, $23, $32, $00 
-EnemyGfxData_InsectChild_Gfx_55BEC:
-	dc.b	$01, $00, $FF, $F1, $00, $00, $33, $DD, $56, $CD, $33, $35, $56, $42, $22, $33, $CD, $22, $22, $2B, $55, $22, $BB, $BC, $55, $00 
-EnemyGfxData_InsectChild_Gfx_55C06:
-	dc.b	$01, $00, $FF, $FF, $F7, $73, $60, $56, $56, $60 
-EnemyGfxData_InsectChild_Gfx_55C10:
-	dc.b	$01, $00, $EE, $EC, $CC, $CC, $04, $43, $74, $07, $98, $09, $AA, $0A, $33, $09, $AA, $07, $89, $00 
-EnemyGfxData_InsectChild_Gfx_55C24:
-	dc.b	$01, $22, $F6, $21, $11, $00, $32, $2B, $43, $33, $33, $75, $43, $32, $87, $54, $43, $98, $54, $43, $98, $75, $43, $33, $99, $75, $44, $33 
-EnemyGfxData_InsectChild_Gfx_55C40:
-	dc.b	$01, $33, $00, $8A, $64, $0C, $2B, $44, $C5, $44, $B4, $22, $C4, $44, $CC, $44, $34, $34, $34, $22, $44, $23, $CC, $DD, $23, $3C, $34, $4D, $34, $DD 
-EnemyGfxData_InsectChild_Gfx_55C5E:
-	dc.b	$01, $00, $33, $31, $11, $11, $55, $60, $45, $66, $45, $66, $45, $6D, $60, $5D, $DD, $60, $D5, $6D, $60, $55, $6D, $D0, $56, $6D, $D0, $00 
-EnemyGfxData_InsectChild_Gfx_55C7A:
-	dc.b	$01, $00, $CC, $EE, $EF, $FF, $07, $E8, $07, $68, $78, $77, $07, $00 
-EnemyGfxData_InsectChild_Gfx_55C88:
-	dc.b	$00, $98, $75, $43, $33, $88, $75, $43, $33, $88, $65, $43, $34, $87, $65, $44, $44, $77, $55, $54, $45, $76, $65, $55, $55, $06, $66, $66, $66, $00, $06, $66 
-	dc.b	$66, $00 
-EnemyGfxData_InsectChild_Gfx_55CAA:
-	dc.b	$01, $66, $00, $00, $36, $C8, $33, $34, $4D, $5D, $33, $DD, $55, $5D, $44, $D4, $55, $D6, $44, $55, $55, $D6, $55, $56, $55, $6E, $6E, $ED, $6E, $ED, $D0, $00 
-EnemyGfxData_InsectChild_Gfx_55CCA:
-	dc.b	$01, $00, $11, $13, $33, $33, $56, $6D, $D0, $66, $6D, $C0, $66, $DD, $D0, $66, $DC, $ED, $DC, $DD, $DC, $DC, $DC, $DD, $CD, $00 
-EnemyGfxData_InsectChild_Gfx_55CE4:
-	dc.b	$01, $00, $FF, $FF, $FF, $FE, $04, $00 
-EnemyGfxData_InsectChild_Gfx_55CEC:
-	dc.b	$01, $00, $FF, $FC, $80, $00, $43, $34, $33, $33, $33, $03, $32, $23, $33, $43, $21, $23, $33, $32, $11, $BB, $22, $00 
-EnemyGfxData_InsectChild_Gfx_55D04:
-	dc.b	$01, $00, $FF, $F1, $00, $00, $4D, $DD, $44, $44, $44, $D4, $44, $32, $23, $4D, $C5, $22, $22, $33, $CC, $22, $22, $33, $56, $00 
-EnemyGfxData_InsectChild_Gfx_55D1E:
-	dc.b	$01, $00, $FF, $FF, $F7, $73, $50, $55, $C5, $60 
-EnemyGfxData_InsectChild_Gfx_55D28:
-	dc.b	$01, $00, $EE, $EC, $CC, $CC, $04, $44, $54, $05, $54, $06, $54, $06, $54, $06, $54, $06, $55, $00 
-EnemyGfxData_InsectChild_Gfx_55D3C:
-	dc.b	$01, $22, $06, $67, $76, $00, $32, $2B, $34, $BB, $32, $34, $32, $23, $32, $33, $33, $23, $33, $32, $24, $CC, $43, $33, $33, $44 
-EnemyGfxData_InsectChild_Gfx_55D56:
-	dc.b	$00, $CC, $44, $34, $45, $43, $C5, $44, $44, $33, $CC, $C4, $45, $22, $33, $CD, $DD, $33, $33, $5D, $CD, $33, $34, $CD, $CC, $C3, $CC, $5D, $CB, $5C, $C5, $5D 
-	dc.b	$CC, $00 
-EnemyGfxData_InsectChild_Gfx_55D78:
-	dc.b	$01, $00, $33, $31, $11, $11, $C5, $50, $DC, $66, $DC, $66, $DC, $D6, $60, $DC, $D6, $60, $CC, $DD, $60, $CC, $CD, $60, $BC, $CD, $E0, $00 
-EnemyGfxData_InsectChild_Gfx_55D94:
-	dc.b	$01, $00, $CE, $EE, $EF, $FF, $06, $65, $65, $65, $66, $06 
-EnemyGfxData_InsectChild_Gfx_55DA0:
-	dc.b	$01, $66, $00, $00, $88, $73, $43, $33, $33, $33, $54, $34, $33, $33, $54, $44, $43, $34, $55, $55, $44, $43, $55, $54, $45, $65, $55, $5C, $06, $00, $06, $00 
-EnemyGfxData_InsectChild_Gfx_55DC0:
-	dc.b	$00, $45, $54, $5D, $DC, $34, $44, $D6, $DD, $4C, $44, $D5, $6C, $C4, $CD, $55, $6D, $C5, $55, $66, $D6, $55, $66, $66, $6E, $66, $66, $6E, $E0, $66, $6E, $E0 
-	dc.b	$00, $00 
-EnemyGfxData_InsectChild_Gfx_55DE2:
-	dc.b	$01, $00, $13, $31, $11, $11, $BB, $CD, $E0, $CB, $CD, $CC, $BC, $6C, $CB, $D0, $ED, $CB, $C0, $0D, $CC, $C0, $0D, $DC, $D0, $DD, $CD, $D0 
-EnemyGfxData_InsectChild_Gfx_55DFE:
-	dc.b	$01, $00, $FF, $FF, $FF, $EE, $05, $05 
-EnemyGfxData_InsectChild_Gfx_55E06:
-	dc.b	$01, $00, $FF, $F8, $00, $00, $05, $44, $D3, $05, $43, $33, $4C, $54, $33, $33, $4C, $43, $32, $24, $B1, $43, $22, $24, $B1, $00 
-EnemyGfxData_InsectChild_Gfx_55E20:
-	dc.b	$01, $00, $FF, $F3, $10, $00, $33, $34, $33, $33, $34, $22, $23, $33, $40, $11, $12, $23, $4D, $12, $11, $23, $3C, $00 
-EnemyGfxData_InsectChild_Gfx_55E38:
-	dc.b	$01, $00, $EE, $CC, $CC, $CC, $54, $54, $05, $4B, $05, $4B, $05, $44, $05, $43, $06, $54, $06, $65 
-EnemyGfxData_InsectChild_Gfx_55E4C:
-	dc.b	$00, $4C, $32, $25, $B2, $C5, $B2, $24, $BB, $44, $B3, $22, $4B, $34, $C4, $32, $44, $34, $5C, $C4, $45, $33, $45, $C5, $55, $33, $34, $CB, $DD, $43, $44, $5C 
-	dc.b	$BC, $00 
-EnemyGfxData_InsectChild_Gfx_55E6E:
-	dc.b	$00, $21, $11, $22, $3C, $22, $22, $22, $B4, $B3, $23, $4C, $44, $B4, $34, $CC, $33, $B5, $44, $C3, $23, $C5, $45, $C3, $24, $CD, $5C, $C3, $4B, $CC, $DC, $54 
-	dc.b	$BB, $00 
-EnemyGfxData_InsectChild_Gfx_55E90:
-	dc.b	$01, $00, $77, $77, $77, $77, $40, $40, $40, $45, $45, $B5, $45, $45 
-EnemyGfxData_InsectChild_Gfx_55E9E:
-	dc.b	$01, $00, $CC, $EE, $EF, $FF, $06, $65, $06, $66, $66, $6D, $0E, $00 
-EnemyGfxData_InsectChild_Gfx_55EAC:
-	dc.b	$00, $44, $44, $45, $DB, $55, $54, $4D, $CC, $55, $DD, $DD, $DC, $5D, $6D, $D6, $DD, $DD, $66, $55, $DD, $E6, $65, $56, $DD, $0E, $E6, $66, $6D, $00, $0E, $E6 
-	dc.b	$6D, $00 
-EnemyGfxData_InsectChild_Gfx_55ECE:
-	dc.b	$00, $CB, $CD, $54, $B4, $BB, $CC, $DC, $B5, $CB, $BC, $C6, $55, $CB, $CD, $65, $56, $DC, $BD, $65, $66, $DC, $BC, $66, $60, $DC, $CD, $66, $00, $CB, $CD, $00 
-	dc.b	$00, $00 
-EnemyGfxData_InsectChild_Gfx_55EF0:
-	dc.b	$01, $00, $77, $7F, $FF, $FF, $55, $50, $60, $00 
-EnemyGfxData_InsectChild_Gfx_55EFA:
-	dc.b	$01, $00, $FF, $FF, $C8, $00, $03, $33, $03, $33, $33, $04, $33, $32, $22, $D4, $32, $21, $11, $00 
-EnemyGfxData_InsectChild_Gfx_55F0E:
-	dc.b	$01, $00, $FF, $FF, $10, $00, $3D, $44, $50, $C4, $33, $3D, $50, $C4, $22, $33, $C5, $1B, $42, $23, $B5, $00 
-EnemyGfxData_InsectChild_Gfx_55F24:
-	dc.b	$01, $00, $FF, $FF, $FF, $77, $50, $45 
-EnemyGfxData_InsectChild_Gfx_55F2C:
-	dc.b	$01, $00, $EE, $EE, $CC, $CC, $04, $04, $4C, $4C, $04, $4B, $04, $4B, $04, $4B, $04, $44 
-EnemyGfxData_InsectChild_Gfx_55F3E:
-	dc.b	$00, $C3, $32, $11, $21, $C3, $22, $11, $12, $4B, $22, $22, $22, $44, $B2, $32, $23, $43, $43, $33, $44, $32, $34, $45, $55, $32, $44, $57, $88, $B4, $47, $78 
-	dc.b	$99, $00 
-EnemyGfxData_InsectChild_Gfx_55F60:
-	dc.b	$00, $1B, $42, $23, $B5, $22, $22, $23, $CC, $32, $22, $2B, $44, $33, $32, $3B, $33, $44, $44, $33, $33, $55, $55, $44, $33, $88, $87, $74, $44, $99, $98, $87 
-	dc.b	$54, $00 
-EnemyGfxData_InsectChild_Gfx_55F82:
-	dc.b	$01, $00, $33, $33, $31, $11, $34, $50, $33, $40, $C3, $45, $B4, $34, $B3, $34, $4B, $34, $50, $43, $34, $50, $43, $34, $50, $00 
-EnemyGfxData_InsectChild_Gfx_55F9C:
-	dc.b	$01, $00, $CE, $EE, $EE, $FF, $04, $44, $44, $44, $54, $05, $05, $00 
-EnemyGfxData_InsectChild_Gfx_55FAA:
-	dc.b	$00, $44, $58, $99, $AA, $44, $88, $9A, $A3, $45, $89, $AA, $A3, $45, $89, $9A, $98, $45, $88, $99, $98, $55, $78, $89, $98, $55, $57, $88, $88, $06, $55, $67 
-	dc.b	$77, $00 
-EnemyGfxData_InsectChild_Gfx_55FCC:
-	dc.b	$01, $76, $00, $11, $17, $8C, $AA, $A9, $98, $75, $3A, $AA, $98, $75, $99, $99, $98, $66, $89, $88, $E6, $68, $87, $77, $77, $66, $66, $66, $66, $00 
-EnemyGfxData_InsectChild_Gfx_55FEA:
-	dc.b	$01, $00, $11, $33, $33, $77, $43, $45, $50, $44, $45, $60, $54, $55, $55, $56, $65, $60, $66, $60, $66, $60 
-EnemyGfxData_InsectChild_Gfx_56000:
-	dc.b	$01, $00, $FF, $FF, $C0, $00, $44, $44, $04, $33, $33, $CC, $32, $22, $3C, $43, $22, $12, $3B, $32 
-EnemyGfxData_InsectChild_Gfx_56014:
-	dc.b	$01, $00, $FF, $FF, $10, $00, $CD, $DD, $50, $43, $33, $33, $50, $22, $22, $33, $CD, $22, $22, $2B, $54, $00 
-EnemyGfxData_InsectChild_Gfx_5602A:
-	dc.b	$01, $00, $FF, $FF, $FF, $77, $50, $55 
-EnemyGfxData_InsectChild_Gfx_56032:
-	dc.b	$01, $00, $EC, $CC, $CC, $CC, $32, $03, $22, $03, $22, $43, $33, $43, $33, $43, $34, $44, $47, $44, $59, $00 
-EnemyGfxData_InsectChild_Gfx_56048:
-	dc.b	$00, $11, $11, $22, $21, $12, $11, $11, $22, $22, $22, $22, $22, $32, $23, $33, $33, $34, $44, $44, $43, $57, $77, $77, $75, $99, $99, $88, $77, $9A, $AA, $99 
-	dc.b	$87, $00 
-EnemyGfxData_InsectChild_Gfx_5606A:
-	dc.b	$01, $33, $00, $09, $B7, $20, $22, $BB, $BC, $44, $22, $B4, $2C, $44, $3B, $22, $2C, $43, $3C, $C4, $34, $44, $54, $43, $CC, $75, $43, $34, $44, $00 
-EnemyGfxData_InsectChild_Gfx_56088:
-	dc.b	$01, $00, $33, $31, $11, $11, $45, $50, $34, $55, $34, $45, $33, $45, $50, $33, $4D, $50, $44, $4D, $50, $CD, $D5, $50, $DD, $55, $50, $00 
-EnemyGfxData_InsectChild_Gfx_560A4:
-	dc.b	$01, $00, $CC, $CC, $CE, $EF, $45, $79, $45, $79, $45, $79, $05, $77, $05, $67, $56, $06 
-EnemyGfxData_InsectChild_Gfx_560B6:
-	dc.b	$00, $A3, $AA, $AA, $98, $A3, $99, $AA, $A9, $96, $78, $9A, $A9, $9E, $68, $9A, $99, $76, $66, $89, $98, $77, $68, $88, $87, $77, $77, $87, $76, $66, $77, $76 
-	dc.b	$66, $00 
-EnemyGfxData_InsectChild_Gfx_560D8:
-	dc.b	$01, $55, $00, $03, $76, $40, $75, $44, $34, $4D, $77, $54, $44, $5D, $77, $54, $DD, $D5, $77, $54, $76, $76, $56, $65, $56, $6E, $66, $66, $6E, $ED 
-EnemyGfxData_InsectChild_Gfx_560F6:
-	dc.b	$01, $00, $11, $33, $37, $7F, $5D, $55, $50, $5D, $56, $50, $5D, $66, $5D, $66, $66, $60, $66, $D0 
-EnemyGfxData_InsectChild_Gfx_5610A:
-	dc.b	$01, $00, $FF, $FF, $C8, $00, $43, $33, $33, $33, $33, $43, $32, $22, $CC, $32, $21, $BB, $33, $00 
-EnemyGfxData_InsectChild_Gfx_5611E:
-	dc.b	$01, $00, $FF, $FF, $10, $00, $33, $DD, $56, $CD, $33, $35, $56, $42, $22, $33, $CD, $22, $22, $2B, $55, $00 
-EnemyGfxData_InsectChild_Gfx_56134:
-	dc.b	$01, $00, $FF, $FF, $F7, $73, $60, $66, $56, $60 
-EnemyGfxData_InsectChild_Gfx_5613E:
-	dc.b	$01, $00, $EC, $CC, $CC, $88, $43, $05, $44, $55, $54, $55, $85, $77, $98, $89, $AA, $07, $9A, $33, $07, $89, $AA, $00 
-EnemyGfxData_InsectChild_Gfx_56156:
-	dc.b	$01, $22, $8F, $62, $11, $10, $11, $23, $32, $32, $2B, $43, $33, $33, $75, $43, $32, $87, $54, $43, $98, $54, $43, $98, $75, $43, $33, $00 
-EnemyGfxData_InsectChild_Gfx_56172:
-	dc.b	$00, $22, $BB, $BC, $55, $2B, $44, $C5, $44, $B4, $22, $C4, $44, $33, $CC, $44, $34, $33, $34, $33, $34, $22, $33, $33, $44, $23, $33, $CC, $DD, $23, $3C, $34 
-	dc.b	$4D, $00 
-EnemyGfxData_InsectChild_Gfx_56194:
-	dc.b	$01, $00, $31, $11, $11, $11, $55, $66, $55, $56, $60, $45, $55, $60, $45, $56, $66, $45, $6D, $66, $5D, $DD, $D6, $D5, $66, $D6, $55, $66, $DD, $00 
-EnemyGfxData_InsectChild_Gfx_561B2:
-	dc.b	$01, $00, $88, $8C, $CC, $EF, $07, $78, $99, $07, $E6, $88, $07, $6E, $68, $66, $68, $76, $77, $07, $77, $66 
-EnemyGfxData_InsectChild_Gfx_561C8:
-	dc.b	$00, $99, $75, $44, $33, $98, $75, $43, $33, $88, $75, $43, $33, $88, $65, $43, $34, $87, $65, $44, $44, $77, $55, $54, $45, $76, $65, $55, $55, $66, $66, $66 
-	dc.b	$66, $00 
-EnemyGfxData_InsectChild_Gfx_561EA:
-	dc.b	$00, $33, $33, $34, $DD, $33, $34, $4D, $5D, $33, $DD, $55, $5D, $44, $D4, $55, $D6, $44, $55, $55, $D6, $55, $56, $66, $66, $55, $66, $66, $6E, $66, $66, $6E 
-	dc.b	$ED, $00 
-EnemyGfxData_InsectChild_Gfx_5620C:
-	dc.b	$01, $00, $11, $11, $11, $33, $55, $66, $DD, $56, $6D, $DD, $56, $6D, $CD, $66, $DD, $D0, $66, $DC, $D0, $ED, $DC, $D0, $DD, $DC, $DC, $DC 
-EnemyGfxData_InsectChild_Gfx_56228:
-	dc.b	$02, $00, $FF, $FF, $C8, $00, $33, $00, $00, $07, $99, $43, $34, $32, $23, $21, $23, $00 
-EnemyGfxData_InsectChild_Gfx_5623A:
-	dc.b	$01, $00, $FF, $FF, $00, $00, $4D, $DD, $44, $40, $44, $44, $DD, $44, $32, $23, $4D, $CD, $22, $22, $33, $5C 
-EnemyGfxData_InsectChild_Gfx_56250:
-	dc.b	$01, $00, $FF, $FF, $F7, $73, $40, $55, $C5, $50 
-EnemyGfxData_InsectChild_Gfx_5625A:
-	dc.b	$01, $00, $EE, $CC, $CC, $CC, $43, $43, $04, $33, $04, $33, $44, $32, $43, $33, $43, $33, $44, $33 
-EnemyGfxData_InsectChild_Gfx_5626E:
-	dc.b	$01, $22, $10, $6A, $9B, $60, $32, $11, $BB, $32, $2B, $34, $BB, $32, $34, $12, $23, $11, $12, $11, $32, $23, $32, $32, $23, $33 
-EnemyGfxData_InsectChild_Gfx_56288:
-	dc.b	$00, $22, $22, $33, $56, $CC, $44, $34, $45, $43, $C5, $44, $44, $33, $CC, $C4, $45, $22, $33, $CD, $DD, $33, $33, $5D, $CD, $33, $34, $CD, $CC, $44, $CC, $5D 
-	dc.b	$CB, $00 
-EnemyGfxData_InsectChild_Gfx_562AA:
-	dc.b	$01, $00, $33, $11, $11, $11, $DC, $55, $5D, $C5, $DC, $C5, $60, $DC, $C5, $60, $DC, $D6, $56, $DC, $D6, $56, $CC, $DD, $66, $CC, $CD, $66 
-EnemyGfxData_InsectChild_Gfx_562C6:
-	dc.b	$01, $00, $CC, $CC, $EE, $FF, $44, $33, $54, $43, $05, $44, $05, $54, $65, $06 
-EnemyGfxData_InsectChild_Gfx_562D6:
-	dc.b	$01, $33, $EE, $77, $20, $00, $44, $CC, $44, $44, $54, $44, $43, $56, $54, $44, $45, $66, $65, $55, $CC, $06, $66, $66, $66, $00 
-EnemyGfxData_InsectChild_Gfx_562F0:
-	dc.b	$01, $66, $00, $00, $02, $7E, $CC, $C5, $5D, $CC, $45, $54, $5D, $DC, $34, $44, $D6, $DD, $34, $44, $D5, $6C, $44, $CD, $55, $6D, $4C, $55, $D6, $C5, $EE, $00 
-EnemyGfxData_InsectChild_Gfx_56310:
-	dc.b	$01, $00, $11, $11, $11, $11, $BC, $CD, $66, $BB, $CD, $66, $CB, $CD, $60, $CC, $BC, $60, $6C, $CB, $D0, $ED, $CB, $C0, $6D, $CC, $C0, $ED, $DC, $D0 
-EnemyGfxData_InsectChild_Gfx_5632E:
-	dc.b	$01, $00, $FF, $FF, $80, $00, $04, $44, $D3, $04, $44, $33, $4C, $44, $33, $33, $4C, $33, $32, $24, $B1, $00 
-EnemyGfxData_InsectChild_Gfx_56344:
-	dc.b	$01, $00, $FF, $FF, $30, $00, $33, $34, $33, $33, $34, $40, $22, $23, $33, $44, $11, $12, $23, $4D 
-EnemyGfxData_InsectChild_Gfx_56358:
-	dc.b	$01, $00, $FF, $FF, $FF, $F7, $40, $00 
-EnemyGfxData_InsectChild_Gfx_56360:
-	dc.b	$01, $00, $EC, $CC, $CC, $CC, $43, $04, $43, $04, $43, $44, $4B, $44, $4B, $44, $34, $54, $33, $54, $43, $00 
-EnemyGfxData_InsectChild_Gfx_56376:
-	dc.b	$00, $33, $22, $24, $B1, $43, $22, $25, $B2, $CC, $32, $24, $BB, $44, $B3, $22, $4B, $34, $C4, $32, $34, $34, $5C, $43, $45, $33, $5C, $C5, $55, $23, $45, $CB 
-	dc.b	$DD, $00 
-EnemyGfxData_InsectChild_Gfx_56398:
-	dc.b	$00, $12, $11, $23, $3C, $21, $11, $22, $3C, $22, $22, $22, $B4, $B3, $23, $4C, $44, $B4, $34, $CC, $33, $B5, $44, $C3, $23, $C5, $45, $C3, $23, $CD, $5C, $C3 
-	dc.b	$33, $00 
-EnemyGfxData_InsectChild_Gfx_563BA:
-	dc.b	$01, $00, $73, $33, $33, $33, $44, $43, $40, $33, $40, $33, $34, $33, $34, $33, $34, $3B, $54, $B5, $45, $00 
-EnemyGfxData_InsectChild_Gfx_563D0:
-	dc.b	$01, $00, $CC, $CC, $CE, $EF, $55, $43, $65, $44, $65, $55, $06, $55, $06, $6D, $66, $06 
-EnemyGfxData_InsectChild_Gfx_563E2:
-	dc.b	$00, $33, $44, $5C, $BC, $44, $44, $45, $DB, $44, $44, $4D, $CC, $55, $5D, $DD, $DC, $5D, $DD, $D6, $DD, $DD, $66, $55, $DD, $66, $65, $56, $DD, $06, $66, $66 
-	dc.b	$6D, $00 
-EnemyGfxData_InsectChild_Gfx_56404:
-	dc.b	$00, $CC, $DC, $54, $44, $CB, $CD, $55, $BB, $BB, $CC, $DC, $B5, $CB, $BC, $C6, $54, $CB, $CD, $65, $55, $DC, $BD, $66, $55, $DC, $BC, $66, $66, $DC, $CD, $66 
-	dc.b	$00, $00 
-EnemyGfxData_InsectChild_Gfx_56426:
-	dc.b	$01, $00, $33, $33, $77, $FF, $B5, $45, $54, $45, $44, $55, $44, $50, $55, $60 
+	incbin "data/art/tiles/enemy/insect_child_gfx.bin"
+EnemyGfxData_InsectChild_Gfx_559EE equ EnemyGfxData_InsectChild_Gfx_559E8+$6
+EnemyGfxData_InsectChild_Gfx_55A06 equ EnemyGfxData_InsectChild_Gfx_559E8+$1E
+EnemyGfxData_InsectChild_Gfx_55A20 equ EnemyGfxData_InsectChild_Gfx_559E8+$38
+EnemyGfxData_InsectChild_Gfx_55A28 equ EnemyGfxData_InsectChild_Gfx_559E8+$40
+EnemyGfxData_InsectChild_Gfx_55A36 equ EnemyGfxData_InsectChild_Gfx_559E8+$4E
+EnemyGfxData_InsectChild_Gfx_55A58 equ EnemyGfxData_InsectChild_Gfx_559E8+$70
+EnemyGfxData_InsectChild_Gfx_55A7A equ EnemyGfxData_InsectChild_Gfx_559E8+$92
+EnemyGfxData_InsectChild_Gfx_55A8E equ EnemyGfxData_InsectChild_Gfx_559E8+$A6
+EnemyGfxData_InsectChild_Gfx_55A98 equ EnemyGfxData_InsectChild_Gfx_559E8+$B0
+EnemyGfxData_InsectChild_Gfx_55ABA equ EnemyGfxData_InsectChild_Gfx_559E8+$D2
+EnemyGfxData_InsectChild_Gfx_55AD8 equ EnemyGfxData_InsectChild_Gfx_559E8+$F0
+EnemyGfxData_InsectChild_Gfx_55AE6 equ EnemyGfxData_InsectChild_Gfx_559E8+$FE
+EnemyGfxData_InsectChild_Gfx_55AFE equ EnemyGfxData_InsectChild_Gfx_559E8+$116
+EnemyGfxData_InsectChild_Gfx_55B18 equ EnemyGfxData_InsectChild_Gfx_559E8+$130
+EnemyGfxData_InsectChild_Gfx_55B26 equ EnemyGfxData_InsectChild_Gfx_559E8+$13E
+EnemyGfxData_InsectChild_Gfx_55B48 equ EnemyGfxData_InsectChild_Gfx_559E8+$160
+EnemyGfxData_InsectChild_Gfx_55B64 equ EnemyGfxData_InsectChild_Gfx_559E8+$17C
+EnemyGfxData_InsectChild_Gfx_55B78 equ EnemyGfxData_InsectChild_Gfx_559E8+$190
+EnemyGfxData_InsectChild_Gfx_55B82 equ EnemyGfxData_InsectChild_Gfx_559E8+$19A
+EnemyGfxData_InsectChild_Gfx_55B9E equ EnemyGfxData_InsectChild_Gfx_559E8+$1B6
+EnemyGfxData_InsectChild_Gfx_55BBC equ EnemyGfxData_InsectChild_Gfx_559E8+$1D4
+EnemyGfxData_InsectChild_Gfx_55BCC equ EnemyGfxData_InsectChild_Gfx_559E8+$1E4
+EnemyGfxData_InsectChild_Gfx_55BD4 equ EnemyGfxData_InsectChild_Gfx_559E8+$1EC
+EnemyGfxData_InsectChild_Gfx_55BEC equ EnemyGfxData_InsectChild_Gfx_559E8+$204
+EnemyGfxData_InsectChild_Gfx_55C06 equ EnemyGfxData_InsectChild_Gfx_559E8+$21E
+EnemyGfxData_InsectChild_Gfx_55C10 equ EnemyGfxData_InsectChild_Gfx_559E8+$228
+EnemyGfxData_InsectChild_Gfx_55C24 equ EnemyGfxData_InsectChild_Gfx_559E8+$23C
+EnemyGfxData_InsectChild_Gfx_55C40 equ EnemyGfxData_InsectChild_Gfx_559E8+$258
+EnemyGfxData_InsectChild_Gfx_55C5E equ EnemyGfxData_InsectChild_Gfx_559E8+$276
+EnemyGfxData_InsectChild_Gfx_55C7A equ EnemyGfxData_InsectChild_Gfx_559E8+$292
+EnemyGfxData_InsectChild_Gfx_55C88 equ EnemyGfxData_InsectChild_Gfx_559E8+$2A0
+EnemyGfxData_InsectChild_Gfx_55CAA equ EnemyGfxData_InsectChild_Gfx_559E8+$2C2
+EnemyGfxData_InsectChild_Gfx_55CCA equ EnemyGfxData_InsectChild_Gfx_559E8+$2E2
+EnemyGfxData_InsectChild_Gfx_55CE4 equ EnemyGfxData_InsectChild_Gfx_559E8+$2FC
+EnemyGfxData_InsectChild_Gfx_55CEC equ EnemyGfxData_InsectChild_Gfx_559E8+$304
+EnemyGfxData_InsectChild_Gfx_55D04 equ EnemyGfxData_InsectChild_Gfx_559E8+$31C
+EnemyGfxData_InsectChild_Gfx_55D1E equ EnemyGfxData_InsectChild_Gfx_559E8+$336
+EnemyGfxData_InsectChild_Gfx_55D28 equ EnemyGfxData_InsectChild_Gfx_559E8+$340
+EnemyGfxData_InsectChild_Gfx_55D3C equ EnemyGfxData_InsectChild_Gfx_559E8+$354
+EnemyGfxData_InsectChild_Gfx_55D56 equ EnemyGfxData_InsectChild_Gfx_559E8+$36E
+EnemyGfxData_InsectChild_Gfx_55D78 equ EnemyGfxData_InsectChild_Gfx_559E8+$390
+EnemyGfxData_InsectChild_Gfx_55D94 equ EnemyGfxData_InsectChild_Gfx_559E8+$3AC
+EnemyGfxData_InsectChild_Gfx_55DA0 equ EnemyGfxData_InsectChild_Gfx_559E8+$3B8
+EnemyGfxData_InsectChild_Gfx_55DC0 equ EnemyGfxData_InsectChild_Gfx_559E8+$3D8
+EnemyGfxData_InsectChild_Gfx_55DE2 equ EnemyGfxData_InsectChild_Gfx_559E8+$3FA
+EnemyGfxData_InsectChild_Gfx_55DFE equ EnemyGfxData_InsectChild_Gfx_559E8+$416
+EnemyGfxData_InsectChild_Gfx_55E06 equ EnemyGfxData_InsectChild_Gfx_559E8+$41E
+EnemyGfxData_InsectChild_Gfx_55E20 equ EnemyGfxData_InsectChild_Gfx_559E8+$438
+EnemyGfxData_InsectChild_Gfx_55E38 equ EnemyGfxData_InsectChild_Gfx_559E8+$450
+EnemyGfxData_InsectChild_Gfx_55E4C equ EnemyGfxData_InsectChild_Gfx_559E8+$464
+EnemyGfxData_InsectChild_Gfx_55E6E equ EnemyGfxData_InsectChild_Gfx_559E8+$486
+EnemyGfxData_InsectChild_Gfx_55E90 equ EnemyGfxData_InsectChild_Gfx_559E8+$4A8
+EnemyGfxData_InsectChild_Gfx_55E9E equ EnemyGfxData_InsectChild_Gfx_559E8+$4B6
+EnemyGfxData_InsectChild_Gfx_55EAC equ EnemyGfxData_InsectChild_Gfx_559E8+$4C4
+EnemyGfxData_InsectChild_Gfx_55ECE equ EnemyGfxData_InsectChild_Gfx_559E8+$4E6
+EnemyGfxData_InsectChild_Gfx_55EF0 equ EnemyGfxData_InsectChild_Gfx_559E8+$508
+EnemyGfxData_InsectChild_Gfx_55EFA equ EnemyGfxData_InsectChild_Gfx_559E8+$512
+EnemyGfxData_InsectChild_Gfx_55F0E equ EnemyGfxData_InsectChild_Gfx_559E8+$526
+EnemyGfxData_InsectChild_Gfx_55F24 equ EnemyGfxData_InsectChild_Gfx_559E8+$53C
+EnemyGfxData_InsectChild_Gfx_55F2C equ EnemyGfxData_InsectChild_Gfx_559E8+$544
+EnemyGfxData_InsectChild_Gfx_55F3E equ EnemyGfxData_InsectChild_Gfx_559E8+$556
+EnemyGfxData_InsectChild_Gfx_55F60 equ EnemyGfxData_InsectChild_Gfx_559E8+$578
+EnemyGfxData_InsectChild_Gfx_55F82 equ EnemyGfxData_InsectChild_Gfx_559E8+$59A
+EnemyGfxData_InsectChild_Gfx_55F9C equ EnemyGfxData_InsectChild_Gfx_559E8+$5B4
+EnemyGfxData_InsectChild_Gfx_55FAA equ EnemyGfxData_InsectChild_Gfx_559E8+$5C2
+EnemyGfxData_InsectChild_Gfx_55FCC equ EnemyGfxData_InsectChild_Gfx_559E8+$5E4
+EnemyGfxData_InsectChild_Gfx_55FEA equ EnemyGfxData_InsectChild_Gfx_559E8+$602
+EnemyGfxData_InsectChild_Gfx_56000 equ EnemyGfxData_InsectChild_Gfx_559E8+$618
+EnemyGfxData_InsectChild_Gfx_56014 equ EnemyGfxData_InsectChild_Gfx_559E8+$62C
+EnemyGfxData_InsectChild_Gfx_5602A equ EnemyGfxData_InsectChild_Gfx_559E8+$642
+EnemyGfxData_InsectChild_Gfx_56032 equ EnemyGfxData_InsectChild_Gfx_559E8+$64A
+EnemyGfxData_InsectChild_Gfx_56048 equ EnemyGfxData_InsectChild_Gfx_559E8+$660
+EnemyGfxData_InsectChild_Gfx_5606A equ EnemyGfxData_InsectChild_Gfx_559E8+$682
+EnemyGfxData_InsectChild_Gfx_56088 equ EnemyGfxData_InsectChild_Gfx_559E8+$6A0
+EnemyGfxData_InsectChild_Gfx_560A4 equ EnemyGfxData_InsectChild_Gfx_559E8+$6BC
+EnemyGfxData_InsectChild_Gfx_560B6 equ EnemyGfxData_InsectChild_Gfx_559E8+$6CE
+EnemyGfxData_InsectChild_Gfx_560D8 equ EnemyGfxData_InsectChild_Gfx_559E8+$6F0
+EnemyGfxData_InsectChild_Gfx_560F6 equ EnemyGfxData_InsectChild_Gfx_559E8+$70E
+EnemyGfxData_InsectChild_Gfx_5610A equ EnemyGfxData_InsectChild_Gfx_559E8+$722
+EnemyGfxData_InsectChild_Gfx_5611E equ EnemyGfxData_InsectChild_Gfx_559E8+$736
+EnemyGfxData_InsectChild_Gfx_56134 equ EnemyGfxData_InsectChild_Gfx_559E8+$74C
+EnemyGfxData_InsectChild_Gfx_5613E equ EnemyGfxData_InsectChild_Gfx_559E8+$756
+EnemyGfxData_InsectChild_Gfx_56156 equ EnemyGfxData_InsectChild_Gfx_559E8+$76E
+EnemyGfxData_InsectChild_Gfx_56172 equ EnemyGfxData_InsectChild_Gfx_559E8+$78A
+EnemyGfxData_InsectChild_Gfx_56194 equ EnemyGfxData_InsectChild_Gfx_559E8+$7AC
+EnemyGfxData_InsectChild_Gfx_561B2 equ EnemyGfxData_InsectChild_Gfx_559E8+$7CA
+EnemyGfxData_InsectChild_Gfx_561C8 equ EnemyGfxData_InsectChild_Gfx_559E8+$7E0
+EnemyGfxData_InsectChild_Gfx_561EA equ EnemyGfxData_InsectChild_Gfx_559E8+$802
+EnemyGfxData_InsectChild_Gfx_5620C equ EnemyGfxData_InsectChild_Gfx_559E8+$824
+EnemyGfxData_InsectChild_Gfx_56228 equ EnemyGfxData_InsectChild_Gfx_559E8+$840
+EnemyGfxData_InsectChild_Gfx_5623A equ EnemyGfxData_InsectChild_Gfx_559E8+$852
+EnemyGfxData_InsectChild_Gfx_56250 equ EnemyGfxData_InsectChild_Gfx_559E8+$868
+EnemyGfxData_InsectChild_Gfx_5625A equ EnemyGfxData_InsectChild_Gfx_559E8+$872
+EnemyGfxData_InsectChild_Gfx_5626E equ EnemyGfxData_InsectChild_Gfx_559E8+$886
+EnemyGfxData_InsectChild_Gfx_56288 equ EnemyGfxData_InsectChild_Gfx_559E8+$8A0
+EnemyGfxData_InsectChild_Gfx_562AA equ EnemyGfxData_InsectChild_Gfx_559E8+$8C2
+EnemyGfxData_InsectChild_Gfx_562C6 equ EnemyGfxData_InsectChild_Gfx_559E8+$8DE
+EnemyGfxData_InsectChild_Gfx_562D6 equ EnemyGfxData_InsectChild_Gfx_559E8+$8EE
+EnemyGfxData_InsectChild_Gfx_562F0 equ EnemyGfxData_InsectChild_Gfx_559E8+$908
+EnemyGfxData_InsectChild_Gfx_56310 equ EnemyGfxData_InsectChild_Gfx_559E8+$928
+EnemyGfxData_InsectChild_Gfx_5632E equ EnemyGfxData_InsectChild_Gfx_559E8+$946
+EnemyGfxData_InsectChild_Gfx_56344 equ EnemyGfxData_InsectChild_Gfx_559E8+$95C
+EnemyGfxData_InsectChild_Gfx_56358 equ EnemyGfxData_InsectChild_Gfx_559E8+$970
+EnemyGfxData_InsectChild_Gfx_56360 equ EnemyGfxData_InsectChild_Gfx_559E8+$978
+EnemyGfxData_InsectChild_Gfx_56376 equ EnemyGfxData_InsectChild_Gfx_559E8+$98E
+EnemyGfxData_InsectChild_Gfx_56398 equ EnemyGfxData_InsectChild_Gfx_559E8+$9B0
+EnemyGfxData_InsectChild_Gfx_563BA equ EnemyGfxData_InsectChild_Gfx_559E8+$9D2
+EnemyGfxData_InsectChild_Gfx_563D0 equ EnemyGfxData_InsectChild_Gfx_559E8+$9E8
+EnemyGfxData_InsectChild_Gfx_563E2 equ EnemyGfxData_InsectChild_Gfx_559E8+$9FA
+EnemyGfxData_InsectChild_Gfx_56404 equ EnemyGfxData_InsectChild_Gfx_559E8+$A1C
+EnemyGfxData_InsectChild_Gfx_56426 equ EnemyGfxData_InsectChild_Gfx_559E8+$A3E
 EnemyGfxData_InsectChild:
 	dc.l	EnemyGfxData_InsectChild_Gfx_559E8
 	dc.l	EnemyGfxData_InsectChild_Gfx_559EE
@@ -59985,117 +57775,62 @@ EnemyGfxFrameTable_InsectMain:
 	dc.b	$00, $15, $13, $16, $14, $17, $00, $18, $00, $1B, $19, $1C, $1A, $1D, $00, $1E, $00, $22, $1F, $23, $20, $24, $21, $25, $00, $28, $1F, $29, $26, $2A, $27, $2B 
 	dc.b	$00, $2F, $2C, $30, $2D, $2A, $2E, $31, $00, $34, $32, $35, $33, $36, $00, $37 
 EnemyGfxData_InsectMain_Gfx_56646:
-	dc.b	$01, $00, $FF, $FF, $FF, $FF 
-EnemyGfxData_InsectMain_Gfx_5664C:
-	dc.b	$01, $00, $EE, $EC, $CE, $EE, $DE, $0D, $D0, $0D, $0D, $0D, $0D, $D0, $DD, $D0 
-EnemyGfxData_InsectMain_Gfx_5665C:
-	dc.b	$02, $DD, $4C, $CC, $00, $00, $00, $13, $33, $33, $37, $ED, $D0, $CD, $0D, $CD, $CD, $CD, $D0, $CD 
-EnemyGfxData_InsectMain_Gfx_56670:
-	dc.b	$01, $00, $FF, $FE, $EF, $FF, $0E, $0E 
-EnemyGfxData_InsectMain_Gfx_56678:
-	dc.b	$02, $00, $C0, $00, $00, $8F, $EE, $06, $FF, $FF, $70, $EC, $CE, $0E, $CC, $00 
-EnemyGfxData_InsectMain_Gfx_56688:
-	dc.b	$01, $EE, $67, $7F, $FF, $C0, $BD, $E0, $DE, $DE, $E0, $00, $00, $00, $00, $00 
-EnemyGfxData_InsectMain_Gfx_56698:
-	dc.b	$01, $00, $F7, $77, $7F, $FF, $E0, $EE, $EE, $E0 
-EnemyGfxData_InsectMain_Gfx_566A2:
-	dc.b	$01, $00, $EF, $FF, $FF, $FF, $0E, $00 
-EnemyGfxData_InsectMain_Gfx_566AA:
-	dc.b	$02, $DD, $62, $51, $01, $00, $00, $08, $88, $8C, $89, $ED, $D0, $0D, $D0, $DC, $D0, $DC, $D0, $DC, $CD, $DC, $0D, $CD, $D0, $0D, $CD, $00 
-EnemyGfxData_InsectMain_Gfx_566C6:
-	dc.b	$01, $00, $77, $77, $77, $77, $DD, $DD, $DD, $0D, $DD, $D0, $D0, $0D 
-EnemyGfxData_InsectMain_Gfx_566D4:
-	dc.b	$02, $00, $C0, $00, $00, $8F, $EE, $37, $FF, $FF, $70, $0E 
-EnemyGfxData_InsectMain_Gfx_566E0:
-	dc.b	$01, $EE, $EF, $FF, $FF, $C0, $00, $E0, $00, $00, $00, $00, $00, $00 
-EnemyGfxData_InsectMain_Gfx_566EE:
-	dc.b	$01, $00, $EF, $FF, $FF, $FF, $EE, $00 
-EnemyGfxData_InsectMain_Gfx_566F6:
-	dc.b	$01, $00, $2E, $EE, $EE, $EC, $EE, $E0, $0D, $0D, $D0, $D0, $DD, $DC, $CD, $0D, $CD, $00 
-EnemyGfxData_InsectMain_Gfx_56708:
-	dc.b	$02, $00, $31, $11, $33, $3B, $D0, $02, $62, $04, $C0, $DC, $DD, $DC, $DD, $DD, $DD, $0D, $CD, $DD, $DD, $0D 
-EnemyGfxData_InsectMain_Gfx_5671E:
-	dc.b	$01, $EE, $FF, $FF, $FF, $C0, $E0, $00, $00, $00, $00, $00 
-EnemyGfxData_InsectMain_Gfx_5672A:
-	dc.b	$01, $00, $3E, $EE, $EE, $E8, $EE, $E0, $0D, $D0, $DD, $0D, $DC, $CD, $0D, $DD, $CD, $00 
-EnemyGfxData_InsectMain_Gfx_5673C:
-	dc.b	$02, $DD, $44, $88, $88, $80, $00, $33, $33, $33, $77, $DC, $DC, $D0, $D0, $0D, $0D, $0D 
-EnemyGfxData_InsectMain_Gfx_5674E:
-	dc.b	$01, $00, $77, $77, $7F, $FF, $0D, $E0, $EE, $EE, $E0, $00 
-EnemyGfxData_InsectMain_Gfx_5675A:
-	dc.b	$01, $00, $EE, $CC, $CE, $EE, $0D, $DD, $0D, $DC, $0C, $0C, $0C, $CC, $DC, $0C, $DC, $00 
-EnemyGfxData_InsectMain_Gfx_5676C:
-	dc.b	$01, $00, $33, $33, $77, $77, $CC, $D0, $CC, $CD, $CD, $D0, $DD, $D0, $D0, $CD, $DD, $DD 
-EnemyGfxData_InsectMain_Gfx_5677E:
-	dc.b	$01, $00, $FE, $EE, $EF, $FF, $0E, $EE, $EE, $0E 
-EnemyGfxData_InsectMain_Gfx_56788:
-	dc.b	$01, $EE, $6E, $EE, $FF, $30, $0E, $DD, $ED, $ED, $ED, $00, $0E, $00, $00, $00, $00, $00 
-EnemyGfxData_InsectMain_Gfx_5679A:
-	dc.b	$02, $00, $30, $00, $00, $1F, $EE, $06, $7F, $FF, $E0, $DC, $CE, $DC, $E0, $DE 
-EnemyGfxData_InsectMain_Gfx_567AA:
-	dc.b	$01, $00, $FF, $F7, $7F, $FF, $E0, $E0 
-EnemyGfxData_InsectMain_Gfx_567B2:
-	dc.b	$01, $00, $8E, $EC, $CC, $CE, $06, $66, $66, $66, $DD, $0D, $D0, $DD, $0D, $D0, $0D, $0D, $DD, $DD 
-EnemyGfxData_InsectMain_Gfx_567C6:
-	dc.b	$02, $DD, $04, $CC, $A2, $00, $00, $01, $31, $15, $33, $66, $66, $66, $60, $6D, $D0, $D0, $D0, $CD, $CD, $CD, $CD, $D0 
-EnemyGfxData_InsectMain_Gfx_567DE:
-	dc.b	$01, $00, $FF, $EE, $EE, $FF, $0E, $EE, $EE, $0E 
-EnemyGfxData_InsectMain_Gfx_567E8:
-	dc.b	$01, $EE, $0E, $FF, $FF, $70, $00, $0E, $EC, $CE, $CC, $0E, $00, $00, $00, $00 
-EnemyGfxData_InsectMain_Gfx_567F8:
-	dc.b	$01, $EE, $77, $7F, $FF, $E0, $BD, $DE, $DE, $00, $00, $00, $00, $00 
-EnemyGfxData_InsectMain_Gfx_56806:
-	dc.b	$01, $00, $F7, $33, $77, $FF, $EE, $EE, $E0, $EE, $E0, $EE, $E0, $00 
-EnemyGfxData_InsectMain_Gfx_56814:
-	dc.b	$01, $00, $8C, $FF, $FF, $FF, $66, $66, $66, $06, $66, $00 
-EnemyGfxData_InsectMain_Gfx_56820:
-	dc.b	$02, $DD, $16, $06, $20, $10, $00, $00, $88, $88, $C8, $66, $6E, $ED, $6D, $D0, $0D, $DC, $CD, $CD, $D0, $CC, $D0, $DC, $CD, $DC, $0D, $CD, $D0, $00 
-EnemyGfxData_InsectMain_Gfx_5683E:
-	dc.b	$01, $00, $73, $B3, $33, $77, $D0, $DD, $C0, $D0, $0D, $DC, $D0, $CC, $DD, $D0, $D0, $D0 
-EnemyGfxData_InsectMain_Gfx_56850:
-	dc.b	$01, $00, $FF, $EC, $CE, $FF, $EE, $0E, $EE, $0E, $EE, $0E 
-EnemyGfxData_InsectMain_Gfx_5685C:
-	dc.b	$02, $00, $C0, $00, $00, $8F, $EE, $3F, $FF, $FF, $70, $00 
-EnemyGfxData_InsectMain_Gfx_56868:
-	dc.b	$01, $EE, $89, $FF, $FF, $C0, $ED, $DD, $E0, $ED, $DE, $E0, $00, $00, $00, $00, $00, $00 
-EnemyGfxData_InsectMain_Gfx_5687A:
-	dc.b	$01, $00, $F7, $33, $7F, $FF, $EE, $EE, $E0, $EE, $E0, $EE 
-EnemyGfxData_InsectMain_Gfx_56886:
-	dc.b	$01, $00, $03, $FE, $EE, $EE, $66, $66, $ED, $D0, $EE, $EE, $0D, $D0, $DD, $DC, $CD, $00 
-EnemyGfxData_InsectMain_Gfx_56898:
-	dc.b	$01, $00, $11, $11, $11, $33, $0D, $CD, $D0, $DC, $CD, $DD, $DC, $CD, $0D, $DD, $CD, $0D, $DD, $D0, $DD, $CD, $DD, $D0, $DD, $D0, $D0, $D0 
-EnemyGfxData_InsectMain_Gfx_568B4:
-	dc.b	$01, $00, $FF, $EE, $EF, $FF, $0E, $EE, $EE, $00 
-EnemyGfxData_InsectMain_Gfx_568BE:
-	dc.b	$02, $00, $C0, $00, $00, $8F, $EE, $37, $FF, $FF, $30, $0E, $0E, $00 
-EnemyGfxData_InsectMain_Gfx_568CC:
-	dc.b	$01, $EE, $FF, $FF, $FF, $E0, $00, $00, $00, $00, $00, $00 
-EnemyGfxData_InsectMain_Gfx_568D8:
-	dc.b	$01, $00, $F3, $33, $37, $FF, $EE, $E0, $EE, $EE, $EE, $EE, $EE, $E0, $E0, $00 
-EnemyGfxData_InsectMain_Gfx_568E8:
-	dc.b	$01, $00, $8E, $FF, $FF, $FF, $06, $66, $66, $66 
-EnemyGfxData_InsectMain_Gfx_568F2:
-	dc.b	$01, $00, $01, $EE, $EE, $EE, $66, $66, $6E, $E0, $66, $6E, $E0, $0D, $D0, $DD, $0D, $DC, $CD, $00 
-EnemyGfxData_InsectMain_Gfx_56906:
-	dc.b	$02, $DD, $84, $48, $88, $88, $00, $13, $33, $33, $37, $CD, $D0, $DC, $DC, $D0, $D0, $0D, $0D, $00 
-EnemyGfxData_InsectMain_Gfx_5691A:
-	dc.b	$01, $00, $FF, $EC, $EF, $FF, $EE, $0E, $EE, $EE 
-EnemyGfxData_InsectMain_Gfx_56924:
-	dc.b	$01, $EE, $3F, $FF, $FF, $30, $00, $0E, $00, $0E, $00, $00, $00, $00 
-EnemyGfxData_InsectMain_Gfx_56932:
-	dc.b	$01, $00, $73, $33, $37, $FF, $ED, $EE, $E0, $EE, $EE, $EE, $EE, $EE, $E0, $E0 
-EnemyGfxData_InsectMain_Gfx_56942:
-	dc.b	$01, $00, $8E, $EC, $CC, $EE, $06, $66, $6D, $0D, $DD, $0D, $DC, $0C, $0C, $0C, $CC, $DC, $0C, $00 
-EnemyGfxData_InsectMain_Gfx_56956:
-	dc.b	$01, $00, $33, $33, $37, $77, $CB, $CD, $CC, $D0, $CC, $CD, $CD, $D0, $DD, $D0, $D0, $CD, $DD, $00 
-EnemyGfxData_InsectMain_Gfx_5696A:
-	dc.b	$01, $00, $FE, $CC, $EE, $FF, $0E, $0E, $EE, $0E, $EE, $EE, $0E, $00 
-EnemyGfxData_InsectMain_Gfx_56978:
-	dc.b	$01, $EE, $6E, $EE, $FF, $70, $00, $DD, $ED, $ED, $ED, $00, $00, $00, $00, $00 
-EnemyGfxData_InsectMain_Gfx_56988:
-	dc.b	$01, $EE, $27, $7F, $FF, $C0, $DC, $CE, $00, $DC, $DE, $E0, $00, $00, $00, $00, $00, $00 
-EnemyGfxData_InsectMain_Gfx_5699A:
-	dc.b	$01, $00, $F7, $33, $7F, $FF, $E0, $EE, $E0, $EE, $E0, $EE 
+	incbin "data/art/tiles/enemy/insect_main_gfx.bin"
+EnemyGfxData_InsectMain_Gfx_5664C equ EnemyGfxData_InsectMain_Gfx_56646+$6
+EnemyGfxData_InsectMain_Gfx_5665C equ EnemyGfxData_InsectMain_Gfx_56646+$16
+EnemyGfxData_InsectMain_Gfx_56670 equ EnemyGfxData_InsectMain_Gfx_56646+$2A
+EnemyGfxData_InsectMain_Gfx_56678 equ EnemyGfxData_InsectMain_Gfx_56646+$32
+EnemyGfxData_InsectMain_Gfx_56688 equ EnemyGfxData_InsectMain_Gfx_56646+$42
+EnemyGfxData_InsectMain_Gfx_56698 equ EnemyGfxData_InsectMain_Gfx_56646+$52
+EnemyGfxData_InsectMain_Gfx_566A2 equ EnemyGfxData_InsectMain_Gfx_56646+$5C
+EnemyGfxData_InsectMain_Gfx_566AA equ EnemyGfxData_InsectMain_Gfx_56646+$64
+EnemyGfxData_InsectMain_Gfx_566C6 equ EnemyGfxData_InsectMain_Gfx_56646+$80
+EnemyGfxData_InsectMain_Gfx_566D4 equ EnemyGfxData_InsectMain_Gfx_56646+$8E
+EnemyGfxData_InsectMain_Gfx_566E0 equ EnemyGfxData_InsectMain_Gfx_56646+$9A
+EnemyGfxData_InsectMain_Gfx_566EE equ EnemyGfxData_InsectMain_Gfx_56646+$A8
+EnemyGfxData_InsectMain_Gfx_566F6 equ EnemyGfxData_InsectMain_Gfx_56646+$B0
+EnemyGfxData_InsectMain_Gfx_56708 equ EnemyGfxData_InsectMain_Gfx_56646+$C2
+EnemyGfxData_InsectMain_Gfx_5671E equ EnemyGfxData_InsectMain_Gfx_56646+$D8
+EnemyGfxData_InsectMain_Gfx_5672A equ EnemyGfxData_InsectMain_Gfx_56646+$E4
+EnemyGfxData_InsectMain_Gfx_5673C equ EnemyGfxData_InsectMain_Gfx_56646+$F6
+EnemyGfxData_InsectMain_Gfx_5674E equ EnemyGfxData_InsectMain_Gfx_56646+$108
+EnemyGfxData_InsectMain_Gfx_5675A equ EnemyGfxData_InsectMain_Gfx_56646+$114
+EnemyGfxData_InsectMain_Gfx_5676C equ EnemyGfxData_InsectMain_Gfx_56646+$126
+EnemyGfxData_InsectMain_Gfx_5677E equ EnemyGfxData_InsectMain_Gfx_56646+$138
+EnemyGfxData_InsectMain_Gfx_56788 equ EnemyGfxData_InsectMain_Gfx_56646+$142
+EnemyGfxData_InsectMain_Gfx_5679A equ EnemyGfxData_InsectMain_Gfx_56646+$154
+EnemyGfxData_InsectMain_Gfx_567AA equ EnemyGfxData_InsectMain_Gfx_56646+$164
+EnemyGfxData_InsectMain_Gfx_567B2 equ EnemyGfxData_InsectMain_Gfx_56646+$16C
+EnemyGfxData_InsectMain_Gfx_567C6 equ EnemyGfxData_InsectMain_Gfx_56646+$180
+EnemyGfxData_InsectMain_Gfx_567DE equ EnemyGfxData_InsectMain_Gfx_56646+$198
+EnemyGfxData_InsectMain_Gfx_567E8 equ EnemyGfxData_InsectMain_Gfx_56646+$1A2
+EnemyGfxData_InsectMain_Gfx_567F8 equ EnemyGfxData_InsectMain_Gfx_56646+$1B2
+EnemyGfxData_InsectMain_Gfx_56806 equ EnemyGfxData_InsectMain_Gfx_56646+$1C0
+EnemyGfxData_InsectMain_Gfx_56814 equ EnemyGfxData_InsectMain_Gfx_56646+$1CE
+EnemyGfxData_InsectMain_Gfx_56820 equ EnemyGfxData_InsectMain_Gfx_56646+$1DA
+EnemyGfxData_InsectMain_Gfx_5683E equ EnemyGfxData_InsectMain_Gfx_56646+$1F8
+EnemyGfxData_InsectMain_Gfx_56850 equ EnemyGfxData_InsectMain_Gfx_56646+$20A
+EnemyGfxData_InsectMain_Gfx_5685C equ EnemyGfxData_InsectMain_Gfx_56646+$216
+EnemyGfxData_InsectMain_Gfx_56868 equ EnemyGfxData_InsectMain_Gfx_56646+$222
+EnemyGfxData_InsectMain_Gfx_5687A equ EnemyGfxData_InsectMain_Gfx_56646+$234
+EnemyGfxData_InsectMain_Gfx_56886 equ EnemyGfxData_InsectMain_Gfx_56646+$240
+EnemyGfxData_InsectMain_Gfx_56898 equ EnemyGfxData_InsectMain_Gfx_56646+$252
+EnemyGfxData_InsectMain_Gfx_568B4 equ EnemyGfxData_InsectMain_Gfx_56646+$26E
+EnemyGfxData_InsectMain_Gfx_568BE equ EnemyGfxData_InsectMain_Gfx_56646+$278
+EnemyGfxData_InsectMain_Gfx_568CC equ EnemyGfxData_InsectMain_Gfx_56646+$286
+EnemyGfxData_InsectMain_Gfx_568D8 equ EnemyGfxData_InsectMain_Gfx_56646+$292
+EnemyGfxData_InsectMain_Gfx_568E8 equ EnemyGfxData_InsectMain_Gfx_56646+$2A2
+EnemyGfxData_InsectMain_Gfx_568F2 equ EnemyGfxData_InsectMain_Gfx_56646+$2AC
+EnemyGfxData_InsectMain_Gfx_56906 equ EnemyGfxData_InsectMain_Gfx_56646+$2C0
+EnemyGfxData_InsectMain_Gfx_5691A equ EnemyGfxData_InsectMain_Gfx_56646+$2D4
+EnemyGfxData_InsectMain_Gfx_56924 equ EnemyGfxData_InsectMain_Gfx_56646+$2DE
+EnemyGfxData_InsectMain_Gfx_56932 equ EnemyGfxData_InsectMain_Gfx_56646+$2EC
+EnemyGfxData_InsectMain_Gfx_56942 equ EnemyGfxData_InsectMain_Gfx_56646+$2FC
+EnemyGfxData_InsectMain_Gfx_56956 equ EnemyGfxData_InsectMain_Gfx_56646+$310
+EnemyGfxData_InsectMain_Gfx_5696A equ EnemyGfxData_InsectMain_Gfx_56646+$324
+EnemyGfxData_InsectMain_Gfx_56978 equ EnemyGfxData_InsectMain_Gfx_56646+$332
+EnemyGfxData_InsectMain_Gfx_56988 equ EnemyGfxData_InsectMain_Gfx_56646+$342
+EnemyGfxData_InsectMain_Gfx_5699A equ EnemyGfxData_InsectMain_Gfx_56646+$354
 EnemyGfxData_InsectMain:
 	dc.l	EnemyGfxData_InsectMain_Gfx_56646
 	dc.l	EnemyGfxData_InsectMain_Gfx_5664C
@@ -60159,209 +57894,101 @@ EnemyGfxFrameTable_GolemMain:
 	dc.b	$3A, $3D, $38, $3B, $3E, $39, $27, $3F, $40, $44, $48, $41, $45, $49, $42, $46, $4A, $43, $47, $4B, $4C, $44, $52, $4D, $45, $49, $4E, $50, $53, $4F, $51, $54 
 	dc.b	$55, $59, $5C, $56, $45, $5D, $57, $5A, $53, $58, $5B, $5E 
 EnemyGfxData_GolemMain_Gfx_56AF2:
-	dc.b	$01, $00, $00, $03, $BF, $FF, $42, $13, $42, $44, $42, $41, $44, $04, $04, $14, $40, $05, $04, $22, $44, $00 
-EnemyGfxData_GolemMain_Gfx_56B08:
-	dc.b	$00, $21, $12, $34, $43, $42, $22, $34, $33, $43, $33, $45, $44, $55, $44, $45, $54, $55, $55, $53, $34, $55, $43, $32, $23, $55, $42, $22, $22, $54, $53, $22 
-	dc.b	$23, $00 
-EnemyGfxData_GolemMain_Gfx_56B2A:
-	dc.b	$00, $11, $12, $45, $55, $21, $22, $55, $05, $32, $24, $55, $00, $44, $44, $55, $50, $55, $55, $65, $45, $45, $66, $65, $33, $34, $56, $66, $33, $45, $66, $66 
-	dc.b	$43, $00 
-EnemyGfxData_GolemMain_Gfx_56B4C:
-	dc.b	$00, $45, $33, $40, $00, $54, $33, $40, $00, $65, $44, $34, $00, $65, $22, $13, $40, $55, $44, $11, $40, $55, $41, $21, $40, $45, $54, $52, $40, $45, $55, $25 
-	dc.b	$00, $00 
-EnemyGfxData_GolemMain_Gfx_56B6E:
-	dc.b	$01, $00, $FE, $EE, $EE, $EF, $04, $04, $04, $04, $05, $05 
-EnemyGfxData_GolemMain_Gfx_56B7A:
-	dc.b	$00, $54, $54, $33, $33, $43, $24, $44, $45, $53, $22, $11, $13, $55, $33, $23, $33, $45, $54, $44, $55, $44, $21, $11, $33, $54, $43, $23, $33, $55, $55, $55 
-	dc.b	$55, $00 
-EnemyGfxData_GolemMain_Gfx_56B9C:
-	dc.b	$01, $45, $84, $40, $46, $22, $55, $65, $43, $54, $65, $44, $34, $66, $54, $34, $54, $56, $54, $53, $56, $55, $34, $55, $44, $54, $55, $55, $34, $55 
-EnemyGfxData_GolemMain_Gfx_56BBA:
-	dc.b	$01, $00, $57, $77, $77, $FF, $45, $50, $45, $45, $50, $50, $50, $00 
-EnemyGfxData_GolemMain_Gfx_56BC8:
-	dc.b	$01, $00, $FF, $C8, $CE, $FF, $0B, $BB, $0B, $BB, $BB, $BB, $BB, $0B 
-EnemyGfxData_GolemMain_Gfx_56BD6:
-	dc.b	$01, $BB, $00, $08, $8C, $70, $55, $42, $11, $33, $05, $44, $33, $33, $B5, $55, $55, $55, $54, $43, $33, $B5, $54, $44, $B5, $55, $0B, $00, $00, $00, $00, $00 
-EnemyGfxData_GolemMain_Gfx_56BF6:
-	dc.b	$02, $55, $36, $E4, $C8, $00, $BB, $00, $11, $37, $E0, $33, $45, $44, $00, $44, $5B, $B0, $00, $00, $00, $00 
-EnemyGfxData_GolemMain_Gfx_56C0C:
-	dc.b	$01, $00, $FF, $73, $13, $FF, $B0, $BB, $BB, $BB, $BB, $B0, $BB, $B0 
-EnemyGfxData_GolemMain_Gfx_56C1A:
-	dc.b	$01, $00, $00, $01, $13, $BF, $44, $22, $11, $44, $43, $13, $24, $44, $42, $13, $42, $45, $42, $41, $44, $04, $14, $40, $04, $22, $44, $00 
-EnemyGfxData_GolemMain_Gfx_56C36:
-	dc.b	$00, $11, $12, $45, $55, $21, $22, $55, $05, $32, $24, $55, $00, $44, $44, $55, $00, $55, $55, $65, $50, $45, $66, $65, $35, $34, $56, $66, $34, $45, $66, $66 
-	dc.b	$43, $00 
-EnemyGfxData_GolemMain_Gfx_56C58:
-	dc.b	$01, $00, $10, $01, $1B, $F7, $54, $42, $13, $53, $22, $13, $30, $64, $34, $23, $40, $65, $42, $35, $05, $34, $50, $55, $40, $00 
-EnemyGfxData_GolemMain_Gfx_56C72:
-	dc.b	$00, $54, $54, $33, $33, $44, $34, $44, $45, $54, $21, $33, $33, $54, $32, $12, $23, $45, $43, $33, $34, $43, $55, $55, $55, $54, $32, $12, $23, $55, $43, $21 
-	dc.b	$33, $00 
-EnemyGfxData_GolemMain_Gfx_56C94:
-	dc.b	$01, $45, $84, $40, $C2, $60, $55, $65, $43, $54, $65, $44, $34, $66, $54, $34, $54, $56, $54, $56, $55, $53, $35, $55, $33, $55, $44, $54, $55, $55 
-EnemyGfxData_GolemMain_Gfx_56CB2:
-	dc.b	$01, $00, $77, $77, $77, $FF, $40, $40, $40, $50, $50, $50 
-EnemyGfxData_GolemMain_Gfx_56CBE:
-	dc.b	$02, $00, $FE, $C8, $CE, $FF, $BB, $00, $33, $31, $00, $0B, $0B, $00 
-EnemyGfxData_GolemMain_Gfx_56CCC:
-	dc.b	$02, $55, $F0, $07, $23, $00, $BB, $00, $08, $8C, $70, $B5, $43, $21, $23, $B5, $54, $43, $33, $B5, $44, $0B, $00, $00, $00, $00 
-EnemyGfxData_GolemMain_Gfx_56CE6:
-	dc.b	$03, $55, $B2, $6C, $C8, $00, $00, $01, $00, $00, $3F, $BB, $00, $11, $37, $C0, $44, $34, $44, $44, $5B, $00 
-EnemyGfxData_GolemMain_Gfx_56CFC:
-	dc.b	$01, $00, $FF, $31, $3F, $FF, $BB, $B0, $BB, $BB, $B0, $BB, $BB, $00 
-EnemyGfxData_GolemMain_Gfx_56D0A:
-	dc.b	$00, $00, $43, $44, $54, $04, $44, $45, $45, $04, $22, $11, $45, $43, $13, $24, $50, $42, $13, $42, $00, $42, $41, $44, $00, $04, $14, $40, $00, $04, $22, $40 
-	dc.b	$00, $00 
-EnemyGfxData_GolemMain_Gfx_56D2C:
-	dc.b	$00, $11, $12, $45, $55, $21, $22, $55, $00, $32, $24, $55, $00, $44, $44, $55, $00, $55, $55, $65, $00, $45, $66, $65, $30, $34, $56, $66, $30, $45, $66, $66 
-	dc.b	$43, $00 
-EnemyGfxData_GolemMain_Gfx_56D4E:
-	dc.b	$01, $00, $13, $3F, $FF, $FF, $54, $23, $50, $53, $45, $05, $50, $00 
-EnemyGfxData_GolemMain_Gfx_56D5C:
-	dc.b	$01, $00, $BE, $EE, $EE, $EF, $44, $04, $04, $04, $04, $05, $05, $00 
-EnemyGfxData_GolemMain_Gfx_56D6A:
-	dc.b	$00, $54, $54, $34, $45, $44, $34, $43, $33, $54, $21, $22, $23, $54, $32, $12, $33, $43, $43, $33, $44, $43, $33, $44, $44, $54, $32, $12, $23, $55, $43, $21 
-	dc.b	$33, $00 
-EnemyGfxData_GolemMain_Gfx_56D8C:
-	dc.b	$01, $55, $C0, $00, $91, $13, $65, $43, $44, $45, $65, $44, $34, $45, $66, $54, $34, $54, $56, $54, $45, $56, $33, $35, $45, $33, $45, $45, $44, $54 
-EnemyGfxData_GolemMain_Gfx_56DAA:
-	dc.b	$01, $00, $FF, $FF, $FF, $FF 
-EnemyGfxData_GolemMain_Gfx_56DB0:
-	dc.b	$01, $00, $FF, $EC, $CC, $FF, $0B, $0B, $BB, $BB, $BB, $0B, $BB, $00 
-EnemyGfxData_GolemMain_Gfx_56DBE:
-	dc.b	$01, $BB, $00, $08, $8C, $F0, $55, $54, $44, $44, $05, $43, $21, $23, $B5, $54, $43, $33, $55, $44, $44, $B5, $55, $55, $55, $55, $00, $00, $00, $00 
-EnemyGfxData_GolemMain_Gfx_56DDC:
-	dc.b	$02, $55, $22, $64, $C8, $00, $BB, $01, $11, $37, $C0, $45, $44, $50, $34, $44, $44, $45, $5B, $B0, $00, $00, $00, $00, $00, $00 
-EnemyGfxData_GolemMain_Gfx_56DF6:
-	dc.b	$01, $00, $F7, $33, $7F, $FF, $BB, $BB, $BB, $BB, $BB, $BB 
-EnemyGfxData_GolemMain_Gfx_56E02:
-	dc.b	$01, $00, $88, $9F, $FF, $FF, $43, $34, $45, $04, $44, $55, $04, $55 
-EnemyGfxData_GolemMain_Gfx_56E10:
-	dc.b	$00, $55, $55, $44, $55, $05, $53, $35, $55, $00, $54, $24, $56, $00, $55, $23, $55, $00, $54, $22, $45, $05, $54, $23, $45, $05, $43, $23, $45, $34, $42, $23 
-	dc.b	$45, $00 
-EnemyGfxData_GolemMain_Gfx_56E32:
-	dc.b	$02, $55, $80, $53, $01, $30, $66, $00, $88, $CE, $C0, $44, $33, $44, $65, $54, $44, $45, $45, $65, $65, $65, $56, $65, $65, $45 
-EnemyGfxData_GolemMain_Gfx_56E4C:
-	dc.b	$01, $00, $10, $00, $88, $9F, $55, $43, $23, $55, $43, $23, $40, $55, $43, $22, $40, $05, $43, $23, $40, $54, $34, $50, $55, $45, $50, $05, $55, $00 
-EnemyGfxData_GolemMain_Gfx_56E6A:
-	dc.b	$02, $33, $22, $60, $14, $20, $44, $09, $99, $60, $16, $54, $32, $45, $32, $43, $24, $43, $54, $32, $23, $54, $43, $55, $43, $00 
-EnemyGfxData_GolemMain_Gfx_56E84:
-	dc.b	$01, $45, $11, $08, $91, $10, $56, $66, $54, $56, $65, $54, $55, $66, $55, $55, $55, $35, $54, $54, $44, $43, $54, $33, $34, $43, $33, $33, $43, $34, $55, $00 
-EnemyGfxData_GolemMain_Gfx_56EA4:
-	dc.b	$01, $00, $F7, $77, $77, $7F, $40, $40, $40, $40, $50, $50 
-EnemyGfxData_GolemMain_Gfx_56EB0:
-	dc.b	$01, $00, $FF, $EC, $EE, $FF, $BB, $0B, $BB, $BB, $0B, $00 
-EnemyGfxData_GolemMain_Gfx_56EBC:
-	dc.b	$01, $BB, $08, $88, $CE, $70, $05, $54, $33, $33, $54, $44, $44, $55, $43, $33, $B5, $54, $44, $55, $54, $55, $00, $00, $00, $00, $00, $00 
-EnemyGfxData_GolemMain_Gfx_56ED8:
-	dc.b	$01, $BB, $00, $01, $13, $E0, $44, $34, $34, $55, $33, $44, $45, $50, $34, $44, $45, $5B, $44, $44, $55, $44, $45, $5B, $55, $55, $B0, $00, $00, $00, $00, $00 
-EnemyGfxData_GolemMain_Gfx_56EF8:
-	dc.b	$01, $00, $FF, $73, $37, $FF, $BB, $BB, $BB, $BB, $BB, $BB 
-EnemyGfxData_GolemMain_Gfx_56F04:
-	dc.b	$01, $00, $88, $8C, $FF, $FF, $03, $33, $45, $04, $33, $45, $05, $44, $55, $55, $50, $00 
-EnemyGfxData_GolemMain_Gfx_56F16:
-	dc.b	$01, $55, $DE, $04, $40, $40, $45, $44, $00, $54, $54, $34, $00, $54, $24, $00, $43, $23, $00, $05, $44, $23, $00, $43, $23, $00, $54, $41, $23, $00 
-EnemyGfxData_GolemMain_Gfx_56F34:
-	dc.b	$01, $55, $88, $53, $19, $B0, $44, $33, $34, $54, $44, $44, $56, $45, $56, $65, $56, $66, $65, $66, $66, $66, $45, $66, $65, $45 
-EnemyGfxData_GolemMain_Gfx_56F4E:
-	dc.b	$01, $00, $00, $00, $9F, $FF, $55, $43, $23, $40, $55, $43, $23, $40, $55, $43, $34, $50, $05, $54, $44, $50, $55, $55 
-EnemyGfxData_GolemMain_Gfx_56F66:
-	dc.b	$01, $44, $04, $44, $30, $16, $00, $54, $31, $23, $05, $32, $23, $05, $33, $33, $05, $43, $24, $54, $43, $54, $32, $22, $23, $54, $42, $22, $55, $43 
-EnemyGfxData_GolemMain_Gfx_56F84:
-	dc.b	$02, $45, $99, $80, $11, $10, $55, $00, $34, $64, $01, $66, $54, $66, $54, $56, $44, $65, $54, $44, $35, $54, $44, $44, $34, $33, $43, $34 
-EnemyGfxData_GolemMain_Gfx_56FA0:
-	dc.b	$01, $00, $FF, $EE, $CE, $FF, $0B, $BB, $0B, $BB, $BB, $00 
-EnemyGfxData_GolemMain_Gfx_56FAC:
-	dc.b	$01, $BB, $00, $88, $CE, $70, $05, $54, $33, $22, $0B, $54, $22, $24, $55, $43, $33, $B5, $54, $44, $55, $54, $55, $0B, $00, $00, $00, $00 
-EnemyGfxData_GolemMain_Gfx_56FC8:
-	dc.b	$01, $BB, $00, $01, $13, $F0, $44, $34, $34, $55, $33, $44, $45, $50, $34, $44, $45, $5B, $44, $44, $55, $44, $45, $5B, $55, $55, $00, $00, $00, $00 
-EnemyGfxData_GolemMain_Gfx_56FE6:
-	dc.b	$01, $00, $FF, $73, $33, $7F, $B0, $BB, $B0, $BB, $BB, $BB, $B0, $B0 
-EnemyGfxData_GolemMain_Gfx_56FF4:
-	dc.b	$01, $00, $C8, $88, $8C, $FF, $22, $34, $03, $23, $34, $03, $33, $45, $04, $33, $45, $05, $44, $55, $55, $50 
-EnemyGfxData_GolemMain_Gfx_5700A:
-	dc.b	$00, $55, $55, $55, $45, $56, $65, $55, $55, $56, $66, $55, $65, $50, $56, $66, $64, $00, $05, $66, $54, $00, $05, $66, $54, $00, $05, $65, $44, $00, $05, $54 
-	dc.b	$43, $00 
-EnemyGfxData_GolemMain_Gfx_5702C:
-	dc.b	$01, $55, $C4, $30, $01, $10, $33, $34, $44, $44, $44, $44, $56, $33, $56, $65, $56, $31, $36, $66, $65, $31, $35, $66, $21, $35, $65, $12, $45, $65, $45, $00 
-EnemyGfxData_GolemMain_Gfx_5704C:
-	dc.b	$01, $00, $00, $04, $FF, $FF, $55, $54, $32, $34, $55, $55, $44, $45, $50, $05, $54, $45, $50, $55, $50, $00 
-EnemyGfxData_GolemMain_Gfx_57062:
-	dc.b	$01, $44, $20, $02, $50, $43, $00, $55, $32, $00, $54, $43, $22, $00, $54, $43, $33, $05, $54, $32, $05, $34, $05, $43, $22, $22, $05, $22, $24, $05, $54, $00 
-EnemyGfxData_GolemMain_Gfx_57082:
-	dc.b	$01, $45, $51, $04, $51, $10, $23, $54, $34, $56, $65, $34, $55, $66, $55, $44, $66, $54, $44, $65, $33, $55, $55, $44, $44, $54, $33, $34, $54, $55 
-EnemyGfxData_GolemMain_Gfx_570A0:
-	dc.b	$01, $00, $FE, $CC, $CF, $FF, $0B, $0B, $BB, $BB, $BB, $0B, $BB, $00 
-EnemyGfxData_GolemMain_Gfx_570AE:
-	dc.b	$02, $00, $80, $00, $00, $CF, $BB, $08, $88, $CE, $30, $55, $43, $32, $B5, $42, $22, $55, $43, $33, $B5, $54, $44, $55, $54, $55 
-EnemyGfxData_GolemMain_Gfx_570C8:
-	dc.b	$01, $BB, $00, $01, $13, $F0, $24, $43, $44, $55, $43, $34, $45, $50, $34, $44, $45, $5B, $44, $44, $55, $44, $45, $5B, $55, $55, $00, $00, $00, $00 
-EnemyGfxData_GolemMain_Gfx_570E6:
-	dc.b	$01, $00, $FF, $31, $33, $7F, $BB, $B0, $BB, $BB, $B0, $BB, $BB, $BB, $B0, $B0 
-EnemyGfxData_GolemMain_Gfx_570F6:
-	dc.b	$01, $00, $88, $88, $AE, $EE, $45, $46, $65, $45, $66, $66, $45, $65, $66, $54, $50, $66, $05, $06, $05, $05, $04, $00 
-EnemyGfxData_GolemMain_Gfx_5710E:
-	dc.b	$02, $45, $40, $04, $E6, $00, $66, $13, $80, $00, $13, $55, $55, $55, $56, $64, $43, $32, $56, $34, $43, $55, $42, $65, $42, $56, $56, $33, $35, $00 
-EnemyGfxData_GolemMain_Gfx_5712C:
-	dc.b	$00, $54, $32, $34, $50, $65, $43, $22, $45, $23, $34, $22, $45, $32, $23, $23, $35, $43, $22, $23, $45, $54, $34, $44, $56, $55, $44, $55, $65, $66, $66, $66 
-	dc.b	$54, $00 
-EnemyGfxData_GolemMain_Gfx_5714E:
-	dc.b	$01, $00, $FF, $91, $11, $33, $06, $65, $06, $55, $55, $65, $44, $50, $54, $34, $50, $35, $45, $34, $55, $00 
-EnemyGfxData_GolemMain_Gfx_57164:
-	dc.b	$01, $00, $EE, $EC, $CC, $CE, $53, $43, $53, $04, $55, $04, $45, $05, $44, $05, $54, $55 
-EnemyGfxData_GolemMain_Gfx_57176:
-	dc.b	$01, $55, $68, $05, $80, $0C, $44, $66, $44, $45, $66, $33, $33, $66, $65, $33, $65, $43, $34, $56, $33, $34, $46, $66, $43, $34, $66, $45, $43, $56 
-EnemyGfxData_GolemMain_Gfx_57194:
-	dc.b	$01, $66, $A8, $CC, $EC, $C4, $60, $45, $60, $65, $45, $65, $34, $65, $43, $54, $65, $54, $65, $45, $55, $44, $33, $00 
-EnemyGfxData_GolemMain_Gfx_571AC:
-	dc.b	$01, $00, $33, $33, $11, $11, $34, $50, $55, $50, $55, $45, $44, $45, $34, $45, $50, $44, $55, $50, $55, $55, $50, $34, $45, $50 
-EnemyGfxData_GolemMain_Gfx_571C6:
-	dc.b	$01, $00, $EE, $EF, $EC, $EF, $55, $05, $05, $BB, $0B, $BB, $BB, $00 
-EnemyGfxData_GolemMain_Gfx_571D4:
-	dc.b	$02, $44, $0B, $04, $31, $00, $BB, $00, $00, $08, $FF, $43, $33, $33, $55, $33, $55, $54, $43, $33, $54, $33, $33, $B5, $54, $B5, $55, $00 
-EnemyGfxData_GolemMain_Gfx_571F0:
-	dc.b	$01, $BB, $00, $00, $01, $FF, $45, $55, $43, $33, $34, $54, $43, $34, $34, $44, $43, $44, $45, $43, $34, $45, $44, $44, $45, $5B, $44, $55, $5B, $00 
-EnemyGfxData_GolemMain_Gfx_5720E:
-	dc.b	$01, $00, $33, $77, $31, $37, $44, $45, $45, $55, $55, $50, $BB, $BB, $BB, $BB, $B0, $BB, $B0, $B0 
-EnemyGfxData_GolemMain_Gfx_57222:
-	dc.b	$02, $66, $63, $31, $00, $00, $00, $00, $04, $EE, $EE, $45, $55, $45, $65, $54, $50, $05, $06, $06, $05, $05, $04, $00 
-EnemyGfxData_GolemMain_Gfx_5723A:
-	dc.b	$01, $66, $00, $80, $02, $73, $55, $43, $33, $36, $55, $53, $33, $33, $34, $43, $32, $54, $56, $35, $43, $46, $64, $56, $55, $42, $65, $65, $42, $33, $35, $00 
-EnemyGfxData_GolemMain_Gfx_5725A:
-	dc.b	$00, $55, $32, $23, $30, $65, $43, $22, $30, $23, $34, $22, $34, $32, $23, $22, $35, $43, $22, $23, $45, $54, $34, $44, $50, $55, $44, $55, $60, $66, $66, $66 
-	dc.b	$00, $00 
-EnemyGfxData_GolemMain_Gfx_5727C:
-	dc.b	$01, $00, $FF, $FC, $80, $01, $55, $55, $55, $44, $55, $05, $53, $45, $50, $05, $55, $55, $50, $54, $33, $45 
-EnemyGfxData_GolemMain_Gfx_57292:
-	dc.b	$01, $66, $C8, $8C, $EC, $C4, $00, $00, $60, $00, $00, $60, $00, $00, $60, $05, $55, $65, $55, $65, $55, $55, $44, $35 
-EnemyGfxData_GolemMain_Gfx_572AA:
-	dc.b	$02, $55, $AC, $00, $C2, $2A, $00, $11, $11, $11, $11, $44, $50, $53, $33, $50, $54, $44, $45, $45, $34, $44, $43, $45, $45, $00 
-EnemyGfxData_GolemMain_Gfx_572C4:
-	dc.b	$01, $00, $EE, $EF, $CC, $CE, $55, $05, $05, $0B, $BB, $BB, $BB, $0B, $BB, $0B 
-EnemyGfxData_GolemMain_Gfx_572D4:
-	dc.b	$01, $BB, $00, $00, $00, $FF, $45, $55, $43, $33, $34, $54, $43, $33, $34, $44, $43, $33, $45, $43, $34, $45, $44, $44, $45, $55, $44, $55, $55, $5B 
-EnemyGfxData_GolemMain_Gfx_572F2:
-	dc.b	$02, $00, $11, $13, $10, $13, $BB, $00, $00, $4E, $E8, $33, $44, $55, $34, $45, $50, $44, $55, $50, $45, $55, $5B, $B0, $B0, $B0 
-EnemyGfxData_GolemMain_Gfx_5730C:
-	dc.b	$01, $00, $00, $CE, $EE, $EE, $54, $50, $66, $65, $05, $50, $06, $66, $06, $66, $66, $06, $05, $05, $54, $00 
-EnemyGfxData_GolemMain_Gfx_57322:
-	dc.b	$01, $66, $00, $80, $27, $73, $55, $34, $43, $33, $55, $53, $33, $33, $34, $34, $42, $56, $53, $56, $54, $46, $64, $65, $42, $42, $33, $35 
-EnemyGfxData_GolemMain_Gfx_5733E:
-	dc.b	$00, $65, $32, $23, $30, $36, $42, $23, $30, $23, $34, $22, $30, $32, $23, $22, $30, $43, $22, $23, $40, $54, $34, $44, $50, $55, $44, $55, $00, $66, $66, $60 
-	dc.b	$00, $00 
-EnemyGfxData_GolemMain_Gfx_57360:
-	dc.b	$01, $00, $FD, $88, $CC, $88, $55, $05, $44, $50, $05, $44, $50, $54, $45, $54, $45, $05, $55, $55, $05, $44, $45, $00 
-EnemyGfxData_GolemMain_Gfx_57378:
-	dc.b	$01, $00, $EE, $CC, $CC, $CC, $53, $43, $05, $53, $05, $55, $05, $45, $05, $44, $05, $54, $05, $55 
-EnemyGfxData_GolemMain_Gfx_5738C:
-	dc.b	$02, $66, $C8, $8C, $EC, $C4, $00, $33, $31, $00, $00, $60, $60, $60, $55, $65, $55, $65, $54, $55, $44, $35 
-EnemyGfxData_GolemMain_Gfx_573A2:
-	dc.b	$02, $44, $20, $22, $28, $C4, $55, $07, $18, $81, $08, $00, $05, $45, $00, $00, $54, $54, $45, $54, $45, $45, $54, $45, $50, $45, $50, $00 
-EnemyGfxData_GolemMain_Gfx_573BE:
-	dc.b	$01, $00, $EE, $EE, $CC, $CE, $54, $54, $05, $05, $0B, $BB, $BB, $BB, $0B, $BB, $0B, $00 
-EnemyGfxData_GolemMain_Gfx_573D0:
-	dc.b	$02, $44, $0B, $04, $31, $00, $BB, $00, $00, $08, $FF, $43, $33, $33, $55, $33, $55, $54, $43, $33, $54, $33, $33, $55, $54, $B5, $55, $00 
-EnemyGfxData_GolemMain_Gfx_573EC:
-	dc.b	$02, $00, $11, $13, $10, $03, $BB, $00, $00, $6F, $EC, $33, $44, $55, $34, $45, $50, $44, $55, $50, $45, $55, $5B, $B0 
+	incbin "data/art/tiles/enemy/golem_main_gfx.bin"
+EnemyGfxData_GolemMain_Gfx_56B08 equ EnemyGfxData_GolemMain_Gfx_56AF2+$16
+EnemyGfxData_GolemMain_Gfx_56B2A equ EnemyGfxData_GolemMain_Gfx_56AF2+$38
+EnemyGfxData_GolemMain_Gfx_56B4C equ EnemyGfxData_GolemMain_Gfx_56AF2+$5A
+EnemyGfxData_GolemMain_Gfx_56B6E equ EnemyGfxData_GolemMain_Gfx_56AF2+$7C
+EnemyGfxData_GolemMain_Gfx_56B7A equ EnemyGfxData_GolemMain_Gfx_56AF2+$88
+EnemyGfxData_GolemMain_Gfx_56B9C equ EnemyGfxData_GolemMain_Gfx_56AF2+$AA
+EnemyGfxData_GolemMain_Gfx_56BBA equ EnemyGfxData_GolemMain_Gfx_56AF2+$C8
+EnemyGfxData_GolemMain_Gfx_56BC8 equ EnemyGfxData_GolemMain_Gfx_56AF2+$D6
+EnemyGfxData_GolemMain_Gfx_56BD6 equ EnemyGfxData_GolemMain_Gfx_56AF2+$E4
+EnemyGfxData_GolemMain_Gfx_56BF6 equ EnemyGfxData_GolemMain_Gfx_56AF2+$104
+EnemyGfxData_GolemMain_Gfx_56C0C equ EnemyGfxData_GolemMain_Gfx_56AF2+$11A
+EnemyGfxData_GolemMain_Gfx_56C1A equ EnemyGfxData_GolemMain_Gfx_56AF2+$128
+EnemyGfxData_GolemMain_Gfx_56C36 equ EnemyGfxData_GolemMain_Gfx_56AF2+$144
+EnemyGfxData_GolemMain_Gfx_56C58 equ EnemyGfxData_GolemMain_Gfx_56AF2+$166
+EnemyGfxData_GolemMain_Gfx_56C72 equ EnemyGfxData_GolemMain_Gfx_56AF2+$180
+EnemyGfxData_GolemMain_Gfx_56C94 equ EnemyGfxData_GolemMain_Gfx_56AF2+$1A2
+EnemyGfxData_GolemMain_Gfx_56CB2 equ EnemyGfxData_GolemMain_Gfx_56AF2+$1C0
+EnemyGfxData_GolemMain_Gfx_56CBE equ EnemyGfxData_GolemMain_Gfx_56AF2+$1CC
+EnemyGfxData_GolemMain_Gfx_56CCC equ EnemyGfxData_GolemMain_Gfx_56AF2+$1DA
+EnemyGfxData_GolemMain_Gfx_56CE6 equ EnemyGfxData_GolemMain_Gfx_56AF2+$1F4
+EnemyGfxData_GolemMain_Gfx_56CFC equ EnemyGfxData_GolemMain_Gfx_56AF2+$20A
+EnemyGfxData_GolemMain_Gfx_56D0A equ EnemyGfxData_GolemMain_Gfx_56AF2+$218
+EnemyGfxData_GolemMain_Gfx_56D2C equ EnemyGfxData_GolemMain_Gfx_56AF2+$23A
+EnemyGfxData_GolemMain_Gfx_56D4E equ EnemyGfxData_GolemMain_Gfx_56AF2+$25C
+EnemyGfxData_GolemMain_Gfx_56D5C equ EnemyGfxData_GolemMain_Gfx_56AF2+$26A
+EnemyGfxData_GolemMain_Gfx_56D6A equ EnemyGfxData_GolemMain_Gfx_56AF2+$278
+EnemyGfxData_GolemMain_Gfx_56D8C equ EnemyGfxData_GolemMain_Gfx_56AF2+$29A
+EnemyGfxData_GolemMain_Gfx_56DAA equ EnemyGfxData_GolemMain_Gfx_56AF2+$2B8
+EnemyGfxData_GolemMain_Gfx_56DB0 equ EnemyGfxData_GolemMain_Gfx_56AF2+$2BE
+EnemyGfxData_GolemMain_Gfx_56DBE equ EnemyGfxData_GolemMain_Gfx_56AF2+$2CC
+EnemyGfxData_GolemMain_Gfx_56DDC equ EnemyGfxData_GolemMain_Gfx_56AF2+$2EA
+EnemyGfxData_GolemMain_Gfx_56DF6 equ EnemyGfxData_GolemMain_Gfx_56AF2+$304
+EnemyGfxData_GolemMain_Gfx_56E02 equ EnemyGfxData_GolemMain_Gfx_56AF2+$310
+EnemyGfxData_GolemMain_Gfx_56E10 equ EnemyGfxData_GolemMain_Gfx_56AF2+$31E
+EnemyGfxData_GolemMain_Gfx_56E32 equ EnemyGfxData_GolemMain_Gfx_56AF2+$340
+EnemyGfxData_GolemMain_Gfx_56E4C equ EnemyGfxData_GolemMain_Gfx_56AF2+$35A
+EnemyGfxData_GolemMain_Gfx_56E6A equ EnemyGfxData_GolemMain_Gfx_56AF2+$378
+EnemyGfxData_GolemMain_Gfx_56E84 equ EnemyGfxData_GolemMain_Gfx_56AF2+$392
+EnemyGfxData_GolemMain_Gfx_56EA4 equ EnemyGfxData_GolemMain_Gfx_56AF2+$3B2
+EnemyGfxData_GolemMain_Gfx_56EB0 equ EnemyGfxData_GolemMain_Gfx_56AF2+$3BE
+EnemyGfxData_GolemMain_Gfx_56EBC equ EnemyGfxData_GolemMain_Gfx_56AF2+$3CA
+EnemyGfxData_GolemMain_Gfx_56ED8 equ EnemyGfxData_GolemMain_Gfx_56AF2+$3E6
+EnemyGfxData_GolemMain_Gfx_56EF8 equ EnemyGfxData_GolemMain_Gfx_56AF2+$406
+EnemyGfxData_GolemMain_Gfx_56F04 equ EnemyGfxData_GolemMain_Gfx_56AF2+$412
+EnemyGfxData_GolemMain_Gfx_56F16 equ EnemyGfxData_GolemMain_Gfx_56AF2+$424
+EnemyGfxData_GolemMain_Gfx_56F34 equ EnemyGfxData_GolemMain_Gfx_56AF2+$442
+EnemyGfxData_GolemMain_Gfx_56F4E equ EnemyGfxData_GolemMain_Gfx_56AF2+$45C
+EnemyGfxData_GolemMain_Gfx_56F66 equ EnemyGfxData_GolemMain_Gfx_56AF2+$474
+EnemyGfxData_GolemMain_Gfx_56F84 equ EnemyGfxData_GolemMain_Gfx_56AF2+$492
+EnemyGfxData_GolemMain_Gfx_56FA0 equ EnemyGfxData_GolemMain_Gfx_56AF2+$4AE
+EnemyGfxData_GolemMain_Gfx_56FAC equ EnemyGfxData_GolemMain_Gfx_56AF2+$4BA
+EnemyGfxData_GolemMain_Gfx_56FC8 equ EnemyGfxData_GolemMain_Gfx_56AF2+$4D6
+EnemyGfxData_GolemMain_Gfx_56FE6 equ EnemyGfxData_GolemMain_Gfx_56AF2+$4F4
+EnemyGfxData_GolemMain_Gfx_56FF4 equ EnemyGfxData_GolemMain_Gfx_56AF2+$502
+EnemyGfxData_GolemMain_Gfx_5700A equ EnemyGfxData_GolemMain_Gfx_56AF2+$518
+EnemyGfxData_GolemMain_Gfx_5702C equ EnemyGfxData_GolemMain_Gfx_56AF2+$53A
+EnemyGfxData_GolemMain_Gfx_5704C equ EnemyGfxData_GolemMain_Gfx_56AF2+$55A
+EnemyGfxData_GolemMain_Gfx_57062 equ EnemyGfxData_GolemMain_Gfx_56AF2+$570
+EnemyGfxData_GolemMain_Gfx_57082 equ EnemyGfxData_GolemMain_Gfx_56AF2+$590
+EnemyGfxData_GolemMain_Gfx_570A0 equ EnemyGfxData_GolemMain_Gfx_56AF2+$5AE
+EnemyGfxData_GolemMain_Gfx_570AE equ EnemyGfxData_GolemMain_Gfx_56AF2+$5BC
+EnemyGfxData_GolemMain_Gfx_570C8 equ EnemyGfxData_GolemMain_Gfx_56AF2+$5D6
+EnemyGfxData_GolemMain_Gfx_570E6 equ EnemyGfxData_GolemMain_Gfx_56AF2+$5F4
+EnemyGfxData_GolemMain_Gfx_570F6 equ EnemyGfxData_GolemMain_Gfx_56AF2+$604
+EnemyGfxData_GolemMain_Gfx_5710E equ EnemyGfxData_GolemMain_Gfx_56AF2+$61C
+EnemyGfxData_GolemMain_Gfx_5712C equ EnemyGfxData_GolemMain_Gfx_56AF2+$63A
+EnemyGfxData_GolemMain_Gfx_5714E equ EnemyGfxData_GolemMain_Gfx_56AF2+$65C
+EnemyGfxData_GolemMain_Gfx_57164 equ EnemyGfxData_GolemMain_Gfx_56AF2+$672
+EnemyGfxData_GolemMain_Gfx_57176 equ EnemyGfxData_GolemMain_Gfx_56AF2+$684
+EnemyGfxData_GolemMain_Gfx_57194 equ EnemyGfxData_GolemMain_Gfx_56AF2+$6A2
+EnemyGfxData_GolemMain_Gfx_571AC equ EnemyGfxData_GolemMain_Gfx_56AF2+$6BA
+EnemyGfxData_GolemMain_Gfx_571C6 equ EnemyGfxData_GolemMain_Gfx_56AF2+$6D4
+EnemyGfxData_GolemMain_Gfx_571D4 equ EnemyGfxData_GolemMain_Gfx_56AF2+$6E2
+EnemyGfxData_GolemMain_Gfx_571F0 equ EnemyGfxData_GolemMain_Gfx_56AF2+$6FE
+EnemyGfxData_GolemMain_Gfx_5720E equ EnemyGfxData_GolemMain_Gfx_56AF2+$71C
+EnemyGfxData_GolemMain_Gfx_57222 equ EnemyGfxData_GolemMain_Gfx_56AF2+$730
+EnemyGfxData_GolemMain_Gfx_5723A equ EnemyGfxData_GolemMain_Gfx_56AF2+$748
+EnemyGfxData_GolemMain_Gfx_5725A equ EnemyGfxData_GolemMain_Gfx_56AF2+$768
+EnemyGfxData_GolemMain_Gfx_5727C equ EnemyGfxData_GolemMain_Gfx_56AF2+$78A
+EnemyGfxData_GolemMain_Gfx_57292 equ EnemyGfxData_GolemMain_Gfx_56AF2+$7A0
+EnemyGfxData_GolemMain_Gfx_572AA equ EnemyGfxData_GolemMain_Gfx_56AF2+$7B8
+EnemyGfxData_GolemMain_Gfx_572C4 equ EnemyGfxData_GolemMain_Gfx_56AF2+$7D2
+EnemyGfxData_GolemMain_Gfx_572D4 equ EnemyGfxData_GolemMain_Gfx_56AF2+$7E2
+EnemyGfxData_GolemMain_Gfx_572F2 equ EnemyGfxData_GolemMain_Gfx_56AF2+$800
+EnemyGfxData_GolemMain_Gfx_5730C equ EnemyGfxData_GolemMain_Gfx_56AF2+$81A
+EnemyGfxData_GolemMain_Gfx_57322 equ EnemyGfxData_GolemMain_Gfx_56AF2+$830
+EnemyGfxData_GolemMain_Gfx_5733E equ EnemyGfxData_GolemMain_Gfx_56AF2+$84C
+EnemyGfxData_GolemMain_Gfx_57360 equ EnemyGfxData_GolemMain_Gfx_56AF2+$86E
+EnemyGfxData_GolemMain_Gfx_57378 equ EnemyGfxData_GolemMain_Gfx_56AF2+$886
+EnemyGfxData_GolemMain_Gfx_5738C equ EnemyGfxData_GolemMain_Gfx_56AF2+$89A
+EnemyGfxData_GolemMain_Gfx_573A2 equ EnemyGfxData_GolemMain_Gfx_56AF2+$8B0
+EnemyGfxData_GolemMain_Gfx_573BE equ EnemyGfxData_GolemMain_Gfx_56AF2+$8CC
+EnemyGfxData_GolemMain_Gfx_573D0 equ EnemyGfxData_GolemMain_Gfx_56AF2+$8DE
+EnemyGfxData_GolemMain_Gfx_573EC equ EnemyGfxData_GolemMain_Gfx_56AF2+$8FA
 EnemyGfxData_GolemMain:
 	dc.l	EnemyGfxData_GolemMain_Gfx_56AF2
 	dc.l	EnemyGfxData_GolemMain_Gfx_56B08
@@ -60464,223 +58091,104 @@ EnemyGfxFrameTable_GolemChild:
 	dc.b	$3E, $42, $3B, $3F, $43, $3C, $40, $44, $45, $49, $4D, $46, $4A, $4E, $47, $4B, $4F, $48, $4C, $4C, $50, $53, $56, $51, $54, $57, $52, $55, $58, $4C, $4C, $4C 
 	dc.b	$59, $5C, $5F, $5A, $5D, $60, $5B, $5E, $61, $4C, $4C, $4C 
 EnemyGfxData_GolemChild_Gfx_575EC:
-	dc.b	$01, $00, $FC, $CC, $FC, $88, $70, $07, $77, $77, $07, $70, $77, $77, $07, $77, $7A, $07, $70, $7A 
-EnemyGfxData_GolemChild_Gfx_57600:
-	dc.b	$01, $77, $40, $9D, $00, $04, $00, $00, $00, $70, $78, $70, $00, $78, $97, $79, $79, $98, $79, $88, $A8, $89, $87, $79, $97, $78, $87, $98, $87, $99, $79, $00 
-EnemyGfxData_GolemChild_Gfx_57620:
-	dc.b	$01, $77, $1B, $E0, $00, $18, $00, $00, $07, $70, $07, $89, $87, $70, $00, $99, $9A, $A7, $00, $88, $78, $9A, $70, $9A, $87, $7A, $A7, $79, $AA, $00 
-EnemyGfxData_GolemChild_Gfx_5763E:
-	dc.b	$01, $00, $F7, $73, $F7, $77, $70, $70, $77, $70, $07, $97, $87, $00 
-EnemyGfxData_GolemChild_Gfx_5764C:
-	dc.b	$01, $00, $8E, $EF, $FF, $FE, $07, $70, $79, $79, $07, $33 
-EnemyGfxData_GolemChild_Gfx_57658:
-	dc.b	$00, $87, $7A, $97, $78, $77, $7A, $77, $97, $07, $A9, $77, $97, $08, $97, $79, $85, $89, $75, $74, $45, $77, $75, $42, $23, $00, $43, $11, $22, $34, $41, $34 
-	dc.b	$16, $00 
-EnemyGfxData_GolemChild_Gfx_5767A:
-	dc.b	$01, $00, $00, $11, $33, $30, $9A, $7A, $77, $88, $8A, $79, $97, $77, $79, $A8, $90, $78, $A7, $70, $78, $97, $57, $87, $45, $77, $64, $70, $33, $33 
-EnemyGfxData_GolemChild_Gfx_57698:
-	dc.b	$01, $00, $7F, $FF, $FF, $FF, $70, $00 
-EnemyGfxData_GolemChild_Gfx_576A0:
-	dc.b	$01, $00, $CC, $C8, $80, $00, $03, $22, $32, $11, $32, $11, $03, $33, $23, $43, $33, $43, $04, $44, $45, $54, $44, $22, $11, $43, $43, $13, $24, $43 
-EnemyGfxData_GolemChild_Gfx_576BE:
-	dc.b	$00, $34, $41, $44, $16, $23, $41, $13, $14, $23, $43, $11, $55, $34, $44, $15, $55, $33, $45, $31, $33, $32, $34, $53, $24, $21, $13, $45, $55, $11, $12, $34 
-	dc.b	$44, $00 
-EnemyGfxData_GolemChild_Gfx_576E0:
-	dc.b	$00, $65, $53, $32, $22, $55, $53, $22, $11, $45, $44, $21, $11, $55, $54, $21, $12, $55, $43, $33, $32, $54, $33, $44, $33, $43, $23, $45, $44, $31, $12, $35 
-	dc.b	$54, $00 
-EnemyGfxData_GolemChild_Gfx_57702:
-	dc.b	$01, $00, $77, $73, $33, $33, $30, $23, $23, $23, $40, $34, $40, $34, $40, $44, $40, $44, $44, $00 
-EnemyGfxData_GolemChild_Gfx_57716:
-	dc.b	$02, $00, $FE, $88, $8E, $CC, $77, $01, $57, $20, $02, $07, $07, $0A, $7A, $07, $7A, $79 
-EnemyGfxData_GolemChild_Gfx_57728:
-	dc.b	$00, $00, $00, $00, $77, $07, $77, $07, $77, $77, $89, $99, $87, $A9, $97, $78, $98, $98, $89, $77, $88, $87, $79, $87, $79, $77, $78, $87, $98, $97, $A9, $99 
-	dc.b	$79, $00 
-EnemyGfxData_GolemChild_Gfx_5774A:
-	dc.b	$01, $77, $6C, $F1, $00, $08, $70, $70, $07, $70, $89, $87, $70, $99, $9A, $A7, $00, $88, $78, $9A, $70, $9A, $AA, $7A, $70, $9A, $79, $A8 
-EnemyGfxData_GolemChild_Gfx_57766:
-	dc.b	$01, $00, $F7, $77, $FF, $FF, $07, $77, $70, $00 
-EnemyGfxData_GolemChild_Gfx_57770:
-	dc.b	$01, $00, $CD, $C8, $FF, $FE, $77, $77, $77, $77, $09, $07, $70, $07, $03, $00 
-EnemyGfxData_GolemChild_Gfx_57780:
-	dc.b	$00, $7A, $97, $77, $78, $A9, $77, $99, $78, $97, $79, $87, $78, $70, $77, $75, $58, $00, $75, $54, $35, $00, $75, $32, $23, $00, $42, $11, $22, $44, $41, $34 
-	dc.b	$16, $00 
-EnemyGfxData_GolemChild_Gfx_577A2:
-	dc.b	$01, $00, $00, $03, $33, $30, $97, $79, $A7, $8A, $A7, $07, $90, $77, $A7, $77, $70, $07, $8A, $97, $7A, $A7, $57, $87, $45, $77, $64, $70, $33, $33 
-EnemyGfxData_GolemChild_Gfx_577C0:
-	dc.b	$01, $00, $73, $7F, $FF, $FF, $87, $AA, $70, $77 
-EnemyGfxData_GolemChild_Gfx_577CA:
-	dc.b	$01, $00, $CC, $CC, $88, $80, $03, $33, $33, $21, $32, $11, $32, $13, $04, $33, $23, $04, $33, $44, $43, $33, $43, $04, $44, $45, $53, $00 
-EnemyGfxData_GolemChild_Gfx_577E6:
-	dc.b	$01, $00, $77, $73, $33, $11, $30, $23, $23, $23, $40, $34, $40, $34, $40, $44, $54, $30, $41, $11, $34, $00 
-EnemyGfxData_GolemChild_Gfx_577FC:
-	dc.b	$01, $00, $EC, $C8, $88, $CE, $78, $07, $A9, $09, $87, $77, $09, $70, $77, $77, $7A, $07, $77, $7A, $70, $79, $78, $00 
-EnemyGfxData_GolemChild_Gfx_57814:
-	dc.b	$00, $97, $00, $07, $77, $89, $77, $99, $77, $78, $78, $88, $97, $A9, $97, $78, $98, $98, $89, $79, $78, $87, $79, $87, $79, $7A, $A9, $87, $98, $A8, $88, $99 
-	dc.b	$79, $00 
-EnemyGfxData_GolemChild_Gfx_57836:
-	dc.b	$01, $77, $6F, $91, $40, $08, $70, $00, $9A, $A7, $89, $87, $7A, $99, $79, $00, $8A, $A9, $7A, $70, $97, $7A, $7A, $70, $79, $79, $AA, $00 
-EnemyGfxData_GolemChild_Gfx_57852:
-	dc.b	$01, $00, $77, $7F, $FF, $73, $70, $70, $70, $07, $98, $70 
-EnemyGfxData_GolemChild_Gfx_5785E:
-	dc.b	$01, $00, $CC, $C9, $9F, $FE, $07, $7A, $77, $7A, $77, $07, $07, $77, $07, $70, $03, $00 
-EnemyGfxData_GolemChild_Gfx_57870:
-	dc.b	$00, $77, $79, $97, $78, $77, $98, $88, $89, $77, $98, $77, $8A, $07, $77, $75, $88, $00, $75, $54, $47, $00, $74, $32, $23, $00, $43, $11, $22, $44, $41, $34 
-	dc.b	$16, $00 
-EnemyGfxData_GolemChild_Gfx_57892:
-	dc.b	$01, $00, $01, $13, $33, $00, $97, $07, $A7, $88, $77, $77, $90, $97, $70, $70, $A9, $77, $8A, $87, $78, $77, $45, $74, $44, $43, $64, $54, $32, $23 
-EnemyGfxData_GolemChild_Gfx_578B0:
-	dc.b	$01, $00, $7F, $FF, $FF, $F7, $87, $30 
-EnemyGfxData_GolemChild_Gfx_578B8:
-	dc.b	$01, $00, $CC, $CC, $88, $88, $03, $33, $33, $21, $32, $11, $42, $13, $04, $42, $23, $04, $43, $44, $03, $34, $43, $43, $34, $53 
-EnemyGfxData_GolemChild_Gfx_578D2:
-	dc.b	$00, $65, $54, $32, $12, $55, $54, $32, $11, $45, $44, $32, $11, $55, $54, $43, $33, $55, $43, $33, $34, $54, $33, $44, $44, $43, $23, $45, $54, $31, $12, $35 
-	dc.b	$55, $00 
-EnemyGfxData_GolemChild_Gfx_578F4:
-	dc.b	$01, $00, $77, $33, $11, $11, $33, $23, $23, $30, $45, $43, $11, $13, $40, $44, $21, $30, $32, $21, $33, $43, $42, $34 
-EnemyGfxData_GolemChild_Gfx_5790C:
-	dc.b	$01, $00, $EE, $EF, $FF, $EC, $07, $07, $07, $70, $07, $89 
-EnemyGfxData_GolemChild_Gfx_57918:
-	dc.b	$01, $77, $6F, $98, $20, $01, $00, $07, $7A, $A9, $A7, $78, $98, $00, $97, $99, $07, $A7, $9A, $A8, $07, $A7, $A7, $79, $AA, $97, $97, $00 
-EnemyGfxData_GolemChild_Gfx_57934:
-	dc.b	$00, $77, $70, $00, $79, $77, $99, $77, $98, $79, $88, $87, $87, $89, $87, $79, $9A, $87, $97, $98, $89, $97, $78, $97, $78, $89, $78, $9A, $A7, $97, $99, $88 
-	dc.b	$8A, $00 
-EnemyGfxData_GolemChild_Gfx_57956:
-	dc.b	$01, $00, $73, $31, $11, $37, $87, $9A, $70, $78, $90, $07, $90, $77, $A7, $77, $77, $A7, $77, $70, $97, $07, $87, $00 
-EnemyGfxData_GolemChild_Gfx_5796E:
-	dc.b	$01, $00, $EF, $FF, $FF, $FE, $78, $03 
-EnemyGfxData_GolemChild_Gfx_57976:
-	dc.b	$01, $00, $08, $8C, $CC, $00, $88, $7A, $70, $79, $09, $77, $77, $07, $07, $79, $77, $9A, $78, $A8, $77, $87, $34, $44, $47, $54, $42, $23, $35, $43 
-EnemyGfxData_GolemChild_Gfx_57994:
-	dc.b	$00, $87, $79, $97, $77, $98, $88, $89, $77, $A8, $77, $89, $77, $88, $57, $77, $70, $73, $44, $47, $00, $32, $23, $47, $00, $22, $13, $44, $00, $31, $34, $44 
-	dc.b	$44, $00 
-EnemyGfxData_GolemChild_Gfx_579B6:
-	dc.b	$01, $00, $33, $39, $9F, $F7, $A7, $70, $A7, $77, $70, $77, $77, $70, $07, $70, $30, $00 
-EnemyGfxData_GolemChild_Gfx_579C8:
-	dc.b	$01, $00, $EE, $CC, $C8, $88, $33, $34, $03, $44, $03, $44, $33, $34, $03, $22, $34, $02, $22, $34, $33, $23, $45, $00 
-EnemyGfxData_GolemChild_Gfx_579E0:
-	dc.b	$00, $21, $11, $23, $34, $21, $11, $23, $34, $32, $12, $22, $33, $32, $22, $22, $33, $43, $32, $23, $33, $44, $33, $33, $33, $55, $44, $34, $44, $55, $44, $44 
-	dc.b	$45, $00 
-EnemyGfxData_GolemChild_Gfx_57A02:
-	dc.b	$01, $33, $90, $44, $40, $32, $34, $43, $34, $44, $32, $22, $34, $21, $11, $44, $21, $12, $34, $21, $12, $44, $43, $32, $23, $44, $43, $45, $43, $34 
-EnemyGfxData_GolemChild_Gfx_57A20:
-	dc.b	$01, $00, $33, $33, $11, $11, $33, $30, $12, $33, $11, $23, $11, $24, $32, $24, $40, $44, $33, $40, $44, $43, $30, $45, $44, $34 
-EnemyGfxData_GolemChild_Gfx_57A3A:
-	dc.b	$01, $00, $FE, $EE, $FF, $FF, $70, $77, $07, $00 
-EnemyGfxData_GolemChild_Gfx_57A44:
-	dc.b	$01, $77, $63, $F8, $00, $01, $07, $07, $07, $70, $07, $78, $98, $00, $7A, $A9, $99, $07, $A9, $87, $88, $07, $A7, $AA, $A9, $8A, $97, $A9 
-EnemyGfxData_GolemChild_Gfx_57A60:
-	dc.b	$00, $77, $00, $00, $00, $77, $70, $77, $70, $78, $99, $98, $77, $89, $87, $79, $9A, $88, $77, $98, $89, $97, $78, $97, $78, $89, $78, $87, $77, $97, $99, $9A 
-	dc.b	$79, $00 
-EnemyGfxData_GolemChild_Gfx_57A82:
-	dc.b	$02, $00, $F7, $11, $17, $33, $77, $08, $AE, $40, $04, $70, $A0, $70, $A7, $A7, $70, $97 
-EnemyGfxData_GolemChild_Gfx_57A94:
-	dc.b	$01, $00, $EC, $EF, $FF, $FF, $78, $07, $AA, $77 
-EnemyGfxData_GolemChild_Gfx_57A9E:
-	dc.b	$01, $00, $00, $0C, $CC, $C0, $A8, $7A, $97, $79, $77, $09, $70, $7A, $70, $07, $77, $7A, $79, $A8, $7A, $A7, $78, $75, $77, $54, $03, $33, $57, $44 
-EnemyGfxData_GolemChild_Gfx_57ABC:
-	dc.b	$00, $87, $77, $79, $A7, $87, $99, $77, $9A, $87, $78, $97, $79, $85, $57, $77, $07, $53, $45, $57, $00, $32, $34, $57, $00, $22, $34, $45, $00, $33, $34, $44 
-	dc.b	$44, $00 
-EnemyGfxData_GolemChild_Gfx_57ADE:
-	dc.b	$01, $00, $3B, $31, $FF, $F7, $77, $77, $77, $90, $77, $70, $07, $70, $30, $00 
-EnemyGfxData_GolemChild_Gfx_57AEE:
-	dc.b	$01, $00, $EE, $EE, $CC, $C8, $03, $03, $33, $34, $03, $34, $32, $34, $22, $34, $03, $23, $34, $00 
-EnemyGfxData_GolemChild_Gfx_57B02:
-	dc.b	$00, $32, $23, $35, $54, $21, $11, $23, $44, $32, $12, $22, $34, $32, $22, $22, $33, $43, $32, $23, $33, $44, $43, $33, $33, $55, $44, $44, $44, $55, $54, $44 
-	dc.b	$45, $00 
-EnemyGfxData_GolemChild_Gfx_57B24:
-	dc.b	$01, $44, $6C, $08, $08, $88, $33, $43, $32, $21, $34, $33, $21, $11, $33, $21, $11, $34, $33, $21, $12, $43, $32, $22, $33, $32, $33, $43, $22, $34 
-EnemyGfxData_GolemChild_Gfx_57B42:
-	dc.b	$01, $00, $33, $33, $11, $11, $33, $30, $22, $33, $12, $23, $12, $24, $22, $24, $40, $24, $33, $40, $44, $43, $34, $45, $44, $34 
-EnemyGfxData_GolemChild_Gfx_57B5C:
-	dc.b	$01, $00, $FE, $EC, $FE, $EE, $07, $07, $07, $77, $70, $79, $78, $00 
-EnemyGfxData_GolemChild_Gfx_57B6A:
-	dc.b	$01, $77, $8D, $70, $00, $81, $70, $00, $00, $07, $70, $00, $07, $78, $98, $00, $7A, $A9, $99, $07, $A9, $87, $88, $A7, $78, $A9, $AA, $97, $7A, $00 
-EnemyGfxData_GolemChild_Gfx_57B88:
-	dc.b	$01, $77, $20, $9B, $00, $02, $00, $00, $00, $00, $07, $87, $07, $79, $87, $97, $88, $97, $89, $97, $97, $78, $98, $8A, $89, $78, $87, $79, $97, $99, $78, $00 
-EnemyGfxData_GolemChild_Gfx_57BA8:
-	dc.b	$01, $00, $F3, $33, $F3, $11, $70, $07, $77, $77, $07, $70, $77, $77, $A7, $77, $70, $A7, $07, $70 
-EnemyGfxData_GolemChild_Gfx_57BBC:
-	dc.b	$01, $00, $EF, $FF, $FF, $FF, $07, $00 
-EnemyGfxData_GolemChild_Gfx_57BC4:
-	dc.b	$01, $00, $00, $88, $CC, $C8, $88, $77, $A7, $A9, $77, $79, $97, $A8, $09, $8A, $97, $07, $7A, $87, $79, $87, $78, $75, $77, $54, $33, $57, $44, $00 
-EnemyGfxData_GolemChild_Gfx_57BE2:
-	dc.b	$00, $87, $79, $A7, $78, $79, $77, $A7, $77, $79, $77, $9A, $70, $58, $97, $79, $80, $53, $47, $47, $98, $32, $23, $37, $77, $22, $11, $24, $00, $33, $34, $44 
-	dc.b	$44, $00 
-EnemyGfxData_GolemChild_Gfx_57C04:
-	dc.b	$01, $00, $17, $7F, $FF, $F7, $97, $07, $70, $97, $70, $30 
-EnemyGfxData_GolemChild_Gfx_57C10:
-	dc.b	$01, $00, $FE, $EE, $EE, $CC, $03, $03, $34, $34, $34, $03, $34, $32, $34, $00 
-EnemyGfxData_GolemChild_Gfx_57C20:
-	dc.b	$00, $32, $23, $35, $54, $21, $11, $23, $44, $32, $12, $22, $34, $32, $22, $22, $33, $33, $32, $23, $33, $34, $43, $33, $33, $45, $44, $44, $44, $45, $54, $44 
-	dc.b	$44, $00 
-EnemyGfxData_GolemChild_Gfx_57C42:
-	dc.b	$01, $44, $6C, $08, $08, $84, $33, $43, $32, $21, $34, $33, $21, $11, $33, $21, $11, $34, $33, $21, $12, $43, $32, $22, $33, $32, $33, $45, $22, $34 
-EnemyGfxData_GolemChild_Gfx_57C60:
-	dc.b	$01, $00, $33, $33, $10, $00, $33, $30, $22, $33, $12, $23, $12, $24, $22, $24, $40, $24, $44, $33, $40, $45, $54, $43, $44, $45, $54, $32, $34, $00 
-EnemyGfxData_GolemChild_Gfx_57C7E:
-	dc.b	$02, $00, $F8, $88, $E8, $00, $77, $00, $71, $06, $40, $70, $07, $70, $07, $70, $79, $A8, $07, $7A, $97, $07, $70, $7A, $87, $00 
-EnemyGfxData_GolemChild_Gfx_57C98:
-	dc.b	$01, $77, $81, $2A, $00, $09, $00, $00, $00, $78, $70, $00, $78, $97, $78, $79, $89, $98, $79, $88, $99, $89, $87, $79, $88, $78, $87, $98, $9A, $99, $79, $00 
-EnemyGfxData_GolemChild_Gfx_57CB8:
-	dc.b	$01, $00, $F1, $00, $30, $00, $70, $07, $77, $87, $77, $77, $70, $A8, $77, $70, $77, $9A, $A7, $78, $9A, $70, $07, $87, $7A, $77, $97, $A7, $79, $AA, $87, $00 
-EnemyGfxData_GolemChild_Gfx_57CD8:
-	dc.b	$01, $00, $FF, $7F, $FF, $FF, $70, $00 
-EnemyGfxData_GolemChild_Gfx_57CE0:
-	dc.b	$01, $00, $0C, $CE, $EE, $EE, $07, $70, $79, $87, $79, $77, $07, $07, $78, $89, $77, $33, $44, $00 
-EnemyGfxData_GolemChild_Gfx_57CF4:
-	dc.b	$00, $7A, $97, $78, $9A, $7A, $77, $97, $8A, $A9, $77, $97, $79, $97, $79, $87, $78, $74, $74, $55, $78, $44, $34, $56, $57, $43, $34, $56, $66, $33, $35, $56 
-	dc.b	$65, $00 
-EnemyGfxData_GolemChild_Gfx_57D16:
-	dc.b	$01, $00, $01, $33, $77, $77, $7A, $77, $88, $70, $79, $97, $77, $A8, $90, $A7, $70, $97, $87, $77, $56, $00 
-EnemyGfxData_GolemChild_Gfx_57D2C:
-	dc.b	$01, $00, $FF, $FF, $FF, $FF 
-EnemyGfxData_GolemChild_Gfx_57D32:
-	dc.b	$01, $00, $EE, $FF, $FF, $C8, $05, $04, $45, $45, $05, $45, $55, $00 
-EnemyGfxData_GolemChild_Gfx_57D40:
-	dc.b	$00, $43, $45, $66, $54, $34, $56, $66, $43, $55, $00, $64, $32, $00, $06, $54, $33, $00, $55, $54, $43, $00, $54, $54, $44, $05, $43, $65, $44, $05, $44, $56 
-	dc.b	$55, $00 
-EnemyGfxData_GolemChild_Gfx_57D62:
-	dc.b	$01, $00, $33, $31, $11, $10, $45, $50, $33, $45, $22, $34, $22, $34, $50, $33, $34, $50, $43, $34, $50, $44, $43, $45, $44, $32, $35, $50 
-EnemyGfxData_GolemChild_Gfx_57D7E:
-	dc.b	$02, $00, $EE, $88, $8C, $80, $77, $10, $17, $02, $44, $08, $70, $07, $07, $70, $79, $A8, $7A, $97, $07, $7A, $87, $00 
-EnemyGfxData_GolemChild_Gfx_57D96:
-	dc.b	$01, $77, $13, $28, $00, $09, $70, $00, $07, $89, $70, $78, $97, $AA, $79, $7A, $99, $98, $79, $89, $88, $89, $87, $79, $88, $78, $87, $98, $9A, $99, $79, $00 
-EnemyGfxData_GolemChild_Gfx_57DB6:
-	dc.b	$01, $00, $F1, $00, $01, $10, $77, $07, $70, $87, $77, $77, $07, $A8, $77, $77, $77, $9A, $A7, $07, $70, $78, $9A, $70, $A7, $7A, $70, $9A, $A8, $A7, $70, $00 
-EnemyGfxData_GolemChild_Gfx_57DD6:
-	dc.b	$01, $00, $04, $CE, $EE, $EE, $07, $70, $79, $87, $07, $79, $77, $07, $07, $07, $78, $77, $33, $44 
-EnemyGfxData_GolemChild_Gfx_57DEA:
-	dc.b	$00, $77, $A7, $78, $97, $78, $A7, $97, $97, $8A, $A7, $97, $A9, $AA, $77, $98, $7A, $77, $74, $75, $78, $44, $34, $56, $57, $43, $34, $56, $66, $33, $35, $56 
-	dc.b	$65, $00 
-EnemyGfxData_GolemChild_Gfx_57E0C:
-	dc.b	$01, $00, $00, $37, $33, $77, $88, $AA, $99, $97, $77, $8A, $77, $70, $78, $77, $A7, $99, $80, $88, $80, $77, $56, $00 
-EnemyGfxData_GolemChild_Gfx_57E24:
-	dc.b	$01, $00, $EE, $FF, $F9, $10, $05, $04, $45, $40, $05, $45, $55, $45, $46, $65, $50, $00 
-EnemyGfxData_GolemChild_Gfx_57E36:
-	dc.b	$00, $43, $45, $66, $54, $34, $56, $66, $54, $55, $00, $66, $54, $00, $06, $65, $54, $00, $55, $45, $55, $00, $54, $44, $55, $05, $43, $45, $55, $05, $55, $56 
-	dc.b	$66, $00 
-EnemyGfxData_GolemChild_Gfx_57E58:
-	dc.b	$01, $00, $31, $11, $11, $10, $44, $54, $33, $33, $40, $32, $23, $34, $33, $23, $34, $43, $33, $44, $54, $44, $44, $54, $43, $35, $54, $32, $33, $40 
-EnemyGfxData_GolemChild_Gfx_57E76:
-	dc.b	$01, $00, $EF, $C8, $88, $C8, $07, $77, $70, $07, $77, $77, $77, $07, $A9, $70, $0A, $98, $7A, $87, $77, $79, $A7, $00 
-EnemyGfxData_GolemChild_Gfx_57E8E:
-	dc.b	$01, $77, $83, $98, $00, $09, $00, $07, $70, $88, $99, $88, $97, $78, $87, $7A, $98, $79, $89, $98, $89, $87, $79, $88, $78, $87, $98, $9A, $99, $79 
-EnemyGfxData_GolemChild_Gfx_57EAC:
-	dc.b	$01, $00, $F3, $00, $11, $10, $70, $77, $AA, $77, $70, $70, $9A, $77, $77, $70, $9A, $AA, $77, $78, $89, $A7, $A7, $78, $A7, $A8, $78, $A7, $70, $00 
-EnemyGfxData_GolemChild_Gfx_57ECA:
-	dc.b	$01, $00, $80, $4E, $EE, $EE, $77, $77, $9A, $07, $70, $77, $77, $07, $07, $07, $07, $78, $77, $33, $44, $00 
-EnemyGfxData_GolemChild_Gfx_57EE0:
-	dc.b	$00, $77, $A7, $98, $97, $7A, $97, $89, $77, $A9, $79, $7A, $97, $97, $79, $88, $A7, $77, $47, $75, $79, $44, $34, $56, $57, $43, $34, $56, $66, $33, $35, $56 
-	dc.b	$65, $00 
-EnemyGfxData_GolemChild_Gfx_57F02:
-	dc.b	$01, $00, $00, $37, $33, $73, $9A, $78, $99, $97, $79, $AA, $77, $70, $78, $77, $77, $99, $80, $88, $80, $77, $55, $44 
-EnemyGfxData_GolemChild_Gfx_57F1A:
-	dc.b	$01, $00, $EE, $F9, $10, $00, $05, $04, $45, $46, $05, $45, $55, $45, $46, $65, $60, $45, $66, $66, $50, $45, $65, $66, $55, $00 
-EnemyGfxData_GolemChild_Gfx_57F34:
-	dc.b	$00, $43, $45, $66, $65, $34, $56, $66, $55, $55, $00, $66, $54, $00, $06, $65, $54, $00, $55, $45, $55, $00, $54, $44, $55, $05, $43, $45, $66, $55, $53, $33 
-	dc.b	$36, $00 
-EnemyGfxData_GolemChild_Gfx_57F56:
-	dc.b	$01, $00, $11, $11, $11, $11, $44, $33, $40, $43, $23, $34, $32, $23, $34, $43, $23, $34, $43, $33, $44, $54, $44, $44, $54, $43, $35, $54, $32, $23 
+	incbin "data/art/tiles/enemy/golem_child_gfx.bin"
+EnemyGfxData_GolemChild_Gfx_57600 equ EnemyGfxData_GolemChild_Gfx_575EC+$14
+EnemyGfxData_GolemChild_Gfx_57620 equ EnemyGfxData_GolemChild_Gfx_575EC+$34
+EnemyGfxData_GolemChild_Gfx_5763E equ EnemyGfxData_GolemChild_Gfx_575EC+$52
+EnemyGfxData_GolemChild_Gfx_5764C equ EnemyGfxData_GolemChild_Gfx_575EC+$60
+EnemyGfxData_GolemChild_Gfx_57658 equ EnemyGfxData_GolemChild_Gfx_575EC+$6C
+EnemyGfxData_GolemChild_Gfx_5767A equ EnemyGfxData_GolemChild_Gfx_575EC+$8E
+EnemyGfxData_GolemChild_Gfx_57698 equ EnemyGfxData_GolemChild_Gfx_575EC+$AC
+EnemyGfxData_GolemChild_Gfx_576A0 equ EnemyGfxData_GolemChild_Gfx_575EC+$B4
+EnemyGfxData_GolemChild_Gfx_576BE equ EnemyGfxData_GolemChild_Gfx_575EC+$D2
+EnemyGfxData_GolemChild_Gfx_576E0 equ EnemyGfxData_GolemChild_Gfx_575EC+$F4
+EnemyGfxData_GolemChild_Gfx_57702 equ EnemyGfxData_GolemChild_Gfx_575EC+$116
+EnemyGfxData_GolemChild_Gfx_57716 equ EnemyGfxData_GolemChild_Gfx_575EC+$12A
+EnemyGfxData_GolemChild_Gfx_57728 equ EnemyGfxData_GolemChild_Gfx_575EC+$13C
+EnemyGfxData_GolemChild_Gfx_5774A equ EnemyGfxData_GolemChild_Gfx_575EC+$15E
+EnemyGfxData_GolemChild_Gfx_57766 equ EnemyGfxData_GolemChild_Gfx_575EC+$17A
+EnemyGfxData_GolemChild_Gfx_57770 equ EnemyGfxData_GolemChild_Gfx_575EC+$184
+EnemyGfxData_GolemChild_Gfx_57780 equ EnemyGfxData_GolemChild_Gfx_575EC+$194
+EnemyGfxData_GolemChild_Gfx_577A2 equ EnemyGfxData_GolemChild_Gfx_575EC+$1B6
+EnemyGfxData_GolemChild_Gfx_577C0 equ EnemyGfxData_GolemChild_Gfx_575EC+$1D4
+EnemyGfxData_GolemChild_Gfx_577CA equ EnemyGfxData_GolemChild_Gfx_575EC+$1DE
+EnemyGfxData_GolemChild_Gfx_577E6 equ EnemyGfxData_GolemChild_Gfx_575EC+$1FA
+EnemyGfxData_GolemChild_Gfx_577FC equ EnemyGfxData_GolemChild_Gfx_575EC+$210
+EnemyGfxData_GolemChild_Gfx_57814 equ EnemyGfxData_GolemChild_Gfx_575EC+$228
+EnemyGfxData_GolemChild_Gfx_57836 equ EnemyGfxData_GolemChild_Gfx_575EC+$24A
+EnemyGfxData_GolemChild_Gfx_57852 equ EnemyGfxData_GolemChild_Gfx_575EC+$266
+EnemyGfxData_GolemChild_Gfx_5785E equ EnemyGfxData_GolemChild_Gfx_575EC+$272
+EnemyGfxData_GolemChild_Gfx_57870 equ EnemyGfxData_GolemChild_Gfx_575EC+$284
+EnemyGfxData_GolemChild_Gfx_57892 equ EnemyGfxData_GolemChild_Gfx_575EC+$2A6
+EnemyGfxData_GolemChild_Gfx_578B0 equ EnemyGfxData_GolemChild_Gfx_575EC+$2C4
+EnemyGfxData_GolemChild_Gfx_578B8 equ EnemyGfxData_GolemChild_Gfx_575EC+$2CC
+EnemyGfxData_GolemChild_Gfx_578D2 equ EnemyGfxData_GolemChild_Gfx_575EC+$2E6
+EnemyGfxData_GolemChild_Gfx_578F4 equ EnemyGfxData_GolemChild_Gfx_575EC+$308
+EnemyGfxData_GolemChild_Gfx_5790C equ EnemyGfxData_GolemChild_Gfx_575EC+$320
+EnemyGfxData_GolemChild_Gfx_57918 equ EnemyGfxData_GolemChild_Gfx_575EC+$32C
+EnemyGfxData_GolemChild_Gfx_57934 equ EnemyGfxData_GolemChild_Gfx_575EC+$348
+EnemyGfxData_GolemChild_Gfx_57956 equ EnemyGfxData_GolemChild_Gfx_575EC+$36A
+EnemyGfxData_GolemChild_Gfx_5796E equ EnemyGfxData_GolemChild_Gfx_575EC+$382
+EnemyGfxData_GolemChild_Gfx_57976 equ EnemyGfxData_GolemChild_Gfx_575EC+$38A
+EnemyGfxData_GolemChild_Gfx_57994 equ EnemyGfxData_GolemChild_Gfx_575EC+$3A8
+EnemyGfxData_GolemChild_Gfx_579B6 equ EnemyGfxData_GolemChild_Gfx_575EC+$3CA
+EnemyGfxData_GolemChild_Gfx_579C8 equ EnemyGfxData_GolemChild_Gfx_575EC+$3DC
+EnemyGfxData_GolemChild_Gfx_579E0 equ EnemyGfxData_GolemChild_Gfx_575EC+$3F4
+EnemyGfxData_GolemChild_Gfx_57A02 equ EnemyGfxData_GolemChild_Gfx_575EC+$416
+EnemyGfxData_GolemChild_Gfx_57A20 equ EnemyGfxData_GolemChild_Gfx_575EC+$434
+EnemyGfxData_GolemChild_Gfx_57A3A equ EnemyGfxData_GolemChild_Gfx_575EC+$44E
+EnemyGfxData_GolemChild_Gfx_57A44 equ EnemyGfxData_GolemChild_Gfx_575EC+$458
+EnemyGfxData_GolemChild_Gfx_57A60 equ EnemyGfxData_GolemChild_Gfx_575EC+$474
+EnemyGfxData_GolemChild_Gfx_57A82 equ EnemyGfxData_GolemChild_Gfx_575EC+$496
+EnemyGfxData_GolemChild_Gfx_57A94 equ EnemyGfxData_GolemChild_Gfx_575EC+$4A8
+EnemyGfxData_GolemChild_Gfx_57A9E equ EnemyGfxData_GolemChild_Gfx_575EC+$4B2
+EnemyGfxData_GolemChild_Gfx_57ABC equ EnemyGfxData_GolemChild_Gfx_575EC+$4D0
+EnemyGfxData_GolemChild_Gfx_57ADE equ EnemyGfxData_GolemChild_Gfx_575EC+$4F2
+EnemyGfxData_GolemChild_Gfx_57AEE equ EnemyGfxData_GolemChild_Gfx_575EC+$502
+EnemyGfxData_GolemChild_Gfx_57B02 equ EnemyGfxData_GolemChild_Gfx_575EC+$516
+EnemyGfxData_GolemChild_Gfx_57B24 equ EnemyGfxData_GolemChild_Gfx_575EC+$538
+EnemyGfxData_GolemChild_Gfx_57B42 equ EnemyGfxData_GolemChild_Gfx_575EC+$556
+EnemyGfxData_GolemChild_Gfx_57B5C equ EnemyGfxData_GolemChild_Gfx_575EC+$570
+EnemyGfxData_GolemChild_Gfx_57B6A equ EnemyGfxData_GolemChild_Gfx_575EC+$57E
+EnemyGfxData_GolemChild_Gfx_57B88 equ EnemyGfxData_GolemChild_Gfx_575EC+$59C
+EnemyGfxData_GolemChild_Gfx_57BA8 equ EnemyGfxData_GolemChild_Gfx_575EC+$5BC
+EnemyGfxData_GolemChild_Gfx_57BBC equ EnemyGfxData_GolemChild_Gfx_575EC+$5D0
+EnemyGfxData_GolemChild_Gfx_57BC4 equ EnemyGfxData_GolemChild_Gfx_575EC+$5D8
+EnemyGfxData_GolemChild_Gfx_57BE2 equ EnemyGfxData_GolemChild_Gfx_575EC+$5F6
+EnemyGfxData_GolemChild_Gfx_57C04 equ EnemyGfxData_GolemChild_Gfx_575EC+$618
+EnemyGfxData_GolemChild_Gfx_57C10 equ EnemyGfxData_GolemChild_Gfx_575EC+$624
+EnemyGfxData_GolemChild_Gfx_57C20 equ EnemyGfxData_GolemChild_Gfx_575EC+$634
+EnemyGfxData_GolemChild_Gfx_57C42 equ EnemyGfxData_GolemChild_Gfx_575EC+$656
+EnemyGfxData_GolemChild_Gfx_57C60 equ EnemyGfxData_GolemChild_Gfx_575EC+$674
+EnemyGfxData_GolemChild_Gfx_57C7E equ EnemyGfxData_GolemChild_Gfx_575EC+$692
+EnemyGfxData_GolemChild_Gfx_57C98 equ EnemyGfxData_GolemChild_Gfx_575EC+$6AC
+EnemyGfxData_GolemChild_Gfx_57CB8 equ EnemyGfxData_GolemChild_Gfx_575EC+$6CC
+EnemyGfxData_GolemChild_Gfx_57CD8 equ EnemyGfxData_GolemChild_Gfx_575EC+$6EC
+EnemyGfxData_GolemChild_Gfx_57CE0 equ EnemyGfxData_GolemChild_Gfx_575EC+$6F4
+EnemyGfxData_GolemChild_Gfx_57CF4 equ EnemyGfxData_GolemChild_Gfx_575EC+$708
+EnemyGfxData_GolemChild_Gfx_57D16 equ EnemyGfxData_GolemChild_Gfx_575EC+$72A
+EnemyGfxData_GolemChild_Gfx_57D2C equ EnemyGfxData_GolemChild_Gfx_575EC+$740
+EnemyGfxData_GolemChild_Gfx_57D32 equ EnemyGfxData_GolemChild_Gfx_575EC+$746
+EnemyGfxData_GolemChild_Gfx_57D40 equ EnemyGfxData_GolemChild_Gfx_575EC+$754
+EnemyGfxData_GolemChild_Gfx_57D62 equ EnemyGfxData_GolemChild_Gfx_575EC+$776
+EnemyGfxData_GolemChild_Gfx_57D7E equ EnemyGfxData_GolemChild_Gfx_575EC+$792
+EnemyGfxData_GolemChild_Gfx_57D96 equ EnemyGfxData_GolemChild_Gfx_575EC+$7AA
+EnemyGfxData_GolemChild_Gfx_57DB6 equ EnemyGfxData_GolemChild_Gfx_575EC+$7CA
+EnemyGfxData_GolemChild_Gfx_57DD6 equ EnemyGfxData_GolemChild_Gfx_575EC+$7EA
+EnemyGfxData_GolemChild_Gfx_57DEA equ EnemyGfxData_GolemChild_Gfx_575EC+$7FE
+EnemyGfxData_GolemChild_Gfx_57E0C equ EnemyGfxData_GolemChild_Gfx_575EC+$820
+EnemyGfxData_GolemChild_Gfx_57E24 equ EnemyGfxData_GolemChild_Gfx_575EC+$838
+EnemyGfxData_GolemChild_Gfx_57E36 equ EnemyGfxData_GolemChild_Gfx_575EC+$84A
+EnemyGfxData_GolemChild_Gfx_57E58 equ EnemyGfxData_GolemChild_Gfx_575EC+$86C
+EnemyGfxData_GolemChild_Gfx_57E76 equ EnemyGfxData_GolemChild_Gfx_575EC+$88A
+EnemyGfxData_GolemChild_Gfx_57E8E equ EnemyGfxData_GolemChild_Gfx_575EC+$8A2
+EnemyGfxData_GolemChild_Gfx_57EAC equ EnemyGfxData_GolemChild_Gfx_575EC+$8C0
+EnemyGfxData_GolemChild_Gfx_57ECA equ EnemyGfxData_GolemChild_Gfx_575EC+$8DE
+EnemyGfxData_GolemChild_Gfx_57EE0 equ EnemyGfxData_GolemChild_Gfx_575EC+$8F4
+EnemyGfxData_GolemChild_Gfx_57F02 equ EnemyGfxData_GolemChild_Gfx_575EC+$916
+EnemyGfxData_GolemChild_Gfx_57F1A equ EnemyGfxData_GolemChild_Gfx_575EC+$92E
+EnemyGfxData_GolemChild_Gfx_57F34 equ EnemyGfxData_GolemChild_Gfx_575EC+$948
+EnemyGfxData_GolemChild_Gfx_57F56 equ EnemyGfxData_GolemChild_Gfx_575EC+$96A
 EnemyGfxData_GolemChild:
 	dc.l	EnemyGfxData_GolemChild_Gfx_575EC
 	dc.l	EnemyGfxData_GolemChild_Gfx_57600
@@ -60786,192 +58294,93 @@ EnemyGfxFrameTable_GargoyleChild:
 	dc.b	$33, $37, $31, $34, $24, $00, $35, $38, $00, $00, $3E, $39, $3C, $3F, $3A, $00, $40, $3B, $3D, $41, $00, $45, $48, $42, $46, $49, $43, $00, $4A, $44, $47, $4B 
 	dc.b	$00, $4F, $53, $4C, $50, $54, $4D, $51, $55, $4E, $52, $56 
 EnemyGfxData_GargoyleChild_Gfx_58168:
-	dc.b	$01, $00, $FF, $FF, $FF, $FF 
-EnemyGfxData_GargoyleChild_Gfx_5816E:
-	dc.b	$01, $00, $FF, $C8, $88, $81, $02, $42, $03, $34, $21, $35, $55, $31, $A4, $53, $21, $CA, $32, $11, $0A, $CA, $11, $00 
-EnemyGfxData_GargoyleChild_Gfx_58186:
-	dc.b	$01, $00, $F3, $11, $8C, $EE, $44, $40, $12, $23, $40, $11, $11, $23, $01, $11, $20, $01, $12, $12, $11, $00 
-EnemyGfxData_GargoyleChild_Gfx_5819C:
-	dc.b	$01, $00, $FF, $FF, $FF, $F7, $20, $00 
-EnemyGfxData_GargoyleChild_Gfx_581A4:
-	dc.b	$01, $00, $33, $77, $FF, $FE, $0C, $A9, $0C, $90, $0B, $0A, $11, $00 
-EnemyGfxData_GargoyleChild_Gfx_581B2:
-	dc.b	$01, $00, $EE, $EC, $C8, $00, $11, $11, $11, $01, $21, $03, $11, $03, $31, $11, $01, $32, $21, $10, $22, $22, $11, $10 
-EnemyGfxData_GargoyleChild_Gfx_581CA:
-	dc.b	$01, $00, $77, $77, $FF, $FF, $10, $10, $10, $10 
-EnemyGfxData_GargoyleChild_Gfx_581D4:
-	dc.b	$01, $00, $FF, $FE, $CC, $89, $43, $04, $11, $31, $43, $02, $14, $11, $01, $31 
-EnemyGfxData_GargoyleChild_Gfx_581E4:
-	dc.b	$00, $00, $00, $11, $22, $00, $02, $23, $33, $00, $23, $32, $34, $21, $34, $44, $43, $12, $23, $45, $55, $21, $34, $54, $55, $12, $24, $34, $54, $11, $23, $43 
-	dc.b	$33, $00 
-EnemyGfxData_GargoyleChild_Gfx_58206:
-	dc.b	$00, $33, $22, $11, $00, $33, $33, $21, $00, $32, $34, $42, $21, $44, $43, $41, $21, $54, $34, $42, $10, $53, $54, $31, $10, $34, $25, $32, $10, $44, $43, $21 
-	dc.b	$11, $00 
-EnemyGfxData_GargoyleChild_Gfx_58228:
-	dc.b	$01, $00, $73, $3B, $BB, $B3, $03, $31, $40, $10, $12, $12, $01, $01, $61, $66, $66, $00 
-EnemyGfxData_GargoyleChild_Gfx_5823A:
-	dc.b	$01, $00, $FF, $FE, $C8, $80, $34, $23, $21, $03, $42, $10, $35, $42, $10, $03, $55, $32, $10, $00 
-EnemyGfxData_GargoyleChild_Gfx_5824E:
-	dc.b	$01, $00, $FF, $F3, $19, $CC, $44, $20, $11, $12, $40, $11, $23, $12, $20, $11, $20, $00 
-EnemyGfxData_GargoyleChild_Gfx_58260:
-	dc.b	$01, $00, $01, $33, $77, $7E, $03, $43, $21, $10, $0B, $A2, $11, $AC, $A1, $CA, $90, $C9, $B0, $A0, $11, $00 
-EnemyGfxData_GargoyleChild_Gfx_58276:
-	dc.b	$01, $00, $CC, $CC, $C8, $11, $01, $20, $01, $11, $01, $11, $11, $10, $21, $10, $13, $21, $10, $01, $32, $21, $22, $22, $11, $00 
-EnemyGfxData_GargoyleChild_Gfx_58290:
-	dc.b	$01, $00, $FF, $EC, $D9, $A8, $43, $04, $11, $31, $02, $10, $02, $43, $01, $04, $11, $00 
-EnemyGfxData_GargoyleChild_Gfx_582A2:
-	dc.b	$00, $00, $00, $11, $22, $00, $02, $22, $33, $10, $23, $22, $34, $21, $34, $44, $43, $02, $23, $45, $55, $01, $34, $54, $55, $31, $24, $34, $54, $11, $23, $43 
-	dc.b	$33, $00 
-EnemyGfxData_GargoyleChild_Gfx_582C4:
-	dc.b	$00, $33, $22, $11, $00, $33, $33, $21, $00, $32, $34, $42, $00, $44, $43, $41, $02, $54, $34, $42, $11, $53, $54, $31, $10, $34, $25, $32, $10, $44, $43, $21 
-	dc.b	$11, $00 
-EnemyGfxData_GargoyleChild_Gfx_582E6:
-	dc.b	$01, $00, $FF, $73, $3B, $91, $34, $11, $40, $01, $30, $13, $01, $20, $60, $01, $20, $00 
-EnemyGfxData_GargoyleChild_Gfx_582F8:
-	dc.b	$01, $00, $FF, $FF, $FC, $C8, $03, $43, $44, $11, $35, $41, $10, $00 
-EnemyGfxData_GargoyleChild_Gfx_58306:
-	dc.b	$01, $00, $FF, $FF, $31, $1D, $44, $33, $11, $11, $20, $10, $01, $12, $12, $00 
-EnemyGfxData_GargoyleChild_Gfx_58316:
-	dc.b	$01, $00, $FF, $FE, $EE, $EE, $0A, $0A, $0C, $0B, $0B, $00 
-EnemyGfxData_GargoyleChild_Gfx_58322:
-	dc.b	$01, $00, $11, $11, $37, $76, $23, $55, $21, $35, $43, $21, $34, $32, $11, $BA, $21, $10, $CA, $10, $B9, $90, $90, $01 
-EnemyGfxData_GargoyleChild_Gfx_5833A:
-	dc.b	$02, $00, $CC, $CC, $88, $11, $11, $20, $33, $22, $02, $20, $01, $20, $01, $10, $12, $10, $01, $23, $21, $22, $22, $00 
-EnemyGfxData_GargoyleChild_Gfx_58352:
-	dc.b	$01, $00, $FC, $CC, $DD, $DC, $04, $43, $41, $11, $31, $01, $10, $10, $10, $14, $43, $00 
-EnemyGfxData_GargoyleChild_Gfx_58364:
-	dc.b	$00, $A0, $00, $11, $22, $00, $02, $22, $33, $30, $22, $22, $34, $11, $34, $24, $43, $12, $23, $45, $55, $11, $34, $54, $55, $22, $24, $34, $54, $11, $23, $43 
-	dc.b	$33, $00 
-EnemyGfxData_GargoyleChild_Gfx_58386:
-	dc.b	$00, $33, $22, $11, $00, $33, $33, $21, $00, $32, $34, $42, $00, $44, $43, $41, $12, $54, $34, $42, $11, $53, $54, $31, $22, $34, $25, $32, $11, $44, $43, $21 
-	dc.b	$11, $00 
-EnemyGfxData_GargoyleChild_Gfx_583A8:
-	dc.b	$01, $00, $FF, $F7, $33, $11, $34, $11, $40, $31, $13, $14, $41, $20, $01, $14, $10, $00 
-EnemyGfxData_GargoyleChild_Gfx_583BA:
-	dc.b	$01, $00, $FF, $98, $00, $26, $05, $55, $44, $33, $50, $05, $42, $11, $33, $04, $10, $01, $13, $43, $10, $12, $31, $11 
-EnemyGfxData_GargoyleChild_Gfx_583D2:
-	dc.b	$01, $00, $FF, $FD, $11, $11, $AC, $0A, $BB, $CA, $34, $54, $B0, $23, $44, $40, $12, $22, $22, $00 
-EnemyGfxData_GargoyleChild_Gfx_583E6:
-	dc.b	$01, $00, $EE, $EE, $EE, $EE, $04, $03, $02, $32, $31, $21, $21, $21 
-EnemyGfxData_GargoyleChild_Gfx_583F4:
-	dc.b	$01, $00, $67, $77, $77, $44, $21, $01, $10, $10, $10, $10, $10, $12, $05, $40, $11, $01, $42, $00 
-EnemyGfxData_GargoyleChild_Gfx_58408:
-	dc.b	$01, $00, $13, $FF, $FF, $C8, $11, $12, $10, $11, $11, $04, $32, $03, $41, $01 
-EnemyGfxData_GargoyleChild_Gfx_58418:
-	dc.b	$01, $00, $FF, $FF, $FF, $73, $54, $13, $40, $00 
-EnemyGfxData_GargoyleChild_Gfx_58422:
-	dc.b	$02, $00, $CC, $CC, $C8, $88, $11, $01, $11, $13, $13, $02, $21, $02, $02, $02, $01, $01, $04, $41, $13, $00 
-EnemyGfxData_GargoyleChild_Gfx_58438:
-	dc.b	$00, $10, $55, $21, $21, $14, $55, $42, $10, $14, $54, $32, $10, $12, $33, $22, $12, $12, $11, $55, $54, $12, $54, $43, $55, $11, $44, $45, $45, $11, $35, $44 
-	dc.b	$54, $00 
-EnemyGfxData_GargoyleChild_Gfx_5845A:
-	dc.b	$00, $00, $22, $24, $54, $00, $12, $45, $55, $00, $22, $34, $44, $32, $12, $22, $33, $45, $55, $21, $11, $55, $53, $42, $11, $54, $54, $53, $12, $44, $35, $44 
-	dc.b	$21, $00 
-EnemyGfxData_GargoyleChild_Gfx_5847C:
-	dc.b	$01, $00, $33, $33, $11, $11, $22, $23, $43, $13, $33, $22, $34, $53, $32, $13, $60, $21, $61, $30, $16, $61, $30, $66, $60, $10 
-EnemyGfxData_GargoyleChild_Gfx_58496:
-	dc.b	$01, $00, $FF, $FF, $C8, $82, $45, $50, $54, $33, $34, $43, $11, $11, $04, $31, $01, $00 
-EnemyGfxData_GargoyleChild_Gfx_584A8:
-	dc.b	$01, $00, $FF, $FC, $80, $00, $0C, $B0, $0A, $BB, $A0, $50, $34, $53, $A0, $33, $45, $55, $20, $13, $23, $54, $32, $00 
-EnemyGfxData_GargoyleChild_Gfx_584C0:
-	dc.b	$01, $00, $FF, $FE, $EE, $EE, $01, $03, $03, $32, $22, $00 
-EnemyGfxData_GargoyleChild_Gfx_584CC:
-	dc.b	$01, $00, $33, $77, $77, $54, $13, $10, $42, $10, $31, $21, $21, $11, $11, $34, $12, $12, $40, $00 
-EnemyGfxData_GargoyleChild_Gfx_584E0:
-	dc.b	$01, $00, $00, $1F, $FF, $D9, $12, $23, $33, $20, $11, $12, $21, $10, $01, $11, $10, $43, $24, $10 
-EnemyGfxData_GargoyleChild_Gfx_584F4:
-	dc.b	$01, $00, $FF, $FF, $FF, $33, $24, $50, $11, $34 
-EnemyGfxData_GargoyleChild_Gfx_584FE:
-	dc.b	$02, $00, $EE, $EC, $C8, $88, $11, $00, $10, $13, $31, $21, $21, $01, $21, $52, $03, $01, $03, $41 
-EnemyGfxData_GargoyleChild_Gfx_58512:
-	dc.b	$00, $10, $55, $21, $20, $14, $55, $42, $00, $14, $54, $32, $10, $13, $33, $22, $12, $12, $11, $55, $54, $12, $14, $43, $55, $12, $44, $45, $45, $12, $53, $44 
-	dc.b	$54, $00 
-EnemyGfxData_GargoyleChild_Gfx_58534:
-	dc.b	$00, $00, $22, $24, $54, $00, $12, $45, $55, $00, $22, $34, $44, $32, $12, $22, $33, $45, $55, $21, $11, $55, $53, $42, $11, $54, $54, $53, $13, $44, $35, $44 
-	dc.b	$21, $00 
-EnemyGfxData_GargoyleChild_Gfx_58556:
-	dc.b	$01, $00, $33, $33, $11, $11, $22, $23, $43, $13, $33, $22, $32, $21, $35, $41, $60, $21, $23, $60, $16, $12, $30, $66, $61, $20 
-EnemyGfxData_GargoyleChild_Gfx_58570:
-	dc.b	$01, $00, $FF, $FF, $FF, $CC, $05, $55, $43, $33 
-EnemyGfxData_GargoyleChild_Gfx_5857A:
-	dc.b	$01, $00, $FF, $FF, $CC, $00, $0A, $C0, $AB, $BA, $40, $03, $45, $3A, $33, $34, $55, $52 
-EnemyGfxData_GargoyleChild_Gfx_5858C:
-	dc.b	$01, $00, $FF, $FF, $FE, $EE, $03, $02, $02, $00 
-EnemyGfxData_GargoyleChild_Gfx_58596:
-	dc.b	$01, $00, $89, $33, $33, $10, $43, $21, $11, $32, $11, $04, $21, $33, $10, $21, $10, $11, $20, $11, $03, $40, $11, $01, $24, $30 
-EnemyGfxData_GargoyleChild_Gfx_585B0:
-	dc.b	$01, $00, $00, $08, $8F, $99, $13, $32, $35, $43, $11, $22, $23, $32, $01, $11, $22, $21, $11, $11, $11, $01, $11, $10, $04, $20, $34, $10 
-EnemyGfxData_GargoyleChild_Gfx_585CC:
-	dc.b	$01, $00, $7F, $FF, $FF, $31, $20, $01, $54, $01, $35, $40 
-EnemyGfxData_GargoyleChild_Gfx_585D8:
-	dc.b	$03, $00, $EE, $C8, $88, $88, $11, $00, $13, $11, $11, $01, $00, $00, $46, $66, $21, $21, $50, $03, $12, $00 
-EnemyGfxData_GargoyleChild_Gfx_585EE:
-	dc.b	$00, $12, $55, $21, $20, $14, $55, $42, $00, $14, $54, $32, $10, $13, $33, $22, $12, $12, $11, $55, $54, $12, $14, $43, $55, $12, $44, $45, $45, $11, $53, $44 
-	dc.b	$54, $00 
-EnemyGfxData_GargoyleChild_Gfx_58610:
-	dc.b	$01, $00, $11, $33, $11, $33, $22, $23, $20, $43, $13, $20, $33, $22, $32, $21, $22, $11, $60, $34, $66, $60, $11, $56, $35, $14 
-EnemyGfxData_GargoyleChild_Gfx_5862A:
-	dc.b	$01, $00, $FF, $C8, $88, $01, $04, $54, $02, $45, $43, $24, $53, $32, $23, $32, $21, $0A, $B2, $22, $11, $0C, $B9, $11 
-EnemyGfxData_GargoyleChild_Gfx_58642:
-	dc.b	$01, $00, $FF, $10, $06, $FF, $20, $34, $44, $32, $22, $22, $33, $11, $11, $11, $12, $10, $01, $00 
-EnemyGfxData_GargoyleChild_Gfx_58656:
-	dc.b	$01, $00, $FF, $F7, $73, $33, $30, $44, $12, $50, $11, $40, $01, $24 
-EnemyGfxData_GargoyleChild_Gfx_58664:
-	dc.b	$01, $00, $33, $77, $FF, $FF, $AC, $A0, $BA, $90, $A0, $90 
-EnemyGfxData_GargoyleChild_Gfx_58670:
-	dc.b	$01, $00, $39, $99, $99, $11, $01, $13, $12, $30, $11, $30, $11, $20, $11, $10, $11, $10, $02, $21, $10, $02, $21, $10 
-EnemyGfxData_GargoyleChild_Gfx_58688:
-	dc.b	$01, $00, $FF, $FF, $FF, $FE, $13, $00 
-EnemyGfxData_GargoyleChild_Gfx_58690:
-	dc.b	$01, $00, $FD, $DC, $C8, $00, $30, $32, $21, $22, $11, $23, $02, $13, $55, $33, $32, $35, $55, $33, $23, $54, $44, $00 
-EnemyGfxData_GargoyleChild_Gfx_586A8:
-	dc.b	$01, $00, $DD, $C0, $00, $00, $03, $31, $13, $34, $23, $55, $34, $33, $55, $54, $43, $33, $54, $43, $33, $33, $44, $43, $32, $32, $43, $33, $25, $53 
-EnemyGfxData_GargoyleChild_Gfx_586C6:
-	dc.b	$01, $00, $11, $33, $33, $33, $02, $21, $10, $23, $21, $10, $43, $21, $32, $21, $22, $11, $32, $10, $53, $10, $54, $10 
-EnemyGfxData_GargoyleChild_Gfx_586DE:
-	dc.b	$01, $00, $FF, $FF, $F8, $00, $04, $54, $20, $02, $45, $43, $32, $24, $53, $32, $11, $00 
-EnemyGfxData_GargoyleChild_Gfx_586F0:
-	dc.b	$01, $00, $FF, $FF, $F1, $04, $33, $45, $43, $21, $11, $12, $54, $10, $01, $11 
-EnemyGfxData_GargoyleChild_Gfx_58700:
-	dc.b	$01, $00, $FF, $FF, $FF, $73, $30, $25, $40, $00 
-EnemyGfxData_GargoyleChild_Gfx_5870A:
-	dc.b	$01, $00, $FE, $EE, $EE, $EF, $0A, $0C, $AC, $BA, $A0, $90 
-EnemyGfxData_GargoyleChild_Gfx_58716:
-	dc.b	$01, $00, $01, $37, $7F, $FF, $23, $32, $21, $10, $B2, $22, $11, $B9, $11, $A0, $90, $00 
-EnemyGfxData_GargoyleChild_Gfx_58728:
-	dc.b	$02, $11, $80, $44, $46, $62, $00, $33, $99, $99, $99, $23, $01, $12, $30, $20, $10, $21 
-EnemyGfxData_GargoyleChild_Gfx_5873A:
-	dc.b	$01, $00, $FF, $FF, $FF, $FC, $02, $13 
-EnemyGfxData_GargoyleChild_Gfx_58742:
-	dc.b	$01, $00, $FD, $CC, $CC, $00, $03, $02, $10, $01, $12, $01, $23, $03, $55, $33, $32, $35, $55, $33, $23, $54, $44, $00 
-EnemyGfxData_GargoyleChild_Gfx_5875A:
-	dc.b	$00, $00, $03, $00, $00, $00, $02, $10, $00, $00, $02, $13, $34, $23, $55, $34, $33, $55, $54, $43, $33, $54, $43, $33, $33, $44, $43, $22, $32, $43, $32, $55 
-	dc.b	$22, $00 
-EnemyGfxData_GargoyleChild_Gfx_5877C:
-	dc.b	$01, $00, $11, $11, $13, $33, $02, $21, $11, $22, $21, $10, $32, $21, $10, $32, $21, $10, $22, $11, $10, $32, $11, $23, $51, $34, $15, $00 
-EnemyGfxData_GargoyleChild_Gfx_58798:
-	dc.b	$01, $00, $FF, $FF, $FF, $F0, $04, $54, $20, $33 
-EnemyGfxData_GargoyleChild_Gfx_587A2:
-	dc.b	$01, $00, $FF, $FF, $FF, $00, $03, $34, $54, $30, $41, $11, $11, $25 
-EnemyGfxData_GargoyleChild_Gfx_587B0:
-	dc.b	$01, $00, $FF, $FF, $FF, $F7, $40, $00 
-EnemyGfxData_GargoyleChild_Gfx_587B8:
-	dc.b	$01, $00, $EE, $EC, $CC, $CD, $02, $24, $23, $0A, $C2, $0C, $B9, $AB, $A0, $BA, $90, $A0 
-EnemyGfxData_GargoyleChild_Gfx_587CA:
-	dc.b	$01, $00, $00, $13, $7F, $FF, $45, $43, $32, $21, $53, $32, $11, $10, $32, $21, $10, $22, $11, $11 
-EnemyGfxData_GargoyleChild_Gfx_587DE:
-	dc.b	$01, $00, $4E, $FF, $FF, $FF, $11, $11, $11, $01 
-EnemyGfxData_GargoyleChild_Gfx_587E8:
-	dc.b	$02, $00, $73, $33, $99, $91, $11, $08, $80, $44, $66, $24, $30, $12, $01, $12, $20, $10, $01, $00 
-EnemyGfxData_GargoyleChild_Gfx_587FC:
-	dc.b	$01, $00, $DF, $FF, $FF, $F8, $90, $01, $22, $13 
-EnemyGfxData_GargoyleChild_Gfx_58806:
-	dc.b	$01, $00, $FE, $EE, $EC, $00, $03, $12, $12, $23, $03, $55, $33, $32, $35, $55, $33, $23, $54, $44 
-EnemyGfxData_GargoyleChild_Gfx_5881A:
-	dc.b	$00, $00, $30, $00, $00, $02, $22, $00, $01, $01, $11, $23, $33, $23, $55, $34, $33, $55, $54, $43, $33, $54, $43, $33, $33, $44, $43, $22, $32, $43, $35, $42 
-	dc.b	$22, $00 
-EnemyGfxData_GargoyleChild_Gfx_5883C:
-	dc.b	$01, $00, $11, $11, $33, $31, $01, $11, $11, $22, $11, $10, $22, $11, $10, $32, $21, $10, $22, $11, $32, $11, $23, $55, $34, $13, $40, $00 
+	incbin "data/art/tiles/enemy/gargoyle_child_gfx.bin"
+EnemyGfxData_GargoyleChild_Gfx_5816E equ EnemyGfxData_GargoyleChild_Gfx_58168+$6
+EnemyGfxData_GargoyleChild_Gfx_58186 equ EnemyGfxData_GargoyleChild_Gfx_58168+$1E
+EnemyGfxData_GargoyleChild_Gfx_5819C equ EnemyGfxData_GargoyleChild_Gfx_58168+$34
+EnemyGfxData_GargoyleChild_Gfx_581A4 equ EnemyGfxData_GargoyleChild_Gfx_58168+$3C
+EnemyGfxData_GargoyleChild_Gfx_581B2 equ EnemyGfxData_GargoyleChild_Gfx_58168+$4A
+EnemyGfxData_GargoyleChild_Gfx_581CA equ EnemyGfxData_GargoyleChild_Gfx_58168+$62
+EnemyGfxData_GargoyleChild_Gfx_581D4 equ EnemyGfxData_GargoyleChild_Gfx_58168+$6C
+EnemyGfxData_GargoyleChild_Gfx_581E4 equ EnemyGfxData_GargoyleChild_Gfx_58168+$7C
+EnemyGfxData_GargoyleChild_Gfx_58206 equ EnemyGfxData_GargoyleChild_Gfx_58168+$9E
+EnemyGfxData_GargoyleChild_Gfx_58228 equ EnemyGfxData_GargoyleChild_Gfx_58168+$C0
+EnemyGfxData_GargoyleChild_Gfx_5823A equ EnemyGfxData_GargoyleChild_Gfx_58168+$D2
+EnemyGfxData_GargoyleChild_Gfx_5824E equ EnemyGfxData_GargoyleChild_Gfx_58168+$E6
+EnemyGfxData_GargoyleChild_Gfx_58260 equ EnemyGfxData_GargoyleChild_Gfx_58168+$F8
+EnemyGfxData_GargoyleChild_Gfx_58276 equ EnemyGfxData_GargoyleChild_Gfx_58168+$10E
+EnemyGfxData_GargoyleChild_Gfx_58290 equ EnemyGfxData_GargoyleChild_Gfx_58168+$128
+EnemyGfxData_GargoyleChild_Gfx_582A2 equ EnemyGfxData_GargoyleChild_Gfx_58168+$13A
+EnemyGfxData_GargoyleChild_Gfx_582C4 equ EnemyGfxData_GargoyleChild_Gfx_58168+$15C
+EnemyGfxData_GargoyleChild_Gfx_582E6 equ EnemyGfxData_GargoyleChild_Gfx_58168+$17E
+EnemyGfxData_GargoyleChild_Gfx_582F8 equ EnemyGfxData_GargoyleChild_Gfx_58168+$190
+EnemyGfxData_GargoyleChild_Gfx_58306 equ EnemyGfxData_GargoyleChild_Gfx_58168+$19E
+EnemyGfxData_GargoyleChild_Gfx_58316 equ EnemyGfxData_GargoyleChild_Gfx_58168+$1AE
+EnemyGfxData_GargoyleChild_Gfx_58322 equ EnemyGfxData_GargoyleChild_Gfx_58168+$1BA
+EnemyGfxData_GargoyleChild_Gfx_5833A equ EnemyGfxData_GargoyleChild_Gfx_58168+$1D2
+EnemyGfxData_GargoyleChild_Gfx_58352 equ EnemyGfxData_GargoyleChild_Gfx_58168+$1EA
+EnemyGfxData_GargoyleChild_Gfx_58364 equ EnemyGfxData_GargoyleChild_Gfx_58168+$1FC
+EnemyGfxData_GargoyleChild_Gfx_58386 equ EnemyGfxData_GargoyleChild_Gfx_58168+$21E
+EnemyGfxData_GargoyleChild_Gfx_583A8 equ EnemyGfxData_GargoyleChild_Gfx_58168+$240
+EnemyGfxData_GargoyleChild_Gfx_583BA equ EnemyGfxData_GargoyleChild_Gfx_58168+$252
+EnemyGfxData_GargoyleChild_Gfx_583D2 equ EnemyGfxData_GargoyleChild_Gfx_58168+$26A
+EnemyGfxData_GargoyleChild_Gfx_583E6 equ EnemyGfxData_GargoyleChild_Gfx_58168+$27E
+EnemyGfxData_GargoyleChild_Gfx_583F4 equ EnemyGfxData_GargoyleChild_Gfx_58168+$28C
+EnemyGfxData_GargoyleChild_Gfx_58408 equ EnemyGfxData_GargoyleChild_Gfx_58168+$2A0
+EnemyGfxData_GargoyleChild_Gfx_58418 equ EnemyGfxData_GargoyleChild_Gfx_58168+$2B0
+EnemyGfxData_GargoyleChild_Gfx_58422 equ EnemyGfxData_GargoyleChild_Gfx_58168+$2BA
+EnemyGfxData_GargoyleChild_Gfx_58438 equ EnemyGfxData_GargoyleChild_Gfx_58168+$2D0
+EnemyGfxData_GargoyleChild_Gfx_5845A equ EnemyGfxData_GargoyleChild_Gfx_58168+$2F2
+EnemyGfxData_GargoyleChild_Gfx_5847C equ EnemyGfxData_GargoyleChild_Gfx_58168+$314
+EnemyGfxData_GargoyleChild_Gfx_58496 equ EnemyGfxData_GargoyleChild_Gfx_58168+$32E
+EnemyGfxData_GargoyleChild_Gfx_584A8 equ EnemyGfxData_GargoyleChild_Gfx_58168+$340
+EnemyGfxData_GargoyleChild_Gfx_584C0 equ EnemyGfxData_GargoyleChild_Gfx_58168+$358
+EnemyGfxData_GargoyleChild_Gfx_584CC equ EnemyGfxData_GargoyleChild_Gfx_58168+$364
+EnemyGfxData_GargoyleChild_Gfx_584E0 equ EnemyGfxData_GargoyleChild_Gfx_58168+$378
+EnemyGfxData_GargoyleChild_Gfx_584F4 equ EnemyGfxData_GargoyleChild_Gfx_58168+$38C
+EnemyGfxData_GargoyleChild_Gfx_584FE equ EnemyGfxData_GargoyleChild_Gfx_58168+$396
+EnemyGfxData_GargoyleChild_Gfx_58512 equ EnemyGfxData_GargoyleChild_Gfx_58168+$3AA
+EnemyGfxData_GargoyleChild_Gfx_58534 equ EnemyGfxData_GargoyleChild_Gfx_58168+$3CC
+EnemyGfxData_GargoyleChild_Gfx_58556 equ EnemyGfxData_GargoyleChild_Gfx_58168+$3EE
+EnemyGfxData_GargoyleChild_Gfx_58570 equ EnemyGfxData_GargoyleChild_Gfx_58168+$408
+EnemyGfxData_GargoyleChild_Gfx_5857A equ EnemyGfxData_GargoyleChild_Gfx_58168+$412
+EnemyGfxData_GargoyleChild_Gfx_5858C equ EnemyGfxData_GargoyleChild_Gfx_58168+$424
+EnemyGfxData_GargoyleChild_Gfx_58596 equ EnemyGfxData_GargoyleChild_Gfx_58168+$42E
+EnemyGfxData_GargoyleChild_Gfx_585B0 equ EnemyGfxData_GargoyleChild_Gfx_58168+$448
+EnemyGfxData_GargoyleChild_Gfx_585CC equ EnemyGfxData_GargoyleChild_Gfx_58168+$464
+EnemyGfxData_GargoyleChild_Gfx_585D8 equ EnemyGfxData_GargoyleChild_Gfx_58168+$470
+EnemyGfxData_GargoyleChild_Gfx_585EE equ EnemyGfxData_GargoyleChild_Gfx_58168+$486
+EnemyGfxData_GargoyleChild_Gfx_58610 equ EnemyGfxData_GargoyleChild_Gfx_58168+$4A8
+EnemyGfxData_GargoyleChild_Gfx_5862A equ EnemyGfxData_GargoyleChild_Gfx_58168+$4C2
+EnemyGfxData_GargoyleChild_Gfx_58642 equ EnemyGfxData_GargoyleChild_Gfx_58168+$4DA
+EnemyGfxData_GargoyleChild_Gfx_58656 equ EnemyGfxData_GargoyleChild_Gfx_58168+$4EE
+EnemyGfxData_GargoyleChild_Gfx_58664 equ EnemyGfxData_GargoyleChild_Gfx_58168+$4FC
+EnemyGfxData_GargoyleChild_Gfx_58670 equ EnemyGfxData_GargoyleChild_Gfx_58168+$508
+EnemyGfxData_GargoyleChild_Gfx_58688 equ EnemyGfxData_GargoyleChild_Gfx_58168+$520
+EnemyGfxData_GargoyleChild_Gfx_58690 equ EnemyGfxData_GargoyleChild_Gfx_58168+$528
+EnemyGfxData_GargoyleChild_Gfx_586A8 equ EnemyGfxData_GargoyleChild_Gfx_58168+$540
+EnemyGfxData_GargoyleChild_Gfx_586C6 equ EnemyGfxData_GargoyleChild_Gfx_58168+$55E
+EnemyGfxData_GargoyleChild_Gfx_586DE equ EnemyGfxData_GargoyleChild_Gfx_58168+$576
+EnemyGfxData_GargoyleChild_Gfx_586F0 equ EnemyGfxData_GargoyleChild_Gfx_58168+$588
+EnemyGfxData_GargoyleChild_Gfx_58700 equ EnemyGfxData_GargoyleChild_Gfx_58168+$598
+EnemyGfxData_GargoyleChild_Gfx_5870A equ EnemyGfxData_GargoyleChild_Gfx_58168+$5A2
+EnemyGfxData_GargoyleChild_Gfx_58716 equ EnemyGfxData_GargoyleChild_Gfx_58168+$5AE
+EnemyGfxData_GargoyleChild_Gfx_58728 equ EnemyGfxData_GargoyleChild_Gfx_58168+$5C0
+EnemyGfxData_GargoyleChild_Gfx_5873A equ EnemyGfxData_GargoyleChild_Gfx_58168+$5D2
+EnemyGfxData_GargoyleChild_Gfx_58742 equ EnemyGfxData_GargoyleChild_Gfx_58168+$5DA
+EnemyGfxData_GargoyleChild_Gfx_5875A equ EnemyGfxData_GargoyleChild_Gfx_58168+$5F2
+EnemyGfxData_GargoyleChild_Gfx_5877C equ EnemyGfxData_GargoyleChild_Gfx_58168+$614
+EnemyGfxData_GargoyleChild_Gfx_58798 equ EnemyGfxData_GargoyleChild_Gfx_58168+$630
+EnemyGfxData_GargoyleChild_Gfx_587A2 equ EnemyGfxData_GargoyleChild_Gfx_58168+$63A
+EnemyGfxData_GargoyleChild_Gfx_587B0 equ EnemyGfxData_GargoyleChild_Gfx_58168+$648
+EnemyGfxData_GargoyleChild_Gfx_587B8 equ EnemyGfxData_GargoyleChild_Gfx_58168+$650
+EnemyGfxData_GargoyleChild_Gfx_587CA equ EnemyGfxData_GargoyleChild_Gfx_58168+$662
+EnemyGfxData_GargoyleChild_Gfx_587DE equ EnemyGfxData_GargoyleChild_Gfx_58168+$676
+EnemyGfxData_GargoyleChild_Gfx_587E8 equ EnemyGfxData_GargoyleChild_Gfx_58168+$680
+EnemyGfxData_GargoyleChild_Gfx_587FC equ EnemyGfxData_GargoyleChild_Gfx_58168+$694
+EnemyGfxData_GargoyleChild_Gfx_58806 equ EnemyGfxData_GargoyleChild_Gfx_58168+$69E
+EnemyGfxData_GargoyleChild_Gfx_5881A equ EnemyGfxData_GargoyleChild_Gfx_58168+$6B2
+EnemyGfxData_GargoyleChild_Gfx_5883C equ EnemyGfxData_GargoyleChild_Gfx_58168+$6D4
 EnemyGfxData_GargoyleChild:
 	dc.l	EnemyGfxData_GargoyleChild_Gfx_58168
 	dc.l	EnemyGfxData_GargoyleChild_Gfx_5816E
@@ -61065,152 +58474,75 @@ EnemyGfxFrameTable_GargoyleMain:
 	dc.b	$1F, $23, $20, $24, $21, $1D, $22, $25, $26, $2A, $27, $2B, $28, $2C, $29, $2D, $2E, $32, $2F, $33, $30, $34, $31, $35, $36, $3A, $37, $3B, $38, $3C, $39, $3D 
 	dc.b	$3E, $41, $37, $42, $3F, $43, $40, $44 
 EnemyGfxData_GargoyleMain_Gfx_589FC:
-	dc.b	$01, $00, $88, $88, $8C, $88, $02, $10, $61, $01, $16, $23, $61, $63, $35, $61, $13, $55, $06, $14, $55, $23, $33, $06, $23, $22, $03, $32, $21, $00 
-EnemyGfxData_GargoyleMain_Gfx_58A1A:
-	dc.b	$00, $11, $21, $14, $23, $33, $27, $81, $43, $55, $33, $12, $43, $55, $44, $12, $33, $54, $44, $12, $45, $34, $22, $11, $22, $22, $21, $11, $61, $11, $11, $16 
-	dc.b	$66, $00 
-EnemyGfxData_GargoyleMain_Gfx_58A3C:
-	dc.b	$01, $11, $16, $40, $08, $0C, $41, $12, $21, $78, $16, $21, $33, $21, $21, $13, $45, $33, $21, $22, $55, $53, $13, $45, $54, $61, $12, $33, $43, $22, $22, $00 
-EnemyGfxData_GargoyleMain_Gfx_58A5C:
-	dc.b	$01, $00, $33, $73, $33, $31, $23, $66, $12, $60, $62, $11, $40, $21, $30, $26, $20, $26, $16, $36, $16, $60 
-EnemyGfxData_GargoyleMain_Gfx_58A72:
-	dc.b	$01, $00, $88, $89, $99, $9F, $02, $32, $11, $34, $41, $66, $35, $16, $66, $44, $16, $42, $66, $04, $60, $03, $10, $00 
-EnemyGfxData_GargoyleMain_Gfx_58A8A:
-	dc.b	$01, $00, $00, $09, $13, $FF, $11, $22, $66, $66, $61, $23, $26, $66, $06, $24, $26, $66, $25, $26, $01, $32, $60, $03, $26, $00 
-EnemyGfxData_GargoyleMain_Gfx_58AA4:
-	dc.b	$01, $00, $00, $00, $88, $DF, $61, $12, $11, $13, $66, $13, $31, $13, $66, $62, $41, $23, $06, $62, $56, $24, $61, $32, $42, $06, $14, $26, $02, $00 
-EnemyGfxData_GargoyleMain_Gfx_58AC2:
-	dc.b	$01, $00, $13, $33, $77, $FF, $32, $66, $60, $32, $66, $26, $66, $26, $60, $66, $60, $00 
-EnemyGfxData_GargoyleMain_Gfx_58AD4:
-	dc.b	$01, $00, $88, $88, $88, $88, $01, $31, $01, $02, $16, $23, $01, $13, $35, $61, $13, $55, $66, $14, $55, $61, $13, $23, $66, $23, $32, $06, $32, $21 
-EnemyGfxData_GargoyleMain_Gfx_58AF2:
-	dc.b	$00, $11, $21, $14, $23, $33, $27, $81, $43, $55, $33, $12, $43, $55, $44, $12, $33, $54, $44, $14, $11, $34, $32, $11, $22, $22, $21, $11, $61, $11, $11, $16 
-	dc.b	$66, $00 
-EnemyGfxData_GargoyleMain_Gfx_58B14:
-	dc.b	$01, $11, $16, $40, $08, $0C, $41, $12, $21, $78, $16, $21, $33, $21, $21, $13, $45, $33, $41, $22, $55, $53, $13, $45, $54, $61, $12, $33, $43, $22, $22, $00 
-EnemyGfxData_GargoyleMain_Gfx_58B34:
-	dc.b	$01, $00, $11, $11, $11, $11, $23, $66, $10, $61, $46, $10, $66, $14, $60, $16, $63, $60, $26, $62, $66, $26, $61, $66, $26, $61, $66, $32, $66, $60 
-EnemyGfxData_GargoyleMain_Gfx_58B52:
-	dc.b	$01, $00, $88, $88, $8C, $DF, $02, $32, $11, $04, $41, $66, $05, $36, $66, $05, $26, $66, $02, $56, $60, $41, $60, $03 
-EnemyGfxData_GargoyleMain_Gfx_58B6A:
-	dc.b	$02, $66, $33, $32, $04, $00, $00, $00, $00, $13, $FF, $12, $22, $62, $32, $62, $41, $02, $51, $06, $13, $16, $60, $21 
-EnemyGfxData_GargoyleMain_Gfx_58B82:
-	dc.b	$01, $00, $00, $00, $08, $CF, $61, $32, $11, $13, $61, $33, $11, $13, $66, $24, $61, $14, $66, $25, $66, $14, $06, $13, $06, $24, $62, $16, $41, $04, $10, $00 
-EnemyGfxData_GargoyleMain_Gfx_58BA2:
-	dc.b	$01, $00, $13, $33, $77, $FF, $32, $66, $60, $42, $66, $41, $66, $16, $60, $16, $60, $00 
-EnemyGfxData_GargoyleMain_Gfx_58BB4:
-	dc.b	$01, $00, $C8, $88, $88, $88, $41, $11, $03, $66, $23, $02, $63, $35, $01, $03, $55, $01, $04, $55, $61, $12, $23, $61, $12, $32, $06, $13, $21, $00 
-EnemyGfxData_GargoyleMain_Gfx_58BD2:
-	dc.b	$00, $41, $12, $21, $10, $78, $11, $11, $16, $21, $11, $33, $21, $21, $13, $45, $33, $41, $22, $55, $53, $11, $13, $45, $54, $61, $12, $33, $43, $11, $11, $22 
-	dc.b	$22, $00 
-EnemyGfxData_GargoyleMain_Gfx_58BF4:
-	dc.b	$01, $00, $91, $11, $11, $13, $01, $10, $60, $61, $30, $66, $61, $20, $16, $66, $10, $26, $66, $16, $26, $66, $60, $26, $66, $60, $32, $66 
-EnemyGfxData_GargoyleMain_Gfx_58C10:
-	dc.b	$01, $00, $CC, $CC, $CC, $EF, $13, $11, $24, $16, $34, $16, $23, $66, $23, $61, $01, $32, $16, $00 
-EnemyGfxData_GargoyleMain_Gfx_58C24:
-	dc.b	$02, $66, $33, $30, $40, $00, $00, $00, $01, $33, $7F, $12, $21, $62, $41, $25, $36, $24, $16, $60, $31, $16, $60, $60 
-EnemyGfxData_GargoyleMain_Gfx_58C3C:
-	dc.b	$02, $61, $88, $99, $15, $00, $00, $00, $00, $0A, $EF, $32, $11, $13, $31, $16, $11, $41, $66, $51, $60, $06, $21, $60, $02, $00 
-EnemyGfxData_GargoyleMain_Gfx_58C56:
-	dc.b	$01, $00, $33, $33, $37, $FF, $43, $16, $54, $26, $54, $16, $42, $60, $41, $60, $36, $00 
-EnemyGfxData_GargoyleMain_Gfx_58C68:
-	dc.b	$01, $00, $88, $AA, $A8, $A8, $32, $12, $11, $31, $01, $11, $21, $21, $21, $01, $11, $02, $11, $66, $66, $10, $66, $16, $66, $66 
-EnemyGfxData_GargoyleMain_Gfx_58C82:
-	dc.b	$01, $11, $88, $CC, $EF, $77, $24, $34, $33, $12, $44, $34, $24, $33, $12, $54, $23, $21, $62, $00 
-EnemyGfxData_GargoyleMain_Gfx_58C96:
-	dc.b	$00, $43, $44, $32, $11, $23, $43, $32, $12, $33, $33, $32, $33, $32, $33, $21, $11, $44, $33, $22, $16, $12, $21, $21, $66, $11, $12, $11, $66, $11, $11, $16 
-	dc.b	$66, $00 
-EnemyGfxData_GargoyleMain_Gfx_58CB8:
-	dc.b	$01, $00, $11, $13, $31, $11, $66, $66, $10, $33, $66, $10, $11, $56, $60, $66, $24, $66, $13, $66, $02, $40, $60, $01, $30, $60, $01, $20 
-EnemyGfxData_GargoyleMain_Gfx_58CD4:
-	dc.b	$01, $00, $EE, $FF, $FF, $FF, $06, $06 
-EnemyGfxData_GargoyleMain_Gfx_58CDC:
-	dc.b	$02, $66, $88, $C7, $31, $00, $00, $00, $00, $8E, $FF, $21, $11, $11, $62, $21, $11, $61, $22, $06, $06, $00 
-EnemyGfxData_GargoyleMain_Gfx_58CF2:
-	dc.b	$02, $66, $13, $7E, $C0, $00, $00, $00, $00, $17, $FF, $11, $11, $16, $11, $16, $16, $60, $60, $60 
-EnemyGfxData_GargoyleMain_Gfx_58D06:
-	dc.b	$01, $00, $55, $19, $9F, $FF, $66, $10, $66, $10, $66, $60, $10, $66, $10, $06, $10, $00 
-EnemyGfxData_GargoyleMain_Gfx_58D18:
-	dc.b	$01, $00, $88, $AA, $A8, $AA, $14, $12, $11, $32, $11, $11, $31, $11, $21, $21, $21, $01, $16, $66, $62, $10, $66, $10, $06, $00 
-EnemyGfxData_GargoyleMain_Gfx_58D32:
-	dc.b	$01, $11, $88, $8C, $EF, $F7, $33, $34, $33, $25, $34, $34, $12, $42, $33, $24, $54, $23, $21, $00 
-EnemyGfxData_GargoyleMain_Gfx_58D46:
-	dc.b	$00, $43, $44, $32, $11, $23, $43, $32, $13, $33, $33, $32, $31, $32, $33, $21, $16, $44, $33, $22, $16, $12, $21, $21, $66, $11, $12, $11, $66, $11, $11, $16 
-	dc.b	$66, $00 
-EnemyGfxData_GargoyleMain_Gfx_58D68:
-	dc.b	$01, $00, $11, $11, $11, $55, $35, $66, $12, $11, $50, $12, $66, $13, $01, $60, $01, $41, $66, $01, $31, $66, $61, $21, $66, $10, $60, $10 
-EnemyGfxData_GargoyleMain_Gfx_58D84:
-	dc.b	$01, $00, $88, $FF, $FF, $FF, $10, $06, $66, $16, $66, $66 
-EnemyGfxData_GargoyleMain_Gfx_58D90:
-	dc.b	$02, $66, $08, $CF, $71, $00, $00, $00, $00, $8C, $FF, $62, $11, $11, $11, $62, $21, $11, $61, $22, $06, $00 
-EnemyGfxData_GargoyleMain_Gfx_58DA6:
-	dc.b	$01, $00, $51, $9F, $FF, $FF, $66, $10, $66, $60, $10, $66, $10, $00 
-EnemyGfxData_GargoyleMain_Gfx_58DB4:
-	dc.b	$01, $00, $88, $88, $8A, $22, $01, $42, $11, $04, $31, $11, $03, $10, $11, $32, $66, $11, $31, $66, $21, $20, $61, $02, $10, $02, $02, $10, $06, $00 
-EnemyGfxData_GargoyleMain_Gfx_58DD2:
-	dc.b	$01, $11, $88, $88, $CF, $F7, $33, $34, $33, $34, $34, $34, $23, $52, $33, $12, $34, $54, $12, $33, $21, $00 
-EnemyGfxData_GargoyleMain_Gfx_58DE8:
-	dc.b	$00, $43, $44, $32, $13, $23, $43, $32, $32, $33, $33, $32, $31, $32, $33, $21, $16, $44, $33, $22, $16, $12, $21, $21, $66, $11, $12, $11, $66, $11, $11, $16 
-	dc.b	$66, $00 
-EnemyGfxData_GargoyleMain_Gfx_58E0A:
-	dc.b	$02, $00, $11, $11, $11, $51, $66, $08, $80, $CC, $8C, $11, $51, $30, $13, $20, $01, $41, $60, $01, $31, $21, $11, $11, $10, $00 
-EnemyGfxData_GargoyleMain_Gfx_58E24:
-	dc.b	$01, $00, $64, $01, $FF, $FF, $02, $66, $01, $06, $66, $01, $06, $66, $60, $01, $66, $60 
-EnemyGfxData_GargoyleMain_Gfx_58E36:
-	dc.b	$02, $66, $08, $CF, $71, $00, $00, $00, $00, $8C, $FF, $22, $11, $11, $11, $22, $21, $11, $61, $22, $06, $00 
-EnemyGfxData_GargoyleMain_Gfx_58E4C:
-	dc.b	$02, $66, $13, $7E, $C0, $00, $00, $00, $01, $3F, $FF, $11, $11, $16, $11, $16, $16, $00 
-EnemyGfxData_GargoyleMain_Gfx_58E5E:
-	dc.b	$01, $00, $17, $FF, $FF, $FF, $66, $66, $10, $60 
-EnemyGfxData_GargoyleMain_Gfx_58E68:
-	dc.b	$01, $00, $C8, $CC, $8C, $8C, $12, $12, $11, $22, $21, $01, $11, $66, $66, $66, $66, $66, $63, $32, $02, $32, $22, $01, $11, $00 
-EnemyGfxData_GargoyleMain_Gfx_58E82:
-	dc.b	$00, $22, $23, $34, $33, $12, $33, $55, $43, $11, $34, $21, $22, $62, $32, $87, $12, $66, $21, $11, $22, $11, $23, $55, $43, $12, $35, $55, $43, $12, $34, $44 
-	dc.b	$33, $00 
-EnemyGfxData_GargoyleMain_Gfx_58EA4:
-	dc.b	$01, $11, $02, $26, $E0, $00, $43, $22, $43, $53, $33, $23, $41, $32, $22, $44, $22, $14, $13, $21, $16, $66, $13, $21, $16, $66, $13, $21, $16, $66, $12, $00 
-EnemyGfxData_GargoyleMain_Gfx_58EC4:
-	dc.b	$01, $00, $33, $77, $31, $11, $33, $10, $13, $10, $13, $13, $12, $66, $12, $66, $66, $62, $66, $60, $62, $66, $60, $00 
-EnemyGfxData_GargoyleMain_Gfx_58EDC:
-	dc.b	$01, $00, $FF, $EC, $8E, $FF, $13, $22, $32, $06, $11, $11, $66, $00 
-EnemyGfxData_GargoyleMain_Gfx_58EEA:
-	dc.b	$02, $66, $00, $03, $FC, $00, $00, $00, $00, $01, $FF, $11, $23, $33, $32, $12, $31, $12, $21, $43, $21, $11, $16, $11, $11, $60 
-EnemyGfxData_GargoyleMain_Gfx_58F04:
-	dc.b	$01, $00, $00, $06, $EF, $FF, $21, $66, $66, $61, $16, $66, $66, $61, $66, $60, $06, $61, $60, $61, $01, $00 
-EnemyGfxData_GargoyleMain_Gfx_58F1A:
-	dc.b	$01, $00, $33, $77, $7F, $FF, $61, $66, $61, $60, $61, $61, $61, $00 
-EnemyGfxData_GargoyleMain_Gfx_58F28:
-	dc.b	$02, $00, $88, $8C, $08, $C8, $66, $00, $03, $73, $00, $02, $11, $12, $11, $02, $22, $01, $11, $11, $06, $06, $44, $32, $02, $11, $11, $00 
-EnemyGfxData_GargoyleMain_Gfx_58F44:
-	dc.b	$00, $22, $23, $34, $33, $12, $33, $55, $43, $11, $34, $21, $22, $62, $32, $87, $12, $66, $21, $11, $22, $61, $23, $55, $43, $12, $35, $55, $43, $12, $34, $44 
-	dc.b	$33, $00 
-EnemyGfxData_GargoyleMain_Gfx_58F66:
-	dc.b	$00, $43, $24, $15, $22, $33, $23, $14, $21, $32, $22, $13, $41, $22, $11, $11, $41, $11, $11, $11, $36, $21, $16, $61, $36, $21, $16, $61, $36, $21, $16, $61 
-	dc.b	$16, $00 
-EnemyGfxData_GargoyleMain_Gfx_58F88:
-	dc.b	$02, $00, $33, $11, $11, $11, $66, $00, $00, $8C, $CC, $31, $14, $11, $13, $11, $01, $30, $60, $01, $30, $61, $30, $36, $36, $16 
-EnemyGfxData_GargoyleMain_Gfx_58FA2:
-	dc.b	$01, $00, $F8, $8C, $8E, $FF, $12, $34, $55, $01, $11, $22, $66, $61, $06, $66, $66, $06 
-EnemyGfxData_GargoyleMain_Gfx_58FB4:
-	dc.b	$01, $00, $00, $00, $03, $FF, $11, $23, $33, $32, $43, $31, $12, $21, $24, $43, $11, $16, $11, $11, $66, $66, $66, $66, $66, $60, $66, $60 
-EnemyGfxData_GargoyleMain_Gfx_58FD0:
-	dc.b	$01, $00, $00, $04, $EF, $FF, $21, $66, $61, $16, $16, $66, $66, $16, $66, $60, $66, $10, $60, $06, $10, $10 
-EnemyGfxData_GargoyleMain_Gfx_58FE6:
-	dc.b	$01, $00, $11, $19, $FF, $FF, $66, $66, $10, $66, $60, $10, $06, $66, $10, $06, $10, $00 
-EnemyGfxData_GargoyleMain_Gfx_58FF8:
-	dc.b	$01, $00, $CE, $C8, $EC, $E8, $01, $12, $22, $02, $31, $66, $11, $16, $66, $66, $66, $22, $01, $23, $21, $00 
-EnemyGfxData_GargoyleMain_Gfx_5900E:
-	dc.b	$01, $11, $00, $33, $A0, $44, $43, $24, $13, $22, $33, $24, $12, $21, $32, $23, $22, $13, $12, $66, $21, $12, $16, $66, $21, $16, $66, $21, $66, $66 
-EnemyGfxData_GargoyleMain_Gfx_5902C:
-	dc.b	$02, $00, $11, $55, $11, $11, $66, $00, $00, $8C, $CC, $31, $11, $30, $11, $11, $30, $11, $13, $60, $13, $60, $13, $63, $61, $61 
-EnemyGfxData_GargoyleMain_Gfx_59046:
-	dc.b	$01, $00, $88, $C8, $CF, $FF, $14, $45, $33, $01, $23, $44, $01, $11, $66, $66, $66, $06, $66, $00 
-EnemyGfxData_GargoyleMain_Gfx_5905A:
-	dc.b	$02, $66, $00, $1F, $C0, $00, $00, $00, $00, $1F, $FF, $11, $23, $33, $32, $32, $11, $12, $21, $11, $11, $11, $60, $00 
-EnemyGfxData_GargoyleMain_Gfx_59072:
-	dc.b	$01, $00, $00, $19, $9F, $FF, $21, $61, $66, $66, $16, $61, $66, $66, $66, $61, $66, $01, $60, $01, $60, $00 
-EnemyGfxData_GargoyleMain_Gfx_59088:
-	dc.b	$01, $00, $11, $9D, $FF, $FF, $66, $66, $01, $66, $66, $01, $66, $61, $61, $00 
+	incbin "data/art/tiles/enemy/gargoyle_main_gfx.bin"
+EnemyGfxData_GargoyleMain_Gfx_58A1A equ EnemyGfxData_GargoyleMain_Gfx_589FC+$1E
+EnemyGfxData_GargoyleMain_Gfx_58A3C equ EnemyGfxData_GargoyleMain_Gfx_589FC+$40
+EnemyGfxData_GargoyleMain_Gfx_58A5C equ EnemyGfxData_GargoyleMain_Gfx_589FC+$60
+EnemyGfxData_GargoyleMain_Gfx_58A72 equ EnemyGfxData_GargoyleMain_Gfx_589FC+$76
+EnemyGfxData_GargoyleMain_Gfx_58A8A equ EnemyGfxData_GargoyleMain_Gfx_589FC+$8E
+EnemyGfxData_GargoyleMain_Gfx_58AA4 equ EnemyGfxData_GargoyleMain_Gfx_589FC+$A8
+EnemyGfxData_GargoyleMain_Gfx_58AC2 equ EnemyGfxData_GargoyleMain_Gfx_589FC+$C6
+EnemyGfxData_GargoyleMain_Gfx_58AD4 equ EnemyGfxData_GargoyleMain_Gfx_589FC+$D8
+EnemyGfxData_GargoyleMain_Gfx_58AF2 equ EnemyGfxData_GargoyleMain_Gfx_589FC+$F6
+EnemyGfxData_GargoyleMain_Gfx_58B14 equ EnemyGfxData_GargoyleMain_Gfx_589FC+$118
+EnemyGfxData_GargoyleMain_Gfx_58B34 equ EnemyGfxData_GargoyleMain_Gfx_589FC+$138
+EnemyGfxData_GargoyleMain_Gfx_58B52 equ EnemyGfxData_GargoyleMain_Gfx_589FC+$156
+EnemyGfxData_GargoyleMain_Gfx_58B6A equ EnemyGfxData_GargoyleMain_Gfx_589FC+$16E
+EnemyGfxData_GargoyleMain_Gfx_58B82 equ EnemyGfxData_GargoyleMain_Gfx_589FC+$186
+EnemyGfxData_GargoyleMain_Gfx_58BA2 equ EnemyGfxData_GargoyleMain_Gfx_589FC+$1A6
+EnemyGfxData_GargoyleMain_Gfx_58BB4 equ EnemyGfxData_GargoyleMain_Gfx_589FC+$1B8
+EnemyGfxData_GargoyleMain_Gfx_58BD2 equ EnemyGfxData_GargoyleMain_Gfx_589FC+$1D6
+EnemyGfxData_GargoyleMain_Gfx_58BF4 equ EnemyGfxData_GargoyleMain_Gfx_589FC+$1F8
+EnemyGfxData_GargoyleMain_Gfx_58C10 equ EnemyGfxData_GargoyleMain_Gfx_589FC+$214
+EnemyGfxData_GargoyleMain_Gfx_58C24 equ EnemyGfxData_GargoyleMain_Gfx_589FC+$228
+EnemyGfxData_GargoyleMain_Gfx_58C3C equ EnemyGfxData_GargoyleMain_Gfx_589FC+$240
+EnemyGfxData_GargoyleMain_Gfx_58C56 equ EnemyGfxData_GargoyleMain_Gfx_589FC+$25A
+EnemyGfxData_GargoyleMain_Gfx_58C68 equ EnemyGfxData_GargoyleMain_Gfx_589FC+$26C
+EnemyGfxData_GargoyleMain_Gfx_58C82 equ EnemyGfxData_GargoyleMain_Gfx_589FC+$286
+EnemyGfxData_GargoyleMain_Gfx_58C96 equ EnemyGfxData_GargoyleMain_Gfx_589FC+$29A
+EnemyGfxData_GargoyleMain_Gfx_58CB8 equ EnemyGfxData_GargoyleMain_Gfx_589FC+$2BC
+EnemyGfxData_GargoyleMain_Gfx_58CD4 equ EnemyGfxData_GargoyleMain_Gfx_589FC+$2D8
+EnemyGfxData_GargoyleMain_Gfx_58CDC equ EnemyGfxData_GargoyleMain_Gfx_589FC+$2E0
+EnemyGfxData_GargoyleMain_Gfx_58CF2 equ EnemyGfxData_GargoyleMain_Gfx_589FC+$2F6
+EnemyGfxData_GargoyleMain_Gfx_58D06 equ EnemyGfxData_GargoyleMain_Gfx_589FC+$30A
+EnemyGfxData_GargoyleMain_Gfx_58D18 equ EnemyGfxData_GargoyleMain_Gfx_589FC+$31C
+EnemyGfxData_GargoyleMain_Gfx_58D32 equ EnemyGfxData_GargoyleMain_Gfx_589FC+$336
+EnemyGfxData_GargoyleMain_Gfx_58D46 equ EnemyGfxData_GargoyleMain_Gfx_589FC+$34A
+EnemyGfxData_GargoyleMain_Gfx_58D68 equ EnemyGfxData_GargoyleMain_Gfx_589FC+$36C
+EnemyGfxData_GargoyleMain_Gfx_58D84 equ EnemyGfxData_GargoyleMain_Gfx_589FC+$388
+EnemyGfxData_GargoyleMain_Gfx_58D90 equ EnemyGfxData_GargoyleMain_Gfx_589FC+$394
+EnemyGfxData_GargoyleMain_Gfx_58DA6 equ EnemyGfxData_GargoyleMain_Gfx_589FC+$3AA
+EnemyGfxData_GargoyleMain_Gfx_58DB4 equ EnemyGfxData_GargoyleMain_Gfx_589FC+$3B8
+EnemyGfxData_GargoyleMain_Gfx_58DD2 equ EnemyGfxData_GargoyleMain_Gfx_589FC+$3D6
+EnemyGfxData_GargoyleMain_Gfx_58DE8 equ EnemyGfxData_GargoyleMain_Gfx_589FC+$3EC
+EnemyGfxData_GargoyleMain_Gfx_58E0A equ EnemyGfxData_GargoyleMain_Gfx_589FC+$40E
+EnemyGfxData_GargoyleMain_Gfx_58E24 equ EnemyGfxData_GargoyleMain_Gfx_589FC+$428
+EnemyGfxData_GargoyleMain_Gfx_58E36 equ EnemyGfxData_GargoyleMain_Gfx_589FC+$43A
+EnemyGfxData_GargoyleMain_Gfx_58E4C equ EnemyGfxData_GargoyleMain_Gfx_589FC+$450
+EnemyGfxData_GargoyleMain_Gfx_58E5E equ EnemyGfxData_GargoyleMain_Gfx_589FC+$462
+EnemyGfxData_GargoyleMain_Gfx_58E68 equ EnemyGfxData_GargoyleMain_Gfx_589FC+$46C
+EnemyGfxData_GargoyleMain_Gfx_58E82 equ EnemyGfxData_GargoyleMain_Gfx_589FC+$486
+EnemyGfxData_GargoyleMain_Gfx_58EA4 equ EnemyGfxData_GargoyleMain_Gfx_589FC+$4A8
+EnemyGfxData_GargoyleMain_Gfx_58EC4 equ EnemyGfxData_GargoyleMain_Gfx_589FC+$4C8
+EnemyGfxData_GargoyleMain_Gfx_58EDC equ EnemyGfxData_GargoyleMain_Gfx_589FC+$4E0
+EnemyGfxData_GargoyleMain_Gfx_58EEA equ EnemyGfxData_GargoyleMain_Gfx_589FC+$4EE
+EnemyGfxData_GargoyleMain_Gfx_58F04 equ EnemyGfxData_GargoyleMain_Gfx_589FC+$508
+EnemyGfxData_GargoyleMain_Gfx_58F1A equ EnemyGfxData_GargoyleMain_Gfx_589FC+$51E
+EnemyGfxData_GargoyleMain_Gfx_58F28 equ EnemyGfxData_GargoyleMain_Gfx_589FC+$52C
+EnemyGfxData_GargoyleMain_Gfx_58F44 equ EnemyGfxData_GargoyleMain_Gfx_589FC+$548
+EnemyGfxData_GargoyleMain_Gfx_58F66 equ EnemyGfxData_GargoyleMain_Gfx_589FC+$56A
+EnemyGfxData_GargoyleMain_Gfx_58F88 equ EnemyGfxData_GargoyleMain_Gfx_589FC+$58C
+EnemyGfxData_GargoyleMain_Gfx_58FA2 equ EnemyGfxData_GargoyleMain_Gfx_589FC+$5A6
+EnemyGfxData_GargoyleMain_Gfx_58FB4 equ EnemyGfxData_GargoyleMain_Gfx_589FC+$5B8
+EnemyGfxData_GargoyleMain_Gfx_58FD0 equ EnemyGfxData_GargoyleMain_Gfx_589FC+$5D4
+EnemyGfxData_GargoyleMain_Gfx_58FE6 equ EnemyGfxData_GargoyleMain_Gfx_589FC+$5EA
+EnemyGfxData_GargoyleMain_Gfx_58FF8 equ EnemyGfxData_GargoyleMain_Gfx_589FC+$5FC
+EnemyGfxData_GargoyleMain_Gfx_5900E equ EnemyGfxData_GargoyleMain_Gfx_589FC+$612
+EnemyGfxData_GargoyleMain_Gfx_5902C equ EnemyGfxData_GargoyleMain_Gfx_589FC+$630
+EnemyGfxData_GargoyleMain_Gfx_59046 equ EnemyGfxData_GargoyleMain_Gfx_589FC+$64A
+EnemyGfxData_GargoyleMain_Gfx_5905A equ EnemyGfxData_GargoyleMain_Gfx_589FC+$65E
+EnemyGfxData_GargoyleMain_Gfx_59072 equ EnemyGfxData_GargoyleMain_Gfx_589FC+$676
+EnemyGfxData_GargoyleMain_Gfx_59088 equ EnemyGfxData_GargoyleMain_Gfx_589FC+$68C
 EnemyGfxData_GargoyleMain:
 	dc.l	EnemyGfxData_GargoyleMain_Gfx_589FC
 	dc.l	EnemyGfxData_GargoyleMain_Gfx_58A1A
@@ -61287,195 +58619,95 @@ EnemyGfxFrameTable_WorldMapChild:
 	dc.b	$34, $38, $32, $35, $39, $00, $36, $3A, $3B, $3E, $41, $3C, $3F, $42, $3D, $40, $43, $00, $00, $44, $45, $48, $4B, $46, $49, $4C, $47, $4A, $4D, $00, $00, $4E 
 	dc.b	$4F, $52, $55, $50, $53, $56, $51, $54, $57, $00, $00, $58 
 EnemyGfxData_WorldMapChild_Gfx_59218:
-	dc.b	$01, $00, $FF, $FF, $FF, $FF 
-EnemyGfxData_WorldMapChild_Gfx_5921E:
-	dc.b	$01, $00, $FF, $FE, $EE, $CC, $02, $03, $24, $01, $44, $24, $31, $00 
-EnemyGfxData_WorldMapChild_Gfx_5922C:
-	dc.b	$01, $00, $FF, $33, $11, $13, $23, $20, $32, $22, $43, $32, $20, $32, $22, $22, $12, $11, $22, $12, $21, $00 
-EnemyGfxData_WorldMapChild_Gfx_59242:
-	dc.b	$01, $00, $FF, $FF, $FF, $EC, $12, $01, $13, $00 
-EnemyGfxData_WorldMapChild_Gfx_5924C:
-	dc.b	$00, $00, $02, $43, $11, $00, $04, $31, $11, $00, $24, $31, $18, $00, $44, $11, $88, $02, $43, $18, $A8, $12, $43, $1A, $9A, $22, $43, $18, $A8, $31, $33, $18 
-	dc.b	$88, $00 
-EnemyGfxData_WorldMapChild_Gfx_5926E:
-	dc.b	$00, $11, $22, $10, $00, $18, $82, $10, $00, $88, $82, $21, $00, $88, $82, $31, $00, $8A, $82, $21, $00, $A9, $A8, $21, $10, $8A, $88, $21, $20, $88, $82, $21 
-	dc.b	$21, $00 
-EnemyGfxData_WorldMapChild_Gfx_59290:
-	dc.b	$01, $00, $FF, $FF, $FF, $F7, $10, $00 
-EnemyGfxData_WorldMapChild_Gfx_59298:
-	dc.b	$01, $00, $CC, $CC, $C8, $88, $03, $43, $13, $24, $11, $32, $23, $43, $23, $34, $01, $22, $33, $01, $22, $23, $01, $11, $22, $00 
-EnemyGfxData_WorldMapChild_Gfx_592B2:
-	dc.b	$01, $11, $00, $03, $53, $02, $31, $23, $88, $88, $31, $12, $38, $88, $21, $12, $21, $88, $32, $21, $54, $75, $41, $17, $31, $55, $51, $1A, $31, $51, $AB, $00 
-EnemyGfxData_WorldMapChild_Gfx_592D2:
-	dc.b	$01, $11, $22, $68, $0C, $42, $88, $82, $24, $88, $22, $23, $88, $12, $12, $77, $13, $21, $27, $15, $14, $57, $71, $BA, $75, $51, $9B, $A1, $51, $00 
-EnemyGfxData_WorldMapChild_Gfx_592F0:
-	dc.b	$01, $00, $73, $33, $33, $33, $31, $21, $10, $24, $21, $43, $21, $33, $21, $32, $21, $12, $11, $11, $11, $00 
-EnemyGfxData_WorldMapChild_Gfx_59306:
-	dc.b	$01, $00, $FF, $EE, $EC, $C8, $02, $03, $24, $01, $44, $24, $31, $02, $43, $11 
-EnemyGfxData_WorldMapChild_Gfx_59316:
-	dc.b	$01, $00, $F3, $31, $11, $31, $23, $20, $32, $22, $43, $32, $20, $32, $22, $22, $12, $11, $22, $12, $21, $11, $22, $10 
-EnemyGfxData_WorldMapChild_Gfx_5932E:
-	dc.b	$01, $00, $FF, $FF, $FE, $EC, $02, $13, $03, $43 
-EnemyGfxData_WorldMapChild_Gfx_59338:
-	dc.b	$00, $00, $04, $31, $11, $00, $24, $31, $18, $00, $44, $11, $88, $02, $43, $18, $A8, $12, $43, $1A, $9A, $22, $43, $18, $A8, $31, $33, $18, $88, $31, $23, $88 
-	dc.b	$88, $00 
-EnemyGfxData_WorldMapChild_Gfx_5935A:
-	dc.b	$01, $21, $02, $02, $23, $30, $18, $82, $10, $00, $88, $82, $00, $88, $82, $31, $00, $8A, $82, $00, $A9, $A8, $10, $8A, $88, $88, $82, $88, $82, $11, $24, $00 
-EnemyGfxData_WorldMapChild_Gfx_5937A:
-	dc.b	$01, $00, $FF, $FF, $F7, $77, $10, $11, $31, $00 
-EnemyGfxData_WorldMapChild_Gfx_59384:
-	dc.b	$01, $00, $CC, $CC, $C8, $88, $03, $24, $11, $32, $23, $43, $23, $34, $22, $34, $01, $22, $34, $01, $11, $33, $01, $11, $13, $00 
-EnemyGfxData_WorldMapChild_Gfx_5939E:
-	dc.b	$01, $11, $00, $33, $74, $02, $31, $12, $38, $88, $21, $12, $21, $88, $32, $21, $32, $22, $41, $31, $71, $1B, $31, $17, $51, $BD, $31, $75, $BD, $00 
-EnemyGfxData_WorldMapChild_Gfx_593BC:
-	dc.b	$00, $88, $22, $22, $23, $88, $77, $13, $44, $17, $15, $12, $33, $21, $57, $71, $23, $11, $75, $55, $23, $BB, $11, $15, $13, $D9, $B1, $55, $11, $D9, $A1, $51 
-	dc.b	$11, $00 
-EnemyGfxData_WorldMapChild_Gfx_593DE:
-	dc.b	$01, $00, $33, $33, $33, $33, $21, $10, $44, $21, $43, $21, $33, $21, $32, $21, $12, $11, $11, $11, $11, $10 
-EnemyGfxData_WorldMapChild_Gfx_593F4:
-	dc.b	$01, $00, $FE, $EE, $CC, $88, $02, $03, $24, $01, $44, $24, $31, $02, $43, $11, $04, $31, $11, $00 
-EnemyGfxData_WorldMapChild_Gfx_59408:
-	dc.b	$01, $00, $33, $11, $13, $11, $23, $20, $32, $22, $43, $32, $20, $32, $22, $22, $12, $11, $22, $12, $21, $11, $22, $10, $18, $82, $10, $00 
-EnemyGfxData_WorldMapChild_Gfx_59424:
-	dc.b	$01, $00, $FF, $FF, $EE, $CC, $02, $13, $01, $43, $03, $24 
-EnemyGfxData_WorldMapChild_Gfx_59430:
-	dc.b	$00, $00, $24, $31, $18, $00, $44, $11, $88, $02, $43, $18, $A8, $12, $43, $1A, $9A, $22, $43, $18, $A8, $31, $33, $18, $88, $31, $23, $88, $88, $31, $12, $38 
-	dc.b	$88, $00 
-EnemyGfxData_WorldMapChild_Gfx_59452:
-	dc.b	$01, $21, $20, $22, $33, $00, $88, $82, $00, $88, $82, $31, $00, $8A, $82, $00, $A9, $A8, $10, $8A, $88, $88, $82, $88, $11, $14, $44, $77, $12, $44, $43, $00 
-EnemyGfxData_WorldMapChild_Gfx_59472:
-	dc.b	$01, $00, $FF, $FF, $77, $73, $10, $10, $31, $21, $10, $00 
-EnemyGfxData_WorldMapChild_Gfx_5947E:
-	dc.b	$01, $00, $CC, $C8, $88, $88, $11, $32, $23, $43, $23, $34, $01, $22, $34, $01, $22, $34, $01, $11, $33, $01, $11, $13, $01, $11, $11, $00 
-EnemyGfxData_WorldMapChild_Gfx_5949A:
-	dc.b	$01, $11, $07, $33, $22, $64, $21, $12, $21, $87, $32, $32, $22, $33, $21, $43, $21, $1C, $44, $21, $CD, $43, $CD, $31, $71, $BC 
-EnemyGfxData_WorldMapChild_Gfx_594B4:
-	dc.b	$00, $88, $51, $23, $44, $17, $77, $12, $23, $71, $17, $72, $23, $11, $71, $17, $22, $DC, $11, $17, $22, $DD, $B1, $12, $11, $DD, $C1, $12, $11, $DC, $B1, $11 
-	dc.b	$11, $00 
-EnemyGfxData_WorldMapChild_Gfx_594D6:
-	dc.b	$01, $00, $33, $33, $33, $37, $44, $21, $33, $21, $23, $21, $22, $21, $12, $11, $11, $11, $11, $10, $10, $00 
-EnemyGfxData_WorldMapChild_Gfx_594EC:
-	dc.b	$01, $00, $FF, $FE, $EE, $CC, $02, $03, $24, $04, $43, $24, $44, $00 
-EnemyGfxData_WorldMapChild_Gfx_594FA:
-	dc.b	$01, $00, $FF, $33, $11, $13, $23, $20, $32, $22, $42, $32, $20, $32, $22, $22, $42, $11, $22, $43, $21, $00 
-EnemyGfxData_WorldMapChild_Gfx_59510:
-	dc.b	$01, $00, $FF, $FF, $FF, $EE, $03, $33 
-EnemyGfxData_WorldMapChild_Gfx_59518:
-	dc.b	$01, $44, $01, $13, $24, $08, $00, $02, $45, $54, $00, $04, $55, $00, $24, $54, $00, $45, $02, $45, $43, $14, $33, $33, $24, $43, $32, $22, $34, $33, $22, $00 
-EnemyGfxData_WorldMapChild_Gfx_59538:
-	dc.b	$01, $22, $00, $04, $4C, $C8, $43, $21, $10, $00, $33, $32, $10, $00, $33, $32, $11, $00, $33, $11, $00, $32, $11, $00, $11, $10, $21, $10, $32, $21, $21, $00 
-EnemyGfxData_WorldMapChild_Gfx_59558:
-	dc.b	$01, $00, $CC, $CC, $C8, $88, $03, $44, $03, $45, $13, $45, $23, $44, $23, $43, $01, $23, $33, $01, $23, $32, $01, $22, $22, $00 
-EnemyGfxData_WorldMapChild_Gfx_59572:
-	dc.b	$02, $44, $44, $CC, $80, $62, $33, $30, $02, $42, $98, $55, $54, $43, $32, $43, $32, $22, $32, $23, $34, $43, $34, $34, $43, $00 
-EnemyGfxData_WorldMapChild_Gfx_5958C:
-	dc.b	$02, $33, $64, $26, $6E, $C0, $22, $01, $10, $11, $17, $23, $12, $23, $32, $34, $43, $34, $32, $43, $32, $32 
-EnemyGfxData_WorldMapChild_Gfx_595A2:
-	dc.b	$01, $00, $73, $33, $33, $33, $21, $21, $10, $21, $11, $22, $11, $22, $11, $22, $21, $12, $11, $11, $11, $00 
-EnemyGfxData_WorldMapChild_Gfx_595B8:
-	dc.b	$01, $00, $FF, $EE, $CC, $C8, $03, $23, $03, $34, $34, $43, $34, $44, $03, $45, $54, $00 
-EnemyGfxData_WorldMapChild_Gfx_595CA:
-	dc.b	$01, $00, $F3, $31, $11, $00, $03, $30, $33, $22, $42, $32, $20, $32, $22, $20, $42, $11, $22, $43, $21, $22, $20, $43, $21, $12, $20, $00 
-EnemyGfxData_WorldMapChild_Gfx_595E6:
-	dc.b	$01, $00, $FF, $FE, $EC, $CC, $02, $33, $03, $44, $04, $44, $34, $44 
-EnemyGfxData_WorldMapChild_Gfx_595F4:
-	dc.b	$01, $44, $11, $32, $40, $84, $00, $04, $55, $00, $34, $54, $02, $45, $32, $45, $43, $34, $33, $33, $24, $43, $32, $22, $34, $33, $22, $55, $33, $32 
-EnemyGfxData_WorldMapChild_Gfx_59612:
-	dc.b	$01, $22, $00, $44, $CC, $80, $33, $32, $10, $00, $33, $32, $11, $00, $33, $11, $00, $32, $11, $00, $11, $10, $21, $10, $32, $21, $21, $23, $33, $33, $12, $00 
-EnemyGfxData_WorldMapChild_Gfx_59632:
-	dc.b	$01, $00, $C8, $88, $CC, $CE, $33, $45, $02, $33, $45, $02, $33, $44, $03, $23, $43, $23, $33, $32, $32, $03, $22, $31 
-EnemyGfxData_WorldMapChild_Gfx_5964A:
-	dc.b	$01, $33, $22, $00, $6E, $B7, $54, $44, $22, $44, $43, $23, $44, $43, $22, $34, $44, $32, $23, $44, $34, $44, $43, $34, $34, $00 
-EnemyGfxData_WorldMapChild_Gfx_59664:
-	dc.b	$02, $33, $C7, $FF, $B0, $00, $22, $10, $00, $46, $74, $32, $43, $32, $23, $32, $32, $11, $12, $00 
-EnemyGfxData_WorldMapChild_Gfx_59678:
-	dc.b	$01, $00, $77, $33, $33, $37, $21, $21, $31, $10, $32, $10, $22, $10, $21, $10, $21, $10, $21, $00 
-EnemyGfxData_WorldMapChild_Gfx_5968C:
-	dc.b	$01, $00, $FE, $EC, $CC, $88, $03, $23, $03, $34, $34, $43, $34, $44, $03, $45, $54, $04, $55, $44 
-EnemyGfxData_WorldMapChild_Gfx_596A0:
-	dc.b	$01, $00, $33, $11, $10, $01, $03, $30, $33, $22, $42, $32, $20, $32, $22, $20, $42, $11, $22, $43, $21, $22, $20, $43, $21, $12, $20, $33, $32, $10 
-EnemyGfxData_WorldMapChild_Gfx_596BE:
-	dc.b	$01, $00, $FE, $CC, $C8, $88, $02, $02, $23, $23, $34, $23, $44, $02, $34, $44, $02, $34, $44, $02, $33, $45 
-EnemyGfxData_WorldMapChild_Gfx_596D4:
-	dc.b	$01, $44, $13, $24, $88, $44, $00, $34, $54, $22, $45, $33, $45, $43, $34, $33, $33, $43, $32, $22, $34, $33, $22, $55, $33, $32, $54, $32, $23, $00 
-EnemyGfxData_WorldMapChild_Gfx_596F2:
-	dc.b	$00, $33, $32, $11, $00, $33, $32, $11, $00, $33, $32, $11, $00, $23, $22, $11, $10, $22, $22, $21, $10, $22, $22, $21, $21, $23, $33, $33, $12, $33, $34, $32 
-	dc.b	$22, $00 
-EnemyGfxData_WorldMapChild_Gfx_59714:
-	dc.b	$01, $00, $FF, $FF, $FF, $77, $10, $21 
-EnemyGfxData_WorldMapChild_Gfx_5971C:
-	dc.b	$01, $00, $CC, $CC, $EE, $EE, $33, $45, $33, $44, $03, $43, $03, $33, $32, $02, $02, $02 
-EnemyGfxData_WorldMapChild_Gfx_5972E:
-	dc.b	$01, $33, $00, $04, $EB, $70, $44, $43, $23, $34, $44, $43, $23, $44, $44, $32, $34, $44, $34, $34, $43, $43, $34, $34, $23, $32, $23, $32 
-EnemyGfxData_WorldMapChild_Gfx_5974A:
-	dc.b	$01, $33, $33, $FF, $90, $10, $44, $44, $43, $43, $32, $22, $32, $22, $23, $32, $32, $22, $12, $22, $11, $11, $22, $00 
-EnemyGfxData_WorldMapChild_Gfx_59762:
-	dc.b	$01, $00, $77, $33, $33, $37, $21, $21, $32, $10, $32, $10, $32, $10, $32, $10, $22, $10, $21, $00 
-EnemyGfxData_WorldMapChild_Gfx_59776:
-	dc.b	$01, $00, $FF, $FF, $FF, $EE, $05, $04 
-EnemyGfxData_WorldMapChild_Gfx_5977E:
-	dc.b	$01, $00, $FF, $88, $00, $00, $05, $53, $33, $55, $54, $33, $05, $55, $43, $32, $55, $54, $33, $22, $54, $43, $32, $22, $44, $43, $22, $11 
-EnemyGfxData_WorldMapChild_Gfx_5979A:
-	dc.b	$01, $00, $FF, $F7, $73, $33, $40, $22, $12, $20, $11, $22, $11, $22 
-EnemyGfxData_WorldMapChild_Gfx_597A8:
-	dc.b	$01, $00, $EE, $EE, $EE, $EE, $43, $22, $28, $0A, $0D, $0A, $08, $02 
-EnemyGfxData_WorldMapChild_Gfx_597B6:
-	dc.b	$01, $33, $22, $11, $30, $18, $54, $54, $22, $25, $54, $32, $22, $54, $43, $82, $44, $43, $A2, $44, $83, $43, $44, $44, $82, $43, $44, $34, $44, $43 
-EnemyGfxData_WorldMapChild_Gfx_597D4:
-	dc.b	$01, $00, $73, $31, $11, $00, $22, $22, $20, $23, $12, $32, $32, $10, $32, $22, $21, $43, $22, $21, $34, $32, $22, $10, $23, $23, $23, $20 
-EnemyGfxData_WorldMapChild_Gfx_597F0:
-	dc.b	$01, $00, $EE, $80, $00, $88, $02, $01, $AA, $A0, $40, $0A, $BB, $BA, $43, $0A, $BD, $B1, $45, $0A, $BB, $21, $44, $A2, $22, $34, $11, $21, $33, $00 
-EnemyGfxData_WorldMapChild_Gfx_5980E:
-	dc.b	$01, $43, $11, $11, $02, $44, $33, $34, $44, $11, $34, $34, $21, $22, $25, $23, $55, $54, $55, $54, $44, $33, $44, $44, $32, $44, $33, $32, $33, $22, $21, $00 
-EnemyGfxData_WorldMapChild_Gfx_5982E:
-	dc.b	$01, $22, $64, $09, $04, $44, $32, $21, $32, $23, $21, $32, $12, $23, $21, $11, $23, $21, $12, $23, $32, $12, $34, $43, $11, $44, $43, $11, $33, $44 
-EnemyGfxData_WorldMapChild_Gfx_5984C:
-	dc.b	$01, $00, $FF, $F7, $77, $77, $10, $20, $20, $30, $20, $00 
-EnemyGfxData_WorldMapChild_Gfx_59858:
-	dc.b	$01, $00, $FF, $FF, $FE, $EE, $05, $04, $43, $00 
-EnemyGfxData_WorldMapChild_Gfx_59862:
-	dc.b	$00, $00, $00, $00, $00, $00, $05, $53, $33, $00, $55, $54, $33, $05, $55, $43, $32, $55, $54, $33, $22, $54, $43, $32, $22, $44, $43, $22, $11, $54, $54, $33 
-	dc.b	$22, $00 
-EnemyGfxData_WorldMapChild_Gfx_59884:
-	dc.b	$01, $00, $FF, $77, $33, $37, $40, $22, $12, $20, $11, $22, $11, $22, $22, $00 
-EnemyGfxData_WorldMapChild_Gfx_59894:
-	dc.b	$01, $00, $EE, $EE, $EE, $C0, $22, $28, $0A, $0D, $0A, $08, $33, $33, $05, $55, $54, $44 
-EnemyGfxData_WorldMapChild_Gfx_598A6:
-	dc.b	$00, $25, $54, $33, $32, $22, $54, $43, $33, $82, $43, $34, $33, $A2, $34, $55, $44, $83, $35, $54, $44, $82, $45, $54, $43, $33, $44, $55, $43, $44, $34, $54 
-	dc.b	$33, $00 
-EnemyGfxData_WorldMapChild_Gfx_598C8:
-	dc.b	$01, $00, $33, $11, $10, $00, $22, $20, $23, $12, $32, $32, $10, $32, $22, $21, $43, $22, $21, $44, $32, $22, $10, $34, $33, $23, $20, $34, $43, $22, $21, $00 
-EnemyGfxData_WorldMapChild_Gfx_598E8:
-	dc.b	$00, $05, $35, $53, $45, $02, $99, $22, $44, $BD, $D9, $B2, $33, $BD, $99, $B1, $33, $AB, $BB, $A1, $23, $0A, $AA, $11, $22, $01, $11, $11, $11, $00, $11, $10 
-	dc.b	$11, $00 
-EnemyGfxData_WorldMapChild_Gfx_5990A:
-	dc.b	$02, $33, $11, $32, $C0, $00, $11, $00, $00, $01, $7F, $55, $55, $44, $55, $54, $44, $44, $44, $44, $43, $22, $22, $21, $22, $22, $22, $21 
-EnemyGfxData_WorldMapChild_Gfx_59926:
-	dc.b	$02, $33, $CE, $C4, $42, $21, $22, $20, $0B, $11, $14, $21, $21, $23, $32, $12, $32, $12, $23, $12, $23, $11, $32, $00 
-EnemyGfxData_WorldMapChild_Gfx_5993E:
-	dc.b	$01, $00, $FF, $77, $77, $77, $10, $20, $20, $30, $21, $21 
-EnemyGfxData_WorldMapChild_Gfx_5994A:
-	dc.b	$01, $00, $FF, $FF, $EE, $EE, $05, $04, $43, $22 
-EnemyGfxData_WorldMapChild_Gfx_59954:
-	dc.b	$00, $00, $05, $53, $33, $00, $55, $54, $33, $05, $55, $43, $32, $55, $54, $33, $22, $54, $43, $32, $22, $44, $43, $22, $11, $54, $54, $33, $22, $25, $54, $33 
-	dc.b	$32, $00 
-EnemyGfxData_WorldMapChild_Gfx_59976:
-	dc.b	$01, $00, $F7, $73, $33, $73, $40, $22, $12, $20, $11, $22, $11, $22, $22, $22, $22, $00 
-EnemyGfxData_WorldMapChild_Gfx_59988:
-	dc.b	$01, $00, $EE, $EC, $80, $00, $28, $0A, $0D, $33, $3A, $23, $44, $44, $05, $23, $34, $55, $54, $22, $23, $44, $42, $BB, $B2, $33 
-EnemyGfxData_WorldMapChild_Gfx_599A2:
-	dc.b	$01, $55, $00, $23, $74, $00, $22, $54, $43, $33, $82, $43, $34, $44, $A2, $34, $54, $33, $35, $34, $45, $45, $54, $44, $45, $54, $54, $34, $44, $44, $54, $00 
-EnemyGfxData_WorldMapChild_Gfx_599C2:
-	dc.b	$01, $22, $02, $64, $20, $26, $33, $12, $20, $00, $33, $32, $00, $43, $00, $43, $21, $20, $44, $43, $10, $44, $44, $32, $20, $44, $33, $21, $33, $21 
-EnemyGfxData_WorldMapChild_Gfx_599E0:
-	dc.b	$00, $0B, $DD, $CB, $23, $BC, $DD, $CC, $B2, $BC, $DD, $CC, $B2, $BC, $CC, $CB, $A1, $AB, $BC, $BA, $22, $0A, $AA, $22, $33, $04, $55, $54, $43, $00, $25, $33 
-	dc.b	$32, $00 
-EnemyGfxData_WorldMapChild_Gfx_59A02:
-	dc.b	$02, $22, $08, $C6, $11, $00, $11, $00, $08, $46, $51, $33, $43, $44, $45, $33, $33, $44, $23, $34, $33, $21, $12, $21, $21, $21, $21, $12, $21, $00 
-EnemyGfxData_WorldMapChild_Gfx_59A20:
-	dc.b	$02, $33, $44, $26, $D4, $63, $22, $21, $10, $21, $88, $43, $21, $44, $32, $44, $44, $44, $32, $23, $32, $32, $23, $00 
-EnemyGfxData_WorldMapChild_Gfx_59A38:
-	dc.b	$01, $00, $F7, $77, $77, $77, $10, $20, $20, $20, $21, $21, $22, $00 
+	incbin "data/art/tiles/enemy/world_map_child_gfx.bin"
+EnemyGfxData_WorldMapChild_Gfx_5921E equ EnemyGfxData_WorldMapChild_Gfx_59218+$6
+EnemyGfxData_WorldMapChild_Gfx_5922C equ EnemyGfxData_WorldMapChild_Gfx_59218+$14
+EnemyGfxData_WorldMapChild_Gfx_59242 equ EnemyGfxData_WorldMapChild_Gfx_59218+$2A
+EnemyGfxData_WorldMapChild_Gfx_5924C equ EnemyGfxData_WorldMapChild_Gfx_59218+$34
+EnemyGfxData_WorldMapChild_Gfx_5926E equ EnemyGfxData_WorldMapChild_Gfx_59218+$56
+EnemyGfxData_WorldMapChild_Gfx_59290 equ EnemyGfxData_WorldMapChild_Gfx_59218+$78
+EnemyGfxData_WorldMapChild_Gfx_59298 equ EnemyGfxData_WorldMapChild_Gfx_59218+$80
+EnemyGfxData_WorldMapChild_Gfx_592B2 equ EnemyGfxData_WorldMapChild_Gfx_59218+$9A
+EnemyGfxData_WorldMapChild_Gfx_592D2 equ EnemyGfxData_WorldMapChild_Gfx_59218+$BA
+EnemyGfxData_WorldMapChild_Gfx_592F0 equ EnemyGfxData_WorldMapChild_Gfx_59218+$D8
+EnemyGfxData_WorldMapChild_Gfx_59306 equ EnemyGfxData_WorldMapChild_Gfx_59218+$EE
+EnemyGfxData_WorldMapChild_Gfx_59316 equ EnemyGfxData_WorldMapChild_Gfx_59218+$FE
+EnemyGfxData_WorldMapChild_Gfx_5932E equ EnemyGfxData_WorldMapChild_Gfx_59218+$116
+EnemyGfxData_WorldMapChild_Gfx_59338 equ EnemyGfxData_WorldMapChild_Gfx_59218+$120
+EnemyGfxData_WorldMapChild_Gfx_5935A equ EnemyGfxData_WorldMapChild_Gfx_59218+$142
+EnemyGfxData_WorldMapChild_Gfx_5937A equ EnemyGfxData_WorldMapChild_Gfx_59218+$162
+EnemyGfxData_WorldMapChild_Gfx_59384 equ EnemyGfxData_WorldMapChild_Gfx_59218+$16C
+EnemyGfxData_WorldMapChild_Gfx_5939E equ EnemyGfxData_WorldMapChild_Gfx_59218+$186
+EnemyGfxData_WorldMapChild_Gfx_593BC equ EnemyGfxData_WorldMapChild_Gfx_59218+$1A4
+EnemyGfxData_WorldMapChild_Gfx_593DE equ EnemyGfxData_WorldMapChild_Gfx_59218+$1C6
+EnemyGfxData_WorldMapChild_Gfx_593F4 equ EnemyGfxData_WorldMapChild_Gfx_59218+$1DC
+EnemyGfxData_WorldMapChild_Gfx_59408 equ EnemyGfxData_WorldMapChild_Gfx_59218+$1F0
+EnemyGfxData_WorldMapChild_Gfx_59424 equ EnemyGfxData_WorldMapChild_Gfx_59218+$20C
+EnemyGfxData_WorldMapChild_Gfx_59430 equ EnemyGfxData_WorldMapChild_Gfx_59218+$218
+EnemyGfxData_WorldMapChild_Gfx_59452 equ EnemyGfxData_WorldMapChild_Gfx_59218+$23A
+EnemyGfxData_WorldMapChild_Gfx_59472 equ EnemyGfxData_WorldMapChild_Gfx_59218+$25A
+EnemyGfxData_WorldMapChild_Gfx_5947E equ EnemyGfxData_WorldMapChild_Gfx_59218+$266
+EnemyGfxData_WorldMapChild_Gfx_5949A equ EnemyGfxData_WorldMapChild_Gfx_59218+$282
+EnemyGfxData_WorldMapChild_Gfx_594B4 equ EnemyGfxData_WorldMapChild_Gfx_59218+$29C
+EnemyGfxData_WorldMapChild_Gfx_594D6 equ EnemyGfxData_WorldMapChild_Gfx_59218+$2BE
+EnemyGfxData_WorldMapChild_Gfx_594EC equ EnemyGfxData_WorldMapChild_Gfx_59218+$2D4
+EnemyGfxData_WorldMapChild_Gfx_594FA equ EnemyGfxData_WorldMapChild_Gfx_59218+$2E2
+EnemyGfxData_WorldMapChild_Gfx_59510 equ EnemyGfxData_WorldMapChild_Gfx_59218+$2F8
+EnemyGfxData_WorldMapChild_Gfx_59518 equ EnemyGfxData_WorldMapChild_Gfx_59218+$300
+EnemyGfxData_WorldMapChild_Gfx_59538 equ EnemyGfxData_WorldMapChild_Gfx_59218+$320
+EnemyGfxData_WorldMapChild_Gfx_59558 equ EnemyGfxData_WorldMapChild_Gfx_59218+$340
+EnemyGfxData_WorldMapChild_Gfx_59572 equ EnemyGfxData_WorldMapChild_Gfx_59218+$35A
+EnemyGfxData_WorldMapChild_Gfx_5958C equ EnemyGfxData_WorldMapChild_Gfx_59218+$374
+EnemyGfxData_WorldMapChild_Gfx_595A2 equ EnemyGfxData_WorldMapChild_Gfx_59218+$38A
+EnemyGfxData_WorldMapChild_Gfx_595B8 equ EnemyGfxData_WorldMapChild_Gfx_59218+$3A0
+EnemyGfxData_WorldMapChild_Gfx_595CA equ EnemyGfxData_WorldMapChild_Gfx_59218+$3B2
+EnemyGfxData_WorldMapChild_Gfx_595E6 equ EnemyGfxData_WorldMapChild_Gfx_59218+$3CE
+EnemyGfxData_WorldMapChild_Gfx_595F4 equ EnemyGfxData_WorldMapChild_Gfx_59218+$3DC
+EnemyGfxData_WorldMapChild_Gfx_59612 equ EnemyGfxData_WorldMapChild_Gfx_59218+$3FA
+EnemyGfxData_WorldMapChild_Gfx_59632 equ EnemyGfxData_WorldMapChild_Gfx_59218+$41A
+EnemyGfxData_WorldMapChild_Gfx_5964A equ EnemyGfxData_WorldMapChild_Gfx_59218+$432
+EnemyGfxData_WorldMapChild_Gfx_59664 equ EnemyGfxData_WorldMapChild_Gfx_59218+$44C
+EnemyGfxData_WorldMapChild_Gfx_59678 equ EnemyGfxData_WorldMapChild_Gfx_59218+$460
+EnemyGfxData_WorldMapChild_Gfx_5968C equ EnemyGfxData_WorldMapChild_Gfx_59218+$474
+EnemyGfxData_WorldMapChild_Gfx_596A0 equ EnemyGfxData_WorldMapChild_Gfx_59218+$488
+EnemyGfxData_WorldMapChild_Gfx_596BE equ EnemyGfxData_WorldMapChild_Gfx_59218+$4A6
+EnemyGfxData_WorldMapChild_Gfx_596D4 equ EnemyGfxData_WorldMapChild_Gfx_59218+$4BC
+EnemyGfxData_WorldMapChild_Gfx_596F2 equ EnemyGfxData_WorldMapChild_Gfx_59218+$4DA
+EnemyGfxData_WorldMapChild_Gfx_59714 equ EnemyGfxData_WorldMapChild_Gfx_59218+$4FC
+EnemyGfxData_WorldMapChild_Gfx_5971C equ EnemyGfxData_WorldMapChild_Gfx_59218+$504
+EnemyGfxData_WorldMapChild_Gfx_5972E equ EnemyGfxData_WorldMapChild_Gfx_59218+$516
+EnemyGfxData_WorldMapChild_Gfx_5974A equ EnemyGfxData_WorldMapChild_Gfx_59218+$532
+EnemyGfxData_WorldMapChild_Gfx_59762 equ EnemyGfxData_WorldMapChild_Gfx_59218+$54A
+EnemyGfxData_WorldMapChild_Gfx_59776 equ EnemyGfxData_WorldMapChild_Gfx_59218+$55E
+EnemyGfxData_WorldMapChild_Gfx_5977E equ EnemyGfxData_WorldMapChild_Gfx_59218+$566
+EnemyGfxData_WorldMapChild_Gfx_5979A equ EnemyGfxData_WorldMapChild_Gfx_59218+$582
+EnemyGfxData_WorldMapChild_Gfx_597A8 equ EnemyGfxData_WorldMapChild_Gfx_59218+$590
+EnemyGfxData_WorldMapChild_Gfx_597B6 equ EnemyGfxData_WorldMapChild_Gfx_59218+$59E
+EnemyGfxData_WorldMapChild_Gfx_597D4 equ EnemyGfxData_WorldMapChild_Gfx_59218+$5BC
+EnemyGfxData_WorldMapChild_Gfx_597F0 equ EnemyGfxData_WorldMapChild_Gfx_59218+$5D8
+EnemyGfxData_WorldMapChild_Gfx_5980E equ EnemyGfxData_WorldMapChild_Gfx_59218+$5F6
+EnemyGfxData_WorldMapChild_Gfx_5982E equ EnemyGfxData_WorldMapChild_Gfx_59218+$616
+EnemyGfxData_WorldMapChild_Gfx_5984C equ EnemyGfxData_WorldMapChild_Gfx_59218+$634
+EnemyGfxData_WorldMapChild_Gfx_59858 equ EnemyGfxData_WorldMapChild_Gfx_59218+$640
+EnemyGfxData_WorldMapChild_Gfx_59862 equ EnemyGfxData_WorldMapChild_Gfx_59218+$64A
+EnemyGfxData_WorldMapChild_Gfx_59884 equ EnemyGfxData_WorldMapChild_Gfx_59218+$66C
+EnemyGfxData_WorldMapChild_Gfx_59894 equ EnemyGfxData_WorldMapChild_Gfx_59218+$67C
+EnemyGfxData_WorldMapChild_Gfx_598A6 equ EnemyGfxData_WorldMapChild_Gfx_59218+$68E
+EnemyGfxData_WorldMapChild_Gfx_598C8 equ EnemyGfxData_WorldMapChild_Gfx_59218+$6B0
+EnemyGfxData_WorldMapChild_Gfx_598E8 equ EnemyGfxData_WorldMapChild_Gfx_59218+$6D0
+EnemyGfxData_WorldMapChild_Gfx_5990A equ EnemyGfxData_WorldMapChild_Gfx_59218+$6F2
+EnemyGfxData_WorldMapChild_Gfx_59926 equ EnemyGfxData_WorldMapChild_Gfx_59218+$70E
+EnemyGfxData_WorldMapChild_Gfx_5993E equ EnemyGfxData_WorldMapChild_Gfx_59218+$726
+EnemyGfxData_WorldMapChild_Gfx_5994A equ EnemyGfxData_WorldMapChild_Gfx_59218+$732
+EnemyGfxData_WorldMapChild_Gfx_59954 equ EnemyGfxData_WorldMapChild_Gfx_59218+$73C
+EnemyGfxData_WorldMapChild_Gfx_59976 equ EnemyGfxData_WorldMapChild_Gfx_59218+$75E
+EnemyGfxData_WorldMapChild_Gfx_59988 equ EnemyGfxData_WorldMapChild_Gfx_59218+$770
+EnemyGfxData_WorldMapChild_Gfx_599A2 equ EnemyGfxData_WorldMapChild_Gfx_59218+$78A
+EnemyGfxData_WorldMapChild_Gfx_599C2 equ EnemyGfxData_WorldMapChild_Gfx_59218+$7AA
+EnemyGfxData_WorldMapChild_Gfx_599E0 equ EnemyGfxData_WorldMapChild_Gfx_59218+$7C8
+EnemyGfxData_WorldMapChild_Gfx_59A02 equ EnemyGfxData_WorldMapChild_Gfx_59218+$7EA
+EnemyGfxData_WorldMapChild_Gfx_59A20 equ EnemyGfxData_WorldMapChild_Gfx_59218+$808
+EnemyGfxData_WorldMapChild_Gfx_59A38 equ EnemyGfxData_WorldMapChild_Gfx_59218+$820
 EnemyGfxData_WorldMapChild:
 	dc.l	EnemyGfxData_WorldMapChild_Gfx_59218
 	dc.l	EnemyGfxData_WorldMapChild_Gfx_5921E
@@ -61572,163 +58804,80 @@ EnemyGfxFrameTable_WorldMapMain:
 	dc.b	$37, $1F, $34, $38, $20, $35, $39, $17, $21, $25, $08, $22, $26, $29, $23, $27, $0A, $24, $28, $0B, $3A, $3E, $14, $3B, $3F, $15, $3C, $40, $16, $3D, $41, $17 
 	dc.b	$42, $46, $1E, $43, $47, $1F, $44, $48, $20, $45, $49, $17 
 EnemyGfxData_WorldMapMain_Gfx_59C16:
-	dc.b	$02, $00, $8C, $CE, $EE, $EE, $01, $40, $21, $11, $11, $11, $11, $11, $11, $11 
-EnemyGfxData_WorldMapMain_Gfx_59C26:
-	dc.b	$01, $11, $22, $6F, $71, $00, $31, $55, $AB, $31, $17, $AB, $13, $1A, $21, $21, $12, $21, $23, $21, $22, $22, $23, $32, $12, $23 
-EnemyGfxData_WorldMapMain_Gfx_59C40:
-	dc.b	$01, $11, $01, $7E, $E8, $00, $D9, $A1, $15, $51, $BB, $A1, $15, $AA, $10, $10, $12, $22, $10, $22, $23, $33, $21, $33, $32, $34, $32, $00 
-EnemyGfxData_WorldMapMain_Gfx_59C5C:
-	dc.b	$01, $00, $37, $FF, $FF, $FF, $11, $10, $10, $00 
-EnemyGfxData_WorldMapMain_Gfx_59C66:
-	dc.b	$01, $00, $EE, $EE, $CC, $CE, $01, $01, $12, $12, $01, $24, $01, $34, $01, $22, $11, $00 
-EnemyGfxData_WorldMapMain_Gfx_59C78:
-	dc.b	$01, $11, $00, $22, $00, $79, $24, $32, $12, $22, $24, $32, $12, $22, $35, $32, $22, $35, $32, $12, $53, $33, $21, $12, $43, $22, $21, $12, $22, $00, $00, $00 
-EnemyGfxData_WorldMapMain_Gfx_59C98:
-	dc.b	$00, $32, $22, $24, $52, $33, $32, $13, $52, $34, $32, $12, $55, $35, $42, $11, $34, $34, $53, $21, $22, $23, $43, $22, $12, $23, $44, $32, $11, $22, $33, $21 
-	dc.b	$10, $00 
-EnemyGfxData_WorldMapMain_Gfx_59CBA:
-	dc.b	$01, $00, $FF, $77, $77, $7F, $20, $22, $32, $10, $10, $00 
-EnemyGfxData_WorldMapMain_Gfx_59CC6:
-	dc.b	$01, $00, $FF, $FE, $CE, $FF, $88, $08, $88, $88 
-EnemyGfxData_WorldMapMain_Gfx_59CD0:
-	dc.b	$02, $00, $EF, $00, $00, $0F, $88, $00, $7F, $FF, $F0, $01, $08, $00 
-EnemyGfxData_WorldMapMain_Gfx_59CDE:
-	dc.b	$02, $00, $1F, $10, $00, $3F, $88, $00, $EF, $FF, $C0, $12, $22, $10 
-EnemyGfxData_WorldMapMain_Gfx_59CEC:
-	dc.b	$01, $00, $FF, $F7, $77, $FF, $80, $88, $80, $00 
-EnemyGfxData_WorldMapMain_Gfx_59CF6:
-	dc.b	$02, $00, $CC, $EE, $EE, $EE, $01, $02, $11, $11, $11, $11, $11, $11 
-EnemyGfxData_WorldMapMain_Gfx_59D04:
-	dc.b	$00, $31, $15, $71, $BB, $13, $17, $51, $1B, $11, $11, $57, $11, $21, $11, $11, $11, $21, $12, $22, $22, $23, $21, $23, $32, $23, $32, $12, $33, $24, $32, $12 
-	dc.b	$33, $00 
-EnemyGfxData_WorldMapMain_Gfx_59D26:
-	dc.b	$01, $11, $37, $6E, $80, $00, $BB, $A1, $BA, $21, $10, $10, $12, $22, $10, $22, $33, $33, $21, $22, $23, $44, $32, $32, $23, $44, $32, $00 
-EnemyGfxData_WorldMapMain_Gfx_59D42:
-	dc.b	$01, $00, $7F, $FF, $FF, $FF, $10, $00 
-EnemyGfxData_WorldMapMain_Gfx_59D4A:
-	dc.b	$01, $00, $EE, $EC, $CE, $EF, $01, $12, $12, $02, $24, $02, $34, $22, $01, $00 
-EnemyGfxData_WorldMapMain_Gfx_59D5A:
-	dc.b	$00, $24, $31, $12, $34, $44, $21, $12, $34, $43, $21, $12, $34, $43, $21, $12, $34, $42, $21, $12, $23, $22, $11, $12, $23, $11, $11, $11, $22, $00, $01, $11 
-	dc.b	$11, $00 
-EnemyGfxData_WorldMapMain_Gfx_59D7C:
-	dc.b	$00, $33, $23, $45, $43, $32, $22, $35, $53, $43, $22, $34, $53, $43, $33, $23, $44, $44, $43, $22, $33, $34, $44, $32, $10, $23, $33, $21, $00, $12, $22, $00 
-	dc.b	$00, $00 
-EnemyGfxData_WorldMapMain_Gfx_59D9E:
-	dc.b	$01, $00, $F7, $77, $7F, $FF, $20, $22, $32, $10 
-EnemyGfxData_WorldMapMain_Gfx_59DA8:
-	dc.b	$01, $00, $FF, $FF, $EE, $FF, $88, $08 
-EnemyGfxData_WorldMapMain_Gfx_59DB0:
-	dc.b	$02, $00, $FF, $80, $00, $0F, $88, $00, $3F, $FF, $70, $08, $08, $00 
-EnemyGfxData_WorldMapMain_Gfx_59DBE:
-	dc.b	$02, $00, $FF, $10, $01, $FF, $88, $00, $EF, $FC, $00, $80 
-EnemyGfxData_WorldMapMain_Gfx_59DCA:
-	dc.b	$01, $00, $FF, $FF, $FF, $FF 
-EnemyGfxData_WorldMapMain_Gfx_59DD0:
-	dc.b	$01, $22, $00, $03, $A0, $64, $13, $17, $51, $7B, $11, $11, $57, $11, $21, $11, $11, $77, $21, $12, $11, $32, $23, $32, $12, $33, $43, $43, $43, $23, $43, $00 
-EnemyGfxData_WorldMapMain_Gfx_59DF0:
-	dc.b	$01, $11, $76, $68, $00, $10, $BB, $21, $10, $71, $10, $12, $22, $10, $12, $22, $32, $10, $22, $23, $42, $10, $22, $34, $33, $22, $34, $43, $22, $00 
-EnemyGfxData_WorldMapMain_Gfx_59E0E:
-	dc.b	$01, $00, $EE, $CC, $CE, $FF, $12, $14, $02, $43, $01, $32, $01, $22, $11, $00 
-EnemyGfxData_WorldMapMain_Gfx_59E1E:
-	dc.b	$00, $43, $22, $34, $33, $32, $23, $44, $32, $32, $23, $44, $32, $22, $33, $44, $33, $21, $33, $33, $43, $11, $11, $11, $22, $11, $11, $00, $00, $00, $00, $00 
-	dc.b	$00, $00 
-EnemyGfxData_WorldMapMain_Gfx_59E40:
-	dc.b	$01, $22, $88, $8C, $B0, $00, $35, $43, $32, $34, $54, $43, $34, $45, $44, $33, $32, $21, $11, $18, $82, $21, $01, $11, $11, $10, $00, $00, $00, $00 
-EnemyGfxData_WorldMapMain_Gfx_59E5E:
-	dc.b	$01, $00, $F7, $77, $7F, $FF, $20, $31, $21, $11 
-EnemyGfxData_WorldMapMain_Gfx_59E68:
-	dc.b	$01, $00, $FF, $FF, $FE, $FF, $08, $00 
-EnemyGfxData_WorldMapMain_Gfx_59E70:
-	dc.b	$02, $00, $FF, $C8, $00, $3F, $88, $00, $17, $FF, $C0, $08 
-EnemyGfxData_WorldMapMain_Gfx_59E7C:
-	dc.b	$02, $00, $FF, $10, $01, $3F, $88, $00, $CE, $EE, $C0, $80, $80, $80 
-EnemyGfxData_WorldMapMain_Gfx_59E8A:
-	dc.b	$01, $00, $CC, $EF, $FF, $EE, $01, $22, $02, $12, $22, $02, $03, $00 
-EnemyGfxData_WorldMapMain_Gfx_59E98:
-	dc.b	$01, $11, $11, $79, $00, $00, $33, $33, $22, $23, $32, $21, $12, $13, $22, $02, $22, $23, $32, $34, $33, $33, $23, $34, $34, $33, $23, $43, $44, $43, $23, $00 
-EnemyGfxData_WorldMapMain_Gfx_59EB8:
-	dc.b	$01, $22, $02, $63, $39, $95, $12, $23, $32, $43, $11, $23, $33, $11, $33, $11, $11, $21, $12, $13, $32, $12, $32, $32, $33, $00 
-EnemyGfxData_WorldMapMain_Gfx_59ED2:
-	dc.b	$02, $00, $77, $77, $73, $31, $22, $08, $08, $88, $CC, $21, $32, $20, $20, $00 
-EnemyGfxData_WorldMapMain_Gfx_59EE2:
-	dc.b	$01, $00, $EE, $EE, $EF, $FF, $23, $23, $22, $02, $02, $00 
-EnemyGfxData_WorldMapMain_Gfx_59EEE:
-	dc.b	$00, $42, $44, $33, $33, $32, $44, $32, $34, $23, $53, $32, $34, $23, $43, $22, $34, $23, $33, $22, $34, $22, $22, $22, $13, $02, $22, $21, $11, $00, $00, $00 
-	dc.b	$11, $00 
-EnemyGfxData_WorldMapMain_Gfx_59F10:
-	dc.b	$01, $32, $98, $04, $44, $24, $22, $23, $22, $23, $43, $33, $22, $23, $44, $43, $21, $34, $43, $21, $33, $44, $22, $12, $23, $33, $11, $22, $21, $10 
-EnemyGfxData_WorldMapMain_Gfx_59F2E:
-	dc.b	$01, $00, $11, $33, $77, $7F, $22, $22, $20, $23, $22, $20, $33, $22, $33, $20, $32, $10, $10, $00 
-EnemyGfxData_WorldMapMain_Gfx_59F42:
-	dc.b	$02, $00, $FF, $00, $00, $0F, $88, $00, $7F, $FF, $F0, $08 
-EnemyGfxData_WorldMapMain_Gfx_59F4E:
-	dc.b	$01, $00, $FF, $EE, $EE, $EE, $02, $02, $02, $02, $22, $22 
-EnemyGfxData_WorldMapMain_Gfx_59F5A:
-	dc.b	$00, $23, $32, $23, $32, $23, $23, $44, $33, $23, $44, $34, $33, $24, $43, $34, $33, $24, $43, $34, $43, $34, $44, $33, $44, $34, $44, $33, $22, $43, $43, $43 
-	dc.b	$32, $00 
-EnemyGfxData_WorldMapMain_Gfx_59F7C:
-	dc.b	$02, $22, $94, $40, $46, $20, $11, $61, $12, $00, $13, $32, $21, $32, $21, $33, $32, $12, $33, $21, $12, $32, $12, $34, $42, $23, $42, $00 
-EnemyGfxData_WorldMapMain_Gfx_59F98:
-	dc.b	$01, $00, $7F, $FF, $FF, $F7, $10, $10 
-EnemyGfxData_WorldMapMain_Gfx_59FA0:
-	dc.b	$01, $00, $EE, $EE, $EF, $FF, $23, $23, $03, $03, $04, $00 
-EnemyGfxData_WorldMapMain_Gfx_59FAC:
-	dc.b	$01, $22, $40, $01, $02, $63, $33, $43, $33, $43, $32, $34, $43, $45, $33, $23, $34, $44, $43, $32, $34, $33, $31, $12, $23, $12, $11, $00, $21, $00, $00, $00 
-EnemyGfxData_WorldMapMain_Gfx_59FCC:
-	dc.b	$01, $22, $8A, $73, $2C, $00, $33, $21, $12, $33, $32, $33, $33, $32, $23, $32, $11, $11, $11, $11, $11, $11, $10, $21, $10, $00, $00, $00 
-EnemyGfxData_WorldMapMain_Gfx_59FE8:
-	dc.b	$01, $00, $77, $77, $77, $FF, $10, $10, $11, $11, $12, $10 
-EnemyGfxData_WorldMapMain_Gfx_59FF4:
-	dc.b	$01, $00, $EE, $EE, $CC, $CC, $02, $22, $23, $24, $02, $24, $02, $34, $02, $44, $02, $43 
-EnemyGfxData_WorldMapMain_Gfx_5A006:
-	dc.b	$02, $33, $41, $10, $22, $09, $43, $00, $45, $00, $E2, $22, $32, $22, $23, $23, $44, $34, $34, $34, $34, $34, $44, $44, $34, $44, $22, $32, $22, $00 
-EnemyGfxData_WorldMapMain_Gfx_5A024:
-	dc.b	$02, $22, $C4, $04, $62, $08, $11, $31, $20, $01, $30, $32, $21, $33, $32, $12, $33, $21, $12, $32, $12, $34, $42, $23, $42, $33, $21, $12 
-EnemyGfxData_WorldMapMain_Gfx_5A040:
-	dc.b	$01, $00, $77, $FF, $FF, $F7, $21, $10, $10, $00 
-EnemyGfxData_WorldMapMain_Gfx_5A04A:
-	dc.b	$01, $00, $CC, $CE, $FF, $FF, $22, $34, $02, $33, $02, $23, $23, $00 
-EnemyGfxData_WorldMapMain_Gfx_5A058:
-	dc.b	$01, $00, $00, $00, $08, $CF, $43, $32, $34, $43, $45, $33, $23, $34, $33, $33, $32, $22, $32, $23, $31, $12, $22, $22, $22, $11, $02, $22, $21, $02, $22, $00 
-EnemyGfxData_WorldMapMain_Gfx_5A078:
-	dc.b	$02, $22, $A7, $32, $C0, $00, $11, $00, $01, $3E, $40, $33, $32, $33, $33, $32, $23, $32, $10, $21, $10, $00, $00, $00, $00, $00 
-EnemyGfxData_WorldMapMain_Gfx_5A092:
-	dc.b	$01, $00, $77, $77, $7F, $FF, $10, $10, $11, $12, $10, $00 
-EnemyGfxData_WorldMapMain_Gfx_5A09E:
-	dc.b	$01, $00, $FF, $FE, $EE, $EE, $02, $02, $02, $23, $23, $00 
-EnemyGfxData_WorldMapMain_Gfx_5A0AA:
-	dc.b	$00, $01, $11, $11, $11, $02, $11, $11, $21, $12, $22, $22, $22, $22, $44, $32, $32, $33, $54, $32, $33, $34, $53, $22, $33, $45, $43, $23, $33, $45, $43, $23 
-	dc.b	$43, $00 
-EnemyGfxData_WorldMapMain_Gfx_5A0CC:
-	dc.b	$01, $22, $54, $BB, $9D, $08, $11, $33, $12, $23, $32, $32, $23, $23, $32, $33, $32, $23, $33, $32, $23, $43, $32, $00 
-EnemyGfxData_WorldMapMain_Gfx_5A0E4:
-	dc.b	$02, $22, $88, $88, $8C, $CC, $00, $77, $33, $33, $11, $20, $20, $20, $20, $20 
-EnemyGfxData_WorldMapMain_Gfx_5A0F4:
-	dc.b	$01, $00, $EE, $EE, $FF, $FF, $23, $22, $02, $02 
-EnemyGfxData_WorldMapMain_Gfx_5A0FE:
-	dc.b	$02, $23, $2A, $AA, $00, $00, $00, $00, $00, $00, $EF, $44, $42, $43, $32, $43, $33, $43, $33, $44, $22, $22, $22, $33, $02, $22, $21, $33, $11, $00 
-EnemyGfxData_WorldMapMain_Gfx_5A11C:
-	dc.b	$00, $22, $23, $44, $33, $23, $22, $44, $43, $33, $32, $34, $44, $33, $32, $23, $34, $44, $32, $22, $12, $23, $33, $32, $11, $22, $32, $21, $10, $12, $22, $10 
-	dc.b	$00, $00 
-EnemyGfxData_WorldMapMain_Gfx_5A13E:
-	dc.b	$01, $00, $33, $33, $77, $FF, $23, $22, $33, $22, $33, $10, $31, $10, $11, $10 
-EnemyGfxData_WorldMapMain_Gfx_5A14E:
-	dc.b	$01, $00, $0C, $EE, $EE, $EE, $03, $42, $21, $21, $01, $10, $02, $02, $02, $03, $23, $23 
-EnemyGfxData_WorldMapMain_Gfx_5A160:
-	dc.b	$01, $33, $00, $4E, $05, $11, $12, $11, $11, $11, $21, $13, $21, $11, $22, $32, $22, $22, $34, $43, $34, $32, $44, $43, $44, $32, $44, $44, $32, $34 
-EnemyGfxData_WorldMapMain_Gfx_5A17E:
-	dc.b	$02, $22, $C7, $B9, $80, $40, $33, $30, $44, $01, $0A, $12, $32, $23, $43, $32, $32, $23, $34, $23, $34, $43, $32, $44 
-EnemyGfxData_WorldMapMain_Gfx_5A196:
-	dc.b	$02, $22, $8C, $C8, $00, $04, $00, $73, $11, $13, $33, $20, $23, $20, $23, $33, $20, $33, $32, $34, $32, $44 
-EnemyGfxData_WorldMapMain_Gfx_5A1AC:
-	dc.b	$01, $00, $EE, $EE, $EF, $FF, $12, $12, $12, $01, $01, $00 
-EnemyGfxData_WorldMapMain_Gfx_5A1B8:
-	dc.b	$00, $44, $32, $24, $44, $44, $32, $23, $44, $34, $33, $23, $34, $24, $43, $22, $33, $23, $33, $32, $23, $22, $22, $21, $11, $00, $21, $10, $00, $00, $00, $00 
-	dc.b	$00, $00 
-EnemyGfxData_WorldMapMain_Gfx_5A1DA:
-	dc.b	$01, $00, $00, $00, $01, $BF, $33, $23, $33, $34, $43, $22, $23, $33, $44, $32, $22, $22, $44, $32, $22, $12, $22, $33, $21, $10, $12, $22, $11, $12 
-EnemyGfxData_WorldMapMain_Gfx_5A1F8:
-	dc.b	$01, $00, $33, $37, $FF, $FF, $33, $22, $33, $10, $31, $10, $11, $00 
+	incbin "data/art/tiles/enemy/world_map_main_gfx.bin"
+EnemyGfxData_WorldMapMain_Gfx_59C26 equ EnemyGfxData_WorldMapMain_Gfx_59C16+$10
+EnemyGfxData_WorldMapMain_Gfx_59C40 equ EnemyGfxData_WorldMapMain_Gfx_59C16+$2A
+EnemyGfxData_WorldMapMain_Gfx_59C5C equ EnemyGfxData_WorldMapMain_Gfx_59C16+$46
+EnemyGfxData_WorldMapMain_Gfx_59C66 equ EnemyGfxData_WorldMapMain_Gfx_59C16+$50
+EnemyGfxData_WorldMapMain_Gfx_59C78 equ EnemyGfxData_WorldMapMain_Gfx_59C16+$62
+EnemyGfxData_WorldMapMain_Gfx_59C98 equ EnemyGfxData_WorldMapMain_Gfx_59C16+$82
+EnemyGfxData_WorldMapMain_Gfx_59CBA equ EnemyGfxData_WorldMapMain_Gfx_59C16+$A4
+EnemyGfxData_WorldMapMain_Gfx_59CC6 equ EnemyGfxData_WorldMapMain_Gfx_59C16+$B0
+EnemyGfxData_WorldMapMain_Gfx_59CD0 equ EnemyGfxData_WorldMapMain_Gfx_59C16+$BA
+EnemyGfxData_WorldMapMain_Gfx_59CDE equ EnemyGfxData_WorldMapMain_Gfx_59C16+$C8
+EnemyGfxData_WorldMapMain_Gfx_59CEC equ EnemyGfxData_WorldMapMain_Gfx_59C16+$D6
+EnemyGfxData_WorldMapMain_Gfx_59CF6 equ EnemyGfxData_WorldMapMain_Gfx_59C16+$E0
+EnemyGfxData_WorldMapMain_Gfx_59D04 equ EnemyGfxData_WorldMapMain_Gfx_59C16+$EE
+EnemyGfxData_WorldMapMain_Gfx_59D26 equ EnemyGfxData_WorldMapMain_Gfx_59C16+$110
+EnemyGfxData_WorldMapMain_Gfx_59D42 equ EnemyGfxData_WorldMapMain_Gfx_59C16+$12C
+EnemyGfxData_WorldMapMain_Gfx_59D4A equ EnemyGfxData_WorldMapMain_Gfx_59C16+$134
+EnemyGfxData_WorldMapMain_Gfx_59D5A equ EnemyGfxData_WorldMapMain_Gfx_59C16+$144
+EnemyGfxData_WorldMapMain_Gfx_59D7C equ EnemyGfxData_WorldMapMain_Gfx_59C16+$166
+EnemyGfxData_WorldMapMain_Gfx_59D9E equ EnemyGfxData_WorldMapMain_Gfx_59C16+$188
+EnemyGfxData_WorldMapMain_Gfx_59DA8 equ EnemyGfxData_WorldMapMain_Gfx_59C16+$192
+EnemyGfxData_WorldMapMain_Gfx_59DB0 equ EnemyGfxData_WorldMapMain_Gfx_59C16+$19A
+EnemyGfxData_WorldMapMain_Gfx_59DBE equ EnemyGfxData_WorldMapMain_Gfx_59C16+$1A8
+EnemyGfxData_WorldMapMain_Gfx_59DCA equ EnemyGfxData_WorldMapMain_Gfx_59C16+$1B4
+EnemyGfxData_WorldMapMain_Gfx_59DD0 equ EnemyGfxData_WorldMapMain_Gfx_59C16+$1BA
+EnemyGfxData_WorldMapMain_Gfx_59DF0 equ EnemyGfxData_WorldMapMain_Gfx_59C16+$1DA
+EnemyGfxData_WorldMapMain_Gfx_59E0E equ EnemyGfxData_WorldMapMain_Gfx_59C16+$1F8
+EnemyGfxData_WorldMapMain_Gfx_59E1E equ EnemyGfxData_WorldMapMain_Gfx_59C16+$208
+EnemyGfxData_WorldMapMain_Gfx_59E40 equ EnemyGfxData_WorldMapMain_Gfx_59C16+$22A
+EnemyGfxData_WorldMapMain_Gfx_59E5E equ EnemyGfxData_WorldMapMain_Gfx_59C16+$248
+EnemyGfxData_WorldMapMain_Gfx_59E68 equ EnemyGfxData_WorldMapMain_Gfx_59C16+$252
+EnemyGfxData_WorldMapMain_Gfx_59E70 equ EnemyGfxData_WorldMapMain_Gfx_59C16+$25A
+EnemyGfxData_WorldMapMain_Gfx_59E7C equ EnemyGfxData_WorldMapMain_Gfx_59C16+$266
+EnemyGfxData_WorldMapMain_Gfx_59E8A equ EnemyGfxData_WorldMapMain_Gfx_59C16+$274
+EnemyGfxData_WorldMapMain_Gfx_59E98 equ EnemyGfxData_WorldMapMain_Gfx_59C16+$282
+EnemyGfxData_WorldMapMain_Gfx_59EB8 equ EnemyGfxData_WorldMapMain_Gfx_59C16+$2A2
+EnemyGfxData_WorldMapMain_Gfx_59ED2 equ EnemyGfxData_WorldMapMain_Gfx_59C16+$2BC
+EnemyGfxData_WorldMapMain_Gfx_59EE2 equ EnemyGfxData_WorldMapMain_Gfx_59C16+$2CC
+EnemyGfxData_WorldMapMain_Gfx_59EEE equ EnemyGfxData_WorldMapMain_Gfx_59C16+$2D8
+EnemyGfxData_WorldMapMain_Gfx_59F10 equ EnemyGfxData_WorldMapMain_Gfx_59C16+$2FA
+EnemyGfxData_WorldMapMain_Gfx_59F2E equ EnemyGfxData_WorldMapMain_Gfx_59C16+$318
+EnemyGfxData_WorldMapMain_Gfx_59F42 equ EnemyGfxData_WorldMapMain_Gfx_59C16+$32C
+EnemyGfxData_WorldMapMain_Gfx_59F4E equ EnemyGfxData_WorldMapMain_Gfx_59C16+$338
+EnemyGfxData_WorldMapMain_Gfx_59F5A equ EnemyGfxData_WorldMapMain_Gfx_59C16+$344
+EnemyGfxData_WorldMapMain_Gfx_59F7C equ EnemyGfxData_WorldMapMain_Gfx_59C16+$366
+EnemyGfxData_WorldMapMain_Gfx_59F98 equ EnemyGfxData_WorldMapMain_Gfx_59C16+$382
+EnemyGfxData_WorldMapMain_Gfx_59FA0 equ EnemyGfxData_WorldMapMain_Gfx_59C16+$38A
+EnemyGfxData_WorldMapMain_Gfx_59FAC equ EnemyGfxData_WorldMapMain_Gfx_59C16+$396
+EnemyGfxData_WorldMapMain_Gfx_59FCC equ EnemyGfxData_WorldMapMain_Gfx_59C16+$3B6
+EnemyGfxData_WorldMapMain_Gfx_59FE8 equ EnemyGfxData_WorldMapMain_Gfx_59C16+$3D2
+EnemyGfxData_WorldMapMain_Gfx_59FF4 equ EnemyGfxData_WorldMapMain_Gfx_59C16+$3DE
+EnemyGfxData_WorldMapMain_Gfx_5A006 equ EnemyGfxData_WorldMapMain_Gfx_59C16+$3F0
+EnemyGfxData_WorldMapMain_Gfx_5A024 equ EnemyGfxData_WorldMapMain_Gfx_59C16+$40E
+EnemyGfxData_WorldMapMain_Gfx_5A040 equ EnemyGfxData_WorldMapMain_Gfx_59C16+$42A
+EnemyGfxData_WorldMapMain_Gfx_5A04A equ EnemyGfxData_WorldMapMain_Gfx_59C16+$434
+EnemyGfxData_WorldMapMain_Gfx_5A058 equ EnemyGfxData_WorldMapMain_Gfx_59C16+$442
+EnemyGfxData_WorldMapMain_Gfx_5A078 equ EnemyGfxData_WorldMapMain_Gfx_59C16+$462
+EnemyGfxData_WorldMapMain_Gfx_5A092 equ EnemyGfxData_WorldMapMain_Gfx_59C16+$47C
+EnemyGfxData_WorldMapMain_Gfx_5A09E equ EnemyGfxData_WorldMapMain_Gfx_59C16+$488
+EnemyGfxData_WorldMapMain_Gfx_5A0AA equ EnemyGfxData_WorldMapMain_Gfx_59C16+$494
+EnemyGfxData_WorldMapMain_Gfx_5A0CC equ EnemyGfxData_WorldMapMain_Gfx_59C16+$4B6
+EnemyGfxData_WorldMapMain_Gfx_5A0E4 equ EnemyGfxData_WorldMapMain_Gfx_59C16+$4CE
+EnemyGfxData_WorldMapMain_Gfx_5A0F4 equ EnemyGfxData_WorldMapMain_Gfx_59C16+$4DE
+EnemyGfxData_WorldMapMain_Gfx_5A0FE equ EnemyGfxData_WorldMapMain_Gfx_59C16+$4E8
+EnemyGfxData_WorldMapMain_Gfx_5A11C equ EnemyGfxData_WorldMapMain_Gfx_59C16+$506
+EnemyGfxData_WorldMapMain_Gfx_5A13E equ EnemyGfxData_WorldMapMain_Gfx_59C16+$528
+EnemyGfxData_WorldMapMain_Gfx_5A14E equ EnemyGfxData_WorldMapMain_Gfx_59C16+$538
+EnemyGfxData_WorldMapMain_Gfx_5A160 equ EnemyGfxData_WorldMapMain_Gfx_59C16+$54A
+EnemyGfxData_WorldMapMain_Gfx_5A17E equ EnemyGfxData_WorldMapMain_Gfx_59C16+$568
+EnemyGfxData_WorldMapMain_Gfx_5A196 equ EnemyGfxData_WorldMapMain_Gfx_59C16+$580
+EnemyGfxData_WorldMapMain_Gfx_5A1AC equ EnemyGfxData_WorldMapMain_Gfx_59C16+$596
+EnemyGfxData_WorldMapMain_Gfx_5A1B8 equ EnemyGfxData_WorldMapMain_Gfx_59C16+$5A2
+EnemyGfxData_WorldMapMain_Gfx_5A1DA equ EnemyGfxData_WorldMapMain_Gfx_59C16+$5C4
+EnemyGfxData_WorldMapMain_Gfx_5A1F8 equ EnemyGfxData_WorldMapMain_Gfx_59C16+$5E2
 EnemyGfxData_WorldMapMain:
 	dc.l	EnemyGfxData_WorldMapMain_Gfx_59C16
 	dc.l	EnemyGfxData_WorldMapMain_Gfx_59C26
@@ -61858,232 +59007,101 @@ EnemyGfxFrameTable_BeastChild:
 	dc.b	$3A, $3E, $37, $3B, $3F, $38, $3C, $40, $00, $43, $47, $41, $44, $48, $42, $45, $49, $00, $46, $4A, $00, $4D, $51, $4B, $4E, $52, $4C, $4F, $53, $00, $50, $54 
 	dc.b	$00, $57, $5B, $55, $58, $5C, $56, $59, $5D, $00, $5A, $5E 
 EnemyGfxData_BeastChild_Gfx_5A432:
-	dc.b	$01, $00, $FF, $FF, $FF, $FF 
-EnemyGfxData_BeastChild_Gfx_5A438:
-	dc.b	$01, $00, $FF, $FC, $88, $80, $01, $11, $01, $12, $34, $11, $24, $34, $12, $33, $45, $01, $12, $34, $46, $00 
-EnemyGfxData_BeastChild_Gfx_5A44E:
-	dc.b	$01, $00, $FF, $F3, $10, $00, $12, $21, $44, $32, $11, $44, $33, $21, $10, $54, $43, $31, $10, $55, $43, $32, $11, $00 
-EnemyGfxData_BeastChild_Gfx_5A466:
-	dc.b	$01, $00, $CC, $CC, $88, $80, $0B, $98, $09, $81, $08, $11, $01, $21, $01, $12, $22, $11, $12, $23, $12, $22, $32, $01, $12, $33, $32, $00 
-EnemyGfxData_BeastChild_Gfx_5A482:
-	dc.b	$00, $11, $32, $44, $55, $12, $23, $35, $46, $12, $23, $45, $66, $22, $24, $45, $66, $B9, $83, $45, $65, $99, $83, $55, $65, $88, $14, $46, $54, $11, $45, $55 
-	dc.b	$65, $00 
-EnemyGfxData_BeastChild_Gfx_5A4A4:
-	dc.b	$00, $55, $44, $32, $21, $55, $6B, $93, $21, $55, $59, $81, $32, $45, $31, $11, $32, $55, $44, $B9, $23, $55, $44, $98, $22, $54, $44, $41, $13, $53, $43, $44 
-	dc.b	$44, $00 
-EnemyGfxData_BeastChild_Gfx_5A4C6:
-	dc.b	$01, $00, $77, $73, $11, $00, $10, $10, $11, $11, $10, $21, $11, $10, $32, $21, $11, $33, $22, $11, $10, $33, $33, $21, $10, $00 
-EnemyGfxData_BeastChild_Gfx_5A4E0:
-	dc.b	$01, $00, $00, $88, $EF, $FF, $01, $23, $32, $14, $01, $22, $21, $54, $12, $13, $44, $01, $02, $33, $22, $00 
-EnemyGfxData_BeastChild_Gfx_5A4F6:
-	dc.b	$00, $34, $55, $66, $66, $44, $56, $65, $55, $44, $44, $43, $43, $33, $32, $29, $EE, $11, $19, $AB, $DB, $02, $13, $49, $AE, $00, $99, $11, $34, $00, $99, $99 
-	dc.b	$99, $00 
-EnemyGfxData_BeastChild_Gfx_5A518:
-	dc.b	$00, $65, $54, $43, $44, $55, $55, $54, $43, $43, $43, $34, $44, $EE, $E9, $22, $33, $EA, $DA, $A9, $12, $DE, $A9, $43, $11, $44, $32, $18, $80, $99, $98, $88 
-	dc.b	$80, $00 
-EnemyGfxData_BeastChild_Gfx_5A53A:
-	dc.b	$01, $00, $00, $11, $3F, $FF, $31, $52, $31, $10, $32, $13, $21, $10, $33, $11, $11, $22, $10, $10, $21, $10 
-EnemyGfxData_BeastChild_Gfx_5A550:
-	dc.b	$01, $00, $FF, $FF, $FF, $C8, $01, $11, $01, $12, $34, $00 
-EnemyGfxData_BeastChild_Gfx_5A55C:
-	dc.b	$01, $00, $FF, $FF, $FF, $31, $12, $21, $44, $32, $11, $00 
-EnemyGfxData_BeastChild_Gfx_5A568:
-	dc.b	$01, $00, $FF, $CC, $C8, $00, $B9, $98, $98, $81, $81, $11, $11, $22, $22, $01, $11, $22, $23, $01, $22, $23, $32, $00 
-EnemyGfxData_BeastChild_Gfx_5A580:
-	dc.b	$00, $00, $11, $24, $34, $01, $12, $34, $46, $11, $32, $44, $55, $12, $23, $35, $46, $12, $23, $45, $66, $B9, $83, $45, $65, $99, $83, $56, $54, $88, $14, $45 
-	dc.b	$34, $00 
-EnemyGfxData_BeastChild_Gfx_5A5A2:
-	dc.b	$00, $44, $33, $21, $10, $55, $43, $32, $11, $55, $44, $32, $21, $55, $6B, $93, $21, $55, $59, $81, $32, $44, $41, $B9, $23, $53, $44, $98, $22, $34, $43, $41 
-	dc.b	$13, $00 
-EnemyGfxData_BeastChild_Gfx_5A5C4:
-	dc.b	$01, $00, $FF, $77, $31, $00, $10, $10, $11, $10, $21, $11, $11, $32, $22, $11, $10, $33, $32, $21, $11, $00 
-EnemyGfxData_BeastChild_Gfx_5A5DA:
-	dc.b	$01, $00, $00, $00, $8C, $FF, $11, $23, $33, $32, $12, $33, $21, $14, $12, $22, $15, $54, $01, $21, $34, $44, $10, $23, $33, $02, $22, $00 
-EnemyGfxData_BeastChild_Gfx_5A5F6:
-	dc.b	$00, $11, $45, $56, $65, $34, $45, $56, $66, $44, $55, $65, $55, $44, $55, $53, $32, $33, $33, $2A, $EC, $11, $18, $AC, $DA, $02, $19, $AB, $CD, $00, $11, $9A 
-	dc.b	$AB, $00 
-EnemyGfxData_BeastChild_Gfx_5A618:
-	dc.b	$00, $55, $54, $44, $44, $65, $54, $44, $44, $55, $55, $54, $33, $12, $33, $54, $44, $AE, $E9, $23, $42, $EA, $DB, $A8, $12, $DD, $BB, $A9, $11, $BB, $AA, $93 
-	dc.b	$10, $00 
-EnemyGfxData_BeastChild_Gfx_5A63A:
-	dc.b	$01, $00, $00, $00, $13, $FF, $33, $33, $32, $11, $31, $15, $23, $11, $32, $21, $32, $11, $33, $31, $11, $10, $22, $21, $01, $21, $11, $00 
-EnemyGfxData_BeastChild_Gfx_5A656:
-	dc.b	$01, $00, $FF, $FF, $FF, $CC, $0B, $98, $09, $81 
-EnemyGfxData_BeastChild_Gfx_5A660:
-	dc.b	$01, $00, $FC, $88, $80, $00, $01, $11, $01, $12, $34, $11, $24, $34, $12, $33, $45, $01, $12, $34, $46, $11, $32, $44, $55, $12, $23, $35, $46, $00 
-EnemyGfxData_BeastChild_Gfx_5A67E:
-	dc.b	$01, $00, $F3, $10, $00, $00, $12, $21, $44, $32, $11, $44, $33, $21, $10, $54, $43, $31, $10, $55, $43, $32, $11, $55, $44, $32, $21, $55, $6B, $93, $21, $00 
-EnemyGfxData_BeastChild_Gfx_5A69E:
-	dc.b	$01, $00, $FF, $FF, $FF, $77, $10, $10 
-EnemyGfxData_BeastChild_Gfx_5A6A6:
-	dc.b	$01, $00, $CC, $CC, $88, $88, $08, $11, $01, $21, $01, $21, $12, $22, $01, $12, $23, $01, $22, $32, $11, $23, $32, $12, $32, $14 
-EnemyGfxData_BeastChild_Gfx_5A6C0:
-	dc.b	$00, $12, $23, $45, $66, $22, $24, $45, $66, $22, $24, $45, $66, $B9, $83, $45, $65, $99, $83, $55, $64, $88, $14, $46, $55, $11, $45, $55, $55, $34, $55, $65 
-	dc.b	$55, $00 
-EnemyGfxData_BeastChild_Gfx_5A6E2:
-	dc.b	$01, $44, $00, $04, $40, $73, $55, $59, $81, $32, $45, $31, $11, $32, $45, $31, $11, $32, $55, $B9, $23, $55, $98, $22, $55, $54, $41, $13, $45, $54, $55, $00 
-EnemyGfxData_BeastChild_Gfx_5A702:
-	dc.b	$02, $11, $88, $84, $02, $22, $00, $73, $33, $11, $11, $10, $10, $21, $32, $21, $10, $33, $21, $33, $32, $31, $53, $00 
-EnemyGfxData_BeastChild_Gfx_5A71A:
-	dc.b	$01, $00, $88, $CE, $FF, $FF, $12, $21, $54, $01, $23, $44, $12, $33, $22, $00 
-EnemyGfxData_BeastChild_Gfx_5A72A:
-	dc.b	$00, $44, $55, $56, $64, $44, $54, $66, $65, $33, $34, $46, $66, $22, $33, $34, $44, $02, $13, $9A, $ED, $00, $98, $11, $34, $00, $99, $88, $88, $00, $99, $98 
-	dc.b	$88, $00 
-EnemyGfxData_BeastChild_Gfx_5A74C:
-	dc.b	$00, $45, $45, $54, $44, $55, $55, $45, $44, $56, $44, $44, $33, $44, $43, $33, $32, $DE, $E9, $93, $11, $54, $31, $18, $80, $99, $98, $88, $80, $99, $98, $88 
-	dc.b	$80, $00 
-EnemyGfxData_BeastChild_Gfx_5A76E:
-	dc.b	$01, $00, $11, $33, $FF, $FF, $32, $12, $11, $33, $11, $10, $22, $11, $21, $10 
-EnemyGfxData_BeastChild_Gfx_5A77E:
-	dc.b	$01, $00, $FF, $FC, $80, $00, $11, $12, $11, $23, $44, $01, $12, $33, $44, $01, $13, $34, $45, $11, $23, $34, $56, $00 
-EnemyGfxData_BeastChild_Gfx_5A796:
-	dc.b	$01, $00, $FF, $F3, $11, $10, $22, $11, $43, $21, $10, $43, $42, $11, $54, $33, $21, $54, $43, $21, $10, $00 
-EnemyGfxData_BeastChild_Gfx_5A7AC:
-	dc.b	$01, $00, $EE, $EC, $88, $00, $01, $01, $11, $01, $11, $01, $11, $12, $11, $12, $23, $01, $11, $22, $33, $01, $12, $33, $33, $00 
-EnemyGfxData_BeastChild_Gfx_5A7C6:
-	dc.b	$00, $12, $23, $44, $55, $12, $3B, $93, $56, $23, $39, $81, $56, $23, $31, $12, $46, $3B, $91, $44, $46, $29, $81, $44, $66, $32, $12, $44, $65, $44, $44, $34 
-	dc.b	$45, $00 
-EnemyGfxData_BeastChild_Gfx_5A7E8:
-	dc.b	$01, $55, $80, $88, $8C, $0C, $44, $23, $11, $54, $53, $32, $21, $54, $32, $21, $54, $33, $22, $54, $3B, $98, $39, $98, $45, $54, $48, $81, $54, $11 
-EnemyGfxData_BeastChild_Gfx_5A806:
-	dc.b	$01, $00, $33, $33, $11, $10, $89, $B0, $18, $90, $11, $80, $12, $10, $22, $21, $10, $32, $21, $11, $23, $22, $21, $23, $33, $21, $10, $00 
-EnemyGfxData_BeastChild_Gfx_5A822:
-	dc.b	$01, $00, $00, $88, $CE, $FF, $01, $12, $33, $33, $01, $12, $23, $21, $11, $22, $31, $01, $12, $11, $01, $11, $01, $00 
-EnemyGfxData_BeastChild_Gfx_5A83A:
-	dc.b	$00, $45, $54, $45, $55, $35, $45, $54, $55, $24, $43, $46, $54, $33, $44, $65, $55, $24, $44, $45, $15, $13, $34, $44, $41, $01, $22, $33, $33, $00, $11, $21 
-	dc.b	$22, $00 
-EnemyGfxData_BeastChild_Gfx_5A85C:
-	dc.b	$00, $15, $55, $55, $43, $16, $55, $55, $44, $12, $65, $55, $44, $51, $65, $54, $43, $51, $26, $44, $33, $31, $16, $33, $22, $31, $22, $11, $11, $12, $11, $11 
-	dc.b	$00, $00 
-EnemyGfxData_BeastChild_Gfx_5A87E:
-	dc.b	$01, $00, $00, $11, $37, $FF, $41, $23, $32, $10, $45, $12, $22, $10, $44, $31, $21, $33, $20, $10, $32, $10, $10, $00 
-EnemyGfxData_BeastChild_Gfx_5A896:
-	dc.b	$01, $00, $FF, $FF, $FF, $C8, $11, $12, $11, $23, $44, $00 
-EnemyGfxData_BeastChild_Gfx_5A8A2:
-	dc.b	$01, $00, $FF, $FF, $FF, $31, $22, $11, $43, $21, $10, $00 
-EnemyGfxData_BeastChild_Gfx_5A8AE:
-	dc.b	$01, $00, $FF, $EE, $C8, $00, $01, $01, $01, $11, $11, $11, $12, $01, $11, $22, $23, $11, $12, $23, $33, $00 
-EnemyGfxData_BeastChild_Gfx_5A8C4:
-	dc.b	$00, $01, $12, $33, $44, $11, $23, $34, $56, $12, $23, $44, $55, $12, $3B, $93, $56, $23, $39, $81, $56, $3B, $91, $44, $46, $29, $81, $44, $66, $32, $12, $44 
-	dc.b	$65, $00 
-EnemyGfxData_BeastChild_Gfx_5A8E6:
-	dc.b	$00, $43, $42, $11, $00, $54, $43, $21, $10, $55, $44, $23, $11, $54, $53, $32, $21, $55, $54, $32, $21, $55, $54, $3B, $98, $55, $55, $39, $98, $45, $54, $48 
-	dc.b	$81, $00 
-EnemyGfxData_BeastChild_Gfx_5A908:
-	dc.b	$01, $00, $FF, $33, $31, $00, $89, $9B, $18, $89, $11, $18, $22, $22, $11, $32, $22, $11, $10, $23, $32, $22, $10, $00 
-EnemyGfxData_BeastChild_Gfx_5A920:
-	dc.b	$02, $11, $88, $80, $53, $00, $00, $00, $00, $8C, $EF, $23, $33, $33, $23, $33, $33, $22, $32, $21, $01, $12, $23, $31, $21, $01 
-EnemyGfxData_BeastChild_Gfx_5A93A:
-	dc.b	$00, $44, $44, $34, $45, $45, $54, $45, $55, $35, $45, $54, $55, $24, $43, $46, $54, $33, $44, $65, $55, $24, $44, $45, $15, $13, $34, $44, $41, $01, $22, $33 
-	dc.b	$33, $00 
-EnemyGfxData_BeastChild_Gfx_5A95C:
-	dc.b	$01, $55, $C6, $62, $00, $00, $54, $11, $15, $43, $16, $44, $12, $65, $44, $51, $65, $54, $43, $51, $26, $44, $33, $31, $16, $33, $22, $31, $22, $11, $11, $00 
-EnemyGfxData_BeastChild_Gfx_5A97C:
-	dc.b	$01, $00, $00, $00, $13, $7F, $23, $33, $32, $11, $41, $12, $33, $21, $45, $51, $22, $21, $44, $43, $12, $10, $33, $32, $01, $32, $21, $10 
-EnemyGfxData_BeastChild_Gfx_5A998:
-	dc.b	$01, $00, $FF, $FF, $FF, $EE, $01, $01 
-EnemyGfxData_BeastChild_Gfx_5A9A0:
-	dc.b	$00, $00, $00, $11, $12, $00, $11, $23, $44, $01, $12, $33, $44, $01, $13, $34, $45, $11, $23, $34, $56, $11, $23, $34, $56, $12, $23, $44, $55, $12, $3B, $93 
-	dc.b	$56, $00 
-EnemyGfxData_BeastChild_Gfx_5A9C2:
-	dc.b	$00, $22, $11, $00, $00, $43, $21, $10, $00, $43, $42, $11, $00, $54, $33, $21, $00, $54, $43, $21, $10, $54, $43, $21, $10, $55, $44, $23, $11, $54, $53, $32 
-	dc.b	$21, $00 
-EnemyGfxData_BeastChild_Gfx_5A9E4:
-	dc.b	$01, $00, $FF, $FF, $FF, $33, $89, $B0, $18, $90 
-EnemyGfxData_BeastChild_Gfx_5A9EE:
-	dc.b	$02, $00, $EC, $CC, $88, $88, $11, $11, $12, $04, $44, $01, $01, $12, $01, $12, $23, $12, $33, $23, $33, $23, $33, $00 
-EnemyGfxData_BeastChild_Gfx_5AA06:
-	dc.b	$00, $23, $39, $81, $56, $23, $31, $12, $46, $23, $31, $12, $46, $3B, $91, $44, $46, $29, $81, $44, $66, $32, $12, $44, $65, $44, $44, $34, $45, $45, $54, $45 
-	dc.b	$55, $00 
-EnemyGfxData_BeastChild_Gfx_5AA28:
-	dc.b	$01, $55, $88, $88, $C0, $C6, $54, $32, $21, $54, $33, $22, $54, $33, $22, $54, $3B, $98, $39, $98, $45, $54, $48, $81, $54, $11, $15, $43 
-EnemyGfxData_BeastChild_Gfx_5AA44:
-	dc.b	$01, $00, $33, $33, $11, $11, $11, $80, $12, $10, $12, $10, $22, $21, $32, $21, $10, $23, $22, $10, $23, $32, $11, $41, $23, $21 
-EnemyGfxData_BeastChild_Gfx_5AA5E:
-	dc.b	$01, $00, $88, $CC, $EF, $FF, $11, $23, $21, $01, $12, $31, $12, $11, $01, $11, $01, $00 
-EnemyGfxData_BeastChild_Gfx_5AA70:
-	dc.b	$00, $35, $45, $54, $55, $24, $43, $46, $54, $33, $44, $65, $55, $24, $44, $45, $15, $13, $34, $44, $41, $01, $22, $33, $33, $00, $81, $21, $22, $00, $88, $81 
-	dc.b	$22, $00 
-EnemyGfxData_BeastChild_Gfx_5AA92:
-	dc.b	$00, $16, $55, $55, $44, $12, $65, $55, $44, $51, $65, $54, $43, $51, $26, $44, $33, $31, $16, $33, $22, $31, $22, $11, $11, $12, $18, $88, $00, $21, $88, $88 
-	dc.b	$00, $00 
-EnemyGfxData_BeastChild_Gfx_5AAB4:
-	dc.b	$01, $00, $11, $33, $7F, $FF, $45, $12, $21, $44, $32, $10, $33, $21, $32, $10, $10, $00 
-EnemyGfxData_BeastChild_Gfx_5AAC6:
-	dc.b	$01, $00, $FF, $FC, $88, $80, $11, $22, $01, $23, $44, $12, $33, $44, $13, $34, $45, $01, $23, $34, $55, $00 
-EnemyGfxData_BeastChild_Gfx_5AADC:
-	dc.b	$01, $00, $FF, $F3, $10, $00, $21, $11, $43, $22, $11, $43, $42, $21, $10, $54, $33, $22, $10, $54, $43, $21, $11, $00 
-EnemyGfxData_BeastChild_Gfx_5AAF4:
-	dc.b	$01, $00, $FF, $EE, $C8, $88, $01, $11, $11, $22, $01, $13, $33, $12, $33, $44, $12, $34, $45, $00 
-EnemyGfxData_BeastChild_Gfx_5AB08:
-	dc.b	$00, $11, $32, $44, $55, $12, $33, $BA, $36, $12, $33, $A9, $36, $22, $33, $12, $35, $34, $BA, $24, $56, $33, $A9, $24, $56, $44, $11, $24, $56, $44, $44, $43 
-	dc.b	$56, $00 
-EnemyGfxData_BeastChild_Gfx_5AB2A:
-	dc.b	$00, $65, $44, $32, $21, $64, $53, $32, $21, $65, $54, $42, $32, $65, $54, $43, $32, $65, $54, $44, $33, $65, $55, $44, $22, $64, $54, $43, $23, $55, $43, $42 
-	dc.b	$25, $00 
-EnemyGfxData_BeastChild_Gfx_5AB4C:
-	dc.b	$01, $00, $F7, $77, $73, $31, $10, $10, $11, $21, $32, $20, $33, $22, $33, $33, $20, $00 
-EnemyGfxData_BeastChild_Gfx_5AB5E:
-	dc.b	$01, $00, $88, $88, $CC, $CF, $11, $35, $54, $01, $11, $54, $01, $E1, $12, $01, $EE, $91, $DB, $A9, $1A, $BA, $01, $11 
-EnemyGfxData_BeastChild_Gfx_5AB76:
-	dc.b	$00, $44, $55, $62, $65, $44, $56, $22, $45, $44, $56, $25, $44, $24, $42, $14, $55, $91, $22, $15, $54, $91, $12, $13, $33, $11, $11, $11, $22, $88, $88, $11 
-	dc.b	$11, $00 
-EnemyGfxData_BeastChild_Gfx_5AB98:
-	dc.b	$00, $45, $54, $45, $45, $55, $55, $54, $42, $45, $54, $34, $44, $65, $56, $65, $44, $56, $64, $54, $43, $55, $54, $43, $22, $23, $22, $22, $21, $11, $11, $11 
-	dc.b	$10, $00 
-EnemyGfxData_BeastChild_Gfx_5ABBA:
-	dc.b	$01, $00, $11, $00, $01, $3F, $44, $33, $21, $64, $33, $21, $25, $43, $22, $10, $12, $43, $22, $10, $11, $22, $21, $10, $21, $21, $10, $11, $10, $00 
-EnemyGfxData_BeastChild_Gfx_5ABD8:
-	dc.b	$01, $00, $FF, $FF, $FF, $C8, $11, $22, $01, $23, $44, $00 
-EnemyGfxData_BeastChild_Gfx_5ABE4:
-	dc.b	$01, $00, $FF, $FF, $FF, $31, $21, $11, $43, $22, $11, $00 
-EnemyGfxData_BeastChild_Gfx_5ABF0:
-	dc.b	$01, $00, $FF, $FE, $C8, $88, $11, $11, $22, $01, $12, $33, $11, $33, $33, $12, $33, $44 
-EnemyGfxData_BeastChild_Gfx_5AC02:
-	dc.b	$00, $00, $12, $33, $44, $01, $23, $34, $55, $11, $32, $44, $55, $12, $33, $BA, $36, $22, $33, $99, $35, $34, $BA, $13, $56, $33, $A9, $24, $56, $44, $11, $24 
-	dc.b	$56, $00 
-EnemyGfxData_BeastChild_Gfx_5AC24:
-	dc.b	$00, $43, $42, $21, $10, $54, $43, $21, $11, $65, $44, $32, $21, $65, $54, $42, $32, $65, $54, $43, $32, $65, $54, $44, $33, $65, $55, $44, $33, $64, $54, $43 
-	dc.b	$22, $00 
-EnemyGfxData_BeastChild_Gfx_5AC46:
-	dc.b	$01, $00, $FF, $F7, $77, $31, $10, $11, $21, $32, $20, $33, $22, $10 
-EnemyGfxData_BeastChild_Gfx_5AC54:
-	dc.b	$01, $00, $88, $88, $8C, $CC, $11, $22, $45, $01, $11, $24, $01, $E1, $12, $01, $EE, $91, $01, $AD, $99, $DB, $AA, $DA, $BA, $1A, $A9, $00 
-EnemyGfxData_BeastChild_Gfx_5AC70:
-	dc.b	$00, $44, $44, $43, $56, $44, $55, $62, $65, $44, $56, $22, $45, $24, $52, $15, $44, $12, $21, $24, $55, $91, $21, $34, $54, $91, $11, $23, $33, $11, $11, $11 
-	dc.b	$22, $00 
-EnemyGfxData_BeastChild_Gfx_5AC92:
-	dc.b	$00, $55, $43, $42, $25, $45, $54, $45, $45, $55, $55, $54, $42, $45, $54, $34, $44, $65, $56, $65, $44, $56, $64, $54, $43, $55, $54, $43, $22, $23, $22, $22 
-	dc.b	$21, $00 
-EnemyGfxData_BeastChild_Gfx_5ACB4:
-	dc.b	$00, $33, $32, $22, $00, $44, $33, $22, $10, $64, $33, $32, $10, $25, $44, $33, $21, $12, $34, $32, $21, $11, $22, $22, $11, $21, $12, $11, $00, $11, $11, $00 
-	dc.b	$00, $00 
-EnemyGfxData_BeastChild_Gfx_5ACD6:
-	dc.b	$00, $00, $00, $11, $22, $00, $01, $23, $44, $00, $12, $33, $44, $00, $13, $34, $45, $01, $23, $34, $55, $01, $23, $34, $55, $11, $32, $44, $55, $11, $32, $44 
-	dc.b	$55, $00 
-EnemyGfxData_BeastChild_Gfx_5ACF8:
-	dc.b	$00, $21, $11, $00, $00, $43, $22, $11, $00, $43, $42, $21, $10, $54, $33, $22, $10, $54, $43, $21, $11, $54, $43, $22, $11, $65, $44, $32, $21, $65, $44, $32 
-	dc.b	$21, $00 
-EnemyGfxData_BeastChild_Gfx_5AD1A:
-	dc.b	$01, $00, $FE, $EE, $CC, $88, $01, $01, $12, $01, $33, $13, $44, $01, $34, $45, $13, $35, $54, $00 
-EnemyGfxData_BeastChild_Gfx_5AD2E:
-	dc.b	$00, $12, $33, $BA, $36, $12, $33, $A9, $36, $22, $33, $12, $35, $34, $44, $24, $56, $33, $BA, $24, $56, $44, $A9, $24, $56, $44, $11, $43, $56, $44, $55, $62 
-	dc.b	$65, $00 
-EnemyGfxData_BeastChild_Gfx_5AD50:
-	dc.b	$00, $64, $53, $32, $21, $65, $54, $42, $32, $65, $54, $43, $32, $65, $54, $44, $33, $65, $55, $44, $22, $64, $54, $43, $23, $55, $43, $42, $25, $45, $54, $45 
-	dc.b	$45, $00 
-EnemyGfxData_BeastChild_Gfx_5AD72:
-	dc.b	$01, $00, $77, $77, $73, $31, $10, $10, $11, $21, $32, $33, $20, $33, $32, $44, $32, $10 
-EnemyGfxData_BeastChild_Gfx_5AD84:
-	dc.b	$01, $00, $88, $8C, $CE, $FF, $13, $44, $44, $22, $33, $34, $01, $12, $22, $DE, $A9, $11, $11, $01 
-EnemyGfxData_BeastChild_Gfx_5AD98:
-	dc.b	$00, $44, $54, $62, $45, $44, $56, $23, $44, $34, $44, $25, $55, $12, $22, $15, $54, $11, $12, $13, $33, $11, $11, $11, $22, $08, $88, $11, $11, $00, $88, $88 
-	dc.b	$88, $00 
-EnemyGfxData_BeastChild_Gfx_5ADBA:
-	dc.b	$00, $55, $55, $54, $42, $45, $54, $34, $43, $65, $56, $65, $44, $56, $64, $54, $43, $55, $54, $43, $22, $23, $22, $22, $21, $11, $11, $11, $10, $88, $88, $89 
-	dc.b	$00, $00 
-EnemyGfxData_BeastChild_Gfx_5ADDC:
-	dc.b	$01, $00, $11, $11, $37, $FF, $64, $32, $10, $25, $32, $21, $13, $32, $21, $12, $22, $11, $21, $11, $11, $00 
+	incbin "data/art/tiles/enemy/beast_child_gfx.bin"
+EnemyGfxData_BeastChild_Gfx_5A438 equ EnemyGfxData_BeastChild_Gfx_5A432+$6
+EnemyGfxData_BeastChild_Gfx_5A44E equ EnemyGfxData_BeastChild_Gfx_5A432+$1C
+EnemyGfxData_BeastChild_Gfx_5A466 equ EnemyGfxData_BeastChild_Gfx_5A432+$34
+EnemyGfxData_BeastChild_Gfx_5A482 equ EnemyGfxData_BeastChild_Gfx_5A432+$50
+EnemyGfxData_BeastChild_Gfx_5A4A4 equ EnemyGfxData_BeastChild_Gfx_5A432+$72
+EnemyGfxData_BeastChild_Gfx_5A4C6 equ EnemyGfxData_BeastChild_Gfx_5A432+$94
+EnemyGfxData_BeastChild_Gfx_5A4E0 equ EnemyGfxData_BeastChild_Gfx_5A432+$AE
+EnemyGfxData_BeastChild_Gfx_5A4F6 equ EnemyGfxData_BeastChild_Gfx_5A432+$C4
+EnemyGfxData_BeastChild_Gfx_5A518 equ EnemyGfxData_BeastChild_Gfx_5A432+$E6
+EnemyGfxData_BeastChild_Gfx_5A53A equ EnemyGfxData_BeastChild_Gfx_5A432+$108
+EnemyGfxData_BeastChild_Gfx_5A550 equ EnemyGfxData_BeastChild_Gfx_5A432+$11E
+EnemyGfxData_BeastChild_Gfx_5A55C equ EnemyGfxData_BeastChild_Gfx_5A432+$12A
+EnemyGfxData_BeastChild_Gfx_5A568 equ EnemyGfxData_BeastChild_Gfx_5A432+$136
+EnemyGfxData_BeastChild_Gfx_5A580 equ EnemyGfxData_BeastChild_Gfx_5A432+$14E
+EnemyGfxData_BeastChild_Gfx_5A5A2 equ EnemyGfxData_BeastChild_Gfx_5A432+$170
+EnemyGfxData_BeastChild_Gfx_5A5C4 equ EnemyGfxData_BeastChild_Gfx_5A432+$192
+EnemyGfxData_BeastChild_Gfx_5A5DA equ EnemyGfxData_BeastChild_Gfx_5A432+$1A8
+EnemyGfxData_BeastChild_Gfx_5A5F6 equ EnemyGfxData_BeastChild_Gfx_5A432+$1C4
+EnemyGfxData_BeastChild_Gfx_5A618 equ EnemyGfxData_BeastChild_Gfx_5A432+$1E6
+EnemyGfxData_BeastChild_Gfx_5A63A equ EnemyGfxData_BeastChild_Gfx_5A432+$208
+EnemyGfxData_BeastChild_Gfx_5A656 equ EnemyGfxData_BeastChild_Gfx_5A432+$224
+EnemyGfxData_BeastChild_Gfx_5A660 equ EnemyGfxData_BeastChild_Gfx_5A432+$22E
+EnemyGfxData_BeastChild_Gfx_5A67E equ EnemyGfxData_BeastChild_Gfx_5A432+$24C
+EnemyGfxData_BeastChild_Gfx_5A69E equ EnemyGfxData_BeastChild_Gfx_5A432+$26C
+EnemyGfxData_BeastChild_Gfx_5A6A6 equ EnemyGfxData_BeastChild_Gfx_5A432+$274
+EnemyGfxData_BeastChild_Gfx_5A6C0 equ EnemyGfxData_BeastChild_Gfx_5A432+$28E
+EnemyGfxData_BeastChild_Gfx_5A6E2 equ EnemyGfxData_BeastChild_Gfx_5A432+$2B0
+EnemyGfxData_BeastChild_Gfx_5A702 equ EnemyGfxData_BeastChild_Gfx_5A432+$2D0
+EnemyGfxData_BeastChild_Gfx_5A71A equ EnemyGfxData_BeastChild_Gfx_5A432+$2E8
+EnemyGfxData_BeastChild_Gfx_5A72A equ EnemyGfxData_BeastChild_Gfx_5A432+$2F8
+EnemyGfxData_BeastChild_Gfx_5A74C equ EnemyGfxData_BeastChild_Gfx_5A432+$31A
+EnemyGfxData_BeastChild_Gfx_5A76E equ EnemyGfxData_BeastChild_Gfx_5A432+$33C
+EnemyGfxData_BeastChild_Gfx_5A77E equ EnemyGfxData_BeastChild_Gfx_5A432+$34C
+EnemyGfxData_BeastChild_Gfx_5A796 equ EnemyGfxData_BeastChild_Gfx_5A432+$364
+EnemyGfxData_BeastChild_Gfx_5A7AC equ EnemyGfxData_BeastChild_Gfx_5A432+$37A
+EnemyGfxData_BeastChild_Gfx_5A7C6 equ EnemyGfxData_BeastChild_Gfx_5A432+$394
+EnemyGfxData_BeastChild_Gfx_5A7E8 equ EnemyGfxData_BeastChild_Gfx_5A432+$3B6
+EnemyGfxData_BeastChild_Gfx_5A806 equ EnemyGfxData_BeastChild_Gfx_5A432+$3D4
+EnemyGfxData_BeastChild_Gfx_5A822 equ EnemyGfxData_BeastChild_Gfx_5A432+$3F0
+EnemyGfxData_BeastChild_Gfx_5A83A equ EnemyGfxData_BeastChild_Gfx_5A432+$408
+EnemyGfxData_BeastChild_Gfx_5A85C equ EnemyGfxData_BeastChild_Gfx_5A432+$42A
+EnemyGfxData_BeastChild_Gfx_5A87E equ EnemyGfxData_BeastChild_Gfx_5A432+$44C
+EnemyGfxData_BeastChild_Gfx_5A896 equ EnemyGfxData_BeastChild_Gfx_5A432+$464
+EnemyGfxData_BeastChild_Gfx_5A8A2 equ EnemyGfxData_BeastChild_Gfx_5A432+$470
+EnemyGfxData_BeastChild_Gfx_5A8AE equ EnemyGfxData_BeastChild_Gfx_5A432+$47C
+EnemyGfxData_BeastChild_Gfx_5A8C4 equ EnemyGfxData_BeastChild_Gfx_5A432+$492
+EnemyGfxData_BeastChild_Gfx_5A8E6 equ EnemyGfxData_BeastChild_Gfx_5A432+$4B4
+EnemyGfxData_BeastChild_Gfx_5A908 equ EnemyGfxData_BeastChild_Gfx_5A432+$4D6
+EnemyGfxData_BeastChild_Gfx_5A920 equ EnemyGfxData_BeastChild_Gfx_5A432+$4EE
+EnemyGfxData_BeastChild_Gfx_5A93A equ EnemyGfxData_BeastChild_Gfx_5A432+$508
+EnemyGfxData_BeastChild_Gfx_5A95C equ EnemyGfxData_BeastChild_Gfx_5A432+$52A
+EnemyGfxData_BeastChild_Gfx_5A97C equ EnemyGfxData_BeastChild_Gfx_5A432+$54A
+EnemyGfxData_BeastChild_Gfx_5A998 equ EnemyGfxData_BeastChild_Gfx_5A432+$566
+EnemyGfxData_BeastChild_Gfx_5A9A0 equ EnemyGfxData_BeastChild_Gfx_5A432+$56E
+EnemyGfxData_BeastChild_Gfx_5A9C2 equ EnemyGfxData_BeastChild_Gfx_5A432+$590
+EnemyGfxData_BeastChild_Gfx_5A9E4 equ EnemyGfxData_BeastChild_Gfx_5A432+$5B2
+EnemyGfxData_BeastChild_Gfx_5A9EE equ EnemyGfxData_BeastChild_Gfx_5A432+$5BC
+EnemyGfxData_BeastChild_Gfx_5AA06 equ EnemyGfxData_BeastChild_Gfx_5A432+$5D4
+EnemyGfxData_BeastChild_Gfx_5AA28 equ EnemyGfxData_BeastChild_Gfx_5A432+$5F6
+EnemyGfxData_BeastChild_Gfx_5AA44 equ EnemyGfxData_BeastChild_Gfx_5A432+$612
+EnemyGfxData_BeastChild_Gfx_5AA5E equ EnemyGfxData_BeastChild_Gfx_5A432+$62C
+EnemyGfxData_BeastChild_Gfx_5AA70 equ EnemyGfxData_BeastChild_Gfx_5A432+$63E
+EnemyGfxData_BeastChild_Gfx_5AA92 equ EnemyGfxData_BeastChild_Gfx_5A432+$660
+EnemyGfxData_BeastChild_Gfx_5AAB4 equ EnemyGfxData_BeastChild_Gfx_5A432+$682
+EnemyGfxData_BeastChild_Gfx_5AAC6 equ EnemyGfxData_BeastChild_Gfx_5A432+$694
+EnemyGfxData_BeastChild_Gfx_5AADC equ EnemyGfxData_BeastChild_Gfx_5A432+$6AA
+EnemyGfxData_BeastChild_Gfx_5AAF4 equ EnemyGfxData_BeastChild_Gfx_5A432+$6C2
+EnemyGfxData_BeastChild_Gfx_5AB08 equ EnemyGfxData_BeastChild_Gfx_5A432+$6D6
+EnemyGfxData_BeastChild_Gfx_5AB2A equ EnemyGfxData_BeastChild_Gfx_5A432+$6F8
+EnemyGfxData_BeastChild_Gfx_5AB4C equ EnemyGfxData_BeastChild_Gfx_5A432+$71A
+EnemyGfxData_BeastChild_Gfx_5AB5E equ EnemyGfxData_BeastChild_Gfx_5A432+$72C
+EnemyGfxData_BeastChild_Gfx_5AB76 equ EnemyGfxData_BeastChild_Gfx_5A432+$744
+EnemyGfxData_BeastChild_Gfx_5AB98 equ EnemyGfxData_BeastChild_Gfx_5A432+$766
+EnemyGfxData_BeastChild_Gfx_5ABBA equ EnemyGfxData_BeastChild_Gfx_5A432+$788
+EnemyGfxData_BeastChild_Gfx_5ABD8 equ EnemyGfxData_BeastChild_Gfx_5A432+$7A6
+EnemyGfxData_BeastChild_Gfx_5ABE4 equ EnemyGfxData_BeastChild_Gfx_5A432+$7B2
+EnemyGfxData_BeastChild_Gfx_5ABF0 equ EnemyGfxData_BeastChild_Gfx_5A432+$7BE
+EnemyGfxData_BeastChild_Gfx_5AC02 equ EnemyGfxData_BeastChild_Gfx_5A432+$7D0
+EnemyGfxData_BeastChild_Gfx_5AC24 equ EnemyGfxData_BeastChild_Gfx_5A432+$7F2
+EnemyGfxData_BeastChild_Gfx_5AC46 equ EnemyGfxData_BeastChild_Gfx_5A432+$814
+EnemyGfxData_BeastChild_Gfx_5AC54 equ EnemyGfxData_BeastChild_Gfx_5A432+$822
+EnemyGfxData_BeastChild_Gfx_5AC70 equ EnemyGfxData_BeastChild_Gfx_5A432+$83E
+EnemyGfxData_BeastChild_Gfx_5AC92 equ EnemyGfxData_BeastChild_Gfx_5A432+$860
+EnemyGfxData_BeastChild_Gfx_5ACB4 equ EnemyGfxData_BeastChild_Gfx_5A432+$882
+EnemyGfxData_BeastChild_Gfx_5ACD6 equ EnemyGfxData_BeastChild_Gfx_5A432+$8A4
+EnemyGfxData_BeastChild_Gfx_5ACF8 equ EnemyGfxData_BeastChild_Gfx_5A432+$8C6
+EnemyGfxData_BeastChild_Gfx_5AD1A equ EnemyGfxData_BeastChild_Gfx_5A432+$8E8
+EnemyGfxData_BeastChild_Gfx_5AD2E equ EnemyGfxData_BeastChild_Gfx_5A432+$8FC
+EnemyGfxData_BeastChild_Gfx_5AD50 equ EnemyGfxData_BeastChild_Gfx_5A432+$91E
+EnemyGfxData_BeastChild_Gfx_5AD72 equ EnemyGfxData_BeastChild_Gfx_5A432+$940
+EnemyGfxData_BeastChild_Gfx_5AD84 equ EnemyGfxData_BeastChild_Gfx_5A432+$952
+EnemyGfxData_BeastChild_Gfx_5AD98 equ EnemyGfxData_BeastChild_Gfx_5A432+$966
+EnemyGfxData_BeastChild_Gfx_5ADBA equ EnemyGfxData_BeastChild_Gfx_5A432+$988
+EnemyGfxData_BeastChild_Gfx_5ADDC equ EnemyGfxData_BeastChild_Gfx_5A432+$9AA
 EnemyGfxData_BeastChild:
 	dc.l	EnemyGfxData_BeastChild_Gfx_5A432
 	dc.l	EnemyGfxData_BeastChild_Gfx_5A438
@@ -62185,155 +59203,74 @@ EnemyGfxFrameTable_BeastMain:
 	dc.b	$1E, $22, $1F, $23, $20, $24, $21, $25, $26, $2A, $27, $2B, $28, $2C, $29, $2D, $2E, $32, $2F, $33, $30, $34, $31, $35, $36, $3A, $37, $3B, $38, $3C, $39, $3D 
 	dc.b	$3E, $40, $2F, $41, $30, $42, $3F, $43 
 EnemyGfxData_BeastMain_Gfx_5AFB6:
-	dc.b	$01, $00, $FF, $EC, $88, $80, $CB, $9F, $BA, $FF, $F9, $98, $BA, $AA, $AA, $FF, $FB, $AA, $0F, $FF, $FC, $CC 
-EnemyGfxData_BeastMain_Gfx_5AFCC:
-	dc.b	$00, $00, $AB, $A9, $9A, $00, $AB, $A9, $AB, $9A, $AC, $BA, $BC, $8A, $BC, $BA, $BC, $AB, $CC, $BB, $CC, $AB, $CC, $AB, $9C, $BC, $CB, $A8, $8A, $BC, $BC, $B8 
-	dc.b	$8A, $00 
-EnemyGfxData_BeastMain_Gfx_5AFEE:
-	dc.b	$00, $AA, $98, $88, $80, $BA, $A9, $88, $80, $BB, $A9, $8A, $98, $CB, $A9, $9A, $98, $CB, $A9, $9A, $A8, $CB, $AA, $9A, $A9, $CB, $B9, $99, $AA, $AA, $98, $99 
-	dc.b	$AA, $00 
-EnemyGfxData_BeastMain_Gfx_5B010:
-	dc.b	$01, $00, $FF, $73, $11, $01, $9B, $99, $F8, $88, $8F, $F0, $98, $89, $9F, $98, $8F, $FF, $F0, $9A, $AA, $AF 
-EnemyGfxData_BeastMain_Gfx_5B026:
-	dc.b	$01, $00, $08, $8C, $EF, $FF, $0F, $CC, $CB, $FF, $BF, $FF, $CC, $0F, $FC, $CF, $0C, $FF, $0F, $00 
-EnemyGfxData_BeastMain_Gfx_5B03A:
-	dc.b	$01, $00, $00, $00, $0C, $FF, $CC, $CB, $A8, $AB, $CC, $B8, $88, $BB, $FF, $C8, $8A, $BB, $FC, $BF, $FB, $FB, $FB, $FF, $BF, $FB, $0F, $FF 
-EnemyGfxData_BeastMain_Gfx_5B056:
-	dc.b	$01, $00, $00, $00, $03, $FF, $AA, $88, $99, $9A, $AA, $AA, $BA, $AB, $AA, $BB, $AA, $FB, $AB, $FB, $CA, $FF, $AC, $FF, $FB, $CB, $FF, $F0 
-EnemyGfxData_BeastMain_Gfx_5B072:
-	dc.b	$01, $00, $11, $33, $FF, $FF, $AF, $FA, $AA, $AF, $FF, $FF, $AA, $FF, $FF, $BA 
-EnemyGfxData_BeastMain_Gfx_5B082:
-	dc.b	$01, $00, $FF, $EC, $88, $80, $CB, $0F, $BA, $FF, $F9, $98, $FF, $AA, $AA, $FF, $FB, $AA, $0F, $FF, $FC, $CC 
-EnemyGfxData_BeastMain_Gfx_5B098:
-	dc.b	$00, $00, $99, $13, $9A, $00, $9B, $99, $23, $9A, $AC, $BA, $A9, $8A, $BC, $BA, $BC, $AB, $CC, $BB, $CC, $AB, $CC, $AB, $9C, $BC, $CB, $A8, $8A, $BC, $BC, $B8 
-	dc.b	$8A, $00 
-EnemyGfxData_BeastMain_Gfx_5B0BA:
-	dc.b	$00, $AA, $93, $18, $80, $43, $21, $88, $80, $99, $A9, $8A, $98, $BB, $A9, $9A, $98, $CB, $A9, $9A, $A8, $CB, $AA, $9A, $A9, $CB, $B9, $99, $AA, $AA, $98, $99 
-	dc.b	$AA, $00 
-EnemyGfxData_BeastMain_Gfx_5B0DC:
-	dc.b	$01, $00, $FF, $73, $11, $01, $9B, $99, $F0, $88, $8F, $F0, $98, $89, $9F, $98, $8F, $FF, $F0, $9A, $AA, $FF 
-EnemyGfxData_BeastMain_Gfx_5B0F2:
-	dc.b	$01, $00, $08, $8E, $EF, $FF, $0F, $FF, $CB, $FF, $0F, $FF, $CC, $0F, $FF, $FF, $FF, $0F 
-EnemyGfxData_BeastMain_Gfx_5B104:
-	dc.b	$01, $00, $00, $00, $0C, $FF, $CC, $CB, $A8, $AB, $CC, $B8, $88, $BB, $FF, $C8, $8A, $BB, $FC, $BF, $FB, $FB, $FF, $FF, $FF, $FB, $0F, $FF 
-EnemyGfxData_BeastMain_Gfx_5B120:
-	dc.b	$01, $00, $00, $00, $13, $FF, $AA, $88, $99, $9A, $AA, $AA, $BA, $AB, $AA, $BB, $AA, $FA, $AB, $FB, $CA, $FF, $AC, $FF, $F0, $FF, $F0, $00 
-EnemyGfxData_BeastMain_Gfx_5B13C:
-	dc.b	$01, $00, $11, $37, $FF, $FF, $AF, $FF, $F0, $AF, $FF, $FF, $AA, $FF, $FF, $00 
-EnemyGfxData_BeastMain_Gfx_5B14C:
-	dc.b	$01, $00, $FF, $E8, $00, $80, $CB, $A0, $99, $BA, $0A, $AA, $F9, $98, $0A, $FA, $AA, $AA, $FF, $FB, $AA, $0C, $CC, $CB, $BC, $00 
-EnemyGfxData_BeastMain_Gfx_5B166:
-	dc.b	$01, $00, $FF, $51, $01, $01, $9B, $80, $99, $F8, $08, $88, $88, $89, $90, $98, $89, $9F, $98, $8F, $FA, $A0, $9A, $AA, $AF, $00 
-EnemyGfxData_BeastMain_Gfx_5B180:
-	dc.b	$01, $00, $00, $88, $8D, $EF, $0F, $CB, $BF, $FF, $0B, $0F, $FF, $CC, $0F, $FC, $CA, $0C, $CC, $FF, $CC, $0C, $0F, $0C, $0B, $00 
-EnemyGfxData_BeastMain_Gfx_5B19A:
-	dc.b	$00, $CC, $CB, $A8, $AB, $CC, $B8, $88, $BB, $AF, $B8, $8A, $AB, $FC, $BA, $FB, $AB, $FB, $AF, $BA, $FB, $B0, $B0, $0B, $FB, $00, $B0, $00, $B0, $00, $00, $00 
-	dc.b	$00, $00 
-EnemyGfxData_BeastMain_Gfx_5B1BC:
-	dc.b	$01, $00, $00, $00, $02, $FF, $AA, $88, $99, $9A, $AA, $AA, $BA, $AB, $AA, $AB, $BA, $AA, $AB, $FA, $CB, $FF, $AC, $CF, $FB, $CB, $FF, $CC, $C0, $00 
-EnemyGfxData_BeastMain_Gfx_5B1DA:
-	dc.b	$01, $00, $10, $31, $FF, $FF, $AF, $FA, $AA, $AA, $FF, $FF, $AA, $AA, $AF, $FF, $BA, $A0 
-EnemyGfxData_BeastMain_Gfx_5B1EC:
-	dc.b	$01, $00, $FF, $FC, $88, $80, $0A, $FF, $FF, $FF, $AA, $FB, $BB, $AC, $FF, $BB, $AB, $0F, $FF, $FF, $B9, $00 
-EnemyGfxData_BeastMain_Gfx_5B202:
-	dc.b	$00, $09, $88, $81, $22, $0A, $98, $88, $88, $0A, $BA, $98, $98, $AB, $BB, $BA, $AA, $AB, $CB, $BA, $B9, $B9, $CB, $BA, $98, $9A, $BB, $AA, $8B, $AC, $BB, $9B 
-	dc.b	$B9, $00 
-EnemyGfxData_BeastMain_Gfx_5B224:
-	dc.b	$01, $88, $6C, $01, $00, $09, $21, $00, $98, $00, $89, $99, $A9, $89, $AA, $A9, $AA, $8A, $A9, $BA, $98, $8A, $BA, $9C, $B8, $99, $BB, $9B, $A8, $CB, $A8, $00 
-EnemyGfxData_BeastMain_Gfx_5B244:
-	dc.b	$01, $00, $FF, $73, $11, $01, $AB, $AA, $F0, $89, $FA, $F0, $8A, $AF, $FF, $99, $AA, $AF, $F0, $99, $FF, $FF 
-EnemyGfxData_BeastMain_Gfx_5B25A:
-	dc.b	$01, $00, $08, $8E, $EF, $FF, $0F, $CC, $BB, $BB, $0F, $FB, $BB, $0F, $CF, $FF, $FF, $CC 
-EnemyGfxData_BeastMain_Gfx_5B26C:
-	dc.b	$01, $00, $00, $00, $0C, $FF, $BB, $BB, $A9, $B8, $AB, $9A, $99, $AB, $FB, $B9, $9A, $AB, $CC, $BB, $FB, $BC, $FF, $FF, $FC, $FF, $CF, $FF 
-EnemyGfxData_BeastMain_Gfx_5B288:
-	dc.b	$01, $00, $00, $00, $03, $FF, $8A, $CB, $B9, $AA, $BB, $BC, $BB, $BA, $BB, $AB, $BF, $BB, $BF, $FC, $BF, $FF, $CF, $FF, $FC, $B0, $FF, $F0 
-EnemyGfxData_BeastMain_Gfx_5B2A4:
-	dc.b	$01, $00, $11, $37, $FF, $FF, $AA, $BB, $B0, $FF, $FF, $FF, $BF, $FF, $FB, $00 
-EnemyGfxData_BeastMain_Gfx_5B2B4:
-	dc.b	$02, $00, $FF, $FC, $88, $80, $FF, $00, $01, $64, $46, $0F, $AA, $BB, $AC, $FB, $AB, $0F, $B9, $00 
-EnemyGfxData_BeastMain_Gfx_5B2C8:
-	dc.b	$00, $00, $81, $21, $22, $0A, $98, $88, $88, $0A, $BA, $98, $98, $AB, $BB, $BA, $AA, $AB, $CB, $BA, $B9, $B9, $CB, $BA, $98, $9A, $BB, $AA, $8B, $AC, $BB, $9B 
-	dc.b	$B9, $00 
-EnemyGfxData_BeastMain_Gfx_5B2EA:
-	dc.b	$00, $12, $18, $88, $00, $88, $88, $98, $00, $89, $99, $A9, $89, $AA, $A9, $AA, $88, $8A, $A9, $BA, $98, $8A, $BA, $9C, $B8, $99, $BB, $9B, $A8, $88, $CB, $A8 
-	dc.b	$88, $00 
-EnemyGfxData_BeastMain_Gfx_5B30C:
-	dc.b	$01, $00, $FF, $73, $11, $01, $AB, $AA, $F0, $89, $FF, $F0, $8A, $AF, $FF, $99, $AA, $FF, $F0, $99, $FF, $FF 
-EnemyGfxData_BeastMain_Gfx_5B322:
-	dc.b	$01, $00, $08, $8E, $EF, $FF, $0F, $FF, $BB, $BB, $0F, $FB, $BB, $0F, $FF, $FF, $FF, $0F 
-EnemyGfxData_BeastMain_Gfx_5B334:
-	dc.b	$01, $00, $00, $00, $0C, $FF, $BB, $BB, $A9, $B8, $AB, $9A, $99, $AB, $FB, $B9, $9A, $AB, $CC, $BB, $FB, $BC, $FF, $FF, $FC, $FF, $0F, $FF 
-EnemyGfxData_BeastMain_Gfx_5B350:
-	dc.b	$01, $00, $00, $00, $13, $FF, $8A, $CB, $B9, $AA, $BB, $BC, $BB, $BA, $BB, $AB, $BF, $BB, $BF, $FC, $BF, $FF, $CF, $FF, $F0, $FF, $F0, $00 
-EnemyGfxData_BeastMain_Gfx_5B36C:
-	dc.b	$01, $00, $11, $37, $FF, $FF, $AA, $BF, $F0, $FF, $FF, $FF, $BF, $FF, $FF, $00 
-EnemyGfxData_BeastMain_Gfx_5B37C:
-	dc.b	$01, $00, $FF, $FC, $88, $80, $0A, $AF, $FB, $AF, $AA, $AF, $BA, $AC, $FF, $FB, $AB, $0B, $FF, $FF, $B9, $00 
-EnemyGfxData_BeastMain_Gfx_5B392:
-	dc.b	$00, $00, $88, $88, $88, $0A, $98, $88, $88, $0A, $BA, $98, $98, $AB, $BB, $BA, $AA, $AB, $CB, $BA, $B9, $B9, $CB, $BA, $98, $9A, $BB, $AA, $8B, $AC, $BB, $9B 
-	dc.b	$B9, $00 
-EnemyGfxData_BeastMain_Gfx_5B3B4:
-	dc.b	$01, $88, $EC, $01, $00, $09, $00, $98, $00, $89, $99, $A9, $89, $AA, $A9, $AA, $8A, $A9, $BA, $98, $8A, $BA, $9C, $B8, $99, $BB, $9B, $A8, $CB, $A8 
-EnemyGfxData_BeastMain_Gfx_5B3D2:
-	dc.b	$01, $00, $FF, $73, $01, $01, $AB, $AA, $F9, $89, $9F, $90, $90, $8A, $AF, $99, $99, $AA, $AF, $F0, $99, $9F, $FF, $00 
-EnemyGfxData_BeastMain_Gfx_5B3EA:
-	dc.b	$01, $00, $08, $8A, $ED, $EF, $0F, $CC, $BB, $BB, $0F, $BB, $BB, $0B, $CF, $FF, $B0, $FF, $CC, $CC, $0C, $00 
-EnemyGfxData_BeastMain_Gfx_5B400:
-	dc.b	$01, $00, $00, $00, $04, $BF, $BB, $BB, $A9, $B8, $AB, $9A, $99, $AB, $FB, $B9, $9A, $AB, $CB, $BB, $FB, $BC, $CB, $FF, $BB, $AF, $C0, $CF, $FF, $0C 
-EnemyGfxData_BeastMain_Gfx_5B41E:
-	dc.b	$01, $00, $00, $00, $00, $DF, $8A, $CB, $B9, $AA, $BB, $BC, $BB, $BA, $BB, $AB, $BA, $BB, $BF, $AC, $BF, $FA, $CF, $FA, $BB, $A0, $FB, $F0, $BC, $0A, $0B, $00 
-EnemyGfxData_BeastMain_Gfx_5B43E:
-	dc.b	$01, $00, $11, $37, $BF, $FF, $AA, $AB, $BB, $FF, $FF, $FF, $BA, $AA, $AB, $B0 
-EnemyGfxData_BeastMain_Gfx_5B44E:
-	dc.b	$01, $00, $FF, $FF, $C8, $88, $09, $FF, $0A, $FF, $AA, $AA, $AA, $BB, $FF, $AA, $BB, $00 
-EnemyGfxData_BeastMain_Gfx_5B460:
-	dc.b	$00, $00, $88, $88, $88, $00, $98, $98, $98, $0A, $A9, $99, $99, $FB, $A9, $9A, $AA, $AB, $A8, $AB, $BA, $BC, $B8, $AC, $BA, $BB, $A8, $BC, $A8, $B8, $89, $BB 
-	dc.b	$CB, $00 
-EnemyGfxData_BeastMain_Gfx_5B482:
-	dc.b	$01, $99, $2E, $C8, $00, $10, $88, $88, $00, $00, $A9, $00, $AA, $AA, $90, $AA, $BA, $BA, $9F, $AA, $BA, $BA, $8A, $9A, $BB, $BA, $8A, $AB, $CB, $A9 
-EnemyGfxData_BeastMain_Gfx_5B4A0:
-	dc.b	$01, $00, $FF, $FF, $33, $11, $99, $90, $9F, $F9, $99, $FF, $FA, $8C, $9A, $AF 
-EnemyGfxData_BeastMain_Gfx_5B4B0:
-	dc.b	$02, $FF, $66, $03, $10, $00, $00, $08, $8C, $EF, $FF, $0F, $FB, $BB, $0F, $BB, $BF, $00 
-EnemyGfxData_BeastMain_Gfx_5B4C2:
-	dc.b	$01, $00, $00, $00, $08, $CF, $B9, $9B, $CB, $BA, $BB, $AB, $CB, $98, $BA, $BC, $CB, $AA, $FF, $BA, $BB, $BA, $CC, $BB, $BF, $FB, $FC, $FF, $FB, $0F, $FF, $00 
-EnemyGfxData_BeastMain_Gfx_5B4E2:
-	dc.b	$01, $00, $00, $00, $01, $7F, $89, $AB, $CB, $BB, $89, $AB, $CC, $BA, $99, $AB, $BC, $BF, $A9, $9A, $BB, $BF, $FB, $BF, $FF, $BB, $FF, $BB, $FF, $FF 
-EnemyGfxData_BeastMain_Gfx_5B500:
-	dc.b	$01, $00, $11, $37, $7F, $FF, $FF, $FF, $F0, $AA, $FF, $FF, $AA, $AA, $FF, $B0 
-EnemyGfxData_BeastMain_Gfx_5B510:
-	dc.b	$01, $00, $CF, $FF, $C8, $88, $01, $11, $0F, $FF, $0F, $FF, $AA, $FF, $AA, $BB, $FF, $AA, $BB, $00 
-EnemyGfxData_BeastMain_Gfx_5B524:
-	dc.b	$00, $11, $11, $11, $11, $08, $88, $88, $88, $0A, $A9, $99, $99, $FB, $A9, $9A, $AA, $AB, $A8, $AB, $BA, $BC, $B8, $AC, $BA, $BB, $A8, $BC, $A8, $B8, $89, $BB 
-	dc.b	$CB, $00 
-EnemyGfxData_BeastMain_Gfx_5B546:
-	dc.b	$00, $11, $11, $11, $10, $88, $88, $99, $00, $99, $99, $A9, $00, $99, $AA, $AA, $90, $AA, $BA, $BA, $9F, $AA, $BA, $BA, $8A, $9A, $BB, $BA, $99, $8A, $AB, $CB 
-	dc.b	$A9, $00 
-EnemyGfxData_BeastMain_Gfx_5B568:
-	dc.b	$01, $00, $FF, $FF, $73, $11, $FF, $9F, $FF, $99, $FF, $F0, $8C, $9A, $FF, $00 
-EnemyGfxData_BeastMain_Gfx_5B578:
-	dc.b	$02, $FF, $66, $03, $10, $00, $00, $08, $8C, $EF, $FF, $0F, $FB, $BB, $0F, $FB, $BF, $00 
-EnemyGfxData_BeastMain_Gfx_5B58A:
-	dc.b	$01, $00, $00, $00, $08, $CF, $B9, $9B, $CB, $BA, $BB, $AB, $CB, $98, $BA, $BC, $CB, $AA, $FF, $BA, $BB, $BA, $FF, $BB, $BF, $FB, $FF, $FF, $FF, $0F, $FF, $00 
-EnemyGfxData_BeastMain_Gfx_5B5AA:
-	dc.b	$01, $00, $00, $00, $01, $7F, $89, $AB, $CB, $BB, $89, $AB, $CC, $BA, $99, $AB, $BC, $BF, $A9, $9A, $BB, $BF, $FB, $BF, $FF, $BF, $FF, $FF, $FF, $FF 
-EnemyGfxData_BeastMain_Gfx_5B5C8:
-	dc.b	$01, $00, $11, $37, $7F, $FF, $FF, $FF, $F0, $AA, $FF, $FF, $AA, $FF, $FF, $F0 
-EnemyGfxData_BeastMain_Gfx_5B5D8:
-	dc.b	$01, $00, $FF, $FD, $80, $08, $09, $B0, $99, $9F, $0A, $0B, $FF, $AA, $AB, $BA, $AA, $BB, $FF, $AA, $BB, $00 
-EnemyGfxData_BeastMain_Gfx_5B5EE:
-	dc.b	$01, $00, $FF, $FB, $10, $11, $09, $F9, $9A, $AA, $99, $9F, $0A, $A0, $99, $FF, $AA, $8C, $99, $FF 
-EnemyGfxData_BeastMain_Gfx_5B602:
-	dc.b	$01, $00, $08, $0C, $EE, $CF, $0F, $FF, $FF, $FB, $BA, $FB, $BB, $0B, $0B, $BA, $AA, $FF, $FF, $FF, $0B, $0C, $B0, $00 
-EnemyGfxData_BeastMain_Gfx_5B61A:
-	dc.b	$00, $B9, $9B, $CB, $BA, $BB, $AB, $CB, $98, $BA, $BC, $CB, $AA, $FF, $BA, $BB, $AA, $CC, $BB, $BA, $AA, $00, $BB, $FF, $BA, $0C, $C0, $0B, $FB, $0C, $00, $00 
-	dc.b	$0B, $00 
-EnemyGfxData_BeastMain_Gfx_5B63C:
-	dc.b	$00, $89, $AB, $CB, $BB, $89, $AB, $CC, $B9, $99, $AB, $BC, $B9, $A9, $9A, $BB, $B9, $9B, $BA, $FA, $BB, $FC, $BB, $FF, $AB, $FF, $C0, $BB, $00, $00, $00, $00 
-	dc.b	$00, $00 
-EnemyGfxData_BeastMain_Gfx_5B65E:
-	dc.b	$01, $00, $11, $07, $37, $7F, $FF, $FF, $F0, $A9, $9A, $AF, $9A, $AA, $AA, $A0, $9F, $9A, $AA, $BA, $0B, $00 
+	incbin "data/art/tiles/enemy/beast_main_gfx.bin"
+EnemyGfxData_BeastMain_Gfx_5AFCC equ EnemyGfxData_BeastMain_Gfx_5AFB6+$16
+EnemyGfxData_BeastMain_Gfx_5AFEE equ EnemyGfxData_BeastMain_Gfx_5AFB6+$38
+EnemyGfxData_BeastMain_Gfx_5B010 equ EnemyGfxData_BeastMain_Gfx_5AFB6+$5A
+EnemyGfxData_BeastMain_Gfx_5B026 equ EnemyGfxData_BeastMain_Gfx_5AFB6+$70
+EnemyGfxData_BeastMain_Gfx_5B03A equ EnemyGfxData_BeastMain_Gfx_5AFB6+$84
+EnemyGfxData_BeastMain_Gfx_5B056 equ EnemyGfxData_BeastMain_Gfx_5AFB6+$A0
+EnemyGfxData_BeastMain_Gfx_5B072 equ EnemyGfxData_BeastMain_Gfx_5AFB6+$BC
+EnemyGfxData_BeastMain_Gfx_5B082 equ EnemyGfxData_BeastMain_Gfx_5AFB6+$CC
+EnemyGfxData_BeastMain_Gfx_5B098 equ EnemyGfxData_BeastMain_Gfx_5AFB6+$E2
+EnemyGfxData_BeastMain_Gfx_5B0BA equ EnemyGfxData_BeastMain_Gfx_5AFB6+$104
+EnemyGfxData_BeastMain_Gfx_5B0DC equ EnemyGfxData_BeastMain_Gfx_5AFB6+$126
+EnemyGfxData_BeastMain_Gfx_5B0F2 equ EnemyGfxData_BeastMain_Gfx_5AFB6+$13C
+EnemyGfxData_BeastMain_Gfx_5B104 equ EnemyGfxData_BeastMain_Gfx_5AFB6+$14E
+EnemyGfxData_BeastMain_Gfx_5B120 equ EnemyGfxData_BeastMain_Gfx_5AFB6+$16A
+EnemyGfxData_BeastMain_Gfx_5B13C equ EnemyGfxData_BeastMain_Gfx_5AFB6+$186
+EnemyGfxData_BeastMain_Gfx_5B14C equ EnemyGfxData_BeastMain_Gfx_5AFB6+$196
+EnemyGfxData_BeastMain_Gfx_5B166 equ EnemyGfxData_BeastMain_Gfx_5AFB6+$1B0
+EnemyGfxData_BeastMain_Gfx_5B180 equ EnemyGfxData_BeastMain_Gfx_5AFB6+$1CA
+EnemyGfxData_BeastMain_Gfx_5B19A equ EnemyGfxData_BeastMain_Gfx_5AFB6+$1E4
+EnemyGfxData_BeastMain_Gfx_5B1BC equ EnemyGfxData_BeastMain_Gfx_5AFB6+$206
+EnemyGfxData_BeastMain_Gfx_5B1DA equ EnemyGfxData_BeastMain_Gfx_5AFB6+$224
+EnemyGfxData_BeastMain_Gfx_5B1EC equ EnemyGfxData_BeastMain_Gfx_5AFB6+$236
+EnemyGfxData_BeastMain_Gfx_5B202 equ EnemyGfxData_BeastMain_Gfx_5AFB6+$24C
+EnemyGfxData_BeastMain_Gfx_5B224 equ EnemyGfxData_BeastMain_Gfx_5AFB6+$26E
+EnemyGfxData_BeastMain_Gfx_5B244 equ EnemyGfxData_BeastMain_Gfx_5AFB6+$28E
+EnemyGfxData_BeastMain_Gfx_5B25A equ EnemyGfxData_BeastMain_Gfx_5AFB6+$2A4
+EnemyGfxData_BeastMain_Gfx_5B26C equ EnemyGfxData_BeastMain_Gfx_5AFB6+$2B6
+EnemyGfxData_BeastMain_Gfx_5B288 equ EnemyGfxData_BeastMain_Gfx_5AFB6+$2D2
+EnemyGfxData_BeastMain_Gfx_5B2A4 equ EnemyGfxData_BeastMain_Gfx_5AFB6+$2EE
+EnemyGfxData_BeastMain_Gfx_5B2B4 equ EnemyGfxData_BeastMain_Gfx_5AFB6+$2FE
+EnemyGfxData_BeastMain_Gfx_5B2C8 equ EnemyGfxData_BeastMain_Gfx_5AFB6+$312
+EnemyGfxData_BeastMain_Gfx_5B2EA equ EnemyGfxData_BeastMain_Gfx_5AFB6+$334
+EnemyGfxData_BeastMain_Gfx_5B30C equ EnemyGfxData_BeastMain_Gfx_5AFB6+$356
+EnemyGfxData_BeastMain_Gfx_5B322 equ EnemyGfxData_BeastMain_Gfx_5AFB6+$36C
+EnemyGfxData_BeastMain_Gfx_5B334 equ EnemyGfxData_BeastMain_Gfx_5AFB6+$37E
+EnemyGfxData_BeastMain_Gfx_5B350 equ EnemyGfxData_BeastMain_Gfx_5AFB6+$39A
+EnemyGfxData_BeastMain_Gfx_5B36C equ EnemyGfxData_BeastMain_Gfx_5AFB6+$3B6
+EnemyGfxData_BeastMain_Gfx_5B37C equ EnemyGfxData_BeastMain_Gfx_5AFB6+$3C6
+EnemyGfxData_BeastMain_Gfx_5B392 equ EnemyGfxData_BeastMain_Gfx_5AFB6+$3DC
+EnemyGfxData_BeastMain_Gfx_5B3B4 equ EnemyGfxData_BeastMain_Gfx_5AFB6+$3FE
+EnemyGfxData_BeastMain_Gfx_5B3D2 equ EnemyGfxData_BeastMain_Gfx_5AFB6+$41C
+EnemyGfxData_BeastMain_Gfx_5B3EA equ EnemyGfxData_BeastMain_Gfx_5AFB6+$434
+EnemyGfxData_BeastMain_Gfx_5B400 equ EnemyGfxData_BeastMain_Gfx_5AFB6+$44A
+EnemyGfxData_BeastMain_Gfx_5B41E equ EnemyGfxData_BeastMain_Gfx_5AFB6+$468
+EnemyGfxData_BeastMain_Gfx_5B43E equ EnemyGfxData_BeastMain_Gfx_5AFB6+$488
+EnemyGfxData_BeastMain_Gfx_5B44E equ EnemyGfxData_BeastMain_Gfx_5AFB6+$498
+EnemyGfxData_BeastMain_Gfx_5B460 equ EnemyGfxData_BeastMain_Gfx_5AFB6+$4AA
+EnemyGfxData_BeastMain_Gfx_5B482 equ EnemyGfxData_BeastMain_Gfx_5AFB6+$4CC
+EnemyGfxData_BeastMain_Gfx_5B4A0 equ EnemyGfxData_BeastMain_Gfx_5AFB6+$4EA
+EnemyGfxData_BeastMain_Gfx_5B4B0 equ EnemyGfxData_BeastMain_Gfx_5AFB6+$4FA
+EnemyGfxData_BeastMain_Gfx_5B4C2 equ EnemyGfxData_BeastMain_Gfx_5AFB6+$50C
+EnemyGfxData_BeastMain_Gfx_5B4E2 equ EnemyGfxData_BeastMain_Gfx_5AFB6+$52C
+EnemyGfxData_BeastMain_Gfx_5B500 equ EnemyGfxData_BeastMain_Gfx_5AFB6+$54A
+EnemyGfxData_BeastMain_Gfx_5B510 equ EnemyGfxData_BeastMain_Gfx_5AFB6+$55A
+EnemyGfxData_BeastMain_Gfx_5B524 equ EnemyGfxData_BeastMain_Gfx_5AFB6+$56E
+EnemyGfxData_BeastMain_Gfx_5B546 equ EnemyGfxData_BeastMain_Gfx_5AFB6+$590
+EnemyGfxData_BeastMain_Gfx_5B568 equ EnemyGfxData_BeastMain_Gfx_5AFB6+$5B2
+EnemyGfxData_BeastMain_Gfx_5B578 equ EnemyGfxData_BeastMain_Gfx_5AFB6+$5C2
+EnemyGfxData_BeastMain_Gfx_5B58A equ EnemyGfxData_BeastMain_Gfx_5AFB6+$5D4
+EnemyGfxData_BeastMain_Gfx_5B5AA equ EnemyGfxData_BeastMain_Gfx_5AFB6+$5F4
+EnemyGfxData_BeastMain_Gfx_5B5C8 equ EnemyGfxData_BeastMain_Gfx_5AFB6+$612
+EnemyGfxData_BeastMain_Gfx_5B5D8 equ EnemyGfxData_BeastMain_Gfx_5AFB6+$622
+EnemyGfxData_BeastMain_Gfx_5B5EE equ EnemyGfxData_BeastMain_Gfx_5AFB6+$638
+EnemyGfxData_BeastMain_Gfx_5B602 equ EnemyGfxData_BeastMain_Gfx_5AFB6+$64C
+EnemyGfxData_BeastMain_Gfx_5B61A equ EnemyGfxData_BeastMain_Gfx_5AFB6+$664
+EnemyGfxData_BeastMain_Gfx_5B63C equ EnemyGfxData_BeastMain_Gfx_5AFB6+$686
+EnemyGfxData_BeastMain_Gfx_5B65E equ EnemyGfxData_BeastMain_Gfx_5AFB6+$6A8
 EnemyGfxData_BeastMain:
 	dc.l	EnemyGfxData_BeastMain_Gfx_5AFB6
 	dc.l	EnemyGfxData_BeastMain_Gfx_5AFCC
@@ -62409,230 +59346,110 @@ EnemyGfxFrameTable_SkeletonChild:
 	dc.b	$41, $45, $3E, $42, $46, $3F, $43, $47, $48, $4B, $4F, $49, $4C, $50, $4A, $4D, $51, $3C, $4E, $52, $53, $56, $5A, $54, $57, $5B, $55, $58, $5C, $3C, $59, $5D 
 	dc.b	$48, $60, $64, $5E, $61, $65, $5F, $62, $66, $3C, $63, $67 
 EnemyGfxData_SkeletonChild_Gfx_5B7F0:
-	dc.b	$01, $00, $FF, $FF, $FF, $EC, $33, $34, $44, $00 
-EnemyGfxData_SkeletonChild_Gfx_5B7FA:
-	dc.b	$01, $00, $EE, $EE, $CC, $00, $0B, $8B, $8B, $8B, $03, $78, $24, $57, $33, $30, $45, $44, $43, $33, $45, $33 
-EnemyGfxData_SkeletonChild_Gfx_5B810:
-	dc.b	$01, $00, $77, $73, $31, $00, $B0, $B8, $88, $87, $10, $87, $21, $72, $21, $10, $32, $11, $10, $13, $22, $11, $11, $33 
-EnemyGfxData_SkeletonChild_Gfx_5B828:
-	dc.b	$01, $00, $FF, $FF, $FF, $31, $33, $22, $44, $32, $20, $00 
-EnemyGfxData_SkeletonChild_Gfx_5B834:
-	dc.b	$01, $00, $88, $88, $88, $88, $03, $45, $54, $04, $56, $54, $34, $55, $44, $34, $54, $33, $34, $44, $33, $34, $44, $33, $33, $33, $22, $33, $32, $21 
-EnemyGfxData_SkeletonChild_Gfx_5B852:
-	dc.b	$01, $11, $00, $00, $44, $4F, $33, $32, $43, $4E, $43, $32, $43, $E2, $32, $22, $43, $D3, $32, $22, $44, $3D, $22, $34, $43, $21, $21, $44, $21, $24, $12, $00 
-EnemyGfxData_SkeletonChild_Gfx_5B872:
-	dc.b	$01, $11, $00, $04, $42, $2E, $ED, $21, $12, $35, $A2, $C1, $12, $34, $A3, $C1, $12, $34, $CC, $12, $24, $22, $12, $23, $43, $21, $22, $22, $14, $22, $12, $00 
-EnemyGfxData_SkeletonChild_Gfx_5B892:
-	dc.b	$01, $22, $22, $22, $04, $8C, $55, $43, $00, $56, $43, $00, $54, $43, $00, $44, $33, $00, $33, $32, $21, $00, $33, $11, $00, $21, $11, $10, $11, $10 
-EnemyGfxData_SkeletonChild_Gfx_5B8B0:
-	dc.b	$00, $03, $43, $22, $11, $04, $43, $32, $11, $34, $43, $21, $11, $44, $32, $21, $11, $43, $21, $11, $10, $32, $11, $20, $00, $32, $21, $20, $00, $33, $33, $20 
-	dc.b	$00, $00 
-EnemyGfxData_SkeletonChild_Gfx_5B8D2:
-	dc.b	$01, $22, $22, $09, $12, $01, $13, $32, $41, $23, $44, $24, $24, $44, $42, $21, $43, $33, $02, $23, $32, $03, $12, $11, $00, $21, $11, $11, $00, $33, $21, $00 
-EnemyGfxData_SkeletonChild_Gfx_5B8F2:
-	dc.b	$01, $11, $B1, $80, $10, $6E, $32, $44, $22, $21, $23, $32, $21, $23, $43, $22, $21, $24, $44, $22, $22, $33, $21, $13, $12, $10, $10, $00 
-EnemyGfxData_SkeletonChild_Gfx_5B90E:
-	dc.b	$01, $11, $01, $B7, $10, $00, $13, $33, $22, $10, $13, $33, $21, $22, $10, $00, $02, $22, $00, $03, $32, $21, $00, $03, $33, $21, $00, $34, $32, $20 
-EnemyGfxData_SkeletonChild_Gfx_5B92C:
-	dc.b	$01, $00, $FF, $FF, $FE, $CC, $03, $03, $44, $04, $55, $00 
-EnemyGfxData_SkeletonChild_Gfx_5B938:
-	dc.b	$01, $00, $EE, $EE, $C0, $00, $0B, $8B, $8B, $8B, $03, $78, $33, $30, $24, $57, $44, $33, $45, $43, $44, $33, $44, $5E 
-EnemyGfxData_SkeletonChild_Gfx_5B950:
-	dc.b	$01, $00, $77, $73, $31, $10, $B0, $B8, $88, $87, $10, $87, $21, $72, $21, $10, $32, $11, $10, $ED, $11, $11, $23, $00 
-EnemyGfxData_SkeletonChild_Gfx_5B968:
-	dc.b	$01, $00, $FF, $FF, $FF, $F7, $21, $00 
-EnemyGfxData_SkeletonChild_Gfx_5B970:
-	dc.b	$01, $00, $CC, $CC, $88, $88, $45, $55, $56, $54, $55, $44, $54, $33, $03, $34, $33, $02, $33, $33, $22, $22, $22, $21, $22, $21 
-EnemyGfxData_SkeletonChild_Gfx_5B98A:
-	dc.b	$00, $43, $33, $43, $EC, $43, $33, $43, $E2, $33, $23, $43, $D3, $33, $22, $44, $4D, $32, $11, $34, $23, $21, $11, $21, $42, $21, $11, $24, $14, $11, $11, $11 
-	dc.b	$41, $00 
-EnemyGfxData_SkeletonChild_Gfx_5B9AC:
-	dc.b	$00, $3C, $D1, $12, $34, $A2, $C1, $12, $45, $A3, $C1, $13, $55, $CC, $21, $13, $45, $32, $11, $12, $34, $11, $21, $12, $33, $44, $14, $12, $23, $11, $31, $11 
-	dc.b	$22, $00 
-EnemyGfxData_SkeletonChild_Gfx_5B9CE:
-	dc.b	$01, $00, $33, $11, $11, $11, $32, $11, $43, $21, $44, $21, $20, $44, $21, $10, $43, $22, $10, $32, $22, $10, $32, $21, $10, $22, $12, $11 
-EnemyGfxData_SkeletonChild_Gfx_5B9EA:
-	dc.b	$00, $02, $21, $22, $11, $02, $11, $12, $10, $21, $21, $11, $20, $21, $11, $10, $00, $22, $22, $10, $00, $03, $32, $22, $00, $03, $43, $22, $00, $00, $42, $33 
-	dc.b	$11, $00 
-EnemyGfxData_SkeletonChild_Gfx_5BA0C:
-	dc.b	$00, $23, $32, $22, $14, $33, $44, $22, $21, $34, $44, $42, $21, $32, $43, $33, $22, $23, $23, $32, $22, $02, $12, $22, $11, $00, $21, $11, $11, $00, $33, $21 
-	dc.b	$22, $00 
-EnemyGfxData_SkeletonChild_Gfx_5BA2E:
-	dc.b	$01, $11, $39, $80, $16, $08, $44, $21, $12, $21, $23, $32, $21, $23, $43, $32, $21, $24, $43, $22, $22, $15, $12, $15, $66, $65, $56, $46, $54, $00 
-EnemyGfxData_SkeletonChild_Gfx_5BA4C:
-	dc.b	$01, $00, $11, $11, $11, $11, $23, $32, $21, $44, $32, $21, $44, $42, $21, $23, $33, $21, $24, $22, $22, $55, $54, $32, $45, $44, $33, $44, $43, $30 
-EnemyGfxData_SkeletonChild_Gfx_5BA6A:
-	dc.b	$01, $00, $FF, $FF, $FF, $FE, $33, $00 
-EnemyGfxData_SkeletonChild_Gfx_5BA72:
-	dc.b	$01, $00, $EE, $EE, $CC, $80, $0B, $8B, $8B, $8B, $03, $78, $24, $57, $03, $45, $44, $33, $33, $45, $33, $00 
-EnemyGfxData_SkeletonChild_Gfx_5BA88:
-	dc.b	$01, $00, $77, $73, $30, $00, $B0, $B8, $88, $87, $10, $87, $21, $72, $21, $01, $13, $32, $11, $11, $34, $22, $11, $12, $35, $00 
-EnemyGfxData_SkeletonChild_Gfx_5BAA2:
-	dc.b	$01, $00, $FF, $FF, $F3, $31, $32, $20, $43, $22, $54, $32, $10, $00 
-EnemyGfxData_SkeletonChild_Gfx_5BAB0:
-	dc.b	$01, $00, $C8, $88, $88, $88, $34, $44, $03, $45, $54, $04, $56, $54, $34, $55, $44, $34, $54, $33, $34, $44, $33, $34, $44, $33, $33, $43, $32, $00 
-EnemyGfxData_SkeletonChild_Gfx_5BACE:
-	dc.b	$00, $43, $33, $43, $22, $33, $32, $42, $C2, $43, $32, $43, $D3, $32, $22, $44, $3E, $32, $22, $34, $43, $22, $11, $21, $44, $21, $11, $24, $12, $21, $11, $11 
-	dc.b	$11, $00 
-EnemyGfxData_SkeletonChild_Gfx_5BAF0:
-	dc.b	$01, $11, $00, $26, $63, $3F, $22, $21, $12, $23, $A2, $C1, $12, $23, $A3, $D1, $22, $DC, $22, $22, $12, $43, $21, $22, $14, $00 
-EnemyGfxData_SkeletonChild_Gfx_5BB0A:
-	dc.b	$01, $11, $22, $22, $26, $2F, $44, $32, $00, $33, $32, $00, $33, $22, $00, $22, $21, $00, $22, $21, $00, $12, $10, $22, $21, $10 
-EnemyGfxData_SkeletonChild_Gfx_5BB24:
-	dc.b	$00, $00, $33, $33, $22, $00, $33, $32, $22, $03, $34, $33, $11, $03, $45, $54, $31, $03, $45, $54, $31, $03, $45, $44, $31, $03, $44, $43, $33, $00, $34, $54 
-	dc.b	$44, $00 
-EnemyGfxData_SkeletonChild_Gfx_5BB46:
-	dc.b	$00, $11, $11, $21, $11, $23, $44, $21, $41, $24, $44, $42, $14, $22, $43, $33, $21, $12, $23, $32, $22, $13, $12, $22, $11, $10, $21, $11, $11, $35, $55, $21 
-	dc.b	$22, $00 
-EnemyGfxData_SkeletonChild_Gfx_5BB68:
-	dc.b	$01, $11, $F9, $18, $10, $7F, $31, $21, $44, $13, $32, $43, $22, $21, $24, $44, $22, $22, $33, $21, $13, $12 
-EnemyGfxData_SkeletonChild_Gfx_5BB7E:
-	dc.b	$02, $11, $F7, $33, $10, $00, $00, $08, $C8, $88, $88, $01, $01, $12, $01, $22, $21, $01, $22, $21, $12, $22, $10, $00 
-EnemyGfxData_SkeletonChild_Gfx_5BB96:
-	dc.b	$01, $00, $FF, $FF, $FF, $EC, $03, $04, $44, $00 
-EnemyGfxData_SkeletonChild_Gfx_5BBA0:
-	dc.b	$01, $00, $EE, $EE, $CC, $00, $0B, $8B, $8B, $73, $03, $44, $34, $54, $33, $30, $24, $54, $43, $33, $32, $33 
-EnemyGfxData_SkeletonChild_Gfx_5BBB6:
-	dc.b	$01, $00, $77, $73, $31, $00, $B0, $B8, $88, $37, $10, $32, $21, $32, $21, $10, $32, $11, $10, $33, $32, $22, $33, $33 
-EnemyGfxData_SkeletonChild_Gfx_5BBCE:
-	dc.b	$01, $00, $FF, $FF, $FF, $33, $33, $20, $44, $32 
-EnemyGfxData_SkeletonChild_Gfx_5BBD8:
-	dc.b	$01, $00, $C8, $88, $88, $88, $45, $54, $04, $56, $54, $04, $55, $43, $04, $54, $43, $03, $44, $33, $03, $43, $33, $03, $33, $22, $33, $32, $21, $00 
-EnemyGfxData_SkeletonChild_Gfx_5BBF6:
-	dc.b	$01, $22, $10, $00, $0E, $CA, $44, $43, $33, $43, $44, $33, $32, $33, $44, $43, $32, $33, $44, $43, $32, $23, $34, $32, $21, $21, $21, $11, $11, $11 
-EnemyGfxData_SkeletonChild_Gfx_5BC14:
-	dc.b	$00, $22, $33, $43, $35, $23, $34, $44, $44, $23, $44, $43, $44, $23, $44, $33, $34, $22, $34, $33, $33, $12, $23, $32, $23, $12, $22, $21, $22, $12, $22, $21 
-	dc.b	$12, $00 
-EnemyGfxData_SkeletonChild_Gfx_5BC36:
-	dc.b	$02, $00, $11, $11, $11, $10, $22, $00, $22, $04, $CE, $55, $43, $20, $56, $43, $20, $54, $43, $44, $33, $33, $32, $21, $33, $11, $21, $10 
-EnemyGfxData_SkeletonChild_Gfx_5BC52:
-	dc.b	$00, $00, $33, $22, $11, $00, $44, $32, $11, $03, $54, $32, $21, $03, $54, $32, $21, $03, $43, $32, $11, $04, $43, $22, $10, $04, $33, $21, $10, $03, $32, $21 
-	dc.b	$11, $00 
-EnemyGfxData_SkeletonChild_Gfx_5BC74:
-	dc.b	$00, $12, $22, $32, $21, $12, $23, $33, $21, $11, $23, $33, $21, $21, $22, $32, $22, $01, $22, $23, $32, $03, $13, $44, $33, $00, $24, $55, $43, $00, $24, $54 
-	dc.b	$33, $00 
-EnemyGfxData_SkeletonChild_Gfx_5BC96:
-	dc.b	$01, $33, $4C, $C0, $88, $00, $23, $22, $11, $22, $11, $21, $11, $23, $32, $11, $11, $22, $21, $11, $43, $22, $10, $34, $54, $32, $10, $24, $44, $32, $21, $00 
-EnemyGfxData_SkeletonChild_Gfx_5BCB6:
-	dc.b	$01, $11, $88, $80, $06, $66, $23, $32, $10, $24, $32, $20, $34, $33, $22, $01, $23, $43, $22, $01, $12, $33, $22, $00, $12, $00, $12, $01, $10, $00 
-EnemyGfxData_SkeletonChild_Gfx_5BCD4:
-	dc.b	$01, $00, $FF, $FF, $FE, $CC, $03, $03, $44, $34, $55, $00 
-EnemyGfxData_SkeletonChild_Gfx_5BCE0:
-	dc.b	$01, $00, $EE, $EE, $C0, $00, $0B, $8B, $8B, $73, $03, $44, $33, $30, $34, $54, $44, $33, $22, $54, $44, $43, $32, $23 
-EnemyGfxData_SkeletonChild_Gfx_5BCF8:
-	dc.b	$01, $00, $77, $73, $31, $10, $B0, $B8, $88, $37, $10, $32, $21, $32, $21, $10, $32, $11, $10, $32, $22, $33, $33, $00 
-EnemyGfxData_SkeletonChild_Gfx_5BD10:
-	dc.b	$01, $00, $FF, $FF, $FF, $F7, $20, $00 
-EnemyGfxData_SkeletonChild_Gfx_5BD18:
-	dc.b	$01, $00, $C8, $88, $88, $CC, $45, $65, $03, $45, $54, $03, $45, $44, $02, $34, $44, $02, $23, $33, $01, $23, $32, $12, $22, $12, $11, $00 
-EnemyGfxData_SkeletonChild_Gfx_5BD34:
-	dc.b	$01, $22, $11, $11, $2C, $CA, $44, $33, $32, $43, $33, $33, $33, $34, $43, $32, $34, $32, $32, $23, $12, $11, $12, $11, $11, $33, $11, $00 
-EnemyGfxData_SkeletonChild_Gfx_5BD50:
-	dc.b	$01, $33, $00, $89, $24, $11, $22, $35, $65, $43, $23, $46, $66, $54, $56, $65, $44, $55, $44, $23, $44, $32, $23, $32, $22, $22, $22, $22, $22, $21, $12, $00 
-EnemyGfxData_SkeletonChild_Gfx_5BD70:
-	dc.b	$01, $00, $73, $33, $33, $31, $32, $33, $20, $33, $20, $33, $20, $32, $20, $34, $32, $44, $33, $55, $43, $20 
-EnemyGfxData_SkeletonChild_Gfx_5BD86:
-	dc.b	$02, $00, $C8, $88, $8C, $CF, $11, $11, $11, $33, $00, $12, $01, $22, $01, $22, $01, $21, $01, $01, $10, $00 
-EnemyGfxData_SkeletonChild_Gfx_5BD9C:
-	dc.b	$00, $22, $33, $22, $11, $12, $33, $32, $12, $12, $33, $32, $12, $12, $23, $22, $23, $11, $22, $23, $33, $01, $13, $44, $33, $00, $24, $55, $43, $00, $24, $54 
-	dc.b	$33, $00 
-EnemyGfxData_SkeletonChild_Gfx_5BDBE:
-	dc.b	$01, $11, $02, $27, $32, $00, $23, $21, $12, $23, $33, $21, $23, $33, $21, $12, $32, $22, $21, $33, $32, $10, $34, $53, $22, $10, $24, $44, $32, $21 
-EnemyGfxData_SkeletonChild_Gfx_5BDDC:
-	dc.b	$01, $00, $11, $11, $11, $11, $55, $43, $20, $45, $43, $20, $45, $43, $22, $34, $43, $32, $23, $33, $22, $22, $22, $21, $02, $21, $11, $02, $22, $11 
-EnemyGfxData_SkeletonChild_Gfx_5BDFA:
-	dc.b	$01, $00, $FF, $FF, $FF, $FF 
-EnemyGfxData_SkeletonChild_Gfx_5BE00:
-	dc.b	$01, $00, $EE, $EE, $CC, $C0, $0B, $8B, $8B, $73, $03, $44, $34, $54, $24, $43, $54, $44, $33, $33 
-EnemyGfxData_SkeletonChild_Gfx_5BE14:
-	dc.b	$01, $00, $77, $73, $30, $00, $B0, $B8, $88, $37, $10, $32, $21, $32, $21, $02, $22, $32, $11, $23, $33, $22, $12, $35, $44, $00 
-EnemyGfxData_SkeletonChild_Gfx_5BE2E:
-	dc.b	$01, $00, $FF, $FF, $F7, $33, $11, $21, $10, $31, $11, $00 
-EnemyGfxData_SkeletonChild_Gfx_5BE3A:
-	dc.b	$01, $00, $EE, $CC, $CC, $C8, $55, $66, $05, $55, $04, $44, $03, $33, $34, $43, $45, $43, $04, $56, $54, $00 
-EnemyGfxData_SkeletonChild_Gfx_5BE50:
-	dc.b	$01, $33, $01, $11, $86, $20, $55, $54, $43, $32, $55, $55, $44, $44, $55, $54, $34, $45, $44, $44, $43, $32, $22, $32, $32, $23, $22, $32, $22, $22, $23, $00 
-EnemyGfxData_SkeletonChild_Gfx_5BE70:
-	dc.b	$01, $11, $00, $00, $4F, $11, $22, $23, $34, $54, $22, $23, $44, $44, $21, $22, $34, $33, $21, $12, $23, $32, $21, $22, $22, $21, $12, $21, $22, $23, $21, $00 
-EnemyGfxData_SkeletonChild_Gfx_5BE90:
-	dc.b	$02, $11, $44, $44, $CC, $E2, $00, $31, $11, $11, $11, $32, $32, $10, $21, $10, $21, $10, $10, $10, $12, $21 
-EnemyGfxData_SkeletonChild_Gfx_5BEA6:
-	dc.b	$01, $00, $88, $88, $88, $88, $04, $65, $43, $05, $55, $42, $04, $44, $32, $43, $44, $31, $43, $33, $21, $43, $22, $11, $44, $21, $11, $43, $21, $10 
-EnemyGfxData_SkeletonChild_Gfx_5BEC4:
-	dc.b	$00, $32, $11, $12, $33, $21, $11, $22, $33, $11, $11, $12, $33, $10, $11, $12, $22, $10, $01, $23, $33, $10, $02, $34, $43, $00, $23, $55, $44, $00, $13, $54 
-	dc.b	$43, $00 
-EnemyGfxData_SkeletonChild_Gfx_5BEE6:
-	dc.b	$02, $32, $AA, $08, $00, $22, $11, $11, $13, $11, $00, $23, $23, $22, $23, $21, $22, $33, $22, $21, $33, $43, $22, $34, $54, $10, $24, $44, $21, $00 
-EnemyGfxData_SkeletonChild_Gfx_5BF04:
-	dc.b	$02, $11, $2A, $EE, $40, $00, $00, $11, $11, $9F, $FF, $12, $21, $22, $10, $00 
-EnemyGfxData_SkeletonChild_Gfx_5BF14:
-	dc.b	$01, $00, $FF, $FF, $FF, $EE, $05, $03 
-EnemyGfxData_SkeletonChild_Gfx_5BF1C:
-	dc.b	$01, $00, $33, $99, $00, $00, $08, $80, $08, $B8, $BB, $80, $8B, $87, $07, $88, $72, $21, $54, $77, $22, $21, $44, $43, $22, $22, $33, $32, $22, $21 
-EnemyGfxData_SkeletonChild_Gfx_5BF3A:
-	dc.b	$01, $00, $FF, $FF, $F7, $73, $10, $11, $11, $11 
-EnemyGfxData_SkeletonChild_Gfx_5BF44:
-	dc.b	$01, $00, $EE, $EE, $EC, $CC, $0E, $0A, $0A, $2D, $32, $04, $43, $03, $43, $02, $32, $00 
-EnemyGfxData_SkeletonChild_Gfx_5BF56:
-	dc.b	$00, $E2, $22, $21, $22, $CC, $22, $12, $23, $CC, $21, $22, $34, $C2, $21, $22, $35, $22, $21, $23, $45, $32, $11, $23, $45, $21, $11, $12, $44, $11, $11, $11 
-	dc.b	$23, $00 
-EnemyGfxData_SkeletonChild_Gfx_5BF78:
-	dc.b	$00, $33, $22, $10, $00, $33, $32, $11, $00, $44, $32, $21, $00, $54, $43, $21, $10, $54, $43, $22, $10, $54, $43, $22, $21, $44, $33, $22, $22, $33, $33, $33 
-	dc.b	$22, $00 
-EnemyGfxData_SkeletonChild_Gfx_5BF9A:
-	dc.b	$01, $00, $FF, $FF, $FF, $77, $10, $10 
-EnemyGfxData_SkeletonChild_Gfx_5BFA2:
-	dc.b	$01, $00, $EE, $FF, $FF, $FF, $21, $01 
-EnemyGfxData_SkeletonChild_Gfx_5BFAA:
-	dc.b	$01, $11, $E9, $00, $00, $67, $12, $21, $12, $00, $22, $22, $22, $00, $22, $33, $32, $00, $02, $33, $33, $00, $01, $22, $33, $00, $22, $00 
-EnemyGfxData_SkeletonChild_Gfx_5BFC6:
-	dc.b	$01, $11, $08, $80, $44, $4C, $22, $24, $43, $32, $23, $44, $33, $23, $33, $32, $21, $12, $22, $23, $21, $13, $33, $21, $13, $34, $21, $13, $34, $33, $43, $00 
-EnemyGfxData_SkeletonChild_Gfx_5BFE6:
-	dc.b	$01, $00, $77, $33, $33, $37, $21, $21, $22, $10, $22, $20, $32, $21, $32, $11, $32, $10, $21, $00 
-EnemyGfxData_SkeletonChild_Gfx_5BFFA:
-	dc.b	$01, $00, $FF, $FF, $FF, $EE, $04, $0E 
-EnemyGfxData_SkeletonChild_Gfx_5C002:
-	dc.b	$01, $00, $33, $99, $00, $00, $08, $80, $08, $B8, $BB, $80, $8B, $87, $07, $88, $72, $11, $54, $77, $22, $21, $32, $23, $22, $21, $DC, $22, $22, $21 
-EnemyGfxData_SkeletonChild_Gfx_5C020:
-	dc.b	$01, $00, $FF, $FF, $F7, $71, $10, $11, $11, $11, $12, $00 
-EnemyGfxData_SkeletonChild_Gfx_5C02C:
-	dc.b	$01, $00, $EE, $EE, $EC, $CE, $0C, $0A, $0A, $CD, $4C, $03, $44, $02, $33, $33 
-EnemyGfxData_SkeletonChild_Gfx_5C03C:
-	dc.b	$01, $22, $22, $26, $04, $48, $DD, $C2, $11, $AD, $C2, $11, $AD, $C2, $12, $DC, $12, $C2, $32, $21, $12, $43, $21, $12, $33, $11, $11, $21, $11, $11 
-EnemyGfxData_SkeletonChild_Gfx_5C05A:
-	dc.b	$00, $12, $33, $22, $20, $23, $44, $33, $22, $34, $44, $44, $32, $34, $55, $54, $32, $34, $55, $44, $32, $23, $44, $43, $34, $22, $33, $32, $33, $11, $22, $22 
-	dc.b	$23, $00 
-EnemyGfxData_SkeletonChild_Gfx_5C07C:
-	dc.b	$01, $00, $F7, $31, $11, $10, $10, $11, $10, $22, $11, $10, $34, $32, $11, $44, $33, $21, $33, $32, $21, $32, $23, $32, $10, $00 
-EnemyGfxData_SkeletonChild_Gfx_5C096:
-	dc.b	$01, $00, $EE, $EE, $EE, $CC, $22, $01, $02, $12, $11, $22, $02, $22, $02, $11 
-EnemyGfxData_SkeletonChild_Gfx_5C0A6:
-	dc.b	$01, $11, $7C, $80, $88, $5F, $22, $12, $22, $22, $12, $33, $12, $33, $22, $34, $24, $32, $23, $13, $32, $12, $21, $21 
-EnemyGfxData_SkeletonChild_Gfx_5C0BE:
-	dc.b	$01, $11, $F7, $31, $13, $7F, $22, $22, $21, $33, $22, $21, $43, $22, $21, $32, $22, $22 
-EnemyGfxData_SkeletonChild_Gfx_5C0D0:
-	dc.b	$00, $11, $34, $32, $10, $11, $44, $32, $10, $01, $14, $32, $10, $00, $24, $42, $10, $00, $22, $42, $10, $12, $44, $21, $10, $14, $44, $21, $00, $14, $42, $11 
-	dc.b	$00, $00 
-EnemyGfxData_SkeletonChild_Gfx_5C0F2:
-	dc.b	$01, $00, $33, $99, $00, $00, $08, $80, $08, $B8, $BB, $80, $8B, $87, $07, $88, $72, $21, $54, $77, $22, $21, $44, $43, $22, $22, $33, $32, $22, $22 
-EnemyGfxData_SkeletonChild_Gfx_5C110:
-	dc.b	$01, $00, $FF, $FF, $F7, $31, $10, $11, $10, $11, $11, $10 
-EnemyGfxData_SkeletonChild_Gfx_5C11C:
-	dc.b	$01, $00, $EE, $EE, $EC, $CC, $02, $0D, $0D, $22, $32, $04, $42, $03, $32, $02, $32, $00 
-EnemyGfxData_SkeletonChild_Gfx_5C12E:
-	dc.b	$01, $44, $00, $31, $04, $51, $22, $22, $22, $33, $22, $12, $33, $33, $22, $23, $21, $34, $45, $12, $34, $55, $54, $12, $55, $54, $22, $55, $33, $34, $54, $00 
-EnemyGfxData_SkeletonChild_Gfx_5C14E:
-	dc.b	$01, $33, $08, $C0, $84, $22, $32, $22, $11, $00, $22, $21, $10, $22, $11, $34, $43, $32, $21, $44, $42, $21, $32, $42, $21, $32, $23, $21, $32, $23, $21, $00 
-EnemyGfxData_SkeletonChild_Gfx_5C16E:
-	dc.b	$02, $00, $FF, $77, $33, $33, $11, $00, $08, $8C, $CC, $10, $10, $00 
-EnemyGfxData_SkeletonChild_Gfx_5C17C:
-	dc.b	$01, $00, $EC, $CC, $88, $88, $23, $02, $33, $22, $34, $33, $45, $02, $34, $54, $02, $34, $44, $22, $33, $43, $22, $33, $33, $00 
-EnemyGfxData_SkeletonChild_Gfx_5C196:
-	dc.b	$01, $11, $00, $03, $33, $26, $33, $33, $44, $33, $43, $23, $33, $32, $53, $22, $22, $22, $43, $21, $43, $21, $33, $22, $32, $21, $12, $22, $22, $00 
-EnemyGfxData_SkeletonChild_Gfx_5C1B4:
-	dc.b	$01, $22, $00, $22, $CE, $D8, $21, $23, $33, $21, $21, $23, $32, $21, $11, $33, $11, $12, $32, $11, $11, $11, $11, $33, $23, $34, $32, $00 
-EnemyGfxData_SkeletonChild_Gfx_5C1D0:
-	dc.b	$02, $11, $CC, $88, $80, $08, $00, $33, $37, $77, $77, $10, $10, $10 
+	incbin "data/art/tiles/enemy/skeleton_child_gfx.bin"
+EnemyGfxData_SkeletonChild_Gfx_5B7FA equ EnemyGfxData_SkeletonChild_Gfx_5B7F0+$A
+EnemyGfxData_SkeletonChild_Gfx_5B810 equ EnemyGfxData_SkeletonChild_Gfx_5B7F0+$20
+EnemyGfxData_SkeletonChild_Gfx_5B828 equ EnemyGfxData_SkeletonChild_Gfx_5B7F0+$38
+EnemyGfxData_SkeletonChild_Gfx_5B834 equ EnemyGfxData_SkeletonChild_Gfx_5B7F0+$44
+EnemyGfxData_SkeletonChild_Gfx_5B852 equ EnemyGfxData_SkeletonChild_Gfx_5B7F0+$62
+EnemyGfxData_SkeletonChild_Gfx_5B872 equ EnemyGfxData_SkeletonChild_Gfx_5B7F0+$82
+EnemyGfxData_SkeletonChild_Gfx_5B892 equ EnemyGfxData_SkeletonChild_Gfx_5B7F0+$A2
+EnemyGfxData_SkeletonChild_Gfx_5B8B0 equ EnemyGfxData_SkeletonChild_Gfx_5B7F0+$C0
+EnemyGfxData_SkeletonChild_Gfx_5B8D2 equ EnemyGfxData_SkeletonChild_Gfx_5B7F0+$E2
+EnemyGfxData_SkeletonChild_Gfx_5B8F2 equ EnemyGfxData_SkeletonChild_Gfx_5B7F0+$102
+EnemyGfxData_SkeletonChild_Gfx_5B90E equ EnemyGfxData_SkeletonChild_Gfx_5B7F0+$11E
+EnemyGfxData_SkeletonChild_Gfx_5B92C equ EnemyGfxData_SkeletonChild_Gfx_5B7F0+$13C
+EnemyGfxData_SkeletonChild_Gfx_5B938 equ EnemyGfxData_SkeletonChild_Gfx_5B7F0+$148
+EnemyGfxData_SkeletonChild_Gfx_5B950 equ EnemyGfxData_SkeletonChild_Gfx_5B7F0+$160
+EnemyGfxData_SkeletonChild_Gfx_5B968 equ EnemyGfxData_SkeletonChild_Gfx_5B7F0+$178
+EnemyGfxData_SkeletonChild_Gfx_5B970 equ EnemyGfxData_SkeletonChild_Gfx_5B7F0+$180
+EnemyGfxData_SkeletonChild_Gfx_5B98A equ EnemyGfxData_SkeletonChild_Gfx_5B7F0+$19A
+EnemyGfxData_SkeletonChild_Gfx_5B9AC equ EnemyGfxData_SkeletonChild_Gfx_5B7F0+$1BC
+EnemyGfxData_SkeletonChild_Gfx_5B9CE equ EnemyGfxData_SkeletonChild_Gfx_5B7F0+$1DE
+EnemyGfxData_SkeletonChild_Gfx_5B9EA equ EnemyGfxData_SkeletonChild_Gfx_5B7F0+$1FA
+EnemyGfxData_SkeletonChild_Gfx_5BA0C equ EnemyGfxData_SkeletonChild_Gfx_5B7F0+$21C
+EnemyGfxData_SkeletonChild_Gfx_5BA2E equ EnemyGfxData_SkeletonChild_Gfx_5B7F0+$23E
+EnemyGfxData_SkeletonChild_Gfx_5BA4C equ EnemyGfxData_SkeletonChild_Gfx_5B7F0+$25C
+EnemyGfxData_SkeletonChild_Gfx_5BA6A equ EnemyGfxData_SkeletonChild_Gfx_5B7F0+$27A
+EnemyGfxData_SkeletonChild_Gfx_5BA72 equ EnemyGfxData_SkeletonChild_Gfx_5B7F0+$282
+EnemyGfxData_SkeletonChild_Gfx_5BA88 equ EnemyGfxData_SkeletonChild_Gfx_5B7F0+$298
+EnemyGfxData_SkeletonChild_Gfx_5BAA2 equ EnemyGfxData_SkeletonChild_Gfx_5B7F0+$2B2
+EnemyGfxData_SkeletonChild_Gfx_5BAB0 equ EnemyGfxData_SkeletonChild_Gfx_5B7F0+$2C0
+EnemyGfxData_SkeletonChild_Gfx_5BACE equ EnemyGfxData_SkeletonChild_Gfx_5B7F0+$2DE
+EnemyGfxData_SkeletonChild_Gfx_5BAF0 equ EnemyGfxData_SkeletonChild_Gfx_5B7F0+$300
+EnemyGfxData_SkeletonChild_Gfx_5BB0A equ EnemyGfxData_SkeletonChild_Gfx_5B7F0+$31A
+EnemyGfxData_SkeletonChild_Gfx_5BB24 equ EnemyGfxData_SkeletonChild_Gfx_5B7F0+$334
+EnemyGfxData_SkeletonChild_Gfx_5BB46 equ EnemyGfxData_SkeletonChild_Gfx_5B7F0+$356
+EnemyGfxData_SkeletonChild_Gfx_5BB68 equ EnemyGfxData_SkeletonChild_Gfx_5B7F0+$378
+EnemyGfxData_SkeletonChild_Gfx_5BB7E equ EnemyGfxData_SkeletonChild_Gfx_5B7F0+$38E
+EnemyGfxData_SkeletonChild_Gfx_5BB96 equ EnemyGfxData_SkeletonChild_Gfx_5B7F0+$3A6
+EnemyGfxData_SkeletonChild_Gfx_5BBA0 equ EnemyGfxData_SkeletonChild_Gfx_5B7F0+$3B0
+EnemyGfxData_SkeletonChild_Gfx_5BBB6 equ EnemyGfxData_SkeletonChild_Gfx_5B7F0+$3C6
+EnemyGfxData_SkeletonChild_Gfx_5BBCE equ EnemyGfxData_SkeletonChild_Gfx_5B7F0+$3DE
+EnemyGfxData_SkeletonChild_Gfx_5BBD8 equ EnemyGfxData_SkeletonChild_Gfx_5B7F0+$3E8
+EnemyGfxData_SkeletonChild_Gfx_5BBF6 equ EnemyGfxData_SkeletonChild_Gfx_5B7F0+$406
+EnemyGfxData_SkeletonChild_Gfx_5BC14 equ EnemyGfxData_SkeletonChild_Gfx_5B7F0+$424
+EnemyGfxData_SkeletonChild_Gfx_5BC36 equ EnemyGfxData_SkeletonChild_Gfx_5B7F0+$446
+EnemyGfxData_SkeletonChild_Gfx_5BC52 equ EnemyGfxData_SkeletonChild_Gfx_5B7F0+$462
+EnemyGfxData_SkeletonChild_Gfx_5BC74 equ EnemyGfxData_SkeletonChild_Gfx_5B7F0+$484
+EnemyGfxData_SkeletonChild_Gfx_5BC96 equ EnemyGfxData_SkeletonChild_Gfx_5B7F0+$4A6
+EnemyGfxData_SkeletonChild_Gfx_5BCB6 equ EnemyGfxData_SkeletonChild_Gfx_5B7F0+$4C6
+EnemyGfxData_SkeletonChild_Gfx_5BCD4 equ EnemyGfxData_SkeletonChild_Gfx_5B7F0+$4E4
+EnemyGfxData_SkeletonChild_Gfx_5BCE0 equ EnemyGfxData_SkeletonChild_Gfx_5B7F0+$4F0
+EnemyGfxData_SkeletonChild_Gfx_5BCF8 equ EnemyGfxData_SkeletonChild_Gfx_5B7F0+$508
+EnemyGfxData_SkeletonChild_Gfx_5BD10 equ EnemyGfxData_SkeletonChild_Gfx_5B7F0+$520
+EnemyGfxData_SkeletonChild_Gfx_5BD18 equ EnemyGfxData_SkeletonChild_Gfx_5B7F0+$528
+EnemyGfxData_SkeletonChild_Gfx_5BD34 equ EnemyGfxData_SkeletonChild_Gfx_5B7F0+$544
+EnemyGfxData_SkeletonChild_Gfx_5BD50 equ EnemyGfxData_SkeletonChild_Gfx_5B7F0+$560
+EnemyGfxData_SkeletonChild_Gfx_5BD70 equ EnemyGfxData_SkeletonChild_Gfx_5B7F0+$580
+EnemyGfxData_SkeletonChild_Gfx_5BD86 equ EnemyGfxData_SkeletonChild_Gfx_5B7F0+$596
+EnemyGfxData_SkeletonChild_Gfx_5BD9C equ EnemyGfxData_SkeletonChild_Gfx_5B7F0+$5AC
+EnemyGfxData_SkeletonChild_Gfx_5BDBE equ EnemyGfxData_SkeletonChild_Gfx_5B7F0+$5CE
+EnemyGfxData_SkeletonChild_Gfx_5BDDC equ EnemyGfxData_SkeletonChild_Gfx_5B7F0+$5EC
+EnemyGfxData_SkeletonChild_Gfx_5BDFA equ EnemyGfxData_SkeletonChild_Gfx_5B7F0+$60A
+EnemyGfxData_SkeletonChild_Gfx_5BE00 equ EnemyGfxData_SkeletonChild_Gfx_5B7F0+$610
+EnemyGfxData_SkeletonChild_Gfx_5BE14 equ EnemyGfxData_SkeletonChild_Gfx_5B7F0+$624
+EnemyGfxData_SkeletonChild_Gfx_5BE2E equ EnemyGfxData_SkeletonChild_Gfx_5B7F0+$63E
+EnemyGfxData_SkeletonChild_Gfx_5BE3A equ EnemyGfxData_SkeletonChild_Gfx_5B7F0+$64A
+EnemyGfxData_SkeletonChild_Gfx_5BE50 equ EnemyGfxData_SkeletonChild_Gfx_5B7F0+$660
+EnemyGfxData_SkeletonChild_Gfx_5BE70 equ EnemyGfxData_SkeletonChild_Gfx_5B7F0+$680
+EnemyGfxData_SkeletonChild_Gfx_5BE90 equ EnemyGfxData_SkeletonChild_Gfx_5B7F0+$6A0
+EnemyGfxData_SkeletonChild_Gfx_5BEA6 equ EnemyGfxData_SkeletonChild_Gfx_5B7F0+$6B6
+EnemyGfxData_SkeletonChild_Gfx_5BEC4 equ EnemyGfxData_SkeletonChild_Gfx_5B7F0+$6D4
+EnemyGfxData_SkeletonChild_Gfx_5BEE6 equ EnemyGfxData_SkeletonChild_Gfx_5B7F0+$6F6
+EnemyGfxData_SkeletonChild_Gfx_5BF04 equ EnemyGfxData_SkeletonChild_Gfx_5B7F0+$714
+EnemyGfxData_SkeletonChild_Gfx_5BF14 equ EnemyGfxData_SkeletonChild_Gfx_5B7F0+$724
+EnemyGfxData_SkeletonChild_Gfx_5BF1C equ EnemyGfxData_SkeletonChild_Gfx_5B7F0+$72C
+EnemyGfxData_SkeletonChild_Gfx_5BF3A equ EnemyGfxData_SkeletonChild_Gfx_5B7F0+$74A
+EnemyGfxData_SkeletonChild_Gfx_5BF44 equ EnemyGfxData_SkeletonChild_Gfx_5B7F0+$754
+EnemyGfxData_SkeletonChild_Gfx_5BF56 equ EnemyGfxData_SkeletonChild_Gfx_5B7F0+$766
+EnemyGfxData_SkeletonChild_Gfx_5BF78 equ EnemyGfxData_SkeletonChild_Gfx_5B7F0+$788
+EnemyGfxData_SkeletonChild_Gfx_5BF9A equ EnemyGfxData_SkeletonChild_Gfx_5B7F0+$7AA
+EnemyGfxData_SkeletonChild_Gfx_5BFA2 equ EnemyGfxData_SkeletonChild_Gfx_5B7F0+$7B2
+EnemyGfxData_SkeletonChild_Gfx_5BFAA equ EnemyGfxData_SkeletonChild_Gfx_5B7F0+$7BA
+EnemyGfxData_SkeletonChild_Gfx_5BFC6 equ EnemyGfxData_SkeletonChild_Gfx_5B7F0+$7D6
+EnemyGfxData_SkeletonChild_Gfx_5BFE6 equ EnemyGfxData_SkeletonChild_Gfx_5B7F0+$7F6
+EnemyGfxData_SkeletonChild_Gfx_5BFFA equ EnemyGfxData_SkeletonChild_Gfx_5B7F0+$80A
+EnemyGfxData_SkeletonChild_Gfx_5C002 equ EnemyGfxData_SkeletonChild_Gfx_5B7F0+$812
+EnemyGfxData_SkeletonChild_Gfx_5C020 equ EnemyGfxData_SkeletonChild_Gfx_5B7F0+$830
+EnemyGfxData_SkeletonChild_Gfx_5C02C equ EnemyGfxData_SkeletonChild_Gfx_5B7F0+$83C
+EnemyGfxData_SkeletonChild_Gfx_5C03C equ EnemyGfxData_SkeletonChild_Gfx_5B7F0+$84C
+EnemyGfxData_SkeletonChild_Gfx_5C05A equ EnemyGfxData_SkeletonChild_Gfx_5B7F0+$86A
+EnemyGfxData_SkeletonChild_Gfx_5C07C equ EnemyGfxData_SkeletonChild_Gfx_5B7F0+$88C
+EnemyGfxData_SkeletonChild_Gfx_5C096 equ EnemyGfxData_SkeletonChild_Gfx_5B7F0+$8A6
+EnemyGfxData_SkeletonChild_Gfx_5C0A6 equ EnemyGfxData_SkeletonChild_Gfx_5B7F0+$8B6
+EnemyGfxData_SkeletonChild_Gfx_5C0BE equ EnemyGfxData_SkeletonChild_Gfx_5B7F0+$8CE
+EnemyGfxData_SkeletonChild_Gfx_5C0D0 equ EnemyGfxData_SkeletonChild_Gfx_5B7F0+$8E0
+EnemyGfxData_SkeletonChild_Gfx_5C0F2 equ EnemyGfxData_SkeletonChild_Gfx_5B7F0+$902
+EnemyGfxData_SkeletonChild_Gfx_5C110 equ EnemyGfxData_SkeletonChild_Gfx_5B7F0+$920
+EnemyGfxData_SkeletonChild_Gfx_5C11C equ EnemyGfxData_SkeletonChild_Gfx_5B7F0+$92C
+EnemyGfxData_SkeletonChild_Gfx_5C12E equ EnemyGfxData_SkeletonChild_Gfx_5B7F0+$93E
+EnemyGfxData_SkeletonChild_Gfx_5C14E equ EnemyGfxData_SkeletonChild_Gfx_5B7F0+$95E
+EnemyGfxData_SkeletonChild_Gfx_5C16E equ EnemyGfxData_SkeletonChild_Gfx_5B7F0+$97E
+EnemyGfxData_SkeletonChild_Gfx_5C17C equ EnemyGfxData_SkeletonChild_Gfx_5B7F0+$98C
+EnemyGfxData_SkeletonChild_Gfx_5C196 equ EnemyGfxData_SkeletonChild_Gfx_5B7F0+$9A6
+EnemyGfxData_SkeletonChild_Gfx_5C1B4 equ EnemyGfxData_SkeletonChild_Gfx_5B7F0+$9C4
+EnemyGfxData_SkeletonChild_Gfx_5C1D0 equ EnemyGfxData_SkeletonChild_Gfx_5B7F0+$9E0
 EnemyGfxData_SkeletonChild:
 	dc.l	EnemyGfxData_SkeletonChild_Gfx_5B7F0
 	dc.l	EnemyGfxData_SkeletonChild_Gfx_5B7FA
@@ -62743,150 +59560,77 @@ EnemyGfxFrameTable_SkeletonMain:
 	dc.b	$14, $23, $20, $24, $21, $25, $22, $26, $27, $2B, $28, $2C, $29, $2D, $2A, $2E, $2F, $33, $30, $34, $31, $35, $32, $36, $37, $3B, $38, $3C, $39, $3D, $3A, $3E 
 	dc.b	$3F, $43, $40, $44, $41, $45, $42, $46 
 EnemyGfxData_SkeletonMain_Gfx_5C3C6:
-	dc.b	$01, $00, $11, $88, $88, $CC, $04, $44, $20, $03, $44, $32, $44, $33, $21, $04, $43, $32, $02, $42, $22, $02, $44, $11, $24, $12, $23, $20 
-EnemyGfxData_SkeletonMain_Gfx_5C3E2:
-	dc.b	$01, $11, $01, $12, $28, $CE, $04, $43, $22, $12, $44, $43, $22, $34, $42, $21, $14, $42, $10, $12, $21, $00, $21, $10, $00, $10, $00, $00 
-EnemyGfxData_SkeletonMain_Gfx_5C3FE:
-	dc.b	$01, $00, $00, $08, $8C, $C8, $11, $13, $32, $22, $11, $34, $43, $22, $11, $34, $55, $32, $23, $44, $32, $02, $33, $33, $23, $32, $22, $21, $02, $11, $11, $00 
-EnemyGfxData_SkeletonMain_Gfx_5C41E:
-	dc.b	$01, $00, $81, $11, $13, $77, $34, $32, $10, $23, $44, $21, $24, $34, $21, $12, $33, $31, $21, $22, $10, $21, $11, $12, $10, $00 
-EnemyGfxData_SkeletonMain_Gfx_5C438:
-	dc.b	$01, $00, $CF, $EE, $CC, $EF, $03, $20, $02, $25, $04, $43, $09, $94, $99, $00 
-EnemyGfxData_SkeletonMain_Gfx_5C448:
-	dc.b	$01, $99, $00, $01, $7F, $F3, $02, $11, $11, $00, $22, $21, $10, $00, $42, $11, $00, $00, $42, $10, $09, $39, $00, $09 
-EnemyGfxData_SkeletonMain_Gfx_5C460:
-	dc.b	$02, $00, $8C, $C2, $00, $01, $99, $00, $0C, $EF, $FE, $02, $21, $11, $22, $11, $03, $22, $33, $94 
-EnemyGfxData_SkeletonMain_Gfx_5C474:
-	dc.b	$01, $00, $F7, $73, $33, $3F, $20, $11, $52, $10, $35, $32, $44, $99, $99, $90 
-EnemyGfxData_SkeletonMain_Gfx_5C484:
-	dc.b	$01, $00, $8C, $CF, $FF, $FF, $04, $43, $21, $32, $21, $22, $11, $00 
-EnemyGfxData_SkeletonMain_Gfx_5C492:
-	dc.b	$00, $04, $53, $22, $12, $05, $54, $32, $11, $45, $54, $31, $11, $56, $54, $31, $10, $55, $43, $21, $00, $44, $43, $11, $00, $33, $32, $10, $00, $11, $21, $10 
-	dc.b	$00, $00 
-EnemyGfxData_SkeletonMain_Gfx_5C4B4:
-	dc.b	$00, $11, $53, $64, $33, $11, $43, $43, $32, $11, $12, $32, $21, $11, $12, $21, $10, $01, $12, $22, $10, $01, $12, $22, $10, $01, $11, $22, $10, $00, $12, $11 
-	dc.b	$00, $00 
-EnemyGfxData_SkeletonMain_Gfx_5C4D6:
-	dc.b	$01, $00, $37, $FF, $FF, $FF, $33, $33, $20, $00 
-EnemyGfxData_SkeletonMain_Gfx_5C4E0:
-	dc.b	$01, $00, $FF, $FE, $EE, $EE, $03, $35, $35, $34, $03, $00 
-EnemyGfxData_SkeletonMain_Gfx_5C4EC:
-	dc.b	$01, $99, $00, $01, $33, $37, $02, $11, $11, $00, $02, $11, $11, $00, $31, $21, $10, $00, $55, $42, $19, $54, $31, $34, $19, $34, $19, $31 
-EnemyGfxData_SkeletonMain_Gfx_5C508:
-	dc.b	$02, $00, $98, $80, $00, $07, $99, $00, $08, $8C, $E0, $12, $11, $01, $11, $10, $01, $23, $10, $91, $23, $29, $91, $92, $29, $91, $19, $90, $90, $00 
-EnemyGfxData_SkeletonMain_Gfx_5C526:
-	dc.b	$01, $00, $FF, $F7, $77, $FF, $90, $99, $90, $00 
-EnemyGfxData_SkeletonMain_Gfx_5C530:
-	dc.b	$01, $00, $88, $8F, $FF, $FF, $34, $55, $55, $33, $44, $44, $03, $33, $33, $00 
-EnemyGfxData_SkeletonMain_Gfx_5C540:
-	dc.b	$01, $11, $01, $10, $26, $72, $56, $65, $43, $12, $55, $44, $32, $34, $43, $22, $13, $32, $21, $12, $02, $22, $12, $01, $10, $01, $00, $12, $12, $00 
-EnemyGfxData_SkeletonMain_Gfx_5C55E:
-	dc.b	$01, $11, $98, $88, $00, $03, $13, $31, $34, $44, $31, $35, $64, $44, $24, $66, $53, $01, $24, $56, $43, $00, $23, $44, $32, $00, $12, $33, $21, $10, $02, $00 
-EnemyGfxData_SkeletonMain_Gfx_5C57E:
-	dc.b	$02, $00, $81, $11, $37, $77, $11, $0A, $EC, $40, $00, $12, $22, $10, $12, $10, $21, $21, $12, $10 
-EnemyGfxData_SkeletonMain_Gfx_5C592:
-	dc.b	$01, $00, $FF, $FF, $FF, $FF 
-EnemyGfxData_SkeletonMain_Gfx_5C598:
-	dc.b	$02, $00, $CC, $80, $00, $8F, $99, $00, $01, $F7, $30, $11, $22, $22, $21, $02, $22, $10, $09, $91, $22, $09, $09, $00 
-EnemyGfxData_SkeletonMain_Gfx_5C5B0:
-	dc.b	$01, $99, $00, $08, $CC, $CE, $10, $02, $21, $11, $00, $02, $32, $10, $00, $02, $43, $20, $92, $34, $22, $24, $44, $22, $42, $92, $42, $33 
-EnemyGfxData_SkeletonMain_Gfx_5C5CC:
-	dc.b	$01, $00, $FF, $F7, $73, $37, $10, $21, $42, $99, $32, $90, $30, $00 
-EnemyGfxData_SkeletonMain_Gfx_5C5DA:
-	dc.b	$01, $00, $88, $CE, $EE, $EF, $22, $11, $11, $02, $21, $11, $02, $11, $11, $11, $12, $02 
-EnemyGfxData_SkeletonMain_Gfx_5C5EC:
-	dc.b	$01, $11, $08, $DF, $EC, $00, $01, $33, $33, $32, $12, $33, $22, $22, $00, $10, $00, $21, $22, $30, $00, $12, $34, $31, $00, $00 
-EnemyGfxData_SkeletonMain_Gfx_5C606:
-	dc.b	$01, $11, $01, $B7, $33, $10, $23, $43, $22, $12, $12, $32, $21, $21, $01, $00, $01, $00, $00, $00, $02, $22, $00, $02, $33, $21 
-EnemyGfxData_SkeletonMain_Gfx_5C620:
-	dc.b	$03, $11, $E4, $88, $88, $00, $10, $12, $44, $44, $08, $00, $01, $33, $33, $77, $21, $12 
-EnemyGfxData_SkeletonMain_Gfx_5C632:
-	dc.b	$01, $00, $FF, $EE, $CC, $EF, $02, $22, $01, $11, $09, $11, $99, $00 
-EnemyGfxData_SkeletonMain_Gfx_5C640:
-	dc.b	$01, $99, $00, $01, $7F, $F3, $02, $44, $31, $00, $23, $43, $20, $00, $33, $32, $00, $00, $22, $20, $09, $22, $00, $09 
-EnemyGfxData_SkeletonMain_Gfx_5C658:
-	dc.b	$02, $00, $8C, $C2, $00, $01, $99, $00, $0C, $EF, $FE, $02, $43, $31, $34, $32, $02, $33, $23, $91 
-EnemyGfxData_SkeletonMain_Gfx_5C66C:
-	dc.b	$01, $00, $F7, $73, $33, $3F, $10, $22, $22, $10, $22, $11, $11, $99, $99, $90 
-EnemyGfxData_SkeletonMain_Gfx_5C67C:
-	dc.b	$01, $11, $00, $53, $22, $08, $01, $33, $33, $32, $01, $12, $33, $22, $01, $22, $01, $21, $12, $22, $10, $12, $22, $10, $13, $33, $22, $20, $33, $43, $20, $00 
-EnemyGfxData_SkeletonMain_Gfx_5C69C:
-	dc.b	$01, $11, $01, $B7, $73, $36, $23, $43, $22, $12, $12, $32, $21, $21, $01, $00, $00, $01, $00, $01, $00, $10 
-EnemyGfxData_SkeletonMain_Gfx_5C6B2:
-	dc.b	$02, $11, $22, $22, $64, $00, $00, $19, $11, $19, $FF, $01, $22, $22, $10, $02, $10, $02, $10, $10 
-EnemyGfxData_SkeletonMain_Gfx_5C6C6:
-	dc.b	$01, $00, $FF, $FF, $EE, $EC, $02, $02, $11, $09, $11, $00 
-EnemyGfxData_SkeletonMain_Gfx_5C6D2:
-	dc.b	$01, $99, $00, $00, $11, $7F, $01, $24, $43, $20, $02, $44, $33, $00, $04, $44, $32, $00, $44, $43, $20, $09, $43, $32, $11, $33, $21, $19, $32, $00 
-EnemyGfxData_SkeletonMain_Gfx_5C6F0:
-	dc.b	$02, $11, $63, $32, $00, $00, $99, $00, $08, $FF, $FC, $00, $10, $00, $01, $00, $01, $91, $23, $00, $00, $00 
-EnemyGfxData_SkeletonMain_Gfx_5C706:
-	dc.b	$01, $00, $FF, $F7, $77, $FF, $29, $99, $90, $00 
-EnemyGfxData_SkeletonMain_Gfx_5C710:
-	dc.b	$01, $00, $89, $99, $CC, $FF, $32, $11, $10, $22, $11, $11, $11, $02, $11, $22, $10, $01, $10, $00 
-EnemyGfxData_SkeletonMain_Gfx_5C724:
-	dc.b	$01, $11, $00, $5F, $E6, $66, $01, $12, $33, $32, $01, $12, $33, $22, $21, $22, $10, $01, $00, $01, $10, $00, $10, $00 
-EnemyGfxData_SkeletonMain_Gfx_5C73C:
-	dc.b	$01, $11, $01, $B7, $70, $11, $23, $43, $22, $12, $12, $32, $21, $21, $01, $00, $00, $01, $22, $21, $00, $02, $22, $00, $02, $21 
-EnemyGfxData_SkeletonMain_Gfx_5C756:
-	dc.b	$01, $00, $FF, $77, $77, $7F, $10, $10, $10, $10, $10, $00 
-EnemyGfxData_SkeletonMain_Gfx_5C762:
-	dc.b	$01, $00, $FF, $FF, $EF, $FF, $09, $00 
-EnemyGfxData_SkeletonMain_Gfx_5C76A:
-	dc.b	$02, $00, $88, $90, $00, $8C, $99, $00, $01, $FF, $71, $01, $11, $10, $11, $11, $10, $11, $11, $01, $11, $19, $09, $00 
-EnemyGfxData_SkeletonMain_Gfx_5C782:
-	dc.b	$01, $99, $00, $00, $CC, $EE, $00, $23, $21, $11, $00, $34, $32, $10, $00, $34, $43, $21, $90, $03, $44, $32, $34, $32, $93, $33, $32, $92 
-EnemyGfxData_SkeletonMain_Gfx_5C79E:
-	dc.b	$01, $00, $FF, $F7, $33, $37, $10, $11, $90, $21, $99, $22, $90, $22 
-EnemyGfxData_SkeletonMain_Gfx_5C7AC:
-	dc.b	$01, $00, $FF, $EE, $FF, $FF, $01, $01 
-EnemyGfxData_SkeletonMain_Gfx_5C7B4:
-	dc.b	$01, $11, $31, $40, $8A, $31, $01, $21, $12, $21, $12, $22, $12, $22, $22, $12, $22, $21, $12, $22, $21, $01, $22, $00, $01, $00, $00, $01 
-EnemyGfxData_SkeletonMain_Gfx_5C7D0:
-	dc.b	$01, $11, $88, $11, $3A, $FF, $13, $34, $42, $34, $43, $21, $13, $44, $32, $23, $44, $21, $23, $33, $22, $10 
-EnemyGfxData_SkeletonMain_Gfx_5C7E6:
-	dc.b	$01, $00, $77, $77, $FF, $F7, $11, $11, $10, $10, $10, $00 
-EnemyGfxData_SkeletonMain_Gfx_5C7F2:
-	dc.b	$01, $00, $FF, $FF, $FE, $CE, $99, $09, $99, $09 
-EnemyGfxData_SkeletonMain_Gfx_5C7FC:
-	dc.b	$02, $00, $EC, $C8, $00, $00, $11, $10, $15, $2F, $01, $01, $21, $12, $21, $12, $22, $10, $99, $99, $99, $12, $99, $99, $99, $00 
-EnemyGfxData_SkeletonMain_Gfx_5C816:
-	dc.b	$01, $11, $FB, $31, $40, $2C, $01, $10, $00, $00, $01, $22, $00, $22, $10, $22, $22, $21, $19, $22, $22, $99, $19, $99 
-EnemyGfxData_SkeletonMain_Gfx_5C82E:
-	dc.b	$01, $00, $77, $7F, $F7, $77, $11, $11, $10, $90, $99, $90 
-EnemyGfxData_SkeletonMain_Gfx_5C83A:
-	dc.b	$01, $00, $CC, $CC, $EF, $FF, $32, $33, $33, $44, $34, $42, $02, $41, $21, $00 
-EnemyGfxData_SkeletonMain_Gfx_5C84A:
-	dc.b	$00, $32, $10, $11, $11, $32, $10, $01, $12, $42, $20, $01, $23, $31, $10, $03, $44, $11, $00, $34, $44, $00, $03, $44, $43, $00, $03, $44, $32, $00, $03, $33 
-	dc.b	$32, $00 
-EnemyGfxData_SkeletonMain_Gfx_5C86C:
-	dc.b	$01, $11, $11, $11, $22, $6F, $12, $22, $21, $22, $22, $21, $33, $32, $21, $43, $32, $21, $33, $22, $10, $32, $21, $10, $21, $10 
-EnemyGfxData_SkeletonMain_Gfx_5C886:
-	dc.b	$01, $00, $11, $BF, $FF, $F7, $12, $22, $11, $11, $11, $10, $11, $10 
-EnemyGfxData_SkeletonMain_Gfx_5C894:
-	dc.b	$01, $00, $FF, $FF, $FF, $EE, $99, $09 
-EnemyGfxData_SkeletonMain_Gfx_5C89C:
-	dc.b	$01, $00, $8C, $EE, $C0, $00, $01, $23, $32, $11, $22, $11, $12, $01, $21, $99, $92, $32, $21, $23, $33, $31, $11, $12, $22, $11, $19, $00 
-EnemyGfxData_SkeletonMain_Gfx_5C8B8:
-	dc.b	$02, $11, $B1, $57, $EE, $00, $99, $00, $00, $01, $FE, $01, $21, $10, $01, $22, $01, $21, $19, $90 
-EnemyGfxData_SkeletonMain_Gfx_5C8CC:
-	dc.b	$01, $00, $77, $FF, $33, $7F, $11, $10, $99, $90, $99, $99, $99, $00 
-EnemyGfxData_SkeletonMain_Gfx_5C8DA:
-	dc.b	$01, $00, $88, $FF, $EE, $EE, $22, $22, $22, $02, $22, $11, $02, $02, $12, $12 
-EnemyGfxData_SkeletonMain_Gfx_5C8EA:
-	dc.b	$01, $11, $FF, $E2, $66, $66, $12, $22, $21, $22, $22, $22, $21, $22, $21, $12, $22, $02 
-EnemyGfxData_SkeletonMain_Gfx_5C8FC:
-	dc.b	$01, $22, $08, $D6, $02, $30, $12, $23, $44, $32, $23, $33, $32, $33, $23, $11, $33, $32, $11, $11, $34, $32, $11, $44, $33, $34, $43, $33, $32, $00 
-EnemyGfxData_SkeletonMain_Gfx_5C91A:
-	dc.b	$01, $00, $77, $77, $73, $33, $21, $21, $10, $10, $10, $11, $10, $21, $11, $22, $11, $00 
-EnemyGfxData_SkeletonMain_Gfx_5C92C:
-	dc.b	$01, $00, $EE, $FF, $FC, $8C, $12, $01, $92, $22, $09, $11, $11, $99, $99, $00 
-EnemyGfxData_SkeletonMain_Gfx_5C93C:
-	dc.b	$02, $11, $22, $66, $44, $80, $99, $00, $00, $13, $7F, $22, $21, $10, $12, $21, $10, $01, $10, $00, $00, $22, $19, $21 
-EnemyGfxData_SkeletonMain_Gfx_5C954:
-	dc.b	$02, $00, $08, $EC, $40, $00, $11, $07, $10, $24, $46, $23, $32, $23, $32, $01, $12, $90, $12, $99, $22, $21, $91, $21, $19, $99, $99, $00 
-EnemyGfxData_SkeletonMain_Gfx_5C970:
-	dc.b	$01, $00, $33, $77, $FF, $77, $11, $10, $11, $10, $22, $20, $99, $90 
+	incbin "data/art/tiles/enemy/skeleton_main_gfx.bin"
+EnemyGfxData_SkeletonMain_Gfx_5C3E2 equ EnemyGfxData_SkeletonMain_Gfx_5C3C6+$1C
+EnemyGfxData_SkeletonMain_Gfx_5C3FE equ EnemyGfxData_SkeletonMain_Gfx_5C3C6+$38
+EnemyGfxData_SkeletonMain_Gfx_5C41E equ EnemyGfxData_SkeletonMain_Gfx_5C3C6+$58
+EnemyGfxData_SkeletonMain_Gfx_5C438 equ EnemyGfxData_SkeletonMain_Gfx_5C3C6+$72
+EnemyGfxData_SkeletonMain_Gfx_5C448 equ EnemyGfxData_SkeletonMain_Gfx_5C3C6+$82
+EnemyGfxData_SkeletonMain_Gfx_5C460 equ EnemyGfxData_SkeletonMain_Gfx_5C3C6+$9A
+EnemyGfxData_SkeletonMain_Gfx_5C474 equ EnemyGfxData_SkeletonMain_Gfx_5C3C6+$AE
+EnemyGfxData_SkeletonMain_Gfx_5C484 equ EnemyGfxData_SkeletonMain_Gfx_5C3C6+$BE
+EnemyGfxData_SkeletonMain_Gfx_5C492 equ EnemyGfxData_SkeletonMain_Gfx_5C3C6+$CC
+EnemyGfxData_SkeletonMain_Gfx_5C4B4 equ EnemyGfxData_SkeletonMain_Gfx_5C3C6+$EE
+EnemyGfxData_SkeletonMain_Gfx_5C4D6 equ EnemyGfxData_SkeletonMain_Gfx_5C3C6+$110
+EnemyGfxData_SkeletonMain_Gfx_5C4E0 equ EnemyGfxData_SkeletonMain_Gfx_5C3C6+$11A
+EnemyGfxData_SkeletonMain_Gfx_5C4EC equ EnemyGfxData_SkeletonMain_Gfx_5C3C6+$126
+EnemyGfxData_SkeletonMain_Gfx_5C508 equ EnemyGfxData_SkeletonMain_Gfx_5C3C6+$142
+EnemyGfxData_SkeletonMain_Gfx_5C526 equ EnemyGfxData_SkeletonMain_Gfx_5C3C6+$160
+EnemyGfxData_SkeletonMain_Gfx_5C530 equ EnemyGfxData_SkeletonMain_Gfx_5C3C6+$16A
+EnemyGfxData_SkeletonMain_Gfx_5C540 equ EnemyGfxData_SkeletonMain_Gfx_5C3C6+$17A
+EnemyGfxData_SkeletonMain_Gfx_5C55E equ EnemyGfxData_SkeletonMain_Gfx_5C3C6+$198
+EnemyGfxData_SkeletonMain_Gfx_5C57E equ EnemyGfxData_SkeletonMain_Gfx_5C3C6+$1B8
+EnemyGfxData_SkeletonMain_Gfx_5C592 equ EnemyGfxData_SkeletonMain_Gfx_5C3C6+$1CC
+EnemyGfxData_SkeletonMain_Gfx_5C598 equ EnemyGfxData_SkeletonMain_Gfx_5C3C6+$1D2
+EnemyGfxData_SkeletonMain_Gfx_5C5B0 equ EnemyGfxData_SkeletonMain_Gfx_5C3C6+$1EA
+EnemyGfxData_SkeletonMain_Gfx_5C5CC equ EnemyGfxData_SkeletonMain_Gfx_5C3C6+$206
+EnemyGfxData_SkeletonMain_Gfx_5C5DA equ EnemyGfxData_SkeletonMain_Gfx_5C3C6+$214
+EnemyGfxData_SkeletonMain_Gfx_5C5EC equ EnemyGfxData_SkeletonMain_Gfx_5C3C6+$226
+EnemyGfxData_SkeletonMain_Gfx_5C606 equ EnemyGfxData_SkeletonMain_Gfx_5C3C6+$240
+EnemyGfxData_SkeletonMain_Gfx_5C620 equ EnemyGfxData_SkeletonMain_Gfx_5C3C6+$25A
+EnemyGfxData_SkeletonMain_Gfx_5C632 equ EnemyGfxData_SkeletonMain_Gfx_5C3C6+$26C
+EnemyGfxData_SkeletonMain_Gfx_5C640 equ EnemyGfxData_SkeletonMain_Gfx_5C3C6+$27A
+EnemyGfxData_SkeletonMain_Gfx_5C658 equ EnemyGfxData_SkeletonMain_Gfx_5C3C6+$292
+EnemyGfxData_SkeletonMain_Gfx_5C66C equ EnemyGfxData_SkeletonMain_Gfx_5C3C6+$2A6
+EnemyGfxData_SkeletonMain_Gfx_5C67C equ EnemyGfxData_SkeletonMain_Gfx_5C3C6+$2B6
+EnemyGfxData_SkeletonMain_Gfx_5C69C equ EnemyGfxData_SkeletonMain_Gfx_5C3C6+$2D6
+EnemyGfxData_SkeletonMain_Gfx_5C6B2 equ EnemyGfxData_SkeletonMain_Gfx_5C3C6+$2EC
+EnemyGfxData_SkeletonMain_Gfx_5C6C6 equ EnemyGfxData_SkeletonMain_Gfx_5C3C6+$300
+EnemyGfxData_SkeletonMain_Gfx_5C6D2 equ EnemyGfxData_SkeletonMain_Gfx_5C3C6+$30C
+EnemyGfxData_SkeletonMain_Gfx_5C6F0 equ EnemyGfxData_SkeletonMain_Gfx_5C3C6+$32A
+EnemyGfxData_SkeletonMain_Gfx_5C706 equ EnemyGfxData_SkeletonMain_Gfx_5C3C6+$340
+EnemyGfxData_SkeletonMain_Gfx_5C710 equ EnemyGfxData_SkeletonMain_Gfx_5C3C6+$34A
+EnemyGfxData_SkeletonMain_Gfx_5C724 equ EnemyGfxData_SkeletonMain_Gfx_5C3C6+$35E
+EnemyGfxData_SkeletonMain_Gfx_5C73C equ EnemyGfxData_SkeletonMain_Gfx_5C3C6+$376
+EnemyGfxData_SkeletonMain_Gfx_5C756 equ EnemyGfxData_SkeletonMain_Gfx_5C3C6+$390
+EnemyGfxData_SkeletonMain_Gfx_5C762 equ EnemyGfxData_SkeletonMain_Gfx_5C3C6+$39C
+EnemyGfxData_SkeletonMain_Gfx_5C76A equ EnemyGfxData_SkeletonMain_Gfx_5C3C6+$3A4
+EnemyGfxData_SkeletonMain_Gfx_5C782 equ EnemyGfxData_SkeletonMain_Gfx_5C3C6+$3BC
+EnemyGfxData_SkeletonMain_Gfx_5C79E equ EnemyGfxData_SkeletonMain_Gfx_5C3C6+$3D8
+EnemyGfxData_SkeletonMain_Gfx_5C7AC equ EnemyGfxData_SkeletonMain_Gfx_5C3C6+$3E6
+EnemyGfxData_SkeletonMain_Gfx_5C7B4 equ EnemyGfxData_SkeletonMain_Gfx_5C3C6+$3EE
+EnemyGfxData_SkeletonMain_Gfx_5C7D0 equ EnemyGfxData_SkeletonMain_Gfx_5C3C6+$40A
+EnemyGfxData_SkeletonMain_Gfx_5C7E6 equ EnemyGfxData_SkeletonMain_Gfx_5C3C6+$420
+EnemyGfxData_SkeletonMain_Gfx_5C7F2 equ EnemyGfxData_SkeletonMain_Gfx_5C3C6+$42C
+EnemyGfxData_SkeletonMain_Gfx_5C7FC equ EnemyGfxData_SkeletonMain_Gfx_5C3C6+$436
+EnemyGfxData_SkeletonMain_Gfx_5C816 equ EnemyGfxData_SkeletonMain_Gfx_5C3C6+$450
+EnemyGfxData_SkeletonMain_Gfx_5C82E equ EnemyGfxData_SkeletonMain_Gfx_5C3C6+$468
+EnemyGfxData_SkeletonMain_Gfx_5C83A equ EnemyGfxData_SkeletonMain_Gfx_5C3C6+$474
+EnemyGfxData_SkeletonMain_Gfx_5C84A equ EnemyGfxData_SkeletonMain_Gfx_5C3C6+$484
+EnemyGfxData_SkeletonMain_Gfx_5C86C equ EnemyGfxData_SkeletonMain_Gfx_5C3C6+$4A6
+EnemyGfxData_SkeletonMain_Gfx_5C886 equ EnemyGfxData_SkeletonMain_Gfx_5C3C6+$4C0
+EnemyGfxData_SkeletonMain_Gfx_5C894 equ EnemyGfxData_SkeletonMain_Gfx_5C3C6+$4CE
+EnemyGfxData_SkeletonMain_Gfx_5C89C equ EnemyGfxData_SkeletonMain_Gfx_5C3C6+$4D6
+EnemyGfxData_SkeletonMain_Gfx_5C8B8 equ EnemyGfxData_SkeletonMain_Gfx_5C3C6+$4F2
+EnemyGfxData_SkeletonMain_Gfx_5C8CC equ EnemyGfxData_SkeletonMain_Gfx_5C3C6+$506
+EnemyGfxData_SkeletonMain_Gfx_5C8DA equ EnemyGfxData_SkeletonMain_Gfx_5C3C6+$514
+EnemyGfxData_SkeletonMain_Gfx_5C8EA equ EnemyGfxData_SkeletonMain_Gfx_5C3C6+$524
+EnemyGfxData_SkeletonMain_Gfx_5C8FC equ EnemyGfxData_SkeletonMain_Gfx_5C3C6+$536
+EnemyGfxData_SkeletonMain_Gfx_5C91A equ EnemyGfxData_SkeletonMain_Gfx_5C3C6+$554
+EnemyGfxData_SkeletonMain_Gfx_5C92C equ EnemyGfxData_SkeletonMain_Gfx_5C3C6+$566
+EnemyGfxData_SkeletonMain_Gfx_5C93C equ EnemyGfxData_SkeletonMain_Gfx_5C3C6+$576
+EnemyGfxData_SkeletonMain_Gfx_5C954 equ EnemyGfxData_SkeletonMain_Gfx_5C3C6+$58E
+EnemyGfxData_SkeletonMain_Gfx_5C970 equ EnemyGfxData_SkeletonMain_Gfx_5C3C6+$5AA
 EnemyGfxData_SkeletonMain:
 	dc.l	EnemyGfxData_SkeletonMain_Gfx_5C3C6
 	dc.l	EnemyGfxData_SkeletonMain_Gfx_5C3E2
@@ -62963,103 +59707,47 @@ EnemyGfxFrameTable_HumanoidChild:
 	dc.b	$00, $04, $08, $01, $05, $09, $02, $06, $0A, $03, $07, $0B, $0C, $0F, $12, $0D, $10, $13, $0E, $11, $14, $03, $03, $03, $03, $03, $03, $15, $17, $19, $16, $18 
 	dc.b	$1A, $03, $03, $03, $03, $03, $03, $1B, $1D, $1F, $1C, $1E, $20, $03, $03, $03, $03, $03, $00, $21, $23, $26, $22, $24, $27, $03, $25, $28 
 EnemyGfxData_HumanoidChild_Gfx_5CAD6:
-	dc.b	$01, $00, $FF, $FF, $FE, $EF, $04, $04 
-EnemyGfxData_HumanoidChild_Gfx_5CADE:
-	dc.b	$01, $00, $FF, $FF, $F6, $66, $40, $04, $63, $05, $64, $04 
-EnemyGfxData_HumanoidChild_Gfx_5CAEA:
-	dc.b	$01, $00, $FF, $FF, $77, $77, $40, $54, $75, $50 
-EnemyGfxData_HumanoidChild_Gfx_5CAF4:
-	dc.b	$01, $00, $FF, $FF, $FF, $FF 
-EnemyGfxData_HumanoidChild_Gfx_5CAFA:
-	dc.b	$01, $00, $EE, $CC, $CC, $EE, $06, $56, $05, $67, $05, $77, $05, $77, $04, $67, $47, $46 
-EnemyGfxData_HumanoidChild_Gfx_5CB0C:
-	dc.b	$00, $64, $00, $50, $00, $43, $05, $75, $05, $53, $07, $75, $46, $43, $57, $55, $56, $45, $75, $54, $67, $77, $75, $30, $67, $76, $75, $35, $54, $74, $75, $35 
-	dc.b	$40, $00 
-EnemyGfxData_HumanoidChild_Gfx_5CB2E:
-	dc.b	$01, $00, $77, $22, $00, $00, $55, $65, $60, $40, $04, $60, $55, $46, $50, $46, $50, $46, $45, $05, $60, $46, $44, $04, $66, $54, $44, $54, $57, $54 
-EnemyGfxData_HumanoidChild_Gfx_5CB4C:
-	dc.b	$01, $00, $F7, $77, $7F, $F7, $44, $64, $74, $40, $50, $00 
-EnemyGfxData_HumanoidChild_Gfx_5CB58:
-	dc.b	$01, $00, $EC, $CC, $CC, $CC, $67, $04, $67, $45, $77, $46, $77, $46, $44, $46, $44, $46, $46, $45, $64, $00 
-EnemyGfxData_HumanoidChild_Gfx_5CB6E:
-	dc.b	$01, $00, $00, $15, $74, $80, $74, $47, $66, $40, $63, $44, $44, $30, $43, $34, $53, $44, $33, $30, $40, $DD, $CB, $0D, $EE, $CC, $30, $CD, $ED, $CC 
-EnemyGfxData_HumanoidChild_Gfx_5CB8C:
-	dc.b	$00, $34, $44, $66, $40, $03, $45, $67, $40, $00, $35, $76, $40, $03, $03, $55, $64, $00, $34, $55, $55, $00, $34, $45, $56, $B0, $03, $44, $55, $AA, $03, $44 
-	dc.b	$55, $00 
-EnemyGfxData_HumanoidChild_Gfx_5CBAE:
-	dc.b	$01, $00, $73, $33, $37, $77, $05, $04, $50, $45, $60, $45, $50, $65, $30, $53, $33, $30 
-EnemyGfxData_HumanoidChild_Gfx_5CBC0:
-	dc.b	$01, $00, $FF, $FF, $FF, $FE, $05, $00 
-EnemyGfxData_HumanoidChild_Gfx_5CBC8:
-	dc.b	$01, $00, $EA, $88, $88, $88, $40, $55, $04, $34, $53, $04, $04, $53, $66, $03, $45, $36, $04, $45, $66, $34, $55, $65, $44, $75, $65, $00 
-EnemyGfxData_HumanoidChild_Gfx_5CBE4:
-	dc.b	$01, $00, $F7, $77, $73, $33, $40, $50, $55, $45, $45, $04, $54, $44, $35, $44 
-EnemyGfxData_HumanoidChild_Gfx_5CBF4:
-	dc.b	$01, $00, $EE, $FF, $EC, $CC, $05, $05, $45, $04, $46, $04, $66, $04, $46, $00 
-EnemyGfxData_HumanoidChild_Gfx_5CC04:
-	dc.b	$00, $53, $46, $66, $55, $54, $76, $64, $55, $55, $76, $55, $53, $56, $74, $55, $33, $66, $75, $44, $23, $64, $44, $43, $22, $64, $45, $32, $22, $64, $44, $50 
-	dc.b	$02, $00 
-EnemyGfxData_HumanoidChild_Gfx_5CC26:
-	dc.b	$01, $00, $31, $11, $11, $10, $53, $44, $53, $44, $40, $45, $54, $44, $44, $54, $44, $33, $45, $40, $33, $34, $44, $32, $33, $34, $22, $32, $34, $40 
-EnemyGfxData_HumanoidChild_Gfx_5CC44:
-	dc.b	$01, $00, $EE, $EE, $EE, $EE, $46, $44, $04, $06, $36, $34, $33, $03 
-EnemyGfxData_HumanoidChild_Gfx_5CC52:
-	dc.b	$00, $66, $64, $52, $00, $66, $64, $43, $20, $44, $66, $43, $BC, $34, $56, $42, $DD, $64, $54, $2B, $EE, $64, $44, $BD, $DE, $66, $44, $BC, $DD, $36, $43, $AB 
-	dc.b	$CC, $00 
-EnemyGfxData_HumanoidChild_Gfx_5CC74:
-	dc.b	$02, $22, $C8, $00, $44, $44, $34, $22, $22, $22, $22, $40, $23, $40, $02, $23, $40, $C2, $23, $00, $CB, $00, $CB, $04, $BB, $44, $B2, $40 
-EnemyGfxData_HumanoidChild_Gfx_5CC90:
-	dc.b	$00, $00, $34, $53, $04, $00, $04, $53, $66, $00, $03, $45, $36, $03, $44, $45, $66, $34, $44, $55, $65, $44, $45, $75, $65, $44, $45, $76, $77, $54, $75, $77 
-	dc.b	$77, $00 
-EnemyGfxData_HumanoidChild_Gfx_5CCB2:
-	dc.b	$01, $00, $77, $77, $33, $31, $50, $55, $45, $45, $54, $40, $35, $40, $53, $44, $53, $44, $40, $00 
-EnemyGfxData_HumanoidChild_Gfx_5CCC6:
-	dc.b	$00, $05, $77, $57, $73, $00, $47, $57, $75, $00, $07, $75, $75, $00, $47, $75, $55, $04, $04, $77, $55, $04, $54, $47, $77, $04, $57, $44, $77, $45, $75, $45 
-	dc.b	$77, $00 
-EnemyGfxData_HumanoidChild_Gfx_5CCE8:
-	dc.b	$00, $45, $54, $44, $00, $44, $54, $04, $00, $55, $45, $44, $40, $55, $34, $44, $40, $52, $23, $44, $40, $52, $23, $44, $40, $52, $22, $34, $00, $42, $22, $34 
-	dc.b	$00, $00 
-EnemyGfxData_HumanoidChild_Gfx_5CD0A:
-	dc.b	$00, $45, $75, $45, $74, $44, $47, $77, $77, $45, $45, $57, $74, $04, $55, $55, $74, $04, $47, $75, $54, $03, $44, $75, $44, $03, $44, $75, $54, $00, $34, $47 
-	dc.b	$74, $00 
-EnemyGfxData_HumanoidChild_Gfx_5CD2C:
-	dc.b	$01, $00, $11, $11, $11, $33, $74, $22, $34, $72, $23, $34, $CB, $22, $30, $4B, $22, $34, $4B, $22, $34, $42, $22, $30, $22, $25, $44, $33 
-EnemyGfxData_HumanoidChild_Gfx_5CD48:
-	dc.b	$01, $00, $EC, $CC, $CC, $88, $54, $05, $56, $05, $46, $05, $46, $44, $55, $45, $35, $04, $43, $57, $04, $43, $57, $00 
-EnemyGfxData_HumanoidChild_Gfx_5CD60:
-	dc.b	$00, $03, $54, $30, $00, $63, $54, $00, $00, $35, $43, $00, $00, $65, $44, $43, $00, $65, $54, $44, $30, $65, $75, $44, $40, $76, $75, $44, $40, $77, $75, $74 
-	dc.b	$50, $00 
-EnemyGfxData_HumanoidChild_Gfx_5CD82:
-	dc.b	$00, $04, $44, $55, $43, $04, $04, $54, $45, $44, $45, $45, $55, $44, $44, $35, $55, $44, $43, $22, $55, $44, $43, $22, $57, $04, $32, $22, $57, $04, $32, $22 
-	dc.b	$47, $00 
-EnemyGfxData_HumanoidChild_Gfx_5CDA4:
-	dc.b	$01, $00, $11, $31, $11, $10, $77, $57, $75, $77, $57, $40, $75, $77, $55, $77, $40, $57, $74, $04, $77, $44, $54, $74, $47, $54, $75, $45, $75, $40 
-EnemyGfxData_HumanoidChild_Gfx_5CDC2:
-	dc.b	$00, $04, $32, $24, $74, $04, $33, $22, $77, $00, $32, $2B, $C4, $04, $32, $2B, $44, $04, $32, $2B, $44, $00, $32, $22, $44, $00, $05, $22, $24, $00, $03, $34 
-	dc.b	$44, $00 
-EnemyGfxData_HumanoidChild_Gfx_5CDE4:
-	dc.b	$00, $75, $45, $75, $40, $77, $77, $44, $40, $77, $55, $45, $40, $75, $55, $54, $00, $55, $77, $44, $00, $45, $74, $43, $00, $55, $74, $40, $00, $77, $44, $30 
-	dc.b	$00, $00 
-EnemyGfxData_HumanoidChild_Gfx_5CE06:
-	dc.b	$01, $00, $FE, $EC, $C8, $88, $44, $54, $05, $56, $05, $46, $04, $05, $46, $04, $44, $55, $04, $45, $35, $00 
-EnemyGfxData_HumanoidChild_Gfx_5CE1C:
-	dc.b	$01, $00, $79, $13, $33, $10, $40, $05, $50, $03, $54, $30, $63, $54, $35, $43, $65, $44, $65, $54, $30, $65, $74, $40, $05, $00 
-EnemyGfxData_HumanoidChild_Gfx_5CE36:
-	dc.b	$00, $00, $04, $43, $55, $00, $44, $43, $55, $04, $44, $55, $43, $04, $44, $54, $43, $00, $45, $43, $33, $04, $44, $33, $22, $04, $33, $32, $22, $44, $33, $32 
-	dc.b	$20, $00 
-EnemyGfxData_HumanoidChild_Gfx_5CE58:
-	dc.b	$00, $56, $66, $43, $55, $54, $66, $74, $55, $55, $56, $55, $50, $35, $77, $55, $50, $24, $57, $76, $65, $22, $57, $46, $66, $22, $45, $44, $66, $00, $25, $44 
-	dc.b	$66, $00 
-EnemyGfxData_HumanoidChild_Gfx_5CE7A:
-	dc.b	$01, $00, $FF, $FF, $77, $77, $40, $44, $64, $44 
-EnemyGfxData_HumanoidChild_Gfx_5CE84:
-	dc.b	$00, $44, $32, $22, $00, $44, $32, $22, $00, $44, $33, $22, $0B, $04, $33, $20, $CD, $04, $32, $2B, $CE, $04, $32, $2B, $DE, $44, $32, $2B, $DD, $44, $32, $22 
-	dc.b	$AB, $00 
-EnemyGfxData_HumanoidChild_Gfx_5CEA6:
-	dc.b	$00, $00, $24, $66, $66, $02, $44, $66, $64, $B4, $46, $64, $44, $E4, $46, $54, $36, $E2, $44, $54, $66, $DD, $24, $44, $64, $DC, $24, $46, $63, $CC, $23, $46 
-	dc.b	$33, $00 
-EnemyGfxData_HumanoidChild_Gfx_5CEC8:
-	dc.b	$01, $00, $77, $FF, $77, $7F, $40, $40, $30, $30, $30, $00 
+	incbin "data/art/tiles/enemy/humanoid_child_gfx.bin"
+EnemyGfxData_HumanoidChild_Gfx_5CADE equ EnemyGfxData_HumanoidChild_Gfx_5CAD6+$8
+EnemyGfxData_HumanoidChild_Gfx_5CAEA equ EnemyGfxData_HumanoidChild_Gfx_5CAD6+$14
+EnemyGfxData_HumanoidChild_Gfx_5CAF4 equ EnemyGfxData_HumanoidChild_Gfx_5CAD6+$1E
+EnemyGfxData_HumanoidChild_Gfx_5CAFA equ EnemyGfxData_HumanoidChild_Gfx_5CAD6+$24
+EnemyGfxData_HumanoidChild_Gfx_5CB0C equ EnemyGfxData_HumanoidChild_Gfx_5CAD6+$36
+EnemyGfxData_HumanoidChild_Gfx_5CB2E equ EnemyGfxData_HumanoidChild_Gfx_5CAD6+$58
+EnemyGfxData_HumanoidChild_Gfx_5CB4C equ EnemyGfxData_HumanoidChild_Gfx_5CAD6+$76
+EnemyGfxData_HumanoidChild_Gfx_5CB58 equ EnemyGfxData_HumanoidChild_Gfx_5CAD6+$82
+EnemyGfxData_HumanoidChild_Gfx_5CB6E equ EnemyGfxData_HumanoidChild_Gfx_5CAD6+$98
+EnemyGfxData_HumanoidChild_Gfx_5CB8C equ EnemyGfxData_HumanoidChild_Gfx_5CAD6+$B6
+EnemyGfxData_HumanoidChild_Gfx_5CBAE equ EnemyGfxData_HumanoidChild_Gfx_5CAD6+$D8
+EnemyGfxData_HumanoidChild_Gfx_5CBC0 equ EnemyGfxData_HumanoidChild_Gfx_5CAD6+$EA
+EnemyGfxData_HumanoidChild_Gfx_5CBC8 equ EnemyGfxData_HumanoidChild_Gfx_5CAD6+$F2
+EnemyGfxData_HumanoidChild_Gfx_5CBE4 equ EnemyGfxData_HumanoidChild_Gfx_5CAD6+$10E
+EnemyGfxData_HumanoidChild_Gfx_5CBF4 equ EnemyGfxData_HumanoidChild_Gfx_5CAD6+$11E
+EnemyGfxData_HumanoidChild_Gfx_5CC04 equ EnemyGfxData_HumanoidChild_Gfx_5CAD6+$12E
+EnemyGfxData_HumanoidChild_Gfx_5CC26 equ EnemyGfxData_HumanoidChild_Gfx_5CAD6+$150
+EnemyGfxData_HumanoidChild_Gfx_5CC44 equ EnemyGfxData_HumanoidChild_Gfx_5CAD6+$16E
+EnemyGfxData_HumanoidChild_Gfx_5CC52 equ EnemyGfxData_HumanoidChild_Gfx_5CAD6+$17C
+EnemyGfxData_HumanoidChild_Gfx_5CC74 equ EnemyGfxData_HumanoidChild_Gfx_5CAD6+$19E
+EnemyGfxData_HumanoidChild_Gfx_5CC90 equ EnemyGfxData_HumanoidChild_Gfx_5CAD6+$1BA
+EnemyGfxData_HumanoidChild_Gfx_5CCB2 equ EnemyGfxData_HumanoidChild_Gfx_5CAD6+$1DC
+EnemyGfxData_HumanoidChild_Gfx_5CCC6 equ EnemyGfxData_HumanoidChild_Gfx_5CAD6+$1F0
+EnemyGfxData_HumanoidChild_Gfx_5CCE8 equ EnemyGfxData_HumanoidChild_Gfx_5CAD6+$212
+EnemyGfxData_HumanoidChild_Gfx_5CD0A equ EnemyGfxData_HumanoidChild_Gfx_5CAD6+$234
+EnemyGfxData_HumanoidChild_Gfx_5CD2C equ EnemyGfxData_HumanoidChild_Gfx_5CAD6+$256
+EnemyGfxData_HumanoidChild_Gfx_5CD48 equ EnemyGfxData_HumanoidChild_Gfx_5CAD6+$272
+EnemyGfxData_HumanoidChild_Gfx_5CD60 equ EnemyGfxData_HumanoidChild_Gfx_5CAD6+$28A
+EnemyGfxData_HumanoidChild_Gfx_5CD82 equ EnemyGfxData_HumanoidChild_Gfx_5CAD6+$2AC
+EnemyGfxData_HumanoidChild_Gfx_5CDA4 equ EnemyGfxData_HumanoidChild_Gfx_5CAD6+$2CE
+EnemyGfxData_HumanoidChild_Gfx_5CDC2 equ EnemyGfxData_HumanoidChild_Gfx_5CAD6+$2EC
+EnemyGfxData_HumanoidChild_Gfx_5CDE4 equ EnemyGfxData_HumanoidChild_Gfx_5CAD6+$30E
+EnemyGfxData_HumanoidChild_Gfx_5CE06 equ EnemyGfxData_HumanoidChild_Gfx_5CAD6+$330
+EnemyGfxData_HumanoidChild_Gfx_5CE1C equ EnemyGfxData_HumanoidChild_Gfx_5CAD6+$346
+EnemyGfxData_HumanoidChild_Gfx_5CE36 equ EnemyGfxData_HumanoidChild_Gfx_5CAD6+$360
+EnemyGfxData_HumanoidChild_Gfx_5CE58 equ EnemyGfxData_HumanoidChild_Gfx_5CAD6+$382
+EnemyGfxData_HumanoidChild_Gfx_5CE7A equ EnemyGfxData_HumanoidChild_Gfx_5CAD6+$3A4
+EnemyGfxData_HumanoidChild_Gfx_5CE84 equ EnemyGfxData_HumanoidChild_Gfx_5CAD6+$3AE
+EnemyGfxData_HumanoidChild_Gfx_5CEA6 equ EnemyGfxData_HumanoidChild_Gfx_5CAD6+$3D0
+EnemyGfxData_HumanoidChild_Gfx_5CEC8 equ EnemyGfxData_HumanoidChild_Gfx_5CAD6+$3F2
 EnemyGfxData_HumanoidChild:
 	dc.l	EnemyGfxData_HumanoidChild_Gfx_5CAD6
 	dc.l	EnemyGfxData_HumanoidChild_Gfx_5CADE
@@ -63106,58 +59794,31 @@ EnemyGfxFrameTable_HumanoidMain:
 	dc.b	$00, $04, $01, $05, $02, $06, $03, $07, $08, $07, $09, $0B, $0A, $0C, $07, $07, $07, $07, $0D, $0F, $0E, $10, $07, $07, $07, $07, $11, $13, $12, $14, $07, $07 
 	dc.b	$07, $07, $15, $17, $16, $18, $07, $07 
 EnemyGfxData_HumanoidMain_Gfx_5CFA0:
-	dc.b	$01, $00, $CC, $CC, $CE, $EE, $45, $54, $04, $54, $03, $55, $03, $44, $03, $34, $34, $32, $33, $00 
-EnemyGfxData_HumanoidMain_Gfx_5CFB4:
-	dc.b	$00, $33, $BC, $DD, $CB, $36, $BB, $CD, $BB, $36, $3A, $BB, $BA, $66, $30, $AA, $AA, $54, $30, $00, $00, $43, $43, $44, $04, $33, $43, $43, $35, $32, $44, $43 
-	dc.b	$33, $00 
-EnemyGfxData_HumanoidMain_Gfx_5CFD6:
-	dc.b	$00, $AA, $03, $34, $43, $AA, $04, $33, $43, $A0, $54, $33, $43, $00, $55, $44, $44, $03, $33, $44, $43, $43, $34, $43, $32, $33, $22, $12, $10, $32, $22, $21 
-	dc.b	$20, $00 
-EnemyGfxData_HumanoidMain_Gfx_5CFF8:
-	dc.b	$01, $00, $77, $77, $FF, $FF, $30, $33, $33, $30 
-EnemyGfxData_HumanoidMain_Gfx_5D002:
-	dc.b	$01, $00, $EF, $FF, $FF, $FF, $03, $00 
-EnemyGfxData_HumanoidMain_Gfx_5D00A:
-	dc.b	$02, $22, $F3, $13, $00, $00, $99, $00, $00, $37, $F7, $32, $12, $00, $32, $11, $00, $00, $00, $09, $09, $00 
-EnemyGfxData_HumanoidMain_Gfx_5D020:
-	dc.b	$02, $00, $11, $37, $00, $01, $99, $00, $00, $EF, $EC, $22, $22, $12, $11, $11, $20, $22, $20, $20, $90, $90, $90, $00 
-EnemyGfxData_HumanoidMain_Gfx_5D038:
-	dc.b	$01, $00, $FF, $FF, $FF, $FF 
-EnemyGfxData_HumanoidMain_Gfx_5D03E:
-	dc.b	$01, $00, $EE, $FF, $FF, $FF, $03, $03 
-EnemyGfxData_HumanoidMain_Gfx_5D046:
-	dc.b	$01, $22, $03, $10, $03, $31, $66, $43, $2A, $AA, $54, $63, $43, $64, $42, $33, $44, $43, $35, $02, $44, $43, $33, $02, $20, $00, $00, $00, $02, $11 
-EnemyGfxData_HumanoidMain_Gfx_5D064:
-	dc.b	$01, $00, $11, $11, $33, $77, $22, $25, $44, $23, $33, $44, $23, $34, $40, $22, $24, $40, $32, $22, $22, $20, $11, $22 
-EnemyGfxData_HumanoidMain_Gfx_5D07C:
-	dc.b	$02, $00, $CF, $FF, $C8, $08, $99, $00, $00, $37, $73, $22, $22, $09, $09, $00 
-EnemyGfxData_HumanoidMain_Gfx_5D08C:
-	dc.b	$02, $00, $7F, $FF, $10, $13, $99, $00, $00, $CE, $EC, $20, $90, $90 
-EnemyGfxData_HumanoidMain_Gfx_5D09A:
-	dc.b	$01, $00, $88, $88, $CE, $EF, $34, $44, $44, $33, $34, $43, $03, $33, $33, $02, $23, $33, $22, $33, $22, $02 
-EnemyGfxData_HumanoidMain_Gfx_5D0B0:
-	dc.b	$01, $00, $33, $33, $37, $7F, $43, $34, $33, $24, $22, $22, $22, $20, $22, $20, $22, $20 
-EnemyGfxData_HumanoidMain_Gfx_5D0C2:
-	dc.b	$02, $00, $FF, $FF, $C8, $8C, $99, $00, $00, $13, $73, $09, $09, $00 
-EnemyGfxData_HumanoidMain_Gfx_5D0D0:
-	dc.b	$02, $00, $FF, $FF, $31, $13, $99, $00, $00, $CE, $C8, $90, $90, $00 
-EnemyGfxData_HumanoidMain_Gfx_5D0DE:
-	dc.b	$01, $00, $88, $8C, $CC, $EF, $04, $33, $44, $04, $23, $33, $02, $22, $23, $22, $23, $22, $23, $02, $22, $22 
-EnemyGfxData_HumanoidMain_Gfx_5D0F4:
-	dc.b	$01, $00, $11, $33, $37, $FF, $44, $44, $30, $44, $33, $30, $33, $33, $33, $22, $32, $20, $20, $00 
-EnemyGfxData_HumanoidMain_Gfx_5D108:
-	dc.b	$02, $00, $FF, $FF, $80, $08, $99, $00, $00, $37, $73, $09, $09, $09, $09, $00 
-EnemyGfxData_HumanoidMain_Gfx_5D118:
-	dc.b	$01, $00, $FF, $FF, $33, $37, $99, $90, $99, $99, $99, $99, $99, $00 
-EnemyGfxData_HumanoidMain_Gfx_5D126:
-	dc.b	$02, $22, $21, $12, $23, $00, $00, $00, $88, $8C, $CE, $04, $45, $2A, $04, $43, $33, $44, $33, $44, $25, $02, $33, $01, $12, $21 
-EnemyGfxData_HumanoidMain_Gfx_5D140:
-	dc.b	$00, $AA, $23, $46, $63, $22, $23, $64, $53, $22, $44, $63, $40, $33, $44, $43, $30, $33, $44, $42, $00, $22, $22, $20, $00, $22, $20, $00, $00, $11, $12, $00 
-	dc.b	$00, $00 
-EnemyGfxData_HumanoidMain_Gfx_5D162:
-	dc.b	$02, $00, $EF, $FF, $80, $8C, $99, $00, $00, $37, $73, $02, $09, $09 
-EnemyGfxData_HumanoidMain_Gfx_5D170:
-	dc.b	$02, $00, $3F, $FF, $31, $13, $99, $00, $00, $8C, $EC, $22, $20, $90, $90, $00 
+	incbin "data/art/tiles/enemy/humanoid_main_gfx.bin"
+EnemyGfxData_HumanoidMain_Gfx_5CFB4 equ EnemyGfxData_HumanoidMain_Gfx_5CFA0+$14
+EnemyGfxData_HumanoidMain_Gfx_5CFD6 equ EnemyGfxData_HumanoidMain_Gfx_5CFA0+$36
+EnemyGfxData_HumanoidMain_Gfx_5CFF8 equ EnemyGfxData_HumanoidMain_Gfx_5CFA0+$58
+EnemyGfxData_HumanoidMain_Gfx_5D002 equ EnemyGfxData_HumanoidMain_Gfx_5CFA0+$62
+EnemyGfxData_HumanoidMain_Gfx_5D00A equ EnemyGfxData_HumanoidMain_Gfx_5CFA0+$6A
+EnemyGfxData_HumanoidMain_Gfx_5D020 equ EnemyGfxData_HumanoidMain_Gfx_5CFA0+$80
+EnemyGfxData_HumanoidMain_Gfx_5D038 equ EnemyGfxData_HumanoidMain_Gfx_5CFA0+$98
+EnemyGfxData_HumanoidMain_Gfx_5D03E equ EnemyGfxData_HumanoidMain_Gfx_5CFA0+$9E
+EnemyGfxData_HumanoidMain_Gfx_5D046 equ EnemyGfxData_HumanoidMain_Gfx_5CFA0+$A6
+EnemyGfxData_HumanoidMain_Gfx_5D064 equ EnemyGfxData_HumanoidMain_Gfx_5CFA0+$C4
+EnemyGfxData_HumanoidMain_Gfx_5D07C equ EnemyGfxData_HumanoidMain_Gfx_5CFA0+$DC
+EnemyGfxData_HumanoidMain_Gfx_5D08C equ EnemyGfxData_HumanoidMain_Gfx_5CFA0+$EC
+EnemyGfxData_HumanoidMain_Gfx_5D09A equ EnemyGfxData_HumanoidMain_Gfx_5CFA0+$FA
+EnemyGfxData_HumanoidMain_Gfx_5D0B0 equ EnemyGfxData_HumanoidMain_Gfx_5CFA0+$110
+EnemyGfxData_HumanoidMain_Gfx_5D0C2 equ EnemyGfxData_HumanoidMain_Gfx_5CFA0+$122
+EnemyGfxData_HumanoidMain_Gfx_5D0D0 equ EnemyGfxData_HumanoidMain_Gfx_5CFA0+$130
+EnemyGfxData_HumanoidMain_Gfx_5D0DE equ EnemyGfxData_HumanoidMain_Gfx_5CFA0+$13E
+EnemyGfxData_HumanoidMain_Gfx_5D0F4 equ EnemyGfxData_HumanoidMain_Gfx_5CFA0+$154
+EnemyGfxData_HumanoidMain_Gfx_5D108 equ EnemyGfxData_HumanoidMain_Gfx_5CFA0+$168
+EnemyGfxData_HumanoidMain_Gfx_5D118 equ EnemyGfxData_HumanoidMain_Gfx_5CFA0+$178
+EnemyGfxData_HumanoidMain_Gfx_5D126 equ EnemyGfxData_HumanoidMain_Gfx_5CFA0+$186
+EnemyGfxData_HumanoidMain_Gfx_5D140 equ EnemyGfxData_HumanoidMain_Gfx_5CFA0+$1A0
+EnemyGfxData_HumanoidMain_Gfx_5D162 equ EnemyGfxData_HumanoidMain_Gfx_5CFA0+$1C2
+EnemyGfxData_HumanoidMain_Gfx_5D170 equ EnemyGfxData_HumanoidMain_Gfx_5CFA0+$1D0
 EnemyGfxData_HumanoidMain:
 	dc.l	EnemyGfxData_HumanoidMain_Gfx_5CFA0
 	dc.l	EnemyGfxData_HumanoidMain_Gfx_5CFB4
@@ -63209,90 +59870,42 @@ EnemyGfxFrameTable_BossMain:
 	dc.b	$00, $04, $08, $0C, $01, $05, $09, $0D, $02, $06, $0A, $0E, $03, $07, $0B, $0F, $00, $10, $12, $16, $01, $05, $13, $17, $02, $06, $14, $18, $03, $11, $15, $19 
 	dc.b	$00, $1B, $1D, $20, $01, $05, $1E, $21, $02, $06, $0A, $22, $1A, $1C, $1F, $23 
 EnemyGfxData_BossMain_Gfx_5D2CE:
-	dc.b	$01, $00, $FF, $FF, $EC, $CC, $44, $03, $45, $23, $45, $23, $45, $00 
-EnemyGfxData_BossMain_Gfx_5D2DC:
-	dc.b	$01, $00, $FF, $F8, $00, $00, $04, $45, $52, $55, $34, $56, $62, $66, $54, $44, $55, $66, $53, $45, $66, $55, $23, $45, $66, $00 
-EnemyGfxData_BossMain_Gfx_5D2F6:
-	dc.b	$00, $00, $00, $00, $00, $04, $45, $50, $00, $34, $56, $65, $00, $34, $56, $65, $30, $34, $55, $55, $34, $44, $55, $44, $45, $55, $66, $54, $56, $53, $66, $53 
-	dc.b	$56, $00 
-EnemyGfxData_BossMain_Gfx_5D318:
-	dc.b	$01, $00, $FF, $FF, $F7, $73, $50, $65, $65, $30 
-EnemyGfxData_BossMain_Gfx_5D322:
-	dc.b	$01, $00, $CC, $88, $00, $44, $22, $34, $11, $23, $11, $01, $13, $12, $10, $11, $01, $11, $21, $14, $02, $10, $22, $14, $02, $02, $13, $01, $A2, $11 
-EnemyGfxData_BossMain_Gfx_5D340:
-	dc.b	$02, $23, $48, $A2, $01, $88, $45, $21, $11, $04, $44, $53, $44, $22, $33, $11, $22, $31, $11, $44, $22, $34, $43, $11, $61, $13, $55, $11 
-EnemyGfxData_BossMain_Gfx_5D35C:
-	dc.b	$00, $55, $55, $53, $55, $66, $54, $43, $45, $66, $53, $32, $34, $55, $53, $15, $53, $54, $43, $56, $65, $44, $32, $56, $65, $33, $15, $35, $55, $11, $55, $35 
-	dc.b	$44, $00 
-EnemyGfxData_BossMain_Gfx_5D37E:
-	dc.b	$02, $00, $33, $31, $00, $00, $33, $00, $04, $4C, $4A, $55, $30, $44, $30, $43, $21, $31, $10, $13, $12, $20, $21, $10, $34, $20, $12, $32, $32, $00 
-EnemyGfxData_BossMain_Gfx_5D39C:
-	dc.b	$00, $01, $AA, $A2, $11, $00, $00, $A3, $31, $00, $03, $32, $21, $00, $32, $22, $12, $03, $25, $55, $11, $03, $54, $33, $42, $22, $53, $23, $32, $32, $42, $02 
-	dc.b	$22, $00 
-EnemyGfxData_BossMain_Gfx_5D3BE:
-	dc.b	$00, $22, $34, $54, $43, $11, $23, $44, $32, $41, $13, $33, $11, $24, $11, $11, $41, $22, $22, $44, $43, $11, $11, $23, $21, $13, $33, $12, $21, $35, $42, $12 
-	dc.b	$14, $00 
-EnemyGfxData_BossMain_Gfx_5D3E0:
-	dc.b	$00, $45, $44, $34, $43, $34, $43, $23, $31, $33, $31, $11, $13, $11, $15, $33, $33, $22, $44, $44, $21, $11, $23, $22, $21, $51, $22, $11, $11, $64, $11, $44 
-	dc.b	$51, $00 
-EnemyGfxData_BossMain_Gfx_5D402:
-	dc.b	$00, $21, $11, $11, $32, $43, $12, $00, $32, $42, $11, $AA, $32, $22, $11, $AA, $A3, $11, $13, $A0, $03, $22, $33, $30, $03, $33, $34, $33, $A2, $12, $22, $43 
-	dc.b	$30, $00 
-EnemyGfxData_BossMain_Gfx_5D424:
-	dc.b	$01, $00, $02, $00, $2E, $FF, $20, $32, $AA, $A2, $04, $20, $A4, $03, $20, $0A, $23, $02, $0A, $AA, $22, $02, $A0, $22, $02, $00 
-EnemyGfxData_BossMain_Gfx_5D43E:
-	dc.b	$02, $AA, $06, $64, $48, $00, $00, $00, $08, $27, $FF, $43, $22, $21, $24, $32, $24, $20, $23, $A0, $02, $0A, $02, $00 
-EnemyGfxData_BossMain_Gfx_5D456:
-	dc.b	$01, $00, $00, $00, $01, $7F, $64, $11, $23, $44, $54, $AA, $A2, $34, $53, $AA, $A2, $34, $42, $0A, $A2, $34, $32, $AA, $23, $3A, $2A, $A0, $3A, $20 
-EnemyGfxData_BossMain_Gfx_5D474:
-	dc.b	$01, $00, $00, $04, $EF, $FF, $1A, $A0, $24, $30, $AA, $AA, $02, $30, $AA, $AA, $AA, $23, $A0, $AA, $23, $20 
-EnemyGfxData_BossMain_Gfx_5D48A:
-	dc.b	$01, $00, $CC, $CA, $00, $44, $22, $34, $11, $23, $01, $13, $11, $11, $02, $12, $10, $14, $02, $22, $22, $14, $31, $22, $13, $22, $03, $11 
-EnemyGfxData_BossMain_Gfx_5D4A6:
-	dc.b	$01, $33, $04, $04, $4C, $48, $55, $30, $00, $00, $44, $12, $00, $43, $21, $22, $20, $31, $12, $20, $13, $10, $20, $20, $20, $34, $00, $22, $32, $A0, $02, $00 
-EnemyGfxData_BossMain_Gfx_5D4C6:
-	dc.b	$01, $00, $40, $82, $64, $08, $20, $A1, $11, $2A, $33, $33, $31, $32, $22, $21, $03, $20, $12, $32, $11, $32, $55, $52, $2A, $54, $43, $32, $53, $22, $22, $00 
-EnemyGfxData_BossMain_Gfx_5D4E6:
-	dc.b	$00, $22, $34, $54, $43, $11, $23, $44, $32, $41, $13, $33, $11, $24, $11, $11, $41, $22, $22, $44, $43, $12, $11, $23, $21, $11, $35, $12, $21, $13, $65, $12 
-	dc.b	$14, $00 
-EnemyGfxData_BossMain_Gfx_5D508:
-	dc.b	$00, $45, $44, $34, $43, $34, $43, $23, $31, $33, $31, $11, $13, $11, $15, $33, $33, $22, $44, $44, $21, $11, $23, $22, $21, $51, $22, $11, $11, $64, $11, $44 
-	dc.b	$54, $00 
-EnemyGfxData_BossMain_Gfx_5D52A:
-	dc.b	$00, $21, $11, $AA, $AA, $43, $12, $33, $00, $42, $11, $11, $30, $22, $11, $02, $30, $11, $1A, $A0, $20, $22, $1A, $A0, $20, $33, $34, $AA, $22, $12, $34, $40 
-	dc.b	$00, $00 
-EnemyGfxData_BossMain_Gfx_5D54C:
-	dc.b	$01, $00, $8A, $80, $13, $7F, $43, $20, $0A, $42, $AA, $32, $0A, $AA, $03, $20, $AA, $AA, $03, $2A, $AA, $02, $2A, $02 
-EnemyGfxData_BossMain_Gfx_5D564:
-	dc.b	$01, $00, $00, $02, $2B, $FF, $23, $43, $21, $24, $24, $32, $AA, $24, $23, $2A, $AA, $23, $22, $0A, $02, $02, $2A, $02, $20, $00 
-EnemyGfxData_BossMain_Gfx_5D57E:
-	dc.b	$01, $00, $00, $00, $03, $7F, $64, $11, $22, $44, $54, $2A, $AA, $24, $53, $AA, $AA, $A3, $42, $0A, $AA, $A2, $32, $AA, $A0, $0A, $20, $AA, $2A, $00 
-EnemyGfxData_BossMain_Gfx_5D59C:
-	dc.b	$01, $00, $11, $11, $15, $FF, $42, $23, $44, $4A, $A2, $34, $4A, $A0, $24, $3A, $AA, $22, $30, $0A, $A2, $3A, $02, $00 
-EnemyGfxData_BossMain_Gfx_5D5B4:
-	dc.b	$01, $00, $FF, $FF, $F7, $71, $50, $65, $65, $30, $02, $00 
-EnemyGfxData_BossMain_Gfx_5D5C0:
-	dc.b	$01, $00, $CC, $CE, $80, $00, $22, $34, $11, $23, $01, $13, $11, $12, $10, $14, $02, $21, $22, $14, $01, $10, $12, $13, $02, $13, $03, $11 
-EnemyGfxData_BossMain_Gfx_5D5DC:
-	dc.b	$01, $33, $04, $04, $4C, $48, $55, $30, $11, $20, $44, $11, $20, $43, $21, $21, $20, $31, $10, $20, $13, $10, $20, $20, $10, $34, $A0, $01, $32, $AA, $AA, $00 
-EnemyGfxData_BossMain_Gfx_5D5FC:
-	dc.b	$00, $21, $32, $31, $11, $23, $22, $22, $31, $13, $20, $02, $21, $32, $00, $00, $12, $32, $00, $0A, $11, $20, $AA, $A5, $52, $2A, $AA, $43, $32, $00, $04, $22 
-	dc.b	$22, $00 
-EnemyGfxData_BossMain_Gfx_5D61E:
-	dc.b	$00, $22, $34, $54, $43, $11, $23, $44, $32, $41, $13, $33, $11, $24, $11, $11, $41, $22, $22, $44, $43, $12, $11, $23, $21, $11, $35, $12, $21, $13, $45, $12 
-	dc.b	$14, $00 
-EnemyGfxData_BossMain_Gfx_5D640:
-	dc.b	$00, $21, $11, $AA, $00, $43, $12, $3A, $00, $42, $11, $1A, $00, $22, $11, $22, $00, $11, $1A, $A2, $20, $22, $1A, $A0, $20, $33, $3A, $00, $22, $12, $33, $AA 
-	dc.b	$02, $00 
-EnemyGfxData_BossMain_Gfx_5D662:
-	dc.b	$01, $00, $88, $8A, $A8, $9B, $04, $22, $22, $53, $22, $0A, $53, $20, $0A, $42, $0A, $32, $AA, $32, $0A, $A0, $20, $A0, $2A, $00 
-EnemyGfxData_BossMain_Gfx_5D67C:
-	dc.b	$01, $00, $00, $00, $4F, $FF, $A3, $43, $21, $24, $AA, $45, $2A, $24, $AA, $35, $20, $23, $AA, $03, $32, $A2, $A0, $02, $A2, $00 
-EnemyGfxData_BossMain_Gfx_5D696:
-	dc.b	$00, $64, $11, $23, $44, $54, $2A, $A2, $34, $53, $AA, $02, $34, $42, $AA, $02, $3A, $32, $0A, $23, $3A, $20, $A0, $30, $AA, $2A, $00, $00, $A0, $00, $00, $00 
-	dc.b	$00, $00 
-EnemyGfxData_BossMain_Gfx_5D6B8:
-	dc.b	$01, $00, $02, $33, $31, $13, $12, $33, $AA, $A2, $A2, $23, $A2, $A2, $23, $A2, $23, $02, $2A, $02, $2A, $A0, $02, $2A, $A0, $02, $AA, $00 
+	incbin "data/art/tiles/enemy/boss_main_gfx.bin"
+EnemyGfxData_BossMain_Gfx_5D2DC equ EnemyGfxData_BossMain_Gfx_5D2CE+$E
+EnemyGfxData_BossMain_Gfx_5D2F6 equ EnemyGfxData_BossMain_Gfx_5D2CE+$28
+EnemyGfxData_BossMain_Gfx_5D318 equ EnemyGfxData_BossMain_Gfx_5D2CE+$4A
+EnemyGfxData_BossMain_Gfx_5D322 equ EnemyGfxData_BossMain_Gfx_5D2CE+$54
+EnemyGfxData_BossMain_Gfx_5D340 equ EnemyGfxData_BossMain_Gfx_5D2CE+$72
+EnemyGfxData_BossMain_Gfx_5D35C equ EnemyGfxData_BossMain_Gfx_5D2CE+$8E
+EnemyGfxData_BossMain_Gfx_5D37E equ EnemyGfxData_BossMain_Gfx_5D2CE+$B0
+EnemyGfxData_BossMain_Gfx_5D39C equ EnemyGfxData_BossMain_Gfx_5D2CE+$CE
+EnemyGfxData_BossMain_Gfx_5D3BE equ EnemyGfxData_BossMain_Gfx_5D2CE+$F0
+EnemyGfxData_BossMain_Gfx_5D3E0 equ EnemyGfxData_BossMain_Gfx_5D2CE+$112
+EnemyGfxData_BossMain_Gfx_5D402 equ EnemyGfxData_BossMain_Gfx_5D2CE+$134
+EnemyGfxData_BossMain_Gfx_5D424 equ EnemyGfxData_BossMain_Gfx_5D2CE+$156
+EnemyGfxData_BossMain_Gfx_5D43E equ EnemyGfxData_BossMain_Gfx_5D2CE+$170
+EnemyGfxData_BossMain_Gfx_5D456 equ EnemyGfxData_BossMain_Gfx_5D2CE+$188
+EnemyGfxData_BossMain_Gfx_5D474 equ EnemyGfxData_BossMain_Gfx_5D2CE+$1A6
+EnemyGfxData_BossMain_Gfx_5D48A equ EnemyGfxData_BossMain_Gfx_5D2CE+$1BC
+EnemyGfxData_BossMain_Gfx_5D4A6 equ EnemyGfxData_BossMain_Gfx_5D2CE+$1D8
+EnemyGfxData_BossMain_Gfx_5D4C6 equ EnemyGfxData_BossMain_Gfx_5D2CE+$1F8
+EnemyGfxData_BossMain_Gfx_5D4E6 equ EnemyGfxData_BossMain_Gfx_5D2CE+$218
+EnemyGfxData_BossMain_Gfx_5D508 equ EnemyGfxData_BossMain_Gfx_5D2CE+$23A
+EnemyGfxData_BossMain_Gfx_5D52A equ EnemyGfxData_BossMain_Gfx_5D2CE+$25C
+EnemyGfxData_BossMain_Gfx_5D54C equ EnemyGfxData_BossMain_Gfx_5D2CE+$27E
+EnemyGfxData_BossMain_Gfx_5D564 equ EnemyGfxData_BossMain_Gfx_5D2CE+$296
+EnemyGfxData_BossMain_Gfx_5D57E equ EnemyGfxData_BossMain_Gfx_5D2CE+$2B0
+EnemyGfxData_BossMain_Gfx_5D59C equ EnemyGfxData_BossMain_Gfx_5D2CE+$2CE
+EnemyGfxData_BossMain_Gfx_5D5B4 equ EnemyGfxData_BossMain_Gfx_5D2CE+$2E6
+EnemyGfxData_BossMain_Gfx_5D5C0 equ EnemyGfxData_BossMain_Gfx_5D2CE+$2F2
+EnemyGfxData_BossMain_Gfx_5D5DC equ EnemyGfxData_BossMain_Gfx_5D2CE+$30E
+EnemyGfxData_BossMain_Gfx_5D5FC equ EnemyGfxData_BossMain_Gfx_5D2CE+$32E
+EnemyGfxData_BossMain_Gfx_5D61E equ EnemyGfxData_BossMain_Gfx_5D2CE+$350
+EnemyGfxData_BossMain_Gfx_5D640 equ EnemyGfxData_BossMain_Gfx_5D2CE+$372
+EnemyGfxData_BossMain_Gfx_5D662 equ EnemyGfxData_BossMain_Gfx_5D2CE+$394
+EnemyGfxData_BossMain_Gfx_5D67C equ EnemyGfxData_BossMain_Gfx_5D2CE+$3AE
+EnemyGfxData_BossMain_Gfx_5D696 equ EnemyGfxData_BossMain_Gfx_5D2CE+$3C8
+EnemyGfxData_BossMain_Gfx_5D6B8 equ EnemyGfxData_BossMain_Gfx_5D2CE+$3EA
 EnemyGfxData_BossMain:
 	dc.l	EnemyGfxData_BossMain_Gfx_5D2CE
 	dc.l	EnemyGfxData_BossMain_Gfx_5D2DC
