@@ -1,0 +1,4166 @@
+; ======================================================================
+; src/script.asm
+; Script/text engine, HUD, windows, text rendering, dialogue
+; ======================================================================
+; ProcessScriptText
+; Process and render dialogue/script text
+; Handles script commands, text timing, player name insertion
+; Main text rendering loop for dialogue windows
+ProcessScriptText:
+	TST.b	Window_tilemap_draw_pending.w
+	BNE.w	ScriptDecode_Return
+	ADDQ.w	#1, Script_render_tick.w
+	MOVE.w	Script_render_tick.w, D0
+	MOVE.b	Message_speed.w, D2
+	MOVE.w	D0, D1
+	SUBQ.w	#1, D1
+	EOR.w	D1, D0
+	BTST.l	D2, D0
+	BEQ.w	ScriptDecode_Return
+	BTST.l	D2, D1
+	BEQ.w	ScriptDecode_Return
+	MOVE.b	#SOUND_TEXT_BLIP, D0
+	JSR	QueueSoundEffect
+	TST.b	Script_reading_player_name.w
+	BNE.b	ProcessScriptText_Loop
+	MOVE.w	Script_source_offset.w, D2
+	MOVEA.l	Script_source_base.w, A0
+	CLR.w	D3
+	MOVE.b	(A0,D2.w), D3
+	CMPI.b	#Script_player_name, D3
+	BNE.b	ProcessScriptText_Loop2
+ProcessScriptText_Loop:
+	LEA	Player_name.w, A0
+	MOVE.w	Player_name_index.w, D2
+	CLR.w	D3
+	MOVE.b	(A0,D2.w), D3
+	MOVE.b	#FLAG_TRUE, Script_reading_player_name.w
+ProcessScriptText_Loop2: ; Text script handling
+	CMPI.b	#SCRIPT_END, D3
+	BEQ.w	ScriptDecode_Done
+	CMPI.b	#SCRIPT_NEWLINE, D3
+	BEQ.w	ScriptRender_PortraitTile_Loop
+	CMPI.b	#SCRIPT_CONTINUE, D3
+	BEQ.w	ScriptRender_PortraitTile_Loop2
+	CMPI.b	#SCRIPT_QUESTION, D3
+	BEQ.w	ScriptDecode_SetResponse
+	CMPI.b	#SCRIPT_YES_NO, D3
+	BEQ.w	ScriptRender_PortraitTile_Loop3
+	CMPI.b	#SCRIPT_CHOICE, D3
+	BEQ.w	ScriptRender_PortraitTile_Loop4
+	CMPI.b	#SCRIPT_ACTIONS, D3
+	BEQ.w	ScriptRender_PortraitTile_Loop5
+	CMPI.b	#SCRIPT_TRIGGERS, D3
+	BEQ.w	ScriptRender_PortraitTile_Loop6
+	CMPI.b	#SCRIPT_WIDE_CHAR_LO, D3
+	BEQ.w	ScriptRender_PortraitTile
+	CMPI.b	#SCRIPT_WIDE_CHAR_HI, D3
+	BEQ.w	ScriptRender_PortraitTile
+	ADDI.w	#$04C0, D3
+	ORI.w	#$8000, D3
+	OR.w	Script_tile_attrs.w, D3
+	JSR	GetScrollOffsetInTiles
+	ADD.w	Script_output_x.w, D0
+	ADD.w	Script_output_base_x.w, D0
+	ADD.w	Script_output_y.w, D1
+	ANDI.w	#$003F, D0
+	ANDI.w	#$003F, D1
+	ASL.w	#1, D0
+	ASL.w	#7, D1
+	ADD.w	D1, D0
+	ANDI.l	#$00001FFF, D0
+	SWAP	D0
+	ORI.l	#$40000003, D0
+	ORI	#$0700, SR
+	MOVE.l	D0, VDP_control_port
+	MOVE.w	D3, VDP_data_port
+	ANDI	#$F8FF, SR
+	ADDQ.w	#1, Script_output_x.w
+	BRA.w	ScriptDecode_AdvanceOffset
+; loc_00010A6E
+ScriptRender_PortraitTile:
+	ADDI.w	#$04C0, D3	
+	ORI.w	#$8000, D3	
+	OR.w	Script_tile_attrs.w, D3	
+	JSR	GetScrollOffsetInTiles	
+	ADD.w	Script_output_x.w, D0	
+	ADD.w	Script_output_base_x.w, D0	
+	ADD.w	Script_output_y.w, D1	
+	SUBQ.w	#1, D0	
+	SUBQ.w	#1, D1	
+	ANDI.w	#$003F, D0	
+	ANDI.w	#$003F, D1	
+	ADD.w	D0, D0	
+	ASL.w	#7, D1	
+	ADD.w	D1, D0	
+	ANDI.l	#$00001FFF, D0	
+	SWAP	D0	
+	ORI.l	#$40000003, D0	
+	MOVE.l	D0, VDP_control_port	
+	MOVE.w	D3, VDP_data_port	
+	BRA.w	ScriptDecode_AdvanceOffset	
+ScriptRender_PortraitTile_Loop:
+	ADDQ.w	#2, Script_output_y.w
+	CLR.w	Script_output_x.w
+	BRA.w	ScriptDecode_AdvanceOffset
+ScriptRender_PortraitTile_Loop2:
+	MOVE.b	#FLAG_TRUE, Script_has_continuation.w
+	JSR	GetScrollOffsetInTiles
+	ADDI.w	#$0014, D0
+	ADDI.w	#$001B, D1
+	SUBQ.w	#1, D0
+	SUBQ.w	#1, D1
+	ANDI.w	#$003F, D0
+	ANDI.w	#$003F, D1
+	ASL.w	#1, D0
+	ASL.w	#7, D1
+	ADD.w	D1, D0
+	ANDI.l	#$00001FFF, D0
+	SWAP	D0
+	ORI.l	#$40000003, D0
+	MOVE.l	D0, VDP_control_port
+	MOVE.w	#$04DF, D3
+	ORI.w	#$8000, D3
+	OR.w	Script_tile_attrs.w, D3
+	MOVE.w	D3, VDP_data_port
+	BRA.w	ScriptDecode_Done
+ScriptRender_PortraitTile_Loop4:
+	MOVE.b	$2(A0,D2.w), Quest_choice_expected_answer.w	
+	MOVE.b	$3(A0,D2.w), Quest_choice_map_trigger.w	
+	MOVE.b	#FLAG_TRUE, Quest_choice_pending.w	
+	BRA.w	ScriptDecode_SetResponse	
+ScriptRender_PortraitTile_Loop5:
+	CLR.l	D4
+	CLR.l	D5
+	LEA	Event_triggers_start.w, A2
+	MOVE.b	$1(A0,D2.w), D4 ; Read the next character after $F9 into D4
+	ADDA.w	D2, A0
+	LEA	$2(A0), A4
+	SUBQ.b	#1, D4
+ScriptRender_PortraitTile_Loop5_Done:
+	MOVE.b	(A4)+, D5 ; Read next to D5
+	CMPI.b	#2, D5
+	BEQ.b	ScriptRender_PortraitTile_Loop7
+	LSL.w	#8, D5
+	MOVE.b	(A4)+, D5
+	MOVE.b	#$FF, (A2,D5.w)
+	BRA.b	ScriptRender_PortraitTile_Loop8
+ScriptRender_PortraitTile_Loop7:
+	MOVE.b	(A4)+, Transaction_amount.w
+	MOVE.b	(A4)+, Transaction_item_id.w
+	MOVE.b	(A4)+, Transaction_item_quantity.w
+	MOVE.b	(A4)+, Transaction_item_flags.w
+	BSR.w	AddPaymentAmount
+ScriptRender_PortraitTile_Loop8:
+	DBF	D4, ScriptRender_PortraitTile_Loop5_Done
+	MOVE.w	#SOUND_ATTACK, D0
+	JSR	QueueSoundEffect
+	BRA.w	ScriptDecode_Done
+ScriptRender_PortraitTile_Loop6:
+	CLR.l	D4
+	CLR.l	D5
+	LEA	Event_triggers_start.w, A2
+	MOVE.b	$1(A0,D2.w), D4
+	ADDA.w	D2, A0
+	LEA	$2(A0), A4
+	SUBQ.b	#1, D4
+ScriptRender_PortraitTile_Loop6_Done:
+	MOVE.b	(A4)+, D5
+	MOVE.b	#$FF, (A2,D5.w)
+	DBF	D4, ScriptRender_PortraitTile_Loop6_Done
+	BRA.w	ScriptDecode_Done
+ScriptRender_PortraitTile_Loop3:
+	MOVE.b	$2(A0,D2.w), Dialog_choice_event_trigger.w
+	MOVE.b	$3(A0,D2.w), Dialog_choice_extended_trigger.w
+	MOVE.b	#FLAG_TRUE, Dialogue_event_trigger_flag.w
+; loc_00010BB2
+ScriptDecode_SetResponse:
+	MOVE.b	$1(A0,D2.w), Dialog_response_index.w
+	MOVE.b	#FLAG_TRUE, Script_has_yes_no_question.w
+ScriptDecode_Done:
+	TST.b	Script_reading_player_name.w
+	BEQ.b	ScriptDecode_Done_Loop
+	CLR.b	Script_reading_player_name.w
+	CLR.w	Player_name_index.w
+	ADDQ.w	#1, Script_source_offset.w
+	BRA.b	ScriptDecode_Return
+ScriptDecode_Done_Loop:
+	MOVE.b	#FLAG_TRUE, Script_text_complete.w
+; loc_00010BD8
+ScriptDecode_AdvanceOffset:
+	TST.b	Script_reading_player_name.w
+	BNE.b	ScriptDecode_Return_Loop
+	ADDQ.w	#1, Script_source_offset.w
+ScriptDecode_Return:
+	RTS
+	
+ScriptDecode_Return_Loop:
+	ADDQ.w	#1, Player_name_index.w
+	RTS
+	
+DrawStartContinueMenu:
+	CLR.w	Dialog_selection.w
+	MOVE.w	#1, Menu_cursor_column_break.w
+	MOVE.w	#MENU_CURSOR_NONE, Menu_cursor_last_index.w
+	MOVE.w	#$000F, Menu_cursor_base_x.w
+	MOVE.w	#$0015, Menu_cursor_base_y.w
+	MOVE.w	#$000E, Window_tilemap_x.w
+	MOVE.w	#$0013, Window_tilemap_y.w
+	MOVE.w	#$000B, Window_width.w
+	MOVE.w	#6, Window_height.w
+	MOVE.w	#0, Window_tile_attrs.w
+	BSR.w	DrawWindowBorder
+	LEA	MenuStartContinueStr, A0
+	MOVE.w	#2, Window_text_x.w
+	MOVE.w	#2, Window_text_y.w
+	BSR.w	RenderTextToWindow
+	CLR.w	Window_draw_row.w
+	MOVE.b	#FLAG_TRUE, Window_tilemap_draw_active.w
+	RTS
+	
+; ResetScriptAndInitDialogue
+; Initialize dialogue window and reset script source offset
+; This entry point clears the script offset before initializing the window
+ResetScriptAndInitDialogue:
+	CLR.w	Script_source_offset.w
+InitDialogueWindow:
+	CLR.b	Script_text_complete.w
+	CLR.b	Script_has_continuation.w
+	CLR.b	Script_has_yes_no_question.w
+	MOVE.w	#5, Script_output_base_x.w
+	MOVE.w	#$0015, Script_output_y.w
+	MOVE.w	#0, Script_tile_attrs.w
+	CLR.w	Script_output_x.w
+	MOVE.w	#4, Window_tilemap_x.w
+	MOVE.w	#$0013, Window_tilemap_y.w
+	MOVE.w	#$001F, Window_width.w
+	MOVE.w	#8, Window_height.w
+	MOVE.w	#0, Window_tile_attrs.w
+	BSR.w	DrawWindowBorder
+	CLR.w	Window_draw_row.w
+	MOVE.b	#FLAG_TRUE, Window_tilemap_draw_pending.w
+	RTS
+	
+DrawOptionsMenu:
+	MOVE.w	#2, Window_tilemap_x.w
+	MOVE.w	#2, Window_tilemap_y.w
+	MOVE.w	#$000D, Window_width.w
+	MOVE.w	#$000A, Window_height.w
+	MOVE.w	#0, Window_tile_attrs.w
+	BSR.w	DrawWindowBorder
+	LEA	MenuOptionsStr, A0
+	MOVE.w	#2, Window_text_x.w
+	MOVE.w	#2, Window_text_y.w
+	BSR.w	RenderTextToWindow
+	CLR.w	Window_draw_row.w
+	MOVE.b	#FLAG_TRUE, Window_tilemap_draw_active.w
+	RTS
+	
+DrawMessageSpeedMenu:
+	MOVE.w	#$000A, Window_tilemap_x.w	
+	MOVE.w	#$000A, Window_tilemap_y.w	
+	MOVE.w	#$000E, Window_width.w	
+	MOVE.w	#$000A, Window_height.w	
+	MOVE.w	#0, Window_tile_attrs.w	
+	BSR.w	DrawWindowBorder	
+	LEA	MessageSpeedStr, A0	
+	MOVE.w	#1, Window_text_x.w	
+	MOVE.w	#2, Window_text_y.w	
+	BSR.w	RenderTextToWindow	
+	LEA	Window_tilemap_buffer.w, A1	
+	CLR.w	D1	
+	MOVE.b	Message_speed.w, D1	
+	ADD.w	D1, D1	
+	ADDQ.w	#4, D1	
+	MOVE.w	#$000F, D0	
+	MULU.w	D0, D1	
+	ADDI.w	#$000C, D1	
+	MOVE.b	#$2A, (A1,D1.w)	
+	CLR.w	Window_draw_row.w	
+	MOVE.b	#FLAG_TRUE, Window_tilemap_draw_active.w	
+	RTS
+	
+DrawYesNoDialog:
+	CLR.w	Dialog_selection.w
+	MOVE.w	#1, Menu_cursor_column_break.w
+	MOVE.w	#MENU_CURSOR_NONE, Menu_cursor_last_index.w
+	MOVE.w	#$001E, Menu_cursor_base_x.w
+	MOVE.w	#$000F, Menu_cursor_base_y.w
+	MOVE.w	#$001C, Window_tilemap_x.w
+	MOVE.w	#$000D, Window_tilemap_y.w
+	MOVE.w	#6, Window_width.w
+	MOVE.w	#6, Window_height.w
+	MOVE.w	#0, Window_tile_attrs.w
+	BSR.w	DrawWindowBorder
+	LEA	YesNoStr, A0
+	MOVE.w	#3, Window_text_x.w
+	MOVE.w	#2, Window_text_y.w
+	BSR.w	RenderTextToWindow
+	CLR.w	Window_draw_row.w
+	MOVE.b	#FLAG_TRUE, Window_tilemap_draw_pending.w
+	RTS
+	
+DrawSavedGameOptionsMenu:
+	CLR.w	Dialog_selection.w
+	MOVE.w	#2, Menu_cursor_column_break.w
+	MOVE.w	#MENU_CURSOR_NONE, Menu_cursor_last_index.w
+	MOVE.w	#$0010, Menu_cursor_base_x.w
+	MOVE.w	#$000E, Menu_cursor_base_y.w
+	MOVE.w	#$000F, Window_tilemap_x.w
+	MOVE.w	#$000C, Window_tilemap_y.w
+	MOVE.w	#$0015, Window_width.w
+	MOVE.w	#7, Window_height.w
+	MOVE.w	#0, Window_tile_attrs.w
+	BSR.w	DrawWindowBorder
+	LEA	SavedGameOptionsStr, A0
+	MOVE.w	#2, Window_text_x.w
+	MOVE.w	#2, Window_text_y.w
+	BSR.w	RenderTextToWindow
+	LEA	$00200001, A0
+	BSR.w	LoadSavegameNameToBuffer
+	LEA	Savegame_name_buffer.w, A0
+	MOVE.w	#$003B, D0
+	BSR.w	RenderTextAtOffset
+	LEA	$00200A81, A0
+	BSR.w	LoadSavegameNameToBuffer
+	LEA	Savegame_name_buffer.w, A0
+	MOVE.w	#$0067, D0
+	BSR.w	RenderTextAtOffset
+	LEA	$00201501, A0
+	BSR.w	LoadSavegameNameToBuffer
+	LEA	Savegame_name_buffer.w, A0
+	MOVE.w	#$0093, D0
+	BSR.w	RenderTextAtOffset
+	CLR.w	Window_draw_row.w
+	MOVE.b	#FLAG_TRUE, Window_tilemap_draw_pending.w
+	RTS
+	
+DrawSpellActionMenu:
+	MOVE.w	#2, Menu_cursor_column_break.w
+	MOVE.w	#MENU_CURSOR_NONE, Menu_cursor_last_index.w
+	MOVE.w	#3, Menu_cursor_base_x.w
+	MOVE.w	#$000E, Menu_cursor_base_y.w
+	MOVE.w	#2, Window_tilemap_x.w
+	MOVE.w	#$000C, Window_tilemap_y.w
+	MOVE.w	#$000D, Window_width.w
+	MOVE.w	#8, Window_height.w
+	MOVE.w	#0, Window_tile_attrs.w
+	BSR.w	DrawWindowBorder
+	LEA	CastReadyDiscardStr, A0
+	MOVE.w	#2, Window_text_x.w
+	MOVE.w	#2, Window_text_y.w
+	BSR.w	RenderTextToWindow
+	CLR.w	Window_draw_row.w
+	MOVE.b	#FLAG_TRUE, Window_tilemap_draw_active.w
+	RTS
+	
+DrawUseDiscardMenuWindow:
+	MOVE.w	#1, Menu_cursor_column_break.w
+	MOVE.w	#MENU_CURSOR_NONE, Menu_cursor_last_index.w
+	MOVE.w	#3, Menu_cursor_base_x.w
+	MOVE.w	#$000E, Menu_cursor_base_y.w
+	MOVE.w	#2, Window_tilemap_x.w
+	MOVE.w	#$000C, Window_tilemap_y.w
+	MOVE.w	#$000D, Window_width.w
+	MOVE.w	#6, Window_height.w
+	MOVE.w	#0, Window_tile_attrs.w
+	BSR.w	DrawWindowBorder
+	LEA	UseDiscardStr, A0
+	MOVE.w	#2, Window_text_x.w
+	MOVE.w	#2, Window_text_y.w
+	BSR.w	RenderTextToWindow
+	CLR.w	Window_draw_row.w
+	MOVE.b	#FLAG_TRUE, Window_tilemap_draw_active.w
+	RTS
+	
+DrawEquipmentMenuWindow:
+	MOVE.w	#2, Menu_cursor_column_break.w
+	MOVE.w	#MENU_CURSOR_NONE, Menu_cursor_last_index.w
+	MOVE.w	#3, Menu_cursor_base_x.w
+	MOVE.w	#$000E, Menu_cursor_base_y.w
+	MOVE.w	#2, Window_tilemap_x.w
+	MOVE.w	#$000C, Window_tilemap_y.w
+	MOVE.w	#$000B, Window_width.w
+	MOVE.w	#8, Window_height.w
+	MOVE.w	#0, Window_tile_attrs.w
+	BSR.w	DrawWindowBorder
+	LEA	PutOnRemoveStopStr, A0
+	MOVE.w	#2, Window_text_x.w
+	MOVE.w	#2, Window_text_y.w
+	BSR.w	RenderTextToWindow
+	CLR.w	Window_draw_row.w
+	MOVE.b	#FLAG_TRUE, Window_tilemap_draw_active.w
+	RTS
+	
+DrawEquipOptionsMenuWindow:
+	MOVE.w	#2, Menu_cursor_column_break.w
+	MOVE.w	#MENU_CURSOR_NONE, Menu_cursor_last_index.w
+	MOVE.w	#$000D, Menu_cursor_base_x.w
+	MOVE.w	#6, Menu_cursor_base_y.w
+	MOVE.w	#$000C, Window_tilemap_x.w
+	MOVE.w	#4, Window_tilemap_y.w
+	MOVE.w	#9, Window_width.w
+	MOVE.w	#8, Window_height.w
+	MOVE.w	#0, Window_tile_attrs.w
+	BSR.w	DrawWindowBorder
+	LEA	EquipOptionsStr, A0
+	MOVE.w	#2, Window_text_x.w
+	MOVE.w	#2, Window_text_y.w
+	BSR.w	RenderTextToWindow
+	CLR.w	Window_draw_row.w
+	MOVE.b	#FLAG_TRUE, Window_tilemap_draw_active.w
+	RTS
+	
+DrawChurchMenuWindow:
+	MOVE.w	#3, Menu_cursor_column_break.w
+	MOVE.w	#MENU_CURSOR_NONE, Menu_cursor_last_index.w
+	MOVE.w	#3, Menu_cursor_base_x.w
+	MOVE.w	#$000C, Menu_cursor_base_y.w
+	MOVE.w	#2, Window_tilemap_x.w
+	MOVE.w	#$000A, Window_tilemap_y.w
+	MOVE.w	#$0015, Window_width.w
+	MOVE.w	#$000A, Window_height.w
+	MOVE.w	#0, Window_tile_attrs.w
+	BSR.w	DrawWindowBorder
+	LEA	ChurchOptionsStr, A0
+	MOVE.w	#2, Window_text_x.w
+	MOVE.w	#2, Window_text_y.w
+	BSR.w	RenderTextToWindow
+	CLR.w	Window_draw_row.w
+	MOVE.b	#FLAG_TRUE, Window_tilemap_draw_active.w
+	RTS
+	
+DrawShopMenuWindow:
+	MOVE.w	#2, Menu_cursor_column_break.w
+	MOVE.w	#MENU_CURSOR_NONE, Menu_cursor_last_index.w
+	MOVE.w	#3, Menu_cursor_base_x.w
+	MOVE.w	#$000E, Menu_cursor_base_y.w
+	MOVE.w	#2, Window_tilemap_x.w
+	MOVE.w	#$000C, Window_tilemap_y.w
+	MOVE.w	#7, Window_width.w
+	MOVE.w	#8, Window_height.w
+	MOVE.w	#0, Window_tile_attrs.w
+	BSR.w	DrawWindowBorder
+	LEA	BuySellStopStr, A0
+	MOVE.w	#2, Window_text_x.w
+	MOVE.w	#2, Window_text_y.w
+	BSR.w	RenderTextToWindow
+	CLR.w	Window_draw_row.w
+	MOVE.b	#FLAG_TRUE, Window_tilemap_draw_active.w
+	RTS
+	
+DrawMoneyDisplayWindow:
+	MOVE.w	#0, Window_tilemap_x.w
+	MOVE.w	#2, Window_tilemap_y.w
+	MOVE.w	#9, Window_width.w
+	MOVE.w	#6, Window_height.w
+	MOVE.w	#0, Window_tile_attrs.w
+	BSR.w	DrawWindowBorder
+	LEA	KimStr, A0
+	MOVE.w	#2, Window_text_x.w
+	MOVE.w	#2, Window_text_y.w
+	BSR.w	RenderTextToWindow
+	MOVE.l	Player_kims.w, D2
+	BSR.w	FormatLongNumberToText
+	MOVE.w	#$002A, D0
+	BSR.w	RenderTextToWindowAtPosition
+	MOVE.b	#FLAG_TRUE, Window_tilemap_draw_pending.w
+	RTS
+	
+DrawItemListBorders:
+	MOVE.w	Possessed_items_length.w, D7
+	BSR.w	DrawListTopBorders
+	MOVE.w	Possessed_items_length.w, D0
+	BSR.w	DrawListBottomBorder
+	RTS
+	
+DrawMagicListBorders:
+	MOVE.w	Possessed_magics_length.w, D7
+	BSR.w	DrawListTopBorders
+	MOVE.w	Possessed_magics_length.w, D0
+	BSR.w	DrawListBottomBorder
+	RTS
+	
+DrawEquipmentListWindow:
+	MOVE.w	Possessed_equipment_length.w, D7
+	BSR.w	DrawListTopBorders
+	MOVE.w	Possessed_equipment_length.w, D0
+	BSR.w	DrawListBottomBorder
+	RTS
+	
+DrawReadyEquipmentMenuBorders:
+	MOVE.w	Ready_equipment_list_length.w, D7
+	BSR.w	DrawListTopBorders
+	MOVE.w	Ready_equipment_list_length.w, D0
+	BSR.w	DrawListBottomBorder
+	RTS
+	
+DrawListTopBorders:
+	LEA	UIBorder_SmallTop, A0
+	MOVE.w	#$000F, Window_tilemap_draw_x.w
+	MOVE.w	#2, Window_tilemap_draw_y.w
+	MOVE.w	#$0015, Window_tilemap_draw_width.w
+	MOVE.w	#0, Window_tilemap_draw_height.w
+	MOVE.w	#0, Script_tile_attrs.w
+	BSR.w	RenderTextToTilemap
+	ADD.w	D7, D7
+	ADDQ.w	#1, D7
+	MOVEQ	#1, D6
+DrawListTopBorders_Done:
+	LEA	UIBorder_SmallMiddle, A0
+	MOVE.w	#$000F, Window_tilemap_draw_x.w
+	MOVE.w	#2, D0
+	ADD.w	D6, D0
+	MOVE.w	D0, Window_tilemap_draw_y.w
+	MOVE.w	#$0015, Window_tilemap_draw_width.w
+	MOVE.w	#0, Window_tilemap_draw_height.w
+	MOVE.w	#0, Script_tile_attrs.w
+	BSR.w	RenderTextToTilemap
+	ADDQ.w	#1, D6
+	DBF	D7, DrawListTopBorders_Done
+	RTS
+	
+DrawListBottomBorder:
+	LEA	UIBorder_LargeBox, A0
+	ADDQ.w	#1, D0
+	ADD.w	D0, D0
+	MOVE.w	#$000F, Window_tilemap_draw_x.w
+	MOVE.w	#2, D1
+	ADD.w	D0, D1
+	MOVE.w	D1, Window_tilemap_draw_y.w
+	MOVE.w	#$0015, Window_tilemap_draw_width.w
+	MOVE.w	#0, Window_tilemap_draw_height.w
+	MOVE.w	#0, Script_tile_attrs.w
+	BSR.w	RenderTextToTilemap
+	RTS
+	
+DrawShopItemListWindow:
+	MOVE.w	Shop_item_count.w, D0
+	SUBQ.w	#1, D0
+	MOVE.w	D0, Menu_cursor_column_break.w
+	MOVE.w	#MENU_CURSOR_NONE, Menu_cursor_last_index.w
+	MOVE.w	#$000B, Menu_cursor_base_x.w
+	MOVE.w	#4, Menu_cursor_base_y.w
+	MOVE.w	#$000A, Window_tilemap_x.w
+	MOVE.w	#2, Window_tilemap_y.w
+	MOVE.w	#$0018, Window_width.w
+	MOVE.w	Shop_item_count.w, D0
+	ADD.w	D0, D0
+	ADDQ.w	#2, D0
+	MOVE.w	D0, Window_height.w
+	MOVE.w	#0, Window_tile_attrs.w
+	BSR.w	DrawWindowBorder
+	MOVE.w	#2, Window_text_x.w
+	MOVE.w	#2, Window_text_y.w
+	LEA	Shop_item_list.w, A3
+	LEA	ShopCategoryNameTables, A4
+	MOVE.w	Current_shop_type.w, D0
+	ASL.w	#3, D0
+	MOVEA.l	(A4,D0.w), A4
+	MOVE.w	Shop_item_count.w, D7
+	SUBQ.w	#1, D7
+DrawShopItemListWindow_Done:
+	MOVE.w	(A3)+, D4
+	ANDI.w	#$00FF, D4
+	ADD.w	D4, D4
+	ADD.w	D4, D4
+	MOVEA.l	(A4,D4.w), A0
+	BSR.w	RenderTextToWindow
+	ADDQ.w	#2, Window_text_y.w
+	DBF	D7, DrawShopItemListWindow_Done
+	MOVE.w	#$0012, Window_text_x.w
+	MOVE.w	#2, Window_text_y.w
+	LEA	ShopPricesByTownAndType, A3
+	MOVE.w	Current_town.w, D0
+	ADD.w	D0, D0
+	ADD.w	D0, D0
+	ADD.w	Current_shop_type.w, D0
+	ADD.w	D0, D0
+	ADD.w	D0, D0
+	MOVEA.l	(A3,D0.w), A3
+	CLR.w	Shop_item_index.w
+	MOVE.w	#0, D3
+DrawShopItemListWindow_Done2:
+	MOVE.l	(A3)+, D2
+	BSR.w	FormatLongNumberToText
+	BSR.w	RenderFormattedTextToWindow
+	ADDQ.w	#2, Window_text_y.w
+	ADDQ.w	#1, Shop_item_index.w
+	MOVE.w	Shop_item_index.w, D0
+	CMP.w	Shop_item_count.w, D0
+	BLT.b	DrawShopItemListWindow_Done2
+	CLR.w	Window_draw_row.w
+	MOVE.b	#FLAG_TRUE, Window_tilemap_draw_active.w
+	RTS
+	
+DrawShopSellListWindow:
+	MOVE.w	Shop_item_count.w, D0
+	SUBQ.w	#1, D0
+	MOVE.w	D0, Menu_cursor_column_break.w
+	MOVE.w	#MENU_CURSOR_NONE, Menu_cursor_last_index.w
+	MOVE.w	#$000B, Menu_cursor_base_x.w
+	MOVE.w	#4, Menu_cursor_base_y.w
+	MOVE.w	#$000A, Window_tilemap_x.w
+	MOVE.w	#2, Window_tilemap_y.w
+	MOVE.w	#$0018, Window_width.w
+	MOVE.w	Shop_item_count.w, D0
+	ADD.w	D0, D0
+	ADDQ.w	#2, D0
+	MOVE.w	D0, Window_height.w
+	MOVE.w	#0, Window_tile_attrs.w
+	BSR.w	DrawWindowBorder
+	MOVE.w	#2, Window_text_x.w
+	MOVE.w	#2, Window_text_y.w
+	LEA	Shop_item_list.w, A3
+	LEA	ShopCategoryNameTables, A4
+	MOVE.w	Current_shop_type.w, D0
+	ASL.w	#3, D0
+	MOVEA.l	(A4,D0.w), A4
+	MOVE.w	Shop_item_count.w, D7
+	SUBQ.w	#1, D7
+DrawShopSellListWindow_Done:
+	MOVE.w	(A3)+, D4
+	ANDI.w	#$00FF, D4
+	ADD.w	D4, D4
+	ADD.w	D4, D4
+	MOVEA.l	(A4,D4.w), A0
+	BSR.w	RenderTextToWindow
+	ADDQ.w	#2, Window_text_y.w
+	DBF	D7, DrawShopSellListWindow_Done
+	CLR.w	Window_draw_row.w
+	MOVE.b	#FLAG_TRUE, Window_tilemap_draw_active.w
+	RTS
+	
+DrawTownListWindow:
+	MOVE.w	#$000B, Menu_cursor_base_x.w
+	MOVE.w	#4, Menu_cursor_base_y.w
+	MOVE.w	#$000A, Window_tilemap_x.w
+	MOVE.w	#2, Window_tilemap_y.w
+	MOVE.w	#0, Window_tile_attrs.w
+	MOVE.w	#$000D, D0
+	MOVE.w	#6, Menu_cursor_column_break.w
+	MOVE.w	#$000D, Menu_cursor_last_index.w
+	MOVE.w	#$0016, Window_width.w
+	MOVE.w	#$0010, Window_height.w
+	BSR.w	DrawWindowBorder
+	MOVE.w	#$000C, Window_text_x.w
+	MOVE.w	#2, Window_text_y.w
+	LEA	TownNames, A4
+	LEA	Towns_visited.w, A6
+	LEA	$1C(A4), A4
+	LEA	obj_sprite_flags(A6), A6
+	MOVE.w	#6, D7
+DrawTownListWindow_Done:
+	MOVEA.l	(A4)+, A0
+	MOVE.b	(A6)+, D0
+	BEQ.b	DrawTownListWindow_Loop
+	BSR.w	RenderTextToWindow
+DrawTownListWindow_Loop:
+	ADDQ.w	#2, Window_text_y.w
+	DBF	D7, DrawTownListWindow_Done
+	MOVE.w	#2, Window_text_x.w
+	MOVE.w	#2, Window_text_y.w
+	LEA	TownNames, A4
+	LEA	Towns_visited.w, A6
+	MOVE.w	#6, D7
+DrawTownListWindow_Loop_Done:
+	MOVEA.l	(A4)+, A0
+	MOVE.b	(A6)+, D0
+	BEQ.b	DrawTownListWindow_Loop2
+	BSR.w	RenderTextToWindow
+DrawTownListWindow_Loop2:
+	ADDQ.w	#2, Window_text_y.w
+	DBF	D7, DrawTownListWindow_Loop_Done
+	CLR.w	Window_draw_row.w
+	MOVE.b	#FLAG_TRUE, Window_tilemap_draw_active.w
+	RTS
+	
+RenderTextToTilemap:
+	JSR	GetScrollOffsetInTiles
+	CLR.w	D3
+RenderTextToTilemap_Done:
+	CLR.w	D2
+RenderTextToTilemap_Done2:
+	MOVE.w	D2, D4
+	MOVE.w	D3, D5
+	ADD.w	D0, D4
+	ADD.w	D1, D5
+	ADD.w	Window_tilemap_draw_x.w, D4
+	ADD.w	Window_tilemap_draw_y.w, D5
+	ANDI.w	#$003F, D4
+	ANDI.w	#$003F, D5
+	ASL.w	#1, D4
+	ASL.w	#7, D5
+	ADD.w	D4, D5
+	ANDI.l	#$0000FFFF, D5
+	SWAP	D5
+	ADDI.l	#$40000003, D5
+	ORI	#$0700, SR
+	MOVE.l	D5, VDP_control_port
+	CLR.w	D4
+	MOVE.b	(A0)+, D4
+	ADDI.w	#$04C0, D4
+	ORI.w	#$8000, D4
+	OR.w	Script_tile_attrs.w, D4
+	MOVE.w	D4, VDP_data_port
+	ANDI	#$F8FF, SR
+	ADDQ.w	#1, D2
+	CMP.w	Window_tilemap_draw_width.w, D2
+	BLE.b	RenderTextToTilemap_Done2
+	ADDQ.w	#1, D3
+	CMP.w	Window_tilemap_draw_height.w, D3
+	BLE.b	RenderTextToTilemap_Done
+	RTS
+	
+LongToDecimalString_Alt:
+	dc.b	$7E, $01, $60, $00, $00, $04 
+LongToDecimalString:
+	MOVEQ	#0, D7
+	ROL.l	#8, D2
+	MOVEQ	#5, D6
+LongToDecimalString_Done:
+	ROL.l	#4, D2
+	MOVE.l	D2, D4
+	ANDI.l	#$0000000F, D4
+	BNE.b	LongToDecimalString_EncodeDigit
+	TST.w	D7
+	BNE.b	LongToDecimalString_EncodeDigit
+	TST.w	D6
+	BEQ.b	LongToDecimalString_EncodeDigit
+	MOVE.b	#$20, D4
+	BRA.b	LongToDecimalString_EncodeDigit_Loop
+; loc_00011440
+LongToDecimalString_EncodeDigit:
+	ADDI.b	#$30, D4
+	MOVEQ	#1, D7
+LongToDecimalString_EncodeDigit_Loop:
+	TST.w	D5
+	BNE.b	LongToDecimalString_EncodeDigit_Loop2
+	BSR.w	WriteDigitToWindowAndAdvance
+	BRA.b	LongToDecimalString_EncodeDigit_Loop3
+LongToDecimalString_EncodeDigit_Loop2:
+	MOVE.b	D4, (A0)+
+LongToDecimalString_EncodeDigit_Loop3:
+	DBF	D6, LongToDecimalString_Done
+	RTS
+	
+FormatLongNumberToText:
+	MOVE.w	#0, D3
+	MOVEQ	#1, D5
+	LEA	Window_text_scratch.w, A0
+	BSR.b	LongToDecimalString
+	MOVE.b	#$FF, (A0)
+	RTS
+	
+FormatLongNumberToText_Alt:
+	dc.b	$7E, $01, $60, $00, $00, $04 
+ConvertNumberToTextDigits:
+	MOVEQ	#0, D7
+	MOVEQ	#3, D6
+ConvertNumberToTextDigits_Done:
+	ROL.w	#4, D2
+	MOVE.w	D2, D4
+	ANDI.w	#$000F, D4
+	BNE.b	ConvertNumberToTextDigits_EncodeDigit
+	TST.w	D7
+	BNE.b	ConvertNumberToTextDigits_EncodeDigit
+	TST.w	D6
+	BEQ.b	ConvertNumberToTextDigits_EncodeDigit
+	MOVE.b	#$20, D4
+	BRA.b	ConvertNumberToTextDigits_EncodeDigit_Loop
+; loc_0001148C
+ConvertNumberToTextDigits_EncodeDigit:
+	ADDI.b	#$30, D4
+	MOVEQ	#1, D7
+ConvertNumberToTextDigits_EncodeDigit_Loop:
+	TST.w	D5
+	BNE.b	ConvertNumberToTextDigits_EncodeDigit_Loop2
+	BSR.w	WriteDigitToWindowAndAdvance
+	BRA.b	ConvertNumberToTextDigits_EncodeDigit_Loop3
+ConvertNumberToTextDigits_EncodeDigit_Loop2:
+	MOVE.b	D4, (A0)+
+ConvertNumberToTextDigits_EncodeDigit_Loop3:
+	DBF	D6, ConvertNumberToTextDigits_Done
+	RTS
+	
+WordToDecimalString_NoPad:
+	MOVEQ	#0, D7
+	MOVEQ	#3, D6
+WordToDecimalString_NoPad_Done:
+	ROL.w	#4, D2
+	MOVE.w	D2, D4
+	ANDI.w	#$000F, D4
+	BNE.b	WordToDecimalString_NoPad_EncodeDigit
+	TST.w	D7
+	BNE.b	WordToDecimalString_NoPad_EncodeDigit
+	TST.w	D6
+	BEQ.b	WordToDecimalString_NoPad_EncodeDigit
+	MOVE.b	#$20, D4
+	BRA.b	WordToDecimalString_NoPad_EncodeDigit_Loop
+; loc_000114C0
+WordToDecimalString_NoPad_EncodeDigit:
+	ADDI.b	#$30, D4
+	MOVEQ	#1, D7
+WordToDecimalString_NoPad_EncodeDigit_Loop:
+	TST.w	D5
+	BNE.b	WordToDecimalString_NoPad_EncodeDigit_Loop2
+	BSR.w	WriteDigitToWindowPlane3
+	BRA.b	WordToDecimalString_NoPad_EncodeDigit_Loop3
+WordToDecimalString_NoPad_EncodeDigit_Loop2:
+	MOVE.b	D4, (A0)+	
+WordToDecimalString_NoPad_EncodeDigit_Loop3:
+	DBF	D6, WordToDecimalString_NoPad_Done
+	RTS
+	
+; loc_000114D8
+WordToDecimalString:
+	MOVE.w	#0, D3
+	MOVEQ	#1, D5
+	LEA	Window_text_scratch.w, A0
+	BSR.b	ConvertNumberToTextDigits
+	MOVE.b	#$FF, (A0)
+	RTS
+	
+WriteDigitToWindowAndAdvance:
+	BSR.w	CalcWindowTileVramAddress
+	ORI.l	#$40000003, D0
+	MOVE.l	D0, VDP_control_port
+	MOVE.w	D4, VDP_data_port
+	ADDQ.w	#1, Window_number_cursor_x.w
+	RTS
+
+WriteDigitToWindowPlane3:
+	BSR.w	CalcWindowTileVramAddress
+	ORI.l	#$60000003, D0
+	MOVE.l	D0, VDP_control_port
+	MOVE.w	D4, VDP_data_port
+	ADDQ.w	#1, Window_number_cursor_x.w
+	RTS
+
+CalcWindowTileVramAddress:
+	ADDI.w	#$84C0, D4
+	OR.w	D3, D4
+	JSR	GetScrollOffsetInTiles
+	ADD.w	Window_number_cursor_x.w, D0
+	ADD.w	Window_number_cursor_y.w, D1
+	ANDI.w	#$003F, D0
+	ANDI.w	#$003F, D1
+	ADD.w	D0, D0
+	ASL.w	#7, D1
+	ADD.w	D1, D0
+	ANDI.l	#$00001FFF, D0
+	SWAP	D0
+	RTS
+
+AddExperiencePoints:
+	LEA	Transaction_amount_end.w, A0
+	LEA	Player_next_level_experience.w, A1
+	MOVEQ	#3, D1
+AddExperiencePoints_Done:
+	ABCD	-(A0), -(A1)
+	DBF	D1, AddExperiencePoints_Done
+	CLR.l	Transaction_amount.w
+	CMPI.l	#SUP_PLAYER_EXP, Player_experience.w
+	BLT.b	AddExperiencePoints_Loop
+	MOVE.l	#MAX_PLAYER_EXP, Player_experience.w	
+AddExperiencePoints_Loop:
+	RTS
+
+AddPaymentAmount:
+	LEA	Transaction_amount_end.w, A0
+	LEA	(Player_kims+4).w, A1
+	MOVEQ	#3, D1
+AddPaymentAmount_Done:
+	ABCD	-(A0), -(A1)
+	DBF	D1, AddPaymentAmount_Done
+	CLR.l	Transaction_amount.w
+	CMPI.l	#SUP_PLAYER_KIMS, Player_kims.w
+	BLT.b	AddPaymentAmount_Loop
+	MOVE.l	#MAX_PLAYER_KIMS, Player_kims.w	
+AddPaymentAmount_Loop:
+	RTS
+	
+;loc_0001159E:
+DeductPaymentAmount:
+	LEA	Transaction_amount_end.w, A0
+	LEA	(Player_kims+4).w, A1
+	MOVEQ	#3, D1
+DeductPaymentAmount_Done:
+	SBCD	-(A0), -(A1)
+	DBF	D1, DeductPaymentAmount_Done
+	CLR.l	Transaction_amount.w
+	TST.l	Player_kims.w
+	BGE.b	DeductPaymentAmount_Loop
+	CLR.l	Player_kims.w
+DeductPaymentAmount_Loop:
+	RTS
+
+DeductPaymentAmount_DeadCode:					; unreferenced dead code
+	LEA	Transaction_item_quantity.w, A0
+	LEA	Player_mhp.w, A1
+	MOVEQ	#1, D1
+DeductPaymentAmount_Loop_Done:
+	SBCD	-(A0), -(A1)
+	DBF	D1, DeductPaymentAmount_Loop_Done
+	CLR.l	Transaction_amount.w
+	TST.w	Player_hp.w
+	BGE.b	DeductPaymentAmount_Loop2
+	CLR.w	Player_hp.w
+DeductPaymentAmount_Loop2:
+	RTS
+; loc_000115DE
+DisplayPlayerKims:
+	MOVE.w	#2, Window_number_cursor_x.w
+	MOVE.w	#6, Window_number_cursor_y.w
+	MOVE.l	Player_kims.w, D2
+	MOVE.w	#0, D3
+	CLR.w	D5
+	BSR.w	LongToDecimalString
+	RTS
+	
+; loc_000115FA
+InitMenuCursorForList:
+	SUBQ.w	#1, D0
+	MOVE.w	D0, Menu_cursor_column_break.w
+	MOVE.w	#MENU_CURSOR_NONE, Menu_cursor_last_index.w
+	MOVE.w	#$0010, Menu_cursor_base_x.w
+	MOVE.w	#4, Menu_cursor_base_y.w
+	RTS
+	
+InitItemMenuCursor:
+	MOVE.w	#1, Menu_cursor_column_break.w
+	MOVE.w	#MENU_CURSOR_NONE, Menu_cursor_last_index.w
+	MOVE.w	#3, Menu_cursor_base_x.w
+	MOVE.w	#$000E, Menu_cursor_base_y.w
+	RTS
+	
+InitSpellbookCursor:
+	MOVE.w	#2, Menu_cursor_column_break.w
+	MOVE.w	#MENU_CURSOR_NONE, Menu_cursor_last_index.w
+	MOVE.w	#3, Menu_cursor_base_x.w
+	MOVE.w	#$000E, Menu_cursor_base_y.w
+	RTS
+	
+SetShopMenuCursorPosition:
+	MOVE.w	Shop_item_count.w, D0	
+	SUBQ.w	#1, D0	
+	MOVE.w	D0, Menu_cursor_column_break.w	
+	MOVE.w	#MENU_CURSOR_NONE, Menu_cursor_last_index.w	
+	MOVE.w	#$000B, Menu_cursor_base_x.w	
+	MOVE.w	#4, Menu_cursor_base_y.w	
+	RTS
+	
+ResetScriptOutputVars:
+	MOVE.w	#5, Script_output_base_x.w
+	ADDQ.w	#2, Script_output_y.w
+	MOVE.w	#0, Script_tile_attrs.w
+	CLR.b	Script_text_complete.w
+	CLR.b	Script_has_continuation.w
+	CLR.b	Script_has_yes_no_question.w
+	CLR.w	Script_source_offset.w
+	CLR.w	Script_output_x.w
+	RTS
+	
+DrawSaveFileSelectWindow:
+	MOVE.w	#4, Window_tilemap_x.w
+	MOVE.w	#1, Window_tilemap_y.w
+	MOVE.w	#$001B, Window_width.w
+	MOVE.w	#$0010, Window_height.w
+	MOVE.w	#0, Window_tile_attrs.w
+	BSR.w	DrawWindowBorder
+	LEA	SelectNumberStr, A0
+	MOVE.w	#2, Window_text_x.w
+	MOVE.w	#4, Window_text_y.w
+	BSR.w	RenderTextToWindow
+	MOVE.w	#2, Menu_cursor_column_break.w
+	MOVE.w	#MENU_CURSOR_NONE, Menu_cursor_last_index.w
+	MOVE.w	#5, Menu_cursor_base_x.w
+	MOVE.w	#$000B, Menu_cursor_base_y.w
+	LEA	$00200001, A0
+	BSR.w	LoadSavegameNameToBuffer
+	LEA	Savegame_name_buffer.w, A0
+	MOVE.w	#$0127, D0
+	BSR.w	RenderTextAtOffset
+	LEA	$00200A81, A0
+	BSR.w	LoadSavegameNameToBuffer
+	LEA	Savegame_name_buffer.w, A0
+	MOVE.w	#$015F, D0
+	BSR.w	RenderTextAtOffset
+	LEA	$00201501, A0
+	BSR.w	LoadSavegameNameToBuffer
+	LEA	Savegame_name_buffer.w, A0
+	MOVE.w	#$0197, D0
+	BSR.w	RenderTextAtOffset
+	LEA	$00200131, A0
+	BSR.w	FormatItemCountToBCD
+	MOVE.w	#$012E, D0
+	BSR.w	RenderTextToWindowAtPosition
+	LEA	$00200BB1, A0
+	BSR.w	FormatItemCountToBCD
+	MOVE.w	#$0166, D0
+	BSR.w	RenderTextToWindowAtPosition
+	LEA	$00201631, A0
+	BSR.w	FormatItemCountToBCD
+	MOVE.w	#$019E, D0
+	BSR.w	RenderTextToWindowAtPosition
+	CLR.w	Window_draw_row.w
+	MOVE.b	#FLAG_TRUE, Window_tilemap_draw_active.w
+	RTS
+	
+LoadSavegameNameToBuffer:
+	LEA	Savegame_name_buffer.w, A1
+	TST.b	(A0)
+	BNE.b	LoadSavegameName_Copy
+	TST.b	$2(A0)
+	BNE.b	LoadSavegameName_Copy
+	TST.b	$4(A0)
+	BNE.b	LoadSavegameName_Copy
+	TST.b	$6(A0)
+	BNE.b	LoadSavegameName_Copy
+	MOVE.l	#$4E4557FF, (A1)
+	RTS
+	
+LoadSavegameName_Copy:
+	MOVE.w	#$000D, D7
+LoadSavegameName_Copy_Done:
+	MOVE.b	(A0)+, (A1)+
+	LEA	$1(A0), A0
+	DBF	D7, LoadSavegameName_Copy_Done
+	MOVE.w	#$FFFF, (A1)
+	BSR.b	ValidateSavegameName
+	RTS
+	
+ValidateSavegameName:
+	LEA	Savegame_name_buffer.w, A1
+	CLR.w	D0
+; loc_0001179E
+ValidateSavegameName_Loop:
+	MOVE.b	(A1)+, D1
+	CMPI.b	#SCRIPT_END, D1
+	BEQ.b	ValidateSavegameName_Loop_Loop
+	CMPI.b	#SCRIPT_WIDE_CHAR_LO, D1
+	BEQ.b	ValidateSavegameName_Loop
+	CMPI.b	#SCRIPT_WIDE_CHAR_HI, D1
+	BEQ.b	ValidateSavegameName_Loop
+	ADDQ.w	#1, D0
+	CMPI.w	#6, D0
+	BGT.b	ValidateSavegameName_Loop_Loop2
+	BRA.b	ValidateSavegameName_Loop
+ValidateSavegameName_Loop_Loop:
+	RTS
+	
+ValidateSavegameName_Loop_Loop2:
+	MOVE.l	#$3F3F3F3F, Savegame_name_buffer.w	
+	MOVE.w	#$FFFF, Savegame_name_overflow.w	
+	RTS
+	
+FormatItemCountToBCD:
+	CLR.w	D0
+	MOVE.b	(A0), D0
+	ASL.w	#4, D0
+	MOVE.b	$2(A0), D0
+	ADDQ.w	#1, D0
+	JSR	ConvertToBCD
+	MOVE.w	D0, D2
+	BSR.w	WordToDecimalString
+	RTS
+	
+DrawSaveErrorWindow:
+	MOVE.w	#$000A, Window_tilemap_x.w
+	MOVE.w	#$0010, Window_tilemap_y.w
+	MOVE.w	#$0019, Window_width.w
+	MOVE.w	#$000A, Window_height.w
+	MOVE.w	#0, Window_tile_attrs.w
+	BSR.w	DrawWindowBorder
+	LEA	ErrorPressCStr, A0
+	MOVE.w	#2, Window_text_x.w
+	MOVE.w	#2, Window_text_y.w
+	BSR.w	RenderTextToWindow
+	CLR.w	Window_draw_row.w
+	MOVE.b	#FLAG_TRUE, Window_tilemap_draw_active.w
+	RTS
+	
+DrawSaveSuccessWindow:
+	MOVE.w	#$000A, Window_tilemap_x.w	
+	MOVE.w	#$0010, Window_tilemap_y.w	
+	MOVE.w	#$0019, Window_width.w	
+	MOVE.w	#$000A, Window_height.w	
+	MOVE.w	#0, Window_tile_attrs.w	
+	BSR.w	DrawWindowBorder	
+	LEA	LooksBetterPressCStr, A0	
+	MOVE.w	#2, Window_text_x.w	
+	MOVE.w	#2, Window_text_y.w	
+	BSR.w	RenderTextToWindow	
+	CLR.w	Window_draw_row.w	
+	MOVE.b	#FLAG_TRUE, Window_tilemap_draw_active.w	
+	RTS
+	
+DrawSaveFailedWindow:
+	MOVE.w	#$000A, Window_tilemap_x.w
+	MOVE.w	#$0010, Window_tilemap_y.w
+	MOVE.w	#$0019, Window_width.w
+	MOVE.w	#$000A, Window_height.w
+	MOVE.w	#0, Window_tile_attrs.w
+	BSR.w	DrawWindowBorder
+	LEA	DidntWorkPressResetStr, A0
+	MOVE.w	#2, Window_text_x.w
+	MOVE.w	#2, Window_text_y.w
+	BSR.w	RenderTextToWindow
+	CLR.w	Window_draw_row.w
+	MOVE.b	#FLAG_TRUE, Window_tilemap_draw_active.w
+	RTS
+	
+DrawNoSavedGameWindow:
+	MOVE.w	#$000A, Window_tilemap_x.w
+	MOVE.w	#$0010, Window_tilemap_y.w
+	MOVE.w	#$0019, Window_width.w
+	MOVE.w	#$000A, Window_height.w
+	MOVE.w	#0, Window_tile_attrs.w
+	BSR.w	DrawWindowBorder
+	LEA	NoSavedGameStr, A0
+	MOVE.w	#2, Window_text_x.w
+	MOVE.w	#2, Window_text_y.w
+	BSR.w	RenderTextToWindow
+	CLR.w	Window_draw_row.w
+	MOVE.b	#FLAG_TRUE, Window_tilemap_draw_active.w
+	RTS
+	
+DrawGameReadyWindow:
+	MOVE.w	#$000A, Window_tilemap_x.w	
+	MOVE.w	#$0010, Window_tilemap_y.w	
+	MOVE.w	#$0019, Window_width.w	
+	MOVE.w	#$000A, Window_height.w	
+	MOVE.w	#0, Window_tile_attrs.w	
+	BSR.w	DrawWindowBorder	
+	LEA	GameReadyPressCStr, A0	
+	MOVE.w	#2, Window_text_x.w	
+	MOVE.w	#2, Window_text_y.w	
+	BSR.w	RenderTextToWindow	
+	CLR.w	Window_draw_row.w	
+	MOVE.b	#FLAG_TRUE, Window_tilemap_draw_active.w	
+	RTS
+	
+DrawCharacterStatsWindow:
+	MOVE.w	#2, Window_tilemap_x.w
+	MOVE.w	#2, Window_tilemap_y.w
+	MOVE.w	#$001B, Window_width.w
+	MOVE.w	#$0014, Window_height.w
+	MOVE.w	#0, Window_tile_attrs.w
+	BSR.w	DrawWindowBorder
+	LEA	CharacterStatsStr, A0
+	MOVE.w	#2, Window_text_x.w
+	MOVE.w	#2, Window_text_y.w
+	BSR.w	RenderTextToWindow
+	TST.w	Player_poisoned.w
+	BEQ.b	DrawCharacterStatsWindow_Loop
+	LEA	BadPoisonStr, A0
+	BRA.b	DrawStatusScreen_RenderCondition
+DrawCharacterStatsWindow_Loop:
+	JSR	CheckIfCursed
+	BEQ.b	DrawCharacterStatsWindow_Loop2
+	LEA	BadCurseStr, A0
+	BRA.b	DrawStatusScreen_RenderCondition
+DrawCharacterStatsWindow_Loop2:
+	MOVE.w	Player_hp.w, D0
+	CMP.w	Player_mhp.w, D0
+	BGE.b	DrawCharacterStatsWindow_Loop3
+	LEA	GoodStr, A0
+	BRA.b	DrawStatusScreen_RenderCondition
+DrawCharacterStatsWindow_Loop3:
+	LEA	BestStr, A0
+; loc_000119AA
+DrawStatusScreen_RenderCondition: ; stats screen?
+	MOVE.w	#$007E, D0
+	BSR.w	RenderTextAtOffset
+	LEA	Player_name.w, A0
+	MOVE.w	#$0041, D0
+	BSR.w	RenderTextAtOffset
+	MOVE.w	Player_level.w, D0
+	ADDQ.w	#1, D0
+	JSR	ConvertToBCD
+	MOVE.w	D0, D2
+	BSR.w	WordToDecimalString
+	MOVE.w	#$00B1, D0
+	BSR.w	RenderTextToWindowAtPosition
+	MOVE.l	Player_experience.w, D2
+	BSR.w	FormatLongNumberToText
+	MOVE.w	#$00BC, D0
+	BSR.w	RenderTextToWindowAtPosition
+	MOVE.w	Player_hp.w, D0
+	JSR	ConvertToBCD
+	MOVE.w	D0, D2
+	BSR.w	WordToDecimalString
+	MOVE.w	#$0121, D0
+	BSR.w	RenderTextToWindowAtPosition
+	MOVE.w	Player_mp.w, D0
+	JSR	ConvertToBCD
+	MOVE.w	D0, D2
+	BSR.w	WordToDecimalString
+	MOVE.w	#$0159, D0
+	BSR.w	RenderTextToWindowAtPosition
+	MOVE.w	Player_str.w, D0
+	JSR	ConvertToBCD
+	MOVE.w	D0, D2
+	BSR.w	WordToDecimalString
+	MOVE.w	#$0191, D0
+	BSR.w	RenderTextToWindowAtPosition
+	MOVE.w	Player_ac.w, D0
+	JSR	ConvertToBCD
+	MOVE.w	D0, D2
+	BSR.w	WordToDecimalString
+	MOVE.w	#$019E, D0
+	BSR.w	RenderTextToWindowAtPosition
+	MOVE.w	Player_int.w, D0
+	JSR	ConvertToBCD
+	MOVE.w	D0, D2
+	BSR.w	WordToDecimalString
+	MOVE.w	#$01C9, D0
+	BSR.w	RenderTextToWindowAtPosition
+	MOVE.w	Player_dex.w, D0
+	JSR	ConvertToBCD
+	MOVE.w	D0, D2
+	BSR.w	WordToDecimalString
+	MOVE.w	#$01D6, D0
+	BSR.w	RenderTextToWindowAtPosition
+	MOVE.w	Player_luk.w, D0
+	JSR	ConvertToBCD
+	MOVE.w	D0, D2
+	BSR.w	WordToDecimalString
+	MOVE.w	#$0201, D0
+	BSR.w	RenderTextToWindowAtPosition
+	MOVE.l	Player_kims.w, D2
+	BSR.w	FormatLongNumberToText
+	MOVE.w	#$020C, D0
+	BSR.w	RenderTextToWindowAtPosition
+	MOVE.w	Player_mmp.w, D0
+	JSR	ConvertToBCD
+	MOVE.w	D0, D2
+	BSR.w	WordToDecimalString
+	MOVE.w	#$0166, D0
+	BSR.w	RenderTextToWindowAtPosition
+	MOVE.w	Player_mhp.w, D0
+	JSR	ConvertToBCD
+	MOVE.w	D0, D2
+	BSR.w	WordToDecimalString
+	MOVE.w	#$012E, D0
+	BSR.w	RenderTextToWindowAtPosition
+	MOVE.l	Player_next_level_experience.w, D2
+	BSR.w	FormatLongNumberToText
+	MOVE.w	#$00F4, D0
+	BSR.w	RenderTextToWindowAtPosition
+	CLR.w	Window_draw_row.w
+	MOVE.b	#FLAG_TRUE, Window_tilemap_draw_active.w
+	RTS
+	
+DrawEquippedGearWindow:
+	MOVE.w	#2, Window_tilemap_x.w
+	MOVE.w	#2, Window_tilemap_y.w
+	MOVE.w	#$001A, Window_width.w
+	MOVE.w	#$000C, Window_height.w
+	MOVE.w	#0, Window_tile_attrs.w
+	BSR.w	DrawWindowBorder
+	LEA	EquipmentReadiedStr, A0
+	MOVE.w	#1, Window_text_x.w
+	MOVE.w	#2, Window_text_y.w
+	BSR.w	RenderTextToWindow
+	LEA	NothingStr, A0
+	MOVE.w	Equipped_sword.w, D0
+	BLT.b	DrawEquippedGearWindow_Loop
+	BSR.w	GetEquipmentNamePointer
+DrawEquippedGearWindow_Loop:
+	MOVE.w	#$0074, D0
+	BSR.w	RenderTextAtOffset
+	LEA	NothingStr, A0
+	MOVE.w	Equipped_shield.w, D0
+	BLT.b	DrawEquippedGearWindow_Loop2
+	BSR.w	GetEquipmentNamePointer
+DrawEquippedGearWindow_Loop2:
+	MOVE.w	#$00AA, D0
+	BSR.w	RenderTextAtOffset
+	LEA	NothingStr, A0
+	MOVE.w	Equipped_armor.w, D0
+	BLT.b	DrawEquippedGearWindow_Loop3
+	BSR.w	GetEquipmentNamePointer
+DrawEquippedGearWindow_Loop3:
+	MOVE.w	#$00DF, D0
+	BSR.w	RenderTextAtOffset
+	LEA	NothingStr, A0
+	MOVE.w	Readied_magic.w, D0
+	BLT.b	DrawEquippedGearWindow_Loop4
+	BSR.w	GetMagicNamePointer
+DrawEquippedGearWindow_Loop4:
+	MOVE.w	#$0115, D0
+	BSR.w	RenderTextAtOffset
+	CLR.w	Window_draw_row.w
+	MOVE.b	#FLAG_TRUE, Window_tilemap_draw_active.w
+	RTS
+	
+GetEquipmentNamePointer:
+	LEA	EquipmentNames, A1
+	ANDI.w	#$00FF, D0
+	ADD.w	D0, D0
+	ADD.w	D0, D0
+	MOVEA.l	(A1,D0.w), A0
+	RTS
+	
+GetMagicNamePointer:
+	LEA	MagicNames, A1
+	ANDI.w	#$00FF, D0
+	ADD.w	D0, D0
+	ADD.w	D0, D0
+	MOVEA.l	(A1,D0.w), A0
+	RTS
+	
+DrawGearCombatWindow:
+	MOVE.w	#$000F, Window_tilemap_x.w
+	MOVE.w	#2, Window_tilemap_y.w
+	MOVE.w	#$0016, Window_width.w
+	MOVE.w	Possessed_equipment_length.w, D0
+	BLE.w	DrawGearCombatWindow_Loop
+	ADD.w	D0, D0
+	ADDQ.w	#3, D0
+	MOVE.w	D0, Window_height.w
+	MOVE.w	#0, Window_tile_attrs.w
+	BSR.w	DrawWindowBorder
+	LEA	GearCombatStr, A0
+	MOVE.w	#2, Window_text_x.w
+	MOVE.w	#2, Window_text_y.w
+	BSR.w	RenderTextToWindow
+	ADDQ.w	#2, Window_text_y.w
+	LEA	Possessed_equipment_list.w, A3
+	LEA	EquipmentNames, A4
+	MOVE.w	Possessed_equipment_length.w, D7
+	SUBQ.w	#1, D7
+DrawGearCombatWindow_Done:
+	MOVE.w	(A3)+, D4
+	ANDI.w	#$00FF, D4
+	ADD.w	D4, D4
+	ADD.w	D4, D4
+	MOVEA.l	(A4,D4.w), A0
+	BSR.w	RenderTextToWindow
+	ADDQ.w	#2, Window_text_y.w
+	DBF	D7, DrawGearCombatWindow_Done
+	MOVE.w	#$0014, Window_text_x.w
+	MOVE.w	#4, Window_text_y.w
+	LEA	Possessed_equipment_list.w, A2
+	MOVE.w	Possessed_equipment_length.w, D7
+	BSR.w	DrawEquippedMarkers
+	CLR.w	Window_draw_row.w
+	MOVE.b	#FLAG_TRUE, Window_tilemap_draw_active.w
+	RTS
+	
+DrawGearCombatWindow_Loop:
+	MOVE.w	#5, Window_height.w	
+	MOVE.w	#0, Window_tile_attrs.w	
+	BSR.w	DrawWindowBorder	
+	LEA	GearCombatStr, A0	
+	MOVE.w	#2, Window_text_x.w	
+	MOVE.w	#2, Window_text_y.w	
+	BSR.w	RenderTextToWindow	
+	LEA	NothingStr, A0	
+	MOVE.w	#$0060, D0	
+	BSR.w	RenderTextAtOffset	
+	CLR.w	Window_draw_row.w	
+	MOVE.b	#FLAG_TRUE, Window_tilemap_draw_active.w	
+	RTS
+	
+DrawEquippedMarkers:
+	MOVE.w	Window_height.w, D7
+	SUBQ.w	#1, D7
+	CLR.w	D3
+DrawEquippedMarkers_Done:
+	MOVE.w	(A2)+, D4
+	ANDI.w	#$8000, D4
+	BEQ.b	DrawEquippedMarkers_Loop
+	MOVE.w	Window_width.w, D0
+	ADDQ.w	#1, D0
+	MOVE.w	Window_text_y.w, D1
+	MULU.w	D1, D0
+	ADD.w	Window_text_x.w, D0
+	LEA	Window_tilemap_buffer.w, A1
+	LEA	(A1,D0.w), A1
+	MOVE.b	#$2A, (A1)
+DrawEquippedMarkers_Loop:
+	ADDQ.w	#2, Window_text_y.w
+	DBF	D7, DrawEquippedMarkers_Done
+	RTS
+	
+DrawMagicListWindow:
+	MOVE.w	#2, Window_tilemap_x.w
+	MOVE.w	#2, Window_tilemap_y.w
+	MOVE.w	#$0011, Window_width.w
+	MOVE.w	Possessed_magics_length.w, D0
+	BLE.w	DrawMagicListWindow_Loop
+	ADD.w	D0, D0
+	ADDQ.w	#3, D0
+	MOVE.w	D0, Window_height.w
+	MOVE.w	#0, Window_tile_attrs.w
+	BSR.w	DrawWindowBorder
+	LEA	GearMagicStr, A0
+	MOVE.w	#2, Window_text_x.w
+	MOVE.w	#2, Window_text_y.w
+	BSR.w	RenderTextToWindow
+	ADDQ.w	#2, Window_text_y.w
+	LEA	Possessed_magics_list.w, A3
+	LEA	MagicNames, A4
+	MOVE.w	Possessed_magics_length.w, D7
+	SUBQ.w	#1, D7
+DrawMagicListWindow_Done:
+	MOVE.w	(A3)+, D4
+	ANDI.w	#$00FF, D4
+	ADD.w	D4, D4
+	ADD.w	D4, D4
+	MOVEA.l	(A4,D4.w), A0
+	BSR.w	RenderTextToWindow
+	ADDQ.w	#2, Window_text_y.w
+	DBF	D7, DrawMagicListWindow_Done
+	MOVE.w	#$0021, Window_text_x.w
+	MOVE.w	#3, Window_text_y.w
+	LEA	Possessed_magics_list.w, A2
+	MOVE.w	Possessed_magics_length.w, D7
+	BSR.w	DrawEquippedMarkers
+	CLR.w	Window_draw_row.w
+	MOVE.b	#FLAG_TRUE, Window_tilemap_draw_active.w
+	RTS
+	
+DrawMagicListWindow_Loop:
+	MOVE.w	#5, Window_height.w
+	MOVE.w	#0, Window_tile_attrs.w
+	BSR.w	DrawWindowBorder
+	LEA	GearMagicStr, A0
+	MOVE.w	#2, Window_text_x.w
+	MOVE.w	#2, Window_text_y.w
+	BSR.w	RenderTextToWindow
+	LEA	NothingStr, A0
+	MOVE.w	#$004C, D0
+	BSR.w	RenderTextAtOffset
+	CLR.w	Window_draw_row.w
+	MOVE.b	#FLAG_TRUE, Window_tilemap_draw_active.w
+	RTS
+	
+DrawItemsListWindow:
+	MOVE.w	#$000F, Window_tilemap_x.w
+	MOVE.w	#2, Window_tilemap_y.w
+	MOVE.w	#$0016, Window_width.w
+	MOVE.w	Possessed_items_length.w, D0
+	BLE.w	DrawItemsListWindow_Loop
+	ADD.w	D0, D0
+	ADDQ.w	#3, D0
+	MOVE.w	D0, Window_height.w
+	MOVE.w	#0, Window_tile_attrs.w
+	BSR.w	DrawWindowBorder
+	LEA	GearItemStr, A0
+	MOVE.w	#2, Window_text_x.w
+	MOVE.w	#2, Window_text_y.w
+	BSR.w	RenderTextToWindow
+	ADDQ.w	#2, Window_text_y.w
+	LEA	Possessed_items_list.w, A3
+	LEA	ItemNames, A4
+	MOVE.w	Possessed_items_length.w, D7
+	SUBQ.w	#1, D7
+DrawItemsListWindow_Done:
+	MOVE.w	(A3)+, D4
+	ANDI.w	#$00FF, D4
+	ADD.w	D4, D4
+	ADD.w	D4, D4
+	MOVEA.l	(A4,D4.w), A0
+	BSR.w	RenderTextToWindow
+	ADDQ.w	#2, Window_text_y.w
+	DBF	D7, DrawItemsListWindow_Done
+	CLR.w	Window_draw_row.w
+	MOVE.b	#FLAG_TRUE, Window_tilemap_draw_active.w
+	RTS
+DrawItemsListWindow_Loop:
+	MOVE.w	#5, Window_height.w	
+	MOVE.w	#0, Window_tile_attrs.w	
+	BSR.w	DrawWindowBorder	
+	LEA	GearItemStr, A0	
+	MOVE.w	#2, Window_text_x.w	
+	MOVE.w	#2, Window_text_y.w	
+	BSR.w	RenderTextToWindow	
+	LEA	NothingStr, A0	
+	MOVE.w	#$0060, D0	
+	BSR.w	RenderTextAtOffset	
+	CLR.w	Window_draw_row.w	
+	MOVE.b	#FLAG_TRUE, Window_tilemap_draw_active.w	
+	RTS
+	
+DrawRingsListWindow:
+	LEA	Rings_collected.w, A0
+	CLR.w	D0
+	MOVE.w	#7, D7
+DrawRingsListWindow_Done:
+	TST.b	(A0)+
+	BEQ.b	DrawRingsListWindow_Loop
+	ADDQ.w	#1, D0
+DrawRingsListWindow_Loop:
+	DBF	D7, DrawRingsListWindow_Done
+	MOVE.w	D0, Possessed_rings_count.w
+	MOVE.w	#9, Window_tilemap_x.w
+	MOVE.w	#2, Window_tilemap_y.w
+	MOVE.w	#$0011, Window_width.w
+	TST.w	D0
+	BLE.w	RingsInventory_EmptyDisplay
+	TST.b	All_rings_collected.w
+	BNE.w	RingsInventory_EmptyDisplay
+	ADD.w	D0, D0
+	ADDQ.w	#3, D0
+	MOVE.w	D0, Window_height.w
+	MOVE.w	#0, Window_tile_attrs.w
+	BSR.w	DrawWindowBorder
+	LEA	RingsStr, A0
+	MOVE.w	#7, Window_text_x.w
+	MOVE.w	#2, Window_text_y.w
+	BSR.w	RenderTextToWindow
+	MOVE.w	#2, Window_text_x.w
+	ADDQ.w	#2, Window_text_y.w
+	MOVE.w	#$FFFF, D4
+	LEA	RingNames, A4
+	LEA	Rings_collected.w, A3
+	MOVE.w	Possessed_rings_count.w, D7
+	SUBQ.w	#1, D7
+; loc_00011ED0
+RingsInventory_NextEntry:
+	ADDQ.w	#1, D4
+	MOVE.b	(A3)+, D0
+	BEQ.b	RingsInventory_NextEntry
+	MOVE.w	D4, D3
+	ADD.w	D3, D3
+	ADD.w	D3, D3
+	MOVEA.l	(A4,D3.w), A0
+	BSR.w	RenderTextToWindow
+	ADDQ.w	#2, Window_text_y.w
+	DBF	D7, RingsInventory_NextEntry
+	CLR.w	Window_draw_row.w
+	MOVE.b	#FLAG_TRUE, Window_tilemap_draw_active.w
+	RTS
+	
+; loc_00011EF8
+RingsInventory_EmptyDisplay:
+	MOVE.w	#5, Window_height.w	
+	MOVE.w	#0, Window_tile_attrs.w	
+	BSR.w	DrawWindowBorder	
+	LEA	RingsStr, A0	
+	MOVE.w	#2, Window_text_x.w	
+	MOVE.w	#2, Window_text_y.w	
+	BSR.w	RenderTextToWindow	
+	LEA	NothingStr, A0	
+	TST.b	All_rings_collected.w	
+	BEQ.b	RingsInventory_EmptyDisplay_Loop	
+	LEA	AllRingsStr, A0	
+RingsInventory_EmptyDisplay_Loop:
+	MOVE.w	#$004C, D0	
+	BSR.w	RenderTextAtOffset	
+	CLR.w	Window_draw_row.w	
+	MOVE.b	#FLAG_TRUE, Window_tilemap_draw_active.w	
+	RTS
+	
+DispatchWindowDrawType:
+	LEA	WindowDrawTypeJumpTable, A0
+	MOVE.w	Window_draw_type.w, D0
+	ADD.w	D0, D0
+	ADD.w	D0, D0
+	JSR	(A0,D0.w)
+	RTS
+	
+; loc_00011F58
+WindowDrawTypeJumpTable:
+	BRA.w	WindowDrawTypeJumpTable_Loop
+	BRA.w	WindowDrawTypeJumpTable_Loop2
+	BRA.w	DrawWindowRow_MessageSpeed	
+	BRA.w	DrawWindowRow_MessageSpeed_Loop
+	BRA.w	DrawWindowRow_MessageSpeed_Loop2
+	BRA.w	DrawWindowRow_MessageSpeed_Loop3
+	BRA.w	DrawWindowRow_MessageSpeed_Loop4
+	BRA.w	DrawWindowRow_MessageSpeed_Loop5	
+	BRA.w	DrawWindowRow_MessageSpeed_Loop6
+	BRA.w	WindowDrawTypeJumpTable_Loop3
+	BRA.w	WindowDrawTypeJumpTable_Loop4
+	BRA.w	WindowDrawTypeJumpTable_Loop5
+	BRA.w	WindowDrawTypeJumpTable_Loop6
+	BRA.w	DrawWindowRow_MessageSpeed	
+	BRA.w	DrawWindowRow_MessageSpeed_Loop7
+WindowDrawTypeJumpTable_Loop:
+	TST.b	Dialog_active_flag.w
+	BEQ.b	WindowDrawTypeJumpTable_Loop7
+	MOVEA.l	Current_actor_ptr.w, A6
+	BSET.b	#7, obj_sprite_flags(A6)
+	CLR.w	D0
+	MOVE.b	obj_next_offset(A6), D0
+	LEA	(A6,D0.w), A6
+	BSET.b	#7, obj_sprite_flags(A6)
+WindowDrawTypeJumpTable_Loop7:
+	MOVE.w	#2, Window_tilemap_draw_x.w
+	MOVE.w	#2, Window_tilemap_draw_y.w
+	MOVE.w	#$001B, Window_tilemap_draw_width.w
+	MOVE.w	#$0014, Window_tilemap_draw_height.w
+	LEA	Script_window_tiles_buffer, A0
+	BRA.w	DrawWindowRowFromBuffer
+WindowDrawTypeJumpTable_Loop2:
+	MOVE.w	#2, Window_tilemap_draw_x.w
+	MOVE.w	#2, Window_tilemap_draw_y.w
+	MOVE.w	#$001A, Window_tilemap_draw_width.w
+	MOVE.w	#$000C, Window_tilemap_draw_height.w
+	LEA	Full_menu_tiles_buffer, A0
+	BRA.w	DrawWindowRowFromBuffer
+WindowDrawTypeJumpTable_Loop3:
+	MOVE.w	#$000F, Window_tilemap_draw_x.w
+	MOVE.w	#2, Window_tilemap_draw_y.w
+	MOVE.w	#$0016, Window_tilemap_draw_width.w
+	MOVE.w	Possessed_equipment_length.w, D0
+	BGT.b	WindowDrawTypeJumpTable_Loop8
+	MOVE.w	#1, D0	
+WindowDrawTypeJumpTable_Loop8:
+	ADD.w	D0, D0
+	ADDQ.w	#3, D0
+	MOVE.w	D0, Window_tilemap_draw_height.w
+	LEA	Equipment_list_tiles_buffer.w, A0
+	BRA.w	DrawWindowRowFromBuffer
+WindowDrawTypeJumpTable_Loop4:
+	MOVE.w	#2, Window_tilemap_draw_x.w
+	MOVE.w	#2, Window_tilemap_draw_y.w
+	MOVE.w	#$0011, Window_tilemap_draw_width.w
+	MOVE.w	Possessed_magics_length.w, D0
+	BGT.b	WindowDrawTypeJumpTable_Loop9
+	MOVE.w	#1, D0
+WindowDrawTypeJumpTable_Loop9:
+	ADD.w	D0, D0
+	ADDQ.w	#3, D0
+	MOVE.w	D0, Window_tilemap_draw_height.w
+	LEA	Magic_list_tiles_buffer.w, A0
+	BRA.w	DrawWindowRowFromBuffer
+WindowDrawTypeJumpTable_Loop5:
+	MOVE.w	#$000F, Window_tilemap_draw_x.w
+	MOVE.w	#2, Window_tilemap_draw_y.w
+	MOVE.w	#$0016, Window_tilemap_draw_width.w
+	MOVE.w	Possessed_items_length.w, D0
+	BGT.b	WindowDrawTypeJumpTable_Loop10
+	MOVE.w	#1, D0	
+WindowDrawTypeJumpTable_Loop10:
+	ADD.w	D0, D0
+	ADDQ.w	#3, D0
+	MOVE.w	D0, Window_tilemap_draw_height.w
+	LEA	Item_list_right_tiles_buffer.w, A0
+	BRA.w	DrawWindowRowFromBuffer
+WindowDrawTypeJumpTable_Loop6:
+	MOVE.w	#9, Window_tilemap_draw_x.w
+	MOVE.w	#2, Window_tilemap_draw_y.w
+	MOVE.w	#$0011, Window_tilemap_draw_width.w
+	MOVE.w	Possessed_rings_count.w, D0
+	BGT.b	WindowDrawTypeJumpTable_Loop11
+	MOVE.w	#1, D0	
+WindowDrawTypeJumpTable_Loop11:
+	ADD.w	D0, D0
+	ADDQ.w	#3, D0
+	MOVE.w	D0, Window_tilemap_draw_height.w
+	LEA	Rings_list_tiles_buffer.w, A0
+	BRA.w	DrawWindowRowFromBuffer
+; loc_000120A8
+DrawWindowRow_MessageSpeed:
+	MOVE.w	#$000A, Window_tilemap_draw_x.w	
+	MOVE.w	#$000A, Window_tilemap_draw_y.w	
+	MOVE.w	#$000E, Window_tilemap_draw_width.w	
+	MOVE.w	#$000A, Window_tilemap_draw_height.w	
+	LEA	Message_speed_menu_tiles_buffer, A0	
+	BRA.w	DrawWindowRowFromBuffer	
+DrawWindowRow_MessageSpeed_Loop:
+	MOVE.w	#2, Window_tilemap_draw_x.w
+	MOVE.w	#2, Window_tilemap_draw_y.w
+	MOVE.w	#$000D, Window_tilemap_draw_width.w
+	MOVE.w	#$000A, Window_tilemap_draw_height.w
+	LEA	Message_speed_menu_tiles_buffer, A0
+	BRA.w	DrawWindowRowFromBuffer
+DrawWindowRow_MessageSpeed_Loop2:
+	MOVE.w	#2, Window_tilemap_draw_x.w
+	MOVE.w	#$000C, Window_tilemap_draw_y.w
+	MOVE.w	#$000D, Window_tilemap_draw_width.w
+	MOVE.w	#6, Window_tilemap_draw_height.w
+	LEA	Item_list_tiles_buffer, A0
+	BRA.w	DrawWindowRowFromBuffer
+DrawWindowRow_MessageSpeed_Loop7:
+	MOVE.w	#2, Window_tilemap_draw_x.w
+	MOVE.w	#$000C, Window_tilemap_draw_y.w
+	MOVE.w	#$000D, Window_tilemap_draw_width.w
+	MOVE.w	#8, Window_tilemap_draw_height.w
+	LEA	Item_list_tiles_buffer, A0
+	BRA.w	DrawWindowRowFromBuffer
+DrawWindowRow_MessageSpeed_Loop3:
+	MOVE.w	#2, Window_tilemap_draw_x.w
+	MOVE.w	#$000C, Window_tilemap_draw_y.w
+	MOVE.w	#7, Window_tilemap_draw_width.w
+	MOVE.w	#8, Window_tilemap_draw_height.w
+	LEA	Status_menu_tiles_buffer.w, A0
+	BRA.w	DrawWindowRowFromBuffer
+DrawWindowRow_MessageSpeed_Loop4:
+	MOVE.w	#2, Window_tilemap_draw_x.w
+	MOVE.w	#$000C, Window_tilemap_draw_y.w
+	MOVE.w	#$000B, Window_tilemap_draw_width.w
+	MOVE.w	#8, Window_tilemap_draw_height.w
+	LEA	Small_menu_tiles_buffer, A0
+	BRA.w	DrawWindowRowFromBuffer
+DrawWindowRow_MessageSpeed_Loop5:
+	MOVE.w	#$000C, Window_tilemap_draw_x.w	
+	MOVE.w	#4, Window_tilemap_draw_y.w	
+	MOVE.w	#9, Window_tilemap_draw_width.w	
+	MOVE.w	#8, Window_tilemap_draw_height.w	
+	LEA	Right_menu_tiles_buffer, A0	
+	BRA.w	DrawWindowRowFromBuffer	
+DrawWindowRow_MessageSpeed_Loop6:
+	MOVE.w	#2, Window_tilemap_draw_x.w
+	MOVE.w	#$000A, Window_tilemap_draw_y.w
+	MOVE.w	#$0015, Window_tilemap_draw_width.w
+	MOVE.w	#$000A, Window_tilemap_draw_height.w
+	LEA	Status_menu_tiles_buffer.w, A0
+; loc_000121B0
+DrawWindowRowFromBuffer:
+	MOVE.w	Window_tilemap_draw_height.w, D0
+	SUB.w	Window_text_row.w, D0
+	BLE.w	DrawWindowTilemap_WriteVDP_Loop
+	ADD.w	D0, Window_tilemap_draw_y.w
+	MOVE.w	Window_tilemap_draw_width.w, D1
+	ADDQ.w	#1, D1
+	MULU.w	D1, D0
+	ADD.w	D0, D0
+	LEA	(A0,D0.w), A0
+	JSR	GetScrollOffsetInTiles
+	ADD.w	Window_tilemap_draw_y.w, D1
+	SUBQ.w	#1, D1
+	ANDI.w	#$003F, D1
+	ASL.w	#7, D1
+	CLR.w	D2
+DrawWindowRowFromBuffer_Done:
+	MOVE.w	D2, D4
+	ADD.w	D0, D4
+	MOVE.w	D1, D5
+	ADD.w	Window_tilemap_draw_x.w, D4
+	ANDI.w	#$003F, D4
+	ASL.w	#1, D4
+	ADD.w	D4, D5
+	ANDI.l	#$0000FFFF, D5
+	SWAP	D5
+	ADDI.l	#$40000003, D5
+	MOVE.w	#$85A6, D4
+	TST.w	D2
+	BEQ.b	DrawWindowTilemap_WriteVDP
+	ADDQ.w	#1, D4
+	CMP.w	Window_tilemap_draw_width.w, D2
+	BNE.b	DrawWindowTilemap_WriteVDP
+	ADDQ.w	#1, D4
+; loc_00012214
+DrawWindowTilemap_WriteVDP:
+	MOVE.l	D5, VDP_control_port
+	MOVE.w	D4, VDP_data_port
+	ADDQ.w	#1, D2
+	CMP.w	Window_tilemap_draw_width.w, D2
+	BLE.b	DrawWindowRowFromBuffer_Done
+	BRA.b	DrawWindowTilemap_WriteVDP_Loop2
+DrawWindowTilemap_WriteVDP_Loop:
+	CLR.b	Window_tilemap_row_draw_pending.w
+DrawWindowTilemap_WriteVDP_Loop2:
+	JSR	GetScrollOffsetInTiles
+	ADD.w	Window_tilemap_draw_y.w, D1
+	ANDI.w	#$003F, D1
+	ASL.w	#7, D1
+	CLR.w	D2
+DrawWindowTilemap_WriteVDP_Loop2_Done:
+	MOVE.w	D2, D4
+	ADD.w	D0, D4
+	MOVE.w	D1, D5
+	ADD.w	Window_tilemap_draw_x.w, D4
+	ANDI.w	#$003F, D4
+	ASL.w	#1, D4
+	ADD.w	D4, D5
+	ANDI.l	#$0000FFFF, D5
+	SWAP	D5
+	ADDI.l	#$40000003, D5
+	MOVE.l	D5, VDP_control_port
+	MOVE.w	(A0)+, VDP_data_port
+	ADDQ.w	#1, D2
+	CMP.w	Window_tilemap_draw_width.w, D2
+	BLE.b	DrawWindowTilemap_WriteVDP_Loop2_Done
+	ADDQ.w	#1, Window_text_row.w
+	RTS
+	
+SaveMessageSpeedMenuToBuffer_Alt:
+	LEA	Message_speed_menu_tiles_buffer, A0
+	MOVE.w	#2, Window_tile_x.w
+	MOVE.w	#2, Window_tile_y.w
+	MOVE.w	#$000D, Window_tile_width.w
+	MOVE.w	#$000A, Window_tile_height.w
+	BSR.w	ReadWindowToBuffer
+	RTS
+	
+SaveStatusBarToBuffer:
+	TST.b	Dialog_active_flag.w
+	BEQ.b	SaveStatusBarToBuffer_Loop
+	MOVEA.l	Current_actor_ptr.w, A6
+	BCLR.b	#7, obj_sprite_flags(A6)
+SaveStatusBarToBuffer_Loop:
+	LEA	Script_window_tiles_buffer, A0
+	MOVE.w	#4, Window_tile_x.w
+	MOVE.w	#$0013, Window_tile_y.w
+	MOVE.w	#$001F, Window_tile_width.w
+	MOVE.w	#8, Window_tile_height.w
+	BSR.w	ReadWindowToBuffer
+	RTS
+	
+SavePromptMenuToBuffer:
+	LEA	Prompt_menu_tiles_buffer.w, A0
+	MOVE.w	#5, Window_tile_x.w
+	MOVE.w	#4, Window_tile_y.w
+	MOVE.w	#$000B, Window_tile_width.w
+	MOVE.w	#2, Window_tile_height.w
+	BSR.w	ReadWindowToBuffer
+	RTS
+	
+SaveRightMenuAreaToBuffer:
+	LEA	Small_menu_tiles_buffer, A0
+	MOVE.w	#$001C, Window_tile_x.w
+	MOVE.w	#$000D, Window_tile_y.w
+	MOVE.w	#6, Window_tile_width.w
+	MOVE.w	#6, Window_tile_height.w
+	BSR.w	ReadWindowToBuffer
+	RTS
+	
+SaveShopSubmenuAreaToBuffer:
+	LEA	Shop_submenu_tiles_buffer.w, A0
+	MOVE.w	#$000F, Window_tile_x.w
+	MOVE.w	#$000C, Window_tile_y.w
+	MOVE.w	#$0015, Window_tile_width.w
+	MOVE.w	#7, Window_tile_height.w
+	BSR.w	ReadWindowToBuffer
+	RTS
+	
+SaveCenterDialogAreaToBuffer:
+	LEA	Large_menu_tiles_buffer, A0
+	MOVE.w	#$000F, Window_tile_x.w
+	MOVE.w	#2, Window_tile_y.w
+	MOVE.w	#$0015, Window_tile_width.w
+	MOVE.w	#$0015, Window_tile_height.w
+	BSR.w	ReadWindowToBuffer
+	RTS
+	
+SaveItemListAreaToBuffer_Small:
+	LEA	Item_list_tiles_buffer, A0
+	MOVE.w	#2, Window_tile_x.w
+	MOVE.w	#$000C, Window_tile_y.w
+	MOVE.w	#$000D, Window_tile_width.w
+	MOVE.w	#6, Window_tile_height.w
+	BSR.w	ReadWindowToBuffer
+	RTS
+	
+SaveItemListAreaToBuffer_Large:
+	LEA	Item_list_tiles_buffer, A0
+	MOVE.w	#2, Window_tile_x.w
+	MOVE.w	#$000C, Window_tile_y.w
+	MOVE.w	#$000D, Window_tile_width.w
+	MOVE.w	#8, Window_tile_height.w
+	BSR.w	ReadWindowToBuffer
+	RTS
+	
+SaveStatusMenuAreaToBuffer_Small:
+	LEA	Status_menu_tiles_buffer.w, A0
+	MOVE.w	#2, Window_tile_x.w
+	MOVE.w	#$000C, Window_tile_y.w
+	MOVE.w	#7, Window_tile_width.w
+	MOVE.w	#8, Window_tile_height.w
+	BSR.w	ReadWindowToBuffer
+	RTS
+	
+SaveStatusMenuAreaToBuffer_Large:
+	LEA	Status_menu_tiles_buffer.w, A0
+	MOVE.w	#2, Window_tile_x.w
+	MOVE.w	#$000A, Window_tile_y.w
+	MOVE.w	#$0015, Window_tile_width.w
+	MOVE.w	#$000A, Window_tile_height.w
+	BSR.w	ReadWindowToBuffer
+	RTS
+	
+SaveShopListToBuffer:
+	LEA	Shop_list_tiles_buffer.w, A0
+	MOVE.w	#$000A, Window_tile_x.w
+	MOVE.w	#2, Window_tile_y.w
+	MOVE.w	#$0018, Window_tile_width.w
+	MOVE.w	#$0011, Window_tile_height.w
+	BSR.w	ReadWindowToBuffer
+	RTS
+	
+SaveStatusMenuTiles:
+	LEA	Status_menu_tiles_buffer.w, A0
+	MOVE.w	#$000A, Window_tile_x.w
+	MOVE.w	#2, Window_tile_y.w
+	MOVE.w	#$0016, Window_tile_width.w
+	MOVE.w	#$0010, Window_tile_height.w
+	BSR.w	ReadWindowToBuffer
+	RTS
+	
+SaveLeftMenuTiles:
+	LEA	Left_menu_tiles_buffer.w, A0
+	MOVE.w	#0, Window_tile_x.w
+	MOVE.w	#2, Window_tile_y.w
+	MOVE.w	#9, Window_tile_width.w
+	MOVE.w	#6, Window_tile_height.w
+	BSR.w	ReadWindowToBuffer
+	RTS
+	
+SaveFullDialogAreaToBuffer:
+	TST.b	Dialog_active_flag.w
+	BEQ.b	SaveFullDialogAreaToBuffer_Loop
+	MOVEA.l	Current_actor_ptr.w, A6
+	BCLR.b	#7, obj_sprite_flags(A6)
+	CLR.w	D0
+	MOVE.b	obj_next_offset(A6), D0
+	LEA	(A6,D0.w), A6
+	BCLR.b	#7, obj_sprite_flags(A6)
+SaveFullDialogAreaToBuffer_Loop:
+	LEA	Script_window_tiles_buffer, A0
+	MOVE.w	#2, Window_tile_x.w
+	MOVE.w	#2, Window_tile_y.w
+	MOVE.w	#$001B, Window_tile_width.w
+	MOVE.w	#$0014, Window_tile_height.w
+	BSR.w	ReadWindowToBuffer
+	RTS
+	
+SaveFullMenuTiles:
+	LEA	Full_menu_tiles_buffer, A0
+	MOVE.w	#2, Window_tile_x.w
+	MOVE.w	#2, Window_tile_y.w
+	MOVE.w	#$001A, Window_tile_width.w
+	MOVE.w	#$000C, D0
+	MOVE.w	D0, Window_tile_height.w
+	BSR.w	ReadWindowToBuffer
+	RTS
+	
+SaveEquipmentListTiles:
+	LEA	Equipment_list_tiles_buffer.w, A0
+	MOVE.w	#$000F, Window_tile_x.w
+	MOVE.w	#2, Window_tile_y.w
+	MOVE.w	#$0016, Window_tile_width.w
+	MOVE.w	#$0014, D0
+	MOVE.w	D0, Window_tile_height.w
+	BSR.w	ReadWindowToBuffer
+	RTS
+	
+SaveMagicListTiles:
+	LEA	Magic_list_tiles_buffer.w, A0
+	MOVE.w	#2, Window_tile_x.w
+	MOVE.w	#2, Window_tile_y.w
+	MOVE.w	#$0011, Window_tile_width.w
+	MOVE.w	#$0014, D0
+	MOVE.w	D0, Window_tile_height.w
+	BSR.w	ReadWindowToBuffer
+	RTS
+	
+SaveItemListRightTiles:
+	LEA	Item_list_right_tiles_buffer.w, A0
+	MOVE.w	#$000F, Window_tile_x.w
+	MOVE.w	#2, Window_tile_y.w
+	MOVE.w	#$0016, Window_tile_width.w
+	MOVE.w	#$0014, D0
+	MOVE.w	D0, Window_tile_height.w
+	BSR.w	ReadWindowToBuffer
+	RTS
+	
+SaveRingsListMenuToBuffer:
+	LEA	Rings_list_tiles_buffer.w, A0
+	MOVE.w	#9, Window_tile_x.w
+	MOVE.w	#2, Window_tile_y.w
+	MOVE.w	#$0011, Window_tile_width.w
+	MOVE.w	#$0014, D0
+	MOVE.w	D0, Window_tile_height.w
+	BSR.w	ReadWindowToBuffer
+	RTS
+	
+SaveMessageSpeedMenuToBuffer:
+	LEA	Message_speed_menu_tiles_buffer, A0	
+	MOVE.w	#$000A, Window_tile_x.w	
+	MOVE.w	#$000A, Window_tile_y.w	
+	MOVE.w	#$000E, Window_tile_width.w	
+	MOVE.w	#$000A, Window_tile_height.w	
+	BSR.w	ReadWindowToBuffer	
+	RTS
+	
+	
+SaveMainMenuToBuffer:
+	LEA	Small_menu_tiles_buffer, A0
+	MOVE.w	#2, Window_tile_x.w
+	MOVE.w	#$000C, Window_tile_y.w
+	MOVE.w	#$000B, Window_tile_width.w
+	MOVE.w	#8, Window_tile_height.w
+	BSR.w	ReadWindowToBuffer
+	RTS
+	
+SaveRightMenuToBuffer:
+	LEA	Right_menu_tiles_buffer, A0
+	MOVE.w	#$000C, Window_tile_x.w
+	MOVE.w	#4, Window_tile_y.w
+	MOVE.w	#9, Window_tile_width.w
+	MOVE.w	#8, Window_tile_height.w
+	BSR.w	ReadWindowToBuffer
+	RTS
+	
+SaveReadyEquipmentMenuToBuffer:
+	LEA	Ready_equipment_menu_tiles_buffer, A0
+	MOVE.w	#$000F, Window_tile_x.w
+	MOVE.w	#2, Window_tile_y.w
+	MOVE.w	#$0015, Window_tile_width.w
+	MOVE.w	#$0012, Window_tile_height.w
+	BSR.w	ReadWindowToBuffer
+	RTS
+	
+; ReadWindowToBuffer
+; Read window tiles from VDP into buffer (save background)
+; Input: A0 = Destination buffer
+;        $FFFFC224 = X offset, $FFFFC226 = Y offset
+;        $FFFFC22C = Width, $FFFFC22E = Height
+ReadWindowToBuffer:
+	JSR	GetScrollOffsetInTiles
+	CLR.w	D3
+ReadWindowToBuffer_Done:
+	CLR.w	D2
+ReadWindowToBuffer_Done2:
+	BSR.w	CalculateVDPAddress
+	ADDQ.l	#3, D5
+	ORI	#$0700, SR
+	MOVE.l	D5, VDP_control_port
+	MOVE.w	VDP_data_port, (A0)+
+	ANDI	#$F8FF, SR
+	ADDQ.w	#1, D2
+	CMP.w	Window_tile_width.w, D2
+	BLE.b	ReadWindowToBuffer_Done2
+	ADDQ.w	#1, D3
+	CMP.w	Window_tile_height.w, D3
+	BLE.b	ReadWindowToBuffer_Done
+	RTS
+	
+; DrawStatusHudWindow
+; Draw main status HUD window (bottom bar showing HP, level, etc.)
+DrawStatusHudWindow:
+	TST.b	Dialog_active_flag.w
+	BEQ.b	DrawStatusHudWindow_Loop
+	MOVEA.l	Current_actor_ptr.w, A6
+	BSET.b	#7, obj_sprite_flags(A6)
+DrawStatusHudWindow_Loop:
+	LEA	Script_window_tiles_buffer, A0
+	MOVE.w	#4, Window_tile_x.w
+	MOVE.w	#$0013, Window_tile_y.w
+	MOVE.w	#$001F, Window_tile_width.w
+	MOVE.w	#8, Window_tile_height.w
+	BSR.w	DrawWindowFromBuffer
+	TST.b	Player_in_first_person_mode.w
+	BEQ.b	DrawStatusHudWindow_Loop2
+	BSR.w	DisplayPlayerKimsAndExperience
+DrawStatusHudWindow_Loop2:
+	RTS
+	
+DrawPromptMenuWindow:
+	LEA	Prompt_menu_tiles_buffer.w, A0
+	MOVE.w	#5, Window_tile_x.w
+	MOVE.w	#4, Window_tile_y.w
+	MOVE.w	#$000B, Window_tile_width.w
+	MOVE.w	#2, Window_tile_height.w
+	BSR.w	DrawWindowFromBuffer
+	RTS
+	
+; DrawLeftMenuWindow
+; Draw left menu window (buffer at $FFFF7CF4, 28x13 at position 6,6)
+DrawLeftMenuWindow:
+	LEA	Small_menu_tiles_buffer, A0
+	MOVE.w	#$001C, Window_tile_x.w
+	MOVE.w	#$000D, Window_tile_y.w
+	MOVE.w	#6, Window_tile_width.w
+	MOVE.w	#6, Window_tile_height.w
+	BSR.w	DrawWindowFromBuffer
+	RTS
+	
+RestoreShopSubmenuFromBuffer:
+	LEA	Shop_submenu_tiles_buffer.w, A0
+	MOVE.w	#$000F, Window_tile_x.w
+	MOVE.w	#$000C, Window_tile_y.w
+	MOVE.w	#$0015, Window_tile_width.w
+	MOVE.w	#7, Window_tile_height.w
+	BSR.w	DrawWindowFromBuffer
+	RTS
+	
+; DrawCenterMenuWindow
+; Draw center menu window (buffer at $FFFF7E52, 21x21 at position 15,2)
+DrawCenterMenuWindow:
+	LEA	Large_menu_tiles_buffer, A0
+	MOVE.w	#$000F, Window_tile_x.w
+	MOVE.w	#2, Window_tile_y.w
+	MOVE.w	#$0015, Window_tile_width.w
+	MOVE.w	#$0015, Window_tile_height.w
+	BSR.w	DrawWindowFromBuffer
+	RTS
+	
+RestoreShopListFromBuffer:
+	LEA	Shop_list_tiles_buffer.w, A0
+	MOVE.w	#$000A, Window_tile_x.w
+	MOVE.w	#2, Window_tile_y.w
+	MOVE.w	#$0018, Window_tile_width.w
+	MOVE.w	#$0011, Window_tile_height.w
+	BSR.w	DrawWindowFromBuffer
+	RTS
+	
+DrawStatusMenuWindow:
+	LEA	Status_menu_tiles_buffer.w, A0
+	MOVE.w	#$000A, Window_tile_x.w
+	MOVE.w	#2, Window_tile_y.w
+	MOVE.w	#$0016, Window_tile_width.w
+	MOVE.w	#$0010, Window_tile_height.w
+	BSR.w	DrawWindowFromBuffer
+	RTS
+	
+RestoreRightMenuFromBuffer:
+	LEA	Right_menu_tiles_buffer, A0
+	MOVE.w	#$000C, Window_tile_x.w
+	MOVE.w	#4, Window_tile_y.w
+	MOVE.w	#9, Window_tile_width.w
+	MOVE.w	#8, Window_tile_height.w
+	BSR.w	DrawWindowFromBuffer
+	RTS
+	
+RestoreReadyEquipmentMenuFromBuffer:
+	LEA	Ready_equipment_menu_tiles_buffer, A0
+	MOVE.w	#$000F, Window_tile_x.w
+	MOVE.w	#2, Window_tile_y.w
+	MOVE.w	#$0015, Window_tile_width.w
+	MOVE.w	#$0012, Window_tile_height.w
+	BSR.w	DrawWindowFromBuffer
+	RTS
+	
+RestoreLeftMenuFromBuffer:
+	LEA	Left_menu_tiles_buffer.w, A0
+	MOVE.w	#0, Window_tile_x.w
+	MOVE.w	#2, Window_tile_y.w
+	MOVE.w	#9, Window_tile_width.w
+	MOVE.w	#6, Window_tile_height.w
+	BSR.w	DrawWindowFromBuffer
+	RTS
+	
+; DrawWindowFromBuffer
+; Draw window from tile buffer to VDP
+; Input: A0 = Source tile buffer
+;        $FFFFC224 = X offset, $FFFFC226 = Y offset
+;        $FFFFC22C = Width, $FFFFC22E = Height
+DrawWindowFromBuffer:
+	JSR	GetScrollOffsetInTiles
+	CLR.w	D3
+DrawWindowFromBuffer_Done:
+	CLR.w	D2
+DrawWindowFromBuffer_Done2:
+	BSR.w	CalculateVDPAddress
+	ADDI.l	#$40000003, D5
+	ORI	#$0700, SR
+	MOVE.l	D5, VDP_control_port
+	MOVE.w	(A0)+, VDP_data_port
+	ANDI	#$F8FF, SR
+	ADDQ.w	#1, D2
+	CMP.w	Window_tile_width.w, D2
+	BLE.b	DrawWindowFromBuffer_Done2
+	ADDQ.w	#1, D3
+	CMP.w	Window_tile_height.w, D3
+	BLE.b	DrawWindowFromBuffer_Done
+	RTS
+	
+CalculateVDPAddress:
+	MOVE.w	D2, D4
+	MOVE.w	D3, D5
+	ADD.w	D0, D4
+	ADD.w	D1, D5
+	ADD.w	Window_tile_x.w, D4
+	ADD.w	Window_tile_y.w, D5
+	ANDI.w	#$003F, D4
+	ANDI.w	#$003F, D5
+	ASL.w	#1, D4
+	ASL.w	#7, D5
+	ADD.w	D4, D5
+	ANDI.l	#$0000FFFF, D5
+	SWAP	D5
+	RTS
+	
+; HandleMenuInput
+; Main menu input handler - processes D-pad input for cursor movement
+HandleMenuInput:
+	MOVE.b	Controller_current_state.w, D2
+	MOVE.b	Controller_previous_state.w, D3
+	EOR.b	D2, D3
+	BEQ.w	BlinkMenuCursor
+	ANDI.w	#$000F, D2
+	BEQ.w	BlinkMenuCursor
+	MOVE.w	#SOUND_HIT, D0
+	JSR	QueueSoundEffect
+	BTST.l	#0, D3
+	BEQ.b	MenuCursor_CheckUp
+	BTST.l	#0, D2
+	BEQ.b	MenuCursor_CheckUp
+	BRA.w	MenuCursorUp
+; loc_0001281A
+MenuCursor_CheckUp:
+	BTST.l	#1, D3
+	BEQ.b	MenuCursor_CheckDown
+	BTST.l	#1, D2
+	BEQ.b	MenuCursor_CheckDown
+	BRA.w	MenuCursorDown
+; loc_0001282A
+MenuCursor_CheckDown:
+	BTST.l	#2, D3
+	BEQ.b	MenuCursor_CheckLeft
+	BTST.l	#2, D2
+	BEQ.b	MenuCursor_CheckLeft
+	BRA.w	MenuCursorLeft
+; loc_0001283A
+MenuCursor_CheckLeft:
+	BTST.l	#3, D3
+	BEQ.b	BlinkMenuCursor
+	BTST.l	#3, D2
+	BEQ.b	BlinkMenuCursor
+	BRA.w	MenuCursorRight
+BlinkMenuCursor:
+	ADDQ.w	#1, Cursor_blink_timer.w
+	MOVE.w	Cursor_blink_timer.w, D0
+	MOVE.w	D0, D1
+	SUBQ.w	#1, D1
+	EOR.w	D1, D0
+	BTST.l	#2, D0
+	BEQ.b	BlinkMenuCursor_Loop
+	BTST.l	#2, D1
+	BEQ.w	DrawMenuCursor
+	BRA.w	EraseMenuCursor
+BlinkMenuCursor_Loop:
+	RTS
+	
+; loc_0001286C
+; Handle UP button - move cursor up in menu
+MenuCursorUp:
+	MOVE.w	Menu_cursor_index.w, D0
+	BLE.b	MenuCursorUp_Return
+	SUB.w	Menu_cursor_column_break.w, D0
+	SUBQ.w	#1, D0
+	BEQ.b	MenuCursorUp_Return
+	BSR.w	EraseMenuCursor
+	SUBQ.w	#1, Menu_cursor_index.w
+	BSR.w	DrawMenuCursor
+; loc_00012886
+MenuCursorUp_Return:
+	RTS
+	
+; loc_00012888
+; Handle DOWN button - move cursor down in menu
+MenuCursorDown:
+	MOVE.w	Menu_cursor_index.w, D0
+	CMP.w	Menu_cursor_column_break.w, D0
+	BEQ.b	MenuCursorDown_Return
+	CMP.w	Menu_cursor_last_index.w, D0
+	BEQ.b	MenuCursorDown_Return
+	BSR.w	EraseMenuCursor
+	ADDQ.w	#1, Menu_cursor_index.w
+	BSR.w	DrawMenuCursor
+; loc_000128A4
+MenuCursorDown_Return:
+	RTS
+	
+; loc_000128A6
+; Handle LEFT button - move cursor to left column
+MenuCursorLeft:
+	MOVE.w	Menu_cursor_index.w, D0
+	CMP.w	Menu_cursor_column_break.w, D0
+	BLE.b	MenuCursorLeft_Loop
+	BSR.w	EraseMenuCursor
+	MOVE.w	Menu_cursor_column_break.w, D0
+	ADDQ.w	#1, D0
+	SUB.w	D0, Menu_cursor_index.w
+	BSR.w	DrawMenuCursor
+MenuCursorLeft_Loop:
+	RTS
+	
+; loc_000128C4
+; Handle RIGHT button - move cursor to right column
+MenuCursorRight:
+	MOVE.w	Menu_cursor_index.w, D0
+	CMP.w	Menu_cursor_column_break.w, D0
+	BGT.b	MenuCursorRight_Return
+	ADD.w	Menu_cursor_column_break.w, D0
+	ADDQ.w	#1, D0
+	CMP.w	Menu_cursor_last_index.w, D0
+	BGT.b	MenuCursorRight_Return
+	BSR.w	EraseMenuCursor
+	MOVE.w	Menu_cursor_column_break.w, D0
+	ADDQ.w	#1, D0
+	ADD.w	D0, Menu_cursor_index.w
+	BSR.w	DrawMenuCursor
+; loc_000128EC
+MenuCursorRight_Return:
+	RTS
+	
+MenuCursorRight_DeadCode:					; unreferenced dead code
+	BSR.w	EraseMenuCursor
+	MOVE.w	Menu_cursor_last_index.w, Menu_cursor_index.w
+	BSR.w	DrawMenuCursor
+	RTS
+EraseMenuCursor:
+	MOVE.w	#$84E0, D6
+	OR.w	Window_tile_attrs.w, D6
+	BSR.w	WriteMenuCursorTile
+	RTS
+	
+DrawMenuCursor:
+	MOVE.w	#$84DC, D6
+	OR.w	Window_tile_attrs.w, D6
+	BSR.w	WriteMenuCursorTile
+	RTS
+	
+; WriteMenuCursorTile
+; Writes menu cursor tile to VRAM at calculated position
+; Input: D6 = Tile ID with attributes
+WriteMenuCursorTile:
+	CLR.w	D2
+	MOVE.w	Menu_cursor_index.w, D3
+	CMP.w	Menu_cursor_column_break.w, D3
+	BLE.b	WriteMenuCursorTile_Loop
+	MOVE.w	Menu_cursor_second_column_x.w, D2
+	SUB.w	Menu_cursor_column_break.w, D3
+	SUBQ.w	#1, D3
+WriteMenuCursorTile_Loop:
+	JSR	GetScrollOffsetInTiles
+	ADD.w	Menu_cursor_base_x.w, D0
+	ADD.w	Menu_cursor_base_y.w, D1
+	ASL.w	#1, D3
+	ADD.w	D2, D0
+	ADD.w	D3, D1
+	ANDI.w	#$003F, D0
+	ANDI.w	#$003F, D1
+	ASL.w	#1, D0
+	ASL.w	#7, D1
+	ADD.w	D1, D0
+	ANDI.l	#$0000FFFF, D0
+	SWAP	D0
+	ORI.l	#$40000003, D0
+	ORI	#$0700, SR
+	MOVE.l	D0, VDP_control_port
+	MOVE.w	D6, VDP_data_port
+	ANDI	#$F8FF, SR
+	RTS
+	
+DrawShopWindow_DeadCode:					; unreferenced dead code
+	MOVE.w	#$000D, Window_tilemap_draw_x.w
+	MOVE.w	#$0004, Window_tilemap_draw_y.w
+	LEA	Shop_item_list.w, A2
+	LEA	ShopCategoryNameTables, A1
+	MOVE.w	Current_shop_type.w, D0
+	ASL.w	#3, D0
+	MOVEA.l	$0(A1,D0.w), A1
+	MOVE.w	Shop_item_count.w, D7
+	BSR.w	DrawShopItemNames
+	RTS
+; loc_000129A0
+DrawShopItemNames:
+	SUBQ.w	#1, D7
+DrawShopItemNames_Alt:
+	CLR.w	D3
+DrawShopItemNames_Done:
+	MOVE.w	(A2)+, D4
+	ANDI.w	#$00FF, D4
+	ADD.w	D4, D4
+	ADD.w	D4, D4
+	MOVEA.l	$0(A1,D4.w), A0
+	CLR.w	D2
+; loc_000129B4
+DrawWindowChar_WriteVDP:
+	JSR	GetScrollOffsetInTiles
+	ADD.w	D2, D0
+	ADD.w	D3, D1
+	ADD.w	Window_tilemap_draw_x.w, D0
+	ADD.w	Window_tilemap_draw_y.w, D1
+	ANDI.w	#$003F, D0
+	ANDI.w	#$003F, D1
+	ASL.w	#1, D0
+	ASL.w	#7, D1
+	ADD.w	D1, D0
+	ANDI.l	#$0000FFFF, D0
+	SWAP	D0
+	ADDI.l	#$40000003, D0
+	MOVE.l	D0, VDP_control_port
+	CLR.w	D6
+	MOVE.b	(A0)+, D6
+	CMPI.b	#SCRIPT_END, D6
+	BEQ.b	DrawWindowChar_WriteVDP_Loop
+	CMPI.b	#SCRIPT_WIDE_CHAR_LO, D6
+	BEQ.b	DrawWindowChar_Special
+	CMPI.b	#SCRIPT_WIDE_CHAR_HI, D6
+	BEQ.b	DrawWindowChar_Special
+	ADDI.w	#$4C0, D6
+	ORI.w	#$8000, D6
+	ORI.w	#$0000, D6
+	MOVE.w	D6, VDP_data_port
+	ADDQ.w	#1, D2
+	BRA.b	DrawWindowChar_WriteVDP
+DrawWindowChar_WriteVDP_Loop:
+	ADDQ.w	#2, D3
+	CMP.w	Window_tilemap_draw_height.w, D3
+	DBF	D7, DrawShopItemNames_Done
+	RTS
+; loc_00012A20
+DrawWindowChar_Special:
+	BSR.w	DrawSpecialCharToVRAM
+	BRA.b	DrawWindowChar_WriteVDP
+DrawWindowChar_DeadCode:					; unreferenced dead code
+	MOVE.w	#$0012, Window_number_cursor_x.w
+	MOVE.w	#$0002, Window_number_cursor_y.w
+	LEA	ShopPricesByTownAndType, A1
+	MOVE.w	Current_town.w, D0
+	ADD.w	D0, D0
+	ADD.w	D0, D0
+	ADD.w	Current_shop_type.w, D0
+	ADD.w	D0, D0
+	ADD.w	D0, D0
+	MOVEA.l	$0(A1,D0.w), A1
+	MOVE.w	Shop_item_count.w, D5
+	SUBQ.w	#1, D5
+	MOVE.w	#$0000, D3
+DrawWindowChar_Special_Done:
+	MOVE.l	(A1)+, D2
+	BSR.w	LongToDecimalString
+	MOVE.w	#$0012, Window_number_cursor_x.w
+	ADDQ.w	#2, Window_number_cursor_y.w
+	DBF	D5, DrawWindowChar_Special_Done
+	RTS
+; CopyStringUntilFF
+; Copy string from A0 to A1 until $FF terminator
+; Input: A0 = Source string pointer, A1 = Destination pointer
+; Output: A0, A1 advanced past copied data
+CopyStringUntilFF:
+	MOVE.b	(A0), D0
+	CMPI.b	#SCRIPT_END, D0
+	BEQ.b	CopyStringUntilFF_Loop
+	MOVE.b	(A0)+, (A1)+
+	BRA.b	CopyStringUntilFF
+CopyStringUntilFF_Loop:
+	RTS
+	
+DrawItemListNames:
+	MOVE.w	#$0011, Window_tilemap_draw_x.w
+	MOVE.w	#4, Window_tilemap_draw_y.w
+	LEA	Possessed_items_list.w, A2
+	LEA	ItemNames, A1
+	MOVE.w	Possessed_items_length.w, D7
+	BSR.w	DrawListItems
+	RTS
+	
+DrawMagicListWithMP:
+	MOVE.w	#$0011, Window_tilemap_draw_x.w
+	MOVE.w	#4, Window_tilemap_draw_y.w
+	LEA	Possessed_magics_list.w, A2
+	LEA	MagicNames, A1
+	MOVE.w	Possessed_magics_length.w, D7
+	BSR.w	DrawListItems
+	MOVE.w	#$0021, Window_tilemap_draw_x.w
+	MOVE.w	#4, Window_tilemap_draw_y.w
+	LEA	Possessed_magics_list.w, A2
+	MOVE.w	Possessed_magics_length.w, D7
+	BSR.w	DrawInventorySelectionMarkers
+	RTS
+	
+DrawPossessedEquipmentList:
+	MOVE.w	#$0011, Window_tilemap_draw_x.w
+	MOVE.w	#4, Window_tilemap_draw_y.w
+	LEA	Possessed_equipment_list.w, A2
+	LEA	EquipmentNames, A1
+	MOVE.w	Possessed_equipment_length.w, D7
+	BSR.w	DrawListItems
+	MOVE.w	#$0023, Window_tilemap_draw_x.w
+	MOVE.w	#4, Window_tilemap_draw_y.w
+	LEA	Possessed_equipment_list.w, A2
+	MOVE.w	Possessed_equipment_length.w, D7
+	BSR.w	DrawInventorySelectionMarkers
+	RTS
+	
+DrawReadyEquipmentList:
+	MOVE.w	Ready_equipment_list_length.w, D7
+	MOVE.w	D7, D0
+	SUBQ.w	#1, D0
+	MOVE.w	D0, Menu_cursor_column_break.w
+	MOVE.w	#MENU_CURSOR_NONE, Menu_cursor_last_index.w
+	MOVE.w	#$0010, Menu_cursor_base_x.w
+	MOVE.w	#4, Menu_cursor_base_y.w
+	MOVE.w	#$0011, Window_tilemap_draw_x.w
+	MOVE.w	#4, Window_tilemap_draw_y.w
+	LEA	Ready_equipment_list.w, A2
+	LEA	EquipmentNames, A1
+	BSR.w	DrawListItems
+	MOVE.w	Ready_equipment_list_length.w, D7
+	MOVE.w	#$0023, Window_tilemap_draw_x.w
+	MOVE.w	#4, Window_tilemap_draw_y.w
+	LEA	Ready_equipment_list.w, A2
+	BSR.w	DrawInventorySelectionMarkers
+	RTS
+	
+DrawListItems:
+	SUBQ.w	#1, D7
+	CLR.w	D3
+DrawListItems_Done:
+	MOVE.w	(A2)+, D4
+	ANDI.w	#$00FF, D4
+	ADD.w	D4, D4
+	ADD.w	D4, D4
+	MOVEA.l	(A1,D4.w), A0
+	CLR.w	D2
+; loc_00012B70
+DrawWindowChar2_WriteVDP:
+	JSR	GetScrollOffsetInTiles
+	ADD.w	D2, D0
+	ADD.w	D3, D1
+	ADD.w	Window_tilemap_draw_x.w, D0
+	ADD.w	Window_tilemap_draw_y.w, D1
+	ANDI.w	#$003F, D0
+	ANDI.w	#$003F, D1
+	ASL.w	#1, D0
+	ASL.w	#7, D1
+	ADD.w	D1, D0
+	ANDI.l	#$0000FFFF, D0
+	SWAP	D0
+	ADDI.l	#$40000003, D0
+	CLR.w	D6
+	MOVE.b	(A0)+, D6
+	CMPI.b	#SCRIPT_END, D6
+	BEQ.b	DrawWindowChar2_WriteVDP_Loop
+	CMPI.b	#SCRIPT_WIDE_CHAR_LO, D6
+	BEQ.b	DrawWindowChar2_Special
+	CMPI.b	#SCRIPT_WIDE_CHAR_HI, D6
+	BEQ.b	DrawWindowChar2_Special
+	ADDI.w	#$04C0, D6
+	ORI.w	#$8000, D6
+	ORI.w	#0, D6
+	ORI	#$0700, SR
+	MOVE.l	D0, VDP_control_port
+	MOVE.w	D6, VDP_data_port
+	ANDI	#$F8FF, SR
+	ADDQ.w	#1, D2
+	BRA.b	DrawWindowChar2_WriteVDP
+DrawWindowChar2_WriteVDP_Loop:
+	ADDQ.w	#2, D3
+	DBF	D7, DrawListItems_Done
+	RTS
+	
+; loc_00012BE0
+DrawWindowChar2_Special:
+	BSR.w	DrawSpecialCharToVRAM	
+	BRA.b	DrawWindowChar2_WriteVDP	
+DrawSpecialCharToVRAM:
+	ADDI.w	#$04C0, D6	
+	ORI.w	#$8000, D6	
+	ORI.w	#0, D6	
+	JSR	GetScrollOffsetInTiles	
+	MOVE.w	D2, D4	
+	MOVE.w	D3, D5	
+	ADD.w	D0, D4	
+	ADD.w	D1, D5	
+	ADD.w	Window_tilemap_draw_x.w, D4	
+	ADD.w	Window_tilemap_draw_y.w, D5	
+	SUBQ.w	#1, D4	
+	SUBQ.w	#1, D5	
+	ANDI.w	#$003F, D4	
+	ANDI.w	#$003F, D5	
+	ASL.w	#1, D4	
+	ASL.w	#7, D5	
+	ADD.w	D4, D5	
+	ANDI.l	#$0000FFFF, D5	
+	SWAP	D5	
+	ADDI.l	#$40000003, D5	
+	ORI	#$0700, SR	
+	MOVE.l	D5, VDP_control_port	
+	MOVE.w	D6, VDP_data_port	
+	ANDI	#$F8FF, SR	
+	RTS
+	
+DrawInventorySelectionMarkers:
+	SUBQ.w	#1, D7
+	CLR.w	D3
+DrawInventorySelectionMarkers_Done:
+	MOVE.w	(A2)+, D4
+	ANDI.w	#$8000, D4
+	BEQ.w	DrawInventorySelectionMarkers_Loop
+	CLR.w	D2
+	JSR	GetScrollOffsetInTiles
+	ADD.w	D2, D0
+	ADD.w	D3, D1
+	ADD.w	Window_tilemap_draw_x.w, D0
+	ADD.w	Window_tilemap_draw_y.w, D1
+	ANDI.w	#$003F, D0
+	ANDI.w	#$003F, D1
+	ASL.w	#1, D0
+	ASL.w	#7, D1
+	ADD.w	D1, D0
+	ANDI.l	#$0000FFFF, D0
+	SWAP	D0
+	ADDI.l	#$40000003, D0
+	MOVE.w	#$84EA, D6
+	ORI.w	#0, D6
+	MOVE.l	D0, VDP_control_port
+	MOVE.w	D6, VDP_data_port
+	ADDQ.w	#1, D2
+DrawInventorySelectionMarkers_Loop:
+	ADDQ.w	#2, D3
+	DBF	D7, DrawInventorySelectionMarkers_Done
+	RTS
+
+; DrawWindowBorder
+; Draw window border/frame tiles
+; Fills window tilemap buffer with border tiles (corners, edges)
+; Uses tile $E0 + offsets for different border parts
+DrawWindowBorder:
+	LEA	Window_tilemap_buffer.w, A0
+	MOVE.w	Window_height.w, D7
+	CLR.w	D1
+DrawWindowBorder_Done:
+	MOVE.w	Window_width.w, D6
+	CLR.w	D0
+DrawWindowBorder_Done2:
+	MOVE.b	#SOUND_LEVEL_UP, D2
+	TST.w	D1
+	BEQ.b	DrawWindowBorder_Loop
+	CMP.w	Window_height.w, D1
+	BNE.b	DrawWindowBorder_Loop2
+	ADDQ.b	#3, D2
+DrawWindowBorder_Loop2:
+	ADDQ.b	#3, D2
+DrawWindowBorder_Loop:
+	TST.w	D0
+	BEQ.b	DrawWindowBorder_Loop3
+	CMP.w	Window_width.w, D0
+	BNE.b	DrawWindowBorder_Loop4
+	ADDQ.b	#1, D2
+DrawWindowBorder_Loop4:
+	ADDQ.b	#1, D2
+DrawWindowBorder_Loop3:
+	MOVE.b	D2, (A0)+
+	ADDQ.w	#1, D0
+	DBF	D6, DrawWindowBorder_Done2
+	ADDQ.w	#1, D1
+	DBF	D7, DrawWindowBorder_Done
+	RTS
+
+RenderTextToWindowAtPosition:
+	LEA	Window_text_scratch.w, A0
+	BRA.w	RenderTextAtOffset
+RenderFormattedTextToWindow:
+	LEA	Window_text_scratch.w, A0
+; RenderTextToWindow
+; Render text string to window tilemap buffer
+; Input: A0 = Text string pointer
+; Processes text codes: $FF=end, $FE=newline, $20→$E4, etc.
+RenderTextToWindow:
+	MOVE.w	Window_width.w, D0
+	ADDQ.w	#1, D0
+	MOVE.w	Window_text_y.w, D1
+	MULU.w	D1, D0
+	ADD.w	Window_text_x.w, D0
+RenderTextAtOffset:
+	LEA	Window_tilemap_buffer.w, A1
+	LEA	(A1,D0.w), A1
+RenderTextAtOffset_Done:
+	LEA	(A1), A2
+; loc_00012D00
+WindowTextDecode_Next:
+	CLR.w	D6
+	MOVE.b	(A0)+, D6
+	CMPI.b	#SCRIPT_END, D6
+	BEQ.w	WindowTextDecode_Special_Loop
+	CMPI.b	#SCRIPT_NEWLINE, D6
+	BEQ.w	WindowTextDecode_Next_Loop
+	CMPI.b	#SCRIPT_WIDE_CHAR_LO, D6
+	BEQ.b	WindowTextDecode_Special
+	CMPI.b	#SCRIPT_WIDE_CHAR_HI, D6
+	BEQ.b	WindowTextDecode_Special
+	CMPI.b	#$20, D6
+	BNE.b	WindowTextDecode_Next_Loop2
+	MOVE.b	#$E4, D6
+WindowTextDecode_Next_Loop2:
+	MOVE.b	D6, (A2)+
+	BRA.b	WindowTextDecode_Next
+WindowTextDecode_Next_Loop:
+	MOVE.w	Window_width.w, D0
+	ADDQ.w	#1, D0
+	ADD.w	D0, D0
+	LEA	(A1,D0.w), A1
+	BRA.b	RenderTextAtOffset_Done
+; loc_00012D3C
+WindowTextDecode_Special:
+	MOVE.w	Window_width.w, D0	
+	ADDQ.w	#1, D0	
+	NEG.w	D0	
+	MOVE.b	D6, -$1(A2,D0.w)	
+	BRA.b	WindowTextDecode_Next	
+WindowTextDecode_Special_Loop:
+	RTS
+	
+DrawWindowTilemapFull:
+	LEA	Window_tilemap_buffer.w, A0
+	JSR	GetScrollOffsetInTiles
+	CLR.w	D3
+DrawWindowTilemapFull_Done:
+	CLR.w	D2
+DrawWindowTilemapFull_Done2:
+	MOVE.w	D2, D4
+	MOVE.w	D3, D5
+	ADD.w	D0, D4
+	ADD.w	D1, D5
+	ADD.w	Window_tilemap_x.w, D4
+	ADD.w	Window_tilemap_y.w, D5
+	ANDI.w	#$003F, D4
+	ANDI.w	#$003F, D5
+	ASL.w	#1, D4
+	ASL.w	#7, D5
+	ADD.w	D4, D5
+	ANDI.l	#$0000FFFF, D5
+	SWAP	D5
+	ADDI.l	#$40000003, D5
+	MOVE.l	D5, VDP_control_port
+	CLR.w	D4
+	MOVE.b	(A0)+, D4
+	ADDI.w	#$04C0, D4
+	ORI.w	#$8000, D4
+	OR.w	Window_tile_attrs.w, D4
+	MOVE.w	D4, VDP_data_port
+	ADDQ.w	#1, D2
+	CMP.w	Window_width.w, D2
+	BLE.b	DrawWindowTilemapFull_Done2
+	ADDQ.w	#1, D3
+	CMP.w	Window_height.w, D3
+	BLE.b	DrawWindowTilemapFull_Done
+	CLR.b	Window_tilemap_draw_pending.w
+	RTS
+
+DrawWindowTilemapRow:
+	LEA	Window_tilemap_buffer.w, A0
+	MOVE.w	Window_width.w, D2
+	MOVE.w	Window_draw_row.w, D0
+	CMP.w	Window_height.w, D0
+	BGE.w	DrawWindowTilemapRow_Loop
+	ADDQ.w	#1, D2
+	MULU.w	D2, D0
+	LEA	(A0,D0.w), A0
+	JSR	GetScrollOffsetInTiles
+	ADD.w	Window_tilemap_y.w, D1
+	ADD.w	Window_draw_row.w, D1
+	ANDI.w	#$003F, D1
+	ASL.w	#7, D1
+	BSR.w	WriteWindowRowToVDP
+	LEA	Window_tilemap_buffer.w, A0
+	MOVE.w	Window_width.w, D2
+	MOVE.w	Window_height.w, D0
+	ADDQ.w	#1, D2
+	MULU.w	D2, D0
+	LEA	(A0,D0.w), A0
+	JSR	GetScrollOffsetInTiles
+	ADD.w	Window_tilemap_y.w, D1
+	ADD.w	Window_draw_row.w, D1
+	ADDQ.w	#1, D1
+	ANDI.w	#$003F, D1
+	ASL.w	#7, D1
+	BSR.w	WriteWindowRowToVDP
+	ADDQ.w	#1, Window_draw_row.w
+	RTS
+
+DrawWindowTilemapRow_Loop:
+	CLR.b	Window_tilemap_draw_active.w
+	RTS
+
+WriteWindowRowToVDP:
+	CLR.w	D2
+WriteWindowRowToVDP_Done:
+	MOVE.w	D2, D4
+	ADD.w	D0, D4
+	MOVE.w	D1, D5
+	ADD.w	Window_tilemap_x.w, D4
+	ANDI.w	#$003F, D4
+	ASL.w	#1, D4
+	ADD.w	D4, D5
+	ANDI.l	#$0000FFFF, D5
+	SWAP	D5
+	ADDI.l	#$40000003, D5
+	MOVE.b	(A0)+, D4
+	ADDI.w	#$84C0, D4
+	OR.w	Window_tile_attrs.w, D4
+	MOVE.l	D5, VDP_control_port
+	MOVE.w	D4, VDP_data_port
+	ADDQ.w	#1, D2
+	CMP.w	Window_width.w, D2
+	BLE.b	WriteWindowRowToVDP_Done
+	RTS
+
+; loc_00012E68
+LoadLevelUpBannerTiles:
+	LEA	UIBorder_LevelUp, A0
+	MOVE.l	#$420A0003, D5
+	ORI	#$0700, SR
+	MOVE.w	#2, D7
+LoadLevelUpBannerTiles_Done:
+	MOVE.l	D5, VDP_control_port
+	MOVE.w	#$000B, D6
+LoadLevelUpBannerTiles_Done2:
+	CLR.w	D0
+	MOVE.b	(A0)+, D0
+	ADDI.w	#$84C0, D0
+	MOVE.w	D0, VDP_data_port
+	DBF	D6, LoadLevelUpBannerTiles_Done2
+	ADDI.l	#$00800000, D5
+	DBF	D7, LoadLevelUpBannerTiles_Done
+	ANDI	#$F8FF, SR
+	RTS
+
+UnknownData_12EA8:
+	dc.b	$00, $7C, $07, $00, $31, $FC, $00, $06, $C2, $42, $31, $FC, $00, $18, $C2, $44, $30, $38, $C6, $2C, $4E, $B9, $00, $01, $04, $8C, $34, $00, $36, $3C, $00, $00 
+	dc.b	$42, $45, $61, $00, $E5, $A4, $31, $FC, $00, $06, $C2, $42, $31, $FC, $00, $1A, $C2, $44, $30, $38, $C6, $32, $4E, $B9, $00, $01, $04, $8C, $34, $00, $36, $3C 
+	dc.b	$00, $00, $42, $45, $61, $00, $E5, $82, $02, $7C, $F8, $FF, $4E, $75 
+; loc_00012EF6
+DisplayPlayerHpMp:
+	ORI	#$0700, SR
+	MOVE.w	#7, Window_number_cursor_x.w
+	MOVE.w	#$0018, Window_number_cursor_y.w
+	MOVE.w	Player_hp.w, D0
+	JSR	ConvertToBCD
+	MOVE.w	D0, D2
+	MOVE.w	#0, D3
+	CLR.w	D5
+	BSR.w	ConvertNumberToTextDigits
+	MOVE.w	#7, Window_number_cursor_x.w
+	MOVE.w	#$001A, Window_number_cursor_y.w
+	MOVE.w	Player_mp.w, D0
+	JSR	ConvertToBCD
+	MOVE.w	D0, D2
+	MOVE.w	#0, D3
+	CLR.w	D5
+	BSR.w	ConvertNumberToTextDigits
+	ANDI	#$F8FF, SR
+	RTS
+
+DisplayCurrentHpMp:
+	ORI	#$0700, SR
+	MOVE.w	#7, Window_number_cursor_x.w
+	MOVE.w	#$0018, Window_number_cursor_y.w
+	MOVE.w	Player_hp.w, D0
+	JSR	ConvertToBCD
+	MOVE.w	D0, D2
+	MOVE.w	#0, D3
+	CLR.w	D5
+	BSR.w	WordToDecimalString_NoPad
+	MOVE.w	#7, Window_number_cursor_x.w
+	MOVE.w	#$001A, Window_number_cursor_y.w
+	MOVE.w	Player_mp.w, D0
+	JSR	ConvertToBCD
+	MOVE.w	D0, D2
+	MOVE.w	#0, D3
+	CLR.w	D5
+	BSR.w	WordToDecimalString_NoPad
+	ANDI	#$F8FF, SR
+	RTS
+
+UnknownData_12F92:
+	dc.b	$00, $7C, $07, $00, $31, $FC, $00, $0C, $C2, $42, $31, $FC, $00, $18, $C2, $44, $30, $38, $C6, $2E, $4E, $B9, $00, $01, $04, $8C, $34, $00, $36, $3C, $00, $00 
+	dc.b	$42, $45, $61, $00, $E4, $EE, $31, $FC, $00, $0C, $C2, $42, $31, $FC, $00, $1A, $C2, $44, $30, $38, $C6, $30, $4E, $B9, $00, $01, $04, $8C, $34, $00, $36, $3C 
+	dc.b	$00, $00, $42, $45, $61, $00, $E4, $CC, $02, $7C, $F8, $FF, $4E, $75 
+DisplayCantUseMessage:
+	LEA	CantUseStr, A0
+	ORI	#$0700, SR
+	MOVE.l	#$6CB60003, VDP_control_port
+	MOVE.w	#9, D7
+DisplayCantUseMessage_Done:
+	MOVE.w	#$84E0, VDP_data_port
+	DBF	D7, DisplayCantUseMessage_Done
+	MOVE.l	#$6D360003, VDP_control_port
+	MOVE.w	#9, D7
+DisplayCantUseMessage_Done2:
+	MOVE.w	#$84E0, VDP_data_port
+	DBF	D7, DisplayCantUseMessage_Done2
+	MOVE.l	#$6D360003, D5
+	BRA.w	DisplayReadiedMagicName_Loop
+DisplayReadiedMagicName:
+	LEA	MagicNames, A0
+	MOVE.w	Readied_magic.w, D0
+	BLT.b	DisplayReadiedMagicName_Loop2
+	ANDI.w	#$00FF, D0
+	ADD.w	D0, D0
+	ADD.w	D0, D0
+	MOVEA.l	(A0,D0.w), A0
+	BRA.w	DisplayReadiedMagicName_Loop3
+DisplayReadiedMagicName_Loop2:
+	LEA	NothingStr, A0
+DisplayReadiedMagicName_Loop3:
+	ORI	#$0700, SR
+	MOVE.l	#$4CB60003, VDP_control_port
+	MOVE.w	#9, D7
+DisplayReadiedMagicName_Loop3_Done:
+	MOVE.w	#$84E0, VDP_data_port
+	DBF	D7, DisplayReadiedMagicName_Loop3_Done
+	MOVE.l	#$4D360003, VDP_control_port
+	MOVE.w	#9, D7
+DisplayReadiedMagicName_Loop3_Done2:
+	MOVE.w	#$84E0, VDP_data_port
+	DBF	D7, DisplayReadiedMagicName_Loop3_Done2
+	MOVE.l	#$4D360003, D5
+DisplayReadiedMagicName_Loop:
+	CLR.w	D2
+; loc_0001308A
+TitleBarText_Next:
+	MOVE.w	D2, D3
+	ANDI.l	#$0000FFFF, D3
+	ADD.w	D3, D3
+	SWAP	D3
+	ADD.l	D5, D3
+	CLR.w	D0
+	MOVE.b	(A0)+, D0
+	CMPI.b	#SCRIPT_END, D0
+	BEQ.w	TitleBarText_SpecialChar_Loop
+	CMPI.b	#SCRIPT_WIDE_CHAR_LO, D0
+	BEQ.b	TitleBarText_SpecialChar
+	CMPI.b	#SCRIPT_WIDE_CHAR_HI, D0
+	BEQ.b	TitleBarText_SpecialChar
+	ADDI.w	#$84C0, D0
+	MOVE.l	D3, VDP_control_port
+	MOVE.w	D0, VDP_data_port
+	ANDI	#$F8FF, SR
+	ADDQ.w	#1, D2
+	BRA.b	TitleBarText_Next
+; loc_000130C8
+TitleBarText_SpecialChar:
+	ADDI.w	#$84C0, D0	
+	SUBI.l	#$00820000, D3	
+	ORI	#$0700, SR	
+	MOVE.l	D3, VDP_control_port	
+	MOVE.w	D0, VDP_data_port	
+	ANDI	#$F8FF, SR	
+	BRA.b	TitleBarText_Next	
+TitleBarText_SpecialChar_Loop:
+	RTS
+
+DisplayPlayerMaxHpMp:
+	ORI	#$0700, SR
+	MOVE.w	#$000D, Window_number_cursor_x.w
+	MOVE.w	#$0018, Window_number_cursor_y.w
+	MOVE.w	Player_mhp.w, D0
+	JSR	ConvertToBCD
+	MOVE.w	D0, D2
+	MOVE.w	#0, D3
+	CLR.w	D5
+	BSR.w	ConvertNumberToTextDigits
+	MOVE.w	#$000D, Window_number_cursor_x.w
+	MOVE.w	#$001A, Window_number_cursor_y.w
+	MOVE.w	Player_mmp.w, D0
+	JSR	ConvertToBCD
+	MOVE.w	D0, D2
+	MOVE.w	#0, D3
+	CLR.w	D5
+	BSR.w	ConvertNumberToTextDigits
+	ANDI	#$F8FF, SR
+	RTS
+
+DisplayMaxHpMp:
+	ORI	#$0700, SR
+	MOVE.w	#$000D, Window_number_cursor_x.w
+	MOVE.w	#$0018, Window_number_cursor_y.w
+	MOVE.w	Player_mhp.w, D0
+	JSR	ConvertToBCD
+	MOVE.w	D0, D2
+	MOVE.w	#0, D3
+	CLR.w	D5
+	BSR.w	WordToDecimalString_NoPad
+	MOVE.w	#$000D, Window_number_cursor_x.w
+	MOVE.w	#$001A, Window_number_cursor_y.w
+	MOVE.w	Player_mmp.w, D0
+	JSR	ConvertToBCD
+	MOVE.w	D0, D2
+	MOVE.w	#0, D3
+	CLR.w	D5
+	BSR.w	WordToDecimalString_NoPad
+	ANDI	#$F8FF, SR
+	RTS
+
+DisplayPlayerKimsAndExperience:
+	ORI	#$0700, SR
+	MOVE.w	#$001C, Window_number_cursor_x.w
+	MOVE.w	#$0013, Window_number_cursor_y.w
+	MOVE.l	Player_kims.w, D2
+	MOVE.w	#0, D3
+	CLR.w	D5
+	BSR.w	LongToDecimalString
+	MOVE.w	#$001C, Window_number_cursor_x.w
+	MOVE.w	#$0015, Window_number_cursor_y.w
+	MOVE.l	Player_experience.w, D2
+	MOVE.w	#0, D3
+	CLR.w	D5
+	BSR.w	LongToDecimalString
+	ANDI	#$F8FF, SR
+	RTS
+
+UpdatePaletteBuffer:
+	LEA	Palette_line_0_buffer.w, A1
+	TST.b	Palette_fade_in_mask.w
+	BNE.w	BuildFadeInTable_Store_Loop
+	TST.b	Fade_out_lines_mask.w
+	BNE.w	LoadPalettesFromTable_Return_Loop
+	TST.b	Fade_in_lines_mask.w
+	BNE.w	BuildFadeTable_Store_Loop
+	BCLR.b	#7, Palette_buffer_dirty.w
+	BEQ.w	UpdatePaletteBuffer_Loop
+	stopZ80
+	JSR	InitVdpDmaRamRoutine
+	MOVE.w	#2, D4
+	ORI.w	#$8F00, D4
+	MOVE.w	D4, VDP_control_port
+	MOVE.w	VDP_Reg1_cache.w, D4
+	BSET.l	#4, D4
+	MOVE.w	D4, VDP_control_port
+	MOVE.l	#$94009340, VDP_control_port
+	MOVE.l	#$96E09500, VDP_control_port
+	MOVE.w	#$977F, VDP_control_port
+	MOVE.l	#VDP_DMA_CMD_CRAM, Vdp_dma_cmd.w
+	JSR	Vdp_dma_ram_routine.w
+	MOVE.w	VDP_Reg1_cache.w, D4
+	BCLR.l	#4, D4
+	MOVE.w	D4, VDP_control_port
+	startZ80
+UpdatePaletteBuffer_Loop:
+	RTS
+
+; LoadPalettesFromTable
+; Load palettes from table into palette buffer
+; Checks fade flags, then copies 4 palettes (32 bytes each) from indexed palette table
+LoadPalettesFromTable:
+	TST.b	Palette_fade_in_mask.w
+	BNE.w	LoadPalettesFromTable_Return
+	TST.b	Fade_out_lines_mask.w
+	BNE.w	LoadPalettesFromTable_Return
+	TST.b	Fade_in_lines_mask.w
+	BNE.w	LoadPalettesFromTable_Return
+	LEA	Palette_line_0_buffer.w, A1
+	LEA	Palette_line_0_index.w, A0
+	LEA	PaletteDataTable, A2
+	MOVEQ	#3, D2
+LoadPalettesFromTable_Done:
+	MOVEQ	#0, D1
+	MOVE.w	(A0)+, D1
+	ASL.w	#5, D1
+	LEA	(A2,D1.w), A3
+	MOVE.l	(A3)+, (A1)+
+	MOVE.l	(A3)+, (A1)+
+	MOVE.l	(A3)+, (A1)+
+	MOVE.l	(A3)+, (A1)+
+	MOVE.l	(A3)+, (A1)+
+	MOVE.l	(A3)+, (A1)+
+	MOVE.l	(A3)+, (A1)+
+	MOVE.l	(A3)+, (A1)+
+	DBF	D2, LoadPalettesFromTable_Done
+	BSET.b	#7, Palette_buffer_dirty.w
+; loc_000132AA
+LoadPalettesFromTable_Return:
+	RTS
+
+LoadPalettesFromTable_Return_Loop:
+	ADDQ.w	#1, Palette_fade_tick_counter.w
+	MOVE.w	Palette_fade_tick_counter.w, D0
+	MOVE.w	D0, D1
+	SUBQ.w	#1, D1
+	EOR.w	D0, D1
+	BTST.l	#3, D1
+	BEQ.w	FadeOutPalette_WriteVDP
+	ADDQ.w	#1, Palette_fade_step_counter.w
+	CMPI.w	#8, Palette_fade_step_counter.w
+	BGE.w	BuildFadeTable_Store_Loop2
+	MOVE.b	Fade_out_lines_mask.w, D3
+	BTST.l	#0, D3
+	BEQ.b	LoadPalettesFromTable_Return_Loop2
+	LEA	Palette_line_0_buffer.w, A1
+	BSR.w	DecrementPaletteRGBValues
+LoadPalettesFromTable_Return_Loop2:
+	BTST.l	#1, D3
+	BEQ.b	LoadPalettesFromTable_Return_Loop3
+	LEA	Palette_line_1_buffer.w, A1
+	BSR.w	DecrementPaletteRGBValues
+LoadPalettesFromTable_Return_Loop3:
+	BTST.l	#2, D3
+	BEQ.b	LoadPalettesFromTable_Return_Loop4
+	LEA	Palette_line_2_buffer.w, A1
+	BSR.w	DecrementPaletteRGBValues
+LoadPalettesFromTable_Return_Loop4:
+	BTST.l	#3, D3
+	BEQ.b	FadeOutPalette_WriteVDP
+	LEA	Palette_line_3_buffer.w, A1
+	BSR.w	DecrementPaletteRGBValues
+; loc_0001330C
+FadeOutPalette_WriteVDP:
+	stopZ80
+	JSR	InitVdpDmaRamRoutine
+	MOVE.w	#2, D4
+	ORI.w	#$8F00, D4
+	MOVE.w	D4, VDP_control_port
+	MOVE.w	VDP_Reg1_cache.w, D4
+	BSET.l	#4, D4
+	MOVE.w	D4, VDP_control_port
+	MOVE.l	#$94009340, VDP_control_port
+	MOVE.l	#$96E09500, VDP_control_port
+	MOVE.w	#$977F, VDP_control_port
+	MOVE.l	#VDP_DMA_CMD_CRAM, Vdp_dma_cmd.w
+	JSR	Vdp_dma_ram_routine.w
+	MOVE.w	VDP_Reg1_cache.w, D4
+	BCLR.l	#4, D4
+	MOVE.w	D4, VDP_control_port
+	startZ80
+	RTS
+
+DecrementPaletteRGBValues:
+	MOVEQ	#$0000000F, D2
+DecrementPaletteRGBValues_Done:
+	MOVE.w	(A1), D0
+	BEQ.w	BuildFadeTable_Store
+	MOVE.w	D0, D1
+	ANDI.w	#$0F00, D1
+	BEQ.b	DecrementPaletteRGBValues_Loop
+	SUBI.w	#$0200, D0
+DecrementPaletteRGBValues_Loop:
+	MOVE.w	D0, D1
+	ANDI.w	#$00F0, D1
+	BEQ.b	DecrementPaletteRGBValues_Loop2
+	SUBI.w	#$0020, D0
+DecrementPaletteRGBValues_Loop2:
+	MOVE.w	D0, D1
+	ANDI.w	#$000F, D1
+	BEQ.b	BuildFadeTable_Store
+	SUBQ.w	#2, D0
+; loc_000133AA
+BuildFadeTable_Store:
+	MOVE.w	D0, (A1)+
+	DBF	D2, DecrementPaletteRGBValues_Done
+	RTS
+
+BuildFadeTable_Store_Loop2:
+	CLR.b	Fade_out_lines_mask.w
+	CLR.w	Palette_fade_step_counter.w
+	LEA	Palette_line_0_index.w, A0
+	MOVE.l	#0, (A0)+
+	MOVE.l	#0, (A0)+
+	stopZ80
+	JSR	InitVdpDmaRamRoutine
+	MOVE.w	#2, D4
+	ORI.w	#$8F00, D4
+	MOVE.w	D4, VDP_control_port
+	MOVE.w	VDP_Reg1_cache.w, D4
+	BSET.l	#4, D4
+	MOVE.w	D4, VDP_control_port
+	MOVE.l	#$94009340, VDP_control_port
+	MOVE.l	#$96E09500, VDP_control_port
+	MOVE.w	#$977F, VDP_control_port
+	MOVE.l	#VDP_DMA_CMD_CRAM, Vdp_dma_cmd.w
+	JSR	Vdp_dma_ram_routine.w
+	MOVE.w	VDP_Reg1_cache.w, D4
+	BCLR.l	#4, D4
+	MOVE.w	D4, VDP_control_port
+	startZ80
+	RTS
+
+BuildFadeTable_Store_Loop:
+	ADDQ.w	#1, Palette_fade_tick_counter.w
+	MOVE.w	Palette_fade_tick_counter.w, D0
+	MOVE.w	D0, D1
+	SUBQ.w	#1, D1
+	EOR.w	D0, D1
+	BTST.l	#3, D1
+	BEQ.w	FadeInPalette_WriteVDP
+	ADDQ.w	#1, Palette_fade_in_step.w
+	CMPI.w	#8, Palette_fade_in_step.w
+	BGE.w	BuildFadeInTable_Store_Loop2
+	MOVE.b	Fade_in_lines_mask.w, D3
+	BTST.l	#0, D3
+	BEQ.b	BuildFadeTable_Store_Loop3
+	LEA	Palette_line_0_buffer.w, A1
+	MOVE.w	Palette_line_0_fade_target.w, D1
+	BSR.w	ShiftPaletteTowardsTarget
+BuildFadeTable_Store_Loop3:
+	BTST.l	#1, D3
+	BEQ.b	BuildFadeTable_Store_Loop4
+	LEA	Palette_line_1_buffer.w, A1
+	MOVE.w	Palette_line_1_fade_target.w, D1
+	BSR.w	ShiftPaletteTowardsTarget
+BuildFadeTable_Store_Loop4:
+	BTST.l	#2, D3
+	BEQ.b	BuildFadeTable_Store_Loop5
+	LEA	Palette_line_2_buffer.w, A1
+	MOVE.w	Palette_line_2_fade_target.w, D1
+	BSR.w	ShiftPaletteTowardsTarget
+BuildFadeTable_Store_Loop5:
+	BTST.l	#3, D3
+	BEQ.b	FadeInPalette_WriteVDP
+	LEA	Palette_line_3_buffer.w, A1
+	MOVE.w	Palette_line_3_fade_target.w, D1
+	BSR.w	ShiftPaletteTowardsTarget
+; loc_000134AE
+FadeInPalette_WriteVDP:
+	MOVE.w	#$0100, Z80_bus_request
+FadeInPalette_WriteVDP_Done:
+	BTST.b	#0, Z80_bus_request
+	BNE.b	FadeInPalette_WriteVDP_Done
+	JSR	InitVdpDmaRamRoutine
+	MOVE.w	#2, D4
+	ORI.w	#$8F00, D4
+	MOVE.w	D4, VDP_control_port
+	MOVE.w	VDP_Reg1_cache.w, D4
+	BSET.l	#4, D4
+	MOVE.w	D4, VDP_control_port
+	MOVE.l	#$94009340, VDP_control_port
+	MOVE.l	#$96E09500, VDP_control_port
+	MOVE.w	#$977F, VDP_control_port
+	MOVE.l	#VDP_DMA_CMD_CRAM, Vdp_dma_cmd.w
+	JSR	Vdp_dma_ram_routine.w
+	MOVE.w	VDP_Reg1_cache.w, D4
+	BCLR.l	#4, D4
+	MOVE.w	D4, VDP_control_port
+	MOVE.w	#0, Z80_bus_request
+	RTS
+
+ShiftPaletteTowardsTarget:
+	LEA	PaletteDataTable, A3
+	ASL.w	#5, D1
+	LEA	(A3,D1.w), A3
+	MOVEQ	#$0000000F, D7
+ShiftPaletteTowardsTarget_Done:
+	MOVE.w	(A3)+, D4
+	MOVE.w	(A1), D0
+	CMP.w	D4, D0
+	BEQ.w	BuildFadeInTable_Store
+	MOVE.w	D0, D1
+	ANDI.w	#$0F00, D1
+	MOVE.w	D4, D5
+	ANDI.w	#$0F00, D5
+	CMP.w	D5, D1
+	BGE.b	ShiftPaletteTowardsTarget_Loop
+	ADDI.w	#$0200, D0
+ShiftPaletteTowardsTarget_Loop:
+	MOVE.w	D0, D1
+	ANDI.w	#$00F0, D1
+	MOVE.w	D4, D5
+	ANDI.w	#$00F0, D5
+	CMP.w	D5, D1
+	BGE.b	ShiftPaletteTowardsTarget_Loop2
+	ADDI.w	#$0020, D0
+ShiftPaletteTowardsTarget_Loop2:
+	MOVE.w	D0, D1
+	ANDI.w	#$000F, D1
+	MOVE.w	D4, D5
+	ANDI.w	#$000F, D5
+	CMP.w	D5, D1
+	BGE.b	BuildFadeInTable_Store
+	ADDQ.w	#2, D0
+; loc_00013574
+BuildFadeInTable_Store:
+	MOVE.w	D0, (A1)+
+	DBF	D7, ShiftPaletteTowardsTarget_Done
+	RTS
+
+BuildFadeInTable_Store_Loop2:
+	MOVE.b	Fade_in_lines_mask.w, D3
+	BTST.l	#0, D3
+	BEQ.b	BuildFadeInTable_Store_Loop3
+	MOVE.w	Palette_line_0_fade_target.w, Palette_line_0_index.w
+BuildFadeInTable_Store_Loop3:
+	BTST.l	#1, D3
+	BEQ.b	BuildFadeInTable_Store_Loop4
+	MOVE.w	Palette_line_1_fade_target.w, Palette_line_1_index.w
+BuildFadeInTable_Store_Loop4:
+	BTST.l	#2, D3
+	BEQ.b	BuildFadeInTable_Store_Loop5
+	MOVE.w	Palette_line_2_fade_target.w, Palette_line_2_index.w
+BuildFadeInTable_Store_Loop5:
+	BTST.l	#3, D3
+	BEQ.b	BuildFadeInTable_Store_Loop6
+	MOVE.w	Palette_line_3_fade_target.w, Palette_line_3_index.w
+BuildFadeInTable_Store_Loop6:
+	CLR.b	Fade_in_lines_mask.w
+	CLR.w	Palette_fade_in_step.w
+	MOVE.w	#$0100, Z80_bus_request
+BuildFadeInTable_Store_Loop6_Done:
+	BTST.b	#0, Z80_bus_request
+	BNE.b	BuildFadeInTable_Store_Loop6_Done
+	JSR	InitVdpDmaRamRoutine
+	MOVE.w	#2, D4
+	ORI.w	#$8F00, D4
+	MOVE.w	D4, VDP_control_port
+	MOVE.w	VDP_Reg1_cache.w, D4
+	BSET.l	#4, D4
+	MOVE.w	D4, VDP_control_port
+	MOVE.l	#$94009340, VDP_control_port
+	MOVE.l	#$96E09500, VDP_control_port
+	MOVE.w	#$977F, VDP_control_port
+	MOVE.l	#VDP_DMA_CMD_CRAM, Vdp_dma_cmd.w
+	JSR	Vdp_dma_ram_routine.w
+	MOVE.w	VDP_Reg1_cache.w, D4
+	BCLR.l	#4, D4
+	MOVE.w	D4, VDP_control_port
+	MOVE.w	#0, Z80_bus_request
+	RTS
+
+BuildFadeInTable_Store_Loop:
+	ADDQ.w	#1, Palette_fade_tick_counter.w
+	MOVE.w	Palette_fade_tick_counter.w, D0
+	MOVE.w	D0, D1
+	SUBQ.w	#1, D1
+	EOR.w	D0, D1
+	BTST.l	#3, D1
+	BEQ.w	FadePaletteLine3_WriteVDP
+	ADDQ.w	#1, Palette_fade_in_step_counter.w
+	CMPI.w	#8, Palette_fade_in_step_counter.w
+	BGE.w	FadePaletteTowardsTarget_NextEntry_Loop
+	MOVE.b	Palette_fade_in_mask.w, D3
+	LEA	Palette_line_0_buffer.w, A1
+	BTST.l	#0, D3
+	BEQ.b	BuildFadeInTable_Store_Loop7
+	MOVE.w	Palette_line_0_fade_in_target.w, D1
+	BSR.w	FadePaletteTowardsTarget
+	BRA.b	BuildFadeInTable_Store_Loop8
+BuildFadeInTable_Store_Loop7:
+	MOVE.w	Palette_line_0_index.w, D1
+	BSR.w	LoadPaletteByIndex
+BuildFadeInTable_Store_Loop8:
+	LEA	Palette_line_1_buffer.w, A1
+	BTST.l	#1, D3
+	BEQ.b	BuildFadeInTable_Store_Loop9
+	MOVE.w	Palette_line_1_fade_in_target.w, D1
+	BSR.w	FadePaletteTowardsTarget
+	BRA.b	BuildFadeInTable_Store_Loop10
+BuildFadeInTable_Store_Loop9:
+	MOVE.w	Palette_line_1_index.w, D1
+	BSR.w	LoadPaletteByIndex
+BuildFadeInTable_Store_Loop10:
+	LEA	Palette_line_2_buffer.w, A1
+	BTST.l	#2, D3
+	BEQ.b	BuildFadeInTable_Store_Loop11
+	MOVE.w	Palette_line_2_fade_in_target.w, D1
+	BSR.w	FadePaletteTowardsTarget
+	BRA.b	BuildFadeInTable_Store_Loop12
+BuildFadeInTable_Store_Loop11:
+	MOVE.w	Palette_line_2_index.w, D1
+	BSR.w	LoadPaletteByIndex
+BuildFadeInTable_Store_Loop12:
+	LEA	Palette_line_3_buffer.w, A1
+	BTST.l	#3, D3
+	BEQ.b	BuildFadeInTable_Store_Loop13
+	MOVE.w	Palette_line_3_fade_in_target.w, D1
+	BSR.w	FadePaletteTowardsTarget
+	BRA.b	FadePaletteLine3_WriteVDP
+BuildFadeInTable_Store_Loop13:
+	MOVE.w	Palette_line_3_index.w, D1
+	BSR.w	LoadPaletteByIndex
+; loc_000136C4
+FadePaletteLine3_WriteVDP:
+	MOVE.w	#$0100, Z80_bus_request
+FadePaletteLine3_WriteVDP_Done:
+	BTST.b	#0, Z80_bus_request
+	BNE.b	FadePaletteLine3_WriteVDP_Done
+	JSR	InitVdpDmaRamRoutine
+	MOVE.w	#2, D4
+	ORI.w	#$8F00, D4
+	MOVE.w	D4, VDP_control_port
+	MOVE.w	VDP_Reg1_cache.w, D4
+	BSET.l	#4, D4
+	MOVE.w	D4, VDP_control_port
+	MOVE.l	#$94009340, VDP_control_port
+	MOVE.l	#$96E09500, VDP_control_port
+	MOVE.w	#$977F, VDP_control_port
+	MOVE.l	#VDP_DMA_CMD_CRAM, Vdp_dma_cmd.w
+	JSR	Vdp_dma_ram_routine.w
+	MOVE.w	VDP_Reg1_cache.w, D4
+	BCLR.l	#4, D4
+	MOVE.w	D4, VDP_control_port
+	MOVE.w	#0, Z80_bus_request
+	RTS
+
+LoadPaletteByIndex:
+	LEA	PaletteDataTable, A2
+	ASL.w	#5, D1
+	LEA	(A2,D1.w), A3
+	MOVE.l	(A3)+, (A1)+
+	MOVE.l	(A3)+, (A1)+
+	MOVE.l	(A3)+, (A1)+
+	MOVE.l	(A3)+, (A1)+
+	MOVE.l	(A3)+, (A1)+
+	MOVE.l	(A3)+, (A1)+
+	MOVE.l	(A3)+, (A1)+
+	MOVE.l	(A3)+, (A1)+
+	RTS
+
+FadePaletteTowardsTarget:
+	LEA	PaletteDataTable, A3
+	ASL.w	#5, D1
+	LEA	(A3,D1.w), A3
+	MOVEQ	#$0000000F, D7
+FadePaletteTowardsTarget_Done:
+	MOVE.w	(A3)+, D4
+	MOVE.w	(A1), D0
+	CMP.w	D4, D0
+	BEQ.w	FadePaletteTowardsTarget_NextEntry
+	MOVE.w	D0, D1
+	ANDI.w	#$0F00, D1
+	MOVE.w	D4, D5
+	ANDI.w	#$0F00, D5
+	CMP.w	D5, D1
+	BEQ.b	ShiftColorGreenComponent
+	BLT.b	FadePaletteTowardsTarget_Loop
+	SUBI.w	#$0200, D0
+	BRA.b	ShiftColorGreenComponent
+FadePaletteTowardsTarget_Loop:
+	ADDI.w	#$0200, D0
+; loc_0001378A
+ShiftColorGreenComponent:
+	MOVE.w	D0, D1
+	ANDI.w	#$00F0, D1
+	MOVE.w	D4, D5
+	ANDI.w	#$00F0, D5
+	CMP.w	D5, D1
+	BEQ.b	ShiftColorBlueComponent
+	BLT.b	ShiftColorGreenComponent_Loop
+	SUBI.w	#$0020, D0
+	BRA.b	ShiftColorBlueComponent
+ShiftColorGreenComponent_Loop:
+	ADDI.w	#$0020, D0
+; loc_000137A6
+ShiftColorBlueComponent:
+	MOVE.w	D0, D1
+	ANDI.w	#$000F, D1
+	MOVE.w	D4, D5
+	ANDI.w	#$000F, D5
+	CMP.w	D5, D1
+	BEQ.b	FadePaletteTowardsTarget_NextEntry
+	BLT.b	ShiftColorBlueComponent_Loop
+	SUBQ.w	#2, D0
+	BRA.b	FadePaletteTowardsTarget_NextEntry
+ShiftColorBlueComponent_Loop:
+	ADDQ.w	#2, D0
+; loc_000137BE
+FadePaletteTowardsTarget_NextEntry:
+	MOVE.w	D0, (A1)+
+	DBF	D7, FadePaletteTowardsTarget_Done
+	RTS
+
+FadePaletteTowardsTarget_NextEntry_Loop:
+	MOVE.b	Palette_fade_in_mask.w, D3
+	BTST.l	#0, D3
+	BEQ.b	FadePaletteTowardsTarget_NextEntry_Loop2
+	MOVE.w	Palette_line_0_fade_in_target.w, Palette_line_0_index.w
+FadePaletteTowardsTarget_NextEntry_Loop2:
+	BTST.l	#1, D3
+	BEQ.b	FadePaletteTowardsTarget_NextEntry_Loop3
+	MOVE.w	Palette_line_1_fade_in_target.w, Palette_line_1_index.w
+FadePaletteTowardsTarget_NextEntry_Loop3:
+	BTST.l	#2, D3
+	BEQ.b	FadePaletteTowardsTarget_NextEntry_Loop4
+	MOVE.w	Palette_line_2_fade_in_target.w, Palette_line_2_index.w
+FadePaletteTowardsTarget_NextEntry_Loop4:
+	BTST.l	#3, D3
+	BEQ.b	FadePaletteTowardsTarget_NextEntry_Loop5
+	MOVE.w	Palette_line_3_fade_in_target.w, Palette_line_3_index.w
+FadePaletteTowardsTarget_NextEntry_Loop5:
+	CLR.b	Palette_fade_in_mask.w
+	CLR.w	Palette_fade_in_step_counter.w
+	MOVE.w	#$0100, Z80_bus_request
+FadePaletteTowardsTarget_NextEntry_Loop5_Done:
+	BTST.b	#0, Z80_bus_request
+	BNE.b	FadePaletteTowardsTarget_NextEntry_Loop5_Done
+	JSR	InitVdpDmaRamRoutine
+	MOVE.w	#2, D4
+	ORI.w	#$8F00, D4
+	MOVE.w	D4, VDP_control_port
+	MOVE.w	VDP_Reg1_cache.w, D4
+	BSET.l	#4, D4
+	MOVE.w	D4, VDP_control_port
+	MOVE.l	#$94009340, VDP_control_port
+	MOVE.l	#$96E09500, VDP_control_port
+	MOVE.w	#$977F, VDP_control_port
+	MOVE.l	#VDP_DMA_CMD_CRAM, Vdp_dma_cmd.w
+	JSR	Vdp_dma_ram_routine.w
+	MOVE.w	VDP_Reg1_cache.w, D4
+	BCLR.l	#4, D4
+	MOVE.w	D4, VDP_control_port
+	MOVE.w	#0, Z80_bus_request
+	RTS
+	
+; loc_00013876
+PaletteDataTable:
+	incbin "data/art/palettes/palette_data.bin"
+; loc_000150F6
+NameEntryScreen_Init:
+	JSR	DisableVDPDisplay
+	JSR	ClearVRAMPlaneA
+	JSR	ClearVRAMPlaneB
+	MOVE.w	#PALETTE_IDX_NAMEENTRY_GLOW1, Palette_line_1_fade_target.w
+	MOVE.w	#PALETTE_IDX_NAMEENTRY_GLOW2, Palette_line_2_fade_target.w
+	MOVE.w	#PALETTE_IDX_NAMEENTRY_BG, Palette_line_3_fade_target.w
+	MOVE.b	#FLAG_TRUE, Fade_in_lines_mask.w
+	BSR.w	DrawNameEntryBackground
+	BSR.w	DrawNameEntryCharGrid
+	MOVEA.l	Enemy_list_ptr.w, A6
+	BSET.b	#7, (A6)
+	BSET.b	#7, obj_sprite_flags(A6)
+	BCLR.b	#3, obj_sprite_flags(A6)
+	BCLR.b	#4, obj_sprite_flags(A6)
+	BSET.b	#5, obj_sprite_flags(A6)
+	BCLR.b	#6, obj_sprite_flags(A6)
+	CLR.b	obj_move_counter(A6)
+	MOVE.w	#1, Name_entry_cursor_x.w
+	MOVE.w	#0, obj_screen_x(A6)
+	MOVE.w	#0, obj_screen_y(A6)
+	MOVE.w	#VRAM_TILE_NAME_ENTRY_GRID, obj_tile_index(A6)
+	MOVE.b	#SPRITE_SIZE_1x1, obj_sprite_size(A6)
+	MOVE.l	#NameEntryGridCursor_Tick, obj_tick_fn(A6)
+	CLR.w	D0
+	MOVE.b	obj_next_offset(A6), D0
+	LEA	(A6,D0.w), A6
+	BSET.b	#7, (A6)
+	BSET.b	#7, obj_sprite_flags(A6)
+	BCLR.b	#3, obj_sprite_flags(A6)
+	BCLR.b	#4, obj_sprite_flags(A6)
+	BCLR.b	#5, obj_sprite_flags(A6)
+	BSET.b	#6, obj_sprite_flags(A6)
+	CLR.b	obj_move_counter(A6)
+	MOVE.w	#$008C, obj_screen_x(A6)
+	MOVE.w	#$0020, obj_screen_y(A6)
+	MOVE.w	#VRAM_TILE_NAME_ENTRY_TEXT, obj_tile_index(A6)
+	MOVE.b	#SPRITE_SIZE_1x1, obj_sprite_size(A6)
+	MOVE.l	#NameEntryTextCursor_Tick, obj_tick_fn(A6)
+	JSR	EnableDisplay
+	MOVE.l	#NameEntryScreen_InputHandler, obj_tick_fn(A5)
+	CLR.w	Name_input_cursor_pos.w
+	CLR.w	Name_entry_cursor_column.w
+	RTS
+
+; loc_000151E0
+NameEntryScreen_InputHandler:
+	TST.b	Fade_in_lines_mask.w
+	BNE.b	NameEntryScreen_InputHandler_Loop
+	MOVE.w	#BUTTON_BIT_C, D2
+	JSR	CheckButtonPress
+	BNE.b	NameEntryScreen_InputHandler_Loop2
+	MOVE.w	#BUTTON_BIT_B, D2
+	JSR	CheckButtonPress
+	BNE.w	NameEntry_ConfirmDone_Loop
+	MOVE.w	#BUTTON_BIT_START, D2
+	JSR	CheckButtonPress
+	BEQ.b	NameEntryScreen_InputHandler_Loop3
+	LEA	Player_name.w, A0	
+	MOVE.w	Name_input_cursor_pos.w, D0	
+	LEA	(A0,D0.w), A0	
+	BRA.w	NameEntry_ConfirmDone	
+NameEntryScreen_InputHandler_Loop3:
+	BSR.w	HandleNameEntryDPad
+NameEntryScreen_InputHandler_Loop:
+	RTS
+
+NameEntryScreen_InputHandler_Loop2:
+	MOVE.w	#SOUND_MENU_SELECT, D0
+	JSR	QueueSoundEffect
+	LEA	Player_name.w, A0
+	LEA	NameEntryCharacterTable, A1
+	MOVE.l	#$41A20003, D6
+	MOVE.w	Name_input_cursor_pos.w, D0
+	LEA	(A0,D0.w), A0
+	MOVEQ	#0, D1
+	MOVE.w	Name_entry_cursor_column.w, D1
+	ADD.w	D1, D1
+	SWAP	D1
+	ADD.l	D1, D6
+	MOVE.w	Name_entry_cursor_row.w, D2
+	MULU.w	#$001E, D2
+	ADD.w	Name_entry_cursor_x.w, D2
+	MOVE.b	(A1,D2.w), D3
+	CMPI.b	#SCRIPT_NEWLINE, D3
+	BEQ.w	NameEntry_ConfirmDone
+	CMPI.w	#5, Name_entry_cursor_column.w
+	BLE.b	NameEntryScreen_InputHandler_Loop4
+	RTS
+	
+NameEntryScreen_InputHandler_Loop4:
+	CMPI.b	#SCRIPT_WIDE_CHAR_LO, D3
+	BEQ.w	WriteCharacterToNameEntry_Loop
+	CMPI.b	#SCRIPT_WIDE_CHAR_HI, D3
+	BEQ.w	WriteCharacterToNameEntry_Loop2
+WriteCharacterToNameEntry:
+	CLR.w	D3
+	MOVE.b	$1E(A1,D2.w), D3
+	MOVE.b	D3, (A0)
+	ADDI.w	#$04C0, D3
+	ORI.w	#$8000, D3
+	ORI.w	#$4000, D3
+	MOVE.l	D6, VDP_control_port
+	MOVE.w	D3, VDP_data_port
+	ADDQ.w	#1, Name_entry_cursor_column.w
+	ADDQ.w	#1, Name_input_cursor_pos.w
+	CMPI.w	#5, Name_entry_cursor_column.w
+	BLE.b	WriteCharacterToNameEntry_Loop3
+	MOVE.w	#$001C, Name_entry_cursor_x.w
+	MOVE.w	#NAME_ENTRY_LAST_ROW, Name_entry_cursor_row.w
+WriteCharacterToNameEntry_Loop3:
+	RTS
+
+WriteCharacterToNameEntry_Loop:
+	BSR.b	WriteCharacterToNameEntry	
+	SUBI.l	#$00800000, D6	
+	MOVE.l	D6, VDP_control_port	
+	MOVE.w	#$C5AC, VDP_data_port	
+	ADDQ.w	#1, Name_input_cursor_pos.w	
+	MOVE.b	#$DE, $1(A0)	
+	RTS
+	
+WriteCharacterToNameEntry_Loop2:
+	BSR.b	WriteCharacterToNameEntry	
+	SUBI.l	#$00800000, D6	
+	MOVE.l	D6, VDP_control_port	
+	MOVE.w	#$C5AD, VDP_data_port	
+	ADDQ.w	#1, Name_input_cursor_pos.w	
+	MOVE.b	#$DF, $1(A0)	
+	RTS
+	
+; loc_00015304
+NameEntry_ConfirmDone:
+	MOVE.b	#$FF, (A0)
+	MOVE.b	#FLAG_TRUE, Name_entry_complete.w
+	MOVE.l	#NameEntryScreen_Done, obj_tick_fn(A5)
+	RTS
+
+NameEntry_ConfirmDone_Loop:
+	MOVE.w	#SOUND_MENU_CANCEL, D0
+	JSR	QueueSoundEffect
+	TST.w	Name_entry_cursor_column.w
+	BLE.w	NameEntry_ConfirmDone_Loop2
+	LEA	Player_name.w, A0
+	MOVE.l	#$41A20003, D6
+	MOVE.w	Name_input_cursor_pos.w, D0
+	LEA	-$1(A0,D0.w), A0
+	SUBQ.w	#1, D0
+	MOVEQ	#0, D1
+	MOVE.w	Name_entry_cursor_column.w, D1
+	SUBQ.w	#1, D1
+	ADD.w	D1, D1
+	SWAP	D1
+	ADD.l	D1, D6
+	MOVE.b	(A0), D0
+	CMPI.b	#SCRIPT_WIDE_CHAR_LO, D0
+	BEQ.b	NameEntry_ConfirmDone_Loop3
+	CMPI.b	#SCRIPT_WIDE_CHAR_HI, D0
+	BNE.b	NameEntry_ConfirmDone_Loop4
+NameEntry_ConfirmDone_Loop3:
+	SUBQ.w	#1, Name_input_cursor_pos.w	
+	CLR.b	-$1(A0)	
+	MOVE.l	D6, D5	
+	SUBI.l	#$00800000, D5	
+	MOVE.l	D5, VDP_control_port	
+	MOVE.w	#$E040, VDP_data_port	
+NameEntry_ConfirmDone_Loop4:
+	SUBQ.w	#1, Name_input_cursor_pos.w
+	SUBQ.w	#1, Name_entry_cursor_column.w
+	CLR.b	(A0)
+	MOVE.l	D6, VDP_control_port
+	MOVE.w	#$E04E, VDP_data_port
+NameEntry_ConfirmDone_Loop2:
+	RTS
+; loc_00015392
+NameEntryScreen_Done:
+	RTS
+
+; loc_00015394
+NameEntryGridCursor_Tick:
+	MOVE.w	Name_entry_cursor_x.w, D0
+	ASL.w	#3, D0
+	ADDI.w	#$002C, D0
+	MOVE.w	D0, obj_screen_x(A5)
+	MOVE.w	Name_entry_cursor_row.w, D0
+	ASL.w	#3, D0
+	ADDI.w	#$0030, D0
+	MOVE.w	D0, obj_screen_y(A5)
+	JSR	AddSpriteToDisplayList
+	RTS
+
+; loc_000153B8
+NameEntryTextCursor_Tick:
+	MOVE.w	Name_entry_cursor_column.w, D0
+	CMPI.w	#5, D0
+	BGT.b	EnemySprite_BlinkReturn
+	ASL.w	#3, D0
+	ADDI.w	#$008C, D0
+	MOVE.w	D0, obj_screen_x(A5)
+	ADDQ.b	#1, obj_move_counter(A5)
+	MOVE.b	obj_move_counter(A5), D0
+	BTST.l	#3, D0
+	BEQ.b	EnemySprite_BlinkReturn
+	JSR	AddSpriteToDisplayList
+; loc_000153E0
+EnemySprite_BlinkReturn:
+	RTS
+
+ClearEnemyListFlags:
+	MOVEA.l	Enemy_list_ptr.w, A6
+	BCLR.b	#7, (A6)
+	CLR.w	D0
+	MOVE.b	obj_next_offset(A6), D0
+	LEA	(A6,D0.w), A6
+	BCLR.b	#7, (A6)
+	RTS
+
+DrawNameEntryBackground:
+	ORI	#$0700, SR
+	MOVE.l	#$61060003, D5
+	LEA	DrawNameEntryBackground_Data, A0
+	MOVE.w	#$0016, D7
+DrawNameEntryBackground_Done:
+	MOVE.l	D5, VDP_control_port
+	MOVE.w	#$0021, D6
+DrawNameEntryBackground_Done2:
+	CLR.w	D0
+	MOVE.b	(A0)+, D0
+	ANDI.w	#$7FFF, D0
+	ORI.w	#$6000, D0
+	ADDI.w	#$003C, D0
+	MOVE.w	D0, VDP_data_port
+	DBF	D6, DrawNameEntryBackground_Done2
+	ADDI.l	#$00800000, D5
+	DBF	D7, DrawNameEntryBackground_Done
+	ANDI	#$F8FF, SR
+	RTS
+
+DrawNameEntryCharGrid:
+	ORI	#$0700, SR
+	MOVE.l	#$428A0003, D5
+	LEA	NameEntryCharacterTable, A0
+	MOVE.w	#$0011, D7
+DrawNameEntryCharGrid_Done:
+	MOVE.l	D5, VDP_control_port
+	MOVE.w	#$001D, D6
+DrawNameEntryCharGrid_Done2:
+	CLR.w	D0
+	MOVE.b	(A0)+, D0
+	ORI.w	#$8000, D0
+	ORI.w	#$2000, D0
+	ADDI.w	#$04C0, D0
+	MOVE.w	D0, VDP_data_port
+	DBF	D6, DrawNameEntryCharGrid_Done2
+	ADDI.l	#$00800000, D5
+	DBF	D7, DrawNameEntryCharGrid_Done
+	ANDI	#$F8FF, SR
+	RTS
+
+HandleNameEntryDPad:
+	MOVE.b	Controller_current_state.w, D0
+	ANDI.w	#$000F, D0
+	BEQ.w	HandleNameEntryDPad_Return
+	MOVE.b	Controller_previous_state.w, D1
+	ANDI.w	#$000F, D1
+	EOR.b	D0, D1
+	BEQ.w	CheckNameEntryCharValid_Loop
+	CLR.b	Name_entry_key_repeat_counter.w
+	BTST.l	#0, D0
+	BNE.w	NameEntryCursor_Up_Sound
+	BTST.l	#1, D0
+	BNE.w	NameEntryCursor_Down_Sound
+	BTST.l	#2, D0
+	BNE.w	NameEntryCursor_Left_Sound
+HandleNameEntryDPad_Done:
+	MOVE.w	#SOUND_HIT, D0
+	JSR	QueueSoundEffect
+; loc_000154CA
+NameEntryCursor_Right:
+	CMPI.w	#NAME_ENTRY_LAST_COL, Name_entry_cursor_x.w
+	BGE.b	NameEntryCursor_Right_Loop
+	ADDQ.w	#1, Name_entry_cursor_x.w
+	BSR.w	CheckNameEntryCharValid
+	BNE.b	NameEntryCursor_Right
+	RTS
+	
+NameEntryCursor_Right_Loop:
+	CLR.w	Name_entry_cursor_x.w
+	BSR.w	CheckNameEntryCharValid
+	BNE.b	NameEntryCursor_Right
+	RTS
+	
+; loc_000154EA
+NameEntryCursor_Left_Sound:
+	MOVE.w	#SOUND_HIT, D0
+	JSR	QueueSoundEffect
+; loc_000154F4
+NameEntryCursor_Left:
+	TST.w	Name_entry_cursor_x.w
+	BLE.b	NameEntryCursor_Left_Loop
+	SUBQ.w	#1, Name_entry_cursor_x.w
+	BSR.w	CheckNameEntryCharValid
+	BNE.b	NameEntryCursor_Left
+	RTS
+NameEntryCursor_Left_Loop:
+	MOVE.w	#NAME_ENTRY_LAST_COL, Name_entry_cursor_x.w
+	BSR.w	CheckNameEntryCharValid
+	BNE.b	NameEntryCursor_Left
+	RTS
+	
+; loc_00015514
+NameEntryCursor_Down_Sound:
+	MOVE.w	#SOUND_HIT, D0
+	JSR	QueueSoundEffect
+; loc_0001551E
+NameEntryCursor_Down:
+	CMPI.w	#NAME_ENTRY_LAST_ROW, Name_entry_cursor_row.w
+	BGE.b	NameEntryCursor_Down_Loop
+	ADDQ.w	#2, Name_entry_cursor_row.w
+	BSR.w	CheckNameEntryCharValid
+	BNE.b	NameEntryCursor_Down
+	RTS
+	
+NameEntryCursor_Down_Loop:
+	CLR.w	Name_entry_cursor_row.w
+	BSR.w	CheckNameEntryCharValid
+	BNE.b	NameEntryCursor_Down
+	RTS
+
+; loc_0001553E
+NameEntryCursor_Up_Sound:
+	MOVE.w	#SOUND_HIT, D0
+	JSR	QueueSoundEffect
+; loc_00015548
+NameEntryCursor_Up:
+	TST.w	Name_entry_cursor_row.w
+	BLE.b	NameEntryCursor_Up_Loop
+	SUBQ.w	#2, Name_entry_cursor_row.w
+	BSR.w	CheckNameEntryCharValid
+	BNE.b	NameEntryCursor_Up
+	RTS
+	
+NameEntryCursor_Up_Loop:
+	MOVE.w	#NAME_ENTRY_LAST_ROW, Name_entry_cursor_row.w
+	BSR.w	CheckNameEntryCharValid
+	BNE.b	NameEntryCursor_Up
+	RTS
+	
+CheckNameEntryCharValid:
+	LEA	NameEntryCharacterTable, A0
+	MOVE.w	Name_entry_cursor_row.w, D0
+	MULU.w	#$001E, D0
+	ADD.w	Name_entry_cursor_x.w, D0
+	MOVE.b	(A0,D0.w), D0
+	CMPI.b	#SCRIPT_END, D0
+	BEQ.b	CheckNameEntryCharValid_Loop2
+	CLR.w	D0
+	RTS
+	
+CheckNameEntryCharValid_Loop2:
+	MOVE.w	#$FFFF, D0
+	RTS
+
+CheckNameEntryCharValid_Loop:
+	ADDQ.b	#1, Name_entry_key_repeat_counter.w
+	BTST.l	#0, D0
+	BNE.w	CheckNameEntryCharValid_Loop3
+	BTST.l	#1, D0
+	BNE.w	CheckNameEntryCharValid_Loop4
+	BTST.l	#2, D0
+	BNE.w	CheckNameEntryCharValid_Loop5
+	CMPI.b	#8, Name_entry_key_repeat_counter.w
+	BLT.w	HandleNameEntryDPad_Return
+	CLR.b	Name_entry_key_repeat_counter.w
+	BRA.w	HandleNameEntryDPad_Done
+CheckNameEntryCharValid_Loop5:
+	CMPI.b	#8, Name_entry_key_repeat_counter.w
+	BLT.w	HandleNameEntryDPad_Return
+	CLR.b	Name_entry_key_repeat_counter.w
+	BRA.w	NameEntryCursor_Left_Sound
+CheckNameEntryCharValid_Loop3:
+	CMPI.b	#8, Name_entry_key_repeat_counter.w
+	BLT.w	HandleNameEntryDPad_Return
+	CLR.b	Name_entry_key_repeat_counter.w
+	BRA.w	NameEntryCursor_Up_Sound
+CheckNameEntryCharValid_Loop4:
+	CMPI.b	#8, Name_entry_key_repeat_counter.w
+	BLT.w	HandleNameEntryDPad_Return
+	CLR.b	Name_entry_key_repeat_counter.w
+	BRA.w	NameEntryCursor_Down_Sound
+HandleNameEntryDPad_Return:
+	RTS
+
+; loc_000155F4
+SegaLogoScreen_Init:
+	ORI	#$0700, SR
+	JSR	DisableVDPDisplay
+	JSR	ClearVRAMPlaneA
+	JSR	ClearVRAMPlaneB
+	LEA	SegaLogoScreen_Init_Data, A0
+	ORI	#$0700, SR
+	MOVE.l	#$40000000, VDP_control_port
+	MOVEQ	#$0000001F, D7
+SegaLogoScreen_Init_Done:
+	MOVE.w	#0, VDP_data_port
+	DBF	D7, SegaLogoScreen_Init_Done
+	MOVE.l	#$46180003, D5
+	MOVE.w	#3, D7
+SegaLogoScreen_Init_Done2:
+	MOVE.l	D5, VDP_control_port
+	MOVE.w	#$000E, D6
+SegaLogoScreen_Init_Done3:
+	CLR.w	D0
+	MOVE.b	(A0)+, D0
+	ORI.w	#$8000, D0
+	ORI.w	#0, D0
+	ADDQ.w	#2, D0
+	MOVE.w	D0, VDP_data_port
+	DBF	D6, SegaLogoScreen_Init_Done3
+	ADDI.l	#$00800000, D5
+	DBF	D7, SegaLogoScreen_Init_Done2
+	ANDI	#$F8FF, SR
+	JSR	EnableDisplay
+	MOVE.w	#1, Palette_line_0_index.w
+	MOVE.l	#SegaLogoScreen_FadeIn, obj_tick_fn(A5)
+	JSR	LoadPalettesFromTable
+	RTS
+
+; loc_00015682
+SegaLogoScreen_FadeIn:
+	ADDQ.w	#1, Frame_delay_counter.w
+	BTST.b	#6, $00A10001
+	BNE.w	SegaLogoScreen_FadeIn_Loop
+	ANDI.w	#7, Frame_delay_counter.w
+	BNE.b	ProloguePaletteStep_Return
+	BRA.b	SegaLogoScreen_FadeIn_Loop2
+SegaLogoScreen_FadeIn_Loop:
+	ANDI.w	#3, Frame_delay_counter.w	
+	BNE.b	ProloguePaletteStep_Return	
+SegaLogoScreen_FadeIn_Loop2:
+	CMPI.w	#$0010, Palette_line_0_index.w
+	BLT.b	SegaLogoScreen_FadeIn_Loop3
+	MOVE.b	#FLAG_TRUE, Intro_animation_done.w
+	BRA.b	SegaLogoScreen_FadeIn_Loop4
+SegaLogoScreen_FadeIn_Loop3:
+	ADDQ.w	#1, Palette_line_0_index.w
+SegaLogoScreen_FadeIn_Loop4:
+	JSR	LoadPalettesFromTable
+; loc_000156BE
+ProloguePaletteStep_Return:
+	RTS
+
+; loc_000156C0
+PrologueScreen_Init:
+	JSR	DisableVDPDisplay
+	JSR	ClearVRAMPlaneA
+	JSR	ClearVRAMPlaneB
+	MOVE.w	#PALETTE_IDX_PROLOGUE_BG, Palette_line_0_fade_target.w
+	MOVE.w	#PALETTE_IDX_PROLOGUE_LINE1, Palette_line_1_fade_target.w
+	MOVE.w	#PALETTE_IDX_PROLOGUE_BG, Palette_line_2_fade_target.w
+	MOVE.w	#PALETTE_IDX_PROLOGUE_SCENE, Palette_line_3_fade_target.w
+	MOVE.w	#PALETTE_IDX_NAMEENTRY_GLOW1, Palette_line_0_fade_in_target.w
+	MOVE.w	#PALETTE_IDX_NAMEENTRY_BG, Palette_line_1_fade_in_target.w
+	MOVE.w	#PALETTE_IDX_NAMEENTRY_BG, Palette_line_2_fade_in_target.w
+	MOVE.w	#PALETTE_IDX_NAMEENTRY_BG, Palette_line_3_fade_in_target.w
+	CLR.w	Prologue_state.w
+	BSR.w	DrawPrologueScene1and2
+	BSR.w	LoadPrologueFadeParams
+	MOVE.b	#6, Timer_seconds_bcd.w
+	JSR	EnableDisplay
+	MOVE.b	#SOUND_PROLOGUE_MUSIC, D0
+	JSR	QueueSoundEffect
+	MOVE.l	#PrologueStateDispatcher, obj_tick_fn(A5)
+	RTS
+
+LoadPrologueFadeParams:
+	LEA	PrologueFadeParamData, A0
+	MOVE.w	Prologue_state.w, D0
+	ADD.w	D0, D0
+	LEA	(A0,D0.w), A0
+	MOVE.b	(A0)+, D1
+	CMPI.b	#1, D1
+	BNE.b	LoadPrologueFadeParams_Loop
+	MOVE.b	(A0), Fade_in_lines_mask.w
+	BRA.b	LoadPrologueFadeParams_Return
+LoadPrologueFadeParams_Loop:
+	CMPI.b	#2, D1
+	BNE.b	LoadPrologueFadeParams_Loop2
+	MOVE.b	(A0), Fade_out_lines_mask.w
+	BRA.b	LoadPrologueFadeParams_Return
+LoadPrologueFadeParams_Loop2:
+	CMPI.b	#3, D1
+	BNE.b	LoadPrologueFadeParams_Return
+	MOVE.b	(A0), Palette_fade_in_mask.w
+; loc_00015762
+LoadPrologueFadeParams_Return:
+	RTS
+
+; loc_00015764
+PrologueStateDispatcher:
+	MOVE.w	Prologue_state.w, D0
+	ADD.w	D0, D0
+	ADD.w	D0, D0
+	LEA	PrologueStateJumpTable, A0
+	JSR	(A0,D0.w)
+	RTS
+
+; loc_00015778
+PrologueStateJumpTable:
+	BRA.w	PrologueWaitAndAdvanceState
+	BRA.w	PrologueWaitAndAdvanceState
+	BRA.w	PrologueTick_WaitTimer
+	BRA.w	PrologueTick_WaitFadeIn
+	BRA.w	PrologueWaitAndAdvanceState
+	BRA.w	PrologueWaitAndAdvanceState
+	BRA.w	PrologueTick_WaitTimer
+	BRA.w	PrologueTick_WaitFadeIn
+	BRA.w	PrologueTick_WaitFadeOut
+	BRA.w	PrologueStateJumpTable_Loop
+	BRA.w	PrologueWaitAndAdvanceState
+	BRA.w	PrologueWaitAndAdvanceState
+	BRA.w	PrologueTick_WaitTimer
+	BRA.w	PrologueTick_WaitFadeIn
+	BRA.w	PrologueTick_WaitFadeOut
+	BRA.w	DebugMaxStats_Return_Loop
+	BRA.w	PrologueWaitAndAdvanceState
+	BRA.w	PrologueWaitAndAdvanceState
+	BRA.w	PrologueTick_WaitTimer
+	BRA.w	PrologueTick_WaitFadeIn
+	BRA.w	PrologueWaitAndAdvanceState
+	BRA.w	PrologueWaitAndAdvanceState
+	BRA.w	PrologueTick_WaitTimer
+	BRA.w	PrologueTick_WaitFadeIn
+	BRA.w	PrologueTick_WaitFadeOut
+	BRA.w	DebugMaxStats_Return_Loop2
+	BRA.w	PrologueWaitAndAdvanceState
+	BRA.w	PrologueTick_WaitTimer
+	BRA.w	PrologueTick_WaitFadeOut
+	BRA.w	PrologueTick_WaitTimer_Loop
+PrologueStateJumpTable_Loop:
+	JSR	ClearVRAMPlaneA
+	JSR	ClearVRAMPlaneB
+	BSR.w	DrawPrologueScene3
+	MOVE.w	#PALETTE_IDX_PROLOGUE_BG, Palette_line_0_fade_target.w
+	MOVE.w	#PALETTE_IDX_PROLOGUE_LINE1, Palette_line_1_fade_target.w
+	MOVE.w	#PALETTE_IDX_PROLOGUE_LINE2, Palette_line_2_fade_target.w
+	MOVE.w	#PALETTE_IDX_PROLOGUE_SCENE, Palette_line_3_fade_target.w
+	ADDQ.w	#1, Prologue_state.w
+	BSR.w	LoadPrologueFadeParams
+	CMPI.l	#$8F84DE76, Player_name.w
+	BNE.b	DebugMaxStats_Return
+	MOVE.b	Controller_2_current_state.w, D0	
+	MOVE.b	D0, D1	
+	ANDI.w	#1, D0	
+	BEQ.b	DebugMaxStats_Return	
+	ANDI.w	#$0020, D1	
+	BEQ.b	PrologueStateJumpTable_Loop2	
+	MOVE.w	#$0023, D7	
+	LEA	Event_triggers_start.w, A0	
+PrologueStateJumpTable_Loop_Done:
+	MOVE.l	#$FFFFFFFF, (A0)+ ; Fill all event triggers
+	DBF	D7, PrologueStateJumpTable_Loop_Done	
+PrologueStateJumpTable_Loop2:
+	LEA	Towns_visited.w, A0	
+	MOVE.w	#TOWN_HASTINGS1, D7	
+PrologueStateJumpTable_Loop2_Done: ; god mode?
+	MOVE.b	#$FF, (A0)+	
+	DBF	D7, PrologueStateJumpTable_Loop2_Done	
+	MOVE.w	#1, Possessed_magics_length.w	
+	LEA	Possessed_magics_list.w, A0	
+	MOVE.w	#((MAGIC_TYPE_FIELD<<8)|MAGIC_ARIES), (A0)	
+	MOVE.w	#MAX_PLAYER_MMP, Player_mmp.w	
+	MOVE.w	#MAX_PLAYER_MHP, Player_mhp.w	
+	MOVE.w	#MAX_PLAYER_AC, Player_ac.w	
+	MOVE.w	#MAX_PLAYER_STR, Player_str.w	
+	MOVE.w	#MAX_PLAYER_DEX, Player_dex.w	
+	MOVE.w	#MAX_PLAYER_INT, Player_int.w	
+	MOVE.w	#MAX_PLAYER_LUK, Player_luk.w	
+	MOVE.l	#MAX_PLAYER_KIMS, Player_kims.w	
+; loc_0001589E
+DebugMaxStats_Return:
+	RTS
+
+DebugMaxStats_Return_Loop:
+	JSR	ClearVRAMPlaneA
+	JSR	ClearVRAMPlaneB
+	BSR.w	DrawPrologueScene4and5
+	MOVE.w	#PALETTE_IDX_PROLOGUE_BG, Palette_line_0_fade_target.w
+	MOVE.w	#PALETTE_IDX_PROLOGUE_SCENE, Palette_line_1_fade_target.w
+	MOVE.w	#PALETTE_IDX_PROLOGUE_BG, Palette_line_2_fade_target.w
+	MOVE.w	#PALETTE_IDX_PROLOGUE_SCENE, Palette_line_3_fade_target.w
+	ADDQ.w	#1, Prologue_state.w
+	BSR.w	LoadPrologueFadeParams
+	RTS
+
+DebugMaxStats_Return_Loop2:
+	MOVE.b	#SOUND_LEVEL_UP, D0
+	JSR	QueueSoundEffect
+	JSR	ClearVRAMPlaneA
+	JSR	ClearVRAMPlaneB
+	BSR.w	DrawPrologueScene6
+	MOVE.w	#PALETTE_IDX_PROLOGUE_BG, Palette_line_0_fade_target.w
+	MOVE.w	#PALETTE_IDX_PROLOGUE_SCENE, Palette_line_1_fade_target.w
+	MOVE.w	#PALETTE_IDX_PROLOGUE_BG, Palette_line_2_fade_target.w
+	MOVE.w	#PALETTE_IDX_PROLOGUE_SCENE, Palette_line_3_fade_target.w
+	ADDQ.w	#1, Prologue_state.w
+	BSR.w	LoadPrologueFadeParams
+	RTS
+
+PrologueTick_WaitFadeOut:
+	TST.b	Fade_out_lines_mask.w
+	BNE.b	PrologueTick_WaitFadeOut_Loop
+	ADDQ.w	#1, Prologue_state.w
+	BSR.w	LoadPrologueFadeParams
+PrologueTick_WaitFadeOut_Loop:
+	RTS
+
+; loc_0001591E
+PrologueWaitAndAdvanceState:
+	TST.b	Fade_in_lines_mask.w
+	BNE.b	PrologueWaitAndAdvanceState_Loop
+	MOVE.b	#6, Timer_seconds_bcd.w
+	ADDQ.w	#1, Prologue_state.w
+	BSR.w	LoadPrologueFadeParams
+PrologueWaitAndAdvanceState_Loop:
+	RTS
+
+PrologueTick_WaitFadeIn:
+	TST.b	Palette_fade_in_mask.w
+	BNE.b	PrologueTick_WaitFadeIn_Loop
+	ADDQ.w	#1, Prologue_state.w
+	BSR.w	LoadPrologueFadeParams
+PrologueTick_WaitFadeIn_Loop:
+	RTS
+
+PrologueTick_WaitTimer:
+	JSR	DecrementTimerBCD
+	BEQ.b	PrologueTick_WaitTimer_Loop2
+	RTS
+
+PrologueTick_WaitTimer_Loop2:
+	ADDQ.w	#1, Prologue_state.w
+	BRA.w	LoadPrologueFadeParams
+PrologueTick_WaitTimer_Loop:
+	MOVE.b	#FLAG_TRUE, Prologue_complete_flag.w
+	MOVE.l	#Prologue_EmptyCallback, obj_tick_fn(A5)
+	RTS
+
+Prologue_EmptyCallback:
+	RTS
+
+DrawPrologueScene1and2:
+	ORI	#$0700, SR
+	MOVE.l	#$60B00003, D5
+	MOVE.w	#$A300, D4
+	BSR.w	DrawTilemapBlock_15x12
+	MOVE.l	#$61320003, D5
+	LEA	DrawPrologueScene1and2_Data, A0
+	MOVE.w	#$A080, D4
+	BSR.w	DrawTilemapBlock_13x10
+	MOVE.l	#$61060003, D5
+	LEA	Prologue1Str, A0
+	MOVE.w	#$84C0, D4
+	BSR.w	DrawVerticalText
+	MOVE.l	#$67840003, D5
+	MOVE.w	#$E300, D4
+	BSR.w	DrawTilemapBlock_15x12
+	MOVE.l	#$68060003, D5
+	LEA	DrawPrologueScene1and2_Data2, A0
+	MOVE.w	#$E100, D4
+	BSR.w	DrawTilemapBlock_13x10
+	MOVE.l	#$67A40003, D5
+	LEA	Prologue2Str, A0
+	MOVE.w	#$C4C0, D4
+	BSR.w	DrawVerticalText
+	ANDI	#$F8FF, SR
+	RTS
+
