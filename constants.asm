@@ -1660,6 +1660,14 @@ obj_kim_reward      equ $3E   ; word: gold (kims) awarded on kill (enemy only)
 ; DemonBoss (lines ~15990–16530) exclusive fields:
 demon_ai_state      equ $42   ; byte: AI phase index (0–5), jump-table index into BossAiDemonJumpTable
 demon_wing_flags    equ $1D   ; byte: wing-fire capability bits (bit0=left, bit1=right, bit2=fire-along-X)
+; Body-segment initial Y-coordinate slots — set at spawn, used to position the
+; 6 worm-body child objects via SpawnChildObjects.  Offsets $44–$4E (words).
+demon_seg0_y        equ $44   ; word: body segment 0 initial Y world coord
+demon_seg1_y        equ $46   ; word: body segment 1 initial Y world coord
+demon_seg2_y        equ $48   ; word: body segment 2 initial Y world coord
+demon_seg3_y        equ $4A   ; word: body segment 3 initial Y world coord
+demon_seg4_y        equ $4C   ; word: body segment 4 initial Y world coord
+demon_seg5_y        equ $4E   ; word: body segment 5 initial Y world coord
 ;
 ; Dual-use — DemonBoss fire-direction (0/1/2) AND OrbitBoss charge-dir flag ($FF/$00)
 ; Defined here for documentation; NOT globally replaced due to conflicting semantics.
