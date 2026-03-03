@@ -1,7 +1,40 @@
-; ===========================================================================
-; Sound System
-; Town tileset pointers, Z80 driver data, sound driver code, LFO tables, FM frequency table, DAC samples
-; ===========================================================================
+;==============================================================
+; SOUND SYSTEM
+; Sword of Vermilion music/SFX driver for YM2612 (FM) and PSG.
+;
+; Responsibilities:
+;   - Sound channel state machine tick (UpdateBattleEntities)
+;   - Per-channel FM and PSG note/script sequencing
+;   - Sound script command dispatcher (30 script commands)
+;   - YM2612 register write with Z80 bus arbitration
+;   - DAC sample upload to Z80 RAM
+;   - LFO vibrato tables and FM frequency table
+;   - Fade-out and global volume control
+;   - Command queue processing (play/stop music and SFX)
+;
+; Channel struct: each FM/PSG channel is $30 bytes (fmch_*).
+;   A3 = pointer to current channel's struct during processing.
+;   A4 = current sound script read pointer (reconstructed from
+;        fmch_script_ptr_hi/lo + base $00093C00 each tick).
+;
+; RAM layout (key addresses):
+;   $FFF400  Sound_cmd_queue   - pending sound command byte
+;   $FFF401  Sound_tempo_ctr   - tempo tick countdown
+;   $FFF402  Sound_tempo_reload- tempo reload value
+;   $FFF41C  Sound_fade_volume - fade-out volume level ($00=off)
+;   $FFF41D  Sound_fade_speed  - fade-out tick rate
+;   $FFF421  Sound_part_flag   - FM bank selector ($00=bank1, $80=bank2)
+;   $FFF430  FM channel 0 struct (bank 1, channels 0-8, stride $30)
+;   $FFF5E0  FM channel 0 struct (bank 2, channels 0-3, stride $30)
+;   $FFF520  DAC/special channel struct
+;==============================================================
+
+;==============================================================
+; GRAPHICS DATA — TOWN TILESETS AND Z80 DRIVER
+; Tile index lookup tables and Z80 sound driver binary data
+; embedded at fixed ROM addresses. Not directly executed by
+; the 68000; the Z80 driver data is copied to Z80 RAM at init.
+;==============================================================
 TownTilesetPtrs_Gfx_8FEE6:
 	dc.b	$00, $00 
 	dc.b	$00, $00, $00, $00, $00, $00, $00, $01, $00, $02, $00, $03, $00, $04, $00, $05, $00, $06, $00, $07, $00, $08, $00, $09, $00, $0A, $00, $07, $00, $08, $00, $0B 
@@ -92,6 +125,14 @@ TownTilesetPtrs_Gfx_9239A:
 	dc.b	$00, $3E, $00, $3E, $01, $37, $01, $37, $00, $3E, $01, $35, $01, $36, $00, $00, $00, $00, $01, $06, $00, $00, $00, $00, $00, $00, $00, $00, $01, $06, $01, $01 
 	dc.b	$00, $00, $00, $00, $00, $00, $00, $00, $01, $01, $00, $00, $00, $00, $00, $F0, $00, $EE, $00, $00, $00, $00, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF 
 	dc.b	$FF, $FF, $FF, $FF 
+;==============================================================
+; MAIN SOUND UPDATE ENTRY
+; Called once per frame to tick the entire sound driver.
+;==============================================================
+
+; UpdateBattleEntities
+; Top-level sound driver tick. Processes command queue, tempo,
+; fade-out, then steps all FM and PSG sound channels.
 UpdateBattleEntities:
 	LEA	$00FFF430, A3
 	BSR.w	ProcessSound_CommandQueue
@@ -99,7 +140,11 @@ UpdateBattleEntities:
 	BSR.w	ProcessSound_FadeOut
 	BSR.w	ProcessFMSoundChannels
 	RTS
-	
+
+; ProcessFMSoundChannels
+; Iterates over all 13 FM/PSG channels in two banks and calls
+; ProcessSoundChannel_FM for each active channel (bit 7 set).
+; Bank 1: 9 channels at $FFF430, Bank 2: 4 channels at $FFF5E0.
 ProcessFMSoundChannels:
 	MOVE.b	#0, $00FFF421
 	MOVE.w	#8, D6
@@ -126,7 +171,19 @@ ProcessFMSoundChannels_Loop2:
 	MOVE.l	(A7)+, D6
 	DBF	D6, ProcessFMSoundChannels_Loop_Done
 	RTS
-	
+
+;==============================================================
+; FM CHANNEL PROCESSOR
+; Per-channel state machine: reads note/script data and drives
+; YM2612 register writes and DAC output each tick.
+;==============================================================
+
+; ProcessSoundChannel_FM
+; Dispatches channel processing based on channel_id flags.
+; Bit 7 of channel_id set: use FM data sequencer path.
+; Bit 4 of channel_id set: use pitch-slide path.
+; Otherwise: read next script byte and process note/command.
+; Inputs: A3 = channel struct pointer
 ProcessSoundChannel_FM:
 	MOVE.b	fmch_channel_id(A3), D7
 	BPL.w	ProcessSoundChannel_FM_Loop
@@ -181,7 +238,18 @@ SoundChannel_NoteLoop_Loop5:
 	MOVE.w	#0, Z80_bus_request
 WriteSoundRegister_Return:
 	RTS
-	
+
+;==============================================================
+; PSG / NOTE HELPERS
+; Handle note frequency, duration, pitch modulation (vibrato
+; and pitch-bend), and PSG hardware frequency writes.
+;==============================================================
+
+; SetSoundNoteAndDuration
+; Decodes a note byte from the script. Negative (bit 7 set)
+; means the high 7 bits are a frequency override; positive is
+; a duration value. Calls UpdateSoundChannelPitch afterwards.
+; Inputs: D5 = note byte, A3 = channel struct, A4 = script ptr
 SetSoundNoteAndDuration:
 	TST.b	D5
 	BPL.b	SetSoundNote_Positive
@@ -282,6 +350,10 @@ LoadNextSoundNote_WithPitchSlide_Loop3:
 	BSR.w	UpdateSoundChannelPitch
 	RTS
 	
+; ApplyPSG_PitchBend
+; Adds or subtracts fmch_pitch_slide from note_freq each tick
+; to produce a linear pitch-bend effect on PSG channels.
+; Inputs: A3 = channel struct
 ApplyPSG_PitchBend:
 	MOVE.w	#0, D0
 	MOVE.w	fmch_note_freq(A3), D1
@@ -297,6 +369,11 @@ ApplyPSG_PitchBend_Loop:
 	MOVE.w	D1, fmch_note_freq(A3)
 	RTS
 	
+; SetSoundNoteDuration
+; Stores D5 (note duration byte) into fmch_note_duration.
+; If the double-tempo flag (bit 1 of tempo_flags) is set,
+; duration is shifted left 1 (doubled).
+; Inputs: D5 = duration, A3 = channel struct
 SetSoundNoteDuration:
 	ANDI.w	#$00FF, D5
 	BTST.b	#1, fmch_tempo_flags(A3)
@@ -306,6 +383,11 @@ SetSoundNoteDuration_Loop:
 	MOVE.w	D5, fmch_note_duration(A3)
 	RTS
 	
+; UpdateSoundChannelPitch
+; Copies note_duration to tick_ctr and saves the current script
+; pointer back into the channel struct (hi/lo byte pair).
+; Resets LFO depth and phase if vibrato is not active.
+; Inputs: A3 = channel struct, A4 = script pointer
 UpdateSoundChannelPitch:
 	MOVE.w	fmch_note_duration(A3), fmch_tick_ctr(A3)
 	MOVE.l	A4, D5
@@ -323,11 +405,21 @@ UpdateSoundChannelPitch:
 WaitPSG_ChannelFree_Return:
 	RTS
 	
+; ApplyPSG_PitchModulation
+; Checks whether vibrato is active (vibrato_idx != 0) and if so
+; falls through to ProcessPSGChannelNoteSequence. Otherwise RTS.
+; Inputs: A3 = channel struct
 ApplyPSG_PitchModulation:
 	MOVE.b	fmch_vibrato_idx(A3), D7
 	BNE.w	ProcessPSGChannelNoteSequence
 	RTS
 	
+; ProcessPSGChannelNoteSequence
+; Applies LFO vibrato to the channel's note frequency and writes
+; the result to the PSG/YM2612 via WriteYM2612Register.
+; Reads LFO waveform from the table pointed to by vibrato_idx.
+; Special bytes $80/$81/$82/$83/$84 control loop/jump/bend.
+; Inputs: A3 = channel struct
 ProcessPSGChannelNoteSequence:
 	MOVE.w	fmch_note_freq(A3), D4
 	BEQ.w	PSGPitch_WriteFrequency_Return
@@ -397,7 +489,19 @@ PSGPitch_WriteFrequency:
 	BSR.w	WriteYM2612Register
 PSGPitch_WriteFrequency_Return:
 	RTS
-	
+
+;==============================================================
+; SOUND SCRIPT POINTER AND COMMAND DISPATCHER
+; Rebuilds the script read pointer from the channel struct and
+; dispatches script command bytes ($E0-$FF) via jump table.
+;==============================================================
+
+; LoadSoundScriptPointer
+; Reconstructs A4 (script read pointer) from fmch_script_ptr_hi
+; and fmch_script_ptr_lo stored in the channel struct, adding
+; the base offset $00093C00.
+; Inputs: A3 = channel struct
+; Outputs: A4 = current script pointer
 LoadSoundScriptPointer:
 	MOVEA.l	#0, A4
 	MOVEQ	#0, D5
@@ -411,6 +515,12 @@ LoadSoundScriptPointer:
 	ADDA.l	#$00093C00, A4
 	RTS
 	
+; ProcessSoundScriptCommand
+; Dispatches a sound script command byte to its handler.
+; Subtracts $E0 from D5, uses result as PC-relative jump table
+; index (4 bytes per entry). Reads next byte into D5 on return.
+; Inputs: D5 = command byte (>= SOUND_SCRIPT_CMD_THRESHOLD=$E0)
+; Outputs: D5 = next script byte after the command
 ProcessSoundScriptCommand:
 	SUBI.b	#$E0, D5
 	ANDI.l	#$000000FF, D5
@@ -419,6 +529,15 @@ ProcessSoundScriptCommand:
 	MOVE.b	(A4)+, D5
 	RTS
 	
+; SoundScriptCommandJumpTable
+; 31 BRA.w entries (4 bytes each). Index = command - $E0.
+; Commands $E0-$E3: NOP. $E4: set tempo. $E5: enable DAC.
+; $E6: disable DAC. $E7: NOP. $E8: set echo flag. $E9: set arpegio.
+; $EA: set volume (absolute). $EB/$EC/$ED: set volume (additive).
+; $EE: jump to offset. $EF/$F0/$F1/$F2/$F3/$F4: loop/call/ret.
+; $F5: set tempo flags. $F6: transpose. $F7: set pitch-slide mode.
+; $F8: delta volume. $F9/$FA/$FB: pan left/right/center.
+; See individual handlers below.
 SoundScriptCommandJumpTable:
 	BRA.w	SoundScript_NopCommand	
 	BRA.w	SoundScript_NopCommand	
@@ -697,6 +816,12 @@ SoundCmd_JumpToOffset_Loop10:
 	MOVE.b	D1, fmch_pan_stereo(A3)
 	MOVE.b	#$B4, D0
 	BRA.w	WriteYM2612Register
+; SetPSGNoteFrequency
+; Looks up a 16-bit PSG frequency word from SetPSGNoteFrequency_Loop2_Data
+; for the note index in D5 (after subtracting $80 and applying
+; transpose) and stores it in fmch_note_freq.
+; D5 = $80 alone is a rest: sets bit 1 of fmch_flags.
+; Inputs: D5 = note byte (bit 7 set = PSG note), A3 = channel struct
 SetPSGNoteFrequency:
 	SUBI.b	#$80, D5
 	BNE.w	SetPSGNoteFrequency_Loop
@@ -711,6 +836,16 @@ SetPSGNoteFrequency_Loop2:
 	MOVE.w	(A0,D5.w), fmch_note_freq(A3)
 	RTS
 	
+;==============================================================
+; SOUND COMMAND QUEUE, TEMPO, AND FADE-OUT
+; Handles top-level commands from the game (play/stop music),
+; per-frame tempo countdown, and global fade-out processing.
+;==============================================================
+
+; ProcessSound_CommandQueue
+; Reads the pending sound command byte from $FFF404.
+; Routes to music start, SFX start, or stop handlers based on
+; the command value range. Clears the queue byte when done.
 ProcessSound_CommandQueue:
 	CLR.w	D0
 	BTST.b	#7, $00FFF404
@@ -830,12 +965,20 @@ SoundInit_Done:
 	MOVE.b	#$80, $00FFF404
 	RTS
 	
+; GetSoundDataPointer
+; Looks up a 16-bit relative offset from table at A0 indexed by
+; D0, adds base $00093C00, and returns the pointer in A0.
+; Inputs: A0 = base table, D0 = index
+; Outputs: A0 = resolved pointer
 GetSoundDataPointer:
 	LSL.w	#1, D0
 	MOVEA.w	(A0,D0.w), A0
 	ADDA.l	#$00093C00, A0
 	RTS
 	
+; StopAllActiveSounds
+; Disables DAC, silences all FM channels (key-off all ops),
+; zeros sound RAM $FFF400-$FFF59B, and mutes all PSG channels.
 StopAllActiveSounds:
 	MOVE.b	#$2B, D0
 	MOVE.b	#0, D1
@@ -851,6 +994,10 @@ StopAllActiveSounds_Done:
 	BSR.w	MutePSG_AllChannels
 	RTS
 	
+; ProcessSound_TempoCounter
+; Decrements the tempo tick counter ($FFF401). When it reaches
+; zero, reloads from $FFF402 and increments tick_ctr on all 9
+; active bank-1 channels to advance them one script step.
 ProcessSound_TempoCounter:
 	LEA	$00FFF402, A0
 	LEA	$00FFF401, A1
@@ -874,6 +1021,11 @@ SoundObjTick_Return_Loop:
 	MOVE.b	#0, $00FFF520
 	RTS
 	
+; ProcessSound_FadeOut
+; Drives the global fade-out effect. Each tick it decrements
+; the fade speed counter ($FFF41D); when expired, increments
+; volume attenuation on all FM channels by 1 step. When fully
+; faded ($FFF41C reaches 0), calls StopAllActiveSounds.
 ProcessSound_FadeOut:
 	MOVEQ	#0, D0
 	MOVE.b	$00FFF41C, D0
@@ -898,6 +1050,11 @@ ProcessSound_FadeOut_Loop2_Done:
 ProcessSound_FadeOut_Loop:
 	RTS
 	
+; InitSoundChannel_FM
+; Re-initialises a bank-2 FM channel using the instrument data
+; pointed to by A0. Temporarily sets A3 to the bank-1 mirror
+; struct, loads FM algorithm data, then restores A3.
+; Inputs: A3 = bank-2 channel struct, A0 = instrument data ptr
 InitSoundChannel_FM:
 	MOVEA.l	A3, A6
 	SUBA.l	#$00000150, A3
@@ -913,6 +1070,9 @@ InitSoundChannel_FM_Loop:
 	MOVEA.l	A6, A3
 	RTS
 	
+; InitSoundChannel_FM_DeadCode
+; Unreachable dead code: would key-off 4 operators and loop,
+; but no code path jumps here. Preserved as-is.
 InitSoundChannel_FM_DeadCode:
 	MOVE.b	#$80, D0
 	MOVE.b	#$0F, D1
@@ -922,6 +1082,10 @@ WriteYM2612_RegisterLoop:
 	ADDQ.w	#4, D0
 	DBF	D7, WriteYM2612_RegisterLoop
 	RTS
+; InitFM_ChannelsToSilence
+; Keys off all 7 FM channels, then writes a full set of
+; register values to silence all 6 YM2612 FM channels using
+; the data table at InitFM_ChannelsToSilence_Done2_Data.
 InitFM_ChannelsToSilence:
 	MOVEQ	#6, D6
 	MOVE.b	#$28, D0
@@ -941,6 +1105,9 @@ InitFM_ChannelsToSilence_Done2:
 	
 InitFM_ChannelsToSilence_Done2_Data:
 	dc.b	$F8, $3F, $3F, $3F, $3F, $00, $00, $00, $00, $1F, $1F, $1F, $1F, $1F, $1F, $1F, $1F, $1F, $1F, $1F, $1F, $FF, $FF, $FF, $FF, $00 
+; MutePSG_AllChannels
+; Sets maximum attenuation ($F) on all 4 PSG channels by
+; writing the latch+attenuation bytes to the PSG data port.
 MutePSG_AllChannels:
 	MOVE.b	#$9F, $00C00011
 	MOVE.b	#$BF, $00C00011
@@ -949,6 +1116,11 @@ MutePSG_AllChannels:
 	MOVE.b	#SOUND_LEVEL_UP, $00C00011
 	RTS
 	
+; LoadFM_AlgorithmData
+; Copies 5 bytes of instrument/algorithm data from (A0) into
+; the channel struct at fmch_op_algo..fmch_op4_tl (offsets
+; $1C-$20), then falls through to WriteFM_ChannelRegisters.
+; Inputs: A0 = instrument data, A3 = channel struct
 LoadFM_AlgorithmData:
 	MOVE.w	#4, D6
 	CLR.w	D0
@@ -957,6 +1129,12 @@ LoadFM_AlgorithmData_Done:
 	ADDQ.b	#1, D0
 	DBF	D6, LoadFM_AlgorithmData_Done
 	SUBQ.w	#5, A0
+; WriteFM_ChannelRegisters
+; Writes all 25 YM2612 operator/channel registers for one FM
+; channel using the register address table WriteFM_ChannelRegisters_Data,
+; then writes the stereo pan register ($B4) and calls
+; UpdateFM_TotalLevelRegisters for operator volume.
+; Inputs: A0 = register data, A3 = channel struct
 WriteFM_ChannelRegisters:
 	MOVEA.l	#WriteFM_ChannelRegisters_Data, A2
 	MOVE.w	#$0018, D6
@@ -976,6 +1154,12 @@ WriteFM_ChannelRegisters_Loop:
 	
 WriteFM_ChannelRegisters_Data:
 	dc.b	$B0, $40, $48, $44, $4C, $30, $38, $34, $3C, $50, $58, $54, $5C, $60, $68, $64, $6C, $70, $78, $74, $7C, $80, $88, $84, $8C, $00 
+; UpdateFM_TotalLevelRegisters
+; Writes the Total Level (TL) registers for the operators that
+; produce output according to the FM algorithm. Which operators
+; carry output varies by algorithm (0-7); the jump table at
+; UpdateFM_OperatorRegisters dispatches accordingly.
+; Inputs: D3 = global volume offset, A3 = channel struct
 UpdateFM_TotalLevelRegisters:
 	BTST.b	#7, fmch_channel_id(A3)
 	BNE.w	UpdateFM_WriteOperator4_Loop
@@ -1015,6 +1199,10 @@ UpdateFM_WriteOperator4:
 UpdateFM_WriteOperator4_Loop:
 	RTS
 	
+; UpdateYM2612KeyOff
+; Sends a key-off command (reg $28) for this channel unless
+; bits 1 or 2 of fmch_flags are set (muted/suppressed).
+; Inputs: A3 = channel struct
 UpdateYM2612KeyOff:
 	MOVE.b	fmch_flags(A3), D2
 	ANDI.b	#6, D2
@@ -1026,6 +1214,10 @@ UpdateYM2612KeyOff:
 UpdateYM2612KeyOff_Loop:
 	RTS
 	
+; WriteFMChannelRegisters
+; Sends a key-on command (reg $28) for this channel unless
+; bits 1 or 2 of fmch_flags are set (muted/suppressed).
+; Inputs: A3 = channel struct
 WriteFMChannelRegisters:
 	MOVE.b	fmch_flags(A3), D2
 	ANDI.b	#6, D2
@@ -1036,6 +1228,17 @@ WriteFMChannelRegisters:
 WriteFMChannelRegisters_Loop:
 	RTS
 	
+;==============================================================
+; YM2612 / FM HARDWARE ACCESS
+; Low-level register writes with Z80 bus arbitration and busy
+; polling. Also handles PSG note frequency table writes.
+;==============================================================
+
+; WriteYM2612Register
+; Writes one YM2612 register. Selects port A ($A04000/$A04001)
+; or port B ($A04002/$A04003) based on channel_id bit 2.
+; Adds channel index (bits 0-1 of channel_id) to register addr.
+; Inputs: D0 = register address, D1 = value, A3 = channel struct
 WriteYM2612Register:
 	BTST.b	#2, fmch_flags(A3)
 	BNE.w	WriteYM2612Register_Part1_Loop
@@ -1067,6 +1270,11 @@ WriteYM2612Register_Part1_Loop2:
 WriteYM2612Register_Part1_Loop:
 	RTS
 	
+; WaitYM2612Ready
+; Acquires the Z80 bus (writes $0100 to Z80_bus_request) then
+; polls until the bus grant bit clears. Also polls the YM2612
+; busy flag (bit 7 of $A01FFD); if busy, releases bus, waits,
+; and retries. Returns with Z80 bus still held.
 WaitYM2612Ready:
 	MOVE.w	#$0100, Z80_bus_request
 WaitYM2612Ready_Done:
@@ -1091,6 +1299,20 @@ SetPSGNoteFrequency_Loop2_Data:
 	dc.b	$2A, $61, $2A, $83, $2A, $A9, $2A, $D5, $2A, $FD, $2B, $2A, $2B, $5C, $2B, $90, $2B, $C6, $2B, $FB, $2C, $3C, $2C, $7B, $32, $61, $32, $83, $32, $A9, $32, $D4 
 	dc.b	$32, $FC, $33, $2A, $33, $5C, $33, $90, $33, $C9, $34, $03, $34, $33, $34, $7B, $3A, $5D, $3A, $83, $3A, $AA, $3A, $D3, $3A, $FD, $3B, $2A, $3B, $5C, $3B, $8E 
 	dc.b	$3B, $C5, $3C, $01, $3C, $3B, $3C, $7C 
+
+;==============================================================
+; FM CHANNEL DATA SEQUENCER
+; Secondary channel processing path for FM channels with the
+; data-sequencer flag set (bit 7 of channel_id). Handles
+; FM pitch-bend, LFO vibrato, arpeggio, and key-on/off.
+;==============================================================
+
+; ProcessSoundChannel_FM_Data
+; Entry for FM channels using the data sequencer (bit 7 of
+; channel_id is set). Counts down tick_ctr; when expired,
+; loads and processes the next script note. Otherwise applies
+; pitch-bend and PSG/FM note output each frame.
+; Inputs: A3 = channel struct
 ProcessSoundChannel_FM_Data:
 	BTST.b	#5, fmch_flags(A3)
 	BNE.w	WaitYM2612Ready_Loop2
@@ -1121,6 +1343,11 @@ SoundChannel_PitchSlideEntry:
 	BSR.w	ProcessFMChannelNoteSequence	
 	BSR.w	ProcessSoundCommand	
 	dc.w	$4E75
+; ProcessSoundScriptNote
+; Loads the current script pointer, reads next byte, dispatches
+; command bytes. For note bytes: if negative sets frequency
+; override, if positive calls SetSoundNoteDuration.
+; Inputs: A3 = channel struct
 ProcessSoundScriptNote:
 	BSR.w	LoadSoundScriptPointer
 	MOVE.b	(A4)+, D5
@@ -1161,6 +1388,12 @@ SoundChannel_NoteLoop3_Loop:
 	BSR.w	UpdateSoundChannelPitch	
 	RTS
 	
+; SetSoundNoteFrequency
+; Sets the FM channel frequency from the note index in D5.
+; D5 = $80 is a rest (sets pitch_bend=$1F, bit 1 of flags).
+; Otherwise applies transpose, looks up fmch_note_freq from
+; SetSoundNoteFrequency_Loop2_Data (FM frequency table).
+; Inputs: D5 = note byte, A3 = channel struct
 SetSoundNoteFrequency:
 	SUBI.b	#$80, D5
 	BNE.w	SetSoundNoteFrequency_Loop
@@ -1178,6 +1411,11 @@ SetSoundNoteFrequency_Loop2:
 	MOVE.w	(A0,D5.w), fmch_note_freq(A3)
 	RTS
 	
+; ProcessFMChannelPitchBend
+; Entry point for per-frame pitch bend. Skips if pitch_bend is
+; $1F (rest) or $FF (no bend), or if vibrato_idx is 0.
+; Falls through to ProcessFMChannelNoteSequence.
+; Inputs: A3 = channel struct
 ProcessFMChannelPitchBend:
 	CMPI.b	#$1F, fmch_pitch_bend(A3)
 	BEQ.w	FMPitchBend_Return
@@ -1185,6 +1423,12 @@ ProcessFMChannelPitchBend:
 	BEQ.w	FMPitchBend_Return
 	MOVE.b	fmch_vibrato_idx(A3), D7
 	BEQ.w	FMPitchBend_Return
+; ProcessFMChannelNoteSequence
+; Applies LFO vibrato to the FM channel's note frequency and
+; writes the result to PSG output ($C00011).
+; Reads LFO waveform from the table pointed to by vibrato_idx.
+; Writes high nibble and low nibble to PSG frequency registers.
+; Inputs: A3 = channel struct
 ProcessFMChannelNoteSequence:
 	MOVE.w	fmch_note_freq(A3), D4
 	CLR.w	D0
@@ -1260,11 +1504,22 @@ FMPitch_WriteFrequency_Loop2:
 FMPitchBend_Return:
 	RTS
 	
+; ProcessSoundChannelSequencer
+; Resets arp_phase. If pitch_bend is $1F (rest), does key-on
+; via UpdateYM2612Channel_Loop. Otherwise runs arpeggio via
+; ProcessSoundCommand_Loop.
+; Inputs: A3 = channel struct
 ProcessSoundChannelSequencer:
 	MOVE.b	#0, fmch_arp_phase(A3)
 	CMPI.b	#$1F, fmch_pitch_bend(A3)
 	BEQ.w	UpdateYM2612Channel_Loop
 	BRA.w	ProcessSoundCommand_Loop
+; ProcessSoundCommand
+; Per-frame arpeggio processor. If arpeggio_idx is zero or
+; pitch_bend is a rest/no-bend value, returns immediately.
+; Otherwise steps through the arpeggio table and writes the
+; resulting volume+channel byte to PSG output ($C00011).
+; Inputs: A3 = channel struct
 ProcessSoundCommand:
 	MOVE.b	fmch_arpeggio_idx(A3), D7
 	BEQ.w	SoundCommand_Return
@@ -1321,6 +1576,10 @@ SoundCommand_Return_Loop2:
 SoundCommand_Return_Loop3:
 	MOVE.b	#0, D0	
 	BRA.b	FMArpeggio_ReadNote	
+; ApplyChannelPitchSlide
+; Adds or subtracts fmch_pitch_slide from fmch_note_freq to
+; produce a linear pitch-bend/glide for FM channels.
+; Inputs: A3 = channel struct
 ApplyChannelPitchSlide:
 	MOVE.w	#0, D0	
 	MOVE.w	fmch_note_freq(A3), D1	
@@ -1335,6 +1594,11 @@ ApplyChannelPitchSlide_Loop2:
 	MOVE.w	D1, fmch_note_freq(A3)	
 	RTS
 	
+; UpdateYM2612Channel
+; Sets the key-on bit (bit 1 of fmch_flags), sets pitch_bend
+; to $1F (rest), then falls through to UpdateYM2612Channel_Loop
+; to write the key-on/off byte to PSG port $C00011.
+; Inputs: A3 = channel struct
 UpdateYM2612Channel:
 	BSET.b	#1, fmch_flags(A3)
 	MOVE.b	#$1F, fmch_pitch_bend(A3)
@@ -1364,6 +1628,19 @@ SetSoundNoteFrequency_Loop2_Data:
 	dc.b	$00, $1F, $00, $1E, $00, $1B, $00, $1A, $00, $19, $00, $17, $00, $16, $00, $15, $00, $14, $00, $13, $00, $12, $00, $11, $00, $00, $00, $00, $00, $00 
 SoundCommand_JumpTable_Loop_Data:
 	dc.b	$03, $05, $0A, $10, $00, $00, $06, $02, $14, $0A, $08, $09, $26, $18, $05, $0A, $05, $06, $16, $03, $03, $0B, $0B, $05, $05, $07, $06, $08, $00, $00, $00, $00 
+
+;==============================================================
+; DATA TABLES — FREQUENCY, LFO, AND COMMAND DATA
+; Frequency lookup tables for FM and PSG notes, LFO vibrato
+; waveform tables, arpeggio patterns, and music command data.
+;==============================================================
+
+; SoundLFO_PointerTable
+; Table of 48 longword pointers to LFO waveform data.
+; Indexed by fmch_vibrato_idx - 1. Entries 5-9 point to
+; SoundLFO_NullEntry (no vibrato). Each waveform is a series
+; of signed byte pitch offsets terminated by control bytes
+; ($80=end, $81=loop, $83=set repeat count, $84/$85=pitch-bend).
 SoundLFO_PointerTable:
 	dc.l	SoundLFO_PointerTable_Entry_939CA
 	dc.l	SoundLFO_PointerTable_Entry_939DC
@@ -1683,6 +1960,19 @@ ProcessSoundCommand_Loop_Data:
 	dc.b	$03, $03, $02, $03, $02, $02, $01, $02, $01, $01, $81, $00, $04, $03, $02, $01, $00, $00, $00, $01, $01, $01, $01, $01, $02, $01, $02, $02, $81, $00, $03, $02 
 	dc.b	$01, $00, $00, $00, $00, $00, $81, $00, $0A, $0B, $0A, $0A, $09, $0A, $09, $09, $08, $09, $08, $08, $07, $08, $07, $07, $06, $07, $06, $06, $05, $06, $05, $05 
 	dc.b	$04, $05, $04, $04, $03, $04, $03, $03, $02, $03, $02, $02, $01, $02, $01, $01, $81, $00, $04, $03, $02, $01, $00, $00, $00, $00, $81, $00 
+
+;==============================================================
+; DAC SAMPLE TABLE AND PCM AUDIO DATA
+; Table of (start, end) pointer pairs for PCM samples uploaded
+; to Z80 RAM at $A00200. Index 0 is a null entry. Samples are
+; raw signed 8-bit PCM. Two entries use equ aliases pointing
+; into the middle of incbin blocks.
+;==============================================================
+
+; LoadDAC_SampleToZ80_Data
+; Pairs of (start, end) pointers for each DAC sample slot.
+; Entry 0: null ($00000000 start = no sample).
+; Entries 1-10: point to PCM data below or in incbin files.
 LoadDAC_SampleToZ80_Data:
 	dc.l	$00000000 
 	dc.l	LoadDAC_SampleToZ80_Data_Entry_99CC8
