@@ -2670,6 +2670,13 @@ BossOrbTick_Static:
 BossOrbTick_Return:
 	RTS
 
+; ======================================================================
+; Utility: Shared Helpers
+; ======================================================================
+
+; CalculateCircularPosition
+; Compute a world-space (X, Y) coordinate on a circle given a radius
+; and an angle index (0-15).  Used by boss orb positioning each frame.
 CalculateCircularPosition:
 	CLR.w	D5
 	MOVE.b	obj_attack_timer(A6), D5
@@ -2688,6 +2695,9 @@ CalculateCircularPosition:
 	MOVE.w	D0, obj_world_y(A6)
 	RTS
 
+; BossDeathReward_MultiSprite
+; Death reward handler for multi-sprite bosses.  Awards XP and kims,
+; decrements enemy count, and deactivates all child orb objects.
 BossDeathReward_MultiSprite:
 	MOVE.b	#SOUND_MAGIC_EFFECT, D0
 	JSR	QueueSoundEffect
@@ -2729,6 +2739,9 @@ EnemyPositionOffsetTable:
 	dc.w	16, 0 
 	dc.w	8, -8 
 
+; ApplyDamageToPlayer
+; Subtract enemy attack power from player HP; clamp to 0.  Plays the
+; player-hit sound and triggers screen-flash if HP reaches zero.
 ApplyDamageToPlayer:
 	MOVE.w	obj_max_hp(A5), D1
 	MOVE.w	Player_ac.w, D0

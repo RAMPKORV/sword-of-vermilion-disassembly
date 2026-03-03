@@ -1016,6 +1016,13 @@ WriteTilemapColumnToVDP_Loop4:
 	DBF	D5, WriteTilemapColumnToVDP_Done
 	RTS
 
+; === Palette Cycling ===
+
+; UpdatePaletteCycle
+; Steps the palette line 2 cycle index forward by one every 8 frames.
+; Detects the 0→1 transition of bit 3 in the frame counter (fires once every 8 frames).
+; Wraps the cycle step back to 0 after step 2 (3 steps total: 0, 1, 2).
+; If the resolved palette index is 0 the step resets and the base entry is used.
 UpdatePaletteCycle:
 	ADDQ.b	#1, Palette_cycle_frame_counter.w
 	MOVE.b	Palette_cycle_frame_counter.w, D0
@@ -1045,6 +1052,13 @@ UpdatePaletteCycle_Loop2:
 TownPaletteCycle_Return:
 	RTS
 
+; === Town Palette Config Data Tables ===
+
+; TownPaletteConfigTable
+; 8 entries, one per town. Each entry is variable-length but pairs of words:
+;   word 0: palette line 1 index (tile graphics palette)
+;   word 1: palette line 2 base index (primary NPC/object palette)
+;   words 2+: palette line 2 cycle indices (used by UpdatePaletteCycle; $0000 = end of cycle)
 TownPaletteConfigTable:
 	dc.w	$0015
 	dc.w	$0016
@@ -1066,6 +1080,8 @@ TownPaletteConfigTable:
 	dc.w	$0023
 	dc.w	$001E
 	dc.b	$00, $1F, $00, $20 
+; TownPaletteLine1IndexTable
+; One word per town: the palette index for the town tile line 1 graphics.
 TownPaletteLine1IndexTable:
 	dc.b	$00, $15 
 	dc.w	$002A
