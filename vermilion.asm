@@ -50521,11 +50521,7 @@ CaveMaps_Map_4198E:
 ; loc_00041A90
 CompressedFontTileData:
 	incbin "data/art/tiles/font/font_tiles.bin"
-LoadBattleTilesToBuffers_Data:
-	dc.b	$00, $02, $01, $03, $04, $05, $01, $01, $06, $01, $07, $01, $08, $09, $01, $0A, $0B, $0C, $01, $01, $0D, $0E, $01, $01, $0F, $01, $01, $01, $10, $01, $01, $01 
-	dc.b	$11, $01, $12, $01, $13, $01, $01, $01, $14, $15, $01, $01, $01, $01, $01, $01, $16, $01, $17, $01, $18, $01, $19, $01, $1A, $01, $1B, $01, $1C, $1D, $01, $01 
-	dc.b	$1E, $20, $1F, $21, $22, $24, $23, $01, $25, $01, $26, $01, $27, $20, $1F, $28, $29, $01, $2A, $01, $2B, $2D, $2C, $01, $2E, $20, $1F, $2F, $30, $20, $1F, $31 
-	dc.b	$32, $01, $01, $01, $33, $01, $34, $01, $35, $01, $01, $01, $36, $01, $01, $01, $2E, $20, $1F, $37, $38, $01, $01, $01 
+LoadBattleTilesToBuffers_Data:	equ CompressedFontTileData+$EE8
 LoadBattleTilesToBuffers_Data2_Gfx_429F0:
 	incbin "data/art/tiles/battle/data2_gfx.bin"
 LoadBattleTilesToBuffers_Data2_Gfx_42A08 equ LoadBattleTilesToBuffers_Data2_Gfx_429F0+$18
@@ -53244,48 +53240,27 @@ SpriteFramePointerTable_4A8B8:
 	dc.l	SpriteFramePointerTable_4A8B8_Frame_4A8AA
 MagicGfxData_WyclifParma_Gfx_4A8F4:
 	incbin "data/art/tiles/boss/magic_wyclifparma_gfx.bin"
-SpriteFramePointerTable_4A8B8_Frame_4A912:
-	dc.b	$01, $00, $9C, $EF, $FF, $C8, $22, $22, $33, $22, $03, $02, $21, $01, $11, $10 
-SpriteFramePointerTable_4A8B8_Frame_4A922:
-	dc.b	$01, $00, $F7, $31, $11, $3F, $22, $32, $22, $03, $22, $11, $03, $32, $21, $22, $21, $10, $11, $10 
-SpriteFramePointerTable_4A8B8_Frame_4A936:
-	dc.b	$01, $00, $FF, $FF, $FF, $FF 
-SpriteFramePointerTable_4A8B8_Frame_4A93C:
-	dc.b	$01, $00, $9C, $EF, $FF, $C8, $FF, $FF, $FF, $FF, $0F, $0F, $FF, $0F, $FF, $F0 
-SpriteFramePointerTable_4A8B8_Frame_4A94C:
-	dc.b	$02, $00, $F7, $31, $11, $3F, $FF, $08, $C6, $6C, $80, $0F, $0F, $F0, $F0, $00 
-SpriteFramePointerTable_4A8B8_Frame_4A95C:
-	dc.b	$01, $00, $BB, $B9, $8C, $CE, $40, $30, $34, $02, $30, $02, $23, $30, $22, $23, $01, $12, $01, $00 
-SpriteFramePointerTable_4A8B8_Frame_4A970:
-	dc.b	$01, $00, $DD, $D9, $13, $37, $04, $03, $43, $03, $20, $03, $32, $20, $32, $22, $21, $10, $10, $00 
-SpriteFramePointerTable_4A8B8_Frame_4A984:
-	dc.b	$01, $00, $BB, $B9, $8C, $CE, $F0, $F0, $FF, $0F, $F0, $0F, $FF, $F0, $FF, $FF, $0F, $FF, $0F, $00 
-SpriteFramePointerTable_4A8B8_Frame_4A998:
-	dc.b	$01, $00, $DD, $D9, $13, $37, $0F, $0F, $FF, $0F, $F0, $0F, $FF, $F0, $FF, $FF, $FF, $F0, $F0, $00 
-SpriteFramePointerTable_4A8B8_Frame_4A9AC:
-	dc.b	$01, $00, $EC, $C8, $9B, $BB, $04, $03, $34, $24, $43, $02, $23, $30, $01, $20, $12, $10, $10, $00 
-SpriteFramePointerTable_4A8B8_Frame_4A9C0:
-	dc.b	$01, $00, $73, $31, $9D, $DD, $40, $43, $30, $34, $42, $03, $32, $20, $02, $10, $21, $01, $01, $00 
-SpriteFramePointerTable_4A8B8_Frame_4A9D4:
-	dc.b	$01, $00, $EC, $C8, $9B, $BB, $0F, $0F, $FF, $FF, $FF, $0F, $FF, $F0, $0F, $F0, $FF, $F0, $F0, $00 
-SpriteFramePointerTable_4A8B8_Frame_4A9E8:
-	dc.b	$01, $00, $73, $31, $9D, $DD, $F0, $FF, $F0, $FF, $FF, $0F, $FF, $F0, $0F, $F0, $FF, $0F, $0F, $00 
-SpriteFramePointerTable_4A8B8_Frame_4A9FC:
-	dc.b	$01, $00, $EC, $FF, $FE, $C9, $02, $22, $33, $02, $02, $11, $01, $11 
-SpriteFramePointerTable_4A8B8_Frame_4AA0A:
-	dc.b	$01, $00, $31, $13, $33, $7F, $22, $20, $33, $32, $10, $03, $32, $10, $03, $21, $32, $21, $21, $10, $10, $00 
-SpriteFramePointerTable_4A8B8_Frame_4AA20:
-	dc.b	$01, $00, $EC, $FF, $FE, $C9, $0F, $FF, $FF, $0F, $0F, $FF, $0F, $FF 
-SpriteFramePointerTable_4A8B8_Frame_4AA2E:
-	dc.b	$02, $FF, $8C, $44, $C8, $00, $00, $31, $13, $33, $7F, $F0, $F0, $0F, $F0, $0F, $F0, $F0 
-SpriteFramePointerTable_4A8B8_Frame_4AA40:
-	dc.b	$01, $00, $FF, $FB, $CC, $EF, $01, $12, $30, $01, $12, $01 
-SpriteFramePointerTable_4A8B8_Frame_4AA4C:
-	dc.b	$01, $00, $73, $3B, $91, $13, $20, $02, $20, $03, $32, $32, $33, $20, $23, $32, $10, $12, $22, $10, $01, $11 
-SpriteFramePointerTable_4A8B8_Frame_4AA62:
-	dc.b	$01, $00, $FF, $FB, $CC, $EF, $0F, $FF, $F0, $0F, $FF, $0F 
-SpriteFramePointerTable_4A8B8_Frame_4AA6E:
-	dc.b	$02, $00, $73, $3B, $91, $13, $FF, $00, $44, $4C, $C4, $F0, $0F, $F0, $0F, $F0, $F0, $F0, $0F, $00 
+SpriteFramePointerTable_4A8B8_Frame_4A912:	equ MagicGfxData_WyclifParma_Gfx_4A8F4+$1E
+SpriteFramePointerTable_4A8B8_Frame_4A922:	equ MagicGfxData_WyclifParma_Gfx_4A8F4+$2E
+SpriteFramePointerTable_4A8B8_Frame_4A936:	equ MagicGfxData_WyclifParma_Gfx_4A8F4+$42
+SpriteFramePointerTable_4A8B8_Frame_4A93C:	equ MagicGfxData_WyclifParma_Gfx_4A8F4+$48
+SpriteFramePointerTable_4A8B8_Frame_4A94C:	equ MagicGfxData_WyclifParma_Gfx_4A8F4+$58
+SpriteFramePointerTable_4A8B8_Frame_4A95C:	equ MagicGfxData_WyclifParma_Gfx_4A8F4+$68
+SpriteFramePointerTable_4A8B8_Frame_4A970:	equ MagicGfxData_WyclifParma_Gfx_4A8F4+$7C
+SpriteFramePointerTable_4A8B8_Frame_4A984:	equ MagicGfxData_WyclifParma_Gfx_4A8F4+$90
+SpriteFramePointerTable_4A8B8_Frame_4A998:	equ MagicGfxData_WyclifParma_Gfx_4A8F4+$A4
+SpriteFramePointerTable_4A8B8_Frame_4A9AC:	equ MagicGfxData_WyclifParma_Gfx_4A8F4+$B8
+SpriteFramePointerTable_4A8B8_Frame_4A9C0:	equ MagicGfxData_WyclifParma_Gfx_4A8F4+$CC
+SpriteFramePointerTable_4A8B8_Frame_4A9D4:	equ MagicGfxData_WyclifParma_Gfx_4A8F4+$E0
+SpriteFramePointerTable_4A8B8_Frame_4A9E8:	equ MagicGfxData_WyclifParma_Gfx_4A8F4+$F4
+SpriteFramePointerTable_4A8B8_Frame_4A9FC:	equ MagicGfxData_WyclifParma_Gfx_4A8F4+$108
+SpriteFramePointerTable_4A8B8_Frame_4AA0A:	equ MagicGfxData_WyclifParma_Gfx_4A8F4+$116
+SpriteFramePointerTable_4A8B8_Frame_4AA20:	equ MagicGfxData_WyclifParma_Gfx_4A8F4+$12C
+SpriteFramePointerTable_4A8B8_Frame_4AA2E:	equ MagicGfxData_WyclifParma_Gfx_4A8F4+$13A
+SpriteFramePointerTable_4A8B8_Frame_4AA40:	equ MagicGfxData_WyclifParma_Gfx_4A8F4+$14C
+SpriteFramePointerTable_4A8B8_Frame_4AA4C:	equ MagicGfxData_WyclifParma_Gfx_4A8F4+$158
+SpriteFramePointerTable_4A8B8_Frame_4AA62:	equ MagicGfxData_WyclifParma_Gfx_4A8F4+$16E
+SpriteFramePointerTable_4A8B8_Frame_4AA6E:	equ MagicGfxData_WyclifParma_Gfx_4A8F4+$17A
 MagicGfxData_WyclifParma_Gfx_4AA82:
 	dc.l	SpriteFramePointerTable_4A8B8_Frame_4A912
 	dc.l	SpriteFramePointerTable_4A8B8_Frame_4A922
@@ -54779,101 +54754,50 @@ SpriteFramePointerTable_4E890:
 	dc.l	SpriteFramePointerTable_4E890_Frame_4E880
 GfxLoadList_WorldBattle_Gfx_4E924:
 	incbin "data/art/tiles/misc/gfxlist_worldbattle_gfx.bin"
-SpriteFramePointerTable_4E890_Frame_4E954:
-	dc.b	$01, $00, $FF, $FF, $FF, $FF 
-SpriteFramePointerTable_4E890_Frame_4E95A:
-	dc.b	$00, $00, $ED, $E0, $00, $0D, $DD, $DD, $00, $0D, $4D, $4D, $00, $0E, $DD, $DE, $00, $0E, $EE, $E8, $00, $06, $89, $89, $85, $97, $68, $98, $95, $87, $46, $69 
-	dc.b	$8D, $00 
-SpriteFramePointerTable_4E890_Frame_4E97C:
-	dc.b	$01, $00, $FF, $FF, $F3, $37, $AA, $D0, $DD, $E0, $AA, $00 
-SpriteFramePointerTable_4E890_Frame_4E988:
-	dc.b	$01, $AA, $01, $12, $40, $89, $57, $77, $6D, $D5, $E6, $77, $DE, $EE, $ED, $EA, $0E, $DD, $BA, $0D, $BB, $BB, $DA, $BB, $BA, $BC, $BB, $BA, $BB, $BC, $BA, $00 
-SpriteFramePointerTable_4E890_Frame_4E9A8:
-	dc.b	$01, $00, $7F, $73, $33, $33, $A0, $AA, $BC, $A0, $BB, $B0, $BB, $A0, $AA, $A0, $66, $A0 
-SpriteFramePointerTable_4E890_Frame_4E9BA:
-	dc.b	$01, $00, $FF, $EE, $CC, $CC, $6E, $EA, $06, $AA, $0E, $AA, $0A, $BA, $EB, $BC 
-SpriteFramePointerTable_4E890_Frame_4E9CA:
-	dc.b	$00, $AB, $BC, $BA, $A6, $DA, $BA, $BB, $66, $AA, $AA, $A6, $67, $AA, $66, $67, $76, $A7, $77, $76, $6A, $A6, $66, $AA, $AA, $AA, $AB, $BB, $BB, $BA, $BB, $CB 
-	dc.b	$BB, $00 
-SpriteFramePointerTable_4E890_Frame_4E9EC:
-	dc.b	$01, $00, $77, $77, $77, $33, $76, $76, $60, $60, $AA, $BB, $CB, $A0, $CC, $B0 
-SpriteFramePointerTable_4E890_Frame_4E9FC:
-	dc.b	$01, $00, $CC, $C8, $88, $CE, $EA, $BC, $DB, $BC, $DB, $BC, $04, $DA, $BB, $4E, $DD, $AA, $04, $EE, $DD, $04, $EE, $44 
-SpriteFramePointerTable_4E890_Frame_4EA14:
-	dc.b	$01, $CC, $33, $1A, $00, $00, $BA, $BB, $BA, $BB, $CB, $AB, $BC, $CB, $CB, $AB, $BB, $CB, $BB, $AA, $AA, $AA, $ED, $ED, $DD, $DD, $EE, $44, $44, $44, $44, $00 
-SpriteFramePointerTable_4E890_Frame_4EA34:
-	dc.b	$01, $00, $33, $11, $13, $37, $BC, $B0, $BC, $BB, $BC, $BA, $E0, $CB, $BD, $E4, $AE, $DE, $44, $DD, $E4, $E4, $40, $40 
-SpriteFramePointerTable_4E890_Frame_4EA4C:
-	dc.b	$01, $00, $FF, $FF, $FE, $EE, $0A, $0A, $AE, $00 
-SpriteFramePointerTable_4E890_Frame_4EA56:
-	dc.b	$00, $57, $77, $6D, $D5, $E6, $77, $DE, $AA, $EE, $ED, $EA, $AA, $0E, $DD, $AA, $BA, $AD, $AA, $BB, $BB, $DA, $BB, $BA, $BC, $EA, $BB, $BA, $BB, $AB, $CB, $BA 
-	dc.b	$A6, $00 
-SpriteFramePointerTable_4E890_Frame_4EA78:
-	dc.b	$01, $00, $7F, $73, $33, $37, $A0, $AA, $BC, $A0, $BB, $B0, $BB, $A0, $AA, $A0, $6A, $00 
-SpriteFramePointerTable_4E890_Frame_4EA8A:
-	dc.b	$01, $00, $EE, $EE, $CC, $CC, $AE, $AA, $0E, $AA, $0A, $A6, $0A, $AE, $0A, $EB, $AA, $EA 
-SpriteFramePointerTable_4E890_Frame_4EA9C:
-	dc.b	$00, $AB, $BB, $AA, $66, $EA, $BB, $AA, $67, $DA, $AA, $66, $67, $67, $66, $77, $77, $77, $77, $66, $6A, $67, $6A, $AA, $AA, $AA, $AB, $BA, $BB, $BB, $AB, $CA 
-	dc.b	$AB, $00 
-SpriteFramePointerTable_4E890_Frame_4EABE:
-	dc.b	$01, $00, $77, $77, $77, $33, $60, $60, $60, $A0, $AA, $BA, $BB, $A0, $BC, $B0 
-SpriteFramePointerTable_4E890_Frame_4EACE:
-	dc.b	$01, $00, $CC, $C8, $88, $CE, $AE, $EA, $AE, $EA, $AE, $EA, $0E, $AE, $DA, $4E, $EE, $DE, $04, $EE, $DD, $04, $ED, $44 
-SpriteFramePointerTable_4E890_Frame_4EAE6:
-	dc.b	$01, $CB, $89, $85, $20, $00, $AB, $BC, $AA, $AA, $BB, $BB, $BB, $CC, $AC, $CC, $AA, $BB, $BB, $EA, $AA, $AA, $ED, $DD, $DD, $DD, $EE, $44, $44, $44, $44, $00 
-SpriteFramePointerTable_4E890_Frame_4EB06:
-	dc.b	$01, $00, $33, $11, $13, $37, $BC, $C0, $BB, $CB, $BC, $CA, $E0, $CB, $BD, $E4, $AE, $DE, $44, $DD, $E4, $E4, $40, $40 
-SpriteFramePointerTable_4E890_Frame_4EB1E:
-	dc.b	$01, $00, $FF, $FE, $EC, $CC, $0D, $DE, $0D, $A5, $ED, $A5, $ED, $A5 
-SpriteFramePointerTable_4E890_Frame_4EB2C:
-	dc.b	$00, $00, $ED, $E0, $00, $0D, $DD, $DD, $00, $0D, $4D, $4D, $00, $8E, $DD, $DE, $8D, $99, $EE, $E9, $9E, $99, $67, $69, $95, $96, $67, $66, $95, $86, $47, $46 
-	dc.b	$85, $00 
-SpriteFramePointerTable_4E890_Frame_4EB4E:
-	dc.b	$01, $00, $FF, $FF, $77, $33, $D0, $AD, $AD, $E0, $AD, $E0 
-SpriteFramePointerTable_4E890_Frame_4EB5A:
-	dc.b	$01, $00, $CC, $EC, $CC, $CC, $ED, $AA, $0E, $DA, $ED, $0B, $CA, $0B, $BB, $06, $6B, $07, $6A, $07, $76, $00 
-SpriteFramePointerTable_4E890_Frame_4EB70:
-	dc.b	$00, $56, $77, $76, $55, $A6, $77, $76, $AA, $D7, $67, $65, $DD, $ED, $75, $7D, $EA, $BB, $D7, $DE, $BB, $BB, $BD, $DE, $BB, $CC, $CD, $DC, $CB, $BB, $BD, $EB 
-	dc.b	$BA, $00 
-SpriteFramePointerTable_4E890_Frame_4EB92:
-	dc.b	$01, $00, $37, $73, $37, $77, $AD, $E0, $DE, $EA, $BC, $A0, $BB, $B0, $AB, $67, $67, $00 
-SpriteFramePointerTable_4E890_Frame_4EBA4:
-	dc.b	$02, $00, $CE, $EC, $CC, $CC, $AA, $00, $00, $13, $33, $05, $77, $77, $56, $0A, $A5, $0A 
-SpriteFramePointerTable_4E890_Frame_4EBB6:
-	dc.b	$01, $AA, $00, $00, $0D, $99, $AB, $BE, $BB, $BA, $65, $5E, $B5, $66, $77, $7E, $67, $77, $77, $77, $77, $75, $A5, $67, $55, $5A, $EA, $AD, $EA, $AD, $EA, $00 
-SpriteFramePointerTable_4E890_Frame_4EBD6:
-	dc.b	$02, $00, $77, $73, $33, $33, $AA, $00, $08, $8C, $8C, $67, $75, $5A, $A0, $A0, $BA, $00 
-SpriteFramePointerTable_4E890_Frame_4EBE8:
-	dc.b	$01, $00, $C8, $88, $8C, $EF, $AA, $AA, $0E, $EA, $AA, $0D, $EA, $AA, $0E, $DE, $AA, $04, $ED, $DE, $44, $4D, $44, $00 
-SpriteFramePointerTable_4E890_Frame_4EC00:
-	dc.b	$01, $AA, $99, $99, $00, $00, $AD, $EA, $AD, $EA, $AD, $EA, $AD, $EA, $EE, $ED, $EA, $BB, $DD, $DD, $EE, $EE, $44, $4D, $DD, $DE, $00, $04, $44, $44 
-SpriteFramePointerTable_4E890_Frame_4EC1E:
-	dc.b	$01, $00, $11, $11, $11, $37, $AA, $BB, $E0, $AA, $BC, $EE, $AA, $BB, $ED, $BB, $AA, $ED, $AA, $AE, $D4, $DD, $DE, $40, $E4, $44, $40, $00 
-SpriteFramePointerTable_4E890_Frame_4EC3A:
-	dc.b	$01, $00, $FF, $FE, $EC, $CC, $0D, $DA, $0D, $AA, $0A, $AA, $0A, $AB 
-SpriteFramePointerTable_4E890_Frame_4EC48:
-	dc.b	$01, $BB, $00, $00, $0E, $8E, $00, $ED, $E0, $00, $0D, $DD, $DD, $00, $0D, $4D, $4D, $00, $DD, $DD, $DD, $DD, $AA, $AA, $AA, $AA, $BA, $CC, $CC, $CB, $BC, $00 
-SpriteFramePointerTable_4E890_Frame_4EC68:
-	dc.b	$01, $00, $FF, $FF, $77, $77, $D0, $AD, $BA, $BA 
-SpriteFramePointerTable_4E890_Frame_4EC72:
-	dc.b	$01, $00, $EE, $EC, $CC, $CC, $AA, $0A, $BB, $0B, $CB, $0B, $BB, $06, $6B, $07, $6A, $07, $66, $00 
-SpriteFramePointerTable_4E890_Frame_4EC86:
-	dc.b	$01, $AA, $E9, $00, $08, $9E, $BB, $BB, $BB, $AB, $CC, $CB, $BA, $AC, $CC, $CC, $CA, $AB, $BC, $BC, $BA, $BB, $CB, $BA, $AB, $BB, $A6, $00 
-SpriteFramePointerTable_4E890_Frame_4ECA2:
-	dc.b	$01, $00, $77, $73, $37, $77, $A0, $A0, $AB, $BB, $B0, $BB, $B0, $AB, $66, $77 
-SpriteFramePointerTable_4E890_Frame_4ECB2:
-	dc.b	$01, $00, $CE, $EC, $CC, $CC, $05, $76, $56, $AA, $0A, $AB, $0A, $CB, $AB, $CB, $AB, $CB, $AB, $CB 
-SpriteFramePointerTable_4E890_Frame_4ECC6:
-	dc.b	$01, $AA, $06, $EC, $01, $08, $A8, $89, $98, $86, $5A, $A6, $BB, $BA, $AB, $BA, $AB, $BB, $AB, $BA, $AB, $BC, $BA, $AB, $BC, $BA, $BB, $BC, $BB, $00 
-SpriteFramePointerTable_4E890_Frame_4ECE4:
-	dc.b	$01, $00, $77, $73, $33, $33, $75, $50, $AA, $BA, $A0, $CC, $A0, $BC, $BA, $BB, $CA, $AB, $CA, $00 
-SpriteFramePointerTable_4E890_Frame_4ECF8:
-	dc.b	$01, $00, $C8, $88, $8C, $EF, $AB, $CB, $0E, $EA, $BA, $0D, $EA, $BA, $0E, $DE, $AA, $04, $ED, $DE, $44, $4D, $44, $00 
-SpriteFramePointerTable_4E890_Frame_4ED10:
-	dc.b	$00, $AA, $AB, $BC, $CB, $AA, $AB, $BC, $CB, $AA, $BB, $BB, $BB, $AA, $BB, $BB, $BB, $EE, $EE, $EA, $BA, $DD, $DD, $EE, $EE, $44, $4D, $DD, $DE, $00, $04, $44 
-	dc.b	$44, $00 
-SpriteFramePointerTable_4E890_Frame_4ED32:
-	dc.b	$01, $00, $11, $11, $11, $37, $AB, $CB, $E0, $AB, $CC, $EE, $AB, $CB, $ED, $AB, $AA, $ED, $AA, $AE, $D4, $DD, $DE, $40, $E4, $44, $40, $00 
+SpriteFramePointerTable_4E890_Frame_4E954:	equ GfxLoadList_WorldBattle_Gfx_4E924+$30
+SpriteFramePointerTable_4E890_Frame_4E95A:	equ GfxLoadList_WorldBattle_Gfx_4E924+$36
+SpriteFramePointerTable_4E890_Frame_4E97C:	equ GfxLoadList_WorldBattle_Gfx_4E924+$58
+SpriteFramePointerTable_4E890_Frame_4E988:	equ GfxLoadList_WorldBattle_Gfx_4E924+$64
+SpriteFramePointerTable_4E890_Frame_4E9A8:	equ GfxLoadList_WorldBattle_Gfx_4E924+$84
+SpriteFramePointerTable_4E890_Frame_4E9BA:	equ GfxLoadList_WorldBattle_Gfx_4E924+$96
+SpriteFramePointerTable_4E890_Frame_4E9CA:	equ GfxLoadList_WorldBattle_Gfx_4E924+$A6
+SpriteFramePointerTable_4E890_Frame_4E9EC:	equ GfxLoadList_WorldBattle_Gfx_4E924+$C8
+SpriteFramePointerTable_4E890_Frame_4E9FC:	equ GfxLoadList_WorldBattle_Gfx_4E924+$D8
+SpriteFramePointerTable_4E890_Frame_4EA14:	equ GfxLoadList_WorldBattle_Gfx_4E924+$F0
+SpriteFramePointerTable_4E890_Frame_4EA34:	equ GfxLoadList_WorldBattle_Gfx_4E924+$110
+SpriteFramePointerTable_4E890_Frame_4EA4C:	equ GfxLoadList_WorldBattle_Gfx_4E924+$128
+SpriteFramePointerTable_4E890_Frame_4EA56:	equ GfxLoadList_WorldBattle_Gfx_4E924+$132
+SpriteFramePointerTable_4E890_Frame_4EA78:	equ GfxLoadList_WorldBattle_Gfx_4E924+$154
+SpriteFramePointerTable_4E890_Frame_4EA8A:	equ GfxLoadList_WorldBattle_Gfx_4E924+$166
+SpriteFramePointerTable_4E890_Frame_4EA9C:	equ GfxLoadList_WorldBattle_Gfx_4E924+$178
+SpriteFramePointerTable_4E890_Frame_4EABE:	equ GfxLoadList_WorldBattle_Gfx_4E924+$19A
+SpriteFramePointerTable_4E890_Frame_4EACE:	equ GfxLoadList_WorldBattle_Gfx_4E924+$1AA
+SpriteFramePointerTable_4E890_Frame_4EAE6:	equ GfxLoadList_WorldBattle_Gfx_4E924+$1C2
+SpriteFramePointerTable_4E890_Frame_4EB06:	equ GfxLoadList_WorldBattle_Gfx_4E924+$1E2
+SpriteFramePointerTable_4E890_Frame_4EB1E:	equ GfxLoadList_WorldBattle_Gfx_4E924+$1FA
+SpriteFramePointerTable_4E890_Frame_4EB2C:	equ GfxLoadList_WorldBattle_Gfx_4E924+$208
+SpriteFramePointerTable_4E890_Frame_4EB4E:	equ GfxLoadList_WorldBattle_Gfx_4E924+$22A
+SpriteFramePointerTable_4E890_Frame_4EB5A:	equ GfxLoadList_WorldBattle_Gfx_4E924+$236
+SpriteFramePointerTable_4E890_Frame_4EB70:	equ GfxLoadList_WorldBattle_Gfx_4E924+$24C
+SpriteFramePointerTable_4E890_Frame_4EB92:	equ GfxLoadList_WorldBattle_Gfx_4E924+$26E
+SpriteFramePointerTable_4E890_Frame_4EBA4:	equ GfxLoadList_WorldBattle_Gfx_4E924+$280
+SpriteFramePointerTable_4E890_Frame_4EBB6:	equ GfxLoadList_WorldBattle_Gfx_4E924+$292
+SpriteFramePointerTable_4E890_Frame_4EBD6:	equ GfxLoadList_WorldBattle_Gfx_4E924+$2B2
+SpriteFramePointerTable_4E890_Frame_4EBE8:	equ GfxLoadList_WorldBattle_Gfx_4E924+$2C4
+SpriteFramePointerTable_4E890_Frame_4EC00:	equ GfxLoadList_WorldBattle_Gfx_4E924+$2DC
+SpriteFramePointerTable_4E890_Frame_4EC1E:	equ GfxLoadList_WorldBattle_Gfx_4E924+$2FA
+SpriteFramePointerTable_4E890_Frame_4EC3A:	equ GfxLoadList_WorldBattle_Gfx_4E924+$316
+SpriteFramePointerTable_4E890_Frame_4EC48:	equ GfxLoadList_WorldBattle_Gfx_4E924+$324
+SpriteFramePointerTable_4E890_Frame_4EC68:	equ GfxLoadList_WorldBattle_Gfx_4E924+$344
+SpriteFramePointerTable_4E890_Frame_4EC72:	equ GfxLoadList_WorldBattle_Gfx_4E924+$34E
+SpriteFramePointerTable_4E890_Frame_4EC86:	equ GfxLoadList_WorldBattle_Gfx_4E924+$362
+SpriteFramePointerTable_4E890_Frame_4ECA2:	equ GfxLoadList_WorldBattle_Gfx_4E924+$37E
+SpriteFramePointerTable_4E890_Frame_4ECB2:	equ GfxLoadList_WorldBattle_Gfx_4E924+$38E
+SpriteFramePointerTable_4E890_Frame_4ECC6:	equ GfxLoadList_WorldBattle_Gfx_4E924+$3A2
+SpriteFramePointerTable_4E890_Frame_4ECE4:	equ GfxLoadList_WorldBattle_Gfx_4E924+$3C0
+SpriteFramePointerTable_4E890_Frame_4ECF8:	equ GfxLoadList_WorldBattle_Gfx_4E924+$3D4
+SpriteFramePointerTable_4E890_Frame_4ED10:	equ GfxLoadList_WorldBattle_Gfx_4E924+$3EC
+SpriteFramePointerTable_4E890_Frame_4ED32:	equ GfxLoadList_WorldBattle_Gfx_4E924+$40E
 GfxLoadList_WorldBattle_Gfx_4ED4E:
 	dc.l	SpriteFramePointerTable_4E890_Frame_4E954
 	dc.l	SpriteFramePointerTable_4E890_Frame_4E95A
