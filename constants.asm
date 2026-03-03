@@ -571,6 +571,11 @@ BATTLE_ARENA_EDGE       = $00A8   ; 168 px — right edge / boss Y floor of batt
 BOSS_BATTLE_PLAYER_X_MIN = $0010  ; 16 px  — leftmost allowed player/entity X in boss arena
 BOSS_BATTLE_PLAYER_X_MAX = $0128  ; 296 px — rightmost allowed player/entity X in boss arena
 
+; DemonBoss (OrbitBoss) HP values for normal and hard difficulty.
+; Written to obj_hp (entity HP) and Boss_max_hp (for the on-screen boss HP bar).
+BOSS_HP_ORBIT_NORMAL    = $05DC   ; 1500 HP — OrbitBoss normal difficulty
+BOSS_HP_ORBIT_HARD      = $270F   ; 9999 HP — OrbitBoss hard difficulty
+
 ; After masking a random number to 8 bits (ANDI.w #$00FF), comparing
 ; against this threshold gives a 50% probability split (0-127 vs 128-255).
 RANDOM_HALF_THRESHOLD   = $0080   ; 50% RNG threshold (128 of 256)
@@ -582,6 +587,16 @@ ENTITY_VISIBLE_TILE_RADIUS = $0019  ; 25 tiles — entity considered off-screen 
 ; Pixel distance threshold for enemy proximity-chase activation.
 ; Compared against |player_world_x - enemy_world_x| and |player_world_y - enemy_world_y|.
 ENEMY_CHASE_PROXIMITY   = $0040   ; 64 px — player within this range triggers chase
+
+; Y offset used when drawing first-person dungeon wall tiles.
+; Applied to the tile screen Y coordinate during wall rendering.
+WALL_TILE_Y_OFFSET      = $000C   ; 12 px — standard wall tile Y offset (4 write sites)
+
+; Enemy animation frame mask values. Used for Enemy_anim_frame_mask to
+; control the animation cycle length. Masked against obj_move_counter,
+; then shifted right by Enemy_anim_frame_shift to get the current frame.
+ENEMY_ANIM_FRAME_MASK_24 = $0018  ; 24-frame animation cycle (MeleeA/B large-sprite enemies)
+ENEMY_ANIM_FRAME_MASK_12 = $000C  ; 12-frame animation cycle (StalkPause and small-sprite enemies)
 
 ; Boss sprite animation phase endpoint.
 ; After masking obj_move_counter with $0030 or $0018 and shifting right,
@@ -648,6 +663,13 @@ Town_tilemap_height     = $FFFFC112
 ; Town tilemap scroll guard: if the map dimension (width or height in tiles)
 ; is <= this value, the camera scroll routine skips tile-row/column updates.
 TOWN_MAP_MIN_SCROLL_TILES = $0010   ; 16 tiles — minimum map size for scrolling
+
+; VRAM base addresses for the town sprite/tile banks.
+; Town_vram_tile_base holds the sprite tile bank ($0300 = tile 768).
+; Town_tilemap_vram_base selects which VRAM plane table receives tilemap data.
+TOWN_SPRITE_TILE_BASE       = $0300  ; Sprite tile bank base for all town scenes (tiles 768+)
+TOWN_TILEMAP_VRAM_BASE_TOWN = $4000  ; Tilemap VRAM base used during normal town entry
+TOWN_TILEMAP_VRAM_BASE_ALT  = $2000  ; Tilemap VRAM base used during InitTownDisplay (battle re-entry)
 
 ; Number of tiles written per map sector by the RLE decompressor.
 ; DecompressMapTile_Next counts writes and exits after this many tiles.
