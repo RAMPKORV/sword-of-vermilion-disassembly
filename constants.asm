@@ -703,6 +703,11 @@ NPC_STUCK_THRESHOLD     = $78     ; 120 ticks — NPC stuck-repath trigger thres
 ; resuming its AI. Distinct from ENEMY_KNOCKBACK_DURATION (standard field enemies).
 BOSS_HIT_STUN_FRAMES    = $0010   ; 16 frames — boss body-part post-hit pause duration (9 write sites)
 
+; RingGuardian (Boss 1) state-machine phase timers (written to obj_invuln_timer).
+; The boss AI cycles: pause-and-reset → head-extend → attack-wait → head-retract → return-home.
+BOSS1_HEAD_PAUSE_TICKS  = $28    ; 40 ticks — pause before head extends / dwell in attack-wait state
+BOSS1_HEAD_EXTEND_TICKS = $64    ; 100 ticks — dwell time while boss head is extending
+
 ; Boss state-transition delay: written to obj_invuln_timer on OrbitBoss inner/outer
 ; parts and RingGuardian when transitioning back to the "select target / choose action"
 ; state. Acts as a cool-down between attack phases (80 ticks ≈ 1.3 s at 60 Hz).
@@ -769,6 +774,25 @@ FERROS_ORBIT_MAX_RADIUS = $00180000  ; 24.0 (fixed 16.16) — Ferros orbit expan
 
 ; DescendingArc projectile: attack timer counts up from 0; gravity fully engages at this value.
 DESCENDING_ARC_GRAVITY_ONSET = $0014  ; 20 ticks — DescendingArc timer threshold for full gravity
+
+; ============================================================
+; Sprite Sort-Key (obj_sort_key) Layer Constants
+; ============================================================
+; obj_sort_key controls sprite rendering Z-depth. Higher values draw in front.
+; Three standard layers are used by the object tick helpers:
+SORT_KEY_SINGLE_OBJ     = $000A   ; 10 — standalone single-sprite objects (SingleObjectTick)
+SORT_KEY_PAIRED_OBJ     = $0014   ; 20 — paired two-sprite objects (PairedObjectTick)
+SORT_KEY_CHAIN_OBJ      = $001E   ; 30 — multi-sprite chain/portrait objects (ChainObjectTick)
+
+; Boss-specific sort keys (set during entity init):
+SORT_KEY_ORBIT_INNER    = $0032   ; 50  — OrbitBoss inner ring satellite
+SORT_KEY_ORBIT_OUTER    = $0046   ; 70  — OrbitBoss outer ring satellite
+SORT_KEY_HYDRA_HEAD     = $00AC   ; 172 — HydraBoss head entity
+SORT_KEY_DEMON_WING     = $00B0   ; 176 — DemonBoss wing entity
+
+; Boss projectile sort key — used by TwoHeadedDragon fireballs, OrbitBoss falling
+; projectiles, and HydraBoss bite projectiles. Draws above all enemy bodies.
+SORT_KEY_BOSS_PROJ      = $00FA   ; 250 — boss projectile front-layer sort key (4 write sites)
 
 ; SetRandomEnemyPosition spawn-zone boundaries.
 ; These define where enemies may be placed in the battle field.
