@@ -2042,6 +2042,7 @@ demon_wing_anim     equ $40   ; byte: wing animation frame toggle (bit0 used; in
 
 ; Parma Castle Soldier exclusive scratch field:
 soldier_home_tile_y equ $2B   ; byte: saved tile Y row of the soldier's home/patrol origin
+soldier_patrol_state equ $29  ; byte: patrol direction state (6 = face-right/wander, 2 = face-down/home)
 
 ; ============================================================
 ; VRAM Sprite Tile Base Addresses (obj_tile_index values)
