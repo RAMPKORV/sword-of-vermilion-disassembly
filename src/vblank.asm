@@ -175,11 +175,11 @@ GameplayObjectInitTable:
 	
 	dc.w	$0000, $001F, $0040, $0000
 	dc.l	$00000000
-	dc.l	$FFFFCC18
+	dc.l	Object_slot_01_ptr
 	
 	dc.w	$0000, $0027, $0050, $0000
 	dc.l	$00000000
-	dc.l	$FFFFCC1C
+	dc.l	Object_slot_02_ptr
 	
 	dc.w	$000B, $001F, $0040, $0000
 	dc.l	$00000000
@@ -221,7 +221,7 @@ BossObjectInitTable_B:
 
 	dc.w	$0000, $0027, $0050, $0000 
 	dc.l	$00000000 
-	dc.l	$FFFFCC18 
+	dc.l	Object_slot_01_ptr 
 
 	dc.w	$0000, $001F, $0040, $0000
 	dc.l	$00000000 
@@ -229,7 +229,7 @@ BossObjectInitTable_B:
 
 	dc.w	$0000, $0027, $0050, $0000
 	dc.l	$00000000 
-	dc.l	$FFFFCC1C 
+	dc.l	Object_slot_02_ptr 
 
 	dc.w	$0002, $001F, $0040, $0000 
 	dc.l	$00000000 
@@ -237,7 +237,7 @@ BossObjectInitTable_B:
 
 	dc.w	$0000, $0027, $0050, $0000 
 	dc.l	$00000000 
-	dc.l	$FFFFCC20 
+	dc.l	Object_slot_03_ptr 
 
 	dc.w	$0002, $001F, $0040, $0000 
 	dc.l	$00000000 
@@ -245,11 +245,11 @@ BossObjectInitTable_B:
 
 	dc.w	$0000, $0027, $0050, $0000
 	dc.l	$00000000 
-	dc.l	$FFFFCC24 
+	dc.l	Object_slot_04_ptr 
 
 	dc.w	$0000, $0027, $0050, $0000 
 	dc.l	$00000000 
-	dc.l	$FFFFCC28 
+	dc.l	Object_slot_05_ptr 
 
 BossObjectInitTable_C:
 	dc.b	$00, $0E, $00, $00, $00, $27, $00, $50, $00, $00, $00, $00, $00, $00, $FF, $FF, $CC, $14, $00, $00, $00, $1F, $00, $40, $00, $00, $00, $00, $00, $00, $FF, $FF 
