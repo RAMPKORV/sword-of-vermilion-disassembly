@@ -490,6 +490,43 @@ FILE_MENU_PHASE_NO_SAVE      = 4  ; Display "no saved game" window
 FILE_MENU_PHASE_SUCCESS      = 5  ; Display load/save success window
 
 ; ============================================================
+; Reward Script Type (Reward_script_type)
+; ============================================================
+; Identifies what kind of reward is in a treasure chest or field pickup.
+; The code branches on these values to build the appropriate item-name
+; string and to route into the correct inventory list.
+; Types 0–2 index into ShopCategoryNameTables (items/equipment/magic).
+; Types 3–5 are handled as special cases before the table lookup.
+;
+REWARD_TYPE_ITEM        = 0  ; Consumable item (indexes ItemNames)
+REWARD_TYPE_EQUIPMENT   = 1  ; Weapon/armor/shield (indexes EquipmentNames)
+REWARD_TYPE_MAGIC       = 2  ; Magic spell (indexes MagicNames)
+REWARD_TYPE_MONEY       = 3  ; Kims (gold) — prints MoneyInsideStr
+REWARD_TYPE_RING        = 4  ; Ring (indexes RingNames)
+REWARD_TYPE_MAP         = 5  ; Area map reveal — sets Map_trigger_flags
+
+; ============================================================
+; Terrain Tileset Index (Terrain_tileset_index)
+; ============================================================
+; Selects which battle-field background tileset to load.
+; Set by LoadBattleTerrainGraphics before loading tile graphics.
+;
+TERRAIN_TILESET_SOLDIER = 0  ; Town/soldier-fight grass tiles
+TERRAIN_TILESET_FIELD   = 1  ; Overworld field (dominant tile type)
+TERRAIN_TILESET_CAVE    = 2  ; Cave interior tiles
+TERRAIN_TILESET_BOSS    = 3  ; Boss arena tiles
+
+; ============================================================
+; Town Tileset Index (Town_tileset_index)
+; ============================================================
+; Selects which town building/tile graphics set to load.
+; Set per-town by SetTileset_* functions.
+;
+TOWN_TILESET_VILLAGE_A  = 0  ; Standard village style A (Wyclif, Watling, Barrow, Helwig, Hastings)
+TOWN_TILESET_VILLAGE_B  = 1  ; Standard village style B (most other towns)
+TOWN_TILESET_EXCALABRIA = 2  ; Excalabria / ruined-Swafham style
+
+; ============================================================
 ; Battle / Overworld Play-Field Boundaries (pixels)
 ; ============================================================
 ; The battle and overworld play-field is 320×184 pixels but the
