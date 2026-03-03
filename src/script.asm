@@ -1,82 +1,101 @@
 ; ======================================================================
 ; src/script.asm
 ; Script/text engine, HUD, windows, text rendering, dialogue
+;
+; Responsibilities:
+;   - Dialogue script execution (text rendering, script opcodes)
+;   - Window/HUD drawing and buffering
+;   - Menu drawing (shops, items, equipment, magic, save files)
+;   - Number formatting (BCD conversion, decimal string output)
+;   - Transaction arithmetic (kims, experience, BCD add/subtract)
+;   - Palette management (fade-in/fade-out, palette table loads)
+;   - Name entry screen
+;   - Prologue / Sega logo cutscene sequencer
 ; ======================================================================
+
+;==============================================================
+; SCRIPT / DIALOGUE ENGINE
+;==============================================================
+
 ; ProcessScriptText
-; Process and render dialogue/script text
-; Handles script commands, text timing, player name insertion
-; Main text rendering loop for dialogue windows
+; Process and render one character of dialogue each tick.
+; Handles rate limiting (Message_speed), player-name insertion,
+; and dispatches on script control codes ($F7–$FF).
+; Outputs the decoded tile directly to VDP VRAM (Plane B window).
 ProcessScriptText:
 	TST.b	Window_tilemap_draw_pending.w
-	BNE.w	ScriptDecode_Return
+	BNE.w	ScriptDecode_Return             ; wait until window has finished drawing
 	ADDQ.w	#1, Script_render_tick.w
 	MOVE.w	Script_render_tick.w, D0
-	MOVE.b	Message_speed.w, D2
+	MOVE.b	Message_speed.w, D2             ; D2 = speed setting (bit number for rate gate)
 	MOVE.w	D0, D1
 	SUBQ.w	#1, D1
-	EOR.w	D1, D0
-	BTST.l	D2, D0
+	EOR.w	D1, D0                          ; isolate lowest changed bit
+	BTST.l	D2, D0                          ; is this the speed-rate bit?
 	BEQ.w	ScriptDecode_Return
 	BTST.l	D2, D1
-	BEQ.w	ScriptDecode_Return
+	BEQ.w	ScriptDecode_Return             ; throttle: only advance on rising edge of bit D2
 	MOVE.b	#SOUND_TEXT_BLIP, D0
-	JSR	QueueSoundEffect
+	JSR	QueueSoundEffect                ; play text blip sound each displayed character
 	TST.b	Script_reading_player_name.w
-	BNE.b	ProcessScriptText_Loop
+	BNE.b	ProcessScriptText_Loop          ; currently mid-player-name: skip source fetch
 	MOVE.w	Script_source_offset.w, D2
-	MOVEA.l	Script_source_base.w, A0
+	MOVEA.l	Script_source_base.w, A0       ; A0 = base address of current script string
 	CLR.w	D3
-	MOVE.b	(A0,D2.w), D3
+	MOVE.b	(A0,D2.w), D3               ; D3 = next byte from script
 	CMPI.b	#SCRIPT_PLAYER_NAME, D3
 	BNE.b	ProcessScriptText_Loop2
-ProcessScriptText_Loop:
+ProcessScriptText_Loop:                     ; begin reading from Player_name buffer
 	LEA	Player_name.w, A0
 	MOVE.w	Player_name_index.w, D2
 	CLR.w	D3
-	MOVE.b	(A0,D2.w), D3
+	MOVE.b	(A0,D2.w), D3               ; D3 = current character from player name
 	MOVE.b	#FLAG_TRUE, Script_reading_player_name.w
-ProcessScriptText_Loop2: ; Text script handling
+ProcessScriptText_Loop2: ; Dispatch on script control codes
 	CMPI.b	#SCRIPT_END, D3
 	BEQ.w	ScriptDecode_Done
 	CMPI.b	#SCRIPT_NEWLINE, D3
-	BEQ.w	ScriptRender_PortraitTile_Loop
+	BEQ.w	ScriptRender_PortraitTile_Loop          ; advance to next row
 	CMPI.b	#SCRIPT_CONTINUE, D3
-	BEQ.w	ScriptRender_PortraitTile_Loop2
+	BEQ.w	ScriptRender_PortraitTile_Loop2         ; show continue arrow, wait
 	CMPI.b	#SCRIPT_QUESTION, D3
-	BEQ.w	ScriptDecode_SetResponse
+	BEQ.w	ScriptDecode_SetResponse                ; set dialogue response index
 	CMPI.b	#SCRIPT_YES_NO, D3
-	BEQ.w	ScriptRender_PortraitTile_Loop3
+	BEQ.w	ScriptRender_PortraitTile_Loop3         ; yes/no prompt
 	CMPI.b	#SCRIPT_CHOICE, D3
-	BEQ.w	ScriptRender_PortraitTile_Loop4
+	BEQ.w	ScriptRender_PortraitTile_Loop4         ; quest choice with expected answer
 	CMPI.b	#SCRIPT_ACTIONS, D3
-	BEQ.w	ScriptRender_PortraitTile_Loop5
+	BEQ.w	ScriptRender_PortraitTile_Loop5         ; execute give-item/kims/trigger actions
 	CMPI.b	#SCRIPT_TRIGGERS, D3
-	BEQ.w	ScriptRender_PortraitTile_Loop6
+	BEQ.w	ScriptRender_PortraitTile_Loop6         ; set event triggers (simple format)
 	CMPI.b	#SCRIPT_WIDE_CHAR_LO, D3
-	BEQ.w	ScriptRender_PortraitTile
+	BEQ.w	ScriptRender_PortraitTile               ; wide char low byte (2-column glyph)
 	CMPI.b	#SCRIPT_WIDE_CHAR_HI, D3
-	BEQ.w	ScriptRender_PortraitTile
-	ADDI.w	#$04C0, D3
-	ORI.w	#$8000, D3
-	OR.w	Script_tile_attrs.w, D3
+	BEQ.w	ScriptRender_PortraitTile               ; wide char high byte
+	ADDI.w	#$04C0, D3                      ; add tile base offset ($4C0 = font tiles base)
+	ORI.w	#$8000, D3                      ; set palette bit (use palette line 0)
+	OR.w	Script_tile_attrs.w, D3         ; merge any additional attributes (flip, priority)
 	JSR	GetScrollOffsetInTiles
-	ADD.w	Script_output_x.w, D0
+	ADD.w	Script_output_x.w, D0          ; D0 = output X in tilemap
 	ADD.w	Script_output_base_x.w, D0
-	ADD.w	Script_output_y.w, D1
-	ANDI.w	#$003F, D0
+	ADD.w	Script_output_y.w, D1          ; D1 = output Y in tilemap
+	ANDI.w	#$003F, D0                      ; wrap to 64-tile-wide tilemap
 	ANDI.w	#$003F, D1
-	ASL.w	#1, D0
-	ASL.w	#7, D1
+	ASL.w	#1, D0                          ; x * 2 (each entry is 2 bytes)
+	ASL.w	#7, D1                          ; y * 128 (64 tiles * 2 bytes per row)
 	ADD.w	D1, D0
-	ANDI.l	#$00001FFF, D0
+	ANDI.l	#$00001FFF, D0                  ; mask to tilemap size
 	SWAP	D0
-	ORI.l	#$40000003, D0
-	ORI	#$0700, SR
+	ORI.l	#$40000003, D0                  ; VDP write-to-VRAM command, Plane B
+	ORI	#$0700, SR                      ; disable interrupts
 	MOVE.l	D0, VDP_control_port
-	MOVE.w	D3, VDP_data_port
-	ANDI	#$F8FF, SR
-	ADDQ.w	#1, Script_output_x.w
+	MOVE.w	D3, VDP_data_port               ; write tile word to VRAM
+	ANDI	#$F8FF, SR                      ; re-enable interrupts
+	ADDQ.w	#1, Script_output_x.w          ; advance horizontal cursor
 	BRA.w	ScriptDecode_AdvanceOffset
+; ScriptRender_PortraitTile
+; Render a wide character (2-column glyph) one tile to the left/above of normal position.
+; Wide chars occupy the tile at (x-1, y-1) relative to the normal cursor.
 ScriptRender_PortraitTile:
 	ADDI.w	#$04C0, D3	
 	ORI.w	#$8000, D3	
@@ -99,14 +118,14 @@ ScriptRender_PortraitTile:
 	MOVE.w	D3, VDP_data_port	
 	BRA.w	ScriptDecode_AdvanceOffset	
 ScriptRender_PortraitTile_Loop:
-	ADDQ.w	#2, Script_output_y.w
-	CLR.w	Script_output_x.w
+	ADDQ.w	#2, Script_output_y.w          ; skip down 2 rows (double-height text lines)
+	CLR.w	Script_output_x.w              ; reset to start of line
 	BRA.w	ScriptDecode_AdvanceOffset
 ScriptRender_PortraitTile_Loop2:
-	MOVE.b	#FLAG_TRUE, Script_has_continuation.w
+	MOVE.b	#FLAG_TRUE, Script_has_continuation.w  ; mark: player must press button to continue
 	JSR	GetScrollOffsetInTiles
-	ADDI.w	#$0014, D0
-	ADDI.w	#$001B, D1
+	ADDI.w	#$0014, D0                      ; X offset = column 20 (right edge of dialog box)
+	ADDI.w	#$001B, D1                      ; Y offset = row 27 (bottom of dialog box)
 	SUBQ.w	#1, D0
 	SUBQ.w	#1, D1
 	ANDI.w	#$003F, D0
@@ -118,7 +137,7 @@ ScriptRender_PortraitTile_Loop2:
 	SWAP	D0
 	ORI.l	#$40000003, D0
 	MOVE.l	D0, VDP_control_port
-	MOVE.w	#$04DF, D3
+	MOVE.w	#$04DF, D3                      ; tile $04DF = continuation arrow glyph
 	ORI.w	#$8000, D3
 	OR.w	Script_tile_attrs.w, D3
 	MOVE.w	D3, VDP_data_port
@@ -195,6 +214,12 @@ ScriptDecode_Return_Loop:
 	ADDQ.w	#1, Player_name_index.w
 	RTS
 	
+;==============================================================
+; MENU / WINDOW DRAWING
+;==============================================================
+
+; DrawStartContinueMenu
+; Draw the title screen Start/Continue selection menu.
 DrawStartContinueMenu:
 	CLR.w	Dialog_selection.w
 	MOVE.w	#1, Menu_cursor_column_break.w
@@ -220,6 +245,8 @@ DrawStartContinueMenu:
 ; This entry point clears the script offset before initializing the window
 ResetScriptAndInitDialogue:
 	CLR.w	Script_source_offset.w
+; InitDialogueWindow
+; Initialize the dialogue window without resetting script offset.
 InitDialogueWindow:
 	CLR.b	Script_text_complete.w
 	CLR.b	Script_has_continuation.w
@@ -238,6 +265,8 @@ InitDialogueWindow:
 	MOVE.b	#FLAG_TRUE, Window_tilemap_draw_pending.w
 	RTS
 	
+; DrawOptionsMenu
+; Draw the main options menu window.
 DrawOptionsMenu:
 	MOVE.w	#2, Window_tilemap_x.w
 	MOVE.w	#2, Window_tilemap_y.w
@@ -253,6 +282,8 @@ DrawOptionsMenu:
 	MOVE.b	#FLAG_TRUE, Window_tilemap_draw_active.w
 	RTS
 	
+; DrawMessageSpeedMenu
+; Draw the message speed selection menu.
 DrawMessageSpeedMenu:
 	MOVE.w	#$000A, Window_tilemap_x.w	
 	MOVE.w	#$000A, Window_tilemap_y.w	
@@ -277,6 +308,8 @@ DrawMessageSpeedMenu:
 	MOVE.b	#FLAG_TRUE, Window_tilemap_draw_active.w	
 	RTS
 	
+; DrawYesNoDialog
+; Draw the Yes/No confirmation dialog window.
 DrawYesNoDialog:
 	CLR.w	Dialog_selection.w
 	MOVE.w	#1, Menu_cursor_column_break.w
@@ -297,6 +330,8 @@ DrawYesNoDialog:
 	MOVE.b	#FLAG_TRUE, Window_tilemap_draw_pending.w
 	RTS
 	
+; DrawSavedGameOptionsMenu
+; Draw the saved game options menu (load from slot 1/2/3).
 DrawSavedGameOptionsMenu:
 	CLR.w	Dialog_selection.w
 	MOVE.w	#2, Menu_cursor_column_break.w
@@ -332,6 +367,8 @@ DrawSavedGameOptionsMenu:
 	MOVE.b	#FLAG_TRUE, Window_tilemap_draw_pending.w
 	RTS
 	
+; DrawSpellActionMenu
+; Draw the spell action menu (Cast/Ready/Discard).
 DrawSpellActionMenu:
 	MOVE.w	#2, Menu_cursor_column_break.w
 	MOVE.w	#MENU_CURSOR_NONE, Menu_cursor_last_index.w
@@ -351,6 +388,8 @@ DrawSpellActionMenu:
 	MOVE.b	#FLAG_TRUE, Window_tilemap_draw_active.w
 	RTS
 	
+; DrawUseDiscardMenuWindow
+; Draw the item Use/Discard action menu window.
 DrawUseDiscardMenuWindow:
 	MOVE.w	#1, Menu_cursor_column_break.w
 	MOVE.w	#MENU_CURSOR_NONE, Menu_cursor_last_index.w
@@ -370,6 +409,8 @@ DrawUseDiscardMenuWindow:
 	MOVE.b	#FLAG_TRUE, Window_tilemap_draw_active.w
 	RTS
 	
+; DrawEquipmentMenuWindow
+; Draw the equipment action menu (Put On/Remove/Stop).
 DrawEquipmentMenuWindow:
 	MOVE.w	#2, Menu_cursor_column_break.w
 	MOVE.w	#MENU_CURSOR_NONE, Menu_cursor_last_index.w
@@ -389,6 +430,8 @@ DrawEquipmentMenuWindow:
 	MOVE.b	#FLAG_TRUE, Window_tilemap_draw_active.w
 	RTS
 	
+; DrawEquipOptionsMenuWindow
+; Draw the equipment options submenu.
 DrawEquipOptionsMenuWindow:
 	MOVE.w	#2, Menu_cursor_column_break.w
 	MOVE.w	#MENU_CURSOR_NONE, Menu_cursor_last_index.w
@@ -408,6 +451,8 @@ DrawEquipOptionsMenuWindow:
 	MOVE.b	#FLAG_TRUE, Window_tilemap_draw_active.w
 	RTS
 	
+; DrawChurchMenuWindow
+; Draw the church services menu window.
 DrawChurchMenuWindow:
 	MOVE.w	#3, Menu_cursor_column_break.w
 	MOVE.w	#MENU_CURSOR_NONE, Menu_cursor_last_index.w
@@ -427,6 +472,8 @@ DrawChurchMenuWindow:
 	MOVE.b	#FLAG_TRUE, Window_tilemap_draw_active.w
 	RTS
 	
+; DrawShopMenuWindow
+; Draw the shop action menu (Buy/Sell/Leave).
 DrawShopMenuWindow:
 	MOVE.w	#2, Menu_cursor_column_break.w
 	MOVE.w	#MENU_CURSOR_NONE, Menu_cursor_last_index.w
@@ -446,6 +493,8 @@ DrawShopMenuWindow:
 	MOVE.b	#FLAG_TRUE, Window_tilemap_draw_active.w
 	RTS
 	
+; DrawMoneyDisplayWindow
+; Draw the player's current kims (gold) display window.
 DrawMoneyDisplayWindow:
 	MOVE.w	#0, Window_tilemap_x.w
 	MOVE.w	#2, Window_tilemap_y.w
@@ -464,6 +513,8 @@ DrawMoneyDisplayWindow:
 	MOVE.b	#FLAG_TRUE, Window_tilemap_draw_pending.w
 	RTS
 	
+; DrawItemListBorders
+; Draw UI border tiles for the item list window.
 DrawItemListBorders:
 	MOVE.w	Possessed_items_length.w, D7
 	BSR.w	DrawListTopBorders
@@ -471,6 +522,8 @@ DrawItemListBorders:
 	BSR.w	DrawListBottomBorder
 	RTS
 	
+; DrawMagicListBorders
+; Draw UI border tiles for the magic list window.
 DrawMagicListBorders:
 	MOVE.w	Possessed_magics_length.w, D7
 	BSR.w	DrawListTopBorders
@@ -478,6 +531,8 @@ DrawMagicListBorders:
 	BSR.w	DrawListBottomBorder
 	RTS
 	
+; DrawEquipmentListWindow
+; Draw UI border tiles for the equipment list window.
 DrawEquipmentListWindow:
 	MOVE.w	Possessed_equipment_length.w, D7
 	BSR.w	DrawListTopBorders
@@ -485,6 +540,8 @@ DrawEquipmentListWindow:
 	BSR.w	DrawListBottomBorder
 	RTS
 	
+; DrawReadyEquipmentMenuBorders
+; Draw UI border tiles for the ready equipment menu.
 DrawReadyEquipmentMenuBorders:
 	MOVE.w	Ready_equipment_list_length.w, D7
 	BSR.w	DrawListTopBorders
@@ -492,6 +549,9 @@ DrawReadyEquipmentMenuBorders:
 	BSR.w	DrawListBottomBorder
 	RTS
 	
+; DrawListTopBorders
+; Draw the top and middle row borders for a scrollable list window.
+; Input: D7 = list item count
 DrawListTopBorders:
 	LEA	UIBorder_SmallTop, A0
 	MOVE.w	#$000F, Window_tilemap_draw_x.w
@@ -517,6 +577,9 @@ DrawListTopBorders_Done:
 	DBF	D7, DrawListTopBorders_Done
 	RTS
 	
+; DrawListBottomBorder
+; Draw the bottom border row for a scrollable list window.
+; Input: D0 = list item count
 DrawListBottomBorder:
 	LEA	UIBorder_LargeBox, A0
 	ADDQ.w	#1, D0
@@ -531,6 +594,8 @@ DrawListBottomBorder:
 	BSR.w	RenderTextToTilemap
 	RTS
 	
+; DrawShopItemListWindow
+; Draw the shop buy list window with item names and prices.
 DrawShopItemListWindow:
 	MOVE.w	Shop_item_count.w, D0
 	SUBQ.w	#1, D0
@@ -590,6 +655,8 @@ DrawShopItemListWindow_Done2:
 	MOVE.b	#FLAG_TRUE, Window_tilemap_draw_active.w
 	RTS
 	
+; DrawShopSellListWindow
+; Draw the shop sell list window with item names (no prices).
 DrawShopSellListWindow:
 	MOVE.w	Shop_item_count.w, D0
 	SUBQ.w	#1, D0
@@ -628,6 +695,8 @@ DrawShopSellListWindow_Done:
 	MOVE.b	#FLAG_TRUE, Window_tilemap_draw_active.w
 	RTS
 	
+; DrawTownListWindow
+; Draw the town/destination selection list window.
 DrawTownListWindow:
 	MOVE.w	#$000B, Menu_cursor_base_x.w
 	MOVE.w	#4, Menu_cursor_base_y.w
@@ -672,6 +741,14 @@ DrawTownListWindow_Loop2:
 	MOVE.b	#FLAG_TRUE, Window_tilemap_draw_active.w
 	RTS
 	
+;==============================================================
+; TILEMAP / TEXT RENDERING
+;==============================================================
+
+; RenderTextToTilemap
+; Render a single character from A0 directly to the VDP tilemap.
+; Inputs: A0 = source byte pointer, D0/D1 = tile offset, D2/D3 = col/row
+; Tile index formula: char + $04C0 | $8000
 RenderTextToTilemap:
 	JSR	GetScrollOffsetInTiles
 	CLR.w	D3
@@ -709,8 +786,17 @@ RenderTextToTilemap_Done2:
 	BLE.b	RenderTextToTilemap_Done
 	RTS
 	
+;==============================================================
+; NUMBER FORMATTING
+;==============================================================
+
+; (LongToDecimalString_Alt: thunk data — BRA.w prefix, do not call directly)
 LongToDecimalString_Alt:
 	dc.b	$7E, $01, $60, $00, $00, $04 
+; LongToDecimalString
+; Convert 32-bit BCD value in D2 to a 6-digit decimal string.
+; Outputs each digit via WriteDigitToWindowAndAdvance or stores to (A0)+.
+; Inputs: D2 = BCD long, D5 = 0 (write to VDP) or 1 (write to buffer A0)
 LongToDecimalString:
 	MOVEQ	#0, D7
 	ROL.l	#8, D2
@@ -740,6 +826,9 @@ LongToDecimalString_EncodeDigit_Loop3:
 	DBF	D6, LongToDecimalString_Done
 	RTS
 	
+; FormatLongNumberToText
+; Format a 32-bit BCD value to a null-terminated decimal string in Window_text_scratch.
+; Inputs: D2 = BCD long value
 FormatLongNumberToText:
 	MOVE.w	#0, D3
 	MOVEQ	#1, D5
@@ -748,8 +837,12 @@ FormatLongNumberToText:
 	MOVE.b	#$FF, (A0)
 	RTS
 	
+; (FormatLongNumberToText_Alt: thunk data — BRA.w prefix, do not call directly)
 FormatLongNumberToText_Alt:
 	dc.b	$7E, $01, $60, $00, $00, $04 
+; ConvertNumberToTextDigits
+; Convert a 16-bit BCD value in D2 to a 4-digit decimal string.
+; Inputs: D2 = BCD word, D5 = 0 (write to VDP) or 1 (write to buffer A0)
 ConvertNumberToTextDigits:
 	MOVEQ	#0, D7
 	MOVEQ	#3, D6
@@ -778,6 +871,9 @@ ConvertNumberToTextDigits_EncodeDigit_Loop3:
 	DBF	D6, ConvertNumberToTextDigits_Done
 	RTS
 	
+; WordToDecimalString_NoPad
+; Like ConvertNumberToTextDigits but outputs to window plane 3 via WriteDigitToWindowPlane3.
+; Inputs: D2 = BCD word, D5 = 0 (write to VDP) or 1 (write to buffer A0)
 WordToDecimalString_NoPad:
 	MOVEQ	#0, D7
 	MOVEQ	#3, D6
@@ -806,6 +902,9 @@ WordToDecimalString_NoPad_EncodeDigit_Loop3:
 	DBF	D6, WordToDecimalString_NoPad_Done
 	RTS
 	
+; WordToDecimalString
+; Format a 16-bit BCD value to a null-terminated decimal string in Window_text_scratch.
+; Inputs: D2 = BCD word
 WordToDecimalString:
 	MOVE.w	#0, D3
 	MOVEQ	#1, D5
@@ -814,6 +913,13 @@ WordToDecimalString:
 	MOVE.b	#$FF, (A0)
 	RTS
 	
+;==============================================================
+; WINDOW DIGIT OUTPUT
+;==============================================================
+
+; WriteDigitToWindowAndAdvance
+; Write a single character tile to the window plane at the current number cursor position.
+; Inputs: D4 = tile character, D3 = palette attribute bits
 WriteDigitToWindowAndAdvance:
 	BSR.w	CalcWindowTileVramAddress
 	ORI.l	#$40000003, D0
@@ -822,6 +928,9 @@ WriteDigitToWindowAndAdvance:
 	ADDQ.w	#1, Window_number_cursor_x.w
 	RTS
 
+; WriteDigitToWindowPlane3
+; Like WriteDigitToWindowAndAdvance but writes to window plane 3 (HUD plane).
+; Inputs: D4 = tile character
 WriteDigitToWindowPlane3:
 	BSR.w	CalcWindowTileVramAddress
 	ORI.l	#$60000003, D0
@@ -830,6 +939,9 @@ WriteDigitToWindowPlane3:
 	ADDQ.w	#1, Window_number_cursor_x.w
 	RTS
 
+; CalcWindowTileVramAddress
+; Calculate VDP VRAM write address for window tile at (Window_number_cursor_x, Window_number_cursor_y).
+; Inputs: D4 = tile index, D3 = attribute bits. Outputs: D0 = VDP address word (swapped for control port)
 CalcWindowTileVramAddress:
 	ADDI.w	#$84C0, D4
 	OR.w	D3, D4
@@ -845,6 +957,12 @@ CalcWindowTileVramAddress:
 	SWAP	D0
 	RTS
 
+;==============================================================
+; TRANSACTION ARITHMETIC
+;==============================================================
+
+; AddExperiencePoints
+; Add Transaction_amount (BCD) to Player_next_level_experience using ABCD, clamp to MAX_PLAYER_EXP.
 AddExperiencePoints:
 	LEA	Transaction_amount_end.w, A0
 	LEA	Player_next_level_experience.w, A1
@@ -859,6 +977,8 @@ AddExperiencePoints_Done:
 AddExperiencePoints_Loop:
 	RTS
 
+; AddPaymentAmount
+; Add Transaction_amount (BCD) to Player_kims using ABCD, clamp to MAX_PLAYER_KIMS.
 AddPaymentAmount:
 	LEA	Transaction_amount_end.w, A0
 	LEA	(Player_kims+4).w, A1
@@ -873,6 +993,8 @@ AddPaymentAmount_Done:
 AddPaymentAmount_Loop:
 	RTS
 	
+; DeductPaymentAmount
+; Subtract Transaction_amount (BCD) from Player_kims using SBCD, clamp to 0.
 DeductPaymentAmount:
 	LEA	Transaction_amount_end.w, A0
 	LEA	(Player_kims+4).w, A1
@@ -900,6 +1022,8 @@ DeductPaymentAmount_Loop_Done:
 	CLR.w	Player_hp.w
 DeductPaymentAmount_Loop2:
 	RTS
+; DisplayPlayerKims
+; Render Player_kims to the money display window at fixed cursor position (2, 6).
 DisplayPlayerKims:
 	MOVE.w	#2, Window_number_cursor_x.w
 	MOVE.w	#6, Window_number_cursor_y.w
@@ -909,6 +1033,12 @@ DisplayPlayerKims:
 	BSR.w	LongToDecimalString
 	RTS
 	
+;==============================================================
+; MENU CURSOR INIT
+;==============================================================
+
+; InitMenuCursorForList
+; Initialize menu cursor for a generic list. Inputs: D0 = column count. Sets base to (0x10, 4).
 InitMenuCursorForList:
 	SUBQ.w	#1, D0
 	MOVE.w	D0, Menu_cursor_column_break.w
@@ -917,6 +1047,8 @@ InitMenuCursorForList:
 	MOVE.w	#4, Menu_cursor_base_y.w
 	RTS
 	
+; InitItemMenuCursor
+; Initialize cursor for the item list menu (single column, base at (3, 14)).
 InitItemMenuCursor:
 	MOVE.w	#1, Menu_cursor_column_break.w
 	MOVE.w	#MENU_CURSOR_NONE, Menu_cursor_last_index.w
@@ -924,6 +1056,8 @@ InitItemMenuCursor:
 	MOVE.w	#$000E, Menu_cursor_base_y.w
 	RTS
 	
+; InitSpellbookCursor
+; Initialize cursor for the spellbook menu (3 columns, base at (3, 14)).
 InitSpellbookCursor:
 	MOVE.w	#2, Menu_cursor_column_break.w
 	MOVE.w	#MENU_CURSOR_NONE, Menu_cursor_last_index.w
@@ -931,6 +1065,8 @@ InitSpellbookCursor:
 	MOVE.w	#$000E, Menu_cursor_base_y.w
 	RTS
 	
+; SetShopMenuCursorPosition
+; Initialize cursor for the shop item list using Shop_item_count. Base at (11, 4).
 SetShopMenuCursorPosition:
 	MOVE.w	Shop_item_count.w, D0	
 	SUBQ.w	#1, D0	
@@ -940,6 +1076,8 @@ SetShopMenuCursorPosition:
 	MOVE.w	#4, Menu_cursor_base_y.w	
 	RTS
 	
+; ResetScriptOutputVars
+; Reset script output position, tile attributes, and completion flags for a new dialogue line.
 ResetScriptOutputVars:
 	MOVE.w	#5, Script_output_base_x.w
 	ADDQ.w	#2, Script_output_y.w
@@ -951,6 +1089,12 @@ ResetScriptOutputVars:
 	CLR.w	Script_output_x.w
 	RTS
 	
+;==============================================================
+; SAVE FILE WINDOWS
+;==============================================================
+
+; DrawSaveFileSelectWindow
+; Draw the save-file selection window with 3 slot labels and any saved game names.
 DrawSaveFileSelectWindow:
 	MOVE.w	#4, Window_tilemap_x.w
 	MOVE.w	#1, Window_tilemap_y.w
@@ -997,6 +1141,8 @@ DrawSaveFileSelectWindow:
 	MOVE.b	#FLAG_TRUE, Window_tilemap_draw_active.w
 	RTS
 	
+; LoadSavegameNameToBuffer
+; Load a saved game's name string from SRAM into Savegame_name_buffer. Inputs: A0 = SRAM name pointer.
 LoadSavegameNameToBuffer:
 	LEA	Savegame_name_buffer.w, A1
 	TST.b	(A0)
@@ -1010,6 +1156,8 @@ LoadSavegameNameToBuffer:
 	MOVE.l	#$4E4557FF, (A1)
 	RTS
 	
+; LoadSavegameName_Copy
+; Inner copy loop: transfer name bytes from SRAM (every other byte) to buffer until 14 chars done.
 LoadSavegameName_Copy:
 	MOVE.w	#$000D, D7
 LoadSavegameName_Copy_Done:
@@ -1020,6 +1168,8 @@ LoadSavegameName_Copy_Done:
 	BSR.b	ValidateSavegameName
 	RTS
 	
+; ValidateSavegameName
+; Check if a save slot contains a valid game name (truncates to "????" if too long).
 ValidateSavegameName:
 	LEA	Savegame_name_buffer.w, A1
 	CLR.w	D0
@@ -1043,6 +1193,8 @@ ValidateSavegameName_Loop_Loop2:
 	MOVE.w	#$FFFF, Savegame_name_overflow.w	
 	RTS
 	
+; FormatItemCountToBCD
+; Convert raw item count bytes at A0 to a BCD word and render as a decimal string.
 FormatItemCountToBCD:
 	CLR.w	D0
 	MOVE.b	(A0), D0
@@ -1054,6 +1206,8 @@ FormatItemCountToBCD:
 	BSR.w	WordToDecimalString
 	RTS
 	
+; DrawSaveErrorWindow
+; Draw the "save error" message window.
 DrawSaveErrorWindow:
 	MOVE.w	#$000A, Window_tilemap_x.w
 	MOVE.w	#$0010, Window_tilemap_y.w
@@ -1069,6 +1223,8 @@ DrawSaveErrorWindow:
 	MOVE.b	#FLAG_TRUE, Window_tilemap_draw_active.w
 	RTS
 	
+; DrawSaveSuccessWindow
+; Draw the "game saved" confirmation window.
 DrawSaveSuccessWindow:
 	MOVE.w	#$000A, Window_tilemap_x.w	
 	MOVE.w	#$0010, Window_tilemap_y.w	
@@ -1084,6 +1240,8 @@ DrawSaveSuccessWindow:
 	MOVE.b	#FLAG_TRUE, Window_tilemap_draw_active.w	
 	RTS
 	
+; DrawSaveFailedWindow
+; Draw the "save failed" error window.
 DrawSaveFailedWindow:
 	MOVE.w	#$000A, Window_tilemap_x.w
 	MOVE.w	#$0010, Window_tilemap_y.w
@@ -1099,6 +1257,8 @@ DrawSaveFailedWindow:
 	MOVE.b	#FLAG_TRUE, Window_tilemap_draw_active.w
 	RTS
 	
+; DrawNoSavedGameWindow
+; Draw the "no saved game" informational window.
 DrawNoSavedGameWindow:
 	MOVE.w	#$000A, Window_tilemap_x.w
 	MOVE.w	#$0010, Window_tilemap_y.w
@@ -1114,6 +1274,8 @@ DrawNoSavedGameWindow:
 	MOVE.b	#FLAG_TRUE, Window_tilemap_draw_active.w
 	RTS
 	
+; DrawGameReadyWindow
+; Draw the "game is ready" / continue-prompt window.
 DrawGameReadyWindow:
 	MOVE.w	#$000A, Window_tilemap_x.w	
 	MOVE.w	#$0010, Window_tilemap_y.w	
@@ -1129,6 +1291,12 @@ DrawGameReadyWindow:
 	MOVE.b	#FLAG_TRUE, Window_tilemap_draw_active.w	
 	RTS
 	
+;==============================================================
+; CHARACTER STATS / EQUIPMENT WINDOWS
+;==============================================================
+
+; DrawCharacterStatsWindow
+; Draw the character status screen showing name, level, HP/MP, stats, and current condition.
 DrawCharacterStatsWindow:
 	MOVE.w	#2, Window_tilemap_x.w
 	MOVE.w	#2, Window_tilemap_y.w
@@ -1157,6 +1325,9 @@ DrawCharacterStatsWindow_Loop2:
 	BRA.b	DrawStatusScreen_RenderCondition
 DrawCharacterStatsWindow_Loop3:
 	LEA	BestStr, A0
+; DrawStatusScreen_RenderCondition
+; Render the character condition/status flags sub-section of the stats screen.
+; Inputs: A0 = pointer to condition string to display
 DrawStatusScreen_RenderCondition: ; stats screen?
 	MOVE.w	#$007E, D0
 	BSR.w	RenderTextAtOffset
@@ -1240,6 +1411,8 @@ DrawStatusScreen_RenderCondition: ; stats screen?
 	MOVE.b	#FLAG_TRUE, Window_tilemap_draw_active.w
 	RTS
 	
+; DrawEquippedGearWindow
+; Draw the equipped gear list window showing weapon, shield, armor, ring, and other slots.
 DrawEquippedGearWindow:
 	MOVE.w	#2, Window_tilemap_x.w
 	MOVE.w	#2, Window_tilemap_y.w
@@ -1283,6 +1456,9 @@ DrawEquippedGearWindow_Loop4:
 	MOVE.b	#FLAG_TRUE, Window_tilemap_draw_active.w
 	RTS
 	
+; GetEquipmentNamePointer
+; Return a pointer to the equipment name string for a given equipment ID.
+; Inputs: D0 = equipment ID. Outputs: A0 = pointer to name string.
 GetEquipmentNamePointer:
 	LEA	EquipmentNames, A1
 	ANDI.w	#$00FF, D0
@@ -1291,6 +1467,9 @@ GetEquipmentNamePointer:
 	MOVEA.l	(A1,D0.w), A0
 	RTS
 	
+; GetMagicNamePointer
+; Return a pointer to the magic spell name string for a given spell ID.
+; Inputs: D0 = spell ID. Outputs: A0 = pointer to name string.
 GetMagicNamePointer:
 	LEA	MagicNames, A1
 	ANDI.w	#$00FF, D0
@@ -1299,6 +1478,12 @@ GetMagicNamePointer:
 	MOVEA.l	(A1,D0.w), A0
 	RTS
 	
+;==============================================================
+; INVENTORY LIST WINDOWS
+;==============================================================
+
+; DrawGearCombatWindow
+; Draw the gear/combat stats window showing attack, defense, and magic values.
 DrawGearCombatWindow:
 	MOVE.w	#$000F, Window_tilemap_x.w
 	MOVE.w	#2, Window_tilemap_y.w
@@ -1352,6 +1537,8 @@ DrawGearCombatWindow_Loop:
 	MOVE.b	#FLAG_TRUE, Window_tilemap_draw_active.w	
 	RTS
 	
+; DrawEquippedMarkers
+; Draw marker icons next to currently equipped items in the list. Inputs: A2 = item list, Window_height = row count.
 DrawEquippedMarkers:
 	MOVE.w	Window_height.w, D7
 	SUBQ.w	#1, D7
@@ -1373,6 +1560,8 @@ DrawEquippedMarkers_Loop:
 	DBF	D7, DrawEquippedMarkers_Done
 	RTS
 	
+; DrawMagicListWindow
+; Draw the magic spell list window with spell names and equipped markers.
 DrawMagicListWindow:
 	MOVE.w	#2, Window_tilemap_x.w
 	MOVE.w	#2, Window_tilemap_y.w
@@ -1426,6 +1615,8 @@ DrawMagicListWindow_Loop:
 	MOVE.b	#FLAG_TRUE, Window_tilemap_draw_active.w
 	RTS
 	
+; DrawItemsListWindow
+; Draw the inventory items list window.
 DrawItemsListWindow:
 	MOVE.w	#$000F, Window_tilemap_x.w
 	MOVE.w	#2, Window_tilemap_y.w
@@ -1473,6 +1664,8 @@ DrawItemsListWindow_Loop:
 	MOVE.b	#FLAG_TRUE, Window_tilemap_draw_active.w	
 	RTS
 	
+; DrawRingsListWindow
+; Draw the rings/accessories list window.
 DrawRingsListWindow:
 	LEA	Rings_collected.w, A0
 	CLR.w	D0
@@ -1541,6 +1734,12 @@ RingsInventory_EmptyDisplay_Loop:
 	MOVE.b	#FLAG_TRUE, Window_tilemap_draw_active.w	
 	RTS
 	
+;==============================================================
+; WINDOW DRAW TYPE DISPATCH
+;==============================================================
+
+; DispatchWindowDrawType
+; Dispatch to the appropriate window-draw routine based on Window_draw_type. Inputs: Window_draw_type = type index.
 DispatchWindowDrawType:
 	LEA	WindowDrawTypeJumpTable, A0
 	MOVE.w	Window_draw_type.w, D0
@@ -1549,6 +1748,7 @@ DispatchWindowDrawType:
 	JSR	(A0,D0.w)
 	RTS
 	
+; Window draw type jump table — indexed by window type ID (4 bytes per entry)
 WindowDrawTypeJumpTable:
 	BRA.w	WindowDrawTypeJumpTable_Loop
 	BRA.w	WindowDrawTypeJumpTable_Loop2
@@ -1640,6 +1840,8 @@ WindowDrawTypeJumpTable_Loop11:
 	MOVE.w	D0, Window_tilemap_draw_height.w
 	LEA	Rings_list_tiles_buffer.w, A0
 	BRA.w	DrawWindowRowFromBuffer
+; DrawWindowRow_MessageSpeed
+; Draw a single row of the message speed selection window from its tile buffer.
 DrawWindowRow_MessageSpeed:
 	MOVE.w	#$000A, Window_tilemap_draw_x.w	
 	MOVE.w	#$000A, Window_tilemap_draw_y.w	
@@ -1695,6 +1897,9 @@ DrawWindowRow_MessageSpeed_Loop6:
 	MOVE.w	#$0015, Window_tilemap_draw_width.w
 	MOVE.w	#$000A, Window_tilemap_draw_height.w
 	LEA	Status_menu_tiles_buffer.w, A0
+; DrawWindowRowFromBuffer
+; Copy a saved window region from a tile buffer back to VRAM, one row per call.
+; Inputs: A0 = tile buffer, Window_tilemap_draw_* = region parameters
 DrawWindowRowFromBuffer:
 	MOVE.w	Window_tilemap_draw_height.w, D0
 	SUB.w	Window_text_row.w, D0
@@ -1729,6 +1934,8 @@ DrawWindowRowFromBuffer_Done:
 	CMP.w	Window_tilemap_draw_width.w, D2
 	BNE.b	DrawWindowTilemap_WriteVDP
 	ADDQ.w	#1, D4
+; DrawWindowTilemap_WriteVDP
+; Write a window tilemap row directly to VDP VRAM.
 DrawWindowTilemap_WriteVDP:
 	MOVE.l	D5, VDP_control_port
 	MOVE.w	D4, VDP_data_port
@@ -1763,6 +1970,12 @@ DrawWindowTilemap_WriteVDP_Loop2_Done:
 	ADDQ.w	#1, Window_text_row.w
 	RTS
 	
+;==============================================================
+; WINDOW BUFFER SAVE/RESTORE
+;==============================================================
+
+; SaveMessageSpeedMenuToBuffer_Alt
+; Save the message speed menu area (small region) to buffer.
 SaveMessageSpeedMenuToBuffer_Alt:
 	LEA	Message_speed_menu_tiles_buffer, A0
 	MOVE.w	#2, Window_tile_x.w
@@ -1772,6 +1985,8 @@ SaveMessageSpeedMenuToBuffer_Alt:
 	BSR.w	ReadWindowToBuffer
 	RTS
 	
+; SaveStatusBarToBuffer
+; Save the status bar tile region to buffer for later restore.
 SaveStatusBarToBuffer:
 	TST.b	Dialog_active_flag.w
 	BEQ.b	SaveStatusBarToBuffer_Loop
@@ -1786,6 +2001,8 @@ SaveStatusBarToBuffer_Loop:
 	BSR.w	ReadWindowToBuffer
 	RTS
 	
+; SavePromptMenuToBuffer
+; Save the prompt menu area tiles to buffer.
 SavePromptMenuToBuffer:
 	LEA	Prompt_menu_tiles_buffer.w, A0
 	MOVE.w	#5, Window_tile_x.w
@@ -1795,6 +2012,8 @@ SavePromptMenuToBuffer:
 	BSR.w	ReadWindowToBuffer
 	RTS
 	
+; SaveRightMenuAreaToBuffer
+; Save the right menu panel area to buffer.
 SaveRightMenuAreaToBuffer:
 	LEA	Small_menu_tiles_buffer, A0
 	MOVE.w	#$001C, Window_tile_x.w
@@ -1804,6 +2023,8 @@ SaveRightMenuAreaToBuffer:
 	BSR.w	ReadWindowToBuffer
 	RTS
 	
+; SaveShopSubmenuAreaToBuffer
+; Save the shop submenu area to buffer.
 SaveShopSubmenuAreaToBuffer:
 	LEA	Shop_submenu_tiles_buffer.w, A0
 	MOVE.w	#$000F, Window_tile_x.w
@@ -1813,6 +2034,8 @@ SaveShopSubmenuAreaToBuffer:
 	BSR.w	ReadWindowToBuffer
 	RTS
 	
+; SaveCenterDialogAreaToBuffer
+; Save the center dialog area to buffer.
 SaveCenterDialogAreaToBuffer:
 	LEA	Large_menu_tiles_buffer, A0
 	MOVE.w	#$000F, Window_tile_x.w
@@ -1822,6 +2045,8 @@ SaveCenterDialogAreaToBuffer:
 	BSR.w	ReadWindowToBuffer
 	RTS
 	
+; SaveItemListAreaToBuffer_Small
+; Save a small item list region (6 rows) to buffer.
 SaveItemListAreaToBuffer_Small:
 	LEA	Item_list_tiles_buffer, A0
 	MOVE.w	#2, Window_tile_x.w
@@ -1831,6 +2056,8 @@ SaveItemListAreaToBuffer_Small:
 	BSR.w	ReadWindowToBuffer
 	RTS
 	
+; SaveItemListAreaToBuffer_Large
+; Save a large item list region (8 rows) to buffer.
 SaveItemListAreaToBuffer_Large:
 	LEA	Item_list_tiles_buffer, A0
 	MOVE.w	#2, Window_tile_x.w
@@ -1840,6 +2067,8 @@ SaveItemListAreaToBuffer_Large:
 	BSR.w	ReadWindowToBuffer
 	RTS
 	
+; SaveStatusMenuAreaToBuffer_Small
+; Save a small status menu region (narrow column) to buffer.
 SaveStatusMenuAreaToBuffer_Small:
 	LEA	Status_menu_tiles_buffer.w, A0
 	MOVE.w	#2, Window_tile_x.w
@@ -1849,6 +2078,8 @@ SaveStatusMenuAreaToBuffer_Small:
 	BSR.w	ReadWindowToBuffer
 	RTS
 	
+; SaveStatusMenuAreaToBuffer_Large
+; Save a large status menu region (full width) to buffer.
 SaveStatusMenuAreaToBuffer_Large:
 	LEA	Status_menu_tiles_buffer.w, A0
 	MOVE.w	#2, Window_tile_x.w
@@ -1858,6 +2089,8 @@ SaveStatusMenuAreaToBuffer_Large:
 	BSR.w	ReadWindowToBuffer
 	RTS
 	
+; SaveShopListToBuffer
+; Save the shop item list area to buffer.
 SaveShopListToBuffer:
 	LEA	Shop_list_tiles_buffer.w, A0
 	MOVE.w	#$000A, Window_tile_x.w
@@ -1867,6 +2100,8 @@ SaveShopListToBuffer:
 	BSR.w	ReadWindowToBuffer
 	RTS
 	
+; SaveStatusMenuTiles
+; Save the status menu tiles to buffer.
 SaveStatusMenuTiles:
 	LEA	Status_menu_tiles_buffer.w, A0
 	MOVE.w	#$000A, Window_tile_x.w
@@ -1876,6 +2111,8 @@ SaveStatusMenuTiles:
 	BSR.w	ReadWindowToBuffer
 	RTS
 	
+; SaveLeftMenuTiles
+; Save the left menu tiles to buffer.
 SaveLeftMenuTiles:
 	LEA	Left_menu_tiles_buffer.w, A0
 	MOVE.w	#0, Window_tile_x.w
@@ -1885,6 +2122,8 @@ SaveLeftMenuTiles:
 	BSR.w	ReadWindowToBuffer
 	RTS
 	
+; SaveFullDialogAreaToBuffer
+; Save the full dialog area tiles to buffer, hiding any active sprite first.
 SaveFullDialogAreaToBuffer:
 	TST.b	Dialog_active_flag.w
 	BEQ.b	SaveFullDialogAreaToBuffer_Loop
@@ -1903,6 +2142,8 @@ SaveFullDialogAreaToBuffer_Loop:
 	BSR.w	ReadWindowToBuffer
 	RTS
 	
+; SaveFullMenuTiles
+; Save the full menu tile region (27×12) to buffer.
 SaveFullMenuTiles:
 	LEA	Full_menu_tiles_buffer, A0
 	MOVE.w	#2, Window_tile_x.w
@@ -1913,6 +2154,8 @@ SaveFullMenuTiles:
 	BSR.w	ReadWindowToBuffer
 	RTS
 	
+; SaveEquipmentListTiles
+; Save the equipment list tile region to buffer.
 SaveEquipmentListTiles:
 	LEA	Equipment_list_tiles_buffer.w, A0
 	MOVE.w	#$000F, Window_tile_x.w
@@ -1923,6 +2166,8 @@ SaveEquipmentListTiles:
 	BSR.w	ReadWindowToBuffer
 	RTS
 	
+; SaveMagicListTiles
+; Save the magic list tile region to buffer.
 SaveMagicListTiles:
 	LEA	Magic_list_tiles_buffer.w, A0
 	MOVE.w	#2, Window_tile_x.w
@@ -1933,6 +2178,8 @@ SaveMagicListTiles:
 	BSR.w	ReadWindowToBuffer
 	RTS
 	
+; SaveItemListRightTiles
+; Save the right portion of the item list to buffer.
 SaveItemListRightTiles:
 	LEA	Item_list_right_tiles_buffer.w, A0
 	MOVE.w	#$000F, Window_tile_x.w
@@ -1943,6 +2190,8 @@ SaveItemListRightTiles:
 	BSR.w	ReadWindowToBuffer
 	RTS
 	
+; SaveRingsListMenuToBuffer
+; Save the rings list menu area to buffer.
 SaveRingsListMenuToBuffer:
 	LEA	Rings_list_tiles_buffer.w, A0
 	MOVE.w	#9, Window_tile_x.w
@@ -1953,6 +2202,8 @@ SaveRingsListMenuToBuffer:
 	BSR.w	ReadWindowToBuffer
 	RTS
 	
+; SaveMessageSpeedMenuToBuffer
+; Save the message speed menu area (large region) to buffer.
 SaveMessageSpeedMenuToBuffer:
 	LEA	Message_speed_menu_tiles_buffer, A0	
 	MOVE.w	#$000A, Window_tile_x.w	
@@ -1963,6 +2214,8 @@ SaveMessageSpeedMenuToBuffer:
 	RTS
 	
 	
+; SaveMainMenuToBuffer
+; Save the main menu tile region to buffer.
 SaveMainMenuToBuffer:
 	LEA	Small_menu_tiles_buffer, A0
 	MOVE.w	#2, Window_tile_x.w
@@ -1972,6 +2225,8 @@ SaveMainMenuToBuffer:
 	BSR.w	ReadWindowToBuffer
 	RTS
 	
+; SaveRightMenuToBuffer
+; Save the right menu tile region to buffer.
 SaveRightMenuToBuffer:
 	LEA	Right_menu_tiles_buffer, A0
 	MOVE.w	#$000C, Window_tile_x.w
@@ -1981,6 +2236,8 @@ SaveRightMenuToBuffer:
 	BSR.w	ReadWindowToBuffer
 	RTS
 	
+; SaveReadyEquipmentMenuToBuffer
+; Save the ready equipment menu tiles to buffer.
 SaveReadyEquipmentMenuToBuffer:
 	LEA	Ready_equipment_menu_tiles_buffer, A0
 	MOVE.w	#$000F, Window_tile_x.w
@@ -2035,6 +2292,8 @@ DrawStatusHudWindow_Loop:
 DrawStatusHudWindow_Loop2:
 	RTS
 	
+; DrawPromptMenuWindow
+; Draw the text prompt menu window from its tile buffer.
 DrawPromptMenuWindow:
 	LEA	Prompt_menu_tiles_buffer.w, A0
 	MOVE.w	#5, Window_tile_x.w
@@ -2055,6 +2314,8 @@ DrawLeftMenuWindow:
 	BSR.w	DrawWindowFromBuffer
 	RTS
 	
+; RestoreShopSubmenuFromBuffer
+; Restore the shop submenu area from its tile buffer.
 RestoreShopSubmenuFromBuffer:
 	LEA	Shop_submenu_tiles_buffer.w, A0
 	MOVE.w	#$000F, Window_tile_x.w
@@ -2075,6 +2336,8 @@ DrawCenterMenuWindow:
 	BSR.w	DrawWindowFromBuffer
 	RTS
 	
+; RestoreShopListFromBuffer
+; Restore the shop item list area from its tile buffer.
 RestoreShopListFromBuffer:
 	LEA	Shop_list_tiles_buffer.w, A0
 	MOVE.w	#$000A, Window_tile_x.w
@@ -2084,6 +2347,8 @@ RestoreShopListFromBuffer:
 	BSR.w	DrawWindowFromBuffer
 	RTS
 	
+; DrawStatusMenuWindow
+; Draw the status menu window from its tile buffer.
 DrawStatusMenuWindow:
 	LEA	Status_menu_tiles_buffer.w, A0
 	MOVE.w	#$000A, Window_tile_x.w
@@ -2093,6 +2358,8 @@ DrawStatusMenuWindow:
 	BSR.w	DrawWindowFromBuffer
 	RTS
 	
+; RestoreRightMenuFromBuffer
+; Restore the right menu area from its tile buffer.
 RestoreRightMenuFromBuffer:
 	LEA	Right_menu_tiles_buffer, A0
 	MOVE.w	#$000C, Window_tile_x.w
@@ -2102,6 +2369,8 @@ RestoreRightMenuFromBuffer:
 	BSR.w	DrawWindowFromBuffer
 	RTS
 	
+; RestoreReadyEquipmentMenuFromBuffer
+; Restore the ready equipment menu from its tile buffer.
 RestoreReadyEquipmentMenuFromBuffer:
 	LEA	Ready_equipment_menu_tiles_buffer, A0
 	MOVE.w	#$000F, Window_tile_x.w
@@ -2111,6 +2380,8 @@ RestoreReadyEquipmentMenuFromBuffer:
 	BSR.w	DrawWindowFromBuffer
 	RTS
 	
+; RestoreLeftMenuFromBuffer
+; Restore the left menu area from its tile buffer.
 RestoreLeftMenuFromBuffer:
 	LEA	Left_menu_tiles_buffer.w, A0
 	MOVE.w	#0, Window_tile_x.w
@@ -2145,6 +2416,9 @@ DrawWindowFromBuffer_Done2:
 	BLE.b	DrawWindowFromBuffer_Done
 	RTS
 	
+; CalculateVDPAddress
+; Calculate a VDP VRAM address for a given tile coordinate.
+; Inputs: D2 = col offset, D3 = row offset, D0 = scroll X, D1 = scroll Y. Outputs: D5 = VDP address (swapped).
 CalculateVDPAddress:
 	MOVE.w	D2, D4
 	MOVE.w	D3, D5
@@ -2161,6 +2435,10 @@ CalculateVDPAddress:
 	SWAP	D5
 	RTS
 	
+;==============================================================
+; MENU INPUT HANDLING
+;==============================================================
+
 ; HandleMenuInput
 ; Main menu input handler - processes D-pad input for cursor movement
 HandleMenuInput:
@@ -2195,6 +2473,8 @@ MenuCursor_CheckLeft:
 	BTST.l	#3, D2
 	BEQ.b	BlinkMenuCursor
 	BRA.w	MenuCursorRight
+; BlinkMenuCursor
+; Toggle the menu cursor visibility on a timer, then draw or erase it.
 BlinkMenuCursor:
 	ADDQ.w	#1, Cursor_blink_timer.w
 	MOVE.w	Cursor_blink_timer.w, D0
@@ -2270,12 +2550,16 @@ MenuCursorRight_DeadCode:					; unreferenced dead code
 	MOVE.w	Menu_cursor_last_index.w, Menu_cursor_index.w
 	BSR.w	DrawMenuCursor
 	RTS
+; EraseMenuCursor
+; Erase the menu cursor tile from VRAM (write blank tile).
 EraseMenuCursor:
 	MOVE.w	#$84E0, D6
 	OR.w	Window_tile_attrs.w, D6
 	BSR.w	WriteMenuCursorTile
 	RTS
 	
+; DrawMenuCursor
+; Draw the menu cursor tile to VRAM at the current cursor position.
 DrawMenuCursor:
 	MOVE.w	#$84DC, D6
 	OR.w	Window_tile_attrs.w, D6
@@ -2325,6 +2609,12 @@ DrawShopWindow_DeadCode:					; unreferenced dead code
 	MOVE.w	Shop_item_count.w, D7
 	BSR.w	DrawShopItemNames
 	RTS
+;==============================================================
+; SHOP / ITEM LIST DRAWING
+;==============================================================
+
+; DrawShopItemNames
+; Draw item names in the shop purchase or sell list. Inputs: A1 = item name pointer table, D7 = item count.
 DrawShopItemNames:
 	SUBQ.w	#1, D7
 DrawShopItemNames_Alt:
@@ -2336,6 +2626,8 @@ DrawShopItemNames_Done:
 	ADD.w	D4, D4
 	MOVEA.l	$0(A1,D4.w), A0
 	CLR.w	D2
+; DrawWindowChar_WriteVDP
+; Write a character tile to the window plane via VDP, advancing the column counter.
 DrawWindowChar_WriteVDP:
 	JSR	GetScrollOffsetInTiles
 	ADD.w	D2, D0
@@ -2370,6 +2662,8 @@ DrawWindowChar_WriteVDP_Loop:
 	CMP.w	Window_tilemap_draw_height.w, D3
 	DBF	D7, DrawShopItemNames_Done
 	RTS
+; DrawWindowChar_Special
+; Handle special character codes (e.g. price display) during shop list rendering.
 DrawWindowChar_Special:
 	BSR.w	DrawSpecialCharToVRAM
 	BRA.b	DrawWindowChar_WriteVDP
@@ -2407,6 +2701,8 @@ CopyStringUntilFF:
 CopyStringUntilFF_Loop:
 	RTS
 	
+; DrawItemListNames
+; Draw item names in the inventory item list.
 DrawItemListNames:
 	MOVE.w	#$0011, Window_tilemap_draw_x.w
 	MOVE.w	#4, Window_tilemap_draw_y.w
@@ -2416,6 +2712,8 @@ DrawItemListNames:
 	BSR.w	DrawListItems
 	RTS
 	
+; DrawMagicListWithMP
+; Draw magic spell names alongside their MP costs in the magic list.
 DrawMagicListWithMP:
 	MOVE.w	#$0011, Window_tilemap_draw_x.w
 	MOVE.w	#4, Window_tilemap_draw_y.w
@@ -2430,6 +2728,8 @@ DrawMagicListWithMP:
 	BSR.w	DrawInventorySelectionMarkers
 	RTS
 	
+; DrawPossessedEquipmentList
+; Draw the list of possessed equipment items in the equipment list window.
 DrawPossessedEquipmentList:
 	MOVE.w	#$0011, Window_tilemap_draw_x.w
 	MOVE.w	#4, Window_tilemap_draw_y.w
@@ -2444,6 +2744,8 @@ DrawPossessedEquipmentList:
 	BSR.w	DrawInventorySelectionMarkers
 	RTS
 	
+; DrawReadyEquipmentList
+; Draw the list of items that are readied/equipped in the ready equipment window.
 DrawReadyEquipmentList:
 	MOVE.w	Ready_equipment_list_length.w, D7
 	MOVE.w	D7, D0
@@ -2464,6 +2766,9 @@ DrawReadyEquipmentList:
 	BSR.w	DrawInventorySelectionMarkers
 	RTS
 	
+; DrawListItems
+; Core routine: draw a list of items to the window, one per row.
+; Inputs: A1 = name pointer table, A2 = item ID list, D7 = item count
 DrawListItems:
 	SUBQ.w	#1, D7
 	CLR.w	D3
@@ -2474,6 +2779,8 @@ DrawListItems_Done:
 	ADD.w	D4, D4
 	MOVEA.l	(A1,D4.w), A0
 	CLR.w	D2
+; DrawWindowChar2_WriteVDP
+; Alternate window character writer: write a character tile to VDP for item list rendering.
 DrawWindowChar2_WriteVDP:
 	JSR	GetScrollOffsetInTiles
 	ADD.w	D2, D0
@@ -2510,9 +2817,13 @@ DrawWindowChar2_WriteVDP_Loop:
 	DBF	D7, DrawListItems_Done
 	RTS
 	
+; DrawWindowChar2_Special
+; Handle special character codes in the alternate window character writer.
 DrawWindowChar2_Special:
 	BSR.w	DrawSpecialCharToVRAM	
 	BRA.b	DrawWindowChar2_WriteVDP	
+; DrawSpecialCharToVRAM
+; Write a special/extended character tile directly to VRAM. Inputs: D6 = tile index, D3 = row offset.
 DrawSpecialCharToVRAM:
 	ADDI.w	#$04C0, D6	
 	ORI.w	#$8000, D6	
@@ -2540,6 +2851,8 @@ DrawSpecialCharToVRAM:
 	ANDI	#$F8FF, SR	
 	RTS
 	
+; DrawInventorySelectionMarkers
+; Draw selection marker tiles next to selected inventory items in the list. Inputs: A2 = item list, D7 = count.
 DrawInventorySelectionMarkers:
 	SUBQ.w	#1, D7
 	CLR.w	D3
@@ -2570,6 +2883,10 @@ DrawInventorySelectionMarkers_Loop:
 	ADDQ.w	#2, D3
 	DBF	D7, DrawInventorySelectionMarkers_Done
 	RTS
+
+;==============================================================
+; WINDOW BORDER / TEXT
+;==============================================================
 
 ; DrawWindowBorder
 ; Draw window border/frame tiles
@@ -2607,9 +2924,13 @@ DrawWindowBorder_Loop3:
 	DBF	D7, DrawWindowBorder_Done
 	RTS
 
+; RenderTextToWindowAtPosition
+; Render text from Window_text_scratch to the window at a packed (x<<5|y) position. Inputs: D0 = packed position.
 RenderTextToWindowAtPosition:
 	LEA	Window_text_scratch.w, A0
 	BRA.w	RenderTextAtOffset
+; RenderFormattedTextToWindow
+; Render formatted text from Window_text_scratch to the current window position.
 RenderFormattedTextToWindow:
 	LEA	Window_text_scratch.w, A0
 ; RenderTextToWindow
@@ -2622,6 +2943,8 @@ RenderTextToWindow:
 	MOVE.w	Window_text_y.w, D1
 	MULU.w	D1, D0
 	ADD.w	Window_text_x.w, D0
+; RenderTextAtOffset
+; Render text string to the window tilemap buffer at a given tile offset. Inputs: A0 = text, D0 = tile offset.
 RenderTextAtOffset:
 	LEA	Window_tilemap_buffer.w, A1
 	LEA	(A1,D0.w), A1
@@ -2650,6 +2973,8 @@ WindowTextDecode_Next_Loop:
 	ADD.w	D0, D0
 	LEA	(A1,D0.w), A1
 	BRA.b	RenderTextAtOffset_Done
+; WindowTextDecode_Special
+; Handle special (wide/double-width) character codes during window text decoding.
 WindowTextDecode_Special:
 	MOVE.w	Window_width.w, D0	
 	ADDQ.w	#1, D0	
@@ -2659,6 +2984,8 @@ WindowTextDecode_Special:
 WindowTextDecode_Special_Loop:
 	RTS
 	
+; DrawWindowTilemapFull
+; Write the entire window tilemap buffer to VRAM (all rows and columns).
 DrawWindowTilemapFull:
 	LEA	Window_tilemap_buffer.w, A0
 	JSR	GetScrollOffsetInTiles
@@ -2696,6 +3023,8 @@ DrawWindowTilemapFull_Done2:
 	CLR.b	Window_tilemap_draw_pending.w
 	RTS
 
+; DrawWindowTilemapRow
+; Write one row of the window tilemap buffer to VRAM, incrementing Window_draw_row each call.
 DrawWindowTilemapRow:
 	LEA	Window_tilemap_buffer.w, A0
 	MOVE.w	Window_width.w, D2
@@ -2731,6 +3060,8 @@ DrawWindowTilemapRow_Loop:
 	CLR.b	Window_tilemap_draw_active.w
 	RTS
 
+; WriteWindowRowToVDP
+; Low-level: write a single row of tile data from buffer to VDP VRAM.
 WriteWindowRowToVDP:
 	CLR.w	D2
 WriteWindowRowToVDP_Done:
@@ -2754,6 +3085,8 @@ WriteWindowRowToVDP_Done:
 	BLE.b	WriteWindowRowToVDP_Done
 	RTS
 
+; LoadLevelUpBannerTiles
+; Load and display the level-up notification banner tiles to VRAM.
 LoadLevelUpBannerTiles:
 	LEA	UIBorder_LevelUp, A0
 	MOVE.l	#$420A0003, D5
@@ -2773,10 +3106,16 @@ LoadLevelUpBannerTiles_Done2:
 	ANDI	#$F8FF, SR
 	RTS
 
+;==============================================================
+; HUD STATUS DISPLAY
+;==============================================================
+
 UnknownData_12EA8:
 	dc.b	$00, $7C, $07, $00, $31, $FC, $00, $06, $C2, $42, $31, $FC, $00, $18, $C2, $44, $30, $38, $C6, $2C, $4E, $B9, $00, $01, $04, $8C, $34, $00, $36, $3C, $00, $00 
 	dc.b	$42, $45, $61, $00, $E5, $A4, $31, $FC, $00, $06, $C2, $42, $31, $FC, $00, $1A, $C2, $44, $30, $38, $C6, $32, $4E, $B9, $00, $01, $04, $8C, $34, $00, $36, $3C 
 	dc.b	$00, $00, $42, $45, $61, $00, $E5, $82, $02, $7C, $F8, $FF, $4E, $75 
+; DisplayPlayerHpMp
+; Display the player's current HP and MP values on the HUD.
 DisplayPlayerHpMp:
 	ORI	#$0700, SR
 	MOVE.w	#7, Window_number_cursor_x.w
@@ -2798,6 +3137,8 @@ DisplayPlayerHpMp:
 	ANDI	#$F8FF, SR
 	RTS
 
+; DisplayCurrentHpMp
+; Render the current HP/MP numeric values to the HUD window plane.
 DisplayCurrentHpMp:
 	ORI	#$0700, SR
 	MOVE.w	#7, Window_number_cursor_x.w
@@ -2823,6 +3164,8 @@ UnknownData_12F92:
 	dc.b	$00, $7C, $07, $00, $31, $FC, $00, $0C, $C2, $42, $31, $FC, $00, $18, $C2, $44, $30, $38, $C6, $2E, $4E, $B9, $00, $01, $04, $8C, $34, $00, $36, $3C, $00, $00 
 	dc.b	$42, $45, $61, $00, $E4, $EE, $31, $FC, $00, $0C, $C2, $42, $31, $FC, $00, $1A, $C2, $44, $30, $38, $C6, $30, $4E, $B9, $00, $01, $04, $8C, $34, $00, $36, $3C 
 	dc.b	$00, $00, $42, $45, $61, $00, $E4, $CC, $02, $7C, $F8, $FF, $4E, $75 
+; DisplayCantUseMessage
+; Display the "can't use" error message in the HUD title bar.
 DisplayCantUseMessage:
 	LEA	CantUseStr, A0
 	ORI	#$0700, SR
@@ -2838,6 +3181,8 @@ DisplayCantUseMessage_Done2:
 	DBF	D7, DisplayCantUseMessage_Done2
 	MOVE.l	#$6D360003, D5
 	BRA.w	DisplayReadiedMagicName_Loop
+; DisplayReadiedMagicName
+; Display the name of the currently readied magic spell in the HUD title bar.
 DisplayReadiedMagicName:
 	LEA	MagicNames, A0
 	MOVE.w	Readied_magic.w, D0
@@ -2895,6 +3240,8 @@ TitleBarText_SpecialChar:
 TitleBarText_SpecialChar_Loop:
 	RTS
 
+; DisplayPlayerMaxHpMp
+; Display the player's maximum HP and MP on the HUD.
 DisplayPlayerMaxHpMp:
 	ORI	#$0700, SR
 	MOVE.w	#$000D, Window_number_cursor_x.w
@@ -2916,6 +3263,8 @@ DisplayPlayerMaxHpMp:
 	ANDI	#$F8FF, SR
 	RTS
 
+; DisplayMaxHpMp
+; Render the max HP/MP numeric values to the HUD window plane.
 DisplayMaxHpMp:
 	ORI	#$0700, SR
 	MOVE.w	#$000D, Window_number_cursor_x.w
@@ -2937,6 +3286,8 @@ DisplayMaxHpMp:
 	ANDI	#$F8FF, SR
 	RTS
 
+; DisplayPlayerKimsAndExperience
+; Display the player's kims (gold) and experience totals on the HUD.
 DisplayPlayerKimsAndExperience:
 	ORI	#$0700, SR
 	MOVE.w	#$001C, Window_number_cursor_x.w
@@ -2954,6 +3305,13 @@ DisplayPlayerKimsAndExperience:
 	ANDI	#$F8FF, SR
 	RTS
 
+;==============================================================
+; PALETTE MANAGEMENT
+;==============================================================
+
+; UpdatePaletteBuffer
+; Flush palette buffer to CRAM via DMA if dirty.
+; Dispatches to fade-in or fade-out routines based on active masks.
 UpdatePaletteBuffer:
 	LEA	Palette_line_0_buffer.w, A1
 	TST.b	Palette_fade_in_mask.w
@@ -2985,8 +3343,8 @@ UpdatePaletteBuffer_Loop:
 	RTS
 
 ; LoadPalettesFromTable
-; Load palettes from table into palette buffer
-; Checks fade flags, then copies 4 palettes (32 bytes each) from indexed palette table
+; Load palettes from table into palette buffer.
+; Checks fade flags, then copies 4 palettes (32 bytes each) from indexed palette table.
 LoadPalettesFromTable:
 	TST.b	Palette_fade_in_mask.w
 	BNE.w	LoadPalettesFromTable_Return
@@ -3047,6 +3405,8 @@ LoadPalettesFromTable_Return_Loop4:
 	BEQ.b	FadeOutPalette_WriteVDP
 	LEA	Palette_line_3_buffer.w, A1
 	BSR.w	DecrementPaletteRGBValues
+; FadeOutPalette_WriteVDP
+; DMA-transfer the current palette buffer to CRAM (fade-out flush).
 FadeOutPalette_WriteVDP:
 	stopZ80
 	JSR	InitVdpDmaRamRoutine
@@ -3067,6 +3427,9 @@ FadeOutPalette_WriteVDP:
 	startZ80
 	RTS
 
+; DecrementPaletteRGBValues
+; Step one palette line (16 colors) one step toward black.
+; Inputs: A1 = palette line buffer pointer
 DecrementPaletteRGBValues:
 	MOVEQ	#$0000000F, D2
 DecrementPaletteRGBValues_Done:
@@ -3151,6 +3514,8 @@ BuildFadeTable_Store_Loop5:
 	LEA	Palette_line_3_buffer.w, A1
 	MOVE.w	Palette_line_3_fade_target.w, D1
 	BSR.w	ShiftPaletteTowardsTarget
+; FadeInPalette_WriteVDP
+; DMA-transfer the current palette buffer to CRAM (fade-in flush).
 FadeInPalette_WriteVDP:
 	MOVE.w	#$0100, Z80_bus_request
 FadeInPalette_WriteVDP_Done:
@@ -3174,6 +3539,9 @@ FadeInPalette_WriteVDP_Done:
 	MOVE.w	#0, Z80_bus_request
 	RTS
 
+; ShiftPaletteTowardsTarget
+; Step one palette line (16 colors) one step toward a target palette.
+; Inputs: A1 = current palette buffer, D1 = target palette index
 ShiftPaletteTowardsTarget:
 	LEA	PaletteDataTable, A3
 	ASL.w	#5, D1
@@ -3305,6 +3673,8 @@ BuildFadeInTable_Store_Loop12:
 BuildFadeInTable_Store_Loop13:
 	MOVE.w	Palette_line_3_index.w, D1
 	BSR.w	LoadPaletteByIndex
+; FadePaletteLine3_WriteVDP
+; DMA-transfer the current palette buffer to CRAM (cross-fade line 3 flush).
 FadePaletteLine3_WriteVDP:
 	MOVE.w	#$0100, Z80_bus_request
 FadePaletteLine3_WriteVDP_Done:
@@ -3328,6 +3698,9 @@ FadePaletteLine3_WriteVDP_Done:
 	MOVE.w	#0, Z80_bus_request
 	RTS
 
+; LoadPaletteByIndex
+; Copy one palette (16 colors, 32 bytes) from PaletteDataTable into palette buffer.
+; Inputs: A1 = destination palette line buffer, D1 = palette index
 LoadPaletteByIndex:
 	LEA	PaletteDataTable, A2
 	ASL.w	#5, D1
@@ -3342,6 +3715,9 @@ LoadPaletteByIndex:
 	MOVE.l	(A3)+, (A1)+
 	RTS
 
+; FadePaletteTowardsTarget
+; Step one palette line (16 colors) toward a target, adjusting R/G/B independently.
+; Inputs: A1 = current palette line buffer, D1 = target palette index
 FadePaletteTowardsTarget:
 	LEA	PaletteDataTable, A3
 	ASL.w	#5, D1
@@ -3434,8 +3810,17 @@ FadePaletteTowardsTarget_NextEntry_Loop5_Done:
 	MOVE.w	#0, Z80_bus_request
 	RTS
 	
+; Palette data table — indexed by palette ID, 32 bytes each (16 colors × 2 bytes)
 PaletteDataTable:
 	incbin "data/art/palettes/palette_data.bin"
+
+;==============================================================
+; NAME ENTRY SCREEN
+;==============================================================
+
+; NameEntryScreen_Init
+; Initialize the player name entry screen.
+; Clears VRAM, sets up fade targets, draws character grid and sprites.
 NameEntryScreen_Init:
 	JSR	DisableVDPDisplay
 	JSR	ClearVRAMPlaneA
@@ -3481,6 +3866,9 @@ NameEntryScreen_Init:
 	CLR.w	Name_entry_cursor_column.w
 	RTS
 
+; NameEntryScreen_InputHandler
+; Per-frame input handler for the name entry screen.
+; Handles A/B/Start buttons and D-pad cursor movement.
 NameEntryScreen_InputHandler:
 	TST.b	Fade_in_lines_mask.w
 	BNE.b	NameEntryScreen_InputHandler_Loop
@@ -3530,6 +3918,8 @@ NameEntryScreen_InputHandler_Loop4:
 	BEQ.w	WriteCharacterToNameEntry_Loop
 	CMPI.b	#SCRIPT_WIDE_CHAR_HI, D3
 	BEQ.w	WriteCharacterToNameEntry_Loop2
+; WriteCharacterToNameEntry
+; Write the selected character tile to the player name buffer and VRAM.
 WriteCharacterToNameEntry:
 	CLR.w	D3
 	MOVE.b	$1E(A1,D2.w), D3
@@ -3566,12 +3956,16 @@ WriteCharacterToNameEntry_Loop2:
 	MOVE.b	#$DF, $1(A0)	
 	RTS
 	
+; NameEntry_ConfirmDone
+; Terminate name entry: write null terminator and switch to Done tick handler.
 NameEntry_ConfirmDone:
 	MOVE.b	#$FF, (A0)
 	MOVE.b	#FLAG_TRUE, Name_entry_complete.w
 	MOVE.l	#NameEntryScreen_Done, obj_tick_fn(A5)
 	RTS
 
+; NameEntry_ConfirmDone_Loop
+; Handle backspace: erase last entered character from buffer and VRAM.
 NameEntry_ConfirmDone_Loop:
 	MOVE.w	#SOUND_MENU_CANCEL, D0
 	JSR	QueueSoundEffect
@@ -3608,9 +4002,13 @@ NameEntry_ConfirmDone_Loop4:
 	MOVE.w	#$E04E, VDP_data_port
 NameEntry_ConfirmDone_Loop2:
 	RTS
+; NameEntryScreen_Done
+; No-op tick handler after name entry is complete.
 NameEntryScreen_Done:
 	RTS
 
+; NameEntryGridCursor_Tick
+; Per-frame tick: position the grid cursor sprite over the selected character cell.
 NameEntryGridCursor_Tick:
 	MOVE.w	Name_entry_cursor_x.w, D0
 	ASL.w	#3, D0
@@ -3623,6 +4021,8 @@ NameEntryGridCursor_Tick:
 	JSR	AddSpriteToDisplayList
 	RTS
 
+; NameEntryTextCursor_Tick
+; Per-frame tick: position and blink the text cursor at the current name position.
 NameEntryTextCursor_Tick:
 	MOVE.w	Name_entry_cursor_column.w, D0
 	CMPI.w	#5, D0
@@ -3638,6 +4038,8 @@ NameEntryTextCursor_Tick:
 EnemySprite_BlinkReturn:
 	RTS
 
+; ClearEnemyListFlags
+; Disable both enemy sprite slots used during the name entry screen.
 ClearEnemyListFlags:
 	MOVEA.l	Enemy_list_ptr.w, A6
 	BCLR.b	#7, (A6)
@@ -3647,6 +4049,8 @@ ClearEnemyListFlags:
 	BCLR.b	#7, (A6)
 	RTS
 
+; DrawNameEntryBackground
+; Write the background tilemap for the name entry screen to VRAM.
 DrawNameEntryBackground:
 	ORI	#$0700, SR
 	MOVE.l	#$61060003, D5
@@ -3668,6 +4072,8 @@ DrawNameEntryBackground_Done2:
 	ANDI	#$F8FF, SR
 	RTS
 
+; DrawNameEntryCharGrid
+; Write the selectable character grid to VRAM for the name entry screen.
 DrawNameEntryCharGrid:
 	ORI	#$0700, SR
 	MOVE.l	#$428A0003, D5
@@ -3689,6 +4095,9 @@ DrawNameEntryCharGrid_Done2:
 	ANDI	#$F8FF, SR
 	RTS
 
+; HandleNameEntryDPad
+; Dispatch D-pad input to the appropriate cursor movement routine.
+; Also handles key-repeat logic.
 HandleNameEntryDPad:
 	MOVE.b	Controller_current_state.w, D0
 	ANDI.w	#$000F, D0
@@ -3707,6 +4116,8 @@ HandleNameEntryDPad:
 HandleNameEntryDPad_Done:
 	MOVE.w	#SOUND_HIT, D0
 	JSR	QueueSoundEffect
+; NameEntryCursor_Right
+; Move grid cursor right, skipping invalid cells, wrapping at the end of the row.
 NameEntryCursor_Right:
 	CMPI.w	#NAME_ENTRY_LAST_COL, Name_entry_cursor_x.w
 	BGE.b	NameEntryCursor_Right_Loop
@@ -3721,9 +4132,13 @@ NameEntryCursor_Right_Loop:
 	BNE.b	NameEntryCursor_Right
 	RTS
 	
+; NameEntryCursor_Left_Sound
+; Play cursor move sound then fall through to NameEntryCursor_Left.
 NameEntryCursor_Left_Sound:
 	MOVE.w	#SOUND_HIT, D0
 	JSR	QueueSoundEffect
+; NameEntryCursor_Left
+; Move grid cursor left, skipping invalid (spacer) cells.
 NameEntryCursor_Left:
 	TST.w	Name_entry_cursor_x.w
 	BLE.b	NameEntryCursor_Left_Loop
@@ -3737,9 +4152,13 @@ NameEntryCursor_Left_Loop:
 	BNE.b	NameEntryCursor_Left
 	RTS
 	
+; NameEntryCursor_Down_Sound
+; Play cursor move sound then fall through to NameEntryCursor_Down.
 NameEntryCursor_Down_Sound:
 	MOVE.w	#SOUND_HIT, D0
 	JSR	QueueSoundEffect
+; NameEntryCursor_Down
+; Move grid cursor down, skipping invalid cells, wrapping at the bottom.
 NameEntryCursor_Down:
 	CMPI.w	#NAME_ENTRY_LAST_ROW, Name_entry_cursor_row.w
 	BGE.b	NameEntryCursor_Down_Loop
@@ -3754,9 +4173,13 @@ NameEntryCursor_Down_Loop:
 	BNE.b	NameEntryCursor_Down
 	RTS
 
+; NameEntryCursor_Up_Sound
+; Play cursor move sound then fall through to NameEntryCursor_Up.
 NameEntryCursor_Up_Sound:
 	MOVE.w	#SOUND_HIT, D0
 	JSR	QueueSoundEffect
+; NameEntryCursor_Up
+; Move grid cursor up, skipping invalid cells, wrapping at the top.
 NameEntryCursor_Up:
 	TST.w	Name_entry_cursor_row.w
 	BLE.b	NameEntryCursor_Up_Loop
@@ -3771,6 +4194,9 @@ NameEntryCursor_Up_Loop:
 	BNE.b	NameEntryCursor_Up
 	RTS
 	
+; CheckNameEntryCharValid
+; Check whether the character at the current grid position is selectable.
+; Outputs: D0 = 0 if valid, $FFFF if invalid (SCRIPT_END spacer)
 CheckNameEntryCharValid:
 	LEA	NameEntryCharacterTable, A0
 	MOVE.w	Name_entry_cursor_row.w, D0
@@ -3816,6 +4242,13 @@ CheckNameEntryCharValid_Loop4:
 HandleNameEntryDPad_Return:
 	RTS
 
+;==============================================================
+; SEGA LOGO / PROLOGUE CUTSCENE
+;==============================================================
+
+; SegaLogoScreen_Init
+; Initialize and display the Sega logo screen.
+; Clears VRAM, writes logo tilemap, enables display, and starts fade-in.
 SegaLogoScreen_Init:
 	ORI	#$0700, SR
 	JSR	DisableVDPDisplay
@@ -3850,6 +4283,9 @@ SegaLogoScreen_Init_Done3:
 	JSR	LoadPalettesFromTable
 	RTS
 
+; SegaLogoScreen_FadeIn
+; Per-frame tick: step palette index to fade in the Sega logo.
+; Advances to prologue once fade is complete.
 SegaLogoScreen_FadeIn:
 	ADDQ.w	#1, Frame_delay_counter.w
 	BTST.b	#6, $00A10001
@@ -3872,6 +4308,8 @@ SegaLogoScreen_FadeIn_Loop4:
 ProloguePaletteStep_Return:
 	RTS
 
+; PrologueScreen_Init
+; Initialize the prologue cutscene: set palette targets, draw scene, start music.
 PrologueScreen_Init:
 	JSR	DisableVDPDisplay
 	JSR	ClearVRAMPlaneA
@@ -3894,6 +4332,8 @@ PrologueScreen_Init:
 	MOVE.l	#PrologueStateDispatcher, obj_tick_fn(A5)
 	RTS
 
+; LoadPrologueFadeParams
+; Load fade-in/fade-out mask for the current prologue state from PrologueFadeParamData.
 LoadPrologueFadeParams:
 	LEA	PrologueFadeParamData, A0
 	MOVE.w	Prologue_state.w, D0
@@ -3916,6 +4356,8 @@ LoadPrologueFadeParams_Loop2:
 LoadPrologueFadeParams_Return:
 	RTS
 
+; PrologueStateDispatcher
+; Per-frame tick: dispatch to the handler for the current prologue state.
 PrologueStateDispatcher:
 	MOVE.w	Prologue_state.w, D0
 	ADD.w	D0, D0
@@ -3924,6 +4366,8 @@ PrologueStateDispatcher:
 	JSR	(A0,D0.w)
 	RTS
 
+; PrologueStateJumpTable
+; Jump table indexed by Prologue_state. Each entry is a BRA to the handler for that state.
 PrologueStateJumpTable:
 	BRA.w	PrologueWaitAndAdvanceState
 	BRA.w	PrologueWaitAndAdvanceState
@@ -3998,6 +4442,8 @@ PrologueStateJumpTable_Loop2_Done: ; god mode?
 DebugMaxStats_Return:
 	RTS
 
+; DebugMaxStats_Return_Loop
+; Prologue state handler: draw scenes 4 and 5, update palette targets, advance state.
 DebugMaxStats_Return_Loop:
 	JSR	ClearVRAMPlaneA
 	JSR	ClearVRAMPlaneB
@@ -4010,6 +4456,8 @@ DebugMaxStats_Return_Loop:
 	BSR.w	LoadPrologueFadeParams
 	RTS
 
+; DebugMaxStats_Return_Loop2
+; Prologue state handler: play level-up sound, draw scene 6, advance state.
 DebugMaxStats_Return_Loop2:
 	MOVE.b	#SOUND_LEVEL_UP, D0
 	JSR	QueueSoundEffect
@@ -4024,6 +4472,8 @@ DebugMaxStats_Return_Loop2:
 	BSR.w	LoadPrologueFadeParams
 	RTS
 
+; PrologueTick_WaitFadeOut
+; Wait until fade-out completes, then advance to next prologue state.
 PrologueTick_WaitFadeOut:
 	TST.b	Fade_out_lines_mask.w
 	BNE.b	PrologueTick_WaitFadeOut_Loop
@@ -4032,6 +4482,8 @@ PrologueTick_WaitFadeOut:
 PrologueTick_WaitFadeOut_Loop:
 	RTS
 
+; PrologueWaitAndAdvanceState
+; Wait until fade-in completes, reset display timer, then advance prologue state.
 PrologueWaitAndAdvanceState:
 	TST.b	Fade_in_lines_mask.w
 	BNE.b	PrologueWaitAndAdvanceState_Loop
@@ -4041,6 +4493,8 @@ PrologueWaitAndAdvanceState:
 PrologueWaitAndAdvanceState_Loop:
 	RTS
 
+; PrologueTick_WaitFadeIn
+; Wait until cross-fade completes, then advance to next prologue state.
 PrologueTick_WaitFadeIn:
 	TST.b	Palette_fade_in_mask.w
 	BNE.b	PrologueTick_WaitFadeIn_Loop
@@ -4049,6 +4503,8 @@ PrologueTick_WaitFadeIn:
 PrologueTick_WaitFadeIn_Loop:
 	RTS
 
+; PrologueTick_WaitTimer
+; Decrement BCD display timer; advance prologue state when it reaches zero.
 PrologueTick_WaitTimer:
 	JSR	DecrementTimerBCD
 	BEQ.b	PrologueTick_WaitTimer_Loop2
@@ -4062,9 +4518,13 @@ PrologueTick_WaitTimer_Loop:
 	MOVE.l	#Prologue_EmptyCallback, obj_tick_fn(A5)
 	RTS
 
+; Prologue_EmptyCallback
+; No-op tick handler; installed after prologue is fully complete.
 Prologue_EmptyCallback:
 	RTS
 
+; DrawPrologueScene1and2
+; Render prologue scenes 1 and 2 tilemaps and text strings to VRAM.
 DrawPrologueScene1and2:
 	ORI	#$0700, SR
 	MOVE.l	#$60B00003, D5
