@@ -361,6 +361,9 @@ GAMEPLAY_STATE_SHOW_POISON_NOTIFICATION = $2D
 BATTLE_FIELD_WIDTH      = $0140   ; Play-field width  (320 px)
 BATTLE_FIELD_TOP        = $0038   ; Top    boundary   ( 56 px — below HUD)
 BATTLE_FIELD_BOTTOM     = $00B8   ; Bottom boundary   (184 px)
+; Right/bottom edge for battle sprites: sprites with world_x or world_y >= this
+; are off the visible arena. Also used as boss-body Y floor clamp.
+BATTLE_ARENA_EDGE       = $00A8   ; 168 px — right edge / boss Y floor of battle arena
 
 ; After masking a random number to 8 bits (ANDI.w #$00FF), comparing
 ; against this threshold gives a 50% probability split (0-127 vs 128-255).
@@ -378,6 +381,10 @@ ENEMY_CHASE_PROXIMITY   = $0040   ; 64 px — player within this range triggers 
 ; After masking obj_move_counter with $0030 or $0018 and shifting right,
 ; the result is compared against this to detect end-of-animation-cycle.
 BOSS_ANIM_PHASE_END     = $000C   ; 12 — animation cycle complete when phase reaches this
+
+; OrbitBoss fire-ring animation: obj_move_counter is masked with $0070 and
+; compared against this to decide when to spawn a fire projectile.
+ORBIT_BOSS_FIRE_PHASE   = $0030   ; 48 — fire phase threshold within move_counter cycle
 
 ;RAM
 
@@ -766,6 +773,11 @@ Intro_scroll_accumulator    = $FFFFC3B2
 Prologue_complete_flag      = $FFFFC3A5
 Prologue_state              = $FFFFC3A0
 Prologue_scroll_offset      = $FFFFC3A4
+
+; Prologue_state (longword, upper word used as tile counter) reaches this value
+; when the full intro scroll is complete. Compared in TitleScreen_ScrollAndWait
+; and UpdatePrologueScrollVRAM to know when to switch to idle mode.
+PROLOGUE_SCROLL_END         = $03FF   ; 1023 — scroll counter at which intro is done
 VDP_regs_cache              = $FFFFC3F0
 Sound_driver_play           = $FFFFF404
 
