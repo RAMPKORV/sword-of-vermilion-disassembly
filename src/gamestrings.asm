@@ -867,7 +867,7 @@ ExpStr:
 ThankYouStr2:
 	dc.b	"Thank you!", $FF, $00
 LongLiveKingStr:
-	dc.b	"Long live King ", Script_player_name, "!", $FF
+	dc.b	"Long live King ", SCRIPT_PLAYER_NAME, "!", $FF
 BanishedEvilStr:
 	dc.b	"You've banished", $FE
 	dc.b	"evil from our land!", $FF 

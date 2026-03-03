@@ -835,7 +835,7 @@ NeedPermanentSolutionStr:
 	dc.b	"when I'm bothered...."
 	dc.b	$F8, $02, $F7, $E0
 CartahenaBeastStr:
-	dc.b	"Thank you, ", Script_player_name, ".", $FD
+	dc.b	"Thank you, ", SCRIPT_PLAYER_NAME, ".", $FD
 	dc.b	"That beast", $FE
 	dc.b	"from Cartahena transformed", $FE
 	dc.b	"itself to look like me.", $FD
@@ -1159,7 +1159,7 @@ AttackedWithoutWarningStr:
 	dc.b	"We were attacked", $FE
 	dc.b	"without warning.", $FF 
 TrueHeroStr:
-	dc.b	"You are a true hero, ", Script_player_name, "!", $FF
+	dc.b	"You are a true hero, ", SCRIPT_PLAYER_NAME, "!", $FF
 HonestLookingFellowStr:
 	dc.b	"You're an honest-looking", $FE
 	dc.b	"fellow!", $FF, $00
@@ -1202,7 +1202,7 @@ MonsterLittleGirlStr:
 	dc.b	"nothing until it attacked.", $FD
 	dc.b	"It took your rings to", $FE
 	dc.b	"Asti's Cave. I'm sorry I", $FE
-	dc.b	"doubted you, ", Script_player_name, ".", $FD
+	dc.b	"doubted you, ", SCRIPT_PLAYER_NAME, ".", $FD
 	dc.b	"Worry about us later--get", $FE
 	dc.b	"those rings before they're", $FE 
 	dc.b	"brought to Tsarkon!", $FD
@@ -1728,7 +1728,7 @@ BestedMeStr:
 	dc.b	"defeat Tsarkon!"
 	dc.b	$F8, $01, $53, $00
 ErikProudStr:
-	dc.b	Script_player_name, ", if only Erik", $FE
+	dc.b	SCRIPT_PLAYER_NAME, ", if only Erik", $FE
 	dc.b	"could see you now.", $FE
 	dc.b	"How proud he would be!", $FD
 	dc.b	"As for Tsarkon, I was never", $FE
@@ -1827,7 +1827,7 @@ FoundRingStr:
 	dc.b	"You found the ring!", $FE
 	dc.b	"Take good care of it.", $FF
 FatherFailingStr:
-	dc.b	"Hurry, ", Script_player_name, ", your father", $FE
+	dc.b	"Hurry, ", SCRIPT_PLAYER_NAME, ", your father", $FE
 	dc.b	"is failing fast.", $FF, $00
 ShareSorrowStr:
 	dc.b	"We all share", $FE
@@ -1849,7 +1849,7 @@ VisitChurchesStr:
 	dc.b	"There you may save your", $FE
 	dc.b	"journeys for later use.", $FF
 RunHomeStr:
-	dc.b	"Run home, ", Script_player_name, "! Your father", $FE
+	dc.b	"Run home, ", SCRIPT_PLAYER_NAME, "! Your father", $FE
 	dc.b	"needs you desperately.", $FF
 FatherRestsStr:
 	dc.b	"Your father rests here,", $FE
@@ -1897,7 +1897,7 @@ FatherGraveStr:
 	dc.b	"in his grave."
 	dc.b	$FF, $00
 IAmNotYourRealFatherStr:
-	dc.b	Script_player_name, ", at last you are here!", $FE
+	dc.b	SCRIPT_PLAYER_NAME, ", at last you are here!", $FE
 	dc.b	"I have much to tell you...I", $FE
 	dc.b	"am not your real father.", $FD
 	dc.b	"You are the son of Erik of", $FE
@@ -1936,7 +1936,7 @@ NoAnswerStr:
 	dc.b	"There is no answer.", $FF
 RingOfWisdomStr:
 	dc.b	"I have waited a long time", $FE
-	dc.b	"for you, Prince ", Script_player_name, ".", $FD
+	dc.b	"for you, Prince ", SCRIPT_PLAYER_NAME, ".", $FD
 	dc.b	"Here is the Ring of Wisdom,", $FE
 	dc.b	"which I received from", $FE
 	dc.b	"Blade. It is rightfully", $FD
@@ -2610,7 +2610,7 @@ StayHereStr:
 	dc.b	"You're staying here? Good!", $FE
 	dc.b	"This is a peaceful town.", $FF
 VeryBraveStr:
-	dc.b	"You are very brave, ", Script_player_name, ".", $FE
+	dc.b	"You are very brave, ", SCRIPT_PLAYER_NAME, ".", $FE
 	dc.b	"Good luck!", $FF
 BewareSlanderingKingStr:
 	dc.b	"Beware of slandering", $FE
@@ -3995,7 +3995,7 @@ GreetingsYoungManStr:
 	dc.b	"Greetings, young man.", $FE
 	dc.b	"enjoying our lovely town?", $FF
 AnselmIntroductionStr:
-	dc.b	"Hi, ", Script_player_name, ". I am Anselm.", $FE
+	dc.b	"Hi, ", SCRIPT_PLAYER_NAME, ". I am Anselm.", $FE
 	dc.b	"My father went to Blazon's", $FE
 	dc.b	"Cave to get the mighty", $FD
 	dc.b	"Poison Shield for you.", $FE
@@ -4435,10 +4435,10 @@ EverythingOnHouseStr:
 	dc.b	"Today, everything's", $FE
 	dc.b	"on the house!", $FF
 WaitingForPlayerNameStr:
-	dc.b	"I am waiting for ", Script_player_name, ".", $FE
+	dc.b	"I am waiting for ", SCRIPT_PLAYER_NAME, ".", $FE
 	dc.b	"He will come some day. You", $FE
-	dc.b	"can't be the ", "", Script_player_name, " I await!", $FD
-	dc.b	Script_player_name, " is a nobleman, but you", $FE
+	dc.b	"can't be the ", "", SCRIPT_PLAYER_NAME, " I await!", $FD
+	dc.b	SCRIPT_PLAYER_NAME, " is a nobleman, but you", $FE
 	dc.b	"don't appear to be. Are you", $FE
 	dc.b	"a spy from Thar or Luther?", $FD
 	dc.b	"No matter! If you can get", $FE
@@ -4833,7 +4833,7 @@ TownDialogTable_Tadcaster_State7:
 	dc.l	TryToBeGoodStr
 TadcasterBegsForMercyStr
 	dc.b	"No, not again! Tadcaster", $FE
-	dc.b	"begs for mercy, ", Script_player_name, ".", $FF
+	dc.b	"begs for mercy, ", SCRIPT_PLAYER_NAME, ".", $FF
 PleaseDontTormentStr:
 	dc.b	"Please don't", $FE
 	dc.b	"torment us any more.", $FF
@@ -4856,7 +4856,7 @@ WelcomeHighnessNoItemsStr
 ImposterConfirmedStr
 	dc.b	"Ah, he was an imposter.", $FF 
 DontHurtMeStr
-	dc.b	"Don't hurt me, ", Script_player_name, "!", $FF
+	dc.b	"Don't hurt me, ", SCRIPT_PLAYER_NAME, "!", $FF
 ImposterDarmonsCaveStr:
 	dc.b	"The imposter lives", $FE
 	dc.b	"in Darmon's Cave,", $FE
@@ -4884,7 +4884,7 @@ AshamedBullyStr
 	dc.b	"Why did I let him bully me?", $FE
 	dc.b	"I'm ashamed of myself now.", $FF, $00
 SorryNoMoneyStr
-	dc.b	"Sorry, ", Script_player_name, ", the money", $FE
+	dc.b	"Sorry, ", SCRIPT_PLAYER_NAME, ", the money", $FE
 	dc.b	"you took from me", $FE
 	dc.b	"yesterday is all I had.", $FF, $00
 VillainUsingNameStr
@@ -4893,7 +4893,7 @@ VillainUsingNameStr
 OhNoDontHurtStr
 	dc.b	"Oh, no!", $FE
 	dc.b	"Please don't", $FE
-	dc.b	"hurt me, ", Script_player_name, "!", $FF, $00
+	dc.b	"hurt me, ", SCRIPT_PLAYER_NAME, "!", $FF, $00
 ReallyNiceGuyStr
 	dc.b	"You mean you're", $FE
 	dc.b	"really a nice guy?", $FF, $00
@@ -4985,7 +4985,7 @@ TakeTaskStepByStepStr
 	dc.b	"at a time and it may", $FE
 	dc.b	"turn out all right.", $FF, $00
 AwaitingYouStr
-	dc.b	"Welcome, ", Script_player_name, ".", $FE
+	dc.b	"Welcome, ", SCRIPT_PLAYER_NAME, ".", $FE
 	dc.b	"I have been awaiting you", $FE
 	dc.b	"for quite some time now.", $FD
 	dc.b	"I used your name", $FE
@@ -5771,7 +5771,7 @@ WaitingExcalabriaStr:
 	dc.b	"This is Excalabria,", $FE 
 	dc.b	"Journey to Swaffham and", $FD
 	dc.b	"find the Ring of Earth.", $FE 
-	dc.b	"Hurry, ", Script_player_name, "!", $FD
+	dc.b	"Hurry, ", SCRIPT_PLAYER_NAME, "!", $FD
 	dc.b	"I have much to tell you", $FE 
 	dc.b	"and time is running out!", $FF
 LongWaitedForYouStr:
@@ -6046,7 +6046,7 @@ SeveralPeopleWaitingStr
 	dc.b	"church? Several people", $FE 
 	dc.b	"are waiting for you there.", $FF, $00 
 WelcomePrinceStr
-	dc.b	"Welcome, Prince ", Script_player_name, "!", $FE 
+	dc.b	"Welcome, Prince ", SCRIPT_PLAYER_NAME, "!", $FE 
 	dc.b	"I was once a servant", $FE 
 	dc.b	"of your father's.", $FD 
 	dc.b	"Though you may not realize", $FE 
@@ -6102,7 +6102,7 @@ FinalBattleStr
 	dc.b	"time for the final battle.", $FE 
 	dc.b	"Go south to meet the enemy.", $FF, $00 
 GreetingsServantsStr
-	dc.b	"Greetings, ", Script_player_name, "!", $FE 
+	dc.b	"Greetings, ", SCRIPT_PLAYER_NAME, "!", $FE 
 	dc.b	"We were once", $FE 
 	dc.b	"your father's servants.", $FF, $00 
 HelloPrinceStr
@@ -6462,7 +6462,7 @@ FreedAtLastStr:
 	dc.b	"I killed your father and", $FE
 	dc.b	"wanted to kill myself, but", $FD
 	dc.b	"the evil wouldn't let me.", $FE
-	dc.b	"Return to Cartahena, ", Script_player_name, ".", $FE
+	dc.b	"Return to Cartahena, ", SCRIPT_PLAYER_NAME, ".", $FE
 	dc.b	"Someone special waits", $FD
 	dc.b	"for you there."
 	dc.b	$F8, $01, $38, $00 

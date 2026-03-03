@@ -27,7 +27,7 @@ ProcessScriptText:
 	MOVEA.l	Script_source_base.w, A0
 	CLR.w	D3
 	MOVE.b	(A0,D2.w), D3
-	CMPI.b	#Script_player_name, D3
+	CMPI.b	#SCRIPT_PLAYER_NAME, D3
 	BNE.b	ProcessScriptText_Loop2
 ProcessScriptText_Loop:
 	LEA	Player_name.w, A0
