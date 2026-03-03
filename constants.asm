@@ -370,6 +370,15 @@ RANDOM_HALF_THRESHOLD   = $0080   ; 50% RNG threshold (128 of 256)
 ; Entity tile coordinate (world_coord - camera) >> 4 is compared against this.
 ENTITY_VISIBLE_TILE_RADIUS = $0019  ; 25 tiles — entity considered off-screen if >= this
 
+; Pixel distance threshold for enemy proximity-chase activation.
+; Compared against |player_world_x - enemy_world_x| and |player_world_y - enemy_world_y|.
+ENEMY_CHASE_PROXIMITY   = $0040   ; 64 px — player within this range triggers chase
+
+; Boss sprite animation phase endpoint.
+; After masking obj_move_counter with $0030 or $0018 and shifting right,
+; the result is compared against this to detect end-of-animation-cycle.
+BOSS_ANIM_PHASE_END     = $000C   ; 12 — animation cycle complete when phase reaches this
+
 ;RAM
 
 Fade_out_lines_mask     = $FFFFC08E
@@ -415,6 +424,10 @@ Town_tilemap_height     = $FFFFC112
 ; Town tilemap scroll guard: if the map dimension (width or height in tiles)
 ; is <= this value, the camera scroll routine skips tile-row/column updates.
 TOWN_MAP_MIN_SCROLL_TILES = $0010   ; 16 tiles — minimum map size for scrolling
+
+; Number of tiles written per map sector by the RLE decompressor.
+; DecompressMapTile_Next counts writes and exits after this many tiles.
+MAP_RLE_TILE_COUNT      = $0100   ; 256 tiles per decompressed sector
 
 Town_tilemap_update_row = $FFFFC120
 Town_tilemap_update_column = $FFFFC122
