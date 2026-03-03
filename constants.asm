@@ -811,6 +811,10 @@ Enemy_reward_type           = $FFFFC57A
 Enemy_reward_value          = $FFFFC57C
 Pending_hint_text           = $FFFFC438
 Map_trigger_index           = $FFFFC43C
+; Map_trigger_index values used by map-giver NPCs
+MAP_TRIGGER_MAP_GIVER_WYCLIF    = $0011  ; Map giver NPC in Wyclif
+MAP_TRIGGER_MAP_GIVER_DEEPDALE  = $0013  ; Map giver NPC in Deepdale
+MAP_TRIGGER_MAP_GIVER_STOW      = $0028  ; Map giver NPC in Stow
 Sleep_delay_timer           = $FFFFC434
 Banshee_powder_active       = $FFFFC45C
 Intro_timer                 = $FFFFC498
