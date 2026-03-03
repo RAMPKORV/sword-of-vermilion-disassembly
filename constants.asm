@@ -614,6 +614,14 @@ DEMON_BOSS_X_RIGHT_BOUND= $0120   ; 288 px — right edge of DemonBoss patrol/fi
 ; DemonBoss projectile Y floor — segment deactivates below this Y.
 DEMON_BOSS_PROJ_Y_FLOOR = $00B0   ; 176 px — projectile segment Y deactivation threshold
 
+; DemonBoss attack-animation timer: obj_attack_timer counts down from $0064.
+; When it reaches this value, the boss fires its wing-bomb mid-animation.
+DEMON_BOSS_ATTACK_FIRE_TICK = $000A  ; 10 — timer tick at which DemonBoss wing attack fires
+
+; DemonBoss projectile segment animation frame count.
+; Segment tick function counts obj_attack_timer up; animation stops at this value.
+DEMON_BOSS_SEG_ANIM_FRAMES = $0010   ; 16 — DemonBoss projectile segment animation frame count
+
 ; Falling projectile Y floor shared by OrbitBoss and RingGuardian child projectiles.
 ; Projectiles clamp to and impact at this Y.
 ORBIT_PROJ_Y_FLOOR      = $00AC   ; 172 px — falling projectile floor Y (OrbitBoss & RingGuardian)
@@ -641,6 +649,14 @@ RING_GUARDIAN_Y_LOWER   = $0096   ; 150 px — RingGuardian lower Y boundary for
 ; OrbitBoss maximum orbit radius (stored in obj_pos_x_fixed of orbit child).
 ; Orbit-expand functions continue until radius reaches this value.
 ORBIT_BOSS_MAX_RADIUS   = $1388   ; 5000 — orbit radius ceiling for OrbitBoss expand phase
+
+; OrbitBoss charge direction accumulates each frame; when it reaches this
+; value the boss transitions to its fire state.
+ORBIT_BOSS_DIRECTION_WRAP = $A0   ; 160 — OrbitBoss charge direction wraparound threshold
+
+; OrbitingSpiral projectile orbit cycle count (stored in obj_xp_reward as scratch counter).
+; When the counter reaches this value, the projectile transitions to straight-line travel.
+ORBITING_SPIRAL_ORBIT_COUNT = $0040  ; 64 — OrbitingSpiral orbit cycles before breaking out
 
 ; Projectile top-of-field boundary (Y). Spiral and OrbitingSpiral projectiles
 ; deactivate when obj_world_y <= this, which is above the HUD (BATTLE_FIELD_TOP = $0038).
