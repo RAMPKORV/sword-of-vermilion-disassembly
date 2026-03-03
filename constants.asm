@@ -1985,6 +1985,11 @@ obj_pos_x_fixed     equ $20   ; long: fixed-point world X position (first-person
 obj_sprite_frame    equ $24   ; byte: current sprite frame index
 obj_behavior_flag   equ $25   ; byte: NPC conditional behavior flag ($FF = triggered)
 obj_hit_flag        equ $26   ; byte: collision/hit flag ($FF = hit this frame)
+; NOTE: $27 is context-dependent — NPC: saved/target wander direction (obj_npc_saved_dir);
+;       orbiting spiral projectile: sine-table angle accumulator (obj_orbit_angle);
+;       DemonBoss: reverse-direction sentinel (demon_dir_flag).
+obj_npc_saved_dir   equ $27   ; byte: NPC saved wander direction (restored after NPC interaction, NPC only)
+obj_orbit_angle     equ $27   ; byte: sine-table index / angle accumulator (orbiting spiral projectile only)
 obj_hp              equ $28   ; word: current hit points (enemy only)
 obj_xp_reward       equ $2A   ; word: experience points awarded on kill (enemy only)
 obj_max_hp          equ $2C   ; word: maximum hit points (enemy only)
@@ -2030,7 +2035,9 @@ orbit_charge_dir    equ $41   ; OrbitBoss: charge direction flag ($FF=positive c
 ;
 ; Additional DemonBoss-exclusive scratch fields:
 demon_seg_active    equ $1C   ; byte: body-segment visible flag ($FF = active/visible, $00 = inactive)
+demon_move_timer    equ $1E   ; word: movement-phase frame countdown (set to $1E=30, decremented each tick)
 demon_move_steps    equ $38   ; word: horizontal bounce step counter (set 1–4, decremented each step until rebound)
+demon_dir_flag      equ $27   ; byte: reverse-direction sentinel ($FF = should reverse X velocity, $00 = normal)
 demon_wing_anim     equ $40   ; byte: wing animation frame toggle (bit0 used; incremented each frame when vel_y==8)
 
 ; Parma Castle Soldier exclusive scratch field:
