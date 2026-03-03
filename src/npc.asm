@@ -1,7 +1,29 @@
 ; ======================================================================
 ; src/npc.asm
-; NPC ticks/inits, talker portraits, encounter initialization
+; NPC behavior tick and init functions for all town NPCs, plus shared
+; movement, collision, and animation utilities.
+;
+; Key responsibilities:
+;   - Per-NPC init routines: set initial tick function, direction, and
+;     sprite state for every named NPC in the game world.
+;   - Per-NPC tick routines: poll event-trigger flags each frame and
+;     update dialogue string pointer and sprite accordingly.
+;   - Generic NPC movement: wandering, direction changes, collision.
+;   - Animation helpers: static/walking/animated sprite frame selection.
+;   - Inventory helpers: add/remove/check items and magic in player lists.
+;   - Object-slot initialization: set up chain, paired, single, and
+;     map-indicator display objects used by the battle/portrait system.
+;   - Talker portrait init/tick: NPC dialogue portrait display logic.
+;   - Encounter initialization: place enemies with randomized positions.
 ; ======================================================================
+
+;==============================================================
+; GENERIC NPC BEHAVIORS
+; Core behavior tick/init pairs shared across many NPC types.
+;==============================================================
+
+; NPCTick_Soldier_Init
+; Init a 2x3-sprite soldier NPC; sets its tick to UpdatePos.
 NPCTick_Soldier_Init:
 	MOVE.b	#SPRITE_SIZE_2x3, obj_sprite_size(A5)
 	MOVE.l	#NPCTick_Soldier_UpdatePos, obj_tick_fn(A5)
@@ -13,7 +35,11 @@ NPCTick_Soldier_UpdatePos:
 	MOVE.l	#NPCTick_StowSoldier_DoctorHint, obj_tick_fn(A5)
 	RTS
 
-NPCTick_StowSoldier_DoctorHint:	
+; NPCTick_StowSoldier_DoctorHint
+; Tick for the Stow soldier who hints about the doctor.
+; Shows BringDoctorHereStr when innocence is not yet proven,
+; the Asti monster has been defeated, and the hint trigger is set.
+NPCTick_StowSoldier_DoctorHint:
 	TST.b	Stow_innocence_proven.w
 	BNE.b	NPCTick_StowSoldier_DoctorHint_Done
 	TST.b	Asti_monster_defeated.w
@@ -25,14 +51,18 @@ NPCTick_StowSoldier_DoctorHint:
 	MOVE.l	#BringDoctorHereStr, obj_npc_str_ptr(A5)
 NPCTick_StowSoldier_DoctorHint_Done:
 	BRA.w	UpdateNPCScreenPosition
+; NPCInit_StowSoldier_DoctorHint
+; Init for the Stow doctor-hint soldier: randomize direction,
+; then run UpdateNPCSpriteFrame each tick.
 NPCInit_StowSoldier_DoctorHint:
 	BSR.w	SetRandomDirection
 	MOVE.l	#UpdateNPCSpriteFrame, obj_tick_fn(A5)
 	RTS
 
 ; UpdateNPCSpriteFrame
-; Update NPC sprite animation frame
-; Sets animation flag, calls sprite update, restores direction
+; Tick: load a static animation frame and restore saved direction.
+; Uses LoadNPCAnimFrame_Static (no walking cycle), then increments
+; obj_move_counter for animation timing.
 UpdateNPCSpriteFrame:
 	MOVEA.l	obj_anim_ptr(A5), A1
 	MOVE.b	#FLAG_TRUE, obj_behavior_flag(A5)
@@ -41,24 +71,31 @@ UpdateNPCSpriteFrame:
 	ADDQ.b	#1, obj_move_counter(A5)
 	RTS
 
+; NPCInit_WalkingStatic
+; Init an NPC that walks around but uses a static (non-walking) sprite.
 NPCInit_WalkingStatic:
 	BSR.w	SetRandomDirection
 	MOVE.l	#NPCTick_WalkingStatic, obj_tick_fn(A5)
 	CLR.b	obj_behavior_flag(A5)
 	RTS
 
+; NPCTick_WalkingStatic
+; Tick: unfreeze, move, then display a static animation frame.
 NPCTick_WalkingStatic:
 	BSR.w	ClearNPCFrozenState
 	BSR.w	UpdateNPCMovement
 	MOVEA.l	obj_anim_ptr(A5), A1
 	BRA.w	LoadNPCAnimFrame_Static
+; NPCInit_WalkingStatic_LoadFrame
+; Variant init: sets tick to NPCBehavior_LoadFrame (animated frame load).
 NPCInit_WalkingStatic_LoadFrame:
 	BSR.w	SetRandomDirection
 	MOVE.l	#NPCBehavior_LoadFrame, obj_tick_fn(A5)
 	RTS
 
 ; NPCBehavior_LoadFrame
-; NPC behavior: Load animation frame and update state
+; Tick: load an animated frame (direction-cycled) and restore direction.
+; Outputs: obj_tile_index updated; obj_move_counter incremented.
 NPCBehavior_LoadFrame:
 	MOVEA.l	obj_anim_ptr(A5), A1
 	MOVE.b	#FLAG_TRUE, obj_behavior_flag(A5)
@@ -67,21 +104,29 @@ NPCBehavior_LoadFrame:
 	ADDQ.b	#1, obj_move_counter(A5)
 	RTS
 
+; NPCInit_WalkingAnimated
+; Init an NPC that walks around with a walking animation cycle.
 NPCInit_WalkingAnimated:
 	BSR.w	SetRandomDirection
 	MOVE.l	#NPCTick_WalkingAnimated, obj_tick_fn(A5)
 	CLR.b	obj_behavior_flag(A5)
 	RTS
 
+; NPCTick_WalkingAnimated
+; Tick: unfreeze, move, then display a walking animation frame.
 NPCTick_WalkingAnimated:
 	BSR.w	ClearNPCFrozenState
 	BSR.w	UpdateNPCMovement
 	MOVEA.l	obj_anim_ptr(A5), A1
 	BRA.w	LoadNPCAnimationFrame
+; NPCInit_WalkingAnimated_Animate
+; Variant init: plays AnimateEntitySprite tick (no movement).
 NPCInit_WalkingAnimated_Animate:
 	MOVE.l	#NPCTick_AnimateEntity, obj_tick_fn(A5)
 	RTS
 
+; NPCTick_AnimateEntity
+; Tick: run AnimateEntitySprite (simple 2-frame flip cycle) in place.
 NPCTick_AnimateEntity:
 	MOVEA.l	obj_anim_ptr(A5), A1
 	MOVE.b	#FLAG_TRUE, obj_behavior_flag(A5)
@@ -89,6 +134,14 @@ NPCTick_AnimateEntity:
 	ADDQ.b	#1, obj_move_counter(A5)
 	RTS
 
+;==============================================================
+; PARMA TOWN NPCs
+; NPCs located in Parma: fairy, Wyclif, and king's quest chain.
+;==============================================================
+
+; NPCInit_ParmaFairy
+; Init the Parma fairy NPC.
+; If Blade is dead, hides the object; otherwise sets ParmaFairy tick.
 NPCInit_ParmaFairy:
 	TST.b	Blade_is_dead.w
 	BEQ.b	NPCInit_ParmaFairy_Loop
@@ -99,12 +152,17 @@ NPCInit_ParmaFairy_Loop:
 	MOVE.l	#NPCTick_ParmaFairy, obj_tick_fn(A5)
 	RTS
 
+; NPCTick_ParmaFairy
+; Tick: if Blade is dead, show NoAnswerStr; then animate in place.
 NPCTick_ParmaFairy:
 	TST.b	Blade_is_dead.w
 	BEQ.b	NPCTick_ParmaFairy_Loop
 	MOVE.l	#NoAnswerStr, obj_npc_str_ptr(A5)
 NPCTick_ParmaFairy_Loop:
 	BRA.b	NPCTick_AnimateEntity
+; NPCInit_Wyclif_ParmaFindRing
+; Init Wyclif in Parma (find ring quest stage).
+; If Blade is dead, uses LoadFrame tick; otherwise ParmaFindRing tick.
 NPCInit_Wyclif_ParmaFindRing:
 	BSR.w	SetRandomDirection
 	CLR.b	obj_behavior_flag(A5)
@@ -117,18 +175,24 @@ NPCInit_Wyclif_ParmaFindRing_Loop:
 	MOVE.l	#NPCTick_ParmaFindRing, obj_tick_fn(A5)
 	RTS
 
+; NPCTick_ParmaFindRing
+; Tick: if Blade is dead, show FindRingStr; else idle load frame.
 NPCTick_ParmaFindRing:   
 	TST.b	Blade_is_dead.w
 	BEQ.b	NPCTick_ParmaFindRing_Loop
 	MOVE.l	#FindRingStr, obj_npc_str_ptr(A5)
 NPCTick_ParmaFindRing_Loop:
 	BRA.w	NPCBehavior_LoadFrame
+; NPCInit_Wyclif_UseMapHint1
+; Init Wyclif for "use map" hint stage 1 (before rings collected).
 NPCInit_Wyclif_UseMapHint1:
 	BSR.w	SetRandomDirection
 	CLR.b	obj_behavior_flag(A5)
 	MOVE.l	#NPCTick_Wyclif_UseMapHint1, obj_tick_fn(A5)
 	RTS
 
+; NPCTick_Wyclif_UseMapHint1
+; Tick: hint to use the map if rings not yet collected (trigger $70).
 NPCTick_Wyclif_UseMapHint1:  
 	TST.b	Rings_collected.w
 	BNE.b	NPCTick_Wyclif_UseMapHint1_Loop
@@ -137,12 +201,16 @@ NPCTick_Wyclif_UseMapHint1:
 	BSR.w	SetHintTextIfTriggered
 NPCTick_Wyclif_UseMapHint1_Loop:
 	BRA.w	UpdateNPCSpriteFrame
+; NPCInit_Wyclif_UseMapHint2Init
+; Init Wyclif for "use map" hint stage 2 (after rings collected).
 NPCInit_Wyclif_UseMapHint2Init:
 	BSR.w	SetRandomDirection
 	CLR.b	obj_behavior_flag(A5)
 	MOVE.l	#NPCTick_Wyclif_UseMapHint2, obj_tick_fn(A5)
 	RTS
 
+; NPCTick_Wyclif_UseMapHint2
+; Tick: hint to use the map when rings ARE collected (trigger $51).
 NPCTick_Wyclif_UseMapHint2:
 	TST.b	Rings_collected.w
 	BEQ.b	NPCTick_Wyclif_UseMapHint2_Loop
@@ -151,23 +219,32 @@ NPCTick_Wyclif_UseMapHint2:
 	BSR.w	SetHintTextIfTriggered
 NPCTick_Wyclif_UseMapHint2_Loop:
 	BRA.w	UpdateNPCSpriteFrame
+; NPCInit_Wyclif_UseMapHint2
+; Init Wyclif for "use map" hint stage 3 (unconditional).
 NPCInit_Wyclif_UseMapHint2:
 	BSR.w	SetRandomDirection
 	CLR.b	obj_behavior_flag(A5)
 	MOVE.l	#NPCTick_Wyclif_UseMapHint3, obj_tick_fn(A5)
 	RTS
 
+; NPCTick_Wyclif_UseMapHint3
+; Tick: always hint to use the map (trigger $40, no condition check).
 NPCTick_Wyclif_UseMapHint3:   
 	MOVE.l	#UseMapStr, Pending_hint_text.w
 	MOVE.w	#$0040, D5
 	BSR.w	SetHintTextIfTriggered
 	BRA.w	UpdateNPCSpriteFrame
+; NPCInit_Parma_AdviceHint
+; Init a Parma townsperson who gives advice about the king's quest.
 NPCInit_Parma_AdviceHint:
 	BSR.w	SetRandomDirection
 	CLR.b	obj_behavior_flag(A5)
 	MOVE.l	#NPCTick_Parma_AdviceHint, obj_tick_fn(A5)
 	RTS
 
+; NPCTick_Parma_AdviceHint
+; Tick: show advice hint based on story stage (real king talked to,
+; or Treasure of Troy challenge issued).
 NPCTick_Parma_AdviceHint:
 	TST.b	Talked_to_real_king.w
 	BEQ.b	NPCTick_Parma_AdviceHint_Loop
@@ -213,6 +290,9 @@ NPCTick_Parma_AdviceHint_Done:
 	MOVE.l	#NPCBehavior_LoadFrame, obj_tick_fn(A5)
 	RTS
 
+; NPCTick_Parma_TreasureQuest
+; Tick: manage the Treasure of Troy quest dialogue for this Parma NPC.
+; Removes the Treasure of Troy item once it has been given to the king.
 NPCTick_Parma_TreasureQuest:  
 	TST.b	Treasure_of_troy_given_to_king.w
 	BEQ.b	NPCTick_Parma_TreasureQuest_Loop
@@ -244,12 +324,17 @@ NPCTick_Parma_TreasureQuest_Done_Loop:
 	MOVE.l	#NPCTick_Parma_GotRingReaction, obj_tick_fn(A5)
 	RTS
 
+; NPCTick_Parma_GotRingReaction
+; Tick: show GotRingStr after player has talked to the real king.
 NPCTick_Parma_GotRingReaction:
 	TST.b	Talked_to_real_king.w
 	BEQ.b	NPCTick_Parma_GotRingReaction_Loop
 	MOVE.l	#GotRingStr, obj_npc_str_ptr(A5)
 NPCTick_Parma_GotRingReaction_Loop:
 	BRA.w	UpdateNPCSpriteFrame
+; NPCInit_Parma_GotRingReaction
+; Init: if Watling youth was restored, swap to ManA sprite.
+; Then set WalkingStatic tick.
 NPCInit_Parma_GotRingReaction:
 	BSR.w	SetRandomDirection
 	CLR.b	obj_behavior_flag(A5)
@@ -261,6 +346,14 @@ NPCInit_Parma_GotRingReaction_Loop:
 	MOVE.l	#NPCTick_WalkingStatic, obj_tick_fn(A5)
 	RTS
 
+;==============================================================
+; WATLING TOWN NPCs
+; NPCs in Watling: youth restoration, cave hints, and gratitude.
+;==============================================================
+
+; NPCInit_Watling_RestoredYouth
+; Init: if youth was restored, swap to ManB sprite and static tick;
+; otherwise set VerlinsCaveHint tick.
 NPCInit_Watling_RestoredYouth:
 	BSR.w	SetRandomDirection
 	CLR.b	obj_behavior_flag(A5)
@@ -275,11 +368,16 @@ NPCInit_Watling_RestoredYouth_Loop:
 	MOVE.l	#NPCTick_Watling_VerlinsCaveHint, obj_tick_fn(A5)
 	RTS
 
+; NPCTick_Watling_VerlinsCaveHint
+; Tick: hint to go north to Verlin's Cave (trigger $36).
 NPCTick_Watling_VerlinsCaveHint:       
 	MOVE.l	#GoNorthVerlinsCaveStr, Pending_hint_text.w
 	MOVE.w	#$36, D5
 	BSR.w	SetHintTextIfTriggered
 	BRA.w	UpdateNPCSpriteFrame
+; NPCInit_Watling_VerlinsCaveHint
+; Init: if youth restored, swap sprite and set ThankYou tick;
+; otherwise static sprite tick.
 NPCInit_Watling_VerlinsCaveHint:
 	BSR.w	SetRandomDirection
 	CLR.b	obj_behavior_flag(A5)
@@ -294,11 +392,15 @@ NPCInit_Watling_VerlinsCaveHint_Loop:
 	MOVE.l	#UpdateNPCSpriteFrame, obj_tick_fn(A5)
 	RTS
 
+; NPCTick_Watling_ThankYou
+; Tick: hint "thank you stranger" (trigger $65).
 NPCTick_Watling_ThankYou:
 	MOVE.l	#ThankYouStrangerStr, Pending_hint_text.w
 	MOVE.w	#$65, D5
 	BSR.w	SetHintTextIfTriggered
 	BRA.w	UpdateNPCSpriteFrame
+; NPCInit_Watling_ThankYou
+; Init: if youth restored, swap to VillagerC sprite and LoadFrame tick.
 NPCInit_Watling_ThankYou:
 	BSR.w	SetRandomDirection
 	CLR.b	obj_behavior_flag(A5)
@@ -313,6 +415,14 @@ NPCInit_Watling_ThankYou_Loop:
 	MOVE.l	#UpdateNPCSpriteFrame, obj_tick_fn(A5)
 	RTS
 
+;==============================================================
+; DEEPDALE TOWN NPCs
+; NPCs in Deepdale: secret keeper, Bremen's cave hint, road warning.
+;==============================================================
+
+; NPCInit_Deepdale_SecretKeeper
+; Init: if king's secret is already kept, use static tick;
+; otherwise set SecretKeeper tick to handle item removal.
 NPCInit_Deepdale_SecretKeeper:
 	BSR.w	SetRandomDirection
 	CLR.b	obj_behavior_flag(A5)
@@ -325,6 +435,9 @@ NPCInit_Deepdale_SecretKeeper_Loop:
 	MOVE.l	#UpdateNPCSpriteFrame, obj_tick_fn(A5)	
 	RTS
 	
+; NPCTick_Deepdale_SecretKeeper
+; Tick: if secret was kept, show KeptSecretStr and remove medicine
+; from inventory (item $010B) if not yet removed.
 NPCTick_Deepdale_SecretKeeper:
 	TST.b	Deepdale_king_secret_kept.w
 	BEQ.b	NPCTick_Deepdale_MedicineDone
@@ -343,6 +456,9 @@ NPCTick_Deepdale_MedicineDone:
 	MOVE.l	#NPCTick_Deepdale_BremensCaveHint, obj_tick_fn(A5)
 	RTS
 
+; NPCTick_Deepdale_BremensCaveHint
+; Tick: if truffle quest started and secret not kept, hint about
+; Bremen's Cave to the northwest (trigger $62).
 NPCTick_Deepdale_BremensCaveHint:
 	TST.b	Deepdale_king_secret_kept.w
 	BNE.b	NPCTick_Deepdale_CaveHintDone
@@ -353,12 +469,17 @@ NPCTick_Deepdale_BremensCaveHint:
 	BSR.w	SetHintTextIfTriggered
 NPCTick_Deepdale_CaveHintDone:
 	BRA.w	UpdateNPCSpriteFrame
+; NPCInit_Deepdale_BremensCaveHint
+; Init: sets StowRoadWarning as the NPC tick.
 NPCInit_Deepdale_BremensCaveHint:
 	BSR.w	SetRandomDirection
 	CLR.b	obj_behavior_flag(A5)
 	MOVE.l	#NPCTick_Deepdale_StowRoadWarning, obj_tick_fn(A5)
 	RTS
 
+; NPCTick_Deepdale_StowRoadWarning
+; Tick: if king's secret was kept, warn about the dangerous road
+; to Stow (trigger $7A).
 NPCTick_Deepdale_StowRoadWarning:
 	TST.b	Deepdale_king_secret_kept.w
 	BEQ.b	NPCTick_Deepdale_StowRoadWarning_Loop
@@ -367,6 +488,11 @@ NPCTick_Deepdale_StowRoadWarning:
 	BSR.w	SetHintTextIfTriggered
 NPCTick_Deepdale_StowRoadWarning_Loop:
 	BRA.w	UpdateNPCSpriteFrame
+;==============================================================
+; STOW TOWN NPCs
+; NPCs in Stow: Sanguios bookkeeper, thief accusers.
+;==============================================================
+; NPCInit_Stow_Bookkeeper (init falls through from Deepdale section)
 	BSR.w	SetRandomDirection
 	CLR.b	obj_behavior_flag(A5)
 	TST.b	Stow_innocence_proven.w
@@ -380,6 +506,11 @@ NPCTick_Stow_SetBookkeeperTick:
 	MOVE.l	#NPCTick_Stow_SanguiosBookkeeper, obj_tick_fn(A5)
 	RTS
 
+; NPCTick_Stow_SanguiosBookkeeper
+; Tick: manage the Sanguios bookkeeper's dialogue and magic grants.
+; - If sent to Malaga: give Sanguia field magic (once), say HopesWithYouStr.
+; - If innocence proven: give Sanguia field magic if magic list has room.
+; - If accused of theft: show ReturnWhenInnocentStr, confiscate Sanguios.
 NPCTick_Stow_SanguiosBookkeeper:
 	TST.b	Sent_to_malaga.w
 	BEQ.b	NPCTick_Stow_SanguiosBookkeeper_Loop
@@ -430,6 +561,8 @@ NPCTick_Stow_Bookkeeper_Done_Loop:
 	MOVE.l	#NPCTick_Stow_ThiefAccuser1, obj_tick_fn(A5)
 	RTS
 
+; NPCTick_Stow_ThiefAccuser1
+; Tick: show YoureTheThiefStr when the theft accusation is active.
 NPCTick_Stow_ThiefAccuser1:
 	TST.b	Accused_of_theft.w
 	BEQ.b	NPCTick_Stow_ThiefAccuser1_Loop
@@ -447,12 +580,22 @@ NPCTick_Stow_ThiefAccuser1_Loop2:
 	MOVE.l	#NPCTick_Stow_ThiefAccuser2, obj_tick_fn(A5)
 	RTS
 
+; NPCTick_Stow_ThiefAccuser2
+; Tick: show FaceOfCriminalStr when the theft accusation is active.
 NPCTick_Stow_ThiefAccuser2:
 	TST.b	Accused_of_theft.w
 	BEQ.b	NPCTick_Stow_ThiefAccuser2_Loop
 	MOVE.l	#FaceOfCriminalStr, obj_npc_str_ptr(A5)
 NPCTick_Stow_ThiefAccuser2_Loop:
 	BRA.w	UpdateNPCSpriteFrame
+;==============================================================
+; MALAGA TOWN NPCs
+; NPCs in Malaga: dungeon key giver, Keltwick hint NPC.
+;==============================================================
+
+; NPCInit_Malaga_DungeonKeySetup
+; Init: if Bearwulf not yet met, hide object and show static sprite;
+; otherwise reset key state and set DungeonKeyGiver tick.
 NPCInit_Malaga_DungeonKeySetup:
 	BSR.w	SetRandomDirection
 	CLR.b	obj_behavior_flag(A5)
@@ -468,6 +611,10 @@ NPCInit_Malaga_DungeonKeySetup_Loop:
 	MOVE.l	#NPCTick_Malaga_DungeonKeyGiver, obj_tick_fn(A5)
 	RTS
 
+; NPCTick_Malaga_DungeonKeyGiver
+; Tick: give the player the dungeon key (item $0025) on first meeting.
+; If the player lost the key, offer a replacement.
+; Checks inventory capacity before granting.
 NPCTick_Malaga_DungeonKeyGiver:
 	TST.b	Dungeon_key_received.w
 	BNE.b	NPCTick_Malaga_DungeonKeyGiver_Loop
@@ -504,12 +651,22 @@ NPCTick_Malaga_DungeonKeyGiver_Default_Loop:
 	MOVE.l	#ComeBackLessGearStr, obj_npc_str_ptr(A5)	
 NPCTick_SetMessage_Done:
 	BRA.w	UpdateNPCSpriteFrame
+; NPCInit_Malaga_DungeonKeyGiver
+; Init: sets Keltwick_MalagaHint as the NPC tick.
 NPCInit_Malaga_DungeonKeyGiver:
 	BSR.w	SetRandomDirection
 	CLR.b	obj_behavior_flag(A5)
 	MOVE.l	#NPCTick_Keltwick_MalagaHint, obj_tick_fn(A5)
 	RTS
 
+;==============================================================
+; KELTWICK TOWN NPCs
+; NPCs in Keltwick: Malaga hint, Blazon's cave hint, old man sketch,
+; alarm clock / sleeping girl, and wait-for-player NPC.
+;==============================================================
+
+; NPCTick_Keltwick_MalagaHint
+; Tick: if sent to Malaga, hint Malaga is northeast (trigger $3D).
 NPCTick_Keltwick_MalagaHint:
 	TST.b	Sent_to_malaga.w
 	BEQ.b	NPCTick_Keltwick_MalagaHint_Loop
@@ -518,12 +675,16 @@ NPCTick_Keltwick_MalagaHint:
 	BSR.w	SetHintTextIfTriggered
 NPCTick_Keltwick_MalagaHint_Loop:
 	BRA.w	UpdateNPCSpriteFrame
+; NPCInit_Keltwick_MalagaHint
+; Init: sets Keltwick_BlazonsCaveHint as the NPC tick.
 NPCInit_Keltwick_MalagaHint:
 	BSR.w	SetRandomDirection
 	CLR.b	obj_behavior_flag(A5)
 	MOVE.l	#NPCTick_Keltwick_BlazonsCaveHint, obj_tick_fn(A5)
 	RTS
 
+; NPCTick_Keltwick_BlazonsCaveHint
+; Tick: if sent to Malaga, hint to go west to Blazon's Cave (trigger $4C).
 NPCTick_Keltwick_BlazonsCaveHint:
 	TST.b	Sent_to_malaga.w
 	BEQ.b	NPCTick_Keltwick_BlazonsCaveHint_Loop
@@ -532,6 +693,9 @@ NPCTick_Keltwick_BlazonsCaveHint:
 	BSR.w	SetHintTextIfTriggered
 NPCTick_Keltwick_BlazonsCaveHint_Loop:
 	BRA.w	UpdateNPCSpriteFrame
+; NPCInit_Keltwick_BlazonsCaveHint
+; Init: if old man is waiting for letter, show WaitingForLetterStr
+; and use LoadFrame tick; otherwise set OldManSketch tick.
 NPCInit_Keltwick_BlazonsCaveHint:
 	BSR.w	SetRandomDirection
 	CLR.b	obj_behavior_flag(A5)
@@ -547,6 +711,10 @@ NPCInit_Keltwick_BlazonsCaveHint_Loop2:
 	MOVE.l	#NPCBehavior_LoadFrame, obj_tick_fn(A5)
 	RTS
 
+; NPCTick_Keltwick_OldManSketch
+; Tick: manage the old man / lone-tree treasure sketch side-quest.
+; Gives the old man's sketch item and tracks whether the
+; treasure chest has been opened.
 NPCTick_Keltwick_OldManSketch:
 	TST.b	Old_man_waiting_for_letter.w
 	BEQ.w	NPCTick_Keltwick_OldManSketch_Loop
@@ -576,6 +744,11 @@ NPCTick_Keltwick_OldManSketch_Loop4:
 	MOVE.l	#ShowSketchStr, obj_npc_str_ptr(A5)
 NPCTick_LoneTreeOldMan_Display:
 	BRA.w	NPCBehavior_LoadFrame
+
+; NPCInit_Keltwick_AlarmClock
+; Init for the alarm-clock prop NPC; determines whether the sleeping
+; girl puzzle is active based on story-progress flags.
+; Sets Keltwick_girl_sleeping flag and assigns SleepingGirl tick.
 NPCInit_Keltwick_AlarmClock:
 	CLR.b	Alarm_clock_rang.w
 	BSR.w	SetRandomDirection
@@ -602,6 +775,9 @@ NPCInit_Keltwick_SleepingGirl_Done:
 	MOVE.l	#NPCTick_Keltwick_SleepingGirl, obj_tick_fn(A5)
 	RTS
 
+; NPCTick_Keltwick_SleepingGirl
+; Tick: show sleeping-girl sprite if girl is asleep and alarm rang.
+; Changes to a waking sprite with different dialogue if innocence proven.
 NPCTick_Keltwick_SleepingGirl:
 	TST.b	Keltwick_girl_sleeping.w
 	BEQ.b	NPCTick_Keltwick_Done
@@ -618,11 +794,17 @@ NPCTick_Keltwick_SleepingGirl_Loop:
 
 NPCTick_Keltwick_Done:
 	BRA.w	NPCBehavior_LoadFrame
+
+; NPCInit_Keltwick_WaitForPlayer
+; Init: randomize direction and assign WaitForPlayer tick.
 	BSR.w	SetRandomDirection
 	CLR.b	obj_behavior_flag(A5)
 	MOVE.l	#NPCTick_Keltwick_WaitForPlayer, obj_tick_fn(A5)
 	RTS
 
+; NPCTick_Keltwick_WaitForPlayer
+; Tick: if Tsarkon is dead, show "will wait" message.
+; Otherwise hint about returning safely (trigger $2E).
 NPCTick_Keltwick_WaitForPlayer:
 	TST.b	Tsarkon_is_dead.w
 	BEQ.b	NPCTick_Keltwick_WaitForPlayer_Loop
@@ -636,11 +818,22 @@ NPCTick_Keltwick_WaitForPlayer_Loop:
 	BSR.w	SetHintTextIfTriggered
 NPCTick_Barrow_HintDone:
 	BRA.w	NPCBehavior_LoadFrame
+
+;==============================================================
+; BARROW TOWN NPCs
+; NPCs in Barrow: northeast hint, quest guard, Bearwulf quest,
+; and Tadcaster direction hint.
+;==============================================================
+
+; NPCInit_Barrow_NortheastHint
+; Init: randomize direction and assign NortheastHint tick.
 	BSR.w	SetRandomDirection
 	CLR.b	obj_behavior_flag(A5)
 	MOVE.l	#NPCTick_Barrow_NortheastHint, obj_tick_fn(A5)
 	RTS
 
+; NPCTick_Barrow_NortheastHint
+; Tick: if map received, hint that Tadcaster is northeast (trigger $1D).
 NPCTick_Barrow_NortheastHint:
 	TST.b	Barrow_map_received.w
 	BEQ.b	NPCTick_Barrow_NortheastHint_Loop
@@ -649,6 +842,9 @@ NPCTick_Barrow_NortheastHint:
 	BSR.w	SetHintTextIfTriggered
 NPCTick_Barrow_NortheastHint_Loop:
 	BRA.w	UpdateNPCSpriteFrame
+
+; NPCInit_Barrow_QuestGuard
+; Init: hide the guard if map already received; assign QuestGuard tick.
 	BSR.w	SetRandomDirection
 	CLR.b	obj_behavior_flag(A5)
 	TST.b	Barrow_map_received.w
@@ -658,6 +854,8 @@ NPCTick_Barrow_NortheastHint_Loop2:
 	MOVE.l	#NPCTick_Barrow_QuestGuard, obj_tick_fn(A5)
 	RTS
 
+; NPCTick_Barrow_QuestGuard
+; Tick: hide guard once both Barrow quests are complete.
 NPCTick_Barrow_QuestGuard:
 	TST.b	Barrow_quest_1_complete.w
 	BEQ.b	NPCTick_Barrow_BearwulfDone
@@ -666,11 +864,18 @@ NPCTick_Barrow_QuestGuard:
 	BCLR.b	#7, (A5)
 NPCTick_Barrow_BearwulfDone:
 	BRA.w	UpdateNPCSpriteFrame
+
+; NPCInit_Barrow_BearwulfQuest
+; Init: randomize direction and assign BearwulfQuest tick.
 	BSR.w	SetRandomDirection
 	CLR.b	obj_behavior_flag(A5)
 	MOVE.l	#NPCTick_Barrow_BearwulfQuest, obj_tick_fn(A5)
 	RTS
 
+; NPCTick_Barrow_BearwulfQuest
+; Tick: update Bearwulf's dialogue based on quest progress.
+; Shows journey-to-Carthahena message if Tsarkon dead, else
+; "return after task" if Bearwulf has come home.
 NPCTick_Barrow_BearwulfQuest:
 	TST.b	Tsarkon_is_dead.w
 	BEQ.b	NPCTick_Barrow_BearwulfQuest_Loop
@@ -682,23 +887,41 @@ NPCTick_Barrow_BearwulfQuest_Loop:
 	MOVE.l	#ReturnAfterTaskStr, obj_npc_str_ptr(A5)	
 NPCTick_Barrow_SetNextTick:
 	BRA.w	NPCBehavior_LoadFrame
+
+; NPCInit_Barrow_BearwulfQuest (secondary init)
+; Init: randomize direction and assign TadcasterHint tick.
 NPCInit_Barrow_BearwulfQuest:
 	BSR.w	SetRandomDirection
 	CLR.b	obj_behavior_flag(A5)
 	MOVE.l	#NPCTick_Barrow_TadcasterHint, obj_tick_fn(A5)
 	RTS
 
+; NPCTick_Barrow_TadcasterHint
+; Tick: hint to reach Tadcaster (trigger $0A).
 NPCTick_Barrow_TadcasterHint:
 	MOVE.l	#ReachTadcasterStr, Pending_hint_text.w
 	MOVE.w	#$000A, D5
 	BSR.w	SetHintTextIfTriggered
 	BRA.w	UpdateNPCSpriteFrame
+
+;==============================================================
+; TADCASTER TOWN NPCs
+; NPCs in Tadcaster: treasure quest, pass seller, imposter hint,
+; and Helwig direction hint.
+;==============================================================
+
+; NPCInit_Barrow_TadcasterHint (leads into Tadcaster)
+; Init: randomize direction and assign TadcasterTreasureQuest tick.
 NPCInit_Barrow_TadcasterHint:
 	BSR.w	SetRandomDirection
 	CLR.b	obj_behavior_flag(A5)
 	MOVE.l	#NPCTick_Tadcaster_TreasureQuest, obj_tick_fn(A5)
 	RTS
 
+; NPCTick_Tadcaster_TreasureQuest
+; Tick: manage the cave treasure quest side-chain.
+; Hints about treasure in cave (trigger $1C); if found,
+; splits kims reward ($7500) and updates dialogue.
 NPCTick_Tadcaster_TreasureQuest:
 	TST.b	Tadcaster_treasure_quest_started.w
 	BEQ.b	NPCTick_Tadcaster_TreasureQuest_Loop
@@ -719,6 +942,10 @@ NPCTick_Tadcaster_TreasureQuest_Loop:
 	BSR.w	SetHintTextIfTriggered
 NPCTick_Tadcaster_HintDone:
 	BRA.w	NPCBehavior_LoadFrame
+
+; NPCInit_Tadcaster_PassSellerSetup
+; Init: only activate pass seller if Uncle Tibor visited and
+; pass not yet purchased; otherwise set static idle.
 NPCInit_Tadcaster_PassSellerSetup:
 	BSR.w	SetRandomDirection
 	CLR.b	obj_behavior_flag(A5)
@@ -733,6 +960,10 @@ NPCInit_PassSeller_SetStatic:
 	MOVE.l	#NPCBehavior_LoadFrame, obj_tick_fn(A5)
 	RTS
 
+; NPCTick_Tadcaster_PassSeller
+; Tick: sell the Pass to Carthahena to the player.
+; Checks gold >= PRICE, inventory not full; deducts payment and
+; adds ITEM_PASS_TO_CARTHAHENA if not already given.
 NPCTick_Tadcaster_PassSeller:
 	TST.b	Pass_to_carthahena_purchased.w
 	BEQ.b	NPCTick_Tadcaster_PassSeller_Loop
@@ -763,12 +994,17 @@ NPCTick_Tadcaster_PassSeller_Loop4:
 	MOVE.l	#BuyPassToCartahenaStr, obj_npc_str_ptr(A5)
 NPCTick_Paofal_PassSeller_Done:
 	BRA.w	NPCBehavior_LoadFrame
+
+; NPCInit_Tadcaster_PassSeller
+; Init: randomize direction and assign ImposterHint tick.
 NPCInit_Tadcaster_PassSeller:
 	BSR.w	SetRandomDirection
 	CLR.b	obj_behavior_flag(A5)
 	MOVE.l	#NPCTick_Tadcaster_ImposterHint, obj_tick_fn(A5)
 	RTS
 
+; NPCTick_Tadcaster_ImposterHint
+; Tick: if imposter not yet killed, hint about Darmon's Cave (trigger $08).
 NPCTick_Tadcaster_ImposterHint:
 	TST.b	Imposter_killed.w
 	BNE.b	NPCTick_Tadcaster_ImposterHint_Loop
@@ -777,12 +1013,17 @@ NPCTick_Tadcaster_ImposterHint:
 	BSR.w	SetHintTextIfTriggered
 NPCTick_Tadcaster_ImposterHint_Loop:
 	BRA.w	UpdateNPCSpriteFrame
+
+; NPCInit_Tadcaster_ImposterHint
+; Init: randomize direction and assign HelwigHint tick.
 NPCInit_Tadcaster_ImposterHint:
 	BSR.w	SetRandomDirection
 	CLR.b	obj_behavior_flag(A5)
 	MOVE.l	#NPCTick_Tadcaster_HelwigHint, obj_tick_fn(A5)
 	RTS
 
+; NPCTick_Tadcaster_HelwigHint
+; Tick: if imposter killed, hint to reach Helwig (trigger $17).
 NPCTick_Tadcaster_HelwigHint:
 	TST.b	Imposter_killed.w
 	BEQ.b	NPCTick_Tadcaster_HelwigHint_Loop
@@ -791,6 +1032,9 @@ NPCTick_Tadcaster_HelwigHint:
 	BSR.w	SetHintTextIfTriggered
 NPCTick_Tadcaster_HelwigHint_Loop:
 	BRA.w	UpdateNPCSpriteFrame
+
+; NPCInit_Tadcaster_HelwigHint
+; Init: hide bully NPC after first fight won; assign WalkingAnimated tick.
 NPCInit_Tadcaster_HelwigHint:
 	BSR.w	SetRandomDirection
 	CLR.b	obj_behavior_flag(A5)
@@ -807,12 +1051,22 @@ NPCInit_Tadcaster_HelwigHint_Loop2:
 	MOVE.l	#NPCTick_WalkingAnimated, obj_tick_fn(A5)
 	RTS
 
+;==============================================================
+; HELWIG TOWN NPCs
+; NPCs in Helwig: generic count-on-you hint, Swaffham hint,
+; rescued villager, secret key giver, old woman quest chain.
+;==============================================================
+
+; NPCInit_Helwig_Generic
+; Init: randomize direction and assign CountOnYouHint tick.
 NPCInit_Helwig_Generic:
 	BSR.w	SetRandomDirection
 	CLR.b	obj_behavior_flag(A5)
 	MOVE.l	#NPCTick_Helwig_CountOnYouHint, obj_tick_fn(A5)
 	RTS
 
+; NPCTick_Helwig_CountOnYouHint
+; Tick: if men not yet rescued, hint "counting on you" (trigger $14).
 NPCTick_Helwig_CountOnYouHint:
 	TST.b	Helwig_men_rescued.w
 	BNE.b	NPCTick_Helwig_CountOnYouHint_Loop
@@ -821,17 +1075,25 @@ NPCTick_Helwig_CountOnYouHint:
 	BSR.w	SetHintTextIfTriggered
 NPCTick_Helwig_CountOnYouHint_Loop:
 	BRA.w	UpdateNPCSpriteFrame
+
+; NPCInit_Helwig_CountOnYouHint
+; Init: randomize direction and assign SwaffhamHint tick.
 NPCInit_Helwig_CountOnYouHint:
 	BSR.w	SetRandomDirection
 	CLR.b	obj_behavior_flag(A5)
 	MOVE.l	#NPCTick_Helwig_SwaffhamHint, obj_tick_fn(A5)
 	RTS
 
+; NPCTick_Helwig_SwaffhamHint
+; Tick: hint to journey west to Swaffham (trigger $03).
 NPCTick_Helwig_SwaffhamHint:
 	MOVE.l	#JourneyWestToSwaffhamStr, Pending_hint_text.w
 	MOVE.w	#3, D5
 	BSR.w	SetHintTextIfTriggered
 	BRA.w	UpdateNPCSpriteFrame
+
+; NPCInit_Helwig_SwaffhamHint
+; Init: hide NPC if men not yet rescued; assign static tick.
 NPCInit_Helwig_SwaffhamHint:
 	BSR.w	SetRandomDirection
 	CLR.b	obj_behavior_flag(A5)
@@ -842,6 +1104,8 @@ NPCInit_Helwig_SwaffhamHint_Loop:
 	MOVE.l	#UpdateNPCSpriteFrame, obj_tick_fn(A5)
 	RTS
 
+; NPCInit_Helwig_RescuedVillager
+; Init: hide villager until Helwig men are rescued; assign WalkingStatic.
 NPCInit_Helwig_RescuedVillager:
 	BSR.w	SetRandomDirection
 	CLR.b	obj_behavior_flag(A5)
@@ -852,6 +1116,8 @@ NPCInit_Helwig_RescuedVillager_Loop:
 	MOVE.l	#NPCTick_WalkingStatic, obj_tick_fn(A5)
 	RTS
 
+; NPCInit_Helwig_KeyGiverVisibility
+; Init: hide key giver until men rescued; then assign SecretKeyGiver tick.
 NPCInit_Helwig_KeyGiverVisibility:
 	BSR.w	SetRandomDirection
 	CLR.b	obj_behavior_flag(A5)
@@ -865,6 +1131,9 @@ NPCInit_Helwig_KeyGiverVisibility_Loop:
 	MOVE.l	#NPCTick_Helwig_SecretKeyGiver, obj_tick_fn(A5)
 	RTS
 
+; NPCTick_Helwig_SecretKeyGiver
+; Tick: give ITEM_SECRET_KEY once cave-key dialog shown and inventory not full.
+; After key given, shows "remembered as hero" dialogue.
 NPCTick_Helwig_SecretKeyGiver:
 	TST.b	Secret_key_received.w
 	BNE.b	NPCTick_Helwig_SecretKeyGiver_Loop
@@ -884,6 +1153,9 @@ NPCTick_Helwig_SecretKeyGiver_Loop2:
 	MOVE.l	#CantCarryMoreItemsStr, obj_npc_str_ptr(A5)
 NPCTick_Helwig_SecretKeyGiver_Done:
 	BRA.w	UpdateNPCSpriteFrame
+; NPCInit_Helwig_SecretKeyGiver (secondary init role)
+; Init: if old-woman quest started, pre-load "found someone" string;
+; then assign OldWomanQuest tick.
 NPCInit_Helwig_SecretKeyGiver:
 	BSR.w	SetRandomDirection
 	CLR.b	obj_behavior_flag(A5)
@@ -894,6 +1166,10 @@ NPCInit_Helwig_SecretKeyGiver_Loop:
 	MOVE.l	#NPCTick_Helwig_OldWomanQuest, obj_tick_fn(A5)
 	RTS
 
+; NPCTick_Helwig_OldWomanQuest
+; Tick: drive the old woman / old man matchmaking quest.
+; Gives ITEM_OLD_WOMANS_SKETCH when quest starts; rewards
+; EQUIPMENT_SHIELD_DRAGON once the pair are united.
 NPCTick_Helwig_OldWomanQuest:
 	TST.b	Old_man_and_woman_paired.w
 	BEQ.b	NPCTick_Helwig_OldWomanQuest_Loop
@@ -945,22 +1221,40 @@ NPCTick_Helwig_OldWomanQuest_Loop5:
 	MOVE.l	#FoundSomeoneForMeStr, obj_npc_str_ptr(A5)
 NPCTick_Helwig_OldWomanQuest_Done:
 	BRA.w	NPCBehavior_LoadFrame
+
+; NPCInit_Helwig_OldWomanQuest (bridges into Swaffham section)
+; Init: set 2x3 soldier sprite size and assign KnuteNoAnswer tick.
 NPCInit_Helwig_OldWomanQuest:
 	MOVE.b	#SPRITE_SIZE_2x3, obj_sprite_size(A5)
 	MOVE.l	#NPCTick_Swaffham_KnuteNoAnswer, obj_tick_fn(A5)
 	RTS
 
+;==============================================================
+; SWAFFHAM AND EXCALABRIA NPCs
+; Knute (Swaffham), crystal exchange wizard (Excalabria),
+; Swaffham ruin wait, spy dinner trap.
+;==============================================================
+
+; NPCTick_Swaffham_KnuteNoAnswer
+; Tick: once Swaffham is ruined, Knute stops responding.
 NPCTick_Swaffham_KnuteNoAnswer:
 	TST.b	Knute_informed_of_swaffham_ruin.w
 	BEQ.b	NPCTick_Swaffham_KnuteNoAnswer_Loop
 	MOVE.l	#NoAnswerStr, obj_npc_str_ptr(A5)
 NPCTick_Swaffham_KnuteNoAnswer_Loop:
 	BRA.w	UpdateNPCScreenPosition
+
+; NPCInit_Excalabria_CrystalExchange (setup)
+; Init: randomize direction and assign CrystalExchange tick.
 	BSR.w	SetRandomDirection
 	CLR.b	obj_behavior_flag(A5)
 	MOVE.l	#NPCTick_Excalabria_CrystalExchange, obj_tick_fn(A5)
 	RTS
 
+; NPCTick_Excalabria_CrystalExchange
+; Tick: crystal merchant in Excalabria; trades rings for colored keys.
+; Checks ring progress (earth, red, blue, white) and gives corresponding
+; key item once crystals are returned.
 NPCTick_Excalabria_CrystalExchange:
 	TST.b	Ring_of_earth_obtained.w
 	BEQ.w	NPCTick_Excalabria_CrystalExchange_Loop
@@ -1044,6 +1338,11 @@ NPCTick_Excalabria_CrystalExchange_Loop11:
 	MOVE.l	#RingOfEarthQuestStr, obj_npc_str_ptr(A5)
 NPCTick_Excalabria_CrystalExchange_Done:
 	BRA.w	NPCBehavior_LoadFrame
+
+; NPCInit_Excalabria_CrystalExchange
+; Init: if all 4 rings not collected, set static tick.
+; If Ring of Earth obtained but Swaffham not yet informed,
+; assign SwaffhamRuinWait tick instead.
 NPCInit_Excalabria_CrystalExchange:
 	BSR.w	SetRandomDirection
 	CLR.b	obj_behavior_flag(A5)
@@ -1064,6 +1363,9 @@ NPCInit_Excalabria_CrystalExchange_Done:
 	MOVE.l	#UpdateNPCSpriteFrame, obj_tick_fn(A5)
 	RTS
 
+; NPCTick_Excalabria_SwaffhamRuinWait
+; Tick: if Swaffham is ruined, clear Carthahena fight trigger and
+; show "waiting in Excalabria" string; else idle.
 NPCTick_Excalabria_SwaffhamRuinWait:
 	TST.b	Swaffham_ruined.w
 	BEQ.b	NPCTick_Excalabria_SwaffhamRuinWait_Loop
@@ -1071,6 +1373,9 @@ NPCTick_Excalabria_SwaffhamRuinWait:
 	MOVE.l	#WaitingExcalabriaStr, obj_npc_str_ptr(A5)
 NPCTick_Excalabria_SwaffhamRuinWait_Loop:
 	BRA.w	NPCBehavior_LoadFrame
+
+; NPCInit_Swaffham_SpyDinnerTrap
+; Init: if poisoned food already eaten, hide NPC; else assign SpyDinnerTrap tick.
 NPCInit_Swaffham_SpyDinnerTrap:
 	BSR.w	SetRandomDirection
 	CLR.b	obj_behavior_flag(A5)
@@ -1084,6 +1389,10 @@ NPCInit_Swaffham_SpyDinnerTrap_Loop:
 	MOVE.l	#UpdateNPCSpriteFrame, obj_tick_fn(A5)
 	RTS
 
+; NPCTick_Swaffham_SpyDinnerTrap
+; Tick: manage the spy-dinner poison trap event.
+; Once player eats poisoned food, triggers sleep sound, gameplay
+; state reset to building entry, and full HP/MP restore.
 NPCTick_Swaffham_SpyDinnerTrap:
 	TST.b	Swaffham_ate_poisoned_food.w
 	BEQ.b	NPCTick_Swaffham_SpyDinnerTrap_Loop
@@ -1119,6 +1428,14 @@ NPCTick_Swaffham_SpyDinnerTrap_Done:
 NPCTick_Swaffham_SpyDinnerTrap_Done_Loop:
 	RTS
 
+;==============================================================
+; HASTINGS AND CARTHAHENA NPCs
+; NPCs in Hastings: hide-after-Tsarkon NPC, welcome prince,
+; gate guard. Carthahena: boss guard, King Thule key giver.
+;==============================================================
+
+; NPCInit_Hastings_HideAfterTsarkon
+; Init: if Tsarkon dead, hide NPC immediately; else assign static tick.
 NPCInit_Hastings_HideAfterTsarkon:
 	BSR.w	SetRandomDirection
 	CLR.b	obj_behavior_flag(A5)
@@ -1131,6 +1448,8 @@ NPCInit_Hastings_HideAfterTsarkon_Loop:
 	MOVE.l	#UpdateNPCSpriteFrame, obj_tick_fn(A5)
 	RTS
 
+; NPCInit_Hastings_WelcomePrince
+; Init: select welcome/waiting dialogue based on sword and story state.
 NPCInit_Hastings_WelcomePrince:
 	BSR.w	SetRandomDirection
 	CLR.b	obj_behavior_flag(A5)
@@ -1145,6 +1464,9 @@ NPCTick_Hastings_SetStaticBehavior:
 	MOVE.l	#NPCBehavior_LoadFrame, obj_tick_fn(A5)
 	RTS
 
+; NPCInit_Hastings_GateGuard
+; Init: if Tsarkon dead, hide guard; if pass purchased, move guard
+; aside ($00F8); then set static LoadFrame tick.
 NPCInit_Hastings_GateGuard:
 	BSR.w	SetRandomDirection
 	CLR.b	obj_behavior_flag(A5)
@@ -1160,6 +1482,8 @@ NPCInit_Hastings_SetBehavior:
 	MOVE.l	#NPCBehavior_LoadFrame, obj_tick_fn(A5)
 	RTS
 
+; NPCInit_Carthahena_BossGuard
+; Init: if boss defeated, hide guard and set static; else BossGuard tick.
 NPCInit_Carthahena_BossGuard:
 	BSR.w	SetRandomDirection
 	CLR.b	obj_behavior_flag(A5)
@@ -1173,6 +1497,8 @@ NPCInit_Carthahena_BossGuard_Loop:
 	MOVE.l	#NPCTick_Carthahena_BossGuard, obj_tick_fn(A5)
 	RTS
 
+; NPCTick_Carthahena_BossGuard
+; Tick: hide guard once boss defeated; else show "bested me" post-fight.
 NPCTick_Carthahena_BossGuard:
 	TST.b	Carthahena_boss_defeated.w
 	BEQ.b	NPCTick_Carthahena_BossGuard_Loop
@@ -1202,6 +1528,9 @@ NPCTick_CarthahenaFinalBoss_AltEntry_DeadCode:					; unreferenced dead code
 NPCTick_CarthahenaFinalBoss_Done_Loop2:
 	MOVE.l	#UpdateNPCSpriteFrame, obj_tick_fn(A5)
 	RTS
+
+; NPCInit_Carthahena_KingThuleKey
+; Init: if Tsarkon dead, set static; else assign KingThuleKey tick.
 NPCInit_Carthahena_KingThuleKey:
 	BSR.w	SetRandomDirection
 	CLR.b	obj_behavior_flag(A5)
@@ -1214,6 +1543,10 @@ NPCInit_Carthahena_KingThuleKey_Loop:
 	MOVE.l	#UpdateNPCSpriteFrame, obj_tick_fn(A5)
 	RTS
 
+; NPCTick_Carthahena_KingThuleKey
+; Tick: Knute the king distributes ITEM_THULE_KEY once Carthahena
+; boss defeated and all 4 rings collected; manages "must have all
+; rings" and "come back less gear" edge cases.
 NPCTick_Carthahena_KingThuleKey:
 	TST.b	Carthahena_boss_defeated.w
 	BEQ.w	NPCTick_SetMessage2_Done
@@ -1241,11 +1574,24 @@ NPCTick_Helwig_SetRingsMessage:
 	MOVE.l	#MustHaveAllRingsStr, obj_npc_str_ptr(A5)	
 NPCTick_SetMessage2_Done:
 	BRA.w	UpdateNPCSpriteFrame
+
+;==============================================================
+; HELWIG INN AND PARMA CASTLE NPCs
+; Inn frying-pan innkeeper in Helwig; castle patrol soldiers
+; and rotation logic in Parma.
+;==============================================================
+
+; NPCInit_Helwig_InnFryingPan
+; Init: randomize direction and assign InnFryingPan tick.
 NPCInit_Helwig_InnFryingPan:
 	BSR.w	SetRandomDirection
 	MOVE.l	#NPCTick_Helwig_InnFryingPan, obj_tick_fn(A5)
 	RTS
 
+; NPCTick_Helwig_InnFryingPan
+; Tick: innkeeper changes dialogue based on how many times the
+; frying pan has been struck (Helwig_frypan_hit_count).
+; Different strings at hit counts 0, 4, and >= 10.
 NPCTick_Helwig_InnFryingPan:
 	TST.b	Helwig_men_rescued.w
 	BNE.b	NPCTick_Helwig_InnFryingPan_Display
@@ -1270,6 +1616,8 @@ NPCTick_Helwig_InnFryingPan_Display:
 	ADDQ.b	#1, obj_move_counter(A5)
 	RTS
 
+; NPCInit_Parma_CastleSoldier
+; Init: face down and assign static castle-soldier tick.
 NPCInit_Parma_CastleSoldier:
 	MOVE.b	#DIRECTION_DOWN, obj_direction(A5)
 	MOVE.b	#4, obj_npc_saved_dir(A5)
@@ -1278,10 +1626,16 @@ NPCInit_Parma_CastleSoldier:
 
 NPCTick_Parma_CastleSoldierStatic:
 	BRA.w	NPCBehavior_LoadFrame
+
+; NPCInit_Parma_CastleSoldierFaceDown
+; Init: facing-down variant; sets patrol target direction to $06 (left).
 NPCInit_Parma_CastleSoldierFaceDown:
 	MOVE.b	#2, obj_hp(A5)
 	MOVE.b	#6, soldier_patrol_state(A5)
 	BRA.w	NPCInit_Parma_CastleSoldierFaceRight_Loop
+; NPCInit_Parma_CastleSoldierFaceRight
+; Init: facing-right variant; patrol target direction $02 (right).
+; Stores home tile coords from world position and starts patrol tick.
 NPCInit_Parma_CastleSoldierFaceRight:
 	MOVE.b	#6, obj_hp(A5)
 	MOVE.b	#2, soldier_patrol_state(A5)
@@ -1298,6 +1652,9 @@ NPCInit_Parma_CastleSoldierFaceRight_Loop:
 	MOVE.l	#NPCTick_Parma_CastleSoldierPatrol, obj_tick_fn(A5)
 	RTS
 
+; NPCTick_Parma_CastleSoldierPatrol
+; Tick: patrol the Parma castle room; if fake king killed while in
+; castle-room-1, switch to static tick. Otherwise rotate patrol.
 NPCTick_Parma_CastleSoldierPatrol:
 	MOVE.w	Gameplay_state.w, D0
 	CMPI.w	#GAMEPLAY_STATE_CASTLE_ROOM1_ACTIVE, D0
@@ -1313,6 +1670,10 @@ NPCTick_ParmaSoldier_Rotate:
 	MOVEA.l	obj_anim_ptr(A5), A1
 	MOVE.w	(A1,D0.w), obj_tile_index(A5)
 	BRA.w	UpdateNPCScreenPosition
+; UpdateParmaSoldierRotation
+; Handle patrol rotation for a Parma castle soldier.
+; Checks player bounding box; oscillates soldier's x position
+; by ±$8000 each frame for NPC_ROTATION_FRAMES, then resets.
 UpdateParmaSoldierRotation:
 	CLR.b	obj_behavior_flag(A5)
 	TST.b	obj_npc_busy_flag(A5)
@@ -1358,6 +1719,17 @@ UpdateParmaSoldierRotation_Loop5:
 ParmaSoldierRotation_Return:
 	RTS
 
+;==============================================================
+; NPC MOVEMENT AND ANIMATION UTILITIES
+; Bounding box check, animation offset calculations, screen
+; position update, tile collision, frame loaders, random
+; direction, wander movement loop.
+;==============================================================
+
+; CheckPlayerInBoundingBox
+; Check whether the player tile-position falls within the
+; patrol bounding box of the current Parma soldier (A5).
+; Outputs: D0 = 1 if inside box, 0 if outside.
 ;CheckPlayerInBoundingBox:
 CheckPlayerInBoundingBox: ; Check whether player is in the bounding box for Parma soldiers
 	CLR.w	D0
@@ -1391,6 +1763,11 @@ ParmaSoldierCollision_NoHit:
 	CLR.w	D0
 	RTS
 
+; GetStaticNPCAnimationOffset
+; Compute word offset into a static NPC animation table.
+; Handles horizontal flip (direction > 4 sets sprite flag bit 3).
+; Inputs: A5 = NPC object (obj_direction, obj_move_counter used)
+; Outputs: D0 = word offset into animation table
 GetStaticNPCAnimationOffset:
 	BCLR.b	#3, obj_sprite_flags(A5)
 	CLR.w	D1
@@ -1431,6 +1808,10 @@ GetStaticNPCAnimationOffset_Return:
 	ADD.w	D0, D0
 	RTS
 
+; GetNPCAnimationOffset
+; Like GetStaticNPCAnimationOffset but for walking/animated NPCs.
+; Inputs: A5 = NPC object
+; Outputs: D0 = word offset into animation table
 GetNPCAnimationOffset:
 	BCLR.b	#3, obj_sprite_flags(A5)
 	CLR.w	D1
@@ -1462,6 +1843,10 @@ GetNPCAnimationOffset_Loop3:
 	ADD.w	D0, D0
 	RTS
 
+; UpdateNPCScreenPosition
+; Convert NPC world position to screen position relative to camera.
+; Adjusts X by 1 pixel when sprite-flip bit and direction alignment
+; require it, then calls AddSpriteToDisplayList.
 UpdateNPCScreenPosition:
 	MOVE.w	obj_world_x(A5), D0
 	SUB.w	Camera_scroll_x.w, D0
@@ -1484,6 +1869,11 @@ NPCScreenPosition_UpdateY:
 	JSR	AddSpriteToDisplayList
 	RTS
 
+; CheckTileCollision
+; Check if the tile in direction D2 (from NPCMoveDeltaTable) at
+; the NPC's world position is solid (high nibble of tile word != 0).
+; Inputs: A5 = NPC object, D2 = direction index (raw)
+; Outputs: D0 = $FFFF if solid (no-match), 0 if passable
 CheckTileCollision:
 	LSR.w	#1, D2
 	ANDI.w	#3, D2
@@ -1516,6 +1906,9 @@ CheckTileCollision_NoMatch_Loop:
 	CLR.w	D0
 	RTS
 
+; LoadNPCAnimFrame_Static
+; Load tile index from static animation table and update screen position.
+; Inputs: A1 = animation table pointer, A5 = NPC object
 LoadNPCAnimFrame_Static:
 	BSR.w	GetStaticNPCAnimationOffset
 	MOVE.w	(A1,D0.w), obj_tile_index(A5)
@@ -1527,6 +1920,10 @@ LoadNPCAnimationFrame:
 	BSR.w	GetNPCAnimationOffset
 	MOVE.w	(A1,D0.w), obj_tile_index(A5)
 	BRA.w	UpdateNPCScreenPosition
+; AnimateEntitySprite
+; Two-frame entity animation using obj_move_counter.
+; Reads bit 6 of $A10001 to choose frame rate (PAL vs NTSC speed).
+; Inputs: A1 = animation table, A5 = NPC/entity object
 AnimateEntitySprite:
 	MOVE.b	obj_move_counter(A5), D0
 	BTST.b	#6, $00A10001
@@ -1550,6 +1947,11 @@ SetRandomDirection:
 	MOVE.b	D0, obj_npc_saved_dir(A5)
 	RTS
 
+; UpdateNPCMovement
+; Advance a wandering NPC by one step in its saved direction.
+; Checks for screen bounds, tile collision, and NPC-NPC collision before moving.
+; If stuck for NPC_STUCK_THRESHOLD frames, tries to rotate 90° to find a clear path.
+; Inputs: A5 = NPC entity pointer
 UpdateNPCMovement:
 	TST.b	obj_npc_busy_flag(A5)
 	BNE.w	NPCMovement_ChangeDirection_Loop
@@ -1585,6 +1987,8 @@ UpdateNPCMovement_Loop:
 UpdateNPCMovement_Loop2:
 	RTS
 
+; NPCMovement_ChangeDirection
+; Rotate the NPC's direction by 90° clockwise (add 2, mask to 0-7) and clear stuck timer.
 NPCMovement_ChangeDirection:
 	MOVE.b	obj_direction(A5), D6
 	ADDQ.b	#2, D6
@@ -1625,6 +2029,9 @@ NPCMovement_ChangeDirection_Loop:
 NPCMovement_ChangeDirection_Loop3:
 	RTS
 
+; NPCWander_UpdateDirection
+; Called after a blocked wander attempt. After NPC_WANDER_DELAY idle frames,
+; pick a new random direction offset and resume wandering.
 NPCWander_UpdateDirection:
 	CLR.b	obj_behavior_flag(A5)
 	ADDQ.b	#1, obj_invuln_timer(A5)
@@ -1642,6 +2049,13 @@ NPCWander_UpdateDirection:
 NPCWander_Return:
 	RTS
 
+;==============================================================
+; COLLISION UTILITIES
+;==============================================================
+
+; CheckEntityOnScreen
+; Test whether entity A5 is within ENTITY_VISIBLE_TILE_RADIUS tiles of the camera.
+; Outputs: D0 = 0 if on-screen, 1 if off-screen (sets NE flag when off-screen)
 CheckEntityOnScreen:
 	MOVE.w	obj_world_x(A5), D0
 	SUB.w	Camera_scroll_x.w, D0
@@ -1664,6 +2078,11 @@ CheckEntityOnScreen_Offscreen:
 	MOVEQ	#1, D0
 	RTS
 
+; CheckSurroundingTileCollision
+; Check all 10 tile offsets in NPCCollisionOffsetTable for A5's direction
+; against the player's current tile position. Returns NE (D0=1) if any match.
+; Inputs: A5 = NPC entity; D0/D1 = player tile X/Y on return
+; Outputs: D0 = 0 if no overlap, 1 if player occupies one of the surrounding tiles
 CheckSurroundingTileCollision:
 	MOVE.w	Player_position_x_in_town.w, D0
 	MOVE.w	Player_position_y_in_town.w, D1
@@ -1700,6 +2119,11 @@ CheckEntityOverlap_NoMatch_Loop:
 	MOVEQ	#1, D0
 	RTS
 
+; CheckAdjacentTileCollision
+; Like CheckSurroundingTileCollision but checks only 4 adjacent offsets instead of 10.
+; Used to see if the player is immediately in the NPC's path.
+; Inputs: A5 = NPC entity
+; Outputs: D0 = 0 if no match, 1 if player is in an adjacent tile
 CheckAdjacentTileCollision:
 	MOVE.w	Player_position_x_in_town.w, D0
 	MOVE.w	Player_position_y_in_town.w, D1
@@ -1736,6 +2160,11 @@ CheckAdjacentTileCollision_NoMatch_Loop:
 	MOVEQ	#1, D0
 	RTS
 
+; CheckNPCCollision
+; Walk the enemy/NPC linked list and check if any other active, collidable entity
+; occupies the same tile offsets as A5 in direction D6.
+; Inputs: A5 = NPC entity, D6 = direction (0-7)
+; Outputs: D0 = 0 if path clear, 1 if another NPC is blocking
 CheckNPCCollision:
 	MOVE.w	obj_world_x(A5), D0
 	ASR.w	#4, D0
@@ -1789,6 +2218,13 @@ CheckNPCCollision_NextEntity_Loop2:
 	MOVEQ	#1, D0
 	RTS
 
+;==============================================================
+; INVENTORY UTILITIES
+;==============================================================
+
+; RemoveItemFromList
+; Remove the item matching D4 from the list at A2/A3, decrementing the count at A2.
+; Inputs: A2 = pointer to item list (first word = count), A3 = list base, D4 = item ID
 RemoveItemFromList:
 	LEA	(A2), A1
 	MOVE.w	(A2)+, D7
@@ -1814,6 +2250,10 @@ RemoveItemFromList_Loop2:
 RemoveItemFromList_Loop:
 	RTS
 
+; CheckItemInList
+; Search the item list at A2 for item ID D4.
+; Inputs: A2 = item list pointer (first word = count), D4 = item ID to find
+; Outputs: D0 = $FFFF if found, 0 if not found
 CheckItemInList:
 	LEA	(A2), A1
 	MOVE.w	(A2)+, D7
@@ -1835,6 +2275,9 @@ CheckCollision_Return:
 	RTS
 
 ;CheckRingsCollected:
+; CheckRingsCollected
+; Verify that all 8 ring-collected flags in Rings_collected are set.
+; Outputs: D0 = 0 if all rings collected, 1 if any ring is missing
 CheckRingsCollected: ; Check that we have D7 consecutive number of flags set starting from A0
 	LEA	Rings_collected.w, A0
 CheckRingsCollected_Done:
@@ -1848,6 +2291,9 @@ CheckRingsCollected_Loop:
 	MOVE.w	#1, D0	
 	RTS
 	
+; BackupRingsToMapTriggers
+; Pack the 8 Rings_collected flags into single byte Map_triggers_backup (one bit each),
+; then clear all Rings_collected entries.
 BackupRingsToMapTriggers:
 	CLR.b	Map_triggers_backup.w
 	LEA	Rings_collected.w, A0
@@ -1862,6 +2308,9 @@ BackupRingsToMapTriggers_Loop:
 	DBF	D7, BackupRingsToMapTriggers_Done
 	RTS
 
+; RestoreRingsFromBackup
+; Unpack the bit-packed ring flags from Map_triggers_backup back into Rings_collected,
+; clearing each backup bit as it is restored.
 RestoreRingsFromBackup:
 	LEA	Rings_collected.w, A0
 	MOVE.w	#7, D7
@@ -1875,6 +2324,10 @@ RestoreRingsFromBackup_Loop:
 	DBF	D7, RestoreRingsFromBackup_Done
 	RTS
 
+; AddItemToInventoryList
+; Increment the possessed-items count and return the doubled old count in D0,
+; which the caller uses as a word-array index for writing the new item entry.
+; Outputs: D0 = byte offset for the new item slot in the list
 AddItemToInventoryList:
 	LEA	Possessed_items_length.w, A0
 	MOVE.w	(A0), D0
@@ -1882,12 +2335,23 @@ AddItemToInventoryList:
 	ADD.w	D0, D0
 	RTS
 
+; CheckInventoryFull
+; Compare the current possessed-items count against the maximum of 8.
+; Outputs: flags set by CMP — BLT if room remains, BGE if full
 CheckInventoryFull:
 	LEA	Possessed_items_length.w, A0
 	MOVE.w	(A0), D0
 	CMPI.w	#8, D0
 	RTS
 
+;==============================================================
+; HINT / STATE HELPERS
+;==============================================================
+
+; SetHintTextIfTriggered
+; If the map trigger at index D5 is set, copy Pending_hint_text into the NPC's
+; string pointer so it displays an updated hint on next talk.
+; Inputs: A5 = NPC entity, D5 = trigger index
 SetHintTextIfTriggered:
 	LEA	Map_trigger_flags.w, A0
 	TST.b	(A0,D5.w)
@@ -1896,6 +2360,9 @@ SetHintTextIfTriggered:
 SetHintTextIfTriggered_Loop:
 	RTS
 
+; ClearNPCFrozenState
+; If player input is no longer blocked, clear the NPC's velocity to unfreeze it.
+; Inputs: A5 = NPC entity
 ClearNPCFrozenState:
 	TST.b	Player_input_blocked.w
 	BNE.b	ClearNPCFrozenState_Loop
@@ -1903,12 +2370,24 @@ ClearNPCFrozenState:
 ClearNPCFrozenState_Loop:
 	RTS
 
+;==============================================================
+; DATA TABLES
+;==============================================================
+
+; NPCCollisionOffsetTable
+; 8 rows of 10 tile-offset pairs (dx, dy) indexed by direction * 20 bytes.
+; Used by CheckSurroundingTileCollision / CheckAdjacentTileCollision / CheckNPCCollision.
+; Each row covers the tiles the NPC occupies when moving in that direction.
 NPCCollisionOffsetTable:
 	dc.w	 0, -2,  0, -1, -1, -1,  1, -1, -1,  0,  1,  0, -1,  1,  0,  1
 	dc.w	 1,  1,  0,  2, -2,  0, -1,  0, -1, -1, -1,  1,  0,  1,  0, -1 
 	dc.w	 1,  1,  1,  0,  1, -1,  2,  0,  0,  2,  0,  1, -1,  1,  1,  1
 	dc.w	-1, -1, -1,  0,  0, -1,  1, -1,  1,  0,  0, -2,  2,  0,  1,  0 
 	dc.w	 1, -1,  1,  1, -1, -1, -1,  0, -1,  1,  0, -1,  0,  1, -2,  0
+; NPCMoveDeltaTable
+; Four long-word pairs (dx, dy) giving the sub-pixel world displacement per step
+; for each cardinal direction: Up, Left, Down, Right.
+; $FFFF8000 = -1/2 tile (negative step), $00008000 = +1/2 tile (positive step).
 NPCMoveDeltaTable:
 	dc.l	$00000000, $FFFF8000 
 	dc.l	$FFFF8000, $00000000 
@@ -1920,6 +2399,13 @@ ParmaSoldierBoundingBoxTable: ; Parma soldiers detection area
 	dc.w -3, 1, -3, 3
 	dc.w -1, 3, -3, 3
 
+;==============================================================
+; OBJECT SLOT PROCESSING
+;==============================================================
+
+; ProcessAllObjectSlots
+; Initialize all map-object entity slots: 5 chains of 7 entities, 5 paired entities,
+; 5 single-sprite entities, and the map indicator entity.
 ProcessAllObjectSlots:
 	MOVEA.l	Enemy_list_ptr.w, A6
 	BSR.w	InitObjectChain_7Entities
@@ -1965,6 +2451,11 @@ ProcessAllObjectSlots_Done:
 	DBF	D7, ProcessAllObjectSlots_Done
 	RTS
 
+; InitObjectChain_7Entities
+; Activate and configure a chain of 7 linked entity slots starting at A6.
+; Parent gets ChainObjectTick_Parent tick; remaining 6 get ChildObjectTick.
+; Every other child has sprite bit 3 set (alternate palette / row).
+; Inputs: A6 = pointer to first entity in the chain
 InitObjectChain_7Entities:
 	BSR.w	InitObjectEntity_Type14
 	MOVE.l	#ChainObjectTick_Parent, obj_tick_fn(A6)
@@ -1978,6 +2469,10 @@ InitObjectChain_7Entities:
 	BSET.b	#3, obj_sprite_flags(A6)
 	RTS
 
+; InitNextObjectEntity
+; Advance A6 to the next entity via obj_next_offset and assign ChildObjectTick.
+; Falls through into InitObjectEntity_Type14 to set flags/size.
+; Inputs: A6 = current entity; updated on return to next entity
 InitNextObjectEntity:
 	CLR.w	D0
 	MOVE.b	obj_next_offset(A6), D0
@@ -1993,6 +2488,10 @@ InitObjectEntity_Type14:
 	MOVE.b	#SPRITE_SIZE_3x4, obj_sprite_size(A6)
 	RTS
 
+; InitPairedObjectEntities
+; Activate and configure two consecutive linked entity slots as a pair.
+; First entity gets PairedObjectTick_A; the second gets ChildObjectTick.
+; Inputs: A6 = pointer to first entity of the pair
 InitPairedObjectEntities:
 	BSET.b	#7, (A6)
 	BCLR.b	#7, obj_sprite_flags(A6)
@@ -2015,6 +2514,9 @@ InitPairedObjectEntities:
 	MOVE.l	#ChildObjectTick, obj_tick_fn(A6)
 	RTS
 
+; InitObjectEntity_Type6
+; Activate a single standalone entity slot with SingleObjectTick and a 3x2 sprite size.
+; Inputs: A6 = entity pointer
 InitObjectEntity_Type6:
 	BSET.b	#7, (A6)
 	MOVE.l	#SingleObjectTick, obj_tick_fn(A6)
@@ -2026,6 +2528,9 @@ InitObjectEntity_Type6:
 	MOVE.b	#SPRITE_SIZE_3x2, obj_sprite_size(A6)
 	RTS
 
+; InitMapIndicatorEntity
+; Activate the map-indicator entity (the arrow showing player position on the overworld).
+; Sets MapIndicatorEntityTick, 2x1 sprite size, and enables the high-priority sprite flag.
 InitMapIndicatorEntity:
 	MOVEA.l	Map_indicator_entity_ptr.w, A6
 	BSET.b	#7, (A6)
@@ -2038,6 +2543,14 @@ InitMapIndicatorEntity:
 	MOVE.b	#SPRITE_SIZE_2x1, obj_sprite_size(A6)
 	RTS
 
+;==============================================================
+; OBJECT TICK FUNCTIONS
+;==============================================================
+
+; MapIndicatorEntityTick
+; Each frame: if not in a town, compute screen position from the player's overworld
+; tile, pick the correct directional arrow tile from MapIndicatorTileIDs, and queue OAM.
+; Inputs: A5 = map indicator entity
 MapIndicatorEntityTick:
 	TST.b	Player_input_blocked.w
 	BNE.b	MapIndicatorEntityTick_Loop
@@ -2059,12 +2572,20 @@ MapIndicatorEntityTick:
 MapIndicatorEntityTick_Loop:
 	RTS
 
+; MapIndicatorTileIDs
+; Four VRAM tile indices for the directional arrows (Up, Left, Down, Right).
+; Indexed by (Player_direction & 6) as a word offset.
 MapIndicatorTileIDs:
 	dc.w	$04D5 
 	dc.w	$04D3 
 	dc.w	$04D7 
 	dc.w	$04D1 
 
+; ChainObjectTick_Parent
+; Each frame: distribute tile indices and screen positions to all 6 child entities in
+; the chain, then queue OAM for the parent sprite if visible within the battle arena.
+; Reads PortraitPositionOffsets for per-child screen offsets.
+; Inputs: A5 = parent entity
 ChainObjectTick_Parent:
 	BSET.b	#5, obj_sprite_flags(A5)
 	BCLR.b	#6, obj_sprite_flags(A5)
@@ -2144,6 +2665,10 @@ ChainObjectTick_Parent_Loop3_Done:
 ChainObjectTick_Parent_Return:
 	RTS
 
+; PairedObjectTick_A
+; Each frame: mirror tile index +12 and sprite flags to the paired child entity,
+; position both at obj_world coords (child 24 pixels above parent), then queue OAM.
+; Inputs: A5 = primary (parent) entity of the pair
 PairedObjectTick_A:
 	BSET.b	#5, obj_sprite_flags(A5)
 	BCLR.b	#6, obj_sprite_flags(A5)
@@ -2185,6 +2710,10 @@ PairedObjectTick_A_Loop3:
 PairedObjectTick_A_Return:
 	RTS
 
+; SingleObjectTick
+; Each frame: set screen position from world coords, assign sort key, and queue OAM
+; if tile index is set and the entity is inside the battle arena.
+; Inputs: A5 = entity
 SingleObjectTick:
 	BSET.b	#5, obj_sprite_flags(A5)
 	BCLR.b	#6, obj_sprite_flags(A5)
@@ -2206,6 +2735,10 @@ SingleObjectTick_Loop:
 SingleObjectTick_Return:
 	RTS
 
+; ChildObjectTick
+; Each frame: if tile index is non-zero and inside the battle arena, queue OAM.
+; Screen position was already set by the parent tick function.
+; Inputs: A5 = child entity
 ChildObjectTick:
 	MOVE.w	obj_tile_index(A5), D0
 	BEQ.b	ChildObjectTick_Return
@@ -2217,11 +2750,20 @@ ChildObjectTick:
 ChildObjectTick_Return:
 	RTS
 
+;==============================================================
+; TALKER PORTRAIT INITS
+;==============================================================
+
+; PortraitInit_Simple
+; Load the talker portrait sprite with no special tick behaviour.
 PortraitInit_Simple:
 	MOVEA.l	Talker_gfx_descriptor_ptr.w, A6
 	BSR.w	InitTalkerPortraitSprite
 	RTS
 
+; PortraitInit_MapGiver
+; Load portrait and assign PortraitTick_MapGiver to both the primary and secondary
+; entity slots, activating the secondary slot via SetObjectActiveFlag.
 PortraitInit_MapGiver:
 	MOVEA.l	Talker_gfx_descriptor_ptr.w, A6
 	BSR.w	InitTalkerPortraitSprite
@@ -2230,6 +2772,9 @@ PortraitInit_MapGiver:
 	MOVE.l	#PortraitTick_MapGiver, obj_tick_fn(A4)
 	RTS
 
+; PortraitInit_StowGirl
+; Load portrait and assign PortraitTick_StowGirl (handles Sanguios book sale)
+; to both entity slots.
 PortraitInit_StowGirl:
 	MOVEA.l	Talker_gfx_descriptor_ptr.w, A6
 	BSR.w	InitTalkerPortraitSprite
@@ -2238,24 +2783,33 @@ PortraitInit_StowGirl:
 	MOVE.l	#PortraitTick_StowGirl, obj_tick_fn(A4)
 	RTS
 
+; PortraitInit_RingOfWisdom
+; Load portrait and assign PortraitTick_RingOfWisdom (checks ring collection status).
 PortraitInit_RingOfWisdom:
 	MOVEA.l	Talker_gfx_descriptor_ptr.w, A6
 	BSR.w	InitTalkerPortraitSprite
 	MOVE.l	#PortraitTick_RingOfWisdom, obj_tick_fn(A5)
 	RTS
 
+; PortraitInit_ImposterGuard
+; Load portrait and assign PortraitTick_ImposterGuard (hides guard after boss trigger).
 PortraitInit_ImposterGuard:
 	MOVEA.l	Talker_gfx_descriptor_ptr.w, A6
 	BSR.w	InitTalkerPortraitSprite
 	MOVE.l	#PortraitTick_ImposterGuard, obj_tick_fn(A5)
 	RTS
 
+; PortraitInit_MalagaPrisoner
+; Load portrait and assign PortraitTick_MalagaPrisoner (handles crown/quest dialog).
 PortraitInit_MalagaPrisoner:
 	MOVEA.l	Talker_gfx_descriptor_ptr.w, A6
 	BSR.w	InitTalkerPortraitSprite
 	MOVE.l	#PortraitTick_MalagaPrisoner, obj_tick_fn(A5)
 	RTS
 
+; PortraitInit_TsarkonFinal
+; Load portrait and assign PortraitTick_TsarkonFinal to both entity slots.
+; Tsarkon disappears from dialog after he is defeated.
 PortraitInit_TsarkonFinal:
 	MOVEA.l	Talker_gfx_descriptor_ptr.w, A6
 	BSR.w	InitTalkerPortraitSprite
@@ -2264,6 +2818,9 @@ PortraitInit_TsarkonFinal:
 	MOVE.l	#PortraitTick_TsarkonFinal, obj_tick_fn(A4)
 	RTS
 
+; PortraitInit_Bearwulf
+; Load portrait and assign PortraitTick_Bearwulf to both slots.
+; Bearwulf disappears after his quest flag is set.
 PortraitInit_Bearwulf:
 	MOVEA.l	Talker_gfx_descriptor_ptr.w, A6
 	BSR.w	InitTalkerPortraitSprite
@@ -2272,6 +2829,9 @@ PortraitInit_Bearwulf:
 	MOVE.l	#PortraitTick_Bearwulf, obj_tick_fn(A4)
 	RTS
 
+; PortraitInit_TruffleGiver
+; Load portrait and assign PortraitTick_Truffle to both slots.
+; NPC disappears after Truffle is collected.
 PortraitInit_TruffleGiver:
 	MOVEA.l	Talker_gfx_descriptor_ptr.w, A6
 	BSR.w	InitTalkerPortraitSprite
@@ -2280,6 +2840,9 @@ PortraitInit_TruffleGiver:
 	MOVE.l	#PortraitTick_Truffle, obj_tick_fn(A4)
 	RTS
 
+; PortraitInit_DigotGiver
+; Load portrait and assign PortraitTick_Digot to both slots.
+; NPC disappears after the Digot plant is received.
 PortraitInit_DigotGiver:
 	MOVEA.l	Talker_gfx_descriptor_ptr.w, A6
 	BSR.w	InitTalkerPortraitSprite
@@ -2288,6 +2851,16 @@ PortraitInit_DigotGiver:
 	MOVE.l	#PortraitTick_Digot, obj_tick_fn(A4)
 	RTS
 
+;==============================================================
+; PORTRAIT SPRITE SETUP
+;==============================================================
+
+; InitEncounterPortrait
+; Set up the enemy encounter portrait sprite(s) for the current battle.
+; Looks up the encounter type from EnemyEncounterGroupTable + Random_number,
+; reads graphics data from EnemyGfxDataTable, and positions the sprite at
+; screen coords ($5C, $A8). Optionally activates a second sprite for large enemies.
+; Inputs: A5 = primary portrait entity
 InitEncounterPortrait:
 	LEA	EnemyEncounterGroupTable, A1
 	CLR.w	D2
@@ -2335,6 +2908,12 @@ InitEncounterPortrait_Loop:
 	JSR	LoadPalettesFromTable
 	RTS
 
+; InitTalkerPortraitSprite
+; Set up the portrait sprite for an NPC talker dialog.
+; Reads sprite size and palette index from the graphics descriptor at A6,
+; positions at screen ($5C, $A8), sets PortraitIdleLoop tick, and optionally
+; activates a secondary sprite via A4 for two-part portraits.
+; Inputs: A5 = portrait entity, A6 = talker graphics descriptor pointer
 InitTalkerPortraitSprite:
 	MOVE.b	obj_direction(A6), obj_sprite_size(A5)
 	MOVE.w	obj_invuln_timer(A6), Palette_line_3_index.w
@@ -2369,14 +2948,27 @@ InitTalkerPortraitSprite_Loop:
 	JSR	LoadPalettesFromTable
 	RTS
 
+;==============================================================
+; TALKER PORTRAIT TICKS
+;==============================================================
+
+; PortraitIdleLoop
+; Default per-frame tick for a portrait entity: simply queue OAM if visible.
 PortraitIdleLoop:
 	JMP	QueueSpriteOAMIfVisible
+
+; PortraitTick_RingOfWisdom
+; If the first ring has been collected, switch dialog to the post-ring message.
 PortraitTick_RingOfWisdom:
 	TST.b	Rings_collected.w
 	BEQ.b	PortraitTick_RingOfWisdom_Loop
 	MOVE.l	#OnlyYouCanSaveUsStr, Script_talk_source.w
 PortraitTick_RingOfWisdom_Loop:
 	JMP	QueueSpriteOAMIfVisible
+
+; PortraitTick_StowGirl
+; Handle the Sanguios book vendor in Stow. Deactivates the portrait if the girl has
+; already left town, selects appropriate price/sold-out dialog, and charges the player.
 PortraitTick_StowGirl:
 	TST.b	Girl_left_for_stow.w
 	BEQ.b	PortraitTick_StowGirl_Loop
@@ -2422,12 +3014,20 @@ PortraitTick_StowGirl_Loop5:
 	MOVE.l	#BuyBookSanguiosStr, Script_talk_source.w
 NPCTick_SanguiosVendor_Display:
 	JMP	QueueSpriteOAMIfVisible
+
+; PortraitTick_ImposterGuard
+; If the imposter boss event has triggered, replace dialog with "NoOneHere" to
+; indicate the guard has been dispatched.
 PortraitTick_ImposterGuard:
 	TST.b	Imposter_boss_trigger.w
 	BEQ.b	PortraitTick_ImposterGuard_Loop
 	MOVE.l	#NoOneHereStr, Script_talk_source.w
 PortraitTick_ImposterGuard_Loop:
 	JMP	QueueSpriteOAMIfVisible
+
+; PortraitTick_MalagaPrisoner
+; Select the correct dialog based on crown/quest progress flags.
+; Removes the crown from inventory once the king is crowned.
 PortraitTick_MalagaPrisoner:
 	TST.b	Malaga_king_crowned.w
 	BEQ.b	PortraitTick_MalagaPrisoner_Loop
@@ -2447,6 +3047,9 @@ PortraitTick_MalagaPrisoner_Loop:
 	MOVE.l	#WaitingForPlayerNameStr, Script_talk_source.w
 PortraitTick_MalagaPrisoner_Done:
 	JMP	QueueSpriteOAMIfVisible
+
+; PortraitTick_TsarkonFinal
+; Once Tsarkon is dead, switch to the ending message and deactivate the portrait entity.
 PortraitTick_TsarkonFinal:
 	TST.b	Tsarkon_is_dead.w
 	BEQ.b	PortraitTick_TsarkonFinal_Loop
@@ -2457,15 +3060,28 @@ PortraitTick_TsarkonFinal:
 
 PortraitTick_TsarkonFinal_Loop:
 	JMP	QueueSpriteOAMIfVisible
+
+; PortraitTick_Bearwulf / PortraitTick_Truffle / PortraitTick_Digot
+; Generic quest-item givers: load the relevant "collected" flag address into A0
+; and fall through to PortraitTick_CheckCollectedFlag.
 PortraitTick_Bearwulf:
 	LEA	Bearwulf_met.w, A0
 	BRA.w	PortraitTick_CheckCollectedFlag
+
+; PortraitTick_Truffle
+; Check Truffle_collected flag and deactivate the portrait if it is set.
 PortraitTick_Truffle:
 	LEA	Truffle_collected.w, A0
 	BRA.w	PortraitTick_CheckCollectedFlag
+
+; PortraitTick_Digot
+; Check Digot_plant_received flag and deactivate the portrait if it is set.
 PortraitTick_Digot:
 	LEA	Digot_plant_received.w, A0
 	BRA.w	PortraitTick_CheckCollectedFlag
+
+; PortraitTick_MapGiver
+; Check the map-trigger flag for this NPC. If set, reveal the area map and deactivate.
 PortraitTick_MapGiver:
 	LEA	Map_trigger_flags.w, A0
 	MOVE.w	Map_trigger_index.w, D5
@@ -2477,6 +3093,11 @@ PortraitTick_MapGiver:
 	JMP	UpdateAreaVisibility
 PortraitTick_MapGiver_Loop:
 	JMP	QueueSpriteOAMIfVisible
+
+; PortraitTick_CheckCollectedFlag
+; Shared tail for quest-item givers. If flag at A0 is set, hide the portrait entity
+; and clear Talker_present_flag so the NPC is no longer available for dialog.
+; Inputs: A0 = pointer to the "collected" flag byte, A5 = portrait entity
 PortraitTick_CheckCollectedFlag:
 	TST.b	(A0)
 	BEQ.b	PortraitTick_CheckCollectedFlag_Loop
@@ -2487,17 +3108,33 @@ PortraitTick_CheckCollectedFlag:
 
 PortraitTick_CheckCollectedFlag_Loop:
 	JMP	QueueSpriteOAMIfVisible
+
+; PortraitPositionOffsets
+; Six (dx, dy) word pairs giving screen offsets for each child entity in a 3-row chain:
+; two sprites per row at X -16/+16, rows at Y -48, -24, 0.
 PortraitPositionOffsets:
 	dc.w	-16, -48, 16, -48 
 	dc.w	-16, -24, 16, -24
 	dc.w	-16, 0, 16, 0 
 
+; SetObjectActiveFlag
+; Advance to the next entity slot from A5 via obj_next_offset and set its active bit.
+; Outputs: A4 = pointer to the activated secondary entity
 SetObjectActiveFlag:
 	MOVE.b	obj_next_offset(A5), D0
 	LEA	(A5,D0.w), A4
 	BSET.b	#7, (A4)
 	RTS
 
+;==============================================================
+; ENCOUNTER INITIALIZATION
+;==============================================================
+
+; InitializeEncounter
+; Prepare an encounter: fill Enemy_position_indices with 0-7, shuffle them randomly,
+; then for each enemy up to Number_Of_Enemies, activate an entity slot and copy stats
+; (HP, XP, gold reward, sprite size, etc.) from EnemyGfxDataTable.
+; Loads palettes and encounter graphics when done.
 InitializeEncounter:
 	LEA	Enemy_position_indices.w, A1
 	CLR.w	D0
