@@ -1833,6 +1833,13 @@ SOUND_BOMB                  = $00BF   ; Explosion/bomb sound (DemonBoss attack, 
 SOUND_MERCUSIOS             = $00BD   ; Mercusios magic projectile launch sound (2 uses)
 SOUND_TERRAFISSI            = $00AF   ; Terrafissi spell / DemonBoss projectile activation sound (2 uses)
 SOUND_BATTLE_START          = $0092   ; Sound played when battle initializes (1 use)
+SOUND_OVERWORLD_MUSIC       = $008E   ; Overworld/field music; written to Current_area_music and queued (2 uses)
+SOUND_SWORD_ATTACK          = $00B6   ; Player sword swing in battle (1 use)
+SOUND_TEXT_BLIP             = $00A2   ; Per-character typewriter blip during script text (1 use)
+SOUND_PROLOGUE_MUSIC        = $0081   ; Music cue queued at prologue scene init (1 use)
+SOUND_TITLE_MUSIC           = $0082   ; Music cue queued at title screen fade-in (1 use)
+SOUND_CHEST_OPEN            = $00AA   ; Sound queued when chest state begins opening sequence (1 use)
+SOUND_CHEST_CREAK           = $00A7   ; Sound queued when chest lid is physically opened (1 use)
 
 ; Sound script byte threshold: bytes < $E0 are note values; bytes >= $E0 are commands.
 SOUND_SCRIPT_CMD_THRESHOLD  = $E0   ; BCS/BCC boundary in SoundChannel_NoteLoop
