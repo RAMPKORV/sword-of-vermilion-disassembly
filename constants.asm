@@ -436,6 +436,21 @@ TOWN_MAP_MIN_SCROLL_TILES = $0010   ; 16 tiles — minimum map size for scrollin
 ; DecompressMapTile_Next counts writes and exits after this many tiles.
 MAP_RLE_TILE_COUNT      = $0100   ; 256 tiles per decompressed sector
 
+; Town map tile type IDs — upper nibble of tile word (after ANDI.w #$F000).
+; Used by DialogState_Init to dispatch to the correct service handler,
+; and by walkability checks (passable types) and chest/item detection.
+; Passable tile groups: $0000 (ground), $2000, $3000, $E000, $F000
+TOWN_TILE_PASSABLE_2    = $2000   ; Passable tile group 2
+TOWN_TILE_PASSABLE_3    = $3000   ; Passable tile group 3
+TOWN_TILE_SHOP          = $4000   ; Weapon/armor shop entrance tile
+TOWN_TILE_CHURCH        = $5000   ; Church entrance tile
+TOWN_TILE_INN           = $6000   ; Inn entrance tile
+TOWN_TILE_FORTUNE_TELLER = $7000  ; Fortune teller (town-specific greeting)
+TOWN_TILE_FORTUNE_TELLER_2 = $8000 ; Fortune teller (alternate variant)
+TOWN_TILE_CHEST         = $9000   ; Chest tile
+TOWN_TILE_PASSABLE_E    = $E000   ; Passable tile group E (empty/open)
+TOWN_TILE_PASSABLE_F    = $F000   ; Passable tile group F
+
 Town_tilemap_update_row = $FFFFC120
 Town_tilemap_update_column = $FFFFC122
 Town_tilemap_row_update_pending = $FFFFC124
