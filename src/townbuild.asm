@@ -802,7 +802,7 @@ RingOfferStr:
 	dc.b	"and I'll give you my ring.", $FD
 	dc.b	"Of course, the cave does", $FE
 	dc.b	"have its guardians...."
-	dc.b	$F8, $01, $02
+	script_cmd_triggers TRIGGER_Treasure_of_troy_challenge_issued
 FindTreasureStr:
 	dc.b	"Find the treasure", $FE
 	dc.b	"quickly, before I", $FE 
@@ -814,17 +814,20 @@ TreasureReturnedStr:
 	dc.b	"Why don't you just forget", $FE
 	dc.b	"about the ring and settle", $FE
 	dc.b	"down to a quiet life here?"
-	dc.b	$FB, $00, $04, $00, $00
+	script_cmd_yes_no $00, TRIGGER_Treasure_of_troy_given_to_king, $00
+	dc.b	$00
 NoChoiceStr:
 	dc.b	"You really have no choice;", $FE
 	dc.b	"just accept it, young man."
-	dc.b	$FB, $00, $04, $00, $00
+	script_cmd_yes_no $00, TRIGGER_Treasure_of_troy_given_to_king, $00
+	dc.b	$00
 OffYouGoStr:
 	dc.b	"Good, good. Off you go now.", SCRIPT_END
 NicePlaceStr:
 	dc.b	"But this is", $FE
 	dc.b	"such a nice place."
-	dc.b	SCRIPT_TRIGGERS, $01, TRIGGER_Talked_to_king_after_given_treasure_of_troy, $00
+	script_cmd_triggers TRIGGER_Talked_to_king_after_given_treasure_of_troy
+	dc.b	$00
 NeedPermanentSolutionStr:
 	dc.b	"What is this?", $FE
 	dc.b	"You again? I see that I", $FE
@@ -833,7 +836,7 @@ NeedPermanentSolutionStr:
 	dc.b	"I'm afraid you'll find", $FE
 	dc.b	"I become rather beastly", $FE
 	dc.b	"when I'm bothered...."
-	dc.b	$F8, $02, $F7, $E0
+	script_cmd_triggers $F7, $E0
 CartahenaBeastStr:
 	dc.b	"Thank you, ", SCRIPT_PLAYER_NAME, ".", $FD
 	dc.b	"That beast", $FE
@@ -844,7 +847,7 @@ CartahenaBeastStr:
 	dc.b	"of the town militia.", $FD
 	dc.b	"Would you care to", $FE
 	dc.b	"settle down here?"
-	dc.b	$FB, $01, $08, $00
+	script_cmd_yes_no $01, TRIGGER_Player_chose_to_stay_in_parma, $00
 RingOfSkyGiftStr:
 	dc.b	"If you must go, head to", $FE
 	dc.b	"Watling. You can get a good", $FE
@@ -854,7 +857,9 @@ RingOfSkyGiftStr:
 	dc.b	"with the Ring of Sky.", $FD
 	dc.b	"Go forth on your quest,", $FE
 	dc.b	"brave warrior!"
-	dc.b	$F9, $02, $00, $05, $00, $F9
+	script_cmd_actions 2
+	script_set_trigger TRIGGER_Talked_to_real_king
+	script_set_trigger $F9
 GotRingStr:
 	dc.b	"Did you get the ring?", $FF
 DecideToLiveHereStr:
@@ -863,7 +868,7 @@ DecideToLiveHereStr:
 ReallyLiveHereStr:
 	dc.b	"Are you really", $FE
 	dc.b	"going to live here?"
-	dc.b	$FB, $01, $08, $00
+	script_cmd_yes_no $01, TRIGGER_Player_chose_to_stay_in_parma, $00
 TalkKingStr:
 	dc.b	"It's better to", $FE
 	dc.b	"talk to the king.", $FF, $00
@@ -1024,11 +1029,11 @@ KingLikesTrufflesStr:
 	dc.b	"in Bremen's Cave,", $FE
 	dc.b	"northwest of here.", $FD
 	dc.b	"This map will guide you."
-	dc.b	$F9, $04 ; 4 map areas
-	dc.b	$01, $62
-	dc.b	$01, $72
-	dc.b	$01, $74
-	dc.b	$01, $73
+	script_cmd_actions 4
+	script_reveal_map $62
+	script_reveal_map $72
+	script_reveal_map $74
+	script_reveal_map $73
 BremensCaveNorthwestStr:
 	dc.b	"Bremen's Cave is", $FE
 	dc.b	"to the northwest.", $FF, $00
@@ -1047,14 +1052,15 @@ MeetKingStr:
 KingNotHereStr:
 	dc.b	"The king is not", $FE
 	dc.b	"here at the moment."
-	dc.b	SCRIPT_TRIGGERS, $01, TRIGGER_Truffle_collected
+	script_cmd_triggers TRIGGER_Truffle_collected
 KingNotSureReturnStr:
 	dc.b	"I'm not really sure when", $FE
 	dc.b	"the king is coming back.", SCRIPT_END
 KingNotSeeingVisitorsStr:
 	dc.b	"The king is not seeing", $FE
 	dc.b	"visitors right now."
-	dc.b	SCRIPT_TRIGGERS, $01, TRIGGER_Truffle_collected, $00
+	script_cmd_triggers TRIGGER_Truffle_collected
+	dc.b	$00
 KingInTownStr:
 	dc.b	"The king is in", $FE
 	dc.b	"town somewhere.", SCRIPT_END, $00
@@ -1192,7 +1198,7 @@ HeardOfYouStr:
 	dc.b	"I'll keep your rings", $FE
 	dc.b	"to ensure that you", $FE
 	dc.b	"don't just run off."
-	dc.b	$F8, $01, $0F
+	script_cmd_triggers TRIGGER_Accused_of_theft
 ReturnWhenInnocentStr:
 	dc.b	"Return only when you have", $FE 
 	dc.b	"proof of your innocence.", $FF, $00
@@ -1208,7 +1214,8 @@ MonsterLittleGirlStr:
 	dc.b	"brought to Tsarkon!", $FD
 	dc.b	"The tavernkeeper has a map", $FE
 	dc.b	"to Asti's Cave."
-	dc.b	$F8, $01, $5F, $00
+	script_cmd_triggers $5F
+	dc.b	$00
 RingsAreSafeStr:
 	dc.b	"Good, the rings are safe.", $FE
 	dc.b	"I'm really sorry, but I", $FE
@@ -1222,15 +1229,15 @@ RingsAreSafeStr:
 	dc.b	"Would you please bring him", $FE
 	dc.b	"to us? Here's a map of the", $FE
 	dc.b	"route to Keltwick."
-	dc.b	$F9, $08 ; 8 map areas
-	dc.b	$01, $7B
-	dc.b	$01, $5C
-	dc.b	$01, $6C
-	dc.b	$01, $7C
-	dc.b	$01, $4D
-	dc.b	$01, $5D
-	dc.b	$01, $6D
-	dc.b	$01, $4E
+	script_cmd_actions 8
+	script_reveal_map $7B
+	script_reveal_map $5C
+	script_reveal_map $6C
+	script_reveal_map $7C
+	script_reveal_map $4D
+	script_reveal_map $5D
+	script_reveal_map $6D
+	script_reveal_map $4E
 	dc.b	$00 ; padding
 BookSanguiaEffortsStr:
 	dc.b	"Brave warrior, please", $FE
@@ -1244,7 +1251,8 @@ BookSanguiaEffortsStr:
 	dc.b	"On the way to Malaga,", $FE
 	dc.b	"please stop in Keltwick and", $FE
 	dc.b	"thank Doctor Basil for us", $2E
-	dc.b	$F8, $01, $13, $00
+	script_cmd_triggers TRIGGER_Sent_to_malaga
+	dc.b	$00
 DiscardBookSpellsStr:
 	dc.b	"If you discard a Book of", $FE
 	dc.b	"Spells, I can give you the", $FE
@@ -1353,20 +1361,24 @@ BrunoInHarmonyCaveStr
 	dc.b	"Bruno is in Harmony Cave,", $FE
 	dc.b	"far to the east.", $FE
 	dc.b	"He has the Ring of Water", $2E
-	dc.b	$F8, $01, $88, $00 
+	script_cmd_triggers $88
+	dc.b	$00
 DontForgetFaceStr:
 	dc.b	"Don't forget my face", $21
-	dc.b	$F8, $02, $1C, $59, $00
+	script_cmd_triggers TRIGGER_Barrow_map_received, $59
+	dc.b	$00
 BrunoNotRightStr:
 	dc.b	"Bruno is not right in the", $FE
 	dc.b	"head. If I " 
 	dc.b	"had the Ring of", $FE
 	dc.b	"Water, all would be well!"
-	dc.b	$F8, $01, $88, $00
+	script_cmd_triggers $88
+	dc.b	$00
 MeetAgainStr:
 	dc.b	"We will meet again", $FE
 	dc.b	"someday, never fear!"
-	dc.b	$F8, $02, $1C, $5A, $00
+	script_cmd_triggers TRIGGER_Barrow_map_received, $5A
+	dc.b	$00
 BrunoLoyalServantStr:
 	dc.b	"Bruno was the most loyal", $FE
 	dc.b	"servant of the old king.", $FF
@@ -1377,12 +1389,12 @@ JourneyNortheastBarrowStr
 	dc.b	"Journey northeast to", $FE
 	dc.b	"Barrow. Let this map", $FE
 	dc.b	"be your guide."
-	dc.b	$F9, $05
-	dc.b	$01, $0E 
-	dc.b	$01, $0D 
-	dc.b	$01, $1D 
-	dc.b	$01, $2D 
-	dc.b	$01, $2C
+	script_cmd_actions 5
+	script_reveal_map $0E
+	script_reveal_map $0D
+	script_reveal_map $1D
+	script_reveal_map $2D
+	script_reveal_map $2C
 BarrowNortheastStr:
 	dc.b	"Barrow is to the northeast.", $FF
 ReceiveRingMarryStr
@@ -1425,12 +1437,12 @@ HelpInTimeOfNeedStr
 	dc.b	"You must go to see him.", $FE
 	dc.b	"Here is a map of the", $FE
 	dc.b	"route to Harmony Cave."
-	dc.b	$F9, $05 ; 5 map areas
-	dc.b	$01, $2C
-	dc.b	$01, $2D
-	dc.b	$01, $2E
-	dc.b	$01, $3E
-	dc.b	$01, $3F
+	script_cmd_actions 5
+	script_reveal_map $2C
+	script_reveal_map $2D
+	script_reveal_map $2E
+	script_reveal_map $3E
+	script_reveal_map $3F
 HopeReturnSafelyStr:
 	dc.b	"I hope you return safely.", $FF
 ReturnAfterQuestStr
@@ -1445,14 +1457,15 @@ RuleMalagaStr
 	dc.b	"Well, can you get", $FE
 	dc.b	"married after you", $FE
 	dc.b	"finish your mission?"
-	dc.b	$FB, $05, $15, $00
+	script_cmd_yes_no $05, TRIGGER_Bearwulf_returned_home, $00
 KeepRingOfWaterStr:
 	dc.b	"Good! Please keep the", $FE
 	dc.b	"Ring of Water as your", $FE
 	dc.b	"engagement ring.", $FF, $00
 DontRefuseUsStr
 	dc.b	"Please don't refuse us", $2E
-	dc.b	$FB, $05, $15, $00, $00
+	script_cmd_yes_no $05, TRIGGER_Bearwulf_returned_home, $00
+	dc.b	$00
 ReturnAfterTaskStr:
 	dc.b	"Return as soon as you", $FE
 	dc.b	"accomplish your task.", $FF 
@@ -1545,7 +1558,8 @@ GreetingsHighnessStr:
 	dc.b	"The ring? Why, you have it!", $FD
 	dc.b	"I gave it to you yesterday.", $FE
 	dc.b	"Please, stop tormenting us!"
-	dc.b	$F8, $01, $22, $00 
+	script_cmd_triggers TRIGGER_Tadcaster_bully_triggered
+	dc.b	$00
 KnowImposterStr:
 	dc.b	"Now I know that he was an", $FE
 	dc.b	"imposter. Unfortunately, he", $FE
@@ -1639,7 +1653,9 @@ RingOfEarthQuestStr:
 	dc.b	"Here is the key to the", $FE
 	dc.b	"Ivory Cave. Off you go.", $FE
 	dc.b	"Good lad!"
-	dc.b	$F9, $01, $00, $2A, $00
+	script_cmd_actions 1
+	script_set_trigger TRIGGER_White_crystal_quest_started
+	dc.b	$00
 GiveWhiteCrystalStr:
 	dc.b	"Give me the White Crystal!", $FE
 	dc.b	"The ring?, Well, I did", $FE
@@ -1655,7 +1671,8 @@ GiveWhiteCrystalStr:
 	dc.b	"of the way, I'm sure.", $FD
 	dc.b	"Here, don't forget the key.", $FE
 	dc.b	"Hurry back now."
-	dc.b	$F9, $01, $00, $2C
+	script_cmd_actions 1
+	script_set_trigger TRIGGER_Red_crystal_quest_started
 RedCrystalTaskStr:
 	dc.b	"Now I have the Red Crystal,", $FE
 	dc.b	"too! But one easy task", $FE
@@ -1667,7 +1684,9 @@ RedCrystalTaskStr:
 	dc.b	"it should flee in terror", $FE
 	dc.b	"from the likes of you!", $FD
 	dc.b	"You'll need this key."
-	dc.b	$F9, $01, $00, $2E, $00
+	script_cmd_actions 1
+	script_set_trigger TRIGGER_Blue_crystal_quest_started
+	dc.b	$00
 ThreeCrystalsStr:
 	dc.b	"At last, all three crystals", $FE
 	dc.b	"are mine, all mine!", $FE
@@ -1677,7 +1696,9 @@ ThreeCrystalsStr:
 	dc.b	"need for violence!", $FD
 	dc.b	"Here is the Ring of Earth.", $FE
 	dc.b	"Now, good riddance to you!"
-	dc.b	$F9, $02, $00, $29, $00, $FD
+	script_cmd_actions 2
+	script_set_trigger TRIGGER_Ring_of_earth_obtained
+	script_set_trigger $FD
 BackSoSoonStr:
 	dc.b	"Back so soon?", $FE
 	dc.b	"Where's my crystal?", $FF
@@ -1721,12 +1742,13 @@ WelcomeFoolStr:
 	dc.b	"He asked me to give you a", $FE
 	dc.b	"gift--this town as your", $FE
 	dc.b	"grave! Prepare to die!"
-	dc.b	$F8, $02, $F7, $E8
+	script_cmd_triggers $F7, $E8
 BestedMeStr:
 	dc.b	"You may have bested me,", $FE
 	dc.b	"but you will never", $FE
 	dc.b	"defeat Tsarkon!"
-	dc.b	$F8, $01, $53, $00
+	script_cmd_triggers $53
+	dc.b	$00
 ErikProudStr:
 	dc.b	SCRIPT_PLAYER_NAME, ", if only Erik", $FE
 	dc.b	"could see you now.", $FE
@@ -1774,7 +1796,9 @@ RingInCaveStr:
 	dc.b	"There's a ring in a cave", $FE
 	dc.b	"south of here.", $FE
 	dc.b	"Here's a map to guide you."
-	dc.b	$F9, $02, $01, $60, $01, $70
+	script_cmd_actions 2
+	script_reveal_map $60
+	script_reveal_map $70
 			; ^ suspected behavior:
 			; F9 => Set either event or map flag 
 			; 02 => Amount of entries in list, number of arguments vary depending on type
@@ -1793,12 +1817,12 @@ QuestBeginsStr:
 	dc.b	"Now your quest begins in", $FE
 	dc.b	"earnest! Here is a map of", $FE
 	dc.b	"the route to Parma."
-	dc.b	$F9, $05 ; 5 map areas
-	dc.b	$01, $41
-	dc.b	$01, $50
-	dc.b	$01, $51
-	dc.b	$01, $60
-	dc.b	$01, $70
+	script_cmd_actions 5
+	script_reveal_map $41
+	script_reveal_map $50
+	script_reveal_map $51
+	script_reveal_map $60
+	script_reveal_map $70
 SorryAboutBladeStr:
 	dc.b	"We're all very", $FE
 	dc.b	"sorry about Blade.", $FF
@@ -1924,7 +1948,9 @@ IAmNotYourRealFatherStr:
 	dc.b	"King Erik would have been", $FE
 	dc.b	"as proud of you as I am.", $FE
 	dc.b	"Go now, and remember me...."
-	dc.b	$F9, $02, $02, $00, $00, $02, $00, $00, $00
+	script_cmd_actions 2
+	script_give_kims $00000200
+	script_set_trigger TRIGGER_Blade_is_dead
 			; ^ suspected behavior:
 			; F9 => Set either event or map flag 
 			; 02 => Amount of entries in list, number of arguments vary depending on type
@@ -1941,7 +1967,9 @@ RingOfWisdomStr:
 	dc.b	"which I received from", $FE
 	dc.b	"Blade. It is rightfully", $FD
 	dc.b	"yours; please accept it."
-	dc.b	$F9, $01, $00, $F8, $00 
+	script_cmd_actions 1
+	script_set_trigger $F8
+	dc.b	$00
 OnlyYouCanSaveUsStr:
 	dc.b	"Only you can save us", $FE
 	dc.b	"from Cartahena.", $FE
@@ -2571,7 +2599,11 @@ WealthWestStr:
 	dc.b	"Much wealth is said to lie", $FE
 	dc.b	"west of here. Take this map", $FE
 	dc.b	"and good luck!"
-	dc.b	$F9, $03, $01, $40, $01, $50, $01, $41, $00
+	script_cmd_actions 3
+	script_reveal_map $40
+	script_reveal_map $50
+	script_reveal_map $41
+	dc.b	$00
 UseMapStr:
 	dc.b	"Did you use my map?", $FF
 MonstersEastStr:
@@ -2682,13 +2714,29 @@ CaveOfTroyMapStr:
 	dc.b	"Seek the Cave of Troy to", $FE
 	dc.b	"the east. I'll give you a", $FE
 	dc.b	"map to show the way", $2E
-	dc.b	$F9, $05, $01, $42, $01, $52, $01, $43, $01, $53, $01, $41, $00
+	script_cmd_actions 5
+	script_reveal_map $42
+	script_reveal_map $52
+	script_reveal_map $43
+	script_reveal_map $53
+	script_reveal_map $41
+	dc.b	$00
 WatlingMapStr:
 	dc.b	"Watling? It's to the east.", $FE
 	dc.b	"I'll give you a map to", $FE 
 	dc.b	"help you get there."
-	dc.b	$F9, $0A, $01, $41, $01, $42, $01, $52, $01, $43, $01, $53, $01 
-	dc.b	$44, $01, $54, $01, $45, $01, $55, $01, $56, $00
+	script_cmd_actions 10
+	script_reveal_map $41
+	script_reveal_map $42
+	script_reveal_map $52
+	script_reveal_map $43
+	script_reveal_map $53
+	script_reveal_map $44
+	script_reveal_map $54
+	script_reveal_map $45
+	script_reveal_map $55
+	script_reveal_map $56
+	dc.b	$00
 ; loc_0002F262
 TownTilemapData_ParmaAndMalaga_SetA_TgtB:	
 	dc.b	$30, $28, $01, $96, $3F, $00, $2F, $00, $02, $A0, $96, $BF, $BF, $BF, $BF, $A8, $01, $83, $B1, $01, $83, $AB 
@@ -2887,7 +2935,13 @@ HelpMapRegionStr:
 	dc.b	"For all your help,", $FE
 	dc.b	"please accept this", $FD
 	dc.b	"map of our region."
-	dc.b	$F9, $06, $01, $74, $01, $65, $01, $75, $01, $66, $01, $56, $01, $55
+	script_cmd_actions 6
+	script_reveal_map $74
+	script_reveal_map $65
+	script_reveal_map $75
+	script_reveal_map $66
+	script_reveal_map $56
+	script_reveal_map $55
 ThankYouStrangerStr:
 	dc.b	"Thank you, stranger.", $FF, $00
 BecomeYoungerStr:
@@ -2902,7 +2956,8 @@ GoSouthwestDeepdaleStr:
 	dc.b	"find Deepdale.", $FF, $00
 HowAreYouStr:
 	dc.b	"How are you?"
-	dc.b	$F8, $01, $1E, $00
+	script_cmd_triggers TRIGGER_Watling_monster_encounter
+	dc.b	$00
 OldStillStr:
 	dc.b	"Why are you so surprised?", $FE
 	dc.b	"I was an old man before,", $FE
@@ -2943,18 +2998,18 @@ Z80DrvrData_3000B:
 Z80DrvrData_3000D:
 	dc.b	" the north.", $FE
 	dc.b	"Here's a map of the way."
-	dc.b	$F9, $04
-	dc.b	$00, $1E
-	dc.b	$01, $36
-	dc.b	$01, $46
-	dc.b	$01, $56
+	script_cmd_actions 4
+	script_set_trigger TRIGGER_Watling_monster_encounter
+	script_reveal_map $36
+	script_reveal_map $46
+	script_reveal_map $56
 	dc.b	$00
 ThankYouHelpStr:	
 	dc.b	"Thank you for your help.", $FE
 	dc.b	"You want to know about", $FE
 	dc.b	"the rings?", $FD
 	dc.b	"Ask the villagers."
-	dc.b	$F8, $01, $0A
+	script_cmd_triggers TRIGGER_Watling_villagers_asked_about_rings
 KnowledgeablePeopleStr:
 	dc.b	"There are many", $FE
 	dc.b	"knowledgeable people.", $FF, $00
@@ -2987,7 +3042,8 @@ StoleYouthStr:
 	dc.b	"from the villagers.", $FD
 	dc.b	"Now I'll drain your", $FE
 	dc.b	"youth as well!"
-	dc.b	$F8, $02, $F7, $E1, $00
+	script_cmd_triggers $F7, $E1
+	dc.b	$00
 ; loc_00030288
 TownTilemapData_Watling_SetA_TgtB:	
 	dc.b	$28, $23, $3F, $00, $3F, $00, $BF, $BE, $01, $13, $6B, $17, $1A, $19, $01, $05 
@@ -3162,20 +3218,20 @@ MapToStowStr:
 	dc.b	"Stow is far to the east.", $FE
 	dc.b	"This map will show", $FE
 	dc.b	"you the way."
-	dc.b	$F9, $0D
-	dc.b	$01, $74 
-	dc.b	$01, $65 
-	dc.b	$01, $75 
-	dc.b	$01, $66 
-	dc.b	$01, $76 
-	dc.b	$01, $67 
-	dc.b	$01, $77 
-	dc.b	$01, $68 
-	dc.b	$01, $69 
-	dc.b	$01, $79 
-	dc.b	$01, $6A 
-	dc.b	$01, $7A 
-	dc.b	$01, $7B
+	script_cmd_actions 13
+	script_reveal_map $74
+	script_reveal_map $65
+	script_reveal_map $75
+	script_reveal_map $66
+	script_reveal_map $76
+	script_reveal_map $67
+	script_reveal_map $77
+	script_reveal_map $68
+	script_reveal_map $69
+	script_reveal_map $79
+	script_reveal_map $6A
+	script_reveal_map $7A
+	script_reveal_map $7B
 RoadToStowDangerousStr:
 	dc.b	"The road to Stow is", $FE
 	dc.b	"extremely dangerous.", $FF, $00
@@ -3229,7 +3285,9 @@ RingOfWindRewardStr:
 	dc.b	"Please don't tell", $FE
 	dc.b	"anyone who I am.", $FE
 	dc.b	"Thanks for the truffles!"
-	dc.b	$F9, $02, $00, $0D, $00, $FA
+	script_cmd_actions 2
+	script_set_trigger TRIGGER_Deepdale_king_secret_kept
+	script_set_trigger $FA
 KeptSecretStr:
 	dc.b	"I hope you've kept", $FE
 	dc.b	"our little secret!", $FF
@@ -3590,12 +3648,12 @@ WelcomeEatStr:
 MapAstiCaveStr:
 	dc.b	"Here is a map", $FE
 	dc.b	"to Asti's Cave", $2E
-	dc.b	$F9, $05 ; 5 map areas
-	dc.b	$01, $5C
-	dc.b	$01, $6C
-	dc.b	$01, $7C
-	dc.b	$01, $6D
-	dc.b	$01, $7B
+	script_cmd_actions 5
+	script_reveal_map $5C
+	script_reveal_map $6C
+	script_reveal_map $7C
+	script_reveal_map $6D
+	script_reveal_map $7B
 	dc.b	$00 ; padding
 GetRingsStr:
 	dc.b	"Be sure to get the rings.", $FF
@@ -3616,10 +3674,11 @@ BuyBookSanguiosStr:
 	dc.b	"Hello. Would you like to buy", $FE
 	dc.b	"a Book of Sanguios Spells?", $FE
 	dc.b	"It's only 1,000 kims."
-	dc.b	$FB, $03, $0E, $00, $00
+	script_cmd_yes_no $03, TRIGGER_Sanguios_book_offered, $00
+	dc.b	$00
 BuyItStr:
 	dc.b	"Don't say no! Just buy it."
-	dc.b	$FB, $03, $0E, $00
+	script_cmd_yes_no $03, TRIGGER_Sanguios_book_offered, $00
 MoreNeatStuffStr:
 	dc.b	"Thanks. When you come back,", $FE
 	dc.b	"I'll try to have more neat", $FE
@@ -3627,8 +3686,9 @@ MoreNeatStuffStr:
 BuyBookSanguiosStr2:
 	dc.b	"Hello. Would you like to buy", $FE
 	dc.b	"a Book of Sanguios Spells?", $FE
-	dc.b	"It's only 1,000 kims.", $FC
-	dc.b	$08, $00
+	dc.b	"It's only 1,000 kims."
+	script_cmd_question $08
+	dc.b	$00
 TurnDownBargainStr:
 	dc.b	"How can you turn down a", $FE
 	dc.b	"bargain like this?", $FC, $08
@@ -3639,8 +3699,9 @@ NotEnoughMoneyStr2:
 BuyBookSanguiosThirdStr3:
 	dc.b	"Hello. Would you like to buy", $FE
 	dc.b	"a Book of Sanguios Spells?", $FE
-	dc.b	"It's only 1,000 kims.", $FC 
-	dc.b	$09, $00
+	dc.b	"It's only 1,000 kims."
+	script_cmd_question $09
+	dc.b	$00
 TurnDownBargainStr2:
 	dc.b	"How can you turn down a", $FE
 	dc.b	"bargain like this?", $FC, $09
@@ -3654,15 +3715,16 @@ NothingForYouStr:
 DidntStealBookStr:
 	dc.b	"What? They said I stole the", $FE
 	dc.b	"Book of Sanguios Spells?", $FE
-	dc.b	"No way! Please believe me.", $FC
-	dc.b	$04, $10
+	dc.b	"No way! Please believe me."
+	script_cmd_question $04
+	dc.b	$10
 ThankYouStr3:
 	dc.b	"Thank you.", $FF, $00
 JustBorrowedBookStr:
 	dc.b	"But it's true. I didn't", $FE
 	dc.b	"steal it--I just borrowed", $FE
 	dc.b	"it for a moment. Ha, ha!"
-	dc.b	$F8, $02, $F7, $E2
+	script_cmd_triggers $F7, $E2
 SorryForStealingStr:
 	dc.b	"I'm sorry. I make", $FE
 	dc.b	"a living selling", $FE
@@ -3673,7 +3735,7 @@ SorryForStealingStr:
 	dc.b	"I will go to Stow to", $FE
 	dc.b	"show them how much I", $FE
 	dc.b	"regret my past mistakes."
-	dc.b	$F8, $01, $3C
+	script_cmd_triggers TRIGGER_Girl_left_for_stow
 MeetAgainStr2:
 	dc.b	"Hello! So we meet again.", $FD
 	dc.b	"I reported to King Tsarkon", $FE
@@ -3682,7 +3744,8 @@ MeetAgainStr2:
 	dc.b	"Oh, yes, I have your rings,", $FE
 	dc.b	"but you'll have to kill", $FE
 	dc.b	"me to get them."	
-	dc.b	$F8, $02, $F7, $E3, $00
+	script_cmd_triggers $F7, $E3
+	dc.b	$00
 
 ; loc_00032532
 TownTilemapData_Stow1_SetA_TgtB:	
@@ -3929,7 +3992,13 @@ MapToMalagaStr:
 	dc.b	"Malaga lies to the", $FE
 	dc.b	"northeast. Here is a map to", $FE
 	dc.b	"help you get there."
-	dc.b	$F9, $06, $01, $2C, $01, $3C, $01, $3D, $01, $3E, $01, $3F, $01, $4E
+	script_cmd_actions 6
+	script_reveal_map $2C
+	script_reveal_map $3C
+	script_reveal_map $3D
+	script_reveal_map $3E
+	script_reveal_map $3F
+	script_reveal_map $4E
 MalagaNortheastStr:
 	dc.b	"Malaga is", $FE
 	dc.b	"northeast of here.", $FF, $00
@@ -3960,7 +4029,10 @@ MapToBlazonsCaveStr:
 	dc.b	"Go west to find Blazon's", $FE
 	dc.b	"Cave. I'll give you a map", $FE
 	dc.b	"that shows the way."
-	dc.b	$F9, $03, $01, $4C, $01, $4D, $01, $4E
+	script_cmd_actions 3
+	script_reveal_map $4C
+	script_reveal_map $4D
+	script_reveal_map $4E
 GoWestBlazonsCaveStr:	
 	dc.b	"If you go west, you'll", $FE
 	dc.b	"find Blazon's Cave.", $FF, $00
@@ -4001,7 +4073,7 @@ AnselmIntroductionStr:
 	dc.b	"Poison Shield for you.", $FE
 	dc.b	"He's been gone for so long!", $FE
 	dc.b	"Please find my father."
-	dc.b	$F8, $01, $87
+	script_cmd_triggers $87
 ThankYouForFindingHimStr:
 	dc.b	"My father has come back.", $FE
 	dc.b	"Thank you for finding him.", $FF
@@ -4013,14 +4085,15 @@ ShowSketchStr:
 	dc.b	"She's very beautiful. Would", $FE
 	dc.b	"you show her this sketch", $FE
 	dc.b	"an artist drew of me?"
-	dc.b	$F9, $01, $00, $26 
+	script_cmd_actions 1
+	script_set_trigger TRIGGER_Old_man_waiting_for_letter
 LoneTreeTreasureStr:
 	dc.b	"If you go north, you'll", $FE
 	dc.b	"find a lone tree.", $FE
 	dc.b	"A treasure of my ancestors", $FD
 	dc.b	"is hidden there.", $FE
 	dc.b	"Take it as my gift."
-	dc.b	$F8, $01, $7A
+	script_cmd_triggers $7A
 WaitingForLetterStr:
 	dc.b	"I am waiting for a letter", $FE
 	dc.b	"from my lady friend.", $FF, $00
@@ -4036,11 +4109,11 @@ MalagaNorthKeyStr:
 	dc.b	"to get there.", $FD
 	dc.b	"I'll give you the key to", $FE
 	dc.b	"the cave."
-	dc.b	$F8, $01, $8A
+	script_cmd_triggers $8A
 LostKeyStr:	
 	dc.b	"Did you lose the key?", $FE
 	dc.b	"I have another one."
-	dc.b	$F8, $01, $8C
+	script_cmd_triggers $8C
 TroubleWakingUpStr:
 	dc.b	"Yawn! I'm having", $FE
 	dc.b	"trouble waking up.", $FF 
@@ -4050,7 +4123,8 @@ WhatsWrongStowStr:
 	dc.b	"been attacked by a monster?", $FD
 	dc.b	"This is terrible! I'll go", $FE
 	dc.b	"there as soon as I'm ready."
-	dc.b	$F8, $01, $12, $00
+	script_cmd_triggers TRIGGER_Stow_innocence_proven
+	dc.b	$00
 ReadyToLeaveStowStr:
 	dc.b	"I'm getting ready", $FE
 	dc.b	"to leave for Stow.", $FF, $00
@@ -4444,7 +4518,8 @@ WaitingForPlayerNameStr:
 	dc.b	"No matter! If you can get", $FE
 	dc.b	"the crown from inside the", $FE
 	dc.b	"cave, you will be king."
-	dc.b	$F8, $01, $CD, $00
+	script_cmd_triggers $CD
+	dc.b	$00
 HaveYouGivenUpStr:
 	dc.b	"What happened?", $FE
 	dc.b	"Have you given up?", $FF
@@ -4456,7 +4531,9 @@ NeverExpectedSucceedStr:
 	dc.b	"you. Here is the ring. You", $FE
 	dc.b	"are now the king of Malaga.", $FD
 	dc.b	"Please return to Malaga."
-	dc.b	$F9, $02, $00, $1B, $00, $FC
+	script_cmd_actions 2
+	script_set_trigger TRIGGER_Malaga_king_crowned
+	script_set_trigger $FC
 ReturnToMalagaStr:
 	dc.b	"Please return to Malaga.", $FF, $00 
 
@@ -4547,7 +4624,15 @@ MapToTadcasterStr:
 	dc.b	"Travel west to", $FE
 	dc.b	"reach Tadcaster.", $FE
 	dc.b	"I have a map for you."
-	dc.b	$F9, $07, $01, $0E, $01, $0D, $01, $0C, $01, $0B, $01, $0A, $01, $09, $01, $19, $00
+	script_cmd_actions 7
+	script_reveal_map $0E
+	script_reveal_map $0D
+	script_reveal_map $0C
+	script_reveal_map $0B
+	script_reveal_map $0A
+	script_reveal_map $09
+	script_reveal_map $19
+	dc.b	$00
 ReachTadcasterStr:
 	dc.b	"Travel west to", $FE
 	dc.b	"reach Tadcaster.", $FF
@@ -4570,7 +4655,12 @@ TreasureLegendStr:
 	dc.b	"guard it are very powerful.", $FE
 	dc.b	"If you wish to try your", $FE
 	dc.b	"luck, use this map."
-	dc.b	$F9, $04, $01, $0C, $01, $1C, $01, $0D, $01, $0E, $00
+	script_cmd_actions 4
+	script_reveal_map $0C
+	script_reveal_map $1C
+	script_reveal_map $0D
+	script_reveal_map $0E
+	dc.b	$00
 TreasureInCaveStr:
 	dc.b	"A treasure of 15,000 kims", $FE
 	dc.b	"is hidden in the Cave of", $FE
@@ -4582,7 +4672,8 @@ ShareTreasureStr:
 	dc.b	"I knew about it", $FE
 	dc.b	"before you did,", $FE
 	dc.b	"so I should get half of it."
-	dc.b	$F8, $01, $20, $00
+	script_cmd_triggers TRIGGER_Tadcaster_treasure_found
+	dc.b	$00
 DontSpendAllWealthStr:
 	dc.b	"Don't spend your wealth", $FE
 	dc.b	"all in one place!", $FF
@@ -4592,7 +4683,7 @@ BuyPassToCartahenaStr:
 	dc.b	"You wish a pass to allow", $FE
 	dc.b	"you into Cartahena? Are you", $FE
 	dc.b	"willing to pay 50,000 kims?"
-	dc.b	$FB, $02, $34, $00
+	script_cmd_yes_no $02, TRIGGER_Pass_to_carthahena_purchased, $00
 WhyHereStr:
 	dc.b	"Then why are you here?", $FF, $00
 BoughtFromMeStr:
@@ -4602,14 +4693,14 @@ BuyPassToCartahenaStr2:
 	dc.b	"You wish a pass to allow", $FE
 	dc.b	"you into Cartahena? Are you", $FE
 	dc.b	"willing to pay 50,000 kims?"
-	dc.b	$FC, $06
+	script_cmd_question $06
 CantAffordPassStr:
 	dc.b	"You can't afford it.", $FF, $00
 BuyPassToCartahenaStr3:
 	dc.b	"You wish a pass to allow", $FE
 	dc.b	"you into Cartahena? Are you", $FE
 	dc.b	"willing to pay 50,000 kims?"
-	dc.b	$FC, $07 
+	script_cmd_question $07
 TooMuchGearStr:
 	dc.b	"You have too much gear", $FE
 	dc.b	"to carry this pass.", $FF, $00 
@@ -4863,11 +4954,11 @@ ImposterDarmonsCaveStr:
 	dc.b	"northwest of here.", $FD
 	dc.b	"Here's a map to", $FE
 	dc.b	"show you the way", $2E
-	dc.b	$F9, $04
-	dc.b	$01, $09
-	dc.b	$01, $19
-	dc.b	$01, $18
-	dc.b	$01, $08
+	script_cmd_actions 4
+	script_reveal_map $09
+	script_reveal_map $19
+	script_reveal_map $18
+	script_reveal_map $08
 	dc.b	$00
 ImposterDarmonsCaveConfirmedStr
 	dc.b	"The imposter lives", $FE
@@ -4917,12 +5008,12 @@ MapToHelwigStr
 	dc.b	"You can reach Helwig by", $FE
 	dc.b	"going west. I'll give you a", $FE
 	dc.b	"map so you don't get lost."
-	dc.b	$F9, $05
-	dc.b	$01, $19
-	dc.b	$01, $18
-	dc.b	$01, $17
-	dc.b	$01, $16
-	dc.b	$01, $06
+	script_cmd_actions 5
+	script_reveal_map $19
+	script_reveal_map $18
+	script_reveal_map $17
+	script_reveal_map $16
+	script_reveal_map $06
 ReachHelwigStr
 	dc.b	"You can reach", $FE
 	dc.b	"Helwig by going west.", $FF
@@ -4933,7 +5024,7 @@ ImposterConfrontationStr
 	dc.b	"Wait, you're not my", $FE
 	dc.b	"master! Prepare to die,", $FE
 	dc.b	"vile imposter!"
-	dc.b	$F8, $01, $F6 
+	script_cmd_triggers $F6
 YouHaveNotWonYetStr
 	dc.b	"You haven't won yet! Come", $FE
 	dc.b	"to Darmon's Cave and face", $FE
@@ -4994,7 +5085,7 @@ AwaitingYouStr
 	dc.b	"I sent the ring to Tsarkon,", $FE
 	dc.b	"but I have something even", $FE
 	dc.b	"better for you...."
-	dc.b	$F8, $02, $F7, $E4
+	script_cmd_triggers $F7, $E4
 ; loc_00036706
 TownTilemapData_Tadcaster_SetA_TgtB:
 	dc.b	$25, $1F, $01, $96, $3F, $00, $24, $00, $02, $A0, $96, $BF, $BF, $BF, $BC, $01, $83, $BF, $A4, $03, $1D, $1E 
@@ -5187,7 +5278,16 @@ OnlyWomenRemainStr:
 JourneyWestToSwaffhamMapStr:
 	dc.b	"Journey west to Swaffham.", $FE
 	dc.b	"Use this map as your guide."
-	dc.b	$F9, $08, $01, $06, $01, $16, $01, $15, $01, $05, $01, $04, $01, $03, $01, $02, $01, $01, $00
+	script_cmd_actions 8
+	script_reveal_map $06
+	script_reveal_map $16
+	script_reveal_map $15
+	script_reveal_map $05
+	script_reveal_map $04
+	script_reveal_map $03
+	script_reveal_map $02
+	script_reveal_map $01
+	dc.b	$00
 JourneyWestToSwaffhamStr:
 	dc.b	"Journey west to Swaffham.", $FF
 HusbandCapturedStr:
@@ -5215,12 +5315,12 @@ MethuenCaveMapStr:
 	dc.b	"Cave to the southwest.", $FD
 	dc.b	"Please help them! Here's a", $FE
 	dc.b	"map that shows the way", $2E
-	dc.b	$F9, $05
-	dc.b	$00, $89
-	dc.b	$01, $06
-	dc.b	$01, $16
-	dc.b	$01, $15
-	dc.b	$01, $14
+	script_cmd_actions 5
+	script_set_trigger $89
+	script_reveal_map $06
+	script_reveal_map $16
+	script_reveal_map $15
+	script_reveal_map $14
 	dc.b	$00
 CountOnYouStr:
 	dc.b	"I know I can count on you!", $FF, $00
@@ -5234,7 +5334,7 @@ GoldMinedMethuenCaveStr:
 	dc.b	"Cartahena uses slaves to", $FE
 	dc.b	"dig out gold to fund their", $FE
 	dc.b	"wars of destruction", $2E
-	dc.b	$F8, $01, $89
+	script_cmd_triggers $89
 WarBetweenCartahenaAndExcalabriaStr:
 	dc.b	"We also suffered in", $FE
 	dc.b	"the war between", $FE
@@ -5246,7 +5346,8 @@ FindSomeoneForMeStr:
 	dc.b	"artist drew of me. Perhaps", $FE
 	dc.b	"someone would like to meet", $FE
 	dc.b	"me after seeing this", $2E 
-	dc.b	$F9, $01, $00, $16
+	script_cmd_actions 1
+	script_set_trigger TRIGGER_Helwig_old_woman_quest_started
 FoundSomeoneForMeStr:
 	dc.b	"Have you found", $FE
 	dc.b	"someone for me?", $FF, $00
@@ -5256,12 +5357,15 @@ WriteLetterGiftDragonShieldStr:
 	dc.b	"I'll write him a letter.", $FD
 	dc.b	"Here, take the Dragon", $FE
 	dc.b	"Shield for your kindness."
-	dc.b	$F9, $01, $00, $27
+	script_cmd_actions 1
+	script_set_trigger TRIGGER_Old_man_and_woman_paired
 GiftDragonShieldStr:
 	dc.b	"Here is a gift to", $FE
 	dc.b	"repay your kindness.", $FE
 	dc.b	"It is the Dragon Shield."
-	dc.b	$F9, $01, $00, $27, $00
+	script_cmd_actions 1
+	script_set_trigger TRIGGER_Old_man_and_woman_paired
+	dc.b	$00
 GetAlongFineStr:
 	dc.b	"I'm sure we'll get along", $FE
 	dc.b	"just fine.", $FF
@@ -5296,7 +5400,8 @@ KeyFromCaveStr:
 	dc.b	"it, and I picked it up.", $FD
 	dc.b	"You might be able to use it", $FE
 	dc.b	"somewhere in the cave."
-	dc.b	$F9, $01, $00, $65
+	script_cmd_actions 1
+	script_set_trigger $65
 RememberedAsHeroStr:
 	dc.b	"You will always", $FE
 	dc.b	"be remembered in our", $FE
@@ -5338,7 +5443,8 @@ LazySlugStr:
 	dc.b	"fact, I will. Take that!", $FD
 	dc.b	"Now don't come back until", $FE
 	dc.b	"you've rescued our men."
-	dc.b	$F8, $01, $D2, $00
+	script_cmd_triggers $D2
+	dc.b	$00
 HurryBringBackHusbandsStr:
 	dc.b	"Good for you!", $FE
 	dc.b	"Please hurry and", $FE
@@ -5361,7 +5467,7 @@ FreeAtLastStr:
 	dc.b	"returning to Helwig now.", $FD
 	dc.b	"Please join us for the", $FE
 	dc.b	"celebrations."
-	dc.b	$F8, $01, $24
+	script_cmd_triggers TRIGGER_Helwig_men_rescued
 ; loc_00037A22
 TownTilemapData_Helwig_SetA_TgtB:
 	dc.b	$30, $2D, $2C, $00, $3F, $58, $05, $58, $58, $19, $05, $03 
@@ -5622,7 +5728,8 @@ CartahenaDestroyedSwaffhamStr:
 	dc.b	"monsters stole my treasure", $FE
 	dc.b	"and the true Ring of Earth.", $FE
 	dc.b	"Only you can stop them now."
-	dc.b	$F8, $01, $4B, $00
+	script_cmd_triggers $4B
+	dc.b	$00
 SomethingStrangeHappenStr:
 	dc.b	"I feel that something", $FE 
 	dc.b	"strange is going to happen.", $FE
@@ -5784,7 +5891,7 @@ LongWaitedForYouStr:
 	dc.b	"Oh, no! This Ring of Earth", $FE 
 	dc.b	"is a fake! Return to", $FE 
 	dc.b	"Swaffham for the true ring."
-	dc.b	$F8, $01, $28
+	script_cmd_triggers TRIGGER_Swaffham_ruined
 TerribleNewsStr:
 	dc.b	"Swaffham in ruins?", $FE 
 	dc.b	"That is terrible news.", $FE 
@@ -6004,7 +6111,8 @@ YouLookIllStr
 	dc.b	"You look ill. Did you", $FE 
 	dc.b	"eat something that", $FE 
 	dc.b	"disagreed with you?"
-	dc.b	$F8, $01, $33, $00
+	script_cmd_triggers TRIGGER_Spy_dinner_poisoned_flag
+	dc.b	$00
 GladRecoveredStr
 	dc.b	"I'm so glad you recovered!", $FF, $00 
 CureEraclePoisonStr
@@ -6017,7 +6125,8 @@ WomanDinnerStr
 	dc.b	"A woman gave you dinner", $FE 
 	dc.b	"in that house?", $FE 
 	dc.b	"But no one lives there!"
-	dc.b	$F8, $01, $33, $00
+	script_cmd_triggers TRIGGER_Spy_dinner_poisoned_flag
+	dc.b	$00
 PoisonedBySpyStr
 	dc.b	"I think you were poisoned", $FE
 	dc.b	"by a spy from Cartahena.", $FF, $00 
@@ -6058,7 +6167,8 @@ WelcomePrinceStr
 	dc.b	"Visit him again,", $FE 
 	dc.b	"as you desperately", $FE 
 	dc.b	"need his creation."
-	dc.b	$F8, $01, $36, $00
+	script_cmd_triggers TRIGGER_Sword_retrieved_from_blacksmith
+	dc.b	$00
 EscapedDestructionExcalabriaStr
 	dc.b	"I escaped the destruction", $FE 
 	dc.b	"of Excalabria. I knew a", $FE 
@@ -6069,7 +6179,7 @@ EscapedDestructionExcalabriaStr
 	dc.b	"I buried it under a", $FE 
 	dc.b	"tree in Excalabria.", $FE 
 	dc.b	"It may still be there."
-	dc.b	$F8, $01, $A2
+	script_cmd_triggers $A2
 ShopInSwaffhamStr
 	dc.b	"I used to work in a shop in", $FE 
 	dc.b	"Swaffham, but I didn't like", $FE
@@ -6084,19 +6194,19 @@ HonorHumbleHomeStr
 	dc.b	"Please partake of this meal", $FE 
 	dc.b	"I have prepared for you.", $FE 
 	dc.b	"I have much to tell you."
-	dc.b	$F8, $02, $30, $4C
+	script_cmd_triggers TRIGGER_Ate_spy_dinner, $4C
 WasItGoodStr
 	dc.b	"Was it good?", $FF, $00 
 PoisonedFoodStr
 	dc.b	"Young fool, I poisoned your", $FE 
 	dc.b	"food. You will die soon!", $FE 
 	dc.b	"Tsarkon will be pleased!"
-	dc.b	$F8, $01, $31
+	script_cmd_triggers TRIGGER_Swaffham_ate_poisoned_food
 NeedPassStr
 	dc.b	"You need a pass to get into", $FE 
 	dc.b	"Cartahena. I hear that one", $FE 
 	dc.b	"can be obtained in Barrow", $2E
-	dc.b	$F8, $01, $25 
+	script_cmd_triggers TRIGGER_Uncle_tibor_visited
 FinalBattleStr
 	dc.b	"Your Highness, now is the", $FE 
 	dc.b	"time for the final battle.", $FE 
@@ -6387,7 +6497,8 @@ TsarkonFledEastStr:
 	dc.b	"I stole the key that you", $FE
 	dc.b	"need to get into the cave.", $FE
 	dc.b	"Here, it is yours", $2E
-	dc.b	$F9, $01, $00, $63
+	script_cmd_actions 1
+	script_set_trigger $63
 TsarkonFledEastwardStr:
 	dc.b	"Tsarkon fled eastward,", $FE
 	dc.b	"to the Cave of Thule.", $FF, $00 
@@ -6407,11 +6518,12 @@ WishPoisonKilledStr:
 	dc.b	"You'll soon wish that", $FE
 	dc.b	"the poisoned food I", $FE
 	dc.b	"gave you had killed you!"
-	dc.b	$F8, $02, $F7, $E9 
+	script_cmd_triggers $F7, $E9
 DieLaughStr:
 	dc.b	"Ha, ha, ha!", $FE
 	dc.b	"you'll die!"
-	dc.b	$F8, $02, $F7, $E9, $00 
+	script_cmd_triggers $F7, $E9
+	dc.b	$00
 TharRevengeStr:
 	dc.b	"So, you are here at last.", $FE 
 	dc.b	"Do you remember me?", $FE
@@ -6419,14 +6531,15 @@ TharRevengeStr:
 	dc.b	"I asked Tsarkon to turn me", $FE
 	dc.b	"into a monster. Now my", $FE
 	dc.b	"revenge will be sweet!"
-	dc.b	$F8, $02, $F7, $EB, $00 
+	script_cmd_triggers $F7, $EB
+	dc.b	$00
 LutherDevastatedSwaffhamStr:
 	dc.b	"Once again we meet, young", $FE
 	dc.b	"fool! It was I, Luther, who", $FE
 	dc.b	"devastated Swaffham.", $FD
 	dc.b	"After I kill you, I'm off", $FE
 	dc.b	"to visit Wyclif...."
-	dc.b	$F8, $02, $F7, $EA 
+	script_cmd_triggers $F7, $EA
 StepfatherRingsStr:
 	dc.b	"Finally, you've come, my", $FE
 	dc.b	"son! I call you that though", $FE
@@ -6438,7 +6551,7 @@ ChaosReignStr:
 	dc.b	"Now the world is ours! Let", $FE
 	dc.b	"chaos reign! Everyone can", $FE
 	dc.b	"suffer as I have suffered!"
-	dc.b	$F8, $01, $A1 
+	script_cmd_triggers $A1
 BreakMothersHeartStr:
 	dc.b	"This will break your", $FE
 	dc.b	"poor mother's heart!", $FE
@@ -6448,7 +6561,7 @@ BreakMothersHeartStr:
 OneOfUsWillDieStr:
 	dc.b	"Then one of us", $FE
 	dc.b	"will die now!"
-	dc.b	$F8, $02, $F7, $EC 
+	script_cmd_triggers $F7, $EC
 FreedAtLastStr:
 	dc.b	"You have freed me at last!", $FE
 	dc.b	"Long have I been in thrall", $FE
@@ -6465,7 +6578,8 @@ FreedAtLastStr:
 	dc.b	"Return to Cartahena, ", SCRIPT_PLAYER_NAME, ".", $FE
 	dc.b	"Someone special waits", $FD
 	dc.b	"for you there."
-	dc.b	$F8, $01, $38, $00 
+	script_cmd_triggers TRIGGER_Tsarkon_is_dead
+	dc.b	$00
 FeelChillsStr:
 	dc.b	"You feel chills, as if", $FE
 	dc.b	"something evil is beside", $FE 

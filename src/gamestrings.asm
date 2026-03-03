@@ -850,7 +850,8 @@ CantTakeBoxStr:
 	dc.b	"it's a box!", $FF, $00
 TookTreasureStr:
 	dc.b	"You took the treasure."
-	dc.b	$F9, $01, $00, $06
+	script_cmd_actions 1
+	script_set_trigger TRIGGER_Treasure_of_troy_found
 OpenedChestStr:
 	dc.b	"You opened"
 	dc.b	" the chest.", $FF 

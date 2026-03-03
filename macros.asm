@@ -179,6 +179,87 @@ RingChest macro type,value,flag
     ENDM
 
 ; ============================================================
+; Dialogue Script Command Macros
+; ============================================================
+; These macros emit the byte sequences consumed by ProcessScriptText
+; (src/script.asm). They replace raw $F8/$F9/$FA/$FB/$FC byte sequences
+; with readable names. Opcodes and constants are defined in constants.asm.
+;
+; IMPORTANT: script_actions <n> must be followed by exactly <n> entry macros
+; (script_set_trigger / script_reveal_map / script_give_kims). The assembler
+; cannot enforce this count — it is the programmer's responsibility.
+;
+; IMPORTANT: macros that emit multiple dc.b directives cannot be embedded
+; inline inside a string dc.b. Split the dc.b line at the command byte first.
+
+; --- $FC SCRIPT_QUESTION ---
+; Reads the player's response into Dialog_response_index.
+; Usage: script_cmd_question <response_index>
+script_cmd_question macro response
+    dc.b    SCRIPT_QUESTION, response
+    ENDM
+
+; --- $FB SCRIPT_YES_NO ---
+; Shows a YES/NO prompt; on answer sets Dialog_choice_event_trigger.
+; Usage: script_cmd_yes_no <response_index>, <event_trigger_offset>, <ext_trigger>
+script_cmd_yes_no macro response, trigger, ext_trigger
+    dc.b    SCRIPT_YES_NO, response, trigger, ext_trigger
+    ENDM
+
+; --- $FA SCRIPT_CHOICE ---
+; Validates player's prior answer; sets Quest_choice_map_trigger if matched.
+; Usage: script_cmd_choice <expected_answer>, <map_trigger>
+script_cmd_choice macro answer, map_trigger
+    dc.b    SCRIPT_CHOICE, answer, map_trigger
+    ENDM
+
+; --- $F8 SCRIPT_TRIGGERS: set story trigger flags ---
+; Each argument is a 1-byte offset into Event_triggers_start.
+; Writes FLAG_TRUE ($FF) to Event_triggers_start + offset.
+; Usage: script_cmd_triggers <t1> [, <t2>]
+script_cmd_triggers macro t1, t2
+    if NARG=1
+    dc.b    SCRIPT_TRIGGERS, 1, t1
+    endc
+    if NARG=2
+    dc.b    SCRIPT_TRIGGERS, 2, t1, t2
+    endc
+    ENDM
+
+; --- $F9 SCRIPT_ACTIONS: action list header ---
+; Emits the opcode and entry count. Must be followed by exactly <count>
+; entry macros: script_set_trigger, script_reveal_map, or script_give_kims.
+; Usage: script_cmd_actions <count>
+script_cmd_actions macro count
+    dc.b    SCRIPT_ACTIONS, count
+    ENDM
+
+; --- $F9 entry: set story trigger ---
+; Writes FLAG_TRUE to Event_triggers_start + offset (16-bit, high byte = $00).
+; Usage: script_set_trigger <offset>
+script_set_trigger macro offset
+    dc.b    $00, offset
+    ENDM
+
+; --- $F9 entry: reveal world map sector ---
+; Writes FLAG_TRUE to Event_triggers_start + $0100 + sector.
+; Usage: script_reveal_map <sector>
+script_reveal_map macro sector
+    dc.b    $01, sector
+    ENDM
+
+; --- $F9 entry: give kims (BCD) ---
+; Adds a BCD-encoded kim amount to the player's wallet via AddPaymentAmount.
+; Amount is a 4-byte packed BCD longword (most-significant pair first).
+; Example: 200 kims = $00000200
+; Usage: script_give_kims <bcd_longword>
+; Note: Transaction_item_id/quantity/flags are loaded from bytes 2-4 of the
+;       longword and should be $00 for a pure kim reward.
+script_give_kims macro bcd_amount
+    dc.b    $02, (bcd_amount>>24)&$FF, (bcd_amount>>16)&$FF, (bcd_amount>>8)&$FF, bcd_amount&$FF
+    ENDM
+
+; ============================================================
 ; NPC Entry Macro
 ; ============================================================
 ; Defines a single NPC entry in a town NPC data table.
