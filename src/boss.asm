@@ -97,7 +97,6 @@ Boss1_VictoryFlash:
 	BRA.b	BossCommon_SpriteUpdate
 Boss1_VictoryFlash_Loop:
 	BSR.w	ClearDialogPlane
-; loc_0000BEB0
 BossCommon_SpriteUpdate:
 	BSR.w	UpdateSpritePositionAndRender
 	RTS
@@ -126,7 +125,6 @@ BossCommon_VictoryMessageWait:
 	BNE.b	BossBattle_SetExitFlag
 	RTS
 
-; loc_0000BF04
 BossBattle_SetExitFlag:
 	MOVE.b	#FLAG_TRUE, Boss_battle_exit_flag.w
 	RTS
@@ -172,7 +170,6 @@ UpdateBattleParallaxLayers:
 	MOVE.l	D2, obj_vel_x(A6)
 	MOVE.l	D3, obj_vel_y(A6)
 	BRA.w	UpdateSpritePositionAndRender
-; loc_0000BF84
 UpdateBattleParallax_ClearSlots:
 	MOVEA.l	Object_slot_02_ptr.w, A6
 	CLR.l	obj_vel_x(A6)
@@ -198,7 +195,6 @@ UpdateSpritePositionAndRender:
 	MOVE.w	#$00A8, obj_world_y(A5)
 	CLR.l	obj_vel_x(A5)
 	CLR.l	obj_vel_y(A5)
-; loc_0000BFE0
 BossBody_SpriteUpdate:
 	MOVEA.l	Object_slot_01_ptr.w, A6
 	LEA	EnemySpriteFrameDataA_12, A0
@@ -666,7 +662,6 @@ TwoHeadedDragon_VictoryFadeoutTick:
 	BRA.b	TwoHeadedDragon_SpriteUpdate
 TwoHeadedDragon_VictoryFadeoutTick_Loop:
 	BSR.w	ClearDialogPlane
-; loc_0000C6DE
 TwoHeadedDragon_SpriteUpdate:
 	JSR	AddSpriteToDisplayList
 	RTS
@@ -736,7 +731,6 @@ TwoHeadedDragon_HeadTickA_Loop_Done:
 
 TwoHeadedDragon_HeadTickA_Loop2:
 	MOVE.w	#BOSS_HIT_STUN_FRAMES, obj_knockback_timer(A5)
-; loc_0000C7D8
 DragonHeadA_IdleTick:
 	CLR.b	obj_hit_flag(A5)
 	TST.b	obj_npc_busy_flag(A5)
@@ -837,7 +831,6 @@ TwoHeadedDragon_HeadTickB_Loop_Done:
 
 TwoHeadedDragon_HeadTickB_Loop2:
 	MOVE.w	#BOSS_HIT_STUN_FRAMES, obj_knockback_timer(A5)
-; loc_0000C942
 DragonHeadB_IdleTick:
 	CLR.b	obj_hit_flag(A5)
 	TST.b	obj_npc_busy_flag(A5)
@@ -978,7 +971,6 @@ CheckPlayerDamageAndKnockback:
 	SUBI.w	#$0014, obj_world_x(A6)
 	MOVE.w	#SOUND_PLAYER_HIT, D0
 	JSR	QueueSoundEffect
-; loc_0000CB1C
 BattleHit_Return:
 	RTS
 
@@ -1005,7 +997,6 @@ ProcessBattleDamageAndPalette_Loop:
 
 ProcessBattleDamageAndPalette_Loop2:
 	MOVE.w	#BOSS_HIT_STUN_FRAMES, obj_knockback_timer(A6)
-; loc_0000CB6C
 ProcessBattleDamage_Return:
 	CLR.b	obj_hit_flag(A6)
 	RTS
@@ -1118,7 +1109,6 @@ DrawBossAttackGraphic1:
 	BSR.w	WriteTextToVRAM
 	RTS
 
-; loc_0000CCD4
 DrawDialogTextLine_Alt1:
 	LEA	DrawDialogTextLine_Alt1_Data, A0
 	MOVE.l	#$43BE0003, D5
@@ -1164,7 +1154,6 @@ AnimateBossAttackFlash:
 AnimateBossAttackFlash_Loop:
 	RTS
 
-; loc_0000CD5E
 BossAttackFlashJumpTable:
 	BRA.w	BossAttackFlashJumpTable_Loop
 	BRA.w	DrawDialogTextLine_Alt2
@@ -1176,7 +1165,6 @@ BossAttackFlashJumpTable_Loop:
 	BSR.w	Write7x8TilesToVRAM
 	RTS
 
-; loc_0000CD80
 DrawDialogTextLine_Alt2:
 	LEA	DrawDialogTextLine_Alt2_Data, A0
 	MOVE.l	#$46420003, D5
@@ -1284,7 +1272,6 @@ SetBattleVictoryAnimFrames2:
 	BSR.w	SetEntityAnimFrames
 	RTS
 
-; loc_0000CF02
 SetEntityAnimFrames:
 	MOVE.w	(A0)+, obj_tile_index(A6)
 	CLR.w	D0
@@ -1302,7 +1289,6 @@ ProcessBattleVictoryEvent:
 	JSR	(A0,D0.w)
 	RTS
 
-; loc_0000CF2E
 BattleVictoryEventJumpTable:
 	BRA.w	BossVictoryEvent_FakeKing
 	BRA.w	BossVictoryEvent_Watling
@@ -1409,7 +1395,6 @@ GetNextItemSlotOffset:
 	ADD.w	D0, D0
 	RTS
 
-; loc_0000D046
 UpdateEncounterPalette:
 	LEA	BattlePaletteIndexTable, A0
 	MOVE.w	Battle_type.w, D0
@@ -1584,7 +1569,6 @@ DemonBoss_MainTick:
 DemonBoss_MainTick_Loop:
 	RTS
 
-; loc_0000D31C
 BossAiDemonJumpTable:
 	BRA.w	DemonBossState_WaitIdle
 	BRA.w	DemonBossState_ChooseDirection
@@ -1598,7 +1582,6 @@ DemonBossState_WaitIdle:
 	SUBQ.w	#1, obj_attack_timer(A5)
 	BGT.w	DemonBossState_WaitReturn
 	ADDQ.b	#1, demon_ai_state(A5)
-; loc_0000D348
 DemonBossState_WaitReturn:
 	RTS
 
@@ -1613,11 +1596,9 @@ DemonBossState_ChooseDirection:
 	MOVE.w	D0, D1
 	ANDI.w	#3, D0
 	BNE.b	DemonBoss_MoveRight
-; loc_0000D36E
 DemonBoss_MoveLeft:
 	MOVE.l	#$0000C000, obj_pos_x_fixed(A5)
 	BRA.b	DemonBoss_MoveRight_Loop
-; loc_0000D378
 DemonBoss_MoveRight:
 	MOVE.l	#Player_overworld_gfx_buffer, obj_pos_x_fixed(A5)
 DemonBoss_MoveRight_Loop:
@@ -1663,16 +1644,13 @@ DemonBossState_Move_Loop2:
 	TST.l	obj_pos_x_fixed(A5)
 	BGE.b	DemonBossState_Move_BounceCheck
 	NEG.l	obj_pos_x_fixed(A5)
-; loc_0000D410
 DemonBossState_Move_BounceCheck:
 	MOVE.w	#DEMON_BOSS_MOVE_DELAY, demon_move_timer(A5)
 	MOVE.w	#$0010, obj_vel_y(A5)
 	BRA.b	DemonBossState_Move_Return
-; loc_0000D41E
 DemonBossState_Move_Rebound:
 	MOVE.w	#DEMON_BOSS_MOVE_DELAY, obj_attack_timer(A5)
 	ADDQ.b	#1, demon_ai_state(A5)
-; loc_0000D428
 DemonBossState_Move_Return:
 	RTS
 
@@ -1689,7 +1667,6 @@ DemonBossState_FireProjectile:
 DemonBossState_FireProjectile_Loop:
 	BCLR.b	#2, demon_wing_flags(A5)
 	BRA.b	DemonBoss_SetFireFlag_Loop
-; loc_0000D454
 DemonBoss_SetFireFlag:
 	BSET.b	#2, demon_wing_flags(A5)
 DemonBoss_SetFireFlag_Loop:
@@ -1714,7 +1691,6 @@ DemonBoss_SetFireFlag_Loop3:
 	CMPI.l	#$0005E000, D1
 	BGE.b	DemonBoss_LaunchProjectile
 	MOVE.l	#$0005E000, D1	
-; loc_0000D49E
 DemonBoss_LaunchProjectile:
 	DIVU.w	#$002C, D1
 	EXT.l	D1
@@ -1759,7 +1735,6 @@ DemonBossState_AttackAnimate_Loop:
 	MOVE.b	#0, demon_fire_dir(A5)
 	JSR	SetEntityCoordFromDirection(PC)
 	BRA.b	DemonBossState_FireReturn
-; loc_0000D542
 DemonBossState_AttackAnimate_UpdateFrame:
 	MOVEA.l	Object_slot_07_ptr.w, A6
 	MOVE.w	obj_attack_timer(A5), D0
@@ -1773,7 +1748,6 @@ DemonBossState_AttackAnimate_UpdateFrame_Loop:
 	JSR	SetEntityCoordFromDirection(PC)
 	MOVE.w	#$0028, obj_attack_timer(A5)
 	ADDQ.b	#1, demon_ai_state(A5)
-; loc_0000D572
 DemonBossState_FireReturn:
 	RTS
 
@@ -1806,25 +1780,20 @@ SetEntityCoordFromDirection_Loop:
 SetEntityCoordFromDirection_Loop2:
 	RTS
 
-; loc_0000D5CC
 DemonBossWingFrameData:
 	dc.w	$78, $96
 	dc.w	$82, $8C 
-; loc_0000D5D4
 EntityDirectionXOffsets:
 	dc.w	$28
 	dc.w	$32
 	dc.w	$3C
-; loc_0000D5DA
 EntityDirectionYOffsets:
 	dc.w	$50
 	dc.w	$5A
 	dc.w	$64
-; loc_0000D5E0
 DemonBossAttackYOffsets:
 	dc.b	$00, $00, $00, $00, $00, $00, $00, $0A, $00, $14, $00, $0A, $00, $00, $00, $0A, $00, $14, $00, $0A, $00, $00, $00, $0A, $00, $0A, $00, $14, $00, $14, $00, $0A 
 	dc.b	$00, $0A, $00, $00, $00, $00, $00, $0A, $00, $0A, $00, $14, $00, $14, $00, $0A, $00, $0A 
-; loc_0000D612
 DemonBossProjectileFrames:
 	dc.b	$00, $00, $00, $08, $00, $10, $00, $18, $00, $20, $00, $00, $00, $08, $00, $10, $00, $18, $00, $20, $00, $00, $00, $08, $00, $10, $00, $18, $00, $20, $00, $00 
 	dc.b	$00, $08, $00, $10, $00, $18, $00, $20, $00, $00, $00, $08, $00, $10, $00, $18, $00, $20 
@@ -1876,7 +1845,6 @@ UpdateBossFlashAndDamage_Loop3:
 	MOVE.w	#$006E, demon_seg3_y(A5)
 BossTick_AbilityCheck_Done:
 	MOVE.w	#BOSS_HIT_STUN_FRAMES, obj_knockback_timer(A5)
-; loc_0000D6F6
 DemonBoss_AbilityReturn:
 	CLR.b	obj_hit_flag(A5)
 	RTS
@@ -1966,7 +1934,6 @@ SpawnChildObjects_Done:
 	DBF	D7, SpawnChildObjects_Done
 	RTS
 
-; loc_0000D80C
 DemonBoss_ClearBodySegment:
 	CLR.b	demon_seg_active(A6)
 	CLR.w	D6
@@ -2098,7 +2065,6 @@ DemonBoss_ProjectileSegmentTick_Loop4:
 DemonBoss_ProjectileSegmentTick_Loop3:
 	RTS
 
-; loc_0000D9C0
 DemonBossProjectileTileFrames:
 	dc.w	$0
 	dc.w	$8 
@@ -2358,7 +2324,6 @@ OrbitBoss_InnerApproach_Loop:
 	MOVE.b	#$FF, orbit_charge_dir(A5)
 	RTS
 	
-; loc_0000DD94
 OrbitBoss_InnerApproach_Tick:
 	BSR.w	GetSignedVelocity
 	ADD.w	D0, obj_direction(A6)
@@ -2374,7 +2339,6 @@ OrbitBoss_InnerApproach_Tick_Loop:
 	BLT.b	OrbitBoss_InnerApproach_ClampDone
 	MOVE.b	#ORBIT_APPROACH_ANGLE_MAX, obj_direction(A6)
 	MOVE.b	#$FF, orbit_charge_dir(A5)
-; loc_0000DDCA
 OrbitBoss_InnerApproach_ClampDone:
 	JSR	ProcessPlayerStrengthCheck
 	RTS
@@ -2402,7 +2366,6 @@ OrbitBoss_InnerCharge_Done:
 	BEQ.b	OrbitBoss_InnerFireWait
 	MOVE.l	#OrbitBoss_InnerSelectTarget, obj_tick_fn(A5)
 	MOVE.b	#BOSS_STATE_DELAY, obj_invuln_timer(A5)
-; loc_0000DE2C
 OrbitBoss_InnerFireWait:
 	JSR	ProcessPlayerStrengthCheck
 	RTS
@@ -2563,7 +2526,6 @@ OrbitBoss_OuterApproach_Loop:
 	MOVE.l	#OrbitBoss_OuterCharge, obj_tick_fn(A5)
 	RTS
 	
-; loc_0000E05A
 OrbitBoss_OuterApproach_Tick:
 	BSR.w	GetSignedVelocity
 	ADD.w	D0, obj_direction(A6)
@@ -2579,7 +2541,6 @@ OrbitBoss_OuterApproach_Tick_Loop:
 	BLT.b	OrbitBoss_OuterApproach_ClampDone
 	MOVE.b	#ORBIT_APPROACH_ANGLE_MAX, obj_direction(A6)
 	MOVE.b	#$FF, orbit_charge_dir(A5)
-; loc_0000E090
 OrbitBoss_OuterApproach_ClampDone:
 	JSR	ProcessBossFightDamage
 	RTS
@@ -2607,7 +2568,6 @@ OrbitBoss_OuterCharge_Done:
 	BNE.b	OrbitBoss_OuterFireWait
 	MOVE.l	#OrbitBoss_OuterSelectTarget, obj_tick_fn(A5)
 	MOVE.b	#BOSS_STATE_DELAY, obj_invuln_timer(A5)
-; loc_0000E0F2
 OrbitBoss_OuterFireWait:
 	JSR	ProcessBossFightDamage
 	RTS
@@ -2703,7 +2663,6 @@ GetSignedVelocity:
 GetSignedVelocity_Loop:
 	RTS
 
-; loc_0000E244
 OrbitBossProjectileFallTick:
 	ADDQ.b	#1, obj_move_counter(A5)
 	MOVE.b	obj_move_counter(A5), D0
@@ -2774,7 +2733,6 @@ ProcessPlayerStrengthCheck_Loop2:
 	MOVE.w	#SOUND_HEAL, D0
 	JSR	QueueSoundEffect
 	MOVE.w	#BOSS_HIT_STUN_FRAMES, obj_knockback_timer(A5)
-; loc_0000E344
 OrbitBoss_InnerPartHit_Return:
 	CLR.b	obj_hit_flag(A5)
 	RTS
@@ -2839,7 +2797,6 @@ ProcessBossFightDamage_Loop2:
 	MOVE.w	#SOUND_HEAL, D0
 	JSR	QueueSoundEffect
 	MOVE.w	#BOSS_HIT_STUN_FRAMES, obj_knockback_timer(A5)
-; loc_0000E40E
 OrbitBoss_OuterPartHit_Return:
 	CLR.b	obj_hit_flag(A5)
 	RTS
@@ -3067,7 +3024,6 @@ HydraBoss_PartIntroAnim_Loop:
 	MOVE.w	obj_world_x(A5), obj_screen_x(A5)
 	MOVE.w	obj_world_y(A5), obj_screen_y(A5)
 	JSR	AddSpriteToDisplayList
-; loc_0000E788
 HydraBoss_PartSpriteDone:
 	RTS
 
@@ -3095,7 +3051,6 @@ HydraBoss_PartIdleTick_Loop2:
 	MOVE.w	#SOUND_HYDRA_BITE, D0
 	JSR	QueueSoundEffect
 	MOVE.w	#BOSS_HIT_STUN_FRAMES, obj_knockback_timer(A5)
-; loc_0000E7E2
 HydraBoss_PartIdleTick_Check:
 	CLR.b	obj_hit_flag(A5)
 	TST.b	obj_npc_busy_flag(A5)
@@ -3129,7 +3084,6 @@ HydraBoss_PartIdleTick_Check_Loop2:
 	CLR.b	obj_move_counter(A5)
 	CLR.b	obj_npc_busy_flag(A5)
 	BRA.w	HydraBoss_PartIdleTick_UpdatePos
-; loc_0000E858
 HydraBoss_PartAttackTick:
 	ADDQ.b	#1, obj_move_counter(A5)
 	MOVE.b	obj_move_counter(A5), D0
@@ -3146,7 +3100,6 @@ HydraBoss_PartAttackTick:
 	NEG.l	D0
 HydraBoss_PartAttackTick_Loop:
 	ADD.l	D0, obj_world_x(A5)
-; loc_0000E88C
 HydraBoss_PartIdleTick_UpdatePos:
 	MOVE.w	obj_world_x(A5), obj_world_x(A6)
 	MOVE.w	obj_world_x(A5), obj_screen_x(A5)
@@ -3203,7 +3156,6 @@ HydraBoss_MainTick_Loop2:
 	MOVE.w	#SOUND_HEAL, D0
 	JSR	QueueSoundEffect
 	MOVE.w	#BOSS_HIT_STUN_FRAMES, obj_knockback_timer(A5)
-; loc_0000E958
 HydraBoss_MainTick_Animate:
 	CLR.b	obj_hit_flag(A5)
 	ADDQ.b	#1, obj_move_counter(A5)
@@ -3229,11 +3181,9 @@ HydraBoss_MainTick_Animate_Loop:
 	MOVE.l	#HydraBoss_DeactivateProjectile, obj_tick_fn(A6)
 	BSR.w	ActivateNextBossPart
 	BRA.b	HydraBoss_MainTick_UpdateFrame
-; loc_0000E9B0
 HydraBoss_MainTick_LaunchProjectile:
 	MOVEA.l	Object_slot_01_ptr.w, A6
 	MOVE.l	#HydraBoss_LaunchProjectile, obj_tick_fn(A6)
-; loc_0000E9BC
 HydraBoss_MainTick_UpdateFrame:
 	LEA	BossSpriteFramePtrs, A0
 	MOVEA.l	(A0,D5.w), A0
@@ -3255,13 +3205,11 @@ HydraBoss_MainTick_UpdateFrame:
 	MOVE.w	obj_world_y(A5), D0
 	ADD.w	(A0)+, D0
 	MOVE.w	D0, obj_world_y(A6)
-; loc_0000EA04
 HydraBoss_MainTick_SpriteUpdate:
 	JSR	CheckEntityPlayerCollisionAndDamage
 	MOVE.w	obj_world_x(A5), obj_screen_x(A5)
 	MOVE.w	obj_world_y(A5), obj_screen_y(A5)
 	JSR	AddSpriteToDisplayList
-; loc_0000EA1C
 HydraBoss_MainTick_Return:
 	RTS
 	
@@ -3635,7 +3583,6 @@ RingGuardian_MainTick:
 	JSR	(A0,D0.w)
 	RTS
 	
-; loc_0000EF36
 BossAiRingGuardianJumpTable:
 	BRA.w	RingGuardianState_WaitBattleStart
 	BRA.w	RingGuardianState_Descend
@@ -3653,7 +3600,6 @@ RingGuardianState_WaitBattleStart:
 	MOVE.b	#BOSS_STATE_DELAY, obj_invuln_timer(A5)
 	MOVE.w	#BOSS1_STATE_CHOOSE_ACTION, Boss_ai_state.w
 	MOVE.l	#$200, obj_pos_x_fixed(A5)
-; loc_0000EF74
 RingGuardianState_WaitBattleStart_Done:
 	BRA.w	BossMoveTick_Clamped
 RingGuardianState_Descend:
@@ -3682,7 +3628,6 @@ RingGuardianState_Descend_Loop3:
 	MOVE.l	#$400, obj_pos_x_fixed(A5)
 	RTS
 	
-; loc_0000EFCA
 RingGuardianState_Patrol_GetDir:
 	BSR.w	GetDirectionFromDeltas
 	BRA.w	RingGuardianState_ApplyVelocity
@@ -3699,7 +3644,6 @@ RingGuardianState_ChasePlayer:
 	CLR.b	obj_invuln_timer(A5)
 	RTS
 	
-; loc_0000EFFA
 RingGuardianState_Chase_GetDir:
 	BSR.w	CalculateDirectionToPlayer
 	BRA.w	RingGuardianState_ApplyVelocity
@@ -3734,7 +3678,6 @@ RingGuardianState_WaitProjectile:
 	BSR.w	WriteDirectionTilesForBoss
 RingGuardianState_WaitProjectile_Loop:
 	BRA.w	BossMoveTick_Clamped
-; loc_0000F070
 RingGuardianState_ApplyVelocity:
 	LEA	SineTable, A0
 	MOVE.l	obj_pos_x_fixed(A5), D0
@@ -3784,7 +3727,6 @@ BossMoveTick_Clamped_Loop:
 	MOVE.w	Player_str.w, D0
 	SUB.w	D0, obj_hp(A5)
 	MOVE.w	#BOSS_HIT_STUN_FRAMES, obj_knockback_timer(A5)
-; loc_0000F11C
 RingGuardian_TakeDamage_Return:
 	CLR.b	obj_hit_flag(A5)
 	MOVE.w	obj_world_x(A5), D0
@@ -3831,7 +3773,6 @@ RingGuardian_VictoryDialog:
 	BRA.b	RingGuardian_VictoryWait
 RingGuardian_VictoryDialog_Loop:
 	JSR	ClearDialogPlane
-; loc_0000F1CC
 RingGuardian_VictoryWait:
 	RTS
 	
@@ -3847,7 +3788,6 @@ RingGuardian_VictoryDialogContinue:
 	BRA.b	RingGuardian_DialogReturn
 RingGuardian_VictoryDialogContinue_Loop:
 	JSR	ClearDialogPlane
-; loc_0000F1FA
 RingGuardian_DialogReturn:
 	RTS
 	

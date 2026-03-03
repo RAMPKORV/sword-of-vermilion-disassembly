@@ -88,7 +88,6 @@ GameState_LoadTown_Loop4:
 	BNE.b	GameState_InitTownEntry_NormalPalette
 	MOVE.w	#PALETTE_IDX_TOWN_DARK, Palette_line_0_fade_target.w
 	BRA.b	GameState_InitTownEntry_NormalPalette_Loop2
-; loc_00001A46
 GameState_InitTownEntry_NormalPalette:
 	MOVE.w	#PALETTE_IDX_TOWN_TILES, Palette_line_0_fade_target.w
 GameState_InitTownEntry_NormalPalette_Loop2:
@@ -229,7 +228,6 @@ GameState_BuildingInterior:
 	MOVE.w	#GAMEPLAY_STATE_FRYING_PAN_DELAY, Gameplay_state.w
 	RTS
 
-; loc_00001C56
 GameState_BuildingInterior_NoBossEvent:
 	TST.b	Boss_event_trigger.w
 	BEQ.b	GameState_BuildingInterior_NoBossEvent_Loop2
@@ -291,7 +289,6 @@ GameState_BuildingInterior_NoBossEvent_Loop5:
 	TST.b	Banshee_powder_active.w
 	BNE.b	GameState_AwakeningMessage_SetState
 	PRINT 	AriseWarriorStr
-; loc_00001D50
 GameState_AwakeningMessage_SetState:
 	MOVE.w	#GAMEPLAY_STATE_READ_AWAKENING_MESSAGE, Gameplay_state.w
 	RTS
@@ -309,7 +306,6 @@ GameState_ReadAwakeningMessage:
 	BNE.b	GameState_ReadAwakening_Dismiss
 	RTS
 
-; loc_00001D7E
 GameState_ReadAwakening_Dismiss:
 	JSR	DrawStatusHudWindow
 	CLR.b	Player_input_blocked.w
@@ -350,7 +346,6 @@ GameState_FryingPanDelay: ; Woman hitting player with frying pan
 	MOVE.w	Palette_line_2_cycle_base.w, Palette_line_2_index.w
 	MOVE.w	#PALETTE_IDX_TOWN_HUD, Palette_line_3_index.w
 	JSR	LoadPalettesFromTable
-; loc_00001E08
 GameState_FryingPanDelay_Return:
 	RTS
 
@@ -406,7 +401,6 @@ GameState_ReadFryingPanMessage:
 	BNE.b	GameState_ReadFryingPan_Dismiss
 	RTS
 
-; loc_00001EC4
 GameState_ReadFryingPan_Dismiss:
 	JSR	DrawStatusHudWindow
 	CLR.w	Overworld_menu_state.w
@@ -792,7 +786,6 @@ GameState_BattleExit_Loop5:
 	CLR.w	Sprite_attr_count.w
 	JSR	FlushSpriteAttributesToVDP
 	MOVE.b	#FLAG_TRUE, Player_in_first_person_mode.w
-; loc_000024D4
 GameState_BeginResurrection_Return:
 	RTS
 
@@ -815,7 +808,6 @@ GameState_ReadSoldierTaunt:
 	BNE.b	GameState_ReadSoldierTaunt_Dismiss
 	RTS
 
-; loc_00002518
 GameState_ReadSoldierTaunt_Dismiss:
 	MOVE.w	#GAMEPLAY_STATE_BATTLE_EXIT, Gameplay_state.w
 	MOVE.b	#SOUND_TRANSITION, D0
@@ -938,7 +930,6 @@ CheckLevelUpAndRestoreMusic: ; level up
 	JSR	SavePromptMenuToBuffer
 	JSR	LoadLevelUpBannerTiles
 	BRA.b	GameState_LevelUpComplete_Check_Loop
-; loc_00002706
 GameState_LevelUpComplete_Check:
 	TST.b	Is_in_cave.w
 	BEQ.b	GameState_LevelUpComplete_Check_Loop2
@@ -965,7 +956,6 @@ GameState_CaveExploration:
 	MOVE.w	#GAMEPLAY_STATE_SHOW_POISON_NOTIFICATION, Gameplay_state.w
 	RTS
 
-; loc_00002752
 GameState_CaveExploration_CheckDeath:
 	BSR.w	CheckPlayerDeath
 	BEQ.b	GameState_CaveExploration_CheckDeath_Loop
@@ -1005,7 +995,6 @@ GameState_CaveExploration_CheckDeath_Loop4:
 	BEQ.b	OverworldMovementTick_HandleMenu
 	JSR	SetupFoundItemReward
 	CLR.b	Found_something_nearby.w
-; loc_000027CC
 OverworldMovementTick_HandleMenu:
 	BSR.w	HandleOverworldMenuInput
 	TST.b	Checked_for_encounter.w
@@ -1025,7 +1014,6 @@ OverworldMovementTick_ClearEncounterCheck:
 OverworldMovementTick_Return:
 	RTS
 
-; loc_000027FE
 OverworldMovementTick_TriggerEncounter:
 	CLR.b	Steps_since_last_encounter.w
 	CLR.b	Player_input_blocked.w
@@ -1101,7 +1089,6 @@ GameState_EncounterGraphicsFadeIn_Loop2:
 	BRA.b	GameState_EncounterGraphicsFadeIn_Return
 GameState_EncounterGraphicsFadeIn_Loop3:
 	BSR.w	UpdateDialogTileColumn
-; loc_000028FA
 GameState_EncounterGraphicsFadeIn_Return:
 	RTS
 
@@ -1137,7 +1124,6 @@ GameState_LevelUpStatsWaitInput:
 	BNE.b	GameState_LevelUpStats_Dismiss
 	RTS
 
-; loc_0000295C
 GameState_LevelUpStats_Dismiss:
 	MOVE.w	#WINDOW_DRAW_SCRIPT, Window_draw_type.w
 	CLR.w	Window_text_row.w
@@ -1168,7 +1154,6 @@ GameState_LevelUpComplete:
 	JSR	DisplayPlayerKimsAndExperience
 	RTS
 
-; loc_000029D4
 GameState_LevelUpComplete_Exit:
 	CLR.b	Player_input_blocked.w
 	MOVE.w	Saved_game_state.w, Gameplay_state.w
@@ -1227,7 +1212,6 @@ GameState_DialogDisplay_Loop2:
 	BRA.b	GameState_DialogDisplay_Return
 GameState_DialogDisplay_Loop3:
 	BSR.w	UpdateDialogTileColumn
-; loc_00002A90
 GameState_DialogDisplay_Return:
 	RTS
 
@@ -1455,7 +1439,6 @@ GameState_WaitForNotificationDismiss:
 	BNE.b	GameState_WaitNotification_Dismiss
 	RTS
 
-; loc_00002D92
 GameState_WaitNotification_Dismiss:
 	JSR	DrawStatusHudWindow
 	MOVE.w	#GAMEPLAY_STATE_OVERWORLD_ACTIVE, Gameplay_state.w
@@ -1647,7 +1630,6 @@ DrawBattleNametable_Done2:
 	ANDI	#$F8FF, SR
 	RTS
 
-; loc_000030AC
 HandleOverworldMenuInput:
 	TST.w	Overworld_menu_state.w
 	BNE.b	HandleOverworldMenuInput_DispatchMenu
@@ -1665,10 +1647,8 @@ HandleOverworldMenuInput_Loop:
 	MOVE.b	#SOUND_MENU_CURSOR, D0
 	JSR	QueueSoundEffect
 	MOVE.w	#OVERWORLD_MENU_STATE_OPTIONS_INIT, Overworld_menu_state.w
-; loc_000030EA
 HandleOverworldMenuInput_DispatchMenu:
 	BRA.w	HandleOverworldMenuInput_Dispatch
-; loc_000030EE
 HandleOverworldMenuInput_Dispatch:
 	TST.b	Window_tilemap_draw_active.w
 	BNE.b	HandleOverworldMenuInput_Return
@@ -1681,11 +1661,9 @@ HandleOverworldMenuInput_Dispatch:
 	ADD.w	D0, D0
 	LEA	OverworldMenuStateJumpTable, A0
 	JSR	(A0,D0.w)
-; loc_00003116
 HandleOverworldMenuInput_Return:
 	RTS
 
-; loc_00003118
 OverworldMenuStateJumpTable:
 	BRA.w	OverworldMenuStateJumpTable_Loop
 	BRA.w	OverworldMenuState0_Return_Loop	
@@ -1699,7 +1677,6 @@ OverworldMenuStateJumpTable_Loop:
 	TST.b	Window_tilemap_row_draw_pending.w
 	BNE.b	OverworldMenuState0_Return
 	CLR.b	Player_input_blocked.w
-; loc_00003140
 OverworldMenuState0_Return:
 	RTS
 
@@ -1815,7 +1792,6 @@ InitMenuCursorDefaults_Loop2:
 	JSR	(A0)
 	RTS
 
-; loc_000032C8
 OverworldMenuActionPtrs:
 	dc.l	DialogueStateMachine
 	dc.l	ItemMenuStateMachine
@@ -1906,7 +1882,6 @@ SearchTownNPCData_Loop:
 	BNE.b	FindTownStateEntry_NextEntry                     ; No: next entry
 	BRA.b	LoadTownStateData_Store                     ; Yes: load data
 	
-; loc_00003366
 FindTownStateEntry_NextEntry:
 	LEA	$28(A1), A1                      ; Skip to next entry
 	BRA.b	SearchTownNPCData_Done
@@ -1922,7 +1897,6 @@ LoadTownStateData:
 	JSR	(A0,D0.w)
 	
 	; Load town state data (40-byte structure)
-; loc_00003380
 LoadTownStateData_Store:
 	MOVE.w	(A0)+, Saved_player_x_in_town.w      ; +$04: X in town
 	MOVE.w	(A0)+, Town_player_spawn_y.w         ; +$06: Spawn Y
@@ -1949,7 +1923,6 @@ LoadAndPlayAreaMusic:
 	BEQ.b	LoadAndPlayAreaMusic_LookupRoom_Loop
 	CMPI.w	#$B, D0
 	BEQ.b	LoadAndPlayAreaMusic_LookupRoom_Loop2
-; loc_000033D8
 LoadAndPlayAreaMusic_LookupRoom:
 	MOVE.b	(A0,D0.w), D0
 	BRA.b	LoadAndPlayAreaMusic_Queue
@@ -1967,7 +1940,6 @@ LoadAndPlayAreaMusic_LookupRoom_Loop2:
 	TST.b	Swaffham_ruined.w
 	BEQ.b	LoadAndPlayAreaMusic_LookupRoom
 	MOVE.w	#SOUND_SWAFFHAM_RUINED_MUSIC, D0
-; loc_00003400
 LoadAndPlayAreaMusic_Queue:
 	MOVE.w	D0, Current_area_music.w
 	JSR	QueueSoundEffect
@@ -1983,7 +1955,6 @@ DisplayKimsAndCompass:
 	JSR	DisplayCompassToVRAM
 	RTS
 
-;loc_00003428
 CheckForEncounter:
 	MOVE.b	#1, Checked_for_encounter.w
 	JSR	GetRandomNumber
@@ -2005,7 +1976,6 @@ CheckForEncounter_triggered:
 ; Entry Format (12 bytes): Sector Y, X pos, Y pos, Direction flags, Handler ptr
 ; Entry list terminated with $FFFF
 ; ============================================================================
-; loc_00003442
 CheckOverworldInteractions:
 	MOVE.l	#NoOneHereStr, Script_talk_source.w ; Default message
 	LEA	OverworldSectorInteractionPtrs, A0                     ; Interaction table base
@@ -2049,7 +2019,6 @@ CheckOverworldInteractions_end:
 ; Entry Format (10 bytes): X pos, Y pos, Direction flags, Handler ptr
 ; Entry list terminated with $FFFF
 ; ============================================================================
-; loc_00003498
 CheckCaveInteractions:
 	LEA	CaveRoomInteractionPtrs, A0                     ; Cave interaction table base
 	MOVE.w	Current_cave_room.w, D0              ; D0 = cave room ID

@@ -85,11 +85,9 @@ DrawTilemapBlock_13x10_Done2:
 	DBF	D7, DrawTilemapBlock_13x10_Done
 	RTS
 	
-; loc_00015B0C
 DrawVerticalText:
 	MOVE.l	D5, VDP_control_port
 	MOVE.l	D5, D3
-; loc_00015B14
 DrawVerticalText_Next:
 	CLR.w	D0
 	MOVE.b	(A0)+, D0
@@ -105,7 +103,6 @@ DrawVerticalText_Next:
 	MOVE.w	D0, VDP_data_port
 	ADDI.l	#$00020000, D3
 	BRA.b	DrawVerticalText_Next
-; loc_00015B44
 DrawVerticalText_NewLine:
 	SUBI.l	#$00820000, D3	
 	MOVE.l	D3, VDP_control_port	
@@ -120,7 +117,6 @@ DrawVerticalText_NewLine_Loop:
 DrawVerticalText_NewLine_Loop2:
 	RTS
 
-; loc_00015B70
 PrologueFadeParamData: ; Fade animation data during prologue
 	dc.b	$01 
 	dc.b	$02
@@ -205,14 +201,12 @@ Prologue6Str:
 	dc.b	"Prince. Eighteen years", $FE
 	dc.b	"have passed since Tsarkon", $FE
 	dc.b	"began his search....", $FF
-; loc_00015E58
 MenuObjectHandler:
 	CLR.w	Town_camera_move_state.w
 	MOVE.l	#TownCameraAndPaletteUpdate, obj_tick_fn(A5)
 	CLR.b	Camera_scrolling_active.w
 	RTS
 
-; loc_00015E6A
 TownCameraAndPaletteUpdate:
 	TST.b	Is_in_battle.w
 	BNE.b	TownCameraTick_Return
@@ -235,14 +229,12 @@ TownCameraAndPaletteUpdate_Loop:
 TownCameraTick_Return:
 	RTS
 
-; loc_00015EA6
 CameraMovementJumpTable: ; suspected camera movement handling
 	BRA.w	ResetTownCameraMovementState
 	BRA.w	ResetTownCameraMovementState_Loop
 	BRA.w	TownCameraScrollUp_TileStep_Loop
 	BRA.w	TownCameraScrollDown_TileStep_Loop
 	BRA.w	TownCameraScrollLeft_TileStep_Loop
-; loc_00015EBA
 ResetTownCameraMovementState:
 	CLR.b	Camera_scrolling_active.w
 	CLR.w	Town_camera_move_state.w
@@ -274,7 +266,6 @@ ResetTownCameraMovementState_Loop2:
 	CMPI.w	#3, D0
 	BLT.b	TownCameraScrollUp_TileStep
 	BSR.w	DrawTownRow_Up
-; loc_00015F10
 TownCameraScrollUp_TileStep:
 	SUBQ.w	#1, Town_camera_tile_y.w
 	BRA.b	TownCameraScrollUp_TileStep_Loop3
@@ -307,7 +298,6 @@ TownCameraScrollUp_TileStep_Loop4:
 	CMP.w	Town_camera_tile_y.w, D1
 	BLE.b	TownCameraScrollDown_TileStep
 	BSR.w	DrawTownRow_Bottom
-; loc_00015F66
 TownCameraScrollDown_TileStep:
 	ADDQ.w	#1, Town_camera_tile_y.w
 	BRA.w	ResetTownCameraMovementState
@@ -336,7 +326,6 @@ TownCameraScrollDown_TileStep_Loop2:
 	SUBQ.w	#3, D0
 	BLT.b	TownCameraScrollLeft_TileStep
 	BSR.w	DrawTownColumn_Left
-; loc_00015FB6
 TownCameraScrollLeft_TileStep:
 	SUBQ.w	#1, Town_camera_tile_x.w
 	BRA.b	TownCameraScrollLeft_TileStep_Loop3
@@ -369,7 +358,6 @@ TownCameraScrollLeft_TileStep_Loop4:
 	CMP.w	Town_camera_tile_x.w, D1
 	BLE.b	TownCameraScrollRight_TileStep
 	BSR.w	DrawTownColumn_Right
-; loc_00016010
 TownCameraScrollRight_TileStep:
 	ADDQ.w	#1, Town_camera_tile_x.w
 	BRA.w	ResetTownCameraMovementState
@@ -488,7 +476,6 @@ InitializeTilemapFromData_Loop5:
 	BSR.w	WriteTownTile2x2WithFlip
 InitializeTilemapFromData_Loop6:
 	BRA.b	WriteTownTilemap_ClearTile_Loop
-; loc_00016170
 WriteTownTilemap_ClearTile:
 	MOVE.l	#0, (A2)
 	MOVE.l	#0, $80(A2)
@@ -603,7 +590,6 @@ WriteTownTilemapToVRAM_Loop2:
 	BRA.b	WriteTownTilemapToVRAM_SetPalette
 WriteTownTilemapToVRAM_Loop:
 	MOVE.w	#7, D0
-; loc_000162CA
 WriteTownTilemapToVRAM_SetPalette:
 	ASL.w	#3, D0
 	LEA	(A0,D0.w), A0
@@ -615,7 +601,6 @@ WriteTownTilemapToVRAM_SetPalette:
 	MOVE.w	(A0)+, Palette_line_2_cycle_index_2.w
 	RTS
 
-; loc_000162EA
 LoadTownTilesetPalette:
 	MOVE.w	Town_tileset_index.w, D0
 	CMPI.w	#TOWN_TILESET_VILLAGE_B, D0
@@ -1011,11 +996,9 @@ UpdatePaletteCycle_Loop:
 UpdatePaletteCycle_Loop2:
 	MOVE.w	D0, Palette_line_2_index.w
 	JSR	LoadPalettesFromTable
-; loc_000167CE
 TownPaletteCycle_Return:
 	RTS
 
-; loc_000167D0
 TownPaletteConfigTable:
 	dc.w	$0015
 	dc.w	$0016
@@ -1037,7 +1020,6 @@ TownPaletteConfigTable:
 	dc.w	$0023
 	dc.w	$001E
 	dc.b	$00, $1F, $00, $20 
-; loc_00016810
 TownPaletteLine1IndexTable:
 	dc.b	$00, $15 
 	dc.w	$002A
@@ -1099,7 +1081,6 @@ DecompressTilemap_WithOffset:
 	ADD.w	D0, D0
 	MOVE.w	D0, Tilemap_buffer_size.w
 	ADDQ.w	#1, A2
-; loc_000168B6
 DecompressTilemap_Next:
 	CLR.w	D0
 	CMP.w	Tilemap_buffer_size.w, D6
@@ -1224,7 +1205,6 @@ TilemapDecompression_JumpTable_Loop8_Done:
 TilemapDecompression_JumpTable_Loop:
 	RTS
 
-; loc_000169D0
 TitleScreen_Init:
 	CLR.w	Intro_timer.w
 	JSR	DisableVDPDisplay
@@ -1268,7 +1248,6 @@ ClearEnemyActiveFlags_Done:
 	DBF	D7, ClearEnemyActiveFlags_Done
 	RTS
 
-; loc_00016A8C
 TitleScreen_WaitForHScroll:
 	MOVE.b	#FLAG_TRUE, Scene_update_flag.w
 	TST.b	HScroll_update_busy.w
@@ -1281,7 +1260,6 @@ TitleScreen_WaitForHScroll:
 TitleScreen_WaitForHScroll_Loop:
 	RTS
 
-; loc_00016AB8
 TitleScreen_FadeAndAnimate:
 	BSR.w	UpdateEndingHScrollValues
 	TST.b	Fade_in_lines_mask.w
@@ -1309,11 +1287,9 @@ TitleScreen_FadeAndAnimate_Loop:
 	BLE.b	TitleScreen_FadeAndAnimate_Return
 	CLR.w	Intro_animation_frame.w
 	MOVE.l	#TitleScreen_LightningFlash, obj_tick_fn(A5)
-; loc_00016B12
 TitleScreen_FadeAndAnimate_Return:
 	RTS
 
-; loc_00016B14
 TitleScreen_LightningFlash:
 	BSR.w	UpdateEndingHScrollValues
 	ADDQ.w	#1, Intro_timer.w
@@ -1349,13 +1325,11 @@ TitleScreen_LightningFlash_Loop3:
 	MOVE.w	#PALETTE_IDX_TITLE_LIGHTNING, Palette_line_0_index.w
 	MOVE.w	#PALETTE_IDX_TITLE_TILES, Palette_line_3_index.w
 	MOVE.l	#TitleScreen_ShowPressStart, obj_tick_fn(A5)
-; loc_00016B82
 TitleScreen_LoadPalette:
 	JSR	LoadPalettesFromTable
 TitleScreen_LoadPalette_Loop:
 	RTS
 
-; loc_00016B8A
 TitleScreen_ShowPressStart:
 	BSR.w	UpdateEndingHScrollValues
 	TST.b	Intro_text_pending.w
@@ -1380,7 +1354,6 @@ TitleScreen_ShowPressStart_Loop:
 	JSR	LoadPalettesFromTable
 	RTS
 
-; loc_00016BE0
 TitleScreen_ScrollAndWait:
 	MOVE.w	Prologue_state.w, D1
 	CMPI.w	#PROLOGUE_SCROLL_END, D1
@@ -1394,7 +1367,6 @@ TitleScreen_ScrollAndWait_Loop:
 	BSR.w	UpdatePrologueScrollVRAM
 	RTS
 	
-; loc_00016C0C
 TitleScreen_IdleWithScroll:
 	BSR.w	UpdateEndingHScrollValues
 	RTS
@@ -1436,7 +1408,6 @@ UpdatePrologueScrollVRAM_Loop:
 	BRA.b	UpdatePrologueScrollVRAM_WriteVDP
 UpdatePrologueScrollVRAM_Loop3:
 	MOVE.w	#0, D1
-; loc_00016C7A
 UpdatePrologueScrollVRAM_WriteVDP:
 	MOVE.l	D0, VDP_control_port
 	MOVE.w	D1, VDP_data_port
@@ -1551,7 +1522,6 @@ SpawnIntroSwordSprite:
 	MOVE.l	#IntroSwordSprite_Tick, obj_tick_fn(A6)
 	RTS
 
-; loc_00016E1E
 IntroSwordSprite_Tick:
 	ADDQ.b	#1, obj_move_counter(A5)
 	MOVE.b	obj_move_counter(A5), D0
@@ -1566,11 +1536,9 @@ IntroSwordSprite_Tick_Loop:
 	JSR	AddSpriteToDisplayList
 	RTS
 
-; loc_00016E4A
 EndingHScrollSpeedTable:
 	dc.b	$00, $00, $40, $00, $00, $00, $60, $00, $00, $00, $80, $00, $00, $00, $A0, $00, $00, $00, $C0, $00, $00, $01, $00, $00, $00, $01, $40, $00, $00, $01, $80, $00 
 	dc.b	$00, $01, $A0, $00, $00, $02, $00, $00, $00, $02, $40, $00 
-; loc_00016E76
 IntroSwordFrameTable:
 	dc.b	$04, $83, $04, $84, $04, $85, $04, $86, $04, $85, $04, $86, $04, $84, $00, $00 
 SpawnMenuCursorSprites:
@@ -1609,7 +1577,6 @@ SpawnMenuCursorSprites:
 	MOVE.l	#MenuCursorSprite_Tick, obj_tick_fn(A6)
 	RTS
 
-; loc_00016F34
 MenuCursorSprite_Tick:
 	JSR	AddSpriteToDisplayList
 	RTS
@@ -1634,7 +1601,6 @@ DrawPressStartText_Done2:
 	ANDI	#$F8FF, SR
 	RTS
 
-; loc_00016F82
 EndingSequence_Init:
 	MOVE.w	#PALETTE_IDX_ALL_WHITE, Palette_line_0_fade_in_target.w
 	MOVE.w	#PALETTE_IDX_ALL_WHITE, Palette_line_1_fade_in_target.w
@@ -1654,7 +1620,6 @@ EndingSequence_Init:
 	MOVE.b	#FLAG_TRUE, HScroll_full_update_flag.w
 	RTS
 
-; loc_00016FD8
 EndingSequence_StepDispatcher:
 	LEA	EndingSequenceStepJumpTable, A0
 	MOVE.w	Ending_sequence_step.w, D0
@@ -1663,7 +1628,6 @@ EndingSequence_StepDispatcher:
 	JSR	(A0,D0.w)
 	RTS
 
-; loc_00016FEC
 EndingSequenceStepJumpTable:
 	BRA.w	EndingSequenceStepJumpTable_Loop
 	BRA.w	EndingStep_Return1_Loop
@@ -1695,7 +1659,6 @@ EndingSequenceStepJumpTable_Loop:
 	JSR	QueueSoundEffect
 	MOVE.w	#ENDING_DELAY_NORMAL, Ending_timer.w
 	ADDQ.w	#1, Ending_sequence_step.w
-; loc_00017062
 EndingStep_Return1:
 	RTS
 
@@ -1733,7 +1696,6 @@ EndingStep_Return1_Loop3:
 	MOVE.w	#PALETTE_IDX_ALL_WHITE, Palette_line_0_fade_in_target.w
 	MOVE.b	#1, Palette_fade_in_mask.w
 	ADDQ.w	#1, Ending_sequence_step.w
-; loc_000170DC
 EndingStep_Return2:
 	RTS
 
@@ -1760,7 +1722,6 @@ EndingStep_Return2_Loop2:
 	MOVE.w	#PALETTE_IDX_ALL_WHITE, Palette_line_0_fade_in_target.w
 	MOVE.b	#FLAG_TRUE, Fade_out_lines_mask.w
 	ADDQ.w	#1, Ending_sequence_step.w
-; loc_00017132
 EndingStep_Return3:
 	RTS
 
@@ -1806,7 +1767,6 @@ EndingStep_Return3_Loop2:
 	BRA.b	EndingSequenceStep_Done
 EndingStep_Return3_Loop4:
 	SUBQ.w	#1, Ending_hscroll_offset.w
-; loc_000171E2
 EndingSequenceStep_Done:
 	BRA.w	EndingSequence_CommonUpdate
 EndingSequenceStep_Done_Loop:
@@ -1817,7 +1777,6 @@ EndingSequenceStep_Done_Loop:
 	ADDQ.w	#1, Ending_sequence_step.w
 	MOVE.w	#PALETTE_IDX_ALL_BLACK, Palette_line_0_fade_in_target.w
 	MOVE.b	#1, Palette_fade_in_mask.w
-; loc_00017202
 EndingStep_Return4:
 	BRA.w	EndingSequence_CommonUpdate
 EndingStep_Return4_Loop:
@@ -1842,7 +1801,6 @@ EndingStep_Return4_Loop2:
 	ADDQ.w	#1, Ending_sequence_step.w
 	MOVE.w	#PALETTE_IDX_ALL_BLACK, Palette_line_0_fade_in_target.w
 	MOVE.b	#1, Palette_fade_in_mask.w
-; loc_0001725C
 EndingStep_Return5:
 	BRA.w	EndingSequence_CommonUpdate
 EndingStep_Return5_Loop:
@@ -1867,7 +1825,6 @@ EndingStep_Return5_Loop2:
 	ADDQ.w	#1, Ending_sequence_step.w
 	MOVE.w	#PALETTE_IDX_ALL_BLACK, Palette_line_0_fade_in_target.w
 	MOVE.b	#1, Palette_fade_in_mask.w
-; loc_000172B6
 EndingStep_Return6:
 	BRA.w	EndingSequence_CommonUpdate
 EndingStep_Return6_Loop:
@@ -1890,7 +1847,6 @@ EndingStep_Return6_Loop2:
 	BRA.b	EndingStep_Return7
 EndingStep_Return6_Loop4:
 	ADDQ.w	#1, Ending_hscroll_offset.w
-; loc_000172F6
 EndingStep_Return7:
 	BRA.w	EndingSequence_CommonUpdate
 EndingStep_Return7_Loop:
@@ -1933,7 +1889,6 @@ EndingStep_Return7_Loop5_Done:
 	BRA.w	EndingSequence_ScrollText_Done
 EndingStep_Return7_Loop6:
 	BSR.w	ClearDialogSprites
-; loc_00017388
 EndingSequence_ScrollText_Done:
 	BRA.w	EndingSequence_CommonUpdate
 EndingSequence_ScrollText_Done_Loop:
@@ -1958,7 +1913,6 @@ EndingSequence_ScrollText_Done_Loop4:
 	ADDI.l	#$4000, Ending_vscroll_accumulator.w
 	MOVE.w	Ending_vscroll_accumulator.w, VScroll_base.w
 	BRA.w	EndingSequence_CommonUpdate
-; loc_000173D8
 EndingSequence_CommonUpdate:
 	BSR.w	UpdateEndingCursorBlink
 	JSR	UpdateEndingHScrollValues
@@ -1986,7 +1940,6 @@ DisplayEndingTextLine_Done:
 	DBF	D7, DisplayEndingTextLine_Done
 	ANDI	#$F8FF, SR
 	ORI	#$0700, SR
-; loc_00017434
 DrawEndingCreditsText_Next:
 	CLR.w	D0
 	MOVE.b	(A0)+, D0
@@ -2004,7 +1957,6 @@ DrawEndingCreditsText_Next:
 	MOVE.w	D0, VDP_data_port
 	ADDI.l	#$00020000, D5
 	BRA.b	DrawEndingCreditsText_Next
-; loc_0001746A
 DrawEndingCreditsText_NewLine:
 	SUBI.l	#$00820000, D5	
 	ADDI.w	#$04C0, D0	
@@ -2016,5 +1968,4 @@ DrawEndingCreditsText_NewLine_Loop:
 	ADDQ.w	#1, Ending_sequence_step.w
 	CLR.w	Ending_timer.w
 	BSR.w	ClearEndingTextArea
-; loc_00017494
 DrawEndingCreditsText_Return:

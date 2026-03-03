@@ -92,26 +92,21 @@ GetDirectionFromDeltas_Loop7:
 GetDirectionFromDeltas_Loop8:
 	ADDQ.b	#1, obj_direction(A5)
 	BRA.w	BossBody_AngleReturn
-; loc_0000F536
 BossBody_AngleDecrease:
 	SUBQ.b	#1, obj_direction(A5)
-; loc_0000F53A
 BossBody_AngleReturn:
 	RTS
 	
-; loc_0000F53C
 BossBodyUpperTilePtrs:
 	dc.l	BossBodyUpperTilePtrs_Gfx_780E4
 	dc.l	SpriteMetaTileTable_780F4
 	dc.l	BossBodyUpperTilePtrs_Gfx_78104
 	dc.l	SpriteMetaTileTable_780F4
-; loc_0000F54C
 BossBodyLowerTilePtrs:
 	dc.l	BossBodyLowerTilePtrs_Gfx_78114
 	dc.l	SpriteMetaTileTable_78120
 	dc.l	BossBodyLowerTilePtrs_Gfx_7812C
 	dc.l	SpriteMetaTileTable_78120
-; loc_0000F55C
 BossDirectionTilePtrs:
 	dc.l	SpriteMetaTileTable_7808A
 	dc.l	BossDirectionTilePtrs_Gfx_780A8
@@ -144,14 +139,12 @@ WriteTilesToVRAM_Done2:
 	ANDI	#$F8FF, SR
 	RTS
 	
-; loc_0000F5B6
 DirectionToPlayerLookup:
 	dc.b	$C0, $A0, $A0, $80, $C0, $E0, $E0, $00, $40 
 	dc.b	$60
 	dc.b	$60
 	dc.b	$80
 	dc.b	$40, $20, $20, $00 
-; loc_0000F5C6
 DirectionToEntityLookup:
 	dc.b	$40, $60, $60, $00, $40, $60, $60 
 	dc.b	$80
@@ -243,7 +236,6 @@ FlushSpriteAttributesToVDP_Loop:
 	MOVE.w	#0, VDP_data_port
 	RTS
 	
-; loc_0000F6DC
 QueueSpriteOAMIfVisible:
 	LEA	Sprite_attr_buffer.w, A0
 	MOVE.w	Sprite_attr_count.w, D0
@@ -329,7 +321,6 @@ QueueSpriteOAM_Return_Loop:
 	
 QueueSpriteOAM_Return_Loop3:
 	RTE	
-; loc_0000F7C4
 SortAndUploadSpriteOAM_Alt:
 	MOVE.w	#$001F, D7
 	LEA	Sprite_priority_slots.w, A0
@@ -852,7 +843,6 @@ LoadTownTileGraphics:
 	BNE.b	LoadTownTileGfx_LookupTable
 	MOVEA.l	LoadTownTileGraphics_Data, A0
 	BRA.b	LoadTownTileGfx_LookupTable_Loop
-; loc_0000FDAA
 LoadTownTileGfx_LookupTable:
 	LEA	TownTileGfxTable, A1
 	MOVE.w	Current_town.w, D0 
@@ -877,7 +867,6 @@ LoadTownTileGfx_LookupTable_Loop_Done:
 	MOVEA.l	LoadTownTileGfx_LookupTable_Loop_Done_Data, A0
 	MOVE.w	LoadTownTileGfx_LookupTable_Loop_Done_Data2, D5
 	BRA.b	LoadTownObjectGfx_DecompressLoop
-; loc_0000FDFA
 LoadTownObjectGfx_LookupTable:
 	LEA	TownTileGfxTable, A1
 	MOVE.w	Current_town.w, D0
@@ -887,7 +876,6 @@ LoadTownObjectGfx_LookupTable:
 	ADD.w	D1, D0
 	MOVEA.l	$4(A1,D0.w), A0
 	MOVE.w	$8(A1,D0.w), D5
-; loc_0000FE14
 LoadTownObjectGfx_DecompressLoop:
 	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
@@ -968,7 +956,6 @@ LoadBattleTerrainGraphics_Loop2:
 	BRA.b	LoadBattleTerrainGraphics_LoadTiles
 LoadBattleTerrainGraphics_Loop3:
 	BSR.w	DetermineTerrainTileset
-; loc_0000FF36
 LoadBattleTerrainGraphics_LoadTiles:
 	MOVE.w	Terrain_tileset_index.w, D0
 	LEA	TerrainTilemapMetadata, A1
@@ -1026,7 +1013,6 @@ LoadWorldMapTileGraphics_Done:
 	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
 	DBF	D5, LoadWorldMapTileGraphics_Done
-; loc_0000FFE8
 ExecuteWorldMapDma:
 	LEA	DmaCmd_WorldMapTiles, A0
 	BSR.w	ExecuteVdpDmaFromRam
@@ -1192,10 +1178,8 @@ LoadMenuTileGraphics_Done2:
 	LEA	DmaCmd_MenuTilesB, A0
 	BSR.w	ExecuteVdpDmaFromRam
 	LEA	Tile_gfx_buffer.w, A2
-; loc_00010200
 LoadMenuTileGfxSet2:
 	LEA	SpriteGfxData_607AA, A0
-; loc_00010206
 LoadMenuTileGfxSet3:
 	MOVE.w	#$006B, D5
 LoadMenuTileGfxSet3_Done:
@@ -1262,7 +1246,6 @@ LoadTitleScreenGraphics_Done4:
 	LEA	DmaCmd_TitleScreenTilesD, A0
 	BSR.w	ExecuteVdpDmaFromRam
 	LEA	LoadTitleScreenGraphics_Done4_Data, A0
-; loc_00010300
 LoadTitleScreenTileGfx:
 	LEA	Tile_gfx_buffer.w, A2
 	MOVE.w	#$0051, D5
@@ -1321,7 +1304,6 @@ ExecuteVdpDmaFromRam_DmaStart:
 	ANDI	#$F8FF, SR
 	RTS
 	
-; loc_000103D6
 InitVdpDmaRamRoutine:
 	LEA	VdpDmaRoutineTemplate, A2
 InitVdpDmaRamRoutine_CopyLoop:
@@ -1333,7 +1315,6 @@ InitVdpDmaRamRoutine_CopyLoop:
 	MOVE.w	(A2)+, (A3)+
 	RTS
 	
-; loc_000103EC
 VdpDmaRoutineTemplate:
 	dc.l	$33F8C18C
 	dc.l	$00C00004
@@ -1440,7 +1421,6 @@ CountTerrainTileType_Loop:
 	CMPI.b	#2, D0
 	BNE.b	CountDialogBytes_Return
 	ADDQ.w	#1, D2
-; loc_00010520
 CountDialogBytes_Return:
 	RTS
 	

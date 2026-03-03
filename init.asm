@@ -1,6 +1,5 @@
 EntryPoint:
 	TST.l	$00A10008
-; loc_00000F32
 EntryPoint_RegionCheck:
 	BNE.w	StartupSequence
 	TST.w	$00A1000C
@@ -11,14 +10,12 @@ EntryPoint_RegionCheck:
 	ANDI.w	#$0F00, D0
 	BEQ.b	EntryPoint_SkipSega
 	MOVE.l	#'SEGA', $2F00(A1)	
-; loc_00000F58
 EntryPoint_SkipSega:
 	MOVE.w	(A4), D0
 	MOVEQ	#0, D0
 	MOVEA.l	D0, A6
 	MOVE.l	A6, USP
 	MOVEQ	#VDPInitValues_End-VDPInitValues-1, D1
-; loc_00000F62
 EntryPoint_VdpInitLoop:
 	MOVE.b	(A5)+, D5
 	MOVE.w	D5, (A4)
@@ -32,32 +29,27 @@ WaitForZ80:
 	BTST.b	D0, (A1)
 	BNE.b	WaitForZ80
 	MOVEQ	#$00000027, D2
-; loc_00000F7E
 EntryPoint_Z80DriverCopyLoop:
 	MOVE.b	(A5)+, (A0)+
 	DBF	D2, EntryPoint_Z80DriverCopyLoop
 	MOVE.w	D0, (A2)
 	MOVE.w	D0, (A1)
 	MOVE.w	D7, (A2)
-; loc_00000F8A
 EntryPoint_ClearRamLoop:
 	MOVE.l	D0, -(A6)
 	DBF	D6, EntryPoint_ClearRamLoop
 	MOVE.l	#$81048F02, (A4)
 	MOVE.l	#$C0000000, (A4)
 	MOVEQ	#$0000001F, D3
-; loc_00000F9E
 EntryPoint_VsramClearLoop:
 	MOVE.l	D0, (A3)
 	DBF	D3, EntryPoint_VsramClearLoop
 	MOVE.l	#$40000010, (A4)
 	MOVEQ	#$00000013, D4
-; loc_00000FAC
 EntryPoint_HscrollClearLoop:
 	MOVE.l	D0, (A3)
 	DBF	D4, EntryPoint_HscrollClearLoop
 	MOVEQ	#3, D5
-; loc_00000FB4
 EntryPoint_Z80InitLoop:
 	MOVE.b	(A5)+, $10(A3)
 	DBF	D5, EntryPoint_Z80InitLoop

@@ -77,7 +77,6 @@ ProcessScriptText_Loop2: ; Text script handling
 	ANDI	#$F8FF, SR
 	ADDQ.w	#1, Script_output_x.w
 	BRA.w	ScriptDecode_AdvanceOffset
-; loc_00010A6E
 ScriptRender_PortraitTile:
 	ADDI.w	#$04C0, D3	
 	ORI.w	#$8000, D3	
@@ -173,7 +172,6 @@ ScriptRender_PortraitTile_Loop3:
 	MOVE.b	$2(A0,D2.w), Dialog_choice_event_trigger.w
 	MOVE.b	$3(A0,D2.w), Dialog_choice_extended_trigger.w
 	MOVE.b	#FLAG_TRUE, Dialogue_event_trigger_flag.w
-; loc_00010BB2
 ScriptDecode_SetResponse:
 	MOVE.b	$1(A0,D2.w), Dialog_response_index.w
 	MOVE.b	#FLAG_TRUE, Script_has_yes_no_question.w
@@ -186,7 +184,6 @@ ScriptDecode_Done:
 	BRA.b	ScriptDecode_Return
 ScriptDecode_Done_Loop:
 	MOVE.b	#FLAG_TRUE, Script_text_complete.w
-; loc_00010BD8
 ScriptDecode_AdvanceOffset:
 	TST.b	Script_reading_player_name.w
 	BNE.b	ScriptDecode_Return_Loop
@@ -729,7 +726,6 @@ LongToDecimalString_Done:
 	BEQ.b	LongToDecimalString_EncodeDigit
 	MOVE.b	#$20, D4
 	BRA.b	LongToDecimalString_EncodeDigit_Loop
-; loc_00011440
 LongToDecimalString_EncodeDigit:
 	ADDI.b	#$30, D4
 	MOVEQ	#1, D7
@@ -768,7 +764,6 @@ ConvertNumberToTextDigits_Done:
 	BEQ.b	ConvertNumberToTextDigits_EncodeDigit
 	MOVE.b	#$20, D4
 	BRA.b	ConvertNumberToTextDigits_EncodeDigit_Loop
-; loc_0001148C
 ConvertNumberToTextDigits_EncodeDigit:
 	ADDI.b	#$30, D4
 	MOVEQ	#1, D7
@@ -797,7 +792,6 @@ WordToDecimalString_NoPad_Done:
 	BEQ.b	WordToDecimalString_NoPad_EncodeDigit
 	MOVE.b	#$20, D4
 	BRA.b	WordToDecimalString_NoPad_EncodeDigit_Loop
-; loc_000114C0
 WordToDecimalString_NoPad_EncodeDigit:
 	ADDI.b	#$30, D4
 	MOVEQ	#1, D7
@@ -812,7 +806,6 @@ WordToDecimalString_NoPad_EncodeDigit_Loop3:
 	DBF	D6, WordToDecimalString_NoPad_Done
 	RTS
 	
-; loc_000114D8
 WordToDecimalString:
 	MOVE.w	#0, D3
 	MOVEQ	#1, D5
@@ -908,7 +901,6 @@ DeductPaymentAmount_Loop_Done:
 	CLR.w	Player_hp.w
 DeductPaymentAmount_Loop2:
 	RTS
-; loc_000115DE
 DisplayPlayerKims:
 	MOVE.w	#2, Window_number_cursor_x.w
 	MOVE.w	#6, Window_number_cursor_y.w
@@ -918,7 +910,6 @@ DisplayPlayerKims:
 	BSR.w	LongToDecimalString
 	RTS
 	
-; loc_000115FA
 InitMenuCursorForList:
 	SUBQ.w	#1, D0
 	MOVE.w	D0, Menu_cursor_column_break.w
@@ -1033,7 +1024,6 @@ LoadSavegameName_Copy_Done:
 ValidateSavegameName:
 	LEA	Savegame_name_buffer.w, A1
 	CLR.w	D0
-; loc_0001179E
 ValidateSavegameName_Loop:
 	MOVE.b	(A1)+, D1
 	CMPI.b	#SCRIPT_END, D1
@@ -1168,7 +1158,6 @@ DrawCharacterStatsWindow_Loop2:
 	BRA.b	DrawStatusScreen_RenderCondition
 DrawCharacterStatsWindow_Loop3:
 	LEA	BestStr, A0
-; loc_000119AA
 DrawStatusScreen_RenderCondition: ; stats screen?
 	MOVE.w	#$007E, D0
 	BSR.w	RenderTextAtOffset
@@ -1519,7 +1508,6 @@ DrawRingsListWindow_Loop:
 	LEA	Rings_collected.w, A3
 	MOVE.w	Possessed_rings_count.w, D7
 	SUBQ.w	#1, D7
-; loc_00011ED0
 RingsInventory_NextEntry:
 	ADDQ.w	#1, D4
 	MOVE.b	(A3)+, D0
@@ -1535,7 +1523,6 @@ RingsInventory_NextEntry:
 	MOVE.b	#FLAG_TRUE, Window_tilemap_draw_active.w
 	RTS
 	
-; loc_00011EF8
 RingsInventory_EmptyDisplay:
 	MOVE.w	#5, Window_height.w	
 	MOVE.w	#0, Window_tile_attrs.w	
@@ -1563,7 +1550,6 @@ DispatchWindowDrawType:
 	JSR	(A0,D0.w)
 	RTS
 	
-; loc_00011F58
 WindowDrawTypeJumpTable:
 	BRA.w	WindowDrawTypeJumpTable_Loop
 	BRA.w	WindowDrawTypeJumpTable_Loop2
@@ -1655,7 +1641,6 @@ WindowDrawTypeJumpTable_Loop11:
 	MOVE.w	D0, Window_tilemap_draw_height.w
 	LEA	Rings_list_tiles_buffer.w, A0
 	BRA.w	DrawWindowRowFromBuffer
-; loc_000120A8
 DrawWindowRow_MessageSpeed:
 	MOVE.w	#$000A, Window_tilemap_draw_x.w	
 	MOVE.w	#$000A, Window_tilemap_draw_y.w	
@@ -1711,7 +1696,6 @@ DrawWindowRow_MessageSpeed_Loop6:
 	MOVE.w	#$0015, Window_tilemap_draw_width.w
 	MOVE.w	#$000A, Window_tilemap_draw_height.w
 	LEA	Status_menu_tiles_buffer.w, A0
-; loc_000121B0
 DrawWindowRowFromBuffer:
 	MOVE.w	Window_tilemap_draw_height.w, D0
 	SUB.w	Window_text_row.w, D0
@@ -1746,7 +1730,6 @@ DrawWindowRowFromBuffer_Done:
 	CMP.w	Window_tilemap_draw_width.w, D2
 	BNE.b	DrawWindowTilemap_WriteVDP
 	ADDQ.w	#1, D4
-; loc_00012214
 DrawWindowTilemap_WriteVDP:
 	MOVE.l	D5, VDP_control_port
 	MOVE.w	D4, VDP_data_port
@@ -2195,21 +2178,18 @@ HandleMenuInput:
 	BTST.l	#0, D2
 	BEQ.b	MenuCursor_CheckUp
 	BRA.w	MenuCursorUp
-; loc_0001281A
 MenuCursor_CheckUp:
 	BTST.l	#1, D3
 	BEQ.b	MenuCursor_CheckDown
 	BTST.l	#1, D2
 	BEQ.b	MenuCursor_CheckDown
 	BRA.w	MenuCursorDown
-; loc_0001282A
 MenuCursor_CheckDown:
 	BTST.l	#2, D3
 	BEQ.b	MenuCursor_CheckLeft
 	BTST.l	#2, D2
 	BEQ.b	MenuCursor_CheckLeft
 	BRA.w	MenuCursorLeft
-; loc_0001283A
 MenuCursor_CheckLeft:
 	BTST.l	#3, D3
 	BEQ.b	BlinkMenuCursor
@@ -2230,7 +2210,6 @@ BlinkMenuCursor:
 BlinkMenuCursor_Loop:
 	RTS
 	
-; loc_0001286C
 ; Handle UP button - move cursor up in menu
 MenuCursorUp:
 	MOVE.w	Menu_cursor_index.w, D0
@@ -2241,11 +2220,9 @@ MenuCursorUp:
 	BSR.w	EraseMenuCursor
 	SUBQ.w	#1, Menu_cursor_index.w
 	BSR.w	DrawMenuCursor
-; loc_00012886
 MenuCursorUp_Return:
 	RTS
 	
-; loc_00012888
 ; Handle DOWN button - move cursor down in menu
 MenuCursorDown:
 	MOVE.w	Menu_cursor_index.w, D0
@@ -2256,11 +2233,9 @@ MenuCursorDown:
 	BSR.w	EraseMenuCursor
 	ADDQ.w	#1, Menu_cursor_index.w
 	BSR.w	DrawMenuCursor
-; loc_000128A4
 MenuCursorDown_Return:
 	RTS
 	
-; loc_000128A6
 ; Handle LEFT button - move cursor to left column
 MenuCursorLeft:
 	MOVE.w	Menu_cursor_index.w, D0
@@ -2274,7 +2249,6 @@ MenuCursorLeft:
 MenuCursorLeft_Loop:
 	RTS
 	
-; loc_000128C4
 ; Handle RIGHT button - move cursor to right column
 MenuCursorRight:
 	MOVE.w	Menu_cursor_index.w, D0
@@ -2289,7 +2263,6 @@ MenuCursorRight:
 	ADDQ.w	#1, D0
 	ADD.w	D0, Menu_cursor_index.w
 	BSR.w	DrawMenuCursor
-; loc_000128EC
 MenuCursorRight_Return:
 	RTS
 	
@@ -2353,7 +2326,6 @@ DrawShopWindow_DeadCode:					; unreferenced dead code
 	MOVE.w	Shop_item_count.w, D7
 	BSR.w	DrawShopItemNames
 	RTS
-; loc_000129A0
 DrawShopItemNames:
 	SUBQ.w	#1, D7
 DrawShopItemNames_Alt:
@@ -2365,7 +2337,6 @@ DrawShopItemNames_Done:
 	ADD.w	D4, D4
 	MOVEA.l	$0(A1,D4.w), A0
 	CLR.w	D2
-; loc_000129B4
 DrawWindowChar_WriteVDP:
 	JSR	GetScrollOffsetInTiles
 	ADD.w	D2, D0
@@ -2400,7 +2371,6 @@ DrawWindowChar_WriteVDP_Loop:
 	CMP.w	Window_tilemap_draw_height.w, D3
 	DBF	D7, DrawShopItemNames_Done
 	RTS
-; loc_00012A20
 DrawWindowChar_Special:
 	BSR.w	DrawSpecialCharToVRAM
 	BRA.b	DrawWindowChar_WriteVDP
@@ -2505,7 +2475,6 @@ DrawListItems_Done:
 	ADD.w	D4, D4
 	MOVEA.l	(A1,D4.w), A0
 	CLR.w	D2
-; loc_00012B70
 DrawWindowChar2_WriteVDP:
 	JSR	GetScrollOffsetInTiles
 	ADD.w	D2, D0
@@ -2542,7 +2511,6 @@ DrawWindowChar2_WriteVDP_Loop:
 	DBF	D7, DrawListItems_Done
 	RTS
 	
-; loc_00012BE0
 DrawWindowChar2_Special:
 	BSR.w	DrawSpecialCharToVRAM	
 	BRA.b	DrawWindowChar2_WriteVDP	
@@ -2660,7 +2628,6 @@ RenderTextAtOffset:
 	LEA	(A1,D0.w), A1
 RenderTextAtOffset_Done:
 	LEA	(A1), A2
-; loc_00012D00
 WindowTextDecode_Next:
 	CLR.w	D6
 	MOVE.b	(A0)+, D6
@@ -2684,7 +2651,6 @@ WindowTextDecode_Next_Loop:
 	ADD.w	D0, D0
 	LEA	(A1,D0.w), A1
 	BRA.b	RenderTextAtOffset_Done
-; loc_00012D3C
 WindowTextDecode_Special:
 	MOVE.w	Window_width.w, D0	
 	ADDQ.w	#1, D0	
@@ -2789,7 +2755,6 @@ WriteWindowRowToVDP_Done:
 	BLE.b	WriteWindowRowToVDP_Done
 	RTS
 
-; loc_00012E68
 LoadLevelUpBannerTiles:
 	LEA	UIBorder_LevelUp, A0
 	MOVE.l	#$420A0003, D5
@@ -2813,7 +2778,6 @@ UnknownData_12EA8:
 	dc.b	$00, $7C, $07, $00, $31, $FC, $00, $06, $C2, $42, $31, $FC, $00, $18, $C2, $44, $30, $38, $C6, $2C, $4E, $B9, $00, $01, $04, $8C, $34, $00, $36, $3C, $00, $00 
 	dc.b	$42, $45, $61, $00, $E5, $A4, $31, $FC, $00, $06, $C2, $42, $31, $FC, $00, $1A, $C2, $44, $30, $38, $C6, $32, $4E, $B9, $00, $01, $04, $8C, $34, $00, $36, $3C 
 	dc.b	$00, $00, $42, $45, $61, $00, $E5, $82, $02, $7C, $F8, $FF, $4E, $75 
-; loc_00012EF6
 DisplayPlayerHpMp:
 	ORI	#$0700, SR
 	MOVE.w	#7, Window_number_cursor_x.w
@@ -2901,7 +2865,6 @@ DisplayReadiedMagicName_Loop3_Done2:
 	MOVE.l	#$4D360003, D5
 DisplayReadiedMagicName_Loop:
 	CLR.w	D2
-; loc_0001308A
 TitleBarText_Next:
 	MOVE.w	D2, D3
 	ANDI.l	#$0000FFFF, D3
@@ -2922,7 +2885,6 @@ TitleBarText_Next:
 	ANDI	#$F8FF, SR
 	ADDQ.w	#1, D2
 	BRA.b	TitleBarText_Next
-; loc_000130C8
 TitleBarText_SpecialChar:
 	ADDI.w	#$84C0, D0	
 	SUBI.l	#$00820000, D3	
@@ -3052,7 +3014,6 @@ LoadPalettesFromTable_Done:
 	MOVE.l	(A3)+, (A1)+
 	DBF	D2, LoadPalettesFromTable_Done
 	BSET.b	#7, Palette_buffer_dirty.w
-; loc_000132AA
 LoadPalettesFromTable_Return:
 	RTS
 
@@ -3087,7 +3048,6 @@ LoadPalettesFromTable_Return_Loop4:
 	BEQ.b	FadeOutPalette_WriteVDP
 	LEA	Palette_line_3_buffer.w, A1
 	BSR.w	DecrementPaletteRGBValues
-; loc_0001330C
 FadeOutPalette_WriteVDP:
 	stopZ80
 	JSR	InitVdpDmaRamRoutine
@@ -3127,7 +3087,6 @@ DecrementPaletteRGBValues_Loop2:
 	ANDI.w	#$000F, D1
 	BEQ.b	BuildFadeTable_Store
 	SUBQ.w	#2, D0
-; loc_000133AA
 BuildFadeTable_Store:
 	MOVE.w	D0, (A1)+
 	DBF	D2, DecrementPaletteRGBValues_Done
@@ -3193,7 +3152,6 @@ BuildFadeTable_Store_Loop5:
 	LEA	Palette_line_3_buffer.w, A1
 	MOVE.w	Palette_line_3_fade_target.w, D1
 	BSR.w	ShiftPaletteTowardsTarget
-; loc_000134AE
 FadeInPalette_WriteVDP:
 	MOVE.w	#$0100, Z80_bus_request
 FadeInPalette_WriteVDP_Done:
@@ -3250,7 +3208,6 @@ ShiftPaletteTowardsTarget_Loop2:
 	CMP.w	D5, D1
 	BGE.b	BuildFadeInTable_Store
 	ADDQ.w	#2, D0
-; loc_00013574
 BuildFadeInTable_Store:
 	MOVE.w	D0, (A1)+
 	DBF	D7, ShiftPaletteTowardsTarget_Done
@@ -3349,7 +3306,6 @@ BuildFadeInTable_Store_Loop12:
 BuildFadeInTable_Store_Loop13:
 	MOVE.w	Palette_line_3_index.w, D1
 	BSR.w	LoadPaletteByIndex
-; loc_000136C4
 FadePaletteLine3_WriteVDP:
 	MOVE.w	#$0100, Z80_bus_request
 FadePaletteLine3_WriteVDP_Done:
@@ -3408,7 +3364,6 @@ FadePaletteTowardsTarget_Done:
 	BRA.b	ShiftColorGreenComponent
 FadePaletteTowardsTarget_Loop:
 	ADDI.w	#$0200, D0
-; loc_0001378A
 ShiftColorGreenComponent:
 	MOVE.w	D0, D1
 	ANDI.w	#$00F0, D1
@@ -3421,7 +3376,6 @@ ShiftColorGreenComponent:
 	BRA.b	ShiftColorBlueComponent
 ShiftColorGreenComponent_Loop:
 	ADDI.w	#$0020, D0
-; loc_000137A6
 ShiftColorBlueComponent:
 	MOVE.w	D0, D1
 	ANDI.w	#$000F, D1
@@ -3434,7 +3388,6 @@ ShiftColorBlueComponent:
 	BRA.b	FadePaletteTowardsTarget_NextEntry
 ShiftColorBlueComponent_Loop:
 	ADDQ.w	#2, D0
-; loc_000137BE
 FadePaletteTowardsTarget_NextEntry:
 	MOVE.w	D0, (A1)+
 	DBF	D7, FadePaletteTowardsTarget_Done
@@ -3482,10 +3435,8 @@ FadePaletteTowardsTarget_NextEntry_Loop5_Done:
 	MOVE.w	#0, Z80_bus_request
 	RTS
 	
-; loc_00013876
 PaletteDataTable:
 	incbin "data/art/palettes/palette_data.bin"
-; loc_000150F6
 NameEntryScreen_Init:
 	JSR	DisableVDPDisplay
 	JSR	ClearVRAMPlaneA
@@ -3531,7 +3482,6 @@ NameEntryScreen_Init:
 	CLR.w	Name_entry_cursor_column.w
 	RTS
 
-; loc_000151E0
 NameEntryScreen_InputHandler:
 	TST.b	Fade_in_lines_mask.w
 	BNE.b	NameEntryScreen_InputHandler_Loop
@@ -3617,7 +3567,6 @@ WriteCharacterToNameEntry_Loop2:
 	MOVE.b	#$DF, $1(A0)	
 	RTS
 	
-; loc_00015304
 NameEntry_ConfirmDone:
 	MOVE.b	#$FF, (A0)
 	MOVE.b	#FLAG_TRUE, Name_entry_complete.w
@@ -3660,11 +3609,9 @@ NameEntry_ConfirmDone_Loop4:
 	MOVE.w	#$E04E, VDP_data_port
 NameEntry_ConfirmDone_Loop2:
 	RTS
-; loc_00015392
 NameEntryScreen_Done:
 	RTS
 
-; loc_00015394
 NameEntryGridCursor_Tick:
 	MOVE.w	Name_entry_cursor_x.w, D0
 	ASL.w	#3, D0
@@ -3677,7 +3624,6 @@ NameEntryGridCursor_Tick:
 	JSR	AddSpriteToDisplayList
 	RTS
 
-; loc_000153B8
 NameEntryTextCursor_Tick:
 	MOVE.w	Name_entry_cursor_column.w, D0
 	CMPI.w	#5, D0
@@ -3690,7 +3636,6 @@ NameEntryTextCursor_Tick:
 	BTST.l	#3, D0
 	BEQ.b	EnemySprite_BlinkReturn
 	JSR	AddSpriteToDisplayList
-; loc_000153E0
 EnemySprite_BlinkReturn:
 	RTS
 
@@ -3763,7 +3708,6 @@ HandleNameEntryDPad:
 HandleNameEntryDPad_Done:
 	MOVE.w	#SOUND_HIT, D0
 	JSR	QueueSoundEffect
-; loc_000154CA
 NameEntryCursor_Right:
 	CMPI.w	#NAME_ENTRY_LAST_COL, Name_entry_cursor_x.w
 	BGE.b	NameEntryCursor_Right_Loop
@@ -3778,11 +3722,9 @@ NameEntryCursor_Right_Loop:
 	BNE.b	NameEntryCursor_Right
 	RTS
 	
-; loc_000154EA
 NameEntryCursor_Left_Sound:
 	MOVE.w	#SOUND_HIT, D0
 	JSR	QueueSoundEffect
-; loc_000154F4
 NameEntryCursor_Left:
 	TST.w	Name_entry_cursor_x.w
 	BLE.b	NameEntryCursor_Left_Loop
@@ -3796,11 +3738,9 @@ NameEntryCursor_Left_Loop:
 	BNE.b	NameEntryCursor_Left
 	RTS
 	
-; loc_00015514
 NameEntryCursor_Down_Sound:
 	MOVE.w	#SOUND_HIT, D0
 	JSR	QueueSoundEffect
-; loc_0001551E
 NameEntryCursor_Down:
 	CMPI.w	#NAME_ENTRY_LAST_ROW, Name_entry_cursor_row.w
 	BGE.b	NameEntryCursor_Down_Loop
@@ -3815,11 +3755,9 @@ NameEntryCursor_Down_Loop:
 	BNE.b	NameEntryCursor_Down
 	RTS
 
-; loc_0001553E
 NameEntryCursor_Up_Sound:
 	MOVE.w	#SOUND_HIT, D0
 	JSR	QueueSoundEffect
-; loc_00015548
 NameEntryCursor_Up:
 	TST.w	Name_entry_cursor_row.w
 	BLE.b	NameEntryCursor_Up_Loop
@@ -3879,7 +3817,6 @@ CheckNameEntryCharValid_Loop4:
 HandleNameEntryDPad_Return:
 	RTS
 
-; loc_000155F4
 SegaLogoScreen_Init:
 	ORI	#$0700, SR
 	JSR	DisableVDPDisplay
@@ -3914,7 +3851,6 @@ SegaLogoScreen_Init_Done3:
 	JSR	LoadPalettesFromTable
 	RTS
 
-; loc_00015682
 SegaLogoScreen_FadeIn:
 	ADDQ.w	#1, Frame_delay_counter.w
 	BTST.b	#6, $00A10001
@@ -3934,11 +3870,9 @@ SegaLogoScreen_FadeIn_Loop3:
 	ADDQ.w	#1, Palette_line_0_index.w
 SegaLogoScreen_FadeIn_Loop4:
 	JSR	LoadPalettesFromTable
-; loc_000156BE
 ProloguePaletteStep_Return:
 	RTS
 
-; loc_000156C0
 PrologueScreen_Init:
 	JSR	DisableVDPDisplay
 	JSR	ClearVRAMPlaneA
@@ -3980,11 +3914,9 @@ LoadPrologueFadeParams_Loop2:
 	CMPI.b	#3, D1
 	BNE.b	LoadPrologueFadeParams_Return
 	MOVE.b	(A0), Palette_fade_in_mask.w
-; loc_00015762
 LoadPrologueFadeParams_Return:
 	RTS
 
-; loc_00015764
 PrologueStateDispatcher:
 	MOVE.w	Prologue_state.w, D0
 	ADD.w	D0, D0
@@ -3993,7 +3925,6 @@ PrologueStateDispatcher:
 	JSR	(A0,D0.w)
 	RTS
 
-; loc_00015778
 PrologueStateJumpTable:
 	BRA.w	PrologueWaitAndAdvanceState
 	BRA.w	PrologueWaitAndAdvanceState
@@ -4065,7 +3996,6 @@ PrologueStateJumpTable_Loop2_Done: ; god mode?
 	MOVE.w	#MAX_PLAYER_INT, Player_int.w	
 	MOVE.w	#MAX_PLAYER_LUK, Player_luk.w	
 	MOVE.l	#MAX_PLAYER_KIMS, Player_kims.w	
-; loc_0001589E
 DebugMaxStats_Return:
 	RTS
 
@@ -4103,7 +4033,6 @@ PrologueTick_WaitFadeOut:
 PrologueTick_WaitFadeOut_Loop:
 	RTS
 
-; loc_0001591E
 PrologueWaitAndAdvanceState:
 	TST.b	Fade_in_lines_mask.w
 	BNE.b	PrologueWaitAndAdvanceState_Loop

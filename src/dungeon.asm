@@ -127,87 +127,69 @@ UpdatePlayerMapSector:
 	JSR	(A0,D4.w)
 	RTS
 
-; loc_0000471E
 RotateCW_NorthJumpTable:
 	BRA.w	RenderFpWall_UpLeft
 	BRA.w	RenderFpWall_DownRight
 	BRA.w	RenderFpWall_DownLeft
 	BRA.w	RenderFpWall_UpRight
-; loc_0000472E
 RotateCW_EastJumpTable:
 	BRA.w	RenderFpWall_LeftUp
 	BRA.w	RenderFpWall_RightDown
 	BRA.w	RenderFpWall_RightUp
 	BRA.w	RenderFpWall_LeftDown
-; loc_0000473E
 RotateCW_SouthJumpTable:
 	BRA.w	RenderFpWall_FarLeft
 	BRA.w	RenderFpWall_FarDownRight
 	BRA.w	RenderFpWall_FarUpLeft
 	BRA.w	RenderFpWall_FarRight
-; loc_0000474E
 RotateCCW_WestJumpTable:
 	BRA.w	RenderFpWall_DownRight
 	BRA.w	RenderFpWall_DownLeft
 	BRA.w	RenderFpWall_UpRight
 	BRA.w	RenderFpWall_UpLeft
-; loc_0000475E
 RotateCCW_EastJumpTable:
 	BRA.w	RenderFpWall_RightDown
 	BRA.w	RenderFpWall_RightUp
 	BRA.w	RenderFpWall_LeftDown
 	BRA.w	RenderFpWall_LeftUp
-; loc_0000476E
 RotateCCW_SouthJumpTable:
 	BRA.w	RenderFpWall_FarDownRight
 	BRA.w	RenderFpWall_FarUpLeft
 	BRA.w	RenderFpWall_FarRight
 	BRA.w	RenderFpWall_FarLeft
-; loc_0000477E
 RenderFpWall_DownRight:
 	LEA	WallTileOffsets_DownRight, A4
 	BRA.w	RenderFpSector_Near
-; loc_00004788
 RenderFpWall_DownLeft:
 	LEA	WallTileOffsets_DownLeft, A4
 	BRA.w	RenderFpSector_Near
-; loc_00004792
 RenderFpWall_UpRight:
 	LEA	WallTileOffsets_UpRight, A4
 	BRA.w	RenderFpSector_Near
-; loc_0000479C
 RenderFpWall_UpLeft:
 	LEA	WallTileOffsets_UpLeft, A4
 	BRA.w	RenderFpSector_Near
-; loc_000047A6
 RenderFpWall_RightDown:
 	LEA	WallTileOffsets_RightDown, A4
 	BRA.w	RenderFpSector_Far
-; loc_000047B0
 RenderFpWall_RightUp:
 	LEA	WallTileOffsets_RightUp, A4
 	BRA.w	RenderFpSector_Far
-; loc_000047BA
 RenderFpWall_LeftDown:
 	LEA	WallTileOffsets_LeftDown, A4
 	BRA.w	RenderFpSector_Far
-; loc_000047C4
 RenderFpWall_LeftUp:
 	LEA	WallTileOffsets_LeftUp, A4
 	BRA.w	RenderFpSector_Far
-; loc_000047CE
 RenderFpWall_FarDownRight:
 	LEA	WallTileOffsets_FarDownRight, A4
 	BRA.w	RenderFpSector_Mid
-; loc_000047D8
 RenderFpWall_FarUpLeft:
 	LEA	WallTileOffsets_FarUpLeft, A4
 	BRA.w	RenderFpSector_Mid
-; loc_000047E2
 RenderFpWall_FarRight:
 	LEA	WallTileOffsets_FarRight, A4
 	BRA.w	RenderFpSector_Mid
-; loc_000047EC
 RenderFpWall_FarLeft:
 	LEA	WallTileOffsets_FarLeft, A4
 	BRA.w	RenderFpSector_Mid
@@ -398,10 +380,8 @@ ForwardMovementJumpTable_Loop12:
 	BNE.b	DungeonForwardMove_PaletteStep
 	MOVE.w	#PALETTE_IDX_CAVE_FLOOR, Palette_line_2_index.w
 	BRA.b	DungeonForwardMove_LoadPaletteDraw
-; loc_00004A40
 DungeonForwardMove_PaletteStep:
 	ADDQ.w	#1, Palette_line_2_index.w
-; loc_00004A44
 DungeonForwardMove_LoadPaletteDraw:
 	JSR	LoadPalettesFromTable
 	CLR.b	Player_move_forward_in_overworld.w
@@ -429,10 +409,8 @@ BackwardMovementJumpTable_Loop2:
 	BNE.b	DungeonBackwardMove_PaletteStep
 	MOVE.w	#PALETTE_IDX_CAVE_ANIM_ALT, Palette_line_2_index.w
 	BRA.b	DungeonBackwardMove_LoadPaletteDraw
-; loc_00004AA2
 DungeonBackwardMove_PaletteStep:
 	SUBQ.w	#1, Palette_line_2_index.w
-; loc_00004AA6
 DungeonBackwardMove_LoadPaletteDraw:
 	JSR	LoadPalettesFromTable
 	MOVE.w	#12, First_person_wall_frame.w
@@ -552,7 +530,6 @@ ResetObjectOffscreenPositions:
 	MOVE.l	#$00580000, obj_world_y(A6)
 	RTS
 
-; loc_00004CCE
 CaveBossStartPositions_Alt:
 	MOVEA.l	Enemy_list_ptr.w, A6
 	MOVE.l	#$00360000, obj_world_x(A6)
@@ -764,7 +741,6 @@ DungeonTick_ApplyObjectOffsets_Loop:
 	ADDI.l	#$00020000, obj_world_y(A6)
 	RTS
 
-; loc_000050F8
 DrawFirstPersonWalls:
 	CLR.w	D0
 	MOVE.b	First_person_wall_right.w, D0
@@ -922,7 +898,6 @@ RenderWallTile_16x11_TwoPalette_Done3:
 	DBF	D7, RenderWallTile_16x11_TwoPalette_Done
 	ANDI	#$F8FF, SR
 	RTS
-; loc_000052CE
 NullTickHandler:
 	RTS
 ClearFirstPersonTilemap:
@@ -1798,7 +1773,6 @@ ClearObjectGfxIndex:
 	MOVE.w	#0, obj_tile_index(A6)
 	RTS
 
-; loc_00005FC4
 MapTileToTypeIndex:
 	CLR.b	obj_direction(A6)
 	TST.b	D4
@@ -1865,7 +1839,6 @@ ValidateDungeonTileType_Loop4:
 
 ValidateDungeonTileType_Loop3:
 	CLR.w	D4
-; loc_0000603C
 RenderMapToVRAM_Return:
 	RTS
 
@@ -1883,7 +1856,6 @@ RenderMapToVRAM_DualPalette_21x13_Alt:
 	LEA	RenderMapToVRAM_DualPalette_21x13_Alt_Data, A0
 	MOVE.w	#$4AA4, D4
 	BRA.w	RenderMapToVRAM_WithPalette
-; loc_0000606E
 RenderMapToVRAM_NoPalette:
 	ORI	#$0700, SR
 	MOVE.l	#$44820003, D5
@@ -1909,7 +1881,6 @@ RenderMapToVRAM_NoPalette_Done3:
 	ANDI	#$F8FF, SR
 	RTS
 
-; loc_000060BE
 RenderMapToVRAM_WithPalette:
 	ORI	#$0700, SR
 	MOVE.l	#$44820003, D5
@@ -1942,7 +1913,6 @@ DisplayStatsToVRAM_AltPalette:
 	LEA	DisplayStatsToVRAM_AltPalette_Data, A0
 	MOVE.w	#$4F70, D4
 	BRA.w	DisplayStatsToVRAM_WithPalette
-; loc_00006126
 DisplayStatsToVRAM_NoPalette:
 	ORI	#$0700, SR
 	MOVE.l	#$40820003, D5
@@ -1968,7 +1938,6 @@ DisplayStatsToVRAM_NoPalette_Done3:
 	ANDI	#$F8FF, SR
 	RTS
 
-; loc_00006176
 DisplayStatsToVRAM_WithPalette:
 	ORI	#$0700, SR
 	MOVE.l	#$40820003, D5
@@ -2001,7 +1970,6 @@ UpdateCompassDisplay_Loop:
 UpdateCompassDisplay_Loop2:
 	ADD.w	D0, D0
 	MOVE.w	D0, Player_compass_frame.w
-; loc_000061D8
 DrawCompassTiles:
 	MOVE.w	Player_compass_frame.w, D0
 	MULU.w	#5, D0
@@ -2068,7 +2036,6 @@ LoadMapSectors_Done:
 ;   9 sectors loaded into RAM buffers starting at Map_sector_top_left
 ; ============================================================================
 ; The game keeps 9 map sectors in memory
-; loc_0000626C
 Load9SectorMapWindow:
 	LEA	OverworldMaps, A0
 	MOVE.w	Player_map_sector_x.w, D0
@@ -2153,7 +2120,6 @@ LoadMapSectorIfInBounds:
 	BGT.w	LoadMapSector_FillDefault            ; Out of bounds
 	
 	; Sector is in bounds - calculate index and load
-; loc_00006328
 LoadMapSector_NoBoundsCheck:
 	ASL.w	#4, D3                  ; D3 = Y * 16
 	ADD.w	D3, D2                  ; D2 = Y*16 + X (sector index)
@@ -2187,7 +2153,6 @@ LoadMapSector_NoBoundsCheck:
 ; Output:
 ;   256 tiles written to buffer in 16x16 grid with 32-tile stride
 ; ============================================================================
-; loc_0000633C
 DecompressMapSectorRLE:
 	MOVEM.w	D1/D0, -(A7)        ; Save registers D0, D1
 	LEA	-$20(A3), A3            ; Adjust output pointer back $20 bytes
@@ -2201,7 +2166,6 @@ DecompressMapSectorRLE_Done:
 	BNE.b	DecompressMapTile_Next            ; If not multiple of 16, continue
 	LEA	$20(A3), A3             ; Skip $20 bytes to next row
 	
-; loc_00006354
 DecompressMapTile_Next:
 	MOVE.b	(A1)+, D1               ; Read next compressed byte
 	CMPI.w	#$80, D1                ; Check if RLE marker (>= $80)

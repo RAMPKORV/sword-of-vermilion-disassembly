@@ -186,13 +186,11 @@ ShopPricesByTownAndType:
 	dc.l	SwaffhamEquipmentShopPrices	
 	dc.l	HastingsMagicShopPrices	
 	dc.l	ParmaMagicShopPrices	
-; loc_000221B0
 ShopResaleValueMapPtrs:
 	dc.l	ItemResaleValueMap
 	dc.l	EquipmentResaleValueMap
 	dc.l	MagicResaleValueMap
 	dc.l	MagicResaleValueMap	
-; loc_000221C0
 ShopPossessionListPtrs:
 	dc.l	Possessed_items_list
 	dc.l	Possessed_equipment_list
@@ -489,7 +487,6 @@ SwaffhamEquipmentShopPrices:
 	dc.l	$38000 
 	dc.l	$50000 
 
-;loc_0002248E
 ItemResaleValueMap:
 	dc.l	$8
 	dc.l	$4
@@ -536,7 +533,6 @@ ItemResaleValueMap:
 	dc.l	$3000 
 	dc.l	$3000 
 
-;loc_0002253E
 EquipmentResaleValueMap:
 	dc.l	$30
 	dc.l	$150
@@ -663,7 +659,6 @@ MagicBaseDamageTable: ; Something indexed by battle magic
 	dc.w	$0050
 MagicElementTypeTable: ; Something indexed by battle magic
 	dc.b	$00, $00, $02, $02, $02, $03, $03, $03, $03, $01, $01, $00, $00, $00
-; loc_000226D6
 ShopCategoryNameTables:
 	dc.l	ItemNames
 	dc.l	Possessed_items_length

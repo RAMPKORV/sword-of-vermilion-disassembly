@@ -95,7 +95,6 @@ CheckIfDoorIsLocked_Done:
 	BNE.w	CheckBlockedDoor_NextEntry
 	RTS
 	
-; loc_0001DF78
 CheckBlockedDoor_NextEntry:
 	LEA	$8(A0), A0
 	BRA.b	CheckIfDoorIsLocked_Done
@@ -103,13 +102,11 @@ CheckBlockedDoor_NextEntry_Loop:
 	MOVE.b	#FLAG_TRUE, Door_unlocked_flag.w
 	RTS
 	
-; loc_0001DF86
 LockedDoorDataTable:
 	dc.b	$00, $16, $00, $0B, $00, $0D, $01, $11, $00, $28, $00, $02, $00, $05, $01, $12, $00, $23, $00, $03, $00, $0D, $01, $13, $00, $20, $00, $0C, $00, $0E, $01, $19 
 	dc.b	$00, $20, $00, $03, $00, $03, $01, $16, $00, $20, $00, $0B, $00, $09, $01, $17, $00, $20, $00, $01, $00, $0F, $01, $18, $00, $22, $00, $01, $00, $05, $01, $16 
 	dc.b	$00, $21, $00, $01, $00, $08, $01, $17, $00, $20, $00, $03, $00, $0B, $01, $18, $00, $2A, $00, $07, $00, $0D, $00, $1A, $00, $2B, $00, $0A, $00, $0A, $00, $25 
 	dc.b	$FF, $FF 
-; loc_0001DFE8
 DialogSelectionStateMachine:
 	MOVE.w	Dialog_selection.w, D0
 	ANDI.w	#$001F, D0
@@ -119,7 +116,6 @@ DialogSelectionStateMachine:
 	JSR	(A0,D0.w)
 	RTS
 	
-; loc_0001E000
 DialogSelectionStateJumpTable:
 	BRA.w	DialogSelectionStateJumpTable_Loop
 	BRA.w	DialogSelection_Increment_Loop
@@ -156,14 +152,12 @@ DialogSelectionStateJumpTable_Loop4:
 	BRA.w	DialogSelect_ShowLookMessage	
 DialogSelectionStateJumpTable_Loop5:
 	PRINT 	TrufflesStillThereStr	
-; loc_0001E084
 DialogSelect_ShowLookMessage:
 	JSR	SaveStatusBarToBuffer
 	JSR	ResetScriptAndInitDialogue
 	MOVE.w	#2, Dialog_selection.w
 	RTS
 	
-; loc_0001E098
 DialogSelection_Increment:
 	ADDQ.w	#1, Dialog_selection.w
 	RTS
@@ -186,7 +180,6 @@ DialogSelection_Increment_Loop2:
 	BNE.w	DialogClose_RestoreHud
 	RTS
 	
-; loc_0001E0DE
 DialogClose_RestoreHud:
 	JSR	DrawStatusHudWindow
 	CLR.w	Overworld_menu_state.w
@@ -221,7 +214,6 @@ DialogClose_RestoreHud_Loop_Done:
 	BEQ.w	DialogSelectState2_Wait
 	MOVEA.l	(A1)+, A0
 	JMP	(A0)
-; loc_0001E140
 DialogSelectState2_Wait:
 	LEA	$A(A0), A0
 	BRA.b	DialogClose_RestoreHud_Loop_Done
@@ -240,12 +232,10 @@ CheckIfTileIsEmpty_Loop:
 	MOVE.w	#$FFFF, D0
 	RTS
 	
-; loc_0001E166
 SeekHandler_Tombstone:
 	dc.b	$21, $FC 
 	dc.l	TombstoneStr
 	dc.b	$C2, $04, $60, $00, $01, $A2 
-; loc_0001E172
 SeekHandler_TitaniasMirror:
 	TST.b	Titanias_mirror_quest_prereq.w
 	BEQ.w	SeekHandler_SetSelection1
@@ -268,12 +258,10 @@ SeekHandler_TitaniasMirror_Loop:
 	BSR.w	DisplayInventoryFullMessage	
 SeekHandler_TitaniasMirror_Loop2:
 	BRA.w	SeekHandler_DisplayAndReturn	
-; loc_0001E1CC
 SeekHandler_SetSelection1:
 	MOVE.w	#1, Dialog_selection.w
 	RTS
 	
-; loc_0001E1D4
 SeekHandler_MegaBlast:
 	TST.b	Mega_blast_acquired.w
 	BNE.w	SeekHandler_MegaBlast_Loop
@@ -297,7 +285,6 @@ SeekHandler_MegaBlast_Loop3:
 SeekHandler_MegaBlast_Loop:
 	MOVE.w	#1, Dialog_selection.w
 	RTS
-; loc_0001E22E
 SeekHandler_RafaelsStick:
 	TST.b	Rafaels_stick_acquired.w
 	BNE.w	SeekHandler_RafaelsStick_Loop
@@ -322,7 +309,6 @@ SeekHandler_RafaelsStick_Loop:
 	MOVE.w	#1, Dialog_selection.w	
 	RTS
 	
-; loc_0001E288
 SeekHandler_Herbs:
 	JSR	CheckInventoryFull	
 	BGE.w	SeekHandler_Herbs_Loop	
@@ -341,7 +327,6 @@ SeekHandler_Herbs_Loop:
 SeekHandler_Herbs_Loop2:
 	BRA.w	SeekHandler_DisplayAndReturn	
 
-; loc_0001E2CC
 SeekHandler_FindOneKim: ; Find 1kim
 	LEA	OneKimStr, A2
 	BSR.w	DisplayFoundItemMessage
@@ -352,7 +337,6 @@ SeekHandler_FindOneKim: ; Find 1kim
 	JSR	QueueSoundEffect
 	BRA.w	SeekHandler_DisplayAndReturn
 
-; loc_0001E2F6
 SeekHandler_RegainAllHp: ; Regain all HP
 	MOVE.w	Player_mhp.w, Player_hp.w
 	MOVE.w	#SOUND_ITEM_PICKUP, D0
@@ -366,7 +350,6 @@ SeekHandler_DisplayAndReturn:
 	MOVE.w	#2, Dialog_selection.w
 	RTS
 	
-; loc_0001E326
 SeekCoordsByTown: ; "Seek" coordinates by town
 	dc.l	SeekData_BladesGrave
 	dc.l	SeekData_BladesGrave
@@ -384,13 +367,11 @@ SeekCoordsByTown: ; "Seek" coordinates by town
 	dc.l	SeekData_BladesGrave 
 	dc.l	SeekData_BladesGrave
 	dc.l	SeekData_Swafham
-; loc_0001E366
 SeekData_BladesGrave: ; Blade's grave
 	dc.w	$2B, $24
 	dc.w	DIRECTION_DOWN
 	dc.l	SeekHandler_Tombstone
 	dc.w	$FFFF
-; loc_0001E372
 SeekData_Deepdale:
 	dc.w	$24, $26
 	dc.w	DIRECTION_ANY
@@ -399,25 +380,21 @@ SeekData_Deepdale:
 	dc.w	DIRECTION_ANY
 	dc.l	SeekHandler_FindOneKim
 	dc.w	$FFFF
-; loc_0001E388
 SeekData_Tadcaster:
 	dc.w	$21, $F
 	dc.w	DIRECTION_ANY
 	dc.l	SeekHandler_MegaBlast 
 	dc.w	$FFFF
-; loc_0001E394
 SeekData_Excalabria:
 	dc.w	$B, $15
 	dc.w	DIRECTION_ANY
 	dc.l	SeekHandler_RafaelsStick
 	dc.w	$FFFF
-; loc_0001E3A0
 SeekData_Hastings:
 	dc.w	$A, $17
 	dc.w	DIRECTION_ANY
 	dc.l	SeekHandler_TitaniasMirror
 	dc.w	$FFFF
-; loc_0001E3AC
 SeekData_Swafham:
 	dc.w	$1F, $21
 	dc.w	DIRECTION_ANY
@@ -465,7 +442,6 @@ DisplayInventoryFullMessage:
 	RTS
 	
 	
-; loc_0001E46C
 TakeItemStateMachine:
 	MOVE.w	Take_item_state.w, D0
 	ANDI.w	#$001F, D0
@@ -475,7 +451,6 @@ TakeItemStateMachine:
 	JSR	(A0,D0.w)
 	RTS
 	
-; loc_0001E484
 TakeItemStateJumpTable:
 	BRA.w	TakeItemStateJumpTable_Loop
 	BRA.w	TakeItemStateJumpTable_Loop2
@@ -505,12 +480,10 @@ TakeItemStateJumpTable_Loop2:
 	BNE.w	TakeItemMenu_SetState4
 	TST.b	Reward_script_active.w
 	BEQ.w	TakeItemState_SetState2
-; loc_0001E4EA
 TakeItemMenu_SetState4:
 	MOVE.w	#TAKE_ITEM_STATE_BUILD_REWARD, Take_item_state.w
 	RTS
 	
-; loc_0001E4F2
 TakeItemState_SetState2:
 	MOVE.w	#TAKE_ITEM_STATE_NO_ITEM_MSG, Take_item_state.w
 	RTS
@@ -533,7 +506,6 @@ TakeItemState_SetState2_Loop2:
 	BNE.w	TakeItem_RestoreHud
 	RTS
 	
-; loc_0001E53A
 TakeItem_RestoreHud:
 	JSR	DrawStatusHudWindow
 	CLR.w	Overworld_menu_state.w
@@ -557,7 +529,6 @@ TakeItem_RestoreHud_Loop:
 	BNE.w	TakeItemState_BuildReward
 	PRINT 	NothingToTakeStr	
 	BRA.w	TakeItemState_BuildReward_Loop2	
-; loc_0001E58A
 TakeItemState_BuildReward:
 	BSR.w	BuildRewardItemMessage
 	RTS
@@ -631,7 +602,6 @@ BuildRewardItemMessage_Loop2:
 	MOVEQ	#0, D0
 	MOVE.w	Reward_script_value.w, D0
 	JSR	FormatKimsAmount
-; loc_0001E6A0
 TakeItem_FinalizeTake:
 	MOVE.b	#$2E, (A1)+
 	MOVE.b	#$FF, (A1)
@@ -683,7 +653,6 @@ TakeItem_FinalizeTake_Loop2:
 	MOVE.w	#TAKE_ITEM_STATE_DISCARD_LIST, Take_item_state.w
 	RTS
 	
-; loc_0001E766
 TakeItem_DontWantMessage:
 	JSR	DrawLeftMenuWindow
 	JSR	ResetScriptAndInitDialogue
@@ -738,7 +707,6 @@ TakeItem_DontWantMessage_Loop4:
 	JSR	DrawPossessedEquipmentList
 	MOVE.l	#Possessed_equipment_list, Active_inventory_list_ptr.w
 	MOVE.w	Possessed_equipment_length.w, D0
-; loc_0001E84C
 TakeItem_InitEquipCursor:
 	JSR	InitMenuCursorForList
 	MOVE.w	#TAKE_ITEM_STATE_ITEM_CURSOR, Take_item_state.w
@@ -885,7 +853,6 @@ TakeItem_InitEquipCursor_Loop3:
 	BNE.w	TakeItem_RestoreHudWithMusic
 	RTS
 	
-; loc_0001EA80
 TakeItem_RestoreHudWithMusic:
 	MOVE.w	Current_area_music.w, D0
 	JSR	QueueSoundEffect
@@ -909,8 +876,6 @@ ClearRewardScriptFlag:
 ClearRewardScriptFlag_Loop:
 	RTS
 	
-; loc_0001EAC6
-; loc_0001EAC6
 BossParallaxEntry_Start:
 	MOVE.l	(A0)+, D0
 	MOVE.w	(A0)+, D1
@@ -925,8 +890,6 @@ BossParallaxEntry_Start:
 	ANDI.l	#$1FFF0000, D4
 	ADD.l	D4, D0
 	MOVE.l	D0, VDP_control_port
-; loc_0001EAEC
-; loc_0001EAEC
 BossParallaxEntry_ColumnLoop:
 	CLR.w	D0
 	MOVE.b	(A0)+, D0
@@ -934,78 +897,64 @@ BossParallaxEntry_ColumnLoop:
 	MOVE.w	D0, VDP_data_port
 	DBF	D1, BossParallaxEntry_ColumnLoop
 	RTS
-; loc_0001EAFE
 WyclifNpcDialogueDispatch:
 	LEA	Wyclif_Npc1_DialogueStates, A1
 	MOVE.w	#1, D7
 	BRA.w	SelectDialogueByGameState
-; loc_0001EB0C
 Wyclif_Npc1_DialogueStates:
 	dc.l	TownDialogTable_Wyclif_State2
 	dc.l	Rings_collected
 	dc.l	TownDialogTable_Wyclif_State1
 	dc.l	Event_triggers_start
 	dc.l	TownDialogTable_Wyclif_State0
-; loc_0001EB20
 Wyclif_Npc2_Dispatch:
 	LEA	Wyclif_Npc2_DialogueStates, A1
 	MOVE.w	#1, D7
 	BRA.w	SelectDialogueByGameState
-; loc_0001EB2E
 Wyclif_Npc2_DialogueStates:
 	dc.l	TownDialogTable_Wyclif_State5
 	dc.l	Rings_collected
 	dc.l	TownDialogTable_Wyclif_State4
 	dc.l	Event_triggers_start
 	dc.l	TownDialogTable_Wyclif_State3
-; loc_0001EB42
 Wyclif_Npc3_Dispatch:
 	LEA	Wyclif_Npc3_DialogueStates, A1
 	MOVE.w	#1, D7
 	BRA.w	SelectDialogueByGameState
-; loc_0001EB50
 Wyclif_Npc3_DialogueStates:
 	dc.l	TownDialogTable_Wyclif_State8 
 	dc.l	Rings_collected
 	dc.l	TownDialogTable_Wyclif_State7
 	dc.l	Event_triggers_start
 	dc.l	TownDialogTable_Wyclif_State6
-; loc_0001EB64
 Wyclif_Npc4_SimpleDispatch:
 	LEA	TownDialogTable_Wyclif_State9, A1
 	BRA.w	SelectDialogueSimple
-; loc_0001EB6E
 Wyclif_Npc4_Dispatch:
 	LEA	Wyclif_Npc4_DialogueStates, A1
 	MOVE.w	#1, D7
 	BRA.w	SelectDialogueByGameState
-; loc_0001EB7C
 Wyclif_Npc4_DialogueStates:
 	dc.l	TownDialogTable_Wyclif_State12
 	dc.l	Rings_collected
 	dc.l	TownDialogTable_Wyclif_State11
 	dc.l	Event_triggers_start
 	dc.l	TownDialogTable_Wyclif_State10	
-; loc_0001EB90
 Wyclif_Npc5_SimpleDispatch:
 	LEA	TownDialogTable_Wyclif_State13, A1
 	BRA.w	SelectDialogueSimple
-; loc_0001EB9A
 Wyclif_Npc5_Dispatch:
 	LEA	Wyclif_Npc5_DialogueStates, A1
 	MOVE.w	#0, D7
 	BRA.w	SelectDialogueByGameState
-; loc_0001EBA8
 Wyclif_Npc5_DialogueStates:
 	dc.l	TownDialogTable_Wyclif_State15
 	dc.l	Rings_collected
 	dc.l	TownDialogTable_Wyclif_State14
-; loc_0001EBB4
 ParmaaNpcDialogueDispatch:
 	LEA	Parma_Npc1_DialogueStates, A1
 	MOVE.w	#4, D7
 	BRA.w	SelectDialogueByGameState
-; loc_0001EBC2
 Parma_Npc1_DialogueStates:
 	dc.l	TownDialogTable_Parma_State4
 	dc.l	Talked_to_real_king
@@ -1018,62 +967,49 @@ Parma_Npc1_DialogueStates:
 	dc.l	TownDialogTable_Parma_State1
 	dc.l	Treasure_of_troy_challenge_issued
 	dc.l	TownDialogTable_Parma_State0
-; loc_0001EBEE
 Parma_Npc1_State5_Dispatch:
 	LEA	TownDialogTable_Parma_State5, A1
 	BRA.w	SelectDialogueSimple
-; loc_0001EBF8
 Parma_Npc1_State6_Dispatch:
 	LEA	TownDialogTable_Parma_State6, A1
 	BRA.w	SelectDialogueSimple
-; loc_0001EC02
 Parma_Npc1_State7_Dispatch:
 	LEA	TownDialogTable_Parma_State7, A1
 	BRA.w	SelectDialogueSimple
-; loc_0001EC0C
 Parma_Npc1_State8_Dispatch:
 	LEA	TownDialogTable_Parma_State8, A1
 	BRA.w	SelectDialogueSimple
-; loc_0001EC16
 Parma_Npc1_State9_Dispatch:
 	LEA	TownDialogTable_Parma_State9, A1
 	BRA.w	SelectDialogueSimple
-; loc_0001EC20
 Parma_Npc1_ConditionA_Dispatch:
 	LEA	ParmaNpc1_ConditionData_A, A1
 	MOVE.w	#0, D7
 	BRA.w	SelectDialogueByGameState
-; loc_0001EC2E
 ParmaNpc1_ConditionData_A:
 	dc.b	$00, $02, $E9, $64 
 	dc.l	Talked_to_real_king
 	dc.l	TownDialogTable_Parma_State15
-; loc_0001EC3A
 Parma_Npc1_ConditionB_Dispatch:
 	LEA	ParmaNpc1_ConditionData_B, A1
 	MOVE.w	#0, D7
 	BRA.w	SelectDialogueByGameState
-; loc_0001EC48
 ParmaNpc1_ConditionData_B:
 	dc.b	$00, $02, $E9, $34 
 	dc.l	Fake_king_killed
 	dc.l	TownDialogTable_Parma_State10
-; loc_0001EC54
 Parma_Npc1_ConditionC_Dispatch:
 	LEA	ParmaNpc1_ConditionData_C, A1
 	MOVE.w	#0, D7
 	BRA.w	SelectDialogueByGameState
-; loc_0001EC62
 ParmaNpc1_ConditionData_C:
 	dc.b	$00, $02, $E9, $40 
 	dc.l	Fake_king_killed
 	dc.l	TownDialogTable_Parma_State11
-; loc_0001EC6E
 Parma_Npc1_ConditionD_Dispatch:
 	LEA	ParmaNpc1_ConditionData_D, A1
 	MOVE.w	#0, D7
 	BRA.w	SelectDialogueByGameState
-; loc_0001EC7C
 ParmaNpc1_ConditionData_D:
 	dc.b	$00, $02, $E9, $48 
 	dc.l	Fake_king_killed
@@ -1081,7 +1017,6 @@ ParmaNpc1_ConditionData_D:
 	LEA	Parma_Npc2_DialogueStates, A1
 	MOVE.w	#4, D7
 	BRA.w	SelectDialogueByGameState
-; loc_0001EC96
 Parma_Npc2_DialogueStates:
 	dc.l	CastleDialogTable_Parma_State5
 	dc.l	Talked_to_real_king
@@ -1097,17 +1032,14 @@ Parma_Npc2_DialogueStates:
 	LEA	ParmaNpc3_ConditionData, A1
 	MOVE.w	#0, D7
 	BRA.w	SelectDialogueByGameState
-; loc_0001ECD0
 ParmaNpc3_ConditionData:
 	dc.b	$00, $02, $91, $2C 
 	dc.l	Player_chose_to_stay_in_parma
 	dc.l	CastleDialogTable_Parma_State6
-; loc_0001ECDC
 Parma_Npc3_Condition_Dispatch:
 	LEA	ParmaNpc4_ConditionData, A1
 	MOVE.w	#2, D7
 	BRA.w	SelectDialogueByGameState
-; loc_0001ECEA
 ParmaNpc4_ConditionData:
 	dc.b	$00, $02, $E9, $54 
 	dc.l	Talked_to_real_king
@@ -1116,48 +1048,40 @@ ParmaNpc4_ConditionData:
 	dc.l	TownDialogTable_Parma_State14
 	dc.l	Treasure_of_troy_challenge_issued
 	dc.l	TownDialogTable_Parma_State13
-; loc_0001ED06
 WatlingNpcDialogueDispatch:
 	LEA	Watling_Npc1_DialogueStates, A1
 	MOVE.w	#1, D7
 	BRA.w	SelectDialogueByGameState
-; loc_0001ED14
 Watling_Npc1_DialogueStates:
 	dc.l	TownDialogTable_Watling_State3
 	dc.l	Watling_villagers_asked_about_rings
 	dc.l	TownDialogTable_Watling_State2
 	dc.l	Watling_youth_restored
 	dc.l	TownDialogTable_Watling_State1
-; loc_0001ED28
 Watling_Npc2_Dispatch:
 	LEA	Watling_Npc2_DialogueStates, A1
 	MOVE.w	#1, D7
 	BRA.w	SelectDialogueByGameState
-; loc_0001ED36
 Watling_Npc2_DialogueStates:
 	dc.l	TownDialogTable_Watling_State6
 	dc.l	Watling_villagers_asked_about_rings
 	dc.l	TownDialogTable_Watling_State5
 	dc.l	Watling_youth_restored
 	dc.l	TownDialogTable_Watling_State4
-; loc_0001ED4A
 DeepdaleNpcDialogueDispatch:
 	LEA	Deepdale_Npc1_DialogueStates, A1
 	MOVE.w	#1, D7
 	BRA.w	SelectDialogueByGameState
-; loc_0001ED58
 Deepdale_Npc1_DialogueStates:
 	dc.l	TownDialogTable_Deepdale_State2
 	dc.l	Deepdale_king_secret_kept
 	dc.l	TownDialogTable_Deepdale_State1
 	dc.l	Deepdale_truffle_quest_started
 	dc.l	TownDialogTable_Deepdale_State0
-; loc_0001ED6C
 Deepdale_Npc2_Dispatch:
 	LEA	Deepdale_Npc2_DialogueStates, A1
 	MOVE.w	#1, D7
 	BRA.w	SelectDialogueByGameState
-; loc_0001ED7A
 Deepdale_Npc2_DialogueStates:
 	dc.l	TownDialogTable_Deepdale_State5
 	dc.l	Deepdale_king_secret_kept
@@ -1167,7 +1091,6 @@ Deepdale_Npc2_DialogueStates:
 	LEA	Deepdale_Npc3_DialogueStates, A1
 	MOVE.w	#1, D7
 	BRA.w	SelectDialogueByGameState
-; loc_0001ED9C
 Deepdale_Npc3_DialogueStates:
 	dc.l	CastleDialogTable_Deepdale_State2
 	dc.l	Deepdale_king_secret_kept
@@ -1177,16 +1100,13 @@ Deepdale_Npc3_DialogueStates:
 	dc.l	$43F90003	
 	dc.l	$0A726000	
 	dc.b	$04, $18 
-; loc_0001EDBA
 Deepdale_Npc3_SimpleDispatch:
 	LEA	TownDialogTable_Deepdale_State6, A1
 	BRA.w	SelectDialogueSimple
-; loc_0001EDC4
 StowNpcDialogueDispatch:
 	LEA	Stow_Npc1_DialogueStates, A1
 	MOVE.w	#3, D7
 	BRA.w	SelectDialogueByGameState
-; loc_0001EDD2
 Stow_Npc1_DialogueStates:
 	dc.l	TownDialogTable_Stow1_State4
 	dc.l	Stow_innocence_proven
@@ -1197,12 +1117,10 @@ Stow_Npc1_DialogueStates:
 	dc.l	TownDialogTable_Stow1_State1
 	dc.l	Sanguios_book_offered
 	dc.l	TownDialogTable_Stow1_State0	
-; loc_0001EDF6
 Stow_Npc2_Dispatch:
 	LEA	Stow_Npc2_DialogueStates, A1
 	MOVE.w	#1, D7
 	BRA.w	SelectDialogueByGameState
-; loc_0001EE04
 Stow_Npc2_DialogueStates:
 	dc.l	TownDialogTable_Stow1_State7
 	dc.l	Stow_innocence_proven
@@ -1212,7 +1130,6 @@ Stow_Npc2_DialogueStates:
 	LEA	Stow_Npc3_DialogueStates, A1
 	MOVE.w	#4, D7
 	BRA.w	SelectDialogueByGameState
-; loc_0001EE26
 Stow_Npc3_DialogueStates:
 	dc.l	CastleDialogTable_Stow_State5
 	dc.l	Stow_innocence_proven
@@ -1225,24 +1142,19 @@ Stow_Npc3_DialogueStates:
 	dc.l	CastleDialogTable_Stow_State1
 	dc.l	Sanguios_book_offered
 	dc.l	CastleDialogTable_Stow_State0	
-; loc_0001EE52
 Stow_Npc3_State8_Dispatch:
 	LEA	TownDialogTable_Stow1_State8, A1
 	BRA.w	SelectDialogueSimple
-; loc_0001EE5C
 Stow_Npc3_State9_Dispatch:
 	LEA	TownDialogTable_Stow1_State9, A1
 	BRA.w	SelectDialogueSimple
-; loc_0001EE66
 Stow_Npc3_State10_Dispatch:
 	LEA	TownDialogTable_Stow1_State10, A1
 	BRA.w	SelectDialogueSimple
-; loc_0001EE70
 KeltwickNpcDialogueDispatch:
 	LEA	Keltwick_Npc1_DialogueStates, A1
 	MOVE.w	#3, D7
 	BRA.w	SelectDialogueByGameState
-; loc_0001EE7E
 Keltwick_Npc1_DialogueStates:
 	dc.b	$00, $03, $2D, $C4
 	dc.l	Bearwulf_returned_home
@@ -1253,36 +1165,29 @@ Keltwick_Npc1_DialogueStates:
 	dc.l	TownDialogTable_Keltwick_State1
 	dc.l	Asti_monster_defeated
 	dc.l	TownDialogTable_Keltwick_State0	
-; loc_0001EEA2
 Keltwick_Npc1_State4_Dispatch:
 	LEA	TownDialogTable_Keltwick_State4, A1
 	BRA.w	SelectDialogueSimple
-; loc_0001EEAC
 Keltwick_Npc2_Dispatch:
 	LEA	Keltwick_Npc2_DialogueStates, A1
 	MOVE.w	#1, D7
 	BRA.w	SelectDialogueByGameState
-; loc_0001EEBA
 Keltwick_Npc2_DialogueStates:
 	dc.l	TownDialogTable_Keltwick_State7
 	dc.l	Sent_to_malaga
 	dc.l	TownDialogTable_Keltwick_State6	
 	dc.l	Alarm_clock_rang
 	dc.l	TownDialogTable_Keltwick_State5
-; loc_0001EECE
 Keltwick_Npc2_State8_Dispatch:
 	LEA	TownDialogTable_Keltwick_State8, A1
 	BRA.w	SelectDialogueSimple
-; loc_0001EED8
 Keltwick_Npc2_State9_Dispatch:
 	LEA	TownDialogTable_Keltwick_State9, A1
 	BRA.w	SelectDialogueSimple
-; loc_0001EEE2
 MalagaNpcDialogueDispatch:
 	LEA	Malaga_Npc1_DialogueStates, A1
 	MOVE.w	#2, D7
 	BRA.w	SelectDialogueByGameState
-; loc_0001EEF0
 Malaga_Npc1_DialogueStates:
 	dc.b	$00, $03, $40, $96
 	dc.l	Bearwulf_returned_home
@@ -1294,7 +1199,6 @@ Malaga_Npc1_DialogueStates:
 	LEA	Malaga_Npc2_DialogueStates, A1
 	MOVE.w	#2, D7
 	BRA.w	SelectDialogueByGameState
-; loc_0001EF1A
 Malaga_Npc2_DialogueStates:
 	dc.b	$00, $02, $AC, $F8
 	dc.l	Bearwulf_returned_home
@@ -1303,42 +1207,34 @@ Malaga_Npc2_DialogueStates:
 	dc.l	CastleDialogTable_Malaga_State1
 	dc.l	Malaga_king_crowned
 	dc.l	CastleDialogTable_Malaga_State0
-; loc_0001EF36
 Malaga_Npc2_SimpleDispatch:
 	LEA	TownDialogTable_Malaga_State3, A1
 	BRA.w	SelectDialogueSimple
-; loc_0001EF40
 BarrowNpcDialogueDispatch:
 	LEA	Barrow_Npc1_DialogueStates, A1
 	MOVE.w	#0, D7
 	BRA.w	SelectDialogueByGameState
-; loc_0001EF4E
 Barrow_Npc1_DialogueStates:
 	dc.l	TownDialogTable_Barrow_State1
 	dc.l	Uncle_tibor_visited
 	dc.l	TownDialogTable_Barrow_State0
-; loc_0001EF5A
 Barrow_Npc2_Dispatch:
 	LEA	Barrow_Npc2_DialogueStates, A1
 	MOVE.w	#1, D7
 	BRA.w	SelectDialogueByGameState
-; loc_0001EF68
 Barrow_Npc2_DialogueStates:
 	dc.b	$00, $03, $4D, $26
 	dc.l	Pass_to_carthahena_purchased
 	dc.l	TownDialogTable_Barrow_State4
 	dc.l	Uncle_tibor_visited
 	dc.l	TownDialogTable_Barrow_State3
-; loc_0001EF7C
 Barrow_Npc2_SimpleDispatch:
 	LEA	TownDialogTable_Barrow_State2, A1
 	BRA.w	SelectDialogueSimple
-; loc_0001EF86
 TadcasterNpcDialogueDispatch:
 	LEA	Tadcaster_Npc1_DialogueStates, A1
 	MOVE.w	#1, D7
 	BRA.w	SelectDialogueByGameState
-; loc_0001EF94
 Tadcaster_Npc1_DialogueStates:
 	dc.l	TownDialogTable_Tadcaster_State2
 	dc.l	Imposter_killed
@@ -1348,71 +1244,58 @@ Tadcaster_Npc1_DialogueStates:
 	LEA	Tadcaster_Npc2_DialogueStates, A1
 	MOVE.w	#1, D7
 	BRA.w	SelectDialogueByGameState
-; loc_0001EFB6
 Tadcaster_Npc2_DialogueStates:
 	dc.b	$00, $02, $B6, $EE
 	dc.l	Imposter_killed
 	dc.l	CastleDialogTable_Tadcaster_State1	
 	dc.l	Bully_first_fight_won
 	dc.l	CastleDialogTable_Tadcaster_State0
-; loc_0001EFCA
 Tadcaster_Npc3_Dispatch:
 	LEA	Tadcaster_Npc3_DialogueStates, A1
 	MOVE.w	#1, D7
 	BRA.w	SelectDialogueByGameState
-; loc_0001EFD8
 Tadcaster_Npc3_DialogueStates:
 	dc.b	$00, $03, $5D, $CC
 	dc.l	Imposter_killed
 	dc.l	TownDialogTable_Tadcaster_State4	
 	dc.l	Bully_first_fight_won
 	dc.l	TownDialogTable_Tadcaster_State3
-; loc_0001EFEC
 Tadcaster_Npc3_State5_Dispatch:
 	LEA	TownDialogTable_Tadcaster_State5, A1
 	BRA.w	SelectDialogueSimple
-; loc_0001EFF6
 Tadcaster_Npc4_Dispatch:
 	LEA	Tadcaster_Npc4_DialogueStates, A1
 	MOVE.w	#1, D7
 	BRA.w	SelectDialogueByGameState
-; loc_0001F004
 Tadcaster_Npc4_DialogueStates:
 	dc.b	$00, $03, $5D, $E0
 	dc.l	Imposter_killed
 	dc.l	TownDialogTable_Tadcaster_State7	
 	dc.l	Bully_first_fight_won
 	dc.l	TownDialogTable_Tadcaster_State6
-; loc_0001F018
 HelwigNpcDialogueDispatch:
 	LEA	Helwig_Npc1_DialogueStates, A1
 	MOVE.w	#0, D7
 	BRA.w	SelectDialogueByGameState
-; loc_0001F026
 Helwig_Npc1_DialogueStates:
 	dc.l	TownDialogTable_Helwig_State1
 	dc.l	Helwig_men_rescued
 	dc.l	TownDialogTable_Helwig_State0
-; loc_0001F032
 Helwig_Npc2_Dispatch:
 	LEA	Helwig_Npc2_DialogueStates, A1
 	MOVE.w	#0, D7
 	BRA.w	SelectDialogueByGameState
-; loc_0001F040
 Helwig_Npc2_DialogueStates:
 	dc.l	TownDialogTable_Helwig_State3
 	dc.l	Helwig_men_rescued
 	dc.l	TownDialogTable_Helwig_State2
-; loc_0001F04C
 Helwig_Npc2_SimpleDispatch:
 	LEA	TownDialogTable_Helwig_State4, A1
 	BRA.w	SelectDialogueSimple
-; loc_0001F056
 SwafhamNpcDialogueDispatch:
 	LEA	Swaffham_Npc1_DialogueStates, A1
 	MOVE.w	#1, D7
 	BRA.w	SelectDialogueByGameState
-; loc_0001F064
 Swaffham_Npc1_DialogueStates:
 	dc.l	TownDialogTable_Swafham_State2
 	dc.l	Swaffham_ruined
@@ -1422,7 +1305,6 @@ Swaffham_Npc1_DialogueStates:
 	LEA	Swaffham_Npc2_DialogueStates, A1
 	MOVE.w	#6, D7
 	BRA.w	SelectDialogueByGameState
-; loc_0001F086
 Swaffham_Npc2_DialogueStates:
 	dc.b	$00, $02, $B9, $EE
 	dc.l	Ring_of_earth_obtained
@@ -1439,24 +1321,20 @@ Swaffham_Npc2_DialogueStates:
 	dc.l	CastleDialogTable_Swafham_State4	
 	dc.l	White_crystal_quest_started
 	dc.l	CastleDialogTable_Swafham_State0
-; loc_0001F0C2
 ExcalabriaaNpcDialogueDispatch:
 	LEA	Excalabria_Npc1_DialogueStates, A1
 	MOVE.w	#1, D7
 	BRA.w	SelectDialogueByGameState
-; loc_0001F0D0
 Excalabria_Npc1_DialogueStates:
 	dc.l	TownDialogTable_Excalabria_State2
 	dc.l	Knute_informed_of_swaffham_ruin
 	dc.l	TownDialogTable_Excalabria_State1
 	dc.l	Ring_of_earth_obtained
 	dc.l	TownDialogTable_Excalabria_State0	
-; loc_0001F0E4
 HastingsNpcDialogueDispatch:
 	LEA	Hastings_Npc1_DialogueStates, A1
 	MOVE.w	#2, D7
 	BRA.w	SelectDialogueByGameState
-; loc_0001F0F2
 Hastings_Npc1_DialogueStates:
 	dc.l	Hastings_Npc1_DialogueStates_TileData_3A0B2
 	dc.l	Digot_plant_received
@@ -1465,39 +1343,32 @@ Hastings_Npc1_DialogueStates:
 	dc.l	TownDialogTable_Hastings_State1
 	dc.l	Ate_spy_dinner
 	dc.l	TownDialogTable_Hastings_State0
-; loc_0001F10E
 Hastings_Npc2_Dispatch:
 	LEA	Hastings_Npc2_DialogueStates, A1
 	MOVE.w	#1, D7
 	BRA.w	SelectDialogueByGameState
-; loc_0001F11C
 Hastings_Npc2_DialogueStates:
 	dc.l	Hastings_Npc2_DialogueStates_TileData_3A0F6
 	dc.l	Spy_dinner_poisoned_flag
 	dc.l	Hastings_Npc2_DialogueStates_TileData_3A0F2
 	dc.l	Ate_spy_dinner
 	dc.l	Hastings_Npc2_DialogueStates_TileData_3A0EE
-; loc_0001F130
 Hastings_Npc2_SubDispatch_A:
 	dc.l	$43F90003	
 	dc.l	$A0DA6000	
 	dc.w	$0098
-; loc_0001F13A
 Hastings_Npc2_SubDispatch_B:
 	dc.w	$43F9
 	dc.l	Hastings_Npc2_SubDispatch_B_Entry_3A0E2	
 	dc.l	$6000008E	
-; loc_0001F144
 Hastings_Npc3_Dispatch:
 	LEA	Hastings_Npc3_DialogueStates, A1
 	MOVE.w	#0, D7
 	BRA.w	SelectDialogueByGameState
-; loc_0001F152
 Hastings_Npc3_DialogueStates:
 	dc.b	$00, $03, $A1, $0E
 	dc.l	Pass_to_carthahena_purchased
 	dc.l	Hastings_Npc3_DialogueStates_TileData_3A0FA
-; loc_0001F15E
 CarthahenaaNpcDialogueDispatch:
 	LEA	CarthahenaaNpcDialogueDispatch_Data3, A0
 	TST.b	Tsarkon_is_dead.w
@@ -1506,7 +1377,6 @@ CarthahenaaNpcDialogueDispatch:
 	TST.b	Pass_to_carthahena_purchased.w
 	BNE.b	SelectCastleDialog_Carthahena_Return
 	LEA	CarthahenaaNpcDialogueDispatch_Data, A0	
-; loc_0001F17C
 SelectCastleDialog_Carthahena_Return:
 	RTS
 	
@@ -1553,11 +1423,9 @@ SelectDialogueByGameState_Done:
 	BNE.b	SelectDialogTable_Found
 	DBF	D7, SelectDialogueByGameState_Done
 	MOVEA.l	(A1), A0
-; loc_0001F1CE
 SelectDialogTable_Found:
 	RTS
 	
-; loc_0001F1D0
 SelectDialogueSimple:
 	BSR.b	CheckGameComplete
 	BNE.b	SelectDialogueSimple_Loop
@@ -1565,14 +1433,12 @@ SelectDialogueSimple:
 SelectDialogueSimple_Loop:
 	RTS
 	
-; loc_0001F1D8
 TalkDirectionDeltaTable:
 	dc.w	0, -1 
 	dc.w	-1, 0 
 	dc.w	0, 1 
 	dc.w	1, 0 
 	dc.w	8, 8 
-; loc_0001F1EC
 TownRoomTilemapPlaneAPtrs:
 	dc.l	LoadTownTilemap_Wyclif_PlaneA
 	dc.l	LoadTownTilemap_ParmaAndMalaga_PlaneA
@@ -1628,7 +1494,6 @@ TownRoomTilemapPlaneAPtrs:
 	dc.l	LoadBuildingTilemap_33_PlaneA
 	dc.l	LoadBuildingTilemap_34_PlaneA
 	dc.l	LoadBuildingTilemap_35_PlaneA
-; loc_0001F2C4
 TownRoomTilemapPlaneBPtrs:
 	dc.l	LoadTownTilemap_Wyclif_PlaneB
 	dc.l	LoadTownTilemap_ParmaAndMalaga_PlaneB
@@ -1684,14 +1549,12 @@ TownRoomTilemapPlaneBPtrs:
 	dc.l	LoadBuildingTilemap_33_PlaneB
 	dc.l	LoadBuildingTilemap_34_PlaneB
 	dc.l	LoadBuildingTilemap_35_PlaneB
-; loc_0001F39C
 TownTilesetPtrs:
 	dc.l	TownTilesetPtrs_Gfx_8B38A
 	dc.l	TownTilesetPtrs_Gfx_8DAE0
 	dc.l	TownTilesetPtrs_Gfx_8FEE6
 	dc.l	loc_00000000 
 	dc.l	TownTilesetPtrs_Gfx_9239A
-; loc_0001F3B0
 DialogueChoiceNoStrPtrs:
 	dc.l	NoChoiceStr
 	dc.l	RingOfSkyGiftStr
@@ -1706,7 +1569,6 @@ DialogueChoiceNoStrPtrs:
 	dc.l	HurryBringBackHusbandsStr
 	dc.l	BreakMothersHeartStr
 	dc.l	OneOfUsWillDieStr
-; loc_0001F3E4
 DialogueChoiceYesStrPtrs:
 	dc.l	OffYouGoStr
 	dc.l	DecideToLiveHereStr
@@ -1721,7 +1583,6 @@ DialogueChoiceYesStrPtrs:
 	dc.l	LazySlugStr
 	dc.l	ChaosReignStr
 	dc.l	ChaosReignStr
-; loc_0001F418
 TownTileGfxTable: ; Tile mappings + graphics by town
 	dc.l	TownTileSet_A_Mappings
 	dc.l	TownTileSet_A_Gfx
@@ -1792,108 +1653,81 @@ LoadTownTileGfx_LookupTable_Loop_Done_Data:
 	dc.l	SpriteGfxData_8FB08
 LoadTownTileGfx_LookupTable_Loop_Done_Data2:
 	dc.w	$001E
-; loc_0001F4C2
 DmaCmd_TownTileset_Wyclif:
 	dc.b	$94, $10, $93, $00, $96, $D0, $95, $00, $97, $7F, $60, $00, $00, $81, $00, $00 
-; loc_0001F4D2
 DmaCmd_TownTileset_Parma:
 	dc.b	$94, $0C, $93, $00, $96, $D0, $95, $00, $97, $7F, $40, $00, $00, $82, $00, $00 
-; loc_0001F4E2
 DmaCmd_TownTileGfxSet1_A:
 	dc.b	$94, $0B, $93, $70, $96, $D0, $95, $00, $97, $7F, $47, $80, $00, $80, $00, $00 
-; loc_0001F4F2
 DmaCmd_TownTileGfxSet1_B:
 	dc.b	$94, $0D, $93, $A0, $96, $D0, $95, $00, $97, $7F, $5E, $60, $00, $80, $00, $00 
-; loc_0001F502
 DmaCmd_TownNpcGfx:
 	dc.b	$94, $06, $93, $C0, $96, $D0, $95, $00, $97, $7F, $79, $A0, $00, $80, $00, $00 
-; loc_0001F512
 DmaCmd_TownTileGfxSet1_D:
 	dc.b	$94, $09, $93, $E0, $96, $D0, $95, $00, $97, $7F, $4C, $60, $00, $81, $00, $00 
-; loc_0001F522
 DmaCmd_TownTileGfxSet1_E:
 	dc.b	$94, $02, $93, $A0, $96, $D0, $95, $00, $97, $7F, $47, $20, $00, $81, $00, $00 
-; loc_0001F532
 DmaCmd_OverworldStatusTiles:
 	dc.b	$94, $03, $93, $A0, $96, $D0, $95, $00, $97, $7F, $40, $40, $00, $80, $00, $00 
-; loc_0001F542
 DmaCmd_MenuTilesA:
 	dc.b	$94, $10, $93, $00, $96, $D0, $95, $00, $97, $7F, $50, $00, $00, $80, $00, $00 
-; loc_0001F552
 DmaCmd_MenuTilesB:
 	dc.b	$94, $04, $93, $30, $96, $D0, $95, $00, $97, $7F, $70, $00, $00, $80, $00, $00 
-; loc_0001F562
 DmaCmd_MenuMiscTilesA:
 	dc.b	$94, $01, $93, $B0, $96, $D0, $95, $00, $97, $7F, $40, $40, $00, $80, $00, $00 
-; loc_0001F572
 DmaCmd_MenuMiscTilesB:
 	dc.b	$94, $00, $93, $80, $96, $D0, $95, $00, $97, $7F, $43, $A0, $00, $80, $00, $00 
-; loc_0001F582
 DmaCmd_OptionsMenuTiles:
 	dc.b	$94, $03, $93, $D0, $96, $D0, $95, $00, $97, $7F, $47, $80, $00, $80, $00, $00 
-; loc_0001F592
 DmaCmd_TitleScreenTilesA:
 	dc.b	$94, $04, $93, $E0, $96, $D0, $95, $00, $97, $7F, $50, $00, $00, $80, $00, $00 
-; loc_0001F5A2
 DmaCmd_TitleScreenTilesB:
 	dc.b	$94, $06, $93, $D0, $96, $D0, $95, $00, $97, $7F, $60, $00, $00, $80, $00, $00 
-; loc_0001F5B2
 DmaCmd_TitleScreenTilesC:
 	dc.b	$94, $06, $93, $30, $96, $D0, $95, $00, $97, $7F, $70, $00, $00, $80, $00, $00 
-; loc_0001F5C2
 DmaCmd_TitleScreenTilesD:
 	dc.b	$94, $05, $93, $00, $96, $D0, $95, $00, $97, $7F, $40, $00, $00, $81, $00, $00 
-; loc_0001F5D2
 DmaCmd_TitleScreenTilesE:
 	dc.b	$94, $05, $93, $20, $96, $D0, $95, $00, $97, $7F, $50, $00, $00, $81, $00, $00 
-; loc_0001F5E2
 DmaCmd_TitleScreenTilesF:
 	dc.b	$94, $00, $93, $60, $96, $D0, $95, $00 
 	dc.l	$977F6000	
 	dc.l	$00810000	
-; loc_0001F5F2
 TerrainTileGfxDmaPtrs:
 	dc.l	DmaCmd_TerrainTileset_0
 	dc.l	DmaCmd_TerrainTileset_1
 	dc.l	DmaCmd_TerrainTileset_2
 	dc.l	DmaCmd_TerrainTileset_3
-; loc_0001F602
 DmaCmd_TerrainTileset_0:
 	dc.l	$94049330	
 	dc.l	$96D09500	
 	dc.l	$977F6000	
 	dc.l	$00810000	
-; loc_0001F612
 DmaCmd_TerrainTileset_1:
 	dc.l	$94049350	
 	dc.l	$96D09500	
 	dc.l	$977F6000	
 	dc.l	$00810000	
-; loc_0001F622
 DmaCmd_TerrainTileset_2:
 	dc.l	$94049350	
 	dc.l	$96D09500	
 	dc.l	$977F6000	
 	dc.l	$00810000	
-; loc_0001F632
 DmaCmd_TerrainTileset_3:
 	dc.l	$94039390	
 	dc.l	$96D09500	
 	dc.l	$977F6000	
 	dc.l	$00810000	
-; loc_0001F642
 DmaCmd_BattleTiles:
 	dc.l	$940193B0	
 	dc.l	$96D09500	
 	dc.l	$977F7980	
 	dc.l	$00810000	
-; loc_0001F652
 TerrainTilemapPtrs:
 	dc.l	TerrainTilemapPtrs_Gfx_68CA2
 	dc.l	SpriteAnimFrameTable_69592
 	dc.l	SpriteAnimFrameTable_69592
 	dc.l	TerrainTilemapPtrs_Gfx_6E028
-; loc_0001F662
 TerrainTilemapMetadata:
 	dc.l	TerrainTilemapMetadata_Gfx_68E5A
 	dc.l	$00430049	
@@ -1903,61 +1737,51 @@ TerrainTilemapMetadata:
 	dc.l	$0045004B	
 	dc.l	TerrainTilemapMetadata_Gfx_6E1E0
 	dc.l	$0039005E	
-; loc_0001F682
 DmaCmd_BattleGroundGfx:
 	dc.l	$94069350	
 	dc.l	$96D09500	
 	dc.l	$977F4980	
 	dc.l	$00820000	
-; loc_0001F692
 DmaCmd_BattleEnemyGfx:
 	dc.l	$94059370	
 	dc.l	$96D09500	
 	dc.l	$977F4400	
 	dc.l	$00810000	
-; loc_0001F6A2
 DmaCmd_BattleStatusGfx:
 	dc.l	$94059390	
 	dc.l	$96D09500	
 	dc.l	$977F4E00	
 	dc.l	$00830000	
-; loc_0001F6B2
 DmaCmd_BattlePlayerGfx:
 	dc.l	$94059300	
 	dc.l	$96D09500	
 	dc.l	$977F6E00	
 	dc.l	$00830000	
-; loc_0001F6C2
 DmaCmd_CaveEnemyGfx:
 	dc.l	$94059370	
 	dc.l	$96D09500	
 	dc.l	$977F4980	
 	dc.l	$00820000	
-; loc_0001F6D2
 DmaCmd_CaveItemGfx:
 	dc.l	$940593E0	
 	dc.l	$96D09500	
 	dc.l	$977F4E00	
 	dc.l	$00830000	
-; loc_0001F6E2
 DmaCmd_WorldMapTiles:
 	dc.l	$940E93B0	
 	dc.l	$96D09500	
 	dc.l	$977F5480	
 	dc.l	$00810000	
-; loc_0001F6F2
 DmaCmd_BattleUiTiles:
 	dc.l	$940393D0	
 	dc.l	$96D09500	
 	dc.l	$977F71E0	
 	dc.l	$00810000	
-; loc_0001F702
 DmaCmd_CaveTiles:
 	dc.l	$94079360	
 	dc.l	$96D09500	
 	dc.l	$977F6E00	
 	dc.l	$00830000	
-; loc_0001F712
 TalkerGfxDesc_MapGiver:
 	dc.l	TalkerGfxDesc_MapGiver_Gfx_51E44
 	dc.l	TalkerPortraitTileDataPtrs
@@ -1970,7 +1794,6 @@ TalkerGfxDesc_MapGiver:
 	dc.b	$0D
 	dc.b	$0F
 	dc.w	$0011
-; loc_0001F72E
 TalkerGfxDesc_StowGirl:
 	dc.l	TalkerGfxDesc_StowGirl_Gfx_51E4C
 	dc.l	TalkerPortraitTileDataPtrs
@@ -1983,7 +1806,6 @@ TalkerGfxDesc_StowGirl:
 	dc.b	$0D
 	dc.b	$0F
 	dc.w	$0012
-; loc_0001F74A
 TalkerGfxDesc_Bearwulf:
 	dc.l	TalkerGfxDesc_Bearwulf_Gfx_51E54
 	dc.l	TalkerPortraitTileDataPtrs
@@ -1996,7 +1818,6 @@ TalkerGfxDesc_Bearwulf:
 	dc.b	$0D
 	dc.b	$0F
 	dc.w	$0011
-; loc_0001F766
 TalkerGfxDesc_Merchant:
 	dc.l	TalkerGfxDesc_Merchant_Gfx_51E5C
 	dc.l	TalkerPortraitTileDataPtrs
@@ -2009,7 +1830,6 @@ TalkerGfxDesc_Merchant:
 	dc.b	$0D
 	dc.b	$0F
 	dc.w	$0011
-; loc_0001F782
 TalkerGfxDesc_GenericNpc:
 	dc.l	TalkerGfxDesc_GenericNpc_Gfx_51EA4
 	dc.l	TalkerPortraitTileDataPtrs
@@ -2022,7 +1842,6 @@ TalkerGfxDesc_GenericNpc:
 	dc.b	$0D
 	dc.b	$0D
 	dc.w	$0079
-; loc_0001F79E
 TalkerGfxDesc_DigotGiver:
 	dc.l	TalkerGfxDesc_DigotGiver_Gfx_51E8C
 	dc.l	TalkerPortraitTileDataPtrs
@@ -2035,7 +1854,6 @@ TalkerGfxDesc_DigotGiver:
 	dc.b	$0D
 	dc.b	$0D
 	dc.w	$0078
-; loc_0001F7BA
 TalkerGfxDesc_TruffleGiver:
 	dc.l	TalkerGfxDesc_TruffleGiver_Gfx_51E7C
 	dc.l	TalkerPortraitTileDataPtrs
@@ -2048,7 +1866,6 @@ TalkerGfxDesc_TruffleGiver:
 	dc.b	$0D
 	dc.b	$0D
 	dc.w	$0078
-; loc_0001F7D6
 TalkerGfxDesc_ImposterGuard:
 	dc.l	TalkerGfxDesc_ImposterGuard_Gfx_51E64
 	dc.l	TalkerPortraitTileDataPtrs
@@ -2061,7 +1878,6 @@ TalkerGfxDesc_ImposterGuard:
 	dc.b	$0D
 	dc.b	$0F
 	dc.w	$00C3
-; loc_0001F7F2
 TalkerGfxDesc_Tsarkon:
 	dc.l	TalkerGfxDesc_Tsarkon_Gfx_51E6C
 	dc.l	TalkerPortraitTileDataPtrs
@@ -2071,12 +1887,10 @@ TalkerGfxDesc_Tsarkon:
 	dc.l	$000F0000	
 	dc.l	$FFF00D0F	
 	dc.l	$00AE0042	
-; loc_0001F810
 GfxLoadList_OverworldBattle:
 	dc.l	GfxLoadList_OverworldBattle_Gfx_5DD16
 	dc.l	GfxLoadList_OverworldBattle_Gfx_5DD9E
 	dc.l	$000B0010	
-; loc_0001F81C
 GfxLoadList_FirstPerson:
 	dc.l	GfxLoadList_FirstPerson_Gfx_81782
 	dc.l	SpriteFramePointerTable_81E28
@@ -2114,7 +1928,6 @@ GfxLoadList_FirstPerson:
 	dc.l	GfxLoadList_FirstPerson_Gfx_86DEC
 	dc.l	GfxLoadList_FirstPerson_Gfx_86F12
 	dc.b	$00, $0B, $FF, $FF 
-; loc_0001F8AC
 GfxLoadList_FirstPersonBattle:
 	dc.b	$00, $1C 
 	dc.l	SpriteMetaTileTable_83108
@@ -2153,19 +1966,16 @@ GfxLoadList_FirstPersonBattle:
 	dc.l	GfxLoadList_FirstPersonBattle_Gfx_885B0
 	dc.l	GfxLoadList_FirstPersonBattle_Gfx_88622
 	dc.b	$00, $0B, $FF, $FF 
-; loc_0001F93E
 GfxLoadList_IntroSegalogo:
 	dc.b	$00, $0D 
 	dc.l	GfxLoadList_IntroSegalogo_Gfx_628CC
 	dc.l	GfxLoadList_IntroSegalogo_Gfx_62900
 	dc.b	$00, $03, $FF, $FF 
-; loc_0001F94C
 GfxLoadList_IntroTitle:
 	dc.b	$00, $0E 
 	dc.l	GfxLoadList_IntroTitle_Gfx_62910
 	dc.l	GfxLoadList_IntroTitle_Gfx_62A08
 	dc.b	$00, $07, $FF, $FF 
-; loc_0001F95A
 GfxLoadList_Town:
 	dc.b	$00, $00 
 	dc.l	FPEnemyTileLayout_A
@@ -2201,7 +2011,6 @@ GfxLoadList_Town:
 	dc.l	GfxLoadList_Town_Gfx_50C86
 	dc.l	SpriteFramePointerTable_51414
 	dc.b	$00, $35, $FF, $FF 
-; loc_0001F9E0
 GfxLoadList_TownBattle:
 	dc.b	$00, $00 
 	dc.l	FPEnemyTileLayout_A
@@ -2249,7 +2058,6 @@ GfxLoadList_TownBattle:
 	dc.l	GfxLoadList_TownBattle_Gfx_50860
 	dc.l	GfxLoadList_TownBattle_Gfx_50A20
 	dc.b	$00, $17, $FF, $FF 
-; loc_0001FA96
 GfxLoadList_WorldBattle:
 	dc.b	$00, $00 
 	dc.l	FPEnemyTileLayout_A
@@ -2291,7 +2099,6 @@ GfxLoadList_WorldBattle:
 	dc.l	GfxLoadList_WorldBattle_Gfx_50CBC
 	dc.l	SpriteFramePointerTable_51414
 	dc.l	$0017FFFF	
-; loc_0001FB34
 MagicGfxDataPtrs:
 	dc.l	MagicGfxData_WyclifParma
 	dc.l	MagicGfxData_WyclifParma
@@ -2309,49 +2116,41 @@ MagicGfxDataPtrs:
 	dc.l	MagicGfxData_HastingsCarthahena
 	dc.l	MagicGfxData_HastingsCarthahena	
 	dc.l	MagicGfxData_HastingsCarthahena	
-; loc_0001FB74
 MagicGfxData_WyclifParma:
 	dc.l	MagicGfxData_WyclifParma_Gfx_4A8F4
 	dc.l	MagicGfxData_WyclifParma_Gfx_4AA82
 	dc.w	$001D
 	dc.w	$0036	
-; loc_0001FB80
 MagicGfxData_DeepdaleStow:
 	dc.l	MagicGfxData_DeepdaleStow_Gfx_48EFE
 	dc.l	MagicGfxData_DeepdaleStow_Gfx_498D0
 	dc.w	$00B3
 	dc.w	$0073	
-; loc_0001FB8C
 MagicGfxData_Keltwick:
 	dc.l	MagicGfxData_Keltwick_Gfx_49AD8
 	dc.l	MagicGfxData_Keltwick_Gfx_49E3C
 	dc.w	$002F
 	dc.w	$0073	
-; loc_0001FB98
 MagicGfxData_Barrow:
 	dc.l	SpriteLayout_4A77A
 	dc.l	SpriteFramePointerTable_4A8B8
 	dc.w	$0017
 	dc.w	$0076	
-; loc_0001FBA4
 MagicGfxData_Tadcaster:
 	dc.l	MagicGfxData_Tadcaster_Gfx_4A548
 	dc.l	MagicGfxData_Tadcaster_Gfx_4A70E
 	dc.w	$001F
 	dc.w	$0076	
-; loc_0001FBB0
 MagicGfxData_Helwig:
 	dc.l	MagicGfxData_Helwig_Gfx_49ECC
 	dc.l	MagicGfxData_Helwig_Gfx_4A42C
 	dc.w	$0053
 	dc.w	$007A	
-; loc_0001FBBC
 MagicGfxData_SwaffhamExcalabria:
 	dc.l	MagicGfxData_SwaffhamExcalabria_Gfx_4AAD6
 	dc.l	MagicGfxData_SwaffhamExcalabria_Gfx_4B1E6
 	dc.w	$007F
 	dc.w	$0074	
-; loc_0001FBC8
 MagicGfxData_HastingsCarthahena:
 	dc.l	SpriteLayout_4A77A
 	dc.l	SpriteFramePointerTable_4A8B8
@@ -2374,50 +2173,35 @@ TownNames:
 	dc.l	TownName_Excalabria
 	dc.l	TownName_Hastings
 	dc.l	TownName_Carthahena
-; loc_0001FC0C
 TownName_Wyclif:
 	dc.b	"Wyclif", $FF, $00
-; loc_0001FC14
 TownName_Parma:
 	dc.b	"Parma", $FF
-; loc_0001FC1A
 TownName_Watling:
 	dc.b	"Watling", $FF
-; loc_0001FC22
 TownName_Deepdale:
 	dc.b	"Deepdale", $FF, $00
-; loc_0001FC2C
 TownName_Stow:
 	dc.b	"Stow", $FF, $00
-; loc_0001FC32
 TownName_Keltwick:
 	dc.b	"Keltwick", $FF, $00
-; loc_0001FC3C
 TownName_Malaga:
 	dc.b	"Malaga", $FF, $00
-; loc_0001FC44
 TownName_Barrow:
 	dc.b	"Barrow", $FF, $00
-; loc_0001FC4C
 TownName_Tadcaster:
 	dc.b	"Tadcaster", $FF
-; loc_0001FC56
 TownName_Helwig:
 	dc.b	"Helwig", $FF, $00
-; loc_0001FC5E
 TownName_Swaffham:
 	dc.b	"Swaffham", $FF, $00
-; loc_0001FC68
 TownName_Excalabria:
 	dc.b	"Excalabria", $FF, $00
-; loc_0001FC74
 TownName_Hastings:
 	dc.b	"Hastings", $FF, $00
-; loc_0001FC7E
 TownName_Carthahena:
 	dc.b	"Cartahena", $FF
 
-; loc_0001FC88
 TownTilesetLoadJumpTable: ; suspected town loading routines that set tilemap
 	BRA.w	SetTileset_Wyclif
 	BRA.w	SetTileset_Parma
@@ -2435,62 +2219,50 @@ TownTilesetLoadJumpTable: ; suspected town loading routines that set tilemap
 	BRA.w	SetTileset_Hastings1
 	BRA.w	SetTileset_Hastings2	
 	BRA.w	SetTileset_Carthahena
-; loc_0001FCC8
 SetTileset_Wyclif:
 	MOVE.w	#TOWN_TILESET_VILLAGE_A, Town_tileset_index.w
 	RTS
 
-; loc_0001FCD0
 SetTileset_Parma:
 	MOVE.w	#TOWN_TILESET_VILLAGE_B, Town_tileset_index.w
 	RTS
 
-; loc_0001FCD8
 SetTileset_Watling:
 	MOVE.w	#TOWN_TILESET_VILLAGE_A, Town_tileset_index.w
 	RTS
 
-; loc_0001FCE0
 SetTileset_Deepdale:
 	MOVE.w	#TOWN_TILESET_VILLAGE_B, Town_tileset_index.w
 	RTS
 
-; loc_0001FCE8
 SetTileset_Stow1:
 	MOVE.w	#TOWN_TILESET_VILLAGE_B, Town_tileset_index.w
 	RTS
 
-; loc_0001FCF0
 SetTileset_Stow2:
 	MOVE.w	#TOWN_TILESET_VILLAGE_B, Town_tileset_index.w	
 	RTS
 
-; loc_0001FCF8
 SetTileset_Keltwick:
 	MOVE.w	#TOWN_TILESET_VILLAGE_B, Town_tileset_index.w
 	RTS
 
-; loc_0001FD00
 SetTileset_Malaga:
 	MOVE.w	#TOWN_TILESET_VILLAGE_B, Town_tileset_index.w
 	RTS
 
-; loc_0001FD08
 SetTileset_Barrow:
 	MOVE.w	#TOWN_TILESET_VILLAGE_A, Town_tileset_index.w
 	RTS
 
-; loc_0001FD10
 SetTileset_Tadcaster:
 	MOVE.w	#TOWN_TILESET_VILLAGE_B, Town_tileset_index.w
 	RTS
 
-; loc_0001FD18
 SetTileset_Helwig:
 	MOVE.w	#TOWN_TILESET_VILLAGE_A, Town_tileset_index.w
 	RTS
 
-; loc_0001FD20
 SetTileset_Swafham:
 	MOVE.w	#TOWN_TILESET_VILLAGE_B, Town_tileset_index.w
 	TST.b	Swaffham_ruined.w
@@ -2499,27 +2271,22 @@ SetTileset_Swafham:
 SetTileset_Swafham_Loop:
 	RTS
 
-; loc_0001FD34
 SetTileset_Excalabria:
 	MOVE.w	#TOWN_TILESET_EXCALABRIA, Town_tileset_index.w
 	RTS
 
-; loc_0001FD3C
 SetTileset_Hastings1:
 	MOVE.w	#TOWN_TILESET_VILLAGE_A, Town_tileset_index.w
 	RTS
 
-; loc_0001FD44
 SetTileset_Hastings2:
 	MOVE.w	#TOWN_TILESET_VILLAGE_B, Town_tileset_index.w	
 	RTS
 	
-; loc_0001FD4C
 SetTileset_Carthahena:
 	MOVE.w	#TOWN_TILESET_VILLAGE_B, Town_tileset_index.w
 	RTS
 
-; loc_0001FD54
 TownSpawnPositionTable: ; suspected town spawning location + camera?
 	dc.w	$00D8, $02B8, $0003, $001F
 	dc.w	$01E8, $0268, $0014, $001A
@@ -2537,7 +2304,6 @@ TownSpawnPositionTable: ; suspected town spawning location + camera?
 	dc.w	$01E8, $01F8, $0015, $0013
 	dc.w	$0118, $0198, $0008, $000D 
 	dc.w	$0108, $0218, $0007, $0015
-; loc_0001FDD4
 TownNpcDataLookupJumpTable: ; suspected: Town NPCs?
 	BRA.w	LoadNpcData_Wyclif
 	BRA.w	LoadNpcData_Parma
@@ -2555,87 +2321,70 @@ TownNpcDataLookupJumpTable: ; suspected: Town NPCs?
 	BRA.w	LoadNpcData_Hastings1
 	BRA.w	LoadNpcData_Hastings2	
 	BRA.w	LoadNpcData_Carthahena
-; loc_0001FE14
 LoadNpcData_Wyclif:
 	LEA	NpcDataTable_Wyclif, A1
 	RTS
 
-; loc_0001FE1C
 LoadNpcData_Parma:
 	LEA	NpcDataTable_Parma, A1
 	RTS
 
-; loc_0001FE24
 LoadNpcData_Watling:
 	LEA	NpcDataTable_Watling, A1
 	RTS
 
-; loc_0001FE2C
 LoadNpcData_Deepdale:
 	LEA	NpcDataTable_Deepdale, A1
 	RTS
 
-; loc_0001FE34
 LoadNpcData_Stow1:
 	LEA	NpcDataTable_Stow1, A1
 	RTS
 
-; loc_0001FE3C
 LoadNpcData_Stow2:
 	LEA	NpcDataTable_Stow2, A1	
 	RTS
 
-; loc_0001FE44
 LoadNpcData_Keltwick:
 	LEA	NpcDataTable_Stow2, A1
 	RTS
 
-; loc_0001FE4C
 LoadNpcData_Malaga:
 	LEA	NpcDataTable_Malaga, A1
 	RTS
 
-; loc_0001FE54
 LoadNpcData_Barrow:
 	LEA	NpcDataTable_Barrow, A1
 	RTS
 
-; loc_0001FE5C
 LoadNpcData_Tadcaster:
 	LEA	NpcDataTable_Tadcaster, A1
 	RTS
 
-; loc_0001FE64
 LoadNpcData_Helwig:
 	LEA	NpcDataTable_Helwig, A1
 	RTS
 
-; loc_0001FE6C
 LoadNpcData_Swafham:
 	LEA	NpcDataTable_Swafham, A1
 	RTS
 
-; loc_0001FE74
 LoadNpcData_Excalabria:
 	LEA	NpcDataTable_Excalabria, A1	
 	RTS
 
-; loc_0001FE7C
 LoadNpcData_Hastings1:
 	LEA	NpcDataTable_Hastings1, A1
 	RTS
 	
-; loc_0001FE84
 LoadNpcData_Hastings2:
 	LEA	NpcDataTable_Hastings1, A1	
 	RTS
 	
-; loc_0001FE8C
 LoadNpcData_Carthahena:
 	LEA	NpcDataTable_Carthahena, A1
 	RTS
 	
-; loc_0001FE94
 AreaMusicIdByRoom:
 	dc.b	$87, $8F, $8B, $8F, $8F, $8F, $8F, $8F, $8B, $8F, $8B, $8F, $83, $8B, $87 
 	dc.b	$9A
@@ -2653,7 +2402,6 @@ AreaMusicIdByRoom:
 	dc.b	$91
 	dc.b	$91, $91, $8C, $8C, $8C, $8C, $8C, $8C, $8C 
 	dc.b	$8C
-; loc_0001FECA
 TownNpcSetupJumpTable: ; Town NPC setup scripts
 	BRA.w	SetupTownNpcs_Wyclif
 	BRA.w	SetupTownNpcs_Parma
@@ -2671,12 +2419,10 @@ TownNpcSetupJumpTable: ; Town NPC setup scripts
 	BRA.w	SetupTownNpcs_Hastings1
 	BRA.w	SetupTownNpcs_Hastings2	
 	BRA.w	SetupTownNpcs_Carthahena
-; loc_0001FF0A
 SetupTownNpcs_Wyclif:
 	MOVE.l	#NpcEntryList_Wyclif, Town_npc_data_ptr.w
 	RTS
 	
-; loc_0001FF14
 SetupTownNpcs_Parma:
 	TST.b	Talked_to_real_king.w
 	BNE.b	SetupTownNpcs_Parma_Normal
@@ -2686,27 +2432,22 @@ SetupTownNpcs_Parma:
 	BNE.b	SetupTownNpcs_Parma_Normal
 	TST.b	Treasure_of_troy_given_to_king.w
 	BNE.b	SetupTownNpcs_Parma_Locked
-; loc_0001FF2C
 SetupTownNpcs_Parma_Normal:
 	MOVE.l	#NpcEntryList_Parma, Town_npc_data_ptr.w
 	RTS
 	
-; loc_0001FF36
 SetupTownNpcs_Parma_Locked:
 	MOVE.l	#NpcEntryList_Parma_Locked, Town_npc_data_ptr.w
 	RTS
 	
-; loc_0001FF40
 SetupTownNpcs_Watling:
 	MOVE.l	#NpcEntryList_Watling, Town_npc_data_ptr.w
 	RTS
 	
-; loc_0001FF4A
 SetupTownNpcs_Deepdale:
 	MOVE.l	#NpcEntryList_Deepdale, Town_npc_data_ptr.w
 	RTS
 	
-; loc_0001FF54
 SetupTownNpcs_Stow1:
 	TST.b	Stow_innocence_proven.w
 	BNE.b	SetupTownNpcs_Stow1_Simple
@@ -2715,43 +2456,35 @@ SetupTownNpcs_Stow1:
 	BEQ.b	SetupTownNpcs_Stow1_Simple
 	RTS
 	
-; loc_0001FF6A
 SetupTownNpcs_Stow1_Simple:
 	MOVE.l	#NpcEntryList_Stow1, Town_npc_data_ptr.w
 	RTS
 	
-; loc_0001FF74
 SetupTownNpcs_Stow2:
 	MOVE.l	#NpcEntryList_Stow2AndKeltwick, Town_npc_data_ptr.w	
 	RTS
 	
 	
-; loc_0001FF7E
 SetupTownNpcs_Keltwick:
 	MOVE.l	#NpcEntryList_Stow2AndKeltwick, Town_npc_data_ptr.w
 	RTS
 	
-; loc_0001FF88
 SetupTownNpcs_Malaga:
 	MOVE.l	#NpcEntryList_Malaga, Town_npc_data_ptr.w
 	RTS
 	
-; loc_0001FF92
 SetupTownNpcs_Barrow:
 	MOVE.l	#NpcEntryList_Barrow, Town_npc_data_ptr.w
 	RTS
 	
-; loc_0001FF9C
 SetupTownNpcs_Tadcaster:
 	MOVE.l	#NpcEntryList_Tadcaster, Town_npc_data_ptr.w
 	RTS
 	
-; loc_0001FFA6
 SetupTownNpcs_Helwig:
 	MOVE.l	#NpcEntryList_Helwig, Town_npc_data_ptr.w
 	RTS
 	
-; loc_0001FFB0
 SetupTownNpcs_Swafham:
 	MOVE.l	#NpcEntryList_Swafham, Town_npc_data_ptr.w
 	TST.b	Swaffham_ruined.w
@@ -2760,23 +2493,19 @@ SetupTownNpcs_Swafham:
 SetupTownNpcs_Swafham_Loop:
 	RTS
 	
-; loc_0001FFC8
 SetupTownNpcs_Excalabria:
 	MOVE.l	#NpcEntryList_Excalabria, Town_npc_data_ptr.w
 	RTS
 	
-; loc_0001FFD2
 SetupTownNpcs_Hastings1:
 	MOVE.l	#NpcEntryList_Hastings, Town_npc_data_ptr.w
 	RTS
 	
-; loc_0001FFDC
 SetupTownNpcs_Hastings2:
 	MOVE.l	#NpcEntryList_Hastings, Town_npc_data_ptr.w	
 	RTS
 	
 	
-; loc_0001FFE6
 SetupTownNpcs_Carthahena:
 	MOVE.l	#NpcEntryList_Carthahena, Town_npc_data_ptr.w
 	TST.b	Tsarkon_is_dead.w
@@ -2785,7 +2514,6 @@ SetupTownNpcs_Carthahena:
 SetupTownNpcs_Carthahena_Loop:
 	RTS
 	
-; loc_0001FFFE
 TownStateDataJumpTableStart:
 	BRA.w	LoadTownStateData_Default	
 TownStateDataJumpTableStart_Parma:
@@ -2796,7 +2524,6 @@ TownStateDataJumpTableStart_Deepdale:
 	BRA.w	LoadTownStateData_Deepdale
 TownStateDataJumpTableStart_Stow:
 	BRA.w	LoadTownStateData_Stow1
-; loc_00020012
 TownStateDataJumpTable:
 	BRA.w	LoadTownStateData_Default	
 	BRA.w	LoadTownStateData_Default	
@@ -2809,28 +2536,23 @@ TownStateDataJumpTable:
 	BRA.w	LoadTownStateData_Default	
 	BRA.w	LoadTownStateData_Default	
 	BRA.w	LoadTownStateData_Carthahena
-; loc_0002003E
 LoadTownStateData_Default:
 	LEA	TownStateConfig_Default, A0	
 	RTS
 	
-; loc_00020046
 LoadTownStateData_Parma:
 	LEA	TownStateConfig_Parma, A0
 LoadTownStateData_Parma_FakeKingCheck:
 	TST.b	Fake_king_killed.w
 	BNE.b	LoadTownStateData_Parma_Return
 	LEA	TownStateConfig_Default, A0
-; loc_00020058
 LoadTownStateData_Parma_Return:
 	RTS
 	
-; loc_0002005A
 LoadTownStateData_Deepdale:
 	LEA	TownStateConfig_Deepdale, A0
 	RTS
 	
-; loc_00020062
 LoadTownStateData_Stow1:
 	TST.b	Stow_innocence_proven.w
 LoadTownStateData_Parma_AltPath:
@@ -2840,14 +2562,12 @@ LoadTownStateData_Parma_AltPath:
 	BEQ.b	LoadTownStateData_Stow1_Simple
 	RTS
 	
-; loc_00020076
 LoadTownStateData_Stow1_Simple:
 	LEA	TownStateConfig_Stow1, A0
 ; loc_0002007C (was LoadTownStateData_Parma_Return comment - actually Stow1_Simple end)
 LoadTownStateData_Stow1_Simple_Return:
 	RTS
 	
-; loc_0002007E
 LoadTownStateData_Malaga:
 	LEA	TownStateConfig_Malaga_MapReceived, A0
 	TST.b	Barrow_map_received.w
@@ -2856,17 +2576,14 @@ LoadTownStateData_Malaga:
 LoadTownStateData_Malaga_Loop:
 	RTS
 	
-; loc_00020092
 LoadTownStateData_Tadcaster:
 	LEA	TownStateConfig_Tadcaster, A0
 	RTS
 	
-; loc_0002009A
 LoadTownStateData_Swafham:
 	LEA	TownStateConfig_Swafham, A0
 	RTS
 	
-; loc_000200A2
 LoadTownStateData_Carthahena:
 	LEA	TownStateConfig_Carthahena, A0
 	TST.b	Tsarkon_is_dead.w
@@ -2875,7 +2592,6 @@ LoadTownStateData_Carthahena:
 LoadTownStateData_Carthahena_Loop:
 	RTS
 	
-; loc_000200B6
 OverworldSectorInteractionPtrs:
 	dc.l	OverworldInteractions_Sector0
 	dc.l	OverworldInteractions_Sector1
@@ -2893,7 +2609,6 @@ OverworldSectorInteractionPtrs:
 	dc.l	OverworldInteractions_Sector13
 	dc.l	OverworldInteractions_Sector14
 	dc.l	OverworldInteractions_Sector15 
-; loc_000200F6
 OverworldInteractions_Sector0:
 	dc.w	$4, $1, $1, $2 
 	dc.l	OverworldChest_Money256
@@ -2908,7 +2623,6 @@ OverworldInteractions_Sector0:
 	dc.w	$0007, $000C, $0001, $0001 
 	dc.l	OverworldChest_Money80_Wyclif
 	dc.w	$FFFF
-; loc_00020140
 OverworldInteractions_Sector1:	
 	dc.w	$5, $5, $2, $1 
 	dc.l	OverworldNpc_MerchantFromParma
@@ -2917,7 +2631,6 @@ OverworldInteractions_Sector1:
 	dc.w	$0002, $0005, $0006, $000A	
 	dc.l	OverworldNpc_UseBansheePowder
 	dc.w	$FFFF
-; loc_00020166
 OverworldInteractions_Sector2:
 	dc.w	$4, $8, $B, $1 
 	dc.l	OverworldChest_DarkSword
@@ -2932,7 +2645,6 @@ OverworldInteractions_Sector2:
 	dc.w	$0001, $000D, $0001, $0005	
 	dc.l	OverworldNpc_MapGiver_Wyclif
 	dc.w	$FFFF
-; loc_000201B0
 OverworldInteractions_Sector3:
 	dc.w	$5, $5, $7, $8
 	dc.l	OverworldChest_SapphireShield
@@ -2945,14 +2657,12 @@ OverworldInteractions_Sector3:
 	dc.w	$0001, $0006, $000C, $0005 
 	dc.l	OverworldNpc_MapGiver_Deepdale
 	dc.w	$FFFF
-; loc_000201EE
 OverworldInteractions_Sector4:
 	dc.w	$5, $2, $1, $1
 	dc.l	SetupNoOneTalker
 	dc.w	$0005, $0008, $0001, $0001
 	dc.l	OverworldChest_Money768_Stow
 	dc.w	$FFFF
-; loc_00020208
 OverworldInteractions_Sector5:
 	dc.w	$4, $C, $5, $8	
 	dc.l	OverworldChest_GemShield	
@@ -2965,7 +2675,6 @@ OverworldInteractions_Sector5:
 	dc.w	$0002, $0009, $0008, $0008	
 	dc.l	OverworldNpc_TsarkonPawnOfEvil
 	dc.w	$FFFF
-; loc_00020246
 OverworldInteractions_Sector6:	
 	dc.w	$3, $E, $2, $8 
 	dc.l	OverworldChest_Medicine
@@ -2978,14 +2687,12 @@ OverworldInteractions_Sector6:
 	dc.w	$0002, $0008, $0001, $0008
 	dc.l	OverworldNpc_MapGiver_Stow
 	dc.w	$FFFF
-; loc_00020284
 OverworldInteractions_Sector7:
 	dc.w	$1, $1, $C, $2
 	dc.l	SetupNoOneTalker
 	dc.w	$0007, $0007, $0005, $0008
 	dc.l	SetupNoOneTalker
 	dc.w	$FFFF
-; loc_0002029E
 OverworldInteractions_Sector8:
 	dc.w	$2, $D, $1, $8
 	dc.l	OverworldChest_Money9999
@@ -2994,14 +2701,12 @@ OverworldInteractions_Sector8:
 	dc.w	$0006, $0007, $0003, $0008	
 	dc.l	OverworldChest_GnomeStone
 	dc.w	$FFFF
-; loc_000202C4
 OverworldInteractions_Sector9:	
 	dc.w	$4, $A, $3, $8
 	dc.l	OverworldChest_Money20480
 	dc.w	$0005, $0006, $000D, $0008 
 	dc.l	OverworldNpc_SawMotherInCarthahena
 	dc.w	$FFFF
-; loc_000202DE
 OverworldInteractions_Sector10:
 	dc.w	$0, $6, $5, $4
 	dc.l	OverworldChest_Money864
@@ -3014,12 +2719,10 @@ OverworldInteractions_Sector10:
 	dc.w	$0007, $000F, $0004, $0008	
 	dc.l	OverworldNpc_GreetingsWarrior	
 	dc.w	$FFFF
-; loc_0002031C
 OverworldInteractions_Sector11:
 	dc.w	$2, $B, $1, $8
 	dc.l	OverworldChest_BansheePowder
 	dc.w	$FFFF	
-; loc_0002032A
 OverworldInteractions_Sector12:
 	dc.w	$1, $B, $2, $8
 	dc.l	OverworldChest_Money5888	
@@ -3030,7 +2733,6 @@ OverworldInteractions_Sector12:
 	dc.w	$0006, $0004, $0006, $0001	
 	dc.l	OverworldChest_RubyBrooch
 	dc.w	$FFFF
-; loc_0002035C
 OverworldInteractions_Sector13:
 	dc.w	$1, $8, $E, $A 
 	dc.l	OverworldNpc_EvilFlourishes
@@ -3039,17 +2741,14 @@ OverworldInteractions_Sector13:
 	dc.w	$0006, $0009, $000C, $0008	
 	dc.l	SetupNoOneTalker	
 	dc.w	$FFFF
-; loc_00020382
 OverworldInteractions_Sector14:
 	dc.w	$4, $B, $7, $9
 	dc.l	OverworldNpc_RingsHavePower
 	dc.w	$FFFF	
-; loc_00020390
 OverworldInteractions_Sector15:
 	dc.w	$3, $D, $7, $8	
 	dc.l	OverworldChest_CrimsonArmor
 	dc.w	$FFFF
-; loc_0002039E
 OverworldChest_CrimsonArmor:
 	TST.b	Crimson_armor_reward_enabled.w
 	BEQ.b	OverworldChest_CrimsonArmor_Loop
@@ -3067,61 +2766,45 @@ OverworldChest_CrimsonArmor_Loop2:
 OverworldChest_CrimsonArmor_Loop:
 	RTS
 	
-; loc_000203DA
 OverworldChest_Money256:
 	MoneyChest $100, Money_chest_256_opened
 	
-; loc_000203EE
 OverworldChest_Money768_Stow:
 	MoneyChest $0300, Money_chest_768_stow_opened
-; loc_00020402
 OverworldChest_Money80_Wyclif:
 	MoneyChest $50, Wyclif_outskirts_chest_opened
 	
-; loc_00020416
 OverworldChest_Money768B:
 	MoneyChest $300, Money_chest_768_b_opened
 	
-; loc_0002042A
 OverworldChest_Money512:
 	MoneyChest $0200, Money_chest_512_opened
-; loc_0002043E
 OverworldChest_Money1280:
 	MoneyChest $0500, Money_chest_1280_opened
-; loc_00020452
 OverworldChest_Money1792B:
 	MoneyChest $0700, Money_chest_1792_b_opened
-; loc_00020466
 OverworldChest_Money20480:
 	MoneyChest $5000, Money_chest_20480_opened
-; loc_0002047A
 OverworldChest_Money5888:
 	MoneyChest $1700, Chest_5888_kims_opened
 	
-; loc_0002048E
 OverworldChest_Money864:	
 	MoneyChest $0360, Money_chest_864_opened
-; loc_000204A2
 OverworldChest_Money9999:
 	MoneyChest $9999, Chest_9999_kims_opened
 	
-; loc_000204B6
 OverworldChest_Candle3:
 	ItemChest ITEM_CANDLE, Candle_chest_3_opened
 	
-; loc_000204CA
 OverworldChest_Lantern2:
 	ItemChest ITEM_LANTERN, Lantern_chest_2_opened
 	
-; loc_000204DE
 OverworldChest_Herbs:
 	ItemChest ITEM_HERBS, Herbs_chest_opened
 	
-; loc_000204F2
 OverworldChest_Herbs2:
 	ItemChest ITEM_HERBS, Herbs_chest_2_opened
 	
-; loc_00020506
 OverworldChest_DarkSword:
 	EquipChest EQUIPMENT_TYPE_SWORD, EQUIPMENT_SWORD_DARK1, Dark_sword_chest_opened, EQUIPMENT_FLAG_CURSED
 	
@@ -3134,145 +2817,118 @@ SetupNoOneTalker:
 	MOVE.l	#NoOneHereStr, Script_talk_source.w
 	RTS
 	
-; loc_00020542
 OverworldNpc_LongDangerousRoad:
 	BSR.w	InitTalkerWithGfxDescriptor_1F712	
 	MOVE.l	#LongDangerousRoadAheadStr, Script_talk_source.w	
 	RTS
 	
 	
-; loc_00020550
 OverworldChest_Medicine:
 	ItemChest ITEM_MEDICINE, Medicine_chest_opened
 	
-; loc_00020564
 OverworldNpc_WrongRoad:
 	BSR.w	InitTalkerWithGfxDescriptor_1F712
 	MOVE.l	#WrongRoadStr, Script_talk_source.w
 	RTS
 	
-; loc_00020572
 OverworldChest_Herbs5:
 	ItemChest ITEM_HERBS, Herbs_chest_5_opened
 	
-; loc_00020586
 OverworldChest_Herbs6:
 	ItemChest ITEM_HERBS, Herbs_chest_6_opened
 	
-; loc_0002059A
 OverworldChest_RubyBrooch:
 	ItemChest ITEM_RUBY_BROOCH, Ruby_brooch_chest_opened
 	
-; loc_000205AE
 OverworldChest_SapphireShield:
 	EquipChest EQUIPMENT_TYPE_SHIELD, EQUIPMENT_SHIELD_SAPPHIRE, Chest_sapphire_shield_opened
-; loc_000205C2
 OverworldChest_BansheePowder:	
 	ItemChest ITEM_BANSHEE_POWDER, Banshee_powder_chest_opened
-; loc_000205D6
 OverworldChest_GnomeStone:
 	ItemChest ITEM_GNOME_STONE, Chest_gnome_stone_opened
 	
-; loc_000205EA
 OverworldChest_GemShield:
 	EquipChest EQUIPMENT_TYPE_SHIELD, EQUIPMENT_SHIELD_GEM, Chest_gem_shield_opened
 	
-; loc_000205FE
 OverworldNpc_MerchantFromParma:
 	BSR.w	InitTalkerWithGfxDescriptor_1F74A
 	MOVE.l	#MerchantFromParmaStr, Script_talk_source.w
 	RTS
 	
-; loc_0002060C
 OverworldNpc_PreparedForTask:
 	BSR.w	InitTalkerWithGfxDescriptor_1F74A
 	MOVE.l	#PreparedForTaskStr, Script_talk_source.w
 	RTS
 	
-; loc_0002061A
 OverworldNpc_HeadedToWatling:
 	BSR.w	InitTalkerWithGfxDescriptor_1F74A
 	MOVE.l	#HeadedToWatlingStr, Script_talk_source.w
 	RTS
 	
-; loc_00020628
 OverworldNpc_WayToDeepdale:
 	BSR.w	InitTalkerWithGfxDescriptor_1F74A
 	MOVE.l	#WayToDeepdaleStr, Script_talk_source.w
 	RTS
 	
-; loc_00020636
 OverworldNpc_LongWayToStow:
 	BSR.w	InitTalkerWithGfxDescriptor_1F712
 	MOVE.l	#LongWayToStowStr, Script_talk_source.w
 	RTS
 	
-; loc_00020644
 OverworldNpc_GreetingsWarrior:
 	BSR.w	InitTalkerWithGfxDescriptor_1F712	
 	MOVE.l	#GreetingsWarriorStr, Script_talk_source.w	
 	RTS
 	
-; loc_00020652
 OverworldNpc_EvilFlourishes:
 	BSR.w	InitTalkerWithGfxDescriptor_1F74A
 	MOVE.l	#EvilFlourishesStr, Script_talk_source.w
 	RTS
 	
-; loc_00020660
 OverworldNpc_AppearancesDeceive:
 	BSR.w	InitTalkerWithGfxDescriptor_1F712	
 	MOVE.l	#AppearancesDeceiveStr, Script_talk_source.w	
 	RTS
 	
-; loc_0002066E
 OverworldNpc_RingsHavePower:
 	BSR.w	InitTalkerWithGfxDescriptor_1F712
 	MOVE.l	#RingsHavePowerStr, Script_talk_source.w
 	RTS
-; loc_0002067C
 OverworldNpc_ProgressingWell:
 	BSR.w	InitTalkerWithGfxDescriptor_1F712
 	MOVE.l	#ProgressingWellStr, Script_talk_source.w
 	RTS
 	
-; loc_0002068A
 OverworldNpc_TharFashionsEvil:
 	BSR.w	InitTalkerWithGfxDescriptor_1F712	
 	MOVE.l	#TharFashionsEvilStr, Script_talk_source.w	
 	RTS
 	
-; loc_00020698
 OverworldNpc_UseBansheePowder:
 	BSR.w	InitTalkerWithGfxDescriptor_1F712
 	MOVE.l	#UseBansheePowderStr, Script_talk_source.w
 	RTS
 	
-; loc_000206A6
 OverworldNpc_TsarkonPawnOfEvil:
 	BSR.w	InitTalkerWithGfxDescriptor_1F712
 	MOVE.l	#TsarkonPawnOfEvilStr, Script_talk_source.w
 	RTS
 	
-; loc_000206B4
 OverworldNpc_SpendWealthWisely:
 	BSR.w	InitTalkerWithGfxDescriptor_1F712
 	MOVE.l	#SpendWealthWiselyStr, Script_talk_source.w
 	RTS
 	
-; loc_000206C2
 OverworldNpc_LearnFromMistakes:
 	BSR.w	InitTalkerWithGfxDescriptor_1F712
 	MOVE.l	#LearnFromMistakesStr, Script_talk_source.w
 	RTS
 	
-; loc_000206D0
 OverworldNpc_SawMotherInCarthahena:
 	BSR.w	InitTalkerWithGfxDescriptor_1F712
 	MOVE.l	#SawMotherInCartahenaStr, Script_talk_source.w
 	RTS
 	
-; loc_000206DE
 OverworldNpc_MapGiver_Wyclif:
 	LEA	Map_trigger_flags.w, A0
 	MOVE.w	#MAP_TRIGGER_MAP_GIVER_WYCLIF, Map_trigger_index.w
@@ -3287,7 +2943,6 @@ OverworldNpc_MapGiver_Wyclif:
 OverworldNpc_MapGiver_Wyclif_Loop:
 	RTS
 	
-; loc_00020714
 OverworldNpc_MapGiver_Deepdale:
 	LEA	Map_trigger_flags.w, A0
 	MOVE.w	#MAP_TRIGGER_MAP_GIVER_DEEPDALE, Map_trigger_index.w
@@ -3302,7 +2957,6 @@ OverworldNpc_MapGiver_Deepdale:
 OverworldNpc_MapGiver_Deepdale_Loop:
 	RTS
 	
-; loc_0002074A
 OverworldNpc_MapGiver_Stow:
 	LEA	Map_trigger_flags.w, A0
 	MOVE.w	#MAP_TRIGGER_MAP_GIVER_STOW, Map_trigger_index.w
@@ -3317,7 +2971,6 @@ OverworldNpc_MapGiver_Stow:
 OverworldNpc_MapGiver_Stow_Loop:
 	RTS
 	
-; loc_00020780
 CaveRoomInteractionPtrs:
 	dc.l	CaveRoomInteractions_00
 	dc.l	CaveRoomInteractions_01
@@ -3363,7 +3016,6 @@ CaveRoomInteractionPtrs:
 	dc.l	CaveRoomInteractions_29
 	dc.l	CaveRoomInteractions_2A
 	dc.l	CaveRoomInteractions_2B
-; loc_00020830
 CaveRoomInteractions_00:
 	dc.w	$2, $4, $4 ; x, y, direction
 	dc.l	CaveEvent_RingOfWisdom
@@ -3376,7 +3028,6 @@ CaveRoomInteractions_00:
 	dc.w	$000A, $0005, $0004 
 	dc.l	CaveChest_Candle
 	dc.w	$FFFF
-; loc_00020864
 CaveRoomInteractions_01:
 	dc.w	$3, $D, $4	
 	dc.l	CheckCaveRoomEnemyState
@@ -3385,7 +3036,6 @@ CaveRoomInteractions_01:
 	dc.w	$0008, $0000, $0001 
 	dc.l	CaveChest_Candle_Parma 
 	dc.w	$FFFF 
-; loc_00020884
 CaveRoomInteractions_02:
 	dc.w	$F, $F, $8 
 	dc.l	CaveChest_ScaleArmor
@@ -3396,7 +3046,6 @@ CaveRoomInteractions_02:
 	dc.w	$0008, $0008, $0002 
 	dc.l	CaveChest_Money768
 	dc.w	$FFFF
-; loc_000208AE
 CaveRoomInteractions_03:
 	dc.w	$3, $6, $8	
 	dc.l	CheckCaveRoomEnemyState
@@ -3405,7 +3054,6 @@ CaveRoomInteractions_03:
 	dc.w	$000B, $0000, $0002
 	dc.l	CaveChest_Candle2	
 	dc.w	$FFFF
-; loc_000208CE
 CaveRoomInteractions_04:
 	dc.w	$0, $7, $1	
 	dc.l	CheckCaveRoomEnemyState
@@ -3414,7 +3062,6 @@ CaveRoomInteractions_04:
 	dc.w	$000C, $0001, $0002	
 	dc.l	CaveEvent_WatlingMonster
 	dc.w	$FFFF
-; loc_000208EE
 CaveRoomInteractions_05:
 	dc.w	$0, $1, $4	
 	dc.l	CheckCaveRoomEnemyState
@@ -3423,7 +3070,6 @@ CaveRoomInteractions_05:
 	dc.w	$0008, $000F, $0008	
 	dc.l	CaveChest_Money1792	
 	dc.w	$FFFF
-; loc_0002090E
 CaveRoomInteractions_06:
 	dc.w	$3, $C, $2	
 	dc.l	CheckCaveRoomEnemyState
@@ -3434,7 +3080,6 @@ CaveRoomInteractions_06:
 	dc.w	$0006, $0004, $0001 
 	dc.l	CaveEvent_Truffle
 	dc.w	$FFFF
-; loc_00020938
 CaveRoomInteractions_07:
 	dc.w	$4, $D, $8	
 	dc.l	CheckCaveRoomEnemyState	
@@ -3443,7 +3088,6 @@ CaveRoomInteractions_07:
 	dc.w	$0007, $0005, $0004	
 	dc.l	CaveChest_Lantern	
 	dc.w	$FFFF
-; loc_00020958
 CaveRoomInteractions_08:
 	dc.w	$D, $B, $4	
 	dc.l	CheckCaveRoomEnemyState	
@@ -3452,7 +3096,6 @@ CaveRoomInteractions_08:
 	dc.w	$0000, $0000, $0002	
 	dc.l	CaveEvent_StowThief
 	dc.w	$FFFF
-; loc_00020978
 CaveRoomInteractions_09:
 	dc.w	$2, $A, $4	
 	dc.l	CheckCaveRoomEnemyState	
@@ -3461,14 +3104,12 @@ CaveRoomInteractions_09:
 	dc.w	$0002, $0003, $0004	
 	dc.l	CaveChest_RoyalShield	
 	dc.w	$FFFF
-; loc_00020998
 CaveRoomInteractions_0A:
 	dc.w	$B, $B, $B	
 	dc.l	CheckCaveRoomEnemyState
 	dc.w	$0007, $0006, $0001 
 	dc.l	CaveEvent_AstiMonster
 	dc.w	$FFFF
-; loc_000209AE
 CaveRoomInteractions_0B:
 	dc.w	$4, $D, $4	
 	dc.l	CheckCaveRoomEnemyState
@@ -3477,7 +3118,6 @@ CaveRoomInteractions_0B:
 	dc.w	$000D, $0007, $0005	
 	dc.l	CaveEvent_BearwulfMeeting
 	dc.w	$FFFF
-; loc_000209CE
 CaveRoomInteractions_0C:
 	dc.w	$B, $3, $2	
 	dc.l	CheckCaveRoomEnemyState
@@ -3492,7 +3132,6 @@ CaveRoomInteractions_0C:
 	dc.w	$0007, $000E, $0004	
 	dc.l	CaveChest_MirageSword
 	dc.w	$FFFF
-; loc_00020A0C
 CaveRoomInteractions_0D:
 	dc.w	$5, $2, $2	
 	dc.l	CheckCaveRoomEnemyState
@@ -3501,21 +3140,18 @@ CaveRoomInteractions_0D:
 	dc.w	$000E, $0009, $0001 
 	dc.l	CaveEvent_MalagaCrownReward
 	dc.w	$FFFF
-; loc_00020A2C
 CaveRoomInteractions_0E:
 	dc.w	$9, $A, $8	
 	dc.l	CheckCaveRoomEnemyState
 	dc.w	$0009, $0000, $0002 
 	dc.l	CaveChest_PhantomShield 
 	dc.w	$FFFF 
-; loc_00020A42
 CaveRoomInteractions_0F:
 	dc.w	$3, $3, $2 
 	dc.l	CheckCaveRoomEnemyState
 	dc.w	$0008, $0004, $0002 
 	dc.l	CaveChest_Money8192
 	dc.w	$FFFF
-; loc_00020A58
 CaveRoomInteractions_10:
 	dc.w	$0, $0, $2	
 	dc.l	CheckCaveRoomEnemyState
@@ -3524,7 +3160,6 @@ CaveRoomInteractions_10:
 	dc.w	$0003, $000C, $0004	
 	dc.l	CaveChest_Money12288	
 	dc.w	$FFFF
-; loc_00020A78
 CaveRoomInteractions_11:
 	dc.w	$1, $E, $2	
 	dc.l	CheckCaveRoomEnemyState
@@ -3541,14 +3176,12 @@ CaveRoomInteractions_11:
 	dc.w	$000D, $0003, $0008	
 	dc.l	CaveChest_Money8192	
 	dc.w	$FFFF
-; loc_00020AC0
 CaveRoomInteractions_12:
 	dc.w	$A, $7, $4	
 	dc.l	CheckCaveRoomEnemyState
 	dc.w	$0000, $0000, $0002 
 	dc.l	CaveChest_GrizzlyShield 
 	dc.w	$FFFF 
-; loc_00020AD6
 CaveRoomInteractions_13:
 	dc.w	$0, $0, $1 
 	dc.l	CheckCaveRoomEnemyState
@@ -3557,57 +3190,46 @@ CaveRoomInteractions_13:
 	dc.w	$0000, $000C, $0002 
 	dc.l	CaveChest_BarbarianSword
 	dc.w	$FFFF
-; loc_00020AF6
 CaveRoomInteractions_14:
 	dc.w	$0, $E, $4	
 	dc.l	CheckCaveRoomEnemyState
 	dc.w	$000A, $000E, $0008 
 	dc.l	CaveEvent_HelwigMenRescued
 	dc.w	$FFFF
-; loc_00020B0C
 CaveRoomInteractions_15:
 	dc.w	$B, $4, $A	
 	dc.l	CheckCaveRoomEnemyState
 	dc.w	$FFFF
-; loc_00020B18
 CaveRoomInteractions_16:
 	dc.w	$8, $B, $4	
 	dc.l	CheckCaveRoomEnemyState
 	dc.w	$0000, $0007, $0005 
 	dc.l	CaveEvent_ExcalabriaRingGuardian1
 	dc.w	$FFFF 
-; loc_00020B2E
 CaveRoomInteractions_17:
 	dc.w	$3, $C, $4 
 	dc.l	CheckCaveRoomEnemyState
 	dc.w	$FFFF 
-; loc_00020B3A
 CaveRoomInteractions_18:
 	dc.w	$4, $7, $2 
 	dc.l	CheckCaveRoomEnemyState
 	dc.w	$FFFF 
-; loc_00020B46
 CaveRoomInteractions_19:
 	dc.w	$1, $5, $1 
 	dc.l	CheckCaveRoomEnemyState
 	dc.w	$FFFF 
-; loc_00020B52
 CaveRoomInteractions_1A:
 	dc.w	$B, $E, $4 
 	dc.l	CheckCaveRoomEnemyState
 	dc.w	$FFFF 
-; loc_00020B5E
 CaveRoomInteractions_1B:	
 	dc.w	$A, $6, $8 
 	dc.l	CheckCaveRoomEnemyState
 	dc.w	$FFFF 
-; loc_00020B6A
 CaveRoomInteractions_1C:
 	dc.w	$FFFF 
-; loc_00020B6C
 CaveRoomInteractions_1D:
 	dc.w	$FFFF 
-; loc_00020B6E
 CaveRoomInteractions_1E:
 	dc.w	$9, $7, $1 
 	dc.l	CheckCaveRoomEnemyState 
@@ -3616,12 +3238,10 @@ CaveRoomInteractions_1E:
 	dc.w	$0005, $000E, $0004 
 	dc.l	CaveChest_OldNickArmor 
 	dc.w	$FFFF 
-; loc_00020B8E
 CaveRoomInteractions_1F:
 	dc.w	$3, $7, $1 
 	dc.l	CheckCaveRoomEnemyState 
 	dc.w	$FFFF 
-; loc_00020B9A
 CaveRoomInteractions_20:
 	dc.w	$5, $3, $A 
 	dc.l	CaveEvent_SwaffhamSpy
@@ -3638,70 +3258,58 @@ CaveRoomInteractions_20:
 	dc.w	$0004, $000B, $000D 
 	dc.l	CaveEvent_TsarkonFinalEncounter
 	dc.w	$FFFF 
-; loc_00020BE2
 CaveRoomInteractions_21:
 	dc.w	$FFFF 
-; loc_00020BE4
 CaveRoomInteractions_22:
 	dc.w	$9, $F, $8 
 	dc.l	CaveChest_SecretArmor
 	dc.w	$0009, $0000, $0008 
 	dc.l	CaveChest_MirrorOfAtlas
 	dc.w	$FFFF
-; loc_00020BFA
 CaveRoomInteractions_23:
 	dc.w	$9, $5, $1	
 	dc.l	CheckCaveRoomEnemyState
 	dc.w	$FFFF
-; loc_00020C06
 CaveRoomInteractions_24:
 	dc.w	$A, $B, $A	
 	dc.l	CheckCaveRoomEnemyState
 	dc.w	$0004, $000C, $0005 
 	dc.l	CaveEvent_ExcalabriaRingGuardian3
 	dc.w	$FFFF 
-; loc_00020C1C
 CaveRoomInteractions_25:
 	dc.w	$C, $3, $8 
 	dc.l	CheckCaveRoomEnemyState
 	dc.w	$FFFF 
-; loc_00020C28
 CaveRoomInteractions_26:
 	dc.w	$F, $C, $8 
 	dc.l	CheckCaveRoomEnemyState
 	dc.w	$FFFF 
-; loc_00020C34
 CaveRoomInteractions_27:
 	dc.w	$9, $9, $2 
 	dc.l	CheckCaveRoomEnemyState
 	dc.w	$0001, $0001, $0001 
 	dc.l	CaveChest_CriticalSword
 	dc.w	$FFFF
-; loc_00020C4A
 CaveRoomInteractions_28:
 	dc.w	$8, $0, $2	
 	dc.l	CheckCaveRoomEnemyState
 	dc.w	$FFFF
-; loc_00020C56
 CaveRoomInteractions_29:
 	dc.w	$0, $D, $1	
 	dc.l	CheckCaveRoomEnemyState
 	dc.w	$000A, $000B, $0005 
 	dc.l	CaveEvent_ExcalabriaRingGuardian2
 	dc.w	$FFFF 
-; loc_00020C6C
 CaveRoomInteractions_2A:
 	dc.w	$2, $D, $2 
 	dc.l	CheckCaveRoomEnemyState 
 	dc.w	$000F, $0007, $0001 
 	dc.l	CaveChest_DeathSword
 	dc.w	$FFFF
-; loc_00020C82
 CaveRoomInteractions_2B:
 	dc.w	$1, $E, $4	
 	dc.l	CheckCaveRoomEnemyState
 	dc.w	$FFFF 
-; loc_00020C8E
 CaveEvent_RingOfWisdom:
 	TST.b	Rings_collected.w
 	BNE.b	CaveEvent_RingOfWisdom_Loop
@@ -3714,126 +3322,92 @@ CaveEvent_RingOfWisdom:
 CaveEvent_RingOfWisdom_Loop:
 	RTS
 	
-; loc_00020CBC
 CaveChest_MirrorOfAtlas:
 	ItemChest ITEM_MIRROR_OF_ATLAS, Chest_mirror_of_atlas_opened
 	
-; loc_00020CD0
 CaveChest_Money256:
 	MoneyChest $100, Chest_256_kims_opened
 	
-; loc_00020CE4
 CaveChest_Money4096:
 	MoneyChest $1000, Chest_4096_kims_opened
 	
-; loc_00020CF8
 CaveChest_GraphiteSword:
 	EquipChest EQUIPMENT_TYPE_SWORD, EQUIPMENT_SWORD_GRAPHITE, Chest_graphite_sword_opened
 	
-; loc_00020D0C
 CaveChest_CriticalSword:
 	EquipChest EQUIPMENT_TYPE_SWORD, EQUIPMENT_SWORD_CRITICAL, Chest_critical_sword_opened
 	
-; loc_00020D20
 CaveChest_GrizzlyShield:
 	EquipChest EQUIPMENT_TYPE_SHIELD, EQUIPMENT_SHIELD_GRIZZLY, Chest_grizzly_shield_opened
-; loc_00020D34
 CaveChest_BarbarianSword:
 	EquipChest EQUIPMENT_TYPE_SWORD, EQUIPMENT_SWORD_BARBARIAN, Chest_barbarian_sword_opened
 	
-; loc_00020D48
 CaveChest_EmeraldArmor:
 	EquipChest EQUIPMENT_TYPE_ARMOR, EQUIPMENT_ARMOR_EMERALD, Chest_emerald_armor_opened
-; loc_00020D5C
 CaveChest_SecretArmor:
 	EquipChest EQUIPMENT_TYPE_ARMOR, EQUIPMENT_ARMOR_SECRET, Chest_secret_armor_opened
 	
-; loc_00020D70
 CaveChest_OldNickArmor:
 	EquipChest EQUIPMENT_TYPE_ARMOR, EQUIPMENT_ARMOR_OLD_NICK, Chest_old_nick_armor_opened, EQUIPMENT_FLAG_CURSED
-; loc_00020D84
 CaveChest_PhantomShield:	
 	EquipChest EQUIPMENT_TYPE_SHIELD, EQUIPMENT_SHIELD_PHANTOM, Chest_phantom_shield_opened
-; loc_00020D98
 CaveChest_DeathSword:
 	EquipChest EQUIPMENT_TYPE_SWORD, EQUIPMENT_SWORD_DEATH, Chest_death_sword_opened, EQUIPMENT_FLAG_CURSED
 	
-; loc_00020DAC
 CaveChest_Herbs3:
 	ItemChest ITEM_HERBS, Herbs_chest_3_opened
 	
-; loc_00020DC0
 CaveChest_Candle:
 	ItemChest ITEM_CANDLE, Candle_chest_opened
 	
-; loc_00020DD4
 CaveChest_Herbs4:
 	ItemChest ITEM_HERBS, Herbs_chest_4_opened
 	
-; loc_00020DE8
 CaveChest_ScaleArmor:
 	EquipChest EQUIPMENT_TYPE_ARMOR, EQUIPMENT_ARMOR_SCALE, Scale_armor_chest_opened
 	
-; loc_00020DFC
 CaveChest_Candle_Parma:
 	ItemChest ITEM_CANDLE, Candle_chest_parma_opened
-; loc_00020E10
 CaveChest_Money768:
 	MoneyChest $0300, Money_chest_768_opened
 	
-; loc_00020E24
 CaveChest_Money1536:
 	MoneyChest $0600, Money_chest_1536_opened
-; loc_00020E38
 CaveChest_Candle2:
 	ItemChest ITEM_CANDLE, Candle_chest_2_opened
 	
-; loc_00020E4C
 CaveChest_Herbs_Watling:	
 	ItemChest ITEM_HERBS, Herbs_chest_watling_opened
-; loc_00020E60
 CaveChest_MagicShield:
 	EquipChest EQUIPMENT_TYPE_SHIELD, EQUIPMENT_SHIELD_MAGIC, Magic_shield_chest_opened
-; loc_00020E74
 CaveChest_Money1792:
 	MoneyChest $700, Money_chest_1792_opened
 	
-; loc_00020E88
 CaveChest_MirageSword:
 	EquipChest EQUIPMENT_TYPE_SWORD, EQUIPMENT_SWORD_MIRAGE, Chest_mirage_sword_opened
 	
-; loc_00020E9C
 CaveChest_LargeShield:
 	EquipChest EQUIPMENT_TYPE_SHIELD, EQUIPMENT_SHIELD_LARGE, Large_shield_chest_opened
-; loc_00020EB0
 CaveChest_MetalArmor:	
 	EquipChest EQUIPMENT_TYPE_ARMOR, EQUIPMENT_ARMOR_METAL, Metal_armor_chest_opened
-; loc_00020EC4
 CaveChest_Money2128:	
 	MoneyChest $0850, Money_chest_2128_opened
-; loc_00020ED8
 CaveChest_Lantern:
 	ItemChest ITEM_LANTERN, Lantern_chest_opened
 	
-; loc_00020EEC
 CaveChest_RoyalShield:
 	EquipChest EQUIPMENT_TYPE_SHIELD, EQUIPMENT_SHIELD_ROYAL, Royal_shield_chest_opened
 	
-; loc_00020F00
 CaveChest_SkeletonArmor:	
 	EquipChest EQUIPMENT_TYPE_ARMOR, EQUIPMENT_ARMOR_SKELETON, Skeleton_armor_chest_opened
-; loc_00020F14
 CaveChest_Money8192:
 	MoneyChest $2000, Money_chest_8192_opened
 	
-; loc_00020F28
 CaveChest_Money12288:
 	MoneyChest $3000, Money_chest_12288_opened
 	
-; loc_00020F3C
 CaveChest_Money8192B:
 	MoneyChest $2000, Money_chest_8192_b_opened
-; loc_00020F50
 CaveEvent_TreasureOfTroy:
 	TST.b	Treasure_of_troy_challenge_issued.w
 	BEQ.b	CaveEvent_TreasureOfTroy_Loop
@@ -3862,7 +3436,6 @@ CheckCaveRoomEnemyState_Loop:
 	MOVE.l	#NoOneHereStr, Script_talk_source.w
 	RTS
 	
-; loc_00020FA2
 CaveEvent_Truffle:
 	TST.b	Truffle_collected.w
 	BNE.b	CaveEvent_Truffle_Loop
@@ -3878,7 +3451,6 @@ CaveEvent_Truffle:
 CaveEvent_Truffle_Loop:
 	RTS
 	
-; loc_00020FE4
 CaveEvent_WatlingMonster:
 	MOVE.l	#NoOneHereStr, Script_talk_source.w
 	TST.b	Watling_monster_encounter_triggered.w
@@ -3887,11 +3459,9 @@ CaveEvent_WatlingMonster:
 	BNE.b	CaveEvent_WatlingThief_Return
 	BSR.w	InitMerchantDialog_Variant3
 	MOVE.l	#StoleYouthStr, Script_talk_source.w
-; loc_00021004
 CaveEvent_WatlingThief_Return:
 	RTS
 	
-; loc_00021006
 CaveEvent_StowThief:
 	TST.b	Girl_left_for_stow.w
 	BNE.b	CaveEvent_StowThief_Return
@@ -3913,7 +3483,6 @@ CaveEvent_StowThief:
 CaveEvent_StowThief_Return:
 	RTS
 	
-; loc_0002105E
 CaveEvent_AstiMonster:
 	TST.b	Girl_left_for_stow.w
 	BEQ.b	CaveEvent_CarthahenaGuard_NoOne
@@ -3922,13 +3491,11 @@ CaveEvent_AstiMonster:
 	BSR.w	InitMerchantDialog_Variant2
 	MOVE.l	#MeetAgainStr2, Script_talk_source.w
 	BRA.b	CaveEvent_CarthahenaGuard_NoOne_Loop
-; loc_00021078
 CaveEvent_CarthahenaGuard_NoOne:
 	MOVE.l	#NoOneHereStr, Script_talk_source.w
 CaveEvent_CarthahenaGuard_NoOne_Loop:
 	RTS
 	
-; loc_00021082
 CaveEvent_BearwulfMeeting:
 	MOVE.l	#NoOneHereStr, Script_talk_source.w
 	TST.b	Bearwulf_cave_entered.w
@@ -3941,11 +3508,9 @@ CaveEvent_BearwulfMeeting:
 	MOVE.l	#TalkerGfxDesc_Bearwulf, Talker_gfx_descriptor_ptr.w
 	BSR.w	InitDialogGraphics
 	MOVE.l	#BearwulfIntroductionStr, Script_talk_source.w
-; loc_000210BC
 CaveEvent_BearwulfMeeting_Return:
 	RTS
 
-; loc_000210BE
 CaveEvent_BearwulfWeaponReward:
 	MOVE.l	#NoOneHereStr, Script_talk_source.w
 	TST.b	Bearwulf_cave_entered.w
@@ -3956,7 +3521,6 @@ CaveEvent_BearwulfWeaponReward:
 CaveEvent_BearwulfWeaponReward_Loop:
 	RTS
 
-; loc_000210E0
 CaveEvent_MalagaDungeonPrisoner:
 	MOVE.l	#NoOneHereStr, Script_talk_source.w
 	TST.b	Malaga_dungeon_person_rescued.w
@@ -3972,11 +3536,9 @@ CaveEvent_MalagaDungeonPrisoner:
 	TST.b	Crown_received.w
 	BNE.b	CaveEvent_MalagaPrisoner_Done
 	MOVE.l	#WaitingForPlayerNameStr, Script_talk_source.w
-; loc_00021128
 CaveEvent_MalagaPrisoner_Done:
 	RTS
 
-; loc_0002112A
 CaveEvent_MalagaCrownReward:
 	MOVE.l	#NoOneHereStr, Script_talk_source.w
 	TST.b	Malaga_dungeon_person_rescued.w
@@ -3987,10 +3549,8 @@ CaveEvent_MalagaCrownReward:
 CaveEvent_MalagaCrownReward_Loop:
 	RTS
 
-; loc_0002114C
 CaveEvent_TadcasterTreasureChest:
 	MoneyChest $8000, Tadcaster_treasure_quest_started
-; loc_00021160
 CaveEvent_TadcasterBully:
 	MOVE.l	#NoOneHereStr, Script_talk_source.w
 	TST.b	Bully_first_fight_won.w
@@ -4003,11 +3563,9 @@ CaveEvent_TadcasterBully:
 	MOVE.l	#TalkerGfxDesc_ImposterGuard, Talker_gfx_descriptor_ptr.w
 	BSR.w	InitDialogGraphics
 	MOVE.l	#AwaitingYouStr, Script_talk_source.w
-; loc_0002119A
 CaveEvent_ImposterGuardScene_Return:
 	RTS
 
-; loc_0002119C
 CaveEvent_HelwigMenRescued:
 	MOVE.l	#NoOneHereStr, Script_talk_source.w
 	TST.b	Helwig_prison_entered.w
@@ -4016,11 +3574,9 @@ CaveEvent_HelwigMenRescued:
 	BNE.b	CaveEvent_HelwigPrisonerFreed_Return
 	BSR.w	InitMerchantDialog_Variant3
 	MOVE.l	#FreeAtLastStr, Script_talk_source.w
-; loc_000211BC
 CaveEvent_HelwigPrisonerFreed_Return:
 	RTS
 
-; loc_000211BE
 CaveEvent_SwaffhamDigotPlant:
 	TST.b	Swaffham_ate_poisoned_food.w
 	BEQ.b	CaveEvent_DigotPlant_Return
@@ -4035,11 +3591,9 @@ CaveEvent_SwaffhamDigotPlant:
 	MOVE.l	#TalkerGfxDesc_DigotGiver, Talker_gfx_descriptor_ptr.w
 	BSR.w	InitDialogGraphics
 	MOVE.l	#NoOneHereStr, Script_talk_source.w
-; loc_00021204
 CaveEvent_DigotPlant_Return:
 	RTS
 	
-; loc_00021206
 CaveEvent_ExcalabriaRingGuardian1:
 	TST.b	Excalabria_boss_1_defeated.w
 	BNE.w	CaveEvent_RingOfWindReward
@@ -4047,14 +3601,12 @@ CaveEvent_ExcalabriaRingGuardian1:
 	MOVE.b	#FLAG_TRUE, Ring_guardian_1_boss_trigger.w
 	RTS
 	
-; loc_0002121C
 CaveEvent_RingOfWindReward:
 	MOVE.w	#REWARD_VALUE_WHITE_CRYSTAL, Reward_script_value.w
 	MOVE.l	#Ring_of_wind_received, Reward_script_flag.w
 	BSR.w	SetupItemTreasure
 	RTS
 	
-; loc_00021230
 CaveEvent_ExcalabriaRingGuardian2:
 	TST.b	Excalabria_boss_2_defeated.w
 	BNE.w	CaveEvent_RedCrystalReward
@@ -4062,14 +3614,12 @@ CaveEvent_ExcalabriaRingGuardian2:
 	MOVE.b	#FLAG_TRUE, Ring_guardian_2_boss_trigger.w
 	RTS
 	
-; loc_00021246
 CaveEvent_RedCrystalReward:
 	MOVE.w	#REWARD_VALUE_RED_CRYSTAL, Reward_script_value.w
 	MOVE.l	#Red_crystal_received, Reward_script_flag.w
 	BSR.w	SetupItemTreasure
 	RTS
 	
-; loc_0002125A
 CaveEvent_ExcalabriaRingGuardian3:
 	TST.b	Excalabria_boss_3_defeated.w
 	BNE.w	CaveEvent_BlueCrystalReward
@@ -4077,14 +3627,12 @@ CaveEvent_ExcalabriaRingGuardian3:
 	MOVE.b	#FLAG_TRUE, Ring_guardian_3_boss_trigger.w
 	RTS
 	
-; loc_00021270
 CaveEvent_BlueCrystalReward:
 	MOVE.w	#REWARD_VALUE_BLUE_CRYSTAL, Reward_script_value.w
 	MOVE.l	#Blue_crystal_received, Reward_script_flag.w
 	BSR.w	SetupItemTreasure
 	RTS
 	
-; loc_00021284
 CaveEvent_SwaffhamSpy:
 	TST.b	Swaffham_spy_defeated.w
 	BNE.w	CaveEvent_SwaffhamSpyKeyReward
@@ -4096,18 +3644,15 @@ CaveEvent_SwaffhamSpy:
 CaveEvent_SwaffhamSpy_Loop:
 	RTS
 	
-; loc_000212AA
 CaveEvent_SwaffhamSpyKeyReward:
 	MOVE.w	#REWARD_VALUE_BRONZE_KEY, Reward_script_value.w
 	MOVE.l	#Thar_bronze_key_collected, Reward_script_flag.w
 	BSR.w	SetupItemTreasure
 	RTS
 	
-; loc_000212BE
 CaveChest_RingSoldier1:
 	RingChest 4, 5, Carthahena_soldier_1_defeated
 	
-; loc_000212D8
 CaveEvent_TharEncounter:
 	TST.b	Thar_defeated.w
 	BNE.w	CaveEvent_TharKeyReward
@@ -4115,18 +3660,15 @@ CaveEvent_TharEncounter:
 	MOVE.l	#TharRevengeStr, Script_talk_source.w
 	RTS
 	
-; loc_000212EE
 CaveEvent_TharKeyReward:
 	MOVE.w	#REWARD_VALUE_SILVER_KEY, Reward_script_value.w
 	MOVE.l	#Thar_silver_key_collected, Reward_script_flag.w
 	BSR.w	SetupItemTreasure
 	RTS
 	
-; loc_00021302
 CaveChest_RingSoldier2:
 	RingChest 4, 6, Carthahena_soldier_2_defeated
 	
-; loc_0002131C
 CaveEvent_LutherEncounter:
 	TST.b	Luther_defeated.w
 	BNE.w	CaveEvent_LutherKeyReward
@@ -4134,18 +3676,15 @@ CaveEvent_LutherEncounter:
 	MOVE.l	#LutherDevastatedSwaffhamStr, Script_talk_source.w
 	RTS
 	
-; loc_00021332
 CaveEvent_LutherKeyReward:
 	MOVE.w	#REWARD_VALUE_GOLD_KEY, Reward_script_value.w
 	MOVE.l	#Luther_gold_key_collected, Reward_script_flag.w
 	BSR.w	SetupItemTreasure
 	RTS
 	
-; loc_00021346
 CaveChest_RingSoldier3:
 	RingChest 4, 7, Carthahena_soldier_3_defeated
 	
-; loc_00021360
 CaveEvent_TsarkonFinalEncounter:
 	TST.b	Tsarkon_is_dead.w
 	BNE.w	CaveEvent_TsarkonFinalEncounter_Loop
@@ -4210,19 +3749,16 @@ InitDialogGraphics:
 ; ============================================================================
 	
 ; Initialize item chest (type 0)
-; loc_0002141E
 SetupItemTreasure:
 	MOVE.w	#REWARD_TYPE_ITEM, Reward_script_type.w          ; Type 0 = Item
 	BRA.w	SetupChestReward
 	
 ; Initialize equipment chest (type 1)
-; loc_00021428
 SetupEquipmentTreasure:
 	MOVE.w	#REWARD_TYPE_EQUIPMENT, Reward_script_type.w          ; Type 1 = Equipment
 	BRA.w	SetupChestReward
 	
 ; Initialize money chest (type 3)
-; loc_00021432
 InitMoneyTreasure:
 	MOVE.w	#REWARD_TYPE_MONEY, Reward_script_type.w          ; Type 3 = Money
 	
@@ -4253,7 +3789,6 @@ InitTalkerWithGfxDescriptor_1F782:
 	MOVE.l	#PortraitInit_Simple, obj_tick_fn(A6)
 	MOVE.l	#TalkerGfxDesc_GenericNpc, Talker_gfx_descriptor_ptr.w
 	BRA.w	InitDialogGraphics
-; loc_00021498
 InitTalkerWithGfxDescriptor_1F712:
 	MOVE.b	#FLAG_TRUE, Talker_present_flag.w
 	BSR.w	InitDialogMode

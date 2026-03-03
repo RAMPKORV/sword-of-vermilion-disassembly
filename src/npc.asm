@@ -7,14 +7,12 @@ NPCTick_Soldier_Init:
 	MOVE.l	#NPCTick_Soldier_UpdatePos, obj_tick_fn(A5)
 	RTS
 
-; loc_00006EFC
 NPCTick_Soldier_UpdatePos:
 	BRA.w	UpdateNPCScreenPosition
 	MOVE.b	#SPRITE_SIZE_2x3, obj_sprite_size(A5)
 	MOVE.l	#NPCTick_StowSoldier_DoctorHint, obj_tick_fn(A5)
 	RTS
 
-; loc_00006F10
 NPCTick_StowSoldier_DoctorHint:	
 	TST.b	Stow_innocence_proven.w
 	BNE.b	NPCTick_StowSoldier_DoctorHint_Done
@@ -25,10 +23,8 @@ NPCTick_StowSoldier_DoctorHint:
 	TST.b	(A0,D5.w)
 	BEQ.b	NPCTick_StowSoldier_DoctorHint_Done
 	MOVE.l	#BringDoctorHereStr, obj_npc_str_ptr(A5)
-; loc_00006F32
 NPCTick_StowSoldier_DoctorHint_Done:
 	BRA.w	UpdateNPCScreenPosition
-; loc_00006F36
 NPCInit_StowSoldier_DoctorHint:
 	BSR.w	SetRandomDirection
 	MOVE.l	#UpdateNPCSpriteFrame, obj_tick_fn(A5)
@@ -45,20 +41,17 @@ UpdateNPCSpriteFrame:
 	ADDQ.b	#1, obj_move_counter(A5)
 	RTS
 
-; loc_00006F5E
 NPCInit_WalkingStatic:
 	BSR.w	SetRandomDirection
 	MOVE.l	#NPCTick_WalkingStatic, obj_tick_fn(A5)
 	CLR.b	obj_behavior_flag(A5)
 	RTS
 
-; loc_00006F70
 NPCTick_WalkingStatic:
 	BSR.w	ClearNPCFrozenState
 	BSR.w	UpdateNPCMovement
 	MOVEA.l	obj_anim_ptr(A5), A1
 	BRA.w	LoadNPCAnimFrame_Static
-; loc_00006F80
 NPCInit_WalkingStatic_LoadFrame:
 	BSR.w	SetRandomDirection
 	MOVE.l	#NPCBehavior_LoadFrame, obj_tick_fn(A5)
@@ -74,25 +67,21 @@ NPCBehavior_LoadFrame:
 	ADDQ.b	#1, obj_move_counter(A5)
 	RTS
 
-; loc_00006FA8
 NPCInit_WalkingAnimated:
 	BSR.w	SetRandomDirection
 	MOVE.l	#NPCTick_WalkingAnimated, obj_tick_fn(A5)
 	CLR.b	obj_behavior_flag(A5)
 	RTS
 
-; loc_00006FBA
 NPCTick_WalkingAnimated:
 	BSR.w	ClearNPCFrozenState
 	BSR.w	UpdateNPCMovement
 	MOVEA.l	obj_anim_ptr(A5), A1
 	BRA.w	LoadNPCAnimationFrame
-; loc_00006FCA
 NPCInit_WalkingAnimated_Animate:
 	MOVE.l	#NPCTick_AnimateEntity, obj_tick_fn(A5)
 	RTS
 
-; loc_00006FD4
 NPCTick_AnimateEntity:
 	MOVEA.l	obj_anim_ptr(A5), A1
 	MOVE.b	#FLAG_TRUE, obj_behavior_flag(A5)
@@ -100,7 +89,6 @@ NPCTick_AnimateEntity:
 	ADDQ.b	#1, obj_move_counter(A5)
 	RTS
 
-; loc_00006FE8
 NPCInit_ParmaFairy:
 	TST.b	Blade_is_dead.w
 	BEQ.b	NPCInit_ParmaFairy_Loop
@@ -111,14 +99,12 @@ NPCInit_ParmaFairy_Loop:
 	MOVE.l	#NPCTick_ParmaFairy, obj_tick_fn(A5)
 	RTS
 
-; loc_00006FFE
 NPCTick_ParmaFairy:
 	TST.b	Blade_is_dead.w
 	BEQ.b	NPCTick_ParmaFairy_Loop
 	MOVE.l	#NoAnswerStr, obj_npc_str_ptr(A5)
 NPCTick_ParmaFairy_Loop:
 	BRA.b	NPCTick_AnimateEntity
-; loc_0000700E
 NPCInit_Wyclif_ParmaFindRing:
 	BSR.w	SetRandomDirection
 	CLR.b	obj_behavior_flag(A5)
@@ -131,21 +117,18 @@ NPCInit_Wyclif_ParmaFindRing_Loop:
 	MOVE.l	#NPCTick_ParmaFindRing, obj_tick_fn(A5)
 	RTS
 
-; loc_00007030
 NPCTick_ParmaFindRing:   
 	TST.b	Blade_is_dead.w
 	BEQ.b	NPCTick_ParmaFindRing_Loop
 	MOVE.l	#FindRingStr, obj_npc_str_ptr(A5)
 NPCTick_ParmaFindRing_Loop:
 	BRA.w	NPCBehavior_LoadFrame
-; loc_00007042
 NPCInit_Wyclif_UseMapHint1:
 	BSR.w	SetRandomDirection
 	CLR.b	obj_behavior_flag(A5)
 	MOVE.l	#NPCTick_Wyclif_UseMapHint1, obj_tick_fn(A5)
 	RTS
 
-; loc_00007054
 NPCTick_Wyclif_UseMapHint1:  
 	TST.b	Rings_collected.w
 	BNE.b	NPCTick_Wyclif_UseMapHint1_Loop
@@ -154,14 +137,12 @@ NPCTick_Wyclif_UseMapHint1:
 	BSR.w	SetHintTextIfTriggered
 NPCTick_Wyclif_UseMapHint1_Loop:
 	BRA.w	UpdateNPCSpriteFrame
-; loc_0000706E
 NPCInit_Wyclif_UseMapHint2Init:
 	BSR.w	SetRandomDirection
 	CLR.b	obj_behavior_flag(A5)
 	MOVE.l	#NPCTick_Wyclif_UseMapHint2, obj_tick_fn(A5)
 	RTS
 
-; loc_00007080
 NPCTick_Wyclif_UseMapHint2:
 	TST.b	Rings_collected.w
 	BEQ.b	NPCTick_Wyclif_UseMapHint2_Loop
@@ -170,27 +151,23 @@ NPCTick_Wyclif_UseMapHint2:
 	BSR.w	SetHintTextIfTriggered
 NPCTick_Wyclif_UseMapHint2_Loop:
 	BRA.w	UpdateNPCSpriteFrame
-; loc_0000709A
 NPCInit_Wyclif_UseMapHint2:
 	BSR.w	SetRandomDirection
 	CLR.b	obj_behavior_flag(A5)
 	MOVE.l	#NPCTick_Wyclif_UseMapHint3, obj_tick_fn(A5)
 	RTS
 
-; loc_000070AC
 NPCTick_Wyclif_UseMapHint3:   
 	MOVE.l	#UseMapStr, Pending_hint_text.w
 	MOVE.w	#$0040, D5
 	BSR.w	SetHintTextIfTriggered
 	BRA.w	UpdateNPCSpriteFrame
-; loc_000070C0
 NPCInit_Parma_AdviceHint:
 	BSR.w	SetRandomDirection
 	CLR.b	obj_behavior_flag(A5)
 	MOVE.l	#NPCTick_Parma_AdviceHint, obj_tick_fn(A5)
 	RTS
 
-; loc_000070D2
 NPCTick_Parma_AdviceHint:
 	TST.b	Talked_to_real_king.w
 	BEQ.b	NPCTick_Parma_AdviceHint_Loop
@@ -204,7 +181,6 @@ NPCTick_Parma_AdviceHint_Loop:
 	MOVE.l	#AdviceForQuestionsStr, Pending_hint_text.w
 	MOVE.w	#$0052, D5
 	BSR.w	SetHintTextIfTriggered
-; loc_00007100
 NPCTick_Parma_HintDone:
 	BRA.w	UpdateNPCSpriteFrame
 	BSR.w	SetRandomDirection
@@ -233,12 +209,10 @@ NPCTick_Parma_HintDone_Loop4:
 	MOVE.l	#NPCTick_Parma_TreasureQuest, obj_tick_fn(A5)
 	RTS
 
-; loc_0000714E
 NPCTick_Parma_AdviceHint_Done:
 	MOVE.l	#NPCBehavior_LoadFrame, obj_tick_fn(A5)
 	RTS
 
-; loc_00007158
 NPCTick_Parma_TreasureQuest:  
 	TST.b	Treasure_of_troy_given_to_king.w
 	BEQ.b	NPCTick_Parma_TreasureQuest_Loop
@@ -257,7 +231,6 @@ NPCTick_Parma_TreasureQuest_Loop2:
 	TST.b	Treasure_of_troy_challenge_issued.w
 	BEQ.b	NPCTick_Parma_TreasureQuest_Done
 	MOVE.l	#FindTreasureStr, obj_npc_str_ptr(A5)
-; loc_00007196
 NPCTick_Parma_TreasureQuest_Done:
 	BRA.w	UpdateNPCSpriteFrame
 	BSR.w	SetRandomDirection
@@ -271,14 +244,12 @@ NPCTick_Parma_TreasureQuest_Done_Loop:
 	MOVE.l	#NPCTick_Parma_GotRingReaction, obj_tick_fn(A5)
 	RTS
 
-; loc_000071B8
 NPCTick_Parma_GotRingReaction:
 	TST.b	Talked_to_real_king.w
 	BEQ.b	NPCTick_Parma_GotRingReaction_Loop
 	MOVE.l	#GotRingStr, obj_npc_str_ptr(A5)
 NPCTick_Parma_GotRingReaction_Loop:
 	BRA.w	UpdateNPCSpriteFrame
-; loc_000071CA
 NPCInit_Parma_GotRingReaction:
 	BSR.w	SetRandomDirection
 	CLR.b	obj_behavior_flag(A5)
@@ -290,7 +261,6 @@ NPCInit_Parma_GotRingReaction_Loop:
 	MOVE.l	#NPCTick_WalkingStatic, obj_tick_fn(A5)
 	RTS
 
-; loc_000071F0
 NPCInit_Watling_RestoredYouth:
 	BSR.w	SetRandomDirection
 	CLR.b	obj_behavior_flag(A5)
@@ -305,13 +275,11 @@ NPCInit_Watling_RestoredYouth_Loop:
 	MOVE.l	#NPCTick_Watling_VerlinsCaveHint, obj_tick_fn(A5)
 	RTS
 
-; loc_00007220
 NPCTick_Watling_VerlinsCaveHint:       
 	MOVE.l	#GoNorthVerlinsCaveStr, Pending_hint_text.w
 	MOVE.w	#$36, D5
 	BSR.w	SetHintTextIfTriggered
 	BRA.w	UpdateNPCSpriteFrame
-; loc_00007234
 NPCInit_Watling_VerlinsCaveHint:
 	BSR.w	SetRandomDirection
 	CLR.b	obj_behavior_flag(A5)
@@ -326,13 +294,11 @@ NPCInit_Watling_VerlinsCaveHint_Loop:
 	MOVE.l	#UpdateNPCSpriteFrame, obj_tick_fn(A5)
 	RTS
 
-; loc_00007264
 NPCTick_Watling_ThankYou:
 	MOVE.l	#ThankYouStrangerStr, Pending_hint_text.w
 	MOVE.w	#$65, D5
 	BSR.w	SetHintTextIfTriggered
 	BRA.w	UpdateNPCSpriteFrame
-; loc_00007278
 NPCInit_Watling_ThankYou:
 	BSR.w	SetRandomDirection
 	CLR.b	obj_behavior_flag(A5)
@@ -347,7 +313,6 @@ NPCInit_Watling_ThankYou_Loop:
 	MOVE.l	#UpdateNPCSpriteFrame, obj_tick_fn(A5)
 	RTS
 
-; loc_000072A8
 NPCInit_Deepdale_SecretKeeper:
 	BSR.w	SetRandomDirection
 	CLR.b	obj_behavior_flag(A5)
@@ -360,7 +325,6 @@ NPCInit_Deepdale_SecretKeeper_Loop:
 	MOVE.l	#UpdateNPCSpriteFrame, obj_tick_fn(A5)	
 	RTS
 	
-; loc_000072CA
 NPCTick_Deepdale_SecretKeeper:
 	TST.b	Deepdale_king_secret_kept.w
 	BEQ.b	NPCTick_Deepdale_MedicineDone
@@ -372,7 +336,6 @@ NPCTick_Deepdale_SecretKeeper:
 	MOVE.w	#$010B, D4
 	BSR.w	RemoveItemFromList
 	MOVE.b	#FLAG_TRUE, Deepdale_medicine_removed.w
-; loc_000072F4
 NPCTick_Deepdale_MedicineDone:
 	BRA.w	UpdateNPCSpriteFrame
 	BSR.w	SetRandomDirection
@@ -380,7 +343,6 @@ NPCTick_Deepdale_MedicineDone:
 	MOVE.l	#NPCTick_Deepdale_BremensCaveHint, obj_tick_fn(A5)
 	RTS
 
-; loc_0000730A
 NPCTick_Deepdale_BremensCaveHint:
 	TST.b	Deepdale_king_secret_kept.w
 	BNE.b	NPCTick_Deepdale_CaveHintDone
@@ -389,17 +351,14 @@ NPCTick_Deepdale_BremensCaveHint:
 	MOVE.l	#BremensCaveNorthwestStr, Pending_hint_text.w
 	MOVE.w	#$62, D5
 	BSR.w	SetHintTextIfTriggered
-; loc_00007326
 NPCTick_Deepdale_CaveHintDone:
 	BRA.w	UpdateNPCSpriteFrame
-; loc_0000732A
 NPCInit_Deepdale_BremensCaveHint:
 	BSR.w	SetRandomDirection
 	CLR.b	obj_behavior_flag(A5)
 	MOVE.l	#NPCTick_Deepdale_StowRoadWarning, obj_tick_fn(A5)
 	RTS
 
-; loc_0000733C
 NPCTick_Deepdale_StowRoadWarning:
 	TST.b	Deepdale_king_secret_kept.w
 	BEQ.b	NPCTick_Deepdale_StowRoadWarning_Loop
@@ -417,12 +376,10 @@ NPCTick_Deepdale_StowRoadWarning_Loop:
 	MOVE.l	#NPCBehavior_LoadFrame, obj_tick_fn(A5)	
 	RTS
 	
-; loc_00007374
 NPCTick_Stow_SetBookkeeperTick:
 	MOVE.l	#NPCTick_Stow_SanguiosBookkeeper, obj_tick_fn(A5)
 	RTS
 
-; loc_0000737E
 NPCTick_Stow_SanguiosBookkeeper:
 	TST.b	Sent_to_malaga.w
 	BEQ.b	NPCTick_Stow_SanguiosBookkeeper_Loop
@@ -473,7 +430,6 @@ NPCTick_Stow_Bookkeeper_Done_Loop:
 	MOVE.l	#NPCTick_Stow_ThiefAccuser1, obj_tick_fn(A5)
 	RTS
 
-; loc_0000742E
 NPCTick_Stow_ThiefAccuser1:
 	TST.b	Accused_of_theft.w
 	BEQ.b	NPCTick_Stow_ThiefAccuser1_Loop
@@ -491,14 +447,12 @@ NPCTick_Stow_ThiefAccuser1_Loop2:
 	MOVE.l	#NPCTick_Stow_ThiefAccuser2, obj_tick_fn(A5)
 	RTS
 
-; loc_00007462
 NPCTick_Stow_ThiefAccuser2:
 	TST.b	Accused_of_theft.w
 	BEQ.b	NPCTick_Stow_ThiefAccuser2_Loop
 	MOVE.l	#FaceOfCriminalStr, obj_npc_str_ptr(A5)
 NPCTick_Stow_ThiefAccuser2_Loop:
 	BRA.w	UpdateNPCSpriteFrame
-; loc_00007474
 NPCInit_Malaga_DungeonKeySetup:
 	BSR.w	SetRandomDirection
 	CLR.b	obj_behavior_flag(A5)
@@ -514,7 +468,6 @@ NPCInit_Malaga_DungeonKeySetup_Loop:
 	MOVE.l	#NPCTick_Malaga_DungeonKeyGiver, obj_tick_fn(A5)
 	RTS
 
-; loc_000074A2
 NPCTick_Malaga_DungeonKeyGiver:
 	TST.b	Dungeon_key_received.w
 	BNE.b	NPCTick_Malaga_DungeonKeyGiver_Loop
@@ -544,7 +497,6 @@ NPCTick_Malaga_DungeonKeyGiver_Loop:
 	MOVE.w	#$0025, (A0,D0.w)	
 	MOVE.b	#FLAG_TRUE, Received_replacement_key.w	
 	BRA.b	NPCTick_SetMessage_Done	
-; loc_00007518
 NPCTick_Malaga_DungeonKeyGiver_Default:
 	MOVE.l	#FindPoisonShieldStr, obj_npc_str_ptr(A5)
 	BRA.b	NPCTick_SetMessage_Done
@@ -552,14 +504,12 @@ NPCTick_Malaga_DungeonKeyGiver_Default_Loop:
 	MOVE.l	#ComeBackLessGearStr, obj_npc_str_ptr(A5)	
 NPCTick_SetMessage_Done:
 	BRA.w	UpdateNPCSpriteFrame
-; loc_0000752E
 NPCInit_Malaga_DungeonKeyGiver:
 	BSR.w	SetRandomDirection
 	CLR.b	obj_behavior_flag(A5)
 	MOVE.l	#NPCTick_Keltwick_MalagaHint, obj_tick_fn(A5)
 	RTS
 
-; loc_00007540
 NPCTick_Keltwick_MalagaHint:
 	TST.b	Sent_to_malaga.w
 	BEQ.b	NPCTick_Keltwick_MalagaHint_Loop
@@ -568,14 +518,12 @@ NPCTick_Keltwick_MalagaHint:
 	BSR.w	SetHintTextIfTriggered
 NPCTick_Keltwick_MalagaHint_Loop:
 	BRA.w	UpdateNPCSpriteFrame
-; loc_0000755A
 NPCInit_Keltwick_MalagaHint:
 	BSR.w	SetRandomDirection
 	CLR.b	obj_behavior_flag(A5)
 	MOVE.l	#NPCTick_Keltwick_BlazonsCaveHint, obj_tick_fn(A5)
 	RTS
 
-; loc_0000756C
 NPCTick_Keltwick_BlazonsCaveHint:
 	TST.b	Sent_to_malaga.w
 	BEQ.b	NPCTick_Keltwick_BlazonsCaveHint_Loop
@@ -584,7 +532,6 @@ NPCTick_Keltwick_BlazonsCaveHint:
 	BSR.w	SetHintTextIfTriggered
 NPCTick_Keltwick_BlazonsCaveHint_Loop:
 	BRA.w	UpdateNPCSpriteFrame
-; loc_00007586
 NPCInit_Keltwick_BlazonsCaveHint:
 	BSR.w	SetRandomDirection
 	CLR.b	obj_behavior_flag(A5)
@@ -600,7 +547,6 @@ NPCInit_Keltwick_BlazonsCaveHint_Loop2:
 	MOVE.l	#NPCBehavior_LoadFrame, obj_tick_fn(A5)
 	RTS
 
-; loc_000075B2
 NPCTick_Keltwick_OldManSketch:
 	TST.b	Old_man_waiting_for_letter.w
 	BEQ.w	NPCTick_Keltwick_OldManSketch_Loop
@@ -630,7 +576,6 @@ NPCTick_Keltwick_OldManSketch_Loop4:
 	MOVE.l	#ShowSketchStr, obj_npc_str_ptr(A5)
 NPCTick_LoneTreeOldMan_Display:
 	BRA.w	NPCBehavior_LoadFrame
-; loc_00007614
 NPCInit_Keltwick_AlarmClock:
 	CLR.b	Alarm_clock_rang.w
 	BSR.w	SetRandomDirection
@@ -653,12 +598,10 @@ NPCInit_Keltwick_AlarmClock_Loop2:
 	BRA.b	NPCInit_Keltwick_SleepingGirl_Done	
 NPCInit_Keltwick_AlarmClock_Loop3:
 	MOVE.b	#FLAG_TRUE, Keltwick_girl_sleeping.w
-; loc_00007654
 NPCInit_Keltwick_SleepingGirl_Done:
 	MOVE.l	#NPCTick_Keltwick_SleepingGirl, obj_tick_fn(A5)
 	RTS
 
-; loc_0000765E
 NPCTick_Keltwick_SleepingGirl:
 	TST.b	Keltwick_girl_sleeping.w
 	BEQ.b	NPCTick_Keltwick_Done
@@ -673,7 +616,6 @@ NPCTick_Keltwick_SleepingGirl_Loop:
 	BSR.w	UpdateNPCSpriteFrame
 	RTS
 
-; loc_0000768E
 NPCTick_Keltwick_Done:
 	BRA.w	NPCBehavior_LoadFrame
 	BSR.w	SetRandomDirection
@@ -681,7 +623,6 @@ NPCTick_Keltwick_Done:
 	MOVE.l	#NPCTick_Keltwick_WaitForPlayer, obj_tick_fn(A5)
 	RTS
 
-; loc_000076A4
 NPCTick_Keltwick_WaitForPlayer:
 	TST.b	Tsarkon_is_dead.w
 	BEQ.b	NPCTick_Keltwick_WaitForPlayer_Loop
@@ -693,7 +634,6 @@ NPCTick_Keltwick_WaitForPlayer_Loop:
 	MOVE.l	#HopeReturnSafelyStr, Pending_hint_text.w
 	MOVE.w	#$002E, D5
 	BSR.w	SetHintTextIfTriggered
-; loc_000076CC
 NPCTick_Barrow_HintDone:
 	BRA.w	NPCBehavior_LoadFrame
 	BSR.w	SetRandomDirection
@@ -701,7 +641,6 @@ NPCTick_Barrow_HintDone:
 	MOVE.l	#NPCTick_Barrow_NortheastHint, obj_tick_fn(A5)
 	RTS
 
-; loc_000076E2
 NPCTick_Barrow_NortheastHint:
 	TST.b	Barrow_map_received.w
 	BEQ.b	NPCTick_Barrow_NortheastHint_Loop
@@ -719,14 +658,12 @@ NPCTick_Barrow_NortheastHint_Loop2:
 	MOVE.l	#NPCTick_Barrow_QuestGuard, obj_tick_fn(A5)
 	RTS
 
-; loc_00007718
 NPCTick_Barrow_QuestGuard:
 	TST.b	Barrow_quest_1_complete.w
 	BEQ.b	NPCTick_Barrow_BearwulfDone
 	TST.b	Barrow_quest_2_complete.w
 	BEQ.b	NPCTick_Barrow_BearwulfDone
 	BCLR.b	#7, (A5)
-; loc_00007728
 NPCTick_Barrow_BearwulfDone:
 	BRA.w	UpdateNPCSpriteFrame
 	BSR.w	SetRandomDirection
@@ -734,7 +671,6 @@ NPCTick_Barrow_BearwulfDone:
 	MOVE.l	#NPCTick_Barrow_BearwulfQuest, obj_tick_fn(A5)
 	RTS
 
-; loc_0000773E
 NPCTick_Barrow_BearwulfQuest:
 	TST.b	Tsarkon_is_dead.w
 	BEQ.b	NPCTick_Barrow_BearwulfQuest_Loop
@@ -744,30 +680,25 @@ NPCTick_Barrow_BearwulfQuest_Loop:
 	TST.b	Bearwulf_returned_home.w
 	BEQ.b	NPCTick_Barrow_SetNextTick
 	MOVE.l	#ReturnAfterTaskStr, obj_npc_str_ptr(A5)	
-; loc_0000775E
 NPCTick_Barrow_SetNextTick:
 	BRA.w	NPCBehavior_LoadFrame
-; loc_00007762
 NPCInit_Barrow_BearwulfQuest:
 	BSR.w	SetRandomDirection
 	CLR.b	obj_behavior_flag(A5)
 	MOVE.l	#NPCTick_Barrow_TadcasterHint, obj_tick_fn(A5)
 	RTS
 
-; loc_00007774
 NPCTick_Barrow_TadcasterHint:
 	MOVE.l	#ReachTadcasterStr, Pending_hint_text.w
 	MOVE.w	#$000A, D5
 	BSR.w	SetHintTextIfTriggered
 	BRA.w	UpdateNPCSpriteFrame
-; loc_00007788
 NPCInit_Barrow_TadcasterHint:
 	BSR.w	SetRandomDirection
 	CLR.b	obj_behavior_flag(A5)
 	MOVE.l	#NPCTick_Tadcaster_TreasureQuest, obj_tick_fn(A5)
 	RTS
 
-; loc_0000779A
 NPCTick_Tadcaster_TreasureQuest:
 	TST.b	Tadcaster_treasure_quest_started.w
 	BEQ.b	NPCTick_Tadcaster_TreasureQuest_Loop
@@ -786,10 +717,8 @@ NPCTick_Tadcaster_TreasureQuest_Loop:
 	MOVE.l	#TreasureInCaveStr, Pending_hint_text.w
 	MOVE.w	#$001C, D5
 	BSR.w	SetHintTextIfTriggered
-; loc_000077E2
 NPCTick_Tadcaster_HintDone:
 	BRA.w	NPCBehavior_LoadFrame
-; loc_000077E6
 NPCInit_Tadcaster_PassSellerSetup:
 	BSR.w	SetRandomDirection
 	CLR.b	obj_behavior_flag(A5)
@@ -800,12 +729,10 @@ NPCInit_Tadcaster_PassSellerSetup:
 	MOVE.l	#NPCTick_Tadcaster_PassSeller, obj_tick_fn(A5)
 	RTS
 
-; loc_00007804
 NPCInit_PassSeller_SetStatic:
 	MOVE.l	#NPCBehavior_LoadFrame, obj_tick_fn(A5)
 	RTS
 
-; loc_0000780E
 NPCTick_Tadcaster_PassSeller:
 	TST.b	Pass_to_carthahena_purchased.w
 	BEQ.b	NPCTick_Tadcaster_PassSeller_Loop
@@ -834,17 +761,14 @@ NPCTick_Tadcaster_PassSeller_Loop3:
 	BRA.b	NPCTick_Paofal_PassSeller_Done	
 NPCTick_Tadcaster_PassSeller_Loop4:
 	MOVE.l	#BuyPassToCartahenaStr, obj_npc_str_ptr(A5)
-; loc_0000787A
 NPCTick_Paofal_PassSeller_Done:
 	BRA.w	NPCBehavior_LoadFrame
-; loc_0000787E
 NPCInit_Tadcaster_PassSeller:
 	BSR.w	SetRandomDirection
 	CLR.b	obj_behavior_flag(A5)
 	MOVE.l	#NPCTick_Tadcaster_ImposterHint, obj_tick_fn(A5)
 	RTS
 
-; loc_00007890
 NPCTick_Tadcaster_ImposterHint:
 	TST.b	Imposter_killed.w
 	BNE.b	NPCTick_Tadcaster_ImposterHint_Loop
@@ -853,14 +777,12 @@ NPCTick_Tadcaster_ImposterHint:
 	BSR.w	SetHintTextIfTriggered
 NPCTick_Tadcaster_ImposterHint_Loop:
 	BRA.w	UpdateNPCSpriteFrame
-; loc_000078AA
 NPCInit_Tadcaster_ImposterHint:
 	BSR.w	SetRandomDirection
 	CLR.b	obj_behavior_flag(A5)
 	MOVE.l	#NPCTick_Tadcaster_HelwigHint, obj_tick_fn(A5)
 	RTS
 
-; loc_000078BC
 NPCTick_Tadcaster_HelwigHint:
 	TST.b	Imposter_killed.w
 	BEQ.b	NPCTick_Tadcaster_HelwigHint_Loop
@@ -869,7 +791,6 @@ NPCTick_Tadcaster_HelwigHint:
 	BSR.w	SetHintTextIfTriggered
 NPCTick_Tadcaster_HelwigHint_Loop:
 	BRA.w	UpdateNPCSpriteFrame
-; loc_000078D6
 NPCInit_Tadcaster_HelwigHint:
 	BSR.w	SetRandomDirection
 	CLR.b	obj_behavior_flag(A5)
@@ -886,14 +807,12 @@ NPCInit_Tadcaster_HelwigHint_Loop2:
 	MOVE.l	#NPCTick_WalkingAnimated, obj_tick_fn(A5)
 	RTS
 
-; loc_00007902
 NPCInit_Helwig_Generic:
 	BSR.w	SetRandomDirection
 	CLR.b	obj_behavior_flag(A5)
 	MOVE.l	#NPCTick_Helwig_CountOnYouHint, obj_tick_fn(A5)
 	RTS
 
-; loc_00007914
 NPCTick_Helwig_CountOnYouHint:
 	TST.b	Helwig_men_rescued.w
 	BNE.b	NPCTick_Helwig_CountOnYouHint_Loop
@@ -902,20 +821,17 @@ NPCTick_Helwig_CountOnYouHint:
 	BSR.w	SetHintTextIfTriggered
 NPCTick_Helwig_CountOnYouHint_Loop:
 	BRA.w	UpdateNPCSpriteFrame
-; loc_0000792E
 NPCInit_Helwig_CountOnYouHint:
 	BSR.w	SetRandomDirection
 	CLR.b	obj_behavior_flag(A5)
 	MOVE.l	#NPCTick_Helwig_SwaffhamHint, obj_tick_fn(A5)
 	RTS
 
-; loc_00007940
 NPCTick_Helwig_SwaffhamHint:
 	MOVE.l	#JourneyWestToSwaffhamStr, Pending_hint_text.w
 	MOVE.w	#3, D5
 	BSR.w	SetHintTextIfTriggered
 	BRA.w	UpdateNPCSpriteFrame
-; loc_00007954
 NPCInit_Helwig_SwaffhamHint:
 	BSR.w	SetRandomDirection
 	CLR.b	obj_behavior_flag(A5)
@@ -926,7 +842,6 @@ NPCInit_Helwig_SwaffhamHint_Loop:
 	MOVE.l	#UpdateNPCSpriteFrame, obj_tick_fn(A5)
 	RTS
 
-; loc_00007970
 NPCInit_Helwig_RescuedVillager:
 	BSR.w	SetRandomDirection
 	CLR.b	obj_behavior_flag(A5)
@@ -937,7 +852,6 @@ NPCInit_Helwig_RescuedVillager_Loop:
 	MOVE.l	#NPCTick_WalkingStatic, obj_tick_fn(A5)
 	RTS
 
-; loc_0000798C
 NPCInit_Helwig_KeyGiverVisibility:
 	BSR.w	SetRandomDirection
 	CLR.b	obj_behavior_flag(A5)
@@ -951,7 +865,6 @@ NPCInit_Helwig_KeyGiverVisibility_Loop:
 	MOVE.l	#NPCTick_Helwig_SecretKeyGiver, obj_tick_fn(A5)
 	RTS
 
-; loc_000079B2
 NPCTick_Helwig_SecretKeyGiver:
 	TST.b	Secret_key_received.w
 	BNE.b	NPCTick_Helwig_SecretKeyGiver_Loop
@@ -969,10 +882,8 @@ NPCTick_Helwig_SecretKeyGiver_Loop:
 	BRA.b	NPCTick_Helwig_SecretKeyGiver_Done
 NPCTick_Helwig_SecretKeyGiver_Loop2:
 	MOVE.l	#CantCarryMoreItemsStr, obj_npc_str_ptr(A5)
-; loc_000079F0
 NPCTick_Helwig_SecretKeyGiver_Done:
 	BRA.w	UpdateNPCSpriteFrame
-; loc_000079F4
 NPCInit_Helwig_SecretKeyGiver:
 	BSR.w	SetRandomDirection
 	CLR.b	obj_behavior_flag(A5)
@@ -983,7 +894,6 @@ NPCInit_Helwig_SecretKeyGiver_Loop:
 	MOVE.l	#NPCTick_Helwig_OldWomanQuest, obj_tick_fn(A5)
 	RTS
 
-; loc_00007A14
 NPCTick_Helwig_OldWomanQuest:
 	TST.b	Old_man_and_woman_paired.w
 	BEQ.b	NPCTick_Helwig_OldWomanQuest_Loop
@@ -1035,13 +945,11 @@ NPCTick_Helwig_OldWomanQuest_Loop5:
 	MOVE.l	#FoundSomeoneForMeStr, obj_npc_str_ptr(A5)
 NPCTick_Helwig_OldWomanQuest_Done:
 	BRA.w	NPCBehavior_LoadFrame
-; loc_00007AD0
 NPCInit_Helwig_OldWomanQuest:
 	MOVE.b	#SPRITE_SIZE_2x3, obj_sprite_size(A5)
 	MOVE.l	#NPCTick_Swaffham_KnuteNoAnswer, obj_tick_fn(A5)
 	RTS
 
-; loc_00007AE0
 NPCTick_Swaffham_KnuteNoAnswer:
 	TST.b	Knute_informed_of_swaffham_ruin.w
 	BEQ.b	NPCTick_Swaffham_KnuteNoAnswer_Loop
@@ -1053,7 +961,6 @@ NPCTick_Swaffham_KnuteNoAnswer_Loop:
 	MOVE.l	#NPCTick_Excalabria_CrystalExchange, obj_tick_fn(A5)
 	RTS
 
-; loc_00007B04
 NPCTick_Excalabria_CrystalExchange:
 	TST.b	Ring_of_earth_obtained.w
 	BEQ.w	NPCTick_Excalabria_CrystalExchange_Loop
@@ -1137,7 +1044,6 @@ NPCTick_Excalabria_CrystalExchange_Loop11:
 	MOVE.l	#RingOfEarthQuestStr, obj_npc_str_ptr(A5)
 NPCTick_Excalabria_CrystalExchange_Done:
 	BRA.w	NPCBehavior_LoadFrame
-; loc_00007C34
 NPCInit_Excalabria_CrystalExchange:
 	BSR.w	SetRandomDirection
 	CLR.b	obj_behavior_flag(A5)
@@ -1154,12 +1060,10 @@ NPCInit_Excalabria_CrystalExchange_Loop:
 	MOVE.l	#NPCTick_Excalabria_SwaffhamRuinWait, obj_tick_fn(A5)
 	RTS
 
-; loc_00007C66
 NPCInit_Excalabria_CrystalExchange_Done:
 	MOVE.l	#UpdateNPCSpriteFrame, obj_tick_fn(A5)
 	RTS
 
-; loc_00007C70
 NPCTick_Excalabria_SwaffhamRuinWait:
 	TST.b	Swaffham_ruined.w
 	BEQ.b	NPCTick_Excalabria_SwaffhamRuinWait_Loop
@@ -1167,7 +1071,6 @@ NPCTick_Excalabria_SwaffhamRuinWait:
 	MOVE.l	#WaitingExcalabriaStr, obj_npc_str_ptr(A5)
 NPCTick_Excalabria_SwaffhamRuinWait_Loop:
 	BRA.w	NPCBehavior_LoadFrame
-; loc_00007C86
 NPCInit_Swaffham_SpyDinnerTrap:
 	BSR.w	SetRandomDirection
 	CLR.b	obj_behavior_flag(A5)
@@ -1181,7 +1084,6 @@ NPCInit_Swaffham_SpyDinnerTrap_Loop:
 	MOVE.l	#UpdateNPCSpriteFrame, obj_tick_fn(A5)
 	RTS
 
-; loc_00007CAC
 NPCTick_Swaffham_SpyDinnerTrap:
 	TST.b	Swaffham_ate_poisoned_food.w
 	BEQ.b	NPCTick_Swaffham_SpyDinnerTrap_Loop
@@ -1212,13 +1114,11 @@ NPCTick_Swaffham_SpyDinnerTrap_Loop2:
 	MOVE.w	Player_mhp.w, Player_hp.w
 	MOVE.w	Player_mmp.w, Player_mp.w
 	MOVE.b	#FLAG_TRUE, Poison_trap_sprung.w
-; loc_00007D32
 NPCTick_Swaffham_SpyDinnerTrap_Done:
 	BSR.w	UpdateNPCSpriteFrame
 NPCTick_Swaffham_SpyDinnerTrap_Done_Loop:
 	RTS
 
-; loc_00007D38
 NPCInit_Hastings_HideAfterTsarkon:
 	BSR.w	SetRandomDirection
 	CLR.b	obj_behavior_flag(A5)
@@ -1231,7 +1131,6 @@ NPCInit_Hastings_HideAfterTsarkon_Loop:
 	MOVE.l	#UpdateNPCSpriteFrame, obj_tick_fn(A5)
 	RTS
 
-; loc_00007D56
 NPCInit_Hastings_WelcomePrince:
 	BSR.w	SetRandomDirection
 	CLR.b	obj_behavior_flag(A5)
@@ -1242,12 +1141,10 @@ NPCInit_Hastings_WelcomePrince:
 	TST.b	Sword_stolen_by_blacksmith.w
 	BNE.b	NPCTick_Hastings_SetStaticBehavior
 	MOVE.l	#SeveralPeopleWaitingStr, obj_npc_str_ptr(A5)	
-; loc_00007D82
 NPCTick_Hastings_SetStaticBehavior:
 	MOVE.l	#NPCBehavior_LoadFrame, obj_tick_fn(A5)
 	RTS
 
-; loc_00007D8C
 NPCInit_Hastings_GateGuard:
 	BSR.w	SetRandomDirection
 	CLR.b	obj_behavior_flag(A5)
@@ -1259,12 +1156,10 @@ NPCInit_Hastings_GateGuard_Loop:
 	TST.b	Pass_to_carthahena_purchased.w
 	BEQ.b	NPCInit_Hastings_SetBehavior
 	MOVE.w	#$00F8, obj_world_x(A5)
-; loc_00007DAC
 NPCInit_Hastings_SetBehavior:
 	MOVE.l	#NPCBehavior_LoadFrame, obj_tick_fn(A5)
 	RTS
 
-; loc_00007DB6
 NPCInit_Carthahena_BossGuard:
 	BSR.w	SetRandomDirection
 	CLR.b	obj_behavior_flag(A5)
@@ -1278,7 +1173,6 @@ NPCInit_Carthahena_BossGuard_Loop:
 	MOVE.l	#NPCTick_Carthahena_BossGuard, obj_tick_fn(A5)
 	RTS
 
-; loc_00007DDC
 NPCTick_Carthahena_BossGuard:
 	TST.b	Carthahena_boss_defeated.w
 	BEQ.b	NPCTick_Carthahena_BossGuard_Loop
@@ -1288,7 +1182,6 @@ NPCTick_Carthahena_BossGuard_Loop:
 	TST.b	Carthahena_boss_met.w
 	BEQ.b	NPCTick_CarthahenaFinalBoss_Done
 	MOVE.l	#BestedMeStr, obj_npc_str_ptr(A5)
-; loc_00007DF6
 NPCTick_CarthahenaFinalBoss_Done:
 	BRA.w	UpdateNPCSpriteFrame
 NPCTick_CarthahenaFinalBoss_DeadCode:					; unreferenced dead code
@@ -1309,7 +1202,6 @@ NPCTick_CarthahenaFinalBoss_AltEntry_DeadCode:					; unreferenced dead code
 NPCTick_CarthahenaFinalBoss_Done_Loop2:
 	MOVE.l	#UpdateNPCSpriteFrame, obj_tick_fn(A5)
 	RTS
-; loc_00007E32
 NPCInit_Carthahena_KingThuleKey:
 	BSR.w	SetRandomDirection
 	CLR.b	obj_behavior_flag(A5)
@@ -1322,7 +1214,6 @@ NPCInit_Carthahena_KingThuleKey_Loop:
 	MOVE.l	#UpdateNPCSpriteFrame, obj_tick_fn(A5)
 	RTS
 
-; loc_00007E54
 NPCTick_Carthahena_KingThuleKey:
 	TST.b	Carthahena_boss_defeated.w
 	BEQ.w	NPCTick_SetMessage2_Done
@@ -1346,18 +1237,15 @@ NPCTick_Carthahena_KingThuleKey:
 NPCTick_Carthahena_KingThuleKey_Loop:
 	MOVE.l	#ComeBackLessGearStr3, obj_npc_str_ptr(A5)
 	BRA.b	NPCTick_SetMessage2_Done
-; loc_00007EB0
 NPCTick_Helwig_SetRingsMessage:
 	MOVE.l	#MustHaveAllRingsStr, obj_npc_str_ptr(A5)	
 NPCTick_SetMessage2_Done:
 	BRA.w	UpdateNPCSpriteFrame
-; loc_00007EBC
 NPCInit_Helwig_InnFryingPan:
 	BSR.w	SetRandomDirection
 	MOVE.l	#NPCTick_Helwig_InnFryingPan, obj_tick_fn(A5)
 	RTS
 
-; loc_00007ECA
 NPCTick_Helwig_InnFryingPan:
 	TST.b	Helwig_men_rescued.w
 	BNE.b	NPCTick_Helwig_InnFryingPan_Display
@@ -1382,22 +1270,18 @@ NPCTick_Helwig_InnFryingPan_Display:
 	ADDQ.b	#1, obj_move_counter(A5)
 	RTS
 
-; loc_00007F18
 NPCInit_Parma_CastleSoldier:
 	MOVE.b	#DIRECTION_DOWN, obj_direction(A5)
 	MOVE.b	#4, obj_npc_saved_dir(A5)
 	MOVE.l	#NPCTick_Parma_CastleSoldierStatic, obj_tick_fn(A5)
 	RTS
 
-; loc_00007F2E
 NPCTick_Parma_CastleSoldierStatic:
 	BRA.w	NPCBehavior_LoadFrame
-; loc_00007F32
 NPCInit_Parma_CastleSoldierFaceDown:
 	MOVE.b	#2, obj_hp(A5)
 	MOVE.b	#6, soldier_patrol_state(A5)
 	BRA.w	NPCInit_Parma_CastleSoldierFaceRight_Loop
-; loc_00007F42
 NPCInit_Parma_CastleSoldierFaceRight:
 	MOVE.b	#6, obj_hp(A5)
 	MOVE.b	#2, soldier_patrol_state(A5)
@@ -1414,7 +1298,6 @@ NPCInit_Parma_CastleSoldierFaceRight_Loop:
 	MOVE.l	#NPCTick_Parma_CastleSoldierPatrol, obj_tick_fn(A5)
 	RTS
 
-; loc_00007F7C
 NPCTick_Parma_CastleSoldierPatrol:
 	MOVE.w	Gameplay_state.w, D0
 	CMPI.w	#GAMEPLAY_STATE_CASTLE_ROOM1_ACTIVE, D0
@@ -1424,7 +1307,6 @@ NPCTick_Parma_CastleSoldierPatrol:
 	MOVE.l	#NPCTick_Parma_CastleSoldierStatic, obj_tick_fn(A5)
 	RTS
 
-; loc_00007F96
 NPCTick_ParmaSoldier_Rotate:
 	BSR.w	UpdateParmaSoldierRotation
 	BSR.w	GetNPCAnimationOffset
@@ -1541,12 +1423,10 @@ GetStaticNPCAnimationOffset_Loop4:
 	CMPI.b	#4, obj_direction(A5)
 	BEQ.b	GetStaticNPCAnimOffset_FlipCheck
 	BRA.b	GetStaticNPCAnimationOffset_Return
-; loc_000080F8
 GetStaticNPCAnimOffset_FlipCheck:
 	BTST.l	#0, D0
 	BNE.b	GetStaticNPCAnimationOffset_Return
 	BSET.b	#3, obj_sprite_flags(A5)
-; loc_00008104
 GetStaticNPCAnimationOffset_Return:
 	ADD.w	D0, D0
 	RTS
@@ -1582,7 +1462,6 @@ GetNPCAnimationOffset_Loop3:
 	ADD.w	D0, D0
 	RTS
 
-; loc_00008154
 UpdateNPCScreenPosition:
 	MOVE.w	obj_world_x(A5), D0
 	SUB.w	Camera_scroll_x.w, D0
@@ -1592,12 +1471,10 @@ UpdateNPCScreenPosition:
 	CMPI.b	#4, obj_direction(A5)
 	BEQ.b	NPCScreenPosition_FlipCheck
 	BRA.b	NPCScreenPosition_UpdateY
-; loc_00008170
 NPCScreenPosition_FlipCheck:
 	BTST.b	#3, obj_sprite_flags(A5)
 	BEQ.b	NPCScreenPosition_UpdateY
 	SUBQ.w	#1, obj_screen_x(A5)
-; loc_0000817C
 NPCScreenPosition_UpdateY:
 	MOVE.w	obj_world_y(A5), D0
 	SUB.w	Camera_scroll_y.w, D0
@@ -1631,7 +1508,6 @@ CheckTileCollision:
 	MOVE.w	(A0,D0.w), D0
 	ANDI.w	#$F000, D0
 	BEQ.b	CheckTileCollision_NoMatch_Loop
-; loc_000081E6
 CheckTileCollision_NoMatch:
 	MOVE.w	#$FFFF, D0
 	RTS
@@ -1709,7 +1585,6 @@ UpdateNPCMovement_Loop:
 UpdateNPCMovement_Loop2:
 	RTS
 
-; loc_000082C0
 NPCMovement_ChangeDirection:
 	MOVE.b	obj_direction(A5), D6
 	ADDQ.b	#2, D6
@@ -1750,7 +1625,6 @@ NPCMovement_ChangeDirection_Loop:
 NPCMovement_ChangeDirection_Loop3:
 	RTS
 
-; loc_00008340
 NPCWander_UpdateDirection:
 	CLR.b	obj_behavior_flag(A5)
 	ADDQ.b	#1, obj_invuln_timer(A5)
@@ -1765,7 +1639,6 @@ NPCWander_UpdateDirection:
 	ANDI.b	#7, D1
 	MOVE.b	D1, obj_direction(A5)
 	MOVE.b	D1, obj_npc_saved_dir(A5)
-; loc_00008374
 NPCWander_Return:
 	RTS
 
@@ -1818,7 +1691,6 @@ CheckSurroundingTileCollision_Done:
 	CMP.w	D5, D1
 	BNE.b	CheckEntityOverlap_NoMatch
 	BRA.b	CheckEntityOverlap_NoMatch_Loop
-; loc_000083EC
 CheckEntityOverlap_NoMatch:
 	DBF	D7, CheckSurroundingTileCollision_Done
 	CLR.w	D0
@@ -1855,7 +1727,6 @@ CheckAdjacentTileCollision_Done:
 	CMP.w	D5, D1
 	BNE.b	CheckAdjacentTileCollision_NoMatch
 	BRA.b	CheckAdjacentTileCollision_NoMatch_Loop
-; loc_0000843A
 CheckAdjacentTileCollision_NoMatch:
 	DBF	D7, CheckAdjacentTileCollision_Done
 	CLR.w	D0
@@ -1903,10 +1774,8 @@ CheckNPCCollision_Done2:
 	CMP.w	D3, D5
 	BNE.b	CheckNPCCollision_NoEntityMatch
 	BRA.b	CheckNPCCollision_NextEntity_Loop2
-; loc_000084A6
 CheckNPCCollision_NoEntityMatch:
 	DBF	D6, CheckNPCCollision_Done2
-; loc_000084AA
 CheckNPCCollision_NextEntity:
 	CLR.w	D2
 	MOVE.b	obj_next_offset(A6), D2
@@ -1920,7 +1789,6 @@ CheckNPCCollision_NextEntity_Loop2:
 	MOVEQ	#1, D0
 	RTS
 
-; loc_000084C0
 RemoveItemFromList:
 	LEA	(A2), A1
 	MOVE.w	(A2)+, D7
@@ -1963,7 +1831,6 @@ CheckItemInList_Done:
 	BRA.b	CheckCollision_Return	
 CheckItemInList_Loop:
 	MOVE.w	#$FFFF, D0
-; loc_00008516
 CheckCollision_Return:
 	RTS
 
@@ -2008,7 +1875,6 @@ RestoreRingsFromBackup_Loop:
 	DBF	D7, RestoreRingsFromBackup_Done
 	RTS
 
-; loc_00008572
 AddItemToInventoryList:
 	LEA	Possessed_items_length.w, A0
 	MOVE.w	(A0), D0
@@ -2016,7 +1882,6 @@ AddItemToInventoryList:
 	ADD.w	D0, D0
 	RTS
 
-; loc_0000857E
 CheckInventoryFull:
 	LEA	Possessed_items_length.w, A0
 	MOVE.w	(A0), D0
@@ -2038,14 +1903,12 @@ ClearNPCFrozenState:
 ClearNPCFrozenState_Loop:
 	RTS
 
-; loc_000085A8
 NPCCollisionOffsetTable:
 	dc.w	 0, -2,  0, -1, -1, -1,  1, -1, -1,  0,  1,  0, -1,  1,  0,  1
 	dc.w	 1,  1,  0,  2, -2,  0, -1,  0, -1, -1, -1,  1,  0,  1,  0, -1 
 	dc.w	 1,  1,  1,  0,  1, -1,  2,  0,  0,  2,  0,  1, -1,  1,  1,  1
 	dc.w	-1, -1, -1,  0,  0, -1,  1, -1,  1,  0,  0, -2,  2,  0,  1,  0 
 	dc.w	 1, -1,  1,  1, -1, -1, -1,  0, -1,  1,  0, -1,  0,  1, -2,  0
-; loc_00008648
 NPCMoveDeltaTable:
 	dc.l	$00000000, $FFFF8000 
 	dc.l	$FFFF8000, $00000000 
@@ -2175,7 +2038,6 @@ InitMapIndicatorEntity:
 	MOVE.b	#SPRITE_SIZE_2x1, obj_sprite_size(A6)
 	RTS
 
-; loc_00008866
 MapIndicatorEntityTick:
 	TST.b	Player_input_blocked.w
 	BNE.b	MapIndicatorEntityTick_Loop
@@ -2197,14 +2059,12 @@ MapIndicatorEntityTick:
 MapIndicatorEntityTick_Loop:
 	RTS
 
-; loc_000088AC
 MapIndicatorTileIDs:
 	dc.w	$04D5 
 	dc.w	$04D3 
 	dc.w	$04D7 
 	dc.w	$04D1 
 
-; loc_000088B4
 ChainObjectTick_Parent:
 	BSET.b	#5, obj_sprite_flags(A5)
 	BCLR.b	#6, obj_sprite_flags(A5)
@@ -2281,11 +2141,9 @@ ChainObjectTick_Parent_Loop3_Done:
 	CMPI.w	#BATTLE_ARENA_EDGE, D0
 	BGE.b	ChainObjectTick_Parent_Return
 	JSR	QueueSpriteOAMIfVisible
-; loc_000089BC
 ChainObjectTick_Parent_Return:
 	RTS
 
-; loc_000089BE
 PairedObjectTick_A:
 	BSET.b	#5, obj_sprite_flags(A5)
 	BCLR.b	#6, obj_sprite_flags(A5)
@@ -2324,11 +2182,9 @@ PairedObjectTick_A_Loop3:
 	CMPI.w	#BATTLE_ARENA_EDGE, D0
 	BGE.b	PairedObjectTick_A_Return
 	JSR	QueueSpriteOAMIfVisible
-; loc_00008A4C
 PairedObjectTick_A_Return:
 	RTS
 
-; loc_00008A4E
 SingleObjectTick:
 	BSET.b	#5, obj_sprite_flags(A5)
 	BCLR.b	#6, obj_sprite_flags(A5)
@@ -2347,11 +2203,9 @@ SingleObjectTick_Loop:
 	CMPI.w	#BATTLE_ARENA_EDGE, D0
 	BGE.b	SingleObjectTick_Return
 	JSR	QueueSpriteOAMIfVisible
-; loc_00008A96
 SingleObjectTick_Return:
 	RTS
 
-; loc_00008A98
 ChildObjectTick:
 	MOVE.w	obj_tile_index(A5), D0
 	BEQ.b	ChildObjectTick_Return
@@ -2360,17 +2214,14 @@ ChildObjectTick:
 	CMPI.w	#BATTLE_ARENA_EDGE, D0
 	BGE.b	ChildObjectTick_Return
 	JSR	QueueSpriteOAMIfVisible
-; loc_00008AB0
 ChildObjectTick_Return:
 	RTS
 
-; loc_00008AB2
 PortraitInit_Simple:
 	MOVEA.l	Talker_gfx_descriptor_ptr.w, A6
 	BSR.w	InitTalkerPortraitSprite
 	RTS
 
-; loc_00008ABC
 PortraitInit_MapGiver:
 	MOVEA.l	Talker_gfx_descriptor_ptr.w, A6
 	BSR.w	InitTalkerPortraitSprite
@@ -2379,7 +2230,6 @@ PortraitInit_MapGiver:
 	MOVE.l	#PortraitTick_MapGiver, obj_tick_fn(A4)
 	RTS
 
-; loc_00008ADA
 PortraitInit_StowGirl:
 	MOVEA.l	Talker_gfx_descriptor_ptr.w, A6
 	BSR.w	InitTalkerPortraitSprite
@@ -2388,28 +2238,24 @@ PortraitInit_StowGirl:
 	MOVE.l	#PortraitTick_StowGirl, obj_tick_fn(A4)
 	RTS
 
-; loc_00008AF8
 PortraitInit_RingOfWisdom:
 	MOVEA.l	Talker_gfx_descriptor_ptr.w, A6
 	BSR.w	InitTalkerPortraitSprite
 	MOVE.l	#PortraitTick_RingOfWisdom, obj_tick_fn(A5)
 	RTS
 
-; loc_00008B0A
 PortraitInit_ImposterGuard:
 	MOVEA.l	Talker_gfx_descriptor_ptr.w, A6
 	BSR.w	InitTalkerPortraitSprite
 	MOVE.l	#PortraitTick_ImposterGuard, obj_tick_fn(A5)
 	RTS
 
-; loc_00008B1C
 PortraitInit_MalagaPrisoner:
 	MOVEA.l	Talker_gfx_descriptor_ptr.w, A6
 	BSR.w	InitTalkerPortraitSprite
 	MOVE.l	#PortraitTick_MalagaPrisoner, obj_tick_fn(A5)
 	RTS
 
-; loc_00008B2E
 PortraitInit_TsarkonFinal:
 	MOVEA.l	Talker_gfx_descriptor_ptr.w, A6
 	BSR.w	InitTalkerPortraitSprite
@@ -2418,7 +2264,6 @@ PortraitInit_TsarkonFinal:
 	MOVE.l	#PortraitTick_TsarkonFinal, obj_tick_fn(A4)
 	RTS
 
-; loc_00008B4C
 PortraitInit_Bearwulf:
 	MOVEA.l	Talker_gfx_descriptor_ptr.w, A6
 	BSR.w	InitTalkerPortraitSprite
@@ -2427,7 +2272,6 @@ PortraitInit_Bearwulf:
 	MOVE.l	#PortraitTick_Bearwulf, obj_tick_fn(A4)
 	RTS
 
-; loc_00008B6A
 PortraitInit_TruffleGiver:
 	MOVEA.l	Talker_gfx_descriptor_ptr.w, A6
 	BSR.w	InitTalkerPortraitSprite
@@ -2436,7 +2280,6 @@ PortraitInit_TruffleGiver:
 	MOVE.l	#PortraitTick_Truffle, obj_tick_fn(A4)
 	RTS
 
-; loc_00008B88
 PortraitInit_DigotGiver:
 	MOVEA.l	Talker_gfx_descriptor_ptr.w, A6
 	BSR.w	InitTalkerPortraitSprite
@@ -2492,7 +2335,6 @@ InitEncounterPortrait_Loop:
 	JSR	LoadPalettesFromTable
 	RTS
 
-; loc_00008C74
 InitTalkerPortraitSprite:
 	MOVE.b	obj_direction(A6), obj_sprite_size(A5)
 	MOVE.w	obj_invuln_timer(A6), Palette_line_3_index.w
@@ -2529,14 +2371,12 @@ InitTalkerPortraitSprite_Loop:
 
 PortraitIdleLoop:
 	JMP	QueueSpriteOAMIfVisible
-; loc_00008D18
 PortraitTick_RingOfWisdom:
 	TST.b	Rings_collected.w
 	BEQ.b	PortraitTick_RingOfWisdom_Loop
 	MOVE.l	#OnlyYouCanSaveUsStr, Script_talk_source.w
 PortraitTick_RingOfWisdom_Loop:
 	JMP	QueueSpriteOAMIfVisible
-; loc_00008D2C
 PortraitTick_StowGirl:
 	TST.b	Girl_left_for_stow.w
 	BEQ.b	PortraitTick_StowGirl_Loop
@@ -2582,14 +2422,12 @@ PortraitTick_StowGirl_Loop5:
 	MOVE.l	#BuyBookSanguiosStr, Script_talk_source.w
 NPCTick_SanguiosVendor_Display:
 	JMP	QueueSpriteOAMIfVisible
-; loc_00008DC6
 PortraitTick_ImposterGuard:
 	TST.b	Imposter_boss_trigger.w
 	BEQ.b	PortraitTick_ImposterGuard_Loop
 	MOVE.l	#NoOneHereStr, Script_talk_source.w
 PortraitTick_ImposterGuard_Loop:
 	JMP	QueueSpriteOAMIfVisible
-; loc_00008DDA
 PortraitTick_MalagaPrisoner:
 	TST.b	Malaga_king_crowned.w
 	BEQ.b	PortraitTick_MalagaPrisoner_Loop
@@ -2607,10 +2445,8 @@ PortraitTick_MalagaPrisoner_Loop:
 	TST.b	Malaga_quest_progress.w
 	BNE.b	PortraitTick_MalagaPrisoner_Done
 	MOVE.l	#WaitingForPlayerNameStr, Script_talk_source.w
-; loc_00008E20
 PortraitTick_MalagaPrisoner_Done:
 	JMP	QueueSpriteOAMIfVisible
-; loc_00008E26
 PortraitTick_TsarkonFinal:
 	TST.b	Tsarkon_is_dead.w
 	BEQ.b	PortraitTick_TsarkonFinal_Loop
@@ -2621,19 +2457,15 @@ PortraitTick_TsarkonFinal:
 
 PortraitTick_TsarkonFinal_Loop:
 	JMP	QueueSpriteOAMIfVisible
-; loc_00008E44
 PortraitTick_Bearwulf:
 	LEA	Bearwulf_met.w, A0
 	BRA.w	PortraitTick_CheckCollectedFlag
-; loc_00008E4C
 PortraitTick_Truffle:
 	LEA	Truffle_collected.w, A0
 	BRA.w	PortraitTick_CheckCollectedFlag
-; loc_00008E54
 PortraitTick_Digot:
 	LEA	Digot_plant_received.w, A0
 	BRA.w	PortraitTick_CheckCollectedFlag
-; loc_00008E5C
 PortraitTick_MapGiver:
 	LEA	Map_trigger_flags.w, A0
 	MOVE.w	Map_trigger_index.w, D5
@@ -2645,7 +2477,6 @@ PortraitTick_MapGiver:
 	JMP	UpdateAreaVisibility
 PortraitTick_MapGiver_Loop:
 	JMP	QueueSpriteOAMIfVisible
-; loc_00008E88
 PortraitTick_CheckCollectedFlag:
 	TST.b	(A0)
 	BEQ.b	PortraitTick_CheckCollectedFlag_Loop
@@ -2656,7 +2487,6 @@ PortraitTick_CheckCollectedFlag:
 
 PortraitTick_CheckCollectedFlag_Loop:
 	JMP	QueueSpriteOAMIfVisible
-; loc_00008EA4
 PortraitPositionOffsets:
 	dc.w	-16, -48, 16, -48 
 	dc.w	-16, -24, 16, -24
@@ -2694,7 +2524,6 @@ InitializeEncounter_Loop:
 	CMP.w	D0, D7
 	BLE.w	EncounterInit_FinalizeEnemyCount
 	MOVE.w	D0, D7
-; loc_00008F1C
 EncounterInit_FinalizeEnemyCount:
 	MOVE.w	D7, Number_Of_Enemies.w
 	LEA	Enemy_position_indices.w, A1

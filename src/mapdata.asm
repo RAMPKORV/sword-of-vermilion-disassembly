@@ -133,7 +133,6 @@ OverworldMaps: ; 128
 	dc.l	CaveMaps	
 OverworldMaps_Map_3E1D4:
 	incbin "data/maps/overworld/sector_0_0.bin"
-; loc_0003E21E
 OverworldMapSector_E21E:
 	incbin "data/maps/overworld/sector_0_1.bin"
 OverworldMaps_Map_3E23C:
@@ -156,14 +155,12 @@ OverworldMaps_Map_3E512:
 	incbin "data/maps/overworld/sector_1_4.bin"
 OverworldMaps_Map_3E586:
 	incbin "data/maps/overworld/sector_1_5.bin"
-; loc_0003E5FC
 OverworldMapSector_E5FC:
 	incbin "data/maps/overworld/sector_2_0.bin"
 OverworldMaps_Map_3E618:
 	incbin "data/maps/overworld/sector_2_1.bin"
 OverworldMaps_Map_3E684:
 	incbin "data/maps/overworld/sector_2_2.bin"
-; loc_0003E6DA
 OverworldMapSector_E6DA:
 	incbin "data/maps/overworld/sector_2_3.bin"
 OverworldMaps_Map_3E6E2:
@@ -184,7 +181,6 @@ OverworldMaps_Map_3E97A:
 	incbin "data/maps/overworld/sector_3_4.bin"
 OverworldMaps_Map_3E9C0:
 	incbin "data/maps/overworld/sector_3_5.bin"
-; loc_0003EA04
 SpriteFrameData_3EA04:
 	incbin "data/maps/overworld/sector_3_6.bin"
 OverworldMaps_Map_3EA62:
@@ -197,7 +193,6 @@ OverworldMaps_Map_3EB22:
 	incbin "data/maps/overworld/sector_4_4.bin"
 OverworldMaps_Map_3EB4E:
 	incbin "data/maps/overworld/sector_4_5.bin"
-; loc_0003EBA4
 SpriteFrameData_3EBA4:
 	incbin "data/maps/overworld/sector_4_6.bin"
 OverworldMaps_Map_3EBEE:
@@ -232,7 +227,6 @@ OverworldMaps_Map_3F05A:
 	incbin "data/maps/overworld/sector_6_6.bin"
 OverworldMaps_Map_3F0D8:
 	incbin "data/maps/overworld/sector_6_7.bin"
-; loc_0003F134
 SpriteFrameData_3F134:
 	incbin "data/maps/overworld/sector_7_0.bin"
 OverworldMaps_Map_3F188:
@@ -247,12 +241,10 @@ OverworldMaps_Map_3F2CE:
 	incbin "data/maps/overworld/sector_8_1.bin"
 OverworldMaps_Map_3F304:
 	incbin "data/maps/overworld/sector_8_2.bin"
-; loc_0003F33E
 OverworldMapSector_F33E:
 	incbin "data/maps/overworld/sector_8_3.bin"
 OverworldMaps_Map_3F388:
 	incbin "data/maps/overworld/sector_8_6.bin"
-; loc_0003F402
 SpriteFrameData_3F402:
 	incbin "data/maps/overworld/sector_9_0.bin"
 OverworldMaps_Map_3F438:
@@ -267,13 +259,10 @@ OverworldMaps_Map_3F5DC:
 	incbin "data/maps/overworld/sector_9_5.bin"
 OverworldMaps_Map_3F61E:
 	incbin "data/maps/overworld/sector_9_6.bin"
-; loc_0003F64E
 SpriteFrameData_3F64E:
 	incbin "data/maps/overworld/sector_10_0.bin"
-; loc_0003F6DC
 SpriteFrameData_3F6DC:
 	incbin "data/maps/overworld/sector_10_1.bin"
-; loc_0003F70A
 OverworldMapSector_F70A:
 	incbin "data/maps/overworld/sector_10_3.bin"
 OverworldMaps_Map_3F76E:
@@ -282,15 +271,12 @@ OverworldMaps_Map_3F7CE:
 	incbin "data/maps/overworld/sector_10_7.bin"
 OverworldMaps_Map_3F85A:
 	incbin "data/maps/overworld/sector_11_0.bin"
-; loc_0003F880
 SpriteFrameData_3F880:
 	incbin "data/maps/overworld/sector_11_1.bin"
-; loc_0003F8F8
 SpriteFrameData_3F8F8:
 	incbin "data/maps/overworld/sector_11_3.bin"
 OverworldMaps_Map_3F992:
 	incbin "data/maps/overworld/sector_11_5.bin"
-; loc_0003FA54
 SpriteFrameData_3FA54:
 	incbin "data/maps/overworld/sector_11_6.bin"
 OverworldMaps_Map_3FAF0:
@@ -323,20 +309,16 @@ OverworldMaps_Map_3FEB6:
 	incbin "data/maps/overworld/sector_13_5.bin"
 OverworldMaps_Map_3FF24:
 	incbin "data/maps/overworld/sector_13_6.bin"
-; loc_0003FF68
 OverworldMapSector_FF68:
 	incbin "data/maps/overworld/sector_14_0.bin"
-; loc_0003FFA0
 OverworldMapSector_FFA0:
 	incbin "data/maps/overworld/sector_14_1.bin"
 OverworldMaps_Map_3FFD6:
 	incbin "data/maps/overworld/sector_14_3.bin"
-; loc_00040018
 OverworldMapSector_40018:
 	incbin "data/maps/overworld/data_40018.bin"
 EnemySpriteData_FacingSide_Gfx_40020:
 	incbin "data/maps/overworld/data_40020.bin"
-; loc_00040028
 OverworldMapSector_40028:
 	incbin "data/maps/overworld/sector_14_4.bin"
 OverworldMapSector_Empty:
@@ -444,7 +426,6 @@ CaveMaps_Map_41092:
 	incbin "data/maps/cave/room_26.bin"
 CaveMaps_Map_4112A:
 	incbin "data/maps/cave/room_27.bin"
-; loc_000411C0
 CaveMapSector_411C0:
 	incbin "data/maps/cave/room_28.bin"
 CaveMaps_Map_4125E:

@@ -140,7 +140,6 @@ ProcessSoundChannel_FM_Loop2:
 	BNE.w	WriteSoundRegister_Return
 	BSR.w	LoadSoundScriptPointer
 	MOVE.b	(A4)+, D5
-; loc_00092992
 SoundChannel_NoteLoop:
 	CMPI.b	#SOUND_SCRIPT_CMD_THRESHOLD, D5
 	BCS.b	SoundChannel_NoteLoop_Loop
@@ -180,7 +179,6 @@ SoundChannel_NoteLoop_Loop5:
 	MOVE.b	D7, $00A01FFE
 	MOVE.b	D5, $00A01FFF
 	MOVE.w	#0, Z80_bus_request
-; loc_00092A3A
 WriteSoundRegister_Return:
 	RTS
 	
@@ -194,7 +192,6 @@ SetSoundNoteAndDuration:
 	BPL.w	SetSoundNote_Positive
 	MOVE.b	-(A4), D5
 	BRA.w	SetSoundNote_Positive_Loop2
-; loc_00092A56
 SetSoundNote_Positive:
 	BSR.w	SetSoundNoteDuration
 SetSoundNote_Positive_Loop2:
@@ -220,7 +217,6 @@ LoadNextSoundNote:
 	BCLR.b	#1, fmch_flags(A3)
 	BSR.w	LoadSoundScriptPointer
 	MOVE.b	(A4)+, D5
-; loc_00092A90
 SoundChannel_NoteLoop2:
 	CMPI.b	#SOUND_SCRIPT_CMD_THRESHOLD, D5
 	BCS.w	SoundChannel_NoteLoop2_Loop
@@ -241,7 +237,6 @@ SoundChannel_NoteLoop2_Loop_Done:
 	BPL.w	SetSoundNote_Positive2
 	MOVE.b	-(A4), D5
 	BRA.w	SetSoundNote_Positive2_Loop2
-; loc_00092ACE
 SetSoundNote_Positive2:
 	BSR.w	SetSoundNoteDuration
 SetSoundNote_Positive2_Loop2:
@@ -325,7 +320,6 @@ UpdateSoundChannelPitch:
 	BTST.b	#1, fmch_flags(A3)
 	BNE.b	WaitPSG_ChannelFree_Return
 	MOVE.b	D0, fmch_lfo_phase(A3)
-; loc_00092BAA
 WaitPSG_ChannelFree_Return:
 	RTS
 	
@@ -365,7 +359,6 @@ PSGChannel_NoteLoop:
 	BEQ.b	PSGPitch_ClampHigh_Loop5
 	BCS.w	PSGPitch_ClampHigh
 	ORI.w	#$FF00, D1
-; loc_00092C12
 PSGPitch_ClampHigh:
 	MOVE.b	fmch_lfo_depth(A3), D3
 	BEQ.b	PSGPitch_ClampHigh_Loop6
@@ -393,7 +386,6 @@ PSGPitch_ClampHigh_Loop4:
 PSGPitch_ClampHigh_Loop5:
 	MOVE.b	#0, D0
 	BRA.b	PSGChannel_NoteLoop
-; loc_00092C4E
 PSGPitch_WriteFrequency:
 	MOVE.w	D4, D1
 	BEQ.w	PSGPitch_WriteFrequency_Return
@@ -403,7 +395,6 @@ PSGPitch_WriteFrequency:
 	MOVE.b	D4, D1
 	MOVE.b	#SOUND_MENU_CURSOR, D0
 	BSR.w	WriteYM2612Register
-; loc_00092C68
 PSGPitch_WriteFrequency_Return:
 	RTS
 	
@@ -531,7 +522,6 @@ LoadDAC_SampleToZ80_Done:
 LoadDAC_SampleToZ80_Loop:
 	RTS
 	
-; loc_00092DD6
 SoundCmd_SetFrequency:
 	MOVE.b	(A4)+, D5
 	ANDI.w	#$00FF, D5
@@ -562,7 +552,6 @@ SoundCmd_SetFrequency_Loop:
 	LEA	FM_FrequencyTable, A0
 	BSR.w	GetSoundDataPointer
 	BRA.w	LoadFM_AlgorithmData
-; loc_00092E36
 LoadFM_AlgorithmData_Return:
 	RTS
 	
@@ -627,7 +616,6 @@ LoadFM_AlgorithmData_Return_Loop4:
 	MOVE.b	(A4)+, fmch_vibrato_idx(A3)
 	RTS
 	
-; loc_00092EF2
 SoundCmd_JumpToOffset:
 	MOVEQ	#0, D1
 	MOVE.b	(A4)+, D0
@@ -877,7 +865,6 @@ ProcessSound_TempoCounter_Done:
 	ADDQ.w	#1, $A(A0)
 	ADDA.l	#$30, A0
 	DBF	D6, ProcessSound_TempoCounter_Done
-; loc_000931F0
 SoundObjTick_Return:
 	RTS
 	
@@ -926,14 +913,10 @@ InitSoundChannel_FM_Loop:
 	MOVEA.l	A6, A3
 	RTS
 	
-; loc_0009328A
-; loc_0009328A
 InitSoundChannel_FM_DeadCode:
 	MOVE.b	#$80, D0
 	MOVE.b	#$0F, D1
 	MOVE.w	#$0003, D7
-; loc_00093296
-; loc_00093296
 WriteYM2612_RegisterLoop:
 	BSR.w	WriteYM2612Register
 	ADDQ.w	#4, D0
@@ -1014,7 +997,6 @@ UpdateFM_OperatorRegisters_Loop:
 	MOVE.b	D3, D1
 	ADD.b	fmch_op1_tl(A3), D1
 	BSR.w	WriteYM2612Register
-; loc_000933B8
 UpdateFMLevel_Operator4:
 	MOVE.b	#$44, D0
 	MOVE.b	D3, D1
@@ -1054,7 +1036,6 @@ WriteFMChannelRegisters:
 WriteFMChannelRegisters_Loop:
 	RTS
 	
-; loc_0009341C
 WriteYM2612Register:
 	BTST.b	#2, fmch_flags(A3)
 	BNE.w	WriteYM2612Register_Part1_Loop
@@ -1158,7 +1139,6 @@ ProcessSoundScriptNote_Loop:
 	MOVE.b	-(A4), D5
 	BSR.w	UpdateSoundChannelPitch
 	RTS
-; loc_000935D0
 SoundChannel_NoteLoop3:
 	BSR.w	SetSoundNoteDuration
 	BSR.w	UpdateSoundChannelPitch
@@ -1235,7 +1215,6 @@ FMChannel_NoteLoop:
 	BEQ.w	FMPitch_ClampHigh_Loop5
 	BCS.w	FMPitch_ClampHigh
 	ORI.w	#$FF00, D1
-; loc_000936C0
 FMPitch_ClampHigh:
 	ADD.w	D1, D4
 	BRA.w	FMPitch_WriteFrequency
@@ -1259,7 +1238,6 @@ FMPitch_ClampHigh_Loop4:
 FMPitch_ClampHigh_Loop5:
 	MOVE.b	#0, D0
 	BRA.b	FMChannel_NoteLoop
-; loc_000936F4
 FMPitch_WriteFrequency:
 	BTST.b	#6, fmch_flags(A3)
 	BNE.w	FMPitchBend_Return
@@ -1304,7 +1282,6 @@ ProcessSoundCommand_Loop:
 	BSR.w	GetSoundDataPointer
 	CLR.w	D0
 	MOVE.b	fmch_arp_phase(A3), D0
-; loc_00093786
 FMArpeggio_ReadNote:
 	MOVE.b	(A0,D0.w), D1
 	ADDQ.w	#1, D0
@@ -1387,7 +1364,6 @@ SetSoundNoteFrequency_Loop2_Data:
 	dc.b	$00, $1F, $00, $1E, $00, $1B, $00, $1A, $00, $19, $00, $17, $00, $16, $00, $15, $00, $14, $00, $13, $00, $12, $00, $11, $00, $00, $00, $00, $00, $00 
 SoundCommand_JumpTable_Loop_Data:
 	dc.b	$03, $05, $0A, $10, $00, $00, $06, $02, $14, $0A, $08, $09, $26, $18, $05, $0A, $05, $06, $16, $03, $03, $0B, $0B, $05, $05, $07, $06, $08, $00, $00, $00, $00 
-; loc_0009390E
 SoundLFO_PointerTable:
 	dc.l	SoundLFO_PointerTable_Entry_939CA
 	dc.l	SoundLFO_PointerTable_Entry_939DC
@@ -1543,7 +1519,6 @@ SoundCommand_JumpTable_Loop_Data2:
 	dc.b	$26, $FC, $29, $14, $2C, $E2, $2F, $EE, $31, $12, $32, $A8, $37, $5E, $38, $42, $39, $D0, $40, $D4, $48, $08, $50, $F2 
 SoundCommand_JumpTable_Loop2_Data:
 	incbin "data/sound/sound_cmd_data.bin"
-; loc_000992BC
 FM_FrequencyTable:
 	dc.b	$58, $BC, $58, $D6, $58, $F0, $59, $0A, $59, $24, $59, $3E, $59, $58, $59, $72, $59, $8C, $59, $A6, $59, $C0, $59, $DA, $59, $F4, $5A, $0E, $5A, $28, $5A, $42 
 	dc.b	$5A, $5C, $5A, $76, $5A, $76, $5A, $76, $5A, $76, $5A, $76, $5A, $76, $5A, $76, $5A, $76, $5A, $76, $5A, $76, $5A, $76, $5A, $76, $5A, $76, $5A, $76, $5A, $76 

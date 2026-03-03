@@ -63,7 +63,6 @@ SawMotherInCartahenaStr:
 	dc.b	"I saw your dear mother", $FE
 	dc.b	"in Cartahena, but that", $FE
 	dc.b	"was many years ago.", $FF
-; loc_000218A2
 LostHereIsAMapStr_Wyclif:
 	dc.b	"Lost again? Well, here's a", $FE
 	dc.b	"map of the area."
@@ -76,7 +75,6 @@ LostHereIsAMapStr_Wyclif:
 	script_reveal_map $21
 	script_reveal_map $22
 	dc.b	$00 ; padding
-; loc_000218DE
 LostHereIsAMapStr_Deepdale:
 	dc.b	"Lost again? Well, here's a", $FE
 	dc.b	"map of the area." 
@@ -86,7 +84,6 @@ LostHereIsAMapStr_Deepdale:
 	script_reveal_map $24
 	script_reveal_map $25
 	dc.b	$00 ; padding
-; loc_00021914
 LostHereIsAMapStr_Stow:
 	dc.b	"Lost again? Well, here's a", $FE
 	dc.b	"map of the area."
@@ -223,14 +220,11 @@ SavedGameOptionsStr:
 	dc.b	$E2, $00, $E3, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E5, $E3, $E4, $E4, $E4, $E4
 	dc.b	$E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E5, $E6, $E7, $E7, $E7, $E7, $E7, $E7, $E7, $E7, $E7, $E7, $E7
 	dc.b	$E7, $E7, $E7, $E7, $E7, $E7, $E7, $E7, $E7, $E7, $E7, $E7, $E8, $00
-; loc_00021DA2
 UIBorder_SmallTop:
 	dc.b	$E0, $E1, $E1, $E1, $E1, $E1, $E1, $E1, $E1, $E1, $E1, $E1, $E1, $E1, $E1, $E1, $E1, $E1, $E1, $E1, $E1, $E2
-; loc_00021DB8
 UIBorder_SmallMiddle:
 	dc.b	$E3, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E5, $E3, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4
 	dc.b	$E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E5
-; loc_00021DE4
 UIBorder_LargeBox:
 	dc.b	$E6, $E7, $E7, $E7, $E7, $E7, $E7, $E7, $E7, $E7, $E7, $E7, $E7, $E7, $E7, $E7, $E7, $E7, $E7, $E7, $E7, $E8, $E0, $E1, $E1, $E1, $E1, $E1, $E1, $E1, $E1, $E1
 	dc.b	$E1, $E1, $E1, $E1, $E1, $E1, $E1, $E1, $E1, $E1, $E1, $E1, $E1, $E1, $E1, $E2, $E3, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4
@@ -240,7 +234,6 @@ UIBorder_LargeBox:
 	dc.b	$E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E5, $E3, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4
 	dc.b	$E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E5, $E3, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4, $E4
 	dc.b	$E4, $E4, $E4, $E4, $E4, $E5, $E6, $E7, $E7, $E7, $E7, $E7, $E7, $E7, $E7, $E7, $E7, $E7, $E7, $E7, $E7, $E7, $E7, $E7, $E7, $E7, $E7, $E7, $E7, $E7, $E7, $E8
-; loc_00021EE4
 UIBorder_LevelUp:
 	dc.b	$E0, $E1, $E1, $E1, $E1, $E1, $E1, $E1, $E1, $E1, $E1, $E2, $E3, $E4, $4C, $45, $56, $45, $4C, $E4, $55, $50, $E4, $E5, $E6, $E7, $E7, $E7, $E7, $E7, $E7, $E7
 	dc.b	$E7, $E7, $E7, $E8

@@ -26,7 +26,6 @@ ProgramState_00_Loop:
 	CLR.w	Palette_fade_step_counter.w
 	MOVE.w	#0, Palette_line_0_index.w
 	JSR	LoadPalettesFromTable
-; loc_0000155A
 ProgramState_01_Return:
 	RTS
 
@@ -71,7 +70,6 @@ ProgramState_03_Loop:
 	MOVE.b	#FLAG_TRUE, Fade_out_lines_mask.w
 	RTS
 
-; loc_000015E6
 ProgramState_03_Return:
 	RTS
 
@@ -228,13 +226,11 @@ ProgramState_NameEntryDone:
 ProgramState_07_Loop:
 	RTS
 
-;loc_000017E6
 ProgramState_EndingInit:
 	MOVE.l	#EndingSequence_Init, vobj_hblank_fn(A5)
 	MOVE.w	#PROGRAM_STATE_ENDING, Program_state.w
 	RTS
 
-;loc_000017F6
 ProgramState_Ending:
 	RTS
 
@@ -250,7 +246,6 @@ ProgramState_GameFadeIn:
 ProgramState_0E_and_10_Loop:
 	RTS
 
-;loc_0000181A
 ProgramState_GameActive:
 	TST.b	Player_is_moving.w
 	BNE.b	ProgramState_0F_Return
@@ -261,7 +256,6 @@ ProgramState_GameActive:
 	ADD.w	D0, D0
 	LEA	GameStateMap, A0
 	JSR	(A0,D0.w)
-; loc_00001838
 ProgramState_0F_Return:
 	RTS
 

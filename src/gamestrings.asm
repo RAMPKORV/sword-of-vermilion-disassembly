@@ -383,7 +383,6 @@ ItemNames:
 	dc.l	MineralBarStr	
 	dc.l	MegaBlastStr	
 ; ===========================================================================
-;loc_00025E64
 MagicNames:
 	dc.l	AeroStr
 	dc.l	AeriosStr
@@ -468,62 +467,50 @@ EquipmentNames:
 	dc.l	SkeletonArmorStr	
 	dc.l	CrimsonArmorStr
 	dc.l	OldNickArmorStr	
-; loc_00025FA4
 ShopDialog_NextTime:
 	dc.l	NextTimeStr	
 	dc.l	NextTimeStr	
 	dc.l	NextTimeStr	
-; loc_00025FB0
 ShopDialog_ThankYou:
 	dc.l	ThankYouStr	
 	dc.l	ThankYouStr	
 	dc.l	ThankYouStr	
-; loc_00025FBC
 ShopDialog_AnythingElse:
 	dc.l	AnythingElseStr	
 	dc.l	AnythingElseStr	
 	dc.l	AnythingElseStr	
-; loc_00025FC8
 ShopDialog_BusinessThanks:
 	dc.l	BusinessThanksStr	
 	dc.l	BusinessThanksStr	
 	dc.l	BusinessThanksStr	
-; loc_00025FD4
 ShopDialog_SellAnything:
 	dc.l	SellAnythingStr	
 	dc.l	SellAnythingStr	
 	dc.l	SellAnythingStr	
-; loc_00025FE0
 ShopDialog_NoNeed:
 	dc.l	NoNeedStr	
 	dc.l	NoNeedStr	
 	dc.l	NoNeedStr	
-; loc_00025FEC
 ShopDialog_GivingAway:
 	dc.l	GivingAwayStr	
 	dc.l	GivingAwayStr	
 	dc.l	GivingAwayStr	
-; loc_00025FF8
 ShopDialog_BuyPrompt:
 	dc.l	BuyPromptStr	
 	dc.l	BuyPromptStr	
 	dc.l	BuyPromptStr	
-; loc_00026004
 ShopDialog_Ok:
 	dc.l	OkStr
 	dc.l	OkStr
 	dc.l	OkStr
-; loc_00026010
 ShopDialog_SellPrompt:
 	dc.l	SellPromptStr	
 	dc.l	SellPromptStr	
 	dc.l	SellPromptStr	
-; loc_0002601C
 ShopDialog_AllRight:
 	dc.l	AllRightStr
 	dc.l	AllRightStr
 	dc.l	AllRightStr
-; loc_00026028
 ShopDialog_Welcome:
 	dc.l	ShopWelcomeStr
 	dc.l	WeaponsArmorStr
@@ -872,7 +859,6 @@ LongLiveKingStr:
 BanishedEvilStr:
 	dc.b	"You've banished", $FE
 	dc.b	"evil from our land!", $FF 
-; loc_000272AC
 EndingCelebrationStrings:
 	dc.l	ThankYouStr2
 	dc.l	LongLiveKingStr

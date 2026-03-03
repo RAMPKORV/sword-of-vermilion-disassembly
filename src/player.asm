@@ -2,7 +2,6 @@
 ; src/player.asm
 ; Player movement, battle player input, entity clearing
 ; ======================================================================
-; loc_0000363C
 ClearAllEnemyEntities:
 	MOVEA.l	Enemy_list_ptr.w, A6
 ClearAllEnemyEntities_loop:
@@ -26,7 +25,6 @@ BattleMusicIdTable:
 	dc.b	$88, $93, $88, $88, $93, $93, $93, $93, $88, $88, $93, $88, $93, $93 
 BattlePaletteIndexTable:
 	dc.w	$5F, $77, $68, $68, $81, $7E, $B1, $B2, $86, $B4, $B3, $87, $88, $82 
-; loc_00003694
 BossBattleObjectInitPtrs:
 	dc.l	InitBossObjects_TypeA
 	dc.l	InitBossObjects_TypeC
@@ -56,7 +54,6 @@ CaveMusicIdTable:
 	dc.b	$97, $8A, $8A, $98, $98, $8A, $8A, $97, $97, $98, $98, $97, $97, $97, $97, $8A, $8A, $8A, $8A, $98, $97, $97, $98, $8A, $8A, $8A, $8A, $8A, $8A, $8A, $8A, $8A 
 	dc.b	$98, $98, $98, $98, $98, $98, $98, $98, $98, $98, $8A, $8A 
 
-; loc_00003714
 PlayerObjectHandler:
 	BCLR.b	#7, obj_sprite_flags(A5)
 	BCLR.b	#3, obj_sprite_flags(A5)
@@ -167,7 +164,6 @@ TownMovement_UpdateIdleSprite_Loop:
 	MOVE.b	#FLAG_TRUE, Player_walk_anim_toggle.w
 TownMovement_UpdateIdleSprite_Loop2:
 	BRA.w	TownMovementTick_UpdateFlags
-; loc_00003896
 TownMovement_CameraUp:
 	MOVE.w	#CAMERA_MOVE_UP, Town_camera_move_state.w
 	MOVE.w	obj_world_y(A5), D0
@@ -176,7 +172,6 @@ TownMovement_CameraUp:
 	SUBQ.w	#1, obj_world_y(A5)
 TownMovement_CameraUp_Loop:
 	BRA.w	TownMovement_UpdateWalkAnim
-; loc_000038AE
 TownMovement_CameraDown:
 	MOVE.w	#CAMERA_MOVE_DOWN, Town_camera_move_state.w
 	MOVE.w	obj_world_y(A5), D0
@@ -186,7 +181,6 @@ TownMovement_CameraDown:
 	ADDQ.w	#1, obj_world_y(A5)
 TownMovement_CameraDown_Loop:
 	BRA.w	TownMovement_UpdateWalkAnim
-; loc_000038CA
 TownMovement_CameraLeft:
 	MOVE.w	#CAMERA_MOVE_LEFT, Town_camera_move_state.w
 	MOVE.w	obj_world_x(A5), D0
@@ -196,7 +190,6 @@ TownMovement_CameraLeft:
 	SUBQ.w	#1, obj_world_x(A5)
 TownMovement_CameraLeft_Loop:
 	BRA.w	TownMovement_UpdateWalkAnim
-; loc_000038E8
 TownMovement_CameraRight:
 	MOVE.w	#CAMERA_MOVE_RIGHT, Town_camera_move_state.w
 	MOVE.w	obj_world_x(A5), D0
@@ -238,7 +231,6 @@ TownMovement_UpdateWalkAnim_Loop5:
 	BGT.b	TownMovementTick_UpdateFlags
 	MOVE.b	#PLAYER_MOVE_STEPS, Player_movement_step_counter.w
 	CLR.b	Player_is_moving.w
-; loc_00003966
 TownMovementTick_UpdateFlags:
 	BCLR.b	#3, obj_sprite_flags(A5)
 	MOVE.w	Player_direction.w, D1
@@ -297,7 +289,6 @@ GetTileInFrontOfPlayer:
 	MOVE.b	#FLAG_TRUE, Town_movement_blocked.w
 	RTS
 
-; loc_00003A1C
 TownMovement_Unblocked:
 	CLR.b	Town_movement_blocked.w
 	RTS
@@ -336,7 +327,6 @@ CheckTownEnemyCollision_Done:
 	MOVE.b	#FLAG_TRUE, Town_movement_blocked.w
 	RTS
 
-; loc_00003A82
 TownEnemyCollision_NextEnemy:
 	CLR.w	D4
 	MOVE.b	obj_next_offset(A6), D4
@@ -529,7 +519,6 @@ BattlePlayerInputHandler:
 	SUBQ.b	#1, obj_invuln_timer(A5)
 	BGT.b	BattlePlayerInputHandler_AttackCheck
 	CLR.b	Player_invulnerable.w
-; loc_00003D7A
 BattlePlayerInputHandler_AttackCheck:
 	TST.b	Player_attacking_flag.w
 	BNE.b	BattlePlayerInputHandler_ProcessMovement
@@ -542,7 +531,6 @@ BattlePlayerInputHandler_AttackCheck:
 	JSR	QueueSoundEffect
 	MOVE.b	#FLAG_TRUE, Player_attacking_flag.w
 	CLR.b	obj_hp(A5)
-; loc_00003DA6
 BattlePlayerInputHandler_ProcessMovement:
 	MOVE.w	#BUTTON_BIT_A, D2
 	JSR	CheckButtonPress
@@ -569,7 +557,6 @@ BattlePlayerInputHandler_ProcessMovement_Loop:
 	SUB.l	D2, obj_world_x(A5)
 	SUB.l	D3, obj_world_y(A5)
 	BRA.w	BattlePlayerInputHandler_UpdateSprite_Loop
-; loc_00003DFE
 BattlePostVictoryTickHandler:
 	SUBQ.b	#1, obj_invuln_timer(A5)
 	BGE.w	BattlePostVictory_NoReward_Loop
@@ -587,7 +574,6 @@ BattlePostVictoryTickHandler:
 	CMPI.w	#$0030, D0
 	BLT.b	BattlePostVictory_NoReward
 	MOVE.b	#FLAG_TRUE, Found_something_nearby.w
-; loc_00003E36
 BattlePostVictory_NoReward:
 	BRA.w	BattlePostVictory_ResetEntities
 BattlePostVictory_NoReward_Loop:
@@ -595,7 +581,6 @@ BattlePostVictory_NoReward_Loop:
 	JSR	AddSpriteToDisplayList
 	RTS
 
-; loc_00003E48
 BattlePostVictory_ResetEntities:
 	MOVEA.l	Player_entity_ptr.w, A6
 	MOVE.l	#BattleEntityIdleTickHandler, obj_tick_fn(A6)
@@ -625,12 +610,10 @@ BattlePostVictory_ResetEntities_Loop2:
 	JSR	AddSpriteToDisplayList
 	RTS
 
-; loc_00003EBC
 BattleEntityIdleTickHandler:
 	JSR	AddSpriteToDisplayList
 	RTS
 
-; loc_00003EC4
 BattlePlayerInputHandler_UpdateSprite:
 	MOVEA.l	Battle_entity_slot_1_ptr.w, A6
 	MOVEA.l	Battle_entity_slot_2_ptr.w, A4
@@ -669,7 +652,6 @@ BattlePlayerInputHandler_UpdateSprite_Loop3:
 	BGT.b	BattleMovement_AttackCheck
 	MOVE.b	#PLAYER_MOVE_STEPS, Player_movement_step_counter.w
 	CLR.b	Player_is_moving.w
-; loc_00003F58
 BattleMovement_AttackCheck:
 	TST.b	Player_attacking_flag.w
 	BEQ.w	BattleMovement_UpdateSprite
@@ -691,7 +673,6 @@ BattleMovement_AttackCheck:
 	BRA.w	BattleMovement_UpdateSprite
 BattleMovement_AttackCheck_Loop:
 	CLR.b	Player_attacking_flag.w
-; loc_00003FA2
 BattleMovement_UpdateSprite:
 	BSET.b	#3, obj_sprite_flags(A5)
 	MOVE.w	Player_direction.w, D1
@@ -737,11 +718,9 @@ BattleMovement_UpdateSprite_Loop4:
 BattleMovement_UpdateSprite_Loop5:
 	MOVE.w	#BATTLE_FIELD_WIDTH, obj_world_x(A5)
 	BRA.b	PlayerSpritePositionClamp_Done
-; loc_00004036
 PlayerSpritePositionClamp_TopEdge:
 	MOVE.w	#BATTLE_FIELD_TOP, obj_world_y(A5)
 	BRA.b	PlayerSpritePositionClamp_Done
-; loc_0000403E
 PlayerSpritePositionClamp_BottomEdge:
 	MOVE.w	#BATTLE_FIELD_BOTTOM, obj_world_y(A5)
 PlayerSpritePositionClamp_Done:
@@ -860,7 +839,6 @@ NpcProximityCheck_NextSlot:
 	DBF	D7, CheckBattleAttackHitbox_Loop2_Done
 	RTS
 
-; loc_000041C2
 NPCInteractionTickHandler:
 	ADDQ.b	#1, obj_move_counter(A5)
 	MOVE.b	#NPC_ATTR_PAL3, obj_sprite_flags(A5)
@@ -990,7 +968,6 @@ OverworldPlayerTickHandler:
 	BTST.l	#3, D0
 	BNE.b	OverworldTick_RotateClockwise
 	BRA.w	OverworldTick_Return	
-; loc_0000441E
 OverworldTick_RotateClockwise:
 	MOVE.w	Overworld_movement_frame.w, D0
 	MOVE.w	D0, D1
@@ -1002,11 +979,9 @@ OverworldTick_RotateClockwise:
 	ASR.w	#1, D0
 	LEA	RotateClockwiseJumpTable, A0
 	ADDQ.w	#1, Player_compass_frame.w
-; loc_00004446
 OverworldRotateDispatch:
 	JSR	(A0,D0.w)
 	BRA.w	OverworldTick_ClearInteractionFlags
-; loc_0000444E
 OverworldTick_RotateCounterClockwise:
 	MOVE.w	Overworld_movement_frame.w, D0
 	MOVE.w	D0, D1

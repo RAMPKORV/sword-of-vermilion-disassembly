@@ -334,10 +334,8 @@ AndPushAbcStartTextStr:
 ; Empty string used in credits/text tables
 EmptyTextStr:
 	dc.b	$00, $00
-; loc_00017C1C
 CreditsTextListTerminator:
 	dc.b	$FE, $00
-; loc_00017C1E
 CreditsTextPtrTable:
 	dc.l	EmptyTextStr
 	dc.l	StaffTextStr
@@ -510,7 +508,6 @@ CreditsTextPtrTable:
 	dc.l	EmptyTextStr
 	dc.l	EmptyTextStr
 	dc.l	CreditsTextListTerminator
-; loc_00017EC6
 SpellbookMenuStateMachine:
 	MOVE.w	Spellbook_menu_state.w, D0
 	ANDI.w	#$001F, D0
@@ -520,7 +517,6 @@ SpellbookMenuStateMachine:
 	JSR	(A0,D0.w)
 	RTS
 
-; loc_00017EDE
 SpellbookMenuStateJumpTable:
 	BRA.w	SpellbookMenuStateJumpTable_Loop
 	BRA.w	SpellbookMenuStateJumpTable_Loop2
@@ -620,7 +616,6 @@ SpellbookMenu_Return_Loop:
 	BNE.b	SpellMenu_ScriptDoneShowStatus
 	RTS
 
-; loc_0001805A
 SpellMenu_ScriptDoneShowStatus:
 	JSR	DrawStatusHudWindow
 	MOVE.w	#SPELLBOOK_STATE_CAST_DONE, Spellbook_menu_state.w
@@ -968,7 +963,6 @@ SpellMenu_ScriptDoneShowStatus_Loop7:
 	BNE.b	SpellMenu_ScriptDoneShowStatus2
 	RTS
 
-; loc_0001856A
 SpellMenu_ScriptDoneShowStatus2:
 	JSR	DrawStatusHudWindow
 	MOVE.w	#SPELLBOOK_STATE_CAST_DONE, Spellbook_menu_state.w
@@ -978,7 +972,6 @@ SpellMenu_ScriptDoneShowStatus2:
 	TST.b	Player_in_first_person_mode.w
 	BEQ.b	SpellMenu_ScriptDoneShowHpMp
 	JSR	DisplayPlayerHpMp
-; loc_00018592
 SpellMenu_ScriptDoneShowHpMp:
 	JSR	ProcessScriptText
 	RTS
@@ -1023,7 +1016,6 @@ SpellMenu_ScriptDoneShowHpMp_Loop2:
 	JSR	QueueSoundEffect
 	RTS
 
-; loc_00018642
 AriesMapMenu_HandleInput:
 	MOVE.w	#$000A, Menu_cursor_second_column_x.w
 	MOVE.w	Aries_selected_town.w, Menu_cursor_index.w
@@ -1061,7 +1053,6 @@ ClearMagicReadyFlags_Done:
 	CLR.w	D0
 	RTS
 
-;loc_0001869C
 CastFieldMagicMap:
 	BRA.w	CastFieldMagicNotAllowed	
 	BRA.w	CastFieldMagicNotAllowed	
@@ -1087,7 +1078,6 @@ CastFieldMagicMap:
 	BRA.w	CastToxios
 	BRA.w	CastSanguio
 
-; loc_000186F8
 ; Attempting to use battle magic in field
 CastFieldMagicNotAllowed:
 	JSR	ResetScriptAndInitDialogue	
@@ -1095,7 +1085,6 @@ CastFieldMagicNotAllowed:
 	MOVE.w	#SPELLBOOK_STATE_CAST_WAIT, Spellbook_menu_state.w	
 	RTS
 
-;loc_0001870E
 CastInaudios:
 	JSR	CheckIfCursed
 	BNE.w	SpellMenu_CursedError
@@ -1113,14 +1102,12 @@ CastInaudios:
 	MOVE.w	#SPELLBOOK_STATE_CAST_WAIT, Spellbook_menu_state.w
 	RTS
 
-; loc_00018752
 SpellMenu_CantUseHere1:
 	JSR	ResetScriptAndInitDialogue	
 	PRINT 	CantUseHereStr	
 	MOVE.w	#SPELLBOOK_STATE_CAST_WAIT, Spellbook_menu_state.w	
 	RTS
 	
-;loc_00018768
 CastLuminos:
 	JSR	CheckIfCursed
 	BNE.w	SpellMenu_CursedError
@@ -1140,14 +1127,12 @@ CastLuminos:
 	JSR	QueueSoundEffect
 	RTS
 
-; loc_000187B4
 SpellMenu_CantUseHere2:
 	JSR	ResetScriptAndInitDialogue
 	PRINT 	BrightPlaceStr
 	MOVE.w	#SPELLBOOK_STATE_CAST_WAIT, Spellbook_menu_state.w
 	RTS
 
-;loc_000187CA
 CastSangua:
 	JSR	CheckIfCursed
 	BNE.w	SpellMenu_CursedError
@@ -1187,7 +1172,6 @@ CastSanguia_Loop3:
 	MOVE.w	#SPELLBOOK_STATE_CAST_WAIT, Spellbook_menu_state.w
 	RTS
 
-;loc_0001884C
 CastSanguio:
 	JSR	CheckIfCursed
 	BNE.w	SpellMenu_CursedError
@@ -1201,7 +1185,6 @@ CastSanguio:
 	MOVE.w	#SPELLBOOK_STATE_CAST_WAIT, Spellbook_menu_state.w
 	RTS
 
-;loc_00018884
 CastToxios:
 	JSR	CheckIfCursed
 	BNE.w	SpellMenu_CursedError
@@ -1217,7 +1200,6 @@ CastToxios_Loop:
 	BEQ.b	UseAntidote_RemovePoison
 	PRINT 	PoisonTooStrongStr
 	BRA.b	UseAntidote_RemovePoison_Loop
-; loc_000188BE
 UseAntidote_RemovePoison:
 	CLR.w	Player_poisoned.w
 	CLR.b	Poison_notified.w
@@ -1228,7 +1210,6 @@ UseAntidote_RemovePoison_Loop:
 	MOVE.w	#SPELLBOOK_STATE_CAST_WAIT, Spellbook_menu_state.w
 	RTS
 
-;loc_000188DE
 CastAries:
 	JSR	CheckIfCursed
 	BNE.w	SpellMenu_CursedError
@@ -1242,14 +1223,12 @@ CastAries:
 	JSR	DrawTownListWindow
 	MOVE.w	#SPELLBOOK_STATE_SHOW_HP_MP, Spellbook_menu_state.w
 	RTS
-; loc_00018912
 SpellMenu_CantUseHere3:
 	PRINT 	CantUseHereStr
 	JSR	ResetScriptAndInitDialogue
 	MOVE.w	#SPELLBOOK_STATE_CAST_WAIT, Spellbook_menu_state.w
 	RTS
 
-;loc_00018928
 CastExtrios:
 	JSR	CheckIfCursed
 	BNE.w	SpellMenu_CursedError
@@ -1289,7 +1268,6 @@ SpellMenu_CursedError:
 	MOVE.w	#SPELLBOOK_STATE_CAST_WAIT, Spellbook_menu_state.w
 	RTS
 
-; loc_000189C2
 TownOverworldCoords: ; Town locations. Without duplicates.
 	; format:
 	; dc.w (x_in_sector), (y_in_sector), (sector_x), (sector_y)
@@ -1308,7 +1286,6 @@ TownOverworldCoords: ; Town locations. Without duplicates.
 	dc.w	$5, $4, $9, $2 ; TOWN_HASTINGS
 	dc.w	$8, $8, $A, $5 ; TOWN_CARTHAHENA
 
-;loc_00018A32
 CastBattleMagicMap:
 	BRA.w	CastAero
 	BRA.w	CastAerios
@@ -1409,7 +1386,6 @@ DeactivateProjectile:
 	BCLR.b	#7, (A5)
 	RTS
 
-;loc_00018BA6
 CastAerios:
 	MOVEA.l	Object_slot_02_ptr.w, A6
 	BTST.b	#7, (A6)

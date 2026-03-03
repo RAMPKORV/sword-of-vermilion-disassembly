@@ -65,7 +65,6 @@ SaveGameToSram_Done10:
 	JSR	CalculateChecksumAndBackupSram
 	RTS
 
-; loc_0001066C
 CopyByteToSram:
 	MOVE.b	(A1)+, (A0)+
 	LEA	$1(A0), A0
@@ -102,7 +101,6 @@ CalculateChecksumAndBackupSram_Loop_Done:
 	DBF	D0, CalculateChecksumAndBackupSram_Loop_Done
 	RTS
 	
-; loc_000106C2
 FileMenuPhaseDispatch:
 	LEA	FileMenuPhaseJumpTable, A0
 	MOVE.w	File_menu_phase.w, D0
@@ -111,7 +109,6 @@ FileMenuPhaseDispatch:
 	JSR	(A0,D0.w)
 	RTS
 	
-; loc_000106D6
 FileMenuPhaseJumpTable:
 	BRA.w	FileMenuPhaseJumpTable_Loop
 	BRA.w	FileMenuPhaseJumpTable_Loop2
@@ -204,7 +201,6 @@ FileMenu_VerifyChecksum_Loop6:
 	MOVE.w	#FILE_MENU_PHASE_SUCCESS, File_menu_phase.w	
 	MOVE.w	#SOUND_LEVEL_UP_BANNER, D0	
 	JSR	QueueSoundEffect	
-; loc_00010818
 FileSave_Return:
 	RTS
 	
@@ -219,7 +215,6 @@ FileSave_Return_Loop2:
 	JSR	CheckButtonPress
 	BEQ.b	FileMenuSaveConfirm_Return
 	MOVE.w	#FILE_MENU_PHASE_DRAW_SELECT, File_menu_phase.w
-; loc_00010838
 FileMenuSaveConfirm_Return:
 	RTS
 	
@@ -230,7 +225,6 @@ FileMenuSaveConfirm_Return_Loop:
 	JSR	CheckButtonPress	
 	BEQ.b	FileMenuLoad_Return	
 	MOVE.b	#FLAG_TRUE, File_load_complete.w	
-; loc_00010852
 FileMenuLoad_Return:
 	RTS
 	
@@ -325,13 +319,11 @@ CopySramBackupToSlot_Done:
 	DBF	D0, CopySramBackupToSlot_Done	
 	RTS
 	
-; loc_0001094A
 SramSaveSlotAddresses:
 	dc.l	$00200001
 	dc.l	$00200A81
 	dc.l	$00201501
 	dc.l	$00200001 
-; loc_0001095A
 SramBackupSlotAddresses:
 	dc.l	$00200541
 	dc.l	$00200FC1

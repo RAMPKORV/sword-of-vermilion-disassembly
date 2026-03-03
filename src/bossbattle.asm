@@ -68,7 +68,6 @@ RenderAreaMap_Loop2:
 	BRA.b	RenderAreaMap_WriteTile
 RenderAreaMap_Loop3:
 	CLR.w	D0
-; loc_00006436
 RenderAreaMap_WriteTile:
 	ADD.w	D0, D0
 	MOVE.w	(A2,D0.w), VDP_data_port
@@ -89,7 +88,6 @@ UpdateAreaVisibility:
 	BNE.b	RenderCaveDarknessTilemap
 UpdateAreaVisibility_Loop:
 	MOVE.w	#$85B7, D4
-; loc_00006470
 RenderCaveDarknessTilemap:
 	ORI	#$0700, SR
 	MOVE.l	#$60AE0003, D5
@@ -135,7 +133,6 @@ RenderCaveDarknessTilemap_Loop_Done2:
 	ADDI.l	#$00800000, D5
 	DBF	D7, RenderCaveDarknessTilemap_Loop_Done
 	ANDI	#$F8FF, SR
-; loc_00006506
 RenderCaveWallTiles_Return:
 	RTS
 
@@ -169,7 +166,6 @@ WallTilemap_NearSide:
 	dc.w	$04D0
 	dc.w	$04C8
 	dc.b	$04, $C9, $04, $C1, $04, $C2, $04, $C3, $04, $C4, $04, $C5, $04, $C6, $04, $CD 
-; loc_00006582
 WallTileGfxPtrs:
 	dc.l	WallTileGfxPtrs_Gfx_80D44
 	dc.l	WallTileGfxPtrs_Gfx_80E56
@@ -239,7 +235,6 @@ WallRenderVdpParams_Mid:
 	dc.b	$63, $0C, $00, $03, $61, $8C, $00, $03, $62, $0C, $00, $03, $62, $8C, $00, $03 
 WallRenderVdpParams_Far:
 	dc.b	$63, $22, $00, $03, $61, $9C, $00, $03, $62, $1E, $00, $03, $62, $A0, $00, $03 
-; loc_000067A4
 WallTileMidGfxPtrs:
 	dc.l	WallTileMidGfxPtrs_Gfx_80AD0
 	dc.l	WallTileMidGfxPtrs_Gfx_80B6A
@@ -362,7 +357,6 @@ BossBattlePlayerTick_Active:
 	SUBQ.b	#1, obj_invuln_timer(A5)
 	BGT.b	BossBattle_AttackCheck
 	CLR.b	Player_invulnerable.w
-; loc_00006998
 BossBattle_AttackCheck:
 	TST.b	Player_attacking_flag.w
 	BNE.w	BossBattle_MoveDone
@@ -416,7 +410,6 @@ BossBattle_PlayerIdle:
 	MOVE.b	#PLAYER_MOVE_STEPS, Player_movement_step_counter.w
 	CLR.b	Player_is_moving.w
 	BRA.w	BossBattle_MoveDone
-; loc_00006A6A
 BossBattle_ApplyMovement:
 	MOVE.w	#$0030, obj_hitbox_half_h(A5)
 	MOVE.b	#FLAG_TRUE, Player_is_moving.w
@@ -470,7 +463,6 @@ BossBattle_PostAttack_ClampAndDisplay_Loop:
 	CMPI.w	#BOSS_BATTLE_PLAYER_X_MAX, D0
 	BLT.b	BossBattle_SpriteUpdate
 	MOVE.w	#BOSS_BATTLE_PLAYER_X_MAX, obj_world_x(A5)	
-; loc_00006B28
 BossBattle_SpriteUpdate:
 	TST.b	Boss_battle_exit_flag.w
 	BNE.w	BossBattleExitCleanup
@@ -686,7 +678,6 @@ CheckFixedAreaCollision:
 CheckFixedAreaCollision_Return:
 	RTS
 
-; loc_00006DCC
 NPCBoundingBoxTable:
 	dc.w	0, 0, 0, 0
 	dc.w	0, 0, 0, 0
@@ -699,7 +690,6 @@ NPCBoundingBoxTable:
 	dc.w	4, 32, -32, -12
 	dc.w	4, 32, -32, -12
 
-; loc_00006E1C
 LoadTownNPCs:
 	CLR.b	Npc_load_done_flag.w
 	CLR.w	D5
@@ -734,7 +724,6 @@ LoadTownNPCs_Loop:
 	MOVE.b	(A0)+, obj_sprite_flags(A6)
 	MOVE.b	(A0)+, obj_collidable(A6)
 	BRA.b	NpcInit_ClearActiveFlag_Loop
-; loc_00006E92
 NpcInit_ClearActiveFlag:
 	BCLR.b	#7, (A6)
 NpcInit_ClearActiveFlag_Loop:
@@ -759,7 +748,6 @@ NpcInit_ClearActiveFlag_Loop_Done:
 NpcInit_ClearActiveFlag_Loop2:
 	RTS
 
-; loc_00006ED2
 ClearAllNPCSlots:					; unreferenced dead code
 	MOVEA.l	Enemy_list_ptr.w, A6
 	MOVEQ	#$1D, D7
@@ -771,4 +759,3 @@ ClearAllNPCSlots_Done:
 	DBF	D7, ClearAllNPCSlots_Done
 	RTS
 
-; loc_00006EEC

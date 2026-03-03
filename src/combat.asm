@@ -56,7 +56,6 @@ MarkProjectileFinished:
 	MOVE.b	#FLAG_TRUE, obj_npc_busy_flag(A5)
 	RTS
 
-;loc_00018D5A
 CastVolti:
 	MOVEA.l	Object_slot_02_ptr.w, A6
 	BTST.b	#7, (A6)
@@ -123,7 +122,6 @@ DeactivateVoltiProjectile:
 	BCLR.b	#7, (A5)
 	RTS
 
-;loc_00018E5C
 CastVoltio:
 	MOVEA.l	Object_slot_02_ptr.w, A6
 	BTST.b	#7, (A6)
@@ -262,7 +260,6 @@ VoltioProjectileOffsetData:
 	dc.w	1 
 	dc.w	3 
 
-;loc_0001901A
 CastVoltios:
 	MOVEA.l	Object_slot_02_ptr.w, A6
 	BTST.b	#7, (A6)
@@ -555,7 +552,6 @@ DrawSpriteAtCurrentPosition:
 	JSR	AddSpriteToDisplayList
 	RTS
 
-;loc_00019408
 CastFerros:
 	MOVEA.l	Object_slot_02_ptr.w, A6
 	BTST.b	#7, (A6)
@@ -636,7 +632,6 @@ DeactivateFerrosProjectile:
 	MOVE.b	#FLAG_TRUE, obj_npc_busy_flag(A5)
 	RTS
 
-;loc_00019540
 CastCopperos:
 	MOVEA.l	Object_slot_02_ptr.w, A6
 	BTST.b	#7, (A6)
@@ -809,7 +804,6 @@ DeactivateAscendingArcProjectile:
 	MOVE.b	#FLAG_TRUE, obj_npc_busy_flag(A5)
 	RTS
 
-;loc_000197DA
 CastMercusios:
 	MOVEA.l	Object_slot_02_ptr.w, A6
 	BTST.b	#7, (A6)
@@ -905,7 +899,6 @@ DeactivateDescendingArcProjectile:
 	MOVE.b	#FLAG_TRUE, obj_npc_busy_flag(A5)
 	RTS
 
-;loc_00019940
 CastArgentos:
 	MOVEA.l	Object_slot_02_ptr.w, A6
 	BTST.b	#7, (A6)
@@ -1099,7 +1092,6 @@ FindNthEnemy_Found:
 	MOVE.l	A4, obj_hp(A6)
 	RTS
 
-;loc_00019C04
 CastHydro:
 	MOVEA.l	Object_slot_02_ptr.w, A6
 	BTST.b	#7, (A6)
@@ -1272,7 +1264,6 @@ SetPosFromEnemy_NextSlot:
 	MOVE.w	#$0070, obj_world_y(A6)	
 	RTS
 	
-;loc_00019E74
 CastChronos:
 	BSR.w	CheckCursedAndConsumeReadiedMagicMp
 	BNE.b	CastChronos_Done
@@ -1294,7 +1285,6 @@ UpdateChronoCountdown:
 ChronoCountdown_StillActive:
 	RTS
 
-;loc_00019EB2
 CastChronios:
 	BSR.w	CheckCursedAndConsumeReadiedMagicMp
 	BNE.b	CastChronios_Done
@@ -1405,7 +1395,6 @@ ClearEnemyActiveFlags_Loop:
 	DBF	D7, ClearEnemyActiveFlags_Loop
 	RTS
 
-; loc_0001A0A8
 CheckProjectileHitEnemies:
 	MOVE.w	obj_world_x(A5), D0
 	MOVE.w	D0, D1
@@ -1522,7 +1511,6 @@ FindTargetEnemy_NoTarget:
 	MOVE.l	#0, obj_hp(A6)
 	RTS
 
-; loc_0001A1EA
 CheckCursedAndConsumeReadiedMagicMp:
 	JSR	CheckIfCursed
 	BNE.b	ConsumeReadiedMagicMp_Fail
@@ -1562,7 +1550,6 @@ DeductMagicMP_Fail:
 	MOVE.w	#$FFFF, D0	
 	RTS
 	
-; loc_0001A250
 InitMagicDamageAndFlags:
 	LEA	MagicBaseDamageTable, A4
 	MOVE.w	Readied_magic.w, D0
@@ -1611,7 +1598,6 @@ CoordsOutOfBounds:
 	CLR.w	D0
 	RTS
 
-; loc_0001A2CE
 ItemMenuStateMachine:
 	MOVE.w	Item_menu_state.w, D0
 	ANDI.w	#$F, D0
@@ -1621,7 +1607,6 @@ ItemMenuStateMachine:
 	JSR	(A0,D0.w)
 	RTS
 
-; loc_0001A2E6
 ItemMenuStateJumpTable: ; Item effect routines map
 	BRA.w	ItemMenuStateJumpTable_Loop
 	BRA.w	ItemMenuStateJumpTable_Loop2
@@ -1686,7 +1671,6 @@ ItemMenuStateJumpTable_Loop4:
 ItemMenuStateJumpTable_Loop5:
 	PRINT 	UseWhichItemStr
 	MOVE.w	#ITEM_MENU_STATE_USE_INIT, Item_menu_state.w
-; loc_0001A3EA
 ItemMenuUseOrDiscard_Done:
 	RTS
 
@@ -1708,7 +1692,6 @@ ItemMenuUseOrDiscard_Done_Loop:
 	BNE.b	ItemMenu_ScriptDone
 	RTS
 
-; loc_0001A428
 ItemMenu_ScriptDone:
 	JSR	DrawStatusHudWindow
 	MOVE.w	#ITEM_MENU_STATE_SCRIPT_DONE, Item_menu_state.w
@@ -1731,7 +1714,6 @@ ItemMenu_ScriptDone_Loop:
 	TST.b	Sixteen_rings_used_at_throne.w
 	BEQ.b	ItemMenu_ItemUsed_Return
 	MOVE.w	#PROGRAM_STATE_ENDING_INIT, Program_state.w
-; loc_0001A474
 ItemMenu_ItemUsed_Return:
 	RTS
 
@@ -1869,7 +1851,6 @@ ItemMenu_ItemUsed_Return_Loop4:
 	BNE.b	ItemMenu_ScriptDone2
 	RTS
 
-; loc_0001A678
 ItemMenu_ScriptDone2:
 	JSR	DrawStatusHudWindow
 	MOVE.w	#WINDOW_DRAW_ITEM_LIST_SHORT, Window_draw_type.w
@@ -1944,7 +1925,6 @@ ItemMenu_ScriptDone2_Loop5:
 	ADDQ.w	#1, Item_menu_state.w
 	RTS
 
-; loc_0001A794
 UseItemDescription_Build:
 	ADD.w	D0, D0
 	ADD.w	D0, D0
@@ -2006,7 +1986,6 @@ UseItemDescription_Build_Loop2:
 	BNE.b	ItemMenu_ScriptDoneCheckCave
 	RTS
 
-; loc_0001A854
 ItemMenu_ScriptDoneCheckCave:
 	JSR	DrawStatusHudWindow
 	TST.b	Player_in_first_person_mode.w
@@ -2053,7 +2032,6 @@ ItemMenu_ScriptDoneCheckCave_Loop2:
 	BNE.b	UseExtrios_Warp
 	RTS
 
-; loc_0001A8DA
 UseExtrios_Warp:
 	LEA	TownOverworldCoords, A0
 	MOVE.w	Current_town.w, D0
@@ -2089,7 +2067,6 @@ UseExtrios_Warp_Loop:
 	BNE.b	UseExtrios_CaveReturn
 	RTS
 
-; loc_0001A954
 UseExtrios_CaveReturn:
 	MOVE.w	Player_cave_position_x.w, Player_position_x_outside_town.w
 	MOVE.w	Player_cave_position_y.w, Player_position_y_outside_town.w
@@ -2152,7 +2129,6 @@ UseItemMap:
 	BRA.w	UseMineralBar
 	BRA.w	UseMegaBlast
 
-;loc_0001AA46
 UseRubyBrooch:
 	TST.b	Is_in_cave.w
 	BNE.b	UseRubyBrooch_Loop
@@ -2182,7 +2158,6 @@ UseBansheePowder_Loop:
 UseBansheePowder_Loop2:
 	RTS
 
-;loc_0001AA98
 UseKulmsVase:
 	ADDI.w	#10, Player_ac.w	
 	CMPI.w	#1500, Player_ac.w	
@@ -2195,7 +2170,6 @@ UseKulmsVase_Loop:
 	JSR	QueueSoundEffect	
 	RTS
 	
-;loc_0001AAC4
 UseKasansChisel:
 	ADDI.w	#10, Player_dex.w	
 	CMPI.w	#MAX_PLAYER_DEX, Player_dex.w	
@@ -2208,7 +2182,6 @@ UseKasansChisel_Loop:
 	JSR	QueueSoundEffect	
 	RTS
 	
-;loc_0001AAF0
 UseBookOfKiel:
 	ADDI.w	#10, Player_int.w	
 	CMPI.w	#MAX_PLAYER_INT, Player_int.w	
@@ -2221,7 +2194,6 @@ UseBookOfKiel_Loop:
 	JSR	QueueSoundEffect	
 	RTS
 	
-;loc_0001AB1C
 UseDanegeldWater:
 	ADDQ.w	#8, Player_mmp.w	
 	CMPI.w	#MAX_PLAYER_MMP, Player_mmp.w	
@@ -2243,7 +2215,6 @@ UseDanegeldWater_Loop2:
 	JSR	QueueSoundEffect	
 	RTS
 
-;loc_0001AB64
 UseMineralBar:
 	ADDI.w	#10, Player_str.w	
 	CMPI.w	#1500, Player_str.w	
@@ -2256,7 +2227,6 @@ UseMineralBar_Loop:
 	JSR	QueueSoundEffect	
 	RTS
 	
-;loc_0001AB90
 UseMegaBlast:
 	ADDI.w	#10, Player_luk.w	
 	CMPI.w	#MAX_PLAYER_LUK, Player_luk.w	
@@ -2269,7 +2239,6 @@ UseMegaBlast_Loop:
 	JSR	QueueSoundEffect	
 	RTS
 	
-;loc_0001ABBC
 UseRafaelsStick:
 	JSR	CheckIfCursed
 	BEQ.b	UseRafaelsStick_Loop
@@ -2283,7 +2252,6 @@ UseRafaelsStick_Loop:
 	PRINT 	NothingHappenedStr
 	RTS
 
-;loc_0001ABE8
 UseTopazJewel:
 	MOVE.w	#30, D1	
 	JSR	GetRandomNumber	
@@ -2292,7 +2260,6 @@ UseTopazJewel:
 	ADD.w	D1, Player_mp.w	
 	BRA.w	UseAgateJewel_Loop	
 
-;loc_0001AC00
 UseAgateJewel:
 	MOVE.w	#10, D1
 	JSR	GetRandomNumber
@@ -2312,12 +2279,10 @@ UseAgateJewel_Loop2:
 	JSR	QueueSoundEffect
 	RTS
 
-;loc_0001AC44
 UseMedicine:
 	ADDI.w	#100, Player_hp.w	
 	BRA.w	UseHerbs_Loop	
 
-;loc_0001AC4E
 UseHerbs:
 	ADDI.w	#40, Player_hp.w
 UseHerbs_Loop:
@@ -2333,7 +2298,6 @@ UseHerbs_Loop2:
 	JSR	QueueSoundEffect
 	RTS
 
-;loc_0001AC84
 UseGriffinWing:
 	TST.b	Player_in_first_person_mode.w
 	BEQ.b	UseItem_NothingHappened1
@@ -2341,12 +2305,10 @@ UseGriffinWing:
 	BNE.b	UseItem_NothingHappened1
 	BSR.w	RemoveSelectedItemFromList
 	MOVE.w	#ITEM_MENU_STATE_WARP_INIT, Item_menu_state.w
-; loc_0001AC9A
 UseItem_NothingHappened1:
 	PRINT 	NothingHappenedStr
 	RTS
 
-;loc_0001ACA4
 UseMirrorOfAtlas:
 	PRINT 	WorldMapsStr
 	LEA	Map_trigger_flags.w, A0
@@ -2362,7 +2324,6 @@ UseMirrorOfAtlas_Loop:
 	BSR.w	RemoveSelectedItemFromList
 	RTS
 
-;loc_0001ACD4
 UseTitaniasMirror:
 	TST.b	Player_in_first_person_mode.w	
 	BEQ.b	UseItem_NothingHappened2	
@@ -2373,12 +2334,10 @@ UseTitaniasMirror:
 	PRINT 	GlowingMapStr	
 	RTS
 	
-; loc_0001ACF6
 UseItem_NothingHappened2:
 	PRINT 	NothingHappenedStr	
 	RTS
 	
-;loc_0001AD00
 UseGnomeStone:
 	TST.b	Is_in_cave.w
 	BEQ.b	UseGnomeStone_Loop
@@ -2407,7 +2366,6 @@ UsePoisonBalm_Loop:
 	BRA.b	UseHerbs_Done
 UsePoisonBalm_Loop2:
 	PRINT 	PoisonTooStrongStr	
-; loc_0001AD56
 UseHerbs_Done:
 	BSR.w	RemoveSelectedItemFromList
 	RTS
@@ -2429,7 +2387,6 @@ UseCandle:
 	JSR	QueueSoundEffect
 	RTS
 
-; loc_0001AD9C
 UseCandle_BrightPlace:
 	BSR.w	RemoveSelectedItemFromList
 	PRINT 	BrightPlaceStr
@@ -2452,7 +2409,6 @@ UseLantern:
 	JSR	QueueSoundEffect
 	RTS
 
-; loc_0001ADE8
 UseLantern_BrightPlace:
 	BSR.w	RemoveSelectedItemFromList	
 	PRINT 	BrightPlaceStr	
@@ -2494,7 +2450,6 @@ UseAlarmClock_Done:
 	MOVE.w	$4(A0,D0.w), D2
 	CMP.w	Player_direction.w, D2
 	BEQ.b	AlarmClockCheck_Return_Loop
-; loc_0001AE68
 UseAlarmClock_NextNPC:
 	ADDQ.w	#1, D1
 	DBF	D7, UseAlarmClock_Done
@@ -2507,7 +2462,6 @@ AlarmClockCheck_Return_Loop:
 	PRINT 	BrrrnnnggStr
 	RTS
 
-; loc_0001AE88
 AlarmClockPositionData:
 	dc.w	$D8
 	dc.w	$98

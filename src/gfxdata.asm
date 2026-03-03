@@ -2,7 +2,6 @@
 ; Graphics Data
 ; Compressed font tiles, battle tile graphics, enemy/boss/player sprite graphics
 ; ===========================================================================
-; loc_00041A90
 CompressedFontTileData:
 	incbin "data/art/tiles/font/font_tiles.bin"
 LoadBattleTilesToBuffers_Data:	equ CompressedFontTileData+$EE8
@@ -2672,7 +2671,6 @@ MagicGfxData_Tadcaster_Gfx_4A70E:
 	dc.l	LoadBossGraphics_Data8_Gfx_4A6E2
 	dc.l	LoadBossGraphics_Data8_Gfx_4A6EE
 	dc.l	LoadBossGraphics_Data8_Gfx_4A6FC
-; loc_0004A77A
 SpriteLayout_4A77A:
 	dc.b	$00, $02, $04, $05, $01, $03, $04, $06, $07, $09, $04, $05, $08, $0A, $04, $06, $0B, $0D, $04, $05, $0C, $0E, $04, $06 
 SpriteFramePointerTable_4A8B8_Frame_4A792:
@@ -2705,7 +2703,6 @@ SpriteFramePointerTable_4A8B8_Frame_4A89C:
 	dc.b	$01, $00, $CC, $CE, $FF, $FF, $B9, $61, $B9, $96, $0B, $99, $BB, $00 
 SpriteFramePointerTable_4A8B8_Frame_4A8AA:
 	dc.b	$01, $00, $33, $37, $FF, $FF, $16, $9B, $69, $9B, $99, $B0, $BB, $00 
-; loc_0004A8B8
 SpriteFramePointerTable_4A8B8:
 	dc.l	SpriteFramePointerTable_4A8B8_Frame_4A792
 	dc.l	SpriteFramePointerTable_4A8B8_Frame_4A7A8
@@ -2994,7 +2991,6 @@ MagicGfxData_SwaffhamExcalabria_Gfx_4B1E6:
 	dc.l	SpriteFramePointerTable_4A8B8_Frame_4B1B8
 	dc.l	SpriteFramePointerTable_4A8B8_Frame_4B1C4
 	dc.l	SpriteFramePointerTable_4A8B8_Frame_4B1DC
-; loc_0004B302
 FPEnemyTileLayout_A:
 	dc.b	$00, $03, $06, $09, $01, $04, $07, $0A, $02, $05, $08, $0B, $00, $0C, $0F, $12, $01, $0D, $10, $13, $02, $0E, $11, $14, $00, $16, $19, $1C, $15, $17, $1A, $1D 
 	dc.b	$00, $18, $1B, $1E, $00, $1F, $22, $25, $15, $20, $23, $26, $00, $21, $24, $27, $00, $29, $2C, $2F, $28, $2A, $2D, $30, $00, $2B, $2E, $31, $00, $32, $35, $38 
@@ -3059,7 +3055,6 @@ FPEnemyTileLayout_B_Gfx_4B846 equ FPEnemyTileLayout_B_Gfx_4B34A+$4FC
 FPEnemyTileLayout_B_Gfx_4B858 equ FPEnemyTileLayout_B_Gfx_4B34A+$50E
 FPEnemyTileLayout_B_Gfx_4B868 equ FPEnemyTileLayout_B_Gfx_4B34A+$51E
 FPEnemyTileLayout_B_Gfx_4B884 equ FPEnemyTileLayout_B_Gfx_4B34A+$53A
-; loc_0004B894
 FPEnemyTileLayout_B:
 	dc.l	FPEnemyTileLayout_B_Gfx_4B34A
 	dc.l	FPEnemyTileLayout_B_Gfx_4B350
@@ -3120,7 +3115,6 @@ FPEnemyTileLayout_B:
 	dc.l	FPEnemyTileLayout_B_Gfx_4B858
 	dc.l	FPEnemyTileLayout_B_Gfx_4B868
 	dc.l	FPEnemyTileLayout_B_Gfx_4B884
-; loc_0004B980
 FPEnemyTileLayout_C:
 	dc.b	$00, $00, $05, $08, $01, $03, $06, $09, $02, $04, $07, $0A, $00, $00, $0C, $0F, $01, $0B, $0D, $10, $02, $04, $0E, $11, $00, $13, $16, $19, $12, $14, $17, $1A 
 	dc.b	$00, $15, $18, $1B, $00, $1D, $20, $19, $1C, $1E, $21, $1A, $00, $1F, $22, $1B 
@@ -3160,7 +3154,6 @@ FPEnemyTileLayout_D_Gfx_4BC4C equ FPEnemyTileLayout_D_Gfx_4B9B0+$29C
 FPEnemyTileLayout_D_Gfx_4BC5E equ FPEnemyTileLayout_D_Gfx_4B9B0+$2AE
 FPEnemyTileLayout_D_Gfx_4BC72 equ FPEnemyTileLayout_D_Gfx_4B9B0+$2C2
 FPEnemyTileLayout_D_Gfx_4BC94 equ FPEnemyTileLayout_D_Gfx_4B9B0+$2E4
-; loc_0004BCA8
 FPEnemyTileLayout_D:
 	dc.l	FPEnemyTileLayout_D_Gfx_4B9B0
 	dc.l	FPEnemyTileLayout_D_Gfx_4B9B6
@@ -3197,7 +3190,6 @@ FPEnemyTileLayout_D:
 	dc.l	FPEnemyTileLayout_D_Gfx_4BC5E
 	dc.l	FPEnemyTileLayout_D_Gfx_4BC72
 	dc.l	FPEnemyTileLayout_D_Gfx_4BC94
-; loc_0004BD34
 FPEnemyTileLayout_E:
 	dc.b	$00, $03, $06, $09, $01, $04, $07, $0A, $02, $05, $08, $0B, $00, $0D, $10, $13, $0C, $0E, $11, $14, $02, $0F, $12, $15, $00, $16, $19, $1C, $0C, $17, $1A, $1D 
 	dc.b	$02, $18, $1B, $1E, $1F, $22, $25, $28, $20, $23, $26, $29, $21, $24, $27, $2A, $02, $2C, $2F, $28, $2B, $2D, $30, $32, $21, $2E, $31, $2A 
@@ -3253,7 +3245,6 @@ FPEnemyTileLayout_F_Gfx_4C140 equ FPEnemyTileLayout_F_Gfx_4BD70+$3D0
 FPEnemyTileLayout_F_Gfx_4C152 equ FPEnemyTileLayout_F_Gfx_4BD70+$3E2
 FPEnemyTileLayout_F_Gfx_4C174 equ FPEnemyTileLayout_F_Gfx_4BD70+$404
 FPEnemyTileLayout_F_Gfx_4C17C equ FPEnemyTileLayout_F_Gfx_4BD70+$40C
-; loc_0004C19E
 FPEnemyTileLayout_F:
 	dc.l	FPEnemyTileLayout_F_Gfx_4BD70
 	dc.l	FPEnemyTileLayout_F_Gfx_4BD78
@@ -3306,7 +3297,6 @@ FPEnemyTileLayout_F:
 	dc.l	FPEnemyTileLayout_F_Gfx_4C152
 	dc.l	FPEnemyTileLayout_F_Gfx_4C174
 	dc.l	FPEnemyTileLayout_F_Gfx_4C17C
-; loc_0004C26A
 FPEnemyTileLayout_G:
 	dc.b	$00, $03, $06, $09, $01, $04, $07, $0A, $02, $05, $08, $0B, $00, $00, $00, $10, $01, $0C, $0E, $11, $02, $0D, $0F, $12, $00, $00, $15, $18, $01, $13, $16, $19 
 	dc.b	$02, $14, $17, $1A, $1B, $1D, $20, $10, $1C, $1E, $21, $23, $00, $1F, $22, $24, $00, $26, $29, $10, $25, $27, $2A, $2C, $00, $28, $2B, $2D 
@@ -3357,7 +3347,6 @@ FPEnemyTileLayout_H_Gfx_4C636 equ FPEnemyTileLayout_H_Gfx_4C2A6+$390
 FPEnemyTileLayout_H_Gfx_4C658 equ FPEnemyTileLayout_H_Gfx_4C2A6+$3B2
 FPEnemyTileLayout_H_Gfx_4C660 equ FPEnemyTileLayout_H_Gfx_4C2A6+$3BA
 FPEnemyTileLayout_H_Gfx_4C682 equ FPEnemyTileLayout_H_Gfx_4C2A6+$3DC
-; loc_0004C68E
 FPEnemyTileLayout_H:
 	dc.l	FPEnemyTileLayout_H_Gfx_4C2A6
 	dc.l	FPEnemyTileLayout_H_Gfx_4C2AC
@@ -3405,7 +3394,6 @@ FPEnemyTileLayout_H:
 	dc.l	FPEnemyTileLayout_H_Gfx_4C658
 	dc.l	FPEnemyTileLayout_H_Gfx_4C660
 	dc.l	FPEnemyTileLayout_H_Gfx_4C682
-; loc_0004C746
 FPEnemyTileLayout_I:
 	dc.b	$00, $03, $06, $09, $01, $04, $07, $0A, $02, $05, $08, $0B, $0C, $0E, $11, $14, $0D, $0F, $12, $15, $02, $10, $13, $16, $17, $19, $1C, $1F, $18, $1A, $1D, $20 
 	dc.b	$02, $1B, $1E, $21, $17, $22, $25, $28, $18, $23, $26, $29, $02, $24, $27, $2A, $02, $2D, $30, $1F, $2B, $2E, $31, $33, $2C, $2F, $32, $34, $02, $37, $3A, $28 
@@ -3474,7 +3462,6 @@ FPEnemyTileLayout_J_Gfx_4CCCE equ FPEnemyTileLayout_J_Gfx_4C78E+$540
 FPEnemyTileLayout_J_Gfx_4CCF0 equ FPEnemyTileLayout_J_Gfx_4C78E+$562
 FPEnemyTileLayout_J_Gfx_4CD06 equ FPEnemyTileLayout_J_Gfx_4C78E+$578
 FPEnemyTileLayout_J_Gfx_4CD22 equ FPEnemyTileLayout_J_Gfx_4C78E+$594
-; loc_0004CD40
 FPEnemyTileLayout_J:
 	dc.l	FPEnemyTileLayout_J_Gfx_4C78E
 	dc.l	FPEnemyTileLayout_J_Gfx_4C798
@@ -3539,7 +3526,6 @@ FPEnemyTileLayout_J:
 	dc.l	FPEnemyTileLayout_J_Gfx_4CCF0
 	dc.l	FPEnemyTileLayout_J_Gfx_4CD06
 	dc.l	FPEnemyTileLayout_J_Gfx_4CD22
-; loc_0004CE3C
 FPEnemyTileLayout_K:
 	dc.b	$00, $03, $06, $09, $01, $04, $07, $0A, $02, $05, $08, $0B, $00, $03, $0F, $12, $0C, $0D, $10, $13, $02, $0E, $11, $14, $15, $17, $1A, $1D, $16, $18, $1B, $1E 
 	dc.b	$03, $19, $1C, $1F, $15, $21, $24, $27, $20, $22, $25, $28, $03, $23, $26, $29 
@@ -3586,7 +3572,6 @@ FPEnemyTileLayout_L_Gfx_4D1D4 equ FPEnemyTileLayout_L_Gfx_4CE6C+$368
 FPEnemyTileLayout_L_Gfx_4D1E6 equ FPEnemyTileLayout_L_Gfx_4CE6C+$37A
 FPEnemyTileLayout_L_Gfx_4D1FE equ FPEnemyTileLayout_L_Gfx_4CE6C+$392
 FPEnemyTileLayout_L_Gfx_4D21A equ FPEnemyTileLayout_L_Gfx_4CE6C+$3AE
-; loc_0004D232
 FPEnemyTileLayout_L:
 	dc.l	FPEnemyTileLayout_L_Gfx_4CE6C
 	dc.l	FPEnemyTileLayout_L_Gfx_4CE76
@@ -3867,7 +3852,6 @@ GfxLoadList_Town_Gfx_4D92A:
 	dc.l	FPEnemyTileLayout_L_Gfx_4D8F8
 	dc.l	FPEnemyTileLayout_L_Gfx_4D900
 	dc.l	FPEnemyTileLayout_L_Gfx_4D922
-; loc_0004D9BE
 FPEnemyTileLayout_M:
 	dc.b	$00, $03, $06, $09, $01, $04, $07, $0A, $02, $05, $08, $0B, $0C, $0E, $11, $14, $01, $0F, $12, $15, $0D, $10, $13, $16, $17, $1A, $1D, $20, $18, $1B, $1E, $21 
 	dc.b	$19, $1C, $1F, $22, $23, $26, $29, $2C, $24, $27, $2A, $2D, $25, $28, $2B, $2E, $2F, $32, $35, $38, $30, $33, $36, $39, $31, $34, $37, $3A, $3B, $3E, $41, $44 
@@ -3956,7 +3940,6 @@ FPEnemyTileLayout_N_Gfx_4E142 equ FPEnemyTileLayout_N_Gfx_4DA12+$730
 FPEnemyTileLayout_N_Gfx_4E152 equ FPEnemyTileLayout_N_Gfx_4DA12+$740
 FPEnemyTileLayout_N_Gfx_4E160 equ FPEnemyTileLayout_N_Gfx_4DA12+$74E
 FPEnemyTileLayout_N_Gfx_4E17E equ FPEnemyTileLayout_N_Gfx_4DA12+$76C
-; loc_0004E190
 FPEnemyTileLayout_N:
 	dc.l	FPEnemyTileLayout_N_Gfx_4DA12
 	dc.l	FPEnemyTileLayout_N_Gfx_4DA26
@@ -4116,7 +4099,6 @@ GfxLoadList_TownBattle_Gfx_4E526:
 	dc.l	FPEnemyTileLayout_N_Gfx_4E4DE
 	dc.l	FPEnemyTileLayout_N_Gfx_4E4F0
 	dc.l	FPEnemyTileLayout_N_Gfx_4E50E
-; loc_0004E582
 SpriteLayout_4E582:
 	dc.b	$00, $02, $04, $07, $01, $03, $05, $08, $00, $00, $06, $09, $00, $00, $0B, $0E, $01, $0A, $0C, $0F, $00, $00, $0D, $10, $00, $12, $15, $18, $11, $13, $16, $19 
 	dc.b	$00, $14, $17, $1A, $00, $1C, $1F, $22, $1B, $1D, $20, $23, $00, $1E, $21, $24 
@@ -4197,7 +4179,6 @@ SpriteFramePointerTable_4E890_Frame_4E866:
 	dc.b	$02, $EE, $F3, $20, $01, $E0, $DD, $00, $C2, $96, $00, $DE, $DE, $ED, $DC, $CD, $ED, $CC, $CD, $ED, $E5, $55, $55, $55, $50, $00 
 SpriteFramePointerTable_4E890_Frame_4E880:
 	dc.b	$01, $00, $77, $33, $37, $7F, $E0, $EE, $DD, $50, $DE, $50, $EE, $50, $E5, $50 
-; loc_0004E890
 SpriteFramePointerTable_4E890:
 	dc.l	SpriteFramePointerTable_4E890_Frame_4E5B2
 	dc.l	SpriteFramePointerTable_4E890_Frame_4E5B8
@@ -5417,7 +5398,6 @@ SpriteFramePointerTable_51414_Frame_513DA:
 	dc.b	$01, $55, $00, $04, $CC, $33, $22, $23, $52, $12, $23, $34, $59, $99, $34, $45, $59, $BA, $45, $59, $BA, $9B, $BB, $9B, $AA, $00, $05, $00, $00, $00 
 SpriteFramePointerTable_51414_Frame_513F8:
 	dc.b	$02, $55, $02, $46, $40, $88, $00, $00, $00, $33, $37, $35, $44, $4E, $34, $95, $54, $34, $95, $54, $45, $95, $50, $95, $95, $50, $50, $00 
-; loc_00051414
 SpriteFramePointerTable_51414:
 	dc.l	SpriteFramePointerTable_51414_Frame_50CD4
 	dc.l	SpriteFramePointerTable_51414_Frame_50CDA
@@ -5846,7 +5826,6 @@ TalkerPortraitTileDataPtrs_Gfx_525BA equ TalkerGfxDesc_MapGiver_Gfx_51E44+$776
 TalkerPortraitTileDataPtrs_Gfx_525CE equ TalkerGfxDesc_MapGiver_Gfx_51E44+$78A
 TalkerPortraitTileDataPtrs_Gfx_525E8 equ TalkerGfxDesc_MapGiver_Gfx_51E44+$7A4
 TalkerPortraitTileDataPtrs_Gfx_52604 equ TalkerGfxDesc_MapGiver_Gfx_51E44+$7C0
-; loc_00052626
 TalkerPortraitTileDataPtrs:
 	dc.l	TalkerPortraitTileDataPtrs_Gfx_51EAC
 	dc.l	TalkerPortraitTileDataPtrs_Gfx_51EB8
@@ -8361,7 +8340,6 @@ EnemyGfxData_WorldMapMain:
 	dc.l	EnemyGfxData_WorldMapMain_Gfx_5A1B8
 	dc.l	EnemyGfxData_WorldMapMain_Gfx_5A1DA
 	dc.l	EnemyGfxData_WorldMapMain_Gfx_5A1F8
-; loc_0005A32E
 MenuTileGfxDescriptor_5A32E:
 	dc.l	LoadMenuTileGfxSet3-3	
 	dc.l	$04050100	
@@ -8401,7 +8379,6 @@ MenuTileGfxPointerTable_5A3AE_Gfx_5A3A2:
 	dc.l	$FFFFF001	
 	dc.l	$88000006	
 	dc.l	$F6088008	
-; loc_0005A3AE
 MenuTileGfxPointerTable_5A3AE:
 	dc.l	MenuTileGfxPointerTable_5A3AE_Gfx_5A336-2
 	dc.l	MenuTileGfxPointerTable_5A3AE_Gfx_5A34A-2
@@ -9961,7 +9938,6 @@ Z80DrvrData_6000E:
 	dc.b	$34, $43, $33, $44, $54, $32, $33, $44, $54, $32, $34, $45, $54, $32, $43, $55, $44, $32, $43, $45, $43, $22, $45, $54, $43, $22, $45, $55, $43, $22, $02, $23 
 	dc.b	$60, $40, $C0, $C0, $33, $02, $26, $26, $26, $22, $34, $22, $32, $34, $22, $44, $22, $43, $34, $22, $43, $34, $22, $43, $01, $00, $33, $37, $77, $77, $44, $53 
 	dc.b	$44, $50, $34, $50, $45, $45, $45, $45, $45 
-; loc_000607AA
 SpriteGfxData_607AA:
 	dc.b	$01, $AA, $02, $90, $9E, $0F, $B0, $09, $AB, $B0, $AB, $BA, $AB, $A9, $99, $BB, $99, $99, $BB, $BB, $BA, $9A, $99, $A9, $9A, $99, $01, $AA, $05, $08, $4B, $C0 
 	dc.b	$00, $BB, $AB, $AB, $BA, $9A, $A9, $99, $99, $9A, $AB, $B9, $99, $9A, $AB, $BB, $9A, $99, $9A, $99, $99, $AB, $BA, $01, $AA, $02, $18, $96, $00, $00, $9A, $BB 
@@ -10108,14 +10084,12 @@ DrawIntroBackground_Data:
 	dc.b	$00, $00, $00, $00, $00, $00, $9A, $9B, $9C, $9D, $9E, $9F, $A0, $A1, $A1, $A2, $A3, $A4, $A5, $A6, $A7, $A8, $A9, $AA, $AB, $AC, $AC, $AD, $AE, $AF, $00, $00 
 	dc.b	$00, $00, $00, $00, $00, $00, $B0, $B1, $B2, $B3, $B4, $B5, $B6, $B7, $B8, $B9, $BA, $B6, $BB, $BC, $BD, $BE, $BF, $C0, $C1, $C2, $C3, $C4, $C5, $C6, $00, $00 
 	dc.b	$00, $00, $00, $00, $00, $00, $00, $00, $C7, $C8, $00, $C9, $B6, $B6, $CA, $CB, $CC, $CD, $CE, $CF, $D0, $D1, $D2, $D3, $D4, $D5, $D6, $D7, $D8, $D9, $00, $00 
-; loc_0006195A
 SpriteTileIndexTable_6195A:
 	dc.b	$00, $01, $02, $01, $02, $03, $04, $05, $06, $07, $08, $09, $0A, $09, $0A, $0B, $0C, $0D, $0E, $0D, $0E, $0F, $10, $11, $12, $13, $14, $15, $16, $15, $16, $17 
 	dc.b	$18, $19, $1A, $19, $1A, $1B, $1C, $1D, $1E, $1F, $20, $21, $22, $21, $22, $23, $24, $25, $26, $25, $26, $27, $28, $29, $2A, $2B, $2C, $2D, $2E, $2D, $2E, $2F 
 	dc.b	$30, $31, $32, $31, $32, $33, $34, $35, $36, $37, $38, $39, $3A, $39, $3A, $3B, $3C, $3D, $3E, $3D, $3E, $3F, $40, $41, $42, $43, $44, $45, $46, $45, $46, $47 
 	dc.b	$48, $49, $4A, $49, $4A, $4B, $4C, $4D, $4E, $4F, $50, $51, $52, $51, $52, $53, $54, $55, $56, $55, $56, $57, $58, $59, $5A, $5B, $5C, $5D, $5E, $5D, $5E, $5F 
 	dc.b	$60, $61, $62, $61, $62, $63, $64, $65, $66, $67, $68, $69, $6A, $69, $6A, $6B 
-; loc_000619EA
 SpriteTileIndexTable_619EA:
 	dc.b	$00, $00, $00, $00, $00, $00, $00, $01, $00, $00, $00, $00, $00, $00, $00, $00, $02, $03, $00, $00, $00, $00, $00, $00, $00, $00, $04, $05, $00, $00, $00, $00 
 	dc.b	$00, $00, $00, $06, $07, $08, $09, $00, $00, $00, $00, $00, $00, $0A, $0B, $0C, $0D, $00, $00, $00, $00, $00, $00, $00, $0E, $0F, $10, $11, $00, $00, $12, $13 
@@ -10512,7 +10486,6 @@ DrawNameEntryBackground_Data:
 	dc.b	$1E, $1E, $1E, $1E, $1E, $1E, $1E, $1E, $1E, $33, $34, $35, $1E, $1E, $1E, $1E, $1E, $1E, $1E, $1E, $1E, $1E, $1E, $1E, $1E, $1E, $1E, $1E, $1E, $1E, $1E, $1E 
 	dc.b	$1E, $1E, $1E, $1E, $1E, $1E, $1E, $1E, $1E, $1E, $36, $37, $38, $39, $3A, $3A, $3A, $3A, $3A, $3A, $3A, $3A, $3A, $3A, $3A, $3A, $3A, $3A, $3A, $3A, $3A, $3A 
 	dc.b	$3A, $3A, $3A, $3A, $3A, $3A, $3A, $3A, $3A, $3A, $3A, $3A, $3B, $3C 
-; loc_00068A86
 NameEntryCharacterTable:
 	dc.b	$FF, $20, $FF, $FF, $20, $FF, $FF, $20, $FF, $FF, $20, $FF, $FF, $20, $FF, $FF, $20, $FF, $FF, $20, $FF, $FF, $20, $FF, $FF, $20, $FF, $FF, $20, $FF, $20, $41 
 	dc.b	$20, $20, $42, $20, $20, $43, $20, $20, $44, $20, $20, $45, $20, $20, $46, $20, $20, $47, $20, $20, $48, $20, $20, $49, $20, $20, $4A, $20, $FF, $20, $FF, $FF 
@@ -10605,7 +10578,6 @@ TerrainTilemapMetadata_Gfx_68E5A:
 	dc.b	$A7, $6A, $A6, $A6, $76, $98, $68, $79, $76, $67, $67, $67, $00, $A8, $9A, $76, $A7, $6A, $9A, $8A, $98, $AA, $A6, $87, $A8, $A9, $A8, $AA, $79, $6A, $79, $67 
 	dc.b	$A7, $97, $A7, $76, $76, $76, $78, $67, $76, $76, $67, $67, $67, $02, $76, $B0, $03, $43, $98, $67, $0C, $80, $BC, $27, $66, $66, $77, $66, $87, $68, $66, $77 
 	dc.b	$78, $02, $67, $4D, $85, $21, $90, $76, $02, $52, $40, $67, $77, $86, $87, $77, $87, $66, $68, $77, $66, $68, $66, $00 
-; loc_00069592
 SpriteAnimFrameTable_69592:
 	dc.b	$00, $01, $02, $03, $04, $05, $06, $07, $08, $00, $00, $01, $02, $03, $04, $05, $06, $07, $08, $00, $09, $0A, $0B, $0C, $0D, $0E, $0F, $10, $11, $12, $09, $0A 
 	dc.b	$0B, $0C, $0D, $0E, $0F, $10, $11, $12, $13, $14, $02, $03, $04, $05, $06, $07, $15, $16, $13, $14, $02, $03, $04, $05, $06, $07, $15, $16, $17, $18, $0B, $0C 
@@ -10621,7 +10593,6 @@ SpriteAnimFrameTable_69592:
 	dc.b	$3C, $3B, $3C, $3B, $3C, $3B, $3C, $3B, $3D, $3E, $3D, $3E, $3D, $3E, $3D, $3E, $3D, $3E, $3D, $3D, $3E, $3D, $3E, $3D, $3E, $3D, $3E, $3D, $3F, $40, $3F, $40 
 	dc.b	$3F, $40, $3F, $40, $3F, $40, $3F, $3F, $40, $3F, $40, $3F, $40, $3F, $40, $3F, $41, $42, $41, $42, $41, $42, $41, $42, $41, $42, $41, $41, $42, $41, $42, $41 
 	dc.b	$42, $41, $42, $41, $43, $44, $43, $44, $43, $44, $43, $44, $43, $44, $43, $43, $44, $43, $44, $43, $44, $43, $44, $43 
-; loc_0006974A
 SpriteGfxData_6974A:
 	dc.b	$01, $88, $FF, $FF, $FF, $FF, $01, $88, $CC, $CE, $CC, $CC, $78, $76, $78, $76, $78, $76, $77, $68, $87, $68, $76, $68, $85, $67, $85, $00, $86, $55, $67, $86 
 	dc.b	$86, $54, $56, $86, $87, $54, $56, $86, $87, $65, $56, $86, $77, $75, $66, $87, $77, $76, $67, $88, $67, $88, $88, $88, $56, $88, $66, $67, $00, $55, $54, $56 
@@ -14209,24 +14180,20 @@ DrawBossHealthBar_Data:
 	dc.b	$00, $00, $00, $00, $00, $72, $73, $74, $75, $76, $77, $78, $79, $00, $00, $00, $00, $00, $00, $84, $85, $86, $87, $88, $89, $8A, $8B, $00, $00, $00, $09, $91 
 	dc.b	$92, $93, $94, $00, $00, $00, $95, $96, $97, $00, $00, $00, $A1, $A2, $A3, $A4, $A5, $00, $00, $00, $A6, $A7, $A8, $00, $00, $00, $00, $00, $AD, $AE, $00, $00 
 	dc.b	$00, $00, $00, $AF, $B0, $B1, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $BD, $BE, $BF, $00, $00 
-; loc_0007808A
 SpriteMetaTileTable_7808A:
 	dc.b	$00, $01, $02, $03, $04, $10, $11, $12, $13, $14, $1E, $1F, $20, $21, $22, $2C, $2D, $2E, $2F, $30, $3F, $40, $41, $42, $43, $52, $53, $54, $55, $56 
 BossDirectionTilePtrs_Gfx_780A8:
 	dc.b	$00, $01, $02, $05, $06, $10, $11, $12, $13, $15, $1E, $1F, $23, $24, $22, $31, $32, $33, $34, $35, $44, $45, $46, $47, $48, $57, $58, $54, $59, $5A 
-; loc_000780C6
 SpriteMetaTileTable_780C6:
 	dc.b	$00, $01, $02, $07, $08, $10, $11, $12, $13, $16, $1E, $1F, $25, $26, $22, $36, $37, $38, $39, $3A, $49, $4A, $4B, $4C, $4D, $5B, $5C, $5D, $5E, $5F 
 BossBodyUpperTilePtrs_Gfx_780E4:
 	dc.b	$67, $68, $69, $6A, $7A, $7B, $7C, $7D, $00, $00, $8C, $8D, $98, $99, $9A, $00 
-; loc_000780F4
 SpriteMetaTileTable_780F4:
 	dc.b	$6B, $6C, $6D, $6E, $7E, $00, $7F, $80, $00, $8E, $8F, $00, $9B, $9C, $9D, $00 
 BossBodyUpperTilePtrs_Gfx_78104:
 	dc.b	$6F, $70, $00, $71, $81, $00, $82, $83, $00, $00, $90, $00, $9E, $9F, $A0, $00 
 BossBodyLowerTilePtrs_Gfx_78114:
 	dc.b	$00, $A9, $AA, $AB, $B2, $B3, $B4, $B5, $00, $C0, $C1, $00 
-; loc_00078120
 SpriteMetaTileTable_78120:
 	dc.b	$00, $A9, $AA, $AB, $B6, $B7, $B8, $B9, $C2, $C3, $C4, $00 
 BossBodyLowerTilePtrs_Gfx_7812C:
@@ -17357,7 +17324,6 @@ SpriteFramePointerTable_81E28_Frame_81DFC:
 	dc.b	$02, $00, $FF, $FF, $C8, $00, $88, $00, $00, $06, $F7, $0F, $FF, $F8, $08, $00 
 SpriteFramePointerTable_81E28_Frame_81E0C:
 	dc.b	$02, $FE, $33, $06, $81, $00, $88, $00, $00, $00, $EF, $00, $00, $00, $00, $00, $0F, $EE, $EE, $0F, $EF, $EF, $EF, $EE, $FF, $FF, $F8, $8F 
-; loc_00081E28
 SpriteFramePointerTable_81E28:
 	dc.l	SpriteFramePointerTable_81E28_Frame_817FA
 	dc.l	SpriteFramePointerTable_81E28_Frame_81800
@@ -17502,35 +17468,30 @@ GfxLoadList_FirstPerson_Gfx_82004:
 	dc.l	SpriteFramePointerTable_81E28_Frame_81FB4
 	dc.l	SpriteFramePointerTable_81E28_Frame_81FD0
 	dc.l	SpriteFramePointerTable_81E28_Frame_81FEC-2
-; loc_00082030
 DungeonFloorTilemap_82030:
 	dc.b	$00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 
 	dc.b	$00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $27, $28, $29, $2A, $2B, $2C, $2B, $2A, $29 
 	dc.b	$28, $27, $19, $14, $15, $16, $17, $18, $17, $16, $15, $14, $19, $0D, $0E, $0F, $10, $11, $12, $11, $10, $0F, $0E, $0D, $19, $14, $15, $16, $17, $18, $17, $16 
 	dc.b	$15, $14, $19, $0D, $0E, $0F, $10, $11, $12, $11, $10, $0F, $0E, $0D, $19, $14, $15, $16, $17, $18, $17, $16, $15, $14, $19, $0D, $0E, $0F, $10, $11, $12, $11 
 	dc.b	$10, $0F, $0E, $0D, $2D, $14, $15, $16, $17, $18, $17, $16, $15, $14, $2D, $2E, $2F, $30, $31, $32, $33, $32, $31, $30, $2F, $2E 
-; loc_000820CA
 DungeonFloorTilemap_820CA:
 	dc.b	$00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 
 	dc.b	$00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $21, $22, $23, $24, $25, $26, $25, $24, $23, $22, $21, $0D, $0E, $0F, $10, $11, $12, $11, $10, $0F 
 	dc.b	$0E, $0D, $19, $14, $15, $16, $17, $18, $17, $16, $15, $14, $19, $0D, $0E, $0F, $10, $11, $12, $11, $10, $0F, $0E, $0D, $19, $14, $15, $16, $17, $18, $17, $16 
 	dc.b	$15, $14, $19, $0D, $0E, $0F, $10, $11, $12, $11, $10, $0F, $0E, $0D, $19, $14, $15, $16, $17, $18, $17, $16, $15, $14, $19, $0D, $0E, $0F, $10, $11, $12, $11 
 	dc.b	$10, $0F, $0E, $0D, $2D, $14, $15, $16, $17, $18, $17, $16, $15, $14, $2D, $2E, $2F, $30, $31, $32, $33, $32, $31, $30, $2F, $2E 
-; loc_00082164
 DungeonFloorTilemap_82164:
 	dc.b	$00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 
 	dc.b	$00, $1B, $1C, $1D, $1E, $1F, $20, $1F, $1E, $1D, $1C, $1B, $0D, $0E, $0F, $10, $11, $12, $11, $10, $0F, $0E, $0D, $0D, $0E, $0F, $10, $11, $12, $11, $10, $0F 
 	dc.b	$0E, $0D, $19, $14, $15, $16, $17, $18, $17, $16, $15, $14, $19, $0D, $0E, $0F, $10, $11, $12, $11, $10, $0F, $0E, $0D, $19, $14, $15, $16, $17, $18, $17, $16 
 	dc.b	$15, $14, $19, $0D, $0E, $0F, $10, $11, $12, $11, $10, $0F, $0E, $0D, $19, $14, $15, $16, $17, $18, $17, $16, $15, $14, $19, $0D, $0E, $0F, $10, $11, $12, $11 
 	dc.b	$10, $0F, $0E, $0D, $2D, $14, $15, $16, $17, $18, $17, $16, $15, $14, $2D, $2E, $2F, $30, $31, $32, $33, $32, $31, $30, $2F, $2E 
-; loc_000821FE
 DungeonFloorTilemap_821FE:
 	dc.b	$00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $1A, $14, $15, $16, $17, $18, $17, $16, $15, $14 
 	dc.b	$1A, $0D, $0E, $0F, $10, $11, $12, $11, $10, $0F, $0E, $0D, $19, $14, $15, $16, $17, $18, $17, $16, $15, $14, $19, $0D, $0E, $0F, $10, $11, $12, $11, $10, $0F 
 	dc.b	$0E, $0D, $19, $14, $15, $16, $17, $18, $17, $16, $15, $14, $19, $0D, $0E, $0F, $10, $11, $12, $11, $10, $0F, $0E, $0D, $19, $14, $15, $16, $17, $18, $17, $16 
 	dc.b	$15, $14, $19, $0D, $0E, $0F, $10, $11, $12, $11, $10, $0F, $0E, $0D, $19, $14, $15, $16, $17, $18, $17, $16, $15, $14, $19, $0D, $0E, $0F, $10, $11, $12, $11 
 	dc.b	$10, $0F, $0E, $0D, $2D, $14, $15, $16, $17, $18, $17, $16, $15, $14, $2D, $2E, $2F, $30, $31, $32, $33, $32, $31, $30, $2F, $2E 
-; loc_00082298
 DungeonFloorTilemap_82298:
 	dc.b	$00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $07, $08, $09, $0A, $0B, $0C, $0B, $0A, $09, $08 
 	dc.b	$07, $13, $14, $15, $16, $17, $18, $17, $16, $15, $14, $13, $0D, $0E, $0F, $10, $11, $12, $11, $10, $0F, $0E, $0D, $19, $14, $15, $16, $17, $18, $17, $16, $15 
@@ -17538,12 +17499,10 @@ DungeonFloorTilemap_82298:
 	dc.b	$0F, $0E, $0D, $19, $14, $15, $16, $17, $18, $17, $16, $15, $14, $19, $0D, $0E, $0F, $10, $11, $12, $11, $10, $0F, $0E, $0D, $19, $14, $15, $16, $17, $18, $17 
 	dc.b	$16, $15, $14, $19, $0D, $0E, $0F, $10, $11, $12, $11, $10, $0F, $0E, $0D, $19, $14, $15, $16, $17, $18, $17, $16, $15, $14, $19, $0D, $0E, $0F, $10, $11, $12 
 	dc.b	$11, $10, $0F, $0E, $0D, $2D, $14, $15, $16, $17, $18, $17, $16, $15, $14, $2D, $2E, $2F, $30, $31, $32, $33, $32, $31, $30, $2F, $2E, $00 
-; loc_00082354
 DungeonFloorTilemap_82354:
 	dc.b	$01, $02, $03, $04, $05, $0D, $0E, $0F, $10, $11, $19, $14, $15, $16, $17, $0D, $0E, $0F, $10, $11, $19, $14, $15, $16, $17, $0D, $0E, $0F, $10, $11, $19, $14 
 	dc.b	$15, $16, $17, $0D, $0E, $0F, $10, $11, $19, $14, $15, $16, $17, $0D, $0E, $0F, $10, $11, $19, $14, $15, $16, $17, $0D, $0E, $0F, $10, $11, $19, $14, $15, $16 
 	dc.b	$17, $0D, $0E, $0F, $10, $11, $2D, $14, $15, $16, $17, $2E, $2F, $30, $31, $32 
-; loc_000823A4
 DungeonFloorTilemap_823A4:
 	dc.b	$05, $04, $03, $02, $01, $11, $10, $0F, $0E, $0D, $17, $16, $15, $14, $19, $11, $10, $0F, $0E, $0D, $17, $16, $15, $14, $19, $11, $10, $0F, $0E, $0D, $17, $16 
 	dc.b	$15, $14, $19, $11, $10, $0F, $0E, $0D, $17, $16, $15, $14, $19, $11, $10, $0F, $0E, $0D, $17, $16, $15, $14, $19, $11, $10, $0F, $0E, $0D, $17, $16, $15, $14 
@@ -17604,7 +17563,6 @@ OpenChestMenu_ExitToHud_Loop2_Data_Entry_82828:
 OpenChestMenu_ExitToHud_Loop2_Data_Entry_82852:
 	dc.b	$34, $45, $45, $45, $45, $45, $34, $54, $53, $53, $53, $53, $53, $54, $55, $56, $56, $56, $56, $56, $55, $36, $56, $56, $56, $56, $56, $36, $34, $56, $56, $56 
 	dc.b	$56, $56, $34, $52, $56, $56, $56, $56, $56, $52 
-; loc_0008287C
 SpriteGfxData_8287C:
 	dc.b	$01, $00, $FF, $FF, $FF, $FF, $01, $00, $FF, $FF, $C8, $00, $43, $33, $57, $54, $44, $05, $55, $65, $55, $66, $65, $66, $66, $01, $00, $FF, $FF, $00, $00, $45 
 	dc.b	$65, $34, $54, $55, $63, $23, $45, $55, $63, $34, $45, $66, $64, $44, $45, $01, $00, $FF, $FF, $00, $00, $33, $44, $44, $45, $44, $44, $44, $53, $55, $44, $45 
@@ -17675,12 +17633,10 @@ SpriteGfxData_8287C:
 	dc.b	$FF, $84, $68, $84, $68, $00, $22, $33, $54, $77, $23, $33, $45, $77, $33, $44, $44, $77, $44, $44, $45, $77, $55, $55, $53, $77, $33, $34, $54, $88, $44, $44 
 	dc.b	$45, $88, $66, $55, $55, $88, $01, $44, $00, $02, $6E, $40, $63, $33, $33, $77, $32, $22, $23, $77, $22, $33, $33, $77, $23, $34, $77, $33, $77, $88, $55, $45 
 	dc.b	$88, $33, $55, $53, $88, $01, $88, $FF, $FF, $FF, $FF, $00 
-; loc_00083108
 SpriteMetaTileTable_83108:
 	dc.b	$00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $11, $14, $17, $12, $15, $18, $13, $16, $19, $00, $00, $00, $3E, $41, $44, $3F, $42 
 	dc.b	$45, $40, $43, $46, $00, $01, $05, $00, $02, $06, $00, $03, $07, $00, $04, $08, $1A, $1E, $22, $1B, $1F, $23, $1C, $20, $24, $1D, $21, $25, $05, $47, $4B, $06 
 	dc.b	$48, $4C, $07, $49, $4D, $08, $4A, $4E 
-; loc_00083150
 SpriteMetaTileTable_83150:
 	dc.b	$00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $26, $2A, $2E, $27, $2B, $2F, $28, $2C, $30, $29, $2D, $31, $00, $09, $0D, $00, $0A, $0E, $00, $0B 
 	dc.b	$0F, $00, $0C, $10, $32, $36, $3A, $33, $37, $3B, $34, $38, $3C, $35, $39, $3D 
@@ -18043,7 +17999,6 @@ FPDungeonSpriteFrameTable:
 	dc.l	FPDungeonSpriteFrameTable_Frame_83D4E
 	dc.l	FPDungeonSpriteFrameTable_Frame_83D62
 	dc.l	FPDungeonSpriteFrameTable_Frame_83D80
-; loc_00083F24
 SpriteLayout_83F24:
 	dc.b	$00, $01, $03, $00, $02, $04, $05, $07, $09, $06, $08, $0A 
 GfxLoadList_FirstPersonBattle_Gfx_83F30:
@@ -18086,7 +18041,6 @@ FPEnemySpriteFrameTable_15_Frame_84092:
 FPEnemySpriteFrameTable_15_Frame_840B4:
 	dc.b	$00, $56, $73, $25, $35, $58, $72, $25, $54, $56, $74, $52, $56, $58, $75, $42, $66, $58, $75, $44, $46, $58, $75, $53, $88, $58, $71, $88, $80, $88, $88, $80 
 	dc.b	$00, $00 
-; loc_000840D6
 FPEnemySpriteFrameTable_15:
 	dc.l	FPEnemySpriteFrameTable_15_Frame_83F3C
 	dc.l	FPEnemySpriteFrameTable_15_Frame_83F42
@@ -18322,7 +18276,6 @@ SpriteFramePointerTable_855C0_Frame_85582:
 	dc.b	$01, $88, $00, $00, $0F, $70, $45, $55, $55, $33, $34, $45, $55, $22, $54, $45, $55, $33, $66, $66, $65, $44, $86, $66, $66, $55, $08, $00, $00, $00, $08, $00 
 SpriteFramePointerTable_855C0_Frame_855A2:
 	dc.b	$01, $88, $00, $00, $00, $FF, $33, $33, $34, $56, $23, $33, $34, $56, $32, $34, $45, $57, $44, $44, $45, $57, $55, $54, $55, $57, $66, $66, $66, $67 
-; loc_000855C0
 SpriteFramePointerTable_855C0:
 	dc.l	SpriteFramePointerTable_855C0_Frame_84E48
 	dc.l	SpriteFramePointerTable_855C0_Frame_84E4E
@@ -18710,7 +18663,6 @@ SpriteFramePointerTable_86CB8_Frame_86C74:
 SpriteFramePointerTable_86CB8_Frame_86C96:
 	dc.b	$00, $43, $65, $32, $25, $03, $66, $32, $25, $34, $56, $42, $25, $34, $66, $42, $25, $34, $66, $42, $25, $43, $88, $32, $28, $88, $00, $88, $80, $00, $00, $00 
 	dc.b	$00, $00 
-; loc_00086CB8
 SpriteFramePointerTable_86CB8:
 	dc.l	SpriteFramePointerTable_86CB8_Frame_8650E
 	dc.l	SpriteFramePointerTable_86CB8_Frame_86514
@@ -18983,7 +18935,6 @@ SpriteFramePointerTable_880F8_Frame_880DA:
 	dc.b	$01, $00, $07, $77, $FF, $FF, $51, $11, $11, $11, $50, $50, $50, $00 
 SpriteFramePointerTable_880F8_Frame_880E8:
 	dc.b	$01, $00, $FF, $FF, $FF, $FB, $70, $00, $01, $00, $7F, $FF, $FF, $FF, $E7, $00 
-; loc_000880F8
 SpriteFramePointerTable_880F8:
 	dc.l	SpriteFramePointerTable_880F8_Frame_87E90
 	dc.l	SpriteFramePointerTable_880F8_Frame_87E96
@@ -19127,7 +19078,6 @@ SpriteFramePointerTable_88528_Frame_884EA:
 	dc.b	$05, $00 
 SpriteFramePointerTable_88528_Frame_8850C:
 	dc.b	$02, $66, $F0, $00, $F0, $00, $88, $00, $00, $0F, $F0, $67, $77, $77, $77, $44, $44, $44, $44, $33, $33, $33, $33, $55, $55, $55, $55, $00 
-; loc_00088528
 SpriteFramePointerTable_88528:
 	dc.l	SpriteFramePointerTable_88528_Frame_8829E
 	dc.l	SpriteFramePointerTable_88528_Frame_882A4
@@ -19293,7 +19243,6 @@ TownTilesetPtrs_Gfx_8DAE0:
 	dc.b	$00, $FC, $00, $FC, $01, $23, $01, $23, $00, $FC, $00, $FC, $00, $00, $00, $00, $00, $01, $01, $24, $00, $00, $00, $00, $00, $41, $00, $01, $01, $24, $00, $42 
 	dc.b	$00, $42, $01, $25, $00, $43, $00, $41, $01, $26, $00, $43, $01, $27, $01, $28, $01, $29, $01, $2A, $01, $2B, $01, $2C, $01, $2D, $01, $2E, $01, $2F, $01, $30 
 	dc.b	$00, $4A, $00, $4A, $01, $30, $01, $31, $00, $4A, $00, $4A, $01, $32, $01, $33, $01, $34, $01, $35, $01, $36, $01, $37, $01, $38, $01, $39 
-; loc_0008E0C8
 SpriteGfxData_8E0C8:
 	dc.b	$01, $00, $FF, $FF, $FF, $FF, $00, $00, $00, $00, $00, $00, $ED, $EE, $E0, $0E, $CC, $CC, $EE, $CC, $CC, $EE, $CE, $CE, $EE, $21, $1C, $EC, $DD, $33, $23, $EE 
 	dc.b	$DD, $33, $33, $EC, $EE, $CC, $CC, $01, $00, $FF, $73, $10, $00, $EE, $EE, $E0, $EC, $CE, $E0, $12, $CE, $CE, $EE, $12, $2C, $CE, $EE, $33, $33, $3E, $CE, $00 
@@ -19505,7 +19454,6 @@ SpriteGfxData_8E0C8:
 	dc.b	$64, $5D, $45, $64, $5D, $01, $00, $FF, $FF, $98, $CC, $0D, $40, $D0, $D4, $D0, $0D, $44, $0D, $65, $01, $00, $FF, $FF, $EC, $CC, $DD, $0D, $DD, $D6, $56, $DD 
 	dc.b	$55, $01, $00, $FF, $FF, $FF, $77, $D0, $D0, $00, $00, $0D, $D5, $DD, $00, $0D, $55, $5D, $00, $D5, $45, $DD, $00, $D5, $55, $6D, $00, $D4, $55, $DD, $0D, $D4 
 	dc.b	$5D, $6D, $0D, $54, $5D, $D0, $DD, $5D, $55, $DD, $01, $00, $7F, $CC, $89, $13, $D0, $05, $55, $54, $4D, $D4, $54, $D0, $D5, $6D, $D4, $55, $60, $44, $66, $00 
-; loc_0008FB08
 SpriteGfxData_8FB08:
 	dc.b	$01, $00, $F3, $10, $EF, $FF, $55, $D0, $4D, $D5, $50, $D0, $0D, $D5, $D0, $D0, $00, $66, $66, $66, $D5, $D6, $6E, $EE, $66, $6E, $EE, $CE, $E6, $EC, $CC, $EC 
 	dc.b	$EE, $CC, $C1, $11, $CE, $C2, $22, $22, $23, $12, $22, $22, $23, $33, $33, $33, $33, $00, $1E, $13, $11, $11, $2E, $23, $12, $22, $22, $E3, $12, $22, $CC, $33 

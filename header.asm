@@ -79,7 +79,6 @@ InitZ80:
 	dc.w	$06B5 				; Checksum
 	dc.b	'J               '
 	dc.l StartOfRom
-;loc_000001A4:
 ROMEndLoc:
 	dc.l EndOfRom-1
 	dc.l $00FF0000 		; Start of RAM

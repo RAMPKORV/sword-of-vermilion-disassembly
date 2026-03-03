@@ -3,7 +3,6 @@
 ; VBlank handler, VDP scroll, controllers, input, palette DMA
 ; ======================================================================
 
-; loc_00000628
 ClearScrollData:
 	ORI	#$0700, SR
 	MOVE.l	#$7C000002, VDP_control_port
@@ -21,7 +20,6 @@ ClearScrollData_vscroll_loop:
 	ANDI	#$F8FF, SR
 	RTS
 
-; loc_0000066E
 EnableDisplay:
 	MOVE.w	VDP_Reg1_cache.w, D0
 	BSET.l	#6, D0
@@ -45,7 +43,6 @@ VDPRegisterDefaults:
 ; Sets up core system objects: VBlank, HBlank, and battle entity slots.
 ; Used during initial startup and basic game states.
 ; ============================================================================
-; loc_000006B6
 BasicObjectInitTable:
 	dc.w	$0005                        ; 6 object groups
 	
@@ -73,7 +70,6 @@ BasicObjectInitTable:
 ; Minimal object setup for menu screens and simple game states.
 ; Only initializes entity slots and menu handler.
 ; ============================================================================
-; loc_00000718
 MenuObjectInitTable:
 	dc.w	$0001                        ; 2 object groups
 	
@@ -89,7 +85,6 @@ MenuObjectInitTable:
 ; Full object setup for active gameplay (overworld, caves, battles).
 ; Initializes 23 object groups with entity slots for player, NPCs, enemies, etc.
 ; ============================================================================
-; loc_0000073A
 GameplayObjectInitTable:
 	dc.w	$16                        ; 23 object groups (0x16 = 22 decimal, 0-based)
 	
@@ -325,7 +320,6 @@ VerticalInterrupt_Loop5:
 VerticalInterrupt_Loop5_Done:
 	NOP	
 	DBF	D7, VerticalInterrupt_Loop5_Done	
-; loc_0000115C
 VBlank_ProcessPalette:
 	JSR	UpdatePaletteBuffer
 	TST.b	Skip_tilemap_updates.w
@@ -450,7 +444,6 @@ CheckButtonPress:
 	MOVEQ	#1, D0
 	RTS
 
-; loc_00001308
 CheckButtonPress_NotPressed:
 	CLR.w	D0
 	RTS
@@ -528,7 +521,6 @@ UpdateSceneScrollBuffers_Loop2:
 	BSR.w	WriteHScrollRunToVRAM
 	RTS
 
-; loc_000013FC
 WriteHScrollRunToVRAM:
 	MOVE.w	(A0), D1
 	ANDI.w	#$01FF, D1
@@ -568,14 +560,12 @@ ProcessSoundQueue:
 ProcessSoundQueue_empty:
 	RTS
 
-; loc_0000146E
 ; HBlank interrupt handler - currently just placeholder NOPs
 HBlankObjectHandler:
 	NOP
 	NOP
 	RTS
 
-; loc_00001474
 ; VBlank interrupt handler - manages program state execution
 VBlankObjectHandler:
 	CLR.w	Program_state.w
@@ -616,7 +606,6 @@ ProgramStateMap:
 	BRA.w	ProgramState_Ending			; $13 Ending sequence
 	BRA.w	ProgramState_Ending			; $14 Ending sequence (alias)
 	BRA.w	ProgramState_LoadSavedGame		; $15 Load saved game, initialize town
-; loc_00001500
 VBlankObjectHandler_Return:
 	RTS
 
