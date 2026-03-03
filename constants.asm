@@ -506,6 +506,31 @@ REWARD_TYPE_RING        = 4  ; Ring (indexes RingNames)
 REWARD_TYPE_MAP         = 5  ; Area map reveal — sets Map_trigger_flags
 
 ; ============================================================
+; Reward Script Values (Reward_script_value)
+; ============================================================
+; Packed word written to Reward_script_value before calling
+; SetupItemTreasure or SetupEquipmentTreasure.
+; High byte = category selector (equipment: EQUIPMENT_TYPE_*;
+;             items: $01; the low byte is masked off at decode time).
+; Low byte  = item/equipment index within its category.
+; These constants correspond to the 12 unique chest/field reward
+; sites in vermilion.asm.
+;
+REWARD_VALUE_TRUFFLE          = $010B  ; Truffle (item $0B)
+REWARD_VALUE_DIGOT_PLANT      = $010C  ; Digot Plant (item $0C)
+REWARD_VALUE_TREASURE_OF_TROY = $010D  ; Treasure of Troy (item $0D)
+REWARD_VALUE_WHITE_CRYSTAL    = $010E  ; White Crystal (item $0E)
+REWARD_VALUE_RED_CRYSTAL      = $010F  ; Red Crystal (item $0F)
+REWARD_VALUE_BLUE_CRYSTAL     = $0110  ; Blue Crystal (item $10)
+REWARD_VALUE_CROWN            = $0114  ; Crown (item $14)
+REWARD_VALUE_BRONZE_KEY       = $0116  ; Bronze Key (item $16)
+REWARD_VALUE_SILVER_KEY       = $0117  ; Silver Key (item $17)
+REWARD_VALUE_GOLD_KEY         = $0118  ; Gold Key (item $18)
+REWARD_VALUE_POISON_SHIELD    = $0823  ; Poison Shield (EQUIPMENT_TYPE_SHIELD | EQUIPMENT_SHIELD_POISON)
+REWARD_VALUE_CRIMSON_ARMOR    = $1037  ; Crimson Armor (EQUIPMENT_TYPE_ARMOR | EQUIPMENT_ARMOR_CRIMSON)
+
+
+; ============================================================
 ; Terrain Tileset Index (Terrain_tileset_index)
 ; ============================================================
 ; Selects which battle-field background tileset to load.
@@ -1391,7 +1416,7 @@ ITEM_TREASURE_OF_TROY   = $0D
 ITEM_WHITE_CRYSTAL      = $0E 
 ITEM_RED_CRYSTAL        = $0F 
 ITEM_BLUE_CRYSTAL       = $10
-ITEM_WHITE_CRYSTAL      = $11
+ITEM_WHITE_KEY          = $11
 ITEM_RED_KEY            = $12
 ITEM_BLUE_KEY           = $13
 ITEM_CROWN              = $14
