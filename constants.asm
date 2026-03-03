@@ -1603,6 +1603,46 @@ NOTESCR_JUMP        = $85   ; Read next byte as absolute jump target position
 
 
 ; ============================================================
+; FM Sound Channel Struct Field Offsets (A3)
+; ============================================================
+; Each FM channel occupies $30 bytes.  The struct base is stored
+; in A3.  Channels start at $00FFF430 and step by fmch_size each.
+;
+; Usage: MOVE.b fmch_flags(A3), D0
+;        SUBQ.w #1, fmch_tick_ctr(A3)
+;
+; Note: offsets $1C–$20 are the 5-byte FM algorithm/operator-TL
+; block loaded by LoadFM_AlgorithmData from the instrument table.
+; Offset $22(A3,D0.w) is a loop-counter array indexed by a script
+; variable D0; not separately named.
+;
+fmch_flags          equ $00   ; byte: status flags (bit7=active, bit6=DAC/echo, bit5=pitch-slide, bit2=muted, bit1=key-off)
+fmch_channel_id     equ $01   ; byte: YM2612 channel index + mode flags (bit4=hold/sustain, bit7=PSG)
+fmch_tempo_flags    equ $02   ; byte: tempo modifier flags (bit1=double-tempo, written by script cmd)
+fmch_script_ptr_hi  equ $03   ; byte: high byte of current script offset (relative to $00093C00)
+fmch_script_ptr_lo  equ $04   ; byte: low byte of current script offset
+fmch_transpose      equ $05   ; byte: semitone transpose added to note values
+fmch_vibrato_idx    equ $06   ; byte: LFO vibrato table index (0=none)
+fmch_arpeggio_idx   equ $07   ; byte: arpeggio sequence table index (0=none)
+fmch_volume         equ $08   ; byte: channel volume (FM total-level offset, added to operator TL)
+fmch_call_sp        equ $09   ; byte: script subroutine call-stack pointer (offset into struct)
+fmch_tick_ctr       equ $0A   ; word: tick countdown; decremented each frame, triggers next note at 0
+fmch_note_freq      equ $0C   ; word: current note frequency (PSG: period value; FM: F-number)
+fmch_note_duration  equ $0E   ; word: note duration in ticks; reloaded into tick_ctr on new note
+fmch_pitch_slide    equ $10   ; byte: pitch-slide rate (signed; added to note_freq each frame)
+fmch_lfo_phase      equ $11   ; byte: LFO vibrato table read position index
+fmch_op_algo        equ $1C   ; byte: FM algorithm/feedback byte (first of 5-byte instrument block)
+fmch_op1_tl         equ $1D   ; byte: operator 1 total-level offset (FM instrument data)
+fmch_op3_tl         equ $1E   ; byte: operator 3 total-level offset (FM instrument data)
+fmch_op2_tl         equ $1F   ; byte: operator 2 total-level offset (FM instrument data)
+fmch_op4_tl         equ $20   ; byte: operator 4 total-level offset (FM instrument data)
+fmch_pan_stereo     equ $21   ; byte: stereo panning byte written to YM2612 register $B4
+fmch_arp_phase      equ $13   ; byte: arpeggio sequence read position index
+fmch_pitch_bend     equ $14   ; byte: pitch-bend counter ($1F=key-off/note-end, $FF=no-bend)
+fmch_lfo_depth      equ $16   ; byte: LFO depth/amplitude accumulator (scaled by vibrato table)
+fmch_size           equ $30   ; struct stride: each channel slot is $30 bytes wide
+
+; ============================================================
 ; Object/Entity Struct Field Offsets
 ; ============================================================
 ; A5 and A6 both point into the object pool. A5 = primary entity
