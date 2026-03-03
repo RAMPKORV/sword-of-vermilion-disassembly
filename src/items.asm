@@ -21,6 +21,9 @@ UseSmallBomb:
 	JSR	QueueSoundEffect
 	RTS
 
+; UseOldWomansSketch: Use the Old Man's Sketch item. Must be in Keltwick,
+; in town exploration mode, and standing at one of the four tiles adjacent
+; to the old man NPC (one per cardinal direction). Triggers the hand-off.
 UseOldWomansSketch:
 	MOVE.w	Current_town.w, D0
 	CMPI.w	#TOWN_KELTWICK, D0
@@ -54,6 +57,9 @@ UseSketch_OldManWrongDir_Loop:
 	PRINT 	OldManTookStr
 	BSR.w	RemoveSelectedItemFromList
 	RTS
+; OldManSketchPositionData: Four (x, y, direction) entries — one per
+; cardinal side of the old man NPC. Player must be at these coordinates
+; and facing the matching direction to trigger the hand-off.
 OldManSketchPositionData:
 	dc.w	OLD_MAN_POSITION_X
 	dc.w	OLD_MAN_POSITION_Y+1
@@ -71,6 +77,9 @@ OldManSketchPositionData:
 	dc.w	OLD_MAN_POSITION_Y-1
 	dc.w	DIRECTION_DOWN
 
+; UseOldMansSketch: Use the Old Woman's Sketch item. Must be in Helwig,
+; in town mode (not first-person), at one of the four tiles adjacent to
+; the old woman NPC. Triggers the hand-off.
 UseOldMansSketch
 	MOVE.w	Current_town.w, D0
 	CMPI.w	#TOWN_HELWIG, D0
@@ -106,6 +115,8 @@ UseSketch_OldWomanWrongDir_Loop:
 	BSR.w	RemoveSelectedItemFromList
 	RTS
 
+; OldWomanSketchPositionData: Four (x, y, direction) entries — one per
+; cardinal side of the old woman NPC.
 OldWomanSketchPositionData:
 	dc.w	OLD_WOMAN_POSITION_X
 	dc.w	OLD_WOMAN_POSITION_Y+1
@@ -131,6 +142,8 @@ UseTruffle:
 	PRINT 	RoastDuckStr	
 	RTS
 	
+; UseDigotPlant: Cure poison if player is poisoned; otherwise display
+; "not poisonous" message. Always removes the item from inventory.
 UseDigotPlant:
 	TST.w	Player_poisoned.w
 	BEQ.b	UseDigotPlant_Loop
@@ -154,6 +167,9 @@ UseCrown:
 	RTS
 	
 
+; UseSixteenRings: Use the Sixteen Rings at the throne in Carthahena castle.
+; Must be in Carthahena, in castle room state ($A), at tile position ($15, 4).
+; Sets the Sixteen_rings_used_at_throne flag and plays a level-up sound.
 UseSixteenRings:
 	MOVE.w	Current_town.w, D0
 	CMPI.w	#TOWN_CARTHAHENA, D0
@@ -189,6 +205,10 @@ UseBlueCrystal:
 	PRINT 	BrightBlue	
 	RTS
 	
+; UseGeneric: Handle key/generic item use.
+; In town mode, checks for a chest tile in front of the player.
+; In overworld first-person mode, checks the map tile ahead for a locked door
+; (tile type 6), then scans LockedDoorDataTable to match room/position/key.
 UseGeneric:
 	TST.b	Player_in_first_person_mode.w
 	BNE.b	UseGeneric_Loop
@@ -254,6 +274,8 @@ UseKey_NoDoor_Loop:
 	PRINT 	EffortsFutileStr	
 	RTS
 	
+; RemoveSelectedItemFromList: Remove the currently selected item from the
+; player's inventory by shifting the array and decrementing the length.
 RemoveSelectedItemFromList:
 	MOVE.w	Selected_item_index.w, D0
 	MOVE.w	#9, D2
@@ -262,6 +284,12 @@ RemoveSelectedItemFromList:
 	JSR	RemoveItemFromArray
 	RTS
 
+; ---------------------------------------------------------------------------
+; Dialogue State Machine
+; ---------------------------------------------------------------------------
+; DialogueStateMachine: Dispatches to the current dialogue handler.
+; Reads Dialogue_state, masks to 6 bits (max 63 states), and jumps through
+; DialogueStateHandlerMap (a table of BRA.w entries, 4 bytes each).
 DialogueStateMachine:
 	MOVE.w	Dialogue_state.w, D0
 	ANDI.w	#$003F, D0
@@ -271,6 +299,13 @@ DialogueStateMachine:
 	JSR	(A0,D0.w)
 	RTS
 
+; DialogueStateHandlerMap: Jump table of BRA.w entries (4 bytes each).
+; Entry index = Dialogue_state & $3F. States are assigned in order:
+;   0  = Init          1  = WaitScript     2  = WaitButton
+;   3  = WaitC         4  = DrawYesNo      5  = ProcessYesNo
+;   6-14 = Shop buy    15-23 = Shop sell   24-26 = FortuneTeller
+;  27-31 = Inn        32-36 = Church       37-38 = Save
+;  39-45 = Malage blacksmith shop
 DialogueStateHandlerMap:
 	BRA.w	DialogState_Init
 	BRA.w	DialogState_WaitScriptThenAdvance
@@ -324,6 +359,13 @@ DialogueStateHandlerMap:
 	BRA.w	DialogState_MalageShopGiveVermilionSword
 	BRA.w	DialogState_WaitScriptThenGoToOverworld
 	BRA.w	DialogState_MalageBlacksmithIntro
+
+; ---------------------------------------------------------------------------
+; Dialogue State Handlers
+; ---------------------------------------------------------------------------
+
+; State 0 - Init: Save status bar, run opening script, detect tile type to
+; determine which service (shop/inn/fortune teller/church) to enter.
 DialogState_Init:
 	MOVE.w	Main_menu_selection.w, Menu_cursor_index.w
 	JSR	DrawMenuCursor
@@ -546,6 +588,11 @@ ExplanationStr:
 	dc.b	"Vermilion, the most powerful", $FE
 	dc.b	"weapon in the world! Use it", $FE
 	dc.b	"wisely, my Prince!", $FF, $00
+
+; - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+; Malage Blacksmith States (states 39-45): special shop to trade rings for
+; the Vermilion Sword
+; - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 DialogState_MalageWaitScriptThenOpenSellList:
 	TST.b	Script_text_complete.w
@@ -910,6 +957,10 @@ DialogueChoice_Continue_Loop:
 	JSR	HandleMenuInput
 	MOVE.w	Menu_cursor_index.w, Dialog_selection.w
 	RTS
+
+; - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+; Shop States (states 6-23): buy menu, sell menu, inventory sell
+; - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 DialogState_WaitScriptThenOpenShopMenu:
 	TST.b	Script_text_complete.w
@@ -1566,6 +1617,10 @@ DialogState_WaitScriptWithYesNoOrContinue_Loop:
 DialogState_WaitScriptWithYesNoOrContinue_Loop3:
 	RTS
 
+; - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+; Fortune Teller States (states 24-26)
+; - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 DialogState_DrawFortuneTellerMoneyWindow:
 	JSR	SaveLeftMenuTiles
 	JSR	DrawMoneyDisplayWindow
@@ -1647,6 +1702,10 @@ ShopExit_RestoreHud_Loop2:
 	JSR	InitDialogueWindow
 ShopExit_RestoreHud_Loop3:
 	RTS
+
+; - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+; Inn States (states 27-31): price prompt, pay, sleep, fade
+; - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 DialogState_WaitScriptThenDrawInnYesNo:
 	TST.b	Script_text_complete.w
@@ -1824,6 +1883,10 @@ InnWatling_RestoreAndExit:
 	JSR	ResetScriptAndInitDialogue
 ChurchDialog_SetState_Return:
 	RTS
+
+; - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+; Church States (states 32-36): menu, curse removal, poison cure
+; - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 DialogState_WaitScriptThenOpenChurchMenu:
 	TST.b	Script_text_complete.w
@@ -2096,6 +2159,10 @@ ShopNoTakeBack_Giveaway_Loop:
 	MOVE.w	Menu_cursor_index.w, Dialog_selection.w
 	RTS
 
+; - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+; Save Menu States (states 37-38)
+; - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 DialogState_WaitScriptThenOpenSaveMenu:
 	TST.b	Script_text_complete.w
 	BEQ.b	DialogState_WaitScriptThenOpenSaveMenu_Loop
@@ -2138,6 +2205,8 @@ DialogState_SaveMenuInput_Loop3:
 DialogState_SaveMenuInput_Loop:
 	RTS
 
+; CheckIfCursed: Scan equipped items (weapon + armor) for a cursed flag.
+; Sets D3 to the item ID if cursed; called before church curse-removal.
 CheckIfCursed:
 	MOVE.w	#2, D7
 	LEA	Equipped_items.w, A0
@@ -2191,6 +2260,8 @@ RecalcArmorClass_NextItem_Loop:
 	DBF	D7, RecalcArmorClass_NextItem_Done
 	RTS
 
+; CheckPlayerTalkToNPC: Check if an NPC is standing in the tile the player
+; is facing. If found, initiates dialogue with that NPC.
 CheckPlayerTalkToNPC:
 	MOVE.w	Player_direction.w, D2
 	BCLR.l	#0, D2
@@ -2230,6 +2301,8 @@ FindNpcByScript_NextEntry_Loop:
 	PRINT 	NoOneHereStr
 	RTS
 
+; FormatShopItemPrice: Build the BCD price string for the currently
+; highlighted shop item and write it into Text_build_buffer.
 FormatShopItemPrice:
 	LEA	ShopResaleValueMapPtrs, A0
 	LEA	ShopPossessionListPtrs, A2
@@ -2250,6 +2323,8 @@ FormatShopItemPrice:
 	MOVE.b	#SCRIPT_NEWLINE, (A1)+
 	RTS
 
+; FormatKimsAmount: Convert a BCD kims value in D0 into ASCII decimal digits
+; (suppressing leading zeros) and append them to A1 (Text_build_buffer ptr).
 FormatKimsAmount:
 	MOVEQ	#0, D7
 	ROL.l	#8, D0
@@ -2278,8 +2353,12 @@ FormatKimsAmount_WriteDigit_Loop:
 	MOVE.b	#$73, (A1)+
 	RTS
 
+; NpcFacingDirectionLookup: Maps player direction index (0-3) to the NPC
+; facing direction value used when initiating talk. One byte per direction.
 NpcFacingDirectionLookup:
 	dc.b	$04, $06, $00, $02 
+; FortuneTellerGreetingsByTown: Per-town function pointer table for the
+; fortune teller opening greeting. One longword per town ID.
 FortuneTellerGreetingsByTown:
 	dc.l	FortuneTellerGreeting_Wyclif
 	dc.l	FortuneTellerGreeting_Watling
@@ -2297,6 +2376,8 @@ FortuneTellerGreetingsByTown:
 	dc.l	NpcDialog_NotHungryCantHelp	
 	dc.l	NpcDialog_NotHungryCantHelp	
 	dc.l	NpcDialog_MotherAwaits	
+; FortuneTellerReadingsByTown: Per-town function pointer table for the
+; fortune teller main reading/prophecy. One longword per town ID.
 FortuneTellerReadingsByTown:
 	dc.l	FortuneTellerReading_Wyclif
 	dc.l	FortuneTellerReading_Watling
@@ -2314,6 +2395,10 @@ FortuneTellerReadingsByTown:
 	dc.l	NpcDialog_FindRingsInCartahena	
 	dc.l	NpcDialog_FindRingsInCartahena	
 	dc.l	NpcDialog_MotherAwaits	
+
+; ---------------------------------------------------------------------------
+; Ready Equipment State Machine
+; ---------------------------------------------------------------------------
 ReadyEquipmentStateMachine:
 	MOVE.w	Ready_equipment_state.w, D0
 	ANDI.w	#$001F, D0
@@ -2816,6 +2901,9 @@ CopyEquipmentNameToTextBuffer:
 	JSR	CopyStringUntilFF
 	RTS
 
+; ---------------------------------------------------------------------------
+; Equip List Menu State Machine
+; ---------------------------------------------------------------------------
 EquipListMenuStateMachine:
 	MOVE.w	Equip_list_menu_state.w, D0
 	ANDI.w	#$000F, D0
@@ -3113,6 +3201,12 @@ EquipListMenu_CursorReady_Return_Loop5:
 EquipListMenu_CursorReady_Return_Loop10:
 	RTS
 
+; ---------------------------------------------------------------------------
+; Level-Up Stat Upgrade
+; ---------------------------------------------------------------------------
+; UpgradeLevelStats: Apply stat increases on level-up. Looks up the player's
+; current level in PlayerLevelToStrMap to get the stat-gain table, then
+; applies randomised increments to STR, AGI, HP, etc.
 UpgradeLevelStats:
 	MOVE.w	Player_level.w, D7
 	ADD.w	D7, D7
