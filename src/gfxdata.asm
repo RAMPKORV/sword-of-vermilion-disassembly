@@ -1,10 +1,32 @@
-; ===========================================================================
-; Graphics Data
-; Compressed font tiles, battle tile graphics, enemy/boss/player sprite graphics
-; ===========================================================================
+;==============================================================
+; gfxdata.asm — Graphics Data Tables
+;
+; Contains all graphics tile data used for loading sprites and
+; tiles at runtime:
+;   - Battle tile pointer tables + tile-index remap arrays
+;   - Player overworld graphics pointer tables
+;   - Boss graphics pointer tables + remap arrays
+;   - Magic effect graphics (compressed inline tiles) per town
+;
+; Pointer tables are arrays of dc.l pointers into incbin blobs.
+; Remap arrays (Data3/Data5/Data7/etc.) map logical tile slots
+; to physical indices in the incbin binary data.
+; Magic tile blobs are compressed with RLE (byte < $80: literal;
+; byte >= $80: repeat next byte ($80 - value) times).
+;==============================================================
+
+;==============================================================
+; FONT TILES
+; Compressed font tile binary data.
+;==============================================================
 CompressedFontTileData:
 	incbin "data/art/tiles/font/font_tiles.bin"
 LoadBattleTilesToBuffers_Data:	equ CompressedFontTileData+$EE8
+;==============================================================
+; BATTLE TILE GRAPHICS — DATA 2
+; Offset equates into incbin battle tile blob + pointer table
+; (55 entries, dc.l) for loading battle tile graphics.
+;==============================================================
 LoadBattleTilesToBuffers_Data2_Gfx_429F0:
 	incbin "data/art/tiles/battle/data2_gfx.bin"
 LoadBattleTilesToBuffers_Data2_Gfx_42A08 equ LoadBattleTilesToBuffers_Data2_Gfx_429F0+$18
@@ -121,6 +143,10 @@ LoadBattleTilesToBuffers_Data2:
 	dc.l	LoadBattleTilesToBuffers_Data2_Gfx_42D1C
 	dc.l	LoadBattleTilesToBuffers_Data2_Gfx_42D2C
 	dc.l	LoadBattleTilesToBuffers_Data2_Gfx_42D34
+;==============================================================
+; BATTLE TILE GRAPHICS — DATA 3 (TILE INDEX REMAP)
+; Byte array mapping logical tile slots to physical tile indices.
+;==============================================================
 LoadBattleTilesToBuffers_Data3:
 	dc.b	$00, $00, $01, $03, $02, $04, $00, $00, $00, $00, $05, $07, $06, $08, $00, $00, $00, $00, $09, $0B, $0A, $0C, $00, $00, $00, $00, $0D, $03, $0E, $04, $00, $00 
 	dc.b	$00, $00, $0F, $11, $10, $08, $00, $00, $00, $00, $12, $14, $13, $0C, $00, $00, $00, $00, $15, $17, $16, $18, $00, $00, $00, $00, $19, $1B, $1A, $1C, $00, $00 
@@ -128,6 +154,11 @@ LoadBattleTilesToBuffers_Data3:
 	dc.b	$00, $00, $2D, $2F, $2E, $30, $00, $00, $00, $00, $31, $33, $32, $34, $00, $35, $36, $3A, $37, $3B, $38, $3C, $39, $3D, $00, $00, $3E, $40, $3F, $41, $00, $35 
 	dc.b	$00, $00, $42, $44, $43, $45, $00, $35, $00, $00, $46, $48, $47, $49, $00, $4A, $00, $00, $4B, $4D, $4C, $4E, $00, $00, $4F, $52, $50, $53, $51, $54, $00, $00 
 	dc.b	$00, $00, $55, $57, $56, $58, $00, $00 
+;==============================================================
+; BATTLE TILE GRAPHICS — DATA 4
+; Offset equates into incbin battle tile blob + pointer table
+; (88 entries, dc.l) for loading battle tile graphics.
+;==============================================================
 LoadBattleTilesToBuffers_Data4_Gfx_42ED0:
 	incbin "data/art/tiles/battle/data4_gfx.bin"
 LoadBattleTilesToBuffers_Data4_Gfx_42ED6 equ LoadBattleTilesToBuffers_Data4_Gfx_42ED0+$6
@@ -308,6 +339,10 @@ LoadBattleTilesToBuffers_Data4:
 	dc.l	LoadBattleTilesToBuffers_Data4_Gfx_43642
 	dc.l	LoadBattleTilesToBuffers_Data4_Gfx_4365A
 	dc.l	LoadBattleTilesToBuffers_Data4_Gfx_4366C
+;==============================================================
+; BATTLE TILE GRAPHICS — DATA 5 (TILE INDEX REMAP)
+; Byte array mapping logical tile slots to physical tile indices.
+;==============================================================
 LoadBattleTilesToBuffers_Data5:
 	dc.b	$00, $04, $08, $01, $05, $09, $02, $06, $0A, $03, $07, $0B, $0C, $10, $14, $0D, $11, $15, $0E, $12, $16, $0F, $13, $17, $18, $1C, $20, $19, $1D, $21, $1A, $1E 
 	dc.b	$22, $1B, $1F, $23, $24, $24, $24, $25, $27, $2A, $26, $28, $2B, $24, $29, $2C, $24, $24, $24, $2D, $30, $33, $2E, $31, $34, $2F, $32, $24, $24, $24, $24, $35 
@@ -321,6 +356,11 @@ LoadBattleTilesToBuffers_Data5:
 	dc.b	$24, $24, $24, $25, $DB, $DD, $DA, $DC, $DE, $24, $24, $24, $24, $24, $E1, $2D, $DF, $E2, $DA, $E0, $E3, $24, $24, $E4, $24, $24, $24, $35, $E5, $E7, $DA, $E6 
 	dc.b	$E8, $24, $24, $24, $E9, $EA, $ED, $BC, $EB, $EE, $BD, $EC, $EF, $24, $C1, $24, $C5, $C8, $CB, $BC, $F2, $F5, $F0, $F3, $F6, $F1, $F4, $24, $F7, $F8, $FB, $BC 
 	dc.b	$F9, $D7, $D0, $D4, $FC, $D1, $FA, $FD 
+;==============================================================
+; BATTLE TILE GRAPHICS — DATA 6
+; Offset equates into incbin battle tile blobs + pointer table
+; (148+ entries, dc.l) for loading battle tile graphics.
+;==============================================================
 LoadBattleTilesToBuffers_Data6_Gfx_43946:
 	incbin "data/art/tiles/battle/data6_gfx_1.bin"
 LoadBattleTilesToBuffers_Data6_Gfx_4394E equ LoadBattleTilesToBuffers_Data6_Gfx_43946+$8
@@ -834,6 +874,11 @@ LoadBattleTilesToBuffers_Data6:
 	dc.l	LoadBattleTilesToBuffers_Data6_Gfx_45254
 	dc.l	LoadBattleTilesToBuffers_Data6_Gfx_4525E
 	dc.l	LoadBattleTilesToBuffers_Data6_Gfx_4527C
+;==============================================================
+; PLAYER OVERWORLD GRAPHICS
+; Tile-index remap array + pointer table (101 entries, dc.l)
+; for loading player overworld sprite tiles.
+;==============================================================
 LoadPlayerOverworldGraphics_Data:
 	dc.b	$00, $03, $06, $09, $01, $04, $07, $0A, $02, $05, $08, $0B, $0C, $0F, $12, $15, $0D, $10, $13, $16, $0E, $11, $14, $17, $18, $1B, $1E, $21, $19, $1C, $1F, $22 
 	dc.b	$1A, $1D, $20, $23, $24, $27, $2A, $2D, $25, $28, $2B, $2E, $26, $29, $2C, $2F, $30, $32, $35, $38, $25, $33, $36, $39, $31, $34, $37, $3A, $3B, $3D, $40, $43 
@@ -1043,6 +1088,11 @@ LoadPlayerOverworldGraphics_Data2:
 	dc.l	LoadPlayerOverworldGraphics_Data2_Gfx_45F06
 	dc.l	LoadPlayerOverworldGraphics_Data2_Gfx_45F18
 	dc.l	LoadPlayerOverworldGraphics_Data2_Gfx_45F2C
+;==============================================================
+; BOSS GRAPHICS — DATA 1 (TILE INDEX REMAP)
+; Byte array mapping logical tile slots to physical tile indices
+; for boss sprite tiles.
+;==============================================================
 LoadBossGraphics_Data:
 	dc.b	$00, $04, $08, $01, $05, $09, $02, $06, $0A, $03, $07, $07, $0B, $07, $11, $0C, $0F, $12, $0D, $10, $13, $0E, $07, $14, $15, $19, $1D, $16, $1A, $1E, $17, $1B 
 	dc.b	$1F, $18, $1C, $20, $21, $25, $29, $22, $26, $2A, $23, $27, $2B, $24, $28, $2C, $2D, $31, $35, $2E, $32, $36, $2F, $33, $37, $30, $34, $38, $39, $3D, $41, $3A 
@@ -1050,6 +1100,11 @@ LoadBossGraphics_Data:
 	dc.b	$50, $25, $57, $51, $54, $58, $52, $55, $59, $53, $56, $5A, $5B, $5F, $61, $5C, $60, $62, $5D, $55, $63, $5E, $56, $64, $65, $69, $6D, $66, $6A, $6E, $67, $6B 
 	dc.b	$6F, $68, $6C, $70, $71, $75, $79, $72, $76, $7A, $73, $77, $7B, $74, $78, $7C, $7D, $81, $85, $7E, $82, $86, $7F, $83, $87, $80, $84, $88, $89, $8D, $91, $8A 
 	dc.b	$8E, $92, $8B, $8F, $93, $8C, $90, $94, $95, $99, $9D, $96, $9A, $9E, $97, $9B, $9F, $98, $9C, $A0, $A1, $A4, $A8, $8A, $A5, $A9, $A2, $A6, $AA, $A3, $A7, $AB 
+;==============================================================
+; BOSS GRAPHICS — DATA 2
+; Offset equates into incbin boss tile blob + pointer table
+; (173 entries, dc.l) for loading boss sprite tiles.
+;==============================================================
 LoadBossGraphics_Data2_Gfx_46198:
 	incbin "data/art/tiles/boss/data2_gfx.bin"
 LoadBossGraphics_Data2_Gfx_461B0 equ LoadBossGraphics_Data2_Gfx_46198+$18
@@ -1396,6 +1451,10 @@ LoadBossGraphics_Data2:
 	dc.l	LoadBossGraphics_Data2_Gfx_471CA
 	dc.l	LoadBossGraphics_Data2_Gfx_471DE
 	dc.l	LoadBossGraphics_Data2_Gfx_471EA
+;==============================================================
+; BOSS GRAPHICS — DATA 3 (TILE INDEX REMAP)
+; Byte array mapping logical tile slots to physical tile indices.
+;==============================================================
 LoadBossGraphics_Data3:
 	dc.b	$00, $04, $08, $0C, $01, $05, $09, $0D, $02, $06, $0A, $0E, $03, $07, $0B, $0F, $00, $11, $15, $19, $01, $12, $16, $1A, $10, $13, $17, $1B, $00, $14, $18, $1C 
 	dc.b	$00, $1E, $22, $26, $01, $1F, $23, $27, $1D, $20, $24, $28, $03, $21, $25, $29, $00, $2C, $30, $34, $01, $2D, $31, $35, $2A, $2E, $32, $36, $2B, $2F, $33, $37 
@@ -1405,6 +1464,11 @@ LoadBossGraphics_Data3:
 	dc.b	$7E, $81, $85, $89, $7F, $82, $86, $8A, $80, $83, $87, $8B, $00, $84, $88, $8C, $00, $8D, $90, $94, $00, $8E, $91, $95, $00, $8F, $92, $96, $00, $00, $93, $97 
 	dc.b	$00, $00, $99, $9D, $00, $00, $9A, $9E, $00, $00, $9B, $9F, $00, $98, $9C, $A0, $00, $A1, $A4, $A8, $00, $A2, $A5, $A9, $00, $A3, $A6, $AA, $00, $00, $A7, $AB 
 	dc.b	$00, $AC, $AF, $B3, $00, $AD, $B0, $B4, $00, $AE, $B1, $B5, $00, $00, $B2, $B6 
+;==============================================================
+; BOSS GRAPHICS — DATA 4
+; Offset equates into incbin boss tile blob + pointer table
+; (183 entries, dc.l) for loading boss sprite tiles.
+;==============================================================
 LoadBossGraphics_Data4_Gfx_475AC:
 	incbin "data/art/tiles/boss/data4_gfx.bin"
 LoadBossGraphics_Data4_Gfx_475B2 equ LoadBossGraphics_Data4_Gfx_475AC+$6
@@ -1773,8 +1837,17 @@ LoadBossGraphics_Data4:
 	dc.l	LoadBossGraphics_Data4_Gfx_48820
 	dc.l	LoadBossGraphics_Data4_Gfx_4883A
 	dc.l	LoadBossGraphics_Data4_Gfx_48856
+;==============================================================
+; BOSS GRAPHICS — DATA 5 (TILE INDEX REMAP)
+; Byte array mapping logical tile slots to physical tile indices.
+;==============================================================
 LoadBossGraphics_Data5:
 	dc.b	$00, $04, $08, $0C, $01, $05, $09, $0D, $02, $06, $0A, $0E, $03, $07, $0B, $0F, $00, $04, $08, $0C, $10, $12, $09, $0D, $11, $13, $0A, $0E, $03, $07, $0B, $0F 
+;==============================================================
+; BOSS GRAPHICS — DATA 6
+; Offset equates into incbin boss tile blob + pointer table
+; (20 entries, dc.l) for loading boss sprite tiles.
+;==============================================================
 LoadBossGraphics_Data6_Gfx_48B6E:
 	incbin "data/art/tiles/boss/data6_gfx.bin"
 LoadBossGraphics_Data6_Gfx_48B74 equ LoadBossGraphics_Data6_Gfx_48B6E+$6
@@ -1817,8 +1890,17 @@ LoadBossGraphics_Data6:
 	dc.l	LoadBossGraphics_Data6_Gfx_48D44
 	dc.l	LoadBossGraphics_Data6_Gfx_48D58
 	dc.l	LoadBossGraphics_Data6_Gfx_48D7A
+;==============================================================
+; BOSS GRAPHICS — DATA 7 (TILE INDEX REMAP)
+; Byte array mapping logical tile slots to physical tile indices.
+;==============================================================
 LoadBossGraphics_Data7:
 	dc.b	$00, $00, $00, $01, $02, $03, $00, $00, $04, $06, $05, $00, $00, $07, $00, $08, $09, $00, $0A, $00, $00, $0B, $00, $0C, $00, $00, $00, $00 
+;==============================================================
+; BOSS GRAPHICS — DATA 8
+; Offset equates into incbin boss tile blob + pointer table
+; (13 entries, dc.l) for loading boss sprite tiles.
+;==============================================================
 LoadBossGraphics_Data8_Gfx_48E08:
 	incbin "data/art/tiles/boss/data8_gfx.bin"
 LoadBossGraphics_Data8_Gfx_48E0E equ LoadBossGraphics_Data8_Gfx_48E08+$6
@@ -1847,6 +1929,13 @@ LoadBossGraphics_Data8:
 	dc.l	LoadBossGraphics_Data8_Gfx_48EA2
 	dc.l	LoadBossGraphics_Data8_Gfx_48EB0
 	dc.l	LoadBossGraphics_Data8_Gfx_48EC0
+;==============================================================
+; MAGIC EFFECT GRAPHICS — DEEPDALE / STOW
+; Tile-index remap array + compressed inline tile blobs +
+; pointer table for magic spell effect graphics.
+; RLE encoding: byte < $80 = literal; byte >= $80 = repeat next
+; byte ($80 - value) times.
+;==============================================================
 MagicGfxData_DeepdaleStow_Gfx_48EFE:
 	dc.b	$00, $03, $05, $07, $01, $04, $06, $08, $02, $02, $02, $02, $02, $0A, $0C, $0E, $09, $0B, $0D, $0F, $02, $02, $02, $02, $10, $12, $14, $0E, $11, $13, $15, $16 
 	dc.b	$02, $02, $02, $02, $17, $19, $1B, $1D, $18, $1A, $1C, $1E, $02, $02, $02, $02, $1F, $21, $1B, $02, $20, $22, $23, $24, $02, $02, $02, $02, $1F, $26, $07, $02 
@@ -2252,6 +2341,13 @@ MagicGfxData_DeepdaleStow_Gfx_498D0:
 	dc.l	LoadBossGraphics_Data8_Gfx_498A6
 	dc.l	LoadBossGraphics_Data8_Gfx_498B4
 	dc.l	LoadBossGraphics_Data8_Gfx_498C6
+;==============================================================
+; MAGIC EFFECT GRAPHICS — KELTWICK
+; Tile-index remap array + compressed inline tile blobs +
+; pointer table for magic spell effect graphics.
+; RLE encoding: byte < $80 = literal; byte >= $80 = repeat next
+; byte ($80 - value) times.
+;==============================================================
 MagicGfxData_Keltwick_Gfx_49AD8:
 	dc.b	$00, $00, $01, $04, $00, $00, $02, $05, $00, $00, $03, $06, $00, $07, $0A, $0D, $00, $08, $0B, $0E, $00, $09, $0C, $0F, $10, $13, $16, $00, $11, $14, $17, $19 
 	dc.b	$12, $15, $18, $1A, $1B, $1E, $21, $00, $1C, $1F, $22, $23, $1D, $20, $00, $00 
@@ -2368,6 +2464,13 @@ MagicGfxData_Keltwick_Gfx_49E3C:
 	dc.l	LoadBossGraphics_Data8_Gfx_49E08
 	dc.l	LoadBossGraphics_Data8_Gfx_49E14
 	dc.l	LoadBossGraphics_Data8_Gfx_49E32
+;==============================================================
+; MAGIC EFFECT GRAPHICS — HELWIG
+; Tile-index remap array + compressed inline tile blobs +
+; pointer table for magic spell effect graphics.
+; RLE encoding: byte < $80 = literal; byte >= $80 = repeat next
+; byte ($80 - value) times.
+;==============================================================
 MagicGfxData_Helwig_Gfx_49ECC:
 	dc.b	$00, $03, $01, $04, $02, $05, $02, $08, $06, $09, $07, $0A, $02, $0D, $0B, $0E, $0C, $0F, $10, $13, $11, $14, $12, $15, $16, $02, $17, $19, $18, $1A, $1B, $02 
 	dc.b	$1C, $1E, $1D, $02, $02, $02, $02, $02, $02, $02, $1F, $21, $20, $22, $02, $23, $24, $27, $25, $28, $26, $29, $2A, $2D, $2B, $2E, $2C, $2F, $30, $33, $31, $34 
@@ -2587,6 +2690,13 @@ MagicGfxData_Helwig_Gfx_4A42C:
 	dc.l	LoadBossGraphics_Data8_Gfx_4A3F6
 	dc.l	LoadBossGraphics_Data8_Gfx_4A3FE
 	dc.l	LoadBossGraphics_Data8_Gfx_4A412
+;==============================================================
+; MAGIC EFFECT GRAPHICS — TADCASTER
+; Tile-index remap array + compressed inline tile blobs +
+; pointer table for magic spell effect graphics.
+; RLE encoding: byte < $80 = literal; byte >= $80 = repeat next
+; byte ($80 - value) times.
+;==============================================================
 MagicGfxData_Tadcaster_Gfx_4A548:
 	dc.b	$00, $04, $01, $05, $02, $00, $03, $00, $06, $0A, $07, $0B, $08, $0C, $09, $0D, $0E, $12, $0F, $13, $10, $14, $11, $15, $00, $19, $16, $1A, $17, $00, $18, $00 
 LoadBossGraphics_Data8_Gfx_4A568:
@@ -2719,6 +2829,13 @@ SpriteFramePointerTable_4A8B8:
 	dc.l	SpriteFramePointerTable_4A8B8_Frame_4A88E
 	dc.l	SpriteFramePointerTable_4A8B8_Frame_4A89C
 	dc.l	SpriteFramePointerTable_4A8B8_Frame_4A8AA
+;==============================================================
+; MAGIC EFFECT GRAPHICS — WYCLIF / PARMA
+; Tile-index remap array + compressed inline tile blobs +
+; pointer table for magic spell effect graphics.
+; RLE encoding: byte < $80 = literal; byte >= $80 = repeat next
+; byte ($80 - value) times.
+;==============================================================
 MagicGfxData_WyclifParma_Gfx_4A8F4:
 	incbin "data/art/tiles/boss/magic_wyclifparma_gfx.bin"
 SpriteFramePointerTable_4A8B8_Frame_4A912:	equ MagicGfxData_WyclifParma_Gfx_4A8F4+$1E
@@ -2764,6 +2881,13 @@ MagicGfxData_WyclifParma_Gfx_4AA82:
 	dc.l	SpriteFramePointerTable_4A8B8_Frame_4AA4C
 	dc.l	SpriteFramePointerTable_4A8B8_Frame_4AA62
 	dc.l	SpriteFramePointerTable_4A8B8_Frame_4AA6E
+;==============================================================
+; MAGIC EFFECT GRAPHICS — SWAFFHAM / EXCALABRIA
+; Tile-index remap array + compressed inline tile blobs +
+; pointer table for magic spell effect graphics.
+; RLE encoding: byte < $80 = literal; byte >= $80 = repeat next
+; byte ($80 - value) times.
+;==============================================================
 MagicGfxData_SwaffhamExcalabria_Gfx_4AAD6:
 	dc.b	$00, $00, $00, $00, $00, $00, $00, $01, $00, $00, $00, $02, $00, $00, $00, $00, $00, $00, $00, $03, $00, $00, $00, $04, $00, $00, $00, $05, $00, $00, $00, $06 
 	dc.b	$00, $00, $07, $0B, $00, $00, $08, $0C, $00, $00, $09, $0D, $00, $00, $0A, $0E, $00, $00, $0F, $13, $00, $00, $10, $14, $00, $00, $11, $15, $00, $00, $12, $16 
@@ -2991,6 +3115,11 @@ MagicGfxData_SwaffhamExcalabria_Gfx_4B1E6:
 	dc.l	SpriteFramePointerTable_4A8B8_Frame_4B1B8
 	dc.l	SpriteFramePointerTable_4A8B8_Frame_4B1C4
 	dc.l	SpriteFramePointerTable_4A8B8_Frame_4B1DC
+;==============================================================
+; FIRST-PERSON ENEMY TILE LAYOUTS
+; Tile-index remap arrays (A–N) + incbin tile blobs for
+; first-person battle enemy sprite graphics.
+;==============================================================
 FPEnemyTileLayout_A:
 	dc.b	$00, $03, $06, $09, $01, $04, $07, $0A, $02, $05, $08, $0B, $00, $0C, $0F, $12, $01, $0D, $10, $13, $02, $0E, $11, $14, $00, $16, $19, $1C, $15, $17, $1A, $1D 
 	dc.b	$00, $18, $1B, $1E, $00, $1F, $22, $25, $15, $20, $23, $26, $00, $21, $24, $27, $00, $29, $2C, $2F, $28, $2A, $2D, $30, $00, $2B, $2E, $31, $00, $32, $35, $38 
