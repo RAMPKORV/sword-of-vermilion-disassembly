@@ -356,9 +356,9 @@ MenuObjectInitTable:
 ; ============================================================================
 ; loc_0000073A
 GameplayObjectInitTable:
-	dc.w	$0016                        ; 23 object groups (0x16 = 22 decimal, 0-based)
+	dc.w	$16                        ; 23 object groups (0x16 = 22 decimal, 0-based)
 	
-	dc.w	$0000, $0027, $0050, $0000 
+	dc.w	$0, $27, $50, $0 
 	dc.l	$00000000
 	dc.l	Enemy_list_ptr
 	
@@ -474,9 +474,9 @@ BossObjectInitTable_A:
 	dc.b	$CC, $28, $00, $00, $00, $1F, $00, $40, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $27, $00, $50, $00, $00, $00, $00, $00, $00, $FF, $FF 
 	dc.b	$CC, $2C, $00, $01, $00, $1F, $00, $40, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 
 BossObjectInitTable_B:
-	dc.w	$0009
+	dc.w	$9
 
-	dc.w	$0000, $0027, $0050, $0000 
+	dc.w	$0, $27, $50, $0 
 	dc.l	$00000000 
 	dc.l	Enemy_list_ptr 
 
@@ -2679,14 +2679,14 @@ TownSpawnPositionData:
 	dc.w	$0208, $0138, $0017, $000B 
 	dc.w	$0208, $0138, $0017, $000B 
 TownPlayerPositionData:
-	dc.w	$0020, $0012, $0027, $0021 
-	dc.w	$000D, $000B, $001C, $000E 
-	dc.w	$000A, $001B, $000A, $001B
-	dc.w	$001A, $0019, $0027, $0021 
-	dc.w	$000F, $000D, $000A, $0018
-	dc.w	$0020, $0020, $001B, $000E
-	dc.w	$001B, $000E, $0020, $0012
-	dc.w	$0020, $0012, $0020, $0012 
+	dc.w	$20, $12, $27, $21 
+	dc.w	$D, $B, $1C, $E 
+	dc.w	$A, $1B, $A, $1B
+	dc.w	$1A, $19, $27, $21 
+	dc.w	$F, $D, $A, $18
+	dc.w	$20, $20, $1B, $E
+	dc.w	$1B, $E, $20, $12
+	dc.w	$20, $12, $20, $12 
 TownTeleportLocationData: ; town teleport locations
 	; format:
 	; dc.w (x_in_sector), (y_in_sector), (sector_x), (sector_y)
@@ -2707,22 +2707,22 @@ TownTeleportLocationData: ; town teleport locations
 	dc.w	$5, $4, $9, $2 ; TOWN_HASTINGS2
 	dc.w	$8, $8, $A, $5 ; TOWN_CARTHAHENA
 TownSavedPositionData:
-	dc.w	$00D8, $0068 
-	dc.w	$0058, $0068
-	dc.w	$00D8, $0068 
-	dc.w	$0058, $0068
-	dc.w	$0058, $0068 
-	dc.w	$0058, $0068
-	dc.w	$0058, $0068 
-	dc.w	$0058, $0068 
-	dc.w	$00D8, $0068 
-	dc.w	$0058, $0068
-	dc.w	$00D8, $0068 
-	dc.w	$0058, $0068
-	dc.w	$0058, $0068 
-	dc.w	$00D8, $0068
-	dc.w	$00D8, $0068
-	dc.w	$00D8, $0068 
+	dc.w	$D8, $68 
+	dc.w	$58, $68
+	dc.w	$D8, $68 
+	dc.w	$58, $68
+	dc.w	$58, $68 
+	dc.w	$58, $68
+	dc.w	$58, $68 
+	dc.w	$58, $68 
+	dc.w	$D8, $68 
+	dc.w	$58, $68
+	dc.w	$D8, $68 
+	dc.w	$58, $68
+	dc.w	$58, $68 
+	dc.w	$D8, $68
+	dc.w	$D8, $68
+	dc.w	$D8, $68 
 
 CheckPlayerDeath:
 	TST.w	Player_hp.w
@@ -3395,7 +3395,7 @@ PlayBattleMusic:
 BattleMusicIdTable:
 	dc.b	$88, $93, $88, $88, $93, $93, $93, $93, $88, $88, $93, $88, $93, $93 
 BattlePaletteIndexTable:
-	dc.w	$005F, $0077, $0068, $0068, $0081, $007E, $00B1, $00B2, $0086, $00B4, $00B3, $0087, $0088, $0082 
+	dc.w	$5F, $77, $68, $68, $81, $7E, $B1, $B2, $86, $B4, $B3, $87, $88, $82 
 ; loc_00003694
 BossBattleObjectInitPtrs:
 	dc.l	InitBossObjects_TypeA
@@ -13122,14 +13122,14 @@ SetEnemyCollisionBounds:
 	
 ;loc_0000B78C:
 EnemyStartingPositions:
-	dc.w	$001E, $0040
-	dc.w	$005E, $0040
-	dc.w	$009E, $0040
-	dc.w	$00DE, $0040
-	dc.w	$001E, $00A0
-	dc.w	$005E, $00A0
-	dc.w	$009E, $00A0
-	dc.w	$00DE, $00A0 
+	dc.w	$1E, $40
+	dc.w	$5E, $40
+	dc.w	$9E, $40
+	dc.w	$DE, $40
+	dc.w	$1E, $A0
+	dc.w	$5E, $A0
+	dc.w	$9E, $A0
+	dc.w	$DE, $A0 
 InitBattleEntities:
 	LEA	BattleEntityInitJumpTable, A0
 	MOVE.w	Battle_type.w, D0
@@ -15301,18 +15301,18 @@ SetEntityCoordFromDirection_Loop2:
 
 ; loc_0000D5CC
 DemonBossWingFrameData:
-	dc.w	$0078, $0096
-	dc.w	$0082, $008C 
+	dc.w	$78, $96
+	dc.w	$82, $8C 
 ; loc_0000D5D4
 EntityDirectionXOffsets:
-	dc.w	$0028
-	dc.w	$0032
-	dc.w	$003C
+	dc.w	$28
+	dc.w	$32
+	dc.w	$3C
 ; loc_0000D5DA
 EntityDirectionYOffsets:
-	dc.w	$0050
-	dc.w	$005A
-	dc.w	$0064
+	dc.w	$50
+	dc.w	$5A
+	dc.w	$64
 ; loc_0000D5E0
 DemonBossAttackYOffsets:
 	dc.b	$00, $00, $00, $00, $00, $00, $00, $0A, $00, $14, $00, $0A, $00, $00, $00, $0A, $00, $14, $00, $0A, $00, $00, $00, $0A, $00, $0A, $00, $14, $00, $14, $00, $0A 
@@ -15593,11 +15593,11 @@ DemonBoss_ProjectileSegmentTick_Loop3:
 
 ; loc_0000D9C0
 DemonBossProjectileTileFrames:
-	dc.w	$0000
-	dc.w	$0008 
-	dc.w	$0010 
-	dc.w	$0018 
-	dc.w	$0020 
+	dc.w	$0
+	dc.w	$8 
+	dc.w	$10 
+	dc.w	$18 
+	dc.w	$20 
 InitOrbitBoss:
 	MOVEA.l	Enemy_list_ptr.w, A6
 	BSET.b	#7, (A6)
@@ -24712,8 +24712,8 @@ TownPaletteCycle_Return:
 
 ; loc_000167D0
 TownPaletteConfigTable:
-	dc.w	$0015
-	dc.w	$0016
+	dc.w	$15
+	dc.w	$16
 	dc.b	$00, $17, $00, $18, $00, $19 
 	dc.w	$001A
 	dc.b	$00, $1B, $00, $1C 
@@ -27004,20 +27004,20 @@ SpellMenu_CursedError:
 TownOverworldCoords: ; Town locations. Without duplicates.
 	; format:
 	; dc.w (x_in_sector), (y_in_sector), (sector_x), (sector_y)
-	dc.w	$0008, $000D, $0000, $0006 ; TOWN_WYCLIF
-	dc.w	$0007, $0006, $0001, $0004 ; TOWN_PARMA
-	dc.w	$0008, $0004, $0006, $0005 ; TOWN_WATLING
-	dc.w	$0004, $0008, $0004, $0007 ; TOWN_DEEPDALE
-	dc.w	$000A, $0005, $000B, $0007 ; TOWN_STOW
-	dc.w	$0004, $0005, $000E, $0004 ; TOWN_KELTWICK
-	dc.w	$0004, $0006, $000C, $0002 ; TOWN_MALAGA
-	dc.w	$0009, $0005, $000E, $0000 ; TOWN_BARROW
-	dc.w	$000A, $0006, $0009, $0001 ; TOWN_TADCASTER
-	dc.w	$0006, $000F, $0006, $0000 ; TOWN_HELWIG
-	dc.w	$0007, $0007, $0001, $0000 ; TOWN_SWAFHAM
-	dc.w	$000A, $0005, $0005, $0002 ; TOWN_EXCALABRIA
-	dc.w	$0005, $0004, $0009, $0002 ; TOWN_HASTINGS
-	dc.w	$0008, $0008, $000A, $0005 ; TOWN_CARTHAHENA
+	dc.w	$8, $D, $0, $6 ; TOWN_WYCLIF
+	dc.w	$7, $6, $1, $4 ; TOWN_PARMA
+	dc.w	$8, $4, $6, $5 ; TOWN_WATLING
+	dc.w	$4, $8, $4, $7 ; TOWN_DEEPDALE
+	dc.w	$A, $5, $B, $7 ; TOWN_STOW
+	dc.w	$4, $5, $E, $4 ; TOWN_KELTWICK
+	dc.w	$4, $6, $C, $2 ; TOWN_MALAGA
+	dc.w	$9, $5, $E, $0 ; TOWN_BARROW
+	dc.w	$A, $6, $9, $1 ; TOWN_TADCASTER
+	dc.w	$6, $F, $6, $0 ; TOWN_HELWIG
+	dc.w	$7, $7, $1, $0 ; TOWN_SWAFHAM
+	dc.w	$A, $5, $5, $2 ; TOWN_EXCALABRIA
+	dc.w	$5, $4, $9, $2 ; TOWN_HASTINGS
+	dc.w	$8, $8, $A, $5 ; TOWN_CARTHAHENA
 
 ;loc_00018A32
 CastBattleMagicMap:
@@ -29694,18 +29694,18 @@ AlarmClockCheck_Return_Loop:
 
 ; loc_0001AE88
 AlarmClockPositionData:
-	dc.w	$00D8
-	dc.w	$0098
-	dc.w	$0000 
-	dc.w	$00C8
-	dc.w	$0088
-	dc.w	$0006 
-	dc.w	$00E8
-	dc.w	$0088
-	dc.w	$0002
-	dc.w	$00D8
-	dc.w	$0078
-	dc.w	$0004 
+	dc.w	$D8
+	dc.w	$98
+	dc.w	$0 
+	dc.w	$C8
+	dc.w	$88
+	dc.w	$6 
+	dc.w	$E8
+	dc.w	$88
+	dc.w	$2
+	dc.w	$D8
+	dc.w	$78
+	dc.w	$4 
 
 ;loc_0001AEA0:
 UseVase:
@@ -36089,7 +36089,7 @@ OverworldSectorInteractionPtrs:
 	dc.l	OverworldInteractions_Sector15 
 ; loc_000200F6
 OverworldInteractions_Sector0:
-	dc.w	$0004, $0001, $0001, $0002 
+	dc.w	$4, $1, $1, $2 
 	dc.l	OverworldChest_Money256
 	dc.w	$0004, $000B, $0004, $0001 
 	dc.l	OverworldChest_Herbs
@@ -36104,7 +36104,7 @@ OverworldInteractions_Sector0:
 	dc.w	$FFFF
 ; loc_00020140
 OverworldInteractions_Sector1:	
-	dc.w	$0005, $0005, $0002, $0001 
+	dc.w	$5, $5, $2, $1 
 	dc.l	OverworldNpc_MerchantFromParma
 	dc.w	$0004, $000F, $0006, $0008	
 	dc.l	OverworldNpc_PreparedForTask
@@ -36113,7 +36113,7 @@ OverworldInteractions_Sector1:
 	dc.w	$FFFF
 ; loc_00020166
 OverworldInteractions_Sector2:
-	dc.w	$0004, $0008, $000B, $0001 
+	dc.w	$4, $8, $B, $1 
 	dc.l	OverworldChest_DarkSword
 	dc.w	$0005, $0009, $000D, $0002	
 	dc.l	OverworldChest_Money768B	
@@ -36128,7 +36128,7 @@ OverworldInteractions_Sector2:
 	dc.w	$FFFF
 ; loc_000201B0
 OverworldInteractions_Sector3:
-	dc.w	$0005, $0005, $0007, $0008
+	dc.w	$5, $5, $7, $8
 	dc.l	OverworldChest_SapphireShield
 	dc.w	$0005, $0002, $000C, $0002
 	dc.l	OverworldChest_Money512 
@@ -36141,14 +36141,14 @@ OverworldInteractions_Sector3:
 	dc.w	$FFFF
 ; loc_000201EE
 OverworldInteractions_Sector4:
-	dc.w	$0005, $0002, $0001, $0001
+	dc.w	$5, $2, $1, $1
 	dc.l	SetupNoOneTalker
 	dc.w	$0005, $0008, $0001, $0001
 	dc.l	OverworldChest_Money768_Stow
 	dc.w	$FFFF
 ; loc_00020208
 OverworldInteractions_Sector5:
-	dc.w	$0004, $000C, $0005, $0008	
+	dc.w	$4, $C, $5, $8	
 	dc.l	OverworldChest_GemShield	
 	dc.w	$0005, $0005, $0005, $0005
 	dc.l	OverworldNpc_HeadedToWatling
@@ -36161,7 +36161,7 @@ OverworldInteractions_Sector5:
 	dc.w	$FFFF
 ; loc_00020246
 OverworldInteractions_Sector6:	
-	dc.w	$0003, $000E, $0002, $0008 
+	dc.w	$3, $E, $2, $8 
 	dc.l	OverworldChest_Medicine
 	dc.w	$0003, $000B, $0007, $0001	
 	dc.l	OverworldNpc_WrongRoad
@@ -36174,14 +36174,14 @@ OverworldInteractions_Sector6:
 	dc.w	$FFFF
 ; loc_00020284
 OverworldInteractions_Sector7:
-	dc.w	$0001, $0001, $000C, $0002
+	dc.w	$1, $1, $C, $2
 	dc.l	SetupNoOneTalker
 	dc.w	$0007, $0007, $0005, $0008
 	dc.l	SetupNoOneTalker
 	dc.w	$FFFF
 ; loc_0002029E
 OverworldInteractions_Sector8:
-	dc.w	$0002, $000D, $0001, $0008
+	dc.w	$2, $D, $1, $8
 	dc.l	OverworldChest_Money9999
 	dc.w	$0005, $000C, $0003, $000A	
 	dc.l	OverworldNpc_LearnFromMistakes
@@ -36190,14 +36190,14 @@ OverworldInteractions_Sector8:
 	dc.w	$FFFF
 ; loc_000202C4
 OverworldInteractions_Sector9:	
-	dc.w	$0004, $000A, $0003, $0008
+	dc.w	$4, $A, $3, $8
 	dc.l	OverworldChest_Money20480
 	dc.w	$0005, $0006, $000D, $0008 
 	dc.l	OverworldNpc_SawMotherInCarthahena
 	dc.w	$FFFF
 ; loc_000202DE
 OverworldInteractions_Sector10:
-	dc.w	$0000, $0006, $0005, $0004
+	dc.w	$0, $6, $5, $4
 	dc.l	OverworldChest_Money864
 	dc.w	$0000, $0009, $000C, $000A 
 	dc.l	OverworldNpc_ProgressingWell
@@ -36210,12 +36210,12 @@ OverworldInteractions_Sector10:
 	dc.w	$FFFF
 ; loc_0002031C
 OverworldInteractions_Sector11:
-	dc.w	$0002, $000B, $0001, $0008
+	dc.w	$2, $B, $1, $8
 	dc.l	OverworldChest_BansheePowder
 	dc.w	$FFFF	
 ; loc_0002032A
 OverworldInteractions_Sector12:
-	dc.w	$0001, $000B, $0002, $0008
+	dc.w	$1, $B, $2, $8
 	dc.l	OverworldChest_Money5888	
 	dc.w	$0002, $0001, $000C, $0002	
 	dc.l	OverworldNpc_AppearancesDeceive	
@@ -36226,7 +36226,7 @@ OverworldInteractions_Sector12:
 	dc.w	$FFFF
 ; loc_0002035C
 OverworldInteractions_Sector13:
-	dc.w	$0001, $0008, $000E, $000A 
+	dc.w	$1, $8, $E, $A 
 	dc.l	OverworldNpc_EvilFlourishes
 	dc.w	$0006, $0009, $0003, $0008	
 	dc.l	SetupNoOneTalker	
@@ -36235,12 +36235,12 @@ OverworldInteractions_Sector13:
 	dc.w	$FFFF
 ; loc_00020382
 OverworldInteractions_Sector14:
-	dc.w	$0004, $000B, $0007, $0009
+	dc.w	$4, $B, $7, $9
 	dc.l	OverworldNpc_RingsHavePower
 	dc.w	$FFFF	
 ; loc_00020390
 OverworldInteractions_Sector15:
-	dc.w	$0003, $000D, $0007, $0008	
+	dc.w	$3, $D, $7, $8	
 	dc.l	OverworldChest_CrimsonArmor
 	dc.w	$FFFF
 ; loc_0002039E
@@ -36559,7 +36559,7 @@ CaveRoomInteractionPtrs:
 	dc.l	CaveRoomInteractions_2B
 ; loc_00020830
 CaveRoomInteractions_00:
-	dc.w	$0002, $0004, $0004 ; x, y, direction
+	dc.w	$2, $4, $4 ; x, y, direction
 	dc.l	CaveEvent_RingOfWisdom
 	dc.w	$000B, $000B, $0002 
 	dc.l	CheckCaveRoomEnemyState
@@ -36572,7 +36572,7 @@ CaveRoomInteractions_00:
 	dc.w	$FFFF
 ; loc_00020864
 CaveRoomInteractions_01:
-	dc.w	$0003, $000D, $0004	
+	dc.w	$3, $D, $4	
 	dc.l	CheckCaveRoomEnemyState
 	dc.w	$0002, $0003, $0004 
 	dc.l	CaveChest_Herbs4
@@ -36581,7 +36581,7 @@ CaveRoomInteractions_01:
 	dc.w	$FFFF 
 ; loc_00020884
 CaveRoomInteractions_02:
-	dc.w	$000F, $000F, $0008 
+	dc.w	$F, $F, $8 
 	dc.l	CaveChest_ScaleArmor
 	dc.w	$000F, $0000, $0001 
 	dc.l	CaveEvent_TreasureOfTroy
@@ -36592,7 +36592,7 @@ CaveRoomInteractions_02:
 	dc.w	$FFFF
 ; loc_000208AE
 CaveRoomInteractions_03:
-	dc.w	$0003, $0006, $0008	
+	dc.w	$3, $6, $8	
 	dc.l	CheckCaveRoomEnemyState
 	dc.w	$0000, $000E, $0001
 	dc.l	CaveChest_Money1536
@@ -36601,7 +36601,7 @@ CaveRoomInteractions_03:
 	dc.w	$FFFF
 ; loc_000208CE
 CaveRoomInteractions_04:
-	dc.w	$0000, $0007, $0001	
+	dc.w	$0, $7, $1	
 	dc.l	CheckCaveRoomEnemyState
 	dc.w	$000A, $0001, $0008
 	dc.l	CaveChest_Herbs_Watling
@@ -36610,7 +36610,7 @@ CaveRoomInteractions_04:
 	dc.w	$FFFF
 ; loc_000208EE
 CaveRoomInteractions_05:
-	dc.w	$0000, $0001, $0004	
+	dc.w	$0, $1, $4	
 	dc.l	CheckCaveRoomEnemyState
 	dc.w	$000B, $0004, $0008
 	dc.l	CaveChest_LargeShield
@@ -36619,7 +36619,7 @@ CaveRoomInteractions_05:
 	dc.w	$FFFF
 ; loc_0002090E
 CaveRoomInteractions_06:
-	dc.w	$0003, $000C, $0002	
+	dc.w	$3, $C, $2	
 	dc.l	CheckCaveRoomEnemyState
 	dc.w	$000E, $000F, $0004 
 	dc.l	CaveChest_MagicShield 
@@ -36630,7 +36630,7 @@ CaveRoomInteractions_06:
 	dc.w	$FFFF
 ; loc_00020938
 CaveRoomInteractions_07:
-	dc.w	$0004, $000D, $0008	
+	dc.w	$4, $D, $8	
 	dc.l	CheckCaveRoomEnemyState	
 	dc.w	$0008, $000F, $0002
 	dc.l	CaveChest_Money2128
@@ -36639,7 +36639,7 @@ CaveRoomInteractions_07:
 	dc.w	$FFFF
 ; loc_00020958
 CaveRoomInteractions_08:
-	dc.w	$000D, $000B, $0004	
+	dc.w	$D, $B, $4	
 	dc.l	CheckCaveRoomEnemyState	
 	dc.w	$000F, $0000, $0001
 	dc.l	CaveChest_SkeletonArmor
@@ -36648,7 +36648,7 @@ CaveRoomInteractions_08:
 	dc.w	$FFFF
 ; loc_00020978
 CaveRoomInteractions_09:
-	dc.w	$0002, $000A, $0004	
+	dc.w	$2, $A, $4	
 	dc.l	CheckCaveRoomEnemyState	
 	dc.w	$0002, $000F, $0008
 	dc.l	CaveChest_SkeletonArmor
@@ -36657,14 +36657,14 @@ CaveRoomInteractions_09:
 	dc.w	$FFFF
 ; loc_00020998
 CaveRoomInteractions_0A:
-	dc.w	$000B, $000B, $000B	
+	dc.w	$B, $B, $B	
 	dc.l	CheckCaveRoomEnemyState
 	dc.w	$0007, $0006, $0001 
 	dc.l	CaveEvent_AstiMonster
 	dc.w	$FFFF
 ; loc_000209AE
 CaveRoomInteractions_0B:
-	dc.w	$0004, $000D, $0004	
+	dc.w	$4, $D, $4	
 	dc.l	CheckCaveRoomEnemyState
 	dc.w	$0006, $0002, $0001
 	dc.l	CaveChest_EmeraldArmor
@@ -36673,7 +36673,7 @@ CaveRoomInteractions_0B:
 	dc.w	$FFFF
 ; loc_000209CE
 CaveRoomInteractions_0C:
-	dc.w	$000B, $0003, $0002	
+	dc.w	$B, $3, $2	
 	dc.l	CheckCaveRoomEnemyState
 	dc.w	$0001, $000E, $0004 
 	dc.l	CaveEvent_BearwulfWeaponReward
@@ -36688,7 +36688,7 @@ CaveRoomInteractions_0C:
 	dc.w	$FFFF
 ; loc_00020A0C
 CaveRoomInteractions_0D:
-	dc.w	$0005, $0002, $0002	
+	dc.w	$5, $2, $2	
 	dc.l	CheckCaveRoomEnemyState
 	dc.w	$0003, $0007, $000A 
 	dc.l	CaveEvent_MalagaDungeonPrisoner
@@ -36697,21 +36697,21 @@ CaveRoomInteractions_0D:
 	dc.w	$FFFF
 ; loc_00020A2C
 CaveRoomInteractions_0E:
-	dc.w	$0009, $000A, $0008	
+	dc.w	$9, $A, $8	
 	dc.l	CheckCaveRoomEnemyState
 	dc.w	$0009, $0000, $0002 
 	dc.l	CaveChest_PhantomShield 
 	dc.w	$FFFF 
 ; loc_00020A42
 CaveRoomInteractions_0F:
-	dc.w	$0003, $0003, $0002 
+	dc.w	$3, $3, $2 
 	dc.l	CheckCaveRoomEnemyState
 	dc.w	$0008, $0004, $0002 
 	dc.l	CaveChest_Money8192
 	dc.w	$FFFF
 ; loc_00020A58
 CaveRoomInteractions_10:
-	dc.w	$0000, $0000, $0002	
+	dc.w	$0, $0, $2	
 	dc.l	CheckCaveRoomEnemyState
 	dc.w	$0003, $0004, $0002
 	dc.l	SetupNoOneTalker
@@ -36720,7 +36720,7 @@ CaveRoomInteractions_10:
 	dc.w	$FFFF
 ; loc_00020A78
 CaveRoomInteractions_11:
-	dc.w	$0001, $000E, $0002	
+	dc.w	$1, $E, $2	
 	dc.l	CheckCaveRoomEnemyState
 	dc.w	$0004, $0004, $0002
 	dc.l	CaveEvent_TadcasterTreasureChest
@@ -36737,14 +36737,14 @@ CaveRoomInteractions_11:
 	dc.w	$FFFF
 ; loc_00020AC0
 CaveRoomInteractions_12:
-	dc.w	$000A, $0007, $0004	
+	dc.w	$A, $7, $4	
 	dc.l	CheckCaveRoomEnemyState
 	dc.w	$0000, $0000, $0002 
 	dc.l	CaveChest_GrizzlyShield 
 	dc.w	$FFFF 
 ; loc_00020AD6
 CaveRoomInteractions_13:
-	dc.w	$0000, $0000, $0001 
+	dc.w	$0, $0, $1 
 	dc.l	CheckCaveRoomEnemyState
 	dc.w	$0007, $000F, $000A 
 	dc.l	CaveEvent_TadcasterBully
@@ -36753,46 +36753,46 @@ CaveRoomInteractions_13:
 	dc.w	$FFFF
 ; loc_00020AF6
 CaveRoomInteractions_14:
-	dc.w	$0000, $000E, $0004	
+	dc.w	$0, $E, $4	
 	dc.l	CheckCaveRoomEnemyState
 	dc.w	$000A, $000E, $0008 
 	dc.l	CaveEvent_HelwigMenRescued
 	dc.w	$FFFF
 ; loc_00020B0C
 CaveRoomInteractions_15:
-	dc.w	$000B, $0004, $000A	
+	dc.w	$B, $4, $A	
 	dc.l	CheckCaveRoomEnemyState
 	dc.w	$FFFF
 ; loc_00020B18
 CaveRoomInteractions_16:
-	dc.w	$0008, $000B, $0004	
+	dc.w	$8, $B, $4	
 	dc.l	CheckCaveRoomEnemyState
 	dc.w	$0000, $0007, $0005 
 	dc.l	CaveEvent_ExcalabriaRingGuardian1
 	dc.w	$FFFF 
 ; loc_00020B2E
 CaveRoomInteractions_17:
-	dc.w	$0003, $000C, $0004 
+	dc.w	$3, $C, $4 
 	dc.l	CheckCaveRoomEnemyState
 	dc.w	$FFFF 
 ; loc_00020B3A
 CaveRoomInteractions_18:
-	dc.w	$0004, $0007, $0002 
+	dc.w	$4, $7, $2 
 	dc.l	CheckCaveRoomEnemyState
 	dc.w	$FFFF 
 ; loc_00020B46
 CaveRoomInteractions_19:
-	dc.w	$0001, $0005, $0001 
+	dc.w	$1, $5, $1 
 	dc.l	CheckCaveRoomEnemyState
 	dc.w	$FFFF 
 ; loc_00020B52
 CaveRoomInteractions_1A:
-	dc.w	$000B, $000E, $0004 
+	dc.w	$B, $E, $4 
 	dc.l	CheckCaveRoomEnemyState
 	dc.w	$FFFF 
 ; loc_00020B5E
 CaveRoomInteractions_1B:	
-	dc.w	$000A, $0006, $0008 
+	dc.w	$A, $6, $8 
 	dc.l	CheckCaveRoomEnemyState
 	dc.w	$FFFF 
 ; loc_00020B6A
@@ -36803,7 +36803,7 @@ CaveRoomInteractions_1D:
 	dc.w	$FFFF 
 ; loc_00020B6E
 CaveRoomInteractions_1E:
-	dc.w	$0009, $0007, $0001 
+	dc.w	$9, $7, $1 
 	dc.l	CheckCaveRoomEnemyState 
 	dc.w	$000D, $0008, $0004 
 	dc.l	CaveEvent_SwaffhamDigotPlant
@@ -36812,12 +36812,12 @@ CaveRoomInteractions_1E:
 	dc.w	$FFFF 
 ; loc_00020B8E
 CaveRoomInteractions_1F:
-	dc.w	$0003, $0007, $0001 
+	dc.w	$3, $7, $1 
 	dc.l	CheckCaveRoomEnemyState 
 	dc.w	$FFFF 
 ; loc_00020B9A
 CaveRoomInteractions_20:
-	dc.w	$0005, $0003, $000A 
+	dc.w	$5, $3, $A 
 	dc.l	CaveEvent_SwaffhamSpy
 	dc.w	$0002, $0003, $0002 
 	dc.l	CaveChest_RingSoldier1
@@ -36837,62 +36837,62 @@ CaveRoomInteractions_21:
 	dc.w	$FFFF 
 ; loc_00020BE4
 CaveRoomInteractions_22:
-	dc.w	$0009, $000F, $0008 
+	dc.w	$9, $F, $8 
 	dc.l	CaveChest_SecretArmor
 	dc.w	$0009, $0000, $0008 
 	dc.l	CaveChest_MirrorOfAtlas
 	dc.w	$FFFF
 ; loc_00020BFA
 CaveRoomInteractions_23:
-	dc.w	$0009, $0005, $0001	
+	dc.w	$9, $5, $1	
 	dc.l	CheckCaveRoomEnemyState
 	dc.w	$FFFF
 ; loc_00020C06
 CaveRoomInteractions_24:
-	dc.w	$000A, $000B, $000A	
+	dc.w	$A, $B, $A	
 	dc.l	CheckCaveRoomEnemyState
 	dc.w	$0004, $000C, $0005 
 	dc.l	CaveEvent_ExcalabriaRingGuardian3
 	dc.w	$FFFF 
 ; loc_00020C1C
 CaveRoomInteractions_25:
-	dc.w	$000C, $0003, $0008 
+	dc.w	$C, $3, $8 
 	dc.l	CheckCaveRoomEnemyState
 	dc.w	$FFFF 
 ; loc_00020C28
 CaveRoomInteractions_26:
-	dc.w	$000F, $000C, $0008 
+	dc.w	$F, $C, $8 
 	dc.l	CheckCaveRoomEnemyState
 	dc.w	$FFFF 
 ; loc_00020C34
 CaveRoomInteractions_27:
-	dc.w	$0009, $0009, $0002 
+	dc.w	$9, $9, $2 
 	dc.l	CheckCaveRoomEnemyState
 	dc.w	$0001, $0001, $0001 
 	dc.l	CaveChest_CriticalSword
 	dc.w	$FFFF
 ; loc_00020C4A
 CaveRoomInteractions_28:
-	dc.w	$0008, $0000, $0002	
+	dc.w	$8, $0, $2	
 	dc.l	CheckCaveRoomEnemyState
 	dc.w	$FFFF
 ; loc_00020C56
 CaveRoomInteractions_29:
-	dc.w	$0000, $000D, $0001	
+	dc.w	$0, $D, $1	
 	dc.l	CheckCaveRoomEnemyState
 	dc.w	$000A, $000B, $0005 
 	dc.l	CaveEvent_ExcalabriaRingGuardian2
 	dc.w	$FFFF 
 ; loc_00020C6C
 CaveRoomInteractions_2A:
-	dc.w	$0002, $000D, $0002 
+	dc.w	$2, $D, $2 
 	dc.l	CheckCaveRoomEnemyState 
 	dc.w	$000F, $0007, $0001 
 	dc.l	CaveChest_DeathSword
 	dc.w	$FFFF
 ; loc_00020C82
 CaveRoomInteractions_2B:
-	dc.w	$0001, $000E, $0004	
+	dc.w	$1, $E, $4	
 	dc.l	CheckCaveRoomEnemyState
 	dc.w	$FFFF 
 ; loc_00020C8E
@@ -38441,38 +38441,38 @@ SineTable:
 	dc.b	$5A, $58, $55, $53, $51, $4E, $4C, $49, $47, $44, $41, $3F, $3C, $39, $36, $33, $30, $2E, $2B, $28, $25, $22, $1F, $1C, $18, $15, $12, $0F, $0C, $09, $06, $03 
 ; loc_000228FE
 BattleSpriteIndexTableA:
-	dc.w	$0000
-	dc.w	$0004
-	dc.w	$0004 
-	dc.w	$0002
-	dc.w	$0001
-	dc.w	$0003
-	dc.w	$0003 
-	dc.w	$0006
-	dc.w	$0007
-	dc.w	$0005
-	dc.w	$0005
-	dc.w	$0005
-	dc.w	$0005
-	dc.w	$0005
-	dc.w	$0005 
+	dc.w	$0
+	dc.w	$4
+	dc.w	$4 
+	dc.w	$2
+	dc.w	$1
+	dc.w	$3
+	dc.w	$3 
+	dc.w	$6
+	dc.w	$7
+	dc.w	$5
+	dc.w	$5
+	dc.w	$5
+	dc.w	$5
+	dc.w	$5
+	dc.w	$5 
 ; loc_0002291C
 BattleSpriteIndexTableB:
-	dc.w	$0000
-	dc.w	$0004
-	dc.w	$0004 
-	dc.w	$0002
-	dc.w	$0000
-	dc.w	$0004
-	dc.w	$0004 
-	dc.w	$0006
-	dc.w	$0000
-	dc.w	$0004
-	dc.w	$0005
-	dc.w	$0005
-	dc.w	$0005
-	dc.w	$0005
-	dc.w	$0005 
+	dc.w	$0
+	dc.w	$4
+	dc.w	$4 
+	dc.w	$2
+	dc.w	$0
+	dc.w	$4
+	dc.w	$4 
+	dc.w	$6
+	dc.w	$0
+	dc.w	$4
+	dc.w	$5
+	dc.w	$5
+	dc.w	$5
+	dc.w	$5
+	dc.w	$5 
 ; loc_0002293A
 BattleSpriteDMACommands:
 	dc.b	$94, $04, $93, $80, $96, $D0, $95, $00, $97, $7F, $43, $20, $00, $80, $00, $00, $94, $03, $93, $00, $96, $D0, $95, $00, $97, $7F, $4C, $20, $00, $80, $00, $00 
@@ -39560,214 +39560,214 @@ EnemyEncounterGroupTable: ; Enemy encounters map
 	dc.l	EnemyEncounterGroup_44
 	dc.l	EnemyEncounterGroup_45
 EnemyEncounterGroup_00: ; Each map segment or cave has a set of 4 encounter types
-	dc.w	$0000, $0000, $000A, $0001 
+	dc.w	$0, $0, $A, $1 
 ; loc_00023C48
 EnemyEncounterGroup_01:
-	dc.w	$0006, $000A, $0001, $0001 
+	dc.w	$6, $A, $1, $1 
 ; loc_00023C50
 EnemyEncounterGroup_02:
-	dc.w	$000A, $000A, $0001, $0000 
+	dc.w	$A, $A, $1, $0 
 ; loc_00023C58
 EnemyEncounterGroup_03:
-	dc.w	$000E, $000A, $0001, $000A 
+	dc.w	$E, $A, $1, $A 
 ; loc_00023C60
 EnemyEncounterGroup_04:
-	dc.w	$000E, $0012, $000A, $0001 
+	dc.w	$E, $12, $A, $1 
 ; loc_00023C68
 EnemyEncounterGroup_05:
-	dc.w	$000E, $0026, $0012, $000A 
+	dc.w	$E, $26, $12, $A 
 ; loc_00023C70
 EnemyEncounterGroup_06:
-	dc.w	$000E, $0006, $0006, $0016 
+	dc.w	$E, $6, $6, $16 
 ; loc_00023C78
 EnemyEncounterGroup_07:
-	dc.w	$0005, $0012, $000E, $0016 
+	dc.w	$5, $12, $E, $16 
 ; loc_00023C80
 EnemyEncounterGroup_08:
-	dc.w	$000B, $000A, $0012, $0005 
+	dc.w	$B, $A, $12, $5 
 ; loc_00023C88
 EnemyEncounterGroup_09:
-	dc.w	$0032, $000B, $0012, $0016 
+	dc.w	$32, $B, $12, $16 
 ; loc_00023C90
 EnemyEncounterGroup_0A:
-	dc.w	$002A, $0032, $0005, $000B 
+	dc.w	$2A, $32, $5, $B 
 ; loc_00023C98
 EnemyEncounterGroup_0B:
-	dc.w	$000F, $0005, $002A, $0032 
+	dc.w	$F, $5, $2A, $32 
 ; loc_00023CA0
 EnemyEncounterGroup_0C:
-	dc.w	$002E, $0006, $0016, $0002 
+	dc.w	$2E, $6, $16, $2 
 ; loc_00023CA8
 EnemyEncounterGroup_0D:
-	dc.w	$001A, $002A, $0032, $000F
+	dc.w	$1A, $2A, $32, $F
 ; loc_00023CB0
 EnemyEncounterGroup_0E:
-	dc.w	$0042, $002E, $001A, $002A 
+	dc.w	$42, $2E, $1A, $2A 
 ; loc_00023CB8
 EnemyEncounterGroup_0F:
-	dc.w	$004A, $002E, $001A, $0042
+	dc.w	$4A, $2E, $1A, $42
 ; loc_00023CC0
 EnemyEncounterGroup_10:
-	dc.w	$001E, $0006, $004A, $0002
+	dc.w	$1E, $6, $4A, $2
 ; loc_00023CC8
 EnemyEncounterGroup_11:
-	dc.w	$004E, $004A, $001A, $0042 
+	dc.w	$4E, $4A, $1A, $42 
 ; loc_00023CD0
 EnemyEncounterGroup_12:
-	dc.w	$0013, $004E, $001A, $0042
+	dc.w	$13, $4E, $1A, $42
 ; loc_00023CD8
 EnemyEncounterGroup_13:
-	dc.w	$0022, $003A, $0036, $001E 
+	dc.w	$22, $3A, $36, $1E 
 ; loc_00023CE0
 EnemyEncounterGroup_14:
-	dc.w	$001B, $0004, $004E, $0013
+	dc.w	$1B, $4, $4E, $13
 ; loc_00023CE8
 EnemyEncounterGroup_15:
-	dc.w	$0046, $0032, $001B, $0004 
+	dc.w	$46, $32, $1B, $4 
 ; loc_00023CF0
 EnemyEncounterGroup_16:
-	dc.w	$002F, $0022, $002A, $0046 
+	dc.w	$2F, $22, $2A, $46 
 ; loc_00023CF8
 EnemyEncounterGroup_17:
-	dc.w	$0027, $000C, $0046, $004E 
+	dc.w	$27, $C, $46, $4E 
 ; loc_00023D00
 EnemyEncounterGroup_18:
-	dc.w	$002B, $0022, $001B, $001A
+	dc.w	$2B, $22, $1B, $1A
 ; loc_00023D08
 EnemyEncounterGroup_19:
-	dc.w	$001F, $003E, $0010, $0007 
+	dc.w	$1F, $3E, $10, $7 
 ; loc_00023D10
 EnemyEncounterGroup_1A:
-	dc.w	$0033, $0022, $001B, $002F 
+	dc.w	$33, $22, $1B, $2F 
 ; loc_00023D18
 EnemyEncounterGroup_1B:
-	dc.w	$0043, $0033, $0010, $0022 
+	dc.w	$43, $33, $10, $22 
 ; loc_00023D20
 EnemyEncounterGroup_1C:
-	dc.w	$004B, $0047, $0033, $0004 
+	dc.w	$4B, $47, $33, $4 
 ; loc_00023D28
 EnemyEncounterGroup_1D:
-	dc.w	$003B, $004B, $0047, $0022 
+	dc.w	$3B, $4B, $47, $22 
 ; loc_00023D30
 EnemyEncounterGroup_1E:
-	dc.w	$001C, $0028, $0047, $0033 
+	dc.w	$1C, $28, $47, $33 
 ; loc_00023D38
 EnemyEncounterGroup_1F:
-	dc.w	$003F, $0017, $0007, $001C 
+	dc.w	$3F, $17, $7, $1C 
 ; loc_00023D40
 EnemyEncounterGroup_20:
-	dc.w	$0023, $001C, $0014, $004B 
+	dc.w	$23, $1C, $14, $4B 
 ; loc_00023D48
 EnemyEncounterGroup_21:
-	dc.w	$0014, $0023, $001C, $0033 
+	dc.w	$14, $23, $1C, $33 
 ; loc_00023D50
 EnemyEncounterGroup_22:
-	dc.w	$0020, $001C, $0008, $0014 
+	dc.w	$20, $1C, $8, $14 
 ; loc_00023D58
 EnemyEncounterGroup_23:
-	dc.w	$0044, $004F, $0014, $0023 
+	dc.w	$44, $4F, $14, $23 
 ; loc_00023D60
 EnemyEncounterGroup_24:
-	dc.w	$000D, $0044, $004F, $001C
+	dc.w	$D, $44, $4F, $1C
 ; loc_00023D68
 EnemyEncounterGroup_25:
-	dc.w	$0048, $0030, $0023, $001C 
+	dc.w	$48, $30, $23, $1C 
 ; loc_00023D70
 EnemyEncounterGroup_26:
-	dc.w	$003C, $0008, $0007, $0048 
+	dc.w	$3C, $8, $7, $48 
 ; loc_00023D78
 EnemyEncounterGroup_27:
-	dc.w	$0011, $000D, $0044, $0048
+	dc.w	$11, $D, $44, $48
 ; loc_00023D80
 EnemyEncounterGroup_28:
-	dc.w	$0034, $002C, $000D, $0011 
+	dc.w	$34, $2C, $D, $11 
 ; loc_00023D88
 EnemyEncounterGroup_29:
-	dc.w	$0040, $0011, $0008, $0030 
+	dc.w	$40, $11, $8, $30 
 ; loc_00023D90
 EnemyEncounterGroup_2A:
-	dc.w	$0029, $0030, $0048, $0023 
+	dc.w	$29, $30, $48, $23 
 ; loc_00023D98
 EnemyEncounterGroup_2B:
-	dc.w	$0021, $004C, $0029, $0040 
+	dc.w	$21, $4C, $29, $40 
 ; loc_00023DA0
 EnemyEncounterGroup_2C:
-	dc.w	$0024, $0029, $0011, $0004
+	dc.w	$24, $29, $11, $4
 ; loc_00023DA8
 EnemyEncounterGroup_2D:
-	dc.w	$0015, $0024, $0034, $004C 
+	dc.w	$15, $24, $34, $4C 
 ; loc_00023DB0
 EnemyEncounterGroup_2E:
-	dc.w	$0050, $0024, $0015, $0029 
+	dc.w	$50, $24, $15, $29 
 ; loc_00023DB8
 EnemyEncounterGroup_2F:
-	dc.w	$0045, $0039, $0024, $0011 
+	dc.w	$45, $39, $24, $11 
 ; loc_00023DC0
 EnemyEncounterGroup_30:
-	dc.w	$0018, $0045, $0039, $0015 
+	dc.w	$18, $45, $39, $15 
 ; loc_00023DC8
 EnemyEncounterGroup_31:
-	dc.w	$0018, $0045, $0050, $0039 
+	dc.w	$18, $45, $50, $39 
 ; loc_00023DD0
 EnemyEncounterGroup_32:
-	dc.w	$0031, $0018, $0050, $0045
+	dc.w	$31, $18, $50, $45
 ; loc_00023DD8
 EnemyEncounterGroup_33:
-	dc.w	$0053, $0050, $0018, $0045 
+	dc.w	$53, $50, $18, $45 
 ; loc_00023DE0
 EnemyEncounterGroup_34:
-	dc.w	$001D, $0031, $0024, $0045 
+	dc.w	$1D, $31, $24, $45 
 ; loc_00023DE8
 EnemyEncounterGroup_35:
-	dc.w	$0009, $003D, $0018, $0050 
+	dc.w	$9, $3D, $18, $50 
 ; loc_00023DF0
 EnemyEncounterGroup_36:
-	dc.w	$002D, $001D, $0031, $0050 
+	dc.w	$2D, $1D, $31, $50 
 ; loc_00023DF8
 EnemyEncounterGroup_37:
-	dc.w	$004D, $002D, $001D, $0004 
+	dc.w	$4D, $2D, $1D, $4 
 ; loc_00023E00
 EnemyEncounterGroup_38:
-	dc.w	$0019, $0041, $004D, $0009 
+	dc.w	$19, $41, $4D, $9 
 ; loc_00023E08
 EnemyEncounterGroup_39:
-	dc.w	$004D, $0019, $002D, $001D 
+	dc.w	$4D, $19, $2D, $1D 
 ; loc_00023E10
 EnemyEncounterGroup_3A:
-	dc.w	$0035, $002D, $004D, $0024 
+	dc.w	$35, $2D, $4D, $24 
 ; loc_00023E18
 EnemyEncounterGroup_3B:
-	dc.w	$0049, $004D, $0035, $0011 
+	dc.w	$49, $4D, $35, $11 
 ; loc_00023E20
 EnemyEncounterGroup_3C:
-	dc.w	$0025, $0049, $0035, $0019 
+	dc.w	$25, $49, $35, $19 
 ; loc_00023E28
 EnemyEncounterGroup_3D:
-	dc.w	$0025, $0049, $0035, $004D
+	dc.w	$25, $49, $35, $4D
 ; loc_00023E30
 EnemyEncounterGroup_3E:
-	dc.w	$0051, $0025, $0049, $0052 
+	dc.w	$51, $25, $49, $52 
 ; loc_00023E38
 EnemyEncounterGroup_3F:
-	dc.w	$0003, $0050, $0050, $0045 
+	dc.w	$3, $50, $50, $45 
 ; loc_00023E40
 EnemyEncounterGroup_40:
-	dc.w	$003E, $0007, $003A, $0022 
+	dc.w	$3E, $7, $3A, $22 
 ; loc_00023E48
 EnemyEncounterGroup_41:
-	dc.w	$0028, $0047, $0022, $004B
+	dc.w	$28, $47, $22, $4B
 ; loc_00023E50
 EnemyEncounterGroup_42:
-	dc.w	$0038, $0008, $0004, $0023
+	dc.w	$38, $8, $4, $23
 ; loc_00023E58
 EnemyEncounterGroup_43:
-	dc.w	$001E, $0036, $0016, $0002
+	dc.w	$1E, $36, $16, $2
 ; loc_00023E60
 EnemyEncounterGroup_44:
-	dc.w	$0037, $0047, $0007, $003A
+	dc.w	$37, $47, $7, $3A
 ; loc_00023E68
 EnemyEncounterGroup_45:
-	dc.w	$0021, $001F, $001E, $004C 
+	dc.w	$21, $1F, $1E, $4C 
 ; loc_00023E70
 EnemyGfxDataTable:
 	dc.l	EnemyAppearance_5A ; Appearance
