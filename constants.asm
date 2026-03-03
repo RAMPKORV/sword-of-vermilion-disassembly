@@ -1598,3 +1598,16 @@ obj_vel_y           equ $36   ; long: Y velocity fixed-point (enemy only)
 obj_attack_timer    equ $3A   ; word: attack/AI cooldown frame counter (enemy only)
 obj_knockback_timer equ $3C   ; word: knockback/stun frame countdown (enemy only)
 obj_kim_reward      equ $3E   ; word: gold (kims) awarded on kill (enemy only)
+
+; Boss-specific scratch fields — used only by a single boss and therefore
+; safe to name.  They REUSE the same offsets as the general struct but with
+; boss-specific semantics.
+;
+; DemonBoss (lines ~15990–16530) exclusive fields:
+demon_ai_state      equ $42   ; byte: AI phase index (0–5), jump-table index into BossAiDemonJumpTable
+demon_wing_flags    equ $1D   ; byte: wing-fire capability bits (bit0=left, bit1=right, bit2=fire-along-X)
+;
+; Dual-use — DemonBoss fire-direction (0/1/2) AND OrbitBoss charge-dir flag ($FF/$00)
+; Defined here for documentation; NOT globally replaced due to conflicting semantics.
+demon_fire_dir      equ $41   ; DemonBoss: fire direction (0=straight,1=left,2=right)
+orbit_charge_dir    equ $41   ; OrbitBoss: charge direction flag ($FF=positive clamp, $00=negative)
