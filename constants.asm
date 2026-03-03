@@ -351,6 +351,54 @@ GAMEPLAY_STATE_SOLDIER_TAUNT = $2B
 GAMEPLAY_STATE_READ_SOLDIER_TAUNT = $2C
 GAMEPLAY_STATE_SHOW_POISON_NOTIFICATION = $2D
 
+; Boss 1 (Hydra/Snake) AI state machine states (Boss_ai_state, BossAiStateJumpTable)
+BOSS1_STATE_INIT_IDLE       = 0   ; Randomise idle timer, wait
+BOSS1_STATE_CHOOSE_ACTION   = 1   ; Pick next attack/move
+BOSS1_STATE_MOVE_DOWN       = 2   ; Descend toward player
+BOSS1_STATE_HEAD_EXTEND     = 3   ; Extend head for bite attack
+BOSS1_STATE_ATTACK_WAIT     = 4   ; Hold extended, check hit window
+BOSS1_STATE_LUNGE_LEFT      = 5   ; Lunge across arena to left
+BOSS1_STATE_RETURN_HOME     = 6   ; Return to home position
+BOSS1_STATE_HEAD_RETRACT    = 7   ; Retract head after bite
+BOSS1_STATE_CHARGE_DOWN_LEFT = 8  ; Charge diagonally down-left
+
+; Spellbook menu state machine states (Spellbook_menu_state, SpellbookMenuStateJumpTable)
+; Masked with $1F before indexing so only low 5 bits matter.
+SPELLBOOK_STATE_INIT        = 0   ; Draw spell action menu window, init cursor
+SPELLBOOK_STATE_WAIT_INPUT  = 1   ; Wait for spell/action selection or B to cancel
+SPELLBOOK_STATE_CLOSE       = 2   ; Close menus, return to overworld menu
+SPELLBOOK_STATE_PUT_DOWN    = 3   ; "Put down book" script running
+SPELLBOOK_STATE_EQUIP_INIT  = 4   ; Equip flow: draw item list, init
+SPELLBOOK_STATE_EQUIP_WAIT  = 5   ; Equip flow: wait for equip confirm
+SPELLBOOK_STATE_USE_INIT    = 6   ; Use flow: init use-item prompt
+SPELLBOOK_STATE_USE_WAIT    = 7   ; Use flow: wait for item selection
+SPELLBOOK_STATE_CAST_INIT   = 8   ; Cast spell: init dialogue
+SPELLBOOK_STATE_CAST_WAIT   = 9   ; Cast spell: wait for script / show "can't use here"
+SPELLBOOK_STATE_CAST_DONE   = $A  ; Cast spell: script done, show HP/MP
+SPELLBOOK_STATE_SHOW_HP_MP  = $B  ; Show HP/MP after cast
+SPELLBOOK_STATE_STATUS_C    = $C  ; Status update step C
+SPELLBOOK_STATE_STATUS_D    = $D  ; Status update step D
+SPELLBOOK_STATE_STATUS_E    = $E  ; Status update step E
+SPELLBOOK_STATE_STATUS_F    = $F  ; Status update step F (final)
+
+; Item menu state machine states (Item_menu_state, ItemMenuStateJumpTable)
+; Masked with $F before indexing so only low 4 bits matter.
+ITEM_MENU_STATE_INIT         = 0  ; Draw use/discard window, init cursor
+ITEM_MENU_STATE_WAIT_INPUT   = 1  ; Wait for use/discard/cancel selection
+ITEM_MENU_STATE_CLOSE        = 2  ; Close menus ("nothing to use" or cancel)
+ITEM_MENU_STATE_SCRIPT_DONE  = 3  ; Generic script done, restore HUD
+ITEM_MENU_STATE_DISCARD_INIT = 4  ; Discard flow: show item list
+ITEM_MENU_STATE_DISCARD_WAIT = 5  ; Discard flow: wait for item selection
+ITEM_MENU_STATE_DISCARD_EXEC = 6  ; Discard flow: execute discard
+ITEM_MENU_STATE_DISCARD_DONE = 7  ; Discard flow: done, restore
+ITEM_MENU_STATE_USE_INIT     = 8  ; Use flow: show item list
+ITEM_MENU_STATE_USE_WAIT     = 9  ; Use flow: wait for item selection
+ITEM_MENU_STATE_USE_DESC     = $A ; Use flow: build item description string
+ITEM_MENU_STATE_USE_CAVE     = $B ; Use flow: cave-light continuation (Candle/Lantern)
+ITEM_MENU_STATE_CAVE_DONE    = $C ; Cave-light script done
+ITEM_MENU_STATE_WARP_INIT    = $D ; Warp init (Griffin Wing / teleport)
+ITEM_MENU_STATE_WARP_EXEC    = $E ; Warp execution (Gnome Stone / exit cave)
+
 ; ============================================================
 ; Battle / Overworld Play-Field Boundaries (pixels)
 ; ============================================================
