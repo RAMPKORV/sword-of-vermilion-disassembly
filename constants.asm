@@ -1952,3 +1952,21 @@ demon_wing_anim     equ $40   ; byte: wing animation frame toggle (bit0 used; in
 
 ; Parma Castle Soldier exclusive scratch field:
 soldier_home_tile_y equ $2B   ; byte: saved tile Y row of the soldier's home/patrol origin
+
+; ============================================================
+; VRAM Sprite Tile Base Addresses (obj_tile_index values)
+; ============================================================
+; These are the VRAM tile index values loaded into obj_tile_index
+; when spawning or initialising specific sprite types.
+; Each value is the base tile in VRAM where that sprite's graphics
+; are stored.
+;
+VRAM_TILE_ENEMY_BASE        = $0019  ; Standard field/town enemy sprite bank (all melee/ranged AI types)
+VRAM_TILE_NPC_MAN_B         = $00CD  ; NPC "Man B" sprite bank (Watling restored-youth form, etc.)
+VRAM_TILE_ORBIT_BOSS_ORB    = $0199  ; OrbitBoss central orb sprite bank (BossOrbTick_Static)
+VRAM_TILE_ORBIT_BOSS_RING   = $0021  ; OrbitBoss satellite ring sprite bank
+VRAM_TILE_DRAGON_HEAD       = $014F  ; Dragon boss head sprite bank (DragonHeadA/B_IdleTick)
+VRAM_TILE_ENCOUNTER_PORTRAIT = $042B  ; Battle encounter portrait sprite bank (InitEncounterPortrait)
+VRAM_TILE_PLAYER_SLASH      = $0245  ; Player sword-slash attack sprite bank
+VRAM_TILE_HYDRO_ICICLE      = $0275  ; Hydro boss icicle projectile sprite bank
+
