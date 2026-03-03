@@ -870,6 +870,11 @@ Shop_purchase_made           = $FFFFC4C4
 
 Town_camera_move_state       = $FFFFC100
 Town_camera_move_counter     = $FFFFC102
+; Town_camera_move_state values: 0 = no scroll, 1-4 = direction
+CAMERA_MOVE_UP    = 1  ; Scroll camera upward
+CAMERA_MOVE_DOWN  = 2  ; Scroll camera downward
+CAMERA_MOVE_LEFT  = 3  ; Scroll camera left
+CAMERA_MOVE_RIGHT = 4  ; Scroll camera right
 HScroll_base                 = $FFFFC104
 VScroll_base                 = $FFFFC106
 HScroll_min_limit            = $FFFFC108
