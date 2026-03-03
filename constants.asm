@@ -625,6 +625,11 @@ PLAYER_HIT_INVULN_FRAMES = $10   ; 16 frames — player invulnerability after ta
 ; the knockback-and-pause phase before the enemy resumes its AI.
 ENEMY_KNOCKBACK_DURATION = $0028  ; 40 frames — standard enemy knockback duration
 
+; Battle victory delay: after all enemies in the field are defeated
+; (Number_Of_Enemies < 0), the player entity waits this many ticks before
+; switching to the post-victory tick handler (score tally, item drop, etc.).
+BATTLE_VICTORY_DELAY    = $3C    ; 60 ticks — post-battle win delay before victory handler (1 write site)
+
 ; Tile-space visibility radius used by CheckEntityOnScreen.
 ; Entity tile coordinate (world_coord - camera) >> 4 is compared against this.
 ENTITY_VISIBLE_TILE_RADIUS = $0019  ; 25 tiles — entity considered off-screen if >= this
@@ -632,6 +637,11 @@ ENTITY_VISIBLE_TILE_RADIUS = $0019  ; 25 tiles — entity considered off-screen 
 ; Pixel distance threshold for enemy proximity-chase activation.
 ; Compared against |player_world_x - enemy_world_x| and |player_world_y - enemy_world_y|.
 ENEMY_CHASE_PROXIMITY   = $0040   ; 64 px — player within this range triggers chase
+
+; Enemy stalk/bounce AI: direction recheck cooldown.
+; After calculating angle toward the player, obj_attack_timer is set to this value.
+; The enemy will not recalculate its direction until the timer expires (180 ticks ≈ 3 s).
+ENEMY_STALK_RECHECK_DELAY = $00B4  ; 180 ticks — stalk/bounce enemy direction-recheck cooldown (2 write sites)
 
 ; Y offset used when drawing first-person dungeon wall tiles.
 ; Applied to the tile screen Y coordinate during wall rendering.
@@ -666,6 +676,11 @@ DEMON_BOSS_ATTACK_FIRE_TICK = $000A  ; 10 — timer tick at which DemonBoss wing
 ; DemonBoss projectile segment animation frame count.
 ; Segment tick function counts obj_attack_timer up; animation stops at this value.
 DEMON_BOSS_SEG_ANIM_FRAMES = $0010   ; 16 — DemonBoss projectile segment animation frame count
+
+; DemonBoss wing movement pause: 30-tick delay used at three points in the wing AI —
+; initial delay before the wing starts moving (obj_attack_timer at init), inter-segment
+; bounce pause (demon_move_timer during movement), and wall-rebound delay (obj_attack_timer).
+DEMON_BOSS_MOVE_DELAY   = $001E   ; 30 ticks — DemonBoss wing pause at init/bounce/rebound (3 write sites)
 
 ; Falling projectile Y floor shared by OrbitBoss and RingGuardian child projectiles.
 ; Projectiles clamp to and impact at this Y.
@@ -716,6 +731,22 @@ ORBIT_BOSS_DIRECTION_WRAP = $A0   ; 160 — OrbitBoss charge direction wraparoun
 
 ; OrbitBoss outer approach: only initiates charge if player X is above this value.
 ORBIT_BOSS_CHARGE_X_MIN = $0046   ; 70 px — minimum player X for OrbitBoss outer charge
+
+; OrbitBoss approach-phase timer: after selecting a target the boss has this many ticks
+; to close distance before transitioning to the charge state (inner and outer parts share).
+ORBIT_BOSS_APPROACH_TICKS = $0080  ; 128 ticks — approach phase budget (2 write sites)
+
+; OrbitBoss victory-cutscene delay: after the boss is defeated, obj_attack_timer counts
+; down from this value before transitioning to the post-victory dialog handler.
+ORBIT_BOSS_VICTORY_DELAY = $0080   ; 128 ticks — post-defeat cutscene delay (1 write site)
+
+; OrbitBoss charge-phase timer: set when the boss begins its charge, giving it this many
+; ticks to complete the dash before the attack phase expires (inner and outer parts share).
+ORBIT_BOSS_CHARGE_TICKS = $0100   ; 256 ticks — charge phase budget (2 write sites)
+
+; OrbitBoss satellite part initial invuln timer. Written to obj_invuln_timer when the
+; inner and outer orbit parts first spawn, preventing immediate damage before they appear.
+ORBIT_BOSS_PART_SPAWN_INVULN = $14  ; 20 ticks — orbit part spawn invulnerability (2 write sites)
 
 ; OrbitingSpiral projectile orbit cycle count (stored in obj_xp_reward as scratch counter).
 ; When the counter reaches this value, the projectile transitions to straight-line travel.
