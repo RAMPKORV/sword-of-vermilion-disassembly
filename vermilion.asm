@@ -358,7 +358,7 @@ MenuObjectInitTable:
 GameplayObjectInitTable:
 	dc.w	$16                        ; 23 object groups (0x16 = 22 decimal, 0-based)
 	
-	dc.w	$0, $27, $50, $0 
+	dc.w	$0000, $0027, $0050, $0000 
 	dc.l	$00000000
 	dc.l	Enemy_list_ptr
 	
@@ -476,7 +476,7 @@ BossObjectInitTable_A:
 BossObjectInitTable_B:
 	dc.w	$9
 
-	dc.w	$0, $27, $50, $0 
+	dc.w	$0000, $0027, $0050, $0000 
 	dc.l	$00000000 
 	dc.l	Enemy_list_ptr 
 
@@ -24712,8 +24712,8 @@ TownPaletteCycle_Return:
 
 ; loc_000167D0
 TownPaletteConfigTable:
-	dc.w	$15
-	dc.w	$16
+	dc.w	$0015
+	dc.w	$0016
 	dc.b	$00, $17, $00, $18, $00, $19 
 	dc.w	$001A
 	dc.b	$00, $1B, $00, $1C 
