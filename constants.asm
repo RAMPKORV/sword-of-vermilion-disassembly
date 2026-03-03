@@ -576,6 +576,42 @@ BOSS_BATTLE_PLAYER_X_MAX = $0128  ; 296 px — rightmost allowed player/entity X
 BOSS_HP_ORBIT_NORMAL    = $05DC   ; 1500 HP — OrbitBoss normal difficulty
 BOSS_HP_ORBIT_HARD      = $270F   ; 9999 HP — OrbitBoss hard difficulty
 
+; DemonBoss (OrbitBoss) body contact damage per hit (written to obj_max_hp of the boss entity).
+BOSS_DMG_DEMON_NORMAL   = $0048   ; 72  damage — DemonBoss contact damage, normal difficulty
+BOSS_DMG_DEMON_HARD     = $00C8   ; 200 damage — DemonBoss contact damage, hard difficulty
+
+; OrbitBoss orbit-ring satellite HP and contact damage.
+; obj_hp is reset to BOSS_HP_ORBIT_PART each time a ring part respawns.
+BOSS_HP_ORBIT_PART      = $0960   ; 2400 HP   — OrbitBoss ring satellite part HP
+BOSS_DMG_ORBIT_PART     = $008C   ; 140 damage — OrbitBoss ring satellite contact damage
+
+; RingGuardian (Boss 1) HP and contact damage by difficulty.
+; obj_max_hp is the boss body contact damage; obj_hp is the total boss HP pool.
+BOSS_HP_RING_NORMAL     = $03E8   ; 1000 HP   — RingGuardian HP, normal difficulty
+BOSS_HP_RING_HARD       = $1388   ; 5000 HP   — RingGuardian HP, hard / very-hard difficulty
+BOSS_DMG_RING_NORMAL    = $0032   ; 50  damage — RingGuardian contact damage, normal
+BOSS_DMG_RING_HARD      = $0186   ; 390 damage — RingGuardian contact damage, hard
+BOSS_DMG_RING_VERYHARD  = $01D6   ; 470 damage — RingGuardian contact damage, very-hard
+
+; TwoHeadedDragon HP and contact damage by difficulty.
+BOSS_HP_DRAGON_NORMAL   = $0AF0   ; 2800 HP   — TwoHeadedDragon HP, normal difficulty
+BOSS_HP_DRAGON_HARD     = $0DAC   ; 3500 HP   — TwoHeadedDragon HP, hard difficulty
+BOSS_HP_DRAGON_VERYHARD = $1D4C   ; 7500 HP   — TwoHeadedDragon HP, very-hard difficulty
+BOSS_DMG_DRAGON_NORMAL  = $003C   ; 60  damage — TwoHeadedDragon contact damage, normal
+BOSS_DMG_DRAGON_HARD    = $0064   ; 100 damage — TwoHeadedDragon contact damage, hard
+BOSS_DMG_DRAGON_VERYHARD= $00B4   ; 180 damage — TwoHeadedDragon contact damage, very-hard
+
+; HydraBoss HP and contact damage by difficulty.
+BOSS_HP_HYDRA_NORMAL    = $09C4   ; 2500 HP   — HydraBoss HP, normal difficulty
+BOSS_HP_HYDRA_HARD      = $1388   ; 5000 HP   — HydraBoss HP, hard difficulty
+BOSS_DMG_HYDRA_NORMAL   = $0064   ; 100 damage — HydraBoss contact damage, normal
+BOSS_DMG_HYDRA_HARD     = $0078   ; 120 damage — HydraBoss contact damage, hard
+
+; Chronos / Chronios spell duration timers.
+; Written to obj_hp of a countdown object; the object deactivates when hp reaches 0.
+CHRONOS_DURATION        = $00C8   ; 200 ticks — Chronos spell active duration
+CHRONIOS_DURATION       = $01F4   ; 500 ticks — Chronios spell active duration
+
 ; After masking a random number to 8 bits (ANDI.w #$00FF), comparing
 ; against this threshold gives a 50% probability split (0-127 vs 128-255).
 RANDOM_HALF_THRESHOLD   = $0080   ; 50% RNG threshold (128 of 256)
