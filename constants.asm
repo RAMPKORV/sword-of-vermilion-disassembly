@@ -1798,6 +1798,10 @@ BOSS_EXIT_DELAY_FRAMES      = $50     ; Frames to wait before processing battle 
 BOSS_VICTORY_FADE_PHASES    = 8       ; Dialog_phase threshold for boss victory fadeout complete (7 uses)
 ENCOUNTER_FADE_PHASES       = $000A   ; Number of fade-in phases for encounter/dialogue intro (2 uses)
 ENCOUNTER_PAUSE_FRAMES      = $0064   ; Frames to pause before battle begins after encounter (1 use)
+ORBIT_ANGLE_INIT_INNER      = $80     ; OrbitBoss inner satellite initial orbit angle (180 degrees)
+ORBIT_ANGLE_INIT_OUTER      = $C0     ; OrbitBoss outer satellite initial orbit angle (192 degrees)
+ORBIT_APPROACH_ANGLE_MIN    = $B0     ; OrbitBoss approach arc lower clamp (176 degrees)
+ORBIT_APPROACH_ANGLE_MAX    = $D0     ; OrbitBoss approach arc upper clamp (208 degrees)
 SLEEP_DELAY_FRAMES          = $012C   ; Frames of sleep animation delay (2 uses)
 ; ============================================================
 ; Name Entry Grid Constants
