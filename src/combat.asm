@@ -656,6 +656,18 @@ DeactivateFerrosProjectile:
 	MOVE.b	#FLAG_TRUE, obj_npc_busy_flag(A5)
 	RTS
 
+; ----------------------------------------------------------------------
+; CastCopperos
+;
+; Fires a single spinning projectile that follows the player's facing
+; direction.  Uses the same sine-table drive as CastVolti, but at
+; speed $400 (quarter the forward speed).  On hitting an enemy the
+; projectile's obj_npc_busy_flag goes negative, triggering
+; CopperosExplodeIntoFragments: 8 fragment sub-projectiles are spawned
+; in a star pattern (directions spaced 32 steps apart), each using
+; UpdateProjectileAscendingArc as their tick function.
+; Lead slot is then switched to UpdateCopperosFragmentsLead.
+; ----------------------------------------------------------------------
 CastCopperos:
 	MOVEA.l	Object_slot_02_ptr.w, A6
 	BTST.b	#7, (A6)
@@ -779,6 +791,18 @@ UpdateCopperosFragmentsLead:
 	JSR	CheckMagicSlotActiveOrClearAll(PC)
 	RTS
 
+; ----------------------------------------------------------------------
+; UpdateProjectileAscendingArc
+;
+; Shared tick for Copperos fragment projectiles.
+; obj_pos_x_fixed is the current speed (starts at $00180000).
+; obj_attack_timer counts down; while > 0 the projectile moves at
+; constant speed.  Once the timer reaches 0 the projectile enters
+; "decay phase": each frame direction advances by 4 and speed decreases
+; by $8000 until the speed reaches 0.  The spawn position is stored in
+; obj_hp (world_x) and obj_xp_reward (world_y); movement is applied
+; relative to that origin each tick.
+; ----------------------------------------------------------------------
 UpdateProjectileAscendingArc:
 	JSR	CheckProjectileHitEnemies(PC)
 	CLR.b	obj_npc_busy_flag(A5)
@@ -828,6 +852,16 @@ DeactivateAscendingArcProjectile:
 	MOVE.b	#FLAG_TRUE, obj_npc_busy_flag(A5)
 	RTS
 
+; ----------------------------------------------------------------------
+; CastMercusios
+;
+; Fires 8 descending-arc projectiles simultaneously, each at a
+; different direction (D7 * 32, covering all 8 compass octants).
+; Each projectile starts at speed $80000 and accelerates downward via
+; UpdateProjectileDescendingArc.  The lead slot (slot 02) is promoted
+; to UpdateMercusiosLeadProjectile which also calls
+; CheckMagicSlotActiveOrClearAll each tick.
+; ----------------------------------------------------------------------
 CastMercusios:
 	MOVEA.l	Object_slot_02_ptr.w, A6
 	BTST.b	#7, (A6)
@@ -879,6 +913,18 @@ UpdateMercusiosLeadProjectile:
 	JSR	CheckMagicSlotActiveOrClearAll(PC)
 	RTS
 
+; ----------------------------------------------------------------------
+; UpdateProjectileDescendingArc
+;
+; Shared tick for Mercusios arc projectiles.
+; obj_attack_timer ramps up until DESCENDING_ARC_GRAVITY_ONSET, then
+; holds.  Each frame the current timer value is divided by 4 (+1) and
+; subtracted from obj_direction, creating a curving downward arc.
+; Speed (obj_pos_x_fixed) increases by $8000 each tick.
+; Spawn position is stored in obj_hp (world_x) / obj_xp_reward
+; (world_y).  On hitting an enemy or leaving bounds, obj_npc_busy_flag
+; is set to FLAG_TRUE.
+; ----------------------------------------------------------------------
 UpdateProjectileDescendingArc:
 	TST.b	obj_npc_busy_flag(A5)
 	BNE.w	DeactivateDescendingArcProjectile
@@ -923,6 +969,19 @@ DeactivateDescendingArcProjectile:
 	MOVE.b	#FLAG_TRUE, obj_npc_busy_flag(A5)
 	RTS
 
+; ----------------------------------------------------------------------
+; CastArgentos
+;
+; Fires a single homing projectile that steers toward the nearest enemy.
+; obj_knockback_timer ($00F0) is the lifetime counter.
+; obj_hp holds a pointer to the target enemy (set via FindNthEnemyInList).
+; Every 8 frames (XOR-with-previous trick on bit 3 of obj_attack_timer)
+; the target is re-evaluated: if the stored enemy is still active it is
+; re-used; otherwise a new search runs.  Leaves a trail of 8-slot-
+; delayed ghost clones (UpdateArgentosTrailClone) using obj_invuln_timer
+; as a ring-buffer index.
+; Sprite frames come from ArgentosSpriteFrameTable.
+; ----------------------------------------------------------------------
 CastArgentos:
 	MOVEA.l	Object_slot_02_ptr.w, A6
 	BTST.b	#7, (A6)
@@ -1116,6 +1175,21 @@ FindNthEnemy_Found:
 	MOVE.l	A4, obj_hp(A6)
 	RTS
 
+; ----------------------------------------------------------------------
+; CastHydro
+;
+; Spawns a water-geyser spell centred on the first active enemy
+; (SetPositionFromActiveEnemy).  Plays through three internal phases:
+;   1. UpdateHydroOpeningAnimation   - 5-frame opening animation
+;   2. UpdateHydroSpawnIcicles       - Spawn up to 5 icicle sub-objects
+;                                      at 8-frame intervals; each icicle
+;                                      rises then explodes.
+;   3. UpdateHydroWaitForIciclesFinish - Waits until all sub-icicles are
+;                                        deactivated, then deactivates self.
+; obj_attack_timer counts icicles spawned (0-5).
+; obj_invuln_timer is the spawn-cooldown for each icicle.
+; obj_knockback_timer holds sort_key for child icicles.
+; ----------------------------------------------------------------------
 CastHydro:
 	MOVEA.l	Object_slot_02_ptr.w, A6
 	BTST.b	#7, (A6)
@@ -1288,6 +1362,15 @@ SetPosFromEnemy_NextSlot:
 	MOVE.w	#$0070, obj_world_y(A6)	
 	RTS
 	
+; ----------------------------------------------------------------------
+; CastChronos / CastChronios
+;
+; Time-stop spells.  Both activate slot 02, set a countdown in obj_hp,
+; and set Encounter_behavior_flag = FLAG_TRUE to freeze enemies.
+; UpdateChronoCountdown decrements obj_hp each tick; when it reaches 0
+; the slot is deactivated and Encounter_behavior_flag is cleared.
+; Chronios uses CHRONIOS_DURATION (longer duration than Chronos).
+; ----------------------------------------------------------------------
 CastChronos:
 	BSR.w	CheckCursedAndConsumeReadiedMagicMp
 	BNE.b	CastChronos_Done
@@ -1322,6 +1405,20 @@ CastChronios:
 CastChronios_Done:
 	RTS
 
+; ----------------------------------------------------------------------
+; CastTerrafissi
+;
+; Screen-shake earthquake spell.  obj_knockback_timer is initialised
+; to 9 * 8 = 72 and counts down each frame.  Each tick:
+;   - ApplyScreenShakeToEnemies subtracts obj_max_hp from every active
+;     enemy's obj_hp (i.e. deals continuous magic damage).
+;   - A displacement byte from TerrafissiShakeDisplacementTable
+;     (indexed by obj_knockback_timer) is sign-extended, shifted into
+;     the upper word as a fixed-point value, accumulated in obj_hp, and
+;     written to HScroll_base for the horizontal-scroll shake effect.
+; When the counter reaches 0, HScroll_base is zeroed and the slot
+; deactivated.
+; ----------------------------------------------------------------------
 CastTerrafissi:
 	MOVEA.l	Object_slot_02_ptr.w, A6
 	BTST.b	#7, (A6)
@@ -1382,6 +1479,12 @@ ApplyShakeToEnemies_NextSlot:
 	DBF	D6, ApplyShakeToEnemies_Loop
 	RTS
 
+; TerrafissiShakeDisplacementTable
+; 192 bytes of signed horizontal-scroll displacement values.
+; Indexed by obj_knockback_timer (72 → 0, counting down).
+; Values alternate between equal positive and negative pairs to create
+; an oscillating left-right shake that gradually grows in amplitude
+; (from $04/$FC near the end to $40/$C0 at peak), then fades back.
 TerrafissiShakeDisplacementTable:
 	dc.b	$04, $04, $04, $04, $FC, $FC, $FC, $FC, $08, $08, $F8, $F8, $08, $08, $F8, $F8, $10, $F0, $10, $F0, $10, $10, $F0, $F0, $20, $E0, $20, $E0, $20, $20, $E0, $E0 
 	dc.b	$20, $E0, $20, $E0, $20, $20, $E0, $E0, $30, $D0, $30, $D0, $30, $30, $D0, $D0, $30, $D0, $30, $D0, $30, $30, $D0, $D0, $40, $C0, $40, $C0, $40, $40, $C0, $C0 
@@ -1390,6 +1493,16 @@ TerrafissiShakeDisplacementTable:
 	dc.b	$30, $D0, $30, $D0, $30, $30, $D0, $D0, $30, $D0, $30, $D0, $30, $30, $D0, $D0, $20, $E0, $20, $E0, $20, $20, $E0, $E0, $20, $E0, $20, $E0, $20, $20, $E0, $E0 
 	dc.b	$10, $F0, $10, $F0, $10, $10, $F0, $F0, $08, $08, $F8, $F8, $08, $08, $F8, $F8, $04, $04, $04, $04, $FC, $FC, $FC, $FC, $2C, $78, $CC, $1C, $4A, $2E, $00, $19 
 	dc.b	$67, $12, $42, $40, $10, $2E, $00, $01, $4D, $F6, $00, $00, $51, $CF, $FF, $EE, $61, $00, $00, $2C, $4E, $75 
+; ----------------------------------------------------------------------
+; CheckMagicSlotActiveOrClearAll
+;
+; Scans up to 8 object slots starting from Object_slot_02_ptr.
+; If any active slot (bit 7 set) has obj_npc_busy_flag == 0, returns
+; immediately (at least one projectile is still alive).
+; If all slots are either inactive or have obj_npc_busy_flag != 0, calls
+; ClearEnemyActiveFlags_Alt to deactivate all 13 object slots and
+; signal spell completion.
+; ----------------------------------------------------------------------
 CheckMagicSlotActiveOrClearAll:
 	MOVEA.l	Object_slot_02_ptr.w, A6
 	MOVE.w	#7, D7
@@ -1407,6 +1520,13 @@ CheckMagicSlotActive_NextSlot:
 CheckMagicSlotActive_FoundAlive:
 	RTS
 
+; ----------------------------------------------------------------------
+; ClearEnemyActiveFlags_Alt
+;
+; Force-deactivates 13 consecutive object slots starting from
+; Object_slot_02_ptr (clears bit 7 in each slot's first byte).
+; Used to clean up all magic projectile slots at once when a spell ends.
+; ----------------------------------------------------------------------
 ClearEnemyActiveFlags_Alt:
 	MOVEA.l	Object_slot_02_ptr.w, A6
 	MOVE.w	#$000C, D7
@@ -1418,6 +1538,20 @@ ClearEnemyActiveFlags_Loop:
 	DBF	D7, ClearEnemyActiveFlags_Loop
 	RTS
 
+; ----------------------------------------------------------------------
+; CheckProjectileHitEnemies
+;
+; AABB collision test between the calling projectile (A5) and all active
+; enemies.  Iterates up to 8 enemy slots (3 hops per iteration).
+; For each active, visible, living enemy, tests:
+;   projectile.right  > enemy.left  (D0 = proj.world_x - hitbox_half_w)
+;   projectile.left   < enemy.right (D1 = proj.world_x + hitbox_half_w)
+;   projectile.top    < enemy.bottom (D2 = proj.world_y - hitbox_half_h)
+;   projectile.bottom > enemy.top   (D3 = proj.world_y)
+; On a hit: subtracts obj_max_hp from the enemy's obj_hp, accounting for
+; elemental resistance (if obj_behavior_flag bit matches, damage ÷ 8).
+; Sets obj_npc_busy_flag = FLAG_TRUE on the projectile after each hit.
+; ----------------------------------------------------------------------
 CheckProjectileHitEnemies:
 	MOVE.w	obj_world_x(A5), D0
 	MOVE.w	D0, D1
@@ -1472,6 +1606,16 @@ CheckHitEnemies_NextEnemy:
 	DBF	D7, CheckHitEnemies_Loop
 	RTS
 
+; ----------------------------------------------------------------------
+; UpdateHomingProjectileDirection
+;
+; Steers the projectile in A5 one step (±1 direction unit, 0-7) toward
+; the target enemy stored in obj_hp(A5) / A6.
+; Calls CalculateAngleBetweenObjects to get a target angle (0-7), then
+; picks the shorter arc (clockwise or counter-clockwise) by comparing
+; the direct delta with the wrap-around delta.
+; Clamps the stored direction to 0-7 after each step.
+; ----------------------------------------------------------------------
 UpdateHomingProjectileDirection:
 	JSR	CalculateAngleBetweenObjects
 	ANDI.w	#7, D0
@@ -1605,6 +1749,16 @@ InitMagicDamage_LookupAndStore:
 	MOVE.b	(A4,D2.w), obj_behavior_flag(A6)
 	RTS
 
+; ----------------------------------------------------------------------
+; CheckCoordsInBounds
+;
+; Validates world (X, Y) coordinates against the battle field boundary.
+; Input:  D0 = world_x,  D1 = world_y
+; Output: D0 = $FFFF if in-bounds, D0 = 0 if out-of-bounds (Z flag set)
+; Boundary constants (from constants.asm):
+;   X: 0 .. BATTLE_FIELD_WIDTH
+;   Y: BATTLE_FIELD_TOP .. BATTLE_FIELD_BOTTOM
+; ----------------------------------------------------------------------
 CheckCoordsInBounds:
 	CMPI.w	#0, D0
 	BLT.b	CoordsOutOfBounds
@@ -1621,6 +1775,33 @@ CoordsOutOfBounds:
 	CLR.w	D0
 	RTS
 
+; ======================================================================
+; Item Menu State Machine
+; ======================================================================
+
+; ----------------------------------------------------------------------
+; ItemMenuStateMachine / ItemMenuStateJumpTable
+;
+; Dispatches to the current item-menu handler using Item_menu_state
+; (low nibble) as an index into ItemMenuStateJumpTable.
+;
+; State table (BRA entries, 6 bytes each):
+;   $0  ItemMenuStateJumpTable_Loop     - Init: draw Use/Discard menu
+;   $1  ItemMenuStateJumpTable_Loop2    - Wait for input, handle B/C
+;   $2  ItemMenuUseOrDiscard_Done_Loop  - Close menus / "nothing to use"
+;   $3  ItemMenu_ScriptDone_Loop        - Script running after discard
+;   $4  ItemMenu_ItemUsed_Return_Loop   - Show item discard menu
+;   $5  ItemMenu_ItemUsed_Return_Loop2  - Confirm discard yes/no
+;   $6  ItemMenu_ItemUsed_Return_Loop3  - After discard confirm
+;   $7  ItemMenu_ItemUsed_Return_Loop4  - Post-discard cleanup
+;   $8  ItemMenu_ScriptDone2_Loop       - Show item use menu
+;   $9  ItemMenu_ScriptDone2_Loop2      - Wait for use menu input
+;   $A  UseItemDescription_Build_Loop   - Use item: build description
+;   $B  UseItemDescription_Build_Loop2  - Light up cave (continued)
+;   $C  ItemMenu_ScriptDoneCheckCave_Loop - Light up cave / Candle / Lantern
+;   $D  ItemMenu_ScriptDoneCheckCave_Loop2 - Teleport / Griffin Wing
+;   $E  UseExtrios_Warp_Loop            - Exit cave / Gnome Stone
+; ----------------------------------------------------------------------
 ItemMenuStateMachine:
 	MOVE.w	Item_menu_state.w, D0
 	ANDI.w	#$F, D0
@@ -2479,6 +2660,14 @@ AlarmClockCheck_Return_Loop:
 	PRINT 	BrrrnnnggStr
 	RTS
 
+; AlarmClockPositionData
+; 4 entries x 3 words each: screen_x, screen_y, direction
+; Used by the alarm clock item effect to place the ringing clock sprite
+; at one of four fixed screen positions depending on context.
+;   Entry 0: ($D8, $98) facing direction 0  (right)
+;   Entry 1: ($C8, $88) facing direction 6  (down-left)
+;   Entry 2: ($E8, $88) facing direction 2  (left)
+;   Entry 3: ($D8, $78) facing direction 4  (up)
 AlarmClockPositionData:
 	dc.w	$D8
 	dc.w	$98
