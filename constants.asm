@@ -1118,7 +1118,8 @@ DIRECTION_ANY   = $F
 ; NPC sprite attribute flags (entity +$07, high byte of VDP tile name word)
 ; Bits 7=priority, 6-5=palette line, 4=vflip, 3=hflip
 NPC_ATTR_PAL0   = $00           ; Palette line 0 (background palette)
-NPC_ATTR_PAL3   = $60           ; Palette line 3 (character palette)
+NPC_ATTR_PAL1   = $20           ; Palette line 1 (enemy palette)
+NPC_ATTR_PAL3   = $60           ; Palette line 3 (character/player palette)
 
 ; NPC collision flags (entity +$2D)
 NPC_NONSOLID    = 0             ; NPC does not block movement
@@ -1929,8 +1930,23 @@ fmch_size           equ $30   ; struct stride: each channel slot is $30 bytes wi
 obj_active          equ $00   ; byte: bit 7 = active flag (BSET/BCLR #7)
 obj_next_offset     equ $01   ; byte: linked-list next-slot stride (LEA (A6,D0.w),A6)
 obj_tick_fn         equ $02   ; long: tick/behavior function pointer
-obj_sprite_size     equ $06   ; byte: sprite size (bits 0-1 used)
-obj_sprite_flags    equ $07   ; byte: flip/attribute flags (bit3=H-flip, bit4=V-flip)
+obj_sprite_size     equ $06   ; byte: VDP sprite size nibble (bits[3:2]=H cells-1, bits[1:0]=V cells-1)
+obj_sprite_flags    equ $07   ; byte: VDP tile attr high byte (bit7=priority, bits6-5=palette, bit4=V-flip, bit3=H-flip)
+
+; obj_sprite_size values: bits[3:2]=horizontal cells-1, bits[1:0]=vertical cells-1
+SPRITE_SIZE_1x1     = $00   ; 1×1 cells (8×8 px)
+SPRITE_SIZE_2x1     = $01   ; 2×1 cells (16×8 px)
+SPRITE_SIZE_3x1     = $02   ; 3×1 cells (24×8 px)
+SPRITE_SIZE_2x2     = $05   ; 2×2 cells (16×16 px)
+SPRITE_SIZE_3x2     = $06   ; 3×2 cells (24×16 px)
+SPRITE_SIZE_4x2     = $07   ; 4×2 cells (32×16 px)
+SPRITE_SIZE_2x3     = $09   ; 2×3 cells (16×24 px)
+SPRITE_SIZE_3x3     = $0A   ; 3×3 cells (24×24 px)
+SPRITE_SIZE_4x3     = $0B   ; 4×3 cells (32×24 px)
+SPRITE_SIZE_1x4     = $0C   ; 1×4 cells (8×32 px)
+SPRITE_SIZE_2x4     = $0D   ; 2×4 cells (16×32 px)
+SPRITE_SIZE_3x4     = $0E   ; 3×4 cells (24×32 px)
+SPRITE_SIZE_4x4     = $0F   ; 4×4 cells (32×32 px)
 obj_tile_index      equ $08   ; word: VRAM tile index for sprite
 obj_screen_x        equ $0A   ; word: on-screen X position (pixels)
 obj_screen_y        equ $0C   ; word: on-screen Y position (pixels)
