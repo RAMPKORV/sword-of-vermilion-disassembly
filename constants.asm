@@ -1525,6 +1525,15 @@ SOUND_BATTLE_START          = $0092   ; Sound played when battle initializes (1 
 ; Sound script byte threshold: bytes < $E0 are note values; bytes >= $E0 are commands.
 SOUND_SCRIPT_CMD_THRESHOLD  = $E0   ; BCS/BCC boundary in SoundChannel_NoteLoop
 
+; Note-sequence script control bytes (used in PSGChannel_NoteLoop, FMChannel_NoteLoop,
+; FMArpeggio_ReadNote).  Bytes $80-$8F in a pitch/arpeggio sequence are control codes;
+; bytes below $80 are raw pitch/note values.
+NOTESCR_RESTART     = $80   ; Reset sequence position to 0 and restart
+NOTESCR_LOOP        = $81   ; Step back 2 positions and loop (repeat last interval)
+NOTESCR_REST        = $83   ; Step back 1 position, output silence (rest)
+NOTESCR_PITCHBEND   = $84   ; Read next byte and add to channel pitch-LFO offset
+NOTESCR_JUMP        = $85   ; Read next byte as absolute jump target position
+
 
 ; ============================================================
 ; Object/Entity Struct Field Offsets
