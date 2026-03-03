@@ -400,6 +400,96 @@ ITEM_MENU_STATE_WARP_INIT    = $D ; Warp init (Griffin Wing / teleport)
 ITEM_MENU_STATE_WARP_EXEC    = $E ; Warp execution (Gnome Stone / exit cave)
 
 ; ============================================================
+; Overworld Menu State Machine (Overworld_menu_state)
+; ============================================================
+; Top-level overworld menu: Start=message speed, C=options menu,
+; then dispatches into sub-menus via OverworldMenuActionPtrs.
+;
+OVERWORLD_MENU_STATE_IDLE         = 0  ; Idle — waiting for Start/C input
+OVERWORLD_MENU_STATE_MSG_SPEED    = 1  ; Draw message speed menu
+OVERWORLD_MENU_STATE_MSG_SPEED_WAIT = 2 ; Wait for message speed selection
+OVERWORLD_MENU_STATE_OPTIONS_INIT = 3  ; Draw options/main menu
+OVERWORLD_MENU_STATE_OPTIONS_WAIT = 4  ; Wait for main menu selection (cursor active)
+OVERWORLD_MENU_STATE_DISPATCH     = 5  ; Dispatch selected sub-menu action
+
+; ============================================================
+; Open/Chest Menu State Machine (Open_menu_state)
+; ============================================================
+; Handles player "Open" action for treasure chests and doors.
+;
+OPEN_MENU_STATE_DETECT       = 0  ; Detect chest/door in front of player
+OPEN_MENU_STATE_MSG_WAIT     = 1  ; Message displayed — waiting for dismiss
+OPEN_MENU_STATE_CLOSE        = 2  ; Restore HUD after message
+OPEN_MENU_STATE_ANIMATION    = 3  ; Chest open animation running
+OPEN_MENU_STATE_TILE_DELAY   = 4  ; Wait for tile-change timer before reward
+OPEN_MENU_STATE_OPEN_DELAY   = 5  ; Wait for open delay before showing contents
+OPEN_MENU_STATE_CONTENTS     = 6  ; Display chest contents / reward
+
+; ============================================================
+; Take Item State Machine (Take_item_state)
+; ============================================================
+; Handles item/reward pick-up flow: detect, message, inventory full,
+; yes/no confirmation, discard, and finalize.
+;
+TAKE_ITEM_STATE_INIT         = 0  ; Init cursor position
+TAKE_ITEM_STATE_CHECK        = 1  ; Check for available reward (first-person / overworld)
+TAKE_ITEM_STATE_NO_ITEM_MSG  = 2  ; Show "nothing to take" message
+TAKE_ITEM_STATE_MSG_WAIT     = 3  ; Wait for message dismiss
+TAKE_ITEM_STATE_BUILD_REWARD = 4  ; Build reward item message
+TAKE_ITEM_STATE_FULL_MSG     = 5  ; Show "cannot carry more" message
+TAKE_ITEM_STATE_CONFIRM      = 6  ; Show yes/no confirm discard dialog
+TAKE_ITEM_STATE_DISCARD_LIST = 7  ; Show discard item list
+TAKE_ITEM_STATE_ITEM_CURSOR  = 8  ; Navigate item list cursor
+TAKE_ITEM_STATE_DISCARD_CONFIRM = 9 ; Confirm discard yes/no
+TAKE_ITEM_STATE_FINALIZE     = $A ; Finalize take (clear flags, return)
+
+; ============================================================
+; Ready Equipment State Machine (Ready_equipment_state)
+; ============================================================
+; Handles equip/unequip flow from the overworld equipment menu.
+;
+READY_EQUIP_STATE_INIT       = 0  ; Init cursor / draw equipment menu
+READY_EQUIP_STATE_WAIT       = 1  ; Wait for category selection
+READY_EQUIP_STATE_OPTIONS    = 2  ; Draw equip-options sub-menu (equip/unequip)
+READY_EQUIP_STATE_LIST_WAIT  = 3  ; Wait for equip-list selection
+READY_EQUIP_STATE_SHOW_LIST_A = 4 ; Show equip list (same handler as 5 — category A)
+READY_EQUIP_STATE_SHOW_LIST_B = 5 ; Show equip list (category B — unequip path)
+READY_EQUIP_STATE_RESULT_MSG = 6  ; Show equip/unequip result message
+
+; ============================================================
+; Equip-List Viewer State Machine (Equip_list_menu_state)
+; ============================================================
+; Shows the full character-sheet gear/combat/magic/items/rings/status
+; pages, cycling through each window page by page.
+;
+EQUIP_LIST_STATE_INIT        = 0  ; Init viewer, draw character stats
+EQUIP_LIST_STATE_STATS_WAIT  = 1  ; Wait for page input on stats window
+EQUIP_LIST_STATE_GEAR_PAGE   = 2  ; Draw equipped-gear window
+EQUIP_LIST_STATE_COMBAT_PAGE = 3  ; Draw combat-stats window
+EQUIP_LIST_STATE_MAGIC_PAGE  = 4  ; Draw magic-list window
+EQUIP_LIST_STATE_ITEMS_PAGE  = 5  ; Draw items-list window
+EQUIP_LIST_STATE_RINGS_PAGE  = 6  ; Draw rings-list window
+EQUIP_LIST_STATE_STATUS_WAIT = 7  ; Status page — wait for input
+EQUIP_LIST_STATE_EXIT_SCRIPT = 8  ; Exit to script/HUD draw
+EQUIP_LIST_STATE_CURSOR_INIT = 9  ; Init item-list cursor
+EQUIP_LIST_STATE_CURSOR_ITEM = $A ; Cursor active on items page
+EQUIP_LIST_STATE_CURSOR_MAGIC = $B ; Cursor active on magic page
+EQUIP_LIST_STATE_CURSOR_EQUIP = $C ; Cursor active on equip-list page
+EQUIP_LIST_STATE_CURSOR_FULL = $D ; Cursor active on full-menu page
+
+; ============================================================
+; File Menu Phase State Machine (File_menu_phase)
+; ============================================================
+; Manages save-file select/load/save confirmation screens.
+;
+FILE_MENU_PHASE_DRAW_SELECT  = 0  ; Draw save-file select window
+FILE_MENU_PHASE_WAIT_SELECT  = 1  ; Wait for save-slot selection
+FILE_MENU_PHASE_VERIFY       = 2  ; Verify checksum / load selected file
+FILE_MENU_PHASE_LOAD_ERROR   = 3  ; Display checksum error window
+FILE_MENU_PHASE_NO_SAVE      = 4  ; Display "no saved game" window
+FILE_MENU_PHASE_SUCCESS      = 5  ; Display load/save success window
+
+; ============================================================
 ; Battle / Overworld Play-Field Boundaries (pixels)
 ; ============================================================
 ; The battle and overworld play-field is 320×184 pixels but the
