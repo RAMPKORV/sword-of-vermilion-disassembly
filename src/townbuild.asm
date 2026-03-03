@@ -1,7 +1,30 @@
-; ===========================================================================
-; Town Building & Configuration Data
-; Building tilemaps, tilemap loader code, town state configs, NPC dispatch tables, castle/town dialogue, town tilemaps
-; ===========================================================================
+;==============================================================
+; townbuild.asm — Town Building Data and Dialog Scripts
+;
+; Contains per-town data for all game towns, organized in
+; repeating blocks:
+;   1. Building tilemap RLE data (PlaneA/PlaneB pairs)
+;   2. Tilemap loader stubs (load plane ptr pairs into RAM)
+;   3. Town state configuration (camera, spawn, NPC counts)
+;   4. Castle/town NPC dialog dispatch tables (per quest state)
+;   5. Dialogue strings (script_cmd_* macro sequences)
+;   6. Castle/town tilemap data sets (RLE, per town)
+;
+; Towns in order: Default/Parma, Deepdale, Stow, Malaga,
+;   Keltwick, Helwig, Tadcaster, Wyclif, Parma (town),
+;   Swaffham, Excalabria, and final area.
+;
+; RLE encoding: byte < $80 = literal tile index;
+; byte >= $80 = repeat next byte ($80 - byte) times.
+;==============================================================
+
+;==============================================================
+; BUILDING TILEMAP RLE DATA
+; RLE-compressed tile data for building interiors.
+; Each blob begins with width/height bytes, followed by
+; RLE-encoded tile indices. Labels: BuildingTilemap_XXY_PlaneA/B
+; where XX = building type ID (hex), Y = A (exterior) or B (interior).
+;==============================================================
 BuildingTilemap_27A_PlaneA:
 	dc.b	$14, $0E, $39, $40, $01, $C0, $A8, $01 
 	dc.b	$C0, $BF, $BF, $BF, $BF, $BF, $A2, $02, $D0, $D0, $B2, $CE, $23, $C0, $A2, $24, $C0, $BE, $2F, $40, $3F, $00
@@ -370,6 +393,12 @@ BuildingTilemap_2FB_PlaneB:
 	dc.b	$1D, $05, $A2, $02, $A4, $A3, $AC, $08, $0A, $0A, $09, $0A, $0A, $A0, $A3, $A4, $AC, $08, $A0, $A2, $A2, $A1, $A2, $A2, $A4, $A3, $AD, $62, $A4, $A3, $A5, $01 
 	dc.b	$A4, $AD, $07, $A3, $A4, $A4, $A3, $A5, $A4, $A3, $AD, $62, $A4, $A5, $A3, $01, $A4, $AB, $04, $53, $4A, $4A, $54, $C2, $04, $55, $4A, $4A, $57, $AA, $24, $4F 
 	dc.b	$C2, $24, $4F, $AE, $02, $A0, $A4, $A9, $3F, $00 
+
+;==============================================================
+; BUILDING TILEMAP LOADERS
+; Each stub loads a PlaneA/PlaneB RLE data pointer pair into
+; Tilemap_data_ptr_plane_a/b for the tilemap decompressor.
+;==============================================================
 LoadBuildingTilemap_2E_PlaneA:
 	MOVE.l	#BuildingTilemap_2EA_PlaneA, Tilemap_data_ptr_plane_a.w
 	MOVE.l	#BuildingTilemap_2EA_PlaneB, Tilemap_data_ptr_plane_b.w
@@ -590,9 +619,14 @@ LoadBuildingTilemap_2A_PlaneB:
 	MOVE.l	#BuildingTilemap_2AB_PlaneB, Tilemap_data_ptr_plane_b.w
 	RTS
 	
+;==============================================================
+; DEFAULT / PARMA CASTLE — TOWN STATE CONFIG + DIALOG
+;==============================================================
+; Town state configuration: camera position, spawn point, NPC layout for Default/Parma castle.
 TownStateConfig_Default:
 	dc.b	$00, $98, $01, $58, $00, $00, $00, $09, $00, $04, $00, $10, $00, $02, $8F, $B6, $00, $68, $00, $28, $00, $11, $00, $02, $90, $82, $00, $00, $00, $00, $00, $00 
 	dc.l	$00000000
+; Town state configuration: camera position, spawn point, NPC layout for Parma castle.
 TownStateConfig_Parma:
 	dc.b	$00, $98, $01, $58, $00, $00, $00, $09, $00, $04, $00, $10, $00, $02, $90, $1C, $00, $68, $00, $28, $00, $11, $00, $02, $90, $82, $00, $00, $00, $00, $00, $00 
 	dc.l	$00000000
@@ -604,6 +638,7 @@ TownStateConfig_Parma:
 	dc.b	$00, $03, $DE, $14, $00, $00, $7F, $18, $60, $01, $01, $88, $01, $28, $01, $81, $00, $03, $DE, $14, $00, $00, $7F, $18, $60, $01, $00, $88, $00, $48, $02, $11 
 	dc.b	$00, $03, $DE, $C0, $00, $00, $71, $04, $60, $01, $FF, $FF, $00, $01, $EC, $C2, $00, $C8, $00, $68, $02, $11, $00, $03, $DE, $C0, $00, $00, $71, $9A, $60, $01 
 	dc.b	$FF, $FF 
+; Dialog dispatch table for Parma castle NPCs, indexed by quest state.
 CastleDialogTable_Parma_State0:
 	dc.l	TalkKingStr
 	dc.l	DeliverMealStr
@@ -831,12 +866,17 @@ LoadCastleTilemap_Parma_PlaneB:
 	MOVE.l	#CastleTilemapData_Parma_SetB_TgtB, Tilemap_data_ptr_plane_b.w
 	RTS
 	
+;==============================================================
+; DEEPDALE CASTLE — TOWN STATE CONFIG + DIALOG
+;==============================================================
+; Town state configuration: camera position, spawn point, NPC layout for Deepdale castle.
 TownStateConfig_Deepdale:
 	dc.b	$01, $68, $01, $58, $00, $0B, $00, $09, $00, $04, $00, $13, $00, $02, $9C, $02, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 
 	dc.l	$00000000
 	dc.b	$00, $01, $ED, $8E, $00, $C8, $00, $68, $00, $91, $00, $03, $DD, $74, $00, $00, $6F, $36, $60, $01, $00, $88, $00, $88, $00, $CD, $00, $03, $DD, $94, $00, $00 
 	dc.b	$72, $F8, $60, $01, $00, $88, $01, $28, $01, $51, $00, $03, $DD, $F4, $00, $00, $6F, $5E, $00, $01, $01, $38, $00, $B8, $01, $D5, $00, $03, $DE, $A0, $00, $00 
 	dc.b	$6F, $5E, $60, $01, $01, $A8, $00, $58, $01, $D5, $00, $03, $DE, $A0, $00, $00, $6F, $36, $60, $01, $FF, $FF 
+; Dialog dispatch table for Deepdale castle NPCs, indexed by quest state.
 CastleDialogTable_Deepdale_State0:
 	dc.l	KingDisguiseMasterStr
 	dc.l	KingPeaceProsperityStr
@@ -943,9 +983,14 @@ LoadCastleTilemap_MediumA_PlaneB:
 	MOVE.l	#CastleTilemapData_MediumA_SetB_TgtB, Tilemap_data_ptr_plane_b.w
 	RTS
 	
+;==============================================================
+; STOW CASTLE — TOWN STATE CONFIG + DIALOG
+;==============================================================
+; NPC dispatch table for Stow castle (links to town NPC dialogue dispatch).
 CastleNpcDispatch_Stow:
 	dc.l	WyclifNpcDialogueDispatch
 	dc.b	$FF, $FF 
+; Town state configuration: camera position, spawn point, NPC layout for Stow castle.
 TownStateConfig_Stow1:
 	dc.b	$01, $48, $01, $48, $00, $04, $00, $08, $00, $04, $00, $14, $00, $02, $A1, $92, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 
 	dc.l	$00000000
@@ -957,6 +1002,7 @@ TownStateConfig_Stow1_Arrested:
 	dc.b	$00, $00, $00, $00, $00, $00, $6E, $EC, $60, $00, $00, $58, $01, $38, $02, $BF, $00, $00, $00, $00, $00, $00, $6E, $EC, $60, $01, $01, $18, $00, $88, $02, $B9 
 	dc.b	$00, $00, $00, $00, $00, $00, $6E, $EC, $60, $00, $01, $18, $00, $98, $02, $BF, $00, $00, $00, $00, $00, $00, $6E, $EC, $60, $01, $00, $B8, $00, $58, $02, $C5 
 	dc.b	$00, $00, $00, $00, $00, $00, $6F, $00, $60, $01, $00, $B8, $00, $68, $02, $CB, $00, $00, $00, $00, $00, $00, $6F, $00, $60, $01, $FF, $FF 
+; Dialog dispatch table for Stow castle NPCs, indexed by quest state.
 CastleDialogTable_Stow_State0:
 	dc.l	BusyNowStr
 	dc.l	BusyNowStr
@@ -1128,9 +1174,14 @@ LoadCastleTilemap_MediumB_PlaneB:
 	MOVE.l	#CastleTilemapData_MediumB_SetB_TgtB, Tilemap_data_ptr_plane_b.w
 	RTS
 	
+;==============================================================
+; MALAGA CASTLE — TOWN STATE CONFIG + DIALOG
+;==============================================================
+; NPC dispatch table for Malaga castle (links to town NPC dialogue dispatch).
 CastleNpcDispatch_Malaga:
 	dc.l	WyclifNpcDialogueDispatch
 	dc.b	$FF, $FF 
+; Town state configuration: camera position, spawn point, NPC layout for Malaga castle.
 TownStateConfig_Malaga:
 	dc.b	$01, $68, $01, $58, $00, $0D, $00, $09, $00, $04, $00, $17, $00, $02, $AB, $C8, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 
 	dc.l	$00000000
@@ -1144,6 +1195,7 @@ TownStateConfig_Malaga_MapReceived:
 	dc.b	$00, $03, $DE, $E4, $00, $00, $76, $92, $60, $01, $02, $18, $01, $48, $00, $91, $00, $03, $DD, $74, $00, $00, $76, $D0, $60, $01, $00, $A8, $01, $38, $00, $CD 
 	dc.b	$00, $03, $DD, $94, $00, $00, $6F, $36, $60, $01, $01, $C8, $00, $98, $00, $19, $00, $03, $DD, $34, $00, $00, $6F, $80, $60, $01, $01, $28, $00, $D8, $01, $09 
 	dc.b	$00, $03, $DD, $D4, $00, $00, $6F, $80, $60, $01, $01, $48, $00, $78, $00, $19, $00, $03, $DD, $34, $00, $00, $77, $2C, $60, $01, $FF, $FF 
+; Dialog dispatch table for Malaga castle NPCs, indexed by quest state.
 CastleDialogTable_Malaga_State0:
 	dc.l	HelpInTimeOfNeedStr 
 	dc.l	BrunoLoyalServantStr 
@@ -1334,14 +1386,20 @@ LoadCastleTilemap_Malaga_PlaneB:
 	MOVE.l	#CastleTilemapData_Malaga_SetB_TgtB, Tilemap_data_ptr_plane_b.w
 	RTS
 	
+;==============================================================
+; TADCASTER CASTLE — TOWN STATE CONFIG + DIALOG
+;==============================================================
+; NPC dispatch table for Tadcaster castle (links to town NPC dialogue dispatch).
 CastleNpcDispatch_Tadcaster:
 	dc.l	WyclifNpcDialogueDispatch
 	dc.b	$FF, $FF 
+; Town state configuration: camera position, spawn point, NPC layout for Tadcaster castle.
 TownStateConfig_Tadcaster:
 	dc.b	$01, $68, $01, $58, $00, $0B, $00, $09, $00, $04, $00, $19, $00, $02, $B6, $A0, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 
 	dc.l	$00000000
 	dc.b	$00, $01, $EF, $A8, $00, $48, $00, $88, $01, $D5, $00, $03, $DE, $A0, $00, $00, $6F, $36, $60, $01, $01, $68, $00, $48, $02, $11, $00, $03, $DE, $C0, $00, $00 
 	dc.b	$6F, $36, $60, $01, $01, $28, $00, $38, $02, $89, $00, $03, $DF, $04, $00, $00, $6F, $80, $00, $01, $FF, $FF 
+; Dialog dispatch table for Tadcaster castle NPCs, indexed by quest state.
 CastleDialogTable_Tadcaster_State0:
 	dc.l	WhyAreYouHereStr
 	dc.l	GreetingsHighnessStr
@@ -1386,12 +1444,18 @@ BegDontTormentHusbandStr:
 	dc.b	"my husband any more,", $FE
 	dc.b	"I beg of you!"
 	dc.b	$FF, $00, $01, $EA, $FE, $FF, $FF 
+
+;==============================================================
+; SWAFHAM CASTLE — TOWN STATE CONFIG + DIALOG
+;==============================================================
+; Town state configuration: camera position, spawn point, NPC layout for Swafham castle.
 TownStateConfig_Swafham:
 	dc.b	$01, $48, $01, $48, $00, $06, $00, $08, $00, $04, $00, $1B, $00, $02, $B9, $34, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 
 	dc.l	$00000000
 	dc.b	$00, $01, $F0, $78, $01, $48, $00, $48, $01, $81, $00, $03, $DE, $14, $00, $00, $6F, $80, $60, $01, $01, $58, $00, $E8, $01, $81, $00, $03, $DE, $14, $00, $00 
 	dc.b	$6F, $80, $60, $01, $00, $28, $00, $88, $01, $81, $00, $03, $DE, $14, $00, $00, $6F, $A8, $60, $01, $01, $38, $00, $88, $01, $81, $00, $03, $DE, $14, $00, $00 
 	dc.b	$6F, $A8, $60, $01, $00, $B8, $00, $58, $02, $11, $00, $03, $DE, $C0, $00, $00, $7A, $F2, $60, $01, $FF, $FF 
+; Dialog dispatch table for Swafham castle NPCs, indexed by quest state.
 CastleDialogTable_Swafham_State0:
 	dc.l	KingWorryingCartahenansStr
 	dc.l	BoredJobStr
@@ -1511,6 +1575,11 @@ CantGiveKeyStr:
 	dc.b	"I can't give you the", $FE
 	dc.b	"key--you're carrying", $FE
 	dc.b	"too much already.", $FF 
+
+;==============================================================
+; CARTHAHENA CASTLE — TOWN STATE CONFIG + DIALOG
+;==============================================================
+; Town state configuration: camera position, spawn point, NPC layout for Carthahena castle.
 TownStateConfig_Carthahena:
 	dc.b	$01, $68, $01, $58, $00, $0B, $00, $09, $00, $04, $00, $1F, $00, $02, $C0, $10, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 
 	dc.l	$00000000
@@ -1521,6 +1590,7 @@ TownStateConfig_Carthahena_TsarkonDead:
 	dc.b	$00, $03, $DE, $A0, $00, $00, $6F, $36, $60, $01, $01, $88, $00, $A8, $01, $D5, $00, $03, $DE, $A0, $00, $00, $6F, $36, $60, $01, $01, $28, $00, $C8, $01, $D5 
 	dc.b	$00, $03, $DE, $A0, $00, $00, $6F, $36, $60, $01, $01, $88, $00, $C8, $01, $D5, $00, $03, $DE, $A0, $00, $00, $6F, $36, $60, $01, $01, $98, $00, $58, $02, $89 
 	dc.b	$00, $03, $DF, $04, $00, $00, $6F, $36, $00, $01, $FF, $FF 
+; Dialog dispatch table for Carthahena castle NPCs, indexed by quest state.
 CastleDialogTable_Carthahena_State0:
 	dc.l	WelcomeFoolStr
 	dc.l	NoOneHereStr
@@ -1809,6 +1879,10 @@ GrieveFatherStr:
 	dc.b	$FF, $00
 GoodManStr:	
 	dc.b	"Your father was a good man.", $FF 
+
+;==============================================================
+; WYCLIF TOWN — NPC DATA, DIALOG TABLES, TILEMAP DATA
+;==============================================================
 NpcDataTable_Wyclif:
 	dc.b	$00, $09, $00, $0B, $00, $98, $00, $C8, $00, $00, $00, $00, $00, $04, $00, $28, $00, $02, $D2, $EE, $00, $98, $00, $58, $00, $2A, $00, $02, $D3, $04, $00, $00 
 	dc.b	$00, $00, $00, $00 
@@ -1883,6 +1957,7 @@ NpcEntryList_Wyclif:
 	npcEntry $0168, $0048, $01D5, NPCSpriteFrames_Soldier, NPCInit_StowSoldier_DoctorHint, NPC_ATTR_PAL3, NPC_SOLID
 	npcEntry $00D8, $0048, $0205, NPCSpriteFrames_Shopkeeper, NPCInit_WalkingAnimated_Animate, NPC_ATTR_PAL3, NPC_SOLID
 	dc.w	$FFFF
+; Dialog dispatch table for Wyclif town NPCs, indexed by quest state.
 TownDialogTable_Wyclif_State0:
 	dc.l	GoodPersonStr
 	dc.l	FatherCallingStr
@@ -2125,6 +2200,9 @@ FortuneTellerReading_Wyclif:
 NpcDialog_DangerousPath_Return:
 	RTS
 	
+;==============================================================
+; PARMA TOWN — NPC DATA, DIALOG TABLES, TILEMAP DATA
+;==============================================================
 NpcDataTable_Parma:
 	dc.b	$00, $16, $00, $22, $00, $98, $00, $C8, $00, $00, $00, $00, $00, $04, $00, $35, $00, $02, $E6, $B6, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 
 	dc.b	$00, $00, $00, $00 
@@ -2222,6 +2300,7 @@ NpcEntryList_Parma_CondD:
 	npcEntry $00B8, $00A8, $0151, NPCSpriteFrames_Woman, NPCInit_StowSoldier_DoctorHint, NPC_ATTR_PAL0, NPC_SOLID
 	npcEntry $00A8, $0048, $0265, NPCSpriteFrames_IndoorNpcC, NPCInit_WalkingAnimated_Animate, NPC_ATTR_PAL0, NPC_SOLID
 	dc.w	$FFFF
+; Dialog dispatch table for Parma town NPCs, indexed by quest state.
 TownDialogTable_Parma_State0:
 	dc.l	WelcomeParmaStr
 	dc.l	WelcomeParmaStr
@@ -2601,6 +2680,9 @@ FortuneTellerGreeting_Watling:
 FortuneTellerGreeting_Watling_Loop:
 	RTS
 	
+;==============================================================
+; WATLING TOWN — NPC DATA, DIALOG TABLES, TILEMAP DATA
+;==============================================================
 NpcDataTable_Watling:
 	dc.b	$00, $09, $00, $19, $00, $98, $00, $C8, $00, $00, $00, $00, $00, $04, $00, $27, $00, $02, $FC, $A4, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 
 	dc.b	$00, $00, $00, $00 
@@ -2846,6 +2928,10 @@ NpcEntryList_Deepdale:
 	npcEntry $00E8, $0248, $0151, NPCSpriteFrames_Woman, NPCInit_WalkingStatic, NPC_ATTR_PAL0, NPC_SOLID
 	npcEntry $0038, $00C8, $0205, NPCSpriteFrames_Elder, NPCInit_StowSoldier_DoctorHint, NPC_ATTR_PAL3, NPC_SOLID
 	dc.w	$FFFF
+
+;==============================================================
+; DEEPDALE TOWN — NPC DATA, DIALOG TABLES, TILEMAP DATA
+;==============================================================
 NpcDataTable_Deepdale:
 	dc.b	$00, $08, $00, $0A, $00, $68, $00, $C8, $00, $00, $00, $00, $00, $04, $01, $32, $00, $03, $09, $8E, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 
 	dc.b	$00, $00, $00, $00 
@@ -2891,6 +2977,7 @@ NpcEntryList_Deepdale_Npc2_CondB:
 	dc.l	Deepdale_Npc2_Dispatch
 	npcEntry $00A8, $0048, $0265, NPCSpriteFrames_IndoorNpcC, NPCInit_WalkingAnimated_Animate, NPC_ATTR_PAL0, NPC_SOLID
 	dc.w	$FFFF
+; Dialog dispatch table for Deepdale town NPCs, indexed by quest state.
 TownDialogTable_Deepdale_State0:
 	dc.l	EnjoyStayDeepdaleStr
 	dc.l	AmazinglyPeacefulStr
@@ -3118,6 +3205,10 @@ NpcEntryList_Stow1_SoldiersPresent:
 	npcEntry $01B8, $0128, $029B, 0, NPCTick_Soldier_Init, NPC_ATTR_PAL3, NPC_NONSOLID
 	npcEntry $01B8, $0138, $02A1, 0, NPCTick_Soldier_Init, NPC_ATTR_PAL3, NPC_SOLID
 	dc.w	$FFFF
+
+;==============================================================
+; STOW TOWN — NPC DATA, DIALOG TABLES, TILEMAP DATA
+;==============================================================
 NpcDataTable_Stow1:
 	dc.b	$00, $07, $00, $07, $00, $68, $00, $C8, $00, $00, $00, $00, $00, $04, $01, $32, $00, $03, $09, $8E, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 
 	dc.b	$00, $00, $00, $00 
@@ -3159,6 +3250,7 @@ NpcEntryList_Stow1_CondD:
 	dc.l	Stow_Npc3_State10_Dispatch
 	npcEntry $00B8, $0068, $01D5, NPCSpriteFrames_Soldier, NPCInit_StowSoldier_DoctorHint, NPC_ATTR_PAL3, NPC_SOLID
 	dc.w	$FFFF
+; Dialog dispatch table for Stow town NPCs, indexed by quest state.
 TownDialogTable_Stow1_State0:
 	dc.l	ThisIsStowStr
 	dc.l	LookingForButtonStr
@@ -3549,6 +3641,10 @@ NpcEntryList_Stow2AndKeltwick:
 	npcEntry $0198, $00D8, $0019, NPCSpriteFrames_Child, NPCInit_Keltwick_BlazonsCaveHint, NPC_ATTR_PAL3, NPC_SOLID
 	npcEntry $0198, $0098, $0205, NPCSpriteFrames_Elder, NPCInit_StowSoldier_DoctorHint, NPC_ATTR_PAL3, NPC_SOLID
 	dc.w	$FFFF
+
+;==============================================================
+; KELTWICK TOWN — NPC DATA, DIALOG TABLES, TILEMAP DATA
+;==============================================================
 NpcDataTable_Stow2:
 	dc.b	$00, $08, $00, $1A, $00, $58, $00, $C8, $00, $00, $00, $00, $00, $04, $01, $32, $00, $03, $2C, $CC, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 
 	dc.b	$00, $00, $00, $00 
@@ -3585,6 +3681,7 @@ NpcEntryList_Keltwick_CondD:
 	dc.l	Keltwick_Npc2_State9_Dispatch
 	npcEntry $00B8, $0048, $01D5, NPCSpriteFrames_Soldier, NPCInit_StowSoldier_DoctorHint, NPC_ATTR_PAL3, NPC_SOLID
 	dc.w	$FFFF
+; Dialog dispatch table for Keltwick town NPCs, indexed by quest state.
 TownDialogTable_Keltwick_State0:
 	dc.l	ThisIsKeltwickStr
 	dc.l	ExploreKeltwickStr
@@ -3890,6 +3987,10 @@ NpcEntryList_Malaga:
 	npcEntry $0048, $0248, $0109, NPCSpriteFrames_VillagerC, NPCInit_WalkingStatic_LoadFrame, NPC_ATTR_PAL3, NPC_SOLID
 	npcEntry $0148, $0028, $0109, NPCSpriteFrames_VillagerC, NPCInit_WalkingAnimated, NPC_ATTR_PAL3, NPC_SOLID
 	dc.w	$FFFF
+
+;==============================================================
+; MALAGA TOWN — NPC DATA, DIALOG TABLES, TILEMAP DATA
+;==============================================================
 NpcDataTable_Malaga:
 	dc.b	$00, $16, $00, $22, $00, $98, $00, $C8, $00, $00, $00, $00, $00, $04, $00, $35, $00, $03, $09, $F6, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 
 	dc.b	$00, $00, $00, $00 
@@ -3945,6 +4046,7 @@ NpcDataTable_Malaga:
 	npcEntry $00B8, $0058, $0151, NPCSpriteFrames_Woman, NPCInit_StowSoldier_DoctorHint, NPC_ATTR_PAL0, NPC_SOLID
 	npcEntry $0048, $0058, $024D, NPCSpriteFrames_IndoorNpcB, NPCInit_WalkingAnimated_Animate, NPC_ATTR_PAL3, NPC_SOLID
 	dc.w	$FFFF
+; Dialog dispatch table for Malaga town NPCs, indexed by quest state.
 TownDialogTable_Malaga_State0:
 	dc.l	PrincessWaitingStr2
 	dc.l	WelcomeMalagaStr
@@ -4217,6 +4319,10 @@ NpcEntryList_Barrow:
 	npcEntry $0198, $00C8, $0151, NPCSpriteFrames_Woman, NPCInit_StowSoldier_DoctorHint, NPC_ATTR_PAL0, NPC_SOLID
 	npcEntry $0088, $01F8, $0019, NPCSpriteFrames_Child, NPCInit_Barrow_TadcasterHint, NPC_ATTR_PAL3, NPC_SOLID
 	dc.w	$FFFF
+
+;==============================================================
+; BARROW TOWN — NPC DATA, DIALOG TABLES, TILEMAP DATA
+;==============================================================
 NpcDataTable_Barrow:
 	dc.b	$00, $09, $00, $1B, $00, $58, $00, $C8, $00, $00, $00, $00, $00, $04, $00, $26, $00, $03, $4C, $D4, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 
 	dc.b	$00, $00, $00, $00 
@@ -4237,6 +4343,7 @@ NpcDataTable_Barrow:
 	dc.l	Barrow_Npc2_SimpleDispatch
 	npcEntry $0048, $0058, $027D, NPCSpriteFrames_IndoorNpcD, NPCInit_WalkingAnimated_Animate, NPC_ATTR_PAL3, NPC_SOLID
 	dc.w	$FFFF
+; Dialog dispatch table for Barrow town NPCs, indexed by quest state.
 TownDialogTable_Barrow_State0:
 	dc.l	WelcomeToBarrowStr
 	dc.l	TadcasterDangerStr
@@ -4463,6 +4570,10 @@ NpcEntryList_Tadcaster:
 	npcEntry $00C8, $0108, $0181, NPCSpriteFrames_Guard, NPCInit_Tadcaster_HelwigHint, NPC_ATTR_PAL3, NPC_SOLID
 	npcEntry $01C8, $0078, $0181, NPCSpriteFrames_Guard, NPCInit_Tadcaster_HelwigHint, NPC_ATTR_PAL3, NPC_SOLID
 	dc.w	$FFFF
+
+;==============================================================
+; TADCASTER TOWN — NPC DATA, DIALOG TABLES, TILEMAP DATA
+;==============================================================
 NpcDataTable_Tadcaster:
 	dc.b	$00, $0B, $00, $0A, $00, $98, $00, $C8, $00, $00, $00, $00, $00, $04, $00, $2F, $00, $03, $5C, $F2, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 
 	dc.b	$00, $00, $00, $00 
@@ -4491,6 +4602,7 @@ NpcEntryList_Tadcaster_CondD:
 	dc.l	Wyclif_Npc2_Dispatch
 	npcEntry $0088, $0058, $0295, NPCSpriteFrames_IndoorNpcE, NPCInit_WalkingAnimated_Animate, NPC_ATTR_PAL3, NPC_SOLID
 	dc.w	$FFFF
+; Dialog dispatch table for Tadcaster town NPCs, indexed by quest state.
 TownDialogTable_Tadcaster_State0:
 	dc.l	TadcasterBegsForMercyStr
 	dc.l	PleaseDontTormentStr
@@ -4809,6 +4921,10 @@ NpcEntryList_Helwig:
 	npcEntry $0108, $0038, $00CD, NPCSpriteFrames_ManB, NPCInit_Helwig_RescuedVillager, NPC_ATTR_PAL3, NPC_SOLID
 	npcEntry $0208, $0258, $0091, NPCSpriteFrames_ManA, NPCInit_Helwig_RescuedVillager, NPC_ATTR_PAL3, NPC_SOLID
 	dc.w	$FFFF
+
+;==============================================================
+; HELWIG TOWN — NPC DATA, DIALOG TABLES, TILEMAP DATA
+;==============================================================
 NpcDataTable_Helwig:
 	dc.b	$00, $0B, $00, $11, $00, $58, $00, $C8, $00, $00, $00, $00, $00, $04, $00, $26, $00, $03, $6D, $60, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 
 	dc.b	$00, $00, $00, $00 
@@ -4838,6 +4954,7 @@ NpcDataTable_Helwig:
 	dc.l	Wyclif_Npc2_Dispatch
 	npcEntry $0088, $0058, $0265, NPCSpriteFrames_IndoorNpcC, NPCInit_WalkingAnimated_Animate, NPC_ATTR_PAL0, NPC_SOLID
 	dc.w	$FFFF
+; Dialog dispatch table for Helwig town NPCs, indexed by quest state.
 TownDialogTable_Helwig_State0:
 	dc.l	YouAreInHelwigStr
 	dc.l	OnlyWomenRemainStr
@@ -5201,6 +5318,10 @@ NpcEntryList_Swafham_Ruined:
 	npcEntry $0138, $0068, $02A7, 0, NPCInit_Helwig_OldWomanQuest, NPC_ATTR_PAL3, NPC_SOLID
 	npcEntry $0138, $0078, $02AD, 0, NPCInit_Helwig_OldWomanQuest, NPC_ATTR_PAL3, NPC_SOLID
 	dc.w	$FFFF
+
+;==============================================================
+; SWAFHAM TOWN — NPC DATA, DIALOG TABLES, TILEMAP DATA
+;==============================================================
 NpcDataTable_Swafham:
 	dc.b	$00, $07, $00, $07, $00, $68, $00, $C8, $00, $00, $00, $00, $00, $04, $01, $32, $00, $03, $09, $8E, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 
 	dc.b	$00, $00, $00, $00 
@@ -5218,6 +5339,7 @@ NpcDataTable_Swafham:
 	dc.b	$00, $00, $00, $00 
 	dc.l	$00000000
 	dc.b	$FF, $FF 
+; Dialog dispatch table for Swafham town NPCs, indexed by quest state.
 TownDialogTable_Swafham_State0:
 	dc.l	MapsHardToFindStr 
 	dc.l	YoureInSwaffhamStr 
@@ -5447,12 +5569,16 @@ LoadTownTilemap_Swafham_PlaneB:
 LoadTownTilemap_Swafham_PlaneB_Loop:
 	RTS
 	
+;==============================================================
+; EXCALABRIA TOWN — NPC DATA, DIALOG TABLES, TILEMAP DATA
+;==============================================================
 NpcEntryList_Excalabria:
 	dc.l	ExcalabriaaNpcDialogueDispatch
 	npcEntry $0078, $0068, $0019, NPCSpriteFrames_Child, NPCInit_Excalabria_CrystalExchange, NPC_ATTR_PAL3, NPC_SOLID
 	dc.w	$FFFF
 NpcDataTable_Excalabria:
 	dc.b	$FF, $FF 
+; Dialog dispatch table for Excalabria town NPCs, indexed by quest state.
 TownDialogTable_Excalabria_State0:
 	dc.l	WaitingExcalabriaStr 
 TownDialogTable_Excalabria_State1:
@@ -5573,6 +5699,10 @@ NpcEntryList_Hastings:
 	npcEntry $0248, $0198, $0151, NPCSpriteFrames_Woman, NPCInit_StowSoldier_DoctorHint, NPC_ATTR_PAL0, NPC_SOLID
 	npcEntry $02D8, $0158, $0019, NPCSpriteFrames_Child, NPCInit_Hastings_WelcomePrince, NPC_ATTR_PAL3, NPC_SOLID
 	dc.w	$FFFF
+
+;==============================================================
+; HASTINGS TOWN — NPC DATA, DIALOG TABLES, TILEMAP DATA
+;==============================================================
 NpcDataTable_Hastings1:
 	dc.b	$00, $09, $00, $0B, $00, $98, $00, $C8, $00, $00, $00, $00, $00, $04, $00, $27, $00, $03, $9F, $98, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 
 	dc.b	$00, $00, $00, $00 
@@ -5608,6 +5738,7 @@ NpcDataTable_Hastings1:
 	npcEntry $00E8, $0088, $0091, NPCSpriteFrames_ManA, NPCInit_WalkingStatic, NPC_ATTR_PAL3, NPC_SOLID
 	npcEntry $0048, $0058, $024D, NPCSpriteFrames_IndoorNpcB, NPCInit_WalkingAnimated_Animate, NPC_ATTR_PAL3, NPC_SOLID
 	dc.w	$FFFF
+; NPC dialog string pointer table for Hastings (state 0).
 TownDialogTable_Hastings_State0:
 	dc.l	ShopInSwaffhamStr
 	dc.l	EscapedDestructionExcalabriaStr
@@ -5945,6 +6076,11 @@ LoadTownTilemap_Hastings_PlaneB:
 	MOVE.l	#TownTilemapData_Hastings_SetB_TgtB, Tilemap_data_ptr_plane_b.w
 	RTS
 	
+;==============================================================
+; CARTHAHENA TOWN
+;==============================================================
+
+; NPC entry list for Carthahena town (Tsarkon alive).
 NpcEntryList_Carthahena:
 	dc.l	CarthahenaaNpcDialogueDispatch
 	npcEntry $00A8, $00B8, $0241, NPCSpriteFrames_Priest, NPCInit_WalkingAnimated_Animate, NPC_ATTR_PAL0, NPC_SOLID
