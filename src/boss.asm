@@ -1,7 +1,40 @@
 ; ======================================================================
 ; src/boss.asm
-; Boss AI: all boss types, boss tile updates
+; Boss battle AI, animation, and reward logic for all boss encounters.
+;
+; Covers six boss types:
+;   Boss 1 (multi-segment serpent), Two-Headed Dragon, Demon Boss,
+;   Orbit Boss, Hydra Boss, Ring Guardian
+;
+; Key responsibilities:
+;   - Per-frame tick functions for each boss state machine
+;   - Parallax layer scrolling during battle
+;   - Sprite animation, collision, and damage processing
+;   - VDP drawing: boss portrait, nameplate, health bar, attack graphics
+;   - Victory sequence: fade, reward award, dialog, exit flag
+;
+; Register conventions (used throughout this file):
+;   A5 = current object pointer (the boss or body-part object)
+;   A6 = secondary object pointer (scratch / child object)
+;   obj_tick_fn(A5) = function pointer for the current state;
+;                     writing a new address transitions the state machine
+;   obj_invuln_timer(A5) = repurposed as a general-purpose countdown
+;                          timer in many boss states
 ; ======================================================================
+
+;==============================================================
+; BOSS 1 — VICTORY SEQUENCE
+; Handles the death-fall gravity loop, victory pose, palette
+; fade, screen-flash, and transition to the reward sequence.
+;==============================================================
+
+; Boss1_DeathFall
+; Per-frame tick while Boss 1's body segments are falling.
+; Applies gravity ($4000/frame) to each of the five body-part
+; slots (slots 02–05 plus A5).  When all velocities reach zero
+; (segments have landed), transitions to Boss1_VictoryPauseWait.
+; Inputs:  A5 = main boss object; Object_slot_02_ptr–05_ptr = body parts
+; Outputs: obj_tick_fn(A5) set to Boss1_VictoryPauseWait when done
 Boss1_DeathFall:
 	CLR.w	D0
 	TST.l	obj_vel_y(A5)
@@ -33,16 +66,19 @@ Boss1_DeathFall_Loop4:
 	ADDI.l	#$4000, obj_vel_y(A6)
 	MOVE.w	#1, D0
 Boss1_DeathFall_Loop5:
-	TST.w	D0
+	TST.w	D0                              ; D0 nonzero = at least one segment still moving
 	BNE.b	Boss1_DeathFall_Loop6
-	MOVE.l	#Boss1_VictoryPauseWait, obj_tick_fn(A5)
-	CLR.w	Dialog_timer.w
-	CLR.w	Dialog_phase.w
-	MOVE.b	#BOSS_VICTORY_PAUSE, obj_invuln_timer(A5)
+	MOVE.l	#Boss1_VictoryPauseWait, obj_tick_fn(A5) ; all segments landed — begin victory
+	CLR.w	Dialog_timer.w                  ; reset general-purpose frame counter
+	CLR.w	Dialog_phase.w                  ; reset flash phase counter
+	MOVE.b	#BOSS_VICTORY_PAUSE, obj_invuln_timer(A5) ; set initial pause duration
 Boss1_DeathFall_Loop6:
 	BSR.w	UpdateSpritePositionAndRender
 	RTS
 
+; Boss1_VictoryPauseWait
+; Counts down a brief pause after all segments land, then switches
+; to the first victory pose and queues the victory fanfare.
 Boss1_VictoryPauseWait:
 	SUBQ.b	#1, obj_invuln_timer(A5)
 	BGE.b	Boss1_VictoryPauseWait_Loop
@@ -55,6 +91,9 @@ Boss1_VictoryPauseWait_Loop:
 	BSR.w	UpdateSpritePositionAndRender
 	RTS
 
+; Boss1_VictoryPose1Wait
+; Holds the first victory animation pose for BOSS_VICTORY_PAUSE frames,
+; then switches to Boss1_VictoryFadeInit to begin the palette fade.
 Boss1_VictoryPose1Wait:
 	SUBQ.b	#1, obj_invuln_timer(A5)
 	BGE.b	Boss1_VictoryPose1Wait_Loop
@@ -65,6 +104,10 @@ Boss1_VictoryPose1Wait_Loop:
 	BSR.w	UpdateSpritePositionAndRender
 	RTS
 
+; Boss1_VictoryFadeInit
+; After a second pause, sets the palette fade target ($0067 = dark blue)
+; and enables palette line 1 fade-in (mask bit 1), then waits for
+; the fade to complete in Boss1_VictoryFadeWait.
 Boss1_VictoryFadeInit:
 	SUBQ.b	#1, obj_invuln_timer(A5)
 	BGE.b	Boss1_VictoryFadeInit_Loop
@@ -75,6 +118,9 @@ Boss1_VictoryFadeInit_Loop:
 	BSR.w	UpdateSpritePositionAndRender
 	RTS
 
+; Boss1_VictoryFadeWait
+; Spins until Palette_fade_in_mask clears (fade complete), then
+; advances to the screen-flash phase and plays the purchase jingle.
 Boss1_VictoryFadeWait:
 	TST.b	Palette_fade_in_mask.w
 	BNE.b	Boss1_VictoryFadeWait_Loop
@@ -85,22 +131,36 @@ Boss1_VictoryFadeWait_Loop:
 	BSR.w	UpdateSpritePositionAndRender
 	RTS
 
+; Boss1_VictoryFlash
+; Flashes the dialog plane every 8 frames (timer & 7 == 0) for
+; BOSS_VICTORY_FADE_PHASES cycles, then transitions to the reward
+; sequence.  Each cycle calls ClearDialogPlane to produce the flash.
 Boss1_VictoryFlash:
-	ADDQ.w	#1, Dialog_timer.w
+	ADDQ.w	#1, Dialog_timer.w              ; advance frame counter
 	MOVE.w	Dialog_timer.w, D0
-	ANDI.w	#7, D0
+	ANDI.w	#7, D0                          ; fire every 8 frames
 	BNE.b	BossCommon_SpriteUpdate
-	CMPI.w	#BOSS_VICTORY_FADE_PHASES, Dialog_phase.w
+	CMPI.w	#BOSS_VICTORY_FADE_PHASES, Dialog_phase.w ; all flash cycles done?
 	BLT.b	Boss1_VictoryFlash_Loop
 	MOVE.l	#BossCommon_VictoryRewardSequence, obj_tick_fn(A5)
-	MOVE.w	#BOSS_VICTORY_DELAY_FRAMES, Dialog_timer.w
+	MOVE.w	#BOSS_VICTORY_DELAY_FRAMES, Dialog_timer.w ; pre-load reward delay
 	BRA.b	BossCommon_SpriteUpdate
 Boss1_VictoryFlash_Loop:
-	BSR.w	ClearDialogPlane
+	BSR.w	ClearDialogPlane                ; clear dialog plane to produce one flash
+; BossCommon_SpriteUpdate — shared tail: update position + render, then return
 BossCommon_SpriteUpdate:
 	BSR.w	UpdateSpritePositionAndRender
 	RTS
 
+;==============================================================
+; BOSS COMMON — VICTORY / EXIT FLOW
+; Shared reward dispatch and dialog wait used by all bosses.
+;==============================================================
+
+; BossCommon_VictoryRewardSequence
+; Counts down Dialog_timer, then clears scroll data, blocks player
+; input, awards XP/kims, displays the victory message, and advances
+; to BossCommon_VictoryMessageWait.
 BossCommon_VictoryRewardSequence:
 	SUBQ.w	#1, Dialog_timer.w
 	BGE.b	BossCommon_VictoryRewardSequence_Loop
@@ -114,6 +174,9 @@ BossCommon_VictoryRewardSequence:
 BossCommon_VictoryRewardSequence_Loop:
 	RTS
 
+; BossCommon_VictoryMessageWait
+; Waits for victory dialog to finish (Script_text_complete), then
+; watches for button B or C press to proceed to exit.
 BossCommon_VictoryMessageWait:
 	TST.b	Script_text_complete.w
 	BEQ.b	BossBattle_SetExitFlag_Loop
@@ -125,14 +188,37 @@ BossCommon_VictoryMessageWait:
 	BNE.b	BossBattle_SetExitFlag
 	RTS
 
+; BossBattle_SetExitFlag
+; Sets Boss_battle_exit_flag to FLAG_TRUE to signal the battle
+; engine that the boss encounter should end.
 BossBattle_SetExitFlag:
 	MOVE.b	#FLAG_TRUE, Boss_battle_exit_flag.w
 	RTS
 
+; BossBattle_SetExitFlag_Loop
+; Drives the script/dialog text engine while waiting for the
+; player to confirm the victory message.
 BossBattle_SetExitFlag_Loop:
 	JSR	ProcessScriptText
 	RTS
 
+;==============================================================
+; BATTLE PARALLAX / SPRITE SYSTEM
+; Drives the four background parallax layers and the Boss 1
+; body-segment sprite rendering each frame.
+;==============================================================
+
+; UpdateBattleParallaxLayers
+; Per-frame tick for the parallax controller object (slot 01).
+; Copies the main object's velocity to slots 02–05 at scaled rates:
+;   slot 02 = full speed (1x)
+;   slot 03 = 75% (velocity - velocity/4)
+;   slot 04 = 50% (velocity >> 1)
+;   slot 05 = 25% (velocity >> 2)
+; If Fade_in_lines_mask or Battle_active_flag is inactive, all
+; velocities are zeroed (layers frozen).
+; Inputs:  A5 = parallax controller object
+;          obj_vel_x/y(A5) = current scroll velocity
 UpdateBattleParallaxLayers:
 	ADDQ.b	#1, obj_move_counter(A5)
 	TST.b	Fade_in_lines_mask.w
@@ -170,7 +256,7 @@ UpdateBattleParallaxLayers:
 	MOVE.l	D2, obj_vel_x(A6)
 	MOVE.l	D3, obj_vel_y(A6)
 	BRA.w	UpdateSpritePositionAndRender
-UpdateBattleParallax_ClearSlots:
+UpdateBattleParallax_ClearSlots:                ; battle inactive — freeze all layers
 	MOVEA.l	Object_slot_02_ptr.w, A6
 	CLR.l	obj_vel_x(A6)
 	CLR.l	obj_vel_y(A6)
@@ -184,36 +270,49 @@ UpdateBattleParallax_ClearSlots:
 	CLR.l	obj_vel_x(A6)
 	CLR.l	obj_vel_y(A6)
 	BRA.w	BossBody_SpriteUpdate
+
+; UpdateSpritePositionAndRender
+; Integrates velocity into world position for A5, clamps the Y
+; coordinate to BATTLE_ARENA_EDGE (resetting velocity if exceeded),
+; then falls through to BossBody_SpriteUpdate.
+; Inputs:  A5 = object to move
 UpdateSpritePositionAndRender:
 	MOVE.l	obj_vel_x(A5), D0
 	MOVE.l	obj_vel_y(A5), D1
 	ADD.l	D0, obj_world_x(A5)
 	ADD.l	D1, obj_world_y(A5)
 	MOVE.w	obj_world_y(A5), D0
-	CMPI.w	#BATTLE_ARENA_EDGE, D0
+	CMPI.w	#BATTLE_ARENA_EDGE, D0          ; has the segment fallen off the bottom?
 	BLT.b	BossBody_SpriteUpdate
-	MOVE.w	#$00A8, obj_world_y(A5)
+	MOVE.w	#$00A8, obj_world_y(A5)         ; clamp to arena floor (168 pixels)
 	CLR.l	obj_vel_x(A5)
 	CLR.l	obj_vel_y(A5)
+; BossBody_SpriteUpdate
+; Copies world position to all five body-part sprite slots (slot 01
+; plus slots at obj_next_offset chain) using EnemySpriteFrameDataA_10
+; offsets, selects the tile index from EnemySpriteFrameDataA_12 via
+; the animated move counter, then submits A5 to the sprite display
+; list and updates the attack graphic overlay.
+; Inputs:  A5 = main body object
 BossBody_SpriteUpdate:
 	MOVEA.l	Object_slot_01_ptr.w, A6
 	LEA	EnemySpriteFrameDataA_12, A0
 	CLR.w	D0
 	MOVE.b	obj_move_counter(A5), D0
-	ANDI.w	#$0070, D0
-	ASR.w	#3, D0
-	MOVE.w	(A0,D0.w), obj_tile_index(A6)
-	LEA	EnemySpriteFrameDataA_10, A0
-	MOVE.w	#4, D7
+	ANDI.w	#$0070, D0                      ; bits 6–4 select anim frame (0–7, steps of $10)
+	ASR.w	#3, D0                          ; shift right 3 → word index into frame table
+	MOVE.w	(A0,D0.w), obj_tile_index(A6)  ; set tile for main display slot
+	LEA	EnemySpriteFrameDataA_10, A0       ; X/Y offset table for body sub-sprites
+	MOVE.w	#4, D7                          ; loop 5 sub-sprites (DBF: 4 down to 0)
 BossBody_SpriteUpdate_Done:
 	MOVE.w	obj_world_x(A5), D0
-	ADD.w	(A0)+, D0
+	ADD.w	(A0)+, D0                       ; apply X offset for this sub-sprite
 	MOVE.w	D0, obj_screen_x(A6)
 	MOVE.w	obj_world_y(A5), D0
-	ADD.w	(A0)+, D0
+	ADD.w	(A0)+, D0                       ; apply Y offset for this sub-sprite
 	MOVE.w	D0, obj_screen_y(A6)
 	CLR.w	D0
-	MOVE.b	obj_next_offset(A6), D0
+	MOVE.b	obj_next_offset(A6), D0        ; follow linked-list chain to next sub-object
 	LEA	(A6,D0.w), A6
 	DBF	D7, BossBody_SpriteUpdate_Done
 	MOVE.w	obj_world_x(A5), obj_screen_x(A5)
@@ -222,6 +321,17 @@ BossBody_SpriteUpdate_Done:
 	BSR.w	UpdateBossAttackGraphic
 	RTS
 
+;==============================================================
+; BOSS 1 — BODY SEGMENT TICKS
+; Per-frame update functions for each of the five Boss 1 body
+; segments: neck, upper body, mid body, tail, and the shared
+; next-slot initialiser.
+;==============================================================
+
+; Boss1_NeckTick
+; Checks player collision (deals damage), integrates velocity,
+; clamps Y, then positions screen coordinates for the neck's
+; two sub-sprites via EnemySpriteFrameDataA_11 offsets.
 Boss1_NeckTick:
 	BSR.w	CheckEntityPlayerCollisionAndDamage
 Boss1_NeckTickNoCollision:
@@ -256,7 +366,7 @@ Boss1_UpperBodyTick:
 	ADD.l	D1, obj_world_y(A5)
 	BSR.w	ClampYPosition
 	MOVEA.l	Enemy_list_ptr.w, A6
-	TST.w	obj_hp(A6)
+	TST.w	obj_hp(A6)                      ; skip collision if boss is already dead
 	BLE.b	Boss1_UpperBodyTick_Loop
 	BSR.w	CheckEntityPlayerCollisionAndDamage
 Boss1_UpperBodyTick_Loop:
@@ -275,6 +385,8 @@ Boss1_UpperBodyTick_Loop:
 	JSR	AddSpriteToDisplayList
 	RTS
 
+; Boss1_MidBodyTick
+; Same as Boss1_UpperBodyTick but uses EnemySpriteFrameDataA_0E offsets.
 Boss1_MidBodyTick:
 	MOVE.l	obj_vel_x(A5), D0
 	MOVE.l	obj_vel_y(A5), D1
@@ -282,7 +394,7 @@ Boss1_MidBodyTick:
 	ADD.l	D1, obj_world_y(A5)
 	BSR.w	ClampYPosition
 	MOVEA.l	Enemy_list_ptr.w, A6
-	TST.w	obj_hp(A6)
+	TST.w	obj_hp(A6)                      ; skip collision if boss is already dead
 	BLE.b	Boss1_MidBodyTick_Loop
 	BSR.w	CheckEntityPlayerCollisionAndDamage
 Boss1_MidBodyTick_Loop:
@@ -301,6 +413,9 @@ Boss1_MidBodyTick_Loop:
 	JSR	AddSpriteToDisplayList
 	RTS
 
+; Boss1_TailTick
+; Tail segment: no collision check, uses EnemySpriteFrameDataA_0F.
+; Falls through to BossCommon_RenderOnly for the final sprite submit.
 Boss1_TailTick:
 	MOVE.l	obj_vel_x(A5), D0
 	MOVE.l	obj_vel_y(A5), D1
@@ -319,10 +434,16 @@ Boss1_TailTick:
 	MOVE.w	D0, obj_screen_y(A6)
 	MOVE.w	obj_world_x(A5), obj_screen_x(A5)
 	MOVE.w	obj_world_y(A5), obj_screen_y(A5)
-BossCommon_RenderOnly:
+BossCommon_RenderOnly:                          ; shared tail: just submit and return
 	JSR	AddSpriteToDisplayList
 	RTS
 
+; InitNextSpriteSlot
+; Advances A6 to the next linked sub-object (via obj_next_offset),
+; marks it active (bit 7), sets palette 1 sprite flags, and clears
+; the flip/rotation bits (7, 3, 4) on obj_sprite_flags.
+; Inputs:  A6 = current sub-object pointer
+; Outputs: A6 = next sub-object pointer, initialised
 InitNextSpriteSlot:
 	CLR.w	D0
 	MOVE.b	obj_next_offset(A6), D0
@@ -340,7 +461,14 @@ InitNextSpriteSlot:
 	MOVE.l	#BossCommon_RenderOnly, obj_tick_fn(A6)
 	RTS
 
-InitSpriteSlot_DeadCode:					; unreferenced dead code
+;==============================================================
+; DEAD CODE + PLAYER SCREEN EDGE CHECK
+;==============================================================
+
+; InitSpriteSlot_DeadCode
+; Unreferenced dead code — clears all 32 sub-objects in the enemy
+; linked list.  Not called anywhere in the ROM.
+InitSpriteSlot_DeadCode:				; unreferenced dead code
 	MOVEA.l	Enemy_list_ptr.w, A6
 	MOVE.w	#$001F, D7
 InitNextSpriteSlot_Done:
@@ -350,18 +478,34 @@ InitNextSpriteSlot_Done:
 	LEA	$0(A6,D0.w), A6
 	DBF	D7, InitNextSpriteSlot_Done
 	RTS
+
+; CheckPlayerLeftOfScreen
+; Returns D0 = $FFFF if the player's world X > $0050 (right of left
+; edge), or D0 = 0 if the player is at or left of the threshold.
+; Inputs:  Player_entity_ptr = pointer to player object
+; Outputs: D0 = $FFFF (player is right of edge) or 0 (at/left of edge)
 CheckPlayerLeftOfScreen:
 	MOVEA.l	Player_entity_ptr.w, A6
 	MOVE.w	obj_world_x(A6), D0
-	CMPI.w	#$0050, D0
+	CMPI.w	#$0050, D0                      ; $50 = left-edge threshold (80 pixels)
 	BLE.b	CheckPlayerLeftOfScreen_Loop
-	MOVE.w	#$FFFF, D0
+	MOVE.w	#$FFFF, D0                      ; player is right of edge
 	RTS
 
 CheckPlayerLeftOfScreen_Loop:
-	CLR.w	D0
+	CLR.w	D0                              ; player is at or left of edge
 	RTS
 
+;==============================================================
+; TWO-HEADED DRAGON — INIT
+; Difficulty-scaled HP/damage setup followed by common init
+; for sprites, AI state, positions, and fireball objects.
+;==============================================================
+
+; InitTwoHeadedDragon_Normal / _Hard / _VeryHard
+; Sets HP and max-damage values for the dragon body (Enemy_list_ptr)
+; and the two head objects (slots 04, 05), then falls through to
+; InitTwoHeadedDragon_Common for shared initialisation.
 InitTwoHeadedDragon_Normal:
 	MOVEA.l	Enemy_list_ptr.w, A6
 	MOVE.w	#BOSS_DMG_DRAGON_NORMAL, obj_max_hp(A6)
@@ -397,6 +541,13 @@ InitTwoHeadedDragon_VeryHard:
 	MOVE.w	#BOSS_HP_DRAGON_VERYHARD, obj_hp(A6)
 	MOVEA.l	Object_slot_03_ptr.w, A6
 	MOVE.w	#BOSS_HP_DRAGON_VERYHARD, obj_hp(A6)
+
+; InitTwoHeadedDragon_Common
+; Shared init: clears defeat/death flags, loads sprite layout data for
+; the body (BossSpriteLayoutData_A) and body-part chain
+; (BossSpriteLayoutData_C), initialises both head objects (slots 02/03)
+; with their head tick functions, and sets up fireball child objects
+; (slots 04/05).
 InitTwoHeadedDragon_Common:
 	CLR.b	Boss_defeated_flag.w
 	CLR.b	Boss_death_anim_done.w
@@ -515,7 +666,18 @@ InitTwoHeadedDragon_Common_Done4:
 	MOVE.l	#TwoHeadedDragon_FireballTickB, obj_tick_fn(A6)
 	BSR.w	DrawBossNameplate
 	RTS
-	
+
+;==============================================================
+; TWO-HEADED DRAGON — FIREBALL TICKS
+; Per-frame update for the two fireball projectile objects
+; (slots 04 and 05), one per dragon head.
+;==============================================================
+
+; TwoHeadedDragon_FireballTickA / _FireballTickB
+; Animate and move a fireball from a given dragon head (slot 02 or 03).
+; While the head is busy, the fireball tracks the head's mouth position.
+; When fired, it travels left and checks for off-screen exit.
+; Collision with the player triggers a knockback/flash sequence.
 TwoHeadedDragon_FireballTickA:
 	ADDQ.b	#1, obj_move_counter(A5)
 	MOVEA.l	Object_slot_02_ptr.w, A6
@@ -569,15 +731,15 @@ TwoHeadedDragon_FireballTickB_Loop4:
 	BRA.b	BossFireball_RenderDone
 TwoHeadedDragon_FireballTickB_Loop3:
 	MOVE.b	obj_move_counter(A5), D0
-	ANDI.w	#8, D0
+	ANDI.w	#8, D0                          ; alternate between two tile frames every 8 ticks
 	ASR.w	#2, D0
 	LEA	BossSpriteLayoutData_F, A0
 	MOVE.w	(A0,D0.w), obj_tile_index(A5)
 	MOVE.l	obj_vel_x(A5), D0
 	ADD.l	D0, obj_world_x(A5)
-	CMPI.w	#PROJ_OFFSCREEN_X_LEFT, obj_world_x(A5)
+	CMPI.w	#PROJ_OFFSCREEN_X_LEFT, obj_world_x(A5) ; gone off the left edge?
 	BGE.b	TwoHeadedDragon_FireballTickB_Loop6
-	CLR.b	obj_npc_busy_flag(A6)
+	CLR.b	obj_npc_busy_flag(A6)           ; deactivate fireball on head
 	CLR.b	obj_move_counter(A5)
 TwoHeadedDragon_FireballTickB_Loop6:
 	MOVE.w	#SORT_KEY_BOSS_PROJ, obj_sort_key(A5)
@@ -587,7 +749,19 @@ BossFireball_RenderDone:
 	MOVE.w	obj_world_y(A5), obj_screen_y(A5)
 	JSR	AddSpriteToDisplayList
 	RTS
-	
+
+;==============================================================
+; TWO-HEADED DRAGON — MAIN / BODY / HEAD TICKS
+; State machine for the dragon body, individual head AI, and
+; the shared dead-head display tick.
+;==============================================================
+
+; TwoHeadedDragon_MainTick
+; Per-frame body tick. Animates the body sprite from
+; BossSpriteLayoutData_B, positions the two neck sub-sprites,
+; submits the body to the display list, drives the attack flash,
+; and checks player contact damage (range $00C8).
+; Switches to death/victory sequence when Boss_defeated_flag is set.
 TwoHeadedDragon_MainTick:
 	TST.b	Boss_defeated_flag.w
 	BEQ.b	TwoHeadedDragon_MainTick_Loop
@@ -621,7 +795,12 @@ TwoHeadedDragon_MainTick_Loop:
 	MOVE.w	#$00C8, D1
 	BSR.w	CheckPlayerDamageAndKnockback
 	RTS
-	
+
+; TwoHeadedDragon_MainTick_Loop2 (death transition)
+; Entered once Boss_defeated_flag is set and Boss_death_anim_done is clear.
+; Freezes all body/head/wing objects on their last frame, fires the
+; victory event, resets dialog counters, and hands off to
+; TwoHeadedDragon_DeathDelayTick via obj_tick_fn.
 TwoHeadedDragon_MainTick_Loop2:
 	MOVE.w	#$00B6, Palette_line_1_index.w
 	MOVE.w	#$0064, obj_knockback_timer(A5)
@@ -640,7 +819,10 @@ TwoHeadedDragon_MainTick_Loop2:
 	JSR	QueueSoundEffect
 	JSR	LoadPalettesFromTable
 	RTS
-	
+
+; TwoHeadedDragon_DeathDelayTick
+; Counts down obj_knockback_timer then switches to the fadeout/flash
+; victory phase and plays the purchase jingle.
 TwoHeadedDragon_DeathDelayTick:
 	SUBQ.w	#1, obj_knockback_timer(A5)
 	BGT.b	TwoHeadedDragon_DeathDelayTick_Loop
@@ -650,7 +832,11 @@ TwoHeadedDragon_DeathDelayTick:
 TwoHeadedDragon_DeathDelayTick_Loop:
 	JSR	AddSpriteToDisplayList
 	RTS
-	
+
+; TwoHeadedDragon_VictoryFadeoutTick
+; Screen-flash victory phase — identical logic to Boss1_VictoryFlash:
+; clears the dialog plane every 8 frames for BOSS_VICTORY_FADE_PHASES
+; cycles then transitions to BossCommon_VictoryRewardSequence.
 TwoHeadedDragon_VictoryFadeoutTick:
 	ADDQ.w	#1, Dialog_timer.w
 	MOVE.w	Dialog_timer.w, D0
@@ -665,7 +851,10 @@ TwoHeadedDragon_VictoryFadeoutTick_Loop:
 TwoHeadedDragon_SpriteUpdate:
 	JSR	AddSpriteToDisplayList
 	RTS
-	
+
+; TwoHeadedDragon_BodyTick
+; Animates the dragon's mid-body segment from BossSpriteLayoutData_D,
+; positions the single neck sub-sprite, and submits to the display list.
 TwoHeadedDragon_BodyTick:
 	LEA	BossSpriteLayoutData_D, A0
 	BSR.w	AnimateSpriteFromTable
@@ -682,7 +871,15 @@ TwoHeadedDragon_BodyTick:
 	MOVE.w	obj_world_y(A5), obj_screen_y(A5)
 	JSR	AddSpriteToDisplayList
 	RTS
-	
+
+; TwoHeadedDragon_HeadTickA / _HeadTickB
+; Per-frame AI for each dragon head.  When battle is active:
+;   - Counts down knockback timer and flashes palette during stun.
+;   - On obj_hit_flag: subtracts player strength from head HP.
+;     If HP goes negative, transitions to TwoHeadedDragon_DeadHeadTick
+;     and loads the dead-head sprite layout (frame 3 of EnemySpriteLayoutPtrsA/B).
+;   - Otherwise falls through to DragonHeadA/B_IdleTick for normal AI.
+; When battle is not active, runs BossTick_Anim_A/B instead.
 TwoHeadedDragon_HeadTickA:
 	TST.b	Fade_in_lines_mask.w
 	BNE.w	BossTick_Anim_A
@@ -724,13 +921,18 @@ TwoHeadedDragon_HeadTickA_Loop_Done:
 	LEA	(A6,D0.w), A6
 	DBF	D7, TwoHeadedDragon_HeadTickA_Loop_Done
 	MOVEA.l	Object_slot_04_ptr.w, A6
-	BCLR.b	#7, (A6)
-	MOVE.w	#$012C, obj_knockback_timer(A5)
+	BCLR.b	#7, (A6)                        ; deactivate fireball A when head A dies
+	MOVE.w	#$012C, obj_knockback_timer(A5) ; $12C = 300 frame death delay
 	MOVE.b	#FLAG_TRUE, Boss_defeated_flag.w
 	RTS
 
 TwoHeadedDragon_HeadTickA_Loop2:
 	MOVE.w	#BOSS_HIT_STUN_FRAMES, obj_knockback_timer(A5)
+
+; DragonHeadA_IdleTick
+; Normal head-A idle behaviour: clears hit flag, and randomly (1-in-8
+; chance per frame) fires a fireball by marking the head busy and
+; launching fireball object slot 04 toward the player.
 DragonHeadA_IdleTick:
 	CLR.b	obj_hit_flag(A5)
 	TST.b	obj_npc_busy_flag(A5)
@@ -750,8 +952,13 @@ DragonHeadA_IdleTick:
 	MOVE.l	#$FFFD8000, obj_vel_x(A6)
 	CLR.b	obj_hit_flag(A6)
 DragonHeadA_IdleTick_Loop:
-	MOVE.w	#8, D0
+	MOVE.w	#8, D0                          ; frame index offset 8 = open-mouth sub-frame
 	BRA.b	BossTick_Anim_A_Loop
+
+; BossTick_Anim_A
+; Selects animation frame for head A from EnemySpriteLayoutPtrsA /
+; EnemySpritePositionPtrsA based on bit 4 of obj_move_counter (toggles
+; every 16 frames), then copies sprite data to the 4 sub-object chain.
 BossTick_Anim_A:
 	ADDQ.b	#1, obj_move_counter(A5)
 	MOVE.b	obj_move_counter(A5), D0
@@ -781,10 +988,16 @@ BossTick_Anim_A_Loop_Done:
 	JSR	AddSpriteToDisplayList
 	RTS
 
+; TwoHeadedDragon_DeadHeadTick
+; Tick for a defeated head — just re-submits the frozen sprite.
 TwoHeadedDragon_DeadHeadTick:
 	JSR	AddSpriteToDisplayList
 	RTS
 
+; TwoHeadedDragon_HeadTickB
+; Identical to TwoHeadedDragon_HeadTickA but handles the second head
+; (slot 03 / fireball slot 05).  Uses EnemySpriteLayoutPtrsB and
+; BossTick_Anim_B for its animations.
 TwoHeadedDragon_HeadTickB:
 	TST.b	Fade_in_lines_mask.w
 	BNE.w	BossTick_Anim_B
@@ -825,12 +1038,16 @@ TwoHeadedDragon_HeadTickB_Loop_Done:
 	LEA	(A6,D0.w), A6
 	DBF	D7, TwoHeadedDragon_HeadTickB_Loop_Done
 	MOVEA.l	Object_slot_05_ptr.w, A6
-	BCLR.b	#7, (A6)
+	BCLR.b	#7, (A6)                        ; deactivate fireball B when head B dies
 	MOVE.b	#FLAG_TRUE, Boss_death_anim_done.w
 	RTS
 
 TwoHeadedDragon_HeadTickB_Loop2:
 	MOVE.w	#BOSS_HIT_STUN_FRAMES, obj_knockback_timer(A5)
+
+; DragonHeadB_IdleTick
+; Normal head-B idle: 1-in-32 chance per frame to fire fireball B
+; (slot 05) at the player.
 DragonHeadB_IdleTick:
 	CLR.b	obj_hit_flag(A5)
 	TST.b	obj_npc_busy_flag(A5)
@@ -850,8 +1067,11 @@ DragonHeadB_IdleTick:
 	MOVE.l	#$FFFD0000, obj_vel_x(A6)
 	CLR.b	obj_hit_flag(A6)
 DragonHeadB_IdleTick_Loop:
-	MOVE.w	#8, D0
+	MOVE.w	#8, D0                          ; open-mouth frame offset
 	BRA.b	BossTick_Anim_B_Loop
+
+; BossTick_Anim_B
+; Same as BossTick_Anim_A but uses EnemySpriteLayoutPtrsB.
 BossTick_Anim_B:
 	ADDQ.b	#1, obj_move_counter(A5)
 	MOVE.b	obj_move_counter(A5), D0
@@ -881,14 +1101,33 @@ BossTick_Anim_B_Loop_Done:
 	JSR	AddSpriteToDisplayList
 	RTS
 
+;==============================================================
+; SPRITE ANIMATION + COLLISION HELPERS
+; Shared utilities used by multiple boss types.
+;==============================================================
+
+; AnimateSpriteFromTable
+; Increments obj_move_counter, extracts bits 5–4 (>> 3) as a word
+; index into the supplied tile-index table (A0), and stores the
+; result in obj_tile_index(A5).  Produces a 4-frame animation that
+; cycles every 16 ticks (frames 0/1/2/3 at 16 fps).
+; Inputs:  A0 = pointer to word table of tile indices (4 entries)
+;          A5 = object to animate
 AnimateSpriteFromTable:
 	ADDQ.b	#1, obj_move_counter(A5)
 	MOVE.b	obj_move_counter(A5), D0
-	ANDI.w	#$0030, D0
-	ASR.w	#3, D0
+	ANDI.w	#$0030, D0                      ; mask bits 5–4 → frame 0–3
+	ASR.w	#3, D0                          ; convert to word offset (×2)
 	MOVE.w	(A0,D0.w), obj_tile_index(A5)
 	RTS
 
+; CheckEntityPlayerCollisionAndDamage
+; Performs an AABB hit test between A5's hitbox and the player.
+; If the player overlaps, sets obj_hit_flag(A5) = FLAG_TRUE and
+; calls ProcessBattleDamageAndPalette to apply damage.
+; Inputs:  A5 = attacker object (hitbox fields: obj_hitbox_x_neg/pos,
+;               obj_hitbox_y_neg/pos relative to obj_world_x/y)
+;          Player_entity_ptr = player object
 CheckEntityPlayerCollisionAndDamage:
 	MOVEA.l	Player_entity_ptr.w, A6
 	MOVE.w	obj_world_x(A5), D0
@@ -958,6 +1197,16 @@ CheckEntityCollision_ClampVelocity:
 CheckEntityPlayerCollisionAndDamage_Return:
 	RTS
 
+;==============================================================
+; DAMAGE / KNOCKBACK / CLAMP HELPERS
+;==============================================================
+
+; CheckPlayerDamageAndKnockback
+; Simple proximity damage check: if the player's world X >= D1,
+; applies damage, sets invulnerability, nudges the player left
+; ($14 pixels), and plays the hit sound.
+; Inputs:  D1 = minimum X threshold for the hit zone
+;          Player_entity_ptr = player object
 CheckPlayerDamageAndKnockback:
 	MOVEA.l	Player_entity_ptr.w, A6
 	MOVE.w	obj_world_x(A6), D0
@@ -974,6 +1223,13 @@ CheckPlayerDamageAndKnockback:
 BattleHit_Return:
 	RTS
 
+; ProcessBattleDamageAndPalette
+; Manages the boss's hit-stun timer (obj_knockback_timer on Enemy_list)
+; and applies damage from obj_hit_flag.  While stunned, loads the
+; flash palette ($0062).  On a killing blow, transitions to
+; Boss1_DeathSequence and fires the victory event.
+; Inputs:  Enemy_list_ptr = main boss object
+;          Player_str = damage amount
 ProcessBattleDamageAndPalette:
 	MOVEA.l	Enemy_list_ptr.w, A6
 	TST.w	obj_knockback_timer(A6)
@@ -1000,7 +1256,11 @@ ProcessBattleDamageAndPalette_Loop2:
 ProcessBattleDamage_Return:
 	CLR.b	obj_hit_flag(A6)
 	RTS
-	
+
+; ClampYPosition
+; Clamps obj_world_y(A5) to a maximum of $00B0 (176 pixels).
+; If the limit is exceeded, zeroes both velocity components.
+; Inputs:  A5 = object to clamp
 ClampYPosition:
 	MOVE.w	obj_world_y(A5), D0
 	CMPI.w	#$00B0, D0
@@ -1011,110 +1271,157 @@ ClampYPosition:
 ClampYPosition_Loop:
 	RTS
 
+;==============================================================
+; VDP DRAW ROUTINES — BOSS UI
+; Write pre-built tile data for the boss portrait, nameplate, and
+; health bar directly to VRAM with interrupts disabled.
+;
+; VDP command word layout in D5:
+;   $44B40003 = write to VRAM address $04B4 (nametable row for portrait)
+;   $44300003 = write to VRAM address $0430 (nametable row for nameplate)
+;   $40000003 = write to VRAM address $0000 (plane A top-left)
+; ADDI.l #$00800000, D5 advances the write address by one nametable
+; row ($80 bytes = 64 tiles × 2 bytes per entry) each loop iteration.
+;==============================================================
+
+; DrawBossPortrait
+; Writes 14 rows × 12 tiles of portrait tile data (from DrawBossPortrait_Data)
+; to VRAM nametable plane B starting at $04B4, with interrupts disabled.
+; Each tile entry = byte from table + $2200 (palette 1, priority 0).
 DrawBossPortrait:
-	ORI	#$0700, SR
-	MOVE.l	#$44B40003, D5
+	ORI	#$0700, SR                          ; disable interrupts (mask level 7)
+	MOVE.l	#$44B40003, D5                  ; VDP write command: plane B, VRAM $04B4
 	LEA	DrawBossPortrait_Data, A0
-	MOVE.w	#$000D, D7
+	MOVE.w	#$000D, D7                      ; 14 rows (DBF: 13 down to 0)
 DrawBossPortrait_Done:
-	MOVE.l	D5, VDP_control_port
-	MOVE.w	#$000B, D6
+	MOVE.l	D5, VDP_control_port            ; set VRAM write address for this row
+	MOVE.w	#$000B, D6                      ; 12 tiles per row (DBF: 11 down to 0)
 DrawBossPortrait_Done2:
 	CLR.w	D0
 	MOVE.b	(A0)+, D0
-	ADDI.w	#$2200, D0
+	ADDI.w	#$2200, D0                      ; add palette 1 attribute bits
 	MOVE.w	D0, VDP_data_port
 	DBF	D6, DrawBossPortrait_Done2
-	ADDI.l	#$00800000, D5
+	ADDI.l	#$00800000, D5                  ; advance to next nametable row
 	DBF	D7, DrawBossPortrait_Done
-	ANDI	#$F8FF, SR
+	ANDI	#$F8FF, SR                          ; re-enable interrupts
 	RTS
 
+; DrawBossNameplate
+; Writes 14 rows × 13 tiles of nameplate tile data to VRAM plane B
+; starting at $0430 (just above the portrait area).
 DrawBossNameplate:
-	ORI	#$0700, SR
-	MOVE.l	#$44300003, D5
+	ORI	#$0700, SR                          ; disable interrupts
+	MOVE.l	#$44300003, D5                  ; VDP write command: plane B, VRAM $0430
 	LEA	DrawBossNameplate_Data, A0
-	MOVE.w	#$000D, D7
+	MOVE.w	#$000D, D7                      ; 14 rows
 DrawBossNameplate_Done:
 	MOVE.l	D5, VDP_control_port
-	MOVE.w	#$000C, D6
+	MOVE.w	#$000C, D6                      ; 13 tiles per row
 DrawBossNameplate_Done2:
 	CLR.w	D0
 	MOVE.b	(A0)+, D0
-	ADDI.w	#$2200, D0
+	ADDI.w	#$2200, D0                      ; palette 1 attribute
 	MOVE.w	D0, VDP_data_port
 	DBF	D6, DrawBossNameplate_Done2
 	ADDI.l	#$00800000, D5
 	DBF	D7, DrawBossNameplate_Done
-	ANDI	#$F8FF, SR
+	ANDI	#$F8FF, SR                          ; re-enable interrupts
 	RTS
 
+; DrawBossHealthBar
+; Writes the health bar background (13 rows × 14 tiles from
+; DrawBossHealthBar_Data, palette 2) then overlays 6 rows × 5 tiles
+; of the HP gauge graphic from SpriteMetaTileTable_7808A.
 DrawBossHealthBar:
-	ORI	#$0700, SR
-	MOVE.l	#$40000003, D5
+	ORI	#$0700, SR                          ; disable interrupts
+	MOVE.l	#$40000003, D5                  ; VDP write command: plane A, VRAM $0000
 	LEA	DrawBossHealthBar_Data, A0
-	MOVE.w	#$000C, D7
+	MOVE.w	#$000C, D7                      ; 13 rows
 DrawBossHealthBar_Done:
 	MOVE.l	D5, VDP_control_port
-	MOVE.w	#$000D, D6
+	MOVE.w	#$000D, D6                      ; 14 tiles per row
 DrawBossHealthBar_Done2:
 	CLR.w	D0
 	MOVE.b	(A0)+, D0
-	ADDI.w	#$A200, D0
+	ADDI.w	#$A200, D0                      ; palette 2 attribute bits
 	MOVE.w	D0, VDP_data_port
 	DBF	D6, DrawBossHealthBar_Done2
 	ADDI.l	#$00800000, D5
 	DBF	D7, DrawBossHealthBar_Done
-	MOVE.l	#$40080003, D5
+	MOVE.l	#$40080003, D5                  ; start of HP gauge overlay area
 	LEA	SpriteMetaTileTable_7808A, A0
-	MOVE.w	#5, D7
+	MOVE.w	#5, D7                          ; 6 rows of gauge tiles
 DrawBossHealthBar_Done3:
 	MOVE.l	D5, VDP_control_port
-	MOVE.w	#4, D6
+	MOVE.w	#4, D6                          ; 5 tiles per row
 DrawBossHealthBar_Done4:
 	CLR.w	D0
 	MOVE.b	(A0)+, D0
-	ADDI.w	#$A200, D0
+	ADDI.w	#$A200, D0                      ; palette 2 attribute bits
 	MOVE.w	D0, VDP_data_port
 	DBF	D6, DrawBossHealthBar_Done4
 	ADDI.l	#$00800000, D5
 	DBF	D7, DrawBossHealthBar_Done3
-	ANDI	#$F8FF, SR
+	ANDI	#$F8FF, SR                          ; re-enable interrupts
 	RTS
 
+;==============================================================
+; BOSS ATTACK GRAPHIC ANIMATION
+; Draws the attack/dialog overlay graphics that appear during
+; battle.  Two jump tables select which graphic to draw based
+; on the frame counter, updated every 16 frames.
+;==============================================================
+
+; UpdateBossAttackGraphic
+; Called every frame from BossBody_SpriteUpdate.  Every 16 ticks
+; (counter & $F == 0), uses bits 5–4 of obj_move_counter as an
+; index into BossAttackGfxJumpTable to draw one of four variants
+; of the attack text graphic.
+; Inputs:  A5 = boss object (obj_move_counter drives the cycle)
 UpdateBossAttackGraphic:
 	CLR.w	D0
 	MOVE.b	obj_move_counter(A5), D0
 	MOVE.w	D0, D1
-	ANDI.w	#$000F, D1
+	ANDI.w	#$000F, D1                      ; only update every 16 frames
 	BNE.b	UpdateBossAttackGraphic_Loop
-	ANDI.w	#$0030, D0
-	ASR.w	#2, D0
+	ANDI.w	#$0030, D0                      ; bits 5–4 → frame select (0/1/2/3)
+	ASR.w	#2, D0                          ; → word offset into jump table
 	LEA	BossAttackGfxJumpTable, A0
 	JSR	(A0,D0.w)
 UpdateBossAttackGraphic_Loop:
 	RTS
 
+; BossAttackGfxJumpTable
+; Four BRA entries dispatching to the four attack-text drawing routines.
 BossAttackGfxJumpTable:
 	BRA.w	DrawBossAttackGraphic1
 	BRA.w	DrawDialogTextLine_Alt1
 	BRA.w	DrawDialogTextLine_Alt1_Loop
 	BRA.w	DrawDialogTextLine_Alt1
+
+; DrawBossAttackGraphic1
+; Draws the primary boss attack text graphic (two rows) at VRAM
+; addresses $43BE and $48C2 on plane B.
 DrawBossAttackGraphic1:
 	LEA	DrawBossAttackGraphic1_Data, A0
-	MOVE.l	#$43BE0003, D5
+	MOVE.l	#$43BE0003, D5                  ; plane B, VRAM $03BE (first text row)
 	BSR.w	WriteTextToVRAM
 	LEA	DrawBossAttackGraphic1_Data2, A0
-	MOVE.l	#$48C20003, D5
+	MOVE.l	#$48C20003, D5                  ; plane B, VRAM $08C2 (second text row)
 	BSR.w	WriteTextToVRAM
 	RTS
 
+; DrawDialogTextLine_Alt1
+; Draws the single-row alternate dialog text at VRAM $43BE.
 DrawDialogTextLine_Alt1:
 	LEA	DrawDialogTextLine_Alt1_Data, A0
 	MOVE.l	#$43BE0003, D5
 	BSR.w	WriteTextToVRAM
 	RTS
 
+; DrawDialogTextLine_Alt1_Loop
+; Two-row variant: draws Alt1 and a second row at $48C2.
 DrawDialogTextLine_Alt1_Loop:
 	LEA	DrawDialogTextLine_Alt1_Loop_Data, A0
 	MOVE.l	#$43BE0003, D5
@@ -1124,98 +1431,138 @@ DrawDialogTextLine_Alt1_Loop:
 	BSR.w	WriteTextToVRAM
 	RTS
 
+; WriteTextToVRAM
+; Writes 6 rows × 7 tiles of text tile data from (A0) to VRAM
+; at the address encoded in D5 (VDP command word), with interrupts
+; disabled.  Each byte from the data table is OR'd with $2200
+; (palette 1) before writing to VDP_data_port.
+; Inputs:  A0 = source tile byte table (6×7 = 42 bytes)
+;          D5 = VDP write command word (VRAM address + write flag)
 WriteTextToVRAM:
-	ORI	#$0700, SR
-	MOVE.w	#5, D7
+	ORI	#$0700, SR                          ; disable interrupts
+	MOVE.w	#5, D7                          ; 6 rows (DBF: 5 down to 0)
 WriteTextToVRAM_Done:
 	MOVE.l	D5, VDP_control_port
-	MOVE.w	#6, D6
+	MOVE.w	#6, D6                          ; 7 tiles per row (DBF: 6 down to 0)
 WriteTextToVRAM_Done2:
 	CLR.w	D0
 	MOVE.b	(A0)+, D0
-	ADDI.w	#$2200, D0
+	ADDI.w	#$2200, D0                      ; palette 1 attribute
 	MOVE.w	D0, VDP_data_port
 	DBF	D6, WriteTextToVRAM_Done2
-	ADDI.l	#$00800000, D5
+	ADDI.l	#$00800000, D5                  ; next nametable row
 	DBF	D7, WriteTextToVRAM_Done
-	ANDI	#$F8FF, SR
+	ANDI	#$F8FF, SR                          ; re-enable interrupts
 	RTS
 
+; AnimateBossAttackFlash
+; Drives the attack-flash overlay animation.  Every 16 frames,
+; uses bits 5–4 of obj_attack_timer as an index into
+; BossAttackFlashJumpTable to draw one of four flash variants.
+; Inputs:  A5 = boss object (obj_attack_timer incremented each call)
 AnimateBossAttackFlash:
 	ADDQ.w	#1, obj_attack_timer(A5)
 	MOVE.w	obj_attack_timer(A5), D0
 	MOVE.w	D0, D1
-	ANDI.w	#$000F, D1
+	ANDI.w	#$000F, D1                      ; only update every 16 frames
 	BNE.b	AnimateBossAttackFlash_Loop
-	ANDI.w	#$0030, D0
+	ANDI.w	#$0030, D0                      ; bits 5–4 → flash variant (0–3)
 	ASR.w	#2, D0
 	LEA	BossAttackFlashJumpTable, A0
 	JSR	(A0,D0.w)
 AnimateBossAttackFlash_Loop:
 	RTS
 
+; BossAttackFlashJumpTable
+; Four entries for the attack-flash animation variants.
 BossAttackFlashJumpTable:
 	BRA.w	BossAttackFlashJumpTable_Loop
 	BRA.w	DrawDialogTextLine_Alt2
 	BRA.w	DrawDialogTextLine_Alt2_Loop
 	BRA.w	DrawDialogTextLine_Alt2
+
+; BossAttackFlashJumpTable_Loop
+; Entry 0: draws the blank/reset flash state at VRAM $4642.
 BossAttackFlashJumpTable_Loop:
 	LEA	BossAttackFlashJumpTable_Loop_Data, A0
 	MOVE.l	#$46420003, D5
 	BSR.w	Write7x8TilesToVRAM
 	RTS
 
+; DrawDialogTextLine_Alt2
+; Draws the single-row Alt2 flash graphic at VRAM $4642 (plane B).
 DrawDialogTextLine_Alt2:
 	LEA	DrawDialogTextLine_Alt2_Data, A0
 	MOVE.l	#$46420003, D5
 	BSR.w	Write7x8TilesToVRAM
 	RTS
 
+; DrawDialogTextLine_Alt2_Loop
+; Alternate two-row variant of the flash graphic.
 DrawDialogTextLine_Alt2_Loop:
 	LEA	DrawDialogTextLine_Alt2_Loop_Data, A0
 	MOVE.l	#$46420003, D5
 	BSR.w	Write7x8TilesToVRAM
 	RTS
 
+; Write7x8TilesToVRAM
+; Writes 8 rows × 8 tiles of tile data from (A0) to VRAM at the
+; address in D5, with interrupts disabled.  Palette 1 attribute
+; ($2200) is OR'd into each tile word.
+; Inputs:  A0 = source tile byte table (8×8 = 64 bytes)
+;          D5 = VDP write command word
 Write7x8TilesToVRAM:
-	ORI	#$0700, SR
-	MOVE.w	#6, D7
+	ORI	#$0700, SR                          ; disable interrupts
+	MOVE.w	#6, D7                          ; 7 rows (DBF: 6 down to 0)
 Write7x8TilesToVRAM_Done:
 	MOVE.l	D5, VDP_control_port
-	MOVE.w	#7, D6
+	MOVE.w	#7, D6                          ; 8 tiles per row (DBF: 7 down to 0)
 Write7x8TilesToVRAM_Done2:
 	CLR.w	D0
 	MOVE.b	(A0)+, D0
-	ADDI.w	#$2200, D0
+	ADDI.w	#$2200, D0                      ; palette 1 attribute
 	MOVE.w	D0, VDP_data_port
 	DBF	D6, Write7x8TilesToVRAM_Done2
-	ADDI.l	#$00800000, D5
+	ADDI.l	#$00800000, D5                  ; next nametable row
 	DBF	D7, Write7x8TilesToVRAM_Done
-	ANDI	#$F8FF, SR
+	ANDI	#$F8FF, SR                          ; re-enable interrupts
 	RTS
 
+;==============================================================
+; DIALOG PLANE + ANIM FRAME HELPERS
+;==============================================================
+
+; ClearDialogPlane
+; Clears one column-strip of the dialog plane per call (used for
+; the Boss 1 / Dragon victory flash effect).  Dialog_phase selects
+; which VRAM column to clear; it is incremented at the end so each
+; successive call wipes the next strip.
+;
+; First pass:  clears $03BE tiles on plane B ($44200000 base).
+; Second pass: clears $0200 tiles on plane A ($40000001 base).
+; Both passes advance the VRAM address by 2 tiles ($00100000) per step.
 ClearDialogPlane:
-	MOVE.l	#$44200000, D5
+	MOVE.l	#$44200000, D5              ; plane B write command base
 	MOVEQ	#0, D0
 	MOVE.w	Dialog_phase.w, D0
-	ADD.w	D0, D0
-	SWAP	D0
+	ADD.w	D0, D0                      ; phase × 2 = word offset
+	SWAP	D0                          ; move offset into high word for VDP address
 	ADD.l	D0, D5
-	MOVE.w	#$03BD, D7
+	MOVE.w	#$03BD, D7                  ; $03BE tiles to clear (DBF: $03BD down to 0)
 	ORI	#$0700, SR
 ClearDialogPlane_Done:
 	MOVE.l	D5, VDP_control_port
 	MOVE.w	#0, VDP_data_port
-	ADDI.l	#$00100000, D5
+	ADDI.l	#$00100000, D5              ; advance by 2 tiles per step
 	DBF	D7, ClearDialogPlane_Done
 	ANDI	#$F8FF, SR
-	MOVE.l	#$40000001, D5
+	MOVE.l	#$40000001, D5              ; plane A write command base
 	MOVEQ	#0, D0
 	MOVE.w	Dialog_phase.w, D0
 	ADD.w	D0, D0
 	SWAP	D0
 	ADD.l	D0, D5
-	MOVE.w	#$01FF, D7
+	MOVE.w	#$01FF, D7                  ; $0200 tiles to clear
 	ORI	#$0700, SR
 ClearDialogPlane_Done2:
 	MOVE.l	D5, VDP_control_port
@@ -1223,9 +1570,12 @@ ClearDialogPlane_Done2:
 	ADDI.l	#$00100000, D5
 	DBF	D7, ClearDialogPlane_Done2
 	ANDI	#$F8FF, SR
-	ADDQ.w	#1, Dialog_phase.w
+	ADDQ.w	#1, Dialog_phase.w          ; advance to next column strip next call
 	RTS
 
+; SetBattleVictoryAnimFrames1
+; Loads the first set of victory animation frames across all five
+; Boss 1 object slots using EnemySpriteFrameDataA_01/04/0B tables.
 SetBattleVictoryAnimFrames1:
 	MOVEA.l	Enemy_list_ptr.w, A6
 	LEA	EnemySpriteFrameDataA_01, A0
@@ -1249,6 +1599,9 @@ SetBattleVictoryAnimFrames1:
 	BSR.w	SetEntityAnimFrames
 	RTS
 
+; SetBattleVictoryAnimFrames2
+; Loads the second set of victory animation frames (different poses)
+; across all five Boss 1 object slots using tables _02/05/0C.
 SetBattleVictoryAnimFrames2:
 	MOVEA.l	Enemy_list_ptr.w, A6
 	LEA	EnemySpriteFrameDataA_02, A0
@@ -1272,6 +1625,12 @@ SetBattleVictoryAnimFrames2:
 	BSR.w	SetEntityAnimFrames
 	RTS
 
+; SetEntityAnimFrames
+; Writes D7+1 consecutive tile-index words from (A0) into the linked
+; sub-object chain starting at A6, following obj_next_offset each step.
+; Inputs:  A0 = source tile index word table
+;          A6 = starting sub-object pointer
+;          D7 = number of additional sub-objects (DBF loop count)
 SetEntityAnimFrames:
 	MOVE.w	(A0)+, obj_tile_index(A6)
 	CLR.w	D0
@@ -1280,15 +1639,27 @@ SetEntityAnimFrames:
 	DBF	D7, SetEntityAnimFrames
 	RTS
 
+;==============================================================
+; BATTLE VICTORY EVENT DISPATCH
+; Sets the appropriate world-state flag for each boss encounter
+; when the player wins.  Indexed by Battle_type (low nibble).
+;==============================================================
+
+; ProcessBattleVictoryEvent
+; Dispatches to the correct BossVictoryEvent_* handler for the
+; current battle type (Battle_type & $0F) via BattleVictoryEventJumpTable.
 ProcessBattleVictoryEvent:
 	LEA	BattleVictoryEventJumpTable, A0
 	MOVE.w	Battle_type.w, D0
-	ANDI.w	#$000F, D0
-	ADD.w	D0, D0
-	ADD.w	D0, D0
+	ANDI.w	#$000F, D0                      ; low nibble = battle type index
+	ADD.w	D0, D0                          ; × 2
+	ADD.w	D0, D0                          ; × 4 = long BRA instruction size
 	JSR	(A0,D0.w)
 	RTS
 
+; BattleVictoryEventJumpTable
+; 14 entries — one BRA per battle type (0–13).
+; Indexed by Battle_type & $0F.
 BattleVictoryEventJumpTable:
 	BRA.w	BossVictoryEvent_FakeKing
 	BRA.w	BossVictoryEvent_Watling
@@ -1377,17 +1748,23 @@ BossVictoryEvent_Tsarkon_Loop2:
 	DBF	D7, BossVictoryEvent_Tsarkon_Done
 BossVictoryEvent_Tsarkon_Loop:
 	BSR.w	GetNextItemSlotOffset
-	MOVE.w	#$0115, (A0,D0.w)
+	MOVE.w	#$0115, (A0,D0.w)           ; add Ring 1 to inventory
 	BSR.w	GetNextItemSlotOffset
-	MOVE.w	#$0116, (A0,D0.w)
+	MOVE.w	#$0116, (A0,D0.w)           ; add Ring 2
 	BSR.w	GetNextItemSlotOffset
-	MOVE.w	#$0117, (A0,D0.w)
+	MOVE.w	#$0117, (A0,D0.w)           ; add Ring 3
 	BSR.w	GetNextItemSlotOffset
-	MOVE.w	#$0118, (A0,D0.w)
+	MOVE.w	#$0118, (A0,D0.w)           ; add Ring 4
 	BSR.w	GetNextItemSlotOffset
-	MOVE.w	#$0119, (A0,D0.w)
+	MOVE.w	#$0119, (A0,D0.w)           ; add Ring 5
 	RTS
 
+; GetNextItemSlotOffset
+; Reads the current item count from Possessed_items_length, increments
+; it, and returns the byte offset into the item list as a word in D0
+; (count × 2).  Also returns A0 = pointer to item list base + length.
+; Outputs: D0 = word offset for next free item slot
+;          A0 = Possessed_items_length pointer (pointing past length word)
 GetNextItemSlotOffset:
 	LEA	Possessed_items_length.w, A0
 	MOVE.w	(A0), D0
@@ -1395,6 +1772,14 @@ GetNextItemSlotOffset:
 	ADD.w	D0, D0
 	RTS
 
+;==============================================================
+; PALETTE HELPERS
+;==============================================================
+
+; UpdateEncounterPalette
+; Looks up the correct palette index for the current Battle_type
+; from BattlePaletteIndexTable.  If it differs from the current
+; Palette_line_1_index, updates it and reloads the palette.
 UpdateEncounterPalette:
 	LEA	BattlePaletteIndexTable, A0
 	MOVE.w	Battle_type.w, D0
@@ -1407,17 +1792,33 @@ UpdateEncounterPalette:
 UpdateEncounterPalette_Loop:
 	RTS
 
+;==============================================================
+; REWARD / MESSAGE + DATA TABLE
+; Awards XP and kims after a boss battle, shows the victory
+; message, and stores the reward lookup table.
+;==============================================================
+
+; AwardBattleRewards
+; Reads the XP and kims reward for the current battle from
+; BattleRewardTable (indexed by Battle_type), adds them to the
+; player's totals, and calls BSR.w DrawBossHealthBar to refresh
+; the UI.
+; Inputs:  Battle_type = current boss encounter index
 AwardBattleRewards:
 	LEA	BattleRewardTable, A2
 	MOVE.w	Battle_type.w, D6
 	ANDI.w	#$000F, D6
-	ASL.w	#3, D6
-	MOVE.l	(A2,D6.w), Transaction_amount.w
+	ASL.w	#3, D6                          ; × 8 = offset of 2 dc.l pairs per entry
+	MOVE.l	(A2,D6.w), Transaction_amount.w ; XP reward
 	JSR	AddExperiencePoints
-	MOVE.l	$4(A2,D6.w), Transaction_amount.w
+	MOVE.l	$4(A2,D6.w), Transaction_amount.w ; kims reward
 	JSR	AddPaymentAmount
 	RTS
 
+; DisplayBattleVictoryMessage
+; Builds the victory text string "<player name> takes <XP> EXP\nand <kims> KIMS"
+; into Text_build_buffer using the reward values from BattleRewardTable,
+; then calls PRINT to display it as a script dialog box.
 DisplayBattleVictoryMessage:
 	LEA	Player_name.w, A0
 	LEA	Text_build_buffer.w, A1
@@ -1448,6 +1849,14 @@ DisplayBattleVictoryMessage:
 	JSR	ResetScriptAndInitDialogue
 	RTS
 
+; BattleRewardTable
+; Parallel pairs of dc.l values: (XP reward, kims reward) per battle type.
+; Indexed by Battle_type & $0F, offset = Battle_type × 8.
+; Entry 0 corresponds to Battle_type 0 (FakeKing), etc.
+;
+; Format per entry:
+;   dc.l  <XP reward>
+;   dc.l  <kims reward>
 BattleRewardTable:
 	dc.l	$500
 	dc.l	$500
@@ -1475,20 +1884,38 @@ BattleRewardTable:
 	dc.l	$35000 
 	dc.l	$0
 	dc.l	$0
-	dc.l	$0 
-	dc.l	$0 
+	dc.l	$0
+	dc.l	$0
 
+;==============================================================
+; DEMON BOSS — INIT
+; Difficulty-scaled HP/damage setup followed by shared sprite,
+; hitbox, and AI state initialisation for the Demon Boss.
+;==============================================================
+
+; InitDemonBoss_Normal / _Hard
+; Sets HP and max-damage values then falls through to InitDemonBoss_Common.
 InitDemonBoss_Normal:
 	MOVEA.l	Enemy_list_ptr.w, A6
 	MOVE.w	#BOSS_HP_ORBIT_NORMAL, obj_hp(A6)
 	MOVE.w	#BOSS_HP_ORBIT_NORMAL, Boss_max_hp.w
 	MOVE.w	#BOSS_DMG_DEMON_NORMAL, obj_max_hp(A6)
 	BRA.w	InitDemonBoss_Common
+
+; InitDemonBoss_Common
+; Shared init: positions the demon at world ($0120, $00B0), sets
+; hitbox ($E8/$18 X, $C0/$00 Y), clears all AI state fields, loads
+; sprite data, spawns child body segments, and draws the boss portrait.
 InitDemonBoss_Hard:
 	MOVEA.l	Enemy_list_ptr.w, A6
 	MOVE.w	#BOSS_HP_ORBIT_HARD, obj_hp(A6)
 	MOVE.w	#BOSS_HP_ORBIT_HARD, Boss_max_hp.w
 	MOVE.w	#BOSS_DMG_DEMON_HARD, obj_max_hp(A6)
+
+; InitDemonBoss_Common
+; Shared init: positions the demon at world ($0120, $00B0), sets
+; hitbox ($E8/$18 X, $C0/$00 Y), clears all AI state fields, loads
+; sprite layout, spawns child body segments, and draws the boss portrait.
 InitDemonBoss_Common:
 	MOVEA.l	Enemy_list_ptr.w, A6
 	BSET.b	#7, (A6)
@@ -1554,13 +1981,29 @@ InitDemonBoss_Common_Done2:
 	DBF	D7, InitDemonBoss_Common_Done2
 	RTS
 
+;==============================================================
+; DEMON BOSS — AI STATE MACHINE
+; Per-frame main tick and six states:
+;   0 = WaitIdle     — countdown before choosing a direction
+;   1 = ChooseDirection — pick X direction and move-step count
+;   2 = Move         — fly horizontally, animate wings
+;   3 = FireProjectile — launch serpent head projectile
+;   4 = AttackAnimate — play fire-breath animation
+;   5 = Cooldown     — wait before returning to WaitIdle
+;==============================================================
+
+; DemonBoss_MainTick
+; Per-frame tick for the Demon Boss.  Skips during fade-in.
+; Dispatches to the state machine via BossAiDemonJumpTable, then
+; runs UpdateBossFlashAndDamage, SpawnBossChildObjects, and
+; CheckEntityPlayerCollisionAndDamage.
 DemonBoss_MainTick:
 	TST.b	Fade_in_lines_mask.w
 	BNE.b	DemonBoss_MainTick_Loop
 	MOVE.b	demon_ai_state(A5), D0
-	ANDI.w	#7, D0
-	ADD.w	D0, D0
-	ADD.w	D0, D0
+	ANDI.w	#7, D0                          ; 8 states max (3-bit mask)
+	ADD.w	D0, D0                          ; × 2
+	ADD.w	D0, D0                          ; × 4 = long BRA instruction size
 	LEA	BossAiDemonJumpTable, A0
 	JSR	(A0,D0.w)
 	JSR	UpdateBossFlashAndDamage(PC)
@@ -1569,6 +2012,8 @@ DemonBoss_MainTick:
 DemonBoss_MainTick_Loop:
 	RTS
 
+; BossAiDemonJumpTable
+; Six BRA entries for the six Demon Boss AI states.
 BossAiDemonJumpTable:
 	BRA.w	DemonBossState_WaitIdle
 	BRA.w	DemonBossState_ChooseDirection
@@ -1576,6 +2021,9 @@ BossAiDemonJumpTable:
 	BRA.w	DemonBossState_FireProjectile
 	BRA.w	DemonBossState_AttackAnimate
 	BRA.w	DemonBossState_Cooldown
+
+; DemonBossState_WaitIdle
+; Counts down obj_attack_timer; advances to ChooseDirection when done.
 DemonBossState_WaitIdle:
 	TST.b	Battle_active_flag.w
 	BEQ.w	DemonBossState_WaitReturn
@@ -1585,6 +2033,10 @@ DemonBossState_WaitIdle:
 DemonBossState_WaitReturn:
 	RTS
 
+; DemonBossState_ChooseDirection
+; Uses RNG + X position to pick move direction (left/right).  Forces
+; to the opposite edge if already at a boundary.  Selects 1–4 move
+; steps and a small vertical bob velocity ($0010).
 DemonBossState_ChooseDirection:
 	JSR	GetRandomNumber(PC)
 	CMPI.w	#DEMON_BOSS_X_LEFT_BOUND, obj_world_x(A5)
@@ -1597,20 +2049,23 @@ DemonBossState_ChooseDirection:
 	ANDI.w	#3, D0
 	BNE.b	DemonBoss_MoveRight
 DemonBoss_MoveLeft:
-	MOVE.l	#$0000C000, obj_pos_x_fixed(A5)
+	MOVE.l	#$0000C000, obj_pos_x_fixed(A5) ; left velocity ($C000 = negative fixed-point)
 	BRA.b	DemonBoss_MoveRight_Loop
 DemonBoss_MoveRight:
-	MOVE.l	#Player_overworld_gfx_buffer, obj_pos_x_fixed(A5)
+	MOVE.l	#Player_overworld_gfx_buffer, obj_pos_x_fixed(A5) ; right velocity
 DemonBoss_MoveRight_Loop:
 	CLR.b	demon_dir_flag(A5)
 	ANDI.w	#3, D0
-	ADDQ.w	#1, D0
+	ADDQ.w	#1, D0                          ; 1–4 move steps
 	MOVE.w	D0, demon_move_steps(A5)
 	CLR.w	demon_move_timer(A5)
-	MOVE.w	#$0010, obj_vel_y(A5)
-	ADDQ.b	#1, demon_ai_state(A5)
+	MOVE.w	#$0010, obj_vel_y(A5)           ; small vertical bob counter
+	ADDQ.b	#1, demon_ai_state(A5)          ; advance to Move state
 	RTS
 
+; DemonBossState_Move
+; Moves the demon horizontally each step, animates wings, and handles
+; boundary rebound.  Advances to FireProjectile after all steps.
 DemonBossState_Move:
 	TST.w	demon_move_timer(A5)
 	BLE.b	DemonBossState_Move_Loop
@@ -1654,6 +2109,12 @@ DemonBossState_Move_Rebound:
 DemonBossState_Move_Return:
 	RTS
 
+; DemonBossState_FireProjectile
+; Counts down obj_attack_timer, then determines whether to fire a
+; second projectile (based on wing_flags bits 0/1 and RNG bit 5).
+; Calculates a scaled X velocity toward the player (clamped to
+; [$5E00, $CE00] range), launches the projectile via slot 07, and
+; advances to AttackAnimate.
 DemonBossState_FireProjectile:
 	SUBQ.w	#1, obj_attack_timer(A5)
 	BGT.w	DemonBoss_LaunchProjectile_Loop
@@ -1707,68 +2168,83 @@ DemonBoss_LaunchProjectile:
 DemonBoss_LaunchProjectile_Loop:
 	RTS
 
+; DemonBossState_AttackAnimate
+; Animates the demon boss body during the attack swing.
+; Counts down obj_attack_timer; at DEMON_BOSS_ATTACK_FIRE_TICK releases the
+; projectile (slot 07) downward; at timer==6 resets wing pose; at 0 advances state.
 DemonBossState_AttackAnimate:
 	SUBQ.w	#1, obj_attack_timer(A5)
 	MOVE.w	obj_attack_timer(A5), D0
 	ASR.w	#1, D0
-	ANDI.w	#$003E, D0
+	ANDI.w	#$003E, D0                          ; 32-entry table index (even offsets)
 	LEA	DemonBossAttackYOffsets, A0
-	MOVE.w	(A0,D0.w), demon_seg0_y(A5)
+	MOVE.w	(A0,D0.w), demon_seg0_y(A5)          ; drive head Y from lunge table
 	TST.w	obj_attack_timer(A5)
-	BEQ.w	DemonBossState_AttackAnimate_UpdateFrame_Loop
+	BEQ.w	DemonBossState_AttackAnimate_UpdateFrame_Loop   ; timer expired → next state
 	CMPI.w	#DEMON_BOSS_ATTACK_FIRE_TICK, obj_attack_timer(A5)
-	BGT.b	DemonBossState_AttackAnimate_UpdateFrame
-	BNE.b	DemonBossState_AttackAnimate_Loop
+	BGT.b	DemonBossState_AttackAnimate_UpdateFrame        ; still winding up
+	BNE.b	DemonBossState_AttackAnimate_Loop               ; past fire tick, not yet end
+	; Exactly at fire tick: launch the projectile
 	MOVE.w	#SOUND_BOMB, D0
 	JSR	QueueSoundEffect
 	MOVEA.l	Object_slot_07_ptr.w, A6
-	MOVE.b	#FLAG_TRUE, obj_move_counter(A6)
-	MOVE.l	#$00020000, obj_vel_y(A6)
+	MOVE.b	#FLAG_TRUE, obj_move_counter(A6)    ; mark projectile as active/falling
+	MOVE.l	#$00020000, obj_vel_y(A6)           ; initial downward velocity
 	CLR.w	obj_attack_timer(A6)
-	MOVE.w	#6, obj_pos_x_fixed(A6)
+	MOVE.w	#6, obj_pos_x_fixed(A6)             ; reset sub-pixel X
 	CLR.w	obj_knockback_timer(A6)
-	CLR.w	$22(A6)
+	CLR.w	$22(A6)                              ; clear segment counter
 	BRA.b	DemonBossState_AttackAnimate_UpdateFrame
 DemonBossState_AttackAnimate_Loop:
-	CMPI.w	#6, obj_attack_timer(A5)
+	CMPI.w	#6, obj_attack_timer(A5)            ; near end of swing: reset wing pose
 	BNE.b	DemonBossState_AttackAnimate_UpdateFrame
-	MOVE.b	#0, demon_fire_dir(A5)
+	MOVE.b	#0, demon_fire_dir(A5)              ; pose 0 = folded/neutral
 	JSR	SetEntityCoordFromDirection(PC)
 	BRA.b	DemonBossState_FireReturn
 DemonBossState_AttackAnimate_UpdateFrame:
+	; Update the projectile sprite frame from DemonBossProjectileFrames table
 	MOVEA.l	Object_slot_07_ptr.w, A6
 	MOVE.w	obj_attack_timer(A5), D0
 	ASR.w	#1, D0
 	ANDI.w	#$003E, D0
 	LEA	DemonBossProjectileFrames, A0
-	MOVE.w	(A0,D0.w), obj_knockback_timer(A6)
+	MOVE.w	(A0,D0.w), obj_knockback_timer(A6)  ; tile frame index stored in knockback_timer
 	BRA.b	DemonBossState_FireReturn
 DemonBossState_AttackAnimate_UpdateFrame_Loop:
-	MOVE.b	#2, demon_fire_dir(A5)
+	; Attack complete: return wing to retracted pose, set cooldown
+	MOVE.b	#2, demon_fire_dir(A5)              ; pose 2 = retracted
 	JSR	SetEntityCoordFromDirection(PC)
-	MOVE.w	#$0028, obj_attack_timer(A5)
-	ADDQ.b	#1, demon_ai_state(A5)
+	MOVE.w	#$0028, obj_attack_timer(A5)        ; 40-frame cooldown
+	ADDQ.b	#1, demon_ai_state(A5)              ; advance to Cooldown state
 DemonBossState_FireReturn:
 	RTS
 
+; DemonBossState_Cooldown
+; Counts down obj_attack_timer after an attack sequence.
+; When expired, clears direction flags, resets wing pose, and returns to WaitIdle.
 DemonBossState_Cooldown:
 	SUBQ.w	#1, obj_attack_timer(A5)
-	BGT.b	DemonBossState_Cooldown_Loop
-	CLR.b	demon_dir_flag(A5)
-	MOVE.b	#0, demon_fire_dir(A5)
+	BGT.b	DemonBossState_Cooldown_Loop        ; still cooling down
+	CLR.b	demon_dir_flag(A5)                  ; clear directional movement flag
+	MOVE.b	#0, demon_fire_dir(A5)              ; fold wings to neutral pose
 	JSR	SetEntityCoordFromDirection(PC)
-	MOVE.w	#$003C, obj_attack_timer(A5)
-	CLR.b	demon_ai_state(A5)
+	MOVE.w	#$003C, obj_attack_timer(A5)        ; 60-frame idle delay
+	CLR.b	demon_ai_state(A5)                  ; return to state 0 (WaitIdle)
 DemonBossState_Cooldown_Loop:
 	RTS
 
+; SetEntityCoordFromDirection
+; Updates the demon boss wing/body segment Y-offsets based on demon_fire_dir.
+; If wing_flags bit 2 is set, uses EntityDirectionXOffsets → demon_seg2_y;
+; otherwise uses EntityDirectionYOffsets → demon_seg3_y.
+; Inputs: A5 = demon boss object; demon_fire_dir(A5) = pose index (0-2/3)
 SetEntityCoordFromDirection:
-	BTST.b	#2, demon_wing_flags(A5)
+	BTST.b	#2, demon_wing_flags(A5)            ; bit 2 = use X-offset table
 	BNE.b	SetEntityCoordFromDirection_Loop
 	LEA	EntityDirectionYOffsets, A0
 	MOVE.b	demon_fire_dir(A5), D0
-	ANDI.w	#3, D0
-	ADD.w	D0, D0
+	ANDI.w	#3, D0                              ; clamp to 0-3
+	ADD.w	D0, D0                              ; × 2 for word offset
 	MOVE.w	(A0,D0.w), demon_seg3_y(A5)
 	BRA.b	SetEntityCoordFromDirection_Loop2
 SetEntityCoordFromDirection_Loop:
@@ -1780,28 +2256,51 @@ SetEntityCoordFromDirection_Loop:
 SetEntityCoordFromDirection_Loop2:
 	RTS
 
+;==============================================================
+; DEMON BOSS DATA TABLES
+;==============================================================
+
+; DemonBossWingFrameData
+; Four wing tile offsets (two pairs: open / closed) used by wing animation.
 DemonBossWingFrameData:
 	dc.w	$78, $96
 	dc.w	$82, $8C 
+; EntityDirectionXOffsets
+; X-component segment offsets for the three fire-direction poses (indexed 0-2).
 EntityDirectionXOffsets:
 	dc.w	$28
 	dc.w	$32
 	dc.w	$3C
+; EntityDirectionYOffsets
+; Y-component segment offsets for the three fire-direction poses (indexed 0-2).
 EntityDirectionYOffsets:
 	dc.w	$50
 	dc.w	$5A
 	dc.w	$64
+; DemonBossAttackYOffsets
+; Per-frame head-Y lunge offsets for the 50-frame attack animation.
+; Indexed as (timer >> 1) & $3E (even bytes → word table, 32 entries × 2 bytes).
 DemonBossAttackYOffsets:
 	dc.b	$00, $00, $00, $00, $00, $00, $00, $0A, $00, $14, $00, $0A, $00, $00, $00, $0A, $00, $14, $00, $0A, $00, $00, $00, $0A, $00, $0A, $00, $14, $00, $14, $00, $0A 
 	dc.b	$00, $0A, $00, $00, $00, $00, $00, $0A, $00, $0A, $00, $14, $00, $14, $00, $0A, $00, $0A 
+; DemonBossProjectileFrames
+; Per-frame tile index offsets for the projectile sprite (50-frame cycle, same indexing).
 DemonBossProjectileFrames:
 	dc.b	$00, $00, $00, $08, $00, $10, $00, $18, $00, $20, $00, $00, $00, $08, $00, $10, $00, $18, $00, $20, $00, $00, $00, $08, $00, $10, $00, $18, $00, $20, $00, $00 
 	dc.b	$00, $08, $00, $10, $00, $18, $00, $20, $00, $00, $00, $08, $00, $10, $00, $18, $00, $20 
 
+;==============================================================
+; DEMON BOSS — DAMAGE, DEATH, AND VICTORY
+;==============================================================
+
+; UpdateBossFlashAndDamage
+; Called every tick. Handles the flash stun timer and processes player hits.
+; On killing blow, installs DemonBoss_DeathInit as the tick function.
+; Below half HP, randomly strips one wing flag (bit 0 or bit 1) to disable wings.
 UpdateBossFlashAndDamage:
 	TST.w	obj_knockback_timer(A5)
 	BLE.b	UpdateBossFlashAndDamage_Loop
-	SUBQ.w	#1, obj_knockback_timer(A5)
+	SUBQ.w	#1, obj_knockback_timer(A5)         ; still in hit-stun: flash palette
 	MOVE.w	#$0026, Palette_line_1_index.w
 	JSR	LoadPalettesFromTable
 	BRA.w	DemonBoss_AbilityReturn
@@ -1809,13 +2308,13 @@ UpdateBossFlashAndDamage_Loop:
 	JSR	UpdateEncounterPalette
 	TST.b	obj_hit_flag(A5)
 	BEQ.w	DemonBoss_AbilityReturn
-	MOVE.b	#$FF, demon_dir_flag(A5)
+	MOVE.b	#$FF, demon_dir_flag(A5)            ; force direction re-evaluation
 	MOVE.w	#SOUND_HEAL, D0
 	JSR	QueueSoundEffect
 	MOVE.w	Player_str.w, D0
 	SUB.w	D0, obj_hp(A5)
-	BCC.b	UpdateBossFlashAndDamage_Loop2
-	MOVE.l	#DemonBoss_DeathInit, obj_tick_fn(A5)
+	BCC.b	UpdateBossFlashAndDamage_Loop2      ; still alive
+	MOVE.l	#DemonBoss_DeathInit, obj_tick_fn(A5)   ; killing blow
 	MOVE.b	#SOUND_MAGIC_EFFECT, D0
 	JSR	QueueSoundEffect
 	RTS
@@ -1849,6 +2348,13 @@ DemonBoss_AbilityReturn:
 	CLR.b	obj_hit_flag(A5)
 	RTS
 
+
+;==============================================================
+; DEMON BOSS — DEATH SEQUENCE + CHILD OBJECTS
+;==============================================================
+; DemonBoss_DeathInit
+; Begins the demon boss death sequence: sets tick function, resets dialog
+; timers, and plays the death sound.
 DemonBoss_DeathInit:
 	MOVE.l	#DemonBoss_DeathSequence, obj_tick_fn(A5)
 	CLR.w	Dialog_timer.w
@@ -1857,6 +2363,9 @@ DemonBoss_DeathInit:
 	JSR	QueueSoundEffect
 	RTS
 
+; DemonBoss_DeathSequence
+; Ticks the death fade: clears the dialog plane every 8 frames until all
+; BOSS_VICTORY_FADE_PHASES have elapsed, then triggers the victory event.
 DemonBoss_DeathSequence:
 	ADDQ.w	#1, Dialog_timer.w
 	MOVE.w	Dialog_timer.w, D0
@@ -1874,6 +2383,9 @@ DemonBoss_DeathSequence_Loop2:
 DemonBoss_DeathSequence_Loop:
 	RTS
 
+; SpawnBossChildObjects
+; Spawns all six demon boss body-segment child objects into the six enemy
+; slots, passing each segment's Y offset and sprite descriptor to SpawnChildObjects.
 SpawnBossChildObjects:
 	MOVE.w	demon_seg0_y(A5), D0
 	MOVEA.l	Object_slot_01_ptr.w, A6
@@ -1901,6 +2413,10 @@ SpawnBossChildObjects:
 	JSR	SpawnChildObjects(PC)
 	RTS
 	
+; SpawnChildObjects
+; Populates a chain of object slots with sprite data from EncounterSpriteDescTable.
+; Inputs: A1 = sprite descriptor entry, A6 = first object slot, D7 = count-1
+; Each entry sets tile index, sprite size, sort key, world X/Y relative to the boss.
 SpawnChildObjects:
 	LEA	EncounterSpriteDescTable, A1
 	ADDA.w	D0, A1
@@ -1934,6 +2450,9 @@ SpawnChildObjects_Done:
 	DBF	D7, SpawnChildObjects_Done
 	RTS
 
+; DemonBoss_ClearBodySegment
+; Marks body-segment object slots as inactive (clears demon_seg_active).
+; Called when the sprite descriptor list ends (sentinel $FFFF encountered).
 DemonBoss_ClearBodySegment:
 	CLR.b	demon_seg_active(A6)
 	CLR.w	D6
@@ -1942,6 +2461,9 @@ DemonBoss_ClearBodySegment:
 	DBF	D7, DemonBoss_ClearBodySegment
 	RTS
 
+; DemonBoss_BodySegmentTick
+; Per-frame tick for a static demon boss body segment.
+; If the segment is active, copies world position to screen position and queues sprite.
 DemonBoss_BodySegmentTick:
 	TST.b	demon_seg_active(A5)
 	BEQ.b	DemonBoss_BodySegmentTick_Loop
@@ -1951,6 +2473,10 @@ DemonBoss_BodySegmentTick:
 DemonBoss_BodySegmentTick_Loop:
 	RTS
 
+; DemonBoss_ProjectileHeadTick
+; Tick function for the head segment of the demon boss projectile.
+; Advances the animation frame counter, spawns trailing segment objects, and
+; delegates rendering to DemonBoss_ProjectileSegmentTick.
 DemonBoss_ProjectileHeadTick:
 	CMPI.b	#FLAG_TRUE, obj_move_counter(A5)
 	BNE.w	DemonBoss_ProjectileHeadTick_Loop
@@ -2019,6 +2545,11 @@ DemonBoss_ProjectileHeadTick_Loop2:
 	JSR	AddSpriteToDisplayList(PC)
 	RTS
 
+; DemonBoss_ProjectileSegmentTick
+; Tick function for each trailing segment of the demon boss projectile.
+; Moves the segment along its velocity vector, checks player collision,
+; cycles through DemonBossProjectileTileFrames for animation, and deactivates
+; the segment when the attack_timer reaches zero after passing the Y floor.
 DemonBoss_ProjectileSegmentTick:
 	LEA	EncounterSpriteList_Hydra, A1
 	MOVEA.l	(A1)+, A2
@@ -2065,12 +2596,24 @@ DemonBoss_ProjectileSegmentTick_Loop4:
 DemonBoss_ProjectileSegmentTick_Loop3:
 	RTS
 
+; DemonBossProjectileTileFrames
+; Animation frame table for demon boss projectile segments.
+; Five word entries (indices 0-4) giving VRAM tile offsets ($0, $8, $10, $18, $20).
+; Indexed via obj_knockback_timer as a tile-offset selector.
 DemonBossProjectileTileFrames:
 	dc.w	$0
 	dc.w	$8 
 	dc.w	$10 
 	dc.w	$18 
 	dc.w	$20 
+
+;==============================================================
+; ORBIT BOSS — INIT
+;==============================================================
+; InitOrbitBoss
+; Initialises the orbit boss main entity: activates it, clears velocity,
+; plays the earthquake sound, sets HP/damage constants, and installs
+; OrbitBoss_MainTick as the tick function.
 InitOrbitBoss:
 	MOVEA.l	Enemy_list_ptr.w, A6
 	BSET.b	#7, (A6)
@@ -2091,6 +2634,11 @@ InitOrbitBoss:
 	CLR.b	Boss_death_anim_done.w
 	RTS
 	
+; OrbitBoss_MainTick
+; Entry tick while the earthquake intro is running.
+; Counts down obj_knockback_timer, applies horizontal screen shake from
+; TerrafissiShakeDisplacementTable, then transitions to OrbitBoss_InitParts
+; once the timer expires and plays the boss battle music.
 OrbitBoss_MainTick:
 	BSR.w	CheckBossDamageAndKnockback
 	TST.w	obj_knockback_timer(A5)
@@ -2124,6 +2672,11 @@ OrbitBoss_MainTick_Loop:
 	CLR.l	HScroll_base.w
 	RTS
 	
+; OrbitBoss_InitParts
+; Spawns and initialises all inner-ring and outer-ring satellite objects.
+; Sets up two groups of four satellites each with initial orbit radii,
+; hitboxes, HP, and assigns OrbitBoss_SatelliteAnimate as their tick function.
+; Transitions the main entity to OrbitBoss_InnerCheckVictory.
 OrbitBoss_InitParts:
 	MOVE.b	#4, Boss_ai_state.w
 	MOVEA.l	Object_slot_01_ptr.w, A6
@@ -2210,6 +2763,14 @@ OrbitBoss_InitParts_Done2:
 	MOVE.l	#OrbitBoss_InnerCheckVictory, obj_tick_fn(A5)
 	RTS
 	
+
+;==============================================================
+; ORBIT BOSS — INNER RING AI
+;==============================================================
+; OrbitBoss_InnerCheckVictory
+; Checks whether both Boss_defeated_flag and Boss_death_anim_done are set.
+; If so, loads the victory palette and transitions to OrbitBoss_InnerVictoryDelay.
+; Otherwise falls through to CheckBossDamageAndKnockback.
 OrbitBoss_InnerCheckVictory:
 	TST.b	Boss_defeated_flag.w
 	BEQ.b	CheckBossDamageAndKnockback
@@ -2223,11 +2784,18 @@ OrbitBoss_InnerCheckVictory:
 	MOVE.w	#SOUND_DOOR_OPEN, D0
 	JSR	QueueSoundEffect
 	MOVE.l	#OrbitBoss_InnerVictoryDelay, obj_tick_fn(A5)
+; CheckBossDamageAndKnockback
+; Applies player-collision damage knockback to the main orbit boss entity.
+; Calls CheckPlayerDamageAndKnockback with a fixed Y-clamp of $00D8.
 CheckBossDamageAndKnockback:
 	MOVE.w	#$00D8, D1
 	JSR	CheckPlayerDamageAndKnockback
 	RTS
 	
+; OrbitBoss_InnerVictoryDelay
+; Countdown delay after inner ring defeat before showing the victory dialog.
+; Decrements obj_attack_timer; when it reaches zero plays the victory sound
+; and transitions to RingGuardian_VictoryDialogContinue.
 OrbitBoss_InnerVictoryDelay:
 	SUBQ.w	#1, obj_attack_timer(A5)
 	BGE.b	OrbitBoss_InnerVictoryDelay_Loop
@@ -2237,6 +2805,9 @@ OrbitBoss_InnerVictoryDelay:
 OrbitBoss_InnerVictoryDelay_Loop:
 	RTS
 	
+; OrbitBoss_InnerExpandOrbit
+; Expands the inner ring satellites outward each tick until they reach
+; ORBIT_BOSS_MAX_RADIUS, then transitions to OrbitBoss_InnerSelectTarget.
 OrbitBoss_InnerExpandOrbit:
 	CLR.w	D0
 	MOVE.b	obj_next_offset(A5), D0
@@ -2260,6 +2831,10 @@ OrbitBoss_InnerExpandOrbit_Loop_Done:
 	DBF	D7, OrbitBoss_InnerExpandOrbit_Loop_Done
 	RTS
 	
+; OrbitBoss_InnerSelectTarget
+; Selects which inner-ring satellite will be the active attacker this round.
+; Walks the object chain by Boss_ai_state steps, activates that satellite's
+; position tracking, idles the remaining ones, then sets OrbitBoss_InnerApproach.
 OrbitBoss_InnerSelectTarget:
 	LEA	(A5), A6
 	CLR.w	D7
@@ -2293,6 +2868,10 @@ OrbitBoss_InnerSelectTarget_Loop:
 	JSR	ProcessPlayerStrengthCheck
 	RTS
 	
+; OrbitBoss_InnerApproach
+; Moves the active inner satellite toward the player during the approach phase.
+; Tracks the chosen satellite's screen position, checks invulnerability delay,
+; and transitions to OrbitBoss_InnerCharge when the player is within range.
 OrbitBoss_InnerApproach:
 	LEA	(A5), A6
 	CLR.w	D7
@@ -2343,6 +2922,10 @@ OrbitBoss_InnerApproach_ClampDone:
 	JSR	ProcessPlayerStrengthCheck
 	RTS
 	
+; OrbitBoss_InnerCharge
+; Spins the inner satellite rapidly toward the fire angle.
+; Transitions to OrbitBoss_InnerFireAnim (or back to InnerSelectTarget if
+; attack direction is set) once ORBIT_BOSS_DIRECTION_WRAP is reached.
 OrbitBoss_InnerCharge:
 	LEA	(A5), A6
 	CLR.w	D7
@@ -2370,6 +2953,10 @@ OrbitBoss_InnerFireWait:
 	JSR	ProcessPlayerStrengthCheck
 	RTS
 	
+; OrbitBoss_InnerFireAnim
+; Plays the pre-fire animation for the inner satellite by cycling through
+; OrbitBoss_InnerSatelliteFrame tiles until ORBIT_BOSS_FIRE_PHASE frames pass,
+; then transitions to OrbitBoss_InnerSpawnProjectile.
 OrbitBoss_InnerFireAnim:
 	LEA	(A5), A6
 	CLR.w	D7
@@ -2397,6 +2984,10 @@ OrbitBoss_InnerFireAnim_Loop:
 	JSR	ProcessPlayerStrengthCheck
 	RTS
 	
+; OrbitBoss_InnerSpawnProjectile
+; Spawns a falling projectile from the active inner satellite into Object_slot_02.
+; Configures velocity, hitbox, tile, sort key, and assigns
+; OrbitBossProjectileFallTick; then sets OrbitBoss_InnerWaitProjectile.
 OrbitBoss_InnerSpawnProjectile:
 	LEA	(A5), A6
 	CLR.w	D7
@@ -2436,6 +3027,9 @@ OrbitBoss_InnerSpawnProjectile_Done:
 	MOVE.l	#OrbitBoss_InnerWaitProjectile, obj_tick_fn(A5)
 	RTS
 	
+; OrbitBoss_InnerWaitProjectile
+; Idles the inner ring AI until the projectile in Object_slot_02 is deactivated
+; (bit 7 cleared), then returns to OrbitBoss_InnerSelectTarget.
 OrbitBoss_InnerWaitProjectile:
 	MOVEA.l	Object_slot_02_ptr.w, A6
 	BTST.b	#7, (A6)
@@ -2444,6 +3038,14 @@ OrbitBoss_InnerWaitProjectile:
 OrbitBoss_InnerWaitProjectile_Loop:
 	RTS
 	
+
+;==============================================================
+; ORBIT BOSS — OUTER RING AI
+;==============================================================
+; OrbitBoss_OuterExpandOrbit
+; Expands the outer ring satellites outward each tick until they reach
+; ORBIT_BOSS_MAX_RADIUS, then transitions to OrbitBoss_OuterSelectTarget.
+; Also calls ProcessBossFightDamage while expanding.
 OrbitBoss_OuterExpandOrbit:
 	CLR.w	D0
 	MOVE.b	obj_next_offset(A5), D0
@@ -2468,6 +3070,10 @@ OrbitBoss_OuterExpandOrbit_Loop_Done:
 	JSR	ProcessBossFightDamage
 	RTS
 	
+; OrbitBoss_OuterSelectTarget
+; Selects the active outer-ring satellite for this attack cycle.
+; Mirrors OrbitBoss_InnerSelectTarget but uses Boss_part_count as the
+; satellite index. Transitions to OrbitBoss_OuterApproach.
 OrbitBoss_OuterSelectTarget:
 	LEA	(A5), A6
 	CLR.w	D7
@@ -2501,6 +3107,10 @@ OrbitBoss_OuterSelectTarget_Loop:
 	JSR	ProcessBossFightDamage
 	RTS
 	
+; OrbitBoss_OuterApproach
+; Moves the active outer satellite toward the player.
+; Mirrors OrbitBoss_InnerApproach but checks ORBIT_BOSS_CHARGE_X_MIN and
+; uses ProcessBossFightDamage; transitions to OrbitBoss_OuterCharge.
 OrbitBoss_OuterApproach:
 	LEA	(A5), A6
 	CLR.w	D7
@@ -2545,6 +3155,10 @@ OrbitBoss_OuterApproach_ClampDone:
 	JSR	ProcessBossFightDamage
 	RTS
 	
+; OrbitBoss_OuterCharge
+; Spins the outer satellite toward the fire angle.
+; Transitions to OrbitBoss_OuterFireAnim (or back to OuterSelectTarget)
+; once ORBIT_APPROACH_ANGLE_MIN is reached.
 OrbitBoss_OuterCharge:
 	LEA	(A5), A6
 	CLR.w	D7
@@ -2572,6 +3186,9 @@ OrbitBoss_OuterFireWait:
 	JSR	ProcessBossFightDamage
 	RTS
 	
+; OrbitBoss_OuterFireAnim
+; Pre-fire animation for the outer satellite, cycling tile frames until
+; ORBIT_BOSS_FIRE_PHASE is reached, then transitions to OrbitBoss_OuterSpawnProjectile.
 OrbitBoss_OuterFireAnim:
 	LEA	(A5), A6
 	CLR.w	D7
@@ -2599,6 +3216,9 @@ OrbitBoss_OuterFireAnim_Loop:
 	JSR	ProcessBossFightDamage
 	RTS
 	
+; OrbitBoss_OuterSpawnProjectile
+; Spawns a falling projectile from the active outer satellite into Object_slot_04.
+; Configuration mirrors InnerSpawnProjectile; transitions to OrbitBoss_OuterWaitProjectile.
 OrbitBoss_OuterSpawnProjectile:
 	LEA	(A5), A6
 	CLR.w	D7
@@ -2638,6 +3258,9 @@ OrbitBoss_OuterSpawnProjectile_Done:
 	MOVE.l	#OrbitBoss_OuterWaitProjectile, obj_tick_fn(A5)
 	RTS
 	
+; OrbitBoss_OuterSpawnProjectile_DeadCode
+; Dead code — unreferenced alternative wait loop that checks Object_slot_02.
+; Superseded by OrbitBoss_OuterWaitProjectile below.
 OrbitBoss_OuterSpawnProjectile_DeadCode:					; unreferenced dead code
 	MOVEA.l	Object_slot_02_ptr.w, A6
 	BTST	#7, (A6)
@@ -2646,6 +3269,9 @@ OrbitBoss_OuterSpawnProjectile_DeadCode:					; unreferenced dead code
 OrbitBoss_OuterSpawnProjectile_Loop:
 	JSR	ProcessBossFightDamage
 	RTS
+; OrbitBoss_OuterWaitProjectile
+; Idles the outer ring AI until the projectile in Object_slot_04 is deactivated,
+; then returns to OrbitBoss_OuterSelectTarget.
 OrbitBoss_OuterWaitProjectile:
 	MOVEA.l	Object_slot_04_ptr.w, A6
 	BTST.b	#7, (A6)
@@ -2655,6 +3281,14 @@ OrbitBoss_OuterWaitProjectile_Loop:
 	JSR	ProcessBossFightDamage
 	RTS
 
+
+;==============================================================
+; ORBIT BOSS — SHARED HELPERS + PROJECTILES
+;==============================================================
+; GetSignedVelocity
+; Returns a signed angular velocity for satellite orbital movement.
+; Inputs: obj_attack_timer(A5) = magnitude, orbit_charge_dir(A5) = sign flag
+; Outputs: D0.w = velocity (negated if orbit_charge_dir < 0)
 GetSignedVelocity:
 	MOVE.w	obj_attack_timer(A5), D0
 	TST.b	orbit_charge_dir(A5)
@@ -2663,6 +3297,11 @@ GetSignedVelocity:
 GetSignedVelocity_Loop:
 	RTS
 
+; OrbitBossProjectileFallTick
+; Per-frame tick for a falling orbit boss projectile.
+; Cycles through OrbitBoss_ProjectileFallFrames for animation, applies
+; velocity, clamps to ORBIT_PROJ_Y_FLOOR, checks player collision,
+; and transitions to OrbitBoss_ProjectileExplode on landing.
 OrbitBossProjectileFallTick:
 	ADDQ.b	#1, obj_move_counter(A5)
 	MOVE.b	obj_move_counter(A5), D0
@@ -2690,6 +3329,9 @@ OrbitBossProjectileFallTick_Loop2:
 	JSR	AddSpriteToDisplayList
 	RTS
 
+; OrbitBoss_ProjectileExplode
+; Plays the projectile explosion animation using OrbitBoss_ProjectileExplodeFrames.
+; Checks player collision during the explosion; deactivates the object when done.
 OrbitBoss_ProjectileExplode:
 	ADDQ.b	#1, obj_move_counter(A5)
 	MOVE.b	obj_move_counter(A5), D0
@@ -2709,6 +3351,15 @@ OrbitBoss_ProjectileExplode_Loop:
 	JSR	AddSpriteToDisplayList
 	RTS
 
+
+;==============================================================
+; ORBIT BOSS — DAMAGE + DEATH
+;==============================================================
+; ProcessPlayerStrengthCheck
+; Handles damage and hit-stun for inner-ring satellite parts.
+; Decrements knockback timer if active; otherwise checks obj_hit_flag,
+; flashes palette, applies Player_str damage, and transitions to
+; OrbitBoss_InnerPartDeath if HP reaches zero.
 ProcessPlayerStrengthCheck:
 	TST.w	obj_knockback_timer(A5)
 	BLE.b	ProcessPlayerStrengthCheck_Loop
@@ -2737,6 +3388,11 @@ OrbitBoss_InnerPartHit_Return:
 	CLR.b	obj_hit_flag(A5)
 	RTS
 
+; OrbitBoss_InnerPartDeath
+; Death animation for a defeated inner-ring satellite.
+; Plays explosion frames via OrbitBoss_ProjectileFrames; when complete,
+; deactivates the satellite, restores HP, and decrements Boss_ai_state.
+; If all inner satellites are defeated, transitions to OrbitBoss_InnerRingDefeated.
 OrbitBoss_InnerPartDeath:
 	BSR.w	UpdateEncounterPalette
 	LEA	(A5), A6
@@ -2769,10 +3425,16 @@ OrbitBoss_InnerPartDeath_Loop:
 	MOVE.w	(A0,D0.w), obj_tile_index(A6)
 	RTS
 
+; OrbitBoss_InnerRingDefeated
+; Sets Boss_defeated_flag to signal that the inner ring has been cleared.
 OrbitBoss_InnerRingDefeated:
 	MOVE.b	#FLAG_TRUE, Boss_defeated_flag.w
 	RTS
 
+; ProcessBossFightDamage
+; Handles damage and hit-stun for outer-ring satellite parts.
+; Mirrors ProcessPlayerStrengthCheck but transitions to OrbitBoss_OuterPartDeath
+; on death instead.
 ProcessBossFightDamage:
 	TST.w	obj_knockback_timer(A5)
 	BLE.b	ProcessBossFightDamage_Loop
@@ -2801,6 +3463,10 @@ OrbitBoss_OuterPartHit_Return:
 	CLR.b	obj_hit_flag(A5)
 	RTS
 
+; OrbitBoss_OuterPartDeath
+; Death animation for a defeated outer-ring satellite.
+; Mirrors OrbitBoss_InnerPartDeath but decrements Boss_part_count.
+; If all outer satellites are defeated, transitions to OrbitBoss_OuterRingDefeated.
 OrbitBoss_OuterPartDeath:
 	BSR.w	UpdateEncounterPalette
 	LEA	(A5), A6
@@ -2833,15 +3499,28 @@ OrbitBoss_OuterPartDeath_Loop:
 	MOVE.w	(A0,D0.w), obj_tile_index(A6)
 	RTS
 
+; OrbitBoss_OuterRingDefeated
+; Sets Boss_death_anim_done to signal that the outer ring has been cleared.
 OrbitBoss_OuterRingDefeated:
 	MOVE.b	#FLAG_TRUE, Boss_death_anim_done.w
 	RTS
 
+
+;==============================================================
+; ORBIT BOSS — SATELLITE ANIMATION
+;==============================================================
+; OrbitBoss_SatelliteOrbitInactive
+; Tick for a satellite that is not the current attacker.
+; Calculates direction to the next object in chain, then falls through
+; to OrbitBoss_SatelliteAnimate to cycle the idle animation.
 OrbitBoss_SatelliteOrbitInactive:
 	CLR.w	D0
 	MOVE.b	obj_next_offset(A5), D0
 	LEA	(A5,D0.w), A6
 	BSR.w	CalculateDirectionToEntity
+; OrbitBoss_SatelliteAnimate
+; Advances the satellite idle animation by cycling through OrbitBoss_SatelliteFrames,
+; then falls through to OrbitBoss_SatelliteUpdatePosition.
 OrbitBoss_SatelliteAnimate:
 	ADDQ.b	#1, obj_move_counter(A5)
 	MOVE.b	obj_move_counter(A5), D0
@@ -2849,6 +3528,10 @@ OrbitBoss_SatelliteAnimate:
 	ASR.w	#2, D0
 	LEA	OrbitBoss_SatelliteFrames, A0
 	MOVE.w	(A0,D0.w), obj_tile_index(A5)
+; OrbitBoss_SatelliteUpdatePosition
+; Recomputes the satellite's world position from its orbit parameters.
+; Calls CalculateSineVelocity to get X/Y velocity components, adds the
+; orbit centre offset, then checks collision and queues the sprite.
 OrbitBoss_SatelliteUpdatePosition:
 	BSR.w	CalculateSineVelocity
 	MOVE.w	obj_vel_x(A5), D0
@@ -2863,6 +3546,14 @@ OrbitBoss_SatelliteUpdatePosition:
 	JSR	AddSpriteToDisplayList
 	RTS
 
+
+;==============================================================
+; ORBIT BOSS — MATH HELPERS
+;==============================================================
+; CalculateSineVelocity
+; Computes orbit velocity components from a radius and angle using SineTable.
+; Inputs: obj_pos_x_fixed(A5) = orbit radius, obj_direction(A5) = angle (0-$3F)
+; Outputs: obj_vel_x(A5), obj_vel_y(A5) = scaled sine/cosine velocity (long)
 CalculateSineVelocity:
 	LEA	SineTable, A0
 	MOVE.w	obj_pos_x_fixed(A5), D0
@@ -2880,15 +3571,29 @@ CalculateSineVelocity:
 	MOVE.l	D3, obj_vel_y(A5)
 	RTS
 
+
+;==============================================================
+; HYDRA BOSS — INIT
+;==============================================================
+; InitHydraBoss_Normal
+; Entry point for normal-difficulty Hydra boss: sets normal HP/damage,
+; then falls through to InitHydraBoss_Common.
 InitHydraBoss_Normal:
 	MOVEA.l	Enemy_list_ptr.w, A6
 	MOVE.w	#BOSS_HP_HYDRA_NORMAL, obj_hp(A6)
 	MOVE.w	#BOSS_DMG_HYDRA_NORMAL, obj_max_hp(A6)
 	BRA.w	InitHydraBoss_Common
+; InitHydraBoss_Hard
+; Entry point for hard-difficulty Hydra boss: sets hard HP/damage,
+; then falls through to InitHydraBoss_Common.
 InitHydraBoss_Hard:
 	MOVEA.l	Enemy_list_ptr.w, A6
 	MOVE.w	#BOSS_HP_HYDRA_HARD, obj_hp(A6)
 	MOVE.w	#BOSS_DMG_HYDRA_HARD, obj_max_hp(A6)
+; InitHydraBoss_Common
+; Shared Hydra boss initialisation: resets AI state and active-part counter,
+; sets up the main body sprite object and two additional body-segment objects,
+; then initialises the first two active body parts via InitBossBodyPart.
 InitHydraBoss_Common:
 	CLR.w	Boss_ai_state.w
 	CLR.w	Boss_active_parts.w
@@ -2944,6 +3649,14 @@ InitHydraBoss_Common_Done:
 	DBF	D7, InitHydraBoss_Common_Done
 	RTS
 	
+
+;==============================================================
+; HYDRA BOSS — PART MANAGEMENT
+;==============================================================
+; ActivateNextBossPart
+; Walks the object chain to the next inactive body-part slot (skipping two
+; slots per part) and calls InitBossBodyPart to activate it.
+; Increments Boss_ai_state and Boss_active_parts.
 ActivateNextBossPart:
 	MOVEA.l	Object_slot_02_ptr.w, A6
 	MOVE.w	Boss_ai_state.w, D7
@@ -2962,6 +3675,10 @@ ActivateNextBossPart_Done:
 	ADDQ.w	#1, Boss_active_parts.w
 	RTS
 	
+; InitBossBodyPart
+; Initialises a single Hydra body part and its associated head sprite object.
+; Sets sprite flags, size, world position from D6, hitbox, HP from the main
+; entity, and installs HydraBoss_PartIntroAnim as the tick function.
 InitBossBodyPart:
 	BSET.b	#7, (A6)
 	MOVE.b	#NPC_ATTR_PAL1, obj_sprite_flags(A6)
@@ -2998,6 +3715,14 @@ InitBossBodyPart:
 	LEA	(A6,D0.w), A6
 	RTS
 
+
+;==============================================================
+; HYDRA BOSS — BODY PART TICKS
+;==============================================================
+; HydraBoss_PartIntroAnim
+; Plays the intro animation for a Hydra body part rising into position.
+; Cycles HydraBoss_BodyPartFrames until BOSS_ANIM_PHASE_END, then transitions
+; to HydraBoss_PartIdleTick and enables the leftward slide velocity.
 HydraBoss_PartIntroAnim:
 	TST.b	Fade_in_lines_mask.w
 	BNE.w	HydraBoss_PartSpriteDone
@@ -3027,6 +3752,11 @@ HydraBoss_PartIntroAnim_Loop:
 HydraBoss_PartSpriteDone:
 	RTS
 
+; HydraBoss_PartIdleTick
+; Main idle/attack tick for a Hydra body part.
+; Handles hit-stun, applies Player_str damage on hit, transitions to
+; HydraBoss_PartDeathAnim when HP depletes, and triggers HydraBoss_PartAttackTick
+; when the player is within range and the attack cooldown has elapsed.
 HydraBoss_PartIdleTick:
 	CLR.w	D0
 	MOVE.b	obj_next_offset(A5), D0
@@ -3084,6 +3814,10 @@ HydraBoss_PartIdleTick_Check_Loop2:
 	CLR.b	obj_move_counter(A5)
 	CLR.b	obj_npc_busy_flag(A5)
 	BRA.w	HydraBoss_PartIdleTick_UpdatePos
+; HydraBoss_PartAttackTick
+; Animates a Hydra body part during its forward lunge attack.
+; Cycles HydraBoss_AttackFrames; applies the slide velocity (or reverses it
+; during the retract phase) until obj_invuln_timer expires.
 HydraBoss_PartAttackTick:
 	ADDQ.b	#1, obj_move_counter(A5)
 	MOVE.b	obj_move_counter(A5), D0
@@ -3108,6 +3842,10 @@ HydraBoss_PartIdleTick_UpdatePos:
 	JSR	AddSpriteToDisplayList
 	RTS
 
+; HydraBoss_PartDeathAnim
+; Plays the death animation for a single Hydra body part.
+; Cycles HydraBoss_PartDeathFrames; on completion decrements Boss_active_parts
+; and transitions to HydraBoss_PartDeadDisplay (static display).
 HydraBoss_PartDeathAnim:
 	CLR.w	D0
 	MOVE.b	obj_next_offset(A5), D0
@@ -3132,6 +3870,15 @@ HydraBoss_PartDeadDisplay:
 	JSR	AddSpriteToDisplayList
 	RTS
 	
+
+;==============================================================
+; HYDRA BOSS — MAIN TICK + DEATH + VICTORY
+;==============================================================
+; HydraBoss_MainTick
+; Per-frame tick for the Hydra boss main head.
+; Handles hit-stun, damage, and death. Animates the main head sprite,
+; periodically initialises a projectile, and activates new body parts
+; when the player approaches the split threshold.
 HydraBoss_MainTick:
 	TST.b	Fade_in_lines_mask.w
 	BNE.w	HydraBoss_MainTick_Return
@@ -3213,6 +3960,10 @@ HydraBoss_MainTick_SpriteUpdate:
 HydraBoss_MainTick_Return:
 	RTS
 	
+; HydraBoss_MainDeathAnim
+; Plays the main Hydra head death animation.
+; Deactivates supplementary head objects, cycles BossProjectileSpriteFramePtrs
+; frames; on completion transitions to HydraBoss_DeathPauseWait.
 HydraBoss_MainDeathAnim:
 	CLR.w	D0
 	MOVE.b	obj_next_offset(A5), D0
@@ -3245,6 +3996,10 @@ HydraBoss_MainDeathAnim_Loop:
 	JSR	AddSpriteToDisplayList
 	RTS
 	
+; HydraBoss_DeathPauseWait
+; Brief pause after the death animation completes.
+; Counts down obj_move_counter then transitions to HydraBoss_DeathClearScreen,
+; resets dialog timers, and plays the victory sound.
 HydraBoss_DeathPauseWait:
 	SUBQ.b	#1, obj_move_counter(A5)
 	BGT.b	HydraBoss_DeathPauseWait_Loop
@@ -3257,6 +4012,9 @@ HydraBoss_DeathPauseWait_Loop:
 	JSR	AddSpriteToDisplayList
 	RTS
 	
+; HydraBoss_DeathClearScreen
+; Clears the dialog plane over BOSS_VICTORY_FADE_PHASES steps (every 8 frames).
+; Once complete, transitions to HydraBoss_VictoryCheck and deactivates body parts.
 HydraBoss_DeathClearScreen:
 	ADDQ.w	#1, Dialog_timer.w
 	MOVE.w	Dialog_timer.w, D0
@@ -3275,6 +4033,10 @@ HydraBoss_DeathClearScreen_Loop:
 	JSR	AddSpriteToDisplayList
 	RTS
 	
+; HydraBoss_VictoryCheck
+; Post-death check: triggers the battle victory event and either awards
+; rewards (normal ending) or starts the next phase via HydraBoss_StartNextBattle
+; if Swaffham_miniboss_defeated is set.
 HydraBoss_VictoryCheck:
 	SUBQ.b	#1, obj_invuln_timer(A5)
 	BNE.b	HydraBoss_VictoryCheck_Loop
@@ -3290,6 +4052,10 @@ HydraBoss_VictoryCheck_Loop2:
 HydraBoss_VictoryCheck_Loop:
 	RTS
 	
+; HydraBoss_StartNextBattle
+; Transitions directly to the next boss battle phase (Swaffham multi-phase fight).
+; Scans Boss_battle_flags to determine the next battle type, clears all enemy
+; entities, re-initialises objects, reloads graphics and tiles, and restarts battle.
 HydraBoss_StartNextBattle:
 	MOVE.b	#FLAG_TRUE, Boss_battle_type_marker.w
 	CLR.w	D0
@@ -3326,6 +4092,10 @@ HydraBoss_StartNextBattle_Loop_Done:
 	JSR	UpdateEncounterPalette
 	RTS
 	
+; DeactivateBossBodyParts
+; Deactivates all Hydra body-part object slots by clearing bit 7.
+; Walks the object chain from the first slot after the main entity until
+; obj_next_offset is zero.
 DeactivateBossBodyParts:
 	MOVEA.l	Enemy_list_ptr.w, A6
 	CLR.w	D0
@@ -3341,6 +4111,14 @@ DeactivateBossBodyParts_Done:
 DeactivateBossBodyParts_Loop:
 	RTS
 	
+
+;==============================================================
+; HYDRA BOSS — PROJECTILE SYSTEM
+;==============================================================
+; InitBossProjectile
+; Initialises the Hydra boss projectile in Object_slot_01.
+; Sets hitbox, sprite flags, tile, sort key, and installs
+; HydraBoss_ProjectileAnimate as the tick function.
 InitBossProjectile:
 	MOVEA.l	Object_slot_01_ptr.w, A6
 	BSET.b	#7, (A6)
@@ -3361,6 +4139,10 @@ InitBossProjectile:
 	MOVE.l	#HydraBoss_ProjectileAnimate, obj_tick_fn(A6)
 	RTS
 	
+; HydraBoss_ProjectileAnimate
+; Idle animation for the Hydra projectile before it is launched.
+; Cycles HydraBoss_ProjectileSpriteFrames and keeps the sprite visible
+; at its current world position.
 HydraBoss_ProjectileAnimate:
 	ADDQ.b	#1, obj_move_counter(A5)
 	MOVE.b	obj_move_counter(A5), D0
@@ -3373,6 +4155,10 @@ HydraBoss_ProjectileAnimate:
 	JSR	AddSpriteToDisplayList
 	RTS
 	
+; HydraBoss_LaunchProjectile
+; Launches the Hydra projectile from the right side of the screen.
+; Sets leftward velocity, positions at the head's fire origin, and
+; transitions to HydraBoss_ProjectileFalling.
 HydraBoss_LaunchProjectile:
 	MOVEA.l	Object_slot_01_ptr.w, A6
 	MOVE.l	#$FFFD0000, obj_vel_x(A6)
@@ -3382,6 +4168,9 @@ HydraBoss_LaunchProjectile:
 	MOVE.l	#HydraBoss_ProjectileFalling, obj_tick_fn(A6)
 	RTS
 	
+; HydraBoss_ProjectileFalling
+; Moves the Hydra projectile leftward each frame and checks collision.
+; Deactivates via HydraBoss_DeactivateProjectile when it leaves the screen.
 HydraBoss_ProjectileFalling:
 	CMPI.w	#PROJ_OFFSCREEN_X_LEFT, obj_world_x(A5)
 	BGE.b	HydraBoss_ProjectileFalling_Loop
@@ -3400,11 +4189,21 @@ HydraBoss_ProjectileFalling_Loop:
 	JSR	AddSpriteToDisplayList
 	RTS
 	
+; HydraBoss_DeactivateProjectile
+; Deactivates the Hydra projectile by clearing bit 7 of Object_slot_01.
 HydraBoss_DeactivateProjectile:
 	MOVEA.l	Object_slot_01_ptr.w, A6
 	BCLR.b	#7, (A6)
 	RTS
 	
+
+;==============================================================
+; HYDRA BOSS — UTILITY HELPERS
+;==============================================================
+; CheckPlayerWithinRange
+; Checks whether the player is within $0020 pixels to the left of the boss part.
+; Inputs: A5 = body part object, Player_entity_ptr = player
+; Outputs: D0 = $FFFF if in range, $0000 otherwise
 CheckPlayerWithinRange:
 	MOVEA.l	Player_entity_ptr.w, A4
 	MOVE.w	obj_world_x(A5), D0
@@ -3419,20 +4218,37 @@ CheckPlayerWithinRange_Loop:
 	CLR.w	D0
 	RTS
 	
+
+;==============================================================
+; RING GUARDIAN — INIT
+;==============================================================
+; InitRingGuardian_Normal
+; Entry point for normal-difficulty Ring Guardian: sets 6500 HP / 180 damage,
+; then falls through to InitRingGuardian_Common.
 InitRingGuardian_Normal:
 	MOVEA.l	Enemy_list_ptr.w, A6
 	MOVE.w	#6500, obj_hp(A6)
 	MOVE.w	#180, obj_max_hp(A6)
 	BRA.b	InitRingGuardian_Common
+; InitRingGuardian_Hard
+; Entry point for hard-difficulty Ring Guardian: sets 7000 HP / 200 damage,
+; then falls through to InitRingGuardian_Common.
 InitRingGuardian_Hard:
 	MOVEA.l	Enemy_list_ptr.w, A6
 	MOVE.w	#7000, obj_hp(A6)
 	MOVE.w	#200, obj_max_hp(A6)
 	BRA.b	InitRingGuardian_Common
+; InitRingGuardian_VeryHard
+; Entry point for very-hard-difficulty Ring Guardian: sets 7000 HP / 200 damage,
+; then falls through to InitRingGuardian_Common.
 InitRingGuardian_VeryHard:
 	MOVEA.l	Enemy_list_ptr.w, A6
 	MOVE.w	#7000, obj_hp(A6)
 	MOVE.w	#200, obj_max_hp(A6)
+; InitRingGuardian_Common
+; Shared Ring Guardian initialisation: sets Boss_max_hp flag, clears defeat flag,
+; draws the health bar, positions the boss, and configures hitbox and movement.
+; Spawns five body sprite objects (groups A and B) and installs tick functions.
 InitRingGuardian_Common:
 	MOVE.b	#FLAG_TRUE, Boss_max_hp.w
 	CLR.b	Boss_defeated_flag.w
@@ -3486,6 +4302,15 @@ InitRingGuardian_Common_Done2:
 	MOVE.l	#RingGuardian_BodyGroupBTick, obj_tick_fn(A6)
 	RTS
 	
+
+;==============================================================
+; RING GUARDIAN — BODY GROUP TICKS
+;==============================================================
+; RingGuardian_BodyGroupATick
+; Per-frame tick for Ring Guardian body sprite group A (front segments).
+; Advances animation counter (unless defeated), looks up sprite data from
+; EncounterEnemySpriteByDirA, positions all four child sprites relative to the
+; main entity, and then falls through to BossCommon_DisplaySprite.
 RingGuardian_BodyGroupATick:
 	TST.b	Boss_defeated_flag.w
 	BNE.b	RingGuardian_BodyGroupATick_Loop
@@ -3529,6 +4354,10 @@ RingGuardian_BodyGroupATick_Loop_Done:
 	MOVE.w	D4, obj_world_y(A6)
 	DBF	D7, RingGuardian_BodyGroupATick_Loop_Done
 	BRA.w	BossCommon_DisplaySprite
+; RingGuardian_BodyGroupBTick
+; Per-frame tick for Ring Guardian body sprite group B (rear segments).
+; Mirrors RingGuardian_BodyGroupATick but uses EncounterEnemySpriteByDirB
+; and only positions two child sprites.
 RingGuardian_BodyGroupBTick:
 	TST.b	Boss_defeated_flag.w
 	BNE.b	RingGuardian_BodyGroupBTick_Loop
@@ -3565,6 +4394,9 @@ RingGuardian_BodyGroupBTick_Loop:
 	MOVE.w	D0, obj_world_x(A6)
 	ADD.w	(A0)+, D1
 	MOVE.w	D1, obj_world_y(A6)
+; BossCommon_DisplaySprite
+; Displays a boss sub-sprite if its tile index is non-zero.
+; Copies world position to screen position and queues the sprite for rendering.
 BossCommon_DisplaySprite:
 	TST.w	obj_tile_index(A5)
 	BEQ.b	BossCommon_DisplaySprite_Loop
@@ -3574,6 +4406,13 @@ BossCommon_DisplaySprite:
 BossCommon_DisplaySprite_Loop:
 	RTS
 	
+
+;==============================================================
+; RING GUARDIAN — MAIN TICK + STATE MACHINE
+;==============================================================
+; RingGuardian_MainTick
+; Main per-frame tick for the Ring Guardian boss.
+; Dispatches to the current AI state handler via BossAiRingGuardianJumpTable.
 RingGuardian_MainTick:
 	MOVE.w	Boss_ai_state.w, D0
 	ANDI.w	#$000F, D0
@@ -3583,6 +4422,10 @@ RingGuardian_MainTick:
 	JSR	(A0,D0.w)
 	RTS
 	
+; BossAiRingGuardianJumpTable
+; Jump table for Ring Guardian AI states (indexed by Boss_ai_state & $0F).
+; States: 0=WaitBattleStart, 1=Descend, 2=ChasePlayer, 3=AttackWindup,
+; 4=WaitProjectile, 5=ChasePlayer (repeat).
 BossAiRingGuardianJumpTable:
 	BRA.w	RingGuardianState_WaitBattleStart
 	BRA.w	RingGuardianState_Descend
@@ -3590,6 +4433,9 @@ BossAiRingGuardianJumpTable:
 	BRA.w	RingGuardianState_AttackWindup
 	BRA.w	RingGuardianState_WaitProjectile
 	BRA.w	RingGuardianState_ChasePlayer	
+; RingGuardianState_WaitBattleStart
+; Waits for the battle intro fade to complete and the battle-active flag to be set.
+; Counts down obj_invuln_timer before transitioning to the first chase state.
 RingGuardianState_WaitBattleStart:
 	TST.b	Fade_in_lines_mask.w
 	BNE.b	RingGuardianState_WaitBattleStart_Done
@@ -3602,6 +4448,10 @@ RingGuardianState_WaitBattleStart:
 	MOVE.l	#$200, obj_pos_x_fixed(A5)
 RingGuardianState_WaitBattleStart_Done:
 	BRA.w	BossMoveTick_Clamped
+; RingGuardianState_Descend
+; Descend/patrol state: moves toward Y=8 while checking HP.
+; On HP depletion, sets Boss_defeated_flag and transitions to RingGuardian_DeathFall.
+; Otherwise transitions to the move-down state to begin chasing the player.
 RingGuardianState_Descend:
 	SUBQ.b	#1, obj_invuln_timer(A5)
 	BLT.b	RingGuardianState_Descend_Loop
@@ -3631,6 +4481,10 @@ RingGuardianState_Descend_Loop3:
 RingGuardianState_Patrol_GetDir:
 	BSR.w	GetDirectionFromDeltas
 	BRA.w	RingGuardianState_ApplyVelocity
+; RingGuardianState_ChasePlayer
+; Chases the player using directional sine-based movement.
+; When the player is within horizontal range and at RING_GUARDIAN_HEAD_Y,
+; transitions to the attack windup state.
 RingGuardianState_ChasePlayer:
 	MOVEA.l	Player_entity_ptr.w, A6
 	MOVE.w	obj_world_x(A6), D0
@@ -3647,6 +4501,10 @@ RingGuardianState_ChasePlayer:
 RingGuardianState_Chase_GetDir:
 	BSR.w	CalculateDirectionToPlayer
 	BRA.w	RingGuardianState_ApplyVelocity
+; RingGuardianState_AttackWindup
+; Animates the Ring Guardian's attack wind-up over BOSS_ANIM_PHASE_END steps.
+; When complete, activates Object_slot_01 as the projectile spawner and
+; transitions to RingGuardianState_WaitProjectile.
 RingGuardianState_AttackWindup:
 	ADDQ.b	#1, obj_invuln_timer(A5)
 	MOVE.b	obj_invuln_timer(A5), D0
@@ -3665,6 +4523,10 @@ RingGuardianState_AttackWindup:
 RingGuardianState_AttackWindup_Loop:
 	BSR.w	WriteDirectionTilesForBoss
 	BRA.w	BossMoveTick_Clamped
+; RingGuardianState_WaitProjectile
+; Waits until the projectile spawner in Object_slot_01 is deactivated.
+; Randomises the next direction angle, resets the cooldown timer, and
+; returns to the chase state.
 RingGuardianState_WaitProjectile:
 	MOVEA.l	Object_slot_01_ptr.w, A6
 	BTST.b	#7, (A6)
@@ -3678,6 +4540,10 @@ RingGuardianState_WaitProjectile:
 	BSR.w	WriteDirectionTilesForBoss
 RingGuardianState_WaitProjectile_Loop:
 	BRA.w	BossMoveTick_Clamped
+; RingGuardianState_ApplyVelocity
+; Applies sine-based directional velocity to the Ring Guardian.
+; Clamps world X to [RING_GUARDIAN_X_LEFT, RING_GUARDIAN_X_RIGHT] and
+; world Y to [0, RING_GUARDIAN_HEAD_Y], then falls through to BossMoveTick_Clamped.
 RingGuardianState_ApplyVelocity:
 	LEA	SineTable, A0
 	MOVE.l	obj_pos_x_fixed(A5), D0
@@ -3708,6 +4574,10 @@ RingGuardianState_ApplyVelocity_Loop3:
 	CMPI.w	#RING_GUARDIAN_HEAD_Y, obj_world_y(A5)
 	BLE.b	BossMoveTick_Clamped
 	MOVE.w	#RING_GUARDIAN_HEAD_Y, obj_world_y(A5)
+; BossMoveTick_Clamped
+; Shared movement tail called by all Ring Guardian state handlers.
+; Advances animation counter, updates body tiles, checks player collision,
+; handles hit-stun flash and damage, updates HScroll/VScroll parallax.
 BossMoveTick_Clamped:
 	ADDQ.b	#1, obj_move_counter(A5)
 	BSR.w	UpdateBossBodyTiles
@@ -3736,6 +4606,14 @@ RingGuardian_TakeDamage_Return:
 	MOVE.w	D0, VScroll_base.w
 	RTS
 	
+
+;==============================================================
+; RING GUARDIAN — DEATH + VICTORY
+;==============================================================
+; RingGuardian_DeathFall
+; Accelerates the Ring Guardian downward under gravity after defeat.
+; Clamps to RING_GUARDIAN_HEAD_Y, loads the victory palette, queues death
+; and victory sounds, and transitions to RingGuardian_VictoryDialog.
 RingGuardian_DeathFall:
 	ADDI.l	#$8000, obj_vel_y(A5)
 	MOVE.l	obj_vel_y(A5), D0
@@ -3760,6 +4638,10 @@ RingGuardian_DeathFall_Loop:
 	MOVE.w	D0, VScroll_base.w
 	RTS
 	
+; RingGuardian_VictoryDialog
+; Clears the dialog plane over BOSS_VICTORY_FADE_PHASES steps.
+; Once complete, triggers the battle victory event and transitions to
+; BossCommon_VictoryRewardSequence.
 RingGuardian_VictoryDialog:
 	ADDQ.w	#1, Dialog_timer.w
 	MOVE.w	Dialog_timer.w, D0
@@ -3776,6 +4658,9 @@ RingGuardian_VictoryDialog_Loop:
 RingGuardian_VictoryWait:
 	RTS
 	
+; RingGuardian_VictoryDialogContinue
+; Secondary victory dialog clear used by the Orbit Boss victory path.
+; Clears the dialog plane then transitions to RingGuardian_ExitWait.
 RingGuardian_VictoryDialogContinue:
 	ADDQ.w	#1, Dialog_timer.w
 	MOVE.w	Dialog_timer.w, D0
@@ -3791,6 +4676,10 @@ RingGuardian_VictoryDialogContinue_Loop:
 RingGuardian_DialogReturn:
 	RTS
 	
+; RingGuardian_ExitWait
+; Countdown before triggering the final battle exit.
+; Decrements Dialog_timer; when zero fires ProcessBattleVictoryEvent and
+; sets Boss_battle_exit_flag to leave the battle screen.
 RingGuardian_ExitWait:
 	SUBQ.w	#1, Dialog_timer.w
 	BGT.b	RingGuardian_ExitWait_Loop
@@ -3799,6 +4688,15 @@ RingGuardian_ExitWait:
 RingGuardian_ExitWait_Loop:
 	RTS
 	
+
+;==============================================================
+; RING GUARDIAN — PROJECTILE SYSTEM
+;==============================================================
+; RingGuardian_ProjectileSpawner
+; Tick function for the Ring Guardian projectile manager (runs in Object_slot_01).
+; Fires one child projectile per two frames, up to 4 total (obj_attack_timer).
+; Each projectile is initialised with leftward+downward velocity and assigned
+; RingGuardian_ChildProjectileTick; deactivates self after all are fired.
 RingGuardian_ProjectileSpawner:
 	ADDQ.b	#1, obj_move_counter(A5)
 	MOVE.b	obj_move_counter(A5), D0
@@ -3850,6 +4748,9 @@ RingGuardian_ProjectileSpawner_Loop2_Done:
 RingGuardian_ProjectileSpawner_Loop:
 	RTS
 	
+; RingGuardian_WaitChildrenDone
+; Waits until all four child projectile objects are deactivated.
+; Walks four slots from the spawner; deactivates the spawner itself once done.
 RingGuardian_WaitChildrenDone:
 	LEA	(A5), A6
 	MOVE.w	#3, D7
@@ -3864,6 +4765,10 @@ RingGuardian_WaitChildrenDone_Done:
 RingGuardian_WaitChildrenDone_Loop:
 	RTS
 	
+; RingGuardian_ChildProjectileTick
+; Per-frame tick for a Ring Guardian child projectile in flight.
+; Checks collision, applies velocity, cycles BattleVDPCmds_EnemySmall frames,
+; and transitions to RingGuardian_ChildGroundImpact on hitting ORBIT_PROJ_Y_FLOOR.
 RingGuardian_ChildProjectileTick:
 	JSR	CheckEntityPlayerCollisionAndDamage
 	ADDQ.b	#1, obj_move_counter(A5)
@@ -3896,6 +4801,10 @@ RingGuardian_ChildProjectileTick_Loop2:
 	JSR	AddSpriteToDisplayList
 	RTS
 	
+; RingGuardian_ChildGroundImpact
+; Ground-impact explosion animation for a Ring Guardian child projectile.
+; Cycles BattleVDPCmds_EnemyLarge frames, checks collision during explosion,
+; and deactivates the object when the animation completes.
 RingGuardian_ChildGroundImpact:
 	ADDQ.b	#1, obj_move_counter(A5)
 	MOVE.b	obj_move_counter(A5), D0
@@ -3919,6 +4828,15 @@ RingGuardian_ChildGroundImpact_Loop:
 	JSR	AddSpriteToDisplayList
 	RTS
 	
+
+;==============================================================
+; RING GUARDIAN — VDP TILE UPDATES
+;==============================================================
+; UpdateBossBodyTiles
+; Writes animated Ring Guardian body tiles directly to VDP VRAM.
+; Disables interrupts (ORI #$0700, SR), streams 4 rows of upper body tiles
+; from BossBodyUpperTilePtrs and 3 rows of lower tiles from BossBodyLowerTilePtrs,
+; adding $A200 as the palette/priority attribute to each tile index.
 UpdateBossBodyTiles:
 	ORI	#$0700, SR
 	MOVE.b	obj_move_counter(A5), D0
