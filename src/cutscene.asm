@@ -1106,6 +1106,8 @@ DecompressTilemaps_PlaneA:
 	JSR	DecompressTilemap_WithOffset(PC)
 	RTS
 
+; DecompressTilemaps_PlaneB
+; Same as DecompressTilemaps_PlaneA but targets the Plane B tilemap data buffer.
 DecompressTilemaps_PlaneB:
 	LEA	Town_tilemap_plane_b_data, A2
 	MOVEA.l	Tilemap_data_ptr_plane_a.w, A1
@@ -1115,6 +1117,10 @@ DecompressTilemaps_PlaneB:
 	JSR	DecompressTilemap_WithOffset(PC)
 	RTS
 
+; DecompressTilemap
+; Primary decompression entry. Reads width/height header from stream A1, stores them,
+; then decompresses data into A2 starting at byte offset 0 (low bytes of each word).
+; D6 tracks the current write position (byte index, stepping by 2 per tile).
 DecompressTilemap:
 	CLR.w	D6
 	CLR.w	D0
@@ -1129,6 +1135,9 @@ DecompressTilemap:
 	ADD.w	D0, D0
 	MOVE.w	D0, Tilemap_buffer_size.w
 	BRA.w	DecompressTilemap_Next
+; DecompressTilemap_WithOffset
+; Secondary decompression entry. Same as DecompressTilemap but starts A2 at +1
+; (ADDQ.w #1, A2 before the loop), so writes land in the high bytes of each word pair.
 DecompressTilemap_WithOffset:
 	CLR.w	D6
 	CLR.w	D0
@@ -1155,6 +1164,17 @@ DecompressTilemap_Next:
 	ASL.w	#2, D2
 	JSR	TilemapDecompression_JumpTable(PC,D2.w)
 	BRA.b	DecompressTilemap_Next
+; TilemapDecompression_JumpTable
+; Dispatch table indexed by the 3-bit opcode (bits 7-5 of the command byte).
+; Each entry is a BRA.w (4 bytes), so the caller multiplies the opcode by 4.
+;   op 0 → TilemapDecompression_JumpTable_Loop2  ; literal run (N bytes, one per entry)
+;   op 1 → TilemapDecompression_JumpTable_Loop3  ; RLE run (1 byte repeated N times)
+;   op 2 → TilemapDecompression_JumpTable_Loop4  ; RLE run (2-byte sequence repeated)
+;   op 3 → TilemapDecompression_JumpTable_Loop5  ; RLE run (3-byte sequence repeated)
+;   op 4 → TilemapDecompression_JumpTable_Loop6  ; RLE run (4-byte sequence repeated)
+;   op 5 → TilemapDecompression_JumpTable_Loop7  ; copy from 1 row back
+;   op 6 → TilemapDecompression_JumpTable_Loop8  ; copy from 2 rows back
+;   op 7 → $4E75 (RTS = end of stream)
 TilemapDecompression_JumpTable:
 	BRA.w	TilemapDecompression_JumpTable_Loop2
 	BRA.w	TilemapDecompression_JumpTable_Loop3
@@ -1267,6 +1287,15 @@ TilemapDecompression_JumpTable_Loop8_Done:
 TilemapDecompression_JumpTable_Loop:
 	RTS
 
+; === Title Screen ===
+; State machine for the title screen sequence. Tick function advances through states:
+;   TitleScreen_Init → TitleScreen_WaitForHScroll → TitleScreen_FadeAndAnimate
+;   → TitleScreen_LightningFlash → TitleScreen_ShowPressStart
+;   → TitleScreen_ScrollAndWait → TitleScreen_IdleWithScroll
+
+; TitleScreen_Init
+; One-time setup: clears VRAM planes, draws background/graphics, sets initial palette
+; indices, enables HScroll mode 3, triggers the initial HScroll update and fade-in.
 TitleScreen_Init:
 	CLR.w	Intro_timer.w
 	JSR	DisableVDPDisplay
@@ -1299,6 +1328,8 @@ TitleScreen_Init:
 	JSR	EnableDisplay
 	RTS
 
+; ClearEnemyActiveFlags
+; Clears the active flag (bit 7) on all 20 enemy list entries without fully deallocating them.
 ClearEnemyActiveFlags:
 	MOVEA.l	Enemy_list_ptr.w, A6
 	MOVEQ	#$13, D7
@@ -1310,6 +1341,9 @@ ClearEnemyActiveFlags_Done:
 	DBF	D7, ClearEnemyActiveFlags_Done
 	RTS
 
+; TitleScreen_WaitForHScroll
+; Spins until the initial HScroll DMA completes, then starts the palette fade-in
+; and queues the title screen music.
 TitleScreen_WaitForHScroll:
 	MOVE.b	#FLAG_TRUE, Scene_update_flag.w
 	TST.b	HScroll_update_busy.w
@@ -1322,6 +1356,10 @@ TitleScreen_WaitForHScroll:
 TitleScreen_WaitForHScroll_Loop:
 	RTS
 
+; TitleScreen_FadeAndAnimate
+; Waits for the palette fade-in to complete, then advances the logo animation frame
+; every 2 frames (bit 1 edge detect). Transitions to TitleScreen_LightningFlash
+; after frame $91.
 TitleScreen_FadeAndAnimate:
 	BSR.w	UpdateEndingHScrollValues
 	TST.b	Fade_in_lines_mask.w
@@ -1352,6 +1390,10 @@ TitleScreen_FadeAndAnimate_Loop:
 TitleScreen_FadeAndAnimate_Return:
 	RTS
 
+; TitleScreen_LightningFlash
+; Alternates the title palette between the lightning and all-white sets on a 2-frame
+; interval, toggling for up to 5 flashes (tracked by Intro_animation_frame).
+; After the 5th flash, transitions to TitleScreen_ShowPressStart.
 TitleScreen_LightningFlash:
 	BSR.w	UpdateEndingHScrollValues
 	ADDQ.w	#1, Intro_timer.w
@@ -1392,6 +1434,10 @@ TitleScreen_LoadPalette:
 TitleScreen_LoadPalette_Loop:
 	RTS
 
+; TitleScreen_ShowPressStart
+; Waits for any pending fade to finish, then draws the "Press Start" text and loads
+; the final title palette. On first entry with Intro_text_pending clear, draws the
+; logo overlay and transitions the scroll into TitleScreen_ScrollAndWait.
 TitleScreen_ShowPressStart:
 	BSR.w	UpdateEndingHScrollValues
 	TST.b	Intro_text_pending.w
@@ -1416,6 +1462,9 @@ TitleScreen_ShowPressStart_Loop:
 	JSR	LoadPalettesFromTable
 	RTS
 
+; TitleScreen_ScrollAndWait
+; Advances the background scroll each frame until PROLOGUE_SCROLL_END is reached,
+; then draws the Start/Continue menu, spawns cursor sprites, and moves to IdleWithScroll.
 TitleScreen_ScrollAndWait:
 	MOVE.w	Prologue_state.w, D1
 	CMPI.w	#PROLOGUE_SCROLL_END, D1
@@ -1429,10 +1478,15 @@ TitleScreen_ScrollAndWait_Loop:
 	BSR.w	UpdatePrologueScrollVRAM
 	RTS
 	
+; TitleScreen_IdleWithScroll
+; Steady state while the Start/Continue menu is visible; just keeps the HScroll animating.
 TitleScreen_IdleWithScroll:
 	BSR.w	UpdateEndingHScrollValues
 	RTS
 
+; UpdateEndingHScrollValues
+; Adds 11 per-scanline speed values from EndingHScrollSpeedTable to the HScroll run
+; table each frame, producing the parallax wave effect on the title/ending screen.
 UpdateEndingHScrollValues:
 	MOVE.b	#FLAG_TRUE, Scene_update_flag.w
 	LEA	HScroll_run_table.w, A0
@@ -1444,6 +1498,11 @@ UpdateEndingHScrollValues_Done:
 	DBF	D7, UpdateEndingHScrollValues_Done
 	RTS
 
+; UpdatePrologueScrollVRAM
+; Writes 85 HScroll values directly to VDP each frame to scroll the background
+; during the prologue/intro sequence. Even scanlines use Prologue_state (forward
+; scroll), odd scanlines use Prologue_scroll_offset (reverse scroll). Both clamp
+; to 0 once their respective limits are reached.
 UpdatePrologueScrollVRAM:
 	MOVE.l	#$7C440002, D0
 	LEA	Prologue_state.w, A0
@@ -1477,6 +1536,11 @@ UpdatePrologueScrollVRAM_WriteVDP:
 	DBF	D7, UpdatePrologueScrollVRAM_Done
 	RTS
 
+; === Intro Graphics Drawing ===
+
+; DrawIntroBackground
+; Fills 10 rows of VDP Plane B (32 tiles wide) with background tile data from
+; DrawIntroBackground_Data, with interrupts disabled during the write.
 DrawIntroBackground:
 	ORI	#$0700, SR
 	MOVE.l	#$49000003, D5
@@ -1496,6 +1560,11 @@ DrawIntroBackground_Done2:
 	ANDI	#$F8FF, SR
 	RTS
 
+; DrawIntroGraphics
+; Writes the title logo and sword sprite tile data to VRAM in three passes:
+;   1. 15 rows × 21 tiles of background tile indices from DrawIntroGraphics_Data.
+;   2. 14 rows × 10 tiles of sprite tile indices from SpriteTileIndexTable_619EA.
+;   3. 4 groups × 9 rows × 16 tiles of sword sprite tiles from SpriteTileIndexTable_6195A.
 DrawIntroGraphics:
 	ORI	#$0700, SR
 	MOVE.l	#$61800003, D5
@@ -1549,6 +1618,9 @@ DrawIntroGraphics_Done7:
 	ANDI	#$F8FF, SR
 	RTS
 
+; DrawTilemapToVRAM_PlaneA
+; Writes 10 rows × 33 tiles from A0 into Plane A VRAM, with interrupts disabled.
+; Used to draw the "Press Start" / "Continue" overlay on the title screen.
 DrawTilemapToVRAM_PlaneA:
 	ORI	#$0700, SR
 	MOVE.l	#$41880003, D5
@@ -1567,6 +1639,9 @@ DrawTilemapToVRAM_PlaneA_Done2:
 	ANDI	#$F8FF, SR
 	RTS
 
+; SpawnIntroSwordSprite
+; Activates the first enemy slot as the animated sword sprite on the title screen.
+; Sets position (164, 129), tile VRAM_TILE_INTRO_SWORD, size 1×1, tick = IntroSwordSprite_Tick.
 SpawnIntroSwordSprite:
 	MOVEA.l	Enemy_list_ptr.w, A6
 	BSET.b	#7, (A6)
@@ -1584,6 +1659,9 @@ SpawnIntroSwordSprite:
 	MOVE.l	#IntroSwordSprite_Tick, obj_tick_fn(A6)
 	RTS
 
+; IntroSwordSprite_Tick
+; Animates the sword sprite by stepping through IntroSwordFrameTable.
+; Frame index = (move_counter & $78) >> 2, clamped to 14 ($E).
 IntroSwordSprite_Tick:
 	ADDQ.b	#1, obj_move_counter(A5)
 	MOVE.b	obj_move_counter(A5), D0
@@ -1598,11 +1676,24 @@ IntroSwordSprite_Tick_Loop:
 	JSR	AddSpriteToDisplayList
 	RTS
 
+; EndingHScrollSpeedTable
+; 11 long-word speed deltas (4 bytes each) added to HScroll_run_table every frame.
+; Values increase from $00004000 to $00024000, creating the parallax band gradient.
 EndingHScrollSpeedTable:
 	dc.b	$00, $00, $40, $00, $00, $00, $60, $00, $00, $00, $80, $00, $00, $00, $A0, $00, $00, $00, $C0, $00, $00, $01, $00, $00, $00, $01, $40, $00, $00, $01, $80, $00 
 	dc.b	$00, $01, $A0, $00, $00, $02, $00, $00, $00, $02, $40, $00 
+; IntroSwordFrameTable
+; 8 entries × 2 bytes: high byte = tile page offset, low byte = tile index within page.
+; Sequence: frames 483→484→485→486→485→486→484, then end ($0000).
 IntroSwordFrameTable:
 	dc.b	$04, $83, $04, $84, $04, $85, $04, $86, $04, $85, $04, $86, $04, $84, $00, $00 
+; === Menu Cursor Sprites ===
+
+; SpawnMenuCursorSprites
+; Activates two adjacent enemy slots as left/right menu cursor sprites.
+; Left cursor: position (240, 100), tile VRAM_TILE_MENU_CURSOR_L, size 1×4.
+; Right cursor: position (272, 100), tile VRAM_TILE_MENU_CURSOR_R, size 1×4.
+; Both use MenuCursorSprite_Tick.
 SpawnMenuCursorSprites:
 	MOVEA.l	Enemy_list_ptr.w, A6
 	CLR.w	D0
@@ -1639,10 +1730,15 @@ SpawnMenuCursorSprites:
 	MOVE.l	#MenuCursorSprite_Tick, obj_tick_fn(A6)
 	RTS
 
+; MenuCursorSprite_Tick
+; Simply re-submits the cursor sprite to the display list each frame.
 MenuCursorSprite_Tick:
 	JSR	AddSpriteToDisplayList
 	RTS
 
+; DrawPressStartText
+; Rewrites the "Press Start" tile area in VRAM using SpriteTileIndexTable_619EA,
+; 14 rows × 10 tiles. Interrupts disabled during the write.
 DrawPressStartText:
 	ORI	#$0700, SR
 	MOVE.l	#$69800003, D4
@@ -1663,6 +1759,13 @@ DrawPressStartText_Done2:
 	ANDI	#$F8FF, SR
 	RTS
 
+; === Ending Sequence ===
+; State machine for the post-boss ending. Tick function is EndingSequence_StepDispatcher
+; which jumps through EndingSequenceStepJumpTable using Ending_sequence_step as index.
+
+; EndingSequence_Init
+; Sets all palette fade targets to white, clears entities, sets a brief initial delay,
+; and installs EndingSequence_StepDispatcher as the tick function.
 EndingSequence_Init:
 	MOVE.w	#PALETTE_IDX_ALL_WHITE, Palette_line_0_fade_in_target.w
 	MOVE.w	#PALETTE_IDX_ALL_WHITE, Palette_line_1_fade_in_target.w
@@ -1682,6 +1785,8 @@ EndingSequence_Init:
 	MOVE.b	#FLAG_TRUE, HScroll_full_update_flag.w
 	RTS
 
+; EndingSequence_StepDispatcher
+; Dispatches to the handler for the current Ending_sequence_step via jump table.
 EndingSequence_StepDispatcher:
 	LEA	EndingSequenceStepJumpTable, A0
 	MOVE.w	Ending_sequence_step.w, D0
@@ -1690,6 +1795,28 @@ EndingSequence_StepDispatcher:
 	JSR	(A0,D0.w)
 	RTS
 
+; EndingSequenceStepJumpTable
+; 20 entries (steps 0–19), each a BRA.w (4 bytes). Step index × 4 = table offset.
+;   step  0 → EndingSequenceStepJumpTable_Loop  ; wait for fade, play fanfare B, clear scroll
+;   step  1 → EndingStep_Return1_Loop           ; wait, play fanfare A, clear planes
+;   step  2 → EndingStep_Return1_Loop2          ; wait, draw Outro1, fade in
+;   step  3 → EndingStep_Return1_Loop3          ; wait for fade, fade to white
+;   step  4 → EndingStep_Return2_Loop           ; draw border+Outro2, fade in
+;   step  5 → EndingStep_Return2_Loop2          ; wait, fade out
+;   step  6 → EndingStep_Return3_Loop           ; wait for fade, init credits screen
+;   step  7 → EndingStep_Return3_Loop2          ; wait, scroll fire, draw Outro3
+;   step  8 → EndingSequenceStep_Done_Loop      ; wait, fade to black
+;   step  9 → EndingStep_Return4_Loop           ; draw Outro4, fade in
+;   step 10 → EndingStep_Return4_Loop2          ; wait
+;   step 11 → EndingStep_Return5_Loop           ; draw Outro5, fade in
+;   step 12 → EndingStep_Return5_Loop2          ; wait
+;   step 13 → EndingStep_Return6_Loop           ; fill pattern
+;   step 14 → EndingStep_Return6_Loop2          ; scroll up, advance
+;   step 15 → EndingStep_Return7_Loop           ; wait, init font tiles
+;   step 16 → EndingStep_Return7_Loop2          ; scroll credits text (pad=A)
+;   step 17 → EndingSequence_ScrollText_Done_Loop   ; display credit lines
+;   step 18 → EndingSequence_ScrollText_Done_Loop2  ; wait for end of credits
+;   step 19 → EndingSequence_CommonUpdate       ; loop idle
 EndingSequenceStepJumpTable:
 	BRA.w	EndingSequenceStepJumpTable_Loop
 	BRA.w	EndingStep_Return1_Loop
@@ -1975,11 +2102,19 @@ EndingSequence_ScrollText_Done_Loop4:
 	ADDI.l	#$4000, Ending_vscroll_accumulator.w
 	MOVE.w	Ending_vscroll_accumulator.w, VScroll_base.w
 	BRA.w	EndingSequence_CommonUpdate
+; EndingSequence_CommonUpdate
+; Per-frame common update called by most ending steps: blinks cursor, updates HScroll.
 EndingSequence_CommonUpdate:
 	BSR.w	UpdateEndingCursorBlink
 	JSR	UpdateEndingHScrollValues
 	RTS
 
+; === Credits Text Display ===
+
+; DisplayEndingTextLine
+; Clears one credits row in VRAM (40 words of tile $04E0) then writes the text for
+; line D0 from CreditsTextPtrTable. VDP address is computed from D0 × $80 within
+; the credits VRAM region. Falls through to DrawEndingCreditsText_Next.
 DisplayEndingTextLine:
 	LEA	CreditsTextPtrTable, A0
 	MOVEQ	#0, D1
@@ -2002,6 +2137,13 @@ DisplayEndingTextLine_Done:
 	DBF	D7, DisplayEndingTextLine_Done
 	ANDI	#$F8FF, SR
 	ORI	#$0700, SR
+; DrawEndingCreditsText_Next
+; Writes one credits text string character by character to VRAM.
+; SCRIPT_WIDE_CHAR_LO / SCRIPT_WIDE_CHAR_HI → write a wide-char tile then newline.
+; SCRIPT_NEWLINE → advance Ending_sequence_step and clear the text area.
+; SCRIPT_END / $00  → return.
+; Each normal character adds $04C0 to get its tile index. D5 holds the VDP address
+; (incremented by $00020000 per character; $00820000 for wide-char line offset).
 DrawEndingCreditsText_Next:
 	CLR.w	D0
 	MOVE.b	(A0)+, D0

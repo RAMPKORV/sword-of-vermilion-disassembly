@@ -2727,8 +2727,19 @@ BossDeathReward_MultiSprite_Done:
 	DBF	D6, BossDeathReward_MultiSprite_Done
 	RTS
 
+; ======================================================================
+; Data Tables
+; ======================================================================
+
+; EnemyDirectionAnimTable
+; Maps a 4-bit quadrant code (built by CalculateAngleBetweenObjects) to
+; a sprite-direction index (0-7: right, up-right, up, up-left, left, …).
 EnemyDirectionAnimTable:
 	dc.b	$06, $05, $05, $04, $06, $07, $07, $00, $02, $03, $03, $04, $02, $01, $01, $00 
+
+; EnemyPositionOffsetTable
+; 8 (X, Y) word pairs, one per direction.  Used by HandlePlayerTakeDamage
+; to nudge the player away from the enemy on contact.
 EnemyPositionOffsetTable:
 	dc.w	0, -16
 	dc.w	-8, -8 
@@ -2804,7 +2815,11 @@ SetRandomEnemyPosition_SetX_Loop2:
 	BRA.w	SetRandomEnemyPosition
 SetRandomEnemyPosition_Return:
 	RTS
-	
+
+; InitEnemyAI
+; Common enemy initialisation: load stats from the encounter table,
+; set HP, attack, and speed; call SetRandomEnemyPosition; load A6 to
+; point at the next (child) object in the linked list.
 InitEnemyAI:
 	CLR.w	D0
 	MOVE.b	obj_next_offset(A5), D0
@@ -2819,7 +2834,11 @@ InitEnemyAI:
 	CLR.w	obj_attack_timer(A5)
 	CLR.w	obj_knockback_timer(A5)
 	RTS
-	
+
+; ProcessEnemyDamage
+; Check for a pending hit (obj_hit_flag), apply player STR damage, and
+; start the invulnerability timer.  Returns CC with HP sign in flags so
+; callers can BGT/BLE to branch on alive/dead.
 ProcessEnemyDamage:
 	TST.b	obj_invuln_timer(A5)
 	BLE.w	ProcessEnemyDamage_Loop
@@ -2837,7 +2856,11 @@ ProcessEnemyDamage_Loop:
 EnemyTakeDamage_Done:
 	TST.w	obj_hp(A5)
 	RTS
-	
+
+; CheckAndUpdateBattleTimer
+; Variant of ProcessEnemyDamage used by shooter/boss enemies.  Also
+; decrements the battle encounter timer and ends the encounter when
+; the timer reaches zero.
 CheckAndUpdateBattleTimer:
 	TST.b	obj_invuln_timer(A5)
 	BLE.w	CheckAndUpdateBattleTimer_Loop
@@ -2854,42 +2877,65 @@ CheckAndUpdateBattleTimer_Loop:
 EnemyTakeDamage3_Done:
 	TST.w	obj_hp(A5)
 	RTS
-	
+
+; SetEnemyGraphicsParams
+; Set tile index, sprite size, and hitbox half-widths for the main
+; enemy sprite using hardcoded defaults.
 SetEnemyGraphicsParams:
 	MOVE.w	#VRAM_TILE_ENEMY_BASE, obj_tile_index(A5)
 	MOVE.b	#SPRITE_SIZE_2x4, obj_sprite_size(A5)
 	MOVE.w	#$000C, obj_hitbox_half_w(A5)
 	MOVE.w	#$000E, obj_hitbox_half_h(A5)
 	RTS
-	
+
+; SetObjectBoundsType2
+; Alternate graphics/hitbox setup: uses VRAM_TILE_ENEMY_ALT, 4x4 sprite,
+; 12x14 half-extents.
 SetObjectBoundsType2:
 	MOVE.w	#VRAM_TILE_ENEMY_ALT, obj_tile_index(A5)
 	MOVE.b	#SPRITE_SIZE_4x4, obj_sprite_size(A5)
 	MOVE.w	#$000C, obj_hitbox_half_w(A5)
 	MOVE.w	#$000E, obj_hitbox_half_h(A5)
 	RTS
-	
+
+; SetObjectBoundsType1
+; Standard graphics/hitbox setup: uses VRAM_TILE_ENEMY_BASE, 3x4 sprite,
+; 12x12 half-extents.
 SetObjectBoundsType1:
 	MOVE.w	#VRAM_TILE_ENEMY_BASE, obj_tile_index(A5)
 	MOVE.b	#SPRITE_SIZE_3x4, obj_sprite_size(A5)
 	MOVE.w	#$000C, obj_hitbox_half_w(A5)
 	MOVE.w	#$000C, obj_hitbox_half_h(A5)
 	RTS
-	
+
+; InitEnemyProjectileSpeed
+; Set up graphics and hitbox for the projectile slot (third child object)
+; and store the speed value in obj_pos_x_fixed ready for
+; CalculateVelocityFromAngle.
 InitEnemyProjectileSpeed:
 	MOVE.w	#VRAM_TILE_ENEMY_BASE, obj_tile_index(A5)
 	MOVE.b	#SPRITE_SIZE_2x4, obj_sprite_size(A5)
 	MOVE.w	#$000C, obj_hitbox_half_w(A5)
 	MOVE.w	#$000C, obj_hitbox_half_h(A5)
 	RTS
-	
+
+; SetEnemyCollisionBounds
+; Set tile index, 2x4 sprite size, and 12x12 hitbox half-extents.
+; Used by IntermittentChase enemies that also need collision bounds.
 SetEnemyCollisionBounds:
 	MOVE.w	#VRAM_TILE_ENEMY_BASE, obj_tile_index(A5)
 	MOVE.b	#SPRITE_SIZE_2x4, obj_sprite_size(A5)
 	MOVE.w	#$000C, obj_hitbox_half_w(A5)
 	MOVE.w	#$000C, obj_hitbox_half_h(A5)
 	RTS
-	
+
+; ======================================================================
+; Battle Initialization
+; ======================================================================
+
+; EnemyStartingPositions
+; 8 (X, Y) world-coordinate pairs used as preset spawn locations for
+; enemies at the start of a random encounter.
 EnemyStartingPositions:
 	dc.w	$1E, $40
 	dc.w	$5E, $40
@@ -2899,6 +2945,10 @@ EnemyStartingPositions:
 	dc.w	$5E, $A0
 	dc.w	$9E, $A0
 	dc.w	$DE, $A0 
+
+; InitBattleEntities
+; Entry point called when a battle starts.  Reads Battle_type, masks
+; to the lower nibble, and dispatches through BattleEntityInitJumpTable.
 InitBattleEntities:
 	LEA	BattleEntityInitJumpTable, A0
 	MOVE.w	Battle_type.w, D0
@@ -2907,7 +2957,10 @@ InitBattleEntities:
 	ADD.w	D0, D0
 	JSR	(A0,D0.w)
 	RTS
-	
+
+; BattleEntityInitJumpTable
+; BRA table indexed by the lower nibble of Battle_type.
+; Each entry calls the appropriate boss/encounter initialiser.
 BattleEntityInitJumpTable:
 	BRA.w	InitBoss1_Normal
 	BRA.w	InitDemonBoss_Normal
@@ -2923,6 +2976,14 @@ BattleEntityInitJumpTable:
 	BRA.w	InitTwoHeadedDragon_VeryHard
 	BRA.w	InitHydraBoss_Hard
 	BRA.w	InitOrbitBoss
+
+; ======================================================================
+; Boss 1 (Demon Ring): Initialization
+; ======================================================================
+
+; InitBoss1_Normal / InitBoss1_Hard / InitBoss1_VeryHard
+; Set up the Boss1 HP ring values based on difficulty then fall through
+; to InitBoss1_Common.
 InitBoss1_Normal:
 	MOVEA.l	Enemy_list_ptr.w, A6
 	MOVE.w	#BOSS_DMG_RING_NORMAL, obj_max_hp(A6)
@@ -3116,13 +3177,24 @@ BossAiStateJumpTable:
 	BRA.w	Boss1State_ReturnHome
 	BRA.w	Boss1State_HeadRetract
 	BRA.w	Boss1State_ChargeDownLeft
+
+; ======================================================================
+; Boss 1 AI State Machine
+; ======================================================================
+
+; Boss1State_InitIdle
+; Entry state: randomly choose the first movement direction and transition
+; to Boss1State_ChooseAction.
 Boss1State_InitIdle:
 	JSR	GetRandomNumber
 	ANDI.w	#$003F, D0
 	MOVE.b	D0, obj_invuln_timer(A5)
 	ADDQ.w	#1, Boss_ai_state.w
 	RTS
-	
+
+; Boss1State_ChooseAction
+; Central dispatch: decrements a cooldown, then picks the next attack
+; phase (MoveRight, HeadExtend, LungeLeft, etc.) based on RNG.
 Boss1State_ChooseAction:
 	SUBQ.b	#1, obj_invuln_timer(A5)
 	BGE.w	Boss1State_MoveRight_Loop
@@ -3238,6 +3310,9 @@ Boss1State_ReturnHome:
 Boss1State_ReturnHome_Loop:
 	RTS
 
+; Boss1_DeathSequence
+; Plays the boss death animation, awards XP/kims, and triggers the
+; post-battle cutscene once the flash sequence finishes.
 Boss1_DeathSequence:
 	CLR.l	obj_vel_x(A5)
 	MOVE.l	#$8000, obj_vel_y(A5)
