@@ -362,6 +362,10 @@ BATTLE_FIELD_WIDTH      = $0140   ; Play-field width  (320 px)
 BATTLE_FIELD_TOP        = $0038   ; Top    boundary   ( 56 px — below HUD)
 BATTLE_FIELD_BOTTOM     = $00B8   ; Bottom boundary   (184 px)
 
+; After masking a random number to 8 bits (ANDI.w #$00FF), comparing
+; against this threshold gives a 50% probability split (0-127 vs 128-255).
+RANDOM_HALF_THRESHOLD   = $0080   ; 50% RNG threshold (128 of 256)
+
 ;RAM
 
 Fade_out_lines_mask     = $FFFFC08E
