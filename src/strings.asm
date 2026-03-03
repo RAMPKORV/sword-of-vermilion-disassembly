@@ -67,34 +67,34 @@ SawMotherInCartahenaStr:
 LostHereIsAMapStr_Wyclif:
 	dc.b	"Lost again? Well, here's a", $FE
 	dc.b	"map of the area."
-	dc.b	$F9, $07 ; 7 map areas
-	dc.b	$01, $00
-	dc.b	$01, $01
-	dc.b	$01, $10
-	dc.b	$01, $11
-	dc.b	$01, $12
-	dc.b	$01, $21
-	dc.b	$01, $22
+	script_cmd_actions 7 ; 7 map areas
+	script_reveal_map $00
+	script_reveal_map $01
+	script_reveal_map $10
+	script_reveal_map $11
+	script_reveal_map $12
+	script_reveal_map $21
+	script_reveal_map $22
 	dc.b	$00 ; padding
 ; loc_000218DE
 LostHereIsAMapStr_Deepdale:
 	dc.b	"Lost again? Well, here's a", $FE
 	dc.b	"map of the area." 
-	dc.b	$F9, $04 ; 4 map areas
-	dc.b	$01, $13
-	dc.b	$01, $23
-	dc.b	$01, $24
-	dc.b	$01, $25
+	script_cmd_actions 4 ; 4 map areas
+	script_reveal_map $13
+	script_reveal_map $23
+	script_reveal_map $24
+	script_reveal_map $25
 	dc.b	$00 ; padding
 ; loc_00021914
 LostHereIsAMapStr_Stow:
 	dc.b	"Lost again? Well, here's a", $FE
 	dc.b	"map of the area."
-	dc.b	$F9, $04 ; 4 map areas
-	dc.b	$01, $26
-	dc.b	$01, $27
-	dc.b	$01, $28
-	dc.b	$01, $29
+	script_cmd_actions 4 ; 4 map areas
+	script_reveal_map $26
+	script_reveal_map $27
+	script_reveal_map $28
+	script_reveal_map $29
 	dc.b	$00 ; padding
 MenuStartContinueStr:
 	dc.b	"Start", $FE
