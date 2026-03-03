@@ -867,6 +867,11 @@ TakeItem_RestoreHudWithMusic_Loop:
 	JSR	ProcessScriptText
 	RTS
 	
+; ---------------------------------------------------------------------------
+; ClearRewardScriptFlag
+; If Reward_script_flag holds a RAM pointer, writes $FF to that address and
+; clears the pointer.  Called after a chest/found-item reward is accepted.
+; ---------------------------------------------------------------------------
 ClearRewardScriptFlag:
 	MOVEA.l	Reward_script_flag.w, A0
 	CMPA.l	#0, A0
@@ -1029,7 +1034,7 @@ Parma_Npc2_DialogueStates:
 	dc.l	CastleDialogTable_Parma_State1
 	dc.l	Treasure_of_troy_challenge_issued
 	dc.l	CastleDialogTable_Parma_State0
-	LEA	ParmaNpc3_ConditionData, A1
+	LEA	ParmaNpc3_ConditionData, A1	; fall-through from Parma_Npc2_DialogueStates
 	MOVE.w	#0, D7
 	BRA.w	SelectDialogueByGameState
 ParmaNpc3_ConditionData:
@@ -1097,9 +1102,9 @@ Deepdale_Npc3_DialogueStates:
 	dc.l	CastleDialogTable_Deepdale_State1
 	dc.l	Deepdale_truffle_quest_started
 	dc.l	CastleDialogTable_Deepdale_State0
-	dc.l	$43F90003	
-	dc.l	$0A726000	
-	dc.b	$04, $18 
+	dc.l	$43F90003	; inline bytes: LEA $00030A72,A1
+	dc.l	$0A726000	; inline bytes: BRA.w Deepdale_Npc3_SimpleDispatch
+	dc.b	$04, $18	; inline bytes: (branch displacement)
 Deepdale_Npc3_SimpleDispatch:
 	LEA	TownDialogTable_Deepdale_State6, A1
 	BRA.w	SelectDialogueSimple
@@ -1127,7 +1132,7 @@ Stow_Npc2_DialogueStates:
 	dc.l	TownDialogTable_Stow1_State6
 	dc.l	Girl_left_for_stow
 	dc.l	TownDialogTable_Stow1_State5
-	LEA	Stow_Npc3_DialogueStates, A1
+	LEA	Stow_Npc3_DialogueStates, A1	; fall-through from Stow_Npc2_DialogueStates
 	MOVE.w	#4, D7
 	BRA.w	SelectDialogueByGameState
 Stow_Npc3_DialogueStates:
@@ -1241,7 +1246,7 @@ Tadcaster_Npc1_DialogueStates:
 	dc.l	TownDialogTable_Tadcaster_State1
 	dc.l	Bully_first_fight_won
 	dc.l	TownDialogTable_Tadcaster_State0
-	LEA	Tadcaster_Npc2_DialogueStates, A1
+	LEA	Tadcaster_Npc2_DialogueStates, A1	; fall-through from Tadcaster_Npc1_DialogueStates
 	MOVE.w	#1, D7
 	BRA.w	SelectDialogueByGameState
 Tadcaster_Npc2_DialogueStates:
@@ -1354,13 +1359,13 @@ Hastings_Npc2_DialogueStates:
 	dc.l	Ate_spy_dinner
 	dc.l	Hastings_Npc2_DialogueStates_TileData_3A0EE
 Hastings_Npc2_SubDispatch_A:
-	dc.l	$43F90003	
-	dc.l	$A0DA6000	
-	dc.w	$0098
+	dc.l	$43F90003	; inline bytes: LEA $0003A0DA,A1
+	dc.l	$A0DA6000	; inline bytes: BRA.w Hastings_Npc2_SubDispatch_B
+	dc.w	$0098		; inline bytes: (branch displacement)
 Hastings_Npc2_SubDispatch_B:
-	dc.w	$43F9
-	dc.l	Hastings_Npc2_SubDispatch_B_Entry_3A0E2	
-	dc.l	$6000008E	
+	dc.w	$43F9		; inline bytes: LEA opword
+	dc.l	Hastings_Npc2_SubDispatch_B_Entry_3A0E2	; inline bytes: LEA target address
+	dc.l	$6000008E	; inline bytes: BRA.w Hastings_Npc3_Dispatch
 Hastings_Npc3_Dispatch:
 	LEA	Hastings_Npc3_DialogueStates, A1
 	MOVE.w	#0, D7

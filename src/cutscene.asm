@@ -1,7 +1,18 @@
 ; ======================================================================
 ; src/cutscene.asm
-; Prologue scenes, intro, ending credits
+; Prologue scenes, title screen, town camera/tilemap, ending credits
 ; ======================================================================
+
+; ======================================================================
+; Prologue Scene Drawing
+; ======================================================================
+; Each DrawPrologueScene* function draws one full "page" of the story
+; intro by writing tilemap blocks and text strings to the VDP.
+; D5 = VDP control word (destination VRAM address + write command),
+; D4 = tile attribute base (palette/priority flags ORed into tile IDs),
+; A0 = pointer to source data or text string.
+; ======================================================================
+
 DrawPrologueScene3:
 	ORI	#$0700, SR
 	MOVE.l	#$63B00003, D5
@@ -18,6 +29,10 @@ DrawPrologueScene3:
 	ANDI	#$F8FF, SR
 	RTS
 
+; ----------------------------------------------------------------------
+; DrawPrologueScene4and5 — prologue pages 4 and 5 (two panels)
+; Draws two background blocks and two text columns in one call.
+; ----------------------------------------------------------------------
 DrawPrologueScene4and5:
 	ORI	#$0700, SR
 	MOVE.l	#$60840003, D5
@@ -45,6 +60,9 @@ DrawPrologueScene4and5:
 	ANDI	#$F8FF, SR
 	RTS
 
+; ----------------------------------------------------------------------
+; DrawPrologueScene6 — prologue page 6 (text only, no background block)
+; ----------------------------------------------------------------------
 DrawPrologueScene6:
 	ORI	#$0700, SR
 	MOVE.l	#$648E0003, D5
@@ -54,12 +72,22 @@ DrawPrologueScene6:
 	ANDI	#$F8FF, SR
 	RTS
 
+; ======================================================================
+; Tilemap Block Drawing Helpers
+; ======================================================================
+
+; ----------------------------------------------------------------------
+; DrawTilemapBlock_15x12 — write a 15-column × 12-row tile block to VDP.
+; D5 = initial VDP write-address command, D4 = tile attribute base.
+; Source data is fixed at DrawTilemapBlock_15x12_Data (byte per tile).
+; Advances VDP address by one row ($00800000) after each row.
+; ----------------------------------------------------------------------
 DrawTilemapBlock_15x12:
 	LEA	DrawTilemapBlock_15x12_Data, A0
 	MOVE.w	#$000B, D7
 DrawTilemapBlock_15x12_Done:
 	MOVE.l	D5, VDP_control_port
-	MOVE.w	#$000E, D6
+	MOVE.w	#$000E, D6              ; 15 tiles per row (DBF loops 14+1)
 DrawTilemapBlock_15x12_Done2:
 	CLR.w	D0
 	MOVE.b	(A0)+, D0
@@ -70,11 +98,16 @@ DrawTilemapBlock_15x12_Done2:
 	DBF	D7, DrawTilemapBlock_15x12_Done
 	RTS
 
+; ----------------------------------------------------------------------
+; DrawTilemapBlock_13x10 — write a 13-column × 10-row tile block to VDP.
+; Same register convention as DrawTilemapBlock_15x12.
+; A0 = pointer to source tile index data (byte per tile, added to D4).
+; ----------------------------------------------------------------------
 DrawTilemapBlock_13x10:
 	MOVE.w	#9, D7
 DrawTilemapBlock_13x10_Done:
 	MOVE.l	D5, VDP_control_port
-	MOVE.w	#$000C, D6
+	MOVE.w	#$000C, D6              ; 13 tiles per row (DBF loops 12+1)
 DrawTilemapBlock_13x10_Done2:
 	CLR.w	D0
 	MOVE.b	(A0)+, D0
@@ -85,6 +118,15 @@ DrawTilemapBlock_13x10_Done2:
 	DBF	D7, DrawTilemapBlock_13x10_Done
 	RTS
 	
+; ----------------------------------------------------------------------
+; DrawVerticalText — render a null-terminated text string into a vertical
+; VDP tilemap column, handling wide characters and column advances.
+; D5 = initial VDP write-address, D4 = tile attribute base,
+; A0 = pointer to string.
+; $FE (SCRIPT_NEWLINE) advances to the next text column ($10 tiles right).
+; $FF (SCRIPT_END) terminates.
+; $DE/$DF (SCRIPT_WIDE_CHAR_LO/HI) write the tile then step one column.
+; ----------------------------------------------------------------------
 DrawVerticalText:
 	MOVE.l	D5, VDP_control_port
 	MOVE.l	D5, D3
@@ -104,7 +146,7 @@ DrawVerticalText_Next:
 	ADDI.l	#$00020000, D3
 	BRA.b	DrawVerticalText_Next
 DrawVerticalText_NewLine:
-	SUBI.l	#$00820000, D3	
+	SUBI.l	#$00820000, D3          ; back up one row in VRAM address
 	MOVE.l	D3, VDP_control_port	
 	ADD.w	D4, D0	
 	MOVE.w	D0, VDP_data_port	
@@ -112,10 +154,14 @@ DrawVerticalText_NewLine:
 	MOVE.l	D3, VDP_control_port	
 	BRA.b	DrawVerticalText_Next	
 DrawVerticalText_NewLine_Loop:
-	ADDI.l	#$01000000, D5
+	ADDI.l	#$01000000, D5          ; advance to next text column ($10 tiles)
 	BRA.b	DrawVerticalText
 DrawVerticalText_NewLine_Loop2:
 	RTS
+
+; ======================================================================
+; Prologue Fade / Text Data
+; ======================================================================
 
 PrologueFadeParamData: ; Fade animation data during prologue
 	dc.b	$01 

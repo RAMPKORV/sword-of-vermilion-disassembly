@@ -1169,6 +1169,11 @@ GameState_LevelUpComplete_Exit_Loop2:
 GameState_LevelUpComplete_Exit_Loop:
 	RTS
 
+; --- GameState_ReturnToFirstPersonView ($1E) ---
+; After a battle, waits for the fade-out, then calls UpdatePlayerOverworldPosition
+; to step the overworld position in the player's facing direction, re-inits
+; the first-person view, applies cave palettes if underground, plays the
+; return sound, and resets encounter/menu state.
 GameState_ReturnToFirstPersonView:
 	TST.b	Fade_out_lines_mask.w
 	BNE.b	GameState_ReturnToFirstPersonView_Loop
@@ -1192,6 +1197,11 @@ GameState_ReturnToFirstPersonView_Loop2:
 GameState_ReturnToFirstPersonView_Loop:
 	RTS
 
+; --- GameState_DialogDisplay ($20) ---
+; NPC portrait/dialog tile animation (identical pacing logic to
+; EncounterGraphicsFadeIn). Slides the dialog portrait in column-by-column.
+; When all phases are done, flushes the tile buffer, clears Dialog_state_flag,
+; and restores Saved_game_state.
 GameState_DialogDisplay:
 	ADDQ.w	#1, Dialog_timer.w
 	MOVE.w	Dialog_timer.w, D0
@@ -1215,6 +1225,15 @@ GameState_DialogDisplay_Loop3:
 GameState_DialogDisplay_Return:
 	RTS
 
+; ======================================================================
+; Boss Battle State Handlers
+; ======================================================================
+
+; --- GameState_BossBattleInit ($21) ---
+; Scans Boss_battle_flags (up to 16 entries) to determine which boss fight
+; is active (Battle_type). Clears all boss flags, then initialises boss
+; battle objects via BossBattleObjectInitPtrs, loads graphics and palettes,
+; and fades in. Player's tick function is set to BossBattlePlayerInit.
 GameState_BossBattleInit:
 	TST.b	Fade_out_lines_mask.w
 	BNE.w	GameState_BossBattleInit_Loop
@@ -1288,11 +1307,20 @@ GameState_BossBattleInit_Loop2_Done:
 GameState_BossBattleInit_Loop:
 	RTS
 
+; --- GameState_BossBattleActive ($22) ---
+; Per-frame boss battle tick: checks player death and refreshes the
+; current HP/MP display. All battle logic runs in the object tick functions.
 GameState_BossBattleActive:
 	BSR.w	CheckPlayerDeath
 	JSR	DisplayCurrentHpMp
 	RTS
 
+; --- GameState_ReturnFromBossBattle ($23) ---
+; Post-boss-battle cleanup. Checks player death. On alive and fade done:
+; disables display, tears down boss objects, restores player-overworld
+; graphics and tick function, reloads VRAM, restores Saved_game_state - 1
+; as the new state (i.e. the state before the boss fight), and re-enables
+; the display. In cave context, sets first-person mode instead of music.
 GameState_ReturnFromBossBattle:
 	BSR.w	CheckPlayerDeath
 	BEQ.b	GameState_ReturnFromBossBattle_Loop
@@ -1339,6 +1367,13 @@ GameState_ReturnFromBossBattle_Loop4:
 GameState_ReturnFromBossBattle_Loop2:
 	RTS
 
+; ======================================================================
+; Death and Resurrection State Handlers
+; ======================================================================
+
+; --- GameState_BeginResurrection ($24) ---
+; Entry point when the player dies. Waits for an in-progress fade to clear,
+; then forces another fade-out and advances to PROCESS_RESURRECTION.
 GameState_BeginResurrection:
 	TST.b	Fade_out_lines_mask.w
 	BNE.b	GameState_BeginResurrection_Loop
@@ -1347,6 +1382,14 @@ GameState_BeginResurrection:
 GameState_BeginResurrection_Loop:
 	RTS
 
+; --- GameState_ProcessResurrection ($25) ---
+; Actual resurrection logic. Waits for fade, then:
+;   - Clears enemy entities and cave state flags
+;   - Unless Banshee_powder_active: halves kims in BCD
+;     (the inner loop processes 4 BCD bytes at a time)
+;   - Restores HP and MP to full
+;   - Calls InitializeTownMode to warp player to nearest church
+;   - Sets Player_awakening_flag so the inn wakeup dialog fires
 GameState_ProcessResurrection:
 	TST.b	Fade_out_lines_mask.w
 	BNE.w	GameState_ProcessResurrection_Loop
@@ -1409,6 +1452,13 @@ GameState_ProcessResurrection_Loop3:
 GameState_ProcessResurrection_Loop:
 	RTS
 
+; ======================================================================
+; Notification State Handlers
+; ======================================================================
+
+; --- GameState_NotifyInaudiosExpired ($26) ---
+; Saves status bar, prints "Inaudios has worn off", and advances to
+; WAIT_FOR_NOTIFICATION_DISMISS with input blocked.
 GameState_NotifyInaudiosExpired:
 	JSR	SaveStatusBarToBuffer
 	JSR	ResetScriptAndInitDialogue
@@ -1417,6 +1467,10 @@ GameState_NotifyInaudiosExpired:
 	MOVE.b	#FLAG_TRUE, Player_input_blocked.w
 	RTS
 
+; --- GameState_ShowPoisonNotification ($2D) ---
+; First-time poison notification: saves status bar, prints "You are poisoned!",
+; advances to WAIT_FOR_NOTIFICATION_DISMISS, and sets Poison_notified so
+; this fires only once per poisoning.
 GameState_ShowPoisonNotification:
 	JSR	SaveStatusBarToBuffer
 	JSR	ResetScriptAndInitDialogue

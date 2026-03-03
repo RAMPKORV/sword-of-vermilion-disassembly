@@ -2,6 +2,9 @@
 ; Game Text & Name Tables
 ; Item/equipment/spell names and pointer tables, shop dialogue, gameplay message strings
 ; ===========================================================================
+; ---------------------------------------------------------------------------
+; Item Menu Prompts
+; ---------------------------------------------------------------------------
 YouHaveNothingToUseStr:
 	dc.b	"You have nothing to use!", $FF, $00
 DiscardWhichItemStr:
@@ -10,6 +13,9 @@ DiscardWhichItemStr:
 UseWhichItemStr:
 	dc.b	"Which item do you", $FE
 	dc.b	"want to use?", $FF, $00
+; ---------------------------------------------------------------------------
+; Spellbook Prompts
+; ---------------------------------------------------------------------------
 NoBooksOfSpellsStr:
 	dc.b	"You have no Books of Spells.", $FF, $00
 PutDownBookStr:
@@ -34,6 +40,9 @@ BookReadyStr:
 	dc.b	"is ready for use in battle!", $FF 
 CantUseStr:
 	dc.b	"CAN'T USE", $FF
+; ---------------------------------------------------------------------------
+; Chest / Door Interaction Messages
+; ---------------------------------------------------------------------------
 AlreadyOpenStr:
 	dc.b	"But it's already open!", $FF, $00
 NothingToOpenStr:
@@ -60,6 +69,9 @@ ThereIsStr:
 	dc.b	"There's ", $FF, $00
 InsideStr:
 	dc.b	" inside!", $FF, $00
+; ---------------------------------------------------------------------------
+; Inventory / Carry Messages
+; ---------------------------------------------------------------------------
 CantCarryMoreStr:
 	dc.b	"You can't carry any more!", $FE
 	dc.b	"Do you want to drop", $FE
@@ -71,6 +83,9 @@ TakesStr:
 	dc.b	"takes ", $FF, $00
 AreaMapStr:
 	dc.b	"Area Map", $FF, $00
+; ---------------------------------------------------------------------------
+; Item Names
+; ---------------------------------------------------------------------------
 HerbsStr:
 	dc.b	"Herbs", $FF
 CandleStr:
@@ -159,6 +174,9 @@ MineralBarStr:
 	dc.b	"Mineral Bar", $FF
 MegaBlastStr:
 	dc.b	"Mega Blast", $FF, $00
+; ---------------------------------------------------------------------------
+; Action Fragment Strings (used to build combat/use messages)
+; ---------------------------------------------------------------------------
 UsesTheStr:
 	dc.b	"uses the", $FF, $00
 PutStr:
@@ -167,6 +185,9 @@ PutDownStr:
 	dc.b	" down", $FF
 DiscardsTheStr:
 	dc.b	"discards the", $FF, $00
+; ---------------------------------------------------------------------------
+; Error / Status Messages (can't use, cursed, not enough MP, etc.)
+; ---------------------------------------------------------------------------
 CantUseHereStr:
 	dc.b	"You can't use that here.", $FF, $00
 SorryYouAreCursedStr:
@@ -181,6 +202,10 @@ BrightPlaceStr:
 	dc.b	"place, nothing happens.", $FF
 AreaBrightStr:
 	dc.b	"The area has become bright.", $FF 
+; ---------------------------------------------------------------------------
+; Equipment Name Strings
+; --- Swords ---
+; ---------------------------------------------------------------------------
 BronzeSwordStr:
 	dc.b	"Bronze Sword", $FF, $00 
 IronSwordStr:
@@ -217,6 +242,7 @@ BarbarianSwordStr:
 	dc.b	"Barbarian Sword", $FF 
 CriticalSwordStr:
 	dc.b	"Critical Sword", $FF, $00 
+; --- Shields ---
 LeatherShieldStr:
 	dc.b	"Leather Shield", $FF, $00 
 SmallShieldStr:
@@ -251,6 +277,7 @@ PoisonShieldStr:
 	dc.b	"Poison Shield", $FF 
 KnightShieldStr:
 	dc.b	"Knight Shield", $FF 
+; --- Armors ---
 LeatherArmorStr:
 	dc.b	"Leather Armor", $FF 
 BronzeArmorStr:
@@ -285,6 +312,9 @@ CrimsonArmorStr:
 	dc.b	"Crimson Armor", $FF 
 OldNickArmorStr:
 	dc.b	"Old Nick Armor", $FF, $00 
+; ---------------------------------------------------------------------------
+; Spell Name Strings
+; ---------------------------------------------------------------------------
 AeroStr:
 	dc.b	"Aero", $FF, $00 
 AeriosStr:
@@ -336,6 +366,7 @@ CantPutDownStr:
 CantCarryMoreStr2:
 	dc.b	"You can't carry any more.", $FF
 ; ===========================================================================
+; Item name pointer table — indexed by item ID
 ItemNames:
 	dc.l	HerbsStr
 	dc.l	CandleStr
@@ -382,6 +413,8 @@ ItemNames:
 	dc.l	MineralBarStr	
 	dc.l	MegaBlastStr	
 ; ===========================================================================
+; Spell name pointer table — indexed by spell ID
+; Note: SanguiosStr (index 22) follows ToxiosStr (index 21) intentionally
 MagicNames:
 	dc.l	AeroStr
 	dc.l	AeriosStr
@@ -407,6 +440,9 @@ MagicNames:
 	dc.l	ToxiosStr
 	dc.l	SanguiosStr
 ; ===========================================================================
+; Equipment name pointer table — indices 0-19: swords, 20-39: shields, 40+: armors
+; Entries 18-19 both point to DarkSwordStr (intentional duplicate).
+; Entries 37-39 all point to CarmineShieldStr (intentional duplicates).
 EquipmentNames:
 	dc.l	BronzeSwordStr
 	dc.l	IronSwordStr
@@ -428,6 +464,7 @@ EquipmentNames:
 	dc.l	CriticalSwordStr
 	dc.l	DarkSwordStr	
 	dc.l	DarkSwordStr	
+	; --- Shields ---
 	dc.l	LeatherShieldStr
 	dc.l	SmallShieldStr
 	dc.l	LargeShieldStr
@@ -448,6 +485,7 @@ EquipmentNames:
 	dc.l	CarmineShieldStr	
 	dc.l	CarmineShieldStr	
 	dc.l	CarmineShieldStr	
+	; --- Armors ---
 	dc.l	LeatherArmorStr
 	dc.l	BronzeArmorStr
 	dc.l	MetalArmorStr
@@ -465,6 +503,11 @@ EquipmentNames:
 	dc.l	SkeletonArmorStr	
 	dc.l	CrimsonArmorStr
 	dc.l	OldNickArmorStr	
+; ===========================================================================
+; Shop Dialogue Pointer Tables
+; Each table has 3 entries: [0] general/item shop  [1] weapons & armor  [2] spellbooks
+; Indexed by shop category to select the appropriate shopkeeper line.
+; ===========================================================================
 ShopDialog_NextTime:
 	dc.l	NextTimeStr	
 	dc.l	NextTimeStr	

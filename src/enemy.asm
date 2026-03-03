@@ -969,6 +969,9 @@ EnemySplit_UpdateSprite_Loop:
 	JSR	AddSpriteToDisplayList
 	RTS
 
+; ProjectileTick_Linear
+; Tick function for straight-line projectiles.  Recalculates velocity
+; each frame, advances position, and deactivates on out-of-bounds.
 ProjectileTick_Linear:
 	BSR.w	CalculateVelocityFromAngle
 	BSR.w	UpdateObjectScreenPosition
@@ -986,6 +989,13 @@ ProjectileTick_Linear_Loop:
 	JSR	AddSpriteToDisplayList
 	RTS
 
+; ======================================================================
+; Enemy Type: StationaryShooter
+; ======================================================================
+
+; InitEnemy_StationaryShooter
+; Single-sprite stationary enemy that fires a homing projectile at the
+; player.  Uses SetEnemyGraphicsParams for sprite/hitbox setup.
 InitEnemy_StationaryShooter:
 	BSR.w	InitEnemyAI
 	BSR.w	SetEnemyGraphicsParams
@@ -994,6 +1004,9 @@ InitEnemy_StationaryShooter:
 	MOVE.l	#EnemyChildSpriteTick, obj_tick_fn(A6)
 	RTS
 
+; EnemyTick_StationaryShooter
+; Per-frame tick: applies damage, aims at the player, and randomly spawns
+; a ProjectileTick_HomingAlt projectile toward the player.
 EnemyTick_StationaryShooter:
 	TST.b	obj_invuln_timer(A5)
 	BLE.w	EnemyTick_StationaryShooter_Loop
@@ -1076,6 +1089,10 @@ EnemyHoming_UpdateSprite_Loop:
 	JSR	AddSpriteToDisplayList
 	RTS
 
+; ProjectileTick_HomingAlt
+; Homing projectile with a limited lifetime (obj_attack_timer counts
+; down to zero then deactivates).  Re-aims toward the player every 16
+; ticks using a change-in-timer XOR trick.
 ProjectileTick_HomingAlt:
 	TST.w	obj_attack_timer(A5)
 	BNE.w	ProjectileTick_HomingAlt_Loop
@@ -1113,6 +1130,13 @@ ProjectileTick_HomingAlt_Loop4:
 	JSR	AddSpriteToDisplayList
 	RTS
 
+; ======================================================================
+; Enemy Type: IntermittentChase
+; ======================================================================
+
+; InitEnemy_IntermittentChase_Random
+; Enemy that chases randomly: direction chosen at random each movement
+; interval.  Enemy_direction_flag cleared to select random mode.
 InitEnemy_IntermittentChase_Random:
 	BSR.w	InitEnemyAI
 	BSR.w	SetEnemyCollisionBounds
@@ -1122,6 +1146,9 @@ InitEnemy_IntermittentChase_Random:
 	MOVE.l	#EnemyChildSpriteTick, obj_tick_fn(A6)
 	RTS
 
+; InitEnemy_IntermittentChase_Homing
+; Enemy that chases toward the player direction.  Enemy_direction_flag
+; set to FLAG_TRUE to select homing mode in EnemyTick_IntermittentChase.
 InitEnemy_IntermittentChase_Homing:
 	BSR.w	InitEnemyAI
 	BSR.w	SetEnemyCollisionBounds
@@ -1131,6 +1158,10 @@ InitEnemy_IntermittentChase_Homing:
 	MOVE.l	#EnemyChildSpriteTick, obj_tick_fn(A6)
 	RTS
 
+; EnemyTick_IntermittentChase
+; Shared tick for both Random and Homing variants.  Moves toward the
+; player when attack_timer is zero; idles and decrements timer otherwise.
+; Direction chosen randomly or by angle based on Enemy_direction_flag.
 EnemyTick_IntermittentChase:
 	BSR.w	ProcessEnemyDamage
 	BGT.w	EnemyTick_IntermittentChase_Loop

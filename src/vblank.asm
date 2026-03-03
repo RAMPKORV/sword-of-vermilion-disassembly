@@ -404,79 +404,115 @@ ReadControllerPort_Loop:
 	LEA	$2(A0), A0
 	RTS
 
+; ============================================================================
+; UpdateScrollRegs_Normal / UpdateScrollRegs_Boss
+; ============================================================================
+; Write the current HScroll and VScroll base values to the VDP.
+;
+; VDP control word $7C000002 = VRAM write to address $7C00 with auto-inc 2.
+;   HScroll table at VRAM $7C00 — first two words (Plane A, Plane B) at offset 0.
+;   Writing D0 twice updates both Plane A and Plane B with the same value.
+;
+; VDP control word $40000010 = VSRAM write to address $0000 with auto-inc 2.
+;   VSRAM offset 0 = Plane A column 0 VScroll, offset 2 = Plane B column 0 VScroll.
+;   Writing D0 twice scrolls both planes by the same amount.
+;
+; UpdateScrollRegs_Boss only writes one word for each scroll axis (single plane),
+; while UpdateScrollRegs_Normal writes two (both Plane A and Plane B).
+; ============================================================================
 UpdateScrollRegs_Normal:
 	MOVE.w	HScroll_base.w, D0
-	ANDI.w	#$01FF, D0
-	MOVE.l	#$7C000002, VDP_control_port
-	MOVE.w	D0, VDP_data_port
-	MOVE.w	D0, VDP_data_port
+	ANDI.w	#$01FF, D0		; Clamp to 512-pixel scroll range
+	MOVE.l	#$7C000002, VDP_control_port	; Set VRAM write address to HScroll table ($7C00)
+	MOVE.w	D0, VDP_data_port	; Write HScroll for Plane A
+	MOVE.w	D0, VDP_data_port	; Write HScroll for Plane B (same value)
 	MOVE.w	VScroll_base.w, D0
-	ANDI.w	#$01FF, D0
-	MOVE.l	#$40000010, VDP_control_port
-	MOVE.w	D0, VDP_data_port
-	MOVE.w	D0, VDP_data_port
+	ANDI.w	#$01FF, D0		; Clamp to 512-pixel scroll range
+	MOVE.l	#$40000010, VDP_control_port	; Set VSRAM write address to offset $0000
+	MOVE.w	D0, VDP_data_port	; Write VScroll for Plane A
+	MOVE.w	D0, VDP_data_port	; Write VScroll for Plane B (same value)
 	RTS
 
 UpdateScrollRegs_Boss:
 	MOVE.w	HScroll_base.w, D0
-	ANDI.w	#$01FF, D0
-	MOVE.l	#$7C000002, VDP_control_port
-	MOVE.w	D0, VDP_data_port
+	ANDI.w	#$01FF, D0		; Clamp to 512-pixel scroll range
+	MOVE.l	#$7C000002, VDP_control_port	; Set VRAM write address to HScroll table ($7C00)
+	MOVE.w	D0, VDP_data_port	; Write HScroll (Plane A only — boss uses single plane)
 	MOVE.w	VScroll_base.w, D0
-	ANDI.w	#$01FF, D0
-	MOVE.l	#$40000010, VDP_control_port
-	MOVE.w	D0, VDP_data_port
+	ANDI.w	#$01FF, D0		; Clamp to 512-pixel scroll range
+	MOVE.l	#$40000010, VDP_control_port	; Set VSRAM write address to offset $0000
+	MOVE.w	D0, VDP_data_port	; Write VScroll (Plane A only)
 	RTS
 
+; ============================================================================
 ; CheckButtonPress
-; Check if a controller button was just pressed
-; Input: D2.l = Bit number to check
-; Output: D0.w = 1 if button was just pressed, 0 otherwise
-; Detects 0→1 transition (button was released, now pressed)
+; ============================================================================
+; Check if a controller button was just pressed this frame (0→1 edge).
+; Input:  D2.l = bit number to check (matches the bit layout in the state byte)
+; Output: D0.w = 1 if the button was just pressed this frame, 0 otherwise
+;
+; Method: XOR current with previous state isolates bits that changed.
+;         A changed bit that was 0 in the previous state = newly pressed.
+; ============================================================================
 CheckButtonPress:
 	MOVE.b	Controller_current_state.w, D0
 	MOVE.b	Controller_previous_state.w, D1
-	EOR.b	D1, D0
-	BTST.l	D2, D0
-	BEQ.b	CheckButtonPress_NotPressed
-	BTST.l	D2, D1
-	BNE.b	CheckButtonPress_NotPressed
-	MOVEQ	#1, D0
+	EOR.b	D1, D0			; D0 = bits that changed between frames
+	BTST.l	D2, D0			; Did this button's bit change?
+	BEQ.b	CheckButtonPress_NotPressed	; No change → not a new press
+	BTST.l	D2, D1			; Was the bit set in the previous state?
+	BNE.b	CheckButtonPress_NotPressed	; Was set before → this is a release, not a press
+	MOVEQ	#1, D0			; New press confirmed
 	RTS
 
 CheckButtonPress_NotPressed:
 	CLR.w	D0
 	RTS
 
+; ============================================================================
+; DisplayHexDigits / WriteDigitToVRAM  [DEAD CODE — unreferenced]
+; ============================================================================
+; Render a 4-digit hex value to the window plane at the current cursor
+; position.  D2.w = 16-bit value to display; D3.w = tile attribute flags.
+;
+; DisplayHexDigits iterates 4 times, extracting each nibble from D2 MSB-first
+; (ROL #4 brings the next nibble into bits 3-0).  Nibbles 0-9 map to ASCII
+; '0'–'9' ($30–$39); A–F get +7 offset to skip ':'-'@', giving $41–$46 ('A'–'F').
+;
+; WriteDigitToVRAM converts the ASCII digit into a tile index ($4C0 base +
+; code point), applies the attribute flags in D3, then computes the VDP VRAM
+; write address for the window plane cell at (Window_number_cursor_x,
+; Window_number_cursor_y) and writes the tile word.
+; ============================================================================
 DisplayHexDigits:					; unreferenced dead code
-	MOVEQ	#3, D6
+	MOVEQ	#3, D6				; 4 digits (loop counter 3..0)
 DisplayHexDigits_Done:
-	ROL.w	#4, D2
+	ROL.w	#4, D2				; Rotate next nibble into bits 3-0
 	MOVE.w	D2, D4
-	ANDI.w	#$000F, D4
-	CMPI.w	#$9, D4
-	BLE.b	DisplayHexDigits_Loop
-	ADDQ.w	#7, D4
+	ANDI.w	#$000F, D4			; Isolate nibble (0–$F)
+	CMPI.w	#$9, D4				; Digit 0–9?
+	BLE.b	DisplayHexDigits_Loop		; Yes → no extra offset needed
+	ADDQ.w	#7, D4				; A–F: skip ':'-'@' gap in ASCII
 DisplayHexDigits_Loop:
-	ADDI.w	#$30, D4
+	ADDI.w	#$30, D4			; Convert to ASCII ('0'=$30 .. 'F'=$46)
 	BSR.w	WriteDigitToVRAM
 	DBF	D6, DisplayHexDigits_Done
 	RTS
 WriteDigitToVRAM:
-	ADDI.w	#$4C0, D4
-	ORI.w	#$8000, D4
-	OR.w	D3, D4
+	ADDI.w	#$4C0, D4			; Add tile base offset (tile $4C0 = '0' in font)
+	ORI.w	#$8000, D4			; Set tile priority bit
+	OR.w	D3, D4				; Merge palette/flip attribute flags
 	MOVE.w	Window_number_cursor_x.w, D0
 	MOVE.w	Window_number_cursor_y.w, D1
-	ADD.w	D0, D0
-	ASL.w	#7, D1
-	ADD.w	D1, D0
-	ANDI.l	#$00001FFF, D0
-	SWAP	D0
-	ORI.l	#$40000003, D0
-	MOVE.l	D0, VDP_control_port
-	MOVE.w	D4, VDP_data_port
-	ADDQ.w	#1, Window_number_cursor_x.w
+	ADD.w	D0, D0				; X * 2 (word offset within row)
+	ASL.w	#7, D1				; Y * 128 (64 tiles/row * 2 bytes each)
+	ADD.w	D1, D0				; Combined byte offset into window plane
+	ANDI.l	#$00001FFF, D0			; Clamp to 8 KB window plane size
+	SWAP	D0				; Move offset to upper word for VDP control word
+	ORI.l	#$40000003, D0			; Set VDP VRAM write command bits
+	MOVE.l	D0, VDP_control_port		; Set VDP write address
+	MOVE.w	D4, VDP_data_port		; Write tile entry
+	ADDQ.w	#1, Window_number_cursor_x.w	; Advance cursor one cell right
 	RTS
 
 UpdateSceneScrollBuffers:

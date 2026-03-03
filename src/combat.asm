@@ -1,7 +1,24 @@
 ; ======================================================================
 ; src/combat.asm
-; Projectiles, combat checks, sprite updates
+; Combat spells, projectile update routines, item use handlers
 ; ======================================================================
+
+; ----------------------------------------------------------------------
+; HomingProjectile_UpdateFlipFlag / HomingProjectile_AnimateFrame
+; / HomingProjectile_ApplyVelocity
+;
+; Per-frame tick for homing projectiles (Aero, Argentos).
+;
+; obj_invuln_timer is repurposed as the current angle index (0-7).
+; Each frame the flip flag mirrors the direction:
+;   direction bits 0-3 of (angle & 7) -> H-flip on obj_sprite_flags bit 3.
+;
+; Velocity is derived from the sine table:
+;   offset = angle * 32
+;   vel_x  = speed * sin(offset)       (X component)
+;   vel_y  = speed * sin(offset + $40) (Y component, quarter-period)
+; Subtracting velocity from world position moves the projectile forward.
+; ----------------------------------------------------------------------
 HomingProjectile_UpdateFlipFlag:
 	BSET.b	#3, obj_sprite_flags(A5)
 	MOVE.b	obj_invuln_timer(A5), D0
@@ -14,32 +31,32 @@ HomingProjectile_AnimateFrame:
 	MOVE.b	obj_move_counter(A5), D0
 	MOVE.b	D0, D1
 	SUBQ.b	#1, D1
-	EOR.b	D1, D0
-	BTST.l	#1, D0
+	EOR.b	D1, D0          ; D0 has a bit set at each power-of-2 boundary
+	BTST.l	#1, D0          ; Advance angle every 2 frames (bit 1 crossing)
 	BEQ.b	HomingProjectile_ApplyVelocity
-	ADDQ.b	#1, obj_invuln_timer(A5)
-	ANDI.b	#7, obj_invuln_timer(A5)
+	ADDQ.b	#1, obj_invuln_timer(A5) ; Advance angle index
+	ANDI.b	#7, obj_invuln_timer(A5) ; Wrap 0-7
 HomingProjectile_ApplyVelocity:
 	MOVE.b	obj_invuln_timer(A5), D0
 	ANDI.w	#7, D0
-	ADD.w	D0, D0
+	ADD.w	D0, D0          ; D0 = angle * 2 (word offset into sprite frame table)
 	LEA	AeroSpriteFrameTable, A0
 	MOVE.w	(A0,D0.w), obj_tile_index(A5)
 	LEA	SineTable, A0
-	MOVE.l	obj_pos_x_fixed(A5), D0
+	MOVE.l	obj_pos_x_fixed(A5), D0 ; Speed (fixed-point, upper word used)
 	CLR.w	D1
 	MOVE.b	obj_direction(A5), D1
-	ASL.w	#5, D1
-	MOVE.b	(A0,D1.w), D2
-	MOVE.b	$40(A0,D1.w), D3
+	ASL.w	#5, D1          ; D1 = angle * 32 (byte offset into sine table)
+	MOVE.b	(A0,D1.w), D2   ; sin(angle)  -> X component
+	MOVE.b	$40(A0,D1.w), D3 ; cos(angle) -> Y component (quarter-period offset)
 	EXT.w	D2
 	EXT.w	D3
-	MULS.w	D0, D2
-	MULS.w	D0, D3
+	MULS.w	D0, D2          ; vel_x = speed * sin
+	MULS.w	D0, D3          ; vel_y = speed * cos
 	MOVE.l	D2, obj_vel_x(A5)
 	MOVE.l	D3, obj_vel_y(A5)
 	MOVE.l	obj_vel_x(A5), D0
-	SUB.l	D0, obj_world_x(A5)
+	SUB.l	D0, obj_world_x(A5) ; Subtract = move forward in direction
 	MOVE.l	obj_vel_y(A5), D0
 	SUB.l	D0, obj_world_y(A5)
 	MOVE.w	obj_world_x(A5), D0
@@ -53,9 +70,16 @@ HomingProjectile_ApplyVelocity:
 	RTS
 	
 MarkProjectileFinished:
-	MOVE.b	#FLAG_TRUE, obj_npc_busy_flag(A5)
+	MOVE.b	#FLAG_TRUE, obj_npc_busy_flag(A5) ; Signal projectile is done (deactivates it)
 	RTS
 
+; ----------------------------------------------------------------------
+; CastVolti
+;
+; Fires a single fast bolt projectile from the player in the direction
+; they are facing.  Uses object slot 02.  Speed = $400.
+; Tick function: UpdateVoltiProjectile
+; ----------------------------------------------------------------------
 CastVolti:
 	MOVEA.l	Object_slot_02_ptr.w, A6
 	BTST.b	#7, (A6)
@@ -77,18 +101,18 @@ CastVolti:
 	MOVE.w	#VRAM_TILE_PLAYER_SLASH, obj_tile_index(A6)
 	BSR.w	InitMagicDamageAndFlags
 	LEA	SineTable, A0
-	MOVE.l	#$400, D0
+	MOVE.l	#$400, D0           ; Projectile speed
 	MOVE.w	Player_direction.w, D1
-	ASL.w	#5, D1
-	MOVE.b	(A0,D1.w), D2
-	MOVE.b	$40(A0,D1.w), D3
+	ASL.w	#5, D1              ; D1 = direction * 32 (sine table byte offset)
+	MOVE.b	(A0,D1.w), D2       ; sin(angle) -> X component
+	MOVE.b	$40(A0,D1.w), D3    ; cos(angle) -> Y component
 	EXT.w	D2
 	EXT.w	D3
-	MULS.w	D0, D2
-	MULS.w	D0, D3
+	MULS.w	D0, D2              ; vel_x = speed * sin
+	MULS.w	D0, D3              ; vel_y = speed * cos
 	MOVE.l	D2, obj_vel_x(A6)
 	MOVE.l	D3, obj_vel_y(A6)
-	MOVE.w	obj_world_x(A5), obj_world_x(A6)
+	MOVE.w	obj_world_x(A5), obj_world_x(A6) ; Spawn at player's position
 	MOVE.w	obj_world_y(A5), obj_world_y(A6)
 	MOVE.l	#UpdateVoltiProjectile, obj_tick_fn(A6)
 CastVolti_Done:
