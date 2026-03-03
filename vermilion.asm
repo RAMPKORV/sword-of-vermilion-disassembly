@@ -3838,10 +3838,10 @@ BattleMoveOffsets:
 	dc.w	$0000, $0100
 	dc.w	$0004, $0000 
 BattleCollisionBoxOffsets:
-	dc.w	$FFF1, $000F, $FFE2, $0000
-	dc.w	$FFE2, $0000, $FFF1, $000F
-	dc.w	$FFF1, $000F, $0000, $001E
-	dc.w	$0000, $001E, $FFF1, $000F 
+	dc.w	-15, 15, -30, 0
+	dc.w	-30, 0, -15, 15
+	dc.w	-15, 15, 0, 30
+	dc.w	0, 30, -15, 15 
 
 InitBattlePlayerObject:	
 	BCLR.b	#7, obj_sprite_flags(A5)
@@ -7397,16 +7397,16 @@ CheckFixedAreaCollision_Return:
 
 ; loc_00006DCC
 NPCBoundingBoxTable:
-	dc.w	$0000, $0000, $0000, $0000
-	dc.w	$0000, $0000, $0000, $0000
-	dc.w	$FFEC, $0000, $FFEE, $0000
-	dc.w	$0008, $0018, $FFE8, $0008
-	dc.w	$0010, $0020, $FFC8, $FFE2
-	dc.w	$FFEC, $0010, $FFC0, $FFD0
-	dc.w	$FFEC, $0010, $FFC0, $FFD0
-	dc.w	$0004, $0020, $FFE0, $FFF4
-	dc.w	$0004, $0020, $FFE0, $FFF4
-	dc.w	$0004, $0020, $FFE0, $FFF4
+	dc.w	0, 0, 0, 0
+	dc.w	0, 0, 0, 0
+	dc.w	-20, 0, -18, 0
+	dc.w	8, 24, -24, 8
+	dc.w	16, 32, -56, -30
+	dc.w	-20, 16, -64, -48
+	dc.w	-20, 16, -64, -48
+	dc.w	4, 32, -32, -12
+	dc.w	4, 32, -32, -12
+	dc.w	4, 32, -32, -12
 
 ; loc_00006E1C
 LoadTownNPCs:
@@ -10137,9 +10137,9 @@ PortraitTick_CheckCollectedFlag_Loop:
 	JMP	QueueSpriteOAMIfVisible
 ; loc_00008EA4
 PortraitPositionOffsets:
-	dc.w	$FFF0, $FFD0, $0010, $FFD0 
-	dc.w	$FFF0, $FFE8, $0010, $FFE8
-	dc.w	$FFF0, $0000, $0010, $0000 
+	dc.w	-16, -48, 16, -48 
+	dc.w	-16, -24, 16, -24
+	dc.w	-16, 0, 16, 0 
 
 SetObjectActiveFlag:
 	MOVE.b	obj_next_offset(A5), D0
@@ -12960,14 +12960,14 @@ BossDeathReward_MultiSprite_Done:
 EnemyDirectionAnimTable:
 	dc.b	$06, $05, $05, $04, $06, $07, $07, $00, $02, $03, $03, $04, $02, $01, $01, $00 
 EnemyPositionOffsetTable:
-	dc.w	$0000, $FFF0
-	dc.w	$FFF8, $FFF8 
-	dc.w	$FFF0, $0000 
-	dc.w	$FFF8, $0008 
-	dc.w	$0000, $0010 
-	dc.w	$0008, $0008 
-	dc.w	$0010, $0000 
-	dc.w	$0008, $FFF8 
+	dc.w	0, -16
+	dc.w	-8, -8 
+	dc.w	-16, 0 
+	dc.w	-8, 8 
+	dc.w	0, 16 
+	dc.w	8, 8 
+	dc.w	16, 0 
+	dc.w	8, -8 
 
 ApplyDamageToPlayer:
 	MOVE.w	obj_max_hp(A5), D1
@@ -27414,38 +27414,38 @@ UpdateVoltioGroundProjectile:
 	RTS
 
 VoltioProjectileOffsetData:
-	dc.w	$FFF0 
-	dc.w	$FFF0 
-	dc.w	$FFFF 
-	dc.w	$0000 
-	dc.w	$0010 
-	dc.w	$FFF0 
-	dc.w	$FFFF 
-	dc.w	$0001 
-	dc.w	$FFF0 
-	dc.w	$0000 
-	dc.w	$0001 
-	dc.w	$0002 
-	dc.w	$0010 
-	dc.w	$0000 
-	dc.w	$0001 
-	dc.w	$0003
-	dc.w	$FFF0 
-	dc.w	$FFFC 
-	dc.w	$FFFF 
-	dc.w	$0000 
-	dc.w	$0010 
-	dc.w	$FFFC 
-	dc.w	$FFFF 
-	dc.w	$0001 
-	dc.w	$FFF0 
-	dc.w	$000C 
-	dc.w	$0001 
-	dc.w	$0002 
-	dc.w	$0010 
-	dc.w	$000C 
-	dc.w	$0001 
-	dc.w	$0003 
+	dc.w	-16 
+	dc.w	-16 
+	dc.w	-1 
+	dc.w	0 
+	dc.w	16 
+	dc.w	-16 
+	dc.w	-1 
+	dc.w	1 
+	dc.w	-16 
+	dc.w	0 
+	dc.w	1 
+	dc.w	2 
+	dc.w	16 
+	dc.w	0 
+	dc.w	1 
+	dc.w	3
+	dc.w	-16 
+	dc.w	-4 
+	dc.w	-1 
+	dc.w	0 
+	dc.w	16 
+	dc.w	-4 
+	dc.w	-1 
+	dc.w	1 
+	dc.w	-16 
+	dc.w	12 
+	dc.w	1 
+	dc.w	2 
+	dc.w	16 
+	dc.w	12 
+	dc.w	1 
+	dc.w	3 
 
 ;loc_0001901A
 CastVoltios:
@@ -34761,11 +34761,11 @@ SelectDialogueSimple_Loop:
 	
 ; loc_0001F1D8
 TalkDirectionDeltaTable:
-	dc.w	$0000, $FFFF 
-	dc.w	$FFFF, $0000 
-	dc.w	$0000, $0001 
-	dc.w	$0001, $0000 
-	dc.w	$0008, $0008 
+	dc.w	0, -1 
+	dc.w	-1, 0 
+	dc.w	0, 1 
+	dc.w	1, 0 
+	dc.w	8, 8 
 ; loc_0001F1EC
 TownRoomTilemapPlaneAPtrs:
 	dc.l	LoadTownTilemap_Wyclif_PlaneA
