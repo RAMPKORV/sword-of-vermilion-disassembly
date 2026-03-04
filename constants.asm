@@ -221,6 +221,22 @@ TRIGGER_Candle_chest_3_opened                       = $00AE
 TRIGGER_Lantern_chest_2_opened                      = $00AF
 TRIGGER_Herbs_chest_6_opened                        = $00B0
 TRIGGER_Ruby_brooch_chest_opened                    = $00B2
+; Boss/pre-battle encounter triggers ($B3-$EC range)
+TRIGGER_Cartahena_beast_challenged          = $00E0   ; CartahenaBeast pre-battle dialogue complete
+TRIGGER_Tsarkon_lieutenant_challenged       = $00E1   ; "stole youth" vampire-boss pre-battle
+TRIGGER_Book_thief_challenged               = $00E2   ; Book-borrowing boss pre-battle
+TRIGGER_Ring_thief_challenged               = $00E3   ; "collecting rings" boss pre-battle
+TRIGGER_Ring_spy_challenged                 = $00E4   ; Ring-to-Tsarkon spy boss pre-battle
+TRIGGER_Thule_guardian_challenged           = $00E8   ; Tsarkon-lieutenant boss in Thule pre-battle
+TRIGGER_Poison_villain_challenged           = $00E9   ; Poisoned-food villain boss pre-battle
+TRIGGER_Luther_challenged                   = $00EA   ; Luther boss pre-battle
+TRIGGER_Thar_challenged                     = $00EB   ; Thar boss pre-battle
+TRIGGER_Tsarkon_final_challenged            = $00EC   ; Final boss (Tsarkon) pre-battle
+TRIGGER_Blazon_quest_dad_acknowledged       = $0087   ; "father went to Blazon's Cave" NPC response
+TRIGGER_Ancestor_treasure_clue_given        = $007A   ; Ancestor tree-treasure clue given
+TRIGGER_Deepdale_crown_quest_given          = $00CD   ; Deepdale king crown-in-cave quest accepted
+TRIGGER_Wyclif_women_rescue_triggered       = $00D2   ; Frying-pan lady: rescue-the-men quest active
+TRIGGER_Chaos_villain_challenged            = $00A1   ; "let chaos reign" villain pre-battle
 ; Ring of Wisdom region
 TRIGGER_Ring_of_wisdom_received             = $00F8
 TRIGGER_Ring_of_sky_received                = $00F9

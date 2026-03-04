@@ -733,7 +733,7 @@ NeedPermanentSolutionStr:
 	dc.b	"I'm afraid you'll find", $FE
 	dc.b	"I become rather beastly", $FE
 	dc.b	"when I'm bothered...."
-	script_cmd_triggers $F7, $E0
+	script_cmd_triggers TRIGGER_Misc_00F7, TRIGGER_Cartahena_beast_challenged
 CartahenaBeastStr:
 	dc.b	"Thank you, ", SCRIPT_PLAYER_NAME, ".", $FD
 	dc.b	"That beast", $FE
@@ -1091,7 +1091,7 @@ MonsterLittleGirlStr:
 	dc.b	"brought to Tsarkon!", $FD
 	dc.b	"The tavernkeeper has a map", $FE
 	dc.b	"to Asti's Cave."
-	script_cmd_triggers $5F
+	script_cmd_triggers TRIGGER_Stow_tavern_free_meal_offered
 	dc.b	$00
 RingsAreSafeStr:
 	dc.b	"Good, the rings are safe.", $FE
@@ -1233,23 +1233,23 @@ BrunoInHarmonyCaveStr
 	dc.b	"Bruno is in Harmony Cave,", $FE
 	dc.b	"far to the east.", $FE
 	dc.b	"He has the Ring of Water", $2E
-	script_cmd_triggers $88
+	script_cmd_triggers TRIGGER_Money_chest_256_opened
 	dc.b	$00
 DontForgetFaceStr:
 	dc.b	"Don't forget my face", $21
-	script_cmd_triggers TRIGGER_Barrow_map_received, $59
+	script_cmd_triggers TRIGGER_Barrow_map_received, TRIGGER_Barrow_quest_1_complete
 	dc.b	$00
 BrunoNotRightStr:
 	dc.b	"Bruno is not right in the", $FE
 	dc.b	"head. If I " 
 	dc.b	"had the Ring of", $FE
 	dc.b	"Water, all would be well!"
-	script_cmd_triggers $88
+	script_cmd_triggers TRIGGER_Money_chest_256_opened
 	dc.b	$00
 MeetAgainStr:
 	dc.b	"We will meet again", $FE
 	dc.b	"someday, never fear!"
-	script_cmd_triggers TRIGGER_Barrow_map_received, $5A
+	script_cmd_triggers TRIGGER_Barrow_map_received, TRIGGER_Barrow_quest_2_complete
 	dc.b	$00
 BrunoLoyalServantStr:
 	dc.b	"Bruno was the most loyal", $FE
@@ -1614,12 +1614,12 @@ WelcomeFoolStr:
 	dc.b	"He asked me to give you a", $FE
 	dc.b	"gift--this town as your", $FE
 	dc.b	"grave! Prepare to die!"
-	script_cmd_triggers $F7, $E8
+	script_cmd_triggers TRIGGER_Misc_00F7, TRIGGER_Thule_guardian_challenged
 BestedMeStr:
 	dc.b	"You may have bested me,", $FE
 	dc.b	"but you will never", $FE
 	dc.b	"defeat Tsarkon!"
-	script_cmd_triggers $53
+	script_cmd_triggers TRIGGER_Carthahena_boss_defeated
 	dc.b	$00
 ErikProudStr:
 	dc.b	SCRIPT_PLAYER_NAME, ", if only Erik", $FE
@@ -2865,7 +2865,7 @@ StoleYouthStr:
 	dc.b	"from the villagers.", $FD
 	dc.b	"Now I'll drain your", $FE
 	dc.b	"youth as well!"
-	script_cmd_triggers $F7, $E1
+	script_cmd_triggers TRIGGER_Misc_00F7, TRIGGER_Tsarkon_lieutenant_challenged
 	dc.b	$00
 TownTilemapData_Watling_SetA_TgtB:	
 	dc.b	$28, $23, $3F, $00, $3F, $00, $BF, $BE, $01, $13, $6B, $17, $1A, $19, $01, $05 
@@ -3519,7 +3519,7 @@ JustBorrowedBookStr:
 	dc.b	"But it's true. I didn't", $FE
 	dc.b	"steal it--I just borrowed", $FE
 	dc.b	"it for a moment. Ha, ha!"
-	script_cmd_triggers $F7, $E2
+	script_cmd_triggers TRIGGER_Misc_00F7, TRIGGER_Book_thief_challenged
 SorryForStealingStr:
 	dc.b	"I'm sorry. I make", $FE
 	dc.b	"a living selling", $FE
@@ -3539,7 +3539,7 @@ MeetAgainStr2:
 	dc.b	"Oh, yes, I have your rings,", $FE
 	dc.b	"but you'll have to kill", $FE
 	dc.b	"me to get them."	
-	script_cmd_triggers $F7, $E3
+	script_cmd_triggers TRIGGER_Misc_00F7, TRIGGER_Ring_thief_challenged
 	dc.b	$00
 
 TownTilemapData_Stow1_SetA_TgtB:	
@@ -3852,7 +3852,7 @@ AnselmIntroductionStr:
 	dc.b	"Poison Shield for you.", $FE
 	dc.b	"He's been gone for so long!", $FE
 	dc.b	"Please find my father."
-	script_cmd_triggers $87
+	script_cmd_triggers TRIGGER_Blazon_quest_dad_acknowledged
 ThankYouForFindingHimStr:
 	dc.b	"My father has come back.", $FE
 	dc.b	"Thank you for finding him.", $FF
@@ -3872,7 +3872,7 @@ LoneTreeTreasureStr:
 	dc.b	"A treasure of my ancestors", $FD
 	dc.b	"is hidden there.", $FE
 	dc.b	"Take it as my gift."
-	script_cmd_triggers $7A
+	script_cmd_triggers TRIGGER_Ancestor_treasure_clue_given
 WaitingForLetterStr:
 	dc.b	"I am waiting for a letter", $FE
 	dc.b	"from my lady friend.", $FF, $00
@@ -3888,11 +3888,11 @@ MalagaNorthKeyStr:
 	dc.b	"to get there.", $FD
 	dc.b	"I'll give you the key to", $FE
 	dc.b	"the cave."
-	script_cmd_triggers $8A
+	script_cmd_triggers TRIGGER_Herbs_chest_2_opened
 LostKeyStr:	
 	dc.b	"Did you lose the key?", $FE
 	dc.b	"I have another one."
-	script_cmd_triggers $8C
+	script_cmd_triggers TRIGGER_Candle_chest_opened
 TroubleWakingUpStr:
 	dc.b	"Yawn! I'm having", $FE
 	dc.b	"trouble waking up.", $FF 
@@ -4290,7 +4290,7 @@ WaitingForPlayerNameStr:
 	dc.b	"No matter! If you can get", $FE
 	dc.b	"the crown from inside the", $FE
 	dc.b	"cave, you will be king."
-	script_cmd_triggers $CD
+	script_cmd_triggers TRIGGER_Deepdale_crown_quest_given
 	dc.b	$00
 HaveYouGivenUpStr:
 	dc.b	"What happened?", $FE
@@ -4782,7 +4782,7 @@ ImposterConfrontationStr
 	dc.b	"Wait, you're not my", $FE
 	dc.b	"master! Prepare to die,", $FE
 	dc.b	"vile imposter!"
-	script_cmd_triggers $F6
+	script_cmd_triggers TRIGGER_Misc_00F6
 YouHaveNotWonYetStr
 	dc.b	"You haven't won yet! Come", $FE
 	dc.b	"to Darmon's Cave and face", $FE
@@ -4843,7 +4843,7 @@ AwaitingYouStr
 	dc.b	"I sent the ring to Tsarkon,", $FE
 	dc.b	"but I have something even", $FE
 	dc.b	"better for you...."
-	script_cmd_triggers $F7, $E4
+	script_cmd_triggers TRIGGER_Misc_00F7, TRIGGER_Ring_spy_challenged
 TownTilemapData_Tadcaster_SetA_TgtB:
 	dc.b	$25, $1F, $01, $96, $3F, $00, $24, $00, $02, $A0, $96, $BF, $BF, $BF, $BC, $01, $83, $BF, $A4, $03, $1D, $1E 
 	dc.b	$84, $AD, $01, $1B, $26, $1C, $AB, $09, $13, $14, $A7, $21, $22, $23, $88, $14, $15, $A9, $03, $1D, $1E, $1F, $25, $20, $AB, $02, $16, $24, $25, $00, $02, $85 
@@ -5080,7 +5080,7 @@ GoldMinedMethuenCaveStr:
 	dc.b	"Cartahena uses slaves to", $FE
 	dc.b	"dig out gold to fund their", $FE
 	dc.b	"wars of destruction", $2E
-	script_cmd_triggers $89
+	script_cmd_triggers TRIGGER_Herbs_chest_opened
 WarBetweenCartahenaAndExcalabriaStr:
 	dc.b	"We also suffered in", $FE
 	dc.b	"the war between", $FE
@@ -5189,7 +5189,7 @@ LazySlugStr:
 	dc.b	"fact, I will. Take that!", $FD
 	dc.b	"Now don't come back until", $FE
 	dc.b	"you've rescued our men."
-	script_cmd_triggers $D2
+	script_cmd_triggers TRIGGER_Wyclif_women_rescue_triggered
 	dc.b	$00
 HurryBringBackHusbandsStr:
 	dc.b	"Good for you!", $FE
@@ -5466,7 +5466,7 @@ CartahenaDestroyedSwaffhamStr:
 	dc.b	"monsters stole my treasure", $FE
 	dc.b	"and the true Ring of Earth.", $FE
 	dc.b	"Only you can stop them now."
-	script_cmd_triggers $4B
+	script_cmd_triggers TRIGGER_Knute_informed_of_swaffham_ruin
 	dc.b	$00
 SomethingStrangeHappenStr:
 	dc.b	"I feel that something", $FE 
@@ -5900,7 +5900,7 @@ EscapedDestructionExcalabriaStr
 	dc.b	"I buried it under a", $FE 
 	dc.b	"tree in Excalabria.", $FE 
 	dc.b	"It may still be there."
-	script_cmd_triggers $A2
+	script_cmd_triggers TRIGGER_Lantern_chest_opened
 ShopInSwaffhamStr
 	dc.b	"I used to work in a shop in", $FE 
 	dc.b	"Swaffham, but I didn't like", $FE
@@ -5915,7 +5915,7 @@ HonorHumbleHomeStr
 	dc.b	"Please partake of this meal", $FE 
 	dc.b	"I have prepared for you.", $FE 
 	dc.b	"I have much to tell you."
-	script_cmd_triggers TRIGGER_Ate_spy_dinner, $4C
+	script_cmd_triggers TRIGGER_Ate_spy_dinner, TRIGGER_Player_greatly_poisoned
 WasItGoodStr
 	dc.b	"Was it good?", $FF, $00 
 PoisonedFoodStr
@@ -6233,11 +6233,11 @@ WishPoisonKilledStr:
 	dc.b	"You'll soon wish that", $FE
 	dc.b	"the poisoned food I", $FE
 	dc.b	"gave you had killed you!"
-	script_cmd_triggers $F7, $E9
+	script_cmd_triggers TRIGGER_Misc_00F7, TRIGGER_Poison_villain_challenged
 DieLaughStr:
 	dc.b	"Ha, ha, ha!", $FE
 	dc.b	"you'll die!"
-	script_cmd_triggers $F7, $E9
+	script_cmd_triggers TRIGGER_Misc_00F7, TRIGGER_Poison_villain_challenged
 	dc.b	$00
 TharRevengeStr:
 	dc.b	"So, you are here at last.", $FE 
@@ -6246,7 +6246,7 @@ TharRevengeStr:
 	dc.b	"I asked Tsarkon to turn me", $FE
 	dc.b	"into a monster. Now my", $FE
 	dc.b	"revenge will be sweet!"
-	script_cmd_triggers $F7, $EB
+	script_cmd_triggers TRIGGER_Misc_00F7, TRIGGER_Thar_challenged
 	dc.b	$00
 LutherDevastatedSwaffhamStr:
 	dc.b	"Once again we meet, young", $FE
@@ -6254,7 +6254,7 @@ LutherDevastatedSwaffhamStr:
 	dc.b	"devastated Swaffham.", $FD
 	dc.b	"After I kill you, I'm off", $FE
 	dc.b	"to visit Wyclif...."
-	script_cmd_triggers $F7, $EA
+	script_cmd_triggers TRIGGER_Misc_00F7, TRIGGER_Luther_challenged
 StepfatherRingsStr:
 	dc.b	"Finally, you've come, my", $FE
 	dc.b	"son! I call you that though", $FE
@@ -6266,7 +6266,7 @@ ChaosReignStr:
 	dc.b	"Now the world is ours! Let", $FE
 	dc.b	"chaos reign! Everyone can", $FE
 	dc.b	"suffer as I have suffered!"
-	script_cmd_triggers $A1
+	script_cmd_triggers TRIGGER_Chaos_villain_challenged
 BreakMothersHeartStr:
 	dc.b	"This will break your", $FE
 	dc.b	"poor mother's heart!", $FE
@@ -6276,7 +6276,7 @@ BreakMothersHeartStr:
 OneOfUsWillDieStr:
 	dc.b	"Then one of us", $FE
 	dc.b	"will die now!"
-	script_cmd_triggers $F7, $EC
+	script_cmd_triggers TRIGGER_Misc_00F7, TRIGGER_Tsarkon_final_challenged
 FreedAtLastStr:
 	dc.b	"You have freed me at last!", $FE
 	dc.b	"Long have I been in thrall", $FE

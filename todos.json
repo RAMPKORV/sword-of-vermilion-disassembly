@@ -286,10 +286,10 @@
           "id": "CONST-007",
           "title": "Replace 26 raw hex trigger offsets with named TRIGGER_ constants in script.asm",
           "description": "26 of 49 script_cmd_triggers calls use raw hex offsets instead of named TRIGGER_ constants. Define and apply constants for all story trigger flags.",
-          "file": "src/script.asm",
+          "file": "src/townbuild.asm",
           "priority": "medium",
           "effort": "medium",
-          "status": "todo"
+          "status": "done"
         }
       ]
     },
