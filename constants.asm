@@ -1,6 +1,49 @@
-VDP_control_port    = $C00004
+; ============================================================
+; Hardware Port Addresses
+; ============================================================
+; VDP (Video Display Processor)
 VDP_data_port       = $C00000
+VDP_control_port    = $C00004
+PSG_port            = $C00011   ; Programmable Sound Generator (directly accessed)
+
+; Z80 Bus Control
 Z80_bus_request     = $A11100
+Z80_reset           = $A11200
+Z80_ram             = $A00000   ; Start of Z80 address space (8 KB)
+Z80_sound_ram       = $A00200   ; Sound driver data region in Z80 RAM
+
+; I/O Ports
+IO_version          = $A10001   ; Hardware version / region register
+IO_data_port_1      = $A10003   ; Controller 1 data port
+IO_data_port_2      = $A10005   ; Controller 2 data port
+IO_expansion        = $A10007   ; Expansion port data
+IO_init_status      = $A10008   ; I/O initialization status (longword)
+IO_ctrl_port_1      = $A10009   ; Controller 1 control port
+IO_ctrl_port_2      = $A1000B   ; Controller 2 control port
+IO_ctrl_expansion   = $A1000D   ; Expansion port control
+IO_init_status_w    = $A1000C   ; I/O initialization status (word check)
+
+; TMSS (Trademark Security System)
+TMSS_register       = $A14000   ; Write 'SEGA' here to unlock VDP
+
+; YM2612 FM Synthesis
+YM2612_addr_0       = $A04000   ; YM2612 address port (bank 0: channels 1-3)
+YM2612_data_0       = $A04001   ; YM2612 data port (bank 0)
+YM2612_addr_1       = $A04002   ; YM2612 address port (bank 1: channels 4-6)
+YM2612_data_1       = $A04003   ; YM2612 data port (bank 1)
+
+; ============================================================
+; VRAM Layout
+; ============================================================
+; Addresses of major structures in VDP VRAM, as configured by
+; VDPInitValues in init.asm. These are VRAM-internal addresses,
+; not 68k bus addresses.
+;
+VRAM_Plane_A        = $C000     ; Scroll A nametable (64x32 = $1000 bytes)
+VRAM_Plane_B        = $E000     ; Scroll B nametable (64x32 = $1000 bytes)
+VRAM_Window         = $F000     ; Window plane nametable
+VRAM_Sprites        = $D800     ; Sprite attribute table (80 entries, $280 bytes)
+VRAM_HScroll        = $DC00     ; Horizontal scroll table
 
 ; ============================================================
 ; Dialogue Script Opcodes
@@ -1013,6 +1056,17 @@ TOWN_TILE_PASSABLE_F    = $F000   ; Passable tile group F
 ; Value $FF is the cave/dungeon exit.
 OVERWORLD_TILE_CAVE_MIN       = $10  ; byte: cave entrance tile lower bound
 OVERWORLD_TILE_UPPER_CAVE_MIN = $90  ; byte (signed): upper-range cave/town boundary
+OVERWORLD_TILE_EXIT           = $FF  ; byte: cave/dungeon exit tile
+
+; First-person dungeon rendering type indices.
+; MapTileToTypeIndex / ValidateDungeonTileType map raw tile bytes to these indices,
+; which are used to look up wall/object graphics in FpObjectTileTable_Near/Mid/Far.
+FP_RENDER_OPEN          = 0  ; open/passable (no wall)
+FP_RENDER_DOOR          = 3  ; cave entrance visible on overworld (not inside cave)
+FP_RENDER_WALL          = 4  ; impassable wall (town-range tile $80-$8F)
+FP_RENDER_MAX_TERRAIN   = 6  ; highest basic terrain index (0-6 used as-is)
+FP_RENDER_DOOR_UPPER    = 7  ; upper-range entrance (tile >= $90, signed negative)
+FP_RENDER_CAVE_WALL     = 8  ; cave interior wall (tile >= $10 while inside cave)
 
 ; ------------------------------------------------------------
 ; Script & Dialogue Engine
@@ -2303,179 +2357,6 @@ VRAM_TILE_MENU_CURSOR_L     = $0487  ; Menu cursor left-half sprite bank
 VRAM_TILE_MENU_CURSOR_R     = $048B  ; Menu cursor right-half sprite bank
 VRAM_TILE_VOLTIOS_EXPLOSION = $0269  ; Voltios deactivate/ascend explosion sprite bank
 VRAM_TILE_HYDRO_ICICLE_FALL = $0295  ; Hydro boss large falling icicle sprite bank
-
-
-; Towns
-TOWN_WYCLIF         = $00
-TOWN_PARMA          = $01
-TOWN_WATLING        = $02
-TOWN_DEEPDALE       = $03
-TOWN_STOW1          = $04
-TOWN_STOW2          = $05
-TOWN_KELTWICK       = $06
-TOWN_MALAGA         = $07
-TOWN_BARROW         = $08
-TOWN_TADCASTER      = $09
-TOWN_HELWIG         = $0A
-TOWN_SWAFHAM        = $0B
-TOWN_EXCALABRIA     = $0C
-TOWN_HASTINGS1      = $0D
-TOWN_HASTINGS2      = $0E
-TOWN_CARTHAHENA     = $0F
-
-ITEM_TYPE_DISCARDABLE       = $00
-ITEM_TYPE_NON_DISCARDABLE   = $01
-
-; Items
-ITEM_HERBS              = $00
-ITEM_CANDLE             = $01
-ITEM_LANTERN            = $02
-ITEM_POISON_BALM        = $03
-ITEM_ALARM_CLOCK        = $04
-ITEM_VASE               = $05
-ITEM_JOKE_BOOK          = $06
-ITEM_SMALL_BOMB         = $07
-ITEM_OLD_WOMANS_SKETCH  = $08
-ITEM_OLD_MANS_SKETCH    = $09
-ITEM_PASS_TO_CARTHAHENA = $0A
-ITEM_TRUFFLE            = $0B
-ITEM_DIGOT_PLANT        = $0C
-ITEM_TREASURE_OF_TROY   = $0D
-ITEM_WHITE_CRYSTAL      = $0E 
-ITEM_RED_CRYSTAL        = $0F 
-ITEM_BLUE_CRYSTAL       = $10
-ITEM_WHITE_KEY          = $11
-ITEM_RED_KEY            = $12
-ITEM_BLUE_KEY           = $13
-ITEM_CROWN              = $14
-ITEM_SIXTEEN_RINGS      = $15
-ITEM_BRONZE_KEY         = $16
-ITEM_SILVER_KEY         = $17
-ITEM_GOLD_KEY           = $18 
-ITEM_THULE_KEY          = $19 
-ITEM_SECRET_KEY         = $1A 
-ITEM_MEDICINE           = $1B
-ITEM_AGATE_JEWEL        = $1C
-ITEM_GRIFFIN_WING       = $1D 
-ITEM_TITANIAS_MIRROR    = $1E 
-ITEM_GNOME_STONE        = $1F 
-ITEM_TOPAZ_JEWEL        = $20 
-ITEM_BANSHEE_POWDER     = $21 
-ITEM_RAFAELS_STICK      = $22 
-ITEM_MIRROR_OF_ATLAS    = $23 
-ITEM_RUBY_BROOCH        = $24
-ITEM_DUNGEON_KEY        = $25
-ITEM_KULMS_VASE         = $26
-ITEM_KASANS_CHISEL      = $27
-ITEM_BOOK_OF_KIEL       = $28 
-ITEM_DANEGELD_WATER     = $29 
-ITEM_MINERAL_BAR        = $2A
-ITEM_MEGA_BLAST         = $2B
-
-FLAG_MAGIC_READIED  = $80
-MAGIC_TYPE_FIELD    = $00
-MAGIC_TYPE_BATTLE   = $02
-
-; Magic
-MAGIC_AERO          = $00
-MAGIC_AERIOS        = $01
-MAGIC_VOLTI         = $02
-MAGIC_VOLTIO        = $03
-MAGIC_VOLTIOS       = $04
-MAGIC_FERROS        = $05
-MAGIC_COPPEROS      = $06
-MAGIC_MERCURIOS     = $07
-MAGIC_ARGENTOS      = $08
-MAGIC_HYDRO         = $09
-MAGIC_HYDRIOS       = $0A
-MAGIC_CHRONO        = $0B
-MAGIC_CHRONIOS      = $0C
-MAGIC_TERRAFISSI    = $0D
-MAGIC_ARIES         = $0E
-MAGIC_EXTRIOS       = $0F
-MAGIC_INAUDIOS      = $10
-MAGIC_LUMINOS       = $11
-MAGIC_SANGUA        = $12
-MAGIC_SANGUIA       = $13
-MAGIC_SANGUIO       = $14
-MAGIC_TOXIOS        = $15
-MAGIC_SANGUIOS      = $16
-
-EQUIPMENT_TYPE_SWORD    = $04
-EQUIPMENT_TYPE_SHIELD   = $08
-EQUIPMENT_TYPE_ARMOR    = $10
-EQUIPMENT_FLAG_CURSED   = $02
-FLAG_IS_EQUIPPED        = $80
-
-; Swords 
-EQUIPMENT_SWORD_BRONZE          = $00
-EQUIPMENT_SWORD_IRON            = $01
-EQUIPMENT_SWORD_SHARP           = $02
-EQUIPMENT_SWORD_LONG            = $03
-EQUIPMENT_SWORD_SILVER          = $04
-EQUIPMENT_SWORD_PRIME           = $05
-EQUIPMENT_SWORD_GOLDEN          = $06
-EQUIPMENT_SWORD_MIRAGE          = $07
-EQUIPMENT_SWORD_PLATINUM        = $08
-EQUIPMENT_SWORD_DIAMOND         = $09
-EQUIPMENT_SWORD_GRAPHITE        = $0A
-EQUIPMENT_SWORD_ROYAL           = $0B
-EQUIPMENT_SWORD_ULTIMATE        = $0C
-EQUIPMENT_SWORD_OF_VERMILION    = $0D
-EQUIPMENT_SWORD_DARK1           = $0E
-EQUIPMENT_SWORD_DEATH           = $0F
-EQUIPMENT_SWORD_BARBARIAN       = $10
-EQUIPMENT_SWORD_CRITICAL        = $11
-EQUIPMENT_SWORD_DARK2           = $12
-EQUIPMENT_SWORD_DARK3           = $13
-
-; Shields
-EQUIPMENT_SHIELD_LEATHER        = $14
-EQUIPMENT_SHIELD_SMALL          = $15
-EQUIPMENT_SHIELD_LARGE          = $16
-EQUIPMENT_SHIELD_SILVER         = $17
-EQUIPMENT_SHIELD_GOLD           = $18
-EQUIPMENT_SHIELD_PLATINUM       = $19
-EQUIPMENT_SHIELD_GEM            = $1A
-EQUIPMENT_SHIELD_SAPPHIRE       = $1B
-EQUIPMENT_SHIELD_DIAMOND        = $1C
-EQUIPMENT_SHIELD_DRAGON         = $1D
-EQUIPMENT_SHIELD_MAGIC          = $1E
-EQUIPMENT_SHIELD_PHANTOM        = $1F
-EQUIPMENT_SHIELD_GRIZZLY        = $20
-EQUIPMENT_SHIELD_CARMINE1       = $21
-EQUIPMENT_SHIELD_ROYAL          = $22
-EQUIPMENT_SHIELD_POISON         = $23
-EQUIPMENT_SHIELD_KNIGHT         = $24
-EQUIPMENT_SHIELD_CARMINE2       = $25
-EQUIPMENT_SHIELD_CARMINE3       = $26
-EQUIPMENT_SHIELD_CARMINE4       = $27
-
-
-; Armors
-EQUIPMENT_ARMOR_LEATHER         = $28
-EQUIPMENT_ARMOR_BRONZE          = $29
-EQUIPMENT_ARMOR_METAL           = $2A
-EQUIPMENT_ARMOR_SCALE           = $2B
-EQUIPMENT_ARMOR_PLATE           = $2C
-EQUIPMENT_ARMOR_SILVER          = $2D
-EQUIPMENT_ARMOR_GOLD            = $2E
-EQUIPMENT_ARMOR_CRYSTAL         = $2F
-EQUIPMENT_ARMOR_EMERALD         = $30
-EQUIPMENT_ARMOR_DIAMOND         = $31
-EQUIPMENT_ARMOR_KNIGHT          = $32
-EQUIPMENT_ARMOR_ULTIMATE        = $33
-EQUIPMENT_ARMOR_ODIN            = $34
-EQUIPMENT_ARMOR_SECRET          = $35
-EQUIPMENT_ARMOR_SKELETON        = $36
-EQUIPMENT_ARMOR_CRIMSON         = $37
-EQUIPMENT_ARMOR_OLD_NICK        = $38
-
-OLD_MAN_POSITION_X = $0019
-OLD_MAN_POSITION_Y = $000D
-
-OLD_WOMAN_POSITION_X = $0027
-OLD_WOMAN_POSITION_Y = $0003
 
 ; ============================================================
 ; Palette Data Table Indices
