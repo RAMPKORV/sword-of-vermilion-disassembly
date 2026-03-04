@@ -612,3 +612,58 @@ magicGfxData macro layout_ptr,frame_ptr,tile_count,palette_id
     dc.w    tile_count
     dc.w    palette_id
     ENDM
+
+; ============================================================
+; townShopBlock Macro
+; ============================================================
+; Defines one town's slot in ShopAssortmentByTownAndShopType
+; or ShopPricesByTownAndType (4 × dc.l = 16 bytes per town).
+; Slot order: item shop, equipment shop, magic buy, magic sell.
+; The magic-sell slot is always ParmaMagicShop* for all towns.
+;
+; item:    Pointer to item shop assortment/prices
+; equip:   Pointer to equipment shop assortment/prices
+; magic:   Pointer to magic shop assortment/prices (buy)
+; msell:   Pointer to magic sell assortment/prices (always ParmaMagicShop*)
+townShopBlock macro item,equip,magic,msell
+    dc.l    item
+    dc.l    equip
+    dc.l    magic
+    dc.l    msell
+    ENDM
+
+; ============================================================
+; shopItem Macro
+; ============================================================
+; One entry in an item shop assortment block.
+; All item shop entries use ITEM_TYPE_DISCARDABLE ($00).
+; 2 bytes: dc.b ITEM_TYPE_DISCARDABLE, <item_id>
+;
+; id: Item constant (e.g. ITEM_HERBS, ITEM_MEDICINE)
+shopItem macro id
+    dc.b    ITEM_TYPE_DISCARDABLE, id
+    ENDM
+
+; ============================================================
+; shopEquip Macro
+; ============================================================
+; One entry in an equipment shop assortment block.
+; 2 bytes: dc.b <type>, <equipment_id>
+;
+; type: Equipment type constant (EQUIPMENT_TYPE_SWORD/SHIELD/ARMOR)
+; id:   Equipment constant (e.g. EQUIPMENT_SWORD_BRONZE)
+shopEquip macro type,id
+    dc.b    type, id
+    ENDM
+
+; ============================================================
+; shopMagic Macro
+; ============================================================
+; One entry in a magic shop assortment block.
+; 2 bytes: dc.b <type>, <magic_id>
+;
+; type: Magic type constant (MAGIC_TYPE_BATTLE or MAGIC_TYPE_FIELD)
+; id:   Magic constant (e.g. MAGIC_FERROS, MAGIC_SANGUA)
+shopMagic macro type,id
+    dc.b    type, id
+    ENDM
