@@ -30,8 +30,8 @@ DebugTestMenu:
 	MOVE.w	VDP_Reg11_cache.w, D0           ; read cached VDP register 11 (HScroll mode)
 	ANDI.w	#$FFF8, D0                      ; mask off HScroll mode bits
 	MOVE.w	D0, VDP_control_port            ; write back (set full-screen HScroll)
-	MOVE.w	#$0000, $FFFFC104.w             ; HScroll_base = 0
-	MOVE.w	#$0000, $FFFFC106.w             ; VScroll_base = 0
+	MOVE.w	#$0000, HScroll_base.w             ; HScroll_base = 0
+	MOVE.w	#$0000, VScroll_base.w             ; VScroll_base = 0
 	MOVE.w	#$004F, Palette_line_0_index.w  ; palette slot 0 → index $4F
 	MOVE.w	#$0053, Palette_line_1_index.w  ; palette slot 1 → index $53
 	MOVE.w	#$0054, Palette_line_2_index.w  ; palette slot 2 → index $54

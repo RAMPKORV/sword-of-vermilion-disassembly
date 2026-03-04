@@ -1,8 +1,8 @@
 EntryPoint:
-	TST.l	$00A10008
+	TST.l	IO_init_status
 EntryPoint_RegionCheck:
 	BNE.w	StartupSequence
-	TST.w	$00A1000C
+	TST.w	IO_init_status_w
 	BNE.b	EntryPoint_RegionCheck
 	LEA	BootParamTable(PC), A5
 	MOVEM.l	(A5)+, D5/D6/D7/A0/A1/A2/A3/A4
@@ -65,7 +65,7 @@ BootParamTable:
 	dc.l	$00000100	
 	dc.l	$00A00000	
 	dc.l	Z80_bus_request	
-	dc.l	$00A11200	
+	dc.l	Z80_reset	
 	dc.l	VDP_data_port	
 	dc.l	VDP_control_port	
 
@@ -103,17 +103,17 @@ VDPInitValues_End:
 ; StartupSequence
 StartupSequence:
 	MOVE.w	#$0100, Z80_bus_request
-	MOVE.b	$00A1000D, D0
+	MOVE.b	IO_ctrl_expansion, D0
 	MOVE.w	#0, Z80_bus_request
 	BTST.l	#6, D0
 	BNE.w	StartupSequence_Init
 	JSR	InitVDP
 ; StartupSequence_Init
 StartupSequence_Init:
-	MOVE.b	$00A10001, D0
+	MOVE.b	IO_version, D0
 	ANDI.b	#$0F, D0
 	BEQ.b	StartupSequence_SetupHardware
-	MOVE.l	#$53454741, $00A14000	
+	MOVE.l	#'SEGA', TMSS_register	
 ; StartupSequence_SetupHardware
 StartupSequence_SetupHardware:
 	ORI	#$0700, SR
@@ -126,12 +126,12 @@ StartupSequence_SetupHardware:
 	ANDI	#$F8FF, SR
 ; MainGameLoop
 MainGameLoop:
-	LEA	$FFFFFE00.w, A7
+	LEA	Stack_base.w, A7
 	BSR.w	WaitForVBlank
-	CLR.b	$FFFFE002.w
+	CLR.b	Sprite_update_pending.w
 	JSR	SortAndUploadSpriteOAM_Alt
-	CLR.w	$FFFFE000.w
-	LEA	$FFFFD000.w, A5
+	CLR.w	Sprite_attr_count.w
+	LEA	Object_slot_base.w, A5
 ; ObjectDispatchLoop
 ObjectDispatchLoop:
 	BTST.b	#7, (A5)
@@ -152,7 +152,7 @@ ObjectDispatchEnd:
 	JSR	SortAndUploadSpriteOAM
 ; ObjectDispatchDone
 ObjectDispatchDone:
-	MOVE.b	#$FF, $FFFFE002.w
+	MOVE.b	#$FF, Sprite_update_pending.w
 	BRA.b	MainGameLoop
 ; loc_000010D8
 ClearVblankFlagAndWait:
@@ -160,7 +160,7 @@ ClearVblankFlagAndWait:
 
 ; WaitForVBlank
 WaitForVBlank:
-	TST.b	$FFFFC0FF.w
+	TST.b	Vblank_flag.w
 	BEQ.b	WaitForVBlank
-	CLR.b	$FFFFC0FF.w
+	CLR.b	Vblank_flag.w
 	RTS

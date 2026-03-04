@@ -205,7 +205,7 @@ TownMovement_UpdateWalkAnim:
 	ADD.w	D1, D1
 	ADDQ.b	#1, obj_move_counter(A5)
 	MOVE.b	obj_move_counter(A5), D0
-	BTST.b	#6, $00A10001
+	BTST.b	#6, IO_version
 	BNE.w	TownMovement_UpdateWalkAnim_Loop
 	ANDI.w	#$000F, D0
 	BNE.b	TownMovement_UpdateWalkAnim_Loop2
@@ -632,7 +632,7 @@ BattlePlayerInputHandler_UpdateSprite_Loop:
 	ASL.w	#4, D1
 	ADDQ.b	#1, obj_move_counter(A5)
 	MOVE.b	obj_move_counter(A5), D0
-	BTST.b	#6, $00A10001
+	BTST.b	#6, IO_version
 	BNE.w	BattlePlayerInputHandler_UpdateSprite_Loop2
 	ANDI.w	#$0018, D0
 	ASR.w	#1, D0
@@ -845,7 +845,7 @@ NPCInteractionTickHandler:
 	MOVE.b	#SPRITE_SIZE_2x2, obj_sprite_size(A5)
 	LEA	NPCSpriteFrames_Base, A0
 	MOVE.b	obj_move_counter(A5), D0
-	BTST.b	#6, $00A10001
+	BTST.b	#6, IO_version
 	BNE.w	NPCInteractionTickHandler_Loop
 	ANDI.w	#$000C, D0
 	ASR.w	#1, D0

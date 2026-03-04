@@ -4326,7 +4326,7 @@ SegaLogoScreen_Init_Done3:
 ; Advances to prologue once fade is complete.
 SegaLogoScreen_FadeIn:
 	ADDQ.w	#1, Frame_delay_counter.w
-	BTST.b	#6, $00A10001
+	BTST.b	#6, IO_version
 	BNE.w	SegaLogoScreen_FadeIn_Loop
 	ANDI.w	#7, Frame_delay_counter.w
 	BNE.b	ProloguePaletteStep_Return

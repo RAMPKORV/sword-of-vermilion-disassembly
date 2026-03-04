@@ -30,7 +30,7 @@ ProgramState_01_Return:
 
 ProgramState_TitleInit:
 	MOVE.b	#$45, Timer_seconds_bcd.w
-	BTST.b	#6, $00A10001
+	BTST.b	#6, IO_version
 	BEQ.b	ProgramState_02_Loop
 	MOVE.b	#$37, Timer_seconds_bcd.w	
 ProgramState_02_Loop:

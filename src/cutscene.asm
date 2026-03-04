@@ -2050,7 +2050,7 @@ EndingStep_Return7_Loop3:
 EndingStep_Return7_Loop2:
 	ADDQ.w	#1, Dialog_timer.w
 	MOVE.w	Dialog_timer.w, D0
-	BTST.b	#6, $00A10001
+	BTST.b	#6, IO_version
 	BNE.w	EndingStep_Return7_Loop4
 	ANDI.w	#7, D0
 	BNE.b	EndingSequence_ScrollText_Done

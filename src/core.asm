@@ -100,9 +100,9 @@ DMAFillWindowSpriteArea:
 InitYM2612:
 	MOVEQ	#$00000040, D0
 	stopZ80
-	MOVE.b	D0, $00A10009
-	MOVE.b	D0, $00A1000B
-	MOVE.b	D0, $00A1000D
+	MOVE.b	D0, IO_ctrl_port_1
+	MOVE.b	D0, IO_ctrl_port_2
+	MOVE.b	D0, IO_ctrl_expansion
 	startZ80
 	RTS
 
@@ -144,12 +144,12 @@ DMAFillEntireVRAM:
 
 InitZ80SoundDriver:
 	MOVE.w	#$0100, Z80_bus_request
-	MOVE.w	#$0100, $00A11200
-	MOVE.w	#0, $00A11200
+	MOVE.w	#$0100, Z80_reset
+	MOVE.w	#0, Z80_reset
 	MOVE.w	#$0013, D7
 InitZ80SoundDriver_Done:
 	DBF	D7, InitZ80SoundDriver_Done
-	MOVE.w	#$0100, $00A11200
+	MOVE.w	#$0100, Z80_reset
 	BSR.w	LoadZ80Driver
 	RTS
 

@@ -1785,7 +1785,7 @@ GetStaticNPCAnimationOffset_Loop:
 	BRA.w	GetStaticNPCAnimationOffset_Return
 GetStaticNPCAnimationOffset_Loop2:
 	MOVE.b	obj_move_counter(A5), D0
-	BTST.b	#6, $00A10001
+	BTST.b	#6, IO_version
 	BNE.w	GetStaticNPCAnimationOffset_Loop3
 	ASR.w	#4, D0
 	ANDI.w	#3, D0
@@ -1829,7 +1829,7 @@ GetNPCAnimationOffset_Loop:
 	BRA.b	GetNPCAnimationOffset_Loop3
 GetNPCAnimationOffset_Loop2:
 	MOVE.b	obj_move_counter(A5), D0
-	BTST.b	#6, $00A10001
+	BTST.b	#6, IO_version
 	BNE.w	GetNPCAnimationOffset_Loop4
 	ASR.w	#4, D0
 	ANDI.w	#3, D0
@@ -1926,7 +1926,7 @@ LoadNPCAnimationFrame:
 ; Inputs: A1 = animation table, A5 = NPC/entity object
 AnimateEntitySprite:
 	MOVE.b	obj_move_counter(A5), D0
-	BTST.b	#6, $00A10001
+	BTST.b	#6, IO_version
 	BNE.w	AnimateEntitySprite_Loop
 	ASR.w	#3, D0
 	ANDI.w	#2, D0

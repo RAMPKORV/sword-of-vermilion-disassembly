@@ -303,7 +303,7 @@ VerticalInterrupt_Loop3:
 	CLR.b	Sprite_dma_update_pending.w
 VerticalInterrupt_Loop4:
 	BSR.w	ProcessSoundQueue
-	BTST.b	#6, $00A10001
+	BTST.b	#6, IO_version
 	BEQ.b	VBlank_ProcessPalette
 	ADDQ.w	#1, Vblank_frame_counter.w	
 	MOVE.w	Vblank_frame_counter.w, D4	
@@ -370,13 +370,13 @@ CheckDebugMode_end:
 ReadControllers:
 	LEA	Controller_current_state.w, A0
 	stopZ80
-	LEA	$00A10003, A1
-	LEA	$00A10009, A2
+	LEA	IO_data_port_1, A1
+	LEA	IO_ctrl_port_1, A2
 	startZ80
 	BSR.w	ReadControllerPort
 	stopZ80
-	LEA	$00A10005, A1
-	LEA	$00A1000B, A2
+	LEA	IO_data_port_2, A1
+	LEA	IO_ctrl_port_2, A2
 	startZ80
 ReadControllerPort:
 	MOVE.b	(A0), $1(A0)

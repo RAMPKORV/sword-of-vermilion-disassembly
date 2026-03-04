@@ -121,7 +121,7 @@
               "uses": 1
             }
           ],
-          "status": "todo"
+          "status": "done"
         },
         {
           "id": "CONST-003",
@@ -185,7 +185,7 @@
               "constant": "VScroll_base"
             }
           ],
-          "status": "todo"
+          "status": "done"
         },
         {
           "id": "CONST-004",
