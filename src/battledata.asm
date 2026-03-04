@@ -1,6 +1,105 @@
 ; ===========================================================================
+; src/battledata.asm
 ; Battle & Enemy Data
-; Sine table, battle sprite tables, DMA commands, enemy sprite frames, encounter tables, enemy stat definitions, enemy sprite sets
+; ===========================================================================
+;
+; OVERVIEW
+; --------
+; This file contains all static data for the battle system:
+;   1. Pre-SineTable preamble      (lines   5-36)   32 dc.l values before SineTable
+;   2. SineTable                   (lines  42-54)   256-byte signed sine LUT
+;   3. BattleSpriteIndexTableA/B   (lines  55-86)   15 words each; sprite bank selectors
+;   4. BattleSpriteDMACommands     (lines  87-...)  16-byte DMA command entries
+;   5. Enemy encounter tables      (lines 980-...)  area+cave zone tables → group indices
+;   6. EnemyEncounterGroupTable    (lines 1033-...) 70 pointer entries (groups 00–45)
+;   7. EnemyEncounterGroup_NN      (lines 1107-...) 4 words each: RNG-selected enemy index
+;   8. EnemyGfxDataTable           (lines 1247-...) 3-pointer entries: appearance/stats/sprites
+;   9. EnemyAppearance_*           (lines 1503-...) 24-byte sprite appearance entries
+;  10. EnemyData_*                 (lines 1610-...) 26-byte enemy stat entries
+;  11. EnemySpriteSet_*            (lines 1782-...) linked sprite set tables
+;
+; ============================================================
+; RANDOMIZER GUIDE
+; ============================================================
+;
+; --- Enemy Stats (EnemyData_*) ---
+; Each entry is 26 bytes ($1A), assembled by the enemyData macro (macros.asm line 515).
+; The macro expands to:
+;
+;   Offset  Size  Field            Notes
+;   +$00    long  ai_fn            AI/init function pointer
+;   +$04    word  tile_id          Sprite palette/bank index (VRAM tile table)
+;   +$06    word  reward_type      ENEMY_REWARD_NONE/$0000–$0003 (see constants.asm)
+;   +$08    word  reward_value     Item ID, gold amount, or encoded reward data
+;   +$0A    byte  extra_obj_slots  Extra linked object slots; 0 for single-sprite enemies
+;   +$0B    byte  max_spawn        Max enemies per encounter (game caps at 7)
+;   +$0C    word  hp               Hit points (big-endian, stored as 2 bytes by macro)
+;   +$0E    word  damage_per_hit   Damage per hit
+;   +$10    word  xp_reward        EXP awarded on kill
+;   +$12    word  kim_reward       Gold (kims) awarded on kill
+;   +$14    long  speed            Movement speed (fixed-point, higher = faster)
+;   +$18    byte  sprite_frame     Initial sprite frame index (almost always $00)
+;   +$19    byte  behavior_flag    AI behavior mode ($02,$04,$06,$08,$0A,$0C,$0E)
+;
+; NOTE: hp and damage_per_hit are stored as raw bytes by the macro:
+;   dc.b (hp)>>8, (hp)&$FF, (damage_per_hit)>>8, (damage_per_hit)&$FF
+; Read them as big-endian words at offsets $0C and $0E respectively.
+;
+; reward_type constants (constants.asm):
+;   ENEMY_REWARD_NONE   = $FFFF  ; No drop
+;   ENEMY_REWARD_TYPE_0 = $0000  ; Gold/common drop
+;   ENEMY_REWARD_TYPE_1 = $0001  ; Item drop; reward_value encodes item ID
+;   ENEMY_REWARD_TYPE_2 = $0002  ; (drop type 2)
+;   ENEMY_REWARD_TYPE_3 = $0003  ; (drop type 3)
+;
+; --- Enemy Encounter Resolution ---
+; To determine what enemies appear:
+;   1. Look up EnemyEncounterTypesByMapSector (overworld) or
+;      EnemyEncounterTypesByCaveRoom (dungeon) with the current area/room index.
+;   2. That byte is an index N into EnemyEncounterGroupTable.
+;   3. EnemyEncounterGroupTable[N] is a pointer to EnemyEncounterGroup_NN.
+;   4. EnemyEncounterGroup_NN has 4 words; Random_number & 3 selects one.
+;   5. That word is an index M into EnemyGfxDataTable (3-pointer entries,
+;      each 12 bytes: Appearance pointer / Data pointer / SpriteSet pointer).
+;   6. The Appearance and Data pointers give sprites and stats respectively.
+;
+;   Overworld area table:  EnemyEncounterTypesByMapSector  (~line  980)
+;   Cave/dungeon table:    EnemyEncounterTypesByCaveRoom   (line  1028)
+;   Group pointer table:   EnemyEncounterGroupTable        (line  1033) — 70 entries
+;   Group data entries:    EnemyEncounterGroup_00–_45      (line  1107) — 4 words each
+;   GFX/data table:        EnemyGfxDataTable               (line  1247) — 3 longs/entry
+;
+; --- Enemy Appearance (EnemyAppearance_*) ---
+; Each entry is 24 bytes (6 × dc.l), assembled by the enemyAppearance macro:
+;
+;   Offset  Size  Field         Notes
+;   +$00    long  main_frames   Pointer to main body frame table
+;   +$04    long  main_gfx      Pointer to main body GFX data
+;   +$08    long  child_frames  Pointer to child sprite frame table (StartOfRom if none)
+;   +$0C    long  child_gfx     Pointer to child sprite GFX data   (StartOfRom if none)
+;   +$10    long  dma_fn        DMA routine: NullSpriteRoutine-2 / ExecuteWorldMapDma
+;   +$14    long  vfx           Packed $PPQQSSTT: PP=pal_hi QQ=pal_lo SS=sprite_size TT=tile_id
+;
+; NOTE: Multiple EnemyAppearance_* labels may share identical body/child frame+gfx
+; pointers (same sprite shape, different palette via vfx field). This is intentional —
+; the game uses the vfx tile_id byte to distinguish palette swaps.
+;
+; --- EnemyGfxDataTable ---
+; 3 dc.l entries per enemy type, 12 bytes per entry, starting at EnemyGfxDataTable.
+; Index in this table matches the word values in EnemyEncounterGroup_NN entries.
+;   +$00  dc.l  EnemyAppearance_*  ; pointer to 24-byte appearance entry
+;   +$04  dc.l  EnemyData_*        ; pointer to 26-byte stat entry
+;   +$08  dc.l  EnemySpriteSet_*   ; pointer to sprite set table
+;
+; Total enemy types in EnemyGfxDataTable: 85 entries (indices $00–$54).
+;
+; --- EnemySpriteSet_* ---
+; Variable-length table of sprite slot records terminated by NULL_PTR (dc.l 0).
+; Each record is 10 bytes:
+;   +$00  long  frame_table pointer
+;   +$04  long  gfx_data pointer
+;   +$08  byte  unknown_0
+;   +$09  byte  unknown_1
 ; ===========================================================================
 	dc.l	$00FCF9F6	
 	dc.l	$F3F0EDEA	
