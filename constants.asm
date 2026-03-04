@@ -1143,6 +1143,12 @@ Text_build_buffer       = $FFFFC260
 Sprite_dma_update_pending = $FFFFC302   ; .b
 Npc_load_done_flag          = $FFFFC303   ; .b
 Vdp_dma_slot_index          = $FFFFC304   ; .w
+; Named indices into BattleSpriteDMACommands (each entry is 16 bytes).
+; Used with Vdp_dma_slot_index before calling ExecuteVdpDmaTransfer.
+DMA_SLOT_ENEMY_FRONT        = $0035   ; slot 53 — enemy front-bank tiles   → VRAM $1B20
+DMA_SLOT_ENEMY_BACK         = $0036   ; slot 54 — enemy back-bank tiles    → VRAM $0320
+DMA_SLOT_ENEMY_ALT          = $003C   ; slot 60 — optional 3rd enemy tiles → VRAM $3320
+DMA_SLOT_MAGIC_SPELL        = $0043   ; slot 67 — magic spell tiles        → VRAM $48A0
 Sound_queue_count           = $FFFFC320   ; .w
 Sound_queue_buffer          = $FFFFC322
 Current_area_music          = $FFFFC32A   ; .w

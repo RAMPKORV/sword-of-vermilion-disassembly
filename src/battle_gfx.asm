@@ -500,14 +500,14 @@ LoadEncounterGraphics:
 	MULU.w	#$000C, D0
 	ADDQ.w	#8, D0
 	MOVEA.l	(A6,D0.w), A6
-	MOVE.w	#$0035, Vdp_dma_slot_index.w
+	MOVE.w	#DMA_SLOT_ENEMY_FRONT, Vdp_dma_slot_index.w
 	LEA	Tile_gfx_buffer.w, A2
 	MOVEA.l	(A6)+, A4
 	MOVEA.l	(A6)+, A3
 	MOVE.w	(A6)+, D5
 	BSR.w	LoadMultipleTilesFromTable
 	BSR.w	ExecuteVdpDmaTransfer
-	MOVE.w	#$0036, Vdp_dma_slot_index.w
+	MOVE.w	#DMA_SLOT_ENEMY_BACK, Vdp_dma_slot_index.w
 	LEA	Tile_gfx_buffer.w, A2
 	MOVEA.l	(A6)+, A4
 	MOVEA.l	(A6)+, A3
@@ -516,7 +516,7 @@ LoadEncounterGraphics:
 	BSR.w	ExecuteVdpDmaTransfer
 	MOVE.l	(A6), D0
 	BLE.b	LoadEncounterGraphics_Loop
-	MOVE.w	#$003C, Vdp_dma_slot_index.w
+	MOVE.w	#DMA_SLOT_ENEMY_ALT, Vdp_dma_slot_index.w
 	LEA	Tile_gfx_buffer.w, A2
 	MOVEA.l	(A6)+, A4
 	MOVEA.l	(A6)+, A3
@@ -544,7 +544,7 @@ LoadMagicGraphics:
 	ADD.w	D0, D0
 	ADD.w	D0, D0
 	MOVEA.l	(A6,D0.w), A6
-	MOVE.w	#$0043, Vdp_dma_slot_index.w
+	MOVE.w	#DMA_SLOT_MAGIC_SPELL, Vdp_dma_slot_index.w
 	LEA	Tile_gfx_buffer.w, A2
 	MOVEA.l	(A6)+, A4
 	MOVEA.l	(A6)+, A3
