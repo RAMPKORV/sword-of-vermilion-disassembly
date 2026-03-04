@@ -504,6 +504,23 @@ HBlankObjectHandler:
 	RTS
 
 ; VBlank interrupt handler - manages program state execution
+; VBlankObjectHandler
+; Top-level program-state dispatcher, called every VBlank frame.
+;
+; On first call: clears Program_state (→ PROGRAM_STATE_SEGA_LOGO_INIT),
+; sets Timer_frames_per_second = $3C (60 fps), and installs
+; VBlankObjectHandler_loop as the tick function for this object so
+; subsequent calls skip the one-time init.
+;
+; Each frame: reads Program_state, masks to 5 bits (& $1F), and if the
+; value is < $16 (22), dispatches via ProgramStateMap as a computed BRA:
+;   index = Program_state & $1F
+;   jump  = ProgramStateMap + index * 4   (each BRA.w is 4 bytes)
+;
+; States >= $16 are silently ignored (no jump).
+;
+; State handlers are responsible for advancing Program_state when their
+; phase is complete (typically MOVE.w #NEXT_STATE, Program_state.w).
 VBlankObjectHandler:
 	CLR.w	Program_state.w
 	MOVE.w	#$3C, Timer_frames_per_second.w
@@ -519,6 +536,43 @@ VBlankObjectHandler_loop:
 	JSR	(A0,D0.w)
 	BRA.w	VBlankObjectHandler_Return
 
+; MOD-003: PROGRAM STATE DISPATCH TABLE
+; ProgramStateMap — computed-branch table for top-level game flow.
+; Indexed by Program_state (RAM $FFFFC400) masked to 5 bits.
+; Each entry is a BRA.w (4 bytes); index * 4 = byte offset into table.
+; See constants.asm PROGRAM_STATE_* for the symbolic index values.
+;
+; Index  Constant                       Target Handler
+; -----  -----------------------------  --------------------------------
+; $00    PROGRAM_STATE_SEGA_LOGO_INIT   ProgramState_SegaLogoInit
+; $01    PROGRAM_STATE_SEGA_LOGO        ProgramState_SegaLogo
+; $02    PROGRAM_STATE_TITLE_INIT       ProgramState_TitleInit
+; $03    PROGRAM_STATE_TITLE_SCREEN     ProgramState_TitleScreen
+; $04    PROGRAM_STATE_TITLE_DEMO       ProgramState_TitleDemo
+; $05    PROGRAM_STATE_NAME_ENTRY_INIT  ProgramState_NameEntryInit
+; $06    PROGRAM_STATE_NAME_ENTRY       ProgramState_NameEntry
+; $07    PROGRAM_STATE_NAME_ENTRY_DONE  ProgramState_NameEntryDone
+; $08    PROGRAM_STATE_PROLOGUE_INIT    ProgramState_PrologueInit
+; $09    PROGRAM_STATE_PROLOGUE         ProgramState_Prologue
+; $0A    PROGRAM_STATE_PROLOGUE_TO_GAME ProgramState_PrologueToGame
+; $0B    PROGRAM_STATE_LOAD_SAVE_INIT   ProgramState_LoadSaveInit
+; $0C    PROGRAM_STATE_LOAD_SAVE        ProgramState_LoadSave
+; $0D    PROGRAM_STATE_LOAD_SAVE_DONE   ProgramState_LoadSaveDone
+; $0E    PROGRAM_STATE_GAME_FADE_IN     ProgramState_GameFadeIn
+; $0F    PROGRAM_STATE_GAME_ACTIVE      ProgramState_GameActive
+; $10    PROGRAM_STATE_GAME_FADE_IN_2   ProgramState_GameFadeIn  (alias)
+; $11    PROGRAM_STATE_GAME_ACTIVE_2    ProgramState_GameActive  (alias)
+; $12    PROGRAM_STATE_ENDING_INIT      ProgramState_EndingInit
+; $13    PROGRAM_STATE_ENDING           ProgramState_Ending
+; $14    PROGRAM_STATE_ENDING_2         ProgramState_Ending      (alias)
+; $15    PROGRAM_STATE_LOAD_SAVED_GAME  ProgramState_LoadSavedGame
+;
+; State flow (new game):
+;   $00 → $01 → $02 → $03 → $05 → $06 → $07 → $08 → $09 → $0A → $0F
+; State flow (continue/load):
+;   $00 → $01 → $02 → $03 → $0B → $0C → $0D → $0E → $0F  (or $15→$0E)
+; Ending:
+;   $0F → ... → $12 → $13/$14
 ProgramStateMap:
 	BRA.w	ProgramState_SegaLogoInit		; $00 Initialize Sega logo
 	BRA.w	ProgramState_SegaLogo			; $01 Sega logo display
