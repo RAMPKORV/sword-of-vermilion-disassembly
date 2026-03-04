@@ -207,73 +207,73 @@ VerticalInterrupt:
 	MOVEM.l	A6/A5/A4/A3/A2/A1/A0/D7/D6/D5/D4/D3/D2/D1/D0, -(A7)
 	MOVE.w	VDP_control_port, D0
 	TST.b	Boss_max_hp.w
-	BEQ.b	VerticalInterrupt_Loop
+	BEQ.b	VBlank_DoNormalScroll
 	BSR.w	UpdateScrollRegs_Boss
-	BRA.b	VerticalInterrupt_Loop2
-VerticalInterrupt_Loop:
+	BRA.b	VBlank_CheckSpriteFlush
+VBlank_DoNormalScroll:
 	BSR.w	UpdateScrollRegs_Normal
-VerticalInterrupt_Loop2:
+VBlank_CheckSpriteFlush:
 	TST.b	Sprite_update_pending.w
-	BEQ.b	VerticalInterrupt_Loop3
+	BEQ.b	VBlank_CheckSpriteDMA
 	JSR	FlushSpriteAttributesToVDP
 	CLR.b	Sprite_update_pending.w
-VerticalInterrupt_Loop3:
+VBlank_CheckSpriteDMA:
 	TST.b	Sprite_dma_update_pending.w
-	BEQ.b	VerticalInterrupt_Loop4
+	BEQ.b	VBlank_ProcessSound
 	JSR	UpdatePlayerSpriteDMA
 	CLR.b	Sprite_dma_update_pending.w
-VerticalInterrupt_Loop4:
+VBlank_ProcessSound:
 	BSR.w	ProcessSoundQueue
 	BTST.b	#6, IO_version
 	BEQ.b	VBlank_ProcessPalette
 	ADDQ.w	#1, Vblank_frame_counter.w	
 	MOVE.w	Vblank_frame_counter.w, D4	
 	ANDI.w	#3, D4	
-	BNE.w	VerticalInterrupt_Loop5	
+	BNE.w	VBlank_PALShortDelay	
 	JSR	UpdateBattleEntities	
 	MOVE.w	#$021D, D7	
-VerticalInterrupt_Loop4_Done:
+VBlank_PALDelay_Loop:
 	NOP	
-	DBF	D7, VerticalInterrupt_Loop4_Done	
+	DBF	D7, VBlank_PALDelay_Loop	
 	BRA.b	VBlank_ProcessPalette	
-VerticalInterrupt_Loop5:
+VBlank_PALShortDelay:
 	MOVE.w	#$0657, D7	
-VerticalInterrupt_Loop5_Done:
+VBlank_PALShortDelay_Loop:
 	NOP	
-	DBF	D7, VerticalInterrupt_Loop5_Done	
+	DBF	D7, VBlank_PALShortDelay_Loop	
 VBlank_ProcessPalette:
 	JSR	UpdatePaletteBuffer
 	TST.b	Skip_tilemap_updates.w
-	BNE.w	VBlank_ProcessPalette_Loop
+	BNE.w	VBlank_Return
 	TST.b	Town_tilemap_row_update_pending.w
-	BEQ.b	VBlank_ProcessPalette_Loop2
+	BEQ.b	VBlank_CheckTownColumn
 	JSR	UpdateTownTilemapRow
 	CLR.b	Town_tilemap_row_update_pending.w
-VBlank_ProcessPalette_Loop2:
+VBlank_CheckTownColumn:
 	TST.b	Town_tilemap_column_update_pending.w
-	BEQ.b	VBlank_ProcessPalette_Loop3
+	BEQ.b	VBlank_CheckWindowRow
 	JSR	UpdateTownTilemapColumn
 	CLR.b	Town_tilemap_column_update_pending.w
-VBlank_ProcessPalette_Loop3:
+VBlank_CheckWindowRow:
 	TST.b	Window_tilemap_draw_active.w
-	BEQ.b	VBlank_ProcessPalette_Loop4
+	BEQ.b	VBlank_CheckWindowDispatch
 	JSR	DrawWindowTilemapRow
-VBlank_ProcessPalette_Loop4:
+VBlank_CheckWindowDispatch:
 	TST.b	Window_tilemap_row_draw_pending.w
-	BEQ.b	VBlank_ProcessPalette_Loop5
+	BEQ.b	VBlank_CheckWindowFull
 	JSR	DispatchWindowDrawType
-VBlank_ProcessPalette_Loop5:
+VBlank_CheckWindowFull:
 	TST.b	Window_tilemap_draw_pending.w
-	BEQ.b	VBlank_ProcessPalette_Loop6
+	BEQ.b	VBlank_CheckSceneScroll
 	JSR	DrawWindowTilemapFull
-VBlank_ProcessPalette_Loop6:
+VBlank_CheckSceneScroll:
 	TST.b	Scene_update_flag.w
-	BEQ.b	VBlank_ProcessPalette_Loop7
+	BEQ.b	VBlank_CheckDebug
 	BSR.w	UpdateSceneScrollBuffers
 	CLR.b	Scene_update_flag.w
-VBlank_ProcessPalette_Loop7:
+VBlank_CheckDebug:
 	BSR.w	CheckDebugMode
-VBlank_ProcessPalette_Loop:
+VBlank_Return:
 	JSR	UpdateBattleEntities
 	BSR.w	ReadControllers
 	ST	Vblank_flag.w
