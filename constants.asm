@@ -50,6 +50,48 @@ VRAM_Sprites        = $D800     ; Sprite attribute table (80 entries, $280 bytes
 VRAM_HScroll        = $DC00     ; Horizontal scroll table
 
 ; ============================================================
+; VDP Command Longwords
+; ============================================================
+; Longwords written directly to VDP_control_port to set the
+; VRAM/CRAM/VSRAM write destination address.
+; Formula: vram_write_cmd(A) = $40000000 | ((A & $3FFF) << 16) | ((A >> 14) & 3)
+;
+VDP_CMD_VRAM_WRITE_PLANE_A  = $40000003  ; VRAM write to $C000 (Plane A nametable base)
+VDP_CMD_VRAM_WRITE_PLANE_B  = $60000003  ; VRAM write to $E000 (Plane B nametable base)
+VDP_CMD_CRAM_WRITE_0        = $C0000000  ; CRAM write to address 0 (palette entry 0)
+VDP_CMD_VSRAM_WRITE_0       = $40000010  ; VSRAM write to address 0 (scroll table entry 0)
+
+; ============================================================
+; VDP DMA Fill Destination Words
+; ============================================================
+; Longwords passed as the 'dest' argument to DMAFillVRAM /
+; VDP_DMAFill.  The subroutine ORs in $40000080 (VRAM write +
+; DMA fill CD bits) before issuing the VDP command.
+;
+VDP_DMA_FILL_SAT            = $7C000002  ; DMA fill destination: Sprite Attribute Table ($F800)
+VDP_DMA_FILL_HSCROLL        = $78000002  ; DMA fill destination: HScroll table ($F000)
+VDP_DMA_FILL_PLANE_A        = $40000003  ; DMA fill destination: Plane A nametable ($C000)
+VDP_DMA_FILL_PLANE_B        = $60000003  ; DMA fill destination: Plane B nametable ($E000)
+VDP_DMA_FILL_WINDOW         = $70000002  ; DMA fill destination: Window plane ($E800)
+VDP_DMA_FILL_VRAM_START     = $40000000  ; DMA fill destination: VRAM address 0
+
+; VRAM region fill sizes (byte count - 1, as passed to DMAFillVRAM)
+VRAM_PLANE_FILL_SIZE        = $1FFF      ; 8192 bytes per nametable plane (64×64 tiles × 2)
+VRAM_SAT_FILL_SIZE          = $03BF      ; 960 bytes (sprite attribute table fill region)
+VRAM_HSCROLL_FILL_SIZE      = $013F      ; 320 bytes (horizontal scroll table)
+VRAM_WINDOW_FILL_SIZE       = $0DFF      ; 3584 bytes (window plane fill region)
+
+; ============================================================
+; Hardware Init Constants
+; ============================================================
+IO_CTRL_DIR_OUTPUT          = $40       ; IO control port value: all data pins = output
+VDP_INIT_REG_COUNT_MINUS1   = $0F       ; 16 VDP registers initialized at startup
+VSRAM_CLEAR_COUNT           = $28       ; DBF count for VSRAM clear (41 entries, words)
+STACK_CLEAR_LONGS_MINUS1    = $7F       ; DBF count for stack clear (128 longs = $200 bytes)
+Z80_RESET_DELAY_LOOPS       = $0013     ; DBF count for Z80 reset stabilization delay
+Z80_DRIVER_SIZE_MINUS1      = $013F     ; Z80 sound driver binary size in bytes - 1 (320 bytes)
+
+; ============================================================
 ; Dialogue Script Opcodes & Text Encoding
 ; ============================================================
 ; These control codes are embedded in dialogue text strings

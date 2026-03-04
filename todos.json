@@ -692,7 +692,7 @@
           "file": "src/core.asm",
           "priority": "medium",
           "effort": "medium",
-          "status": "todo"
+          "status": "done"
         },
         {
           "id": "MAGIC-002",

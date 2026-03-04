@@ -8,7 +8,7 @@ ErrorTrap:
 InitVDP:
 	LEA	Stack_base.w, A6
 	MOVEQ	#0, D7
-	MOVE.w	#$007F, D6
+	MOVE.w	#STACK_CLEAR_LONGS_MINUS1, D6 ; clear $200 bytes (128 longs)
 InitPSG:
 	MOVE.l	D7, (A6)+
 	DBF	D6, InitPSG
@@ -39,13 +39,13 @@ InitEquipmentAndLevel:
 	RTS
 
 ClearVRAMSprites:
-	DMAFillVRAM $7C000002, $03BF
+	DMAFillVRAM VDP_DMA_FILL_SAT, VRAM_SAT_FILL_SIZE
 ClearVRAMSprites_End:
 	RTS
 
 ClearVSRAM:
-	MOVE.l	#$40000010, D7
-	MOVEQ	#$00000028, D6
+	MOVE.l	#VDP_CMD_VSRAM_WRITE_0, D7
+	MOVEQ	#VSRAM_CLEAR_COUNT, D6
 	MOVEQ	#0, D5
 	MOVE.l	D7, VDP_control_port
 ClearVSRAM_loop:
@@ -55,15 +55,15 @@ BossProjectileSpriteFrame_D_Frame_2B0: ; Referenced by data table at line 38051
 	RTS
 
 ClearVRAMHScroll:
-	DMAFillVRAM $78000002, $013F
+	DMAFillVRAM VDP_DMA_FILL_HSCROLL, VRAM_HSCROLL_FILL_SIZE
 	RTS
 
 ClearVRAMPlaneA:
-	DMAFillVRAM $40000003, $1FFF
+	DMAFillVRAM VDP_DMA_FILL_PLANE_A, VRAM_PLANE_FILL_SIZE
 	RTS
 
 ClearVRAMPlaneB:
-	DMAFillVRAM $60000003, $1FFF
+	DMAFillVRAM VDP_DMA_FILL_PLANE_B, VRAM_PLANE_FILL_SIZE
 	RTS
 
 ; ---------------------------------------------------------------------------
@@ -76,7 +76,7 @@ ClearVRAMPlaneB:
 ; DMAFillVRAM macro.  Cannot be removed without breaking bit-perfect output.
 ; ---------------------------------------------------------------------------
 DMAFillPartial:
-	MOVE.w	#$1FFF, D6
+	MOVE.w	#VRAM_PLANE_FILL_SIZE, D6
 	JSR	VDP_DMAFill
 	RTS
 
@@ -90,11 +90,11 @@ DMAFillPartial:
 ; Cannot be removed without breaking bit-perfect output.
 ; ---------------------------------------------------------------------------
 DMAFillWindowSpriteArea:
-	DMAFillVRAM $70000002, $0DFF
+	DMAFillVRAM VDP_DMA_FILL_WINDOW, VRAM_WINDOW_FILL_SIZE
 	RTS
 
 InitYM2612:
-	MOVEQ	#$00000040, D0
+	MOVEQ	#IO_CTRL_DIR_OUTPUT, D0
 	stopZ80
 	MOVE.b	D0, IO_ctrl_port_1
 	MOVE.b	D0, IO_ctrl_port_2
@@ -104,7 +104,7 @@ InitYM2612:
 
 InitVDPAndClearVRAM:
 	LEA	VDPRegisterDefaults, A0
-	MOVEQ	#$0000000F, D0
+	MOVEQ	#VDP_INIT_REG_COUNT_MINUS1, D0
 InitVDPAndClearVRAM_Done:
 	MOVE.w	(A0)+, VDP_control_port
 	DBF	D0, InitVDPAndClearVRAM_Done
@@ -113,7 +113,7 @@ InitVDPAndClearVRAM_Done:
 	MOVE.l	(A0)+, (A1)+
 	MOVE.l	(A0)+, (A1)+
 	MOVE.w	(A0)+, (A1)+
-	MOVE.l	#$C0000000, VDP_control_port
+	MOVE.l	#VDP_CMD_CRAM_WRITE_0, VDP_control_port
 	MOVE.w	#0, VDP_data_port
 	BSR.w	ClearVRAMSprites
 	BSR.w	ClearVSRAM
@@ -122,7 +122,7 @@ ClearVRAMScrollAndPlanes:                   ; alternate entry: skip sprite table
 	BSR.w	ClearVRAMHScroll
 	BSR.w	ClearVRAMPlaneA
 	BSR.w	ClearVRAMPlaneB
-	DMAFillVRAM $40000000, $001F
+	DMAFillVRAM VDP_DMA_FILL_VRAM_START, $001F   ; zero first 32 bytes of Plane A
 	RTS
 
 ; ---------------------------------------------------------------------------
@@ -133,17 +133,17 @@ ClearVRAMScrollAndPlanes:                   ; alternate entry: skip sprite table
 ; InitVDPAndClearVRAM.  Cannot be removed without breaking bit-perfect output.
 ; ---------------------------------------------------------------------------
 DMAFillEntireVRAM:
-	DMAFillVRAM $40000000, $FFFF
+	DMAFillVRAM VDP_DMA_FILL_VRAM_START, $FFFF   ; fill all 64 KB of VRAM
 	RTS
 
 InitZ80SoundDriver:
-	MOVE.w	#$0100, Z80_bus_request
-	MOVE.w	#$0100, Z80_reset
-	MOVE.w	#0, Z80_reset
-	MOVE.w	#$0013, D7
+	MOVE.w	#Z80_BUS_ON, Z80_bus_request
+	MOVE.w	#Z80_BUS_ON, Z80_reset
+	MOVE.w	#Z80_BUS_OFF, Z80_reset
+	MOVE.w	#Z80_RESET_DELAY_LOOPS, D7
 InitZ80SoundDriver_Done:
 	DBF	D7, InitZ80SoundDriver_Done
-	MOVE.w	#$0100, Z80_reset
+	MOVE.w	#Z80_BUS_ON, Z80_reset
 	BSR.w	LoadZ80Driver
 	RTS
 
@@ -151,7 +151,7 @@ InitZ80SoundDriver_Done:
 LoadZ80Driver: ; Send below chunk of data into Z80 RAM
 	LEA	Z80_ram, A1
 	LEA	Z80DriverBinary, A2
-	MOVE.w	#$013F, D6
+	MOVE.w	#Z80_DRIVER_SIZE_MINUS1, D6
 LoadZ80Driver_Done:
 	MOVE.b	(A2)+, (A1)+
 	DBF	D6, LoadZ80Driver_Done
