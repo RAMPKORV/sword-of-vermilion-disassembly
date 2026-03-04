@@ -219,11 +219,26 @@
 ; SCRIPT / DIALOGUE ENGINE
 ;==============================================================
 
-; ProcessScriptText
-; Process and render one character of dialogue each tick.
-; Handles rate limiting (Message_speed), player-name insertion,
-; and dispatches on script control codes ($F7–$FF).
-; Outputs the decoded tile directly to VDP VRAM (Plane B window).
+; ---------------------------------------------------------------------------
+; ProcessScriptText — advance script by one character per rate-gated tick
+;
+; Reads the next byte from the active script string (Script_source_base +
+; Script_source_offset), substitutes Player_name when the SCRIPT_PLAYER_NAME
+; code is encountered, and dispatches on control codes $F7–$FF.  Printable
+; bytes are converted to tile indices and written directly to VDP VRAM
+; (Plane B window layer).
+;
+; Called once per game tick from the dialogue state machine.
+;
+; Input:   (all state via RAM)
+;   Script_source_base.w   — pointer to current script string
+;   Script_source_offset.w — byte index within that string
+;   Message_speed.w        — speed setting (bit number for rate gate)
+;   Script_render_tick.w   — incremented each call; used for rate limiting
+;
+; Scratch:  D0-D3, A0
+; Output:   VDP nametable updated; Script_source_offset.w advanced
+; ---------------------------------------------------------------------------
 ProcessScriptText:
 	TST.b	Window_tilemap_draw_pending.w
 	BNE.w	ScriptDecode_Return             ; wait until window has finished drawing
@@ -440,9 +455,17 @@ DrawStartContinueMenu:
 	MOVE.b	#FLAG_TRUE, Window_tilemap_draw_active.w
 	RTS
 	
-; ResetScriptAndInitDialogue
-; Initialize dialogue window and reset script source offset
-; This entry point clears the script offset before initializing the window
+; ---------------------------------------------------------------------------
+; ResetScriptAndInitDialogue — clear script offset then initialise window
+;
+; Resets Script_source_offset to 0, then falls through to InitDialogueWindow.
+; Use this when starting a new dialogue from the beginning of a script string.
+; Use InitDialogueWindow directly when the offset should be preserved.
+;
+; Input:   none
+; Scratch:  (same as InitDialogueWindow)
+; Output:   Script_source_offset.w = 0; dialogue window initialised
+; ---------------------------------------------------------------------------
 ResetScriptAndInitDialogue:
 	CLR.w	Script_source_offset.w
 ; InitDialogueWindow
@@ -2185,6 +2208,19 @@ SaveMessageSpeedMenuToBuffer_Alt:
 	BSR.w	ReadWindowToBuffer
 	RTS
 	
+; ---------------------------------------------------------------------------
+; SaveStatusBarToBuffer — snapshot the status-bar VRAM region to RAM
+;
+; Reads the 31×8 tile region at nametable position (4, 19) into
+; Script_window_tiles_buffer so it can be restored later by
+; DrawStatusHudWindow.  If Dialog_active_flag is set, also clears bit 7
+; of obj_sprite_flags on Current_actor_ptr (hides its sprite while the
+; dialogue window is open).
+;
+; Input:   (all state via RAM)
+; Scratch:  A0, A6, D0
+; Output:   Script_window_tiles_buffer filled; VDP nametable read
+; ---------------------------------------------------------------------------
 ; SaveStatusBarToBuffer
 ; Save the status bar tile region to buffer for later restore.
 SaveStatusBarToBuffer:
@@ -2472,6 +2508,19 @@ ReadWindowToBuffer_Done2:
 	BLE.b	ReadWindowToBuffer_Done
 	RTS
 	
+; ---------------------------------------------------------------------------
+; DrawStatusHudWindow — restore the status-bar VRAM region from RAM buffer
+;
+; Writes Script_window_tiles_buffer back to the 31×8 nametable region at
+; (4, 19).  If Dialog_active_flag is set, also sets bit 7 of
+; obj_sprite_flags on Current_actor_ptr (re-shows its sprite).  If
+; Player_in_first_person_mode is set, also calls
+; DisplayPlayerKimsAndExperience to refresh the kims/XP overlay.
+;
+; Input:   (all state via RAM)
+; Scratch:  A0, A6, D0
+; Output:   VDP nametable updated from Script_window_tiles_buffer
+; ---------------------------------------------------------------------------
 ; DrawStatusHudWindow
 ; Draw main status HUD window (bottom bar showing HP, level, etc.)
 DrawStatusHudWindow:
@@ -2503,6 +2552,17 @@ DrawPromptMenuWindow:
 	BSR.w	DrawWindowFromBuffer
 	RTS
 	
+; ---------------------------------------------------------------------------
+; DrawLeftMenuWindow — blit Small_menu_tiles_buffer to the right-side panel
+;
+; Writes a 6×6 tile block at nametable position ($1C, $0D) from
+; Small_menu_tiles_buffer.  Despite the name the physical position is on
+; the right side of the screen (column 28).
+;
+; Input:   (all state via RAM)
+; Scratch:  A0, D0-D3
+; Output:   VDP nametable updated
+; ---------------------------------------------------------------------------
 ; DrawLeftMenuWindow
 ; Draw left menu window (buffer at $FFFF7CF4, 28x13 at position 6,6)
 DrawLeftMenuWindow:
@@ -2525,6 +2585,17 @@ RestoreShopSubmenuFromBuffer:
 	BSR.w	DrawWindowFromBuffer
 	RTS
 	
+; ---------------------------------------------------------------------------
+; DrawCenterMenuWindow — blit Large_menu_tiles_buffer to the center panel
+;
+; Writes a 21×21 tile block at nametable position ($0F, 2) from
+; Large_menu_tiles_buffer.  Used for inventory, equipment, status, and
+; shop item-list windows.
+;
+; Input:   (all state via RAM)
+; Scratch:  A0, D0-D3
+; Output:   VDP nametable updated
+; ---------------------------------------------------------------------------
 ; DrawCenterMenuWindow
 ; Draw center menu window (buffer at $FFFF7E52, 21x21 at position 15,2)
 DrawCenterMenuWindow:
@@ -2639,6 +2710,23 @@ CalculateVDPAddress:
 ; MENU INPUT HANDLING
 ;==============================================================
 
+; ---------------------------------------------------------------------------
+; HandleMenuInput — read D-pad and move the menu cursor one step
+;
+; Compares Controller_current_state with Controller_previous_state to detect
+; a freshly-pressed directional button, then calls the appropriate
+; MenuCursorUp/Down/Left/Right handler.  If no direction is newly pressed,
+; falls through to BlinkMenuCursor to toggle cursor visibility on a timer.
+;
+; Called every game tick while a menu is open.
+;
+; Input:   (all state via RAM)
+;   Controller_current_state.w  — current joypad byte
+;   Controller_previous_state.w — joypad byte from previous tick
+;
+; Scratch:  D2, D3
+; Output:   Menu_cursor_index.w updated; cursor tile written to VDP
+; ---------------------------------------------------------------------------
 ; HandleMenuInput
 ; Main menu input handler - processes D-pad input for cursor movement
 HandleMenuInput:
@@ -2757,6 +2845,22 @@ EraseMenuCursor:
 	BSR.w	WriteMenuCursorTile
 	RTS
 	
+; ---------------------------------------------------------------------------
+; DrawMenuCursor — write the cursor tile to VRAM at the current position
+;
+; Sets D6 to tile $84DC (cursor glyph) OR'd with Window_tile_attrs, then
+; calls WriteMenuCursorTile.  The tile is written to the nametable cell
+; computed from Menu_cursor_index and the menu base coordinates.
+;
+; Input:   (all state via RAM)
+;   Menu_cursor_index.w        — current cursor row (0-based)
+;   Menu_cursor_column_break.w — row at which a second column starts
+;   Menu_cursor_base_x/y.w     — nametable origin of the menu
+;   Window_tile_attrs.w        — palette/priority bits OR'd into tile word
+;
+; Scratch:  D0-D4, D6
+; Output:   cursor tile written to VDP nametable
+; ---------------------------------------------------------------------------
 ; DrawMenuCursor
 ; Draw the menu cursor tile to VRAM at the current cursor position.
 DrawMenuCursor:
@@ -3087,6 +3191,24 @@ DrawInventorySelectionMarkers_Loop:
 ; WINDOW BORDER / TEXT
 ;==============================================================
 
+; ---------------------------------------------------------------------------
+; DrawWindowBorder — fill Window_tilemap_buffer with border tile bytes
+;
+; Iterates over a (Window_width+1) × (Window_height+1) grid and writes a
+; border-tile index byte for each cell into Window_tilemap_buffer.  Tile
+; indices start at SOUND_LEVEL_UP ($B0) and are adjusted +1 for right/left
+; edges and +3 for bottom/top rows, producing a 9-tile corner+edge set.
+;
+; The filled buffer is later transferred to VDP VRAM by the window-draw DMA
+; routine triggered when Window_tilemap_draw_pending/active is set.
+;
+; Input:   (all state via RAM)
+;   Window_width.w   — inner width in tiles (border adds 1 column each side)
+;   Window_height.w  — inner height in tiles (border adds 1 row each side)
+;
+; Scratch:  D0-D2, D6, D7, A0
+; Output:   Window_tilemap_buffer filled
+; ---------------------------------------------------------------------------
 ; DrawWindowBorder
 ; Draw window border/frame tiles
 ; Fills window tilemap buffer with border tiles (corners, edges)
@@ -3579,6 +3701,23 @@ UpdatePaletteBuffer:
 UpdatePaletteBuffer_Loop:
 	RTS
 
+; ---------------------------------------------------------------------------
+; LoadPalettesFromTable — copy four palettes from PaletteDataTable to RAM
+;
+; Reads four 16-entry (32-byte) palette slots from PaletteDataTable using
+; the indices in Palette_line_0_index through Palette_line_3_index, and
+; copies them into Palette_line_0_buffer (128 bytes total).  Sets bit 7 of
+; Palette_buffer_dirty so the VBlank DMA routine uploads them to CRAM.
+;
+; Returns immediately without copying if any fade is in progress
+; (Palette_fade_in_mask, Fade_out_lines_mask, or Fade_in_lines_mask set).
+;
+; Input:   (all state via RAM)
+;   Palette_line_0_index.w – Palette_line_3_index.w  — palette table indices
+;
+; Scratch:  D1, D2, A0-A3
+; Output:   Palette_line_0_buffer filled; Palette_buffer_dirty bit 7 set
+; ---------------------------------------------------------------------------
 ; LoadPalettesFromTable
 ; Load palettes from table into palette buffer.
 ; Checks fade flags, then copies 4 palettes (32 bytes each) from indexed palette table.

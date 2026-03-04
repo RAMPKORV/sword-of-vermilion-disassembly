@@ -62,6 +62,23 @@ CalculateVelocityFromAngle:
 	MOVE.l	D3, obj_vel_y(A5)
 	RTS
 
+; ---------------------------------------------------------------------------
+; CheckObjectOnScreen — clamp object to battle-field bounds, update display
+;
+; Subtracts the object's velocity from its world position and checks whether
+; the resulting coordinate is within the battle-field rectangle
+; (X: 0–BATTLE_FIELD_WIDTH, Y: BATTLE_FIELD_TOP–BATTLE_FIELD_BOTTOM).
+; If in bounds the position is committed and the display coordinates are
+; synced.  If out of bounds the velocity is zeroed, the timers cleared, and
+; a random direction is added to obj_direction.
+;
+; Input:
+;   A5    pointer to enemy object struct
+;
+; Scratch:  D0, D1
+; Output:   obj_world_x/y updated; obj_screen_x/y/sort_key synced;
+;           OR obj_vel_x/y zeroed and obj_direction randomised
+; ---------------------------------------------------------------------------
 ; CheckObjectOnScreen
 ; Check if object is within visible screen bounds and update position
 ; Bounds: X = 0-320 pixels ($140), Y = 56-184 pixels ($38-$B8)
@@ -136,6 +153,25 @@ DeactivateOffScreenObject_Loop:
 	MOVE.w	obj_screen_y(A5), obj_sort_key(A5)
 	RTS
 
+; ---------------------------------------------------------------------------
+; HandlePlayerTakeDamage — test enemy-player AABB overlap and apply damage
+;
+; Checks whether the enemy object (A5) overlaps the player hitbox (A6 =
+; Player_entity_ptr).  Returns immediately if a screen fade is in progress
+; or the player is currently invulnerable.
+;
+; On a hit: sets Player_invulnerable, starts the invulnerability timer,
+; calls ApplyDamageToPlayer, plays SOUND_PLAYER_HIT, optionally inflicts
+; poison (based on enemy type, equipped shield, and a LUK check), then
+; calls CalculateAngleBetweenObjects to compute a knockback vector.
+;
+; Input:
+;   A5    pointer to enemy object struct (attacker)
+;
+; Scratch:  D0-D2, A0, A6
+; Output:   Player HP reduced; Player_invulnerable set; knockback applied;
+;           Player_poisoned set if poison proc succeeds
+; ---------------------------------------------------------------------------
 ; HandlePlayerTakeDamage
 ; Handle player taking damage from enemy collision
 ; Checks collision with enemy hitbox, applies damage, poison chance, and knockback

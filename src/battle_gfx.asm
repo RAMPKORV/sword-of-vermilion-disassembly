@@ -587,6 +587,21 @@ ExecuteVdpDmaTransfer:
 	ANDI	#$F8FF, SR
 	RTS
 
+; ---------------------------------------------------------------------------
+; GetRandomNumber — advance the LCG RNG and return a pseudo-random word
+;
+; Uses a 32-bit linear-congruential generator stored in Rng_state.  The
+; multiplier is effectively 41 (2²+1)×(2³+1) = 45, then the high and low
+; words are XOR-folded to produce a 16-bit result in D0.w.
+;
+; NOTE: This function is physically located in battle_gfx.asm because it
+; was not yet extracted to a dedicated module.  Logically it belongs with
+; the core math utilities.  See MOVE-001 for the annotation task.
+;
+; Input:   (none)
+; Scratch:  D1 (saved/restored via stack)
+; Output:   D0.w = 16-bit pseudo-random value; Rng_state.w updated
+; ---------------------------------------------------------------------------
 GetRandomNumber:
 	MOVEM.l	D1, -(A7)
 	MOVE.l	Rng_state.w, D1

@@ -20,6 +20,16 @@ ClearScrollData_vscroll_loop:
 	ANDI	#$F8FF, SR
 	RTS
 
+; ---------------------------------------------------------------------------
+; EnableDisplay — set VDP register 1 bit 6 to turn the display on
+;
+; Updates both the cached copy (VDP_Reg1_cache) and the hardware register.
+; Pair with DisableVDPDisplay.
+;
+; Input:   none
+; Scratch:  D0
+; Output:   VDP display enabled; VDP_Reg1_cache.w updated
+; ---------------------------------------------------------------------------
 EnableDisplay:
 	MOVE.w	VDP_Reg1_cache.w, D0
 	BSET.l	#6, D0
@@ -27,6 +37,16 @@ EnableDisplay:
 	MOVE.w	D0, VDP_control_port
 	RTS
 
+; ---------------------------------------------------------------------------
+; DisableVDPDisplay — clear VDP register 1 bit 6 to blank the display
+;
+; Updates both the cached copy (VDP_Reg1_cache) and the hardware register.
+; Pair with EnableDisplay.
+;
+; Input:   none
+; Scratch:  D0
+; Output:   VDP display blanked; VDP_Reg1_cache.w updated
+; ---------------------------------------------------------------------------
 DisableVDPDisplay:
 	MOVE.w	VDP_Reg1_cache.w, D0
 	BCLR.l	#6, D0

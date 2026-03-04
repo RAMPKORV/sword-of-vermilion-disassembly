@@ -271,6 +271,20 @@ UseKey_NoDoor_Loop:
 	PRINT 	EffortsFutileStr	
 	RTS
 	
+; ---------------------------------------------------------------------------
+; RemoveSelectedItemFromList — remove the selected item from the inventory
+;
+; Reads Selected_item_index.w as the element to remove from the
+; Possessed_items_list array (max 10 entries, indices 0–9).  Shifts the
+; tail of the array down by one entry by calling RemoveItemFromArray, then
+; decrements Possessed_items_length.w.
+;
+; Input:   (all state via RAM)
+;   Selected_item_index.w   — index of the item to remove (0-based)
+;
+; Scratch:  D0, D2, A0
+; Output:   Possessed_items_list updated; Possessed_items_length decremented
+; ---------------------------------------------------------------------------
 ; RemoveSelectedItemFromList: Remove the currently selected item from the
 ; player's inventory by shifting the array and decrementing the length.
 RemoveSelectedItemFromList:

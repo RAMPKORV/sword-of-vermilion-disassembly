@@ -864,6 +864,26 @@ ClearRewardScriptFlag:
 ClearRewardScriptFlag_Loop:
 	RTS
 	
+; ---------------------------------------------------------------------------
+; BossParallaxEntry_Start — write one parallax nametable row to VDP
+;
+; Reads a packed parameter record from the address in A0 (auto-incremented)
+; and DMA-writes one row of tile words to the VDP nametable, offset by the
+; current HScroll/VScroll base values.
+;
+; Called 110 times — all call sites are in miscdata.asm and towndata.asm,
+; each preceded by a LEA <RecordLabel>, A0.
+;
+; Input:
+;   A0    pointer to BossParallaxEntry record:
+;           +0  dc.l   VDP VRAM write-command (nametable row address)
+;           +4  dc.w   column count - 1  (DBF loop counter)
+;           +6  dc.w   tile index offset added to each tile byte
+;           +8  dc.b[] tile bytes (one per column)
+;
+; Scratch:  D0-D4
+; Output:   VDP nametable row written; A0 advanced past record
+; ---------------------------------------------------------------------------
 BossParallaxEntry_Start:
 	MOVE.l	(A0)+, D0
 	MOVE.w	(A0)+, D1

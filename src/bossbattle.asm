@@ -618,6 +618,27 @@ BossCollision_FinalBoss:
 	BSR.w	CheckFixedAreaCollision
 	RTS
 
+; ---------------------------------------------------------------------------
+; CheckObjectCollisionBounds — AABB hit-test against a caller-supplied rect
+;
+; Tests whether the object at A6 overlaps the axis-aligned bounding box
+; defined by D0–D3.  Returns immediately (no hit) if bit 7 of (A6) is
+; clear (object inactive or not collidable).
+;
+; The object's hitbox is read from the signed byte fields obj_hitbox_x_pos,
+; obj_hitbox_x_neg, obj_hitbox_y_pos, and obj_hitbox_y_neg (offsets into
+; the struct at A6), each sign-extended and added to the world position.
+;
+; Input:
+;   A6    pointer to the object struct to test
+;   D0.w  right  edge of test rectangle  (x_max)
+;   D1.w  left   edge of test rectangle  (x_min)
+;   D2.w  bottom edge of test rectangle  (y_max)
+;   D3.w  top    edge of test rectangle  (y_min)
+;
+; Scratch:  D4
+; Output:   obj_hit_flag(A6) = FLAG_TRUE if overlap, else unchanged
+; ---------------------------------------------------------------------------
 CheckObjectCollisionBounds:
 	BTST.b	#7, (A6)
 	BEQ.b	ObjectCollisionBounds_Done
