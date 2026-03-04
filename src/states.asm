@@ -237,52 +237,122 @@ ProgramState_GameActive:
 ProgramState_0F_Return:
 	RTS
 
-; $FFFFC410 - $FFFFC414
+; MOD-004: GAMEPLAY STATE DISPATCH TABLE
+; GameStateMap — computed-branch table for all in-game states.
+; Called each frame by ProgramState_GameActive (PROGRAM_STATE_GAME_ACTIVE, $0F/$11),
+; provided the player is not moving and no camera scroll is active.
+;
+; Dispatch formula:
+;   D0 = Gameplay_state (RAM $FFFFC410)
+;   jump = GameStateMap + D0 * 4  (each BRA.w is 4 bytes)
+;
+; State constants are defined in constants.asm as GAMEPLAY_STATE_*.
+; Handlers in src/gameplay.asm; transitions write GAMEPLAY_STATE_* to
+; Gameplay_state.w.  Saved_game_state.w preserves the pre-battle state
+; so encounters can return to the correct exploration context.
+;
+; Index  Constant                              Handler
+; -----  ------------------------------------  --------------------------------
+; $00    GAMEPLAY_STATE_INIT_TOWN_ENTRY        GameState_InitTownEntry
+; $01    GAMEPLAY_STATE_LOAD_TOWN              GameState_LoadTown
+; $02    GAMEPLAY_STATE_TOWN_EXPLORATION       GameState_TownExploration
+; $03    GAMEPLAY_STATE_INIT_BUILDING_ENTRY    GameState_InitBuildingEntry
+; $04    GAMEPLAY_STATE_BUILDING_INTERIOR      GameState_BuildingInterior
+; $05    GAMEPLAY_STATE_TRANSITION_TO_2F       GameState_TransitionToSecondFloor
+; $06    GAMEPLAY_STATE_SECOND_FLOOR           GameState_SecondFloorActive
+; $07    GAMEPLAY_STATE_TRANSITION_TO_3F       GameState_TransitionToThirdFloor
+; $08    GAMEPLAY_STATE_THIRD_FLOOR            GameState_ThirdFloorActive
+; $09    GAMEPLAY_STATE_TRANSITION_TO_CASTLE   GameState_TransitionToCastleMain
+; $0A    GAMEPLAY_STATE_CASTLE_ROOM1           GameState_CastleRoom1Active
+; $0B    GAMEPLAY_STATE_LOAD_CASTLE_ROOM2      GameState_LoadCastleRoom2
+; $0C    GAMEPLAY_STATE_CASTLE_ROOM2           GameState_CastleRoom2Active
+; $0D    GAMEPLAY_STATE_LOAD_CASTLE_ROOM3      GameState_LoadCastleRoom3
+; $0E    GAMEPLAY_STATE_CAVE_ENTRANCE          GameState_CaveEntrance
+; $0F    GAMEPLAY_STATE_BATTLE_INITIALIZE      GameState_BattleInitialize
+; $10    GAMEPLAY_STATE_BATTLE_ACTIVE          GameState_BattleActive
+; $11    GAMEPLAY_STATE_BATTLE_EXIT            GameState_BattleExit
+; $12    GAMEPLAY_STATE_OVERWORLD_RELOAD       GameState_OverworldReload
+; $13    GAMEPLAY_STATE_OVERWORLD_ACTIVE       GameState_OverworldActive
+; $14    GAMEPLAY_STATE_TOWN_FADE_IN_COMPLETE  GameState_TownFadeInComplete
+; $15    GAMEPLAY_STATE_ENTERING_CAVE          GameState_EnteringCave
+; $16    GAMEPLAY_STATE_CAVE_EXPLORATION       GameState_CaveExploration
+; $17    GAMEPLAY_STATE_CAVE_FADE_OUT_COMPLETE GameState_CaveFadeOutComplete
+; $18    GAMEPLAY_STATE_ENCOUNTER_INITIALIZE   GameState_EncounterInitialize
+; $19    GAMEPLAY_STATE_ENCOUNTER_FADE_IN      GameState_EncounterGraphicsFadeIn
+; $1A    GAMEPLAY_STATE_ENCOUNTER_PAUSE        GameState_EncounterPauseBeforeBattle
+; $1B    GAMEPLAY_STATE_LEVEL_UP_BANNER        GameState_LevelUpBannerDisplay
+; $1C    GAMEPLAY_STATE_LEVEL_UP_WAIT          GameState_LevelUpStatsWaitInput
+; $1D    GAMEPLAY_STATE_LEVEL_UP_COMPLETE      GameState_LevelUpComplete
+; $1E    GAMEPLAY_STATE_RETURN_TO_FIRST_PERSON GameState_ReturnToFirstPersonView
+; $1F    GAMEPLAY_STATE_FADE_IN_COMPLETE       GameState_FadeInComplete
+; $20    GAMEPLAY_STATE_DIALOG_DISPLAY         GameState_DialogDisplay
+; $21    GAMEPLAY_STATE_BOSS_BATTLE_INIT       GameState_BossBattleInit
+; $22    GAMEPLAY_STATE_BOSS_BATTLE_ACTIVE     GameState_BossBattleActive
+; $23    GAMEPLAY_STATE_RETURN_FROM_BOSS       GameState_ReturnFromBossBattle
+; $24    GAMEPLAY_STATE_BEGIN_RESURRECTION     GameState_BeginResurrection
+; $25    GAMEPLAY_STATE_PROCESS_RESURRECTION   GameState_ProcessResurrection
+; $26    GAMEPLAY_STATE_NOTIFY_INAUDIOS        GameState_NotifyInaudiosExpired
+; $27    GAMEPLAY_STATE_WAIT_DISMISS           GameState_WaitForNotificationDismiss
+; $28    GAMEPLAY_STATE_READ_AWAKENING         GameState_ReadAwakeningMessage
+; $29    GAMEPLAY_STATE_FRYING_PAN_DELAY       GameState_FryingPanDelay
+; $2A    GAMEPLAY_STATE_READ_FRYING_PAN        GameState_ReadFryingPanMessage
+; $2B    GAMEPLAY_STATE_SOLDIER_TAUNT          GameState_SoldierTaunt
+; $2C    GAMEPLAY_STATE_READ_SOLDIER_TAUNT     GameState_ReadSoldierTaunt
+; $2D    GAMEPLAY_STATE_SHOW_POISON_NOTIFY     GameState_ShowPoisonNotification
+;
+; Typical state flows:
+;   New-game town entry: $00 → $01 → $1F → $02
+;   Enter building:      $02 → $03 → $04
+;   Leave building:      $04 → $01 → $1F → $02
+;   Overworld/cave:      $02 → $0E → $15 → $16
+;   Encounter chain:     $16 → $17 → $18 → $19 → $1A → (battle) → $1E → $16
+;   Boss battle:         $04/$02 → $21 → $22 → $23 → (restore saved state)
+;   Death/resurrection:  $any → $24 → $25 → $00
 GameStateMap:
-	BRA.w	GameState_InitTownEntry ; $00
-	BRA.w	GameState_LoadTown ; $01 Exiting building
-	BRA.w	GameState_TownExploration ; $02 In town
-	BRA.w	GameState_InitBuildingEntry ; $03 Entering building
-	BRA.w	GameState_BuildingInterior ; $04 Inside building
-	BRA.w	GameState_TransitionToSecondFloor ; $05 Going upstairs/downstairs in church
-	BRA.w	GameState_SecondFloorActive ; $06 Upstairs in church
-	BRA.w	GameState_TransitionToThirdFloor ; $07 Going on 2nd floor in church
-	BRA.w	GameState_ThirdFloorActive ; $08 Being on second floor in church
-	BRA.w	GameState_TransitionToCastleMain ; $09 Entering castle
-	BRA.w	GameState_CastleRoom1Active ; $0A Entering castle #2
-	BRA.w	GameState_LoadCastleRoom2 ; $0B Inside castle
-	BRA.w	GameState_CastleRoom2Active ; $0C 
-	BRA.w	GameState_LoadCastleRoom3 ; $0D 	
-	BRA.w	GameState_CaveEntrance ; $0E Enter cave
-	BRA.w	GameState_BattleInitialize ; $0F Battle
-	BRA.w	GameState_BattleActive ; $10 Overworld?
-	BRA.w	GameState_BattleExit ; $11 Exit town
-	BRA.w	GameState_OverworldReload ; $12 Exit town #2
-	BRA.w	GameState_OverworldActive ; $13 Outside town
-	BRA.w	GameState_TownFadeInComplete ; $14 Entering town
-	BRA.w	GameState_EnteringCave ; $15 Entering cave #2
-	BRA.w	GameState_CaveExploration ; $16 Inside cave
-	BRA.w	GameState_CaveFadeOutComplete ; $17 Exiting cave
-	BRA.w	GameState_EncounterInitialize ; $18 Encounter
-	BRA.w	GameState_EncounterGraphicsFadeIn ; $19 
-	BRA.w	GameState_EncounterPauseBeforeBattle ; $1A 
-	BRA.w	GameState_LevelUpBannerDisplay ; $1B Start showing stats
-	BRA.w	GameState_LevelUpStatsWaitInput ; $1C 
-	BRA.w	GameState_LevelUpComplete ; $1D 
-	BRA.w	GameState_ReturnToFirstPersonView ; $1E Walk forward (Maybe just walk?)
-	BRA.w	GameState_FadeInComplete ; $1F Loading/initialization of town or building
-	BRA.w	GameState_DialogDisplay ; $20 Finding chest/character
-	BRA.w	GameState_BossBattleInit ; $21 
-	BRA.w	GameState_BossBattleActive ; $22 
-	BRA.w	GameState_ReturnFromBossBattle ; $23 Reload town?
-	BRA.w	GameState_BeginResurrection ; $24 Resurrect in church
-	BRA.w	GameState_ProcessResurrection ; $25 Resurrect in church #2
-	BRA.w	GameState_NotifyInaudiosExpired ; $26 Inaudios wear off
-	BRA.w	GameState_WaitForNotificationDismiss ; $27 
-	BRA.w	GameState_ReadAwakeningMessage ; $28 
-	BRA.w	GameState_FryingPanDelay ; $29 Get hit by frying pan message
-	BRA.w	GameState_ReadFryingPanMessage ; $2A 
-	BRA.w	GameState_SoldierTaunt ; $2B "You haven't won yet"
-	BRA.w	GameState_ReadSoldierTaunt ; $2C 
-	BRA.w	GameState_ShowPoisonNotification ; $2D Get poisoned messsage
+	BRA.w	GameState_InitTownEntry			; $00 GAMEPLAY_STATE_INIT_TOWN_ENTRY
+	BRA.w	GameState_LoadTown			; $01 GAMEPLAY_STATE_LOAD_TOWN
+	BRA.w	GameState_TownExploration		; $02 GAMEPLAY_STATE_TOWN_EXPLORATION
+	BRA.w	GameState_InitBuildingEntry		; $03 GAMEPLAY_STATE_INIT_BUILDING_ENTRY
+	BRA.w	GameState_BuildingInterior		; $04 GAMEPLAY_STATE_BUILDING_INTERIOR
+	BRA.w	GameState_TransitionToSecondFloor	; $05 GAMEPLAY_STATE_TRANSITION_TO_2F
+	BRA.w	GameState_SecondFloorActive		; $06 GAMEPLAY_STATE_SECOND_FLOOR
+	BRA.w	GameState_TransitionToThirdFloor	; $07 GAMEPLAY_STATE_TRANSITION_TO_3F
+	BRA.w	GameState_ThirdFloorActive		; $08 GAMEPLAY_STATE_THIRD_FLOOR
+	BRA.w	GameState_TransitionToCastleMain	; $09 GAMEPLAY_STATE_TRANSITION_TO_CASTLE
+	BRA.w	GameState_CastleRoom1Active		; $0A GAMEPLAY_STATE_CASTLE_ROOM1
+	BRA.w	GameState_LoadCastleRoom2		; $0B GAMEPLAY_STATE_LOAD_CASTLE_ROOM2
+	BRA.w	GameState_CastleRoom2Active		; $0C GAMEPLAY_STATE_CASTLE_ROOM2
+	BRA.w	GameState_LoadCastleRoom3		; $0D GAMEPLAY_STATE_LOAD_CASTLE_ROOM3
+	BRA.w	GameState_CaveEntrance			; $0E GAMEPLAY_STATE_CAVE_ENTRANCE
+	BRA.w	GameState_BattleInitialize		; $0F GAMEPLAY_STATE_BATTLE_INITIALIZE
+	BRA.w	GameState_BattleActive			; $10 GAMEPLAY_STATE_BATTLE_ACTIVE
+	BRA.w	GameState_BattleExit			; $11 GAMEPLAY_STATE_BATTLE_EXIT
+	BRA.w	GameState_OverworldReload		; $12 GAMEPLAY_STATE_OVERWORLD_RELOAD
+	BRA.w	GameState_OverworldActive		; $13 GAMEPLAY_STATE_OVERWORLD_ACTIVE
+	BRA.w	GameState_TownFadeInComplete		; $14 GAMEPLAY_STATE_TOWN_FADE_IN_COMPLETE
+	BRA.w	GameState_EnteringCave			; $15 GAMEPLAY_STATE_ENTERING_CAVE
+	BRA.w	GameState_CaveExploration		; $16 GAMEPLAY_STATE_CAVE_EXPLORATION
+	BRA.w	GameState_CaveFadeOutComplete		; $17 GAMEPLAY_STATE_CAVE_FADE_OUT_COMPLETE
+	BRA.w	GameState_EncounterInitialize		; $18 GAMEPLAY_STATE_ENCOUNTER_INITIALIZE
+	BRA.w	GameState_EncounterGraphicsFadeIn	; $19 GAMEPLAY_STATE_ENCOUNTER_FADE_IN
+	BRA.w	GameState_EncounterPauseBeforeBattle	; $1A GAMEPLAY_STATE_ENCOUNTER_PAUSE
+	BRA.w	GameState_LevelUpBannerDisplay		; $1B GAMEPLAY_STATE_LEVEL_UP_BANNER
+	BRA.w	GameState_LevelUpStatsWaitInput		; $1C GAMEPLAY_STATE_LEVEL_UP_WAIT
+	BRA.w	GameState_LevelUpComplete		; $1D GAMEPLAY_STATE_LEVEL_UP_COMPLETE
+	BRA.w	GameState_ReturnToFirstPersonView	; $1E GAMEPLAY_STATE_RETURN_TO_FIRST_PERSON
+	BRA.w	GameState_FadeInComplete		; $1F GAMEPLAY_STATE_FADE_IN_COMPLETE
+	BRA.w	GameState_DialogDisplay			; $20 GAMEPLAY_STATE_DIALOG_DISPLAY
+	BRA.w	GameState_BossBattleInit		; $21 GAMEPLAY_STATE_BOSS_BATTLE_INIT
+	BRA.w	GameState_BossBattleActive		; $22 GAMEPLAY_STATE_BOSS_BATTLE_ACTIVE
+	BRA.w	GameState_ReturnFromBossBattle		; $23 GAMEPLAY_STATE_RETURN_FROM_BOSS
+	BRA.w	GameState_BeginResurrection		; $24 GAMEPLAY_STATE_BEGIN_RESURRECTION
+	BRA.w	GameState_ProcessResurrection		; $25 GAMEPLAY_STATE_PROCESS_RESURRECTION
+	BRA.w	GameState_NotifyInaudiosExpired		; $26 GAMEPLAY_STATE_NOTIFY_INAUDIOS
+	BRA.w	GameState_WaitForNotificationDismiss	; $27 GAMEPLAY_STATE_WAIT_DISMISS
+	BRA.w	GameState_ReadAwakeningMessage		; $28 GAMEPLAY_STATE_READ_AWAKENING
+	BRA.w	GameState_FryingPanDelay		; $29 GAMEPLAY_STATE_FRYING_PAN_DELAY
+	BRA.w	GameState_ReadFryingPanMessage		; $2A GAMEPLAY_STATE_READ_FRYING_PAN
+	BRA.w	GameState_SoldierTaunt			; $2B GAMEPLAY_STATE_SOLDIER_TAUNT
+	BRA.w	GameState_ReadSoldierTaunt		; $2C GAMEPLAY_STATE_READ_SOLDIER_TAUNT
+	BRA.w	GameState_ShowPoisonNotification	; $2D GAMEPLAY_STATE_SHOW_POISON_NOTIFY
 
