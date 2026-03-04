@@ -1532,6 +1532,117 @@ Quest_choice_map_trigger        = $FFFFC705   ; .b
 ; The Blade_is_dead … style labels (further below) are the full RAM addresses.
 ; Both refer to the same flags; prefer TRIGGER_ in script data.
 ;
+; -----------------------------------------------------------------------
+; RAND-007: STORY PROGRESSION GRAPH
+; -----------------------------------------------------------------------
+; For a randomizer, these are the KEY flags that gate story advancement.
+; Format: FLAG_NAME (offset) — SET by: … | GATES: …
+;
+; === MAIN STORY CRITICAL PATH ===
+;
+; Fake_king_killed ($0003)
+;   SET by: boss.asm — imposter-king boss defeat
+;   GATES:  Parma king questline continues; triggers reveal of real king
+;
+; Talked_to_real_king ($0005)
+;   SET by: townbuild.asm script ($F8 trigger) after real-king dialogue
+;   GATES:  Treasure of Troy questline starts
+;
+; Treasure_of_troy_found ($0006)
+;   SET by: townbuild.asm script on chest pick-up in Parma dungeon
+;   GATES:  Player can give treasure to king for reward
+;
+; Treasure_of_troy_given_to_king ($0004)
+;   SET by: townbuild.asm script ($F9 actions) on dialogue completion
+;   GATES:  King gives clue about next destination
+;
+; Sent_to_malaga ($0013)
+;   SET by: townbuild.asm script (Parma king dialogue conclusion)
+;   GATES:  Malaga questline becomes active
+;
+; Malaga_king_crowned ($001B)
+;   SET by: townbuild.asm script_set_trigger in Malaga event sequence
+;   GATES:  Malaga NPCs give post-coronation dialogue; Stow route opens
+;
+; Imposter_killed ($001D)
+;   SET by: boss.asm — CaveImposterBoss defeat
+;   GATES:  Barrow castle interior accessible (npc.asm/towndata.asm gate)
+;
+; Ring_of_earth_obtained ($0029)
+;   SET by: townbuild.asm script_set_trigger in Barrow ring-guardian event
+;   GATES:  One of four rings acquired (ending check)
+;
+; Ring_of_wind_received ($002B)
+;   SET by: towndata.asm (Reward_script_flag mechanism after ring-guardian fight)
+;   GATES:  Second ring acquired
+;
+; Player_has_sword_of_vermilion ($0037)
+;   SET by: items.asm — using the sword retrieval sequence
+;   GATES:  Endgame sword fight with Tsarkon becomes available
+;
+; Tsarkon_is_dead ($0038)
+;   SET by: townbuild.asm script_cmd_triggers in Tsarkon final-battle script
+;   GATES:  Ending sequence triggers; all "Tsarkon fled" NPCs switch
+;           dialogue (npc.asm widespread TST.b Tsarkon_is_dead checks)
+;
+; Crown_received ($003B)
+;   SET by: towndata.asm Reward_script_flag mechanism (crown chest event)
+;   GATES:  Crowning ceremony in final town; game-complete flag
+;
+; === BOSS FIGHT TRIGGERS (separate from Event_triggers array) ===
+; These live above $FFFFC800, outside the save-slot-backed trigger array.
+;
+; Imposter_boss_trigger    ($FFFFC804)  — set by towndata.asm dungeon event;
+;   read by npc.asm to initiate imposter boss fight portrait sequence
+; Ring_guardian_1_boss_trigger ($FFFFC805) — set by towndata.asm ($3454)
+;   when player enters ring-guardian dungeon room
+; Ring_guardian_2_boss_trigger ($FFFFC806) — set by towndata.asm ($3467)
+; Ring_guardian_3_boss_trigger ($FFFFC807) — set by towndata.asm ($3480)
+; Boss_event_trigger       ($FFFFC817)  — transient flag set by towndata.asm;
+;   read by gameplay.asm (GameState_BuildingInterior and GameState_TownExploration)
+;   to trigger the boss dialogue/cutscene state ($21 GAMEPLAY_STATE_BOSS_BATTLE_INIT)
+; Soldier_fight_event_trigger ($FFFFC816) — set by towndata.asm Carthahena event;
+;   read by gameplay.asm to trigger the soldier fight interlude ($2B/$2C states)
+;
+; === SWORD / KEY ITEM SEQUENCE ===
+;
+; Sword_stolen_by_blacksmith ($0035)
+;   SET by: items.asm when player uses Wrong_item near blacksmith
+;   GATES:  Player must retrieve sword (blacksmith NPC changes dialogue)
+;
+; Sword_retrieved_from_blacksmith ($0036)
+;   SET by: townbuild.asm script when sword is taken back
+;   GATES:  Player_has_sword_of_vermilion can now be acquired
+;
+; Pass_to_carthahena_purchased ($0034)
+;   SET by: townbuild.asm script (shop dialogue) — buy the pass
+;   GATES:  Carthahena town border guards let player through
+;           (npc.asm checks Pass_to_carthahena_given for guard NPC)
+;
+; === SIDE QUEST FLAGS RELEVANT TO RANDOMIZER ===
+;
+; Truffle_collected ($000B)
+;   SET by: townbuild.asm script on truffle chest pick-up
+;   GATES:  Deepdale truffle-giver NPC accepts delivery
+;
+; Bearwulf_met ($0014)
+;   SET by: townbuild.asm script on first Bearwulf conversation
+;   GATES:  Bearwulf questline begins; npc.asm shows travelling dialogue
+;
+; Bearwulf_returned_home ($0015)
+;   SET by: townbuild.asm SCRIPT_YES_NO callback when Bearwulf quest completes
+;   GATES:  Barrow NPCs react to Bearwulf's safe return
+;
+; Helwig_men_rescued ($0024)
+;   SET by: npc.asm — FreePrisoners dialogue completion
+;   GATES:  Helwig inn-wakeup event; towndata.asm cave event
+;
+; Ring_of_earth_obtained / Ring_of_wind_received / White_crystal_received /
+; Red_crystal_received / Blue_crystal_received — the four ring/crystal flags
+;   are gated by their respective dungeon bosses or NPC quests.
+;   A complete randomizer must treat all four as prerequisite for the endgame.
+; -----------------------------------------------------------------------
+;
 Event_triggers_start                        = $FFFFC720   ; .b
 Blade_is_dead                               = $FFFFC720   ; .b
 Treasure_of_troy_challenge_issued           = $FFFFC722   ; .b

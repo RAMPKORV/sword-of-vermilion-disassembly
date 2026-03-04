@@ -1,7 +1,6 @@
 	include "macros.asm"
 	include "constants.asm"
 StartOfRom:
-loc_00000000:
 	dc.l	$FFFFFE00 			; Initial stack pointer value
 BusError:
 	dc.l	EntryPoint 			; Start of program

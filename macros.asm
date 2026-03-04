@@ -477,11 +477,11 @@ npcEntry macro xpos,ypos,tile,anim,tick,attr,solid
 ; main_frames:  Pointer to frame table for main body sprite
 ; main_gfx:     Pointer to GFX data for main body sprite
 ; child_frames: Pointer to frame table for child sprite
-;               (use loc_00000000 if no child sprite)
+;               (use StartOfRom if no child sprite)
 ; child_gfx:    Pointer to GFX data for child sprite
-;               (use loc_00000000 if no child sprite)
+;               (use StartOfRom if no child sprite)
 ; dma_fn:       DMA routine pointer — NullSpriteRoutine-2,
-;               ExecuteWorldMapDma, or loc_00000000 for boss entries
+;               ExecuteWorldMapDma, or StartOfRom for boss entries
 ; vfx:          Packed longword $PPQQSSTT
 ;               PP=pal_hi, QQ=pal_lo, SS=sprite_size, TT=tile_id
 enemyAppearance macro main_frames,main_gfx,child_frames,child_gfx,dma_fn,vfx
