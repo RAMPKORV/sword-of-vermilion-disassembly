@@ -1040,7 +1040,7 @@
           "description": "Town maps in data/maps/town/ are binary blobs. Document the exact format (dimensions, tile encoding, layer structure) for a visual editor.",
           "priority": "high",
           "effort": "large",
-          "status": "todo"
+          "status": "done"
         },
         {
           "id": "EDIT-002",
@@ -1048,7 +1048,7 @@
           "description": "Overworld sectors in data/maps/ use RLE compression. Document the exact format including decompression algorithm, tile IDs, and sector dimensions.",
           "priority": "high",
           "effort": "medium",
-          "status": "todo"
+          "status": "done"
         },
         {
           "id": "EDIT-003",
@@ -1056,7 +1056,7 @@
           "description": "Cave/dungeon rooms in data/maps/ have their own format. Document for a visual dungeon editor.",
           "priority": "high",
           "effort": "medium",
-          "status": "todo"
+          "status": "done"
         },
         {
           "id": "EDIT-004",
