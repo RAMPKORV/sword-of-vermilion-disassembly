@@ -900,6 +900,11 @@ LoadBattleHudGraphics_Done2:
 	BSR.w	ExecuteVdpDmaFromPointer
 	RTS
 	
+; ExecuteVdpDmaFromPointer
+; Execute VDP DMA transfer from a pointer table entry to VRAM
+; Input: A0 = Pointer to DMA command data (destination, length, source)
+; NOTE: Byte-for-byte identical to ExecuteVdpDmaFromRam (line ~1281).
+;       Both exist in the original ROM; neither can be removed without breaking bit-perfectness.
 ExecuteVdpDmaFromPointer:
 	ORI	#$0700, SR
 	stopZ80
@@ -1276,9 +1281,11 @@ LoadOptionsMenuGraphics_Done:
 ; ExecuteVdpDmaFromRam
 ; Execute VDP DMA transfer from RAM to VRAM
 ; Input: A0 = Pointer to DMA command data (destination, length, source)
+; NOTE: This function is byte-for-byte identical to ExecuteVdpDmaFromPointer above.
+;       Both exist in the original ROM binary. ExecuteVdpDmaFromRam is used for ~29
+;       DMA transfers; ExecuteVdpDmaFromPointer is used for ~4 town/HUD tile loads.
 ExecuteVdpDmaFromRam:
 	ORI	#$0700, SR
-ExecuteVdpDmaFromRam_DmaStart:
 	stopZ80
 	BSR.w	InitVdpDmaRamRoutine
 	MOVE.w	#2, D4
