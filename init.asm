@@ -155,8 +155,8 @@ ObjectDispatchDone:
 	MOVE.b	#$FF, $FFFFE002.w
 	BRA.b	MainGameLoop
 ; loc_000010D8
-loc_000010D8:
-	dc.b	$42, $38, $C0, $FF      ; CLR.w $FFFFC0FF + fall-through to WaitForVBlank
+ClearVblankFlagAndWait:
+	dc.b	$42, $38, $C0, $FF      ; CLR.w Vblank_flag (word-clear) + fall-through to WaitForVBlank
 
 ; WaitForVBlank
 WaitForVBlank:

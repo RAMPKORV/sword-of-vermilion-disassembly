@@ -570,5 +570,5 @@ ShopCategoryNameTables:
 	dc.l	Possessed_magics_length
 	dc.l	MagicNames	
 	dc.l	Possessed_magics_length	
-	dc.l	loc_00000000	
-	dc.l	loc_00000000	
+	dc.l	NULL_PTR	
+	dc.l	NULL_PTR	

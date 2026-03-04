@@ -293,12 +293,12 @@ EnemySpritePositionB_Frame0:
 	dc.l	$01050082	
 	dc.l	$010700A2	
 	dc.l	$010300B2	
-	dc.l	loc_00000000	
+	dc.l	NULL_PTR	
 EnemySpritePositionB_Frame1:
 	dc.l	$01050082	
 	dc.l	$010A00A2	
 	dc.l	$010200B2	
-	dc.l	loc_00000000	
+	dc.l	NULL_PTR	
 EnemySpritePositionB_Frame23:
 	dc.l	$01050082	
 	dc.l	$010800A2	
@@ -852,8 +852,8 @@ EnemySpriteData_FacingSide:
 	dc.l	$00140018	
 	dc.l	$00A10F0A	
 	dc.l	$00340018	
-	dc.l	loc_00000000	
-	dc.l	loc_00000000	
+	dc.l	NULL_PTR	
+	dc.l	NULL_PTR	
 EnemySpriteData_FacingUp:
 	dc.l	$010F060A	
 	dc.l	$0054FFFB	
@@ -904,11 +904,11 @@ BossProjectileSpriteFramePtrs:
 	dc.l	BossProjectileSpriteFrame_D
 BossSpriteFrame_FakeKing:
 	dc.l	$024101B1	
-	dc.l	loc_00000000	
+	dc.l	NULL_PTR	
 	dc.l	InitEquipmentAndLevel-3	
 BossSpriteFrame_StowThief:
 	dc.l	$01C10000	
-	dc.l	loc_00000000	
+	dc.l	NULL_PTR	
 BossSpriteFrame_Asti:
 	dc.l	$025901D1	
 	dc.l	LoadCaveTileGraphics	
@@ -922,20 +922,20 @@ BossSpriteFrame_Carthahena:
 	dc.l	$FFDC027D	
 BossSpriteFrame_Luther:
 	dc.l	$020102AD	
-	dc.l	loc_00000000	
+	dc.l	NULL_PTR	
 BossProjectileSpriteFrame_B:
 	dc.l	$02890211	
-	dc.l	loc_00000000	
+	dc.l	NULL_PTR	
 	dc.l	ClearVRAMSprites_End-3	
 BossProjectileSpriteFrame_C:
 	dc.l	$02210000	
-	dc.l	loc_00000000	
+	dc.l	NULL_PTR	
 BossProjectileSpriteFrame_D:
 	dc.l	$02A10231	
-	dc.l	loc_00000000	
+	dc.l	NULL_PTR	
 	dc.l	BossProjectileSpriteFrame_D_Frame_2B0	
 HydraBoss_ProjectileSpriteFrames:
-	dc.l	loc_00000000	
+	dc.l	NULL_PTR	
 	dc.l	$02B402B8	
 	dc.l	$02B402B8	
 	dc.l	$02B402B8	
@@ -1593,11 +1593,11 @@ EnemyAppearance_Gargoyle_BE:
 EnemyAppearance_Gargoyle_BF:
 	enemyAppearance EnemyGfxFrameTable_GargoyleMain,EnemyGfxData_GargoyleMain,EnemyGfxFrameTable_GargoyleChild,EnemyGfxData_GargoyleChild,NullSpriteRoutine-2,$0D0E00BF
 EnemyAppearance_75:
-	enemyAppearance EnemyGfxFrameTable_BossMain,EnemyGfxData_BossMain,loc_00000000,loc_00000000,loc_00000000,$0F000075
+	enemyAppearance EnemyGfxFrameTable_BossMain,EnemyGfxData_BossMain,NULL_PTR,NULL_PTR,NULL_PTR,$0F000075
 EnemyAppearance_C0:
-	enemyAppearance EnemyGfxFrameTable_BossMain,EnemyGfxData_BossMain,loc_00000000,loc_00000000,loc_00000000,$0F0000C0
+	enemyAppearance EnemyGfxFrameTable_BossMain,EnemyGfxData_BossMain,NULL_PTR,NULL_PTR,NULL_PTR,$0F0000C0
 EnemyAppearance_C1:
-	enemyAppearance EnemyGfxFrameTable_BossMain,EnemyGfxData_BossMain,loc_00000000,loc_00000000,loc_00000000,$0F0000C1
+	enemyAppearance EnemyGfxFrameTable_BossMain,EnemyGfxData_BossMain,NULL_PTR,NULL_PTR,NULL_PTR,$0F0000C1
 EnemyAppearance_C2:
 	dc.l	EnemyGfxFrameTable_BossMain
 	dc.l	EnemyGfxData_BossMain

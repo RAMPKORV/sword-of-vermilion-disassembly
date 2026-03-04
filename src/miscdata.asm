@@ -26,7 +26,7 @@ DebugTestMenu:
 	MOVE.b	#$00, D0
 	JSR	QueueSoundEffect                ; silence music
 	JSR	DisableVDPDisplay
-	JSR	loc_000010D8                    ; CLR Vblank_flag + WaitForVBlank
+	JSR	ClearVblankFlagAndWait                    ; CLR Vblank_flag + WaitForVBlank
 	MOVE.w	VDP_Reg11_cache.w, D0           ; read cached VDP register 11 (HScroll mode)
 	ANDI.w	#$FFF8, D0                      ; mask off HScroll mode bits
 	MOVE.w	D0, VDP_control_port            ; write back (set full-screen HScroll)
@@ -85,7 +85,7 @@ DebugMainMenu_JumpTable:
 ; and loops until A+B+C+Start are all held simultaneously.
 ; ---------------------------------------------------------------------------
 DebugInputTest:
-	JSR	loc_000010D8                    ; CLR Vblank_flag + WaitForVBlank
+	JSR	ClearVblankFlagAndWait                    ; CLR Vblank_flag + WaitForVBlank
 	MOVE.w	#$004F, Palette_line_0_index.w
 	MOVE.w	#$0053, Palette_line_1_index.w
 	MOVE.w	#$0054, Palette_line_2_index.w
@@ -202,7 +202,7 @@ DebugInput_CheckAllPressed_Done:
 DebugSoundTest:
 	JSR	QueueSoundEffect
 	JSR	DisableVDPDisplay
-	JSR	loc_000010D8                    ; CLR Vblank_flag + WaitForVBlank
+	JSR	ClearVblankFlagAndWait                    ; CLR Vblank_flag + WaitForVBlank
 	JSR	EnableDisplay
 	MOVE.l	#$44040003, D5
 	MOVE.l	D5, DebugMenu_vdp_cursor.w
@@ -241,7 +241,7 @@ DebugSoundTest_Return:
 ; DebugSoundCategory_Menu — sub-menu that scrolls through entries for one category ($3CA52)
 ;   In:  DebugMenu_sound_category.w = category index (0-3)
 DebugSoundCategory_Menu:
-	JSR	loc_000010D8                    ; CLR Vblank_flag + WaitForVBlank
+	JSR	ClearVblankFlagAndWait                    ; CLR Vblank_flag + WaitForVBlank
 	MOVE.b	#$01, DebugMenu_in_submenu.w    ; flag: inside sub-menu
 	MOVE.l	#$42040003, D5
 	MOVE.l	D5, DebugMenu_vdp_cursor.w
@@ -476,7 +476,7 @@ DebugSoundCategory_DA:
 ; DebugCRTTest — CRT display test, fills screen with colour gradient ($3CF02)
 ; ---------------------------------------------------------------------------
 DebugCRTTest:
-	JSR	loc_000010D8                    ; CLR Vblank_flag + WaitForVBlank
+	JSR	ClearVblankFlagAndWait                    ; CLR Vblank_flag + WaitForVBlank
 	JSR	ClearVRAMScrollAndPlanes        ; clear VRAM
 	LEA	DebugCRTTest_Row_Title, A0
 	JSR	BossParallaxEntry_Start
