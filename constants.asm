@@ -58,6 +58,7 @@ VRAM_HScroll        = $BC00     ; Horizontal scroll table
 ;
 VDP_CMD_VRAM_WRITE_PLANE_A  = $40000003  ; VRAM write to $C000 (Plane A nametable base)
 VDP_CMD_VRAM_WRITE_PLANE_B  = $60000003  ; VRAM write to $E000 (Plane B nametable base)
+VDP_CMD_VRAM_WRITE_HSCROLL  = $7C000002  ; VRAM write to $BC00 (HScroll table base)
 VDP_CMD_CRAM_WRITE_0        = $C0000000  ; CRAM write to address 0 (palette entry 0)
 VDP_CMD_VSRAM_WRITE_0       = $40000010  ; VSRAM write to address 0 (scroll table entry 0)
 
@@ -90,6 +91,18 @@ VSRAM_CLEAR_COUNT           = $28       ; DBF count for VSRAM clear (41 entries,
 STACK_CLEAR_LONGS_MINUS1    = $7F       ; DBF count for stack clear (128 longs = $200 bytes)
 Z80_RESET_DELAY_LOOPS       = $0013     ; DBF count for Z80 reset stabilization delay
 Z80_DRIVER_SIZE_MINUS1      = $013F     ; Z80 sound driver binary size in bytes - 1 (320 bytes)
+
+; ============================================================
+; VBlank / Scroll Constants
+; ============================================================
+SCROLL_RANGE_MASK           = $01FF     ; 9-bit mask for 512-pixel scroll range
+HSCROLL_CLEAR_COUNT         = $01FF     ; DBF count for HScroll/VScroll clear (512 entries - 1)
+HSCROLL_TABLE_ENTRY_STRIDE  = $00040000 ; VDP cmd address increment per HScroll row (4 bytes)
+HSCROLL_ROW_COUNT_MINUS1    = $00DF     ; Per-line HScroll fill: 224 rows - 1 (DBF count)
+PAL_DELAY_LOOP_COUNT        = $021D     ; PAL 50 Hz timing delay (long, every 4th frame)
+PAL_SHORT_DELAY_LOOP_COUNT  = $0657     ; PAL 50 Hz timing delay (short, other frames)
+NTSC_FRAMES_PER_SECOND      = $3C       ; Frames per second (60 for NTSC)
+PROGRAM_STATE_COUNT         = $16       ; Number of program states (22)
 
 ; ============================================================
 ; Dialogue Script Opcodes & Text Encoding

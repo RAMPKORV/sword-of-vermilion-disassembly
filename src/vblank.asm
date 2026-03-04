@@ -5,13 +5,13 @@
 
 ClearScrollData:
 	ORI	#$0700, SR
-	MOVE.l	#$7C000002, VDP_control_port
-	MOVE.w	#$01FF, D7
+	MOVE.l	#VDP_CMD_VRAM_WRITE_HSCROLL, VDP_control_port
+	MOVE.w	#HSCROLL_CLEAR_COUNT, D7
 ClearScrollData_hscroll_loop:
 	MOVE.w	#0, VDP_data_port
 	DBF	D7, ClearScrollData_hscroll_loop
 	MOVE.l	#0, VDP_control_port
-	MOVE.w	#$01FF, D7
+	MOVE.w	#HSCROLL_CLEAR_COUNT, D7
 ClearScrollData_vscroll_loop:
 	MOVE.w	#0, VDP_data_port
 	DBF	D7, ClearScrollData_vscroll_loop
@@ -231,13 +231,13 @@ VBlank_ProcessSound:
 	ANDI.w	#3, D4	
 	BNE.w	VBlank_PALShortDelay	
 	JSR	UpdateBattleEntities	
-	MOVE.w	#$021D, D7	
+	MOVE.w	#PAL_DELAY_LOOP_COUNT, D7	
 VBlank_PALDelay_Loop:
 	NOP	
 	DBF	D7, VBlank_PALDelay_Loop	
 	BRA.b	VBlank_ProcessPalette	
 VBlank_PALShortDelay:
-	MOVE.w	#$0657, D7	
+	MOVE.w	#PAL_SHORT_DELAY_LOOP_COUNT, D7	
 VBlank_PALShortDelay_Loop:
 	NOP	
 	DBF	D7, VBlank_PALShortDelay_Loop	
@@ -281,7 +281,7 @@ VBlank_Return:
 	RTE
 CheckDebugMode:
 	MOVE.b	Controller_2_current_state.w, D0
-	CMPI.b	#$F0, D0
+	CMPI.b	#CONTROLLER_ACTION_BUTTONS_MASK, D0
 	BNE.b	CheckDebugMode_end
 	MOVE.l	#DebugTestMenu, $42(A7)	
 	MOVE.b	#FLAG_TRUE, Skip_tilemap_updates.w	
@@ -330,8 +330,8 @@ ReadControllerPort_Loop:
 ; ============================================================================
 ; Write the current HScroll and VScroll base values to the VDP.
 ;
-; VDP control word $7C000002 = VRAM write to address $7C00 with auto-inc 2.
-;   HScroll table at VRAM $7C00 — first two words (Plane A, Plane B) at offset 0.
+; VDP control word $7C000002 = VRAM write to address $BC00.
+;   HScroll table at VRAM $BC00 — first two words (Plane A, Plane B) at offset 0.
 ;   Writing D0 twice updates both Plane A and Plane B with the same value.
 ;
 ; VDP control word $40000010 = VSRAM write to address $0000 with auto-inc 2.
@@ -343,25 +343,25 @@ ReadControllerPort_Loop:
 ; ============================================================================
 UpdateScrollRegs_Normal:
 	MOVE.w	HScroll_base.w, D0
-	ANDI.w	#$01FF, D0		; Clamp to 512-pixel scroll range
-	MOVE.l	#$7C000002, VDP_control_port	; Set VRAM write address to HScroll table ($7C00)
+	ANDI.w	#SCROLL_RANGE_MASK, D0		; Clamp to 512-pixel scroll range
+	MOVE.l	#VDP_CMD_VRAM_WRITE_HSCROLL, VDP_control_port	; Set VRAM write address to HScroll table ($BC00)
 	MOVE.w	D0, VDP_data_port	; Write HScroll for Plane A
 	MOVE.w	D0, VDP_data_port	; Write HScroll for Plane B (same value)
 	MOVE.w	VScroll_base.w, D0
-	ANDI.w	#$01FF, D0		; Clamp to 512-pixel scroll range
-	MOVE.l	#$40000010, VDP_control_port	; Set VSRAM write address to offset $0000
+	ANDI.w	#SCROLL_RANGE_MASK, D0		; Clamp to 512-pixel scroll range
+	MOVE.l	#VDP_CMD_VSRAM_WRITE_0, VDP_control_port	; Set VSRAM write address to offset $0000
 	MOVE.w	D0, VDP_data_port	; Write VScroll for Plane A
 	MOVE.w	D0, VDP_data_port	; Write VScroll for Plane B (same value)
 	RTS
 
 UpdateScrollRegs_Boss:
 	MOVE.w	HScroll_base.w, D0
-	ANDI.w	#$01FF, D0		; Clamp to 512-pixel scroll range
-	MOVE.l	#$7C000002, VDP_control_port	; Set VRAM write address to HScroll table ($7C00)
+	ANDI.w	#SCROLL_RANGE_MASK, D0		; Clamp to 512-pixel scroll range
+	MOVE.l	#VDP_CMD_VRAM_WRITE_HSCROLL, VDP_control_port	; Set VRAM write address to HScroll table ($BC00)
 	MOVE.w	D0, VDP_data_port	; Write HScroll (Plane A only — boss uses single plane)
 	MOVE.w	VScroll_base.w, D0
-	ANDI.w	#$01FF, D0		; Clamp to 512-pixel scroll range
-	MOVE.l	#$40000010, VDP_control_port	; Set VSRAM write address to offset $0000
+	ANDI.w	#SCROLL_RANGE_MASK, D0		; Clamp to 512-pixel scroll range
+	MOVE.l	#VDP_CMD_VSRAM_WRITE_0, VDP_control_port	; Set VSRAM write address to offset $0000
 	MOVE.w	D0, VDP_data_port	; Write VScroll (Plane A only)
 	RTS
 
@@ -430,7 +430,7 @@ WriteDigitToVRAM:
 	ADD.w	D1, D0				; Combined byte offset into window plane
 	ANDI.l	#$00001FFF, D0			; Clamp to 8 KB window plane size
 	SWAP	D0				; Move offset to upper word for VDP control word
-	ORI.l	#$40000003, D0			; Set VDP VRAM write command bits
+	ORI.l	#$40000003, D0			; Set VDP VRAM write command bits (CD=01, A15:A14=11)
 	MOVE.l	D0, VDP_control_port		; Set VDP write address
 	MOVE.w	D4, VDP_data_port		; Write tile entry
 	ADDQ.w	#1, Window_number_cursor_x.w	; Advance cursor one cell right
@@ -443,7 +443,7 @@ UpdateSceneScrollBuffers:
 	BEQ.b	UpdateSceneScrollBuffers_Loop2
 	ADDQ.w	#1, VScroll_base.w
 	ANDI.w	#$01FF, D0
-	MOVE.l	#$40000010, VDP_control_port
+	MOVE.l	#VDP_CMD_VSRAM_WRITE_0, VDP_control_port
 	MOVE.w	D0, VDP_data_port
 	MOVE.w	D0, VDP_data_port
 	RTS
@@ -453,7 +453,7 @@ UpdateSceneScrollBuffers_Loop:
 UpdateSceneScrollBuffers_Loop2:
 	CLR.b	HScroll_update_busy.w
 	LEA	HScroll_run_table.w, A0
-	MOVE.l	#$7E620002, D0
+	MOVE.l	#$7E620002, D0			; VDP VRAM write to $BE62 (HScroll table offset for parallax)
 	MOVE.w	#2, D7
 	BSR.w	WriteHScrollRunToVRAM
 	MOVE.w	#3, D7
@@ -480,23 +480,23 @@ UpdateSceneScrollBuffers_Loop2:
 
 WriteHScrollRunToVRAM:
 	MOVE.w	(A0), D1
-	ANDI.w	#$01FF, D1
+	ANDI.w	#SCROLL_RANGE_MASK, D1
 	MOVE.l	D0, VDP_control_port
 	MOVE.w	D1, VDP_data_port
-	ADDI.l	#$00040000, D0
+	ADDI.l	#HSCROLL_TABLE_ENTRY_STRIDE, D0
 	DBF	D7, WriteHScrollRunToVRAM
 	LEA	$4(A0), A0
 	RTS
 
 FillVScrollTable:
-	MOVE.l	#$7C000002, D0
+	MOVE.l	#VDP_CMD_VRAM_WRITE_HSCROLL, D0
 	MOVE.w	Ending_hscroll_offset.w, D1
-	ANDI.w	#$01FF, D1
-	MOVE.w	#$00DF, D7
+	ANDI.w	#SCROLL_RANGE_MASK, D1
+	MOVE.w	#HSCROLL_ROW_COUNT_MINUS1, D7
 FillVScrollTable_loop:
 	MOVE.l	D0, VDP_control_port
 	MOVE.w	D1, VDP_data_port
-	ADDI.l	#$00040000, D0
+	ADDI.l	#HSCROLL_TABLE_ENTRY_STRIDE, D0
 	DBF	D7, FillVScrollTable_loop
 	RTS
 
@@ -543,12 +543,12 @@ HBlankObjectHandler:
 ; phase is complete (typically MOVE.w #NEXT_STATE, Program_state.w).
 VBlankObjectHandler:
 	CLR.w	Program_state.w
-	MOVE.w	#$3C, Timer_frames_per_second.w
+	MOVE.w	#NTSC_FRAMES_PER_SECOND, Timer_frames_per_second.w
 	MOVE.l	#VBlankObjectHandler_loop, obj_tick_fn(A5)
 VBlankObjectHandler_loop:
 	MOVE.w	Program_state.w, D0
 	ANDI.w	#$1F, D0
-	CMPI.w	#$16, D0
+	CMPI.w	#PROGRAM_STATE_COUNT, D0
 	BGE.w	VBlankObjectHandler_Return
 	ADD.w	D0, D0
 	ADD.w	D0, D0
