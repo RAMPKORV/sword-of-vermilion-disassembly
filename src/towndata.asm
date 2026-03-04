@@ -2,6 +2,20 @@
 ; src/towndata.asm
 ; Town NPC data, tileset config, cave events, dialog helpers
 ; ======================================================================
+;
+; NOTE: This file begins mid-function. ASM68K assembles all included
+; files as a single continuous stream, so the function body is split
+; across the file boundary.
+;
+; The function ChestAnimation_Return starts in src/items.asm at the
+; label ChestAnimation_Return (items.asm line 3283). items.asm ends
+; without an RTS at line 3325, falling directly into this file.
+;
+; Code below (starting at BEQ ChestAnimation_Return_Loop8) is the
+; reward-type dispatch within ChestAnimation_Return: it reads
+; Reward_script_type and branches to the appropriate handler for each
+; chest reward category (ring, money, map, or item/spell lookup).
+;
 	BEQ.w	ChestAnimation_Return_Loop8
 	CMPI.w	#REWARD_TYPE_MONEY, D0
 	BEQ.w	ChestAnimation_Return_Loop9
