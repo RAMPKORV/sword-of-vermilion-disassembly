@@ -1455,348 +1455,103 @@ EnemyGfxDataTable:
 	dc.l	EnemyData_StalkPause_7B_Last
 	dc.l	EnemySpriteSet_A
 EnemyAppearance_5A:
-	dc.l	EnemyGfxFrameTable_OrbMain
-	dc.l	EnemyGfxData_OrbMain
-	dc.l	EnemyGfxFrameTable_OrbChild
-	dc.l	EnemyGfxData_OrbChild
-	dc.l	NullSpriteRoutine-2	
-	dc.l	$0E0D005A	; Appearance palette/vfx
+	enemyAppearance EnemyGfxFrameTable_OrbMain,EnemyGfxData_OrbMain,EnemyGfxFrameTable_OrbChild,EnemyGfxData_OrbChild,NullSpriteRoutine-2,$0E0D005A
 EnemyAppearance_69:
-	dc.l	EnemyGfxFrameTable_OrbMain
-	dc.l	EnemyGfxData_OrbMain
-	dc.l	EnemyGfxFrameTable_OrbChild
-	dc.l	EnemyGfxData_OrbChild
-	dc.l	NullSpriteRoutine-2	
-	dc.l	$0E0D0069	
+	enemyAppearance EnemyGfxFrameTable_OrbMain,EnemyGfxData_OrbMain,EnemyGfxFrameTable_OrbChild,EnemyGfxData_OrbChild,NullSpriteRoutine-2,$0E0D0069
 EnemyAppearance_6A:
-	dc.l	EnemyGfxFrameTable_OrbMain
-	dc.l	EnemyGfxData_OrbMain
-	dc.l	EnemyGfxFrameTable_OrbChild
-	dc.l	EnemyGfxData_OrbChild
-	dc.l	NullSpriteRoutine-2	
-	dc.l	$0E0D006A	
+	enemyAppearance EnemyGfxFrameTable_OrbMain,EnemyGfxData_OrbMain,EnemyGfxFrameTable_OrbChild,EnemyGfxData_OrbChild,NullSpriteRoutine-2,$0E0D006A
 EnemyAppearance_6B:
-	dc.l	EnemyGfxFrameTable_OrbMain	
-	dc.l	EnemyGfxData_OrbMain	
-	dc.l	EnemyGfxFrameTable_OrbChild	
-	dc.l	EnemyGfxData_OrbChild	
-	dc.l	NullSpriteRoutine-2	
-	dc.l	$0E0D006B	
+	enemyAppearance EnemyGfxFrameTable_OrbMain,EnemyGfxData_OrbMain,EnemyGfxFrameTable_OrbChild,EnemyGfxData_OrbChild,NullSpriteRoutine-2,$0E0D006B
 EnemyAppearance_AC:
-	dc.l	EnemyGfxFrameTable_OrbMain
-	dc.l	EnemyGfxData_OrbMain
-	dc.l	EnemyGfxFrameTable_OrbChild
-	dc.l	EnemyGfxData_OrbChild
-	dc.l	NullSpriteRoutine-2	
-	dc.l	$0E0D00AC	
+	enemyAppearance EnemyGfxFrameTable_OrbMain,EnemyGfxData_OrbMain,EnemyGfxFrameTable_OrbChild,EnemyGfxData_OrbChild,NullSpriteRoutine-2,$0E0D00AC
 EnemyAppearance_AD:
-	dc.l	EnemyGfxFrameTable_OrbMain
-	dc.l	EnemyGfxData_OrbMain
-	dc.l	EnemyGfxFrameTable_OrbChild
-	dc.l	EnemyGfxData_OrbChild
-	dc.l	NullSpriteRoutine-2	
-	dc.l	$0E0D00AD	
+	enemyAppearance EnemyGfxFrameTable_OrbMain,EnemyGfxData_OrbMain,EnemyGfxFrameTable_OrbChild,EnemyGfxData_OrbChild,NullSpriteRoutine-2,$0E0D00AD
 EnemyAppearance_4E:
-	dc.l	EnemyGfxFrameTable_DragonMain
-	dc.l	EnemyGfxData_DragonMain
-	dc.l	EnemyGfxFrameTable_DragonChild
-	dc.l	EnemyGfxData_DragonChild
-	dc.l	NullSpriteRoutine-2	
-	dc.l	$0D0E004E	
+	enemyAppearance EnemyGfxFrameTable_DragonMain,EnemyGfxData_DragonMain,EnemyGfxFrameTable_DragonChild,EnemyGfxData_DragonChild,NullSpriteRoutine-2,$0D0E004E
 EnemyAppearance_7B:
-	dc.l	EnemyGfxFrameTable_DragonMain
-	dc.l	EnemyGfxData_DragonMain
-	dc.l	EnemyGfxFrameTable_DragonChild
-	dc.l	EnemyGfxData_DragonChild
-	dc.l	NullSpriteRoutine-2	
-	dc.l	$0D0E007B	
+	enemyAppearance EnemyGfxFrameTable_DragonMain,EnemyGfxData_DragonMain,EnemyGfxFrameTable_DragonChild,EnemyGfxData_DragonChild,NullSpriteRoutine-2,$0D0E007B
 EnemyAppearance_7C:
-	dc.l	EnemyGfxFrameTable_DragonMain
-	dc.l	EnemyGfxData_DragonMain
-	dc.l	EnemyGfxFrameTable_DragonChild
-	dc.l	EnemyGfxData_DragonChild
-	dc.l	NullSpriteRoutine-2	
-	dc.l	$0D0E007C	
+	enemyAppearance EnemyGfxFrameTable_DragonMain,EnemyGfxData_DragonMain,EnemyGfxFrameTable_DragonChild,EnemyGfxData_DragonChild,NullSpriteRoutine-2,$0D0E007C
 EnemyAppearance_7D:
-	dc.l	EnemyGfxFrameTable_DragonMain
-	dc.l	EnemyGfxData_DragonMain
-	dc.l	EnemyGfxFrameTable_DragonChild
-	dc.l	EnemyGfxData_DragonChild
-	dc.l	NullSpriteRoutine-2	
-	dc.l	$0D0E007D	
+	enemyAppearance EnemyGfxFrameTable_DragonMain,EnemyGfxData_DragonMain,EnemyGfxFrameTable_DragonChild,EnemyGfxData_DragonChild,NullSpriteRoutine-2,$0D0E007D
 EnemyAppearance_4D:
-	dc.l	EnemyGfxFrameTable_QuadrupedMain
-	dc.l	EnemyGfxData_QuadrupedMain
-	dc.l	EnemyGfxFrameTable_QuadrupedChild
-	dc.l	EnemyGfxData_QuadrupedChild
-	dc.l	NullSpriteRoutine-2	
-	dc.l	$0D0E004D	
+	enemyAppearance EnemyGfxFrameTable_QuadrupedMain,EnemyGfxData_QuadrupedMain,EnemyGfxFrameTable_QuadrupedChild,EnemyGfxData_QuadrupedChild,NullSpriteRoutine-2,$0D0E004D
 EnemyAppearance_6C:
-	dc.l	EnemyGfxFrameTable_QuadrupedMain
-	dc.l	EnemyGfxData_QuadrupedMain
-	dc.l	EnemyGfxFrameTable_QuadrupedChild
-	dc.l	EnemyGfxData_QuadrupedChild
-	dc.l	NullSpriteRoutine-2	
-	dc.l	$0D0E006C	
+	enemyAppearance EnemyGfxFrameTable_QuadrupedMain,EnemyGfxData_QuadrupedMain,EnemyGfxFrameTable_QuadrupedChild,EnemyGfxData_QuadrupedChild,NullSpriteRoutine-2,$0D0E006C
 EnemyAppearance_6D:
-	dc.l	EnemyGfxFrameTable_QuadrupedMain
-	dc.l	EnemyGfxData_QuadrupedMain
-	dc.l	EnemyGfxFrameTable_QuadrupedChild
-	dc.l	EnemyGfxData_QuadrupedChild
-	dc.l	NullSpriteRoutine-2	
-	dc.l	$0D0E006D	
+	enemyAppearance EnemyGfxFrameTable_QuadrupedMain,EnemyGfxData_QuadrupedMain,EnemyGfxFrameTable_QuadrupedChild,EnemyGfxData_QuadrupedChild,NullSpriteRoutine-2,$0D0E006D
 EnemyAppearance_6E:
-	dc.l	EnemyGfxFrameTable_QuadrupedMain
-	dc.l	EnemyGfxData_QuadrupedMain
-	dc.l	EnemyGfxFrameTable_QuadrupedChild
-	dc.l	EnemyGfxData_QuadrupedChild
-	dc.l	NullSpriteRoutine-2	
-	dc.l	$0D0E006E	
+	enemyAppearance EnemyGfxFrameTable_QuadrupedMain,EnemyGfxData_QuadrupedMain,EnemyGfxFrameTable_QuadrupedChild,EnemyGfxData_QuadrupedChild,NullSpriteRoutine-2,$0D0E006E
 EnemyAppearance_5B:
-	dc.l	EnemyGfxFrameTable_SerpentMain
-	dc.l	EnemyGfxData_SerpentMain
-	dc.l	EnemyGfxFrameTable_SerpentChild
-	dc.l	EnemyGfxData_SerpentChild
-	dc.l	NullSpriteRoutine-2	
-	dc.l	$0D0E005B	
+	enemyAppearance EnemyGfxFrameTable_SerpentMain,EnemyGfxData_SerpentMain,EnemyGfxFrameTable_SerpentChild,EnemyGfxData_SerpentChild,NullSpriteRoutine-2,$0D0E005B
 EnemyAppearance_6F:
-	dc.l	EnemyGfxFrameTable_SerpentMain
-	dc.l	EnemyGfxData_SerpentMain
-	dc.l	EnemyGfxFrameTable_SerpentChild
-	dc.l	EnemyGfxData_SerpentChild
-	dc.l	NullSpriteRoutine-2	
-	dc.l	$0D0E006F	
+	enemyAppearance EnemyGfxFrameTable_SerpentMain,EnemyGfxData_SerpentMain,EnemyGfxFrameTable_SerpentChild,EnemyGfxData_SerpentChild,NullSpriteRoutine-2,$0D0E006F
 EnemyAppearance_70:
-	dc.l	EnemyGfxFrameTable_SerpentMain
-	dc.l	EnemyGfxData_SerpentMain
-	dc.l	EnemyGfxFrameTable_SerpentChild
-	dc.l	EnemyGfxData_SerpentChild
-	dc.l	NullSpriteRoutine-2	
-	dc.l	$0D0E0070	
+	enemyAppearance EnemyGfxFrameTable_SerpentMain,EnemyGfxData_SerpentMain,EnemyGfxFrameTable_SerpentChild,EnemyGfxData_SerpentChild,NullSpriteRoutine-2,$0D0E0070
 EnemyAppearance_71:
-	dc.l	EnemyGfxFrameTable_SerpentMain
-	dc.l	EnemyGfxData_SerpentMain
-	dc.l	EnemyGfxFrameTable_SerpentChild
-	dc.l	EnemyGfxData_SerpentChild
-	dc.l	NullSpriteRoutine-2	
-	dc.l	$0D0E0071	
+	enemyAppearance EnemyGfxFrameTable_SerpentMain,EnemyGfxData_SerpentMain,EnemyGfxFrameTable_SerpentChild,EnemyGfxData_SerpentChild,NullSpriteRoutine-2,$0D0E0071
 EnemyAppearance_63:
-	dc.l	EnemyGfxFrameTable_WorldMapMain
-	dc.l	EnemyGfxData_WorldMapMain
-	dc.l	EnemyGfxFrameTable_WorldMapChild
-	dc.l	EnemyGfxData_WorldMapChild
-	dc.l	ExecuteWorldMapDma	
-	dc.l	$0E0E0063	
+	enemyAppearance EnemyGfxFrameTable_WorldMapMain,EnemyGfxData_WorldMapMain,EnemyGfxFrameTable_WorldMapChild,EnemyGfxData_WorldMapChild,ExecuteWorldMapDma,$0E0E0063
 EnemyAppearance_A4:
-	dc.l	EnemyGfxFrameTable_WorldMapMain
-	dc.l	EnemyGfxData_WorldMapMain
-	dc.l	EnemyGfxFrameTable_WorldMapChild
-	dc.l	EnemyGfxData_WorldMapChild
-	dc.l	ExecuteWorldMapDma	
-	dc.l	$0E0E00A4	
+	enemyAppearance EnemyGfxFrameTable_WorldMapMain,EnemyGfxData_WorldMapMain,EnemyGfxFrameTable_WorldMapChild,EnemyGfxData_WorldMapChild,ExecuteWorldMapDma,$0E0E00A4
 EnemyAppearance_A5:
-	dc.l	EnemyGfxFrameTable_WorldMapMain
-	dc.l	EnemyGfxData_WorldMapMain
-	dc.l	EnemyGfxFrameTable_WorldMapChild
-	dc.l	EnemyGfxData_WorldMapChild
-	dc.l	ExecuteWorldMapDma	
-	dc.l	$0E0E00A5	
+	enemyAppearance EnemyGfxFrameTable_WorldMapMain,EnemyGfxData_WorldMapMain,EnemyGfxFrameTable_WorldMapChild,EnemyGfxData_WorldMapChild,ExecuteWorldMapDma,$0E0E00A5
 EnemyAppearance_A6:
-	dc.l	EnemyGfxFrameTable_WorldMapMain
-	dc.l	EnemyGfxData_WorldMapMain
-	dc.l	EnemyGfxFrameTable_WorldMapChild
-	dc.l	EnemyGfxData_WorldMapChild
-	dc.l	ExecuteWorldMapDma	
-	dc.l	$0E0E00A6	
+	enemyAppearance EnemyGfxFrameTable_WorldMapMain,EnemyGfxData_WorldMapMain,EnemyGfxFrameTable_WorldMapChild,EnemyGfxData_WorldMapChild,ExecuteWorldMapDma,$0E0E00A6
 EnemyAppearance_5C:
-	dc.l	EnemyGfxFrameTable_InsectMain
-	dc.l	EnemyGfxData_InsectMain
-	dc.l	EnemyGfxFrameTable_InsectChild
-	dc.l	EnemyGfxData_InsectChild
-	dc.l	NullSpriteRoutine-2	
-	dc.l	$0D0E005C	
+	enemyAppearance EnemyGfxFrameTable_InsectMain,EnemyGfxData_InsectMain,EnemyGfxFrameTable_InsectChild,EnemyGfxData_InsectChild,NullSpriteRoutine-2,$0D0E005C
 EnemyAppearance_9E:
-	dc.l	EnemyGfxFrameTable_InsectMain
-	dc.l	EnemyGfxData_InsectMain
-	dc.l	EnemyGfxFrameTable_InsectChild
-	dc.l	EnemyGfxData_InsectChild
-	dc.l	NullSpriteRoutine-2	
-	dc.l	$0D0E009E	
+	enemyAppearance EnemyGfxFrameTable_InsectMain,EnemyGfxData_InsectMain,EnemyGfxFrameTable_InsectChild,EnemyGfxData_InsectChild,NullSpriteRoutine-2,$0D0E009E
 EnemyAppearance_9F:
-	dc.l	EnemyGfxFrameTable_InsectMain
-	dc.l	EnemyGfxData_InsectMain
-	dc.l	EnemyGfxFrameTable_InsectChild
-	dc.l	EnemyGfxData_InsectChild
-	dc.l	NullSpriteRoutine-2	
-	dc.l	$0D0E009F	
+	enemyAppearance EnemyGfxFrameTable_InsectMain,EnemyGfxData_InsectMain,EnemyGfxFrameTable_InsectChild,EnemyGfxData_InsectChild,NullSpriteRoutine-2,$0D0E009F
 EnemyAppearance_A0:
-	dc.l	EnemyGfxFrameTable_InsectMain
-	dc.l	EnemyGfxData_InsectMain
-	dc.l	EnemyGfxFrameTable_InsectChild
-	dc.l	EnemyGfxData_InsectChild
-	dc.l	NullSpriteRoutine-2	
-	dc.l	$0D0E00A0	
+	enemyAppearance EnemyGfxFrameTable_InsectMain,EnemyGfxData_InsectMain,EnemyGfxFrameTable_InsectChild,EnemyGfxData_InsectChild,NullSpriteRoutine-2,$0D0E00A0
 EnemyAppearance_5D:
-	dc.l	EnemyGfxFrameTable_GolemMain
-	dc.l	EnemyGfxData_GolemMain
-	dc.l	EnemyGfxFrameTable_GolemChild
-	dc.l	EnemyGfxData_GolemChild
-	dc.l	ExecuteWorldMapDma	
-	dc.l	$0E0E005D	
+	enemyAppearance EnemyGfxFrameTable_GolemMain,EnemyGfxData_GolemMain,EnemyGfxFrameTable_GolemChild,EnemyGfxData_GolemChild,ExecuteWorldMapDma,$0E0E005D
 EnemyAppearance_A1:
-	dc.l	EnemyGfxFrameTable_GolemMain
-	dc.l	EnemyGfxData_GolemMain
-	dc.l	EnemyGfxFrameTable_GolemChild
-	dc.l	EnemyGfxData_GolemChild
-	dc.l	ExecuteWorldMapDma	
-	dc.l	$0E0E00A1	
+	enemyAppearance EnemyGfxFrameTable_GolemMain,EnemyGfxData_GolemMain,EnemyGfxFrameTable_GolemChild,EnemyGfxData_GolemChild,ExecuteWorldMapDma,$0E0E00A1
 EnemyAppearance_A2:
-	dc.l	EnemyGfxFrameTable_GolemMain
-	dc.l	EnemyGfxData_GolemMain
-	dc.l	EnemyGfxFrameTable_GolemChild
-	dc.l	EnemyGfxData_GolemChild
-	dc.l	ExecuteWorldMapDma	
-	dc.l	$0E0E00A2	
+	enemyAppearance EnemyGfxFrameTable_GolemMain,EnemyGfxData_GolemMain,EnemyGfxFrameTable_GolemChild,EnemyGfxData_GolemChild,ExecuteWorldMapDma,$0E0E00A2
 EnemyAppearance_A3:
-	dc.l	EnemyGfxFrameTable_GolemMain
-	dc.l	EnemyGfxData_GolemMain
-	dc.l	EnemyGfxFrameTable_GolemChild
-	dc.l	EnemyGfxData_GolemChild
-	dc.l	ExecuteWorldMapDma	
-	dc.l	$0E0E00A3	
+	enemyAppearance EnemyGfxFrameTable_GolemMain,EnemyGfxData_GolemMain,EnemyGfxFrameTable_GolemChild,EnemyGfxData_GolemChild,ExecuteWorldMapDma,$0E0E00A3
 EnemyAppearance_64:
-	dc.l	EnemyGfxFrameTable_BeastMain
-	dc.l	EnemyGfxData_BeastMain
-	dc.l	EnemyGfxFrameTable_BeastChild
-	dc.l	EnemyGfxData_BeastChild
-	dc.l	NullSpriteRoutine-2	
-	dc.l	$0D0E0064	
+	enemyAppearance EnemyGfxFrameTable_BeastMain,EnemyGfxData_BeastMain,EnemyGfxFrameTable_BeastChild,EnemyGfxData_BeastChild,NullSpriteRoutine-2,$0D0E0064
 EnemyAppearance_B9:
-	dc.l	EnemyGfxFrameTable_BeastMain
-	dc.l	EnemyGfxData_BeastMain
-	dc.l	EnemyGfxFrameTable_BeastChild
-	dc.l	EnemyGfxData_BeastChild
-	dc.l	NullSpriteRoutine-2	
-	dc.l	$0D0E00B9	
+	enemyAppearance EnemyGfxFrameTable_BeastMain,EnemyGfxData_BeastMain,EnemyGfxFrameTable_BeastChild,EnemyGfxData_BeastChild,NullSpriteRoutine-2,$0D0E00B9
 EnemyAppearance_BA:
-	dc.l	EnemyGfxFrameTable_BeastMain
-	dc.l	EnemyGfxData_BeastMain
-	dc.l	EnemyGfxFrameTable_BeastChild
-	dc.l	EnemyGfxData_BeastChild
-	dc.l	NullSpriteRoutine-2	
-	dc.l	$0D0E00BA	
+	enemyAppearance EnemyGfxFrameTable_BeastMain,EnemyGfxData_BeastMain,EnemyGfxFrameTable_BeastChild,EnemyGfxData_BeastChild,NullSpriteRoutine-2,$0D0E00BA
 EnemyAppearance_BB:
-	dc.l	EnemyGfxFrameTable_BeastMain
-	dc.l	EnemyGfxData_BeastMain
-	dc.l	EnemyGfxFrameTable_BeastChild
-	dc.l	EnemyGfxData_BeastChild
-	dc.l	NullSpriteRoutine-2	
-	dc.l	$0D0E00BB	
+	enemyAppearance EnemyGfxFrameTable_BeastMain,EnemyGfxData_BeastMain,EnemyGfxFrameTable_BeastChild,EnemyGfxData_BeastChild,NullSpriteRoutine-2,$0D0E00BB
 EnemyAppearance_65:
-	dc.l	EnemyGfxFrameTable_SkeletonMain
-	dc.l	EnemyGfxData_SkeletonMain
-	dc.l	EnemyGfxFrameTable_SkeletonChild
-	dc.l	EnemyGfxData_SkeletonChild
-	dc.l	NullSpriteRoutine-2	
-	dc.l	$0D0E0065	
+	enemyAppearance EnemyGfxFrameTable_SkeletonMain,EnemyGfxData_SkeletonMain,EnemyGfxFrameTable_SkeletonChild,EnemyGfxData_SkeletonChild,NullSpriteRoutine-2,$0D0E0065
 EnemyAppearance_A7:
-	dc.l	EnemyGfxFrameTable_SkeletonMain
-	dc.l	EnemyGfxData_SkeletonMain
-	dc.l	EnemyGfxFrameTable_SkeletonChild
-	dc.l	EnemyGfxData_SkeletonChild
-	dc.l	NullSpriteRoutine-2	
-	dc.l	$0D0E00A7	
+	enemyAppearance EnemyGfxFrameTable_SkeletonMain,EnemyGfxData_SkeletonMain,EnemyGfxFrameTable_SkeletonChild,EnemyGfxData_SkeletonChild,NullSpriteRoutine-2,$0D0E00A7
 EnemyAppearance_A8:
-	dc.l	EnemyGfxFrameTable_SkeletonMain
-	dc.l	EnemyGfxData_SkeletonMain
-	dc.l	EnemyGfxFrameTable_SkeletonChild
-	dc.l	EnemyGfxData_SkeletonChild
-	dc.l	NullSpriteRoutine-2	
-	dc.l	$0D0E00A8	
+	enemyAppearance EnemyGfxFrameTable_SkeletonMain,EnemyGfxData_SkeletonMain,EnemyGfxFrameTable_SkeletonChild,EnemyGfxData_SkeletonChild,NullSpriteRoutine-2,$0D0E00A8
 EnemyAppearance_A9:
-	dc.l	EnemyGfxFrameTable_SkeletonMain
-	dc.l	EnemyGfxData_SkeletonMain
-	dc.l	EnemyGfxFrameTable_SkeletonChild
-	dc.l	EnemyGfxData_SkeletonChild
-	dc.l	NullSpriteRoutine-2	
-	dc.l	$0D0E00A9	
+	enemyAppearance EnemyGfxFrameTable_SkeletonMain,EnemyGfxData_SkeletonMain,EnemyGfxFrameTable_SkeletonChild,EnemyGfxData_SkeletonChild,NullSpriteRoutine-2,$0D0E00A9
 EnemyAppearance_66:
-	dc.l	EnemyGfxFrameTable_HumanoidMain
-	dc.l	EnemyGfxData_HumanoidMain
-	dc.l	EnemyGfxFrameTable_HumanoidChild
-	dc.l	EnemyGfxData_HumanoidChild
-	dc.l	NullSpriteRoutine-2	
-	dc.l	$0D0E0066	
+	enemyAppearance EnemyGfxFrameTable_HumanoidMain,EnemyGfxData_HumanoidMain,EnemyGfxFrameTable_HumanoidChild,EnemyGfxData_HumanoidChild,NullSpriteRoutine-2,$0D0E0066
 EnemyAppearance_AA:
-	dc.l	EnemyGfxFrameTable_HumanoidMain
-	dc.l	EnemyGfxData_HumanoidMain
-	dc.l	EnemyGfxFrameTable_HumanoidChild
-	dc.l	EnemyGfxData_HumanoidChild
-	dc.l	NullSpriteRoutine-2	
-	dc.l	$0D0E00AA	
+	enemyAppearance EnemyGfxFrameTable_HumanoidMain,EnemyGfxData_HumanoidMain,EnemyGfxFrameTable_HumanoidChild,EnemyGfxData_HumanoidChild,NullSpriteRoutine-2,$0D0E00AA
 EnemyAppearance_AB:
-	dc.l	EnemyGfxFrameTable_HumanoidMain
-	dc.l	EnemyGfxData_HumanoidMain
-	dc.l	EnemyGfxFrameTable_HumanoidChild
-	dc.l	EnemyGfxData_HumanoidChild
-	dc.l	NullSpriteRoutine-2	
-	dc.l	$0D0E00AB	
+	enemyAppearance EnemyGfxFrameTable_HumanoidMain,EnemyGfxData_HumanoidMain,EnemyGfxFrameTable_HumanoidChild,EnemyGfxData_HumanoidChild,NullSpriteRoutine-2,$0D0E00AB
 EnemyAppearance_BC:
-	dc.l	EnemyGfxFrameTable_HumanoidMain
-	dc.l	EnemyGfxData_HumanoidMain
-	dc.l	EnemyGfxFrameTable_HumanoidChild
-	dc.l	EnemyGfxData_HumanoidChild
-	dc.l	NullSpriteRoutine-2	
-	dc.l	$0D0E00BC	
+	enemyAppearance EnemyGfxFrameTable_HumanoidMain,EnemyGfxData_HumanoidMain,EnemyGfxFrameTable_HumanoidChild,EnemyGfxData_HumanoidChild,NullSpriteRoutine-2,$0D0E00BC
 EnemyAppearance_61:
-	dc.l	EnemyGfxFrameTable_GargoyleMain
-	dc.l	EnemyGfxData_GargoyleMain
-	dc.l	EnemyGfxFrameTable_GargoyleChild
-	dc.l	EnemyGfxData_GargoyleChild
-	dc.l	NullSpriteRoutine-2	
-	dc.l	$0D0E0061	
+	enemyAppearance EnemyGfxFrameTable_GargoyleMain,EnemyGfxData_GargoyleMain,EnemyGfxFrameTable_GargoyleChild,EnemyGfxData_GargoyleChild,NullSpriteRoutine-2,$0D0E0061
 EnemyAppearance_BD:
-	dc.l	EnemyGfxFrameTable_GargoyleMain	
-	dc.l	EnemyGfxData_GargoyleMain	
-	dc.l	EnemyGfxFrameTable_GargoyleChild	
-	dc.l	EnemyGfxData_GargoyleChild	
-	dc.l	NullSpriteRoutine-2	
-	dc.l	$0D0E00BD	
+	enemyAppearance EnemyGfxFrameTable_GargoyleMain,EnemyGfxData_GargoyleMain,EnemyGfxFrameTable_GargoyleChild,EnemyGfxData_GargoyleChild,NullSpriteRoutine-2,$0D0E00BD
 EnemyAppearance_BE:
-	dc.l	EnemyGfxFrameTable_GargoyleMain
-	dc.l	EnemyGfxData_GargoyleMain
-	dc.l	EnemyGfxFrameTable_GargoyleChild
-	dc.l	EnemyGfxData_GargoyleChild
-	dc.l	NullSpriteRoutine-2	
-	dc.l	$0D0E00BE	
+	enemyAppearance EnemyGfxFrameTable_GargoyleMain,EnemyGfxData_GargoyleMain,EnemyGfxFrameTable_GargoyleChild,EnemyGfxData_GargoyleChild,NullSpriteRoutine-2,$0D0E00BE
 EnemyAppearance_BF:
-	dc.l	EnemyGfxFrameTable_GargoyleMain
-	dc.l	EnemyGfxData_GargoyleMain
-	dc.l	EnemyGfxFrameTable_GargoyleChild
-	dc.l	EnemyGfxData_GargoyleChild
-	dc.l	NullSpriteRoutine-2	
-	dc.l	$0D0E00BF	
+	enemyAppearance EnemyGfxFrameTable_GargoyleMain,EnemyGfxData_GargoyleMain,EnemyGfxFrameTable_GargoyleChild,EnemyGfxData_GargoyleChild,NullSpriteRoutine-2,$0D0E00BF
 EnemyAppearance_75:
-	dc.l	EnemyGfxFrameTable_BossMain
-	dc.l	EnemyGfxData_BossMain
-	dc.l	loc_00000000	
-	dc.l	loc_00000000	
-	dc.l	loc_00000000	
-	dc.l	$0F000075	
+	enemyAppearance EnemyGfxFrameTable_BossMain,EnemyGfxData_BossMain,loc_00000000,loc_00000000,loc_00000000,$0F000075
 EnemyAppearance_C0:
-	dc.l	EnemyGfxFrameTable_BossMain
-	dc.l	EnemyGfxData_BossMain
-	dc.l	loc_00000000	
-	dc.l	loc_00000000	
-	dc.l	loc_00000000	
-	dc.l	$0F0000C0	
+	enemyAppearance EnemyGfxFrameTable_BossMain,EnemyGfxData_BossMain,loc_00000000,loc_00000000,loc_00000000,$0F0000C0
 EnemyAppearance_C1:
-	dc.l	EnemyGfxFrameTable_BossMain
-	dc.l	EnemyGfxData_BossMain
-	dc.l	loc_00000000	
-	dc.l	loc_00000000	
-	dc.l	loc_00000000	
-	dc.l	$0F0000C1	
+	enemyAppearance EnemyGfxFrameTable_BossMain,EnemyGfxData_BossMain,loc_00000000,loc_00000000,loc_00000000,$0F0000C1
 EnemyAppearance_C2:
 	dc.l	EnemyGfxFrameTable_BossMain
 	dc.l	EnemyGfxData_BossMain
