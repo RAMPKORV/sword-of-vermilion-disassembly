@@ -1055,146 +1055,149 @@ EnemyEncounterGroupTable: ; Enemy encounters map
 	dc.l	EnemyEncounterGroup_43
 	dc.l	EnemyEncounterGroup_44
 	dc.l	EnemyEncounterGroup_45
-EnemyEncounterGroup_00: ; Each map segment or cave has a set of 4 encounter types
-	dc.w	$0, $0, $A, $1 
+; EnemyEncounterGroup_NN: 4 encounter-type words selected by Random_number (0-3).
+; Each word is an index into EnemyGfxDataTable (12-byte entries).
+; The group index comes from EnemyEncounterTypesByMapSector or EnemyEncounterTypesByCaveRoom.
+EnemyEncounterGroup_00:
+	dc.w	$0, $0, $A, $1 ; Bouncing_5A | Bouncing_5A | StandardMelee_4D | Bouncing_69
 EnemyEncounterGroup_01:
-	dc.w	$6, $A, $1, $1 
+	dc.w	$6, $A, $1, $1 ; StalkPause_4E | StandardMelee_4D | Bouncing_69 | Bouncing_69
 EnemyEncounterGroup_02:
-	dc.w	$A, $A, $1, $0 
+	dc.w	$A, $A, $1, $0 ; StandardMelee_4D | StandardMelee_4D | Bouncing_69 | Bouncing_5A
 EnemyEncounterGroup_03:
-	dc.w	$E, $A, $1, $A 
+	dc.w	$E, $A, $1, $A ; FleeChase_5B | StandardMelee_4D | Bouncing_69 | StandardMelee_4D
 EnemyEncounterGroup_04:
-	dc.w	$E, $12, $A, $1 
+	dc.w	$E, $12, $A, $1 ; FleeChase_5B | ProjectileFire_63 | StandardMelee_4D | Bouncing_69
 EnemyEncounterGroup_05:
-	dc.w	$E, $26, $12, $A 
+	dc.w	$E, $26, $12, $A ; FleeChase_5B | RandomShooter_66 | ProjectileFire_63 | StandardMelee_4D
 EnemyEncounterGroup_06:
-	dc.w	$E, $6, $6, $16 
+	dc.w	$E, $6, $6, $16 ; FleeChase_5B | StalkPause_4E | StalkPause_4E | ProximityChase_5C
 EnemyEncounterGroup_07:
-	dc.w	$5, $12, $E, $16 
+	dc.w	$5, $12, $E, $16 ; Bouncing_AD | ProjectileFire_63 | FleeChase_5B | ProximityChase_5C
 EnemyEncounterGroup_08:
-	dc.w	$B, $A, $12, $5 
+	dc.w	$B, $A, $12, $5 ; StandardMelee_6C | StandardMelee_4D | ProjectileFire_63 | Bouncing_AD
 EnemyEncounterGroup_09:
-	dc.w	$32, $B, $12, $16 
+	dc.w	$32, $B, $12, $16 ; BurstFire_63 | StandardMelee_6C | ProjectileFire_63 | ProximityChase_5C
 EnemyEncounterGroup_0A:
-	dc.w	$2A, $32, $5, $B 
+	dc.w	$2A, $32, $5, $B ; StandardMeleeFast_61 | BurstFire_63 | Bouncing_AD | StandardMelee_6C
 EnemyEncounterGroup_0B:
-	dc.w	$F, $5, $2A, $32 
+	dc.w	$F, $5, $2A, $32 ; FleeChase_6F | Bouncing_AD | StandardMeleeFast_61 | BurstFire_63
 EnemyEncounterGroup_0C:
-	dc.w	$2E, $6, $16, $2 
+	dc.w	$2E, $6, $16, $2 ; OrbShield_75 | StalkPause_4E | ProximityChase_5C | Bouncing_6A
 EnemyEncounterGroup_0D:
-	dc.w	$1A, $2A, $32, $F
+	dc.w	$1A, $2A, $32, $F ; StandardMeleeAlt_5D | StandardMeleeFast_61 | BurstFire_63 | FleeChase_6F
 EnemyEncounterGroup_0E:
-	dc.w	$42, $2E, $1A, $2A 
+	dc.w	$42, $2E, $1A, $2A ; Teleporter_66 | OrbShield_75 | StandardMeleeAlt_5D | StandardMeleeFast_61
 EnemyEncounterGroup_0F:
-	dc.w	$4A, $2E, $1A, $42
+	dc.w	$4A, $2E, $1A, $42 ; MultiOrb_75 | OrbShield_75 | StandardMeleeAlt_5D | Teleporter_66
 EnemyEncounterGroup_10:
-	dc.w	$1E, $6, $4A, $2
+	dc.w	$1E, $6, $4A, $2 ; StalkPauseAlt_64 | StalkPause_4E | MultiOrb_75 | Bouncing_6A
 EnemyEncounterGroup_11:
-	dc.w	$4E, $4A, $1A, $42 
+	dc.w	$4E, $4A, $1A, $42 ; OrbRing_75 | MultiOrb_75 | StandardMeleeAlt_5D | Teleporter_66
 EnemyEncounterGroup_12:
-	dc.w	$13, $4E, $1A, $42
+	dc.w	$13, $4E, $1A, $42 ; ProjectileFire_A4 | OrbRing_75 | StandardMeleeAlt_5D | Teleporter_66
 EnemyEncounterGroup_13:
-	dc.w	$22, $3A, $36, $1E 
+	dc.w	$22, $3A, $36, $1E ; HumanoidMelee_65 | FastBurstShooter_64 | StalkPause3_64 | StalkPauseAlt_64
 EnemyEncounterGroup_14:
-	dc.w	$1B, $4, $4E, $13
+	dc.w	$1B, $4, $4E, $13 ; StandardMeleeAlt_A1 | Bouncing_AC | OrbRing_75 | ProjectileFire_A4
 EnemyEncounterGroup_15:
-	dc.w	$46, $32, $1B, $4 
+	dc.w	$46, $32, $1B, $4 ; SequentialFire_66 | BurstFire_63 | StandardMeleeAlt_A1 | Bouncing_AC
 EnemyEncounterGroup_16:
-	dc.w	$2F, $22, $2A, $46 
+	dc.w	$2F, $22, $2A, $46 ; OrbShield_C0 | HumanoidMelee_65 | StandardMeleeFast_61 | SequentialFire_66
 EnemyEncounterGroup_17:
-	dc.w	$27, $C, $46, $4E 
+	dc.w	$27, $C, $46, $4E ; RandomShooter_AA | StandardMelee_6D | SequentialFire_66 | OrbRing_75
 EnemyEncounterGroup_18:
-	dc.w	$2B, $22, $1B, $1A
+	dc.w	$2B, $22, $1B, $1A ; StandardMeleeFast_BD | HumanoidMelee_65 | StandardMeleeAlt_A1 | StandardMeleeAlt_5D
 EnemyEncounterGroup_19:
-	dc.w	$1F, $3E, $10, $7 
+	dc.w	$1F, $3E, $10, $7 ; StalkPauseAlt_B9 | HomingShooter_64 | FleeChase_70 | StalkPause_7B
 EnemyEncounterGroup_1A:
-	dc.w	$33, $22, $1B, $2F 
+	dc.w	$33, $22, $1B, $2F ; BurstFire_A4 | HumanoidMelee_65 | StandardMeleeAlt_A1 | OrbShield_C0
 EnemyEncounterGroup_1B:
-	dc.w	$43, $33, $10, $22 
+	dc.w	$43, $33, $10, $22 ; Teleporter_AA | BurstFire_A4 | FleeChase_70 | HumanoidMelee_65
 EnemyEncounterGroup_1C:
-	dc.w	$4B, $47, $33, $4 
+	dc.w	$4B, $47, $33, $4 ; MultiOrb_C0 | SequentialFire_AA | BurstFire_A4 | Bouncing_AC
 EnemyEncounterGroup_1D:
-	dc.w	$3B, $4B, $47, $22 
+	dc.w	$3B, $4B, $47, $22 ; FastBurstShooter_B9 | MultiOrb_C0 | SequentialFire_AA | HumanoidMelee_65
 EnemyEncounterGroup_1E:
-	dc.w	$1C, $28, $47, $33 
+	dc.w	$1C, $28, $47, $33 ; StandardMeleeAlt_A2 | RandomShooter_AB | SequentialFire_AA | BurstFire_A4
 EnemyEncounterGroup_1F:
-	dc.w	$3F, $17, $7, $1C 
+	dc.w	$3F, $17, $7, $1C ; HomingShooter_B9 | ProximityChase_9E | StalkPause_7B | StandardMeleeAlt_A2
 EnemyEncounterGroup_20:
-	dc.w	$23, $1C, $14, $4B 
+	dc.w	$23, $1C, $14, $4B ; HumanoidMelee_A7 | StandardMeleeAlt_A2 | ProjectileFire_A5 | MultiOrb_C0
 EnemyEncounterGroup_21:
-	dc.w	$14, $23, $1C, $33 
+	dc.w	$14, $23, $1C, $33 ; ProjectileFire_A5 | HumanoidMelee_A7 | StandardMeleeAlt_A2 | BurstFire_A4
 EnemyEncounterGroup_22:
-	dc.w	$20, $1C, $8, $14 
+	dc.w	$20, $1C, $8, $14 ; StalkPauseAlt_BA | StandardMeleeAlt_A2 | StalkPause_7C | ProjectileFire_A5
 EnemyEncounterGroup_23:
-	dc.w	$44, $4F, $14, $23 
+	dc.w	$44, $4F, $14, $23 ; Teleporter_AB | OrbRing_C0 | ProjectileFire_A5 | HumanoidMelee_A7
 EnemyEncounterGroup_24:
-	dc.w	$D, $44, $4F, $1C
+	dc.w	$D, $44, $4F, $1C ; StandardMelee_6E | Teleporter_AB | OrbRing_C0 | StandardMeleeAlt_A2
 EnemyEncounterGroup_25:
-	dc.w	$48, $30, $23, $1C 
+	dc.w	$48, $30, $23, $1C ; SequentialFire_AB | OrbShield_C1 | HumanoidMelee_A7 | StandardMeleeAlt_A2
 EnemyEncounterGroup_26:
-	dc.w	$3C, $8, $7, $48 
+	dc.w	$3C, $8, $7, $48 ; FastBurstShooter_BA | StalkPause_7C | StalkPause_7B | SequentialFire_AB
 EnemyEncounterGroup_27:
-	dc.w	$11, $D, $44, $48
+	dc.w	$11, $D, $44, $48 ; FleeChase_71 | StandardMelee_6E | Teleporter_AB | SequentialFire_AB
 EnemyEncounterGroup_28:
-	dc.w	$34, $2C, $D, $11 
+	dc.w	$34, $2C, $D, $11 ; BurstFire_A5 | StandardMeleeFast_BE | StandardMelee_6E | FleeChase_71
 EnemyEncounterGroup_29:
-	dc.w	$40, $11, $8, $30 
+	dc.w	$40, $11, $8, $30 ; HomingShooter_BA | FleeChase_71 | StalkPause_7C | OrbShield_C1
 EnemyEncounterGroup_2A:
-	dc.w	$29, $30, $48, $23 
+	dc.w	$29, $30, $48, $23 ; RandomShooter_BC | OrbShield_C1 | SequentialFire_AB | HumanoidMelee_A7
 EnemyEncounterGroup_2B:
-	dc.w	$21, $4C, $29, $40 
+	dc.w	$21, $4C, $29, $40 ; StalkPauseAlt_BB | MultiOrb_C1 | RandomShooter_BC | HomingShooter_BA
 EnemyEncounterGroup_2C:
-	dc.w	$24, $29, $11, $4
+	dc.w	$24, $29, $11, $4 ; HumanoidMeleeAlt_A8 | RandomShooter_BC | FleeChase_71 | Bouncing_AC
 EnemyEncounterGroup_2D:
-	dc.w	$15, $24, $34, $4C 
+	dc.w	$15, $24, $34, $4C ; ProjectileFire_A6 | HumanoidMeleeAlt_A8 | BurstFire_A5 | MultiOrb_C1
 EnemyEncounterGroup_2E:
-	dc.w	$50, $24, $15, $29 
+	dc.w	$50, $24, $15, $29 ; OrbRing_C1 | HumanoidMeleeAlt_A8 | ProjectileFire_A6 | RandomShooter_BC
 EnemyEncounterGroup_2F:
-	dc.w	$45, $39, $24, $11 
+	dc.w	$45, $39, $24, $11 ; Teleporter_BC | StalkPause3_BB | HumanoidMeleeAlt_A8 | FleeChase_71
 EnemyEncounterGroup_30:
-	dc.w	$18, $45, $39, $15 
+	dc.w	$18, $45, $39, $15 ; ProximityChase_9F | Teleporter_BC | StalkPause3_BB | ProjectileFire_A6
 EnemyEncounterGroup_31:
-	dc.w	$18, $45, $50, $39 
+	dc.w	$18, $45, $50, $39 ; ProximityChase_9F | Teleporter_BC | OrbRing_C1 | StalkPause3_BB
 EnemyEncounterGroup_32:
-	dc.w	$31, $18, $50, $45
+	dc.w	$31, $18, $50, $45 ; OrbShield_C2 | ProximityChase_9F | OrbRing_C1 | Teleporter_BC
 EnemyEncounterGroup_33:
-	dc.w	$53, $50, $18, $45 
+	dc.w	$53, $50, $18, $45 ; SpiralBurst_A6b | OrbRing_C1 | ProximityChase_9F | Teleporter_BC
 EnemyEncounterGroup_34:
-	dc.w	$1D, $31, $24, $45 
+	dc.w	$1D, $31, $24, $45 ; StandardMeleeAlt_A3 | OrbShield_C2 | HumanoidMeleeAlt_A8 | Teleporter_BC
 EnemyEncounterGroup_35:
-	dc.w	$9, $3D, $18, $50 
+	dc.w	$9, $3D, $18, $50 ; StalkPause_7D | FastBurstShooter_BB | ProximityChase_9F | OrbRing_C1
 EnemyEncounterGroup_36:
-	dc.w	$2D, $1D, $31, $50 
+	dc.w	$2D, $1D, $31, $50 ; StandardMeleeFast_BF | StandardMeleeAlt_A3 | OrbShield_C2 | OrbRing_C1
 EnemyEncounterGroup_37:
-	dc.w	$4D, $2D, $1D, $4 
+	dc.w	$4D, $2D, $1D, $4 ; MultiOrb_C2 | StandardMeleeFast_BF | StandardMeleeAlt_A3 | Bouncing_AC
 EnemyEncounterGroup_38:
-	dc.w	$19, $41, $4D, $9 
+	dc.w	$19, $41, $4D, $9 ; ProximityChase_A0 | HomingShooter_BB | MultiOrb_C2 | StalkPause_7D
 EnemyEncounterGroup_39:
-	dc.w	$4D, $19, $2D, $1D 
+	dc.w	$4D, $19, $2D, $1D ; MultiOrb_C2 | ProximityChase_A0 | StandardMeleeFast_BF | StandardMeleeAlt_A3
 EnemyEncounterGroup_3A:
-	dc.w	$35, $2D, $4D, $24 
+	dc.w	$35, $2D, $4D, $24 ; BurstFire_A6 | StandardMeleeFast_BF | MultiOrb_C2 | HumanoidMeleeAlt_A8
 EnemyEncounterGroup_3B:
-	dc.w	$49, $4D, $35, $11 
+	dc.w	$49, $4D, $35, $11 ; SequentialFire_BC | MultiOrb_C2 | BurstFire_A6 | FleeChase_71
 EnemyEncounterGroup_3C:
-	dc.w	$25, $49, $35, $19 
+	dc.w	$25, $49, $35, $19 ; HumanoidMeleeAlt_A9 | SequentialFire_BC | BurstFire_A6 | ProximityChase_A0
 EnemyEncounterGroup_3D:
-	dc.w	$25, $49, $35, $4D
+	dc.w	$25, $49, $35, $4D ; HumanoidMeleeAlt_A9 | SequentialFire_BC | BurstFire_A6 | MultiOrb_C2
 EnemyEncounterGroup_3E:
-	dc.w	$51, $25, $49, $52 
+	dc.w	$51, $25, $49, $52 ; OrbRing_C2 | HumanoidMeleeAlt_A9 | SequentialFire_BC | SpiralBurst_A6a
 EnemyEncounterGroup_3F:
-	dc.w	$3, $50, $50, $45 
+	dc.w	$3, $50, $50, $45 ; Bouncing_6B | OrbRing_C1 | OrbRing_C1 | Teleporter_BC
 EnemyEncounterGroup_40:
-	dc.w	$3E, $7, $3A, $22 
+	dc.w	$3E, $7, $3A, $22 ; HomingShooter_64 | StalkPause_7B | FastBurstShooter_64 | HumanoidMelee_65
 EnemyEncounterGroup_41:
-	dc.w	$28, $47, $22, $4B
+	dc.w	$28, $47, $22, $4B ; RandomShooter_AB | SequentialFire_AA | HumanoidMelee_65 | MultiOrb_C0
 EnemyEncounterGroup_42:
-	dc.w	$38, $8, $4, $23
+	dc.w	$38, $8, $4, $23 ; StalkPause3_BA | StalkPause_7C | Bouncing_AC | HumanoidMelee_A7
 EnemyEncounterGroup_43:
-	dc.w	$1E, $36, $16, $2
+	dc.w	$1E, $36, $16, $2 ; StalkPauseAlt_64 | StalkPause3_64 | ProximityChase_5C | Bouncing_6A
 EnemyEncounterGroup_44:
-	dc.w	$37, $47, $7, $3A
+	dc.w	$37, $47, $7, $3A ; StationaryShooter_B9 | SequentialFire_AA | StalkPause_7B | FastBurstShooter_64
 EnemyEncounterGroup_45:
-	dc.w	$21, $1F, $1E, $4C 
+	dc.w	$21, $1F, $1E, $4C ; StalkPauseAlt_BB | StalkPauseAlt_B9 | StalkPauseAlt_64 | MultiOrb_C1
 EnemyGfxDataTable:
 	dc.l	EnemyAppearance_5A ; Appearance
 	dc.l	EnemyData_Bouncing_5A ; Sprite mappings
