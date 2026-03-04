@@ -1474,8 +1474,53 @@ Quest_choice_expected_answer    = $FFFFC704   ; .w(1)/b(1)
 Quest_choice_map_trigger        = $FFFFC705   ; .b
 
 ; ------------------------------------------------------------
-; Event Triggers ($FFFFC720-$FFFFC820)
+; Event Triggers ($FFFFC720-$FFFFC91F)  [RAM-003]
 ; ------------------------------------------------------------
+; A flat 512-byte ($200) array of single-byte flag slots that
+; record all story/quest progress.  Cleared to $00 on new game;
+; saved/loaded verbatim by sram.asm (512 bytes per save slot).
+;
+; Layout by offset range:
+;   $0000–$00FF : Story/quest progress flags (1 byte each)
+;   $0100–$01FF : World-map reveal flags (1 byte per map sector)
+;
+; Value semantics:
+;   $00 = not set (FLAG_FALSE)
+;   $FF = set     (FLAG_TRUE)
+;   (Any non-zero value is treated as set by TST.b checks.)
+;
+; HOW FLAGS ARE SET:
+;   1. Via script bytecode (townbuild.asm data, evaluated by script VM):
+;        SCRIPT_TRIGGERS ($F8) — up to 2 flags (1-byte offsets, low half only)
+;          → macro: script_cmd_triggers <TRIGGER_xxx>
+;        SCRIPT_ACTIONS  ($F9) — action list with 16-bit offsets:
+;          · entry $00 xx : set Event_triggers_start[$00_xx] = FLAG_TRUE
+;          · entry $01 xx : set Event_triggers_start[$01_xx] = FLAG_TRUE (map reveal)
+;          · entry $02 .. : give kims (not a trigger)
+;          → macros: script_set_trigger, script_reveal_map, script_give_kims
+;   2. Via ASM code (items.asm):
+;        MOVE.b #FLAG_TRUE, <FullRAMAddr>.w   (direct byte write)
+;   3. Via quest-choice scripting:
+;        SCRIPT_YES_NO ($FB) records an answer;
+;        SCRIPT_CHOICE ($FA) conditionally sets Quest_choice_map_trigger.
+;
+; HOW FLAGS ARE READ:
+;   1. NPC dialogue dispatch in npc.asm checks individual flags to decide
+;      which script to run (e.g. TST.b Blade_is_dead.w → branch to alt text).
+;   2. Items.asm item-use handlers check flags before applying effects
+;      (e.g. check Sword_retrieved_from_blacksmith before allowing retrieval).
+;   3. gameplay.asm boss-trigger check: compares flag bytes to decide whether
+;      to start a boss encounter dialogue sequence.
+;
+; SAVE/LOAD (sram.asm):
+;   LEA Event_triggers_start.w, A1
+;   MOVE.w #$01FF, D7   ; 512 bytes = $0200 = $01FF+1 DBF iterations
+;   loop: copy byte ↔ SRAM
+;
+; TRIGGER_ constants (below) are OFFSETS from Event_triggers_start.
+; The Blade_is_dead … style labels (further below) are the full RAM addresses.
+; Both refer to the same flags; prefer TRIGGER_ in script data.
+;
 Event_triggers_start                        = $FFFFC720   ; .b
 Blade_is_dead                               = $FFFFC720   ; .b
 Treasure_of_troy_challenge_issued           = $FFFFC722   ; .b

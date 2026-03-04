@@ -1338,12 +1338,13 @@
           "file": "src/script.asm, src/gameplay.asm, constants.asm",
           "priority": "high",
           "effort": "large",
-          "status": "todo",
+          "status": "done",
           "tags": [
             "documentation",
             "ram",
             "events"
-          ]
+          ],
+          "completed": "2026-03-04"
         },
         {
           "id": "RAM-004",
@@ -2089,8 +2090,8 @@
   "statistics": {
     "total_tasks": 139,
     "by_status": {
-      "done": 27,
-      "todo": 112
+      "done": 28,
+      "todo": 111
     },
     "by_priority": {
       "critical": 1,
