@@ -148,41 +148,23 @@ Z80DriverBinary:
 	dc.b	$78, $32, $00, $40, $08, $00, $32, $01, $40, $32, $FC, $1F, $CB, $BE, $E1, $C9, $01, $03, $06, $0C, $18, $28, $50, $90, $FF, $FD, $FA, $F4, $E8, $D8, $B0, $70 
 
 InitMenuObjects:
-	LEA	Object_table_base.w, A0
-	LEA	MenuObjectInitTable, A1
-	BRA.w	InitObjectsFromTable
+	initObjects MenuObjectInitTable
 InitGameplayObjects:
-	LEA	Object_table_base.w, A0
-	LEA	GameplayObjectInitTable, A1
-	BRA.w	InitObjectsFromTable
+	initObjects GameplayObjectInitTable
 InitBattleObjects:
-	LEA	Object_table_base.w, A0
-	LEA	BattleObjectInitTable, A1
-	BRA.w	InitObjectsFromTable
+	initObjects BattleObjectInitTable
 InitBossObjects_TypeA:
-	LEA	Object_table_base.w, A0
-	LEA	BossObjectInitTable_A, A1
-	BRA.w	InitObjectsFromTable
+	initObjects BossObjectInitTable_A
 InitBossObjects_TypeB:
-	LEA	Object_table_base.w, A0
-	LEA	BossObjectInitTable_B, A1
-	BRA.w	InitObjectsFromTable
+	initObjects BossObjectInitTable_B
 InitBossObjects_TypeC:
-	LEA	Object_table_base.w, A0
-	LEA	BossObjectInitTable_C, A1
-	BRA.w	InitObjectsFromTable
+	initObjects BossObjectInitTable_C
 InitBossObjects_TypeD:
-	LEA	Object_table_base.w, A0
-	LEA	BossObjectInitTable_D, A1
-	BRA.w	InitObjectsFromTable
+	initObjects BossObjectInitTable_D
 InitBossObjects_TypeE:
-	LEA	Object_table_base.w, A0
-	LEA	BossObjectInitTable_E, A1
-	BRA.w	InitObjectsFromTable
+	initObjects BossObjectInitTable_E
 InitBossObjects_TypeF:
-	LEA	Object_table_base.w, A0
-	LEA	BossObjectInitTable_F, A1
-	BRA.w	InitObjectsFromTable
+	initObjects BossObjectInitTable_F
 InitBossObjects_InlineData:
 	dc.b	$41, $F8, $D0, $E0, $43, $F9, $00, $00, $0E, $FA, $60, $00, $00, $0C 
 
