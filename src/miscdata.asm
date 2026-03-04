@@ -690,263 +690,495 @@ DebugMenu_ScrollTick_PrevSubItem_Done:
 ;              then (column-count+1) bytes of HScroll data
 ; ---------------------------------------------------------------------------
 DebugMenu_Row_InputTest:
-	dc.b	$44, $08, $00, $03, $00, $0B, $84, $C0, $49, $4E, $50, $55, $54, $20, $20, $20
-	dc.b	$54, $45, $53, $54
+	dc.l	$44080003				; VDP write cmd
+	dc.w	$000B					; col count-1 = 11 (12 cols)
+	dc.w	$84C0					; normal tile
+	dc.b	"INPUT   TEST"
 DebugMenu_Row_SoundTest:
-	dc.b	$45, $08, $00, $03, $00, $0B, $84, $C0, $53, $4F, $55, $4E, $44, $20, $20, $20
-	dc.b	$54, $45, $53, $54
+	dc.l	$45080003				; VDP write cmd
+	dc.w	$000B					; col count-1 = 11 (12 cols)
+	dc.w	$84C0					; normal tile
+	dc.b	"SOUND   TEST"
 DebugMenu_Row_CRTTest:
-	dc.b	$46, $08, $00, $03, $00, $0B, $84, $C0, $43, $2E, $52, $2E, $54, $2E, $20, $20
-	dc.b	$54, $45, $53, $54
+	dc.l	$46080003				; VDP write cmd
+	dc.w	$000B					; col count-1 = 11 (12 cols)
+	dc.w	$84C0					; normal tile
+	dc.b	"C.R.T.  TEST"
 DebugMenu_Row_Exit:
-	dc.b	$4A, $08, $00, $03, $00, $03, $84, $C0, $45, $58, $49, $54
+	dc.l	$4A080003				; VDP write cmd
+	dc.w	$0003					; col count-1 = 3 (4 cols)
+	dc.w	$84C0					; normal tile
+	dc.b	"EXIT"
 DebugMenu_Row_SelectInstruction:
-	dc.b	$4D, $06, $00, $03, $00, $1E, $84, $C0, $53, $45, $4C, $45, $43, $54, $20, $42
-	dc.b	$59, $20, $53, $54, $49, $43, $4B, $21, $20, $50, $55, $53, $48, $20, $41, $20
-	dc.b	$42, $55, $54, $54, $4F, $4E, $21, $00
+	dc.l	$4D060003				; VDP write cmd
+	dc.w	$001E					; col count-1 = 30 (31 cols)
+	dc.w	$84C0					; normal tile
+	dc.b	"SELECT BY STICK! PUSH A BUTTON!", $00
 DebugInputTest_Row_Up:
-	dc.b	$44, $16, $00, $03, $00, $01, $84, $C0, $55, $50
+	dc.l	$44160003				; VDP write cmd
+	dc.w	$0001					; col count-1 = 1 (2 cols)
+	dc.w	$84C0					; normal tile
+	dc.b	"UP"
 DebugInputTest_Row_Down:
-	dc.b	$4A, $14, $00, $03, $00, $03, $84, $C0, $44, $4F, $57, $4E
+	dc.l	$4A140003				; VDP write cmd
+	dc.w	$0003					; col count-1 = 3 (4 cols)
+	dc.w	$84C0					; normal tile
+	dc.b	"DOWN"
 DebugInputTest_Row_Left:
-	dc.b	$47, $06, $00, $03, $00, $03, $84, $C0, $4C, $45, $46, $54
+	dc.l	$47060003				; VDP write cmd
+	dc.w	$0003					; col count-1 = 3 (4 cols)
+	dc.w	$84C0					; normal tile
+	dc.b	"LEFT"
 DebugInputTest_Row_Right:
-	dc.b	$47, $20, $00, $03, $00, $04, $84, $C0, $52, $49, $47, $48, $54, $00
+	dc.l	$47200003				; VDP write cmd
+	dc.w	$0004					; col count-1 = 4 (5 cols)
+	dc.w	$84C0					; normal tile
+	dc.b	"RIGHT", $00
 DebugInputTest_Row_A:
-	dc.b	$4B, $2E, $00, $03, $00, $00, $84, $C0, $41, $00
+	dc.l	$4B2E0003				; VDP write cmd
+	dc.w	$0000					; col count-1 = 0 (1 cols)
+	dc.w	$84C0					; normal tile
+	dc.b	"A", $00
 DebugInputTest_Row_B:
-	dc.b	$49, $B4, $00, $03, $00, $00, $84, $C0, $42, $00
+	dc.l	$49B40003				; VDP write cmd
+	dc.w	$0000					; col count-1 = 0 (1 cols)
+	dc.w	$84C0					; normal tile
+	dc.b	"B", $00
 DebugInputTest_Row_C:
-	dc.b	$48, $3A, $00, $03, $00, $00, $84, $C0, $43, $00
+	dc.l	$483A0003				; VDP write cmd
+	dc.w	$0000					; col count-1 = 0 (1 cols)
+	dc.w	$84C0					; normal tile
+	dc.b	"C", $00
 DebugInputTest_Row_Start:
-	dc.b	$44, $30, $00, $03, $00, $04, $84, $C0, $53, $54, $41, $52, $54, $00
+	dc.l	$44300003				; VDP write cmd
+	dc.w	$0004					; col count-1 = 4 (5 cols)
+	dc.w	$84C0					; normal tile
+	dc.b	"START", $00
 DebugInputTest_Row_Title:
-	dc.b	$40, $9C, $00, $03, $00, $09, $A4, $C0, $49, $4E, $50, $55, $54, $20, $54, $45
-	dc.b	$53, $54
+	dc.l	$409C0003				; VDP write cmd
+	dc.w	$0009					; col count-1 = 9 (10 cols)
+	dc.w	$A4C0					; wide/title tile
+	dc.b	"INPUT TEST"
 DebugSoundTest_Row_BGM:
-	dc.b	$44, $08, $00, $03, $00, $06, $84, $C0, $31, $2E, $20, $20, $42, $47, $4D, $00
+	dc.l	$44080003				; VDP write cmd
+	dc.w	$0006					; col count-1 = 6 (7 cols)
+	dc.w	$84C0					; normal tile
+	dc.b	"1.  BGM", $00
 DebugSoundTest_Row_Effect:
-	dc.b	$45, $08, $00, $03, $00, $09, $84, $C0, $32, $2E, $20, $20, $45, $46, $46, $45
-	dc.b	$43, $54
+	dc.l	$45080003				; VDP write cmd
+	dc.w	$0009					; col count-1 = 9 (10 cols)
+	dc.w	$84C0					; normal tile
+	dc.b	"2.  EFFECT"
 DebugSoundTest_Row_BGM2:
-	dc.b	$46, $08, $00, $03, $00, $08, $84, $C0, $33, $2E, $20, $20, $42, $47, $4D, $20
-	dc.b	$32, $00
+	dc.l	$46080003				; VDP write cmd
+	dc.w	$0008					; col count-1 = 8 (9 cols)
+	dc.w	$84C0					; normal tile
+	dc.b	"3.  BGM 2", $00
 DebugSoundTest_Row_DA:
-	dc.b	$47, $08, $00, $03, $00, $06, $84, $C0, $34, $2E, $20, $20, $44, $2F, $41, $00
+	dc.l	$47080003				; VDP write cmd
+	dc.w	$0006					; col count-1 = 6 (7 cols)
+	dc.w	$84C0					; normal tile
+	dc.b	"4.  D/A", $00
 DebugBGM_Row_Opening:
-	dc.b	$42, $0A, $00, $03, $00, $08, $84, $C0, $31, $2E, $4F, $50, $45, $4E, $49, $4E
-	dc.b	$47, $00
+	dc.l	$420A0003				; VDP write cmd
+	dc.w	$0008					; col count-1 = 8 (9 cols)
+	dc.w	$84C0					; normal tile
+	dc.b	"1.OPENING", $00
 DebugBGM_Row_Title:
-	dc.b	$43, $0A, $00, $03, $00, $06, $84, $C0, $32, $2E, $54, $49, $54, $4C, $45, $00
+	dc.l	$430A0003				; VDP write cmd
+	dc.w	$0006					; col count-1 = 6 (7 cols)
+	dc.w	$84C0					; normal tile
+	dc.b	"2.TITLE", $00
 DebugBGM_Row_NameEntry:
-	dc.b	$44, $0A, $00, $03, $00, $0B, $84, $C0, $33, $2E, $4E, $41, $4D, $45, $20, $45
-	dc.b	$4E, $54, $52, $59
+	dc.l	$440A0003				; VDP write cmd
+	dc.w	$000B					; col count-1 = 11 (12 cols)
+	dc.w	$84C0					; normal tile
+	dc.b	"3.NAME ENTRY"
 DebugBGM_Row_Stats:
-	dc.b	$45, $0A, $00, $03, $00, $07, $84, $C0, $34, $2E, $53, $54, $41, $54, $54, $53
+	dc.l	$450A0003				; VDP write cmd
+	dc.w	$0007					; col count-1 = 7 (8 cols)
+	dc.w	$84C0					; normal tile
+	dc.b	"4.STATTS"
 DebugBGM_Row_Areas:
-	dc.b	$46, $0A, $00, $03, $00, $06, $84, $C0, $35, $2E, $45, $52, $49, $41, $53, $00
+	dc.l	$460A0003				; VDP write cmd
+	dc.w	$0006					; col count-1 = 6 (7 cols)
+	dc.w	$84C0					; normal tile
+	dc.b	"5.ERIAS", $00
 DebugBGM_Row_VillageA:
-	dc.b	$47, $0A, $00, $03, $00, $0A, $84, $C0, $36, $2E, $56, $49, $4C, $4C, $41, $47
-	dc.b	$45, $20, $41, $00
+	dc.l	$470A0003				; VDP write cmd
+	dc.w	$000A					; col count-1 = 10 (11 cols)
+	dc.w	$84C0					; normal tile
+	dc.b	"6.VILLAGE A", $00
 DebugBGM_Row_Fuyodol:
-	dc.b	$48, $0A, $00, $03, $00, $08, $84, $C0, $37, $2E, $46, $55, $59, $4F, $44, $4F
-	dc.b	$4C, $00
+	dc.l	$480A0003				; VDP write cmd
+	dc.w	$0008					; col count-1 = 8 (9 cols)
+	dc.w	$84C0					; normal tile
+	dc.b	"7.FUYODOL", $00
 DebugBGM_Row_ShopCity:
-	dc.b	$49, $0A, $00, $03, $00, $0C, $84, $C0, $38, $2E, $53, $48, $4F, $50, $20, $28
-	dc.b	$43, $49, $54, $59, $29, $00
+	dc.l	$490A0003				; VDP write cmd
+	dc.w	$000C					; col count-1 = 12 (13 cols)
+	dc.w	$84C0					; normal tile
+	dc.b	"8.SHOP (CITY)", $00
 DebugBGM_Row_ShopVillage:
-	dc.b	$4A, $0A, $00, $03, $00, $0F, $84, $C0, $39, $2E, $53, $48, $4F, $50, $20, $28
-	dc.b	$56, $49, $4C, $4C, $41, $47, $45, $29
+	dc.l	$4A0A0003				; VDP write cmd
+	dc.w	$000F					; col count-1 = 15 (16 cols)
+	dc.w	$84C0					; normal tile
+	dc.b	"9.SHOP (VILLAGE)"
 DebugBGM_Row_Church:
-	dc.b	$4B, $08, $00, $03, $00, $08, $84, $C0, $31, $30, $2E, $43, $48, $55, $52, $43
-	dc.b	$48, $00
+	dc.l	$4B080003				; VDP write cmd
+	dc.w	$0008					; col count-1 = 8 (9 cols)
+	dc.w	$84C0					; normal tile
+	dc.b	"10.CHURCH", $00
 DebugBGM_Row_Dungeon:
-	dc.b	$42, $30, $00, $03, $00, $09, $84, $C0, $31, $31, $2E, $44, $55, $4E, $47, $45
-	dc.b	$4F, $4E
+	dc.l	$42300003				; VDP write cmd
+	dc.w	$0009					; col count-1 = 9 (10 cols)
+	dc.w	$84C0					; normal tile
+	dc.b	"11.DUNGEON"
 DebugBGM_Row_Dungeon2:
-	dc.b	$43, $30, $00, $03, $00, $0B, $84, $C0, $31, $32, $2E, $44, $55, $4E, $47, $45
-	dc.b	$4F, $4E, $20, $32
+	dc.l	$43300003				; VDP write cmd
+	dc.w	$000B					; col count-1 = 11 (12 cols)
+	dc.w	$84C0					; normal tile
+	dc.b	"12.DUNGEON 2"
 DebugBGM_Row_BossA:
-	dc.b	$44, $30, $00, $03, $00, $08, $84, $C0, $31, $33, $2E, $42, $4F, $53, $53, $20
-	dc.b	$41, $00
+	dc.l	$44300003				; VDP write cmd
+	dc.w	$0008					; col count-1 = 8 (9 cols)
+	dc.w	$84C0					; normal tile
+	dc.b	"13.BOSS A", $00
 DebugBGM_Row_BossB:
-	dc.b	$45, $30, $00, $03, $00, $08, $84, $C0, $31, $34, $2E, $42, $4F, $53, $53, $20
-	dc.b	$42, $00
+	dc.l	$45300003				; VDP write cmd
+	dc.w	$0008					; col count-1 = 8 (9 cols)
+	dc.w	$84C0					; normal tile
+	dc.b	"14.BOSS B", $00
 DebugBGM_Row_3DMode:
-	dc.b	$46, $30, $00, $03, $00, $09, $84, $C0, $31, $35, $2E, $33, $44, $20, $4D, $4F
-	dc.b	$44, $45
+	dc.l	$46300003				; VDP write cmd
+	dc.w	$0009					; col count-1 = 9 (10 cols)
+	dc.w	$84C0					; normal tile
+	dc.b	"15.3D MODE"
 DebugBGM_Row_Battle:
-	dc.b	$47, $30, $00, $03, $00, $08, $84, $C0, $31, $36, $2E, $42, $41, $54, $54, $4C
-	dc.b	$45, $00
+	dc.l	$47300003				; VDP write cmd
+	dc.w	$0008					; col count-1 = 8 (9 cols)
+	dc.w	$84C0					; normal tile
+	dc.b	"16.BATTLE", $00
 DebugBGM_Row_Castle:
-	dc.b	$48, $30, $00, $03, $00, $08, $84, $C0, $31, $37, $2E, $43, $41, $53, $54, $4C
-	dc.b	$45, $00
+	dc.l	$48300003				; VDP write cmd
+	dc.w	$0008					; col count-1 = 8 (9 cols)
+	dc.w	$84C0					; normal tile
+	dc.b	"17.CASTLE", $00
 DebugBGM_Row_PlayerDead:
-	dc.b	$49, $30, $00, $03, $00, $0D, $84, $C0, $31, $38, $2E, $50, $4C, $41, $59, $45
-	dc.b	$52, $20, $44, $45, $41, $44
+	dc.l	$49300003				; VDP write cmd
+	dc.w	$000D					; col count-1 = 13 (14 cols)
+	dc.w	$84C0					; normal tile
+	dc.b	"18.PLAYER DEAD"
 DebugBGM_Row_JijiTheme:
-	dc.b	$4A, $30, $00, $03, $00, $0C, $84, $C0, $31, $39, $2E, $4A, $49, $4A, $49, $20
-	dc.b	$54, $48, $45, $4D, $45, $00
+	dc.l	$4A300003				; VDP write cmd
+	dc.w	$000C					; col count-1 = 12 (13 cols)
+	dc.w	$84C0					; normal tile
+	dc.b	"19.JIJI THEME", $00
 DebugSound_Row_Exit:
-	dc.b	$4B, $30, $00, $03, $00, $07, $84, $C0, $32, $30, $2E, $20, $45, $58, $49, $54
+	dc.l	$4B300003				; VDP write cmd
+	dc.w	$0007					; col count-1 = 7 (8 cols)
+	dc.w	$84C0					; normal tile
+	dc.b	"20. EXIT"
 DebugSound_Row_SoundTestTitle:
-	dc.b	$41, $1C, $00, $03, $00, $09, $A4, $C0, $53, $4F, $55, $4E, $44, $20, $54, $45
-	dc.b	$53, $54
+	dc.l	$411C0003				; VDP write cmd
+	dc.w	$0009					; col count-1 = 9 (10 cols)
+	dc.w	$A4C0					; wide/title tile
+	dc.b	"SOUND TEST"
 DebugEffect_Row_WindowOpen:
-	dc.b	$42, $0A, $00, $03, $00, $0C, $84, $C0, $31, $2E, $57, $49, $4E, $44, $4F, $57
-	dc.b	$20, $4F, $50, $45, $4E, $00
+	dc.l	$420A0003				; VDP write cmd
+	dc.w	$000C					; col count-1 = 12 (13 cols)
+	dc.w	$84C0					; normal tile
+	dc.b	"1.WINDOW OPEN", $00
 DebugEffect_Row_CommandSet:
-	dc.b	$43, $0A, $00, $03, $00, $0C, $84, $C0, $32, $2E, $43, $4F, $4D, $4D, $41, $4E
-	dc.b	$44, $20, $53, $45, $54, $00
+	dc.l	$430A0003				; VDP write cmd
+	dc.w	$000C					; col count-1 = 12 (13 cols)
+	dc.w	$84C0					; normal tile
+	dc.b	"2.COMMAND SET", $00
 DebugEffect_Row_CommandCancel:
-	dc.b	$44, $0A, $00, $03, $00, $0F, $84, $C0, $33, $2E, $43, $4F, $4D, $4D, $41, $4E
-	dc.b	$44, $20, $43, $41, $4E, $43, $45, $4C
+	dc.l	$440A0003				; VDP write cmd
+	dc.w	$000F					; col count-1 = 15 (16 cols)
+	dc.w	$84C0					; normal tile
+	dc.b	"3.COMMAND CANCEL"
 DebugEffect_Row_CommandSelect:
-	dc.b	$45, $0A, $00, $03, $00, $0F, $84, $C0, $34, $2E, $43, $4F, $4D, $4D, $41, $4E
-	dc.b	$44, $20, $53, $45, $4C, $45, $43, $54
+	dc.l	$450A0003				; VDP write cmd
+	dc.w	$000F					; col count-1 = 15 (16 cols)
+	dc.w	$84C0					; normal tile
+	dc.b	"4.COMMAND SELECT"
 DebugEffect_Row_Talking:
-	dc.b	$46, $0A, $00, $03, $00, $08, $84, $C0, $35, $2E, $54, $41, $4C, $4B, $49, $4E
-	dc.b	$47, $00
+	dc.l	$460A0003				; VDP write cmd
+	dc.w	$0008					; col count-1 = 8 (9 cols)
+	dc.w	$84C0					; normal tile
+	dc.b	"5.TALKING", $00
 DebugEffect_Row_IntoHouse:
-	dc.b	$47, $0A, $00, $03, $00, $0B, $84, $C0, $36, $2E, $49, $4E, $54, $4F, $20, $48
-	dc.b	$4F, $55, $53, $45
+	dc.l	$470A0003				; VDP write cmd
+	dc.w	$000B					; col count-1 = 11 (12 cols)
+	dc.w	$84C0					; normal tile
+	dc.b	"6.INTO HOUSE"
 DebugEffect_Row_Ring:
-	dc.b	$48, $0A, $00, $03, $00, $05, $84, $C0, $37, $2E, $52, $49, $4E, $47
+	dc.l	$480A0003				; VDP write cmd
+	dc.w	$0005					; col count-1 = 5 (6 cols)
+	dc.w	$84C0					; normal tile
+	dc.b	"7.RING"
 DebugEffect_Row_Star:
-	dc.b	$49, $0A, $00, $03, $00, $05, $84, $C0, $38, $2E, $53, $54, $41, $52
+	dc.l	$490A0003				; VDP write cmd
+	dc.w	$0005					; col count-1 = 5 (6 cols)
+	dc.w	$84C0					; normal tile
+	dc.b	"8.STAR"
 DebugEffect_Row_GetItem:
-	dc.b	$4A, $0A, $00, $03, $00, $0D, $84, $C0, $39, $2E, $47, $45, $54, $20, $54, $48
-	dc.b	$45, $20, $49, $54, $45, $4D
+	dc.l	$4A0A0003				; VDP write cmd
+	dc.w	$000D					; col count-1 = 13 (14 cols)
+	dc.w	$84C0					; normal tile
+	dc.b	"9.GET THE ITEM"
 DebugEffect_Row_OpenBox:
-	dc.b	$4B, $08, $00, $03, $00, $0A, $84, $C0, $31, $30, $2E, $4F, $50, $45, $4E, $20
-	dc.b	$42, $4F, $58, $00
+	dc.l	$4B080003				; VDP write cmd
+	dc.w	$000A					; col count-1 = 10 (11 cols)
+	dc.w	$84C0					; normal tile
+	dc.b	"10.OPEN BOX", $00
 DebugEffect_Row_DoorKnock:
-	dc.b	$42, $30, $00, $03, $00, $0C, $84, $C0, $31, $31, $2E, $44, $4F, $4F, $52, $20
-	dc.b	$4B, $4E, $4F, $43, $4B, $00
+	dc.l	$42300003				; VDP write cmd
+	dc.w	$000C					; col count-1 = 12 (13 cols)
+	dc.w	$84C0					; normal tile
+	dc.b	"11.DOOR KNOCK", $00
 DebugEffect_Row_Light:
-	dc.b	$43, $30, $00, $03, $00, $07, $84, $C0, $31, $32, $2E, $4C, $49, $47, $48, $54
+	dc.l	$43300003				; VDP write cmd
+	dc.w	$0007					; col count-1 = 7 (8 cols)
+	dc.w	$84C0					; normal tile
+	dc.b	"12.LIGHT"
 DebugEffect_Row_Recover:
-	dc.b	$44, $30, $00, $03, $00, $09, $84, $C0, $31, $33, $2E, $52, $45, $43, $4F, $56
-	dc.b	$45, $52
+	dc.l	$44300003				; VDP write cmd
+	dc.w	$0009					; col count-1 = 9 (10 cols)
+	dc.w	$84C0					; normal tile
+	dc.b	"13.RECOVER"
 DebugEffect_Row_Water:
-	dc.b	$45, $30, $00, $03, $00, $07, $84, $C0, $31, $34, $2E, $57, $41, $54, $45, $52
+	dc.l	$45300003				; VDP write cmd
+	dc.w	$0007					; col count-1 = 7 (8 cols)
+	dc.w	$84C0					; normal tile
+	dc.b	"14.WATER"
 DebugEffect_Row_Fire2:
-	dc.b	$46, $30, $00, $03, $00, $08, $84, $C0, $31, $35, $2E, $46, $49, $52, $45, $20
-	dc.b	$32, $00
+	dc.l	$46300003				; VDP write cmd
+	dc.w	$0008					; col count-1 = 8 (9 cols)
+	dc.w	$84C0					; normal tile
+	dc.b	"15.FIRE 2", $00
 DebugEffect_Row_Fire3:
-	dc.b	$47, $30, $00, $03, $00, $08, $84, $C0, $31, $36, $2E, $46, $49, $52, $45, $20
-	dc.b	$33, $00
+	dc.l	$47300003				; VDP write cmd
+	dc.w	$0008					; col count-1 = 8 (9 cols)
+	dc.w	$84C0					; normal tile
+	dc.b	"16.FIRE 3", $00
 DebugEffect_Row_Electric:
-	dc.b	$48, $30, $00, $03, $00, $0A, $84, $C0, $31, $37, $2E, $45, $4C, $45, $43, $54
-	dc.b	$52, $49, $43, $00
+	dc.l	$48300003				; VDP write cmd
+	dc.w	$000A					; col count-1 = 10 (11 cols)
+	dc.w	$84C0					; normal tile
+	dc.b	"17.ELECTRIC", $00
 DebugEffect_Row_Bomber:
-	dc.b	$49, $30, $00, $03, $00, $08, $84, $C0, $31, $38, $2E, $42, $4F, $4D, $42, $45
-	dc.b	$52, $00
+	dc.l	$49300003				; VDP write cmd
+	dc.w	$0008					; col count-1 = 8 (9 cols)
+	dc.w	$84C0					; normal tile
+	dc.b	"18.BOMBER", $00
 DebugEffect_Row_Clock:
-	dc.b	$4A, $30, $00, $03, $00, $07, $84, $C0, $31, $39, $2E, $43, $4C, $4F, $43, $4B
+	dc.l	$4A300003				; VDP write cmd
+	dc.w	$0007					; col count-1 = 7 (8 cols)
+	dc.w	$84C0					; normal tile
+	dc.b	"19.CLOCK"
 DebugBGM2_Row_EnemyAppear:
-	dc.b	$42, $0A, $00, $03, $00, $0D, $84, $C0, $31, $2E, $45, $4E, $45, $4D, $59, $20
-	dc.b	$41, $50, $50, $45, $41, $52
+	dc.l	$420A0003				; VDP write cmd
+	dc.w	$000D					; col count-1 = 13 (14 cols)
+	dc.w	$84C0					; normal tile
+	dc.b	"1.ENEMY APPEAR"
 DebugBGM2_Row_Rest:
-	dc.b	$43, $0A, $00, $03, $00, $05, $84, $C0, $32, $2E, $52, $45, $53, $54
+	dc.l	$430A0003				; VDP write cmd
+	dc.w	$0005					; col count-1 = 5 (6 cols)
+	dc.w	$84C0					; normal tile
+	dc.b	"2.REST"
 DebugBGM2_Row_LevelUp:
-	dc.b	$44, $0A, $00, $03, $00, $09, $84, $C0, $33, $2E, $4C, $45, $56, $45, $4C, $20
-	dc.b	$55, $50
+	dc.l	$440A0003				; VDP write cmd
+	dc.w	$0009					; col count-1 = 9 (10 cols)
+	dc.w	$84C0					; normal tile
+	dc.b	"3.LEVEL UP"
 DebugBGM2_Row_Warp:
-	dc.b	$45, $0A, $00, $03, $00, $05, $84, $C0, $34, $2E, $57, $41, $52, $50
+	dc.l	$450A0003				; VDP write cmd
+	dc.w	$0005					; col count-1 = 5 (6 cols)
+	dc.w	$84C0					; normal tile
+	dc.b	"4.WARP"
 DebugBGM2_Row_SetFlag:
-	dc.b	$46, $0A, $00, $03, $00, $09, $84, $C0, $35, $2E, $53, $45, $54, $20, $46, $4C
-	dc.b	$41, $47
+	dc.l	$460A0003				; VDP write cmd
+	dc.w	$0009					; col count-1 = 9 (10 cols)
+	dc.w	$84C0					; normal tile
+	dc.b	"5.SET FLAG"
 DebugBGM2_Row_EnemyMelt:
-	dc.b	$47, $0A, $00, $03, $00, $0B, $84, $C0, $36, $2E, $45, $4E, $45, $4D, $59, $20
-	dc.b	$4D, $45, $4C, $54
+	dc.l	$470A0003				; VDP write cmd
+	dc.w	$000B					; col count-1 = 11 (12 cols)
+	dc.w	$84C0					; normal tile
+	dc.b	"6.ENEMY MELT"
 DebugBGM2_Row_EnemyDelete:
-	dc.b	$48, $0A, $00, $03, $00, $0D, $84, $C0, $37, $2E, $45, $4E, $45, $4D, $59, $20
-	dc.b	$44, $45, $4C, $45, $54, $45
+	dc.l	$480A0003				; VDP write cmd
+	dc.w	$000D					; col count-1 = 13 (14 cols)
+	dc.w	$84C0					; normal tile
+	dc.b	"7.ENEMY DELETE"
 DebugBGM2_Row_Earthquake:
-	dc.b	$49, $0A, $00, $03, $00, $0B, $84, $C0, $38, $2E, $45, $41, $52, $54, $48, $51
-	dc.b	$55, $41, $4B, $45
+	dc.l	$490A0003				; VDP write cmd
+	dc.w	$000B					; col count-1 = 11 (12 cols)
+	dc.w	$84C0					; normal tile
+	dc.b	"8.EARTHQUAKE"
 DebugBGM2_Row_Ending:
-	dc.b	$4A, $0A, $00, $03, $00, $07, $84, $C0, $39, $2E, $45, $4E, $44, $49, $4E, $47
+	dc.l	$4A0A0003				; VDP write cmd
+	dc.w	$0007					; col count-1 = 7 (8 cols)
+	dc.w	$84C0					; normal tile
+	dc.b	"9.ENDING"
 DebugBGM2_Row_LastCity:
-	dc.b	$4B, $08, $00, $03, $00, $0B, $84, $C0, $31, $30, $2E, $4C, $41, $53, $54, $20
-	dc.b	$43, $49, $54, $59
+	dc.l	$4B080003				; VDP write cmd
+	dc.w	$000B					; col count-1 = 11 (12 cols)
+	dc.w	$84C0					; normal tile
+	dc.b	"10.LAST CITY"
 DebugBGM2_Row_LightSong:
-	dc.b	$42, $30, $00, $03, $00, $0C, $84, $C0, $31, $31, $2E, $4C, $49, $47, $48, $54
-	dc.b	$20, $53, $4F, $4E, $47, $00
+	dc.l	$42300003				; VDP write cmd
+	dc.w	$000C					; col count-1 = 12 (13 cols)
+	dc.w	$84C0					; normal tile
+	dc.b	"11.LIGHT SONG", $00
 DebugBGM2_Row_DoorOpen:
-	dc.b	$43, $30, $00, $03, $00, $0B, $84, $C0, $31, $32, $2E, $44, $4F, $4F, $52, $20
-	dc.b	$4F, $50, $45, $4E
+	dc.l	$43300003				; VDP write cmd
+	dc.w	$000B					; col count-1 = 11 (12 cols)
+	dc.w	$84C0					; normal tile
+	dc.b	"12.DOOR OPEN"
 DebugBGM2_Row_DoorClose:
-	dc.b	$44, $30, $00, $03, $00, $0C, $84, $C0, $31, $33, $2E, $44, $4F, $4F, $52, $20
-	dc.b	$43, $4C, $4F, $53, $45, $00
+	dc.l	$44300003				; VDP write cmd
+	dc.w	$000C					; col count-1 = 12 (13 cols)
+	dc.w	$84C0					; normal tile
+	dc.b	"13.DOOR CLOSE", $00
 DebugBGM2_Row_Ending2:
-	dc.b	$45, $30, $00, $03, $00, $0A, $84, $C0, $31, $34, $2E, $45, $4E, $44, $49, $4E
-	dc.b	$47, $20, $32, $00
+	dc.l	$45300003				; VDP write cmd
+	dc.w	$000A					; col count-1 = 10 (11 cols)
+	dc.w	$84C0					; normal tile
+	dc.b	"14.ENDING 2", $00
 DebugBGM2_Row_Empty15:
-	dc.b	$46, $30, $00, $03, $00, $02, $84, $C0, $31, $35, $2E, $00
+	dc.l	$46300003				; VDP write cmd
+	dc.w	$0002					; col count-1 = 2 (3 cols)
+	dc.w	$84C0					; normal tile
+	dc.b	"15.", $00
 DebugBGM2_Row_Empty16:
-	dc.b	$47, $30, $00, $03, $00, $02, $84, $C0, $31, $36, $2E, $00
+	dc.l	$47300003				; VDP write cmd
+	dc.w	$0002					; col count-1 = 2 (3 cols)
+	dc.w	$84C0					; normal tile
+	dc.b	"16.", $00
 DebugBGM2_Row_Empty17:
-	dc.b	$48, $30, $00, $03, $00, $02, $84, $C0, $31, $37, $2E, $00
+	dc.l	$48300003				; VDP write cmd
+	dc.w	$0002					; col count-1 = 2 (3 cols)
+	dc.w	$84C0					; normal tile
+	dc.b	"17.", $00
 DebugBGM2_Row_Empty18:
-	dc.b	$49, $30, $00, $03, $00, $02, $84, $C0, $31, $38, $2E, $00
+	dc.l	$49300003				; VDP write cmd
+	dc.w	$0002					; col count-1 = 2 (3 cols)
+	dc.w	$84C0					; normal tile
+	dc.b	"18.", $00
 DebugBGM2_Row_Empty19:
-	dc.b	$4A, $30, $00, $03, $00, $02, $84, $C0, $31, $39, $2E, $00
+	dc.l	$4A300003				; VDP write cmd
+	dc.w	$0002					; col count-1 = 2 (3 cols)
+	dc.w	$84C0					; normal tile
+	dc.b	"19.", $00
 DebugDA_Row_ThunderLow:
-	dc.b	$42, $0A, $00, $03, $00, $0C, $84, $C0, $31, $2E, $54, $48, $55, $4E, $44, $45
-	dc.b	$52, $20, $4C, $4F, $57, $00
+	dc.l	$420A0003				; VDP write cmd
+	dc.w	$000C					; col count-1 = 12 (13 cols)
+	dc.w	$84C0					; normal tile
+	dc.b	"1.THUNDER LOW", $00
 DebugDA_Row_ThunderHi:
-	dc.b	$43, $0A, $00, $03, $00, $0B, $84, $C0, $32, $2E, $54, $48, $55, $4E, $44, $45
-	dc.b	$52, $20, $48, $49
+	dc.l	$430A0003				; VDP write cmd
+	dc.w	$000B					; col count-1 = 11 (12 cols)
+	dc.w	$84C0					; normal tile
+	dc.b	"2.THUNDER HI"
 DebugDA_Row_EnemyDamage:
-	dc.b	$44, $0A, $00, $03, $00, $0D, $84, $C0, $33, $2E, $45, $4E, $45, $4D, $59, $20
-	dc.b	$44, $41, $4D, $41, $47, $45
+	dc.l	$440A0003				; VDP write cmd
+	dc.w	$000D					; col count-1 = 13 (14 cols)
+	dc.w	$84C0					; normal tile
+	dc.b	"3.ENEMY DAMAGE"
 DebugDA_Row_EnemyDead:
-	dc.b	$45, $0A, $00, $03, $00, $0B, $84, $C0, $34, $2E, $45, $4E, $45, $4D, $59, $20
-	dc.b	$44, $45, $41, $44
+	dc.l	$450A0003				; VDP write cmd
+	dc.w	$000B					; col count-1 = 11 (12 cols)
+	dc.w	$84C0					; normal tile
+	dc.b	"4.ENEMY DEAD"
 DebugDA_Row_PlayerDamage:
-	dc.b	$46, $0A, $00, $03, $00, $0E, $84, $C0, $35, $2E, $50, $4C, $41, $59, $45, $52
-	dc.b	$20, $44, $41, $4D, $41, $47, $45, $00
+	dc.l	$460A0003				; VDP write cmd
+	dc.w	$000E					; col count-1 = 14 (15 cols)
+	dc.w	$84C0					; normal tile
+	dc.b	"5.PLAYER DAMAGE", $00
 DebugDA_Row_PlayerDead:
-	dc.b	$47, $0A, $00, $03, $00, $0C, $84, $C0, $36, $2E, $50, $4C, $41, $59, $45, $52
-	dc.b	$20, $44, $45, $41, $44, $00
+	dc.l	$470A0003				; VDP write cmd
+	dc.w	$000C					; col count-1 = 12 (13 cols)
+	dc.w	$84C0					; normal tile
+	dc.b	"6.PLAYER DEAD", $00
 DebugDA_Row_Sword1:
-	dc.b	$48, $0A, $00, $03, $00, $08, $84, $C0, $37, $2E, $53, $57, $4F, $52, $44, $20
-	dc.b	$31, $00
+	dc.l	$480A0003				; VDP write cmd
+	dc.w	$0008					; col count-1 = 8 (9 cols)
+	dc.w	$84C0					; normal tile
+	dc.b	"7.SWORD 1", $00
 DebugDA_Row_Sword2:
-	dc.b	$49, $0A, $00, $03, $00, $08, $84, $C0, $38, $2E, $53, $57, $4F, $52, $44, $20
-	dc.b	$32, $00
+	dc.l	$490A0003				; VDP write cmd
+	dc.w	$0008					; col count-1 = 8 (9 cols)
+	dc.w	$84C0					; normal tile
+	dc.b	"8.SWORD 2", $00
 DebugDA_Row_Sword3:
-	dc.b	$4A, $0A, $00, $03, $00, $08, $84, $C0, $39, $2E, $53, $57, $4F, $52, $44, $20
-	dc.b	$33, $00
+	dc.l	$4A0A0003				; VDP write cmd
+	dc.w	$0008					; col count-1 = 8 (9 cols)
+	dc.w	$84C0					; normal tile
+	dc.b	"9.SWORD 3", $00
 DebugDA_Row_Sword4:
-	dc.b	$4B, $08, $00, $03, $00, $09, $84, $C0, $31, $30, $2E, $53, $57, $4F, $52, $44
-	dc.b	$20, $34
+	dc.l	$4B080003				; VDP write cmd
+	dc.w	$0009					; col count-1 = 9 (10 cols)
+	dc.w	$84C0					; normal tile
+	dc.b	"10.SWORD 4"
 DebugDA_Row_Empty11:
-	dc.b	$42, $30, $00, $03, $00, $02, $84, $C0, $31, $31, $2E, $00
+	dc.l	$42300003				; VDP write cmd
+	dc.w	$0002					; col count-1 = 2 (3 cols)
+	dc.w	$84C0					; normal tile
+	dc.b	"11.", $00
 DebugDA_Row_Empty12:
-	dc.b	$43, $30, $00, $03, $00, $02, $84, $C0, $31, $32, $2E, $00
+	dc.l	$43300003				; VDP write cmd
+	dc.w	$0002					; col count-1 = 2 (3 cols)
+	dc.w	$84C0					; normal tile
+	dc.b	"12.", $00
 DebugDA_Row_Empty13:
-	dc.b	$44, $30, $00, $03, $00, $02, $84, $C0, $31, $33, $2E, $00
+	dc.l	$44300003				; VDP write cmd
+	dc.w	$0002					; col count-1 = 2 (3 cols)
+	dc.w	$84C0					; normal tile
+	dc.b	"13.", $00
 DebugDA_Row_Empty14:
-	dc.b	$45, $30, $00, $03, $00, $02, $84, $C0, $31, $34, $2E, $00
+	dc.l	$45300003				; VDP write cmd
+	dc.w	$0002					; col count-1 = 2 (3 cols)
+	dc.w	$84C0					; normal tile
+	dc.b	"14.", $00
 DebugDA_Row_Empty15:
-	dc.b	$46, $30, $00, $03, $00, $02, $84, $C0, $31, $35, $2E, $00
+	dc.l	$46300003				; VDP write cmd
+	dc.w	$0002					; col count-1 = 2 (3 cols)
+	dc.w	$84C0					; normal tile
+	dc.b	"15.", $00
 DebugDA_Row_Empty16:
-	dc.b	$47, $30, $00, $03, $00, $02, $84, $C0, $31, $36, $2E, $00
+	dc.l	$47300003				; VDP write cmd
+	dc.w	$0002					; col count-1 = 2 (3 cols)
+	dc.w	$84C0					; normal tile
+	dc.b	"16.", $00
 DebugDA_Row_Empty17:
-	dc.b	$48, $30, $00, $03, $00, $02, $84, $C0, $31, $37, $2E, $00
+	dc.l	$48300003				; VDP write cmd
+	dc.w	$0002					; col count-1 = 2 (3 cols)
+	dc.w	$84C0					; normal tile
+	dc.b	"17.", $00
 DebugDA_Row_Empty18:
-	dc.b	$49, $30, $00, $03, $00, $02, $84, $C0, $31, $38, $2E, $00
+	dc.l	$49300003				; VDP write cmd
+	dc.w	$0002					; col count-1 = 2 (3 cols)
+	dc.w	$84C0					; normal tile
+	dc.b	"18.", $00
 DebugDA_Row_Empty19:
-	dc.b	$4A, $30, $00, $03, $00, $02, $84, $C0, $31, $39, $2E, $00
+	dc.l	$4A300003				; VDP write cmd
+	dc.w	$0002					; col count-1 = 2 (3 cols)
+	dc.w	$84C0					; normal tile
+	dc.b	"19.", $00
 DebugCRTTest_Row_Title:
-	dc.b	$41, $1C, $00, $03, $00, $09, $C4, $C0, $43, $52, $54, $20, $20, $20, $54, $45
-	dc.b	$53, $54
+	dc.l	$411C0003				; VDP write cmd
+	dc.w	$0009					; col count-1 = 9 (10 cols)
+	dc.w	$C4C0					; special tile
+	dc.b	"CRT   TEST"
 DebugCRTTest_Row_ExitInstruction:
-	dc.b	$4D, $14, $00, $03, $00, $14, $A4, $C0, $45, $58, $49, $54, $2E, $2E, $2E, $50
-	dc.b	$55, $53, $48, $20, $43, $20, $42, $55, $54, $54, $4F, $4E, $21, $00
+	dc.l	$4D140003				; VDP write cmd
+	dc.w	$0014					; col count-1 = 20 (21 cols)
+	dc.w	$A4C0					; wide/title tile
+	dc.b	"EXIT...PUSH C BUTTON!", $00
 
 ; DebugSoundID_Table — pointer table: 4 longs pointing to sound-ID arrays for each category
 ; (BGM pointer table at $3D890, Effect at $3D8B8, BGM2 at $3D8E0, D/A at $3D908)
