@@ -961,7 +961,7 @@ Parma_Npc1_ConditionA_Dispatch:
 	MOVE.w	#0, D7
 	BRA.w	SelectDialogueByGameState
 ParmaNpc1_ConditionData_A:
-	dc.b	$00, $02, $E9, $64 
+	dc.l	TownDialogTable_Parma_State15_GameOver	; game-complete dialogue
 	dc.l	Talked_to_real_king
 	dc.l	TownDialogTable_Parma_State15
 Parma_Npc1_ConditionB_Dispatch:
@@ -969,7 +969,7 @@ Parma_Npc1_ConditionB_Dispatch:
 	MOVE.w	#0, D7
 	BRA.w	SelectDialogueByGameState
 ParmaNpc1_ConditionData_B:
-	dc.b	$00, $02, $E9, $34 
+	dc.l	TownDialogTable_Parma_State10_GameOver	; game-complete dialogue
 	dc.l	Fake_king_killed
 	dc.l	TownDialogTable_Parma_State10
 Parma_Npc1_ConditionC_Dispatch:
@@ -977,7 +977,7 @@ Parma_Npc1_ConditionC_Dispatch:
 	MOVE.w	#0, D7
 	BRA.w	SelectDialogueByGameState
 ParmaNpc1_ConditionData_C:
-	dc.b	$00, $02, $E9, $40 
+	dc.l	TownDialogTable_Parma_State11_GameOver	; game-complete dialogue
 	dc.l	Fake_king_killed
 	dc.l	TownDialogTable_Parma_State11
 Parma_Npc1_ConditionD_Dispatch:
@@ -985,7 +985,7 @@ Parma_Npc1_ConditionD_Dispatch:
 	MOVE.w	#0, D7
 	BRA.w	SelectDialogueByGameState
 ParmaNpc1_ConditionData_D:
-	dc.b	$00, $02, $E9, $48 
+	dc.l	TownDialogTable_Parma_State12_GameOver	; game-complete dialogue
 	dc.l	Fake_king_killed
 	dc.l	TownDialogTable_Parma_State12
 	LEA	Parma_Npc2_DialogueStates, A1
@@ -1007,7 +1007,7 @@ Parma_Npc2_DialogueStates:
 	MOVE.w	#0, D7
 	BRA.w	SelectDialogueByGameState
 ParmaNpc3_ConditionData:
-	dc.b	$00, $02, $91, $2C 
+	dc.l	CastleDialogTable_Parma_State6_GameOver	; game-complete dialogue
 	dc.l	Player_chose_to_stay_in_parma
 	dc.l	CastleDialogTable_Parma_State6
 Parma_Npc3_Condition_Dispatch:
@@ -1015,7 +1015,7 @@ Parma_Npc3_Condition_Dispatch:
 	MOVE.w	#2, D7
 	BRA.w	SelectDialogueByGameState
 ParmaNpc4_ConditionData:
-	dc.b	$00, $02, $E9, $54 
+	dc.l	TownDialogTable_Parma_State14_GameOver	; game-complete dialogue
 	dc.l	Talked_to_real_king
 	dc.l	TownDialogTable_Parma_State13
 	dc.l	Treasure_of_troy_found
@@ -1130,7 +1130,7 @@ KeltwickNpcDialogueDispatch:
 	MOVE.w	#3, D7
 	BRA.w	SelectDialogueByGameState
 Keltwick_Npc1_DialogueStates:
-	dc.b	$00, $03, $2D, $C4
+	dc.l	TownDialogTable_Keltwick_State3_GameOver	; game-complete dialogue
 	dc.l	Bearwulf_returned_home
 	dc.l	TownDialogTable_Keltwick_State3
 	dc.l	Bearwulf_met
@@ -1163,7 +1163,7 @@ MalagaNpcDialogueDispatch:
 	MOVE.w	#2, D7
 	BRA.w	SelectDialogueByGameState
 Malaga_Npc1_DialogueStates:
-	dc.b	$00, $03, $40, $96
+	dc.l	TownDialogTable_Malaga_State2_GameOver	; game-complete dialogue
 	dc.l	Bearwulf_returned_home
 	dc.l	TownDialogTable_Malaga_State2
 	dc.l	Barrow_map_received
@@ -1174,7 +1174,7 @@ Malaga_Npc1_DialogueStates:
 	MOVE.w	#2, D7
 	BRA.w	SelectDialogueByGameState
 Malaga_Npc2_DialogueStates:
-	dc.b	$00, $02, $AC, $F8
+	dc.l	CastleDialogTable_Malaga_State2_GameOver	; game-complete dialogue
 	dc.l	Bearwulf_returned_home
 	dc.l	CastleDialogTable_Malaga_State2
 	dc.l	Barrow_map_received
@@ -1197,7 +1197,7 @@ Barrow_Npc2_Dispatch:
 	MOVE.w	#1, D7
 	BRA.w	SelectDialogueByGameState
 Barrow_Npc2_DialogueStates:
-	dc.b	$00, $03, $4D, $26
+	dc.l	TownDialogTable_Barrow_State4_GameOver	; game-complete dialogue
 	dc.l	Pass_to_carthahena_purchased
 	dc.l	TownDialogTable_Barrow_State4
 	dc.l	Uncle_tibor_visited
@@ -1219,7 +1219,7 @@ Tadcaster_Npc1_DialogueStates:
 	MOVE.w	#1, D7
 	BRA.w	SelectDialogueByGameState
 Tadcaster_Npc2_DialogueStates:
-	dc.b	$00, $02, $B6, $EE
+	dc.l	CastleDialogTable_Tadcaster_State1_GameOver	; game-complete dialogue
 	dc.l	Imposter_killed
 	dc.l	CastleDialogTable_Tadcaster_State1	
 	dc.l	Bully_first_fight_won
@@ -1229,7 +1229,7 @@ Tadcaster_Npc3_Dispatch:
 	MOVE.w	#1, D7
 	BRA.w	SelectDialogueByGameState
 Tadcaster_Npc3_DialogueStates:
-	dc.b	$00, $03, $5D, $CC
+	dc.l	TownDialogTable_Tadcaster_State4_GameOver	; game-complete dialogue
 	dc.l	Imposter_killed
 	dc.l	TownDialogTable_Tadcaster_State4	
 	dc.l	Bully_first_fight_won
@@ -1242,7 +1242,7 @@ Tadcaster_Npc4_Dispatch:
 	MOVE.w	#1, D7
 	BRA.w	SelectDialogueByGameState
 Tadcaster_Npc4_DialogueStates:
-	dc.b	$00, $03, $5D, $E0
+	dc.l	TownDialogTable_Tadcaster_State7_GameOver	; game-complete dialogue
 	dc.l	Imposter_killed
 	dc.l	TownDialogTable_Tadcaster_State7	
 	dc.l	Bully_first_fight_won
@@ -1280,7 +1280,7 @@ Swaffham_Npc1_DialogueStates:
 	MOVE.w	#6, D7
 	BRA.w	SelectDialogueByGameState
 Swaffham_Npc2_DialogueStates:
-	dc.b	$00, $02, $B9, $EE
+	dc.l	CastleDialogTable_Swaffham_State4_GameOver	; game-complete dialogue
 	dc.l	Ring_of_earth_obtained
 	dc.l	CastleDialogTable_Swaffham_State3
 	dc.l	Blue_crystal_received
@@ -1340,7 +1340,7 @@ Hastings_Npc3_Dispatch:
 	MOVE.w	#0, D7
 	BRA.w	SelectDialogueByGameState
 Hastings_Npc3_DialogueStates:
-	dc.b	$00, $03, $A1, $0E
+	dc.l	Hastings_Npc3_DialogueStates_TileData_3A0FA_GameOver	; game-complete dialogue
 	dc.l	Pass_to_carthahena_purchased
 	dc.l	Hastings_Npc3_DialogueStates_TileData_3A0FA
 CarthahenaaNpcDialogueDispatch:

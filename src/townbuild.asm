@@ -683,6 +683,7 @@ CastleDialogTable_Parma_State5:
 	dc.l	NoOneHereStr 
 CastleDialogTable_Parma_State6:
 	dc.l	CartahenaBeastStr
+CastleDialogTable_Parma_State6_GameOver:
 	dc.l	ReallyLiveHereStr
 RingOfferStr:
 	dc.b	"Yes, I have the ring.", $FE
@@ -1220,6 +1221,7 @@ CastleDialogTable_Malaga_State2:
 	dc.l	BrunoReturnedStr 
 	dc.l	RuleMalagaStr 
 	dc.l	NoOneHereStr 
+CastleDialogTable_Malaga_State2_GameOver:
 	dc.l	HopeReturnSafelyStr 
 	dc.l	JourneyNortheastBarrowStr 
 	dc.l	PrincessWaitingStr 
@@ -1408,6 +1410,7 @@ CastleDialogTable_Tadcaster_State1:
 	dc.l	DoNotJudgeKingStr
 	dc.l	KnowImposterStr
 	dc.l	BegDontTormentHusbandStr
+CastleDialogTable_Tadcaster_State1_GameOver:
 	dc.l	DoNotJudgeKingStr
 	dc.l	SavedMyLandStr
 	dc.l	BegDontTormentHusbandStr
@@ -1486,6 +1489,7 @@ CastleDialogTable_Swaffham_State4:
 	dc.l	DullJobLousyWagesStr
 	dc.l	LookingForJobStr
 	dc.l	BackSoSoonStr
+CastleDialogTable_Swaffham_State4_GameOver:
 	dc.l	KingWorryingCartahenansStr
 	dc.l	BoredJobStr
 	dc.l	DullJobLousyWagesStr 
@@ -2375,23 +2379,28 @@ TownDialogTable_Parma_State9:
 TownDialogTable_Parma_State10:
 	dc.l	GnostanDonationsStr
 	dc.l	ConvertToGnostanStr 
+TownDialogTable_Parma_State10_GameOver:
 	dc.l	GoodToBeFreeStr
 	dc.l	BelieveInGoodStr 
 TownDialogTable_Parma_State11:
 	dc.l	KingForcesGnostanStr
+TownDialogTable_Parma_State11_GameOver:
 	dc.l	ThanksForFreeingUsStr 
 TownDialogTable_Parma_State12:
 	dc.l	ConvertForMoneyStr
+TownDialogTable_Parma_State12_GameOver:
 	dc.l	SavedFromEvilStr 
 TownDialogTable_Parma_State13:
 	dc.l	AdviceForQuestionsStr 
 TownDialogTable_Parma_State14:
 	dc.l	CaveOfTroyMapStr
+TownDialogTable_Parma_State14_GameOver:
 	dc.l	WatlingMapStr 
 TownDialogTable_Parma_State15:
 	dc.l	ExploringCavesStr
 	dc.l	GoWestStr
 	dc.l	NoOneHereStr 
+TownDialogTable_Parma_State15_GameOver:
 	dc.l	ExploringCavesStr
 	dc.l	GoWestStr
 	dc.l	NoOneHereStr
@@ -3726,6 +3735,7 @@ TownDialogTable_Keltwick_State3:
 	dc.l	HasFatherReturnedStr 
 	dc.l	IntroduceMeToSomeoneStr
 	dc.l	ThankYouForFindingHimStr
+TownDialogTable_Keltwick_State3_GameOver:
 	dc.l	ThisIsKeltwickStr
 	dc.l	MapToMalagaStr
 	dc.l	BearwulfLivesWithSonStr
@@ -4083,6 +4093,7 @@ TownDialogTable_Malaga_State2:
 	dc.l	GladLutherNotKingStr 
 	dc.l	TharLutherHateYouStr 
 	dc.l	NewKingQuestionStr 
+TownDialogTable_Malaga_State2_GameOver:
 	dc.l	PrincessWaitingStr2 
 	dc.l	WelcomeMalagaStr 
 	dc.l	SecretlyHatedTharStr 
@@ -4090,7 +4101,7 @@ TownDialogTable_Malaga_State2:
 	dc.l	TownUnitedAgainStr 
 	dc.l	WaitForReturnStr 
 	dc.l	WaitForReturnStr 
-	dc.l	RelievedTharNotKingStr 
+	dc.l	RelievedTharNotKingStr
 	dc.l	GladLutherNotKingStr 
 	dc.l	VillageOfBarrowStr 
 	dc.l	HopeYouSucceedStr 
@@ -4364,8 +4375,9 @@ TownDialogTable_Barrow_State3:
 	dc.l	GoAwayStr 
 TownDialogTable_Barrow_State4:
 	dc.l	BuyPassToCartahenaStr
+TownDialogTable_Barrow_State4_GameOver:
 	dc.l	GoAwayStr
-WelcomeToBarrowStr:	
+WelcomeToBarrowStr:
 	dc.b	"Welcome to Barrow.", $FF, $00
 UncleTiborStr:
 	dc.b	"There is an old man here,", $FE
@@ -4657,6 +4669,7 @@ TownDialogTable_Tadcaster_State3:
 TownDialogTable_Tadcaster_State4:
 	dc.l	BulliesAteFoodStr
 	dc.l	HungryNoMoneyStr
+TownDialogTable_Tadcaster_State4_GameOver:
 	dc.l	CelebrateTriumphStr 
 	dc.l	TavernkeeperGreatGuyStr 
 TownDialogTable_Tadcaster_State5:
@@ -4665,6 +4678,7 @@ TownDialogTable_Tadcaster_State6:
 	dc.l	WhyEvilStr 
 TownDialogTable_Tadcaster_State7:
 	dc.l	TryToBeGoodStr 
+TownDialogTable_Tadcaster_State7_GameOver:
 	dc.l	TryToBeGoodStr
 TadcasterBegsForMercyStr
 	dc.b	"No, not again! Tadcaster", $FE
@@ -5801,6 +5815,7 @@ Hastings_Npc3_DialogueStates_TileData_3A0FA:
 	dc.l	GreetingsServantsStr
 	dc.l	WaitingForThisDayStr
 	dc.l	GrownIntoFineYoungManStr
+Hastings_Npc3_DialogueStates_TileData_3A0FA_GameOver:
 	dc.l	NoOneHereStr
 	dc.l	FinalBattleStr
 	dc.l	HelloPrinceStr 
