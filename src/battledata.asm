@@ -63,7 +63,7 @@
 ;      each 12 bytes: Appearance pointer / Data pointer / SpriteSet pointer).
 ;   6. The Appearance and Data pointers give sprites and stats respectively.
 ;
-;   Overworld area table:  EnemyEncounterTypesByMapSector  (~line  980)
+;   Overworld area table:  EnemyEncounterTypesByMapSector  (line 1116)
 ;   Cave/dungeon table:    EnemyEncounterTypesByCaveRoom   (line  1028)
 ;   Group pointer table:   EnemyEncounterGroupTable        (line  1033) — 70 entries
 ;   Group data entries:    EnemyEncounterGroup_00–_45      (line  1107) — 4 words each
@@ -1114,16 +1114,24 @@ EncounterTileData_Entry:
 	dc.b	$00, $4F 
 
 EnemyEncounterTypesByMapSector:  ; Maps current map sector to pointer index at EnemyEncounterGroupTable
-	dc.b	$28, $28, $28, $27, $27, $27, $24, $00, $21, $23, $20, $20, $1E, $1E, $41, $00
-	dc.b	$2A, $2A, $2C, $2E, $25, $25, $24, $24, $21, $21, $00, $00, $1E, $41, $00, $00
-	dc.b	$00, $2D, $2D, $2D, $2E, $2E, $34, $36, $36, $36, $37, $37, $1B, $1C, $1C, $00
-	dc.b	$00, $32, $32, $3F, $1E, $2E, $0B, $00, $00, $39, $00, $00, $1B, $1B, $1A, $1C
-	dc.b	$03, $02, $05, $05, $08, $08, $0A, $00, $00, $39, $00, $3D, $18, $18, $17, $00 
-	dc.b	$04, $02, $07, $07, $08, $08, $09, $00, $3A, $3A, $3B, $3C, $16, $17, $00, $00 
-	dc.b	$00, $00, $0F, $00, $00, $0D, $11, $11, $12, $12, $14, $00, $16, $17, $00, $00 
-	dc.b	$00, $00, $0E, $0E, $0D, $0F, $0F, $11, $00, $12, $15, $14, $16, $00, $00, $00 
+; 128 bytes: 8 rows × 16 columns — the overworld map is 16 sectors wide, 8 sectors tall.
+; Index = (sector_row * 16) + sector_col, where sector = (world_y >> tile_shift, world_x >> tile_shift).
+; Value $00 = no random encounters (towns, roads, safe zones).
+; Values $01–$45 are indices into EnemyEncounterGroupTable.
+;             col:  0     1     2     3     4     5     6     7     8     9     A     B     C     D     E     F
+	dc.b	$28, $28, $28, $27, $27, $27, $24, $00, $21, $23, $20, $20, $1E, $1E, $41, $00	; row 0
+	dc.b	$2A, $2A, $2C, $2E, $25, $25, $24, $24, $21, $21, $00, $00, $1E, $41, $00, $00	; row 1
+	dc.b	$00, $2D, $2D, $2D, $2E, $2E, $34, $36, $36, $36, $37, $37, $1B, $1C, $1C, $00	; row 2
+	dc.b	$00, $32, $32, $3F, $1E, $2E, $0B, $00, $00, $39, $00, $00, $1B, $1B, $1A, $1C	; row 3
+	dc.b	$03, $02, $05, $05, $08, $08, $0A, $00, $00, $39, $00, $3D, $18, $18, $17, $00	; row 4
+	dc.b	$04, $02, $07, $07, $08, $08, $09, $00, $3A, $3A, $3B, $3C, $16, $17, $00, $00	; row 5
+	dc.b	$00, $00, $0F, $00, $00, $0D, $11, $11, $12, $12, $14, $00, $16, $17, $00, $00	; row 6
+	dc.b	$00, $00, $0E, $0E, $0D, $0F, $0F, $11, $00, $12, $15, $14, $16, $00, $00, $00	; row 7
 
 ; Maps current cave room to pointer index at EnemyEncounterGroupTable
+; 42 bytes: one entry per cave/dungeon room ID ($00–$29).
+; Room IDs are assigned sequentially as the player progresses through dungeons.
+; Values are indices into EnemyEncounterGroupTable ($01–$45).
 EnemyEncounterTypesByCaveRoom:
 	dc.b	$01, $06, $06, $0C, $0C, $10, $43, $13, $13, $40, $40, $19, $19, $1D, $1D, $1F 
 	dc.b	$1F, $1F, $22, $42, $26, $26, $29, $2F, $2F, $30, $31, $31, $35, $35, $38, $38 
