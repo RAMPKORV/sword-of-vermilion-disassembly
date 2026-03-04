@@ -34,7 +34,7 @@ ProgramState_SegaLogoInit:
 
 ProgramState_SegaLogo
 	MOVE.b	Controller_current_state.w, D0
-	ANDI.b	#$F0, D0
+	ANDI.b	#CONTROLLER_ACTION_BUTTONS_MASK, D0
 	BNE.b	ProgramState_00_Loop
 	TST.b	Intro_animation_done.w
 	BEQ.b	ProgramState_01_Return
@@ -193,7 +193,7 @@ ProgramState_LoadSaveInit:
 	JSR	ClearScrollData
 	JSR	ClearEnemyActiveFlags
 	MOVE.w	VDP_Reg11_cache.w, D0
-	ANDI.w	#$FFF8, D0
+	ANDI.w	#VDP_REG11_WINDOW_CLEAR_MASK, D0
 	MOVE.w	D0, VDP_control_port
 	MOVE.l	#FileMenuPhaseDispatch, vobj_hblank_fn(A5)
 	CLR.w	File_menu_phase.w
@@ -277,7 +277,7 @@ ProgramState_NameEntryInit:
 	JSR	ClearScrollData
 	JSR	ClearEnemyActiveFlags
 	MOVE.w	VDP_Reg11_cache.w, D0
-	ANDI.w	#$FFF8, D0
+	ANDI.w	#VDP_REG11_WINDOW_CLEAR_MASK, D0
 	MOVE.w	D0, VDP_control_port
 	JSR	LoadOptionsMenuGraphics
 	JSR	EnableDisplay

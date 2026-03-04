@@ -28,7 +28,7 @@ DebugTestMenu:
 	JSR	DisableVDPDisplay
 	JSR	ClearVblankFlagAndWait                    ; CLR Vblank_flag + WaitForVBlank
 	MOVE.w	VDP_Reg11_cache.w, D0           ; read cached VDP register 11 (HScroll mode)
-	ANDI.w	#$FFF8, D0                      ; mask off HScroll mode bits
+	ANDI.w	#VDP_REG11_WINDOW_CLEAR_MASK, D0    ; mask off HScroll mode bits
 	MOVE.w	D0, VDP_control_port            ; write back (set full-screen HScroll)
 	MOVE.w	#$0000, HScroll_base.w             ; HScroll_base = 0
 	MOVE.w	#$0000, VScroll_base.w             ; VScroll_base = 0

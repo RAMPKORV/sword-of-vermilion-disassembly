@@ -1180,6 +1180,10 @@ HScroll_run_table            = $FFFFC3B8
 VDP_regs_cache              = $FFFFC3F0
 VDP_Reg1_cache               = $FFFFC3F2   ; .w
 VDP_Reg11_cache             = $FFFFC3F6   ; .w
+; Mask applied to VDP_Reg11_cache before writing to VDP_control_port to clear
+; the VDP window horizontal base point (bits 0-2 = window X tile offset).
+; Usage: ANDI.w #VDP_REG11_WINDOW_CLEAR_MASK, D0 / MOVE.w D0, VDP_control_port
+VDP_REG11_WINDOW_CLEAR_MASK = $FFF8
 
 ; Town_camera_move_state values: 0 = no scroll, 1-4 = direction
 CAMERA_MOVE_UP    = 1  ; Scroll camera upward
@@ -1208,6 +1212,9 @@ BUTTON_BIT_B        = 4
 BUTTON_BIT_C        = 5
 BUTTON_BIT_A        = 6
 BUTTON_BIT_START    = 7
+; Mask for the four action buttons (A/B/C/START) in the controller byte.
+; Used to test "any action button pressed" without checking directional buttons.
+CONTROLLER_ACTION_BUTTONS_MASK = $F0
 
 
 ; Prologue_state (longword, upper word used as tile counter) reaches this value
