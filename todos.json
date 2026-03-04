@@ -701,7 +701,8 @@
           "file": "src/vblank.asm",
           "priority": "medium",
           "effort": "medium",
-          "status": "todo"
+          "status": "done",
+          "completed_at": "2026-03-05"
         },
         {
           "id": "MAGIC-003",
@@ -728,7 +729,8 @@
           "file": "src/battle_gfx.asm",
           "priority": "medium",
           "effort": "large",
-          "status": "todo"
+          "status": "done",
+          "completed_at": "2026-03-05"
         },
         {
           "id": "MAGIC-006",
@@ -1148,7 +1150,8 @@
           "file": "constants.asm",
           "priority": "medium",
           "effort": "small",
-          "status": "todo"
+          "status": "done",
+          "completed_at": "2026-03-05"
         },
         {
           "id": "ARCH-003",
@@ -2099,8 +2102,8 @@
   "statistics": {
     "total_tasks": 139,
     "by_status": {
-      "done": 29,
-      "todo": 110
+      "done": 32,
+      "todo": 107
     },
     "by_priority": {
       "critical": 1,

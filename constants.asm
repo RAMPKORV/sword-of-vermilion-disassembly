@@ -410,6 +410,12 @@ TRIGGER_Misc_00F6                           = $00F6
 TRIGGER_Misc_00F7                           = $00F7
 TRIGGER_Misc_011C                           = $011C
 
+; ============================================================
+; Program State Machine Constants (Program_state)
+; ============================================================
+; Top-level program state IDs stored in Program_state ($FFFFC400).
+; Dispatched via ProgramStateMap jump table in states.asm.
+;
 PROGRAM_STATE_SEGA_LOGO_INIT    = $00   ; Initialize Sega logo screen
 PROGRAM_STATE_SEGA_LOGO         = $01   ; Sega logo display (wait for animation)
 PROGRAM_STATE_TITLE_INIT        = $02   ; Initialize title screen
@@ -433,7 +439,12 @@ PROGRAM_STATE_ENDING            = $13   ; Ending sequence active (shared with $1
 PROGRAM_STATE_ENDING_2          = $14   ; Ending sequence active (alias for $13)
 PROGRAM_STATE_LOAD_SAVED_GAME   = $15   ; Load saved game state, initialize town
 
-; Gameplay state constants (for Gameplay_state variable)
+; ============================================================
+; Gameplay State Machine Constants (Gameplay_state)
+; ============================================================
+; Gameplay sub-state IDs stored in Gameplay_state ($FFFFC402).
+; Dispatched via GameplayStateJumpTable in gameplay.asm.
+;
 GAMEPLAY_STATE_INIT_TOWN_ENTRY = $00
 GAMEPLAY_STATE_LOAD_TOWN = $01
 GAMEPLAY_STATE_TOWN_EXPLORATION = $02
@@ -481,7 +492,11 @@ GAMEPLAY_STATE_SOLDIER_TAUNT = $2B
 GAMEPLAY_STATE_READ_SOLDIER_TAUNT = $2C
 GAMEPLAY_STATE_SHOW_POISON_NOTIFICATION = $2D
 
-; Boss 1 (Hydra/Snake) AI state machine states (Boss_ai_state, BossAiStateJumpTable)
+; ============================================================
+; Boss 1 (Hydra/Snake) AI State Machine
+; ============================================================
+; Boss_ai_state values dispatched via BossAiStateJumpTable.
+;
 BOSS1_STATE_INIT_IDLE       = 0   ; Randomise idle timer, wait
 BOSS1_STATE_CHOOSE_ACTION   = 1   ; Pick next attack/move
 BOSS1_STATE_MOVE_DOWN       = 2   ; Descend toward player
@@ -492,8 +507,12 @@ BOSS1_STATE_RETURN_HOME     = 6   ; Return to home position
 BOSS1_STATE_HEAD_RETRACT    = 7   ; Retract head after bite
 BOSS1_STATE_CHARGE_DOWN_LEFT = 8  ; Charge diagonally down-left
 
-; Spellbook menu state machine states (Spellbook_menu_state, SpellbookMenuStateJumpTable)
+; ============================================================
+; Spellbook Menu State Machine
+; ============================================================
+; Spellbook_menu_state values dispatched via SpellbookMenuStateJumpTable.
 ; Masked with $1F before indexing so only low 5 bits matter.
+;
 SPELLBOOK_STATE_INIT        = 0   ; Draw spell action menu window, init cursor
 SPELLBOOK_STATE_WAIT_INPUT  = 1   ; Wait for spell/action selection or B to cancel
 SPELLBOOK_STATE_CLOSE       = 2   ; Close menus, return to overworld menu
@@ -511,8 +530,12 @@ SPELLBOOK_STATE_STATUS_D    = $D  ; Status update step D
 SPELLBOOK_STATE_STATUS_E    = $E  ; Status update step E
 SPELLBOOK_STATE_STATUS_F    = $F  ; Status update step F (final)
 
-; Item menu state machine states (Item_menu_state, ItemMenuStateJumpTable)
+; ============================================================
+; Item Menu State Machine
+; ============================================================
+; Item_menu_state values dispatched via ItemMenuStateJumpTable.
 ; Masked with $F before indexing so only low 4 bits matter.
+;
 ITEM_MENU_STATE_INIT         = 0  ; Draw use/discard window, init cursor
 ITEM_MENU_STATE_WAIT_INPUT   = 1  ; Wait for use/discard/cancel selection
 ITEM_MENU_STATE_CLOSE        = 2  ; Close menus ("nothing to use" or cancel)
@@ -1105,6 +1128,10 @@ Vdp_dma_cmd                  = $FFFFC18C   ; .l
 Vdp_dma_cmd_hi               = $FFFFC18E   ; .w
 Vdp_dma_ram_routine          = $FFFFC190
 
+; ============================================================
+; Town Map & Tile Type Constants
+; ============================================================
+
 ; Town tilemap scroll guard: if the map dimension (width or height in tiles)
 ; is <= this value, the camera scroll routine skips tile-row/column updates.
 TOWN_MAP_MIN_SCROLL_TILES = $0010   ; 16 tiles — minimum map size for scrolling
@@ -1253,19 +1280,11 @@ CAMERA_MOVE_DOWN  = 2  ; Scroll camera downward
 CAMERA_MOVE_LEFT  = 3  ; Scroll camera left
 CAMERA_MOVE_RIGHT = 4  ; Scroll camera right
 
-; Map sector buffers
-
-; Battle/Tilemap buffers
-
-; Menu tile buffers
-
-; Object/entity system
-
-
-
-
-; Controller Button Bit Numbers (for use with CheckButtonPress)
-; Genesis controller button bits:
+; ============================================================
+; Controller Button Constants
+; ============================================================
+; Genesis controller button bit numbers (for use with CheckButtonPress).
+;
 BUTTON_BIT_UP       = 0
 BUTTON_BIT_DOWN     = 1
 BUTTON_BIT_LEFT     = 2
@@ -1278,6 +1297,9 @@ BUTTON_BIT_START    = 7
 ; Used to test "any action button pressed" without checking directional buttons.
 CONTROLLER_ACTION_BUTTONS_MASK = $F0
 
+; ============================================================
+; Prologue Timing Constants
+; ============================================================
 
 ; Prologue_state (longword, upper word used as tile counter) reaches this value
 ; when the full intro scroll is complete. Compared in TitleScreen_ScrollAndWait
@@ -1957,11 +1979,11 @@ Ram_clear_end                = $FFFFFD00    ; End of general RAM clear region (b
 ; ------------------------------------------------------------
 Stack_base                   = $FFFFFE00
 
-; Chest/Treasure Flags ($FFFFC780-$FFFFC7B2)
-
-; Event Flags $FFFFC7B9-$FFFFC7F2
-
-; Towns
+; ============================================================
+; Town ID Constants
+; ============================================================
+; Town indices for Current_town ($FFFFC40C).
+;
 TOWN_WYCLIF         = $00
 TOWN_PARMA          = $01
 TOWN_WATLING        = $02
@@ -1979,10 +2001,14 @@ TOWN_HASTINGS1      = $0D
 TOWN_HASTINGS2      = $0E
 TOWN_CARTHAHENA     = $0F
 
+; ============================================================
+; Item ID Constants
+; ============================================================
+; Item type flags and item IDs for the Possessed_items array.
+;
 ITEM_TYPE_DISCARDABLE       = $00
 ITEM_TYPE_NON_DISCARDABLE   = $01
 
-; Items
 ITEM_HERBS              = $00
 ITEM_CANDLE             = $01
 ITEM_LANTERN            = $02
@@ -2028,11 +2054,15 @@ ITEM_DANEGELD_WATER     = $29
 ITEM_MINERAL_BAR        = $2A
 ITEM_MEGA_BLAST         = $2B
 
+; ============================================================
+; Magic Spell ID Constants
+; ============================================================
+; Magic readied flag, type flags, and spell IDs for Possessed_magic.
+;
 FLAG_MAGIC_READIED  = $80
 MAGIC_TYPE_FIELD    = $00
 MAGIC_TYPE_BATTLE   = $02
 
-; Magic
 MAGIC_AERO          = $00
 MAGIC_AERIOS        = $01
 MAGIC_VOLTI         = $02
@@ -2057,6 +2087,12 @@ MAGIC_SANGUIO       = $14
 MAGIC_TOXIOS        = $15
 MAGIC_SANGUIOS      = $16
 
+; ============================================================
+; Equipment ID Constants
+; ============================================================
+; Equipment type flags, cursed flag, equipped flag, and all
+; sword/shield/armor IDs for Equipment_list.
+;
 EQUIPMENT_TYPE_SWORD    = $04
 EQUIPMENT_TYPE_SHIELD   = $08
 EQUIPMENT_TYPE_ARMOR    = $10
@@ -2126,6 +2162,9 @@ EQUIPMENT_ARMOR_SKELETON        = $36
 EQUIPMENT_ARMOR_CRIMSON         = $37
 EQUIPMENT_ARMOR_OLD_NICK        = $38
 
+; ============================================================
+; NPC Fixed Spawn Positions
+; ============================================================
 OLD_MAN_POSITION_X = $0019
 OLD_MAN_POSITION_Y = $000D
 
@@ -2434,9 +2473,13 @@ SOUND_THUNDER_HI            = $00B7   ; Thunder D/A high variant (DebugDA row 2)
 ; Sound script byte threshold: bytes < $E0 are note values; bytes >= $E0 are commands.
 SOUND_SCRIPT_CMD_THRESHOLD  = $E0   ; BCS/BCC boundary in SoundChannel_NoteLoop
 
-; Note-sequence script control bytes (used in PSGChannel_NoteLoop, FMChannel_NoteLoop,
-; FMArpeggio_ReadNote).  Bytes $80-$8F in a pitch/arpeggio sequence are control codes;
+; ============================================================
+; Note-Sequence Script Control Bytes
+; ============================================================
+; Used in PSGChannel_NoteLoop, FMChannel_NoteLoop, FMArpeggio_ReadNote.
+; Bytes $80-$8F in a pitch/arpeggio sequence are control codes;
 ; bytes below $80 are raw pitch/note values.
+;
 NOTESCR_RESTART     = $80   ; Reset sequence position to 0 and restart
 NOTESCR_LOOP        = $81   ; Step back 2 positions and loop (repeat last interval)
 NOTESCR_REST        = $83   ; Step back 1 position, output silence (rest)
