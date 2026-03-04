@@ -728,7 +728,7 @@ LoadFM_AlgorithmData_Return_Loop10:
 LoadFM_AlgorithmData_Return_Loop3:
 	MOVE.b	(A4)+, D0	
 	ANDI.b	#$E0, D0	
-	MOVE.b	D0, $00C00011	
+	MOVE.b	D0, PSG_port	
 	RTS
 	
 LoadFM_AlgorithmData_Return_Loop4:
@@ -1109,11 +1109,11 @@ InitFM_ChannelsToSilence_Done2_Data:
 ; Sets maximum attenuation ($F) on all 4 PSG channels by
 ; writing the latch+attenuation bytes to the PSG data port.
 MutePSG_AllChannels:
-	MOVE.b	#$9F, $00C00011
-	MOVE.b	#$BF, $00C00011
-	MOVE.b	#$DF, $00C00011
-	MOVE.b	#$FF, $00C00011
-	MOVE.b	#SOUND_LEVEL_UP, $00C00011
+	MOVE.b	#$9F, PSG_port
+	MOVE.b	#$BF, PSG_port
+	MOVE.b	#$DF, PSG_port
+	MOVE.b	#$FF, PSG_port
+	MOVE.b	#SOUND_LEVEL_UP, PSG_port
 	RTS
 	
 ; LoadFM_AlgorithmData
@@ -1497,10 +1497,10 @@ FMPitch_WriteFrequency_Loop:
 FMPitch_WriteFrequency_Loop2:
 	ANDI.w	#$000F, D5
 	OR.w	D5, D0
-	MOVE.b	D0, $00C00011
+	MOVE.b	D0, PSG_port
 	ANDI.w	#$0FF0, D4
 	LSR.w	#4, D4
-	MOVE.b	D4, $00C00011
+	MOVE.b	D4, PSG_port
 FMPitchBend_Return:
 	RTS
 	
@@ -1561,7 +1561,7 @@ FMArpeggio_ReadNote_Loop:
 	BEQ.w	SoundCommand_Return
 	OR.b	fmch_channel_id(A3), D4
 	ADDI.b	#$10, D4
-	MOVE.b	D4, $00C00011
+	MOVE.b	D4, PSG_port
 SoundCommand_Return:
 	RTS
 	
@@ -1608,12 +1608,12 @@ UpdateYM2612Channel_Loop:
 	CMPI.b	#$FF, D4
 	BNE.w	UpdateYM2612Channel_Loop2
 	MOVE.b	#$DF, D7	
-	MOVE.b	D7, $00C00011	
+	MOVE.b	D7, PSG_port	
 	NOP	
 	NOP	
 	NOP	
 UpdateYM2612Channel_Loop2:
-	MOVE.b	D4, $00C00011
+	MOVE.b	D4, PSG_port
 	RTS
 	
 SetSoundNoteFrequency_Loop2_Data:

@@ -155,7 +155,7 @@ InitZ80SoundDriver_Done:
 
 ;LoadZ80Driver:
 LoadZ80Driver: ; Send below chunk of data into Z80 RAM
-	LEA	$00A00000, A1
+	LEA	Z80_ram, A1
 	LEA	Z80DriverBinary, A2
 	MOVE.w	#$013F, D6
 LoadZ80Driver_Done:
