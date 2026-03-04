@@ -1,0 +1,2121 @@
+{
+  "_meta": {
+    "project": "Sword of Vermilion Disassembly",
+    "description": "Task list for achieving a clean, DRY, well-documented, bit-perfect disassembly ready for randomizer and game editor tooling",
+    "created": "2026-03-04",
+    "label_progress": "100% named (0 loc_ labels remain)",
+    "total_commits": 396
+  },
+  "schema_version": 2,
+  "task_defaults": {
+    "verify_steps": [
+      "cmd //c verify.bat"
+    ],
+    "acceptance": [
+      "Bit-perfect build: cmd //c verify.bat exits 0",
+      "No hex-to-decimal conversions in dc.b/dc.w/dc.l tables",
+      "New labels follow repo conventions; loc_ renames preserve original address in a comment"
+    ],
+    "editing_rules": [
+      "Prefer symbolic constants for RAM and I/O addresses",
+      "Prefer existing macros over repeated instruction sequences",
+      "Avoid moving code across modules unless callers are updated and verify.bat remains bit-perfect"
+    ]
+  },
+  "quality_gates": {
+    "always": [
+      "Run cmd //c verify.bat after any change",
+      "If verify fails, fix cause; do not revert unrelated user changes",
+      "Do not use Python; use Node.js for scripts"
+    ],
+    "before_refactors": [
+      "Add/confirm label-level comments explaining invariants and expected register usage",
+      "Confirm branches (BSR/BRA) remain in range or change to JSR/JMP",
+      "Confirm all dc.* tables remain byte-identical (keep hex literals)"
+    ]
+  },
+  "categories": {
+    "constants_cleanup": {
+      "description": "Fix constants.asm: remove duplicates, add missing constants, replace hardcoded addresses",
+      "tasks": [
+        {
+          "id": "CONST-001",
+          "title": "Remove duplicate constant blocks in constants.asm",
+          "description": "Lines 2218-2575 are a wholesale copy of lines 1879-2216. Remove the second copy, preserving the ~12 unique Sound IDs at lines 2511-2522 (SOUND_DUNGEON_MUSIC, SOUND_VILLAGE_A_MUSIC, etc.) by relocating them to the first copy's sound section.",
+          "file": "constants.asm",
+          "lines": "2218-2575 (duplicate of 1879-2216)",
+          "priority": "critical",
+          "effort": "small",
+          "sections_duplicated": [
+            "Palette Data Table Indices",
+            "Window Draw Type IDs",
+            "Dialogue State Machine IDs",
+            "Movement Constants",
+            "VDP DMA Control Words",
+            "Boolean Flag Values",
+            "Sentinel/None Constants",
+            "Tile Type Values",
+            "VDP Tile Attribute Constants",
+            "Sound Effect IDs (2 blocks)",
+            "Boss & Encounter Timing Constants",
+            "Name Entry Grid Constants",
+            "Poison Duration",
+            "Boss Hit Flash Palette Indices",
+            "Ending Sequence Timer Durations",
+            "FM Sound Channel Struct Field Offsets"
+          ],
+          "status": "done"
+        },
+        {
+          "id": "CONST-002",
+          "title": "Define I/O port address constants",
+          "description": "Add constants for all Genesis I/O port addresses currently hardcoded across 9 files. These are completely absent from constants.asm.",
+          "file": "constants.asm",
+          "priority": "high",
+          "effort": "small",
+          "constants_to_add": [
+            {
+              "name": "IO_version_register",
+              "value": "$00A10001",
+              "uses": 10,
+              "note": "BTST #6 for PAL/NTSC region check"
+            },
+            {
+              "name": "IO_data_port_1",
+              "value": "$00A10003",
+              "uses": 1
+            },
+            {
+              "name": "IO_data_port_2",
+              "value": "$00A10005",
+              "uses": 1
+            },
+            {
+              "name": "IO_tmss_register",
+              "value": "$00A14000",
+              "uses": 1
+            },
+            {
+              "name": "IO_ctrl_port_1",
+              "value": "$00A10009",
+              "uses": 2
+            },
+            {
+              "name": "IO_ctrl_port_2",
+              "value": "$00A1000B",
+              "uses": 2
+            },
+            {
+              "name": "IO_ctrl_port_exp",
+              "value": "$00A1000D",
+              "uses": 2
+            },
+            {
+              "name": "IO_hw_init_1",
+              "value": "$00A10008",
+              "uses": 1
+            },
+            {
+              "name": "IO_hw_init_2",
+              "value": "$00A1000C",
+              "uses": 1
+            }
+          ],
+          "status": "todo"
+        },
+        {
+          "id": "CONST-003",
+          "title": "Replace hardcoded RAM addresses with existing constants",
+          "description": "9 instruction-level hardcoded RAM addresses already have symbolic constants defined but are not using them.",
+          "priority": "high",
+          "effort": "small",
+          "replacements": [
+            {
+              "file": "init.asm",
+              "line": 129,
+              "raw": "$FFFFFE00",
+              "constant": "Stack_base"
+            },
+            {
+              "file": "init.asm",
+              "line": 131,
+              "raw": "$FFFFE002",
+              "constant": "Sprite_update_pending"
+            },
+            {
+              "file": "init.asm",
+              "line": 133,
+              "raw": "$FFFFE000",
+              "constant": "Sprite_attr_count"
+            },
+            {
+              "file": "init.asm",
+              "line": 134,
+              "raw": "$FFFFD000",
+              "constant": "Object_slot_base"
+            },
+            {
+              "file": "init.asm",
+              "line": 155,
+              "raw": "$FFFFE002",
+              "constant": "Sprite_update_pending"
+            },
+            {
+              "file": "init.asm",
+              "line": 163,
+              "raw": "$FFFFC0FF",
+              "constant": "Vblank_flag"
+            },
+            {
+              "file": "init.asm",
+              "line": 165,
+              "raw": "$FFFFC0FF",
+              "constant": "Vblank_flag"
+            },
+            {
+              "file": "src/miscdata.asm",
+              "line": 33,
+              "raw": "$FFFFC104",
+              "constant": "HScroll_base"
+            },
+            {
+              "file": "src/miscdata.asm",
+              "line": 34,
+              "raw": "$FFFFC106",
+              "constant": "VScroll_base"
+            }
+          ],
+          "status": "todo"
+        },
+        {
+          "id": "CONST-004",
+          "title": "Replace hardcoded I/O addresses with new constants",
+          "description": "After CONST-002 defines the constants, replace all 26 hardcoded I/O port references across 9 files.",
+          "depends_on": "CONST-002",
+          "priority": "high",
+          "effort": "medium",
+          "files_affected": [
+            {
+              "file": "init.asm",
+              "count": 5
+            },
+            {
+              "file": "src/core.asm",
+              "count": 7
+            },
+            {
+              "file": "src/vblank.asm",
+              "count": 5
+            },
+            {
+              "file": "src/sound.asm",
+              "count": 11
+            },
+            {
+              "file": "src/player.asm",
+              "count": 3
+            },
+            {
+              "file": "src/npc.asm",
+              "count": 3
+            },
+            {
+              "file": "src/states.asm",
+              "count": 1
+            },
+            {
+              "file": "src/script.asm",
+              "count": 1
+            },
+            {
+              "file": "src/cutscene.asm",
+              "count": 1
+            }
+          ],
+          "status": "todo"
+        },
+        {
+          "id": "CONST-005",
+          "title": "Use existing but unused constants: Z80_reset, Z80_ram, PSG_port",
+          "description": "Three constants are already defined in constants.asm but never used. Replace 15 hardcoded references.",
+          "priority": "high",
+          "effort": "small",
+          "replacements": [
+            {
+              "constant": "Z80_reset",
+              "value": "$A11200",
+              "uses": 3,
+              "file": "src/core.asm"
+            },
+            {
+              "constant": "Z80_ram",
+              "value": "$A00000",
+              "uses": 1,
+              "file": "src/core.asm"
+            },
+            {
+              "constant": "PSG_port",
+              "value": "$C00011",
+              "uses": 11,
+              "file": "src/sound.asm"
+            }
+          ],
+          "status": "todo"
+        },
+        {
+          "id": "CONST-006",
+          "title": "Define constants for remaining obj_struct field offsets",
+          "description": "Some object struct fields are still used as raw hex offsets like $3B(A5/A6) (12 refs) and $22(A5/A6) (5 refs). Define named offset constants.",
+          "priority": "medium",
+          "effort": "medium",
+          "offsets_to_name": [
+            {
+              "offset": "$3B",
+              "refs": 12,
+              "note": "Unknown obj_struct field at +$3B"
+            },
+            {
+              "offset": "$22",
+              "refs": 5,
+              "note": "Unknown obj_struct field at +$22"
+            }
+          ],
+          "status": "todo"
+        },
+        {
+          "id": "CONST-007",
+          "title": "Replace 26 raw hex trigger offsets with named TRIGGER_ constants in script.asm",
+          "description": "26 of 49 script_cmd_triggers calls use raw hex offsets instead of named TRIGGER_ constants. Define and apply constants for all story trigger flags.",
+          "file": "src/script.asm",
+          "priority": "medium",
+          "effort": "medium",
+          "status": "todo"
+        }
+      ]
+    },
+    "macro_adoption": {
+      "description": "Adopt existing macros in places that still use raw instruction patterns",
+      "tasks": [
+        {
+          "id": "MACRO-001",
+          "title": "Use DMAFillVRAM macro in core.asm",
+          "description": "7 instances of the 5-instruction DMA fill pattern in core.asm that match the DMAFillVRAM macro signature.",
+          "file": "src/core.asm",
+          "priority": "medium",
+          "effort": "small",
+          "instances": [
+            {
+              "line": "42-46",
+              "function": "ClearVRAMSprites",
+              "dest": "$7C000002",
+              "len": "$03BF"
+            },
+            {
+              "line": "62-66",
+              "function": "ClearVRAMHScroll",
+              "dest": "$78000002",
+              "len": "$013F"
+            },
+            {
+              "line": "70-74",
+              "function": "ClearVRAMPlaneA",
+              "dest": "$40000003",
+              "len": "$1FFF"
+            },
+            {
+              "line": "78-82",
+              "function": "ClearVRAMPlaneB",
+              "dest": "$60000003",
+              "len": "$1FFF"
+            },
+            {
+              "line": "93-97",
+              "function": "DMAFillWindowSpriteArea",
+              "dest": "$70000002",
+              "len": "$0DFF"
+            },
+            {
+              "line": "129-133",
+              "function": "ClearVRAMScrollAndPlanes (inline)",
+              "dest": "$40000000",
+              "len": "$001F"
+            },
+            {
+              "line": "138-142",
+              "function": "DMAFillEntireVRAM",
+              "dest": "$40000000",
+              "len": "$FFFF"
+            }
+          ],
+          "status": "todo"
+        },
+        {
+          "id": "MACRO-002",
+          "title": "Use initObjects macro for 9 trampolines in core.asm",
+          "description": "9 three-line LEA/LEA/BRA trampolines in core.asm (lines 178-213) could use the initObjects macro.",
+          "file": "src/core.asm",
+          "priority": "medium",
+          "effort": "small",
+          "functions": [
+            "InitMenuObjects",
+            "InitGameplayObjects",
+            "InitBattleObjects",
+            "InitBossObjects_TypeA",
+            "InitBossObjects_TypeB",
+            "InitBossObjects_TypeC",
+            "InitBossObjects_TypeD",
+            "InitBossObjects_TypeE",
+            "InitBossObjects_TypeF"
+          ],
+          "status": "todo"
+        },
+        {
+          "id": "MACRO-003",
+          "title": "Convert remaining 36 raw JSR CheckButtonPress to CheckButton macro",
+          "description": "36 raw JSR CheckButtonPress calls remain across 7 files. 118 calls already use the macro.",
+          "priority": "medium",
+          "effort": "medium",
+          "files": [
+            {
+              "file": "src/combat.asm",
+              "count": 20
+            },
+            {
+              "file": "src/miscdata.asm",
+              "count": 4
+            },
+            {
+              "file": "src/script.asm",
+              "count": 3
+            },
+            {
+              "file": "src/states.asm",
+              "count": 1
+            },
+            {
+              "file": "src/sram.asm",
+              "count": 4
+            },
+            {
+              "file": "src/player.asm",
+              "count": 2
+            },
+            {
+              "file": "src/boss.asm",
+              "count": 2
+            }
+          ],
+          "status": "todo"
+        },
+        {
+          "id": "MACRO-004",
+          "title": "Convert raw object init tables to objectInitGroup macro in vblank.asm",
+          "description": "~123 object groups across 7 tables use raw dc.b/dc.w hex instead of the objectInitGroup macro. Only 8 entries currently use the macro.",
+          "file": "src/vblank.asm",
+          "priority": "medium",
+          "effort": "large",
+          "tables": [
+            {
+              "name": "GameplayObjectInitTable",
+              "lines": "88-181",
+              "groups": 23,
+              "format": "raw dc.w/dc.l",
+              "difficulty": "easy"
+            },
+            {
+              "name": "BattleObjectInitTable",
+              "lines": "182-197",
+              "groups": 29,
+              "format": "raw dc.b blob",
+              "difficulty": "hard"
+            },
+            {
+              "name": "BossObjectInitTable_A",
+              "lines": "198-205",
+              "groups": 13,
+              "format": "raw dc.b blob",
+              "difficulty": "hard"
+            },
+            {
+              "name": "BossObjectInitTable_B",
+              "lines": "206-248",
+              "groups": 10,
+              "format": "raw dc.w/dc.l",
+              "difficulty": "easy"
+            },
+            {
+              "name": "BossObjectInitTable_C",
+              "lines": "249-257",
+              "groups": 15,
+              "format": "raw dc.b blob",
+              "difficulty": "hard"
+            },
+            {
+              "name": "BossObjectInitTable_D",
+              "lines": "258-262",
+              "groups": 7,
+              "format": "raw dc.b blob",
+              "difficulty": "hard"
+            },
+            {
+              "name": "BossObjectInitTable_E",
+              "lines": "263-273",
+              "groups": 19,
+              "format": "raw dc.b blob",
+              "difficulty": "hard"
+            },
+            {
+              "name": "BossObjectInitTable_F",
+              "lines": "274-280",
+              "groups": 7,
+              "format": "raw dc.b blob",
+              "difficulty": "hard"
+            }
+          ],
+          "status": "todo"
+        },
+        {
+          "id": "MACRO-005",
+          "title": "Adopt PlaySound macro for ~12 remaining raw sound calls",
+          "description": "The PlaySound macro is not used consistently. ~12 places still load sound IDs manually and JSR to the sound queue.",
+          "priority": "low",
+          "effort": "small",
+          "status": "todo"
+        }
+      ]
+    },
+    "code_deduplication": {
+      "description": "Eliminate DRY violations: refactor duplicated code into shared routines or macros",
+      "tasks": [
+        {
+          "id": "DRY-001",
+          "title": "Unify four UpdateFpWalls_Facing* functions in dungeon.asm",
+          "description": "UpdateFpWalls_FacingUp, FacingDown, FacingLeft, FacingRight are four ~80-line nearly identical functions that differ only in directional offsets. Refactor into a single parameterized function.",
+          "file": "src/dungeon.asm",
+          "priority": "high",
+          "effort": "large",
+          "estimated_savings": "~240 lines",
+          "status": "todo"
+        },
+        {
+          "id": "DRY-002",
+          "title": "Merge ValidateDungeonTileType and MapTileToTypeIndex in dungeon.asm",
+          "description": "These two functions are near-identical. Merge into one with a parameter or a shared core.",
+          "file": "src/dungeon.asm",
+          "priority": "medium",
+          "effort": "medium",
+          "status": "todo"
+        },
+        {
+          "id": "DRY-003",
+          "title": "Deduplicate ExecuteVdpDmaFromPointer and ExecuteVdpDmaFromRam in battle_gfx.asm",
+          "description": "These two functions are byte-for-byte identical. One should become a JMP/BRA to the other.",
+          "file": "src/battle_gfx.asm",
+          "priority": "high",
+          "effort": "small",
+          "status": "todo"
+        },
+        {
+          "id": "DRY-004",
+          "title": "Parameterize ~20 decompress+DMA patterns in battle_gfx.asm",
+          "description": "~20 instances of a decompress-then-DMA-transfer pattern that could be extracted into a macro or shared subroutine.",
+          "file": "src/battle_gfx.asm",
+          "priority": "medium",
+          "effort": "large",
+          "status": "todo"
+        },
+        {
+          "id": "DRY-005",
+          "title": "Extract window setup sequence macro in script.asm",
+          "description": "Window setup sequences (set coordinates, dimensions, draw mode) are repeated ~15+ times in script.asm.",
+          "file": "src/script.asm",
+          "priority": "medium",
+          "effort": "medium",
+          "status": "todo"
+        },
+        {
+          "id": "DRY-006",
+          "title": "Unify Save/Restore buffer functions in script.asm",
+          "description": "Save-to-buffer and restore-from-buffer functions are nearly identical (~20 instances). Refactor into parameterized versions.",
+          "file": "src/script.asm",
+          "priority": "medium",
+          "effort": "medium",
+          "status": "todo"
+        },
+        {
+          "id": "DRY-007",
+          "title": "Unify three DMA setup blocks in UpdatePlayerSpriteDMA",
+          "description": "Three nearly identical DMA setup blocks differ only in source/destination parameters.",
+          "file": "src/player.asm",
+          "priority": "medium",
+          "effort": "small",
+          "status": "todo"
+        },
+        {
+          "id": "DRY-008",
+          "title": "Extract fade-out gate pattern in states.asm",
+          "description": "A fade-out gate pattern is repeated 9 times. Extract into a macro or subroutine.",
+          "file": "src/states.asm",
+          "priority": "medium",
+          "effort": "small",
+          "status": "todo"
+        },
+        {
+          "id": "DRY-009",
+          "title": "Extract state completion check in states.asm",
+          "description": "State completion check pattern is repeated 5 times. Could be a macro.",
+          "file": "src/states.asm",
+          "priority": "low",
+          "effort": "small",
+          "status": "todo"
+        },
+        {
+          "id": "DRY-010",
+          "title": "Merge WriteMaskedTileRow and WriteTileRowFromBitfield in battle_gfx.asm",
+          "description": "These two functions are functionally identical (both iterate 32 pixels over a bitfield). One should alias or jump to the other.",
+          "file": "src/battle_gfx.asm",
+          "priority": "medium",
+          "effort": "small",
+          "status": "todo"
+        }
+      ]
+    },
+    "documentation": {
+      "description": "Add function headers, section comments, and inline documentation",
+      "tasks": [
+        {
+          "id": "DOC-001",
+          "title": "Document states.asm program state machine",
+          "description": "states.asm has only 1.7% comment-only lines. It implements the critical program state machine (logo, title, name entry, prologue) and needs comprehensive documentation.",
+          "file": "src/states.asm",
+          "priority": "high",
+          "effort": "large",
+          "status": "todo"
+        },
+        {
+          "id": "DOC-002",
+          "title": "Document init.asm boot sequence and main game loop",
+          "description": "init.asm has only 6.6% comment-only lines. The boot sequence, hardware initialization, and MainGameLoop need detailed documentation.",
+          "file": "init.asm",
+          "priority": "high",
+          "effort": "medium",
+          "status": "todo"
+        },
+        {
+          "id": "DOC-003",
+          "title": "Document remaining ~41 undocumented functions in battle_gfx.asm",
+          "description": "Only 9 of ~50 functions in battle_gfx.asm have documentation comments (18% coverage).",
+          "file": "src/battle_gfx.asm",
+          "priority": "medium",
+          "effort": "large",
+          "status": "todo"
+        },
+        {
+          "id": "DOC-004",
+          "title": "Document self-modifying DMA code: VdpDmaRoutineTemplate / InitVdpDmaRamRoutine",
+          "description": "The self-modifying DMA code in battle_gfx.asm is completely undocumented. This is complex and crucial to understand.",
+          "file": "src/battle_gfx.asm",
+          "priority": "high",
+          "effort": "medium",
+          "status": "todo"
+        },
+        {
+          "id": "DOC-005",
+          "title": "Fix misleading VBlank handler label names",
+          "description": "VBlank handler labels use _Loop suffixes for non-loop code. Rename to reflect actual control flow.",
+          "file": "src/vblank.asm",
+          "priority": "medium",
+          "effort": "small",
+          "status": "todo"
+        },
+        {
+          "id": "DOC-006",
+          "title": "Rename meaningless sub-labels throughout codebase",
+          "description": "Many sub-labels use meaningless suffixes like _Loop, _Loop2, _Done, _Done2 that don't describe what the code does. Audit and rename for clarity.",
+          "priority": "low",
+          "effort": "large",
+          "note": "Project-wide effort; do file-by-file",
+          "status": "todo"
+        },
+        {
+          "id": "DOC-007",
+          "title": "Document map data format in mapdata.asm",
+          "description": "Map data in mapdata.asm consists of binary blobs with no comments explaining tile encoding, dimensions, or RLE compression format. The format IS documented in notes.txt but not in the code itself.",
+          "file": "src/mapdata.asm",
+          "priority": "medium",
+          "effort": "medium",
+          "status": "todo"
+        },
+        {
+          "id": "DOC-008",
+          "title": "Add per-entry annotations to key data tables",
+          "description": "Town spawn positions, battle music IDs, and palette index tables lack per-entry comments explaining what each value represents.",
+          "priority": "low",
+          "effort": "medium",
+          "files": [
+            "src/towndata.asm",
+            "src/battledata.asm",
+            "src/gfxdata.asm"
+          ],
+          "status": "todo"
+        },
+        {
+          "id": "DOC-009",
+          "title": "Document gameplay.asm state machine",
+          "description": "gameplay.asm implements the gameplay state machine (town, overworld, dungeon, battle) and needs function headers and state transition documentation.",
+          "file": "src/gameplay.asm",
+          "priority": "medium",
+          "effort": "large",
+          "status": "todo"
+        },
+        {
+          "id": "DOC-010",
+          "title": "Document dungeon.asm first-person rendering system",
+          "description": "The first-person wall rendering system in dungeon.asm is complex (directional wall updates, tile type mapping) and lacks documentation.",
+          "file": "src/dungeon.asm",
+          "priority": "medium",
+          "effort": "large",
+          "status": "todo"
+        }
+      ]
+    },
+    "magic_numbers": {
+      "description": "Replace magic numbers with named constants",
+      "tasks": [
+        {
+          "id": "MAGIC-001",
+          "title": "Replace 19 magic numbers in core.asm",
+          "description": "VDP register values, VRAM addresses, and DMA parameters used as raw hex. Define constants for each.",
+          "file": "src/core.asm",
+          "priority": "medium",
+          "effort": "medium",
+          "status": "todo"
+        },
+        {
+          "id": "MAGIC-002",
+          "title": "Replace 18+ magic numbers in vblank.asm",
+          "description": "DMA slot indices, VRAM offsets, and timing values hardcoded as raw hex.",
+          "file": "src/vblank.asm",
+          "priority": "medium",
+          "effort": "medium",
+          "status": "todo"
+        },
+        {
+          "id": "MAGIC-003",
+          "title": "Replace 12 magic numbers in states.asm",
+          "description": "State indices, timer values, and palette offsets used as raw numbers.",
+          "file": "src/states.asm",
+          "priority": "medium",
+          "effort": "small",
+          "status": "todo"
+        },
+        {
+          "id": "MAGIC-004",
+          "title": "Replace 10 magic numbers in init.asm",
+          "description": "Hardware init values, VDP register settings, and memory ranges used as raw hex.",
+          "file": "init.asm",
+          "priority": "medium",
+          "effort": "small",
+          "status": "todo"
+        },
+        {
+          "id": "MAGIC-005",
+          "title": "Replace 30+ VDP command longwords in battle_gfx.asm",
+          "description": "Hardcoded VDP commands like $40000080, $7C000002, $60000003 etc. used directly. Define named constants or use a vdpCommand macro.",
+          "file": "src/battle_gfx.asm",
+          "priority": "medium",
+          "effort": "large",
+          "status": "todo"
+        },
+        {
+          "id": "MAGIC-006",
+          "title": "Name DMA slot indices in battle_gfx.asm",
+          "description": "DMA slot indices $0035, $0036, $003C, $0043 are used throughout without explanation. Define named constants.",
+          "file": "src/battle_gfx.asm",
+          "priority": "medium",
+          "effort": "small",
+          "status": "todo"
+        }
+      ]
+    },
+    "dead_code": {
+      "description": "Clean up dead code, orphan bytes, and unused routines",
+      "tasks": [
+        {
+          "id": "DEAD-001",
+          "title": "Remove or annotate 4 dead code blocks in script.asm",
+          "description": "Four functions suffixed _DeadCode are confirmed unreachable: DeductPaymentAmount_DeadCode (line 1012), MenuCursorRight_DeadCode (line 2548), DrawShopWindow_DeadCode (line 2601), DrawWindowChar_DeadCode (line 2670).",
+          "file": "src/script.asm",
+          "priority": "low",
+          "effort": "small",
+          "note": "Cannot remove without breaking bit-perfect build. Annotate thoroughly instead. Consider converting to dc.b data blocks with comments.",
+          "status": "todo"
+        },
+        {
+          "id": "DEAD-002",
+          "title": "Annotate 3 orphan RTS bytes in magic.asm",
+          "description": "Three dc.b $4E, $75 (RTS opcode as data) at lines 751, 803, 885 sit after unconditional BRA.w instructions. These are unreachable vestigial code.",
+          "file": "src/magic.asm",
+          "priority": "low",
+          "effort": "small",
+          "note": "Add comments explaining these are dead bytes from original binary",
+          "status": "todo"
+        },
+        {
+          "id": "DEAD-003",
+          "title": "Annotate unused DMAFillPartial and DMAFillWindowSpriteArea in core.asm",
+          "description": "Both functions at lines 86 and 92 are already marked as unused. Ensure documentation is thorough.",
+          "file": "src/core.asm",
+          "priority": "low",
+          "effort": "small",
+          "status": "todo"
+        },
+        {
+          "id": "DEAD-004",
+          "title": "Annotate InitSoundChannel_FM_DeadCode in sound.asm",
+          "description": "Already labeled as dead code. Ensure it has thorough documentation about what it does and why it's unused.",
+          "file": "src/sound.asm",
+          "priority": "low",
+          "effort": "small",
+          "status": "todo"
+        }
+      ]
+    },
+    "misplaced_code": {
+      "description": "Move functions to their logical modules",
+      "tasks": [
+        {
+          "id": "MOVE-001",
+          "title": "Move GetRandomNumber from battle_gfx.asm to core.asm",
+          "description": "General-purpose RNG called by 100+ sites across every module. Currently at battle_gfx.asm:590. Belongs in core.asm.",
+          "file": "src/battle_gfx.asm",
+          "line": 590,
+          "target": "src/core.asm",
+          "priority": "high",
+          "effort": "medium",
+          "note": "Must verify no short-range BSR.b/BSR.w calls break when function moves. All JSR calls should be fine.",
+          "status": "todo"
+        },
+        {
+          "id": "MOVE-002",
+          "title": "Move RemoveItemFromArray from battle_gfx.asm to core.asm",
+          "description": "Generic array manipulation utility called from combat, npc, boss, items, magic. Currently at battle_gfx.asm:610.",
+          "file": "src/battle_gfx.asm",
+          "line": 610,
+          "target": "src/core.asm",
+          "priority": "medium",
+          "effort": "medium",
+          "status": "todo"
+        },
+        {
+          "id": "MOVE-003",
+          "title": "Move ConvertToBCD and ExtractBCDDigit from battle_gfx.asm to core.asm",
+          "description": "Numeric conversion utilities called 23+ times from script.asm, items.asm. Currently at battle_gfx.asm:1356/1375.",
+          "file": "src/battle_gfx.asm",
+          "lines": "1356-1390",
+          "target": "src/core.asm",
+          "priority": "medium",
+          "effort": "medium",
+          "status": "todo"
+        },
+        {
+          "id": "MOVE-004",
+          "title": "Move QueueSoundEffect from battle_gfx.asm to sound.asm",
+          "description": "Sound queue management called by 100+ sites across virtually every module. Currently at battle_gfx.asm:1426.",
+          "file": "src/battle_gfx.asm",
+          "line": 1426,
+          "target": "src/sound.asm",
+          "priority": "high",
+          "effort": "medium",
+          "status": "todo"
+        },
+        {
+          "id": "MOVE-005",
+          "title": "Move DetermineTerrainTileset and CountTerrainTileType from battle_gfx.asm to gameplay.asm",
+          "description": "Terrain/map logic reading map sectors and player position. Currently at battle_gfx.asm:1383/1410.",
+          "file": "src/battle_gfx.asm",
+          "lines": "1383-1425",
+          "target": "src/gameplay.asm",
+          "priority": "low",
+          "effort": "medium",
+          "note": "DetermineTerrainTileset is also called internally via BSR.w from battle_gfx.asm:953, which would need to change to JSR.",
+          "status": "todo"
+        },
+        {
+          "id": "MOVE-006",
+          "title": "Separate town tileset data from sound.asm",
+          "description": "sound.asm contains town tileset data mixed in with the sound driver. This data should be in towndata.asm or gfxdata.asm.",
+          "file": "src/sound.asm",
+          "priority": "low",
+          "effort": "medium",
+          "note": "Requires careful analysis of include ordering and ROM layout",
+          "status": "todo"
+        }
+      ]
+    },
+    "data_tables": {
+      "description": "Improve data table readability and structure",
+      "tasks": [
+        {
+          "id": "DATA-001",
+          "title": "Rename ROM-address-suffix graphics labels in gfxdata.asm",
+          "description": "Graphics data labels use disassembler-artifact suffixes (e.g., _Gfx_429F0) instead of descriptive names. 3,771 labels need systematic renaming.",
+          "file": "src/gfxdata.asm",
+          "priority": "medium",
+          "effort": "very_large",
+          "note": "Do in batches by asset type: player sprites, enemy sprites, UI tiles, etc.",
+          "status": "todo"
+        },
+        {
+          "id": "DATA-002",
+          "title": "Replace disassembler-artifact pointer table labels",
+          "description": "Some pointer tables reference labels like SpriteFrameData_3F134 for map sector labels. Rename to descriptive names.",
+          "priority": "medium",
+          "effort": "large",
+          "files": [
+            "src/gfxdata.asm",
+            "src/mapdata.asm"
+          ],
+          "status": "todo"
+        },
+        {
+          "id": "DATA-003",
+          "title": "Add map data format documentation headers",
+          "description": "Add comments at the top of map data sections explaining the RLE compression format, tile encoding, and map dimensions.",
+          "file": "src/mapdata.asm",
+          "priority": "medium",
+          "effort": "small",
+          "status": "todo"
+        },
+        {
+          "id": "DATA-004",
+          "title": "Document binary asset formats in data/ directory",
+          "description": "Add a format description file or comments explaining the binary format of extracted assets in data/art/, data/maps/, data/sound/.",
+          "priority": "low",
+          "effort": "medium",
+          "status": "todo"
+        }
+      ]
+    },
+    "string_organization": {
+      "description": "Organize strings and dialogue for maintainability and future localization/editing",
+      "tasks": [
+        {
+          "id": "STR-001",
+          "title": "Audit NPC dialogue scattered across townbuild.asm",
+          "description": "NPC dialogue is scattered across townbuild.asm (6,371 lines), interleaved with binary tilemap data. Catalog all dialogue locations for future extraction.",
+          "file": "src/townbuild.asm",
+          "priority": "medium",
+          "effort": "large",
+          "status": "todo"
+        },
+        {
+          "id": "STR-002",
+          "title": "Create a string ID index/catalog",
+          "description": "Currently no central string ID system exists - strings are referenced directly by label. Create a reference catalog mapping string labels to their content and usage.",
+          "priority": "low",
+          "effort": "large",
+          "note": "Important for randomizer/editor: need to know which strings can be swapped",
+          "status": "todo"
+        },
+        {
+          "id": "STR-003",
+          "title": "Document string fragment concatenation patterns",
+          "description": "Some strings require runtime concatenation. Document these patterns for localization/editor concerns.",
+          "priority": "low",
+          "effort": "medium",
+          "status": "todo"
+        }
+      ]
+    },
+    "randomizer_prep": {
+      "description": "Prepare the codebase for randomizer development",
+      "tasks": [
+        {
+          "id": "RAND-001",
+          "title": "Document enemy stat table format for randomization",
+          "description": "battledata.asm uses enemyData/enemyAppearance macros and is well-structured. Document the full format including stat ranges, balance constraints, and which fields are safe to randomize.",
+          "file": "src/battledata.asm",
+          "priority": "high",
+          "effort": "medium",
+          "status": "todo"
+        },
+        {
+          "id": "RAND-002",
+          "title": "Document shop data format for randomization",
+          "description": "shopdata.asm is well-structured with macros. Document which fields can be randomized and constraints (e.g., item availability progression, price ranges).",
+          "file": "src/shopdata.asm",
+          "priority": "high",
+          "effort": "small",
+          "status": "todo"
+        },
+        {
+          "id": "RAND-003",
+          "title": "Analyze player stat tables for randomizer constraints",
+          "description": "playerstats.asm contains level-up data. Analyze the format, stat progression curves, and document constraints for randomization.",
+          "file": "src/playerstats.asm",
+          "priority": "high",
+          "effort": "medium",
+          "status": "todo"
+        },
+        {
+          "id": "RAND-004",
+          "title": "Map item distribution across towns and chests",
+          "description": "Create a comprehensive map of where items are placed (shops, chests, NPC rewards) to enable item shuffle randomization.",
+          "priority": "high",
+          "effort": "large",
+          "files": [
+            "src/shopdata.asm",
+            "src/items.asm",
+            "src/script.asm",
+            "src/townbuild.asm"
+          ],
+          "status": "todo"
+        },
+        {
+          "id": "RAND-005",
+          "title": "Document enemy encounter table structure",
+          "description": "Understand and document how enemy encounters are assigned to map regions, including encounter rates, enemy group composition, and boss triggers.",
+          "file": "src/battledata.asm",
+          "priority": "high",
+          "effort": "medium",
+          "status": "todo"
+        },
+        {
+          "id": "RAND-006",
+          "title": "Analyze enemy graphics swapping feasibility",
+          "description": "Enemy graphics are constrained by VRAM slot sizes and palette coupling. Document which enemies can swap graphics and the constraints.",
+          "file": "src/battle_gfx.asm",
+          "priority": "medium",
+          "effort": "large",
+          "status": "todo"
+        },
+        {
+          "id": "RAND-007",
+          "title": "Document story trigger flag system for progression randomization",
+          "description": "Event_triggers at $FFFFC720+ control story progression. Map all trigger flags, what sets them, and what they gate.",
+          "priority": "high",
+          "effort": "large",
+          "files": [
+            "src/script.asm",
+            "src/npc.asm",
+            "src/gameplay.asm",
+            "constants.asm"
+          ],
+          "status": "todo"
+        },
+        {
+          "id": "RAND-008",
+          "title": "Catalog all treasure chest contents and locations",
+          "description": "Identify every treasure chest in the game, what it contains, and where it's placed in the map data for item shuffle.",
+          "priority": "medium",
+          "effort": "large",
+          "status": "todo"
+        },
+        {
+          "id": "RAND-009",
+          "title": "Document town/dungeon connectivity graph",
+          "description": "Map how towns and dungeons connect to each other and what gates access (items, story flags). Essential for logic-based randomization.",
+          "priority": "medium",
+          "effort": "large",
+          "status": "todo"
+        },
+        {
+          "id": "RAND-010",
+          "title": "Create randomizer seed injection point documentation",
+          "description": "Document where and how a randomizer could inject a seed value and modify RNG behavior without breaking the game.",
+          "priority": "low",
+          "effort": "small",
+          "note": "GetRandomNumber at battle_gfx.asm:590 is the sole RNG function",
+          "status": "todo"
+        }
+      ]
+    },
+    "editor_prep": {
+      "description": "Prepare the codebase for game editor development",
+      "tasks": [
+        {
+          "id": "EDIT-001",
+          "title": "Document town map binary format for editor",
+          "description": "Town maps in data/maps/town/ are binary blobs. Document the exact format (dimensions, tile encoding, layer structure) for a visual editor.",
+          "priority": "high",
+          "effort": "large",
+          "status": "todo"
+        },
+        {
+          "id": "EDIT-002",
+          "title": "Document overworld sector binary format for editor",
+          "description": "Overworld sectors in data/maps/ use RLE compression. Document the exact format including decompression algorithm, tile IDs, and sector dimensions.",
+          "priority": "high",
+          "effort": "medium",
+          "status": "todo"
+        },
+        {
+          "id": "EDIT-003",
+          "title": "Document dungeon/cave map format for editor",
+          "description": "Cave/dungeon rooms in data/maps/ have their own format. Document for a visual dungeon editor.",
+          "priority": "high",
+          "effort": "medium",
+          "status": "todo"
+        },
+        {
+          "id": "EDIT-004",
+          "title": "Document sprite/tile art format for editor",
+          "description": "Art assets in data/art/ (tiles, palettes) need format documentation for a graphics viewer/editor.",
+          "priority": "medium",
+          "effort": "medium",
+          "status": "todo"
+        },
+        {
+          "id": "EDIT-005",
+          "title": "Document palette format and assignment system for editor",
+          "description": "Palette data format and how palettes are assigned to sprites/tiles. Palette indices are already defined as constants.",
+          "priority": "medium",
+          "effort": "medium",
+          "status": "todo"
+        },
+        {
+          "id": "EDIT-006",
+          "title": "Create machine-readable data extraction scripts (Node.js)",
+          "description": "Write Node.js scripts that can extract game data (enemies, items, shops, maps) from the ROM into JSON for editor consumption.",
+          "priority": "medium",
+          "effort": "large",
+          "note": "Use Node.js per project convention (no Python)",
+          "status": "todo"
+        },
+        {
+          "id": "EDIT-007",
+          "title": "Create machine-readable data injection scripts (Node.js)",
+          "description": "Write Node.js scripts that can take edited JSON data and inject it back into the assembly source files.",
+          "priority": "medium",
+          "effort": "large",
+          "depends_on": "EDIT-006",
+          "status": "todo"
+        },
+        {
+          "id": "EDIT-008",
+          "title": "Document NPC placement and behavior data format",
+          "description": "NPC positions, movement patterns, and dialogue triggers need documentation for an NPC placement editor.",
+          "file": "src/npc.asm",
+          "priority": "medium",
+          "effort": "large",
+          "status": "todo"
+        },
+        {
+          "id": "EDIT-009",
+          "title": "Document SRAM save format for editor/save editor",
+          "description": "The SRAM persistence format in sram.asm needs documentation for a save game editor.",
+          "file": "src/sram.asm",
+          "priority": "low",
+          "effort": "medium",
+          "status": "todo"
+        },
+        {
+          "id": "EDIT-010",
+          "title": "Document sound/music data format for editor",
+          "description": "The sound driver is extensively reverse-engineered (~2,063 lines). Document the music data format for a music editor.",
+          "file": "src/sound.asm",
+          "priority": "low",
+          "effort": "medium",
+          "status": "todo"
+        }
+      ]
+    },
+    "architecture": {
+      "description": "Structural improvements to the codebase organization",
+      "tasks": [
+        {
+          "id": "ARCH-001",
+          "title": "Split constants.asm into logical sections",
+          "description": "constants.asm is ~2,976 lines in a single file. Consider splitting into: hw_constants.asm, game_constants.asm, ram_addresses.asm, vdp_constants.asm, sound_constants.asm.",
+          "file": "constants.asm",
+          "priority": "low",
+          "effort": "large",
+          "note": "Low priority - current single-file approach works, splitting is optional for readability",
+          "status": "todo"
+        },
+        {
+          "id": "ARCH-002",
+          "title": "Organize constants.asm sections with clear headers",
+          "description": "Even without splitting, add clear section separator comments to make navigation easier. Some sections already have headers; ensure all do.",
+          "file": "constants.asm",
+          "priority": "medium",
+          "effort": "small",
+          "status": "todo"
+        },
+        {
+          "id": "ARCH-003",
+          "title": "Create a macro for VDP command word generation",
+          "description": "Currently VDP command longwords ($40000080, $7C000002, etc.) are hardcoded. Create a macro like vdpCmd(addr, type) that generates these at assemble time.",
+          "file": "macros.asm",
+          "priority": "medium",
+          "effort": "medium",
+          "note": "Would eliminate MAGIC-005 entirely and make VDP operations self-documenting",
+          "status": "todo"
+        },
+        {
+          "id": "ARCH-004",
+          "title": "Audit and improve macros.asm organization",
+          "description": "52 macros across 698 lines. Ensure they're grouped logically (VDP macros, object macros, sound macros, utility macros) with section headers.",
+          "file": "macros.asm",
+          "priority": "low",
+          "effort": "small",
+          "status": "todo"
+        },
+        {
+          "id": "ARCH-005",
+          "title": "Consider splitting battle_gfx.asm after moving misplaced functions",
+          "description": "After MOVE-001 through MOVE-005, battle_gfx.asm should be reviewed. If still large, consider splitting into battle_gfx.asm (rendering) and battle_dma.asm (DMA management).",
+          "depends_on": [
+            "MOVE-001",
+            "MOVE-002",
+            "MOVE-003",
+            "MOVE-004",
+            "MOVE-005"
+          ],
+          "priority": "low",
+          "effort": "medium",
+          "status": "todo"
+        }
+      ]
+    },
+    "build_quality": {
+      "description": "Build system and verification improvements",
+      "tasks": [
+        {
+          "id": "BUILD-001",
+          "title": "Add listing file analysis for magic number auditing",
+          "description": "Use vermilion.lst (generated by build) to systematically find remaining magic numbers by comparing instruction operands against constants.asm definitions.",
+          "priority": "low",
+          "effort": "medium",
+          "status": "todo"
+        },
+        {
+          "id": "BUILD-002",
+          "title": "Create a label coverage report script (Node.js)",
+          "description": "Script to parse the listing file and report how many loc_ labels remain vs named labels, tracking progress over time.",
+          "priority": "low",
+          "effort": "small",
+          "note": "Currently at 99.99% named (1 loc_ remains)",
+          "status": "todo"
+        },
+        {
+          "id": "BUILD-003",
+          "title": "Clean up vermilion_test.asm reference file",
+          "description": "The original unsplit disassembly (78,461 lines, 12,063 loc_ labels) is kept as reference. Consider whether it's still needed or if git history suffices.",
+          "priority": "low",
+          "effort": "small",
+          "status": "todo"
+        }
+      ]
+    },
+    "labeling_and_traceability": {
+      "description": "Ensure every code location is named, annotated, and indexable by tooling",
+      "tasks": [
+        {
+          "id": "LABEL-001",
+          "title": "Rename final loc_ label in header.asm",
+          "description": "One loc_ label remains in header.asm. Identify its purpose from context, assign a meaningful PascalCase name, and add a comment preserving the original hex ROM offset above the new label.",
+          "file": "header.asm",
+          "priority": "high",
+          "effort": "small",
+          "status": "done",
+          "tags": [
+            "labeling",
+            "header"
+          ],
+          "completed": "2026-03-04"
+        },
+        {
+          "id": "LABEL-002",
+          "title": "Standardize file-level banner comments across all src/*.asm",
+          "description": "Every src/*.asm file should open with a section banner in the canonical format:\n; ======================================================================\n; src/<filename>.asm\n; <one-line module description>\n; ======================================================================\nAudit all 28 files and add or correct banners where missing or malformed.",
+          "file": "src/*.asm",
+          "priority": "medium",
+          "effort": "small",
+          "status": "todo",
+          "tags": [
+            "documentation",
+            "labeling"
+          ]
+        },
+        {
+          "id": "LABEL-003",
+          "title": "Add ROM offset annotations to major data block boundaries",
+          "description": "For large data sections (map data, graphics tiles, sound tables) add a comment showing the ROM offset at the start of each block, e.g. ; @ $00012340. This makes it easy to cross-reference with a hex editor or disassembler.",
+          "file": "src/mapdata.asm, src/gfxdata.asm, src/sound.asm",
+          "priority": "low",
+          "effort": "medium",
+          "status": "todo",
+          "tags": [
+            "documentation",
+            "labeling",
+            "data"
+          ]
+        },
+        {
+          "id": "LABEL-004",
+          "title": "Export machine-readable ROM symbol map via Node.js",
+          "description": "Write tools/index/symbol_map.js that parses vermilion.lst (the assembler listing) and emits tools/index/symbol_map.json: an object mapping every label name to its ROM address. This powers all downstream tooling (randomizer, editor, linters).",
+          "file": "tools/index/symbol_map.js",
+          "priority": "medium",
+          "effort": "medium",
+          "status": "todo",
+          "tags": [
+            "tooling",
+            "labeling",
+            "index"
+          ]
+        },
+        {
+          "id": "LABEL-005",
+          "title": "Generate callsite index for core utilities",
+          "description": "Write tools/index/callsites.js that reads the .lst file and records every JSR/BSR to a set of high-value targets (WaitForVBlank, QueueSoundEffect, CheckButtonPress, etc.) and emits tools/index/callsites.json. Useful for refactoring and documenting call graphs.",
+          "file": "tools/index/callsites.js",
+          "priority": "low",
+          "effort": "medium",
+          "status": "todo",
+          "tags": [
+            "tooling",
+            "labeling",
+            "index"
+          ]
+        },
+        {
+          "id": "LABEL-006",
+          "title": "Audit and replace intent-free sub-label suffixes project-wide",
+          "description": "Sub-labels like _Loop, _End, _Return are fine, but many functions have _0, _1, _2 or purely numeric suffixes with no semantic meaning. Audit src/*.asm for these patterns and rename to intent-revealing names (e.g. _LoopBody, _NotFound, _SkipUpdate).",
+          "file": "src/*.asm",
+          "priority": "low",
+          "effort": "very_large",
+          "status": "todo",
+          "tags": [
+            "labeling",
+            "readability"
+          ]
+        }
+      ]
+    },
+    "ram_and_struct_docs": {
+      "description": "Document and symbolize RAM layout, object structs, and all runtime data structures",
+      "tasks": [
+        {
+          "id": "RAM-001",
+          "title": "Document object slot struct layout (A5/A6-based)",
+          "description": "The engine uses A5 as an object pointer with fixed field offsets. Identify every field accessed via $00(A5), $02(A5), $04(A5), etc. by auditing src/npc.asm, src/enemy.asm, src/player.asm. Write a struct layout comment block in constants.asm and/or a docs/object_struct.md.",
+          "file": "src/npc.asm, src/enemy.asm, src/player.asm, constants.asm",
+          "priority": "high",
+          "effort": "large",
+          "status": "todo",
+          "tags": [
+            "documentation",
+            "ram",
+            "structs"
+          ]
+        },
+        {
+          "id": "RAM-002",
+          "title": "Replace raw $NN(A5/A6) field offsets with named obj_* constants",
+          "description": "After RAM-001 documents the object struct, define obj_* offset constants in constants.asm (e.g. obj_type equ $00, obj_x equ $04) and replace every raw $NN(A5) or $NN(A6) access across src/. Verify bit-perfect after each file.",
+          "file": "src/*.asm, constants.asm",
+          "priority": "medium",
+          "effort": "large",
+          "status": "todo",
+          "tags": [
+            "constants",
+            "ram",
+            "structs"
+          ],
+          "depends_on": [
+            "RAM-001"
+          ]
+        },
+        {
+          "id": "RAM-003",
+          "title": "Document Event_triggers layout and bit/byte assignment",
+          "description": "Event_triggers ($FFFFC720+) controls story progression. Audit script.asm and gameplay.asm for every read/write to this region and document which byte/bit controls which story flag. Add named constants (e.g. EVT_MET_KING equ 0) to constants.asm.",
+          "file": "src/script.asm, src/gameplay.asm, constants.asm",
+          "priority": "high",
+          "effort": "large",
+          "status": "todo",
+          "tags": [
+            "documentation",
+            "ram",
+            "events"
+          ]
+        },
+        {
+          "id": "RAM-004",
+          "title": "Add size/type annotations to RAM symbol definitions in constants.asm",
+          "description": "Each RAM address in constants.asm should have a comment documenting its size (.b/.w/.l), type (flag, counter, pointer, etc.) and a brief description. Example: Player_hp equ $FFFFC62C ; .w current HP. Do all ~80 RAM symbols.",
+          "file": "constants.asm",
+          "priority": "medium",
+          "effort": "large",
+          "status": "todo",
+          "tags": [
+            "documentation",
+            "ram",
+            "constants"
+          ]
+        },
+        {
+          "id": "RAM-005",
+          "title": "Document sprite attribute buffer and DMA upload pipeline",
+          "description": "Find the sprite attribute table (SAT) buffer in RAM and document its layout, size, and how battle_gfx.asm/vblank.asm DMA it to VRAM. Add a comment block in vblank.asm and/or a docs/sprite_pipeline.md.",
+          "file": "src/vblank.asm, src/battle_gfx.asm",
+          "priority": "medium",
+          "effort": "medium",
+          "status": "todo",
+          "tags": [
+            "documentation",
+            "ram",
+            "vdp",
+            "dma"
+          ]
+        },
+        {
+          "id": "RAM-006",
+          "title": "Document controller input sampling and debounce pipeline",
+          "description": "Find the joypad read routine (likely in vblank.asm or player.asm), document the RAM variables storing raw input, held buttons, newly-pressed buttons, and how CheckButtonPress uses them. Add comment block and RAM symbol annotations.",
+          "file": "src/vblank.asm, src/player.asm, constants.asm",
+          "priority": "medium",
+          "effort": "medium",
+          "status": "todo",
+          "tags": [
+            "documentation",
+            "ram",
+            "input"
+          ]
+        },
+        {
+          "id": "RAM-007",
+          "title": "Document scroll register and tilemap layout in RAM",
+          "description": "Document the RAM buffers for H-scroll, V-scroll, and plane A/B tilemap writes. Identify which variables drive VDP scroll register updates in vblank.asm and add explanatory comments.",
+          "file": "src/vblank.asm, constants.asm",
+          "priority": "medium",
+          "effort": "medium",
+          "status": "todo",
+          "tags": [
+            "documentation",
+            "ram",
+            "vdp",
+            "scroll"
+          ]
+        },
+        {
+          "id": "RAM-008",
+          "title": "Export RAM symbol index as JSON for tooling",
+          "description": "Write tools/index/ram_symbols.js that reads constants.asm, extracts every 'label equ $FFFFC...' definition (and its annotation from RAM-004), and emits tools/index/ram_symbols.json. Depends on RAM-004 annotations being present.",
+          "file": "tools/index/ram_symbols.js",
+          "priority": "low",
+          "effort": "medium",
+          "status": "todo",
+          "tags": [
+            "tooling",
+            "ram",
+            "index"
+          ],
+          "depends_on": [
+            "RAM-004"
+          ]
+        }
+      ]
+    },
+    "script_vm_reverse_engineering": {
+      "description": "Fully reverse-engineer the dialogue/script VM: opcodes, runtime state, text encoding, and tooling",
+      "tasks": [
+        {
+          "id": "VM-001",
+          "title": "Create complete script opcode table",
+          "description": "Audit script.asm and enumerate every opcode handler with its byte value, mnemonic, operand count/types, and a one-line description of its effect. Write the table as a comment block in script.asm and export as tools/index/script_opcodes.json.",
+          "file": "src/script.asm, tools/index/script_opcodes.json",
+          "priority": "high",
+          "effort": "large",
+          "status": "todo",
+          "tags": [
+            "script-vm",
+            "documentation",
+            "index"
+          ]
+        },
+        {
+          "id": "VM-002",
+          "title": "Document script engine runtime RAM state",
+          "description": "Identify and document every RAM variable the script VM reads and writes during execution (program counter, stack pointer, argument registers, current NPC ID, etc.). Add named constants to constants.asm and a comment block at the top of script.asm.",
+          "file": "src/script.asm, constants.asm",
+          "priority": "high",
+          "effort": "large",
+          "status": "todo",
+          "tags": [
+            "script-vm",
+            "documentation",
+            "ram"
+          ]
+        },
+        {
+          "id": "VM-003",
+          "title": "Document text encoding and string control codes",
+          "description": "The game uses a custom character encoding. Document the full code-point-to-glyph mapping and all string control codes (newline, end-of-string, pause, etc.) used in gamestrings.asm and strings.asm. Write a reference table as a comment block and/or docs/text_encoding.md.",
+          "file": "src/gamestrings.asm, src/strings.asm",
+          "priority": "high",
+          "effort": "medium",
+          "status": "todo",
+          "tags": [
+            "script-vm",
+            "text",
+            "documentation"
+          ]
+        },
+        {
+          "id": "VM-004",
+          "title": "Map all script entry points to callers",
+          "description": "For each script bytecode entry point in gamestrings.asm / script.asm, identify which NPC ID, town ID, or event trigger invokes it. Write tools/index/script_entries.js that emits tools/index/script_entries.json mapping entry label -> { caller_type, caller_id }.",
+          "file": "src/script.asm, src/npc.asm, tools/index/script_entries.js",
+          "priority": "medium",
+          "effort": "large",
+          "status": "todo",
+          "tags": [
+            "script-vm",
+            "index",
+            "tooling"
+          ]
+        },
+        {
+          "id": "VM-005",
+          "title": "Document dialogue state machine IDs and transitions",
+          "description": "The script VM likely has a dialogue state variable controlling multi-page text flow. Identify the states, their IDs, and transition conditions. Add named constants and a state-machine diagram as a comment block in script.asm.",
+          "file": "src/script.asm, constants.asm",
+          "priority": "medium",
+          "effort": "medium",
+          "status": "todo",
+          "tags": [
+            "script-vm",
+            "documentation",
+            "state-machine"
+          ]
+        },
+        {
+          "id": "VM-006",
+          "title": "Write a script bytecode disassembler (Node.js)",
+          "description": "Write tools/script_disasm.js: reads a script bytecode blob (by label address from symbol_map.json), decodes opcodes using script_opcodes.json, and prints a human-readable disassembly. Depends on VM-001 and LABEL-004.",
+          "file": "tools/script_disasm.js",
+          "priority": "medium",
+          "effort": "large",
+          "status": "todo",
+          "tags": [
+            "script-vm",
+            "tooling"
+          ],
+          "depends_on": [
+            "VM-001",
+            "LABEL-004"
+          ]
+        },
+        {
+          "id": "VM-007",
+          "title": "Export all game strings as decoded JSON",
+          "description": "Write tools/index/strings.js that reads out.bin (or the assembled binary), uses the text encoding table from VM-003, and exports every string reachable from the string table as tools/index/strings.json: { label, address, text }. Depends on VM-003 and LABEL-004.",
+          "file": "tools/index/strings.js",
+          "priority": "medium",
+          "effort": "large",
+          "status": "todo",
+          "tags": [
+            "script-vm",
+            "text",
+            "tooling",
+            "index"
+          ],
+          "depends_on": [
+            "VM-003",
+            "LABEL-004"
+          ]
+        },
+        {
+          "id": "VM-008",
+          "title": "Normalize script command handler naming",
+          "description": "Script opcode handler labels in script.asm are likely a mix of loc_ addresses and ad-hoc names. After VM-001, rename all handlers to ScriptCmd_<Mnemonic> (e.g. ScriptCmd_ShowText, ScriptCmd_GiveItem). Verify bit-perfect after each rename batch.",
+          "file": "src/script.asm",
+          "priority": "low",
+          "effort": "large",
+          "status": "todo",
+          "tags": [
+            "script-vm",
+            "labeling"
+          ],
+          "depends_on": [
+            "VM-001"
+          ]
+        },
+        {
+          "id": "VM-009",
+          "title": "Document window drawing primitives called by script commands",
+          "description": "Script commands for showing text boxes call lower-level window draw routines. Identify and document these routines (likely in states.asm or a ui module): their parameters, which VDP registers/VRAM addresses they write, and how the text cursor advances.",
+          "file": "src/script.asm, src/states.asm",
+          "priority": "low",
+          "effort": "medium",
+          "status": "todo",
+          "tags": [
+            "script-vm",
+            "documentation",
+            "vdp"
+          ]
+        },
+        {
+          "id": "VM-010",
+          "title": "Write a script reassembler / patch injector (Node.js)",
+          "description": "Write tools/script_patch.js: takes a JSON patch (list of { label, new_text_or_bytes }) and produces a patched binary. This is the foundation for the text editor / localization tooling and the randomizer's NPC dialogue shuffler. Depends on VM-006 and VM-007.",
+          "file": "tools/script_patch.js",
+          "priority": "low",
+          "effort": "very_large",
+          "status": "todo",
+          "tags": [
+            "script-vm",
+            "tooling",
+            "randomizer"
+          ],
+          "depends_on": [
+            "VM-006",
+            "VM-007"
+          ]
+        }
+      ]
+    },
+    "tooling_and_lints": {
+      "description": "Node.js linters, validators, and index generators to catch regressions and automate audits",
+      "tasks": [
+        {
+          "id": "TOOL-001",
+          "title": "Lint dc.* decimal literals",
+          "description": "Write tools/lint_dc_decimal.js: scans src/*.asm for dc.b/dc.w/dc.l lines containing unadorned decimal integers (not preceded by $ or %). Reports file, line, and value. This catches the most common source of build non-determinism before it reaches verify.bat.",
+          "file": "tools/lint_dc_decimal.js",
+          "priority": "high",
+          "effort": "small",
+          "status": "done",
+          "tags": [
+            "tooling",
+            "lint",
+            "data"
+          ],
+          "completed": "2026-03-04",
+          "note": "Script written to tools/lint_dc_decimal.js. 407 hits found — majority are signed coordinate tables (legitimately decimal). Primary concern: VDP init bytes in init.asm. Linter serves as review-flag tool."
+        },
+        {
+          "id": "TOOL-002",
+          "title": "Lint hardcoded RAM addresses",
+          "description": "Write tools/lint_raw_ram_addresses.js: scans src/*.asm and init.asm for raw $FFFFC... or $FFFFF... address literals used as operands (not in equ definitions). Reports file and line so they can be replaced with constants.asm symbols.",
+          "file": "tools/lint_raw_ram_addresses.js",
+          "priority": "high",
+          "effort": "small",
+          "status": "done",
+          "tags": [
+            "tooling",
+            "lint",
+            "ram",
+            "constants"
+          ],
+          "completed": "2026-03-04",
+          "note": "Script written to tools/lint_raw_ram_addresses.js. 9 real violations found: 7 in init.asm + 2 in src/miscdata.asm — all covered by CONST-003."
+        },
+        {
+          "id": "TOOL-003",
+          "title": "Lint hardcoded I/O port addresses",
+          "description": "Write tools/lint_raw_io_addresses.js: scans src/*.asm for raw hardware I/O addresses ($C00000-$C0001F VDP, $A10000-$A1001F I/O, $A11100 Z80, etc.) used as operands outside equ lines. Reports file and line.",
+          "file": "tools/lint_raw_io_addresses.js",
+          "priority": "high",
+          "effort": "small",
+          "status": "done",
+          "tags": [
+            "tooling",
+            "lint",
+            "hardware",
+            "constants"
+          ]
+        },
+        {
+          "id": "TOOL-004",
+          "title": "Lint duplicate constant definitions",
+          "description": "Write tools/lint_duplicate_constants.js: parses constants.asm for all 'label equ value' lines and reports any label defined more than once. This directly targets the CONST-001 duplicate block regression.",
+          "file": "tools/lint_duplicate_constants.js",
+          "priority": "high",
+          "effort": "small",
+          "status": "done",
+          "tags": [
+            "tooling",
+            "lint",
+            "constants"
+          ],
+          "completed": "2026-03-04",
+          "note": "Script written to tools/lint_duplicate_constants.js. Found 25 duplicates, all fmch_* fields — confirms CONST-001 duplicate block at lines 2551-2575."
+        },
+        {
+          "id": "TOOL-005",
+          "title": "Lint remaining loc_ labels in active build",
+          "description": "Write tools/lint_loc_labels.js: scans all *.asm files included in the build and reports every remaining loc_XXXXXXXX label. Exit 0 if none (clean), exit 1 with list if any remain. Use as a regression check after LABEL-001 is done.",
+          "file": "tools/lint_loc_labels.js",
+          "priority": "medium",
+          "effort": "small",
+          "status": "todo",
+          "tags": [
+            "tooling",
+            "lint",
+            "labeling"
+          ]
+        },
+        {
+          "id": "TOOL-006",
+          "title": "Lint raw $NN(A5/A6) object field offsets",
+          "description": "Write tools/lint_raw_obj_offsets.js: scans src/*.asm for operands matching the pattern $[0-9A-Fa-f]+(A5) or $[0-9A-Fa-f]+(A6) and reports them. After RAM-002 replaces them with named constants, this linter prevents regressions.",
+          "file": "tools/lint_raw_obj_offsets.js",
+          "priority": "medium",
+          "effort": "medium",
+          "status": "todo",
+          "tags": [
+            "tooling",
+            "lint",
+            "ram",
+            "structs"
+          ],
+          "depends_on": [
+            "RAM-001"
+          ]
+        },
+        {
+          "id": "TOOL-007",
+          "title": "Report macro adoption opportunities",
+          "description": "Write tools/report_macro_opportunities.js: for each macro defined in macros.asm, scan src/*.asm for instruction sequences that match its expansion and report file + line. This automates the MAC-00x audits.",
+          "file": "tools/report_macro_opportunities.js",
+          "priority": "low",
+          "effort": "medium",
+          "status": "todo",
+          "tags": [
+            "tooling",
+            "macros"
+          ]
+        },
+        {
+          "id": "TOOL-008",
+          "title": "Unified run_checks script",
+          "description": "Write tools/run_checks.js (and tools/run_checks.cmd for Windows) that runs all lint scripts in sequence and prints a summary pass/fail report. Intended as a pre-commit sanity check distinct from verify.bat.",
+          "file": "tools/run_checks.js, tools/run_checks.cmd",
+          "priority": "medium",
+          "effort": "small",
+          "status": "todo",
+          "tags": [
+            "tooling",
+            "lint",
+            "build"
+          ]
+        },
+        {
+          "id": "TOOL-009",
+          "title": "todos.json schema + validator",
+          "description": "Write tools/todos.schema.json (JSON Schema draft-07) and tools/validate_todos.js that validates todos.json against it. Catches missing required fields (id, title, status, priority) before they cause tooling failures downstream.",
+          "file": "tools/todos.schema.json, tools/validate_todos.js",
+          "priority": "medium",
+          "effort": "medium",
+          "status": "todo",
+          "tags": [
+            "tooling",
+            "todos",
+            "schema"
+          ]
+        },
+        {
+          "id": "TOOL-010",
+          "title": "Auto-generate todos.json statistics",
+          "description": "Write tools/update_todos_stats.js: reads todos.json, counts tasks by status, priority, and category, and rewrites the statistics block in-place. Run after any manual edit to todos.json to keep stats accurate.",
+          "file": "tools/update_todos_stats.js",
+          "priority": "low",
+          "effort": "small",
+          "status": "todo",
+          "tags": [
+            "tooling",
+            "todos"
+          ]
+        },
+        {
+          "id": "TOOL-011",
+          "title": "Export include dependency graph",
+          "description": "Write tools/index/include_graph.js: parses vermilion.asm and all included .asm files recursively, extracts 'include' directives, and emits tools/index/include_graph.json as an adjacency list. Useful for understanding build order and module dependencies.",
+          "file": "tools/index/include_graph.js",
+          "priority": "low",
+          "effort": "small",
+          "status": "todo",
+          "tags": [
+            "tooling",
+            "index",
+            "architecture"
+          ]
+        },
+        {
+          "id": "TOOL-012",
+          "title": "Export function inventory index",
+          "description": "Write tools/index/functions.js: scans src/*.asm for PascalCase labels (function definitions by convention) and emits tools/index/functions.json: { name, file, line, address (from symbol_map if available) }. Depends on LABEL-004 for address data.",
+          "file": "tools/index/functions.js",
+          "priority": "low",
+          "effort": "medium",
+          "status": "todo",
+          "tags": [
+            "tooling",
+            "index",
+            "labeling"
+          ],
+          "depends_on": [
+            "LABEL-004"
+          ]
+        }
+      ]
+    },
+    "module_architecture": {
+      "description": "Improve module boundaries, register conventions, and intra-module organization",
+      "tasks": [
+        {
+          "id": "MOD-001",
+          "title": "Write module responsibility rules doc",
+          "description": "Write docs/module_boundaries.md: for each src/*.asm file, document its single responsibility, what it may and may not call, and which RAM regions it owns. This makes misplaced-code (MISC-00x) decisions objective.",
+          "file": "docs/module_boundaries.md",
+          "priority": "medium",
+          "effort": "small",
+          "status": "todo",
+          "tags": [
+            "documentation",
+            "architecture"
+          ]
+        },
+        {
+          "id": "MOD-002",
+          "title": "Add register convention headers to all exported functions",
+          "description": "Every public (JSR-able) function should have a comment block documenting: inputs (Dx/Ax), outputs (Dx/Ax), trashed registers, and stack effects. Audit all src/*.asm exported functions and add missing headers. Priority: functions with >3 call sites.",
+          "file": "src/*.asm",
+          "priority": "high",
+          "effort": "large",
+          "status": "todo",
+          "tags": [
+            "documentation",
+            "architecture",
+            "registers"
+          ]
+        },
+        {
+          "id": "MOD-003",
+          "title": "Document program state dispatch table",
+          "description": "ProgramStateMap in states.asm drives the top-level program state machine. Document each state ID: name, entry conditions, exit conditions, and which module handles it. Write as a comment block in states.asm and/or docs/program_states.md.",
+          "file": "src/states.asm",
+          "priority": "high",
+          "effort": "medium",
+          "status": "todo",
+          "tags": [
+            "documentation",
+            "architecture",
+            "state-machine"
+          ]
+        },
+        {
+          "id": "MOD-004",
+          "title": "Document gameplay state dispatch table",
+          "description": "The gameplay state machine (town, overworld, dungeon, battle) in gameplay.asm has its own dispatch table. Document each state: ID, handler label, entry/exit conditions. Write as a comment block in gameplay.asm and/or docs/gameplay_states.md.",
+          "file": "src/gameplay.asm",
+          "priority": "high",
+          "effort": "medium",
+          "status": "todo",
+          "tags": [
+            "documentation",
+            "architecture",
+            "state-machine"
+          ]
+        },
+        {
+          "id": "MOD-005",
+          "title": "Consolidate region/PAL check into IsPalRegion macro/helper",
+          "description": "The PAL/NTSC region check pattern (reading $00A10008 or version register) likely appears in multiple places. Find all instances, extract to a macro or single helper function IsPalRegion, and replace call sites. Verify bit-perfect.",
+          "file": "src/*.asm, macros.asm",
+          "priority": "medium",
+          "effort": "small",
+          "status": "todo",
+          "tags": [
+            "macros",
+            "deduplication",
+            "architecture"
+          ]
+        },
+        {
+          "id": "MOD-006",
+          "title": "Create src/util.asm shared utilities module",
+          "description": "Several small utility routines (RNG, BCD conversion, string copy, etc.) are currently in ad-hoc locations. Create src/util.asm, move these routines there, update all callers, and add it to vermilion.asm includes. Verify bit-perfect.",
+          "file": "src/util.asm, vermilion.asm",
+          "priority": "low",
+          "effort": "medium",
+          "status": "todo",
+          "tags": [
+            "architecture",
+            "deduplication"
+          ]
+        },
+        {
+          "id": "MOD-007",
+          "title": "Adopt consistent Vdp*/Dma*/Vram* naming for VDP helpers",
+          "description": "VDP utility functions across core.asm, vblank.asm, and battle_gfx.asm use inconsistent naming (DMAFillVRAM, DmaCopyToVram, etc.). Standardize: VDP operations -> Vdp* prefix, DMA ops -> Dma* prefix, VRAM address calculations -> Vram* prefix.",
+          "file": "src/core.asm, src/vblank.asm, src/battle_gfx.asm",
+          "priority": "low",
+          "effort": "large",
+          "status": "todo",
+          "tags": [
+            "labeling",
+            "architecture",
+            "vdp"
+          ]
+        },
+        {
+          "id": "MOD-008",
+          "title": "Normalize all object init tables to objectInitGroup macro format",
+          "description": "vblank.asm has 123 object init groups using raw dc.b instead of the objectInitGroup macro. Convert all 123 to use the macro. The result must be bit-perfect. Do in batches of ~20 groups, verifying after each batch.",
+          "file": "src/vblank.asm",
+          "priority": "medium",
+          "effort": "large",
+          "status": "todo",
+          "tags": [
+            "macros",
+            "data",
+            "vblank"
+          ]
+        },
+        {
+          "id": "MOD-009",
+          "title": "Consider splitting battle_gfx.asm into rendering + DMA sub-modules",
+          "description": "battle_gfx.asm contains misplaced non-battle code (GetRandomNumber, QueueSoundEffect) and duplicate DMA functions. After MISC-00x tasks relocate misplaced code, evaluate whether the remaining content warrants splitting into battle_render.asm and dma.asm.",
+          "file": "src/battle_gfx.asm",
+          "priority": "low",
+          "effort": "large",
+          "status": "todo",
+          "tags": [
+            "architecture",
+            "deduplication"
+          ]
+        },
+        {
+          "id": "MOD-010",
+          "title": "Add VDP command word generation macro (vdpWriteCmd)",
+          "description": "VDP write-address command words ($C000xxxx patterns) are likely computed manually in several places. Add a vdpWriteCmd macro to macros.asm that encodes VRAM/CRAM/VSRAM address and read/write mode, and replace raw computations. Verify bit-perfect.",
+          "file": "macros.asm, src/*.asm",
+          "priority": "medium",
+          "effort": "medium",
+          "status": "todo",
+          "tags": [
+            "macros",
+            "vdp",
+            "architecture"
+          ]
+        }
+      ]
+    },
+    "contributor_experience": {
+      "description": "Documentation, guides, and checklists to make the project accessible to new contributors",
+      "tasks": [
+        {
+          "id": "CONTRIB-001",
+          "title": "Write a contributor guide",
+          "description": "Write docs/contributing.md: covers the build/verify workflow, code style rules (from AGENTS.md), how to run linters, and the commit discipline (one change, verify, commit). Keep it concise and link to other docs files.",
+          "file": "docs/contributing.md",
+          "priority": "medium",
+          "effort": "small",
+          "status": "todo",
+          "tags": [
+            "documentation",
+            "contributor-experience"
+          ]
+        },
+        {
+          "id": "CONTRIB-002",
+          "title": "Create debugging verify-failure playbook",
+          "description": "Write docs/debugging_verify_failures.md: a step-by-step guide for diagnosing and fixing a non-bit-perfect build. Cover: hex→decimal in dc.*, off-by-one in data tables, wrong label after rename, missing/extra bytes in a struct, and how to use the .lst file to pinpoint the divergence.",
+          "file": "docs/debugging_verify_failures.md",
+          "priority": "medium",
+          "effort": "small",
+          "status": "todo",
+          "tags": [
+            "documentation",
+            "contributor-experience",
+            "debugging"
+          ]
+        },
+        {
+          "id": "CONTRIB-003",
+          "title": "Write a project glossary",
+          "description": "Write docs/glossary.md: define terms specific to this project and to 68k / Genesis development (VDP, DMA, SAT, VRAM, nametable, object slot, event trigger, script VM, RLE, etc.). Cross-reference with constants.asm and notes.txt.",
+          "file": "docs/glossary.md",
+          "priority": "low",
+          "effort": "small",
+          "status": "todo",
+          "tags": [
+            "documentation",
+            "contributor-experience"
+          ]
+        },
+        {
+          "id": "CONTRIB-004",
+          "title": "Write an onboarding guide",
+          "description": "Write docs/onboarding.md: end-to-end guide for a new contributor: prerequisites (ASM68K, Node.js), cloning, first build, first verify, understanding the file structure, and pointers to the most important files (constants.asm, init.asm, notes.txt).",
+          "file": "docs/onboarding.md",
+          "priority": "medium",
+          "effort": "medium",
+          "status": "todo",
+          "tags": [
+            "documentation",
+            "contributor-experience"
+          ]
+        },
+        {
+          "id": "CONTRIB-005",
+          "title": "Document ASM68K assembler quirks",
+          "description": "Write docs/asm68k_quirks.md: document known ASM68K behaviors that affect bit-perfectness, including: decimal vs hex in dc.*, auto-extend behavior (disabled by /o ae-), forward reference resolution, local label scoping, and any others discovered during disassembly work.",
+          "file": "docs/asm68k_quirks.md",
+          "priority": "medium",
+          "effort": "small",
+          "status": "todo",
+          "tags": [
+            "documentation",
+            "contributor-experience",
+            "build"
+          ]
+        },
+        {
+          "id": "CONTRIB-006",
+          "title": "Create data table style guide",
+          "description": "Write docs/data_table_style.md: document the conventions for data tables in this project: hex literals only in dc.*, alignment, grouping, commentary format, and how to add a new table (with a worked example).",
+          "file": "docs/data_table_style.md",
+          "priority": "low",
+          "effort": "small",
+          "status": "todo",
+          "tags": [
+            "documentation",
+            "contributor-experience",
+            "data"
+          ]
+        },
+        {
+          "id": "CONTRIB-007",
+          "title": "Add a project roadmap doc",
+          "description": "Write docs/roadmap.md: describe the three phases of the project (1: bit-perfect disassembly cleanup, 2: randomizer tooling, 3: game editor) with the key milestones for each phase. Link to todos.json categories as the detailed task list.",
+          "file": "docs/roadmap.md",
+          "priority": "low",
+          "effort": "small",
+          "status": "todo",
+          "tags": [
+            "documentation",
+            "contributor-experience"
+          ]
+        },
+        {
+          "id": "CONTRIB-008",
+          "title": "Create a refactor changelog",
+          "description": "Write docs/refactor_log.md: a running log of significant refactors (label renames, constant extractions, macro adoptions, module moves) with the commit hash, what changed, and why. Helps reviewers understand the project's history without reading every commit.",
+          "file": "docs/refactor_log.md",
+          "priority": "low",
+          "effort": "small",
+          "status": "todo",
+          "tags": [
+            "documentation",
+            "contributor-experience"
+          ]
+        },
+        {
+          "id": "CONTRIB-009",
+          "title": "Document build+verify workflow",
+          "description": "Write docs/build_workflow.md: covers the full build pipeline (vermilion.asm -> asm68k.exe -> out.bin -> verify.bat SHA256 check), how to interpret the .lst file, and the gitignore policy for out.bin and vermilion.lst.",
+          "file": "docs/build_workflow.md",
+          "priority": "medium",
+          "effort": "small",
+          "status": "todo",
+          "tags": [
+            "documentation",
+            "contributor-experience",
+            "build"
+          ]
+        },
+        {
+          "id": "CONTRIB-010",
+          "title": "Create a change safety checklist",
+          "description": "Write docs/change_checklist.md: a short checklist to run through before committing any change: [ ] verify.bat passes, [ ] no hex->decimal in dc.*, [ ] label renames have offset comment, [ ] register conventions documented, [ ] no misplaced code introduced.",
+          "file": "docs/change_checklist.md",
+          "priority": "low",
+          "effort": "small",
+          "status": "todo",
+          "tags": [
+            "documentation",
+            "contributor-experience"
+          ]
+        }
+      ]
+    }
+  },
+  "priority_order": [
+    "LABEL-001",
+    "TOOL-001",
+    "TOOL-004",
+    "TOOL-002",
+    "TOOL-003",
+    "RAM-001",
+    "RAM-003",
+    "VM-001",
+    "VM-002",
+    "VM-003",
+    "MOD-002",
+    "MOD-003",
+    "MOD-004",
+    "CONST-001 (critical: remove duplicate constant blocks)",
+    "CONST-002 + CONST-003 + CONST-005 (high: define/use constants for hardcoded addresses)",
+    "CONST-004 (high: replace I/O addresses project-wide)",
+    "DRY-003 (high: merge identical DMA functions)",
+    "DRY-001 (high: unify 4 directional wall functions)",
+    "MOVE-001 + MOVE-004 (high: move GetRandomNumber and QueueSoundEffect)",
+    "DOC-001 + DOC-002 + DOC-004 (high: document critical systems)",
+    "RAND-001 through RAND-005 (high: randomizer data documentation)",
+    "EDIT-001 through EDIT-003 (high: editor map format documentation)",
+    "MACRO-001 through MACRO-004 (medium: adopt existing macros)",
+    "CONST-006 + CONST-007 (medium: remaining constant definitions)",
+    "DRY-002, DRY-004 through DRY-010 (medium: remaining deduplication)",
+    "MAGIC-001 through MAGIC-006 (medium: magic number elimination)",
+    "DOC-003, DOC-005 through DOC-010 (medium: remaining documentation)",
+    "MOVE-002, MOVE-003, MOVE-005, MOVE-006 (medium: remaining function moves)",
+    "DATA-001 through DATA-004 (medium: data table improvements)",
+    "STR-001 through STR-003 (medium/low: string organization)",
+    "ARCH-001 through ARCH-005 (low: architectural improvements)",
+    "DEAD-001 through DEAD-004 (low: dead code annotation)",
+    "BUILD-001 through BUILD-003 (low: build tooling)",
+    "RAND-006 through RAND-010 (medium/low: advanced randomizer prep)",
+    "EDIT-004 through EDIT-010 (medium/low: advanced editor prep)"
+  ],
+  "statistics": {
+    "total_tasks": 139,
+    "by_status": {
+      "todo": 139
+    },
+    "by_priority": {
+      "critical": 1,
+      "high": 33,
+      "medium": 64,
+      "low": 41
+    },
+    "by_category": {
+      "constants_cleanup": 7,
+      "macro_adoption": 5,
+      "code_deduplication": 10,
+      "documentation": 10,
+      "magic_numbers": 6,
+      "dead_code": 4,
+      "misplaced_code": 6,
+      "data_tables": 4,
+      "string_organization": 3,
+      "randomizer_prep": 10,
+      "editor_prep": 10,
+      "architecture": 5,
+      "build_quality": 3,
+      "labeling_and_traceability": 6,
+      "ram_and_struct_docs": 8,
+      "script_vm_reverse_engineering": 10,
+      "tooling_and_lints": 12,
+      "module_architecture": 10,
+      "contributor_experience": 10
+    }
+  }
+}
