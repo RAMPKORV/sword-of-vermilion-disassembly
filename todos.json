@@ -1433,12 +1433,13 @@
           "file": "src/script.asm, tools/index/script_opcodes.json",
           "priority": "high",
           "effort": "large",
-          "status": "todo",
+          "status": "done",
           "tags": [
             "script-vm",
             "documentation",
             "index"
-          ]
+          ],
+          "completed": "2026-03-04"
         },
         {
           "id": "VM-002",
@@ -2090,8 +2091,8 @@
   "statistics": {
     "total_tasks": 139,
     "by_status": {
-      "done": 28,
-      "todo": 111
+      "done": 29,
+      "todo": 110
     },
     "by_priority": {
       "critical": 1,

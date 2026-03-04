@@ -12,6 +12,67 @@
 ;   - Name entry screen
 ;   - Prologue / Sega logo cutscene sequencer
 ; ======================================================================
+;
+; ======================================================================
+; VM-001: SCRIPT OPCODE REFERENCE TABLE
+; ======================================================================
+; The script VM is driven by ProcessScriptText, which reads one byte
+; per tick from the current script string (Script_source_base +
+; Script_source_offset) and dispatches on control codes.
+;
+; Tile base: $04C0 added to every display byte before writing to VRAM.
+; Palette:   bit 15 set ($8000 OR'd) → palette line 0.
+;
+; Opcode  Const              Size    Operands / Action
+; ------  -----------------  ------  -------------------------------------------
+; $FF     SCRIPT_END         1       End of dialogue. Mark text complete.
+; $FE     SCRIPT_NEWLINE     1       Advance Y cursor 2 rows; reset X to 0.
+; $FD     SCRIPT_CONTINUE    1       Draw continuation arrow at (20,27); wait for
+;                                    player input (sets Script_has_continuation).
+; $FC     SCRIPT_QUESTION    2       [opcode, response_idx]
+;                                    Store response_idx → Dialog_response_index.
+;                                    Set Script_has_yes_no_question = FLAG_TRUE.
+;                                    (No text rendered; dialogue pauses for reply.)
+; $FB     SCRIPT_YES_NO      4       [opcode, response_idx, trigger_offset, ext_trigger]
+;                                    response_idx  → Dialog_response_index
+;                                    trigger_offset→ Dialog_choice_event_trigger
+;                                    ext_trigger   → Dialog_choice_extended_trigger
+;                                    Set Dialogue_event_trigger_flag, Script_has_yes_no_question.
+; $FA     SCRIPT_CHOICE      3       [opcode, expected_answer, map_trigger]
+;                                    expected_answer → Quest_choice_expected_answer
+;                                    map_trigger     → Quest_choice_map_trigger
+;                                    Set Quest_choice_pending = FLAG_TRUE.
+;                                    Store response_idx from byte[1].
+; $F9     SCRIPT_ACTIONS     2+N*M   [opcode, count, entry0, entry1, ...]
+;                                    Execute 'count' actions. Each entry:
+;                                      [$00, offset.b]    Set Event_triggers_start[offset]=FF
+;                                      [$01, sector.b]    Reveal world-map sector (offset+$100)
+;                                      [$02, bcd0..3]     Add BCD kim reward via AddPaymentAmount
+;                                      (entry 0 = 2 bytes; entries $02 = 6 bytes)
+;                                    Plays SOUND_ATTACK after all actions.
+; $F8     SCRIPT_TRIGGERS    2+N     [opcode, count, offset0, offset1, ...]
+;                                    For each of 'count' offset bytes:
+;                                      Set Event_triggers_start[offset] = $FF
+;                                    Max 2 offsets in macro form; raw data may have more.
+; $F7     SCRIPT_PLAYER_NAME 1       Switch source to Player_name buffer; resume
+;                                    character-by-character output from there.
+; $DF     SCRIPT_WIDE_CHAR_HI 1      Wide glyph high byte — render at (x-1, y-1).
+; $DE     SCRIPT_WIDE_CHAR_LO 1      Wide glyph low byte — render at (x-1, y-1).
+; $00–$DD Display char       1       Tile index = byte + $04C0; write to Plane B tilemap
+; $E0–$F6 Display char       1       Tile index = byte + $04C0 (gap between wide and control)
+;
+; Rendering cursor state:
+;   Script_output_x       (word)  current column offset (tiles)
+;   Script_output_y       (word)  current row offset (tiles)
+;   Script_output_base_x  (word)  window left margin (tiles)
+;   Script_tile_attrs     (word)  extra VDP tile attributes to OR into each glyph
+;
+; Script pointer state:
+;   Script_source_base    (long)  pointer to start of current script string
+;   Script_source_offset  (word)  byte offset from base to current read position
+;
+; See tools/index/script_opcodes.json for machine-readable version.
+; ======================================================================
 
 ;==============================================================
 ; SCRIPT / DIALOGUE ENGINE

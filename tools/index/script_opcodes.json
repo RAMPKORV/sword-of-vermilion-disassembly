@@ -1,0 +1,139 @@
+{
+  "_meta": {
+    "description": "Sword of Vermilion script VM opcode table (VM-001)",
+    "source": "src/script.asm ProcessScriptText dispatch (lines ~54-73)",
+    "tile_base": "0x04C0",
+    "note": "Bytes $00-$DD and $E0-$F6 are display characters (tile = byte + 0x04C0). Bytes $F7-$FF and $DE-$DF are control codes."
+  },
+  "opcodes": [
+    {
+      "byte": "0xFF",
+      "constant": "SCRIPT_END",
+      "mnemonic": "END",
+      "size_bytes": 1,
+      "operands": [],
+      "description": "End of dialogue. Sets Script_text_complete = FLAG_TRUE. Clears Script_reading_player_name and Script_source_offset if in name-reading mode."
+    },
+    {
+      "byte": "0xFE",
+      "constant": "SCRIPT_NEWLINE",
+      "mnemonic": "NEWLINE",
+      "size_bytes": 1,
+      "operands": [],
+      "description": "Advance Script_output_y by 2 (double-height text rows); reset Script_output_x to 0."
+    },
+    {
+      "byte": "0xFD",
+      "constant": "SCRIPT_CONTINUE",
+      "mnemonic": "CONTINUE",
+      "size_bytes": 1,
+      "operands": [],
+      "description": "Draw continuation arrow glyph (tile $04DF) at column 20, row 27 in the dialog box. Set Script_has_continuation = FLAG_TRUE. Pause script until player presses a button."
+    },
+    {
+      "byte": "0xFC",
+      "constant": "SCRIPT_QUESTION",
+      "mnemonic": "QUESTION",
+      "size_bytes": 2,
+      "operands": [
+        { "name": "response_index", "size": "byte", "description": "Response index written to Dialog_response_index" }
+      ],
+      "description": "Store operand byte as Dialog_response_index. Set Script_has_yes_no_question = FLAG_TRUE. No glyph rendered; execution pauses for player reply."
+    },
+    {
+      "byte": "0xFB",
+      "constant": "SCRIPT_YES_NO",
+      "mnemonic": "YES_NO",
+      "size_bytes": 4,
+      "operands": [
+        { "name": "response_index",  "size": "byte", "description": "Written to Dialog_response_index" },
+        { "name": "trigger_offset",  "size": "byte", "description": "Written to Dialog_choice_event_trigger (offset into Event_triggers_start)" },
+        { "name": "ext_trigger",     "size": "byte", "description": "Written to Dialog_choice_extended_trigger" }
+      ],
+      "description": "Show a YES/NO question. Store response_index, trigger_offset and ext_trigger. Set Dialogue_event_trigger_flag and Script_has_yes_no_question."
+    },
+    {
+      "byte": "0xFA",
+      "constant": "SCRIPT_CHOICE",
+      "mnemonic": "CHOICE",
+      "size_bytes": 3,
+      "operands": [
+        { "name": "response_index",    "size": "byte", "description": "Written to Dialog_response_index (also stores Script_has_yes_no_question)" },
+        { "name": "expected_answer",   "size": "byte", "description": "Written to Quest_choice_expected_answer" },
+        { "name": "map_trigger",       "size": "byte", "description": "Written to Quest_choice_map_trigger" }
+      ],
+      "description": "Quest choice with expected answer. Sets Quest_choice_pending = FLAG_TRUE. Also sets Dialog_response_index from byte[1]."
+    },
+    {
+      "byte": "0xF9",
+      "constant": "SCRIPT_ACTIONS",
+      "mnemonic": "ACTIONS",
+      "size_bytes": "variable",
+      "operands": [
+        { "name": "count", "size": "byte", "description": "Number of action entries that follow" },
+        {
+          "name": "entries",
+          "size": "variable",
+          "description": "Each entry is one of: [$00,offset.b]=set trigger; [$01,sector.b]=reveal map sector; [$02,bcd0,bcd1,bcd2,bcd3]=add kim reward",
+          "entry_types": [
+            { "type_byte": "0x00", "extra_bytes": 1, "action": "Set Event_triggers_start[offset] = 0xFF" },
+            { "type_byte": "0x01", "extra_bytes": 1, "action": "Set Event_triggers_start[0x0100 + sector] = 0xFF (reveal world-map sector)" },
+            { "type_byte": "0x02", "extra_bytes": 4, "action": "Add BCD kim reward: Transaction_amount/item_id/quantity/flags from bytes 2-5; call AddPaymentAmount" }
+          ]
+        }
+      ],
+      "description": "Execute a list of actions: set event flags, reveal map sectors, or give kims. Plays SOUND_ATTACK after all actions. Marks Script_text_complete."
+    },
+    {
+      "byte": "0xF8",
+      "constant": "SCRIPT_TRIGGERS",
+      "mnemonic": "TRIGGERS",
+      "size_bytes": "variable",
+      "operands": [
+        { "name": "count",   "size": "byte", "description": "Number of 1-byte trigger offsets that follow" },
+        { "name": "offsets", "size": "count bytes", "description": "Each byte is an offset into Event_triggers_start; that byte is set to 0xFF" }
+      ],
+      "description": "Set one or more event trigger flags (simplified form of ACTIONS). Low-byte offsets only ($00-$FF range). Marks Script_text_complete."
+    },
+    {
+      "byte": "0xF7",
+      "constant": "SCRIPT_PLAYER_NAME",
+      "mnemonic": "PLAYER_NAME",
+      "size_bytes": 1,
+      "operands": [],
+      "description": "Switch script source to Player_name buffer. Characters are read from Player_name[Player_name_index] until the name ends, then resume from original script pointer."
+    },
+    {
+      "byte": "0xDF",
+      "constant": "SCRIPT_WIDE_CHAR_HI",
+      "mnemonic": "WIDE_HI",
+      "size_bytes": 1,
+      "operands": [],
+      "description": "Wide character high surrogate byte. Renders glyph at position (cursor_x - 1, cursor_y - 1) — one tile to the upper-left of the current cursor. Used for 2-column-wide kanji-style characters."
+    },
+    {
+      "byte": "0xDE",
+      "constant": "SCRIPT_WIDE_CHAR_LO",
+      "mnemonic": "WIDE_LO",
+      "size_bytes": 1,
+      "operands": [],
+      "description": "Wide character low surrogate byte. Same rendering path as WIDE_HI (both use ScriptRender_PortraitTile). Treated identically at the dispatch level."
+    },
+    {
+      "byte": "0x00-0xDD",
+      "constant": "(display)",
+      "mnemonic": "CHAR",
+      "size_bytes": 1,
+      "operands": [],
+      "description": "Display character. VRAM tile = byte + 0x04C0, palette bit set, merged with Script_tile_attrs. Written to Plane B tilemap at (Script_output_base_x + Script_output_x, Script_output_y). Advances Script_output_x by 1."
+    },
+    {
+      "byte": "0xE0-0xF6",
+      "constant": "(display)",
+      "mnemonic": "CHAR",
+      "size_bytes": 1,
+      "operands": [],
+      "description": "Display character (gap between WIDE range and control codes). Same rendering path as $00-$DD."
+    }
+  ]
+}
