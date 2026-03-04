@@ -1059,283 +1059,283 @@ EnemyEncounterGroupTable: ; Enemy encounters map
 ; Each word is an index into EnemyGfxDataTable (12-byte entries).
 ; The group index comes from EnemyEncounterTypesByMapSector or EnemyEncounterTypesByCaveRoom.
 EnemyEncounterGroup_00:
-	dc.w	$0, $0, $A, $1 ; Bouncing_5A | Bouncing_5A | StandardMelee_4D | Bouncing_69
+	dc.w	$0, $0, $A, $1 ; GreenSlime | GreenSlime | DogKobold | BlueJelly
 EnemyEncounterGroup_01:
-	dc.w	$6, $A, $1, $1 ; StalkPause_4E | StandardMelee_4D | Bouncing_69 | Bouncing_69
+	dc.w	$6, $A, $1, $1 ; Skeleton | DogKobold | BlueJelly | BlueJelly
 EnemyEncounterGroup_02:
-	dc.w	$A, $A, $1, $0 ; StandardMelee_4D | StandardMelee_4D | Bouncing_69 | Bouncing_5A
+	dc.w	$A, $A, $1, $0 ; DogKobold | DogKobold | BlueJelly | GreenSlime
 EnemyEncounterGroup_03:
-	dc.w	$E, $A, $1, $A ; FleeChase_5B | StandardMelee_4D | Bouncing_69 | StandardMelee_4D
+	dc.w	$E, $A, $1, $A ; FruitBat | DogKobold | BlueJelly | DogKobold
 EnemyEncounterGroup_04:
-	dc.w	$E, $12, $A, $1 ; FleeChase_5B | ProjectileFire_63 | StandardMelee_4D | Bouncing_69
+	dc.w	$E, $12, $A, $1 ; FruitBat | Eyeball | DogKobold | BlueJelly
 EnemyEncounterGroup_05:
-	dc.w	$E, $26, $12, $A ; FleeChase_5B | RandomShooter_66 | ProjectileFire_63 | StandardMelee_4D
+	dc.w	$E, $26, $12, $A ; FruitBat | Neophyte_Ranged | Eyeball | DogKobold
 EnemyEncounterGroup_06:
-	dc.w	$E, $6, $6, $16 ; FleeChase_5B | StalkPause_4E | StalkPause_4E | ProximityChase_5C
+	dc.w	$E, $6, $6, $16 ; FruitBat | Skeleton | Skeleton | Needler
 EnemyEncounterGroup_07:
-	dc.w	$5, $12, $E, $16 ; Bouncing_AD | ProjectileFire_63 | FleeChase_5B | ProximityChase_5C
+	dc.w	$5, $12, $E, $16 ; GrayOoze | Eyeball | FruitBat | Needler
 EnemyEncounterGroup_08:
-	dc.w	$B, $A, $12, $5 ; StandardMelee_6C | StandardMelee_4D | ProjectileFire_63 | Bouncing_AD
+	dc.w	$B, $A, $12, $5 ; CoyoteKobold | DogKobold | Eyeball | GrayOoze
 EnemyEncounterGroup_09:
-	dc.w	$32, $B, $12, $16 ; BurstFire_63 | StandardMelee_6C | ProjectileFire_63 | ProximityChase_5C
+	dc.w	$32, $B, $12, $16 ; Eyeball_BurstFire | CoyoteKobold | Eyeball | Needler
 EnemyEncounterGroup_0A:
-	dc.w	$2A, $32, $5, $B ; StandardMeleeFast_61 | BurstFire_63 | Bouncing_AD | StandardMelee_6C
+	dc.w	$2A, $32, $5, $B ; Gargoyle | Eyeball_BurstFire | GrayOoze | CoyoteKobold
 EnemyEncounterGroup_0B:
-	dc.w	$F, $5, $2A, $32 ; FleeChase_6F | Bouncing_AD | StandardMeleeFast_61 | BurstFire_63
+	dc.w	$F, $5, $2A, $32 ; CaveBat | GrayOoze | Gargoyle | Eyeball_BurstFire
 EnemyEncounterGroup_0C:
-	dc.w	$2E, $6, $16, $2 ; OrbShield_75 | StalkPause_4E | ProximityChase_5C | Bouncing_6A
+	dc.w	$2E, $6, $16, $2 ; OrbShield_75 | Skeleton | Needler | RedGlunk
 EnemyEncounterGroup_0D:
-	dc.w	$1A, $2A, $32, $F ; StandardMeleeAlt_5D | StandardMeleeFast_61 | BurstFire_63 | FleeChase_6F
+	dc.w	$1A, $2A, $32, $F ; Basher | Gargoyle | Eyeball_BurstFire | CaveBat
 EnemyEncounterGroup_0E:
-	dc.w	$42, $2E, $1A, $2A ; Teleporter_66 | OrbShield_75 | StandardMeleeAlt_5D | StandardMeleeFast_61
+	dc.w	$42, $2E, $1A, $2A ; Neophyte_Tele | OrbShield_75 | Basher | Gargoyle
 EnemyEncounterGroup_0F:
-	dc.w	$4A, $2E, $1A, $42 ; MultiOrb_75 | OrbShield_75 | StandardMeleeAlt_5D | Teleporter_66
+	dc.w	$4A, $2E, $1A, $42 ; MultiOrb_75 | OrbShield_75 | Basher | Neophyte_Tele
 EnemyEncounterGroup_10:
-	dc.w	$1E, $6, $4A, $2 ; StalkPauseAlt_64 | StalkPause_4E | MultiOrb_75 | Bouncing_6A
+	dc.w	$1E, $6, $4A, $2 ; Puffball | Skeleton | MultiOrb_75 | RedGlunk
 EnemyEncounterGroup_11:
-	dc.w	$4E, $4A, $1A, $42 ; OrbRing_75 | MultiOrb_75 | StandardMeleeAlt_5D | Teleporter_66
+	dc.w	$4E, $4A, $1A, $42 ; OrbRing_75 | MultiOrb_75 | Basher | Neophyte_Tele
 EnemyEncounterGroup_12:
-	dc.w	$13, $4E, $1A, $42 ; ProjectileFire_A4 | OrbRing_75 | StandardMeleeAlt_5D | Teleporter_66
+	dc.w	$13, $4E, $1A, $42 ; RedEye | OrbRing_75 | Basher | Neophyte_Tele
 EnemyEncounterGroup_13:
-	dc.w	$22, $3A, $36, $1E ; HumanoidMelee_65 | FastBurstShooter_64 | StalkPause3_64 | StalkPauseAlt_64
+	dc.w	$22, $3A, $36, $1E ; Neophyte | Flamer | Rattler | Puffball
 EnemyEncounterGroup_14:
-	dc.w	$1B, $4, $4E, $13 ; StandardMeleeAlt_A1 | Bouncing_AC | OrbRing_75 | ProjectileFire_A4
+	dc.w	$1B, $4, $4E, $13 ; Smasher | BlackGlop | OrbRing_75 | RedEye
 EnemyEncounterGroup_15:
-	dc.w	$46, $32, $1B, $4 ; SequentialFire_66 | BurstFire_63 | StandardMeleeAlt_A1 | Bouncing_AC
+	dc.w	$46, $32, $1B, $4 ; Neophyte_SeqFire | Eyeball_BurstFire | Smasher | BlackGlop
 EnemyEncounterGroup_16:
-	dc.w	$2F, $22, $2A, $46 ; OrbShield_C0 | HumanoidMelee_65 | StandardMeleeFast_61 | SequentialFire_66
+	dc.w	$2F, $22, $2A, $46 ; OrbShield_C0 | Neophyte | Gargoyle | Neophyte_SeqFire
 EnemyEncounterGroup_17:
-	dc.w	$27, $C, $46, $4E ; RandomShooter_AA | StandardMelee_6D | SequentialFire_66 | OrbRing_75
+	dc.w	$27, $C, $46, $4E ; Conjurer_Ranged | HyenaKobold | Neophyte_SeqFire | OrbRing_75
 EnemyEncounterGroup_18:
-	dc.w	$2B, $22, $1B, $1A ; StandardMeleeFast_BD | HumanoidMelee_65 | StandardMeleeAlt_A1 | StandardMeleeAlt_5D
+	dc.w	$2B, $22, $1B, $1A ; Gargoyle_BD | Neophyte | Smasher | Basher
 EnemyEncounterGroup_19:
-	dc.w	$1F, $3E, $10, $7 ; StalkPauseAlt_B9 | HomingShooter_64 | FleeChase_70 | StalkPause_7B
+	dc.w	$1F, $3E, $10, $7 ; Toadstool | Creeper | KillerBat | Zombie
 EnemyEncounterGroup_1A:
-	dc.w	$33, $22, $1B, $2F ; BurstFire_A4 | HumanoidMelee_65 | StandardMeleeAlt_A1 | OrbShield_C0
+	dc.w	$33, $22, $1B, $2F ; RedEye_BurstFire | Neophyte | Smasher | OrbShield_C0
 EnemyEncounterGroup_1B:
-	dc.w	$43, $33, $10, $22 ; Teleporter_AA | BurstFire_A4 | FleeChase_70 | HumanoidMelee_65
+	dc.w	$43, $33, $10, $22 ; Conjurer_Tele | RedEye_BurstFire | KillerBat | Neophyte
 EnemyEncounterGroup_1C:
-	dc.w	$4B, $47, $33, $4 ; MultiOrb_C0 | SequentialFire_AA | BurstFire_A4 | Bouncing_AC
+	dc.w	$4B, $47, $33, $4 ; MultiOrb_C0 | Conjurer_SeqFire | RedEye_BurstFire | BlackGlop
 EnemyEncounterGroup_1D:
-	dc.w	$3B, $4B, $47, $22 ; FastBurstShooter_B9 | MultiOrb_C0 | SequentialFire_AA | HumanoidMelee_65
+	dc.w	$3B, $4B, $47, $22 ; Melter | MultiOrb_C0 | Conjurer_SeqFire | Neophyte
 EnemyEncounterGroup_1E:
-	dc.w	$1C, $28, $47, $33 ; StandardMeleeAlt_A2 | RandomShooter_AB | SequentialFire_AA | BurstFire_A4
+	dc.w	$1C, $28, $47, $33 ; Crusher | Mage_Ranged | Conjurer_SeqFire | RedEye_BurstFire
 EnemyEncounterGroup_1F:
-	dc.w	$3F, $17, $7, $1C ; HomingShooter_B9 | ProximityChase_9E | StalkPause_7B | StandardMeleeAlt_A2
+	dc.w	$3F, $17, $7, $1C ; Oozer | Stinger | Zombie | Crusher
 EnemyEncounterGroup_20:
-	dc.w	$23, $1C, $14, $4B ; HumanoidMelee_A7 | StandardMeleeAlt_A2 | ProjectileFire_A5 | MultiOrb_C0
+	dc.w	$23, $1C, $14, $4B ; Conjurer | Crusher | ZapEye | MultiOrb_C0
 EnemyEncounterGroup_21:
-	dc.w	$14, $23, $1C, $33 ; ProjectileFire_A5 | HumanoidMelee_A7 | StandardMeleeAlt_A2 | BurstFire_A4
+	dc.w	$14, $23, $1C, $33 ; ZapEye | Conjurer | Crusher | RedEye_BurstFire
 EnemyEncounterGroup_22:
-	dc.w	$20, $1C, $8, $14 ; StalkPauseAlt_BA | StandardMeleeAlt_A2 | StalkPause_7C | ProjectileFire_A5
+	dc.w	$20, $1C, $8, $14 ; Fungo | Crusher | Ghoul | ZapEye
 EnemyEncounterGroup_23:
-	dc.w	$44, $4F, $14, $23 ; Teleporter_AB | OrbRing_C0 | ProjectileFire_A5 | HumanoidMelee_A7
+	dc.w	$44, $4F, $14, $23 ; Mage_Tele | OrbRing_C0 | ZapEye | Conjurer
 EnemyEncounterGroup_24:
-	dc.w	$D, $44, $4F, $1C ; StandardMelee_6E | Teleporter_AB | OrbRing_C0 | StandardMeleeAlt_A2
+	dc.w	$D, $44, $4F, $1C ; WolfKobold | Mage_Tele | OrbRing_C0 | Crusher
 EnemyEncounterGroup_25:
-	dc.w	$48, $30, $23, $1C ; SequentialFire_AB | OrbShield_C1 | HumanoidMelee_A7 | StandardMeleeAlt_A2
+	dc.w	$48, $30, $23, $1C ; Mage_SeqFire | OrbShield_C1 | Conjurer | Crusher
 EnemyEncounterGroup_26:
-	dc.w	$3C, $8, $7, $48 ; FastBurstShooter_BA | StalkPause_7C | StalkPause_7B | SequentialFire_AB
+	dc.w	$3C, $8, $7, $48 ; Scorcher | Ghoul | Zombie | Mage_SeqFire
 EnemyEncounterGroup_27:
-	dc.w	$11, $D, $44, $48 ; FleeChase_71 | StandardMelee_6E | Teleporter_AB | SequentialFire_AB
+	dc.w	$11, $D, $44, $48 ; VampireBat | WolfKobold | Mage_Tele | Mage_SeqFire
 EnemyEncounterGroup_28:
-	dc.w	$34, $2C, $D, $11 ; BurstFire_A5 | StandardMeleeFast_BE | StandardMelee_6E | FleeChase_71
+	dc.w	$34, $2C, $D, $11 ; ZapEye_BurstFire | Gargoyle_BE | WolfKobold | VampireBat
 EnemyEncounterGroup_29:
-	dc.w	$40, $11, $8, $30 ; HomingShooter_BA | FleeChase_71 | StalkPause_7C | OrbShield_C1
+	dc.w	$40, $11, $8, $30 ; Slimer | VampireBat | Ghoul | OrbShield_C1
 EnemyEncounterGroup_2A:
-	dc.w	$29, $30, $48, $23 ; RandomShooter_BC | OrbShield_C1 | SequentialFire_AB | HumanoidMelee_A7
+	dc.w	$29, $30, $48, $23 ; Wizard_Ranged | OrbShield_C1 | Mage_SeqFire | Conjurer
 EnemyEncounterGroup_2B:
-	dc.w	$21, $4C, $29, $40 ; StalkPauseAlt_BB | MultiOrb_C1 | RandomShooter_BC | HomingShooter_BA
+	dc.w	$21, $4C, $29, $40 ; Morel | MultiOrb_C1 | Wizard_Ranged | Slimer
 EnemyEncounterGroup_2C:
-	dc.w	$24, $29, $11, $4 ; HumanoidMeleeAlt_A8 | RandomShooter_BC | FleeChase_71 | Bouncing_AC
+	dc.w	$24, $29, $11, $4 ; Mage | Wizard_Ranged | VampireBat | BlackGlop
 EnemyEncounterGroup_2D:
-	dc.w	$15, $24, $34, $4C ; ProjectileFire_A6 | HumanoidMeleeAlt_A8 | BurstFire_A5 | MultiOrb_C1
+	dc.w	$15, $24, $34, $4C ; KillerEye | Mage | ZapEye_BurstFire | MultiOrb_C1
 EnemyEncounterGroup_2E:
-	dc.w	$50, $24, $15, $29 ; OrbRing_C1 | HumanoidMeleeAlt_A8 | ProjectileFire_A6 | RandomShooter_BC
+	dc.w	$50, $24, $15, $29 ; OrbRing_C1 | Mage | KillerEye | Wizard_Ranged
 EnemyEncounterGroup_2F:
-	dc.w	$45, $39, $24, $11 ; Teleporter_BC | StalkPause3_BB | HumanoidMeleeAlt_A8 | FleeChase_71
+	dc.w	$45, $39, $24, $11 ; Wizard_Tele | Anaconda | Mage | VampireBat
 EnemyEncounterGroup_30:
-	dc.w	$18, $45, $39, $15 ; ProximityChase_9F | Teleporter_BC | StalkPause3_BB | ProjectileFire_A6
+	dc.w	$18, $45, $39, $15 ; Injector | Wizard_Tele | Anaconda | KillerEye
 EnemyEncounterGroup_31:
-	dc.w	$18, $45, $50, $39 ; ProximityChase_9F | Teleporter_BC | OrbRing_C1 | StalkPause3_BB
+	dc.w	$18, $45, $50, $39 ; Injector | Wizard_Tele | OrbRing_C1 | Anaconda
 EnemyEncounterGroup_32:
-	dc.w	$31, $18, $50, $45 ; OrbShield_C2 | ProximityChase_9F | OrbRing_C1 | Teleporter_BC
+	dc.w	$31, $18, $50, $45 ; OrbShield_C2 | Injector | OrbRing_C1 | Wizard_Tele
 EnemyEncounterGroup_33:
-	dc.w	$53, $50, $18, $45 ; SpiralBurst_A6b | OrbRing_C1 | ProximityChase_9F | Teleporter_BC
+	dc.w	$53, $50, $18, $45 ; KillerEye_SpiralBurst_B | OrbRing_C1 | Injector | Wizard_Tele
 EnemyEncounterGroup_34:
-	dc.w	$1D, $31, $24, $45 ; StandardMeleeAlt_A3 | OrbShield_C2 | HumanoidMeleeAlt_A8 | Teleporter_BC
+	dc.w	$1D, $31, $24, $45 ; Obliterator | OrbShield_C2 | Mage | Wizard_Tele
 EnemyEncounterGroup_35:
-	dc.w	$9, $3D, $18, $50 ; StalkPause_7D | FastBurstShooter_BB | ProximityChase_9F | OrbRing_C1
+	dc.w	$9, $3D, $18, $50 ; Cryptmaster | Incinerator | Injector | OrbRing_C1
 EnemyEncounterGroup_36:
-	dc.w	$2D, $1D, $31, $50 ; StandardMeleeFast_BF | StandardMeleeAlt_A3 | OrbShield_C2 | OrbRing_C1
+	dc.w	$2D, $1D, $31, $50 ; Gargoyle_BF | Obliterator | OrbShield_C2 | OrbRing_C1
 EnemyEncounterGroup_37:
-	dc.w	$4D, $2D, $1D, $4 ; MultiOrb_C2 | StandardMeleeFast_BF | StandardMeleeAlt_A3 | Bouncing_AC
+	dc.w	$4D, $2D, $1D, $4 ; MultiOrb_C2 | Gargoyle_BF | Obliterator | BlackGlop
 EnemyEncounterGroup_38:
-	dc.w	$19, $41, $4D, $9 ; ProximityChase_A0 | HomingShooter_BB | MultiOrb_C2 | StalkPause_7D
+	dc.w	$19, $41, $4D, $9 ; Poisoner | Slurper | MultiOrb_C2 | Cryptmaster
 EnemyEncounterGroup_39:
-	dc.w	$4D, $19, $2D, $1D ; MultiOrb_C2 | ProximityChase_A0 | StandardMeleeFast_BF | StandardMeleeAlt_A3
+	dc.w	$4D, $19, $2D, $1D ; MultiOrb_C2 | Poisoner | Gargoyle_BF | Obliterator
 EnemyEncounterGroup_3A:
-	dc.w	$35, $2D, $4D, $24 ; BurstFire_A6 | StandardMeleeFast_BF | MultiOrb_C2 | HumanoidMeleeAlt_A8
+	dc.w	$35, $2D, $4D, $24 ; KillerEye_BurstFire | Gargoyle_BF | MultiOrb_C2 | Mage
 EnemyEncounterGroup_3B:
-	dc.w	$49, $4D, $35, $11 ; SequentialFire_BC | MultiOrb_C2 | BurstFire_A6 | FleeChase_71
+	dc.w	$49, $4D, $35, $11 ; Wizard_SeqFire | MultiOrb_C2 | KillerEye_BurstFire | VampireBat
 EnemyEncounterGroup_3C:
-	dc.w	$25, $49, $35, $19 ; HumanoidMeleeAlt_A9 | SequentialFire_BC | BurstFire_A6 | ProximityChase_A0
+	dc.w	$25, $49, $35, $19 ; Wizard | Wizard_SeqFire | KillerEye_BurstFire | Poisoner
 EnemyEncounterGroup_3D:
-	dc.w	$25, $49, $35, $4D ; HumanoidMeleeAlt_A9 | SequentialFire_BC | BurstFire_A6 | MultiOrb_C2
+	dc.w	$25, $49, $35, $4D ; Wizard | Wizard_SeqFire | KillerEye_BurstFire | MultiOrb_C2
 EnemyEncounterGroup_3E:
-	dc.w	$51, $25, $49, $52 ; OrbRing_C2 | HumanoidMeleeAlt_A9 | SequentialFire_BC | SpiralBurst_A6a
+	dc.w	$51, $25, $49, $52 ; OrbRing_C2 | Wizard | Wizard_SeqFire | KillerEye_SpiralBurst_A
 EnemyEncounterGroup_3F:
-	dc.w	$3, $50, $50, $45 ; Bouncing_6B | OrbRing_C1 | OrbRing_C1 | Teleporter_BC
+	dc.w	$3, $50, $50, $45 ; GoldPudding | OrbRing_C1 | OrbRing_C1 | Wizard_Tele
 EnemyEncounterGroup_40:
-	dc.w	$3E, $7, $3A, $22 ; HomingShooter_64 | StalkPause_7B | FastBurstShooter_64 | HumanoidMelee_65
+	dc.w	$3E, $7, $3A, $22 ; Creeper | Zombie | Flamer | Neophyte
 EnemyEncounterGroup_41:
-	dc.w	$28, $47, $22, $4B ; RandomShooter_AB | SequentialFire_AA | HumanoidMelee_65 | MultiOrb_C0
+	dc.w	$28, $47, $22, $4B ; Mage_Ranged | Conjurer_SeqFire | Neophyte | MultiOrb_C0
 EnemyEncounterGroup_42:
-	dc.w	$38, $8, $4, $23 ; StalkPause3_BA | StalkPause_7C | Bouncing_AC | HumanoidMelee_A7
+	dc.w	$38, $8, $4, $23 ; Cobra | Ghoul | BlackGlop | Conjurer
 EnemyEncounterGroup_43:
-	dc.w	$1E, $36, $16, $2 ; StalkPauseAlt_64 | StalkPause3_64 | ProximityChase_5C | Bouncing_6A
+	dc.w	$1E, $36, $16, $2 ; Puffball | Rattler | Needler | RedGlunk
 EnemyEncounterGroup_44:
-	dc.w	$37, $47, $7, $3A ; StationaryShooter_B9 | SequentialFire_AA | StalkPause_7B | FastBurstShooter_64
+	dc.w	$37, $47, $7, $3A ; Python | Conjurer_SeqFire | Zombie | Flamer
 EnemyEncounterGroup_45:
-	dc.w	$21, $1F, $1E, $4C ; StalkPauseAlt_BB | StalkPauseAlt_B9 | StalkPauseAlt_64 | MultiOrb_C1
+	dc.w	$21, $1F, $1E, $4C ; Morel | Toadstool | Puffball | MultiOrb_C1
 EnemyGfxDataTable:
-	dc.l	EnemyAppearance_5A ; Appearance
-	dc.l	EnemyData_Bouncing_5A ; Sprite mappings
+	dc.l	EnemyAppearance_GreenSlime ; Appearance
+	dc.l	EnemyData_GreenSlime ; Sprite mappings
 	dc.l	EnemySpriteSet_C ; Sprites
-	dc.l	EnemyAppearance_69
-	dc.l	EnemyData_Bouncing_69
+	dc.l	EnemyAppearance_BlueJelly
+	dc.l	EnemyData_BlueJelly
 	dc.l	EnemySpriteSet_C
-	dc.l	EnemyAppearance_6A
-	dc.l	EnemyData_Bouncing_6A
+	dc.l	EnemyAppearance_RedGlunk
+	dc.l	EnemyData_RedGlunk
 	dc.l	EnemySpriteSet_C
-	dc.l	EnemyAppearance_6B	
-	dc.l	EnemyData_Bouncing_6B	
+	dc.l	EnemyAppearance_GoldPudding	
+	dc.l	EnemyData_GoldPudding	
 	dc.l	EnemySpriteSet_C	
-	dc.l	EnemyAppearance_AC
-	dc.l	EnemyData_Bouncing_AC
+	dc.l	EnemyAppearance_BlackGlop
+	dc.l	EnemyData_BlackGlop
 	dc.l	EnemySpriteSet_C
-	dc.l	EnemyAppearance_AD
-	dc.l	EnemyData_Bouncing_AD
+	dc.l	EnemyAppearance_GrayOoze
+	dc.l	EnemyData_GrayOoze
 	dc.l	EnemySpriteSet_C
-	dc.l	EnemyAppearance_4E
-	dc.l	EnemyData_StalkPause_4E
+	dc.l	EnemyAppearance_Skeleton
+	dc.l	EnemyData_Skeleton
 	dc.l	EnemySpriteSet_A
-	dc.l	EnemyAppearance_7B
-	dc.l	EnemyData_StalkPause_7B
+	dc.l	EnemyAppearance_Zombie
+	dc.l	EnemyData_Zombie
 	dc.l	EnemySpriteSet_A
-	dc.l	EnemyAppearance_7C
-	dc.l	EnemyData_StalkPause_7C
+	dc.l	EnemyAppearance_Ghoul
+	dc.l	EnemyData_Ghoul
 	dc.l	EnemySpriteSet_A
-	dc.l	EnemyAppearance_7D
-	dc.l	EnemyData_StalkPause_7D
+	dc.l	EnemyAppearance_Cryptmaster
+	dc.l	EnemyData_Cryptmaster
 	dc.l	EnemySpriteSet_A
-	dc.l	EnemyAppearance_4D
-	dc.l	EnemyData_StandardMelee_4D
+	dc.l	EnemyAppearance_DogKobold
+	dc.l	EnemyData_DogKobold
 	dc.l	EnemySpriteSet_B
-	dc.l	EnemyAppearance_6C
-	dc.l	EnemyData_StandardMelee_6C
+	dc.l	EnemyAppearance_CoyoteKobold
+	dc.l	EnemyData_CoyoteKobold
 	dc.l	EnemySpriteSet_B
-	dc.l	EnemyAppearance_6D
-	dc.l	EnemyData_StandardMelee_6D
+	dc.l	EnemyAppearance_HyenaKobold
+	dc.l	EnemyData_HyenaKobold
 	dc.l	EnemySpriteSet_B
-	dc.l	EnemyAppearance_6E
-	dc.l	EnemyData_StandardMelee_6E
+	dc.l	EnemyAppearance_WolfKobold
+	dc.l	EnemyData_WolfKobold
 	dc.l	EnemySpriteSet_B
-	dc.l	EnemyAppearance_5B
-	dc.l	EnemyData_FleeChase_5B
+	dc.l	EnemyAppearance_FruitBat
+	dc.l	EnemyData_FruitBat
 	dc.l	EnemySpriteSet_D
-	dc.l	EnemyAppearance_6F
-	dc.l	EnemyData_FleeChase_6F
+	dc.l	EnemyAppearance_CaveBat
+	dc.l	EnemyData_CaveBat
 	dc.l	EnemySpriteSet_D
-	dc.l	EnemyAppearance_70
-	dc.l	EnemyData_FleeChase_70
+	dc.l	EnemyAppearance_KillerBat
+	dc.l	EnemyData_KillerBat
 	dc.l	EnemySpriteSet_D
-	dc.l	EnemyAppearance_71
-	dc.l	EnemyData_FleeChase_71
+	dc.l	EnemyAppearance_VampireBat
+	dc.l	EnemyData_VampireBat
 	dc.l	EnemySpriteSet_D
 	dc.l	EnemyAppearance_63
-	dc.l	EnemyData_ProjectileFire_63
+	dc.l	EnemyData_Eyeball
 	dc.l	EnemySpriteSet_H
 	dc.l	EnemyAppearance_A4
-	dc.l	EnemyData_ProjectileFire_A4
+	dc.l	EnemyData_RedEye
 	dc.l	EnemySpriteSet_H
 	dc.l	EnemyAppearance_A5
-	dc.l	EnemyData_ProjectileFire_A5
+	dc.l	EnemyData_ZapEye
 	dc.l	EnemySpriteSet_H
 	dc.l	EnemyAppearance_A6
-	dc.l	EnemyData_ProjectileFire_A6
+	dc.l	EnemyData_KillerEye
 	dc.l	EnemySpriteSet_H
-	dc.l	EnemyAppearance_5C
-	dc.l	EnemyData_ProximityChase_5C
+	dc.l	EnemyAppearance_Needler
+	dc.l	EnemyData_Needler
 	dc.l	EnemySpriteSet_E
-	dc.l	EnemyAppearance_9E
-	dc.l	EnemyData_ProximityChase_9E
+	dc.l	EnemyAppearance_Stinger
+	dc.l	EnemyData_Stinger
 	dc.l	EnemySpriteSet_E
-	dc.l	EnemyAppearance_9F
-	dc.l	EnemyData_ProximityChase_9F
+	dc.l	EnemyAppearance_Injector
+	dc.l	EnemyData_Injector
 	dc.l	EnemySpriteSet_E
-	dc.l	EnemyAppearance_A0
-	dc.l	EnemyData_ProximityChase_A0
+	dc.l	EnemyAppearance_Poisoner
+	dc.l	EnemyData_Poisoner
 	dc.l	EnemySpriteSet_E
-	dc.l	EnemyAppearance_5D
-	dc.l	EnemyData_StandardMeleeAlt_5D
+	dc.l	EnemyAppearance_Basher
+	dc.l	EnemyData_Basher
 	dc.l	EnemySpriteSet_F
-	dc.l	EnemyAppearance_A1
-	dc.l	EnemyData_StandardMeleeAlt_A1
+	dc.l	EnemyAppearance_Smasher
+	dc.l	EnemyData_Smasher
 	dc.l	EnemySpriteSet_F
-	dc.l	EnemyAppearance_A2
-	dc.l	EnemyData_StandardMeleeAlt_A2
+	dc.l	EnemyAppearance_Crusher
+	dc.l	EnemyData_Crusher
 	dc.l	EnemySpriteSet_F
-	dc.l	EnemyAppearance_A3
-	dc.l	EnemyData_StandardMeleeAlt_A3
+	dc.l	EnemyAppearance_Obliterator
+	dc.l	EnemyData_Obliterator
 	dc.l	EnemySpriteSet_F
 	dc.l	EnemyAppearance_64
-	dc.l	EnemyData_StalkPauseAlt_64
+	dc.l	EnemyData_Puffball
 	dc.l	EnemySpriteSet_I
 	dc.l	EnemyAppearance_B9
-	dc.l	EnemyData_StalkPauseAlt_B9
+	dc.l	EnemyData_Toadstool
 	dc.l	EnemySpriteSet_I
 	dc.l	EnemyAppearance_BA
-	dc.l	EnemyData_StalkPauseAlt_BA
+	dc.l	EnemyData_Fungo
 	dc.l	EnemySpriteSet_I
 	dc.l	EnemyAppearance_BB
-	dc.l	EnemyData_StalkPauseAlt_BB
+	dc.l	EnemyData_Morel
 	dc.l	EnemySpriteSet_I
-	dc.l	EnemyAppearance_65
-	dc.l	EnemyData_HumanoidMelee_65
+	dc.l	EnemyAppearance_Neophyte
+	dc.l	EnemyData_Neophyte
 	dc.l	EnemySpriteSet_J
-	dc.l	EnemyAppearance_A7
-	dc.l	EnemyData_HumanoidMelee_A7
+	dc.l	EnemyAppearance_Conjurer
+	dc.l	EnemyData_Conjurer
 	dc.l	EnemySpriteSet_J
-	dc.l	EnemyAppearance_A8
-	dc.l	EnemyData_HumanoidMeleeAlt_A8
+	dc.l	EnemyAppearance_Mage
+	dc.l	EnemyData_Mage
 	dc.l	EnemySpriteSet_J
-	dc.l	EnemyAppearance_A9
-	dc.l	EnemyData_HumanoidMeleeAlt_A9
+	dc.l	EnemyAppearance_Wizard
+	dc.l	EnemyData_Wizard
 	dc.l	EnemySpriteSet_J
 	dc.l	EnemyAppearance_66
-	dc.l	EnemyData_RandomShooter_66
+	dc.l	EnemyData_Neophyte_Ranged
 	dc.l	EnemySpriteSet_K
 	dc.l	EnemyAppearance_AA
-	dc.l	EnemyData_RandomShooter_AA
+	dc.l	EnemyData_Conjurer_Ranged
 	dc.l	EnemySpriteSet_K
 	dc.l	EnemyAppearance_AB
-	dc.l	EnemyData_RandomShooter_AB
+	dc.l	EnemyData_Mage_Ranged
 	dc.l	EnemySpriteSet_K
 	dc.l	EnemyAppearance_BC
-	dc.l	EnemyData_RandomShooter_BC
+	dc.l	EnemyData_Wizard_Ranged
 	dc.l	EnemySpriteSet_K
-	dc.l	EnemyAppearance_61
-	dc.l	EnemyData_StandardMeleeFast_61
+	dc.l	EnemyAppearance_Gargoyle
+	dc.l	EnemyData_Gargoyle
 	dc.l	EnemySpriteSet_G
-	dc.l	EnemyAppearance_BD	
-	dc.l	EnemyData_StandardMeleeFast_BD	
+	dc.l	EnemyAppearance_Gargoyle_BD	
+	dc.l	EnemyData_Gargoyle_BD	
 	dc.l	EnemySpriteSet_G	
-	dc.l	EnemyAppearance_BE
-	dc.l	EnemyData_StandardMeleeFast_BE
+	dc.l	EnemyAppearance_Gargoyle_BE
+	dc.l	EnemyData_Gargoyle_BE
 	dc.l	EnemySpriteSet_G
-	dc.l	EnemyAppearance_BF
-	dc.l	EnemyData_StandardMeleeFast_BF
+	dc.l	EnemyAppearance_Gargoyle_BF
+	dc.l	EnemyData_Gargoyle_BF
 	dc.l	EnemySpriteSet_G
 	dc.l	EnemyAppearance_75
 	dc.l	EnemyData_OrbShield_75
@@ -1350,76 +1350,76 @@ EnemyGfxDataTable:
 	dc.l	EnemyData_OrbShield_C2
 	dc.l	EnemySpriteSet_M
 	dc.l	EnemyAppearance_63
-	dc.l	EnemyData_BurstFire_63
+	dc.l	EnemyData_Eyeball_BurstFire
 	dc.l	EnemySpriteSet_H
 	dc.l	EnemyAppearance_A4
-	dc.l	EnemyData_BurstFire_A4
+	dc.l	EnemyData_RedEye_BurstFire
 	dc.l	EnemySpriteSet_H
 	dc.l	EnemyAppearance_A5
-	dc.l	EnemyData_BurstFire_A5
+	dc.l	EnemyData_ZapEye_BurstFire
 	dc.l	EnemySpriteSet_H
 	dc.l	EnemyAppearance_A6
-	dc.l	EnemyData_BurstFire_A6
+	dc.l	EnemyData_KillerEye_BurstFire
 	dc.l	EnemySpriteSet_H
 	dc.l	EnemyAppearance_64
-	dc.l	EnemyData_StalkPause3_64
+	dc.l	EnemyData_Rattler
 	dc.l	EnemySpriteSet_I
 	dc.l	EnemyAppearance_B9	
-	dc.l	EnemyData_StationaryShooter_B9	
+	dc.l	EnemyData_Python	
 	dc.l	EnemySpriteSet_I	
 	dc.l	EnemyAppearance_BA
-	dc.l	EnemyData_StalkPause3_BA
+	dc.l	EnemyData_Cobra
 	dc.l	EnemySpriteSet_I
 	dc.l	EnemyAppearance_BB
-	dc.l	EnemyData_StalkPause3_BB
+	dc.l	EnemyData_Anaconda
 	dc.l	EnemySpriteSet_I
 	dc.l	EnemyAppearance_64
-	dc.l	EnemyData_FastBurstShooter_64
+	dc.l	EnemyData_Flamer
 	dc.l	EnemySpriteSet_I
 	dc.l	EnemyAppearance_B9
-	dc.l	EnemyData_FastBurstShooter_B9
+	dc.l	EnemyData_Melter
 	dc.l	EnemySpriteSet_I
 	dc.l	EnemyAppearance_BA
-	dc.l	EnemyData_FastBurstShooter_BA
+	dc.l	EnemyData_Scorcher
 	dc.l	EnemySpriteSet_I
 	dc.l	EnemyAppearance_BB	
-	dc.l	EnemyData_FastBurstShooter_BB	
+	dc.l	EnemyData_Incinerator	
 	dc.l	EnemySpriteSet_I	
 	dc.l	EnemyAppearance_64
-	dc.l	EnemyData_HomingShooter_64
+	dc.l	EnemyData_Creeper
 	dc.l	EnemySpriteSet_I
 	dc.l	EnemyAppearance_B9
-	dc.l	EnemyData_HomingShooter_B9
+	dc.l	EnemyData_Oozer
 	dc.l	EnemySpriteSet_I
 	dc.l	EnemyAppearance_BA
-	dc.l	EnemyData_HomingShooter_BA
+	dc.l	EnemyData_Slimer
 	dc.l	EnemySpriteSet_I
 	dc.l	EnemyAppearance_BB
-	dc.l	EnemyData_HomingShooter_BB
+	dc.l	EnemyData_Slurper
 	dc.l	EnemySpriteSet_I
 	dc.l	EnemyAppearance_66
-	dc.l	EnemyData_Teleporter_66
+	dc.l	EnemyData_Neophyte_Tele
 	dc.l	EnemySpriteSet_K
 	dc.l	EnemyAppearance_AA
-	dc.l	EnemyData_Teleporter_AA
+	dc.l	EnemyData_Conjurer_Tele
 	dc.l	EnemySpriteSet_K
 	dc.l	EnemyAppearance_AB
-	dc.l	EnemyData_Teleporter_AB
+	dc.l	EnemyData_Mage_Tele
 	dc.l	EnemySpriteSet_K
 	dc.l	EnemyAppearance_BC
-	dc.l	EnemyData_Teleporter_BC
+	dc.l	EnemyData_Wizard_Tele
 	dc.l	EnemySpriteSet_K
 	dc.l	EnemyAppearance_66
-	dc.l	EnemyData_SequentialFire_66
+	dc.l	EnemyData_Neophyte_SeqFire
 	dc.l	EnemySpriteSet_L
 	dc.l	EnemyAppearance_AA
-	dc.l	EnemyData_SequentialFire_AA
+	dc.l	EnemyData_Conjurer_SeqFire
 	dc.l	EnemySpriteSet_L
 	dc.l	EnemyAppearance_AB
-	dc.l	EnemyData_SequentialFire_AB
+	dc.l	EnemyData_Mage_SeqFire
 	dc.l	EnemySpriteSet_L
 	dc.l	EnemyAppearance_BC
-	dc.l	EnemyData_SequentialFire_BC
+	dc.l	EnemyData_Wizard_SeqFire
 	dc.l	EnemySpriteSet_L
 	dc.l	EnemyAppearance_75
 	dc.l	EnemyData_MultiOrb_75
@@ -1446,49 +1446,49 @@ EnemyGfxDataTable:
 	dc.l	EnemyData_OrbRing_C2
 	dc.l	EnemySpriteSet_M
 	dc.l	EnemyAppearance_A6
-	dc.l	EnemyData_SpiralBurst_A6a
+	dc.l	EnemyData_KillerEye_SpiralBurst_A
 	dc.l	EnemySpriteSet_H
 	dc.l	EnemyAppearance_A6
-	dc.l	EnemyData_SpiralBurst_A6b
+	dc.l	EnemyData_KillerEye_SpiralBurst_B
 	dc.l	EnemySpriteSet_H
-	dc.l	EnemyAppearance_7B	
-	dc.l	EnemyData_StalkPause_7B_Last
+	dc.l	EnemyAppearance_Zombie	
+	dc.l	EnemyData_Zombie_Last
 	dc.l	EnemySpriteSet_A
-EnemyAppearance_5A:
+EnemyAppearance_GreenSlime:
 	enemyAppearance EnemyGfxFrameTable_OrbMain,EnemyGfxData_OrbMain,EnemyGfxFrameTable_OrbChild,EnemyGfxData_OrbChild,NullSpriteRoutine-2,$0E0D005A
-EnemyAppearance_69:
+EnemyAppearance_BlueJelly:
 	enemyAppearance EnemyGfxFrameTable_OrbMain,EnemyGfxData_OrbMain,EnemyGfxFrameTable_OrbChild,EnemyGfxData_OrbChild,NullSpriteRoutine-2,$0E0D0069
-EnemyAppearance_6A:
+EnemyAppearance_RedGlunk:
 	enemyAppearance EnemyGfxFrameTable_OrbMain,EnemyGfxData_OrbMain,EnemyGfxFrameTable_OrbChild,EnemyGfxData_OrbChild,NullSpriteRoutine-2,$0E0D006A
-EnemyAppearance_6B:
+EnemyAppearance_GoldPudding:
 	enemyAppearance EnemyGfxFrameTable_OrbMain,EnemyGfxData_OrbMain,EnemyGfxFrameTable_OrbChild,EnemyGfxData_OrbChild,NullSpriteRoutine-2,$0E0D006B
-EnemyAppearance_AC:
+EnemyAppearance_BlackGlop:
 	enemyAppearance EnemyGfxFrameTable_OrbMain,EnemyGfxData_OrbMain,EnemyGfxFrameTable_OrbChild,EnemyGfxData_OrbChild,NullSpriteRoutine-2,$0E0D00AC
-EnemyAppearance_AD:
+EnemyAppearance_GrayOoze:
 	enemyAppearance EnemyGfxFrameTable_OrbMain,EnemyGfxData_OrbMain,EnemyGfxFrameTable_OrbChild,EnemyGfxData_OrbChild,NullSpriteRoutine-2,$0E0D00AD
-EnemyAppearance_4E:
+EnemyAppearance_Skeleton:
 	enemyAppearance EnemyGfxFrameTable_DragonMain,EnemyGfxData_DragonMain,EnemyGfxFrameTable_DragonChild,EnemyGfxData_DragonChild,NullSpriteRoutine-2,$0D0E004E
-EnemyAppearance_7B:
+EnemyAppearance_Zombie:
 	enemyAppearance EnemyGfxFrameTable_DragonMain,EnemyGfxData_DragonMain,EnemyGfxFrameTable_DragonChild,EnemyGfxData_DragonChild,NullSpriteRoutine-2,$0D0E007B
-EnemyAppearance_7C:
+EnemyAppearance_Ghoul:
 	enemyAppearance EnemyGfxFrameTable_DragonMain,EnemyGfxData_DragonMain,EnemyGfxFrameTable_DragonChild,EnemyGfxData_DragonChild,NullSpriteRoutine-2,$0D0E007C
-EnemyAppearance_7D:
+EnemyAppearance_Cryptmaster:
 	enemyAppearance EnemyGfxFrameTable_DragonMain,EnemyGfxData_DragonMain,EnemyGfxFrameTable_DragonChild,EnemyGfxData_DragonChild,NullSpriteRoutine-2,$0D0E007D
-EnemyAppearance_4D:
+EnemyAppearance_DogKobold:
 	enemyAppearance EnemyGfxFrameTable_QuadrupedMain,EnemyGfxData_QuadrupedMain,EnemyGfxFrameTable_QuadrupedChild,EnemyGfxData_QuadrupedChild,NullSpriteRoutine-2,$0D0E004D
-EnemyAppearance_6C:
+EnemyAppearance_CoyoteKobold:
 	enemyAppearance EnemyGfxFrameTable_QuadrupedMain,EnemyGfxData_QuadrupedMain,EnemyGfxFrameTable_QuadrupedChild,EnemyGfxData_QuadrupedChild,NullSpriteRoutine-2,$0D0E006C
-EnemyAppearance_6D:
+EnemyAppearance_HyenaKobold:
 	enemyAppearance EnemyGfxFrameTable_QuadrupedMain,EnemyGfxData_QuadrupedMain,EnemyGfxFrameTable_QuadrupedChild,EnemyGfxData_QuadrupedChild,NullSpriteRoutine-2,$0D0E006D
-EnemyAppearance_6E:
+EnemyAppearance_WolfKobold:
 	enemyAppearance EnemyGfxFrameTable_QuadrupedMain,EnemyGfxData_QuadrupedMain,EnemyGfxFrameTable_QuadrupedChild,EnemyGfxData_QuadrupedChild,NullSpriteRoutine-2,$0D0E006E
-EnemyAppearance_5B:
+EnemyAppearance_FruitBat:
 	enemyAppearance EnemyGfxFrameTable_SerpentMain,EnemyGfxData_SerpentMain,EnemyGfxFrameTable_SerpentChild,EnemyGfxData_SerpentChild,NullSpriteRoutine-2,$0D0E005B
-EnemyAppearance_6F:
+EnemyAppearance_CaveBat:
 	enemyAppearance EnemyGfxFrameTable_SerpentMain,EnemyGfxData_SerpentMain,EnemyGfxFrameTable_SerpentChild,EnemyGfxData_SerpentChild,NullSpriteRoutine-2,$0D0E006F
-EnemyAppearance_70:
+EnemyAppearance_KillerBat:
 	enemyAppearance EnemyGfxFrameTable_SerpentMain,EnemyGfxData_SerpentMain,EnemyGfxFrameTable_SerpentChild,EnemyGfxData_SerpentChild,NullSpriteRoutine-2,$0D0E0070
-EnemyAppearance_71:
+EnemyAppearance_VampireBat:
 	enemyAppearance EnemyGfxFrameTable_SerpentMain,EnemyGfxData_SerpentMain,EnemyGfxFrameTable_SerpentChild,EnemyGfxData_SerpentChild,NullSpriteRoutine-2,$0D0E0071
 EnemyAppearance_63:
 	enemyAppearance EnemyGfxFrameTable_WorldMapMain,EnemyGfxData_WorldMapMain,EnemyGfxFrameTable_WorldMapChild,EnemyGfxData_WorldMapChild,ExecuteWorldMapDma,$0E0E0063
@@ -1498,21 +1498,21 @@ EnemyAppearance_A5:
 	enemyAppearance EnemyGfxFrameTable_WorldMapMain,EnemyGfxData_WorldMapMain,EnemyGfxFrameTable_WorldMapChild,EnemyGfxData_WorldMapChild,ExecuteWorldMapDma,$0E0E00A5
 EnemyAppearance_A6:
 	enemyAppearance EnemyGfxFrameTable_WorldMapMain,EnemyGfxData_WorldMapMain,EnemyGfxFrameTable_WorldMapChild,EnemyGfxData_WorldMapChild,ExecuteWorldMapDma,$0E0E00A6
-EnemyAppearance_5C:
+EnemyAppearance_Needler:
 	enemyAppearance EnemyGfxFrameTable_InsectMain,EnemyGfxData_InsectMain,EnemyGfxFrameTable_InsectChild,EnemyGfxData_InsectChild,NullSpriteRoutine-2,$0D0E005C
-EnemyAppearance_9E:
+EnemyAppearance_Stinger:
 	enemyAppearance EnemyGfxFrameTable_InsectMain,EnemyGfxData_InsectMain,EnemyGfxFrameTable_InsectChild,EnemyGfxData_InsectChild,NullSpriteRoutine-2,$0D0E009E
-EnemyAppearance_9F:
+EnemyAppearance_Injector:
 	enemyAppearance EnemyGfxFrameTable_InsectMain,EnemyGfxData_InsectMain,EnemyGfxFrameTable_InsectChild,EnemyGfxData_InsectChild,NullSpriteRoutine-2,$0D0E009F
-EnemyAppearance_A0:
+EnemyAppearance_Poisoner:
 	enemyAppearance EnemyGfxFrameTable_InsectMain,EnemyGfxData_InsectMain,EnemyGfxFrameTable_InsectChild,EnemyGfxData_InsectChild,NullSpriteRoutine-2,$0D0E00A0
-EnemyAppearance_5D:
+EnemyAppearance_Basher:
 	enemyAppearance EnemyGfxFrameTable_GolemMain,EnemyGfxData_GolemMain,EnemyGfxFrameTable_GolemChild,EnemyGfxData_GolemChild,ExecuteWorldMapDma,$0E0E005D
-EnemyAppearance_A1:
+EnemyAppearance_Smasher:
 	enemyAppearance EnemyGfxFrameTable_GolemMain,EnemyGfxData_GolemMain,EnemyGfxFrameTable_GolemChild,EnemyGfxData_GolemChild,ExecuteWorldMapDma,$0E0E00A1
-EnemyAppearance_A2:
+EnemyAppearance_Crusher:
 	enemyAppearance EnemyGfxFrameTable_GolemMain,EnemyGfxData_GolemMain,EnemyGfxFrameTable_GolemChild,EnemyGfxData_GolemChild,ExecuteWorldMapDma,$0E0E00A2
-EnemyAppearance_A3:
+EnemyAppearance_Obliterator:
 	enemyAppearance EnemyGfxFrameTable_GolemMain,EnemyGfxData_GolemMain,EnemyGfxFrameTable_GolemChild,EnemyGfxData_GolemChild,ExecuteWorldMapDma,$0E0E00A3
 EnemyAppearance_64:
 	enemyAppearance EnemyGfxFrameTable_BeastMain,EnemyGfxData_BeastMain,EnemyGfxFrameTable_BeastChild,EnemyGfxData_BeastChild,NullSpriteRoutine-2,$0D0E0064
@@ -1522,13 +1522,13 @@ EnemyAppearance_BA:
 	enemyAppearance EnemyGfxFrameTable_BeastMain,EnemyGfxData_BeastMain,EnemyGfxFrameTable_BeastChild,EnemyGfxData_BeastChild,NullSpriteRoutine-2,$0D0E00BA
 EnemyAppearance_BB:
 	enemyAppearance EnemyGfxFrameTable_BeastMain,EnemyGfxData_BeastMain,EnemyGfxFrameTable_BeastChild,EnemyGfxData_BeastChild,NullSpriteRoutine-2,$0D0E00BB
-EnemyAppearance_65:
+EnemyAppearance_Neophyte:
 	enemyAppearance EnemyGfxFrameTable_SkeletonMain,EnemyGfxData_SkeletonMain,EnemyGfxFrameTable_SkeletonChild,EnemyGfxData_SkeletonChild,NullSpriteRoutine-2,$0D0E0065
-EnemyAppearance_A7:
+EnemyAppearance_Conjurer:
 	enemyAppearance EnemyGfxFrameTable_SkeletonMain,EnemyGfxData_SkeletonMain,EnemyGfxFrameTable_SkeletonChild,EnemyGfxData_SkeletonChild,NullSpriteRoutine-2,$0D0E00A7
-EnemyAppearance_A8:
+EnemyAppearance_Mage:
 	enemyAppearance EnemyGfxFrameTable_SkeletonMain,EnemyGfxData_SkeletonMain,EnemyGfxFrameTable_SkeletonChild,EnemyGfxData_SkeletonChild,NullSpriteRoutine-2,$0D0E00A8
-EnemyAppearance_A9:
+EnemyAppearance_Wizard:
 	enemyAppearance EnemyGfxFrameTable_SkeletonMain,EnemyGfxData_SkeletonMain,EnemyGfxFrameTable_SkeletonChild,EnemyGfxData_SkeletonChild,NullSpriteRoutine-2,$0D0E00A9
 EnemyAppearance_66:
 	enemyAppearance EnemyGfxFrameTable_HumanoidMain,EnemyGfxData_HumanoidMain,EnemyGfxFrameTable_HumanoidChild,EnemyGfxData_HumanoidChild,NullSpriteRoutine-2,$0D0E0066
@@ -1538,13 +1538,13 @@ EnemyAppearance_AB:
 	enemyAppearance EnemyGfxFrameTable_HumanoidMain,EnemyGfxData_HumanoidMain,EnemyGfxFrameTable_HumanoidChild,EnemyGfxData_HumanoidChild,NullSpriteRoutine-2,$0D0E00AB
 EnemyAppearance_BC:
 	enemyAppearance EnemyGfxFrameTable_HumanoidMain,EnemyGfxData_HumanoidMain,EnemyGfxFrameTable_HumanoidChild,EnemyGfxData_HumanoidChild,NullSpriteRoutine-2,$0D0E00BC
-EnemyAppearance_61:
+EnemyAppearance_Gargoyle:
 	enemyAppearance EnemyGfxFrameTable_GargoyleMain,EnemyGfxData_GargoyleMain,EnemyGfxFrameTable_GargoyleChild,EnemyGfxData_GargoyleChild,NullSpriteRoutine-2,$0D0E0061
-EnemyAppearance_BD:
+EnemyAppearance_Gargoyle_BD:
 	enemyAppearance EnemyGfxFrameTable_GargoyleMain,EnemyGfxData_GargoyleMain,EnemyGfxFrameTable_GargoyleChild,EnemyGfxData_GargoyleChild,NullSpriteRoutine-2,$0D0E00BD
-EnemyAppearance_BE:
+EnemyAppearance_Gargoyle_BE:
 	enemyAppearance EnemyGfxFrameTable_GargoyleMain,EnemyGfxData_GargoyleMain,EnemyGfxFrameTable_GargoyleChild,EnemyGfxData_GargoyleChild,NullSpriteRoutine-2,$0D0E00BE
-EnemyAppearance_BF:
+EnemyAppearance_Gargoyle_BF:
 	enemyAppearance EnemyGfxFrameTable_GargoyleMain,EnemyGfxData_GargoyleMain,EnemyGfxFrameTable_GargoyleChild,EnemyGfxData_GargoyleChild,NullSpriteRoutine-2,$0D0E00BF
 EnemyAppearance_75:
 	enemyAppearance EnemyGfxFrameTable_BossMain,EnemyGfxData_BossMain,loc_00000000,loc_00000000,loc_00000000,$0F000075
@@ -1563,97 +1563,97 @@ EnemyAppearance_C2:
 	dc.w	$00C2
 ; enemyData ai_fn, tile_id, reward_type, reward_value, extra_obj_slots, max_spawn,
 ;           hp, damage_per_hit, xp_reward, kim_reward, speed, sprite_frame, behavior_flag
-EnemyData_Bouncing_5A:
+EnemyData_GreenSlime:
 	enemyData InitEnemy_Bouncing,$005A,ENEMY_REWARD_TYPE_0,$0000,$00,$07,$001C,$0004,$0001,$0002,$00000150,$00,$02
-EnemyData_Bouncing_69:
+EnemyData_BlueJelly:
 	enemyData InitEnemy_Bouncing,$0069,ENEMY_REWARD_TYPE_0,$0000,$00,$07,$001C,$0005,$0002,$0002,$00000170,$00,$02
-EnemyData_Bouncing_6A:
+EnemyData_RedGlunk:
 	enemyData InitEnemy_Bouncing,$006A,ENEMY_REWARD_TYPE_0,$001F,$00,$07,$0064,$001E,$0065,$0030,$00000240,$00,$02
-EnemyData_Bouncing_6B:
+EnemyData_GoldPudding:
 	enemyData $00009A72,$006B,ENEMY_REWARD_TYPE_0,$0026,$00,$07,$1F40,$006E,$0396,$0100,$00000550,$00,$0E
-EnemyData_Bouncing_AC:
+EnemyData_BlackGlop:
 	enemyData InitEnemy_Bouncing,$00AC,ENEMY_REWARD_TYPE_0,$0021,$00,$07,$00FA,$0052,$0180,$0070,$00000280,$00,$02
-EnemyData_Bouncing_AD:
+EnemyData_GrayOoze:
 	enemyData InitEnemy_Bouncing,$00AD,ENEMY_REWARD_TYPE_0,$0003,$00,$07,$0059,$0017,$0039,$0010,$00000210,$00,$02
-EnemyData_StalkPause_4E:
+EnemyData_Skeleton:
 	enemyData InitEnemy_StalkPause,$004E,ENEMY_REWARD_TYPE_0,$0001,$00,$07,$0096,$0006,$0008,$0016,$00000180,$00,$02
-EnemyData_StalkPause_7B:
+EnemyData_Zombie:
 	enemyData InitEnemy_StalkPause,$007B,ENEMY_REWARD_TYPE_1,$060E,$00,$07,$04B0,$003C,$0210,$0710,$00000200,$00,$02
-EnemyData_StalkPause_7C:
+EnemyData_Ghoul:
 	enemyData InitEnemy_StalkPause,$007C,ENEMY_REWARD_TYPE_1,$1036,$00,$07,$05DC,$004E,$0277,$0115,$00000260,$00,$02
-EnemyData_StalkPause_7D:
+EnemyData_Cryptmaster:
 	enemyData InitEnemy_StalkPause,$007D,ENEMY_REWARD_TYPE_1,$0410,$00,$07,$0898,$0063,$0441,$0161,$0000012C,$00,$02
-EnemyData_StandardMelee_4D:
+EnemyData_DogKobold:
 	enemyData InitEnemy_StandardMelee,$004D,ENEMY_REWARD_TYPE_1,$1028,$00,$07,$0058,$0006,$0004,$0005,$00000150,$00,$02
-EnemyData_StandardMelee_6C:
+EnemyData_CoyoteKobold:
 	enemyData InitEnemy_StandardMelee,$006C,ENEMY_REWARD_TYPE_1,$0816,$00,$07,$018F,$001E,$0042,$0020,$00000165,$00,$02
-EnemyData_StandardMelee_6D:
+EnemyData_HyenaKobold:
 	enemyData InitEnemy_StandardMelee,$006D,ENEMY_REWARD_TYPE_1,$102A,$00,$07,$0258,$0036,$0206,$0068,$00000180,$00,$02
-EnemyData_StandardMelee_6E:
+EnemyData_WolfKobold:
 	enemyData InitEnemy_StandardMelee,$006E,ENEMY_REWARD_TYPE_1,$1032,$00,$07,$05FA,$0062,$0284,$0109,$00000195,$00,$02
-EnemyData_FleeChase_5B:
+EnemyData_FruitBat:
 	enemyData InitEnemy_FleeChase,$005B,ENEMY_REWARD_NONE,$0000,$00,$07,$0064,$000C,$0010,$0009,$00000200,$00,$02
-EnemyData_FleeChase_6F:
+EnemyData_CaveBat:
 	enemyData InitEnemy_FleeChase,$006F,ENEMY_REWARD_TYPE_0,$0000,$00,$07,$00AA,$0027,$0077,$0027,$00000220,$00,$02
-EnemyData_FleeChase_70:
+EnemyData_KillerBat:
 	enemyData InitEnemy_FleeChase,$0070,ENEMY_REWARD_TYPE_0,$001B,$00,$07,$02E4,$0046,$0212,$0131,$00000260,$00,$02
-EnemyData_FleeChase_71:
+EnemyData_VampireBat:
 	enemyData InitEnemy_FleeChase,$0071,ENEMY_REWARD_TYPE_0,$0024,$00,$07,$044C,$0078,$0316,$0180,$00000300,$00,$02
-EnemyData_ProjectileFire_63:
+EnemyData_Eyeball:
 	enemyData InitEnemy_ProjectileFire,$0063,ENEMY_REWARD_NONE,$0000,$00,$07,$003A,$001D,$0017,$0011,$00000190,$00,$0A
-EnemyData_ProjectileFire_A4:
+EnemyData_RedEye:
 	enemyData InitEnemy_ProjectileFire,$00A4,ENEMY_REWARD_TYPE_0,$001B,$00,$07,$00D2,$0032,$0152,$0023,$00000230,$00,$0A
-EnemyData_ProjectileFire_A5:
+EnemyData_ZapEye:
 	enemyData InitEnemy_ProjectileFire,$00A5,ENEMY_REWARD_TYPE_0,$001C,$00,$07,$01EA,$003C,$0249,$0068,$00000250,$00,$0A
-EnemyData_ProjectileFire_A6:
+EnemyData_KillerEye:
 	enemyData InitEnemy_ProjectileFire,$00A6,ENEMY_REWARD_TYPE_0,$0029,$00,$07,$04CE,$005E,$0329,$0247,$00000300,$00,$0A
-EnemyData_ProximityChase_5C:
+EnemyData_Needler:
 	enemyData InitEnemy_ProximityChase,$005C,ENEMY_REWARD_NONE,$0000,$00,$07,$0064,$0024,$0031,$0015,$00000200,$00,$06
-EnemyData_ProximityChase_9E:
+EnemyData_Stinger:
 	enemyData InitEnemy_ProximityChase,$009E,ENEMY_REWARD_TYPE_0,$001B,$00,$07,$01C2,$006D,$0243,$0107,$00000220,$00,$06
-EnemyData_ProximityChase_9F:
+EnemyData_Injector:
 	enemyData InitEnemy_ProximityChase,$009F,ENEMY_REWARD_TYPE_0,$0027,$00,$07,$0276,$00F4,$0422,$0154,$00000240,$00,$06
-EnemyData_ProximityChase_A0:
+EnemyData_Poisoner:
 	enemyData InitEnemy_ProximityChase,$00A0,ENEMY_REWARD_TYPE_0,$0020,$00,$07,$0316,$00B4,$0455,$0276,$00000280,$00,$06
-EnemyData_StandardMeleeAlt_5D:
+EnemyData_Basher:
 	enemyData InitEnemy_StandardMeleeAlt,$005D,ENEMY_REWARD_NONE,$0000,$00,$07,$0172,$0042,$0085,$0040,$00000180,$00,$02
-EnemyData_StandardMeleeAlt_A1:
+EnemyData_Smasher:
 	enemyData InitEnemy_StandardMeleeAlt,$00A1,ENEMY_REWARD_TYPE_1,$0402,$00,$07,$0348,$0052,$0173,$0065,$00000190,$00,$02
-EnemyData_StandardMeleeAlt_A2:
+EnemyData_Crusher:
 	enemyData InitEnemy_StandardMeleeAlt,$00A2,ENEMY_REWARD_TYPE_0,$0003,$00,$07,$0384,$0052,$0234,$0105,$00000200,$00,$02
-EnemyData_StandardMeleeAlt_A3:
+EnemyData_Obliterator:
 	enemyData InitEnemy_StandardMeleeAlt,$00A3,ENEMY_REWARD_TYPE_1,$0819,$00,$07,$05C8,$00AD,$0437,$0360,$00000210,$00,$06
-EnemyData_StalkPauseAlt_64:
+EnemyData_Puffball:
 	enemyData InitEnemy_StalkPauseAlt,$0064,ENEMY_REWARD_TYPE_0,$001B,$00,$07,$021D,$0026,$0224,$0037,$00000080,$01,$02
-EnemyData_StalkPauseAlt_B9:
+EnemyData_Toadstool:
 	enemyData InitEnemy_StalkPauseAlt,$00B9,ENEMY_REWARD_TYPE_0,$001F,$00,$07,$0550,$0039,$0318,$0067,$00000120,$01,$02
-EnemyData_StalkPauseAlt_BA:
+EnemyData_Fungo:
 	enemyData InitEnemy_StalkPauseAlt,$00BA,ENEMY_REWARD_TYPE_0,$001C,$00,$07,$08AC,$0056,$0351,$0099,$00000140,$01,$02
-EnemyData_StalkPauseAlt_BB:
+EnemyData_Morel:
 	enemyData InitEnemy_StalkPauseAlt,$00BB,ENEMY_REWARD_TYPE_0,$002A,$00,$07,$0D34,$006A,$0437,$0130,$00000160,$01,$06
-EnemyData_HumanoidMelee_65:
+EnemyData_Neophyte:
 	enemyData InitEnemy_IntermittentChase_Random,$0065,ENEMY_REWARD_TYPE_1,$1028,$00,$07,$05DC,$005C,$0169,$0063,$00000110,$00,$02
-EnemyData_HumanoidMelee_A7:
+EnemyData_Conjurer:
 	enemyData InitEnemy_IntermittentChase_Random,$00A7,ENEMY_REWARD_TYPE_1,$102A,$00,$07,$0A28,$008D,$0458,$0110,$00000150,$00,$02
-EnemyData_HumanoidMeleeAlt_A8:
+EnemyData_Mage:
 	enemyData InitEnemy_IntermittentChase_Homing,$00A8,ENEMY_REWARD_TYPE_1,$081E,$00,$07,$0E10,$00A0,$0501,$0135,$00000170,$00,$0E
-EnemyData_HumanoidMeleeAlt_A9:
+EnemyData_Wizard:
 	enemyData InitEnemy_IntermittentChase_Homing,$00A9,ENEMY_REWARD_TYPE_1,$002A,$00,$07,$0FA0,$00B4,$0600,$0250,$00000300,$00,$02
-EnemyData_RandomShooter_66:
+EnemyData_Neophyte_Ranged:
 	enemyData InitEnemy_RandomShooter,$0066,ENEMY_REWARD_NONE,$0000,$00,$07,$0123,$001E,$0025,$0013,$00000180,$00,$08
-EnemyData_RandomShooter_AA:
+EnemyData_Conjurer_Ranged:
 	enemyData InitEnemy_RandomShooter,$00AA,ENEMY_REWARD_TYPE_0,$0002,$00,$07,$0258,$0040,$0203,$0070,$00000200,$00,$0C
-EnemyData_RandomShooter_AB:
+EnemyData_Mage_Ranged:
 	enemyData InitEnemy_RandomShooter,$00AB,ENEMY_REWARD_TYPE_0,$0002,$00,$07,$035C,$0063,$0233,$0099,$00000220,$00,$0C
-EnemyData_RandomShooter_BC:
+EnemyData_Wizard_Ranged:
 	enemyData InitEnemy_RandomShooter,$00BC,ENEMY_REWARD_TYPE_2,$0207,$00,$07,$049C,$0097,$0301,$0140,$00000240,$00,$0C
-EnemyData_StandardMeleeFast_61:
+EnemyData_Gargoyle:
 	enemyData InitEnemy_StandardMeleeFast,$0061,ENEMY_REWARD_TYPE_1,$102C,$00,$07,$04B0,$0018,$0090,$0033,$00000120,$01,$02
-EnemyData_StandardMeleeFast_BD:
+EnemyData_Gargoyle_BD:
 	enemyData $00009528,$00BD,ENEMY_REWARD_TYPE_1,$102D,$00,$07,$0898,$0031,$0208,$0068,$00000160,$01,$02
-EnemyData_StandardMeleeFast_BE:
+EnemyData_Gargoyle_BE:
 	enemyData InitEnemy_StandardMeleeFast,$00BE,ENEMY_REWARD_TYPE_1,$0028,$00,$07,$0BB8,$0061,$0366,$0145,$00000200,$01,$02
-EnemyData_StandardMeleeFast_BF:
+EnemyData_Gargoyle_BF:
 	enemyData InitEnemy_StandardMeleeFast,$00BF,ENEMY_REWARD_TYPE_1,$002B,$00,$07,$11F8,$0093,$0452,$0209,$00000220,$01,$02
 EnemyData_OrbShield_75:
 	enemyData InitBoss_OrbShield,$0075,ENEMY_REWARD_TYPE_0,$001B,$01,$03,$0070,$001E,$0076,$0038,$00000160,$00,$02
@@ -1663,53 +1663,53 @@ EnemyData_OrbShield_C1:
 	enemyData InitBoss_OrbShield,$00C1,ENEMY_REWARD_TYPE_0,$001C,$03,$01,$05FA,$006C,$0302,$0136,$00000200,$00,$02
 EnemyData_OrbShield_C2:
 	enemyData InitBoss_OrbShield,$00C2,ENEMY_REWARD_TYPE_0,$0020,$03,$01,$0898,$008C,$0925,$0172,$00000220,$00,$02
-EnemyData_BurstFire_63:
+EnemyData_Eyeball_BurstFire:
 	enemyData InitEnemy_BurstFire,$0063,ENEMY_REWARD_TYPE_0,$0000,$03,$01,$0096,$0049,$0057,$0026,$00000200,$00,$0A
-EnemyData_BurstFire_A4:
+EnemyData_RedEye_BurstFire:
 	enemyData InitEnemy_BurstFire,$00A4,ENEMY_REWARD_TYPE_0,$001D,$03,$01,$0172,$006B,$0213,$0072,$00000220,$00,$0A
-EnemyData_BurstFire_A5:
+EnemyData_ZapEye_BurstFire:
 	enemyData InitEnemy_BurstFire,$00A5,ENEMY_REWARD_TYPE_3,$3000,$03,$01,$0258,$009C,$0319,$0152,$00000240,$00,$0A
-EnemyData_BurstFire_A6:
+EnemyData_KillerEye_BurstFire:
 	enemyData InitEnemy_BurstFire,$00A6,ENEMY_REWARD_NONE,$0002,$03,$01,$06A4,$00B1,$0472,$0206,$00000260,$00,$0A
-EnemyData_StalkPause3_64:
+EnemyData_Rattler:
 	enemyData InitEnemy_StationaryShooter,$0064,ENEMY_REWARD_TYPE_0,$001B,$00,$07,$01E0,$0039,$0333,$0039,$00000180,$01,$02
-EnemyData_StationaryShooter_B9:
+EnemyData_Python:
 	enemyData $00009D90,$00B9,ENEMY_REWARD_TYPE_0,$0003,$00,$07,$0348,$004D,$0416,$0070,$00000200,$01,$02
-EnemyData_StalkPause3_BA:
+EnemyData_Cobra:
 	enemyData InitEnemy_StationaryShooter,$00BA,ENEMY_REWARD_TYPE_0,$001C,$00,$07,$03FC,$006C,$0472,$0113,$00000220,$01,$02
-EnemyData_StalkPause3_BB:
+EnemyData_Anaconda:
 	enemyData InitEnemy_StationaryShooter,$00BB,ENEMY_REWARD_TYPE_3,$3000,$00,$07,$04F6,$0097,$0618,$0143,$00000240,$01,$02
-EnemyData_FastBurstShooter_64:
+EnemyData_Flamer:
 	enemyData InitEnemy_FastBurstShooter,$0064,ENEMY_REWARD_TYPE_3,$0500,$03,$01,$0398,$0039,$0267,$0052,$00000180,$01,$02
-EnemyData_FastBurstShooter_B9:
+EnemyData_Melter:
 	enemyData InitEnemy_FastBurstShooter,$00B9,ENEMY_REWARD_TYPE_0,$001C,$03,$01,$0578,$0048,$0321,$0095,$00000180,$01,$02
-EnemyData_FastBurstShooter_BA:
+EnemyData_Scorcher:
 	enemyData InitEnemy_FastBurstShooter,$00BA,ENEMY_REWARD_TYPE_0,$002B,$03,$01,$0703,$005C,$0414,$0129,$00000180,$01,$02
-EnemyData_FastBurstShooter_BB:
+EnemyData_Incinerator:
 	enemyData $0000A6AA,$00BB,ENEMY_REWARD_TYPE_0,$0020,$03,$01,$0A8C,$0075,$0544,$0182,$00000180,$01,$02
-EnemyData_HomingShooter_64:
+EnemyData_Creeper:
 	enemyData InitEnemy_HomingShooter,$0064,ENEMY_REWARD_TYPE_0,$001B,$03,$01,$0398,$003A,$0395,$0070,$00000180,$01,$02
-EnemyData_HomingShooter_B9:
+EnemyData_Oozer:
 	enemyData InitEnemy_HomingShooter,$00B9,ENEMY_REWARD_TYPE_0,$0021,$03,$01,$044C,$004A,$0441,$0093,$00000220,$01,$02
-EnemyData_HomingShooter_BA:
+EnemyData_Slimer:
 	enemyData InitEnemy_HomingShooter,$00BA,ENEMY_REWARD_TYPE_0,$001C,$03,$01,$0640,$0063,$0524,$0156,$00000260,$01,$02
-EnemyData_HomingShooter_BB:
+EnemyData_Slurper:
 	enemyData InitEnemy_HomingShooter,$00BB,ENEMY_REWARD_TYPE_0,$0026,$03,$01,$076C,$0079,$0657,$0609,$00000300,$01,$02
-EnemyData_Teleporter_66:
+EnemyData_Neophyte_Tele:
 	enemyData InitEnemy_Teleporter,$0066,ENEMY_REWARD_TYPE_0,$0001,$00,$07,$00DE,$0029,$0094,$0043,$00000250,$00,$08
-EnemyData_Teleporter_AA:
+EnemyData_Conjurer_Tele:
 	enemyData InitEnemy_Teleporter,$00AA,ENEMY_REWARD_NONE,$0000,$00,$07,$0186,$0068,$0215,$0090,$00000300,$00,$0C
-EnemyData_Teleporter_AB:
+EnemyData_Mage_Tele:
 	enemyData InitEnemy_Teleporter,$00AB,ENEMY_REWARD_TYPE_3,$1000,$00,$07,$01FE,$0080,$0260,$0120,$00000350,$00,$0C
-EnemyData_Teleporter_BC:
+EnemyData_Wizard_Tele:
 	enemyData InitEnemy_Teleporter,$00BC,ENEMY_REWARD_TYPE_2,$0205,$00,$07,$0276,$00BB,$0412,$0172,$00000400,$00,$0C
-EnemyData_SequentialFire_66:
+EnemyData_Neophyte_SeqFire:
 	enemyData InitEnemy_SequentialFire,$0066,ENEMY_REWARD_TYPE_0,$0001,$03,$01,$0352,$003E,$0183,$0067,$00000160,$00,$08
-EnemyData_SequentialFire_AA:
+EnemyData_Conjurer_SeqFire:
 	enemyData InitEnemy_SequentialFire,$00AA,ENEMY_REWARD_TYPE_0,$0001,$03,$01,$044C,$004A,$0217,$0100,$00000180,$00,$0C
-EnemyData_SequentialFire_AB:
+EnemyData_Mage_SeqFire:
 	enemyData InitEnemy_SequentialFire,$00AB,ENEMY_REWARD_TYPE_0,$0002,$03,$01,$05FA,$006C,$0293,$0133,$00000200,$00,$0C
-EnemyData_SequentialFire_BC:
+EnemyData_Wizard_SeqFire:
 	enemyData InitEnemy_SequentialFire,$00BC,ENEMY_REWARD_TYPE_3,$1000,$03,$01,$06B8,$00C8,$0618,$0220,$00000220,$00,$04
 EnemyData_MultiOrb_75:
 	enemyData InitBoss_MultiOrb,$0075,ENEMY_REWARD_TYPE_0,$0000,$03,$01,$02BC,$0024,$0104,$0045,$00000180,$00,$02
@@ -1727,11 +1727,11 @@ EnemyData_OrbRing_C1:
 	enemyData InitBoss_OrbRing,$00C1,ENEMY_REWARD_TYPE_3,$5000,$03,$01,$0988,$0072,$0374,$0168,$00000220,$00,$02
 EnemyData_OrbRing_C2:
 	enemyData InitBoss_OrbRing,$00C2,ENEMY_REWARD_TYPE_0,$0027,$03,$01,$0A8C,$00A8,$0512,$0390,$00000240,$00,$0A
-EnemyData_SpiralBurst_A6a:
+EnemyData_KillerEye_SpiralBurst_A:
 	enemyData InitEnemy_SpiralBurst,$00A6,ENEMY_REWARD_TYPE_0,$0029,$01,$03,$06A4,$009D,$0472,$0206,$00000260,$00,$0A
-EnemyData_SpiralBurst_A6b:
+EnemyData_KillerEye_SpiralBurst_B:
 	enemyData InitEnemy_SpiralBurst,$00A6,ENEMY_REWARD_TYPE_0,$0020,$01,$00,$06A4,$00C8,$0472,$0206,$00000360,$00,$0E
-EnemyData_StalkPause_7B_Last:
+EnemyData_Zombie_Last:
 	enemyData InitEnemy_StalkPause,$007B,ENEMY_REWARD_TYPE_3,$3000,$00,$04,$04B0,$0064,$0000,$1200,$00000190,$00,$0E
 EnemySpriteSet_A:
 	dc.l	EnemyGfxFrameTable_DragonChild
