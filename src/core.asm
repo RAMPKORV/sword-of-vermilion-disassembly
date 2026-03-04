@@ -39,11 +39,7 @@ InitEquipmentAndLevel:
 	RTS
 
 ClearVRAMSprites:
-	MOVE.l	#$7C000002, D7
-	MOVE.w	#$03BF, D6
-	MOVE.b	#0, D5
-	MOVE.w	#1, D4
-	JSR	VDP_DMAFill
+	DMAFillVRAM $7C000002, $03BF
 ClearVRAMSprites_End:
 	RTS
 
@@ -59,27 +55,15 @@ BossProjectileSpriteFrame_D_Frame_2B0: ; Referenced by data table at line 38051
 	RTS
 
 ClearVRAMHScroll:
-	MOVE.l	#$78000002, D7
-	MOVE.w	#$013F, D6
-	MOVE.b	#0, D5
-	MOVE.w	#1, D4
-	JSR	VDP_DMAFill
+	DMAFillVRAM $78000002, $013F
 	RTS
 
 ClearVRAMPlaneA:
-	MOVE.l	#$40000003, D7
-	MOVE.w	#$1FFF, D6
-	MOVE.b	#0, D5
-	MOVE.w	#1, D4
-	JSR	VDP_DMAFill
+	DMAFillVRAM $40000003, $1FFF
 	RTS
 
 ClearVRAMPlaneB:
-	MOVE.l	#$60000003, D7
-	MOVE.w	#$1FFF, D6
-	MOVE.b	#0, D5
-	MOVE.w	#1, D4
-	JSR	VDP_DMAFill
+	DMAFillVRAM $60000003, $1FFF
 	RTS
 
 ; Unused DMA fill fragment - sets D6 only, expects D7/D5/D4 preset
@@ -90,11 +74,7 @@ DMAFillPartial:
 
 ; Unused - DMA fill VRAM $B000, length $0DFF (window/sprite area)
 DMAFillWindowSpriteArea:
-	MOVE.l	#$70000002, D7
-	MOVE.w	#$0DFF, D6
-	MOVE.b	#0, D5
-	MOVE.w	#1, D4
-	JSR	VDP_DMAFill
+	DMAFillVRAM $70000002, $0DFF
 	RTS
 
 InitYM2612:
@@ -126,20 +106,12 @@ ClearVRAMScrollAndPlanes:                   ; alternate entry: skip sprite table
 	BSR.w	ClearVRAMHScroll
 	BSR.w	ClearVRAMPlaneA
 	BSR.w	ClearVRAMPlaneB
-	MOVE.l	#$40000000, D7
-	MOVE.w	#$001F, D6
-	MOVE.b	#0, D5
-	MOVE.w	#1, D4
-	JSR	VDP_DMAFill
+	DMAFillVRAM $40000000, $001F
 	RTS
 
 ; Unused - DMA fill entire VRAM ($0000, length $FFFF)
 DMAFillEntireVRAM:
-	MOVE.l	#$40000000, D7
-	MOVE.w	#$FFFF, D6
-	MOVE.b	#0, D5
-	MOVE.w	#1, D4
-	JSR	VDP_DMAFill
+	DMAFillVRAM $40000000, $FFFF
 	RTS
 
 InitZ80SoundDriver:
