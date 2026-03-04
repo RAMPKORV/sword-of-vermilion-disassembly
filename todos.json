@@ -1002,7 +1002,7 @@
             "src/gameplay.asm",
             "constants.asm"
           ],
-          "status": "todo"
+          "status": "done"
         },
         {
           "id": "RAND-008",
