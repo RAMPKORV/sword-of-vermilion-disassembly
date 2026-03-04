@@ -2244,19 +2244,64 @@ fmch_lfo_depth      equ $16   ; byte: LFO depth/amplitude accumulator (scaled by
 fmch_size           equ $30   ; struct stride: each channel slot is $30 bytes wide
 
 ; ============================================================
-; Object/Entity Struct Field Offsets
+; Object/Entity Struct Field Offsets  (RAM-001)
 ; ============================================================
-; A5 and A6 both point into the object pool. A5 = primary entity
-; (player, enemy body, NPC), A6 = secondary sprite slot (child
-; part, linked via obj_next_offset).
+; A5 and A6 both point into the object pool at $FFFFD000.
+;   A5 = primary entity (player, field enemy, NPC, boss body)
+;   A6 = secondary sprite slot (child part, linked via obj_next_offset)
 ;
 ; Usage: MOVE.w obj_world_x(A5), D0
 ;        MOVE.b obj_direction(A5), D1
 ;
-; Fields marked (enemy only) or (NPC only) differ by object type.
-; Fields at $2E-$31 are not globally renamed: NPC structs store a
-; longword animation pointer at $2E, while enemy structs store four
-; signed hitbox-extent bytes at $2E/$2F/$30/$31.
+; Full struct layout (all objects share offsets $00–$27; upper fields
+; are type-specific and share offsets with different semantics):
+;
+; Off  Size  Name                 Roles / notes
+; ---- ----  ---------------      -------------------------------------------
+; $00   .b   obj_active           bit 7 = active flag (BSET/BCLR #7)
+; $01   .b   obj_next_offset      linked-list stride to next slot (LEA (A6,D0.w),A6)
+; $02   .l   obj_tick_fn          behavior/tick function pointer
+; $06   .b   obj_sprite_size      VDP sprite size nibble (bits[3:2]=W-1, [1:0]=H-1)
+; $07   .b   obj_sprite_flags     VDP tile-attr high byte (priority/palette/flip)
+; $08   .w   obj_tile_index       VRAM tile index for sprite
+; $0A   .w   obj_screen_x         on-screen X (pixels, added to world pos)
+; $0C   .w   obj_screen_y         on-screen Y (pixels)
+; $0E   .l   obj_world_x          world X position (fixed-point: .w integer, $10=sub)
+; $12   .l   obj_world_y          world Y position  (also vobj_hblank_fn for mini-objs)
+; $16   .w   obj_sort_key         sprite Z-depth sort value
+; $18   .b   obj_direction        facing direction (0=up,2=left,4=down,6=right)
+; $19   .b   obj_npc_busy_flag    NPC busy flag ($FF=busy)
+; $1A   .b   obj_invuln_timer     invulnerability frame countdown
+; $1B   .b   obj_move_counter     movement/animation step counter
+; $1C   .l   obj_npc_str_ptr      NPC: hint-text/script pointer
+; $1C   .w   obj_hitbox_half_w    enemy/projectile: hitbox half-width  (same offset)
+; $1E   .w   obj_hitbox_half_h    enemy/projectile: hitbox half-height
+; $20   .l   obj_pos_x_fixed      1st-person fixed-point X  (dungeon movement)
+; $22   .w   obj_seg_counter      battle: segment sub-state / center-Y counter
+; $24   .b   obj_sprite_frame     current sprite frame index
+; $25   .b   obj_behavior_flag    NPC conditional behavior flag ($FF=triggered)
+; $26   .b   obj_hit_flag         collision/hit flag ($FF=hit this frame)
+; $27   .b   obj_npc_saved_dir    NPC: saved wander direction
+; $27   .b   obj_orbit_angle      orbiting projectile: sine-table angle (same offset)
+; $27   .b   demon_dir_flag       DemonBoss: reverse-direction sentinel (same offset)
+; $28   .w   obj_hp               enemy: current HP
+; $2A   .w   obj_xp_reward        enemy: XP awarded on kill
+; $2C   .w   obj_max_hp           enemy: max HP  (also boss damage, see BOSS_ constants)
+; $2D   .b   obj_collidable       NPC: solid flag ($01=solid)
+; $2E   .l   obj_anim_ptr         NPC: animation table pointer
+; $2E   .b   obj_hitbox_x_neg     enemy: hitbox left extent, signed  (same offset)
+; $2F   .b   obj_hitbox_x_pos     enemy: hitbox right extent, signed
+; $30   .b   obj_hitbox_y_neg     enemy: hitbox top extent, signed
+; $31   .b   obj_hitbox_y_pos     enemy: hitbox bottom extent, signed
+; $32   .l   obj_vel_x            enemy: X velocity (fixed-point)
+; $36   .l   obj_vel_y            enemy: Y velocity (fixed-point)
+; $3A   .w   obj_attack_timer     enemy: attack/AI cooldown counter
+; $3B   .b   obj_sub_timer        projectile: trail count / scatter counter (low byte of $3A)
+; $3C   .w   obj_knockback_timer  enemy: knockback stun countdown
+; $3E   .w   obj_kim_reward       enemy: gold (kims) awarded on kill
+; $40+       boss-specific fields (demon_*, orbit_*, soldier_*)
+;
+; See individual field definitions below for full semantics.
 ;
 obj_active          equ $00   ; byte: bit 7 = active flag (BSET/BCLR #7)
 obj_next_offset     equ $01   ; byte: linked-list next-slot stride (LEA (A6,D0.w),A6)
