@@ -1616,7 +1616,7 @@ EnemyData_BlueJelly:
 EnemyData_RedGlunk:
 	enemyData InitEnemy_Bouncing,$006A,ENEMY_REWARD_TYPE_0,$001F,$00,$07,$0064,$001E,$0065,$0030,$00000240,$00,$02
 EnemyData_GoldPudding:
-	enemyData $00009A72,$006B,ENEMY_REWARD_TYPE_0,$0026,$00,$07,$1F40,$006E,$0396,$0100,$00000550,$00,$0E
+	enemyData InitEnemy_Bouncing,$006B,ENEMY_REWARD_TYPE_0,$0026,$00,$07,$1F40,$006E,$0396,$0100,$00000550,$00,$0E
 EnemyData_BlackGlop:
 	enemyData InitEnemy_Bouncing,$00AC,ENEMY_REWARD_TYPE_0,$0021,$00,$07,$00FA,$0052,$0180,$0070,$00000280,$00,$02
 EnemyData_GrayOoze:
@@ -1696,7 +1696,7 @@ EnemyData_Wizard_Ranged:
 EnemyData_Gargoyle:
 	enemyData InitEnemy_StandardMeleeFast,$0061,ENEMY_REWARD_TYPE_1,$102C,$00,$07,$04B0,$0018,$0090,$0033,$00000120,$01,$02
 EnemyData_Gargoyle_BD:
-	enemyData $00009528,$00BD,ENEMY_REWARD_TYPE_1,$102D,$00,$07,$0898,$0031,$0208,$0068,$00000160,$01,$02
+	enemyData InitEnemy_StandardMeleeFast,$00BD,ENEMY_REWARD_TYPE_1,$102D,$00,$07,$0898,$0031,$0208,$0068,$00000160,$01,$02
 EnemyData_Gargoyle_BE:
 	enemyData InitEnemy_StandardMeleeFast,$00BE,ENEMY_REWARD_TYPE_1,$0028,$00,$07,$0BB8,$0061,$0366,$0145,$00000200,$01,$02
 EnemyData_Gargoyle_BF:
@@ -1720,7 +1720,7 @@ EnemyData_KillerEye_BurstFire:
 EnemyData_Rattler:
 	enemyData InitEnemy_StationaryShooter,$0064,ENEMY_REWARD_TYPE_0,$001B,$00,$07,$01E0,$0039,$0333,$0039,$00000180,$01,$02
 EnemyData_Python:
-	enemyData $00009D90,$00B9,ENEMY_REWARD_TYPE_0,$0003,$00,$07,$0348,$004D,$0416,$0070,$00000200,$01,$02
+	enemyData InitEnemy_StationaryShooter,$00B9,ENEMY_REWARD_TYPE_0,$0003,$00,$07,$0348,$004D,$0416,$0070,$00000200,$01,$02
 EnemyData_Cobra:
 	enemyData InitEnemy_StationaryShooter,$00BA,ENEMY_REWARD_TYPE_0,$001C,$00,$07,$03FC,$006C,$0472,$0113,$00000220,$01,$02
 EnemyData_Anaconda:
@@ -1732,7 +1732,7 @@ EnemyData_Melter:
 EnemyData_Scorcher:
 	enemyData InitEnemy_FastBurstShooter,$00BA,ENEMY_REWARD_TYPE_0,$002B,$03,$01,$0703,$005C,$0414,$0129,$00000180,$01,$02
 EnemyData_Incinerator:
-	enemyData $0000A6AA,$00BB,ENEMY_REWARD_TYPE_0,$0020,$03,$01,$0A8C,$0075,$0544,$0182,$00000180,$01,$02
+	enemyData InitEnemy_FastBurstShooter,$00BB,ENEMY_REWARD_TYPE_0,$0020,$03,$01,$0A8C,$0075,$0544,$0182,$00000180,$01,$02
 EnemyData_Creeper:
 	enemyData InitEnemy_HomingShooter,$0064,ENEMY_REWARD_TYPE_0,$001B,$03,$01,$0398,$003A,$0395,$0070,$00000180,$01,$02
 EnemyData_Oozer:
