@@ -10410,7 +10410,7 @@ TitleScreen_ShowPressStart_Loop_Data_Entry_629AC:
 	dc.l	$01112200	
 	dc.l	$00333344	
 	dc.l	$48044400	
-	dc.l	loc_00000000	
+	dc.l	NULL_PTR	
 TitleScreen_ShowPressStart_Loop_Data_Entry_629C8:
 	dc.l	$01004000	
 	dc.l	$204F4844	
@@ -10428,7 +10428,7 @@ TitleScreen_ShowPressStart_Loop_Data_Entry_629E8:
 	dc.l	$11112822	
 	dc.l	$22383333	
 	dc.l	$04444800	
-	dc.l	loc_00000000	
+	dc.l	NULL_PTR
 GfxLoadList_IntroTitle_Gfx_62A08:
 	dc.l	TitleScreen_ShowPressStart_Loop_Data_Entry_62918
 	dc.l	TitleScreen_ShowPressStart_Loop_Data_Entry_6293C-2

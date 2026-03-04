@@ -59,12 +59,12 @@ RenderAreaMap_Loop_Done2:
 	BLT.b	RenderAreaMap_Loop2
 	CMPI.b	#OVERWORLD_TILE_CAVE_MIN, D0
 	BLT.b	RenderAreaMap_WriteTile
-	MOVE.b	#3, D0
+	MOVE.b	#FP_RENDER_DOOR, D0
 	BRA.b	RenderAreaMap_WriteTile
 RenderAreaMap_Loop2:
 	CMPI.b	#OVERWORLD_TILE_UPPER_CAVE_MIN, D0
 	BLT.b	RenderAreaMap_Loop3
-	MOVE.b	#7, D0
+	MOVE.b	#FP_RENDER_DOOR_UPPER, D0
 	BRA.b	RenderAreaMap_WriteTile
 RenderAreaMap_Loop3:
 	CLR.w	D0
@@ -170,35 +170,35 @@ WallTileGfxPtrs:
 	dc.l	WallTileGfxPtrs_Gfx_80D44
 	dc.l	WallTileGfxPtrs_Gfx_80E56
 	dc.l	WallTileGfxPtrs_Gfx_80E00
-	dc.l	loc_00000000	
+	dc.l	NULL_PTR	
 	dc.l	DungeonFloorTilemap_82298
 	dc.l	DungeonFloorTilemap_823A4
 	dc.l	DungeonFloorTilemap_82354
-	dc.l	loc_00000000	
+	dc.l	NULL_PTR	
 	dc.l	WallTileGfxPtrs_Gfx_84382
 	dc.l	WallTileGfxPtrs_Gfx_8447E
 	dc.l	WallTileGfxPtrs_Gfx_84432
-	dc.l	loc_00000000	
+	dc.l	NULL_PTR	
 	dc.l	WallTileGfxPtrs_Gfx_85A80
 	dc.l	WallTileGfxPtrs_Gfx_85B92
 	dc.l	WallTileGfxPtrs_Gfx_85B3C
-	dc.l	loc_00000000	
+	dc.l	NULL_PTR	
 	dc.l	DungeonFloorTilemap_82298
 	dc.l	DungeonFloorTilemap_823A4
 	dc.l	DungeonFloorTilemap_82354
-	dc.l	loc_00000000	
+	dc.l	NULL_PTR	
 	dc.l	WallTileGfxPtrs_Gfx_8265C
 	dc.l	WallTileGfxPtrs_Gfx_8276E
 	dc.l	WallTileGfxPtrs_Gfx_82718
-	dc.l	loc_00000000	
+	dc.l	NULL_PTR	
 	dc.l	WallTileGfxPtrs_Gfx_87576
 	dc.l	WallTileGfxPtrs_Gfx_87688
 	dc.l	WallTileGfxPtrs_Gfx_87632
-	dc.l	loc_00000000	
+	dc.l	NULL_PTR	
 	dc.l	WallTileGfxPtrs_Gfx_871A6
 	dc.l	WallTileGfxPtrs_Gfx_872B8
 	dc.l	WallTileGfxPtrs_Gfx_87262
-	dc.l	loc_00000000	
+	dc.l	NULL_PTR	
 WallTileOffsets_UpLeft:
 	dc.b	$FF, $D0, $FF, $D1, $FF, $A0, $FF, $A1, $FF, $A2, $FF, $70, $FF, $71, $FF, $72, $FF, $73, $FF, $3F, $FF, $40, $FF, $41, $FF, $42, $FF, $43 
 WallTileOffsets_UpRight:
@@ -317,7 +317,7 @@ BossBattlePlayerTick_Intro:
 	BNE.b	BossBattlePlayerTick_Intro_Loop
 	ADDQ.b	#1, obj_move_counter(A5)
 	MOVE.b	obj_move_counter(A5), D0
-	BTST.b	#6, $00A10001
+	BTST.b	#6, IO_version
 	BNE.w	BossBattlePlayerTick_Intro_Loop2
 	ANDI.w	#$0060, D0
 	ASR.w	#5, D0
@@ -360,11 +360,9 @@ BossBattlePlayerTick_Active:
 BossBattle_AttackCheck:
 	TST.b	Player_attacking_flag.w
 	BNE.w	BossBattle_MoveDone
-	MOVE.w	#BUTTON_BIT_C, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_C
 	BEQ.b	BossBattle_AttackCheck_Loop
-	MOVE.w	#SOUND_BOSS_SWORD_ATTACK, D0
-	JSR	QueueSoundEffect
+	PlaySound SOUND_BOSS_SWORD_ATTACK
 	MOVE.b	#FLAG_TRUE, Player_attacking_flag.w
 	CLR.b	obj_hp(A5)
 BossBattle_AttackCheck_Loop:
@@ -415,7 +413,7 @@ BossBattle_ApplyMovement:
 	MOVE.b	#FLAG_TRUE, Player_is_moving.w
 	ADDQ.b	#1, obj_move_counter(A5)
 	MOVE.b	obj_move_counter(A5), D0
-	BTST.b	#6, $00A10001
+	BTST.b	#6, IO_version
 	BNE.b	BossBattle_ApplyMovement_Loop
 	ANDI.w	#$000C, D0
 	BRA.b	BossBattle_ApplyMovement_Loop2

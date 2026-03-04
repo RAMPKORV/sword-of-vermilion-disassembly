@@ -1803,904 +1803,178 @@ EnemyAppearance_C2:
 	dc.b	$0F
 	dc.b	$00 
 	dc.w	$00C2
+; enemyData ai_fn, tile_id, reward_type, reward_value, extra_obj_slots, max_spawn,
+;           hp, damage_per_hit, xp_reward, kim_reward, speed, sprite_frame, behavior_flag
 EnemyData_Bouncing_5A:
-	dc.l	InitEnemy_Bouncing
-	dc.w	$005A
-	dc.w	$0000
-	dc.w	$0000
-	dc.b	$00
-	dc.b	$07
-	dc.b	$00, $1C, $00, $04, $00, $01, $00, $02 
-	dc.l	$00000150
-	dc.b	$00
-	dc.b	$02
+	enemyData InitEnemy_Bouncing,$005A,ENEMY_REWARD_TYPE_0,$0000,$00,$07,$001C,$0004,$0001,$0002,$00000150,$00,$02
 EnemyData_Bouncing_69:
-	dc.l	InitEnemy_Bouncing
-	dc.w	$0069
-	dc.w	$0000
-	dc.w	$0000
-	dc.b	$00
-	dc.b	$07
-	dc.b	$00, $1C, $00, $05, $00, $02, $00, $02 
-	dc.l	$00000170
-	dc.b	$00
-	dc.b	$02
+	enemyData InitEnemy_Bouncing,$0069,ENEMY_REWARD_TYPE_0,$0000,$00,$07,$001C,$0005,$0002,$0002,$00000170,$00,$02
 EnemyData_Bouncing_6A:
-	dc.l	InitEnemy_Bouncing
-	dc.w	$006A
-	dc.w	$0000
-	dc.w	$001F
-	dc.b	$00
-	dc.b	$07
-	dc.b	$00, $64, $00, $1E, $00, $65, $00, $30 
-	dc.l	$00000240
-	dc.b	$00
-	dc.b	$02
+	enemyData InitEnemy_Bouncing,$006A,ENEMY_REWARD_TYPE_0,$001F,$00,$07,$0064,$001E,$0065,$0030,$00000240,$00,$02
 EnemyData_Bouncing_6B:
-	dc.b	$00, $00, $9A, $72, $00, $6B, $00, $00, $00, $26, $00, $07, $1F, $40, $00, $6E, $03, $96, $01, $00, $00, $00, $05, $50, $00, $0E 
+	enemyData $00009A72,$006B,ENEMY_REWARD_TYPE_0,$0026,$00,$07,$1F40,$006E,$0396,$0100,$00000550,$00,$0E
 EnemyData_Bouncing_AC:
-	dc.l	InitEnemy_Bouncing
-	dc.w	$00AC
-	dc.w	$0000
-	dc.w	$0021
-	dc.b	$00
-	dc.b	$07
-	dc.b	$00, $FA, $00, $52, $01, $80, $00, $70 
-	dc.l	$00000280
-	dc.b	$00
-	dc.b	$02
+	enemyData InitEnemy_Bouncing,$00AC,ENEMY_REWARD_TYPE_0,$0021,$00,$07,$00FA,$0052,$0180,$0070,$00000280,$00,$02
 EnemyData_Bouncing_AD:
-	dc.l	InitEnemy_Bouncing
-	dc.w	$00AD
-	dc.w	$0000
-	dc.w	$0003
-	dc.b	$00
-	dc.b	$07
-	dc.b	$00, $59, $00, $17, $00, $39, $00, $10 
-	dc.l	$00000210
-	dc.b	$00
-	dc.b	$02
+	enemyData InitEnemy_Bouncing,$00AD,ENEMY_REWARD_TYPE_0,$0003,$00,$07,$0059,$0017,$0039,$0010,$00000210,$00,$02
 EnemyData_StalkPause_4E:
-	dc.l	InitEnemy_StalkPause
-	dc.w	$004E
-	dc.w	$0000
-	dc.w	$0001
-	dc.b	$00
-	dc.b	$07
-	dc.b	$00, $96, $00, $06, $00, $08, $00, $16 
-	dc.l	$00000180
-	dc.b	$00
-	dc.b	$02
+	enemyData InitEnemy_StalkPause,$004E,ENEMY_REWARD_TYPE_0,$0001,$00,$07,$0096,$0006,$0008,$0016,$00000180,$00,$02
 EnemyData_StalkPause_7B:
-	dc.l	InitEnemy_StalkPause
-	dc.w	$007B
-	dc.w	$0001
-	dc.w	$060E
-	dc.b	$00
-	dc.b	$07
-	dc.b	$04, $B0, $00, $3C, $02, $10, $07, $10 
-	dc.l	$00000200
-	dc.b	$00
-	dc.b	$02
+	enemyData InitEnemy_StalkPause,$007B,ENEMY_REWARD_TYPE_1,$060E,$00,$07,$04B0,$003C,$0210,$0710,$00000200,$00,$02
 EnemyData_StalkPause_7C:
-	dc.l	InitEnemy_StalkPause
-	dc.w	$007C
-	dc.w	$0001
-	dc.w	$1036
-	dc.b	$00
-	dc.b	$07
-	dc.b	$05, $DC, $00, $4E, $02, $77, $01, $15 
-	dc.l	$00000260
-	dc.b	$00
-	dc.b	$02
+	enemyData InitEnemy_StalkPause,$007C,ENEMY_REWARD_TYPE_1,$1036,$00,$07,$05DC,$004E,$0277,$0115,$00000260,$00,$02
 EnemyData_StalkPause_7D:
-	dc.l	InitEnemy_StalkPause
-	dc.w	$007D
-	dc.w	$0001
-	dc.w	$0410
-	dc.b	$00
-	dc.b	$07
-	dc.b	$08, $98, $00, $63, $04, $41, $01, $61 
-	dc.l	$0000012C
-	dc.b	$00
-	dc.b	$02
+	enemyData InitEnemy_StalkPause,$007D,ENEMY_REWARD_TYPE_1,$0410,$00,$07,$0898,$0063,$0441,$0161,$0000012C,$00,$02
 EnemyData_StandardMelee_4D:
-	dc.l	InitEnemy_StandardMelee
-	dc.w	$004D
-	dc.w	$0001
-	dc.w	$1028
-	dc.b	$00
-	dc.b	$07
-	dc.b	$00, $58, $00, $06, $00, $04, $00, $05 
-	dc.l	$00000150
-	dc.b	$00
-	dc.b	$02
+	enemyData InitEnemy_StandardMelee,$004D,ENEMY_REWARD_TYPE_1,$1028,$00,$07,$0058,$0006,$0004,$0005,$00000150,$00,$02
 EnemyData_StandardMelee_6C:
-	dc.l	InitEnemy_StandardMelee
-	dc.w	$006C
-	dc.w	$0001
-	dc.w	$0816
-	dc.b	$00
-	dc.b	$07
-	dc.b	$01, $8F, $00, $1E, $00, $42, $00, $20 
-	dc.l	$00000165
-	dc.b	$00
-	dc.b	$02
+	enemyData InitEnemy_StandardMelee,$006C,ENEMY_REWARD_TYPE_1,$0816,$00,$07,$018F,$001E,$0042,$0020,$00000165,$00,$02
 EnemyData_StandardMelee_6D:
-	dc.l	InitEnemy_StandardMelee
-	dc.w	$006D
-	dc.w	$0001
-	dc.w	$102A
-	dc.b	$00
-	dc.b	$07
-	dc.b	$02, $58, $00, $36, $02, $06, $00, $68 
-	dc.l	$00000180
-	dc.b	$00
-	dc.b	$02
+	enemyData InitEnemy_StandardMelee,$006D,ENEMY_REWARD_TYPE_1,$102A,$00,$07,$0258,$0036,$0206,$0068,$00000180,$00,$02
 EnemyData_StandardMelee_6E:
-	dc.l	InitEnemy_StandardMelee
-	dc.w	$006E
-	dc.w	$0001
-	dc.w	$1032
-	dc.b	$00
-	dc.b	$07
-	dc.b	$05, $FA, $00, $62, $02, $84, $01, $09 
-	dc.l	$00000195
-	dc.b	$00
-	dc.b	$02
+	enemyData InitEnemy_StandardMelee,$006E,ENEMY_REWARD_TYPE_1,$1032,$00,$07,$05FA,$0062,$0284,$0109,$00000195,$00,$02
 EnemyData_FleeChase_5B:
-	dc.l	InitEnemy_FleeChase
-	dc.w	$005B
-	dc.w	$FFFF
-	dc.w	$0000
-	dc.b	$00
-	dc.b	$07
-	dc.b	$00, $64, $00, $0C, $00, $10, $00, $09 
-	dc.l	$00000200
-	dc.b	$00
-	dc.b	$02
+	enemyData InitEnemy_FleeChase,$005B,ENEMY_REWARD_NONE,$0000,$00,$07,$0064,$000C,$0010,$0009,$00000200,$00,$02
 EnemyData_FleeChase_6F:
-	dc.l	InitEnemy_FleeChase
-	dc.w	$006F
-	dc.w	$0000
-	dc.w	$0000
-	dc.b	$00
-	dc.b	$07
-	dc.b	$00, $AA, $00, $27, $00, $77, $00, $27 
-	dc.l	$00000220
-	dc.b	$00
-	dc.b	$02
+	enemyData InitEnemy_FleeChase,$006F,ENEMY_REWARD_TYPE_0,$0000,$00,$07,$00AA,$0027,$0077,$0027,$00000220,$00,$02
 EnemyData_FleeChase_70:
-	dc.l	InitEnemy_FleeChase
-	dc.w	$0070
-	dc.w	$0000
-	dc.w	$001B
-	dc.b	$00
-	dc.b	$07
-	dc.b	$02, $E4, $00, $46, $02, $12, $01, $31 
-	dc.l	$00000260
-	dc.b	$00
-	dc.b	$02
+	enemyData InitEnemy_FleeChase,$0070,ENEMY_REWARD_TYPE_0,$001B,$00,$07,$02E4,$0046,$0212,$0131,$00000260,$00,$02
 EnemyData_FleeChase_71:
-	dc.l	InitEnemy_FleeChase
-	dc.w	$0071
-	dc.w	$0000
-	dc.w	$0024
-	dc.b	$00
-	dc.b	$07
-	dc.b	$04, $4C, $00, $78, $03, $16, $01, $80 
-	dc.l	$00000300
-	dc.b	$00
-	dc.b	$02
+	enemyData InitEnemy_FleeChase,$0071,ENEMY_REWARD_TYPE_0,$0024,$00,$07,$044C,$0078,$0316,$0180,$00000300,$00,$02
 EnemyData_ProjectileFire_63:
-	dc.l	InitEnemy_ProjectileFire
-	dc.w	$0063
-	dc.w	$FFFF
-	dc.w	$0000
-	dc.b	$00
-	dc.b	$07
-	dc.b	$00, $3A, $00, $1D, $00, $17, $00, $11 
-	dc.l	$00000190
-	dc.b	$00
-	dc.b	$0A
+	enemyData InitEnemy_ProjectileFire,$0063,ENEMY_REWARD_NONE,$0000,$00,$07,$003A,$001D,$0017,$0011,$00000190,$00,$0A
 EnemyData_ProjectileFire_A4:
-	dc.l	InitEnemy_ProjectileFire
-	dc.w	$00A4
-	dc.w	$0000
-	dc.w	$001B
-	dc.b	$00
-	dc.b	$07
-	dc.b	$00, $D2, $00, $32, $01, $52, $00, $23 
-	dc.l	$00000230
-	dc.b	$00
-	dc.b	$0A
+	enemyData InitEnemy_ProjectileFire,$00A4,ENEMY_REWARD_TYPE_0,$001B,$00,$07,$00D2,$0032,$0152,$0023,$00000230,$00,$0A
 EnemyData_ProjectileFire_A5:
-	dc.l	InitEnemy_ProjectileFire
-	dc.w	$00A5
-	dc.w	$0000
-	dc.w	$001C
-	dc.b	$00
-	dc.b	$07
-	dc.b	$01, $EA, $00, $3C, $02, $49, $00, $68 
-	dc.l	$00000250
-	dc.b	$00
-	dc.b	$0A
+	enemyData InitEnemy_ProjectileFire,$00A5,ENEMY_REWARD_TYPE_0,$001C,$00,$07,$01EA,$003C,$0249,$0068,$00000250,$00,$0A
 EnemyData_ProjectileFire_A6:
-	dc.l	InitEnemy_ProjectileFire
-	dc.w	$00A6
-	dc.w	$0000
-	dc.w	$0029
-	dc.b	$00
-	dc.b	$07
-	dc.b	$04, $CE, $00, $5E, $03, $29, $02, $47 
-	dc.l	$00000300
-	dc.b	$00
-	dc.b	$0A
+	enemyData InitEnemy_ProjectileFire,$00A6,ENEMY_REWARD_TYPE_0,$0029,$00,$07,$04CE,$005E,$0329,$0247,$00000300,$00,$0A
 EnemyData_ProximityChase_5C:
-	dc.l	InitEnemy_ProximityChase
-	dc.w	$005C
-	dc.w	$FFFF
-	dc.w	$0000
-	dc.b	$00
-	dc.b	$07
-	dc.b	$00, $64, $00, $24, $00, $31, $00, $15 
-	dc.l	$00000200
-	dc.b	$00
-	dc.b	$06
+	enemyData InitEnemy_ProximityChase,$005C,ENEMY_REWARD_NONE,$0000,$00,$07,$0064,$0024,$0031,$0015,$00000200,$00,$06
 EnemyData_ProximityChase_9E:
-	dc.l	InitEnemy_ProximityChase
-	dc.w	$009E
-	dc.w	$0000
-	dc.w	$001B
-	dc.b	$00
-	dc.b	$07
-	dc.b	$01, $C2, $00, $6D, $02, $43, $01, $07 
-	dc.l	$00000220
-	dc.b	$00
-	dc.b	$06
+	enemyData InitEnemy_ProximityChase,$009E,ENEMY_REWARD_TYPE_0,$001B,$00,$07,$01C2,$006D,$0243,$0107,$00000220,$00,$06
 EnemyData_ProximityChase_9F:
-	dc.l	InitEnemy_ProximityChase
-	dc.w	$009F
-	dc.w	$0000
-	dc.w	$0027
-	dc.b	$00
-	dc.b	$07
-	dc.b	$02, $76, $00, $F4, $04, $22, $01, $54 
-	dc.l	$00000240
-	dc.b	$00
-	dc.b	$06
+	enemyData InitEnemy_ProximityChase,$009F,ENEMY_REWARD_TYPE_0,$0027,$00,$07,$0276,$00F4,$0422,$0154,$00000240,$00,$06
 EnemyData_ProximityChase_A0:
-	dc.l	InitEnemy_ProximityChase
-	dc.w	$00A0
-	dc.w	$0000
-	dc.w	$0020
-	dc.b	$00
-	dc.b	$07
-	dc.b	$03, $16, $00, $B4, $04, $55, $02, $76 
-	dc.l	$00000280
-	dc.b	$00
-	dc.b	$06
+	enemyData InitEnemy_ProximityChase,$00A0,ENEMY_REWARD_TYPE_0,$0020,$00,$07,$0316,$00B4,$0455,$0276,$00000280,$00,$06
 EnemyData_StandardMeleeAlt_5D:
-	dc.l	InitEnemy_StandardMeleeAlt
-	dc.w	$005D
-	dc.w	$FFFF
-	dc.w	$0000
-	dc.b	$00
-	dc.b	$07
-	dc.b	$01, $72, $00, $42, $00, $85, $00, $40 
-	dc.l	$00000180
-	dc.b	$00
-	dc.b	$02
+	enemyData InitEnemy_StandardMeleeAlt,$005D,ENEMY_REWARD_NONE,$0000,$00,$07,$0172,$0042,$0085,$0040,$00000180,$00,$02
 EnemyData_StandardMeleeAlt_A1:
-	dc.l	InitEnemy_StandardMeleeAlt
-	dc.w	$00A1
-	dc.w	$0001
-	dc.w	$0402
-	dc.b	$00
-	dc.b	$07
-	dc.b	$03, $48, $00, $52, $01, $73, $00, $65 
-	dc.l	$00000190
-	dc.b	$00
-	dc.b	$02
+	enemyData InitEnemy_StandardMeleeAlt,$00A1,ENEMY_REWARD_TYPE_1,$0402,$00,$07,$0348,$0052,$0173,$0065,$00000190,$00,$02
 EnemyData_StandardMeleeAlt_A2:
-	dc.l	InitEnemy_StandardMeleeAlt
-	dc.w	$00A2
-	dc.w	$0000
-	dc.w	$0003
-	dc.b	$00
-	dc.b	$07
-	dc.b	$03, $84, $00, $52, $02, $34, $01, $05 
-	dc.l	$00000200
-	dc.b	$00
-	dc.b	$02
+	enemyData InitEnemy_StandardMeleeAlt,$00A2,ENEMY_REWARD_TYPE_0,$0003,$00,$07,$0384,$0052,$0234,$0105,$00000200,$00,$02
 EnemyData_StandardMeleeAlt_A3:
-	dc.l	InitEnemy_StandardMeleeAlt
-	dc.w	$00A3
-	dc.w	$0001
-	dc.w	$0819
-	dc.b	$00
-	dc.b	$07
-	dc.b	$05, $C8, $00, $AD, $04, $37, $03, $60 
-	dc.l	$00000210
-	dc.b	$00
-	dc.b	$06
+	enemyData InitEnemy_StandardMeleeAlt,$00A3,ENEMY_REWARD_TYPE_1,$0819,$00,$07,$05C8,$00AD,$0437,$0360,$00000210,$00,$06
 EnemyData_StalkPauseAlt_64:
-	dc.l	InitEnemy_StalkPauseAlt
-	dc.w	$0064
-	dc.w	$0000
-	dc.w	$001B
-	dc.b	$00
-	dc.b	$07
-	dc.b	$02, $1D, $00, $26, $02, $24, $00, $37 
-	dc.l	$00000080
-	dc.b	$01
-	dc.b	$02
+	enemyData InitEnemy_StalkPauseAlt,$0064,ENEMY_REWARD_TYPE_0,$001B,$00,$07,$021D,$0026,$0224,$0037,$00000080,$01,$02
 EnemyData_StalkPauseAlt_B9:
-	dc.l	InitEnemy_StalkPauseAlt
-	dc.w	$00B9
-	dc.w	$0000
-	dc.w	$001F
-	dc.b	$00
-	dc.b	$07
-	dc.b	$05, $50, $00, $39, $03, $18, $00, $67 
-	dc.l	$00000120
-	dc.b	$01
-	dc.b	$02
+	enemyData InitEnemy_StalkPauseAlt,$00B9,ENEMY_REWARD_TYPE_0,$001F,$00,$07,$0550,$0039,$0318,$0067,$00000120,$01,$02
 EnemyData_StalkPauseAlt_BA:
-	dc.l	InitEnemy_StalkPauseAlt
-	dc.w	$00BA
-	dc.w	$0000
-	dc.w	$001C
-	dc.b	$00
-	dc.b	$07
-	dc.b	$08, $AC, $00, $56, $03, $51, $00, $99 
-	dc.l	$00000140
-	dc.b	$01
-	dc.b	$02
+	enemyData InitEnemy_StalkPauseAlt,$00BA,ENEMY_REWARD_TYPE_0,$001C,$00,$07,$08AC,$0056,$0351,$0099,$00000140,$01,$02
 EnemyData_StalkPauseAlt_BB:
-	dc.l	InitEnemy_StalkPauseAlt
-	dc.w	$00BB
-	dc.w	$0000
-	dc.w	$002A
-	dc.b	$00
-	dc.b	$07
-	dc.b	$0D, $34, $00, $6A, $04, $37, $01, $30 
-	dc.l	$00000160
-	dc.b	$01
-	dc.b	$06
+	enemyData InitEnemy_StalkPauseAlt,$00BB,ENEMY_REWARD_TYPE_0,$002A,$00,$07,$0D34,$006A,$0437,$0130,$00000160,$01,$06
 EnemyData_HumanoidMelee_65:
-	dc.l	InitEnemy_IntermittentChase_Random
-	dc.w	$0065
-	dc.w	$0001
-	dc.w	$1028
-	dc.b	$00
-	dc.b	$07
-	dc.b	$05, $DC, $00, $5C, $01, $69, $00, $63 
-	dc.l	$00000110
-	dc.b	$00
-	dc.b	$02
+	enemyData InitEnemy_IntermittentChase_Random,$0065,ENEMY_REWARD_TYPE_1,$1028,$00,$07,$05DC,$005C,$0169,$0063,$00000110,$00,$02
 EnemyData_HumanoidMelee_A7:
-	dc.l	InitEnemy_IntermittentChase_Random
-	dc.w	$00A7
-	dc.w	$0001
-	dc.w	$102A
-	dc.b	$00
-	dc.b	$07
-	dc.b	$0A, $28, $00, $8D, $04, $58, $01, $10 
-	dc.l	$00000150
-	dc.b	$00
-	dc.b	$02
+	enemyData InitEnemy_IntermittentChase_Random,$00A7,ENEMY_REWARD_TYPE_1,$102A,$00,$07,$0A28,$008D,$0458,$0110,$00000150,$00,$02
 EnemyData_HumanoidMeleeAlt_A8:
-	dc.l	InitEnemy_IntermittentChase_Homing
-	dc.w	$00A8
-	dc.w	$0001
-	dc.w	$081E
-	dc.b	$00
-	dc.b	$07
-	dc.b	$0E, $10, $00, $A0, $05, $01, $01, $35 
-	dc.l	$00000170
-	dc.b	$00
-	dc.b	$0E
+	enemyData InitEnemy_IntermittentChase_Homing,$00A8,ENEMY_REWARD_TYPE_1,$081E,$00,$07,$0E10,$00A0,$0501,$0135,$00000170,$00,$0E
 EnemyData_HumanoidMeleeAlt_A9:
-	dc.l	InitEnemy_IntermittentChase_Homing
-	dc.w	$00A9
-	dc.w	$0001
-	dc.w	$002A
-	dc.b	$00
-	dc.b	$07
-	dc.b	$0F, $A0, $00, $B4, $06, $00, $02, $50 
-	dc.l	$00000300
-	dc.b	$00
-	dc.b	$02
+	enemyData InitEnemy_IntermittentChase_Homing,$00A9,ENEMY_REWARD_TYPE_1,$002A,$00,$07,$0FA0,$00B4,$0600,$0250,$00000300,$00,$02
 EnemyData_RandomShooter_66:
-	dc.l	InitEnemy_RandomShooter
-	dc.w	$0066
-	dc.w	$FFFF
-	dc.w	$0000
-	dc.b	$00
-	dc.b	$07
-	dc.b	$01, $23, $00, $1E, $00, $25, $00, $13 
-	dc.l	$00000180
-	dc.b	$00
-	dc.b	$08
+	enemyData InitEnemy_RandomShooter,$0066,ENEMY_REWARD_NONE,$0000,$00,$07,$0123,$001E,$0025,$0013,$00000180,$00,$08
 EnemyData_RandomShooter_AA:
-	dc.l	InitEnemy_RandomShooter
-	dc.w	$00AA
-	dc.w	$0000
-	dc.w	$0002
-	dc.b	$00
-	dc.b	$07
-	dc.b	$02, $58, $00, $40, $02, $03, $00, $70 
-	dc.l	$00000200
-	dc.b	$00
-	dc.b	$0C
+	enemyData InitEnemy_RandomShooter,$00AA,ENEMY_REWARD_TYPE_0,$0002,$00,$07,$0258,$0040,$0203,$0070,$00000200,$00,$0C
 EnemyData_RandomShooter_AB:
-	dc.l	InitEnemy_RandomShooter
-	dc.w	$00AB
-	dc.w	$0000
-	dc.w	$0002
-	dc.b	$00
-	dc.b	$07
-	dc.b	$03, $5C, $00, $63, $02, $33, $00, $99 
-	dc.l	$00000220
-	dc.b	$00
-	dc.b	$0C
+	enemyData InitEnemy_RandomShooter,$00AB,ENEMY_REWARD_TYPE_0,$0002,$00,$07,$035C,$0063,$0233,$0099,$00000220,$00,$0C
 EnemyData_RandomShooter_BC:
-	dc.l	InitEnemy_RandomShooter
-	dc.w	$00BC
-	dc.w	$0002
-	dc.w	$0207
-	dc.b	$00
-	dc.b	$07
-	dc.b	$04, $9C, $00, $97, $03, $01, $01, $40 
-	dc.l	$00000240
-	dc.b	$00
-	dc.b	$0C
+	enemyData InitEnemy_RandomShooter,$00BC,ENEMY_REWARD_TYPE_2,$0207,$00,$07,$049C,$0097,$0301,$0140,$00000240,$00,$0C
 EnemyData_StandardMeleeFast_61:
-	dc.l	InitEnemy_StandardMeleeFast
-	dc.w	$0061
-	dc.w	$0001
-	dc.w	$102C
-	dc.b	$00
-	dc.b	$07
-	dc.b	$04, $B0, $00, $18, $00, $90, $00, $33 
-	dc.l	$00000120
-	dc.b	$01
-	dc.b	$02
+	enemyData InitEnemy_StandardMeleeFast,$0061,ENEMY_REWARD_TYPE_1,$102C,$00,$07,$04B0,$0018,$0090,$0033,$00000120,$01,$02
 EnemyData_StandardMeleeFast_BD:
-	dc.b	$00, $00, $95, $28, $00, $BD, $00, $01, $10, $2D, $00, $07, $08, $98, $00, $31, $02, $08, $00, $68, $00, $00, $01, $60, $01, $02 
+	enemyData $00009528,$00BD,ENEMY_REWARD_TYPE_1,$102D,$00,$07,$0898,$0031,$0208,$0068,$00000160,$01,$02
 EnemyData_StandardMeleeFast_BE:
-	dc.l	InitEnemy_StandardMeleeFast
-	dc.w	$00BE
-	dc.w	$0001
-	dc.w	$0028
-	dc.b	$00
-	dc.b	$07
-	dc.b	$0B, $B8, $00, $61, $03, $66, $01, $45 
-	dc.l	$00000200
-	dc.b	$01
-	dc.b	$02
+	enemyData InitEnemy_StandardMeleeFast,$00BE,ENEMY_REWARD_TYPE_1,$0028,$00,$07,$0BB8,$0061,$0366,$0145,$00000200,$01,$02
 EnemyData_StandardMeleeFast_BF:
-	dc.l	InitEnemy_StandardMeleeFast
-	dc.w	$00BF
-	dc.w	$0001
-	dc.w	$002B
-	dc.b	$00
-	dc.b	$07
-	dc.b	$11, $F8, $00, $93, $04, $52, $02, $09 
-	dc.l	$00000220
-	dc.b	$01
-	dc.b	$02
+	enemyData InitEnemy_StandardMeleeFast,$00BF,ENEMY_REWARD_TYPE_1,$002B,$00,$07,$11F8,$0093,$0452,$0209,$00000220,$01,$02
 EnemyData_OrbShield_75:
-	dc.l	InitBoss_OrbShield
-	dc.w	$0075
-	dc.w	$0000
-	dc.w	$001B
-	dc.b	$01
-	dc.b	$03
-	dc.b	$00, $70, $00, $1E, $00, $76, $00, $38 
-	dc.l	$00000160
-	dc.b	$00
-	dc.b	$02
+	enemyData InitBoss_OrbShield,$0075,ENEMY_REWARD_TYPE_0,$001B,$01,$03,$0070,$001E,$0076,$0038,$00000160,$00,$02
 EnemyData_OrbShield_C0:
-	dc.l	InitBoss_OrbShield
-	dc.w	$00C0
-	dc.w	$0000
-	dc.w	$001B
-	dc.b	$03
-	dc.b	$01
-	dc.b	$01, $72, $00, $52, $01, $92, $00, $68 
-	dc.l	$00000180
-	dc.b	$00
-	dc.b	$02
+	enemyData InitBoss_OrbShield,$00C0,ENEMY_REWARD_TYPE_0,$001B,$03,$01,$0172,$0052,$0192,$0068,$00000180,$00,$02
 EnemyData_OrbShield_C1:
-	dc.l	InitBoss_OrbShield
-	dc.w	$00C1
-	dc.w	$0000
-	dc.w	$001C
-	dc.b	$03
-	dc.b	$01
-	dc.b	$05, $FA, $00, $6C, $03, $02, $01, $36 
-	dc.l	$00000200
-	dc.b	$00
-	dc.b	$02
+	enemyData InitBoss_OrbShield,$00C1,ENEMY_REWARD_TYPE_0,$001C,$03,$01,$05FA,$006C,$0302,$0136,$00000200,$00,$02
 EnemyData_OrbShield_C2:
-	dc.l	InitBoss_OrbShield
-	dc.w	$00C2
-	dc.w	$0000
-	dc.w	$0020
-	dc.b	$03
-	dc.b	$01
-	dc.b	$08, $98, $00, $8C, $09, $25, $01, $72 
-	dc.l	$00000220
-	dc.b	$00
-	dc.b	$02
+	enemyData InitBoss_OrbShield,$00C2,ENEMY_REWARD_TYPE_0,$0020,$03,$01,$0898,$008C,$0925,$0172,$00000220,$00,$02
 EnemyData_BurstFire_63:
-	dc.l	InitEnemy_BurstFire
-	dc.w	$0063
-	dc.w	$0000
-	dc.w	$0000
-	dc.b	$03
-	dc.b	$01
-	dc.b	$00, $96, $00, $49, $00, $57, $00, $26 
-	dc.l	$00000200
-	dc.b	$00
-	dc.b	$0A
+	enemyData InitEnemy_BurstFire,$0063,ENEMY_REWARD_TYPE_0,$0000,$03,$01,$0096,$0049,$0057,$0026,$00000200,$00,$0A
 EnemyData_BurstFire_A4:
-	dc.l	InitEnemy_BurstFire
-	dc.w	$00A4
-	dc.w	$0000
-	dc.w	$001D
-	dc.b	$03
-	dc.b	$01
-	dc.b	$01, $72, $00, $6B, $02, $13, $00, $72 
-	dc.l	$00000220
-	dc.b	$00
-	dc.b	$0A
+	enemyData InitEnemy_BurstFire,$00A4,ENEMY_REWARD_TYPE_0,$001D,$03,$01,$0172,$006B,$0213,$0072,$00000220,$00,$0A
 EnemyData_BurstFire_A5:
-	dc.l	InitEnemy_BurstFire
-	dc.w	$00A5
-	dc.w	$0003
-	dc.w	$3000
-	dc.b	$03
-	dc.b	$01
-	dc.b	$02, $58, $00, $9C, $03, $19, $01, $52 
-	dc.l	$00000240
-	dc.b	$00
-	dc.b	$0A
+	enemyData InitEnemy_BurstFire,$00A5,ENEMY_REWARD_TYPE_3,$3000,$03,$01,$0258,$009C,$0319,$0152,$00000240,$00,$0A
 EnemyData_BurstFire_A6:
-	dc.l	InitEnemy_BurstFire
-	dc.w	$00A6
-	dc.w	$FFFF
-	dc.w	$0002
-	dc.b	$03
-	dc.b	$01
-	dc.b	$06, $A4, $00, $B1, $04, $72, $02, $06 
-	dc.l	$00000260
-	dc.b	$00
-	dc.b	$0A
+	enemyData InitEnemy_BurstFire,$00A6,ENEMY_REWARD_NONE,$0002,$03,$01,$06A4,$00B1,$0472,$0206,$00000260,$00,$0A
 EnemyData_StalkPause3_64:
-	dc.l	InitEnemy_StationaryShooter
-	dc.w	$0064
-	dc.w	$0000
-	dc.w	$001B
-	dc.b	$00
-	dc.b	$07
-	dc.b	$01, $E0, $00, $39, $03, $33, $00, $39 
-	dc.l	$00000180
-	dc.b	$01
-	dc.b	$02
+	enemyData InitEnemy_StationaryShooter,$0064,ENEMY_REWARD_TYPE_0,$001B,$00,$07,$01E0,$0039,$0333,$0039,$00000180,$01,$02
 EnemyData_StationaryShooter_B9:
-	dc.b	$00, $00, $9D, $90, $00, $B9, $00, $00, $00, $03, $00, $07, $03, $48, $00, $4D, $04, $16, $00, $70, $00, $00, $02, $00, $01, $02 
+	enemyData $00009D90,$00B9,ENEMY_REWARD_TYPE_0,$0003,$00,$07,$0348,$004D,$0416,$0070,$00000200,$01,$02
 EnemyData_StalkPause3_BA:
-	dc.l	InitEnemy_StationaryShooter
-	dc.w	$00BA
-	dc.w	$0000
-	dc.w	$001C
-	dc.b	$00
-	dc.b	$07
-	dc.b	$03, $FC, $00, $6C, $04, $72, $01, $13 
-	dc.l	$00000220
-	dc.b	$01
-	dc.b	$02
+	enemyData InitEnemy_StationaryShooter,$00BA,ENEMY_REWARD_TYPE_0,$001C,$00,$07,$03FC,$006C,$0472,$0113,$00000220,$01,$02
 EnemyData_StalkPause3_BB:
-	dc.l	InitEnemy_StationaryShooter
-	dc.w	$00BB
-	dc.w	$0003
-	dc.w	$3000
-	dc.b	$00
-	dc.b	$07
-	dc.b	$04, $F6, $00, $97, $06, $18, $01, $43 
-	dc.l	$00000240
-	dc.b	$01
-	dc.b	$02
+	enemyData InitEnemy_StationaryShooter,$00BB,ENEMY_REWARD_TYPE_3,$3000,$00,$07,$04F6,$0097,$0618,$0143,$00000240,$01,$02
 EnemyData_FastBurstShooter_64:
-	dc.l	InitEnemy_FastBurstShooter
-	dc.w	$0064
-	dc.w	$0003
-	dc.w	$0500
-	dc.b	$03
-	dc.b	$01
-	dc.b	$03, $98, $00, $39, $02, $67, $00, $52 
-	dc.l	$00000180
-	dc.b	$01
-	dc.b	$02
+	enemyData InitEnemy_FastBurstShooter,$0064,ENEMY_REWARD_TYPE_3,$0500,$03,$01,$0398,$0039,$0267,$0052,$00000180,$01,$02
 EnemyData_FastBurstShooter_B9:
-	dc.l	InitEnemy_FastBurstShooter
-	dc.w	$00B9
-	dc.w	$0000
-	dc.w	$001C
-	dc.b	$03
-	dc.b	$01
-	dc.b	$05, $78, $00, $48, $03, $21, $00, $95 
-	dc.l	$00000180
-	dc.b	$01
-	dc.b	$02
+	enemyData InitEnemy_FastBurstShooter,$00B9,ENEMY_REWARD_TYPE_0,$001C,$03,$01,$0578,$0048,$0321,$0095,$00000180,$01,$02
 EnemyData_FastBurstShooter_BA:
-	dc.l	InitEnemy_FastBurstShooter
-	dc.w	$00BA
-	dc.w	$0000
-	dc.w	$002B
-	dc.b	$03
-	dc.b	$01
-	dc.b	$07, $03, $00, $5C, $04, $14, $01, $29 
-	dc.l	$00000180
-	dc.b	$01
-	dc.b	$02
+	enemyData InitEnemy_FastBurstShooter,$00BA,ENEMY_REWARD_TYPE_0,$002B,$03,$01,$0703,$005C,$0414,$0129,$00000180,$01,$02
 EnemyData_FastBurstShooter_BB:
-	dc.b	$00, $00, $A6, $AA, $00, $BB, $00, $00, $00, $20, $03, $01, $0A, $8C, $00, $75, $05, $44, $01, $82, $00, $00, $01, $80, $01, $02 
+	enemyData $0000A6AA,$00BB,ENEMY_REWARD_TYPE_0,$0020,$03,$01,$0A8C,$0075,$0544,$0182,$00000180,$01,$02
 EnemyData_HomingShooter_64:
-	dc.l	InitEnemy_HomingShooter
-	dc.w	$0064
-	dc.w	$0000
-	dc.w	$001B
-	dc.b	$03
-	dc.b	$01
-	dc.b	$03, $98, $00, $3A, $03, $95, $00, $70 
-	dc.l	$00000180
-	dc.b	$01
-	dc.b	$02
+	enemyData InitEnemy_HomingShooter,$0064,ENEMY_REWARD_TYPE_0,$001B,$03,$01,$0398,$003A,$0395,$0070,$00000180,$01,$02
 EnemyData_HomingShooter_B9:
-	dc.l	InitEnemy_HomingShooter
-	dc.w	$00B9
-	dc.w	$0000
-	dc.w	$0021
-	dc.b	$03
-	dc.b	$01
-	dc.b	$04, $4C, $00, $4A, $04, $41, $00, $93 
-	dc.l	$00000220
-	dc.b	$01
-	dc.b	$02
+	enemyData InitEnemy_HomingShooter,$00B9,ENEMY_REWARD_TYPE_0,$0021,$03,$01,$044C,$004A,$0441,$0093,$00000220,$01,$02
 EnemyData_HomingShooter_BA:
-	dc.l	InitEnemy_HomingShooter
-	dc.w	$00BA
-	dc.w	$0000
-	dc.w	$001C
-	dc.b	$03
-	dc.b	$01
-	dc.b	$06, $40, $00, $63, $05, $24, $01, $56 
-	dc.l	$00000260
-	dc.b	$01
-	dc.b	$02
+	enemyData InitEnemy_HomingShooter,$00BA,ENEMY_REWARD_TYPE_0,$001C,$03,$01,$0640,$0063,$0524,$0156,$00000260,$01,$02
 EnemyData_HomingShooter_BB:
-	dc.l	InitEnemy_HomingShooter
-	dc.w	$00BB
-	dc.w	$0000
-	dc.w	$0026
-	dc.b	$03
-	dc.b	$01
-	dc.b	$07, $6C, $00, $79, $06, $57, $06, $09 
-	dc.l	$00000300
-	dc.b	$01
-	dc.b	$02
+	enemyData InitEnemy_HomingShooter,$00BB,ENEMY_REWARD_TYPE_0,$0026,$03,$01,$076C,$0079,$0657,$0609,$00000300,$01,$02
 EnemyData_Teleporter_66:
-	dc.l	InitEnemy_Teleporter
-	dc.w	$0066
-	dc.w	$0000
-	dc.w	$0001
-	dc.b	$00
-	dc.b	$07
-	dc.b	$00, $DE, $00, $29, $00, $94, $00, $43 
-	dc.l	$00000250
-	dc.b	$00
-	dc.b	$08
+	enemyData InitEnemy_Teleporter,$0066,ENEMY_REWARD_TYPE_0,$0001,$00,$07,$00DE,$0029,$0094,$0043,$00000250,$00,$08
 EnemyData_Teleporter_AA:
-	dc.l	InitEnemy_Teleporter
-	dc.w	$00AA
-	dc.w	$FFFF
-	dc.w	$0000
-	dc.b	$00
-	dc.b	$07
-	dc.b	$01, $86, $00, $68, $02, $15, $00, $90 
-	dc.l	$00000300
-	dc.b	$00
-	dc.b	$0C
+	enemyData InitEnemy_Teleporter,$00AA,ENEMY_REWARD_NONE,$0000,$00,$07,$0186,$0068,$0215,$0090,$00000300,$00,$0C
 EnemyData_Teleporter_AB:
-	dc.l	InitEnemy_Teleporter
-	dc.w	$00AB
-	dc.w	$0003
-	dc.w	$1000
-	dc.b	$00
-	dc.b	$07
-	dc.b	$01, $FE, $00, $80, $02, $60, $01, $20 
-	dc.l	$00000350
-	dc.b	$00
-	dc.b	$0C
+	enemyData InitEnemy_Teleporter,$00AB,ENEMY_REWARD_TYPE_3,$1000,$00,$07,$01FE,$0080,$0260,$0120,$00000350,$00,$0C
 EnemyData_Teleporter_BC:
-	dc.l	InitEnemy_Teleporter
-	dc.w	$00BC
-	dc.w	$0002
-	dc.w	$0205
-	dc.b	$00
-	dc.b	$07
-	dc.b	$02, $76, $00, $BB, $04, $12, $01, $72 
-	dc.l	$00000400
-	dc.b	$00
-	dc.b	$0C
+	enemyData InitEnemy_Teleporter,$00BC,ENEMY_REWARD_TYPE_2,$0205,$00,$07,$0276,$00BB,$0412,$0172,$00000400,$00,$0C
 EnemyData_SequentialFire_66:
-	dc.l	InitEnemy_SequentialFire
-	dc.w	$0066
-	dc.w	$0000
-	dc.w	$0001
-	dc.b	$03
-	dc.b	$01
-	dc.b	$03, $52, $00, $3E, $01, $83, $00, $67 
-	dc.l	$00000160
-	dc.b	$00
-	dc.b	$08
+	enemyData InitEnemy_SequentialFire,$0066,ENEMY_REWARD_TYPE_0,$0001,$03,$01,$0352,$003E,$0183,$0067,$00000160,$00,$08
 EnemyData_SequentialFire_AA:
-	dc.l	InitEnemy_SequentialFire
-	dc.w	$00AA
-	dc.w	$0000
-	dc.w	$0001
-	dc.b	$03
-	dc.b	$01
-	dc.b	$04, $4C, $00, $4A, $02, $17, $01, $00 
-	dc.l	$00000180
-	dc.b	$00
-	dc.b	$0C
+	enemyData InitEnemy_SequentialFire,$00AA,ENEMY_REWARD_TYPE_0,$0001,$03,$01,$044C,$004A,$0217,$0100,$00000180,$00,$0C
 EnemyData_SequentialFire_AB:
-	dc.l	InitEnemy_SequentialFire
-	dc.w	$00AB
-	dc.w	$0000
-	dc.w	$0002
-	dc.b	$03
-	dc.b	$01
-	dc.b	$05, $FA, $00, $6C, $02, $93, $01, $33 
-	dc.l	$00000200
-	dc.b	$00
-	dc.b	$0C
+	enemyData InitEnemy_SequentialFire,$00AB,ENEMY_REWARD_TYPE_0,$0002,$03,$01,$05FA,$006C,$0293,$0133,$00000200,$00,$0C
 EnemyData_SequentialFire_BC:
-	dc.l	InitEnemy_SequentialFire
-	dc.w	$00BC
-	dc.w	$0003
-	dc.w	$1000
-	dc.b	$03
-	dc.b	$01
-	dc.b	$06, $B8, $00, $C8, $06, $18, $02, $20 
-	dc.l	$00000220
-	dc.b	$00
-	dc.b	$04
+	enemyData InitEnemy_SequentialFire,$00BC,ENEMY_REWARD_TYPE_3,$1000,$03,$01,$06B8,$00C8,$0618,$0220,$00000220,$00,$04
 EnemyData_MultiOrb_75:
-	dc.l	InitBoss_MultiOrb
-	dc.w	$0075
-	dc.w	$0000
-	dc.w	$0000
-	dc.b	$03
-	dc.b	$01
-	dc.b	$02, $BC, $00, $24, $01, $04, $00, $45 
-	dc.l	$00000180
-	dc.b	$00
-	dc.b	$02
+	enemyData InitBoss_MultiOrb,$0075,ENEMY_REWARD_TYPE_0,$0000,$03,$01,$02BC,$0024,$0104,$0045,$00000180,$00,$02
 EnemyData_MultiOrb_C0:
-	dc.l	InitBoss_MultiOrb
-	dc.w	$00C0
-	dc.w	$0000
-	dc.w	$001C
-	dc.b	$03
-	dc.b	$01
-	dc.b	$04, $B0, $00, $54, $02, $19, $00, $93 
-	dc.l	$00000185
-	dc.b	$00
-	dc.b	$02
+	enemyData InitBoss_MultiOrb,$00C0,ENEMY_REWARD_TYPE_0,$001C,$03,$01,$04B0,$0054,$0219,$0093,$00000185,$00,$02
 EnemyData_MultiOrb_C1:
-	dc.l	InitBoss_MultiOrb
-	dc.w	$00C1
-	dc.w	$0000
-	dc.w	$001B
-	dc.b	$03
-	dc.b	$01
-	dc.b	$06, $A4, $00, $82, $03, $61, $01, $58 
-	dc.l	$00000190
-	dc.b	$00
-	dc.b	$02
+	enemyData InitBoss_MultiOrb,$00C1,ENEMY_REWARD_TYPE_0,$001B,$03,$01,$06A4,$0082,$0361,$0158,$00000190,$00,$02
 EnemyData_MultiOrb_C2:
-	dc.l	InitBoss_MultiOrb
-	dc.w	$00C2
-	dc.w	$0000
-	dc.w	$001C
-	dc.b	$03
-	dc.b	$01
-	dc.b	$08, $FC, $00, $8D, $04, $51, $01, $97 
-	dc.l	$00000195
-	dc.b	$00
-	dc.b	$06
+	enemyData InitBoss_MultiOrb,$00C2,ENEMY_REWARD_TYPE_0,$001C,$03,$01,$08FC,$008D,$0451,$0197,$00000195,$00,$06
 EnemyData_OrbRing_75:
-	dc.l	InitBoss_OrbRing
-	dc.w	$0075
-	dc.w	$0000
-	dc.w	$001B
-	dc.b	$03
-	dc.b	$01
-	dc.b	$03, $0C, $00, $2F, $01, $41, $00, $50 
-	dc.l	$00000180
-	dc.b	$00
-	dc.b	$02
+	enemyData InitBoss_OrbRing,$0075,ENEMY_REWARD_TYPE_0,$001B,$03,$01,$030C,$002F,$0141,$0050,$00000180,$00,$02
 EnemyData_OrbRing_C0:
-	dc.l	InitBoss_OrbRing
-	dc.w	$00C0
-	dc.w	$0000
-	dc.w	$001C
-	dc.b	$03
-	dc.b	$01
-	dc.b	$05, $DC, $00, $62, $02, $69, $01, $23 
-	dc.l	$00000200
-	dc.b	$00
-	dc.b	$02
+	enemyData InitBoss_OrbRing,$00C0,ENEMY_REWARD_TYPE_0,$001C,$03,$01,$05DC,$0062,$0269,$0123,$00000200,$00,$02
 EnemyData_OrbRing_C1:
-	dc.l	InitBoss_OrbRing
-	dc.w	$00C1
-	dc.w	$0003
-	dc.w	$5000
-	dc.b	$03
-	dc.b	$01
-	dc.b	$09, $88, $00, $72, $03, $74, $01, $68 
-	dc.l	$00000220
-	dc.b	$00
-	dc.b	$02
+	enemyData InitBoss_OrbRing,$00C1,ENEMY_REWARD_TYPE_3,$5000,$03,$01,$0988,$0072,$0374,$0168,$00000220,$00,$02
 EnemyData_OrbRing_C2:
-	dc.l	InitBoss_OrbRing
-	dc.w	$00C2
-	dc.w	$0000
-	dc.w	$0027
-	dc.b	$03
-	dc.b	$01
-	dc.b	$0A, $8C, $00, $A8, $05, $12, $03, $90 
-	dc.l	$00000240
-	dc.b	$00
-	dc.b	$0A
+	enemyData InitBoss_OrbRing,$00C2,ENEMY_REWARD_TYPE_0,$0027,$03,$01,$0A8C,$00A8,$0512,$0390,$00000240,$00,$0A
 EnemyData_SpiralBurst_A6a:
-	dc.l	InitEnemy_SpiralBurst
-	dc.w	$00A6
-	dc.w	$0000
-	dc.w	$0029
-	dc.b	$01
-	dc.b	$03
-	dc.b	$06, $A4, $00, $9D, $04, $72, $02, $06 
-	dc.l	$00000260
-	dc.b	$00
-	dc.b	$0A
+	enemyData InitEnemy_SpiralBurst,$00A6,ENEMY_REWARD_TYPE_0,$0029,$01,$03,$06A4,$009D,$0472,$0206,$00000260,$00,$0A
 EnemyData_SpiralBurst_A6b:
-	dc.l	InitEnemy_SpiralBurst
-	dc.w	$00A6
-	dc.w	$0000
-	dc.w	$0020
-	dc.b	$01
-	dc.b	$00
-	dc.b	$06, $A4, $00, $C8, $04, $72, $02, $06 
-	dc.l	$00000360
-	dc.b	$00
-	dc.b	$0E
+	enemyData InitEnemy_SpiralBurst,$00A6,ENEMY_REWARD_TYPE_0,$0020,$01,$00,$06A4,$00C8,$0472,$0206,$00000360,$00,$0E
 EnemyData_StalkPause_7B_Last:
-	dc.l	InitEnemy_StalkPause
-	dc.w	$007B
-	dc.w	$0003
-	dc.w	$3000
-	dc.b	$00
-	dc.b	$04, $04, $B0, $00, $64, $00, $00, $12, $00 
-	dc.l	$00000190
-	dc.b	$00
-	dc.b	$0E
+	enemyData InitEnemy_StalkPause,$007B,ENEMY_REWARD_TYPE_3,$3000,$00,$04,$04B0,$0064,$0000,$1200,$00000190,$00,$0E
 EnemySpriteSet_A:
 	dc.l	EnemyGfxFrameTable_DragonChild
 	dc.l	EnemyGfxData_DragonChild
@@ -2708,7 +1982,7 @@ EnemySpriteSet_A:
 	dc.l	EnemyGfxFrameTable_DragonMain
 	dc.l	EnemyGfxData_DragonMain
 	dc.b	$00, $47 
-	dc.l	$00000000
+	dc.l	NULL_PTR
 EnemySpriteSet_B:
 	dc.l	EnemyGfxFrameTable_QuadrupedChild
 	dc.l	EnemyGfxData_QuadrupedChild
@@ -2716,7 +1990,7 @@ EnemySpriteSet_B:
 	dc.l	EnemyGfxFrameTable_QuadrupedMain
 	dc.l	EnemyGfxData_QuadrupedMain
 	dc.b	$00, $47 
-	dc.l	$00000000
+	dc.l	NULL_PTR
 EnemySpriteSet_C:
 	dc.l	EnemyGfxFrameTable_OrbChild
 	dc.l	EnemyGfxData_OrbChild
@@ -2724,7 +1998,7 @@ EnemySpriteSet_C:
 	dc.l	EnemyGfxFrameTable_OrbMain
 	dc.l	EnemyGfxData_OrbMain
 	dc.b	$00, $47 
-	dc.l	$00000000
+	dc.l	NULL_PTR
 EnemySpriteSet_D:
 	dc.l	EnemyGfxFrameTable_SerpentChild
 	dc.l	EnemyGfxData_SerpentChild
@@ -2732,7 +2006,7 @@ EnemySpriteSet_D:
 	dc.l	EnemyGfxFrameTable_SerpentMain
 	dc.l	EnemyGfxData_SerpentMain
 	dc.b	$00, $47 
-	dc.l	$00000000
+	dc.l	NULL_PTR
 EnemySpriteSet_E:
 	dc.l	EnemyGfxFrameTable_InsectChild
 	dc.l	EnemyGfxData_InsectChild
@@ -2740,7 +2014,7 @@ EnemySpriteSet_E:
 	dc.l	EnemyGfxFrameTable_InsectMain
 	dc.l	EnemyGfxData_InsectMain
 	dc.b	$00, $4F 
-	dc.l	$00000000
+	dc.l	NULL_PTR
 EnemySpriteSet_F:
 	dc.l	EnemyGfxFrameTable_GolemChild
 	dc.l	EnemyGfxData_GolemChild
@@ -2748,7 +2022,7 @@ EnemySpriteSet_F:
 	dc.l	EnemyGfxFrameTable_GolemMain
 	dc.l	EnemyGfxData_GolemMain
 	dc.b	$00, $6B 
-	dc.l	$00000000
+	dc.l	NULL_PTR
 EnemySpriteSet_G:
 	dc.l	EnemyGfxFrameTable_GargoyleChild
 	dc.l	EnemyGfxData_GargoyleChild
@@ -2756,7 +2030,7 @@ EnemySpriteSet_G:
 	dc.l	EnemyGfxFrameTable_GargoyleMain
 	dc.l	EnemyGfxData_GargoyleMain
 	dc.b	$00, $47 
-	dc.l	$00000000
+	dc.l	NULL_PTR
 EnemySpriteSet_H:
 	dc.l	EnemyGfxFrameTable_WorldMapChild
 	dc.l	EnemyGfxData_WorldMapChild
@@ -2784,7 +2058,7 @@ EnemySpriteSet_J:
 	dc.l	EnemyGfxFrameTable_SkeletonMain
 	dc.l	EnemyGfxData_SkeletonMain
 	dc.b	$00, $47 
-	dc.l	$00000000
+	dc.l	NULL_PTR
 EnemySpriteSet_K:
 	dc.l	EnemyGfxFrameTable_HumanoidChild
 	dc.l	EnemyGfxData_HumanoidChild
@@ -2792,7 +2066,7 @@ EnemySpriteSet_K:
 	dc.l	EnemyGfxFrameTable_HumanoidMain
 	dc.l	EnemyGfxData_HumanoidMain
 	dc.b	$00, $27 
-	dc.l	$00000000
+	dc.l	NULL_PTR
 EnemySpriteSet_L:
 	dc.l	EnemyGfxFrameTable_HumanoidChild
 	dc.l	EnemyGfxData_HumanoidChild

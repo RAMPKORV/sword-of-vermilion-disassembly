@@ -172,20 +172,16 @@ DialogSelection_Increment_Loop:
 DialogSelection_Increment_Loop2:
 	TST.b	Script_text_complete.w
 	BEQ.w	DialogClose_RestoreHud_Loop2
-	MOVE.w	#BUTTON_BIT_C, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_C
 	BNE.w	DialogClose_RestoreHud
-	MOVE.w	#BUTTON_BIT_B, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_B
 	BNE.w	DialogClose_RestoreHud
 	RTS
 	
 DialogClose_RestoreHud:
 	JSR	DrawStatusHudWindow
 	CLR.w	Overworld_menu_state.w
-	MOVE.w	#WINDOW_DRAW_MSG_SPEED_ALT, Window_draw_type.w
-	CLR.w	Window_text_row.w
-	MOVE.b	#FLAG_TRUE, Window_tilemap_row_draw_pending.w
+	TriggerWindowRedraw WINDOW_DRAW_MSG_SPEED_ALT
 	RTS
 	
 DialogClose_RestoreHud_Loop2:
@@ -249,8 +245,7 @@ SeekHandler_TitaniasMirror:
 	JSR	AddItemToInventoryList	
 	MOVE.w	#((ITEM_TYPE_DISCARDABLE<<8)|ITEM_TITANIAS_MIRROR), (A0,D0.w)
 	MOVE.b	#FLAG_TRUE, Titanias_mirror_acquired.w	
-	MOVE.w	#SOUND_ATTACK, D0	
-	JSR	QueueSoundEffect	
+	PlaySound SOUND_ATTACK	
 	BRA.w	SeekHandler_TitaniasMirror_Loop2	
 SeekHandler_TitaniasMirror_Loop:
 	LEA	TitaniasMirrorStr, A2	
@@ -273,8 +268,7 @@ SeekHandler_MegaBlast:
 	JSR	AddItemToInventoryList
 	MOVE.w	#((ITEM_TYPE_DISCARDABLE<<8)|ITEM_MEGA_BLAST), (A0,D0.w)
 	MOVE.b	#FLAG_TRUE, Mega_blast_acquired.w
-	MOVE.w	#SOUND_ATTACK, D0
-	JSR	QueueSoundEffect
+	PlaySound SOUND_ATTACK
 	BRA.w	SeekHandler_MegaBlast_Loop3
 SeekHandler_MegaBlast_Loop2:
 	LEA	MegaBlastStr, A2
@@ -296,8 +290,7 @@ SeekHandler_RafaelsStick:
 	JSR	AddItemToInventoryList
 	MOVE.w	#((ITEM_TYPE_DISCARDABLE<<8)|ITEM_RAFAELS_STICK), (A0,D0.w)
 	MOVE.b	#FLAG_TRUE, Rafaels_stick_acquired.w
-	MOVE.w	#SOUND_ATTACK, D0
-	JSR	QueueSoundEffect
+	PlaySound SOUND_ATTACK
 	BRA.w	SeekHandler_RafaelsStick_Loop3
 SeekHandler_RafaelsStick_Loop2:
 	LEA	RafaelsStickStr, A2	
@@ -317,8 +310,7 @@ SeekHandler_Herbs:
 	BSR.w	DisplayFoundItemWithName	
 	JSR	AddItemToInventoryList	
 	MOVE.w	#0, (A0,D0.w)	
-	MOVE.w	#SOUND_ATTACK, D0	
-	JSR	QueueSoundEffect	
+	PlaySound SOUND_ATTACK	
 	BRA.w	SeekHandler_Herbs_Loop2	
 SeekHandler_Herbs_Loop:
 	LEA	HerbsStr, A2	
@@ -333,14 +325,12 @@ SeekHandler_FindOneKim: ; Find 1kim
 	BSR.w	DisplayFoundItemWithName
 	MOVE.l	#$00000001, Transaction_amount.w
 	JSR	AddPaymentAmount
-	MOVE.w	#SOUND_ATTACK, D0
-	JSR	QueueSoundEffect
+	PlaySound SOUND_ATTACK
 	BRA.w	SeekHandler_DisplayAndReturn
 
 SeekHandler_RegainAllHp: ; Regain all HP
 	MOVE.w	Player_mhp.w, Player_hp.w
-	MOVE.w	#SOUND_ITEM_PICKUP, D0
-	JSR	QueueSoundEffect
+	PlaySound SOUND_ITEM_PICKUP
 	MOVE.l	#AllHitPointsStr, Script_source_base.w
 	BRA.w	SeekHandler_DisplayAndReturn
 
@@ -498,20 +488,16 @@ TakeItemState_SetState2_Loop:
 TakeItemState_SetState2_Loop2:
 	TST.b	Script_text_complete.w
 	BEQ.w	TakeItem_RestoreHud_Loop2
-	MOVE.w	#BUTTON_BIT_C, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_C
 	BNE.w	TakeItem_RestoreHud
-	MOVE.w	#BUTTON_BIT_B, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_B
 	BNE.w	TakeItem_RestoreHud
 	RTS
 	
 TakeItem_RestoreHud:
 	JSR	DrawStatusHudWindow
 	CLR.w	Overworld_menu_state.w
-	MOVE.w	#WINDOW_DRAW_MSG_SPEED_ALT, Window_draw_type.w
-	CLR.w	Window_text_row.w
-	MOVE.b	#FLAG_TRUE, Window_tilemap_row_draw_pending.w
+	TriggerWindowRedraw WINDOW_DRAW_MSG_SPEED_ALT
 	RTS
 	
 TakeItem_RestoreHud_Loop2:
@@ -606,8 +592,7 @@ TakeItem_FinalizeTake:
 	MOVE.b	#$2E, (A1)+
 	MOVE.b	#$FF, (A1)
 	PRINT 	Text_build_buffer
-	MOVE.w	#SOUND_ERROR, D0
-	JSR	QueueSoundEffect
+	PlaySound SOUND_ERROR
 	JSR	SaveStatusBarToBuffer
 	JSR	ResetScriptAndInitDialogue
 	BSR.w	ClearRewardScriptFlag
@@ -638,14 +623,11 @@ TakeItem_FinalizeTake_Loop4:
 	RTS
 	
 TakeItem_FinalizeTake_Loop2:
-	MOVE.w	#BUTTON_BIT_B, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_B
 	BNE.w	TakeItem_DontWantMessage
-	MOVE.w	#BUTTON_BIT_C, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_C
 	BEQ.w	TakeItem_DontWantMessage_Loop2
-	MOVE.w	#SOUND_MENU_SELECT, D0
-	JSR	QueueSoundEffect
+	PlaySound SOUND_MENU_SELECT
 	TST.w	Dialog_selection.w
 	BNE.w	TakeItem_DontWantMessage
 	JSR	DrawLeftMenuWindow
@@ -717,11 +699,9 @@ TakeItem_InitEquipCursor_Loop4:
 	RTS
 	
 TakeItem_InitEquipCursor_Loop:
-	MOVE.w	#BUTTON_BIT_B, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_B
 	BEQ.w	TakeItem_InitEquipCursor_Loop5
-	MOVE.w	#SOUND_MENU_CANCEL, D0
-	JSR	QueueSoundEffect
+	PlaySound SOUND_MENU_CANCEL
 	JSR	DrawCenterMenuWindow
 	JSR	ResetScriptAndInitDialogue
 	PRINT 	CantCarryMoreStr
@@ -729,12 +709,10 @@ TakeItem_InitEquipCursor_Loop:
 	RTS
 	
 TakeItem_InitEquipCursor_Loop5:
-	MOVE.w	#BUTTON_BIT_C, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_C
 	BEQ.w	TakeItem_InitEquipCursor_Loop6
 	JSR	DrawMenuCursor
-	MOVE.w	#SOUND_MENU_SELECT, D0
-	JSR	QueueSoundEffect
+	PlaySound SOUND_MENU_SELECT
 	JSR	SaveRightMenuAreaToBuffer
 	JSR	DrawYesNoDialog
 	MOVE.w	#TAKE_ITEM_STATE_DISCARD_CONFIRM, Take_item_state.w
@@ -748,19 +726,15 @@ TakeItem_InitEquipCursor_Loop6:
 	RTS
 	
 TakeItem_InitEquipCursor_Loop2:
-	MOVE.w	#BUTTON_BIT_B, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_B
 	BNE.w	TakeItem_InitEquipCursor_Loop7
-	MOVE.w	#BUTTON_BIT_C, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_C
 	BEQ.w	TakeItem_InitEquipCursor_Loop8
-	MOVE.w	#SOUND_MENU_SELECT, D0
-	JSR	QueueSoundEffect
+	PlaySound SOUND_MENU_SELECT
 	TST.w	Dialog_selection.w
 	BEQ.w	TakeItem_InitEquipCursor_Loop9
 TakeItem_InitEquipCursor_Loop7:
-	MOVE.w	#SOUND_MENU_CANCEL, D0	
-	JSR	QueueSoundEffect	
+	PlaySound SOUND_MENU_CANCEL	
 	JSR	DrawLeftMenuWindow	
 	MOVEA.l	Active_inventory_list_ptr.w, A0	
 	MOVE.w	-$2(A0), D0	
@@ -781,8 +755,7 @@ TakeItem_InitEquipCursor_Loop9: ; Discard item
 	PRINT 	CantPutDownStr
 	BRA.w	TakeItem_InitEquipCursor_Loop11
 TakeItem_InitEquipCursor_Loop10:
-	MOVE.w	#SOUND_ERROR, D0
-	JSR	QueueSoundEffect
+	PlaySound SOUND_ERROR
 	LEA	Text_build_buffer.w, A1
 	LEA	PutStr, A0
 	JSR	CopyStringUntilFF
@@ -845,11 +818,9 @@ TakeItem_InitEquipCursor_Loop8:
 TakeItem_InitEquipCursor_Loop3:
 	TST.b	Script_text_complete.w
 	BEQ.w	TakeItem_RestoreHudWithMusic_Loop
-	MOVE.w	#BUTTON_BIT_C, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_C
 	BNE.w	TakeItem_RestoreHudWithMusic
-	MOVE.w	#BUTTON_BIT_B, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_B
 	BNE.w	TakeItem_RestoreHudWithMusic
 	RTS
 	
@@ -858,9 +829,7 @@ TakeItem_RestoreHudWithMusic:
 	JSR	QueueSoundEffect
 	JSR	DrawStatusHudWindow
 	CLR.w	Overworld_menu_state.w
-	MOVE.w	#WINDOW_DRAW_MSG_SPEED_ALT, Window_draw_type.w
-	CLR.w	Window_text_row.w
-	MOVE.b	#FLAG_TRUE, Window_tilemap_row_draw_pending.w
+	TriggerWindowRedraw WINDOW_DRAW_MSG_SPEED_ALT
 	RTS
 	
 TakeItem_RestoreHudWithMusic_Loop:
@@ -1558,7 +1527,7 @@ TownTilesetPtrs:
 	dc.l	TownTilesetPtrs_Gfx_8B38A
 	dc.l	TownTilesetPtrs_Gfx_8DAE0
 	dc.l	TownTilesetPtrs_Gfx_8FEE6
-	dc.l	loc_00000000 
+	dc.l	NULL_PTR 
 	dc.l	TownTilesetPtrs_Gfx_9239A
 DialogueChoiceNoStrPtrs:
 	dc.l	NoChoiceStr
@@ -3730,11 +3699,7 @@ InitDialogMode:
 	
 InitDialogGraphics:
 	JSR	LoadTalkerGraphics
-	MOVE.l	#$45600002, D7
-	MOVE.w	#$03FF, D6
-	MOVE.b	#0, D5
-	MOVE.w	#1, D4
-	JSR	VDP_DMAFill
+	DMAFillVRAM $45600002, $03FF
 	RTS
 ; ============================================================================
 ; Treasure Chest Initialization Functions
