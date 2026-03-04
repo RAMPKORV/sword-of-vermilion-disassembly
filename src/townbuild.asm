@@ -14,10 +14,106 @@
 ;   Keltwick, Helwig, Tadcaster, Wyclif, Parma (town),
 ;   Swaffham, Excalabria, and final area.
 ;
-; RLE encoding: byte < $80 = literal tile index;
-; byte >= $80 = repeat next byte ($80 - byte) times.
+; ===========================================================================
+; TOWN TILEMAP FORMAT
+; ===========================================================================
+;
+; Town tilemaps use a 7-opcode RLE compression scheme different from the
+; overworld/cave format. Each tilemap blob is a stream of command bytes
+; processed by DecompressTilemap (src/cutscene.asm).
+;
+; STREAM HEADER (2 bytes, consumed by DecompressTilemap):
+;   Byte 0: width  (in tiles)
+;   Byte 1: height (in tiles)
+;
+; COMMAND BYTE ENCODING:
+;   Bits 7–5 = opcode  (3 bits, values 0–7)
+;   Bits 4–0 = count N (5 bits, N+1 elements are output per command)
+;
+;   op 0 — Literal run:    emit N+1 bytes each read from stream
+;   op 1 — Repeat 1 byte:  read 1 byte, emit it N+1 times
+;   op 2 — Repeat 2 bytes: read 2 bytes, emit pair N+1 times (2*(N+1) tiles)
+;   op 3 — Repeat 3 bytes: read 3 bytes, emit triple N+1 times
+;   op 4 — Repeat 4 bytes: read 4 bytes, emit quad N+1 times
+;   op 5 — Copy row-1:     copy N+1 tiles from 1 row back (relative to current pos)
+;   op 6 — Copy row-2:     copy N+1 tiles from 2 rows back
+;   op 7 — End of stream:  $FF byte = RTS (terminates decompression)
+;
+; OUTPUT INTERLEAVING:
+;   Each town has TWO tilemap blobs per plane (plane A and plane B), loaded by
+;   separate loader stubs (LoadTownTilemap_*_PlaneA / _PlaneB). Each blob is
+;   decompressed into an interleaved word buffer:
+;     - Primary blob writes to low bytes  (byte offset 0, stride +2)
+;     - Secondary blob writes to high bytes (byte offset 1, stride +2)
+;   Together the two blobs form a word-per-tile tilemap where each word is a
+;   Genesis VDP nametable entry: [palette|priority|flip|tile_id].
+;
+; PLANE A vs PLANE B:
+;   Each room index selects one loader from TownRoomTilemapPlaneAPtrs and one
+;   from TownRoomTilemapPlaneBPtrs (src/towndata.asm). Each loader sets:
+;     Tilemap_data_ptr_plane_a → pointer to blob for plane A data
+;     Tilemap_data_ptr_plane_b → pointer to blob for plane B data
+;   Some loaders branch on event flags to load an alternate tilemap set.
+;
+; ROOM INDEX RANGE:
+;   $00–$0F : Outdoor town areas (16 named towns)
+;   $10–$1F : Castle interiors (various sizes)
+;   $20–$35 : Building interiors (22 building types)
+;
+; TILEMAP DATA LABEL CONVENTION:
+;   TownTilemapData_<TownName>_Set[A|B]_Tgt[A|B]
+;     SetA / SetB = one of potentially multiple variant sets (e.g. pre/post event)
+;     TgtA / TgtB = which decompressor target (low/high byte interleave)
+;   BuildingTilemap_<XX>[A|B]_Plane[A|B]
+;     XX = 2-digit hex building type ID; A/B = entrance vs interior
+;
+; ===========================================================================
+; NPC ENTRY LIST FORMAT
+; ===========================================================================
+;
+; Each NpcEntryList_<Town> is structured as one or more "NPC groups":
+;   dc.l  <DialogueDispatch>    ; pointer to this group's dialogue handler
+;   npcEntry ...                ; one per NPC in this group (see macros.asm)
+;   npcEntry ...
+;   dc.w  $FFFF                 ; end-of-group sentinel
+;   dc.l  <NextDialogueDispatch>; optional: start of another group
+;   npcEntry ...
+;   dc.w  $FFFF
+;   ...                         ; list of groups ends at end of data
+;
+; npcEntry macro (macros.asm:464) expands to 14 bytes:
+;   +$00  dc.w  xpos            ; world X position (pixels)
+;   +$02  dc.w  ypos            ; world Y position (pixels)
+;   +$04  dc.w  tile            ; sprite tile ID
+;   +$06  dc.l  anim            ; pointer to sprite frame table
+;   +$0A  dc.l  tick            ; pointer to NPC AI/init routine
+;   +$0E  dc.b  attr            ; VDP attribute flags (palette, priority)
+;   +$0F  dc.b  solid           ; NPC_SOLID ($01) or NPC_PASSABLE ($00)
+;
+; ===========================================================================
+; NPC DATA TABLE FORMAT  (NpcDataTable_<Town>)
+; ===========================================================================
+;
+; The NpcDataTable is a separate array of fixed-size NPC records terminated
+; by $FFFF. Each record is 40 bytes:
+;   +$00  dc.w  ?,?             ; patrol start tile X, Y
+;   +$04  dc.w  ?,?             ; patrol speed or range
+;   +$08  dc.w  ?,?             ; ???
+;   +$0C  dc.w  ?,?             ; ???
+;   +$10  dc.w  dialog_state    ; NPC dialog state index
+;   +$12  dc.w  ?               ; ???
+;   +$14  dc.l  ?               ; pointer (dialog or route data)
+;   +$18  dc.w  ?,?             ; patrol waypoint B X, Y
+;   +$1C  dc.w  ?,?             ; ???
+;   +$20  dc.w  dialog_state_2  ; secondary dialog state index
+;   +$22  dc.w  ?               ; ???
+;   +$24  dc.l  ?               ; pointer
+;   ... (total: 36 data bytes + 4 bytes = 40 bytes per entry)
+;   Terminator: dc.b $FF, $FF
+;
+; NOTE: NpcDataTable field meanings are not yet fully reversed.
+;
 ;==============================================================
-
 ;==============================================================
 ; BUILDING TILEMAP RLE DATA
 ; RLE-compressed tile data for building interiors.

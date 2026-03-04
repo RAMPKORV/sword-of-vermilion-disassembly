@@ -1,6 +1,68 @@
 ; ===========================================================================
-; Map Data
+; src/mapdata.asm
 ; Overworld map pointer table, overworld sector data, cave room data
+; ===========================================================================
+;
+; MAP DATA OVERVIEW
+; -----------------
+; The world is divided into three map types, each with its own binary format
+; and decompressor:
+;
+;   1. OVERWORLD SECTORS  — 96 RLE-compressed sector files
+;   2. CAVE ROOMS         — 43 RLE-compressed room files
+;   3. TOWN TILEMAPS      — inline RLE in townbuild.asm (different compressor)
+;
+; ---------------------------------------------------------------------------
+; OVERWORLD SECTOR FORMAT  (data/maps/overworld/sector_X_Y.bin)
+; ---------------------------------------------------------------------------
+; The overworld is a 16×8 grid of sectors (128 total).
+; Sectors are indexed by (sector_x, sector_y), accessed as:
+;   index = sector_y * 16 + sector_x
+;   pointer = OverworldMaps[index]   (128-entry dc.l table)
+;
+; Each sector encodes a 16×16 tile map using a simple RLE scheme:
+;
+;   Byte < $80  → emit byte as a literal tile index
+;   Byte >= $80 → RLE run: count = (byte − $80), next byte is tile value;
+;                 emit tile (count) times
+;
+; Decompressor: DecompressMapSectorRLE (src/dungeon.asm)
+; Output: 256 tiles written into a buffer with 32-tile row stride
+;         (16 tiles of map data + 16 bytes of padding per row)
+;
+; The game loads a 3×3 window of 9 sectors around the player at all times
+; via Load9SectorMapWindow (src/dungeon.asm).
+;
+; Some OverworldMaps entries point to CaveMaps instead of sector data —
+; these mark overworld tiles that act as cave entrances.
+; Two entries (OverworldMapSector_40018, EnemySpriteData_FacingSide_Gfx_40020)
+; are small blobs that are NOT sector maps.
+;
+; ---------------------------------------------------------------------------
+; CAVE ROOM FORMAT  (data/maps/cave/room_NN.bin)
+; ---------------------------------------------------------------------------
+; Same RLE encoding as overworld sectors (byte < $80 literal, >= $80 run).
+; Decompressor: DecompressMapSectorRLE (same routine).
+; Output layout: same 16×16 grid with 32-tile stride.
+;
+; 44 rooms total (indices 0–28 + 31–43; indices 29–30 share room_28.bin).
+; Cave room pointer table: CaveMaps (44-entry dc.l table in this file).
+; Cave room index is the direct lookup key into CaveMaps.
+;
+; ---------------------------------------------------------------------------
+; TOWN TILEMAP FORMAT  (inline in src/townbuild.asm)
+; ---------------------------------------------------------------------------
+; See townbuild.asm file header and src/cutscene.asm:DecompressTilemap for
+; full documentation of the town-specific tilemap compression format.
+;
+; ---------------------------------------------------------------------------
+; MAP CONSTANTS (src/constants.asm)
+; ---------------------------------------------------------------------------
+;   MAP_RLE_TILE_COUNT    = $100   (256 tiles per sector/room)
+;   Player_map_sector_x   = $FFFFC???  current sector X
+;   Player_map_sector_y   = $FFFFC???  current sector Y
+;   Map_sector_*          = RAM buffers for the 9-sector window
+;
 ; ===========================================================================
 OverworldMaps: ; 128
 	dc.l	OverworldMaps_Map_3E1D4
