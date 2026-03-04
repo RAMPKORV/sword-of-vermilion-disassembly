@@ -64,7 +64,7 @@ EntryPoint_RegionCheck:
 	; D6 = RAM clear word count - 1 ($00003FFF = clear $10000 bytes)
 	; D7 = VDP register stride $8100 (added to each VDP init byte → cmd)
 	MOVE.w	-$1100(A1), D0	; read IO_version ($A10000)
-	ANDI.w	#$0F00, D0		; isolate region bits (bits 8-11)
+	ANDI.w	#IO_VERSION_REGION_MASK_W, D0	; isolate region bits (bits 8-11)
 	BEQ.b	EntryPoint_SkipSega	; 0 = no TMSS required
 	MOVE.l	#'SEGA', $2F00(A1)	; $A14000 — TMSS register: write 'SEGA' to unlock VDP
 EntryPoint_SkipSega:
@@ -190,15 +190,15 @@ VDPInitValues_End:
 ;   9. Enable interrupts and fall into MainGameLoop.
 ; -----------------------------------------------------------------------
 StartupSequence:
-	MOVE.w	#$0100, Z80_bus_request		; request Z80 bus
+	MOVE.w	#Z80_BUS_ON, Z80_bus_request		; request Z80 bus
 	MOVE.b	IO_ctrl_expansion, D0		; read expansion port control byte
-	MOVE.w	#0, Z80_bus_request		; release Z80 bus
+	MOVE.w	#Z80_BUS_OFF, Z80_bus_request		; release Z80 bus
 	BTST.l	#6, D0				; bit 6: expansion device connected?
 	BNE.w	StartupSequence_Init		; yes → skip InitVDP (device handles it)
 	JSR	InitVDP				; cold init: program all VDP registers
 StartupSequence_Init:
 	MOVE.b	IO_version, D0			; read hardware version register
-	ANDI.b	#$0F, D0			; isolate region/version nibble
+	ANDI.b	#IO_VERSION_REGION_MASK_B, D0	; isolate region/version nibble
 	BEQ.b	StartupSequence_SetupHardware	; 0 = no TMSS required (Model 2+)
 	MOVE.l	#'SEGA', TMSS_register		; Model 1: write TMSS unlock token
 StartupSequence_SetupHardware:

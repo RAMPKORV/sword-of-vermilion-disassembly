@@ -11,6 +11,8 @@ Z80_bus_request     = $A11100
 Z80_reset           = $A11200
 Z80_ram             = $A00000   ; Start of Z80 address space (8 KB)
 Z80_sound_ram       = $A00200   ; Sound driver data region in Z80 RAM
+Z80_BUS_ON          = $0100    ; Value written to Z80_bus_request to request the bus
+Z80_BUS_OFF         = $0000    ; Value written to Z80_bus_request to release the bus
 
 ; I/O Ports
 IO_version          = $A10001   ; Hardware version / region register
@@ -21,6 +23,8 @@ IO_init_status      = $A10008   ; I/O initialization status (longword)
 IO_ctrl_port_1      = $A10009   ; Controller 1 control port
 IO_ctrl_port_2      = $A1000B   ; Controller 2 control port
 IO_ctrl_expansion   = $A1000D   ; Expansion port control
+IO_VERSION_REGION_MASK_W = $0F00 ; Mask for region bits when IO_version read as word ($A10000)
+IO_VERSION_REGION_MASK_B = $0F   ; Mask for region/version nibble when IO_version read as byte
 IO_init_status_w    = $A1000C   ; I/O initialization status (word check)
 
 ; TMSS (Trademark Security System)

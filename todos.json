@@ -719,7 +719,7 @@
           "file": "init.asm",
           "priority": "medium",
           "effort": "small",
-          "status": "todo"
+          "status": "done"
         },
         {
           "id": "MAGIC-005",
