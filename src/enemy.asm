@@ -41,6 +41,11 @@ ClampProjectile_Kill_Loop_Done:
 	DBF	D7, ClampProjectile_Kill_Loop_Done
 	RTS
 
+
+; CalculateVelocityFromAngle
+; Convert obj_direction (0-7) into a fixed-point velocity vector
+; using SineTable and obj_pos_x_fixed as the speed scalar.
+; Output: obj_vel_x / obj_vel_y set on A5.
 CalculateVelocityFromAngle:
 	LEA	SineTable, A0
 	MOVE.l	obj_pos_x_fixed(A5), D0
@@ -97,6 +102,10 @@ UpdateObjectDisplayPosition:
 	MOVE.w	obj_screen_y(A5), obj_sort_key(A5)
 	RTS
 
+
+; UpdateObjectScreenPosition
+; Like CheckObjectOnScreen but deactivates the object instead of
+; randomising direction when it leaves the battle field.
 UpdateObjectScreenPosition:
 	MOVE.l	obj_world_x(A5), D0
 	SUB.l	obj_vel_x(A5), D0
@@ -130,6 +139,10 @@ DeactivateOffScreenObject_Loop:
 ; HandlePlayerTakeDamage
 ; Handle player taking damage from enemy collision
 ; Checks collision with enemy hitbox, applies damage, poison chance, and knockback
+
+; ======================================================================
+; Collision and Damage Helpers
+; ======================================================================
 HandlePlayerTakeDamage:
 	TST.b	Fade_out_lines_mask.w
 	BNE.w	HandlePlayerTakeDamage_Return
@@ -192,6 +205,10 @@ HandlePlayerTakeDamage_ApplyKnockback:
 HandlePlayerTakeDamage_Return:
 	RTS
 
+
+; CalculateAngleToObjectCentered
+; Variant of CalculateAngleBetweenObjects that biases the angle
+; toward the screen centre before computing the direction.
 CalculateAngleToObjectCentered:
 	MOVE.w	#$00A0, D2
 	MOVE.w	obj_world_x(A6), D0
@@ -248,6 +265,10 @@ CalculateAngleBetweenObjects_common_Loop5:
 	MOVE.b	(A1), D0
 	RTS
 
+
+; CheckEnemyCollision
+; AABB test between A5 and all active enemies in Enemy_list_ptr.
+; Zeroes velocity on A5 if an overlap is found.
 CheckEnemyCollision:
 	MOVEA.l	Enemy_list_ptr.w, A6
 	TST.w	Number_Of_Enemies.w
@@ -303,6 +324,14 @@ EnemyCollision_NextEnemy:
 EnemyCollision_NextEnemy_Loop:
 	RTS
 
+
+; ======================================================================
+; Death Rewards and Death Animation
+; ======================================================================
+
+; EnemyDeathReward_OneSprite
+; Award XP/kims, decrement enemy count, start death animation.
+; Deactivates the single child sprite slot.
 EnemyDeathReward_OneSprite:
 	MOVE.b	#SOUND_MAGIC_EFFECT, D0
 	JSR	QueueSoundEffect
@@ -325,6 +354,9 @@ EnemyDeathReward_OneSprite:
 	BCLR.b	#7, (A6)
 	RTS
 
+
+; EnemyDeathReward_TwoSprites
+; As EnemyDeathReward_OneSprite but deactivates two child sprite slots.
 EnemyDeathReward_TwoSprites:
 	MOVE.b	#SOUND_MAGIC_EFFECT, D0
 	JSR	QueueSoundEffect
@@ -351,6 +383,10 @@ EnemyDeathReward_TwoSprites:
 	BCLR.b	#7, (A6)
 	RTS
 
+
+; EnemyDeathAnimation
+; Per-frame tick for the death flash sequence.  Cycles through
+; EnemyDeathAnimation_Data tile indices; deactivates when done.
 EnemyDeathAnimation:
 	ADDQ.b	#1, obj_move_counter(A5)
 	LEA	EnemyDeathAnimation_Data, A0
@@ -367,6 +403,15 @@ EnemyDeathAnimation_Loop:
 	JSR	AddSpriteToDisplayList
 	RTS
 
+
+; ======================================================================
+; Enemy Type: StandardMelee
+; ======================================================================
+
+; InitEnemy_StandardMelee / InitEnemy_StandardMeleeAlt / InitEnemy_StandardMeleeFast
+; Set up two-sprite melee enemies that walk toward the player.
+; Alt uses a slightly wider primary sprite.
+; Fast uses a shorter animation mask for quicker walking animation.
 InitEnemy_StandardMelee:
 	BSR.w	InitEnemyAI
 	MOVE.w	#VRAM_TILE_ENEMY_BASE, obj_tile_index(A5)
@@ -499,6 +544,14 @@ EnemyTick_UpdateSprite:
 	JSR	AddSpriteToDisplayList
 	RTS
 
+
+; ======================================================================
+; Enemy Type: StalkPause
+; ======================================================================
+
+; InitEnemy_StalkPause / InitEnemy_StalkPauseAlt
+; Two-sprite melee enemy that randomly pauses its movement for a
+; period before resuming the chase.
 InitEnemy_StalkPause:
 	BSR.w	InitEnemyAI
 	MOVE.w	#VRAM_TILE_ENEMY_BASE, obj_tile_index(A5)
@@ -600,6 +653,14 @@ EnemyTick_StalkPause_Loop2:
 	JSR	AddSpriteToDisplayList
 	RTS
 
+
+; ======================================================================
+; Enemy Type: ProximityChase
+; ======================================================================
+
+; InitEnemy_ProximityChase
+; Two-sprite enemy that only chases when the player is within
+; ENEMY_CHASE_PROXIMITY pixels; otherwise stands still facing the player.
 InitEnemy_ProximityChase:
 	BSR.w	InitEnemyAI
 	MOVE.w	#VRAM_TILE_ENEMY_BASE, obj_tile_index(A5)
@@ -692,6 +753,14 @@ EnemyTick_ProximityChase_Loop2:
 	JSR	AddSpriteToDisplayList
 	RTS
 
+
+; ======================================================================
+; Enemy Type: FleeChase
+; ======================================================================
+
+; InitEnemy_FleeChase
+; Two-sprite enemy with random brief fleeing bursts mixed into
+; the normal chase behaviour.
 InitEnemy_FleeChase:
 	BSR.w	InitEnemyAI
 	MOVE.w	#VRAM_TILE_ENEMY_BASE, obj_tile_index(A5)
@@ -769,6 +838,14 @@ EnemyTick_FleeChase_Loop2:
 	JSR	AddSpriteToDisplayList
 	RTS
 
+
+; ======================================================================
+; Enemy Type: Bouncing
+; ======================================================================
+
+; InitEnemy_Bouncing
+; Two-sprite enemy that uses a stalk-pause movement style with a
+; bounce animation (child sprite offset above the main sprite).
 InitEnemy_Bouncing:
 	BSR.w	InitEnemyAI
 	MOVE.w	#VRAM_TILE_ENEMY_BASE, obj_tile_index(A5)
@@ -845,6 +922,14 @@ EnemyTick_Bouncing_Loop2:
 	JSR	AddSpriteToDisplayList
 	RTS
 
+
+; ======================================================================
+; Enemy Type: ProjectileFire
+; ======================================================================
+
+; InitEnemy_ProjectileFire
+; Two-sprite melee enemy that also spawns a linear projectile child
+; (ProjectileTick_Linear) from its current position.
 InitEnemy_ProjectileFire:
 	BSR.w	InitEnemyAI
 	BSR.w	SetObjectBoundsType1
@@ -972,6 +1057,10 @@ EnemySplit_UpdateSprite_Loop:
 ; ProjectileTick_Linear
 ; Tick function for straight-line projectiles.  Recalculates velocity
 ; each frame, advances position, and deactivates on out-of-bounds.
+
+; ======================================================================
+; Projectile: Linear
+; ======================================================================
 ProjectileTick_Linear:
 	BSR.w	CalculateVelocityFromAngle
 	BSR.w	UpdateObjectScreenPosition
@@ -1247,6 +1336,14 @@ EnemyCharge_UpdateSprite_Loop:
 	JSR	AddSpriteToDisplayList
 	RTS
 	
+
+; ======================================================================
+; Enemy Type: RandomShooter
+; ======================================================================
+
+; InitEnemy_RandomShooter
+; Two-sprite enemy that periodically randomises its facing direction
+; and fires a linear projectile when idle.
 InitEnemy_RandomShooter:
 	BSR.w	InitEnemyAI
 	BSR.w	InitEnemyProjectileSpeed
@@ -1322,6 +1419,15 @@ EnemyTick_RandomShooter_Move_Loop:
 	JSR	AddSpriteToDisplayList
 	RTS
 	
+
+; ======================================================================
+; Enemy Type: Teleporter
+; ======================================================================
+
+; InitEnemy_Teleporter
+; Single-sprite stationary enemy that teleports to a random position
+; on a random timer using SetRandomEnemyPosition.  Uses
+; CheckAndUpdateBattleTimer so it dies when the encounter timer runs out.
 InitEnemy_Teleporter:
 	BSR.w	InitEnemyAI
 	BSR.w	InitEnemyProjectileSpeed
@@ -1378,6 +1484,15 @@ EnemyTick_Teleporter_Loop3:
 EnemyTick_Teleporter_Loop4:
 	RTS
 	
+
+; ======================================================================
+; Enemy Type: BurstFire
+; ======================================================================
+
+; InitEnemy_BurstFire
+; Enemy that alternates between chasing and firing an 8-way burst of
+; ProjectileTick_Straight projectiles.  Uses the 4-state
+; EnemyAiChasePauseJumpTable.
 InitEnemy_BurstFire:
 	BSR.w	InitEnemyAI
 	BSR.w	SetObjectBoundsType1
@@ -1493,6 +1608,14 @@ EnemyAiChasePause_HandleDamage_Loop2:
 	JSR	AddSpriteToDisplayList(PC)
 	RTS
 	
+
+; ======================================================================
+; Projectile: Straight (8-direction burst)
+; ======================================================================
+
+; ProjectileTick_Straight
+; Single-sprite projectile that travels in a fixed direction until it
+; leaves the battle field.  Used by BurstFire and FastBurstShooter.
 ProjectileTick_Straight:
 	JSR	CalculateVelocityFromAngle(PC)
 	JSR	ClampProjectileToScreenBounds(PC)
@@ -1509,6 +1632,15 @@ ProjectileTick_Straight:
 ProjectileTick_Straight_Loop:
 	RTS
 	
+
+; ======================================================================
+; Enemy Type: HomingShooter
+; ======================================================================
+
+; InitEnemy_HomingShooter
+; Stationary enemy (uses CheckAndUpdateBattleTimer).  Randomly fires
+; an 8-way fan of ProjectileTick_Homing projectiles that home toward
+; the player.
 InitEnemy_HomingShooter:
 	BSR.w	InitEnemyAI
 	BSR.w	SetEnemyGraphicsParams
@@ -1601,6 +1733,15 @@ EnemyMultiProjectile_UpdateSprite_Loop:
 	JSR	AddSpriteToDisplayList
 	RTS
 	
+
+; ======================================================================
+; Projectile: Homing
+; ======================================================================
+
+; ProjectileTick_Homing
+; Homing projectile with a two-timer system: obj_attack_timer counts
+; down a brief arming delay before the projectile begins homing;
+; obj_knockback_timer is the total lifetime.
 ProjectileTick_Homing:
 	TST.w	obj_knockback_timer(A5)
 	BNE.w	ProjectileTick_Homing_Loop
@@ -1643,10 +1784,22 @@ EnemyChase_Move_Loop2:
 	JSR	AddSpriteToDisplayList
 	RTS
 	
+
+; ======================================================================
+; Child Sprite Helpers
+; ======================================================================
+
+; EnemyChildSpriteTick
+; Default tick function for passive child sprites; just adds them to
+; the display list.
 EnemyChildSpriteTick:
 	JSR	AddSpriteToDisplayList
 	RTS
 	
+
+; CopyPositionToLinkedSprite
+; Copy sprite_flags, screen_x, and screen_y (offset -16 px) from A5
+; to A6 for two-part enemy sprites drawn side-by-side.
 CopyPositionToLinkedSprite:
 	MOVE.b	obj_sprite_flags(A5), obj_sprite_flags(A6)
 	MOVE.w	obj_screen_x(A5), obj_screen_x(A6)
@@ -1656,6 +1809,10 @@ CopyPositionToLinkedSprite:
 	MOVE.w	obj_sort_key(A5), obj_sort_key(A6)
 	RTS
 	
+
+; CopyEnemyPositionToChildObject
+; Same as CopyPositionToLinkedSprite but offsets screen_y by -24 px
+; (used by enemies where the child sprite sits higher above the main).
 CopyEnemyPositionToChildObject:
 	MOVE.b	obj_sprite_flags(A5), obj_sprite_flags(A6)
 	MOVE.w	obj_screen_x(A5), obj_screen_x(A6)
@@ -1665,6 +1822,14 @@ CopyEnemyPositionToChildObject:
 	MOVE.w	obj_sort_key(A5), obj_sort_key(A6)
 	RTS
 	
+
+; ======================================================================
+; Enemy Type: FastBurstShooter
+; ======================================================================
+
+; InitEnemy_FastBurstShooter
+; Like HomingShooter but fires 8 ProjectileTick_Straight projectiles
+; at speed $380 instead of homing ones.  Uses CheckAndUpdateBattleTimer.
 InitEnemy_FastBurstShooter:
 	BSR.w	InitEnemyAI
 	BSR.w	SetEnemyGraphicsParams
@@ -1755,6 +1920,14 @@ EnemySpreadShot_UpdateSprite_Loop:
 	JSR	AddSpriteToDisplayList
 	RTS
 	
+
+; ======================================================================
+; Enemy Type: SequentialFire
+; ======================================================================
+
+; InitEnemy_SequentialFire
+; Moves toward the player, pauses, then fires a slow spread of
+; ProjectileTick_Spiral projectiles via an 8-phase jump table.
 InitEnemy_SequentialFire:
 	CLR.w	D0
 	MOVE.b	obj_next_offset(A5), D0
@@ -1907,6 +2080,15 @@ ProjectileTick_PostCollision_Loop3:
 	JSR	AddSpriteToDisplayList(PC)
 	RTS
 	
+
+; ======================================================================
+; Projectile: Spiral
+; ======================================================================
+
+; ProjectileTick_Spiral
+; Projectile that travels outward in an expanding spiral.  Uses
+; obj_xp_reward as a radius counter and obj_direction as the current
+; angle into SineTable.
 ProjectileTick_Spiral:
 	ADDQ.w	#1, obj_xp_reward(A5)
 	ADDQ.b	#4, obj_direction(A5)
@@ -1953,6 +2135,15 @@ ProjectileTick_Spiral_OutOfBounds_Loop:
 ProjectileTick_Spiral_OutOfBounds_Loop2:
 	RTS
 	
+
+; ======================================================================
+; Enemy Type: SpiralBurst
+; ======================================================================
+
+; InitEnemy_SpiralBurst
+; Boss-tier enemy that spawns groups of ProjectileTick_OrbitingSpiral
+; projectiles that orbit it before flying outward.  Uses
+; CheckAndUpdateBattleTimer and the EnemyAiSpiralJumpTable.
 InitEnemy_SpiralBurst:
 	BSR.w	InitEnemyAI
 	BSR.w	SetObjectBoundsType1
@@ -2098,6 +2289,15 @@ ProjectileTick2_PostCollision_Loop2:
 	JSR	AddSpriteToDisplayList(PC)
 	RTS
 	
+
+; ======================================================================
+; Projectile: OrbitingSpiral
+; ======================================================================
+
+; ProjectileTick_OrbitingSpiral
+; Orbits a centre point (obj_orbit_center_x / obj_attack_timer as Y)
+; with growing radius until ORBITING_SPIRAL_ORBIT_COUNT is reached,
+; then transitions to straight outward movement.
 ProjectileTick_OrbitingSpiral:
 	CMPI.w	#ORBITING_SPIRAL_ORBIT_COUNT, obj_xp_reward(A5)
 	BLT.w	ProjectileTick_OrbitingSpiral_Loop
@@ -2156,6 +2356,14 @@ ProjectileTick_OrbitingSpiral_OutOfBounds_Loop:
 ProjectileTick_OrbitingSpiral_OutOfBounds_Loop2:
 	RTS
 	
+
+; ======================================================================
+; Boss Type: OrbShield
+; ======================================================================
+
+; InitBoss_OrbShield
+; Initialises a large boss enemy with a single orbiting shield orb.
+; Main body uses BossTick_OrbShield; orb uses BossOrbTick_Static.
 InitBoss_OrbShield:
 	JSR	GetRandomNumber
 	MOVE.b	D0, obj_move_counter(A5)
@@ -2194,6 +2402,10 @@ InitBoss_OrbShield:
 	CLR.w	obj_vel_y(A5)
 	RTS
 	
+
+; BossTick_OrbShield
+; Per-frame tick: processes damage / invulnerability, then moves the
+; orb in a circular scatter pattern around the boss.
 BossTick_OrbShield:
 	TST.b	obj_invuln_timer(A5)
 	BLE.w	BossTick_OrbShield_Loop
@@ -2299,6 +2511,14 @@ EnemyTakeDamage2_CheckDeath_Loop5:
 	JSR	AddSpriteToDisplayList(PC)
 	RTS
 	
+
+; ======================================================================
+; Boss Type: MultiOrb
+; ======================================================================
+
+; InitBoss_MultiOrb
+; Large boss surrounded by 9 orbiting shield orbs (BossOrbTick_Static).
+; Uses BossTick_MultiOrb / BossDeathReward_MultiSprite.
 InitBoss_MultiOrb:
 	JSR	GetRandomNumber
 	MOVE.b	D0, obj_move_counter(A5)
@@ -2341,6 +2561,10 @@ InitBoss_MultiOrb_Done:
 	CLR.w	obj_vel_y(A5)
 	RTS
 	
+
+; BossTick_MultiOrb
+; Per-frame tick: damage / invulnerability; scatter-moves all 9 orbs
+; outward when HP falls below threshold.
 BossTick_MultiOrb:
 	TST.b	obj_invuln_timer(A5)
 	BLE.w	BossTick_MultiOrb_Loop
@@ -2474,6 +2698,14 @@ BossTakeDamage_CheckDeath_Loop5:
 	JSR	AddSpriteToDisplayList(PC)
 	RTS
 	
+
+; ======================================================================
+; Boss Type: OrbRing
+; ======================================================================
+
+; InitBoss_OrbRing
+; Large boss with a ring of 9 orbs positioned on a circle using
+; CalculateCircularPosition.  Uses BossTick_OrbRing.
 InitBoss_OrbRing:
 	JSR	GetRandomNumber
 	MOVE.b	D0, obj_move_counter(A5)
@@ -2537,6 +2769,10 @@ InitBoss_OrbRing_Done:
 	CLR.w	obj_vel_y(A5)
 	RTS
 	
+
+; BossTick_OrbRing
+; Per-frame tick: damage / invulnerability; rotates all ring orbs by
+; incrementing their angle index each frame.
 BossTick_OrbRing:
 	TST.b	obj_invuln_timer(A5)
 	BLE.w	BossTick_OrbRing_Loop
@@ -2649,6 +2885,11 @@ BossTakeDamage2_CheckDeath_Loop4:
 	JSR	AddSpriteToDisplayList(PC)
 	RTS
 
+
+; BossOrbTick_Static
+; Per-frame tick for individual boss orbs.  Zeroes velocity, syncs
+; screen position from world position, and calls HandlePlayerTakeDamage.
+; Skips AddSpriteToDisplayList if the orb is off-screen.
 BossOrbTick_Static:	
 	CLR.l	obj_vel_x(A5)
 	CLR.l	obj_vel_y(A5)
@@ -3153,6 +3394,10 @@ InitBoss1_Common_Done6:
 	BSR.w	DrawBossAttackGraphic1
 	RTS
 	
+
+; Boss1_MainTick
+; Per-frame tick: dispatch through BossAiStateJumpTable, then run
+; damage/palette, parallax, and player-collision helpers.
 Boss1_MainTick:
 	MOVE.w	Boss_ai_state.w, D0
 	ANDI.w	#$000F, D0
