@@ -2508,6 +2508,19 @@ SOUND_HYDRO_ICICLE          = $00BA   ; Hydro boss icicle spawn (1 use)
 SOUND_CHEST_RATTLE          = $00BB   ; Chest begins animating/rattling (1 use)
 SOUND_ALARM_CLOCK           = $00C1   ; Alarm Clock item use (1 use)
 
+; Sound IDs confirmed from DebugSoundID_Table BGM/Effect/DA arrays in miscdata.asm:
+SOUND_DUNGEON_MUSIC         = $008A   ; Dungeon BGM (DebugBGM row 11)
+SOUND_VILLAGE_A_MUSIC       = $008B   ; Village A BGM (DebugBGM row 6)
+SOUND_SHOP_CITY_MUSIC       = $008C   ; Shop (City) BGM (DebugBGM row 8)
+SOUND_ERIAS_MUSIC           = $008F   ; Erias/Areas overworld BGM (DebugBGM row 5)
+SOUND_CHURCH_MUSIC          = $0091   ; Church BGM (DebugBGM row 10)
+SOUND_SHOP_VILLAGE_MUSIC    = $0095   ; Shop (Village) BGM (DebugBGM row 9)
+SOUND_CASTLE_MUSIC          = $0096   ; Castle BGM (DebugBGM row 17)
+SOUND_JIJI_THEME            = $0097   ; Jiji character theme BGM (DebugBGM row 19)
+SOUND_DUNGEON2_MUSIC        = $0098   ; Dungeon 2 BGM (DebugBGM row 12)
+SOUND_ENEMY_APPEAR_JINGLE   = $009A   ; Enemy appear jingle/sting (DebugBGM2 row 10)
+SOUND_THUNDER_HI            = $00B7   ; Thunder D/A high variant (DebugDA row 2)
+
 ; Sound script byte threshold: bytes < $E0 are note values; bytes >= $E0 are commands.
 SOUND_SCRIPT_CMD_THRESHOLD  = $E0   ; BCS/BCC boundary in SoundChannel_NoteLoop
 
