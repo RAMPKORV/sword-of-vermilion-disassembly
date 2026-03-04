@@ -43,15 +43,15 @@ DebugTestMenu:
 	CLR.w	DebugMenu_selected_item.w
 	CLR.w	DebugMenu_scroll_pos.w
 	JSR	ClearVRAMScrollAndPlanes        ; clear VRAM HScroll/PlaneA/PlaneB/sprites/VSRAM
-	LEA	loc_0003D1BC, A0                ; parallax row 0 config
+	LEA	DebugMenu_Row_InputTest, A0                ; parallax row 0 config
 	JSR	BossParallaxEntry_Start
-	LEA	loc_0003D1D0, A0                ; parallax row 1 config
+	LEA	DebugMenu_Row_SoundTest, A0                ; parallax row 1 config
 	JSR	BossParallaxEntry_Start
-	LEA	loc_0003D1E4, A0                ; parallax row 2 config
+	LEA	DebugMenu_Row_CRTTest, A0                ; parallax row 2 config
 	JSR	BossParallaxEntry_Start
-	LEA	loc_0003D1F8, A0                ; parallax row 3 config
+	LEA	DebugMenu_Row_Exit, A0                ; parallax row 3 config
 	JSR	BossParallaxEntry_Start
-	LEA	loc_0003D204, A0                ; parallax row 4 config (shared footer)
+	LEA	DebugMenu_Row_SelectInstruction, A0                ; parallax row 4 config (shared footer)
 	JSR	BossParallaxEntry_Start
 DebugTestMenu_WaitLoop:
 	JSR	WaitForVBlank
@@ -91,23 +91,23 @@ DebugInputTest:
 	MOVE.w	#$0054, Palette_line_2_index.w
 	JSR	LoadPalettesFromTable
 	JSR	ClearVRAMScrollAndPlanes        ; clear VRAM
-	LEA	loc_0003D22C, A0
+	LEA	DebugInputTest_Row_Up, A0
 	JSR	BossParallaxEntry_Start
-	LEA	loc_0003D236, A0
+	LEA	DebugInputTest_Row_Down, A0
 	JSR	BossParallaxEntry_Start
-	LEA	loc_0003D242, A0
+	LEA	DebugInputTest_Row_Left, A0
 	JSR	BossParallaxEntry_Start
-	LEA	loc_0003D24E, A0
+	LEA	DebugInputTest_Row_Right, A0
 	JSR	BossParallaxEntry_Start
-	LEA	loc_0003D25C, A0
+	LEA	DebugInputTest_Row_A, A0
 	JSR	BossParallaxEntry_Start
-	LEA	loc_0003D266, A0
+	LEA	DebugInputTest_Row_B, A0
 	JSR	BossParallaxEntry_Start
-	LEA	loc_0003D270, A0
+	LEA	DebugInputTest_Row_C, A0
 	JSR	BossParallaxEntry_Start
-	LEA	loc_0003D27A, A0
+	LEA	DebugInputTest_Row_Start, A0
 	JSR	BossParallaxEntry_Start
-	LEA	loc_0003D288, A0
+	LEA	DebugInputTest_Row_Title, A0
 	JSR	BossParallaxEntry_Start
 DebugInputTest_Loop:
 	JSR	ReadControllers
@@ -209,17 +209,17 @@ DebugSoundTest:
 	CLR.w	DebugMenu_selected_item.w
 	CLR.w	DebugMenu_scroll_pos.w
 	JSR	ClearVRAMScrollAndPlanes        ; clear VRAM
-	LEA	loc_0003D29A, A0
+	LEA	DebugSoundTest_Row_BGM, A0
 	JSR	BossParallaxEntry_Start
-	LEA	loc_0003D2AA, A0
+	LEA	DebugSoundTest_Row_Effect, A0
 	JSR	BossParallaxEntry_Start
-	LEA	loc_0003D2BC, A0
+	LEA	DebugSoundTest_Row_BGM2, A0
 	JSR	BossParallaxEntry_Start
-	LEA	loc_0003D2CE, A0
+	LEA	DebugSoundTest_Row_DA, A0
 	JSR	BossParallaxEntry_Start
-	LEA	loc_0003D1F8, A0                ; shared footer row
+	LEA	DebugMenu_Row_Exit, A0                ; shared footer row
 	JSR	BossParallaxEntry_Start
-	LEA	loc_0003D204, A0                ; shared footer row
+	LEA	DebugMenu_Row_SelectInstruction, A0                ; shared footer row
 	JSR	BossParallaxEntry_Start
 DebugSoundTest_WaitLoop:
 	JSR	WaitForVBlank
@@ -261,7 +261,7 @@ DebugSoundCategory_SubWaitLoop:             ; shared wait loop for all categorie
 	MOVE.w	DebugMenu_sound_item.w, D1
 	CMPI.w	#$0013, D1                      ; ≥ 19 entries → exit sub-menu
 	BGE.w	DebugSoundCategory_SubDone
-	LEA	loc_0003D880, A0                ; pointer table: category → sound-ID table
+	LEA	DebugSoundID_Table, A0                ; pointer table: category → sound-ID table
 	MOVE.w	DebugMenu_sound_category.w, D0
 	ADD.w	D0, D0                          ; category × 4 (long pointers)
 	ADD.w	D0, D0
@@ -282,193 +282,193 @@ DebugSoundCategory_JumpTable:
 
 ; DebugSoundCategory_BGM ($3CADA) — load BGM parallax tiles then enter sub-loop
 DebugSoundCategory_BGM:
-	LEA	loc_0003D2DE, A0
+	LEA	DebugBGM_Row_Opening, A0
 	JSR	BossParallaxEntry_Start
-	LEA	loc_0003D2F0, A0
+	LEA	DebugBGM_Row_Title, A0
 	JSR	BossParallaxEntry_Start
-	LEA	loc_0003D300, A0
+	LEA	DebugBGM_Row_NameEntry, A0
 	JSR	BossParallaxEntry_Start
-	LEA	loc_0003D314, A0
+	LEA	DebugBGM_Row_Stats, A0
 	JSR	BossParallaxEntry_Start
-	LEA	loc_0003D324, A0
+	LEA	DebugBGM_Row_Areas, A0
 	JSR	BossParallaxEntry_Start
-	LEA	loc_0003D334, A0
+	LEA	DebugBGM_Row_VillageA, A0
 	JSR	BossParallaxEntry_Start
-	LEA	loc_0003D348, A0
+	LEA	DebugBGM_Row_Fuyodol, A0
 	JSR	BossParallaxEntry_Start
-	LEA	loc_0003D35A, A0
+	LEA	DebugBGM_Row_ShopCity, A0
 	JSR	BossParallaxEntry_Start
-	LEA	loc_0003D370, A0
+	LEA	DebugBGM_Row_ShopVillage, A0
 	JSR	BossParallaxEntry_Start
-	LEA	loc_0003D388, A0
+	LEA	DebugBGM_Row_Church, A0
 	JSR	BossParallaxEntry_Start
-	LEA	loc_0003D39A, A0
+	LEA	DebugBGM_Row_Dungeon, A0
 	JSR	BossParallaxEntry_Start
-	LEA	loc_0003D3AC, A0
+	LEA	DebugBGM_Row_Dungeon2, A0
 	JSR	BossParallaxEntry_Start
-	LEA	loc_0003D3C0, A0
+	LEA	DebugBGM_Row_BossA, A0
 	JSR	BossParallaxEntry_Start
-	LEA	loc_0003D3D2, A0
+	LEA	DebugBGM_Row_BossB, A0
 	JSR	BossParallaxEntry_Start
-	LEA	loc_0003D3E4, A0
+	LEA	DebugBGM_Row_3DMode, A0
 	JSR	BossParallaxEntry_Start
-	LEA	loc_0003D3F6, A0
+	LEA	DebugBGM_Row_Battle, A0
 	JSR	BossParallaxEntry_Start
-	LEA	loc_0003D408, A0
+	LEA	DebugBGM_Row_Castle, A0
 	JSR	BossParallaxEntry_Start
-	LEA	loc_0003D41A, A0
+	LEA	DebugBGM_Row_PlayerDead, A0
 	JSR	BossParallaxEntry_Start
-	LEA	loc_0003D430, A0
+	LEA	DebugBGM_Row_JijiTheme, A0
 	JSR	BossParallaxEntry_Start
-	LEA	loc_0003D446, A0                ; shared footer row
+	LEA	DebugSound_Row_Exit, A0                ; shared footer row
 	JSR	BossParallaxEntry_Start
-	LEA	loc_0003D456, A0                ; shared footer row
+	LEA	DebugSound_Row_SoundTestTitle, A0                ; shared footer row
 	JSR	BossParallaxEntry_Start
-	LEA	loc_0003D204, A0                ; shared footer row
+	LEA	DebugMenu_Row_SelectInstruction, A0                ; shared footer row
 	JSR	BossParallaxEntry_Start
 	RTS
 
 ; DebugSoundCategory_Effect ($3CBE4) — load Effect parallax tiles
 DebugSoundCategory_Effect:
-	LEA	loc_0003D468, A0
+	LEA	DebugEffect_Row_WindowOpen, A0
 	JSR	BossParallaxEntry_Start
-	LEA	loc_0003D47E, A0
+	LEA	DebugEffect_Row_CommandSet, A0
 	JSR	BossParallaxEntry_Start
-	LEA	loc_0003D494, A0
+	LEA	DebugEffect_Row_CommandCancel, A0
 	JSR	BossParallaxEntry_Start
-	LEA	loc_0003D4AC, A0
+	LEA	DebugEffect_Row_CommandSelect, A0
 	JSR	BossParallaxEntry_Start
-	LEA	loc_0003D4C4, A0
+	LEA	DebugEffect_Row_Talking, A0
 	JSR	BossParallaxEntry_Start
-	LEA	loc_0003D4D6, A0
+	LEA	DebugEffect_Row_IntoHouse, A0
 	JSR	BossParallaxEntry_Start
-	LEA	loc_0003D4EA, A0
+	LEA	DebugEffect_Row_Ring, A0
 	JSR	BossParallaxEntry_Start
-	LEA	loc_0003D4F8, A0
+	LEA	DebugEffect_Row_Star, A0
 	JSR	BossParallaxEntry_Start
-	LEA	loc_0003D506, A0
+	LEA	DebugEffect_Row_GetItem, A0
 	JSR	BossParallaxEntry_Start
-	LEA	loc_0003D51C, A0
+	LEA	DebugEffect_Row_OpenBox, A0
 	JSR	BossParallaxEntry_Start
-	LEA	loc_0003D530, A0
+	LEA	DebugEffect_Row_DoorKnock, A0
 	JSR	BossParallaxEntry_Start
-	LEA	loc_0003D546, A0
+	LEA	DebugEffect_Row_Light, A0
 	JSR	BossParallaxEntry_Start
-	LEA	loc_0003D556, A0
+	LEA	DebugEffect_Row_Recover, A0
 	JSR	BossParallaxEntry_Start
-	LEA	loc_0003D568, A0
+	LEA	DebugEffect_Row_Water, A0
 	JSR	BossParallaxEntry_Start
-	LEA	loc_0003D578, A0
+	LEA	DebugEffect_Row_Fire2, A0
 	JSR	BossParallaxEntry_Start
-	LEA	loc_0003D58A, A0
+	LEA	DebugEffect_Row_Fire3, A0
 	JSR	BossParallaxEntry_Start
-	LEA	loc_0003D59C, A0
+	LEA	DebugEffect_Row_Electric, A0
 	JSR	BossParallaxEntry_Start
-	LEA	loc_0003D5B0, A0
+	LEA	DebugEffect_Row_Bomber, A0
 	JSR	BossParallaxEntry_Start
-	LEA	loc_0003D5C2, A0
+	LEA	DebugEffect_Row_Clock, A0
 	JSR	BossParallaxEntry_Start
-	LEA	loc_0003D446, A0                ; shared footer row
+	LEA	DebugSound_Row_Exit, A0                ; shared footer row
 	JSR	BossParallaxEntry_Start
-	LEA	loc_0003D456, A0                ; shared footer row
+	LEA	DebugSound_Row_SoundTestTitle, A0                ; shared footer row
 	JSR	BossParallaxEntry_Start
-	LEA	loc_0003D204, A0                ; shared footer row
+	LEA	DebugMenu_Row_SelectInstruction, A0                ; shared footer row
 	JSR	BossParallaxEntry_Start
 	RTS
 
 ; DebugSoundCategory_BGM2 ($3CCEE) — load BGM2 parallax tiles
 DebugSoundCategory_BGM2:
-	LEA	loc_0003D5D2, A0
+	LEA	DebugBGM2_Row_EnemyAppear, A0
 	JSR	BossParallaxEntry_Start
-	LEA	loc_0003D5E8, A0
+	LEA	DebugBGM2_Row_Rest, A0
 	JSR	BossParallaxEntry_Start
-	LEA	loc_0003D5F6, A0
+	LEA	DebugBGM2_Row_LevelUp, A0
 	JSR	BossParallaxEntry_Start
-	LEA	loc_0003D608, A0
+	LEA	DebugBGM2_Row_Warp, A0
 	JSR	BossParallaxEntry_Start
-	LEA	loc_0003D616, A0
+	LEA	DebugBGM2_Row_SetFlag, A0
 	JSR	BossParallaxEntry_Start
-	LEA	loc_0003D628, A0
+	LEA	DebugBGM2_Row_EnemyMelt, A0
 	JSR	BossParallaxEntry_Start
-	LEA	loc_0003D63C, A0
+	LEA	DebugBGM2_Row_EnemyDelete, A0
 	JSR	BossParallaxEntry_Start
-	LEA	loc_0003D652, A0
+	LEA	DebugBGM2_Row_Earthquake, A0
 	JSR	BossParallaxEntry_Start
-	LEA	loc_0003D666, A0
+	LEA	DebugBGM2_Row_Ending, A0
 	JSR	BossParallaxEntry_Start
-	LEA	loc_0003D676, A0
+	LEA	DebugBGM2_Row_LastCity, A0
 	JSR	BossParallaxEntry_Start
-	LEA	loc_0003D68A, A0
+	LEA	DebugBGM2_Row_LightSong, A0
 	JSR	BossParallaxEntry_Start
-	LEA	loc_0003D6A0, A0
+	LEA	DebugBGM2_Row_DoorOpen, A0
 	JSR	BossParallaxEntry_Start
-	LEA	loc_0003D6B4, A0
+	LEA	DebugBGM2_Row_DoorClose, A0
 	JSR	BossParallaxEntry_Start
-	LEA	loc_0003D6CA, A0
+	LEA	DebugBGM2_Row_Ending2, A0
 	JSR	BossParallaxEntry_Start
-	LEA	loc_0003D6DE, A0
+	LEA	DebugBGM2_Row_Empty15, A0
 	JSR	BossParallaxEntry_Start
-	LEA	loc_0003D6EA, A0
+	LEA	DebugBGM2_Row_Empty16, A0
 	JSR	BossParallaxEntry_Start
-	LEA	loc_0003D6F6, A0
+	LEA	DebugBGM2_Row_Empty17, A0
 	JSR	BossParallaxEntry_Start
-	LEA	loc_0003D702, A0
+	LEA	DebugBGM2_Row_Empty18, A0
 	JSR	BossParallaxEntry_Start
-	LEA	loc_0003D70E, A0
+	LEA	DebugBGM2_Row_Empty19, A0
 	JSR	BossParallaxEntry_Start
-	LEA	loc_0003D446, A0                ; shared footer row
+	LEA	DebugSound_Row_Exit, A0                ; shared footer row
 	JSR	BossParallaxEntry_Start
-	LEA	loc_0003D456, A0                ; shared footer row
+	LEA	DebugSound_Row_SoundTestTitle, A0                ; shared footer row
 	JSR	BossParallaxEntry_Start
-	LEA	loc_0003D204, A0                ; shared footer row
+	LEA	DebugMenu_Row_SelectInstruction, A0                ; shared footer row
 	JSR	BossParallaxEntry_Start
 	RTS
 
 ; DebugSoundCategory_DA ($3CDF8) — load D/A parallax tiles
 DebugSoundCategory_DA:
-	LEA	loc_0003D71A, A0
+	LEA	DebugDA_Row_ThunderLow, A0
 	JSR	BossParallaxEntry_Start
-	LEA	loc_0003D730, A0
+	LEA	DebugDA_Row_ThunderHi, A0
 	JSR	BossParallaxEntry_Start
-	LEA	loc_0003D744, A0
+	LEA	DebugDA_Row_EnemyDamage, A0
 	JSR	BossParallaxEntry_Start
-	LEA	loc_0003D75A, A0
+	LEA	DebugDA_Row_EnemyDead, A0
 	JSR	BossParallaxEntry_Start
-	LEA	loc_0003D76E, A0
+	LEA	DebugDA_Row_PlayerDamage, A0
 	JSR	BossParallaxEntry_Start
-	LEA	loc_0003D786, A0
+	LEA	DebugDA_Row_PlayerDead, A0
 	JSR	BossParallaxEntry_Start
-	LEA	loc_0003D79C, A0
+	LEA	DebugDA_Row_Sword1, A0
 	JSR	BossParallaxEntry_Start
-	LEA	loc_0003D7AE, A0
+	LEA	DebugDA_Row_Sword2, A0
 	JSR	BossParallaxEntry_Start
-	LEA	loc_0003D7C0, A0
+	LEA	DebugDA_Row_Sword3, A0
 	JSR	BossParallaxEntry_Start
-	LEA	loc_0003D7D2, A0
+	LEA	DebugDA_Row_Sword4, A0
 	JSR	BossParallaxEntry_Start
-	LEA	loc_0003D7E4, A0
+	LEA	DebugDA_Row_Empty11, A0
 	JSR	BossParallaxEntry_Start
-	LEA	loc_0003D7F0, A0
+	LEA	DebugDA_Row_Empty12, A0
 	JSR	BossParallaxEntry_Start
-	LEA	loc_0003D7FC, A0
+	LEA	DebugDA_Row_Empty13, A0
 	JSR	BossParallaxEntry_Start
-	LEA	loc_0003D808, A0
+	LEA	DebugDA_Row_Empty14, A0
 	JSR	BossParallaxEntry_Start
-	LEA	loc_0003D814, A0
+	LEA	DebugDA_Row_Empty15, A0
 	JSR	BossParallaxEntry_Start
-	LEA	loc_0003D820, A0
+	LEA	DebugDA_Row_Empty16, A0
 	JSR	BossParallaxEntry_Start
-	LEA	loc_0003D82C, A0
+	LEA	DebugDA_Row_Empty17, A0
 	JSR	BossParallaxEntry_Start
-	LEA	loc_0003D838, A0
+	LEA	DebugDA_Row_Empty18, A0
 	JSR	BossParallaxEntry_Start
-	LEA	loc_0003D844, A0
+	LEA	DebugDA_Row_Empty19, A0
 	JSR	BossParallaxEntry_Start
-	LEA	loc_0003D446, A0                ; shared footer row
+	LEA	DebugSound_Row_Exit, A0                ; shared footer row
 	JSR	BossParallaxEntry_Start
-	LEA	loc_0003D456, A0                ; shared footer row
+	LEA	DebugSound_Row_SoundTestTitle, A0                ; shared footer row
 	JSR	BossParallaxEntry_Start
-	LEA	loc_0003D204, A0                ; shared footer row
+	LEA	DebugMenu_Row_SelectInstruction, A0                ; shared footer row
 	JSR	BossParallaxEntry_Start
 	RTS
 
@@ -478,9 +478,9 @@ DebugSoundCategory_DA:
 DebugCRTTest:
 	JSR	loc_000010D8                    ; CLR Vblank_flag + WaitForVBlank
 	JSR	ClearVRAMScrollAndPlanes        ; clear VRAM
-	LEA	loc_0003D850, A0
+	LEA	DebugCRTTest_Row_Title, A0
 	JSR	BossParallaxEntry_Start
-	LEA	loc_0003D862, A0
+	LEA	DebugCRTTest_Row_ExitInstruction, A0
 	JSR	BossParallaxEntry_Start
 	BSR.w	DebugCRT_DrawGrayGradient       ; draw 8×16 gray ramp on screen
 	MOVE.w	#$0055, Palette_line_0_index.w
@@ -689,268 +689,268 @@ DebugMenu_ScrollTick_PrevSubItem_Done:
 ; Each record: dc.l VDP-control-word, dc.w column-count, dc.w base-offset,
 ;              then (column-count+1) bytes of HScroll data
 ; ---------------------------------------------------------------------------
-loc_0003D1BC:
+DebugMenu_Row_InputTest:
 	dc.b	$44, $08, $00, $03, $00, $0B, $84, $C0, $49, $4E, $50, $55, $54, $20, $20, $20
 	dc.b	$54, $45, $53, $54
-loc_0003D1D0:
+DebugMenu_Row_SoundTest:
 	dc.b	$45, $08, $00, $03, $00, $0B, $84, $C0, $53, $4F, $55, $4E, $44, $20, $20, $20
 	dc.b	$54, $45, $53, $54
-loc_0003D1E4:
+DebugMenu_Row_CRTTest:
 	dc.b	$46, $08, $00, $03, $00, $0B, $84, $C0, $43, $2E, $52, $2E, $54, $2E, $20, $20
 	dc.b	$54, $45, $53, $54
-loc_0003D1F8:
+DebugMenu_Row_Exit:
 	dc.b	$4A, $08, $00, $03, $00, $03, $84, $C0, $45, $58, $49, $54
-loc_0003D204:
+DebugMenu_Row_SelectInstruction:
 	dc.b	$4D, $06, $00, $03, $00, $1E, $84, $C0, $53, $45, $4C, $45, $43, $54, $20, $42
 	dc.b	$59, $20, $53, $54, $49, $43, $4B, $21, $20, $50, $55, $53, $48, $20, $41, $20
 	dc.b	$42, $55, $54, $54, $4F, $4E, $21, $00
-loc_0003D22C:
+DebugInputTest_Row_Up:
 	dc.b	$44, $16, $00, $03, $00, $01, $84, $C0, $55, $50
-loc_0003D236:
+DebugInputTest_Row_Down:
 	dc.b	$4A, $14, $00, $03, $00, $03, $84, $C0, $44, $4F, $57, $4E
-loc_0003D242:
+DebugInputTest_Row_Left:
 	dc.b	$47, $06, $00, $03, $00, $03, $84, $C0, $4C, $45, $46, $54
-loc_0003D24E:
+DebugInputTest_Row_Right:
 	dc.b	$47, $20, $00, $03, $00, $04, $84, $C0, $52, $49, $47, $48, $54, $00
-loc_0003D25C:
+DebugInputTest_Row_A:
 	dc.b	$4B, $2E, $00, $03, $00, $00, $84, $C0, $41, $00
-loc_0003D266:
+DebugInputTest_Row_B:
 	dc.b	$49, $B4, $00, $03, $00, $00, $84, $C0, $42, $00
-loc_0003D270:
+DebugInputTest_Row_C:
 	dc.b	$48, $3A, $00, $03, $00, $00, $84, $C0, $43, $00
-loc_0003D27A:
+DebugInputTest_Row_Start:
 	dc.b	$44, $30, $00, $03, $00, $04, $84, $C0, $53, $54, $41, $52, $54, $00
-loc_0003D288:
+DebugInputTest_Row_Title:
 	dc.b	$40, $9C, $00, $03, $00, $09, $A4, $C0, $49, $4E, $50, $55, $54, $20, $54, $45
 	dc.b	$53, $54
-loc_0003D29A:
+DebugSoundTest_Row_BGM:
 	dc.b	$44, $08, $00, $03, $00, $06, $84, $C0, $31, $2E, $20, $20, $42, $47, $4D, $00
-loc_0003D2AA:
+DebugSoundTest_Row_Effect:
 	dc.b	$45, $08, $00, $03, $00, $09, $84, $C0, $32, $2E, $20, $20, $45, $46, $46, $45
 	dc.b	$43, $54
-loc_0003D2BC:
+DebugSoundTest_Row_BGM2:
 	dc.b	$46, $08, $00, $03, $00, $08, $84, $C0, $33, $2E, $20, $20, $42, $47, $4D, $20
 	dc.b	$32, $00
-loc_0003D2CE:
+DebugSoundTest_Row_DA:
 	dc.b	$47, $08, $00, $03, $00, $06, $84, $C0, $34, $2E, $20, $20, $44, $2F, $41, $00
-loc_0003D2DE:
+DebugBGM_Row_Opening:
 	dc.b	$42, $0A, $00, $03, $00, $08, $84, $C0, $31, $2E, $4F, $50, $45, $4E, $49, $4E
 	dc.b	$47, $00
-loc_0003D2F0:
+DebugBGM_Row_Title:
 	dc.b	$43, $0A, $00, $03, $00, $06, $84, $C0, $32, $2E, $54, $49, $54, $4C, $45, $00
-loc_0003D300:
+DebugBGM_Row_NameEntry:
 	dc.b	$44, $0A, $00, $03, $00, $0B, $84, $C0, $33, $2E, $4E, $41, $4D, $45, $20, $45
 	dc.b	$4E, $54, $52, $59
-loc_0003D314:
+DebugBGM_Row_Stats:
 	dc.b	$45, $0A, $00, $03, $00, $07, $84, $C0, $34, $2E, $53, $54, $41, $54, $54, $53
-loc_0003D324:
+DebugBGM_Row_Areas:
 	dc.b	$46, $0A, $00, $03, $00, $06, $84, $C0, $35, $2E, $45, $52, $49, $41, $53, $00
-loc_0003D334:
+DebugBGM_Row_VillageA:
 	dc.b	$47, $0A, $00, $03, $00, $0A, $84, $C0, $36, $2E, $56, $49, $4C, $4C, $41, $47
 	dc.b	$45, $20, $41, $00
-loc_0003D348:
+DebugBGM_Row_Fuyodol:
 	dc.b	$48, $0A, $00, $03, $00, $08, $84, $C0, $37, $2E, $46, $55, $59, $4F, $44, $4F
 	dc.b	$4C, $00
-loc_0003D35A:
+DebugBGM_Row_ShopCity:
 	dc.b	$49, $0A, $00, $03, $00, $0C, $84, $C0, $38, $2E, $53, $48, $4F, $50, $20, $28
 	dc.b	$43, $49, $54, $59, $29, $00
-loc_0003D370:
+DebugBGM_Row_ShopVillage:
 	dc.b	$4A, $0A, $00, $03, $00, $0F, $84, $C0, $39, $2E, $53, $48, $4F, $50, $20, $28
 	dc.b	$56, $49, $4C, $4C, $41, $47, $45, $29
-loc_0003D388:
+DebugBGM_Row_Church:
 	dc.b	$4B, $08, $00, $03, $00, $08, $84, $C0, $31, $30, $2E, $43, $48, $55, $52, $43
 	dc.b	$48, $00
-loc_0003D39A:
+DebugBGM_Row_Dungeon:
 	dc.b	$42, $30, $00, $03, $00, $09, $84, $C0, $31, $31, $2E, $44, $55, $4E, $47, $45
 	dc.b	$4F, $4E
-loc_0003D3AC:
+DebugBGM_Row_Dungeon2:
 	dc.b	$43, $30, $00, $03, $00, $0B, $84, $C0, $31, $32, $2E, $44, $55, $4E, $47, $45
 	dc.b	$4F, $4E, $20, $32
-loc_0003D3C0:
+DebugBGM_Row_BossA:
 	dc.b	$44, $30, $00, $03, $00, $08, $84, $C0, $31, $33, $2E, $42, $4F, $53, $53, $20
 	dc.b	$41, $00
-loc_0003D3D2:
+DebugBGM_Row_BossB:
 	dc.b	$45, $30, $00, $03, $00, $08, $84, $C0, $31, $34, $2E, $42, $4F, $53, $53, $20
 	dc.b	$42, $00
-loc_0003D3E4:
+DebugBGM_Row_3DMode:
 	dc.b	$46, $30, $00, $03, $00, $09, $84, $C0, $31, $35, $2E, $33, $44, $20, $4D, $4F
 	dc.b	$44, $45
-loc_0003D3F6:
+DebugBGM_Row_Battle:
 	dc.b	$47, $30, $00, $03, $00, $08, $84, $C0, $31, $36, $2E, $42, $41, $54, $54, $4C
 	dc.b	$45, $00
-loc_0003D408:
+DebugBGM_Row_Castle:
 	dc.b	$48, $30, $00, $03, $00, $08, $84, $C0, $31, $37, $2E, $43, $41, $53, $54, $4C
 	dc.b	$45, $00
-loc_0003D41A:
+DebugBGM_Row_PlayerDead:
 	dc.b	$49, $30, $00, $03, $00, $0D, $84, $C0, $31, $38, $2E, $50, $4C, $41, $59, $45
 	dc.b	$52, $20, $44, $45, $41, $44
-loc_0003D430:
+DebugBGM_Row_JijiTheme:
 	dc.b	$4A, $30, $00, $03, $00, $0C, $84, $C0, $31, $39, $2E, $4A, $49, $4A, $49, $20
 	dc.b	$54, $48, $45, $4D, $45, $00
-loc_0003D446:
+DebugSound_Row_Exit:
 	dc.b	$4B, $30, $00, $03, $00, $07, $84, $C0, $32, $30, $2E, $20, $45, $58, $49, $54
-loc_0003D456:
+DebugSound_Row_SoundTestTitle:
 	dc.b	$41, $1C, $00, $03, $00, $09, $A4, $C0, $53, $4F, $55, $4E, $44, $20, $54, $45
 	dc.b	$53, $54
-loc_0003D468:
+DebugEffect_Row_WindowOpen:
 	dc.b	$42, $0A, $00, $03, $00, $0C, $84, $C0, $31, $2E, $57, $49, $4E, $44, $4F, $57
 	dc.b	$20, $4F, $50, $45, $4E, $00
-loc_0003D47E:
+DebugEffect_Row_CommandSet:
 	dc.b	$43, $0A, $00, $03, $00, $0C, $84, $C0, $32, $2E, $43, $4F, $4D, $4D, $41, $4E
 	dc.b	$44, $20, $53, $45, $54, $00
-loc_0003D494:
+DebugEffect_Row_CommandCancel:
 	dc.b	$44, $0A, $00, $03, $00, $0F, $84, $C0, $33, $2E, $43, $4F, $4D, $4D, $41, $4E
 	dc.b	$44, $20, $43, $41, $4E, $43, $45, $4C
-loc_0003D4AC:
+DebugEffect_Row_CommandSelect:
 	dc.b	$45, $0A, $00, $03, $00, $0F, $84, $C0, $34, $2E, $43, $4F, $4D, $4D, $41, $4E
 	dc.b	$44, $20, $53, $45, $4C, $45, $43, $54
-loc_0003D4C4:
+DebugEffect_Row_Talking:
 	dc.b	$46, $0A, $00, $03, $00, $08, $84, $C0, $35, $2E, $54, $41, $4C, $4B, $49, $4E
 	dc.b	$47, $00
-loc_0003D4D6:
+DebugEffect_Row_IntoHouse:
 	dc.b	$47, $0A, $00, $03, $00, $0B, $84, $C0, $36, $2E, $49, $4E, $54, $4F, $20, $48
 	dc.b	$4F, $55, $53, $45
-loc_0003D4EA:
+DebugEffect_Row_Ring:
 	dc.b	$48, $0A, $00, $03, $00, $05, $84, $C0, $37, $2E, $52, $49, $4E, $47
-loc_0003D4F8:
+DebugEffect_Row_Star:
 	dc.b	$49, $0A, $00, $03, $00, $05, $84, $C0, $38, $2E, $53, $54, $41, $52
-loc_0003D506:
+DebugEffect_Row_GetItem:
 	dc.b	$4A, $0A, $00, $03, $00, $0D, $84, $C0, $39, $2E, $47, $45, $54, $20, $54, $48
 	dc.b	$45, $20, $49, $54, $45, $4D
-loc_0003D51C:
+DebugEffect_Row_OpenBox:
 	dc.b	$4B, $08, $00, $03, $00, $0A, $84, $C0, $31, $30, $2E, $4F, $50, $45, $4E, $20
 	dc.b	$42, $4F, $58, $00
-loc_0003D530:
+DebugEffect_Row_DoorKnock:
 	dc.b	$42, $30, $00, $03, $00, $0C, $84, $C0, $31, $31, $2E, $44, $4F, $4F, $52, $20
 	dc.b	$4B, $4E, $4F, $43, $4B, $00
-loc_0003D546:
+DebugEffect_Row_Light:
 	dc.b	$43, $30, $00, $03, $00, $07, $84, $C0, $31, $32, $2E, $4C, $49, $47, $48, $54
-loc_0003D556:
+DebugEffect_Row_Recover:
 	dc.b	$44, $30, $00, $03, $00, $09, $84, $C0, $31, $33, $2E, $52, $45, $43, $4F, $56
 	dc.b	$45, $52
-loc_0003D568:
+DebugEffect_Row_Water:
 	dc.b	$45, $30, $00, $03, $00, $07, $84, $C0, $31, $34, $2E, $57, $41, $54, $45, $52
-loc_0003D578:
+DebugEffect_Row_Fire2:
 	dc.b	$46, $30, $00, $03, $00, $08, $84, $C0, $31, $35, $2E, $46, $49, $52, $45, $20
 	dc.b	$32, $00
-loc_0003D58A:
+DebugEffect_Row_Fire3:
 	dc.b	$47, $30, $00, $03, $00, $08, $84, $C0, $31, $36, $2E, $46, $49, $52, $45, $20
 	dc.b	$33, $00
-loc_0003D59C:
+DebugEffect_Row_Electric:
 	dc.b	$48, $30, $00, $03, $00, $0A, $84, $C0, $31, $37, $2E, $45, $4C, $45, $43, $54
 	dc.b	$52, $49, $43, $00
-loc_0003D5B0:
+DebugEffect_Row_Bomber:
 	dc.b	$49, $30, $00, $03, $00, $08, $84, $C0, $31, $38, $2E, $42, $4F, $4D, $42, $45
 	dc.b	$52, $00
-loc_0003D5C2:
+DebugEffect_Row_Clock:
 	dc.b	$4A, $30, $00, $03, $00, $07, $84, $C0, $31, $39, $2E, $43, $4C, $4F, $43, $4B
-loc_0003D5D2:
+DebugBGM2_Row_EnemyAppear:
 	dc.b	$42, $0A, $00, $03, $00, $0D, $84, $C0, $31, $2E, $45, $4E, $45, $4D, $59, $20
 	dc.b	$41, $50, $50, $45, $41, $52
-loc_0003D5E8:
+DebugBGM2_Row_Rest:
 	dc.b	$43, $0A, $00, $03, $00, $05, $84, $C0, $32, $2E, $52, $45, $53, $54
-loc_0003D5F6:
+DebugBGM2_Row_LevelUp:
 	dc.b	$44, $0A, $00, $03, $00, $09, $84, $C0, $33, $2E, $4C, $45, $56, $45, $4C, $20
 	dc.b	$55, $50
-loc_0003D608:
+DebugBGM2_Row_Warp:
 	dc.b	$45, $0A, $00, $03, $00, $05, $84, $C0, $34, $2E, $57, $41, $52, $50
-loc_0003D616:
+DebugBGM2_Row_SetFlag:
 	dc.b	$46, $0A, $00, $03, $00, $09, $84, $C0, $35, $2E, $53, $45, $54, $20, $46, $4C
 	dc.b	$41, $47
-loc_0003D628:
+DebugBGM2_Row_EnemyMelt:
 	dc.b	$47, $0A, $00, $03, $00, $0B, $84, $C0, $36, $2E, $45, $4E, $45, $4D, $59, $20
 	dc.b	$4D, $45, $4C, $54
-loc_0003D63C:
+DebugBGM2_Row_EnemyDelete:
 	dc.b	$48, $0A, $00, $03, $00, $0D, $84, $C0, $37, $2E, $45, $4E, $45, $4D, $59, $20
 	dc.b	$44, $45, $4C, $45, $54, $45
-loc_0003D652:
+DebugBGM2_Row_Earthquake:
 	dc.b	$49, $0A, $00, $03, $00, $0B, $84, $C0, $38, $2E, $45, $41, $52, $54, $48, $51
 	dc.b	$55, $41, $4B, $45
-loc_0003D666:
+DebugBGM2_Row_Ending:
 	dc.b	$4A, $0A, $00, $03, $00, $07, $84, $C0, $39, $2E, $45, $4E, $44, $49, $4E, $47
-loc_0003D676:
+DebugBGM2_Row_LastCity:
 	dc.b	$4B, $08, $00, $03, $00, $0B, $84, $C0, $31, $30, $2E, $4C, $41, $53, $54, $20
 	dc.b	$43, $49, $54, $59
-loc_0003D68A:
+DebugBGM2_Row_LightSong:
 	dc.b	$42, $30, $00, $03, $00, $0C, $84, $C0, $31, $31, $2E, $4C, $49, $47, $48, $54
 	dc.b	$20, $53, $4F, $4E, $47, $00
-loc_0003D6A0:
+DebugBGM2_Row_DoorOpen:
 	dc.b	$43, $30, $00, $03, $00, $0B, $84, $C0, $31, $32, $2E, $44, $4F, $4F, $52, $20
 	dc.b	$4F, $50, $45, $4E
-loc_0003D6B4:
+DebugBGM2_Row_DoorClose:
 	dc.b	$44, $30, $00, $03, $00, $0C, $84, $C0, $31, $33, $2E, $44, $4F, $4F, $52, $20
 	dc.b	$43, $4C, $4F, $53, $45, $00
-loc_0003D6CA:
+DebugBGM2_Row_Ending2:
 	dc.b	$45, $30, $00, $03, $00, $0A, $84, $C0, $31, $34, $2E, $45, $4E, $44, $49, $4E
 	dc.b	$47, $20, $32, $00
-loc_0003D6DE:
+DebugBGM2_Row_Empty15:
 	dc.b	$46, $30, $00, $03, $00, $02, $84, $C0, $31, $35, $2E, $00
-loc_0003D6EA:
+DebugBGM2_Row_Empty16:
 	dc.b	$47, $30, $00, $03, $00, $02, $84, $C0, $31, $36, $2E, $00
-loc_0003D6F6:
+DebugBGM2_Row_Empty17:
 	dc.b	$48, $30, $00, $03, $00, $02, $84, $C0, $31, $37, $2E, $00
-loc_0003D702:
+DebugBGM2_Row_Empty18:
 	dc.b	$49, $30, $00, $03, $00, $02, $84, $C0, $31, $38, $2E, $00
-loc_0003D70E:
+DebugBGM2_Row_Empty19:
 	dc.b	$4A, $30, $00, $03, $00, $02, $84, $C0, $31, $39, $2E, $00
-loc_0003D71A:
+DebugDA_Row_ThunderLow:
 	dc.b	$42, $0A, $00, $03, $00, $0C, $84, $C0, $31, $2E, $54, $48, $55, $4E, $44, $45
 	dc.b	$52, $20, $4C, $4F, $57, $00
-loc_0003D730:
+DebugDA_Row_ThunderHi:
 	dc.b	$43, $0A, $00, $03, $00, $0B, $84, $C0, $32, $2E, $54, $48, $55, $4E, $44, $45
 	dc.b	$52, $20, $48, $49
-loc_0003D744:
+DebugDA_Row_EnemyDamage:
 	dc.b	$44, $0A, $00, $03, $00, $0D, $84, $C0, $33, $2E, $45, $4E, $45, $4D, $59, $20
 	dc.b	$44, $41, $4D, $41, $47, $45
-loc_0003D75A:
+DebugDA_Row_EnemyDead:
 	dc.b	$45, $0A, $00, $03, $00, $0B, $84, $C0, $34, $2E, $45, $4E, $45, $4D, $59, $20
 	dc.b	$44, $45, $41, $44
-loc_0003D76E:
+DebugDA_Row_PlayerDamage:
 	dc.b	$46, $0A, $00, $03, $00, $0E, $84, $C0, $35, $2E, $50, $4C, $41, $59, $45, $52
 	dc.b	$20, $44, $41, $4D, $41, $47, $45, $00
-loc_0003D786:
+DebugDA_Row_PlayerDead:
 	dc.b	$47, $0A, $00, $03, $00, $0C, $84, $C0, $36, $2E, $50, $4C, $41, $59, $45, $52
 	dc.b	$20, $44, $45, $41, $44, $00
-loc_0003D79C:
+DebugDA_Row_Sword1:
 	dc.b	$48, $0A, $00, $03, $00, $08, $84, $C0, $37, $2E, $53, $57, $4F, $52, $44, $20
 	dc.b	$31, $00
-loc_0003D7AE:
+DebugDA_Row_Sword2:
 	dc.b	$49, $0A, $00, $03, $00, $08, $84, $C0, $38, $2E, $53, $57, $4F, $52, $44, $20
 	dc.b	$32, $00
-loc_0003D7C0:
+DebugDA_Row_Sword3:
 	dc.b	$4A, $0A, $00, $03, $00, $08, $84, $C0, $39, $2E, $53, $57, $4F, $52, $44, $20
 	dc.b	$33, $00
-loc_0003D7D2:
+DebugDA_Row_Sword4:
 	dc.b	$4B, $08, $00, $03, $00, $09, $84, $C0, $31, $30, $2E, $53, $57, $4F, $52, $44
 	dc.b	$20, $34
-loc_0003D7E4:
+DebugDA_Row_Empty11:
 	dc.b	$42, $30, $00, $03, $00, $02, $84, $C0, $31, $31, $2E, $00
-loc_0003D7F0:
+DebugDA_Row_Empty12:
 	dc.b	$43, $30, $00, $03, $00, $02, $84, $C0, $31, $32, $2E, $00
-loc_0003D7FC:
+DebugDA_Row_Empty13:
 	dc.b	$44, $30, $00, $03, $00, $02, $84, $C0, $31, $33, $2E, $00
-loc_0003D808:
+DebugDA_Row_Empty14:
 	dc.b	$45, $30, $00, $03, $00, $02, $84, $C0, $31, $34, $2E, $00
-loc_0003D814:
+DebugDA_Row_Empty15:
 	dc.b	$46, $30, $00, $03, $00, $02, $84, $C0, $31, $35, $2E, $00
-loc_0003D820:
+DebugDA_Row_Empty16:
 	dc.b	$47, $30, $00, $03, $00, $02, $84, $C0, $31, $36, $2E, $00
-loc_0003D82C:
+DebugDA_Row_Empty17:
 	dc.b	$48, $30, $00, $03, $00, $02, $84, $C0, $31, $37, $2E, $00
-loc_0003D838:
+DebugDA_Row_Empty18:
 	dc.b	$49, $30, $00, $03, $00, $02, $84, $C0, $31, $38, $2E, $00
-loc_0003D844:
+DebugDA_Row_Empty19:
 	dc.b	$4A, $30, $00, $03, $00, $02, $84, $C0, $31, $39, $2E, $00
-loc_0003D850:
+DebugCRTTest_Row_Title:
 	dc.b	$41, $1C, $00, $03, $00, $09, $C4, $C0, $43, $52, $54, $20, $20, $20, $54, $45
 	dc.b	$53, $54
-loc_0003D862:
+DebugCRTTest_Row_ExitInstruction:
 	dc.b	$4D, $14, $00, $03, $00, $14, $A4, $C0, $45, $58, $49, $54, $2E, $2E, $2E, $50
 	dc.b	$55, $53, $48, $20, $43, $20, $42, $55, $54, $54, $4F, $4E, $21, $00
 
-; loc_0003D880 — pointer table: 4 longs pointing to sound-ID arrays for each category
+; DebugSoundID_Table — pointer table: 4 longs pointing to sound-ID arrays for each category
 ; (BGM pointer table at $3D890, Effect at $3D8B8, BGM2 at $3D8E0, D/A at $3D908)
-loc_0003D880:
+DebugSoundID_Table:
 	dc.b	$00, $03, $D8, $90, $00, $03, $D8, $B8, $00, $03, $D8, $E0, $00, $03, $D9, $08
 	dc.b	$00, $81, $00, $82, $00, $8D, $00, $87, $00, $8F, $00, $8B, $00, $83, $00, $8C
 	dc.b	$00, $95, $00, $91, $00, $8A, $00, $98, $00, $88, $00, $93, $00, $8E, $00, $92
