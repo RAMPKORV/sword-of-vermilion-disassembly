@@ -1,6 +1,71 @@
 ; ===========================================================================
+; src/playerstats.asm
 ; Player Statistics Data
-; Player level-up stat maps, equipment modifiers, experience table
+; ===========================================================================
+;
+; OVERVIEW
+; --------
+; This file contains all static lookup tables for the player character's
+; progression system:
+;
+;   Table                              Lines    Size    Notes
+;   ---------------------------------- -------- ------- --------------------
+;   PlayerLevelToMmpMap                5–36     31 w    Max MP gained per level-up
+;   PlayerLevelToMhpMap                37–68    31 w    Max HP gained per level-up
+;   PlayerLevelToStrMap                69–100   31 w    STR gained per level-up
+;   EquipmentToStatModifierMap         101–158  58 w    STR/AC bonus by equip index
+;   PlayerLevelToAcMap                 159–190  31 w    AC gained per level-up
+;   PlayerLevelToIntMap                191–222  31 w    INT gained per level-up
+;   PlayerLevelToDexMap                223–254  31 w    DEX gained per level-up
+;   PlayerLevelToLukMap                255–286  31 w    LUK gained per level-up
+;   PlayerLevelToNextLevelExperienceMap 287–318 31 l    Cumulative EXP for next level
+;
+; ============================================================
+; RANDOMIZER GUIDE
+; ============================================================
+;
+; --- Level-Up Stat Delta Tables ---
+; Each of the 7 level-up stat tables (Mmp, Mhp, Str, Ac, Int, Dex, Luk) contains
+; exactly 31 dc.w entries (31 level transitions, covering levels 1–31).
+; Entry N represents the amount added to the stat when the player reaches level N+1.
+; Index 0 = gain when reaching level 1, index 30 = gain when reaching level 31.
+;
+; Usage: when leveling up from level L to L+1, the game reads:
+;   PlayerLevelTo<Stat>Map[L] (0-based index = current level)
+; and adds it to the corresponding Player_<stat> RAM variable.
+;
+; Key RAM addresses (constants.asm):
+;   Player_level   $FFFFC640  (word)
+;   Player_hp      $FFFFC62C  (word)  — current HP
+;   Player_mhp     $FFFFC62E  (word)  — max HP
+;   Player_str     $FFFFC642  (word)
+;   Player_ac      $FFFFC644  (word)
+;   Player_int     $FFFFC646  (word)  — INT (magic power)
+;   Player_dex     $FFFFC648  (word)
+;   Player_luk     $FFFFC64A  (word)
+;   Player_mmp     (see constants.asm)
+;
+; To randomize level-up progression: modify dc.w values in these tables.
+; WARNING: keep values non-zero; a level with 0 stat gain is legal but unusual.
+;
+; --- EquipmentToStatModifierMap ---
+; 58 dc.w entries, indexed by equipment ID (equipment slot 0–57).
+; For weapons (swords): value = added STR bonus while equipped.
+; For shields and armor: value = added AC bonus while equipped.
+; The map covers all equipment types in a flat array.
+; Equipment type boundaries (approximate, from EquipmentResaleValueMap in shopdata.asm):
+;   $00–$13  Swords  (20 entries, IDs match EQUIPMENT_SWORD_* constants)
+;   $14–$27  Shields (20 entries, IDs match EQUIPMENT_SHIELD_* constants)
+;   $28–$38  Armor   (17 entries, IDs match EQUIPMENT_ARMOR_* constants)
+; NOTE: Total 57 entries in EquipmentResaleValueMap vs. 58 here — the extra
+; entry at the end of the stat map is padding ($0000).
+;
+; --- Experience Table ---
+; PlayerLevelToNextLevelExperienceMap: 31 dc.l entries.
+; Entry N = total EXP required to reach level N+1 (not a delta — cumulative).
+; Entry 0 = EXP to reach level 2 ($90 = 144 EXP).
+; Entry 29 = EXP for level 31 cap ($999999 = 10,066,329 EXP).
+; Entry 30 = sentinel value $FFFFFF (never reached normally).
 ; ===========================================================================
 PlayerLevelToMmpMap: ; word-sized
 	dc.w	$0
