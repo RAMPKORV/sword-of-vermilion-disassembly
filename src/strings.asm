@@ -1,7 +1,8 @@
-; ===========================================================================
+; ======================================================================
+; src/strings.asm
 ; String Data & UI Elements
 ; Overworld dialogue, menu strings, UI border tilemaps
-; ===========================================================================
+; ======================================================================
 LongDangerousRoadAheadStr:
 	dc.b	"You have a long and", $FE
 	dc.b	"dangerous road ahead of", $FE

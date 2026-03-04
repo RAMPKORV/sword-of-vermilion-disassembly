@@ -1,6 +1,6 @@
-;==============================================================
-; SOUND SYSTEM
-; Sword of Vermilion music/SFX driver for YM2612 (FM) and PSG.
+; ======================================================================
+; src/sound.asm
+; Sound System — Sword of Vermilion music/SFX driver for YM2612 (FM) and PSG.
 ;
 ; Responsibilities:
 ;   - Sound channel state machine tick (UpdateBattleEntities)
@@ -27,7 +27,7 @@
 ;   $FFF430  FM channel 0 struct (bank 1, channels 0-8, stride $30)
 ;   $FFF5E0  FM channel 0 struct (bank 2, channels 0-3, stride $30)
 ;   $FFF520  DAC/special channel struct
-;==============================================================
+; ======================================================================
 
 ;==============================================================
 ; GRAPHICS DATA — TOWN TILESETS AND Z80 DRIVER

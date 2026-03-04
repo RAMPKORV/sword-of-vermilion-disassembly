@@ -1,5 +1,6 @@
-;==============================================================
-; gfxdata.asm — Graphics Data Tables
+; ======================================================================
+; src/gfxdata.asm
+; Graphics Data Tables
 ;
 ; Contains all graphics tile data used for loading sprites and
 ; tiles at runtime:
@@ -13,7 +14,7 @@
 ; to physical indices in the incbin binary data.
 ; Magic tile blobs are compressed with RLE (byte < $80: literal;
 ; byte >= $80: repeat next byte ($80 - value) times).
-;==============================================================
+; ======================================================================
 
 ;==============================================================
 ; FONT TILES

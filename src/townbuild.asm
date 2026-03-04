@@ -1,5 +1,6 @@
-;==============================================================
-; townbuild.asm — Town Building Data and Dialog Scripts
+; ======================================================================
+; src/townbuild.asm
+; Town Building Data and Dialog Scripts
 ;
 ; Contains per-town data for all game towns, organized in
 ; repeating blocks:
@@ -13,7 +14,7 @@
 ; Towns in order: Default/Parma, Deepdale, Stow, Malaga,
 ;   Keltwick, Helwig, Tadcaster, Wyclif, Parma (town),
 ;   Swaffham, Excalabria, and final area.
-;
+; ======================================================================
 ; ===========================================================================
 ; TOWN TILEMAP FORMAT
 ; ===========================================================================
