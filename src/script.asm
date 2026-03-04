@@ -73,6 +73,97 @@
 ;
 ; See tools/index/script_opcodes.json for machine-readable version.
 ; ======================================================================
+;
+; ======================================================================
+; VM-002: SCRIPT ENGINE RUNTIME RAM STATE
+; ======================================================================
+; All variables are in 68000 RAM ($FFFF0000–$FFFFFFFF).
+; Grouped by role; see constants.asm for addresses.
+;
+; --- Script Pointer / Program Counter ---
+;   Script_source_base    (.l $FFFFC204)  Pointer to start of active script string.
+;                                         Loaded from NPC dialogue table before each
+;                                         conversation; changed by $F7 to Player_name.
+;   Script_source_offset  (.w $FFFFC202)  Byte offset from Script_source_base to the
+;                                         next byte to be consumed by ProcessScriptText.
+;                                         Incremented after each byte is consumed.
+;   Script_talk_source    (.l $FFFFC250)  Saved base pointer for the original NPC
+;                                         script, preserved when $F7 temporarily
+;                                         redirects the source to Player_name.
+;   Script_continuation_ptr (.l $FFFFC254) Pointer to the continuation segment used
+;                                         after a $FD (CONTINUE) page-break.
+;
+; --- Render Cursor ---
+;   Script_output_x       (.w $FFFFC234)  Current column position (tile units) within
+;                                         the dialogue window.
+;   Script_output_y       (.w $FFFFC232)  Current row position (tile units).
+;   Script_output_base_x  (.w $FFFFC230)  Left margin of the dialogue window (tiles).
+;                                         Added to Script_output_x for absolute tile col.
+;   Script_tile_attrs     (.w $FFFFC208)  Extra VDP tile attribute bits OR'd into every
+;                                         written glyph (palette line, flip bits, etc.).
+;
+; --- Rate Control ---
+;   Script_render_tick    (.w $FFFFC20C)  Frame counter incremented each tick by
+;                                         ProcessScriptText; used with Message_speed to
+;                                         gate one character per N frames.
+;   Message_speed         (.b $FFFFC210)  Bit index (0–7) that controls character rate.
+;                                         0 = fastest; higher = slower.
+;                                         Saved/loaded per save slot.
+;
+; --- Status Flags ---
+;   Script_text_complete      (.b $FFFFC20F)  Set to FLAG_TRUE ($FF) by SCRIPT_END ($FF).
+;                                              Caller checks this to know dialogue ended.
+;   Script_has_continuation   (.b $FFFFC211)  Set to FLAG_TRUE by SCRIPT_CONTINUE ($FD).
+;                                              Caller draws the "more" arrow and waits.
+;   Script_has_yes_no_question(.b $FFFFC212)  Set by SCRIPT_QUESTION ($FC) / YES_NO ($FB).
+;                                              Caller shows Yes/No menu.
+;   Script_reading_player_name(.b $FFFFC213)  Non-zero while $F7 has redirected the
+;                                              source to the Player_name buffer.
+;
+; --- Player Name Insertion ---
+;   Player_name_index     (.w $FFFFC214)  Byte offset into Player_name being output.
+;                                         Cleared when $F7 is encountered; incremented
+;                                         each character; source reverts when '\0' hit.
+;   Player_name           (.l $FFFFC64C)  Player's name string (null-terminated, up to
+;                                         8 chars).  Read-only from the script engine.
+;
+; --- Dialogue / Quest Response ---
+;   Dialog_response_index     (.b $FFFFC240)  Response slot index stored by $FC/$FB for
+;                                              the NPC dialogue handler to check.
+;   Dialog_choice_event_trigger (.w $FFFFC700) Event-trigger offset stored by $FB ($FA).
+;   Dialog_choice_extended_trigger (.b $FFFFC701) Secondary trigger offset (YES_NO $FB).
+;   Quest_choice_pending      (.b $FFFFC703)  Set by SCRIPT_CHOICE ($FA); caller shows
+;                                              the choice prompt.
+;   Quest_choice_expected_answer (.b $FFFFC704) Expected player answer for $FA choices.
+;   Quest_choice_map_trigger  (.b $FFFFC705)  Map-state trigger set on correct $FA reply.
+;
+; --- Window / Tilemap System ---
+;   Window_tilemap_draw_pending  (.b $FFFF9900)  Non-zero while the window tilemap DMA
+;                                                 is pending; ProcessScriptText blocks
+;                                                 until this clears.
+;   Window_tilemap_draw_active   (.b $FFFF9910)  Set while a window draw is in progress.
+;   Window_tilemap_row_draw_pending (.b $FFFF9911) Per-row draw flag for incremental
+;                                                   window rendering.
+;   Window_tilemap_draw_x/y      (.w $FFFFC220/222) Top-left tile coords for next draw.
+;   Window_tilemap_draw_width/height (.w $FFFFC228/22A) Dimensions of window in tiles.
+;   Window_tile_x/y/width/height (.w $FFFFC224/226/22C/22E) Alternate tile-region dims
+;                                                            used during row rendering.
+;   Window_tilemap_buffer        ($FFFF9920)  64-byte scratch buffer for a single row of
+;                                             tile data assembled before DMA transfer.
+;
+; --- Dialogue Phase (used by gameplay.asm / npc.asm callers) ---
+;   Dialog_selection      (.w $FFFFC428)  Currently highlighted menu item index.
+;   Dialog_phase          (.w $FFFFC552)  State step within the current dialogue phase
+;                                          (0 = waiting to open, higher = sequenced).
+;   Dialog_timer          (.w $FFFFC554)  Frame timer used by dialogue phase sequencer.
+;   Dialog_active_flag    (.b $FFFFC561)  Non-zero while a dialogue window is open.
+;   Dialog_state_flag     (.b $FFFFC56A)  Secondary flag set when dialogue is in
+;                                          a "settled" (awaiting input) state.
+;
+; --- Cursor Blink ---
+;   Cursor_blink_timer    (.w $FFFFC200)  Frame counter for blinking the dialogue
+;                                         cursor / continuation arrow.
+; ======================================================================
 
 ;==============================================================
 ; SCRIPT / DIALOGUE ENGINE
