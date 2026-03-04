@@ -66,13 +66,29 @@ ClearVRAMPlaneB:
 	DMAFillVRAM $60000003, $1FFF
 	RTS
 
-; Unused DMA fill fragment - sets D6 only, expects D7/D5/D4 preset
+; ---------------------------------------------------------------------------
+; DMAFillPartial — DEAD CODE: incomplete DMA fill fragment
+;
+; DEAD CODE: No call sites exist.  Sets D6 = $1FFF and calls VDP_DMAFill,
+; but VDP_DMAFill also requires D7 (VRAM destination command) and D5 (fill
+; byte) to be pre-loaded by the caller — making this an incomplete wrapper.
+; Likely a leftover from an early DMA abstraction that was superseded by the
+; DMAFillVRAM macro.  Cannot be removed without breaking bit-perfect output.
+; ---------------------------------------------------------------------------
 DMAFillPartial:
 	MOVE.w	#$1FFF, D6
 	JSR	VDP_DMAFill
 	RTS
 
-; Unused - DMA fill VRAM $B000, length $0DFF (window/sprite area)
+; ---------------------------------------------------------------------------
+; DMAFillWindowSpriteArea — DEAD CODE: fill window/sprite VRAM region
+;
+; DEAD CODE: No call sites exist.  Would fill 0x0E00 bytes of VRAM from
+; address $B000 (the window plane / sprite attribute table region) with
+; zero.  Likely an early initialization routine superseded by the VDP reset
+; sequence in InitVDPAndClearVRAM/ClearVRAMScrollAndPlanes.
+; Cannot be removed without breaking bit-perfect output.
+; ---------------------------------------------------------------------------
 DMAFillWindowSpriteArea:
 	DMAFillVRAM $70000002, $0DFF
 	RTS
@@ -109,7 +125,13 @@ ClearVRAMScrollAndPlanes:                   ; alternate entry: skip sprite table
 	DMAFillVRAM $40000000, $001F
 	RTS
 
-; Unused - DMA fill entire VRAM ($0000, length $FFFF)
+; ---------------------------------------------------------------------------
+; DMAFillEntireVRAM — DEAD CODE: fill entire VRAM ($0000–$FFFF) with zero
+;
+; DEAD CODE: No call sites exist.  Would DMA-fill all 64 KB of VRAM.
+; Superseded by the selective per-region clear functions called from
+; InitVDPAndClearVRAM.  Cannot be removed without breaking bit-perfect output.
+; ---------------------------------------------------------------------------
 DMAFillEntireVRAM:
 	DMAFillVRAM $40000000, $FFFF
 	RTS

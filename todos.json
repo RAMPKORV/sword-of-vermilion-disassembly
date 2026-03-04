@@ -752,7 +752,7 @@
           "priority": "low",
           "effort": "small",
           "note": "Cannot remove without breaking bit-perfect build. Annotate thoroughly instead. Consider converting to dc.b data blocks with comments.",
-          "status": "todo"
+          "status": "done"
         },
         {
           "id": "DEAD-002",
@@ -762,7 +762,7 @@
           "priority": "low",
           "effort": "small",
           "note": "Add comments explaining these are dead bytes from original binary",
-          "status": "todo"
+          "status": "done"
         },
         {
           "id": "DEAD-003",
@@ -771,7 +771,7 @@
           "file": "src/core.asm",
           "priority": "low",
           "effort": "small",
-          "status": "todo"
+          "status": "done"
         },
         {
           "id": "DEAD-004",
@@ -780,7 +780,7 @@
           "file": "src/sound.asm",
           "priority": "low",
           "effort": "small",
-          "status": "todo"
+          "status": "done"
         }
       ]
     },

@@ -1070,9 +1070,15 @@ InitSoundChannel_FM_Loop:
 	MOVEA.l	A6, A3
 	RTS
 	
-; InitSoundChannel_FM_DeadCode
-; Unreachable dead code: would key-off 4 operators and loop,
-; but no code path jumps here. Preserved as-is.
+; ---------------------------------------------------------------------------
+; InitSoundChannel_FM_DeadCode — DEAD CODE: orphaned FM key-off loop
+;
+; DEAD CODE: No call sites exist.  Would write $80 to FM register D0 with
+; $0F in D1, looping 4 times while incrementing D0 by 4 each iteration —
+; effectively keying off 4 FM operators.  Likely an early FM-off helper that
+; was superseded by InitFM_ChannelsToSilence / WriteYM2612Register.
+; Cannot be removed without breaking bit-perfect output.
+; ---------------------------------------------------------------------------
 InitSoundChannel_FM_DeadCode:
 	MOVE.b	#$80, D0
 	MOVE.b	#$0F, D1

@@ -1232,6 +1232,15 @@ DeductPaymentAmount_Done:
 DeductPaymentAmount_Loop:
 	RTS
 
+; ---------------------------------------------------------------------------
+; DeductPaymentAmount_DeadCode — unreachable duplicate of payment deduction
+;
+; DEAD CODE: No call sites exist anywhere in the ROM.  This appears to be an
+; earlier version of the payment deduction logic that was superseded by the
+; live code above.  It uses SBCD (Subtract BCD) to update the player's money
+; field via Transaction_item_quantity/Player_mhp, which differs from the
+; live version.  Cannot be removed without breaking bit-perfect output.
+; ---------------------------------------------------------------------------
 DeductPaymentAmount_DeadCode:					; unreferenced dead code
 	LEA	Transaction_item_quantity.w, A0
 	LEA	Player_mhp.w, A1
@@ -2832,6 +2841,15 @@ MenuCursorRight:
 MenuCursorRight_Return:
 	RTS
 	
+; ---------------------------------------------------------------------------
+; MenuCursorRight_DeadCode — unreachable cursor-restore sequence
+;
+; DEAD CODE: No call sites exist.  This appears to be a fragment of a
+; "move cursor right" handler that was never wired into the menu dispatch
+; table.  It restores the cursor to Menu_cursor_last_index and redraws it,
+; which would undo a right-move.  Superseded by the live HandleMenuInput
+; cursor logic.  Cannot be removed without breaking bit-perfect output.
+; ---------------------------------------------------------------------------
 MenuCursorRight_DeadCode:					; unreferenced dead code
 	BSR.w	EraseMenuCursor
 	MOVE.w	Menu_cursor_last_index.w, Menu_cursor_index.w
@@ -2901,6 +2919,14 @@ WriteMenuCursorTile_Loop:
 	ANDI	#$F8FF, SR
 	RTS
 	
+; ---------------------------------------------------------------------------
+; DrawShopWindow_DeadCode — unreachable shop window draw call
+;
+; DEAD CODE: No call sites exist.  Appears to be an early version of the
+; shop UI setup that renders items to a hard-coded window position ($D, $4).
+; The live code path builds the shop window via script commands instead.
+; Cannot be removed without breaking bit-perfect output.
+; ---------------------------------------------------------------------------
 DrawShopWindow_DeadCode:					; unreferenced dead code
 	MOVE.w	#$000D, Window_tilemap_draw_x.w
 	MOVE.w	#$0004, Window_tilemap_draw_y.w
@@ -2970,6 +2996,14 @@ DrawWindowChar_WriteVDP_Loop:
 DrawWindowChar_Special:
 	BSR.w	DrawSpecialCharToVRAM
 	BRA.b	DrawWindowChar_WriteVDP
+; ---------------------------------------------------------------------------
+; DrawWindowChar_DeadCode — unreachable shop price list renderer
+;
+; DEAD CODE: No call sites exist.  Renders a column of shop prices by
+; iterating ShopPricesByTownAndType for Current_town/Current_shop_type.
+; The live code draws prices via the script dialogue system instead.
+; Cannot be removed without breaking bit-perfect output.
+; ---------------------------------------------------------------------------
 DrawWindowChar_DeadCode:					; unreferenced dead code
 	MOVE.w	#$0012, Window_number_cursor_x.w
 	MOVE.w	#$0002, Window_number_cursor_y.w

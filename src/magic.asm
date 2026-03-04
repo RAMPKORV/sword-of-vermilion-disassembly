@@ -748,7 +748,7 @@ SpellMenu_ScriptDoneShowStatus_Loop9:
 	ADDQ.w	#1, Spellbook_menu_state.w
 	MOVE.w	Possessed_magics_length.w, D0
 	BRA.w	InitMenuCursorForList
-	dc.b	$4E, $75 
+	dc.b	$4E, $75 ; DEAD: orphan RTS opcode ($4E75) after unconditional BRA; unreachable
 SpellMenu_ScriptDoneShowStatus_Loop23:
 	JSR	ProcessScriptText
 	RTS
@@ -800,7 +800,7 @@ SpellMenu_ScriptDoneShowStatus_Loop26:
 	MOVE.w	#SPELLBOOK_STATE_STATUS_D, Spellbook_menu_state.w
 	MOVE.w	Possessed_magics_length.w, D0
 	BRA.w	InitMenuCursorForList
-	dc.b	$4E, $75 
+	dc.b	$4E, $75 ; DEAD: orphan RTS opcode ($4E75) after unconditional BRA; unreachable
 SpellMenu_ScriptDoneShowStatus_Loop28:
 	JSR	DrawLeftMenuWindow
 	JSR	DrawCenterMenuWindow
@@ -882,7 +882,7 @@ SpellMenu_ScriptDoneShowStatus_Loop5:
 	BSR.w	DrawStatusHudWindow
 	MOVE.w	#SPELLBOOK_STATE_WAIT_INPUT, Spellbook_menu_state.w
 	BRA.w	InitSpellbookCursor
-	dc.b	$4E, $75 
+	dc.b	$4E, $75 ; DEAD: orphan RTS opcode ($4E75) after unconditional BRA; unreachable
 SpellMenu_ScriptDoneShowStatus_Loop32:
 	CheckButton BUTTON_BIT_C
 	BEQ.w	SpellMenu_ScriptDoneShowStatus_Loop33
