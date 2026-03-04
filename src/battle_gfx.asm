@@ -1306,6 +1306,37 @@ ExecuteVdpDmaFromRam:
 	ANDI	#$F8FF, SR
 	RTS
 	
+; -----------------------------------------------------------------------
+; InitVdpDmaRamRoutine / VdpDmaRoutineTemplate
+;
+; The VDP DMA-start trigger requires two consecutive 16-bit writes to the
+; VDP control port ($C00004). A 68000 MOVE.l to a memory-mapped I/O port
+; does NOT reliably produce two separate command words. To work around this,
+; the game uses SELF-MODIFYING CODE: a tiny 3-instruction subroutine is
+; stored as raw bytes in ROM (VdpDmaRoutineTemplate), copied into RAM at
+; Vdp_dma_ram_routine ($FFFFC190) by InitVdpDmaRamRoutine, and then called
+; via JSR Vdp_dma_ram_routine.w.
+;
+; The stub does the following when called:
+;   MOVE.w  Vdp_dma_cmd.w ($FFFFC18C), VDP_control_port    ; cmd word lo
+;   MOVE.w  Vdp_dma_cmd_hi.w ($FFFFC18E), VDP_control_port ; cmd word hi
+;   RTS
+;
+; Callers preload the 32-bit VDP destination-address command (with DMA-enable
+; bit set) into Vdp_dma_cmd ($FFFFC18C) using MOVE.l before calling the stub.
+; Vdp_dma_cmd_hi ($FFFFC18E) overlaps the upper half of Vdp_dma_cmd.
+;
+; The stub is re-copied on every top-level DMA call (not cached). This is safe
+; because the template is read-only and never modified.
+;
+; The sub-label InitVdpDmaRamRoutine_CopyLoop is vestigial — there is no loop;
+; the copy is fully unrolled: 4× MOVE.l (16 bytes) + 1× MOVE.w (2 bytes) = 18.
+;
+; Template bytes decoded:
+;   $33F8 C18C 00C0 0004  = MOVE.w $FFFFC18C.w, $00C00004.l  (cmd lo → VDP ctrl)
+;   $33F8 C18E 00C0 0004  = MOVE.w $FFFFC18E.w, $00C00004.l  (cmd hi → VDP ctrl)
+;   $4E75                 = RTS
+; -----------------------------------------------------------------------
 InitVdpDmaRamRoutine:
 	LEA	VdpDmaRoutineTemplate, A2
 InitVdpDmaRamRoutine_CopyLoop:
@@ -1317,12 +1348,15 @@ InitVdpDmaRamRoutine_CopyLoop:
 	MOVE.w	(A2)+, (A3)+
 	RTS
 	
+; 18-byte ROM template that is copied into RAM and executed as a subroutine.
+; See InitVdpDmaRamRoutine above for full explanation.
+; Decoded: MOVE.w Vdp_dma_cmd, VDP_ctrl / MOVE.w Vdp_dma_cmd_hi, VDP_ctrl / RTS
 VdpDmaRoutineTemplate:
-	dc.l	$33F8C18C
-	dc.l	$00C00004
-	dc.l	$33F8C18E
-	dc.l	$00C00004
-	dc.w	$4E75 
+	dc.l	$33F8C18C	; MOVE.w $FFFFC18C.w, ...
+	dc.l	$00C00004	; ... $00C00004.l  (cmd lo word → VDP control port)
+	dc.l	$33F8C18E	; MOVE.w $FFFFC18E.w, ...
+	dc.l	$00C00004	; ... $00C00004.l  (cmd hi word → VDP control port)
+	dc.w	$4E75 		; RTS
 VDP_DMAFill:
 	ORI	#$0700, SR
 	ORI.w	#$8F00, D4
