@@ -667,3 +667,32 @@ shopEquip macro type,id
 shopMagic macro type,id
     dc.b    type, id
     ENDM
+
+; ============================================================
+; dmaCmd Macro
+; ============================================================
+; One 16-byte entry in BattleSpriteDMACommands (battledata.asm).
+; Consumed by ExecuteVdpDmaTransfer (battle_gfx.asm) which reads
+; three longwords + one word as VDP control port writes, then
+; stores the DMA destination command longword to Vdp_dma_cmd.
+;
+; The DMA source is always $FFA000 (the battle sprite RAM buffer):
+;   reg $16 (source mid) = $D0, reg $15 (source lo) = $00,
+;   reg $17 (source hi / mode) = $7F  =>  $7FD000 >> 1 = $FFA000 (pre-shifted).
+;
+; len_words : DMA transfer length in words (16-bit big-endian)
+; vram_addr : VRAM destination address
+;
+; Byte layout (16 bytes):
+;   $94, len_hi, $93, len_lo          VDP regs $14/$13 = DMA length
+;   $96, $D0,   $95, $00              VDP regs $16/$15 = DMA source mid/lo
+;   $97, $7F                          VDP reg  $17    = DMA source hi / mode
+;   <4-byte DMA destination command>  encodes vram_addr for DMA write
+;   $00, $00                          padding (never consumed)
+dmaCmd macro len_words,vram_addr
+    dc.b    $94, ((len_words)>>8)&$FF, $93, (len_words)&$FF
+    dc.b    $96, $D0, $95, $00
+    dc.b    $97, $7F
+    dc.l    $40000080|((vram_addr&$3FFF)<<16)|((vram_addr>>14)&3)
+    dc.w    $0000
+    ENDM
