@@ -46,8 +46,8 @@ YM2612_data_1       = $A04003   ; YM2612 data port (bank 1)
 VRAM_Plane_A        = $C000     ; Scroll A nametable (64x32 = $1000 bytes)
 VRAM_Plane_B        = $E000     ; Scroll B nametable (64x32 = $1000 bytes)
 VRAM_Window         = $F000     ; Window plane nametable
-VRAM_Sprites        = $D800     ; Sprite attribute table (80 entries, $280 bytes)
-VRAM_HScroll        = $DC00     ; Horizontal scroll table
+VRAM_Sprites        = $B800     ; Sprite attribute table (80 entries, $280 bytes)
+VRAM_HScroll        = $BC00     ; Horizontal scroll table
 
 ; ============================================================
 ; VDP Command Longwords
@@ -68,17 +68,17 @@ VDP_CMD_VSRAM_WRITE_0       = $40000010  ; VSRAM write to address 0 (scroll tabl
 ; VDP_DMAFill.  The subroutine ORs in $40000080 (VRAM write +
 ; DMA fill CD bits) before issuing the VDP command.
 ;
-VDP_DMA_FILL_SAT            = $7C000002  ; DMA fill destination: Sprite Attribute Table ($F800)
-VDP_DMA_FILL_HSCROLL        = $78000002  ; DMA fill destination: HScroll table ($F000)
+VDP_DMA_FILL_SAT            = $78000002  ; DMA fill destination: Sprite Attribute Table ($B800)
+VDP_DMA_FILL_HSCROLL        = $7C000002  ; DMA fill destination: HScroll table ($BC00)
 VDP_DMA_FILL_PLANE_A        = $40000003  ; DMA fill destination: Plane A nametable ($C000)
 VDP_DMA_FILL_PLANE_B        = $60000003  ; DMA fill destination: Plane B nametable ($E000)
-VDP_DMA_FILL_WINDOW         = $70000002  ; DMA fill destination: Window plane ($E800)
+VDP_DMA_FILL_WINDOW         = $70000002  ; DMA fill destination: Window plane ($B000)
 VDP_DMA_FILL_VRAM_START     = $40000000  ; DMA fill destination: VRAM address 0
 
 ; VRAM region fill sizes (byte count - 1, as passed to DMAFillVRAM)
 VRAM_PLANE_FILL_SIZE        = $1FFF      ; 8192 bytes per nametable plane (64×64 tiles × 2)
-VRAM_SAT_FILL_SIZE          = $03BF      ; 960 bytes (sprite attribute table fill region)
-VRAM_HSCROLL_FILL_SIZE      = $013F      ; 320 bytes (horizontal scroll table)
+VRAM_SAT_FILL_SIZE          = $013F      ; 320 bytes (sprite attribute table fill region)
+VRAM_HSCROLL_FILL_SIZE      = $03BF      ; 960 bytes (horizontal scroll table)
 VRAM_WINDOW_FILL_SIZE       = $0DFF      ; 3584 bytes (window plane fill region)
 
 ; ============================================================

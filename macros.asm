@@ -141,7 +141,7 @@ InitMenuCursor macro cols, x, y
 ; len:  Number of bytes to fill
 ; Every call site uses fill_value=0 and auto_increment=1.
 ; DMAFillVRAM uses JSR; DMAFillVRAM_bsr uses BSR.w (for battle_gfx.asm).
-; Usage: DMAFillVRAM $7C000002, $03BF
+; Usage: DMAFillVRAM VDP_DMA_FILL_HSCROLL, VRAM_HSCROLL_FILL_SIZE
 DMAFillVRAM macro dest, len
     MOVE.l  #dest, D7
     MOVE.w  #len, D6

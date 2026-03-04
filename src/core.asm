@@ -38,8 +38,11 @@ InitEquipmentAndLevel:
 	MOVE.b	#$FF, (A0)
 	RTS
 
+; MISNOMER: Despite the name, this clears the HScroll table at $BC00,
+; not the Sprite Attribute Table.  The label is kept for bit-perfectness
+; (referenced by data table in battledata.asm via ClearVRAMSprites_End).
 ClearVRAMSprites:
-	DMAFillVRAM VDP_DMA_FILL_SAT, VRAM_SAT_FILL_SIZE
+	DMAFillVRAM VDP_DMA_FILL_HSCROLL, VRAM_HSCROLL_FILL_SIZE
 ClearVRAMSprites_End:
 	RTS
 
@@ -54,8 +57,10 @@ BossProjectileSpriteFrame_D_Frame_2B0: ; Referenced by data table at line 38051
 	DBF	D6, ClearVSRAM_loop
 	RTS
 
+; MISNOMER: Despite the name, this clears the SAT at $B800,
+; not the HScroll table.
 ClearVRAMHScroll:
-	DMAFillVRAM VDP_DMA_FILL_HSCROLL, VRAM_HSCROLL_FILL_SIZE
+	DMAFillVRAM VDP_DMA_FILL_SAT, VRAM_SAT_FILL_SIZE
 	RTS
 
 ClearVRAMPlaneA:
