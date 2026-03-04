@@ -1415,8 +1415,7 @@ NPCTick_Swaffham_SpyDinnerTrap_Loop2:
 	MOVE.w	Town_camera_tile_x.w, Town_saved_camera_x.w
 	MOVE.w	Town_camera_tile_y.w, Saved_camera_tile_y_room1.w
 	MOVE.b	#FLAG_TRUE, Fade_out_lines_mask.w
-	MOVE.b	#SOUND_SLEEP, D0
-	JSR	QueueSoundEffect
+	PlaySound_b	SOUND_SLEEP
 	MOVE.w	#GAMEPLAY_STATE_INIT_BUILDING_ENTRY, Gameplay_state.w
 	MOVE.w	#POISONED_DURATION, Player_poisoned.w
 	MOVE.b	#FLAG_TRUE, Poison_notified.w

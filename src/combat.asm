@@ -86,8 +86,7 @@ CastVolti:
 	BNE.w	CastVolti_Done
 	BSR.w	CheckCursedAndConsumeReadiedMagicMp
 	BNE.w	CastVolti_Done
-	MOVE.w	#SOUND_TREASURE, D0
-	JSR	QueueSoundEffect
+	PlaySound	SOUND_TREASURE
 	BSET.b	#7, (A6)
 	BCLR.b	#5, obj_sprite_flags(A6)
 	BCLR.b	#6, obj_sprite_flags(A6)
@@ -163,8 +162,7 @@ CastVoltio:
 	BNE.w	CastVoltio_Done
 	BSR.w	CheckCursedAndConsumeReadiedMagicMp
 	BNE.w	CastVoltio_Done
-	MOVE.w	#SOUND_TREASURE, D0
-	JSR	QueueSoundEffect
+	PlaySound	SOUND_TREASURE
 	MOVE.w	#$0245, D6
 	LEA	VoltioProjectileOffsetData, A0
 	MOVE.l	#UpdateVoltioLeadOrbitProjectile, obj_tick_fn(A6)
@@ -321,8 +319,7 @@ CastVoltios:
 	BNE.b	CastVoltios_Done
 	BSR.w	CheckCursedAndConsumeReadiedMagicMp
 	BNE.b	CastVoltios_Done
-	MOVE.w	#SOUND_VOLTIOS_CAST, D0
-	JSR	QueueSoundEffect
+	PlaySound	SOUND_VOLTIOS_CAST
 	BSET.b	#7, (A6)
 	CLR.w	obj_attack_timer(A6)
 	BSR.w	InitMagicDamageAndFlags
@@ -639,8 +636,7 @@ CastFerros:
 	BNE.w	CastFerros_Done
 	BSR.w	CheckCursedAndConsumeReadiedMagicMp
 	BNE.w	CastFerros_Done
-	MOVE.w	#SOUND_SAVE, D0
-	JSR	QueueSoundEffect
+	PlaySound	SOUND_SAVE
 	BSET.b	#7, (A6)
 	BCLR.b	#7, obj_sprite_flags(A6)
 	BCLR.b	#3, obj_sprite_flags(A6)
@@ -731,8 +727,7 @@ CastCopperos:
 	BNE.w	CastCopperos_Done
 	BSR.w	CheckCursedAndConsumeReadiedMagicMp
 	BNE.w	CastCopperos_Done
-	MOVE.w	#SOUND_SAVE, D0
-	JSR	QueueSoundEffect
+	PlaySound	SOUND_SAVE
 	BSET.b	#7, (A6)
 	BCLR.b	#7, obj_sprite_flags(A6)
 	BCLR.b	#3, obj_sprite_flags(A6)
@@ -925,8 +920,7 @@ CastMercusios:
 	BNE.w	CastMercusios_Done
 	BSR.w	CheckCursedAndConsumeReadiedMagicMp
 	BNE.w	CastMercusios_Done
-	MOVE.w	#SOUND_MERCUSIOS, D0
-	JSR	QueueSoundEffect
+	PlaySound	SOUND_MERCUSIOS
 	MOVE.w	#7, D7
 MercusiosInitProjectileLoop:
 	BSET.b	#7, (A6)
@@ -1071,8 +1065,7 @@ CastArgentos:
 	MOVE.w	obj_world_x(A5), obj_world_x(A6)
 	MOVE.w	obj_world_y(A5), obj_world_y(A6)
 	MOVE.l	#UpdateArgentosProjectile, obj_tick_fn(A6)
-	MOVE.w	#SOUND_MERCUSIOS, D0
-	JSR	QueueSoundEffect
+	PlaySound	SOUND_MERCUSIOS
 CastArgentos_Done:
 	RTS
 
@@ -1349,8 +1342,7 @@ HydroSpawnIcicle_AdvanceToSlotLoop:
 	MOVE.w	#VRAM_TILE_HYDRO_ICICLE, obj_tile_index(A5)
 	BRA.b	HydroSpawnIcicle_HitCheckAndDraw
 HydroSpawnIcicle_PlaySoundAndDraw:
-	MOVE.w	#SOUND_HYDRO_ICICLE, D0
-	JSR	QueueSoundEffect
+	PlaySound	SOUND_HYDRO_ICICLE
 HydroSpawnIcicle_HitCheckAndDraw:
 	JSR	CheckProjectileHitEnemies(PC)
 	MOVE.w	obj_world_x(A5), obj_screen_x(A5)
@@ -1461,8 +1453,7 @@ CastChronos:
 	MOVE.w	#CHRONOS_DURATION, obj_hp(A6)
 	MOVE.l	#UpdateChronoCountdown, obj_tick_fn(A6)
 	MOVE.b	#FLAG_TRUE, Encounter_behavior_flag.w
-	MOVE.w	#SOUND_ITEM_PICKUP, D0
-	JSR	QueueSoundEffect
+	PlaySound	SOUND_ITEM_PICKUP
 CastChronos_Done:
 	RTS
 	
@@ -1482,8 +1473,7 @@ CastChronios:
 	MOVE.w	#CHRONIOS_DURATION, obj_hp(A6)
 	MOVE.l	#UpdateChronoCountdown, obj_tick_fn(A6)
 	MOVE.b	#FLAG_TRUE, Encounter_behavior_flag.w
-	MOVE.w	#SOUND_ITEM_PICKUP, D0
-	JSR	QueueSoundEffect
+	PlaySound	SOUND_ITEM_PICKUP
 CastChronios_Done:
 	RTS
 
@@ -1507,8 +1497,7 @@ CastTerrafissi:
 	BNE.b	CastTerrafissi_Done
 	BSR.w	CheckCursedAndConsumeReadiedMagicMp
 	BNE.b	CastTerrafissi_Done
-	MOVE.w	#SOUND_TERRAFISSI, D0
-	JSR	QueueSoundEffect
+	PlaySound	SOUND_TERRAFISSI
 	BSET.b	#7, (A6)
 	CLR.l	obj_hp(A6)
 	MOVE.w	#9, D0
@@ -1951,8 +1940,7 @@ ItemMenuStateJumpTable_Loop2:
 	CheckButton BUTTON_BIT_B
 	BEQ.b	ItemMenuStateJumpTable_Loop3
 	MOVE.w	#WINDOW_DRAW_ITEM_LIST_SHORT, Window_draw_type.w
-	MOVE.w	#SOUND_MENU_CANCEL, D0
-	JSR	QueueSoundEffect
+	PlaySound	SOUND_MENU_CANCEL
 	CLR.w	Window_text_row.w
 	MOVE.b	#FLAG_TRUE, Window_tilemap_row_draw_pending.w
 	MOVE.w	#OVERWORLD_MENU_STATE_OPTIONS_WAIT, Overworld_menu_state.w
@@ -1964,8 +1952,7 @@ ItemMenuStateJumpTable_Loop3:
 	BEQ.w	ItemMenuUseOrDiscard_Done_Loop2
 	MOVE.w	Item_menu_action_mode.w, Menu_cursor_index.w
 	JSR	DrawMenuCursor
-	MOVE.w	#SOUND_MENU_SELECT, D0
-	JSR	QueueSoundEffect
+	PlaySound	SOUND_MENU_SELECT
 	JSR	SaveStatusBarToBuffer
 	JSR	ResetScriptAndInitDialogue
 	TST.w	Possessed_items_length.w
@@ -2054,8 +2041,7 @@ ItemMenu_ItemUsed_Return_Loop5:
 ItemMenu_ItemUsed_Return_Loop2:
 	CheckButton BUTTON_BIT_B
 	BEQ.b	ItemMenu_ItemUsed_Return_Loop6
-	MOVE.w	#SOUND_MENU_CANCEL, D0
-	JSR	QueueSoundEffect
+	PlaySound	SOUND_MENU_CANCEL
 	JSR	DrawCenterMenuWindow
 	JSR	DrawStatusHudWindow
 	MOVE.w	#ITEM_MENU_STATE_WAIT_INPUT, Item_menu_state.w
@@ -2067,8 +2053,7 @@ ItemMenu_ItemUsed_Return_Loop6:
 	BEQ.b	ItemMenu_ItemUsed_Return_Loop7
 	MOVE.w	Selected_item_index.w, Menu_cursor_index.w
 	JSR	DrawMenuCursor
-	MOVE.w	#SOUND_MENU_SELECT, D0
-	JSR	QueueSoundEffect
+	PlaySound	SOUND_MENU_SELECT
 	JSR	SaveRightMenuAreaToBuffer
 	JSR	DrawYesNoDialog
 	MOVE.w	#ITEM_MENU_STATE_DISCARD_EXEC, Item_menu_state.w
@@ -2086,8 +2071,7 @@ ItemMenu_ItemUsed_Return_Loop3:
 	BNE.b	ItemMenu_ItemUsed_Return_Loop8
 	CheckButton BUTTON_BIT_C
 	BEQ.w	ItemMenu_ItemUsed_Return_Loop9
-	MOVE.w	#SOUND_MENU_SELECT, D0
-	JSR	QueueSoundEffect
+	PlaySound	SOUND_MENU_SELECT
 	TST.w	Dialog_selection.w
 	BEQ.b	ItemMenu_ItemUsed_Return_Loop10
 	JSR	DrawLeftMenuWindow
@@ -2098,8 +2082,7 @@ ItemMenu_ItemUsed_Return_Loop3:
 	RTS
 
 ItemMenu_ItemUsed_Return_Loop8:
-	MOVE.w	#SOUND_MENU_CANCEL, D0	
-	JSR	QueueSoundEffect	
+	PlaySound	SOUND_MENU_CANCEL	
 	JSR	DrawLeftMenuWindow	
 	CLR.w	Selected_item_index.w	
 	MOVE.w	#ITEM_MENU_STATE_DISCARD_WAIT, Item_menu_state.w	
@@ -2194,8 +2177,7 @@ ItemMenu_ScriptDone2_Loop4:
 ItemMenu_ScriptDone2_Loop2:
 	CheckButton BUTTON_BIT_B
 	BEQ.b	ItemMenu_ScriptDone2_Loop5
-	MOVE.w	#SOUND_MENU_CANCEL, D0
-	JSR	QueueSoundEffect
+	PlaySound	SOUND_MENU_CANCEL
 	JSR	DrawCenterMenuWindow
 	JSR	DrawStatusHudWindow
 	MOVE.w	#ITEM_MENU_STATE_WAIT_INPUT, Item_menu_state.w
@@ -2207,8 +2189,7 @@ ItemMenu_ScriptDone2_Loop5:
 	BEQ.w	UseItemDescription_Build_Loop3
 	MOVE.w	Selected_item_index.w, Menu_cursor_index.w
 	JSR	DrawMenuCursor
-	MOVE.w	#SOUND_MENU_SELECT, D0
-	JSR	QueueSoundEffect
+	PlaySound	SOUND_MENU_SELECT
 	JSR	DrawCenterMenuWindow
 	JSR	ResetScriptAndInitDialogue
 	JSR	CopyPlayerNameToTextBuffer
@@ -2358,8 +2339,7 @@ UseExtrios_Warp_Loop2:
 	MOVE.w	#GAMEPLAY_STATE_OVERWORLD_RELOAD, Gameplay_state.w
 	MOVE.b	#FLAG_TRUE, Player_in_first_person_mode.w
 	CLR.b	Is_in_cave.w
-	MOVE.w	#SOUND_FOOTSTEP, D0
-	JSR	QueueSoundEffect
+	PlaySound	SOUND_FOOTSTEP
 	RTS
 
 UseExtrios_Warp_Loop:
@@ -2380,8 +2360,7 @@ UseExtrios_CaveReturn:
 	CLR.b	Is_in_cave.w
 	CLR.b	Cave_light_active.w
 	CLR.w	Cave_light_timer.w
-	MOVE.w	#SOUND_FOOTSTEP, D0
-	JSR	QueueSoundEffect
+	PlaySound	SOUND_FOOTSTEP
 	RTS
 
 UseItemMap:
@@ -2466,8 +2445,7 @@ UseKulmsVase:
 UseKulmsVase_Loop:
 	PRINT 	JarBreaksStr	
 	BSR.w	RemoveSelectedItemFromList	
-	MOVE.w	#SOUND_ITEM_PICKUP, D0	
-	JSR	QueueSoundEffect	
+	PlaySound	SOUND_ITEM_PICKUP	
 	RTS
 	
 UseKasansChisel:
@@ -2478,8 +2456,7 @@ UseKasansChisel:
 UseKasansChisel_Loop:
 	PRINT 	HorribleTasteStr	
 	BSR.w	RemoveSelectedItemFromList	
-	MOVE.w	#SOUND_ITEM_PICKUP, D0	
-	JSR	QueueSoundEffect	
+	PlaySound	SOUND_ITEM_PICKUP	
 	RTS
 	
 UseBookOfKiel:
@@ -2490,8 +2467,7 @@ UseBookOfKiel:
 UseBookOfKiel_Loop:
 	PRINT 	ReadDisappearsStr	
 	BSR.w	RemoveSelectedItemFromList	
-	MOVE.w	#SOUND_ITEM_PICKUP, D0	
-	JSR	QueueSoundEffect	
+	PlaySound	SOUND_ITEM_PICKUP	
 	RTS
 	
 UseDanegeldWater:
@@ -2511,8 +2487,7 @@ UseDanegeldWater_Loop3:
 	PRINT 	BitterTasteStr	
 UseDanegeldWater_Loop2:
 	BSR.w	RemoveSelectedItemFromList	
-	MOVE.w	#SOUND_ITEM_PICKUP, D0	
-	JSR	QueueSoundEffect	
+	PlaySound	SOUND_ITEM_PICKUP	
 	RTS
 
 UseMineralBar:
@@ -2523,8 +2498,7 @@ UseMineralBar:
 UseMineralBar_Loop:
 	PRINT 	BrokePowerStr	
 	BSR.w	RemoveSelectedItemFromList	
-	MOVE.w	#SOUND_ITEM_PICKUP, D0	
-	JSR	QueueSoundEffect	
+	PlaySound	SOUND_ITEM_PICKUP	
 	RTS
 	
 UseMegaBlast:
@@ -2535,8 +2509,7 @@ UseMegaBlast:
 UseMegaBlast_Loop:
 	PRINT 	NoFeelStr	
 	BSR.w	RemoveSelectedItemFromList	
-	MOVE.w	#SOUND_ITEM_PICKUP, D0	
-	JSR	QueueSoundEffect	
+	PlaySound	SOUND_ITEM_PICKUP	
 	RTS
 	
 UseRafaelsStick:
@@ -2544,8 +2517,7 @@ UseRafaelsStick:
 	BEQ.b	UseRafaelsStick_Loop
 	JSR	RemoveCursedEquipment	
 	PRINT 	CurseRemovedStr	
-	MOVE.w	#SOUND_ITEM_PICKUP, D0	
-	JSR	QueueSoundEffect	
+	PlaySound	SOUND_ITEM_PICKUP	
 	RTS
 	
 UseRafaelsStick_Loop:
@@ -2575,8 +2547,7 @@ UseAgateJewel_Loop:
 	PRINT 	AllMagicRestoredStr	
 UseAgateJewel_Loop2:
 	BSR.w	RemoveSelectedItemFromList
-	MOVE.w	#SOUND_ITEM_PICKUP, D0
-	JSR	QueueSoundEffect
+	PlaySound	SOUND_ITEM_PICKUP
 	RTS
 
 UseMedicine:
@@ -2594,8 +2565,7 @@ UseHerbs_Loop:
 	PRINT 	AllHitPointsStr
 UseHerbs_Loop2:
 	BSR.w	RemoveSelectedItemFromList
-	MOVE.w	#SOUND_ITEM_PICKUP, D0
-	JSR	QueueSoundEffect
+	PlaySound	SOUND_ITEM_PICKUP
 	RTS
 
 UseGriffinWing:
@@ -2657,8 +2627,7 @@ UsePoisonBalm:
 	CLR.b	Poison_notified.w
 	CLR.w	Player_poisoned.w
 	PRINT 	PoisonPurgedStr
-	MOVE.w	#SOUND_ITEM_PICKUP, D0
-	JSR	QueueSoundEffect
+	PlaySound	SOUND_ITEM_PICKUP
 	BRA.b	UseHerbs_Done
 UsePoisonBalm_Loop:
 	PRINT 	NotPoisonousStr
@@ -2681,8 +2650,7 @@ UseCandle:
 	MOVE.w	#$0800, Cave_light_timer.w
 	MOVE.b	#FLAG_TRUE, Cave_light_active.w
 	BSR.w	RemoveSelectedItemFromList
-	MOVE.w	#SOUND_ENEMY_DEATH, D0
-	JSR	QueueSoundEffect
+	PlaySound	SOUND_ENEMY_DEATH
 	RTS
 
 UseCandle_BrightPlace:
@@ -2702,8 +2670,7 @@ UseLantern:
 	CLR.w	Cave_light_timer.w
 	MOVE.b	#1, Cave_light_active.w
 	BSR.w	RemoveSelectedItemFromList
-	MOVE.w	#SOUND_ENEMY_DEATH, D0
-	JSR	QueueSoundEffect
+	PlaySound	SOUND_ENEMY_DEATH
 	RTS
 
 UseLantern_BrightPlace:
@@ -2712,8 +2679,7 @@ UseLantern_BrightPlace:
 	RTS
 	
 UseAlarmClock:
-	MOVE.w	#SOUND_ALARM_CLOCK, D0
-	JSR	QueueSoundEffect
+	PlaySound	SOUND_ALARM_CLOCK
 	TST.b	Keltwick_girl_sleeping.w
 	BEQ.w	AlarmClockCheck_Return
 	MOVE.w	Current_town.w, D0

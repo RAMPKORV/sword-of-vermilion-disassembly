@@ -177,8 +177,7 @@ HandlePlayerTakeDamage:
 	MOVE.b	#FLAG_TRUE, Player_invulnerable.w
 	MOVE.b	#PLAYER_HIT_INVULN_FRAMES, obj_invuln_timer(A6)
 	BSR.w	ApplyDamageToPlayer
-	MOVE.b	#SOUND_PLAYER_HIT, D0
-	JSR	QueueSoundEffect
+	PlaySound_b	SOUND_PLAYER_HIT
 	TST.b	obj_sprite_frame(A5)
 	BEQ.w	HandlePlayerTakeDamage_ApplyKnockback
 	MOVE.w	Equipped_shield.w, D0
@@ -333,8 +332,7 @@ EnemyCollision_NextEnemy_Loop:
 ; Award XP/kims, decrement enemy count, start death animation.
 ; Deactivates the single child sprite slot.
 EnemyDeathReward_OneSprite:
-	MOVE.b	#SOUND_MAGIC_EFFECT, D0
-	JSR	QueueSoundEffect
+	PlaySound_b	SOUND_MAGIC_EFFECT
 	MOVEQ	#0, D0
 	MOVE.w	obj_xp_reward(A5), D0
 	MOVE.l	D0, Transaction_amount.w
@@ -358,8 +356,7 @@ EnemyDeathReward_OneSprite:
 ; EnemyDeathReward_TwoSprites
 ; As EnemyDeathReward_OneSprite but deactivates two child sprite slots.
 EnemyDeathReward_TwoSprites:
-	MOVE.b	#SOUND_MAGIC_EFFECT, D0
-	JSR	QueueSoundEffect
+	PlaySound_b	SOUND_MAGIC_EFFECT
 	MOVEQ	#0, D0
 	MOVE.w	obj_xp_reward(A5), D0
 	MOVE.l	D0, Transaction_amount.w
@@ -1104,8 +1101,7 @@ EnemyTick_StationaryShooter:
 EnemyTick_StationaryShooter_Loop:
 	TST.b	obj_hit_flag(A5)
 	BEQ.w	EnemyTakeDamage_CheckDeath
-	MOVE.b	#SOUND_HEAL, D0	
-	JSR	QueueSoundEffect	
+	PlaySound_b	SOUND_HEAL	
 	MOVE.w	Player_str.w, D0	
 	SUB.w	D0, obj_hp(A5)	
 	MOVE.b	#PLAYER_HIT_INVULN_FRAMES, obj_invuln_timer(A5)	
@@ -2414,8 +2410,7 @@ BossTick_OrbShield:
 BossTick_OrbShield_Loop:
 	TST.b	obj_hit_flag(A5)
 	BEQ.w	EnemyTakeDamage2_CheckDeath
-	MOVE.b	#SOUND_HEAL, D0	
-	JSR	QueueSoundEffect	
+	PlaySound_b	SOUND_HEAL	
 	MOVE.w	Player_str.w, D0	
 	SUB.w	D0, obj_hp(A5)	
 	MOVE.b	#PLAYER_HIT_INVULN_FRAMES, obj_invuln_timer(A5)	
@@ -2573,8 +2568,7 @@ BossTick_MultiOrb:
 BossTick_MultiOrb_Loop:
 	TST.b	obj_hit_flag(A5)
 	BEQ.w	BossTakeDamage_CheckDeath
-	MOVE.b	#SOUND_HEAL, D0	
-	JSR	QueueSoundEffect	
+	PlaySound_b	SOUND_HEAL	
 	MOVE.w	Player_str.w, D0	
 	SUB.w	D0, obj_hp(A5)	
 	MOVE.b	#PLAYER_HIT_INVULN_FRAMES, obj_invuln_timer(A5)	
@@ -2781,8 +2775,7 @@ BossTick_OrbRing:
 BossTick_OrbRing_Loop:
 	TST.b	obj_hit_flag(A5)
 	BEQ.w	BossTakeDamage2_CheckDeath
-	MOVE.b	#SOUND_HEAL, D0	
-	JSR	QueueSoundEffect	
+	PlaySound_b	SOUND_HEAL	
 	MOVE.w	Player_str.w, D0	
 	SUB.w	D0, obj_hp(A5)	
 	MOVE.b	#PLAYER_HIT_INVULN_FRAMES, obj_invuln_timer(A5)	
@@ -2940,8 +2933,7 @@ CalculateCircularPosition:
 ; Death reward handler for multi-sprite bosses.  Awards XP and kims,
 ; decrements enemy count, and deactivates all child orb objects.
 BossDeathReward_MultiSprite:
-	MOVE.b	#SOUND_MAGIC_EFFECT, D0
-	JSR	QueueSoundEffect
+	PlaySound_b	SOUND_MAGIC_EFFECT
 	MOVEQ	#0, D0
 	MOVE.w	obj_xp_reward(A5), D0
 	MOVE.l	D0, Transaction_amount.w
@@ -3088,8 +3080,7 @@ ProcessEnemyDamage:
 ProcessEnemyDamage_Loop:
 	TST.b	obj_hit_flag(A5)
 	BEQ.w	EnemyTakeDamage_Done
-	MOVE.b	#SOUND_HEAL, D0
-	JSR	QueueSoundEffect
+	PlaySound_b	SOUND_HEAL
 	MOVE.w	#$0078, obj_knockback_timer(A5)
 	MOVE.w	Player_str.w, D0
 	SUB.w	D0, obj_hp(A5)
@@ -3110,8 +3101,7 @@ CheckAndUpdateBattleTimer:
 CheckAndUpdateBattleTimer_Loop:
 	TST.b	obj_hit_flag(A5)
 	BEQ.w	EnemyTakeDamage3_Done
-	MOVE.b	#SOUND_HEAL, D0
-	JSR	QueueSoundEffect
+	PlaySound_b	SOUND_HEAL
 	MOVE.w	Player_str.w, D0
 	SUB.w	D0, obj_hp(A5)
 	MOVE.b	#PLAYER_HIT_INVULN_FRAMES, obj_invuln_timer(A5)
@@ -3577,7 +3567,6 @@ Boss1_DeathSequence:
 	MOVE.l	#$8000, obj_vel_y(A6)
 	BSR.w	UpdateSpritePositionAndRender
 	MOVE.l	#Boss1_DeathFall, obj_tick_fn(A5)
-	MOVE.w	#SOUND_DOOR_OPEN, D0
-	JSR	QueueSoundEffect
+	PlaySound	SOUND_DOOR_OPEN
 	RTS
 

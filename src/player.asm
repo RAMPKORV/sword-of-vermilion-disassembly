@@ -526,8 +526,7 @@ BattlePlayerInputHandler_AttackCheck:
 	BEQ.b	BattlePlayerInputHandler_ProcessMovement
 	TST.w	Equipped_sword.w
 	BLT.b	BattlePlayerInputHandler_ProcessMovement
-	MOVE.b	#SOUND_SWORD_ATTACK, D0
-	JSR	QueueSoundEffect
+	PlaySound_b	SOUND_SWORD_ATTACK
 	MOVE.b	#FLAG_TRUE, Player_attacking_flag.w
 	CLR.b	obj_hp(A5)
 BattlePlayerInputHandler_ProcessMovement:
@@ -597,10 +596,8 @@ BattlePostVictory_ResetEntities:
 	BRA.b	BattlePostVictory_ResetEntities_Loop2
 BattlePostVictory_ResetEntities_Loop:
 	MOVE.w	#GAMEPLAY_STATE_BATTLE_EXIT, Gameplay_state.w
-	MOVE.b	#SOUND_TRANSITION, D0
-	JSR	QueueSoundEffect
-	MOVE.w	#SOUND_LEVEL_UP, D0
-	JSR	QueueSoundEffect
+	PlaySound_b	SOUND_TRANSITION
+	PlaySound	SOUND_LEVEL_UP
 	MOVE.b	#FLAG_TRUE, Fade_out_lines_mask.w
 BattlePostVictory_ResetEntities_Loop2:
 	MOVE.b	#FLAG_TRUE, Sprite_dma_update_pending.w
@@ -1017,8 +1014,7 @@ OverworldTick_RotateCounterClockwise_Loop3:
 	BEQ.b	OverworldTick_RotateCounterClockwise_Loop6
 	MOVE.b	#6, Fade_out_lines_mask.w
 	MOVE.w	#GAMEPLAY_STATE_RETURN_TO_FIRST_PERSON_VIEW, Gameplay_state.w
-	MOVE.b	#SOUND_TRANSITION, D0
-	JSR	QueueSoundEffect
+	PlaySound_b	SOUND_TRANSITION
 	RTS
 
 OverworldTick_RotateCounterClockwise_Loop6:
@@ -1052,8 +1048,7 @@ OverworldTick_ClearInteractionFlags:
 	BCLR.b	#7, (A6)
 	TST.b	Chest_already_opened.w
 	BEQ.b	OverworldTick_ClearInteractionFlags_Loop
-	MOVE.w	#SOUND_OVERWORLD_RETURN, D0	
-	JSR	QueueSoundEffect	
+	PlaySound	SOUND_OVERWORLD_RETURN	
 	CLR.b	Chest_already_opened.w	
 OverworldTick_ClearInteractionFlags_Loop:
 	CLR.b	Door_unlocked_flag.w

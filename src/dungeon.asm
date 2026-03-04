@@ -33,8 +33,7 @@ HandleMapTileTransition_Loop2: ; Enter cave
 	MOVE.b	#FLAG_TRUE, Cave_position_saved.w
 HandleMapTileTransition_Loop5:
 	MOVE.w	#GAMEPLAY_STATE_ENTERING_CAVE, Gameplay_state.w
-	MOVE.b	#SOUND_TRANSITION, D0
-	JSR	QueueSoundEffect
+	PlaySound_b	SOUND_TRANSITION
 	RTS
 
 HandleMapTileTransition_Loop3:
@@ -42,14 +41,12 @@ HandleMapTileTransition_Loop3:
 	MOVE.w	D0, Current_town.w
 	MOVE.w	#GAMEPLAY_STATE_TOWN_FADE_IN_COMPLETE, Gameplay_state.w
 	CLR.b	Cave_position_saved.w
-	MOVE.b	#SOUND_TRANSITION, D0
-	JSR	QueueSoundEffect
+	PlaySound_b	SOUND_TRANSITION
 	MOVE.b	#FLAG_TRUE, Fade_out_lines_mask.w
 	RTS
 
 HandleMapTileTransition_Loop:
-	MOVE.b	#SOUND_TRANSITION, D0
-	JSR	QueueSoundEffect
+	PlaySound_b	SOUND_TRANSITION
 	CLR.b	Cave_position_saved.w
 	MOVE.w	#GAMEPLAY_STATE_CAVE_FADE_OUT_COMPLETE, Gameplay_state.w
 	MOVE.b	#FLAG_TRUE, Fade_out_lines_mask.w

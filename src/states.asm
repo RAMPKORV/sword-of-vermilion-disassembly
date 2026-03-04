@@ -72,8 +72,7 @@ ProgramState_03_Return:
 ProgramState_TitleDemo:
 	TST.b	Fade_out_lines_mask.w
 	BNE.b	ProgramState_04_Loop
-	MOVE.w	#SOUND_LEVEL_UP, D0
-	JSR	QueueSoundEffect
+	PlaySound	SOUND_LEVEL_UP
 	CLR.w	Program_state.w
 	CLR.b	Scene_update_flag.w
 	JSR	ClearScrollData
@@ -111,8 +110,7 @@ ProgramState_PrologueToGame:
 	MOVE.w	#$D, Player_position_y_outside_town.w
 	MOVE.w	#0, Player_map_sector_x.w
 	MOVE.w	#6, Player_map_sector_y.w
-	MOVE.w	#SOUND_LEVEL_UP, D0
-	JSR	QueueSoundEffect
+	PlaySound	SOUND_LEVEL_UP
 ProgramState_0A_Loop:
 	RTS
 
@@ -131,8 +129,7 @@ ProgramState_LoadSaveInit:
 	CLR.b	File_load_complete.w
 	MOVE.w	#PALETTE_IDX_TOWN_TILES, Palette_line_0_index.w
 	MOVE.w	#PROGRAM_STATE_LOAD_SAVE, Program_state.w
-	MOVE.w	#SOUND_NAME_ENTRY, D0
-	JSR	QueueSoundEffect
+	PlaySound	SOUND_NAME_ENTRY
 	JSR	LoadPalettesFromTable
 ProgramState_0B_Loop:
 	RTS
@@ -150,8 +147,7 @@ ProgramState_LoadSaveDone:
 	BNE.b	ProgramState_0D_Loop	
 	MOVE.l	#HBlankObjectHandler, vobj_hblank_fn(A5)	
 	MOVE.w	#PROGRAM_STATE_LOAD_SAVED_GAME, Program_state.w	
-	MOVE.w	#SOUND_LEVEL_UP, D0	
-	JSR	QueueSoundEffect	
+	PlaySound	SOUND_LEVEL_UP	
 ProgramState_0D_Loop:
 	RTS
 	
@@ -187,8 +183,7 @@ ProgramState_NameEntryInit:
 	MOVE.l	#NameEntryScreen_Init, vobj_hblank_fn(A5)
 	MOVE.w	#PROGRAM_STATE_NAME_ENTRY, Program_state.w
 	CLR.b	Name_entry_complete.w
-	MOVE.b	#SOUND_NAME_ENTRY, D0
-	JSR	QueueSoundEffect
+	PlaySound_b	SOUND_NAME_ENTRY
 ProgramState_05_Loop:
 	RTS
 
@@ -206,8 +201,7 @@ ProgramState_NameEntryDone:
 	JSR	ClearEnemyListFlags
 	MOVE.l	#HBlankObjectHandler, vobj_hblank_fn(A5)
 	MOVE.w	#PROGRAM_STATE_PROLOGUE_INIT, Program_state.w
-	MOVE.w	#SOUND_LEVEL_UP, D0
-	JSR	QueueSoundEffect
+	PlaySound	SOUND_LEVEL_UP
 ProgramState_07_Loop:
 	RTS
 

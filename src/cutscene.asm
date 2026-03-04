@@ -1351,8 +1351,7 @@ TitleScreen_WaitForHScroll:
 	MOVE.l	#TitleScreen_FadeAndAnimate, obj_tick_fn(A5)
 	MOVE.b	#4, Fade_in_lines_mask.w
 	MOVE.w	#PALETTE_IDX_TITLE_BG, Palette_line_2_fade_target.w
-	MOVE.b	#SOUND_TITLE_MUSIC, D0
-	JSR	QueueSoundEffect
+	PlaySound_b	SOUND_TITLE_MUSIC
 TitleScreen_WaitForHScroll_Loop:
 	RTS
 
@@ -1844,8 +1843,7 @@ EndingSequenceStepJumpTable_Loop:
 	SUBQ.w	#1, Ending_timer.w
 	BGT.b	EndingStep_Return1
 	JSR	ClearScrollData
-	MOVE.w	#SOUND_ENDING_FANFARE_B, D0
-	JSR	QueueSoundEffect
+	PlaySound	SOUND_ENDING_FANFARE_B
 	MOVE.w	#ENDING_DELAY_NORMAL, Ending_timer.w
 	ADDQ.w	#1, Ending_sequence_step.w
 EndingStep_Return1:
@@ -1854,8 +1852,7 @@ EndingStep_Return1:
 EndingStep_Return1_Loop:
 	SUBQ.w	#1, Ending_timer.w
 	BGT.b	EndingStep_Return1_Loop4
-	MOVE.w	#SOUND_ENDING_FANFARE_A, D0
-	JSR	QueueSoundEffect
+	PlaySound	SOUND_ENDING_FANFARE_A
 	JSR	ClearVRAMPlaneA
 	JSR	ClearVRAMPlaneB
 	MOVE.w	#ENDING_DELAY_NORMAL, Ending_timer.w
@@ -1931,8 +1928,7 @@ EndingStep_Return3_Loop:
 	MOVE.w	#PALETTE_IDX_TITLE_BG, Palette_line_2_fade_target.w
 	MOVE.w	#PALETTE_IDX_ENDING_CURSOR_MIN, Palette_line_3_index.w
 	ADDQ.w	#1, Ending_sequence_step.w
-	MOVE.w	#SOUND_ENDING_STAFF_MUSIC, D0
-	JSR	QueueSoundEffect
+	PlaySound	SOUND_ENDING_STAFF_MUSIC
 	MOVE.w	#ENDING_DELAY_NORMAL, Ending_timer.w
 	JSR	LoadPalettesFromTable
 EndingStep_Return3_Loop3:
@@ -2041,8 +2037,7 @@ EndingStep_Return7:
 EndingStep_Return7_Loop:
 	SUBQ.w	#1, Ending_timer.w
 	BGT.b	EndingStep_Return7_Loop3
-	MOVE.w	#SOUND_LEVEL_UP, D0
-	JSR	QueueSoundEffect
+	PlaySound	SOUND_LEVEL_UP
 	ADDQ.w	#1, Ending_sequence_step.w
 	JSR	InitFontTiles
 EndingStep_Return7_Loop3:
@@ -2065,8 +2060,7 @@ EndingStep_Return7_Loop5:
 	CLR.w	Ending_timer.w
 	CLR.l	Ending_vscroll_accumulator.w
 	MOVE.b	#FLAG_TRUE, Boss_max_hp.w
-	MOVE.w	#SOUND_ENDING_CREDITS_MUSIC, D0
-	JSR	QueueSoundEffect
+	PlaySound	SOUND_ENDING_CREDITS_MUSIC
 	MOVE.w	#PALETTE_IDX_TOWN_TILES, Palette_line_0_index.w
 	MOVE.w	#$0093, Palette_line_1_index.w
 	JSR	LoadPalettesFromTable

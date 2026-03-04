@@ -85,8 +85,7 @@ Boss1_VictoryPauseWait:
 	BSR.w	SetBattleVictoryAnimFrames1
 	MOVE.l	#Boss1_VictoryPose1Wait, obj_tick_fn(A5)
 	MOVE.b	#BOSS_VICTORY_PAUSE, obj_invuln_timer(A5)
-	MOVE.w	#SOUND_BOSS1_VICTORY, D0
-	JSR	QueueSoundEffect
+	PlaySound	SOUND_BOSS1_VICTORY
 Boss1_VictoryPauseWait_Loop:
 	BSR.w	UpdateSpritePositionAndRender
 	RTS
@@ -125,8 +124,7 @@ Boss1_VictoryFadeWait:
 	TST.b	Palette_fade_in_mask.w
 	BNE.b	Boss1_VictoryFadeWait_Loop
 	MOVE.l	#Boss1_VictoryFlash, obj_tick_fn(A5)
-	MOVE.w	#SOUND_PURCHASE, D0
-	JSR	QueueSoundEffect
+	PlaySound	SOUND_PURCHASE
 Boss1_VictoryFadeWait_Loop:
 	BSR.w	UpdateSpritePositionAndRender
 	RTS
@@ -165,8 +163,7 @@ BossCommon_VictoryRewardSequence:
 	SUBQ.w	#1, Dialog_timer.w
 	BGE.b	BossCommon_VictoryRewardSequence_Loop
 	JSR	ClearScrollData
-	MOVE.w	#SOUND_ERROR, D0
-	JSR	QueueSoundEffect
+	PlaySound	SOUND_ERROR
 	MOVE.b	#FLAG_TRUE, Player_input_blocked.w
 	BSR.w	AwardBattleRewards
 	BSR.w	DisplayBattleVictoryMessage
@@ -813,8 +810,7 @@ TwoHeadedDragon_MainTick_Loop2:
 	BSR.w	ProcessBattleVictoryEvent
 	CLR.w	Dialog_timer.w
 	CLR.w	Dialog_phase.w
-	MOVE.w	#SOUND_DOOR_OPEN, D0
-	JSR	QueueSoundEffect
+	PlaySound	SOUND_DOOR_OPEN
 	JSR	LoadPalettesFromTable
 	RTS
 
@@ -825,8 +821,7 @@ TwoHeadedDragon_DeathDelayTick:
 	SUBQ.w	#1, obj_knockback_timer(A5)
 	BGT.b	TwoHeadedDragon_DeathDelayTick_Loop
 	MOVE.l	#TwoHeadedDragon_VictoryFadeoutTick, obj_tick_fn(A5)
-	MOVE.w	#SOUND_PURCHASE, D0
-	JSR	QueueSoundEffect
+	PlaySound	SOUND_PURCHASE
 TwoHeadedDragon_DeathDelayTick_Loop:
 	JSR	AddSpriteToDisplayList
 	RTS
@@ -1164,8 +1159,7 @@ CheckEntityPlayerCollisionAndDamage:
 	BGT.w	CheckEntityPlayerCollisionAndDamage_Return
 	TST.b	Player_invulnerable.w
 	BNE.w	CheckEntityPlayerCollisionAndDamage_Return
-	MOVE.w	#SOUND_PLAYER_HIT, D0
-	JSR	QueueSoundEffect
+	PlaySound	SOUND_PLAYER_HIT
 	MOVE.b	#FLAG_TRUE, Player_invulnerable.w
 	MOVE.b	#PLAYER_HIT_INVULN_FRAMES, obj_invuln_timer(A6)
 	JSR	ApplyDamageToPlayer
@@ -1216,8 +1210,7 @@ CheckPlayerDamageAndKnockback:
 	MOVE.b	#PLAYER_HIT_INVULN_FRAMES, obj_invuln_timer(A6)
 	JSR	ApplyDamageToPlayer
 	SUBI.w	#$0014, obj_world_x(A6)
-	MOVE.w	#SOUND_PLAYER_HIT, D0
-	JSR	QueueSoundEffect
+	PlaySound	SOUND_PLAYER_HIT
 BattleHit_Return:
 	RTS
 
@@ -1240,8 +1233,7 @@ ProcessBattleDamageAndPalette_Loop:
 	BSR.w	UpdateEncounterPalette
 	TST.b	obj_hit_flag(A6)
 	BEQ.b	ProcessBattleDamage_Return
-	MOVE.w	#SOUND_HEAL, D0
-	JSR	QueueSoundEffect
+	PlaySound	SOUND_HEAL
 	MOVE.w	Player_str.w, D0
 	SUB.w	D0, obj_hp(A6)
 	BCC.b	ProcessBattleDamageAndPalette_Loop2
@@ -2159,8 +2151,7 @@ DemonBoss_LaunchProjectile:
 	MOVE.l	D1, obj_vel_x(A6)
 	BSET.b	#7, (A6)
 	MOVE.l	#DemonBoss_ProjectileHeadTick, obj_tick_fn(A6)
-	MOVE.w	#SOUND_TREASURE, D0
-	JSR	QueueSoundEffect
+	PlaySound	SOUND_TREASURE
 	MOVE.w	#$0064, obj_attack_timer(A5)
 	ADDQ.b	#1, demon_ai_state(A5)
 DemonBoss_LaunchProjectile_Loop:
@@ -2183,8 +2174,7 @@ DemonBossState_AttackAnimate:
 	BGT.b	DemonBossState_AttackAnimate_UpdateFrame        ; still winding up
 	BNE.b	DemonBossState_AttackAnimate_Loop               ; past fire tick, not yet end
 	; Exactly at fire tick: launch the projectile
-	MOVE.w	#SOUND_BOMB, D0
-	JSR	QueueSoundEffect
+	PlaySound	SOUND_BOMB
 	MOVEA.l	Object_slot_07_ptr.w, A6
 	MOVE.b	#FLAG_TRUE, obj_move_counter(A6)    ; mark projectile as active/falling
 	MOVE.l	#$00020000, obj_vel_y(A6)           ; initial downward velocity
@@ -2307,14 +2297,12 @@ UpdateBossFlashAndDamage_Loop:
 	TST.b	obj_hit_flag(A5)
 	BEQ.w	DemonBoss_AbilityReturn
 	MOVE.b	#$FF, demon_dir_flag(A5)            ; force direction re-evaluation
-	MOVE.w	#SOUND_HEAL, D0
-	JSR	QueueSoundEffect
+	PlaySound	SOUND_HEAL
 	MOVE.w	Player_str.w, D0
 	SUB.w	D0, obj_hp(A5)
 	BCC.b	UpdateBossFlashAndDamage_Loop2      ; still alive
 	MOVE.l	#DemonBoss_DeathInit, obj_tick_fn(A5)   ; killing blow
-	MOVE.b	#SOUND_MAGIC_EFFECT, D0
-	JSR	QueueSoundEffect
+	PlaySound_b	SOUND_MAGIC_EFFECT
 	RTS
 
 UpdateBossFlashAndDamage_Loop2:
@@ -2329,8 +2317,7 @@ UpdateBossFlashAndDamage_Loop2:
 	ANDI.b	#3, D1
 	CMPI.b	#3, D1
 	BNE.b	BossTick_AbilityCheck_Done
-	MOVE.b	#SOUND_MAGIC_EFFECT, D0
-	JSR	QueueSoundEffect
+	PlaySound_b	SOUND_MAGIC_EFFECT
 	JSR	GetRandomNumber(PC)
 	BTST.l	#4, D0
 	BEQ.b	UpdateBossFlashAndDamage_Loop3
@@ -2357,8 +2344,7 @@ DemonBoss_DeathInit:
 	MOVE.l	#DemonBoss_DeathSequence, obj_tick_fn(A5)
 	CLR.w	Dialog_timer.w
 	CLR.w	Dialog_phase.w
-	MOVE.w	#SOUND_PURCHASE, D0
-	JSR	QueueSoundEffect
+	PlaySound	SOUND_PURCHASE
 	RTS
 
 ; DemonBoss_DeathSequence
@@ -2620,8 +2606,7 @@ InitOrbitBoss:
 	CLR.l	obj_vel_x(A6)
 	MOVE.w	#0, D0
 	JSR	QueueSoundEffect
-	MOVE.w	#SOUND_TERRAFISSI, D0
-	JSR	QueueSoundEffect
+	PlaySound	SOUND_TERRAFISSI
 	CLR.l	obj_hp(A6)
 	MOVE.w	#$0016, D0
 	ASL.w	#3, D0
@@ -2664,8 +2649,7 @@ OrbitBoss_MainTick_Loop2:
 	RTS
 	
 OrbitBoss_MainTick_Loop:
-	MOVE.w	#SOUND_ORBIT_BOSS_MUSIC, D0
-	JSR	QueueSoundEffect
+	PlaySound	SOUND_ORBIT_BOSS_MUSIC
 	MOVE.l	#OrbitBoss_InitParts, obj_tick_fn(A5)
 	CLR.l	HScroll_base.w
 	RTS
@@ -2779,8 +2763,7 @@ OrbitBoss_InnerCheckVictory:
 	CLR.w	Dialog_timer.w
 	CLR.w	Dialog_phase.w
 	MOVE.w	#ORBIT_BOSS_VICTORY_DELAY, obj_attack_timer(A5)
-	MOVE.w	#SOUND_DOOR_OPEN, D0
-	JSR	QueueSoundEffect
+	PlaySound	SOUND_DOOR_OPEN
 	MOVE.l	#OrbitBoss_InnerVictoryDelay, obj_tick_fn(A5)
 ; CheckBossDamageAndKnockback
 ; Applies player-collision damage knockback to the main orbit boss entity.
@@ -2797,8 +2780,7 @@ CheckBossDamageAndKnockback:
 OrbitBoss_InnerVictoryDelay:
 	SUBQ.w	#1, obj_attack_timer(A5)
 	BGE.b	OrbitBoss_InnerVictoryDelay_Loop
-	MOVE.w	#SOUND_PURCHASE, D0
-	JSR	QueueSoundEffect
+	PlaySound	SOUND_PURCHASE
 	MOVE.l	#RingGuardian_VictoryDialogContinue, obj_tick_fn(A5)
 OrbitBoss_InnerVictoryDelay_Loop:
 	RTS
@@ -3372,15 +3354,13 @@ ProcessPlayerStrengthCheck_Loop:
 	MOVE.w	Player_str.w, D0
 	SUB.w	D0, obj_hp(A5)
 	BGT.b	ProcessPlayerStrengthCheck_Loop2
-	MOVE.w	#SOUND_MAGIC_EFFECT, D0
-	JSR	QueueSoundEffect
+	PlaySound	SOUND_MAGIC_EFFECT
 	CLR.b	obj_move_counter(A5)
 	MOVE.l	#OrbitBoss_InnerPartDeath, obj_tick_fn(A5)
 	RTS
 
 ProcessPlayerStrengthCheck_Loop2:
-	MOVE.w	#SOUND_HEAL, D0
-	JSR	QueueSoundEffect
+	PlaySound	SOUND_HEAL
 	MOVE.w	#BOSS_HIT_STUN_FRAMES, obj_knockback_timer(A5)
 OrbitBoss_InnerPartHit_Return:
 	CLR.b	obj_hit_flag(A5)
@@ -3447,15 +3427,13 @@ ProcessBossFightDamage_Loop:
 	MOVE.w	Player_str.w, D0
 	SUB.w	D0, obj_hp(A5)
 	BGT.b	ProcessBossFightDamage_Loop2
-	MOVE.w	#SOUND_MAGIC_EFFECT, D0
-	JSR	QueueSoundEffect
+	PlaySound	SOUND_MAGIC_EFFECT
 	CLR.b	obj_move_counter(A5)
 	MOVE.l	#OrbitBoss_OuterPartDeath, obj_tick_fn(A5)
 	RTS
 
 ProcessBossFightDamage_Loop2:
-	MOVE.w	#SOUND_HEAL, D0
-	JSR	QueueSoundEffect
+	PlaySound	SOUND_HEAL
 	MOVE.w	#BOSS_HIT_STUN_FRAMES, obj_knockback_timer(A5)
 OrbitBoss_OuterPartHit_Return:
 	CLR.b	obj_hit_flag(A5)
@@ -3771,13 +3749,11 @@ HydraBoss_PartIdleTick_Loop:
 	SUB.w	D0, obj_hp(A5)
 	BCC.b	HydraBoss_PartIdleTick_Loop2
 	MOVE.l	#HydraBoss_PartDeathAnim, obj_tick_fn(A5)
-	MOVE.w	#SOUND_MAGIC_EFFECT, D0
-	JSR	QueueSoundEffect
+	PlaySound	SOUND_MAGIC_EFFECT
 	CLR.b	obj_move_counter(A5)
 	BRA.w	HydraBoss_PartIdleTick_UpdatePos
 HydraBoss_PartIdleTick_Loop2:
-	MOVE.w	#SOUND_HYDRA_BITE, D0
-	JSR	QueueSoundEffect
+	PlaySound	SOUND_HYDRA_BITE
 	MOVE.w	#BOSS_HIT_STUN_FRAMES, obj_knockback_timer(A5)
 HydraBoss_PartIdleTick_Check:
 	CLR.b	obj_hit_flag(A5)
@@ -3893,13 +3869,11 @@ HydraBoss_MainTick_Loop:
 	SUB.w	D0, obj_hp(A5)
 	BCC.b	HydraBoss_MainTick_Loop2
 	MOVE.l	#HydraBoss_MainDeathAnim, obj_tick_fn(A5)
-	MOVE.w	#SOUND_MAGIC_EFFECT, D0
-	JSR	QueueSoundEffect
+	PlaySound	SOUND_MAGIC_EFFECT
 	CLR.b	obj_move_counter(A5)
 	BRA.w	HydraBoss_MainTick_SpriteUpdate
 HydraBoss_MainTick_Loop2:
-	MOVE.w	#SOUND_HEAL, D0
-	JSR	QueueSoundEffect
+	PlaySound	SOUND_HEAL
 	MOVE.w	#BOSS_HIT_STUN_FRAMES, obj_knockback_timer(A5)
 HydraBoss_MainTick_Animate:
 	CLR.b	obj_hit_flag(A5)
@@ -3981,8 +3955,7 @@ HydraBoss_MainDeathAnim:
 	SUBQ.w	#1, Boss_active_parts.w
 	MOVE.l	#HydraBoss_DeathPauseWait, obj_tick_fn(A5)
 	MOVE.b	#$28, obj_move_counter(A5)
-	MOVE.w	#SOUND_DOOR_OPEN, D0
-	JSR	QueueSoundEffect
+	PlaySound	SOUND_DOOR_OPEN
 	MOVE.w	#$000C, D0
 HydraBoss_MainDeathAnim_Loop:
 	LEA	BossProjectileSpriteFramePtrs, A0
@@ -4004,8 +3977,7 @@ HydraBoss_DeathPauseWait:
 	MOVE.l	#HydraBoss_DeathClearScreen, obj_tick_fn(A5)
 	CLR.w	Dialog_timer.w
 	CLR.w	Dialog_phase.w
-	MOVE.w	#SOUND_PURCHASE, D0
-	JSR	QueueSoundEffect
+	PlaySound	SOUND_PURCHASE
 HydraBoss_DeathPauseWait_Loop:
 	JSR	AddSpriteToDisplayList
 	RTS
@@ -4590,8 +4562,7 @@ BossMoveTick_Clamped_Loop:
 	JSR	UpdateEncounterPalette
 	TST.b	obj_hit_flag(A5)
 	BEQ.b	RingGuardian_TakeDamage_Return
-	MOVE.w	#SOUND_HEAL, D0
-	JSR	QueueSoundEffect
+	PlaySound	SOUND_HEAL
 	MOVE.w	Player_str.w, D0
 	SUB.w	D0, obj_hp(A5)
 	MOVE.w	#BOSS_HIT_STUN_FRAMES, obj_knockback_timer(A5)
@@ -4624,10 +4595,8 @@ RingGuardian_DeathFall:
 	MOVE.l	#RingGuardian_VictoryDialog, obj_tick_fn(A5)
 	CLR.w	Dialog_timer.w
 	CLR.w	Dialog_phase.w
-	MOVE.w	#SOUND_DOOR_OPEN, D0
-	JSR	QueueSoundEffect
-	MOVE.w	#SOUND_PURCHASE, D0
-	JSR	QueueSoundEffect
+	PlaySound	SOUND_DOOR_OPEN
+	PlaySound	SOUND_PURCHASE
 RingGuardian_DeathFall_Loop:
 	MOVE.w	obj_world_x(A5), D0
 	MOVE.w	D0, HScroll_base.w
@@ -4741,8 +4710,7 @@ RingGuardian_ProjectileSpawner_Loop2_Done:
 	MOVE.l	#$00030000, obj_vel_y(A6)
 	CLR.b	obj_move_counter(A6)
 	MOVE.l	#RingGuardian_ChildProjectileTick, obj_tick_fn(A6)
-	MOVE.w	#SOUND_SAVE, D0
-	JSR	QueueSoundEffect
+	PlaySound	SOUND_SAVE
 RingGuardian_ProjectileSpawner_Loop:
 	RTS
 	

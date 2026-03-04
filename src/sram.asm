@@ -185,10 +185,8 @@ FileMenu_VerifyChecksum_Loop:
 	BEQ.b	FileMenu_VerifyChecksum_Loop6
 	JSR	DrawSaveFailedWindow
 	ADDQ.w	#1, File_menu_phase.w
-	MOVE.w	#SOUND_SAVE_FAILED, D0
-	JSR	QueueSoundEffect
-	MOVE.w	#SOUND_SPELL_CAST, D0
-	JSR	QueueSoundEffect
+	PlaySound	SOUND_SAVE_FAILED
+	PlaySound	SOUND_SPELL_CAST
 	RTS
 	
 FileMenu_VerifyChecksum_Loop6:
@@ -197,8 +195,7 @@ FileMenu_VerifyChecksum_Loop6:
 	BSR.w	LoadGameFromSave	
 	JSR	DrawSaveSuccessWindow	
 	MOVE.w	#FILE_MENU_PHASE_SUCCESS, File_menu_phase.w	
-	MOVE.w	#SOUND_LEVEL_UP_BANNER, D0	
-	JSR	QueueSoundEffect	
+	PlaySound	SOUND_LEVEL_UP_BANNER	
 FileSave_Return:
 	RTS
 	

@@ -35,8 +35,7 @@ ProcessScriptText:
 	BEQ.w	ScriptDecode_Return
 	BTST.l	D2, D1
 	BEQ.w	ScriptDecode_Return             ; throttle: only advance on rising edge of bit D2
-	MOVE.b	#SOUND_TEXT_BLIP, D0
-	JSR	QueueSoundEffect                ; play text blip sound each displayed character
+	PlaySound_b	SOUND_TEXT_BLIP                ; play text blip sound each displayed character
 	TST.b	Script_reading_player_name.w
 	BNE.b	ProcessScriptText_Loop          ; currently mid-player-name: skip source fetch
 	MOVE.w	Script_source_offset.w, D2
@@ -171,8 +170,7 @@ ScriptRender_PortraitTile_Loop7:
 	BSR.w	AddPaymentAmount
 ScriptRender_PortraitTile_Loop8:
 	DBF	D4, ScriptRender_PortraitTile_Loop5_Done
-	MOVE.w	#SOUND_ATTACK, D0
-	JSR	QueueSoundEffect
+	PlaySound	SOUND_ATTACK
 	BRA.w	ScriptDecode_Done
 ScriptRender_PortraitTile_Loop6:
 	CLR.l	D4
@@ -2448,8 +2446,7 @@ HandleMenuInput:
 	BEQ.w	BlinkMenuCursor
 	ANDI.w	#$000F, D2
 	BEQ.w	BlinkMenuCursor
-	MOVE.w	#SOUND_HIT, D0
-	JSR	QueueSoundEffect
+	PlaySound	SOUND_HIT
 	BTST.l	#0, D3
 	BEQ.b	MenuCursor_CheckUp
 	BTST.l	#0, D2
@@ -3926,8 +3923,7 @@ NameEntryScreen_InputHandler_Loop:
 	RTS
 
 NameEntryScreen_InputHandler_Loop2:
-	MOVE.w	#SOUND_MENU_SELECT, D0
-	JSR	QueueSoundEffect
+	PlaySound	SOUND_MENU_SELECT
 	LEA	Player_name.w, A0
 	LEA	NameEntryCharacterTable, A1
 	MOVE.l	#$41A20003, D6
@@ -4002,8 +3998,7 @@ NameEntry_ConfirmDone:
 ; NameEntry_ConfirmDone_Loop
 ; Handle backspace: erase last entered character from buffer and VRAM.
 NameEntry_ConfirmDone_Loop:
-	MOVE.w	#SOUND_MENU_CANCEL, D0
-	JSR	QueueSoundEffect
+	PlaySound	SOUND_MENU_CANCEL
 	TST.w	Name_entry_cursor_column.w
 	BLE.w	NameEntry_ConfirmDone_Loop2
 	LEA	Player_name.w, A0
@@ -4149,8 +4144,7 @@ HandleNameEntryDPad:
 	BTST.l	#2, D0
 	BNE.w	NameEntryCursor_Left_Sound
 HandleNameEntryDPad_Done:
-	MOVE.w	#SOUND_HIT, D0
-	JSR	QueueSoundEffect
+	PlaySound	SOUND_HIT
 ; NameEntryCursor_Right
 ; Move grid cursor right, skipping invalid cells, wrapping at the end of the row.
 NameEntryCursor_Right:
@@ -4170,8 +4164,7 @@ NameEntryCursor_Right_Loop:
 ; NameEntryCursor_Left_Sound
 ; Play cursor move sound then fall through to NameEntryCursor_Left.
 NameEntryCursor_Left_Sound:
-	MOVE.w	#SOUND_HIT, D0
-	JSR	QueueSoundEffect
+	PlaySound	SOUND_HIT
 ; NameEntryCursor_Left
 ; Move grid cursor left, skipping invalid (spacer) cells.
 NameEntryCursor_Left:
@@ -4190,8 +4183,7 @@ NameEntryCursor_Left_Loop:
 ; NameEntryCursor_Down_Sound
 ; Play cursor move sound then fall through to NameEntryCursor_Down.
 NameEntryCursor_Down_Sound:
-	MOVE.w	#SOUND_HIT, D0
-	JSR	QueueSoundEffect
+	PlaySound	SOUND_HIT
 ; NameEntryCursor_Down
 ; Move grid cursor down, skipping invalid cells, wrapping at the bottom.
 NameEntryCursor_Down:
@@ -4211,8 +4203,7 @@ NameEntryCursor_Down_Loop:
 ; NameEntryCursor_Up_Sound
 ; Play cursor move sound then fall through to NameEntryCursor_Up.
 NameEntryCursor_Up_Sound:
-	MOVE.w	#SOUND_HIT, D0
-	JSR	QueueSoundEffect
+	PlaySound	SOUND_HIT
 ; NameEntryCursor_Up
 ; Move grid cursor up, skipping invalid cells, wrapping at the top.
 NameEntryCursor_Up:
@@ -4362,8 +4353,7 @@ PrologueScreen_Init:
 	BSR.w	LoadPrologueFadeParams
 	MOVE.b	#6, Timer_seconds_bcd.w
 	JSR	EnableDisplay
-	MOVE.b	#SOUND_PROLOGUE_MUSIC, D0
-	JSR	QueueSoundEffect
+	PlaySound_b	SOUND_PROLOGUE_MUSIC
 	MOVE.l	#PrologueStateDispatcher, obj_tick_fn(A5)
 	RTS
 
@@ -4494,8 +4484,7 @@ DebugMaxStats_Return_Loop:
 ; DebugMaxStats_Return_Loop2
 ; Prologue state handler: play level-up sound, draw scene 6, advance state.
 DebugMaxStats_Return_Loop2:
-	MOVE.b	#SOUND_LEVEL_UP, D0
-	JSR	QueueSoundEffect
+	PlaySound_b	SOUND_LEVEL_UP
 	JSR	ClearVRAMPlaneA
 	JSR	ClearVRAMPlaneB
 	BSR.w	DrawPrologueScene6
