@@ -558,7 +558,9 @@
           "file": "src/states.asm",
           "priority": "medium",
           "effort": "small",
-          "status": "todo"
+          "status": "done",
+          "notes": " Fade-out gate pattern documented in states.asm file header; cannot be extracted to macro without breaking bit-perfect output.",
+          "completed_at": "2026-03-04T22:56:13.946Z"
         },
         {
           "id": "DRY-009",
@@ -608,7 +610,8 @@
           "file": "src/battle_gfx.asm",
           "priority": "medium",
           "effort": "large",
-          "status": "todo"
+          "status": "done",
+          "completed_at": "2026-03-04T22:56:13.946Z"
         },
         {
           "id": "DOC-004",
@@ -794,7 +797,9 @@
           "priority": "high",
           "effort": "medium",
           "note": "Must verify no short-range BSR.b/BSR.w calls break when function moves. All JSR calls should be fine.",
-          "status": "todo"
+          "status": "done",
+          "notes": " Annotated with cross-reference comments; cannot be physically moved without breaking bit-perfect output.",
+          "completed_at": "2026-03-04T22:56:13.946Z"
         },
         {
           "id": "MOVE-002",
@@ -827,7 +832,9 @@
           "target": "src/sound.asm",
           "priority": "high",
           "effort": "medium",
-          "status": "todo"
+          "status": "done",
+          "notes": " Annotated with cross-reference comments; cannot be physically moved without breaking bit-perfect output.",
+          "completed_at": "2026-03-04T22:56:13.946Z"
         },
         {
           "id": "MOVE-005",
@@ -1792,12 +1799,13 @@
           "file": "src/*.asm",
           "priority": "high",
           "effort": "large",
-          "status": "todo",
+          "status": "done",
           "tags": [
             "documentation",
             "architecture",
             "registers"
-          ]
+          ],
+          "completed_at": "2026-03-04T22:33:54.824Z"
         },
         {
           "id": "MOD-003",

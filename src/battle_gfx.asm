@@ -1,7 +1,33 @@
 ; ======================================================================
 ; src/battle_gfx.asm
 ; Battle graphics loading, DMA, tile decompression
+;
+; NOTE — misplaced general-purpose utilities (see MOVE-001, MOVE-004):
+;   GetRandomNumber   (line ~605) — LCG RNG; used by 59 call sites across
+;                                   enemy.asm, combat.asm, boss.asm, etc.
+;                                   Logically belongs in a math/util module.
+;   QueueSoundEffect  (line ~1482) — sound queue push; used by 14 call sites
+;                                   across gameplay.asm, items.asm, boss.asm,
+;                                   player.asm, etc.
+;                                   Logically belongs in sound.asm.
+;   Both functions cannot be physically moved without breaking bit-perfect
+;   output (absolute addresses change).  Annotated in place.
 ; ======================================================================
+
+; ---------------------------------------------------------------------------
+; WriteDirectionTilesForBoss — write 6 direction-tile rows to VDP VRAM
+;
+; Looks up a tile source pointer from BossDirectionTilePtrs using D0 as a
+; word index (0-3), then writes 6 rows of 5 tiles each to VRAM starting at
+; address $40080003 (plane A row), advancing the destination by $80 per row.
+; Each source byte is offset by $A200 to form the tile attribute word.
+;
+; Input:
+;   D0.w  direction index (0-3); word index into BossDirectionTilePtrs
+;
+; Scratch:  D0, D4-D7, A0
+; Output:   6 × 5 tile words written to VDP nametable
+; ---------------------------------------------------------------------------
 WriteDirectionTilesForBoss:
 	ORI	#$0700, SR
 	LEA	BossDirectionTilePtrs, A0
@@ -22,6 +48,25 @@ WriteDirectionTilesForBoss_Done2:
 	ANDI	#$F8FF, SR
 	RTS
 	
+; ---------------------------------------------------------------------------
+; CalculateDirectionToEntity — compute facing direction from A5 toward A6
+; CalculateDirectionToPlayer — compute facing direction from A5 toward player
+;
+; Both functions compute an 8-directional facing value and store it in
+; obj_direction(A5), then step it one increment toward the desired angle
+; (clamped rotation, not snap).  They share GetDirectionFromDeltas.
+;
+; CalculateDirectionToEntity uses the world positions of the objects
+; at A5 and A6.  CalculateDirectionToPlayer loads the player entity
+; pointer and offsets by ($18, $58) to account for sprite origin.
+;
+; Input:
+;   A5    entity whose direction field is being updated
+;   A6    (CalculateDirectionToEntity only) target entity
+;
+; Scratch:  D0-D4, A1, A6 (CalculateDirectionToPlayer clobbers A6)
+; Output:   obj_direction(A5) incremented one step toward target
+; ---------------------------------------------------------------------------
 CalculateDirectionToEntity:
 	LEA	DirectionToEntityLookup, A1
 	MOVE.w	obj_world_x(A6), D0
@@ -112,6 +157,19 @@ BossDirectionTilePtrs:
 	dc.l	BossDirectionTilePtrs_Gfx_780A8
 	dc.l	SpriteMetaTileTable_780C6
 	dc.l	SpriteMetaTileTable_780C6	
+; ---------------------------------------------------------------------------
+; WriteTilesToVRAM — write one sprite tile set from BossTileSourceTable to VDP
+;
+; Selects a record from BossTileSourceTable using D0 as an entry index (each
+; entry is 12 bytes: source ptr, col-count word, row-count word, VDP address
+; long).  Writes col × row tiles to VDP nametable with interrupts masked.
+;
+; Input:
+;   D0.w  entry index into BossTileSourceTable
+;
+; Scratch:  D0, D4-D7, A0, A1
+; Output:   tiles written to VDP; interrupts restored via SR
+; ---------------------------------------------------------------------------
 WriteTilesToVRAM:
 	LEA	BossTileSourceTable, A0
 	MOVE.w	D0, D1
@@ -151,10 +209,21 @@ DirectionToEntityLookup:
 	dc.b	$C0
 	dc.b	$E0
 	dc.b	$E0, $00, $C0, $A0, $A0, $80 
-; AddSpriteToDisplayList
-; Add sprite to display list for rendering
-; Checks sprite bounds, calculates position, and adds to sprite buffer
-; Input: A5 = Object data pointer
+; ---------------------------------------------------------------------------
+; AddSpriteToDisplayList — add a sprite to the priority-sort display list
+;
+; Checks whether the sprite at A5 is on-screen, computes its priority slot
+; from obj_sort_key, and inserts it into the priority bucket structure at
+; Sprite_priority_slots.  Each bucket is 16 bytes; up to 15 sprites per
+; bucket (the counter byte is $0F when full).
+;
+; Input:
+;   A5    object data pointer (obj_screen_x, obj_screen_y, obj_sprite_size,
+;         obj_sprite_flags, obj_tile_index, obj_sort_key)
+;
+; Scratch:  D0-D7, A0
+; Output:   sprite added to sort buffer; Sprite_attr_count incremented
+; ---------------------------------------------------------------------------
 AddSpriteToDisplayList:
 	ORI	#$0700, SR
 	MOVE.w	obj_screen_y(A5), D5
@@ -217,6 +286,17 @@ AddSpriteToDisplayList_Return:
 	ANDI	#$F8FF, SR
 	RTS
 	
+; ---------------------------------------------------------------------------
+; FlushSpriteAttributesToVDP — write sprite attribute table to VDP
+;
+; Writes all queued sprite OAM entries (Sprite_attr_buffer) to the VDP
+; sprite attribute table at VRAM $7800.  Terminates the list with a
+; zero-filled entry (Y=0 terminates the VDP sprite chain).
+;
+; Input:   (none)  — reads Sprite_attr_count.w and Sprite_attr_buffer.w
+; Scratch:  D0, A2
+; Output:   VDP sprite attribute table updated
+; ---------------------------------------------------------------------------
 FlushSpriteAttributesToVDP:
 	MOVE.l	#$78000002, VDP_control_port
 	MOVE.w	Sprite_attr_count.w, D0
@@ -236,6 +316,20 @@ FlushSpriteAttributesToVDP_Loop:
 	MOVE.w	#0, VDP_data_port
 	RTS
 	
+; ---------------------------------------------------------------------------
+; QueueSpriteOAMIfVisible — build one OAM entry in Sprite_attr_buffer
+;
+; Checks if the sprite at A5 is on-screen, then writes a single 8-byte OAM
+; entry (Y, size/link, tile attributes, X) directly into Sprite_attr_buffer
+; at the slot indexed by Sprite_attr_count, then increments the count.
+; Unlike AddSpriteToDisplayList this function bypasses the priority sort.
+;
+; Input:
+;   A5    object data pointer
+;
+; Scratch:  D0-D4, A0
+; Output:   OAM entry appended; Sprite_attr_count incremented
+; ---------------------------------------------------------------------------
 QueueSpriteOAMIfVisible:
 	LEA	Sprite_attr_buffer.w, A0
 	MOVE.w	Sprite_attr_count.w, D0
@@ -280,6 +374,19 @@ QueueSpriteOAMIfVisible:
 QueueSpriteOAM_Return:
 	RTS
 	
+; ---------------------------------------------------------------------------
+; SortAndUploadSpriteOAM — sort priority buckets and build final OAM list
+;
+; Iterates all 256 priority buckets in Sprite_priority_slots (16 bytes each,
+; up to 15 sprite indices per bucket).  For each occupied bucket, copies the
+; corresponding OAM records from the unsorted Sprite_attr_buffer into the
+; final build buffer (Sprite_sort_temp_buffer) in priority order, patching
+; the link chain as it goes.  Interrupts are masked during the operation.
+;
+; Input:   (none) — reads Sprite_priority_slots and Sprite_attr_buffer
+; Scratch:  D0-D7, A0-A4
+; Output:   Sprite_sort_temp_buffer populated with sorted, linked OAM
+; ---------------------------------------------------------------------------
 SortAndUploadSpriteOAM:
 	ORI	#$0700, SR
 	TST.w	Sprite_attr_count.w
@@ -321,6 +428,18 @@ QueueSpriteOAM_Return_Loop:
 	
 QueueSpriteOAM_Return_Loop3:
 	RTE	
+; ---------------------------------------------------------------------------
+; SortAndUploadSpriteOAM_Alt — clear all priority-bucket slot counters
+;
+; Clears the first byte of all 32 priority buckets in Sprite_priority_slots.
+; Each bucket is 16 bytes; this loop steps through 32 × 8 = 256 buckets via
+; DBF, clearing the count byte of each.  Called at the start of each frame
+; to reset the sort list before any new sprites are added.
+;
+; Input:   (none)
+; Scratch:  D7, A0
+; Output:   Sprite_priority_slots count bytes all zeroed
+; ---------------------------------------------------------------------------
 SortAndUploadSpriteOAM_Alt:
 	MOVE.w	#$001F, D7
 	LEA	Sprite_priority_slots.w, A0
@@ -345,6 +464,20 @@ QueueSpriteOAM_Return_Loop3_Done:
 	ANDI	#$F8FF, SR
 	RTS
 	
+; ---------------------------------------------------------------------------
+; LoadEncounterGraphics — load all tile sets for a random encounter battle
+;
+; Loads four GFX groups:
+;   1. EncounterTileData_Entry    — base encounter tiles (player + HUD)
+;   2. GfxLoadList_OverworldBattle — overworld battle background tiles
+;   3. EnemyGfxDataTable          — enemy sprite tiles (front + back banks)
+;   4. Optional 3rd enemy tile set (if source pointer is non-null)
+; Each group is decompressed into Tile_gfx_buffer and DMA'd to VRAM.
+;
+; Input:   (via RAM)  Current_encounter_type.w
+; Scratch:  D0, D5, A2, A3, A4, A6
+; Output:   VRAM loaded with encounter tile sets
+; ---------------------------------------------------------------------------
 LoadEncounterGraphics:
 	LEA	EncounterTileData_Entry-2, A6
 	MOVE.w	(A6)+, Vdp_dma_slot_index.w
@@ -393,6 +526,19 @@ LoadEncounterGraphics:
 LoadEncounterGraphics_Loop:
 	RTS
 	
+; ---------------------------------------------------------------------------
+; LoadMagicGraphics — load tile graphics and palette for a magic spell
+;
+; Uses D0.w as a spell index to look up a record in MagicGfxDataPtrs.
+; Decompresses the spell's tile data into Tile_gfx_buffer, DMA's it to
+; VRAM slot $43, then loads the spell's palette via LoadPalettesFromTable.
+;
+; Input:
+;   D0.w  magic/spell index into MagicGfxDataPtrs
+;
+; Scratch:  D0, D5, A2, A4, A6
+; Output:   VRAM slot $43 loaded; palette updated
+; ---------------------------------------------------------------------------
 LoadMagicGraphics:
 	LEA	MagicGfxDataPtrs, A6
 	ADD.w	D0, D0
@@ -409,6 +555,19 @@ LoadMagicGraphics:
 	JSR	LoadPalettesFromTable
 	RTS
 	
+; ---------------------------------------------------------------------------
+; LoadEncounterTypeGraphics — load enemy tile graphics for current encounter
+;
+; Reads Encounter_group_index to pick a group from EnemyEncounterGroupTable,
+; then uses Random_number to select one of 4 possible encounter types within
+; that group.  Stores the selected type in Current_encounter_type.  Loads
+; the primary tile set (16 tiles) and optional secondary tile set into
+; Tile_gfx_buffer and Enemy_gfx_buffer respectively.
+;
+; Input:   (via RAM)  Encounter_group_index.w, Random_number.w
+; Scratch:  D0-D2, D5, A1, A2, A3, A4, A6
+; Output:   Current_encounter_type.w set; tile buffers loaded
+; ---------------------------------------------------------------------------
 LoadEncounterTypeGraphics:
 	LEA	Tile_gfx_buffer.w, A2
 	LEA	EnemyEncounterGroupTable, A1
@@ -440,6 +599,18 @@ LoadEncounterTypeGraphics:
 LoadEncounterTypeGraphics_Loop:
 	RTS
 	
+; ---------------------------------------------------------------------------
+; LoadTalkerGraphics — load tile graphics for an NPC talker/portrait
+;
+; Reads Talker_gfx_descriptor_ptr to get a graphics descriptor record.
+; Loads the primary tile set into Tile_gfx_buffer and, if the secondary
+; pointer is non-null, loads the secondary set into Enemy_gfx_buffer.
+; Used during dialogue to load the NPC portrait/sprite tiles.
+;
+; Input:   (via RAM)  Talker_gfx_descriptor_ptr.w
+; Scratch:  D5, A2, A3, A4, A6
+; Output:   Tile_gfx_buffer (and optionally Enemy_gfx_buffer) loaded
+; ---------------------------------------------------------------------------
 LoadTalkerGraphics:
 	LEA	Tile_gfx_buffer.w, A2
 	MOVEA.l	Talker_gfx_descriptor_ptr.w, A6
@@ -458,17 +629,51 @@ LoadTalkerGraphics:
 LoadTalkerGraphics_Loop:
 	RTS
 	
+; ---------------------------------------------------------------------------
+; LoadFirstPersonGraphics — load tile sets for first-person dungeon view
+;
+; Processes GfxLoadList_FirstPerson via ProcessGraphicsLoadList, then
+; DMA-fills $01FF bytes of VRAM at address $40000000 with zeros.
+;
+; Input:   (none)
+; Scratch:  A6 (via ProcessGraphicsLoadList)
+; Output:   VRAM first-person tile slots loaded and zeroed
+; ---------------------------------------------------------------------------
 LoadFirstPersonGraphics:
 	LEA	GfxLoadList_FirstPerson-2, A6
 	BSR.w	ProcessGraphicsLoadList
 	DMAFillVRAM_bsr $40000000, $01FF
 	RTS
 	
+; ---------------------------------------------------------------------------
+; LoadFirstPersonBattleGraphics — load tile sets for first-person battle view
+;
+; Processes GfxLoadList_FirstPersonBattle via ProcessGraphicsLoadList.
+;
+; Input:   (none)
+; Scratch:  A6 (via ProcessGraphicsLoadList)
+; Output:   VRAM first-person battle tile slots loaded
+; ---------------------------------------------------------------------------
 LoadFirstPersonBattleGraphics:
 	LEA	GfxLoadList_FirstPersonBattle, A6
 	BSR.w	ProcessGraphicsLoadList
 	RTS
 	
+; ---------------------------------------------------------------------------
+; LoadIntroSegalogGraphics  — load Sega logo intro tile graphics
+; LoadIntroTitleGraphics    — load title screen intro tile graphics
+; LoadTownGraphics          — load town tile graphics
+; LoadTownBattleGraphics    — load town battle tile graphics
+; LoadWorldBattleGraphics   — load world/overworld battle tile graphics
+;
+; All five functions tail-call ProcessGraphicsLoadList with their
+; respective GfxLoadList pointer in A6.  See ProcessGraphicsLoadList
+; for the load loop.
+;
+; Input:   (none)
+; Scratch:  A6 (via ProcessGraphicsLoadList)
+; Output:   VRAM slots loaded for the respective context
+; ---------------------------------------------------------------------------
 LoadIntroSegalogGraphics:
 	LEA	GfxLoadList_IntroSegalogo, A6
 	BRA.w	ProcessGraphicsLoadList
@@ -484,6 +689,16 @@ LoadTownBattleGraphics:
 LoadWorldBattleGraphics:
 	LEA	GfxLoadList_WorldBattle, A6
 	BRA.w	ProcessGraphicsLoadList
+; ---------------------------------------------------------------------------
+; LoadPlayerOverworldGraphics — load player overworld sprite tile graphics
+;
+; Decompresses 108 ($6C) tiles from LoadPlayerOverworldGraphics_Data into
+; Player_overworld_gfx_buffer using the indexed table loader.
+;
+; Input:   (none)
+; Scratch:  D5, A2, A3, A4
+; Output:   Player_overworld_gfx_buffer loaded with player sprite tiles
+; ---------------------------------------------------------------------------
 LoadPlayerOverworldGraphics:
 	LEA	LoadPlayerOverworldGraphics_Data2, A3
 	LEA	Player_overworld_gfx_buffer, A2
@@ -492,6 +707,19 @@ LoadPlayerOverworldGraphics:
 	BSR.w	LoadMultipleTilesFromTable
 	RTS
 	
+; ---------------------------------------------------------------------------
+; LoadBattleTilesToBuffers — load tile sets for battle plane/slot buffers
+;
+; Decompresses three groups of tile data into three separate RAM buffers:
+;   Tilemap_buffer_plane_a   — 168 ($A8) tiles from Data3/Data4
+;   Battle_gfx_slot_1_buffer — 360 ($168) tiles from Data5/Data6
+;   Battle_gfx_slot_2_buffer — 120 ($78) tiles from Data/Data2
+; Uses LoadMultipleTilesFromTable for each group.
+;
+; Input:   (none)
+; Scratch:  D5, A2, A3, A4, A6
+; Output:   Battle tile RAM buffers populated
+; ---------------------------------------------------------------------------
 LoadBattleTilesToBuffers:
 	LEA	Tilemap_buffer_plane_a, A2
 	LEA	LoadBattleTilesToBuffers_Data3, A4
@@ -510,6 +738,19 @@ LoadBattleTilesToBuffers:
 	BSR.w	LoadMultipleTilesFromTable
 	RTS
 	
+; ---------------------------------------------------------------------------
+; LoadBossGraphics — load tile graphics for boss battle
+;
+; Decompresses four groups into separate RAM buffers:
+;   Tilemap_buffer_plane_a   — 192 ($C0) tiles from Data/Data2
+;   Boss_gfx_slot_1_buffer   — 240 ($F0) tiles from Data3/Data4
+;   Boss_gfx_extra_buffer    —  32 ($20) tiles from Data5/Data6
+;   Boss_gfx_slot_2_buffer   —  28 ($1C) tiles from Data7/Data8
+;
+; Input:   (none)
+; Scratch:  D5, A2, A3, A4, A6
+; Output:   Boss tile RAM buffers populated
+; ---------------------------------------------------------------------------
 LoadBossGraphics:
 	LEA	Tilemap_buffer_plane_a, A2
 	LEA	LoadBossGraphics_Data, A4
@@ -533,6 +774,23 @@ LoadBossGraphics:
 	BSR.w	LoadMultipleTilesFromTable
 	RTS
 	
+; ---------------------------------------------------------------------------
+; ProcessGraphicsLoadList — process a GFX load list and DMA each slot
+;
+; Reads a GFX load list pointed to by A6.  Each entry is:
+;   word  DMA slot index (negative value = end of list)
+;   long  source index table pointer (A4)
+;   long  tile pointer table pointer (A3)
+;   word  tile count (D5)
+; For each entry, decompresses tiles into Tile_gfx_buffer and DMA-transfers
+; them to the slot.  Terminates when the slot word is negative.
+;
+; Input:
+;   A6    pointer to GFX load list
+;
+; Scratch:  D0, D5, A2, A3, A4, A6
+; Output:   VRAM slots loaded per list entries
+; ---------------------------------------------------------------------------
 ProcessGraphicsLoadList:
 	MOVE.w	(A6)+, D0
 	BLT.b	ProcessGraphicsLoadList_Loop
@@ -547,9 +805,22 @@ ProcessGraphicsLoadList:
 ProcessGraphicsLoadList_Loop:
 	RTS
 	
-; LoadMultipleTilesFromTable
-; Load and decompress multiple tiles from indexed table
-; Input: A4 = Index list, A3 = Tile pointer table, A2 = Destination, D5 = Count
+; ---------------------------------------------------------------------------
+; LoadMultipleTilesFromTable — decompress N tiles from an indexed tile table
+;
+; Reads byte indices from A4; for each index, looks up the source pointer
+; in a long-pointer table at A3 (index×4), decompresses the tile into A2,
+; then advances A2 by $20 (32 bytes per tile). Iterates D5+1 tiles (DBF).
+;
+; Input:
+;   A4    index list (one byte per tile)
+;   A3    tile pointer table (one long ptr per unique tile)
+;   A2    destination buffer
+;   D5.w  tile count minus 1 (DBF loop counter)
+;
+; Scratch:  D0, D5, A0, A2
+; Output:   A2 advanced past written tiles; tiles decompressed in buffer
+; ---------------------------------------------------------------------------
 LoadMultipleTilesFromTable:
 	CLR.w	D0
 	MOVE.b	(A4)+, D0
@@ -561,6 +832,20 @@ LoadMultipleTilesFromTable:
 	DBF	D5, LoadMultipleTilesFromTable
 	RTS
 	
+; ---------------------------------------------------------------------------
+; ExecuteVdpDmaTransfer — DMA Tile_gfx_buffer to VRAM slot from command table
+;
+; Looks up the DMA command record for the current Vdp_dma_slot_index in
+; BattleSpriteDMACommands (each record is 16 bytes), programs the VDP DMA
+; registers, copies the command routine to RAM, and executes it.
+; Stops and restarts the Z80 around the DMA.
+;
+; Input:   (via RAM)
+;   Vdp_dma_slot_index.w  — slot index into BattleSpriteDMACommands
+;
+; Scratch:  D0, D4, A0
+; Output:   Tile_gfx_buffer DMA'd to VRAM at selected slot
+; ---------------------------------------------------------------------------
 ExecuteVdpDmaTransfer:
 	ORI	#$0700, SR
 	stopZ80
@@ -622,6 +907,21 @@ GetRandomNumber_Loop:
 	MOVEM.l	(A7)+, D1
 	RTS
 
+; ---------------------------------------------------------------------------
+; RemoveItemFromArray — remove element at index D0 from a word array at A0
+;
+; Shifts all words after the removed index one slot forward (left-compaction),
+; effectively removing the element at index D0. The array length (in entries)
+; is D2; the caller is responsible for decrementing the length after the call.
+;
+; Input:
+;   D0.w  index of element to remove (0-based)
+;   D2.w  current array length (number of entries)
+;   A0    base address of word array
+;
+; Scratch:  D1, A0
+; Output:   Array compacted; entry at D0 overwritten
+; ---------------------------------------------------------------------------
 RemoveItemFromArray:
 	MOVE.w	D0, D1
 	ADD.w	D0, D0
@@ -635,10 +935,21 @@ RemoveItemFromArray_Done:
 RemoveItemFromArray_Loop:
 	RTS
 	
-; DecompressTileGraphics
-; Decompress tile graphics data
-; Input: A0 = Source compressed data, A2 = Destination buffer
-; Uses bitfield (D3) to track which pixels are already set
+; ---------------------------------------------------------------------------
+; DecompressTileGraphics — decompress a masked tile from ROM into A2
+;
+; Decodes a custom bit-masked tile format.  Each tile record consists of
+; mask runs followed by unmasked pixel bytes.  The mask bitmask (D3.l)
+; accumulates 1 bits for pixels that were explicitly set; pixels still
+; zero in the mask are filled by reading additional bytes from the source.
+;
+; Input:
+;   A0    pointer to compressed tile data
+;   A2    destination tile buffer (32 bytes, 8×8 4bpp)
+;
+; Scratch:  D0-D4, A0-A1, A2 unchanged (A1 is a working pointer into A2)
+; Output:   32 bytes of 4bpp tile data written at A2
+; ---------------------------------------------------------------------------
 DecompressTileGraphics:
 	CLR.l	D3
 DecompressTileGraphics_ReadByte:
@@ -696,6 +1007,22 @@ DecompressTileGraphics_UnmaskedPixels:
 	DBF	D0, DecompressTileGraphics_Loop_Done
 	RTS
 	
+; ---------------------------------------------------------------------------
+; WriteMaskedTileRow — write 32 pixels using a mask bitfield
+;
+; Iterates 32 pixels (one tile row of 4bpp data, 4 bits per pixel = 32 nibbles
+; packed into 16 bytes).  For each pixel position, tests the corresponding bit
+; in D1; if set, writes D2 to (A1) (color index byte); if clear, leaves it.
+; Advances A1 one byte per pixel regardless.
+;
+; Input:
+;   D1.l  mask bitfield (bit 31 = pixel 0, left-shifted each iteration)
+;   D2.b  color byte to write for masked pixels
+;   A2    base tile buffer (A1 is initialized from A2)
+;
+; Scratch:  D1, D4, A1
+; Output:   Masked pixels in tile row written with D2
+; ---------------------------------------------------------------------------
 WriteMaskedTileRow:
 	LEA	(A2), A1
 WriteMaskedTileRow_PixelLoop:
@@ -712,6 +1039,20 @@ WriteMaskedTileRow_NextPixel:
 	DBF	D4, WriteMaskedTileRow_Done
 	RTS
 	
+; ---------------------------------------------------------------------------
+; DecompressFontTile — decompress a masked font tile with color clamping
+;
+; Same structure as DecompressTileGraphics but applies ClampTileCoordinates
+; to each pixel byte before writing, which clamps the color index to a safe
+; palette range.  Used exclusively for font/UI tiles.
+;
+; Input:
+;   A0    pointer to compressed font tile data
+;   A2    destination tile buffer (32 bytes)
+;
+; Scratch:  D0-D3, D6-D7, A0-A1
+; Output:   32 bytes of clamped 4bpp tile data written at A2
+; ---------------------------------------------------------------------------
 DecompressFontTile:
 	CLR.l	D3
 	CLR.w	D0
@@ -775,6 +1116,20 @@ DecompressFontTile_Loop_Done:
 	DBF	D0, DecompressFontTile_Loop_Done
 	RTS
 	
+; ---------------------------------------------------------------------------
+; WriteTileRowFromBitfield — write 32 pixels using a mask bitfield (font)
+;
+; Same as WriteMaskedTileRow but used by DecompressFontTile.  Iterates 32
+; pixel positions; for each bit set in D1, writes D2 to (A1).
+;
+; Input:
+;   D1.l  mask bitfield
+;   D2.b  color byte for masked pixels
+;   A2    base tile buffer
+;
+; Scratch:  D1, D4, A1
+; Output:   Masked pixels written; A1 advanced past row
+; ---------------------------------------------------------------------------
 WriteTileRowFromBitfield:
 	LEA	(A2), A1
 	MOVEQ	#$0000001F, D4
@@ -788,6 +1143,20 @@ WriteTileRowFromBitfield_Loop:
 	DBF	D4, WriteTileRowFromBitfield_Done
 	RTS
 	
+; ---------------------------------------------------------------------------
+; ClampTileCoordinates — clamp a font pixel byte to a safe palette range
+;
+; Font color bytes encode two nibbles (high = row offset, low = column).
+; This function clamps each nibble: if the high nibble is $3x it is zeroed,
+; and if the low nibble is $x3 it is zeroed.  Used to prevent color index
+; overflow when blitting font tiles.
+;
+; Input:
+;   D6.b  raw pixel byte (packed nibble pair)
+;
+; Scratch:  D7
+; Output:   D6.b clamped
+; ---------------------------------------------------------------------------
 ClampTileCoordinates:
 	MOVE.b	D6, D7
 	ANDI.w	#$00F0, D7
@@ -803,6 +1172,17 @@ ClampTileCoordinates_Loop:
 ClampTileCoordinates_Loop2:
 	RTS
 
+; ---------------------------------------------------------------------------
+; LoadAndDecompressTileGfx — decompress all 256 tiles and DMA to VRAM
+;
+; Decompresses 256 tiles from CompressedFontTileData into Tile_gfx_buffer
+; using DecompressTileGraphics (no clamping), then DMA's the buffer to
+; VRAM via TransferTilesViaDma.
+;
+; Input:   (none)
+; Scratch:  D5, A0, A2
+; Output:   VRAM tile area loaded with 256 decompressed (unclamped) tiles
+; ---------------------------------------------------------------------------
 LoadAndDecompressTileGfx:
 	LEA	Tile_gfx_buffer.w, A2
 	LEA	CompressedFontTileData, A0
@@ -814,6 +1194,17 @@ ClampTileCoordinates_Loop2_Done:
 	BSR.w	TransferTilesViaDma
 	RTS
 
+; ---------------------------------------------------------------------------
+; InitFontTiles — decompress font tiles (with clamping) and DMA to VRAM
+;
+; Decompresses 256 tiles from CompressedFontTileData into Tile_gfx_buffer
+; using DecompressFontTile (with ClampTileCoordinates applied per pixel),
+; then DMA's the buffer to VRAM via TransferTilesViaDma.
+;
+; Input:   (none)
+; Scratch:  D5, A0, A2
+; Output:   VRAM tile area loaded with 256 clamped font tiles
+; ---------------------------------------------------------------------------
 InitFontTiles:
 	LEA	Tile_gfx_buffer.w, A2
 	LEA	CompressedFontTileData, A0
@@ -825,6 +1216,17 @@ InitFontTiles_Done:
 	BSR.w	TransferTilesViaDma
 	RTS
 
+; ---------------------------------------------------------------------------
+; TransferTilesViaDma — DMA Tile_gfx_buffer to VRAM at $C000 (font area)
+;
+; Hard-wired DMA transfer: copies Tile_gfx_buffer ($0000–$1FFF in RAM) to
+; VRAM address $C000 (256 tiles × 32 bytes, slot offset $4C00/2 = $2600).
+; Uses self-modifying code stub in RAM (see InitVdpDmaRamRoutine).
+;
+; Input:   (none) — source is always Tile_gfx_buffer, dest always $C000
+; Scratch:  D4
+; Output:   VRAM font area updated
+; ---------------------------------------------------------------------------
 TransferTilesViaDma:
 	stopZ80
 	JSR	InitVdpDmaRamRoutine
@@ -845,6 +1247,18 @@ TransferTilesViaDma:
 	MOVE.w	#0, Z80_bus_request
 	RTS
 
+; ---------------------------------------------------------------------------
+; LoadTownTileGraphics — decompress and DMA town tileset for Current_town
+;
+; Selects the town tileset from TownTileGfxTable using Current_town.w
+; (each entry is 10 bytes).  Special-cases Swaffham when ruined.
+; Decompresses 256 tiles into Tile_gfx_buffer, DMA's to VRAM (Wyclif slot),
+; then decompresses object tiles and DMA's to VRAM (Parma slot).
+;
+; Input:   (via RAM)  Current_town.w, Swaffham_ruined.w
+; Scratch:  D0-D1, D5, A0-A2
+; Output:   Town tileset and object tiles loaded into VRAM
+; ---------------------------------------------------------------------------
 LoadTownTileGraphics:
 	LEA	Tile_gfx_buffer.w, A2
 	TST.b	Swaffham_ruined.w
@@ -894,6 +1308,17 @@ LoadTownObjectGfx_DecompressLoop:
 	BSR.w	ExecuteVdpDmaFromPointer
 	RTS
 	
+; ---------------------------------------------------------------------------
+; LoadBattleHudGraphics — load battle HUD tile graphics to VRAM
+;
+; Decompresses 256 HUD tiles into Tile_gfx_buffer, DMA's to VRAM Wyclif
+; slot, then decompresses 58 ($3A) additional HUD tiles and DMA's to the
+; Parma slot.
+;
+; Input:   (none)
+; Scratch:  D5, A0, A2
+; Output:   VRAM Wyclif and Parma slots loaded with battle HUD tiles
+; ---------------------------------------------------------------------------
 LoadBattleHudGraphics:
 	LEA	Tile_gfx_buffer.w, A2
 	LEA	LoadBattleHudGraphics_Data, A0
@@ -942,6 +1367,17 @@ ExecuteVdpDmaFromPointer:
 	ANDI	#$F8FF, SR
 	RTS
 	
+; ---------------------------------------------------------------------------
+; ExecuteVdpDmaFromPointer_Setup — decompress overworld status tiles and DMA
+;
+; Decompresses 58 ($3A) tiles from ExecuteVdpDmaFromPointer_Data into
+; Tile_gfx_buffer and DMA's them to VRAM via ExecuteVdpDmaFromRam using
+; the DmaCmd_OverworldStatusTiles command.
+;
+; Input:   (none)
+; Scratch:  D5, A0, A2
+; Output:   VRAM overworld status tile area loaded
+; ---------------------------------------------------------------------------
 ExecuteVdpDmaFromPointer_Setup:
 	LEA	ExecuteVdpDmaFromPointer_Data, A0
 	LEA	Tile_gfx_buffer.w, A2
@@ -954,6 +1390,18 @@ ExecuteVdpDmaFromPointer_Done:
 	BSR.w	ExecuteVdpDmaFromRam
 	RTS
 	
+; ---------------------------------------------------------------------------
+; LoadBattleTerrainGraphics — load battle terrain tileset and palette
+;
+; Determines the terrain tileset index (boss, cave, soldier, or overworld)
+; by checking battle flags and calling DetermineTerrainTileset.  Then
+; decompresses the tiles from TerrainTilemapMetadata, DMA's them to VRAM,
+; and loads the terrain palette via LoadPalettesFromTable.
+;
+; Input:   (via RAM)  Is_boss_battle.w, Is_in_cave.w, Soldier_fight_event_trigger.w
+; Scratch:  D0, D5, A0-A2
+; Output:   Terrain tileset in VRAM; Terrain_tileset_index.w set; palette updated
+; ---------------------------------------------------------------------------
 LoadBattleTerrainGraphics:
 	TST.b	Is_boss_battle.w
 	BEQ.b	LoadBattleTerrainGraphics_Loop
@@ -990,12 +1438,36 @@ LoadBattleTerrainGraphics_LoadTiles:
 	JSR	LoadPalettesFromTable
 	RTS
 	
+; ---------------------------------------------------------------------------
+; DecompressTileLoop — decompress D5+1 tiles into A2, advancing by $20 each
+;
+; Simple loop helper shared by several callers.  Decompresses D5+1 tiles
+; from A0 into sequential $20-byte slots starting at A2.
+;
+; Input:
+;   A0    source compressed tile data
+;   A2    destination buffer
+;   D5.w  tile count minus 1 (DBF loop counter)
+;
+; Scratch:  A0, A2, D5
+; Output:   Tiles decompressed; A2 advanced past last tile
+; ---------------------------------------------------------------------------
 DecompressTileLoop:
 	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
 	DBF	D5, DecompressTileLoop
 	RTS
 	
+; ---------------------------------------------------------------------------
+; LoadBattleTileGraphics — load battle floor/field tile graphics to VRAM
+;
+; Decompresses 27 ($1B) tiles from LoadBattleTileGraphics_Data and DMA's
+; them to the DmaCmd_BattleTiles VRAM slot.
+;
+; Input:   (none)
+; Scratch:  D5, A0, A2
+; Output:   VRAM battle tile slot loaded
+; ---------------------------------------------------------------------------
 LoadBattleTileGraphics:
 	LEA	LoadBattleTileGraphics_Data, A0
 	LEA	Tile_gfx_buffer.w, A2
@@ -1008,6 +1480,16 @@ LoadBattleTileGraphics_Done:
 	BSR.w	ExecuteVdpDmaFromRam
 	RTS
 	
+; ---------------------------------------------------------------------------
+; LoadBattleUiTileGraphics — load battle UI tile graphics to VRAM
+;
+; Decompresses 61 ($3D) tiles from LoadBattleUiTileGraphics_Data and DMA's
+; them to the DmaCmd_BattleUiTiles VRAM slot.
+;
+; Input:   (none)
+; Scratch:  D5, A0, A2
+; Output:   VRAM battle UI tile slot loaded
+; ---------------------------------------------------------------------------
 LoadBattleUiTileGraphics:
 	LEA	LoadBattleUiTileGraphics_Data, A0
 	LEA	Tile_gfx_buffer.w, A2
@@ -1020,6 +1502,18 @@ LoadBattleUiTileGraphics_Done:
 	BSR.w	ExecuteVdpDmaFromRam
 	RTS
 	
+; ---------------------------------------------------------------------------
+; LoadWorldMapTileGraphics — load world map tile graphics to VRAM
+;
+; Decompresses 235 ($EB) tiles from LoadWorldMapTileGraphics_Data and DMA's
+; them to the DmaCmd_WorldMapTiles VRAM slot.  Falls through to the
+; ExecuteWorldMapDma label (which is also a named entry point for just the
+; DMA step).
+;
+; Input:   (none)
+; Scratch:  D5, A0, A2
+; Output:   VRAM world map tile area loaded
+; ---------------------------------------------------------------------------
 LoadWorldMapTileGraphics:
 	LEA	LoadWorldMapTileGraphics_Data, A0
 	LEA	Tile_gfx_buffer.w, A2
@@ -1036,6 +1530,18 @@ ExecuteWorldMapDma:
 NullSpriteRoutine:
 	RTS
 	
+; ---------------------------------------------------------------------------
+; LoadCaveTileGraphics — load compressed cave tileset from ROM data pointer
+; LoadCaveTileGfxToBuffer — decompress 118 ($76) cave tiles into Tile_gfx_buffer
+;
+; LoadCaveTileGraphics sets A0 = LoadCaveTileGraphics_Data then falls through
+; to LoadCaveTileGfxToBuffer, which decompresses the tiles and DMA's them
+; to VRAM via DmaCmd_CaveTiles.
+;
+; Input:   (none)
+; Scratch:  D5, A0, A2
+; Output:   VRAM cave tile slot loaded
+; ---------------------------------------------------------------------------
 LoadCaveTileGraphics:
 	LEA	LoadCaveTileGraphics_Data, A0
 LoadCaveTileGfxToBuffer:
@@ -1052,6 +1558,14 @@ LoadCaveTileGfxToBuffer_DmaTransfer:
 	BSR.w	ExecuteVdpDmaFromRam
 	RTS
 	
+; ---------------------------------------------------------------------------
+; LoadBattleGroundTileGraphics — load battle ground/floor tile graphics
+;
+; Decompresses 101 ($65) tiles from LoadBattleGroundTileGraphics_Data and
+; DMA's them to DmaCmd_BattleGroundGfx.
+;
+; Input:   (none)  Scratch:  D5, A0, A2  Output:   VRAM ground tile slot loaded
+; ---------------------------------------------------------------------------
 LoadBattleGroundTileGraphics:
 	LEA	LoadBattleGroundTileGraphics_Data, A0
 	LEA	Tile_gfx_buffer.w, A2
@@ -1064,6 +1578,14 @@ LoadBattleGroundTileGraphics_Done:
 	BSR.w	ExecuteVdpDmaFromRam
 	RTS
 	
+; ---------------------------------------------------------------------------
+; LoadBattleEnemyTileGraphics — load battle enemy sprite tile graphics
+;
+; Decompresses 87 ($57) tiles from SpriteGfxData_8287C and DMA's them
+; to DmaCmd_BattleEnemyGfx.
+;
+; Input:   (none)  Scratch:  D5, A0, A2  Output:   VRAM enemy tile slot loaded
+; ---------------------------------------------------------------------------
 LoadBattleEnemyTileGraphics:
 	LEA	SpriteGfxData_8287C, A0
 	LEA	Tile_gfx_buffer.w, A2
@@ -1076,6 +1598,14 @@ LoadBattleEnemyTileGraphics_Done:
 	BSR.w	ExecuteVdpDmaFromRam
 	RTS
 	
+; ---------------------------------------------------------------------------
+; LoadBattleStatusTileGraphics — load battle status bar tile graphics
+;
+; Decompresses 89 ($59) tiles from LoadBattleStatusTileGraphics_Data and
+; DMA's them to DmaCmd_BattleStatusGfx.
+;
+; Input:   (none)  Scratch:  D5, A0, A2  Output:   VRAM battle status tile slot loaded
+; ---------------------------------------------------------------------------
 LoadBattleStatusTileGraphics:
 	LEA	LoadBattleStatusTileGraphics_Data, A0
 	LEA	Tile_gfx_buffer.w, A2
@@ -1088,6 +1618,15 @@ LoadBattleStatusTileGraphics_Done:
 	BSR.w	ExecuteVdpDmaFromRam
 	RTS
 	
+; ---------------------------------------------------------------------------
+; LoadCaveEnemyTileGraphics — load cave enemy sprite tile graphics
+;
+; Decompresses 87 ($57) tiles from SpriteGfxData_8287C and DMA's them
+; to DmaCmd_CaveEnemyGfx.  Same source as LoadBattleEnemyTileGraphics
+; but targets a different DMA command / VRAM destination.
+;
+; Input:   (none)  Scratch:  D5, A0, A2  Output:   VRAM cave enemy tile slot loaded
+; ---------------------------------------------------------------------------
 LoadCaveEnemyTileGraphics:
 	LEA	SpriteGfxData_8287C, A0
 	LEA	Tile_gfx_buffer.w, A2
@@ -1100,6 +1639,14 @@ LoadCaveEnemyTileGraphics_Done:
 	BSR.w	ExecuteVdpDmaFromRam
 	RTS
 	
+; ---------------------------------------------------------------------------
+; LoadCaveItemTileGraphics — load cave item/chest tile graphics
+;
+; Decompresses 94 ($5E) tiles from LoadCaveItemTileGraphics_Data and DMA's
+; them to DmaCmd_CaveItemGfx.
+;
+; Input:   (none)  Scratch:  D5, A0, A2  Output:   VRAM cave item tile slot loaded
+; ---------------------------------------------------------------------------
 LoadCaveItemTileGraphics:
 	LEA	LoadCaveItemTileGraphics_Data, A0
 	LEA	Tile_gfx_buffer.w, A2
@@ -1112,6 +1659,14 @@ LoadCaveItemTileGraphics_Done:
 	BSR.w	ExecuteVdpDmaFromRam
 	RTS
 	
+; ---------------------------------------------------------------------------
+; LoadBattlePlayerTileGraphics — load player sprite tile graphics for battle
+;
+; Decompresses 80 ($50) tiles from LoadBattlePlayerTileGraphics_Data and
+; DMA's them to DmaCmd_BattlePlayerGfx.
+;
+; Input:   (none)  Scratch:  D5, A0, A2  Output:   VRAM battle player tile slot loaded
+; ---------------------------------------------------------------------------
 LoadBattlePlayerTileGraphics:
 	LEA	LoadBattlePlayerTileGraphics_Data, A0
 	LEA	Tile_gfx_buffer.w, A2
@@ -1124,6 +1679,20 @@ LoadBattlePlayerTileGraphics_Done:
 	BSR.w	ExecuteVdpDmaFromRam
 	RTS
 	
+; ---------------------------------------------------------------------------
+; LoadTownTileGfxSet1   — load tile GFX set 1 from LoadTownTileGfxSet1_Data
+; LoadTownTileGfxToBuffer — decompress and DMA full town tile GFX set (5 groups)
+;
+; LoadTownTileGfxSet1 sets A0 to a fixed data pointer then falls through to
+; LoadTownTileGfxToBuffer, which loads 5 tile groups into VRAM:
+;   Group A: 183 tiles → DmaCmd_TownTileGfxSet1_A
+;   Group B: 218 tiles → DmaCmd_TownTileGfxSet1_B
+;   Group C: 108 tiles (NPCs) → DmaCmd_TownNpcGfx
+;   Group D: 158 tiles → DmaCmd_TownTileGfxSet1_D
+;   Group E:  42 tiles → DmaCmd_TownTileGfxSet1_E
+;
+; Input:   (none)  Scratch:  D5, A0, A2  Output:   VRAM town tile GFX set 1 loaded
+; ---------------------------------------------------------------------------
 LoadTownTileGfxSet1:
 	LEA	LoadTownTileGfxSet1_Data, A0
 LoadTownTileGfxToBuffer:
@@ -1173,6 +1742,20 @@ LoadTownTileGfxToBuffer_Done5:
 	BSR.w	ExecuteVdpDmaFromRam
 	RTS
 	
+; ---------------------------------------------------------------------------
+; LoadMenuTileGraphics — load all menu tile graphics to VRAM
+;
+; Loads 6 tile groups into VRAM:
+;   Group A: 256 tiles → DmaCmd_MenuTilesA
+;   Group B: 256 tiles → DmaCmd_MenuTilesB
+;   Group C: 108 NPC tiles → DmaCmd_TownNpcGfx  (shared with town)
+;   Group D:  27 misc tiles → DmaCmd_MenuMiscTilesA
+;   Group E:   8 misc tiles → DmaCmd_MenuMiscTilesB
+; LoadMenuTileGfxSet2 and LoadMenuTileGfxSet3 are mid-function entry points
+; that skip groups A and B respectively.
+;
+; Input:   (none)  Scratch:  D5, A0, A2  Output:   VRAM menu tile areas loaded
+; ---------------------------------------------------------------------------
 LoadMenuTileGraphics:
 	LEA	Tile_gfx_buffer.w, A2
 	LEA	LoadMenuTileGraphics_Data, A0
@@ -1223,6 +1806,20 @@ LoadMenuTileGfxSet3_Done3:
 	BSR.w	ExecuteVdpDmaFromRam
 	RTS
 	
+; ---------------------------------------------------------------------------
+; LoadTitleScreenGraphics — load all title screen tile graphics to VRAM
+;
+; Loads 6 tile groups into VRAM:
+;   Group A: 78  tiles → DmaCmd_TitleScreenTilesA
+;   Group B: 109 tiles → DmaCmd_TitleScreenTilesB
+;   Group C:  99 tiles → DmaCmd_TitleScreenTilesC
+;   Group D:  80 tiles → DmaCmd_TitleScreenTilesD
+;   Group E:  82 tiles → DmaCmd_TitleScreenTilesE
+;   Group F:   6 tiles → DmaCmd_TitleScreenTilesF
+; LoadTitleScreenTileGfx is a mid-function entry that skips groups A-D.
+;
+; Input:   (none)  Scratch:  D5, A0, A2  Output:   VRAM title screen tile areas loaded
+; ---------------------------------------------------------------------------
 LoadTitleScreenGraphics:
 	LEA	LoadTitleScreenGraphics_Data, A0
 	LEA	Tile_gfx_buffer.w, A2
@@ -1281,6 +1878,14 @@ LoadTitleScreenTileGfx_Done2:
 	BSR.w	ExecuteVdpDmaFromRam
 	RTS
 	
+; ---------------------------------------------------------------------------
+; LoadOptionsMenuGraphics — load options menu tile graphics to VRAM
+;
+; Decompresses 61 ($3D) tiles from LoadOptionsMenuGraphics_Data and DMA's
+; them to DmaCmd_OptionsMenuTiles.
+;
+; Input:   (none)  Scratch:  D5, A0, A2  Output:   VRAM options menu tile slot loaded
+; ---------------------------------------------------------------------------
 LoadOptionsMenuGraphics:
 	LEA	LoadOptionsMenuGraphics_Data, A0
 	LEA	Tile_gfx_buffer.w, A2
@@ -1372,6 +1977,21 @@ VdpDmaRoutineTemplate:
 	dc.l	$33F8C18E	; MOVE.w $FFFFC18E.w, ...
 	dc.l	$00C00004	; ... $00C00004.l  (cmd hi word → VDP control port)
 	dc.w	$4E75 		; RTS
+; ---------------------------------------------------------------------------
+; VDP_DMAFill — fill VRAM with a single byte value via DMA fill mode
+;
+; Performs a VDP DMA fill: fills D6.w bytes of VRAM starting at the address
+; encoded in D7.l with the byte value in D5.b.  Waits for the DMA busy flag
+; to clear before returning.
+;
+; Input:
+;   D5.b  fill byte value
+;   D6.w  fill length in bytes
+;   D7.l  VRAM destination address (bits set for DMA fill command word)
+;
+; Scratch:  D4
+; Output:   VRAM region filled; VDP DMA mode restored
+; ---------------------------------------------------------------------------
 VDP_DMAFill:
 	ORI	#$0700, SR
 	ORI.w	#$8F00, D4
@@ -1404,11 +2024,18 @@ VDP_DMAFill_Done:
 	
 Z80SoundDriver_Data_10480:
 	dc.b	$76, $00, $02, $80, $00, $00, $00, $FF, $60, $00, $00, $1A 
-; ConvertToBCD
-; Convert binary number to BCD (Binary Coded Decimal) format
-; Input: D0 = Binary number (0-99999)
-; Output: D0 = BCD representation (each nibble is a decimal digit)
-; Example: 12345 ($3039) -> $00012345 BCD
+; ---------------------------------------------------------------------------
+; ConvertToBCD — convert a 16-bit binary number (0–99999) to 5-digit BCD
+;
+; Extracts digits by successive division and accumulates them into D3 as
+; packed BCD (each nibble = one decimal digit, MSD in the highest nibble).
+;
+; Input:
+;   D0.w  binary value (0–99999; upper word ignored)
+;
+; Scratch:  D1, D3
+; Output:   D0.l = 5-digit BCD (e.g. 12345 → $00012345)
+; ---------------------------------------------------------------------------
 ConvertToBCD:
 	MOVEQ	#0, D3
 	ANDI.l	#$0000FFFF, D0
@@ -1424,10 +2051,21 @@ ConvertToBCD:
 	MOVE.l	D3, D0
 	RTS
 	
-; ExtractBCDDigit
-; Extract one BCD digit by division
-; Input: D0 = Number, D1 = Divisor, D3 = Accumulated BCD
-; Output: D0 = Remainder, D3 = BCD with new digit added
+; ---------------------------------------------------------------------------
+; ExtractBCDDigit — extract one BCD decimal digit by division
+;
+; Divides D0.w by D1.w (the place value: 10000, 1000, 100, 10) to get one
+; digit, ORs it into D3 as a nibble (LSB), then shifts D3 left by 4 for
+; the next digit.  The remainder is kept in D0 for the next call.
+;
+; Input:
+;   D0.w  current value
+;   D1.w  divisor (place value)
+;   D3.l  accumulated BCD (new digit OR'd into LSB, then shifted)
+;
+; Scratch:  (none)
+; Output:   D0.w = remainder; D3.l updated
+; ---------------------------------------------------------------------------
 ExtractBCDDigit:
 	DIVU.w	D1, D0
 	OR.b	D0, D3
@@ -1436,6 +2074,21 @@ ExtractBCDDigit:
 	SWAP	D0
 	RTS
 	
+; ---------------------------------------------------------------------------
+; DetermineTerrainTileset — pick overworld battle terrain tileset by tile type
+;
+; Samples a 3×3 region of the overworld sector map centered on the player's
+; current position (Map_sector_center), counts "forest" (type 1) and "water"
+; (type 2) tiles via CountTerrainTileType.  If water tiles outnumber forest,
+; sets Terrain_tileset_index to TERRAIN_TILESET_FIELD (0); otherwise leaves
+; the index at 0 (the caller pre-clears it).
+;
+; Input:   (via RAM)
+;   Player_position_x_outside_town.w, Player_position_y_outside_town.w
+;
+; Scratch:  D0-D2, D6-D7, A0, A2
+; Output:   Terrain_tileset_index.w set
+; ---------------------------------------------------------------------------
 DetermineTerrainTileset:
 	CLR.w	Terrain_tileset_index.w
 	LEA	Map_sector_center.w, A0
@@ -1463,6 +2116,20 @@ DetermineTerrainTileset_Done2:
 DetermineTerrainTileset_Loop:
 	RTS
 	
+; ---------------------------------------------------------------------------
+; CountTerrainTileType — tally forest (1) and water (2) tile counts
+;
+; Helper for DetermineTerrainTileset.  Increments D1 if D0=1 (forest),
+; increments D2 if D0=2 (water/field).
+;
+; Input:
+;   D0.b  tile type byte
+;   D1.w  forest tile count accumulator
+;   D2.w  water tile count accumulator
+;
+; Scratch:  (none)
+; Output:   D1 or D2 incremented
+; ---------------------------------------------------------------------------
 CountTerrainTileType:
 	CMPI.b	#1, D0
 	BNE.b	CountTerrainTileType_Loop
@@ -1475,10 +2142,22 @@ CountTerrainTileType_Loop:
 CountDialogBytes_Return:
 	RTS
 	
-; QueueSoundEffect
-; Queue a sound effect for playback
-; Input: D0.b = Sound effect ID
-; Adds sound to queue if not full (max 8 entries)
+; ---------------------------------------------------------------------------
+; QueueSoundEffect — push a sound effect ID onto the sound queue
+;
+; NOTE: Physically located in battle_gfx.asm due to original ROM layout.
+; Logically belongs in sound.asm.  Cannot be moved without breaking
+; bit-perfect output.  See MOVE-004.
+;
+; Checks Sound_queue_count; if the queue has room (< 8), appends D0.b to
+; Sound_queue_buffer and increments the count.
+;
+; Input:
+;   D0.b  sound effect ID
+;
+; Scratch:  D1, A0
+; Output:   sound ID appended to queue (if not full)
+; ---------------------------------------------------------------------------
 QueueSoundEffect:
 	MOVE.w	Sound_queue_count.w, D1
 	CMPI.w	#8, D1
@@ -1489,6 +2168,18 @@ QueueSoundEffect:
 QueueSoundEffect_Loop:
 	RTS
 	
+; ---------------------------------------------------------------------------
+; LoadBattleTilesToVram — DMA tile sets for current battle type to VRAM
+;
+; Looks up a list pointer from BattleTileDataPtrs using Battle_type.w.
+; Each list entry has the same format as a ProcessGraphicsLoadList record
+; (slot word, A4 ptr, A3 ptr, tile count).  Processes entries until the
+; slot word is negative.
+;
+; Input:   (via RAM)  Battle_type.w
+; Scratch:  D0, D5, A2, A3, A4, A6
+; Output:   VRAM battle tile slots loaded per BattleTileDataPtrs list
+; ---------------------------------------------------------------------------
 LoadBattleTilesToVram:
 	LEA	BattleTileDataPtrs, A6
 	MOVE.w	Battle_type.w, D0
@@ -1509,6 +2200,20 @@ LoadBattleTilesToVram_Done:
 LoadBattleTilesToVram_Loop:
 	RTS
 	
+; ---------------------------------------------------------------------------
+; LoadBattleGraphics — decompress and DMA a single-source battle tile set
+;
+; Reads Battle_type.w, looks up a record in BattleGfxDataPtrs. The record
+; contains: source pointer (long), tile count (word), DMA command pointer
+; (long). If the source pointer is null (0), the function returns without
+; doing anything.
+;
+; Input:   (via RAM)
+;   Battle_type.w  — index into BattleGfxDataPtrs
+;
+; Scratch:  D5, A0, A2, A6
+; Output:   VRAM tile slot populated for this battle type (if source != null)
+; ---------------------------------------------------------------------------
 LoadBattleGraphics:
 	LEA	BattleGfxDataPtrs, A6
 	MOVE.w	Battle_type.w, D0

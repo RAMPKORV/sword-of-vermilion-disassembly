@@ -1,6 +1,23 @@
 ; ======================================================================
 ; src/states.asm
 ; Program state machine: Sega logo, title, name entry, prologue init
+;
+; PATTERN — fade-out gate (DRY-008):
+;   The following two-instruction idiom appears at the top of every
+;   transition state handler (states $03, $04, $08, $0A, $0B, $0D,
+;   $0F, $15, and others in gameplay.asm):
+;
+;       TST.b   Fade_out_lines_mask.w
+;       BNE.b   <StateLabel_Loop>       ; return if fade still running
+;       ; ... one-shot init work ...
+;   <StateLabel_Loop>:
+;       RTS
+;
+;   This is a "wait for the previous screen's fade-out to complete before
+;   doing setup" guard.  The VBlank handler decrements Fade_out_lines_mask
+;   each frame until it reaches zero.  Cannot be extracted to a macro
+;   without breaking bit-perfect output (instruction encoding would change).
+;   Documented here for reader orientation.
 ; ======================================================================
 
 ; ProgramState_SegaLogoInit — $00 PROGRAM_STATE_SEGA_LOGO_INIT
