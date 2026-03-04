@@ -590,7 +590,7 @@
           "file": "src/states.asm",
           "priority": "high",
           "effort": "large",
-          "status": "todo"
+          "status": "done"
         },
         {
           "id": "DOC-002",
@@ -1448,7 +1448,7 @@
           "file": "src/script.asm, constants.asm",
           "priority": "high",
           "effort": "large",
-          "status": "todo",
+          "status": "done",
           "tags": [
             "script-vm",
             "documentation",
@@ -1462,7 +1462,7 @@
           "file": "src/gamestrings.asm, src/strings.asm",
           "priority": "high",
           "effort": "medium",
-          "status": "todo",
+          "status": "done",
           "tags": [
             "script-vm",
             "text",
@@ -1806,7 +1806,7 @@
           "file": "src/states.asm",
           "priority": "high",
           "effort": "medium",
-          "status": "todo",
+          "status": "done",
           "tags": [
             "documentation",
             "architecture",
@@ -1820,7 +1820,7 @@
           "file": "src/gameplay.asm",
           "priority": "high",
           "effort": "medium",
-          "status": "todo",
+          "status": "done",
           "tags": [
             "documentation",
             "architecture",
