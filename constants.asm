@@ -59,6 +59,7 @@ VRAM_HScroll        = $BC00     ; Horizontal scroll table
 VDP_CMD_VRAM_WRITE_PLANE_A  = $40000003  ; VRAM write to $C000 (Plane A nametable base)
 VDP_CMD_VRAM_WRITE_PLANE_B  = $60000003  ; VRAM write to $E000 (Plane B nametable base)
 VDP_CMD_VRAM_WRITE_HSCROLL  = $7C000002  ; VRAM write to $BC00 (HScroll table base)
+VDP_CMD_VRAM_WRITE_SAT      = $78000002  ; VRAM write to $B800 (Sprite Attribute Table)
 VDP_CMD_CRAM_WRITE_0        = $C0000000  ; CRAM write to address 0 (palette entry 0)
 VDP_CMD_VSRAM_WRITE_0       = $40000010  ; VSRAM write to address 0 (scroll table entry 0)
 

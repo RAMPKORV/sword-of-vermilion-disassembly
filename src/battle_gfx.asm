@@ -298,7 +298,7 @@ AddSpriteToDisplayList_Return:
 ; Output:   VDP sprite attribute table updated
 ; ---------------------------------------------------------------------------
 FlushSpriteAttributesToVDP:
-	MOVE.l	#$78000002, VDP_control_port
+	MOVE.l	#VDP_CMD_VRAM_WRITE_SAT, VDP_control_port
 	MOVE.w	Sprite_attr_count.w, D0
 	SUBQ.w	#1, D0
 	BLT.b	FlushSpriteAttributesToVDP_Loop
@@ -642,7 +642,7 @@ LoadTalkerGraphics_Loop:
 LoadFirstPersonGraphics:
 	LEA	GfxLoadList_FirstPerson-2, A6
 	BSR.w	ProcessGraphicsLoadList
-	DMAFillVRAM_bsr $40000000, $01FF
+	DMAFillVRAM_bsr VDP_DMA_FILL_VRAM_START, $01FF
 	RTS
 	
 ; ---------------------------------------------------------------------------
@@ -1231,18 +1231,18 @@ TransferTilesViaDma:
 	stopZ80
 	JSR	InitVdpDmaRamRoutine
 	MOVE.w	#2, D4
-	ORI.w	#$8F00, D4
+	ORI.w	#$8F00, D4			; VDP reg 15 = 2: auto-increment
 	MOVE.w	D4, VDP_control_port
 	MOVE.w	VDP_Reg1_cache.w, D4
-	BSET.l	#4, D4
+	BSET.l	#4, D4				; Enable DMA in reg 1
 	MOVE.w	D4, VDP_control_port
-	MOVE.l	#$94109300, VDP_control_port
-	MOVE.l	#$96D09500, VDP_control_port
-	MOVE.w	#$977F, VDP_control_port
-	MOVE.l	#$58000082, Vdp_dma_cmd.w
+	MOVE.l	#$94109300, VDP_control_port	; Regs 19-20: DMA length = $1000 bytes
+	MOVE.l	#$96D09500, VDP_control_port	; Regs 21-22: DMA source = $xxD000
+	MOVE.w	#$977F, VDP_control_port	; Reg 23 = $7F: DMA source high + 68k→VRAM mode
+	MOVE.l	#$58000082, Vdp_dma_cmd.w	; VRAM write to $6000 with DMA trigger
 	JSR	Vdp_dma_ram_routine.w
 	MOVE.w	VDP_Reg1_cache.w, D4
-	BCLR.l	#4, D4
+	BCLR.l	#4, D4				; Clear DMA enable bit
 	MOVE.w	D4, VDP_control_port
 	MOVE.w	#0, Z80_bus_request
 	RTS
@@ -1994,31 +1994,31 @@ VdpDmaRoutineTemplate:
 ; ---------------------------------------------------------------------------
 VDP_DMAFill:
 	ORI	#$0700, SR
-	ORI.w	#$8F00, D4
+	ORI.w	#$8F00, D4			; VDP reg 15: auto-increment = D4 (caller-supplied)
 	MOVE.w	D4, VDP_control_port
 	MOVE.w	VDP_Reg1_cache.w, D4
-	BSET.l	#4, D4
+	BSET.l	#4, D4				; Set bit 4 = enable DMA in reg 1
 	MOVE.w	D4, VDP_control_port
-	MOVE.l	#$00940000, D4
-	MOVE.w	D6, D4
-	LSL.l	#8, D4
-	MOVE.w	#$9300, D4
-	MOVE.b	D6, D4
-	MOVE.l	D4, VDP_control_port
-	MOVE.w	#$9780, VDP_control_port
-	ORI.l	#$40000080, D7
+	MOVE.l	#$00940000, D4			; Template for regs 19-20 (DMA length)
+	MOVE.w	D6, D4				; D6 = fill length
+	LSL.l	#8, D4				; Shift length high byte into reg 20 position
+	MOVE.w	#$9300, D4			; VDP reg 19 template (DMA length low)
+	MOVE.b	D6, D4				; Merge length low byte
+	MOVE.l	D4, VDP_control_port		; Write regs 19+20 (DMA length)
+	MOVE.w	#$9780, VDP_control_port	; VDP reg 23 = $80: DMA mode = VRAM fill
+	ORI.l	#$40000080, D7			; Set VRAM write + DMA CD bits
 	MOVE.l	D7, Vdp_dma_cmd.w
-	MOVE.w	Vdp_dma_cmd.w, VDP_control_port
-	MOVE.w	Vdp_dma_cmd_hi.w, VDP_control_port
-	MOVE.b	D5, VDP_data_port
+	MOVE.w	Vdp_dma_cmd.w, VDP_control_port	; Write DMA command (low word first)
+	MOVE.w	Vdp_dma_cmd_hi.w, VDP_control_port	; Write DMA command (high word triggers DMA)
+	MOVE.b	D5, VDP_data_port		; Fill value byte
 VDP_DMAFill_Done:
-	MOVE.w	VDP_control_port, D4
-	BTST.l	#1, D4
-	BNE.b	VDP_DMAFill_Done
+	MOVE.w	VDP_control_port, D4		; Read VDP status
+	BTST.l	#1, D4				; Check DMA busy bit
+	BNE.b	VDP_DMAFill_Done		; Wait until DMA completes
 	MOVE.w	VDP_Reg1_cache.w, D4
-	BCLR.l	#4, D4
-	MOVE.w	D4, VDP_control_port
-	MOVE.w	#$8F02, VDP_control_port
+	BCLR.l	#4, D4				; Clear DMA enable bit
+	MOVE.w	D4, VDP_control_port		; Restore reg 1
+	MOVE.w	#$8F02, VDP_control_port	; VDP reg 15 = 2: restore auto-increment
 	ANDI	#$F8FF, SR
 	RTS
 	
