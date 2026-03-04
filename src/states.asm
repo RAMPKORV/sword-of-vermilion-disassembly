@@ -2,6 +2,12 @@
 ; src/states.asm
 ; Program state machine: Sega logo, title, name entry, prologue init
 ; ======================================================================
+
+; ProgramState_SegaLogoInit — $00 PROGRAM_STATE_SEGA_LOGO_INIT
+; One-shot initialization of the Sega logo screen.
+; Sets a 2-second BCD timer, installs SegaLogoScreen_Init as the
+; HBlank handler (which loads and animates the logo), then advances
+; Program_state to PROGRAM_STATE_SEGA_LOGO ($01).
 ProgramState_SegaLogoInit:
 	MOVE.b	#2, Timer_seconds_bcd.w
 	MOVE.l	#SegaLogoScreen_Init, vobj_hblank_fn(A5)
@@ -28,6 +34,12 @@ ProgramState_00_Loop:
 ProgramState_01_Return:
 	RTS
 
+; ProgramState_TitleInit — $02 PROGRAM_STATE_TITLE_INIT
+; One-shot initialization of the title screen.
+; Sets idle timer to $45 BCD seconds ($37 on PAL hardware detected via
+; IO_version bit 6).  Installs TitleScreen_Init as the HBlank handler,
+; advances to PROGRAM_STATE_TITLE_SCREEN ($03), and clears
+; Title_intro_complete to gate input until animation finishes.
 ProgramState_TitleInit:
 	MOVE.b	#$45, Timer_seconds_bcd.w
 	BTST.b	#6, IO_version
@@ -39,6 +51,15 @@ ProgramState_02_Loop:
 	CLR.b	Title_intro_complete.w
 	RTS
 
+; ProgramState_TitleScreen — $03 PROGRAM_STATE_TITLE_SCREEN
+; Per-frame handler for the title menu (New Game / Continue).
+; Blocks until Title_intro_complete is set and window DMA has settled.
+; On START press:
+;   Dialog_selection == 0 → new game → PROGRAM_STATE_NAME_ENTRY_INIT ($05)
+;   Dialog_selection != 0 → load game → PROGRAM_STATE_LOAD_SAVE_INIT ($0B)
+; Both branches set Fade_out_lines_mask to begin the fade transition.
+; If the idle timer expires (no input), advances to PROGRAM_STATE_TITLE_DEMO ($04).
+; Otherwise, routes controller input through HandleMenuInput to move the cursor.
 ProgramState_TitleScreen:
 	TST.b	Title_intro_complete.w
 	BEQ.w	ProgramState_03_Return
@@ -69,6 +90,12 @@ ProgramState_03_Loop:
 ProgramState_03_Return:
 	RTS
 
+; ProgramState_TitleDemo — $04 PROGRAM_STATE_TITLE_DEMO
+; Demo/attract loop entered after the title idle timer expires.
+; Waits for the current fade-out to complete, then plays the level-up
+; sound (used as a jingle), resets Program_state to $00
+; (PROGRAM_STATE_SEGA_LOGO_INIT) to restart the intro sequence, clears
+; scrolling state and enemy flags, and restores the default HBlank handler.
 ProgramState_TitleDemo:
 	TST.b	Fade_out_lines_mask.w
 	BNE.b	ProgramState_04_Loop
@@ -81,6 +108,12 @@ ProgramState_TitleDemo:
 ProgramState_04_Loop:
 	RTS
 
+; ProgramState_PrologueInit — $08 PROGRAM_STATE_PROLOGUE_INIT
+; One-shot initialization of the story prologue sequence.
+; Waits for current fade-out, then loads the title-screen tile graphics
+; (reused as prologue background), installs PrologueScreen_Init as the
+; HBlank handler, advances to PROGRAM_STATE_PROLOGUE ($09), and clears
+; Prologue_complete_flag so the prologue handler waits for completion.
 ProgramState_PrologueInit:
 	TST.b	Fade_out_lines_mask.w
 	BNE.b	ProgramState_08_Loop
@@ -91,6 +124,12 @@ ProgramState_PrologueInit:
 ProgramState_08_Loop:
 	RTS
 
+; ProgramState_Prologue — $09 PROGRAM_STATE_PROLOGUE
+; Per-frame handler while the story prologue is playing.
+; Blocks until Prologue_complete_flag is set (set by PrologueScreen_Init
+; animation driver when the text scroll finishes).
+; On completion: advances to PROGRAM_STATE_PROLOGUE_TO_GAME ($0A) and
+; triggers a fade-out.
 ProgramState_Prologue:
 	TST.b	Prologue_complete_flag.w
 	BEQ.b	ProgramState_09_Loop
@@ -99,6 +138,14 @@ ProgramState_Prologue:
 ProgramState_09_Loop:
 	RTS
 
+; ProgramState_PrologueToGame — $0A PROGRAM_STATE_PROLOGUE_TO_GAME
+; Transition handler: prologue complete → main game start.
+; Waits for fade-out, then:
+;   - Calls Prologue_EmptyCallback (no-op placeholder)
+;   - Restores default HBlank handler
+;   - Advances to PROGRAM_STATE_GAME_FADE_IN ($0E)
+;   - Sets initial overworld position: town 0, sector (0,6), tile (8,13)
+;   - Plays level-up sound (jingle)
 ProgramState_PrologueToGame:
 	TST.b	Fade_out_lines_mask.w
 	BNE.b	ProgramState_0A_Loop
@@ -114,6 +161,13 @@ ProgramState_PrologueToGame:
 ProgramState_0A_Loop:
 	RTS
 
+; ProgramState_LoadSaveInit — $0B PROGRAM_STATE_LOAD_SAVE_INIT
+; One-shot initialization of the file select / continue screen.
+; Waits for fade-out, then clears VRAM planes, scroll data, and enemy
+; flags.  Resets VDP window scroll, installs FileMenuPhaseDispatch as
+; the HBlank handler (drives the save-file menu), clears File_menu_phase
+; and File_load_complete, loads town-tile palettes, advances to
+; PROGRAM_STATE_LOAD_SAVE ($0C), and plays the name-entry music.
 ProgramState_LoadSaveInit:
 	TST.b	Fade_out_lines_mask.w
 	BNE.b	ProgramState_0B_Loop
@@ -134,6 +188,12 @@ ProgramState_LoadSaveInit:
 ProgramState_0B_Loop:
 	RTS
 
+; ProgramState_LoadSave — $0C PROGRAM_STATE_LOAD_SAVE
+; Per-frame handler for the file select menu.
+; Blocks until File_load_complete is set (by FileMenuPhaseDispatch when
+; the player selects a save slot and the load finishes).
+; On completion: advances to PROGRAM_STATE_LOAD_SAVE_DONE ($0D) and
+; triggers a fade-out.
 ProgramState_LoadSave:
 	TST.b	File_load_complete.w
 	BEQ.b	ProgramState_0C_Loop
@@ -142,6 +202,10 @@ ProgramState_LoadSave:
 ProgramState_0C_Loop:
 	RTS
 
+; ProgramState_LoadSaveDone — $0D PROGRAM_STATE_LOAD_SAVE_DONE
+; Transition: file-select complete → saved game load.
+; Waits for fade-out, then restores the default HBlank handler, advances
+; to PROGRAM_STATE_LOAD_SAVED_GAME ($15), and plays the level-up jingle.
 ProgramState_LoadSaveDone:
 	TST.b	Fade_out_lines_mask.w	
 	BNE.b	ProgramState_0D_Loop	
@@ -151,6 +215,17 @@ ProgramState_LoadSaveDone:
 ProgramState_0D_Loop:
 	RTS
 	
+; ProgramState_LoadSavedGame — $15 PROGRAM_STATE_LOAD_SAVED_GAME
+; Restores a saved game and transitions to the main game.
+; Waits for fade-out, then:
+;   - Sets Town_vram_tile_base to TOWN_SPRITE_TILE_BASE
+;   - Clears all enemy entities, first-person mode, cave state
+;   - Calls InitializeTownMode to set up the town environment
+;   - Advances Program_state to PROGRAM_STATE_GAME_FADE_IN ($0E)
+;   - Sets Gameplay_state to GAMEPLAY_STATE_INIT_BUILDING_ENTRY ($03)
+;     so the player resumes inside the last saved town/building
+;   - Restores Current_town_room from Saved_town_room_1
+;   - Starts area music via LoadAndPlayAreaMusic
 ProgramState_LoadSavedGame:
 	TST.b	Fade_out_lines_mask.w	
 	BNE.b	ProgramState_15_Loop	
@@ -168,6 +243,15 @@ ProgramState_LoadSavedGame:
 ProgramState_15_Loop:
 	RTS
 	
+; ProgramState_NameEntryInit — $05 PROGRAM_STATE_NAME_ENTRY_INIT
+; One-shot initialization of the name entry screen.
+; Waits for fade-out, then:
+;   - Disables VDP display, clears scroll/enemy state
+;   - Resets VDP window scroll
+;   - Loads the options-menu tile graphics (shared with name entry)
+;   - Re-enables display, installs NameEntryScreen_Init as HBlank handler
+;   - Advances to PROGRAM_STATE_NAME_ENTRY ($06)
+;   - Clears Name_entry_complete, plays name-entry music
 ProgramState_NameEntryInit:
 	TST.b	Fade_out_lines_mask.w
 	BNE.b	ProgramState_05_Loop
@@ -187,6 +271,12 @@ ProgramState_NameEntryInit:
 ProgramState_05_Loop:
 	RTS
 
+; ProgramState_NameEntry — $06 PROGRAM_STATE_NAME_ENTRY
+; Per-frame handler for the name entry screen.
+; Blocks until Name_entry_complete is set (by NameEntryScreen_Init when
+; the player confirms their name).
+; On completion: advances to PROGRAM_STATE_NAME_ENTRY_DONE ($07) and
+; triggers a fade-out.
 ProgramState_NameEntry:
 	TST.b	Name_entry_complete.w
 	BEQ.b	ProgramState_06_Loop
@@ -195,6 +285,11 @@ ProgramState_NameEntry:
 ProgramState_06_Loop:
 	RTS
 
+; ProgramState_NameEntryDone — $07 PROGRAM_STATE_NAME_ENTRY_DONE
+; Transition: name confirmed → prologue.
+; Waits for fade-out, then clears the enemy list flags, restores the
+; default HBlank handler, advances to PROGRAM_STATE_PROLOGUE_INIT ($08),
+; and plays the level-up jingle.
 ProgramState_NameEntryDone:
 	TST.b	Fade_out_lines_mask.w
 	BNE.b	ProgramState_07_Loop
@@ -205,14 +300,31 @@ ProgramState_NameEntryDone:
 ProgramState_07_Loop:
 	RTS
 
+; ProgramState_EndingInit — $12 PROGRAM_STATE_ENDING_INIT
+; One-shot initialization of the ending sequence.
+; Installs EndingSequence_Init as the HBlank handler, then immediately
+; advances to PROGRAM_STATE_ENDING ($13).
+; EndingSequence_Init drives the full ending animation independently.
 ProgramState_EndingInit:
 	MOVE.l	#EndingSequence_Init, vobj_hblank_fn(A5)
 	MOVE.w	#PROGRAM_STATE_ENDING, Program_state.w
 	RTS
 
+; ProgramState_Ending — $13/$14 PROGRAM_STATE_ENDING / PROGRAM_STATE_ENDING_2
+; Per-frame handler for the ending sequence.
+; Currently a no-op stub — the ending is entirely driven by
+; EndingSequence_Init (the installed HBlank handler).
 ProgramState_Ending:
 	RTS
 
+; ProgramState_GameFadeIn — $0E/$10 PROGRAM_STATE_GAME_FADE_IN / PROGRAM_STATE_GAME_FADE_IN_2
+; Transition handler: wait for screen fade-in before entering main game.
+; Waits for Fade_out_lines_mask to clear (fade complete), then:
+;   - Disables VDP display
+;   - Sets the player entity's active bit (bit 7 of its object struct)
+;   - Advances Program_state by 1 ($0E→$0F, $10→$11) to GAME_ACTIVE
+;   - Sets Message_speed = 1 (normal text speed)
+; States $0E and $10 both point here; ADDQ advances to $0F or $11 respectively.
 ProgramState_GameFadeIn:
 	TST.b	Fade_out_lines_mask.w
 	BNE.w	ProgramState_0E_and_10_Loop
