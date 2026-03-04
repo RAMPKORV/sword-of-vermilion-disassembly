@@ -42,7 +42,7 @@ DebugTestMenu:
 	MOVE.l	D5, DebugMenu_vdp_cursor.w
 	CLR.w	DebugMenu_selected_item.w
 	CLR.w	DebugMenu_scroll_pos.w
-	JSR	loc_00000396                    ; clear VRAM HScroll/PlaneA/PlaneB/sprites/VSRAM
+	JSR	ClearVRAMScrollAndPlanes        ; clear VRAM HScroll/PlaneA/PlaneB/sprites/VSRAM
 	LEA	loc_0003D1BC, A0                ; parallax row 0 config
 	JSR	BossParallaxEntry_Start
 	LEA	loc_0003D1D0, A0                ; parallax row 1 config
@@ -90,7 +90,7 @@ DebugInputTest:
 	MOVE.w	#$0053, Palette_line_1_index.w
 	MOVE.w	#$0054, Palette_line_2_index.w
 	JSR	LoadPalettesFromTable
-	JSR	loc_00000396                    ; clear VRAM
+	JSR	ClearVRAMScrollAndPlanes        ; clear VRAM
 	LEA	loc_0003D22C, A0
 	JSR	BossParallaxEntry_Start
 	LEA	loc_0003D236, A0
@@ -208,7 +208,7 @@ DebugSoundTest:
 	MOVE.l	D5, DebugMenu_vdp_cursor.w
 	CLR.w	DebugMenu_selected_item.w
 	CLR.w	DebugMenu_scroll_pos.w
-	JSR	loc_00000396                    ; clear VRAM
+	JSR	ClearVRAMScrollAndPlanes        ; clear VRAM
 	LEA	loc_0003D29A, A0
 	JSR	BossParallaxEntry_Start
 	LEA	loc_0003D2AA, A0
@@ -247,7 +247,7 @@ DebugSoundCategory_Menu:
 	MOVE.l	D5, DebugMenu_vdp_cursor.w
 	CLR.w	DebugMenu_sound_item.w
 	CLR.w	DebugMenu_scroll_pos.w
-	JSR	loc_00000396                    ; clear VRAM
+	JSR	ClearVRAMScrollAndPlanes        ; clear VRAM
 	MOVE.w	DebugMenu_sound_category.w, D0
 	ADD.w	D0, D0                          ; category × 4
 	ADD.w	D0, D0
@@ -477,7 +477,7 @@ DebugSoundCategory_DA:
 ; ---------------------------------------------------------------------------
 DebugCRTTest:
 	JSR	loc_000010D8                    ; CLR Vblank_flag + WaitForVBlank
-	JSR	loc_00000396                    ; clear VRAM
+	JSR	ClearVRAMScrollAndPlanes        ; clear VRAM
 	LEA	loc_0003D850, A0
 	JSR	BossParallaxEntry_Start
 	LEA	loc_0003D862, A0
