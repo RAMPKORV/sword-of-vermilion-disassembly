@@ -2193,7 +2193,7 @@ DemonBossState_AttackAnimate:
 	CLR.w	obj_attack_timer(A6)
 	MOVE.w	#6, obj_pos_x_fixed(A6)             ; reset sub-pixel X
 	CLR.w	obj_knockback_timer(A6)
-	CLR.w	$22(A6)                              ; clear segment counter
+	CLR.w	obj_seg_counter(A6)                              ; clear segment counter
 	BRA.b	DemonBossState_AttackAnimate_UpdateFrame
 DemonBossState_AttackAnimate_Loop:
 	CMPI.w	#6, obj_attack_timer(A5)            ; near end of swing: reset wing pose
@@ -2480,13 +2480,13 @@ DemonBoss_BodySegmentTick_Loop:
 DemonBoss_ProjectileHeadTick:
 	CMPI.b	#FLAG_TRUE, obj_move_counter(A5)
 	BNE.w	DemonBoss_ProjectileHeadTick_Loop
-	MOVE.w	$22(A5), D7
+	MOVE.w	obj_seg_counter(A5), D7
 	CMPI.w	#2, D7
 	BGT.w	DemonBoss_ProjectileSegmentTick
 	SUBQ.w	#1, obj_pos_x_fixed(A5)
 	BGT.w	DemonBoss_ProjectileSegmentTick
 	MOVE.w	#6, obj_pos_x_fixed(A5)
-	ADDQ.w	#1, $22(A5)
+	ADDQ.w	#1, obj_seg_counter(A5)
 	MOVEA.l	Object_slot_07_ptr.w, A6
 DemonBoss_ProjectileHeadTick_Done:
 	CLR.w	D0

@@ -2282,6 +2282,9 @@ obj_npc_str_ptr     equ $1C   ; long: NPC hint-text / script string pointer (NPC
 obj_hitbox_half_w   equ $1C   ; word: hitbox half-width (enemy/projectile only, same offset)
 obj_hitbox_half_h   equ $1E   ; word: hitbox half-height (enemy/projectile only)
 obj_pos_x_fixed     equ $20   ; long: fixed-point world X position (first-person movement)
+; NOTE: $22 is context-dependent — battle/projectile: word sub-state or center-Y counter (obj_seg_counter);
+;       first-person: low word of obj_pos_x_fixed (not independently named in that context).
+obj_seg_counter     equ $22   ; word: segment/sub-state counter (battle objects: projectile trail, boss attack phase)
 obj_sprite_frame    equ $24   ; byte: current sprite frame index
 obj_behavior_flag   equ $25   ; byte: NPC conditional behavior flag ($FF = triggered)
 obj_hit_flag        equ $26   ; byte: collision/hit flag ($FF = hit this frame)
@@ -2309,6 +2312,9 @@ obj_proj_offset_y   equ $30   ; word: follow-projectile Y offset from player (ov
 ; NOTE: orbiting spiral projectile reuses $2E as long orbit_center_x (overlaps obj_hitbox_x_neg)
 obj_orbit_center_x  equ $2E   ; word/long: orbit center X position (orbiting spiral projectile only)
 obj_attack_timer    equ $3A   ; word: attack/AI cooldown frame counter (enemy only)
+; NOTE: $3B is the low byte of the obj_attack_timer word, used independently as a byte counter
+;       in projectile trail emission and boss scatter logic.
+obj_sub_timer       equ $3B   ; byte: secondary timer/counter low byte (projectile trail count, scatter counter)
 obj_knockback_timer equ $3C   ; word: knockback/stun frame countdown (enemy only)
 obj_kim_reward      equ $3E   ; word: gold (kims) awarded on kill (enemy only)
 

@@ -1133,10 +1133,10 @@ ArgentosProjectile_ApplyMovement:
 	ASR.w	#1, D0
 	MOVE.w	(A0,D0.w), obj_tile_index(A5)
 	JSR	AddSpriteToDisplayList
-	ADDQ.b	#1, $3B(A5)
-	CMPI.b	#6, $3B(A5)
+	ADDQ.b	#1, obj_sub_timer(A5)
+	CMPI.b	#6, obj_sub_timer(A5)
 	BLE.w	ArgentosProjectile_NoTrailThisTick
-	CLR.b	$3B(A5)
+	CLR.b	obj_sub_timer(A5)
 	MOVE.b	obj_invuln_timer(A5), D7
 	ADDQ.b	#1, obj_invuln_timer(A5)
 	ANDI.w	#7, D7

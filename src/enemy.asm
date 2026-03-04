@@ -1998,7 +1998,7 @@ ProjectileTick_Phase1:
 	SUBQ.w	#1, obj_knockback_timer(A5)
 	BNE.w	ProjectileTick_PostCollision
 	ADDQ.b	#1, obj_attack_timer(A5)
-	MOVE.b	#8, $3B(A5)
+	MOVE.b	#8, obj_sub_timer(A5)
 	MOVE.w	#$001E, obj_knockback_timer(A5)
 	BRA.w	ProjectileTick_PostCollision
 ProjectileTick_Phase2:
@@ -2006,7 +2006,7 @@ ProjectileTick_Phase2:
 	BNE.w	ProjectileTick_PostCollision
 	MOVE.w	#8, obj_knockback_timer(A5)
 	MOVEQ	#0, D7
-	MOVE.b	$3B(A5), D7
+	MOVE.b	obj_sub_timer(A5), D7
 	CLR.w	D0
 	LEA	(A5), A6
 ProjectileTick_Phase2_Done:
@@ -2017,7 +2017,7 @@ ProjectileTick_Phase2_Done:
 	MOVE.w	obj_world_x(A5), obj_pos_x_fixed(A6)
 	MOVE.w	obj_world_y(A5), D1
 	SUBI.w	#$0018, D1
-	MOVE.w	D1, $22(A6)
+	MOVE.w	D1, obj_seg_counter(A6)
 	MOVE.w	#$0018, obj_xp_reward(A6)
 	MOVE.w	obj_max_hp(A5), obj_max_hp(A6)
 	MOVE.b	#SPRITE_SIZE_2x1, obj_sprite_size(A6)
@@ -2028,7 +2028,7 @@ ProjectileTick_Phase2_Done:
 	ASL.b	#5, D1
 	MOVE.b	D1, obj_direction(A6)
 	MOVE.l	#ProjectileTick_Spiral, obj_tick_fn(A6)
-	SUBQ.b	#1, $3B(A5)
+	SUBQ.b	#1, obj_sub_timer(A5)
 	BNE.w	ProjectileTick_PostCollision
 	ADDQ.b	#1, obj_attack_timer(A5)
 	MOVE.w	#$005A, obj_knockback_timer(A5)
@@ -2106,7 +2106,7 @@ ProjectileTick_Spiral:
 	ASR.l	#7, D2
 	ASR.l	#7, D3
 	ADD.w	obj_pos_x_fixed(A5), D2
-	ADD.w	$22(A5), D3
+	ADD.w	obj_seg_counter(A5), D3
 	MOVE.w	D2, obj_world_x(A5)
 	MOVE.w	D3, obj_world_y(A5)
 	CMPI.w	#0, obj_world_x(A5)
@@ -2469,7 +2469,7 @@ EnemyTakeDamage2_CheckDeath_Loop3:
 	MOVE.b	obj_knockback_timer(A6), D1
 	EXT.w	D1
 	CLR.l	D2
-	MOVE.b	$3B(A6), D2
+	MOVE.b	obj_sub_timer(A6), D2
 	CMPI.w	#$0040, D2
 	BLE.b	EnemyTakeDamage2_CheckDeath_Loop4
 	MOVE.w	#$FFFC, D1
@@ -2481,7 +2481,7 @@ EnemyTakeDamage2_CheckDeath_Loop4:
 EnemyTakeDamage2_CheckDeath_Loop5:
 	MOVE.b	D1, obj_knockback_timer(A6)
 	ADD.w	D1, D2
-	MOVE.b	D2, $3B(A6)
+	MOVE.b	D2, obj_sub_timer(A6)
 	CLR.w	D5
 	MOVE.b	obj_attack_timer(A6), D5
 	CLR.l	D0
@@ -2588,7 +2588,7 @@ BossTakeDamage_CheckDeath_Loop:
 	CLR.b	obj_hit_flag(A5)
 	CLR.l	obj_vel_x(A5)
 	CLR.l	obj_vel_y(A5)
-	TST.b	$3B(A5)
+	TST.b	obj_sub_timer(A5)
 	BNE.w	BossTakeDamage_CheckDeath_Loop2
 	CMPI.b	#DEATH_SCATTER_ANGLE_COUNT, obj_attack_timer(A5)
 	BCS.b	BossTakeDamage_CheckDeath_Loop3
@@ -2634,7 +2634,7 @@ BossTakeDamage_CheckDeath_Loop3_Done:
 	DBF	D7, BossTakeDamage_CheckDeath_Loop3_Done
 	BRA.w	BossTakeDamage_CheckDeath_Loop5
 BossTakeDamage_CheckDeath_Loop4:
-	MOVE.b	#$21, $3B(A5)
+	MOVE.b	#$21, obj_sub_timer(A5)
 	MOVEA.l	Player_entity_ptr.w, A6
 	BSR.w	CalculateAngleBetweenObjects
 	ADDQ.b	#2, D0
@@ -2643,10 +2643,10 @@ BossTakeDamage_CheckDeath_Loop4:
 	MOVE.w	D0, obj_knockback_timer(A5)
 BossTakeDamage_CheckDeath_Loop2:
 	LEA	(A5), A0
-	SUBQ.b	#1, $3B(A5)
+	SUBQ.b	#1, obj_sub_timer(A5)
 	MOVE.w	#8, D7
 	CLR.l	D0
-	MOVE.b	$3B(A5), D0
+	MOVE.b	obj_sub_timer(A5), D0
 	ASR.w	#1, D0
 	SUBQ.w	#8, D0
 	BGE.b	BossTakeDamage_CheckDeath_Loop6

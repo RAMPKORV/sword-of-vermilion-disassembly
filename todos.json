@@ -280,7 +280,7 @@
               "note": "Unknown obj_struct field at +$22"
             }
           ],
-          "status": "todo"
+          "status": "done"
         },
         {
           "id": "CONST-007",
