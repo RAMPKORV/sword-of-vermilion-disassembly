@@ -525,3 +525,90 @@ enemyData macro ai_fn,tile_id,reward_type,reward_value,extra_obj_slots,max_spawn
     dc.b    sprite_frame
     dc.b    behavior_flag
     ENDM
+
+; ============================================================
+; townTileGfxEntry Macro
+; ============================================================
+; Defines one entry in TownTileGfxTable (towndata.asm).
+; Each entry is exactly 10 bytes (dc.l + dc.l + dc.w).
+; The table is indexed by town ID to determine which tileset
+; mappings and graphics to load.
+;
+; mappings: Pointer to tileset mapping data (e.g. TownTileSet_A_Mappings)
+; gfx:      Pointer to tile graphics data   (e.g. TownTileSet_A_Gfx)
+; count:    Number of tiles to load (word)  — $0097 for set A, $0039 for set B
+townTileGfxEntry macro mappings,gfx,count
+    dc.l    mappings
+    dc.l    gfx
+    dc.w    count
+    ENDM
+
+; ============================================================
+; talkerGfxDesc Macro
+; ============================================================
+; Defines a standard talker NPC graphics descriptor in towndata.asm.
+; Each entry is exactly 22 bytes. Used for NPCs with a distinct
+; walking sprite (MapGiver, StowGirl, Bearwulf, Merchant, ImposterGuard).
+; The portrait frame table (TalkerPortraitTileDataPtrs) and sprite frame
+; table (TalkerSpriteFrameTable), plus all fixed fields, are baked in.
+;
+; portrait_gfx: Pointer to portrait tile data
+; sprite_gfx:   Pointer to body/sprite tile data
+; dialogue_id:  NPC dialogue/script ID (word)
+talkerGfxDesc macro portrait_gfx,sprite_gfx,dialogue_id
+    dc.l    portrait_gfx
+    dc.l    TalkerPortraitTileDataPtrs
+    dc.w    $0007
+    dc.l    sprite_gfx
+    dc.l    TalkerSpriteFrameTable
+    dc.w    $000F
+    dc.w    $0000
+    dc.w    $FFF0
+    dc.b    $0D
+    dc.b    $0F
+    dc.w    dialogue_id
+    ENDM
+
+; ============================================================
+; talkerGfxDescPortrait Macro
+; ============================================================
+; Defines a portrait-only talker NPC graphics descriptor.
+; Used for NPCs whose sprite is portrait-style (no walking animation):
+; GenericNpc, DigotGiver, TruffleGiver.
+; Differs from talkerGfxDesc: sprite_frame_table = TalkerPortraitTileDataPtrs
+; and sprite_param = $0D instead of $0F.
+;
+; portrait_gfx: Pointer to portrait tile data
+; sprite_gfx:   Pointer to sprite tile data (portrait-style)
+; dialogue_id:  NPC dialogue/script ID (word)
+talkerGfxDescPortrait macro portrait_gfx,sprite_gfx,dialogue_id
+    dc.l    portrait_gfx
+    dc.l    TalkerPortraitTileDataPtrs
+    dc.w    $0007
+    dc.l    sprite_gfx
+    dc.l    TalkerPortraitTileDataPtrs
+    dc.w    $000F
+    dc.w    $0000
+    dc.w    $FFF0
+    dc.b    $0D
+    dc.b    $0D
+    dc.w    dialogue_id
+    ENDM
+
+; ============================================================
+; magicGfxData Macro
+; ============================================================
+; Defines one magic graphics data entry in towndata.asm.
+; Each entry is exactly 12 bytes (dc.l + dc.l + dc.w + dc.w).
+; Indexed by town to load the correct magic/spell tile graphics.
+;
+; layout_ptr:  Pointer to sprite/tile layout data
+; frame_ptr:   Pointer to frame pointer table
+; tile_count:  Number of tiles (word)
+; palette_id:  Palette/VRAM slot identifier (word)
+magicGfxData macro layout_ptr,frame_ptr,tile_count,palette_id
+    dc.l    layout_ptr
+    dc.l    frame_ptr
+    dc.w    tile_count
+    dc.w    palette_id
+    ENDM

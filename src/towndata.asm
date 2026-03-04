@@ -1558,69 +1558,39 @@ DialogueChoiceYesStrPtrs:
 	dc.l	ChaosReignStr
 	dc.l	ChaosReignStr
 TownTileGfxTable: ; Tile mappings + graphics by town
-	dc.l	TownTileSet_A_Mappings
-	dc.l	TownTileSet_A_Gfx
-	dc.w	$0097
+	townTileGfxEntry TownTileSet_A_Mappings,TownTileSet_A_Gfx,$0097
 
-	dc.l	TownTileSet_B_Mappings
-	dc.l	TownTileSet_B_Gfx
-	dc.w	$0039
+	townTileGfxEntry TownTileSet_B_Mappings,TownTileSet_B_Gfx,$0039
 
-	dc.l	TownTileSet_A_Mappings
-	dc.l	TownTileSet_A_Gfx
-	dc.w	$0097
+	townTileGfxEntry TownTileSet_A_Mappings,TownTileSet_A_Gfx,$0097
 
-	dc.l	TownTileSet_B_Mappings
-	dc.l	TownTileSet_B_Gfx
-	dc.w	$0039
+	townTileGfxEntry TownTileSet_B_Mappings,TownTileSet_B_Gfx,$0039
 
-	dc.l	TownTileSet_B_Mappings
-	dc.l	TownTileSet_B_Gfx
-	dc.w	$0039
+	townTileGfxEntry TownTileSet_B_Mappings,TownTileSet_B_Gfx,$0039
 
-	dc.l	TownTileSet_B_Mappings
-	dc.l	TownTileSet_B_Gfx
-	dc.w	$0039	
+	townTileGfxEntry TownTileSet_B_Mappings,TownTileSet_B_Gfx,$0039
 
-	dc.l	TownTileSet_B_Mappings
-	dc.l	TownTileSet_B_Gfx
-	dc.w	$0039
+	townTileGfxEntry TownTileSet_B_Mappings,TownTileSet_B_Gfx,$0039
 
-	dc.l	TownTileSet_B_Mappings
-	dc.l	TownTileSet_B_Gfx
-	dc.w	$0039
+	townTileGfxEntry TownTileSet_B_Mappings,TownTileSet_B_Gfx,$0039
 
-	dc.l	TownTileSet_A_Mappings
-	dc.l	TownTileSet_A_Gfx
-	dc.w	$0097
+	townTileGfxEntry TownTileSet_A_Mappings,TownTileSet_A_Gfx,$0097
 
-	dc.l	TownTileSet_B_Mappings
-	dc.l	TownTileSet_B_Gfx
-	dc.w	$0039
+	townTileGfxEntry TownTileSet_B_Mappings,TownTileSet_B_Gfx,$0039
 
-	dc.l	TownTileSet_A_Mappings
-	dc.l	TownTileSet_A_Gfx
-	dc.w	$0097
+	townTileGfxEntry TownTileSet_A_Mappings,TownTileSet_A_Gfx,$0097
 
-	dc.l	TownTileSet_B_Mappings
-	dc.l	TownTileSet_B_Gfx
-	dc.w	$0039
+	townTileGfxEntry TownTileSet_B_Mappings,TownTileSet_B_Gfx,$0039
 
-	dc.l	SpriteGfxData_8E0C8
+	dc.l	SpriteGfxData_8E0C8	; Excalabria/ruin tileset (anomalous — raw sprite data ptrs)
 	dc.l	SpriteGfxData_8FB08
 	dc.w	$001E
 
-	dc.l	TownTileSet_A_Mappings
-	dc.l	TownTileSet_A_Gfx
-	dc.w	$0097
+	townTileGfxEntry TownTileSet_A_Mappings,TownTileSet_A_Gfx,$0097
 
-	dc.l	TownTileSet_B_Mappings
-	dc.l	TownTileSet_B_Gfx
-	dc.w	$0039	
+	townTileGfxEntry TownTileSet_B_Mappings,TownTileSet_B_Gfx,$0039
 
-	dc.l	TownTileSet_B_Mappings
-	dc.l	TownTileSet_B_Gfx
-	dc.w	$0039
+	townTileGfxEntry TownTileSet_B_Mappings,TownTileSet_B_Gfx,$0039
 LoadTownTileGraphics_Data:
 	dc.l	SpriteGfxData_8E0C8
 LoadTownTileGfx_LookupTable_Loop_Done_Data:
@@ -1757,101 +1727,21 @@ DmaCmd_CaveTiles:
 	dc.l	$977F6E00	
 	dc.l	$00830000	
 TalkerGfxDesc_MapGiver:
-	dc.l	TalkerGfxDesc_MapGiver_Gfx_51E44
-	dc.l	TalkerPortraitTileDataPtrs
-	dc.w	$0007
-	dc.l	TalkerGfxDesc_MapGiver_Gfx_51534
-	dc.l	TalkerSpriteFrameTable
-	dc.w	$000F
-	dc.w	$0000
-	dc.w	$FFF0
-	dc.b	$0D
-	dc.b	$0F
-	dc.w	$0011
+	talkerGfxDesc TalkerGfxDesc_MapGiver_Gfx_51E44,TalkerGfxDesc_MapGiver_Gfx_51534,$0011
 TalkerGfxDesc_StowGirl:
-	dc.l	TalkerGfxDesc_StowGirl_Gfx_51E4C
-	dc.l	TalkerPortraitTileDataPtrs
-	dc.w	$0007
-	dc.l	TalkerGfxDesc_StowGirl_Gfx_51544
-	dc.l	TalkerSpriteFrameTable
-	dc.w	$000F
-	dc.w	$0000
-	dc.w	$FFF0
-	dc.b	$0D
-	dc.b	$0F
-	dc.w	$0012
+	talkerGfxDesc TalkerGfxDesc_StowGirl_Gfx_51E4C,TalkerGfxDesc_StowGirl_Gfx_51544,$0012
 TalkerGfxDesc_Bearwulf:
-	dc.l	TalkerGfxDesc_Bearwulf_Gfx_51E54
-	dc.l	TalkerPortraitTileDataPtrs
-	dc.w	$0007
-	dc.l	TalkerGfxDesc_Bearwulf_Gfx_51554
-	dc.l	TalkerSpriteFrameTable
-	dc.w	$000F
-	dc.w	$0000
-	dc.w	$FFF0
-	dc.b	$0D
-	dc.b	$0F
-	dc.w	$0011
+	talkerGfxDesc TalkerGfxDesc_Bearwulf_Gfx_51E54,TalkerGfxDesc_Bearwulf_Gfx_51554,$0011
 TalkerGfxDesc_Merchant:
-	dc.l	TalkerGfxDesc_Merchant_Gfx_51E5C
-	dc.l	TalkerPortraitTileDataPtrs
-	dc.w	$0007
-	dc.l	TalkerGfxDesc_Merchant_Gfx_51564
-	dc.l	TalkerSpriteFrameTable
-	dc.w	$000F
-	dc.w	$0000
-	dc.w	$FFF0
-	dc.b	$0D
-	dc.b	$0F
-	dc.w	$0011
+	talkerGfxDesc TalkerGfxDesc_Merchant_Gfx_51E5C,TalkerGfxDesc_Merchant_Gfx_51564,$0011
 TalkerGfxDesc_GenericNpc:
-	dc.l	TalkerGfxDesc_GenericNpc_Gfx_51EA4
-	dc.l	TalkerPortraitTileDataPtrs
-	dc.w	$0007
-	dc.l	TalkerGfxDesc_GenericNpc_Gfx_51E94
-	dc.l	TalkerPortraitTileDataPtrs
-	dc.w	$000F
-	dc.w	$0000
-	dc.w	$FFF0
-	dc.b	$0D
-	dc.b	$0D
-	dc.w	$0079
+	talkerGfxDescPortrait TalkerGfxDesc_GenericNpc_Gfx_51EA4,TalkerGfxDesc_GenericNpc_Gfx_51E94,$0079
 TalkerGfxDesc_DigotGiver:
-	dc.l	TalkerGfxDesc_DigotGiver_Gfx_51E8C
-	dc.l	TalkerPortraitTileDataPtrs
-	dc.w	$0007
-	dc.l	TalkerGfxDesc_DigotGiver_Gfx_51E84
-	dc.l	TalkerPortraitTileDataPtrs
-	dc.w	$000F
-	dc.w	$0000
-	dc.w	$FFF0
-	dc.b	$0D
-	dc.b	$0D
-	dc.w	$0078
+	talkerGfxDescPortrait TalkerGfxDesc_DigotGiver_Gfx_51E8C,TalkerGfxDesc_DigotGiver_Gfx_51E84,$0078
 TalkerGfxDesc_TruffleGiver:
-	dc.l	TalkerGfxDesc_TruffleGiver_Gfx_51E7C
-	dc.l	TalkerPortraitTileDataPtrs
-	dc.w	$0007
-	dc.l	TalkerGfxDesc_TruffleGiver_Gfx_51E74
-	dc.l	TalkerPortraitTileDataPtrs
-	dc.w	$000F
-	dc.w	$0000
-	dc.w	$FFF0
-	dc.b	$0D
-	dc.b	$0D
-	dc.w	$0078
+	talkerGfxDescPortrait TalkerGfxDesc_TruffleGiver_Gfx_51E7C,TalkerGfxDesc_TruffleGiver_Gfx_51E74,$0078
 TalkerGfxDesc_ImposterGuard:
-	dc.l	TalkerGfxDesc_ImposterGuard_Gfx_51E64
-	dc.l	TalkerPortraitTileDataPtrs
-	dc.w	$0007
-	dc.l	TalkerGfxDesc_ImposterGuard_Gfx_51574
-	dc.l	TalkerSpriteFrameTable
-	dc.w	$000F
-	dc.w	$0000
-	dc.w	$FFF0
-	dc.b	$0D
-	dc.b	$0F
-	dc.w	$00C3
+	talkerGfxDesc TalkerGfxDesc_ImposterGuard_Gfx_51E64,TalkerGfxDesc_ImposterGuard_Gfx_51574,$00C3
 TalkerGfxDesc_Tsarkon:
 	dc.l	TalkerGfxDesc_Tsarkon_Gfx_51E6C
 	dc.l	TalkerPortraitTileDataPtrs
@@ -2091,45 +1981,21 @@ MagicGfxDataPtrs:
 	dc.l	MagicGfxData_HastingsCarthahena	
 	dc.l	MagicGfxData_HastingsCarthahena	
 MagicGfxData_WyclifParma:
-	dc.l	MagicGfxData_WyclifParma_Gfx_4A8F4
-	dc.l	MagicGfxData_WyclifParma_Gfx_4AA82
-	dc.w	$001D
-	dc.w	$0036	
+	magicGfxData MagicGfxData_WyclifParma_Gfx_4A8F4,MagicGfxData_WyclifParma_Gfx_4AA82,$001D,$0036
 MagicGfxData_DeepdaleStow:
-	dc.l	MagicGfxData_DeepdaleStow_Gfx_48EFE
-	dc.l	MagicGfxData_DeepdaleStow_Gfx_498D0
-	dc.w	$00B3
-	dc.w	$0073	
+	magicGfxData MagicGfxData_DeepdaleStow_Gfx_48EFE,MagicGfxData_DeepdaleStow_Gfx_498D0,$00B3,$0073
 MagicGfxData_Keltwick:
-	dc.l	MagicGfxData_Keltwick_Gfx_49AD8
-	dc.l	MagicGfxData_Keltwick_Gfx_49E3C
-	dc.w	$002F
-	dc.w	$0073	
+	magicGfxData MagicGfxData_Keltwick_Gfx_49Ad8,MagicGfxData_Keltwick_Gfx_49E3C,$002F,$0073
 MagicGfxData_Barrow:
-	dc.l	SpriteLayout_4A77A
-	dc.l	SpriteFramePointerTable_4A8B8
-	dc.w	$0017
-	dc.w	$0076	
+	magicGfxData SpriteLayout_4A77A,SpriteFramePointerTable_4A8B8,$0017,$0076
 MagicGfxData_Tadcaster:
-	dc.l	MagicGfxData_Tadcaster_Gfx_4A548
-	dc.l	MagicGfxData_Tadcaster_Gfx_4A70E
-	dc.w	$001F
-	dc.w	$0076	
+	magicGfxData MagicGfxData_Tadcaster_Gfx_4A548,MagicGfxData_Tadcaster_Gfx_4A70E,$001F,$0076
 MagicGfxData_Helwig:
-	dc.l	MagicGfxData_Helwig_Gfx_49ECC
-	dc.l	MagicGfxData_Helwig_Gfx_4A42C
-	dc.w	$0053
-	dc.w	$007A	
+	magicGfxData MagicGfxData_Helwig_Gfx_49ECC,MagicGfxData_Helwig_Gfx_4A42C,$0053,$007A
 MagicGfxData_SwaffhamExcalabria:
-	dc.l	MagicGfxData_SwaffhamExcalabria_Gfx_4AAD6
-	dc.l	MagicGfxData_SwaffhamExcalabria_Gfx_4B1E6
-	dc.w	$007F
-	dc.w	$0074	
+	magicGfxData MagicGfxData_SwaffhamExcalabria_Gfx_4AAD6,MagicGfxData_SwaffhamExcalabria_Gfx_4B1E6,$007F,$0074
 MagicGfxData_HastingsCarthahena:
-	dc.l	SpriteLayout_4A77A
-	dc.l	SpriteFramePointerTable_4A8B8
-	dc.w	$0017
-	dc.w	$0036	
+	magicGfxData SpriteLayout_4A77A,SpriteFramePointerTable_4A8B8,$0017,$0036
 ; ===========================================================================
 TownNames:
 	dc.l	TownName_Wyclif
