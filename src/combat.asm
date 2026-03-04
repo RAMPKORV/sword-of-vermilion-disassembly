@@ -1948,8 +1948,7 @@ ItemMenuStateJumpTable_Loop:
 ItemMenuStateJumpTable_Loop2:
 	TST.b	Window_tilemap_draw_active.w
 	BNE.w	ItemMenuUseOrDiscard_Done
-	MOVE.w	#BUTTON_BIT_B, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_B
 	BEQ.b	ItemMenuStateJumpTable_Loop3
 	MOVE.w	#WINDOW_DRAW_ITEM_LIST_SHORT, Window_draw_type.w
 	MOVE.w	#SOUND_MENU_CANCEL, D0
@@ -1961,8 +1960,7 @@ ItemMenuStateJumpTable_Loop2:
 	RTS
 
 ItemMenuStateJumpTable_Loop3:
-	MOVE.w	#BUTTON_BIT_C, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_C
 	BEQ.w	ItemMenuUseOrDiscard_Done_Loop2
 	MOVE.w	Item_menu_action_mode.w, Menu_cursor_index.w
 	JSR	DrawMenuCursor
@@ -1997,11 +1995,9 @@ ItemMenuUseOrDiscard_Done_Loop2:
 ItemMenuUseOrDiscard_Done_Loop:
 	TST.b	Script_text_complete.w
 	BEQ.w	ItemMenu_ScriptDone_Loop2
-	MOVE.w	#BUTTON_BIT_C, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_C
 	BNE.b	ItemMenu_ScriptDone
-	MOVE.w	#BUTTON_BIT_B, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_B
 	BNE.b	ItemMenu_ScriptDone
 	RTS
 
@@ -2056,8 +2052,7 @@ ItemMenu_ItemUsed_Return_Loop5:
 	RTS
 
 ItemMenu_ItemUsed_Return_Loop2:
-	MOVE.w	#BUTTON_BIT_B, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_B
 	BEQ.b	ItemMenu_ItemUsed_Return_Loop6
 	MOVE.w	#SOUND_MENU_CANCEL, D0
 	JSR	QueueSoundEffect
@@ -2068,8 +2063,7 @@ ItemMenu_ItemUsed_Return_Loop2:
 	RTS
 
 ItemMenu_ItemUsed_Return_Loop6:
-	MOVE.w	#BUTTON_BIT_C, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_C
 	BEQ.b	ItemMenu_ItemUsed_Return_Loop7
 	MOVE.w	Selected_item_index.w, Menu_cursor_index.w
 	JSR	DrawMenuCursor
@@ -2088,11 +2082,9 @@ ItemMenu_ItemUsed_Return_Loop7:
 	RTS
 
 ItemMenu_ItemUsed_Return_Loop3:
-	MOVE.w	#BUTTON_BIT_B, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_B
 	BNE.b	ItemMenu_ItemUsed_Return_Loop8
-	MOVE.w	#BUTTON_BIT_C, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_C
 	BEQ.w	ItemMenu_ItemUsed_Return_Loop9
 	MOVE.w	#SOUND_MENU_SELECT, D0
 	JSR	QueueSoundEffect
@@ -2165,11 +2157,9 @@ ItemMenu_ItemUsed_Return_Loop9:
 ItemMenu_ItemUsed_Return_Loop4:
 	TST.b	Script_text_complete.w
 	BEQ.w	ItemMenu_ScriptDone2_Loop3
-	MOVE.w	#BUTTON_BIT_B, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_B
 	BNE.b	ItemMenu_ScriptDone2
-	MOVE.w	#BUTTON_BIT_C, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_C
 	BNE.b	ItemMenu_ScriptDone2
 	RTS
 
@@ -2202,8 +2192,7 @@ ItemMenu_ScriptDone2_Loop4:
 	RTS
 
 ItemMenu_ScriptDone2_Loop2:
-	MOVE.w	#BUTTON_BIT_B, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_B
 	BEQ.b	ItemMenu_ScriptDone2_Loop5
 	MOVE.w	#SOUND_MENU_CANCEL, D0
 	JSR	QueueSoundEffect
@@ -2214,8 +2203,7 @@ ItemMenu_ScriptDone2_Loop2:
 	RTS
 
 ItemMenu_ScriptDone2_Loop5:
-	MOVE.w	#BUTTON_BIT_C, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_C
 	BEQ.w	UseItemDescription_Build_Loop3
 	MOVE.w	Selected_item_index.w, Menu_cursor_index.w
 	JSR	DrawMenuCursor
@@ -2277,8 +2265,7 @@ UseItemDescription_Build_Loop5:
 	RTS
 
 UseItemDescription_Build_Loop4:
-	MOVE.w	#BUTTON_BIT_C, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_C
 	BEQ.b	UseItemDescription_Build_Loop7
 	JSR	ResetScriptAndInitDialogue
 UseItemDescription_Build_Loop6:
@@ -2300,11 +2287,9 @@ UseItemDescription_Build_Loop2:
 	BEQ.w	ItemMenu_ScriptDoneCheckCave_Loop3
 	TST.b	Script_has_continuation.w
 	BNE.w	ItemMenu_ScriptDoneCheckCave_Loop4
-	MOVE.w	#BUTTON_BIT_C, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_C
 	BNE.b	ItemMenu_ScriptDoneCheckCave
-	MOVE.w	#BUTTON_BIT_B, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_B
 	BNE.b	ItemMenu_ScriptDoneCheckCave
 	RTS
 
@@ -2329,8 +2314,7 @@ ItemMenu_ScriptDoneCheckCave_Loop3:
 	RTS
 
 ItemMenu_ScriptDoneCheckCave_Loop4:
-	MOVE.w	#BUTTON_BIT_C, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_C
 	BEQ.b	ItemMenu_ScriptDoneCheckCave_Loop7
 	JSR	InitDialogueWindow
 ItemMenu_ScriptDoneCheckCave_Loop7:
@@ -2346,11 +2330,9 @@ ItemMenu_ScriptDoneCheckCave_Loop8:
 	RTS
 
 ItemMenu_ScriptDoneCheckCave_Loop2:
-	MOVE.w	#BUTTON_BIT_C, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_C
 	BNE.b	UseExtrios_Warp
-	MOVE.w	#BUTTON_BIT_B, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_B
 	BNE.b	UseExtrios_Warp
 	RTS
 
@@ -2381,11 +2363,9 @@ UseExtrios_Warp_Loop2:
 	RTS
 
 UseExtrios_Warp_Loop:
-	MOVE.w	#BUTTON_BIT_C, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_C
 	BNE.b	UseExtrios_CaveReturn
-	MOVE.w	#BUTTON_BIT_B, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_B
 	BNE.b	UseExtrios_CaveReturn
 	RTS
 

@@ -44,8 +44,7 @@ ProgramState_TitleScreen:
 	BEQ.w	ProgramState_03_Return
 	TST.b	Window_tilemap_draw_active.w
 	BNE.w	ProgramState_03_Return
-	MOVE.w	#BUTTON_BIT_START, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_START
 	BEQ.w	ProgramState_03_Loop
 	TST.w	Dialog_selection.w
 	BEQ.b	ProgramState_03_Loop2

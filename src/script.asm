@@ -3910,14 +3910,11 @@ NameEntryScreen_Init:
 NameEntryScreen_InputHandler:
 	TST.b	Fade_in_lines_mask.w
 	BNE.b	NameEntryScreen_InputHandler_Loop
-	MOVE.w	#BUTTON_BIT_C, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_C
 	BNE.b	NameEntryScreen_InputHandler_Loop2
-	MOVE.w	#BUTTON_BIT_B, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_B
 	BNE.w	NameEntry_ConfirmDone_Loop
-	MOVE.w	#BUTTON_BIT_START, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_START
 	BEQ.b	NameEntryScreen_InputHandler_Loop3
 	LEA	Player_name.w, A0	
 	MOVE.w	Name_input_cursor_pos.w, D0	

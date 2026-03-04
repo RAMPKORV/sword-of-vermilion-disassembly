@@ -127,8 +127,7 @@ FileMenuPhaseJumpTable_Loop:
 FileMenuPhaseJumpTable_Loop2:
 	TST.b	Window_tilemap_draw_active.w
 	BNE.w	FileMenu_VerifyChecksum_Loop2
-	MOVE.w	#BUTTON_BIT_C, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_C
 	BEQ.w	FileMenu_VerifyChecksum_Loop3
 	MOVE.w	Dialog_selection.w, Menu_cursor_index.w
 	JSR	DrawMenuCursor
@@ -179,8 +178,7 @@ FileMenu_VerifyChecksum_Loop2:
 FileMenu_VerifyChecksum_Loop:
 	TST.b	Window_tilemap_draw_active.w
 	BNE.w	FileSave_Return
-	MOVE.w	#BUTTON_BIT_C, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_C
 	BEQ.w	FileSave_Return
 	MOVEA.l	Sram_backup_ptr.w, A0
 	BSR.w	VerifySaveChecksum
@@ -211,8 +209,7 @@ FileSave_Return_Loop:
 FileSave_Return_Loop2:
 	TST.b	Window_tilemap_draw_active.w
 	BNE.b	FileMenuSaveConfirm_Return
-	MOVE.w	#BUTTON_BIT_C, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_C
 	BEQ.b	FileMenuSaveConfirm_Return
 	MOVE.w	#FILE_MENU_PHASE_DRAW_SELECT, File_menu_phase.w
 FileMenuSaveConfirm_Return:
@@ -221,8 +218,7 @@ FileMenuSaveConfirm_Return:
 FileMenuSaveConfirm_Return_Loop:
 	TST.b	Window_tilemap_draw_active.w	
 	BNE.b	FileMenuLoad_Return	
-	MOVE.w	#BUTTON_BIT_C, D2	
-	JSR	CheckButtonPress	
+	CheckButton BUTTON_BIT_C	
 	BEQ.b	FileMenuLoad_Return	
 	MOVE.b	#FLAG_TRUE, File_load_complete.w	
 FileMenuLoad_Return:

@@ -522,8 +522,7 @@ BattlePlayerInputHandler:
 BattlePlayerInputHandler_AttackCheck:
 	TST.b	Player_attacking_flag.w
 	BNE.b	BattlePlayerInputHandler_ProcessMovement
-	MOVE.w	#BUTTON_BIT_C, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_C
 	BEQ.b	BattlePlayerInputHandler_ProcessMovement
 	TST.w	Equipped_sword.w
 	BLT.b	BattlePlayerInputHandler_ProcessMovement
@@ -532,8 +531,7 @@ BattlePlayerInputHandler_AttackCheck:
 	MOVE.b	#FLAG_TRUE, Player_attacking_flag.w
 	CLR.b	obj_hp(A5)
 BattlePlayerInputHandler_ProcessMovement:
-	MOVE.w	#BUTTON_BIT_A, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_A
 	BEQ.b	BattlePlayerInputHandler_ProcessMovement_Loop
 	BSR.w	DispatchBattleMagic
 BattlePlayerInputHandler_ProcessMovement_Loop:

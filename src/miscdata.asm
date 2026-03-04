@@ -58,8 +58,7 @@ DebugTestMenu_WaitLoop:
 	MOVE.b	#$00, D0
 	JSR	QueueSoundEffect                ; keep music silent each frame
 	BSR.w	DebugMenu_ScrollTick            ; update scroll + advance menu cursor
-	MOVE.w	#$0006, D2                      ; check A or B button
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_A
 	BEQ.b	DebugTestMenu_WaitLoop          ; no button → keep waiting
 	MOVE.w	DebugMenu_selected_item.w, D0
 	CMPI.w	#$0004, D0                      ; past last item?
@@ -226,8 +225,7 @@ DebugSoundTest_WaitLoop:
 	MOVE.b	#$00, D0
 	JSR	QueueSoundEffect
 	BSR.w	DebugMenu_ScrollTick
-	MOVE.w	#$0006, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_A
 	BEQ.b	DebugSoundTest_WaitLoop
 	MOVE.w	DebugMenu_selected_item.w, D0
 	CMPI.w	#$0004, D0                      ; ≥4 → EXIT
@@ -255,8 +253,7 @@ DebugSoundCategory_Menu:
 DebugSoundCategory_SubWaitLoop:             ; shared wait loop for all categories ($3CA82)
 	JSR	WaitForVBlank
 	BSR.w	DebugMenu_ScrollTick
-	MOVE.w	#$0006, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_A
 	BEQ.b	DebugSoundCategory_SubWaitLoop
 	MOVE.w	DebugMenu_sound_item.w, D1
 	CMPI.w	#$0013, D1                      ; ≥ 19 entries → exit sub-menu
@@ -493,8 +490,7 @@ DebugCRTTest:
 	BSR.w	DebugCRT_DrawColorRow2          ; draw colour-bar row 2
 	BSR.w	DebugCRT_DrawColorRow3          ; draw colour-bar row 3
 DebugCRTTest_WaitLoop:
-	MOVE.w	#$0005, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_C
 	BEQ.b	DebugCRTTest_WaitLoop           ; wait for any button
 	RTS
 

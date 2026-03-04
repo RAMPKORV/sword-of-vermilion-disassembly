@@ -180,11 +180,9 @@ BossCommon_VictoryRewardSequence_Loop:
 BossCommon_VictoryMessageWait:
 	TST.b	Script_text_complete.w
 	BEQ.b	BossBattle_SetExitFlag_Loop
-	MOVE.w	#BUTTON_BIT_C, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_C
 	BNE.b	BossBattle_SetExitFlag
-	MOVE.w	#BUTTON_BIT_B, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_B
 	BNE.b	BossBattle_SetExitFlag
 	RTS
 
