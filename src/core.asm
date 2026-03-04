@@ -121,6 +121,8 @@ InitVDPAndClearVRAM_Done:
 	MOVE.w	#0, VDP_data_port
 	BSR.w	ClearVRAMSprites
 	BSR.w	ClearVSRAM
+; loc_00000396 — entry point used by DebugTestMenu to clear VRAM scroll/plane/sprite tables
+loc_00000396:
 	BSR.w	ClearVRAMHScroll
 	BSR.w	ClearVRAMPlaneA
 	BSR.w	ClearVRAMPlaneB

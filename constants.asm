@@ -1117,6 +1117,13 @@ Sound_queue_buffer          = $FFFFC322
 Current_area_music          = $FFFFC32A   ; .w
 Vblank_frame_counter        = $FFFFC32C   ; .w
 Skip_tilemap_updates        = $FFFFC340   ; .b
+; $FFFFC341-$FFFFC359: debug/test menu temporaries (DebugTestMenu only)
+DebugMenu_in_submenu        = $FFFFC341   ; .b  non-zero while inside a sound-test sub-menu
+DebugMenu_scroll_pos        = $FFFFC342   ; .w  current horizontal scroll counter (−8..+8)
+DebugMenu_selected_item     = $FFFFC344   ; .w  currently highlighted main-menu item (0-based)
+DebugMenu_vdp_cursor        = $FFFFC346   ; .l  cached VDP write-address register value
+DebugMenu_sound_item        = $FFFFC34A   ; .w  currently highlighted sound-test entry (0-based)
+DebugMenu_sound_category    = $FFFFC358   ; .w  selected sound category (0=BGM, 1=Effect, 2=BGM2, 3=D/A)
 Savegame_name_buffer        = $FFFFC35A   ; .l
 Savegame_name_overflow      = $FFFFC35E   ; .w
 Name_entry_cursor_x         = $FFFFC380   ; .w

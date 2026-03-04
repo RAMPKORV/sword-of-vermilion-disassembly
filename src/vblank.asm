@@ -362,7 +362,7 @@ CheckDebugMode:
 	MOVE.b	Controller_2_current_state.w, D0
 	CMPI.b	#$F0, D0
 	BNE.b	CheckDebugMode_end
-	MOVE.l	#loc_003C6E8, $42(A7)	
+	MOVE.l	#DebugTestMenu, $42(A7)	
 	MOVE.b	#FLAG_TRUE, Skip_tilemap_updates.w	
 CheckDebugMode_end:
 	RTS

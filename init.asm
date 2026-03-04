@@ -154,7 +154,9 @@ ObjectDispatchEnd:
 ObjectDispatchDone:
 	MOVE.b	#$FF, $FFFFE002.w
 	BRA.b	MainGameLoop
-	dc.b	$42, $38, $C0, $FF 
+; loc_000010D8
+loc_000010D8:
+	dc.b	$42, $38, $C0, $FF      ; CLR.w $FFFFC0FF + fall-through to WaitForVBlank
 
 ; WaitForVBlank
 WaitForVBlank:

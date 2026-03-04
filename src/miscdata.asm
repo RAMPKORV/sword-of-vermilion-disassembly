@@ -1,301 +1,968 @@
 ; ===========================================================================
+; src/miscdata.asm
 ; Miscellaneous Game Data
-; Boss parallax entry code (un-disassembled), debug/test menus, battle animation frames, NPC sprite frames
+; Debug/test menu (DebugTestMenu), boss parallax init tables,
+; battle animation frames, NPC sprite frames
 ; ===========================================================================
-	
-loc_003C6E8: ; Seems like there are many references to BossParallaxEntry_Start here. TODO: Organize data
-	dc.b	$4A, $38, $C0, $8E, $66, $FA, $10, $3C, $00, $00, $4E, $B9, $00, $01, $05, $22, $4E, $B9, $00, $00, $06, $82, $4E, $B9, $00, $00, $10, $D8, $30, $38, $C3, $F6 
-	dc.b	$02, $40, $FF, $F8, $33, $C0, $00, $C0, $00, $04, $31, $FC, $00, $00, $C1, $04, $31, $FC, $00, $00, $C1, $06, $31, $FC, $00, $4F, $C0, $80, $31, $FC, $00, $53 
-	dc.b	$C0, $82, $31, $FC, $00, $54, $C0, $84, $31, $FC, $00, $01, $C0, $86, $4E, $B9, $00, $01, $32, $5E, $4E, $B9, $00, $00, $06, $6E, $2A, $3C, $44, $04, $00, $03 
-	dc.b	$21, $C5, $C3, $46, $42, $78, $C3, $44, $42, $78, $C3, $42, $4E, $B9, $00, $00, $03, $96, $41, $F9, $00, $03, $D1, $BC, $4E, $B9, $00, $01, $EA, $C6, $41, $F9 
-	dc.b	$00, $03, $D1, $D0, $4E, $B9, $00, $01, $EA, $C6, $41, $F9, $00, $03, $D1, $E4, $4E, $B9, $00, $01, $EA, $C6, $41, $F9, $00, $03, $D1, $F8, $4E, $B9, $00, $01 
-	dc.b	$EA, $C6, $41, $F9, $00, $03, $D2, $04, $4E, $B9, $00, $01, $EA, $C6, $4E, $B9, $00, $00, $10, $DC, $10, $3C, $00, $00, $4E, $B9, $00, $01, $05, $22, $61, $00 
-	dc.b	$08, $7C, $34, $3C, $00, $06, $4E, $B9, $00, $00, $12, $F2, $67, $E0, $30, $38, $C3, $44, $0C, $40, $00, $04, $6E, $00, $08, $54, $60, $00, $00, $04, $60, $CE 
-	dc.b	$D0, $40, $D0, $40, $4E, $BB, $00, $06, $60, $00, $FF, $16, $60, $00, $00, $12, $60, $00, $01, $C6, $60, $00, $07, $24, $60, $00, $08, $30, $60, $00, $08, $2E 
-	dc.b	$4E, $B9, $00, $00, $10, $D8, $31, $FC, $00, $4F, $C0, $80, $31, $FC, $00, $53, $C0, $82, $31, $FC, $00, $54, $C0, $84, $4E, $B9, $00, $01, $32, $5E, $4E, $B9 
-	dc.b	$00, $00, $03, $96, $41, $F9, $00, $03, $D2, $2C, $4E, $B9, $00, $01, $EA, $C6, $41, $F9, $00, $03, $D2, $36, $4E, $B9, $00, $01, $EA, $C6, $41, $F9, $00, $03 
-	dc.b	$D2, $42, $4E, $B9, $00, $01, $EA, $C6, $41, $F9, $00, $03, $D2, $4E, $4E, $B9, $00, $01, $EA, $C6, $41, $F9, $00, $03, $D2, $5C, $4E, $B9, $00, $01, $EA, $C6 
-	dc.b	$41, $F9, $00, $03, $D2, $66, $4E, $B9, $00, $01, $EA, $C6, $41, $F9, $00, $03, $D2, $70, $4E, $B9, $00, $01, $EA, $C6, $41, $F9, $00, $03, $D2, $7A, $4E, $B9 
-	dc.b	$00, $01, $EA, $C6, $41, $F9, $00, $03, $D2, $88, $4E, $B9, $00, $01, $EA, $C6, $4E, $B9, $00, $00, $11, $EE, $42, $42, $14, $38, $C4, $08, $20, $3C, $45, $96 
-	dc.b	$00, $03, $22, $3C, $00, $00, $04, $DE, $08, $02, $00, $00, $61, $00, $00, $C6, $20, $3C, $48, $96, $00, $03, $22, $3C, $00, $00, $04, $DF, $08, $02, $00, $01 
-	dc.b	$61, $00, $00, $B2, $20, $3C, $47, $10, $00, $03, $22, $3C, $00, $00, $04, $DD, $08, $02, $00, $02, $61, $00, $00, $9E, $20, $3C, $47, $1C, $00, $03, $22, $3C 
-	dc.b	$00, $00, $04, $DC, $08, $02, $00, $03, $61, $00, $00, $8A, $20, $3C, $4B, $32, $00, $03, $08, $02, $00, $06, $61, $00, $00, $38, $20, $3C, $49, $B8, $00, $03 
-	dc.b	$08, $02, $00, $04, $61, $00, $00, $2A, $20, $3C, $48, $3E, $00, $03, $08, $02, $00, $05, $61, $00, $00, $1C, $20, $3C, $44, $3C, $00, $03, $08, $02, $00, $07 
-	dc.b	$61, $00, $00, $0E, $61, $00, $00, $72, $4A, $43, $67, $00, $FF, $64, $4E, $75, $66, $00, $00, $22, $23, $C0, $00, $C0, $00, $04, $33, $FC, $25, $0F, $00, $C0 
-	dc.b	$00, $00, $33, $FC, $25, $06, $00, $C0, $00, $00, $33, $FC, $25, $06, $00, $C0, $00, $00, $4E, $75, $23, $C0, $00, $C0, $00, $04, $33, $FC, $45, $0F, $00, $C0 
-	dc.b	$00, $00, $33, $FC, $45, $0E, $00, $C0, $00, $00, $33, $FC, $44, $C0, $00, $C0, $00, $00, $4E, $75, $66, $00, $00, $10, $23, $C0, $00, $C0, $00, $04, $33, $C1 
-	dc.b	$00, $C0, $00, $00, $4E, $75, $06, $41, $40, $00, $23, $C0, $00, $C0, $00, $04, $33, $C1, $00, $C0, $00, $00, $4E, $75, $42, $43, $08, $02, $00, $06, $67, $16 
-	dc.b	$08, $02, $00, $04, $67, $10, $08, $02, $00, $05, $67, $0A, $08, $02, $00, $07, $67, $04, $36, $3C, $00, $01, $4E, $75, $4E, $B9, $00, $01, $05, $22, $4E, $B9 
-	dc.b	$00, $00, $06, $82, $4E, $B9, $00, $00, $10, $D8, $4E, $B9, $00, $00, $06, $6E, $2A, $3C, $44, $04, $00, $03, $21, $C5, $C3, $46, $42, $78, $C3, $44, $42, $78 
-	dc.b	$C3, $42, $4E, $B9, $00, $00, $03, $96, $41, $F9, $00, $03, $D2, $9A, $4E, $B9, $00, $01, $EA, $C6, $41, $F9, $00, $03, $D2, $AA, $4E, $B9, $00, $01, $EA, $C6 
-	dc.b	$41, $F9, $00, $03, $D2, $BC, $4E, $B9, $00, $01, $EA, $C6, $41, $F9, $00, $03, $D2, $CE, $4E, $B9, $00, $01, $EA, $C6, $41, $F9, $00, $03, $D1, $F8, $4E, $B9 
-	dc.b	$00, $01, $EA, $C6, $41, $F9, $00, $03, $D2, $04, $4E, $B9, $00, $01, $EA, $C6, $4E, $B9, $00, $00, $10, $DC, $10, $3C, $00, $00, $4E, $B9, $00, $01, $05, $22 
-	dc.b	$61, $00, $05, $FA, $34, $3C, $00, $06, $4E, $B9, $00, $00, $12, $F2, $67, $E0, $30, $38, $C3, $44, $0C, $40, $00, $04, $6C, $00, $00, $0E, $31, $C0, $C3, $58 
-	dc.b	$61, $00, $00, $08, $60, $00, $FF, $52, $4E, $75, $4E, $B9, $00, $00, $10, $D8, $11, $FC, $00, $01, $C3, $41, $2A, $3C, $42, $04, $00, $03, $21, $C5, $C3, $46 
-	dc.b	$42, $78, $C3, $4A, $42, $78, $C3, $42, $4E, $B9, $00, $00, $03, $96, $30, $38, $C3, $58, $D0, $40, $D0, $40, $4E, $BB, $00, $4A, $4E, $B9, $00, $00, $10, $DC 
-	dc.b	$61, $00, $05, $9A, $34, $3C, $00, $06, $4E, $B9, $00, $00, $12, $F2, $67, $EA, $32, $38, $C3, $4A, $0C, $41, $00, $13, $6C, $00, $00, $22, $41, $F9, $00, $03 
-	dc.b	$D8, $80, $30, $38, $C3, $58, $D0, $40, $D0, $40, $22, $70, $00, $00, $D2, $41, $30, $31, $10, $00, $4E, $B9, $00, $01, $05, $22, $60, $BE, $42, $38, $C3, $41 
-	dc.b	$4E, $75, $60, $00, $00, $0E, $60, $00, $01, $14, $60, $00, $02, $1A, $60, $00, $03, $20, $41, $F9, $00, $03, $D2, $DE, $4E, $B9, $00, $01, $EA, $C6, $41, $F9 
-	dc.b	$00, $03, $D2, $F0, $4E, $B9, $00, $01, $EA, $C6, $41, $F9, $00, $03, $D3, $00, $4E, $B9, $00, $01, $EA, $C6, $41, $F9, $00, $03, $D3, $14, $4E, $B9, $00, $01 
-	dc.b	$EA, $C6, $41, $F9, $00, $03, $D3, $24, $4E, $B9, $00, $01, $EA, $C6, $41, $F9, $00, $03, $D3, $34, $4E, $B9, $00, $01, $EA, $C6, $41, $F9, $00, $03, $D3, $48 
-	dc.b	$4E, $B9, $00, $01, $EA, $C6, $41, $F9, $00, $03, $D3, $5A, $4E, $B9, $00, $01, $EA, $C6, $41, $F9, $00, $03, $D3, $70, $4E, $B9, $00, $01, $EA, $C6, $41, $F9 
-	dc.b	$00, $03, $D3, $88, $4E, $B9, $00, $01, $EA, $C6, $41, $F9, $00, $03, $D3, $9A, $4E, $B9, $00, $01, $EA, $C6, $41, $F9, $00, $03, $D3, $AC, $4E, $B9, $00, $01 
-	dc.b	$EA, $C6, $41, $F9, $00, $03, $D3, $C0, $4E, $B9, $00, $01, $EA, $C6, $41, $F9, $00, $03, $D3, $D2, $4E, $B9, $00, $01, $EA, $C6, $41, $F9, $00, $03, $D3, $E4 
-	dc.b	$4E, $B9, $00, $01, $EA, $C6, $41, $F9, $00, $03, $D3, $F6, $4E, $B9, $00, $01, $EA, $C6, $41, $F9, $00, $03, $D4, $08, $4E, $B9, $00, $01, $EA, $C6, $41, $F9 
-	dc.b	$00, $03, $D4, $1A, $4E, $B9, $00, $01, $EA, $C6, $41, $F9, $00, $03, $D4, $30, $4E, $B9, $00, $01, $EA, $C6, $41, $F9, $00, $03, $D4, $46, $4E, $B9, $00, $01 
-	dc.b	$EA, $C6, $41, $F9, $00, $03, $D4, $56, $4E, $B9, $00, $01, $EA, $C6, $41, $F9, $00, $03, $D2, $04, $4E, $B9, $00, $01, $EA, $C6, $4E, $75, $41, $F9, $00, $03 
-	dc.b	$D4, $68, $4E, $B9, $00, $01, $EA, $C6, $41, $F9, $00, $03, $D4, $7E, $4E, $B9, $00, $01, $EA, $C6, $41, $F9, $00, $03, $D4, $94, $4E, $B9, $00, $01, $EA, $C6 
-	dc.b	$41, $F9, $00, $03, $D4, $AC, $4E, $B9, $00, $01, $EA, $C6, $41, $F9, $00, $03, $D4, $C4, $4E, $B9, $00, $01, $EA, $C6, $41, $F9, $00, $03, $D4, $D6, $4E, $B9 
-	dc.b	$00, $01, $EA, $C6, $41, $F9, $00, $03, $D4, $EA, $4E, $B9, $00, $01, $EA, $C6, $41, $F9, $00, $03, $D4, $F8, $4E, $B9, $00, $01, $EA, $C6, $41, $F9, $00, $03 
-	dc.b	$D5, $06, $4E, $B9, $00, $01, $EA, $C6, $41, $F9, $00, $03, $D5, $1C, $4E, $B9, $00, $01, $EA, $C6, $41, $F9, $00, $03, $D5, $30, $4E, $B9, $00, $01, $EA, $C6 
-	dc.b	$41, $F9, $00, $03, $D5, $46, $4E, $B9, $00, $01, $EA, $C6, $41, $F9, $00, $03, $D5, $56, $4E, $B9, $00, $01, $EA, $C6, $41, $F9, $00, $03, $D5, $68, $4E, $B9 
-	dc.b	$00, $01, $EA, $C6, $41, $F9, $00, $03, $D5, $78, $4E, $B9, $00, $01, $EA, $C6, $41, $F9, $00, $03, $D5, $8A, $4E, $B9, $00, $01, $EA, $C6, $41, $F9, $00, $03 
-	dc.b	$D5, $9C, $4E, $B9, $00, $01, $EA, $C6, $41, $F9, $00, $03, $D5, $B0, $4E, $B9, $00, $01, $EA, $C6, $41, $F9, $00, $03, $D5, $C2, $4E, $B9, $00, $01, $EA, $C6 
-	dc.b	$41, $F9, $00, $03, $D4, $46, $4E, $B9, $00, $01, $EA, $C6, $41, $F9, $00, $03, $D4, $56, $4E, $B9, $00, $01, $EA, $C6, $41, $F9, $00, $03, $D2, $04, $4E, $B9 
-	dc.b	$00, $01, $EA, $C6, $4E, $75, $41, $F9, $00, $03, $D5, $D2, $4E, $B9, $00, $01, $EA, $C6, $41, $F9, $00, $03, $D5, $E8, $4E, $B9, $00, $01, $EA, $C6, $41, $F9 
-	dc.b	$00, $03, $D5, $F6, $4E, $B9, $00, $01, $EA, $C6, $41, $F9, $00, $03, $D6, $08, $4E, $B9, $00, $01, $EA, $C6, $41, $F9, $00, $03, $D6, $16, $4E, $B9, $00, $01 
-	dc.b	$EA, $C6, $41, $F9, $00, $03, $D6, $28, $4E, $B9, $00, $01, $EA, $C6, $41, $F9, $00, $03, $D6, $3C, $4E, $B9, $00, $01, $EA, $C6, $41, $F9, $00, $03, $D6, $52 
-	dc.b	$4E, $B9, $00, $01, $EA, $C6, $41, $F9, $00, $03, $D6, $66, $4E, $B9, $00, $01, $EA, $C6, $41, $F9, $00, $03, $D6, $76, $4E, $B9, $00, $01, $EA, $C6, $41, $F9 
-	dc.b	$00, $03, $D6, $8A, $4E, $B9, $00, $01, $EA, $C6, $41, $F9, $00, $03, $D6, $A0, $4E, $B9, $00, $01, $EA, $C6, $41, $F9, $00, $03, $D6, $B4, $4E, $B9, $00, $01 
-	dc.b	$EA, $C6, $41, $F9, $00, $03, $D6, $CA, $4E, $B9, $00, $01, $EA, $C6, $41, $F9, $00, $03, $D6, $DE, $4E, $B9, $00, $01, $EA, $C6, $41, $F9, $00, $03, $D6, $EA 
-	dc.b	$4E, $B9, $00, $01, $EA, $C6, $41, $F9, $00, $03, $D6, $F6, $4E, $B9, $00, $01, $EA, $C6, $41, $F9, $00, $03, $D7, $02, $4E, $B9, $00, $01, $EA, $C6, $41, $F9 
-	dc.b	$00, $03, $D7, $0E, $4E, $B9, $00, $01, $EA, $C6, $41, $F9, $00, $03, $D4, $46, $4E, $B9, $00, $01, $EA, $C6, $41, $F9, $00, $03, $D4, $56, $4E, $B9, $00, $01 
-	dc.b	$EA, $C6, $41, $F9, $00, $03, $D2, $04, $4E, $B9, $00, $01, $EA, $C6, $4E, $75, $41, $F9, $00, $03, $D7, $1A, $4E, $B9, $00, $01, $EA, $C6, $41, $F9, $00, $03 
-	dc.b	$D7, $30, $4E, $B9, $00, $01, $EA, $C6, $41, $F9, $00, $03, $D7, $44, $4E, $B9, $00, $01, $EA, $C6, $41, $F9, $00, $03, $D7, $5A, $4E, $B9, $00, $01, $EA, $C6 
-	dc.b	$41, $F9, $00, $03, $D7, $6E, $4E, $B9, $00, $01, $EA, $C6, $41, $F9, $00, $03, $D7, $86, $4E, $B9, $00, $01, $EA, $C6, $41, $F9, $00, $03, $D7, $9C, $4E, $B9 
-	dc.b	$00, $01, $EA, $C6, $41, $F9, $00, $03, $D7, $AE, $4E, $B9, $00, $01, $EA, $C6, $41, $F9, $00, $03, $D7, $C0, $4E, $B9, $00, $01, $EA, $C6, $41, $F9, $00, $03 
-	dc.b	$D7, $D2, $4E, $B9, $00, $01, $EA, $C6, $41, $F9, $00, $03, $D7, $E4, $4E, $B9, $00, $01, $EA, $C6, $41, $F9, $00, $03, $D7, $F0, $4E, $B9, $00, $01, $EA, $C6 
-	dc.b	$41, $F9, $00, $03, $D7, $FC, $4E, $B9, $00, $01, $EA, $C6, $41, $F9, $00, $03, $D8, $08, $4E, $B9, $00, $01, $EA, $C6, $41, $F9, $00, $03, $D8, $14, $4E, $B9 
-	dc.b	$00, $01, $EA, $C6, $41, $F9, $00, $03, $D8, $20, $4E, $B9, $00, $01, $EA, $C6, $41, $F9, $00, $03, $D8, $2C, $4E, $B9, $00, $01, $EA, $C6, $41, $F9, $00, $03 
-	dc.b	$D8, $38, $4E, $B9, $00, $01, $EA, $C6, $41, $F9, $00, $03, $D8, $44, $4E, $B9, $00, $01, $EA, $C6, $41, $F9, $00, $03, $D4, $46, $4E, $B9, $00, $01, $EA, $C6 
-	dc.b	$41, $F9, $00, $03, $D4, $56, $4E, $B9, $00, $01, $EA, $C6, $41, $F9, $00, $03, $D2, $04, $4E, $B9, $00, $01, $EA, $C6, $4E, $75, $4E, $B9, $00, $00, $10, $D8 
-	dc.b	$4E, $B9, $00, $00, $03, $96, $41, $F9, $00, $03, $D8, $50, $4E, $B9, $00, $01, $EA, $C6, $41, $F9, $00, $03, $D8, $62, $4E, $B9, $00, $01, $EA, $C6, $61, $00 
-	dc.b	$00, $3E, $31, $FC, $00, $55, $C0, $80, $31, $FC, $00, $56, $C0, $82, $31, $FC, $00, $57, $C0, $84, $31, $FC, $00, $58, $C0, $86, $4E, $B9, $00, $01, $32, $5E 
-	dc.b	$61, $00, $00, $50, $61, $00, $00, $5C, $61, $00, $00, $68, $61, $00, $00, $74, $34, $3C, $00, $05, $4E, $B9, $00, $00, $12, $F2, $67, $F4, $4E, $75, $42, $40 
-	dc.b	$30, $3C, $11, $11, $00, $7C, $07, $00, $23, $FC, $4F, $40, $00, $01, $00, $C0, $00, $04, $34, $3C, $00, $07, $32, $3C, $00, $0F, $33, $C0, $00, $C0, $00, $00 
-	dc.b	$51, $C9, $FF, $F8, $06, $40, $11, $11, $51, $CA, $FF, $EC, $02, $7C, $F8, $FF, $4E, $75, $2A, $3C, $63, $10, $00, $03, $38, $3C, $82, $7A, $61, $00, $00, $34 
-	dc.b	$4E, $75, $2A, $3C, $65, $10, $00, $03, $38, $3C, $A2, $7A, $61, $00, $00, $24, $4E, $75, $2A, $3C, $67, $10, $00, $03, $38, $3C, $C2, $7A, $61, $00, $00, $14 
-	dc.b	$4E, $75, $2A, $3C, $69, $10, $00, $03, $38, $3C, $E2, $7A, $61, $00, $00, $04, $4E, $75, $00, $7C, $07, $00, $36, $3C, $00, $02, $23, $C5, $00, $C0, $00, $04 
-	dc.b	$30, $04, $34, $3C, $00, $07, $32, $3C, $00, $02, $33, $C0, $00, $C0, $00, $00, $51, $C9, $FF, $F8, $52, $40, $51, $CA, $FF, $EE, $06, $85, $00, $80, $00, $00 
-	dc.b	$51, $CB, $FF, $D8, $02, $7C, $F8, $FF, $4E, $75, $4E, $75, $4E, $B9, $00, $00, $10, $DC, $42, $38, $C3, $40, $4E, $F9, $00, $00, $0F, $2C, $2A, $38, $C3, $46 
-	dc.b	$70, $00, $08, $38, $00, $00, $C4, $09, $67, $04, $70, $FF, $60, $0A, $08, $38, $00, $01, $C4, $09, $67, $02, $70, $01, $D1, $78, $C3, $42, $32, $38, $C3, $42 
-	dc.b	$0C, $41, $00, $08, $6E, $00, $00, $1E, $0C, $41, $FF, $F8, $6D, $00, $00, $C2, $23, $C5, $00, $C0, $00, $04, $33, $FC, $04, $DC, $00, $C0, $00, $00, $21, $C5 
-	dc.b	$C3, $46, $4E, $75, $4A, $38, $C3, $41, $66, $00, $00, $54, $23, $C5, $00, $C0, $00, $04, $33, $FC, $00, $00, $00, $C0, $00, $00, $51, $78, $C3, $42, $06, $85 
-	dc.b	$01, $00, $00, $00, $52, $78, $C3, $44, $0C, $78, $00, $04, $C3, $44, $66, $08, $2A, $3C, $4A, $04, $00, $03, $60, $12, $0C, $78, $00, $04, $C3, $44, $65, $0A 
-	dc.b	$2A, $3C, $44, $04, $00, $03, $42, $78, $C3, $44, $23, $C5, $00, $C0, $00, $04, $33, $FC, $04, $DC, $00, $C0, $00, $00, $21, $C5, $C3, $46, $4E, $75, $23, $C5 
-	dc.b	$00, $C0, $00, $04, $33, $FC, $00, $00, $00, $C0, $00, $00, $51, $78, $C3, $42, $06, $85, $01, $00, $00, $00, $52, $78, $C3, $4A, $0C, $78, $00, $14, $C3, $4A 
-	dc.b	$65, $0C, $2A, $3C, $42, $04, $00, $03, $42, $78, $C3, $4A, $60, $0E, $0C, $78, $00, $0A, $C3, $4A, $66, $06, $2A, $3C, $42, $2C, $00, $03, $23, $C5, $00, $C0 
-	dc.b	$00, $04, $33, $FC, $04, $DC, $00, $C0, $00, $00, $21, $C5, $C3, $46, $4E, $75, $4A, $38, $C3, $41, $66, $00, $00, $50, $23, $C5, $00, $C0, $00, $04, $33, $FC 
-	dc.b	$00, $00, $00, $C0, $00, $00, $50, $78, $C3, $42, $04, $85, $01, $00, $00, $00, $53, $78, $C3, $44, $64, $0E, $2A, $3C, $4A, $04, $00, $03, $31, $FC, $00, $04 
-	dc.b	$C3, $44, $60, $0E, $0C, $78, $00, $03, $C3, $44, $66, $06, $2A, $3C, $47, $04, $00, $03, $23, $C5, $00, $C0, $00, $04, $33, $FC, $04, $DC, $00, $C0, $00, $00 
-	dc.b	$21, $C5, $C3, $46, $4E, $75, $23, $C5, $00, $C0, $00, $04, $33, $FC, $00, $00, $00, $C0, $00, $00, $50, $78, $C3, $42, $04, $85, $01, $00, $00, $00, $53, $78 
-	dc.b	$C3, $4A, $64, $0E, $2A, $3C, $4B, $2C, $00, $03, $31, $FC, $00, $13, $C3, $4A, $60, $0E, $0C, $78, $00, $09, $C3, $4A, $66, $06, $2A, $3C, $4B, $04, $00, $03 
-	dc.b	$23, $C5, $00, $C0, $00, $04, $33, $FC, $04, $DC, $00, $C0, $00, $00, $21, $C5, $C3, $46, $4E, $75, $44, $08, $00, $03, $00, $0B, $84, $C0
-	
-	dc.b	"INPUT   TESTE"
-	dc.b	$08, $00, $03, $00, $0B, $84, $C0
-	dc.b	"SOUND   TESTF"
-	dc.b	$08, $00, $03, $00, $0B, $84, $C0
-	dc.b	"C.R.T.  TESTJ"
-	dc.b	$08, $00, $03, $00, $03, $84, $C0
-	dc.b	"EXITM"
-	dc.b	$06, $00, $03, $00, $1E, $84, $C0
-	dc.b	"SELECT BY STICK! PUSH A BUTTON!"
-	dc.b	$00, $44, $16, $00, $03, $00, $01, $84, $C0
-	dc.b	"UPJ"
-	dc.b	$14, $00, $03, $00, $03, $84, $C0
-	dc.b	"DOWNG"
-	dc.b	$06, $00, $03, $00, $03, $84, $C0
-	dc.b	"LEFTG "
-	dc.b	$00, $03, $00, $04, $84, $C0
-	dc.b	"RIGHT", $00, "K."
-	dc.b	$00, $03, $00, $00, $84, $C0
-	dc.b	"A", $00, "I", $B4 
-	dc.b	$00, $03, $00, $00, $84, $C0
-	dc.b	"B", $00, "H:"
-	dc.b	$00, $03, $00, $00, $84, $C0
-	dc.b	"C", $00, "D0"
-	dc.b	$00, $03, $00, $04, $84, $C0
-	dc.b	"START"
-	dc.b	$00, $40, $9C, $00
-	dc.b	$03, $00, $09, $A4, $C0
-	dc.b	"INPUT TESTD", $08
-	dc.b	$00, $03, $00, $06, $84, $C0
-	dc.b	"1.  BG"
-	dc.b	"M", $00, "E", $08
-	dc.b	$00, $03, $00, $09, $84, $C0
-	dc.b	"2.  EFFECTF", $08
-	dc.b	$00, $03, $00, $08, $84, $C0
-	dc.b	"3.  BGM 2", $00, "G", $08
-	dc.b	$00, $03, $00, $06, $84, $C0
-	dc.b	"4.  D/A", $00, "B", $0A
-	dc.b	$00, $03, $00, $08, $84, $C0
-	dc.b	"1.OPENING", $00, "C", $0A
-	dc.b	$00, $03, $00, $06, $84, $C0
-	dc.b	"2.TITLE", $00, "D", $0A
-	dc.b	$00, $03, $00, $0B, $84, $C0 
-	dc.b	"3.NAME ENTRYE", $0A
-	dc.b	$00, $03, $00, $07, $84, $C0
-	dc.b	"4.STATTSF", $0A
-	dc.b	$00, $03, $00, $06, $84, $C0
-	dc.b	"5.ERIAS", $00, "G", $0A
-	dc.b	$00, $03, $00, $0A, $84, $C0
-	dc.b	"6.VILLAGE A", $00, "H", $0A
-	dc.b	$00, $03, $00, $08, $84, $C0
-	dc.b	"7.FUYODOL", $00, "I", $0A
-	dc.b	$00, $03, $00, $0C, $84, $C0
-	dc.b	"8.SHOP (CITY)", $00, "J", $0A
-	dc.b	$00, $03, $00, $0F, $84, $C0
-	dc.b	"9.SHOP (VILLAGE)K", $08
-	dc.b	$00, $03, $00, $08, $84, $C0
-	dc.b	"10.CHURCH", $00, "B0"
-	dc.b	$00, $03, $00, $09, $84, $C0
-	dc.b	"11.DUNGEONC0"
-	dc.b	$00, $03, $00, $0B, $84, $C0
-	dc.b	"12.DUNGEON 2D0"
-	dc.b	$00, $03, $00, $08, $84, $C0 
-	dc.b	"13.BOSS A", $00, "E0"
-	dc.b	$00, $03, $00, $08, $84, $C0
-	dc.b	"14.BOSS B", $00, "F0"
-	dc.b	$00, $03, $00, $09, $84, $C0
-	dc.b	"15.3D MODEG0"
-	dc.b	$00, $03, $00, $08, $84, $C0
-	dc.b	"16.BATTLE", $00, "H", $30
-	dc.b	$00, $03, $00, $08, $84, $C0
-	dc.b	"17.CASTLE", $00, "I0"
-	dc.b	$00, $03, $00, $0D, $84, $C0
-	dc.b	"18.PLAYER DEADJ0"
-	dc.b	$00, $03, $00, $0C, $84, $C0
-	dc.b	"19.JIJI THEME", $00, "K0"
-	dc.b	$00, $03, $00, $07, $84, $C0
-	dc.b	"20. EXITA", $1C
-	dc.b	$00, $03, $00, $09, $A4, $C0
-	dc.b	"SOUND TESTB", $0A
-	dc.b	$00, $03, $00, $0C, $84, $C0
-	dc.b	"1.WINDOW OPEN", $00, "C", $0A
-	dc.b	$00, $03, $00, $0C, $84, $C0
-	dc.b	"2.COMMAND SET", $00, "D", $0A
-	dc.b	$00, $03, $00, $0F, $84, $C0
-	dc.b	"3.COMMAND CANCELE", $0A
-	dc.b	$00, $03, $00, $0F, $84, $C0
-	dc.b	"4.COMMAND SELECTF", $0A
-	dc.b	$00, $03, $00, $08, $84, $C0
-	dc.b	"5.TALKING", $00, "G", $0A
-	dc.b	$00, $03, $00, $0B, $84, $C0
-	dc.b	"6.INTO HOUSEH", $0A
-	dc.b	$00, $03, $00, $05, $84, $C0
-	dc.b	"7.RINGI", $0A
-	dc.b	$00, $03, $00, $05, $84, $C0
-	dc.b	"8.STARJ", $0A 
-	dc.b	$00, $03, $00, $0D, $84, $C0
-	dc.b	"9.GET THE ITEMK", $08
-	dc.b	$00, $03, $00, $0A, $84, $C0
-	dc.b	"10.OPEN BOX", $00, $42, $30
-	dc.b	$00, $03, $00, $0C, $84, $C0
-	dc.b	"11.DOOR KNOCK", $00, $43, $30 
-	dc.b	$00, $03, $00, $07, $84, $C0
-	dc.b	"12.LIGHTD0"
-	dc.b	$00, $03, $00, $09, $84, $C0
-	dc.b	"13.RECOVERE0"
-	dc.b	$00, $03, $00, $07, $84, $C0
-	dc.b	"14.WATERF0"
-	dc.b	$00, $03, $00, $08, $84, $C0
-	dc.b	"15.FIRE 2", $00, "G0"
-	dc.b	$00, $03, $00, $08, $84, $C0
-	dc.b	"16.FIRE 3", $00, "H0"
-	dc.b	$00, $03, $00, $0A, $84, $C0
-	dc.b	"17.ELECTRIC", $00, "I0"
-	dc.b	$00, $03, $00, $08, $84, $C0
-	dc.b	"18.BOMBER", $00, "J0"
-	dc.b	$00, $03, $00, $07, $84, $C0
-	dc.b	"19.CLOCKB", $0A
-	dc.b	$00, $03, $00, $0D, $84, $C0
-	dc.b	"1.ENEMY APPEARC", $0A
-	dc.b	$00, $03, $00, $05, $84, $C0
-	dc.b	"2.RESTD", $0A
-	dc.b	$00, $03, $00, $09, $84, $C0
-	dc.b	"3.LEVEL UPE", $0A
-	dc.b	$00, $03, $00, $05, $84, $C0
-	dc.b	"4.WARPF", $0A
-	dc.b	$00, $03, $00, $09, $84, $C0
-	dc.b	"5.SET FLAGG", $0A
-	dc.b	$00, $03, $00, $0B, $84, $C0
-	dc.b	"6.ENEMY MELTH", $0A
-	dc.b	$00, $03, $00, $0D, $84, $C0
-	dc.b	"7.ENEMY DELETEI", $0A
-	dc.b	$00, $03, $00, $0B, $84, $C0
-	dc.b	"8.EARTHQUAKEJ", $0A 
-	dc.b	$00, $03, $00, $07, $84, $C0
-	dc.b	"9.ENDINGK", $08
-	dc.b	$00, $03, $00, $0B, $84, $C0
-	dc.b	"10.LAST CITYB0"
-	dc.b	$00, $03, $00, $0C, $84, $C0
-	dc.b	"11.LIGHT SONG", $00, "C0"
-	dc.b	$00, $03, $00, $0B, $84, $C0 
-	dc.b	"12.DOOR OPEND0"
-	dc.b	$00, $03, $00, $0C, $84, $C0
-	dc.b	"13.DOOR CLOSE", $00, "E0"
-	dc.b	$00, $03, $00, $0A, $84, $C0
-	dc.b	"14.ENDING 2", $00, "F0"
-	dc.b	$00, $03, $00, $02, $84, $C0
-	dc.b	"15.", $00, "G0"
-	dc.b	$00, $03, $00, $02, $84, $C0
-	dc.b	"16.", $00, "H0"
-	dc.b	$00, $03, $00, $02, $84, $C0
-	dc.b	"17.", $00, "I0"
-	dc.b	$00, $03, $00, $02, $84, $C0
-	dc.b	"18.", $00, "J0"
-	dc.b	$00, $03, $00, $02, $84, $C0
-	dc.b	"19.", $00, "B", $0A
-	dc.b	$00, $03, $00, $0C, $84, $C0
-	dc.b	"1.THUNDER LOW", $00, $43, $0A
-	dc.b	$00, $03, $00, $0B, $84, $C0
-	dc.b	"2.THUNDER HID", $0A
-	dc.b	$00, $03, $00, $0D, $84, $C0
-	dc.b	"3.ENEMY DAMAGEE", $0A
-	dc.b	$00, $03, $00, $0B, $84, $C0
-	dc.b	"4.ENEMY DEADF", $0A
-	dc.b	$00, $03, $00, $0E, $84, $C0
-	dc.b	"5.PLAYER DAMAGE", $00, "G", $0A 
-	dc.b	$00, $03, $00, $0C, $84, $C0
-	dc.b	"6.PLAYER DEAD", $00, "H", $0A
-	dc.b	$00, $03, $00, $08, $84, $C0
-	dc.b	"7.SWORD 1", $00, "I", $0A
-	dc.b	$00, $03, $00, $08, $84, $C0
-	dc.b	"8.SWORD 2", $00, "J", $0A
-	dc.b	$00, $03, $00, $08, $84, $C0 
-	dc.b	"9.SWORD 3", $00, "K", $08
-	dc.b	$00, $03, $00, $09, $84, $C0
-	dc.b	"10.SWORD 4B0"
-	dc.b	$00, $03, $00, $02, $84, $C0
-	dc.b	"11.", $00, "C0"
-	dc.b	$00, $03, $00, $02, $84, $C0
-	dc.b	"12.", $00, "D0"
-	dc.b	$00, $03, $00, $02, $84, $C0
-	dc.b	"13.", $00, "E0"
-	dc.b	$00, $03, $00, $02, $84, $C0
-	dc.b	"14.", $00, "F0"
-	dc.b	$00, $03, $00, $02, $84, $C0
-	dc.b	"15.", $00, "G0"
-	dc.b	$00, $03, $00, $02, $84, $C0 
-	dc.b	"16.", $00, "H0"
-	dc.b	$00, $03, $00, $02, $84, $C0
-	dc.b	"17.", $00, "I0"
-	dc.b	$00, $03, $00, $02, $84, $C0
-	dc.b	"18.", $00, "J0"
-	dc.b	$00, $03, $00, $02, $84, $C0
-	dc.b	"19.", $00, "A", $1C
-	dc.b	$00, $03, $00, $09, $C4, $C0
-	dc.b	"CRT   TESTM", $14
-	dc.b	$00, $03, $00, $14, $A4, $C0
-	dc.b	"EXIT...PUSH C BUTTON!"
-	dc.b	$00, $00, $03, $D8, $90, $00, $03, $D8, $B8, $00, $03, $D8, $E0
-	dc.b	$00, $03, $D9, $08, $00, $81, $00, $82, $00, $8D, $00, $87, $00, $8F, $00, $8B, $00, $83, $00, $8C, $00, $95, $00, $91, $00, $8A, $00, $98 
-	dc.b	$00, $88, $00, $93, $00, $8E, $00, $92, $00, $96, $00, $94, $00, $97, $00, $00, $00, $A0, $00, $A1, $00, $A8, $00, $A9, $00, $A2, $00, $A3, $00, $A4, $00, $A5 
-	dc.b	$00, $A6, $00, $A7, $00, $AA, $00, $AD, $00, $AE, $00, $BA, $00, $BC, $00, $BD, $00, $BE, $00, $BF, $00, $C1, $00, $00, $00, $84, $00, $85, $00, $86, $00, $89 
-	dc.b	$00, $90, $00, $AB, $00, $AC, $00, $AF, $00, $99, $00, $9A, $00, $9B, $00, $BB, $00, $B3, $00, $9C, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 
-	dc.b	$00, $B0, $00, $B7, $00, $B1, $00, $C0, $00, $B2, $00, $B9, $00, $B4, $00, $B5, $00, $B6, $00, $B8, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 
-	dc.b	$00, $00, $00, $00, $00, $00, $00, $00 
+
+; ---------------------------------------------------------------------------
+; DebugTestMenu — factory debug/test menu dispatcher ($3C6E8)
+;
+; Called via JSR from game init (MOVE.l #DebugTestMenu, $42(A7) at $11DE).
+; Presents a scrolling menu: INPUT TEST / SOUND TEST / C.R.T. TEST / EXIT.
+; Never returns normally — exits by JMP EntryPoint.
+;
+; Register usage (throughout this section):
+;   D5.l  current VDP HScroll write-address register value
+;   D2.w  button mask for CheckButtonPress
+;   D3.w  exit flag (non-zero = leave input-test loop)
+;   A0    pointer to BossParallaxEntry_Start parameter record
+; ---------------------------------------------------------------------------
+
+; loc_003C6E8
+DebugTestMenu:
+	TST.b	Fade_out_lines_mask.w           ; wait for any pending fade to clear
+	BNE.b	DebugTestMenu                   ; loop until zero
+	MOVE.b	#$00, D0
+	JSR	QueueSoundEffect                ; silence music
+	JSR	DisableVDPDisplay
+	JSR	loc_000010D8                    ; CLR Vblank_flag + WaitForVBlank
+	MOVE.w	VDP_Reg11_cache.w, D0           ; read cached VDP register 11 (HScroll mode)
+	ANDI.w	#$FFF8, D0                      ; mask off HScroll mode bits
+	MOVE.w	D0, VDP_control_port            ; write back (set full-screen HScroll)
+	MOVE.w	#$0000, $FFFFC104.w             ; HScroll_base = 0
+	MOVE.w	#$0000, $FFFFC106.w             ; VScroll_base = 0
+	MOVE.w	#$004F, Palette_line_0_index.w  ; palette slot 0 → index $4F
+	MOVE.w	#$0053, Palette_line_1_index.w  ; palette slot 1 → index $53
+	MOVE.w	#$0054, Palette_line_2_index.w  ; palette slot 2 → index $54
+	MOVE.w	#$0001, Palette_line_3_index.w  ; palette slot 3 → index $01
+	JSR	LoadPalettesFromTable
+	JSR	EnableDisplay
+	MOVE.l	#$44040003, D5                  ; VDP write addr for first menu tile row
+	MOVE.l	D5, DebugMenu_vdp_cursor.w
+	CLR.w	DebugMenu_selected_item.w
+	CLR.w	DebugMenu_scroll_pos.w
+	JSR	loc_00000396                    ; clear VRAM HScroll/PlaneA/PlaneB/sprites/VSRAM
+	LEA	loc_0003D1BC, A0                ; parallax row 0 config
+	JSR	BossParallaxEntry_Start
+	LEA	loc_0003D1D0, A0                ; parallax row 1 config
+	JSR	BossParallaxEntry_Start
+	LEA	loc_0003D1E4, A0                ; parallax row 2 config
+	JSR	BossParallaxEntry_Start
+	LEA	loc_0003D1F8, A0                ; parallax row 3 config
+	JSR	BossParallaxEntry_Start
+	LEA	loc_0003D204, A0                ; parallax row 4 config (shared footer)
+	JSR	BossParallaxEntry_Start
+DebugTestMenu_WaitLoop:
+	JSR	WaitForVBlank
+	MOVE.b	#$00, D0
+	JSR	QueueSoundEffect                ; keep music silent each frame
+	BSR.w	DebugMenu_ScrollTick            ; update scroll + advance menu cursor
+	MOVE.w	#$0006, D2                      ; check A or B button
+	JSR	CheckButtonPress
+	BEQ.b	DebugTestMenu_WaitLoop          ; no button → keep waiting
+	MOVE.w	DebugMenu_selected_item.w, D0
+	CMPI.w	#$0004, D0                      ; past last item?
+	BGT.w	DebugTestMenu_Exit              ; yes → exit to game
+	BRA.w	DebugTestMenu_Dispatch
+	BRA.b	DebugTestMenu_WaitLoop          ; (unreachable — branch over jump table)
+DebugTestMenu_Dispatch:
+	ADD.w	D0, D0                          ; index × 4 (each entry is a BRA.w = 4 bytes)
+	ADD.w	D0, D0
+	JSR	DebugMainMenu_JumpTable(PC,D0.w)
+	; --- jump table base at $3C7D4 (D0=0 → INPUT TEST) ---
+	BRA.w	DebugTestMenu                   ; $3C7D0  D0=-1 (unreachable guard)
+DebugMainMenu_JumpTable:
+	BRA.w	DebugInputTest                  ; $3C7D4  item 0
+	BRA.w	DebugSoundTest                  ; $3C7D8  item 1
+	BRA.w	DebugCRTTest                    ; $3C7DC  item 2
+	BRA.w	DebugTestMenu_NoOp              ; $3C7E0  item 3 (empty)
+	BRA.w	DebugTestMenu_Exit              ; $3C7E4  item 4 (EXIT)
+
+; ---------------------------------------------------------------------------
+; DebugInputTest — show controller button state ($3C7E8)
+; Draws 9 button indicators (Up/Down/Left/Right/A/B/C/Start + all-pressed)
+; and loops until A+B+C+Start are all held simultaneously.
+; ---------------------------------------------------------------------------
+DebugInputTest:
+	JSR	loc_000010D8                    ; CLR Vblank_flag + WaitForVBlank
+	MOVE.w	#$004F, Palette_line_0_index.w
+	MOVE.w	#$0053, Palette_line_1_index.w
+	MOVE.w	#$0054, Palette_line_2_index.w
+	JSR	LoadPalettesFromTable
+	JSR	loc_00000396                    ; clear VRAM
+	LEA	loc_0003D22C, A0
+	JSR	BossParallaxEntry_Start
+	LEA	loc_0003D236, A0
+	JSR	BossParallaxEntry_Start
+	LEA	loc_0003D242, A0
+	JSR	BossParallaxEntry_Start
+	LEA	loc_0003D24E, A0
+	JSR	BossParallaxEntry_Start
+	LEA	loc_0003D25C, A0
+	JSR	BossParallaxEntry_Start
+	LEA	loc_0003D266, A0
+	JSR	BossParallaxEntry_Start
+	LEA	loc_0003D270, A0
+	JSR	BossParallaxEntry_Start
+	LEA	loc_0003D27A, A0
+	JSR	BossParallaxEntry_Start
+	LEA	loc_0003D288, A0
+	JSR	BossParallaxEntry_Start
+DebugInputTest_Loop:
+	JSR	ReadControllers
+	CLR.w	D2
+	MOVE.b	Controller_current_state.w, D2 ; load current button bits into D2
+	; Directional buttons — draw tile using D0=VDP write addr, D1=tile index
+	MOVE.l	#$45960003, D0
+	MOVE.l	#$000004DE, D1              ; tile $04DE = "UP" indicator (released state)
+	BTST	#0, D2                      ; bit 0 = Up
+	BSR.w	DebugInput_DrawDirectionBtn
+	MOVE.l	#$48960003, D0
+	MOVE.l	#$000004DF, D1              ; tile $04DF = "DOWN" indicator
+	BTST	#1, D2                      ; bit 1 = Down
+	BSR.w	DebugInput_DrawDirectionBtn
+	MOVE.l	#$47100003, D0
+	MOVE.l	#$000004DD, D1              ; tile $04DD = "LEFT" indicator
+	BTST	#2, D2                      ; bit 2 = Left
+	BSR.w	DebugInput_DrawDirectionBtn
+	MOVE.l	#$471C0003, D0
+	MOVE.l	#$000004DC, D1              ; tile $04DC = "RIGHT" indicator
+	BTST	#3, D2                      ; bit 3 = Right
+	BSR.w	DebugInput_DrawDirectionBtn
+	; Action buttons — draw solid/hollow box tile (no tile index needed)
+	MOVE.l	#$4B320003, D0
+	BTST	#6, D2                      ; bit 6 = A
+	BSR.w	DebugInput_DrawActionBtn
+	MOVE.l	#$49B80003, D0
+	BTST	#4, D2                      ; bit 4 = B
+	BSR.w	DebugInput_DrawActionBtn
+	MOVE.l	#$483E0003, D0
+	BTST	#5, D2                      ; bit 5 = C
+	BSR.w	DebugInput_DrawActionBtn
+	MOVE.l	#$443C0003, D0
+	BTST	#7, D2                      ; bit 7 = Start
+	BSR.w	DebugInput_DrawActionBtn
+	BSR.w	DebugInput_CheckAllPressed  ; sets D3.w if A+B+C+Start all held
+	TST.w	D3
+	BEQ.w	DebugInputTest_Loop         ; not all pressed → keep reading
+	RTS                                 ; all pressed → return to main menu loop
+
+; DebugInput_DrawActionBtn — draw action-button tile (pressed or not) ($3C918)
+;   In:  D0.l = VDP write-address command, D2.w = buttons, Z flag = button state
+;   Side-effect: uses VDP_data_port to write 3 tile words
+DebugInput_DrawActionBtn:
+	BNE.w	DebugInput_DrawActionBtn_Pressed
+	MOVE.l	D0, VDP_control_port
+	MOVE.w	#$250F, VDP_data_port        ; tile $250F (released: hollow box top)
+	MOVE.w	#$2506, VDP_data_port        ; tile $2506 (released: hollow box mid)
+	MOVE.w	#$2506, VDP_data_port        ; tile $2506 (released: hollow box bot)
+	RTS
+DebugInput_DrawActionBtn_Pressed:
+	MOVE.l	D0, VDP_control_port
+	MOVE.w	#$450F, VDP_data_port        ; tile $450F (pressed: solid box top)
+	MOVE.w	#$450E, VDP_data_port        ; tile $450E (pressed: solid box mid)
+	MOVE.w	#$44C0, VDP_data_port        ; tile $44C0 (pressed: solid box bot)
+	RTS
+
+; DebugInput_DrawDirectionBtn — draw direction tile (Z=0: released, Z=1: pressed) ($3C95C)
+;   In:  D0.l = VDP write-address command, D1.w = tile index for released state
+DebugInput_DrawDirectionBtn:
+	BNE.w	DebugInput_DrawDirectionBtn_Pressed
+	MOVE.l	D0, VDP_control_port
+	MOVE.w	D1, VDP_data_port
+	RTS
+DebugInput_DrawDirectionBtn_Pressed:
+	ADDI.w	#$4000, D1                   ; flip palette bit (pressed highlight)
+	MOVE.l	D0, VDP_control_port
+	MOVE.w	D1, VDP_data_port
+	RTS
+
+; DebugInput_CheckAllPressed — set D3.w=1 if A+B+C+Start all held ($3C980)
+DebugInput_CheckAllPressed:
+	CLR.w	D3
+	BTST	#6, D2                       ; A
+	BEQ.b	DebugInput_CheckAllPressed_Done
+	BTST	#4, D2                       ; B
+	BEQ.b	DebugInput_CheckAllPressed_Done
+	BTST	#5, D2                       ; C
+	BEQ.b	DebugInput_CheckAllPressed_Done
+	BTST	#7, D2                       ; Start
+	BEQ.b	DebugInput_CheckAllPressed_Done
+	MOVE.w	#$0001, D3
+DebugInput_CheckAllPressed_Done:
+	RTS
+
+; ---------------------------------------------------------------------------
+; DebugSoundTest — sound-test menu ($3C9A0)
+; Presents a scrollable list of BGM/effect entries for all sound categories.
+; Pressing a button plays the selected sound.  EXITS back to main menu on
+; reaching item ≥ $14 (20 entries per category).
+; ---------------------------------------------------------------------------
+DebugSoundTest:
+	JSR	QueueSoundEffect
+	JSR	DisableVDPDisplay
+	JSR	loc_000010D8                    ; CLR Vblank_flag + WaitForVBlank
+	JSR	EnableDisplay
+	MOVE.l	#$44040003, D5
+	MOVE.l	D5, DebugMenu_vdp_cursor.w
+	CLR.w	DebugMenu_selected_item.w
+	CLR.w	DebugMenu_scroll_pos.w
+	JSR	loc_00000396                    ; clear VRAM
+	LEA	loc_0003D29A, A0
+	JSR	BossParallaxEntry_Start
+	LEA	loc_0003D2AA, A0
+	JSR	BossParallaxEntry_Start
+	LEA	loc_0003D2BC, A0
+	JSR	BossParallaxEntry_Start
+	LEA	loc_0003D2CE, A0
+	JSR	BossParallaxEntry_Start
+	LEA	loc_0003D1F8, A0                ; shared footer row
+	JSR	BossParallaxEntry_Start
+	LEA	loc_0003D204, A0                ; shared footer row
+	JSR	BossParallaxEntry_Start
+DebugSoundTest_WaitLoop:
+	JSR	WaitForVBlank
+	MOVE.b	#$00, D0
+	JSR	QueueSoundEffect
+	BSR.w	DebugMenu_ScrollTick
+	MOVE.w	#$0006, D2
+	JSR	CheckButtonPress
+	BEQ.b	DebugSoundTest_WaitLoop
+	MOVE.w	DebugMenu_selected_item.w, D0
+	CMPI.w	#$0004, D0                      ; ≥4 → EXIT
+	BGE.w	DebugSoundTest_Return
+	MOVE.w	D0, DebugMenu_sound_category.w  ; save selected category (0-3)
+	BSR.w	DebugSoundCategory_Menu         ; open sub-menu for this category
+	BRA.w	DebugSoundTest
+DebugSoundTest_Return:
+	RTS
+
+; DebugSoundCategory_Menu — sub-menu that scrolls through entries for one category ($3CA52)
+;   In:  DebugMenu_sound_category.w = category index (0-3)
+DebugSoundCategory_Menu:
+	JSR	loc_000010D8                    ; CLR Vblank_flag + WaitForVBlank
+	MOVE.b	#$01, DebugMenu_in_submenu.w    ; flag: inside sub-menu
+	MOVE.l	#$42040003, D5
+	MOVE.l	D5, DebugMenu_vdp_cursor.w
+	CLR.w	DebugMenu_sound_item.w
+	CLR.w	DebugMenu_scroll_pos.w
+	JSR	loc_00000396                    ; clear VRAM
+	MOVE.w	DebugMenu_sound_category.w, D0
+	ADD.w	D0, D0                          ; category × 4
+	ADD.w	D0, D0
+	JSR	DebugSoundCategory_JumpTable(PC,D0.w)
+DebugSoundCategory_SubWaitLoop:             ; shared wait loop for all categories ($3CA82)
+	JSR	WaitForVBlank
+	BSR.w	DebugMenu_ScrollTick
+	MOVE.w	#$0006, D2
+	JSR	CheckButtonPress
+	BEQ.b	DebugSoundCategory_SubWaitLoop
+	MOVE.w	DebugMenu_sound_item.w, D1
+	CMPI.w	#$0013, D1                      ; ≥ 19 entries → exit sub-menu
+	BGE.w	DebugSoundCategory_SubDone
+	LEA	loc_0003D880, A0                ; pointer table: category → sound-ID table
+	MOVE.w	DebugMenu_sound_category.w, D0
+	ADD.w	D0, D0                          ; category × 4 (long pointers)
+	ADD.w	D0, D0
+	MOVE.l	+0(A0,D0.w), A1                 ; A1 → sound-ID array for this category
+	ADD.w	D1, D1                          ; item × 2 (word entries)
+	MOVE.w	+0(A1,D1.w), D0                 ; D0 = sound ID
+	JSR	QueueSoundEffect                ; play selected sound
+	BRA.b	DebugSoundCategory_SubWaitLoop
+DebugSoundCategory_SubDone:
+	CLR.b	DebugMenu_in_submenu.w
+	RTS
+	; --- jump table base at $3CACA ---
+DebugSoundCategory_JumpTable:
+	BRA.w	DebugSoundCategory_BGM          ; $3CACA  cat 0 = BGM
+	BRA.w	DebugSoundCategory_Effect       ; $3CACE  cat 1 = Effect
+	BRA.w	DebugSoundCategory_BGM2         ; $3CAD2  cat 2 = BGM 2
+	BRA.w	DebugSoundCategory_DA           ; $3CAD6  cat 3 = D/A
+
+; DebugSoundCategory_BGM ($3CADA) — load BGM parallax tiles then enter sub-loop
+DebugSoundCategory_BGM:
+	LEA	loc_0003D2DE, A0
+	JSR	BossParallaxEntry_Start
+	LEA	loc_0003D2F0, A0
+	JSR	BossParallaxEntry_Start
+	LEA	loc_0003D300, A0
+	JSR	BossParallaxEntry_Start
+	LEA	loc_0003D314, A0
+	JSR	BossParallaxEntry_Start
+	LEA	loc_0003D324, A0
+	JSR	BossParallaxEntry_Start
+	LEA	loc_0003D334, A0
+	JSR	BossParallaxEntry_Start
+	LEA	loc_0003D348, A0
+	JSR	BossParallaxEntry_Start
+	LEA	loc_0003D35A, A0
+	JSR	BossParallaxEntry_Start
+	LEA	loc_0003D370, A0
+	JSR	BossParallaxEntry_Start
+	LEA	loc_0003D388, A0
+	JSR	BossParallaxEntry_Start
+	LEA	loc_0003D39A, A0
+	JSR	BossParallaxEntry_Start
+	LEA	loc_0003D3AC, A0
+	JSR	BossParallaxEntry_Start
+	LEA	loc_0003D3C0, A0
+	JSR	BossParallaxEntry_Start
+	LEA	loc_0003D3D2, A0
+	JSR	BossParallaxEntry_Start
+	LEA	loc_0003D3E4, A0
+	JSR	BossParallaxEntry_Start
+	LEA	loc_0003D3F6, A0
+	JSR	BossParallaxEntry_Start
+	LEA	loc_0003D408, A0
+	JSR	BossParallaxEntry_Start
+	LEA	loc_0003D41A, A0
+	JSR	BossParallaxEntry_Start
+	LEA	loc_0003D430, A0
+	JSR	BossParallaxEntry_Start
+	LEA	loc_0003D446, A0                ; shared footer row
+	JSR	BossParallaxEntry_Start
+	LEA	loc_0003D456, A0                ; shared footer row
+	JSR	BossParallaxEntry_Start
+	LEA	loc_0003D204, A0                ; shared footer row
+	JSR	BossParallaxEntry_Start
+	RTS
+
+; DebugSoundCategory_Effect ($3CBE4) — load Effect parallax tiles
+DebugSoundCategory_Effect:
+	LEA	loc_0003D468, A0
+	JSR	BossParallaxEntry_Start
+	LEA	loc_0003D47E, A0
+	JSR	BossParallaxEntry_Start
+	LEA	loc_0003D494, A0
+	JSR	BossParallaxEntry_Start
+	LEA	loc_0003D4AC, A0
+	JSR	BossParallaxEntry_Start
+	LEA	loc_0003D4C4, A0
+	JSR	BossParallaxEntry_Start
+	LEA	loc_0003D4D6, A0
+	JSR	BossParallaxEntry_Start
+	LEA	loc_0003D4EA, A0
+	JSR	BossParallaxEntry_Start
+	LEA	loc_0003D4F8, A0
+	JSR	BossParallaxEntry_Start
+	LEA	loc_0003D506, A0
+	JSR	BossParallaxEntry_Start
+	LEA	loc_0003D51C, A0
+	JSR	BossParallaxEntry_Start
+	LEA	loc_0003D530, A0
+	JSR	BossParallaxEntry_Start
+	LEA	loc_0003D546, A0
+	JSR	BossParallaxEntry_Start
+	LEA	loc_0003D556, A0
+	JSR	BossParallaxEntry_Start
+	LEA	loc_0003D568, A0
+	JSR	BossParallaxEntry_Start
+	LEA	loc_0003D578, A0
+	JSR	BossParallaxEntry_Start
+	LEA	loc_0003D58A, A0
+	JSR	BossParallaxEntry_Start
+	LEA	loc_0003D59C, A0
+	JSR	BossParallaxEntry_Start
+	LEA	loc_0003D5B0, A0
+	JSR	BossParallaxEntry_Start
+	LEA	loc_0003D5C2, A0
+	JSR	BossParallaxEntry_Start
+	LEA	loc_0003D446, A0                ; shared footer row
+	JSR	BossParallaxEntry_Start
+	LEA	loc_0003D456, A0                ; shared footer row
+	JSR	BossParallaxEntry_Start
+	LEA	loc_0003D204, A0                ; shared footer row
+	JSR	BossParallaxEntry_Start
+	RTS
+
+; DebugSoundCategory_BGM2 ($3CCEE) — load BGM2 parallax tiles
+DebugSoundCategory_BGM2:
+	LEA	loc_0003D5D2, A0
+	JSR	BossParallaxEntry_Start
+	LEA	loc_0003D5E8, A0
+	JSR	BossParallaxEntry_Start
+	LEA	loc_0003D5F6, A0
+	JSR	BossParallaxEntry_Start
+	LEA	loc_0003D608, A0
+	JSR	BossParallaxEntry_Start
+	LEA	loc_0003D616, A0
+	JSR	BossParallaxEntry_Start
+	LEA	loc_0003D628, A0
+	JSR	BossParallaxEntry_Start
+	LEA	loc_0003D63C, A0
+	JSR	BossParallaxEntry_Start
+	LEA	loc_0003D652, A0
+	JSR	BossParallaxEntry_Start
+	LEA	loc_0003D666, A0
+	JSR	BossParallaxEntry_Start
+	LEA	loc_0003D676, A0
+	JSR	BossParallaxEntry_Start
+	LEA	loc_0003D68A, A0
+	JSR	BossParallaxEntry_Start
+	LEA	loc_0003D6A0, A0
+	JSR	BossParallaxEntry_Start
+	LEA	loc_0003D6B4, A0
+	JSR	BossParallaxEntry_Start
+	LEA	loc_0003D6CA, A0
+	JSR	BossParallaxEntry_Start
+	LEA	loc_0003D6DE, A0
+	JSR	BossParallaxEntry_Start
+	LEA	loc_0003D6EA, A0
+	JSR	BossParallaxEntry_Start
+	LEA	loc_0003D6F6, A0
+	JSR	BossParallaxEntry_Start
+	LEA	loc_0003D702, A0
+	JSR	BossParallaxEntry_Start
+	LEA	loc_0003D70E, A0
+	JSR	BossParallaxEntry_Start
+	LEA	loc_0003D446, A0                ; shared footer row
+	JSR	BossParallaxEntry_Start
+	LEA	loc_0003D456, A0                ; shared footer row
+	JSR	BossParallaxEntry_Start
+	LEA	loc_0003D204, A0                ; shared footer row
+	JSR	BossParallaxEntry_Start
+	RTS
+
+; DebugSoundCategory_DA ($3CDF8) — load D/A parallax tiles
+DebugSoundCategory_DA:
+	LEA	loc_0003D71A, A0
+	JSR	BossParallaxEntry_Start
+	LEA	loc_0003D730, A0
+	JSR	BossParallaxEntry_Start
+	LEA	loc_0003D744, A0
+	JSR	BossParallaxEntry_Start
+	LEA	loc_0003D75A, A0
+	JSR	BossParallaxEntry_Start
+	LEA	loc_0003D76E, A0
+	JSR	BossParallaxEntry_Start
+	LEA	loc_0003D786, A0
+	JSR	BossParallaxEntry_Start
+	LEA	loc_0003D79C, A0
+	JSR	BossParallaxEntry_Start
+	LEA	loc_0003D7AE, A0
+	JSR	BossParallaxEntry_Start
+	LEA	loc_0003D7C0, A0
+	JSR	BossParallaxEntry_Start
+	LEA	loc_0003D7D2, A0
+	JSR	BossParallaxEntry_Start
+	LEA	loc_0003D7E4, A0
+	JSR	BossParallaxEntry_Start
+	LEA	loc_0003D7F0, A0
+	JSR	BossParallaxEntry_Start
+	LEA	loc_0003D7FC, A0
+	JSR	BossParallaxEntry_Start
+	LEA	loc_0003D808, A0
+	JSR	BossParallaxEntry_Start
+	LEA	loc_0003D814, A0
+	JSR	BossParallaxEntry_Start
+	LEA	loc_0003D820, A0
+	JSR	BossParallaxEntry_Start
+	LEA	loc_0003D82C, A0
+	JSR	BossParallaxEntry_Start
+	LEA	loc_0003D838, A0
+	JSR	BossParallaxEntry_Start
+	LEA	loc_0003D844, A0
+	JSR	BossParallaxEntry_Start
+	LEA	loc_0003D446, A0                ; shared footer row
+	JSR	BossParallaxEntry_Start
+	LEA	loc_0003D456, A0                ; shared footer row
+	JSR	BossParallaxEntry_Start
+	LEA	loc_0003D204, A0                ; shared footer row
+	JSR	BossParallaxEntry_Start
+	RTS
+
+; ---------------------------------------------------------------------------
+; DebugCRTTest — CRT display test, fills screen with colour gradient ($3CF02)
+; ---------------------------------------------------------------------------
+DebugCRTTest:
+	JSR	loc_000010D8                    ; CLR Vblank_flag + WaitForVBlank
+	JSR	loc_00000396                    ; clear VRAM
+	LEA	loc_0003D850, A0
+	JSR	BossParallaxEntry_Start
+	LEA	loc_0003D862, A0
+	JSR	BossParallaxEntry_Start
+	BSR.w	DebugCRT_DrawGrayGradient       ; draw 8×16 gray ramp on screen
+	MOVE.w	#$0055, Palette_line_0_index.w
+	MOVE.w	#$0056, Palette_line_1_index.w
+	MOVE.w	#$0057, Palette_line_2_index.w
+	MOVE.w	#$0058, Palette_line_3_index.w
+	JSR	LoadPalettesFromTable
+	BSR.w	DebugCRT_DrawColorRow0          ; draw colour-bar row 0
+	BSR.w	DebugCRT_DrawColorRow1          ; draw colour-bar row 1
+	BSR.w	DebugCRT_DrawColorRow2          ; draw colour-bar row 2
+	BSR.w	DebugCRT_DrawColorRow3          ; draw colour-bar row 3
+DebugCRTTest_WaitLoop:
+	MOVE.w	#$0005, D2
+	JSR	CheckButtonPress
+	BEQ.b	DebugCRTTest_WaitLoop           ; wait for any button
+	RTS
+
+; DebugCRT_DrawGrayGradient — write 8×16 gray-ramp tiles directly to VRAM ($3CF66)
+; Disables interrupts, writes 8 rows of 16 tiles each, incrementing colour $1111 per row.
+DebugCRT_DrawGrayGradient:
+	CLR.w	D0
+	MOVE.w	#$1111, D0                      ; starting palette entry (dark gray)
+	ORI	#$0700, SR                      ; disable interrupts
+	MOVE.l	#$4F400001, VDP_control_port    ; set VDP write address for first tile
+	MOVE.w	#$0007, D2                      ; 8 rows (7 downto 0)
+DebugCRT_GrayGrad_RowLoop:
+	MOVE.w	#$000F, D1                      ; 16 tiles per row (15 downto 0)
+DebugCRT_GrayGrad_TileLoop:
+	MOVE.w	D0, VDP_data_port               ; write tile colour word
+	DBF	D1, DebugCRT_GrayGrad_TileLoop
+	ADDI.w	#$1111, D0                      ; next shade
+	DBF	D2, DebugCRT_GrayGrad_RowLoop
+	ANDI	#$F8FF, SR                      ; re-enable interrupts
+	RTS
+
+; DebugCRT_DrawColorRow0-3 — write 3-row colour bars using palette offset in D5 ($3CF9A-$3CFCA)
+DebugCRT_DrawColorRow0:
+	MOVE.l	#$63100003, D5              ; VDP write addr for row 0
+	MOVE.w	#$827A, D4                  ; starting colour word
+	BSR.w	DebugCRT_DrawColorStrip
+	RTS
+DebugCRT_DrawColorRow1:
+	MOVE.l	#$65100003, D5
+	MOVE.w	#$A27A, D4
+	BSR.w	DebugCRT_DrawColorStrip
+	RTS
+DebugCRT_DrawColorRow2:
+	MOVE.l	#$67100003, D5
+	MOVE.w	#$C27A, D4
+	BSR.w	DebugCRT_DrawColorStrip
+	RTS
+DebugCRT_DrawColorRow3:
+	MOVE.l	#$69100003, D5
+	MOVE.w	#$E27A, D4
+	BSR.w	DebugCRT_DrawColorStrip
+	RTS
+
+; DebugCRT_DrawColorStrip — draw one 3-row colour strip ($3CFDA)
+;   In:  D5.l = VDP control word (write address),  D4.w = starting colour index
+;   Writes 3 rows × 8 groups × 3 tiles each, incrementing colour index each group.
+DebugCRT_DrawColorStrip:
+	ORI	#$0700, SR                      ; disable interrupts
+	MOVE.w	#$0002, D3                      ; 3 rows (2 downto 0)
+DebugCRT_ColorStrip_RowLoop:
+	MOVE.l	D5, VDP_control_port
+	MOVE.w	D4, D0
+	MOVE.w	#$0007, D2                      ; 8 groups per row
+DebugCRT_ColorStrip_GroupLoop:
+	MOVE.w	#$0002, D1                      ; 3 tiles per group
+DebugCRT_ColorStrip_TileLoop:
+	MOVE.w	D0, VDP_data_port
+	DBF	D1, DebugCRT_ColorStrip_TileLoop
+	ADDQ.w	#1, D0                          ; next colour
+	DBF	D2, DebugCRT_ColorStrip_GroupLoop
+	ADDI.l	#$800000, D5                    ; advance VDP write address by 1 row
+	DBF	D3, DebugCRT_ColorStrip_RowLoop
+	ANDI	#$F8FF, SR                      ; re-enable interrupts
+	RTS
+
+; DebugTestMenu_NoOp — empty menu item stub ($3D012)
+DebugTestMenu_NoOp:
+	RTS
+
+; DebugTestMenu_Exit — wait one vblank, clear skip flag, restart game ($3D014)
+DebugTestMenu_Exit:
+	JSR	WaitForVBlank
+	CLR.b	Skip_tilemap_updates.w
+	JMP	EntryPoint
+
+; ---------------------------------------------------------------------------
+; DebugMenu_ScrollTick — update horizontal scroll each frame ($3D024)
+;
+; Reads left/right from Controller_previous_state, adds ±1 to scroll_pos.
+; When scroll_pos reaches ±8 (full tile width), advances/retreats the selected
+; menu item and writes the HScroll tile to VRAM.
+; D5.l in/out = current VDP write-address register value (cached).
+; ---------------------------------------------------------------------------
+DebugMenu_ScrollTick:
+	MOVE.l	DebugMenu_vdp_cursor.w, D5
+	MOVEQ	#0, D0
+	BTST	#0, Controller_previous_state.w    ; left bit
+	BEQ.b	DebugMenu_ScrollTick_CheckRight
+	MOVEQ	#-1, D0                             ; scrolling left
+	BRA.b	DebugMenu_ScrollTick_Apply
+DebugMenu_ScrollTick_CheckRight:
+	BTST	#1, Controller_previous_state.w    ; right bit
+	BEQ.b	DebugMenu_ScrollTick_Apply
+	MOVEQ	#1, D0                              ; scrolling right
+DebugMenu_ScrollTick_Apply:
+	ADD.w	D0, DebugMenu_scroll_pos.w
+	MOVE.w	DebugMenu_scroll_pos.w, D1
+	CMPI.w	#$0008, D1                          ; reached +8 pixels?
+	BGT.w	DebugMenu_ScrollTick_NextItem
+	CMPI.w	#$FFF8, D1                          ; reached −8 pixels?
+	BLT.w	DebugMenu_ScrollTick_PrevItem
+	; still within ±8 — just write HScroll value
+	MOVE.l	D5, VDP_control_port
+	MOVE.w	#$04DC, VDP_data_port               ; HScroll value (tile scroll position)
+	MOVE.l	D5, DebugMenu_vdp_cursor.w
+	RTS
+DebugMenu_ScrollTick_NextItem:                  ; scroll_pos > +8 → advance item
+	TST.b	DebugMenu_in_submenu.w
+	BNE.w	DebugMenu_ScrollTick_NextSubItem
+	MOVE.l	D5, VDP_control_port
+	MOVE.w	#$0000, VDP_data_port
+	SUBQ.w	#8, DebugMenu_scroll_pos.w          ; subtract 8 pixels (one tile step)
+	ADDI.l	#$1000000, D5                       ; advance VDP row pointer
+	ADDQ.w	#1, DebugMenu_selected_item.w
+	CMPI.w	#$0004, DebugMenu_selected_item.w   ; wraparound at item 4?
+	BNE.b	DebugMenu_ScrollTick_NextItem_Check
+	MOVE.l	#$4A040003, D5                      ; special VDP addr for item 4
+	BRA.b	DebugMenu_ScrollTick_NextItem_Done
+DebugMenu_ScrollTick_NextItem_Check:
+	CMPI.w	#$0004, DebugMenu_selected_item.w
+	BCS.b	DebugMenu_ScrollTick_NextItem_Done  ; < 4 → no wrap
+	MOVE.l	#$44040003, D5                      ; reset VDP addr to item 0
+	CLR.w	DebugMenu_selected_item.w
+DebugMenu_ScrollTick_NextItem_Done:
+	MOVE.l	D5, VDP_control_port
+	MOVE.w	#$04DC, VDP_data_port
+	MOVE.l	D5, DebugMenu_vdp_cursor.w
+	RTS
+DebugMenu_ScrollTick_NextSubItem:               ; in sub-menu: advance sound item
+	MOVE.l	D5, VDP_control_port
+	MOVE.w	#$0000, VDP_data_port
+	SUBQ.w	#8, DebugMenu_scroll_pos.w
+	ADDI.l	#$1000000, D5
+	ADDQ.w	#1, DebugMenu_sound_item.w
+	CMPI.w	#$0014, DebugMenu_sound_item.w      ; wraparound at 20 items?
+	BCS.b	DebugMenu_ScrollTick_NextSubItem_Check
+	MOVE.l	#$42040003, D5
+	CLR.w	DebugMenu_sound_item.w
+	BRA.b	DebugMenu_ScrollTick_NextSubItem_Done
+DebugMenu_ScrollTick_NextSubItem_Check:
+	CMPI.w	#$000A, DebugMenu_sound_item.w      ; item 10 → special VDP addr
+	BNE.b	DebugMenu_ScrollTick_NextSubItem_Done
+	MOVE.l	#$422C0003, D5
+DebugMenu_ScrollTick_NextSubItem_Done:
+	MOVE.l	D5, VDP_control_port
+	MOVE.w	#$04DC, VDP_data_port
+	MOVE.l	D5, DebugMenu_vdp_cursor.w
+	RTS
+DebugMenu_ScrollTick_PrevItem:                  ; scroll_pos < −8 → retreat item
+	TST.b	DebugMenu_in_submenu.w
+	BNE.w	DebugMenu_ScrollTick_PrevSubItem
+	MOVE.l	D5, VDP_control_port
+	MOVE.w	#$0000, VDP_data_port
+	ADDQ.w	#8, DebugMenu_scroll_pos.w          ; add 8 pixels (one tile step back)
+	SUBI.l	#$1000000, D5                       ; retreat VDP row pointer
+	SUBQ.w	#1, DebugMenu_selected_item.w
+	BCC.b	DebugMenu_ScrollTick_PrevItem_Check ; no underflow → check for item 3
+	MOVE.l	#$4A040003, D5
+	MOVE.w	#$0004, DebugMenu_selected_item.w   ; wrap to item 4
+	BRA.b	DebugMenu_ScrollTick_PrevItem_Done
+DebugMenu_ScrollTick_PrevItem_Check:
+	CMPI.w	#$0003, DebugMenu_selected_item.w   ; item 3 → special VDP addr
+	BNE.b	DebugMenu_ScrollTick_PrevItem_Done
+	MOVE.l	#$47040003, D5
+DebugMenu_ScrollTick_PrevItem_Done:
+	MOVE.l	D5, VDP_control_port
+	MOVE.w	#$04DC, VDP_data_port
+	MOVE.l	D5, DebugMenu_vdp_cursor.w
+	RTS
+DebugMenu_ScrollTick_PrevSubItem:               ; in sub-menu: retreat sound item
+	MOVE.l	D5, VDP_control_port
+	MOVE.w	#$0000, VDP_data_port
+	ADDQ.w	#8, DebugMenu_scroll_pos.w
+	SUBI.l	#$1000000, D5
+	SUBQ.w	#1, DebugMenu_sound_item.w
+	BCC.b	DebugMenu_ScrollTick_PrevSubItem_Check ; no underflow
+	MOVE.l	#$4B2C0003, D5
+	MOVE.w	#$0013, DebugMenu_sound_item.w      ; wrap to item 19
+	BRA.b	DebugMenu_ScrollTick_PrevSubItem_Done
+DebugMenu_ScrollTick_PrevSubItem_Check:
+	CMPI.w	#$0009, DebugMenu_sound_item.w      ; item 9 → special VDP addr
+	BNE.b	DebugMenu_ScrollTick_PrevSubItem_Done
+	MOVE.l	#$4B040003, D5
+DebugMenu_ScrollTick_PrevSubItem_Done:
+	MOVE.l	D5, VDP_control_port
+	MOVE.w	#$04DC, VDP_data_port
+	MOVE.l	D5, DebugMenu_vdp_cursor.w
+	RTS
+
+; ---------------------------------------------------------------------------
+; BossParallaxEntry data records begin here ($3D1BC)
+; Each record: dc.l VDP-control-word, dc.w column-count, dc.w base-offset,
+;              then (column-count+1) bytes of HScroll data
+; ---------------------------------------------------------------------------
+loc_0003D1BC:
+	dc.b	$44, $08, $00, $03, $00, $0B, $84, $C0, $49, $4E, $50, $55, $54, $20, $20, $20
+	dc.b	$54, $45, $53, $54
+loc_0003D1D0:
+	dc.b	$45, $08, $00, $03, $00, $0B, $84, $C0, $53, $4F, $55, $4E, $44, $20, $20, $20
+	dc.b	$54, $45, $53, $54
+loc_0003D1E4:
+	dc.b	$46, $08, $00, $03, $00, $0B, $84, $C0, $43, $2E, $52, $2E, $54, $2E, $20, $20
+	dc.b	$54, $45, $53, $54
+loc_0003D1F8:
+	dc.b	$4A, $08, $00, $03, $00, $03, $84, $C0, $45, $58, $49, $54
+loc_0003D204:
+	dc.b	$4D, $06, $00, $03, $00, $1E, $84, $C0, $53, $45, $4C, $45, $43, $54, $20, $42
+	dc.b	$59, $20, $53, $54, $49, $43, $4B, $21, $20, $50, $55, $53, $48, $20, $41, $20
+	dc.b	$42, $55, $54, $54, $4F, $4E, $21, $00
+loc_0003D22C:
+	dc.b	$44, $16, $00, $03, $00, $01, $84, $C0, $55, $50
+loc_0003D236:
+	dc.b	$4A, $14, $00, $03, $00, $03, $84, $C0, $44, $4F, $57, $4E
+loc_0003D242:
+	dc.b	$47, $06, $00, $03, $00, $03, $84, $C0, $4C, $45, $46, $54
+loc_0003D24E:
+	dc.b	$47, $20, $00, $03, $00, $04, $84, $C0, $52, $49, $47, $48, $54, $00
+loc_0003D25C:
+	dc.b	$4B, $2E, $00, $03, $00, $00, $84, $C0, $41, $00
+loc_0003D266:
+	dc.b	$49, $B4, $00, $03, $00, $00, $84, $C0, $42, $00
+loc_0003D270:
+	dc.b	$48, $3A, $00, $03, $00, $00, $84, $C0, $43, $00
+loc_0003D27A:
+	dc.b	$44, $30, $00, $03, $00, $04, $84, $C0, $53, $54, $41, $52, $54, $00
+loc_0003D288:
+	dc.b	$40, $9C, $00, $03, $00, $09, $A4, $C0, $49, $4E, $50, $55, $54, $20, $54, $45
+	dc.b	$53, $54
+loc_0003D29A:
+	dc.b	$44, $08, $00, $03, $00, $06, $84, $C0, $31, $2E, $20, $20, $42, $47, $4D, $00
+loc_0003D2AA:
+	dc.b	$45, $08, $00, $03, $00, $09, $84, $C0, $32, $2E, $20, $20, $45, $46, $46, $45
+	dc.b	$43, $54
+loc_0003D2BC:
+	dc.b	$46, $08, $00, $03, $00, $08, $84, $C0, $33, $2E, $20, $20, $42, $47, $4D, $20
+	dc.b	$32, $00
+loc_0003D2CE:
+	dc.b	$47, $08, $00, $03, $00, $06, $84, $C0, $34, $2E, $20, $20, $44, $2F, $41, $00
+loc_0003D2DE:
+	dc.b	$42, $0A, $00, $03, $00, $08, $84, $C0, $31, $2E, $4F, $50, $45, $4E, $49, $4E
+	dc.b	$47, $00
+loc_0003D2F0:
+	dc.b	$43, $0A, $00, $03, $00, $06, $84, $C0, $32, $2E, $54, $49, $54, $4C, $45, $00
+loc_0003D300:
+	dc.b	$44, $0A, $00, $03, $00, $0B, $84, $C0, $33, $2E, $4E, $41, $4D, $45, $20, $45
+	dc.b	$4E, $54, $52, $59
+loc_0003D314:
+	dc.b	$45, $0A, $00, $03, $00, $07, $84, $C0, $34, $2E, $53, $54, $41, $54, $54, $53
+loc_0003D324:
+	dc.b	$46, $0A, $00, $03, $00, $06, $84, $C0, $35, $2E, $45, $52, $49, $41, $53, $00
+loc_0003D334:
+	dc.b	$47, $0A, $00, $03, $00, $0A, $84, $C0, $36, $2E, $56, $49, $4C, $4C, $41, $47
+	dc.b	$45, $20, $41, $00
+loc_0003D348:
+	dc.b	$48, $0A, $00, $03, $00, $08, $84, $C0, $37, $2E, $46, $55, $59, $4F, $44, $4F
+	dc.b	$4C, $00
+loc_0003D35A:
+	dc.b	$49, $0A, $00, $03, $00, $0C, $84, $C0, $38, $2E, $53, $48, $4F, $50, $20, $28
+	dc.b	$43, $49, $54, $59, $29, $00
+loc_0003D370:
+	dc.b	$4A, $0A, $00, $03, $00, $0F, $84, $C0, $39, $2E, $53, $48, $4F, $50, $20, $28
+	dc.b	$56, $49, $4C, $4C, $41, $47, $45, $29
+loc_0003D388:
+	dc.b	$4B, $08, $00, $03, $00, $08, $84, $C0, $31, $30, $2E, $43, $48, $55, $52, $43
+	dc.b	$48, $00
+loc_0003D39A:
+	dc.b	$42, $30, $00, $03, $00, $09, $84, $C0, $31, $31, $2E, $44, $55, $4E, $47, $45
+	dc.b	$4F, $4E
+loc_0003D3AC:
+	dc.b	$43, $30, $00, $03, $00, $0B, $84, $C0, $31, $32, $2E, $44, $55, $4E, $47, $45
+	dc.b	$4F, $4E, $20, $32
+loc_0003D3C0:
+	dc.b	$44, $30, $00, $03, $00, $08, $84, $C0, $31, $33, $2E, $42, $4F, $53, $53, $20
+	dc.b	$41, $00
+loc_0003D3D2:
+	dc.b	$45, $30, $00, $03, $00, $08, $84, $C0, $31, $34, $2E, $42, $4F, $53, $53, $20
+	dc.b	$42, $00
+loc_0003D3E4:
+	dc.b	$46, $30, $00, $03, $00, $09, $84, $C0, $31, $35, $2E, $33, $44, $20, $4D, $4F
+	dc.b	$44, $45
+loc_0003D3F6:
+	dc.b	$47, $30, $00, $03, $00, $08, $84, $C0, $31, $36, $2E, $42, $41, $54, $54, $4C
+	dc.b	$45, $00
+loc_0003D408:
+	dc.b	$48, $30, $00, $03, $00, $08, $84, $C0, $31, $37, $2E, $43, $41, $53, $54, $4C
+	dc.b	$45, $00
+loc_0003D41A:
+	dc.b	$49, $30, $00, $03, $00, $0D, $84, $C0, $31, $38, $2E, $50, $4C, $41, $59, $45
+	dc.b	$52, $20, $44, $45, $41, $44
+loc_0003D430:
+	dc.b	$4A, $30, $00, $03, $00, $0C, $84, $C0, $31, $39, $2E, $4A, $49, $4A, $49, $20
+	dc.b	$54, $48, $45, $4D, $45, $00
+loc_0003D446:
+	dc.b	$4B, $30, $00, $03, $00, $07, $84, $C0, $32, $30, $2E, $20, $45, $58, $49, $54
+loc_0003D456:
+	dc.b	$41, $1C, $00, $03, $00, $09, $A4, $C0, $53, $4F, $55, $4E, $44, $20, $54, $45
+	dc.b	$53, $54
+loc_0003D468:
+	dc.b	$42, $0A, $00, $03, $00, $0C, $84, $C0, $31, $2E, $57, $49, $4E, $44, $4F, $57
+	dc.b	$20, $4F, $50, $45, $4E, $00
+loc_0003D47E:
+	dc.b	$43, $0A, $00, $03, $00, $0C, $84, $C0, $32, $2E, $43, $4F, $4D, $4D, $41, $4E
+	dc.b	$44, $20, $53, $45, $54, $00
+loc_0003D494:
+	dc.b	$44, $0A, $00, $03, $00, $0F, $84, $C0, $33, $2E, $43, $4F, $4D, $4D, $41, $4E
+	dc.b	$44, $20, $43, $41, $4E, $43, $45, $4C
+loc_0003D4AC:
+	dc.b	$45, $0A, $00, $03, $00, $0F, $84, $C0, $34, $2E, $43, $4F, $4D, $4D, $41, $4E
+	dc.b	$44, $20, $53, $45, $4C, $45, $43, $54
+loc_0003D4C4:
+	dc.b	$46, $0A, $00, $03, $00, $08, $84, $C0, $35, $2E, $54, $41, $4C, $4B, $49, $4E
+	dc.b	$47, $00
+loc_0003D4D6:
+	dc.b	$47, $0A, $00, $03, $00, $0B, $84, $C0, $36, $2E, $49, $4E, $54, $4F, $20, $48
+	dc.b	$4F, $55, $53, $45
+loc_0003D4EA:
+	dc.b	$48, $0A, $00, $03, $00, $05, $84, $C0, $37, $2E, $52, $49, $4E, $47
+loc_0003D4F8:
+	dc.b	$49, $0A, $00, $03, $00, $05, $84, $C0, $38, $2E, $53, $54, $41, $52
+loc_0003D506:
+	dc.b	$4A, $0A, $00, $03, $00, $0D, $84, $C0, $39, $2E, $47, $45, $54, $20, $54, $48
+	dc.b	$45, $20, $49, $54, $45, $4D
+loc_0003D51C:
+	dc.b	$4B, $08, $00, $03, $00, $0A, $84, $C0, $31, $30, $2E, $4F, $50, $45, $4E, $20
+	dc.b	$42, $4F, $58, $00
+loc_0003D530:
+	dc.b	$42, $30, $00, $03, $00, $0C, $84, $C0, $31, $31, $2E, $44, $4F, $4F, $52, $20
+	dc.b	$4B, $4E, $4F, $43, $4B, $00
+loc_0003D546:
+	dc.b	$43, $30, $00, $03, $00, $07, $84, $C0, $31, $32, $2E, $4C, $49, $47, $48, $54
+loc_0003D556:
+	dc.b	$44, $30, $00, $03, $00, $09, $84, $C0, $31, $33, $2E, $52, $45, $43, $4F, $56
+	dc.b	$45, $52
+loc_0003D568:
+	dc.b	$45, $30, $00, $03, $00, $07, $84, $C0, $31, $34, $2E, $57, $41, $54, $45, $52
+loc_0003D578:
+	dc.b	$46, $30, $00, $03, $00, $08, $84, $C0, $31, $35, $2E, $46, $49, $52, $45, $20
+	dc.b	$32, $00
+loc_0003D58A:
+	dc.b	$47, $30, $00, $03, $00, $08, $84, $C0, $31, $36, $2E, $46, $49, $52, $45, $20
+	dc.b	$33, $00
+loc_0003D59C:
+	dc.b	$48, $30, $00, $03, $00, $0A, $84, $C0, $31, $37, $2E, $45, $4C, $45, $43, $54
+	dc.b	$52, $49, $43, $00
+loc_0003D5B0:
+	dc.b	$49, $30, $00, $03, $00, $08, $84, $C0, $31, $38, $2E, $42, $4F, $4D, $42, $45
+	dc.b	$52, $00
+loc_0003D5C2:
+	dc.b	$4A, $30, $00, $03, $00, $07, $84, $C0, $31, $39, $2E, $43, $4C, $4F, $43, $4B
+loc_0003D5D2:
+	dc.b	$42, $0A, $00, $03, $00, $0D, $84, $C0, $31, $2E, $45, $4E, $45, $4D, $59, $20
+	dc.b	$41, $50, $50, $45, $41, $52
+loc_0003D5E8:
+	dc.b	$43, $0A, $00, $03, $00, $05, $84, $C0, $32, $2E, $52, $45, $53, $54
+loc_0003D5F6:
+	dc.b	$44, $0A, $00, $03, $00, $09, $84, $C0, $33, $2E, $4C, $45, $56, $45, $4C, $20
+	dc.b	$55, $50
+loc_0003D608:
+	dc.b	$45, $0A, $00, $03, $00, $05, $84, $C0, $34, $2E, $57, $41, $52, $50
+loc_0003D616:
+	dc.b	$46, $0A, $00, $03, $00, $09, $84, $C0, $35, $2E, $53, $45, $54, $20, $46, $4C
+	dc.b	$41, $47
+loc_0003D628:
+	dc.b	$47, $0A, $00, $03, $00, $0B, $84, $C0, $36, $2E, $45, $4E, $45, $4D, $59, $20
+	dc.b	$4D, $45, $4C, $54
+loc_0003D63C:
+	dc.b	$48, $0A, $00, $03, $00, $0D, $84, $C0, $37, $2E, $45, $4E, $45, $4D, $59, $20
+	dc.b	$44, $45, $4C, $45, $54, $45
+loc_0003D652:
+	dc.b	$49, $0A, $00, $03, $00, $0B, $84, $C0, $38, $2E, $45, $41, $52, $54, $48, $51
+	dc.b	$55, $41, $4B, $45
+loc_0003D666:
+	dc.b	$4A, $0A, $00, $03, $00, $07, $84, $C0, $39, $2E, $45, $4E, $44, $49, $4E, $47
+loc_0003D676:
+	dc.b	$4B, $08, $00, $03, $00, $0B, $84, $C0, $31, $30, $2E, $4C, $41, $53, $54, $20
+	dc.b	$43, $49, $54, $59
+loc_0003D68A:
+	dc.b	$42, $30, $00, $03, $00, $0C, $84, $C0, $31, $31, $2E, $4C, $49, $47, $48, $54
+	dc.b	$20, $53, $4F, $4E, $47, $00
+loc_0003D6A0:
+	dc.b	$43, $30, $00, $03, $00, $0B, $84, $C0, $31, $32, $2E, $44, $4F, $4F, $52, $20
+	dc.b	$4F, $50, $45, $4E
+loc_0003D6B4:
+	dc.b	$44, $30, $00, $03, $00, $0C, $84, $C0, $31, $33, $2E, $44, $4F, $4F, $52, $20
+	dc.b	$43, $4C, $4F, $53, $45, $00
+loc_0003D6CA:
+	dc.b	$45, $30, $00, $03, $00, $0A, $84, $C0, $31, $34, $2E, $45, $4E, $44, $49, $4E
+	dc.b	$47, $20, $32, $00
+loc_0003D6DE:
+	dc.b	$46, $30, $00, $03, $00, $02, $84, $C0, $31, $35, $2E, $00
+loc_0003D6EA:
+	dc.b	$47, $30, $00, $03, $00, $02, $84, $C0, $31, $36, $2E, $00
+loc_0003D6F6:
+	dc.b	$48, $30, $00, $03, $00, $02, $84, $C0, $31, $37, $2E, $00
+loc_0003D702:
+	dc.b	$49, $30, $00, $03, $00, $02, $84, $C0, $31, $38, $2E, $00
+loc_0003D70E:
+	dc.b	$4A, $30, $00, $03, $00, $02, $84, $C0, $31, $39, $2E, $00
+loc_0003D71A:
+	dc.b	$42, $0A, $00, $03, $00, $0C, $84, $C0, $31, $2E, $54, $48, $55, $4E, $44, $45
+	dc.b	$52, $20, $4C, $4F, $57, $00
+loc_0003D730:
+	dc.b	$43, $0A, $00, $03, $00, $0B, $84, $C0, $32, $2E, $54, $48, $55, $4E, $44, $45
+	dc.b	$52, $20, $48, $49
+loc_0003D744:
+	dc.b	$44, $0A, $00, $03, $00, $0D, $84, $C0, $33, $2E, $45, $4E, $45, $4D, $59, $20
+	dc.b	$44, $41, $4D, $41, $47, $45
+loc_0003D75A:
+	dc.b	$45, $0A, $00, $03, $00, $0B, $84, $C0, $34, $2E, $45, $4E, $45, $4D, $59, $20
+	dc.b	$44, $45, $41, $44
+loc_0003D76E:
+	dc.b	$46, $0A, $00, $03, $00, $0E, $84, $C0, $35, $2E, $50, $4C, $41, $59, $45, $52
+	dc.b	$20, $44, $41, $4D, $41, $47, $45, $00
+loc_0003D786:
+	dc.b	$47, $0A, $00, $03, $00, $0C, $84, $C0, $36, $2E, $50, $4C, $41, $59, $45, $52
+	dc.b	$20, $44, $45, $41, $44, $00
+loc_0003D79C:
+	dc.b	$48, $0A, $00, $03, $00, $08, $84, $C0, $37, $2E, $53, $57, $4F, $52, $44, $20
+	dc.b	$31, $00
+loc_0003D7AE:
+	dc.b	$49, $0A, $00, $03, $00, $08, $84, $C0, $38, $2E, $53, $57, $4F, $52, $44, $20
+	dc.b	$32, $00
+loc_0003D7C0:
+	dc.b	$4A, $0A, $00, $03, $00, $08, $84, $C0, $39, $2E, $53, $57, $4F, $52, $44, $20
+	dc.b	$33, $00
+loc_0003D7D2:
+	dc.b	$4B, $08, $00, $03, $00, $09, $84, $C0, $31, $30, $2E, $53, $57, $4F, $52, $44
+	dc.b	$20, $34
+loc_0003D7E4:
+	dc.b	$42, $30, $00, $03, $00, $02, $84, $C0, $31, $31, $2E, $00
+loc_0003D7F0:
+	dc.b	$43, $30, $00, $03, $00, $02, $84, $C0, $31, $32, $2E, $00
+loc_0003D7FC:
+	dc.b	$44, $30, $00, $03, $00, $02, $84, $C0, $31, $33, $2E, $00
+loc_0003D808:
+	dc.b	$45, $30, $00, $03, $00, $02, $84, $C0, $31, $34, $2E, $00
+loc_0003D814:
+	dc.b	$46, $30, $00, $03, $00, $02, $84, $C0, $31, $35, $2E, $00
+loc_0003D820:
+	dc.b	$47, $30, $00, $03, $00, $02, $84, $C0, $31, $36, $2E, $00
+loc_0003D82C:
+	dc.b	$48, $30, $00, $03, $00, $02, $84, $C0, $31, $37, $2E, $00
+loc_0003D838:
+	dc.b	$49, $30, $00, $03, $00, $02, $84, $C0, $31, $38, $2E, $00
+loc_0003D844:
+	dc.b	$4A, $30, $00, $03, $00, $02, $84, $C0, $31, $39, $2E, $00
+loc_0003D850:
+	dc.b	$41, $1C, $00, $03, $00, $09, $C4, $C0, $43, $52, $54, $20, $20, $20, $54, $45
+	dc.b	$53, $54
+loc_0003D862:
+	dc.b	$4D, $14, $00, $03, $00, $14, $A4, $C0, $45, $58, $49, $54, $2E, $2E, $2E, $50
+	dc.b	$55, $53, $48, $20, $43, $20, $42, $55, $54, $54, $4F, $4E, $21, $00
+
+; loc_0003D880 — pointer table: 4 longs pointing to sound-ID arrays for each category
+; (BGM pointer table at $3D890, Effect at $3D8B8, BGM2 at $3D8E0, D/A at $3D908)
+loc_0003D880:
+	dc.b	$00, $03, $D8, $90, $00, $03, $D8, $B8, $00, $03, $D8, $E0, $00, $03, $D9, $08
+	dc.b	$00, $81, $00, $82, $00, $8D, $00, $87, $00, $8F, $00, $8B, $00, $83, $00, $8C
+	dc.b	$00, $95, $00, $91, $00, $8A, $00, $98, $00, $88, $00, $93, $00, $8E, $00, $92
+	dc.b	$00, $96, $00, $94, $00, $97, $00, $00, $00, $A0, $00, $A1, $00, $A8, $00, $A9
+	dc.b	$00, $A2, $00, $A3, $00, $A4, $00, $A5, $00, $A6, $00, $A7, $00, $AA, $00, $AD
+	dc.b	$00, $AE, $00, $BA, $00, $BC, $00, $BD, $00, $BE, $00, $BF, $00, $C1, $00, $00
+	dc.b	$00, $84, $00, $85, $00, $86, $00, $89, $00, $90, $00, $AB, $00, $AC, $00, $AF
+	dc.b	$00, $99, $00, $9A, $00, $9B, $00, $BB, $00, $B3, $00, $9C, $00, $00, $00, $00
+	dc.b	$00, $00, $00, $00, $00, $00, $00, $00, $00, $B0, $00, $B7, $00, $B1, $00, $C0
+	dc.b	$00, $B2, $00, $B9, $00, $B4, $00, $B5, $00, $B6, $00, $B8, $00, $00, $00, $00
+	dc.b	$00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
+
 PlayerSpritePositionClamp_Done_Data:
 	dc.b	$00, $02, $FF, $FD, $00, $01, $FF, $FB, $00, $03, $FF, $FC, $FF, $FF, $FF, $ED, $FF, $FB, $FF, $E2, $FF, $FF, $00, $01, $00, $09, $FF, $FC, $00, $09, $FF, $FB 
 	dc.b	$00, $04, $FF, $FB, $00, $0E, $FF, $ED, $00, $09, $FF, $DF, $00, $00, $00, $00, $00, $09, $FF, $FD, $00, $03, $FF, $FD, $00, $0F, $FF, $F7, $00, $11, $FF, $EB 
