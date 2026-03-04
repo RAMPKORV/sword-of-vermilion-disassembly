@@ -46,10 +46,21 @@ VRAM_Sprites        = $D800     ; Sprite attribute table (80 entries, $280 bytes
 VRAM_HScroll        = $DC00     ; Horizontal scroll table
 
 ; ============================================================
-; Dialogue Script Opcodes
+; Dialogue Script Opcodes & Text Encoding
 ; ============================================================
 ; These control codes are embedded in dialogue text strings
 ; to control text rendering and trigger game events.
+;
+; Text Encoding:
+;   Dialogue strings use ASCII-compatible byte values.
+;   The assembler encodes dc.b "text" as standard ASCII.
+;   Display bytes $20–$DD and $E0–$F6 are rendered as glyphs.
+;   Tile VRAM index = byte + FONT_TILE_BASE.
+;   Font tiles are loaded from data/art/tiles/font/font_tiles.bin.
+;   Wide characters ($DE/$DF pair) also use FONT_TILE_BASE but
+;   with palette bit $8000 OR'd in and positioned at (x-1, y-1).
+;
+FONT_TILE_BASE          = $04C0 ; Base VRAM tile index for font glyphs (byte + $04C0 = tile)
 ;
 ; Text Control Codes:
 SCRIPT_END              = $FF   ; End of dialogue script

@@ -164,6 +164,56 @@
 ;   Cursor_blink_timer    (.w $FFFFC200)  Frame counter for blinking the dialogue
 ;                                         cursor / continuation arrow.
 ; ======================================================================
+;
+; ======================================================================
+; VM-003: TEXT ENCODING
+; ======================================================================
+; Sword of Vermilion uses an ASCII-compatible custom character encoding.
+;
+; --- Byte-to-Glyph Formula ---
+;   VRAM tile index = script_byte + FONT_TILE_BASE  ($04C0)
+;   Example: 'A' ($41) → tile $0501 in VRAM font block
+;
+; --- Display Byte Ranges ---
+;   $20–$7E   Standard printable ASCII (space, digits, A-Z, a-z, punct.)
+;   $7F–$DD   Extended/special characters and symbols (punctuation,
+;             accented letters, box-drawing, etc.)
+;   $E0–$F6   Additional display characters (gap between wide chars
+;             and control codes $F7–$FF)
+;   NOTE: bytes $00–$1F are not used as display characters in practice.
+;
+; --- Control / Non-Display Bytes ---
+;   $F7   SCRIPT_PLAYER_NAME  — redirect output to Player_name buffer
+;   $F8   SCRIPT_TRIGGERS     — set event trigger flags
+;   $F9   SCRIPT_ACTIONS      — execute give-item/kims/trigger actions
+;   $FA   SCRIPT_CHOICE       — quest choice with expected answer
+;   $FB   SCRIPT_YES_NO       — yes/no prompt with event trigger
+;   $FC   SCRIPT_QUESTION     — show response choices
+;   $FD   SCRIPT_CONTINUE     — page break: wait for button then continue
+;   $FE   SCRIPT_NEWLINE      — advance 2 rows, reset X to left margin
+;   $FF   SCRIPT_END          — end of string; $00 padding follows
+;   $DE   SCRIPT_WIDE_CHAR_LO — wide glyph low surrogate
+;   $DF   SCRIPT_WIDE_CHAR_HI — wide glyph high surrogate
+;
+; --- Wide Characters ($DE / $DF) ---
+;   Wide glyphs occupy two tile columns. The $DF byte is the top/left
+;   tile; the $DE byte is the bottom/right tile.
+;   Both are rendered as: tile = byte + $04C0, with palette bit $8000
+;   forced set. The glyph is written one tile left and one tile above
+;   the normal cursor position (see ScriptRender_PortraitTile).
+;
+; --- Font Tile Data ---
+;   Source binary: data/art/tiles/font/font_tiles.bin
+;   Loaded at startup as CompressedFontTileData (RLE-compressed).
+;   Tiles are 8×8 pixels, 4bpp planar, Mega Drive native format.
+;   The continuation/page-break arrow glyph is at tile $04DF
+;   ($DF display byte → written directly as #$04DF in the renderer).
+;
+; --- String Termination ---
+;   Every string ends with SCRIPT_END ($FF).
+;   A $00 padding byte frequently follows to maintain word alignment.
+;   The assembler-emitted dc.b "..." form maps standard ASCII directly.
+; ======================================================================
 
 ;==============================================================
 ; SCRIPT / DIALOGUE ENGINE
