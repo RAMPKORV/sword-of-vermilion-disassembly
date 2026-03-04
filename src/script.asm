@@ -3110,10 +3110,29 @@ LoadLevelUpBannerTiles_Done2:
 ; HUD STATUS DISPLAY
 ;==============================================================
 
-UnknownData_12EA8:
-	dc.b	$00, $7C, $07, $00, $31, $FC, $00, $06, $C2, $42, $31, $FC, $00, $18, $C2, $44, $30, $38, $C6, $2C, $4E, $B9, $00, $01, $04, $8C, $34, $00, $36, $3C, $00, $00 
-	dc.b	$42, $45, $61, $00, $E5, $A4, $31, $FC, $00, $06, $C2, $42, $31, $FC, $00, $1A, $C2, $44, $30, $38, $C6, $32, $4E, $B9, $00, $01, $04, $8C, $34, $00, $36, $3C 
-	dc.b	$00, $00, $42, $45, $61, $00, $E5, $82, $02, $7C, $F8, $FF, $4E, $75 
+; DisplayHpMpAlt
+; Display current HP and MP at alternate HUD column (x=6).
+; Variant of DisplayPlayerHpMp used for a different HUD layout position.
+DisplayHpMpAlt:
+	ORI	#$0700, SR
+	MOVE.w	#6, Window_number_cursor_x.w
+	MOVE.w	#$0018, Window_number_cursor_y.w
+	MOVE.w	Player_hp.w, D0
+	JSR	ConvertToBCD
+	MOVE.w	D0, D2
+	MOVE.w	#0, D3
+	CLR.w	D5
+	BSR.w	ConvertNumberToTextDigits
+	MOVE.w	#6, Window_number_cursor_x.w
+	MOVE.w	#$001A, Window_number_cursor_y.w
+	MOVE.w	Player_mp.w, D0
+	JSR	ConvertToBCD
+	MOVE.w	D0, D2
+	MOVE.w	#0, D3
+	CLR.w	D5
+	BSR.w	ConvertNumberToTextDigits
+	ANDI	#$F8FF, SR
+	RTS
 ; DisplayPlayerHpMp
 ; Display the player's current HP and MP values on the HUD.
 DisplayPlayerHpMp:
@@ -3160,10 +3179,29 @@ DisplayCurrentHpMp:
 	ANDI	#$F8FF, SR
 	RTS
 
-UnknownData_12F92:
-	dc.b	$00, $7C, $07, $00, $31, $FC, $00, $0C, $C2, $42, $31, $FC, $00, $18, $C2, $44, $30, $38, $C6, $2E, $4E, $B9, $00, $01, $04, $8C, $34, $00, $36, $3C, $00, $00 
-	dc.b	$42, $45, $61, $00, $E4, $EE, $31, $FC, $00, $0C, $C2, $42, $31, $FC, $00, $1A, $C2, $44, $30, $38, $C6, $30, $4E, $B9, $00, $01, $04, $8C, $34, $00, $36, $3C 
-	dc.b	$00, $00, $42, $45, $61, $00, $E4, $CC, $02, $7C, $F8, $FF, $4E, $75 
+; DisplayMaxHpMpAlt
+; Display max HP and MP at alternate HUD column (x=$C).
+; Variant of DisplayMaxHpMp used for a different HUD layout position.
+DisplayMaxHpMpAlt:
+	ORI	#$0700, SR
+	MOVE.w	#$000C, Window_number_cursor_x.w
+	MOVE.w	#$0018, Window_number_cursor_y.w
+	MOVE.w	Player_mhp.w, D0
+	JSR	ConvertToBCD
+	MOVE.w	D0, D2
+	MOVE.w	#0, D3
+	CLR.w	D5
+	BSR.w	WordToDecimalString_NoPad
+	MOVE.w	#$000C, Window_number_cursor_x.w
+	MOVE.w	#$001A, Window_number_cursor_y.w
+	MOVE.w	Player_mmp.w, D0
+	JSR	ConvertToBCD
+	MOVE.w	D0, D2
+	MOVE.w	#0, D3
+	CLR.w	D5
+	BSR.w	WordToDecimalString_NoPad
+	ANDI	#$F8FF, SR
+	RTS
 ; DisplayCantUseMessage
 ; Display the "can't use" error message in the HUD title bar.
 DisplayCantUseMessage:
