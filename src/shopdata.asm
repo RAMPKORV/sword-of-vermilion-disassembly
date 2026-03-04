@@ -1,6 +1,94 @@
 ; ===========================================================================
+; src/shopdata.asm
 ; Shop & Economy Data
-; Inn/church prices, shop assortments, item prices, magic cost/element tables
+; ===========================================================================
+;
+; OVERVIEW
+; --------
+; This file contains all static data for the shop, economy, and magic systems:
+;   1.  InnAndFortuneTellerPricesByTown   (line   5)  14 dc.l prices, one per town
+;   2.  ChurchCurseRemovalPricesByTown    (line  21)  14 dc.l prices, one per town
+;   3.  ChurchPoisonCurePricesByTown      (line  37)  14 dc.l prices, one per town
+;   4.  ShopAssortmentByTownAndShopType   (line  53)  16 towns × 4 dc.l pointers
+;   5.  ShopPricesByTownAndType           (line  73)  16 towns × 4 dc.l pointers
+;   6.  ShopResaleValueMapPtrs            (line  92)  4 dc.l pointers to resale maps
+;   7.  ShopPossessionListPtrs            (line  97)  4 dc.l pointers to inventory lists
+;   8.  <Town>ItemShopAssortment/Prices   (line 102)  per-town item assortments+prices
+;   9.  <Town>EquipmentShopAssortment/...  (line 310)  per-town equipment assortments+prices
+;  10.  <Town>MagicShopAssortment/Prices  (line 228)  per-town magic assortments+prices
+;  11.  ItemResaleValueMap                (line 393)  44 dc.l values, indexed by item ID
+;  12.  EquipmentResaleValueMap           (line 439)  57 dc.l values, indexed by equip ID
+;  13.  MagicResaleValueMap               (line 498)  23 dc.l values, indexed by magic ID
+;  14.  MagicMpConsumptionMap             (line 522)  23 dc.w values, indexed by magic ID
+;  15.  MagicBaseDamageTable              (line 546)  14 × (tier,base) byte pairs
+;  16.  MagicElementTypeTable             (line 562)  14 bytes, indexed by battle magic ID
+;  17.  ShopCategoryNameTables            (line 564)  5 × 2 dc.l pairs + 2 NULL_PTR pairs
+;
+; ============================================================
+; RANDOMIZER GUIDE
+; ============================================================
+;
+; --- Service Prices (inn/church) ---
+; All three price tables have exactly 14 dc.l entries, one per town
+; (towns $00–$0D). Index directly by town ID (Current_town).
+;   InnAndFortuneTellerPricesByTown  — same price for both inn and fortune teller
+;   ChurchCurseRemovalPricesByTown
+;   ChurchPoisonCurePricesByTown
+;
+; --- Shop Lookup (assortment and prices) ---
+; Both ShopAssortmentByTownAndShopType and ShopPricesByTownAndType are parallel
+; tables structured identically. Each town occupies 16 bytes (4 × dc.l pointers).
+; Index formula: base + town_id*16 + shop_type*4
+; Shop type slots (0–3):
+;   0 — Item shop
+;   1 — Equipment shop
+;   2 — Magic shop (buy)
+;   3 — Magic shop (sell) — always points to ParmaMagicShop* for all towns
+;
+; NOTE: Towns $0E (HASTINGS2) and $0F (CARTHAHENA) have no item shop.
+; Their item-slot pointer in ShopAssortmentByTownAndShopType points to
+; ParmaMagicShopAssortment (a non-fatal mismatch), and in ShopPricesByTownAndType
+; also points to a magic assortment pointer instead of a price table (harmless
+; since those towns have no item shop NPC to trigger it).
+;
+; Macro: townShopBlock item,equip,magic,msell  → 4 dc.l values (macros.asm line 628)
+;
+; --- Shop Assortment Format ---
+; Each assortment block starts with a dc.w count, then count × 2-byte entries.
+;   Item shop:       dc.w count  then  shopItem ITEM_*  entries
+;   Equipment shop:  dc.w count  then  shopEquip EQUIPMENT_TYPE_*, EQUIPMENT_*  entries
+;   Magic shop:      dc.w count  then  shopMagic MAGIC_TYPE_*, MAGIC_*  entries
+;
+; Macro expansions (2 bytes each, macros.asm lines 643/655/667):
+;   shopItem  id       →  dc.b ITEM_TYPE_DISCARDABLE, id
+;   shopEquip type,id  →  dc.b type, id
+;   shopMagic type,id  →  dc.b type, id
+;
+; --- Shop Price Format ---
+; Each price block has one dc.l (32-bit kim value) per item in the matching
+; assortment block, in the same order. No count prefix — must be read using
+; the assortment count. The raw dc.l value equals the buy price in kims.
+; Note: the displayed price may be derived differently in some cases (the
+; game multiplies hex values, so $20 = 32 kims, $100 = 256 kims, etc.).
+;
+; --- Resale Value Maps ---
+; Three flat arrays of dc.l, one entry per ID, indexed directly by item/equip/magic ID.
+;   ItemResaleValueMap        — 44 entries (items $00–$2B)
+;   EquipmentResaleValueMap   — 57 entries (equipment $00–$38)
+;   MagicResaleValueMap       — 23 entries (magic $00–$16)
+; Sell price = resale map value. Some entries are $0 (quest items, unsellable).
+; Note: MAGIC_ARGENTOS resale ($2000 = 8192 kims) < buy price ($40000 = 262144 kims).
+;
+; ShopResaleValueMapPtrs — 4 pointers (item/equip/magic_buy/magic_sell)
+; ShopPossessionListPtrs — 4 pointers to player inventory RAM arrays
+;
+; --- Magic Tables ---
+; MagicMpConsumptionMap    — dc.w per magic ID ($00–$16), MP cost
+; MagicBaseDamageTable     — 2 bytes per battle magic ($00–$0D only):
+;                              byte 0: tier (affects scaling)
+;                              byte 1: base damage value
+; MagicElementTypeTable    — 1 byte per battle magic ($00–$0D):
+;                              $00=neutral $01=water $02=thunder $03=fire
 ; ===========================================================================
 InnAndFortuneTellerPricesByTown:
 	dc.l	$10
