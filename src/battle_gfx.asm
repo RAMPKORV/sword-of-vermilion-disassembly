@@ -461,11 +461,7 @@ LoadTalkerGraphics_Loop:
 LoadFirstPersonGraphics:
 	LEA	GfxLoadList_FirstPerson-2, A6
 	BSR.w	ProcessGraphicsLoadList
-	MOVE.l	#$40000000, D7
-	MOVE.w	#$01FF, D6
-	MOVE.b	#0, D5
-	MOVE.w	#1, D4
-	BSR.w	VDP_DMAFill
+	DMAFillVRAM_bsr $40000000, $01FF
 	RTS
 	
 LoadFirstPersonBattleGraphics:
@@ -838,7 +834,7 @@ LoadTownTileGraphics:
 	LEA	Tile_gfx_buffer.w, A2
 	TST.b	Swaffham_ruined.w
 	BEQ.b	LoadTownTileGfx_LookupTable
-	CMPI.w	#TOWN_SWAFHAM, Current_town.w
+	CMPI.w	#TOWN_SWAFFHAM, Current_town.w
 	BNE.b	LoadTownTileGfx_LookupTable
 	MOVEA.l	LoadTownTileGraphics_Data, A0
 	BRA.b	LoadTownTileGfx_LookupTable_Loop
@@ -861,7 +857,7 @@ LoadTownTileGfx_LookupTable_Loop_Done:
 	LEA	Tile_gfx_buffer.w, A2
 	TST.b	Swaffham_ruined.w
 	BEQ.b	LoadTownObjectGfx_LookupTable
-	CMPI.w	#TOWN_SWAFHAM, Current_town.w
+	CMPI.w	#TOWN_SWAFFHAM, Current_town.w
 	BNE.b	LoadTownObjectGfx_LookupTable
 	MOVEA.l	LoadTownTileGfx_LookupTable_Loop_Done_Data, A0
 	MOVE.w	LoadTownTileGfx_LookupTable_Loop_Done_Data2, D5

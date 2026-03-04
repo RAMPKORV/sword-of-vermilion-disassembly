@@ -17,8 +17,7 @@ UseJokeBook:
 UseSmallBomb:
 	PRINT 	LoudRoarStr
 	BSR.w	RemoveSelectedItemFromList
-	MOVE.w	#SOUND_BOMB, D0
-	JSR	QueueSoundEffect
+	PlaySound SOUND_BOMB
 	RTS
 
 ; UseOldWomansSketch: Use the Old Man's Sketch item. Must be in Keltwick,
@@ -185,8 +184,7 @@ UseSixteenRings:
 	BNE.b	UseSixteenRings_WrongCondition
 	PRINT 	RingsLeaveStr
 	MOVE.b	#FLAG_TRUE, Sixteen_rings_used_at_throne.w
-	MOVE.w	#SOUND_LEVEL_UP, D0
-	JSR	QueueSoundEffect
+	PlaySound SOUND_LEVEL_UP
 	RTS
 
 UseSixteenRings_WrongCondition:
@@ -250,8 +248,7 @@ UseGeneric_Loop_Done:
 	ANDI.w	#$00FF, D1
 	CMP.w	D1, D0
 	BNE.b	UseKey_NoDoor_Loop2
-	MOVE.w	#SOUND_ATTACK, D0
-	JSR	QueueSoundEffect
+	PlaySound SOUND_ATTACK
 	MOVE.b	#FLAG_TRUE, Door_unlocked_flag.w
 	PRINT 	KeyUnlockedStr
 	RTS
@@ -617,14 +614,12 @@ DialogState_MalageWaitDrawThenShowMoneySellWindow_Loop:
 DialogState_MalageShopSelectItemToBuy:
 	TST.b	Script_text_complete.w
 	BEQ.w	DialogState_MalageShopSelectItemToBuy_Loop
-	MOVE.w	#BUTTON_BIT_B, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_B
 	BEQ.b	DialogState_MalageShopSelectItemToBuy_Loop2
 	JSR	ResetScriptAndInitDialogue	
 	PRINT 	NoLeaveWithoutBuyingStr	
 	CLR.b	Script_text_complete.w	
-	MOVE.w	#SOUND_MENU_CANCEL, D0	
-	JSR	QueueSoundEffect	
+	PlaySound SOUND_MENU_CANCEL	
 	JSR	RestoreLeftMenuFromBuffer	
 	JSR	RestoreShopListFromBuffer	
 	MOVE.w	#DIALOG_STATE_MALAGE_WAIT_SCRIPT_THEN_OPEN_SELL_LIST, Dialogue_state.w	
@@ -633,13 +628,11 @@ DialogState_MalageShopSelectItemToBuy:
 DialogState_MalageShopSelectItemToBuy_Loop:
 	JMP	ProcessScriptText	
 DialogState_MalageShopSelectItemToBuy_Loop2:
-	MOVE.w	#BUTTON_BIT_C, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_C
 	BEQ.b	DialogState_MalageShopSelectItemToBuy_Loop3
 	MOVE.w	Shop_selected_index.w, Menu_cursor_index.w
 	JSR	DrawMenuCursor
-	MOVE.w	#SOUND_MENU_SELECT, D0
-	JSR	QueueSoundEffect
+	PlaySound SOUND_MENU_SELECT
 	JSR	SaveRightMenuAreaToBuffer
 	JSR	DrawYesNoDialog
 	MOVE.w	#DIALOG_STATE_MALAGE_BLACKSMITH_INTRO, Dialogue_state.w
@@ -699,18 +692,15 @@ DoneMyBestStr:
 DialogState_MalageShopConfirmOrCancel:
 	TST.b	Script_text_complete.w
 	BEQ.w	ShopBuy_CancelReturn_Loop
-	MOVE.w	#BUTTON_BIT_B, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_B
 	BNE.w	ShopBuy_CancelReturn
-	MOVE.w	#BUTTON_BIT_C, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_C
 	BEQ.w	ShopBuy_CancelReturn_Loop2
 	MOVE.w	Dialog_selection.w, Menu_cursor_index.w
 	JSR	DrawMenuCursor
 	TST.w	Dialog_selection.w
 	BNE.w	ShopBuy_CancelReturn
-	MOVE.w	#SOUND_MENU_SELECT, D0
-	JSR	QueueSoundEffect
+	PlaySound SOUND_MENU_SELECT
 	JSR	DrawLeftMenuWindow
 	JSR	ResetScriptAndInitDialogue
 	LEA	Possessed_items_length.w, A0
@@ -782,8 +772,7 @@ ShopBuy_RestoreAndReturn:
 	RTS
 
 ShopBuy_CancelReturn:
-	MOVE.w	#SOUND_MENU_CANCEL, D0
-	JSR	QueueSoundEffect
+	PlaySound SOUND_MENU_CANCEL
 	JSR	DrawLeftMenuWindow
 	MOVE.w	#DIALOG_STATE_MALAGE_WAIT_SCRIPT_THEN_OPEN_SELL_LIST, Dialogue_state.w
 	JSR	RestoreLeftMenuFromBuffer
@@ -825,11 +814,9 @@ DialogState_WaitScriptThenGoToOverworld:
 	BEQ.b	DialogWait_ClearRow_Loop
 	TST.b	Script_has_continuation.w
 	BNE.w	DialogWait_ClearRow_Loop2
-	MOVE.w	#BUTTON_BIT_C, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_C
 	BNE.b	DialogWait_ClearRow
-	MOVE.w	#BUTTON_BIT_B, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_B
 	BNE.b	DialogWait_ClearRow
 	RTS
 
@@ -839,8 +826,7 @@ DialogWait_ClearRow:
 	RTS
 
 DialogWait_ClearRow_Loop2:
-	MOVE.w	#BUTTON_BIT_C, D2	
-	JSR	CheckButtonPress	
+	CheckButton BUTTON_BIT_C	
 	BEQ.b	DialogWait_ClearRow_Loop3	
 	JSR	InitDialogueWindow	
 DialogWait_ClearRow_Loop:
@@ -874,25 +860,20 @@ DialogState_WaitScriptThenAdvance_Loop:
 	RTS
 
 DialogState_WaitButtonThenCloseMenu:
-	MOVE.w	#BUTTON_BIT_C, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_C
 	BNE.b	DialogWait_CloseToOverworld
-	MOVE.w	#BUTTON_BIT_B, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_B
 	BNE.b	DialogWait_CloseToOverworld
 	RTS
 
 DialogWait_CloseToOverworld:
 	CLR.w	Overworld_menu_state.w
 	JSR	DrawStatusHudWindow
-	MOVE.w	#WINDOW_DRAW_MSG_SPEED_ALT, Window_draw_type.w
-	CLR.w	Window_text_row.w
-	MOVE.b	#FLAG_TRUE, Window_tilemap_row_draw_pending.w
+	TriggerWindowRedraw WINDOW_DRAW_MSG_SPEED_ALT
 	RTS
 
 DialogState_WaitCThenRestartDialogue:
-	MOVE.w	#BUTTON_BIT_C, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_C
 	BEQ.b	DialogState_WaitCThenRestartDialogue_Loop
 	JSR	InitDialogueWindow
 	MOVE.w	#DIALOG_STATE_WAIT_SCRIPT_THEN_ADVANCE, Dialogue_state.w
@@ -906,8 +887,7 @@ DialogState_DrawYesNoDialog:
 	RTS
 
 DialogState_ProcessYesNoAnswer:
-	MOVE.w	#BUTTON_BIT_C, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_C
 	BEQ.w	DialogueChoice_Continue_Loop
 	JSR	DrawLeftMenuWindow
 	JSR	ResetScriptAndInitDialogue
@@ -979,13 +959,11 @@ DialogState_ShopMenuInput:
 	BNE.w	ShopSell_ListReturn
 	TST.b	Window_tilemap_row_draw_pending.w
 	BNE.w	ShopSell_ListReturn
-	MOVE.w	#BUTTON_BIT_B, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_B
 	BEQ.b	DialogState_ShopMenuInput_Loop
 	BRA.b	DialogState_ShopMenuInput_Loop2
 DialogState_ShopMenuInput_Loop:
-	MOVE.w	#BUTTON_BIT_C, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_C
 	BEQ.b	ShopSell_ShowPrompt_Loop
 	MOVE.w	Shop_action_selection.w, Menu_cursor_index.w
 	JSR	DrawMenuCursor
@@ -1032,18 +1010,14 @@ ShopSell_ListReturn:
 DialogState_WaitScriptThenCloseToOverworld:
 	TST.b	Script_text_complete.w
 	BEQ.b	DialogState_ShowWindowReturn_Loop
-	MOVE.w	#BUTTON_BIT_C, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_C
 	BNE.b	DialogState_ShowWindowReturn
-	MOVE.w	#BUTTON_BIT_B, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_B
 	BNE.b	DialogState_ShowWindowReturn
 	RTS
 
 DialogState_ShowWindowReturn:
-	MOVE.w	#WINDOW_DRAW_ITEM_LIST_TALL, Window_draw_type.w
-	CLR.w	Window_text_row.w
-	MOVE.b	#FLAG_TRUE, Window_tilemap_row_draw_pending.w
+	TriggerWindowRedraw WINDOW_DRAW_ITEM_LIST_TALL
 	MOVE.w	#DIALOG_STATE_REDRAW_HUD_AND_CLOSE, Dialogue_state.w
 	RTS
 
@@ -1054,9 +1028,7 @@ DialogState_RedrawHudAndClose:
 	BNE.b	DialogState_RedrawHudAndClose_Loop
 	JSR	DrawStatusHudWindow
 	CLR.w	Overworld_menu_state.w
-	MOVE.w	#WINDOW_DRAW_MSG_SPEED_ALT, Window_draw_type.w
-	CLR.w	Window_text_row.w
-	MOVE.b	#FLAG_TRUE, Window_tilemap_row_draw_pending.w
+	TriggerWindowRedraw WINDOW_DRAW_MSG_SPEED_ALT
 DialogState_RedrawHudAndClose_Loop:
 	RTS
 
@@ -1085,11 +1057,9 @@ DialogState_WaitDrawThenShowMoneyWindow_Loop:
 DialogState_ShopSellItemSelectInput:
 	TST.b	Script_text_complete.w
 	BEQ.w	DialogState_ShopSellItemSelectInput_Loop
-	MOVE.w	#BUTTON_BIT_B, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_B
 	BEQ.b	DialogState_ShopSellItemSelectInput_Loop2
-	MOVE.w	#SOUND_MENU_CANCEL, D0
-	JSR	QueueSoundEffect
+	PlaySound SOUND_MENU_CANCEL
 	JSR	RestoreLeftMenuFromBuffer
 	JSR	RestoreShopListFromBuffer
 	JSR	DrawShopMenuWindow
@@ -1097,11 +1067,9 @@ DialogState_ShopSellItemSelectInput:
 	RTS
 
 DialogState_ShopSellItemSelectInput_Loop2:
-	MOVE.w	#BUTTON_BIT_C, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_C
 	BEQ.w	DialogState_ShopSellItemSelectInput_Loop3
-	MOVE.w	#SOUND_MENU_SELECT, D0
-	JSR	QueueSoundEffect
+	PlaySound SOUND_MENU_SELECT
 	MOVE.w	Shop_selected_index.w, Menu_cursor_index.w
 	JSR	DrawMenuCursor
 	JSR	SaveRightMenuAreaToBuffer
@@ -1145,18 +1113,15 @@ DialogState_ShopSellItemSelectInput_Loop:
 DialogState_ShopBuyConfirmAndPurchase:
 	TST.b	Script_text_complete.w
 	BEQ.w	ShopCancel_RedrawBuyPrompt_Loop
-	MOVE.w	#BUTTON_BIT_B, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_B
 	BNE.w	ShopCancel_RedrawBuyPrompt
-	MOVE.w	#BUTTON_BIT_C, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_C
 	BEQ.w	ShopCancel_RedrawBuyPrompt_Loop2
 	MOVE.w	Dialog_selection.w, Menu_cursor_index.w
 	JSR	DrawMenuCursor
 	TST.w	Dialog_selection.w
 	BNE.w	ShopCancel_RedrawBuyPrompt
-	MOVE.w	#SOUND_MENU_SELECT, D0
-	JSR	QueueSoundEffect
+	PlaySound SOUND_MENU_SELECT
 	JSR	DrawLeftMenuWindow
 	JSR	ResetScriptAndInitDialogue
 	LEA	ShopPricesByTownAndType, A0
@@ -1214,8 +1179,7 @@ ShopGiveaway_RestoreList:
 	RTS
 
 ShopCancel_RedrawBuyPrompt:
-	MOVE.w	#SOUND_MENU_CANCEL, D0	
-	JSR	QueueSoundEffect	
+	PlaySound SOUND_MENU_CANCEL	
 	JSR	DrawLeftMenuWindow	
 	MOVE.w	#DIALOG_STATE_SHOP_SELL_ITEM_SELECT_INPUT, Dialogue_state.w	
 	JSR	SetShopMenuCursorPosition	
@@ -1255,11 +1219,9 @@ DialogState_WaitScriptThenDrawSellConfirm_Loop:
 DialogState_SellConfirmYesNoInput:
 	TST.b	Script_text_complete.w
 	BEQ.w	ShopBuyDone_ThankYou_Loop
-	MOVE.w	#BUTTON_BIT_B, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_B
 	BNE.b	ShopBuyDone_ThankYou
-	MOVE.w	#BUTTON_BIT_C, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_C
 	BNE.b	DialogState_SellConfirmYesNoInput_Loop
 	MOVE.w	Dialog_selection.w, Menu_cursor_index.w
 	JSR	HandleMenuInput
@@ -1356,11 +1318,9 @@ ShopEquip_InitCursor_Loop:
 DialogState_WaitScriptThenReturnToSellList:
 	TST.b	Script_text_complete.w
 	BEQ.b	DialogWait_ShowAnythingElse_Loop
-	MOVE.w	#BUTTON_BIT_C, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_C
 	BNE.b	DialogWait_ShowAnythingElse
-	MOVE.w	#BUTTON_BIT_B, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_B
 	BNE.b	DialogWait_ShowAnythingElse
 	RTS
 
@@ -1379,8 +1339,7 @@ DialogWait_ShowAnythingElse_Loop:
 DialogState_SellInventoryItemSelectInput:
 	TST.b	Script_text_complete.w
 	BEQ.w	ShopBuy_ScanItem_Loop
-	MOVE.w	#BUTTON_BIT_B, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_B
 	BEQ.b	DialogState_SellInventoryItemSelectInput_Loop
 	JSR	DrawCenterMenuWindow
 	JSR	RestoreLeftMenuFromBuffer
@@ -1389,8 +1348,7 @@ DialogState_SellInventoryItemSelectInput:
 	RTS
 
 DialogState_SellInventoryItemSelectInput_Loop:
-	MOVE.w	#BUTTON_BIT_C, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_C
 	BEQ.w	ShopBuy_ScanItem_Loop2
 	MOVE.w	Shop_selected_index.w, Menu_cursor_index.w
 	JSR	DrawMenuCursor
@@ -1461,11 +1419,9 @@ DialogState_WaitScriptThenDrawSellItemYesNo:
 DialogState_WaitScriptThenDrawSellItemYesNo_Loop:
 	JMP	ProcessScriptText
 DialogState_SellInventoryConfirmAndSell:
-	MOVE.w	#BUTTON_BIT_B, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_B
 	BNE.w	ShopEquip_DrawAndSetState
-	MOVE.w	#BUTTON_BIT_C, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_C
 	BEQ.w	ShopEquip_DrawAndSetState_Loop
 	MOVE.w	Dialog_selection.w, Menu_cursor_index.w
 	JSR	DrawMenuCursor
@@ -1561,11 +1517,9 @@ DialogState_DrawSellInventoryYesNo:
 DialogState_SellInventoryCancelOrConfirm:
 	TST.b	Script_text_complete.w
 	BEQ.w	ShopSell_RestoreAndInit_Loop
-	MOVE.w	#BUTTON_BIT_B, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_B
 	BNE.b	ShopSell_RestoreAndInit
-	MOVE.w	#BUTTON_BIT_C, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_C
 	BNE.b	DialogState_SellInventoryCancelOrConfirm_Loop
 	MOVE.w	Dialog_selection.w, Menu_cursor_index.w
 	JSR	HandleMenuInput
@@ -1608,8 +1562,7 @@ DialogState_WaitScriptWithYesNoOrContinue:
 	RTS
 
 DialogState_WaitScriptWithYesNoOrContinue_Loop2:
-	MOVE.w	#BUTTON_BIT_C, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_C
 	BEQ.b	DialogState_WaitScriptWithYesNoOrContinue_Loop3
 	JSR	InitDialogueWindow
 DialogState_WaitScriptWithYesNoOrContinue_Loop:
@@ -1629,11 +1582,9 @@ DialogState_DrawFortuneTellerMoneyWindow:
 	RTS
 
 DialogState_FortuneTellerPayAndRead:
-	MOVE.w	#BUTTON_BIT_B, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_B
 	BNE.w	FortuneTeller_NoQuestionsLeft
-	MOVE.w	#BUTTON_BIT_C, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_C
 	BEQ.w	FortuneTeller_DrawAndSetState_Loop
 	TST.w	Dialog_selection.w
 	BNE.w	FortuneTeller_NoQuestionsLeft
@@ -1676,11 +1627,9 @@ DialogState_WaitFortuneTellerScriptThenClose:
 	BEQ.b	ShopExit_RestoreHud_Loop
 	TST.b	Script_has_continuation.w
 	BNE.b	ShopExit_RestoreHud_Loop2
-	MOVE.w	#BUTTON_BIT_C, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_C
 	BNE.b	ShopExit_RestoreHud
-	MOVE.w	#BUTTON_BIT_B, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_B
 	BNE.b	ShopExit_RestoreHud
 	RTS
 
@@ -1688,16 +1637,13 @@ ShopExit_RestoreHud:
 	JSR	DrawStatusHudWindow
 	JSR	RestoreLeftMenuFromBuffer
 	CLR.w	Overworld_menu_state.w
-	MOVE.w	#WINDOW_DRAW_MSG_SPEED_ALT, Window_draw_type.w
-	CLR.w	Window_text_row.w
-	MOVE.b	#FLAG_TRUE, Window_tilemap_row_draw_pending.w
+	TriggerWindowRedraw WINDOW_DRAW_MSG_SPEED_ALT
 	RTS
 
 ShopExit_RestoreHud_Loop:
 	JMP	ProcessScriptText
 ShopExit_RestoreHud_Loop2:
-	MOVE.w	#BUTTON_BIT_C, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_C
 	BEQ.b	ShopExit_RestoreHud_Loop3
 	JSR	InitDialogueWindow
 ShopExit_RestoreHud_Loop3:
@@ -1727,8 +1673,7 @@ DialogState_WaitScriptThenDrawInnYesNo_Loop4:
 DialogState_WaitScriptThenDrawInnYesNo_Loop:
 	JMP	ProcessScriptText
 DialogState_WaitScriptThenDrawInnYesNo_Loop2:
-	MOVE.w	#BUTTON_BIT_C, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_C
 	BEQ.b	DialogState_WaitScriptThenDrawInnYesNo_Loop5
 	JSR	InitDialogueWindow
 DialogState_WaitScriptThenDrawInnYesNo_Loop5:
@@ -1747,11 +1692,9 @@ DialogState_InnPayAndSleep:
 	BNE.w	InnWatling_ConfirmPayment
 	TST.b	Watling_inn_free_stay_used.w
 	BNE.w	InnWatling_ConfirmPayment
-	MOVE.w	#BUTTON_BIT_B, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_B
 	BNE.b	InnWatling_CreditNight
-	MOVE.w	#BUTTON_BIT_C, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_C
 	BNE.b	InnWatling_CreditNight
 	RTS
 
@@ -1778,11 +1721,9 @@ InnWatling_CreditNight_Loop2:
 	CLR.w	Watling_inn_unpaid_nights.w
 	BRA.w	InnWatling_SetRestState
 InnWatling_ConfirmPayment:
-	MOVE.w	#BUTTON_BIT_B, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_B
 	BNE.w	InnWatling_ServicesCost
-	MOVE.w	#BUTTON_BIT_C, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_C
 	BEQ.w	InnWatling_ServicesCost_Loop
 	MOVE.w	Dialog_selection.w, Menu_cursor_index.w
 	JSR	DrawMenuCursor
@@ -1893,8 +1834,7 @@ DialogState_WaitScriptThenOpenChurchMenu:
 	BEQ.b	DialogState_WaitScriptThenOpenChurchMenu_Loop
 	JSR	SaveStatusMenuAreaToBuffer_Large
 	JSR	DrawChurchMenuWindow
-	MOVE.w	#SOUND_MENU_CURSOR, D0
-	JSR	QueueSoundEffect
+	PlaySound SOUND_MENU_CURSOR
 	CLR.w	Church_service_selection.w
 	ADDQ.w	#1, Dialogue_state.w
 	RTS
@@ -1906,13 +1846,11 @@ DialogState_ChurchMenuInput:
 	BNE.w	ChurchMenu_HandleInput_Return
 	TST.b	Window_tilemap_row_draw_pending.w
 	BNE.w	ChurchMenu_HandleInput_Return
-	MOVE.w	#BUTTON_BIT_B, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_B
 	BEQ.b	DialogState_ChurchMenuInput_Loop
 	BRA.b	DialogState_ChurchMenuInput_Loop2
 DialogState_ChurchMenuInput_Loop:
-	MOVE.w	#BUTTON_BIT_C, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_C
 	BEQ.w	ChurchService_InitDialogue_Loop
 	MOVE.w	Church_service_selection.w, Menu_cursor_index.w
 	JSR	DrawMenuCursor
@@ -1987,20 +1925,15 @@ ChurchMenu_HandleInput_Return:
 DialogState_WaitScriptThenCloseChurchToHud:
 	TST.b	Script_text_complete.w
 	BEQ.b	ChurchExit_RestoreAndSetState_Loop
-	MOVE.w	#BUTTON_BIT_C, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_C
 	BNE.b	ChurchExit_RestoreAndSetState
-	MOVE.w	#BUTTON_BIT_B, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_B
 	BNE.b	ChurchExit_RestoreAndSetState
 	RTS
 
 ChurchExit_RestoreAndSetState:
-	MOVE.w	#SOUND_MENU_CANCEL, D0
-	JSR	QueueSoundEffect
-	MOVE.w	#WINDOW_DRAW_RIGHT_MENU, Window_draw_type.w
-	CLR.w	Window_text_row.w
-	MOVE.b	#FLAG_TRUE, Window_tilemap_row_draw_pending.w
+	PlaySound SOUND_MENU_CANCEL
+	TriggerWindowRedraw WINDOW_DRAW_RIGHT_MENU
 	MOVE.w	#DIALOG_STATE_WAIT_TILE_THEN_CLOSE_TO_OVERWORLD, Dialogue_state.w
 	RTS
 
@@ -2010,12 +1943,9 @@ DialogState_WaitTileThenCloseToOverworld:
 	TST.b	Window_tilemap_row_draw_pending.w
 	BNE.b	DialogState_WaitTileThenCloseToOverworld_Loop
 	JSR	DrawStatusHudWindow
-	MOVE.w	#SOUND_MENU_CANCEL, D0
-	JSR	QueueSoundEffect
+	PlaySound SOUND_MENU_CANCEL
 	CLR.w	Overworld_menu_state.w
-	MOVE.w	#WINDOW_DRAW_MSG_SPEED_ALT, Window_draw_type.w
-	CLR.w	Window_text_row.w
-	MOVE.b	#FLAG_TRUE, Window_tilemap_row_draw_pending.w
+	TriggerWindowRedraw WINDOW_DRAW_MSG_SPEED_ALT
 DialogState_WaitTileThenCloseToOverworld_Loop:
 	RTS
 
@@ -2040,11 +1970,9 @@ DialogState_DrawCurseRemovalMoneyWindow_Loop:
 	RTS
 
 DialogState_CurseRemovalPayAndCure:
-	MOVE.w	#BUTTON_BIT_B, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_B
 	BNE.w	ShopNoTakeBack_Sell
-	MOVE.w	#BUTTON_BIT_C, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_C
 	BEQ.w	ShopNoTakeBack_Sell_Loop
 	MOVE.w	Dialog_selection.w, Menu_cursor_index.w
 	JSR	DrawMenuCursor
@@ -2106,11 +2034,9 @@ DialogState_DrawPoisonCureMoneyWindow:
 	RTS
 
 DialogState_PoisonCurePayAndCure:
-	MOVE.w	#BUTTON_BIT_B, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_B
 	BNE.w	ShopNoTakeBack_Giveaway
-	MOVE.w	#BUTTON_BIT_C, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_C
 	BEQ.w	ShopNoTakeBack_Giveaway_Loop
 	MOVE.w	Dialog_selection.w, Menu_cursor_index.w
 	JSR	DrawMenuCursor
@@ -2176,11 +2102,9 @@ DialogState_WaitScriptThenOpenSaveMenu_Loop:
 DialogState_SaveMenuInput:
 	TST.b	Window_tilemap_draw_active.w
 	BNE.b	DialogState_SaveMenuInput_Loop
-	MOVE.w	#BUTTON_BIT_B, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_B
 	BNE.b	DialogState_SaveMenuInput_Loop2
-	MOVE.w	#BUTTON_BIT_C, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_C
 	BEQ.b	DialogState_SaveMenuInput_Loop3
 	JSR	SaveGameToSram
 	JSR	RestoreShopSubmenuFromBuffer
@@ -2192,8 +2116,7 @@ DialogState_SaveMenuInput:
 DialogState_SaveMenuInput_Loop2:
 	JSR	RestoreShopSubmenuFromBuffer	
 	JSR	DrawChurchMenuWindow	
-	MOVE.w	#SOUND_MENU_CURSOR, D0	
-	JSR	QueueSoundEffect	
+	PlaySound SOUND_MENU_CURSOR	
 	CLR.w	Church_service_selection.w	
 	MOVE.w	#DIALOG_STATE_CHURCH_MENU_INPUT, Dialogue_state.w	
 	RTS
@@ -2370,7 +2293,7 @@ FortuneTellerGreetingsByTown:
 	dc.l	FortuneTellerGreeting_Malaga
 	dc.l	FortuneTellerGreeting_Barrow	
 	dc.l	FortuneTellerGreeting_Helwig
-	dc.l	FortuneTellerGreeting_Swafham	
+	dc.l	FortuneTellerGreeting_Swaffham	
 	dc.l	FortuneTellerGreeting_Excalabria	
 	dc.l	FortuneTellerGreeting_ExcalabriaCastle	
 	dc.l	NpcDialog_NotHungryCantHelp	
@@ -2389,7 +2312,7 @@ FortuneTellerReadingsByTown:
 	dc.l	FortuneTellerReading_Malaga
 	dc.l	FortuneTellerGreeting_Barrow	
 	dc.l	FortuneTellerReading_Helwig
-	dc.l	FortuneTellerGreeting_Swafham
+	dc.l	FortuneTellerGreeting_Swaffham
 	dc.l	FortuneTellerGreeting_Excalabria
 	dc.l	FortuneTellerGreeting_ExcalabriaCastle	
 	dc.l	NpcDialog_FindRingsInCartahena	
@@ -2432,11 +2355,9 @@ ReadyEquipmentStateJumpTable_Loop2:
 	BNE.w	ReadyEquipmentMenu_Done
 	TST.b	Window_tilemap_row_draw_pending.w
 	BNE.w	ReadyEquipmentMenu_Done
-	MOVE.w	#BUTTON_BIT_B, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_B
 	BNE.b	ReadyEquip_ConfirmAndSetState
-	MOVE.w	#BUTTON_BIT_C, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_C
 	BNE.b	ReadyEquip_ConfirmAndSetState_Loop
 	MOVE.w	Ready_equipment_selection.w, Menu_cursor_index.w
 	JSR	HandleMenuInput
@@ -2444,11 +2365,8 @@ ReadyEquipmentStateJumpTable_Loop2:
 	RTS
 
 ReadyEquip_ConfirmAndSetState:
-	MOVE.w	#SOUND_MENU_CANCEL, D0
-	JSR	QueueSoundEffect
-	MOVE.w	#WINDOW_DRAW_STATUS_MENU, Window_draw_type.w
-	CLR.w	Window_text_row.w
-	MOVE.b	#FLAG_TRUE, Window_tilemap_row_draw_pending.w
+	PlaySound SOUND_MENU_CANCEL
+	TriggerWindowRedraw WINDOW_DRAW_STATUS_MENU
 	MOVE.w	#OVERWORLD_MENU_STATE_OPTIONS_WAIT, Overworld_menu_state.w
 	JSR	InitMenuCursorDefaults
 	RTS
@@ -2459,8 +2377,7 @@ ReadyEquip_ConfirmAndSetState_Loop:
 	MOVE.w	Ready_equipment_selection.w, D0
 	CMPI.w	#2, D0
 	BEQ.b	ReadyEquip_ConfirmAndSetState
-	MOVE.w	#SOUND_MENU_SELECT, D0
-	JSR	QueueSoundEffect
+	PlaySound SOUND_MENU_SELECT
 	CLR.w	Ready_equipment_category.w
 	MOVE.w	#READY_EQUIP_STATE_OPTIONS, Ready_equipment_state.w
 	JSR	SaveRightMenuToBuffer
@@ -2474,11 +2391,9 @@ ReadyEquipmentMenu_Done:
 ReadyEquipmentMenu_Done_Loop:
 	TST.b	Window_tilemap_draw_active.w
 	BNE.w	ReadyEquipmentMenu_Done_Loop3
-	MOVE.w	#BUTTON_BIT_B, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_B
 	BNE.b	ReadyEquipmentMenu_Done_Loop4
-	MOVE.w	#BUTTON_BIT_C, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_C
 	BNE.b	ReadyEquipmentMenu_Done_Loop5
 	MOVE.w	Ready_equipment_category.w, Menu_cursor_index.w
 	JSR	HandleMenuInput
@@ -2486,8 +2401,7 @@ ReadyEquipmentMenu_Done_Loop:
 	RTS
 
 ReadyEquipmentMenu_Done_Loop4:
-	MOVE.w	#SOUND_MENU_CANCEL, D0
-	JSR	QueueSoundEffect
+	PlaySound SOUND_MENU_CANCEL
 	JSR	RestoreRightMenuFromBuffer
 	JSR	DrawEquipmentMenuWindow
 	MOVE.w	#READY_EQUIP_STATE_WAIT, Ready_equipment_state.w
@@ -2496,8 +2410,7 @@ ReadyEquipmentMenu_Done_Loop4:
 ReadyEquipmentMenu_Done_Loop5:
 	MOVE.w	Ready_equipment_category.w, Menu_cursor_index.w
 	JSR	DrawMenuCursor
-	MOVE.w	#SOUND_MENU_SELECT, D0
-	JSR	QueueSoundEffect
+	PlaySound SOUND_MENU_SELECT
 	BSR.w	BuildEquipmentListForCategory
 	JSR	SaveStatusBarToBuffer
 	JSR	ResetScriptAndInitDialogue
@@ -2520,11 +2433,9 @@ ReadyEquipmentMenu_Done_Loop3:
 ReadyEquipmentMenu_Done_Loop2:
 	TST.b	Script_text_complete.w
 	BEQ.w	ReadyEquip_CursedReturn_Loop
-	MOVE.w	#BUTTON_BIT_B, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_B
 	BNE.b	ReadyEquipmentMenu_Done_Loop7
-	MOVE.w	#BUTTON_BIT_C, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_C
 	BNE.b	ReadyEquipmentMenu_Done_Loop8
 	MOVE.w	Ready_equipment_cursor_index.w, Menu_cursor_index.w
 	JSR	HandleMenuInput
@@ -2532,8 +2443,7 @@ ReadyEquipmentMenu_Done_Loop2:
 	RTS
 
 ReadyEquipmentMenu_Done_Loop7:
-	MOVE.w	#SOUND_MENU_CANCEL, D0
-	JSR	QueueSoundEffect
+	PlaySound SOUND_MENU_CANCEL
 	JSR	RestoreReadyEquipmentMenuFromBuffer
 	JSR	DrawStatusHudWindow
 	JSR	RestoreRightMenuFromBuffer
@@ -2544,8 +2454,7 @@ ReadyEquipmentMenu_Done_Loop7:
 ReadyEquipmentMenu_Done_Loop8:
 	MOVE.w	Ready_equipment_cursor_index.w, Menu_cursor_index.w
 	JSR	DrawMenuCursor
-	MOVE.w	#SOUND_MENU_SELECT, D0
-	JSR	QueueSoundEffect
+	PlaySound SOUND_MENU_SELECT
 	JSR	ResetScriptAndInitDialogue
 	BSR.w	GetCurrentEquippedItemID
 	TST.w	D0
@@ -2634,11 +2543,9 @@ ReadyEquip_CursedReturn_Loop:
 	RTS
 
 ReadyEquipmentState_ShowCategory:
-	MOVE.w	#BUTTON_BIT_B, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_B
 	BNE.b	ReadyEquipmentState_ShowCategory_Loop2
-	MOVE.w	#BUTTON_BIT_C, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_C
 	BNE.b	ReadyEquipmentState_ShowCategory_Loop3
 	MOVE.w	Ready_equipment_category.w, Menu_cursor_index.w
 	JSR	HandleMenuInput
@@ -2646,8 +2553,7 @@ ReadyEquipmentState_ShowCategory:
 	RTS
 
 ReadyEquipmentState_ShowCategory_Loop2:
-	MOVE.w	#SOUND_MENU_CANCEL, D0	
-	JSR	QueueSoundEffect	
+	PlaySound SOUND_MENU_CANCEL	
 	JSR	RestoreRightMenuFromBuffer	
 	JSR	DrawEquipmentMenuWindow	
 	MOVE.w	#READY_EQUIP_STATE_WAIT, Ready_equipment_state.w	
@@ -2656,8 +2562,7 @@ ReadyEquipmentState_ShowCategory_Loop2:
 ReadyEquipmentState_ShowCategory_Loop3:
 	MOVE.w	Ready_equipment_category.w, Menu_cursor_index.w
 	JSR	DrawMenuCursor
-	MOVE.w	#SOUND_MENU_SELECT, D0
-	JSR	QueueSoundEffect
+	PlaySound SOUND_MENU_SELECT
 	BSR.w	BuildEquipmentListForCategory
 	JSR	SaveStatusBarToBuffer
 	JSR	ResetScriptAndInitDialogue
@@ -2705,11 +2610,9 @@ ReadyEquipmentState_ShowCategory_Loop5:
 ReadyEquipmentState_ShowCategory_Loop:
 	TST.b	Script_text_complete.w
 	BEQ.b	ReadyEquip_ExitToHud_Loop
-	MOVE.w	#BUTTON_BIT_C, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_C
 	BNE.b	ReadyEquip_ExitToHud
-	MOVE.w	#BUTTON_BIT_B, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_B
 	BNE.b	ReadyEquip_ExitToHud
 	RTS
 
@@ -2931,8 +2834,7 @@ EquipListMenuStateJumpTable:
 EquipListMenuStateJumpTable_Loop:
 	MOVE.w	Main_menu_selection.w, Menu_cursor_index.w
 	JSR	DrawMenuCursor
-	MOVE.w	#SOUND_MENU_CURSOR, D0
-	JSR	QueueSoundEffect
+	PlaySound SOUND_MENU_CURSOR
 	JSR	SaveFullDialogAreaToBuffer
 	JSR	DrawCharacterStatsWindow
 	ADDQ.w	#1, Equip_list_menu_state.w
@@ -2943,26 +2845,20 @@ EquipListMenuStateJumpTable_Loop2:
 	BNE.w	EquipListMenu_DrawGear_Return
 	TST.b	Window_tilemap_row_draw_pending.w
 	BNE.w	EquipListMenu_DrawGear_Return
-	MOVE.w	#BUTTON_BIT_C, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_C
 	BNE.w	EquipListMenuStateJumpTable_Loop3
-	MOVE.w	#BUTTON_BIT_B, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_B
 	BNE.w	EquipListMenuStateJumpTable_Loop4
 	RTS
 
 EquipListMenuStateJumpTable_Loop4:
-	MOVE.w	#SOUND_MENU_CANCEL, D0
-	JSR	QueueSoundEffect
+	PlaySound SOUND_MENU_CANCEL
 	MOVE.w	#EQUIP_LIST_STATE_EXIT_SCRIPT, Equip_list_menu_state.w
-	MOVE.w	#WINDOW_DRAW_SCRIPT, Window_draw_type.w
-	CLR.w	Window_text_row.w
-	MOVE.b	#FLAG_TRUE, Window_tilemap_row_draw_pending.w
+	TriggerWindowRedraw WINDOW_DRAW_SCRIPT
 	RTS
 
 EquipListMenuStateJumpTable_Loop3:
-	MOVE.w	#SOUND_MENU_CURSOR, D0
-	JSR	QueueSoundEffect
+	PlaySound SOUND_MENU_CURSOR
 	JSR	SaveFullMenuTiles
 	JSR	DrawEquippedGearWindow
 	ADDQ.w	#1, Equip_list_menu_state.w
@@ -2974,26 +2870,20 @@ EquipListMenu_DrawGear_Return_Loop:
 	BNE.w	EquipListMenu_DrawCombat_Return
 	TST.b	Window_tilemap_row_draw_pending.w
 	BNE.w	EquipListMenu_DrawCombat_Return
-	MOVE.w	#BUTTON_BIT_C, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_C
 	BNE.w	EquipListMenu_DrawGear_Return_Loop2
-	MOVE.w	#BUTTON_BIT_B, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_B
 	BNE.w	EquipListMenu_DrawGear_Return_Loop3
 	RTS
 
 EquipListMenu_DrawGear_Return_Loop3:
-	MOVE.w	#SOUND_MENU_CANCEL, D0
-	JSR	QueueSoundEffect
-	MOVE.w	#WINDOW_DRAW_FULL_MENU, Window_draw_type.w
-	MOVE.b	#FLAG_TRUE, Window_tilemap_row_draw_pending.w
-	CLR.w	Window_text_row.w
+	PlaySound SOUND_MENU_CANCEL
+	TriggerWindowRedraw_alt WINDOW_DRAW_FULL_MENU
 	MOVE.w	#EQUIP_LIST_STATE_STATS_WAIT, Equip_list_menu_state.w
 	RTS
 
 EquipListMenu_DrawGear_Return_Loop2:
-	MOVE.w	#SOUND_MENU_CURSOR, D0
-	JSR	QueueSoundEffect
+	PlaySound SOUND_MENU_CURSOR
 	JSR	SaveEquipmentListTiles
 	JSR	DrawGearCombatWindow
 	ADDQ.w	#1, Equip_list_menu_state.w
@@ -3005,26 +2895,20 @@ EquipListMenu_DrawCombat_Return_Loop:
 	BNE.w	EquipListMenu_DrawMagic_Return
 	TST.b	Window_tilemap_row_draw_pending.w
 	BNE.w	EquipListMenu_DrawMagic_Return
-	MOVE.w	#BUTTON_BIT_C, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_C
 	BNE.w	EquipListMenu_DrawCombat_Return_Loop2
-	MOVE.w	#BUTTON_BIT_B, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_B
 	BNE.w	EquipListMenu_DrawCombat_Return_Loop3
 	RTS
 
 EquipListMenu_DrawCombat_Return_Loop3:
-	MOVE.w	#SOUND_MENU_CANCEL, D0
-	JSR	QueueSoundEffect
-	MOVE.w	#WINDOW_DRAW_EQUIP_LIST, Window_draw_type.w
-	MOVE.b	#FLAG_TRUE, Window_tilemap_row_draw_pending.w
-	CLR.w	Window_text_row.w
+	PlaySound SOUND_MENU_CANCEL
+	TriggerWindowRedraw_alt WINDOW_DRAW_EQUIP_LIST
 	MOVE.w	#EQUIP_LIST_STATE_GEAR_PAGE, Equip_list_menu_state.w
 	RTS
 
 EquipListMenu_DrawCombat_Return_Loop2:
-	MOVE.w	#SOUND_MENU_CURSOR, D0
-	JSR	QueueSoundEffect
+	PlaySound SOUND_MENU_CURSOR
 	JSR	SaveMagicListTiles
 	JSR	DrawMagicListWindow
 	ADDQ.w	#1, Equip_list_menu_state.w
@@ -3036,26 +2920,20 @@ EquipListMenu_DrawMagic_Return_Loop:
 	BNE.w	EquipListMenu_DrawItems_Return
 	TST.b	Window_tilemap_row_draw_pending.w
 	BNE.w	EquipListMenu_DrawItems_Return
-	MOVE.w	#BUTTON_BIT_C, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_C
 	BNE.w	EquipListMenu_DrawMagic_Return_Loop2
-	MOVE.w	#BUTTON_BIT_B, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_B
 	BNE.w	EquipListMenu_DrawMagic_Return_Loop3
 	RTS
 
 EquipListMenu_DrawMagic_Return_Loop3:
-	MOVE.w	#SOUND_MENU_CANCEL, D0
-	JSR	QueueSoundEffect
-	MOVE.w	#WINDOW_DRAW_MAGIC_LIST, Window_draw_type.w
-	MOVE.b	#FLAG_TRUE, Window_tilemap_row_draw_pending.w
-	CLR.w	Window_text_row.w
+	PlaySound SOUND_MENU_CANCEL
+	TriggerWindowRedraw_alt WINDOW_DRAW_MAGIC_LIST
 	MOVE.w	#EQUIP_LIST_STATE_COMBAT_PAGE, Equip_list_menu_state.w
 	RTS
 
 EquipListMenu_DrawMagic_Return_Loop2:
-	MOVE.w	#SOUND_MENU_CURSOR, D0
-	JSR	QueueSoundEffect
+	PlaySound SOUND_MENU_CURSOR
 	JSR	SaveItemListRightTiles
 	JSR	DrawItemsListWindow
 	ADDQ.w	#1, Equip_list_menu_state.w
@@ -3067,26 +2945,20 @@ EquipListMenu_DrawItems_Return_Loop:
 	BNE.w	EquipListMenu_DrawRings_Return
 	TST.b	Window_tilemap_row_draw_pending.w
 	BNE.w	EquipListMenu_DrawRings_Return
-	MOVE.w	#BUTTON_BIT_C, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_C
 	BNE.w	EquipListMenu_DrawItems_Return_Loop2
-	MOVE.w	#BUTTON_BIT_B, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_B
 	BNE.w	EquipListMenu_DrawItems_Return_Loop3
 	RTS
 
 EquipListMenu_DrawItems_Return_Loop3:
-	MOVE.w	#SOUND_MENU_CANCEL, D0
-	JSR	QueueSoundEffect
-	MOVE.w	#WINDOW_DRAW_ITEM_RIGHT, Window_draw_type.w
-	MOVE.b	#FLAG_TRUE, Window_tilemap_row_draw_pending.w
-	CLR.w	Window_text_row.w
+	PlaySound SOUND_MENU_CANCEL
+	TriggerWindowRedraw_alt WINDOW_DRAW_ITEM_RIGHT
 	MOVE.w	#EQUIP_LIST_STATE_MAGIC_PAGE, Equip_list_menu_state.w
 	RTS
 
 EquipListMenu_DrawItems_Return_Loop2:
-	MOVE.w	#SOUND_MENU_CURSOR, D0
-	JSR	QueueSoundEffect
+	PlaySound SOUND_MENU_CURSOR
 	JSR	SaveRingsListMenuToBuffer
 	JSR	DrawRingsListWindow
 	ADDQ.w	#1, Equip_list_menu_state.w
@@ -3098,11 +2970,9 @@ EquipListMenu_DrawRings_Return_Loop:
 	BNE.w	EquipListMenu_DrawStatus_Return
 	TST.b	Window_tilemap_row_draw_pending.w
 	BNE.w	EquipListMenu_DrawStatus_Return
-	MOVE.w	#BUTTON_BIT_C, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_C
 	BNE.w	EquipListMenu_DrawRings_Return_Loop2
-	MOVE.w	#BUTTON_BIT_B, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_B
 	BNE.w	EquipListMenu_DrawRings_Return_Loop3
 	RTS
 
@@ -3112,11 +2982,8 @@ EquipListMenu_DrawRings_Return_Loop2:
 EquipListMenu_DrawRings_Return_Loop3:
 	MOVE.w	#EQUIP_LIST_STATE_ITEMS_PAGE, Equip_list_menu_state.w
 EquipListMenu_DrawRings_Return_Loop4:
-	MOVE.w	#SOUND_MENU_CANCEL, D0
-	JSR	QueueSoundEffect
-	MOVE.w	#WINDOW_DRAW_RING_LIST, Window_draw_type.w
-	MOVE.b	#FLAG_TRUE, Window_tilemap_row_draw_pending.w
-	CLR.w	Window_text_row.w
+	PlaySound SOUND_MENU_CANCEL
+	TriggerWindowRedraw_alt WINDOW_DRAW_RING_LIST
 EquipListMenu_DrawStatus_Return:
 	RTS
 
@@ -3125,12 +2992,9 @@ EquipListMenu_DrawStatus_Return_Loop:
 	BNE.w	EquipListMenu_DrawWindow_Return	
 	TST.b	Window_tilemap_row_draw_pending.w	
 	BNE.w	EquipListMenu_DrawWindow_Return	
-	MOVE.w	#SOUND_MENU_CANCEL, D0	
-	JSR	QueueSoundEffect	
+	PlaySound SOUND_MENU_CANCEL	
 	MOVE.w	#EQUIP_LIST_STATE_EXIT_SCRIPT, Equip_list_menu_state.w	
-	MOVE.w	#WINDOW_DRAW_SCRIPT, Window_draw_type.w	
-	CLR.w	Window_text_row.w	
-	MOVE.b	#FLAG_TRUE, Window_tilemap_row_draw_pending.w	
+	TriggerWindowRedraw WINDOW_DRAW_SCRIPT
 EquipListMenu_DrawWindow_Return:
 	RTS
 	
@@ -3147,11 +3011,8 @@ EquipListMenu_CursorReady_Return:
 EquipListMenu_CursorReady_Return_Loop:
 	TST.b	Window_tilemap_row_draw_pending.w
 	BNE.w	EquipListMenu_CursorReady_Return_Loop6
-	MOVE.w	#SOUND_MENU_CANCEL, D0
-	JSR	QueueSoundEffect
-	MOVE.w	#WINDOW_DRAW_ITEM_RIGHT, Window_draw_type.w
-	MOVE.b	#FLAG_TRUE, Window_tilemap_row_draw_pending.w
-	CLR.w	Window_text_row.w
+	PlaySound SOUND_MENU_CANCEL
+	TriggerWindowRedraw_alt WINDOW_DRAW_ITEM_RIGHT
 	MOVE.w	#EQUIP_LIST_STATE_CURSOR_ITEM, Equip_list_menu_state.w
 EquipListMenu_CursorReady_Return_Loop6:
 	RTS
@@ -3159,45 +3020,33 @@ EquipListMenu_CursorReady_Return_Loop6:
 EquipListMenu_CursorReady_Return_Loop2:
 	TST.b	Window_tilemap_row_draw_pending.w
 	BNE.w	EquipListMenu_CursorReady_Return_Loop7
-	MOVE.w	#SOUND_MENU_CANCEL, D0
-	JSR	QueueSoundEffect
-	MOVE.w	#WINDOW_DRAW_MAGIC_LIST, Window_draw_type.w
-	MOVE.b	#FLAG_TRUE, Window_tilemap_row_draw_pending.w
-	CLR.w	Window_text_row.w
+	PlaySound SOUND_MENU_CANCEL
+	TriggerWindowRedraw_alt WINDOW_DRAW_MAGIC_LIST
 	MOVE.w	#EQUIP_LIST_STATE_CURSOR_MAGIC, Equip_list_menu_state.w
 EquipListMenu_CursorReady_Return_Loop7:
 	RTS
 EquipListMenu_CursorReady_Return_Loop3:
 	TST.b	Window_tilemap_row_draw_pending.w
 	BNE.w	EquipListMenu_CursorReady_Return_Loop8
-	MOVE.w	#SOUND_MENU_CANCEL, D0
-	JSR	QueueSoundEffect
-	MOVE.w	#WINDOW_DRAW_EQUIP_LIST, Window_draw_type.w
-	MOVE.b	#FLAG_TRUE, Window_tilemap_row_draw_pending.w
-	CLR.w	Window_text_row.w
+	PlaySound SOUND_MENU_CANCEL
+	TriggerWindowRedraw_alt WINDOW_DRAW_EQUIP_LIST
 	MOVE.w	#EQUIP_LIST_STATE_CURSOR_EQUIP, Equip_list_menu_state.w
 EquipListMenu_CursorReady_Return_Loop8:
 	RTS
 EquipListMenu_CursorReady_Return_Loop4:
 	TST.b	Window_tilemap_row_draw_pending.w
 	BNE.w	EquipListMenu_CursorReady_Return_Loop9
-	MOVE.w	#SOUND_MENU_CANCEL, D0
-	JSR	QueueSoundEffect
-	MOVE.w	#WINDOW_DRAW_FULL_MENU, Window_draw_type.w
-	MOVE.b	#FLAG_TRUE, Window_tilemap_row_draw_pending.w
-	CLR.w	Window_text_row.w
+	PlaySound SOUND_MENU_CANCEL
+	TriggerWindowRedraw_alt WINDOW_DRAW_FULL_MENU
 	MOVE.w	#EQUIP_LIST_STATE_CURSOR_FULL, Equip_list_menu_state.w
 EquipListMenu_CursorReady_Return_Loop9:
 	RTS
 EquipListMenu_CursorReady_Return_Loop5:
 	TST.b	Window_tilemap_row_draw_pending.w
 	BNE.w	EquipListMenu_CursorReady_Return_Loop10
-	MOVE.w	#SOUND_MENU_CANCEL, D0
-	JSR	QueueSoundEffect
+	PlaySound SOUND_MENU_CANCEL
 	MOVE.w	#EQUIP_LIST_STATE_EXIT_SCRIPT, Equip_list_menu_state.w
-	MOVE.w	#WINDOW_DRAW_SCRIPT, Window_draw_type.w
-	CLR.w	Window_text_row.w
-	MOVE.b	#FLAG_TRUE, Window_tilemap_row_draw_pending.w
+	TriggerWindowRedraw WINDOW_DRAW_SCRIPT
 EquipListMenu_CursorReady_Return_Loop10:
 	RTS
 
@@ -3346,17 +3195,13 @@ ChestOpenStateJumpTable_Loop2:
 	; Start opening animation
 	CLR.w	Chest_animation_frame.w
 	CLR.w	Chest_animation_timer.w
-	MOVE.w	#SOUND_CHEST_RATTLE, D0               ; Sound effect
-	JSR	QueueSoundEffect
+	PlaySound SOUND_CHEST_RATTLE
 	MOVE.w	#OPEN_MENU_STATE_ANIMATION, Open_menu_state.w    ; State 3: Animation
-	MOVE.w	#WINDOW_DRAW_MSG_SPEED_ALT, Window_draw_type.w
-	CLR.w	Window_text_row.w
-	MOVE.b	#FLAG_TRUE, Window_tilemap_row_draw_pending.w
+	TriggerWindowRedraw WINDOW_DRAW_MSG_SPEED_ALT
 	RTS
 	
 ChestOpenStateJumpTable_Loop3:
-	MOVE.b	#SOUND_CHEST_OPEN, D0	
-	JSR	QueueSoundEffect	
+	PlaySound_b SOUND_CHEST_OPEN	
 	MOVE.b	#CHEST_OPEN_DELAY_FRAMES, Open_chest_delay_timer.w	
 	MOVE.w	#OPEN_MENU_STATE_TILE_DELAY, Open_menu_state.w	
 	RTS
@@ -3368,8 +3213,7 @@ OpenChestMenu_CheckChest:
 	BNE.w	OpenChestMenu_CheckChest_Loop4             ; Yes
 	
 	; Open the chest
-	MOVE.b	#SOUND_CHEST_CREAK, D0
-	JSR	QueueSoundEffect             ; Sound effect
+	PlaySound_b SOUND_CHEST_CREAK             ; Sound effect
 	MOVE.b	#FLAG_TRUE, Chest_opened_flag.w
 	MOVEA.l	Current_actor_ptr.w, A6          ; Chest sprite
 	CLR.w	D0
@@ -3400,11 +3244,9 @@ OpenMenu_ShowMessage_Init:
 OpenMenu_ShowMessage_Init_Loop:
 	TST.b	Script_text_complete.w
 	BEQ.w	OpenChestMenu_ExitToHud_Loop3
-	MOVE.w	#BUTTON_BIT_C, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_C
 	BNE.w	OpenChestMenu_ExitToHud
-	MOVE.w	#BUTTON_BIT_B, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_B
 	BNE.w	OpenChestMenu_ExitToHud
 	RTS
 	
@@ -3419,9 +3261,7 @@ OpenChestMenu_ExitToHud_Loop3:
 	
 OpenChestMenu_ExitToHud_Loop:
 	CLR.w	Overworld_menu_state.w
-	MOVE.w	#WINDOW_DRAW_MSG_SPEED_ALT, Window_draw_type.w
-	CLR.w	Window_text_row.w
-	MOVE.b	#FLAG_TRUE, Window_tilemap_row_draw_pending.w
+	TriggerWindowRedraw WINDOW_DRAW_MSG_SPEED_ALT
 	RTS
 	
 OpenChestMenu_ExitToHud_Loop2:

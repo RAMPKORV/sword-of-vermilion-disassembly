@@ -1710,7 +1710,7 @@ TOWN_MALAGA         = $07
 TOWN_BARROW         = $08
 TOWN_TADCASTER      = $09
 TOWN_HELWIG         = $0A
-TOWN_SWAFHAM        = $0B
+TOWN_SWAFFHAM       = $0B
 TOWN_EXCALABRIA     = $0C
 TOWN_HASTINGS1      = $0D
 TOWN_HASTINGS2      = $0E
@@ -2704,4 +2704,21 @@ VRAM_TILE_MENU_CURSOR_L     = $0487  ; Menu cursor left-half sprite bank
 VRAM_TILE_MENU_CURSOR_R     = $048B  ; Menu cursor right-half sprite bank
 VRAM_TILE_VOLTIOS_EXPLOSION = $0269  ; Voltios deactivate/ascend explosion sprite bank
 VRAM_TILE_HYDRO_ICICLE_FALL = $0295  ; Hydro boss large falling icicle sprite bank
+
+; ============================================================
+; Null Pointer Sentinel
+; ============================================================
+NULL_PTR            = 0     ; Null pointer / list terminator used in dc.l data tables
+
+; ============================================================
+; Enemy Reward Type Constants (EnemyData reward_type field)
+; ============================================================
+; Used in the reward_type word of each EnemyData entry.
+; $FFFF = no drop; $0000–$0003 = drop category.
+ENEMY_REWARD_NONE   = $FFFF ; No item/gold drop
+ENEMY_REWARD_TYPE_0 = $0000 ; Drop type 0 (gold/common)
+ENEMY_REWARD_TYPE_1 = $0001 ; Drop type 1 (item; reward_value encodes item ID)
+ENEMY_REWARD_TYPE_2 = $0002 ; Drop type 2
+ENEMY_REWARD_TYPE_3 = $0003 ; Drop type 3
+
 

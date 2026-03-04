@@ -547,26 +547,20 @@ SpellbookMenuStateJumpTable_Loop:
 SpellbookMenuStateJumpTable_Loop2:
 	TST.b	Window_tilemap_draw_active.w
 	BNE.w	SpellbookMenu_Return
-	MOVE.w	#BUTTON_BIT_B, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_B
 	BEQ.b	SpellbookMenuStateJumpTable_Loop3
-	MOVE.w	#SOUND_MENU_CANCEL, D0
-	JSR	QueueSoundEffect
-	MOVE.w	#WINDOW_DRAW_ITEM_SELL_TALL, Window_draw_type.w
-	CLR.w	Window_text_row.w
-	MOVE.b	#FLAG_TRUE, Window_tilemap_row_draw_pending.w
+	PlaySound SOUND_MENU_CANCEL
+	TriggerWindowRedraw WINDOW_DRAW_ITEM_SELL_TALL
 	MOVE.w	#OVERWORLD_MENU_STATE_OPTIONS_WAIT, Overworld_menu_state.w
 	JSR	InitMenuCursorDefaults
 	RTS
 
 SpellbookMenuStateJumpTable_Loop3:
-	MOVE.w	#BUTTON_BIT_C, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_C
 	BEQ.w	SpellbookMenu_Return_Loop2
 	MOVE.w	Item_menu_action_mode.w, Menu_cursor_index.w
 	JSR	DrawMenuCursor
-	MOVE.w	#SOUND_MENU_SELECT, D0
-	JSR	QueueSoundEffect
+	PlaySound SOUND_MENU_SELECT
 	JSR	SaveStatusBarToBuffer
 	JSR	ResetScriptAndInitDialogue
 	TST.w	Possessed_magics_length.w
@@ -608,20 +602,16 @@ SpellbookMenu_Return_Loop2:
 SpellbookMenu_Return_Loop:
 	TST.b	Script_text_complete.w
 	BEQ.w	SpellMenu_ScriptDoneShowStatus_Loop13
-	MOVE.w	#BUTTON_BIT_C, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_C
 	BNE.b	SpellMenu_ScriptDoneShowStatus
-	MOVE.w	#BUTTON_BIT_B, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_B
 	BNE.b	SpellMenu_ScriptDoneShowStatus
 	RTS
 
 SpellMenu_ScriptDoneShowStatus:
 	JSR	DrawStatusHudWindow
 	MOVE.w	#SPELLBOOK_STATE_CAST_DONE, Spellbook_menu_state.w
-	MOVE.w	#WINDOW_DRAW_ITEM_SELL_TALL, Window_draw_type.w
-	CLR.w	Window_text_row.w
-	MOVE.b	#FLAG_TRUE, Window_tilemap_row_draw_pending.w
+	TriggerWindowRedraw WINDOW_DRAW_ITEM_SELL_TALL
 	RTS
 
 SpellMenu_ScriptDoneShowStatus_Loop13:
@@ -636,9 +626,7 @@ SpellMenu_ScriptDoneShowStatus_Loop8:
 	JSR	DisplayReadiedMagicName
 SpellMenu_ScriptDoneShowStatus_Loop15:
 	CLR.w	Overworld_menu_state.w
-	MOVE.w	#WINDOW_DRAW_MSG_SPEED_ALT, Window_draw_type.w
-	CLR.w	Window_text_row.w
-	MOVE.b	#FLAG_TRUE, Window_tilemap_row_draw_pending.w
+	TriggerWindowRedraw WINDOW_DRAW_MSG_SPEED_ALT
 SpellMenu_ScriptDoneShowStatus_Loop14:
 	RTS
 
@@ -659,23 +647,19 @@ SpellMenu_ScriptDoneShowStatus_Loop16:
 	RTS
 
 SpellMenu_ScriptDoneShowStatus_Loop2:
-	MOVE.w	#BUTTON_BIT_B, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_B
 	BEQ.b	SpellMenu_ScriptDoneShowStatus_Loop17
-	MOVE.w	#SOUND_MENU_CANCEL, D0	
-	JSR	QueueSoundEffect	
+	PlaySound SOUND_MENU_CANCEL	
 	JSR	DrawCenterMenuWindow	
 	JSR	DrawStatusHudWindow	
 	MOVE.w	#SPELLBOOK_STATE_WAIT_INPUT, Spellbook_menu_state.w	
 	BRA.w	InitSpellbookCursor	
 SpellMenu_ScriptDoneShowStatus_Loop17:
-	MOVE.w	#BUTTON_BIT_C, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_C
 	BEQ.b	SpellMenu_ScriptDoneShowStatus_Loop18
 	MOVE.w	Magic_list_cursor_index.w, Menu_cursor_index.w
 	JSR	DrawMenuCursor
-	MOVE.w	#SOUND_MENU_SELECT, D0
-	JSR	QueueSoundEffect
+	PlaySound SOUND_MENU_SELECT
 	JSR	SaveRightMenuAreaToBuffer
 	JSR	DrawYesNoDialog
 	ADDQ.w	#1, Spellbook_menu_state.w
@@ -689,14 +673,11 @@ SpellMenu_ScriptDoneShowStatus_Loop18:
 	RTS
 
 SpellMenu_ScriptDoneShowStatus_Loop3:
-	MOVE.w	#BUTTON_BIT_B, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_B
 	BNE.b	SpellMenu_ScriptDoneShowStatus_Loop19
-	MOVE.w	#BUTTON_BIT_C, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_C
 	BEQ.w	SpellMenu_ScriptDoneShowStatus_Loop20
-	MOVE.w	#SOUND_MENU_SELECT, D0
-	JSR	QueueSoundEffect
+	PlaySound SOUND_MENU_SELECT
 	TST.w	Dialog_selection.w
 	BEQ.w	SpellMenu_ScriptDoneShowStatus_Loop21
 	JSR	DrawLeftMenuWindow	
@@ -707,8 +688,7 @@ SpellMenu_ScriptDoneShowStatus_Loop3:
 	RTS
 	
 SpellMenu_ScriptDoneShowStatus_Loop19:
-	MOVE.w	#SOUND_MENU_CANCEL, D0	
-	JSR	QueueSoundEffect	
+	PlaySound SOUND_MENU_CANCEL	
 	JSR	DrawLeftMenuWindow	
 	MOVE.w	#SPELLBOOK_STATE_EQUIP_INIT, Spellbook_menu_state.w	
 	MOVE.w	Possessed_magics_length.w, D0	
@@ -774,23 +754,19 @@ SpellMenu_ScriptDoneShowStatus_Loop23:
 	RTS
 
 SpellMenu_ScriptDoneShowStatus_Loop10:
-	MOVE.w	#BUTTON_BIT_B, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_B
 	BEQ.b	SpellMenu_ScriptDoneShowStatus_Loop24
-	MOVE.w	#SOUND_MENU_CANCEL, D0
-	JSR	QueueSoundEffect
+	PlaySound SOUND_MENU_CANCEL
 	JSR	DrawCenterMenuWindow
 	JSR	DrawStatusHudWindow
 	MOVE.w	#SPELLBOOK_STATE_WAIT_INPUT, Spellbook_menu_state.w
 	BRA.w	InitSpellbookCursor
 SpellMenu_ScriptDoneShowStatus_Loop24:
-	MOVE.w	#BUTTON_BIT_C, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_C
 	BEQ.b	SpellMenu_ScriptDoneShowStatus_Loop25
 	MOVE.w	Magic_list_cursor_index.w, Menu_cursor_index.w
 	JSR	DrawMenuCursor
-	MOVE.w	#SOUND_MENU_SELECT, D0
-	JSR	QueueSoundEffect
+	PlaySound SOUND_MENU_SELECT
 	JSR	SaveRightMenuAreaToBuffer
 	JSR	DrawYesNoDialog
 	ADDQ.w	#1, Spellbook_menu_state.w
@@ -804,14 +780,11 @@ SpellMenu_ScriptDoneShowStatus_Loop25:
 	RTS
 
 SpellMenu_ScriptDoneShowStatus_Loop11:
-	MOVE.w	#BUTTON_BIT_B, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_B
 	BNE.b	SpellMenu_ScriptDoneShowStatus_Loop26
-	MOVE.w	#BUTTON_BIT_C, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_C
 	BEQ.w	SpellMenu_ScriptDoneShowStatus_Loop27
-	MOVE.w	#SOUND_MENU_SELECT, D0
-	JSR	QueueSoundEffect
+	PlaySound SOUND_MENU_SELECT
 	TST.w	Dialog_selection.w
 	BEQ.b	SpellMenu_ScriptDoneShowStatus_Loop28
 	JSR	DrawLeftMenuWindow	
@@ -822,8 +795,7 @@ SpellMenu_ScriptDoneShowStatus_Loop11:
 	RTS
 	
 SpellMenu_ScriptDoneShowStatus_Loop26:
-	MOVE.w	#SOUND_MENU_CANCEL, D0
-	JSR	QueueSoundEffect
+	PlaySound SOUND_MENU_CANCEL
 	JSR	DrawLeftMenuWindow
 	MOVE.w	#SPELLBOOK_STATE_STATUS_D, Spellbook_menu_state.w
 	MOVE.w	Possessed_magics_length.w, D0
@@ -903,24 +875,20 @@ SpellMenu_ScriptDoneShowStatus_Loop31:
 	RTS
 
 SpellMenu_ScriptDoneShowStatus_Loop5:
-	MOVE.w	#BUTTON_BIT_B, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_B
 	BEQ.b	SpellMenu_ScriptDoneShowStatus_Loop32
-	MOVE.w	#SOUND_MENU_CANCEL, D0
-	JSR	QueueSoundEffect
+	PlaySound SOUND_MENU_CANCEL
 	BSR.w	DrawCenterMenuWindow
 	BSR.w	DrawStatusHudWindow
 	MOVE.w	#SPELLBOOK_STATE_WAIT_INPUT, Spellbook_menu_state.w
 	BRA.w	InitSpellbookCursor
 	dc.b	$4E, $75 
 SpellMenu_ScriptDoneShowStatus_Loop32:
-	MOVE.w	#BUTTON_BIT_C, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_C
 	BEQ.w	SpellMenu_ScriptDoneShowStatus_Loop33
 	MOVE.w	Magic_list_cursor_index.w, Menu_cursor_index.w
 	JSR	DrawMenuCursor
-	MOVE.w	#SOUND_MENU_SELECT, D0
-	JSR	QueueSoundEffect
+	PlaySound SOUND_MENU_SELECT
 	JSR	DrawCenterMenuWindow
 	LEA	Possessed_magics_list.w, A0
 	MOVE.w	Magic_list_cursor_index.w, D0
@@ -955,20 +923,16 @@ SpellMenu_ScriptDoneShowStatus_Loop34:
 SpellMenu_ScriptDoneShowStatus_Loop7:
 	TST.b	Script_text_complete.w
 	BEQ.w	SpellMenu_ScriptDoneShowHpMp
-	MOVE.w	#BUTTON_BIT_C, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_C
 	BNE.b	SpellMenu_ScriptDoneShowStatus2
-	MOVE.w	#BUTTON_BIT_B, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_B
 	BNE.b	SpellMenu_ScriptDoneShowStatus2
 	RTS
 
 SpellMenu_ScriptDoneShowStatus2:
 	JSR	DrawStatusHudWindow
 	MOVE.w	#SPELLBOOK_STATE_CAST_DONE, Spellbook_menu_state.w
-	MOVE.w	#WINDOW_DRAW_ITEM_SELL_TALL, Window_draw_type.w
-	CLR.w	Window_text_row.w
-	MOVE.b	#FLAG_TRUE, Window_tilemap_row_draw_pending.w
+	TriggerWindowRedraw WINDOW_DRAW_ITEM_SELL_TALL
 	TST.b	Player_in_first_person_mode.w
 	BEQ.b	SpellMenu_ScriptDoneShowHpMp
 	JSR	DisplayPlayerHpMp
@@ -977,21 +941,17 @@ SpellMenu_ScriptDoneShowHpMp:
 	RTS
 
 SpellMenu_ScriptDoneShowHpMp_Loop:
-	MOVE.w	#BUTTON_BIT_B, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_B
 	BEQ.b	SpellMenu_ScriptDoneShowHpMp_Loop2
-	MOVE.w	#SOUND_MENU_CANCEL, D0
-	JSR	QueueSoundEffect
+	PlaySound SOUND_MENU_CANCEL
 	BSR.w	DrawStatusMenuWindow
 	MOVE.w	#SPELLBOOK_STATE_USE_INIT, Spellbook_menu_state.w
 	RTS
 
 SpellMenu_ScriptDoneShowHpMp_Loop2:
-	MOVE.w	#BUTTON_BIT_C, D2
-	JSR	CheckButtonPress
+	CheckButton BUTTON_BIT_C
 	BEQ.w	AriesMapMenu_HandleInput
-	MOVE.w	#SOUND_MENU_SELECT, D0
-	JSR	QueueSoundEffect
+	PlaySound SOUND_MENU_SELECT
 	MOVE.w	Aries_selected_town.w, D0
 	CMPI.w	#TOWN_HASTINGS1, D0
 	BGT.w	AriesMapMenu_HandleInput
@@ -1012,8 +972,7 @@ SpellMenu_ScriptDoneShowHpMp_Loop2:
 	MOVE.w	#GAMEPLAY_STATE_OVERWORLD_RELOAD, Gameplay_state.w
 	MOVE.b	#FLAG_TRUE, Player_in_first_person_mode.w
 	CLR.b	Is_in_cave.w
-	MOVE.w	#SOUND_FOOTSTEP, D0
-	JSR	QueueSoundEffect
+	PlaySound SOUND_FOOTSTEP
 	RTS
 
 AriesMapMenu_HandleInput:
@@ -1095,8 +1054,7 @@ CastInaudios:
 	TST.b	Is_in_cave.w
 	BNE.b	SpellMenu_CantUseHere1
 	MOVE.w	#$001E, Inaudios_steps_remaining.w
-	MOVE.w	#SOUND_ITEM_PICKUP, D0
-	JSR	QueueSoundEffect
+	PlaySound SOUND_ITEM_PICKUP
 	JSR	ResetScriptAndInitDialogue
 	PRINT 	InaudiosSpellsStr
 	MOVE.w	#SPELLBOOK_STATE_CAST_WAIT, Spellbook_menu_state.w
@@ -1123,8 +1081,7 @@ CastLuminos:
 	MOVE.b	#6, Fade_in_lines_mask.w
 	CLR.w	Cave_light_timer.w
 	MOVE.b	#1, Cave_light_active.w
-	MOVE.w	#SOUND_ENEMY_DEATH, D0
-	JSR	QueueSoundEffect
+	PlaySound SOUND_ENEMY_DEATH
 	RTS
 
 SpellMenu_CantUseHere2:
@@ -1165,8 +1122,7 @@ CastSanguia_Loop:
 CastSanguia_Loop2:
 	PRINT 	HitPointsRegainedStr
 CastSanguia_Loop3:
-	MOVE.w	#SOUND_ITEM_PICKUP, D0
-	JSR	QueueSoundEffect
+	PlaySound SOUND_ITEM_PICKUP
 	JSR	ResetScriptAndInitDialogue
 	MOVE.w	#SPELLBOOK_STATE_CAST_WAIT, Spellbook_menu_state.w
 	RTS
@@ -1178,8 +1134,7 @@ CastSanguio:
 	BNE.w	SpellMenu_NotEnoughMp
 	MOVE.w	Player_mhp.w, Player_hp.w
 	PRINT 	AllHitPointsStr
-	MOVE.w	#SOUND_ITEM_PICKUP, D0
-	JSR	QueueSoundEffect
+	PlaySound SOUND_ITEM_PICKUP
 	JSR	ResetScriptAndInitDialogue
 	MOVE.w	#SPELLBOOK_STATE_CAST_WAIT, Spellbook_menu_state.w
 	RTS
@@ -1202,8 +1157,7 @@ CastToxios_Loop:
 UseAntidote_RemovePoison:
 	CLR.w	Player_poisoned.w
 	CLR.b	Poison_notified.w
-	MOVE.w	#SOUND_ITEM_PICKUP, D0
-	JSR	QueueSoundEffect
+	PlaySound SOUND_ITEM_PICKUP
 UseAntidote_RemovePoison_Loop:
 	JSR	ResetScriptAndInitDialogue
 	MOVE.w	#SPELLBOOK_STATE_CAST_WAIT, Spellbook_menu_state.w
@@ -1245,8 +1199,7 @@ CastExtrios:
 	CLR.b	Is_in_cave.w
 	CLR.b	Cave_light_active.w
 	CLR.w	Cave_light_timer.w
-	MOVE.w	#SOUND_FOOTSTEP, D0
-	JSR	QueueSoundEffect
+	PlaySound SOUND_FOOTSTEP
 	RTS
 
 CastExtrios_Loop:
@@ -1280,7 +1233,7 @@ TownOverworldCoords: ; Town locations. Without duplicates.
 	dc.w	$9, $5, $E, $0 ; TOWN_BARROW
 	dc.w	$A, $6, $9, $1 ; TOWN_TADCASTER
 	dc.w	$6, $F, $6, $0 ; TOWN_HELWIG
-	dc.w	$7, $7, $1, $0 ; TOWN_SWAFHAM
+	dc.w	$7, $7, $1, $0 ; TOWN_SWAFFHAM
 	dc.w	$A, $5, $5, $2 ; TOWN_EXCALABRIA
 	dc.w	$5, $4, $9, $2 ; TOWN_HASTINGS
 	dc.w	$8, $8, $A, $5 ; TOWN_CARTHAHENA

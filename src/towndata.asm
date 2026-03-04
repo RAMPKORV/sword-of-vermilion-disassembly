@@ -356,7 +356,7 @@ SeekCoordsByTown: ; "Seek" coordinates by town
 	dc.l	SeekData_Hastings
 	dc.l	SeekData_BladesGrave 
 	dc.l	SeekData_BladesGrave
-	dc.l	SeekData_Swafham
+	dc.l	SeekData_Swaffham
 SeekData_BladesGrave: ; Blade's grave
 	dc.w	$2B, $24
 	dc.w	DIRECTION_DOWN
@@ -385,7 +385,7 @@ SeekData_Hastings:
 	dc.w	DIRECTION_ANY
 	dc.l	SeekHandler_TitaniasMirror
 	dc.w	$FFFF
-SeekData_Swafham:
+SeekData_Swaffham:
 	dc.w	$1F, $21
 	dc.w	DIRECTION_ANY
 	dc.l	SeekHandler_Herbs
@@ -1266,35 +1266,35 @@ Helwig_Npc2_DialogueStates:
 Helwig_Npc2_SimpleDispatch:
 	LEA	TownDialogTable_Helwig_State4, A1
 	BRA.w	SelectDialogueSimple
-SwafhamNpcDialogueDispatch:
+SwaffhamNpcDialogueDispatch:
 	LEA	Swaffham_Npc1_DialogueStates, A1
 	MOVE.w	#1, D7
 	BRA.w	SelectDialogueByGameState
 Swaffham_Npc1_DialogueStates:
-	dc.l	TownDialogTable_Swafham_State2
+	dc.l	TownDialogTable_Swaffham_State2
 	dc.l	Swaffham_ruined
-	dc.l	TownDialogTable_Swafham_State1
+	dc.l	TownDialogTable_Swaffham_State1
 	dc.l	Ring_of_earth_obtained
-	dc.l	TownDialogTable_Swafham_State0
+	dc.l	TownDialogTable_Swaffham_State0
 	LEA	Swaffham_Npc2_DialogueStates, A1
 	MOVE.w	#6, D7
 	BRA.w	SelectDialogueByGameState
 Swaffham_Npc2_DialogueStates:
 	dc.b	$00, $02, $B9, $EE
 	dc.l	Ring_of_earth_obtained
-	dc.l	CastleDialogTable_Swafham_State3
+	dc.l	CastleDialogTable_Swaffham_State3
 	dc.l	Blue_crystal_received
-	dc.l	CastleDialogTable_Swafham_State4	
+	dc.l	CastleDialogTable_Swaffham_State4	
 	dc.l	Blue_crystal_quest_started
-	dc.l	CastleDialogTable_Swafham_State2
+	dc.l	CastleDialogTable_Swaffham_State2
 	dc.l	Red_crystal_received
-	dc.l	CastleDialogTable_Swafham_State4	
+	dc.l	CastleDialogTable_Swaffham_State4	
 	dc.l	Red_crystal_quest_started
-	dc.l	CastleDialogTable_Swafham_State1
+	dc.l	CastleDialogTable_Swaffham_State1
 	dc.l	Ring_of_wind_received
-	dc.l	CastleDialogTable_Swafham_State4	
+	dc.l	CastleDialogTable_Swaffham_State4	
 	dc.l	White_crystal_quest_started
-	dc.l	CastleDialogTable_Swafham_State0
+	dc.l	CastleDialogTable_Swaffham_State0
 ExcalabriaaNpcDialogueDispatch:
 	LEA	Excalabria_Npc1_DialogueStates, A1
 	MOVE.w	#1, D7
@@ -1425,7 +1425,7 @@ TownRoomTilemapPlaneAPtrs:
 	dc.l	LoadTownTilemap_Barrow_PlaneA
 	dc.l	LoadTownTilemap_Tadcaster_PlaneA
 	dc.l	LoadTownTilemap_Helwig_PlaneA
-	dc.l	LoadTownTilemap_Swafham_PlaneA
+	dc.l	LoadTownTilemap_Swaffham_PlaneA
 	dc.l	LoadTownTilemap_Excalabria_PlaneA
 	dc.l	LoadTownTilemap_Hastings_PlaneA
 	dc.l	LoadTownTilemap_Hastings_PlaneA	
@@ -1480,7 +1480,7 @@ TownRoomTilemapPlaneBPtrs:
 	dc.l	LoadTownTilemap_Barrow_PlaneB
 	dc.l	LoadTownTilemap_Tadcaster_PlaneB
 	dc.l	LoadTownTilemap_Helwig_PlaneB
-	dc.l	LoadTownTilemap_Swafham_PlaneB
+	dc.l	LoadTownTilemap_Swaffham_PlaneB
 	dc.l	LoadTownTilemap_Excalabria_PlaneB
 	dc.l	LoadTownTilemap_Hastings_PlaneB
 	dc.l	LoadTownTilemap_Hastings_PlaneB	
@@ -2053,7 +2053,7 @@ TownTilesetLoadJumpTable: ; suspected town loading routines that set tilemap
 	BRA.w	SetTileset_Barrow
 	BRA.w	SetTileset_Tadcaster
 	BRA.w	SetTileset_Helwig
-	BRA.w	SetTileset_Swafham
+	BRA.w	SetTileset_Swaffham
 	BRA.w	SetTileset_Excalabria
 	BRA.w	SetTileset_Hastings1
 	BRA.w	SetTileset_Hastings2	
@@ -2102,12 +2102,12 @@ SetTileset_Helwig:
 	MOVE.w	#TOWN_TILESET_VILLAGE_A, Town_tileset_index.w
 	RTS
 
-SetTileset_Swafham:
+SetTileset_Swaffham:
 	MOVE.w	#TOWN_TILESET_VILLAGE_B, Town_tileset_index.w
 	TST.b	Swaffham_ruined.w
-	BEQ.b	SetTileset_Swafham_Loop
+	BEQ.b	SetTileset_Swaffham_Loop
 	MOVE.w	#TOWN_TILESET_EXCALABRIA, Town_tileset_index.w
-SetTileset_Swafham_Loop:
+SetTileset_Swaffham_Loop:
 	RTS
 
 SetTileset_Excalabria:
@@ -2155,7 +2155,7 @@ TownNpcDataLookupJumpTable: ; suspected: Town NPCs?
 	BRA.w	LoadNpcData_Barrow
 	BRA.w	LoadNpcData_Tadcaster
 	BRA.w	LoadNpcData_Helwig
-	BRA.w	LoadNpcData_Swafham
+	BRA.w	LoadNpcData_Swaffham
 	BRA.w	LoadNpcData_Excalabria	
 	BRA.w	LoadNpcData_Hastings1
 	BRA.w	LoadNpcData_Hastings2	
@@ -2204,8 +2204,8 @@ LoadNpcData_Helwig:
 	LEA	NpcDataTable_Helwig, A1
 	RTS
 
-LoadNpcData_Swafham:
-	LEA	NpcDataTable_Swafham, A1
+LoadNpcData_Swaffham:
+	LEA	NpcDataTable_Swaffham, A1
 	RTS
 
 LoadNpcData_Excalabria:
@@ -2253,7 +2253,7 @@ TownNpcSetupJumpTable: ; Town NPC setup scripts
 	BRA.w	SetupTownNpcs_Barrow
 	BRA.w	SetupTownNpcs_Tadcaster
 	BRA.w	SetupTownNpcs_Helwig
-	BRA.w	SetupTownNpcs_Swafham
+	BRA.w	SetupTownNpcs_Swaffham
 	BRA.w	SetupTownNpcs_Excalabria
 	BRA.w	SetupTownNpcs_Hastings1
 	BRA.w	SetupTownNpcs_Hastings2	
@@ -2324,12 +2324,12 @@ SetupTownNpcs_Helwig:
 	MOVE.l	#NpcEntryList_Helwig, Town_npc_data_ptr.w
 	RTS
 	
-SetupTownNpcs_Swafham:
-	MOVE.l	#NpcEntryList_Swafham, Town_npc_data_ptr.w
+SetupTownNpcs_Swaffham:
+	MOVE.l	#NpcEntryList_Swaffham, Town_npc_data_ptr.w
 	TST.b	Swaffham_ruined.w
-	BEQ.b	SetupTownNpcs_Swafham_Loop
-	MOVE.l	#NpcEntryList_Swafham_Ruined, Town_npc_data_ptr.w
-SetupTownNpcs_Swafham_Loop:
+	BEQ.b	SetupTownNpcs_Swaffham_Loop
+	MOVE.l	#NpcEntryList_Swaffham_Ruined, Town_npc_data_ptr.w
+SetupTownNpcs_Swaffham_Loop:
 	RTS
 	
 SetupTownNpcs_Excalabria:
@@ -2370,7 +2370,7 @@ TownStateDataJumpTable:
 	BRA.w	LoadTownStateData_Default	
 	BRA.w	LoadTownStateData_Tadcaster
 	BRA.w	LoadTownStateData_Default	
-	BRA.w	LoadTownStateData_Swafham
+	BRA.w	LoadTownStateData_Swaffham
 	BRA.w	LoadTownStateData_Default	
 	BRA.w	LoadTownStateData_Default	
 	BRA.w	LoadTownStateData_Default	
@@ -2419,8 +2419,8 @@ LoadTownStateData_Tadcaster:
 	LEA	TownStateConfig_Tadcaster, A0
 	RTS
 	
-LoadTownStateData_Swafham:
-	LEA	TownStateConfig_Swafham, A0
+LoadTownStateData_Swaffham:
+	LEA	TownStateConfig_Swaffham, A0
 	RTS
 	
 LoadTownStateData_Carthahena:

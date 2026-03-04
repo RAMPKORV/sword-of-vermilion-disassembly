@@ -1446,41 +1446,41 @@ BegDontTormentHusbandStr:
 	dc.b	$FF, $00, $01, $EA, $FE, $FF, $FF 
 
 ;==============================================================
-; SWAFHAM CASTLE — TOWN STATE CONFIG + DIALOG
+; SWAFFHAM CASTLE — TOWN STATE CONFIG + DIALOG
 ;==============================================================
-; Town state configuration: camera position, spawn point, NPC layout for Swafham castle.
-TownStateConfig_Swafham:
+; Town state configuration: camera position, spawn point, NPC layout for Swaffham castle.
+TownStateConfig_Swaffham:
 	dc.b	$01, $48, $01, $48, $00, $06, $00, $08, $00, $04, $00, $1B, $00, $02, $B9, $34, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 
 	dc.l	$00000000
 	dc.b	$00, $01, $F0, $78, $01, $48, $00, $48, $01, $81, $00, $03, $DE, $14, $00, $00, $6F, $80, $60, $01, $01, $58, $00, $E8, $01, $81, $00, $03, $DE, $14, $00, $00 
 	dc.b	$6F, $80, $60, $01, $00, $28, $00, $88, $01, $81, $00, $03, $DE, $14, $00, $00, $6F, $A8, $60, $01, $01, $38, $00, $88, $01, $81, $00, $03, $DE, $14, $00, $00 
 	dc.b	$6F, $A8, $60, $01, $00, $B8, $00, $58, $02, $11, $00, $03, $DE, $C0, $00, $00, $7A, $F2, $60, $01, $FF, $FF 
-; Dialog dispatch table for Swafham castle NPCs, indexed by quest state.
-CastleDialogTable_Swafham_State0:
+; Dialog dispatch table for Swaffham castle NPCs, indexed by quest state.
+CastleDialogTable_Swaffham_State0:
 	dc.l	KingWorryingCartahenansStr
 	dc.l	BoredJobStr
 	dc.l	DullJobLousyWagesStr
 	dc.l	LookingForJobStr
 	dc.l	RingOfEarthQuestStr 
-CastleDialogTable_Swafham_State1:
+CastleDialogTable_Swaffham_State1:
 	dc.l	KingWorryingCartahenansStr
 	dc.l	BoredJobStr
 	dc.l	DullJobLousyWagesStr
 	dc.l	LookingForJobStr
 	dc.l	GiveWhiteCrystalStr 
-CastleDialogTable_Swafham_State2:
+CastleDialogTable_Swaffham_State2:
 	dc.l	KingWorryingCartahenansStr
 	dc.l	BoredJobStr
 	dc.l	DullJobLousyWagesStr
 	dc.l	LookingForJobStr
 	dc.l	RedCrystalTaskStr 
-CastleDialogTable_Swafham_State3:
+CastleDialogTable_Swaffham_State3:
 	dc.l	KingWorryingCartahenansStr
 	dc.l	BoredJobStr
 	dc.l	DullJobLousyWagesStr
 	dc.l	LookingForJobStr
 	dc.l	ThreeCrystalsStr 
-CastleDialogTable_Swafham_State4:
+CastleDialogTable_Swaffham_State4:
 	dc.l	KingWorryingCartahenansStr
 	dc.l	BoredJobStr
 	dc.l	DullJobLousyWagesStr
@@ -5293,12 +5293,12 @@ LoadTownTilemap_Helwig_PlaneB:
 	MOVE.l	#TownTilemapData_Helwig_SetB_TgtB, Tilemap_data_ptr_plane_b.w
 	RTS
 	
-FortuneTellerGreeting_Swafham:
+FortuneTellerGreeting_Swaffham:
 	PRINT 	WhatsWrongHereStr
 	RTS
 	
-NpcEntryList_Swafham:
-	dc.l	SwafhamNpcDialogueDispatch
+NpcEntryList_Swaffham:
+	dc.l	SwaffhamNpcDialogueDispatch
 	npcEntry $0118, $0108, $0091, NPCSpriteFrames_ManA, NPCInit_StowSoldier_DoctorHint, NPC_ATTR_PAL3, NPC_SOLID
 	npcEntry $0108, $0158, $00CD, NPCSpriteFrames_ManB, NPCInit_StowSoldier_DoctorHint, NPC_ATTR_PAL3, NPC_SOLID
 	npcEntry $0208, $0058, $0091, NPCSpriteFrames_ManA, NPCInit_StowSoldier_DoctorHint, NPC_ATTR_PAL3, NPC_SOLID
@@ -5313,16 +5313,16 @@ NpcEntryList_Swafham:
 	npcEntry $0148, $0058, $0019, NPCSpriteFrames_Child, NPCInit_WalkingStatic_LoadFrame, NPC_ATTR_PAL3, NPC_SOLID
 	npcEntry $0208, $0128, $0061, NPCSpriteFrames_VillagerB, NPCInit_StowSoldier_DoctorHint, NPC_ATTR_PAL3, NPC_SOLID
 	dc.w	$FFFF
-NpcEntryList_Swafham_Ruined:
-	dc.l	SwafhamNpcDialogueDispatch
+NpcEntryList_Swaffham_Ruined:
+	dc.l	SwaffhamNpcDialogueDispatch
 	npcEntry $0138, $0068, $02A7, 0, NPCInit_Helwig_OldWomanQuest, NPC_ATTR_PAL3, NPC_SOLID
 	npcEntry $0138, $0078, $02AD, 0, NPCInit_Helwig_OldWomanQuest, NPC_ATTR_PAL3, NPC_SOLID
 	dc.w	$FFFF
 
 ;==============================================================
-; SWAFHAM TOWN — NPC DATA, DIALOG TABLES, TILEMAP DATA
+; SWAFFHAM TOWN — NPC DATA, DIALOG TABLES, TILEMAP DATA
 ;==============================================================
-NpcDataTable_Swafham:
+NpcDataTable_Swaffham:
 	dc.b	$00, $07, $00, $07, $00, $68, $00, $C8, $00, $00, $00, $00, $00, $04, $01, $32, $00, $03, $09, $8E, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 
 	dc.b	$00, $00, $00, $00 
 	dc.l	$00000000
@@ -5339,8 +5339,8 @@ NpcDataTable_Swafham:
 	dc.b	$00, $00, $00, $00 
 	dc.l	$00000000
 	dc.b	$FF, $FF 
-; Dialog dispatch table for Swafham town NPCs, indexed by quest state.
-TownDialogTable_Swafham_State0:
+; Dialog dispatch table for Swaffham town NPCs, indexed by quest state.
+TownDialogTable_Swaffham_State0:
 	dc.l	MapsHardToFindStr 
 	dc.l	YoureInSwaffhamStr 
 	dc.l	AskKingForGoldStr 
@@ -5354,7 +5354,7 @@ TownDialogTable_Swafham_State0:
 	dc.l	TownDestroyedLongAgoStr 
 	dc.l	TerribleMonsterCaveStr 
 	dc.l	ExcalabriaDestroyedStr 
-TownDialogTable_Swafham_State1:
+TownDialogTable_Swaffham_State1:
 	dc.l	MapsHardToFindStr 
 	dc.l	YoureInSwaffhamStr 
 	dc.l	KingGaveRingStr 
@@ -5368,7 +5368,7 @@ TownDialogTable_Swafham_State1:
 	dc.l	TownDestroyedLongAgoStr 
 	dc.l	ThreeCavesToRuinsStr 
 	dc.l	ExcalabriaDestroyedStr 
-TownDialogTable_Swafham_State2:
+TownDialogTable_Swaffham_State2:
 	dc.l	CartahenaDestroyedSwaffhamStr 
 	dc.l	CartahenaDestroyedSwaffhamStr
 	dc.l	TaxesHighStr
@@ -5462,7 +5462,7 @@ FortuneTellerGreeting_Excalabria:
 	PRINT 	SomethingStrangeHappenStr
 	RTS
 	
-TownTilemapData_Swafham_SetA_TgtB:
+TownTilemapData_Swaffham_SetA_TgtB:
 	dc.b	$24, $1D, $01, $96, $3F, $00, $23, $00, $02, $A0, $96, $A6, $01, $1B, $23, $1C, $03, $B3, $B4, $1C, $A8, $02, $36, $37, $B2, $08, $1D, $1E, $1F, $20, $20, $B5 
 	dc.b	$B6, $20, $A8, $02, $38, $39, $AF, $0C, $13, $14, $A7, $21, $22, $23, $1F, $20, $B7, $B8, $20, $15, $A7, $02, $3A, $3B, $AF, $02, $16, $24, $28, $00, $02, $2A 
 	dc.b	$17, $A7, $02, $3C, $3D, $A3, $01, $3E, $AC, $01, $2B, $A8, $01, $30, $A8, $02, $3F, $40, $A2, $03, $41, $42, $43, $AB, $01, $31, $B1, $08, $44, $45, $00, $41 
@@ -5475,12 +5475,12 @@ TownTilemapData_Swafham_SetA_TgtB:
 	dc.b	$A7, $01, $2B, $A8, $01, $30, $A7, $01, $2B, $A5, $01, $86, $AC, $01, $31, $B0, $01, $31, $A5, $01, $87, $AC, $2A, $00, $A7, $2B, $00, $A7, $01, $18, $23, $19 
 	dc.b	$01, $00, $26, $19, $01, $1A, $A5, $01, $18, $23, $19, $01, $00, $27, $19, $01, $1A, $A6, $3F, $00, $BF, $A7, $01, $9D, $BF, $A3, $02, $9C, $9A, $BF, $A3, $01 
 	dc.b	$99, $3F
-TownTilemapData_Swafham_SetA_TgtA:	
+TownTilemapData_Swaffham_SetA_TgtA:	
 	dc.b	$24, $1D, $01, $A0, $3F, $20, $24, $20, $A7, $27, $A0, $A8, $02, $A0, $A0, $B2, $28, $A0, $B9, $2C, $A0, $B8, $33, $20, $A5, $01, $A0, $BF, $A3, $23 
 	dc.b	$A0, $BF, $01, $20, $25, $A0, $BA, $2D, $A0, $B7, $30, $20, $AA, $01, $A0, $BF, $A3, $23, $A0, $BE, $29, $A0, $BB, $34, $20, $23, $A0, $BF, $A2, $23, $B0, $BF 
 	dc.b	$A2, $2A, $20, $BF, $BF, $B1, $27, $A0, $AA, $28, $A0, $AA, $28, $A0, $A9, $29, $A0, $A7, $2C, $A0, $A5, $2D, $A0, $A6, $39, $20, $A3, $25, $20, $BF, $BF, $BF 
 	dc.b	$A7, $28, $20, $BF, $BF, $BF, $B0, $2F, $A0, $A3, $30, $A0, $A2, $3F, $20, $24, $20, $3F
-TownTilemapData_Swafham_SetB_TgtB:	
+TownTilemapData_Swaffham_SetB_TgtB:	
 	dc.b	$24, $1D, $01, $7D, $2E, $97, $01, $9F, $23, $33, $01, $9F, $2F, $97 
 	dc.b	$02, $7A, $7D, $BF, $A5, $3F, $98, $23, $98, $A3, $2E, $7D, $A3, $2F, $7D, $A5, $0D, $78, $79, $21, $25, $26, $27, $23, $28, $B9, $BA, $7A, $7A, $7B, $B7, $0A 
 	dc.b	$7C, $7D, $25, $2C, $8C, $2E, $27, $2F, $34, $34, $BC, $08, $2C, $34, $33, $34, $2E, $35, $2D, $2D, $BC, $06, $2D, $2D, $33, $2D, $2D, $7A, $24, $7E, $BA, $03 
@@ -5496,24 +5496,24 @@ TownTilemapData_Swafham_SetB_TgtB:
 	dc.b	$05, $2D, $2D, $33, $2D, $2D, $AE, $03, $7F, $7E, $80, $23, $7E, $24, $7D, $A7, $03, $7F, $7E, $80, $23, $7E, $AB, $01, $81, $23, $79, $02, $82, $81, $26, $79 
 	dc.b	$01, $82, $A4, $01, $81, $23, $79, $02, $82, $81, $27, $79, $01, $82, $A4, $3F, $98, $01, $98, $A3, $2E, $9E, $01, $A1, $A3, $01, $9B, $2F, $9E, $A2, $2F, $97 
 	dc.b	$01, $AF, $A2, $30, $97, $01, $7A, $3F
-TownTilemapData_Swafham_SetB_TgtA:	
+TownTilemapData_Swaffham_SetB_TgtA:	
 	dc.b	$24, $1D, $3F, $12, $35, $12, $23, $32, $B2, $3F, $04, $23, $04, $A3, $2E, $02, $A3, $2F, $02, $A5, $2C, $12, $BB, $23 
 	dc.b	$1A, $BF, $A2, $29, $12, $BC, $01, $22, $BF, $A4, $01, $02, $AC, $2D, $12, $A6, $2D, $02, $B6, $31, $04, $B3, $2E, $02, $BA, $29, $12, $BE, $23, $1A, $BF, $A2 
 	dc.b	$26, $12, $AC, $01, $22, $B2, $01, $22, $B0, $01, $02, $B2, $01, $02, $BF, $2A, $02, $A4, $2E, $02, $A4, $3F, $04, $01, $04, $A4, $2E, $02, $A3, $2F, $02, $A5 
 	dc.b	$2C, $12, $A5, $2D, $12, $A9, $23, $1A, $AE, $23, $1A, $B0, $29, $12, $A8, $2A, $12, $AA, $01, $22, $B0, $01, $22, $B2, $01, $02, $B0, $01, $02, $AE, $2D, $02 
 	dc.b	$A4, $2E, $02, $A4, $3F, $04, $01, $04, $A3, $2F, $0A, $A3, $30, $0A, $A2, $2F, $12, $23, $F4, $31, $12, $3F
-TownTilemapData_Swafham_Ruined_TgtB:	
+TownTilemapData_Swaffham_Ruined_TgtB:	
 	dc.b	$24, $1E, $01, $73, $3F, $00, $23, $00, $02, $72 
 	dc.b	$73, $BF, $BF, $AE, $08, $01, $02, $03, $04, $05, $03, $04, $06, $BC, $3E, $00, $BF, $BF, $BF, $BF, $BF, $BF, $B0, $03, $30, $31, $32, $43, $32, $31, $01, $33 
 	dc.b	$AD, $05, $01, $03, $02, $04, $06, $A8, $2E, $00, $A9, $3B, $00, $BF, $BF, $BF, $BF, $BF, $BF, $BF, $A5, $08, $01, $03, $02, $03, $04, $05, $03, $06, $A9, $05 
 	dc.b	$01, $03, $04, $02, $06, $AE, $3E, $00, $BF, $BF, $BF, $BF, $BF, $BF, $BF, $10, $81, $6B, $6C, $6D, $6A, $6A, $6E, $6C, $6D, $6A, $6E, $6A, $6A, $6B, $6A, $6C 
 	dc.b	$A3, $01, $6D, $23, $6A, $11, $6B, $6C, $6D, $6E, $6E, $6C, $6D, $6A, $6A, $6B, $6E, $6A, $82, $84, $71, $6F, $70, $23, $71, $02, $6F, $70, $26, $71, $01, $6F 
 	dc.b	$A3, $01, $70, $24, $71, $82, $6F, $70, $71, $71, $23, $71, $01, $83, $3F, $00, $25, $00, $3F, $00
-TownTilemapData_Swafham_Ruined_TgtA:	
+TownTilemapData_Swaffham_Ruined_TgtA:	
 	dc.b	$24, $1E, $01, $A0, $3F, $20, $23, $20, $02, $A0, $A0, $BF 
 	dc.b	$BF, $AE, $28, $B0, $BC, $3E, $20, $BF, $BF, $BF, $BF, $BF, $BF, $B0, $2A, $B0, $AD, $25, $B0, $A8, $2E, $20, $A9, $3B, $20, $BF, $BF, $BF, $BF, $BF, $BF, $BF 
 	dc.b	$A5, $28, $B0, $A9, $25, $B0, $AE, $3E, $20, $BF, $BF, $BF, $BF, $BF, $BF, $BF, $30, $A0, $A3, $3F, $A0, $B6, $3F, $20, $25, $20, $3F, $00
-TownTilemapData_Swafham_Ruined_SetB_TgtB:	
+TownTilemapData_Swaffham_Ruined_SetB_TgtB:	
 	dc.b	$24, $1E, $01, $10 
 	dc.b	$25, $5B, $02, $5C, $5F, $25, $5B, $03, $60, $5B, $5C, $23, $5D, $02, $5E, $5F, $23, $5B, $05, $60, $5B, $5B, $5C, $5F, $26, $5B, $02, $10, $10, $A5, $29, $5B 
 	dc.b	$05, $61, $62, $63, $64, $65, $2F, $5B, $A2, $01, $80, $23, $87, $02, $57, $58, $24, $87, $02, $57, $58, $23, $87, $04, $66, $67, $68, $69, $24, $87, $02, $57 
@@ -5542,31 +5542,31 @@ TownTilemapData_Swafham_Ruined_SetB_TgtB:
 	dc.b	$A2, $04, $2F, $2D, $2E, $5A, $C2, $03, $56, $2D, $2D, $25, $2E, $08, $2F, $2E, $56, $2F, $2E, $2E, $56, $80, $A2, $2E, $88, $23, $80, $2F, $88, $01, $80, $A3 
 	dc.b	$3F, $80, $23, $80, $BF, $A6, $1E, $26, $27, $28, $29, $2A, $2B, $26, $27, $28, $29, $2A, $2B, $26, $27, $28, $29, $54, $55, $56, $27, $28, $29, $2A, $2B, $26 
 	dc.b	$27, $28, $29, $2A, $2B, $06, $26, $27, $28, $29, $2A, $2B, $3F, $00
-TownTilemapData_Swafham_Ruined_SetB_TgtA:	
+TownTilemapData_Swaffham_Ruined_SetB_TgtA:	
 	dc.b	$24, $1E, $3F, $12, $3F, $12, $AB, $2F, $04, $23, $14, $30, $04, $A3, $2E, $02, $23, $04 
 	dc.b	$2F, $02, $A7, $28, $12, $BD, $26, $02, $BF, $A3, $23, $12, $BD, $02, $12, $02, $C2, $26, $02, $B9, $2B, $02, $BF, $BB, $24, $04, $01, $02, $25, $04, $A2, $25 
 	dc.b	$04, $B3, $2E, $02, $A5, $2A, $12, $AD, $25, $12, $BF, $82, $12, $02, $02, $02, $BF, $AC, $23, $02, $42, $12, $02, $24, $02, $AB, $02, $12, $02, $CA, $25, $02 
 	dc.b	$B2, $28, $02, $AA, $28, $02, $BF, $A9, $23, $04, $01, $02, $23, $04, $A2, $29, $04, $A2, $26, $04, $01, $02, $26, $04, $A3, $2E, $02, $A3, $2F, $02, $A7, $28 
 	dc.b	$12, $A9, $25, $12, $AF, $25, $02, $01, $E2, $AB, $23, $02, $B4, $23, $12, $BD, $02, $12, $02, $C2, $26, $02, $A7, $02, $12, $02, $D0, $2B, $02, $A6, $2C, $02 
 	dc.b	$BF, $A9, $3F, $04, $01, $04, $BF, $BF, $AD, $2F, $12, $23, $F2, $31, $12, $3F 
-LoadTownTilemap_Swafham_PlaneA:
-	MOVE.l	#TownTilemapData_Swafham_SetA_TgtA, Tilemap_data_ptr_plane_a.w
-	MOVE.l	#TownTilemapData_Swafham_SetA_TgtB, Tilemap_data_ptr_plane_b.w
+LoadTownTilemap_Swaffham_PlaneA:
+	MOVE.l	#TownTilemapData_Swaffham_SetA_TgtA, Tilemap_data_ptr_plane_a.w
+	MOVE.l	#TownTilemapData_Swaffham_SetA_TgtB, Tilemap_data_ptr_plane_b.w
 	TST.b	Swaffham_ruined.w
-	BEQ.w	LoadTownTilemap_Swafham_PlaneA_Loop
-	MOVE.l	#TownTilemapData_Swafham_Ruined_TgtA, Tilemap_data_ptr_plane_a.w
-	MOVE.l	#TownTilemapData_Swafham_Ruined_TgtB, Tilemap_data_ptr_plane_b.w
-LoadTownTilemap_Swafham_PlaneA_Loop:
+	BEQ.w	LoadTownTilemap_Swaffham_PlaneA_Loop
+	MOVE.l	#TownTilemapData_Swaffham_Ruined_TgtA, Tilemap_data_ptr_plane_a.w
+	MOVE.l	#TownTilemapData_Swaffham_Ruined_TgtB, Tilemap_data_ptr_plane_b.w
+LoadTownTilemap_Swaffham_PlaneA_Loop:
 	RTS
 	
-LoadTownTilemap_Swafham_PlaneB:
-	MOVE.l	#TownTilemapData_Swafham_SetB_TgtA, Tilemap_data_ptr_plane_a.w
-	MOVE.l	#TownTilemapData_Swafham_SetB_TgtB, Tilemap_data_ptr_plane_b.w
+LoadTownTilemap_Swaffham_PlaneB:
+	MOVE.l	#TownTilemapData_Swaffham_SetB_TgtA, Tilemap_data_ptr_plane_a.w
+	MOVE.l	#TownTilemapData_Swaffham_SetB_TgtB, Tilemap_data_ptr_plane_b.w
 	TST.b	Swaffham_ruined.w
-	BEQ.w	LoadTownTilemap_Swafham_PlaneB_Loop
-	MOVE.l	#TownTilemapData_Swafham_Ruined_SetB_TgtA, Tilemap_data_ptr_plane_a.w
-	MOVE.l	#TownTilemapData_Swafham_Ruined_SetB_TgtB, Tilemap_data_ptr_plane_b.w
-LoadTownTilemap_Swafham_PlaneB_Loop:
+	BEQ.w	LoadTownTilemap_Swaffham_PlaneB_Loop
+	MOVE.l	#TownTilemapData_Swaffham_Ruined_SetB_TgtA, Tilemap_data_ptr_plane_a.w
+	MOVE.l	#TownTilemapData_Swaffham_Ruined_SetB_TgtB, Tilemap_data_ptr_plane_b.w
+LoadTownTilemap_Swaffham_PlaneB_Loop:
 	RTS
 	
 ;==============================================================
