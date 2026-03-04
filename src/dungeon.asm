@@ -928,6 +928,37 @@ UpdateFpWallJumpTable:
 	BRA.w	UpdateFpWalls_FacingLeft
 	BRA.w	UpdateFpWalls_FacingDown
 	BRA.w	UpdateFpWalls_FacingRight
+; -----------------------------------------------------------------------
+; UpdateFpWalls_FacingLeft / FacingDown / FacingRight / FacingUp
+; Update first-person wall tile indices for all 15 visible object slots
+;   across 3 depth tiers (Near/Mid/Far) and 5 lateral positions.
+;
+; Called exclusively via UpdateFpWallJumpTable dispatch above.
+; Inputs (from UpdateFirstPersonWallData):
+;   D0.w = Player X position    D1.w = Player Y position
+;   A0   = Map_sector_center base pointer
+;
+; All four functions share the same skeleton and differ only in:
+;   - Which axis is "forward" vs "lateral"  (X or Y)
+;   - The sign of the forward step          (+1 or -1)
+;   - Assignment of wall-side variables     (center/left/right naming)
+;   - Object slot ordering across lateral positions
+;
+; Facing   Forward-step   Lateral stride   Wall-left var       Wall-right var
+; Left     X-1, D1*$30    ±$30 (Y rows)    Fp_wall_right_2     First_person_wall_right
+; Down     Y+1, *$30+D0   ±$01 (X cols)    Fp_wall_right_2     First_person_wall_right
+; Right    X+1, D1*$30    ±$30 (Y rows)    First_person_wall_right  Fp_wall_right_2
+; Up       Y-1, *$30+D0   ±$01 (X cols)    First_person_wall_right  Fp_wall_right_2
+;
+; Left/Down share identical object slot ordering.
+; Right/Up share the mirror-image slot ordering.
+;
+; NOTE: FacingDown has a spurious extra LEA FpObjectTileTable_Far,A1 at the
+;       start of its Far tier — a no-op bug present in the original ROM binary.
+; NOTE: These four functions are logically unifiable into one parameterized
+;       routine, but cannot be merged without changing ROM bytes (bit-perfect
+;       constraint). They are preserved as-is from the original binary.
+; -----------------------------------------------------------------------
 UpdateFpWalls_FacingLeft:
 	SUBQ.w	#1, D0
 	MULU.w	#$0030, D1
@@ -1040,6 +1071,9 @@ UpdateFpWalls_FacingLeft:
 	MOVE.w	(A1,D4.w), obj_tile_index(A6)
 	RTS
 
+; See block comment above UpdateFpWalls_FacingLeft for full analysis.
+; FacingDown: forward = Y+1, lateral stride = ±$01, slots = Left/Down order
+; NOTE: contains a spurious extra LEA FpObjectTileTable_Far,A1 at Far tier start (no-op)
 UpdateFpWalls_FacingDown:
 	ADDQ.w	#1, D1
 	MULU.w	#$0030, D1
@@ -1153,6 +1187,8 @@ UpdateFpWalls_FacingDown:
 	MOVE.w	(A1,D4.w), obj_tile_index(A6)
 	RTS
 
+; See block comment above UpdateFpWalls_FacingLeft for full analysis.
+; FacingRight: forward = X+1, lateral stride = ±$30, slots = Right/Up order (mirrored)
 UpdateFpWalls_FacingRight:
 	ADDQ.w	#1, D0
 	MULU.w	#$0030, D1
@@ -1265,6 +1301,9 @@ UpdateFpWalls_FacingRight:
 	MOVE.w	(A1,D4.w), obj_tile_index(A6)
 	RTS
 
+; See block comment above UpdateFpWalls_FacingLeft for full analysis.
+; FacingUp: forward = Y-1, lateral stride = ±$01, slots = Right/Up order (mirrored)
+; Saves D0/D1 into D2/D3 before computing (only function that preserves inputs)
 UpdateFpWalls_FacingUp:
 	MOVE.w	D0, D2
 	MOVE.w	D1, D3
