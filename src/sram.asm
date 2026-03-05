@@ -251,14 +251,14 @@ FileMenuPhase_WaitSelection:
 	MOVEA.l	Sram_save_slot_ptr.w, A0
 	; Check first four interleaved bytes of slot for any non-zero data.
 	; Each logical save byte occupies 2 SRAM bytes (odd only), so:
-	;   $0(A0) = name[0], $2(A0) = name[1], $4(A0) = name[2], $6(A0) = name[3]
-	TST.b	(A0)		; name byte 0
+	;   sram_slot_name0 offset $0000 = name[0], sram_slot_name1 $0002 = name[1], ...
+	TST.b	(A0)				; name byte 0 (sram_slot_name0 = $0000)
 	BNE.b	FileMenu_ChecksumAndLoad
-	TST.b	$2(A0)		; name byte 1
+	TST.b	sram_slot_name1(A0)	; name byte 1
 	BNE.b	FileMenu_ChecksumAndLoad
-	TST.b	$4(A0)		; name byte 2
+	TST.b	sram_slot_name2(A0)	; name byte 2
 	BNE.b	FileMenu_ChecksumAndLoad
-	TST.b	$6(A0)		; name byte 3
+	TST.b	sram_slot_name3(A0)	; name byte 3
 	BNE.b	FileMenu_ChecksumAndLoad
 	BRA.b	FileMenu_NoSave
 FileMenu_ChecksumAndLoad:

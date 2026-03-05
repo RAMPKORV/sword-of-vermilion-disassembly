@@ -2304,4 +2304,34 @@ ENEMY_REWARD_TYPE_1 = $0001 ; Drop type 1 (item; reward_value encodes item ID)
 ENEMY_REWARD_TYPE_2 = $0002 ; Drop type 2
 ENEMY_REWARD_TYPE_3 = $0003 ; Drop type 3
 
+; ============================================================
+; SRAM Save Slot Field Offsets (interleaved)
+; ============================================================
+; Each save slot stores fields sequentially in SRAM interleaved format:
+; one logical byte occupies two physical SRAM bytes (odd byte only).
+; These offsets are physical byte offsets from the slot base address.
+;
+; Slot data order (matches SaveGameToSram / LoadGameFromSave):
+;   Offset  Size  Field
+;   ------  ----  -----------------------
+;    $0000   14   Player name (14 chars × 2 interleaved bytes = $1C physical)
+;    $001C    2   Current town
+;    $0020   14   Towns visited flags
+;    $003C    8   Overworld position (x/y/facing)
+;    $004C   22   Item inventory (length + array)
+;    $0074   22   Magic inventory
+;    $009C   22   Equipment inventory
+;    $00C4   16   Equipped gear
+;    $00D4   48   Gold + stat block
+;    $0134  512   Event/story trigger flags
+;    $0534    2   Checksum (big-endian, appended after data)
+;
+; The first four interleaved bytes (offsets 0, 2, 4, 6) are the first
+; four bytes of the player name.  They are tested to detect empty slots.
+;
+sram_slot_name0     equ $0000   ; interleaved offset: name byte 0 (first char)
+sram_slot_name1     equ $0002   ; interleaved offset: name byte 1
+sram_slot_name2     equ $0004   ; interleaved offset: name byte 2
+sram_slot_name3     equ $0006   ; interleaved offset: name byte 3
+
 

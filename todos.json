@@ -357,7 +357,7 @@
           "file": "game_constants.asm + src/sram.asm",
           "priority": "medium",
           "effort": "medium",
-          "status": "todo"
+          "status": "done"
         },
         {
           "id": "STRUCT-002",
