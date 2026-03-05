@@ -290,7 +290,7 @@
           "priority": "high",
           "effort": "small",
           "estimated_instances": 15,
-          "status": "todo"
+          "status": "done"
         },
         {
           "id": "SND-003",

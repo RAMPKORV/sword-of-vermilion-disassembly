@@ -20,6 +20,19 @@ Z80_sound_ram       = $A00200   ; Sound driver data region in Z80 RAM
 Z80_BUS_ON          = $0100    ; Value written to Z80_bus_request to request the bus
 Z80_BUS_OFF         = $0000    ; Value written to Z80_bus_request to release the bus
 
+; YM2612 FM Synthesis Chip Ports (accessed from 68000 via Z80 bus arbitration)
+; Port A controls FM channels 1-3; Port B controls FM channels 4-6.
+YM2612_addr_port_1  = $A04000  ; YM2612 port A: write register address (channels 1-3)
+YM2612_data_port_1  = $A04001  ; YM2612 port A: write register data    (channels 1-3)
+YM2612_addr_port_2  = $A04002  ; YM2612 port B: write register address (channels 4-6)
+YM2612_data_port_2  = $A04003  ; YM2612 port B: write register data    (channels 4-6)
+
+; Z80 DAC / PCM Sample Ports (mapped in Z80 address space, accessed by 68000 via bus grant)
+; These addresses are in the Z80's local address space ($A00000-$A01FFF from 68K perspective).
+Z80_dac_status      = $A01FFD  ; Bit 7: YM2612 busy flag (poll before writes)
+Z80_dac_bank        = $A01FFE  ; PCM sample bank select (upper address bits)
+Z80_dac_sample      = $A01FFF  ; PCM sample data byte (written to YM2612 DAC channel 6)
+
 ; I/O Ports
 IO_version          = $A10001   ; Hardware version / region register
 IO_data_port_1      = $A10003   ; Controller 1 data port

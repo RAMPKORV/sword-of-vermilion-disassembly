@@ -257,8 +257,8 @@ SoundChannel_NoteLoop_CheckDACMode:
 	BTST.b	#2, fmch_flags(A3)
 	BNE.w	SoundChannel_NoteLoop_SetNoteAndDuration
 	MOVE.w	#$0100, Z80_bus_request
-	MOVE.b	D5, $00A01FFF
-	MOVE.b	#0, $00A01FFE
+	MOVE.b	D5, Z80_dac_sample
+	MOVE.b	#0, Z80_dac_bank
 	MOVE.w	#0, Z80_bus_request
 ; @ $000929E2
 SoundChannel_NoteLoop_SetNoteAndDuration:
@@ -271,7 +271,7 @@ SoundChannel_NoteLoop_ArpeggioActive:
 	MOVE.b	fmch_note_freq(A3), D7
 	BNE.w	SoundChannel_NoteLoop_WriteDAC
 	MOVE.w	#$0100, Z80_bus_request
-	MOVE.b	#0, $00A01FFF
+	MOVE.b	#0, Z80_dac_sample
 	MOVE.w	#0, Z80_bus_request
 	RTS
 	
@@ -280,8 +280,8 @@ SoundChannel_NoteLoop_WriteDAC:
 	ADD.b	fmch_transpose(A3), D7
 	MOVE.b	fmch_arpeggio_idx(A3), D5
 	MOVE.w	#$0100, Z80_bus_request
-	MOVE.b	D7, $00A01FFE
-	MOVE.b	D5, $00A01FFF
+	MOVE.b	D7, Z80_dac_bank
+	MOVE.b	D5, Z80_dac_sample
 	MOVE.w	#0, Z80_bus_request
 ; @ $00092A3A
 WriteSoundRegister_Return:
@@ -815,7 +815,7 @@ LoadFM_AlgorithmData_ReinitPSGChannel:
 ; @ $00092E90
 LoadFM_AlgorithmData_InitDACChannel:
 	MOVE.w	#$0100, Z80_bus_request
-	MOVE.b	#0, $00A01FFF
+	MOVE.b	#0, Z80_dac_sample
 	MOVE.w	#0, Z80_bus_request
 	CLR.w	D0
 	MOVE.w	D0, D1
@@ -1438,11 +1438,11 @@ WriteYM2612Register:
 ; @ $00093436
 WriteYM2612Register_Part1:
 	BSR.w	WaitYM2612Ready
-	MOVE.b	D0, $00A04000
+	MOVE.b	D0, YM2612_addr_port_1
 	NOP
 	NOP
 	NOP
-	MOVE.b	D1, $00A04001
+	MOVE.b	D1, YM2612_data_port_1
 	MOVE.w	#0, Z80_bus_request
 	RTS
 	
@@ -1451,11 +1451,11 @@ WriteYM2612Register_PortB:
 	ANDI.b	#3, D2
 	ADD.b	D2, D0
 	BSR.b	WaitYM2612Ready
-	MOVE.b	D0, $00A04002
+	MOVE.b	D0, YM2612_addr_port_2
 	NOP
 	NOP
 	NOP
-	MOVE.b	D1, $00A04003
+	MOVE.b	D1, YM2612_data_port_2
 	MOVE.w	#0, Z80_bus_request
 ; @ $00093478
 WriteYM2612Register_Return:
@@ -1473,7 +1473,7 @@ WaitYM2612Ready:
 WaitYM2612Ready_Done:
 	BTST.b	#0, Z80_bus_request
 	BNE.b	WaitYM2612Ready_Done
-	BTST.b	#7, $00A01FFD
+	BTST.b	#7, Z80_dac_status
 	BEQ.b	WaitYM2612Ready_Loop
 	MOVE.w	#0, Z80_bus_request
 	NOP
