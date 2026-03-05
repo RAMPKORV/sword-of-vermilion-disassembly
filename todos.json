@@ -4,7 +4,7 @@
     "description": "Task list for achieving a clean, DRY, well-documented, bit-perfect disassembly ready for randomizer and game editor tooling",
     "created": "2026-03-04",
     "label_progress": "100% named (0 loc_ labels remain)",
-    "total_commits": 397
+    "total_commits": 398
   },
   "schema_version": 2,
   "task_defaults": {
@@ -952,7 +952,8 @@
           "priority": "low",
           "effort": "large",
           "note": "Important for randomizer/editor: need to know which strings can be swapped",
-          "status": "todo"
+          "status": "done",
+          "done_note": "tools/index/strings.json already created by VM-007 (strings indexer); full catalog with label, address, text, raw_ops per entry"
         },
         {
           "id": "STR-003",
@@ -1605,7 +1606,7 @@
           "file": "src/script.asm",
           "priority": "low",
           "effort": "large",
-          "status": "todo",
+          "status": "done",
           "tags": [
             "script-vm",
             "labeling"
@@ -2218,7 +2219,7 @@
       "module_architecture": 10,
       "contributor_experience": 10
     },
-    "done": 126,
-    "todo": 13
+    "done": 128,
+    "todo": 11
   }
 }

@@ -271,19 +271,19 @@ ProcessScriptText_Loop2: ; Dispatch on script control codes
 	CMPI.b	#SCRIPT_END, D3
 	BEQ.w	ScriptDecode_Done
 	CMPI.b	#SCRIPT_NEWLINE, D3
-	BEQ.w	ScriptRender_PortraitTile_Loop          ; advance to next row
+	BEQ.w	ScriptCmd_Newline                       ; advance to next row
 	CMPI.b	#SCRIPT_CONTINUE, D3
-	BEQ.w	ScriptRender_PortraitTile_Loop2         ; show continue arrow, wait
+	BEQ.w	ScriptCmd_Continue                      ; show continue arrow, wait
 	CMPI.b	#SCRIPT_QUESTION, D3
 	BEQ.w	ScriptDecode_SetResponse                ; set dialogue response index
 	CMPI.b	#SCRIPT_YES_NO, D3
-	BEQ.w	ScriptRender_PortraitTile_Loop3         ; yes/no prompt
+	BEQ.w	ScriptCmd_YesNo                         ; yes/no prompt
 	CMPI.b	#SCRIPT_CHOICE, D3
-	BEQ.w	ScriptRender_PortraitTile_Loop4         ; quest choice with expected answer
+	BEQ.w	ScriptCmd_Choice                        ; quest choice with expected answer
 	CMPI.b	#SCRIPT_ACTIONS, D3
-	BEQ.w	ScriptRender_PortraitTile_Loop5         ; execute give-item/kims/trigger actions
+	BEQ.w	ScriptCmd_Actions                       ; execute give-item/kims/trigger actions
 	CMPI.b	#SCRIPT_TRIGGERS, D3
-	BEQ.w	ScriptRender_PortraitTile_Loop6         ; set event triggers (simple format)
+	BEQ.w	ScriptCmd_Triggers                      ; set event triggers (simple format)
 	CMPI.b	#SCRIPT_WIDE_CHAR_LO, D3
 	BEQ.w	ScriptRender_PortraitTile               ; wide char low byte (2-column glyph)
 	CMPI.b	#SCRIPT_WIDE_CHAR_HI, D3
@@ -333,11 +333,11 @@ ScriptRender_PortraitTile:
 	MOVE.l	D0, VDP_control_port	
 	MOVE.w	D3, VDP_data_port	
 	BRA.w	ScriptDecode_AdvanceOffset	
-ScriptRender_PortraitTile_Loop:
+ScriptCmd_Newline:
 	ADDQ.w	#2, Script_output_y.w          ; skip down 2 rows (double-height text lines)
 	CLR.w	Script_output_x.w              ; reset to start of line
 	BRA.w	ScriptDecode_AdvanceOffset
-ScriptRender_PortraitTile_Loop2:
+ScriptCmd_Continue:
 	MOVE.b	#FLAG_TRUE, Script_has_continuation.w  ; mark: player must press button to continue
 	JSR	GetScrollOffsetInTiles
 	ADDI.w	#$0014, D0                      ; X offset = column 20 (right edge of dialog box)
@@ -358,12 +358,12 @@ ScriptRender_PortraitTile_Loop2:
 	OR.w	Script_tile_attrs.w, D3
 	MOVE.w	D3, VDP_data_port
 	BRA.w	ScriptDecode_Done
-ScriptRender_PortraitTile_Loop4:
+ScriptCmd_Choice:
 	MOVE.b	$2(A0,D2.w), Quest_choice_expected_answer.w	
 	MOVE.b	$3(A0,D2.w), Quest_choice_map_trigger.w	
 	MOVE.b	#FLAG_TRUE, Quest_choice_pending.w	
 	BRA.w	ScriptDecode_SetResponse	
-ScriptRender_PortraitTile_Loop5:
+ScriptCmd_Actions:
 	CLR.l	D4
 	CLR.l	D5
 	LEA	Event_triggers_start.w, A2
@@ -371,25 +371,25 @@ ScriptRender_PortraitTile_Loop5:
 	ADDA.w	D2, A0
 	LEA	$2(A0), A4
 	SUBQ.b	#1, D4
-ScriptRender_PortraitTile_Loop5_Done:
+ScriptCmd_Actions_Loop:
 	MOVE.b	(A4)+, D5 ; Read next to D5
 	CMPI.b	#2, D5
-	BEQ.b	ScriptRender_PortraitTile_Loop7
+	BEQ.b	ScriptCmd_Actions_GiveItem
 	LSL.w	#8, D5
 	MOVE.b	(A4)+, D5
 	MOVE.b	#$FF, (A2,D5.w)
-	BRA.b	ScriptRender_PortraitTile_Loop8
-ScriptRender_PortraitTile_Loop7:
+	BRA.b	ScriptCmd_Actions_Next
+ScriptCmd_Actions_GiveItem:
 	MOVE.b	(A4)+, Transaction_amount.w
 	MOVE.b	(A4)+, Transaction_item_id.w
 	MOVE.b	(A4)+, Transaction_item_quantity.w
 	MOVE.b	(A4)+, Transaction_item_flags.w
 	BSR.w	AddPaymentAmount
-ScriptRender_PortraitTile_Loop8:
-	DBF	D4, ScriptRender_PortraitTile_Loop5_Done
+ScriptCmd_Actions_Next:
+	DBF	D4, ScriptCmd_Actions_Loop
 	PlaySound	SOUND_ATTACK
 	BRA.w	ScriptDecode_Done
-ScriptRender_PortraitTile_Loop6:
+ScriptCmd_Triggers:
 	CLR.l	D4
 	CLR.l	D5
 	LEA	Event_triggers_start.w, A2
@@ -397,12 +397,12 @@ ScriptRender_PortraitTile_Loop6:
 	ADDA.w	D2, A0
 	LEA	$2(A0), A4
 	SUBQ.b	#1, D4
-ScriptRender_PortraitTile_Loop6_Done:
+ScriptCmd_Triggers_Loop:
 	MOVE.b	(A4)+, D5
 	MOVE.b	#$FF, (A2,D5.w)
-	DBF	D4, ScriptRender_PortraitTile_Loop6_Done
+	DBF	D4, ScriptCmd_Triggers_Loop
 	BRA.w	ScriptDecode_Done
-ScriptRender_PortraitTile_Loop3:
+ScriptCmd_YesNo:
 	MOVE.b	$2(A0,D2.w), Dialog_choice_event_trigger.w
 	MOVE.b	$3(A0,D2.w), Dialog_choice_extended_trigger.w
 	MOVE.b	#FLAG_TRUE, Dialogue_event_trigger_flag.w
