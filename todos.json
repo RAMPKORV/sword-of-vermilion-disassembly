@@ -4,7 +4,7 @@
     "description": "Task list for achieving a clean, DRY, well-documented, bit-perfect disassembly ready for randomizer and game editor tooling",
     "created": "2026-03-04",
     "label_progress": "100% named (0 loc_ labels remain)",
-    "total_commits": 396
+    "total_commits": 397
   },
   "schema_version": 2,
   "task_defaults": {
@@ -1132,7 +1132,7 @@
           "priority": "medium",
           "effort": "large",
           "depends_on": "EDIT-006",
-          "status": "todo"
+          "status": "done"
         },
         {
           "id": "EDIT-008",
@@ -2217,6 +2217,8 @@
       "tooling_and_lints": 12,
       "module_architecture": 10,
       "contributor_experience": 10
-    }
+    },
+    "done": 126,
+    "todo": 13
   }
 }
