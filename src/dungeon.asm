@@ -9,34 +9,34 @@ HandleMapTileTransition:
 	CMPI.b	#$FF, D0
 	BEQ.w	HandleMapTileTransition_Loop
 	CMPI.b	#OVERWORLD_TILE_CAVE_MIN, D0
-	BGE.b	HandleMapTileTransition_Loop2
+	BGE.b	HandleMapTileTransition_EnterCave
 	CMPI.b	#OVERWORLD_TILE_UPPER_CAVE_MIN, D0
-	BLT.w	HandleMapTileTransition_Loop3
+	BLT.w	HandleMapTileTransition_EnterTown
 	TST.b	D0
-	BLT.b	HandleMapTileTransition_Loop4
+	BLT.b	HandleMapTileTransition_ClearHighBitAndEnterCave
 	RTS
 
-HandleMapTileTransition_Loop4:
+HandleMapTileTransition_ClearHighBitAndEnterCave:
 	BCLR.l	#7, D0
-HandleMapTileTransition_Loop2: ; Enter cave
+HandleMapTileTransition_EnterCave: ; Enter cave
 	SUBI.b	#$10, D0
 	ANDI.w	#$007F, D0
 	MOVE.w	D0, Current_cave_room.w
 	MOVE.b	#FLAG_TRUE, Is_in_cave.w
 	MOVE.b	#FLAG_TRUE, Fade_out_lines_mask.w
 	TST.b	Cave_position_saved.w
-	BNE.b	HandleMapTileTransition_Loop5
+	BNE.b	HandleMapTileTransition_SaveCavePosition
 	MOVE.w	Player_position_x_outside_town.w, Player_cave_position_x.w
 	MOVE.w	Player_position_y_outside_town.w, Player_cave_position_y.w
 	MOVE.w	Player_map_sector_x.w, Player_cave_map_sector_x.w
 	MOVE.w	Player_map_sector_y.w, Player_cave_map_sector_y.w
 	MOVE.b	#FLAG_TRUE, Cave_position_saved.w
-HandleMapTileTransition_Loop5:
+HandleMapTileTransition_SaveCavePosition:
 	MOVE.w	#GAMEPLAY_STATE_ENTERING_CAVE, Gameplay_state.w
 	PlaySound_b	SOUND_TRANSITION
 	RTS
 
-HandleMapTileTransition_Loop3:
+HandleMapTileTransition_EnterTown:
 	ANDI.w	#$000F, D0
 	MOVE.w	D0, Current_town.w
 	MOVE.w	#GAMEPLAY_STATE_TOWN_FADE_IN_COMPLETE, Gameplay_state.w
@@ -63,56 +63,56 @@ RefreshFirstPersonView:
 
 RotateClockwiseJumpTable:
 	BRA.w	RotateCounterClockwiseJumpTable_Loop
-	BRA.w	RotateCounterClockwiseJumpTable_Loop2
-	BRA.w	RotateCounterClockwiseJumpTable_Loop3
+	BRA.w	RotateCounterClockwiseJumpTable_RotateCW_East
+	BRA.w	RotateCounterClockwiseJumpTable_RotateCW_South
 	BRA.w	RenderWallTile_NearTwoPalette_Loop
 RotateCounterClockwiseJumpTable:
-	BRA.w	RotateCounterClockwiseJumpTable_Loop4
-	BRA.w	RotateCounterClockwiseJumpTable_Loop5
-	BRA.w	RotateCounterClockwiseJumpTable_Loop6
-	BRA.w	RenderWallTile_NearTwoPalette_Loop2
-RotateCounterClockwiseJumpTable_Loop6:
+	BRA.w	RotateCounterClockwiseJumpTable_RotateCCW_South
+	BRA.w	RotateCounterClockwiseJumpTable_RotateCCW_East
+	BRA.w	RotateCounterClockwiseJumpTable_RotateCCW_West
+	BRA.w	RenderWallTile_NearTwoPalette_RotateCW
+RotateCounterClockwiseJumpTable_RotateCCW_West:
 	LEA	RotateCCW_WestJumpTable, A0
-	BRA.w	RotateCounterClockwiseJumpTable_Loop7
+	BRA.w	RotateCounterClockwiseJumpTable_Init21x13_And_Render
 RotateCounterClockwiseJumpTable_Loop:
 	LEA	RotateCW_NorthJumpTable, A0
-RotateCounterClockwiseJumpTable_Loop7:
+RotateCounterClockwiseJumpTable_Init21x13_And_Render:
 	BSR.w	InitObjectPositions_21x13
 	LEA	Map_sector_center.w, A2
 	BSR.w	UpdatePlayerMapSector
 	BSR.w	RenderMapToVRAM_DualPalette_21x13
 	TST.b	Is_in_cave.w
-	BNE.b	RotateCounterClockwiseJumpTable_Loop8
+	BNE.b	RotateCounterClockwiseJumpTable_DisplayCaveStats_21x13
 	BRA.w	DrawCompassTiles
-RotateCounterClockwiseJumpTable_Loop8:
+RotateCounterClockwiseJumpTable_DisplayCaveStats_21x13:
 	BRA.w	DisplayStatsToVRAM_SinglePalette
-RotateCounterClockwiseJumpTable_Loop5:
+RotateCounterClockwiseJumpTable_RotateCCW_East:
 	LEA	RotateCCW_EastJumpTable, A0
-	BRA.w	RotateCounterClockwiseJumpTable_Loop9
-RotateCounterClockwiseJumpTable_Loop2:
+	BRA.w	RotateCounterClockwiseJumpTable_Init21x20_And_Render
+RotateCounterClockwiseJumpTable_RotateCW_East:
 	LEA	RotateCW_EastJumpTable, A0
-RotateCounterClockwiseJumpTable_Loop9:
+RotateCounterClockwiseJumpTable_Init21x20_And_Render:
 	BSR.w	InitObjectPositions_21x20
 	BSR.w	UpdatePlayerMapSector
 	BSR.w	RenderMapToVRAM_DualPalette_21x20
 	TST.b	Is_in_cave.w
-	BNE.b	RotateCounterClockwiseJumpTable_Loop10
+	BNE.b	RotateCounterClockwiseJumpTable_DisplayCaveStats_21x20
 	BRA.w	DrawCompassTiles
-RotateCounterClockwiseJumpTable_Loop10:
+RotateCounterClockwiseJumpTable_DisplayCaveStats_21x20:
 	BRA.w	DisplayStatsToVRAM
-RotateCounterClockwiseJumpTable_Loop4:
+RotateCounterClockwiseJumpTable_RotateCCW_South:
 	LEA	RotateCCW_SouthJumpTable, A0
-	BRA.w	RotateCounterClockwiseJumpTable_Loop11
-RotateCounterClockwiseJumpTable_Loop3:
+	BRA.w	RotateCounterClockwiseJumpTable_Init21x13Alt_And_Render
+RotateCounterClockwiseJumpTable_RotateCW_South:
 	LEA	RotateCW_SouthJumpTable, A0
-RotateCounterClockwiseJumpTable_Loop11:
+RotateCounterClockwiseJumpTable_Init21x13Alt_And_Render:
 	BSR.w	InitObjectPositions_21x13Alt
 	BSR.w	UpdatePlayerMapSector
 	BSR.w	RenderMapToVRAM_DualPalette_21x13_Alt
 	TST.b	Is_in_cave.w
-	BNE.b	RotateCounterClockwiseJumpTable_Loop12
+	BNE.b	RotateCounterClockwiseJumpTable_DisplayCaveStats_21x13Alt
 	BRA.w	DrawCompassTiles
-RotateCounterClockwiseJumpTable_Loop12:
+RotateCounterClockwiseJumpTable_DisplayCaveStats_21x13Alt:
 	BRA.w	DisplayStatsToVRAM_AltPalette
 UpdatePlayerMapSector:
 	LEA	Map_sector_center.w, A2
@@ -267,17 +267,17 @@ RenderWallTile_NearTwoPalette_Loop:
 	BSR.w	RefreshFirstPersonView
 	BSR.w	DisplayCompassToVRAM
 	TST.b	Is_in_cave.w
-	BNE.b	RenderWallTile_NearTwoPalette_Loop3
+	BNE.b	RenderWallTile_NearTwoPalette_RotateCCW_DisplayKims
 	BSR.w	UpdateCompassDisplay
-	BRA.b	RenderWallTile_NearTwoPalette_Loop4
-RenderWallTile_NearTwoPalette_Loop3:
+	BRA.b	RenderWallTile_NearTwoPalette_RotateCCW_UpdateArea
+RenderWallTile_NearTwoPalette_RotateCCW_DisplayKims:
 	BSR.w	DisplayKimsToVRAM
-RenderWallTile_NearTwoPalette_Loop4:
+RenderWallTile_NearTwoPalette_RotateCCW_UpdateArea:
 	BSR.w	UpdateAreaVisibility
 	BSR.w	DecrementInaudiosSteps
 	RTS
 
-RenderWallTile_NearTwoPalette_Loop2:
+RenderWallTile_NearTwoPalette_RotateCW:
 	CLR.b	Player_rotate_counter_clockwise_in_overworld.w
 	ADDQ.w	#2, Player_direction.w
 	ANDI.w	#7, Player_direction.w
@@ -285,26 +285,26 @@ RenderWallTile_NearTwoPalette_Loop2:
 	BSR.w	RefreshFirstPersonView
 	BSR.w	DisplayCompassToVRAM
 	TST.b	Is_in_cave.w
-	BNE.b	RenderWallTile_NearTwoPalette_Loop5
+	BNE.b	RenderWallTile_NearTwoPalette_RotateCW_DisplayKims
 	BSR.w	UpdateCompassDisplay
-	BRA.b	RenderWallTile_NearTwoPalette_Loop6
-RenderWallTile_NearTwoPalette_Loop5:
+	BRA.b	RenderWallTile_NearTwoPalette_RotateCW_UpdateArea
+RenderWallTile_NearTwoPalette_RotateCW_DisplayKims:
 	BSR.w	DisplayKimsToVRAM
-RenderWallTile_NearTwoPalette_Loop6:
+RenderWallTile_NearTwoPalette_RotateCW_UpdateArea:
 	BSR.w	UpdateAreaVisibility
 	BSR.w	DecrementInaudiosSteps
 	RTS
 
 ForwardMovementJumpTable:
 	BRA.w	ForwardMovementJumpTable_Loop
-	BRA.w	ForwardMovementJumpTable_Loop2
-	BRA.w	ForwardMovementJumpTable_Loop3
-	BRA.w	ForwardMovementJumpTable_Loop4
+	BRA.w	ForwardMovementJumpTable_CheckPoison_Frame8
+	BRA.w	ForwardMovementJumpTable_Frame12_CaveWalls
+	BRA.w	ForwardMovementJumpTable_Frame16_PaletteCycle
 ForwardMovementJumpTable_Loop:
 	TST.w	Palette_line_2_index.w
-	BEQ.b	ForwardMovementJumpTable_Loop5
+	BEQ.b	ForwardMovementJumpTable_LoadPalette_Frame0
 	ADDQ.w	#1, Palette_line_2_index.w
-ForwardMovementJumpTable_Loop5:
+ForwardMovementJumpTable_LoadPalette_Frame0:
 	JSR	LoadPalettesFromTable
 	LEA	FpDirectionDeltaForward, A0
 	BSR.w	UpdateMapSectorPosition
@@ -315,45 +315,45 @@ ForwardMovementJumpTable_Loop5:
 	BSR.w	UpdateAreaVisibility
 	CLR.w	D7
 	BRA.w	CaveBossStartPositions_Alt
-ForwardMovementJumpTable_Loop2:
+ForwardMovementJumpTable_CheckPoison_Frame8:
 	TST.w	Palette_line_2_index.w
-	BEQ.b	ForwardMovementJumpTable_Loop6
+	BEQ.b	ForwardMovementJumpTable_LoadPalette_Frame8
 	ADDQ.w	#1, Palette_line_2_index.w
-ForwardMovementJumpTable_Loop6:
+ForwardMovementJumpTable_LoadPalette_Frame8:
 	TST.w	Player_poisoned.w
-	BEQ.b	ForwardMovementJumpTable_Loop7
+	BEQ.b	ForwardMovementJumpTable_LoadPaletteDone_Frame8
 	MOVE.w	#PALETTE_IDX_CAVE_POISON, Palette_line_0_index.w
 	MOVE.w	Player_str.w, D0
 	ASR.w	#7, D0
-	BGT.b	ForwardMovementJumpTable_Loop8
+	BGT.b	ForwardMovementJumpTable_ClampHpAfterHeal_Frame8
 	MOVEQ	#1, D0	
-ForwardMovementJumpTable_Loop8:
+ForwardMovementJumpTable_ClampHpAfterHeal_Frame8:
 	SUB.w	D0, Player_hp.w
 	JSR	DisplayPlayerHpMp
-ForwardMovementJumpTable_Loop7:
+ForwardMovementJumpTable_LoadPaletteDone_Frame8:
 	JSR	LoadPalettesFromTable
 	MOVE.w	Equipped_armor.w, D0
 	ANDI.w	#$00FF, D0
 	CMPI.w	#EQUIPMENT_ARMOR_CRIMSON, D0
-	BNE.b	ForwardMovementJumpTable_Loop9
+	BNE.b	ForwardMovementJumpTable_LoadPaletteDone_Frame12
 	ADDQ.w	#5, Player_hp.w	
 	MOVE.w	Player_hp.w, D0	
 	CMP.w	Player_mhp.w, D0	
-	BLE.b	ForwardMovementJumpTable_Loop10	
+	BLE.b	ForwardMovementJumpTable_ClampHpAfterHeal_Frame12	
 	MOVE.w	Player_mhp.w, Player_hp.w	
-ForwardMovementJumpTable_Loop10:
+ForwardMovementJumpTable_ClampHpAfterHeal_Frame12:
 	JSR	DisplayPlayerHpMp	
-ForwardMovementJumpTable_Loop9:
+ForwardMovementJumpTable_LoadPaletteDone_Frame12:
 	MOVE.w	#8, First_person_wall_frame.w
 	MOVE.w	#4, Wall_render_y_offset.w
 	BSR.w	DrawFirstPersonWalls
 	CLR.w	D7
 	BRA.w	DungeonTick_ApplyObjectOffsets
-ForwardMovementJumpTable_Loop3:
+ForwardMovementJumpTable_Frame12_CaveWalls:
 	TST.w	Palette_line_2_index.w
-	BEQ.b	ForwardMovementJumpTable_Loop11
+	BEQ.b	ForwardMovementJumpTable_LoadPalette_Frame12
 	ADDQ.w	#1, Palette_line_2_index.w
-ForwardMovementJumpTable_Loop11:
+ForwardMovementJumpTable_LoadPalette_Frame12:
 	MOVE.w	#PALETTE_IDX_CAVE_WALLS, Palette_line_0_index.w
 	JSR	LoadPalettesFromTable
 	MOVE.w	#12, First_person_wall_frame.w
@@ -363,16 +363,16 @@ ForwardMovementJumpTable_Loop11:
 	BSR.w	ApplyAreaDamageToObjects
 	CLR.w	D7
 	BRA.w	DungeonTick_ApplyObjectOffsets
-ForwardMovementJumpTable_Loop4:
+ForwardMovementJumpTable_Frame16_PaletteCycle:
 	TST.w	Palette_line_2_index.w
 	BEQ.b	DungeonForwardMove_LoadPaletteDraw
 	TST.b	Is_in_cave.w
-	BEQ.b	ForwardMovementJumpTable_Loop12
+	BEQ.b	ForwardMovementJumpTable_PaletteCycleWrap_NonCave
 	CMPI.w	#PALETTE_IDX_CAVE_ANIM_END, Palette_line_2_index.w
 	BNE.b	DungeonForwardMove_PaletteStep
 	MOVE.w	#PALETTE_IDX_CAVE_ANIM_BASE, Palette_line_2_index.w
 	BRA.b	DungeonForwardMove_LoadPaletteDraw
-ForwardMovementJumpTable_Loop12:
+ForwardMovementJumpTable_PaletteCycleWrap_NonCave:
 	CMPI.w	#PALETTE_IDX_CAVE_ANIM_ALT, Palette_line_2_index.w
 	BNE.b	DungeonForwardMove_PaletteStep
 	MOVE.w	#PALETTE_IDX_CAVE_FLOOR, Palette_line_2_index.w
@@ -390,18 +390,18 @@ DungeonForwardMove_LoadPaletteDraw:
 BackwardMovementJumpTable:
 	BRA.w	BackwardMovementJumpTable_Loop
 	BRA.w	DungeonBackwardMove_LoadPaletteDraw_Loop
-	BRA.w	DungeonBackwardMove_LoadPaletteDraw_Loop2
-	BRA.w	DungeonBackwardMove_LoadPaletteDraw_Loop3
+	BRA.w	DungeonBackwardMove_Frame4_CaveWalls
+	BRA.w	DungeonBackwardMove_Frame16_PaletteCycle
 BackwardMovementJumpTable_Loop:
 	TST.w	Palette_line_2_index.w
 	BEQ.b	DungeonBackwardMove_LoadPaletteDraw
 	TST.b	Is_in_cave.w
-	BEQ.b	BackwardMovementJumpTable_Loop2
+	BEQ.b	BackwardMovementJumpTable_PaletteCycleWrap_NonCave
 	CMPI.w	#PALETTE_IDX_CAVE_ANIM_BASE, Palette_line_2_index.w
 	BNE.b	DungeonBackwardMove_PaletteStep
 	MOVE.w	#PALETTE_IDX_CAVE_ANIM_END, Palette_line_2_index.w
 	BRA.b	DungeonBackwardMove_LoadPaletteDraw
-BackwardMovementJumpTable_Loop2:
+BackwardMovementJumpTable_PaletteCycleWrap_NonCave:
 	CMPI.w	#PALETTE_IDX_CAVE_FLOOR, Palette_line_2_index.w
 	BNE.b	DungeonBackwardMove_PaletteStep
 	MOVE.w	#PALETTE_IDX_CAVE_ANIM_ALT, Palette_line_2_index.w
@@ -417,33 +417,33 @@ DungeonBackwardMove_LoadPaletteDraw:
 	BRA.w	DungeonTick_ApplyObjectOffsets
 DungeonBackwardMove_LoadPaletteDraw_Loop:
 	TST.w	Palette_line_2_index.w
-	BEQ.b	DungeonBackwardMove_LoadPaletteDraw_Loop4
+	BEQ.b	DungeonBackwardMove_LoadPalette_Frame12
 	SUBQ.w	#1, Palette_line_2_index.w
-DungeonBackwardMove_LoadPaletteDraw_Loop4:
+DungeonBackwardMove_LoadPalette_Frame12:
 	TST.w	Player_poisoned.w
-	BEQ.b	DungeonBackwardMove_LoadPaletteDraw_Loop5
+	BEQ.b	DungeonBackwardMove_CheckPoison_Frame8
 	MOVE.w	#PALETTE_IDX_CAVE_POISON, Palette_line_0_index.w
 	MOVE.w	Player_str.w, D0
 	ASR.w	#7, D0
-	BGT.b	DungeonBackwardMove_LoadPaletteDraw_Loop6
+	BGT.b	DungeonBackwardMove_ClampHpAfterHeal_Frame8
 	MOVEQ	#1, D0	
-DungeonBackwardMove_LoadPaletteDraw_Loop6:
+DungeonBackwardMove_ClampHpAfterHeal_Frame8:
 	SUB.w	D0, Player_hp.w
 	JSR	DisplayPlayerHpMp
-DungeonBackwardMove_LoadPaletteDraw_Loop5:
+DungeonBackwardMove_CheckPoison_Frame8:
 	JSR	LoadPalettesFromTable
 	MOVE.w	Equipped_armor.w, D0
 	ANDI.w	#$00FF, D0
 	CMPI.w	#EQUIPMENT_ARMOR_CRIMSON, D0
-	BNE.b	DungeonBackwardMove_LoadPaletteDraw_Loop7
+	BNE.b	DungeonBackwardMove_LoadPaletteDone_Frame4
 	ADDQ.w	#2, Player_hp.w	
 	MOVE.w	Player_hp.w, D0	
 	CMP.w	Player_mhp.w, D0	
-	BLE.b	DungeonBackwardMove_LoadPaletteDraw_Loop8	
+	BLE.b	DungeonBackwardMove_ClampHpAfterHeal_Frame4	
 	MOVE.w	Player_mhp.w, Player_hp.w	
-DungeonBackwardMove_LoadPaletteDraw_Loop8:
+DungeonBackwardMove_ClampHpAfterHeal_Frame4:
 	JSR	DisplayPlayerHpMp	
-DungeonBackwardMove_LoadPaletteDraw_Loop7:
+DungeonBackwardMove_LoadPaletteDone_Frame4:
 	MOVE.w	#8, First_person_wall_frame.w
 	MOVE.w	#4, Wall_render_y_offset.w
 	BSR.w	DrawFirstPersonWalls
@@ -451,11 +451,11 @@ DungeonBackwardMove_LoadPaletteDraw_Loop7:
 	BSR.w	ApplyAreaDamageToObjects
 	MOVEQ	#1, D7
 	BRA.w	DungeonTick_ApplyObjectOffsets
-DungeonBackwardMove_LoadPaletteDraw_Loop2:
+DungeonBackwardMove_Frame4_CaveWalls:
 	TST.w	Palette_line_2_index.w
-	BEQ.b	DungeonBackwardMove_LoadPaletteDraw_Loop9
+	BEQ.b	DungeonBackwardMove_LoadPalette_Frame4
 	SUBQ.w	#1, Palette_line_2_index.w
-DungeonBackwardMove_LoadPaletteDraw_Loop9:
+DungeonBackwardMove_LoadPalette_Frame4:
 	MOVE.w	#PALETTE_IDX_CAVE_WALLS, Palette_line_0_index.w
 	JSR	LoadPalettesFromTable
 	MOVE.w	#4, First_person_wall_frame.w
@@ -463,11 +463,11 @@ DungeonBackwardMove_LoadPaletteDraw_Loop9:
 	BSR.w	DrawFirstPersonWalls
 	MOVEQ	#1, D7
 	BRA.w	CaveBossStartPositions_Alt
-DungeonBackwardMove_LoadPaletteDraw_Loop3:
+DungeonBackwardMove_Frame16_PaletteCycle:
 	TST.w	Palette_line_2_index.w
-	BEQ.b	DungeonBackwardMove_LoadPaletteDraw_Loop10
+	BEQ.b	DungeonBackwardMove_LoadPalette_Frame16
 	SUBQ.w	#1, Palette_line_2_index.w
-DungeonBackwardMove_LoadPaletteDraw_Loop10:
+DungeonBackwardMove_LoadPalette_Frame16:
 	JSR	LoadPalettesFromTable
 	CLR.b	Player_move_backward_in_overworld.w
 	LEA	FpDirectionDeltaBackward, A0
@@ -586,12 +586,12 @@ ApplyAreaDamageToObjects:
 	MOVE.w	#$FFDC, D2
 	MOVE.w	#$FFE8, D3
 	MOVE.w	#$FFFA, D4
-	BRA.b	ApplyAreaDamageToObjects_Loop2
+	BRA.b	ApplyAreaDamageToObjects_Apply
 ApplyAreaDamageToObjects_Loop:
 	MOVE.w	#$0024, D2
 	MOVE.w	#$0018, D3
 	MOVE.w	#6, D4
-ApplyAreaDamageToObjects_Loop2:
+ApplyAreaDamageToObjects_Apply:
 	MOVEA.l	Enemy_list_ptr.w, A6
 	BSR.w	ApplyDamageToObjectIfAlive
 	MOVEA.l	Object_slot_01_ptr.w, A6
@@ -748,18 +748,18 @@ DrawFirstPersonWalls:
 DrawFirstPersonWalls_Loop:
 	CLR.w	D0
 	MOVE.b	First_person_center_wall.w, D0
-	BLE.b	DrawFirstPersonWalls_Loop2
+	BLE.b	DrawFirstPersonWalls_DrawCenterWall
 	LEA	WallRenderVdpParams_Mid, A2
 	BSR.w	PrepareWallTileRenderData
 	BSR.w	RenderWallTile_14x10_TwoPalette
-DrawFirstPersonWalls_Loop2:
+DrawFirstPersonWalls_DrawCenterWall:
 	CLR.w	D0
 	MOVE.b	Fp_wall_right_2.w, D0
-	BLE.b	DrawFirstPersonWalls_Loop3
+	BLE.b	DrawFirstPersonWalls_Return
 	LEA	WallRenderVdpParams_Far, A2
 	BSR.w	PrepareWallTileRenderData
 	BSR.w	RenderWallTile_14x10_TwoPalette_RightWall
-DrawFirstPersonWalls_Loop3:
+DrawFirstPersonWalls_Return:
 	RTS
 
 PrepareWallTileRenderData:
@@ -787,19 +787,19 @@ RenderWallTile_14x10_TwoPalette:
 RenderWallTile_14x10_TwoPalette_Done:
 	MOVE.l	D5, VDP_control_port
 	MOVE.w	#5, D6
-RenderWallTile_14x10_TwoPalette_Done2:
+RenderWallTile_14x10_TwoPalette_WritePalette1Tile:
 	CLR.w	D0
 	MOVE.b	(A0)+, D0
 	ADD.w	D1, D0
 	MOVE.w	D0, VDP_data_port
-	DBF	D6, RenderWallTile_14x10_TwoPalette_Done2
+	DBF	D6, RenderWallTile_14x10_TwoPalette_WritePalette1Tile
 	MOVE.w	#4, D6
-RenderWallTile_14x10_TwoPalette_Done3:
+RenderWallTile_14x10_TwoPalette_WritePalette2Tile:
 	CLR.w	D0
 	MOVE.b	(A0)+, D0
 	ADD.w	D2, D0
 	MOVE.w	D0, VDP_data_port
-	DBF	D6, RenderWallTile_14x10_TwoPalette_Done3
+	DBF	D6, RenderWallTile_14x10_TwoPalette_WritePalette2Tile
 	ADDI.l	#$00800000, D5
 	DBF	D7, RenderWallTile_14x10_TwoPalette_Done
 	ANDI	#$F8FF, SR
@@ -811,16 +811,16 @@ RenderWallTile_14x10_TwoPalette_RightWall:
 RenderWallTile_14x10_TwoPalette_RightWall_Done:
 	MOVE.l	D5, D4
 	MOVE.w	#5, D6
-RenderWallTile_14x10_TwoPalette_RightWall_Done2:
+RenderWallTile_14x10_TwoPalette_RightWall_WritePalette1Tile:
 	MOVE.l	D4, VDP_control_port
 	CLR.w	D0
 	MOVE.b	(A0)+, D0
 	ADD.w	D1, D0
 	MOVE.w	D0, VDP_data_port
 	ADDI.l	#$00020000, D4
-	DBF	D6, RenderWallTile_14x10_TwoPalette_RightWall_Done2
+	DBF	D6, RenderWallTile_14x10_TwoPalette_RightWall_WritePalette1Tile
 	MOVE.w	#4, D6
-RenderWallTile_14x10_TwoPalette_RightWall_Done3:
+RenderWallTile_14x10_TwoPalette_RightWall_WritePalette2Tile:
 	MOVE.l	D4, VDP_control_port
 	CLR.w	D0
 	MOVE.b	(A0)+, D0
@@ -832,7 +832,7 @@ RenderWallTile_14x10_TwoPalette_RightWall_Done3:
 	MOVE.w	D0, VDP_data_port
 RenderWallTile_14x10_TwoPalette_RightWall_Loop:
 	ADDI.l	#$00020000, D4
-	DBF	D6, RenderWallTile_14x10_TwoPalette_RightWall_Done3
+	DBF	D6, RenderWallTile_14x10_TwoPalette_RightWall_WritePalette2Tile
 	ADDI.l	#$00800000, D5
 	DBF	D7, RenderWallTile_14x10_TwoPalette_RightWall_Done
 	ANDI	#$F8FF, SR
@@ -844,12 +844,12 @@ RenderWallTile_16x5_Palette1:
 RenderWallTile_16x5_Palette1_Done:
 	MOVE.l	D5, VDP_control_port
 	MOVE.w	#4, D6
-RenderWallTile_16x5_Palette1_Done2:
+RenderWallTile_16x5_Palette1_WriteTile:
 	CLR.w	D0
 	MOVE.b	(A0)+, D0
 	ADD.w	D1, D0
 	MOVE.w	D0, VDP_data_port
-	DBF	D6, RenderWallTile_16x5_Palette1_Done2
+	DBF	D6, RenderWallTile_16x5_Palette1_WriteTile
 	ADDI.l	#$00800000, D5
 	DBF	D7, RenderWallTile_16x5_Palette1_Done
 	ANDI	#$F8FF, SR
@@ -861,12 +861,12 @@ RenderWallTile_16x5_Palette0:
 RenderWallTile_16x5_Palette0_Done:
 	MOVE.l	D5, VDP_control_port
 	MOVE.w	#4, D6
-RenderWallTile_16x5_Palette0_Done2:
+RenderWallTile_16x5_Palette0_WriteTile:
 	CLR.w	D0
 	MOVE.b	(A0)+, D0
 	ADD.w	D1, D0
 	MOVE.w	D0, VDP_data_port
-	DBF	D6, RenderWallTile_16x5_Palette0_Done2
+	DBF	D6, RenderWallTile_16x5_Palette0_WriteTile
 	ADDI.l	#$00800000, D5
 	DBF	D7, RenderWallTile_16x5_Palette0_Done
 	ANDI	#$F8FF, SR
@@ -878,19 +878,19 @@ RenderWallTile_16x11_TwoPalette:
 RenderWallTile_16x11_TwoPalette_Done:
 	MOVE.l	D5, VDP_control_port
 	MOVE.w	#5, D6
-RenderWallTile_16x11_TwoPalette_Done2:
+RenderWallTile_16x11_TwoPalette_WritePalette1Tile:
 	CLR.w	D0
 	MOVE.b	(A0)+, D0
 	ADD.w	D1, D0
 	MOVE.w	D0, VDP_data_port
-	DBF	D6, RenderWallTile_16x11_TwoPalette_Done2
+	DBF	D6, RenderWallTile_16x11_TwoPalette_WritePalette1Tile
 	MOVE.w	#4, D6
-RenderWallTile_16x11_TwoPalette_Done3:
+RenderWallTile_16x11_TwoPalette_WritePalette2Tile:
 	CLR.w	D0
 	MOVE.b	(A0)+, D0
 	ADD.w	D2, D0
 	MOVE.w	D0, VDP_data_port
-	DBF	D6, RenderWallTile_16x11_TwoPalette_Done3
+	DBF	D6, RenderWallTile_16x11_TwoPalette_WritePalette2Tile
 	ADDI.l	#$00800000, D5
 	DBF	D7, RenderWallTile_16x11_TwoPalette_Done
 	ANDI	#$F8FF, SR
@@ -904,9 +904,9 @@ ClearFirstPersonTilemap:
 ClearFirstPersonTilemap_Done:
 	MOVE.l	D5, VDP_control_port
 	MOVE.w	#$0014, D6
-ClearFirstPersonTilemap_Done2:
+ClearFirstPersonTilemap_ClearTile:
 	MOVE.w	#0, VDP_data_port
-	DBF	D6, ClearFirstPersonTilemap_Done2
+	DBF	D6, ClearFirstPersonTilemap_ClearTile
 	ADDI.l	#$00800000, D5
 	DBF	D7, ClearFirstPersonTilemap_Done
 	ANDI	#$F8FF, SR
@@ -1445,20 +1445,20 @@ UpdateMapSectorPosition: ; Go left from current map sector
 	BRA.w	MapSectorScroll_Return
 UpdateMapSectorPosition_Loop: ; Go right from current map sector
 	CMPI.w	#$0010, Player_position_x_outside_town.w
-	BLT.b	UpdateMapSectorPosition_Loop2
+	BLT.b	UpdateMapSectorPosition_ScrollRight
 	ADDQ.w	#1, Player_map_sector_x.w
 	CLR.w	Player_position_x_outside_town.w
 	BSR.w	LoadMapSectors
 	BRA.w	MapSectorScroll_Return
-UpdateMapSectorPosition_Loop2: ; Go up from current map sector
+UpdateMapSectorPosition_ScrollRight: ; Go up from current map sector
 	MOVE.w	$2(A0,D0.w), D1
 	ADD.w	D1, Player_position_y_outside_town.w
-	BGE.b	UpdateMapSectorPosition_Loop3
+	BGE.b	UpdateMapSectorPosition_ScrollDown
 	SUBQ.w	#1, Player_map_sector_y.w
 	MOVE.w	#$000F, Player_position_y_outside_town.w
 	BSR.w	LoadMapSectors
 	BRA.b	MapSectorScroll_Return
-UpdateMapSectorPosition_Loop3: ; Go down from current map sector
+UpdateMapSectorPosition_ScrollDown: ; Go down from current map sector
 	CMPI.w	#$0010, Player_position_y_outside_town.w
 	BLT.b	MapSectorScroll_Return
 	ADDQ.w	#1, Player_map_sector_y.w
@@ -1530,10 +1530,10 @@ RenderFpSector_Near_Loop:
 	MOVE.b	(A2,D0.w), D4
 	BSR.w	MapTileToTypeIndex
 	SUBQ.w	#1, D4
-	BLT.b	RenderFpSector_Near_Loop2
+	BLT.b	RenderFpSector_Near_LoadObjectTiles
 	MOVE.l	#$63180003, D5
 	BSR.w	RenderWallTileWithPalette
-RenderFpSector_Near_Loop2:
+RenderFpSector_Near_LoadObjectTiles:
 	LEA	FpObjectTileTable_Near, A0
 	MOVEA.l	Enemy_list_ptr.w, A6
 	BSR.w	LoadMapTileGfxIndex
@@ -1612,20 +1612,20 @@ RenderFpSector_Far_Loop:
 	MOVE.b	(A2,D0.w), D4
 	BSR.w	MapTileToTypeIndex
 	SUBQ.w	#1, D4
-	BLT.b	RenderFpSector_Far_Loop2
+	BLT.b	RenderFpSector_Far_RenderMidWall
 	MOVE.l	#$630C0003, D5
 	BSR.w	RenderWallTileWithPalette
-RenderFpSector_Far_Loop2:
+RenderFpSector_Far_RenderMidWall:
 	MOVE.w	Map_tile_base_index.w, D0
 	ADD.w	(A4)+, D0
 	CLR.w	D4
 	MOVE.b	(A2,D0.w), D4
 	BSR.w	MapTileToTypeIndex
 	SUBQ.w	#1, D4
-	BLT.b	RenderFpSector_Far_Loop3
+	BLT.b	RenderFpSector_Far_LoadObjectTiles
 	MOVE.l	#$63020003, D5
 	BSR.w	RenderWallTile_MidSinglePalette
-RenderFpSector_Far_Loop3:
+RenderFpSector_Far_LoadObjectTiles:
 	LEA	FpObjectTileTable_Near, A0
 	MOVEA.l	Enemy_list_ptr.w, A6
 	BSR.w	LoadMapTileGfxIndex
@@ -1718,10 +1718,10 @@ RenderFpSector_Mid_Loop:
 	MOVE.b	(A2,D0.w), D4
 	BSR.w	MapTileToTypeIndex
 	SUBQ.w	#1, D4
-	BLT.b	RenderFpSector_Mid_Loop2
+	BLT.b	RenderFpSector_Mid_LoadObjectTiles
 	MOVE.l	#$63000003, D5
 	BSR.w	RenderWallTileWithPalette
-RenderFpSector_Mid_Loop2:
+RenderFpSector_Mid_LoadObjectTiles:
 	LEA	FpObjectTileTable_Near, A0
 	MOVEA.l	Object_slot_01_ptr.w, A6
 	BSR.w	LoadMapTileGfxIndex
@@ -1822,31 +1822,31 @@ MapTileToTypeIndex:
 	TST.b	D4
 	BGE.b	MapTileToTypeIndex_Loop
 	CMPI.b	#OVERWORLD_TILE_UPPER_CAVE_MIN, D4
-	BLT.b	MapTileToTypeIndex_Loop2
+	BLT.b	MapTileToTypeIndex_SetType4_UpperCave
 	MOVE.b	#7, D4
 	RTS
 
 MapTileToTypeIndex_Loop:
 	CMPI.b	#6, D4
-	BLE.b	MapTileToTypeIndex_Loop3
+	BLE.b	MapTileToTypeIndex_NormalType
 	CMPI.b	#OVERWORLD_TILE_CAVE_MIN, D4
-	BLT.b	MapTileToTypeIndex_Loop4
+	BLT.b	MapTileToTypeIndex_ClearType
 	TST.b	Is_in_cave.w
-	BEQ.b	MapTileToTypeIndex_Loop5
+	BEQ.b	MapTileToTypeIndex_SetType3_OverworldCave
 	MOVE.b	#8, D4
 	RTS
 
-MapTileToTypeIndex_Loop2:
+MapTileToTypeIndex_SetType4_UpperCave:
 	MOVE.b	#4, D4
 	RTS
 
-MapTileToTypeIndex_Loop5:
+MapTileToTypeIndex_SetType3_OverworldCave:
 	MOVE.b	#3, D4
 	RTS
 
-MapTileToTypeIndex_Loop4:
+MapTileToTypeIndex_ClearType:
 	CLR.w	D4
-MapTileToTypeIndex_Loop3:
+MapTileToTypeIndex_NormalType:
 	RTS
 
 ; ValidateDungeonTileType
@@ -1870,7 +1870,7 @@ ValidateDungeonTileType:
 	BEQ.b	RenderMapToVRAM_Return
 	BGT.b	ValidateDungeonTileType_Loop
 	CMPI.b	#OVERWORLD_TILE_UPPER_CAVE_MIN, D4
-	BLT.b	ValidateDungeonTileType_Loop2
+	BLT.b	ValidateDungeonTileType_SetType4_UpperCave
 	MOVE.b	#7, D4
 	RTS
 
@@ -1878,21 +1878,21 @@ ValidateDungeonTileType_Loop:
 	CMPI.b	#6, D4
 	BLE.b	RenderMapToVRAM_Return
 	CMPI.b	#OVERWORLD_TILE_CAVE_MIN, D4
-	BLT.b	ValidateDungeonTileType_Loop3
+	BLT.b	ValidateDungeonTileType_NormalType
 	TST.b	Is_in_cave.w
-	BEQ.b	ValidateDungeonTileType_Loop4
+	BEQ.b	ValidateDungeonTileType_SetType3_OverworldCave
 	MOVE.b	#8, D4
 	RTS
 
-ValidateDungeonTileType_Loop2:
+ValidateDungeonTileType_SetType4_UpperCave:
 	MOVE.b	#4, D4
 	RTS
 
-ValidateDungeonTileType_Loop4:
+ValidateDungeonTileType_SetType3_OverworldCave:
 	MOVE.b	#3, D4
 	RTS
 
-ValidateDungeonTileType_Loop3:
+ValidateDungeonTileType_NormalType:
 	CLR.w	D4
 RenderMapToVRAM_Return:
 	RTS
@@ -1918,19 +1918,19 @@ RenderMapToVRAM_NoPalette:
 RenderMapToVRAM_NoPalette_Done:
 	MOVE.l	D5, VDP_control_port
 	MOVE.w	#$000A, D6
-RenderMapToVRAM_NoPalette_Done2:
+RenderMapToVRAM_NoPalette_WritePalette1Tile:
 	CLR.w	D0
 	MOVE.b	(A0)+, D0
 	ADDI.w	#$42A4, D0
 	MOVE.w	D0, VDP_data_port
-	DBF	D6, RenderMapToVRAM_NoPalette_Done2
+	DBF	D6, RenderMapToVRAM_NoPalette_WritePalette1Tile
 	MOVE.w	#9, D6
-RenderMapToVRAM_NoPalette_Done3:
+RenderMapToVRAM_NoPalette_WritePalette2Tile:
 	CLR.w	D0
 	MOVE.b	(A0)+, D0
 	ADDI.w	#$4AA4, D0
 	MOVE.w	D0, VDP_data_port
-	DBF	D6, RenderMapToVRAM_NoPalette_Done3
+	DBF	D6, RenderMapToVRAM_NoPalette_WritePalette2Tile
 	ADDI.l	#$00800000, D5
 	DBF	D7, RenderMapToVRAM_NoPalette_Done
 	ANDI	#$F8FF, SR
@@ -1943,12 +1943,12 @@ RenderMapToVRAM_WithPalette:
 RenderMapToVRAM_WithPalette_Done:
 	MOVE.l	D5, VDP_control_port
 	MOVE.w	#$0014, D6
-RenderMapToVRAM_WithPalette_Done2:
+RenderMapToVRAM_WithPalette_WriteTile:
 	CLR.w	D0
 	MOVE.b	(A0)+, D0
 	ADD.w	D4, D0
 	MOVE.w	D0, VDP_data_port
-	DBF	D6, RenderMapToVRAM_WithPalette_Done2
+	DBF	D6, RenderMapToVRAM_WithPalette_WriteTile
 	ADDI.l	#$00800000, D5
 	DBF	D7, RenderMapToVRAM_WithPalette_Done
 	ANDI	#$F8FF, SR
@@ -1975,19 +1975,19 @@ DisplayStatsToVRAM_NoPalette:
 DisplayStatsToVRAM_NoPalette_Done:
 	MOVE.l	D5, VDP_control_port
 	MOVE.w	#$000A, D6
-DisplayStatsToVRAM_NoPalette_Done2:
+DisplayStatsToVRAM_NoPalette_WritePalette1Tile:
 	CLR.w	D0
 	MOVE.b	(A0)+, D0
 	ADDI.w	#$4770, D0
 	MOVE.w	D0, VDP_data_port
-	DBF	D6, DisplayStatsToVRAM_NoPalette_Done2
+	DBF	D6, DisplayStatsToVRAM_NoPalette_WritePalette1Tile
 	MOVE.w	#9, D6
-DisplayStatsToVRAM_NoPalette_Done3:
+DisplayStatsToVRAM_NoPalette_WritePalette2Tile:
 	CLR.w	D0
 	MOVE.b	(A0)+, D0
 	ADDI.w	#$4F70, D0
 	MOVE.w	D0, VDP_data_port
-	DBF	D6, DisplayStatsToVRAM_NoPalette_Done3
+	DBF	D6, DisplayStatsToVRAM_NoPalette_WritePalette2Tile
 	ADDI.l	#$00800000, D5
 	DBF	D7, DisplayStatsToVRAM_NoPalette_Done
 	ANDI	#$F8FF, SR
@@ -2000,12 +2000,12 @@ DisplayStatsToVRAM_WithPalette:
 DisplayStatsToVRAM_WithPalette_Done:
 	MOVE.l	D5, VDP_control_port
 	MOVE.w	#$0014, D6
-DisplayStatsToVRAM_WithPalette_Done2:
+DisplayStatsToVRAM_WithPalette_WriteTile:
 	CLR.w	D0
 	MOVE.b	(A0)+, D0
 	ADD.w	D4, D0
 	MOVE.w	D0, VDP_data_port
-	DBF	D6, DisplayStatsToVRAM_WithPalette_Done2
+	DBF	D6, DisplayStatsToVRAM_WithPalette_WriteTile
 	ADDI.l	#$00800000, D5
 	DBF	D7, DisplayStatsToVRAM_WithPalette_Done
 	ANDI	#$F8FF, SR
@@ -2016,13 +2016,13 @@ UpdateCompassDisplay:
 	CMPI.w	#DIRECTION_LEFT, D0
 	BEQ.b	UpdateCompassDisplay_Loop
 	CMPI.w	#DIRECTION_RIGHT, D0
-	BNE.b	UpdateCompassDisplay_Loop2
+	BNE.b	UpdateCompassDisplay_SetFrameFromDirection
 	MOVE.w	#4, Player_compass_frame.w
 	BRA.w	DrawCompassTiles
 UpdateCompassDisplay_Loop:
 	MOVE.w	#$000C, Player_compass_frame.w
 	BRA.w	DrawCompassTiles
-UpdateCompassDisplay_Loop2:
+UpdateCompassDisplay_SetFrameFromDirection:
 	ADD.w	D0, D0
 	MOVE.w	D0, Player_compass_frame.w
 DrawCompassTiles:
@@ -2037,12 +2037,12 @@ DrawCompassTiles_Done:
 	LEA	(A0), A1
 	MOVE.l	D5, VDP_control_port
 	MOVE.w	#$0014, D6
-DrawCompassTiles_Done2:
+DrawCompassTiles_WriteTile:
 	CLR.w	D0
 	MOVE.b	(A1)+, D0
 	ADDI.w	#$438F, D0
 	MOVE.w	D0, VDP_data_port
-	DBF	D6, DrawCompassTiles_Done2
+	DBF	D6, DrawCompassTiles_WriteTile
 	ADDI.l	#$00800000, D5
 	LEA	$64(A0), A0
 	DBF	D7, DrawCompassTiles_Done
@@ -2235,12 +2235,12 @@ DecompressMapTile_Next_Done:
 	ADDQ.w	#1, D0                  ; Increment tile counter
 	MOVE.w	D0, D2                  ; Check if end of row
 	ANDI.w	#$000F, D2
-	BNE.b	DecompressMapTile_Next_Loop2
+	BNE.b	DecompressMapTile_Next_CheckRleDone
 	LEA	$20(A3), A3             ; Skip to next row
 	
-DecompressMapTile_Next_Loop2:
+DecompressMapTile_Next_CheckRleDone:
 	CMPI.w	#MAP_RLE_TILE_COUNT, D0              ; 256 tiles written?
-	BGE.b	DecompressMapTile_Next_Loop3            ; Yes: exit
+	BGE.b	DecompressMapTile_Next_Exit            ; Yes: exit
 	DBF	D1, DecompressMapTile_Next_Done        ; Loop while repeat count > 0
 	CLR.w	D1
 	BRA.b	DecompressMapTile_Next            ; Read next byte
@@ -2252,6 +2252,6 @@ DecompressMapTile_Next_Loop:
 	CMPI.w	#MAP_RLE_TILE_COUNT, D0              ; 256 tiles written?
 	BLT.b	DecompressMapSectorRLE_Done            ; No: continue
 	
-DecompressMapTile_Next_Loop3:
+DecompressMapTile_Next_Exit:
 	MOVEM.w	(A7)+, D0/D1            ; Restore registers
 	RTS
