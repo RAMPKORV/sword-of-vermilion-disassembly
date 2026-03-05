@@ -134,8 +134,38 @@ InitMenuCursor macro cols, x, y
     ENDM
 
 ; ============================================================
-; DMA Fill Macros
+; State Completion Gate Macro
 ; ============================================================
+; Advance Program_state and trigger a fade-out when a completion flag is set.
+;
+; Used in "blocker" state handlers that wait for an async operation to finish
+; (name entry, file load, prologue animation, etc.).  When <flag> is zero the
+; handler returns immediately (the operation is still in progress).  When <flag>
+; is non-zero it advances Program_state to <next_state>, arms the fade-out, and
+; falls through to RTS.
+;
+; The macro produces the same 5-instruction / 20-byte sequence as the inline
+; code it replaces, so the assembled binary is bit-perfect.
+;
+; flag:       RAM flag byte address constant (without .w suffix)
+; next_state: PROGRAM_STATE_* constant for the following state
+;
+; Usage: AdvanceStateOnComplete Prologue_complete_flag, PROGRAM_STATE_PROLOGUE_TO_GAME
+; Note:  Pass the flag symbol WITHOUT the .w suffix; the macro appends .w internally
+;        via \1.w to preserve the short (word) addressing mode that the original code
+;        uses.  Named-arg references (e.g. "flag") are lowercased by ASM68K, which
+;        would produce an undefined-symbol error; positional \1/\2 references are used
+;        instead to avoid that assembler quirk.
+AdvanceStateOnComplete macro flag, next_state
+    TST.b   \1.w
+    BEQ.b   .done\@
+    MOVE.w  #\2, Program_state.w
+    MOVE.b  #FLAG_TRUE, Fade_out_lines_mask.w
+.done\@:
+    RTS
+    ENDM
+
+
 ; Zero-fill a region of VRAM via VDP DMA fill.
 ; dest: VDP command longword encoding the target VRAM address
 ; len:  Number of bytes to fill

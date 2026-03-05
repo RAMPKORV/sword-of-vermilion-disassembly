@@ -579,7 +579,9 @@
           "file": "src/states.asm",
           "priority": "low",
           "effort": "small",
-          "status": "todo"
+          "status": "done",
+          "notes": "Added AdvanceStateOnComplete macro to macros.asm. Replaced 3 identical 5-instruction completion-gate patterns in ProgramState_Prologue, ProgramState_LoadSave, ProgramState_NameEntry. Used positional \u0001.w syntax to preserve short (.w) addressing mode (named arg refs are lowercased by ASM68K, breaking symbol lookup). Bit-perfect verified.",
+          "completed_at": "2026-03-05T00:36:00.758Z"
         },
         {
           "id": "DRY-010",

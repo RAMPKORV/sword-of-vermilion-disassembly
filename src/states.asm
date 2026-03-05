@@ -18,7 +18,18 @@
 ;   each frame until it reaches zero.  Cannot be extracted to a macro
 ;   without breaking bit-perfect output (instruction encoding would change).
 ;   Documented here for reader orientation.
+;
+; PATTERN — state completion gate (DRY-009):
+;   Three "blocker" handlers wait for an async flag before advancing state:
+;     ProgramState_Prologue    — waits for Prologue_complete_flag
+;     ProgramState_LoadSave    — waits for File_load_complete
+;     ProgramState_NameEntry   — waits for Name_entry_complete
+;
+;   All three now use the AdvanceStateOnComplete macro (macros.asm), which
+;   expands to the identical 20-byte / 5-instruction sequence and is
+;   bit-perfect.
 ; ======================================================================
+
 
 ; ProgramState_SegaLogoInit — $00 PROGRAM_STATE_SEGA_LOGO_INIT
 ; One-shot initialization of the Sega logo screen.
@@ -148,12 +159,7 @@ ProgramState_08_Loop:
 ; On completion: advances to PROGRAM_STATE_PROLOGUE_TO_GAME ($0A) and
 ; triggers a fade-out.
 ProgramState_Prologue:
-	TST.b	Prologue_complete_flag.w
-	BEQ.b	ProgramState_09_Loop
-	MOVE.w	#PROGRAM_STATE_PROLOGUE_TO_GAME, Program_state.w
-	MOVE.b	#FLAG_TRUE, Fade_out_lines_mask.w
-ProgramState_09_Loop:
-	RTS
+	AdvanceStateOnComplete Prologue_complete_flag, PROGRAM_STATE_PROLOGUE_TO_GAME
 
 ; ProgramState_PrologueToGame — $0A PROGRAM_STATE_PROLOGUE_TO_GAME
 ; Transition handler: prologue complete → main game start.
@@ -212,12 +218,7 @@ ProgramState_0B_Loop:
 ; On completion: advances to PROGRAM_STATE_LOAD_SAVE_DONE ($0D) and
 ; triggers a fade-out.
 ProgramState_LoadSave:
-	TST.b	File_load_complete.w
-	BEQ.b	ProgramState_0C_Loop
-	MOVE.w	#PROGRAM_STATE_LOAD_SAVE_DONE, Program_state.w	
-	MOVE.b	#FLAG_TRUE, Fade_out_lines_mask.w	
-ProgramState_0C_Loop:
-	RTS
+	AdvanceStateOnComplete File_load_complete, PROGRAM_STATE_LOAD_SAVE_DONE
 
 ; ProgramState_LoadSaveDone — $0D PROGRAM_STATE_LOAD_SAVE_DONE
 ; Transition: file-select complete → saved game load.
@@ -295,12 +296,7 @@ ProgramState_05_Loop:
 ; On completion: advances to PROGRAM_STATE_NAME_ENTRY_DONE ($07) and
 ; triggers a fade-out.
 ProgramState_NameEntry:
-	TST.b	Name_entry_complete.w
-	BEQ.b	ProgramState_06_Loop
-	MOVE.w	#PROGRAM_STATE_NAME_ENTRY_DONE, Program_state.w
-	MOVE.b	#FLAG_TRUE, Fade_out_lines_mask.w
-ProgramState_06_Loop:
-	RTS
+	AdvanceStateOnComplete Name_entry_complete, PROGRAM_STATE_NAME_ENTRY_DONE
 
 ; ProgramState_NameEntryDone — $07 PROGRAM_STATE_NAME_ENTRY_DONE
 ; Transition: name confirmed → prologue.
