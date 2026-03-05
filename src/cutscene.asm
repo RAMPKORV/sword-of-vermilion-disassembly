@@ -247,12 +247,32 @@ Prologue6Str:
 	dc.b	"Prince. Eighteen years", $FE
 	dc.b	"have passed since Tsarkon", $FE
 	dc.b	"began his search....", $FF
+; ======================================================================
+; Town Camera State Machine
+; ======================================================================
+; The town camera is driven by a 5-state jump table (CameraMovementJumpTable).
+; Town_camera_move_state selects the current scroll direction:
+;   0 = idle/reset       3 = scroll down
+;   1 = reset-to-origin  4 = scroll left
+;   2 = scroll up
+; Camera_scroll_x / Camera_scroll_y track the world pixel origin of the viewport.
+; Town_camera_tile_x / Town_camera_tile_y track which tile column/row is at the top-left.
+; HScroll_base / VScroll_base are the VDP scroll registers (negative = scroll right/down).
+; ======================================================================
+
+; MenuObjectHandler
+; Object tick function installed during menu/title transitions.
+; Clears the camera move state and installs TownCameraAndPaletteUpdate as the live tick.
 MenuObjectHandler:
 	CLR.w	Town_camera_move_state.w
 	MOVE.l	#TownCameraAndPaletteUpdate, obj_tick_fn(A5)
 	CLR.b	Camera_scrolling_active.w
 	RTS
 
+; TownCameraAndPaletteUpdate
+; Per-frame tick: skips while in battle / first-person / fading, then steps the palette
+; cycle (if active) and dispatches to the current camera movement handler via
+; CameraMovementJumpTable indexed by Town_camera_move_state × 4.
 TownCameraAndPaletteUpdate:
 	TST.b	Is_in_battle.w
 	BNE.b	TownCameraTick_Return
@@ -275,18 +295,25 @@ TownCameraAndPaletteUpdate_Loop:
 TownCameraTick_Return:
 	RTS
 
-CameraMovementJumpTable: ; suspected camera movement handling
+CameraMovementJumpTable: ; 5 entries; Town_camera_move_state × 4 = jump offset
 	BRA.w	ResetTownCameraMovementState
 	BRA.w	ResetTownCameraMovementState_Loop
 	BRA.w	TownCameraScrollUp_TileStep_Loop
 	BRA.w	TownCameraScrollDown_TileStep_Loop
 	BRA.w	TownCameraScrollLeft_TileStep_Loop
+; ResetTownCameraMovementState
+; Idle entry: clears Camera_scrolling_active, resets move state to 0, and loads a
+; 16-frame cooldown counter into Town_camera_move_counter.
 ResetTownCameraMovementState:
 	CLR.b	Camera_scrolling_active.w
 	CLR.w	Town_camera_move_state.w
 	MOVE.w	#$0010, Town_camera_move_counter.w
 	RTS
 
+; ResetTownCameraMovementState_Loop
+; Scroll-up wind-down: while VScroll_base > 0 and the player is more than 8 tiles
+; below the scroll origin, scroll up one pixel per frame and decrement the move counter.
+; When counter hits 0, steps the tile row and resets.
 ResetTownCameraMovementState_Loop:
 	TST.w	VScroll_base.w
 	BLE.b	ResetTownCameraMovementState
@@ -319,6 +346,10 @@ TownCameraScrollUp_TileStep_ClampTileY:
 	CLR.w	Town_camera_tile_y.w
 TownCameraScrollUp_TileStep_CommitTileY:
 	BRA.b	ResetTownCameraMovementState
+; TownCameraScrollUp_TileStep_Loop
+; Scroll-down active: while VScroll_base < VScroll_max_limit and player is more than
+; 6 tiles below the scroll origin, scroll down one pixel per frame. On tile step,
+; draws a new bottom row via DrawTownRow_Bottom.
 TownCameraScrollUp_TileStep_Loop:
 	MOVE.w	VScroll_base.w, D0
 	CMP.w	VScroll_max_limit.w, D0
@@ -347,6 +378,10 @@ TownCameraScrollUp_TileStep_UpdateScrollDown:
 TownCameraScrollDown_TileStep:
 	ADDQ.w	#1, Town_camera_tile_y.w
 	BRA.w	ResetTownCameraMovementState
+; TownCameraScrollDown_TileStep_Loop
+; Scroll-left active (HScroll_base >= 0, going negative): while player is more than
+; 11 tiles right of the scroll origin, scroll left one pixel per frame.
+; On tile step, draws a new left column via DrawTownColumn_Left.
 TownCameraScrollDown_TileStep_Loop:
 	TST.w	HScroll_base.w
 	BGE.w	ResetTownCameraMovementState
@@ -379,6 +414,10 @@ TownCameraScrollLeft_TileStep_ClampTileX:
 	CLR.w	Town_camera_tile_x.w
 TownCameraScrollLeft_TileStep_CommitTileX:
 	BRA.w	ResetTownCameraMovementState
+; TownCameraScrollLeft_TileStep_Loop
+; Scroll-right active: while HScroll_base > HScroll_min_limit and player is more than
+; 8 tiles left of the scroll origin, scroll right one pixel per frame.
+; On tile step, draws a new right column via DrawTownColumn_Right.
 TownCameraScrollLeft_TileStep_Loop:
 	MOVE.w	HScroll_base.w, D0
 	CMP.w	HScroll_min_limit.w, D0
@@ -407,6 +446,15 @@ TownCameraScrollLeft_TileStep_UpdateScrollRight:
 TownCameraScrollRight_TileStep:
 	ADDQ.w	#1, Town_camera_tile_x.w
 	BRA.w	ResetTownCameraMovementState
+; ======================================================================
+; Town Tilemap Loader
+; ======================================================================
+
+; LoadTownTilemaps
+; Loads and decompresses both Plane A and Plane B tilemaps for the current town room
+; (Current_town_room), sets up scroll limits, and positions the player at the spawn point.
+; After this function: Town_tilemap_width/height, VScroll_max_limit, HScroll_min_limit,
+; Camera_scroll_x/y, and player obj_world_x/y are all initialized.
 LoadTownTilemaps:
 	LEA	TownRoomTilemapPlaneAPtrs, A0
 	MOVE.w	Current_town_room.w, D0
@@ -457,6 +505,14 @@ LoadTownTilemaps:
 	MOVE.w	Player_spawn_tile_y.w, obj_world_y(A6)
 	RTS
 
+; InitializeTilemapFromData
+; Sets up a tilemap buffer from decompressed data in A0, writing 32×32 visible tiles
+; into the buffer at A6. Also stores the tilemap pointer, width, and height.
+; Inputs: A0 = raw tilemap data (2 bytes header: width, height; then tile words),
+;         A1 = pointer-to-store for the tilemap base,
+;         A6 = destination buffer (Tilemap_buffer_plane_a or _plane_b),
+;         Tilemap_plane_select = 0 for Plane A, TILEMAP_PLANE_B for Plane B.
+; Output: fills the 32×32 ring-buffer with tile entries starting at Town_camera spawn.
 InitializeTilemapFromData:
 	MOVE.l	A0, (A1)
 	MOVE.w	(A0)+, D0
@@ -536,6 +592,11 @@ WriteTownTilemap_ClearTile_Loop:
 	DBF	D7, InitializeTilemapFromData_Loop2_Done
 	RTS
 
+; WriteTownTile2x2WithFlip
+; Writes a 2×2 tile block from the town tileset into the ring-buffer at A2, applying
+; attribute flags from D1 (upper byte of the source tile word). Bit 12 (D3=$000C) in D1
+; controls horizontal flip: if set, clears the flip flag on the second row pair.
+; A4 points into the tileset entry (4 words: top-left, top-right, bottom-left, bottom-right).
 WriteTownTile2x2WithFlip:
 	MOVE.w	#$000C, D3
 	LEA	TownTilesetPtrs, A1
@@ -566,6 +627,10 @@ WriteTownTile2x2WithFlip_Loop:
 	MOVE.w	D0, $82(A2)
 	RTS
 
+; WriteTownTile2x2
+; Same as WriteTownTile2x2WithFlip but without flip handling.
+; Writes 4 tile words (top-left, top-right at (A2) and $2(A2); bottom-left, bottom-right
+; at $80(A2) and $82(A2)), ORing in attribute flags from D1.
 WriteTownTile2x2:
 	LEA	TownTilesetPtrs, A1
 	MOVE.w	Town_tileset_index.w, D1
@@ -591,6 +656,14 @@ WriteTownTile2x2:
 	MOVE.w	D0, $82(A2)
 	RTS
 
+; WriteTownTilemapToVRAM
+; Writes both tilemap ring-buffers (Plane A and Plane B) to VDP VRAM in full (4096 tiles
+; each = $1000 words). Plane A base: $4000, Plane B base: $6000.
+; Tile attribute merging:
+;   Plane A: bits 15-13 (palette/priority) ORed with tile ID + $0300 (tile base offset).
+;   Plane B: bits 11-9 ORed into bits 15-13 position (ASL 4) + tile ID + $0300.
+; After writing, loads the palette config for the current town room (palette routing
+; depends on room number ranges: 0-$F, $10-$1F, $20-$2A, $2B-$2D, $2E+).
 WriteTownTilemapToVRAM:
 	ORI	#$0700, SR
 	MOVE.l	#$40000003, VDP_control_port
@@ -667,6 +740,21 @@ LoadTownTilesetPalette_Loop:
 	MOVE.w	Palette_line_1_index.w, Palette_line_1_index_saved.w
 	RTS
 
+; ======================================================================
+; Incremental Town Tilemap Row/Column Drawing
+; ======================================================================
+; These functions update the ring-buffer with new tile rows or columns as the camera
+; scrolls. The ring-buffer is 32 tiles wide × 32 tiles tall (each tile = 2 bytes,
+; so 32×32×2 = $800 bytes per plane). Tile X and Y indices wrap modulo $20 (32).
+; DrawTownRow_Up / DrawTownRow_Bottom draw a full row on the top or bottom edge.
+; DrawTownColumn_Left / DrawTownColumn_Right draw a full column on the left or right edge.
+; All four functions draw to both Plane A and Plane B buffers, and set a pending flag
+; so the new tiles are flushed to VDP during the next VBlank.
+; ======================================================================
+
+; DrawTownRow_Up
+; Draws the row at (Town_camera_tile_y - 3) into both plane buffers,
+; then sets Town_tilemap_update_row and Town_tilemap_row_update_pending.
 DrawTownRow_Up:
 	MOVE.w	Town_camera_tile_y.w, D0
 	SUBQ.w	#3, D0
@@ -708,6 +796,9 @@ DrawTownRow_Up:
 	MOVE.b	#FLAG_TRUE, Town_tilemap_row_update_pending.w
 	RTS
 
+; DrawTownColumn_Left
+; Draws the column at (Town_camera_tile_x - 3) into both plane buffers,
+; then sets Town_tilemap_update_column and Town_tilemap_column_update_pending.
 DrawTownColumn_Left:
 	MOVE.w	Town_camera_tile_x.w, D0
 	SUBQ.w	#3, D0
@@ -749,6 +840,9 @@ DrawTownColumn_Left:
 	MOVE.b	#FLAG_TRUE, Town_tilemap_column_update_pending.w
 	RTS
 
+; DrawTownRow_Bottom
+; Draws the row at (Town_camera_tile_y + $1C) into both plane buffers,
+; then sets Town_tilemap_update_row and Town_tilemap_row_update_pending.
 DrawTownRow_Bottom:
 	MOVE.w	Town_camera_tile_y.w, D0
 	ADDI.w	#$1C, D0
@@ -790,6 +884,9 @@ DrawTownRow_Bottom:
 	MOVE.b	#FLAG_TRUE, Town_tilemap_row_update_pending.w
 	RTS
 
+; DrawTownColumn_Right
+; Draws the column at (Town_camera_tile_x + $1C) into both plane buffers,
+; then sets Town_tilemap_update_column and Town_tilemap_column_update_pending.
 DrawTownColumn_Right:
 	MOVE.w	Town_camera_tile_x.w, D0
 	ADDI.w	#$1C, D0
@@ -831,6 +928,11 @@ DrawTownColumn_Right:
 	MOVE.b	#FLAG_TRUE, Town_tilemap_column_update_pending.w
 	RTS
 
+; DrawTownTilemapRow
+; Writes one horizontal strip of tiles from the source tilemap (A0) into the ring-buffer
+; (A3). D0 = tile row index, D6 = starting tile column, D5 = tile count - 1 (DBF).
+; Ring-buffer Y position = D0 mod 32, X position = D6 mod 64 (×2 bytes).
+; Dispatches to WriteTownTile2x2 (Plane B) or WriteTownTile2x2WithFlip (Plane A).
 DrawTownTilemapRow:
 	ASL.w	#1, D6
 	MOVE.w	D0, D2
@@ -871,6 +973,10 @@ DrawTownTilemapRow_NextTile:
 	DBF	D5, DrawTownTilemapRow_Done
 	RTS
 
+; DrawTownTilemapColumn
+; Writes one vertical strip of tiles from the source tilemap (A0) into the ring-buffer
+; (A3). D0 = tile column index, D6 = starting tile row, D5 = tile count - 1 (DBF).
+; Advances through A0 by Town_tilemap_width words per step (one full map row).
 DrawTownTilemapColumn:
 	ASL.w	#1, D0
 	MOVE.w	D0, D2
@@ -910,6 +1016,13 @@ DrawTownTilemapColumn_NextTile:
 	DBF	D5, DrawTownTilemapColumn_Done
 	RTS
 
+; ======================================================================
+; VDP Tilemap Flush (Row and Column)
+; ======================================================================
+
+; UpdateTownTilemapRow
+; Flushes the pending tile row (Town_tilemap_update_row) to VDP for both
+; Plane A (VDP base $C000) and Plane B (VDP base $E000).
 UpdateTownTilemapRow:
 	LEA	Tilemap_buffer_plane_a, A3
 	MOVE.w	#$C000, D5
@@ -919,6 +1032,10 @@ UpdateTownTilemapRow:
 	BSR.w	WriteTilemapRowToVDP
 	RTS
 
+; WriteTilemapRowToVDP
+; Writes 128 tile words from the ring-buffer row to VDP. Computes the VRAM write address
+; from Town_tilemap_update_row (mod 32) combined with the plane base D5.
+; Adds Town_vram_tile_base to each tile before writing.
 WriteTilemapRowToVDP:
 	MOVE.w	Town_tilemap_update_row.w, D0
 	ANDI.l	#$1F, D0
@@ -955,6 +1072,9 @@ WriteTilemapRowToVDP_MergePlaneA:
 	DBF	D5, WriteTilemapRowToVDP_Done
 	RTS
 
+; UpdateTownTilemapColumn
+; Flushes the pending tile column (Town_tilemap_update_column) to VDP for both
+; Plane A (VDP base $C000) and Plane B (VDP base $E000).
 UpdateTownTilemapColumn:
 	LEA	Tilemap_buffer_plane_a, A3
 	MOVE.w	#$C000, D5
@@ -964,6 +1084,10 @@ UpdateTownTilemapColumn:
 	BSR.w	WriteTilemapColumnToVDP
 	RTS
 
+; WriteTilemapColumnToVDP
+; Writes 64 pairs of tile words (two vertically adjacent tiles per step) from the
+; ring-buffer column to VDP. Advances VDP address by $00800000 (one VRAM row) each step.
+; Both tiles per step are merged and add Town_vram_tile_base before writing.
 WriteTilemapColumnToVDP:
 	MOVE.w	Town_tilemap_update_column.w, D0
 	ANDI.w	#$1F, D0
@@ -1097,6 +1221,9 @@ TownPaletteLine1IndexTable:
 	dc.w	$00AF
 	dc.b	$00, $00, $00, $15, $00, $00 
 	dc.w	$00B0
+; DecompressTilemaps_PlaneA
+; Decompresses two data streams (ptr_plane_a and ptr_plane_b) into Town_tilemap_plane_a_data.
+; First pass writes to low bytes (offset 0), second pass to high bytes (offset +1).
 DecompressTilemaps_PlaneA:
 	LEA	Town_tilemap_plane_a_data, A2
 	MOVEA.l	Tilemap_data_ptr_plane_a.w, A1
@@ -1849,6 +1976,8 @@ EndingStep_WaitForFadeAndPlayFanfare:
 EndingStep_Return1:
 	RTS
 
+; EndingStep_WaitAndPlayFanfareA
+; Waits for the normal delay, plays fanfare A, clears both VRAM planes, resets timer.
 EndingStep_WaitAndPlayFanfareA:
 	SUBQ.w	#1, Ending_timer.w
 	BGT.b	EndingStep_WaitAndPlayFanfareA_Return
@@ -1860,6 +1989,8 @@ EndingStep_WaitAndPlayFanfareA:
 EndingStep_WaitAndPlayFanfareA_Return:
 	RTS
 
+; EndingStep_WaitAndDrawOutro1
+; Waits for the normal delay, then draws Outro1Str and triggers a palette fade-in.
 EndingStep_WaitAndDrawOutro1:
 	SUBQ.w	#1, Ending_timer.w
 	BGT.b	EndingStep_WaitAndDrawOutro1_Return
@@ -1874,17 +2005,21 @@ EndingStep_WaitAndDrawOutro1:
 EndingStep_WaitAndDrawOutro1_Return:
 	RTS
 
+; EndingStep_WaitThenFadeToWhite
+; After fade-in completes and the timer expires, fades palette line 0 to all-white.
 EndingStep_WaitThenFadeToWhite:
 	TST.b	Palette_fade_in_mask.w
-	BNE.b	EndingStep_Return2
+	BNE.b	EndingStep_WaitThenFadeToWhite_Return
 	SUBQ.w	#1, Ending_timer.w
-	BGT.b	EndingStep_Return2
+	BGT.b	EndingStep_WaitThenFadeToWhite_Return
 	MOVE.w	#PALETTE_IDX_ALL_WHITE, Palette_line_0_fade_in_target.w
 	MOVE.b	#1, Palette_fade_in_mask.w
 	ADDQ.w	#1, Ending_sequence_step.w
-EndingStep_Return2:
+EndingStep_WaitThenFadeToWhite_Return:
 	RTS
 
+; EndingStep_DrawOutro2
+; After fade completes, draws the ending border pattern + Outro2Str and fades in.
 EndingStep_DrawOutro2:
 	TST.b	Palette_fade_in_mask.w
 	BNE.b	EndingStep_DrawOutro2_Return
@@ -1900,6 +2035,8 @@ EndingStep_DrawOutro2:
 EndingStep_DrawOutro2_Return:
 	RTS
 
+; EndingStep_WaitThenFadeOut
+; After fade and timer expire, triggers full fade-out (all palette lines to white).
 EndingStep_WaitThenFadeOut:
 	TST.b	Palette_fade_in_mask.w
 	BNE.b	EndingStep_Return3
@@ -1911,6 +2048,10 @@ EndingStep_WaitThenFadeOut:
 EndingStep_Return3:
 	RTS
 
+; EndingStep_InitCreditsScreen
+; After fade-out completes: clears VRAM, enables HScroll mode 3, loads menu tile GFX,
+; initialises the credits screen layout, draws staff names, triggers 6-line fade-in,
+; and starts SOUND_ENDING_STAFF_MUSIC.
 EndingStep_InitCreditsScreen:
 	TST.b	Fade_out_lines_mask.w
 	BNE.b	EndingStep_InitCreditsScreen_Return
@@ -1934,6 +2075,9 @@ EndingStep_InitCreditsScreen:
 EndingStep_InitCreditsScreen_Return:
 	RTS
 
+; EndingStep_ScrollFireAndDrawOutro3
+; Decrements Ending_hscroll_offset one step per frame until it reaches $FFCE, then
+; draws Outro3Str and transitions. Falls through to EndingSequence_CommonUpdate.
 EndingStep_ScrollFireAndDrawOutro3:
 	TST.b	Fade_in_lines_mask.w
 	BNE.b	EndingSequenceStep_Done
@@ -1954,6 +2098,8 @@ EndingStep_ScrollFireStep:
 	SUBQ.w	#1, Ending_hscroll_offset.w
 EndingSequenceStep_Done:
 	BRA.w	EndingSequence_CommonUpdate
+; EndingStep_WaitThenFadeToBlack
+; After fade-in completes and timer expires, fades palette line 0 to all-black.
 EndingStep_WaitThenFadeToBlack:
 	TST.b	Palette_fade_in_mask.w
 	BNE.b	EndingStep_Return4
@@ -1964,6 +2110,8 @@ EndingStep_WaitThenFadeToBlack:
 	MOVE.b	#1, Palette_fade_in_mask.w
 EndingStep_Return4:
 	BRA.w	EndingSequence_CommonUpdate
+; EndingStep_DrawOutro4
+; After fade completes, draws the dialog-area pattern + Outro4Str and fades in.
 EndingStep_DrawOutro4:
 	TST.b	Palette_fade_in_mask.w
 	BNE.b	EndingStep_DrawOutro4_Return
@@ -1978,6 +2126,8 @@ EndingStep_DrawOutro4:
 	MOVE.w	#ENDING_DELAY_LONGER, Ending_timer.w
 EndingStep_DrawOutro4_Return:
 	BRA.w	EndingSequence_CommonUpdate
+; EndingStep_WaitAfterOutro4
+; After fade and timer expire, fades to all-black and advances to next step.
 EndingStep_WaitAfterOutro4:
 	TST.b	Palette_fade_in_mask.w
 	BNE.b	EndingStep_Return5
@@ -1988,6 +2138,8 @@ EndingStep_WaitAfterOutro4:
 	MOVE.b	#1, Palette_fade_in_mask.w
 EndingStep_Return5:
 	BRA.w	EndingSequence_CommonUpdate
+; EndingStep_DrawOutro5
+; After fade completes, draws the dialog-area pattern + Outro5Str and fades in.
 EndingStep_DrawOutro5:
 	TST.b	Palette_fade_in_mask.w
 	BNE.b	EndingStep_DrawOutro5_Return
@@ -2002,6 +2154,8 @@ EndingStep_DrawOutro5:
 	MOVE.w	#ENDING_DELAY_LONGER, Ending_timer.w
 EndingStep_DrawOutro5_Return:
 	BRA.w	EndingSequence_CommonUpdate
+; EndingStep_WaitAfterOutro5
+; After fade and timer expire, fades to all-black and advances to next step.
 EndingStep_WaitAfterOutro5:
 	TST.b	Palette_fade_in_mask.w
 	BNE.b	EndingStep_Return6
@@ -2012,6 +2166,8 @@ EndingStep_WaitAfterOutro5:
 	MOVE.b	#1, Palette_fade_in_mask.w
 EndingStep_Return6:
 	BRA.w	EndingSequence_CommonUpdate
+; EndingStep_FillPattern
+; After fade completes, fills the dialog area with pattern tiles and resets the timer.
 EndingStep_FillPattern:
 	TST.b	Palette_fade_in_mask.w
 	BNE.b	EndingStep_FillPattern_Return
@@ -2020,6 +2176,9 @@ EndingStep_FillPattern:
 	ADDQ.w	#1, Ending_sequence_step.w
 EndingStep_FillPattern_Return:
 	BRA.w	EndingSequence_CommonUpdate
+; EndingStep_ScrollUpAndAdvance
+; Counts down the scroll timer; while Ending_hscroll_offset < 0, increments it by 1
+; per tick to scroll the fire effect upward. Advances when offset reaches 0.
 EndingStep_ScrollUpAndAdvance:
 	SUBQ.w	#1, Ending_timer.w
 	BGT.b	EndingStep_Return7
@@ -2034,6 +2193,8 @@ EndingStep_ScrollUpStep:
 	ADDQ.w	#1, Ending_hscroll_offset.w
 EndingStep_Return7:
 	BRA.w	EndingSequence_CommonUpdate
+; EndingStep_WaitAndInitFontTiles
+; Waits for the timer, then plays SOUND_LEVEL_UP, initializes font tiles, and advances.
 EndingStep_WaitAndInitFontTiles:
 	SUBQ.w	#1, Ending_timer.w
 	BGT.b	EndingStep_WaitAndInitFontTiles_Return
@@ -2042,6 +2203,11 @@ EndingStep_WaitAndInitFontTiles:
 	JSR	InitFontTiles
 EndingStep_WaitAndInitFontTiles_Return:
 	BRA.w	EndingSequence_CommonUpdate
+; EndingStep_ScrollCreditsText
+; Scrolls the credits text. Overseas (bit 6 of IO_version): fires every 4 frames.
+; Domestic: fires every 8 frames. Checks Dialog_phase against BOSS_VICTORY_FADE_PHASES
+; to decide whether to advance to step 17 or clear dialog sprites and keep scrolling.
+; On step advance: clears dialog state, plays SOUND_ENDING_CREDITS_MUSIC, blanks name buffer.
 EndingStep_ScrollCreditsText:
 	ADDQ.w	#1, Dialog_timer.w
 	MOVE.w	Dialog_timer.w, D0
@@ -2074,6 +2240,9 @@ EndingStep_ClearDialogSprites:
 	BSR.w	ClearDialogSprites
 EndingSequence_ScrollText_Done:
 	BRA.w	EndingSequence_CommonUpdate
+; EndingStep_DisplayCreditLines
+; Each 32 frames ($20), draws one credits text line (DisplayEndingTextLine).
+; Each frame, adds $4000 to Ending_vscroll_accumulator and writes the high word to VScroll_base.
 EndingStep_DisplayCreditLines:
 	MOVE.l	Ending_timer.w, D0
 	MOVE.l	D0, D1
@@ -2086,6 +2255,9 @@ EndingStep_DisplayCreditLines_WriteRow:
 	ADDI.l	#$4000, Ending_vscroll_accumulator.w
 	MOVE.w	Ending_vscroll_accumulator.w, VScroll_base.w
 	BRA.w	EndingSequence_CommonUpdate
+; EndingStep_WaitForCreditsEnd
+; Continues scrolling the credits (same VScroll accumulator pattern) until Ending_timer
+; reaches $200, then advances to step 19 (EndingSequence_CommonUpdate idle loop).
 EndingStep_WaitForCreditsEnd:
 	MOVE.w	Ending_timer.w, D0
 	CMPI.w	#$0200, D0
