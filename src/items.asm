@@ -145,15 +145,15 @@ UseTruffle:
 ; "not poisonous" message. Always removes the item from inventory.
 UseDigotPlant:
 	TST.w	Player_poisoned.w
-	BEQ.b	UseDigotPlant_Loop
+	BEQ.b	UseDigotPlant_NotPoisoned
 	CLR.b	Poison_notified.w
 	CLR.w	Player_poisoned.w
 	CLR.b	Player_greatly_poisoned.w
 	PRINT 	PoisonPurgedStr
-	BRA.b	UseDigotPlant_Loop2
-UseDigotPlant_Loop:
+	BRA.b	UseDigotPlant_RemoveItem
+UseDigotPlant_NotPoisoned:
 	PRINT 	NotPoisonousStr
-UseDigotPlant_Loop2:
+UseDigotPlant_RemoveItem:
 	BSR.w	RemoveSelectedItemFromList
 	RTS
 
@@ -247,7 +247,7 @@ UseGeneric_Loop_Done:
 	MOVE.w	(A0,D1.w), D1
 	ANDI.w	#$00FF, D1
 	CMP.w	D1, D0
-	BNE.b	UseKey_NoDoor_Loop2
+	BNE.b	UseKey_NoDoor_WrongKey
 	PlaySound SOUND_ATTACK
 	MOVE.b	#FLAG_TRUE, Door_unlocked_flag.w
 	PRINT 	KeyUnlockedStr
@@ -264,7 +264,7 @@ UseKey_NoDoor:
 	PRINT 	NoDoorStr	
 	RTS
 	
-UseKey_NoDoor_Loop2:
+UseKey_NoDoor_WrongKey:
 	PRINT 	KeyDoesntFitStr
 	RTS
 UseKey_NoDoor_Loop:
@@ -389,20 +389,20 @@ DialogState_Init:
 	CMPI.w	#TOWN_TILE_SHOP, D0
 	BEQ.w	FortuneTeller_EnterState_Loop
 	CMPI.w	#TOWN_TILE_FORTUNE_TELLER, D0
-	BEQ.w	FortuneTeller_EnterState_Loop2
+	BEQ.w	FortuneTeller_EnterState_FeePrompt
 	CMPI.w	#TOWN_TILE_INN, D0
-	BEQ.b	DialogState_Init_Loop
+	BEQ.b	DialogState_Init_InnEntry
 	CMPI.w	#TOWN_TILE_FORTUNE_TELLER_2, D0
-	BEQ.b	DialogState_Init_Loop2
+	BEQ.b	DialogState_Init_FortuneTeller2Entry
 	CMPI.w	#TOWN_TILE_CHURCH, D0
-	BEQ.b	DialogState_Init_Loop3
-	BRA.w	ShopInit_LoadAssortment_Loop2
-DialogState_Init_Loop3:
+	BEQ.b	DialogState_Init_ChurchEntry
+	BRA.w	ShopInit_LoadAssortment_TalkToNPC
+DialogState_Init_ChurchEntry:
 	MOVE.w	#DIALOG_STATE_WAIT_SCRIPT_THEN_OPEN_CHURCH_MENU, Dialogue_state.w
 	PRINT 	HelpPromptStr
 	RTS
 
-DialogState_Init_Loop2:
+DialogState_Init_FortuneTeller2Entry:
 	LEA	FortuneTellerGreetingsByTown, A0
 	MOVE.w	Current_town.w, D0
 	ADD.w	D0, D0
@@ -411,7 +411,7 @@ DialogState_Init_Loop2:
 	JSR	(A0)
 	RTS
 
-DialogState_Init_Loop:
+DialogState_Init_InnEntry:
 	MOVE.w	Current_town.w, D0
 	CMPI.w	#TOWN_WATLING, D0
 	BNE.w	InnDialog_ShowPricePrompt
@@ -419,14 +419,14 @@ DialogState_Init_Loop:
 	BNE.w	InnDialog_ShowPricePrompt
 	PRINT 	CustomerStayHereStr
 	TST.b	Watling_youth_restored.w
-	BNE.b	DialogState_Init_Loop4
+	BNE.b	DialogState_Init_WatlingCheck
 	BRA.w	FortuneTeller_EnterState
-DialogState_Init_Loop4:
+DialogState_Init_WatlingCheck:
 	TST.w	Watling_inn_unpaid_nights.w
-	BNE.b	DialogState_Init_Loop5
+	BNE.b	DialogState_Init_WatlingFreeStay
 	MOVE.b	#FLAG_TRUE, Watling_inn_free_stay_used.w	
 	BRA.w	InnDialog_ShowPricePrompt	
-DialogState_Init_Loop5:
+DialogState_Init_WatlingFreeStay:
 	LEA	Text_build_buffer.w, A1
 	LEA	StayingForFreeStr, A0
 	JSR	CopyStringUntilFF
@@ -465,7 +465,7 @@ FortuneTeller_EnterState:
 	MOVE.w	#DIALOG_STATE_WAIT_SCRIPT_THEN_DRAW_INN_YES_NO, Dialogue_state.w
 	RTS
 
-FortuneTeller_EnterState_Loop2:
+FortuneTeller_EnterState_FeePrompt:
 	LEA	Text_build_buffer.w, A1
 	LEA	FortuneTellerStr, A0
 	JSR	CopyStringUntilFF
@@ -492,19 +492,19 @@ FortuneTeller_EnterState_Loop:
 	CLR.w	Current_shop_type.w
 	MOVE.w	Current_town_room.w, D0
 	ANDI.w	#$0100, D0
-	BEQ.b	FortuneTeller_EnterState_Loop3
+	BEQ.b	FortuneTeller_EnterState_CheckShopType
 	CLR.w	Current_shop_type.w
 	MOVE.w	Current_town.w, D0
 	CMPI.w	#TOWN_MALAGA, D0
 	BNE.b	ShopInit_LoadAssortment
-	BRA.b	ShopInit_LoadAssortment_Loop3
-FortuneTeller_EnterState_Loop3:
+	BRA.b	ShopInit_LoadAssortment_MalagaShop
+FortuneTeller_EnterState_CheckShopType:
 	MOVE.w	Current_town_room.w, D0
 	ANDI.w	#$0200, D0
-	BEQ.b	FortuneTeller_EnterState_Loop4
+	BEQ.b	FortuneTeller_EnterState_CheckEquipShop
 	MOVE.w	#SHOP_TYPE_EQUIPMENT, Current_shop_type.w
 	BRA.b	ShopInit_LoadAssortment
-FortuneTeller_EnterState_Loop4:
+FortuneTeller_EnterState_CheckEquipShop:
 	MOVE.w	Current_town_room.w, D0
 	ANDI.w	#$0400, D0
 	BEQ.b	ShopInit_LoadAssortment
@@ -529,7 +529,7 @@ ShopInit_LoadAssortment_Done:
 	DBF	D7, ShopInit_LoadAssortment_Done
 	RTS
 
-ShopInit_LoadAssortment_Loop2:
+ShopInit_LoadAssortment_TalkToNPC:
 	BSR.w	CheckPlayerTalkToNPC
 	RTS
 
@@ -537,7 +537,7 @@ ShopInit_LoadAssortment_Loop:
 	MOVE.l	Script_talk_source.w, Script_source_base.w
 	RTS
 
-ShopInit_LoadAssortment_Loop3:
+ShopInit_LoadAssortment_MalagaShop:
 	LEA	ShopGreetingStrPtrs, A0
 	CLR.w	D2
 	MOVE.w	#3, D2
@@ -627,9 +627,9 @@ DialogState_MalageWaitDrawThenShowMoneySellWindow_Loop:
 
 DialogState_MalageShopSelectItemToBuy:
 	TST.b	Script_text_complete.w
-	BEQ.w	DialogState_MalageShopSelectItemToBuy_Loop
+	BEQ.w	DialogState_MalageShopSelectItemToBuy_ProcessText
 	CheckButton BUTTON_BIT_B
-	BEQ.b	DialogState_MalageShopSelectItemToBuy_Loop2
+	BEQ.b	DialogState_MalageShopSelectItemToBuy_CheckConfirm
 	JSR	ResetScriptAndInitDialogue	
 	PRINT 	NoLeaveWithoutBuyingStr	
 	CLR.b	Script_text_complete.w	
@@ -639,11 +639,11 @@ DialogState_MalageShopSelectItemToBuy:
 	MOVE.w	#DIALOG_STATE_MALAGE_WAIT_SCRIPT_THEN_OPEN_SELL_LIST, Dialogue_state.w	
 	RTS
 	
-DialogState_MalageShopSelectItemToBuy_Loop:
+DialogState_MalageShopSelectItemToBuy_ProcessText:
 	JMP	ProcessScriptText	
-DialogState_MalageShopSelectItemToBuy_Loop2:
+DialogState_MalageShopSelectItemToBuy_CheckConfirm:
 	CheckButton BUTTON_BIT_C
-	BEQ.b	DialogState_MalageShopSelectItemToBuy_Loop3
+	BEQ.b	DialogState_MalageShopSelectItemToBuy_HandleCursor
 	MOVE.w	Shop_selected_index.w, Menu_cursor_index.w
 	JSR	DrawMenuCursor
 	PlaySound SOUND_MENU_SELECT
@@ -652,7 +652,7 @@ DialogState_MalageShopSelectItemToBuy_Loop2:
 	MOVE.w	#DIALOG_STATE_MALAGE_BLACKSMITH_INTRO, Dialogue_state.w
 	RTS
 
-DialogState_MalageShopSelectItemToBuy_Loop3:
+DialogState_MalageShopSelectItemToBuy_HandleCursor:
 	MOVE.w	Shop_selected_index.w, Menu_cursor_index.w
 	JSR	HandleMenuInput
 	MOVE.w	Menu_cursor_index.w, Shop_selected_index.w
@@ -705,11 +705,11 @@ DoneMyBestStr:
 
 DialogState_MalageShopConfirmOrCancel:
 	TST.b	Script_text_complete.w
-	BEQ.w	ShopBuy_CancelReturn_Loop
+	BEQ.w	ShopBuy_CancelReturn_ProcessText
 	CheckButton BUTTON_BIT_B
 	BNE.w	ShopBuy_CancelReturn
 	CheckButton BUTTON_BIT_C
-	BEQ.w	ShopBuy_CancelReturn_Loop2
+	BEQ.w	ShopBuy_CancelReturn_HandleYesNo
 	MOVE.w	Dialog_selection.w, Menu_cursor_index.w
 	JSR	DrawMenuCursor
 	TST.w	Dialog_selection.w
@@ -737,16 +737,16 @@ DialogState_MalageShopConfirmOrCancel_Loop_Done:
 	MOVE.w	(A2,D1.w), D3
 	MOVE.w	#$000A, D0
 	BTST.l	D0, D3
-	BEQ.b	DialogState_MalageShopConfirmOrCancel_Loop2
+	BEQ.b	DialogState_MalageShopConfirmOrCancel_ScanNext
 	SUBQ.w	#1, (A1)
-	BGE.b	DialogState_MalageShopConfirmOrCancel_Loop3
+	BGE.b	DialogState_MalageShopConfirmOrCancel_ClampLength
 	CLR.w	(A1)	
-DialogState_MalageShopConfirmOrCancel_Loop3:
+DialogState_MalageShopConfirmOrCancel_ClampLength:
 	MOVE.w	D7, D0
 	LEA	Possessed_equipment_list.w, A0
 	MOVE.w	#8, D2
 	JSR	RemoveItemFromArray
-DialogState_MalageShopConfirmOrCancel_Loop2:
+DialogState_MalageShopConfirmOrCancel_ScanNext:
 	DBF	D7, DialogState_MalageShopConfirmOrCancel_Loop_Done
 	MOVE.w	(A1), D0
 	CMPI.w	#8, D0
@@ -759,13 +759,13 @@ ShopBuy_ConfirmBuy:
 	ADD.w	D0, D0
 	MOVE.w	#$0401, (A1,D0.w)
 	MOVE.w	Equipped_sword.w, D0
-	BLT.b	ShopBuy_ConfirmBuy_Loop
+	BLT.b	ShopBuy_ConfirmBuy_ClearSword
 	ANDI.w	#$00FF, D0
 	ADD.w	D0, D0
 	LEA	EquipmentToStatModifierMap, A0
 	MOVE.w	(A0,D0.w), D0
 	SUB.w	D0, Player_str.w
-ShopBuy_ConfirmBuy_Loop:
+ShopBuy_ConfirmBuy_ClearSword:
 	MOVE.w	#EQUIP_NONE, Equipped_sword.w
 	MOVE.b	#FLAG_TRUE, Sword_stolen_by_blacksmith.w
 	CLR.l	Player_kims.w
@@ -796,13 +796,13 @@ ShopBuy_CancelReturn:
 	CLR.b	Script_text_complete.w
 	RTS
 
-ShopBuy_CancelReturn_Loop2:
+ShopBuy_CancelReturn_HandleYesNo:
 	MOVE.w	Dialog_selection.w, Menu_cursor_index.w
 	JSR	HandleMenuInput
 	MOVE.w	Menu_cursor_index.w, Dialog_selection.w
 	RTS
 
-ShopBuy_CancelReturn_Loop:
+ShopBuy_CancelReturn_ProcessText:
 	JSR	ProcessScriptText
 	RTS
 
@@ -810,24 +810,24 @@ DialogState_MalageShopGiveVermilionSword:
 	LEA	Possessed_equipment_length.w, A0
 	MOVE.w	(A0), D0
 	CMPI.w	#8, D0 ; Max number of equipment
-	BLT.b	DialogState_MalageShopGiveVermilionSword_Loop
+	BLT.b	DialogState_MalageShopGiveVermilionSword_AddSword
 	PRINT 	ComeBackWithLessStr	
-	BRA.b	DialogState_MalageShopGiveVermilionSword_Loop2	
-DialogState_MalageShopGiveVermilionSword_Loop:
+	BRA.b	DialogState_MalageShopGiveVermilionSword_SetState	
+DialogState_MalageShopGiveVermilionSword_AddSword:
 	MOVE.w	(A0), D0
 	ADDQ.w	#1, (A0)+
 	ADD.w	D0, D0
 	MOVE.w	#((EQUIPMENT_TYPE_SWORD<<8)|EQUIPMENT_SWORD_OF_VERMILION), (A0,D0.w)
 	MOVE.b	#FLAG_TRUE, Player_has_received_sword_of_vermilion.w
-DialogState_MalageShopGiveVermilionSword_Loop2:
+DialogState_MalageShopGiveVermilionSword_SetState:
 	MOVE.w	#DIALOG_STATE_WAIT_SCRIPT_THEN_ADVANCE, Dialogue_state.w
 	RTS
 
 DialogState_WaitScriptThenGoToOverworld:
 	TST.b	Script_text_complete.w
-	BEQ.b	DialogWait_ClearRow_Loop
+	BEQ.b	DialogWait_ClearRow_ProcessText
 	TST.b	Script_has_continuation.w
-	BNE.w	DialogWait_ClearRow_Loop2
+	BNE.w	DialogWait_ClearRow_WaitContinue
 	CheckButton BUTTON_BIT_C
 	BNE.b	DialogWait_ClearRow
 	CheckButton BUTTON_BIT_B
@@ -839,38 +839,38 @@ DialogWait_ClearRow:
 	MOVE.w	#DIALOG_STATE_REDRAW_HUD_AND_CLOSE, Dialogue_state.w
 	RTS
 
-DialogWait_ClearRow_Loop2:
+DialogWait_ClearRow_WaitContinue:
 	CheckButton BUTTON_BIT_C	
-	BEQ.b	DialogWait_ClearRow_Loop3	
+	BEQ.b	DialogWait_ClearRow_Return	
 	JSR	InitDialogueWindow	
-DialogWait_ClearRow_Loop:
+DialogWait_ClearRow_ProcessText:
 	JSR	ProcessScriptText
-DialogWait_ClearRow_Loop3:
+DialogWait_ClearRow_Return:
 	RTS
 
 DialogState_WaitScriptThenAdvance:
 	TST.b	Window_tilemap_draw_pending.w
-	BNE.b	DialogState_WaitScriptThenAdvance_Loop
+	BNE.b	DialogState_WaitScriptThenAdvance_Return
 	TST.b	Script_text_complete.w
-	BEQ.b	DialogState_WaitScriptThenAdvance_Loop2
+	BEQ.b	DialogState_WaitScriptThenAdvance_ProcessText
 	TST.b	Script_has_continuation.w
-	BNE.b	DialogState_WaitScriptThenAdvance_Loop3
+	BNE.b	DialogState_WaitScriptThenAdvance_SetContinueState
 	TST.b	Script_has_yes_no_question.w
-	BNE.b	DialogState_WaitScriptThenAdvance_Loop4
+	BNE.b	DialogState_WaitScriptThenAdvance_SetYesNoState
 	ADDQ.w	#1, Dialogue_state.w
 	RTS
 
-DialogState_WaitScriptThenAdvance_Loop3:
+DialogState_WaitScriptThenAdvance_SetContinueState:
 	MOVE.w	#DIALOG_STATE_WAIT_C_THEN_RESTART_DIALOGUE, Dialogue_state.w
 	RTS
 
-DialogState_WaitScriptThenAdvance_Loop4:
+DialogState_WaitScriptThenAdvance_SetYesNoState:
 	MOVE.w	#DIALOG_STATE_DRAW_YES_NO_DIALOG, Dialogue_state.w
 	RTS
 
-DialogState_WaitScriptThenAdvance_Loop2:
+DialogState_WaitScriptThenAdvance_ProcessText:
 	JSR	ProcessScriptText
-DialogState_WaitScriptThenAdvance_Loop:
+DialogState_WaitScriptThenAdvance_Return:
 	RTS
 
 DialogState_WaitButtonThenCloseMenu:
@@ -902,7 +902,7 @@ DialogState_DrawYesNoDialog:
 
 DialogState_ProcessYesNoAnswer:
 	CheckButton BUTTON_BIT_C
-	BEQ.w	DialogueChoice_Continue_Loop
+	BEQ.w	DialogueChoice_Continue_HandleCursor
 	JSR	DrawLeftMenuWindow
 	JSR	ResetScriptAndInitDialogue
 	TST.b	Dialogue_event_trigger_flag.w
@@ -929,12 +929,12 @@ DialogState_ProcessYesNoAnswer_Loop:
 	MOVE.b	#1, (A0,D0.w)
 DialogueChoice_Continue:
 	TST.w	Dialog_selection.w
-	BEQ.b	DialogueChoice_Continue_Loop2
+	BEQ.b	DialogueChoice_Continue_SelectYes
 	LEA	DialogueChoiceNoStrPtrs, A0
-	BRA.b	DialogueChoice_Continue_Loop3
-DialogueChoice_Continue_Loop2:
+	BRA.b	DialogueChoice_Continue_LoadScript
+DialogueChoice_Continue_SelectYes:
 	LEA	DialogueChoiceYesStrPtrs, A0
-DialogueChoice_Continue_Loop3:
+DialogueChoice_Continue_LoadScript:
 	CLR.w	Dialog_choice_event_trigger.w
 	CLR.b	Dialogue_event_trigger_flag.w
 	CLR.b	Quest_choice_pending.w
@@ -946,7 +946,7 @@ DialogueChoice_Continue_Loop3:
 	MOVE.w	#DIALOG_STATE_WAIT_SCRIPT_THEN_ADVANCE, Dialogue_state.w
 	RTS
 
-DialogueChoice_Continue_Loop:
+DialogueChoice_Continue_HandleCursor:
 	MOVE.w	Dialog_selection.w, Menu_cursor_index.w
 	JSR	HandleMenuInput
 	MOVE.w	Menu_cursor_index.w, Dialog_selection.w
@@ -974,30 +974,30 @@ DialogState_ShopMenuInput:
 	TST.b	Window_tilemap_row_draw_pending.w
 	BNE.w	ShopSell_ListReturn
 	CheckButton BUTTON_BIT_B
-	BEQ.b	DialogState_ShopMenuInput_Loop
-	BRA.b	DialogState_ShopMenuInput_Loop2
-DialogState_ShopMenuInput_Loop:
+	BEQ.b	DialogState_ShopMenuInput_CheckConfirm
+	BRA.b	DialogState_ShopMenuInput_SelectExit
+DialogState_ShopMenuInput_CheckConfirm:
 	CheckButton BUTTON_BIT_C
 	BEQ.b	ShopSell_ShowPrompt_Loop
 	MOVE.w	Shop_action_selection.w, Menu_cursor_index.w
 	JSR	DrawMenuCursor
 	TST.w	Shop_action_selection.w
-	BEQ.b	DialogState_ShopMenuInput_Loop3
+	BEQ.b	DialogState_ShopMenuInput_SelectBuy
 	CMPI.w	#1, Shop_action_selection.w
-	BEQ.b	DialogState_ShopMenuInput_Loop4
-DialogState_ShopMenuInput_Loop2:
+	BEQ.b	DialogState_ShopMenuInput_SelectSell
+DialogState_ShopMenuInput_SelectExit:
 	MOVE.w	Current_shop_type.w, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
 	LEA	ShopDialog_NextTime, A0
 	TST.b	Shop_purchase_made.w
-	BEQ.b	DialogState_ShopMenuInput_Loop5
+	BEQ.b	DialogState_ShopMenuInput_LoadGoodbye
 	LEA	ShopDialog_BusinessThanks, A0	
-DialogState_ShopMenuInput_Loop5:
+DialogState_ShopMenuInput_LoadGoodbye:
 	MOVE.l	(A0,D0.w), Script_source_base.w
 	MOVE.w	#DIALOG_STATE_WAIT_SCRIPT_THEN_CLOSE_TO_OVERWORLD, Dialogue_state.w
 	BRA.b	ShopSell_ShowPrompt
-DialogState_ShopMenuInput_Loop3:
+DialogState_ShopMenuInput_SelectBuy:
 	MOVE.w	Current_shop_type.w, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
@@ -1005,7 +1005,7 @@ DialogState_ShopMenuInput_Loop3:
 	MOVE.l	(A0,D0.w), Script_source_base.w
 	MOVE.w	#DIALOG_STATE_WAIT_SCRIPT_THEN_OPEN_SELL_LIST_WINDOW, Dialogue_state.w
 	BRA.b	ShopSell_ShowPrompt
-DialogState_ShopMenuInput_Loop4:
+DialogState_ShopMenuInput_SelectSell:
 	MOVE.w	Current_shop_type.w, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
@@ -1070,9 +1070,9 @@ DialogState_WaitDrawThenShowMoneyWindow_Loop:
 
 DialogState_ShopSellItemSelectInput:
 	TST.b	Script_text_complete.w
-	BEQ.w	DialogState_ShopSellItemSelectInput_Loop
+	BEQ.w	DialogState_ShopSellItemSelectInput_ProcessText
 	CheckButton BUTTON_BIT_B
-	BEQ.b	DialogState_ShopSellItemSelectInput_Loop2
+	BEQ.b	DialogState_ShopSellItemSelectInput_CheckConfirm
 	PlaySound SOUND_MENU_CANCEL
 	JSR	RestoreLeftMenuFromBuffer
 	JSR	RestoreShopListFromBuffer
@@ -1080,9 +1080,9 @@ DialogState_ShopSellItemSelectInput:
 	MOVE.w	#DIALOG_STATE_SHOP_MENU_INPUT, Dialogue_state.w
 	RTS
 
-DialogState_ShopSellItemSelectInput_Loop2:
+DialogState_ShopSellItemSelectInput_CheckConfirm:
 	CheckButton BUTTON_BIT_C
-	BEQ.w	DialogState_ShopSellItemSelectInput_Loop3
+	BEQ.w	DialogState_ShopSellItemSelectInput_HandleCursor
 	PlaySound SOUND_MENU_SELECT
 	MOVE.w	Shop_selected_index.w, Menu_cursor_index.w
 	JSR	DrawMenuCursor
@@ -1116,21 +1116,21 @@ DialogState_ShopSellItemSelectInput_Loop2:
 	ADDQ.w	#1, Dialogue_state.w
 	RTS
 
-DialogState_ShopSellItemSelectInput_Loop3:
+DialogState_ShopSellItemSelectInput_HandleCursor:
 	MOVE.w	Shop_selected_index.w, Menu_cursor_index.w
 	JSR	HandleMenuInput
 	MOVE.w	Menu_cursor_index.w, Shop_selected_index.w
 	RTS
 
-DialogState_ShopSellItemSelectInput_Loop:
+DialogState_ShopSellItemSelectInput_ProcessText:
 	JMP	ProcessScriptText	
 DialogState_ShopBuyConfirmAndPurchase:
 	TST.b	Script_text_complete.w
-	BEQ.w	ShopCancel_RedrawBuyPrompt_Loop
+	BEQ.w	ShopCancel_RedrawBuyPrompt_ProcessText
 	CheckButton BUTTON_BIT_B
 	BNE.w	ShopCancel_RedrawBuyPrompt
 	CheckButton BUTTON_BIT_C
-	BEQ.w	ShopCancel_RedrawBuyPrompt_Loop2
+	BEQ.w	ShopCancel_RedrawBuyPrompt_HandleYesNo
 	MOVE.w	Dialog_selection.w, Menu_cursor_index.w
 	JSR	DrawMenuCursor
 	TST.w	Dialog_selection.w
@@ -1154,17 +1154,17 @@ DialogState_ShopBuyConfirmAndPurchase:
 	MOVE.l	Player_kims.w, D1
 	ANDI.l	#$00FFFFFF, D1
 	CMP.l	D0, D1
-	BLT.b	DialogState_ShopBuyConfirmAndPurchase_Loop
+	BLT.b	DialogState_ShopBuyConfirmAndPurchase_InsufficientFunds
 	LEA	ShopCategoryNameTables, A0
 	MOVE.w	Current_shop_type.w, D0
 	ASL.w	#3, D0
 	MOVEA.l	$4(A0,D0.w), A0
 	MOVE.w	(A0), D0
 	CMPI.w	#8, D0
-	BLT.b	DialogState_ShopBuyConfirmAndPurchase_Loop2
+	BLT.b	DialogState_ShopBuyConfirmAndPurchase_AddItem
 	PRINT 	CantCarryMoreStr2
 	BRA.b	ShopGiveaway_RestoreList
-DialogState_ShopBuyConfirmAndPurchase_Loop2:
+DialogState_ShopBuyConfirmAndPurchase_AddItem:
 	ADDQ.w	#1, (A0)+
 	ADD.w	D0, D0
 	LEA	Shop_item_list.w, A1
@@ -1181,7 +1181,7 @@ DialogState_ShopBuyConfirmAndPurchase_Loop2:
 	JSR	DeductPaymentAmount
 	JSR	DisplayPlayerKims
 	BRA.b	ShopGiveaway_RestoreList
-DialogState_ShopBuyConfirmAndPurchase_Loop:
+DialogState_ShopBuyConfirmAndPurchase_InsufficientFunds:
 	MOVE.w	Current_shop_type.w, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
@@ -1205,13 +1205,13 @@ ShopCancel_RedrawBuyPrompt:
 	MOVE.l	(A0,D0.w), Script_source_base.w	
 	RTS
 	
-ShopCancel_RedrawBuyPrompt_Loop2:
+ShopCancel_RedrawBuyPrompt_HandleYesNo:
 	MOVE.w	Dialog_selection.w, Menu_cursor_index.w
 	JSR	HandleMenuInput
 	MOVE.w	Menu_cursor_index.w, Dialog_selection.w
 	RTS
 
-ShopCancel_RedrawBuyPrompt_Loop:
+ShopCancel_RedrawBuyPrompt_ProcessText:
 	JMP	ProcessScriptText
 DialogState_WaitScriptThenDrawSellConfirm:
 	TST.b	Script_text_complete.w
@@ -1279,30 +1279,30 @@ DialogState_WaitScriptThenGoToBuyMenu_Loop:
 
 DialogState_WaitScriptThenOpenInventorySellList:
 	TST.b	Script_text_complete.w
-	BEQ.w	ShopEquip_InitCursor_Loop
+	BEQ.w	ShopEquip_InitCursor_ProcessText
 	MOVE.w	Current_shop_type.w, D0
 	ASL.w	#3, D0
 	LEA	ShopCategoryNameTables, A0
 	MOVEA.l	$4(A0,D0.w), A0
 	MOVE.w	(A0), D0
-	BEQ.w	ShopEquip_InitCursor_Loop2
+	BEQ.w	ShopEquip_InitCursor_NothingToSell
 	JSR	SaveCenterDialogAreaToBuffer
 	MOVE.w	Current_shop_type.w, D0
-	BEQ.b	DialogState_WaitScriptThenOpenInventorySellList_Loop
+	BEQ.b	DialogState_WaitScriptThenOpenInventorySellList_DrawItemList
 	CMPI.w	#SHOP_TYPE_EQUIPMENT, D0
-	BEQ.b	DialogState_WaitScriptThenOpenInventorySellList_Loop2
+	BEQ.b	DialogState_WaitScriptThenOpenInventorySellList_DrawEquipList
 	JSR	DrawMagicListBorders
 	JSR	DrawMagicListWithMP
 	MOVE.l	#Possessed_magics_list, Active_inventory_list_ptr.w
 	MOVE.w	Possessed_magics_length.w, D0
 	BRA.b	ShopEquip_InitCursor
-DialogState_WaitScriptThenOpenInventorySellList_Loop:
+DialogState_WaitScriptThenOpenInventorySellList_DrawItemList:
 	JSR	DrawItemListBorders
 	JSR	DrawItemListNames
 	MOVE.l	#Possessed_items_list, Active_inventory_list_ptr.w
 	MOVE.w	Possessed_items_length.w, D0
 	BRA.b	ShopEquip_InitCursor
-DialogState_WaitScriptThenOpenInventorySellList_Loop2:
+DialogState_WaitScriptThenOpenInventorySellList_DrawEquipList:
 	JSR	DrawEquipmentListWindow
 	JSR	DrawPossessedEquipmentList
 	MOVE.l	#Possessed_equipment_list, Active_inventory_list_ptr.w
@@ -1316,7 +1316,7 @@ ShopEquip_InitCursor:
 	MOVE.w	#DIALOG_STATE_SELL_INVENTORY_ITEM_SELECT_INPUT, Dialogue_state.w
 	RTS
 
-ShopEquip_InitCursor_Loop2:
+ShopEquip_InitCursor_NothingToSell:
 	JSR	ResetScriptAndInitDialogue
 	JSR	SaveLeftMenuTiles
 	MOVE.w	Current_shop_type.w, D0
@@ -1327,7 +1327,7 @@ ShopEquip_InitCursor_Loop2:
 	ADDQ.w	#1, Dialogue_state.w
 	RTS
 
-ShopEquip_InitCursor_Loop:
+ShopEquip_InitCursor_ProcessText:
 	JMP	ProcessScriptText
 DialogState_WaitScriptThenReturnToSellList:
 	TST.b	Script_text_complete.w
@@ -1352,7 +1352,7 @@ DialogWait_ShowAnythingElse_Loop:
 	JMP	ProcessScriptText
 DialogState_SellInventoryItemSelectInput:
 	TST.b	Script_text_complete.w
-	BEQ.w	ShopBuy_ScanItem_Loop
+	BEQ.w	ShopBuy_ScanItem_ProcessText
 	CheckButton BUTTON_BIT_B
 	BEQ.b	DialogState_SellInventoryItemSelectInput_Loop
 	JSR	DrawCenterMenuWindow
@@ -1363,7 +1363,7 @@ DialogState_SellInventoryItemSelectInput:
 
 DialogState_SellInventoryItemSelectInput_Loop:
 	CheckButton BUTTON_BIT_C
-	BEQ.w	ShopBuy_ScanItem_Loop2
+	BEQ.w	ShopBuy_ScanItem_HandleCursor
 	MOVE.w	Shop_selected_index.w, Menu_cursor_index.w
 	JSR	DrawMenuCursor
 	JSR	ResetScriptAndInitDialogue
@@ -1374,7 +1374,7 @@ DialogState_SellInventoryItemSelectInput_Loop:
 	MOVE.w	(A2,D0.w), D0
 	MOVE.w	#8, D1
 	BTST.l	D1, D0
-	BNE.w	ShopBuy_ScanItem_Loop3
+	BNE.w	ShopBuy_ScanItem_ItemUnwanted
 	CMPI.w	#SHOP_TYPE_EQUIPMENT, Current_shop_type.w
 	BNE.b	ShopBuy_ScanItem
 	MOVE.w	#9, D1
@@ -1382,7 +1382,7 @@ DialogState_SellInventoryItemSelectInput_Loop:
 	BEQ.b	ShopBuy_ScanItem
 	MOVE.w	#$000F, D1
 	BTST.l	D1, D0
-	BNE.b	ShopBuy_ScanItem_Loop4
+	BNE.b	ShopBuy_ScanItem_ItemCursed
 ShopBuy_ScanItem:
 	MOVE.w	D0, D2
 	LEA	IsStr, A0
@@ -1399,28 +1399,28 @@ ShopBuy_ScanItem:
 	ADDQ.w	#1, Dialogue_state.w
 	RTS
 
-ShopBuy_ScanItem_Loop4:
+ShopBuy_ScanItem_ItemCursed:
 	PRINT 	CursedItemStr	
-	BRA.b	ShopBuy_ScanItem_Loop5	
-ShopBuy_ScanItem_Loop3:
+	BRA.b	ShopBuy_ScanItem_ShowRejectAndReturn	
+ShopBuy_ScanItem_ItemUnwanted:
 	MOVE.w	Current_shop_type.w, D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
 	LEA	ShopDialog_NoNeed, A0
 	MOVE.l	(A0,D0.w), Script_source_base.w
-ShopBuy_ScanItem_Loop5:
+ShopBuy_ScanItem_ShowRejectAndReturn:
 	JSR	DrawCenterMenuWindow
 	JSR	ResetScriptAndInitDialogue
 	MOVE.w	#DIALOG_STATE_WAIT_SCRIPT_THEN_RETURN_TO_SELL_LIST, Dialogue_state.w
 	RTS
 
-ShopBuy_ScanItem_Loop2:
+ShopBuy_ScanItem_HandleCursor:
 	MOVE.w	Shop_selected_index.w, Menu_cursor_index.w
 	JSR	HandleMenuInput
 	MOVE.w	Menu_cursor_index.w, Shop_selected_index.w
 	RTS
 
-ShopBuy_ScanItem_Loop:
+ShopBuy_ScanItem_ProcessText:
 	JMP	ProcessScriptText	
 DialogState_WaitScriptThenDrawSellItemYesNo:
 	TST.b	Script_text_complete.w
@@ -1455,34 +1455,34 @@ DialogState_SellInventoryConfirmAndSell:
 	MOVE.w	(A2,D0.w), D0
 	BGE.w	ShopSell_RemoveFromList
 	CMPI.l	#Possessed_magics_list, Active_inventory_list_ptr.w
-	BNE.w	DialogState_SellInventoryConfirmAndSell_Loop
+	BNE.w	DialogState_SellInventoryConfirmAndSell_ClearMagic
 	MOVE.w	#MAGIC_NONE, Readied_magic.w
 	BRA.w	ShopSell_RemoveFromList
-DialogState_SellInventoryConfirmAndSell_Loop:
+DialogState_SellInventoryConfirmAndSell_ClearMagic:
 	LEA	Equipped_items.w, A2
 	MOVE.w	D0, D2
 	MOVE.w	#$000A, D1
 	ASR.w	D1, D0
 DialogState_SellInventoryConfirmAndSell_Loop_Done:
 	BTST.l	#0, D0
-	BNE.b	DialogState_SellInventoryConfirmAndSell_Loop2
+	BNE.b	DialogState_SellInventoryConfirmAndSell_UnequipItem
 	LEA	$2(A2), A2
 	ASR.w	#1, D0
 	BRA.b	DialogState_SellInventoryConfirmAndSell_Loop_Done
-DialogState_SellInventoryConfirmAndSell_Loop2:
+DialogState_SellInventoryConfirmAndSell_UnequipItem:
 	MOVE.w	#$FFFF, (A2)
 	MOVE.w	D2, D0
 	ANDI.w	#$00FF, D0
 	ADD.w	D0, D0
 	LEA	EquipmentToStatModifierMap, A3
 	ANDI.w	#$0400, D2
-	BEQ.b	DialogState_SellInventoryConfirmAndSell_Loop3
+	BEQ.b	DialogState_SellInventoryConfirmAndSell_AdjustAC
 	MOVE.w	Player_str.w, D1	
 	SUB.w	(A3,D0.w), D1	
 	ANDI.w	#$7FFF, D1	
 	MOVE.w	D1, Player_str.w	
 	BRA.b	ShopSell_RemoveFromList	
-DialogState_SellInventoryConfirmAndSell_Loop3:
+DialogState_SellInventoryConfirmAndSell_AdjustAC:
 	MOVE.w	Player_ac.w, D1
 	SUB.w	(A3,D0.w), D1
 	ANDI.w	#$7FFF, D1
@@ -1567,21 +1567,21 @@ ShopSell_RestoreAndInit_Loop:
 	JMP	ProcessScriptText
 DialogState_WaitScriptWithYesNoOrContinue:
 	TST.b	Script_text_complete.w
-	BEQ.b	DialogState_WaitScriptWithYesNoOrContinue_Loop
+	BEQ.b	DialogState_WaitScriptWithYesNoOrContinue_ProcessText
 	TST.b	Script_has_continuation.w
-	BNE.w	DialogState_WaitScriptWithYesNoOrContinue_Loop2
+	BNE.w	DialogState_WaitScriptWithYesNoOrContinue_WaitContinue
 	JSR	SaveRightMenuAreaToBuffer
 	JSR	DrawYesNoDialog
 	ADDQ.w	#1, Dialogue_state.w
 	RTS
 
-DialogState_WaitScriptWithYesNoOrContinue_Loop2:
+DialogState_WaitScriptWithYesNoOrContinue_WaitContinue:
 	CheckButton BUTTON_BIT_C
-	BEQ.b	DialogState_WaitScriptWithYesNoOrContinue_Loop3
+	BEQ.b	DialogState_WaitScriptWithYesNoOrContinue_Return
 	JSR	InitDialogueWindow
-DialogState_WaitScriptWithYesNoOrContinue_Loop:
+DialogState_WaitScriptWithYesNoOrContinue_ProcessText:
 	JSR	ProcessScriptText
-DialogState_WaitScriptWithYesNoOrContinue_Loop3:
+DialogState_WaitScriptWithYesNoOrContinue_Return:
 	RTS
 
 ; - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -1638,9 +1638,9 @@ FortuneTeller_DrawAndSetState_Loop:
 
 DialogState_WaitFortuneTellerScriptThenClose:
 	TST.b	Script_text_complete.w
-	BEQ.b	ShopExit_RestoreHud_Loop
+	BEQ.b	ShopExit_RestoreHud_ProcessText
 	TST.b	Script_has_continuation.w
-	BNE.b	ShopExit_RestoreHud_Loop2
+	BNE.b	ShopExit_RestoreHud_CheckContinue
 	CheckButton BUTTON_BIT_C
 	BNE.b	ShopExit_RestoreHud
 	CheckButton BUTTON_BIT_B
@@ -1654,13 +1654,13 @@ ShopExit_RestoreHud:
 	TriggerWindowRedraw WINDOW_DRAW_MSG_SPEED_ALT
 	RTS
 
-ShopExit_RestoreHud_Loop:
+ShopExit_RestoreHud_ProcessText:
 	JMP	ProcessScriptText
-ShopExit_RestoreHud_Loop2:
+ShopExit_RestoreHud_CheckContinue:
 	CheckButton BUTTON_BIT_C
-	BEQ.b	ShopExit_RestoreHud_Loop3
+	BEQ.b	ShopExit_RestoreHud_Return
 	JSR	InitDialogueWindow
-ShopExit_RestoreHud_Loop3:
+ShopExit_RestoreHud_Return:
 	RTS
 
 ; - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -1669,28 +1669,28 @@ ShopExit_RestoreHud_Loop3:
 
 DialogState_WaitScriptThenDrawInnYesNo:
 	TST.b	Script_text_complete.w
-	BEQ.b	DialogState_WaitScriptThenDrawInnYesNo_Loop
+	BEQ.b	DialogState_WaitScriptThenDrawInnYesNo_ProcessText
 	TST.b	Script_has_continuation.w
-	BNE.b	DialogState_WaitScriptThenDrawInnYesNo_Loop2
+	BNE.b	DialogState_WaitScriptThenDrawInnYesNo_CheckContinue
 	MOVE.w	Current_town.w, D0
 	CMPI.w	#TOWN_WATLING, D0
-	BNE.b	DialogState_WaitScriptThenDrawInnYesNo_Loop3
+	BNE.b	DialogState_WaitScriptThenDrawInnYesNo_DrawYesNo
 	TST.b	Watling_inn_free_stay_used.w
-	BEQ.b	DialogState_WaitScriptThenDrawInnYesNo_Loop4
-DialogState_WaitScriptThenDrawInnYesNo_Loop3:
+	BEQ.b	DialogState_WaitScriptThenDrawInnYesNo_SetState
+DialogState_WaitScriptThenDrawInnYesNo_DrawYesNo:
 	JSR	SaveRightMenuAreaToBuffer
 	JSR	DrawYesNoDialog
-DialogState_WaitScriptThenDrawInnYesNo_Loop4:
+DialogState_WaitScriptThenDrawInnYesNo_SetState:
 	MOVE.w	#DIALOG_STATE_DRAW_INN_MONEY_WINDOW, Dialogue_state.w
 	RTS
 
-DialogState_WaitScriptThenDrawInnYesNo_Loop:
+DialogState_WaitScriptThenDrawInnYesNo_ProcessText:
 	JMP	ProcessScriptText
-DialogState_WaitScriptThenDrawInnYesNo_Loop2:
+DialogState_WaitScriptThenDrawInnYesNo_CheckContinue:
 	CheckButton BUTTON_BIT_C
-	BEQ.b	DialogState_WaitScriptThenDrawInnYesNo_Loop5
+	BEQ.b	DialogState_WaitScriptThenDrawInnYesNo_Return
 	JSR	InitDialogueWindow
-DialogState_WaitScriptThenDrawInnYesNo_Loop5:
+DialogState_WaitScriptThenDrawInnYesNo_Return:
 	RTS
 
 DialogState_DrawInnMoneyWindow:
@@ -1722,15 +1722,15 @@ InnWatling_CreditNight_Done:
 	MOVE.l	Player_kims.w, D1
 	ANDI.l	#$00FFFFFF, D1
 	CMPI.l	#$400, D1
-	BLT.b	InnWatling_CreditNight_Loop
+	BLT.b	InnWatling_CreditNight_Broke
 	MOVE.l	#$400, Transaction_amount.w
 	JSR	DeductPaymentAmount
 	DBF	D7, InnWatling_CreditNight_Done
-	BRA.b	InnWatling_CreditNight_Loop2
-InnWatling_CreditNight_Loop:
+	BRA.b	InnWatling_CreditNight_AfterPayment
+InnWatling_CreditNight_Broke:
 	MOVE.b	#FLAG_TRUE, Watling_inn_broke_penalty.w	
 	CLR.l	Player_kims.w	
-InnWatling_CreditNight_Loop2:
+InnWatling_CreditNight_AfterPayment:
 	JSR	DisplayPlayerKims
 	CLR.w	Watling_inn_unpaid_nights.w
 	BRA.w	InnWatling_SetRestState
@@ -1738,7 +1738,7 @@ InnWatling_ConfirmPayment:
 	CheckButton BUTTON_BIT_B
 	BNE.w	InnWatling_ServicesCost
 	CheckButton BUTTON_BIT_C
-	BEQ.w	InnWatling_ServicesCost_Loop
+	BEQ.w	InnWatling_ServicesCost_HandleCursor
 	MOVE.w	Dialog_selection.w, Menu_cursor_index.w
 	JSR	DrawMenuCursor
 	TST.w	Dialog_selection.w
@@ -1751,7 +1751,7 @@ InnWatling_ConfirmPayment:
 	MOVE.l	Player_kims.w, D1
 	ANDI.l	#$00FFFFFF, D1
 	CMP.l	D0, D1
-	BLT.b	InnWatling_SetRestState_Loop
+	BLT.b	InnWatling_SetRestState_NoPayStreet
 	MOVE.l	D0, Transaction_amount.w
 	JSR	DeductPaymentAmount
 	JSR	DisplayPlayerKims
@@ -1762,18 +1762,18 @@ InnWatling_SetRestState:
 	MOVE.w	#DIALOG_STATE_WAIT_SCRIPT_THEN_START_SLEEP_FADE, Dialogue_state.w
 	RTS
 
-InnWatling_SetRestState_Loop:
+InnWatling_SetRestState_NoPayStreet:
 	PRINT 	NoPaySleepStreetStr
-	BRA.b	InnWatling_ServicesCost_Loop2
+	BRA.b	InnWatling_ServicesCost_SetStateAndReset
 InnWatling_ServicesCost:
 	PRINT 	ServicesCostStr
-InnWatling_ServicesCost_Loop2:
+InnWatling_ServicesCost_SetStateAndReset:
 	JSR	DrawLeftMenuWindow
 	MOVE.w	#DIALOG_STATE_WAIT_FORTUNE_TELLER_SCRIPT_THEN_CLOSE, Dialogue_state.w
 	JSR	ResetScriptAndInitDialogue
 	RTS
 
-InnWatling_ServicesCost_Loop:
+InnWatling_ServicesCost_HandleCursor:
 	MOVE.w	Dialog_selection.w, Menu_cursor_index.w
 	JSR	HandleMenuInput
 	MOVE.w	Menu_cursor_index.w, Dialog_selection.w
@@ -1795,33 +1795,33 @@ DialogState_SleepFadeAndRestore:
 	SUBQ.w	#1, Sleep_delay_timer.w
 	BGE.w	ChurchDialog_SetState_Return
 	TST.b	Watling_inn_broke_penalty.w
-	BEQ.b	DialogState_SleepFadeAndRestore_Loop
+	BEQ.b	DialogState_SleepFadeAndRestore_FullRestore
 	MOVE.w	Player_hp.w, D0	
 	CMPI.w	#1, D0	
-	BEQ.b	DialogState_SleepFadeAndRestore_Loop2	
+	BEQ.b	DialogState_SleepFadeAndRestore_HalveHp	
 	LSR.w	#1, D0	
-DialogState_SleepFadeAndRestore_Loop2:
+DialogState_SleepFadeAndRestore_HalveHp:
 	MOVE.w	D0, Player_hp.w	
 	MOVE.w	Player_mp.w, D0	
 	LSR.w	#1, D0	
 	MOVE.w	D0, Player_mp.w	
 	CLR.b	Watling_inn_broke_penalty.w	
-	BRA.b	DialogState_SleepFadeAndRestore_Loop3	
-DialogState_SleepFadeAndRestore_Loop:
+	BRA.b	DialogState_SleepFadeAndRestore_RestoreStats	
+DialogState_SleepFadeAndRestore_FullRestore:
 	MOVE.w	Player_mhp.w, Player_hp.w
 	MOVE.w	Player_mmp.w, Player_mp.w
-DialogState_SleepFadeAndRestore_Loop3:
+DialogState_SleepFadeAndRestore_RestoreStats:
 	MOVE.w	Current_town.w, D0
 	CMPI.w	#TOWN_WATLING, D0
 	BNE.b	InnWatling_GoodMorning
 	TST.b	Watling_inn_free_stay_used.w
 	BNE.b	InnWatling_GoodMorning
 	TST.b	Watling_youth_restored.w
-	BEQ.b	DialogState_SleepFadeAndRestore_Loop4
+	BEQ.b	DialogState_SleepFadeAndRestore_WatlingNoPay
 	PRINT 	DontPullOnMeStr
 	MOVE.b	#FLAG_TRUE, Watling_inn_free_stay_used.w
 	BRA.b	InnWatling_RestoreAndExit
-DialogState_SleepFadeAndRestore_Loop4:
+DialogState_SleepFadeAndRestore_WatlingNoPay:
 	PRINT 	MoveAlongStr
 	BRA.b	InnWatling_RestoreAndExit
 InnWatling_GoodMorning:
@@ -1861,26 +1861,26 @@ DialogState_ChurchMenuInput:
 	TST.b	Window_tilemap_row_draw_pending.w
 	BNE.w	ChurchMenu_HandleInput_Return
 	CheckButton BUTTON_BIT_B
-	BEQ.b	DialogState_ChurchMenuInput_Loop
-	BRA.b	DialogState_ChurchMenuInput_Loop2
-DialogState_ChurchMenuInput_Loop:
+	BEQ.b	DialogState_ChurchMenuInput_CheckConfirm
+	BRA.b	DialogState_ChurchMenuInput_SelectLeave
+DialogState_ChurchMenuInput_CheckConfirm:
 	CheckButton BUTTON_BIT_C
 	BEQ.w	ChurchService_InitDialogue_Loop
 	MOVE.w	Church_service_selection.w, Menu_cursor_index.w
 	JSR	DrawMenuCursor
 	TST.w	Church_service_selection.w
-	BEQ.b	DialogState_ChurchMenuInput_Loop3
+	BEQ.b	DialogState_ChurchMenuInput_SelectCurse
 	CMPI.w	#1, Church_service_selection.w
-	BEQ.w	DialogState_ChurchMenuInput_Loop4
+	BEQ.w	DialogState_ChurchMenuInput_SelectPoison
 	CMPI.w	#2, Church_service_selection.w
-	BEQ.w	DialogState_ChurchMenuInput_Loop5
-DialogState_ChurchMenuInput_Loop2:
+	BEQ.w	DialogState_ChurchMenuInput_SelectSave
+DialogState_ChurchMenuInput_SelectLeave:
 	PRINT 	NeverGiveUpStr
 	MOVE.w	#DIALOG_STATE_WAIT_SCRIPT_THEN_CLOSE_CHURCH_TO_HUD, Dialogue_state.w
 	BRA.w	ChurchService_InitDialogue
-DialogState_ChurchMenuInput_Loop3:
+DialogState_ChurchMenuInput_SelectCurse:
 	BSR.w	CheckIfCursed
-	BEQ.b	DialogState_ChurchMenuInput_Loop6
+	BEQ.b	DialogState_ChurchMenuInput_NotCursed
 	LEA	Text_build_buffer.w, A1
 	LEA	GiveToCharityStr, A0
 	JSR	CopyStringUntilFF
@@ -1897,13 +1897,13 @@ DialogState_ChurchMenuInput_Loop3:
 	PRINT 	Text_build_buffer
 	MOVE.w	#DIALOG_STATE_WAIT_SCRIPT_THEN_DRAW_CURSE_YES_NO, Dialogue_state.w
 	BRA.w	ChurchService_InitDialogue
-DialogState_ChurchMenuInput_Loop6:
+DialogState_ChurchMenuInput_NotCursed:
 	PRINT 	NoCurseStr
 	MOVE.w	#DIALOG_STATE_WAIT_SCRIPT_THEN_CLOSE_CHURCH_TO_HUD, Dialogue_state.w
 	BRA.b	ChurchService_InitDialogue
-DialogState_ChurchMenuInput_Loop4:
+DialogState_ChurchMenuInput_SelectPoison:
 	MOVE.w	Player_poisoned.w, D0
-	BEQ.b	DialogState_ChurchMenuInput_Loop7
+	BEQ.b	DialogState_ChurchMenuInput_NotPoisoned
 	LEA	Text_build_buffer.w, A1
 	LEA	GiveToCharityStr, A0
 	JSR	CopyStringUntilFF
@@ -1920,11 +1920,11 @@ DialogState_ChurchMenuInput_Loop4:
 	PRINT 	Text_build_buffer
 	MOVE.w	#DIALOG_STATE_WAIT_SCRIPT_THEN_DRAW_POISON_YES_NO, Dialogue_state.w
 	BRA.b	ChurchService_InitDialogue
-DialogState_ChurchMenuInput_Loop7:
+DialogState_ChurchMenuInput_NotPoisoned:
 	PRINT 	NotPoisonedStr
 	MOVE.w	#DIALOG_STATE_WAIT_SCRIPT_THEN_CLOSE_CHURCH_TO_HUD, Dialogue_state.w
 	BRA.b	ChurchService_InitDialogue
-DialogState_ChurchMenuInput_Loop5:
+DialogState_ChurchMenuInput_SelectSave:
 	PRINT 	SaveNumberStr
 	MOVE.w	#DIALOG_STATE_WAIT_SCRIPT_THEN_OPEN_SAVE_MENU, Dialogue_state.w
 ChurchService_InitDialogue:
@@ -1987,7 +1987,7 @@ DialogState_CurseRemovalPayAndCure:
 	CheckButton BUTTON_BIT_B
 	BNE.w	ShopNoTakeBack_Sell
 	CheckButton BUTTON_BIT_C
-	BEQ.w	ShopNoTakeBack_Sell_Loop
+	BEQ.w	ShopNoTakeBack_Sell_HandleCursor
 	MOVE.w	Dialog_selection.w, Menu_cursor_index.w
 	JSR	DrawMenuCursor
 	TST.w	Dialog_selection.w
@@ -2014,17 +2014,17 @@ DialogState_CurseRemovalPayAndCure:
 
 DialogState_CurseRemovalPayAndCure_Loop:
 	PRINT 	NoTakeBackStr	
-	BRA.b	ShopNoTakeBack_Sell_Loop2	
+	BRA.b	ShopNoTakeBack_Sell_SetStateAndReset	
 ShopNoTakeBack_Sell:
 	PRINT 	NoTakeBackStr	
-ShopNoTakeBack_Sell_Loop2:
+ShopNoTakeBack_Sell_SetStateAndReset:
 	JSR	DrawLeftMenuWindow	
 	JSR	RestoreLeftMenuFromBuffer	
 	MOVE.w	#DIALOG_STATE_WAIT_SCRIPT_THEN_CLOSE_CHURCH_TO_HUD, Dialogue_state.w	
 	JSR	ResetScriptAndInitDialogue	
 	RTS
 	
-ShopNoTakeBack_Sell_Loop:
+ShopNoTakeBack_Sell_HandleCursor:
 	MOVE.w	Dialog_selection.w, Menu_cursor_index.w
 	JSR	HandleMenuInput
 	MOVE.w	Menu_cursor_index.w, Dialog_selection.w
@@ -2051,7 +2051,7 @@ DialogState_PoisonCurePayAndCure:
 	CheckButton BUTTON_BIT_B
 	BNE.w	ShopNoTakeBack_Giveaway
 	CheckButton BUTTON_BIT_C
-	BEQ.w	ShopNoTakeBack_Giveaway_Loop
+	BEQ.w	ShopNoTakeBack_Giveaway_HandleCursor
 	MOVE.w	Dialog_selection.w, Menu_cursor_index.w
 	JSR	DrawMenuCursor
 	TST.w	Dialog_selection.w
@@ -2064,36 +2064,36 @@ DialogState_PoisonCurePayAndCure:
 	MOVE.l	Player_kims.w, D1
 	ANDI.l	#$00FFFFFF, D1
 	CMP.l	D0, D1
-	BLT.w	DialogState_PoisonCurePayAndCure_Loop
+	BLT.w	DialogState_PoisonCurePayAndCure_NoFunds
 	MOVE.l	D0, Transaction_amount.w
 	JSR	DeductPaymentAmount
 	JSR	DisplayPlayerKims
 	TST.w	Player_greatly_poisoned.w
-	BNE.b	DialogState_PoisonCurePayAndCure_Loop2
+	BNE.b	DialogState_PoisonCurePayAndCure_SeriousPoisoned
 	CLR.w	Player_poisoned.w
 	CLR.b	Poison_notified.w
 	PRINT 	PoisonPurgedStr
-	BRA.b	DialogState_PoisonCurePayAndCure_Loop3
-DialogState_PoisonCurePayAndCure_Loop2:
+	BRA.b	DialogState_PoisonCurePayAndCure_ExitChurch
+DialogState_PoisonCurePayAndCure_SeriousPoisoned:
 	PRINT 	CantCureStr
-DialogState_PoisonCurePayAndCure_Loop3:
+DialogState_PoisonCurePayAndCure_ExitChurch:
 	JSR	DrawLeftMenuWindow
 	JSR	RestoreLeftMenuFromBuffer
 	JSR	ResetScriptAndInitDialogue
 	MOVE.w	#DIALOG_STATE_WAIT_SCRIPT_THEN_CLOSE_CHURCH_TO_HUD, Dialogue_state.w
 	RTS
 
-DialogState_PoisonCurePayAndCure_Loop:
+DialogState_PoisonCurePayAndCure_NoFunds:
 	PRINT 	NoTakeBackStr	
-	BRA.b	ShopNoTakeBack_Giveaway_Loop2	
+	BRA.b	ShopNoTakeBack_Giveaway_SetStateAndReset	
 ShopNoTakeBack_Giveaway:
 	PRINT 	NoTakeBackStr	
-ShopNoTakeBack_Giveaway_Loop2:
+ShopNoTakeBack_Giveaway_SetStateAndReset:
 	JSR	DrawLeftMenuWindow	
 	JSR	RestoreLeftMenuFromBuffer	
 	MOVE.w	#DIALOG_STATE_WAIT_SCRIPT_THEN_CLOSE_CHURCH_TO_HUD, Dialogue_state.w	
 	JMP	ResetScriptAndInitDialogue	
-ShopNoTakeBack_Giveaway_Loop:
+ShopNoTakeBack_Giveaway_HandleCursor:
 	MOVE.w	Dialog_selection.w, Menu_cursor_index.w
 	JSR	HandleMenuInput
 	MOVE.w	Menu_cursor_index.w, Dialog_selection.w
@@ -2115,11 +2115,11 @@ DialogState_WaitScriptThenOpenSaveMenu_Loop:
 	JMP	ProcessScriptText
 DialogState_SaveMenuInput:
 	TST.b	Window_tilemap_draw_active.w
-	BNE.b	DialogState_SaveMenuInput_Loop
+	BNE.b	DialogState_SaveMenuInput_Return
 	CheckButton BUTTON_BIT_B
-	BNE.b	DialogState_SaveMenuInput_Loop2
+	BNE.b	DialogState_SaveMenuInput_BackToChurch
 	CheckButton BUTTON_BIT_C
-	BEQ.b	DialogState_SaveMenuInput_Loop3
+	BEQ.b	DialogState_SaveMenuInput_HandleCursor
 	JSR	SaveGameToSram
 	JSR	RestoreShopSubmenuFromBuffer
 	JSR	ResetScriptAndInitDialogue
@@ -2127,7 +2127,7 @@ DialogState_SaveMenuInput:
 	MOVE.w	#DIALOG_STATE_WAIT_SCRIPT_THEN_CLOSE_CHURCH_TO_HUD, Dialogue_state.w
 	RTS
 
-DialogState_SaveMenuInput_Loop2:
+DialogState_SaveMenuInput_BackToChurch:
 	JSR	RestoreShopSubmenuFromBuffer	
 	JSR	DrawChurchMenuWindow	
 	PlaySound SOUND_MENU_CURSOR	
@@ -2135,11 +2135,11 @@ DialogState_SaveMenuInput_Loop2:
 	MOVE.w	#DIALOG_STATE_CHURCH_MENU_INPUT, Dialogue_state.w	
 	RTS
 	
-DialogState_SaveMenuInput_Loop3:
+DialogState_SaveMenuInput_HandleCursor:
 	MOVE.w	Dialog_selection.w, Menu_cursor_index.w
 	JSR	HandleMenuInput
 	MOVE.w	Menu_cursor_index.w, Dialog_selection.w
-DialogState_SaveMenuInput_Loop:
+DialogState_SaveMenuInput_Return:
 	RTS
 
 ; CheckIfCursed: Scan equipped items (weapon + armor) for a cursed flag.
@@ -2347,12 +2347,12 @@ ReadyEquipmentStateMachine:
 
 ReadyEquipmentStateJumpTable:
 	BRA.w	ReadyEquipmentStateJumpTable_Loop
-	BRA.w	ReadyEquipmentStateJumpTable_Loop2
+	BRA.w	ReadyEquipmentStateJumpTable_WaitInput
 	BRA.w	ReadyEquipmentMenu_Done_Loop
-	BRA.w	ReadyEquipmentMenu_Done_Loop2
+	BRA.w	ReadyEquipmentMenu_Done_WaitInput
 	BRA.w	ReadyEquipmentState_ShowCategory	
 	BRA.w	ReadyEquipmentState_ShowCategory
-	BRA.w	ReadyEquipmentState_ShowCategory_Loop
+	BRA.w	ReadyEquipmentState_ShowCategory_WaitDraw
 	BRA.w	ReadyEquipmentState_ShowCategory	
 ReadyEquipmentStateJumpTable_Loop:
 	MOVE.w	Main_menu_selection.w, Menu_cursor_index.w
@@ -2364,7 +2364,7 @@ ReadyEquipmentStateJumpTable_Loop:
 	CLR.w	Menu_cursor_index.w
 	RTS
 
-ReadyEquipmentStateJumpTable_Loop2:
+ReadyEquipmentStateJumpTable_WaitInput:
 	TST.b	Window_tilemap_draw_active.w
 	BNE.w	ReadyEquipmentMenu_Done
 	TST.b	Window_tilemap_row_draw_pending.w
@@ -2372,7 +2372,7 @@ ReadyEquipmentStateJumpTable_Loop2:
 	CheckButton BUTTON_BIT_B
 	BNE.b	ReadyEquip_ConfirmAndSetState
 	CheckButton BUTTON_BIT_C
-	BNE.b	ReadyEquip_ConfirmAndSetState_Loop
+	BNE.b	ReadyEquip_ConfirmAndSetState_SelectItem
 	MOVE.w	Ready_equipment_selection.w, Menu_cursor_index.w
 	JSR	HandleMenuInput
 	MOVE.w	Menu_cursor_index.w, Ready_equipment_selection.w
@@ -2385,7 +2385,7 @@ ReadyEquip_ConfirmAndSetState:
 	JSR	InitMenuCursorDefaults
 	RTS
 	
-ReadyEquip_ConfirmAndSetState_Loop:
+ReadyEquip_ConfirmAndSetState_SelectItem:
 	MOVE.w	Ready_equipment_selection.w, Menu_cursor_index.w
 	JSR	DrawMenuCursor
 	MOVE.w	Ready_equipment_selection.w, D0
@@ -2404,24 +2404,24 @@ ReadyEquipmentMenu_Done:
 
 ReadyEquipmentMenu_Done_Loop:
 	TST.b	Window_tilemap_draw_active.w
-	BNE.w	ReadyEquipmentMenu_Done_Loop3
+	BNE.w	ReadyEquipmentMenu_Done_WaitDraw
 	CheckButton BUTTON_BIT_B
-	BNE.b	ReadyEquipmentMenu_Done_Loop4
+	BNE.b	ReadyEquipmentMenu_Done_CancelToEquipMenu
 	CheckButton BUTTON_BIT_C
-	BNE.b	ReadyEquipmentMenu_Done_Loop5
+	BNE.b	ReadyEquipmentMenu_Done_ConfirmSelection
 	MOVE.w	Ready_equipment_category.w, Menu_cursor_index.w
 	JSR	HandleMenuInput
 	MOVE.w	Menu_cursor_index.w, Ready_equipment_category.w
 	RTS
 
-ReadyEquipmentMenu_Done_Loop4:
+ReadyEquipmentMenu_Done_CancelToEquipMenu:
 	PlaySound SOUND_MENU_CANCEL
 	JSR	RestoreRightMenuFromBuffer
 	JSR	DrawEquipmentMenuWindow
 	MOVE.w	#READY_EQUIP_STATE_WAIT, Ready_equipment_state.w
 	RTS
 
-ReadyEquipmentMenu_Done_Loop5:
+ReadyEquipmentMenu_Done_ConfirmSelection:
 	MOVE.w	Ready_equipment_category.w, Menu_cursor_index.w
 	JSR	DrawMenuCursor
 	PlaySound SOUND_MENU_SELECT
@@ -2429,7 +2429,7 @@ ReadyEquipmentMenu_Done_Loop5:
 	JSR	SaveStatusBarToBuffer
 	JSR	ResetScriptAndInitDialogue
 	TST.w	Ready_equipment_list_length.w
-	BLE.b	ReadyEquipmentMenu_Done_Loop6
+	BLE.b	ReadyEquipmentMenu_Done_NothingAvailable
 	JSR	SaveReadyEquipmentMenuToBuffer
 	JSR	DrawReadyEquipmentMenuBorders
 	JSR	DrawReadyEquipmentList
@@ -2438,25 +2438,25 @@ ReadyEquipmentMenu_Done_Loop5:
 	CLR.w	Ready_equipment_cursor_index.w
 	RTS
 
-ReadyEquipmentMenu_Done_Loop6:
+ReadyEquipmentMenu_Done_NothingAvailable:
 	PRINT 	ProperEquipmentStr
 	MOVE.w	#READY_EQUIP_STATE_RESULT_MSG, Ready_equipment_state.w
-ReadyEquipmentMenu_Done_Loop3:
+ReadyEquipmentMenu_Done_WaitDraw:
 	RTS
 
-ReadyEquipmentMenu_Done_Loop2:
+ReadyEquipmentMenu_Done_WaitInput:
 	TST.b	Script_text_complete.w
-	BEQ.w	ReadyEquip_CursedReturn_Loop
+	BEQ.w	ReadyEquip_CursedReturn_ProcessText
 	CheckButton BUTTON_BIT_B
-	BNE.b	ReadyEquipmentMenu_Done_Loop7
+	BNE.b	ReadyEquipmentMenu_Done_CancelAndRestore
 	CheckButton BUTTON_BIT_C
-	BNE.b	ReadyEquipmentMenu_Done_Loop8
+	BNE.b	ReadyEquipmentMenu_Done_ConfirmEquip
 	MOVE.w	Ready_equipment_cursor_index.w, Menu_cursor_index.w
 	JSR	HandleMenuInput
 	MOVE.w	Menu_cursor_index.w, Ready_equipment_cursor_index.w
 	RTS
 
-ReadyEquipmentMenu_Done_Loop7:
+ReadyEquipmentMenu_Done_CancelAndRestore:
 	PlaySound SOUND_MENU_CANCEL
 	JSR	RestoreReadyEquipmentMenuFromBuffer
 	JSR	DrawStatusHudWindow
@@ -2465,20 +2465,20 @@ ReadyEquipmentMenu_Done_Loop7:
 	MOVE.w	#READY_EQUIP_STATE_WAIT, Ready_equipment_state.w
 	RTS
 
-ReadyEquipmentMenu_Done_Loop8:
+ReadyEquipmentMenu_Done_ConfirmEquip:
 	MOVE.w	Ready_equipment_cursor_index.w, Menu_cursor_index.w
 	JSR	DrawMenuCursor
 	PlaySound SOUND_MENU_SELECT
 	JSR	ResetScriptAndInitDialogue
 	BSR.w	GetCurrentEquippedItemID
 	TST.w	D0
-	BGE.w	ReadyEquipmentMenu_Done_Loop9
+	BGE.w	ReadyEquipmentMenu_Done_AlreadyEquipped
 	BSR.w	EquipSelectedItem
 	BSR.w	CopyPlayerNameToTextBuffer
 	BSR.w	GetSelectedEquipmentID
 	MOVE.w	#9, D2
 	BTST.l	D2, D1
-	BNE.w	ReadyEquipmentMenu_Done_Loop10
+	BNE.w	ReadyEquipmentMenu_Done_CursedEquip
 	MOVE.w	D1, D2
 	MOVE.w	Ready_equipment_category.w, D0
 	ANDI.w	#3, D0
@@ -2497,14 +2497,14 @@ ReadyEquipmentMenu_Done_Loop8:
 	JSR	RestoreReadyEquipmentMenuFromBuffer
 	RTS
 
-ReadyEquipmentMenu_Done_Loop9:
+ReadyEquipmentMenu_Done_AlreadyEquipped:
 	PRINT 	AlreadyReadiedStr
 	BSR.w	GetSelectedEquipmentID
 	CMP.b	D0, D1
-	BEQ.w	ReadyEquipmentMenu_Done_Loop11
+	BEQ.w	ReadyEquipmentMenu_Done_DoEquip
 	MOVE.w	#9, D2
 	BTST.l	D2, D0
-	BNE.w	ReadyEquipmentMenu_Done_Loop12
+	BNE.w	ReadyEquipmentMenu_Done_CursedSwap
 	BSR.w	ClearEquipmentCursedFlag
 	BSR.w	CopyPlayerNameToTextBuffer
 	BSR.w	GetCurrentEquippedItemID
@@ -2539,41 +2539,41 @@ ReadyEquipmentMenu_Done_Loop9:
 	MOVE.b	#$2E, (A1)+
 	MOVE.b	#$FF, (A1)
 	PRINT 	Text_build_buffer
-ReadyEquipmentMenu_Done_Loop11:
+ReadyEquipmentMenu_Done_DoEquip:
 	BSR.w	EquipSelectedItem
 	BRA.b	ReadyEquip_CursedReturn
-ReadyEquipmentMenu_Done_Loop12:
+ReadyEquipmentMenu_Done_CursedSwap:
 	PRINT 	ExchangeCursedStr
 	BRA.b	ReadyEquip_CursedReturn
-ReadyEquipmentMenu_Done_Loop10:
+ReadyEquipmentMenu_Done_CursedEquip:
 	PRINT 	CursedStr
 ReadyEquip_CursedReturn:
 	MOVE.w	#READY_EQUIP_STATE_RESULT_MSG, Ready_equipment_state.w
 	JSR	RestoreReadyEquipmentMenuFromBuffer
 	RTS
 
-ReadyEquip_CursedReturn_Loop:
+ReadyEquip_CursedReturn_ProcessText:
 	JSR	ProcessScriptText
 	RTS
 
 ReadyEquipmentState_ShowCategory:
 	CheckButton BUTTON_BIT_B
-	BNE.b	ReadyEquipmentState_ShowCategory_Loop2
+	BNE.b	ReadyEquipmentState_ShowCategory_CancelToEquipMenu
 	CheckButton BUTTON_BIT_C
-	BNE.b	ReadyEquipmentState_ShowCategory_Loop3
+	BNE.b	ReadyEquipmentState_ShowCategory_ConfirmUnequip
 	MOVE.w	Ready_equipment_category.w, Menu_cursor_index.w
 	JSR	HandleMenuInput
 	MOVE.w	Menu_cursor_index.w, Ready_equipment_category.w
 	RTS
 
-ReadyEquipmentState_ShowCategory_Loop2:
+ReadyEquipmentState_ShowCategory_CancelToEquipMenu:
 	PlaySound SOUND_MENU_CANCEL	
 	JSR	RestoreRightMenuFromBuffer	
 	JSR	DrawEquipmentMenuWindow	
 	MOVE.w	#READY_EQUIP_STATE_WAIT, Ready_equipment_state.w	
 	RTS
 	
-ReadyEquipmentState_ShowCategory_Loop3:
+ReadyEquipmentState_ShowCategory_ConfirmUnequip:
 	MOVE.w	Ready_equipment_category.w, Menu_cursor_index.w
 	JSR	DrawMenuCursor
 	PlaySound SOUND_MENU_SELECT
@@ -2582,10 +2582,10 @@ ReadyEquipmentState_ShowCategory_Loop3:
 	JSR	ResetScriptAndInitDialogue
 	BSR.w	GetCurrentEquippedItemID
 	TST.w	D0
-	BLT.w	ReadyEquipmentState_ShowCategory_Loop4
+	BLT.w	ReadyEquipmentState_ShowCategory_NothingEquipped
 	MOVE.w	#9, D1
 	BTST.l	D1, D0
-	BNE.w	ReadyEquipmentState_ShowCategory_Loop5
+	BNE.w	ReadyEquipmentState_ShowCategory_CursedUnequip
 	MOVE.w	D0, D6
 	BSR.w	UnequipItemByID
 	MOVE.w	Ready_equipment_category.w, D0
@@ -2611,19 +2611,19 @@ ReadyEquipmentState_ShowCategory_Loop3:
 	MOVE.w	#READY_EQUIP_STATE_RESULT_MSG, Ready_equipment_state.w
 	RTS
 
-ReadyEquipmentState_ShowCategory_Loop4:
+ReadyEquipmentState_ShowCategory_NothingEquipped:
 	PRINT 	NothingToUseStr
 	MOVE.w	#READY_EQUIP_STATE_RESULT_MSG, Ready_equipment_state.w
 	RTS
 
-ReadyEquipmentState_ShowCategory_Loop5:
+ReadyEquipmentState_ShowCategory_CursedUnequip:
 	PRINT 	DropCursedStr	
 	MOVE.w	#READY_EQUIP_STATE_RESULT_MSG, Ready_equipment_state.w	
 	RTS
 	
-ReadyEquipmentState_ShowCategory_Loop:
+ReadyEquipmentState_ShowCategory_WaitDraw:
 	TST.b	Script_text_complete.w
-	BEQ.b	ReadyEquip_ExitToHud_Loop
+	BEQ.b	ReadyEquip_ExitToHud_ProcessText
 	CheckButton BUTTON_BIT_C
 	BNE.b	ReadyEquip_ExitToHud
 	CheckButton BUTTON_BIT_B
@@ -2637,16 +2637,16 @@ ReadyEquip_ExitToHud:
 	MOVE.w	#READY_EQUIP_STATE_WAIT, Ready_equipment_state.w
 	RTS
 
-ReadyEquip_ExitToHud_Loop:
+ReadyEquip_ExitToHud_ProcessText:
 	JSR	ProcessScriptText
 	RTS
 
 EquipStatAddJumpTable:
-	BRA.w	EquipStatAddJumpTable_Loop
-	BRA.w	EquipStatAddJumpTable_Loop2
+	BRA.w	EquipStatAddJumpTable_AddStrBonus
+	BRA.w	EquipStatAddJumpTable_AddAcBonus
 	BRA.w	EquipItem_AddAcBonus
 	BRA.w	EquipItem_AddAcBonus	
-EquipStatAddJumpTable_Loop:
+EquipStatAddJumpTable_AddStrBonus:
 	LEA	EquipmentToStatModifierMap, A0
 	ANDI.w	#$00FF, D1
 	ADD.w	D1, D1
@@ -2656,7 +2656,7 @@ EquipStatAddJumpTable_Loop:
 	MOVE.w	D0, Player_str.w
 	RTS
 
-EquipStatAddJumpTable_Loop2:
+EquipStatAddJumpTable_AddAcBonus:
 	LEA	EquipmentToStatModifierMap, A0
 	ANDI.w	#$00FF, D1
 	ADD.w	D1, D1
@@ -2677,11 +2677,11 @@ EquipItem_AddAcBonus:
 	RTS
 
 EquipStatRemoveJumpTable:
-	BRA.w	EquipStatRemoveJumpTable_Loop
-	BRA.w	EquipStatRemoveJumpTable_Loop2
+	BRA.w	EquipStatRemoveJumpTable_SubStrBonus
+	BRA.w	EquipStatRemoveJumpTable_SubAcBonus
 	BRA.w	UnequipItem_SubAcBonus
 	BRA.w	UnequipItem_SubAcBonus	
-EquipStatRemoveJumpTable_Loop:
+EquipStatRemoveJumpTable_SubStrBonus:
 	LEA	EquipmentToStatModifierMap, A0
 	ANDI.w	#$00FF, D6
 	ADD.w	D6, D6
@@ -2691,7 +2691,7 @@ EquipStatRemoveJumpTable_Loop:
 	MOVE.w	D0, Player_str.w
 	RTS
 
-EquipStatRemoveJumpTable_Loop2:
+EquipStatRemoveJumpTable_SubAcBonus:
 	LEA	EquipmentToStatModifierMap, A0
 	ANDI.w	#$00FF, D6
 	ADD.w	D6, D6
@@ -2735,17 +2735,17 @@ BuildEquipmentListForCategory:
 	LEA	Ready_equipment_list.w, A2
 	LEA	Possessed_equipment_length.w, A1
 	MOVE.w	(A1)+, D7
-	BLE.b	BuildEquipmentListForCategory_Loop
+	BLE.b	BuildEquipmentListForCategory_StoreLength
 	SUBQ.w	#1, D7
-BuildEquipmentListForCategory_Done:
+BuildEquipmentListForCategory_CheckSlot:
 	MOVE.w	(A1)+, D1
 	BTST.l	D0, D1
-	BEQ.b	BuildEquipmentListForCategory_Loop2
+	BEQ.b	BuildEquipmentListForCategory_NextSlot
 	MOVE.w	D1, (A2)+
 	ADDQ.w	#1, D2
-BuildEquipmentListForCategory_Loop2:
-	DBF	D7, BuildEquipmentListForCategory_Done
-BuildEquipmentListForCategory_Loop:
+BuildEquipmentListForCategory_NextSlot:
+	DBF	D7, BuildEquipmentListForCategory_CheckSlot
+BuildEquipmentListForCategory_StoreLength:
 	MOVE.w	D2, Ready_equipment_list_length.w
 	RTS
 
@@ -2772,16 +2772,16 @@ EquipSelectedItem:
 	MOVE.w	D1, (A2,D2.w)
 	LEA	Possessed_equipment_list.w, A2
 	MOVE.w	Possessed_equipment_length.w, D7
-EquipSelectedItem_Done:
+EquipSelectedItem_CheckSlot:
 	MOVE.w	(A2)+, D3
 	CMP.b	D3, D1
-	BNE.b	EquipSelectedItem_Loop
+	BNE.b	EquipSelectedItem_NextSlot
 	ORI.w	#$8000, D3
 	MOVE.w	D3, -$2(A2)
-	BRA.b	EquipSelectedItem_Loop2
-EquipSelectedItem_Loop:
-	DBF	D7, EquipSelectedItem_Done
-EquipSelectedItem_Loop2:
+	BRA.b	EquipSelectedItem_Return
+EquipSelectedItem_NextSlot:
+	DBF	D7, EquipSelectedItem_CheckSlot
+EquipSelectedItem_Return:
 	RTS
 
 ClearEquipmentCursedFlag:
@@ -2832,7 +2832,7 @@ EquipListMenuStateMachine:
 
 EquipListMenuStateJumpTable:
 	BRA.w	EquipListMenuStateJumpTable_Loop
-	BRA.w	EquipListMenuStateJumpTable_Loop2
+	BRA.w	EquipListMenuStateJumpTable_WaitInput
 	BRA.w	EquipListMenu_DrawGear_Return_Loop
 	BRA.w	EquipListMenu_DrawCombat_Return_Loop
 	BRA.w	EquipListMenu_DrawMagic_Return_Loop
@@ -2840,11 +2840,11 @@ EquipListMenuStateJumpTable:
 	BRA.w	EquipListMenu_DrawRings_Return_Loop
 	BRA.w	EquipListMenu_DrawStatus_Return_Loop	
 	BRA.w	EquipListMenu_DrawWindow_Return_Loop
-	BRA.w	EquipListMenu_CursorReady_Return_Loop
-	BRA.w	EquipListMenu_CursorReady_Return_Loop2
-	BRA.w	EquipListMenu_CursorReady_Return_Loop3
-	BRA.w	EquipListMenu_CursorReady_Return_Loop4
-	BRA.w	EquipListMenu_CursorReady_Return_Loop5
+	BRA.w	EquipListMenu_CursorReady_Return_ToItemPage
+	BRA.w	EquipListMenu_CursorReady_Return_ToMagicPage
+	BRA.w	EquipListMenu_CursorReady_Return_ToEquipPage
+	BRA.w	EquipListMenu_CursorReady_Return_ToFullPage
+	BRA.w	EquipListMenu_CursorReady_Return_ToScript
 EquipListMenuStateJumpTable_Loop:
 	MOVE.w	Main_menu_selection.w, Menu_cursor_index.w
 	JSR	DrawMenuCursor
@@ -2854,24 +2854,24 @@ EquipListMenuStateJumpTable_Loop:
 	ADDQ.w	#1, Equip_list_menu_state.w
 	RTS
 
-EquipListMenuStateJumpTable_Loop2:
+EquipListMenuStateJumpTable_WaitInput:
 	TST.b	Window_tilemap_draw_active.w
 	BNE.w	EquipListMenu_DrawGear_Return
 	TST.b	Window_tilemap_row_draw_pending.w
 	BNE.w	EquipListMenu_DrawGear_Return
 	CheckButton BUTTON_BIT_C
-	BNE.w	EquipListMenuStateJumpTable_Loop3
+	BNE.w	EquipListMenuStateJumpTable_ShowGearPage
 	CheckButton BUTTON_BIT_B
-	BNE.w	EquipListMenuStateJumpTable_Loop4
+	BNE.w	EquipListMenuStateJumpTable_CancelToScript
 	RTS
 
-EquipListMenuStateJumpTable_Loop4:
+EquipListMenuStateJumpTable_CancelToScript:
 	PlaySound SOUND_MENU_CANCEL
 	MOVE.w	#EQUIP_LIST_STATE_EXIT_SCRIPT, Equip_list_menu_state.w
 	TriggerWindowRedraw WINDOW_DRAW_SCRIPT
 	RTS
 
-EquipListMenuStateJumpTable_Loop3:
+EquipListMenuStateJumpTable_ShowGearPage:
 	PlaySound SOUND_MENU_CURSOR
 	JSR	SaveFullMenuTiles
 	JSR	DrawEquippedGearWindow
@@ -2885,18 +2885,18 @@ EquipListMenu_DrawGear_Return_Loop:
 	TST.b	Window_tilemap_row_draw_pending.w
 	BNE.w	EquipListMenu_DrawCombat_Return
 	CheckButton BUTTON_BIT_C
-	BNE.w	EquipListMenu_DrawGear_Return_Loop2
+	BNE.w	EquipListMenu_DrawGear_Return_ShowCombatPage
 	CheckButton BUTTON_BIT_B
-	BNE.w	EquipListMenu_DrawGear_Return_Loop3
+	BNE.w	EquipListMenu_DrawGear_Return_CancelToStats
 	RTS
 
-EquipListMenu_DrawGear_Return_Loop3:
+EquipListMenu_DrawGear_Return_CancelToStats:
 	PlaySound SOUND_MENU_CANCEL
 	TriggerWindowRedraw_alt WINDOW_DRAW_FULL_MENU
 	MOVE.w	#EQUIP_LIST_STATE_STATS_WAIT, Equip_list_menu_state.w
 	RTS
 
-EquipListMenu_DrawGear_Return_Loop2:
+EquipListMenu_DrawGear_Return_ShowCombatPage:
 	PlaySound SOUND_MENU_CURSOR
 	JSR	SaveEquipmentListTiles
 	JSR	DrawGearCombatWindow
@@ -2910,18 +2910,18 @@ EquipListMenu_DrawCombat_Return_Loop:
 	TST.b	Window_tilemap_row_draw_pending.w
 	BNE.w	EquipListMenu_DrawMagic_Return
 	CheckButton BUTTON_BIT_C
-	BNE.w	EquipListMenu_DrawCombat_Return_Loop2
+	BNE.w	EquipListMenu_DrawCombat_Return_ShowMagicPage
 	CheckButton BUTTON_BIT_B
-	BNE.w	EquipListMenu_DrawCombat_Return_Loop3
+	BNE.w	EquipListMenu_DrawCombat_Return_CancelToGear
 	RTS
 
-EquipListMenu_DrawCombat_Return_Loop3:
+EquipListMenu_DrawCombat_Return_CancelToGear:
 	PlaySound SOUND_MENU_CANCEL
 	TriggerWindowRedraw_alt WINDOW_DRAW_EQUIP_LIST
 	MOVE.w	#EQUIP_LIST_STATE_GEAR_PAGE, Equip_list_menu_state.w
 	RTS
 
-EquipListMenu_DrawCombat_Return_Loop2:
+EquipListMenu_DrawCombat_Return_ShowMagicPage:
 	PlaySound SOUND_MENU_CURSOR
 	JSR	SaveMagicListTiles
 	JSR	DrawMagicListWindow
@@ -2935,18 +2935,18 @@ EquipListMenu_DrawMagic_Return_Loop:
 	TST.b	Window_tilemap_row_draw_pending.w
 	BNE.w	EquipListMenu_DrawItems_Return
 	CheckButton BUTTON_BIT_C
-	BNE.w	EquipListMenu_DrawMagic_Return_Loop2
+	BNE.w	EquipListMenu_DrawMagic_Return_ShowItemsPage
 	CheckButton BUTTON_BIT_B
-	BNE.w	EquipListMenu_DrawMagic_Return_Loop3
+	BNE.w	EquipListMenu_DrawMagic_Return_CancelToCombat
 	RTS
 
-EquipListMenu_DrawMagic_Return_Loop3:
+EquipListMenu_DrawMagic_Return_CancelToCombat:
 	PlaySound SOUND_MENU_CANCEL
 	TriggerWindowRedraw_alt WINDOW_DRAW_MAGIC_LIST
 	MOVE.w	#EQUIP_LIST_STATE_COMBAT_PAGE, Equip_list_menu_state.w
 	RTS
 
-EquipListMenu_DrawMagic_Return_Loop2:
+EquipListMenu_DrawMagic_Return_ShowItemsPage:
 	PlaySound SOUND_MENU_CURSOR
 	JSR	SaveItemListRightTiles
 	JSR	DrawItemsListWindow
@@ -2960,18 +2960,18 @@ EquipListMenu_DrawItems_Return_Loop:
 	TST.b	Window_tilemap_row_draw_pending.w
 	BNE.w	EquipListMenu_DrawRings_Return
 	CheckButton BUTTON_BIT_C
-	BNE.w	EquipListMenu_DrawItems_Return_Loop2
+	BNE.w	EquipListMenu_DrawItems_Return_ShowRingsPage
 	CheckButton BUTTON_BIT_B
-	BNE.w	EquipListMenu_DrawItems_Return_Loop3
+	BNE.w	EquipListMenu_DrawItems_Return_CancelToMagic
 	RTS
 
-EquipListMenu_DrawItems_Return_Loop3:
+EquipListMenu_DrawItems_Return_CancelToMagic:
 	PlaySound SOUND_MENU_CANCEL
 	TriggerWindowRedraw_alt WINDOW_DRAW_ITEM_RIGHT
 	MOVE.w	#EQUIP_LIST_STATE_MAGIC_PAGE, Equip_list_menu_state.w
 	RTS
 
-EquipListMenu_DrawItems_Return_Loop2:
+EquipListMenu_DrawItems_Return_ShowRingsPage:
 	PlaySound SOUND_MENU_CURSOR
 	JSR	SaveRingsListMenuToBuffer
 	JSR	DrawRingsListWindow
@@ -2985,17 +2985,17 @@ EquipListMenu_DrawRings_Return_Loop:
 	TST.b	Window_tilemap_row_draw_pending.w
 	BNE.w	EquipListMenu_DrawStatus_Return
 	CheckButton BUTTON_BIT_C
-	BNE.w	EquipListMenu_DrawRings_Return_Loop2
+	BNE.w	EquipListMenu_DrawRings_Return_ShowCursorInit
 	CheckButton BUTTON_BIT_B
-	BNE.w	EquipListMenu_DrawRings_Return_Loop3
+	BNE.w	EquipListMenu_DrawRings_Return_CancelToItems
 	RTS
 
-EquipListMenu_DrawRings_Return_Loop2:
+EquipListMenu_DrawRings_Return_ShowCursorInit:
 	MOVE.w	#EQUIP_LIST_STATE_CURSOR_INIT, Equip_list_menu_state.w
-	BRA.w	EquipListMenu_DrawRings_Return_Loop4
-EquipListMenu_DrawRings_Return_Loop3:
+	BRA.w	EquipListMenu_DrawRings_Return_CancelAndRedraw
+EquipListMenu_DrawRings_Return_CancelToItems:
 	MOVE.w	#EQUIP_LIST_STATE_ITEMS_PAGE, Equip_list_menu_state.w
-EquipListMenu_DrawRings_Return_Loop4:
+EquipListMenu_DrawRings_Return_CancelAndRedraw:
 	PlaySound SOUND_MENU_CANCEL
 	TriggerWindowRedraw_alt WINDOW_DRAW_RING_LIST
 EquipListMenu_DrawStatus_Return:
@@ -3022,46 +3022,46 @@ EquipListMenu_DrawWindow_Return_Loop:
 EquipListMenu_CursorReady_Return:
 	RTS
 
-EquipListMenu_CursorReady_Return_Loop:
+EquipListMenu_CursorReady_Return_ToItemPage:
 	TST.b	Window_tilemap_row_draw_pending.w
-	BNE.w	EquipListMenu_CursorReady_Return_Loop6
+	BNE.w	EquipListMenu_CursorReady_Return_WaitItem
 	PlaySound SOUND_MENU_CANCEL
 	TriggerWindowRedraw_alt WINDOW_DRAW_ITEM_RIGHT
 	MOVE.w	#EQUIP_LIST_STATE_CURSOR_ITEM, Equip_list_menu_state.w
-EquipListMenu_CursorReady_Return_Loop6:
+EquipListMenu_CursorReady_Return_WaitItem:
 	RTS
 
-EquipListMenu_CursorReady_Return_Loop2:
+EquipListMenu_CursorReady_Return_ToMagicPage:
 	TST.b	Window_tilemap_row_draw_pending.w
-	BNE.w	EquipListMenu_CursorReady_Return_Loop7
+	BNE.w	EquipListMenu_CursorReady_Return_WaitMagic
 	PlaySound SOUND_MENU_CANCEL
 	TriggerWindowRedraw_alt WINDOW_DRAW_MAGIC_LIST
 	MOVE.w	#EQUIP_LIST_STATE_CURSOR_MAGIC, Equip_list_menu_state.w
-EquipListMenu_CursorReady_Return_Loop7:
+EquipListMenu_CursorReady_Return_WaitMagic:
 	RTS
-EquipListMenu_CursorReady_Return_Loop3:
+EquipListMenu_CursorReady_Return_ToEquipPage:
 	TST.b	Window_tilemap_row_draw_pending.w
-	BNE.w	EquipListMenu_CursorReady_Return_Loop8
+	BNE.w	EquipListMenu_CursorReady_Return_WaitEquip
 	PlaySound SOUND_MENU_CANCEL
 	TriggerWindowRedraw_alt WINDOW_DRAW_EQUIP_LIST
 	MOVE.w	#EQUIP_LIST_STATE_CURSOR_EQUIP, Equip_list_menu_state.w
-EquipListMenu_CursorReady_Return_Loop8:
+EquipListMenu_CursorReady_Return_WaitEquip:
 	RTS
-EquipListMenu_CursorReady_Return_Loop4:
+EquipListMenu_CursorReady_Return_ToFullPage:
 	TST.b	Window_tilemap_row_draw_pending.w
-	BNE.w	EquipListMenu_CursorReady_Return_Loop9
+	BNE.w	EquipListMenu_CursorReady_Return_WaitFull
 	PlaySound SOUND_MENU_CANCEL
 	TriggerWindowRedraw_alt WINDOW_DRAW_FULL_MENU
 	MOVE.w	#EQUIP_LIST_STATE_CURSOR_FULL, Equip_list_menu_state.w
-EquipListMenu_CursorReady_Return_Loop9:
+EquipListMenu_CursorReady_Return_WaitFull:
 	RTS
-EquipListMenu_CursorReady_Return_Loop5:
+EquipListMenu_CursorReady_Return_ToScript:
 	TST.b	Window_tilemap_row_draw_pending.w
-	BNE.w	EquipListMenu_CursorReady_Return_Loop10
+	BNE.w	EquipListMenu_CursorReady_Return_WaitScript
 	PlaySound SOUND_MENU_CANCEL
 	MOVE.w	#EQUIP_LIST_STATE_EXIT_SCRIPT, Equip_list_menu_state.w
 	TriggerWindowRedraw WINDOW_DRAW_SCRIPT
-EquipListMenu_CursorReady_Return_Loop10:
+EquipListMenu_CursorReady_Return_WaitScript:
 	RTS
 
 ; ---------------------------------------------------------------------------
@@ -3080,9 +3080,9 @@ UpgradeLevelStats:
 	ADD.w	D0, D1
 	ADD.w	D1, Player_str.w
 	CMPI.w	#MAX_PLAYER_STR, Player_str.w
-	BLE.b	UpgradeLevelStats_Loop
+	BLE.b	UpgradeLevelStats_CapLuk
 	MOVE.w	#MAX_PLAYER_STR, Player_str.w	
-UpgradeLevelStats_Loop:
+UpgradeLevelStats_CapLuk:
 	LEA	PlayerLevelToLukMap, A0
 	MOVE.w	(A0,D7.w), D1
 	JSR	GetRandomNumber
@@ -3090,9 +3090,9 @@ UpgradeLevelStats_Loop:
 	ADD.w	D0, D1
 	ADD.w	D1, Player_luk.w
 	CMPI.w	#MAX_PLAYER_LUK, Player_luk.w
-	BLE.b	UpgradeLevelStats_Loop2
+	BLE.b	UpgradeLevelStats_CapDex
 	MOVE.w	#MAX_PLAYER_LUK, Player_luk.w	
-UpgradeLevelStats_Loop2:
+UpgradeLevelStats_CapDex:
 	LEA	PlayerLevelToDexMap, A0
 	MOVE.w	(A0,D7.w), D1
 	JSR	GetRandomNumber
@@ -3100,9 +3100,9 @@ UpgradeLevelStats_Loop2:
 	ADD.w	D0, D1
 	ADD.w	D1, Player_dex.w
 	CMPI.w	#MAX_PLAYER_DEX, Player_dex.w
-	BLE.b	UpgradeLevelStats_Loop3
+	BLE.b	UpgradeLevelStats_CapAc
 	MOVE.w	#MAX_PLAYER_DEX, Player_dex.w	
-UpgradeLevelStats_Loop3:
+UpgradeLevelStats_CapAc:
 	LEA	PlayerLevelToAcMap, A0
 	MOVE.w	(A0,D7.w), D1
 	JSR	GetRandomNumber
@@ -3110,9 +3110,9 @@ UpgradeLevelStats_Loop3:
 	ADD.w	D0, D1
 	ADD.w	D1, Player_ac.w
 	CMPI.w	#MAX_PLAYER_AC, Player_ac.w
-	BLE.b	UpgradeLevelStats_Loop4
+	BLE.b	UpgradeLevelStats_CapInt
 	MOVE.w	#MAX_PLAYER_AC, Player_ac.w	
-UpgradeLevelStats_Loop4:
+UpgradeLevelStats_CapInt:
 	LEA	PlayerLevelToIntMap, A0
 	MOVE.w	(A0,D7.w), D1
 	JSR	GetRandomNumber
@@ -3120,9 +3120,9 @@ UpgradeLevelStats_Loop4:
 	ADD.w	D0, D1
 	ADD.w	D1, Player_int.w
 	CMPI.w	#MAX_PLAYER_INT, Player_int.w
-	BLE.b	UpgradeLevelStats_Loop5
+	BLE.b	UpgradeLevelStats_CapMmp
 	MOVE.w	#MAX_PLAYER_INT, Player_int.w	
-UpgradeLevelStats_Loop5:
+UpgradeLevelStats_CapMmp:
 	LEA	PlayerLevelToMmpMap, A0
 	MOVE.w	(A0,D7.w), D1
 	JSR	GetRandomNumber
@@ -3130,9 +3130,9 @@ UpgradeLevelStats_Loop5:
 	ADD.w	D0, D1
 	ADD.w	D1, Player_mmp.w
 	CMPI.w	#MAX_PLAYER_MMP, Player_mmp.w
-	BLE.b	UpgradeLevelStats_Loop6
+	BLE.b	UpgradeLevelStats_ApplyMhp
 	MOVE.w	#MAX_PLAYER_MMP, Player_mmp.w
-UpgradeLevelStats_Loop6:
+UpgradeLevelStats_ApplyMhp:
 	MOVE.w	Player_mmp.w, Player_mp.w
 	LEA	PlayerLevelToMhpMap, A0
 	MOVE.w	(A0,D7.w), D1
@@ -3141,9 +3141,9 @@ UpgradeLevelStats_Loop6:
 	ADD.w	D0, D1
 	ADD.w	D1, Player_mhp.w
 	CMPI.w	#MAX_PLAYER_MHP, Player_mhp.w
-	BLE.b	UpgradeLevelStats_Loop7
+	BLE.b	UpgradeLevelStats_CapMhp
 	MOVE.w	#MAX_PLAYER_MHP, Player_mhp.w	
-UpgradeLevelStats_Loop7:
+UpgradeLevelStats_CapMhp:
 	MOVE.w	Player_mhp.w, Player_hp.w
 	ADD.w	D7, D7
 	LEA	PlayerLevelToNextLevelExperienceMap, A0
@@ -3174,37 +3174,37 @@ ChestOpeningStateMachine_Loop:
 	; State handler jump table
 ChestOpenStateJumpTable:
 	BRA.w	ChestOpenStateJumpTable_Loop            ; State 0: Detect
-	BRA.w	OpenMenu_ShowMessage_Init_Loop            ; State 1: Message wait
+	BRA.w	OpenMenu_ShowMessage_Init_WaitInput            ; State 1: Message wait
 	BRA.w	OpenChestMenu_ExitToHud_Loop            ; State 2: Close
-	BRA.w	OpenChestMenu_ExitToHud_Loop2            ; State 3: Animation
+	BRA.w	OpenChestMenu_ExitToHud_Animate            ; State 3: Animation
 	BRA.w	ChestAnimation_Return_Loop            ; State 4: Tile delay
-	BRA.w	ChestAnimation_Return_Loop2            ; State 5: Open delay
-	BRA.w	ChestAnimation_Return_Loop3            ; State 6: Contents
+	BRA.w	ChestAnimation_Return_OpenDelay            ; State 5: Open delay
+	BRA.w	ChestAnimation_Return_ShowContents            ; State 6: Contents
 	
 ; State 0: Initial detection
 ChestOpenStateJumpTable_Loop:
 	MOVE.w	Main_menu_selection.w, Menu_cursor_index.w
 	JSR	DrawMenuCursor
 	TST.b	Player_in_first_person_mode.w
-	BNE.w	ChestOpenStateJumpTable_Loop2             ; First-person: check sprite
+	BNE.w	ChestOpenStateJumpTable_FirstPersonCheck             ; First-person: check sprite
 	
 	; Top-down: Check tile type
 	JSR	GetTileInFrontOfPlayer             ; Get tile in front of player
 	CMPI.w	#TOWN_TILE_CHEST, D0               ; Chest tile?
-	BEQ.w	ChestOpenStateJumpTable_Loop3             ; Yes: play sound, advance
+	BEQ.w	ChestOpenStateJumpTable_TopDownOpen             ; Yes: play sound, advance
 	BRA.w	OpenChestMenu_CheckChest             ; No: check chest sprite
 	
 	; First-person: Check chest sprite
-ChestOpenStateJumpTable_Loop2:
+ChestOpenStateJumpTable_FirstPersonCheck:
 	TST.b	Chest_already_opened.w       ; Already opened?
-	BNE.w	OpenChestMenu_CheckChest_Loop             ; Yes: "Already open"
+	BNE.w	OpenChestMenu_CheckChest_AlreadyOpen             ; Yes: "Already open"
 	LEA	FpDirectionDeltaForward, A0
 	JSR	GetMapTileInDirection             ; Search for object
 	CMPI.b	#6, D0                   ; Type 6 = chest sprite?
 	BNE.w	OpenChestMenu_CheckChest
 	BSR.w	CheckIfDoorIsLocked             ; Check if locked
 	TST.b	Door_unlocked_flag.w
-	BEQ.w	OpenChestMenu_CheckChest_Loop2             ; Locked
+	BEQ.w	OpenChestMenu_CheckChest_Locked             ; Locked
 	
 	; Start opening animation
 	CLR.w	Chest_animation_frame.w
@@ -3214,7 +3214,7 @@ ChestOpenStateJumpTable_Loop2:
 	TriggerWindowRedraw WINDOW_DRAW_MSG_SPEED_ALT
 	RTS
 	
-ChestOpenStateJumpTable_Loop3:
+ChestOpenStateJumpTable_TopDownOpen:
 	PlaySound_b SOUND_CHEST_OPEN	
 	MOVE.b	#CHEST_OPEN_DELAY_FRAMES, Open_chest_delay_timer.w	
 	MOVE.w	#OPEN_MENU_STATE_TILE_DELAY, Open_menu_state.w	
@@ -3222,9 +3222,9 @@ ChestOpenStateJumpTable_Loop3:
 	
 OpenChestMenu_CheckChest:
 	TST.b	Reward_script_active.w              ; Chest present?
-	BEQ.w	OpenChestMenu_CheckChest_Loop3             ; No
+	BEQ.w	OpenChestMenu_CheckChest_NothingHere             ; No
 	TST.b	Chest_opened_flag.w      ; Already opened?
-	BNE.w	OpenChestMenu_CheckChest_Loop4             ; Yes
+	BNE.w	OpenChestMenu_CheckChest_AlreadyOpened             ; Yes
 	
 	; Open the chest
 	PlaySound_b SOUND_CHEST_CREAK             ; Sound effect
@@ -3238,16 +3238,16 @@ OpenChestMenu_CheckChest:
 	MOVE.w	#OPEN_MENU_STATE_OPEN_DELAY, Open_menu_state.w    ; State 5
 	RTS
 
-OpenChestMenu_CheckChest_Loop2:
+OpenChestMenu_CheckChest_Locked:
 	PRINT 	LockedStr
 	BRA.w	OpenMenu_ShowMessage_Init
-OpenChestMenu_CheckChest_Loop4:
+OpenChestMenu_CheckChest_AlreadyOpened:
 	PRINT 	AlreadyOpenedStr
 	BRA.w	OpenMenu_ShowMessage_Init
-OpenChestMenu_CheckChest_Loop3:
+OpenChestMenu_CheckChest_NothingHere:
 	PRINT 	NothingToOpenStr
 	BRA.w	OpenMenu_ShowMessage_Init
-OpenChestMenu_CheckChest_Loop:
+OpenChestMenu_CheckChest_AlreadyOpen:
 	PRINT 	AlreadyOpenStr	
 OpenMenu_ShowMessage_Init:
 	JSR	SaveStatusBarToBuffer             ; Display message
@@ -3255,9 +3255,9 @@ OpenMenu_ShowMessage_Init:
 	MOVE.w	#OPEN_MENU_STATE_MSG_WAIT, Open_menu_state.w    ; State 1
 	RTS
 	
-OpenMenu_ShowMessage_Init_Loop:
+OpenMenu_ShowMessage_Init_WaitInput:
 	TST.b	Script_text_complete.w
-	BEQ.w	OpenChestMenu_ExitToHud_Loop3
+	BEQ.w	OpenChestMenu_ExitToHud_ProcessText
 	CheckButton BUTTON_BIT_C
 	BNE.w	OpenChestMenu_ExitToHud
 	CheckButton BUTTON_BIT_B
@@ -3269,7 +3269,7 @@ OpenChestMenu_ExitToHud:
 	MOVE.w	#OPEN_MENU_STATE_CLOSE, Open_menu_state.w
 	RTS
 	
-OpenChestMenu_ExitToHud_Loop3:
+OpenChestMenu_ExitToHud_ProcessText:
 	JSR	ProcessScriptText
 	RTS
 	
@@ -3278,7 +3278,7 @@ OpenChestMenu_ExitToHud_Loop:
 	TriggerWindowRedraw WINDOW_DRAW_MSG_SPEED_ALT
 	RTS
 	
-OpenChestMenu_ExitToHud_Loop2:
+OpenChestMenu_ExitToHud_Animate:
 	TST.b	Window_tilemap_row_draw_pending.w
 	BNE.w	ChestAnimation_Return
 	ADDQ.w	#1, Chest_animation_timer.w
@@ -3286,7 +3286,7 @@ OpenChestMenu_ExitToHud_Loop2:
 	ANDI.w	#$000F, D0
 	BNE.w	ChestAnimation_Return
 	CMPI.w	#4, Chest_animation_frame.w
-	BGE.w	ChestAnimation_Return_Loop4
+	BGE.w	ChestAnimation_Return_FullyOpen
 	LEA	OpenChestMenu_ExitToHud_Loop2_Data, A0
 	MOVE.w	Chest_animation_frame.w, D0
 	ADD.w	D0, D0
@@ -3297,39 +3297,39 @@ OpenChestMenu_ExitToHud_Loop2:
 ChestAnimation_Return:
 	RTS
 	
-ChestAnimation_Return_Loop4:
+ChestAnimation_Return_FullyOpen:
 	MOVE.b	#FLAG_TRUE, Chest_already_opened.w
 	CLR.w	Overworld_menu_state.w
 	RTS
 	
 ChestAnimation_Return_Loop:
 	SUBQ.b	#1, Open_chest_delay_timer.w	
-	BNE.w	ChestAnimation_Return_Loop5	
+	BNE.w	ChestAnimation_Return_WaitDelay	
 	PRINT 	CantOpenStr	
 	JSR	SaveStatusBarToBuffer	
 	JSR	ResetScriptAndInitDialogue	
 	MOVE.w	#OPEN_MENU_STATE_MSG_WAIT, Open_menu_state.w	
-ChestAnimation_Return_Loop5:
+ChestAnimation_Return_WaitDelay:
 	RTS
 	
-ChestAnimation_Return_Loop2:
+ChestAnimation_Return_OpenDelay:
 	SUBQ.b	#1, Open_chest_delay_timer.w
-	BNE.w	ChestAnimation_Return_Loop6
+	BNE.w	ChestAnimation_Return_WaitOpen
 	PRINT 	OpenedChestStr
 	JSR	SaveStatusBarToBuffer
 	JSR	ResetScriptAndInitDialogue
 	MOVE.w	#OPEN_MENU_STATE_CONTENTS, Open_menu_state.w
-ChestAnimation_Return_Loop6:
+ChestAnimation_Return_WaitOpen:
 	RTS
 	
-ChestAnimation_Return_Loop3:
+ChestAnimation_Return_ShowContents:
 	TST.b	Script_text_complete.w
 	BEQ.w	ChestReward_Display_Loop
 	TST.b	Reward_script_available.w
-	BNE.w	ChestAnimation_Return_Loop7
+	BNE.w	ChestAnimation_Return_BuildRewardMsg
 	PRINT 	NothingInsideStr
 	BRA.w	ChestReward_Display
-ChestAnimation_Return_Loop7:
+ChestAnimation_Return_BuildRewardMsg:
 	LEA	Text_build_buffer.w, A1
 	LEA	ThereIsStr, A0
 	JSR	CopyStringUntilFF
