@@ -467,7 +467,7 @@
           "file": "tools/rom_diff.js",
           "priority": "medium",
           "effort": "medium",
-          "status": "todo"
+          "status": "done"
         },
         {
           "id": "TOOLB-006",
