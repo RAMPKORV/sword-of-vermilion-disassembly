@@ -265,7 +265,7 @@
           "file": "game_constants.asm + src/miscdata.asm",
           "priority": "low",
           "effort": "small",
-          "status": "todo"
+          "status": "done"
         }
       ]
     },
@@ -299,7 +299,7 @@
           "file": "sound_constants.asm + src/sound.asm",
           "priority": "medium",
           "effort": "medium",
-          "status": "todo"
+          "status": "done"
         }
       ]
     },
@@ -334,7 +334,7 @@
           "priority": "low",
           "effort": "small",
           "depends_on": "MAGICB-002",
-          "status": "todo"
+          "status": "done"
         },
         {
           "id": "NEWMAC-004",
@@ -343,7 +343,7 @@
           "file": "macros.asm + src/sound.asm",
           "priority": "low",
           "effort": "small",
-          "status": "todo"
+          "status": "done"
         }
       ]
     },

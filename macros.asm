@@ -871,3 +871,36 @@ InterruptEnable macro
 RomAddrMask macro reg
     ANDI.l  #ROM_ADDRESS_MASK, \reg
     ENDM
+
+; ============================================================
+; SaveSR / RestoreSR Macros
+; ============================================================
+; Save or restore the 68000 Status Register (SR) via the stack.
+; Used in routines that must preserve interrupt state across a
+; critical section that might change SR (e.g. sound driver ISR
+; re-entry guards, DMA sequences that temporarily mask interrupts).
+;
+; SaveSR    pushes SR onto the stack (word):
+;   MOVE.w  SR, -(SP)
+;
+; RestoreSR pops SR from the stack (word):
+;   MOVE.w  (SP)+, SR
+;
+; CAUTION: These are privileged instructions on the 68000 (SR is
+; supervisor-only).  The Genesis always runs in supervisor mode,
+; so this is safe.  Callers must ensure SaveSR and RestoreSR are
+; matched (one RestoreSR per SaveSR) to keep the stack balanced.
+;
+; Usage:
+;   SaveSR              ; preserve current SR / interrupt mask
+;   InterruptDisable    ; enter critical section
+;   ... critical work ...
+;   RestoreSR           ; restore prior interrupt mask
+;
+SaveSR macro
+    MOVE.w  SR, -(SP)
+    ENDM
+
+RestoreSR macro
+    MOVE.w  (SP)+, SR
+    ENDM
