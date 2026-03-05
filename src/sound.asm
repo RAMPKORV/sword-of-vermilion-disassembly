@@ -29,20 +29,39 @@
 ;   $FFF520  DAC/special channel struct
 ; ======================================================================
 
-;==============================================================
-; GRAPHICS DATA — TOWN TILESETS AND Z80 DRIVER
-; Tile index lookup tables and Z80 sound driver binary data
-; embedded at fixed ROM addresses. Not directly executed by
-; the 68000; the Z80 driver data is copied to Z80 RAM at init.
+; ======================================================================
+; MISPLACED GRAPHICS DATA — TOWN TILESETS, BATTLE HUD, AND Z80 DRIVER
+; ======================================================================
+; WHY THIS DATA IS HERE:
+;   The original ROM places these graphics/driver tables at fixed ROM
+;   addresses that fall inside the sound.asm region.  The disassembler
+;   simply split the file at these addresses.  Moving them would shift all
+;   downstream ROM offsets and break bit-perfect output, so they remain
+;   here.  See MOVE-006 in notes for the full relocation constraint.
 ;
-; MOVE-006 NOTE: TownTilesetPtrs_Entry02 and
-; TownTilesetPtrs_Entry03 below are town tileset index
-; lookup tables and belong logically in gfxdata.asm alongside
-; other graphics data. They are stranded here because the
-; disassembler placed them at these ROM addresses inside the
-; sound driver region. Physical relocation would change all
-; downstream ROM offsets and break bit-perfect output.
-;==============================================================
+; WHAT THIS SECTION CONTAINS:
+;   TownTilesetPtrs_Entry02   Town tileset index table, tileset set 2
+;                             (logically belongs in gfxdata.asm)
+;   Z80DrvrData_90002/90008   Z80 sound driver binary (copied to Z80 RAM
+;                             at init by LoadZ80SoundDriver; not 68k code)
+;   LoadBattleHudGraphics_Data/
+;   LoadBattleHudGraphics_Done_Data  Battle HUD tile graphics (incbin)
+;                             (logically belongs in gfxdata.asm or
+;                             battle_gfx.asm)
+;   TownTilesetPtrs_Entry03   Town tileset index table, tileset set 3
+;                             (logically belongs in gfxdata.asm)
+;
+; TOWN TILESET TABLE FORMAT:
+;   Each table is an array of dc.w entries (pairs of bytes in the dc.b
+;   representation).  Each word is a tile graphic index into the town
+;   tileset asset, indexed by tile slot number.  Entry 0 is a $0000
+;   sentinel/default.  These tables are consulted by the town tile
+;   rendering system to map logical tile slots to graphic assets.
+;
+; NOTE FOR MODDERS/RANDOMIZERS:
+;   These tables govern which graphic appears for each town tile slot.
+;   They are NOT audio data despite their location in this file.
+; ======================================================================
 TownTilesetPtrs_Entry02:
 	dc.b	$00, $00 
 	dc.b	$00, $00, $00, $00, $00, $00, $00, $01, $00, $02, $00, $03, $00, $04, $00, $05, $00, $06, $00, $07, $00, $08, $00, $09, $00, $0A, $00, $07, $00, $08, $00, $0B 
@@ -84,11 +103,14 @@ Z80DrvrData_90008:
 	dc.b	$00, $C0, $00, $00, $00, $C0, $01, $1B, $00, $BD, $01, $1C, $00, $BF, $00, $BF, $01, $1D, $00, $BD, $01, $1E, $00, $BF, $00, $BD, $00, $BA, $00, $BB, $00, $B8 
 	dc.b	$00, $B9, $00, $BD, $00, $BF 
 ; @ $0009032E
+; Battle HUD tile graphics set 1 (incbin; not audio data — see MISPLACED section above)
 LoadBattleHudGraphics_Data:
 	incbin "data/art/tiles/battle/hud_gfx_1.bin"
 ; @ $00091CBC
+; Battle HUD tile graphics set 2 (incbin; not audio data — see MISPLACED section above)
 LoadBattleHudGraphics_Done_Data:
 	incbin "data/art/tiles/battle/hud_gfx_2.bin"
+; Town tileset index table, set 3 (not audio data — see MISPLACED section above)
 TownTilesetPtrs_Entry03:
 	dc.b	$00, $00 
 	dc.b	$00, $00, $00, $00, $00, $00, $00, $01, $00, $02, $00, $03, $00, $04, $00, $00, $00, $00, $00, $05, $00, $06, $00, $00, $00, $00, $00, $07, $00, $08, $00, $09 
