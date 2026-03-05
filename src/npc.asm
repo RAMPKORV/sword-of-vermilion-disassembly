@@ -268,21 +268,21 @@ NPCTick_Parma_HintDone:
 	BRA.b	NPCTick_Parma_AdviceHint_Done
 NPCTick_Parma_HintDone_Loop:
 	TST.b	Fake_king_killed.w
-	BEQ.b	NPCTick_Parma_HintDone_Loop2
+	BEQ.b	NPCTick_Parma_HintDone_TreasureGivenToKing
 	BCLR.b	#7, (A5)
 	RTS
 
-NPCTick_Parma_HintDone_Loop2:
+NPCTick_Parma_HintDone_TreasureGivenToKing:
 	TST.b	Talked_to_king_after_given_treasure_of_troy.w
-	BEQ.b	NPCTick_Parma_HintDone_Loop3
+	BEQ.b	NPCTick_Parma_HintDone_TreasureFound
 	MOVE.l	#NeedPermanentSolutionStr, obj_npc_str_ptr(A5)
 	BRA.b	NPCTick_Parma_AdviceHint_Done
-NPCTick_Parma_HintDone_Loop3:
+NPCTick_Parma_HintDone_TreasureFound:
 	TST.b	Treasure_of_troy_found.w
-	BNE.b	NPCTick_Parma_HintDone_Loop4
+	BNE.b	NPCTick_Parma_HintDone_StartQuestTick
 	TST.b	Treasure_of_troy_challenge_issued.w
 	BNE.b	NPCTick_Parma_AdviceHint_Done
-NPCTick_Parma_HintDone_Loop4:
+NPCTick_Parma_HintDone_StartQuestTick:
 	MOVE.l	#NPCTick_Parma_TreasureQuest, obj_tick_fn(A5)
 	RTS
 
@@ -304,10 +304,10 @@ NPCTick_Parma_TreasureQuest:
 	BRA.b	NPCTick_Parma_TreasureQuest_Done
 NPCTick_Parma_TreasureQuest_Loop:
 	TST.b	Treasure_of_troy_found.w
-	BEQ.b	NPCTick_Parma_TreasureQuest_Loop2
+	BEQ.b	NPCTick_Parma_TreasureQuest_TreasureNotFound
 	MOVE.l	#TreasureReturnedStr, obj_npc_str_ptr(A5)
 	BRA.b	NPCTick_Parma_TreasureQuest_Done
-NPCTick_Parma_TreasureQuest_Loop2:
+NPCTick_Parma_TreasureQuest_TreasureNotFound:
 	TST.b	Treasure_of_troy_challenge_issued.w
 	BEQ.b	NPCTick_Parma_TreasureQuest_Done
 	MOVE.l	#FindTreasureStr, obj_npc_str_ptr(A5)
@@ -526,17 +526,17 @@ NPCTick_Stow_SanguiosBookkeeper:
 	BRA.w	NPCTick_Stow_Bookkeeper_Done
 NPCTick_Stow_SanguiosBookkeeper_Loop:
 	TST.b	Stow_innocence_proven.w
-	BEQ.b	NPCTick_Stow_SanguiosBookkeeper_Loop2
+	BEQ.b	NPCTick_Stow_SanguiosBookkeeper_AccusedNotInnocent
 	LEA	Possessed_magics_length.w, A0
 	MOVE.w	(A0), D0
 	CMPI.w	#8, D0
-	BLT.b	NPCTick_Stow_SanguiosBookkeeper_Loop3
+	BLT.b	NPCTick_Stow_SanguiosBookkeeper_SpellSlotFree
 	MOVE.l	#DiscardBookSpellsStr, obj_npc_str_ptr(A5)
 	BRA.w	NPCTick_Stow_Bookkeeper_Done
-NPCTick_Stow_SanguiosBookkeeper_Loop3:
+NPCTick_Stow_SanguiosBookkeeper_SpellSlotFree:
 	MOVE.l	#BookSanguiaEffortsStr, obj_npc_str_ptr(A5)
 	BRA.w	NPCTick_Stow_Bookkeeper_Done
-NPCTick_Stow_SanguiosBookkeeper_Loop2:
+NPCTick_Stow_SanguiosBookkeeper_AccusedNotInnocent:
 	TST.b	Accused_of_theft.w
 	BEQ.w	NPCTick_Stow_Bookkeeper_Done
 	MOVE.l	#ReturnWhenInnocentStr, obj_npc_str_ptr(A5)
@@ -572,11 +572,11 @@ NPCTick_Stow_ThiefAccuser1_Loop:
 	BSR.w	SetRandomDirection
 	CLR.b	obj_behavior_flag(A5)
 	TST.b	Accused_of_theft.w
-	BEQ.b	NPCTick_Stow_ThiefAccuser1_Loop2
+	BEQ.b	NPCTick_Stow_ThiefAccuser1_NotAccused
 	MOVE.l	#UpdateNPCSpriteFrame, obj_tick_fn(A5)
 	RTS
 
-NPCTick_Stow_ThiefAccuser1_Loop2:
+NPCTick_Stow_ThiefAccuser1_NotAccused:
 	MOVE.l	#NPCTick_Stow_ThiefAccuser2, obj_tick_fn(A5)
 	RTS
 
@@ -702,12 +702,12 @@ NPCInit_Keltwick_BlazonsCaveHint:
 	TST.b	Old_man_waiting_for_letter.w
 	BEQ.b	NPCInit_Keltwick_BlazonsCaveHint_Loop
 	MOVE.l	#WaitingForLetterStr, obj_npc_str_ptr(A5)
-	BRA.b	NPCInit_Keltwick_BlazonsCaveHint_Loop2
+	BRA.b	NPCInit_Keltwick_BlazonsCaveHint_LoadFrame
 NPCInit_Keltwick_BlazonsCaveHint_Loop:
 	MOVE.l	#NPCTick_Keltwick_OldManSketch, obj_tick_fn(A5)
 	RTS
 
-NPCInit_Keltwick_BlazonsCaveHint_Loop2:
+NPCInit_Keltwick_BlazonsCaveHint_LoadFrame:
 	MOVE.l	#NPCBehavior_LoadFrame, obj_tick_fn(A5)
 	RTS
 
@@ -719,16 +719,16 @@ NPCTick_Keltwick_OldManSketch:
 	TST.b	Old_man_waiting_for_letter.w
 	BEQ.w	NPCTick_Keltwick_OldManSketch_Loop
 	TST.b	Old_mans_sketch_given.w
-	BNE.b	NPCTick_Keltwick_OldManSketch_Loop2
+	BNE.b	NPCTick_Keltwick_OldManSketch_SketchAlreadyGiven
 	BSR.w	AddItemToInventoryList
 	MOVE.w	#((ITEM_TYPE_NON_DISCARDABLE<<8)|ITEM_OLD_MANS_SKETCH), (A0,D0.w)
 	MOVE.b	#FLAG_TRUE, Old_mans_sketch_given.w
-NPCTick_Keltwick_OldManSketch_Loop2:
+NPCTick_Keltwick_OldManSketch_SketchAlreadyGiven:
 	TST.b	Crimson_armor_chest_opened.w
-	BEQ.b	NPCTick_Keltwick_OldManSketch_Loop3
+	BEQ.b	NPCTick_Keltwick_OldManSketch_ChestNotOpened
 	MOVE.l	#WaitingForLetterStr, obj_npc_str_ptr(A5)	
 	BRA.w	NPCTick_LoneTreeOldMan_Display	
-NPCTick_Keltwick_OldManSketch_Loop3:
+NPCTick_Keltwick_OldManSketch_ChestNotOpened:
 	MOVE.l	#LoneTreeTreasureStr, obj_npc_str_ptr(A5)
 	BRA.b	NPCTick_LoneTreeOldMan_Display
 NPCTick_Keltwick_OldManSketch_Loop:
@@ -737,10 +737,10 @@ NPCTick_Keltwick_OldManSketch_Loop:
 	LEA	Possessed_items_length.w, A0
 	MOVE.w	(A0), D0
 	CMPI.w	#8, D0
-	BLT.b	NPCTick_Keltwick_OldManSketch_Loop4
+	BLT.b	NPCTick_Keltwick_OldManSketch_InventoryFree
 	MOVE.l	#ComeBackLessGearStr, obj_npc_str_ptr(A5)	
 	BRA.b	NPCTick_LoneTreeOldMan_Display	
-NPCTick_Keltwick_OldManSketch_Loop4:
+NPCTick_Keltwick_OldManSketch_InventoryFree:
 	MOVE.l	#ShowSketchStr, obj_npc_str_ptr(A5)
 NPCTick_LoneTreeOldMan_Display:
 	BRA.w	NPCBehavior_LoadFrame
@@ -760,16 +760,16 @@ NPCInit_Keltwick_AlarmClock:
 	BRA.w	NPCInit_Keltwick_SleepingGirl_Done	
 NPCInit_Keltwick_AlarmClock_Loop:
 	TST.b	Sent_to_malaga.w
-	BEQ.b	NPCInit_Keltwick_AlarmClock_Loop2
+	BEQ.b	NPCInit_Keltwick_AlarmClock_NotSentToMalaga
 	CLR.b	Keltwick_girl_sleeping.w
 	BRA.b	NPCInit_Keltwick_SleepingGirl_Done
-NPCInit_Keltwick_AlarmClock_Loop2:
+NPCInit_Keltwick_AlarmClock_NotSentToMalaga:
 	TST.b	Stow_innocence_proven.w
-	BEQ.b	NPCInit_Keltwick_AlarmClock_Loop3
+	BEQ.b	NPCInit_Keltwick_AlarmClock_InnocenceNotProven
 	BCLR.b	#7, (A5)	
 	CLR.b	Keltwick_girl_sleeping.w	
 	BRA.b	NPCInit_Keltwick_SleepingGirl_Done	
-NPCInit_Keltwick_AlarmClock_Loop3:
+NPCInit_Keltwick_AlarmClock_InnocenceNotProven:
 	MOVE.b	#FLAG_TRUE, Keltwick_girl_sleeping.w
 NPCInit_Keltwick_SleepingGirl_Done:
 	MOVE.l	#NPCTick_Keltwick_SleepingGirl, obj_tick_fn(A5)
@@ -848,9 +848,9 @@ NPCTick_Barrow_NortheastHint_Loop:
 	BSR.w	SetRandomDirection
 	CLR.b	obj_behavior_flag(A5)
 	TST.b	Barrow_map_received.w
-	BEQ.b	NPCTick_Barrow_NortheastHint_Loop2
+	BEQ.b	NPCTick_Barrow_NortheastHint_SetTick
 	BCLR.b	#7, (A5)	
-NPCTick_Barrow_NortheastHint_Loop2:
+NPCTick_Barrow_NortheastHint_SetTick:
 	MOVE.l	#NPCTick_Barrow_QuestGuard, obj_tick_fn(A5)
 	RTS
 
@@ -929,11 +929,11 @@ NPCTick_Tadcaster_TreasureQuest:
 	TST.b	Tadcaster_treasure_found.w	
 	BEQ.b	NPCTick_Tadcaster_HintDone	
 	TST.b	Tadcaster_treasure_kims_received.w	
-	BNE.b	NPCTick_Tadcaster_TreasureQuest_Loop2	
+	BNE.b	NPCTick_Tadcaster_TreasureQuest_KimsAlreadyPaid	
 	MOVE.l	#$7500, Transaction_amount.w	
 	JSR	DeductPaymentAmount	
 	MOVE.b	#FLAG_TRUE, Tadcaster_treasure_kims_received.w	
-NPCTick_Tadcaster_TreasureQuest_Loop2:
+NPCTick_Tadcaster_TreasureQuest_KimsAlreadyPaid:
 	MOVE.l	#DontSpendAllWealthStr, obj_npc_str_ptr(A5)	
 	BRA.b	NPCTick_Tadcaster_HintDone	
 NPCTick_Tadcaster_TreasureQuest_Loop:
@@ -968,13 +968,13 @@ NPCTick_Tadcaster_PassSeller:
 	TST.b	Pass_to_carthahena_purchased.w
 	BEQ.b	NPCTick_Tadcaster_PassSeller_Loop
 	TST.b	Pass_to_carthahena_given.w
-	BNE.b	NPCTick_Tadcaster_PassSeller_Loop2
+	BNE.b	NPCTick_Tadcaster_PassSeller_PassAlreadyGiven
 	BSR.w	AddItemToInventoryList
 	MOVE.w	#((ITEM_TYPE_NON_DISCARDABLE<<8)|ITEM_PASS_TO_CARTHAHENA), (A0,D0.w)
 	MOVE.l	#PRICE_PASS_TO_CARTHAHENA, Transaction_amount.w
 	JSR	DeductPaymentAmount
 	MOVE.b	#FLAG_TRUE, Pass_to_carthahena_given.w
-NPCTick_Tadcaster_PassSeller_Loop2:
+NPCTick_Tadcaster_PassSeller_PassAlreadyGiven:
 	MOVE.l	#GoAwayStr, obj_npc_str_ptr(A5)
 	BRA.w	NPCTick_Paofal_PassSeller_Done
 NPCTick_Tadcaster_PassSeller_Loop:
@@ -982,15 +982,15 @@ NPCTick_Tadcaster_PassSeller_Loop:
 	MOVE.l	Player_kims.w, D1
 	ANDI.l	#$00FFFFFF, D1
 	CMP.l	D0, D1
-	BLT.b	NPCTick_Tadcaster_PassSeller_Loop3
+	BLT.b	NPCTick_Tadcaster_PassSeller_NotEnoughKims
 	BSR.w	CheckInventoryFull
-	BLT.b	NPCTick_Tadcaster_PassSeller_Loop4
+	BLT.b	NPCTick_Tadcaster_PassSeller_InventoryFree
 	MOVE.l	#BuyPassToCartahenaStr3, obj_npc_str_ptr(A5)	
 	BRA.b	NPCTick_Paofal_PassSeller_Done	
-NPCTick_Tadcaster_PassSeller_Loop3:
+NPCTick_Tadcaster_PassSeller_NotEnoughKims:
 	MOVE.l	#BuyPassToCartahenaStr2, obj_npc_str_ptr(A5)	
 	BRA.b	NPCTick_Paofal_PassSeller_Done	
-NPCTick_Tadcaster_PassSeller_Loop4:
+NPCTick_Tadcaster_PassSeller_InventoryFree:
 	MOVE.l	#BuyPassToCartahenaStr, obj_npc_str_ptr(A5)
 NPCTick_Paofal_PassSeller_Done:
 	BRA.w	NPCBehavior_LoadFrame
@@ -1041,13 +1041,13 @@ NPCInit_Tadcaster_HelwigHint:
 	TST.b	Bully_first_fight_won.w
 	BNE.b	NPCInit_Tadcaster_HelwigHint_Loop
 	TST.b	Tadcaster_bully_triggered.w
-	BNE.b	NPCInit_Tadcaster_HelwigHint_Loop2
+	BNE.b	NPCInit_Tadcaster_HelwigHint_BullyTriggered
 NPCInit_Tadcaster_HelwigHint_Loop:
 	BCLR.b	#7, (A5)
 	MOVE.l	#NPCTick_WalkingAnimated, obj_tick_fn(A5)
 	RTS
 
-NPCInit_Tadcaster_HelwigHint_Loop2:
+NPCInit_Tadcaster_HelwigHint_BullyTriggered:
 	MOVE.l	#NPCTick_WalkingAnimated, obj_tick_fn(A5)
 	RTS
 
@@ -1138,7 +1138,7 @@ NPCTick_Helwig_SecretKeyGiver:
 	TST.b	Secret_key_received.w
 	BNE.b	NPCTick_Helwig_SecretKeyGiver_Loop
 	BSR.w	CheckInventoryFull
-	BGE.b	NPCTick_Helwig_SecretKeyGiver_Loop2
+	BGE.b	NPCTick_Helwig_SecretKeyGiver_InventoryFull
 	MOVE.l	#KeyFromCaveStr, obj_npc_str_ptr(A5)
 	TST.b	Cave_key_dialog_shown.w
 	BEQ.b	NPCTick_Helwig_SecretKeyGiver_Done
@@ -1149,7 +1149,7 @@ NPCTick_Helwig_SecretKeyGiver:
 NPCTick_Helwig_SecretKeyGiver_Loop:
 	MOVE.l	#RememberedAsHeroStr, obj_npc_str_ptr(A5)
 	BRA.b	NPCTick_Helwig_SecretKeyGiver_Done
-NPCTick_Helwig_SecretKeyGiver_Loop2:
+NPCTick_Helwig_SecretKeyGiver_InventoryFull:
 	MOVE.l	#CantCarryMoreItemsStr, obj_npc_str_ptr(A5)
 NPCTick_Helwig_SecretKeyGiver_Done:
 	BRA.w	UpdateNPCSpriteFrame
@@ -1185,12 +1185,12 @@ NPCTick_Helwig_OldWomanQuest:
 	BRA.w	NPCTick_Helwig_OldWomanQuest_Done
 NPCTick_Helwig_OldWomanQuest_Loop:
 	TST.b	Old_woman_has_received_sketch.w
-	BEQ.w	NPCTick_Helwig_OldWomanQuest_Loop2
+	BEQ.w	NPCTick_Helwig_OldWomanQuest_SketchNotReceived
 	MOVE.l	#WriteLetterGiftDragonShieldStr, obj_npc_str_ptr(A5)
 	TST.b	Dragon_shield_offered_to_player.w
-	BEQ.b	NPCTick_Helwig_OldWomanQuest_Loop3
+	BEQ.b	NPCTick_Helwig_OldWomanQuest_ShieldAlreadyOffered
 	MOVE.l	#GiftDragonShieldStr, obj_npc_str_ptr(A5)
-NPCTick_Helwig_OldWomanQuest_Loop3:
+NPCTick_Helwig_OldWomanQuest_ShieldAlreadyOffered:
 	LEA	Possessed_equipment_length.w, A0
 	MOVE.w	(A0), D0
 	CMPI.w	#8, D0
@@ -1198,26 +1198,26 @@ NPCTick_Helwig_OldWomanQuest_Loop3:
 	MOVE.l	#FriendGiftDragonShieldStr, obj_npc_str_ptr(A5)
 	MOVE.b	#FLAG_TRUE, Dragon_shield_offered_to_player.w
 	BRA.w	NPCTick_Helwig_OldWomanQuest_Done
-NPCTick_Helwig_OldWomanQuest_Loop2:
+NPCTick_Helwig_OldWomanQuest_SketchNotReceived:
 	TST.b	Helwig_old_woman_quest_started.w
-	BEQ.b	NPCTick_Helwig_OldWomanQuest_Loop4
+	BEQ.b	NPCTick_Helwig_OldWomanQuest_MenRescued
 	TST.b	Player_has_received_old_womans_sketch.w
-	BNE.w	NPCTick_Helwig_OldWomanQuest_Loop5
+	BNE.w	NPCTick_Helwig_OldWomanQuest_SketchAlreadyGiven
 	BSR.w	AddItemToInventoryList
 	MOVE.w	#((ITEM_TYPE_NON_DISCARDABLE<<8)|ITEM_OLD_WOMANS_SKETCH), (A0,D0.w)
 	MOVE.b	#FLAG_TRUE, Player_has_received_old_womans_sketch.w
 	BRA.w	NPCTick_Helwig_OldWomanQuest_Done
-NPCTick_Helwig_OldWomanQuest_Loop4:
+NPCTick_Helwig_OldWomanQuest_MenRescued:
 	TST.b	Helwig_men_rescued.w
 	BEQ.b	NPCTick_Helwig_OldWomanQuest_Done
 	BSR.w	CheckInventoryFull
-	BLT.b	NPCTick_Helwig_OldWomanQuest_Loop6
+	BLT.b	NPCTick_Helwig_OldWomanQuest_InventoryFree
 	MOVE.l	#ComeBackLessGearStr2, obj_npc_str_ptr(A5)
 	BRA.b	NPCTick_Helwig_OldWomanQuest_Done
-NPCTick_Helwig_OldWomanQuest_Loop6:
+NPCTick_Helwig_OldWomanQuest_InventoryFree:
 	MOVE.l	#FindSomeoneForMeStr, obj_npc_str_ptr(A5)
 	BRA.b	NPCTick_Helwig_OldWomanQuest_Done
-NPCTick_Helwig_OldWomanQuest_Loop5:
+NPCTick_Helwig_OldWomanQuest_SketchAlreadyGiven:
 	MOVE.l	#FoundSomeoneForMeStr, obj_npc_str_ptr(A5)
 NPCTick_Helwig_OldWomanQuest_Done:
 	BRA.w	NPCBehavior_LoadFrame
@@ -1270,13 +1270,13 @@ NPCTick_Excalabria_CrystalExchange:
 	BRA.w	NPCTick_Excalabria_CrystalExchange_Done
 NPCTick_Excalabria_CrystalExchange_Loop:
 	TST.b	Blue_crystal_received.w
-	BEQ.b	NPCTick_Excalabria_CrystalExchange_Loop2
+	BEQ.b	NPCTick_Excalabria_CrystalExchange_BlueCrystalNotReceived
 	BRA.w	NPCTick_Excalabria_CrystalExchange_Done
-NPCTick_Excalabria_CrystalExchange_Loop2:
+NPCTick_Excalabria_CrystalExchange_BlueCrystalNotReceived:
 	TST.b	Blue_crystal_quest_started.w
-	BEQ.w	NPCTick_Excalabria_CrystalExchange_Loop3
+	BEQ.w	NPCTick_Excalabria_CrystalExchange_BlueQuestNotStarted
 	TST.b	Blue_key_received.w
-	BNE.w	NPCTick_Excalabria_CrystalExchange_Loop4
+	BNE.w	NPCTick_Excalabria_CrystalExchange_BlueKeyAlreadyGiven
 	LEA	Possessed_items_list.w, A3
 	LEA	Possessed_items_length.w, A2
 	MOVE.w	#$010F, D4
@@ -1288,18 +1288,18 @@ NPCTick_Excalabria_CrystalExchange_Loop2:
 	BSR.w	AddItemToInventoryList
 	MOVE.w	#((ITEM_TYPE_NON_DISCARDABLE<<8)|ITEM_BLUE_KEY), (A0,D0.w)
 	MOVE.b	#FLAG_TRUE, Blue_key_received.w
-NPCTick_Excalabria_CrystalExchange_Loop4:
+NPCTick_Excalabria_CrystalExchange_BlueKeyAlreadyGiven:
 	MOVE.l	#BackSoSoonStr, obj_npc_str_ptr(A5)
 	BRA.w	NPCTick_Excalabria_CrystalExchange_Done
-NPCTick_Excalabria_CrystalExchange_Loop3:
+NPCTick_Excalabria_CrystalExchange_BlueQuestNotStarted:
 	TST.b	Red_crystal_received.w
-	BEQ.w	NPCTick_Excalabria_CrystalExchange_Loop5
+	BEQ.w	NPCTick_Excalabria_CrystalExchange_RedCrystalNotReceived
 	BRA.w	NPCTick_Excalabria_CrystalExchange_Done
-NPCTick_Excalabria_CrystalExchange_Loop5:
+NPCTick_Excalabria_CrystalExchange_RedCrystalNotReceived:
 	TST.b	Red_crystal_quest_started.w
-	BEQ.w	NPCTick_Excalabria_CrystalExchange_Loop6
+	BEQ.w	NPCTick_Excalabria_CrystalExchange_RedQuestNotStarted
 	TST.b	Red_key_received.w
-	BNE.w	NPCTick_Excalabria_CrystalExchange_Loop7
+	BNE.w	NPCTick_Excalabria_CrystalExchange_RedKeyAlreadyGiven
 	LEA	Possessed_items_list.w, A3
 	LEA	Possessed_items_length.w, A2
 	MOVE.w	#$010E, D4
@@ -1311,30 +1311,30 @@ NPCTick_Excalabria_CrystalExchange_Loop5:
 	BSR.w	AddItemToInventoryList
 	MOVE.w	#((ITEM_TYPE_NON_DISCARDABLE<<8)|ITEM_RED_KEY), (A0,D0.w)
 	MOVE.b	#FLAG_TRUE, Red_key_received.w
-NPCTick_Excalabria_CrystalExchange_Loop7:
+NPCTick_Excalabria_CrystalExchange_RedKeyAlreadyGiven:
 	MOVE.l	#BackSoSoonStr, obj_npc_str_ptr(A5)
 	BRA.w	NPCTick_Excalabria_CrystalExchange_Done
-NPCTick_Excalabria_CrystalExchange_Loop6:
+NPCTick_Excalabria_CrystalExchange_RedQuestNotStarted:
 	TST.b	Ring_of_wind_received.w
-	BEQ.b	NPCTick_Excalabria_CrystalExchange_Loop8
+	BEQ.b	NPCTick_Excalabria_CrystalExchange_WindRingNotReceived
 	BRA.w	NPCTick_Excalabria_CrystalExchange_Done
-NPCTick_Excalabria_CrystalExchange_Loop8:
+NPCTick_Excalabria_CrystalExchange_WindRingNotReceived:
 	TST.b	White_crystal_quest_started.w
-	BEQ.b	NPCTick_Excalabria_CrystalExchange_Loop9
+	BEQ.b	NPCTick_Excalabria_CrystalExchange_WhiteQuestNotStarted
 	TST.b	White_crystal_received.w
-	BNE.b	NPCTick_Excalabria_CrystalExchange_Loop10
+	BNE.b	NPCTick_Excalabria_CrystalExchange_WhiteCrystalAlreadyGiven
 	BSR.w	AddItemToInventoryList
 	MOVE.w	#((ITEM_TYPE_NON_DISCARDABLE<<8)|ITEM_WHITE_KEY), (A0,D0.w)
 	MOVE.b	#FLAG_TRUE, White_crystal_received.w
-NPCTick_Excalabria_CrystalExchange_Loop10:
+NPCTick_Excalabria_CrystalExchange_WhiteCrystalAlreadyGiven:
 	MOVE.l	#BackSoSoonStr, obj_npc_str_ptr(A5)
 	BRA.w	NPCTick_Excalabria_CrystalExchange_Done
-NPCTick_Excalabria_CrystalExchange_Loop9:
+NPCTick_Excalabria_CrystalExchange_WhiteQuestNotStarted:
 	BSR.w	CheckInventoryFull
-	BLT.b	NPCTick_Excalabria_CrystalExchange_Loop11
+	BLT.b	NPCTick_Excalabria_CrystalExchange_InventoryFree
 	MOVE.l	#CantGiveKeyStr, obj_npc_str_ptr(A5)	
 	BRA.b	NPCTick_Excalabria_CrystalExchange_Done	
-NPCTick_Excalabria_CrystalExchange_Loop11:
+NPCTick_Excalabria_CrystalExchange_InventoryFree:
 	MOVE.l	#RingOfEarthQuestStr, obj_npc_str_ptr(A5)
 NPCTick_Excalabria_CrystalExchange_Done:
 	BRA.w	NPCBehavior_LoadFrame
@@ -1400,10 +1400,10 @@ NPCTick_Swaffham_SpyDinnerTrap:
 	BRA.w	NPCTick_Swaffham_SpyDinnerTrap_Done_Loop
 NPCTick_Swaffham_SpyDinnerTrap_Loop:
 	TST.b	Spy_dinner_poisoned_flag.w
-	BEQ.b	NPCTick_Swaffham_SpyDinnerTrap_Loop2
+	BEQ.b	NPCTick_Swaffham_SpyDinnerTrap_DinnerNotPoisoned
 	MOVE.l	#PoisonedFoodStr, obj_npc_str_ptr(A5)
 	BRA.w	NPCTick_Swaffham_SpyDinnerTrap_Done
-NPCTick_Swaffham_SpyDinnerTrap_Loop2:
+NPCTick_Swaffham_SpyDinnerTrap_DinnerNotPoisoned:
 	TST.b	Ate_spy_dinner.w
 	BEQ.w	NPCTick_Swaffham_SpyDinnerTrap_Done
 	MOVE.l	#WasItGoodStr, obj_npc_str_ptr(A5)
@@ -1522,9 +1522,9 @@ NPCTick_CarthahenaFinalBoss_AltEntry_DeadCode:					; unreferenced dead code
 	BSR.w	SetRandomDirection
 	CLR.b	obj_behavior_flag(A5)
 	TST.b	Tsarkon_is_dead.w
-	BNE.b	NPCTick_CarthahenaFinalBoss_Done_Loop2
+	BNE.b	NPCTick_CarthahenaFinalBoss_Done_Loop2b
 	BCLR	#7, (A5)
-NPCTick_CarthahenaFinalBoss_Done_Loop2:
+NPCTick_CarthahenaFinalBoss_Done_Loop2b:
 	MOVE.l	#UpdateNPCSpriteFrame, obj_tick_fn(A5)
 	RTS
 
@@ -1599,10 +1599,10 @@ NPCTick_Helwig_InnFryingPan:
 	CMPI.w	#$000A, D0
 	BGE.b	NPCTick_Helwig_InnFryingPan_Loop
 	CMPI.w	#4, D0
-	BEQ.b	NPCTick_Helwig_InnFryingPan_Loop2
+	BEQ.b	NPCTick_Helwig_InnFryingPan_FourHits
 	MOVE.l	#SleepInSoftBedStr, obj_npc_str_ptr(A5)
 	BRA.b	NPCTick_Helwig_InnFryingPan_Display
-NPCTick_Helwig_InnFryingPan_Loop2:
+NPCTick_Helwig_InnFryingPan_FourHits:
 	MOVE.l	#SleepInSoftBedStr, obj_npc_str_ptr(A5)	
 	BRA.b	NPCTick_Helwig_InnFryingPan_Display	
 NPCTick_Helwig_InnFryingPan_Loop:
@@ -1679,13 +1679,13 @@ UpdateParmaSoldierRotation:
 	BNE.w	UpdateParmaSoldierRotation_Loop
 	MOVE.b	obj_npc_saved_dir(A5), obj_direction(A5)
 	BSR.w	CheckPlayerInBoundingBox
-	BEQ.b	UpdateParmaSoldierRotation_Loop2
+	BEQ.b	UpdateParmaSoldierRotation_PlayerNotInBox
 	TST.b	obj_max_hp(A5)
 	BNE.w	ParmaSoldierRotation_Return
 	MOVE.b	#FLAG_TRUE, obj_npc_busy_flag(A5)
 	MOVE.b	obj_hp(A5), obj_direction(A5)
 	BNE.w	ParmaSoldierRotation_Return
-UpdateParmaSoldierRotation_Loop2:
+UpdateParmaSoldierRotation_PlayerNotInBox:
 	TST.b	obj_max_hp(A5)
 	BEQ.w	ParmaSoldierRotation_Return
 	MOVE.b	#FLAG_TRUE, obj_npc_busy_flag(A5)
@@ -1693,12 +1693,12 @@ UpdateParmaSoldierRotation_Loop2:
 	BNE.w	ParmaSoldierRotation_Return
 UpdateParmaSoldierRotation_Loop:
 	CMPI.b	#2, obj_direction(A5)
-	BLE.b	UpdateParmaSoldierRotation_Loop3
+	BLE.b	UpdateParmaSoldierRotation_MoveRight
 	ADDI.l	#$8000, obj_world_x(A5)
-	BRA.b	UpdateParmaSoldierRotation_Loop4
-UpdateParmaSoldierRotation_Loop3:
+	BRA.b	UpdateParmaSoldierRotation_AdvanceCounter
+UpdateParmaSoldierRotation_MoveRight:
 	SUBI.l	#$8000, obj_world_x(A5)
-UpdateParmaSoldierRotation_Loop4:
+UpdateParmaSoldierRotation_AdvanceCounter:
 	MOVE.b	#FLAG_TRUE, obj_behavior_flag(A5)
 	ADDQ.b	#1, obj_hit_flag(A5)
 	ADDQ.b	#1, obj_move_counter(A5)
@@ -1707,9 +1707,9 @@ UpdateParmaSoldierRotation_Loop4:
 	CLR.b	obj_max_hp(A5)
 	MOVE.b	obj_direction(A5), D0
 	CMP.b	obj_hp(A5), D0
-	BNE.b	UpdateParmaSoldierRotation_Loop5
+	BNE.b	UpdateParmaSoldierRotation_ReachedTarget
 	MOVE.b	#$FF, obj_max_hp(A5)
-UpdateParmaSoldierRotation_Loop5:
+UpdateParmaSoldierRotation_ReachedTarget:
 	CLR.b	obj_hit_flag(A5)
 	CLR.b	obj_move_counter(A5)
 	CLR.b	obj_npc_busy_flag(A5)
@@ -1779,20 +1779,20 @@ GetStaticNPCAnimationOffset_Loop:
 	ADD.w	D1, D1
 	ADD.w	D1, D1
 	TST.b	obj_behavior_flag(A5)
-	BNE.b	GetStaticNPCAnimationOffset_Loop2
+	BNE.b	GetStaticNPCAnimationOffset_Animating
 	MOVE.w	D1, D0
 	BRA.w	GetStaticNPCAnimationOffset_Return
-GetStaticNPCAnimationOffset_Loop2:
+GetStaticNPCAnimationOffset_Animating:
 	MOVE.b	obj_move_counter(A5), D0
 	BTST.b	#6, IO_version
-	BNE.w	GetStaticNPCAnimationOffset_Loop3
+	BNE.w	GetStaticNPCAnimationOffset_PALRate
 	ASR.w	#4, D0
 	ANDI.w	#3, D0
-	BRA.b	GetStaticNPCAnimationOffset_Loop4
-GetStaticNPCAnimationOffset_Loop3:
+	BRA.b	GetStaticNPCAnimationOffset_FrameIndex
+GetStaticNPCAnimationOffset_PALRate:
 	ASR.w	#3, D0	
 	ANDI.w	#3, D0	
-GetStaticNPCAnimationOffset_Loop4:
+GetStaticNPCAnimationOffset_FrameIndex:
 	ADD.w	D1, D0
 	TST.b	obj_direction(A5)
 	BEQ.b	GetStaticNPCAnimOffset_FlipCheck
@@ -1823,22 +1823,22 @@ GetNPCAnimationOffset_Loop:
 	ADD.w	D1, D1
 	ADD.w	D1, D1
 	TST.b	obj_behavior_flag(A5)
-	BNE.b	GetNPCAnimationOffset_Loop2
+	BNE.b	GetNPCAnimationOffset_Animating
 	MOVE.w	D1, D0
-	BRA.b	GetNPCAnimationOffset_Loop3
-GetNPCAnimationOffset_Loop2:
+	BRA.b	GetNPCAnimationOffset_Done
+GetNPCAnimationOffset_Animating:
 	MOVE.b	obj_move_counter(A5), D0
 	BTST.b	#6, IO_version
-	BNE.w	GetNPCAnimationOffset_Loop4
+	BNE.w	GetNPCAnimationOffset_PALRate
 	ASR.w	#4, D0
 	ANDI.w	#3, D0
-	BRA.b	GetNPCAnimationOffset_Loop5
-GetNPCAnimationOffset_Loop4:
+	BRA.b	GetNPCAnimationOffset_FrameIndex
+GetNPCAnimationOffset_PALRate:
 	ASR.w	#3, D0	
 	ANDI.w	#3, D0	
-GetNPCAnimationOffset_Loop5:
+GetNPCAnimationOffset_FrameIndex:
 	ADD.w	D1, D0
-GetNPCAnimationOffset_Loop3:
+GetNPCAnimationOffset_Done:
 	ADD.w	D0, D0
 	RTS
 
@@ -1926,14 +1926,14 @@ LoadNPCAnimationFrame:
 AnimateEntitySprite:
 	MOVE.b	obj_move_counter(A5), D0
 	BTST.b	#6, IO_version
-	BNE.w	AnimateEntitySprite_Loop
+	BNE.w	AnimateEntitySprite_PALRate
 	ASR.w	#3, D0
 	ANDI.w	#2, D0
-	BRA.b	AnimateEntitySprite_Loop2
-AnimateEntitySprite_Loop:
+	BRA.b	AnimateEntitySprite_SetTile
+AnimateEntitySprite_PALRate:
 	ASR.w	#2, D0	
 	ANDI.w	#2, D0	
-AnimateEntitySprite_Loop2:
+AnimateEntitySprite_SetTile:
 	MOVE.w	(A1,D0.w), obj_tile_index(A5)
 	BRA.w	UpdateNPCScreenPosition
 ; SetRandomDirection
@@ -1958,13 +1958,13 @@ UpdateNPCMovement:
 	BNE.w	NPCWander_Return
 	MOVE.b	obj_npc_saved_dir(A5), obj_direction(A5)
 	BSR.w	CheckSurroundingTileCollision
-	BEQ.w	NPCMovement_ChangeDirection_Loop2
+	BEQ.w	NPCMovement_ChangeDirection_PathCheck
 	MOVE.b	#FLAG_TRUE, obj_behavior_flag(A5)
 	TST.b	obj_vel_x(A5)
-	BNE.w	UpdateNPCMovement_Loop
+	BNE.w	UpdateNPCMovement_StepComplete
 	ADDQ.b	#1, obj_invuln_timer(A5)
 	CMPI.b	#NPC_STUCK_THRESHOLD, obj_invuln_timer(A5)
-	BLE.w	UpdateNPCMovement_Loop2
+	BLE.w	UpdateNPCMovement_ClearStuck
 	BSR.w	CheckAdjacentTileCollision
 	BNE.w	NPCMovement_ChangeDirection
 	CLR.w	D6
@@ -1981,9 +1981,9 @@ UpdateNPCMovement:
 	MOVE.b	#FLAG_TRUE, obj_npc_busy_flag(A5)
 	CLR.b	obj_move_counter(A5)
 	CLR.b	obj_behavior_flag(A5)
-UpdateNPCMovement_Loop:
+UpdateNPCMovement_StepComplete:
 	CLR.b	obj_invuln_timer(A5)
-UpdateNPCMovement_Loop2:
+UpdateNPCMovement_ClearStuck:
 	RTS
 
 ; NPCMovement_ChangeDirection
@@ -1997,7 +1997,7 @@ NPCMovement_ChangeDirection:
 	CLR.b	obj_invuln_timer(A5)
 	RTS
 
-NPCMovement_ChangeDirection_Loop2:
+NPCMovement_ChangeDirection_PathCheck:
 	CLR.w	D2
 	MOVE.b	obj_direction(A5), D2
 	BSR.w	CheckTileCollision
@@ -2022,10 +2022,10 @@ NPCMovement_ChangeDirection_Loop:
 	ADDQ.b	#1, obj_hit_flag(A5)
 	ADDQ.b	#1, obj_move_counter(A5)
 	CMPI.b	#NPC_ROTATION_FRAMES, obj_hit_flag(A5)
-	BLT.b	NPCMovement_ChangeDirection_Loop3
+	BLT.b	NPCMovement_ChangeDirection_NotDone
 	CLR.b	obj_hit_flag(A5)
 	CLR.b	obj_npc_busy_flag(A5)
-NPCMovement_ChangeDirection_Loop3:
+NPCMovement_ChangeDirection_NotDone:
 	RTS
 
 ; NPCWander_UpdateDirection
@@ -2192,7 +2192,7 @@ CheckNPCCollision_Done:
 	ASR.w	#4, D4
 	MOVE.w	obj_world_y(A6), D5
 	ASR.w	#4, D5
-CheckNPCCollision_Done2:
+CheckNPCCollision_OffsetLoop:
 	MOVE.w	D0, D2
 	MOVE.w	D1, D3
 	ADD.w	(A1)+, D2
@@ -2201,9 +2201,9 @@ CheckNPCCollision_Done2:
 	BNE.b	CheckNPCCollision_NoEntityMatch
 	CMP.w	D3, D5
 	BNE.b	CheckNPCCollision_NoEntityMatch
-	BRA.b	CheckNPCCollision_NextEntity_Loop2
+	BRA.b	CheckNPCCollision_NextEntity_Match
 CheckNPCCollision_NoEntityMatch:
-	DBF	D6, CheckNPCCollision_Done2
+	DBF	D6, CheckNPCCollision_OffsetLoop
 CheckNPCCollision_NextEntity:
 	CLR.w	D2
 	MOVE.b	obj_next_offset(A6), D2
@@ -2213,7 +2213,7 @@ CheckNPCCollision_NextEntity_Loop:
 	CLR.w	D0
 	RTS
 
-CheckNPCCollision_NextEntity_Loop2:
+CheckNPCCollision_NextEntity_Match:
 	MOVEQ	#1, D0
 	RTS
 
@@ -2235,16 +2235,16 @@ RemoveItemFromList_Done:
 	MOVE.w	(A2,D1.w), D3
 	MOVE.w	D4, D0
 	CMP.w	D0, D3
-	BNE.b	RemoveItemFromList_Loop2
+	BNE.b	RemoveItemFromList_NoMatch
 	SUBQ.w	#1, (A1)
-	BGE.b	RemoveItemFromList_Loop3
+	BGE.b	RemoveItemFromList_CountOk
 	CLR.w	(A1)	
-RemoveItemFromList_Loop3:
+RemoveItemFromList_CountOk:
 	MOVE.w	D7, D0
 	MOVEA.l	A3, A0
 	MOVE.w	#8, D2
 	JSR	RemoveItemFromArray
-RemoveItemFromList_Loop2:
+RemoveItemFromList_NoMatch:
 	DBF	D7, RemoveItemFromList_Done
 RemoveItemFromList_Loop:
 	RTS
@@ -2598,12 +2598,12 @@ ChainObjectTick_Parent_Loop:
 	LEA	(A5,D0.w), A6
 	MOVE.w	obj_tile_index(A5), D6
 	CMPI.w	#0, D6
-	BLE.w	ChainObjectTick_Parent_Loop2
+	BLE.w	ChainObjectTick_Parent_ClearChildren
 	MOVE.b	obj_sprite_flags(A5), obj_sprite_flags(A6)
 	BSET.b	#3, obj_sprite_flags(A6)
 	MOVE.w	D6, obj_tile_index(A6)
 	MOVEQ	#1, D7
-ChainObjectTick_Parent_Loop_Done:
+ChainObjectTick_Parent_ChildLoop:
 	ADDI.w	#$000C, D6
 	CLR.w	D0
 	MOVE.b	obj_next_offset(A6), D0
@@ -2616,17 +2616,17 @@ ChainObjectTick_Parent_Loop_Done:
 	MOVE.w	D6, obj_tile_index(A6)
 	MOVE.b	obj_sprite_flags(A5), obj_sprite_flags(A6)
 	BSET.b	#3, obj_sprite_flags(A6)
-	DBF	D7, ChainObjectTick_Parent_Loop_Done
-	BRA.w	ChainObjectTick_Parent_Loop3
-ChainObjectTick_Parent_Loop2:
+	DBF	D7, ChainObjectTick_Parent_ChildLoop
+	BRA.w	ChainObjectTick_Parent_PositionChildren
+ChainObjectTick_Parent_ClearChildren:
 	MOVEQ	#4, D7
-ChainObjectTick_Parent_Loop2_Done:
+ChainObjectTick_Parent_ClearLoop:
 	MOVE.w	#0, obj_tile_index(A6)
 	CLR.w	D0
 	MOVE.b	obj_next_offset(A6), D0
 	LEA	(A6,D0.w), A6
-	DBF	D7, ChainObjectTick_Parent_Loop2_Done
-ChainObjectTick_Parent_Loop3:
+	DBF	D7, ChainObjectTick_Parent_ClearLoop
+ChainObjectTick_Parent_PositionChildren:
 	LEA	PortraitPositionOffsets, A0
 	MOVE.w	obj_world_x(A5), D3
 	MOVE.w	obj_world_y(A5), D4
@@ -2641,7 +2641,7 @@ ChainObjectTick_Parent_Loop3:
 	MOVE.w	D1, obj_screen_x(A5)
 	MOVE.w	D2, obj_screen_y(A5)
 	MOVEQ	#4, D7
-ChainObjectTick_Parent_Loop3_Done:
+ChainObjectTick_Parent_OffsetLoop:
 	MOVE.w	D3, D1
 	MOVE.w	D4, D2
 	ADD.w	(A0)+, D1
@@ -2653,7 +2653,7 @@ ChainObjectTick_Parent_Loop3_Done:
 	CLR.w	D0
 	MOVE.b	obj_next_offset(A6), D0
 	LEA	(A6,D0.w), A6
-	DBF	D7, ChainObjectTick_Parent_Loop3_Done
+	DBF	D7, ChainObjectTick_Parent_OffsetLoop
 	TST.w	obj_tile_index(A5)
 	BEQ.b	ChainObjectTick_Parent_Return
 	MOVE.w	obj_world_x(A5), D0
@@ -2682,14 +2682,14 @@ PairedObjectTick_A_Loop:
 	MOVE.w	#SORT_KEY_PAIRED_OBJ, obj_sort_key(A5)
 	MOVE.w	obj_tile_index(A5), D6
 	CMPI.w	#0, D6
-	BLE.b	PairedObjectTick_A_Loop2
+	BLE.b	PairedObjectTick_A_TileZero
 	ADDI.w	#$000C, D6
 	MOVE.w	D6, obj_tile_index(A6)
 	MOVE.b	obj_sprite_flags(A5), obj_sprite_flags(A6)
-	BRA.b	PairedObjectTick_A_Loop3
-PairedObjectTick_A_Loop2:
+	BRA.b	PairedObjectTick_A_Position
+PairedObjectTick_A_TileZero:
 	MOVE.w	#0, obj_tile_index(A6)
-PairedObjectTick_A_Loop3:
+PairedObjectTick_A_Position:
 	MOVE.w	obj_world_x(A5), D0
 	MOVE.w	obj_world_y(A5), D1
 	MOVE.w	D0, obj_screen_x(A6)
@@ -2980,9 +2980,9 @@ PortraitTick_StowGirl_Loop:
 	TST.b	Accused_of_theft.w
 	BNE.b	NPCTick_SanguiosVendor_Display
 	TST.b	Sanguios_book_offered.w
-	BEQ.b	PortraitTick_StowGirl_Loop2
+	BEQ.b	PortraitTick_StowGirl_BookNotOffered
 	TST.b	Sanguios_purchased.w
-	BNE.b	PortraitTick_StowGirl_Loop3
+	BNE.b	PortraitTick_StowGirl_AlreadyPurchased
 	LEA	Possessed_magics_length.w, A0
 	MOVE.w	(A0), D0
 	ADDQ.w	#1, (A0)+
@@ -2991,25 +2991,25 @@ PortraitTick_StowGirl_Loop:
 	MOVE.l	#PRICE_SANGUIOS, Transaction_amount.w
 	JSR	DeductPaymentAmount
 	MOVE.b	#FLAG_TRUE, Sanguios_purchased.w
-PortraitTick_StowGirl_Loop3:
+PortraitTick_StowGirl_AlreadyPurchased:
 	MOVE.l	#NothingForYouStr, Script_talk_source.w
 	BRA.b	NPCTick_SanguiosVendor_Display
-PortraitTick_StowGirl_Loop2: ; buy Sanguios from little girl
+PortraitTick_StowGirl_BookNotOffered: ; buy Sanguios from little girl
 	MOVE.l	#PRICE_SANGUIOS, D0
 	MOVE.l	Player_kims.w, D1
 	ANDI.l	#$00FFFFFF, D1
 	CMP.l	D0, D1
-	BLT.b	PortraitTick_StowGirl_Loop4
+	BLT.b	PortraitTick_StowGirl_NotEnoughKims
 	LEA	Possessed_magics_length.w, A0
 	MOVE.w	(A0), D0
 	CMPI.w	#8, D0
-	BLT.b	PortraitTick_StowGirl_Loop5
+	BLT.b	PortraitTick_StowGirl_SpellSlotFree
 	MOVE.l	#BuyBookSanguiosThirdStr3, Script_talk_source.w	
 	BRA.b	NPCTick_SanguiosVendor_Display	
-PortraitTick_StowGirl_Loop4:
+PortraitTick_StowGirl_NotEnoughKims:
 	MOVE.l	#BuyBookSanguiosStr2, Script_talk_source.w	
 	BRA.b	NPCTick_SanguiosVendor_Display	
-PortraitTick_StowGirl_Loop5:
+PortraitTick_StowGirl_SpellSlotFree:
 	MOVE.l	#BuyBookSanguiosStr, Script_talk_source.w
 NPCTick_SanguiosVendor_Display:
 	JMP	QueueSpriteOAMIfVisible
@@ -3177,7 +3177,7 @@ EncounterInit_FinalizeEnemyCount_Done:
 	DBF	D7, EncounterInit_FinalizeEnemyCount_Done
 	LEA	Enemy_position_indices.w, A1
 	MOVE.w	Number_Of_Enemies.w, D7
-EncounterInit_FinalizeEnemyCount_Done2: ; Loop number of enemies
+EncounterInit_EnemySetupLoop: ; Loop number of enemies
 	BSET.b	#7, (A6)
 	BSET.b	#6, (A6)
 	BCLR.b	#7, obj_sprite_flags(A6)
@@ -3216,10 +3216,10 @@ EncounterInit_FinalizeEnemyCount_Done2: ; Loop number of enemies
 	MOVE.b	$1(A6,D0.w), D1
 	ADD.w	D1, D0
 	ADD.w	D1, D0
-EncounterInit_FinalizeEnemyCount_Done3:
+EncounterInit_AdvanceSlotLoop:
 	LEA	(A6,D0.w), A6
-	DBF	D6, EncounterInit_FinalizeEnemyCount_Done3
-	DBF	D7, EncounterInit_FinalizeEnemyCount_Done2
+	DBF	D6, EncounterInit_AdvanceSlotLoop
+	DBF	D7, EncounterInit_EnemySetupLoop
 	JSR	LoadPalettesFromTable
 	JSR	LoadEncounterGraphics
 	RTS
