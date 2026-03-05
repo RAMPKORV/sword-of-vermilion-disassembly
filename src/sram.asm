@@ -14,54 +14,54 @@ SaveGameToSram:
 	MOVEA.l	Sram_save_slot_ptr.w, A0
 	LEA	Player_name.w, A1
 	MOVE.w	#$000D, D7
-SaveGameToSram_Done:
+SaveGameToSram_CopyNameLoop:
 	BSR.w	CopyByteToSram
-	DBF	D7, SaveGameToSram_Done
+	DBF	D7, SaveGameToSram_CopyNameLoop
 	LEA	Current_town.w, A1
 	MOVE.w	#1, D7
-SaveGameToSram_Done2:
+SaveGameToSram_TownLoop:
 	BSR.w	CopyByteToSram
-	DBF	D7, SaveGameToSram_Done2
+	DBF	D7, SaveGameToSram_TownLoop
 	LEA	Towns_visited.w, A1
 	MOVE.w	#$000D, D7
-SaveGameToSram_Done3:
+SaveGameToSram_CopyTownsVisitedLoop:
 	BSR.w	CopyByteToSram
-	DBF	D7, SaveGameToSram_Done3
+	DBF	D7, SaveGameToSram_CopyTownsVisitedLoop
 	LEA	Player_position_x_outside_town.w, A1
 	MOVE.w	#7, D7
-SaveGameToSram_Done4:
+SaveGameToSram_CopyPositionLoop:
 	BSR.w	CopyByteToSram
-	DBF	D7, SaveGameToSram_Done4
+	DBF	D7, SaveGameToSram_CopyPositionLoop
 	LEA	Possessed_items_length.w, A1
 	MOVE.w	#$0015, D7
-SaveGameToSram_Done5:
+SaveGameToSram_CopyItemsLoop:
 	BSR.w	CopyByteToSram
-	DBF	D7, SaveGameToSram_Done5
+	DBF	D7, SaveGameToSram_CopyItemsLoop
 	LEA	Possessed_magics_length.w, A1
 	MOVE.w	#$0015, D7
-SaveGameToSram_Done6:
+SaveGameToSram_CopyMagicsLoop:
 	BSR.w	CopyByteToSram
-	DBF	D7, SaveGameToSram_Done6
+	DBF	D7, SaveGameToSram_CopyMagicsLoop
 	LEA	Possessed_equipment_length.w, A1
 	MOVE.w	#$0015, D7
-SaveGameToSram_Done7:
+SaveGameToSram_CopyEquipmentLoop:
 	BSR.w	CopyByteToSram
-	DBF	D7, SaveGameToSram_Done7
+	DBF	D7, SaveGameToSram_CopyEquipmentLoop
 	LEA	Equipped_sword.w, A1
 	MOVE.w	#$000F, D7
-SaveGameToSram_Done8:
+SaveGameToSram_CopyEquippedLoop:
 	BSR.w	CopyByteToSram
-	DBF	D7, SaveGameToSram_Done8
+	DBF	D7, SaveGameToSram_CopyEquippedLoop
 	LEA	Player_kims.w, A1
 	MOVE.w	#$002F, D7
-SaveGameToSram_Done9:
+SaveGameToSram_CopyKimsLoop:
 	BSR.w	CopyByteToSram
-	DBF	D7, SaveGameToSram_Done9
+	DBF	D7, SaveGameToSram_CopyKimsLoop
 	LEA	Event_triggers_start.w, A1
 	MOVE.w	#$01FF, D7
-SaveGameToSram_Done10:
+SaveGameToSram_CopyEventsLoop:
 	BSR.w	CopyByteToSram
-	DBF	D7, SaveGameToSram_Done10
+	DBF	D7, SaveGameToSram_CopyEventsLoop
 	JSR	CalculateChecksumAndBackupSram
 	RTS
 
@@ -74,7 +74,7 @@ CalculateChecksumAndBackupSram:
 	MOVEA.l	Sram_save_slot_ptr.w, A0
 	MOVE.w	#$014E, D7
 	MOVEQ	#0, D1
-CalculateChecksumAndBackupSram_Done:
+CalculateChecksumAndBackupSram_ChecksumLoop:
 	MOVE.b	(A0)+, D2
 	ASL.w	#8, D2
 	LEA	$1(A0), A0
@@ -82,10 +82,10 @@ CalculateChecksumAndBackupSram_Done:
 	LEA	$1(A0), A0
 	EOR.w	D2, D1
 	LSR.w	#1, D1
-	BCC.b	CalculateChecksumAndBackupSram_Loop
+	BCC.b	CalculateChecksumAndBackupSram_ChecksumNext
 	EORI.w	#$8810, D1
-CalculateChecksumAndBackupSram_Loop:
-	DBF	D7, CalculateChecksumAndBackupSram_Done
+CalculateChecksumAndBackupSram_ChecksumNext:
+	DBF	D7, CalculateChecksumAndBackupSram_ChecksumLoop
 	MOVE.w	D1, D0
 	ASR.w	#8, D1
 	MOVE.b	D1, (A0)+
@@ -94,11 +94,11 @@ CalculateChecksumAndBackupSram_Loop:
 	MOVEA.l	Sram_save_slot_ptr.w, A1
 	MOVEA.l	Sram_backup_ptr.w, A0
 	MOVE.w	#$029F, D0
-CalculateChecksumAndBackupSram_Loop_Done:
+CalculateChecksumAndBackupSram_BackupCopyLoop:
 	MOVE.b	(A1)+, (A0)+
 	LEA	$1(A0), A0
 	LEA	$1(A1), A1
-	DBF	D0, CalculateChecksumAndBackupSram_Loop_Done
+	DBF	D0, CalculateChecksumAndBackupSram_BackupCopyLoop
 	RTS
 	
 FileMenuPhaseDispatch:
@@ -111,10 +111,10 @@ FileMenuPhaseDispatch:
 	
 FileMenuPhaseJumpTable:
 	BRA.w	FileMenuPhaseJumpTable_Loop
-	BRA.w	FileMenuPhaseJumpTable_Loop2
-	BRA.w	FileMenu_VerifyChecksum_Loop
+	BRA.w	FileMenuPhase_WaitSelection
+	BRA.w	FileMenu_VerifyBackup
 	BRA.w	FileSave_Return_Loop
-	BRA.w	FileSave_Return_Loop2
+	BRA.w	FileMenuPhase_SaveConfirmWait
 	BRA.w	FileMenuSaveConfirm_Return_Loop	
 FileMenuPhaseJumpTable_Loop:
 	CLR.w	Dialog_selection.w
@@ -124,11 +124,11 @@ FileMenuPhaseJumpTable_Loop:
 	ADDQ.w	#1, File_menu_phase.w
 	RTS
 	
-FileMenuPhaseJumpTable_Loop2:
+FileMenuPhase_WaitSelection:
 	TST.b	Window_tilemap_draw_active.w
-	BNE.w	FileMenu_VerifyChecksum_Loop2
+	BNE.w	FileMenuPhase_WaitSelection_Return
 	CheckButton BUTTON_BIT_C
-	BEQ.w	FileMenu_VerifyChecksum_Loop3
+	BEQ.w	FileMenu_MoveCursor
 	MOVE.w	Dialog_selection.w, Menu_cursor_index.w
 	JSR	DrawMenuCursor
 	LEA	SramSaveSlotAddresses, A0
@@ -141,55 +141,55 @@ FileMenuPhaseJumpTable_Loop2:
 	MOVE.l	(A1,D0.w), Sram_backup_ptr.w
 	MOVEA.l	Sram_save_slot_ptr.w, A0
 	TST.b	(A0)
-	BNE.b	FileMenu_VerifyChecksum
+	BNE.b	FileMenu_ChecksumAndLoad
 	TST.b	$2(A0)
-	BNE.b	FileMenu_VerifyChecksum
+	BNE.b	FileMenu_ChecksumAndLoad
 	TST.b	$4(A0)
-	BNE.b	FileMenu_VerifyChecksum
+	BNE.b	FileMenu_ChecksumAndLoad
 	TST.b	$6(A0)
-	BNE.b	FileMenu_VerifyChecksum
-	BRA.b	FileMenu_VerifyChecksum_Loop4
-FileMenu_VerifyChecksum:
+	BNE.b	FileMenu_ChecksumAndLoad
+	BRA.b	FileMenu_NoSave
+FileMenu_ChecksumAndLoad:
 	BSR.w	VerifySaveChecksum
-	BEQ.b	FileMenu_VerifyChecksum_Loop5
+	BEQ.b	FileMenu_LoadFromSlot
 	ADDQ.w	#1, File_menu_phase.w
 	JSR	DrawSaveErrorWindow
 	RTS
 	
-FileMenu_VerifyChecksum_Loop5:
+FileMenu_LoadFromSlot:
 	MOVEA.l	Sram_save_slot_ptr.w, A0	
 	BSR.w	LoadGameFromSave	
 	JSR	DrawGameReadyWindow	
 	MOVE.w	#FILE_MENU_PHASE_SUCCESS, File_menu_phase.w	
 	RTS
 	
-FileMenu_VerifyChecksum_Loop4:
+FileMenu_NoSave:
 	MOVE.w	#FILE_MENU_PHASE_NO_SAVE, File_menu_phase.w
 	JSR	DrawNoSavedGameWindow
 	RTS
 	
-FileMenu_VerifyChecksum_Loop3:
+FileMenu_MoveCursor:
 	MOVE.w	Dialog_selection.w, Menu_cursor_index.w
 	JSR	HandleMenuInput
 	MOVE.w	Menu_cursor_index.w, Dialog_selection.w
-FileMenu_VerifyChecksum_Loop2:
+FileMenuPhase_WaitSelection_Return:
 	RTS
 	
-FileMenu_VerifyChecksum_Loop:
+FileMenu_VerifyBackup:
 	TST.b	Window_tilemap_draw_active.w
 	BNE.w	FileSave_Return
 	CheckButton BUTTON_BIT_C
 	BEQ.w	FileSave_Return
 	MOVEA.l	Sram_backup_ptr.w, A0
 	BSR.w	VerifySaveChecksum
-	BEQ.b	FileMenu_VerifyChecksum_Loop6
+	BEQ.b	FileMenu_RestoreFromBackup
 	JSR	DrawSaveFailedWindow
 	ADDQ.w	#1, File_menu_phase.w
 	PlaySound	SOUND_SAVE_FAILED
 	PlaySound	SOUND_SPELL_CAST
 	RTS
 	
-FileMenu_VerifyChecksum_Loop6:
+FileMenu_RestoreFromBackup:
 	MOVEA.l	Sram_backup_ptr.w, A0	
 	BSR.w	CopySramBackupToSlot	
 	BSR.w	LoadGameFromSave	
@@ -203,7 +203,7 @@ FileSave_Return_Loop:
 	TST.b	Window_tilemap_draw_active.w
 	RTS
 	
-FileSave_Return_Loop2:
+FileMenuPhase_SaveConfirmWait:
 	TST.b	Window_tilemap_draw_active.w
 	BNE.b	FileMenuSaveConfirm_Return
 	CheckButton BUTTON_BIT_C
@@ -224,54 +224,54 @@ FileMenuLoad_Return:
 LoadGameFromSave:
 	LEA	Player_name.w, A1	
 	MOVE.w	#$000D, D7	
-LoadGameFromSave_Done:
+LoadGameFromSave_CopyNameLoop:
 	BSR.w	CopyByteFromInterleavedSave	
-	DBF	D7, LoadGameFromSave_Done	
+	DBF	D7, LoadGameFromSave_CopyNameLoop	
 	LEA	Current_town.w, A1	
 	MOVE.w	#1, D7	
-LoadGameFromSave_Done2:
+LoadGameFromSave_TownLoop:
 	BSR.w	CopyByteFromInterleavedSave	
-	DBF	D7, LoadGameFromSave_Done2	
+	DBF	D7, LoadGameFromSave_TownLoop
 	LEA	Towns_visited.w, A1	
 	MOVE.w	#$000D, D7	
-LoadGameFromSave_Done3:
+LoadGameFromSave_CopyTownsVisitedLoop:
 	BSR.w	CopyByteFromInterleavedSave	
-	DBF	D7, LoadGameFromSave_Done3	
+	DBF	D7, LoadGameFromSave_CopyTownsVisitedLoop	
 	LEA	Player_position_x_outside_town.w, A1	
 	MOVE.w	#7, D7	
-LoadGameFromSave_Done4:
+LoadGameFromSave_CopyPositionLoop:
 	BSR.w	CopyByteFromInterleavedSave	
-	DBF	D7, LoadGameFromSave_Done4	
+	DBF	D7, LoadGameFromSave_CopyPositionLoop	
 	LEA	Possessed_items_length.w, A1	
 	MOVE.w	#$0015, D7	
-LoadGameFromSave_Done5:
+LoadGameFromSave_CopyItemsLoop:
 	BSR.w	CopyByteFromInterleavedSave	
-	DBF	D7, LoadGameFromSave_Done5	
+	DBF	D7, LoadGameFromSave_CopyItemsLoop	
 	LEA	Possessed_magics_length.w, A1	
 	MOVE.w	#$0015, D7	
-LoadGameFromSave_Done6:
+LoadGameFromSave_CopyMagicsLoop:
 	BSR.w	CopyByteFromInterleavedSave	
-	DBF	D7, LoadGameFromSave_Done6	
+	DBF	D7, LoadGameFromSave_CopyMagicsLoop	
 	LEA	Possessed_equipment_length.w, A1	
 	MOVE.w	#$0015, D7	
-LoadGameFromSave_Done7:
+LoadGameFromSave_CopyEquipmentLoop:
 	BSR.w	CopyByteFromInterleavedSave	
-	DBF	D7, LoadGameFromSave_Done7	
+	DBF	D7, LoadGameFromSave_CopyEquipmentLoop	
 	LEA	Equipped_sword.w, A1	
 	MOVE.w	#$000F, D7	
-LoadGameFromSave_Done8:
+LoadGameFromSave_CopyEquippedLoop:
 	BSR.w	CopyByteFromInterleavedSave	
-	DBF	D7, LoadGameFromSave_Done8	
+	DBF	D7, LoadGameFromSave_CopyEquippedLoop	
 	LEA	Player_kims.w, A1	
 	MOVE.w	#$002F, D7	
-LoadGameFromSave_Done9:
+LoadGameFromSave_CopyKimsLoop:
 	BSR.w	CopyByteFromInterleavedSave	
-	DBF	D7, LoadGameFromSave_Done9	
+	DBF	D7, LoadGameFromSave_CopyKimsLoop	
 	LEA	Event_triggers_start.w, A1	
 	MOVE.w	#$01FF, D7	
-LoadGameFromSave_Done10:
+LoadGameFromSave_CopyEventsLoop:
 	BSR.w	CopyByteFromInterleavedSave	
-	DBF	D7, LoadGameFromSave_Done10	
+	DBF	D7, LoadGameFromSave_CopyEventsLoop	
 	RTS
 	
 CopyByteFromInterleavedSave:
@@ -282,7 +282,7 @@ CopyByteFromInterleavedSave:
 VerifySaveChecksum:
 	MOVE.w	#$014E, D7
 	MOVEQ	#0, D1
-VerifySaveChecksum_Done:
+VerifySaveChecksum_Loop:
 	MOVE.b	(A0)+, D2
 	ASL.w	#8, D2
 	LEA	$1(A0), A0
@@ -290,10 +290,10 @@ VerifySaveChecksum_Done:
 	LEA	$1(A0), A0
 	EOR.w	D2, D1
 	LSR.w	#1, D1
-	BCC.b	VerifySaveChecksum_Loop
+	BCC.b	VerifySaveChecksum_SkipXor
 	EORI.w	#$8810, D1
-VerifySaveChecksum_Loop:
-	DBF	D7, VerifySaveChecksum_Done
+VerifySaveChecksum_SkipXor:
+	DBF	D7, VerifySaveChecksum_Loop
 	MOVE.b	(A0)+, D0
 	LEA	$1(A0), A0
 	ASL.w	#8, D0
@@ -305,11 +305,11 @@ CopySramBackupToSlot:
 	MOVEA.l	Sram_save_slot_ptr.w, A0	
 	MOVEA.l	Sram_backup_ptr.w, A1	
 	MOVE.w	#$029F, D0	
-CopySramBackupToSlot_Done:
+CopySramBackupToSlot_CopyLoop:
 	MOVE.b	(A1)+, (A0)+	
 	LEA	$1(A0), A0	
 	LEA	$1(A1), A1	
-	DBF	D0, CopySramBackupToSlot_Done	
+	DBF	D0, CopySramBackupToSlot_CopyLoop	
 	RTS
 	
 SramSaveSlotAddresses:
