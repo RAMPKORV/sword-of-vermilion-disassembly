@@ -324,7 +324,7 @@
           "priority": "medium",
           "effort": "small",
           "note": "Must verify ASM68K generates identical bytes for the macro expansion vs inline instructions",
-          "status": "todo"
+          "status": "done"
         },
         {
           "id": "NEWMAC-003",

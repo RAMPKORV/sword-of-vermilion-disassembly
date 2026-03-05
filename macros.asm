@@ -812,3 +812,36 @@ dmaCmd macro len_words,vram_addr
 VdpRowAdvance macro reg
     ADDI.l  #VDP_VRAM_ROW_STRIDE, \reg
     ENDM
+
+; ============================================================
+; InterruptDisable / InterruptEnable Macros
+; ============================================================
+; Disable or re-enable the 68000 interrupt priority mask in the
+; Status Register (SR).  This is the standard Genesis pattern for
+; protecting VDP write sequences from VBlank interference.
+;
+; InterruptDisable  sets   interrupt mask bits to level 7 (all masked):
+;   ORI  #$0700, SR    —    opcode $007C, immediate $0700
+;
+; InterruptEnable   clears interrupt mask bits to level 0 (all enabled):
+;   ANDI #$F8FF, SR    —    opcode $027C, immediate $F8FF
+;
+; Both macros expand to a single instruction and are byte-identical
+; to the inline ORI/ANDI forms used throughout the codebase.
+;
+; Usage:
+;   InterruptDisable          ; mask all interrupts before VDP writes
+;   ... VDP write sequence ...
+;   InterruptEnable           ; restore interrupts when done
+;
+; CAUTION: InterruptDisable is a privileged instruction on the 68000
+; (SR is supervisor-only).  This code always runs in supervisor mode
+; (the Genesis boots into supervisor mode and never drops to user mode),
+; so this is safe.  Do not use in code paths that could run in user mode.
+InterruptDisable macro
+    ORI     #$0700, SR
+    ENDM
+
+InterruptEnable macro
+    ANDI    #$F8FF, SR
+    ENDM

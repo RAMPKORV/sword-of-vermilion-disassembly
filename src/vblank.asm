@@ -4,7 +4,7 @@
 ; ======================================================================
 
 ClearScrollData:
-	ORI	#$0700, SR
+	InterruptDisable
 	MOVE.l	#VDP_CMD_VRAM_WRITE_HSCROLL, VDP_control_port
 	MOVE.w	#HSCROLL_CLEAR_COUNT, D7
 ClearScrollData_hscroll_loop:
@@ -17,7 +17,7 @@ ClearScrollData_vscroll_loop:
 	DBF	D7, ClearScrollData_vscroll_loop
 	CLR.w	HScroll_base.w
 	CLR.w	VScroll_base.w
-	ANDI	#$F8FF, SR
+	InterruptEnable
 	RTS
 
 ; ---------------------------------------------------------------------------
