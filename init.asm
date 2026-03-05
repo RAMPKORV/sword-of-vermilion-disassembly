@@ -204,6 +204,9 @@ StartupSequence_Init:
 StartupSequence_SetupHardware:
 	ORI	#$0700, SR			; disable interrupts during setup
 	JSR	ClearRAMAndInitHardware		; (core.asm) — clears game RAM, inits VDP/DMA
+	; RANDOMIZER SEED INJECTION: Rng_state ($FFFFC0A0) is now $00000000.
+	; Insert: MOVE.l #<seed>, Rng_state.w  here to override the default seed.
+	; See GetRandomNumber (battle_gfx.asm) for full injection documentation.
 	JSR	InitBasicObjectSlots		; (core.asm) — builds initial object slot linked list
 	JSR	ExecuteVdpDmaFromPointer_Setup	; (battle_gfx.asm) — primes DMA stub + loads tile buffer
 	JSR	LoadAndDecompressTileGfx	; (battle_gfx.asm) — decompress + DMA base graphics

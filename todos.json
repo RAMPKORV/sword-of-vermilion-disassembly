@@ -661,7 +661,9 @@
           "file": "src/mapdata.asm",
           "priority": "medium",
           "effort": "medium",
-          "status": "todo"
+          "status": "done",
+          "notes": "mapdata.asm header already contains full format documentation (added in DATA-003): RLE encoding, overworld 16x8 grid, cave room format, tile value legend ($00 ground, $01 tree, $02 rock, $05 cave rock, $0F house, $1x cave entrance, $8x town entrance, $FF cave exit), pointer table layout, special entries. Notes.txt content is now in the code.",
+          "completed_at": "2026-03-05"
         },
         {
           "id": "DOC-008",
@@ -1059,7 +1061,9 @@
           "priority": "low",
           "effort": "small",
           "note": "GetRandomNumber at battle_gfx.asm:590 is the sole RNG function",
-          "status": "todo"
+          "status": "done",
+          "notes": "Added seed injection documentation to GetRandomNumber (battle_gfx.asm:890) and StartupSequence injection point comment in init.asm:206. Rng_state ($FFFFC0A0.l) is zero after ClearRAMAndInitHardware — write any non-zero .l value there to override the default seed $2A6D365A. 59 call sites all funnel through the single GetRandomNumber function.",
+          "completed_at": "2026-03-05"
         }
       ]
     },

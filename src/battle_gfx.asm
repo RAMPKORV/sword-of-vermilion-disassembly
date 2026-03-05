@@ -886,6 +886,26 @@ ExecuteVdpDmaTransfer:
 ; Input:   (none)
 ; Scratch:  D1 (saved/restored via stack)
 ; Output:   D0.w = 16-bit pseudo-random value; Rng_state.w updated
+;
+; RANDOMIZER SEED INJECTION POINT
+; --------------------------------
+; Rng_state ($FFFFC0A0, .l) is the sole RNG state variable.  It is cleared
+; to zero during ClearRAMAndInitHardware (init.asm:StartupSequence) and then
+; first used on the frame that triggers the first GetRandomNumber call.
+;
+; When Rng_state == 0 on entry, the BNE guard falls through to the seed
+; constant MOVE.l #$2A6D365A, D1 — this is the game's hard-coded seed.
+;
+; To inject a randomizer seed:
+;   1. After ClearRAMAndInitHardware returns (init.asm:StartupSequence+4),
+;      insert: MOVE.l #<seed_value>, Rng_state.w
+;   2. Any non-zero 32-bit value is a valid seed; the LCG will produce a
+;      different sequence for every distinct seed.
+;   3. The seed must be written BEFORE the first JSR GetRandomNumber, which
+;      occurs during the first enemy encounter after startup.
+;   4. 59 call sites spread across enemy.asm, combat.asm, items.asm,
+;      boss.asm, npc.asm, player.asm, gameplay.asm — all funnel through
+;      this single function.
 ; ---------------------------------------------------------------------------
 GetRandomNumber:
 	MOVEM.l	D1, -(A7)
