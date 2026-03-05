@@ -596,7 +596,7 @@
           "file": "docs/editor_architecture.md",
           "priority": "high",
           "effort": "medium",
-          "status": "todo"
+          "status": "done"
         },
         {
           "id": "EDITOR-002",
