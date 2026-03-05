@@ -2388,10 +2388,10 @@ NPCCollisionOffsetTable:
 ; for each cardinal direction: Up, Left, Down, Right.
 ; $FFFF8000 = -1/2 tile (negative step), $00008000 = +1/2 tile (positive step).
 NPCMoveDeltaTable:
-	dc.l	$00000000, $FFFF8000 
-	dc.l	$FFFF8000, $00000000 
-	dc.l	$00000000, $00008000 
-	dc.l	$00008000, $00000000 
+	dc.l	$00000000, $FFFF8000 	; raw data: (dx,dy)=(0, -0.5 tile) per step
+	dc.l	$FFFF8000, $00000000 	; raw data: (dx,dy)=(-0.5, 0) per step
+	dc.l	$00000000, $00008000 	; raw data: (dx,dy)=(0, +0.5) per step
+	dc.l	$00008000, $00000000 	; raw data: (dx,dy)=(+0.5, 0) per step
 ParmaSoldierBoundingBoxTable: ; Parma soldiers detection area
 	dc.w -3, 0,  0, 3
 	dc.w -3, 1, -3, 3

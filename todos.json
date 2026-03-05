@@ -477,7 +477,7 @@
           "priority": "medium",
           "effort": "small",
           "depends_on": "MAGICB-003",
-          "status": "todo"
+          "status": "done"
         },
         {
           "id": "TOOLB-007",
