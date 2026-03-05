@@ -486,7 +486,7 @@
           "file": "tools/comment_density.js",
           "priority": "low",
           "effort": "small",
-          "status": "todo"
+          "status": "done"
         },
         {
           "id": "TOOLB-008",
@@ -495,7 +495,7 @@
           "file": "tools/audit_magic_numbers.js",
           "priority": "medium",
           "effort": "medium",
-          "status": "todo"
+          "status": "done"
         }
       ]
     },
