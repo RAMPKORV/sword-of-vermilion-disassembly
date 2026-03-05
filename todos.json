@@ -458,7 +458,7 @@
           "file": "tools/progression_validator.js",
           "priority": "high",
           "effort": "large",
-          "status": "todo"
+          "status": "done"
         },
         {
           "id": "TOOLB-005",
