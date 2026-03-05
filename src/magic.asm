@@ -29,12 +29,12 @@
 ;
 ; VDP TILE ATTRIBUTE VALUES USED IN THIS FILE
 ; --------------------------------------------
-; $A080 : palette 2, priority 1, base tile $080 (credits background fill)
-; $84C0 : palette 2, priority 0, base tile $0C0 (border pattern tile)
-; $84E0 : palette 2, priority 0, base tile $0E0 (ending border tile)
-; $601D : palette 1, priority 1, base tile $01D + offset (credits sprite row)
-; $41CD : palette 0, priority 1, base tile $1CD + offset (staff name glyph)
-; $4002 : palette 0, priority 0, base tile $002 + offset (dialog area fill)
+; $A080 : priority=1, palette=1, base tile $080 (credits background fill) = TILE_ATTR_CREDITS_BG
+; $84C0 : priority=1, palette=0, base tile $4C0 (font/text tile base)     = TILE_ATTR_TEXT
+; $84E0 : priority=1, palette=0, base tile $4E0 (ending border tile)
+; $601D : priority=1, palette=1, base tile $01D + offset (credits sprite row)
+; $41CD : priority=1, palette=0, base tile $1CD + offset (staff name glyph)
+; $4002 : priority=0, palette=2, base tile $002 + offset (dialog area fill) = TILE_ATTR_DIALOG
 ;
 ; The ADDI.l #$00800000, Dx pattern advances the VDP nametable write
 ; address by one row (64 tiles * 2 bytes = 128 = $80 bytes = $00800000
@@ -73,8 +73,8 @@
 ClearEndingTextArea:
 	MOVE.l	D5, D4
 	CLR.w	D0
-	ANDI.l	#$5FFF0003, D4	; strip VRAM address bits (keep command type)
-	ORI.l	#$40000003, D4	; set VRAM write command: plane A write
+	ANDI.l	#VDP_CMD_VRAM_WRITE_ADDR_MASK, D4	; strip VRAM address bits (keep command type)
+	ORI.l	#VDP_CMD_VRAM_WRITE_PLANE_A, D4	; set VRAM write command: plane A write
 	MOVE.w	#2, D7		; 3 rows (D7 = count - 1)
 ClearEndingTextArea_Done:
 	MOVE.l	D4, VDP_control_port
@@ -83,13 +83,13 @@ ClearEndingTextArea_TileWriteLoop:
 	MOVE.w	D0, VDP_data_port	; write blank tile
 	DBF	D6, ClearEndingTextArea_TileWriteLoop
 	ADDI.l	#VDP_VRAM_ROW_STRIDE, D4	; advance to next nametable row
-	ANDI.l	#$5FFF0003, D4
-	ORI.l	#$40000003, D4
+	ANDI.l	#VDP_CMD_VRAM_WRITE_ADDR_MASK, D4
+	ORI.l	#VDP_CMD_VRAM_WRITE_PLANE_A, D4
 	DBF	D7, ClearEndingTextArea_Done
 	; Phase 2: skip ahead 14 rows ($000E), then write 3 rows with tile data
 	ADDI.l	#$000E0000, D5
-	ANDI.l	#$5FFF0003, D5
-	ORI.l	#$40000003, D5
+	ANDI.l	#VDP_CMD_VRAM_WRITE_ADDR_MASK, D5
+	ORI.l	#VDP_CMD_VRAM_WRITE_PLANE_A, D5
 	LEA	ClearEndingTextArea_InnerLoop_Data, A0
 	MOVE.w	#2, D7		; 3 rows
 ClearEndingTextArea_Phase2RowLoop:
@@ -98,17 +98,17 @@ ClearEndingTextArea_Phase2RowLoop:
 ClearEndingTextArea_Phase2TileLoop:
 	CLR.w	D0
 	MOVE.b	(A0)+, D0
-	ADDI.w	#$4002, D0	; tile attribute base: palette 0, no priority, tile $002 + offset
+	ADDI.w	#TILE_ATTR_DIALOG, D0	; tile attribute base: priority=0, palette=2, tile=$002 + offset
 	MOVE.w	D0, VDP_data_port
 	DBF	D6, ClearEndingTextArea_Phase2TileLoop
 	ADDI.l	#VDP_VRAM_ROW_STRIDE, D5	; next row
-	ANDI.l	#$5FFF0003, D5
-	ORI.l	#$40000003, D5
+	ANDI.l	#VDP_CMD_VRAM_WRITE_ADDR_MASK, D5
+	ORI.l	#VDP_CMD_VRAM_WRITE_PLANE_A, D5
 	DBF	D7, ClearEndingTextArea_Phase2RowLoop
 	; Phase 3: rewind 14 rows and clear 15 rows of 25 tiles
 	SUBI.l	#$000E0000, D5
-	ANDI.l	#$5FFF0003, D5
-	ORI.l	#$40000003, D5
+	ANDI.l	#VDP_CMD_VRAM_WRITE_ADDR_MASK, D5
+	ORI.l	#VDP_CMD_VRAM_WRITE_PLANE_A, D5
 	MOVE.w	#$000E, D7	; 15 rows
 ClearEndingTextArea_Done5:
 	MOVE.l	D5, VDP_control_port
@@ -118,8 +118,8 @@ ClearEndingTextArea_Done6:
 	MOVE.w	D0, VDP_data_port
 	DBF	D6, ClearEndingTextArea_Done6
 	ADDI.l	#VDP_VRAM_ROW_STRIDE, D5	; next row
-	ANDI.l	#$5FFF0003, D5
-	ORI.l	#$40000003, D5
+	ANDI.l	#VDP_CMD_VRAM_WRITE_ADDR_MASK, D5
+	ORI.l	#VDP_CMD_VRAM_WRITE_PLANE_A, D5
 	DBF	D7, ClearEndingTextArea_Done5
 	RTS
 
@@ -139,8 +139,8 @@ ClearEndingTextArea_Done6:
 ; ----------------------------------------------------------------------
 InitEndingCreditsScreen:
 	ORI	#$0700, SR	; disable interrupts during VDP writes
-	MOVE.l	#$40000003, D5	; VDP write command: plane A, address $0000
-	MOVE.w	#$A080, D4	; tile attr: palette 2, priority 1, tile $080
+	MOVE.l	#VDP_CMD_VRAM_WRITE_PLANE_A, D5	; VDP write command: plane A, address $0000
+	MOVE.w	#TILE_ATTR_CREDITS_BG, D4	; tile attr: priority=1, palette=1, tile=$080
 	MOVE.w	#$003F, D7	; 64 rows (full nametable height)
 InitEndingCreditsScreen_Done:
 	MOVE.l	D5, VDP_control_port
@@ -159,13 +159,13 @@ InitEndingCreditsScreen_SecondPhaseRowLoop:
 	MOVE.w	#$001B, D6	; 28 tiles per row
 InitEndingCreditsScreen_SecondPhaseTileLoop:
 	MOVE.w	(A0)+, D0
-	ADDI.w	#$A080, D0	; add tile attribute base $A080
+	ADDI.w	#TILE_ATTR_CREDITS_BG, D0	; add tile attribute base: priority=1, palette=1, tile=$080
 	MOVE.w	D0, VDP_data_port
 	DBF	D6, InitEndingCreditsScreen_SecondPhaseTileLoop
 	ADDI.l	#VDP_VRAM_ROW_STRIDE, D5	; next row
 	DBF	D7, InitEndingCreditsScreen_SecondPhaseRowLoop
 	; Phase 3: write sprite/credits name rows
-	MOVE.l	#$60000003, D5	; VDP write: plane B, address $0000
+	MOVE.l	#VDP_CMD_VRAM_WRITE_PLANE_B, D5	; VDP write: plane B, address $0000
 	LEA	InitEndingCreditsScreen_Done4_Data, A0
 	MOVE.w	#$001B, D7	; 28 rows
 InitEndingCreditsScreen_Done5:
@@ -194,7 +194,7 @@ InitEndingCreditsScreen_Done6:
 ; ----------------------------------------------------------------------
 DrawCreditsStaffNames:
 	ORI	#$0700, SR	; disable interrupts
-	MOVE.l	#$69800003, D4	; VDP write command: initial staff name row
+	MOVE.l	#VDP_CMD_VRAM_WRITE_E980, D4	; VDP write command: initial staff name row
 	MOVE.w	#3, D7		; 4 staff name groups (rows of names)
 DrawCreditsStaffNames_Done:
 	LEA	SpriteTileIndexTable_6195A, A0
@@ -257,7 +257,7 @@ FillDialogAreaWithPattern_Done:
 	MOVE.w	#$0014, D6	; 21 tiles per row
 	MOVE.l	D5, VDP_control_port
 FillDialogAreaWithPattern_TileLoop:
-	MOVE.w	#$A080, VDP_data_port	; tile attr: palette 2, priority 1, tile $080
+	MOVE.w	#TILE_ATTR_CREDITS_BG, VDP_data_port	; tile attr: priority=1, palette=1, tile=$080
 	DBF	D6, FillDialogAreaWithPattern_TileLoop
 	ADDI.l	#VDP_VRAM_ROW_STRIDE, D5		; next row
 	DBF	D7, FillDialogAreaWithPattern_Done

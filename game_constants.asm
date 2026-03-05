@@ -2074,10 +2074,29 @@ TILE_TYPE_EXIT      = $F000   ; Exit tile (return to overworld / higher floor)
 ; ============================================================
 ; VDP Tile Attribute Constants
 ; ============================================================
-; OR'd into tile index words when writing tiles to VRAM.
+; Nametable tile attribute word format (16-bit):
+;   bit 15    : priority (1 = draw in front of sprites)
+;   bits 14-13: palette line (0-3)
+;   bit 12    : V-flip
+;   bit 11    : H-flip
+;   bits 10-0 : tile index
+;
 ; $6000 = priority bit set + palette line 3 (used for dialogue/script tiles).
 ;
 VDP_ATTR_SCRIPT     = $6000   ; VDP tile attributes for script/dialogue rendering
+
+; Tile attribute bases for tilemap writes in cutscene/magic/prologue/ending code.
+; D4 is loaded with one of these values and OR'd into tile IDs before VDP writes.
+;
+; Bit decode: p=priority, pal=palette line (0-3), t=tile index
+;
+TILE_ATTR_TEXT          = $84C0 ; p=1 pal=0 t=$4C0 — font base tile (all prologue/ending text)
+                                ; NOTE: $84C0 = $8000 | FONT_TILE_BASE
+TILE_ATTR_CREDITS_BG    = $A080 ; p=1 pal=1 t=$080 — credits background fill tile
+TILE_ATTR_CREDITS_DETAIL= $C180 ; p=1 pal=2 t=$180 — credits detail tilemap block
+TILE_ATTR_SCENE_BG      = $A300 ; p=1 pal=1 t=$300 — prologue scene background tile
+TILE_ATTR_SCENE_FIRE    = $E300 ; p=1 pal=3 t=$300 — prologue fire/dark scene tile
+TILE_ATTR_DIALOG        = $4002 ; p=0 pal=2 t=$002 — dialog area fill base (+ byte offset)
 ; ============================================================
 ; Object/Entity Struct Field Offsets  (RAM-001)
 ; ============================================================

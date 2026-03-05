@@ -229,7 +229,7 @@
           "file": "game_constants.asm + src/cutscene.asm + src/magic.asm",
           "priority": "medium",
           "effort": "medium",
-          "status": "todo"
+          "status": "done"
         },
         {
           "id": "MAGICB-005",

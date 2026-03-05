@@ -16,15 +16,15 @@
 DrawPrologueScene3:
 	ORI	#$0700, SR
 	MOVE.l	#$63B00003, D5
-	MOVE.w	#$A300, D4
+	MOVE.w	#TILE_ATTR_SCENE_BG, D4
 	BSR.w	DrawTilemapBlock_15x12
 	MOVE.l	#$64320003, D5
 	LEA	DrawPrologueScene3_Data, A0
-	MOVE.w	#$C180, D4
+	MOVE.w	#TILE_ATTR_CREDITS_DETAIL, D4
 	BSR.w	DrawTilemapBlock_13x10
 	MOVE.l	#$61820003, D5
 	LEA	Prologue3Str, A0
-	MOVE.w	#$84C0, D4
+	MOVE.w	#TILE_ATTR_TEXT, D4
 	BSR.w	DrawVerticalText
 	ANDI	#$F8FF, SR
 	RTS
@@ -36,18 +36,18 @@ DrawPrologueScene3:
 DrawPrologueScene4and5:
 	ORI	#$0700, SR
 	MOVE.l	#$60840003, D5
-	MOVE.w	#$A300, D4
+	MOVE.w	#TILE_ATTR_SCENE_BG, D4
 	BSR.w	DrawTilemapBlock_15x12
-	MOVE.l	#$61060003, D5
+	MOVE.l	#VDP_CMD_VRAM_WRITE_E106, D5
 	LEA	DrawPrologueScene4and5_Data, A0
 	MOVE.w	#$A200, D4
 	BSR.w	DrawTilemapBlock_13x10
 	MOVE.l	#$61A40003, D5
 	LEA	Prologue4Str, A0
-	MOVE.w	#$84C0, D4
+	MOVE.w	#TILE_ATTR_TEXT, D4
 	BSR.w	DrawVerticalText
 	MOVE.l	#$67B00003, D5
-	MOVE.w	#$E300, D4
+	MOVE.w	#TILE_ATTR_SCENE_FIRE, D4
 	BSR.w	DrawTilemapBlock_15x12
 	MOVE.l	#$68320003, D5
 	LEA	DrawPrologueScene4and5_Data2, A0
@@ -67,7 +67,7 @@ DrawPrologueScene6:
 	ORI	#$0700, SR
 	MOVE.l	#$648E0003, D5
 	LEA	Prologue6Str, A0
-	MOVE.w	#$84C0, D4
+	MOVE.w	#TILE_ATTR_TEXT, D4
 	BSR.w	DrawVerticalText
 	ANDI	#$F8FF, SR
 	RTS
@@ -666,7 +666,7 @@ WriteTownTile2x2:
 ; depends on room number ranges: 0-$F, $10-$1F, $20-$2A, $2B-$2D, $2E+).
 WriteTownTilemapToVRAM:
 	ORI	#$0700, SR
-	MOVE.l	#$40000003, VDP_control_port
+	MOVE.l	#VDP_CMD_VRAM_WRITE_PLANE_A, VDP_control_port
 	LEA	Tilemap_buffer_plane_a, A0
 	MOVE.w	#$0FFF, D4
 WriteTownTilemapToVRAM_Done:
@@ -678,7 +678,7 @@ WriteTownTilemapToVRAM_Done:
 	ADDI.w	#$0300, D2
 	MOVE.w	D2, VDP_data_port
 	DBF	D4, WriteTownTilemapToVRAM_Done
-	MOVE.l	#$60000003, VDP_control_port
+	MOVE.l	#VDP_CMD_VRAM_WRITE_PLANE_B, VDP_control_port
 	LEA	Tilemap_buffer_plane_b, A0
 	MOVE.w	#$0FFF, D4
 WriteTownTilemapToVRAM_WritePlaneB:
@@ -1444,7 +1444,7 @@ TitleScreen_Init:
 	MOVE.w	#$FF20, VScroll_base.w
 	MOVE.w	VScroll_base.w, D0
 	ANDI.w	#$01FF, D0
-	MOVE.l	#$40000010, VDP_control_port
+	MOVE.l	#VDP_CMD_VSRAM_WRITE_0, VDP_control_port
 	MOVE.w	D0, VDP_data_port
 	MOVE.w	D0, VDP_data_port
 	MOVE.b	#FLAG_TRUE, HScroll_update_busy.w
@@ -1707,8 +1707,8 @@ DrawIntroGraphics_WriteTile1:
 	DBF	D6, DrawIntroGraphics_WriteTile1
 	ADDI.l	#VDP_VRAM_ROW_STRIDE, D5
 	DBF	D7, DrawIntroGraphics_Done
-	MOVE.l	#$69800003, D4
-	MOVE.l	#$60AA0003, D5
+	MOVE.l	#VDP_CMD_VRAM_WRITE_E980, D4
+	MOVE.l	#VDP_CMD_VRAM_WRITE_E0AA, D5
 	LEA	SpriteTileIndexTable_619EA, A0
 	MOVE.w	#$000D, D7
 DrawIntroGraphics_WriteRow2:
@@ -1722,7 +1722,7 @@ DrawIntroGraphics_WriteTile2:
 	DBF	D6, DrawIntroGraphics_WriteTile2
 	ADDI.l	#VDP_VRAM_ROW_STRIDE, D5
 	DBF	D7, DrawIntroGraphics_WriteRow2
-	MOVE.l	#$69800003, D4
+	MOVE.l	#VDP_CMD_VRAM_WRITE_E980, D4
 	MOVE.w	#3, D7
 DrawIntroGraphics_WriteSwordGroup:
 	LEA	SpriteTileIndexTable_6195A, A0
@@ -1867,8 +1867,8 @@ MenuCursorSprite_Tick:
 ; 14 rows × 10 tiles. Interrupts disabled during the write.
 DrawPressStartText:
 	ORI	#$0700, SR
-	MOVE.l	#$69800003, D4
-	MOVE.l	#$60AA0003, D5
+	MOVE.l	#VDP_CMD_VRAM_WRITE_E980, D4
+	MOVE.l	#VDP_CMD_VRAM_WRITE_E0AA, D5
 	LEA	SpriteTileIndexTable_619EA, A0
 	MOVE.w	#$D, D7
 DrawPressStartText_Done:
@@ -1995,9 +1995,9 @@ EndingStep_WaitAndDrawOutro1:
 	SUBQ.w	#1, Ending_timer.w
 	BGT.b	EndingStep_WaitAndDrawOutro1_Return
 	MOVE.w	#PALETTE_IDX_ENDING_TEXT_BG, Palette_line_0_fade_in_target.w
-	MOVE.l	#$67140003, D5
+	MOVE.l	#VDP_CMD_VRAM_WRITE_E714, D5
 	LEA	Outro1Str, A0
-	MOVE.w	#$84C0, D4
+	MOVE.w	#TILE_ATTR_TEXT, D4
 	JSR	DrawVerticalText
 	MOVE.b	#1, Palette_fade_in_mask.w
 	ADDQ.w	#1, Ending_sequence_step.w
@@ -2025,9 +2025,9 @@ EndingStep_DrawOutro2:
 	BNE.b	EndingStep_DrawOutro2_Return
 	BSR.w	DrawEndingBorderPattern
 	MOVE.w	#PALETTE_IDX_ENDING_TEXT_BG, Palette_line_0_fade_in_target.w
-	MOVE.l	#$67140003, D5
+	MOVE.l	#VDP_CMD_VRAM_WRITE_E714, D5
 	LEA	Outro2Str, A0
-	MOVE.w	#$84C0, D4
+	MOVE.w	#TILE_ATTR_TEXT, D4
 	JSR	DrawVerticalText
 	MOVE.b	#1, Palette_fade_in_mask.w
 	ADDQ.w	#1, Ending_sequence_step.w
@@ -2085,9 +2085,9 @@ EndingStep_ScrollFireAndDrawOutro3:
 	BGT.b	EndingSequenceStep_Done
 	CMPI.w	#$FFCE, Ending_hscroll_offset.w
 	BGT.b	EndingStep_ScrollFireStep
-	MOVE.l	#$413C0003, D5
+	MOVE.l	#VDP_CMD_VRAM_WRITE_C13C, D5
 	LEA	Outro3Str, A0
-	MOVE.w	#$84C0, D4
+	MOVE.w	#TILE_ATTR_TEXT, D4
 	JSR	DrawVerticalText
 	MOVE.w	#PALETTE_IDX_ENDING_FIRE, Palette_line_0_fade_in_target.w
 	MOVE.b	#1, Palette_fade_in_mask.w
@@ -2116,9 +2116,9 @@ EndingStep_DrawOutro4:
 	TST.b	Palette_fade_in_mask.w
 	BNE.b	EndingStep_DrawOutro4_Return
 	BSR.w	FillDialogAreaWithPattern
-	MOVE.l	#$413C0003, D5
+	MOVE.l	#VDP_CMD_VRAM_WRITE_C13C, D5
 	LEA	Outro4Str, A0
-	MOVE.w	#$84C0, D4
+	MOVE.w	#TILE_ATTR_TEXT, D4
 	JSR	DrawVerticalText
 	MOVE.w	#PALETTE_IDX_ENDING_FIRE, Palette_line_0_fade_in_target.w
 	MOVE.b	#1, Palette_fade_in_mask.w
@@ -2144,9 +2144,9 @@ EndingStep_DrawOutro5:
 	TST.b	Palette_fade_in_mask.w
 	BNE.b	EndingStep_DrawOutro5_Return
 	BSR.w	FillDialogAreaWithPattern
-	MOVE.l	#$413C0003, D5
+	MOVE.l	#VDP_CMD_VRAM_WRITE_C13C, D5
 	LEA	Outro5Str, A0
-	MOVE.w	#$84C0, D4
+	MOVE.w	#TILE_ATTR_TEXT, D4
 	JSR	DrawVerticalText
 	MOVE.w	#PALETTE_IDX_ENDING_FIRE, Palette_line_0_fade_in_target.w
 	MOVE.b	#1, Palette_fade_in_mask.w
@@ -2292,8 +2292,8 @@ DisplayEndingTextLine:
 	MULU.w	#$0080, D1
 	SWAP	D1
 	ADD.l	D1, D5
-	ANDI.l	#$5FFF0003, D5
-	ORI.l	#$40000003, D5
+	ANDI.l	#VDP_CMD_VRAM_WRITE_ADDR_MASK, D5
+	ORI.l	#VDP_CMD_VRAM_WRITE_PLANE_A, D5
 	ORI	#$0700, SR
 	MOVE.l	D5, VDP_control_port
 	MOVE.w	#$04E0, D0
