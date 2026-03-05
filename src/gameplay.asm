@@ -110,13 +110,13 @@ GameState_LoadTown:
 	BGT.w	GameState_LoadTown_Loop
 	MOVE.w	Current_town.w, D0
 	CMPI.w	#TOWN_CARTHAHENA, D0
-	BLT.b	GameState_LoadTown_Loop2
+	BLT.b	GameState_LoadTown_SkipCarthahenaIdx
 	SUBQ.w	#1, D0
-GameState_LoadTown_Loop2:
+GameState_LoadTown_SkipCarthahenaIdx:
 	CMPI.w	#TOWN_KELTWICK, D0
-	BLT.b	GameState_LoadTown_Loop3
+	BLT.b	GameState_LoadTown_SkipKelwickIdx
 	SUBQ.w	#1, D0
-GameState_LoadTown_Loop3:
+GameState_LoadTown_SkipKelwickIdx:
 	LEA	Towns_visited.w, A0
 	MOVE.b	#$FF, (A0,D0.w)
 	MOVE.w	Current_town.w, D0
@@ -145,9 +145,9 @@ GameState_LoadTown_Loop:
 	MOVE.w	#TOWN_TILEMAP_VRAM_BASE_TOWN, Town_tilemap_vram_base.w
 	JSR	WriteTownTilemapToVRAM
 	TST.b	Skip_town_intro_after_fight.w
-	BNE.b	GameState_LoadTown_Loop4
+	BNE.b	GameState_LoadTown_SkipMusicLoad
 	JSR	LoadAndPlayAreaMusic
-GameState_LoadTown_Loop4:
+GameState_LoadTown_SkipMusicLoad:
 	CLR.b	Skip_town_intro_after_fight.w
 	MOVEA.l	Enemy_list_ptr.w, A6
 	BSET.b	#7, (A6)
@@ -158,10 +158,10 @@ GameState_LoadTown_Loop4:
 	TST.b	Tsarkon_is_dead.w
 	BNE.b	GameState_InitTownEntry_NormalPalette
 	MOVE.w	#PALETTE_IDX_TOWN_DARK, Palette_line_0_fade_target.w
-	BRA.b	GameState_InitTownEntry_NormalPalette_Loop2
+	BRA.b	GameState_InitTownEntry_StartFadeIn
 GameState_InitTownEntry_NormalPalette:
 	MOVE.w	#PALETTE_IDX_TOWN_TILES, Palette_line_0_fade_target.w
-GameState_InitTownEntry_NormalPalette_Loop2:
+GameState_InitTownEntry_StartFadeIn:
 	MOVE.w	Palette_line_1_index_saved.w, Palette_line_1_fade_target.w
 	MOVE.w	Palette_line_2_cycle_base.w, Palette_line_2_fade_target.w
 	MOVE.w	#PALETTE_IDX_TOWN_HUD, Palette_line_3_fade_target.w
@@ -210,29 +210,29 @@ GameState_TownExploration:
 
 GameState_TownExploration_Loop:
 	TST.b	Boss_event_trigger.w
-	BEQ.b	GameState_TownExploration_Loop2
+	BEQ.b	GameState_TownExploration_CheckTile
 	MOVE.w	Gameplay_state.w, Saved_game_state.w	
 	BSR.w	SavePlayerTownPosition	
 	MOVE.w	#GAMEPLAY_STATE_BOSS_BATTLE_INIT, Gameplay_state.w	
 	MOVE.b	#FLAG_TRUE, Fade_out_lines_mask.w	
 	RTS
 	
-GameState_TownExploration_Loop2:
+GameState_TownExploration_CheckTile:
 	BSR.w	GetCurrentTileType
 	CMPI.w	#TILE_TYPE_CASTLE, Current_tile_type.w
-	BEQ.b	GameState_TownExploration_Loop3
+	BEQ.b	GameState_TownExploration_EnterCastle
 	CMPI.w	#TILE_TYPE_EXIT, Current_tile_type.w
-	BEQ.b	GameState_TownExploration_Loop4
+	BEQ.b	GameState_TownExploration_ExitToOverworld
 	CMPI.w	#TILE_TYPE_ENTRANCE, Current_tile_type.w
-	BEQ.w	GameState_TownExploration_Loop5
+	BEQ.w	GameState_TownExploration_EnterBuilding
 	BRA.w	HandleOverworldMenuInput
-GameState_TownExploration_Loop3:
+GameState_TownExploration_EnterCastle:
 	PlaySound_b SOUND_TRANSITION
 	PlaySound SOUND_LEVEL_UP
 	MOVE.b	#FLAG_TRUE, Fade_out_lines_mask.w
 	MOVE.w	#GAMEPLAY_STATE_TRANSITION_TO_CASTLE_MAIN, Gameplay_state.w
-	BRA.w	GameState_TownExploration_Loop6
-GameState_TownExploration_Loop4:
+	BRA.w	GameState_TownExploration_SavePosition
+GameState_TownExploration_ExitToOverworld:
 	PlaySound_b SOUND_TRANSITION
 	PlaySound SOUND_LEVEL_UP
 	MOVE.b	#FLAG_TRUE, Fade_out_lines_mask.w
@@ -240,12 +240,12 @@ GameState_TownExploration_Loop4:
 	MOVE.b	#FLAG_TRUE, Player_is_moving.w
 	RTS
 
-GameState_TownExploration_Loop5:
+GameState_TownExploration_EnterBuilding:
 	PlaySound_b SOUND_TRANSITION
 	PlaySound SOUND_LEVEL_UP
 	MOVE.b	#FLAG_TRUE, Fade_out_lines_mask.w
 	ADDQ.w	#1, Gameplay_state.w
-GameState_TownExploration_Loop6:
+GameState_TownExploration_SavePosition:
 	MOVEA.l	Player_entity_ptr.w, A6
 	MOVE.w	obj_world_x(A6), Town_spawn_x.w
 	MOVE.w	obj_world_y(A6), D0
@@ -279,11 +279,11 @@ GameState_InitBuildingEntry:
 	JSR	LoadBattleHudGraphics
 	JSR	LoadTownBattleGraphics
 	TST.w	Saved_player_x_in_town.w
-	BGT.b	GameState_InitBuildingEntry_Loop2
+	BGT.b	GameState_InitBuildingEntry_SetSpawn
 	BSR.w	SearchTownNPCData
 	MOVE.w	Saved_town_room_1.w, Current_town_room.w
 	JSR	LoadAndPlayAreaMusic
-GameState_InitBuildingEntry_Loop2:
+GameState_InitBuildingEntry_SetSpawn:
 	MOVE.w	Saved_player_x_in_town.w, Player_spawn_position_x.w
 	MOVE.w	Town_player_spawn_y.w, Player_spawn_tile_y.w
 	MOVE.w	Town_saved_camera_x.w, Town_camera_spawn_x.w
@@ -319,7 +319,7 @@ GameState_BuildingInterior:
 
 GameState_BuildingInterior_NoBossEvent:
 	TST.b	Boss_event_trigger.w
-	BEQ.b	GameState_BuildingInterior_NoBossEvent_Loop2
+	BEQ.b	GameState_BuildingInterior_CheckTile
 	MOVEA.l	Player_entity_ptr.w, A6	
 	MOVE.w	obj_world_x(A6), Saved_player_x_in_town.w	
 	MOVE.w	obj_world_y(A6), Town_player_spawn_y.w	
@@ -331,14 +331,14 @@ GameState_BuildingInterior_NoBossEvent:
 	MOVE.b	#FLAG_TRUE, Fade_out_lines_mask.w	
 	RTS
 	
-GameState_BuildingInterior_NoBossEvent_Loop2:
+GameState_BuildingInterior_CheckTile:
 	BSR.w	GetCurrentTileType
 	CMPI.w	#TILE_TYPE_EXIT, Current_tile_type.w
-	BEQ.b	GameState_BuildingInterior_NoBossEvent_Loop3
+	BEQ.b	GameState_BuildingInterior_ExitToTown
 	CMPI.w	#TILE_TYPE_ENTRANCE, Current_tile_type.w
-	BEQ.b	GameState_BuildingInterior_NoBossEvent_Loop4
+	BEQ.b	GameState_BuildingInterior_GoToNextFloor
 	BRA.w	HandleOverworldMenuInput
-GameState_BuildingInterior_NoBossEvent_Loop3:
+GameState_BuildingInterior_ExitToTown:
 	PlaySound_b SOUND_TRANSITION
 	PlaySound SOUND_LEVEL_UP
 	MOVE.b	#FLAG_TRUE, Fade_out_lines_mask.w
@@ -347,7 +347,7 @@ GameState_BuildingInterior_NoBossEvent_Loop3:
 	MOVE.w	#DIRECTION_DOWN, Player_direction.w
 	RTS
 
-GameState_BuildingInterior_NoBossEvent_Loop4:
+GameState_BuildingInterior_GoToNextFloor:
 	PlaySound_b SOUND_TRANSITION
 	MOVE.b	#FLAG_TRUE, Fade_out_lines_mask.w
 	ADDQ.w	#1, Gameplay_state.w
@@ -366,11 +366,11 @@ GameState_BuildingInterior_NoBossEvent_Loop:
 	JSR	ResetScriptAndInitDialogue
 	PRINT 	AwakenVoiceStr
 	TST.b	Frying_pan_knockout_flag.w
-	BEQ.b	GameState_BuildingInterior_NoBossEvent_Loop5
+	BEQ.b	GameState_BuildingInterior_CheckBanshee
 	PRINT 	CarelessWarningStr	
 	CLR.b	Frying_pan_knockout_flag.w	
 	BRA.b	GameState_AwakeningMessage_SetState	
-GameState_BuildingInterior_NoBossEvent_Loop5:
+GameState_BuildingInterior_CheckBanshee:
 	TST.b	Banshee_powder_active.w
 	BNE.b	GameState_AwakeningMessage_SetState
 	PRINT 	AriseWarriorStr
@@ -390,7 +390,7 @@ GameState_ReadAwakeningMessage:
 	TST.b	Script_text_complete.w
 	BEQ.b	GameState_ReadAwakening_Dismiss_Loop
 	TST.b	Script_has_continuation.w
-	BNE.b	GameState_ReadAwakening_Dismiss_Loop2
+	BNE.b	GameState_ReadAwakening_CheckPageTurn
 	CheckButton BUTTON_BIT_B
 	BNE.b	GameState_ReadAwakening_Dismiss
 	CheckButton BUTTON_BIT_C
@@ -409,11 +409,11 @@ GameState_ReadAwakening_Dismiss_Loop:
 	JSR	ProcessScriptText
 	RTS
 
-GameState_ReadAwakening_Dismiss_Loop2:
+GameState_ReadAwakening_CheckPageTurn:
 	CheckButton BUTTON_BIT_C
-	BEQ.b	GameState_ReadAwakening_Dismiss_Loop3
+	BEQ.b	GameState_ReadAwakening_WaitPageTurn
 	JSR	InitDialogueWindow
-GameState_ReadAwakening_Dismiss_Loop3:
+GameState_ReadAwakening_WaitPageTurn:
 	RTS
 
 ; --- GameState_FryingPanDelay ($29) ---
@@ -460,27 +460,27 @@ GameState_FryingPanDelay_Return_Loop:
 	CLR.w	Player_mhp.w	
 	CLR.l	Player_experience.w	
 	MOVE.w	Equipped_sword.w, D1	
-	BLT.w	GameState_FryingPanDelay_Return_Loop2	
+	BLT.w	GameState_FryingPanDelay_ApplySwordBonus	
 	LEA	EquipmentToStatModifierMap, A0	
 	ANDI.w	#$00FF, D1	
 	ADD.w	D1, D1	
 	MOVE.w	(A0,D1.w), Player_str.w	
-GameState_FryingPanDelay_Return_Loop2:
+GameState_FryingPanDelay_ApplySwordBonus:
 	MOVE.w	Equipped_shield.w, D1	
-	BLT.w	GameState_FryingPanDelay_Return_Loop3	
+	BLT.w	GameState_FryingPanDelay_ApplyShieldBonus	
 	LEA	EquipmentToStatModifierMap, A0	
 	ANDI.w	#$FF, D1	
 	ADD.w	D1, D1	
 	MOVE.w	(A0,D1.w), Player_ac.w	
-GameState_FryingPanDelay_Return_Loop3:
+GameState_FryingPanDelay_ApplyShieldBonus:
 	MOVE.w	Equipped_armor.w, D1	
-	BLT.w	GameState_FryingPanDelay_Return_Loop4	
+	BLT.w	GameState_FryingPanDelay_ApplyArmorBonus	
 	LEA	EquipmentToStatModifierMap, A0	
 	ANDI.w	#$FF, D1	
 	ADD.w	D1, D1	
 	MOVE.w	(A0,D1.w), D1	
 	ADD.w	D1, Player_ac.w	
-GameState_FryingPanDelay_Return_Loop4:
+GameState_FryingPanDelay_ApplyArmorBonus:
 	JSR	UpgradeLevelStats	
 	RTS
 	
@@ -491,7 +491,7 @@ GameState_ReadFryingPanMessage:
 	TST.b	Script_text_complete.w
 	BEQ.b	GameState_ReadFryingPan_Dismiss_Loop
 	TST.b	Script_has_continuation.w
-	BNE.w	GameState_ReadFryingPan_Dismiss_Loop2
+	BNE.w	GameState_ReadFryingPan_CheckPageTurn
 	CheckButton BUTTON_BIT_B
 	BNE.b	GameState_ReadFryingPan_Dismiss
 	CheckButton BUTTON_BIT_C
@@ -505,13 +505,13 @@ GameState_ReadFryingPan_Dismiss:
 	MOVE.w	#GAMEPLAY_STATE_BUILDING_INTERIOR, Gameplay_state.w
 	RTS
 
-GameState_ReadFryingPan_Dismiss_Loop2:
+GameState_ReadFryingPan_CheckPageTurn:
 	CheckButton BUTTON_BIT_C
-	BEQ.b	GameState_ReadFryingPan_Dismiss_Loop3
+	BEQ.b	GameState_ReadFryingPan_WaitPageTurn
 	JSR	InitDialogueWindow
 GameState_ReadFryingPan_Dismiss_Loop:
 	JSR	ProcessScriptText
-GameState_ReadFryingPan_Dismiss_Loop3:
+GameState_ReadFryingPan_WaitPageTurn:
 	RTS
 
 ; ======================================================================
@@ -547,7 +547,7 @@ GameState_SecondFloorActive:
 	CMPI.w	#TILE_TYPE_EXIT, Current_tile_type.w
 	BEQ.b	GameState_SecondFloorActive_Loop
 	CMPI.w	#TILE_TYPE_ENTRANCE, Current_tile_type.w
-	BEQ.w	GameState_SecondFloorActive_Loop2
+	BEQ.w	GameState_SecondFloorActive_GoToThirdFloor
 	BRA.w	HandleOverworldMenuInput
 GameState_SecondFloorActive_Loop:
 	MOVE.b	#FLAG_TRUE, Fade_out_lines_mask.w
@@ -570,7 +570,7 @@ GameState_SecondFloorActive_Loop:
 	MOVE.w	#DIRECTION_DOWN, Player_direction.w
 	RTS
 
-GameState_SecondFloorActive_Loop2:
+GameState_SecondFloorActive_GoToThirdFloor:
 	PlaySound_b SOUND_TRANSITION
 	MOVE.b	#FLAG_TRUE, Fade_out_lines_mask.w
 	ADDQ.w	#1, Gameplay_state.w
@@ -650,11 +650,11 @@ GameState_TransitionToCastleMain:
 	JSR	LoadBattleHudGraphics
 	JSR	LoadWorldBattleGraphics
 	TST.w	Saved_player_x_in_town.w
-	BGT.b	GameState_TransitionToCastleMain_Loop2
+	BGT.b	GameState_TransitionToCastleMain_SetSpawn
 	BSR.w	LoadTownStateData
 	MOVE.w	Saved_town_room_1.w, Current_town_room.w
 	JSR	LoadAndPlayAreaMusic
-GameState_TransitionToCastleMain_Loop2:
+GameState_TransitionToCastleMain_SetSpawn:
 	MOVE.w	Saved_player_x_in_town.w, Player_spawn_position_x.w
 	MOVE.w	Town_player_spawn_y.w, Player_spawn_tile_y.w
 	MOVE.w	Town_saved_camera_x.w, Town_camera_spawn_x.w
@@ -688,11 +688,11 @@ GameState_CastleRoom1Active:
 GameState_CastleRoom1Active_Loop:
 	BSR.w	GetCurrentTileType
 	CMPI.w	#TILE_TYPE_EXIT, Current_tile_type.w
-	BEQ.b	GameState_CastleRoom1Active_Loop2
+	BEQ.b	GameState_CastleRoom1Active_ExitToTown
 	CMPI.w	#TILE_TYPE_ENTRANCE, Current_tile_type.w
-	BEQ.w	GameState_CastleRoom1Active_Loop3
+	BEQ.w	GameState_CastleRoom1Active_GoToRoom2
 	BRA.w	HandleOverworldMenuInput
-GameState_CastleRoom1Active_Loop2:
+GameState_CastleRoom1Active_ExitToTown:
 	PlaySound_b SOUND_TRANSITION
 	PlaySound SOUND_LEVEL_UP
 	MOVE.b	#FLAG_TRUE, Fade_out_lines_mask.w
@@ -702,7 +702,7 @@ GameState_CastleRoom1Active_Loop2:
 	MOVE.w	#DIRECTION_DOWN, Player_direction.w
 	RTS
 
-GameState_CastleRoom1Active_Loop3:
+GameState_CastleRoom1Active_GoToRoom2:
 	PlaySound_b SOUND_TRANSITION
 	MOVE.b	#FLAG_TRUE, Fade_out_lines_mask.w
 	ADDQ.w	#1, Gameplay_state.w
@@ -742,7 +742,7 @@ GameState_CastleRoom2Active:
 	CMPI.w	#TILE_TYPE_EXIT, Current_tile_type.w
 	BEQ.b	GameState_CastleRoom2Active_Loop
 	CMPI.w	#TILE_TYPE_ENTRANCE, Current_tile_type.w
-	BEQ.b	GameState_CastleRoom2Active_Loop2
+	BEQ.b	GameState_CastleRoom2Active_GoToRoom3
 	BRA.w	HandleOverworldMenuInput
 GameState_CastleRoom2Active_Loop:
 	PlaySound_b SOUND_TRANSITION
@@ -759,7 +759,7 @@ GameState_CastleRoom2Active_Loop:
 	MOVE.w	#DIRECTION_DOWN, Player_direction.w
 	RTS
 
-GameState_CastleRoom2Active_Loop2:
+GameState_CastleRoom2Active_GoToRoom3:
 	PlaySound_b SOUND_TRANSITION	
 	MOVE.b	#FLAG_TRUE, Fade_out_lines_mask.w	
 	ADDQ.w	#1, Gameplay_state.w	
@@ -854,10 +854,10 @@ GameState_BattleInitialize:
 	MOVE.l	D0, obj_pos_x_fixed(A6)
 	JSR	InitializeEncounter
 	MOVE.w	Readied_magic.w, D0
-	BLT.b	GameState_BattleInitialize_Loop2
+	BLT.b	GameState_BattleInitialize_DisplayHud
 	ANDI.w	#$00FF, D0
 	JSR	LoadMagicGraphics
-GameState_BattleInitialize_Loop2:
+GameState_BattleInitialize_DisplayHud:
 	JSR	DisplayPlayerMaxHpMp
 	JSR	DisplayReadiedMagicName
 	CLR.b	Player_in_first_person_mode.w
@@ -876,9 +876,9 @@ GameState_BattleActive:
 	TST.w	Player_hp.w
 	BGT.b	GameState_BattleActive_Loop
 	TST.b	Bully_first_fight_won.w
-	BNE.b	GameState_BattleActive_Loop2
+	BNE.b	GameState_BattleActive_TriggerDeath
 	CLR.b	Soldier_fight_event_trigger.w
-GameState_BattleActive_Loop2:
+GameState_BattleActive_TriggerDeath:
 	PlaySound SOUND_SPELL_CAST
 	MOVE.w	#GAMEPLAY_STATE_BEGIN_RESURRECTION, Gameplay_state.w
 	MOVE.b	#8, Fade_out_lines_mask.w
@@ -896,9 +896,9 @@ GameState_BattleExit:
 	TST.w	Player_hp.w
 	BGT.b	GameState_BattleExit_Loop
 	TST.b	Bully_first_fight_won.w	
-	BNE.b	GameState_BattleExit_Loop2	
+	BNE.b	GameState_BattleExit_TriggerDeath	
 	CLR.b	Soldier_fight_event_trigger.w	
-GameState_BattleExit_Loop2:
+GameState_BattleExit_TriggerDeath:
 	PlaySound SOUND_SPELL_CAST	
 	MOVE.w	#GAMEPLAY_STATE_BEGIN_RESURRECTION, Gameplay_state.w	
 	MOVE.b	#8, Fade_out_lines_mask.w	
@@ -911,19 +911,19 @@ GameState_BattleExit_Loop:
 	MOVE.w	Saved_player_direction.w, Player_direction.w
 	CLR.b	Is_in_battle.w
 	TST.b	Soldier_fight_event_trigger.w
-	BEQ.b	GameState_BattleExit_Loop3
+	BEQ.b	GameState_BattleExit_CheckCaveReload
 	CLR.b	Soldier_fight_event_trigger.w
 	MOVE.b	#FLAG_TRUE, Bully_first_fight_won.w
 	MOVE.b	#FLAG_TRUE, Skip_town_intro_after_fight.w
 	BRA.w	GameState_ReturnFromBossBattle
-GameState_BattleExit_Loop3:
+GameState_BattleExit_CheckCaveReload:
 	TST.b	Is_in_cave.w
-	BNE.b	GameState_BattleExit_Loop4
+	BNE.b	GameState_BattleExit_ReloadCave
 	MOVE.w	#GAMEPLAY_STATE_OVERWORLD_RELOAD, Gameplay_state.w
-	BRA.b	GameState_BattleExit_Loop5
-GameState_BattleExit_Loop4:
+	BRA.b	GameState_BattleExit_ClearEntities
+GameState_BattleExit_ReloadCave:
 	MOVE.w	#GAMEPLAY_STATE_ENTERING_CAVE, Gameplay_state.w
-GameState_BattleExit_Loop5:
+GameState_BattleExit_ClearEntities:
 	JSR	ClearAllEnemyEntities
 	CLR.w	Sprite_attr_count.w
 	JSR	FlushSpriteAttributesToVDP
@@ -1034,11 +1034,11 @@ GameState_EnteringCave:
 	JSR	LoadFirstPersonBattleGraphics
 	BSR.w	DisplayKimsAndCompass
 	TST.b	Cave_light_active.w
-	BEQ.b	GameState_EnteringCave_Loop2
+	BEQ.b	GameState_EnteringCave_ApplyLightPalette
 	MOVE.w	#PALETTE_IDX_CAVE_FLOOR_LIT, Palette_line_1_index.w
 	MOVE.w	#PALETTE_IDX_CAVE_ANIM_BASE, Palette_line_2_index.w
 	JSR	LoadPalettesFromTable
-GameState_EnteringCave_Loop2:
+GameState_EnteringCave_ApplyLightPalette:
 	JSR	EnableDisplay
 	MOVE.w	#ENCOUNTER_RATE_CAVE, Encounter_rate.w
 	BSR.w	CheckLevelUpAndRestoreMusic
@@ -1110,14 +1110,14 @@ CheckLevelUpAndRestoreMusic: ; level up
 	BRA.b	GameState_LevelUpComplete_Check_Loop
 GameState_LevelUpComplete_Check:
 	TST.b	Is_in_cave.w
-	BEQ.b	GameState_LevelUpComplete_Check_Loop2
+	BEQ.b	GameState_LevelUpComplete_Check_OverworldMusic
 	BSR.w	PlayCaveMusic
-	BRA.b	GameState_LevelUpComplete_Check_Loop3
-GameState_LevelUpComplete_Check_Loop2:
+	BRA.b	GameState_LevelUpComplete_Check_ClearBlock
+GameState_LevelUpComplete_Check_OverworldMusic:
 	MOVE.b	#SOUND_OVERWORLD_MUSIC, D0
 	MOVE.w	D0, Current_area_music.w
 	JSR	QueueSoundEffect
-GameState_LevelUpComplete_Check_Loop3:
+GameState_LevelUpComplete_Check_ClearBlock:
 	CLR.b	Player_input_blocked.w
 GameState_LevelUpComplete_Check_Loop:
 	JSR	DisplayPlayerHpMp
@@ -1147,14 +1147,14 @@ GameState_CaveExploration_CheckDeath:
 	
 GameState_CaveExploration_CheckDeath_Loop:
 	TST.b	Boss_event_trigger.w
-	BEQ.b	GameState_CaveExploration_CheckDeath_Loop2
+	BEQ.b	GameState_CaveExploration_CheckMovement
 	MOVE.w	Gameplay_state.w, Saved_game_state.w
 	MOVE.w	#GAMEPLAY_STATE_BOSS_BATTLE_INIT, Gameplay_state.w
 	PlaySound SOUND_LEVEL_UP
 	MOVE.b	#FLAG_TRUE, Fade_out_lines_mask.w
 	RTS
 
-GameState_CaveExploration_CheckDeath_Loop2: ; process movement actions in overworld
+GameState_CaveExploration_CheckMovement: ; process movement actions in overworld
 	TST.b	Player_move_forward_in_overworld.w
 	BNE.w	OverworldMovementTick_ClearEncounterCheck
 	TST.b	Player_move_backward_in_overworld.w
@@ -1166,12 +1166,12 @@ GameState_CaveExploration_CheckDeath_Loop2: ; process movement actions in overwo
 	TST.b	Dialog_active_flag.w
 	BNE.b	OverworldMovementTick_HandleMenu
 	TST.b	Is_in_cave.w
-	BEQ.w	GameState_CaveExploration_CheckDeath_Loop3
+	BEQ.w	GameState_CaveExploration_CheckOverworld
 	BSR.w	CheckCaveInteractions
-	BRA.b	GameState_CaveExploration_CheckDeath_Loop4
-GameState_CaveExploration_CheckDeath_Loop3:
+	BRA.b	GameState_CaveExploration_CheckReward
+GameState_CaveExploration_CheckOverworld:
 	BSR.w	CheckOverworldInteractions
-GameState_CaveExploration_CheckDeath_Loop4:
+GameState_CaveExploration_CheckReward:
 	TST.b	Dialog_state_flag.w
 	BNE.b	OverworldMovementTick_HandleMenu
 	TST.b	Found_something_nearby.w
@@ -1240,12 +1240,12 @@ GameState_EncounterInitialize:
 	MOVE.w	Player_map_sector_x.w, D1
 	ADD.w	D1, D0
 	MOVE.b	(A0,D0.w), Encounter_group_index.w
-	BRA.b	GameState_EncounterInitialize_Loop2
+	BRA.b	GameState_EncounterInitialize_PickVariant
 GameState_EncounterInitialize_Loop:
 	LEA	EnemyEncounterTypesByCaveRoom, A0
 	MOVE.w	Current_cave_room.w, D0
 	MOVE.b	(A0,D0.w), Encounter_group_index.w
-GameState_EncounterInitialize_Loop2:
+GameState_EncounterInitialize_PickVariant:
 	JSR	GetRandomNumber
 	ANDI.w	#3, D0
 	MOVE.w	D0, Random_number.w
@@ -1273,17 +1273,17 @@ GameState_EncounterGraphicsFadeIn:
 	BNE.b	GameState_EncounterGraphicsFadeIn_Loop
 	ANDI.w	#7, D0
 	BNE.b	GameState_EncounterGraphicsFadeIn_Return
-	BRA.b	GameState_EncounterGraphicsFadeIn_Loop2
+	BRA.b	GameState_EncounterGraphicsFadeIn_CheckPhase
 GameState_EncounterGraphicsFadeIn_Loop:
 	ANDI.w	#3, D0	
 	BNE.b	GameState_EncounterGraphicsFadeIn_Return	
-GameState_EncounterGraphicsFadeIn_Loop2:
+GameState_EncounterGraphicsFadeIn_CheckPhase:
 	CMPI.w	#ENCOUNTER_FADE_PHASES, Dialog_phase.w
-	BLT.b	GameState_EncounterGraphicsFadeIn_Loop3
+	BLT.b	GameState_EncounterGraphicsFadeIn_DrawColumn
 	BSR.w	FlushDialogTileBuffer
 	MOVE.w	#GAMEPLAY_STATE_ENCOUNTER_PAUSE_BEFORE_BATTLE, Gameplay_state.w
 	BRA.b	GameState_EncounterGraphicsFadeIn_Return
-GameState_EncounterGraphicsFadeIn_Loop3:
+GameState_EncounterGraphicsFadeIn_DrawColumn:
 	BSR.w	UpdateDialogTileColumn
 GameState_EncounterGraphicsFadeIn_Return:
 	RTS
@@ -1367,11 +1367,11 @@ GameState_LevelUpComplete_Exit:
 	MOVE.w	Saved_game_state.w, Gameplay_state.w
 	MOVE.b	#SOUND_OVERWORLD_MUSIC, D0
 	TST.b	Is_in_cave.w
-	BEQ.b	GameState_LevelUpComplete_Exit_Loop2
+	BEQ.b	GameState_LevelUpComplete_OverworldMusic
 	BSR.w	PlayCaveMusic
 	RTS
 
-GameState_LevelUpComplete_Exit_Loop2:
+GameState_LevelUpComplete_OverworldMusic:
 	MOVE.w	D0, Current_area_music.w
 	JSR	QueueSoundEffect
 GameState_LevelUpComplete_Exit_Loop:
@@ -1390,10 +1390,10 @@ GameState_ReturnToFirstPersonView:
 	MOVE.w	#GAMEPLAY_STATE_CAVE_EXPLORATION, Gameplay_state.w
 	MOVE.w	#PALETTE_IDX_CAVE_WALLS, Palette_line_0_index.w
 	TST.b	Cave_light_active.w
-	BEQ.b	GameState_ReturnToFirstPersonView_Loop2
+	BEQ.b	GameState_ReturnToFirstPersonView_ApplyLightPalette
 	MOVE.w	#PALETTE_IDX_CAVE_FLOOR_LIT, Palette_line_1_index.w
 	MOVE.w	#PALETTE_IDX_CAVE_ANIM_BASE, Palette_line_2_index.w
-GameState_ReturnToFirstPersonView_Loop2:
+GameState_ReturnToFirstPersonView_ApplyLightPalette:
 	PlaySound SOUND_OVERWORLD_RETURN
 	MOVE.w	#PALETTE_IDX_TOWN_HUD, Palette_line_3_index.w
 	CLR.b	Encounter_triggered.w
@@ -1416,18 +1416,18 @@ GameState_DialogDisplay:
 	BNE.w	GameState_DialogDisplay_Loop
 	ANDI.w	#7, D0
 	BNE.b	GameState_DialogDisplay_Return
-	BRA.b	GameState_DialogDisplay_Loop2
+	BRA.b	GameState_DialogDisplay_CheckPhase
 GameState_DialogDisplay_Loop:
 	ANDI.w	#3, D0	
 	BNE.b	GameState_DialogDisplay_Return	
-GameState_DialogDisplay_Loop2:
+GameState_DialogDisplay_CheckPhase:
 	CMPI.w	#ENCOUNTER_FADE_PHASES, Dialog_phase.w
-	BLT.b	GameState_DialogDisplay_Loop3
+	BLT.b	GameState_DialogDisplay_DrawColumn
 	CLR.b	Dialog_state_flag.w
 	BSR.w	FlushDialogTileBuffer
 	MOVE.w	Saved_game_state.w, Gameplay_state.w
 	BRA.b	GameState_DialogDisplay_Return
-GameState_DialogDisplay_Loop3:
+GameState_DialogDisplay_DrawColumn:
 	BSR.w	UpdateDialogTileColumn
 GameState_DialogDisplay_Return:
 	RTS
@@ -1455,18 +1455,18 @@ GameState_BossBattleInit:
 GameState_BossBattleInit_Done:
 	MOVE.b	(A0)+, D1
 	TST.b	D1
-	BNE.b	GameState_BossBattleInit_Loop2
+	BNE.b	GameState_BossBattleInit_FoundActiveBoss
 	ADDQ.w	#1, D0
 	DBF	D7, GameState_BossBattleInit_Done
-GameState_BossBattleInit_Loop2:
+GameState_BossBattleInit_FoundActiveBoss:
 	CLR.b	Boss_event_trigger.w
 	CLR.b	-$2(A0)
 	MOVE.w	D0, Battle_type.w
 	LEA	Boss_battle_flags.w, A0
 	MOVE.w	#3, D7
-GameState_BossBattleInit_Loop2_Done:
+GameState_BossBattleInit_ClearFlagNext:
 	CLR.l	(A0)+
-	DBF	D7, GameState_BossBattleInit_Loop2_Done
+	DBF	D7, GameState_BossBattleInit_ClearFlagNext
 	BSR.w	ClearAllEnemyEntities
 	LEA	BossBattleObjectInitPtrs, A0
 	MOVE.w	Battle_type.w, D0
@@ -1535,7 +1535,7 @@ GameState_ReturnFromBossBattle:
 	
 GameState_ReturnFromBossBattle_Loop:
 	TST.b	Fade_out_lines_mask.w
-	BNE.w	GameState_ReturnFromBossBattle_Loop2
+	BNE.w	GameState_ReturnFromBossBattle_WaitFade
 	JSR	DisableVDPDisplay
 	CLR.b	Is_boss_battle.w
 	CLR.b	Is_in_battle.w
@@ -1563,15 +1563,15 @@ GameState_ReturnFromBossBattle_Loop:
 	SUBQ.w	#1, D0
 	MOVE.w	D0, Gameplay_state.w
 	TST.b	Is_in_cave.w
-	BNE.b	GameState_ReturnFromBossBattle_Loop3
+	BNE.b	GameState_ReturnFromBossBattle_InCaveMode
 	MOVE.w	Current_area_music.w, D0
 	JSR	QueueSoundEffect
-	BRA.b	GameState_ReturnFromBossBattle_Loop4
-GameState_ReturnFromBossBattle_Loop3:
+	BRA.b	GameState_ReturnFromBossBattle_EnableDisplay
+GameState_ReturnFromBossBattle_InCaveMode:
 	MOVE.b	#FLAG_TRUE, Player_in_first_person_mode.w
-GameState_ReturnFromBossBattle_Loop4:
+GameState_ReturnFromBossBattle_EnableDisplay:
 	JSR	EnableDisplay
-GameState_ReturnFromBossBattle_Loop2:
+GameState_ReturnFromBossBattle_WaitFade:
 	RTS
 
 ; ======================================================================
@@ -1606,30 +1606,30 @@ GameState_ProcessResurrection:
 	CLR.b	Cave_light_active.w
 	CLR.w	Cave_light_timer.w
 	TST.b	Player_greatly_poisoned.w
-	BNE.b	GameState_ProcessResurrection_Loop2
+	BNE.b	GameState_ProcessResurrection_HalveKims
 	CLR.w	Player_poisoned.w
-GameState_ProcessResurrection_Loop2: ; ressurected in church?
+GameState_ProcessResurrection_HalveKims: ; ressurected in church?
 	MOVE.w	Player_mhp.w, Player_hp.w
 	MOVE.w	Player_mmp.w, Player_mp.w
 	TST.b	Banshee_powder_active.w
-	BNE.w	GameState_ProcessResurrection_Loop3
+	BNE.w	GameState_ProcessResurrection_InitTown
 	LEA	Player_kims.w, A0
 	CLR.l	D2
 	MOVE.w	#3, D4
-GameState_ProcessResurrection_Loop2_Done:
+GameState_ProcessResurrection_BcdByteLoop:
 	CLR.l	D0
 	MOVE.b	(A0), D0
 	CLR.l	D1
 	MOVE.b	D0, D1
 	ANDI.b	#$F0, D1
-	BEQ.b	GameState_ProcessResurrection_Loop4
+	BEQ.b	GameState_ProcessResurrection_BcdHighZero
 	LSR.b	#4, D1
 	DIVU.w	#2, D1
-GameState_ProcessResurrection_Loop4:
+GameState_ProcessResurrection_BcdHighZero:
 	TST.w	D2
-	BEQ.b	GameState_ProcessResurrection_Loop5
+	BEQ.b	GameState_ProcessResurrection_BcdHighNoCarry
 	ADDQ.w	#5, D1
-GameState_ProcessResurrection_Loop5:
+GameState_ProcessResurrection_BcdHighNoCarry:
 	CLR.l	D2
 	MOVE.l	D1, D2
 	SWAP	D2
@@ -1637,20 +1637,20 @@ GameState_ProcessResurrection_Loop5:
 	CLR.l	D3
 	MOVE.b	D0, D3
 	ANDI.b	#$0F, D3
-	BEQ.b	GameState_ProcessResurrection_Loop6
+	BEQ.b	GameState_ProcessResurrection_BcdLowZero
 	DIVU.w	#2, D3
-GameState_ProcessResurrection_Loop6:
+GameState_ProcessResurrection_BcdLowZero:
 	TST.w	D2
-	BEQ.b	GameState_ProcessResurrection_Loop7
+	BEQ.b	GameState_ProcessResurrection_BcdLowNoCarry
 	ADDQ.w	#5, D3
-GameState_ProcessResurrection_Loop7:
+GameState_ProcessResurrection_BcdLowNoCarry:
 	CLR.l	D2
 	MOVE.l	D3, D2
 	SWAP	D2
 	OR.b	D1, D3
 	MOVE.b	D3, (A0)+
-	DBF	D4, GameState_ProcessResurrection_Loop2_Done
-GameState_ProcessResurrection_Loop3:
+	DBF	D4, GameState_ProcessResurrection_BcdByteLoop
+GameState_ProcessResurrection_InitTown:
 	BSR.w	InitializeTownMode
 	MOVE.w	#GAMEPLAY_STATE_INIT_BUILDING_ENTRY, Gameplay_state.w
 	MOVE.w	Saved_town_room_1.w, Current_town_room.w
@@ -1696,7 +1696,7 @@ GameState_WaitForNotificationDismiss:
 	TST.b	Window_tilemap_draw_pending.w
 	BNE.b	GameState_WaitNotification_Dismiss_Loop
 	TST.b	Script_text_complete.w
-	BEQ.b	GameState_WaitNotification_Dismiss_Loop2
+	BEQ.b	GameState_WaitNotification_ProcessText
 	CheckButton BUTTON_BIT_C
 	BNE.b	GameState_WaitNotification_Dismiss
 	CheckButton BUTTON_BIT_B
@@ -1707,7 +1707,7 @@ GameState_WaitNotification_Dismiss:
 	JSR	DrawStatusHudWindow
 	MOVE.w	#GAMEPLAY_STATE_OVERWORLD_ACTIVE, Gameplay_state.w
 	CLR.b	Player_input_blocked.w
-GameState_WaitNotification_Dismiss_Loop2:
+GameState_WaitNotification_ProcessText:
 	JSR	ProcessScriptText
 GameState_WaitNotification_Dismiss_Loop:
 	RTS
@@ -2148,10 +2148,10 @@ HandleOverworldMenuInput_Return:
 OverworldMenuStateJumpTable:
 	BRA.w	OverworldMenuStateJumpTable_Loop
 	BRA.w	OverworldMenuState0_Return_Loop	
-	BRA.w	OverworldMenuState0_Return_Loop2	
-	BRA.w	OverworldMenuState0_Return_Loop3
+	BRA.w	OverworldMenuMsgSpeed_HandleInput	
+	BRA.w	OverworldMenuOptions_Init
 	BRA.w	InitMenuCursorDefaults_Loop
-	BRA.w	InitMenuCursorDefaults_Loop2
+	BRA.w	InitMenuCursorDefaults_ExecuteAction
 OverworldMenuStateJumpTable_Loop:
 	TST.b	Window_tilemap_draw_active.w
 	BNE.b	OverworldMenuState0_Return
@@ -2172,21 +2172,21 @@ OverworldMenuState0_Return_Loop:
 	CLR.w	Main_menu_selection.w	
 	RTS
 	
-OverworldMenuState0_Return_Loop2:
+OverworldMenuMsgSpeed_HandleInput:
 	TST.b	Window_tilemap_draw_active.w	
-	BNE.w	OverworldMenuState0_Return_Loop4	
+	BNE.w	OverworldMenuMsgSpeed_WaitDraw	
 	MOVE.w	#BUTTON_BIT_B, D2	
 	BSR.w	CheckButtonPress	
-	BEQ.b	OverworldMenuState0_Return_Loop5	
+	BEQ.b	OverworldMenuMsgSpeed_CheckConfirm	
 	PlaySound_b SOUND_MENU_CANCEL	
 	CLR.w	Overworld_menu_state.w	
 	TriggerWindowRedraw WINDOW_DRAW_MSG_SPEED
 	RTS
 	
-OverworldMenuState0_Return_Loop5:
+OverworldMenuMsgSpeed_CheckConfirm:
 	MOVE.w	#BUTTON_BIT_C, D2	
 	BSR.w	CheckButtonPress	
-	BEQ.b	OverworldMenuState0_Return_Loop6	
+	BEQ.b	OverworldMenuMsgSpeed_MoveCursor	
 	PlaySound_b SOUND_MENU_SELECT	
 	MOVE.w	Main_menu_selection.w, D0	
 	MOVE.b	D0, Message_speed.w	
@@ -2194,15 +2194,15 @@ OverworldMenuState0_Return_Loop5:
 	TriggerWindowRedraw WINDOW_DRAW_MSG_SPEED
 	RTS
 	
-OverworldMenuState0_Return_Loop6:
+OverworldMenuMsgSpeed_MoveCursor:
 	MOVE.w	Main_menu_selection.w, Menu_cursor_index.w	
 	MOVE.w	#VDP_ATTR_SCRIPT, Script_tile_attrs.w	
 	JSR	HandleMenuInput	
 	MOVE.w	Menu_cursor_index.w, Main_menu_selection.w	
-OverworldMenuState0_Return_Loop4:
+OverworldMenuMsgSpeed_WaitDraw:
 	RTS
 	
-OverworldMenuState0_Return_Loop3:
+OverworldMenuOptions_Init:
 	JSR	SaveMessageSpeedMenuToBuffer_Alt
 	JSR	DrawOptionsMenu
 	ADDQ.w	#1, Overworld_menu_state.w
@@ -2232,32 +2232,32 @@ InitMenuCursorDefaults:
 
 InitMenuCursorDefaults_Loop:
 	TST.b	Window_tilemap_draw_active.w
-	BNE.w	InitMenuCursorDefaults_Loop3
+	BNE.w	InitMenuCursorDefaults_WaitDraw
 	MOVE.w	#BUTTON_BIT_B, D2
 	BSR.w	CheckButtonPress
-	BEQ.b	InitMenuCursorDefaults_Loop4
+	BEQ.b	InitMenuCursorDefaults_CheckConfirm
 	PlaySound_b SOUND_MENU_CANCEL
 	CLR.w	Overworld_menu_state.w
 	TriggerWindowRedraw WINDOW_DRAW_MSG_SPEED_ALT
 	RTS
 
-InitMenuCursorDefaults_Loop4:
+InitMenuCursorDefaults_CheckConfirm:
 	MOVE.w	#BUTTON_BIT_C, D2
 	BSR.w	CheckButtonPress
-	BEQ.b	InitMenuCursorDefaults_Loop5
+	BEQ.b	InitMenuCursorDefaults_MoveCursor
 	PlaySound_b SOUND_MENU_SELECT
 	ADDQ.w	#1, Overworld_menu_state.w
 	RTS
 
-InitMenuCursorDefaults_Loop5:
+InitMenuCursorDefaults_MoveCursor:
 	MOVE.w	Main_menu_selection.w, Menu_cursor_index.w
 	MOVE.w	#VDP_ATTR_SCRIPT, Script_tile_attrs.w
 	JSR	HandleMenuInput
 	MOVE.w	Menu_cursor_index.w, Main_menu_selection.w
-InitMenuCursorDefaults_Loop3:
+InitMenuCursorDefaults_WaitDraw:
 	RTS
 
-InitMenuCursorDefaults_Loop2:
+InitMenuCursorDefaults_ExecuteAction:
 	MOVE.w	Main_menu_selection.w, D0
 	ANDI.w	#7, D0
 	ADD.w	D0, D0
@@ -2309,13 +2309,13 @@ DecrementTimerBCD:
 	ADDQ.w	#1, D1
 	MOVE.b	Timer_seconds_bcd.w, D0
 	SBCD	D1, D0
-	BCS.w	DecrementTimerBCD_Loop2
+	BCS.w	DecrementTimerBCD_Expired
 	MOVE.b	D0, Timer_seconds_bcd.w
 DecrementTimerBCD_Loop:
 	MOVEQ	#-1, D0
 	RTS
 
-DecrementTimerBCD_Loop2:
+DecrementTimerBCD_Expired:
 	CLR.w	D0
 	RTS
 
@@ -2421,21 +2421,21 @@ LoadAndPlayAreaMusic:
 	CMPI.w	#4, D0
 	BEQ.b	LoadAndPlayAreaMusic_LookupRoom_Loop
 	CMPI.w	#$B, D0
-	BEQ.b	LoadAndPlayAreaMusic_LookupRoom_Loop2
+	BEQ.b	LoadAndPlayAreaMusic_CheckSwaffham
 LoadAndPlayAreaMusic_LookupRoom:
 	MOVE.b	(A0,D0.w), D0
 	BRA.b	LoadAndPlayAreaMusic_Queue
 LoadAndPlayAreaMusic_LookupRoom_Loop:
 	TST.b	Stow_innocence_proven.w
-	BNE.b	LoadAndPlayAreaMusic_LookupRoom_Loop3
+	BNE.b	LoadAndPlayAreaMusic_StowInnocenceMusic
 	TST.b	Girl_left_for_stow.w
 	BEQ.b	LoadAndPlayAreaMusic_LookupRoom
 	MOVE.w	#SOUND_STOW_MUSIC_GIRL_LEFT, D0
 	BRA.b	LoadAndPlayAreaMusic_Queue
-LoadAndPlayAreaMusic_LookupRoom_Loop3:
+LoadAndPlayAreaMusic_StowInnocenceMusic:
 	MOVE.w	#SOUND_STOW_MUSIC_INNOCENCE, D0
 	BRA.b	LoadAndPlayAreaMusic_Queue
-LoadAndPlayAreaMusic_LookupRoom_Loop2:
+LoadAndPlayAreaMusic_CheckSwaffham:
 	TST.b	Swaffham_ruined.w
 	BEQ.b	LoadAndPlayAreaMusic_LookupRoom
 	MOVE.w	#SOUND_SWAFFHAM_RUINED_MUSIC, D0
