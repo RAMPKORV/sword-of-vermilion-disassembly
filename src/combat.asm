@@ -1892,7 +1892,7 @@ CoordsOutOfBounds:
 ;   $5  ItemMenu_ItemUsed_Return_DiscardWait  - Confirm discard yes/no
 ;   $6  ItemMenu_ItemUsed_Return_DiscardExec  - After discard confirm
 ;   $7  ItemMenu_ItemUsed_Return_ScriptWait   - Post-discard cleanup
-;   $9  ItemMenu_ScriptDone2_UseWait          - Wait for use menu input
+;   $9  ItemMenu_UseScript_UseWait             - Wait for use menu input
 ;   $A  UseItemDescription_Build_Loop        - Use item: build description
 ;   $B  UseItemDescription_Build_CheckContinue - Light up cave (continued)
 ;   $C  ItemMenu_ScriptDoneCheckCave_Loop    - Light up cave / Candle / Lantern
@@ -1917,8 +1917,8 @@ ItemMenuStateJumpTable: ; Item effect routines map
 	BRA.w	ItemMenu_ItemUsed_Return_DiscardWait
 	BRA.w	ItemMenu_ItemUsed_Return_DiscardExec
 	BRA.w	ItemMenu_ItemUsed_Return_ScriptWait
-	BRA.w	ItemMenu_ScriptDone2_Loop ; Show item use menu
-	BRA.w	ItemMenu_ScriptDone2_UseWait
+	BRA.w	ItemMenu_UseScript_Loop ; Show item use menu
+	BRA.w	ItemMenu_UseScript_UseWait
 	BRA.w	UseItemDescription_Build_Loop
 	BRA.w	UseItemDescription_Build_CheckContinue ; Light up cave, continued
 	BRA.w	ItemMenu_ScriptDoneCheckCave_Loop ; Light up cave / Candle / Lantern
@@ -2138,14 +2138,14 @@ ItemMenu_ItemUsed_Return_HandleYesNo:
 
 ItemMenu_ItemUsed_Return_ScriptWait:
 	TST.b	Script_text_complete.w
-	BEQ.w	ItemMenu_ScriptDone2_ProcessText
+	BEQ.w	ItemMenu_UseScript_ProcessText
 	CheckButton BUTTON_BIT_B
-	BNE.b	ItemMenu_ScriptDone2
+	BNE.b	ItemMenu_UseScript_Dismiss
 	CheckButton BUTTON_BIT_C
-	BNE.b	ItemMenu_ScriptDone2
+	BNE.b	ItemMenu_UseScript_Dismiss
 	RTS
 
-ItemMenu_ScriptDone2:
+ItemMenu_UseScript_Dismiss:
 	JSR	DrawStatusHudWindow
 	MOVE.w	#WINDOW_DRAW_ITEM_LIST_SHORT, Window_draw_type.w
 	CLR.w	Window_text_row.w
@@ -2153,13 +2153,13 @@ ItemMenu_ScriptDone2:
 	MOVE.w	#ITEM_MENU_STATE_SCRIPT_DONE, Item_menu_state.w
 	RTS
 
-ItemMenu_ScriptDone2_ProcessText:
+ItemMenu_UseScript_ProcessText:
 	JSR	ProcessScriptText
 	RTS
 
-ItemMenu_ScriptDone2_Loop:
+ItemMenu_UseScript_Loop:
 	TST.b	Script_text_complete.w
-	BEQ.b	ItemMenu_ScriptDone2_WaitScroll
+	BEQ.b	ItemMenu_UseScript_WaitScroll
 	JSR	SaveCenterDialogAreaToBuffer
 	JSR	DrawItemListBorders
 	JSR	DrawItemListNames
@@ -2169,13 +2169,13 @@ ItemMenu_ScriptDone2_Loop:
 	JSR	InitMenuCursorForList
 	RTS
 
-ItemMenu_ScriptDone2_WaitScroll:
+ItemMenu_UseScript_WaitScroll:
 	JSR	ProcessScriptText
 	RTS
 
-ItemMenu_ScriptDone2_UseWait:
+ItemMenu_UseScript_UseWait:
 	CheckButton BUTTON_BIT_B
-	BEQ.b	ItemMenu_ScriptDone2_CheckConfirm
+	BEQ.b	ItemMenu_UseScript_CheckConfirm
 	PlaySound	SOUND_MENU_CANCEL
 	JSR	DrawCenterMenuWindow
 	JSR	DrawStatusHudWindow
@@ -2183,7 +2183,7 @@ ItemMenu_ScriptDone2_UseWait:
 	JSR	InitItemMenuCursor
 	RTS
 
-ItemMenu_ScriptDone2_CheckConfirm:
+ItemMenu_UseScript_CheckConfirm:
 	CheckButton BUTTON_BIT_C
 	BEQ.w	UseItemDescription_Build_HandleCursor
 	MOVE.w	Selected_item_index.w, Menu_cursor_index.w

@@ -16,6 +16,24 @@
 ; Reward_script_type and branches to the appropriate handler for each
 ; chest reward category (ring, money, map, or item/spell lookup).
 ;
+; File structure:
+;   Lines    1-123  ChestAnimation_Return continuation + LockedDoorDataTable
+;   Lines  124-243  Dialog state machines (DialogSelectionStateMachine,
+;                   DialogSelection_Increment, DialogClose_RestoreHud)
+;   Lines  244-410  Seek handlers (overworld item find events)
+;   Lines  411-864  TakeItem state machine + reward helpers
+;   Lines  865-907  BossParallaxEntry_Start (VDP nametable row writer)
+;   Lines  908+     NPC dialogue dispatch tables by town (Wyclif, Parma,
+;                   Deepdale, Tadcaster, Malaga, Stow, Carthahena,
+;                   Helwig, Swaffham, Hastings, Excalabria, Astiburg)
+;   Lines 1407+     CheckGameComplete, SelectDialogueByGameState
+;   Lines 1800+     Town spawn/camera position tables, music ID table
+;   Lines 2523+     Treasure chest catalog (all overworld + cave chests)
+;   Lines 2700+     CaveRoomInteractionPtrs dispatch table
+;   Lines 2800+     CaveRoomInteractions_00 – CaveRoomInteractions_2B
+;   Lines 3423+     CaveEvent handlers (named story events)
+;   Lines 3825+     InitDialogMode, SetupChestReward, Init*Treasure
+;
 	BEQ.w	ChestAnimation_Return_FindRing
 	CMPI.w	#REWARD_TYPE_MONEY, D0
 	BEQ.w	ChestAnimation_Return_FindMoney
@@ -61,6 +79,17 @@ ChestReward_Display_Loop:
 	JSR	ProcessScriptText
 	RTS
 	
+; ======================================================================
+; Chest Animation and Door Lock Helpers
+; ======================================================================
+
+; WriteChestAnimationToVRAM
+; Streams 6 rows of 4+3 tile words to VDP VRAM to render the chest-open
+; animation graphic.  VDP address is advanced by one row ($00800000) per
+; iteration via D5.
+;
+; Input:  A0 = pointer to chest animation tile byte stream
+; Scratch: D0, D5-D7; modifies VDP_control_port and VDP_data_port
 WriteChestAnimationToVRAM:
 	MOVE.l	#$67100003, D5
 	ORI	#$0700, SR
@@ -86,6 +115,19 @@ WriteChestAnimationToVRAM_TileRowB:
 	ANDI	#$F8FF, SR
 	RTS
 	
+; CheckIfDoorIsLocked
+; Walk LockedDoorDataTable to see if the tile in front of the player
+; (Player_position + facing delta) matches a locked-door entry for the
+; current cave room.
+;
+; Entry format (8 bytes each, terminated by $FFFF):
+;   dc.w  room_id, tile_x, tile_y, key_item_id
+;
+; If no matching entry found: sets Door_unlocked_flag = FLAG_TRUE (door open).
+; If a matching entry is found: returns without setting the flag (door locked).
+;
+; A2 = FpDirectionDeltaForward (facing delta table)
+; D3/D4 = computed tile position in front of player
 CheckIfDoorIsLocked:
 	LEA	FpDirectionDeltaForward, A2
 	MOVE.w	Player_position_x_outside_town.w, D3
@@ -116,11 +158,39 @@ CheckBlockedDoor_NextEntry_Loop:
 	MOVE.b	#FLAG_TRUE, Door_unlocked_flag.w
 	RTS
 	
+; LockedDoorDataTable
+; Each entry is 8 bytes: room_id(w), tile_x(w), tile_y(w), key_item_id(w).
+; Terminated by $FFFF.  CheckIfDoorIsLocked walks this table to determine
+; if the tile in front of the player requires a key item.
+;
+; room  X     Y     key_item
+; ----  ----  ----  --------
+; $16   $0B   $0D   key $0111  (Parma dungeon north gate)
+; $28   $02   $05   key $0112  (Parma dungeon inner gate)
+; $23   $03   $0D   key $0113  (Deepdale dungeon)
+; $20   $0C   $0E   key $0119  (Stow dungeon)
+; $20   $03   $03   key $0116  (Stow dungeon alt)
+; $20   $0B   $09   key $0117  (Stow dungeon alt2)
+; $20   $01   $0F   key $0118  (Stow dungeon alt3)
+; $22   $01   $05   key $0116  (Carthahena dungeon)
+; $21   $01   $08   key $0117  (Malaga dungeon)
+; $20   $03   $0B   key $0118  (Malaga dungeon alt)
+; $2A   $07   $0D   key $001A  (Excalabria dungeon)
+; $2B   $0A   $0A   key $0025  (Tsarkon fortress)
+; $FFFF = end of table
 LockedDoorDataTable:
 	dc.b	$00, $16, $00, $0B, $00, $0D, $01, $11, $00, $28, $00, $02, $00, $05, $01, $12, $00, $23, $00, $03, $00, $0D, $01, $13, $00, $20, $00, $0C, $00, $0E, $01, $19 
 	dc.b	$00, $20, $00, $03, $00, $03, $01, $16, $00, $20, $00, $0B, $00, $09, $01, $17, $00, $20, $00, $01, $00, $0F, $01, $18, $00, $22, $00, $01, $00, $05, $01, $16 
 	dc.b	$00, $21, $00, $01, $00, $08, $01, $17, $00, $20, $00, $03, $00, $0B, $01, $18, $00, $2A, $00, $07, $00, $0D, $00, $1A, $00, $2B, $00, $0A, $00, $0A, $00, $25 
 	dc.b	$FF, $FF 
+; ======================================================================
+; Dialog Selection State Machine
+; ======================================================================
+
+; DialogSelectionStateMachine
+; Dispatches on Dialog_selection (low 5 bits) through
+; DialogSelectionStateJumpTable (4 states: idle, increment,
+; wait-for-input, close-and-restore-HUD).
 DialogSelectionStateMachine:
 	MOVE.w	Dialog_selection.w, D0
 	ANDI.w	#$001F, D0
@@ -231,6 +301,9 @@ DialogSelectState2_Wait_Loop:
 	MOVE.w	#1, Dialog_selection.w
 	RTS
 	
+; CheckIfTileIsEmpty
+; Calls GetCurrentTileType; returns D0=0 if the tile is TOWN_TILE_PASSABLE_E,
+; or D0=$FFFF if the tile blocks passage.
 CheckIfTileIsEmpty:
 	JSR	GetCurrentTileType
 	CMPI.w	#TOWN_TILE_PASSABLE_E, D0
@@ -242,10 +315,33 @@ CheckIfTileIsEmpty_Loop:
 	MOVE.w	#$FFFF, D0
 	RTS
 	
+; ======================================================================
+; Seek Handlers (Overworld Examine / Item Find Events)
+; ======================================================================
+;
+; "Seek" = the player presses action while facing an overworld tile that
+; has a special interaction.  SeekCoordsByTown maps town IDs to look-up
+; tables of (tile_x, tile_y, handler) entries.
+;
+; SeekHandler_Tombstone      — display tombstone text (inline script bytes)
+; SeekHandler_TitaniasMirror — give Titania's Mirror if not yet acquired
+; SeekHandler_MegaBlast      — give Mega Blast spell item
+; SeekHandler_RafaelsStick   — give Rafael's Stick key item
+; SeekHandler_Herbs          — give Herbs consumable
+; SeekHandler_FindOneKim     — give 1 kim (trivial gold pickup)
+; SeekHandler_RegainAllHp    — restore all player HP
+
+; SeekHandler_Tombstone
+; Inline script: MOVE.l #TombstoneStr, A? / BRA.b to print handler.
+; Raw bytes $21,$FC = MOVE.l #imm, -(A7) preamble; $C2,$04,$60,$00,$01,$A2
+; are assembler-generated code for the subsequent BRA.b.
 SeekHandler_Tombstone:
 	dc.b	$21, $FC 
 	dc.l	TombstoneStr
 	dc.b	$C2, $04, $60, $00, $01, $A2 
+; SeekHandler_TitaniasMirror
+; Give Titania's Mirror if prereq met and not yet acquired.
+; Falls through to SeekHandler_DisplayAndReturn after message display.
 SeekHandler_TitaniasMirror:
 	TST.b	Titanias_mirror_quest_prereq.w
 	BEQ.w	SeekHandler_SetSelection1
@@ -271,6 +367,8 @@ SeekHandler_SetSelection1:
 	MOVE.w	#1, Dialog_selection.w
 	RTS
 	
+; SeekHandler_MegaBlast
+; Give Mega Blast spell if not yet acquired.
 SeekHandler_MegaBlast:
 	TST.b	Mega_blast_acquired.w
 	BNE.w	SeekHandler_MegaBlast_Loop
@@ -293,6 +391,8 @@ SeekHandler_MegaBlast_AcquireMegaBlast:
 SeekHandler_MegaBlast_Loop:
 	MOVE.w	#1, Dialog_selection.w
 	RTS
+; SeekHandler_RafaelsStick
+; Give Rafael's Stick key item if not yet acquired.
 SeekHandler_RafaelsStick:
 	TST.b	Rafaels_stick_acquired.w
 	BNE.w	SeekHandler_RafaelsStick_Loop
@@ -316,6 +416,8 @@ SeekHandler_RafaelsStick_Loop:
 	MOVE.w	#1, Dialog_selection.w	
 	RTS
 	
+; SeekHandler_Herbs
+; Give Herbs consumable.
 SeekHandler_Herbs:
 	JSR	CheckInventoryFull	
 	BGE.w	SeekHandler_Herbs_Loop	
@@ -420,6 +522,9 @@ TooMuchToCarryStr:
 OneKimStr:
 	dc.b	"1kim", $FF, $00
 
+; DisplayFoundItemMessage
+; Copies item label (A2) and " found!" suffix to Text_build_buffer,
+; then PRINTs and waits for acknowledgement.
 DisplayFoundItemMessage:
 	JSR	CopyPlayerNameToTextBuffer
 	LEA	FoundItemStr, A0
@@ -428,6 +533,8 @@ DisplayFoundItemMessage:
 	JSR	CopyStringUntilFF
 	RTS
 	
+; DisplayFoundItemWithName
+; Appends " inside!" to Text_build_buffer and PRINTs.
 DisplayFoundItemWithName:
 	LEA	FoundItemCommaStr, A0
 	JSR	CopyStringUntilFF
@@ -438,6 +545,8 @@ DisplayFoundItemWithName:
 	PRINT 	Text_build_buffer
 	RTS
 	
+; DisplayInventoryFullMessage
+; Prints "Too much to carry!" message.
 DisplayInventoryFullMessage:
 	LEA	TooMuchToCarryStr, A0	
 	JSR	CopyStringUntilFF	
@@ -446,6 +555,14 @@ DisplayInventoryFullMessage:
 	RTS
 	
 	
+; ======================================================================
+; Take Item State Machine
+; ======================================================================
+
+; TakeItemStateMachine
+; Dispatches on Take_item_state (low 5 bits) through
+; TakeItemStateJumpTable (11 states: idle→cursor init→wait for script
+; →build reward→finalize take→discard flow→restore HUD).
 TakeItemStateMachine:
 	MOVE.w	Take_item_state.w, D0
 	ANDI.w	#$001F, D0
@@ -455,6 +572,19 @@ TakeItemStateMachine:
 	JSR	(A0,D0.w)
 	RTS
 	
+; TakeItemStateJumpTable
+; BRA table indexed by Take_item_state & $1F.  States 0-10 in order:
+;   0 = idle (draw cursor)
+;   1 = check first-person mode
+;   2 = show "Nothing to take" message
+;   3 = wait for input on "Nothing to take"
+;   4 = restore HUD
+;   5 = wait for finalize script
+;   6 = confirm yes/no
+;   7 = wait for "don't want" script
+;   8 = cancel to "inventory full" message
+;   9 = confirm discard
+;  10 = wait for finalize (post-discard)
 TakeItemStateJumpTable:
 	BRA.w	TakeItemStateJumpTable_Loop
 	BRA.w	TakeItemStateJumpTable_CheckFirstPersonMode
@@ -541,6 +671,10 @@ TakeItemState_BuildReward_PrintAndReset:
 	MOVE.w	#TAKE_ITEM_STATE_MSG_WAIT, Take_item_state.w
 	RTS
 	
+; BuildRewardItemMessage
+; Constructs the reward discovery text in Text_build_buffer based on
+; Reward_script_type: item/spell lookup (type 0), map, ring, or money.
+; Falls through to PrintAndReset or BRA to type-specific sub-handler.
 BuildRewardItemMessage:
 	JSR	CopyPlayerNameToTextBuffer
 	LEA	TakesStr, A0
@@ -602,6 +736,10 @@ BuildRewardItemMessage_RewardMoney:
 	MOVEQ	#0, D0
 	MOVE.w	Reward_script_value.w, D0
 	JSR	FormatKimsAmount
+; TakeItem_FinalizeTake
+; Executes the actual item-grant: calls SetupChestReward which copies
+; the item into Possessed_items; if inventory is full, branches to the
+; discard-item sub-flow instead.
 TakeItem_FinalizeTake:
 	MOVE.b	#$2E, (A1)+
 	MOVE.b	#$FF, (A1)
@@ -905,6 +1043,22 @@ BossParallaxEntry_ColumnLoop:
 	MOVE.w	D0, VDP_data_port
 	DBF	D1, BossParallaxEntry_ColumnLoop
 	RTS
+; ======================================================================
+; NPC Dialogue Dispatch Tables
+; ======================================================================
+;
+; Each town has multiple NPC dispatch functions.  The naming pattern is:
+;   <Town>NpcDialogueDispatch        — multi-state (SelectDialogueByGameState)
+;   <Town>Npc<N>_SimpleDispatch      — single table (SelectDialogueSimple)
+;   <Town>_Npc<N>_DialogueStates     — condition/pointer table (dc.l pairs)
+;
+; Condition tables: dc.l target_dialogue, dc.l condition_flag, ... (null-term)
+; SelectDialogueByGameState walks the table comparing condition flags until
+; it finds a matching (non-zero) one, then selects that dialogue.
+
+; WyclifNpcDialogueDispatch / Wyclif_Npc1..5
+; Wyclif is the starting town.  States 0-15 cover the prologue through
+; the player choosing to leave / having collected rings.
 WyclifNpcDialogueDispatch:
 	LEA	Wyclif_Npc1_DialogueStates, A1
 	MOVE.w	#1, D7
@@ -959,6 +1113,12 @@ Wyclif_Npc5_DialogueStates:
 	dc.l	TownDialogTable_Wyclif_State15
 	dc.l	Rings_collected
 	dc.l	TownDialogTable_Wyclif_State14
+; ParmaaNpcDialogueDispatch / Parma_Npc1..
+; Parma is the second town.  States track the fake king / treasure of Troy
+; quest arc and the Talked_to_real_king / Fake_king_killed flags.
+; ParmaaNpcDialogueDispatch / Parma_Npc1..4
+; Parma is the second town — the imposter-king quest hub.
+; States track Treasure_of_troy_challenge_issued, Fake_king_killed, Talked_to_real_king.
 ParmaaNpcDialogueDispatch:
 	LEA	Parma_Npc1_DialogueStates, A1
 	MOVE.w	#4, D7
@@ -1056,6 +1216,9 @@ ParmaNpc4_ConditionData:
 	dc.l	TownDialogTable_Parma_State14
 	dc.l	Treasure_of_troy_challenge_issued
 	dc.l	TownDialogTable_Parma_State13
+; WatlingNpcDialogueDispatch / Watling_Npc1..2
+; Watling is a cursed village — NPCs track Watling_youth_restored and
+; Watling_villagers_asked_about_rings to shift their dialogue states.
 WatlingNpcDialogueDispatch:
 	LEA	Watling_Npc1_DialogueStates, A1
 	MOVE.w	#1, D7
@@ -1076,6 +1239,9 @@ Watling_Npc2_DialogueStates:
 	dc.l	TownDialogTable_Watling_State5
 	dc.l	Watling_youth_restored
 	dc.l	TownDialogTable_Watling_State4
+; DeepdaleNpcDialogueDispatch / Deepdale_Npc1..3
+; Deepdale harbours a king who hides a secret. NPCs track
+; Deepdale_truffle_quest_started and Deepdale_king_secret_kept.
 DeepdaleNpcDialogueDispatch:
 	LEA	Deepdale_Npc1_DialogueStates, A1
 	MOVE.w	#1, D7
@@ -1111,6 +1277,9 @@ Deepdale_Npc3_DialogueStates:
 Deepdale_Npc3_SimpleDispatch:
 	LEA	TownDialogTable_Deepdale_State6, A1
 	BRA.w	SelectDialogueSimple
+; StowNpcDialogueDispatch / Stow_Npc1..3
+; Stow is the book-theft quest town. NPCs track Sanguios_book_offered,
+; Accused_of_theft, Girl_left_for_stow, Stow_innocence_proven.
 StowNpcDialogueDispatch:
 	LEA	Stow_Npc1_DialogueStates, A1
 	MOVE.w	#3, D7
@@ -1159,6 +1328,9 @@ Stow_Npc3_State9_Dispatch:
 Stow_Npc3_State10_Dispatch:
 	LEA	TownDialogTable_Stow1_State10, A1
 	BRA.w	SelectDialogueSimple
+; KeltwickNpcDialogueDispatch / Keltwick_Npc1..2
+; Keltwick is a mountain village linked to the Bearwulf / Malaga quest arc.
+; NPCs track Asti_monster_defeated, Sent_to_malaga, Bearwulf_met, Bearwulf_returned_home.
 KeltwickNpcDialogueDispatch:
 	LEA	Keltwick_Npc1_DialogueStates, A1
 	MOVE.w	#3, D7
@@ -1192,6 +1364,9 @@ Keltwick_Npc2_State8_Dispatch:
 Keltwick_Npc2_State9_Dispatch:
 	LEA	TownDialogTable_Keltwick_State9, A1
 	BRA.w	SelectDialogueSimple
+; MalagaNpcDialogueDispatch / Malaga_Npc1..2
+; Malaga is the dungeon-prisoner / crown-reward quest town.
+; NPCs track Malaga_king_crowned, Barrow_map_received, Bearwulf_returned_home.
 MalagaNpcDialogueDispatch:
 	LEA	Malaga_Npc1_DialogueStates, A1
 	MOVE.w	#2, D7
@@ -1218,6 +1393,9 @@ Malaga_Npc2_DialogueStates:
 Malaga_Npc2_SimpleDispatch:
 	LEA	TownDialogTable_Malaga_State3, A1
 	BRA.w	SelectDialogueSimple
+; BarrowNpcDialogueDispatch / Barrow_Npc1..2
+; Barrow is the Ring of Wisdom dungeon town. States track Uncle_tibor_visited
+; and Pass_to_carthahena_purchased for the mid-game ferry unlock.
 BarrowNpcDialogueDispatch:
 	LEA	Barrow_Npc1_DialogueStates, A1
 	MOVE.w	#0, D7
@@ -1239,6 +1417,9 @@ Barrow_Npc2_DialogueStates:
 Barrow_Npc2_SimpleDispatch:
 	LEA	TownDialogTable_Barrow_State2, A1
 	BRA.w	SelectDialogueSimple
+; TadcasterNpcDialogueDispatch / Tadcaster_Npc1..4
+; Tadcaster is the bully / imposter-guard quest town. States track
+; Bully_first_fight_won and Imposter_killed.
 TadcasterNpcDialogueDispatch:
 	LEA	Tadcaster_Npc1_DialogueStates, A1
 	MOVE.w	#1, D7
@@ -1281,6 +1462,9 @@ Tadcaster_Npc4_DialogueStates:
 	dc.l	TownDialogTable_Tadcaster_State7	
 	dc.l	Bully_first_fight_won
 	dc.l	TownDialogTable_Tadcaster_State6
+; HelwigNpcDialogueDispatch / Helwig_Npc1..2
+; Helwig is the men-in-prison rescue town. Both NPCs track
+; Helwig_men_rescued to shift their dialogue.
 HelwigNpcDialogueDispatch:
 	LEA	Helwig_Npc1_DialogueStates, A1
 	MOVE.w	#0, D7
@@ -1300,6 +1484,9 @@ Helwig_Npc2_DialogueStates:
 Helwig_Npc2_SimpleDispatch:
 	LEA	TownDialogTable_Helwig_State4, A1
 	BRA.w	SelectDialogueSimple
+; SwaffhamNpcDialogueDispatch / Swaffham_Npc1..2
+; Swaffham is the poisoned-food / crystal quest hub. States track
+; Ring_of_earth_obtained, Blue/Red/White crystal flags (6 conditions total).
 SwaffhamNpcDialogueDispatch:
 	LEA	Swaffham_Npc1_DialogueStates, A1
 	MOVE.w	#1, D7
@@ -1329,6 +1516,9 @@ Swaffham_Npc2_DialogueStates:
 	dc.l	CastleDialogTable_Swaffham_State4	
 	dc.l	White_crystal_quest_started
 	dc.l	CastleDialogTable_Swaffham_State0
+; ExcalabriaaNpcDialogueDispatch / Excalabria_Npc1
+; Excalabria is Knute's kingdom — ring-guardian dungeon hub.
+; State tracks Ring_of_earth_obtained and Knute_informed_of_swaffham_ruin.
 ExcalabriaaNpcDialogueDispatch:
 	LEA	Excalabria_Npc1_DialogueStates, A1
 	MOVE.w	#1, D7
@@ -1339,6 +1529,10 @@ Excalabria_Npc1_DialogueStates:
 	dc.l	TownDialogTable_Excalabria_State1
 	dc.l	Ring_of_earth_obtained
 	dc.l	TownDialogTable_Excalabria_State0	
+; HastingsNpcDialogueDispatch / Hastings_Npc1..3
+; Hastings is the spy-dinner / poisoning quest town. States track
+; Ate_spy_dinner, Swaffham_ate_poisoned_food, Digot_plant_received,
+; Spy_dinner_poisoned_flag, and Pass_to_carthahena_purchased.
 HastingsNpcDialogueDispatch:
 	LEA	Hastings_Npc1_DialogueStates, A1
 	MOVE.w	#2, D7
@@ -1377,6 +1571,9 @@ Hastings_Npc3_DialogueStates:
 	dc.l	Hastings_Npc3_DialogueStates_TileData_3A0FA_GameOver	; game-complete dialogue
 	dc.l	Pass_to_carthahena_purchased
 	dc.l	Hastings_Npc3_DialogueStates_TileData_3A0FA
+; CarthahenaaNpcDialogueDispatch / CarthahenaaNpcSubDispatch
+; Carthahena is Tsarkon's castle town. Two dispatch helpers switch between
+; three data pointers based on Pass_to_carthahena_purchased / Tsarkon_is_dead.
 CarthahenaaNpcDialogueDispatch:
 	LEA	CarthahenaaNpcDialogueDispatch_Data3, A0
 	TST.b	Tsarkon_is_dead.w
@@ -1388,6 +1585,8 @@ CarthahenaaNpcDialogueDispatch:
 SelectCastleDialog_Carthahena_Return:
 	RTS
 	
+; SelectCastleDialog_Carthahena — pick castle dialogue table based on story state
+; Returns A0 = State1 if Tsarkon dead, else State0.
 SelectCastleDialog_Carthahena:
 	LEA	CastleDialogTable_Carthahena_State1, A0
 	TST.b	Tsarkon_is_dead.w
@@ -1396,6 +1595,8 @@ SelectCastleDialog_Carthahena:
 SelectCastleDialog_Carthahena_Return_Loop:
 	RTS
 	
+; CarthahenaaNpcSubDispatch — secondary Carthahena NPC data pointer picker
+; Returns A0 pointing to data 2 if Tsarkon_is_dead, else data 1.
 CarthahenaaNpcSubDispatch:
 	LEA	CarthahenaaNpcSubDispatch_Data2, A0
 	TST.b	Tsarkon_is_dead.w
@@ -1404,9 +1605,12 @@ CarthahenaaNpcSubDispatch:
 CarthahenaaNpcSubDispatch_Loop:
 	RTS
 	
-; CheckGameComplete
-; Check if game is completed (Tsarkon defeated)
-; Output: D0 = 0 if not complete, $FFFF if complete
+; ---------------------------------------------------------------------------
+; CheckGameComplete — test whether Tsarkon has been defeated
+;
+; Sets A0 = EndingCelebrationStrings (for SelectDialogueSimple to use).
+; Returns D0 = 0 (not complete) or D0 = $FFFF (complete / Tsarkon dead).
+; ---------------------------------------------------------------------------
 CheckGameComplete:
 	LEA	EndingCelebrationStrings, A0
 	TST.b	Tsarkon_is_dead.w
@@ -1418,9 +1622,20 @@ CheckGameComplete_Loop:
 	MOVE.w	#$FFFF, D0
 	RTS
 
-; SelectDialogueByGameState
-; Select dialogue string from table based on game completion state
-; Iterates through paired pointers until finding one with matching trigger state
+; ---------------------------------------------------------------------------
+; SelectDialogueByGameState — pick dialogue from a condition table
+;
+; Calls CheckGameComplete first; if true, returns A0 = first pointer.
+; Otherwise iterates D7+1 pairs of (dialogue_ptr, flag_ptr); each iteration
+; reads a flag byte: if non-zero, that dialogue is chosen.  Falls through
+; to the last unconditional entry when all flags are zero.
+;
+; Input:
+;   A1    pointer to condition table: dc.l ptr, dc.l flag ... dc.l fallback
+;   D7    number of condition pairs to test (0 = test one pair)
+; Output:
+;   A0    selected dialogue string pointer
+; ---------------------------------------------------------------------------
 SelectDialogueByGameState:
 	BSR.b	CheckGameComplete
 	BNE.b	SelectDialogTable_Found
@@ -1434,6 +1649,13 @@ SelectDialogueByGameState_Done:
 SelectDialogTable_Found:
 	RTS
 	
+; ---------------------------------------------------------------------------
+; SelectDialogueSimple — return A1 unless game is complete
+;
+; If CheckGameComplete returns non-zero, A0 already holds the game-complete
+; string (set by CheckGameComplete via EndingCelebrationStrings); otherwise
+; returns A0 = A1 (the caller's simple dialogue pointer).
+; ---------------------------------------------------------------------------
 SelectDialogueSimple:
 	BSR.b	CheckGameComplete
 	BNE.b	SelectDialogueSimple_Loop
@@ -1441,6 +1663,10 @@ SelectDialogueSimple:
 SelectDialogueSimple_Loop:
 	RTS
 	
+; TalkDirectionDeltaTable — NPC tile-search offsets per facing direction
+; Layout: dc.w dx, dy  (tile units)
+; Entries: facing up (0,-1), facing left (-1,0), facing down (0,1),
+;          facing right (1,0), and a sentinel/fallback (8,8).
 TalkDirectionDeltaTable:
 	dc.w	0, -1 
 	dc.w	-1, 0 
@@ -2702,6 +2928,8 @@ LoadTownStateData_Carthahena_Loop:
 ;   SetupChestReward, which check the flag and set Reward_script_available.
 ; ============================================================================
 
+; OverworldSectorInteractionPtrs — dispatch table for overworld sector events
+; Indexed by the current overworld sector (0–15). Format mirrors CaveRoomInteractionPtrs.
 OverworldSectorInteractionPtrs:
 	dc.l	OverworldInteractions_Sector0
 	dc.l	OverworldInteractions_Sector1
@@ -3081,6 +3309,22 @@ OverworldNpc_MapGiver_Stow:
 OverworldNpc_MapGiver_Stow_Loop:
 	RTS
 	
+; ============================================================================
+; CaveRoomInteractionPtrs — dispatch table for dungeon / cave room events
+; ============================================================================
+; Indexed by Current_cave_room (0x00–0x2B). Each pointer references a
+; CaveRoomInteractions_XX block with the format:
+;
+;   dc.w  spawn_x, spawn_y, spawn_dir   ; player entry position and direction
+;   dc.l  default_handler               ; called when no trigger matches (enemy check)
+;   dc.w  tile_x, tile_y, interact_dir  ; interaction hotspot
+;   dc.l  handler_ptr                   ; event / chest / NPC handler
+;   ... (repeated for each hotspot)
+;   dc.w  $FFFF                         ; end-of-list sentinel
+;
+; Rooms with only a default handler (no hotspots) contain just the header
+; dc.w fields, dc.l default, dc.w $FFFF.
+; ============================================================================
 CaveRoomInteractionPtrs:
 	dc.l	CaveRoomInteractions_00
 	dc.l	CaveRoomInteractions_01
@@ -3126,6 +3370,7 @@ CaveRoomInteractionPtrs:
 	dc.l	CaveRoomInteractions_29
 	dc.l	CaveRoomInteractions_2A
 	dc.l	CaveRoomInteractions_2B
+; Room $00 — Barrow dungeon: Ring of Wisdom chamber; 3 chests + ring event
 CaveRoomInteractions_00:
 	dc.w	$2, $4, $4 ; x, y, direction
 	dc.l	CaveEvent_RingOfWisdom
@@ -3138,6 +3383,7 @@ CaveRoomInteractions_00:
 	dc.w	$000A, $0005, $0004 
 	dc.l	CaveChest_Candle
 	dc.w	$FFFF
+; Room $01 — Parma dungeon level 1: 2 item chests (Herbs4, Candle)
 CaveRoomInteractions_01:
 	dc.w	$3, $D, $4	
 	dc.l	CheckCaveRoomEnemyState
@@ -3146,6 +3392,7 @@ CaveRoomInteractions_01:
 	dc.w	$0008, $0000, $0001 
 	dc.l	CaveChest_Candle_Parma 
 	dc.w	$FFFF 
+; Room $02 — Parma dungeon: Treasure of Troy chamber; Scale Armor + Money768
 CaveRoomInteractions_02:
 	dc.w	$F, $F, $8 
 	dc.l	CaveChest_ScaleArmor
@@ -3156,6 +3403,7 @@ CaveRoomInteractions_02:
 	dc.w	$0008, $0008, $0002 
 	dc.l	CaveChest_Money768
 	dc.w	$FFFF
+; Room $03 — Parma dungeon level 2: Money1536 + Candle2 chests
 CaveRoomInteractions_03:
 	dc.w	$3, $6, $8	
 	dc.l	CheckCaveRoomEnemyState
@@ -3164,6 +3412,7 @@ CaveRoomInteractions_03:
 	dc.w	$000B, $0000, $0002
 	dc.l	CaveChest_Candle2	
 	dc.w	$FFFF
+; Room $04 — Watling dungeon: Herbs_Watling chest + WatlingMonster NPC event
 CaveRoomInteractions_04:
 	dc.w	$0, $7, $1	
 	dc.l	CheckCaveRoomEnemyState
@@ -3172,6 +3421,7 @@ CaveRoomInteractions_04:
 	dc.w	$000C, $0001, $0002	
 	dc.l	CaveEvent_WatlingMonster
 	dc.w	$FFFF
+; Room $05 — mid-game dungeon: LargeShield + Money1792 chests
 CaveRoomInteractions_05:
 	dc.w	$0, $1, $4	
 	dc.l	CheckCaveRoomEnemyState
@@ -3180,6 +3430,7 @@ CaveRoomInteractions_05:
 	dc.w	$0008, $000F, $0008	
 	dc.l	CaveChest_Money1792	
 	dc.w	$FFFF
+; Room $06 — Truffle cave / Deepdale: MagicShield + MetalArmor chests + Truffle event
 CaveRoomInteractions_06:
 	dc.w	$3, $C, $2	
 	dc.l	CheckCaveRoomEnemyState
@@ -3190,6 +3441,7 @@ CaveRoomInteractions_06:
 	dc.w	$0006, $0004, $0001 
 	dc.l	CaveEvent_Truffle
 	dc.w	$FFFF
+; Room $07 — mid-game dungeon: Money2128 + Lantern chests
 CaveRoomInteractions_07:
 	dc.w	$4, $D, $8	
 	dc.l	CheckCaveRoomEnemyState	
@@ -3198,6 +3450,7 @@ CaveRoomInteractions_07:
 	dc.w	$0007, $0005, $0004	
 	dc.l	CaveChest_Lantern	
 	dc.w	$FFFF
+; Room $08 — Stow dungeon: SkeletonArmor chest + StowThief NPC event
 CaveRoomInteractions_08:
 	dc.w	$D, $B, $4	
 	dc.l	CheckCaveRoomEnemyState	
@@ -3206,6 +3459,7 @@ CaveRoomInteractions_08:
 	dc.w	$0000, $0000, $0002	
 	dc.l	CaveEvent_StowThief
 	dc.w	$FFFF
+; Room $09 — late-game dungeon: SkeletonArmor (shared flag) + RoyalShield chests
 CaveRoomInteractions_09:
 	dc.w	$2, $A, $4	
 	dc.l	CheckCaveRoomEnemyState	
@@ -3214,12 +3468,14 @@ CaveRoomInteractions_09:
 	dc.w	$0002, $0003, $0004	
 	dc.l	CaveChest_RoyalShield	
 	dc.w	$FFFF
+; Room $0A — Asti area cave: AstiMonster NPC encounter
 CaveRoomInteractions_0A:
 	dc.w	$B, $B, $B	
 	dc.l	CheckCaveRoomEnemyState
 	dc.w	$0007, $0006, $0001 
 	dc.l	CaveEvent_AstiMonster
 	dc.w	$FFFF
+; Room $0B — Barrow dungeon: EmeraldArmor chest + Bearwulf first meeting
 CaveRoomInteractions_0B:
 	dc.w	$4, $D, $4	
 	dc.l	CheckCaveRoomEnemyState
@@ -3228,6 +3484,7 @@ CaveRoomInteractions_0B:
 	dc.w	$000D, $0007, $0005	
 	dc.l	CaveEvent_BearwulfMeeting
 	dc.w	$FFFF
+; Room $0C — Barrow dungeon: Bearwulf weapon reward + 3× Money4096 + MirageSword
 CaveRoomInteractions_0C:
 	dc.w	$B, $3, $2	
 	dc.l	CheckCaveRoomEnemyState
@@ -3242,6 +3499,7 @@ CaveRoomInteractions_0C:
 	dc.w	$0007, $000E, $0004	
 	dc.l	CaveChest_MirageSword
 	dc.w	$FFFF
+; Room $0D — Malaga dungeon: prisoner NPC + crown reward event (no chests)
 CaveRoomInteractions_0D:
 	dc.w	$5, $2, $2	
 	dc.l	CheckCaveRoomEnemyState
@@ -3250,18 +3508,21 @@ CaveRoomInteractions_0D:
 	dc.w	$000E, $0009, $0001 
 	dc.l	CaveEvent_MalagaCrownReward
 	dc.w	$FFFF
+; Room $0E — late-game dungeon: PhantomShield chest
 CaveRoomInteractions_0E:
 	dc.w	$9, $A, $8	
 	dc.l	CheckCaveRoomEnemyState
 	dc.w	$0009, $0000, $0002 
 	dc.l	CaveChest_PhantomShield 
 	dc.w	$FFFF 
+; Room $0F — late-game dungeon: Money8192 chest
 CaveRoomInteractions_0F:
 	dc.w	$3, $3, $2 
 	dc.l	CheckCaveRoomEnemyState
 	dc.w	$0008, $0004, $0002 
 	dc.l	CaveChest_Money8192
 	dc.w	$FFFF
+; Room $10 — late-game dungeon: Money12288 chest + empty NPC slot
 CaveRoomInteractions_10:
 	dc.w	$0, $0, $2	
 	dc.l	CheckCaveRoomEnemyState
@@ -3270,6 +3531,7 @@ CaveRoomInteractions_10:
 	dc.w	$0003, $000C, $0004	
 	dc.l	CaveChest_Money12288	
 	dc.w	$FFFF
+; Room $11 — Tadcaster dungeon: TreasureChest event + GraphiteSword + 4 money chests
 CaveRoomInteractions_11:
 	dc.w	$1, $E, $2	
 	dc.l	CheckCaveRoomEnemyState
@@ -3286,12 +3548,14 @@ CaveRoomInteractions_11:
 	dc.w	$000D, $0003, $0008	
 	dc.l	CaveChest_Money8192	
 	dc.w	$FFFF
+; Room $12 — mid-game dungeon: GrizzlyShield chest
 CaveRoomInteractions_12:
 	dc.w	$A, $7, $4	
 	dc.l	CheckCaveRoomEnemyState
 	dc.w	$0000, $0000, $0002 
 	dc.l	CaveChest_GrizzlyShield 
 	dc.w	$FFFF 
+; Room $13 — Tadcaster dungeon: TadcasterBully boss encounter + BarbarianSword chest
 CaveRoomInteractions_13:
 	dc.w	$0, $0, $1 
 	dc.l	CheckCaveRoomEnemyState
@@ -3300,46 +3564,57 @@ CaveRoomInteractions_13:
 	dc.w	$0000, $000C, $0002 
 	dc.l	CaveChest_BarbarianSword
 	dc.w	$FFFF
+; Room $14 — Helwig dungeon: men-in-prison rescue event
 CaveRoomInteractions_14:
 	dc.w	$0, $E, $4	
 	dc.l	CheckCaveRoomEnemyState
 	dc.w	$000A, $000E, $0008 
 	dc.l	CaveEvent_HelwigMenRescued
 	dc.w	$FFFF
+; Room $15 — enemies-only room (no hotspots)
 CaveRoomInteractions_15:
 	dc.w	$B, $4, $A	
 	dc.l	CheckCaveRoomEnemyState
 	dc.w	$FFFF
+; Room $16 — Excalabria dungeon: Ring Guardian 1 boss trigger
 CaveRoomInteractions_16:
 	dc.w	$8, $B, $4	
 	dc.l	CheckCaveRoomEnemyState
 	dc.w	$0000, $0007, $0005 
 	dc.l	CaveEvent_ExcalabriaRingGuardian1
 	dc.w	$FFFF 
+; Room $17 — enemies-only room (no hotspots)
 CaveRoomInteractions_17:
 	dc.w	$3, $C, $4 
 	dc.l	CheckCaveRoomEnemyState
 	dc.w	$FFFF 
+; Room $18 — enemies-only room (no hotspots)
 CaveRoomInteractions_18:
 	dc.w	$4, $7, $2 
 	dc.l	CheckCaveRoomEnemyState
 	dc.w	$FFFF 
+; Room $19 — enemies-only room (no hotspots)
 CaveRoomInteractions_19:
 	dc.w	$1, $5, $1 
 	dc.l	CheckCaveRoomEnemyState
 	dc.w	$FFFF 
+; Room $1A — enemies-only room (no hotspots)
 CaveRoomInteractions_1A:
 	dc.w	$B, $E, $4 
 	dc.l	CheckCaveRoomEnemyState
 	dc.w	$FFFF 
+; Room $1B — enemies-only room (no hotspots)
 CaveRoomInteractions_1B:	
 	dc.w	$A, $6, $8 
 	dc.l	CheckCaveRoomEnemyState
 	dc.w	$FFFF 
+; Room $1C — empty room (sentinel only)
 CaveRoomInteractions_1C:
 	dc.w	$FFFF 
+; Room $1D — empty room (sentinel only)
 CaveRoomInteractions_1D:
 	dc.w	$FFFF 
+; Room $1E — Swaffham dungeon: DigotPlant event + OldNickArmor (cursed) chest
 CaveRoomInteractions_1E:
 	dc.w	$9, $7, $1 
 	dc.l	CheckCaveRoomEnemyState 
@@ -3348,10 +3623,12 @@ CaveRoomInteractions_1E:
 	dc.w	$0005, $000E, $0004 
 	dc.l	CaveChest_OldNickArmor 
 	dc.w	$FFFF 
+; Room $1F — enemies-only room (no hotspots)
 CaveRoomInteractions_1F:
 	dc.w	$3, $7, $1 
 	dc.l	CheckCaveRoomEnemyState 
 	dc.w	$FFFF 
+; Room $20 — Tsarkon final dungeon: Swaffham spy + 3 ring soldiers + Thar + Luther + Tsarkon
 CaveRoomInteractions_20:
 	dc.w	$5, $3, $A 
 	dc.l	CaveEvent_SwaffhamSpy
@@ -3368,58 +3645,73 @@ CaveRoomInteractions_20:
 	dc.w	$0004, $000B, $000D 
 	dc.l	CaveEvent_TsarkonFinalEncounter
 	dc.w	$FFFF 
+; Room $21 — empty room (sentinel only)
 CaveRoomInteractions_21:
 	dc.w	$FFFF 
+; Room $22 — late-game secret vault: SecretArmor + MirrorOfAtlas chests
 CaveRoomInteractions_22:
 	dc.w	$9, $F, $8 
 	dc.l	CaveChest_SecretArmor
 	dc.w	$0009, $0000, $0008 
 	dc.l	CaveChest_MirrorOfAtlas
 	dc.w	$FFFF
+; Room $23 — enemies-only room (no hotspots)
 CaveRoomInteractions_23:
 	dc.w	$9, $5, $1	
 	dc.l	CheckCaveRoomEnemyState
 	dc.w	$FFFF
+; Room $24 — Excalabria dungeon: Ring Guardian 3 boss trigger
 CaveRoomInteractions_24:
 	dc.w	$A, $B, $A	
 	dc.l	CheckCaveRoomEnemyState
 	dc.w	$0004, $000C, $0005 
 	dc.l	CaveEvent_ExcalabriaRingGuardian3
 	dc.w	$FFFF 
+; Room $25 — enemies-only room (no hotspots)
 CaveRoomInteractions_25:
 	dc.w	$C, $3, $8 
 	dc.l	CheckCaveRoomEnemyState
 	dc.w	$FFFF 
+; Room $26 — enemies-only room (no hotspots)
 CaveRoomInteractions_26:
 	dc.w	$F, $C, $8 
 	dc.l	CheckCaveRoomEnemyState
 	dc.w	$FFFF 
+; Room $27 — late-game dungeon: CriticalSword chest
 CaveRoomInteractions_27:
 	dc.w	$9, $9, $2 
 	dc.l	CheckCaveRoomEnemyState
 	dc.w	$0001, $0001, $0001 
 	dc.l	CaveChest_CriticalSword
 	dc.w	$FFFF
+; Room $28 — enemies-only room (no hotspots)
 CaveRoomInteractions_28:
 	dc.w	$8, $0, $2	
 	dc.l	CheckCaveRoomEnemyState
 	dc.w	$FFFF
+; Room $29 — Excalabria dungeon: Ring Guardian 2 boss trigger
 CaveRoomInteractions_29:
 	dc.w	$0, $D, $1	
 	dc.l	CheckCaveRoomEnemyState
 	dc.w	$000A, $000B, $0005 
 	dc.l	CaveEvent_ExcalabriaRingGuardian2
 	dc.w	$FFFF 
+; Room $2A — final dungeon: DeathSword (cursed) chest
 CaveRoomInteractions_2A:
 	dc.w	$2, $D, $2 
 	dc.l	CheckCaveRoomEnemyState 
 	dc.w	$000F, $0007, $0001 
 	dc.l	CaveChest_DeathSword
 	dc.w	$FFFF
+; Room $2B — enemies-only room (no hotspots)
 CaveRoomInteractions_2B:
 	dc.w	$1, $E, $4	
 	dc.l	CheckCaveRoomEnemyState
 	dc.w	$FFFF 
+; ---------------------------------------------------------------------------
+; CaveEvent_RingOfWisdom — grant/show Ring of Wisdom if not yet collected
+; Sets up the RingOfWisdom portrait/dialogue if Rings_collected is clear.
+; ---------------------------------------------------------------------------
 CaveEvent_RingOfWisdom:
 	TST.b	Rings_collected.w
 	BNE.b	CaveEvent_RingOfWisdom_Loop
@@ -3518,6 +3810,8 @@ CaveChest_Money12288:
 	
 CaveChest_Money8192B:
 	MoneyChest $2000, Money_chest_8192_b_opened
+; CaveEvent_TreasureOfTroy — award Treasure of Troy item reward
+; Only fires if Treasure_of_troy_challenge_issued is set.
 CaveEvent_TreasureOfTroy:
 	TST.b	Treasure_of_troy_challenge_issued.w
 	BEQ.b	CaveEvent_TreasureOfTroy_Loop
@@ -3530,6 +3824,14 @@ CaveEvent_TreasureOfTroy_Loop:
 ; CheckCaveRoomEnemyState
 ; Check cave room enemy state and setup default "no one here" message
 ; Checks if current cave room has been cleared, sets script accordingly
+; ---------------------------------------------------------------------------
+; CheckCaveRoomEnemyState — default interaction for cleared / enemy rooms
+;
+; If the current room's trigger flag is clear (enemies still present),
+; marks Reward_script_available so the "no one here" map overlay appears.
+; Always sets Reward_script_active and spawns a chest/NPC sprite via
+; InitTalkerWithGfxDescriptor_1F782 with NoOneHereStr as the message.
+; ---------------------------------------------------------------------------
 CheckCaveRoomEnemyState:
 	LEA	Map_trigger_flags.w, A0
 	CLR.w	D0
@@ -3546,6 +3848,8 @@ CheckCaveRoomEnemyState_Loop:
 	MOVE.l	#NoOneHereStr, Script_talk_source.w
 	RTS
 	
+; CaveEvent_Truffle — award Truffle item if not yet collected
+; Sets Truffles_available + Reward_script_* then sets up TruffleGiver portrait.
 CaveEvent_Truffle:
 	TST.b	Truffle_collected.w
 	BNE.b	CaveEvent_Truffle_Loop
@@ -3561,6 +3865,9 @@ CaveEvent_Truffle:
 CaveEvent_Truffle_Loop:
 	RTS
 	
+; CaveEvent_WatlingMonster — Watling youth-theft NPC scene
+; Shows merchant-variant dialogue and StoleYouthStr if encounter triggered
+; and youth not yet restored.
 CaveEvent_WatlingMonster:
 	MOVE.l	#NoOneHereStr, Script_talk_source.w
 	TST.b	Watling_monster_encounter_triggered.w
@@ -3572,6 +3879,8 @@ CaveEvent_WatlingMonster:
 CaveEvent_WatlingThief_Return:
 	RTS
 	
+; CaveEvent_StowThief — Stow book-theft girl NPC scene
+; Multi-state: shifts dialogue through book/theft/innocence flags.
 CaveEvent_StowThief:
 	TST.b	Girl_left_for_stow.w
 	BNE.b	CaveEvent_StowThief_Return
@@ -3593,6 +3902,9 @@ CaveEvent_StowThief:
 CaveEvent_StowThief_Return:
 	RTS
 	
+; CaveEvent_AstiMonster — Asti cave monster NPC scene
+; Shows MeetAgainStr2 via merchant-variant if girl has left for Stow
+; and Asti monster not yet defeated.
 CaveEvent_AstiMonster:
 	TST.b	Girl_left_for_stow.w
 	BEQ.b	CaveEvent_CarthahenaGuard_NoOne
@@ -3606,6 +3918,9 @@ CaveEvent_CarthahenaGuard_NoOne:
 CaveEvent_CarthahenaGuard_NoOne_Loop:
 	RTS
 	
+; CaveEvent_BearwulfMeeting — Bearwulf introduction scene (room $0B)
+; Shows portrait + BearwulfIntroductionStr only on first entry after
+; Bearwulf_cave_entered is set and Bearwulf_met is still clear.
 CaveEvent_BearwulfMeeting:
 	MOVE.l	#NoOneHereStr, Script_talk_source.w
 	TST.b	Bearwulf_cave_entered.w
@@ -3621,6 +3936,8 @@ CaveEvent_BearwulfMeeting:
 CaveEvent_BearwulfMeeting_Return:
 	RTS
 
+; CaveEvent_BearwulfWeaponReward — give Bearwulf's weapon reward (room $0C)
+; Awards POISON_SHIELD equipment if Bearwulf_cave_entered is set.
 CaveEvent_BearwulfWeaponReward:
 	MOVE.l	#NoOneHereStr, Script_talk_source.w
 	TST.b	Bearwulf_cave_entered.w
@@ -3631,6 +3948,9 @@ CaveEvent_BearwulfWeaponReward:
 CaveEvent_BearwulfWeaponReward_Loop:
 	RTS
 
+; CaveEvent_MalagaDungeonPrisoner — Malaga prisoner NPC (room $0D)
+; Shows prisoner portrait after rescue; shifts to crown-waiting dialogue
+; once Malaga_dungeon_person_rescued is set and Crown_received is clear.
 CaveEvent_MalagaDungeonPrisoner:
 	MOVE.l	#NoOneHereStr, Script_talk_source.w
 	TST.b	Malaga_dungeon_person_rescued.w
@@ -3649,6 +3969,8 @@ CaveEvent_MalagaDungeonPrisoner:
 CaveEvent_MalagaPrisoner_Done:
 	RTS
 
+; CaveEvent_MalagaCrownReward — give Crown reward (room $0D)
+; Awards REWARD_VALUE_CROWN item if Malaga_dungeon_person_rescued is set.
 CaveEvent_MalagaCrownReward:
 	MOVE.l	#NoOneHereStr, Script_talk_source.w
 	TST.b	Malaga_dungeon_person_rescued.w
@@ -3659,8 +3981,13 @@ CaveEvent_MalagaCrownReward:
 CaveEvent_MalagaCrownReward_Loop:
 	RTS
 
+; CaveEvent_TadcasterTreasureChest — Tadcaster special money chest (room $11)
+; Uses MoneyChest macro with $8000 kims and Tadcaster_treasure_quest_started flag.
 CaveEvent_TadcasterTreasureChest:
 	MoneyChest $8000, Tadcaster_treasure_quest_started
+; CaveEvent_TadcasterBully — Tadcaster bully / imposter-guard encounter (room $13)
+; Shows imposter guard portrait + AwaitingYouStr after bully fight won,
+; until Imposter_killed is set.
 CaveEvent_TadcasterBully:
 	MOVE.l	#NoOneHereStr, Script_talk_source.w
 	TST.b	Bully_first_fight_won.w
@@ -3676,6 +4003,9 @@ CaveEvent_TadcasterBully:
 CaveEvent_ImposterGuardScene_Return:
 	RTS
 
+; CaveEvent_HelwigMenRescued — Helwig prisoner freed scene (room $14)
+; Shows merchant-variant + FreeAtLastStr after Helwig_prison_entered
+; is set and Helwig_men_rescued is still clear.
 CaveEvent_HelwigMenRescued:
 	MOVE.l	#NoOneHereStr, Script_talk_source.w
 	TST.b	Helwig_prison_entered.w
@@ -3687,6 +4017,9 @@ CaveEvent_HelwigMenRescued:
 CaveEvent_HelwigPrisonerFreed_Return:
 	RTS
 
+; CaveEvent_SwaffhamDigotPlant — Digot Plant item event (room $1E)
+; Awards REWARD_VALUE_DIGOT_PLANT if Swaffham_ate_poisoned_food is set
+; and Digot_plant_received is clear.  Sets Herbs_available as side effect.
 CaveEvent_SwaffhamDigotPlant:
 	TST.b	Swaffham_ate_poisoned_food.w
 	BEQ.b	CaveEvent_DigotPlant_Return
@@ -3704,6 +4037,9 @@ CaveEvent_SwaffhamDigotPlant:
 CaveEvent_DigotPlant_Return:
 	RTS
 	
+; CaveEvent_ExcalabriaRingGuardian1 — Ring Guardian 1 boss trigger (room $16)
+; If boss defeated: award Ring of Wind (white crystal) via RingOfWindReward.
+; Otherwise: set Boss_event_trigger and Ring_guardian_1_boss_trigger to start fight.
 CaveEvent_ExcalabriaRingGuardian1:
 	TST.b	Excalabria_boss_1_defeated.w
 	BNE.w	CaveEvent_RingOfWindReward
@@ -3711,12 +4047,15 @@ CaveEvent_ExcalabriaRingGuardian1:
 	MOVE.b	#FLAG_TRUE, Ring_guardian_1_boss_trigger.w
 	RTS
 	
+; CaveEvent_RingOfWindReward — award white crystal (Ring of Wind) after Guardian 1 defeat
 CaveEvent_RingOfWindReward:
 	MOVE.w	#REWARD_VALUE_WHITE_CRYSTAL, Reward_script_value.w
 	MOVE.l	#Ring_of_wind_received, Reward_script_flag.w
 	BSR.w	SetupItemTreasure
 	RTS
 	
+; CaveEvent_ExcalabriaRingGuardian2 — Ring Guardian 2 boss trigger (room $29)
+; If boss defeated: award red crystal.  Otherwise: set boss trigger flags.
 CaveEvent_ExcalabriaRingGuardian2:
 	TST.b	Excalabria_boss_2_defeated.w
 	BNE.w	CaveEvent_RedCrystalReward
@@ -3724,12 +4063,15 @@ CaveEvent_ExcalabriaRingGuardian2:
 	MOVE.b	#FLAG_TRUE, Ring_guardian_2_boss_trigger.w
 	RTS
 	
+; CaveEvent_RedCrystalReward — award red crystal after Guardian 2 defeat
 CaveEvent_RedCrystalReward:
 	MOVE.w	#REWARD_VALUE_RED_CRYSTAL, Reward_script_value.w
 	MOVE.l	#Red_crystal_received, Reward_script_flag.w
 	BSR.w	SetupItemTreasure
 	RTS
 	
+; CaveEvent_ExcalabriaRingGuardian3 — Ring Guardian 3 boss trigger (room $24)
+; If boss defeated: award blue crystal.  Otherwise: set boss trigger flags.
 CaveEvent_ExcalabriaRingGuardian3:
 	TST.b	Excalabria_boss_3_defeated.w
 	BNE.w	CaveEvent_BlueCrystalReward
@@ -3737,12 +4079,16 @@ CaveEvent_ExcalabriaRingGuardian3:
 	MOVE.b	#FLAG_TRUE, Ring_guardian_3_boss_trigger.w
 	RTS
 	
+; CaveEvent_BlueCrystalReward — award blue crystal after Guardian 3 defeat
 CaveEvent_BlueCrystalReward:
 	MOVE.w	#REWARD_VALUE_BLUE_CRYSTAL, Reward_script_value.w
 	MOVE.l	#Blue_crystal_received, Reward_script_flag.w
 	BSR.w	SetupItemTreasure
 	RTS
 	
+; CaveEvent_SwaffhamSpy — Swaffham spy encounter + bronze key reward (room $20)
+; Before defeat: shows DieLaughStr / WishPoisonKilledStr via merchant-variant.
+; After defeat: awards REWARD_VALUE_BRONZE_KEY via SwaffhamSpyKeyReward.
 CaveEvent_SwaffhamSpy:
 	TST.b	Swaffham_spy_defeated.w
 	BNE.w	CaveEvent_SwaffhamSpyKeyReward
@@ -3754,6 +4100,7 @@ CaveEvent_SwaffhamSpy:
 CaveEvent_SwaffhamSpy_Loop:
 	RTS
 	
+; CaveEvent_SwaffhamSpyKeyReward — award bronze key item after spy defeat
 CaveEvent_SwaffhamSpyKeyReward:
 	MOVE.w	#REWARD_VALUE_BRONZE_KEY, Reward_script_value.w
 	MOVE.l	#Thar_bronze_key_collected, Reward_script_flag.w
@@ -3763,6 +4110,9 @@ CaveEvent_SwaffhamSpyKeyReward:
 CaveChest_RingSoldier1:
 	RingChest 4, 5, Carthahena_soldier_1_defeated
 	
+; CaveEvent_TharEncounter — Thar boss encounter + silver key reward (room $20)
+; Before defeat: shows TharRevengeStr via InitTalkerWithGfxDescriptor_1F712.
+; After defeat: awards REWARD_VALUE_SILVER_KEY.
 CaveEvent_TharEncounter:
 	TST.b	Thar_defeated.w
 	BNE.w	CaveEvent_TharKeyReward
@@ -3770,6 +4120,7 @@ CaveEvent_TharEncounter:
 	MOVE.l	#TharRevengeStr, Script_talk_source.w
 	RTS
 	
+; CaveEvent_TharKeyReward — award silver key item after Thar defeat
 CaveEvent_TharKeyReward:
 	MOVE.w	#REWARD_VALUE_SILVER_KEY, Reward_script_value.w
 	MOVE.l	#Thar_silver_key_collected, Reward_script_flag.w
@@ -3779,6 +4130,9 @@ CaveEvent_TharKeyReward:
 CaveChest_RingSoldier2:
 	RingChest 4, 6, Carthahena_soldier_2_defeated
 	
+; CaveEvent_LutherEncounter — Luther boss encounter + gold key reward (room $20)
+; Before defeat: shows LutherDevastatedSwaffhamStr via InitTalkerWithGfxDescriptor_1F712.
+; After defeat: awards REWARD_VALUE_GOLD_KEY.
 CaveEvent_LutherEncounter:
 	TST.b	Luther_defeated.w
 	BNE.w	CaveEvent_LutherKeyReward
@@ -3786,6 +4140,7 @@ CaveEvent_LutherEncounter:
 	MOVE.l	#LutherDevastatedSwaffhamStr, Script_talk_source.w
 	RTS
 	
+; CaveEvent_LutherKeyReward — award gold key item after Luther defeat
 CaveEvent_LutherKeyReward:
 	MOVE.w	#REWARD_VALUE_GOLD_KEY, Reward_script_value.w
 	MOVE.l	#Luther_gold_key_collected, Reward_script_flag.w
@@ -3795,6 +4150,9 @@ CaveEvent_LutherKeyReward:
 CaveChest_RingSoldier3:
 	RingChest 4, 7, Carthahena_soldier_3_defeated
 	
+; CaveEvent_TsarkonFinalEncounter — final Tsarkon confrontation (room $20)
+; Multi-state: checks all 7 rings collected, then shifts through stepfather /
+; all-rings / game-over dialogue states.  After Tsarkon_is_dead: ending message.
 CaveEvent_TsarkonFinalEncounter:
 	TST.b	Tsarkon_is_dead.w
 	BNE.w	CaveEvent_TsarkonFinalEncounter_Loop
@@ -3822,6 +4180,13 @@ CaveEvent_TsarkonFinalEncounter_Loop:
 CaveEvent_Tsarkon_Return:
 	RTS
 	
+; ---------------------------------------------------------------------------
+; InitDialogMode — switch to dialog display state
+;
+; Sets Dialog_active_flag, Dialog_state_flag, clears timers/phase, saves
+; Gameplay_state and Player_direction, then sets GAMEPLAY_STATE_DIALOG_DISPLAY.
+; Also sets bit 7 of the current actor's flags.
+; ---------------------------------------------------------------------------
 InitDialogMode:
 	MOVEA.l	Current_actor_ptr.w, A6
 	BSET.b	#7, (A6)
@@ -3834,6 +4199,8 @@ InitDialogMode:
 	MOVE.w	#GAMEPLAY_STATE_DIALOG_DISPLAY, Gameplay_state.w
 	RTS
 	
+; InitDialogGraphics — load talker tiles and clear portrait VRAM region
+; Calls LoadTalkerGraphics then DMA-fills VRAM at $45600002 for $03FF words.
 InitDialogGraphics:
 	JSR	LoadTalkerGraphics
 	DMAFillVRAM $45600002, $03FF
@@ -3881,6 +4248,9 @@ SetupChestReward_Loop:
 	MOVE.l	#NoOneHereStr, Script_talk_source.w
 	RTS
 	
+; SetupFoundItemReward — present a dropped/found item from an enemy reward
+; Copies Enemy_reward_type/value into Reward_script_*, marks available+active,
+; spawns the generic chest sprite, and sets NoOneHereStr as the talk source.
 SetupFoundItemReward:
 	MOVE.w	Enemy_reward_type.w, Reward_script_type.w
 	MOVE.w	Enemy_reward_value.w, Reward_script_value.w
@@ -3890,29 +4260,39 @@ SetupFoundItemReward:
 	MOVE.l	#NoOneHereStr, Script_talk_source.w
 	RTS
 	
+; InitTalkerWithGfxDescriptor_1F782 — init chest/item talker (generic NPC sprite)
+; Calls InitDialogMode, sets PortraitInit_Simple tick fn, GenericNpc gfx descriptor.
 InitTalkerWithGfxDescriptor_1F782:
 	BSR.w	InitDialogMode
 	MOVE.l	#PortraitInit_Simple, obj_tick_fn(A6)
 	MOVE.l	#TalkerGfxDesc_GenericNpc, Talker_gfx_descriptor_ptr.w
 	BRA.w	InitDialogGraphics
+; InitTalkerWithGfxDescriptor_1F712 — init named NPC talker (MapGiver sprite)
+; Sets Talker_present_flag, calls InitDialogMode, sets MapGiver gfx descriptor.
 InitTalkerWithGfxDescriptor_1F712:
 	MOVE.b	#FLAG_TRUE, Talker_present_flag.w
 	BSR.w	InitDialogMode
 	MOVE.l	#PortraitInit_Simple, obj_tick_fn(A6)
 	MOVE.l	#TalkerGfxDesc_MapGiver, Talker_gfx_descriptor_ptr.w
 	BRA.w	InitDialogGraphics
+; InitTalkerWithGfxDescriptor_1F74A — init Bearwulf talker (Bearwulf sprite)
+; Sets Talker_present_flag, calls InitDialogMode, sets Bearwulf gfx descriptor.
 InitTalkerWithGfxDescriptor_1F74A:
 	MOVE.b	#FLAG_TRUE, Talker_present_flag.w
 	BSR.w	InitDialogMode
 	MOVE.l	#PortraitInit_Simple, obj_tick_fn(A6)
 	MOVE.l	#TalkerGfxDesc_Bearwulf, Talker_gfx_descriptor_ptr.w
 	BRA.w	InitDialogGraphics
+; InitMerchantDialog_Variant2 — init StowGirl talker variant
+; Sets Talker_present_flag + InitDialogMode + StowGirl gfx descriptor.
 InitMerchantDialog_Variant2:
 	MOVE.b	#FLAG_TRUE, Talker_present_flag.w
 	BSR.w	InitDialogMode
 	MOVE.l	#PortraitInit_Simple, obj_tick_fn(A6)
 	MOVE.l	#TalkerGfxDesc_StowGirl, Talker_gfx_descriptor_ptr.w
 	BRA.w	InitDialogGraphics
+; InitMerchantDialog_Variant3 — init Merchant talker variant
+; Sets Talker_present_flag + InitDialogMode + Merchant gfx descriptor.
 InitMerchantDialog_Variant3:
 	MOVE.b	#FLAG_TRUE, Talker_present_flag.w
 	BSR.w	InitDialogMode

@@ -1427,10 +1427,10 @@ LoadBattleHudGraphics_TileLoop1:
 	LEA	Tile_gfx_buffer.w, A2
 	LEA	LoadBattleHudGraphics_Done_Data, A0
 	MOVE.w	#$0039, D5
-LoadBattleHudGraphics_TileLoop2:
+LoadBattleHudGraphics_TileLoopParma:
 	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
-	DBF	D5, LoadBattleHudGraphics_TileLoop2
+	DBF	D5, LoadBattleHudGraphics_TileLoopParma
 	LEA	DmaCmd_TownTileset_Parma, A0
 	BSR.w	ExecuteVdpDmaFromPointer
 	RTS
@@ -1817,28 +1817,28 @@ LoadTownTileGfxToBuffer_TileLoop1:
 	LEA	Tile_gfx_buffer.w, A2
 	LEA	LoadTownTileGfxToBuffer_Done_Data, A0
 	MOVE.w	#$00D9, D5
-LoadTownTileGfxToBuffer_TileLoop2:
+LoadTownTileGfxToBuffer_TileLoopGroupB:
 	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
-	DBF	D5, LoadTownTileGfxToBuffer_TileLoop2
+	DBF	D5, LoadTownTileGfxToBuffer_TileLoopGroupB
 	LEA	DmaCmd_TownTileGfxSet1_B, A0
 	BSR.w	ExecuteVdpDmaFromRam
 	LEA	Tile_gfx_buffer.w, A2
 	LEA	SpriteGfxData_607AA, A0
 	MOVE.w	#$006B, D5
-LoadTownTileGfxToBuffer_TileLoop3:
+LoadTownTileGfxToBuffer_TileLoopGroupC:
 	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
-	DBF	D5, LoadTownTileGfxToBuffer_TileLoop3
+	DBF	D5, LoadTownTileGfxToBuffer_TileLoopGroupC
 	LEA	DmaCmd_TownNpcGfx, A0
 	BSR.w	ExecuteVdpDmaFromRam
 	LEA	Tile_gfx_buffer.w, A2
 	LEA	LoadTownTileGfxToBuffer_Done3_Data, A0
 	MOVE.w	#$009D, D5
-LoadTownTileGfxToBuffer_TileLoop4:
+LoadTownTileGfxToBuffer_TileLoopGroupD:
 	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
-	DBF	D5, LoadTownTileGfxToBuffer_TileLoop4
+	DBF	D5, LoadTownTileGfxToBuffer_TileLoopGroupD
 	LEA	DmaCmd_TownTileGfxSet1_D, A0
 	BSR.w	ExecuteVdpDmaFromRam
 	LEA	Tile_gfx_buffer.w, A2
@@ -1879,10 +1879,10 @@ LoadMenuTileGraphics_TileLoop1:
 	LEA	Tile_gfx_buffer.w, A2
 	LEA	LoadMenuTileGraphics_Done_Data, A0
 	MOVE.w	#$00FF, D5
-LoadMenuTileGraphics_TileLoop2:
+LoadMenuTileGraphics_TileLoopGroupB:
 	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
-	DBF	D5, LoadMenuTileGraphics_TileLoop2
+	DBF	D5, LoadMenuTileGraphics_TileLoopGroupB
 	LEA	DmaCmd_MenuTilesB, A0
 	BSR.w	ExecuteVdpDmaFromRam
 	LEA	Tile_gfx_buffer.w, A2
@@ -1899,19 +1899,19 @@ LoadMenuTileGfxSet3_TileLoop1:
 	LEA	Tile_gfx_buffer.w, A2
 	LEA	LoadMenuTileGfxSet3_Done_Data, A0
 	MOVE.w	#$001A, D5
-LoadMenuTileGfxSet3_TileLoop2:
+LoadMenuTileGfxSet3_TileLoopMiscA:
 	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
-	DBF	D5, LoadMenuTileGfxSet3_TileLoop2
+	DBF	D5, LoadMenuTileGfxSet3_TileLoopMiscA
 	LEA	DmaCmd_MenuMiscTilesA, A0
 	BSR.w	ExecuteVdpDmaFromRam
 	LEA	Tile_gfx_buffer.w, A2
 	LEA	LoadMenuTileGfxSet3_Set2Data, A0
 	MOVE.w	#7, D5
-LoadMenuTileGfxSet3_TileLoop3:
+LoadMenuTileGfxSet3_TileLoopMiscB:
 	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
-	DBF	D5, LoadMenuTileGfxSet3_TileLoop3
+	DBF	D5, LoadMenuTileGfxSet3_TileLoopMiscB
 	LEA	DmaCmd_MenuMiscTilesB, A0
 	BSR.w	ExecuteVdpDmaFromRam
 	RTS
@@ -1943,28 +1943,28 @@ LoadTitleScreenGraphics_TileLoop1:
 	LEA	LoadTitleScreenGraphics_Done_Data, A0
 	LEA	Tile_gfx_buffer.w, A2
 	MOVE.w	#$006C, D5
-LoadTitleScreenGraphics_TileLoop2:
+LoadTitleScreenGraphics_TileLoopGroupB:
 	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
-	DBF	D5, LoadTitleScreenGraphics_TileLoop2
+	DBF	D5, LoadTitleScreenGraphics_TileLoopGroupB
 	LEA	DmaCmd_TitleScreenTilesB, A0
 	BSR.w	ExecuteVdpDmaFromRam
 	LEA	LoadTitleScreenGraphics_Set2Data, A0
 	LEA	Tile_gfx_buffer.w, A2
 	MOVE.w	#$0062, D5
-LoadTitleScreenGraphics_TileLoop3:
+LoadTitleScreenGraphics_TileLoopGroupC:
 	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
-	DBF	D5, LoadTitleScreenGraphics_TileLoop3
+	DBF	D5, LoadTitleScreenGraphics_TileLoopGroupC
 	LEA	DmaCmd_TitleScreenTilesC, A0
 	BSR.w	ExecuteVdpDmaFromRam
 	LEA	LoadTitleScreenGraphics_Done3_Data, A0
 	LEA	Tile_gfx_buffer.w, A2
 	MOVE.w	#$004F, D5
-LoadTitleScreenGraphics_TileLoop4:
+LoadTitleScreenGraphics_TileLoopGroupD:
 	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
-	DBF	D5, LoadTitleScreenGraphics_TileLoop4
+	DBF	D5, LoadTitleScreenGraphics_TileLoopGroupD
 	LEA	DmaCmd_TitleScreenTilesD, A0
 	BSR.w	ExecuteVdpDmaFromRam
 	LEA	LoadTitleScreenGraphics_Done4_Data, A0
@@ -1980,10 +1980,10 @@ LoadTitleScreenTileGfx_TileLoop1:
 	LEA	LoadTitleScreenTileGfx_Done_Data, A0
 	LEA	Tile_gfx_buffer.w, A2
 	MOVE.w	#5, D5
-LoadTitleScreenTileGfx_TileLoop2:
+LoadTitleScreenTileGfx_TileLoopGroupF:
 	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
-	DBF	D5, LoadTitleScreenTileGfx_TileLoop2
+	DBF	D5, LoadTitleScreenTileGfx_TileLoopGroupF
 	LEA	DmaCmd_TitleScreenTilesF, A0
 	BSR.w	ExecuteVdpDmaFromRam
 	RTS
