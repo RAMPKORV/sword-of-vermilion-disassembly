@@ -1,0 +1,54 @@
+[
+  {
+    "label": "Prologue1Str",
+    "raw_ops": [
+      { "mnemonic": "TEXT", "text": "Long ago, King" },
+      { "mnemonic": "NEWLINE" },
+      { "mnemonic": "TEXT", "text": "Tsarkon of Cartahena" },
+      { "mnemonic": "NEWLINE" },
+      { "mnemonic": "TEXT", "text": "unleashed his evil" },
+      { "mnemonic": "NEWLINE" },
+      { "mnemonic": "TEXT", "text": "hordes upon the" },
+      { "mnemonic": "NEWLINE" },
+      { "mnemonic": "TEXT", "text": "peaceful land of" },
+      { "mnemonic": "NEWLINE" },
+      { "mnemonic": "TEXT", "text": "Excalabria." },
+      { "mnemonic": "END" }
+    ]
+  },
+  {
+    "label": "StaffTextStr",
+    "new_text": "      STAFF"
+  },
+  {
+    "label": "RingOfferStr",
+    "raw_ops": [
+      { "mnemonic": "TEXT", "text": "Yes, I have the ring." },
+      { "mnemonic": "NEWLINE" },
+      { "mnemonic": "TEXT", "text": "You need it to combat" },
+      { "mnemonic": "NEWLINE" },
+      { "mnemonic": "TEXT", "text": "the hordes of Cartahena?" },
+      { "mnemonic": "CONTINUE" },
+      { "mnemonic": "TEXT", "text": "You're not powerful enough" },
+      { "mnemonic": "NEWLINE" },
+      { "mnemonic": "TEXT", "text": "to stand a chance at that." },
+      { "mnemonic": "CONTINUE" },
+      { "mnemonic": "TEXT", "text": "Nonetheless, I propose" },
+      { "mnemonic": "NEWLINE" },
+      { "mnemonic": "TEXT", "text": "a test. The Cave of Troy" },
+      { "mnemonic": "NEWLINE" },
+      { "mnemonic": "TEXT", "text": "is outside of town." },
+      { "mnemonic": "CONTINUE" },
+      { "mnemonic": "TEXT", "text": "Return to me with" },
+      { "mnemonic": "NEWLINE" },
+      { "mnemonic": "TEXT", "text": "the Treasure of Troy," },
+      { "mnemonic": "NEWLINE" },
+      { "mnemonic": "TEXT", "text": "and I'll give you my ring." },
+      { "mnemonic": "CONTINUE" },
+      { "mnemonic": "TEXT", "text": "Of course, the cave does" },
+      { "mnemonic": "NEWLINE" },
+      { "mnemonic": "TEXT", "text": "have its guardians...." },
+      { "mnemonic": "TRIGGERS", "triggers": [2] }
+    ]
+  }
+]

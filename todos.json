@@ -1644,7 +1644,7 @@
           "file": "tools/script_patch.js",
           "priority": "low",
           "effort": "very_large",
-          "status": "todo",
+          "status": "done",
           "tags": [
             "script-vm",
             "tooling",
@@ -1653,7 +1653,9 @@
           "depends_on": [
             "VM-006",
             "VM-007"
-          ]
+          ],
+          "notes": "Created tools/script_patch.js. Supports --patch <patch.json>, --dry-run, --validate, --example, --force-resize. Accepts raw_ops (full opcode array) or new_text (plain text with \\n/\\f/\\p escapes). Computes ROM byte span from symbol_map.json, finds ASM block via script_entries.json, pads to span, errors if larger. All opcodes supported: TEXT, NEWLINE, CONTINUE, END, PLAYER_NAME, QUESTION, YES_NO, CHOICE, TRIGGERS, ACTIONS, WIDE_HI, WIDE_LO. No-op tests bit-perfect for Prologue1Str, RingOfferStr (TRIGGERS terminal), StaffTextStr, and all three simultaneously. Build verified bit-perfect.",
+          "completed_at": "2026-03-05"
         }
       ]
     },
@@ -2203,8 +2205,8 @@
   "statistics": {
     "total_tasks": 139,
     "by_status": {
-      "done": 126,
-      "todo": 13
+      "done": 137,
+      "todo": 2
     },
     "by_priority": {
       "critical": 1,
@@ -2232,8 +2234,6 @@
       "tooling_and_lints": 12,
       "module_architecture": 10,
       "contributor_experience": 10
-    },
-    "done": 131,
-    "todo": 8
+    }
   }
 }
