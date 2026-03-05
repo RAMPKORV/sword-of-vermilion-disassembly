@@ -102,6 +102,27 @@ Or run them all at once:
 node tools/run_checks.js
 ```
 
+## Pre-commit hook (recommended)
+
+A pre-commit hook runs lint checks and `verify.bat` automatically before every
+`git commit`. Install it once from the repo root:
+
+**Git Bash / WSL / Linux / macOS:**
+```bash
+cp tools/pre-commit.sh .git/hooks/pre-commit
+chmod +x .git/hooks/pre-commit
+```
+
+**Windows (manual check only):**
+Git for Windows executes hooks as shell scripts, so install `pre-commit.sh` as
+above. To run the checks manually from `cmd.exe`:
+```batch
+tools\pre-commit.cmd
+```
+
+Once installed, the hook fires on every `git commit` and blocks the commit if
+any lint check fails or the ROM hash does not match.
+
 ## Adding constants
 
 All new constants go in `constants.asm` in the appropriate section (section

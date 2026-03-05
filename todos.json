@@ -677,7 +677,7 @@
           "file": "tools/pre-commit.sh + tools/pre-commit.cmd",
           "priority": "high",
           "effort": "small",
-          "status": "todo"
+          "status": "done"
         },
         {
           "id": "REGR-002",
