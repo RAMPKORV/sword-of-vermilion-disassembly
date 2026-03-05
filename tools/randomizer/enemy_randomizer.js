@@ -197,7 +197,7 @@ if (DRY_RUN || !seedArg) {
       console.log(`  [${String(i).padStart(3)}] ${String(orig.name).padEnd(20)} ${diffs.join(', ')}`);
     }
   });
-  if (!DRY_RUN) process.exit(0);
+  if (DRY_RUN) process.exit(0);
 }
 
 // Write modified data
