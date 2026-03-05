@@ -557,7 +557,9 @@
           "file": "src/player.asm",
           "priority": "medium",
           "effort": "small",
-          "status": "todo"
+          "status": "done",
+          "notes": "Bit-perfect constraint: 6 entity-DMA blocks (7 instructions each) across 3 branches, each with unique buffer/ptr/stride/D3/D5. Extracting a helper would shift BSR.w SetupVdpDmaCommand displacements and break bit-perfect. Added comprehensive header comment on UpdatePlayerSpriteDMA documenting all 3 branches, per-entity pattern, and DRY-007 constraint.",
+          "completed_at": "2026-03-05T00:31:27.803Z"
         },
         {
           "id": "DRY-008",

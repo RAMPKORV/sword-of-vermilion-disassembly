@@ -335,6 +335,39 @@ TownEnemyCollision_NextEnemy:
 TownEnemyCollision_NextEnemy_Loop:
 	RTS
 
+; ---------------------------------------------------------------------------
+; UpdatePlayerSpriteDMA — queue DMA transfers for player/enemy battle sprites
+;
+; Dispatches to one of three code paths based on battle state:
+;
+;   Overworld (Is_boss_battle=0, Is_in_battle=0):
+;     DMA Player_overworld_gfx_buffer  → VRAM $1010  (stride $180/frame)
+;
+;   Normal battle (Is_in_battle≠0):
+;     DMA Tilemap_buffer_plane_a       → VRAM $0D00  (player, stride $100/frame)
+;     DMA Battle_gfx_slot_1_buffer     → VRAM $1010  (enemy 1, stride $180/frame)
+;     DMA Battle_gfx_slot_2_buffer     → VRAM $1550  (enemy 2, stride $080/frame)
+;
+;   Boss battle (Is_boss_battle≠0):
+;     DMA Tilemap_buffer_plane_a       → VRAM $1010  (player, stride $180/frame)
+;     DMA Boss_gfx_slot_1_buffer       → VRAM $0980  (boss 1, stride $200/frame)
+;     DMA Boss_gfx_slot_2_buffer       → VRAM $1550  (boss 2, stride $080/frame)
+;
+; Each per-entity block follows the pattern:
+;   LEA buffer,A0 / MOVEA.l ptr,A6 / CLR.w D0 / MOVE.b frame(A6),D0
+;   MULU stride,D0 / ADDA D0,A0 / EXG D0,A0
+;   MOVE.l #D3_cmd,D3 / MOVE.l #D5_cmd,D5 / BSR SetupVdpDmaCommand
+;
+; DRY-007 NOTE: The 7-instruction entity-DMA pattern repeats 6 times across
+; the three branches with unique (buffer, ptr, stride, D3, D5) values.
+; Extracting a helper would change each BSR.w SetupVdpDmaCommand displacement,
+; breaking bit-perfect output.  The pattern is documented here; physical
+; deduplication is intentionally deferred.
+;
+; Input:   Is_boss_battle.w, Is_in_battle.w, Player/Battle entity ptrs+frames
+; Scratch: D0-D5, A0, A6
+; Output:  DMA command words written to DMA slot registers
+; ---------------------------------------------------------------------------
 UpdatePlayerSpriteDMA:
 	TST.b	Is_boss_battle.w
 	BNE.w	UpdatePlayerSpriteDMA_Loop
