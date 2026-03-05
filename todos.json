@@ -449,7 +449,7 @@
           "priority": "medium",
           "effort": "medium",
           "depends_on": "Data from tools/extract_game_data.js",
-          "status": "todo"
+          "status": "done"
         },
         {
           "id": "TOOLB-004",
