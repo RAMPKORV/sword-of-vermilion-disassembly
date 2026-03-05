@@ -94,15 +94,15 @@
 ; Map Sector Layout
 ; -----------------
 ; Each sector is 16×16 tiles; 3×3 sectors are kept in RAM (48×48 tile window).
-; Sector stride in RAM: $30 bytes per row (16 data + 16 padding).
+; Sector stride in RAM: DUNGEON_ROW_STRIDE ($30) bytes per row (16 data + 16 padding).
 ; Adjacency offsets from Map_sector_center base pointer:
-;   A2           = current cell (center)
-;   -$01(A2)     = one step left (X-1)
-;   +$01(A2)     = one step right (X+1)
-;   -$30(A2)     = one row up (Y-1)
-;   +$30(A2)     = one row down (Y+1)
-;   -$60(A2)     = two rows up (Y-2, far depth)
-;   +$60(A2)     = two rows down (Y+2, far depth)
+;   A2                           = current cell (center)
+;   -1(A2)                       = one step left  (X-1)
+;   +1(A2)                       = one step right (X+1)
+;   -DUNGEON_ROW_STRIDE(A2)      = one row up   (Y-1)
+;   +DUNGEON_ROW_STRIDE(A2)      = one row down (Y+1)
+;   -DUNGEON_2ROW_STRIDE(A2)     = two rows up  (Y-2, far depth)
+;   +DUNGEON_2ROW_STRIDE(A2)     = two rows down (Y+2, far depth)
 ;
 ; ======================================================================
 DecrementInaudiosSteps_Done:
@@ -1199,23 +1199,23 @@ UpdateFpWalls_FacingLeft:
 	MOVE.b	(A2), D4
 	BSR.w	ValidateDungeonTileType
 	MOVE.b	D4, First_person_center_wall.w
-	MOVE.b	-$30(A2), D4
+	MOVE.b	-DUNGEON_ROW_STRIDE(A2), D4
 	BSR.w	ValidateDungeonTileType
 	MOVE.b	D4, Fp_wall_right_2.w
-	MOVE.b	$30(A2), D4
+	MOVE.b	DUNGEON_ROW_STRIDE(A2), D4
 	BSR.w	ValidateDungeonTileType
 	MOVE.b	D4, First_person_wall_right.w
 	LEA	FpObjectTileTable_Near, A1
 	LEA	-$1(A2), A2
 	MOVEA.l	Object_slot_04_ptr.w, A6
 	CLR.w	D4
-	MOVE.b	-$60(A2), D4
+	MOVE.b	-DUNGEON_2ROW_STRIDE(A2), D4
 	BSR.w	ValidateDungeonTileType
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), obj_tile_index(A6)
 	MOVEA.l	Object_slot_01_ptr.w, A6
 	CLR.w	D4
-	MOVE.b	-$30(A2), D4
+	MOVE.b	-DUNGEON_ROW_STRIDE(A2), D4
 	BSR.w	ValidateDungeonTileType
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), obj_tile_index(A6)
@@ -1227,13 +1227,13 @@ UpdateFpWalls_FacingLeft:
 	MOVE.w	(A1,D4.w), obj_tile_index(A6)
 	MOVEA.l	Enemy_list_ptr.w, A6
 	CLR.w	D4
-	MOVE.b	$30(A2), D4
+	MOVE.b	DUNGEON_ROW_STRIDE(A2), D4
 	BSR.w	ValidateDungeonTileType
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), obj_tile_index(A6)
 	MOVEA.l	Object_slot_03_ptr.w, A6
 	CLR.w	D4
-	MOVE.b	$60(A2), D4
+	MOVE.b	DUNGEON_2ROW_STRIDE(A2), D4
 	BSR.w	ValidateDungeonTileType
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), obj_tile_index(A6)
@@ -1241,13 +1241,13 @@ UpdateFpWalls_FacingLeft:
 	LEA	FpObjectTileTable_Mid, A1
 	MOVEA.l	Object_slot_09_ptr.w, A6
 	CLR.w	D4
-	MOVE.b	-$60(A2), D4
+	MOVE.b	-DUNGEON_2ROW_STRIDE(A2), D4
 	BSR.w	ValidateDungeonTileType
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), obj_tile_index(A6)
 	MOVEA.l	Object_slot_06_ptr.w, A6
 	CLR.w	D4
-	MOVE.b	-$30(A2), D4
+	MOVE.b	-DUNGEON_ROW_STRIDE(A2), D4
 	BSR.w	ValidateDungeonTileType
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), obj_tile_index(A6)
@@ -1259,13 +1259,13 @@ UpdateFpWalls_FacingLeft:
 	MOVE.w	(A1,D4.w), obj_tile_index(A6)
 	MOVEA.l	Object_slot_05_ptr.w, A6
 	CLR.w	D4
-	MOVE.b	$30(A2), D4
+	MOVE.b	DUNGEON_ROW_STRIDE(A2), D4
 	BSR.w	ValidateDungeonTileType
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), obj_tile_index(A6)
 	MOVEA.l	Object_slot_08_ptr.w, A6
 	CLR.w	D4
-	MOVE.b	$60(A2), D4
+	MOVE.b	DUNGEON_2ROW_STRIDE(A2), D4
 	BSR.w	ValidateDungeonTileType
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), obj_tile_index(A6)
@@ -1273,13 +1273,13 @@ UpdateFpWalls_FacingLeft:
 	LEA	FpObjectTileTable_Far, A1
 	MOVEA.l	Object_slot_0E_ptr.w, A6
 	CLR.w	D4
-	MOVE.b	-$60(A2), D4
+	MOVE.b	-DUNGEON_2ROW_STRIDE(A2), D4
 	BSR.w	ValidateDungeonTileType
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), obj_tile_index(A6)
 	MOVEA.l	Object_slot_0B_ptr.w, A6
 	CLR.w	D4
-	MOVE.b	-$30(A2), D4
+	MOVE.b	-DUNGEON_ROW_STRIDE(A2), D4
 	BSR.w	ValidateDungeonTileType
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), obj_tile_index(A6)
@@ -1291,13 +1291,13 @@ UpdateFpWalls_FacingLeft:
 	MOVE.w	(A1,D4.w), obj_tile_index(A6)
 	MOVEA.l	Object_slot_0A_ptr.w, A6
 	CLR.w	D4
-	MOVE.b	$30(A2), D4
+	MOVE.b	DUNGEON_ROW_STRIDE(A2), D4
 	BSR.w	ValidateDungeonTileType
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), obj_tile_index(A6)
 	MOVEA.l	Object_slot_0D_ptr.w, A6
 	CLR.w	D4
-	MOVE.b	$60(A2), D4
+	MOVE.b	DUNGEON_2ROW_STRIDE(A2), D4
 	BSR.w	ValidateDungeonTileType
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), obj_tile_index(A6)
@@ -1320,7 +1320,7 @@ UpdateFpWalls_FacingDown:
 	MOVE.b	$1(A2), D4
 	BSR.w	ValidateDungeonTileType
 	MOVE.b	D4, First_person_wall_right.w
-	LEA	$30(A2), A2
+	LEA	DUNGEON_ROW_STRIDE(A2), A2
 	LEA	FpObjectTileTable_Near, A1
 	MOVEA.l	Object_slot_04_ptr.w, A6
 	CLR.w	D4
@@ -1352,7 +1352,7 @@ UpdateFpWalls_FacingDown:
 	BSR.w	ValidateDungeonTileType
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), obj_tile_index(A6)
-	LEA	$30(A2), A2
+	LEA	DUNGEON_ROW_STRIDE(A2), A2
 	LEA	FpObjectTileTable_Mid, A1
 	MOVEA.l	Object_slot_09_ptr.w, A6
 	CLR.w	D4
@@ -1384,7 +1384,7 @@ UpdateFpWalls_FacingDown:
 	BSR.w	ValidateDungeonTileType
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), obj_tile_index(A6)
-	LEA	$30(A2), A2
+	LEA	DUNGEON_ROW_STRIDE(A2), A2
 	LEA	FpObjectTileTable_Far, A1
 	MOVEA.l	Object_slot_0E_ptr.w, A6
 	CLR.w	D4
@@ -1426,26 +1426,26 @@ UpdateFpWalls_FacingRight:
 	MULU.w	#$0030, D1
 	ADD.w	D1, D0
 	LEA	(A0,D0.w), A2
-	MOVE.b	-$30(A2), D4
+	MOVE.b	-DUNGEON_ROW_STRIDE(A2), D4
 	BSR.w	ValidateDungeonTileType
 	MOVE.b	D4, First_person_wall_right.w
 	MOVE.b	(A2), D4
 	BSR.w	ValidateDungeonTileType
 	MOVE.b	D4, First_person_center_wall.w
-	MOVE.b	$30(A2), D4
+	MOVE.b	DUNGEON_ROW_STRIDE(A2), D4
 	BSR.w	ValidateDungeonTileType
 	MOVE.b	D4, Fp_wall_right_2.w
 	LEA	$1(A2), A2
 	LEA	FpObjectTileTable_Near, A1
 	MOVEA.l	Object_slot_03_ptr.w, A6
 	CLR.w	D4
-	MOVE.b	-$60(A2), D4
+	MOVE.b	-DUNGEON_2ROW_STRIDE(A2), D4
 	BSR.w	ValidateDungeonTileType
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), obj_tile_index(A6)
 	MOVEA.l	Enemy_list_ptr.w, A6
 	CLR.w	D4
-	MOVE.b	-$30(A2), D4
+	MOVE.b	-DUNGEON_ROW_STRIDE(A2), D4
 	BSR.w	ValidateDungeonTileType
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), obj_tile_index(A6)
@@ -1457,13 +1457,13 @@ UpdateFpWalls_FacingRight:
 	MOVE.w	(A1,D4.w), obj_tile_index(A6)
 	MOVEA.l	Object_slot_01_ptr.w, A6
 	CLR.w	D4
-	MOVE.b	$30(A2), D4
+	MOVE.b	DUNGEON_ROW_STRIDE(A2), D4
 	BSR.w	ValidateDungeonTileType
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), obj_tile_index(A6)
 	MOVEA.l	Object_slot_04_ptr.w, A6
 	CLR.w	D4
-	MOVE.b	$60(A2), D4
+	MOVE.b	DUNGEON_2ROW_STRIDE(A2), D4
 	BSR.w	ValidateDungeonTileType
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), obj_tile_index(A6)
@@ -1471,13 +1471,13 @@ UpdateFpWalls_FacingRight:
 	LEA	FpObjectTileTable_Mid, A1
 	MOVEA.l	Object_slot_08_ptr.w, A6
 	CLR.w	D4
-	MOVE.b	-$60(A2), D4
+	MOVE.b	-DUNGEON_2ROW_STRIDE(A2), D4
 	BSR.w	ValidateDungeonTileType
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), obj_tile_index(A6)
 	MOVEA.l	Object_slot_05_ptr.w, A6
 	CLR.w	D4
-	MOVE.b	-$30(A2), D4
+	MOVE.b	-DUNGEON_ROW_STRIDE(A2), D4
 	BSR.w	ValidateDungeonTileType
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), obj_tile_index(A6)
@@ -1489,13 +1489,13 @@ UpdateFpWalls_FacingRight:
 	MOVE.w	(A1,D4.w), obj_tile_index(A6)
 	MOVEA.l	Object_slot_06_ptr.w, A6
 	CLR.w	D4
-	MOVE.b	$30(A2), D4
+	MOVE.b	DUNGEON_ROW_STRIDE(A2), D4
 	BSR.w	ValidateDungeonTileType
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), obj_tile_index(A6)
 	MOVEA.l	Object_slot_09_ptr.w, A6
 	CLR.w	D4
-	MOVE.b	$60(A2), D4
+	MOVE.b	DUNGEON_2ROW_STRIDE(A2), D4
 	BSR.w	ValidateDungeonTileType
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), obj_tile_index(A6)
@@ -1503,13 +1503,13 @@ UpdateFpWalls_FacingRight:
 	LEA	FpObjectTileTable_Far, A1
 	MOVEA.l	Object_slot_0D_ptr.w, A6
 	CLR.w	D4
-	MOVE.b	-$60(A2), D4
+	MOVE.b	-DUNGEON_2ROW_STRIDE(A2), D4
 	BSR.w	ValidateDungeonTileType
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), obj_tile_index(A6)
 	MOVEA.l	Object_slot_0A_ptr.w, A6
 	CLR.w	D4
-	MOVE.b	-$30(A2), D4
+	MOVE.b	-DUNGEON_ROW_STRIDE(A2), D4
 	BSR.w	ValidateDungeonTileType
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), obj_tile_index(A6)
@@ -1521,13 +1521,13 @@ UpdateFpWalls_FacingRight:
 	MOVE.w	(A1,D4.w), obj_tile_index(A6)
 	MOVEA.l	Object_slot_0B_ptr.w, A6
 	CLR.w	D4
-	MOVE.b	$30(A2), D4
+	MOVE.b	DUNGEON_ROW_STRIDE(A2), D4
 	BSR.w	ValidateDungeonTileType
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), obj_tile_index(A6)
 	MOVEA.l	Object_slot_0E_ptr.w, A6
 	CLR.w	D4
-	MOVE.b	$60(A2), D4
+	MOVE.b	DUNGEON_2ROW_STRIDE(A2), D4
 	BSR.w	ValidateDungeonTileType
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), obj_tile_index(A6)
@@ -1552,7 +1552,7 @@ UpdateFpWalls_FacingUp:
 	MOVE.b	$1(A2), D4
 	BSR.w	ValidateDungeonTileType
 	MOVE.b	D4, Fp_wall_right_2.w
-	LEA	-$30(A2), A2
+	LEA	-DUNGEON_ROW_STRIDE(A2), A2
 	LEA	FpObjectTileTable_Near, A1
 	MOVEA.l	Object_slot_03_ptr.w, A6
 	CLR.w	D4
@@ -1584,7 +1584,7 @@ UpdateFpWalls_FacingUp:
 	BSR.w	ValidateDungeonTileType
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), obj_tile_index(A6)
-	LEA	-$30(A2), A2
+	LEA	-DUNGEON_ROW_STRIDE(A2), A2
 	LEA	FpObjectTileTable_Mid, A1
 	MOVEA.l	Object_slot_08_ptr.w, A6
 	CLR.w	D4
@@ -1616,7 +1616,7 @@ UpdateFpWalls_FacingUp:
 	BSR.w	ValidateDungeonTileType
 	ADD.w	D4, D4
 	MOVE.w	(A1,D4.w), obj_tile_index(A6)
-	LEA	-$30(A2), A2
+	LEA	-DUNGEON_ROW_STRIDE(A2), A2
 	LEA	FpObjectTileTable_Far, A1
 	MOVEA.l	Object_slot_0D_ptr.w, A6
 	CLR.w	D4

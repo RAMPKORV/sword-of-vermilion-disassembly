@@ -366,7 +366,7 @@
           "file": "game_constants.asm + src/dungeon.asm",
           "priority": "medium",
           "effort": "small",
-          "status": "todo"
+          "status": "done"
         },
         {
           "id": "STRUCT-003",

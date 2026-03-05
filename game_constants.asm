@@ -2335,3 +2335,21 @@ sram_slot_name2     equ $0004   ; interleaved offset: name byte 2
 sram_slot_name3     equ $0006   ; interleaved offset: name byte 3
 
 
+; ============================================================
+; Dungeon Map Sector Stride Constants
+; ============================================================
+; The dungeon/overworld map keeps a 3×3 sector window (48×48 tiles) in
+; RAM.  Each sector is 16×16 tiles, but the row stride in RAM is $30 bytes
+; (16 data bytes + 16 padding bytes).  A2 points to the center tile of the
+; visible cell; adjacency is navigated with these offsets:
+;
+;   A2              current cell
+;   -1(A2)          one step left  (X-1)
+;   +1(A2)          one step right (X+1)
+;   -DUNGEON_ROW_STRIDE(A2)   one row up   (Y-1)
+;   +DUNGEON_ROW_STRIDE(A2)   one row down (Y+1)
+;   -DUNGEON_2ROW_STRIDE(A2)  two rows up  (Y-2, far depth rendering)
+;   +DUNGEON_2ROW_STRIDE(A2)  two rows down (Y+2, far depth rendering)
+;
+DUNGEON_ROW_STRIDE      equ $30     ; bytes per map row (16 tile data + 16 padding)
+DUNGEON_2ROW_STRIDE     equ $60     ; bytes per two map rows (far depth = 2 × DUNGEON_ROW_STRIDE)
