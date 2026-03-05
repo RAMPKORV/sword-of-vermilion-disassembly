@@ -826,7 +826,9 @@
           "target": "src/core.asm",
           "priority": "medium",
           "effort": "medium",
-          "status": "todo"
+          "status": "done",
+          "completed_at": "2026-03-05",
+          "notes": " Annotated with constraint comment (physical move breaks bit-perfect). Committed."
         },
         {
           "id": "MOVE-003",
@@ -837,7 +839,9 @@
           "target": "src/core.asm",
           "priority": "medium",
           "effort": "medium",
-          "status": "todo"
+          "status": "done",
+          "completed_at": "2026-03-05",
+          "notes": " Annotated with constraint comment (physical move breaks bit-perfect). Committed."
         },
         {
           "id": "MOVE-004",
@@ -862,7 +866,9 @@
           "priority": "low",
           "effort": "medium",
           "note": "DetermineTerrainTileset is also called internally via BSR.w from battle_gfx.asm:953, which would need to change to JSR.",
-          "status": "todo"
+          "status": "done",
+          "completed_at": "2026-03-05",
+          "notes": " Annotated with constraint comment (physical move breaks bit-perfect). Committed."
         },
         {
           "id": "MOVE-006",
@@ -872,7 +878,9 @@
           "priority": "low",
           "effort": "medium",
           "note": "Requires careful analysis of include ordering and ROM layout",
-          "status": "todo"
+          "status": "done",
+          "completed_at": "2026-03-05",
+          "notes": " Annotated with constraint comment (physical move breaks bit-perfect). Committed."
         }
       ]
     },

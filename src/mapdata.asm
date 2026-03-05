@@ -63,7 +63,39 @@
 ;   Player_map_sector_y   = $FFFFC???  current sector Y
 ;   Map_sector_*          = RAM buffers for the 9-sector window
 ;
-; ===========================================================================
+; ---------------------------------------------------------------------------
+; TILE VALUE LEGEND  (applies to both overworld sectors and cave rooms)
+; ---------------------------------------------------------------------------
+;   $00       Ground / floor
+;   $01       Tree (impassable)
+;   $02       Rock (impassable)
+;   $05       Cave rock (impassable)
+;   $0F       House (impassable)
+;   $1x       Cave entrance — lower 4 bits = cave index (0–F)
+;   $8x       Town entrance  — lower 4 bits = town ID (0–F)
+;   $FF       Cave exit (returns player to overworld)
+;
+;   Other values are terrain tile indices for the current tileset.
+; ---------------------------------------------------------------------------
+; SPECIAL OverworldMaps ENTRIES
+; ---------------------------------------------------------------------------
+;   OverworldMapSector_Empty  — filler sector (ocean / blank)
+;   OverworldMapSector_E21E   — shared sector used in multiple grid slots
+;   OverworldMapSector_E6DA   — shared sector (sector_2_3.bin)
+;   CaveMaps (dc.l pointer)   — overworld cell is a cave entrance hub;
+;                               the cave room index is encoded in the tile
+;   OverworldMapSector_40018  — small non-sector data blob (10 bytes)
+;   EnemySpriteData_FacingSide_Gfx_40020 — 8-byte non-sector blob
+;   OverworldMapSector_40028  — sector_14_4.bin (last real overworld sector)
+; ---------------------------------------------------------------------------
+
+;==============================================================
+; OVERWORLD MAP POINTER TABLE
+; 128 dc.l pointers (16 columns × 8 rows).
+; Index = sector_y * 16 + sector_x.
+; Each entry points to a sector .bin incbin below, or to CaveMaps
+; for cells that act as cave entrance hubs.
+;==============================================================
 OverworldMaps: ; 128
 	dc.l	OverworldMaps_Map_3E1D4
 	dc.l	OverworldMaps_Map_3E40E
@@ -193,6 +225,11 @@ OverworldMaps: ; 128
 	dc.l	OverworldMapSector_FF68
 	dc.l	OverworldMapSector_Empty	
 	dc.l	CaveMaps	
+;==============================================================
+; OVERWORLD SECTOR DATA
+; RLE-compressed 16×16 tile maps, one per sector file.
+; Labels use ROM-address suffix (DATA-001 — rename pending).
+;==============================================================
 OverworldMaps_Map_3E1D4:
 	incbin "data/maps/overworld/sector_0_0.bin"
 OverworldMapSector_E21E:
@@ -386,6 +423,11 @@ OverworldMapSector_40028:
 OverworldMapSector_Empty:
 	incbin "data/maps/overworld/sector_15_0.bin"
 
+;==============================================================
+; CAVE MAP POINTER TABLE
+; 44 dc.l pointers (indices 0–43).
+; Indices 29–30 share room_28.bin (same physical room).
+;==============================================================
 CaveMaps: ; 44 pointers
 	dc.l	CaveMaps_Map_4014C
 	dc.l	CaveMaps_Map_401BC
@@ -431,6 +473,12 @@ CaveMaps: ; 44 pointers
 	dc.l	CaveMaps_Map_4183C
 	dc.l	CaveMaps_Map_418E0
 	dc.l	CaveMaps_Map_4198E
+;==============================================================
+; CAVE ROOM DATA
+; RLE-compressed 16×16 tile maps, one per cave room file.
+; Same RLE encoding as overworld sectors.
+; Labels use ROM-address suffix (DATA-001 — rename pending).
+;==============================================================
 CaveMaps_Map_4014C:
 	incbin "data/maps/cave/room_00.bin"
 CaveMaps_Map_401BC:
