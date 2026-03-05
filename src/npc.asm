@@ -980,7 +980,7 @@ NPCTick_Tadcaster_PassSeller_PassAlreadyGiven:
 NPCTick_Tadcaster_PassSeller_Loop:
 	MOVE.l	#PRICE_PASS_TO_CARTHAHENA, D0
 	MOVE.l	Player_kims.w, D1
-	ANDI.l	#$00FFFFFF, D1
+	ANDI.l	#ROM_ADDRESS_MASK, D1
 	CMP.l	D0, D1
 	BLT.b	NPCTick_Tadcaster_PassSeller_NotEnoughKims
 	BSR.w	CheckInventoryFull
@@ -2997,7 +2997,7 @@ PortraitTick_StowGirl_AlreadyPurchased:
 PortraitTick_StowGirl_BookNotOffered: ; buy Sanguios from little girl
 	MOVE.l	#PRICE_SANGUIOS, D0
 	MOVE.l	Player_kims.w, D1
-	ANDI.l	#$00FFFFFF, D1
+	ANDI.l	#ROM_ADDRESS_MASK, D1
 	CMP.l	D0, D1
 	BLT.b	PortraitTick_StowGirl_NotEnoughKims
 	LEA	Possessed_magics_length.w, A0

@@ -452,7 +452,7 @@ UpdatePlayerSpriteDMA_BossBattle:
 	RTS
 
 SetupVdpDmaCommand:
-	ANDI.l	#$00FFFFFF, D0
+	ANDI.l	#ROM_ADDRESS_MASK, D0
 	LSR.l	#1, D0
 	MOVE.w	D0, D1
 	MOVE.l	#$95009600, D2

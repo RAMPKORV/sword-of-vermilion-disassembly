@@ -61,7 +61,7 @@
 ;  Chest/Door Opening State Machine (lines ~3162-3339)
 ;    ChestOpeningStateMachine               — 7-state chest/door opener
 ;
-; ANDI.l #$00FFFFFF — appears in 6 places to mask Player_kims to 24 bits
+; ANDI.l #ROM_ADDRESS_MASK ($00FFFFFF) — appears in 6 places to mask Player_kims to 24 bits
 ;   (the high byte is unused; masking prevents overflow comparisons from
 ;    seeing garbage in the high byte of the 32-bit RAM word).
 ;
@@ -1326,7 +1326,7 @@ DialogState_ShopBuyConfirmAndPurchase:
 	MOVE.l	(A0,D0.w), Shop_selected_price.w
 	MOVE.l	(A0,D0.w), D0
 	MOVE.l	Player_kims.w, D1
-	ANDI.l	#$00FFFFFF, D1          ; mask high byte — Player_kims is 24-bit BCD
+	ANDI.l	#ROM_ADDRESS_MASK, D1          ; mask high byte — Player_kims is 24-bit BCD
 	CMP.l	D0, D1
 	BLT.b	DialogState_ShopBuyConfirmAndPurchase_InsufficientFunds
 	LEA	ShopCategoryNameTables, A0
@@ -1817,7 +1817,7 @@ DialogState_FortuneTellerPayAndRead:
 	LEA	InnAndFortuneTellerPricesByTown, A0
 	MOVE.l	(A0,D0.w), D0
 	MOVE.l	Player_kims.w, D1
-	ANDI.l	#$00FFFFFF, D1          ; mask high byte — Player_kims is 24-bit BCD
+	ANDI.l	#ROM_ADDRESS_MASK, D1          ; mask high byte — Player_kims is 24-bit BCD
 	CMP.l	D0, D1
 	BLT.w	DialogState_FortuneTellerPayAndRead_Loop
 	MOVE.l	D0, Transaction_amount.w
@@ -1953,7 +1953,7 @@ InnWatling_CreditNight:
 	SUBQ.w	#1, D7
 InnWatling_CreditNight_Done:
 	MOVE.l	Player_kims.w, D1
-	ANDI.l	#$00FFFFFF, D1          ; mask high byte — Player_kims is 24-bit BCD
+	ANDI.l	#ROM_ADDRESS_MASK, D1          ; mask high byte — Player_kims is 24-bit BCD
 	CMPI.l	#$400, D1               ; $400 = 400 kims per night (BCD)
 	BLT.b	InnWatling_CreditNight_Broke
 	MOVE.l	#$400, Transaction_amount.w
@@ -1982,7 +1982,7 @@ InnWatling_ConfirmPayment:
 	LEA	InnAndFortuneTellerPricesByTown, A0
 	MOVE.l	(A0,D0.w), D0
 	MOVE.l	Player_kims.w, D1
-	ANDI.l	#$00FFFFFF, D1
+	ANDI.l	#ROM_ADDRESS_MASK, D1
 	CMP.l	D0, D1
 	BLT.b	InnWatling_SetRestState_NoPayStreet
 	MOVE.l	D0, Transaction_amount.w
@@ -2293,7 +2293,7 @@ DialogState_CurseRemovalPayAndCure:
 	LEA	ChurchCurseRemovalPricesByTown, A0
 	MOVE.l	(A0,D0.w), D0
 	MOVE.l	Player_kims.w, D1
-	ANDI.l	#$00FFFFFF, D1
+	ANDI.l	#ROM_ADDRESS_MASK, D1
 	CMP.l	D0, D1
 	BLT.b	DialogState_CurseRemovalPayAndCure_Loop
 	MOVE.l	D0, Transaction_amount.w
@@ -2378,7 +2378,7 @@ DialogState_PoisonCurePayAndCure:
 	LEA	ChurchPoisonCurePricesByTown, A0
 	MOVE.l	(A0,D0.w), D0
 	MOVE.l	Player_kims.w, D1
-	ANDI.l	#$00FFFFFF, D1
+	ANDI.l	#ROM_ADDRESS_MASK, D1
 	CMP.l	D0, D1
 	BLT.w	DialogState_PoisonCurePayAndCure_NoFunds
 	MOVE.l	D0, Transaction_amount.w

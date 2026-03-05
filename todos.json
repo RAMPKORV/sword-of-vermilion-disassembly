@@ -153,7 +153,7 @@
           "priority": "high",
           "effort": "small",
           "estimated_instances": 8,
-          "status": "todo"
+          "status": "done"
         },
         {
           "id": "MAGICB-003",

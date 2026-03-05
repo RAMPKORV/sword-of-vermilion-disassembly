@@ -112,3 +112,11 @@ PAL_DELAY_LOOP_COUNT        = $021D     ; PAL 50 Hz timing delay (long, every 4t
 PAL_SHORT_DELAY_LOOP_COUNT  = $0657     ; PAL 50 Hz timing delay (short, other frames)
 NTSC_FRAMES_PER_SECOND      = $3C       ; Frames per second (60 for NTSC)
 PROGRAM_STATE_COUNT         = $16       ; Number of program states (22)
+
+; ============================================================
+; CPU / Address Space Constants
+; ============================================================
+; The 68000 has a 24-bit address bus. ROM pointers stored in 32-bit
+; registers must be masked to 24 bits before use as effective addresses.
+; This mask strips the high byte of any 32-bit ROM pointer.
+ROM_ADDRESS_MASK            = $00FFFFFF ; Mask 32-bit value to 24-bit ROM address
