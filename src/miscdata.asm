@@ -1191,7 +1191,7 @@ DebugSoundID_Table:
 	dc.b	$00, $B2, $00, $B9, $00, $B4, $00, $B5, $00, $B6, $00, $B8, $00, $00, $00, $00
 	dc.b	$00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
 
-PlayerSpritePositionClamp_Done_Data:
+WeaponSpriteOffsetTable:
 	dc.b	$00, $02, $FF, $FD, $00, $01, $FF, $FB, $00, $03, $FF, $FC, $FF, $FF, $FF, $ED, $FF, $FB, $FF, $E2, $FF, $FF, $00, $01, $00, $09, $FF, $FC, $00, $09, $FF, $FB 
 	dc.b	$00, $04, $FF, $FB, $00, $0E, $FF, $ED, $00, $09, $FF, $DF, $00, $00, $00, $00, $00, $09, $FF, $FD, $00, $03, $FF, $FD, $00, $0F, $FF, $F7, $00, $11, $FF, $EB 
 	dc.b	$00, $05, $FF, $E2, $00, $0F, $FF, $F6, $00, $04, $FF, $FD, $FF, $FF, $FF, $FC, $00, $0E, $FF, $FC, $00, $0F, $FF, $ED, $00, $05, $FF, $E3, $00, $0C, $FF, $ED 

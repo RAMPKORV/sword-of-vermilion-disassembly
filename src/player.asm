@@ -81,7 +81,7 @@ PlayerObjectHandler:
 
 PlayerObjectTick:
 	TST.b	Is_in_battle.w
-	BNE.w	PlayerObjectTick_Loop
+	BNE.w	PlayerObjectTick_Return
 	MOVE.w	obj_world_x(A5), D0
 	LSR.w	#3, D0
 	MOVE.w	D0, D2
@@ -107,7 +107,7 @@ PlayerObjectTick:
 	TST.b	Fade_out_lines_mask.w
 	BNE.w	TownMovement_UpdateIdleSprite
 	TST.b	Player_is_moving.w
-	BNE.w	PlayerObjectTick_Loop2
+	BNE.w	PlayerObjectTick_AlreadyMoving
 	MOVE.b	Controller_current_state.w, D0
 	ANDI.w	#$000F, D0
 	BEQ.w	TownMovement_UpdateIdleSprite
@@ -122,7 +122,7 @@ PlayerObjectTick:
 	TST.b	Town_movement_blocked.w
 	BNE.w	TownMovement_UpdateIdleSprite
 	BSR.w	CheckTownEnemyCollision
-PlayerObjectTick_Loop2:
+PlayerObjectTick_AlreadyMoving:
 	TST.b	Town_movement_blocked.w
 	BNE.w	TownMovement_UpdateIdleSprite
 	MOVE.w	Player_direction.w, D0
@@ -131,7 +131,7 @@ PlayerObjectTick_Loop2:
 	ADD.w	D0, D0
 	LEA	PlayerMovementJumpTable, A0
 	JSR	(A0,D0.w)
-PlayerObjectTick_Loop:
+PlayerObjectTick_Return:
 	RTS
 
 PlayerObjectTick_DeadCode:					; unreferenced dead code
@@ -159,10 +159,10 @@ TownMovement_UpdateIdleSprite:
 	TST.b	Player_walk_anim_toggle.w
 	BEQ.b	TownMovement_UpdateIdleSprite_Loop
 	CLR.b	Player_walk_anim_toggle.w
-	BRA.b	TownMovement_UpdateIdleSprite_Loop2
+	BRA.b	TownMovement_UpdateIdleSprite_Done
 TownMovement_UpdateIdleSprite_Loop:
 	MOVE.b	#FLAG_TRUE, Player_walk_anim_toggle.w
-TownMovement_UpdateIdleSprite_Loop2:
+TownMovement_UpdateIdleSprite_Done:
 	BRA.w	TownMovementTick_UpdateFlags
 TownMovement_CameraUp:
 	MOVE.w	#CAMERA_MOVE_UP, Town_camera_move_state.w
@@ -208,18 +208,18 @@ TownMovement_UpdateWalkAnim:
 	BTST.b	#6, IO_version
 	BNE.w	TownMovement_UpdateWalkAnim_Loop
 	ANDI.w	#$000F, D0
-	BNE.b	TownMovement_UpdateWalkAnim_Loop2
+	BNE.b	TownMovement_AnimTick_2Btn
 	BSR.w	UpdatePlayerAnimation
-TownMovement_UpdateWalkAnim_Loop2:
+TownMovement_AnimTick_2Btn:
 	ASR.w	#3, D0
-	BRA.b	TownMovement_UpdateWalkAnim_Loop3
+	BRA.b	TownMovement_AnimTick_FrameSelect
 TownMovement_UpdateWalkAnim_Loop:
 	ANDI.w	#7, D0	
 	BNE.b	TownMovement_UpdateWalkAnim_Loop4	
 	BSR.w	UpdatePlayerAnimation	
 TownMovement_UpdateWalkAnim_Loop4:
 	ASR.w	#2, D0	
-TownMovement_UpdateWalkAnim_Loop3:
+TownMovement_AnimTick_FrameSelect:
 	TST.b	Player_walk_anim_toggle.w
 	BEQ.b	TownMovement_UpdateWalkAnim_Loop5
 	ADDQ.w	#2, D0
@@ -254,10 +254,10 @@ UpdatePlayerAnimation:
 	TST.b	Player_walk_anim_toggle.w
 	BEQ.b	UpdatePlayerAnimation_Loop
 	CLR.b	Player_walk_anim_toggle.w
-	BRA.b	UpdatePlayerAnimation_Loop2
+	BRA.b	UpdatePlayerAnimation_Return
 UpdatePlayerAnimation_Loop:
 	MOVE.b	#FLAG_TRUE, Player_walk_anim_toggle.w
-UpdatePlayerAnimation_Loop2:
+UpdatePlayerAnimation_Return:
 	RTS
 
 GetTileInFrontOfPlayer:
@@ -370,9 +370,9 @@ TownEnemyCollision_NextEnemy_Loop:
 ; ---------------------------------------------------------------------------
 UpdatePlayerSpriteDMA:
 	TST.b	Is_boss_battle.w
-	BNE.w	UpdatePlayerSpriteDMA_Loop
+	BNE.w	UpdatePlayerSpriteDMA_BossBattle
 	TST.b	Is_in_battle.w
-	BNE.b	UpdatePlayerSpriteDMA_Loop2
+	BNE.b	UpdatePlayerSpriteDMA_NormalBattle
 	LEA	Player_overworld_gfx_buffer, A0
 	MOVEA.l	Player_entity_ptr.w, A6
 	CLR.w	D0
@@ -385,7 +385,7 @@ UpdatePlayerSpriteDMA:
 	BSR.w	SetupVdpDmaCommand
 	RTS
 
-UpdatePlayerSpriteDMA_Loop2:
+UpdatePlayerSpriteDMA_NormalBattle:
 	LEA	Tilemap_buffer_plane_a, A0
 	MOVEA.l	Player_entity_ptr.w, A6
 	CLR.w	D0
@@ -418,7 +418,7 @@ UpdatePlayerSpriteDMA_Loop2:
 	BSR.w	SetupVdpDmaCommand
 	RTS
 
-UpdatePlayerSpriteDMA_Loop:
+UpdatePlayerSpriteDMA_BossBattle:
 	LEA	Tilemap_buffer_plane_a, A0
 	MOVEA.l	Player_entity_ptr.w, A6
 	CLR.w	D0
@@ -626,13 +626,13 @@ BattlePostVictory_ResetEntities:
 	TST.b	Soldier_fight_event_trigger.w
 	BEQ.b	BattlePostVictory_ResetEntities_Loop
 	MOVE.w	#GAMEPLAY_STATE_SOLDIER_TAUNT, Gameplay_state.w
-	BRA.b	BattlePostVictory_ResetEntities_Loop2
+	BRA.b	BattlePostVictory_Done
 BattlePostVictory_ResetEntities_Loop:
 	MOVE.w	#GAMEPLAY_STATE_BATTLE_EXIT, Gameplay_state.w
 	PlaySound_b	SOUND_TRANSITION
 	PlaySound	SOUND_LEVEL_UP
 	MOVE.b	#FLAG_TRUE, Fade_out_lines_mask.w
-BattlePostVictory_ResetEntities_Loop2:
+BattlePostVictory_Done:
 	MOVE.b	#FLAG_TRUE, Sprite_dma_update_pending.w
 	CLR.b	Player_is_moving.w
 	JSR	AddSpriteToDisplayList
@@ -661,15 +661,15 @@ BattlePlayerInputHandler_UpdateSprite_Loop:
 	ADDQ.b	#1, obj_move_counter(A5)
 	MOVE.b	obj_move_counter(A5), D0
 	BTST.b	#6, IO_version
-	BNE.w	BattlePlayerInputHandler_UpdateSprite_Loop2
+	BNE.w	BattlePlayerInputHandler_WalkAnim_6Btn
 	ANDI.w	#$0018, D0
 	ASR.w	#1, D0
 	ADD.w	D1, D0
-	BRA.b	BattlePlayerInputHandler_UpdateSprite_Loop3
-BattlePlayerInputHandler_UpdateSprite_Loop2:
+	BRA.b	BattlePlayerInputHandler_WalkAnim_ApplyFrame
+BattlePlayerInputHandler_WalkAnim_6Btn:
 	ANDI.w	#$000C, D0	
 	ADD.w	D1, D0	
-BattlePlayerInputHandler_UpdateSprite_Loop3:
+BattlePlayerInputHandler_WalkAnim_ApplyFrame:
 	MOVEA.l	Battle_entity_slot_1_ptr.w, A6
 	MOVEA.l	Battle_entity_slot_2_ptr.w, A4
 	LEA	OverworldMapSector_DA08, A0
@@ -709,26 +709,26 @@ BattleMovement_UpdateSprite:
 	BCLR.b	#3, obj_sprite_flags(A5)
 BattleMovement_UpdateSprite_Loop:
 	TST.w	Number_Of_Enemies.w
-	BGE.b	BattleMovement_UpdateSprite_Loop2
+	BGE.b	BattleMovement_SoldierFightClamp
 	MOVE.b	#BATTLE_VICTORY_DELAY, obj_invuln_timer(A5)
 	MOVE.l	#BattlePostVictoryTickHandler, obj_tick_fn(A5)
 	RTS
 
-BattleMovement_UpdateSprite_Loop2:
+BattleMovement_SoldierFightClamp:
 	TST.b	Soldier_fight_event_trigger.w
-	BEQ.b	BattleMovement_UpdateSprite_Loop3
+	BEQ.b	BattleMovement_NormalExitClamp
 	MOVE.w	obj_world_x(A5), D0
 	MOVE.w	obj_world_y(A5), D1
 	CMPI.w	#0, D0
-	BLT.w	BattleMovement_UpdateSprite_Loop4
+	BLT.w	PlayerSpritePositionClamp_LeftEdge
 	CMPI.w	#BATTLE_FIELD_WIDTH, D0
-	BGT.w	BattleMovement_UpdateSprite_Loop5
+	BGT.w	PlayerSpritePositionClamp_RightEdge
 	CMPI.w	#BATTLE_FIELD_TOP, D1
 	BLT.w	PlayerSpritePositionClamp_TopEdge
 	CMPI.w	#BATTLE_FIELD_BOTTOM, D1
 	BGT.w	PlayerSpritePositionClamp_BottomEdge
 	BRA.w	PlayerSpritePositionClamp_Done
-BattleMovement_UpdateSprite_Loop3:
+BattleMovement_NormalExitClamp:
 	MOVE.w	obj_world_x(A5), D0
 	MOVE.w	obj_world_y(A5), D1
 	CMPI.w	#0, D0
@@ -740,10 +740,10 @@ BattleMovement_UpdateSprite_Loop3:
 	CMPI.w	#BATTLE_FIELD_BOTTOM, D1
 	BGT.b	PlayerSpritePositionClamp_BottomEdge
 	BRA.b	PlayerSpritePositionClamp_Done
-BattleMovement_UpdateSprite_Loop4:
+PlayerSpritePositionClamp_LeftEdge:
 	MOVE.w	#0, obj_world_x(A5)	
 	BRA.b	PlayerSpritePositionClamp_Done	
-BattleMovement_UpdateSprite_Loop5:
+PlayerSpritePositionClamp_RightEdge:
 	MOVE.w	#BATTLE_FIELD_WIDTH, obj_world_x(A5)
 	BRA.b	PlayerSpritePositionClamp_Done
 PlayerSpritePositionClamp_TopEdge:
@@ -779,12 +779,12 @@ BattleSlot2WeaponHandler
 	MOVE.b	obj_sprite_frame(A5), D0
 	ADD.w	D0, D0
 	ADD.w	D0, D0
-	LEA	PlayerSpritePositionClamp_Done_Data, A0
+	LEA	WeaponSpriteOffsetTable, A0
 	MOVE.w	(A0,D0.w), D1
 	BTST.b	#3, obj_sprite_flags(A5)
-	BEQ.b	PlayerSpritePositionClamp_Done_Loop
+	BEQ.b	WeaponPositionOffset_ApplyX
 	NEG.w	D1
-PlayerSpritePositionClamp_Done_Loop:
+WeaponPositionOffset_ApplyX:
 	MOVE.w	obj_screen_x(A6), D2
 	ADD.w	D1, D2
 	MOVE.w	D2, obj_screen_x(A5)
@@ -804,27 +804,27 @@ CheckBattleAttackHitbox: ; suspected collision detection
 	ASL.w	#3, D0
 	LEA	(A0,D0.w), A0
 	BTST.b	#3, obj_sprite_flags(A5)
-	BNE.b	CheckBattleAttackHitbox_Loop
+	BNE.b	CheckBattleAttackHitbox_Mirrored
 	MOVE.w	(A0)+, D0
 	MOVE.w	(A0)+, D1
 	ADD.w	obj_world_x(A5), D0
 	ADD.w	obj_world_x(A5), D1
-	BRA.b	CheckBattleAttackHitbox_Loop2
-CheckBattleAttackHitbox_Loop:
+	BRA.b	CheckBattleAttackHitbox_TestEntities
+CheckBattleAttackHitbox_Mirrored:
 	MOVE.w	(A0)+, D1
 	MOVE.w	(A0)+, D0
 	NEG.w	D0
 	NEG.w	D1
 	ADD.w	obj_world_x(A5), D1
 	ADD.w	obj_world_x(A5), D0
-CheckBattleAttackHitbox_Loop2:
+CheckBattleAttackHitbox_TestEntities:
 	MOVE.w	(A0)+, D2
 	ADD.w	obj_world_y(A5), D2
 	MOVE.w	(A0), D3
 	ADD.w	obj_world_y(A5), D3
 	MOVEA.l	Enemy_list_ptr.w, A6
 	MOVE.w	#9, D7
-CheckBattleAttackHitbox_Loop2_Done:
+CheckBattleAttackHitbox_EntityLoop:
 	BTST.b	#7, (A6)
 	BEQ.w	NpcProximityCheck_NextSlot
 	BTST.b	#6, (A6)
@@ -864,7 +864,7 @@ NpcProximityCheck_NextSlot:
 	CLR.w	D5
 	MOVE.b	obj_next_offset(A6), D5
 	LEA	(A6,D5.w), A6
-	DBF	D7, CheckBattleAttackHitbox_Loop2_Done
+	DBF	D7, CheckBattleAttackHitbox_EntityLoop
 	RTS
 
 NPCInteractionTickHandler:
@@ -877,16 +877,16 @@ NPCInteractionTickHandler:
 	BNE.w	NPCInteractionTickHandler_Loop
 	ANDI.w	#$000C, D0
 	ASR.w	#1, D0
-	BRA.b	NPCInteractionTickHandler_Loop2
+	BRA.b	NPCInteractionTickHandler_CheckFrameEnd
 NPCInteractionTickHandler_Loop:
 	ANDI.w	#6, D0	
-NPCInteractionTickHandler_Loop2:
+NPCInteractionTickHandler_CheckFrameEnd:
 	CMPI.w	#4, D0
-	BLE.b	NPCInteractionTickHandler_Loop3
+	BLE.b	NPCInteractionTickHandler_DrawSprite
 	BCLR.b	#7, (A5)
 	RTS
 
-NPCInteractionTickHandler_Loop3:
+NPCInteractionTickHandler_DrawSprite:
 	MOVE.w	(A0,D0.w), obj_tile_index(A5)
 	MOVE.w	obj_world_x(A5), obj_screen_x(A5)
 	MOVE.w	obj_world_y(A5), obj_screen_y(A5)
@@ -976,9 +976,9 @@ OverworldPlayerTickHandler:
 	TST.b	Player_in_first_person_mode.w
 	BEQ.w	OverworldTick_Return
 	TST.b	Player_move_forward_in_overworld.w
-	BNE.w	OverworldTick_RotateCounterClockwise_Loop
+	BNE.w	OverworldTick_MoveForward
 	TST.b	Player_move_backward_in_overworld.w
-	BNE.w	OverworldTick_RotateCounterClockwise_Loop2
+	BNE.w	OverworldTick_MoveBackward
 	TST.b	Player_rotate_counter_clockwise_in_overworld.w
 	BNE.w	OverworldTick_RotateCounterClockwise
 	TST.b	Player_rotate_clockwise_in_overworld.w
@@ -988,9 +988,9 @@ OverworldPlayerTickHandler:
 	ANDI.w	#$000F, D0
 	BEQ.w	OverworldTick_CaveLightCheck
 	BTST.l	#0, D0
-	BNE.w	OverworldTick_RotateCounterClockwise_Loop3
+	BNE.w	OverworldTick_ActionButton
 	BTST.l	#1, D0
-	BNE.w	OverworldTick_RotateCounterClockwise_Loop4
+	BNE.w	OverworldTick_BackwardTransitionCheck
 	BTST.l	#2, D0
 	BNE.w	OverworldTick_RotateCounterClockwise
 	BTST.l	#3, D0
@@ -1020,18 +1020,18 @@ OverworldTick_RotateCounterClockwise:
 	ANDI.w	#$0018, D0
 	ASR.w	#1, D0
 	SUBQ.w	#1, Player_compass_frame.w
-	BGE.b	OverworldTick_RotateCounterClockwise_Loop5
+	BGE.b	OverworldTick_RotateCounterClockwise_Dispatch
 	MOVE.w	#$000F, Player_compass_frame.w
-OverworldTick_RotateCounterClockwise_Loop5:
+OverworldTick_RotateCounterClockwise_Dispatch:
 	LEA	RotateCounterClockwiseJumpTable, A0
 	JSR	(A0,D0.w)
 	BRA.w	OverworldTick_ClearInteractionFlags
-OverworldTick_RotateCounterClockwise_Loop4:
+OverworldTick_BackwardTransitionCheck:
 	LEA	FpDirectionDeltaBackward, A0
 	BSR.w	GetMapTileInDirection
 	BSR.w	HandleMapTileTransition
 	BNE.w	OverworldTick_Return
-OverworldTick_RotateCounterClockwise_Loop2:
+OverworldTick_MoveBackward:
 	MOVE.w	Overworld_movement_frame.w, D0
 	MOVE.w	D0, D1
 	ANDI.w	#3, D1
@@ -1042,20 +1042,20 @@ OverworldTick_RotateCounterClockwise_Loop2:
 	LEA	BackwardMovementJumpTable, A0
 	JSR	(A0,D0.w)
 	BRA.w	OverworldTick_ClearInteractionFlags
-OverworldTick_RotateCounterClockwise_Loop3:
+OverworldTick_ActionButton:
 	TST.b	Chest_already_opened.w
-	BEQ.b	OverworldTick_RotateCounterClockwise_Loop6
+	BEQ.b	OverworldTick_ForwardTransitionCheck
 	MOVE.b	#6, Fade_out_lines_mask.w
 	MOVE.w	#GAMEPLAY_STATE_RETURN_TO_FIRST_PERSON_VIEW, Gameplay_state.w
 	PlaySound_b	SOUND_TRANSITION
 	RTS
 
-OverworldTick_RotateCounterClockwise_Loop6:
+OverworldTick_ForwardTransitionCheck:
 	LEA	FpDirectionDeltaForward, A0
 	BSR.w	GetMapTileInDirection
 	BSR.w	HandleMapTileTransition
 	BNE.w	OverworldTick_Return
-OverworldTick_RotateCounterClockwise_Loop:
+OverworldTick_MoveForward:
 	MOVE.w	Overworld_movement_frame.w, D0
 	MOVE.w	D0, D1
 	ANDI.w	#3, D1
@@ -1103,8 +1103,8 @@ DecrementInaudiosSteps:
 	TST.w	Inaudios_steps_remaining.w
 	BNE.b	DecrementInaudiosSteps_Loop
 	MOVE.w	#GAMEPLAY_STATE_NOTIFY_INAUDIOS_EXPIRED, Gameplay_state.w
-	BRA.b	DecrementInaudiosSteps_Loop2
+	BRA.b	DecrementInaudiosSteps_Decrement
 DecrementInaudiosSteps_Loop:
 	BLT.b	DecrementInaudiosSteps_Loop3
-DecrementInaudiosSteps_Loop2:
+DecrementInaudiosSteps_Decrement:
 	SUBQ.w	#1, Inaudios_steps_remaining.w
