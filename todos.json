@@ -407,7 +407,7 @@
           "file": "src/towndata.asm",
           "priority": "medium",
           "effort": "small",
-          "status": "todo"
+          "status": "done"
         },
         {
           "id": "MISDATA-003",
@@ -416,7 +416,7 @@
           "file": "src/magic.asm",
           "priority": "medium",
           "effort": "small",
-          "status": "todo"
+          "status": "done"
         }
       ]
     },

@@ -1,7 +1,11 @@
 ; ======================================================================
 ; src/magic.asm
 ; NAMING NOTE: Despite the filename, this file contains a mix of systems
-; due to ROM layout constraints from the original binary. Contents are:
+; due to ROM layout constraints from the original binary. The name
+; "magic.asm" was assigned during Phase 1 disassembly based on the last
+; major section in the file (field magic casting, section 4), but the
+; file actually starts with ending credits code stranded here by the
+; original ROM's function placement. Contents are:
 ;
 ;   1. ENDING CREDITS / OUTRO RENDERING (lines ~1-170)
 ;      VDP tilemap rendering for the post-game credits scroll, credits

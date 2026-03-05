@@ -3,18 +3,24 @@
 ; Town NPC data, tileset config, cave events, dialog helpers
 ; ======================================================================
 ;
-; NOTE: This file begins mid-function. ASM68K assembles all included
+; *** CROSS-FILE FUNCTION CONTINUATION ***
+; =========================================
+; This file begins mid-function. ASM68K assembles all included
 ; files as a single continuous stream, so the function body is split
-; across the file boundary.
+; across the file boundary.  This is a ROM layout artifact from the
+; original binary disassembly and cannot be moved without breaking
+; bit-perfect output.
 ;
-; The function ChestAnimation_Return starts in src/items.asm at the
-; label ChestAnimation_Return (items.asm line 3283). items.asm ends
-; without an RTS at line 3325, falling directly into this file.
+; The function ChestAnimation_Return starts in src/items.asm:
+;   - Entry label:  ChestAnimation_Return (items.asm line ~3870)
+;   - items.asm ends at its last dc.b/CMPI at line 3928 with no RTS,
+;     falling directly into this file.
 ;
 ; Code below (starting at BEQ ChestAnimation_Return_FindRing) is the
 ; reward-type dispatch within ChestAnimation_Return: it reads
 ; Reward_script_type and branches to the appropriate handler for each
 ; chest reward category (ring, money, map, or item/spell lookup).
+; =========================================
 ;
 ; File structure:
 ;   Lines    1-123  ChestAnimation_Return continuation + LockedDoorDataTable
