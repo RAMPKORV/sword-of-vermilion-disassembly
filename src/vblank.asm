@@ -440,7 +440,7 @@ UpdateSceneScrollBuffers:
 	TST.b	HScroll_full_update_flag.w
 	BNE.b	UpdateSceneScrollBuffers_Loop
 	MOVE.w	VScroll_base.w, D0
-	BEQ.b	UpdateSceneScrollBuffers_Loop2
+	BEQ.b	UpdateSceneScrollBuffers_ClearHScroll
 	ADDQ.w	#1, VScroll_base.w
 	ANDI.w	#$01FF, D0
 	MOVE.l	#VDP_CMD_VSRAM_WRITE_0, VDP_control_port
@@ -450,7 +450,7 @@ UpdateSceneScrollBuffers:
 
 UpdateSceneScrollBuffers_Loop:
 	BSR.w	FillVScrollTable
-UpdateSceneScrollBuffers_Loop2:
+UpdateSceneScrollBuffers_ClearHScroll:
 	CLR.b	HScroll_update_busy.w
 	LEA	HScroll_run_table.w, A0
 	MOVE.l	#$7E620002, D0			; VDP VRAM write to $BE62 (HScroll table offset for parallax)

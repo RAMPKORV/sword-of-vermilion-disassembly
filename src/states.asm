@@ -96,12 +96,12 @@ ProgramState_TitleScreen:
 	CheckButton BUTTON_BIT_START
 	BEQ.w	ProgramState_03_Loop
 	TST.w	Dialog_selection.w
-	BEQ.b	ProgramState_03_Loop2
+	BEQ.b	ProgramState_03_LoadSave
 	MOVE.w	#PROGRAM_STATE_LOAD_SAVE_INIT, Program_state.w
-	BRA.b	ProgramState_03_Loop3
-ProgramState_03_Loop2:
+	BRA.b	ProgramState_03_BeginFade
+ProgramState_03_LoadSave:
 	MOVE.w	#PROGRAM_STATE_NAME_ENTRY_INIT, Program_state.w
-ProgramState_03_Loop3:
+ProgramState_03_BeginFade:
 	MOVE.b	#FLAG_TRUE, Fade_out_lines_mask.w
 	RTS
 

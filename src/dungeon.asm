@@ -2,7 +2,7 @@
 ; src/dungeon.asm
 ; First-person dungeon view, map decompression, compass, sectors
 ; ======================================================================
-DecrementInaudiosSteps_Loop3:
+DecrementInaudiosSteps_Done:
 	RTS
 
 HandleMapTileTransition:

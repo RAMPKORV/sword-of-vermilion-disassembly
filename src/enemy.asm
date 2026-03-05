@@ -1161,12 +1161,12 @@ EnemyTakeDamage_CheckDeath_Loop:
 	JSR	GetRandomNumber
 	MOVE.w	D0, D1
 	ANDI.w	#$007F, D0
-	BEQ.w	EnemyTakeDamage_CheckDeath_Loop2
+	BEQ.w	EnemyTick_StationaryShooter_SpawnProjectile
 	CLR.b	obj_npc_busy_flag(A4)
 	CLR.l	obj_vel_x(A4)
 	CLR.l	obj_vel_y(A4)
 	BRA.w	EnemyHoming_UpdateSprite
-EnemyTakeDamage_CheckDeath_Loop2:
+EnemyTick_StationaryShooter_SpawnProjectile:
 	BSET.b	#7, (A4)
 	JSR	GetRandomNumber
 	MOVE.b	D0, obj_move_counter(A4)
@@ -1553,7 +1553,7 @@ EnemyAiChasePauseJumpTable:
 	BRA.w	EnemyAiChasePause_Tick
 	BRA.w	EnemyAiChasePause_Tick_Loop
 	BRA.w	EnemyAiChasePause_Tick
-	BRA.w	EnemyAiChasePause_Tick_Loop2
+	BRA.w	EnemyAiChasePause_Tick_SpawnBurst
 EnemyAiChasePause_Tick:
 	TST.w	obj_knockback_timer(A5)
 	BEQ.w	EnemyAiChasePause_Tick_AdvancePhase
@@ -1579,7 +1579,7 @@ EnemyAiChasePause_Tick_ChaseAdvance:
 	ADDQ.w	#1, obj_attack_timer(A5)
 	MOVE.w	#ENEMY_KNOCKBACK_DURATION, obj_knockback_timer(A5)
 	BRA.w	EnemyAiChasePause_Move
-EnemyAiChasePause_Tick_Loop2:
+EnemyAiChasePause_Tick_SpawnBurst:
 	MOVE.l	obj_world_x(A5), D1
 	MOVE.l	obj_world_y(A5), D2
 	MOVE.l	#$400, D3
@@ -1590,7 +1590,7 @@ EnemyAiChasePause_Tick_Loop2:
 	CLR.w	D0
 	MOVE.b	obj_next_offset(A5), D0
 	LEA	(A5,D0.w), A6
-EnemyAiChasePause_Tick_Loop2_Done:
+EnemyAiChasePause_Tick_SpawnNext:
 	MOVE.b	obj_next_offset(A6), D0
 	LEA	(A6,D0.w), A6
 	BSET.b	#7, (A6)
@@ -1602,7 +1602,7 @@ EnemyAiChasePause_Tick_Loop2_Done:
 	MOVE.b	D6, obj_sprite_flags(A6)
 	MOVE.b	D7, obj_direction(A6)
 	MOVE.l	#ProjectileTick_Straight, obj_tick_fn(A6)
-	DBF	D7, EnemyAiChasePause_Tick_Loop2_Done
+	DBF	D7, EnemyAiChasePause_Tick_SpawnNext
 	ADDQ.w	#1, obj_attack_timer(A5)
 	MOVE.w	#ENEMY_KNOCKBACK_DURATION, obj_knockback_timer(A5)
 	BRA.w	EnemyAiChasePause_HandleDamage
@@ -2092,14 +2092,14 @@ ProjectileTick_PostCollision_SetFlip:
 	MOVE.b	obj_attack_timer(A5), D0
 	ANDI.w	#3, D0
 	CMPI.b	#2, D0
-	BGE.b	ProjectileTick_PostCollision_Loop2
+	BGE.b	ProjectileTick_PostCollision_FirePhase
 	LEA	EnemyAnimFrames_Fireball_B, A0
 	LEA	EnemyAnimFrames_Fireball_C, A1
 	MOVE.b	obj_move_counter(A5), D0
 	ANDI.w	#$0018, D0
 	ASR.w	#2, D0
 	BRA.b	ProjectileTick_PostCollision_DrawSprite
-ProjectileTick_PostCollision_Loop2:
+ProjectileTick_PostCollision_FirePhase:
 	LEA	ProjectileTick_PostCollision_Loop2_Data, A0
 	LEA	ProjectileTick_PostCollision_Loop2_Data2, A1
 	MOVE.b	obj_move_counter(A5), D0

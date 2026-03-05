@@ -1105,6 +1105,6 @@ DecrementInaudiosSteps:
 	MOVE.w	#GAMEPLAY_STATE_NOTIFY_INAUDIOS_EXPIRED, Gameplay_state.w
 	BRA.b	DecrementInaudiosSteps_Decrement
 DecrementInaudiosSteps_Loop:
-	BLT.b	DecrementInaudiosSteps_Loop3
+	BLT.b	DecrementInaudiosSteps_Done
 DecrementInaudiosSteps_Decrement:
 	SUBQ.w	#1, Inaudios_steps_remaining.w
