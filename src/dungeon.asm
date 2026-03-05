@@ -2,9 +2,129 @@
 ; src/dungeon.asm
 ; First-person dungeon view, map decompression, compass, sectors
 ; ======================================================================
+;
+; Contents
+; --------
+;  Map Tile Transitions (lines ~5-55)
+;    HandleMapTileTransition          — overworld tile → enter cave/town/exit
+;
+;  First-Person View Entry (lines ~55-115)
+;    RefreshFirstPersonView            — full FP redraw (wall data + render)
+;    RotateClockwiseJumpTable          — CW/CCW turn dispatch + map re-render
+;    RotateCounterClockwiseJumpTable
+;    UpdatePlayerMapSector             — advance sector pointer, scroll map
+;
+;  Wall Render Jump Tables (lines ~127-195)
+;    RotateCW/CCW_*JumpTable           — 4-entry BRA tables for each facing
+;    RenderFpWall_*                    — 12 single-instruction BRA trampolines
+;
+;  Wall Tile Renderers (lines ~193-295)
+;    RenderWallTileWithPalette         — write a single 7-tile VDP wall row
+;    RenderWallTile_NearFrontTwoPalette — 8x14 near-front wall (2 palettes)
+;    RenderWallTile_MidSinglePalette   — 6x12 mid wall (1 palette)
+;    RenderWallTile_FarSinglePalette   — 4x10 far wall (1 palette)
+;    RenderWallTile_NearTwoPalette     — 14x10 near side wall (2 palettes)
+;      includes CW/CCW rotate variants that update kims display
+;
+;  Forward/Backward Movement (lines ~298-480)
+;    ForwardMovementJumpTable          — 16-frame walk-forward animation
+;    BackwardMovementJumpTable         — 16-frame walk-backward animation
+;    DungeonForwardMove_PaletteStep    — palette cycle helper (forward)
+;    DungeonBackwardMove_PaletteStep   — palette cycle helper (backward)
+;
+;  Object Placement (lines ~482-645)
+;    ResetObjectOffscreenPositions     — move all 15 sprites off-screen
+;    CaveBossStartPositions_Alt        — boss-fight initial positions
+;    ApplyAreaDamageToObjects          — apply AOE damage to all live objects
+;    ApplyDamageToObjectIfAlive        — decrement HP on one object
+;    AddValueToObjectSlot_D4           — generic object field add
+;
+;  Dungeon Tick / Object Offsets (lines ~649-741)
+;    DungeonTick_ApplyObjectOffsets    — per-frame object position delta table
+;      (D7 selects forward or backward direction set; 14 object slots × 2 dirs)
+;
+;  Wall Draw (lines ~741-898)
+;    DrawFirstPersonWalls              — render right/center/far wall slots
+;    PrepareWallTileRenderData         — compute VDP address, source ptr, pos
+;    RenderWallTile_14x10_TwoPalette   — 14×10 two-palette VDP write (with/without right-wall variant)
+;    RenderWallTile_16x5_Palette0/1    — 16×5 single-palette VDP writes
+;    RenderWallTile_16x11_TwoPalette   — 16×11 two-palette VDP write
+;    NullTickHandler                   — no-op RTS
+;
+;  First-Person Wall Data (lines ~900-1420)
+;    ClearFirstPersonTilemap           — blank the FP VRAM area
+;    UpdateFirstPersonWallData         — dispatch to facing-specific updater
+;    UpdateFpWallJumpTable             — 4-entry BRA dispatch
+;    UpdateFpWalls_FacingLeft/Down/Right/Up — read 15 map tiles for FP view
+;
+;  Map Sector Utilities (lines ~1421-1475)
+;    GetMapTileInDirection             — read the tile one step ahead of player
+;    UpdateMapSectorPosition           — advance position + scroll if out of sector
+;    FpDirectionDeltaForward/Backward  — delta tables for FP movement
+;
+;  Object Position Init (lines ~1475-1763)
+;    InitObjectPositions_21x13/21x20/21x13Alt — set world positions for all slots
+;    RenderFpSector_Near/Far/Mid       — assign tile indices for depth tiers
+;
+;  Tile Index Helpers (lines ~1764-1900)
+;    LoadMapTileGfxIndex               — tile byte → obj_tile_index
+;    LoadMapTileGfxIndexAlt1/2         — variants with -$24/-$18 offset
+;    ClearObjectGfxIndex               — zero obj_tile_index
+;    MapTileToTypeIndex                — tile byte → terrain type index
+;    ValidateDungeonTileType           — like MapTileToTypeIndex, with bounds check
+;
+;  Map Render / VDP Write (lines ~1900-2050)
+;    RenderMapToVRAM_DualPalette_21x13/20 — render overworld/cave map tiles
+;    RenderMapToVRAM_NoPalette         — map write without palette attribute
+;    RenderMapToVRAM_WithPalette       — map write with palette attribute
+;    DisplayKimsToVRAM                 — render kim counter to HUD
+;    DisplayStatsToVRAM variants       — render player stats area
+;    UpdateCompassDisplay              — compute compass heading
+;    DrawCompassTiles                  — write compass tiles to VRAM
+;
+;  Map Loading (lines ~2052-2210)
+;    LoadMapSectors                    — load cave room OR 9-sector window
+;    Load9SectorMapWindow              — load 3×3 sector grid around player
+;    LoadMapSectorIfInBounds           — bounds-check then decompress sector
+;    LoadMapSector_NoBoundsCheck       — decompress sector directly
+;
+;  RLE Decompressor (lines ~2211-2257)
+;    DecompressMapSectorRLE            — decode map sector from RLE stream
+;
+; Map Sector Layout
+; -----------------
+; Each sector is 16×16 tiles; 3×3 sectors are kept in RAM (48×48 tile window).
+; Sector stride in RAM: $30 bytes per row (16 data + 16 padding).
+; Adjacency offsets from Map_sector_center base pointer:
+;   A2           = current cell (center)
+;   -$01(A2)     = one step left (X-1)
+;   +$01(A2)     = one step right (X+1)
+;   -$30(A2)     = one row up (Y-1)
+;   +$30(A2)     = one row down (Y+1)
+;   -$60(A2)     = two rows up (Y-2, far depth)
+;   +$60(A2)     = two rows down (Y+2, far depth)
+;
+; ======================================================================
 DecrementInaudiosSteps_Done:
 	RTS
 
+; ---------------------------------------------------------------------------
+; HandleMapTileTransition: Dispatch on overworld tile type when player steps
+; onto a special tile (cave entrance, town entrance, or exit).
+;
+;   $FF         → exit current area (GAMEPLAY_STATE_CAVE_FADE_OUT_COMPLETE)
+;   ≥ OVERWORLD_TILE_CAVE_MIN and < $80  → enter cave (cave room = tile - $10)
+;   ≥ OVERWORLD_TILE_UPPER_CAVE_MIN      → clear high bit, then enter cave
+;   < OVERWORLD_TILE_CAVE_MIN            → enter town (town ID = tile & $F)
+;
+; For cave entry: saves the player's current overworld position (X, Y, sector)
+; to Player_cave_* on the first entry (Cave_position_saved flag). Sets
+; GAMEPLAY_STATE_ENTERING_CAVE, plays SOUND_TRANSITION.
+;
+; Input:  D0.b = overworld tile type at player's feet
+; Output: Gameplay_state.w updated; Fade_out_lines_mask set; sound queued
+; Scratch: D0
+; ---------------------------------------------------------------------------
 HandleMapTileTransition:
 	CMPI.b	#$FF, D0
 	BEQ.w	HandleMapTileTransition_Loop
@@ -52,6 +172,18 @@ HandleMapTileTransition_Loop:
 	MOVE.b	#FLAG_TRUE, Fade_out_lines_mask.w
 	RTS
 
+; ---------------------------------------------------------------------------
+; RefreshFirstPersonView: Force a complete first-person view redraw.
+;
+; Clears the move-forward flag, rebuilds wall tile data (UpdateFirstPersonWallData),
+; resets the animation frame counter and Y offset, renders all wall tiles
+; (DrawFirstPersonWalls), then resets all sprite positions off-screen.
+;
+; Called on room entry, turn completion, and after teleport.
+;
+; Input:  (none)
+; Output: VDP updated with current wall tiles; object positions reset
+; ---------------------------------------------------------------------------
 RefreshFirstPersonView:
 	CLR.b	Player_move_forward_in_overworld.w
 	BSR.w	UpdateFirstPersonWallData
@@ -114,6 +246,16 @@ RotateCounterClockwiseJumpTable_Init21x13Alt_And_Render:
 	BRA.w	DrawCompassTiles
 RotateCounterClockwiseJumpTable_DisplayCaveStats_21x13Alt:
 	BRA.w	DisplayStatsToVRAM_AltPalette
+; ---------------------------------------------------------------------------
+; UpdatePlayerMapSector: Sync the map-sector A2 pointer to the player's
+; current sub-sector position (D0=X, D1=Y).
+;
+; Computes: A2 = Map_sector_center + (D1 * $30) + D0
+; Used before all first-person rendering calls to set the tile read base.
+;
+; Input:  D0.w = player X within sector (0-15), D1.w = player Y (0-15)
+; Output: A2 = pointer into Map_sector_center for the player's current cell
+; ---------------------------------------------------------------------------
 UpdatePlayerMapSector:
 	LEA	Map_sector_center.w, A2
 	MOVE.w	Player_position_x_outside_town.w, D0
@@ -479,6 +621,19 @@ DungeonBackwardMove_LoadPalette_Frame16:
 	BSR.w	UpdateAreaVisibility
 	BSR.w	DecrementInaudiosSteps
 	BRA.w	ResetObjectOffscreenPositions
+; ---------------------------------------------------------------------------
+; ResetObjectOffscreenPositions: Move all 15 sprite object slots to their
+; default off-screen (hidden) world coordinates.
+;
+; Used at the start of a turn or on FP view refresh to prevent stale sprites
+; from appearing before the new frame's positions are computed.
+;
+; Object positions use 16.16 fixed-point (high word = whole pixels).
+; $00800000 in obj_world_y = Y=128, which is below the visible screen area.
+;
+; Input:  Object_slot_01_ptr ... Object_slot_0E_ptr, Enemy_list_ptr (RAM ptrs)
+; Output: obj_world_x/y written for all 15 slots
+; ---------------------------------------------------------------------------
 ResetObjectOffscreenPositions:
 	MOVEA.l	Enemy_list_ptr.w, A6
 	MOVE.l	#$00240000, obj_world_x(A6)
@@ -580,6 +735,17 @@ CaveBossStartPositions_Alt:
 CaveBossStartPositions_Alt_Loop:
 	RTS
 
+; ---------------------------------------------------------------------------
+; ApplyAreaDamageToObjects: Apply a fixed damage amount to all active objects
+; in the dungeon object list (area-of-effect attack).
+;
+; Iterates up to 30 object slots from Enemy_list_ptr. For each slot with the
+; active flag (bit 7 of first byte) set, calls ApplyDamageToObjectIfAlive.
+;
+; Input:  D3.w = damage amount; Enemy_list_ptr.w = object list base
+; Output: obj_hp decremented for all active live objects
+; Scratch: D7, A6
+; ---------------------------------------------------------------------------
 ApplyAreaDamageToObjects:
 	TST.w	D7
 	BEQ.b	ApplyAreaDamageToObjects_Loop
@@ -646,6 +812,24 @@ AddValueToObjectSlot_D4:
 AddValueToObjectSlot_D4_Loop:
 	RTS
 
+; ---------------------------------------------------------------------------
+; DungeonTick_ApplyObjectOffsets: Per-frame world-position delta for all
+; 15 dungeon sprite objects during a walk animation step.
+;
+; D7 selects direction: non-zero = forward (subtract from enemy X/Y, add to
+; slot X/Y); zero = backward (reverse signs). Each slot has its own fixed
+; delta magnitude matching its perspective depth in the FP view:
+;   Enemy/slot-01  ±$0006 (near, 6-pixel step)
+;   Slots 03/04    ±$0012 (near-side, 18-pixel step)
+;   Slots 05-07    ±$0004 (mid, 4-pixel step)
+;   Slots 08-09    ±$0008 (mid-side, 8-pixel step)
+;   Slots 0A-0B    ±$0002 (far, 2-pixel step)
+;   Slots 0D-0E    ±$0004 (far-side, 4-pixel step)
+;
+; Input:  D7.w (non-zero = forward, 0 = backward)
+;         Object_slot_0*_ptr.w = pointers to each object block
+; Output: obj_world_x/y updated for all 15 slots
+; ---------------------------------------------------------------------------
 DungeonTick_ApplyObjectOffsets:
 	TST.w	D7
 	BEQ.w	DungeonTick_ApplyObjectOffsets_Loop
@@ -738,6 +922,21 @@ DungeonTick_ApplyObjectOffsets_Loop:
 	ADDI.l	#$00020000, obj_world_y(A6)
 	RTS
 
+; ---------------------------------------------------------------------------
+; DrawFirstPersonWalls: Render the right, center, and far wall slots to VRAM.
+;
+; Reads three wall-tile ID variables:
+;   First_person_wall_right.w  → near right wall (WallRenderVdpParams_Near)
+;   First_person_center_wall.w → center wall     (WallRenderVdpParams_Mid)
+;   Fp_wall_right_2.w          → far right wall  (WallRenderVdpParams_Far)
+;
+; For each non-zero ID: PrepareWallTileRenderData then RenderWallTile_14x10_TwoPalette.
+; The far wall uses the RightWall variant instead.
+;
+; Input:  First_person_wall_right, First_person_center_wall, Fp_wall_right_2.w
+;         First_person_wall_frame.w, Wall_render_y_offset.w
+; Output: Wall tiles written to VDP
+; ---------------------------------------------------------------------------
 DrawFirstPersonWalls:
 	CLR.w	D0
 	MOVE.b	First_person_wall_right.w, D0
@@ -762,6 +961,22 @@ DrawFirstPersonWalls_DrawCenterWall:
 DrawFirstPersonWalls_Return:
 	RTS
 
+; ---------------------------------------------------------------------------
+; PrepareWallTileRenderData: Compute tile source pointer and VDP addresses
+; for a single wall slot prior to rendering.
+;
+; Wall tile ID in D0 (1-based). Computes:
+;   D2  = Wall_render_y_offset + (D0-1)*16  → selects correct row in WallTileMidGfxPtrs
+;   A0  = WallTileMidGfxPtrs[D2] (source tile data pointer)
+;   D5  = WallRenderVdpParams[frame] (VDP VRAM write address longword)
+;   D1  = sprite screen X offset | $A000 (palette 0 attribute)
+;   D2  = sprite screen X offset | $A800 (palette 1 attribute)
+;   D4  = raw sprite X position word (from FpSpritePositionTable)
+;
+; Input:  D0.w = wall tile ID (1-based), A2 = VDP params base,
+;         First_person_wall_frame.w, Wall_render_y_offset.w
+; Output: D1/D2/D4/D5/A0 set for subsequent RenderWallTile_* calls
+; ---------------------------------------------------------------------------
 PrepareWallTileRenderData:
 	MOVE.w	First_person_wall_frame.w, D1
 	MOVE.w	Wall_render_y_offset.w, D2
@@ -912,6 +1127,23 @@ ClearFirstPersonTilemap_ClearTile:
 	ANDI	#$F8FF, SR
 	RTS
 
+; ---------------------------------------------------------------------------
+; UpdateFirstPersonWallData: Determine which wall tiles are visible and update
+; First_person_*_wall.w variables for the current player position and facing.
+;
+; Reads Player_position_x/y_outside_town.w and Player_direction.w, then
+; dispatches via UpdateFpWallJumpTable to the facing-specific updater:
+;   Direction 0 → UpdateFpWalls_FacingUp
+;   Direction 2 → UpdateFpWalls_FacingLeft
+;   Direction 4 → UpdateFpWalls_FacingDown
+;   Direction 6 → UpdateFpWalls_FacingRight
+;
+; Input:  Player_position_x/y_outside_town.w, Player_direction.w
+;         Map_sector_center.w (base of sector tile data)
+; Output: First_person_center_wall, First_person_wall_right, Fp_wall_right_2,
+;         and related FP wall variables written for all 15 object slots
+; Scratch: D0, D1, D4, A0, A2
+; ---------------------------------------------------------------------------
 UpdateFirstPersonWallData:
 	LEA	Map_sector_center.w, A0
 	LEA	UpdateFpWallJumpTable, A2
@@ -1418,6 +1650,18 @@ UpdateFpWalls_FacingUp:
 	MOVE.w	(A1,D4.w), obj_tile_index(A6)
 	RTS
 
+; ---------------------------------------------------------------------------
+; GetMapTileInDirection: Read the map tile one step ahead of the player.
+;
+; Computes target position = (Player_x + delta_x[dir], Player_y + delta_y[dir])
+; using a caller-supplied delta table in A0 (2 words per direction: dx, dy).
+; Converts (x, y) to a linear index: index = y*$30 + x, then reads
+; Map_sector_center[index].
+;
+; Input:  A0 = delta table (word dx at offset dir*4, word dy at offset dir*4+2)
+; Output: D0.b = tile type at the target position
+; Scratch: D0, D1, D2
+; ---------------------------------------------------------------------------
 GetMapTileInDirection:
 	MOVE.w	Player_position_x_outside_town.w, D0
 	MOVE.w	Player_position_y_outside_town.w, D1
@@ -1432,6 +1676,23 @@ GetMapTileInDirection:
 	RTS
 
 ;UpdateMapSectorPosition:
+; ---------------------------------------------------------------------------
+; UpdateMapSectorPosition: Advance the player's position by the movement
+; delta for the current direction, scrolling the map sector window if the
+; player crosses a sector boundary.
+;
+; Direction delta is read from A0 at offset dir*4 (dx, dy). After updating
+; Player_position_x/y_outside_town, checks for underflow/overflow against
+; the sector tile range [0, $10):
+;   X < 0  → Player_map_sector_x--; wrap X to $F; reload sectors
+;   X ≥ 16 → Player_map_sector_x++; wrap X to 0; reload sectors
+;   Y < 0  → Player_map_sector_y--; wrap Y to $F; reload sectors
+;   Y ≥ 16 → Player_map_sector_y++; wrap Y to 0; reload sectors
+;
+; Input:  A0 = direction delta table; Player_direction.w
+; Output: Player_position_x/y updated; LoadMapSectors called on sector cross
+; Scratch: D0, D1
+; ---------------------------------------------------------------------------
 UpdateMapSectorPosition: ; Go left from current map sector
 	MOVE.w	Player_direction.w, D0
 	ANDI.w	#6, D0
@@ -1761,6 +2022,27 @@ RenderFpSector_Mid_LoadObjectTiles:
 ; Load map tile graphics index for object
 ; Input: A2 = Map data, A4 = Offset pointer, A0 = Tile type table, A6 = Object
 ; Output: Sets object+$8 to tile graphics index
+; ---------------------------------------------------------------------------
+; LoadMapTileGfxIndex: Look up the graphics tile index for the map tile at
+; the object's position and write it to obj_tile_index(A6).
+;
+; Reads an offset from the A4 position table (word), adds Map_tile_base_index,
+; uses that as an index into the sector tile array (A2), then converts the
+; raw tile byte to a terrain type index (MapTileToTypeIndex), and looks up
+; the final tile number in the per-type tile offset table at A0.
+;
+; Three variants:
+;   LoadMapTileGfxIndex      — use index directly
+;   LoadMapTileGfxIndexAlt1  — subtract $24 from result (mid-depth offset)
+;   LoadMapTileGfxIndexAlt2  — subtract $18 from result (far-depth offset)
+;
+; In all variants: if the tile byte is zero, calls ClearObjectGfxIndex.
+;
+; Input:  A6 = object slot ptr; A4 = position offset table ptr (advanced);
+;         A2 = sector tile data; A0 = tile-type → tile-index map;
+;         Map_tile_base_index.w
+; Output: obj_tile_index(A6) written; A4 advanced by 2
+; ---------------------------------------------------------------------------
 LoadMapTileGfxIndex:
 	MOVE.w	Map_tile_base_index.w, D0
 	ADD.w	(A4)+, D0
@@ -2011,6 +2293,17 @@ DisplayStatsToVRAM_WithPalette_WriteTile:
 	ANDI	#$F8FF, SR
 	RTS
 
+; ---------------------------------------------------------------------------
+; UpdateCompassDisplay: Compute the player's compass heading and update
+; the compass tile attributes for the HUD display.
+;
+; Reads Player_direction.w (0=Up, 2=Left, 4=Down, 6=Right) and maps it to
+; the appropriate compass rose tile set. Called every frame when in the
+; overworld or dungeon first-person view.
+;
+; Input:  Player_direction.w
+; Output: VDP compass tile area updated (via DrawCompassTiles)
+; ---------------------------------------------------------------------------
 UpdateCompassDisplay:
 	MOVE.w	Player_direction.w, D0
 	CMPI.w	#DIRECTION_LEFT, D0
@@ -2049,6 +2342,22 @@ DrawCompassTiles_WriteTile:
 	ANDI	#$F8FF, SR
 	RTS
 
+; ---------------------------------------------------------------------------
+; LoadMapSectors: Load the sector data for the current area into RAM.
+;
+; Cave mode (Is_in_cave ≠ 0):
+;   - Fills the entire 9-sector buffer with tile $05 (cave rock).
+;   - Loads Current_cave_room's RLE-compressed data from CaveMaps into
+;     Map_sector_center, decompresses in place.
+;   - Calls CheckCaveRoomMapRevealed, UpdateAreaVisibility, RenderAreaMap.
+;
+; Overworld mode:
+;   - Delegates to Load9SectorMapWindow (3×3 sector grid load).
+;
+; Input:  Is_in_cave.w, Current_cave_room.w, Player_map_sector_x/y.w
+; Output: Map_sector_* RAM updated; minimap rendered
+; Scratch: D0, D7, A0-A3
+; ---------------------------------------------------------------------------
 LoadMapSectors:
 	TST.b	Is_in_cave.w
 	BEQ.w	Load9SectorMapWindow
