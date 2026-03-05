@@ -2373,6 +2373,25 @@ sram_slot_name1     equ $0002   ; interleaved offset: name byte 1
 sram_slot_name2     equ $0004   ; interleaved offset: name byte 2
 sram_slot_name3     equ $0006   ; interleaved offset: name byte 3
 
+; SRAM data block sizes (DBF loop counts = actual size - 1).
+; These are used as the initial D7 value for SaveGameToSram / LoadGameFromSave
+; copy loops; DBF decrements until underflow, so count = size - 1.
+SRAM_NAME_SIZE_M1           = $000D   ; 14 bytes — player name (14 chars)
+SRAM_TOWNS_SIZE_M1          = $000D   ; 14 bytes — towns-visited flags (shared constant)
+SRAM_INVENTORY_SIZE_M1      = $0015   ; 22 bytes — items / magic / equipment inventories
+SRAM_EQUIPPED_SIZE_M1       = $000F   ; 16 bytes — currently equipped gear (sword/shield/armor/ring etc.)
+SRAM_STATS_SIZE_M1          = $002F   ; 48 bytes — gold (long) + stat block (HP, MP, level, etc.)
+SRAM_EVENTS_SIZE_M1         = $01FF   ; 512 bytes — event/story trigger flags array
+; Checksum loop: iterates over 335 words (670 data bytes + 2-byte checksum slot).
+; D7 is loaded with SRAM_CHECKSUM_WORD_COUNT_M1; each iteration reads one word.
+SRAM_CHECKSUM_WORD_COUNT_M1 = $014E   ; 335 words — checksum loop word count (DBF count = 335-1)
+; Backup copy size: 672 physical SRAM bytes = 670 data bytes + 2 checksum bytes,
+; each occupying 2 interleaved SRAM bytes.  Loaded into D0; DBF copies D0+1 = 672 bytes.
+SRAM_SLOT_TOTAL_SIZE_M1     = $029F   ; 672 bytes — full save slot size incl. checksum (DBF count)
+; CRC-16 feedback polynomial used by CalculateChecksumAndBackupSram.
+; Algorithm: for each data word, EOR into accumulator, LSR; if carry out, XOR with poly.
+SRAM_CHECKSUM_POLY          = $8810   ; CRC-16 polynomial ($8810 = bit-reversed CCITT variant)
+
 
 ; ============================================================
 ; Dungeon Map Sector Stride Constants

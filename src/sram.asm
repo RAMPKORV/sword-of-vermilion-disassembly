@@ -64,9 +64,9 @@ SaveGameToSram:
 	MOVE.l	(A0,D0.w), Sram_save_slot_ptr.w
 	MOVE.l	(A1,D0.w), Sram_backup_ptr.w
 	MOVEA.l	Sram_save_slot_ptr.w, A0
-	; --- Copy player name (14 bytes; $000D+1 iterations) ---
+	; --- Copy player name (14 bytes; SRAM_NAME_SIZE_M1+1 iterations) ---
 	LEA	Player_name.w, A1
-	MOVE.w	#$000D, D7		; 14 bytes: chars 0-13
+	MOVE.w	#SRAM_NAME_SIZE_M1, D7		; 14 bytes: chars 0-13
 SaveGameToSram_CopyNameLoop:
 	BSR.w	CopyByteToSram
 	DBF	D7, SaveGameToSram_CopyNameLoop
@@ -78,7 +78,7 @@ SaveGameToSram_TownLoop:
 	DBF	D7, SaveGameToSram_TownLoop
 	; --- Copy towns-visited flags (14 bytes) ---
 	LEA	Towns_visited.w, A1
-	MOVE.w	#$000D, D7		; 14 bytes
+	MOVE.w	#SRAM_TOWNS_SIZE_M1, D7		; 14 bytes
 SaveGameToSram_CopyTownsVisitedLoop:
 	BSR.w	CopyByteToSram
 	DBF	D7, SaveGameToSram_CopyTownsVisitedLoop
@@ -90,37 +90,37 @@ SaveGameToSram_CopyPositionLoop:
 	DBF	D7, SaveGameToSram_CopyPositionLoop
 	; --- Copy item inventory (22 bytes: length word + 20-item array) ---
 	LEA	Possessed_items_length.w, A1
-	MOVE.w	#$0015, D7		; 22 bytes
+	MOVE.w	#SRAM_INVENTORY_SIZE_M1, D7		; 22 bytes
 SaveGameToSram_CopyItemsLoop:
 	BSR.w	CopyByteToSram
 	DBF	D7, SaveGameToSram_CopyItemsLoop
 	; --- Copy magic inventory (22 bytes) ---
 	LEA	Possessed_magics_length.w, A1
-	MOVE.w	#$0015, D7		; 22 bytes
+	MOVE.w	#SRAM_INVENTORY_SIZE_M1, D7		; 22 bytes
 SaveGameToSram_CopyMagicsLoop:
 	BSR.w	CopyByteToSram
 	DBF	D7, SaveGameToSram_CopyMagicsLoop
 	; --- Copy equipment inventory (22 bytes) ---
 	LEA	Possessed_equipment_length.w, A1
-	MOVE.w	#$0015, D7		; 22 bytes
+	MOVE.w	#SRAM_INVENTORY_SIZE_M1, D7		; 22 bytes
 SaveGameToSram_CopyEquipmentLoop:
 	BSR.w	CopyByteToSram
 	DBF	D7, SaveGameToSram_CopyEquipmentLoop
 	; --- Copy currently equipped gear (16 bytes: sword, shield, armor, ring, etc.) ---
 	LEA	Equipped_sword.w, A1
-	MOVE.w	#$000F, D7		; 16 bytes
+	MOVE.w	#SRAM_EQUIPPED_SIZE_M1, D7		; 16 bytes
 SaveGameToSram_CopyEquippedLoop:
 	BSR.w	CopyByteToSram
 	DBF	D7, SaveGameToSram_CopyEquippedLoop
 	; --- Copy gold and stats block (48 bytes: kims long + remaining stat words) ---
 	LEA	Player_kims.w, A1
-	MOVE.w	#$002F, D7		; 48 bytes
+	MOVE.w	#SRAM_STATS_SIZE_M1, D7		; 48 bytes
 SaveGameToSram_CopyKimsLoop:
 	BSR.w	CopyByteToSram
 	DBF	D7, SaveGameToSram_CopyKimsLoop
 	; --- Copy event/story trigger flags (512 bytes) ---
 	LEA	Event_triggers_start.w, A1
-	MOVE.w	#$01FF, D7		; 512 bytes
+	MOVE.w	#SRAM_EVENTS_SIZE_M1, D7		; 512 bytes
 SaveGameToSram_CopyEventsLoop:
 	BSR.w	CopyByteToSram
 	DBF	D7, SaveGameToSram_CopyEventsLoop
@@ -163,7 +163,7 @@ CopyByteToSram:
 ; ----------------------------------------------------------------------
 CalculateChecksumAndBackupSram:
 	MOVEA.l	Sram_save_slot_ptr.w, A0
-	MOVE.w	#$014E, D7	; 335 iterations = 335 words of save data
+	MOVE.w	#SRAM_CHECKSUM_WORD_COUNT_M1, D7	; 335 iterations = 335 words of save data
 	MOVEQ	#0, D1		; D1 = running checksum accumulator
 CalculateChecksumAndBackupSram_ChecksumLoop:
 	; Read high byte of next word (from odd SRAM address)
@@ -177,7 +177,7 @@ CalculateChecksumAndBackupSram_ChecksumLoop:
 	EOR.w	D2, D1
 	LSR.w	#1, D1		; shift right; carry = bit that was shifted out
 	BCC.b	CalculateChecksumAndBackupSram_ChecksumNext
-	EORI.w	#$8810, D1	; bit was 1: XOR with polynomial $8810
+	EORI.w	#SRAM_CHECKSUM_POLY, D1	; bit was 1: XOR with polynomial $8810
 CalculateChecksumAndBackupSram_ChecksumNext:
 	DBF	D7, CalculateChecksumAndBackupSram_ChecksumLoop
 	; Write checksum big-endian after the data block
@@ -189,7 +189,7 @@ CalculateChecksumAndBackupSram_ChecksumNext:
 	; Copy primary slot (data + checksum) to backup slot
 	MOVEA.l	Sram_save_slot_ptr.w, A1
 	MOVEA.l	Sram_backup_ptr.w, A0
-	MOVE.w	#$029F, D0	; 672 bytes total (data + 2-byte checksum)
+	MOVE.w	#SRAM_SLOT_TOTAL_SIZE_M1, D0	; 672 bytes total (data + 2-byte checksum)
 CalculateChecksumAndBackupSram_BackupCopyLoop:
 	MOVE.b	(A1)+, (A0)+
 	LEA	$1(A0), A0	; skip even SRAM byte (destination)
@@ -344,7 +344,7 @@ FileMenuLoad_Return:
 ; ----------------------------------------------------------------------
 LoadGameFromSave:
 	LEA	Player_name.w, A1
-	MOVE.w	#$000D, D7	; 14 bytes: player name
+	MOVE.w	#SRAM_NAME_SIZE_M1, D7	; 14 bytes: player name
 LoadGameFromSave_CopyNameLoop:
 	BSR.w	CopyByteFromInterleavedSave
 	DBF	D7, LoadGameFromSave_CopyNameLoop
@@ -354,7 +354,7 @@ LoadGameFromSave_TownLoop:
 	BSR.w	CopyByteFromInterleavedSave
 	DBF	D7, LoadGameFromSave_TownLoop
 	LEA	Towns_visited.w, A1
-	MOVE.w	#$000D, D7	; 14 bytes: towns-visited flags
+	MOVE.w	#SRAM_TOWNS_SIZE_M1, D7	; 14 bytes: towns-visited flags
 LoadGameFromSave_CopyTownsVisitedLoop:
 	BSR.w	CopyByteFromInterleavedSave
 	DBF	D7, LoadGameFromSave_CopyTownsVisitedLoop
@@ -364,32 +364,32 @@ LoadGameFromSave_CopyPositionLoop:
 	BSR.w	CopyByteFromInterleavedSave
 	DBF	D7, LoadGameFromSave_CopyPositionLoop
 	LEA	Possessed_items_length.w, A1
-	MOVE.w	#$0015, D7	; 22 bytes: item inventory
+	MOVE.w	#SRAM_INVENTORY_SIZE_M1, D7	; 22 bytes: item inventory
 LoadGameFromSave_CopyItemsLoop:
 	BSR.w	CopyByteFromInterleavedSave
 	DBF	D7, LoadGameFromSave_CopyItemsLoop
 	LEA	Possessed_magics_length.w, A1
-	MOVE.w	#$0015, D7	; 22 bytes: magic inventory
+	MOVE.w	#SRAM_INVENTORY_SIZE_M1, D7	; 22 bytes: magic inventory
 LoadGameFromSave_CopyMagicsLoop:
 	BSR.w	CopyByteFromInterleavedSave
 	DBF	D7, LoadGameFromSave_CopyMagicsLoop
 	LEA	Possessed_equipment_length.w, A1
-	MOVE.w	#$0015, D7	; 22 bytes: equipment inventory
+	MOVE.w	#SRAM_INVENTORY_SIZE_M1, D7	; 22 bytes: equipment inventory
 LoadGameFromSave_CopyEquipmentLoop:
 	BSR.w	CopyByteFromInterleavedSave
 	DBF	D7, LoadGameFromSave_CopyEquipmentLoop
 	LEA	Equipped_sword.w, A1
-	MOVE.w	#$000F, D7	; 16 bytes: equipped gear
+	MOVE.w	#SRAM_EQUIPPED_SIZE_M1, D7	; 16 bytes: equipped gear
 LoadGameFromSave_CopyEquippedLoop:
 	BSR.w	CopyByteFromInterleavedSave
 	DBF	D7, LoadGameFromSave_CopyEquippedLoop
 	LEA	Player_kims.w, A1
-	MOVE.w	#$002F, D7	; 48 bytes: gold + stat block
+	MOVE.w	#SRAM_STATS_SIZE_M1, D7	; 48 bytes: gold + stat block
 LoadGameFromSave_CopyKimsLoop:
 	BSR.w	CopyByteFromInterleavedSave
 	DBF	D7, LoadGameFromSave_CopyKimsLoop
 	LEA	Event_triggers_start.w, A1
-	MOVE.w	#$01FF, D7	; 512 bytes: event/story trigger flags
+	MOVE.w	#SRAM_EVENTS_SIZE_M1, D7	; 512 bytes: event/story trigger flags
 LoadGameFromSave_CopyEventsLoop:
 	BSR.w	CopyByteFromInterleavedSave
 	DBF	D7, LoadGameFromSave_CopyEventsLoop
@@ -410,7 +410,7 @@ CopyByteFromInterleavedSave:
 	
 ; ----------------------------------------------------------------------
 ; VerifySaveChecksum
-; Recompute the $8810 CRC over the data portion of a save slot and compare
+; Recompute the SRAM_CHECKSUM_POLY CRC over the data portion of a save slot and compare
 ; against the stored checksum. Identical algorithm to
 ; CalculateChecksumAndBackupSram.
 ; In:  A0 = pointer to start of SRAM slot to verify
@@ -419,7 +419,7 @@ CopyByteFromInterleavedSave:
 ; Uses: A0, D0, D1, D2, D7
 ; ----------------------------------------------------------------------
 VerifySaveChecksum:
-	MOVE.w	#$014E, D7	; 335 iterations (same as save)
+	MOVE.w	#SRAM_CHECKSUM_WORD_COUNT_M1, D7	; 335 iterations (same as save)
 	MOVEQ	#0, D1		; D1 = checksum accumulator
 VerifySaveChecksum_Loop:
 	MOVE.b	(A0)+, D2
@@ -430,7 +430,7 @@ VerifySaveChecksum_Loop:
 	EOR.w	D2, D1
 	LSR.w	#1, D1
 	BCC.b	VerifySaveChecksum_SkipXor
-	EORI.w	#$8810, D1	; polynomial feedback
+	EORI.w	#SRAM_CHECKSUM_POLY, D1	; polynomial feedback
 VerifySaveChecksum_SkipXor:
 	DBF	D7, VerifySaveChecksum_Loop
 	; Read stored big-endian checksum from SRAM into D0
@@ -445,7 +445,7 @@ VerifySaveChecksum_SkipXor:
 ; CopySramBackupToSlot
 ; Copy the backup slot back to the primary slot (disaster recovery).
 ; Used when the primary slot fails checksum but the backup is intact.
-; Copies $029F+1 = 672 interleaved bytes (data + checksum).
+; Copies SRAM_SLOT_TOTAL_SIZE_M1+1 = 672 interleaved bytes (data + checksum).
 ; In:  Sram_save_slot_ptr.w = destination (primary slot)
 ;      Sram_backup_ptr.w    = source (backup slot)
 ; Out: Primary slot overwritten with backup data
@@ -454,7 +454,7 @@ VerifySaveChecksum_SkipXor:
 CopySramBackupToSlot:
 	MOVEA.l	Sram_save_slot_ptr.w, A0	; destination: primary slot
 	MOVEA.l	Sram_backup_ptr.w, A1		; source: backup slot
-	MOVE.w	#$029F, D0			; 672 bytes total
+	MOVE.w	#SRAM_SLOT_TOTAL_SIZE_M1, D0		; 672 bytes total
 CopySramBackupToSlot_CopyLoop:
 	MOVE.b	(A1)+, (A0)+
 	LEA	$1(A0), A0	; skip even SRAM byte (destination)
