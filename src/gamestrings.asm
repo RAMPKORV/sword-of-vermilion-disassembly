@@ -56,9 +56,11 @@ AlreadyOpenedStr:
 NothingInsideStr:
 	dc.b	"Sorry, there's", $FE
 	dc.b	"nothing inside.", $FF, $00
+; DEAD CODE — TrufflesStillThereStr2: unused alternate variant of TrufflesStillThereStr; no references in source
 TrufflesStillThereStr2:
 	dc.b	"Stop worrying, the", $FE
 	dc.b	"truffles are still there!", $FF, $00
+; DEAD CODE — HerbsStillThereStr2: unused alternate variant of HerbsStillThereStr; no references in source
 HerbsStillThereStr2:
 	dc.b	"Stop worrying, the", $FE
 	dc.b	"herbs are still there!", $FF
@@ -877,6 +879,7 @@ TombstoneStr:
 CantTakeBoxStr:
 	dc.b	"You can't take it,", $FE
 	dc.b	"it's a box!", $FF, $00
+; DEAD CODE — TookTreasureStr: defined but never referenced; treasure acknowledgement string that was superseded
 TookTreasureStr:
 	dc.b	"You took the treasure."
 	script_cmd_actions 1

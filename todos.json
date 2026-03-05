@@ -663,7 +663,7 @@
           "description": "Using tools/index/callsites.json and tools/index/functions.json, identify functions with zero external callers. These may be dead code, or may be called via computed jumps (offset tables). For each, determine if truly dead or table-dispatched, and annotate accordingly.",
           "priority": "medium",
           "effort": "large",
-          "status": "todo"
+          "status": "done"
         }
       ]
     },
