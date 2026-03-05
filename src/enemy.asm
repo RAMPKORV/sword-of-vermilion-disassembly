@@ -3463,15 +3463,15 @@ InitBoss1_Common:
 	MOVE.b	#$EC, obj_hitbox_y_neg(A6)
 	MOVE.b	#$F8, obj_hitbox_y_pos(A6)
 	CLR.w	obj_knockback_timer(A6)
-	MOVE.l	#$FFFFE000, obj_vel_x(A6)	; initial leftward drift (-0.875 px/frame)
-	MOVE.l	#$8000, obj_vel_y(A6)		; slow downward drift (+0.5 px/frame)
+	MOVE.l	#BOSS1_VEL_SPAWN_LEFT, obj_vel_x(A6)	; initial leftward drift (-0.875 px/frame)
+	MOVE.l	#BOSS1_VEL_HALF_DOWN, obj_vel_y(A6)	; slow downward drift (+0.5 px/frame)
 	MOVE.b	(A0)+, obj_sprite_size(A6)
 	CLR.w	D0
 	MOVE.b	(A0)+, D0
 	MOVE.w	D0, obj_sort_key(A6)
 	MOVE.w	(A0)+, obj_tile_index(A6)
-	MOVE.w	#$006E, obj_world_x(A6)	; spawn X = 110 (centre-right of field)
-	MOVE.w	#$0060, obj_world_y(A6)	; spawn Y = 96 (upper-middle of field)
+	MOVE.w	#BOSS1_HEAD_HOME_X, obj_world_x(A6)	; spawn X = 110 (centre-right of field)
+	MOVE.w	#BOSS1_HEAD_HOME_Y, obj_world_y(A6)	; spawn Y = 96 (upper-middle of field)
 	MOVE.l	#Boss1_MainTick, obj_tick_fn(A6)
 	MOVE.w	#4, D7
 InitBoss1_Common_Done:
@@ -3493,7 +3493,7 @@ InitBoss1_Common_Done:
 	MOVE.b	(A0)+, D0
 	MOVE.w	D0, obj_sort_key(A6)
 	MOVE.w	(A0)+, obj_tile_index(A6)
-	MOVE.w	#$006E, obj_world_x(A6)		; neck spawn X = 110 (aligned with head)
+	MOVE.w	#BOSS1_HEAD_HOME_X, obj_world_x(A6)		; neck spawn X = 110 (aligned with head)
 	MOVE.w	#$006C, obj_world_y(A6)		; neck spawn Y = 108 (just below head)
 	MOVE.l	#Boss1_NeckTick, obj_tick_fn(A6)
 	MOVE.w	#1, D7
@@ -3513,7 +3513,7 @@ InitBoss1_Common_NeckLoop:
 	MOVE.w	D0, obj_sort_key(A6)
 	MOVE.w	(A0)+, obj_tile_index(A6)
 	MOVE.w	#SOUND_PLAYER_HIT, obj_world_x(A6)	; upper-body spawn X (raw constant = pixel pos)
-	MOVE.w	#$0070, obj_world_y(A6)		; upper-body spawn Y = 112
+	MOVE.w	#BOSS1_BODY_HOME_Y, obj_world_y(A6)		; upper-body spawn Y = 112
 	MOVE.l	#Boss1_UpperBodyTick, obj_tick_fn(A6)
 	MOVE.b	#$F0, obj_hitbox_x_neg(A6)		; hitbox: -16 px left
 	MOVE.b	#$10, obj_hitbox_x_pos(A6)		; hitbox: +16 px right
@@ -3535,8 +3535,8 @@ InitBoss1_Common_UpperBodyLoop:
 	MOVE.b	(A0)+, D0
 	MOVE.w	D0, obj_sort_key(A6)
 	MOVE.w	(A0)+, obj_tile_index(A6)
-	MOVE.w	#$00C8, obj_world_x(A6)		; mid-body spawn X = 200
-	MOVE.w	#$0070, obj_world_y(A6)		; mid-body spawn Y = 112
+	MOVE.w	#BOSS1_MIDBODY_HOME_X, obj_world_x(A6)		; mid-body spawn X = 200
+	MOVE.w	#BOSS1_BODY_HOME_Y, obj_world_y(A6)		; mid-body spawn Y = 112
 	MOVE.l	#Boss1_MidBodyTick, obj_tick_fn(A6)
 	MOVE.b	#$F0, obj_hitbox_x_neg(A6)
 	MOVE.b	#$10, obj_hitbox_x_pos(A6)
@@ -3558,8 +3558,8 @@ InitBoss1_Common_MidBodyLoop:
 	MOVE.b	(A0)+, D0
 	MOVE.w	D0, obj_sort_key(A6)
 	MOVE.w	(A0)+, obj_tile_index(A6)
-	MOVE.w	#$00DA, obj_world_x(A6)		; tail spawn X = 218
-	MOVE.w	#$0070, obj_world_y(A6)		; tail spawn Y = 112
+	MOVE.w	#BOSS1_TAIL_HOME_X, obj_world_x(A6)		; tail spawn X = 218
+	MOVE.w	#BOSS1_BODY_HOME_Y, obj_world_y(A6)		; tail spawn Y = 112
 	MOVE.l	#Boss1_TailTick, obj_tick_fn(A6)
 	MOVE.w	#0, D7
 InitBoss1_Common_TailLoop:
@@ -3649,8 +3649,8 @@ Boss1State_ChooseAction:
 	ANDI.w	#3, D0
 	BEQ.b	Boss1State_MoveRight
 	MOVE.w	#BOSS1_STATE_CHARGE_DOWN_LEFT, Boss_ai_state.w
-	MOVE.l	#$FFFF8000, obj_vel_x(A5)	; charge left at -0.5 px/frame
-	MOVE.l	#$00020000, obj_vel_y(A5)	; charge down at +2.0 px/frame
+	MOVE.l	#BOSS1_VEL_HALF_UP, obj_vel_x(A5)	; charge left at -0.5 px/frame
+	MOVE.l	#BOSS1_VEL_CHARGE_DOWN, obj_vel_y(A5)	; charge down at +2.0 px/frame
 	RTS
 
 ; Boss1State_MoveRight / Boss1State_MoveRight_Loop
@@ -3658,8 +3658,8 @@ Boss1State_ChooseAction:
 ; Boss1State_MoveRight_Loop is the idle fall-through RTS.
 Boss1State_MoveRight:
 	MOVE.w	#BOSS1_STATE_MOVE_DOWN, Boss_ai_state.w
-	MOVE.l	#$4000, obj_vel_x(A5)		; drift right at +0.25 px/frame
-	MOVE.l	#$8000, obj_vel_y(A5)		; drift down at +0.5 px/frame
+	MOVE.l	#BOSS1_VEL_QUARTER_RIGHT, obj_vel_x(A5)	; drift right at +0.25 px/frame
+	MOVE.l	#BOSS1_VEL_HALF_DOWN, obj_vel_y(A5)	; drift down at +0.5 px/frame
 Boss1State_MoveRight_Loop:
 	RTS
 
@@ -3699,8 +3699,8 @@ Boss1State_HeadRetract:
 	SUBQ.b	#1, obj_invuln_timer(A5)
 	BGE.b	Boss1State_HeadRetract_Loop
 	MOVE.w	#BOSS1_STATE_RETURN_HOME, Boss_ai_state.w
-	MOVE.l	#$FFFFC000, obj_vel_x(A5)	; retreat left at -0.25 px/frame
-	MOVE.l	#$FFFF8000, obj_vel_y(A5)	; retreat up at -0.5 px/frame
+	MOVE.l	#BOSS1_VEL_QUARTER_LEFT, obj_vel_x(A5)	; retreat left at -0.25 px/frame
+	MOVE.l	#BOSS1_VEL_HALF_UP, obj_vel_y(A5)	; retreat up at -0.5 px/frame
 Boss1State_HeadRetract_Loop:
 	MOVEA.l	Object_slot_02_ptr.w, A6
 	SUBI.l	#$1000, obj_world_x(A6)
@@ -3722,7 +3722,7 @@ Boss1State_AttackWait_CheckLunge:
 	BSR.w	CheckPlayerLeftOfScreen
 	BEQ.b	Boss1State_AttackWait_Return
 	MOVE.w	#BOSS1_STATE_LUNGE_LEFT, Boss_ai_state.w
-	MOVE.l	#$FFFE0000, obj_vel_x(A5)	; lunge left at -2.0 px/frame
+	MOVE.l	#BOSS1_VEL_LUNGE_LEFT, obj_vel_x(A5)	; lunge left at -2.0 px/frame
 	MOVE.l	#0, obj_vel_y(A5)
 	RTS
 	
@@ -3734,11 +3734,11 @@ Boss1State_AttackWait_Return:
 ; then transitions to ReturnHome with a rightward bounce velocity.
 Boss1State_LungeLeft:
 	MOVE.w	obj_world_x(A5), D0
-	CMPI.w	#$005A, D0			; lunge target X = 90 px from left edge
+	CMPI.w	#BOSS1_LUNGE_TARGET_X, D0		; lunge target X = 90 px from left edge
 	BGE.b	Boss1State_LungeLeft_Loop
 	MOVE.w	#BOSS1_STATE_RETURN_HOME, Boss_ai_state.w
-	MOVE.l	#$4000, obj_vel_x(A5)		; bounce right at +0.25 px/frame
-	MOVE.l	#$FFFF8000, obj_vel_y(A5)	; drift up at -0.5 px/frame
+	MOVE.l	#BOSS1_VEL_QUARTER_RIGHT, obj_vel_x(A5)	; bounce right at +0.25 px/frame
+	MOVE.l	#BOSS1_VEL_HALF_UP, obj_vel_y(A5)	; drift up at -0.5 px/frame
 Boss1State_LungeLeft_Loop:
 	RTS
 
@@ -3752,39 +3752,39 @@ Boss1State_ChargeDownLeft:
 	CMPI.w	#RING_GUARDIAN_Y_LOWER, obj_world_y(A5)
 	BLE.b	Boss1State_ChargeDownLeft_Loop
 	MOVE.w	#BOSS1_STATE_RETURN_HOME, Boss_ai_state.w
-	MOVE.l	#$4000, obj_vel_x(A5)		; drift right at +0.25 px/frame
+	MOVE.l	#BOSS1_VEL_QUARTER_RIGHT, obj_vel_x(A5)	; drift right at +0.25 px/frame
 	MOVE.l	#Tilemap_buffer_plane_a, obj_vel_y(A5)	; raw addr used as velocity word
 Boss1State_ChargeDownLeft_Loop:
 	RTS
 
 ; Boss1State_ReturnHome
-; Waits until the head Y ≤ $0060 (home position), then snaps ALL five
+; Waits until the head Y ≤ BOSS1_HEAD_HOME_Y (96 px), then snaps ALL five
 ; body slots back to their resting coordinates and resets the AI state
 ; to BOSS1_STATE_INIT_IDLE.  Velocities are zeroed so the boss pauses
 ; before the next attack cycle begins.
-;   Tail  (slot 05): X=$00DA, Y=$0070
-;   MidBody (slot 04): X=$00C8, Y=$0070
-;   UpperBody (slot 03): X=SOUND_PLAYER_HIT (raw value), Y=$0070
-;   Neck  (slot 02): X=$006E, Y=$006C
-;   Head  (A5 = slot 01): X=$006E, Y=$0060
+;   Tail  (slot 05): X=BOSS1_TAIL_HOME_X ($00DA), Y=BOSS1_BODY_HOME_Y ($0070)
+;   MidBody (slot 04): X=BOSS1_MIDBODY_HOME_X ($00C8), Y=BOSS1_BODY_HOME_Y ($0070)
+;   UpperBody (slot 03): X=SOUND_PLAYER_HIT (raw value), Y=BOSS1_BODY_HOME_Y ($0070)
+;   Neck  (slot 02): X=BOSS1_HEAD_HOME_X ($006E), Y=BOSS1_NECK_HOME_Y ($006C)
+;   Head  (A5 = slot 01): X=BOSS1_HEAD_HOME_X ($006E), Y=BOSS1_HEAD_HOME_Y ($0060)
 Boss1State_ReturnHome:
 	MOVE.w	obj_world_y(A5), D0
-	CMPI.w	#$0060, D0			; home Y = 96 px (upper-middle)
+	CMPI.w	#BOSS1_HEAD_HOME_Y, D0			; home Y = 96 px (upper-middle)
 	BGT.b	Boss1State_ReturnHome_Loop
-	MOVE.w	#$006E, obj_world_x(A5)		; head home X = 110
-	MOVE.w	#$0060, obj_world_y(A5)		; head home Y = 96
+	MOVE.w	#BOSS1_HEAD_HOME_X, obj_world_x(A5)	; head home X = 110
+	MOVE.w	#BOSS1_HEAD_HOME_Y, obj_world_y(A5)	; head home Y = 96
 	MOVEA.l	Object_slot_05_ptr.w, A6
-	MOVE.w	#$00DA, obj_world_x(A6)		; tail home X = 218
-	MOVE.w	#$0070, obj_world_y(A6)		; tail home Y = 112
+	MOVE.w	#BOSS1_TAIL_HOME_X, obj_world_x(A6)	; tail home X = 218
+	MOVE.w	#BOSS1_BODY_HOME_Y, obj_world_y(A6)	; tail home Y = 112
 	MOVEA.l	Object_slot_04_ptr.w, A6
-	MOVE.w	#$00C8, obj_world_x(A6)		; mid-body home X = 200
-	MOVE.w	#$0070, obj_world_y(A6)		; mid-body home Y = 112
+	MOVE.w	#BOSS1_MIDBODY_HOME_X, obj_world_x(A6)	; mid-body home X = 200
+	MOVE.w	#BOSS1_BODY_HOME_Y, obj_world_y(A6)	; mid-body home Y = 112
 	MOVEA.l	Object_slot_03_ptr.w, A6
 	MOVE.w	#SOUND_PLAYER_HIT, obj_world_x(A6)	; upper-body home X (raw constant)
-	MOVE.w	#$0070, obj_world_y(A6)		; upper-body home Y = 112
+	MOVE.w	#BOSS1_BODY_HOME_Y, obj_world_y(A6)	; upper-body home Y = 112
 	MOVEA.l	Object_slot_02_ptr.w, A6
-	MOVE.w	#$006E, obj_world_x(A6)		; neck home X = 110 (aligned with head)
-	MOVE.w	#$006C, obj_world_y(A6)		; neck home Y = 108
+	MOVE.w	#BOSS1_HEAD_HOME_X, obj_world_x(A6)	; neck home X = 110 (aligned with head)
+	MOVE.w	#BOSS1_NECK_HOME_Y, obj_world_y(A6)	; neck home Y = 108
 	MOVE.w	#BOSS1_STATE_INIT_IDLE, Boss_ai_state.w
 	CLR.l	obj_vel_x(A5)
 	CLR.l	obj_vel_y(A5)
@@ -3799,21 +3799,21 @@ Boss1State_ReturnHome_Loop:
 ; Boss1_NeckTickNoCollision so the body can scroll off-screen safely.
 Boss1_DeathSequence:
 	CLR.l	obj_vel_x(A5)
-	MOVE.l	#$8000, obj_vel_y(A5)		; head falls down at +0.5 px/frame
+	MOVE.l	#BOSS1_VEL_HALF_DOWN, obj_vel_y(A5)	; head falls down at +0.5 px/frame
 	MOVE.b	#0, obj_move_counter(A5)
 	MOVEA.l	Object_slot_02_ptr.w, A6
 	MOVE.l	#Boss1_NeckTickNoCollision, obj_tick_fn(A6)
 	CLR.l	obj_vel_x(A6)
-	MOVE.l	#$8000, obj_vel_y(A6)		; neck falls at +0.5 px/frame
+	MOVE.l	#BOSS1_VEL_HALF_DOWN, obj_vel_y(A6)	; neck falls at +0.5 px/frame
 	MOVEA.l	Object_slot_03_ptr.w, A6
 	CLR.l	obj_vel_x(A6)
-	MOVE.l	#$8000, obj_vel_y(A6)		; upper-body falls at +0.5 px/frame
+	MOVE.l	#BOSS1_VEL_HALF_DOWN, obj_vel_y(A6)	; upper-body falls at +0.5 px/frame
 	MOVEA.l	Object_slot_04_ptr.w, A6
 	CLR.l	obj_vel_x(A6)
-	MOVE.l	#$8000, obj_vel_y(A6)		; mid-body falls at +0.5 px/frame
+	MOVE.l	#BOSS1_VEL_HALF_DOWN, obj_vel_y(A6)	; mid-body falls at +0.5 px/frame
 	MOVEA.l	Object_slot_05_ptr.w, A6
 	CLR.l	obj_vel_x(A6)
-	MOVE.l	#$8000, obj_vel_y(A6)		; tail falls at +0.5 px/frame
+	MOVE.l	#BOSS1_VEL_HALF_DOWN, obj_vel_y(A6)	; tail falls at +0.5 px/frame
 	BSR.w	UpdateSpritePositionAndRender
 	MOVE.l	#Boss1_DeathFall, obj_tick_fn(A5)
 	PlaySound	SOUND_DOOR_OPEN

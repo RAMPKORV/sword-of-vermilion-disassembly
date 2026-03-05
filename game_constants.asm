@@ -760,6 +760,26 @@ BOSS_HIT_STUN_FRAMES    = $0010   ; 16 frames — boss body-part post-hit pause 
 BOSS1_HEAD_PAUSE_TICKS  = $28    ; 40 ticks — pause before head extends / dwell in attack-wait state
 BOSS1_HEAD_EXTEND_TICKS = $64    ; 100 ticks — dwell time while boss head is extending
 
+; RingGuardian (Boss 1) velocity constants (fixed-point .l: upper word = integer, lower word = fraction).
+; All velocities are applied to obj_vel_x / obj_vel_y of the head sprite each tick.
+BOSS1_VEL_QUARTER_RIGHT = $00004000   ; +0.25 px/frame — slow rightward drift / post-lunge bounce
+BOSS1_VEL_HALF_DOWN     = $00008000   ; +0.5 px/frame  — slow downward drift / death fall
+BOSS1_VEL_CHARGE_DOWN   = $00020000   ; +2.0 px/frame  — diagonal charge downward component
+BOSS1_VEL_HALF_UP       = $FFFF8000   ; -0.5 px/frame  — retreat up / post-lunge drift up
+BOSS1_VEL_QUARTER_LEFT  = $FFFFC000   ; -0.25 px/frame — slow retreat leftward
+BOSS1_VEL_LUNGE_LEFT    = $FFFE0000   ; -2.0 px/frame  — high-speed lunge to the left
+BOSS1_VEL_SPAWN_LEFT    = $FFFFE000   ; -0.875 px/frame — initial leftward drift at spawn
+
+; RingGuardian (Boss 1) spawn and home-position coordinates (world pixels).
+; "Home" positions are snapped to when Boss1State_ReturnHome completes.
+BOSS1_HEAD_HOME_X       = $006E   ; 110 px — head and neck home X (centre-right of arena)
+BOSS1_HEAD_HOME_Y       = $0060   ;  96 px — head home Y (upper-middle row)
+BOSS1_NECK_HOME_Y       = $006C   ; 108 px — neck home Y (just below head)
+BOSS1_BODY_HOME_Y       = $0070   ; 112 px — upper-body / mid-body / tail shared home Y
+BOSS1_MIDBODY_HOME_X    = $00C8   ; 200 px — mid-body home X
+BOSS1_TAIL_HOME_X       = $00DA   ; 218 px — tail home X (rightmost body segment)
+BOSS1_LUNGE_TARGET_X    = $005A   ;  90 px — X threshold that ends the lunge-left state
+
 ; Boss state-transition delay: written to obj_invuln_timer on OrbitBoss inner/outer
 ; parts and RingGuardian when transitioning back to the "select target / choose action"
 ; state. Acts as a cool-down between attack phases (80 ticks ≈ 1.3 s at 60 Hz).

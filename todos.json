@@ -238,7 +238,7 @@
           "file": "game_constants.asm + src/enemy.asm",
           "priority": "medium",
           "effort": "medium",
-          "status": "todo"
+          "status": "done"
         },
         {
           "id": "MAGICB-006",
