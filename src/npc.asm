@@ -31,6 +31,7 @@ NPCTick_Soldier_Init:
 
 NPCTick_Soldier_UpdatePos:
 	BRA.w	UpdateNPCScreenPosition
+; DEAD CODE — unreachable init body; no entry label (stranded after BRA tail-call)
 	MOVE.b	#SPRITE_SIZE_2x3, obj_sprite_size(A5)
 	MOVE.l	#NPCTick_StowSoldier_DoctorHint, obj_tick_fn(A5)
 	RTS
@@ -260,6 +261,7 @@ NPCTick_Parma_AdviceHint_Loop:
 	BSR.w	SetHintTextIfTriggered
 NPCTick_Parma_HintDone:
 	BRA.w	UpdateNPCSpriteFrame
+; DEAD CODE — unreachable init body; no entry label (stranded after BRA tail-call)
 	BSR.w	SetRandomDirection
 	CLR.b	obj_behavior_flag(A5)
 	TST.b	Talked_to_real_king.w
@@ -313,6 +315,7 @@ NPCTick_Parma_TreasureQuest_TreasureNotFound:
 	MOVE.l	#FindTreasureStr, obj_npc_str_ptr(A5)
 NPCTick_Parma_TreasureQuest_Done:
 	BRA.w	UpdateNPCSpriteFrame
+; DEAD CODE — unreachable init body; no entry label (stranded after BRA tail-call)
 	BSR.w	SetRandomDirection
 	CLR.b	obj_behavior_flag(A5)
 	TST.b	Talked_to_real_king.w
@@ -451,6 +454,7 @@ NPCTick_Deepdale_SecretKeeper:
 	MOVE.b	#FLAG_TRUE, Deepdale_medicine_removed.w
 NPCTick_Deepdale_MedicineDone:
 	BRA.w	UpdateNPCSpriteFrame
+; DEAD CODE — unreachable init body; no entry label (stranded after BRA tail-call)
 	BSR.w	SetRandomDirection
 	CLR.b	obj_behavior_flag(A5)
 	MOVE.l	#NPCTick_Deepdale_BremensCaveHint, obj_tick_fn(A5)
@@ -493,6 +497,7 @@ NPCTick_Deepdale_StowRoadWarning_Loop:
 ; NPCs in Stow: Sanguios bookkeeper, thief accusers.
 ;==============================================================
 ; NPCInit_Stow_Bookkeeper (init falls through from Deepdale section)
+; DEAD CODE — unreachable init body; no entry label (stranded after BRA tail-call)
 	BSR.w	SetRandomDirection
 	CLR.b	obj_behavior_flag(A5)
 	TST.b	Stow_innocence_proven.w
@@ -550,6 +555,7 @@ NPCTick_Stow_SanguiosBookkeeper_AccusedNotInnocent:
 	MOVE.b	#FLAG_TRUE, Sanguios_confiscated.w
 NPCTick_Stow_Bookkeeper_Done:
 	BRA.w	NPCBehavior_LoadFrame
+; DEAD CODE — unreachable init body; no entry label (stranded after BRA tail-call)
 	BSR.w	SetRandomDirection
 	CLR.b	obj_behavior_flag(A5)
 	TST.b	Accused_of_theft.w
@@ -569,6 +575,7 @@ NPCTick_Stow_ThiefAccuser1:
 	MOVE.l	#YoureTheThiefStr, obj_npc_str_ptr(A5)
 NPCTick_Stow_ThiefAccuser1_Loop:
 	BRA.w	UpdateNPCSpriteFrame
+; DEAD CODE — unreachable init body; no entry label (stranded after BRA tail-call)
 	BSR.w	SetRandomDirection
 	CLR.b	obj_behavior_flag(A5)
 	TST.b	Accused_of_theft.w
@@ -797,6 +804,7 @@ NPCTick_Keltwick_Done:
 
 ; NPCInit_Keltwick_WaitForPlayer
 ; Init: randomize direction and assign WaitForPlayer tick.
+; DEAD CODE — unreachable init body; no entry label (stranded after BRA tail-call)
 	BSR.w	SetRandomDirection
 	CLR.b	obj_behavior_flag(A5)
 	MOVE.l	#NPCTick_Keltwick_WaitForPlayer, obj_tick_fn(A5)
@@ -827,6 +835,7 @@ NPCTick_Barrow_HintDone:
 
 ; NPCInit_Barrow_NortheastHint
 ; Init: randomize direction and assign NortheastHint tick.
+; DEAD CODE — unreachable init body; no entry label (stranded after BRA tail-call)
 	BSR.w	SetRandomDirection
 	CLR.b	obj_behavior_flag(A5)
 	MOVE.l	#NPCTick_Barrow_NortheastHint, obj_tick_fn(A5)
@@ -845,6 +854,7 @@ NPCTick_Barrow_NortheastHint_Loop:
 
 ; NPCInit_Barrow_QuestGuard
 ; Init: hide the guard if map already received; assign QuestGuard tick.
+; DEAD CODE — unreachable init body; no entry label (stranded after BRA tail-call)
 	BSR.w	SetRandomDirection
 	CLR.b	obj_behavior_flag(A5)
 	TST.b	Barrow_map_received.w
@@ -867,6 +877,7 @@ NPCTick_Barrow_BearwulfDone:
 
 ; NPCInit_Barrow_BearwulfQuest
 ; Init: randomize direction and assign BearwulfQuest tick.
+; DEAD CODE — unreachable init body; no entry label (stranded after BRA tail-call)
 	BSR.w	SetRandomDirection
 	CLR.b	obj_behavior_flag(A5)
 	MOVE.l	#NPCTick_Barrow_BearwulfQuest, obj_tick_fn(A5)
@@ -1246,6 +1257,7 @@ NPCTick_Swaffham_KnuteNoAnswer_Loop:
 
 ; NPCInit_Excalabria_CrystalExchange (setup)
 ; Init: randomize direction and assign CrystalExchange tick.
+; DEAD CODE — unreachable init body; no entry label (stranded after BRA tail-call)
 	BSR.w	SetRandomDirection
 	CLR.b	obj_behavior_flag(A5)
 	MOVE.l	#NPCTick_Excalabria_CrystalExchange, obj_tick_fn(A5)

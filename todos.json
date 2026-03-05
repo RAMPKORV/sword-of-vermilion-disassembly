@@ -655,7 +655,7 @@
           "description": "Scan all src/*.asm files for instructions immediately following BRA/JMP/RTS that are not reachable by any label. Flag as dead code with dc.b encoding and explanatory comments. The magic.asm orphan RTS bytes (DEAD-002) were found this way; systematically check all files.",
           "priority": "medium",
           "effort": "large",
-          "status": "todo"
+          "status": "done"
         },
         {
           "id": "DEADB-002",
