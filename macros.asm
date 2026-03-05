@@ -720,8 +720,53 @@ shopMagic macro type,id
     ENDM
 
 ; ============================================================
-; dmaCmd Macro
+; vdpCmd Macro
 ; ============================================================
+; Generate a VDP control-port command longword at assemble time.
+; Encodes a VRAM, CRAM, or VSRAM access address into the format
+; expected by the VDP control port.
+;
+; Usage:
+;   vdpCmd addr, type
+;
+;   addr: VRAM/CRAM/VSRAM address (0-based within the space)
+;   type: One of the VDP_TYPE_* constants below
+;
+; VDP_TYPE constants:
+;   VDP_TYPE_VRAM_WRITE  = $01   CD bits = 0001
+;   VDP_TYPE_VRAM_READ   = $00   CD bits = 0000
+;   VDP_TYPE_CRAM_WRITE  = $03   CD bits = 0011
+;   VDP_TYPE_CRAM_READ   = $08   CD bits = 1000
+;   VDP_TYPE_VSRAM_WRITE = $05   CD bits = 0101
+;   VDP_TYPE_VSRAM_READ  = $04   CD bits = 0100
+;   VDP_TYPE_VRAM_DMA    = $21   CD bits = 1 in high byte + 0001
+;
+; Formula:
+;   bits 31-30:  CD1-CD0  = (type & 3)
+;   bits 29-16:  A13-A0   = (addr & $3FFF)
+;   bits  7-4:   CD5-CD2  = (type >> 2) << 4
+;   bits  1-0:   A15-A14  = (addr >> 14) & 3
+;
+; Example: write to VRAM $C000 (Plane A base):
+;   vdpCmd $C000, VDP_TYPE_VRAM_WRITE
+;   → $40000003  (same as VDP_CMD_VRAM_WRITE_PLANE_A)
+;
+; Named constants for common addresses exist in constants.asm
+; (VDP_CMD_VRAM_WRITE_PLANE_A, etc.).  Use this macro for
+; addresses not covered by those constants, or for new code.
+VDP_TYPE_VRAM_WRITE  = $01
+VDP_TYPE_VRAM_READ   = $00
+VDP_TYPE_CRAM_WRITE  = $03
+VDP_TYPE_CRAM_READ   = $08
+VDP_TYPE_VSRAM_WRITE = $05
+VDP_TYPE_VSRAM_READ  = $04
+VDP_TYPE_VRAM_DMA    = $21
+
+vdpCmd macro addr,type
+    dc.l    (((type)&3)<<30) | (((addr)&$3FFF)<<16) | ((((type)>>2)&$F)<<4) | (((addr)>>14)&3)
+    ENDM
+
+
 ; One 16-byte entry in BattleSpriteDMACommands (battledata.asm).
 ; Consumed by ExecuteVdpDmaTransfer (battle_gfx.asm) which reads
 ; three longwords + one word as VDP control port writes, then
