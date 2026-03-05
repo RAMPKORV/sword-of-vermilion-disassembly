@@ -845,3 +845,29 @@ InterruptDisable macro
 InterruptEnable macro
     ANDI    #$F8FF, SR
     ENDM
+
+; ============================================================
+; RomAddrMask Macro
+; ============================================================
+; Mask a 32-bit register to a 24-bit ROM address by clearing the
+; high byte.  The Genesis 68000 has a 24-bit address bus; ROM
+; pointers stored as longwords must be masked before use as
+; effective addresses.
+;
+; The pattern ANDI.l #ROM_ADDRESS_MASK, Dn appears 9+ times across
+; items.asm, npc.asm, and player.asm to strip the high byte from a
+; Player_kims value or other 32-bit value before address arithmetic.
+;
+; reg: any data register (D0–D7)
+;
+; Usage:
+;   MOVE.l  Player_kims.w, D1
+;   RomAddrMask D1          ; clear high byte, keep 24-bit value
+;
+; Expands to:
+;   ANDI.l  #ROM_ADDRESS_MASK, D1
+; which is byte-identical to the explicit ANDI.l #$00FFFFFF, D1 form.
+;
+RomAddrMask macro reg
+    ANDI.l  #ROM_ADDRESS_MASK, \reg
+    ENDM
