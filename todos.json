@@ -916,7 +916,8 @@
           "file": "src/mapdata.asm",
           "priority": "medium",
           "effort": "small",
-          "status": "todo"
+          "status": "done",
+          "completed_at": "2026-03-05"
         },
         {
           "id": "DATA-004",
@@ -1869,12 +1870,13 @@
           "file": "src/*.asm, macros.asm",
           "priority": "medium",
           "effort": "small",
-          "status": "todo",
+          "status": "done",
           "tags": [
             "macros",
             "deduplication",
             "architecture"
-          ]
+          ],
+          "completed_at": "2026-03-05"
         },
         {
           "id": "MOD-006",

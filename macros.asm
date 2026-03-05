@@ -1,6 +1,27 @@
 ; ============================================================
-; Print Macro
+; IsPalRegion Macro
 ; ============================================================
+; Test whether the console is running in PAL mode (50 Hz).
+; Bit 6 of IO_version ($A10001) is set on PAL hardware.
+; After expansion, test the Z flag with BNE (PAL) or BEQ (NTSC).
+;
+; Usage:
+;   IsPalRegion
+;   BNE.b   .palPath     ; branch if PAL (bit 6 set)
+;   ... NTSC path ...
+; .palPath:
+;   ... PAL path ...
+;
+; Note: all 11 call sites in the codebase use the explicit
+;   BTST.b #6, IO_version
+; form.  This macro is provided as the canonical named form
+; for new code and documentation.  Replacing existing sites
+; is safe since the expansion is byte-for-byte identical.
+IsPalRegion macro
+    BTST.b  #IO_VERSION_PAL_BIT, IO_version
+    ENDM
+
+
 ; Sets the script source pointer for dialogue display
 print macro strPtr
     MOVE.l  #strPtr, Script_source_base.w

@@ -25,6 +25,7 @@ IO_ctrl_port_2      = $A1000B   ; Controller 2 control port
 IO_ctrl_expansion   = $A1000D   ; Expansion port control
 IO_VERSION_REGION_MASK_W = $0F00 ; Mask for region bits when IO_version read as word ($A10000)
 IO_VERSION_REGION_MASK_B = $0F   ; Mask for region/version nibble when IO_version read as byte
+IO_VERSION_PAL_BIT       = 6     ; Bit 6 of IO_version: set = PAL (50 Hz), clear = NTSC (60 Hz)
 IO_init_status_w    = $A1000C   ; I/O initialization status (word check)
 
 ; TMSS (Trademark Security System)
