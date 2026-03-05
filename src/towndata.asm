@@ -97,7 +97,7 @@ ChestReward_Display_Loop:
 ; Input:  A0 = pointer to chest animation tile byte stream
 ; Scratch: D0, D5-D7; modifies VDP_control_port and VDP_data_port
 WriteChestAnimationToVRAM:
-	MOVE.l	#$67100003, D5
+	MOVE.l	#VDP_CMD_VRAM_WRITE_E710, D5
 	ORI	#$0700, SR
 	MOVE.w	#5, D7
 WriteChestAnimationToVRAM_Done:
@@ -174,21 +174,31 @@ CheckBlockedDoor_NextEntry_Loop:
 ; $16   $0B   $0D   key $0111  (Parma dungeon north gate)
 ; $28   $02   $05   key $0112  (Parma dungeon inner gate)
 ; $23   $03   $0D   key $0113  (Deepdale dungeon)
-; $20   $0C   $0E   key $0119  (Stow dungeon)
-; $20   $03   $03   key $0116  (Stow dungeon alt)
-; $20   $0B   $09   key $0117  (Stow dungeon alt2)
-; $20   $01   $0F   key $0118  (Stow dungeon alt3)
+; $20   $0C   $0E   key $0119  (Stow dungeon main gate)
+; $20   $03   $03   key $0116  (Stow dungeon alt gate 1)
+; $20   $0B   $09   key $0117  (Stow dungeon alt gate 2)
+; $20   $01   $0F   key $0118  (Stow dungeon alt gate 3)
 ; $22   $01   $05   key $0116  (Carthahena dungeon)
-; $21   $01   $08   key $0117  (Malaga dungeon)
-; $20   $03   $0B   key $0118  (Malaga dungeon alt)
+; $21   $01   $08   key $0117  (Malaga dungeon main gate)
+; $20   $03   $0B   key $0118  (Stow dungeon alt gate 4)
 ; $2A   $07   $0D   key $001A  (Excalabria dungeon)
 ; $2B   $0A   $0A   key $0025  (Tsarkon fortress)
 ; $FFFF = end of table
 LockedDoorDataTable:
-	dc.b	$00, $16, $00, $0B, $00, $0D, $01, $11, $00, $28, $00, $02, $00, $05, $01, $12, $00, $23, $00, $03, $00, $0D, $01, $13, $00, $20, $00, $0C, $00, $0E, $01, $19 
-	dc.b	$00, $20, $00, $03, $00, $03, $01, $16, $00, $20, $00, $0B, $00, $09, $01, $17, $00, $20, $00, $01, $00, $0F, $01, $18, $00, $22, $00, $01, $00, $05, $01, $16 
-	dc.b	$00, $21, $00, $01, $00, $08, $01, $17, $00, $20, $00, $03, $00, $0B, $01, $18, $00, $2A, $00, $07, $00, $0D, $00, $1A, $00, $2B, $00, $0A, $00, $0A, $00, $25 
-	dc.b	$FF, $FF 
+	; room_id(w)            tile_x(w)  tile_y(w)  key_item_id(w)
+	dc.w  CAVE_ROOM_PARMA_NORTH,  $000B, $000D, $0100|ITEM_WHITE_KEY   ; Parma dungeon north gate
+	dc.w  CAVE_ROOM_PARMA_INNER,  $0002, $0005, $0100|ITEM_RED_KEY     ; Parma dungeon inner gate
+	dc.w  CAVE_ROOM_DEEPDALE,     $0003, $000D, $0100|ITEM_BLUE_KEY    ; Deepdale dungeon
+	dc.w  CAVE_ROOM_STOW,         $000C, $000E, $0100|ITEM_THULE_KEY   ; Stow dungeon main gate
+	dc.w  CAVE_ROOM_STOW,         $0003, $0003, $0100|ITEM_BRONZE_KEY  ; Stow dungeon alt gate 1
+	dc.w  CAVE_ROOM_STOW,         $000B, $0009, $0100|ITEM_SILVER_KEY  ; Stow dungeon alt gate 2
+	dc.w  CAVE_ROOM_STOW,         $0001, $000F, $0100|ITEM_GOLD_KEY    ; Stow dungeon alt gate 3
+	dc.w  CAVE_ROOM_CARTHAHENA,   $0001, $0005, $0100|ITEM_BRONZE_KEY  ; Carthahena dungeon
+	dc.w  CAVE_ROOM_MALAGA,       $0001, $0008, $0100|ITEM_SILVER_KEY  ; Malaga dungeon main gate
+	dc.w  CAVE_ROOM_STOW,         $0003, $000B, $0100|ITEM_GOLD_KEY    ; Stow dungeon alt gate 4
+	dc.w  CAVE_ROOM_EXCALABRIA,   $0007, $000D, ITEM_SECRET_KEY        ; Excalabria dungeon
+	dc.w  CAVE_ROOM_TSARKON,      $000A, $000A, ITEM_DUNGEON_KEY       ; Tsarkon fortress
+	dc.w  $FFFF                                                        ; end of table
 ; ======================================================================
 ; Dialog Selection State Machine
 ; ======================================================================

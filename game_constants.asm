@@ -1751,6 +1751,23 @@ TOWN_HASTINGS2      = $0E
 TOWN_CARTHAHENA     = $0F
 
 ; ============================================================
+; Cave/Dungeon Room ID Constants
+; ============================================================
+; Values stored in Current_cave_room ($FFFFC556).
+; These are the room IDs matched by CheckIfDoorIsLocked.
+; Each dungeon has one room ID; some dungeons (Stow) reuse the
+; same room ID for multiple doors.
+;
+CAVE_ROOM_PARMA_NORTH   = $16   ; Parma dungeon north level (outer gate)
+CAVE_ROOM_PARMA_INNER   = $28   ; Parma dungeon inner level (inner gate)
+CAVE_ROOM_DEEPDALE      = $23   ; Deepdale dungeon
+CAVE_ROOM_STOW          = $20   ; Stow dungeon (4 doors share this room ID)
+CAVE_ROOM_CARTHAHENA    = $22   ; Carthahena dungeon
+CAVE_ROOM_MALAGA        = $21   ; Malaga dungeon (2 doors: main + alt)
+CAVE_ROOM_EXCALABRIA    = $2A   ; Excalabria dungeon
+CAVE_ROOM_TSARKON       = $2B   ; Tsarkon fortress
+
+; ============================================================
 ; Item ID Constants
 ; ============================================================
 ; Item type flags and item IDs for the Possessed_items array.
