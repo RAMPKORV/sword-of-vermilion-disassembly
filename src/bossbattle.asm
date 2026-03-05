@@ -29,14 +29,14 @@ CheckCaveRoomMapRevealed_Loop:
 
 LoadMapSector_FillDefault:
 	MOVEQ	#$F, D7
-LoadMapSector_FillDefault_Done:
+LoadMapSector_FillDefault_OuterLoop:
 	LEA	(A2), A3
 	MOVEQ	#3, D6
-LoadMapSector_FillDefault_Done2:
+LoadMapSector_FillDefault_InnerLoop:
 	MOVE.l	#$01010101, (A3)+ ; Fill map data with trees
-	DBF	D6, LoadMapSector_FillDefault_Done2
+	DBF	D6, LoadMapSector_FillDefault_InnerLoop
 	LEA	$30(A2), A2
-	DBF	D7, LoadMapSector_FillDefault_Done
+	DBF	D7, LoadMapSector_FillDefault_OuterLoop
 	RTS
 
 RenderAreaMap:
@@ -49,32 +49,32 @@ RenderAreaMap:
 	LEA	WallTilemap_NearSide, A2
 RenderAreaMap_Loop:
 	MOVEQ	#$F, D7
-RenderAreaMap_Loop_Done:
+RenderAreaMap_RowLoop:
 	LEA	(A0), A1
 	MOVE.l	D5, VDP_control_port
 	MOVEQ	#$F, D6
-RenderAreaMap_Loop_Done2:
+RenderAreaMap_ColLoop:
 	CLR.w	D0
 	MOVE.b	(A1)+, D0
-	BLT.b	RenderAreaMap_Loop2
+	BLT.b	RenderAreaMap_CaveEntrance
 	CMPI.b	#OVERWORLD_TILE_CAVE_MIN, D0
 	BLT.b	RenderAreaMap_WriteTile
 	MOVE.b	#FP_RENDER_DOOR, D0
 	BRA.b	RenderAreaMap_WriteTile
-RenderAreaMap_Loop2:
+RenderAreaMap_CaveEntrance:
 	CMPI.b	#OVERWORLD_TILE_UPPER_CAVE_MIN, D0
-	BLT.b	RenderAreaMap_Loop3
+	BLT.b	RenderAreaMap_UpperCaveEntrance
 	MOVE.b	#FP_RENDER_DOOR_UPPER, D0
 	BRA.b	RenderAreaMap_WriteTile
-RenderAreaMap_Loop3:
+RenderAreaMap_UpperCaveEntrance:
 	CLR.w	D0
 RenderAreaMap_WriteTile:
 	ADD.w	D0, D0
 	MOVE.w	(A2,D0.w), VDP_data_port
-	DBF	D6, RenderAreaMap_Loop_Done2
+	DBF	D6, RenderAreaMap_ColLoop
 	LEA	$30(A0), A0
 	ADDI.l	#$00800000, D5
-	DBF	D7, RenderAreaMap_Loop_Done
+	DBF	D7, RenderAreaMap_RowLoop
 	ANDI	#$F8FF, SR
 	RTS
 
@@ -92,15 +92,15 @@ RenderCaveDarknessTilemap:
 	ORI	#$0700, SR
 	MOVE.l	#$60AE0003, D5
 	MOVEQ	#$0000000F, D7
-RenderCaveDarknessTilemap_Done:
+RenderCaveDarknessTilemap_RowLoop:
 	MOVE.l	D5, VDP_control_port
 	MOVEQ	#$0000000F, D6
-RenderCaveDarknessTilemap_Done2:
+RenderCaveDarknessTilemap_ColLoop:
 	MOVE.w	D4, VDP_data_port
-	DBF	D6, RenderCaveDarknessTilemap_Done2
+	DBF	D6, RenderCaveDarknessTilemap_ColLoop
 	LEA	$30(A0), A0
 	ADDI.l	#$00800000, D5
-	DBF	D7, RenderCaveDarknessTilemap_Done
+	DBF	D7, RenderCaveDarknessTilemap_RowLoop
 	ANDI	#$F8FF, SR
 	TST.b	Area_map_revealed.w
 	BNE.w	RenderCaveWallTiles_Return
@@ -124,14 +124,14 @@ RenderCaveDarknessTilemap_Loop:
 	SUBI.l	#$00820000, D5
 	ORI	#$0700, SR
 	MOVEQ	#2, D7
-RenderCaveDarknessTilemap_Loop_Done:
+RenderCaveDarknessTilemap_RowLoopB:
 	MOVE.l	D5, VDP_control_port
 	MOVEQ	#2, D6
-RenderCaveDarknessTilemap_Loop_Done2:
+RenderCaveDarknessTilemap_ColLoopB:
 	MOVE.w	(A0)+, VDP_data_port
-	DBF	D6, RenderCaveDarknessTilemap_Loop_Done2
+	DBF	D6, RenderCaveDarknessTilemap_ColLoopB
 	ADDI.l	#$00800000, D5
-	DBF	D7, RenderCaveDarknessTilemap_Loop_Done
+	DBF	D7, RenderCaveDarknessTilemap_RowLoopB
 	ANDI	#$F8FF, SR
 RenderCaveWallTiles_Return:
 	RTS
@@ -318,23 +318,23 @@ BossBattlePlayerTick_Intro:
 	ADDQ.b	#1, obj_move_counter(A5)
 	MOVE.b	obj_move_counter(A5), D0
 	BTST.b	#6, IO_version
-	BNE.w	BossBattlePlayerTick_Intro_Loop2
+	BNE.w	BossBattlePlayerTick_Intro_PAL
 	ANDI.w	#$0060, D0
 	ASR.w	#5, D0
-	BRA.b	BossBattlePlayerTick_Intro_Loop3
-BossBattlePlayerTick_Intro_Loop2:
+	BRA.b	BossBattlePlayerTick_Intro_CheckFrame
+BossBattlePlayerTick_Intro_PAL:
 	ANDI.w	#$0030, D0	
 	ASR.w	#4, D0	
-BossBattlePlayerTick_Intro_Loop3:
+BossBattlePlayerTick_Intro_CheckFrame:
 	CMPI.w	#2, D0
-	BLT.b	BossBattlePlayerTick_Intro_Loop4
+	BLT.b	BossBattlePlayerTick_Intro_DisplayFrame
 	CLR.b	obj_move_counter(A5)
 	MOVE.l	#BossBattlePlayerTick_Active, obj_tick_fn(A5)
 	MOVE.b	#FLAG_TRUE, Battle_active_flag.w
 	BRA.w	BossBattle_MoveDone
 BossBattlePlayerTick_Intro_Loop:
 	CLR.w	D0
-BossBattlePlayerTick_Intro_Loop4:
+BossBattlePlayerTick_Intro_DisplayFrame:
 	MOVEA.l	Battle_entity_slot_1_ptr.w, A6
 	LEA	BossBattleIntroFrameData, A0
 	MOVE.b	(A0,D0.w), obj_sprite_frame(A6)
@@ -370,13 +370,13 @@ BossBattle_AttackCheck_Loop:
 	ANDI.w	#$000F, D0
 	BEQ.w	BossBattle_PlayerIdle
 	BTST.l	#1, D0
-	BNE.b	BossBattle_AttackCheck_Loop2
+	BNE.b	BossBattle_AttackLeft
 	BTST.l	#2, D0
-	BNE.b	BossBattle_AttackCheck_Loop3
+	BNE.b	BossBattle_MoveLeft
 	BTST.l	#3, D0
-	BNE.w	BossBattle_AttackCheck_Loop4
+	BNE.w	BossBattle_MoveRight
 	BRA.w	BossBattle_PlayerIdle
-BossBattle_AttackCheck_Loop2:
+BossBattle_AttackLeft:
 	MOVE.w	#$0027, obj_hitbox_half_h(A5)
 	MOVEA.l	Battle_entity_slot_1_ptr.w, A6
 	MOVEA.l	Battle_entity_slot_2_ptr.w, A4
@@ -384,19 +384,19 @@ BossBattle_AttackCheck_Loop2:
 	MOVE.b	#$0C, obj_sprite_frame(A6)
 	MOVE.b	#5, obj_sprite_frame(A4)
 	BRA.w	BossBattle_PostAttack_ClampAndDisplay
-BossBattle_AttackCheck_Loop3:
+BossBattle_MoveLeft:
 	MOVE.l	obj_pos_x_fixed(A5), D0
 	ASL.l	#7, D0
 	SUB.l	D0, obj_world_x(A5)
 	MOVE.w	#DIRECTION_LEFT, Player_direction.w
-	LEA	BossBattle_AttackCheck_Loop3_Data, A0
+	LEA	BossBattle_MoveLeft_Data, A0
 	BRA.w	BossBattle_ApplyMovement
-BossBattle_AttackCheck_Loop4:
+BossBattle_MoveRight:
 	MOVE.l	obj_pos_x_fixed(A5), D0
 	ASL.l	#7, D0
 	ADD.l	D0, obj_world_x(A5)
 	MOVE.w	#DIRECTION_DOWN, Player_direction.w
-	LEA	BossBattle_AttackCheck_Loop4_Data, A0
+	LEA	BossBattle_MoveRight_Data, A0
 	BRA.w	BossBattle_ApplyMovement
 BossBattle_PlayerIdle:
 	MOVE.w	#$0030, obj_hitbox_half_h(A5)
@@ -414,13 +414,13 @@ BossBattle_ApplyMovement:
 	ADDQ.b	#1, obj_move_counter(A5)
 	MOVE.b	obj_move_counter(A5), D0
 	BTST.b	#6, IO_version
-	BNE.b	BossBattle_ApplyMovement_Loop
+	BNE.b	BossBattle_ApplyMovement_PAL
 	ANDI.w	#$000C, D0
-	BRA.b	BossBattle_ApplyMovement_Loop2
-BossBattle_ApplyMovement_Loop:
+	BRA.b	BossBattle_ApplyMovement_DisplayFrame
+BossBattle_ApplyMovement_PAL:
 	ANDI.w	#6, D0	
 	ASL.w	#1, D0	
-BossBattle_ApplyMovement_Loop2:
+BossBattle_ApplyMovement_DisplayFrame:
 	MOVEA.l	Battle_entity_slot_1_ptr.w, A6
 	MOVEA.l	Battle_entity_slot_2_ptr.w, A4
 	MOVE.b	(A0,D0.w), obj_sprite_frame(A5)
@@ -756,7 +756,7 @@ NpcInit_ClearActiveFlag_Loop:
 	JSR	(A0)
 	MOVE.w	Npc_count.w, D7
 	SUBQ.w	#1, D7
-	BLT.b	NpcInit_ClearActiveFlag_Loop2
+	BLT.b	NpcInit_ClearActiveFlag_Done
 	MOVEA.l	Enemy_list_ptr.w, A6
 NpcInit_ClearActiveFlag_Loop_Done:
 	MOVE.l	(A0)+, obj_npc_str_ptr(A6)
@@ -764,7 +764,7 @@ NpcInit_ClearActiveFlag_Loop_Done:
 	MOVE.b	obj_next_offset(A6), D0
 	LEA	(A6,D0.w), A6
 	DBF	D7, NpcInit_ClearActiveFlag_Loop_Done
-NpcInit_ClearActiveFlag_Loop2:
+NpcInit_ClearActiveFlag_Done:
 	RTS
 
 ClearAllNPCSlots:					; unreferenced dead code

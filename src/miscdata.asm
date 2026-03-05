@@ -1427,7 +1427,7 @@ BattleMovement_AttackCheck_Data:
 	dc.b	$1B
 	dc.b	$1B
 	dc.b	$00, $14, $17, $1A, $00 
-BossBattle_AttackCheck_Loop3_Data:
+BossBattle_MoveLeft_Data:
 	dc.b	$0D
 	dc.b	$0D
 	dc.b	$04
@@ -1444,7 +1444,7 @@ BossBattle_AttackCheck_Loop3_Data:
 	dc.b	$0E
 	dc.b	$04
 	dc.b	$00 
-BossBattle_AttackCheck_Loop4_Data:
+BossBattle_MoveRight_Data:
 	dc.b	$00
 	dc.b	$00
 	dc.b	$06
