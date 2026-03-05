@@ -143,18 +143,18 @@ BossBody_AngleReturn:
 	RTS
 	
 BossBodyUpperTilePtrs:
-	dc.l	BossBodyUpperTilePtrs_Gfx_780E4
+	dc.l	BossBodyUpperTilePtrs_Entry00
 	dc.l	SpriteMetaTileTable_780F4
-	dc.l	BossBodyUpperTilePtrs_Gfx_78104
+	dc.l	BossBodyUpperTilePtrs_Entry01
 	dc.l	SpriteMetaTileTable_780F4
 BossBodyLowerTilePtrs:
-	dc.l	BossBodyLowerTilePtrs_Gfx_78114
+	dc.l	BossBodyLowerTilePtrs_Entry00
 	dc.l	SpriteMetaTileTable_78120
-	dc.l	BossBodyLowerTilePtrs_Gfx_7812C
+	dc.l	BossBodyLowerTilePtrs_Entry01
 	dc.l	SpriteMetaTileTable_78120
 BossDirectionTilePtrs:
 	dc.l	SpriteMetaTileTable_7808A
-	dc.l	BossDirectionTilePtrs_Gfx_780A8
+	dc.l	BossDirectionTilePtrs_Entry00
 	dc.l	SpriteMetaTileTable_780C6
 	dc.l	SpriteMetaTileTable_780C6	
 ; ---------------------------------------------------------------------------
@@ -585,7 +585,7 @@ LoadEncounterTypeGraphics:
 	MOVEA.l	(A6,D1.w), A6
 	MOVE.l	A6, Current_encounter_gfx_ptr.w
 	MOVEA.l	obj_active(A6), A4
-	MOVEA.l	$4(A6), A3
+	MOVEA.l	eagfx_main_gfx(A6), A3
 	MOVE.w	#$000F, D5
 	BSR.w	LoadMultipleTilesFromTable
 	LEA	Enemy_gfx_buffer.w, A2
@@ -615,7 +615,7 @@ LoadTalkerGraphics:
 	LEA	Tile_gfx_buffer.w, A2
 	MOVEA.l	Talker_gfx_descriptor_ptr.w, A6
 	MOVEA.l	obj_active(A6), A4
-	MOVEA.l	$4(A6), A3
+	MOVEA.l	eagfx_main_gfx(A6), A3
 	MOVE.w	obj_tile_index(A6), D5
 	BSR.w	LoadMultipleTilesFromTable
 	LEA	Enemy_gfx_buffer.w, A2
@@ -1840,14 +1840,14 @@ LoadMenuTileGfxSet3_Done:
 	LEA	Tile_gfx_buffer.w, A2
 	LEA	LoadMenuTileGfxSet3_Done_Data, A0
 	MOVE.w	#$001A, D5
-LoadMenuTileGfxSet3_Done2:
+LoadMenuTileGfxSet3_Set2Loop:
 	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
-	DBF	D5, LoadMenuTileGfxSet3_Done2
+	DBF	D5, LoadMenuTileGfxSet3_Set2Loop
 	LEA	DmaCmd_MenuMiscTilesA, A0
 	BSR.w	ExecuteVdpDmaFromRam
 	LEA	Tile_gfx_buffer.w, A2
-	LEA	LoadMenuTileGfxSet3_Done2_Data, A0
+	LEA	LoadMenuTileGfxSet3_Set2Data, A0
 	MOVE.w	#7, D5
 LoadMenuTileGfxSet3_Done3:
 	BSR.w	DecompressTileGraphics
@@ -1884,13 +1884,13 @@ LoadTitleScreenGraphics_Done:
 	LEA	LoadTitleScreenGraphics_Done_Data, A0
 	LEA	Tile_gfx_buffer.w, A2
 	MOVE.w	#$006C, D5
-LoadTitleScreenGraphics_Done2:
+LoadTitleScreenGraphics_Set2Loop:
 	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
-	DBF	D5, LoadTitleScreenGraphics_Done2
+	DBF	D5, LoadTitleScreenGraphics_Set2Loop
 	LEA	DmaCmd_TitleScreenTilesB, A0
 	BSR.w	ExecuteVdpDmaFromRam
-	LEA	LoadTitleScreenGraphics_Done2_Data, A0
+	LEA	LoadTitleScreenGraphics_Set2Data, A0
 	LEA	Tile_gfx_buffer.w, A2
 	MOVE.w	#$0062, D5
 LoadTitleScreenGraphics_Done3:

@@ -897,7 +897,9 @@
           "priority": "medium",
           "effort": "very_large",
           "note": "Do in batches by asset type: player sprites, enemy sprites, UI tiles, etc.",
-          "status": "todo"
+          "status": "done",
+          "notes": "Wrote tools/rename_gfx_labels.js; replaced all 3,610 _Gfx_XXXXXX label definitions and 10,222 references across 7 files with sequential _Entry00, _Entry01, … suffixes grouped by table root. Build verified bit-perfect.",
+          "completed_at": "2026-03-05"
         },
         {
           "id": "DATA-002",

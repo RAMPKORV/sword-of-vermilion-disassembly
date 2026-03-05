@@ -1558,11 +1558,11 @@ TownRoomTilemapPlaneBPtrs:
 	dc.l	LoadBuildingTilemap_34_PlaneB
 	dc.l	LoadBuildingTilemap_35_PlaneB
 TownTilesetPtrs:
-	dc.l	TownTilesetPtrs_Gfx_8B38A
-	dc.l	TownTilesetPtrs_Gfx_8DAE0
-	dc.l	TownTilesetPtrs_Gfx_8FEE6
+	dc.l	TownTilesetPtrs_Entry00
+	dc.l	TownTilesetPtrs_Entry01
+	dc.l	TownTilesetPtrs_Entry02
 	dc.l	NULL_PTR 
-	dc.l	TownTilesetPtrs_Gfx_9239A
+	dc.l	TownTilesetPtrs_Entry03
 DialogueChoiceNoStrPtrs:
 	dc.l	NoChoiceStr
 	dc.l	RingOfSkyGiftStr
@@ -1702,18 +1702,18 @@ DmaCmd_BattleTiles:
 	dc.l	$977F7980	
 	dc.l	$00810000	
 TerrainTilemapPtrs:
-	dc.l	TerrainTilemapPtrs_Gfx_68CA2
+	dc.l	TerrainTilemapPtrs_Entry00
 	dc.l	SpriteAnimFrameTable_69592
 	dc.l	SpriteAnimFrameTable_69592
-	dc.l	TerrainTilemapPtrs_Gfx_6E028
+	dc.l	TerrainTilemapPtrs_Entry01
 TerrainTilemapMetadata:
-	dc.l	TerrainTilemapMetadata_Gfx_68E5A
+	dc.l	TerrainTilemapMetadata_Entry00
 	dc.l	$00430049	
 	dc.l	SpriteGfxData_6974A
 	dc.l	$0045004A	
 	dc.l	SpriteGfxData_6974A
 	dc.l	$0045004B	
-	dc.l	TerrainTilemapMetadata_Gfx_6E1E0
+	dc.l	TerrainTilemapMetadata_Entry01
 	dc.l	$0039005E	
 DmaCmd_BattleGroundGfx:
 	dc.l	$94069350	
@@ -1761,43 +1761,43 @@ DmaCmd_CaveTiles:
 	dc.l	$977F6E00	
 	dc.l	$00830000	
 TalkerGfxDesc_MapGiver:
-	talkerGfxDesc TalkerGfxDesc_MapGiver_Gfx_51E44,TalkerGfxDesc_MapGiver_Gfx_51534,$0011
+	talkerGfxDesc TalkerGfxDesc_MapGiver_Entry01,TalkerGfxDesc_MapGiver_Entry00,$0011
 TalkerGfxDesc_StowGirl:
-	talkerGfxDesc TalkerGfxDesc_StowGirl_Gfx_51E4C,TalkerGfxDesc_StowGirl_Gfx_51544,$0012
+	talkerGfxDesc TalkerGfxDesc_StowGirl_Entry01,TalkerGfxDesc_StowGirl_Entry00,$0012
 TalkerGfxDesc_Bearwulf:
-	talkerGfxDesc TalkerGfxDesc_Bearwulf_Gfx_51E54,TalkerGfxDesc_Bearwulf_Gfx_51554,$0011
+	talkerGfxDesc TalkerGfxDesc_Bearwulf_Entry01,TalkerGfxDesc_Bearwulf_Entry00,$0011
 TalkerGfxDesc_Merchant:
-	talkerGfxDesc TalkerGfxDesc_Merchant_Gfx_51E5C,TalkerGfxDesc_Merchant_Gfx_51564,$0011
+	talkerGfxDesc TalkerGfxDesc_Merchant_Entry01,TalkerGfxDesc_Merchant_Entry00,$0011
 TalkerGfxDesc_GenericNpc:
-	talkerGfxDescPortrait TalkerGfxDesc_GenericNpc_Gfx_51EA4,TalkerGfxDesc_GenericNpc_Gfx_51E94,$0079
+	talkerGfxDescPortrait TalkerGfxDesc_GenericNpc_Entry01,TalkerGfxDesc_GenericNpc_Entry00,$0079
 TalkerGfxDesc_DigotGiver:
-	talkerGfxDescPortrait TalkerGfxDesc_DigotGiver_Gfx_51E8C,TalkerGfxDesc_DigotGiver_Gfx_51E84,$0078
+	talkerGfxDescPortrait TalkerGfxDesc_DigotGiver_Entry01,TalkerGfxDesc_DigotGiver_Entry00,$0078
 TalkerGfxDesc_TruffleGiver:
-	talkerGfxDescPortrait TalkerGfxDesc_TruffleGiver_Gfx_51E7C,TalkerGfxDesc_TruffleGiver_Gfx_51E74,$0078
+	talkerGfxDescPortrait TalkerGfxDesc_TruffleGiver_Entry01,TalkerGfxDesc_TruffleGiver_Entry00,$0078
 TalkerGfxDesc_ImposterGuard:
-	talkerGfxDesc TalkerGfxDesc_ImposterGuard_Gfx_51E64,TalkerGfxDesc_ImposterGuard_Gfx_51574,$00C3
+	talkerGfxDesc TalkerGfxDesc_ImposterGuard_Entry01,TalkerGfxDesc_ImposterGuard_Entry00,$00C3
 TalkerGfxDesc_Tsarkon:
-	dc.l	TalkerGfxDesc_Tsarkon_Gfx_51E6C
+	dc.l	TalkerGfxDesc_Tsarkon_Entry01
 	dc.l	TalkerPortraitTileDataPtrs
 	dc.w	$0007
-	dc.l	TalkerGfxDesc_Tsarkon_Gfx_51584
+	dc.l	TalkerGfxDesc_Tsarkon_Entry00
 	dc.l	TalkerSpriteFrameTable
 	dc.l	$000F0000	
 	dc.l	$FFF00D0F	
 	dc.l	$00AE0042	
 GfxLoadList_OverworldBattle:
-	dc.l	GfxLoadList_OverworldBattle_Gfx_5DD16
-	dc.l	GfxLoadList_OverworldBattle_Gfx_5DD9E
+	dc.l	GfxLoadList_OverworldBattle_Entry00
+	dc.l	GfxLoadList_OverworldBattle_Entry01
 	dc.l	$000B0010	
 GfxLoadList_FirstPerson:
-	dc.l	GfxLoadList_FirstPerson_Gfx_81782
+	dc.l	GfxLoadList_FirstPerson_Entry00
 	dc.l	SpriteFramePointerTable_81E28
 	dc.l	$00470011	
-	dc.l	GfxLoadList_FirstPerson_Gfx_817CA
+	dc.l	GfxLoadList_FirstPerson_Entry01
 	dc.l	SpriteFramePointerTable_81E28
 	dc.l	$002F0012	
-	dc.l	GfxLoadList_FirstPerson_Gfx_81F24
-	dc.l	GfxLoadList_FirstPerson_Gfx_82004
+	dc.l	GfxLoadList_FirstPerson_Entry02
+	dc.l	GfxLoadList_FirstPerson_Entry03
 	dc.l	$000B0013	
 	dc.l	SpriteMetaTileTable_83108
 	dc.l	FPDungeonSpriteFrameTable
@@ -1808,23 +1808,23 @@ GfxLoadList_FirstPerson:
 	dc.l	SpriteLayout_83F24
 	dc.l	FPEnemySpriteFrameTable_15
 	dc.l	$000B0016	
-	dc.l	GfxLoadList_FirstPerson_Gfx_84DD0
+	dc.l	GfxLoadList_FirstPerson_Entry04
 	dc.l	SpriteFramePointerTable_855C0
 	dc.l	$00470017	
-	dc.l	GfxLoadList_FirstPerson_Gfx_84E18
+	dc.l	GfxLoadList_FirstPerson_Entry05
 	dc.l	SpriteFramePointerTable_855C0
 	dc.l	$002F0018	
-	dc.l	GfxLoadList_FirstPerson_Gfx_856F8
-	dc.l	GfxLoadList_FirstPerson_Gfx_857EC
+	dc.l	GfxLoadList_FirstPerson_Entry06
+	dc.l	GfxLoadList_FirstPerson_Entry07
 	dc.l	$000B0019	
-	dc.l	GfxLoadList_FirstPerson_Gfx_86496
+	dc.l	GfxLoadList_FirstPerson_Entry08
 	dc.l	SpriteFramePointerTable_86CB8
 	dc.l	$0047001A	
-	dc.l	GfxLoadList_FirstPerson_Gfx_864DE
+	dc.l	GfxLoadList_FirstPerson_Entry09
 	dc.l	SpriteFramePointerTable_86CB8
 	dc.l	$002F001B	
-	dc.l	GfxLoadList_FirstPerson_Gfx_86DEC
-	dc.l	GfxLoadList_FirstPerson_Gfx_86F12
+	dc.l	GfxLoadList_FirstPerson_Entry10
+	dc.l	GfxLoadList_FirstPerson_Entry11
 	dc.b	$00, $0B, $FF, $FF 
 GfxLoadList_FirstPersonBattle:
 	dc.b	$00, $1C 
@@ -1837,42 +1837,42 @@ GfxLoadList_FirstPersonBattle:
 	dc.l	SpriteLayout_83F24
 	dc.l	FPEnemySpriteFrameTable_15
 	dc.l	$000B001F	
-	dc.l	GfxLoadList_FirstPersonBattle_Gfx_83180
+	dc.l	GfxLoadList_FirstPersonBattle_Entry00
 	dc.l	FPDungeonSpriteFrameTable
 	dc.l	$00470020	
-	dc.l	GfxLoadList_FirstPersonBattle_Gfx_831C8
+	dc.l	GfxLoadList_FirstPersonBattle_Entry01
 	dc.l	FPDungeonSpriteFrameTable
 	dc.l	$002F0021	
-	dc.l	GfxLoadList_FirstPersonBattle_Gfx_83F30
+	dc.l	GfxLoadList_FirstPersonBattle_Entry02
 	dc.l	FPEnemySpriteFrameTable_15
 	dc.l	$000B0022	
-	dc.l	GfxLoadList_FirstPersonBattle_Gfx_87E18
+	dc.l	GfxLoadList_FirstPersonBattle_Entry03
 	dc.l	SpriteFramePointerTable_880F8
 	dc.l	$00470023	
-	dc.l	GfxLoadList_FirstPersonBattle_Gfx_87E60
+	dc.l	GfxLoadList_FirstPersonBattle_Entry04
 	dc.l	SpriteFramePointerTable_880F8
 	dc.l	$002F0024	
-	dc.l	GfxLoadList_FirstPersonBattle_Gfx_88188
-	dc.l	GfxLoadList_FirstPersonBattle_Gfx_88202
+	dc.l	GfxLoadList_FirstPersonBattle_Entry05
+	dc.l	GfxLoadList_FirstPersonBattle_Entry06
 	dc.l	$000B0025	
-	dc.l	GfxLoadList_FirstPersonBattle_Gfx_88226
+	dc.l	GfxLoadList_FirstPersonBattle_Entry07
 	dc.l	SpriteFramePointerTable_88528
 	dc.l	$00470026	
-	dc.l	GfxLoadList_FirstPersonBattle_Gfx_8826E
+	dc.l	GfxLoadList_FirstPersonBattle_Entry08
 	dc.l	SpriteFramePointerTable_88528
 	dc.l	$002F0027	
-	dc.l	GfxLoadList_FirstPersonBattle_Gfx_885B0
-	dc.l	GfxLoadList_FirstPersonBattle_Gfx_88622
+	dc.l	GfxLoadList_FirstPersonBattle_Entry09
+	dc.l	GfxLoadList_FirstPersonBattle_Entry10
 	dc.b	$00, $0B, $FF, $FF 
 GfxLoadList_IntroSegalogo:
 	dc.b	$00, $0D 
-	dc.l	GfxLoadList_IntroSegalogo_Gfx_628CC
-	dc.l	GfxLoadList_IntroSegalogo_Gfx_62900
+	dc.l	GfxLoadList_IntroSegalogo_Entry00
+	dc.l	GfxLoadList_IntroSegalogo_Entry01
 	dc.b	$00, $03, $FF, $FF 
 GfxLoadList_IntroTitle:
 	dc.b	$00, $0E 
-	dc.l	GfxLoadList_IntroTitle_Gfx_62910
-	dc.l	GfxLoadList_IntroTitle_Gfx_62A08
+	dc.l	GfxLoadList_IntroTitle_Entry00
+	dc.l	GfxLoadList_IntroTitle_Entry01
 	dc.b	$00, $07, $FF, $FF 
 GfxLoadList_Town:
 	dc.b	$00, $00 
@@ -1900,13 +1900,13 @@ GfxLoadList_Town:
 	dc.l	SpriteLayout_4E582
 	dc.l	SpriteFramePointerTable_4E890
 	dc.l	$002F0008	
-	dc.l	GfxLoadList_Town_Gfx_4D2DA
-	dc.l	GfxLoadList_Town_Gfx_4D5AA
+	dc.l	GfxLoadList_Town_Entry00
+	dc.l	GfxLoadList_Town_Entry01
 	dc.l	$003B0009	
-	dc.l	GfxLoadList_Town_Gfx_4D62E
-	dc.l	GfxLoadList_Town_Gfx_4D92A
+	dc.l	GfxLoadList_Town_Entry02
+	dc.l	GfxLoadList_Town_Entry03
 	dc.l	$003B000C	
-	dc.l	GfxLoadList_Town_Gfx_50C86
+	dc.l	GfxLoadList_Town_Entry04
 	dc.l	SpriteFramePointerTable_51414
 	dc.b	$00, $35, $FF, $FF 
 GfxLoadList_TownBattle:
@@ -1935,26 +1935,26 @@ GfxLoadList_TownBattle:
 	dc.l	SpriteLayout_4E582
 	dc.l	SpriteFramePointerTable_4E890
 	dc.l	$002F000A	
-	dc.l	GfxLoadList_TownBattle_Gfx_4E2DC
-	dc.l	GfxLoadList_TownBattle_Gfx_4E526
+	dc.l	GfxLoadList_TownBattle_Entry00
+	dc.l	GfxLoadList_TownBattle_Entry01
 	dc.l	$0017000B	
-	dc.l	GfxLoadList_TownBattle_Gfx_500B6
-	dc.l	GfxLoadList_TownBattle_Gfx_5024C
+	dc.l	GfxLoadList_TownBattle_Entry02
+	dc.l	GfxLoadList_TownBattle_Entry03
 	dc.l	$00170030	
-	dc.l	GfxLoadList_TownBattle_Gfx_50294
-	dc.l	GfxLoadList_TownBattle_Gfx_50452
+	dc.l	GfxLoadList_TownBattle_Entry04
+	dc.l	GfxLoadList_TownBattle_Entry05
 	dc.l	$00170031	
-	dc.l	GfxLoadList_TownBattle_Gfx_5049A
-	dc.l	GfxLoadList_TownBattle_Gfx_50620
+	dc.l	GfxLoadList_TownBattle_Entry06
+	dc.l	GfxLoadList_TownBattle_Entry07
 	dc.l	$00170032	
-	dc.l	GfxLoadList_TownBattle_Gfx_50A6C
-	dc.l	GfxLoadList_TownBattle_Gfx_50C3A
+	dc.l	GfxLoadList_TownBattle_Entry12
+	dc.l	GfxLoadList_TownBattle_Entry13
 	dc.l	$00170033	
-	dc.l	GfxLoadList_TownBattle_Gfx_50660
-	dc.l	GfxLoadList_TownBattle_Gfx_50818
+	dc.l	GfxLoadList_TownBattle_Entry08
+	dc.l	GfxLoadList_TownBattle_Entry09
 	dc.l	$00170034	
-	dc.l	GfxLoadList_TownBattle_Gfx_50860
-	dc.l	GfxLoadList_TownBattle_Gfx_50A20
+	dc.l	GfxLoadList_TownBattle_Entry10
+	dc.l	GfxLoadList_TownBattle_Entry11
 	dc.b	$00, $17, $FF, $FF 
 GfxLoadList_WorldBattle:
 	dc.b	$00, $00 
@@ -1979,22 +1979,22 @@ GfxLoadList_WorldBattle:
 	dc.l	FPEnemyTileLayout_M
 	dc.l	FPEnemyTileLayout_N
 	dc.l	$0053002B	
-	dc.l	GfxLoadList_WorldBattle_Gfx_4FB28
-	dc.l	GfxLoadList_WorldBattle_Gfx_4FFE6
+	dc.l	GfxLoadList_WorldBattle_Entry08
+	dc.l	GfxLoadList_WorldBattle_Entry09
 	dc.l	$003B002C	
-	dc.l	GfxLoadList_WorldBattle_Gfx_4F2AE
-	dc.l	GfxLoadList_WorldBattle_Gfx_4F8A2
+	dc.l	GfxLoadList_WorldBattle_Entry04
+	dc.l	GfxLoadList_WorldBattle_Entry05
 	dc.l	$003B002D	
-	dc.l	GfxLoadList_WorldBattle_Gfx_4F98E
-	dc.l	GfxLoadList_WorldBattle_Gfx_4FAFC
+	dc.l	GfxLoadList_WorldBattle_Entry06
+	dc.l	GfxLoadList_WorldBattle_Entry07
 	dc.l	$000B002E	
-	dc.l	GfxLoadList_WorldBattle_Gfx_4EDFE
-	dc.l	GfxLoadList_WorldBattle_Gfx_4F202
+	dc.l	GfxLoadList_WorldBattle_Entry02
+	dc.l	GfxLoadList_WorldBattle_Entry03
 	dc.l	$002F002F	
-	dc.l	GfxLoadList_WorldBattle_Gfx_4E924
-	dc.l	GfxLoadList_WorldBattle_Gfx_4ED4E
+	dc.l	GfxLoadList_WorldBattle_Entry00
+	dc.l	GfxLoadList_WorldBattle_Entry01
 	dc.l	$002F0044	
-	dc.l	GfxLoadList_WorldBattle_Gfx_50CBC
+	dc.l	GfxLoadList_WorldBattle_Entry10
 	dc.l	SpriteFramePointerTable_51414
 	dc.l	$0017FFFF	
 MagicGfxDataPtrs:
@@ -2015,19 +2015,19 @@ MagicGfxDataPtrs:
 	dc.l	MagicGfxData_HastingsCarthahena	
 	dc.l	MagicGfxData_HastingsCarthahena	
 MagicGfxData_WyclifParma:
-	magicGfxData MagicGfxData_WyclifParma_Gfx_4A8F4,MagicGfxData_WyclifParma_Gfx_4AA82,$001D,$0036
+	magicGfxData MagicGfxData_WyclifParma_Entry00,MagicGfxData_WyclifParma_Entry01,$001D,$0036
 MagicGfxData_DeepdaleStow:
-	magicGfxData MagicGfxData_DeepdaleStow_Gfx_48EFE,MagicGfxData_DeepdaleStow_Gfx_498D0,$00B3,$0073
+	magicGfxData MagicGfxData_DeepdaleStow_Entry00,MagicGfxData_DeepdaleStow_Entry01,$00B3,$0073
 MagicGfxData_Keltwick:
-	magicGfxData MagicGfxData_Keltwick_Gfx_49Ad8,MagicGfxData_Keltwick_Gfx_49E3C,$002F,$0073
+	magicGfxData MagicGfxData_Keltwick_Entry00,MagicGfxData_Keltwick_Entry01,$002F,$0073
 MagicGfxData_Barrow:
 	magicGfxData SpriteLayout_4A77A,SpriteFramePointerTable_4A8B8,$0017,$0076
 MagicGfxData_Tadcaster:
-	magicGfxData MagicGfxData_Tadcaster_Gfx_4A548,MagicGfxData_Tadcaster_Gfx_4A70E,$001F,$0076
+	magicGfxData MagicGfxData_Tadcaster_Entry00,MagicGfxData_Tadcaster_Entry01,$001F,$0076
 MagicGfxData_Helwig:
-	magicGfxData MagicGfxData_Helwig_Gfx_49ECC,MagicGfxData_Helwig_Gfx_4A42C,$0053,$007A
+	magicGfxData MagicGfxData_Helwig_Entry00,MagicGfxData_Helwig_Entry01,$0053,$007A
 MagicGfxData_SwaffhamExcalabria:
-	magicGfxData MagicGfxData_SwaffhamExcalabria_Gfx_4AAD6,MagicGfxData_SwaffhamExcalabria_Gfx_4B1E6,$007F,$0074
+	magicGfxData MagicGfxData_SwaffhamExcalabria_Entry00,MagicGfxData_SwaffhamExcalabria_Entry01,$007F,$0074
 MagicGfxData_HastingsCarthahena:
 	magicGfxData SpriteLayout_4A77A,SpriteFramePointerTable_4A8B8,$0017,$0036
 ; ===========================================================================

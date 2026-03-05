@@ -770,102 +770,102 @@ BattleTileDataPtrs:
 	dc.l	BossTileData_Tsarkon
 BossTileData_FakeKing:
 	dc.b	$00, $37 
-	dc.l	BossTileData_FakeKing_Gfx_6FCDA
-	dc.l	BossTileData_FakeKing_Gfx_70BFA
+	dc.l	BossTileData_FakeKing_Entry01
+	dc.l	BossTileData_FakeKing_Entry02
 	dc.l	$00BC0038	
-	dc.l	BossTileData_FakeKing_Gfx_70E32
-	dc.l	BossTileData_FakeKing_Gfx_7100E
+	dc.l	BossTileData_FakeKing_Entry03
+	dc.l	BossTileData_FakeKing_Entry04
 	dc.l	$00170039	
-	dc.l	BossTileData_FakeKing_Gfx_7105A
-	dc.l	BossTileData_FakeKing_Gfx_7114A
+	dc.l	BossTileData_FakeKing_Entry05
+	dc.l	BossTileData_FakeKing_Entry06
 	dc.l	$000B003A	
-	dc.l	BossTileData_FakeKing_Gfx_71176
-	dc.l	BossTileData_FakeKing_Gfx_71248
-	dc.l	BossTileData_FakeKing_Gfx_5003E-3	
-	dc.l	BossTileData_FakeKing_Gfx_71260
-	dc.l	BossTileData_FakeKing_Gfx_71774
+	dc.l	BossTileData_FakeKing_Entry07
+	dc.l	BossTileData_FakeKing_Entry08
+	dc.l	BossTileData_FakeKing_Entry00-3	
+	dc.l	BossTileData_FakeKing_Entry09
+	dc.l	BossTileData_FakeKing_Entry10
 	dc.b	$00, $2F, $FF, $FF 
 BossTileData_StowThief:
 	dc.b	$00, $3D 
-	dc.l	BossTileData_StowThief_Gfx_72ABA
-	dc.l	BossTileData_StowThief_Gfx_73686
+	dc.l	BossTileData_StowThief_Entry00
+	dc.l	BossTileData_StowThief_Entry01
 	dc.l	$008F003E	
-	dc.l	BossTileData_StowThief_Gfx_73856
-	dc.l	BossTileData_StowThief_Gfx_73D82
+	dc.l	BossTileData_StowThief_Entry02
+	dc.l	BossTileData_StowThief_Entry03
 	dc.l	$0043003F	
-	dc.l	BossTileData_StowThief_Gfx_73E52
-	dc.l	BossTileData_StowThief_Gfx_748AA
+	dc.l	BossTileData_StowThief_Entry04
+	dc.l	BossTileData_StowThief_Entry05
 	dc.l	$007D0040	
-	dc.l	BossTileData_StowThief_Gfx_74A6A
-	dc.l	BossTileData_StowThief_Gfx_74F1E
+	dc.l	BossTileData_StowThief_Entry06
+	dc.l	BossTileData_StowThief_Entry07
 	dc.b	$00, $2F, $FF, $FF 
 BossTileData_Watling:
 	dc.b	$00, $45 
-	dc.l	BossTileData_Watling_Gfx_74FD2
-	dc.l	BossTileData_Watling_Gfx_7653A
+	dc.l	BossTileData_Watling_Entry00
+	dc.l	BossTileData_Watling_Entry01
 	dc.l	$00D70046	
-	dc.l	BossTileData_Watling_Gfx_76862
-	dc.l	BossTileData_Watling_Gfx_77506
+	dc.l	BossTileData_Watling_Entry02
+	dc.l	BossTileData_Watling_Entry03
 	dc.l	$008F0047	
-	dc.l	BossTileData_Watling_Gfx_77706
-	dc.l	BossTileData_Watling_Gfx_77998
+	dc.l	BossTileData_Watling_Entry04
+	dc.l	BossTileData_Watling_Entry05
 	dc.l	$001B0048	
-	dc.l	BossTileData_Watling_Gfx_77A04
-	dc.l	BossTileData_Watling_Gfx_77B74
+	dc.l	BossTileData_Watling_Entry06
+	dc.l	BossTileData_Watling_Entry07
 	dc.l	$000E0049	
-	dc.l	BossTileData_Watling_Gfx_77BB0
-	dc.l	BossTileData_Watling_Gfx_77CCE
+	dc.l	BossTileData_Watling_Entry08
+	dc.l	BossTileData_Watling_Entry09
 	dc.l	$000B004A	
-	dc.l	BossTileData_Watling_Gfx_77CFE
-	dc.l	BossTileData_Watling_Gfx_77EC4
+	dc.l	BossTileData_Watling_Entry10
+	dc.l	BossTileData_Watling_Entry11
 	dc.l	$0013004B	
-	dc.l	BossTileData_Watling_Gfx_77F10
-	dc.l	BossTileData_Watling_Gfx_77FAC
+	dc.l	BossTileData_Watling_Entry12
+	dc.l	BossTileData_Watling_Entry13
 	dc.b	$00, $09, $FF, $FF 
 BossTileData_Excalabria:
 	dc.b	$00, $4C 
-	dc.l	BossTileData_Excalabria_Gfx_79462
-	dc.l	BossTileData_Excalabria_Gfx_7A182
+	dc.l	BossTileData_Excalabria_Entry00
+	dc.l	BossTileData_Excalabria_Entry01
 	dc.l	$009F004D	
-	dc.l	BossTileData_Excalabria_Gfx_7A3B6
-	dc.l	BossTileData_Excalabria_Gfx_7A7A4
+	dc.l	BossTileData_Excalabria_Entry02
+	dc.l	BossTileData_Excalabria_Entry03
 	dc.l	$0035004E	
-	dc.l	BossTileData_Excalabria_Gfx_7A854
-	dc.l	BossTileData_Excalabria_Gfx_7AA60
+	dc.l	BossTileData_Excalabria_Entry04
+	dc.l	BossTileData_Excalabria_Entry05
 	dc.l	$001D004F	
-	dc.l	BossTileData_Excalabria_Gfx_7AACC
-	dc.l	BossTileData_Excalabria_Gfx_7ABD8
+	dc.l	BossTileData_Excalabria_Entry06
+	dc.l	BossTileData_Excalabria_Entry07
 	dc.l	$000B0050	
-	dc.l	BossTileData_Excalabria_Gfx_7AC08
-	dc.l	BossTileData_Excalabria_Gfx_7AC2C
+	dc.l	BossTileData_Excalabria_Entry08
+	dc.l	BossTileData_Excalabria_Entry09
 	dc.l	TownStateDataJumpTableStart_Parma-3	
 BossTileData_Imposter:
 	dc.b	$00, $51 
-	dc.l	BossTileData_Imposter_Gfx_7AC34
-	dc.l	BossTileData_Imposter_Gfx_7B9B4
+	dc.l	BossTileData_Imposter_Entry00
+	dc.l	BossTileData_Imposter_Entry01
 	dc.l	$00CF0052	
-	dc.l	BossTileData_Imposter_Gfx_7BBC8
-	dc.l	BossTileData_Imposter_Gfx_7C7E0
+	dc.l	BossTileData_Imposter_Entry02
+	dc.l	BossTileData_Imposter_Entry03
 	dc.l	$00BF0053	
-	dc.l	BossTileData_Imposter_Gfx_7C9EC
-	dc.l	BossTileData_Imposter_Gfx_7D138
+	dc.l	BossTileData_Imposter_Entry04
+	dc.l	BossTileData_Imposter_Entry05
 	dc.l	$008F0054	
-	dc.l	BossTileData_Imposter_Gfx_7D250
-	dc.l	BossTileData_Imposter_Gfx_7D844
+	dc.l	BossTileData_Imposter_Entry06
+	dc.l	BossTileData_Imposter_Entry07
 	dc.l	$006B0055	
-	dc.l	BossTileData_Imposter_Gfx_7D920
-	dc.l	BossTileData_Imposter_Gfx_7D960
+	dc.l	BossTileData_Imposter_Entry08
+	dc.l	BossTileData_Imposter_Entry09
 	dc.l	LoadTownStateData_Parma_Return-2	
-	dc.l	BossTileData_Imposter_Gfx_7D96C
-	dc.l	BossTileData_Imposter_Gfx_7DB80
+	dc.l	BossTileData_Imposter_Entry10
+	dc.l	BossTileData_Imposter_Entry11
 	dc.b	$00, $1B, $FF, $FF 
 BossTileData_Tsarkon:
 	dc.b	$00, $57 
-	dc.l	BossTileData_Tsarkon_Gfx_7DBF0
-	dc.l	BossTileData_Tsarkon_Gfx_7EBF4
+	dc.l	BossTileData_Tsarkon_Entry00
+	dc.l	BossTileData_Tsarkon_Entry01
 	dc.l	$00AF0058	
-	dc.l	BossTileData_Tsarkon_Gfx_7EE3C
-	dc.l	BossTileData_Tsarkon_Gfx_7F4FC
+	dc.l	BossTileData_Tsarkon_Entry02
+	dc.l	BossTileData_Tsarkon_Entry03
 	dc.l	$0050FFFF	
 BattleGfxDataPtrs:
 	dc.l	BattleGfxData_FakeKing
@@ -883,22 +883,22 @@ BattleGfxDataPtrs:
 	dc.l	BattleGfxData_Null
 	dc.l	BattleGfxData_Tsarkon
 BattleGfxData_FakeKing:
-	dc.l	BattleGfxData_FakeKing_Gfx_6E652
+	dc.l	BattleGfxData_FakeKing_Entry00
 	dc.b	$00, $E2 
 	dc.l	BattlePaletteData_FakeKing
 BattleGfxData_StowThief:
-	dc.l	BattleGfxData_StowThief_Gfx_7182C
+	dc.l	BattleGfxData_StowThief_Entry00
 	dc.b	$00, $D1 
 	dc.l	BattlePaletteData_StowThief
 BattleGfxData_Null:
 	dc.l	$00000000
 	dc.b	$00, $00, $00, $00, $00, $00 
 BattleGfxData_Excalabria:
-	dc.l	BattleGfxData_Excalabria_Gfx_78138
+	dc.l	BattleGfxData_Excalabria_Entry00
 	dc.b	$00, $C6 
 	dc.l	BattlePaletteData_Excalabria
 BattleGfxData_Tsarkon:
-	dc.l	BattleGfxData_Tsarkon_Gfx_7F77A
+	dc.l	BattleGfxData_Tsarkon_Entry00
 	dc.b	$00, $DE 
 	dc.l	BattlePaletteData_Tsarkon
 BattlePaletteData_FakeKing:
@@ -954,7 +954,7 @@ EnemySpriteData_FacingSide:
 	dc.l	$0122000A	
 	dc.l	$0046FFF3	
 	dc.l	$0103060A	
-	dc.l	EnemySpriteData_FacingSide_Gfx_40020	
+	dc.l	EnemySpriteData_FacingSide_Entry00	
 	dc.l	$00910F0A	
 	dc.l	$00140018	
 	dc.l	$00A10F0A	
@@ -986,7 +986,7 @@ EnemySpriteDataB_FacingUp:
 	dc.l	$0109060A	
 	dc.l	$002CFFFB	
 	dc.l	$0119050A	
-	dc.l	EnemySpriteDataB_FacingUp_Gfx_80010	
+	dc.l	EnemySpriteDataB_FacingUp_Entry00	
 BossSpriteFramePtrs:
 	dc.l	BossSpriteFrame_FakeKing
 	dc.l	BossSpriteFrame_FakeKing
@@ -1082,22 +1082,22 @@ HydraBoss_PartDeathFrames:
 	dc.l	$019900E1	
 	dc.l	$01A50000	
 BossTileSourceTable:
-	dc.l	BossTileSourceTable_Gfx_7F618
+	dc.l	BossTileSourceTable_Entry00
 	dc.l	$000A0003	
 	dc.l	$49360003	
-	dc.l	BossTileSourceTable_Gfx_7F644
+	dc.l	BossTileSourceTable_Entry01
 	dc.l	$000A0003	
 	dc.l	$49360003	
-	dc.l	BossTileSourceTable_Gfx_7F670
+	dc.l	BossTileSourceTable_Entry02
 	dc.l	$000A0003	
 	dc.l	$49360003	
-	dc.l	BossTileSourceTable_Gfx_7F69C
+	dc.l	BossTileSourceTable_Entry03
 	dc.l	$000A0003	
 	dc.l	$49360003	
-	dc.l	BossTileSourceTable_Gfx_7F6D4
+	dc.l	BossTileSourceTable_Entry04
 	dc.l	$000A0005	
 	dc.l	$48360003	
-	dc.l	BossTileSourceTable_Gfx_7F716
+	dc.l	BossTileSourceTable_Entry05
 	dc.l	$000A0008	
 	dc.l	$46B60003	
 OrbitBoss_SatelliteFrames:
@@ -1117,8 +1117,8 @@ OrbitBoss_ProjectileExplodeFrames:
 	dc.l	$01070110	
 	dc.l	$01190041	
 EncounterTileData_Entry:
-	dc.l	EncounterTileData_Entry_Gfx_5D7A0
-	dc.l	EncounterTileData_Entry_Gfx_5DC36
+	dc.l	EncounterTileData_Entry_Entry00
+	dc.l	EncounterTileData_Entry_Entry01
 	dc.b	$00, $4F 
 
 EnemyEncounterTypesByMapSector:  ; Maps current map sector to pointer index at EnemyEncounterGroupTable
@@ -1993,8 +1993,8 @@ EnemySpriteSet_L:
 	dc.l	EnemyGfxFrameTable_HumanoidMain
 	dc.l	EnemyGfxData_HumanoidMain
 	dc.b	$00, $27 
-	dc.l	EnemySpriteSet_L_Gfx_5D1E4
-	dc.l	EnemySpriteSet_L_Gfx_5D286
+	dc.l	EnemySpriteSet_L_Entry00
+	dc.l	EnemySpriteSet_L_Entry01
 	dc.b	$00, $05 
 EnemySpriteSet_M:
 	dc.l	EnemyGfxFrameTable_BossMain
@@ -2003,6 +2003,6 @@ EnemySpriteSet_M:
 	dc.l	EnemyGfxFrameTable_HumanoidMain
 	dc.l	EnemyGfxData_HumanoidMain
 	dc.b	$00, $27 
-	dc.l	EnemySpriteSet_M_Gfx_5D764
-	dc.l	EnemySpriteSet_M_Gfx_5D798
+	dc.l	EnemySpriteSet_M_Entry00
+	dc.l	EnemySpriteSet_M_Entry01
 	dc.b	$00, $01 

@@ -35,7 +35,7 @@
 ;
 ; Some OverworldMaps entries point to CaveMaps instead of sector data —
 ; these mark overworld tiles that act as cave entrances.
-; Two entries (OverworldMapSector_40018, EnemySpriteData_FacingSide_Gfx_40020)
+; Two entries (OverworldMapSector_40018, EnemySpriteData_FacingSide_Entry00)
 ; are small blobs that are NOT sector maps.
 ;
 ; ---------------------------------------------------------------------------
@@ -85,7 +85,7 @@
 ;   CaveMaps (dc.l pointer)   — overworld cell is a cave entrance hub;
 ;                               the cave room index is encoded in the tile
 ;   OverworldMapSector_40018  — small non-sector data blob (10 bytes)
-;   EnemySpriteData_FacingSide_Gfx_40020 — 8-byte non-sector blob
+;   EnemySpriteData_FacingSide_Entry00 — 8-byte non-sector blob
 ;   OverworldMapSector_40028  — sector_14_4.bin (last real overworld sector)
 ; ---------------------------------------------------------------------------
 
@@ -416,7 +416,7 @@ OverworldMaps_Map_3FFD6:
 	incbin "data/maps/overworld/sector_14_3.bin"
 OverworldMapSector_40018:
 	incbin "data/maps/overworld/data_40018.bin"
-EnemySpriteData_FacingSide_Gfx_40020:
+EnemySpriteData_FacingSide_Entry00:
 	incbin "data/maps/overworld/data_40020.bin"
 OverworldMapSector_40028:
 	incbin "data/maps/overworld/sector_14_4.bin"

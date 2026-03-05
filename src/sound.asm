@@ -35,15 +35,15 @@
 ; embedded at fixed ROM addresses. Not directly executed by
 ; the 68000; the Z80 driver data is copied to Z80 RAM at init.
 ;
-; MOVE-006 NOTE: TownTilesetPtrs_Gfx_8FEE6 and
-; TownTilesetPtrs_Gfx_9239A below are town tileset index
+; MOVE-006 NOTE: TownTilesetPtrs_Entry02 and
+; TownTilesetPtrs_Entry03 below are town tileset index
 ; lookup tables and belong logically in gfxdata.asm alongside
 ; other graphics data. They are stranded here because the
 ; disassembler placed them at these ROM addresses inside the
 ; sound driver region. Physical relocation would change all
 ; downstream ROM offsets and break bit-perfect output.
 ;==============================================================
-TownTilesetPtrs_Gfx_8FEE6:
+TownTilesetPtrs_Entry02:
 	dc.b	$00, $00 
 	dc.b	$00, $00, $00, $00, $00, $00, $00, $01, $00, $02, $00, $03, $00, $04, $00, $05, $00, $06, $00, $07, $00, $08, $00, $09, $00, $0A, $00, $07, $00, $08, $00, $0B 
 	dc.b	$00, $0C, $00, $0D, $00, $0E, $00, $0F, $00, $02, $00, $10, $00, $04, $00, $0F, $00, $11, $00, $10, $00, $12, $00, $13, $00, $14, $00, $15, $00, $16, $00, $17 
@@ -87,7 +87,7 @@ LoadBattleHudGraphics_Data:
 	incbin "data/art/tiles/battle/hud_gfx_1.bin"
 LoadBattleHudGraphics_Done_Data:
 	incbin "data/art/tiles/battle/hud_gfx_2.bin"
-TownTilesetPtrs_Gfx_9239A:
+TownTilesetPtrs_Entry03:
 	dc.b	$00, $00 
 	dc.b	$00, $00, $00, $00, $00, $00, $00, $01, $00, $02, $00, $03, $00, $04, $00, $00, $00, $00, $00, $05, $00, $06, $00, $00, $00, $00, $00, $07, $00, $08, $00, $09 
 	dc.b	$00, $0A, $00, $0B, $00, $0C, $00, $0D, $00, $0E, $00, $0F, $00, $10, $00, $03, $00, $04, $00, $03, $00, $04, $00, $11, $00, $12, $00, $13, $00, $14, $00, $15 
@@ -1099,7 +1099,7 @@ WriteYM2612_RegisterLoop:
 ; InitFM_ChannelsToSilence
 ; Keys off all 7 FM channels, then writes a full set of
 ; register values to silence all 6 YM2612 FM channels using
-; the data table at InitFM_ChannelsToSilence_Done2_Data.
+; the data table at InitFM_ChannelsToSilence_RegData.
 InitFM_ChannelsToSilence:
 	MOVEQ	#6, D6
 	MOVE.b	#$28, D0
@@ -1110,14 +1110,14 @@ InitFM_ChannelsToSilence_Done:
 	DBF	D6, InitFM_ChannelsToSilence_Done
 	LEA	$00FFF430, A3
 	MOVE.w	#5, D7
-InitFM_ChannelsToSilence_Done2:
-	LEA	InitFM_ChannelsToSilence_Done2_Data, A0
+InitFM_ChannelsToSilence_ChannelLoop:
+	LEA	InitFM_ChannelsToSilence_RegData, A0
 	BSR.w	WriteFM_ChannelRegisters
 	ADDA.w	#$0030, A3
-	DBF	D7, InitFM_ChannelsToSilence_Done2
+	DBF	D7, InitFM_ChannelsToSilence_ChannelLoop
 	RTS
 	
-InitFM_ChannelsToSilence_Done2_Data:
+InitFM_ChannelsToSilence_RegData:
 	dc.b	$F8, $3F, $3F, $3F, $3F, $00, $00, $00, $00, $1F, $1F, $1F, $1F, $1F, $1F, $1F, $1F, $1F, $1F, $1F, $1F, $FF, $FF, $FF, $FF, $00 
 ; MutePSG_AllChannels
 ; Sets maximum attenuation ($F) on all 4 PSG channels by

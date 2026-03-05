@@ -167,37 +167,37 @@ WallTilemap_NearSide:
 	dc.w	$04C8
 	dc.b	$04, $C9, $04, $C1, $04, $C2, $04, $C3, $04, $C4, $04, $C5, $04, $C6, $04, $CD 
 WallTileGfxPtrs:
-	dc.l	WallTileGfxPtrs_Gfx_80D44
-	dc.l	WallTileGfxPtrs_Gfx_80E56
-	dc.l	WallTileGfxPtrs_Gfx_80E00
+	dc.l	WallTileGfxPtrs_Entry00
+	dc.l	WallTileGfxPtrs_Entry02
+	dc.l	WallTileGfxPtrs_Entry01
 	dc.l	NULL_PTR	
 	dc.l	DungeonFloorTilemap_82298
 	dc.l	DungeonFloorTilemap_823A4
 	dc.l	DungeonFloorTilemap_82354
 	dc.l	NULL_PTR	
-	dc.l	WallTileGfxPtrs_Gfx_84382
-	dc.l	WallTileGfxPtrs_Gfx_8447E
-	dc.l	WallTileGfxPtrs_Gfx_84432
+	dc.l	WallTileGfxPtrs_Entry06
+	dc.l	WallTileGfxPtrs_Entry08
+	dc.l	WallTileGfxPtrs_Entry07
 	dc.l	NULL_PTR	
-	dc.l	WallTileGfxPtrs_Gfx_85A80
-	dc.l	WallTileGfxPtrs_Gfx_85B92
-	dc.l	WallTileGfxPtrs_Gfx_85B3C
+	dc.l	WallTileGfxPtrs_Entry09
+	dc.l	WallTileGfxPtrs_Entry11
+	dc.l	WallTileGfxPtrs_Entry10
 	dc.l	NULL_PTR	
 	dc.l	DungeonFloorTilemap_82298
 	dc.l	DungeonFloorTilemap_823A4
 	dc.l	DungeonFloorTilemap_82354
 	dc.l	NULL_PTR	
-	dc.l	WallTileGfxPtrs_Gfx_8265C
-	dc.l	WallTileGfxPtrs_Gfx_8276E
-	dc.l	WallTileGfxPtrs_Gfx_82718
+	dc.l	WallTileGfxPtrs_Entry03
+	dc.l	WallTileGfxPtrs_Entry05
+	dc.l	WallTileGfxPtrs_Entry04
 	dc.l	NULL_PTR	
-	dc.l	WallTileGfxPtrs_Gfx_87576
-	dc.l	WallTileGfxPtrs_Gfx_87688
-	dc.l	WallTileGfxPtrs_Gfx_87632
+	dc.l	WallTileGfxPtrs_Entry15
+	dc.l	WallTileGfxPtrs_Entry17
+	dc.l	WallTileGfxPtrs_Entry16
 	dc.l	NULL_PTR	
-	dc.l	WallTileGfxPtrs_Gfx_871A6
-	dc.l	WallTileGfxPtrs_Gfx_872B8
-	dc.l	WallTileGfxPtrs_Gfx_87262
+	dc.l	WallTileGfxPtrs_Entry12
+	dc.l	WallTileGfxPtrs_Entry14
+	dc.l	WallTileGfxPtrs_Entry13
 	dc.l	NULL_PTR	
 WallTileOffsets_UpLeft:
 	dc.b	$FF, $D0, $FF, $D1, $FF, $A0, $FF, $A1, $FF, $A2, $FF, $70, $FF, $71, $FF, $72, $FF, $73, $FF, $3F, $FF, $40, $FF, $41, $FF, $42, $FF, $43 
@@ -236,38 +236,38 @@ WallRenderVdpParams_Mid:
 WallRenderVdpParams_Far:
 	dc.b	$63, $22, $00, $03, $61, $9C, $00, $03, $62, $1E, $00, $03, $62, $A0, $00, $03 
 WallTileMidGfxPtrs:
-	dc.l	WallTileMidGfxPtrs_Gfx_80AD0
-	dc.l	WallTileMidGfxPtrs_Gfx_80B6A
-	dc.l	WallTileMidGfxPtrs_Gfx_80C04
-	dc.l	WallTileMidGfxPtrs_Gfx_80C9E
+	dc.l	WallTileMidGfxPtrs_Entry00
+	dc.l	WallTileMidGfxPtrs_Entry01
+	dc.l	WallTileMidGfxPtrs_Entry02
+	dc.l	WallTileMidGfxPtrs_Entry03
 	dc.l	DungeonFloorTilemap_82030
 	dc.l	DungeonFloorTilemap_820CA
 	dc.l	DungeonFloorTilemap_82164
 	dc.l	DungeonFloorTilemap_821FE
-	dc.l	WallTileMidGfxPtrs_Gfx_8411A
-	dc.l	WallTileMidGfxPtrs_Gfx_841B4
-	dc.l	WallTileMidGfxPtrs_Gfx_8424E
-	dc.l	WallTileMidGfxPtrs_Gfx_842E8
-	dc.l	WallTileMidGfxPtrs_Gfx_85818
-	dc.l	WallTileMidGfxPtrs_Gfx_858B2
-	dc.l	WallTileMidGfxPtrs_Gfx_8594C
-	dc.l	WallTileMidGfxPtrs_Gfx_859E6
+	dc.l	WallTileMidGfxPtrs_Entry08
+	dc.l	WallTileMidGfxPtrs_Entry09
+	dc.l	WallTileMidGfxPtrs_Entry10
+	dc.l	WallTileMidGfxPtrs_Entry11
+	dc.l	WallTileMidGfxPtrs_Entry12
+	dc.l	WallTileMidGfxPtrs_Entry13
+	dc.l	WallTileMidGfxPtrs_Entry14
+	dc.l	WallTileMidGfxPtrs_Entry15
 	dc.l	DungeonFloorTilemap_82030
 	dc.l	DungeonFloorTilemap_820CA
 	dc.l	DungeonFloorTilemap_82164
 	dc.l	DungeonFloorTilemap_821FE
-	dc.l	WallTileMidGfxPtrs_Gfx_823F4
-	dc.l	WallTileMidGfxPtrs_Gfx_8248E
-	dc.l	WallTileMidGfxPtrs_Gfx_82528
-	dc.l	WallTileMidGfxPtrs_Gfx_825C2
-	dc.l	WallTileMidGfxPtrs_Gfx_8730E
-	dc.l	WallTileMidGfxPtrs_Gfx_873A8
-	dc.l	WallTileMidGfxPtrs_Gfx_87442
-	dc.l	WallTileMidGfxPtrs_Gfx_874DC
-	dc.l	WallTileMidGfxPtrs_Gfx_86F3E
-	dc.l	WallTileMidGfxPtrs_Gfx_86FD8
-	dc.l	WallTileMidGfxPtrs_Gfx_87072
-	dc.l	WallTileMidGfxPtrs_Gfx_8710C
+	dc.l	WallTileMidGfxPtrs_Entry04
+	dc.l	WallTileMidGfxPtrs_Entry05
+	dc.l	WallTileMidGfxPtrs_Entry06
+	dc.l	WallTileMidGfxPtrs_Entry07
+	dc.l	WallTileMidGfxPtrs_Entry20
+	dc.l	WallTileMidGfxPtrs_Entry21
+	dc.l	WallTileMidGfxPtrs_Entry22
+	dc.l	WallTileMidGfxPtrs_Entry23
+	dc.l	WallTileMidGfxPtrs_Entry16
+	dc.l	WallTileMidGfxPtrs_Entry17
+	dc.l	WallTileMidGfxPtrs_Entry18
+	dc.l	WallTileMidGfxPtrs_Entry19
 FpSpritePositionTable:
 	dc.b	$04, $4C, $02, $20, $06, $70, $07, $70, $04, $4C, $04, $4C, $06, $70, $06, $70 
 
