@@ -210,7 +210,7 @@ UpdateAreaVisibility_Loop:
 	MOVE.w	#$85B7, D4
 RenderCaveDarknessTilemap:
 	ORI	#$0700, SR
-	MOVE.l	#$60AE0003, D5
+	MOVE.l	#VDP_CMD_VRAM_WRITE_E0AE, D5
 	MOVEQ	#$0000000F, D7
 RenderCaveDarknessTilemap_RowLoop:
 	MOVE.l	D5, VDP_control_port
@@ -231,7 +231,7 @@ RenderCaveDarknessTilemap_ColLoop:
 	; In cave, light is active: draw 3×3 torchlight patch at player position
 RenderCaveDarknessTilemap_Loop:
 	LEA	CaveWallTileIndices, A0 ; 9 partial-fog tile attributes (3 rows × 3 cols)
-	MOVE.l	#$60AE0003, D5       ; Plane B base for area map window
+	MOVE.l	#VDP_CMD_VRAM_WRITE_E0AE, D5       ; Plane B base for area map window
 	MOVEQ	#0, D0
 	MOVEQ	#0, D1
 	MOVE.w	Player_position_x_outside_town.w, D0

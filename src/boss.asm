@@ -1325,7 +1325,7 @@ DrawBossNameplate_TileLoop:
 ; of the HP gauge graphic from SpriteMetaTileTable_7808A.
 DrawBossHealthBar:
 	ORI	#$0700, SR                          ; disable interrupts
-	MOVE.l	#$40000003, D5                  ; VDP write command: plane A, VRAM $0000
+	MOVE.l	#VDP_CMD_VRAM_WRITE_PLANE_A, D5                  ; VDP write command: plane A, VRAM $0000
 	LEA	DrawBossHealthBar_Data, A0
 	MOVE.w	#$000C, D7                      ; 13 rows
 DrawBossHealthBar_Done:
@@ -1395,10 +1395,10 @@ BossAttackGfxJumpTable:
 ; addresses $43BE and $48C2 on plane B.
 DrawBossAttackGraphic1:
 	LEA	DrawBossAttackGraphic1_Data, A0
-	MOVE.l	#$43BE0003, D5                  ; plane B, VRAM $03BE (first text row)
+	MOVE.l	#VDP_CMD_VRAM_WRITE_C3BE, D5                  ; plane B, VRAM $03BE (first text row)
 	BSR.w	WriteTextToVRAM
 	LEA	DrawBossAttackGraphic1_Data2, A0
-	MOVE.l	#$48C20003, D5                  ; plane B, VRAM $08C2 (second text row)
+	MOVE.l	#VDP_CMD_VRAM_WRITE_C8C2, D5                  ; plane B, VRAM $08C2 (second text row)
 	BSR.w	WriteTextToVRAM
 	RTS
 
@@ -1406,7 +1406,7 @@ DrawBossAttackGraphic1:
 ; Draws the single-row alternate dialog text at VRAM $43BE.
 DrawDialogTextLine_Alt1:
 	LEA	DrawDialogTextLine_Alt1_Data, A0
-	MOVE.l	#$43BE0003, D5
+	MOVE.l	#VDP_CMD_VRAM_WRITE_C3BE, D5
 	BSR.w	WriteTextToVRAM
 	RTS
 
@@ -1414,10 +1414,10 @@ DrawDialogTextLine_Alt1:
 ; Two-row variant: draws Alt1 and a second row at $48C2.
 DrawDialogTextLine_Alt1_Loop:
 	LEA	DrawDialogTextLine_Alt1_Loop_Data, A0
-	MOVE.l	#$43BE0003, D5
+	MOVE.l	#VDP_CMD_VRAM_WRITE_C3BE, D5
 	BSR.w	WriteTextToVRAM
 	LEA	DrawDialogTextLine_Alt1_Loop_Data2, A0
-	MOVE.l	#$48C20003, D5
+	MOVE.l	#VDP_CMD_VRAM_WRITE_C8C2, D5
 	BSR.w	WriteTextToVRAM
 	RTS
 
@@ -1475,7 +1475,7 @@ BossAttackFlashJumpTable:
 ; Entry 0: draws the blank/reset flash state at VRAM $4642.
 BossAttackFlashJumpTable_Loop:
 	LEA	BossAttackFlashJumpTable_Loop_Data, A0
-	MOVE.l	#$46420003, D5
+	MOVE.l	#VDP_CMD_VRAM_WRITE_C642, D5
 	BSR.w	Write7x8TilesToVRAM
 	RTS
 
@@ -1483,7 +1483,7 @@ BossAttackFlashJumpTable_Loop:
 ; Draws the single-row Alt2 flash graphic at VRAM $4642 (plane B).
 DrawDialogTextLine_Alt2:
 	LEA	DrawDialogTextLine_Alt2_Data, A0
-	MOVE.l	#$46420003, D5
+	MOVE.l	#VDP_CMD_VRAM_WRITE_C642, D5
 	BSR.w	Write7x8TilesToVRAM
 	RTS
 
@@ -1491,7 +1491,7 @@ DrawDialogTextLine_Alt2:
 ; Alternate two-row variant of the flash graphic.
 DrawDialogTextLine_Alt2_Loop:
 	LEA	DrawDialogTextLine_Alt2_Loop_Data, A0
-	MOVE.l	#$46420003, D5
+	MOVE.l	#VDP_CMD_VRAM_WRITE_C642, D5
 	BSR.w	Write7x8TilesToVRAM
 	RTS
 

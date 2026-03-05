@@ -302,7 +302,7 @@ ProcessScriptText_Dispatch: ; Dispatch on script control codes
 	ADD.w	D1, D0
 	ANDI.l	#$00001FFF, D0                  ; mask to tilemap size
 	SWAP	D0
-	ORI.l	#$40000003, D0                  ; VDP write-to-VRAM command, Plane B
+	ORI.l	#VDP_CMD_VRAM_WRITE_PLANE_A, D0                  ; VDP write-to-VRAM command, Plane B
 	ORI	#$0700, SR                      ; disable interrupts
 	MOVE.l	D0, VDP_control_port
 	MOVE.w	D3, VDP_data_port               ; write tile word to VRAM
@@ -329,7 +329,7 @@ ScriptRender_PortraitTile:
 	ADD.w	D1, D0	
 	ANDI.l	#$00001FFF, D0	
 	SWAP	D0	
-	ORI.l	#$40000003, D0	
+	ORI.l	#VDP_CMD_VRAM_WRITE_PLANE_A, D0	
 	MOVE.l	D0, VDP_control_port	
 	MOVE.w	D3, VDP_data_port	
 	BRA.w	ScriptDecode_AdvanceOffset	
@@ -351,7 +351,7 @@ ScriptCmd_Continue:
 	ADD.w	D1, D0
 	ANDI.l	#$00001FFF, D0
 	SWAP	D0
-	ORI.l	#$40000003, D0
+	ORI.l	#VDP_CMD_VRAM_WRITE_PLANE_A, D0
 	MOVE.l	D0, VDP_control_port
 	MOVE.w	#$04DF, D3                      ; tile $04DF = continuation arrow glyph
 	ORI.w	#$8000, D3
@@ -946,7 +946,7 @@ RenderTextToTilemap_WriteColumn:
 	ADD.w	D4, D5
 	ANDI.l	#$0000FFFF, D5
 	SWAP	D5
-	ADDI.l	#$40000003, D5
+	ADDI.l	#VDP_CMD_VRAM_WRITE_PLANE_A, D5
 	ORI	#$0700, SR
 	MOVE.l	D5, VDP_control_port
 	CLR.w	D4
@@ -1100,7 +1100,7 @@ WordToDecimalString:
 ; Inputs: D4 = tile character, D3 = palette attribute bits
 WriteDigitToWindowAndAdvance:
 	BSR.w	CalcWindowTileVramAddress
-	ORI.l	#$40000003, D0
+	ORI.l	#VDP_CMD_VRAM_WRITE_PLANE_A, D0
 	MOVE.l	D0, VDP_control_port
 	MOVE.w	D4, VDP_data_port
 	ADDQ.w	#1, Window_number_cursor_x.w
@@ -1111,7 +1111,7 @@ WriteDigitToWindowAndAdvance:
 ; Inputs: D4 = tile character
 WriteDigitToWindowPlane3:
 	BSR.w	CalcWindowTileVramAddress
-	ORI.l	#$60000003, D0
+	ORI.l	#VDP_CMD_VRAM_WRITE_PLANE_B, D0
 	MOVE.l	D0, VDP_control_port
 	MOVE.w	D4, VDP_data_port
 	ADDQ.w	#1, Window_number_cursor_x.w
@@ -2057,7 +2057,7 @@ DrawWindowRowFromBuffer_Done:
 	ADD.w	D4, D5
 	ANDI.l	#$0000FFFF, D5
 	SWAP	D5
-	ADDI.l	#$40000003, D5
+	ADDI.l	#VDP_CMD_VRAM_WRITE_PLANE_A, D5
 	MOVE.w	#$85A6, D4
 	TST.w	D2
 	BEQ.b	DrawWindowTilemap_WriteVDP
@@ -2092,7 +2092,7 @@ DrawWindowTilemap_WriteVDP_Loop2_Done:
 	ADD.w	D4, D5
 	ANDI.l	#$0000FFFF, D5
 	SWAP	D5
-	ADDI.l	#$40000003, D5
+	ADDI.l	#VDP_CMD_VRAM_WRITE_PLANE_A, D5
 	MOVE.l	D5, VDP_control_port
 	MOVE.w	(A0)+, VDP_data_port
 	ADDQ.w	#1, D2
@@ -2610,7 +2610,7 @@ DrawWindowFromBuffer_Done:
 	CLR.w	D2
 DrawWindowFromBuffer_WriteColumn:
 	BSR.w	CalculateVDPAddress
-	ADDI.l	#$40000003, D5
+	ADDI.l	#VDP_CMD_VRAM_WRITE_PLANE_A, D5
 	ORI	#$0700, SR
 	MOVE.l	D5, VDP_control_port
 	MOVE.w	(A0)+, VDP_data_port
@@ -2839,7 +2839,7 @@ WriteMenuCursorTile_Loop:
 	ADD.w	D1, D0
 	ANDI.l	#$0000FFFF, D0
 	SWAP	D0
-	ORI.l	#$40000003, D0
+	ORI.l	#VDP_CMD_VRAM_WRITE_PLANE_A, D0
 	ORI	#$0700, SR
 	MOVE.l	D0, VDP_control_port
 	MOVE.w	D6, VDP_data_port
@@ -2897,7 +2897,7 @@ DrawWindowChar_WriteVDP:
 	ADD.w	D1, D0
 	ANDI.l	#$0000FFFF, D0
 	SWAP	D0
-	ADDI.l	#$40000003, D0
+	ADDI.l	#VDP_CMD_VRAM_WRITE_PLANE_A, D0
 	MOVE.l	D0, VDP_control_port
 	CLR.w	D6
 	MOVE.b	(A0)+, D6
@@ -3058,7 +3058,7 @@ DrawWindowChar2_WriteVDP:
 	ADD.w	D1, D0
 	ANDI.l	#$0000FFFF, D0
 	SWAP	D0
-	ADDI.l	#$40000003, D0
+	ADDI.l	#VDP_CMD_VRAM_WRITE_PLANE_A, D0
 	CLR.w	D6
 	MOVE.b	(A0)+, D6
 	CMPI.b	#SCRIPT_END, D6
@@ -3108,7 +3108,7 @@ DrawSpecialCharToVRAM:
 	ADD.w	D4, D5	
 	ANDI.l	#$0000FFFF, D5	
 	SWAP	D5	
-	ADDI.l	#$40000003, D5	
+	ADDI.l	#VDP_CMD_VRAM_WRITE_PLANE_A, D5	
 	ORI	#$0700, SR	
 	MOVE.l	D5, VDP_control_port	
 	MOVE.w	D6, VDP_data_port	
@@ -3137,7 +3137,7 @@ DrawInventorySelectionMarkers_Done:
 	ADD.w	D1, D0
 	ANDI.l	#$0000FFFF, D0
 	SWAP	D0
-	ADDI.l	#$40000003, D0
+	ADDI.l	#VDP_CMD_VRAM_WRITE_PLANE_A, D0
 	MOVE.w	#$84EA, D6
 	ORI.w	#0, D6
 	MOVE.l	D0, VDP_control_port
@@ -3355,7 +3355,7 @@ DrawWindowTilemapFull_WriteColumn:
 	ADD.w	D4, D5
 	ANDI.l	#$0000FFFF, D5
 	SWAP	D5
-	ADDI.l	#$40000003, D5
+	ADDI.l	#VDP_CMD_VRAM_WRITE_PLANE_A, D5
 	MOVE.l	D5, VDP_control_port
 	CLR.w	D4
 	MOVE.b	(A0)+, D4
@@ -3469,7 +3469,7 @@ WriteWindowRowToVDP_Done:
 	ADD.w	D4, D5
 	ANDI.l	#$0000FFFF, D5
 	SWAP	D5
-	ADDI.l	#$40000003, D5
+	ADDI.l	#VDP_CMD_VRAM_WRITE_PLANE_A, D5
 	MOVE.b	(A0)+, D4
 	ADDI.w	#$84C0, D4
 	OR.w	Window_tile_attrs.w, D4
@@ -3602,17 +3602,17 @@ DisplayMaxHpMpAlt:
 DisplayCantUseMessage:
 	LEA	CantUseStr, A0
 	ORI	#$0700, SR
-	MOVE.l	#$6CB60003, VDP_control_port
+	MOVE.l	#VDP_CMD_VRAM_WRITE_ECB6, VDP_control_port
 	MOVE.w	#9, D7
 DisplayCantUseMessage_Done:
 	MOVE.w	#$84E0, VDP_data_port
 	DBF	D7, DisplayCantUseMessage_Done
-	MOVE.l	#$6D360003, VDP_control_port
+	MOVE.l	#VDP_CMD_VRAM_WRITE_ED36, VDP_control_port
 	MOVE.w	#9, D7
 DisplayCantUseMessage_ClearSecondRow:
 	MOVE.w	#$84E0, VDP_data_port
 	DBF	D7, DisplayCantUseMessage_ClearSecondRow
-	MOVE.l	#$6D360003, D5
+	MOVE.l	#VDP_CMD_VRAM_WRITE_ED36, D5
 	BRA.w	DisplayReadiedMagicName_Loop
 ; DisplayReadiedMagicName
 ; Display the name of the currently readied magic spell in the HUD title bar.
@@ -3629,17 +3629,17 @@ DisplayReadiedMagicName_NoMagic:
 	LEA	NothingStr, A0
 DisplayReadiedMagicName_WriteToVDP:
 	ORI	#$0700, SR
-	MOVE.l	#$4CB60003, VDP_control_port
+	MOVE.l	#VDP_CMD_VRAM_WRITE_CCB6, VDP_control_port
 	MOVE.w	#9, D7
 DisplayReadiedMagicName_Loop3_Done:
 	MOVE.w	#$84E0, VDP_data_port
 	DBF	D7, DisplayReadiedMagicName_Loop3_Done
-	MOVE.l	#$4D360003, VDP_control_port
+	MOVE.l	#VDP_CMD_VRAM_WRITE_CD36, VDP_control_port
 	MOVE.w	#9, D7
 DisplayReadiedMagicName_WriteToVDP_Done:
 	MOVE.w	#$84E0, VDP_data_port
 	DBF	D7, DisplayReadiedMagicName_WriteToVDP_Done
-	MOVE.l	#$4D360003, D5
+	MOVE.l	#VDP_CMD_VRAM_WRITE_CD36, D5
 DisplayReadiedMagicName_Loop:
 	CLR.w	D2
 TitleBarText_Next:
@@ -4341,7 +4341,7 @@ NameEntryScreen_InputHandler_InputChar:
 	PlaySound	SOUND_MENU_SELECT
 	LEA	Player_name.w, A0
 	LEA	NameEntryCharacterTable, A1
-	MOVE.l	#$41A20003, D6
+	MOVE.l	#VDP_CMD_VRAM_WRITE_C1A2, D6
 	MOVE.w	Name_input_cursor_pos.w, D0
 	LEA	(A0,D0.w), A0
 	MOVEQ	#0, D1
@@ -4417,7 +4417,7 @@ NameEntry_ConfirmDone_Loop:
 	TST.w	Name_entry_cursor_column.w
 	BLE.w	NameEntry_ConfirmDone_NothingToErase
 	LEA	Player_name.w, A0
-	MOVE.l	#$41A20003, D6
+	MOVE.l	#VDP_CMD_VRAM_WRITE_C1A2, D6
 	MOVE.w	Name_input_cursor_pos.w, D0
 	LEA	-$1(A0,D0.w), A0
 	SUBQ.w	#1, D0
@@ -4498,7 +4498,7 @@ ClearEnemyListFlags:
 ; Write the background tilemap for the name entry screen to VRAM.
 DrawNameEntryBackground:
 	ORI	#$0700, SR
-	MOVE.l	#$61060003, D5
+	MOVE.l	#VDP_CMD_VRAM_WRITE_E106, D5
 	LEA	DrawNameEntryBackground_Data, A0
 	MOVE.w	#$0016, D7
 DrawNameEntryBackground_Done:
@@ -4973,7 +4973,7 @@ DrawPrologueScene1and2:
 	LEA	DrawPrologueScene1and2_Data, A0
 	MOVE.w	#$A080, D4
 	BSR.w	DrawTilemapBlock_13x10
-	MOVE.l	#$61060003, D5
+	MOVE.l	#VDP_CMD_VRAM_WRITE_E106, D5
 	LEA	Prologue1Str, A0
 	MOVE.w	#$84C0, D4
 	BSR.w	DrawVerticalText

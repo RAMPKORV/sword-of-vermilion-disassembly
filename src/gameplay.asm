@@ -1977,7 +1977,7 @@ CheckPlayerDeath_Loop:
 ; Used by both EncounterGraphicsFadeIn and DialogDisplay.
 UpdateDialogTileColumn:
 	LEA	Tile_gfx_buffer.w, A0
-	MOVE.l	#$45600002, D5
+	MOVE.l	#VDP_CMD_VRAM_WRITE_8560, D5
 	MOVEQ	#0, D0
 	MOVE.w	Dialog_phase.w, D0
 	ADDA.w	D0, A0
@@ -2005,7 +2005,7 @@ UpdateDialogTileColumn_Done:
 FlushDialogTileBuffer:
 	ORI	#$0700, SR
 	LEA	Tile_gfx_buffer.w, A0
-	MOVE.l	#$45600002, D5
+	MOVE.l	#VDP_CMD_VRAM_WRITE_8560, D5
 	MOVE.l	D5, VDP_control_port
 	MOVE.w	#$01FF, D7
 	ORI	#$0700, SR
@@ -2022,7 +2022,7 @@ FlushDialogTileBuffer_Done:
 ; ($60280003).  Each half is 22 rows x 20 columns.  Tile indices come
 ; from TerrainTilemapPtrs indexed by Terrain_tileset_index.
 DrawTerrainTilemap:
-	MOVE.l	#$60000003, D5
+	MOVE.l	#VDP_CMD_VRAM_WRITE_PLANE_B, D5
 	BSR.b	DrawTerrainTilemapHelper
 	MOVE.l	#$60280003, D5
 DrawTerrainTilemapHelper:
@@ -2077,7 +2077,7 @@ DrawBattleStatusBar_WriteTile:
 ; are OR'd with $8000 (high priority) and offset by $03CC.
 DrawBattleNametable:
 	ORI	#$0700, SR
-	MOVE.l	#$40000003, D5
+	MOVE.l	#VDP_CMD_VRAM_WRITE_PLANE_A, D5
 	LEA	DrawBattleNametable_Data, A0
 	MOVE.w	#$001B, D7
 DrawBattleNametable_WriteRow:

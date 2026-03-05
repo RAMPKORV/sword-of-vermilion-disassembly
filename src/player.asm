@@ -380,7 +380,7 @@ UpdatePlayerSpriteDMA:
 	MULU.w	#$0180, D0
 	ADDA.l	D0, A0
 	EXG	D0, A0
-	MOVE.l	#$40200080, D3
+	MOVE.l	#VDP_DMA_VRAM_WRITE_0200, D3
 	MOVE.l	#$940093C0, D5
 	BSR.w	SetupVdpDmaCommand
 	RTS
@@ -393,7 +393,7 @@ UpdatePlayerSpriteDMA_NormalBattle:
 	MULU.w	#$0100, D0
 	ADDA.l	D0, A0
 	EXG	D0, A0
-	MOVE.l	#$41A00080, D3
+	MOVE.l	#VDP_DMA_VRAM_WRITE_1A00, D3
 	MOVE.l	#$94009380, D5
 	BSR.w	SetupVdpDmaCommand
 	LEA	Battle_gfx_slot_1_buffer, A0
@@ -403,7 +403,7 @@ UpdatePlayerSpriteDMA_NormalBattle:
 	MULU.w	#$0180, D0
 	ADDA.l	D0, A0
 	EXG	D0, A0
-	MOVE.l	#$40200080, D3
+	MOVE.l	#VDP_DMA_VRAM_WRITE_0200, D3
 	MOVE.l	#$940093C0, D5
 	BSR.w	SetupVdpDmaCommand
 	LEA	Battle_gfx_slot_2_buffer, A0
@@ -413,7 +413,7 @@ UpdatePlayerSpriteDMA_NormalBattle:
 	MULU.w	#$0080, D0
 	ADDA.l	D0, A0
 	EXG	D0, A0
-	MOVE.l	#$42A00080, D3
+	MOVE.l	#VDP_DMA_VRAM_WRITE_2A00, D3
 	MOVE.l	#$94009340, D5
 	BSR.w	SetupVdpDmaCommand
 	RTS
@@ -426,7 +426,7 @@ UpdatePlayerSpriteDMA_BossBattle:
 	MULU.w	#$0180, D0
 	ADDA.l	D0, A0
 	EXG	D0, A0
-	MOVE.l	#$42200080, D3
+	MOVE.l	#VDP_DMA_VRAM_WRITE_2200, D3
 	MOVE.l	#$940093C0, D5
 	BSR.w	SetupVdpDmaCommand
 	LEA	Boss_gfx_slot_1_buffer, A0
@@ -436,7 +436,7 @@ UpdatePlayerSpriteDMA_BossBattle:
 	MULU.w	#$0200, D0
 	ADDA.l	D0, A0
 	EXG	D0, A0
-	MOVE.l	#$40200080, D3
+	MOVE.l	#VDP_DMA_VRAM_WRITE_0200, D3
 	MOVE.l	#$94019300, D5
 	BSR.w	SetupVdpDmaCommand
 	LEA	Boss_gfx_slot_2_buffer, A0
@@ -446,7 +446,7 @@ UpdatePlayerSpriteDMA_BossBattle:
 	MULU.w	#$0080, D0
 	ADDA.l	D0, A0
 	EXG	D0, A0
-	MOVE.l	#$43A00080, D3
+	MOVE.l	#VDP_DMA_VRAM_WRITE_3A00, D3
 	MOVE.l	#$94009340, D5
 	BSR.w	SetupVdpDmaCommand
 	RTS

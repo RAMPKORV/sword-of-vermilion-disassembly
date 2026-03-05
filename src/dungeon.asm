@@ -2195,7 +2195,7 @@ RenderMapToVRAM_DualPalette_21x13_Alt:
 	BRA.w	RenderMapToVRAM_WithPalette
 RenderMapToVRAM_NoPalette:
 	ORI	#$0700, SR
-	MOVE.l	#$44820003, D5
+	MOVE.l	#VDP_CMD_VRAM_WRITE_C482, D5
 	MOVE.w	#$000C, D7
 RenderMapToVRAM_NoPalette_Done:
 	MOVE.l	D5, VDP_control_port
@@ -2220,7 +2220,7 @@ RenderMapToVRAM_NoPalette_WritePalette2Tile:
 
 RenderMapToVRAM_WithPalette:
 	ORI	#$0700, SR
-	MOVE.l	#$44820003, D5
+	MOVE.l	#VDP_CMD_VRAM_WRITE_C482, D5
 	MOVE.w	#$000C, D7
 RenderMapToVRAM_WithPalette_Done:
 	MOVE.l	D5, VDP_control_port
@@ -2252,7 +2252,7 @@ DisplayStatsToVRAM_AltPalette:
 	BRA.w	DisplayStatsToVRAM_WithPalette
 DisplayStatsToVRAM_NoPalette:
 	ORI	#$0700, SR
-	MOVE.l	#$40820003, D5
+	MOVE.l	#VDP_CMD_VRAM_WRITE_C082, D5
 	MOVE.w	#7, D7
 DisplayStatsToVRAM_NoPalette_Done:
 	MOVE.l	D5, VDP_control_port
@@ -2277,7 +2277,7 @@ DisplayStatsToVRAM_NoPalette_WritePalette2Tile:
 
 DisplayStatsToVRAM_WithPalette:
 	ORI	#$0700, SR
-	MOVE.l	#$40820003, D5
+	MOVE.l	#VDP_CMD_VRAM_WRITE_C082, D5
 	MOVE.w	#7, D7
 DisplayStatsToVRAM_WithPalette_Done:
 	MOVE.l	D5, VDP_control_port
@@ -2324,7 +2324,7 @@ DrawCompassTiles:
 	LEA	DrawCompassTiles_Data, A0
 	LEA	(A0,D0.w), A0
 	ORI	#$0700, SR
-	MOVE.l	#$40820003, D5
+	MOVE.l	#VDP_CMD_VRAM_WRITE_C082, D5
 	MOVE.w	#7, D7
 DrawCompassTiles_Done:
 	LEA	(A0), A1
