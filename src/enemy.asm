@@ -2,6 +2,15 @@
 ; src/enemy.asm
 ; Enemy AI, projectiles, collision, damage, death rewards
 ; ======================================================================
+; ======================================================================
+; Projectile Boundary Helpers
+; ======================================================================
+
+; ClampProjectileToScreenBounds
+; Each frame: re-applies the previous position (pos - vel) and checks it
+; against the battle-field bounds.  If inside, stores the updated pos.
+; If outside (or at the edge), deactivates the object (clears bit 7) and
+; falls through to copy world coords to screen coords.
 ClampProjectileToScreenBounds:
 	MOVE.l	obj_world_x(A5), D0
 	SUB.l	obj_vel_x(A5), D0
@@ -48,16 +57,16 @@ ClampProjectile_Kill_Loop_Done:
 ; Output: obj_vel_x / obj_vel_y set on A5.
 CalculateVelocityFromAngle:
 	LEA	SineTable, A0
-	MOVE.l	obj_pos_x_fixed(A5), D0
+	MOVE.l	obj_pos_x_fixed(A5), D0	; D0 = speed scalar
 	CLR.w	D1
 	MOVE.b	obj_direction(A5), D1
-	ASL.w	#5, D1
-	MOVE.b	(A0,D1.w), D2
-	MOVE.b	$40(A0,D1.w), D3
+	ASL.w	#5, D1				; direction × 32 = sine table offset
+	MOVE.b	(A0,D1.w), D2			; D2 = sin(dir) for X velocity
+	MOVE.b	$40(A0,D1.w), D3		; D3 = sin(dir+64) = cos for Y velocity
 	EXT.w	D2
 	EXT.w	D3
-	MULS.w	D0, D2
-	MULS.w	D0, D3
+	MULS.w	D0, D2				; vel_x = speed × sin
+	MULS.w	D0, D3				; vel_y = speed × cos
 	MOVE.l	D2, obj_vel_x(A5)
 	MOVE.l	D3, obj_vel_y(A5)
 	RTS
@@ -80,10 +89,10 @@ CalculateVelocityFromAngle:
 ;           OR obj_vel_x/y zeroed and obj_direction randomised
 ; ---------------------------------------------------------------------------
 ; CheckObjectOnScreen
-; Check if object is within visible screen bounds and update position
-; Bounds: X = 0-320 pixels ($140), Y = 56-184 pixels ($38-$B8)
-; If out of bounds: Clears scroll offset and randomizes direction
-; If in bounds: Updates display position from world position
+; Variant of ClampProjectileToScreenBounds for generic enemies.
+; On out-of-bounds: zeroes velocity, zeroes timers, randomises direction
+; by ±0-7 (keeps enemy from leaving the field entirely).
+; Falls through to UpdateObjectDisplayPosition on both paths.
 CheckObjectOnScreen:
 	MOVE.l	obj_world_x(A5), D0
 	SUB.l	obj_vel_x(A5), D0
@@ -113,6 +122,9 @@ ObjectOffScreen:
 	ANDI.b	#7, D0
 	ADD.b	D0, obj_direction(A5)
 	ANDI.b	#7, obj_direction(A5)
+; UpdateObjectDisplayPosition
+; Trivial helper: copies world_x/y to screen_x/y and sets sort_key
+; from world_y (no bounds checking).
 UpdateObjectDisplayPosition:
 	MOVE.w	obj_world_x(A5), obj_screen_x(A5)
 	MOVE.w	obj_world_y(A5), obj_screen_y(A5)
@@ -172,9 +184,6 @@ DeactivateOffScreenObject_Loop:
 ; Output:   Player HP reduced; Player_invulnerable set; knockback applied;
 ;           Player_poisoned set if poison proc succeeds
 ; ---------------------------------------------------------------------------
-; HandlePlayerTakeDamage
-; Handle player taking damage from enemy collision
-; Checks collision with enemy hitbox, applies damage, poison chance, and knockback
 
 ; ======================================================================
 ; Collision and Damage Helpers
@@ -211,31 +220,31 @@ HandlePlayerTakeDamage:
 	TST.b	Player_invulnerable.w
 	BNE.w	HandlePlayerTakeDamage_Return
 	MOVE.b	#FLAG_TRUE, Player_invulnerable.w
-	MOVE.b	#PLAYER_HIT_INVULN_FRAMES, obj_invuln_timer(A6)
+	MOVE.b	#PLAYER_HIT_INVULN_FRAMES, obj_invuln_timer(A6)	; post-hit grace period
 	BSR.w	ApplyDamageToPlayer
-	PlaySound_b	SOUND_PLAYER_HIT
-	TST.b	obj_sprite_frame(A5)
-	BEQ.w	HandlePlayerTakeDamage_ApplyKnockback
+	PlaySound_b	SOUND_PLAYER_HIT		; hit sound
+	TST.b	obj_sprite_frame(A5)			; enemy type has poison flag?
+	BEQ.w	HandlePlayerTakeDamage_ApplyKnockback	; no → skip poison check
 	MOVE.w	Equipped_shield.w, D0
 	ANDI.w	#$00FF, D0
-	CMPI.w	#EQUIPMENT_SHIELD_POISON, D0
-	BEQ.w	HandlePlayerTakeDamage_ApplyKnockback
+	CMPI.w	#EQUIPMENT_SHIELD_POISON, D0		; poison-resist shield equipped?
+	BEQ.w	HandlePlayerTakeDamage_ApplyKnockback	; yes → skip poison
 	JSR	GetRandomNumber
-	ANDI.w	#$01FF, D0
-	CMP.w	Player_luk.w, D0
+	ANDI.w	#$01FF, D0				; random 0-511
+	CMP.w	Player_luk.w, D0			; RNG < LUK → resist
 	BLT.b	HandlePlayerTakeDamage_ApplyKnockback
-	MOVE.w	#POISONED_DURATION, Player_poisoned.w
+	MOVE.w	#POISONED_DURATION, Player_poisoned.w	; poison applied
 HandlePlayerTakeDamage_ApplyKnockback:
-	BSR.w	CalculateAngleBetweenObjects
+	BSR.w	CalculateAngleBetweenObjects		; D0 = angle from enemy to player
 	ANDI.w	#7, D0
 	ADD.w	D0, D0
-	ADD.w	D0, D0
+	ADD.w	D0, D0					; × 4 = word pair index into table
 	LEA	EnemyPositionOffsetTable, A0
 	MOVE.w	(A0,D0.w), D1
-	ADD.w	D1, obj_world_x(A6)
+	ADD.w	D1, obj_world_x(A6)			; nudge player X
 	MOVE.w	$2(A0,D0.w), D1
-	ADD.w	D1, obj_world_y(A6)
-	CLR.l	obj_vel_x(A5)
+	ADD.w	D1, obj_world_y(A6)			; nudge player Y
+	CLR.l	obj_vel_x(A5)				; stop enemy on contact
 	CLR.l	obj_vel_y(A5)
 HandlePlayerTakeDamage_Return:
 	RTS
@@ -244,6 +253,11 @@ HandlePlayerTakeDamage_Return:
 ; CalculateAngleToObjectCentered
 ; Variant of CalculateAngleBetweenObjects that biases the angle
 ; toward the screen centre before computing the direction.
+; Screen centre: X=$00A0 (160), Y=$0078 (120).
+; If target X > 160: X_biased = (X/2) + 160  (pull toward right)
+; If target Y > 120: Y_biased = (Y/2) + 120  (pull toward bottom)
+; This gives a "herding" effect — enemies converge toward the screen
+; middle rather than the exact player position.
 CalculateAngleToObjectCentered:
 	MOVE.w	#$00A0, D2
 	MOVE.w	obj_world_x(A6), D0
@@ -263,9 +277,18 @@ CalculateAngleToObjectCentered_OffsetY:
 	SUB.w	obj_world_y(A5), D1
 	BRA.w	CalculateAngleBetweenObjects_common
 ; CalculateAngleBetweenObjects
-; Calculate angle from object A5 to object A6
-; Input: A5 = Source object, A6 = Target object
-; Output: D0 = Angle (0-15, where 0=right, 4=down, 8=left, 12=up)
+; Calculate angle from object A5 to object A6 using a 16-direction
+; octant table.  Computes (dx, dy) = target minus source, classifies
+; into one of 16 octants, then looks up the sprite direction index.
+;
+; Octant classification bits in D2:
+;   bit 3: dx < 0  (west half)
+;   bit 2: dy < 0  (north half)
+;   bit 1: |dx| < |dy| (Y-dominant)
+;   bit 0: second half of octant (finer sub-division)
+;
+; Input: A5 = source object, A6 = target object
+; Output: D0 = direction index 0-7 (0=right, 2=down, 4=left, 6=up)
 CalculateAngleBetweenObjects:
 	MOVE.w	obj_world_x(A6), D0
 	SUB.w	obj_world_x(A5), D0
@@ -304,6 +327,15 @@ CalculateAngleBetweenObjects_common_SetOctantBit:
 ; CheckEnemyCollision
 ; AABB test between A5 and all active enemies in Enemy_list_ptr.
 ; Zeroes velocity on A5 if an overlap is found.
+; CheckEnemyCollision
+; AABB collision test: checks if A5 (the moving object) overlaps any
+; other active enemy in the enemy list.  On overlap, zeroes A5's velocity.
+; Uses pre-battle position (world - vel) so collision is checked at the
+; frame's START, not after movement has already been applied.
+;
+; D2 = enemy left edge, D3 = enemy right edge (X span of A5)
+; D4 = enemy bottom edge, D5 = enemy top edge (Y span of A5)
+; A6 walks the linked list via obj_next_offset; skips inactive slots.
 CheckEnemyCollision:
 	MOVEA.l	Enemy_list_ptr.w, A6
 	TST.w	Number_Of_Enemies.w
@@ -367,6 +399,10 @@ EnemyCollision_NextEnemy_Loop:
 ; EnemyDeathReward_OneSprite
 ; Award XP/kims, decrement enemy count, start death animation.
 ; Deactivates the single child sprite slot.
+; EnemyDeathReward_OneSprite
+; Awards XP and kims from obj_xp_reward/obj_kim_reward, decrements
+; Number_Of_Enemies, switches tick function to EnemyDeathAnimation,
+; sets death palette, and deactivates the single child sprite slot.
 EnemyDeathReward_OneSprite:
 	PlaySound_b	SOUND_MAGIC_EFFECT
 	MOVEQ	#0, D0
@@ -390,7 +426,8 @@ EnemyDeathReward_OneSprite:
 
 
 ; EnemyDeathReward_TwoSprites
-; As EnemyDeathReward_OneSprite but deactivates two child sprite slots.
+; Like EnemyDeathReward_OneSprite but walks the next-offset chain twice
+; to deactivate two child sprite slots.
 EnemyDeathReward_TwoSprites:
 	PlaySound_b	SOUND_MAGIC_EFFECT
 	MOVEQ	#0, D0
@@ -493,6 +530,13 @@ InitEnemy_StandardMeleeFast:
 	MOVE.l	#EnemyAnimFrames_MeleeA_Child, Enemy_anim_table_child.w
 	RTS
 
+; EnemyTick_StandardMelee
+; Per-frame tick for standard two-sprite melee enemies.
+; Priority: knockback flee > attack-timer wander > face-and-chase.
+; When obj_knockback_timer > 0: face away from player (dir +4 mod 8).
+; When obj_attack_timer > 0:    small random turn every ~1-in-8 frames.
+; When both are zero:           1-in-256 chance to set a wander timer ($F0
+;   frames); otherwise aim directly at the player each frame.
 EnemyTick_StandardMelee:
 	BSR.w	ProcessEnemyDamage
 	BGT.w	EnemyTick_StandardMelee_Alive
@@ -508,7 +552,7 @@ EnemyTick_StandardMelee_Alive:
 	SUBQ.w	#1, obj_knockback_timer(A5)
 	MOVEA.l	Player_entity_ptr.w, A6
 	BSR.w	CalculateAngleBetweenObjects
-	ADDQ.b	#4, D0
+	ADDQ.b	#4, D0			; face opposite direction (flee)
 	ANDI.b	#7, D0
 	MOVE.b	D0, obj_direction(A5)
 	BRA.w	EnemyMovementTick_UpdateVelocity
@@ -521,10 +565,10 @@ EnemyTick_StandardMelee_CheckAttackTimer:
 	BNE.w	EnemyMovementTick_UpdateVelocity
 	BTST.l	#4, D0
 	BEQ.w	EnemyTick_StandardMelee_TurnRight
-	ADDQ.b	#1, obj_direction(A5)	
+	ADDQ.b	#1, obj_direction(A5)	; random left turn
 	BRA.w	EnemyTick_StandardMelee_ApplyTurn	
 EnemyTick_StandardMelee_TurnRight:
-	SUBQ.b	#1, obj_direction(A5)
+	SUBQ.b	#1, obj_direction(A5)	; random right turn
 EnemyTick_StandardMelee_ApplyTurn:
 	ANDI.b	#7, obj_direction(A5)
 	BRA.w	EnemyMovementTick_UpdateVelocity
@@ -532,11 +576,16 @@ EnemyTick_StandardMelee_ChooseDirection:
 	JSR	GetRandomNumber
 	ANDI.w	#$00FF, D0
 	BNE.w	EnemyTick_StandardMelee_RandomWander
-	MOVE.w	#$00F0, obj_attack_timer(A5)
+	MOVE.w	#$00F0, obj_attack_timer(A5)	; ~240 frames of wander mode
 EnemyTick_StandardMelee_RandomWander:
 	MOVEA.l	Player_entity_ptr.w, A6
 	BSR.w	CalculateAngleBetweenObjects
 	MOVE.b	D0, obj_direction(A5)
+; EnemyMovementTick_UpdateVelocity
+; Shared tail section for all two-sprite melee enemy ticks.
+; Recalculates velocity, checks collision, handles player damage, then
+; updates the animation frame and flip bit for both main and child sprites.
+; A6 is set to the child sprite object by reading obj_next_offset.
 EnemyMovementTick_UpdateVelocity:
 	BSR.w	CalculateVelocityFromAngle
 	BSR.w	CheckEnemyCollision
@@ -545,24 +594,24 @@ EnemyMovementTick_UpdateVelocity:
 	MOVE.l	obj_vel_x(A5), D0
 	OR.l	obj_vel_y(A5), D0
 	BEQ.w	EnemyMovementTick_UpdateVelocity_CheckMoving
-	ADDQ.b	#1, obj_move_counter(A5)
+	ADDQ.b	#1, obj_move_counter(A5)	; only advance walk-cycle when moving
 EnemyMovementTick_UpdateVelocity_CheckMoving:
 	CLR.w	D0
 	MOVE.b	obj_next_offset(A5), D0
-	LEA	(A5,D0.w), A6
+	LEA	(A5,D0.w), A6			; A6 = child sprite object
 	MOVE.b	obj_move_counter(A5), D0
 	AND.w	Enemy_anim_frame_mask.w, D0
 	MOVE.w	Enemy_anim_frame_shift.w, D1
-	ASR.w	D1, D0
-	BCLR.b	#3, obj_sprite_flags(A5)
+	ASR.w	D1, D0				; D0 = animation frame index
+	BCLR.b	#3, obj_sprite_flags(A5)	; clear H-flip
 	CLR.w	D1
 	MOVE.b	obj_direction(A5), D1
 	CMPI.b	#4, D1
 	BLE.w	EnemyMovementTick_UpdateVelocity_SetFlip
-	BSET.b	#3, obj_sprite_flags(A5)
+	BSET.b	#3, obj_sprite_flags(A5)	; directions > 4 = facing left → H-flip
 EnemyMovementTick_UpdateVelocity_SetFlip:
-	ASL.w	#3, D1
-	ADD.w	D0, D1
+	ASL.w	#3, D1				; direction × 8 = row in anim table
+	ADD.w	D0, D1				; + frame column
 	MOVEA.l	Enemy_anim_table_main.w, A0
 	MOVEA.l	Enemy_anim_table_child.w, A1
 	MOVE.w	(A0,D1.w), obj_tile_index(A5)
@@ -573,6 +622,8 @@ EnemyMovementTick_UpdateVelocity_SetFlip:
 	BRA.w	EnemyTick_UpdateSprite
 EnemyMovementTick_UpdateVelocity_OffsetChild:
 	BSR.w	CopyEnemyPositionToChildObject
+; EnemyTick_UpdateSprite
+; Final step shared by all melee tick paths: add to sprite display list.
 EnemyTick_UpdateSprite:
 	JSR	AddSpriteToDisplayList
 	RTS
@@ -612,6 +663,11 @@ InitEnemy_StalkPauseAlt:
 	MOVE.l	#EnemyAnimFrames_MeleeA_Child, Enemy_anim_table_child.w
 	RTS
 
+; EnemyTick_StalkPause
+; Per-frame tick: knockback flee > pause-timer stand-still > stalk/chase.
+; obj_attack_timer: pause countdown (face player but stand still).
+; obj_knockback_timer: flee countdown (face away, keep moving).
+; 1-in-128 chance each frame to reset the pause timer.
 EnemyTick_StalkPause:
 	BSR.w	ProcessEnemyDamage
 	BGT.w	EnemyTick_StalkPause_Alive
@@ -705,6 +761,12 @@ InitEnemy_ProximityChase:
 	MOVE.l	#EnemyChildSpriteTick, obj_tick_fn(A6)
 	RTS
 
+; EnemyTick_ProximityChase
+; Per-frame tick for proximity-triggered chase enemy.
+; If |dx| > ENEMY_CHASE_PROXIMITY OR |dy| > ENEMY_CHASE_PROXIMITY:
+;   face player, zero velocity (stand-still AI).
+; Otherwise: aim and chase.
+; obj_knockback_timer > 0 overrides both: flee in opposite direction.
 EnemyTick_ProximityChase:
 	BSR.w	ProcessEnemyDamage
 	BGT.w	EnemyTick_ProximityChase_Alive
@@ -792,8 +854,9 @@ EnemyTick_ProximityChase_AddToDisplay:
 ; ======================================================================
 
 ; InitEnemy_FleeChase
-; Two-sprite enemy with random brief fleeing bursts mixed into
-; the normal chase behaviour.
+; Two-sprite melee enemy that alternates between chasing and briefly
+; fleeing (running away from player).  No special hitbox params set here —
+; uses defaults from InitEnemyAI.
 InitEnemy_FleeChase:
 	BSR.w	InitEnemyAI
 	MOVE.w	#VRAM_TILE_ENEMY_BASE, obj_tile_index(A5)
@@ -805,6 +868,12 @@ InitEnemy_FleeChase:
 	MOVE.l	#EnemyChildSpriteTick, obj_tick_fn(A6)
 	RTS
 
+; EnemyTick_FleeChase
+; Per-frame tick: knockback flee > random flee-timer > chase.
+; When obj_knockback_timer > 0:  flee from player.
+; When it reaches 0:  1-in-256 chance to set a new flee timer
+;   (value = (RNG >> 8) & $FF + $78, i.e. 120–375 frames).
+; Otherwise:  chase player directly.
 EnemyTick_FleeChase:
 	BSR.w	ProcessEnemyDamage
 	BGT.w	EnemyTick_FleeChase_Alive
@@ -828,11 +897,11 @@ EnemyTick_FleeChase_CheckFlee:
 	JSR	GetRandomNumber
 	MOVE.w	D0, D1
 	ANDI.w	#$00FF, D0
-	BNE.w	EnemyTick_FleeChase_SetFleeDir
-	ASR.w	#8, D1
+	BNE.w	EnemyTick_FleeChase_SetFleeDir	; 255-in-256 frames: just chase
+	ASR.w	#8, D1				; high byte of RNG
 	ANDI.w	#$00FF, D1
-	ADDI.w	#$0078, D1
-	MOVE.w	D1, obj_knockback_timer(A5)
+	ADDI.w	#$0078, D1			; flee timer = 120–375 frames
+	MOVE.w	D1, obj_knockback_timer(A5)	; start flee burst
 EnemyTick_FleeChase_SetFleeDir:
 	MOVEA.l	Player_entity_ptr.w, A6
 	BSR.w	CalculateAngleBetweenObjects
@@ -890,6 +959,10 @@ InitEnemy_Bouncing:
 	MOVE.l	#EnemyChildSpriteTick, obj_tick_fn(A6)
 	RTS
 
+; EnemyTick_Bouncing
+; Per-frame tick: stalk-pause AI with a two-part bounce animation.
+; The child sprite is always drawn 24 px ($18) above the main sprite Y.
+; Animation uses EnemyTick_Bouncing_Loop6_Data tables (bits 2-4 of counter).
 EnemyTick_Bouncing:
 	BSR.w	ProcessEnemyDamage
 	BGT.w	EnemyTick_Bouncing_Alive
@@ -939,16 +1012,16 @@ EnemyTick_Bouncing_UpdateBounceAnim:
 	LEA	(A5,D0.w), A6
 	ADDQ.b	#1, obj_move_counter(A5)
 	MOVE.b	obj_move_counter(A5), D0
-	ANDI.w	#$001C, D0
-	ASR.w	#1, D0
+	ANDI.w	#$001C, D0			; bits 2-4 of counter → frame (0-14, step 2)
+	ASR.w	#1, D0				; → word table index (0,2,4,6,8,10,12,14)
 	LEA	EnemyTick_Bouncing_Loop6_Data, A0
 	LEA	EnemyTick_Bouncing_Loop6_Data2, A1
-	MOVE.w	(A0,D0.w), obj_tile_index(A5)
-	MOVE.w	(A1,D0.w), obj_tile_index(A6)
-	MOVE.b	obj_sprite_flags(A5), obj_sprite_flags(A6)
+	MOVE.w	(A0,D0.w), obj_tile_index(A5)	; main body tile
+	MOVE.w	(A1,D0.w), obj_tile_index(A6)	; upper body tile
+	MOVE.b	obj_sprite_flags(A5), obj_sprite_flags(A6) ; sync flip/palette
 	MOVE.w	obj_screen_x(A5), obj_screen_x(A6)
 	MOVE.w	obj_screen_y(A5), D0
-	SUBI.w	#$0018, D0
+	SUBI.w	#$0018, D0			; child sprite 24 px above main
 	MOVE.w	D0, obj_screen_y(A6)
 	MOVE.w	obj_sort_key(A5), obj_sort_key(A6)
 EnemyTick_Bouncing_AddToDisplay:
@@ -971,6 +1044,12 @@ InitEnemy_ProjectileFire:
 	MOVE.l	#EnemyChildSpriteTick, obj_tick_fn(A6)
 	RTS
 
+; EnemyTick_ProjectileFire
+; Per-frame tick: knockback flee > wander-timer > track-and-fire pattern.
+; Uses a third child object (A4) as a projectile (ProjectileTick_Linear).
+; When obj_attack_timer > 0: random turn (1-in-8) then move.
+; When zero and RNG=0: set attack_timer = $0078 (120-frame wander), random turn.
+; Otherwise: face player, zero velocity (pause before firing).
 EnemyTick_ProjectileFire:
 	BSR.w	ProcessEnemyDamage
 	BGT.w	EnemyTick_ProjectileFire_Alive
@@ -1044,25 +1123,38 @@ EnemyTick_ProjectileFire_Move_CheckMoving:
 	CLR.l	obj_vel_x(A4)
 	CLR.l	obj_vel_y(A4)
 	BRA.w	EnemySplit_UpdateSprite
+; ======================================================================
+; Projectile Spawner: EnemySplit (ProjectileFire helper)
+; ======================================================================
+
+; EnemySplit_SpawnChild
+; Activates the third object slot (A4) as a new linear projectile aimed
+; at the player.  Copies position and speed from the parent (A5).
+; Only called when A4 is not already active (bit 7 clear).
+;
+; EnemySplit_UpdateSprite
+; Shared tail: update walk animation for the two-sprite parent enemy,
+; copy child-sprite position via CopyEnemyPositionToChildObject, and
+; submit to the display list.
 EnemySplit_SpawnChild:
-	BSET.b	#7, (A4)
+	BSET.b	#7, (A4)			; mark projectile slot active
 	JSR	GetRandomNumber
 	MOVE.b	D0, obj_move_counter(A4)
 	MOVE.b	obj_sprite_flags(A5), obj_sprite_flags(A4)
 	MOVE.l	obj_world_x(A5), obj_world_x(A4)
 	MOVE.l	obj_world_y(A5), obj_world_y(A4)
 	MOVE.w	obj_world_y(A4), D0
-	MOVE.w	D0, obj_world_y(A4)
+	MOVE.w	D0, obj_world_y(A4)		; re-store word (normalise fixed-point)
 	MOVE.l	obj_pos_x_fixed(A5), D0
-	ADD.l	D0, D0
+	ADD.l	D0, D0				; projectile speed = 2× parent speed
 	MOVE.l	D0, obj_pos_x_fixed(A4)
 	MOVE.b	#1, obj_sprite_size(A4)
 	MOVE.l	#ProjectileTick_Linear, obj_tick_fn(A4)
-	MOVE.w	obj_max_hp(A5), obj_max_hp(A4)
+	MOVE.w	obj_max_hp(A5), obj_max_hp(A4)	; carry damage value to projectile
 	MOVEA.l	Player_entity_ptr.w, A6
 	BSR.w	CalculateAngleBetweenObjects
-	MOVE.b	D0, obj_direction(A4)
-	MOVE.b	D0, obj_direction(A5)
+	MOVE.b	D0, obj_direction(A4)		; projectile aims at player
+	MOVE.b	D0, obj_direction(A5)		; parent faces same direction
 EnemySplit_UpdateSprite:
 	CLR.w	D0
 	MOVE.b	obj_next_offset(A5), D0
@@ -1214,10 +1306,14 @@ EnemyHoming_UpdateSprite_SetFlip:
 ; Homing projectile with a limited lifetime (obj_attack_timer counts
 ; down to zero then deactivates).  Re-aims toward the player every 16
 ; ticks using a change-in-timer XOR trick.
+;
+; XOR trick: (timer) XOR (timer-1) flips bit N if bit N was the lowest
+; set bit.  BTST #4 is true exactly once every 16 frames (when bit 4
+; transitions 1→0), giving a retarget every 16 ticks.
 ProjectileTick_HomingAlt:
 	TST.w	obj_attack_timer(A5)
 	BNE.w	ProjectileTick_HomingAlt_Active
-	BCLR.b	#7, (A5)
+	BCLR.b	#7, (A5)			; deactivate projectile
 	CLR.b	obj_npc_busy_flag(A5)
 	CLR.l	obj_vel_x(A5)
 	CLR.l	obj_vel_y(A5)
@@ -1227,11 +1323,11 @@ ProjectileTick_HomingAlt_Active:
 	MOVE.w	obj_attack_timer(A5), D0
 	MOVE.w	D0, D1
 	SUBQ.w	#1, D1
-	EOR.w	D0, D1
-	BTST.l	#4, D1
+	EOR.w	D0, D1				; D1 = D0 XOR (D0-1) — bit N set iff N was lowest bit
+	BTST.l	#4, D1				; true once every 16 frames
 	BEQ.w	ProjectileTick_HomingAlt_Retarget
 	MOVEA.l	Player_entity_ptr.w, A6
-	BSR.w	CalculateAngleBetweenObjects
+	BSR.w	CalculateAngleBetweenObjects	; re-aim
 	MOVE.b	D0, obj_direction(A5)
 ProjectileTick_HomingAlt_Retarget:
 	BSR.w	CalculateVelocityFromAngle
@@ -1384,6 +1480,11 @@ InitEnemy_RandomShooter:
 	MOVE.l	#EnemyChildSpriteTick, obj_tick_fn(A6)
 	RTS
 	
+; EnemyTick_RandomShooter
+; Per-frame tick: knockback flee > attack-timer cooldown > 1-in-32 chance
+; to randomise direction and set a $50-frame shoot cooldown.  Otherwise
+; tracks player but stands still.
+; Fires a single-sprite projectile via the child slot (A4).
 EnemyTick_RandomShooter:
 	BSR.w	ProcessEnemyDamage
 	BGT.w	EnemyTick_RandomShooter_Alive
@@ -1468,13 +1569,18 @@ InitEnemy_Teleporter:
 	MOVE.l	#EnemyChildSpriteTick, obj_tick_fn(A6)
 	RTS
 	
+; EnemyTick_Teleporter
+; Per-frame tick: when obj_knockback_timer reaches 0, picks a new random
+; teleport delay in range [$60, $7F] (96-127 frames) and calls
+; SetRandomEnemyPosition to warp to a new spot.  Then falls through to
+; CheckAndUpdateBattleTimer / the animation update.
 EnemyTick_Teleporter:	
 	TST.w	obj_knockback_timer(A5)
 	BNE.w	EnemyTick_Teleporter_Countdown
 	CLR.w	D0
 	JSR	GetRandomNumber
-	ORI.w	#$0060, D0
-	ANDI.w	#$007F, D0
+	ORI.w	#$0060, D0			; ensure minimum delay of $60 frames
+	ANDI.w	#$007F, D0			; cap at $7F
 	MOVE.w	D0, obj_knockback_timer(A5)
 	CLR.w	D0
 	MOVE.b	obj_next_offset(A5), D0
@@ -1871,6 +1977,10 @@ InitEnemy_FastBurstShooter:
 	BSR.w	SetRandomEnemyPosition
 	RTS
 	
+; EnemyTick_FastBurstShooter
+; Per-frame tick: aims at player, then 1-in-128 chance spawns 8
+; ProjectileTick_Straight projectiles (one per direction 0-7).
+; Speed $380 (fixed-point 3.5 px/frame) per projectile.
 EnemyTick_FastBurstShooter:
 	BSR.w	CheckAndUpdateBattleTimer
 	BGT.w	EnemyTick_FastBurstShooter_Alive
@@ -2562,29 +2672,29 @@ InitBoss_MultiOrb:
 	LEA	(A5), A6
 	MOVE.w	#8, D7
 InitBoss_MultiOrb_Done:
-	LEA	(A6), A4
+	LEA	(A6), A4			; A4 = previous slot
 	CLR.w	D0
 	MOVE.b	obj_next_offset(A4), D0
-	LEA	(A4,D0.w), A6
-	BSET.b	#7, (A6)
+	LEA	(A4,D0.w), A6			; A6 = next orb slot
+	BSET.b	#7, (A6)			; activate orb
 	MOVE.b	#SPRITE_SIZE_2x1, obj_sprite_size(A6)
-	MOVE.b	D2, obj_sprite_flags(A6)
+	MOVE.b	D2, obj_sprite_flags(A6)	; shared palette
 	MOVE.w	#VRAM_TILE_ORBIT_BOSS_ORB, obj_tile_index(A6)
-	MOVE.l	obj_world_x(A5), obj_world_x(A6)
+	MOVE.l	obj_world_x(A5), obj_world_x(A6); inherit boss X
 	MOVE.l	obj_world_y(A5), D1
-	SUBI.l	#$00080000, D1
+	SUBI.l	#$00080000, D1			; 8 px above boss centre
 	MOVE.l	D1, obj_world_y(A6)
 	MOVE.l	#BossOrbTick_Static, obj_tick_fn(A6)
 	CLR.l	obj_vel_x(A6)
 	CLR.l	obj_vel_y(A6)
-	MOVE.w	#4, obj_hitbox_half_w(A6)
-	MOVE.w	#4, obj_hitbox_half_h(A6)
-	MOVE.w	obj_max_hp(A5), obj_max_hp(A6)
+	MOVE.w	#4, obj_hitbox_half_w(A6)	; 4 px half-width hitbox
+	MOVE.w	#4, obj_hitbox_half_h(A6)	; 4 px half-height hitbox
+	MOVE.w	obj_max_hp(A5), obj_max_hp(A6)	; orbs share boss max HP (damage ring)
 	CLR.b	obj_invuln_timer(A6)
 	MOVE.w	obj_world_x(A6), obj_screen_x(A6)
 	MOVE.w	obj_world_y(A6), obj_screen_y(A6)
 	MOVE.w	obj_world_y(A6), obj_sort_key(A6)
-	DBF	D7, InitBoss_MultiOrb_Done
+	DBF	D7, InitBoss_MultiOrb_Done	; repeat for all 9 orb slots
 	CLR.b	obj_invuln_timer(A5)
 	CLR.w	obj_attack_timer(A5)
 	CLR.w	obj_knockback_timer(A5)
@@ -2619,33 +2729,33 @@ BossTakeDamage_CheckDeath_Alive:
 	CLR.l	obj_vel_x(A5)
 	CLR.l	obj_vel_y(A5)
 	TST.b	obj_sub_timer(A5)
-	BNE.w	BossTakeDamage_CheckDeath_StaticPhase
+	BNE.w	BossTakeDamage_CheckDeath_StaticPhase	; sub_timer > 0 = orb wobble phase
 	CMPI.b	#DEATH_SCATTER_ANGLE_COUNT, obj_attack_timer(A5)
 	BCS.b	BossTakeDamage_CheckDeath_AnglePhase
 	JSR	GetRandomNumber
 	ANDI.w	#$00FF, D0
-	CMPI.w	#RANDOM_HALF_THRESHOLD, D0
+	CMPI.w	#RANDOM_HALF_THRESHOLD, D0		; 50% chance to reset orb scatter angle
 	BLE.b	BossTakeDamage_CheckDeath_ResetAngle
 	CLR.b	obj_attack_timer(A5)
 BossTakeDamage_CheckDeath_AnglePhase:
-	ADDQ.b	#1, obj_attack_timer(A5)
+	ADDQ.b	#1, obj_attack_timer(A5)		; advance angle phase counter
 	MOVEA.l	Player_entity_ptr.w, A6
 	BSR.w	CalculateAngleBetweenObjects
-	ADDQ.b	#2, D0
+	ADDQ.b	#2, D0				; offset angle by 2 (45° rotation)
 	ANDI.w	#7, D0
-	ASL.w	#5, D0
+	ASL.w	#5, D0				; D0 = sine table offset (dir × 32)
 	MOVE.w	D0, D5
 	CLR.l	D0
 	LEA	SineTable, A0
-	MOVE.b	$40(A0,D5.w), D0
-	ASL.w	#8, D0
+	MOVE.b	$40(A0,D5.w), D0			; X = cosine component
+	ASL.w	#8, D0				; scale to fixed-point
 	EXT.l	D0
-	NEG.l	D0
+	NEG.l	D0				; negate for correct X direction
 	MOVE.l	D0, obj_vel_x(A5)
 	CLR.l	D0
 	LEA	SineTable, A0
-	MOVE.b	(A0,D5.w), D0
-	ASL.w	#8, D0
+	MOVE.b	(A0,D5.w), D0			; Y = sine component
+	ASL.w	#8, D0				; scale to fixed-point
 	EXT.l	D0
 	MOVE.l	D0, obj_vel_y(A5)
 	BSR.w	CheckEnemyCollision
@@ -2664,67 +2774,86 @@ BossTakeDamage_CheckDeath_ResetOrbPositions:
 	DBF	D7, BossTakeDamage_CheckDeath_ResetOrbPositions
 	BRA.w	BossTakeDamage_CheckDeath_WobblePhase
 BossTakeDamage_CheckDeath_ResetAngle:
-	MOVE.b	#$21, obj_sub_timer(A5)
+	MOVE.b	#$21, obj_sub_timer(A5)		; arm wobble timer (33 frames)
 	MOVEA.l	Player_entity_ptr.w, A6
-	BSR.w	CalculateAngleBetweenObjects
-	ADDQ.b	#2, D0
+	BSR.w	CalculateAngleBetweenObjects	; D0 = 8-dir angle toward player
+	ADDQ.b	#2, D0				; rotate 45° for scatter direction
 	ANDI.w	#7, D0
-	ASL.w	#5, D0
-	MOVE.w	D0, obj_knockback_timer(A5)
+	ASL.w	#5, D0				; × 32 = sine table offset
+	MOVE.w	D0, obj_knockback_timer(A5)	; save angle for StaticPhase loop
+; BossTakeDamage_CheckDeath_StaticPhase
+; Orb wobble / scatter phase active while obj_sub_timer > 0.
+; Each frame the 9 orbs are repositioned on an expanding/contracting ring
+; using a sine-based radius that pulses with sub_timer.
+;
+; Algorithm:
+;   sub_timer counts down from $21 (33).  Half it and subtract 8 to get
+;   a signed wobble value in [-8, +8].  ABS gives distance from mid-point.
+;   Radius D6 = 2 × (8 - |wobble|), so it peaks at 16 when timer≈$11
+;   and tapers to 0 at the ends.  D3 = D6 is the per-orb ring step.
+;   Each orb i gets: X = boss_X + cosine(angle) × (D6 + i×D3) >> 8
+;                    Y = boss_Y - sine(angle)   × (D6 + i×D3) >> 8  - 8
+;
+; D5 = obj_knockback_timer (saved sine table offset, set in ResetAngle)
+; D6 = current radius (even, 0-16)
+; D7 = orb count - 1 (8 orbs)
+; A0 = boss object base (kept throughout loop to read boss world_x/y)
 BossTakeDamage_CheckDeath_StaticPhase:
-	LEA	(A5), A0
-	SUBQ.b	#1, obj_sub_timer(A5)
-	MOVE.w	#8, D7
+	LEA	(A5), A0			; A0 = boss base (for X/Y each iteration)
+	SUBQ.b	#1, obj_sub_timer(A5)		; count down wobble timer
+	MOVE.w	#8, D7				; 9 orbs (DBF 8→0)
 	CLR.l	D0
 	MOVE.b	obj_sub_timer(A5), D0
-	ASR.w	#1, D0
-	SUBQ.w	#8, D0
+	ASR.w	#1, D0				; half timer → wobble value
+	SUBQ.w	#8, D0				; centre around 0: range [-8, +8]
 	BGE.b	BossTakeDamage_CheckDeath_AbsWobble
-	NEG.w	D0
+	NEG.w	D0				; ABS: always positive distance from mid
 BossTakeDamage_CheckDeath_AbsWobble:
-	MOVE.w	obj_knockback_timer(A5), D5
+	MOVE.w	obj_knockback_timer(A5), D5	; D5 = saved sine table offset
 	MOVEQ	#8, D6
-	SUB.w	D0, D6
-	ADD.w	D6, D6
-	MOVE.w	D6, D3
+	SUB.w	D0, D6				; D6 = 8 - |wobble|  (peak = 8)
+	ADD.w	D6, D6				; × 2  (peak radius = 16 px)
+	MOVE.w	D6, D3				; D3 = per-orb ring step (constant)
 	LEA	(A5), A6
 BossTakeDamage_CheckDeath_UpdateOrbPositions:
-	LEA	(A6), A4
-	MOVE.w	D6, D1
+	LEA	(A6), A4			; A4 = current orb
+	MOVE.w	D6, D1				; D1 = this orb's radius multiplier
 	CLR.w	D0
 	MOVE.b	obj_next_offset(A4), D0
-	LEA	(A4,D0.w), A6
+	LEA	(A4,D0.w), A6			; advance to next orb in list
 	CLR.l	D0
 	LEA	SineTable, A1
-	MOVE.b	$40(A1,D5.w), D0
-	ASL.w	#8, D0
+	MOVE.b	$40(A1,D5.w), D0		; cosine (sine offset $40)
+	ASL.w	#8, D0				; scale to fixed-point
 	EXT.l	D0
-	MULS.w	D1, D0
-	ADD.l	$E(A0), D0
+	MULS.w	D1, D0				; X offset = cos × radius
+	ADD.l	$E(A0), D0			; + boss world_x ($E = obj_world_x)
 	MOVE.l	D0, obj_world_x(A6)
 	CLR.l	D0
 	LEA	SineTable, A1
-	MOVE.b	(A1,D5.w), D0
-	ASL.w	#8, D0
+	MOVE.b	(A1,D5.w), D0			; sine
+	ASL.w	#8, D0				; scale to fixed-point
 	EXT.l	D0
-	MULS.w	D1, D0
-	NEG.l	D0
-	ADD.l	$12(A0), D0
-	SUBI.l	#$00080000, D0
+	MULS.w	D1, D0				; Y offset = sin × radius
+	NEG.l	D0				; negate (Y axis is inverted)
+	ADD.l	$12(A0), D0			; + boss world_y ($12 = obj_world_y)
+	SUBI.l	#$00080000, D0			; shift up by 8 px (orb above boss centre)
 	MOVE.l	D0, obj_world_y(A6)
-	ADD.w	D3, D6
+	ADD.w	D3, D6				; advance radius for next orb
 	DBF	D7, BossTakeDamage_CheckDeath_UpdateOrbPositions
-	LEA	(A0), A5
+	LEA	(A0), A5			; restore A5 → boss
 	BSR.w	CheckEnemyCollision
 	BSR.w	HandlePlayerTakeDamage
 	BSR.w	CheckObjectOnScreen
+; BossTakeDamage_CheckDeath_WobblePhase
+; Advance and apply boss body animation (fireball loop, 4 frames of 2 ticks each).
 BossTakeDamage_CheckDeath_WobblePhase:
-	ADDQ.b	#1, obj_move_counter(A5)
+	ADDQ.b	#1, obj_move_counter(A5)	; global frame counter
 	MOVE.b	obj_move_counter(A5), D1
-	ANDI.w	#$000C, D1
-	LSR.w	#1, D1
+	ANDI.w	#$000C, D1			; bits 2-3 → 0,4,8,12 (4-frame cycle)
+	LSR.w	#1, D1				; → 0,2,4,6  (word table index)
 	LEA	EnemyAnimFrames_Fireball_D, A0
-	MOVE.w	(A0,D1.w), obj_tile_index(A5)
+	MOVE.w	(A0,D1.w), obj_tile_index(A5)	; select animation frame
 	JSR	AddSpriteToDisplayList(PC)
 	RTS
 	
@@ -2736,27 +2865,31 @@ BossTakeDamage_CheckDeath_WobblePhase:
 ; InitBoss_OrbRing
 ; Large boss with a ring of 9 orbs positioned on a circle using
 ; CalculateCircularPosition.  Uses BossTick_OrbRing.
+;
+; Layout: boss body (A5) + 1 centre orb (slot+1) + 8 ring orbs (slots+2..+9).
+;   Centre orb: Y = boss_Y - $10 (16 px above boss), tile $0199, BossOrbTick_Static.
+;   Ring orbs:  angle = centre_orb.attack_timer + $10 each; same tile, BossOrbTick_Static.
 InitBoss_OrbRing:
 	JSR	GetRandomNumber
-	MOVE.b	D0, obj_move_counter(A5)
+	MOVE.b	D0, obj_move_counter(A5)	; randomise animation phase
 	ANDI.b	#6, D0
-	MOVE.b	D0, obj_direction(A5)
+	MOVE.b	D0, obj_direction(A5)		; initial facing (even, 0-6)
 	MOVE.b	#SPRITE_SIZE_4x4, obj_sprite_size(A5)
 	MOVE.l	#BossTick_OrbRing, obj_tick_fn(A5)
 	BSR.w	SetObjectBoundsType2
 	CLR.w	D0
 	MOVE.b	obj_next_offset(A5), D0
-	LEA	(A5,D0.w), A6
-	BSET.b	#7, (A6)
-	MOVE.l	obj_world_x(A5), obj_world_x(A6)
+	LEA	(A5,D0.w), A6			; A6 = centre orb slot
+	BSET.b	#7, (A6)			; activate centre orb
+	MOVE.l	obj_world_x(A5), obj_world_x(A6); align X with boss
 	MOVE.l	obj_world_y(A5), D1
-	SUBI.l	#$00100000, D1
+	SUBI.l	#$00100000, D1			; 16 px above boss
 	MOVE.l	D1, obj_world_y(A6)
-	MOVE.b	#0, obj_attack_timer(A6)
+	MOVE.b	#0, obj_attack_timer(A6)	; angle index starts at 0
 	MOVE.b	#SPRITE_SIZE_2x1, obj_sprite_size(A6)
-	MOVE.b	obj_sprite_flags(A5), D2
+	MOVE.b	obj_sprite_flags(A5), D2	; D2 = palette flags (shared by all orbs)
 	MOVE.b	D2, obj_sprite_flags(A6)
-	MOVE.w	#$0199, D3
+	MOVE.w	#$0199, D3			; D3 = orb tile index (shared)
 	MOVE.w	D3, obj_tile_index(A6)
 	MOVE.l	#BossOrbTick_Static, obj_tick_fn(A6)
 	CLR.l	obj_vel_x(A6)
@@ -2767,31 +2900,31 @@ InitBoss_OrbRing:
 	MOVE.w	obj_world_x(A6), obj_screen_x(A6)
 	MOVE.w	obj_world_y(A6), obj_screen_y(A6)
 	MOVE.w	obj_world_y(A6), obj_sort_key(A6)
-	MOVE.w	#7, D7
+	MOVE.w	#7, D7				; 8 ring orbs (DBF 7→0)
 InitBoss_OrbRing_Done:
-	LEA	(A6), A4
+	LEA	(A6), A4			; A4 = previous orb (parent for angle)
 	CLR.w	D0
 	MOVE.b	obj_next_offset(A4), D0
-	LEA	(A4,D0.w), A6
-	BSET.b	#7, (A6)
+	LEA	(A4,D0.w), A6			; A6 = next ring orb slot
+	BSET.b	#7, (A6)			; activate
 	MOVE.b	#SPRITE_SIZE_2x1, obj_sprite_size(A6)
-	MOVE.b	D2, obj_sprite_flags(A6)
-	MOVE.w	D3, obj_tile_index(A6)
-	MOVE.b	$3A(A4), D0
-	ADDI.w	#$0010, D0
-	MOVE.b	D0, obj_attack_timer(A6)
-	JSR	CalculateCircularPosition(PC)
+	MOVE.b	D2, obj_sprite_flags(A6)	; shared palette
+	MOVE.w	D3, obj_tile_index(A6)		; shared tile $0199
+	MOVE.b	$3A(A4), D0			; prev orb's attack_timer (angle index)
+	ADDI.w	#$0010, D0			; advance angle by $10 (22.5° apart)
+	MOVE.b	D0, obj_attack_timer(A6)	; store this orb's angle index
+	JSR	CalculateCircularPosition(PC)	; set world_x/y from angle+radius
 	MOVE.l	#BossOrbTick_Static, obj_tick_fn(A6)
 	CLR.l	obj_vel_x(A6)
 	CLR.l	obj_vel_y(A6)
 	MOVE.w	#4, obj_hitbox_half_w(A6)
 	MOVE.w	#4, obj_hitbox_half_h(A6)
-	MOVE.w	obj_max_hp(A5), obj_max_hp(A6)
+	MOVE.w	obj_max_hp(A5), obj_max_hp(A6)	; ring orbs inherit boss max HP
 	CLR.b	obj_invuln_timer(A6)
 	MOVE.w	obj_world_x(A6), obj_screen_x(A6)
 	MOVE.w	obj_world_y(A6), obj_screen_y(A6)
 	MOVE.w	obj_world_y(A6), obj_sort_key(A6)
-	DBF	D7, InitBoss_OrbRing_Done
+	DBF	D7, InitBoss_OrbRing_Done	; repeat for all 8 ring orbs
 	CLR.b	obj_invuln_timer(A5)
 	CLR.w	obj_attack_timer(A5)
 	CLR.w	obj_knockback_timer(A5)
@@ -2803,24 +2936,36 @@ InitBoss_OrbRing_Done:
 ; BossTick_OrbRing
 ; Per-frame tick: damage / invulnerability; rotates all ring orbs by
 ; incrementing their angle index each frame.
+;
+; Hit handling:
+;   obj_invuln_timer > 0 → count down, jump to BossTakeDamage2_CheckDeath.
+;   obj_hit_flag set     → subtract Player_str from HP, start invuln.
+;   SOUND_HEAL is the hit-confirm sfx (misnamed constant).
 BossTick_OrbRing:
 	TST.b	obj_invuln_timer(A5)
 	BLE.w	BossTick_OrbRing_Loop
-	SUBQ.b	#1, obj_invuln_timer(A5)	
-	BRA.w	BossTakeDamage2_CheckDeath	
+	SUBQ.b	#1, obj_invuln_timer(A5)	; decrement invulnerability timer
+	BRA.w	BossTakeDamage2_CheckDeath	; no new damage while invuln
 BossTick_OrbRing_Loop:
 	TST.b	obj_hit_flag(A5)
-	BEQ.w	BossTakeDamage2_CheckDeath
-	PlaySound_b	SOUND_HEAL	
-	MOVE.w	Player_str.w, D0	
-	SUB.w	D0, obj_hp(A5)	
-	MOVE.b	#PLAYER_HIT_INVULN_FRAMES, obj_invuln_timer(A5)	
+	BEQ.w	BossTakeDamage2_CheckDeath	; no hit this frame
+	PlaySound_b	SOUND_HEAL		; hit-confirm sfx
+	MOVE.w	Player_str.w, D0		; D0 = player STR
+	SUB.w	D0, obj_hp(A5)			; subtract damage from boss HP
+	MOVE.b	#PLAYER_HIT_INVULN_FRAMES, obj_invuln_timer(A5)	; start invuln window
+; BossTakeDamage2_CheckDeath
+; Check HP; if ≤ 0 transition to multi-sprite death reward handler.
 BossTakeDamage2_CheckDeath:
 	TST.w	obj_hp(A5)
 	BGT.w	BossTakeDamage2_CheckDeath_Alive
-	MOVE.l	#BossDeathReward_MultiSprite, obj_tick_fn(A5)
+	MOVE.l	#BossDeathReward_MultiSprite, obj_tick_fn(A5)	; switch to death sequence
 	RTS
 	
+; BossTakeDamage2_CheckDeath_Alive
+; Scatter-velocity AI for OrbRing boss.  Mirrors BossTakeDamage_CheckDeath_Alive
+; but operates on the OrbRing body.
+;   obj_knockback_timer: scatter angle counter (0 → DEATH_SCATTER_ANGLE_COUNT)
+;   50% RNG chance to reset angle each cycle.
 BossTakeDamage2_CheckDeath_Alive:
 	CLR.b	obj_hit_flag(A5)
 	CLR.l	obj_vel_x(A5)
@@ -2829,86 +2974,90 @@ BossTakeDamage2_CheckDeath_Alive:
 	BCS.b	BossTakeDamage2_CheckDeath_AnglePhase
 	JSR	GetRandomNumber
 	ANDI.w	#$00FF, D0
-	CMPI.w	#RANDOM_HALF_THRESHOLD, D0
+	CMPI.w	#RANDOM_HALF_THRESHOLD, D0		; 50% chance to reset scatter cycle
 	BLE.b	BossTakeDamage2_CheckDeath_ResetAngle
-	CLR.b	obj_knockback_timer(A5)
+	CLR.b	obj_knockback_timer(A5)			; reset angle counter
 BossTakeDamage2_CheckDeath_AnglePhase:
-	ADDQ.b	#1, obj_knockback_timer(A5)
+	ADDQ.b	#1, obj_knockback_timer(A5)		; advance scatter angle
 	MOVEA.l	Player_entity_ptr.w, A6
 	BSR.w	CalculateAngleBetweenObjects
-	ADDQ.b	#2, D0
+	ADDQ.b	#2, D0					; offset by 2 (45°)
 	ANDI.w	#7, D0
-	ASL.w	#5, D0
+	ASL.w	#5, D0					; × 32 = sine table offset
 	MOVE.w	D0, D5
 	CLR.l	D0
 	LEA	SineTable, A0
-	MOVE.b	$40(A0,D5.w), D0
-	ASL.w	#8, D0
+	MOVE.b	$40(A0,D5.w), D0			; cosine component
+	ASL.w	#8, D0					; scale to fixed-point
 	EXT.l	D0
-	NEG.l	D0
+	NEG.l	D0					; negate for correct X direction
 	MOVE.l	D0, obj_vel_x(A5)
 	CLR.l	D0
 	LEA	SineTable, A0
-	MOVE.b	(A0,D5.w), D0
-	ASL.w	#8, D0
+	MOVE.b	(A0,D5.w), D0				; sine component
+	ASL.w	#8, D0					; scale to fixed-point
 	EXT.l	D0
 	MOVE.l	D0, obj_vel_y(A5)
 BossTakeDamage2_CheckDeath_ResetAngle:
 	BSR.w	CheckEnemyCollision
 	BSR.w	HandlePlayerTakeDamage
 	BSR.w	CheckObjectOnScreen
-	ADDQ.b	#1, obj_move_counter(A5)
+	ADDQ.b	#1, obj_move_counter(A5)		; advance body animation counter
 	MOVE.b	obj_move_counter(A5), D1
-	ANDI.w	#$000C, D1
-	LSR.w	#1, D1
+	ANDI.w	#$000C, D1				; 4-frame animation cycle
+	LSR.w	#1, D1					; → word table index (0,2,4,6)
 	LEA	EnemyAnimFrames_Fireball_D, A0
-	MOVE.w	(A0,D1.w), obj_tile_index(A5)
-	LEA	(A5), A0
+	MOVE.w	(A0,D1.w), obj_tile_index(A5)		; apply boss body frame
+	LEA	(A5), A0				; A0 = boss (preserved across orb loop)
 	CLR.w	D5
 	MOVE.b	obj_next_offset(A5), D5
-	LEA	(A5,D5.w), A6
-	MOVE.l	obj_world_x(A5), obj_world_x(A6)
+	LEA	(A5,D5.w), A6				; A6 = centre orb
+	MOVE.l	obj_world_x(A5), obj_world_x(A6)	; keep centre orb aligned
 	MOVE.l	obj_world_y(A5), D1
-	SUBI.l	#$00100000, D1
+	SUBI.l	#$00100000, D1				; 16 px above boss
 	MOVE.l	D1, obj_world_y(A6)
-	BSET.b	#7, (A6)
-	CLR.w	D6
-	MOVE.w	#7, D7
+	BSET.b	#7, (A6)				; ensure centre orb is active
+	CLR.w	D6					; D6 = cumulative angle adjustment
+	MOVE.w	#7, D7					; 8 ring orbs (DBF 7→0)
+; BossTakeDamage2_CheckDeath_RotateOrbs
+; Each ring orb: check if its slot-index (obj_move_counter & 7) ≥ 6 to decide
+; whether to fire a projectile toward the player.  Rotate angle toward player
+; using a signed delta, then re-position via CalculateCircularPosition.
 BossTakeDamage2_CheckDeath_RotateOrbs:
-	MOVE.b	$1B(A0), D0
-	ANDI.b	#7, D0
-	CMPI.b	#6, D0
+	MOVE.b	$1B(A0), D0				; A0.orb move_counter
+	ANDI.b	#7, D0					; keep low 3 bits
+	CMPI.b	#6, D0					; ≥ 6 → launch projectile
 	BLT.b	BossTakeDamage2_CheckDeath_SkipLaunch
-	LEA	(A6), A4
+	LEA	(A6), A4				; A4 = this orb
 	LEA	(A4), A5
 	MOVEA.l	Player_entity_ptr.w, A6
-	BSR.w	CalculateAngleBetweenObjects
+	BSR.w	CalculateAngleBetweenObjects		; D0 = raw 8-dir angle to player
 	ADDQ.b	#2, D0
 	ANDI.w	#7, D0
-	ASL.w	#5, D0
+	ASL.w	#5, D0					; × 32 = target sine offset
 	CLR.w	D5
 	MOVE.b	obj_next_offset(A4), D5
-	LEA	(A4,D5.w), A6
+	LEA	(A4,D5.w), A6				; next orb
 	CLR.w	D1
-	MOVE.b	obj_attack_timer(A6), D1
-	ADD.b	D6, D1
+	MOVE.b	obj_attack_timer(A6), D1		; current orb angle
+	ADD.b	D6, D1					; add cumulative rotation
 	ANDI.w	#$00FF, D1
-	MOVE.w	#1, D2
-	SUB.w	D1, D0
+	MOVE.w	#1, D2					; D2 = rotation direction (+1 or -1)
+	SUB.w	D1, D0					; angular delta
 	BGE.b	BossTakeDamage2_CheckDeath_CheckAngleDir
 	NEG.w	D0
-	NEG.w	D2
+	NEG.w	D2					; flip direction
 BossTakeDamage2_CheckDeath_CheckAngleDir:
-	CMPI.w	#$0080, D0
+	CMPI.w	#$0080, D0				; if delta > 128 (half-circle), flip
 	BLE.b	BossTakeDamage2_CheckDeath_CheckAngleRange
 	NEG.w	D2
 BossTakeDamage2_CheckDeath_CheckAngleRange:
-	ADD.w	D2, D1
-	ADD.w	D2, D6
-	MOVE.b	D1, obj_attack_timer(A6)
+	ADD.w	D2, D1					; step angle toward target
+	ADD.w	D2, D6					; accumulate rotation for next orb
+	MOVE.b	D1, obj_attack_timer(A6)		; store updated angle
 BossTakeDamage2_CheckDeath_SkipLaunch:
-	JSR	CalculateCircularPosition(PC)
-	BSET.b	#7, (A6)
+	JSR	CalculateCircularPosition(PC)		; reposition orb on ring
+	BSET.b	#7, (A6)				; activate orb
 	DBF	D7, BossTakeDamage2_CheckDeath_RotateOrbs
 	LEA	(A0), A5
 	JSR	AddSpriteToDisplayList(PC)
@@ -2949,50 +3098,54 @@ BossOrbTick_Return:
 ; and an angle index (0-15).  Used by boss orb positioning each frame.
 CalculateCircularPosition:
 	CLR.w	D5
-	MOVE.b	obj_attack_timer(A6), D5
+	MOVE.b	obj_attack_timer(A6), D5	; D5 = orbit angle index (0-63)
 	LEA	SineTable, A2
-	MOVE.b	$40(A2,D5.w), D0
+	MOVE.b	$40(A2,D5.w), D0		; X = sine[angle + $40] = cosine[angle]
 	EXT.w	D0
-	ASR.w	#4, D0
-	ADD.w	obj_world_x(A4), D0
+	ASR.w	#4, D0				; scale: divide by 16 (→ orbit radius)
+	ADD.w	obj_world_x(A4), D0		; offset from parent X
 	MOVE.w	D0, obj_world_x(A6)
 	LEA	SineTable, A2
-	MOVE.b	(A2,D5.w), D0
+	MOVE.b	(A2,D5.w), D0			; Y = -sine[angle]
 	EXT.w	D0
-	ASR.w	#4, D0
-	NEG.w	D0
-	ADD.w	obj_world_y(A4), D0
+	ASR.w	#4, D0				; scale by 16
+	NEG.w	D0				; negate (Y increases downward)
+	ADD.w	obj_world_y(A4), D0		; offset from parent Y
 	MOVE.w	D0, obj_world_y(A6)
 	RTS
 
 ; BossDeathReward_MultiSprite
 ; Death reward handler for multi-sprite bosses.  Awards XP and kims,
 ; decrements enemy count, and deactivates all child orb objects.
+;
+; Transition: sets obj_tick_fn = EnemyDeathAnimation on A5, clears
+; move_counter, then walks the 9 child slots via obj_next_offset and
+; clears bit 7 (active flag) on each one.
 BossDeathReward_MultiSprite:
-	PlaySound_b	SOUND_MAGIC_EFFECT
+	PlaySound_b	SOUND_MAGIC_EFFECT		; boss-death fanfare
 	MOVEQ	#0, D0
 	MOVE.w	obj_xp_reward(A5), D0
 	MOVE.l	D0, Transaction_amount.w
-	JSR	AddExperiencePoints
+	JSR	AddExperiencePoints			; award XP
 	MOVEQ	#0, D0
 	MOVE.w	obj_kim_reward(A5), D0
 	MOVE.l	D0, Transaction_amount.w
-	JSR	AddPaymentAmount
-	SUBQ.w	#1, Number_Of_Enemies.w
+	JSR	AddPaymentAmount			; award kims
+	SUBQ.w	#1, Number_Of_Enemies.w			; decrement enemy counter
 	CLR.b	obj_move_counter(A5)
-	MOVE.l	#EnemyDeathAnimation, obj_tick_fn(A5)
-	MOVE.b	#NPC_ATTR_PAL3, obj_sprite_flags(A5)
+	MOVE.l	#EnemyDeathAnimation, obj_tick_fn(A5)	; start body death flash
+	MOVE.b	#NPC_ATTR_PAL3, obj_sprite_flags(A5)	; death palette
 	MOVE.b	#SPRITE_SIZE_4x4, obj_sprite_size(A5)
 	CLR.w	D0
 	MOVE.b	obj_next_offset(A5), D0
-	LEA	(A5,D0.w), A6
-	BCLR.b	#7, (A6)
-	MOVE.w	#8, D6
+	LEA	(A5,D0.w), A6				; A6 = first child orb
+	BCLR.b	#7, (A6)				; deactivate orb 1
+	MOVE.w	#8, D6					; 9 children total (1 done, 8 remain)
 BossDeathReward_MultiSprite_Done:
 	CLR.w	D0
 	MOVE.b	obj_next_offset(A6), D0
-	LEA	(A6,D0.w), A6
-	BCLR.b	#7, (A6)
+	LEA	(A6,D0.w), A6				; advance to next child
+	BCLR.b	#7, (A6)				; deactivate
 	DBF	D6, BossDeathReward_MultiSprite_Done
 	RTS
 
@@ -3020,52 +3173,58 @@ EnemyPositionOffsetTable:
 	dc.w	8, -8 
 
 ; ApplyDamageToPlayer
-; Subtract enemy attack power from player HP; clamp to 0.  Plays the
-; player-hit sound and triggers screen-flash if HP reaches zero.
+; Computes damage = enemy's obj_max_hp minus (Player_AC >> 3), minimum 1.
+; Subtracts from Player_hp, clamped at 0.
 ApplyDamageToPlayer:
-	MOVE.w	obj_max_hp(A5), D1
+	MOVE.w	obj_max_hp(A5), D1		; D1 = base damage (enemy attack power)
 	MOVE.w	Player_ac.w, D0
-	ASR.w	#3, D0
-	SUB.w	D0, D1
+	ASR.w	#3, D0				; AC / 8 = defence reduction
+	SUB.w	D0, D1				; net damage = attack - defence
 	BGT.w	ApplyDamageToPlayer_ClampMin
-	MOVEQ	#1, D1
+	MOVEQ	#1, D1				; minimum 1 damage (always hurts)
 ApplyDamageToPlayer_ClampMin:
-	SUB.w	D1, Player_hp.w
+	SUB.w	D1, Player_hp.w			; apply damage to player HP
 	BGE.w	ApplyDamageToPlayer_ClampZero
-	CLR.w	Player_hp.w
+	CLR.w	Player_hp.w			; clamp to 0 (no negative HP)
 ApplyDamageToPlayer_ClampZero:
 	RTS
 
+; SetRandomEnemyPosition
+; Picks random X in [1, SPAWN_ZONE_X_MAX] and Y in [SPAWN_ZONE_Y_MIN,
+; SPAWN_ZONE_Y_MAX], wrapping values that fall outside those ranges.
+; Then checks whether the result falls inside the player-safe zone
+; (SPAWN_SAFE_X_MIN–BATTLE_FIELD_BOTTOM × SPAWN_SAFE_Y_MIN–SPAWN_SAFE_Y_MAX);
+; if so, retries recursively until a valid position is found.
 SetRandomEnemyPosition:
 	CLR.w	D0
 	JSR	GetRandomNumber
-	ANDI.w	#$01FF, D0
-	CMPI.w	#1, D0
+	ANDI.w	#$01FF, D0			; 9-bit random X (0-511)
+	CMPI.w	#1, D0				; X < 1 → mirror wrap
 	BGT.w	SetRandomEnemyPosition_WrapX
 	MOVE.w	#1, D1
 	SUB.w	D0, D1
-	MOVE.w	#SPAWN_ZONE_X_MAX, D0
+	MOVE.w	#SPAWN_ZONE_X_MAX, D0		; wrap from right edge
 	SUB.w	D1, D0
 	BRA.w	SetRandomEnemyPosition_SetX
 SetRandomEnemyPosition_WrapX:
-	CMPI.w	#SPAWN_ZONE_X_MAX, D0
+	CMPI.w	#SPAWN_ZONE_X_MAX, D0		; X ≥ max → wrap to low end
 	BLT.w	SetRandomEnemyPosition_SetX
 	SUBI.w	#SPAWN_ZONE_X_MAX, D0
 	ADDQ.w	#1, D0
 SetRandomEnemyPosition_SetX:
-	MOVE.w	D0, obj_world_x(A5)
+	MOVE.w	D0, obj_world_x(A5)		; store clamped X
 	CLR.w	D0
 	JSR	GetRandomNumber
-	ANDI.w	#$00FF, D0
-	CMPI.w	#SPAWN_ZONE_Y_MIN, D0
+	ANDI.w	#$00FF, D0			; 8-bit random Y (0-255)
+	CMPI.w	#SPAWN_ZONE_Y_MIN, D0		; Y < min → mirror wrap
 	BGT.w	SetRandomEnemyPosition_WrapY
 	MOVE.w	#SPAWN_ZONE_Y_MIN, D1
 	SUB.w	D0, D1
-	MOVE.w	#SPAWN_ZONE_Y_MAX, D0
+	MOVE.w	#SPAWN_ZONE_Y_MAX, D0		; wrap from bottom edge
 	SUB.w	D1, D0
 	BRA.w	SetRandomEnemyPosition_SetY
 SetRandomEnemyPosition_WrapY:
-	CMPI.w	#SPAWN_ZONE_Y_MAX, D0
+	CMPI.w	#SPAWN_ZONE_Y_MAX, D0		; Y ≥ max → wrap to low end
 	BLT.b	SetRandomEnemyPosition_SetX
 	SUBI.w	#SPAWN_ZONE_Y_MAX, D0
 	ADDI.w	#SPAWN_ZONE_Y_MIN, D0
@@ -3089,6 +3248,9 @@ SetRandomEnemyPosition_Return:
 ; Common enemy initialisation: load stats from the encounter table,
 ; set HP, attack, and speed; call SetRandomEnemyPosition; load A6 to
 ; point at the next (child) object in the linked list.
+;
+; Sets a random initial obj_direction (even value 0-6) and randomises
+; obj_move_counter for animation phase staggering.
 InitEnemyAI:
 	CLR.w	D0
 	MOVE.b	obj_next_offset(A5), D0
@@ -3108,6 +3270,10 @@ InitEnemyAI:
 ; Check for a pending hit (obj_hit_flag), apply player STR damage, and
 ; start the invulnerability timer.  Returns CC with HP sign in flags so
 ; callers can BGT/BLE to branch on alive/dead.
+;
+; Registers: D0 scratch; A5 enemy object.
+; Side-effects: obj_invuln_timer decremented each frame;
+;   obj_knockback_timer set to $0078 on a new hit.
 ProcessEnemyDamage:
 	TST.b	obj_invuln_timer(A5)
 	BLE.w	ProcessEnemyDamage_Loop
@@ -3116,10 +3282,10 @@ ProcessEnemyDamage:
 ProcessEnemyDamage_Loop:
 	TST.b	obj_hit_flag(A5)
 	BEQ.w	EnemyTakeDamage_Done
-	PlaySound_b	SOUND_HEAL
-	MOVE.w	#$0078, obj_knockback_timer(A5)
+	PlaySound_b	SOUND_HEAL			; hit-confirm sfx
+	MOVE.w	#$0078, obj_knockback_timer(A5)		; set knockback window (120 frames)
 	MOVE.w	Player_str.w, D0
-	SUB.w	D0, obj_hp(A5)
+	SUB.w	D0, obj_hp(A5)				; subtract player STR from HP
 	MOVE.b	#PLAYER_HIT_INVULN_FRAMES, obj_invuln_timer(A5)
 EnemyTakeDamage_Done:
 	TST.w	obj_hp(A5)
@@ -3129,6 +3295,9 @@ EnemyTakeDamage_Done:
 ; Variant of ProcessEnemyDamage used by shooter/boss enemies.  Also
 ; decrements the battle encounter timer and ends the encounter when
 ; the timer reaches zero.
+;
+; Identical hit/invuln logic to ProcessEnemyDamage; the "battle timer"
+; aspect is handled by the callers that check EnemyTakeDamage3_Done CC.
 CheckAndUpdateBattleTimer:
 	TST.b	obj_invuln_timer(A5)
 	BLE.w	CheckAndUpdateBattleTimer_Loop
@@ -3216,6 +3385,8 @@ EnemyStartingPositions:
 ; InitBattleEntities
 ; Entry point called when a battle starts.  Reads Battle_type, masks
 ; to the lower nibble, and dispatches through BattleEntityInitJumpTable.
+; The nibble selects among 14 possible boss/encounter configurations
+; (0–13 defined in BattleEntityInitJumpTable below).
 InitBattleEntities:
 	LEA	BattleEntityInitJumpTable, A0
 	MOVE.w	Battle_type.w, D0
@@ -3292,15 +3463,15 @@ InitBoss1_Common:
 	MOVE.b	#$EC, obj_hitbox_y_neg(A6)
 	MOVE.b	#$F8, obj_hitbox_y_pos(A6)
 	CLR.w	obj_knockback_timer(A6)
-	MOVE.l	#$FFFFE000, obj_vel_x(A6)
-	MOVE.l	#$8000, obj_vel_y(A6)
+	MOVE.l	#$FFFFE000, obj_vel_x(A6)	; initial leftward drift (-0.875 px/frame)
+	MOVE.l	#$8000, obj_vel_y(A6)		; slow downward drift (+0.5 px/frame)
 	MOVE.b	(A0)+, obj_sprite_size(A6)
 	CLR.w	D0
 	MOVE.b	(A0)+, D0
 	MOVE.w	D0, obj_sort_key(A6)
 	MOVE.w	(A0)+, obj_tile_index(A6)
-	MOVE.w	#$006E, obj_world_x(A6)
-	MOVE.w	#$0060, obj_world_y(A6)
+	MOVE.w	#$006E, obj_world_x(A6)	; spawn X = 110 (centre-right of field)
+	MOVE.w	#$0060, obj_world_y(A6)	; spawn Y = 96 (upper-middle of field)
 	MOVE.l	#Boss1_MainTick, obj_tick_fn(A6)
 	MOVE.w	#4, D7
 InitBoss1_Common_Done:
@@ -3322,14 +3493,14 @@ InitBoss1_Common_Done:
 	MOVE.b	(A0)+, D0
 	MOVE.w	D0, obj_sort_key(A6)
 	MOVE.w	(A0)+, obj_tile_index(A6)
-	MOVE.w	#$006E, obj_world_x(A6)
-	MOVE.w	#$006C, obj_world_y(A6)
+	MOVE.w	#$006E, obj_world_x(A6)		; neck spawn X = 110 (aligned with head)
+	MOVE.w	#$006C, obj_world_y(A6)		; neck spawn Y = 108 (just below head)
 	MOVE.l	#Boss1_NeckTick, obj_tick_fn(A6)
 	MOVE.w	#1, D7
 InitBoss1_Common_NeckLoop:
 	BSR.w	InitNextSpriteSlot
 	DBF	D7, InitBoss1_Common_NeckLoop
-	MOVEA.l	Object_slot_03_ptr.w, A6
+	MOVEA.l	Object_slot_03_ptr.w, A6		; upper body (wing joint)
 	LEA	EnemySpriteFrameDataA_08, A0
 	BSET.b	#7, (A6)
 	MOVE.b	#NPC_ATTR_PAL1, obj_sprite_flags(A6)
@@ -3341,18 +3512,18 @@ InitBoss1_Common_NeckLoop:
 	MOVE.b	(A0)+, D0
 	MOVE.w	D0, obj_sort_key(A6)
 	MOVE.w	(A0)+, obj_tile_index(A6)
-	MOVE.w	#SOUND_PLAYER_HIT, obj_world_x(A6)
-	MOVE.w	#$0070, obj_world_y(A6)
+	MOVE.w	#SOUND_PLAYER_HIT, obj_world_x(A6)	; upper-body spawn X (raw constant = pixel pos)
+	MOVE.w	#$0070, obj_world_y(A6)		; upper-body spawn Y = 112
 	MOVE.l	#Boss1_UpperBodyTick, obj_tick_fn(A6)
-	MOVE.b	#$F0, obj_hitbox_x_neg(A6)
-	MOVE.b	#$10, obj_hitbox_x_pos(A6)
-	MOVE.b	#SOUND_LEVEL_UP, obj_hitbox_y_neg(A6)
+	MOVE.b	#$F0, obj_hitbox_x_neg(A6)		; hitbox: -16 px left
+	MOVE.b	#$10, obj_hitbox_x_pos(A6)		; hitbox: +16 px right
+	MOVE.b	#SOUND_LEVEL_UP, obj_hitbox_y_neg(A6)	; hitbox: raw constant = -$xx px up
 	MOVE.b	#0, obj_hitbox_y_pos(A6)
 	MOVE.w	#0, D7
 InitBoss1_Common_UpperBodyLoop:
 	BSR.w	InitNextSpriteSlot
 	DBF	D7, InitBoss1_Common_UpperBodyLoop
-	MOVEA.l	Object_slot_04_ptr.w, A6
+	MOVEA.l	Object_slot_04_ptr.w, A6		; mid-body
 	LEA	EnemySpriteFrameDataA_09, A0
 	BSET.b	#7, (A6)
 	MOVE.b	#NPC_ATTR_PAL1, obj_sprite_flags(A6)
@@ -3364,8 +3535,8 @@ InitBoss1_Common_UpperBodyLoop:
 	MOVE.b	(A0)+, D0
 	MOVE.w	D0, obj_sort_key(A6)
 	MOVE.w	(A0)+, obj_tile_index(A6)
-	MOVE.w	#$00C8, obj_world_x(A6)
-	MOVE.w	#$0070, obj_world_y(A6)
+	MOVE.w	#$00C8, obj_world_x(A6)		; mid-body spawn X = 200
+	MOVE.w	#$0070, obj_world_y(A6)		; mid-body spawn Y = 112
 	MOVE.l	#Boss1_MidBodyTick, obj_tick_fn(A6)
 	MOVE.b	#$F0, obj_hitbox_x_neg(A6)
 	MOVE.b	#$10, obj_hitbox_x_pos(A6)
@@ -3375,7 +3546,7 @@ InitBoss1_Common_UpperBodyLoop:
 InitBoss1_Common_MidBodyLoop:
 	BSR.w	InitNextSpriteSlot
 	DBF	D7, InitBoss1_Common_MidBodyLoop
-	MOVEA.l	Object_slot_05_ptr.w, A6
+	MOVEA.l	Object_slot_05_ptr.w, A6		; tail
 	LEA	EnemySpriteFrameDataA_0A, A0
 	BSET.b	#7, (A6)
 	MOVE.b	#NPC_ATTR_PAL1, obj_sprite_flags(A6)
@@ -3387,17 +3558,17 @@ InitBoss1_Common_MidBodyLoop:
 	MOVE.b	(A0)+, D0
 	MOVE.w	D0, obj_sort_key(A6)
 	MOVE.w	(A0)+, obj_tile_index(A6)
-	MOVE.w	#$00DA, obj_world_x(A6)
-	MOVE.w	#$0070, obj_world_y(A6)
+	MOVE.w	#$00DA, obj_world_x(A6)		; tail spawn X = 218
+	MOVE.w	#$0070, obj_world_y(A6)		; tail spawn Y = 112
 	MOVE.l	#Boss1_TailTick, obj_tick_fn(A6)
 	MOVE.w	#0, D7
 InitBoss1_Common_TailLoop:
 	BSR.w	InitNextSpriteSlot
 	DBF	D7, InitBoss1_Common_TailLoop
-	MOVEA.l	Object_slot_06_ptr.w, A6
-	LEA	EnemySpriteFrameDataA_06, A0
-	LEA	EnemySpriteFrameDataA_07, A1
-	MOVE.w	#2, D7
+	MOVEA.l	Object_slot_06_ptr.w, A6		; wings (slots 06-08, 3 sprites)
+	LEA	EnemySpriteFrameDataA_06, A0		; wing frame data
+	LEA	EnemySpriteFrameDataA_07, A1		; wing screen position table
+	MOVE.w	#2, D7					; 3 wing sprites (DBF = 0-2)
 InitBoss1_Common_WingLoop:
 	BSET.b	#7, (A6)
 	MOVE.b	#NPC_ATTR_PAL1, obj_sprite_flags(A6)
@@ -3438,16 +3609,19 @@ Boss1_MainTick:
 	BSR.w	CheckPlayerDamageAndKnockback
 	RTS
 	
+; BossAiStateJumpTable
+; Indexed by Boss_ai_state & $F (0-8).  Each entry is a BRA.w to the
+; corresponding AI state handler.
 BossAiStateJumpTable:
-	BRA.w	Boss1State_InitIdle
-	BRA.w	Boss1State_ChooseAction
-	BRA.w	Boss1State_MoveDown
-	BRA.w	Boss1State_HeadExtend
-	BRA.w	Boss1State_AttackWait
-	BRA.w	Boss1State_LungeLeft
-	BRA.w	Boss1State_ReturnHome
-	BRA.w	Boss1State_HeadRetract
-	BRA.w	Boss1State_ChargeDownLeft
+	BRA.w	Boss1State_InitIdle		; 0 = BOSS1_STATE_INIT_IDLE
+	BRA.w	Boss1State_ChooseAction		; 1 = BOSS1_STATE_CHOOSE_ACTION
+	BRA.w	Boss1State_MoveDown		; 2 = BOSS1_STATE_MOVE_DOWN
+	BRA.w	Boss1State_HeadExtend		; 3 = BOSS1_STATE_HEAD_EXTEND
+	BRA.w	Boss1State_AttackWait		; 4 = BOSS1_STATE_ATTACK_WAIT
+	BRA.w	Boss1State_LungeLeft		; 5 = BOSS1_STATE_LUNGE_LEFT
+	BRA.w	Boss1State_ReturnHome		; 6 = BOSS1_STATE_RETURN_HOME
+	BRA.w	Boss1State_HeadRetract		; 7 = BOSS1_STATE_HEAD_RETRACT
+	BRA.w	Boss1State_ChargeDownLeft	; 8 = BOSS1_STATE_CHARGE_DOWN_LEFT
 
 ; ======================================================================
 ; Boss 1 AI State Machine
@@ -3464,8 +3638,8 @@ Boss1State_InitIdle:
 	RTS
 
 ; Boss1State_ChooseAction
-; Central dispatch: decrements a cooldown, then picks the next attack
-; phase (MoveRight, HeadExtend, LungeLeft, etc.) based on RNG.
+; Decrements cooldown timer.  On expiry: if player is right-of-screen,
+; 75% chance to charge diagonally down-left; otherwise drift right+down.
 Boss1State_ChooseAction:
 	SUBQ.b	#1, obj_invuln_timer(A5)
 	BGE.w	Boss1State_MoveRight_Loop
@@ -3475,17 +3649,23 @@ Boss1State_ChooseAction:
 	ANDI.w	#3, D0
 	BEQ.b	Boss1State_MoveRight
 	MOVE.w	#BOSS1_STATE_CHARGE_DOWN_LEFT, Boss_ai_state.w
-	MOVE.l	#$FFFF8000, obj_vel_x(A5)
-	MOVE.l	#$00020000, obj_vel_y(A5)
+	MOVE.l	#$FFFF8000, obj_vel_x(A5)	; charge left at -0.5 px/frame
+	MOVE.l	#$00020000, obj_vel_y(A5)	; charge down at +2.0 px/frame
 	RTS
-	
+
+; Boss1State_MoveRight / Boss1State_MoveRight_Loop
+; Sets MOVE_DOWN state and gives the body a slow right+down drift.
+; Boss1State_MoveRight_Loop is the idle fall-through RTS.
 Boss1State_MoveRight:
 	MOVE.w	#BOSS1_STATE_MOVE_DOWN, Boss_ai_state.w
-	MOVE.l	#$4000, obj_vel_x(A5)
-	MOVE.l	#$8000, obj_vel_y(A5)
+	MOVE.l	#$4000, obj_vel_x(A5)		; drift right at +0.25 px/frame
+	MOVE.l	#$8000, obj_vel_y(A5)		; drift down at +0.5 px/frame
 Boss1State_MoveRight_Loop:
 	RTS
-	
+
+; Boss1State_MoveDown / Boss1State_PauseAndReset
+; Waits until Y > RING_GUARDIAN_Y_LOWER then stops movement and
+; transitions to HEAD_EXTEND so the boss can strike downward.
 Boss1State_MoveDown:
 	CMPI.w	#RING_GUARDIAN_Y_LOWER, obj_world_y(A5)
 	BLE.b	Boss1State_PauseAndReset_Loop
@@ -3496,7 +3676,10 @@ Boss1State_PauseAndReset:
 	CLR.l	obj_vel_y(A5)
 Boss1State_PauseAndReset_Loop:
 	RTS
-	
+
+; Boss1State_HeadExtend
+; Counts down timer; on expiry advances to ATTACK_WAIT and rearms timer.
+; Each frame nudges the neck (slot 02) right and down by $10/$40 pixels.
 Boss1State_HeadExtend:
 	SUBQ.b	#1, obj_invuln_timer(A5)
 	BGE.b	Boss1State_HeadExtend_Loop
@@ -3508,18 +3691,26 @@ Boss1State_HeadExtend_Loop:
 	ADDI.l	#$4000, obj_world_y(A6)
 	RTS
 	
+; Boss1State_HeadRetract
+; Counts down obj_invuln_timer; when expired transitions to ReturnHome
+; and sets the body moving up-left.  Each frame shifts the neck (slot 02)
+; back toward its resting position.
 Boss1State_HeadRetract:
 	SUBQ.b	#1, obj_invuln_timer(A5)
 	BGE.b	Boss1State_HeadRetract_Loop
 	MOVE.w	#BOSS1_STATE_RETURN_HOME, Boss_ai_state.w
-	MOVE.l	#$FFFFC000, obj_vel_x(A5)
-	MOVE.l	#$FFFF8000, obj_vel_y(A5)
+	MOVE.l	#$FFFFC000, obj_vel_x(A5)	; retreat left at -0.25 px/frame
+	MOVE.l	#$FFFF8000, obj_vel_y(A5)	; retreat up at -0.5 px/frame
 Boss1State_HeadRetract_Loop:
 	MOVEA.l	Object_slot_02_ptr.w, A6
 	SUBI.l	#$1000, obj_world_x(A6)
 	SUBI.l	#$4000, obj_world_y(A6)
 	RTS
 	
+; Boss1State_AttackWait
+; Holds the head extended for BOSS1_HEAD_PAUSE_TICKS frames.
+; Falls through each frame to Boss1State_AttackWait_CheckLunge which
+; will trigger a lunge if the player is to the left of the screen.
 Boss1State_AttackWait:
 	SUBQ.b	#1, obj_invuln_timer(A5)
 	BGE.b	Boss1State_AttackWait_CheckLunge
@@ -3531,50 +3722,69 @@ Boss1State_AttackWait_CheckLunge:
 	BSR.w	CheckPlayerLeftOfScreen
 	BEQ.b	Boss1State_AttackWait_Return
 	MOVE.w	#BOSS1_STATE_LUNGE_LEFT, Boss_ai_state.w
-	MOVE.l	#$FFFE0000, obj_vel_x(A5)
+	MOVE.l	#$FFFE0000, obj_vel_x(A5)	; lunge left at -2.0 px/frame
 	MOVE.l	#0, obj_vel_y(A5)
 	RTS
 	
 Boss1State_AttackWait_Return:
 	RTS
 	
+; Boss1State_LungeLeft
+; Drives the head leftward at high speed until X ≤ $005A (90 pixels),
+; then transitions to ReturnHome with a rightward bounce velocity.
 Boss1State_LungeLeft:
 	MOVE.w	obj_world_x(A5), D0
-	CMPI.w	#$005A, D0
+	CMPI.w	#$005A, D0			; lunge target X = 90 px from left edge
 	BGE.b	Boss1State_LungeLeft_Loop
 	MOVE.w	#BOSS1_STATE_RETURN_HOME, Boss_ai_state.w
-	MOVE.l	#$4000, obj_vel_x(A5)
-	MOVE.l	#$FFFF8000, obj_vel_y(A5)
+	MOVE.l	#$4000, obj_vel_x(A5)		; bounce right at +0.25 px/frame
+	MOVE.l	#$FFFF8000, obj_vel_y(A5)	; drift up at -0.5 px/frame
 Boss1State_LungeLeft_Loop:
 	RTS
 
+; Boss1State_ChargeDownLeft
+; Charges diagonally down-left until Y reaches RING_GUARDIAN_Y_LOWER,
+; then transitions to ReturnHome.
+; NOTE: obj_vel_y is set to #Tilemap_buffer_plane_a (the address value),
+; which is used as a raw word velocity constant — a quirk of the original
+; code that happens to produce the correct downward drift speed.
 Boss1State_ChargeDownLeft:
 	CMPI.w	#RING_GUARDIAN_Y_LOWER, obj_world_y(A5)
 	BLE.b	Boss1State_ChargeDownLeft_Loop
 	MOVE.w	#BOSS1_STATE_RETURN_HOME, Boss_ai_state.w
-	MOVE.l	#$4000, obj_vel_x(A5)
-	MOVE.l	#Tilemap_buffer_plane_a, obj_vel_y(A5)
+	MOVE.l	#$4000, obj_vel_x(A5)		; drift right at +0.25 px/frame
+	MOVE.l	#Tilemap_buffer_plane_a, obj_vel_y(A5)	; raw addr used as velocity word
 Boss1State_ChargeDownLeft_Loop:
 	RTS
 
+; Boss1State_ReturnHome
+; Waits until the head Y ≤ $0060 (home position), then snaps ALL five
+; body slots back to their resting coordinates and resets the AI state
+; to BOSS1_STATE_INIT_IDLE.  Velocities are zeroed so the boss pauses
+; before the next attack cycle begins.
+;   Tail  (slot 05): X=$00DA, Y=$0070
+;   MidBody (slot 04): X=$00C8, Y=$0070
+;   UpperBody (slot 03): X=SOUND_PLAYER_HIT (raw value), Y=$0070
+;   Neck  (slot 02): X=$006E, Y=$006C
+;   Head  (A5 = slot 01): X=$006E, Y=$0060
 Boss1State_ReturnHome:
 	MOVE.w	obj_world_y(A5), D0
-	CMPI.w	#$0060, D0
+	CMPI.w	#$0060, D0			; home Y = 96 px (upper-middle)
 	BGT.b	Boss1State_ReturnHome_Loop
-	MOVE.w	#$006E, obj_world_x(A5)
-	MOVE.w	#$0060, obj_world_y(A5)
+	MOVE.w	#$006E, obj_world_x(A5)		; head home X = 110
+	MOVE.w	#$0060, obj_world_y(A5)		; head home Y = 96
 	MOVEA.l	Object_slot_05_ptr.w, A6
-	MOVE.w	#$00DA, obj_world_x(A6)
-	MOVE.w	#$0070, obj_world_y(A6)
+	MOVE.w	#$00DA, obj_world_x(A6)		; tail home X = 218
+	MOVE.w	#$0070, obj_world_y(A6)		; tail home Y = 112
 	MOVEA.l	Object_slot_04_ptr.w, A6
-	MOVE.w	#$00C8, obj_world_x(A6)
-	MOVE.w	#$0070, obj_world_y(A6)
+	MOVE.w	#$00C8, obj_world_x(A6)		; mid-body home X = 200
+	MOVE.w	#$0070, obj_world_y(A6)		; mid-body home Y = 112
 	MOVEA.l	Object_slot_03_ptr.w, A6
-	MOVE.w	#SOUND_PLAYER_HIT, obj_world_x(A6)
-	MOVE.w	#$0070, obj_world_y(A6)
+	MOVE.w	#SOUND_PLAYER_HIT, obj_world_x(A6)	; upper-body home X (raw constant)
+	MOVE.w	#$0070, obj_world_y(A6)		; upper-body home Y = 112
 	MOVEA.l	Object_slot_02_ptr.w, A6
-	MOVE.w	#$006E, obj_world_x(A6)
-	MOVE.w	#$006C, obj_world_y(A6)
+	MOVE.w	#$006E, obj_world_x(A6)		; neck home X = 110 (aligned with head)
+	MOVE.w	#$006C, obj_world_y(A6)		; neck home Y = 108
 	MOVE.w	#BOSS1_STATE_INIT_IDLE, Boss_ai_state.w
 	CLR.l	obj_vel_x(A5)
 	CLR.l	obj_vel_y(A5)
@@ -3584,23 +3794,26 @@ Boss1State_ReturnHome_Loop:
 ; Boss1_DeathSequence
 ; Plays the boss death animation, awards XP/kims, and triggers the
 ; post-battle cutscene once the flash sequence finishes.
+; Sets all five body slots to fall downward at +0.5 px/frame ($8000),
+; clears horizontal velocity, then swaps the neck tick function to
+; Boss1_NeckTickNoCollision so the body can scroll off-screen safely.
 Boss1_DeathSequence:
 	CLR.l	obj_vel_x(A5)
-	MOVE.l	#$8000, obj_vel_y(A5)
+	MOVE.l	#$8000, obj_vel_y(A5)		; head falls down at +0.5 px/frame
 	MOVE.b	#0, obj_move_counter(A5)
 	MOVEA.l	Object_slot_02_ptr.w, A6
 	MOVE.l	#Boss1_NeckTickNoCollision, obj_tick_fn(A6)
 	CLR.l	obj_vel_x(A6)
-	MOVE.l	#$8000, obj_vel_y(A6)
+	MOVE.l	#$8000, obj_vel_y(A6)		; neck falls at +0.5 px/frame
 	MOVEA.l	Object_slot_03_ptr.w, A6
 	CLR.l	obj_vel_x(A6)
-	MOVE.l	#$8000, obj_vel_y(A6)
+	MOVE.l	#$8000, obj_vel_y(A6)		; upper-body falls at +0.5 px/frame
 	MOVEA.l	Object_slot_04_ptr.w, A6
 	CLR.l	obj_vel_x(A6)
-	MOVE.l	#$8000, obj_vel_y(A6)
+	MOVE.l	#$8000, obj_vel_y(A6)		; mid-body falls at +0.5 px/frame
 	MOVEA.l	Object_slot_05_ptr.w, A6
 	CLR.l	obj_vel_x(A6)
-	MOVE.l	#$8000, obj_vel_y(A6)
+	MOVE.l	#$8000, obj_vel_y(A6)		; tail falls at +0.5 px/frame
 	BSR.w	UpdateSpritePositionAndRender
 	MOVE.l	#Boss1_DeathFall, obj_tick_fn(A5)
 	PlaySound	SOUND_DOOR_OPEN
