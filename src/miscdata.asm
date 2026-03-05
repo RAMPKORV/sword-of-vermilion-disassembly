@@ -38,7 +38,7 @@ DebugTestMenu:
 	MOVE.w	#$0001, Palette_line_3_index.w  ; palette slot 3 → index $01
 	JSR	LoadPalettesFromTable
 	JSR	EnableDisplay
-	MOVE.l	#$44040003, D5                  ; VDP write addr for first menu tile row
+	MOVE.l	#VDP_CMD_VRAM_WRITE_C404, D5                  ; VDP write addr for first menu tile row
 	MOVE.l	D5, DebugMenu_vdp_cursor.w
 	CLR.w	DebugMenu_selected_item.w
 	CLR.w	DebugMenu_scroll_pos.w
@@ -114,19 +114,19 @@ DebugInputTest_Loop:
 	MOVE.b	Controller_current_state.w, D2 ; load current button bits into D2
 	; Directional buttons — draw tile using D0=VDP write addr, D1=tile index
 	MOVE.l	#$45960003, D0
-	MOVE.l	#$000004DE, D1              ; tile $04DE = "UP" indicator (released state)
+	MOVE.l	#DEBUG_TILE_BTN_UP, D1      ; tile $04DE = "UP" indicator (released state)
 	BTST	#0, D2                      ; bit 0 = Up
 	BSR.w	DebugInput_DrawDirectionBtn
 	MOVE.l	#$48960003, D0
-	MOVE.l	#$000004DF, D1              ; tile $04DF = "DOWN" indicator
+	MOVE.l	#DEBUG_TILE_BTN_DOWN, D1    ; tile $04DF = "DOWN" indicator
 	BTST	#1, D2                      ; bit 1 = Down
 	BSR.w	DebugInput_DrawDirectionBtn
 	MOVE.l	#$47100003, D0
-	MOVE.l	#$000004DD, D1              ; tile $04DD = "LEFT" indicator
+	MOVE.l	#DEBUG_TILE_BTN_LEFT, D1    ; tile $04DD = "LEFT" indicator
 	BTST	#2, D2                      ; bit 2 = Left
 	BSR.w	DebugInput_DrawDirectionBtn
 	MOVE.l	#$471C0003, D0
-	MOVE.l	#$000004DC, D1              ; tile $04DC = "RIGHT" indicator
+	MOVE.l	#DEBUG_TILE_BTN_RIGHT, D1   ; tile $04DC = "RIGHT" indicator
 	BTST	#3, D2                      ; bit 3 = Right
 	BSR.w	DebugInput_DrawDirectionBtn
 	; Action buttons — draw solid/hollow box tile (no tile index needed)
@@ -153,15 +153,15 @@ DebugInputTest_Loop:
 DebugInput_DrawActionBtn:
 	BNE.w	DebugInput_DrawActionBtn_Pressed
 	MOVE.l	D0, VDP_control_port
-	MOVE.w	#$250F, VDP_data_port        ; tile $250F (released: hollow box top)
-	MOVE.w	#$2506, VDP_data_port        ; tile $2506 (released: hollow box mid)
-	MOVE.w	#$2506, VDP_data_port        ; tile $2506 (released: hollow box bot)
+	MOVE.w	#DEBUG_TILE_BTN_BOX_TOP, VDP_data_port      ; tile $250F (released: hollow box top)
+	MOVE.w	#DEBUG_TILE_BTN_BOX_MID, VDP_data_port      ; tile $2506 (released: hollow box mid)
+	MOVE.w	#DEBUG_TILE_BTN_BOX_MID, VDP_data_port      ; tile $2506 (released: hollow box bot)
 	RTS
 DebugInput_DrawActionBtn_Pressed:
 	MOVE.l	D0, VDP_control_port
-	MOVE.w	#$450F, VDP_data_port        ; tile $450F (pressed: solid box top)
-	MOVE.w	#$450E, VDP_data_port        ; tile $450E (pressed: solid box mid)
-	MOVE.w	#$44C0, VDP_data_port        ; tile $44C0 (pressed: solid box bot)
+	MOVE.w	#DEBUG_TILE_BTN_BOX_TOP_PRESSED, VDP_data_port  ; tile $450F (pressed: solid box top)
+	MOVE.w	#DEBUG_TILE_BTN_BOX_MID_PRESSED, VDP_data_port  ; tile $450E (pressed: solid box mid)
+	MOVE.w	#DEBUG_TILE_BTN_BOX_BOT_PRESSED, VDP_data_port  ; tile $44C0 (pressed: solid box bot)
 	RTS
 
 ; DebugInput_DrawDirectionBtn — draw direction tile (Z=0: released, Z=1: pressed) ($3C95C)
@@ -172,7 +172,7 @@ DebugInput_DrawDirectionBtn:
 	MOVE.w	D1, VDP_data_port
 	RTS
 DebugInput_DrawDirectionBtn_Pressed:
-	ADDI.w	#$4000, D1                   ; flip palette bit (pressed highlight)
+	ADDI.w	#TILE_ATTR_PALETTE_FLIP, D1  ; flip palette bit (pressed highlight)
 	MOVE.l	D0, VDP_control_port
 	MOVE.w	D1, VDP_data_port
 	RTS
@@ -203,7 +203,7 @@ DebugSoundTest:
 	JSR	DisableVDPDisplay
 	JSR	ClearVblankFlagAndWait                    ; CLR Vblank_flag + WaitForVBlank
 	JSR	EnableDisplay
-	MOVE.l	#$44040003, D5
+	MOVE.l	#VDP_CMD_VRAM_WRITE_C404, D5
 	MOVE.l	D5, DebugMenu_vdp_cursor.w
 	CLR.w	DebugMenu_selected_item.w
 	CLR.w	DebugMenu_scroll_pos.w
@@ -241,7 +241,7 @@ DebugSoundTest_Return:
 DebugSoundCategory_Menu:
 	JSR	ClearVblankFlagAndWait                    ; CLR Vblank_flag + WaitForVBlank
 	MOVE.b	#$01, DebugMenu_in_submenu.w    ; flag: inside sub-menu
-	MOVE.l	#$42040003, D5
+	MOVE.l	#VDP_CMD_VRAM_WRITE_C204, D5
 	MOVE.l	D5, DebugMenu_vdp_cursor.w
 	CLR.w	DebugMenu_sound_item.w
 	CLR.w	DebugMenu_scroll_pos.w
@@ -524,7 +524,7 @@ DebugCRT_DrawColorRow1:
 	BSR.w	DebugCRT_DrawColorStrip
 	RTS
 DebugCRT_DrawColorRow2:
-	MOVE.l	#$67100003, D5
+	MOVE.l	#VDP_CMD_VRAM_WRITE_E710, D5
 	MOVE.w	#$C27A, D4
 	BSR.w	DebugCRT_DrawColorStrip
 	RTS
@@ -592,9 +592,9 @@ DebugMenu_ScrollTick_Apply:
 	BGT.w	DebugMenu_ScrollTick_NextItem
 	CMPI.w	#$FFF8, D1                          ; reached −8 pixels?
 	BLT.w	DebugMenu_ScrollTick_PrevItem
-	; still within ±8 — just write HScroll value
+	; still within ±8 — just write cursor tile
 	MOVE.l	D5, VDP_control_port
-	MOVE.w	#$04DC, VDP_data_port               ; HScroll value (tile scroll position)
+	MOVE.w	#DEBUG_TILE_BTN_RIGHT, VDP_data_port        ; cursor/selection highlight tile
 	MOVE.l	D5, DebugMenu_vdp_cursor.w
 	RTS
 DebugMenu_ScrollTick_NextItem:                  ; scroll_pos > +8 → advance item
@@ -607,16 +607,16 @@ DebugMenu_ScrollTick_NextItem:                  ; scroll_pos > +8 → advance it
 	ADDQ.w	#1, DebugMenu_selected_item.w
 	CMPI.w	#$0004, DebugMenu_selected_item.w   ; wraparound at item 4?
 	BNE.b	DebugMenu_ScrollTick_NextItem_Check
-	MOVE.l	#$4A040003, D5                      ; special VDP addr for item 4
+	MOVE.l	#VDP_CMD_VRAM_WRITE_CA04, D5                      ; special VDP addr for item 4
 	BRA.b	DebugMenu_ScrollTick_NextItem_Done
 DebugMenu_ScrollTick_NextItem_Check:
 	CMPI.w	#$0004, DebugMenu_selected_item.w
 	BCS.b	DebugMenu_ScrollTick_NextItem_Done  ; < 4 → no wrap
-	MOVE.l	#$44040003, D5                      ; reset VDP addr to item 0
+	MOVE.l	#VDP_CMD_VRAM_WRITE_C404, D5                      ; reset VDP addr to item 0
 	CLR.w	DebugMenu_selected_item.w
 DebugMenu_ScrollTick_NextItem_Done:
 	MOVE.l	D5, VDP_control_port
-	MOVE.w	#$04DC, VDP_data_port
+	MOVE.w	#DEBUG_TILE_BTN_RIGHT, VDP_data_port
 	MOVE.l	D5, DebugMenu_vdp_cursor.w
 	RTS
 DebugMenu_ScrollTick_NextSubItem:               ; in sub-menu: advance sound item
@@ -627,7 +627,7 @@ DebugMenu_ScrollTick_NextSubItem:               ; in sub-menu: advance sound ite
 	ADDQ.w	#1, DebugMenu_sound_item.w
 	CMPI.w	#$0014, DebugMenu_sound_item.w      ; wraparound at 20 items?
 	BCS.b	DebugMenu_ScrollTick_NextSubItem_Check
-	MOVE.l	#$42040003, D5
+	MOVE.l	#VDP_CMD_VRAM_WRITE_C204, D5
 	CLR.w	DebugMenu_sound_item.w
 	BRA.b	DebugMenu_ScrollTick_NextSubItem_Done
 DebugMenu_ScrollTick_NextSubItem_Check:
@@ -636,7 +636,7 @@ DebugMenu_ScrollTick_NextSubItem_Check:
 	MOVE.l	#$422C0003, D5
 DebugMenu_ScrollTick_NextSubItem_Done:
 	MOVE.l	D5, VDP_control_port
-	MOVE.w	#$04DC, VDP_data_port
+	MOVE.w	#DEBUG_TILE_BTN_RIGHT, VDP_data_port
 	MOVE.l	D5, DebugMenu_vdp_cursor.w
 	RTS
 DebugMenu_ScrollTick_PrevItem:                  ; scroll_pos < −8 → retreat item
@@ -648,7 +648,7 @@ DebugMenu_ScrollTick_PrevItem:                  ; scroll_pos < −8 → retreat 
 	SUBI.l	#$1000000, D5                       ; retreat VDP row pointer
 	SUBQ.w	#1, DebugMenu_selected_item.w
 	BCC.b	DebugMenu_ScrollTick_PrevItem_Check ; no underflow → check for item 3
-	MOVE.l	#$4A040003, D5
+	MOVE.l	#VDP_CMD_VRAM_WRITE_CA04, D5
 	MOVE.w	#$0004, DebugMenu_selected_item.w   ; wrap to item 4
 	BRA.b	DebugMenu_ScrollTick_PrevItem_Done
 DebugMenu_ScrollTick_PrevItem_Check:
@@ -657,7 +657,7 @@ DebugMenu_ScrollTick_PrevItem_Check:
 	MOVE.l	#$47040003, D5
 DebugMenu_ScrollTick_PrevItem_Done:
 	MOVE.l	D5, VDP_control_port
-	MOVE.w	#$04DC, VDP_data_port
+	MOVE.w	#DEBUG_TILE_BTN_RIGHT, VDP_data_port
 	MOVE.l	D5, DebugMenu_vdp_cursor.w
 	RTS
 DebugMenu_ScrollTick_PrevSubItem:               ; in sub-menu: retreat sound item
@@ -676,7 +676,7 @@ DebugMenu_ScrollTick_PrevSubItem_Check:
 	MOVE.l	#$4B040003, D5
 DebugMenu_ScrollTick_PrevSubItem_Done:
 	MOVE.l	D5, VDP_control_port
-	MOVE.w	#$04DC, VDP_data_port
+	MOVE.w	#DEBUG_TILE_BTN_RIGHT, VDP_data_port
 	MOVE.l	D5, DebugMenu_vdp_cursor.w
 	RTS
 

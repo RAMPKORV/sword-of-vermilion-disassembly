@@ -2428,3 +2428,36 @@ SRAM_CHECKSUM_POLY          = $8810   ; CRC-16 polynomial ($8810 = bit-reversed 
 ;
 DUNGEON_ROW_STRIDE      equ $30     ; bytes per map row (16 tile data + 16 padding)
 DUNGEON_2ROW_STRIDE     equ $60     ; bytes per two map rows (far depth = 2 × DUNGEON_ROW_STRIDE)
+
+
+; ============================================================
+; Debug Screen Tile Constants (miscdata.asm — DebugInputTest)
+; ============================================================
+; Tile attribute words written directly to VDP_data_port for the
+; debug input-test overlay and debug menu cursor highlight.
+;
+; Tile attribute word layout (Genesis nametable entry):
+;   bit15       = priority
+;   bits14-13   = palette (0-3)
+;   bit12       = V-flip
+;   bit11       = H-flip
+;   bits10-0    = tile index
+;
+; Direction-button tiles (released state):
+DEBUG_TILE_BTN_UP           = $04DE ; tile $4DE — "UP"    direction indicator
+DEBUG_TILE_BTN_DOWN         = $04DF ; tile $4DF — "DOWN"  direction indicator
+DEBUG_TILE_BTN_LEFT         = $04DD ; tile $4DD — "LEFT"  direction indicator
+DEBUG_TILE_BTN_RIGHT        = $04DC ; tile $4DC — "RIGHT" direction indicator / menu cursor
+
+; Action-button tiles (released state — hollow box):
+DEBUG_TILE_BTN_BOX_TOP      = $250F ; pal=1 p=0 t=$10F — hollow box top row
+DEBUG_TILE_BTN_BOX_MID      = $2506 ; pal=1 p=0 t=$106 — hollow box mid/bot row
+
+; Action-button tiles (pressed state — solid box):
+DEBUG_TILE_BTN_BOX_TOP_PRESSED = $450F ; pal=2 p=0 t=$10F — solid box top row
+DEBUG_TILE_BTN_BOX_MID_PRESSED = $450E ; pal=2 p=0 t=$10E — solid box mid row
+DEBUG_TILE_BTN_BOX_BOT_PRESSED = $44C0 ; pal=2 p=0 t=$0C0 — solid box bot row
+
+; Palette-flip modifier: adding this to a tile attribute word switches palette
+; from index 0→1 (or 2→3), used to highlight direction buttons when pressed.
+TILE_ATTR_PALETTE_FLIP      = $4000 ; bit14 set = palette bit toggle (palette +2)
