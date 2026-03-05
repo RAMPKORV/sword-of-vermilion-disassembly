@@ -114,14 +114,14 @@ UseOldWomansSketch_Done:
 	MOVE.w	(A0), D0
 	CMP.w	Player_position_x_in_town.w, D0
 	BNE.b	UseSketch_OldManNextEntry
-	MOVE.w	$2(A0), D0
+	MOVE.w	SKETCH_POS_Y(A0), D0
 	CMP.w	Player_position_y_in_town.w, D0
 	BNE.b	UseSketch_OldManNextEntry
-	MOVE.w	$4(A0), D0
+	MOVE.w	SKETCH_POS_DIR(A0), D0
 	CMP.w	Player_direction.w, D0
 	BEQ.b	UseSketch_OldManWrongDir_Loop
 UseSketch_OldManNextEntry:
-	LEA	$6(A0), A0	
+	LEA	SKETCH_POS_ENTRY_SIZE(A0), A0	
 	DBF	D7, UseOldWomansSketch_Done	
 UseSketch_OldManWrongDir:
 	PRINT 	YoungerBeautifulStr	
@@ -171,14 +171,14 @@ OldManSketchPositionData_Done:
 	MOVE.w	(A0), D0
 	CMP.w	Player_position_x_in_town.w, D0
 	BNE.b	UseSketch_OldWomanNextEntry
-	MOVE.w	$2(A0), D0
+	MOVE.w	SKETCH_POS_Y(A0), D0
 	CMP.w	Player_position_y_in_town.w, D0
 	BNE.b	UseSketch_OldWomanNextEntry
-	MOVE.w	$4(A0), D0
+	MOVE.w	SKETCH_POS_DIR(A0), D0
 	CMP.w	Player_direction.w, D0
 	BEQ.b	UseSketch_OldWomanWrongDir_Loop
 UseSketch_OldWomanNextEntry:
-	LEA	$6(A0), A0
+	LEA	SKETCH_POS_ENTRY_SIZE(A0), A0
 	DBF	D7, OldManSketchPositionData_Done
 UseSketch_OldWomanWrongDir:
 	PRINT 	MeanLookStr	
@@ -359,7 +359,7 @@ UseGeneric_Loop_Done:
 	RTS
 
 CheckLockedDoor_NextEntry:
-	LEA	$8(A0), A0
+	LEA	LOCKDOOR_ENTRY_SIZE(A0), A0
 	BRA.b	UseGeneric_Loop_Done
 CheckLockedDoor_NextEntry_Loop:
 	PRINT 	NoKeyholeStr	

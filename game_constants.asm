@@ -2461,3 +2461,45 @@ DEBUG_TILE_BTN_BOX_BOT_PRESSED = $44C0 ; pal=2 p=0 t=$0C0 — solid box bot row
 ; Palette-flip modifier: adding this to a tile attribute word switches palette
 ; from index 0→1 (or 2→3), used to highlight direction buttons when pressed.
 TILE_ATTR_PALETTE_FLIP      = $4000 ; bit14 set = palette bit toggle (palette +2)
+
+
+; ============================================================
+; Sketch Position Entry Struct (items.asm)
+; ============================================================
+; OldManSketchPositionData / OldWomanSketchPositionData each hold
+; 4 entries of 3 words (6 bytes).  Each entry describes one cardinal
+; side of the NPC: the tile coordinate the player must stand on, and
+; the direction they must face, to trigger the sketch hand-off.
+;
+; Byte layout per entry:
+;   +0  tile X position (word)
+;   +2  tile Y position (word)
+;   +4  required facing direction (word)
+;   --- total entry size: 6 bytes
+;
+SKETCH_POS_X            equ $0  ; word: tile X coordinate
+SKETCH_POS_Y            equ $2  ; word: tile Y coordinate
+SKETCH_POS_DIR          equ $4  ; word: required direction (DIRECTION_*)
+SKETCH_POS_ENTRY_SIZE   equ $6  ; bytes per entry (3 words)
+
+
+; ============================================================
+; Locked Door Data Entry Struct (towndata.asm / items.asm)
+; ============================================================
+; LockedDoorDataTable entries encode one locked door each.
+; Used by CheckIfDoorIsLocked (towndata.asm) and UseGeneric key
+; item handler (items.asm) to match the tile in front of the
+; player against the required key item.
+;
+; Byte layout per entry:
+;   +0  cave room ID   (word; $FFFF = end-of-table sentinel)
+;   +2  tile X         (word)
+;   +4  tile Y         (word)
+;   +6  required key item ID (word; low byte compared against selected item)
+;   --- total entry size: 8 bytes
+;
+LOCKDOOR_ROOM_ID        equ $0  ; word: cave room ID (CAVE_ROOM_*)
+LOCKDOOR_TILE_X         equ $2  ; word: locked tile X position
+LOCKDOOR_TILE_Y         equ $4  ; word: locked tile Y position
+LOCKDOOR_KEY_ITEM       equ $6  ; word: required key item ID (low byte checked)
+LOCKDOOR_ENTRY_SIZE     equ $8  ; bytes per entry (4 words)

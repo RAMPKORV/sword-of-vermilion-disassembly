@@ -158,7 +158,7 @@ CheckIfDoorIsLocked_Done:
 	RTS
 	
 CheckBlockedDoor_NextEntry:
-	LEA	$8(A0), A0
+	LEA	LOCKDOOR_ENTRY_SIZE(A0), A0
 	BRA.b	CheckIfDoorIsLocked_Done
 CheckBlockedDoor_NextEntry_Loop:
 	MOVE.b	#FLAG_TRUE, Door_unlocked_flag.w

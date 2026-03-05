@@ -375,7 +375,7 @@
           "file": "game_constants.asm + src/items.asm",
           "priority": "medium",
           "effort": "medium",
-          "status": "todo"
+          "status": "done"
         },
         {
           "id": "STRUCT-004",
@@ -384,7 +384,7 @@
           "file": "game_constants.asm + src/towndata.asm",
           "priority": "medium",
           "effort": "small",
-          "status": "todo"
+          "status": "done"
         }
       ]
     },
