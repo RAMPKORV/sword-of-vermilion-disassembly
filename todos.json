@@ -535,7 +535,9 @@
           "file": "src/script.asm",
           "priority": "medium",
           "effort": "medium",
-          "status": "todo"
+          "status": "done",
+          "notes": "Converted 31 of 32 inline window-setup sequences to SetupWindow/SetupWindowSize/DrawWindowDynH macro calls. 1 site (DrawTownListWindow) left as-is: assignments are interleaved with other register and cursor setup code. Bit-perfect.",
+          "completed_at": "2026-03-05"
         },
         {
           "id": "DRY-006",

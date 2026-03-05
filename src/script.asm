@@ -441,12 +441,7 @@ DrawStartContinueMenu:
 	MOVE.w	#MENU_CURSOR_NONE, Menu_cursor_last_index.w
 	MOVE.w	#$000F, Menu_cursor_base_x.w
 	MOVE.w	#$0015, Menu_cursor_base_y.w
-	MOVE.w	#$000E, Window_tilemap_x.w
-	MOVE.w	#$0013, Window_tilemap_y.w
-	MOVE.w	#$000B, Window_width.w
-	MOVE.w	#6, Window_height.w
-	MOVE.w	#0, Window_tile_attrs.w
-	BSR.w	DrawWindowBorder
+	SetupWindow $000E, $0013, $000B, 6
 	LEA	MenuStartContinueStr, A0
 	MOVE.w	#2, Window_text_x.w
 	MOVE.w	#2, Window_text_y.w
@@ -478,12 +473,7 @@ InitDialogueWindow:
 	MOVE.w	#$0015, Script_output_y.w
 	MOVE.w	#0, Script_tile_attrs.w
 	CLR.w	Script_output_x.w
-	MOVE.w	#4, Window_tilemap_x.w
-	MOVE.w	#$0013, Window_tilemap_y.w
-	MOVE.w	#$001F, Window_width.w
-	MOVE.w	#8, Window_height.w
-	MOVE.w	#0, Window_tile_attrs.w
-	BSR.w	DrawWindowBorder
+	SetupWindow 4, $0013, $001F, 8
 	CLR.w	Window_draw_row.w
 	MOVE.b	#FLAG_TRUE, Window_tilemap_draw_pending.w
 	RTS
@@ -491,12 +481,7 @@ InitDialogueWindow:
 ; DrawOptionsMenu
 ; Draw the main options menu window.
 DrawOptionsMenu:
-	MOVE.w	#2, Window_tilemap_x.w
-	MOVE.w	#2, Window_tilemap_y.w
-	MOVE.w	#$000D, Window_width.w
-	MOVE.w	#$000A, Window_height.w
-	MOVE.w	#0, Window_tile_attrs.w
-	BSR.w	DrawWindowBorder
+	SetupWindow 2, 2, $000D, $000A
 	LEA	MenuOptionsStr, A0
 	MOVE.w	#2, Window_text_x.w
 	MOVE.w	#2, Window_text_y.w
@@ -508,12 +493,7 @@ DrawOptionsMenu:
 ; DrawMessageSpeedMenu
 ; Draw the message speed selection menu.
 DrawMessageSpeedMenu:
-	MOVE.w	#$000A, Window_tilemap_x.w	
-	MOVE.w	#$000A, Window_tilemap_y.w	
-	MOVE.w	#$000E, Window_width.w	
-	MOVE.w	#$000A, Window_height.w	
-	MOVE.w	#0, Window_tile_attrs.w	
-	BSR.w	DrawWindowBorder	
+	SetupWindow $000A, $000A, $000E, $000A	
 	LEA	MessageSpeedStr, A0	
 	MOVE.w	#1, Window_text_x.w	
 	MOVE.w	#2, Window_text_y.w	
@@ -539,12 +519,7 @@ DrawYesNoDialog:
 	MOVE.w	#MENU_CURSOR_NONE, Menu_cursor_last_index.w
 	MOVE.w	#$001E, Menu_cursor_base_x.w
 	MOVE.w	#$000F, Menu_cursor_base_y.w
-	MOVE.w	#$001C, Window_tilemap_x.w
-	MOVE.w	#$000D, Window_tilemap_y.w
-	MOVE.w	#6, Window_width.w
-	MOVE.w	#6, Window_height.w
-	MOVE.w	#0, Window_tile_attrs.w
-	BSR.w	DrawWindowBorder
+	SetupWindow $001C, $000D, 6, 6
 	LEA	YesNoStr, A0
 	MOVE.w	#3, Window_text_x.w
 	MOVE.w	#2, Window_text_y.w
@@ -561,12 +536,7 @@ DrawSavedGameOptionsMenu:
 	MOVE.w	#MENU_CURSOR_NONE, Menu_cursor_last_index.w
 	MOVE.w	#$0010, Menu_cursor_base_x.w
 	MOVE.w	#$000E, Menu_cursor_base_y.w
-	MOVE.w	#$000F, Window_tilemap_x.w
-	MOVE.w	#$000C, Window_tilemap_y.w
-	MOVE.w	#$0015, Window_width.w
-	MOVE.w	#7, Window_height.w
-	MOVE.w	#0, Window_tile_attrs.w
-	BSR.w	DrawWindowBorder
+	SetupWindow $000F, $000C, $0015, 7
 	LEA	SavedGameOptionsStr, A0
 	MOVE.w	#2, Window_text_x.w
 	MOVE.w	#2, Window_text_y.w
@@ -597,12 +567,7 @@ DrawSpellActionMenu:
 	MOVE.w	#MENU_CURSOR_NONE, Menu_cursor_last_index.w
 	MOVE.w	#3, Menu_cursor_base_x.w
 	MOVE.w	#$000E, Menu_cursor_base_y.w
-	MOVE.w	#2, Window_tilemap_x.w
-	MOVE.w	#$000C, Window_tilemap_y.w
-	MOVE.w	#$000D, Window_width.w
-	MOVE.w	#8, Window_height.w
-	MOVE.w	#0, Window_tile_attrs.w
-	BSR.w	DrawWindowBorder
+	SetupWindow 2, $000C, $000D, 8
 	LEA	CastReadyDiscardStr, A0
 	MOVE.w	#2, Window_text_x.w
 	MOVE.w	#2, Window_text_y.w
@@ -618,12 +583,7 @@ DrawUseDiscardMenuWindow:
 	MOVE.w	#MENU_CURSOR_NONE, Menu_cursor_last_index.w
 	MOVE.w	#3, Menu_cursor_base_x.w
 	MOVE.w	#$000E, Menu_cursor_base_y.w
-	MOVE.w	#2, Window_tilemap_x.w
-	MOVE.w	#$000C, Window_tilemap_y.w
-	MOVE.w	#$000D, Window_width.w
-	MOVE.w	#6, Window_height.w
-	MOVE.w	#0, Window_tile_attrs.w
-	BSR.w	DrawWindowBorder
+	SetupWindow 2, $000C, $000D, 6
 	LEA	UseDiscardStr, A0
 	MOVE.w	#2, Window_text_x.w
 	MOVE.w	#2, Window_text_y.w
@@ -639,12 +599,7 @@ DrawEquipmentMenuWindow:
 	MOVE.w	#MENU_CURSOR_NONE, Menu_cursor_last_index.w
 	MOVE.w	#3, Menu_cursor_base_x.w
 	MOVE.w	#$000E, Menu_cursor_base_y.w
-	MOVE.w	#2, Window_tilemap_x.w
-	MOVE.w	#$000C, Window_tilemap_y.w
-	MOVE.w	#$000B, Window_width.w
-	MOVE.w	#8, Window_height.w
-	MOVE.w	#0, Window_tile_attrs.w
-	BSR.w	DrawWindowBorder
+	SetupWindow 2, $000C, $000B, 8
 	LEA	PutOnRemoveStopStr, A0
 	MOVE.w	#2, Window_text_x.w
 	MOVE.w	#2, Window_text_y.w
@@ -660,12 +615,7 @@ DrawEquipOptionsMenuWindow:
 	MOVE.w	#MENU_CURSOR_NONE, Menu_cursor_last_index.w
 	MOVE.w	#$000D, Menu_cursor_base_x.w
 	MOVE.w	#6, Menu_cursor_base_y.w
-	MOVE.w	#$000C, Window_tilemap_x.w
-	MOVE.w	#4, Window_tilemap_y.w
-	MOVE.w	#9, Window_width.w
-	MOVE.w	#8, Window_height.w
-	MOVE.w	#0, Window_tile_attrs.w
-	BSR.w	DrawWindowBorder
+	SetupWindow $000C, 4, 9, 8
 	LEA	EquipOptionsStr, A0
 	MOVE.w	#2, Window_text_x.w
 	MOVE.w	#2, Window_text_y.w
@@ -681,12 +631,7 @@ DrawChurchMenuWindow:
 	MOVE.w	#MENU_CURSOR_NONE, Menu_cursor_last_index.w
 	MOVE.w	#3, Menu_cursor_base_x.w
 	MOVE.w	#$000C, Menu_cursor_base_y.w
-	MOVE.w	#2, Window_tilemap_x.w
-	MOVE.w	#$000A, Window_tilemap_y.w
-	MOVE.w	#$0015, Window_width.w
-	MOVE.w	#$000A, Window_height.w
-	MOVE.w	#0, Window_tile_attrs.w
-	BSR.w	DrawWindowBorder
+	SetupWindow 2, $000A, $0015, $000A
 	LEA	ChurchOptionsStr, A0
 	MOVE.w	#2, Window_text_x.w
 	MOVE.w	#2, Window_text_y.w
@@ -702,12 +647,7 @@ DrawShopMenuWindow:
 	MOVE.w	#MENU_CURSOR_NONE, Menu_cursor_last_index.w
 	MOVE.w	#3, Menu_cursor_base_x.w
 	MOVE.w	#$000E, Menu_cursor_base_y.w
-	MOVE.w	#2, Window_tilemap_x.w
-	MOVE.w	#$000C, Window_tilemap_y.w
-	MOVE.w	#7, Window_width.w
-	MOVE.w	#8, Window_height.w
-	MOVE.w	#0, Window_tile_attrs.w
-	BSR.w	DrawWindowBorder
+	SetupWindow 2, $000C, 7, 8
 	LEA	BuySellStopStr, A0
 	MOVE.w	#2, Window_text_x.w
 	MOVE.w	#2, Window_text_y.w
@@ -719,12 +659,7 @@ DrawShopMenuWindow:
 ; DrawMoneyDisplayWindow
 ; Draw the player's current kims (gold) display window.
 DrawMoneyDisplayWindow:
-	MOVE.w	#0, Window_tilemap_x.w
-	MOVE.w	#2, Window_tilemap_y.w
-	MOVE.w	#9, Window_width.w
-	MOVE.w	#6, Window_height.w
-	MOVE.w	#0, Window_tile_attrs.w
-	BSR.w	DrawWindowBorder
+	SetupWindow 0, 2, 9, 6
 	LEA	KimStr, A0
 	MOVE.w	#2, Window_text_x.w
 	MOVE.w	#2, Window_text_y.w
@@ -832,9 +767,7 @@ DrawShopItemListWindow:
 	MOVE.w	Shop_item_count.w, D0
 	ADD.w	D0, D0
 	ADDQ.w	#2, D0
-	MOVE.w	D0, Window_height.w
-	MOVE.w	#0, Window_tile_attrs.w
-	BSR.w	DrawWindowBorder
+	DrawWindowDynH
 	MOVE.w	#2, Window_text_x.w
 	MOVE.w	#2, Window_text_y.w
 	LEA	Shop_item_list.w, A3
@@ -893,9 +826,7 @@ DrawShopSellListWindow:
 	MOVE.w	Shop_item_count.w, D0
 	ADD.w	D0, D0
 	ADDQ.w	#2, D0
-	MOVE.w	D0, Window_height.w
-	MOVE.w	#0, Window_tile_attrs.w
-	BSR.w	DrawWindowBorder
+	DrawWindowDynH
 	MOVE.w	#2, Window_text_x.w
 	MOVE.w	#2, Window_text_y.w
 	LEA	Shop_item_list.w, A3
@@ -1328,12 +1259,7 @@ ResetScriptOutputVars:
 ; DrawSaveFileSelectWindow
 ; Draw the save-file selection window with 3 slot labels and any saved game names.
 DrawSaveFileSelectWindow:
-	MOVE.w	#4, Window_tilemap_x.w
-	MOVE.w	#1, Window_tilemap_y.w
-	MOVE.w	#$001B, Window_width.w
-	MOVE.w	#$0010, Window_height.w
-	MOVE.w	#0, Window_tile_attrs.w
-	BSR.w	DrawWindowBorder
+	SetupWindow 4, 1, $001B, $0010
 	LEA	SelectNumberStr, A0
 	MOVE.w	#2, Window_text_x.w
 	MOVE.w	#4, Window_text_y.w
@@ -1441,12 +1367,7 @@ FormatItemCountToBCD:
 ; DrawSaveErrorWindow
 ; Draw the "save error" message window.
 DrawSaveErrorWindow:
-	MOVE.w	#$000A, Window_tilemap_x.w
-	MOVE.w	#$0010, Window_tilemap_y.w
-	MOVE.w	#$0019, Window_width.w
-	MOVE.w	#$000A, Window_height.w
-	MOVE.w	#0, Window_tile_attrs.w
-	BSR.w	DrawWindowBorder
+	SetupWindow $000A, $0010, $0019, $000A
 	LEA	ErrorPressCStr, A0
 	MOVE.w	#2, Window_text_x.w
 	MOVE.w	#2, Window_text_y.w
@@ -1458,12 +1379,7 @@ DrawSaveErrorWindow:
 ; DrawSaveSuccessWindow
 ; Draw the "game saved" confirmation window.
 DrawSaveSuccessWindow:
-	MOVE.w	#$000A, Window_tilemap_x.w	
-	MOVE.w	#$0010, Window_tilemap_y.w	
-	MOVE.w	#$0019, Window_width.w	
-	MOVE.w	#$000A, Window_height.w	
-	MOVE.w	#0, Window_tile_attrs.w	
-	BSR.w	DrawWindowBorder	
+	SetupWindow $000A, $0010, $0019, $000A	
 	LEA	LooksBetterPressCStr, A0	
 	MOVE.w	#2, Window_text_x.w	
 	MOVE.w	#2, Window_text_y.w	
@@ -1475,12 +1391,7 @@ DrawSaveSuccessWindow:
 ; DrawSaveFailedWindow
 ; Draw the "save failed" error window.
 DrawSaveFailedWindow:
-	MOVE.w	#$000A, Window_tilemap_x.w
-	MOVE.w	#$0010, Window_tilemap_y.w
-	MOVE.w	#$0019, Window_width.w
-	MOVE.w	#$000A, Window_height.w
-	MOVE.w	#0, Window_tile_attrs.w
-	BSR.w	DrawWindowBorder
+	SetupWindow $000A, $0010, $0019, $000A
 	LEA	DidntWorkPressResetStr, A0
 	MOVE.w	#2, Window_text_x.w
 	MOVE.w	#2, Window_text_y.w
@@ -1492,12 +1403,7 @@ DrawSaveFailedWindow:
 ; DrawNoSavedGameWindow
 ; Draw the "no saved game" informational window.
 DrawNoSavedGameWindow:
-	MOVE.w	#$000A, Window_tilemap_x.w
-	MOVE.w	#$0010, Window_tilemap_y.w
-	MOVE.w	#$0019, Window_width.w
-	MOVE.w	#$000A, Window_height.w
-	MOVE.w	#0, Window_tile_attrs.w
-	BSR.w	DrawWindowBorder
+	SetupWindow $000A, $0010, $0019, $000A
 	LEA	NoSavedGameStr, A0
 	MOVE.w	#2, Window_text_x.w
 	MOVE.w	#2, Window_text_y.w
@@ -1509,12 +1415,7 @@ DrawNoSavedGameWindow:
 ; DrawGameReadyWindow
 ; Draw the "game is ready" / continue-prompt window.
 DrawGameReadyWindow:
-	MOVE.w	#$000A, Window_tilemap_x.w	
-	MOVE.w	#$0010, Window_tilemap_y.w	
-	MOVE.w	#$0019, Window_width.w	
-	MOVE.w	#$000A, Window_height.w	
-	MOVE.w	#0, Window_tile_attrs.w	
-	BSR.w	DrawWindowBorder	
+	SetupWindow $000A, $0010, $0019, $000A	
 	LEA	GameReadyPressCStr, A0	
 	MOVE.w	#2, Window_text_x.w	
 	MOVE.w	#2, Window_text_y.w	
@@ -1530,12 +1431,7 @@ DrawGameReadyWindow:
 ; DrawCharacterStatsWindow
 ; Draw the character status screen showing name, level, HP/MP, stats, and current condition.
 DrawCharacterStatsWindow:
-	MOVE.w	#2, Window_tilemap_x.w
-	MOVE.w	#2, Window_tilemap_y.w
-	MOVE.w	#$001B, Window_width.w
-	MOVE.w	#$0014, Window_height.w
-	MOVE.w	#0, Window_tile_attrs.w
-	BSR.w	DrawWindowBorder
+	SetupWindow 2, 2, $001B, $0014
 	LEA	CharacterStatsStr, A0
 	MOVE.w	#2, Window_text_x.w
 	MOVE.w	#2, Window_text_y.w
@@ -1646,12 +1542,7 @@ DrawStatusScreen_RenderCondition: ; stats screen?
 ; DrawEquippedGearWindow
 ; Draw the equipped gear list window showing weapon, shield, armor, ring, and other slots.
 DrawEquippedGearWindow:
-	MOVE.w	#2, Window_tilemap_x.w
-	MOVE.w	#2, Window_tilemap_y.w
-	MOVE.w	#$001A, Window_width.w
-	MOVE.w	#$000C, Window_height.w
-	MOVE.w	#0, Window_tile_attrs.w
-	BSR.w	DrawWindowBorder
+	SetupWindow 2, 2, $001A, $000C
 	LEA	EquipmentReadiedStr, A0
 	MOVE.w	#1, Window_text_x.w
 	MOVE.w	#2, Window_text_y.w
@@ -1724,9 +1615,7 @@ DrawGearCombatWindow:
 	BLE.w	DrawGearCombatWindow_Loop
 	ADD.w	D0, D0
 	ADDQ.w	#3, D0
-	MOVE.w	D0, Window_height.w
-	MOVE.w	#0, Window_tile_attrs.w
-	BSR.w	DrawWindowBorder
+	DrawWindowDynH
 	LEA	GearCombatStr, A0
 	MOVE.w	#2, Window_text_x.w
 	MOVE.w	#2, Window_text_y.w
@@ -1755,9 +1644,7 @@ DrawGearCombatWindow_Done:
 	RTS
 	
 DrawGearCombatWindow_Loop:
-	MOVE.w	#5, Window_height.w	
-	MOVE.w	#0, Window_tile_attrs.w	
-	BSR.w	DrawWindowBorder	
+	SetupWindowSize 5	
 	LEA	GearCombatStr, A0	
 	MOVE.w	#2, Window_text_x.w	
 	MOVE.w	#2, Window_text_y.w	
@@ -1802,9 +1689,7 @@ DrawMagicListWindow:
 	BLE.w	DrawMagicListWindow_Loop
 	ADD.w	D0, D0
 	ADDQ.w	#3, D0
-	MOVE.w	D0, Window_height.w
-	MOVE.w	#0, Window_tile_attrs.w
-	BSR.w	DrawWindowBorder
+	DrawWindowDynH
 	LEA	GearMagicStr, A0
 	MOVE.w	#2, Window_text_x.w
 	MOVE.w	#2, Window_text_y.w
@@ -1833,9 +1718,7 @@ DrawMagicListWindow_Done:
 	RTS
 	
 DrawMagicListWindow_Loop:
-	MOVE.w	#5, Window_height.w
-	MOVE.w	#0, Window_tile_attrs.w
-	BSR.w	DrawWindowBorder
+	SetupWindowSize 5
 	LEA	GearMagicStr, A0
 	MOVE.w	#2, Window_text_x.w
 	MOVE.w	#2, Window_text_y.w
@@ -1857,9 +1740,7 @@ DrawItemsListWindow:
 	BLE.w	DrawItemsListWindow_Loop
 	ADD.w	D0, D0
 	ADDQ.w	#3, D0
-	MOVE.w	D0, Window_height.w
-	MOVE.w	#0, Window_tile_attrs.w
-	BSR.w	DrawWindowBorder
+	DrawWindowDynH
 	LEA	GearItemStr, A0
 	MOVE.w	#2, Window_text_x.w
 	MOVE.w	#2, Window_text_y.w
@@ -1882,9 +1763,7 @@ DrawItemsListWindow_Done:
 	MOVE.b	#FLAG_TRUE, Window_tilemap_draw_active.w
 	RTS
 DrawItemsListWindow_Loop:
-	MOVE.w	#5, Window_height.w	
-	MOVE.w	#0, Window_tile_attrs.w	
-	BSR.w	DrawWindowBorder	
+	SetupWindowSize 5	
 	LEA	GearItemStr, A0	
 	MOVE.w	#2, Window_text_x.w	
 	MOVE.w	#2, Window_text_y.w	
@@ -1918,9 +1797,7 @@ DrawRingsListWindow_Loop:
 	BNE.w	RingsInventory_EmptyDisplay
 	ADD.w	D0, D0
 	ADDQ.w	#3, D0
-	MOVE.w	D0, Window_height.w
-	MOVE.w	#0, Window_tile_attrs.w
-	BSR.w	DrawWindowBorder
+	DrawWindowDynH
 	LEA	RingsStr, A0
 	MOVE.w	#7, Window_text_x.w
 	MOVE.w	#2, Window_text_y.w
@@ -1948,9 +1825,7 @@ RingsInventory_NextEntry:
 	RTS
 	
 RingsInventory_EmptyDisplay:
-	MOVE.w	#5, Window_height.w	
-	MOVE.w	#0, Window_tile_attrs.w	
-	BSR.w	DrawWindowBorder	
+	SetupWindowSize 5	
 	LEA	RingsStr, A0	
 	MOVE.w	#2, Window_text_x.w	
 	MOVE.w	#2, Window_text_y.w	
