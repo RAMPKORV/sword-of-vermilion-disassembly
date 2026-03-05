@@ -207,3 +207,38 @@ fmch_arp_phase      equ $13   ; byte: arpeggio sequence read position index
 fmch_pitch_bend     equ $14   ; byte: pitch-bend counter ($1F=key-off/note-end, $FF=no-bend)
 fmch_lfo_depth      equ $16   ; byte: LFO depth/amplitude accumulator (scaled by vibrato table)
 fmch_size           equ $30   ; struct stride: each channel slot is $30 bytes wide
+
+; ============================================================
+; Sound Driver Timing and Architecture Constants
+; ============================================================
+
+; Sound script data base address in ROM.
+; All script pointers are stored as 16-bit offsets relative to
+; this address; reconstructed as: A4 = offset + SND_SCRIPT_BASE.
+SND_SCRIPT_BASE             = $00093C00 ; ROM address of sound script data start
+
+; Fade-out parameters (used by ProcessSound_FadeOut):
+; Volume steps from SND_FADE_VOLUME_INIT down to 0.
+; One step is applied every SND_FADE_SPEED_INIT frames.
+; Total fade time = SND_FADE_VOLUME_INIT × SND_FADE_SPEED_INIT frames
+;   = $3F × 2 = 126 frames ≈ 2.1 s at 60 fps.
+SND_FADE_VOLUME_INIT        = $3F       ; Initial fade-out volume level (63 attenuation steps)
+SND_FADE_SPEED_INIT         = 2        ; Frames between each volume decrement step
+
+; Sound RAM clear loop count for StopAllActiveSounds.
+; DBF loops SND_RAM_CLEAR_COUNT+1 = $9C (156) times × 4 bytes = 624 bytes
+; ($FFF400..$FFF66F; rounds up to cover the full driver RAM region).
+SND_RAM_CLEAR_COUNT         = $009B     ; DBF count for zeroing sound driver RAM
+
+; YM2612 register address for key-on/key-off control.
+YM2612_REG_KEY_ONOFF        = $28       ; YM2612 global key on/off register address
+
+; FM channel register write count (used by WriteFM_ChannelRegisters).
+; One channel requires 25 register address+data byte pairs written.
+; DBF loop uses FM_CHANNEL_REG_COUNT_M1 = 25 - 1 = 24 = $18.
+FM_CHANNEL_REG_COUNT_M1     = $0018     ; 25 FM operator register pairs per channel (DBF count)
+
+; Channel bank iteration DBF counts.
+; Bank 1 has 9 channels (DBF 8..0); bank 2 has 4 channels (DBF 3..0).
+SND_BANK1_CH_COUNT_M1       = 8        ; DBF count for 9 bank-1 FM/PSG channels (indices 0..8)
+SND_BANK2_CH_COUNT_M1       = 3        ; DBF count for 4 bank-2 FM channels (indices 0..3)

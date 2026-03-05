@@ -76,12 +76,56 @@ VRAM_HScroll        = $BC00     ; Horizontal scroll table
 ; VRAM/CRAM/VSRAM write destination address.
 ; Formula: vram_write_cmd(A) = $40000000 | ((A & $3FFF) << 16) | ((A >> 14) & 3)
 ;
+; Address mask: ANDI.l #VDP_CMD_VRAM_WRITE_ADDR_MASK, Dn
+;   Clears the address portion while preserving command type bits.
+;   Used after ADDI.l #VDP_VRAM_ROW_STRIDE to fix any carry overflow.
+
+; --- Named VRAM destinations (Plane A = $C000, Plane B = $E000) ---
 VDP_CMD_VRAM_WRITE_PLANE_A  = $40000003  ; VRAM write to $C000 (Plane A nametable base)
 VDP_CMD_VRAM_WRITE_PLANE_B  = $60000003  ; VRAM write to $E000 (Plane B nametable base)
 VDP_CMD_VRAM_WRITE_HSCROLL  = $7C000002  ; VRAM write to $BC00 (HScroll table base)
 VDP_CMD_VRAM_WRITE_SAT      = $78000002  ; VRAM write to $B800 (Sprite Attribute Table)
 VDP_CMD_CRAM_WRITE_0        = $C0000000  ; CRAM write to address 0 (palette entry 0)
 VDP_CMD_VSRAM_WRITE_0       = $40000010  ; VSRAM write to address 0 (scroll table entry 0)
+
+; --- Address mask for row-advance fixup ---
+VDP_CMD_VRAM_WRITE_ADDR_MASK = $5FFF0003  ; Clears addr bits after row-stride add (ANDI.l mask)
+
+; --- Plane A VRAM write commands (specific offsets, multi-use) ---
+VDP_CMD_VRAM_WRITE_C082     = $40820003  ; VRAM write to $C082 (Plane A, dungeon wall tile row 1)
+VDP_CMD_VRAM_WRITE_C13C     = $413C0003  ; VRAM write to $C13C (Plane A, town tilemap render start)
+VDP_CMD_VRAM_WRITE_C1A2     = $41A20003  ; VRAM write to $C1A2 (Plane A row 3, col 81)
+VDP_CMD_VRAM_WRITE_C204     = $42040003  ; VRAM write to $C204 (Plane A row 4, col 2)
+VDP_CMD_VRAM_WRITE_C3BE     = $43BE0003  ; VRAM write to $C3BE (Plane A, boss text row 1)
+VDP_CMD_VRAM_WRITE_C404     = $44040003  ; VRAM write to $C404 (Plane A row 8, col 2)
+VDP_CMD_VRAM_WRITE_C482     = $44820003  ; VRAM write to $C482 (Plane A, dungeon wall tile row 9)
+VDP_CMD_VRAM_WRITE_C642     = $46420003  ; VRAM write to $C642 (Plane A, boss HP gauge row)
+VDP_CMD_VRAM_WRITE_C8C2     = $48C20003  ; VRAM write to $C8C2 (Plane A, boss text row 2)
+VDP_CMD_VRAM_WRITE_CA04     = $4A040003  ; VRAM write to $CA04 (Plane A row 10, col 2)
+VDP_CMD_VRAM_WRITE_CCB6     = $4CB60003  ; VRAM write to $CCB6 (Plane A, HUD message area row 1)
+VDP_CMD_VRAM_WRITE_CD36     = $4D360003  ; VRAM write to $CD36 (Plane A, HUD message area row 2)
+
+; --- Plane B VRAM write commands (specific offsets, multi-use) ---
+VDP_CMD_VRAM_WRITE_E0AA     = $60AA0003  ; VRAM write to $E0AA (Plane B row 1, col 85)
+VDP_CMD_VRAM_WRITE_E0AE     = $60AE0003  ; VRAM write to $E0AE (Plane B row 1, col 87)
+VDP_CMD_VRAM_WRITE_E106     = $61060003  ; VRAM write to $E106 (Plane B row 2, col 3)
+VDP_CMD_VRAM_WRITE_E710     = $67100003  ; VRAM write to $E710 (Plane B row 14, col 8)
+VDP_CMD_VRAM_WRITE_E714     = $67140003  ; VRAM write to $E714 (Plane B row 14, col 10)
+VDP_CMD_VRAM_WRITE_E980     = $69800003  ; VRAM write to $E980 (Plane B, credits staff names area)
+VDP_CMD_VRAM_WRITE_ECB6     = $6CB60003  ; VRAM write to $ECB6 (Plane B, HUD message area row 1)
+VDP_CMD_VRAM_WRITE_ED36     = $6D360003  ; VRAM write to $ED36 (Plane B, HUD message area row 2)
+
+; --- Other VRAM write commands (multi-use) ---
+VDP_CMD_VRAM_WRITE_8560     = $45600002  ; VRAM write to $8560 (overworld tilemap window area)
+
+; --- VRAM DMA write commands (battle sprite tile transfer destinations) ---
+; These are VRAM DMA write commands (CD bits = 0x21) used by UpdatePlayerSpriteDMA.
+; Each names a sprite tile slot in VRAM for battle animation DMA transfers.
+VDP_DMA_VRAM_WRITE_0200     = $40200080  ; VRAM DMA write to $0200 (battle sprite slot: enemy main)
+VDP_DMA_VRAM_WRITE_1A00     = $41A00080  ; VRAM DMA write to $1A00 (battle sprite slot: player)
+VDP_DMA_VRAM_WRITE_2200     = $42200080  ; VRAM DMA write to $2200 (battle sprite slot: player boss battle)
+VDP_DMA_VRAM_WRITE_2A00     = $42A00080  ; VRAM DMA write to $2A00 (battle sprite slot: ally/partner)
+VDP_DMA_VRAM_WRITE_3A00     = $43A00080  ; VRAM DMA write to $3A00 (battle sprite slot: boss slot 2)
 
 ; ============================================================
 ; VDP DMA Fill Destination Words
@@ -133,3 +177,15 @@ PROGRAM_STATE_COUNT         = $16       ; Number of program states (22)
 ; registers must be masked to 24 bits before use as effective addresses.
 ; This mask strips the high byte of any 32-bit ROM pointer.
 ROM_ADDRESS_MASK            = $00FFFFFF ; Mask 32-bit value to 24-bit ROM address
+
+; ============================================================
+; PSG Mute Register Bytes
+; ============================================================
+; Written to PSG_port to set maximum attenuation ($F) on each
+; PSG channel.  Each byte encodes: bit7=1 (latch), bits5-4=ch
+; index, bit4=1 (volume register), bits3-0=$F (max attenuation).
+;
+PSG_CH0_MUTE        = $9F   ; PSG channel 0 latch: max attenuation (vol reg, $F)
+PSG_CH1_MUTE        = $BF   ; PSG channel 1 latch: max attenuation
+PSG_CH2_MUTE        = $DF   ; PSG channel 2 latch: max attenuation
+PSG_CH3_MUTE        = $FF   ; PSG channel 3 latch: max attenuation (noise ch)

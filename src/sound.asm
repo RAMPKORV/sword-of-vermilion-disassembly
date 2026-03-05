@@ -181,7 +181,7 @@ UpdateBattleEntities:
 ; @ $00092918
 ProcessFMSoundChannels:
 	MOVE.b	#0, SndRAM_part_flag
-	MOVE.w	#8, D6
+	MOVE.w	#SND_BANK1_CH_COUNT_M1, D6
 	LEA	SndRAM_ch_bank1, A3
 ; @ $0009292A
 ProcessFMSoundChannels_Done:
@@ -191,11 +191,11 @@ ProcessFMSoundChannels_Done:
 	BSR.w	ProcessSoundChannel_FM
 ; @ $00092936
 ProcessFMSoundChannels_Loop:
-	ADDA.w	#$0030, A3
+	ADDA.w	#fmch_size, A3
 	MOVE.l	(A7)+, D6
 	DBF	D6, ProcessFMSoundChannels_Done
 	MOVE.b	#$80, SndRAM_part_flag
-	MOVE.w	#3, D6
+	MOVE.w	#SND_BANK2_CH_COUNT_M1, D6
 	LEA	SndRAM_ch_bank2, A3
 ; @ $00092952
 ProcessFMSoundChannels_Loop_Done:
@@ -205,7 +205,7 @@ ProcessFMSoundChannels_Loop_Done:
 	BSR.w	ProcessSoundChannel_FM
 ; @ $0009295E
 ProcessFMSoundChannels_SkipChannel:
-	ADDA.w	#$0030, A3
+	ADDA.w	#fmch_size, A3
 	MOVE.l	(A7)+, D6
 	DBF	D6, ProcessFMSoundChannels_Loop_Done
 	RTS
@@ -463,7 +463,7 @@ SetSoundNoteDuration_Loop:
 UpdateSoundChannelPitch:
 	MOVE.w	fmch_note_duration(A3), fmch_tick_ctr(A3)
 	MOVE.l	A4, D5
-	SUBI.l	#$00093C00, D5
+	SUBI.l	#SND_SCRIPT_BASE, D5
 	MOVE.b	D5, fmch_script_ptr_lo(A3)
 	LSR.w	#8, D5
 	MOVE.b	D5, fmch_script_ptr_hi(A3)
@@ -598,7 +598,7 @@ LoadSoundScriptPointer:
 	LSL.w	#8, D0
 	ADD.w	D0, D1
 	MOVEA.w	D1, A4
-	ADDA.l	#$00093C00, A4
+	ADDA.l	#SND_SCRIPT_BASE, A4
 	RTS
 	
 ; ProcessSoundScriptCommand
@@ -752,7 +752,7 @@ SoundCmd_SetFrequency_ApplyDuration:
 	MOVE.w	D5, fmch_note_duration(A3)
 	MOVE.w	D5, fmch_tick_ctr(A3)
 	MOVE.l	A4, D5
-	SUBI.l	#$00093C00, D5
+	SUBI.l	#SND_SCRIPT_BASE, D5
 	MOVE.b	D5, fmch_script_ptr_lo(A3)
 	LSR.w	#8, D5
 	MOVE.b	D5, fmch_script_ptr_hi(A3)
@@ -856,7 +856,7 @@ SoundCmd_JumpToOffset:
 	LSL.w	#8, D0
 	MOVE.b	(A4), D1
 	ADD.w	D0, D1
-	ADDI.l	#$00093C00, D1
+	ADDI.l	#SND_SCRIPT_BASE, D1
 	MOVEA.l	D1, A4
 	RTS
 	
@@ -1042,7 +1042,7 @@ SoundCommand_JumpTable_CopyChannelData:
 	DBF	D6, SoundCommand_JumpTable_CopyChannelData
 	MOVE.b	#$C0, $21(A2)
 	MOVE.w	#1, $A(A2)
-	ADDA.w	#$0030, A2
+	ADDA.w	#fmch_size, A2
 	DBF	D5, SoundCommand_JumpTable_InitChannels
 	BRA.w	SoundInit_Done
 ; @ $000930B4
@@ -1098,7 +1098,7 @@ SoundCommand_JumpTable_CopySFXChannelData:
 	MOVE.b	#$C0, $21(A2)
 	MOVE.b	#$30, $9(A2)
 	MOVE.w	#1, $A(A2)
-	ADDA.l	#$00000030, A2
+	ADDA.l	#fmch_size, A2
 	DBF	D5, SoundCommand_JumpTable_StartSFX_Done
 	BRA.w	SoundInit_Done
 ; @ $00093176
@@ -1111,14 +1111,14 @@ SoundInit_Done:
 	
 ; GetSoundDataPointer
 ; Looks up a 16-bit relative offset from table at A0 indexed by
-; D0, adds base $00093C00, and returns the pointer in A0.
+; D0, adds base SND_SCRIPT_BASE ($00093C00), and returns the pointer in A0.
 ; Inputs: A0 = base table, D0 = index
 ; Outputs: A0 = resolved pointer
 ; @ $00093184
 GetSoundDataPointer:
 	LSL.w	#1, D0
 	MOVEA.w	(A0,D0.w), A0
-	ADDA.l	#$00093C00, A0
+	ADDA.l	#SND_SCRIPT_BASE, A0
 	RTS
 	
 ; StopAllActiveSounds
@@ -1133,7 +1133,7 @@ StopAllActiveSounds:
 	BSR.w	InitFM_ChannelsToSilence
 	MOVEA.l	(A7)+, A3
 	LEA	SndRAM_cmd_queue, A6
-	MOVE.w	#$009B, D6
+	MOVE.w	#SND_RAM_CLEAR_COUNT, D6
 ; @ $000931B0
 StopAllActiveSounds_Done:
 	MOVE.l	#0, (A6)+
@@ -1155,11 +1155,11 @@ ProcessSound_TempoCounter:
 	BNE.w	SoundObjTick_Return
 	MOVE.b	(A0), (A1)
 	LEA	SndRAM_ch_bank1, A0
-	MOVE.w	#8, D6
+	MOVE.w	#SND_BANK1_CH_COUNT_M1, D6
 ; @ $000931E2
 ProcessSound_TempoCounter_Done:
 	ADDQ.w	#1, $A(A0)
-	ADDA.l	#$30, A0
+	ADDA.l	#fmch_size, A0
 	DBF	D6, ProcessSound_TempoCounter_Done
 ; @ $000931F0
 SoundObjTick_Return:
@@ -1167,8 +1167,8 @@ SoundObjTick_Return:
 	
 ; @ $000931F2
 SoundObjTick_Return_Loop:
-	MOVE.b	#$3F, SndRAM_fade_volume
-	MOVE.b	#2, SndRAM_fade_speed
+	MOVE.b	#SND_FADE_VOLUME_INIT, SndRAM_fade_volume
+	MOVE.b	#SND_FADE_SPEED_INIT, SndRAM_fade_speed
 	MOVE.b	#0, SndRAM_ch_dac
 	RTS
 	
@@ -1191,15 +1191,15 @@ ProcessSound_FadeOut:
 ProcessSound_FadeOut_FadeStep:
 	SUBQ.b	#1, SndRAM_fade_volume
 	BEQ.w	StopAllActiveSounds
-	MOVE.b	#2, SndRAM_fade_speed
+	MOVE.b	#SND_FADE_SPEED_INIT, SndRAM_fade_speed
 	LEA	SndRAM_ch_bank1, A3
-	MOVE.w	#8, D6
+	MOVE.w	#SND_BANK1_CH_COUNT_M1, D6
 ; @ $00093242
 ProcessSound_FadeOut_FadeChannels:
 	ADDQ.b	#1, fmch_volume(A3)
 	MOVE.b	fmch_volume(A3), D3
 	BSR.w	UpdateFM_TotalLevelRegisters
-	ADDA.w	#$0030, A3
+	ADDA.w	#fmch_size, A3
 	DBF	D6, ProcessSound_FadeOut_FadeChannels
 ; @ $00093256
 ProcessSound_FadeOut_Return:
@@ -1254,7 +1254,7 @@ WriteYM2612_RegisterLoop:
 ; @ $000932A2
 InitFM_ChannelsToSilence:
 	MOVEQ	#6, D6
-	MOVE.b	#$28, D0
+	MOVE.b	#YM2612_REG_KEY_ONOFF, D0
 	MOVE.b	#0, D1
 ; @ $000932AC
 InitFM_ChannelsToSilence_Done:
@@ -1267,7 +1267,7 @@ InitFM_ChannelsToSilence_Done:
 InitFM_ChannelsToSilence_ChannelLoop:
 	LEA	InitFM_ChannelsToSilence_RegData, A0
 	BSR.w	WriteFM_ChannelRegisters
-	ADDA.w	#$0030, A3
+	ADDA.w	#fmch_size, A3
 	DBF	D7, InitFM_ChannelsToSilence_ChannelLoop
 	RTS
 	
@@ -1279,10 +1279,10 @@ InitFM_ChannelsToSilence_RegData:
 ; writing the latch+attenuation bytes to the PSG data port.
 ; @ $000932EE
 MutePSG_AllChannels:
-	MOVE.b	#$9F, PSG_port
-	MOVE.b	#$BF, PSG_port
-	MOVE.b	#$DF, PSG_port
-	MOVE.b	#$FF, PSG_port
+	MOVE.b	#PSG_CH0_MUTE, PSG_port
+	MOVE.b	#PSG_CH1_MUTE, PSG_port
+	MOVE.b	#PSG_CH2_MUTE, PSG_port
+	MOVE.b	#PSG_CH3_MUTE, PSG_port
 	MOVE.b	#SOUND_LEVEL_UP, PSG_port
 	RTS
 	
@@ -1310,7 +1310,7 @@ LoadFM_AlgorithmData_Done:
 ; @ $0009332A
 WriteFM_ChannelRegisters:
 	MOVEA.l	#WriteFM_ChannelRegisters_Data, A2
-	MOVE.w	#$0018, D6
+	MOVE.w	#FM_CHANNEL_REG_COUNT_M1, D6
 ; @ $00093334
 WriteFM_ChannelRegisters_Done:
 	MOVE.b	(A2)+, D0
@@ -1391,7 +1391,7 @@ UpdateYM2612KeyOff:
 	MOVE.b	fmch_flags(A3), D2
 	ANDI.b	#6, D2
 	BNE.w	UpdateYM2612KeyOff_Loop
-	MOVE.b	#$28, D0
+	MOVE.b	#YM2612_REG_KEY_ONOFF, D0
 	MOVE.b	fmch_channel_id(A3), D1
 	ORI.b	#$F0, D1
 	BSR.w	WriteYM2612Register_Part1
@@ -1408,7 +1408,7 @@ WriteFMChannelRegisters:
 	MOVE.b	fmch_flags(A3), D2
 	ANDI.b	#6, D2
 	BNE.w	WriteFMChannelRegisters_Loop
-	MOVE.b	#$28, D0
+	MOVE.b	#YM2612_REG_KEY_ONOFF, D0
 	MOVE.b	fmch_channel_id(A3), D1
 	BSR.w	WriteYM2612Register_Part1
 ; @ $0009341A
