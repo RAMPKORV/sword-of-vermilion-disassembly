@@ -2034,17 +2034,17 @@ DrawTerrainTilemapHelper:
 	ADD.w	D0, D0
 	MOVEA.l	(A0,D0.w), A0
 	MOVE.w	#$0015, D7
-DrawTerrainTilemapHelper_Done:
+DrawTerrainTilemapHelper_WriteRow:
 	MOVE.l	D5, VDP_control_port
 	MOVE.w	#$0013, D6
-DrawTerrainTilemapHelper_Done2:
+DrawTerrainTilemapHelper_WriteTile:
 	CLR.w	D0
 	MOVE.b	(A0)+, D0
 	ADDI.w	#$4300, D0
 	MOVE.w	D0, VDP_data_port
-	DBF	D6, DrawTerrainTilemapHelper_Done2
+	DBF	D6, DrawTerrainTilemapHelper_WriteTile
 	ADDI.l	#$00800000, D5
-	DBF	D7, DrawTerrainTilemapHelper_Done
+	DBF	D7, DrawTerrainTilemapHelper_WriteRow
 	ANDI	#$F8FF, SR
 	RTS
 
@@ -2057,17 +2057,17 @@ DrawBattleStatusBar:
 	MOVE.l	#$6B000003, D5
 	LEA	DrawBattleStatusBar_Data, A0
 	MOVE.w	#5, D7
-DrawBattleStatusBar_Done:
+DrawBattleStatusBar_WriteRow:
 	MOVE.l	D5, VDP_control_port
 	MOVE.w	#$0027, D6
-DrawBattleStatusBar_Done2:
+DrawBattleStatusBar_WriteTile:
 	CLR.w	D0
 	MOVE.b	(A0)+, D0
 	ADDI.w	#$83CC, D0
 	MOVE.w	D0, VDP_data_port
-	DBF	D6, DrawBattleStatusBar_Done2
+	DBF	D6, DrawBattleStatusBar_WriteTile
 	ADDI.l	#$00800000, D5
-	DBF	D7, DrawBattleStatusBar_Done
+	DBF	D7, DrawBattleStatusBar_WriteRow
 	ANDI	#$F8FF, SR
 	RTS
 
@@ -2080,19 +2080,19 @@ DrawBattleNametable:
 	MOVE.l	#$40000003, D5
 	LEA	DrawBattleNametable_Data, A0
 	MOVE.w	#$001B, D7
-DrawBattleNametable_Done:
+DrawBattleNametable_WriteRow:
 	MOVE.l	D5, VDP_control_port
 	MOVE.w	#$0027, D6
-DrawBattleNametable_Done2:
+DrawBattleNametable_WriteTile:
 	CLR.w	D0
 	MOVE.b	(A0)+, D0
 	ORI.w	#$8000, D0
 	ORI.w	#0, D0
 	ADDI.w	#$03CC, D0
 	MOVE.w	D0, VDP_data_port
-	DBF	D6, DrawBattleNametable_Done2
+	DBF	D6, DrawBattleNametable_WriteTile
 	ADDI.l	#$00800000, D5
-	DBF	D7, DrawBattleNametable_Done
+	DBF	D7, DrawBattleNametable_WriteRow
 	ANDI	#$F8FF, SR
 	RTS
 
