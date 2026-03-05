@@ -88,12 +88,12 @@ DrawTilemapBlock_15x12:
 DrawTilemapBlock_15x12_Done:
 	MOVE.l	D5, VDP_control_port
 	MOVE.w	#$000E, D6              ; 15 tiles per row (DBF loops 14+1)
-DrawTilemapBlock_15x12_Done2:
+DrawTilemapBlock_15x12_WriteTile:
 	CLR.w	D0
 	MOVE.b	(A0)+, D0
 	ADD.w	D4, D0
 	MOVE.w	D0, VDP_data_port
-	DBF	D6, DrawTilemapBlock_15x12_Done2
+	DBF	D6, DrawTilemapBlock_15x12_WriteTile
 	ADDI.l	#$00800000, D5
 	DBF	D7, DrawTilemapBlock_15x12_Done
 	RTS
@@ -108,12 +108,12 @@ DrawTilemapBlock_13x10:
 DrawTilemapBlock_13x10_Done:
 	MOVE.l	D5, VDP_control_port
 	MOVE.w	#$000C, D6              ; 13 tiles per row (DBF loops 12+1)
-DrawTilemapBlock_13x10_Done2:
+DrawTilemapBlock_13x10_WriteTile:
 	CLR.w	D0
 	MOVE.b	(A0)+, D0
 	ADD.w	D4, D0
 	MOVE.w	D0, VDP_data_port
-	DBF	D6, DrawTilemapBlock_13x10_Done2
+	DBF	D6, DrawTilemapBlock_13x10_WriteTile
 	ADDI.l	#$00800000, D5
 	DBF	D7, DrawTilemapBlock_13x10_Done
 	RTS
@@ -136,7 +136,7 @@ DrawVerticalText_Next:
 	CMPI.b	#SCRIPT_NEWLINE, D0
 	BEQ.w	DrawVerticalText_NewLine_Loop
 	CMPI.b	#SCRIPT_END, D0
-	BEQ.w	DrawVerticalText_NewLine_Loop2
+	BEQ.w	DrawVerticalText_End
 	CMPI.b	#SCRIPT_WIDE_CHAR_LO, D0
 	BEQ.b	DrawVerticalText_NewLine
 	CMPI.b	#SCRIPT_WIDE_CHAR_HI, D0
@@ -156,7 +156,7 @@ DrawVerticalText_NewLine:
 DrawVerticalText_NewLine_Loop:
 	ADDI.l	#$01000000, D5          ; advance to next text column ($10 tiles)
 	BRA.b	DrawVerticalText
-DrawVerticalText_NewLine_Loop2:
+DrawVerticalText_End:
 	RTS
 
 ; ======================================================================
@@ -300,24 +300,24 @@ ResetTownCameraMovementState_Loop:
 	SUBQ.w	#1, VScroll_base.w
 	SUBQ.w	#1, Camera_scroll_y.w
 	SUBQ.w	#1, Town_camera_move_counter.w
-	BLE.b	ResetTownCameraMovementState_Loop2
+	BLE.b	ResetTownCameraMovementState_UpdateTileY
 	RTS
 
-ResetTownCameraMovementState_Loop2:
+ResetTownCameraMovementState_UpdateTileY:
 	MOVE.w	Town_tilemap_height.w, D1
 	CMPI.w	#TOWN_MAP_MIN_SCROLL_TILES, D1
 	BLE.b	TownCameraScrollUp_TileStep
 	MOVE.w	Town_camera_tile_y.w, D0
-	BLE.b	TownCameraScrollUp_TileStep_Loop2
+	BLE.b	TownCameraScrollUp_TileStep_ClampTileY
 	CMPI.w	#3, D0
 	BLT.b	TownCameraScrollUp_TileStep
 	BSR.w	DrawTownRow_Up
 TownCameraScrollUp_TileStep:
 	SUBQ.w	#1, Town_camera_tile_y.w
-	BRA.b	TownCameraScrollUp_TileStep_Loop3
-TownCameraScrollUp_TileStep_Loop2:
+	BRA.b	TownCameraScrollUp_TileStep_CommitTileY
+TownCameraScrollUp_TileStep_ClampTileY:
 	CLR.w	Town_camera_tile_y.w
-TownCameraScrollUp_TileStep_Loop3:
+TownCameraScrollUp_TileStep_CommitTileY:
 	BRA.b	ResetTownCameraMovementState
 TownCameraScrollUp_TileStep_Loop:
 	MOVE.w	VScroll_base.w, D0
@@ -333,10 +333,10 @@ TownCameraScrollUp_TileStep_Loop:
 	ADDQ.w	#1, VScroll_base.w
 	ADDQ.w	#1, Camera_scroll_y.w
 	SUBQ.w	#1, Town_camera_move_counter.w
-	BLE.b	TownCameraScrollUp_TileStep_Loop4
+	BLE.b	TownCameraScrollUp_TileStep_UpdateScrollDown
 	RTS
 
-TownCameraScrollUp_TileStep_Loop4:
+TownCameraScrollUp_TileStep_UpdateScrollDown:
 	MOVE.w	Town_tilemap_height.w, D1
 	CMPI.w	#TOWN_MAP_MIN_SCROLL_TILES, D1
 	BLE.b	TownCameraScrollDown_TileStep
@@ -360,24 +360,24 @@ TownCameraScrollDown_TileStep_Loop:
 	ADDQ.w	#1, HScroll_base.w
 	SUBQ.w	#1, Camera_scroll_x.w
 	SUBQ.w	#1, Town_camera_move_counter.w
-	BLE.b	TownCameraScrollDown_TileStep_Loop2
+	BLE.b	TownCameraScrollDown_TileStep_UpdateTileX
 	RTS
 
-TownCameraScrollDown_TileStep_Loop2:
+TownCameraScrollDown_TileStep_UpdateTileX:
 	MOVE.w	Town_tilemap_width.w, D1
 	CMPI.w	#TOWN_MAP_MIN_SCROLL_TILES, D1
 	BLE.b	TownCameraScrollLeft_TileStep
 	MOVE.w	Town_camera_tile_x.w, D0
-	BLE.b	TownCameraScrollLeft_TileStep_Loop2
+	BLE.b	TownCameraScrollLeft_TileStep_ClampTileX
 	SUBQ.w	#3, D0
 	BLT.b	TownCameraScrollLeft_TileStep
 	BSR.w	DrawTownColumn_Left
 TownCameraScrollLeft_TileStep:
 	SUBQ.w	#1, Town_camera_tile_x.w
-	BRA.b	TownCameraScrollLeft_TileStep_Loop3
-TownCameraScrollLeft_TileStep_Loop2:
+	BRA.b	TownCameraScrollLeft_TileStep_CommitTileX
+TownCameraScrollLeft_TileStep_ClampTileX:
 	CLR.w	Town_camera_tile_x.w
-TownCameraScrollLeft_TileStep_Loop3:
+TownCameraScrollLeft_TileStep_CommitTileX:
 	BRA.w	ResetTownCameraMovementState
 TownCameraScrollLeft_TileStep_Loop:
 	MOVE.w	HScroll_base.w, D0
@@ -393,10 +393,10 @@ TownCameraScrollLeft_TileStep_Loop:
 	SUBQ.w	#1, HScroll_base.w
 	ADDQ.w	#1, Camera_scroll_x.w
 	SUBQ.w	#1, Town_camera_move_counter.w
-	BLE.b	TownCameraScrollLeft_TileStep_Loop4
+	BLE.b	TownCameraScrollLeft_TileStep_UpdateScrollRight
 	RTS
 	
-TownCameraScrollLeft_TileStep_Loop4:
+TownCameraScrollLeft_TileStep_UpdateScrollRight:
 	MOVE.w	Town_tilemap_width.w, D1
 	CMPI.w	#TOWN_MAP_MIN_SCROLL_TILES, D1
 	BLE.b	TownCameraScrollRight_TileStep
@@ -477,9 +477,9 @@ InitializeTilemapFromData:
 InitializeTilemapFromData_Loop:
 	SUBQ.w	#3, D0
 	CMPI.w	#3, D1
-	BGE.b	InitializeTilemapFromData_Loop2
+	BGE.b	InitializeTilemapFromData_AdjustOriginY
 	MOVEQ	#3, D1
-InitializeTilemapFromData_Loop2:
+InitializeTilemapFromData_AdjustOriginY:
 	SUBQ.w	#3, D1
 	MULU.w	D1, D2
 	ADD.w	D2, D0
@@ -489,15 +489,15 @@ InitializeTilemapFromData_Loop2:
 	MOVE.w	D1, D4
 InitializeTilemapFromData_Loop2_Done:
 	CMP.w	Town_tilemap_height.w, D4
-	BLT.b	InitializeTilemapFromData_Loop3
+	BLT.b	InitializeTilemapFromData_CheckRowOverflow
 	MOVE.b	#FLAG_TRUE, Tilemap_row_overflow_flag.w
-InitializeTilemapFromData_Loop3:
+InitializeTilemapFromData_CheckRowOverflow:
 	MOVEQ	#$1F, D6
 	MOVE.w	Town_camera_tile_x.w, D5
 	CMPI.w	#3, D5
-	BGE.b	InitializeTilemapFromData_Loop4
+	BGE.b	InitializeTilemapFromData_AdjustOriginX
 	MOVEQ	#3, D5
-InitializeTilemapFromData_Loop4:
+InitializeTilemapFromData_AdjustOriginX:
 	SUBQ.w	#3, D5
 	LEA	(A0), A3
 InitializeTilemapFromData_Loop4_Done:
@@ -515,12 +515,12 @@ InitializeTilemapFromData_Loop4_Done:
 	BGE.b	WriteTownTilemap_ClearTile
 	MOVE.w	(A3)+, D0
 	TST.w	Tilemap_plane_select.w
-	BEQ.b	InitializeTilemapFromData_Loop5
+	BEQ.b	InitializeTilemapFromData_WritePlaneA
 	BSR.w	WriteTownTile2x2
-	BRA.b	InitializeTilemapFromData_Loop6
-InitializeTilemapFromData_Loop5:
+	BRA.b	InitializeTilemapFromData_NextTile
+InitializeTilemapFromData_WritePlaneA:
 	BSR.w	WriteTownTile2x2WithFlip
-InitializeTilemapFromData_Loop6:
+InitializeTilemapFromData_NextTile:
 	BRA.b	WriteTownTilemap_ClearTile_Loop
 WriteTownTilemap_ClearTile:
 	MOVE.l	#0, (A2)
@@ -608,7 +608,7 @@ WriteTownTilemapToVRAM_Done:
 	MOVE.l	#$60000003, VDP_control_port
 	LEA	Tilemap_buffer_plane_b, A0
 	MOVE.w	#$0FFF, D4
-WriteTownTilemapToVRAM_Done2:
+WriteTownTilemapToVRAM_WritePlaneB:
 	MOVE.w	(A0)+, D1
 	MOVE.w	D1, D2
 	ANDI.w	#$01FF, D1
@@ -617,7 +617,7 @@ WriteTownTilemapToVRAM_Done2:
 	OR.w	D1, D2
 	ADDI.w	#$0300, D2
 	MOVE.w	D2, VDP_data_port
-	DBF	D4, WriteTownTilemapToVRAM_Done2
+	DBF	D4, WriteTownTilemapToVRAM_WritePlaneB
 	ANDI	#$F8FF, SR
 	LEA	TownPaletteConfigTable, A0
 	MOVE.w	Current_town_room.w, D0
@@ -628,10 +628,10 @@ WriteTownTilemapToVRAM_Done2:
 	CMPI.w	#$002A, D0
 	BLE.w	LoadTownTilesetPalette
 	CMPI.w	#$002D, D0
-	BLE.b	WriteTownTilemapToVRAM_Loop2
+	BLE.b	WriteTownTilemapToVRAM_SetPaletteRegion2
 	MOVE.w	#6, D0
 	BRA.b	WriteTownTilemapToVRAM_SetPalette
-WriteTownTilemapToVRAM_Loop2:
+WriteTownTilemapToVRAM_SetPaletteRegion2:
 	MOVE.w	#5, D0
 	BRA.b	WriteTownTilemapToVRAM_SetPalette
 WriteTownTilemapToVRAM_Loop:
@@ -858,10 +858,10 @@ DrawTownTilemapRow_Done:
 	TST.w	Tilemap_plane_select.w
 	BEQ.b	DrawTownTilemapRow_Loop
 	BSR.w	WriteTownTile2x2
-	BRA.b	DrawTownTilemapRow_Loop2
+	BRA.b	DrawTownTilemapRow_NextTile
 DrawTownTilemapRow_Loop:
 	BSR.w	WriteTownTile2x2WithFlip
-DrawTownTilemapRow_Loop2:
+DrawTownTilemapRow_NextTile:
 	ADDQ.w	#2, D7
 	ADDQ.w	#4, D6
 	ANDI.w	#$7F, D6
@@ -893,10 +893,10 @@ DrawTownTilemapColumn_Done:
 	TST.w	Tilemap_plane_select.w
 	BEQ.b	DrawTownTilemapColumn_Loop
 	BSR.w	WriteTownTile2x2
-	BRA.b	DrawTownTilemapColumn_Loop2
+	BRA.b	DrawTownTilemapColumn_NextTile
 DrawTownTilemapColumn_Loop:
 	BSR.w	WriteTownTile2x2WithFlip
-DrawTownTilemapColumn_Loop2:
+DrawTownTilemapColumn_NextTile:
 	MOVE.w	Town_tilemap_width.w, D1
 	ASL.w	#1, D1
 	ADD.w	D1, D7
@@ -945,10 +945,10 @@ WriteTilemapRowToVDP_Done:
 	BNE.b	WriteTilemapRowToVDP_Loop
 	ANDI.w	#$0E00, D2
 	ASL.w	#4, D2
-	BRA.b	WriteTilemapRowToVDP_Loop2
+	BRA.b	WriteTilemapRowToVDP_MergePlaneA
 WriteTilemapRowToVDP_Loop:
 	ANDI.w	#$E000, D2
-WriteTilemapRowToVDP_Loop2:
+WriteTilemapRowToVDP_MergePlaneA:
 	OR.w	D1, D2
 	ADD.w	Town_vram_tile_base.w, D2
 	MOVE.w	D2, VDP_data_port
@@ -990,10 +990,10 @@ WriteTilemapColumnToVDP_Done:
 	BNE.b	WriteTilemapColumnToVDP_Loop
 	ANDI.w	#$0E00, D2
 	ASL.w	#4, D2
-	BRA.b	WriteTilemapColumnToVDP_Loop2
+	BRA.b	WriteTilemapColumnToVDP_MergePlaneA
 WriteTilemapColumnToVDP_Loop:
 	ANDI.w	#$E000, D2
-WriteTilemapColumnToVDP_Loop2:
+WriteTilemapColumnToVDP_MergePlaneA:
 	OR.w	D1, D2
 	ADD.w	Town_vram_tile_base.w, D2
 	MOVE.w	D2, VDP_data_port
@@ -1001,13 +1001,13 @@ WriteTilemapColumnToVDP_Loop2:
 	MOVE.w	D1, D2
 	ANDI.w	#$01FF, D1
 	CMPA.l	#Tilemap_buffer_plane_b, A3
-	BNE.b	WriteTilemapColumnToVDP_Loop3
+	BNE.b	WriteTilemapColumnToVDP_MergePlaneB_Row2
 	ANDI.w	#$0E00, D2
 	ASL.w	#4, D2
-	BRA.b	WriteTilemapColumnToVDP_Loop4
-WriteTilemapColumnToVDP_Loop3:
+	BRA.b	WriteTilemapColumnToVDP_MergePlaneA_Row2
+WriteTilemapColumnToVDP_MergePlaneB_Row2:
 	ANDI.w	#$E000, D2
-WriteTilemapColumnToVDP_Loop4:
+WriteTilemapColumnToVDP_MergePlaneA_Row2:
 	OR.w	D1, D2
 	ADD.w	Town_vram_tile_base.w, D2
 	MOVE.w	D2, VDP_data_port
@@ -1043,10 +1043,10 @@ UpdatePaletteCycle_Loop:
 	ANDI.w	#3, D0
 	ADD.w	D0, D0
 	MOVE.w	(A0,D0.w), D0
-	BNE.b	UpdatePaletteCycle_Loop2
+	BNE.b	UpdatePaletteCycle_SetPaletteIndex
 	CLR.b	Palette_line_2_cycle_step.w	
 	MOVE.w	(A0), D0	
-UpdatePaletteCycle_Loop2:
+UpdatePaletteCycle_SetPaletteIndex:
 	MOVE.w	D0, Palette_line_2_index.w
 	JSR	LoadPalettesFromTable
 TownPaletteCycle_Return:
@@ -1167,24 +1167,24 @@ DecompressTilemap_Next:
 ; TilemapDecompression_JumpTable
 ; Dispatch table indexed by the 3-bit opcode (bits 7-5 of the command byte).
 ; Each entry is a BRA.w (4 bytes), so the caller multiplies the opcode by 4.
-;   op 0 → TilemapDecompression_JumpTable_Loop2  ; literal run (N bytes, one per entry)
-;   op 1 → TilemapDecompression_JumpTable_Loop3  ; RLE run (1 byte repeated N times)
-;   op 2 → TilemapDecompression_JumpTable_Loop4  ; RLE run (2-byte sequence repeated)
-;   op 3 → TilemapDecompression_JumpTable_Loop5  ; RLE run (3-byte sequence repeated)
-;   op 4 → TilemapDecompression_JumpTable_Loop6  ; RLE run (4-byte sequence repeated)
-;   op 5 → TilemapDecompression_JumpTable_Loop7  ; copy from 1 row back
-;   op 6 → TilemapDecompression_JumpTable_Loop8  ; copy from 2 rows back
+;   op 0 → TilemapDecompression_CopyLiterals  ; literal run (N bytes, one per entry)
+;   op 1 → TilemapDecompression_RepeatByte  ; RLE run (1 byte repeated N times)
+;   op 2 → TilemapDecompression_Repeat2Bytes  ; RLE run (2-byte sequence repeated)
+;   op 3 → TilemapDecompression_Repeat3Bytes  ; RLE run (3-byte sequence repeated)
+;   op 4 → TilemapDecompression_Repeat4Bytes  ; RLE run (4-byte sequence repeated)
+;   op 5 → TilemapDecompression_CopyPrevRow  ; copy from 1 row back
+;   op 6 → TilemapDecompression_Copy2RowsBack  ; copy from 2 rows back
 ;   op 7 → $4E75 (RTS = end of stream)
 TilemapDecompression_JumpTable:
-	BRA.w	TilemapDecompression_JumpTable_Loop2
-	BRA.w	TilemapDecompression_JumpTable_Loop3
-	BRA.w	TilemapDecompression_JumpTable_Loop4
-	BRA.w	TilemapDecompression_JumpTable_Loop5
-	BRA.w	TilemapDecompression_JumpTable_Loop6
-	BRA.w	TilemapDecompression_JumpTable_Loop7
-	BRA.w	TilemapDecompression_JumpTable_Loop8
+	BRA.w	TilemapDecompression_CopyLiterals
+	BRA.w	TilemapDecompression_RepeatByte
+	BRA.w	TilemapDecompression_Repeat2Bytes
+	BRA.w	TilemapDecompression_Repeat3Bytes
+	BRA.w	TilemapDecompression_Repeat4Bytes
+	BRA.w	TilemapDecompression_CopyPrevRow
+	BRA.w	TilemapDecompression_Copy2RowsBack
 	dc.b	$4E, $75 
-TilemapDecompression_JumpTable_Loop2:
+TilemapDecompression_CopyLiterals:
 	ANDI.w	#$001F, D0
 	SUBQ.w	#1, D0
 TilemapDecompression_JumpTable_Loop2_Done:
@@ -1194,7 +1194,7 @@ TilemapDecompression_JumpTable_Loop2_Done:
 	DBF	D0, TilemapDecompression_JumpTable_Loop2_Done
 	RTS
 
-TilemapDecompression_JumpTable_Loop3:
+TilemapDecompression_RepeatByte:
 	ANDI.w	#$001F, D0
 	SUBQ.w	#1, D0
 	MOVE.b	(A1)+, D1
@@ -1204,7 +1204,7 @@ TilemapDecompression_JumpTable_Loop3_Done:
 	DBF	D0, TilemapDecompression_JumpTable_Loop3_Done
 	RTS
 	
-TilemapDecompression_JumpTable_Loop4:
+TilemapDecompression_Repeat2Bytes:
 	ANDI.w	#$001F, D0
 	SUBQ.w	#1, D0
 	MOVE.b	(A1)+, D1
@@ -1217,7 +1217,7 @@ TilemapDecompression_JumpTable_Loop4_Done:
 	DBF	D0, TilemapDecompression_JumpTable_Loop4_Done
 	RTS
 	
-TilemapDecompression_JumpTable_Loop5:
+TilemapDecompression_Repeat3Bytes:
 	ANDI.w	#$001F, D0
 	SUBQ.w	#1, D0
 	MOVE.b	(A1)+, D1
@@ -1233,7 +1233,7 @@ TilemapDecompression_JumpTable_Loop5_Done:
 	DBF	D0, TilemapDecompression_JumpTable_Loop5_Done
 	RTS
 	
-TilemapDecompression_JumpTable_Loop6:
+TilemapDecompression_Repeat4Bytes:
 	ANDI.w	#$001F, D0
 	SUBQ.w	#1, D0
 	MOVE.b	(A1)+, D1
@@ -1252,7 +1252,7 @@ TilemapDecompression_JumpTable_Loop6_Done:
 	DBF	D0, TilemapDecompression_JumpTable_Loop6_Done
 	RTS
 	
-TilemapDecompression_JumpTable_Loop7:
+TilemapDecompression_CopyPrevRow:
 	ANDI.w	#$001F, D0
 	SUBQ.w	#1, D0
 	MOVE.w	D6, D2
@@ -1267,7 +1267,7 @@ TilemapDecompression_JumpTable_Loop7_Done:
 	DBF	D0, TilemapDecompression_JumpTable_Loop7_Done
 	RTS
 	
-TilemapDecompression_JumpTable_Loop8:
+TilemapDecompression_Copy2RowsBack:
 	ANDI.w	#$001F, D0
 	SUBQ.w	#1, D0
 	MOVE.w	D6, D2
@@ -1374,9 +1374,9 @@ TitleScreen_FadeAndAnimate:
 	CMPI.w	#$0018, D0
 	BLT.b	TitleScreen_FadeAndAnimate_Loop
 	CMPI.w	#$0089, D0
-	BGE.b	TitleScreen_FadeAndAnimate_Loop2
+	BGE.b	TitleScreen_FadeAndAnimate_ClampFrame
 	MOVE.w	#$0089, Intro_animation_frame.w
-TitleScreen_FadeAndAnimate_Loop2:
+TitleScreen_FadeAndAnimate_ClampFrame:
 	MOVE.w	Intro_animation_frame.w, Palette_line_0_index.w
 	JSR	LoadPalettesFromTable
 TitleScreen_FadeAndAnimate_Loop:
@@ -1404,27 +1404,27 @@ TitleScreen_LightningFlash:
 	CMPI.w	#2, D2
 	BLT.b	TitleScreen_LightningFlash_Loop
 	BTST.l	#1, D1
-	BNE.b	TitleScreen_LightningFlash_Loop2
+	BNE.b	TitleScreen_LightningFlash_FlashStep
 	RTS
 
 TitleScreen_LightningFlash_Loop:
 	BTST.l	#3, D1
 	BEQ.b	TitleScreen_LoadPalette_Loop
-TitleScreen_LightningFlash_Loop2:
+TitleScreen_LightningFlash_FlashStep:
 	CMPI.w	#5, D2
-	BEQ.b	TitleScreen_LightningFlash_Loop3
+	BEQ.b	TitleScreen_LightningFlash_FinalFlash
 	BTST.l	#0, D2
-	BEQ.b	TitleScreen_LightningFlash_Loop4
+	BEQ.b	TitleScreen_LightningFlash_WhiteFlash
 	MOVE.w	#PALETTE_IDX_TITLE_LIGHTNING, Palette_line_0_index.w
 	MOVE.w	#PALETTE_IDX_TITLE_TILES, Palette_line_3_index.w
 	ADDQ.w	#1, Intro_animation_frame.w
 	BRA.b	TitleScreen_LoadPalette
-TitleScreen_LightningFlash_Loop4:
+TitleScreen_LightningFlash_WhiteFlash:
 	MOVE.w	#PALETTE_IDX_ALL_WHITE, Palette_line_0_index.w
 	MOVE.w	#PALETTE_IDX_TITLE_LOGO, Palette_line_3_index.w
 	ADDQ.w	#1, Intro_animation_frame.w
 	BRA.b	TitleScreen_LoadPalette
-TitleScreen_LightningFlash_Loop3:
+TitleScreen_LightningFlash_FinalFlash:
 	MOVE.w	#PALETTE_IDX_TITLE_LIGHTNING, Palette_line_0_index.w
 	MOVE.w	#PALETTE_IDX_TITLE_TILES, Palette_line_3_index.w
 	MOVE.l	#TitleScreen_ShowPressStart, obj_tick_fn(A5)
@@ -1442,12 +1442,12 @@ TitleScreen_ShowPressStart:
 	TST.b	Intro_text_pending.w
 	BEQ.b	TitleScreen_ShowPressStart_Loop
 	TST.b	Fade_in_lines_mask.w
-	BNE.b	TitleScreen_ShowPressStart_Loop2
+	BNE.b	TitleScreen_ShowPressStart_WaitFade
 	CLR.b	Intro_text_pending.w
 	BSR.w	DrawPressStartText
 	MOVE.w	#$0031, Palette_line_0_index.w
 	JSR	LoadPalettesFromTable
-TitleScreen_ShowPressStart_Loop2:
+TitleScreen_ShowPressStart_WaitFade:
 	RTS
 
 TitleScreen_ShowPressStart_Loop:
@@ -1514,19 +1514,19 @@ UpdatePrologueScrollVRAM_Done:
 	BNE.b	UpdatePrologueScrollVRAM_Loop
 	MOVE.w	(A0), D1
 	CMPI.w	#PROLOGUE_SCROLL_END, D1
-	BGE.b	UpdatePrologueScrollVRAM_Loop2
+	BGE.b	UpdatePrologueScrollVRAM_ClampToEnd
 	ANDI.w	#$01FF, D1
 	BRA.b	UpdatePrologueScrollVRAM_WriteVDP
-UpdatePrologueScrollVRAM_Loop2:
+UpdatePrologueScrollVRAM_ClampToEnd:
 	MOVE.w	#0, D1
 	BRA.b	UpdatePrologueScrollVRAM_WriteVDP
 UpdatePrologueScrollVRAM_Loop:
 	MOVE.w	(A1), D1
 	CMPI.w	#0, D1
-	BLE.b	UpdatePrologueScrollVRAM_Loop3
+	BLE.b	UpdatePrologueScrollVRAM_ClampToZero
 	ANDI.w	#$01FF, D1
 	BRA.b	UpdatePrologueScrollVRAM_WriteVDP
-UpdatePrologueScrollVRAM_Loop3:
+UpdatePrologueScrollVRAM_ClampToZero:
 	MOVE.w	#0, D1
 UpdatePrologueScrollVRAM_WriteVDP:
 	MOVE.l	D0, VDP_control_port
@@ -1548,12 +1548,12 @@ DrawIntroBackground:
 DrawIntroBackground_Done:
 	MOVE.l	D5, VDP_control_port
 	MOVE.w	#$001F, D6
-DrawIntroBackground_Done2:
+DrawIntroBackground_WriteTile:
 	CLR.w	D0
 	MOVE.b	(A0)+, D0
 	ADDI.w	#$E0F3, D0
 	MOVE.w	D0, VDP_data_port
-	DBF	D6, DrawIntroBackground_Done2
+	DBF	D6, DrawIntroBackground_WriteTile
 	ADDI.l	#$00800000, D5
 	DBF	D7, DrawIntroBackground_Done
 	ANDI	#$F8FF, SR
@@ -1572,48 +1572,48 @@ DrawIntroGraphics:
 DrawIntroGraphics_Done:
 	MOVE.l	D5, VDP_control_port
 	MOVE.w	#$0014, D6
-DrawIntroGraphics_Done2:
+DrawIntroGraphics_WriteTile1:
 	CLR.w	D0
 	MOVE.b	(A0)+, D0
 	ADDI.w	#$603C, D0
 	MOVE.w	D0, VDP_data_port
-	DBF	D6, DrawIntroGraphics_Done2
+	DBF	D6, DrawIntroGraphics_WriteTile1
 	ADDI.l	#$00800000, D5
 	DBF	D7, DrawIntroGraphics_Done
 	MOVE.l	#$69800003, D4
 	MOVE.l	#$60AA0003, D5
 	LEA	SpriteTileIndexTable_619EA, A0
 	MOVE.w	#$000D, D7
-DrawIntroGraphics_Done3:
+DrawIntroGraphics_WriteRow2:
 	MOVE.l	D5, VDP_control_port
 	MOVE.w	#9, D6
-DrawIntroGraphics_Done4:
+DrawIntroGraphics_WriteTile2:
 	CLR.w	D0
 	MOVE.b	(A0)+, D0
 	ADDI.w	#$0239, D0
 	MOVE.w	D0, VDP_data_port
-	DBF	D6, DrawIntroGraphics_Done4
+	DBF	D6, DrawIntroGraphics_WriteTile2
 	ADDI.l	#$00800000, D5
-	DBF	D7, DrawIntroGraphics_Done3
+	DBF	D7, DrawIntroGraphics_WriteRow2
 	MOVE.l	#$69800003, D4
 	MOVE.w	#3, D7
-DrawIntroGraphics_Done5:
+DrawIntroGraphics_WriteSwordGroup:
 	LEA	SpriteTileIndexTable_6195A, A0
 	MOVE.w	#8, D6
 	MOVE.l	D4, D3
-DrawIntroGraphics_Done6:
+DrawIntroGraphics_WriteSwordRow:
 	MOVE.w	#$F, D5
 	MOVE.l	D3, VDP_control_port
-DrawIntroGraphics_Done7:
+DrawIntroGraphics_WriteSwordTile:
 	CLR.w	D0
 	MOVE.b	(A0)+, D0
 	ADDI.w	#$41CD, D0
 	MOVE.w	D0, VDP_data_port
-	DBF	D5, DrawIntroGraphics_Done7
+	DBF	D5, DrawIntroGraphics_WriteSwordTile
 	ADDI.l	#$00800000, D3
-	DBF	D6, DrawIntroGraphics_Done6
+	DBF	D6, DrawIntroGraphics_WriteSwordRow
 	ADDI.l	#$00200000, D4
-	DBF	D7, DrawIntroGraphics_Done5
+	DBF	D7, DrawIntroGraphics_WriteSwordGroup
 	ANDI	#$F8FF, SR
 	RTS
 
@@ -1627,12 +1627,12 @@ DrawTilemapToVRAM_PlaneA:
 DrawTilemapToVRAM_PlaneA_Done:
 	MOVE.l	D5, VDP_control_port
 	MOVE.w	#$0020, D6
-DrawTilemapToVRAM_PlaneA_Done2:
+DrawTilemapToVRAM_PlaneA_WriteTile:
 	CLR.w	D0
 	MOVE.b	(A0)+, D0
 	ADDI.w	#$A263, D0
 	MOVE.w	D0, VDP_data_port
-	DBF	D6, DrawTilemapToVRAM_PlaneA_Done2
+	DBF	D6, DrawTilemapToVRAM_PlaneA_WriteTile
 	ADDI.l	#$00800000, D5
 	DBF	D7, DrawTilemapToVRAM_PlaneA_Done
 	ANDI	#$F8FF, SR
@@ -1747,12 +1747,12 @@ DrawPressStartText:
 DrawPressStartText_Done:
 	MOVE.l	D5, VDP_control_port
 	MOVE.w	#9, D6
-DrawPressStartText_Done2:
+DrawPressStartText_WriteTile:
 	CLR.w	D0
 	MOVE.b	(A0), D0
 	ADDI.w	#$0239, D0
 	MOVE.w	D0, VDP_data_port
-	DBF	D6, DrawPressStartText_Done2
+	DBF	D6, DrawPressStartText_WriteTile
 	ADDI.l	#$00800000, D5
 	DBF	D7, DrawPressStartText_Done
 	ANDI	#$F8FF, SR
@@ -1796,48 +1796,48 @@ EndingSequence_StepDispatcher:
 
 ; EndingSequenceStepJumpTable
 ; 20 entries (steps 0–19), each a BRA.w (4 bytes). Step index × 4 = table offset.
-;   step  0 → EndingSequenceStepJumpTable_Loop  ; wait for fade, play fanfare B, clear scroll
-;   step  1 → EndingStep_Return1_Loop           ; wait, play fanfare A, clear planes
-;   step  2 → EndingStep_Return1_Loop2          ; wait, draw Outro1, fade in
-;   step  3 → EndingStep_Return1_Loop3          ; wait for fade, fade to white
-;   step  4 → EndingStep_Return2_Loop           ; draw border+Outro2, fade in
-;   step  5 → EndingStep_Return2_Loop2          ; wait, fade out
-;   step  6 → EndingStep_Return3_Loop           ; wait for fade, init credits screen
-;   step  7 → EndingStep_Return3_Loop2          ; wait, scroll fire, draw Outro3
-;   step  8 → EndingSequenceStep_Done_Loop      ; wait, fade to black
-;   step  9 → EndingStep_Return4_Loop           ; draw Outro4, fade in
-;   step 10 → EndingStep_Return4_Loop2          ; wait
-;   step 11 → EndingStep_Return5_Loop           ; draw Outro5, fade in
-;   step 12 → EndingStep_Return5_Loop2          ; wait
-;   step 13 → EndingStep_Return6_Loop           ; fill pattern
-;   step 14 → EndingStep_Return6_Loop2          ; scroll up, advance
-;   step 15 → EndingStep_Return7_Loop           ; wait, init font tiles
-;   step 16 → EndingStep_Return7_Loop2          ; scroll credits text (pad=A)
-;   step 17 → EndingSequence_ScrollText_Done_Loop   ; display credit lines
-;   step 18 → EndingSequence_ScrollText_Done_Loop2  ; wait for end of credits
+;   step  0 → EndingStep_WaitForFadeAndPlayFanfare  ; wait for fade, play fanfare B, clear scroll
+;   step  1 → EndingStep_WaitAndPlayFanfareA           ; wait, play fanfare A, clear planes
+;   step  2 → EndingStep_WaitAndDrawOutro1          ; wait, draw Outro1, fade in
+;   step  3 → EndingStep_WaitThenFadeToWhite          ; wait for fade, fade to white
+;   step  4 → EndingStep_DrawOutro2           ; draw border+Outro2, fade in
+;   step  5 → EndingStep_WaitThenFadeOut          ; wait, fade out
+;   step  6 → EndingStep_InitCreditsScreen           ; wait for fade, init credits screen
+;   step  7 → EndingStep_ScrollFireAndDrawOutro3          ; wait, scroll fire, draw Outro3
+;   step  8 → EndingStep_WaitThenFadeToBlack      ; wait, fade to black
+;   step  9 → EndingStep_DrawOutro4           ; draw Outro4, fade in
+;   step 10 → EndingStep_WaitAfterOutro4          ; wait
+;   step 11 → EndingStep_DrawOutro5           ; draw Outro5, fade in
+;   step 12 → EndingStep_WaitAfterOutro5          ; wait
+;   step 13 → EndingStep_FillPattern           ; fill pattern
+;   step 14 → EndingStep_ScrollUpAndAdvance          ; scroll up, advance
+;   step 15 → EndingStep_WaitAndInitFontTiles           ; wait, init font tiles
+;   step 16 → EndingStep_ScrollCreditsText          ; scroll credits text (pad=A)
+;   step 17 → EndingStep_DisplayCreditLines   ; display credit lines
+;   step 18 → EndingStep_WaitForCreditsEnd  ; wait for end of credits
 ;   step 19 → EndingSequence_CommonUpdate       ; loop idle
 EndingSequenceStepJumpTable:
-	BRA.w	EndingSequenceStepJumpTable_Loop
-	BRA.w	EndingStep_Return1_Loop
-	BRA.w	EndingStep_Return1_Loop2
-	BRA.w	EndingStep_Return1_Loop3
-	BRA.w	EndingStep_Return2_Loop
-	BRA.w	EndingStep_Return2_Loop2
-	BRA.w	EndingStep_Return3_Loop
-	BRA.w	EndingStep_Return3_Loop2
-	BRA.w	EndingSequenceStep_Done_Loop
-	BRA.w	EndingStep_Return4_Loop
-	BRA.w	EndingStep_Return4_Loop2
-	BRA.w	EndingStep_Return5_Loop
-	BRA.w	EndingStep_Return5_Loop2
-	BRA.w	EndingStep_Return6_Loop
-	BRA.w	EndingStep_Return6_Loop2
-	BRA.w	EndingStep_Return7_Loop
-	BRA.w	EndingStep_Return7_Loop2
-	BRA.w	EndingSequence_ScrollText_Done_Loop
-	BRA.w	EndingSequence_ScrollText_Done_Loop2
+	BRA.w	EndingStep_WaitForFadeAndPlayFanfare
+	BRA.w	EndingStep_WaitAndPlayFanfareA
+	BRA.w	EndingStep_WaitAndDrawOutro1
+	BRA.w	EndingStep_WaitThenFadeToWhite
+	BRA.w	EndingStep_DrawOutro2
+	BRA.w	EndingStep_WaitThenFadeOut
+	BRA.w	EndingStep_InitCreditsScreen
+	BRA.w	EndingStep_ScrollFireAndDrawOutro3
+	BRA.w	EndingStep_WaitThenFadeToBlack
+	BRA.w	EndingStep_DrawOutro4
+	BRA.w	EndingStep_WaitAfterOutro4
+	BRA.w	EndingStep_DrawOutro5
+	BRA.w	EndingStep_WaitAfterOutro5
+	BRA.w	EndingStep_FillPattern
+	BRA.w	EndingStep_ScrollUpAndAdvance
+	BRA.w	EndingStep_WaitAndInitFontTiles
+	BRA.w	EndingStep_ScrollCreditsText
+	BRA.w	EndingStep_DisplayCreditLines
+	BRA.w	EndingStep_WaitForCreditsEnd
 	BRA.w	EndingSequence_CommonUpdate
-EndingSequenceStepJumpTable_Loop:
+EndingStep_WaitForFadeAndPlayFanfare:
 	TST.b	Palette_fade_in_mask.w
 	BNE.b	EndingStep_Return1
 	SUBQ.w	#1, Ending_timer.w
@@ -1849,20 +1849,20 @@ EndingSequenceStepJumpTable_Loop:
 EndingStep_Return1:
 	RTS
 
-EndingStep_Return1_Loop:
+EndingStep_WaitAndPlayFanfareA:
 	SUBQ.w	#1, Ending_timer.w
-	BGT.b	EndingStep_Return1_Loop4
+	BGT.b	EndingStep_WaitAndPlayFanfareA_Return
 	PlaySound	SOUND_ENDING_FANFARE_A
 	JSR	ClearVRAMPlaneA
 	JSR	ClearVRAMPlaneB
 	MOVE.w	#ENDING_DELAY_NORMAL, Ending_timer.w
 	ADDQ.w	#1, Ending_sequence_step.w
-EndingStep_Return1_Loop4:
+EndingStep_WaitAndPlayFanfareA_Return:
 	RTS
 
-EndingStep_Return1_Loop2:
+EndingStep_WaitAndDrawOutro1:
 	SUBQ.w	#1, Ending_timer.w
-	BGT.b	EndingStep_Return1_Loop5
+	BGT.b	EndingStep_WaitAndDrawOutro1_Return
 	MOVE.w	#PALETTE_IDX_ENDING_TEXT_BG, Palette_line_0_fade_in_target.w
 	MOVE.l	#$67140003, D5
 	LEA	Outro1Str, A0
@@ -1871,10 +1871,10 @@ EndingStep_Return1_Loop2:
 	MOVE.b	#1, Palette_fade_in_mask.w
 	ADDQ.w	#1, Ending_sequence_step.w
 	MOVE.w	#ENDING_DELAY_NORMAL, Ending_timer.w
-EndingStep_Return1_Loop5:
+EndingStep_WaitAndDrawOutro1_Return:
 	RTS
 
-EndingStep_Return1_Loop3:
+EndingStep_WaitThenFadeToWhite:
 	TST.b	Palette_fade_in_mask.w
 	BNE.b	EndingStep_Return2
 	SUBQ.w	#1, Ending_timer.w
@@ -1885,9 +1885,9 @@ EndingStep_Return1_Loop3:
 EndingStep_Return2:
 	RTS
 
-EndingStep_Return2_Loop:
+EndingStep_DrawOutro2:
 	TST.b	Palette_fade_in_mask.w
-	BNE.b	EndingStep_Return2_Loop3
+	BNE.b	EndingStep_DrawOutro2_Return
 	BSR.w	DrawEndingBorderPattern
 	MOVE.w	#PALETTE_IDX_ENDING_TEXT_BG, Palette_line_0_fade_in_target.w
 	MOVE.l	#$67140003, D5
@@ -1897,10 +1897,10 @@ EndingStep_Return2_Loop:
 	MOVE.b	#1, Palette_fade_in_mask.w
 	ADDQ.w	#1, Ending_sequence_step.w
 	MOVE.w	#ENDING_DELAY_LONG, Ending_timer.w
-EndingStep_Return2_Loop3:
+EndingStep_DrawOutro2_Return:
 	RTS
 
-EndingStep_Return2_Loop2:
+EndingStep_WaitThenFadeOut:
 	TST.b	Palette_fade_in_mask.w
 	BNE.b	EndingStep_Return3
 	SUBQ.w	#1, Ending_timer.w
@@ -1911,9 +1911,9 @@ EndingStep_Return2_Loop2:
 EndingStep_Return3:
 	RTS
 
-EndingStep_Return3_Loop:
+EndingStep_InitCreditsScreen:
 	TST.b	Fade_out_lines_mask.w
-	BNE.b	EndingStep_Return3_Loop3
+	BNE.b	EndingStep_InitCreditsScreen_Return
 	JSR	ClearVRAMPlaneA
 	JSR	ClearVRAMPlaneB
 	MOVE.w	VDP_Reg11_cache.w, D0
@@ -1931,16 +1931,16 @@ EndingStep_Return3_Loop:
 	PlaySound	SOUND_ENDING_STAFF_MUSIC
 	MOVE.w	#ENDING_DELAY_NORMAL, Ending_timer.w
 	JSR	LoadPalettesFromTable
-EndingStep_Return3_Loop3:
+EndingStep_InitCreditsScreen_Return:
 	RTS
 
-EndingStep_Return3_Loop2:
+EndingStep_ScrollFireAndDrawOutro3:
 	TST.b	Fade_in_lines_mask.w
 	BNE.b	EndingSequenceStep_Done
 	SUBQ.w	#1, Ending_timer.w
 	BGT.b	EndingSequenceStep_Done
 	CMPI.w	#$FFCE, Ending_hscroll_offset.w
-	BGT.b	EndingStep_Return3_Loop4
+	BGT.b	EndingStep_ScrollFireStep
 	MOVE.l	#$413C0003, D5
 	LEA	Outro3Str, A0
 	MOVE.w	#$84C0, D4
@@ -1950,11 +1950,11 @@ EndingStep_Return3_Loop2:
 	MOVE.w	#ENDING_DELAY_LONG, Ending_timer.w
 	ADDQ.w	#1, Ending_sequence_step.w
 	BRA.b	EndingSequenceStep_Done
-EndingStep_Return3_Loop4:
+EndingStep_ScrollFireStep:
 	SUBQ.w	#1, Ending_hscroll_offset.w
 EndingSequenceStep_Done:
 	BRA.w	EndingSequence_CommonUpdate
-EndingSequenceStep_Done_Loop:
+EndingStep_WaitThenFadeToBlack:
 	TST.b	Palette_fade_in_mask.w
 	BNE.b	EndingStep_Return4
 	SUBQ.w	#1, Ending_timer.w
@@ -1964,9 +1964,9 @@ EndingSequenceStep_Done_Loop:
 	MOVE.b	#1, Palette_fade_in_mask.w
 EndingStep_Return4:
 	BRA.w	EndingSequence_CommonUpdate
-EndingStep_Return4_Loop:
+EndingStep_DrawOutro4:
 	TST.b	Palette_fade_in_mask.w
-	BNE.b	EndingStep_Return4_Loop3
+	BNE.b	EndingStep_DrawOutro4_Return
 	BSR.w	FillDialogAreaWithPattern
 	MOVE.l	#$413C0003, D5
 	LEA	Outro4Str, A0
@@ -1976,9 +1976,9 @@ EndingStep_Return4_Loop:
 	MOVE.b	#1, Palette_fade_in_mask.w
 	ADDQ.w	#1, Ending_sequence_step.w
 	MOVE.w	#ENDING_DELAY_LONGER, Ending_timer.w
-EndingStep_Return4_Loop3:
+EndingStep_DrawOutro4_Return:
 	BRA.w	EndingSequence_CommonUpdate
-EndingStep_Return4_Loop2:
+EndingStep_WaitAfterOutro4:
 	TST.b	Palette_fade_in_mask.w
 	BNE.b	EndingStep_Return5
 	SUBQ.w	#1, Ending_timer.w
@@ -1988,9 +1988,9 @@ EndingStep_Return4_Loop2:
 	MOVE.b	#1, Palette_fade_in_mask.w
 EndingStep_Return5:
 	BRA.w	EndingSequence_CommonUpdate
-EndingStep_Return5_Loop:
+EndingStep_DrawOutro5:
 	TST.b	Palette_fade_in_mask.w
-	BNE.b	EndingStep_Return5_Loop3
+	BNE.b	EndingStep_DrawOutro5_Return
 	BSR.w	FillDialogAreaWithPattern
 	MOVE.l	#$413C0003, D5
 	LEA	Outro5Str, A0
@@ -2000,9 +2000,9 @@ EndingStep_Return5_Loop:
 	MOVE.b	#1, Palette_fade_in_mask.w
 	ADDQ.w	#1, Ending_sequence_step.w
 	MOVE.w	#ENDING_DELAY_LONGER, Ending_timer.w
-EndingStep_Return5_Loop3:
+EndingStep_DrawOutro5_Return:
 	BRA.w	EndingSequence_CommonUpdate
-EndingStep_Return5_Loop2:
+EndingStep_WaitAfterOutro5:
 	TST.b	Palette_fade_in_mask.w
 	BNE.b	EndingStep_Return6
 	SUBQ.w	#1, Ending_timer.w
@@ -2012,50 +2012,50 @@ EndingStep_Return5_Loop2:
 	MOVE.b	#1, Palette_fade_in_mask.w
 EndingStep_Return6:
 	BRA.w	EndingSequence_CommonUpdate
-EndingStep_Return6_Loop:
+EndingStep_FillPattern:
 	TST.b	Palette_fade_in_mask.w
-	BNE.b	EndingStep_Return6_Loop3
+	BNE.b	EndingStep_FillPattern_Return
 	BSR.w	FillDialogAreaWithPattern
 	MOVE.w	#ENDING_DELAY_NORMAL, Ending_timer.w
 	ADDQ.w	#1, Ending_sequence_step.w
-EndingStep_Return6_Loop3:
+EndingStep_FillPattern_Return:
 	BRA.w	EndingSequence_CommonUpdate
-EndingStep_Return6_Loop2:
+EndingStep_ScrollUpAndAdvance:
 	SUBQ.w	#1, Ending_timer.w
 	BGT.b	EndingStep_Return7
 	TST.w	Ending_hscroll_offset.w
-	BLT.b	EndingStep_Return6_Loop4
+	BLT.b	EndingStep_ScrollUpStep
 	ADDQ.w	#1, Ending_sequence_step.w
 	CLR.w	Dialog_timer.w
 	CLR.w	Dialog_phase.w
 	MOVE.w	#ENDING_DELAY_SCROLL, Ending_timer.w
 	BRA.b	EndingStep_Return7
-EndingStep_Return6_Loop4:
+EndingStep_ScrollUpStep:
 	ADDQ.w	#1, Ending_hscroll_offset.w
 EndingStep_Return7:
 	BRA.w	EndingSequence_CommonUpdate
-EndingStep_Return7_Loop:
+EndingStep_WaitAndInitFontTiles:
 	SUBQ.w	#1, Ending_timer.w
-	BGT.b	EndingStep_Return7_Loop3
+	BGT.b	EndingStep_WaitAndInitFontTiles_Return
 	PlaySound	SOUND_LEVEL_UP
 	ADDQ.w	#1, Ending_sequence_step.w
 	JSR	InitFontTiles
-EndingStep_Return7_Loop3:
+EndingStep_WaitAndInitFontTiles_Return:
 	BRA.w	EndingSequence_CommonUpdate
-EndingStep_Return7_Loop2:
+EndingStep_ScrollCreditsText:
 	ADDQ.w	#1, Dialog_timer.w
 	MOVE.w	Dialog_timer.w, D0
 	BTST.b	#6, IO_version
-	BNE.w	EndingStep_Return7_Loop4
+	BNE.w	EndingStep_ScrollCreditsText_OverseasSpeed
 	ANDI.w	#7, D0
 	BNE.b	EndingSequence_ScrollText_Done
-	BRA.b	EndingStep_Return7_Loop5
-EndingStep_Return7_Loop4:
+	BRA.b	EndingStep_ScrollCreditsText_DrawCheck
+EndingStep_ScrollCreditsText_OverseasSpeed:
 	ANDI.w	#3, D0	
 	BNE.b	EndingSequence_ScrollText_Done	
-EndingStep_Return7_Loop5:
+EndingStep_ScrollCreditsText_DrawCheck:
 	CMPI.w	#BOSS_VICTORY_FADE_PHASES, Dialog_phase.w
-	BLT.b	EndingStep_Return7_Loop6
+	BLT.b	EndingStep_ClearDialogSprites
 	ADDQ.w	#1, Ending_sequence_step.w
 	CLR.w	Ending_timer.w
 	CLR.l	Ending_vscroll_accumulator.w
@@ -2066,32 +2066,32 @@ EndingStep_Return7_Loop5:
 	JSR	LoadPalettesFromTable
 	LEA	Ending_player_name_buffer.w, A0
 	MOVE.w	#5, D7
-EndingStep_Return7_Loop5_Done:
+EndingStep_ClearNameBuffer:
 	MOVE.b	#$20, (A0)+
-	DBF	D7, EndingStep_Return7_Loop5_Done
+	DBF	D7, EndingStep_ClearNameBuffer
 	BRA.w	EndingSequence_ScrollText_Done
-EndingStep_Return7_Loop6:
+EndingStep_ClearDialogSprites:
 	BSR.w	ClearDialogSprites
 EndingSequence_ScrollText_Done:
 	BRA.w	EndingSequence_CommonUpdate
-EndingSequence_ScrollText_Done_Loop:
+EndingStep_DisplayCreditLines:
 	MOVE.l	Ending_timer.w, D0
 	MOVE.l	D0, D1
 	ANDI.w	#$001F, D1
-	BNE.b	EndingSequence_ScrollText_Done_Loop3
+	BNE.b	EndingStep_DisplayCreditLines_WriteRow
 	ASR.l	#5, D0
 	BSR.w	DisplayEndingTextLine
-EndingSequence_ScrollText_Done_Loop3:
+EndingStep_DisplayCreditLines_WriteRow:
 	ADDQ.l	#1, Ending_timer.w
 	ADDI.l	#$4000, Ending_vscroll_accumulator.w
 	MOVE.w	Ending_vscroll_accumulator.w, VScroll_base.w
 	BRA.w	EndingSequence_CommonUpdate
-EndingSequence_ScrollText_Done_Loop2:
+EndingStep_WaitForCreditsEnd:
 	MOVE.w	Ending_timer.w, D0
 	CMPI.w	#$0200, D0
-	BLE.b	EndingSequence_ScrollText_Done_Loop4
+	BLE.b	EndingStep_WaitForCreditsEnd_Scroll
 	ADDQ.w	#1, Ending_sequence_step.w
-EndingSequence_ScrollText_Done_Loop4:
+EndingStep_WaitForCreditsEnd_Scroll:
 	ADDQ.w	#1, Ending_timer.w
 	ADDI.l	#$4000, Ending_vscroll_accumulator.w
 	MOVE.w	Ending_vscroll_accumulator.w, VScroll_base.w
