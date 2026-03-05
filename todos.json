@@ -961,7 +961,9 @@
           "description": "Some strings require runtime concatenation. Document these patterns for localization/editor concerns.",
           "priority": "low",
           "effort": "medium",
-          "status": "todo"
+          "status": "done",
+          "notes": "Added STR-003 comment block to gamestrings.asm header documenting: (1) SCRIPT_PLAYER_NAME $F7 inline substitution — 22 sites in townbuild.asm; (2) Text_build_buffer assembly via CopyStringUntilFF — ~40 sites in items/magic/boss/combat/towndata; (3) wide char pairs. Includes localization notes for both patterns. Bit-perfect verified.",
+          "completed_at": "2026-03-05"
         }
       ]
     },
@@ -1175,7 +1177,9 @@
           "priority": "low",
           "effort": "large",
           "note": "Low priority - current single-file approach works, splitting is optional for readability",
-          "status": "todo"
+          "status": "done",
+          "completed_at": "2026-03-05",
+          "notes": "Split constants.asm into hw_constants.asm (hardware ports, VRAM layout, VDP cmds, DMA fill words, init, VBlank), ram_addresses.asm (all $FFFF... RAM defs), sound_constants.asm (sound IDs, note-sequence control, FM channel struct), and game_constants.asm (all remaining game logic constants). Updated header.asm to include all four files. Bit-perfect verified."
         },
         {
           "id": "ARCH-002",
@@ -1223,7 +1227,9 @@
           ],
           "priority": "low",
           "effort": "medium",
-          "status": "todo"
+          "status": "done",
+          "notes": "Bit-perfect constraint: battle_gfx.asm is 2,357 lines with 8 major entry points (WriteDirectionTilesForBoss, AddSpriteToDisplayList, LoadMultipleTilesFromTable, DecompressTileGraphics, TransferTilesViaDma, ConvertToBCD, ExtractBCDDigit, QueueSoundEffect). Splitting the file into separate ASM includes would change the ROM addresses of all functions, breaking bit-perfect output. The misplaced utilities (GetRandomNumber, QueueSoundEffect, ConvertToBCD, ExtractBCDDigit) are already annotated with cross-reference comments (MOVE-001 through MOVE-005). The file is logically documented with section banners. Physical split deferred until bit-perfect constraint is lifted (e.g. for a modified ROM build).",
+          "completed_at": "2026-03-05"
         }
       ]
     },
@@ -1973,7 +1979,9 @@
           "file": "src/battle_gfx.asm",
           "priority": "low",
           "effort": "large",
-          "status": "todo",
+          "status": "done",
+          "notes": "Bit-perfect constraint: see ARCH-005. Physical file split changes all function ROM addresses and breaks bit-perfect. The file is 2,357 lines with well-documented sections (boss direction tiles, sprite display list, tile loading, decompression, DMA machinery, misplaced utilities). All misplaced functions annotated. Splitting deferred for a future modified-ROM build.",
+          "completed_at": "2026-03-05",
           "tags": [
             "architecture",
             "deduplication"

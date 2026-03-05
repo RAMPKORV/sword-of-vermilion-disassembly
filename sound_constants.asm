@@ -1,0 +1,182 @@
+; ======================================================================
+; sound_constants.asm
+; Sound Effect IDs, Note-Sequence Script Control Bytes, and
+; FM Sound Channel Struct Field Offsets.
+; ======================================================================
+
+; ============================================================
+; Sound Effect IDs
+; ============================================================
+; These are passed to QueueSoundEffect to play sound effects.
+;
+SOUND_MENU_CANCEL       = $00A8   ; Cancel/back sound (36 uses)
+SOUND_MENU_SELECT       = $00A1   ; Confirm/select sound (23 uses)
+SOUND_MENU_CURSOR       = $00A0   ; Cursor movement (8 uses)
+SOUND_ITEM_PICKUP       = $00AE   ; Item pickup/acquire (16 uses)
+SOUND_LEVEL_UP          = $00E0   ; Level up fanfare (16 uses)
+SOUND_PURCHASE          = $00AC   ; Shop purchase (6 uses)
+SOUND_HEAL              = $00B5   ; Healing sound (6 uses)
+SOUND_DOOR_OPEN         = $00C0   ; Door opening (5 uses)
+SOUND_ATTACK            = $00A6   ; Attack sound (5 uses)
+SOUND_HIT               = $00A9   ; Hit/damage sound (5 uses)
+SOUND_SPELL_CAST        = $00B9   ; Spell casting (4 uses)
+SOUND_MAGIC_EFFECT      = $00B1   ; Magic effect (4 uses)
+SOUND_ERROR             = $0090   ; Error/invalid action (3 uses)
+SOUND_TREASURE          = $00BE   ; Treasure chest (3 uses)
+SOUND_SAVE              = $00BC   ; Save game (3 uses)
+SOUND_FOOTSTEP          = $0089   ; Footstep/walk (3 uses)
+SOUND_ENEMY_DEATH       = $00AD   ; Enemy death (3 uses)
+
+; ============================================================
+; Boss & Encounter Timing Constants
+; ============================================================
+; Frame-count delays used during boss fights and encounters.
+;
+BOSS_VICTORY_DELAY_FRAMES   = $0032   ; Frames to wait before boss reward sequence (4 uses)
+BOSS_EXIT_DELAY_FRAMES      = $50     ; Frames to wait before processing battle victory event (1 use)
+BOSS_VICTORY_FADE_PHASES    = 8       ; Dialog_phase threshold for boss victory fadeout complete (7 uses)
+ENCOUNTER_FADE_PHASES       = $000A   ; Number of fade-in phases for encounter/dialogue intro (2 uses)
+ENCOUNTER_PAUSE_FRAMES      = $0064   ; Frames to pause before battle begins after encounter (1 use)
+ORBIT_ANGLE_INIT_INNER      = $80     ; OrbitBoss inner satellite initial orbit angle (180 degrees)
+ORBIT_ANGLE_INIT_OUTER      = $C0     ; OrbitBoss outer satellite initial orbit angle (192 degrees)
+ORBIT_APPROACH_ANGLE_MIN    = $B0     ; OrbitBoss approach arc lower clamp (176 degrees)
+ORBIT_APPROACH_ANGLE_MAX    = $D0     ; OrbitBoss approach arc upper clamp (208 degrees)
+SLEEP_DELAY_FRAMES          = $012C   ; Frames of sleep animation delay (2 uses)
+; ============================================================
+; Name Entry Grid Constants
+; ============================================================
+NAME_ENTRY_LAST_ROW         = $0010   ; Last valid row index in name entry grid (wraps to 0) (3 uses)
+NAME_ENTRY_LAST_COL         = $001D   ; Last valid column index in name entry grid (wraps to 0) (2 uses)
+; ============================================================
+; Poison Duration
+; ============================================================
+POISONED_DURATION           = $FFFF   ; Player_poisoned: indefinite/permanent poison (2 uses)
+; ============================================================
+; Boss Hit Flash Palette Indices
+; ============================================================
+PALETTE_IDX_BOSS_FLASH_A    = $00B5   ; Boss hit flash palette A (two-headed dragon) (2 uses)
+PALETTE_IDX_BOSS_FLASH_B    = $00B7   ; Boss hit flash palette B (orbit/ring boss) (2 uses)
+
+; VRAM tile index of the two-headed dragon boss head in its idle/resting frame.
+; Compared against obj_tile_index(A6) to detect when the head sprite is at rest
+; before triggering a random attack animation.
+DRAGON_HEAD_IDLE_TILE       = $00DD   ; Dragon head idle-frame tile index (2 uses)
+
+; ============================================================
+; Ending Sequence Timer Durations (Ending_timer)
+; ============================================================
+; Frame counts used during the ending sequence steps.
+; At 60 fps: $0032=50f, $00C8=200f, $012C=300f, $0190=400f, $01F4=500f.
+;
+ENDING_DELAY_BRIEF          = $0032   ; Very short ending delay (1 use)
+ENDING_DELAY_NORMAL         = $00C8   ; Standard ending step duration (5 uses)
+ENDING_DELAY_LONG           = $012C   ; Long ending step duration (2 uses)
+ENDING_DELAY_SCROLL         = $0190   ; Ending scroll phase duration (1 use)
+ENDING_DELAY_LONGER         = $01F4   ; Extended ending step duration (2 uses)
+
+; ============================================================
+; Sound Effect IDs (additional)
+; ============================================================
+SOUND_TRANSITION            = $00A3   ; Screen/room fade transition sound (19 uses)
+SOUND_SLEEP                 = $0085   ; Sleep/frying-pan sound effect (3 uses)
+SOUND_LEVEL_UP_BANNER       = $0086   ; Sound played when level-up banner triggers (2 uses)
+SOUND_NAME_ENTRY            = $008D   ; Sound played when entering name-entry or load-save screen (2 uses)
+SOUND_OVERWORLD_RETURN      = $00B3   ; Sound when returning to overworld from dungeon/after chest (2 uses)
+SOUND_PLAYER_HIT            = $00B2   ; Sound when player takes damage in overworld or battle (2 uses)
+SOUND_BOMB                  = $00BF   ; Explosion/bomb sound (DemonBoss attack, SmallBomb item) (2 uses)
+SOUND_MERCUSIOS             = $00BD   ; Mercusios magic projectile launch sound (2 uses)
+SOUND_TERRAFISSI            = $00AF   ; Terrafissi spell / DemonBoss projectile activation sound (2 uses)
+SOUND_BATTLE_START          = $0092   ; Sound played when battle initializes (1 use)
+SOUND_OVERWORLD_MUSIC       = $008E   ; Overworld/field music; written to Current_area_music and queued (2 uses)
+SOUND_SWORD_ATTACK          = $00B6   ; Player sword swing in battle (1 use)
+SOUND_TEXT_BLIP             = $00A2   ; Per-character typewriter blip during script text (1 use)
+SOUND_PROLOGUE_MUSIC        = $0081   ; Music cue queued at prologue scene init (1 use)
+SOUND_TITLE_MUSIC           = $0082   ; Music cue queued at title screen fade-in (1 use)
+SOUND_CHEST_OPEN            = $00AA   ; Sound queued when chest state begins opening sequence (1 use)
+SOUND_CHEST_CREAK           = $00A7   ; Sound queued when chest lid is physically opened (1 use)
+SOUND_SWAFFHAM_RUINED_MUSIC = $0083   ; Swaffham town music after it is ruined (1 use)
+SOUND_ENCOUNTER_START       = $0084   ; Sound at encounter initialization before battle (1 use)
+SOUND_STOW_MUSIC_GIRL_LEFT  = $0087   ; Stow town music while girl has left for Stow event (1 use)
+SOUND_STOW_MUSIC_INNOCENCE  = $009B   ; Stow town music after innocence is proven (1 use)
+SOUND_ORBIT_BOSS_MUSIC      = $0093   ; OrbitBoss battle music (1 use)
+SOUND_SAVE_FAILED           = $0094   ; Sound when save operation fails (1 use)
+SOUND_ENDING_CREDITS_MUSIC  = $0099   ; Ending credits scroll music (1 use)
+SOUND_ENDING_STAFF_MUSIC    = $009C   ; Ending staff names screen music (1 use)
+SOUND_ENDING_FANFARE_A      = $00A4   ; Ending sequence fanfare cue A (1 use)
+SOUND_ENDING_FANFARE_B      = $00A5   ; Ending sequence fanfare cue B (1 use)
+SOUND_BOSS1_VICTORY         = $00AB   ; Boss 1 (OrbitBoss) victory music (1 use)
+SOUND_VOLTIOS_CAST          = $00B0   ; Voltios magic spell cast (1 use)
+SOUND_HYDRA_BITE            = $00B4   ; Hydra boss bite/attack sound (1 use)
+SOUND_BOSS_SWORD_ATTACK     = $00B8   ; Player sword swing in boss battle (1 use)
+SOUND_HYDRO_ICICLE          = $00BA   ; Hydro boss icicle spawn (1 use)
+SOUND_CHEST_RATTLE          = $00BB   ; Chest begins animating/rattling (1 use)
+SOUND_ALARM_CLOCK           = $00C1   ; Alarm Clock item use (1 use)
+
+; Sound IDs confirmed from DebugSoundID_Table BGM/Effect/DA arrays in miscdata.asm:
+SOUND_DUNGEON_MUSIC         = $008A   ; Dungeon BGM (DebugBGM row 11)
+SOUND_VILLAGE_A_MUSIC       = $008B   ; Village A BGM (DebugBGM row 6)
+SOUND_SHOP_CITY_MUSIC       = $008C   ; Shop (City) BGM (DebugBGM row 8)
+SOUND_ERIAS_MUSIC           = $008F   ; Erias/Areas overworld BGM (DebugBGM row 5)
+SOUND_CHURCH_MUSIC          = $0091   ; Church BGM (DebugBGM row 10)
+SOUND_SHOP_VILLAGE_MUSIC    = $0095   ; Shop (Village) BGM (DebugBGM row 9)
+SOUND_CASTLE_MUSIC          = $0096   ; Castle BGM (DebugBGM row 17)
+SOUND_JIJI_THEME            = $0097   ; Jiji character theme BGM (DebugBGM row 19)
+SOUND_DUNGEON2_MUSIC        = $0098   ; Dungeon 2 BGM (DebugBGM row 12)
+SOUND_ENEMY_APPEAR_JINGLE   = $009A   ; Enemy appear jingle/sting (DebugBGM2 row 10)
+SOUND_THUNDER_HI            = $00B7   ; Thunder D/A high variant (DebugDA row 2)
+
+; Sound script byte threshold: bytes < $E0 are note values; bytes >= $E0 are commands.
+SOUND_SCRIPT_CMD_THRESHOLD  = $E0   ; BCS/BCC boundary in SoundChannel_NoteLoop
+
+; ============================================================
+; Note-Sequence Script Control Bytes
+; ============================================================
+; Used in PSGChannel_NoteLoop, FMChannel_NoteLoop, FMArpeggio_ReadNote.
+; Bytes $80-$8F in a pitch/arpeggio sequence are control codes;
+; bytes below $80 are raw pitch/note values.
+;
+NOTESCR_RESTART     = $80   ; Reset sequence position to 0 and restart
+NOTESCR_LOOP        = $81   ; Step back 2 positions and loop (repeat last interval)
+NOTESCR_REST        = $83   ; Step back 1 position, output silence (rest)
+NOTESCR_PITCHBEND   = $84   ; Read next byte and add to channel pitch-LFO offset
+NOTESCR_JUMP        = $85   ; Read next byte as absolute jump target position
+
+; ============================================================
+; FM Sound Channel Struct Field Offsets (A3)
+; ============================================================
+; Each FM channel occupies $30 bytes.  The struct base is stored
+; in A3.  Channels start at $00FFF430 and step by fmch_size each.
+;
+; Usage: MOVE.b fmch_flags(A3), D0
+;        SUBQ.w #1, fmch_tick_ctr(A3)
+;
+; Note: offsets $1C–$20 are the 5-byte FM algorithm/operator-TL
+; block loaded by LoadFM_AlgorithmData from the instrument table.
+; Offset $22(A3,D0.w) is a loop-counter array indexed by a script
+; variable D0; not separately named.
+;
+fmch_flags          equ $00   ; byte: status flags (bit7=active, bit6=DAC/echo, bit5=pitch-slide, bit2=muted, bit1=key-off)
+fmch_channel_id     equ $01   ; byte: YM2612 channel index + mode flags (bit4=hold/sustain, bit7=PSG)
+fmch_tempo_flags    equ $02   ; byte: tempo modifier flags (bit1=double-tempo, written by script cmd)
+fmch_script_ptr_hi  equ $03   ; byte: high byte of current script offset (relative to $00093C00)
+fmch_script_ptr_lo  equ $04   ; byte: low byte of current script offset
+fmch_transpose      equ $05   ; byte: semitone transpose added to note values
+fmch_vibrato_idx    equ $06   ; byte: LFO vibrato table index (0=none)
+fmch_arpeggio_idx   equ $07   ; byte: arpeggio sequence table index (0=none)
+fmch_volume         equ $08   ; byte: channel volume (FM total-level offset, added to operator TL)
+fmch_call_sp        equ $09   ; byte: script subroutine call-stack pointer (offset into struct)
+fmch_tick_ctr       equ $0A   ; word: tick countdown; decremented each frame, triggers next note at 0
+fmch_note_freq      equ $0C   ; word: current note frequency (PSG: period value; FM: F-number)
+fmch_note_duration  equ $0E   ; word: note duration in ticks; reloaded into tick_ctr on new note
+fmch_pitch_slide    equ $10   ; byte: pitch-slide rate (signed; added to note_freq each frame)
+fmch_lfo_phase      equ $11   ; byte: LFO vibrato table read position index
+fmch_op_algo        equ $1C   ; byte: FM algorithm/feedback byte (first of 5-byte instrument block)
+fmch_op1_tl         equ $1D   ; byte: operator 1 total-level offset (FM instrument data)
+fmch_op3_tl         equ $1E   ; byte: operator 3 total-level offset (FM instrument data)
+fmch_op2_tl         equ $1F   ; byte: operator 2 total-level offset (FM instrument data)
+fmch_op4_tl         equ $20   ; byte: operator 4 total-level offset (FM instrument data)
+fmch_pan_stereo     equ $21   ; byte: stereo panning byte written to YM2612 register $B4
+fmch_arp_phase      equ $13   ; byte: arpeggio sequence read position index
+fmch_pitch_bend     equ $14   ; byte: pitch-bend counter ($1F=key-off/note-end, $FF=no-bend)
+fmch_lfo_depth      equ $16   ; byte: LFO depth/amplitude accumulator (scaled by vibrato table)
+fmch_size           equ $30   ; struct stride: each channel slot is $30 bytes wide
