@@ -642,7 +642,7 @@
           "priority": "low",
           "effort": "very_large",
           "depends_on": "TOOLB-001",
-          "status": "todo"
+          "status": "done"
         }
       ]
     },
