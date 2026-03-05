@@ -145,7 +145,7 @@ TownTilesetPtrs_Entry03:
 ; fade-out, then steps all FM and PSG sound channels.
 ; @ $00092900
 UpdateBattleEntities:
-	LEA	$00FFF430, A3
+	LEA	SndRAM_ch_bank1, A3
 	BSR.w	ProcessSound_CommandQueue
 	BSR.w	ProcessSound_TempoCounter
 	BSR.w	ProcessSound_FadeOut
@@ -158,9 +158,9 @@ UpdateBattleEntities:
 ; Bank 1: 9 channels at $FFF430, Bank 2: 4 channels at $FFF5E0.
 ; @ $00092918
 ProcessFMSoundChannels:
-	MOVE.b	#0, $00FFF421
+	MOVE.b	#0, SndRAM_part_flag
 	MOVE.w	#8, D6
-	LEA	$00FFF430, A3
+	LEA	SndRAM_ch_bank1, A3
 ; @ $0009292A
 ProcessFMSoundChannels_Done:
 	MOVE.l	D6, -(A7)
@@ -172,9 +172,9 @@ ProcessFMSoundChannels_Loop:
 	ADDA.w	#$0030, A3
 	MOVE.l	(A7)+, D6
 	DBF	D6, ProcessFMSoundChannels_Done
-	MOVE.b	#$80, $00FFF421
+	MOVE.b	#$80, SndRAM_part_flag
 	MOVE.w	#3, D6
-	LEA	$00FFF5E0, A3
+	LEA	SndRAM_ch_bank2, A3
 ; @ $00092952
 ProcessFMSoundChannels_Loop_Done:
 	MOVE.l	D6, -(A7)
@@ -644,8 +644,8 @@ SoundScript_NopCommand:
 ; @ $00092D24
 SoundCmd_SetTempo:
 	MOVE.b	(A4)+, D0	
-	ADD.b	D0, $00FFF402	
-	MOVE.b	#1, $00FFF401	
+	ADD.b	D0, SndRAM_tempo_reload	
+	MOVE.b	#1, SndRAM_tempo_ctr	
 	RTS
 	
 ; @ $00092D36
@@ -776,7 +776,7 @@ LoadFM_AlgorithmData_ReinitFMChannel:
 	BSET.b	#1, fmch_flags(A3)
 ; @ $00092E6E
 LoadFM_AlgorithmData_CheckInitNeeded:
-	TST.b	$00FFF421
+	TST.b	SndRAM_part_flag
 	BEQ.b	LoadFM_AlgorithmData_ReturnFromReinit
 	BSR.w	InitSoundChannel_FM
 ; @ $00092E7A
@@ -787,7 +787,7 @@ LoadFM_AlgorithmData_ReturnFromReinit:
 ; @ $00092E7E
 LoadFM_AlgorithmData_ReinitPSGChannel:
 	BSET.b	#1, fmch_flags(A3)
-	TST.b	$00FFF421
+	TST.b	SndRAM_part_flag
 	BEQ.b	LoadFM_AlgorithmData_InitDACChannel
 	BSR.w	InitSoundChannel_FM
 ; @ $00092E90
@@ -801,7 +801,7 @@ LoadFM_AlgorithmData_InitDACChannel:
 	MOVE.b	#0, D1
 	BSR.w	WriteYM2612Register_Part1
 	MOVEA.l	A3, A1
-	MOVEA.l	#$00FFF520, A3
+	MOVEA.l	#SndRAM_ch_dac, A3
 	BCLR.b	#2, $0(A3)
 	MOVE.b	$13(A3), D0
 	ANDI.w	#$00FF, D0
@@ -956,9 +956,9 @@ SetPSGNoteFrequency_LookupFreq:
 ; @ $00092FE2
 ProcessSound_CommandQueue:
 	CLR.w	D0
-	BTST.b	#7, $00FFF404
+	BTST.b	#7, SndRAM_cmd_pending
 	BEQ.w	SoundInit_StopAndConfigure
-	MOVE.b	$00FFF404, D0
+	MOVE.b	SndRAM_cmd_pending, D0
 	CMPI.b	#$9D, D0
 	BCS.w	SoundCommand_JumpTable_StartSFX
 	CMPI.b	#$A0, D0
@@ -1025,30 +1025,30 @@ SoundCommand_JumpTable_CopyChannelData:
 	BRA.w	SoundInit_Done
 ; @ $000930B4
 SoundCommand_JumpTable_StartDACMusic:
-	LEA	$00FFF520, A2
+	LEA	SndRAM_ch_dac, A2
 	BSET.b	#2, $0(A2)
 	MOVE.b	(A0)+, D0
-	LEA	$00FFF670, A1
+	LEA	SndRAM_dac_ext, A1
 	MOVE.w	#8, D6
 ; @ $000930CC
 SoundCommand_JumpTable_CopyDACChannelData:
 	MOVE.b	(A0)+, (A1)+
 	DBF	D6, SoundCommand_JumpTable_CopyDACChannelData
-	LEA	$00FFF670, A1
+	LEA	SndRAM_dac_ext, A1
 	MOVE.b	#$C0, $21(A1)
 	MOVE.w	#1, $A(A1)
 	MOVE.b	#$C0, $21(A1)
 	BRA.w	SoundInit_Done
 ; @ $000930EE
 SoundCommand_JumpTable_Loop2_Done_Data:
-	dc.l	$00FFF490
-	dc.l	$00FFF4C0	
-	dc.l	$00FFF4C0
-	dc.l	$00FFF4F0
-	dc.l	$00FFF520	
-	dc.l	$00FFF550	
-	dc.l	$00FFF580	
-	dc.l	$00FFF5B0	
+	dc.l	SndRAM_ch2
+	dc.l	SndRAM_ch3	
+	dc.l	SndRAM_ch3
+	dc.l	SndRAM_ch4
+	dc.l	SndRAM_ch_dac	
+	dc.l	SndRAM_ch6	
+	dc.l	SndRAM_ch7	
+	dc.l	SndRAM_ch8	
 ; @ $0009310E
 SoundCommand_JumpTable_StartSFX:
 	SUBI.b	#$81, D0
@@ -1057,14 +1057,14 @@ SoundCommand_JumpTable_StartSFX:
 	BSR.w	StopAllActiveSounds
 	MOVE.l	(A7)+, D0
 	LEA	SoundCommand_JumpTable_Loop_Data, A0
-	MOVE.b	(A0,D0.w), $00FFF402
-	MOVE.b	(A0,D0.w), $00FFF401
+	MOVE.b	(A0,D0.w), SndRAM_tempo_reload
+	MOVE.b	(A0,D0.w), SndRAM_tempo_ctr
 	LEA	SoundCommand_JumpTable_Loop_Data2, A0
 	BSR.w	GetSoundDataPointer
 	MOVEQ	#0, D5
 	MOVE.b	(A0)+, D5
 	SUBQ.b	#1, D5
-	LEA	$00FFF430, A2
+	LEA	SndRAM_ch_bank1, A2
 ; @ $0009314A
 SoundCommand_JumpTable_StartSFX_Done:
 	MOVEA.l	A2, A1
@@ -1084,7 +1084,7 @@ SoundInit_StopAndConfigure:
 	BSR.w	StopAllActiveSounds
 ; @ $0009317A
 SoundInit_Done:
-	MOVE.b	#$80, $00FFF404
+	MOVE.b	#$80, SndRAM_cmd_pending
 	RTS
 	
 ; GetSoundDataPointer
@@ -1110,7 +1110,7 @@ StopAllActiveSounds:
 	MOVE.l	A3, -(A7)
 	BSR.w	InitFM_ChannelsToSilence
 	MOVEA.l	(A7)+, A3
-	LEA	$00FFF400, A6
+	LEA	SndRAM_cmd_queue, A6
 	MOVE.w	#$009B, D6
 ; @ $000931B0
 StopAllActiveSounds_Done:
@@ -1125,14 +1125,14 @@ StopAllActiveSounds_Done:
 ; active bank-1 channels to advance them one script step.
 ; @ $000931C0
 ProcessSound_TempoCounter:
-	LEA	$00FFF402, A0
-	LEA	$00FFF401, A1
+	LEA	SndRAM_tempo_reload, A0
+	LEA	SndRAM_tempo_ctr, A1
 	TST.b	(A0)
 	BEQ.b	SoundObjTick_Return
 	SUBQ.b	#1, (A1)
 	BNE.w	SoundObjTick_Return
 	MOVE.b	(A0), (A1)
-	LEA	$00FFF430, A0
+	LEA	SndRAM_ch_bank1, A0
 	MOVE.w	#8, D6
 ; @ $000931E2
 ProcessSound_TempoCounter_Done:
@@ -1145,9 +1145,9 @@ SoundObjTick_Return:
 	
 ; @ $000931F2
 SoundObjTick_Return_Loop:
-	MOVE.b	#$3F, $00FFF41C
-	MOVE.b	#2, $00FFF41D
-	MOVE.b	#0, $00FFF520
+	MOVE.b	#$3F, SndRAM_fade_volume
+	MOVE.b	#2, SndRAM_fade_speed
+	MOVE.b	#0, SndRAM_ch_dac
 	RTS
 	
 ; ProcessSound_FadeOut
@@ -1158,19 +1158,19 @@ SoundObjTick_Return_Loop:
 ; @ $0009320C
 ProcessSound_FadeOut:
 	MOVEQ	#0, D0
-	MOVE.b	$00FFF41C, D0
+	MOVE.b	SndRAM_fade_volume, D0
 	BEQ.b	ProcessSound_FadeOut_Return
-	MOVE.b	$00FFF41D, D0
+	MOVE.b	SndRAM_fade_speed, D0
 	BEQ.b	ProcessSound_FadeOut_FadeStep
-	SUBQ.b	#1, $00FFF41D
+	SUBQ.b	#1, SndRAM_fade_speed
 	RTS
 	
 ; @ $00093226
 ProcessSound_FadeOut_FadeStep:
-	SUBQ.b	#1, $00FFF41C
+	SUBQ.b	#1, SndRAM_fade_volume
 	BEQ.w	StopAllActiveSounds
-	MOVE.b	#2, $00FFF41D
-	LEA	$00FFF430, A3
+	MOVE.b	#2, SndRAM_fade_speed
+	LEA	SndRAM_ch_bank1, A3
 	MOVE.w	#8, D6
 ; @ $00093242
 ProcessSound_FadeOut_FadeChannels:
@@ -1239,7 +1239,7 @@ InitFM_ChannelsToSilence_Done:
 	BSR.w	WriteYM2612Register
 	ADDQ.b	#1, D1
 	DBF	D6, InitFM_ChannelsToSilence_Done
-	LEA	$00FFF430, A3
+	LEA	SndRAM_ch_bank1, A3
 	MOVE.w	#5, D7
 ; @ $000932C0
 InitFM_ChannelsToSilence_ChannelLoop:

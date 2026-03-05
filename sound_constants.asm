@@ -129,6 +129,33 @@ SOUND_THUNDER_HI            = $00B7   ; Thunder D/A high variant (DebugDA row 2)
 SOUND_SCRIPT_CMD_THRESHOLD  = $E0   ; BCS/BCC boundary in SoundChannel_NoteLoop
 
 ; ============================================================
+; Sound Driver RAM Addresses
+; ============================================================
+; The sound driver occupies $FFF400-$FFF69F.
+; Bank 1: 9 FM/PSG channels at SndRAM_ch_bank1, stride fmch_size ($30).
+; Bank 2: 4 FM channels at SndRAM_ch_bank2, stride fmch_size ($30).
+; DAC channel: SndRAM_ch_dac (bank 1 channel 5, $FFF520).
+; DAC extra channel data buffer: SndRAM_dac_ext ($FFF670).
+;
+SndRAM_cmd_queue    = $00FFF400   ; byte: pending sound command byte (written by 68k, read by driver)
+SndRAM_tempo_ctr    = $00FFF401   ; byte: tempo tick countdown (decremented each frame)
+SndRAM_tempo_reload = $00FFF402   ; byte: tempo reload value (reloaded into tempo_ctr when it hits 0)
+SndRAM_cmd_pending  = $00FFF404   ; byte: sound command currently being processed (bit7=ready flag)
+SndRAM_fade_volume  = $00FFF41C   ; byte: current fade-out volume level ($00 = fade inactive)
+SndRAM_fade_speed   = $00FFF41D   ; byte: fade-out decrement rate (ticks between each volume step)
+SndRAM_part_flag    = $00FFF421   ; byte: FM bank selector ($00=bank1/part1, $80=bank2/part2)
+SndRAM_ch_bank1     = $00FFF430   ; FM/PSG channel struct base — bank 1, channel 0 (9 channels, stride $30)
+SndRAM_ch2          = $00FFF490   ; FM channel 2 struct (bank 1, channel slot 2)
+SndRAM_ch3          = $00FFF4C0   ; FM channel 3 struct (bank 1, channel slot 3)
+SndRAM_ch4          = $00FFF4F0   ; FM channel 4 struct (bank 1, channel slot 4)
+SndRAM_ch_dac       = $00FFF520   ; DAC/special channel struct (bank 1, channel slot 5)
+SndRAM_ch6          = $00FFF550   ; FM channel 6 struct (bank 1, channel slot 6)
+SndRAM_ch7          = $00FFF580   ; FM channel 7 struct (bank 1, channel slot 7)
+SndRAM_ch8          = $00FFF5B0   ; FM channel 8 struct (bank 1, channel slot 8)
+SndRAM_ch_bank2     = $00FFF5E0   ; FM channel struct base — bank 2, channel 0 (4 channels, stride $30)
+SndRAM_dac_ext      = $00FFF670   ; DAC extra channel data buffer (9 bytes, used by StartDACMusic)
+
+; ============================================================
 ; Note-Sequence Script Control Bytes
 ; ============================================================
 ; Used in PSGChannel_NoteLoop, FMChannel_NoteLoop, FMArpeggio_ReadNote.
