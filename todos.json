@@ -509,7 +509,7 @@
           "file": "docs/randomizer_architecture.md",
           "priority": "high",
           "effort": "medium",
-          "status": "todo"
+          "status": "done"
         },
         {
           "id": "RANDO-002",
