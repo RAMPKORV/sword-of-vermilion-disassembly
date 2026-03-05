@@ -652,7 +652,7 @@
           "priority": "low",
           "effort": "large",
           "note": "Project-wide effort; do file-by-file",
-          "status": "todo"
+          "status": "done"
         },
         {
           "id": "DOC-007",
@@ -1348,7 +1348,7 @@
           "file": "src/*.asm",
           "priority": "low",
           "effort": "very_large",
-          "status": "todo",
+          "status": "done",
           "tags": [
             "labeling",
             "readability"
