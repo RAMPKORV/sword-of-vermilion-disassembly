@@ -2043,7 +2043,7 @@ DrawTerrainTilemapHelper_WriteTile:
 	ADDI.w	#$4300, D0
 	MOVE.w	D0, VDP_data_port
 	DBF	D6, DrawTerrainTilemapHelper_WriteTile
-	ADDI.l	#$00800000, D5
+	ADDI.l	#VDP_VRAM_ROW_STRIDE, D5
 	DBF	D7, DrawTerrainTilemapHelper_WriteRow
 	ANDI	#$F8FF, SR
 	RTS
@@ -2066,7 +2066,7 @@ DrawBattleStatusBar_WriteTile:
 	ADDI.w	#$83CC, D0
 	MOVE.w	D0, VDP_data_port
 	DBF	D6, DrawBattleStatusBar_WriteTile
-	ADDI.l	#$00800000, D5
+	ADDI.l	#VDP_VRAM_ROW_STRIDE, D5
 	DBF	D7, DrawBattleStatusBar_WriteRow
 	ANDI	#$F8FF, SR
 	RTS
@@ -2091,7 +2091,7 @@ DrawBattleNametable_WriteTile:
 	ADDI.w	#$03CC, D0
 	MOVE.w	D0, VDP_data_port
 	DBF	D6, DrawBattleNametable_WriteTile
-	ADDI.l	#$00800000, D5
+	ADDI.l	#VDP_VRAM_ROW_STRIDE, D5
 	DBF	D7, DrawBattleNametable_WriteRow
 	ANDI	#$F8FF, SR
 	RTS

@@ -166,7 +166,7 @@ RenderAreaMap_WriteTile:
 	MOVE.w	(A2,D0.w), VDP_data_port
 	DBF	D6, RenderAreaMap_ColLoop
 	LEA	$30(A0), A0         ; advance map pointer by one row ($30 = 48 byte stride)
-	ADDI.l	#$00800000, D5      ; advance VDP write address by one nametable row
+	ADDI.l	#VDP_VRAM_ROW_STRIDE, D5      ; advance VDP write address by one nametable row
 	DBF	D7, RenderAreaMap_RowLoop
 	ANDI	#$F8FF, SR          ; re-enable interrupts
 	RTS
@@ -219,7 +219,7 @@ RenderCaveDarknessTilemap_ColLoop:
 	MOVE.w	D4, VDP_data_port
 	DBF	D6, RenderCaveDarknessTilemap_ColLoop
 	LEA	$30(A0), A0         ; advance map pointer (unused here, kept for struct symmetry)
-	ADDI.l	#$00800000, D5      ; advance VDP write address by one nametable row
+	ADDI.l	#VDP_VRAM_ROW_STRIDE, D5      ; advance VDP write address by one nametable row
 	DBF	D7, RenderCaveDarknessTilemap_RowLoop
 	ANDI	#$F8FF, SR          ; re-enable interrupts
 	TST.b	Area_map_revealed.w
@@ -251,7 +251,7 @@ RenderCaveDarknessTilemap_RowLoopB:
 RenderCaveDarknessTilemap_ColLoopB:
 	MOVE.w	(A0)+, VDP_data_port
 	DBF	D6, RenderCaveDarknessTilemap_ColLoopB
-	ADDI.l	#$00800000, D5      ; advance VDP write address by one nametable row
+	ADDI.l	#VDP_VRAM_ROW_STRIDE, D5      ; advance VDP write address by one nametable row
 	DBF	D7, RenderCaveDarknessTilemap_RowLoopB
 	ANDI	#$F8FF, SR          ; re-enable interrupts
 RenderCaveWallTiles_Return:

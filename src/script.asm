@@ -3496,7 +3496,7 @@ LoadLevelUpBannerTiles_WriteTile:
 	ADDI.w	#$84C0, D0
 	MOVE.w	D0, VDP_data_port
 	DBF	D6, LoadLevelUpBannerTiles_WriteTile
-	ADDI.l	#$00800000, D5
+	ADDI.l	#VDP_VRAM_ROW_STRIDE, D5
 	DBF	D7, LoadLevelUpBannerTiles_Done
 	ANDI	#$F8FF, SR
 	RTS
@@ -4386,7 +4386,7 @@ WriteCharacterToNameEntry_CheckLimit:
 
 WriteCharacterToNameEntry_WriteWideLo:
 	BSR.b	WriteCharacterToNameEntry	
-	SUBI.l	#$00800000, D6	
+	SUBI.l	#VDP_VRAM_ROW_STRIDE, D6	
 	MOVE.l	D6, VDP_control_port	
 	MOVE.w	#$C5AC, VDP_data_port	
 	ADDQ.w	#1, Name_input_cursor_pos.w	
@@ -4395,7 +4395,7 @@ WriteCharacterToNameEntry_WriteWideLo:
 	
 WriteCharacterToNameEntry_WriteWideHi:
 	BSR.b	WriteCharacterToNameEntry	
-	SUBI.l	#$00800000, D6	
+	SUBI.l	#VDP_VRAM_ROW_STRIDE, D6	
 	MOVE.l	D6, VDP_control_port	
 	MOVE.w	#$C5AD, VDP_data_port	
 	ADDQ.w	#1, Name_input_cursor_pos.w	
@@ -4436,7 +4436,7 @@ NameEntry_ConfirmDone_EraseWideExtra:
 	SUBQ.w	#1, Name_input_cursor_pos.w	
 	CLR.b	-$1(A0)	
 	MOVE.l	D6, D5	
-	SUBI.l	#$00800000, D5	
+	SUBI.l	#VDP_VRAM_ROW_STRIDE, D5	
 	MOVE.l	D5, VDP_control_port	
 	MOVE.w	#$E040, VDP_data_port	
 NameEntry_ConfirmDone_EraseSingle:
@@ -4512,7 +4512,7 @@ DrawNameEntryBackground_WriteTile:
 	ADDI.w	#$003C, D0
 	MOVE.w	D0, VDP_data_port
 	DBF	D6, DrawNameEntryBackground_WriteTile
-	ADDI.l	#$00800000, D5
+	ADDI.l	#VDP_VRAM_ROW_STRIDE, D5
 	DBF	D7, DrawNameEntryBackground_Done
 	ANDI	#$F8FF, SR
 	RTS
@@ -4535,7 +4535,7 @@ DrawNameEntryCharGrid_WriteTile:
 	ADDI.w	#$04C0, D0
 	MOVE.w	D0, VDP_data_port
 	DBF	D6, DrawNameEntryCharGrid_WriteTile
-	ADDI.l	#$00800000, D5
+	ADDI.l	#VDP_VRAM_ROW_STRIDE, D5
 	DBF	D7, DrawNameEntryCharGrid_Done
 	ANDI	#$F8FF, SR
 	RTS
@@ -4715,7 +4715,7 @@ SegaLogoScreen_Init_WriteTile:
 	ADDQ.w	#2, D0
 	MOVE.w	D0, VDP_data_port
 	DBF	D6, SegaLogoScreen_Init_WriteTile
-	ADDI.l	#$00800000, D5
+	ADDI.l	#VDP_VRAM_ROW_STRIDE, D5
 	DBF	D7, SegaLogoScreen_Init_WriteRow
 	ANDI	#$F8FF, SR
 	JSR	EnableDisplay

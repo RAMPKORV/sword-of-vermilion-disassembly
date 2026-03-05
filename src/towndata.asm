@@ -110,7 +110,7 @@ WriteChestAnimationToVRAM_TileRowB:
 	ADDI.w	#$AC4C, D0
 	MOVE.w	D0, VDP_data_port
 	DBF	D6, WriteChestAnimationToVRAM_TileRowB
-	ADDI.l	#$00800000, D5
+	ADDI.l	#VDP_VRAM_ROW_STRIDE, D5
 	DBF	D7, WriteChestAnimationToVRAM_Done
 	ANDI	#$F8FF, SR
 	RTS

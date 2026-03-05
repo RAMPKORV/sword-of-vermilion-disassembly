@@ -106,6 +106,7 @@ Z80_DRIVER_SIZE_MINUS1      = $013F     ; Z80 sound driver binary size in bytes 
 SCROLL_RANGE_MASK           = $01FF     ; 9-bit mask for 512-pixel scroll range
 HSCROLL_CLEAR_COUNT         = $01FF     ; DBF count for HScroll/VScroll clear (512 entries - 1)
 HSCROLL_TABLE_ENTRY_STRIDE  = $00040000 ; VDP cmd address increment per HScroll row (4 bytes)
+VDP_VRAM_ROW_STRIDE         = $00800000 ; VDP cmd address increment per nametable row (64 tiles × 2 bytes = 128 = $80)
 HSCROLL_ROW_COUNT_MINUS1    = $00DF     ; Per-line HScroll fill: 224 rows - 1 (DBF count)
 PAL_DELAY_LOOP_COUNT        = $021D     ; PAL 50 Hz timing delay (long, every 4th frame)
 PAL_SHORT_DELAY_LOOP_COUNT  = $0657     ; PAL 50 Hz timing delay (short, other frames)

@@ -43,7 +43,7 @@ WriteDirectionTilesForBoss_TileLoop:
 	ADDI.w	#$A200, D0
 	MOVE.w	D0, VDP_data_port
 	DBF	D6, WriteDirectionTilesForBoss_TileLoop
-	ADDI.l	#$00800000, D5
+	ADDI.l	#VDP_VRAM_ROW_STRIDE, D5
 	DBF	D7, WriteDirectionTilesForBoss_RowLoop
 	ANDI	#$F8FF, SR
 	RTS
@@ -192,7 +192,7 @@ WriteTilesToVRAM_TileLoop:
 	ADDI.w	#$2200, D0
 	MOVE.w	D0, VDP_data_port
 	DBF	D4, WriteTilesToVRAM_TileLoop
-	ADDI.l	#$00800000, D5
+	ADDI.l	#VDP_VRAM_ROW_STRIDE, D5
 	DBF	D7, WriteTilesToVRAM_RowLoop
 	ANDI	#$F8FF, SR
 	RTS

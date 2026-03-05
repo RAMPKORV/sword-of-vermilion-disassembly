@@ -94,7 +94,7 @@ DrawTilemapBlock_15x12_WriteTile:
 	ADD.w	D4, D0
 	MOVE.w	D0, VDP_data_port
 	DBF	D6, DrawTilemapBlock_15x12_WriteTile
-	ADDI.l	#$00800000, D5
+	ADDI.l	#VDP_VRAM_ROW_STRIDE, D5
 	DBF	D7, DrawTilemapBlock_15x12_Done
 	RTS
 
@@ -114,7 +114,7 @@ DrawTilemapBlock_13x10_WriteTile:
 	ADD.w	D4, D0
 	MOVE.w	D0, VDP_data_port
 	DBF	D6, DrawTilemapBlock_13x10_WriteTile
-	ADDI.l	#$00800000, D5
+	ADDI.l	#VDP_VRAM_ROW_STRIDE, D5
 	DBF	D7, DrawTilemapBlock_13x10_Done
 	RTS
 	
@@ -1136,7 +1136,7 @@ WriteTilemapColumnToVDP_MergePlaneA_Row2:
 	ADD.w	Town_vram_tile_base.w, D2
 	MOVE.w	D2, VDP_data_port
 	LEA	$80(A0), A0
-	ADDI.l	#$00800000, D0
+	ADDI.l	#VDP_VRAM_ROW_STRIDE, D0
 	DBF	D5, WriteTilemapColumnToVDP_Done
 	RTS
 
@@ -1681,7 +1681,7 @@ DrawIntroBackground_WriteTile:
 	ADDI.w	#$E0F3, D0
 	MOVE.w	D0, VDP_data_port
 	DBF	D6, DrawIntroBackground_WriteTile
-	ADDI.l	#$00800000, D5
+	ADDI.l	#VDP_VRAM_ROW_STRIDE, D5
 	DBF	D7, DrawIntroBackground_Done
 	ANDI	#$F8FF, SR
 	RTS
@@ -1705,7 +1705,7 @@ DrawIntroGraphics_WriteTile1:
 	ADDI.w	#$603C, D0
 	MOVE.w	D0, VDP_data_port
 	DBF	D6, DrawIntroGraphics_WriteTile1
-	ADDI.l	#$00800000, D5
+	ADDI.l	#VDP_VRAM_ROW_STRIDE, D5
 	DBF	D7, DrawIntroGraphics_Done
 	MOVE.l	#$69800003, D4
 	MOVE.l	#$60AA0003, D5
@@ -1720,7 +1720,7 @@ DrawIntroGraphics_WriteTile2:
 	ADDI.w	#$0239, D0
 	MOVE.w	D0, VDP_data_port
 	DBF	D6, DrawIntroGraphics_WriteTile2
-	ADDI.l	#$00800000, D5
+	ADDI.l	#VDP_VRAM_ROW_STRIDE, D5
 	DBF	D7, DrawIntroGraphics_WriteRow2
 	MOVE.l	#$69800003, D4
 	MOVE.w	#3, D7
@@ -1737,7 +1737,7 @@ DrawIntroGraphics_WriteSwordTile:
 	ADDI.w	#$41CD, D0
 	MOVE.w	D0, VDP_data_port
 	DBF	D5, DrawIntroGraphics_WriteSwordTile
-	ADDI.l	#$00800000, D3
+	ADDI.l	#VDP_VRAM_ROW_STRIDE, D3
 	DBF	D6, DrawIntroGraphics_WriteSwordRow
 	ADDI.l	#$00200000, D4
 	DBF	D7, DrawIntroGraphics_WriteSwordGroup
@@ -1760,7 +1760,7 @@ DrawTilemapToVRAM_PlaneA_WriteTile:
 	ADDI.w	#$A263, D0
 	MOVE.w	D0, VDP_data_port
 	DBF	D6, DrawTilemapToVRAM_PlaneA_WriteTile
-	ADDI.l	#$00800000, D5
+	ADDI.l	#VDP_VRAM_ROW_STRIDE, D5
 	DBF	D7, DrawTilemapToVRAM_PlaneA_Done
 	ANDI	#$F8FF, SR
 	RTS
@@ -1880,7 +1880,7 @@ DrawPressStartText_WriteTile:
 	ADDI.w	#$0239, D0
 	MOVE.w	D0, VDP_data_port
 	DBF	D6, DrawPressStartText_WriteTile
-	ADDI.l	#$00800000, D5
+	ADDI.l	#VDP_VRAM_ROW_STRIDE, D5
 	DBF	D7, DrawPressStartText_Done
 	ANDI	#$F8FF, SR
 	RTS

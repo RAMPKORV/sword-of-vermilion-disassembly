@@ -1015,7 +1015,7 @@ RenderWallTile_14x10_TwoPalette_WritePalette2Tile:
 	ADD.w	D2, D0
 	MOVE.w	D0, VDP_data_port
 	DBF	D6, RenderWallTile_14x10_TwoPalette_WritePalette2Tile
-	ADDI.l	#$00800000, D5
+	ADDI.l	#VDP_VRAM_ROW_STRIDE, D5
 	DBF	D7, RenderWallTile_14x10_TwoPalette_Done
 	ANDI	#$F8FF, SR
 	RTS
@@ -1048,7 +1048,7 @@ RenderWallTile_14x10_TwoPalette_RightWall_WritePalette2Tile:
 RenderWallTile_14x10_TwoPalette_RightWall_Loop:
 	ADDI.l	#$00020000, D4
 	DBF	D6, RenderWallTile_14x10_TwoPalette_RightWall_WritePalette2Tile
-	ADDI.l	#$00800000, D5
+	ADDI.l	#VDP_VRAM_ROW_STRIDE, D5
 	DBF	D7, RenderWallTile_14x10_TwoPalette_RightWall_Done
 	ANDI	#$F8FF, SR
 	RTS
@@ -1065,7 +1065,7 @@ RenderWallTile_16x5_Palette1_WriteTile:
 	ADD.w	D1, D0
 	MOVE.w	D0, VDP_data_port
 	DBF	D6, RenderWallTile_16x5_Palette1_WriteTile
-	ADDI.l	#$00800000, D5
+	ADDI.l	#VDP_VRAM_ROW_STRIDE, D5
 	DBF	D7, RenderWallTile_16x5_Palette1_Done
 	ANDI	#$F8FF, SR
 	RTS
@@ -1082,7 +1082,7 @@ RenderWallTile_16x5_Palette0_WriteTile:
 	ADD.w	D1, D0
 	MOVE.w	D0, VDP_data_port
 	DBF	D6, RenderWallTile_16x5_Palette0_WriteTile
-	ADDI.l	#$00800000, D5
+	ADDI.l	#VDP_VRAM_ROW_STRIDE, D5
 	DBF	D7, RenderWallTile_16x5_Palette0_Done
 	ANDI	#$F8FF, SR
 	RTS
@@ -1106,7 +1106,7 @@ RenderWallTile_16x11_TwoPalette_WritePalette2Tile:
 	ADD.w	D2, D0
 	MOVE.w	D0, VDP_data_port
 	DBF	D6, RenderWallTile_16x11_TwoPalette_WritePalette2Tile
-	ADDI.l	#$00800000, D5
+	ADDI.l	#VDP_VRAM_ROW_STRIDE, D5
 	DBF	D7, RenderWallTile_16x11_TwoPalette_Done
 	ANDI	#$F8FF, SR
 	RTS
@@ -1122,7 +1122,7 @@ ClearFirstPersonTilemap_Done:
 ClearFirstPersonTilemap_ClearTile:
 	MOVE.w	#0, VDP_data_port
 	DBF	D6, ClearFirstPersonTilemap_ClearTile
-	ADDI.l	#$00800000, D5
+	ADDI.l	#VDP_VRAM_ROW_STRIDE, D5
 	DBF	D7, ClearFirstPersonTilemap_Done
 	ANDI	#$F8FF, SR
 	RTS
@@ -2213,7 +2213,7 @@ RenderMapToVRAM_NoPalette_WritePalette2Tile:
 	ADDI.w	#$4AA4, D0
 	MOVE.w	D0, VDP_data_port
 	DBF	D6, RenderMapToVRAM_NoPalette_WritePalette2Tile
-	ADDI.l	#$00800000, D5
+	ADDI.l	#VDP_VRAM_ROW_STRIDE, D5
 	DBF	D7, RenderMapToVRAM_NoPalette_Done
 	ANDI	#$F8FF, SR
 	RTS
@@ -2231,7 +2231,7 @@ RenderMapToVRAM_WithPalette_WriteTile:
 	ADD.w	D4, D0
 	MOVE.w	D0, VDP_data_port
 	DBF	D6, RenderMapToVRAM_WithPalette_WriteTile
-	ADDI.l	#$00800000, D5
+	ADDI.l	#VDP_VRAM_ROW_STRIDE, D5
 	DBF	D7, RenderMapToVRAM_WithPalette_Done
 	ANDI	#$F8FF, SR
 	RTS
@@ -2270,7 +2270,7 @@ DisplayStatsToVRAM_NoPalette_WritePalette2Tile:
 	ADDI.w	#$4F70, D0
 	MOVE.w	D0, VDP_data_port
 	DBF	D6, DisplayStatsToVRAM_NoPalette_WritePalette2Tile
-	ADDI.l	#$00800000, D5
+	ADDI.l	#VDP_VRAM_ROW_STRIDE, D5
 	DBF	D7, DisplayStatsToVRAM_NoPalette_Done
 	ANDI	#$F8FF, SR
 	RTS
@@ -2288,7 +2288,7 @@ DisplayStatsToVRAM_WithPalette_WriteTile:
 	ADD.w	D4, D0
 	MOVE.w	D0, VDP_data_port
 	DBF	D6, DisplayStatsToVRAM_WithPalette_WriteTile
-	ADDI.l	#$00800000, D5
+	ADDI.l	#VDP_VRAM_ROW_STRIDE, D5
 	DBF	D7, DisplayStatsToVRAM_WithPalette_Done
 	ANDI	#$F8FF, SR
 	RTS
@@ -2336,7 +2336,7 @@ DrawCompassTiles_WriteTile:
 	ADDI.w	#$438F, D0
 	MOVE.w	D0, VDP_data_port
 	DBF	D6, DrawCompassTiles_WriteTile
-	ADDI.l	#$00800000, D5
+	ADDI.l	#VDP_VRAM_ROW_STRIDE, D5
 	LEA	$64(A0), A0
 	DBF	D7, DrawCompassTiles_Done
 	ANDI	#$F8FF, SR

@@ -78,7 +78,7 @@ ClearEndingTextArea_Done:
 ClearEndingTextArea_TileWriteLoop:
 	MOVE.w	D0, VDP_data_port	; write blank tile
 	DBF	D6, ClearEndingTextArea_TileWriteLoop
-	ADDI.l	#$00800000, D4	; advance to next nametable row
+	ADDI.l	#VDP_VRAM_ROW_STRIDE, D4	; advance to next nametable row
 	ANDI.l	#$5FFF0003, D4
 	ORI.l	#$40000003, D4
 	DBF	D7, ClearEndingTextArea_Done
@@ -97,7 +97,7 @@ ClearEndingTextArea_Phase2TileLoop:
 	ADDI.w	#$4002, D0	; tile attribute base: palette 0, no priority, tile $002 + offset
 	MOVE.w	D0, VDP_data_port
 	DBF	D6, ClearEndingTextArea_Phase2TileLoop
-	ADDI.l	#$00800000, D5	; next row
+	ADDI.l	#VDP_VRAM_ROW_STRIDE, D5	; next row
 	ANDI.l	#$5FFF0003, D5
 	ORI.l	#$40000003, D5
 	DBF	D7, ClearEndingTextArea_Phase2RowLoop
@@ -113,7 +113,7 @@ ClearEndingTextArea_Done6:
 	CLR.w	D0
 	MOVE.w	D0, VDP_data_port
 	DBF	D6, ClearEndingTextArea_Done6
-	ADDI.l	#$00800000, D5	; next row
+	ADDI.l	#VDP_VRAM_ROW_STRIDE, D5	; next row
 	ANDI.l	#$5FFF0003, D5
 	ORI.l	#$40000003, D5
 	DBF	D7, ClearEndingTextArea_Done5
@@ -144,7 +144,7 @@ InitEndingCreditsScreen_Done:
 InitEndingCreditsScreen_TileWriteLoop:
 	MOVE.w	D4, VDP_data_port	; fill with $A080 background tile
 	DBF	D6, InitEndingCreditsScreen_TileWriteLoop
-	ADDI.l	#$00800000, D5	; advance to next row
+	ADDI.l	#VDP_VRAM_ROW_STRIDE, D5	; advance to next row
 	DBF	D7, InitEndingCreditsScreen_Done
 	; Phase 2: write text area rows using tile offsets from data table
 	MOVE.l	#$40040003, D5	; VDP write: plane A, address $0004 (column 2)
@@ -158,7 +158,7 @@ InitEndingCreditsScreen_SecondPhaseTileLoop:
 	ADDI.w	#$A080, D0	; add tile attribute base $A080
 	MOVE.w	D0, VDP_data_port
 	DBF	D6, InitEndingCreditsScreen_SecondPhaseTileLoop
-	ADDI.l	#$00800000, D5	; next row
+	ADDI.l	#VDP_VRAM_ROW_STRIDE, D5	; next row
 	DBF	D7, InitEndingCreditsScreen_SecondPhaseRowLoop
 	; Phase 3: write sprite/credits name rows
 	MOVE.l	#$60000003, D5	; VDP write: plane B, address $0000
@@ -173,7 +173,7 @@ InitEndingCreditsScreen_Done6:
 	ADDI.w	#$601D, D0	; tile attr: palette 1, priority 1, tile $01D + offset
 	MOVE.w	D0, VDP_data_port
 	DBF	D6, InitEndingCreditsScreen_Done6
-	ADDI.l	#$00800000, D5	; next row
+	ADDI.l	#VDP_VRAM_ROW_STRIDE, D5	; next row
 	DBF	D7, InitEndingCreditsScreen_Done5
 	ANDI	#$F8FF, SR	; re-enable interrupts
 	RTS
@@ -205,7 +205,7 @@ DrawCreditsStaffNames_TileLoop:
 	ADDI.w	#$41CD, D0	; tile attr: palette 0, priority 1, glyph $1CD + offset
 	MOVE.w	D0, VDP_data_port
 	DBF	D5, DrawCreditsStaffNames_TileLoop
-	ADDI.l	#$00800000, D3	; next nametable row
+	ADDI.l	#VDP_VRAM_ROW_STRIDE, D3	; next nametable row
 	DBF	D6, DrawCreditsStaffNames_ColumnLoop
 	ADDI.l	#$00200000, D4	; advance to next staff group position
 	DBF	D7, DrawCreditsStaffNames_Done
@@ -232,7 +232,7 @@ DrawEndingBorderPattern_Done:
 DrawEndingBorderPattern_TileLoop:
 	MOVE.w	D4, VDP_data_port
 	DBF	D6, DrawEndingBorderPattern_TileLoop
-	ADDI.l	#$00800000, D5	; next row
+	ADDI.l	#VDP_VRAM_ROW_STRIDE, D5	; next row
 	DBF	D7, DrawEndingBorderPattern_Done
 	ANDI	#$F8FF, SR	; re-enable interrupts
 	RTS
@@ -255,7 +255,7 @@ FillDialogAreaWithPattern_Done:
 FillDialogAreaWithPattern_TileLoop:
 	MOVE.w	#$A080, VDP_data_port	; tile attr: palette 2, priority 1, tile $080
 	DBF	D6, FillDialogAreaWithPattern_TileLoop
-	ADDI.l	#$00800000, D5		; next row
+	ADDI.l	#VDP_VRAM_ROW_STRIDE, D5		; next row
 	DBF	D7, FillDialogAreaWithPattern_Done
 	RTS
 

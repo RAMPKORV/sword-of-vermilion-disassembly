@@ -1292,7 +1292,7 @@ DrawBossPortrait_TileLoop:
 	ADDI.w	#$2200, D0                      ; add palette 1 attribute bits
 	MOVE.w	D0, VDP_data_port
 	DBF	D6, DrawBossPortrait_TileLoop
-	ADDI.l	#$00800000, D5                  ; advance to next nametable row
+	ADDI.l	#VDP_VRAM_ROW_STRIDE, D5                  ; advance to next nametable row
 	DBF	D7, DrawBossPortrait_Done
 	ANDI	#$F8FF, SR                          ; re-enable interrupts
 	RTS
@@ -1314,7 +1314,7 @@ DrawBossNameplate_TileLoop:
 	ADDI.w	#$2200, D0                      ; palette 1 attribute
 	MOVE.w	D0, VDP_data_port
 	DBF	D6, DrawBossNameplate_TileLoop
-	ADDI.l	#$00800000, D5
+	ADDI.l	#VDP_VRAM_ROW_STRIDE, D5
 	DBF	D7, DrawBossNameplate_Done
 	ANDI	#$F8FF, SR                          ; re-enable interrupts
 	RTS
@@ -1337,7 +1337,7 @@ DrawBossHealthBar_TileLoop:
 	ADDI.w	#$A200, D0                      ; palette 2 attribute bits
 	MOVE.w	D0, VDP_data_port
 	DBF	D6, DrawBossHealthBar_TileLoop
-	ADDI.l	#$00800000, D5
+	ADDI.l	#VDP_VRAM_ROW_STRIDE, D5
 	DBF	D7, DrawBossHealthBar_Done
 	MOVE.l	#$40080003, D5                  ; start of HP gauge overlay area
 	LEA	SpriteMetaTileTable_7808A, A0
@@ -1351,7 +1351,7 @@ DrawBossHealthBar_GaugeTileLoop:
 	ADDI.w	#$A200, D0                      ; palette 2 attribute bits
 	MOVE.w	D0, VDP_data_port
 	DBF	D6, DrawBossHealthBar_GaugeTileLoop
-	ADDI.l	#$00800000, D5
+	ADDI.l	#VDP_VRAM_ROW_STRIDE, D5
 	DBF	D7, DrawBossHealthBar_GaugeRowLoop
 	ANDI	#$F8FF, SR                          ; re-enable interrupts
 	RTS
@@ -1440,7 +1440,7 @@ WriteTextToVRAM_TileLoop:
 	ADDI.w	#$2200, D0                      ; palette 1 attribute
 	MOVE.w	D0, VDP_data_port
 	DBF	D6, WriteTextToVRAM_TileLoop
-	ADDI.l	#$00800000, D5                  ; next nametable row
+	ADDI.l	#VDP_VRAM_ROW_STRIDE, D5                  ; next nametable row
 	DBF	D7, WriteTextToVRAM_Done
 	ANDI	#$F8FF, SR                          ; re-enable interrupts
 	RTS
@@ -1513,7 +1513,7 @@ Write7x8TilesToVRAM_TileLoop:
 	ADDI.w	#$2200, D0                      ; palette 1 attribute
 	MOVE.w	D0, VDP_data_port
 	DBF	D6, Write7x8TilesToVRAM_TileLoop
-	ADDI.l	#$00800000, D5                  ; next nametable row
+	ADDI.l	#VDP_VRAM_ROW_STRIDE, D5                  ; next nametable row
 	DBF	D7, Write7x8TilesToVRAM_Done
 	ANDI	#$F8FF, SR                          ; re-enable interrupts
 	RTS
@@ -4822,7 +4822,7 @@ UpdateBossBodyTiles_UpperTileLoop:
 	ADDI.w	#$A200, D0
 	MOVE.w	D0, VDP_data_port
 	DBF	D6, UpdateBossBodyTiles_UpperTileLoop
-	ADDI.l	#$00800000, D5
+	ADDI.l	#VDP_VRAM_ROW_STRIDE, D5
 	DBF	D7, UpdateBossBodyTiles_Done
 	MOVE.l	#$41800003, D5
 	MOVE.w	#2, D7
@@ -4835,7 +4835,7 @@ UpdateBossBodyTiles_LowerTileLoop:
 	ADDI.w	#$A200, D0
 	MOVE.w	D0, VDP_data_port
 	DBF	D6, UpdateBossBodyTiles_LowerTileLoop
-	ADDI.l	#$00800000, D5
+	ADDI.l	#VDP_VRAM_ROW_STRIDE, D5
 	DBF	D7, UpdateBossBodyTiles_LowerRowLoop
 	ANDI	#$F8FF, SR
 	RTS
