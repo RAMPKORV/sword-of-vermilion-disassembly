@@ -1304,7 +1304,9 @@
           "file": "src/mapdata.asm, src/gfxdata.asm, src/sound.asm",
           "priority": "low",
           "effort": "medium",
-          "status": "todo",
+          "status": "done",
+          "notes": "Added ; @ $XXXXXXXX ROM offset annotations above all major data block labels in mapdata.asm (12), gfxdata.asm (1050), and sound.asm (263). Filtered out sub-entry labels (_Frame_, _TileData_, _Entry, Z80DrvrData_, _Map_/_Sector_ with hex suffix) since those embed addresses in their names. Bit-perfect verified.",
+          "completed_at": "2026-03-05",
           "tags": [
             "documentation",
             "labeling",
@@ -2201,8 +2203,8 @@
   "statistics": {
     "total_tasks": 139,
     "by_status": {
-      "done": 125,
-      "todo": 14
+      "done": 126,
+      "todo": 13
     },
     "by_priority": {
       "critical": 1,
@@ -2231,7 +2233,7 @@
       "module_architecture": 10,
       "contributor_experience": 10
     },
-    "done": 130,
-    "todo": 9
+    "done": 131,
+    "todo": 8
   }
 }

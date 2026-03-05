@@ -20,6 +20,7 @@
 ; FONT TILES
 ; Compressed font tile binary data.
 ;==============================================================
+; @ $00041A90
 CompressedFontTileData:
 	incbin "data/art/tiles/font/font_tiles.bin"
 LoadBattleTilesToBuffers_Data:	equ CompressedFontTileData+$EE8
@@ -86,6 +87,7 @@ LoadBattleTilesToBuffers_Data2_Entry53 equ LoadBattleTilesToBuffers_Data2_Entry0
 LoadBattleTilesToBuffers_Data2_Entry54 equ LoadBattleTilesToBuffers_Data2_Entry00+$32C
 LoadBattleTilesToBuffers_Data2_Entry55 equ LoadBattleTilesToBuffers_Data2_Entry00+$33C
 LoadBattleTilesToBuffers_Data2_Entry56 equ LoadBattleTilesToBuffers_Data2_Entry00+$344
+; @ $00042D44
 LoadBattleTilesToBuffers_Data2:
 	dc.l	LoadBattleTilesToBuffers_Data2_Entry00
 	dc.l	LoadBattleTilesToBuffers_Data2_Entry01
@@ -148,6 +150,7 @@ LoadBattleTilesToBuffers_Data2:
 ; BATTLE TILE GRAPHICS — DATA 3 (TILE INDEX REMAP)
 ; Byte array mapping logical tile slots to physical tile indices.
 ;==============================================================
+; @ $00042E28
 LoadBattleTilesToBuffers_Data3:
 	dc.b	$00, $00, $01, $03, $02, $04, $00, $00, $00, $00, $05, $07, $06, $08, $00, $00, $00, $00, $09, $0B, $0A, $0C, $00, $00, $00, $00, $0D, $03, $0E, $04, $00, $00 
 	dc.b	$00, $00, $0F, $11, $10, $08, $00, $00, $00, $00, $12, $14, $13, $0C, $00, $00, $00, $00, $15, $17, $16, $18, $00, $00, $00, $00, $19, $1B, $1A, $1C, $00, $00 
@@ -250,6 +253,7 @@ LoadBattleTilesToBuffers_Data4_Entry85 equ LoadBattleTilesToBuffers_Data4_Entry0
 LoadBattleTilesToBuffers_Data4_Entry86 equ LoadBattleTilesToBuffers_Data4_Entry00+$772
 LoadBattleTilesToBuffers_Data4_Entry87 equ LoadBattleTilesToBuffers_Data4_Entry00+$78A
 LoadBattleTilesToBuffers_Data4_Entry88 equ LoadBattleTilesToBuffers_Data4_Entry00+$79C
+; @ $0004367A
 LoadBattleTilesToBuffers_Data4:
 	dc.l	LoadBattleTilesToBuffers_Data4_Entry00
 	dc.l	LoadBattleTilesToBuffers_Data4_Entry01
@@ -344,6 +348,7 @@ LoadBattleTilesToBuffers_Data4:
 ; BATTLE TILE GRAPHICS — DATA 5 (TILE INDEX REMAP)
 ; Byte array mapping logical tile slots to physical tile indices.
 ;==============================================================
+; @ $000437DE
 LoadBattleTilesToBuffers_Data5:
 	dc.b	$00, $04, $08, $01, $05, $09, $02, $06, $0A, $03, $07, $0B, $0C, $10, $14, $0D, $11, $15, $0E, $12, $16, $0F, $13, $17, $18, $1C, $20, $19, $1D, $21, $1A, $1E 
 	dc.b	$22, $1B, $1F, $23, $24, $24, $24, $25, $27, $2A, $26, $28, $2B, $24, $29, $2C, $24, $24, $24, $2D, $30, $33, $2E, $31, $34, $2F, $32, $24, $24, $24, $24, $35 
@@ -620,6 +625,7 @@ LoadBattleTilesToBuffers_Data6_Entry250 equ LoadBattleTilesToBuffers_Data6_Entry
 LoadBattleTilesToBuffers_Data6_Entry251 equ LoadBattleTilesToBuffers_Data6_Entry124+$CD4
 LoadBattleTilesToBuffers_Data6_Entry252 equ LoadBattleTilesToBuffers_Data6_Entry124+$CDE
 LoadBattleTilesToBuffers_Data6_Entry253 equ LoadBattleTilesToBuffers_Data6_Entry124+$CFC
+; @ $00045286
 LoadBattleTilesToBuffers_Data6:
 	dc.l	LoadBattleTilesToBuffers_Data6_Entry00
 	dc.l	LoadBattleTilesToBuffers_Data6_Entry01
@@ -880,6 +886,7 @@ LoadBattleTilesToBuffers_Data6:
 ; Tile-index remap array + pointer table (101 entries, dc.l)
 ; for loading player overworld sprite tiles.
 ;==============================================================
+; @ $0004567E
 LoadPlayerOverworldGraphics_Data:
 	dc.b	$00, $03, $06, $09, $01, $04, $07, $0A, $02, $05, $08, $0B, $0C, $0F, $12, $15, $0D, $10, $13, $16, $0E, $11, $14, $17, $18, $1B, $1E, $21, $19, $1C, $1F, $22 
 	dc.b	$1A, $1D, $20, $23, $24, $27, $2A, $2D, $25, $28, $2B, $2E, $26, $29, $2C, $2F, $30, $32, $35, $38, $25, $33, $36, $39, $31, $34, $37, $3A, $3B, $3D, $40, $43 
@@ -987,6 +994,7 @@ LoadPlayerOverworldGraphics_Data2_Entry97 equ LoadPlayerOverworldGraphics_Data2_
 LoadPlayerOverworldGraphics_Data2_Entry98 equ LoadPlayerOverworldGraphics_Data2_Entry00+$81C
 LoadPlayerOverworldGraphics_Data2_Entry99 equ LoadPlayerOverworldGraphics_Data2_Entry00+$82E
 LoadPlayerOverworldGraphics_Data2_Entry100 equ LoadPlayerOverworldGraphics_Data2_Entry00+$842
+; @ $00045F44
 LoadPlayerOverworldGraphics_Data2:
 	dc.l	LoadPlayerOverworldGraphics_Data2_Entry00
 	dc.l	LoadPlayerOverworldGraphics_Data2_Entry01
@@ -1094,6 +1102,7 @@ LoadPlayerOverworldGraphics_Data2:
 ; Byte array mapping logical tile slots to physical tile indices
 ; for boss sprite tiles.
 ;==============================================================
+; @ $000460D8
 LoadBossGraphics_Data:
 	dc.b	$00, $04, $08, $01, $05, $09, $02, $06, $0A, $03, $07, $07, $0B, $07, $11, $0C, $0F, $12, $0D, $10, $13, $0E, $07, $14, $15, $19, $1D, $16, $1A, $1E, $17, $1B 
 	dc.b	$1F, $18, $1C, $20, $21, $25, $29, $22, $26, $2A, $23, $27, $2B, $24, $28, $2C, $2D, $31, $35, $2E, $32, $36, $2F, $33, $37, $30, $34, $38, $39, $3D, $41, $3A 
@@ -1279,6 +1288,7 @@ LoadBossGraphics_Data2_Entry168 equ LoadBossGraphics_Data2_Entry00+$1016
 LoadBossGraphics_Data2_Entry169 equ LoadBossGraphics_Data2_Entry00+$1032
 LoadBossGraphics_Data2_Entry170 equ LoadBossGraphics_Data2_Entry00+$1046
 LoadBossGraphics_Data2_Entry171 equ LoadBossGraphics_Data2_Entry00+$1052
+; @ $0004720C
 LoadBossGraphics_Data2:
 	dc.l	LoadBossGraphics_Data2_Entry00
 	dc.l	LoadBossGraphics_Data2_Entry01
@@ -1456,6 +1466,7 @@ LoadBossGraphics_Data2:
 ; BOSS GRAPHICS — DATA 3 (TILE INDEX REMAP)
 ; Byte array mapping logical tile slots to physical tile indices.
 ;==============================================================
+; @ $000474BC
 LoadBossGraphics_Data3:
 	dc.b	$00, $04, $08, $0C, $01, $05, $09, $0D, $02, $06, $0A, $0E, $03, $07, $0B, $0F, $00, $11, $15, $19, $01, $12, $16, $1A, $10, $13, $17, $1B, $00, $14, $18, $1C 
 	dc.b	$00, $1E, $22, $26, $01, $1F, $23, $27, $1D, $20, $24, $28, $03, $21, $25, $29, $00, $2C, $30, $34, $01, $2D, $31, $35, $2A, $2E, $32, $36, $2B, $2F, $33, $37 
@@ -1654,6 +1665,7 @@ LoadBossGraphics_Data4_Entry179 equ LoadBossGraphics_Data4_Entry00+$125C
 LoadBossGraphics_Data4_Entry180 equ LoadBossGraphics_Data4_Entry00+$1274
 LoadBossGraphics_Data4_Entry181 equ LoadBossGraphics_Data4_Entry00+$128E
 LoadBossGraphics_Data4_Entry182 equ LoadBossGraphics_Data4_Entry00+$12AA
+; @ $00048872
 LoadBossGraphics_Data4:
 	dc.l	LoadBossGraphics_Data4_Entry00
 	dc.l	LoadBossGraphics_Data4_Entry01
@@ -1842,6 +1854,7 @@ LoadBossGraphics_Data4:
 ; BOSS GRAPHICS — DATA 5 (TILE INDEX REMAP)
 ; Byte array mapping logical tile slots to physical tile indices.
 ;==============================================================
+; @ $00048B4E
 LoadBossGraphics_Data5:
 	dc.b	$00, $04, $08, $0C, $01, $05, $09, $0D, $02, $06, $0A, $0E, $03, $07, $0B, $0F, $00, $04, $08, $0C, $10, $12, $09, $0D, $11, $13, $0A, $0E, $03, $07, $0B, $0F 
 ;==============================================================
@@ -1870,6 +1883,7 @@ LoadBossGraphics_Data6_Entry16 equ LoadBossGraphics_Data6_Entry00+$1B8
 LoadBossGraphics_Data6_Entry17 equ LoadBossGraphics_Data6_Entry00+$1D6
 LoadBossGraphics_Data6_Entry18 equ LoadBossGraphics_Data6_Entry00+$1EA
 LoadBossGraphics_Data6_Entry19 equ LoadBossGraphics_Data6_Entry00+$20C
+; @ $00048D9C
 LoadBossGraphics_Data6:
 	dc.l	LoadBossGraphics_Data6_Entry00
 	dc.l	LoadBossGraphics_Data6_Entry01
@@ -1895,6 +1909,7 @@ LoadBossGraphics_Data6:
 ; BOSS GRAPHICS — DATA 7 (TILE INDEX REMAP)
 ; Byte array mapping logical tile slots to physical tile indices.
 ;==============================================================
+; @ $00048DEC
 LoadBossGraphics_Data7:
 	dc.b	$00, $00, $00, $01, $02, $03, $00, $00, $04, $06, $05, $00, $00, $07, $00, $08, $09, $00, $0A, $00, $00, $0B, $00, $0C, $00, $00, $00, $00 
 ;==============================================================
@@ -1916,6 +1931,7 @@ LoadBossGraphics_Data8_Entry09 equ LoadBossGraphics_Data8_Entry00+$86
 LoadBossGraphics_Data8_Entry10 equ LoadBossGraphics_Data8_Entry00+$9A
 LoadBossGraphics_Data8_Entry11 equ LoadBossGraphics_Data8_Entry00+$A8
 LoadBossGraphics_Data8_Entry12 equ LoadBossGraphics_Data8_Entry00+$B8
+; @ $00048ECA
 LoadBossGraphics_Data8:
 	dc.l	LoadBossGraphics_Data8_Entry00
 	dc.l	LoadBossGraphics_Data8_Entry01
@@ -2782,6 +2798,7 @@ MagicGfxData_Tadcaster_Entry01:
 	dc.l	LoadBossGraphics_Data8_Entry274
 	dc.l	LoadBossGraphics_Data8_Entry275
 	dc.l	LoadBossGraphics_Data8_Entry276
+; @ $0004A77A
 SpriteLayout_4A77A:
 	dc.b	$00, $02, $04, $05, $01, $03, $04, $06, $07, $09, $04, $05, $08, $0A, $04, $06, $0B, $0D, $04, $05, $0C, $0E, $04, $06 
 SpriteFramePointerTable_4A8B8_Frame_4A792:
@@ -2814,6 +2831,7 @@ SpriteFramePointerTable_4A8B8_Frame_4A89C:
 	dc.b	$01, $00, $CC, $CE, $FF, $FF, $B9, $61, $B9, $96, $0B, $99, $BB, $00 
 SpriteFramePointerTable_4A8B8_Frame_4A8AA:
 	dc.b	$01, $00, $33, $37, $FF, $FF, $16, $9B, $69, $9B, $99, $B0, $BB, $00 
+; @ $0004A8B8
 SpriteFramePointerTable_4A8B8:
 	dc.l	SpriteFramePointerTable_4A8B8_Frame_4A792
 	dc.l	SpriteFramePointerTable_4A8B8_Frame_4A7A8
@@ -3121,6 +3139,7 @@ MagicGfxData_SwaffhamExcalabria_Entry01:
 ; Tile-index remap arrays (A–N) + incbin tile blobs for
 ; first-person battle enemy sprite graphics.
 ;==============================================================
+; @ $0004B302
 FPEnemyTileLayout_A:
 	dc.b	$00, $03, $06, $09, $01, $04, $07, $0A, $02, $05, $08, $0B, $00, $0C, $0F, $12, $01, $0D, $10, $13, $02, $0E, $11, $14, $00, $16, $19, $1C, $15, $17, $1A, $1D 
 	dc.b	$00, $18, $1B, $1E, $00, $1F, $22, $25, $15, $20, $23, $26, $00, $21, $24, $27, $00, $29, $2C, $2F, $28, $2A, $2D, $30, $00, $2B, $2E, $31, $00, $32, $35, $38 
@@ -3185,6 +3204,7 @@ FPEnemyTileLayout_B_Entry55 equ FPEnemyTileLayout_B_Entry00+$4FC
 FPEnemyTileLayout_B_Entry56 equ FPEnemyTileLayout_B_Entry00+$50E
 FPEnemyTileLayout_B_Entry57 equ FPEnemyTileLayout_B_Entry00+$51E
 FPEnemyTileLayout_B_Entry58 equ FPEnemyTileLayout_B_Entry00+$53A
+; @ $0004B894
 FPEnemyTileLayout_B:
 	dc.l	FPEnemyTileLayout_B_Entry00
 	dc.l	FPEnemyTileLayout_B_Entry01
@@ -3245,6 +3265,7 @@ FPEnemyTileLayout_B:
 	dc.l	FPEnemyTileLayout_B_Entry56
 	dc.l	FPEnemyTileLayout_B_Entry57
 	dc.l	FPEnemyTileLayout_B_Entry58
+; @ $0004B980
 FPEnemyTileLayout_C:
 	dc.b	$00, $00, $05, $08, $01, $03, $06, $09, $02, $04, $07, $0A, $00, $00, $0C, $0F, $01, $0B, $0D, $10, $02, $04, $0E, $11, $00, $13, $16, $19, $12, $14, $17, $1A 
 	dc.b	$00, $15, $18, $1B, $00, $1D, $20, $19, $1C, $1E, $21, $1A, $00, $1F, $22, $1B 
@@ -3284,6 +3305,7 @@ FPEnemyTileLayout_D_Entry31 equ FPEnemyTileLayout_D_Entry00+$29C
 FPEnemyTileLayout_D_Entry32 equ FPEnemyTileLayout_D_Entry00+$2AE
 FPEnemyTileLayout_D_Entry33 equ FPEnemyTileLayout_D_Entry00+$2C2
 FPEnemyTileLayout_D_Entry34 equ FPEnemyTileLayout_D_Entry00+$2E4
+; @ $0004BCA8
 FPEnemyTileLayout_D:
 	dc.l	FPEnemyTileLayout_D_Entry00
 	dc.l	FPEnemyTileLayout_D_Entry01
@@ -3320,6 +3342,7 @@ FPEnemyTileLayout_D:
 	dc.l	FPEnemyTileLayout_D_Entry32
 	dc.l	FPEnemyTileLayout_D_Entry33
 	dc.l	FPEnemyTileLayout_D_Entry34
+; @ $0004BD34
 FPEnemyTileLayout_E:
 	dc.b	$00, $03, $06, $09, $01, $04, $07, $0A, $02, $05, $08, $0B, $00, $0D, $10, $13, $0C, $0E, $11, $14, $02, $0F, $12, $15, $00, $16, $19, $1C, $0C, $17, $1A, $1D 
 	dc.b	$02, $18, $1B, $1E, $1F, $22, $25, $28, $20, $23, $26, $29, $21, $24, $27, $2A, $02, $2C, $2F, $28, $2B, $2D, $30, $32, $21, $2E, $31, $2A 
@@ -3375,6 +3398,7 @@ FPEnemyTileLayout_F_Entry47 equ FPEnemyTileLayout_F_Entry00+$3D0
 FPEnemyTileLayout_F_Entry48 equ FPEnemyTileLayout_F_Entry00+$3E2
 FPEnemyTileLayout_F_Entry49 equ FPEnemyTileLayout_F_Entry00+$404
 FPEnemyTileLayout_F_Entry50 equ FPEnemyTileLayout_F_Entry00+$40C
+; @ $0004C19E
 FPEnemyTileLayout_F:
 	dc.l	FPEnemyTileLayout_F_Entry00
 	dc.l	FPEnemyTileLayout_F_Entry01
@@ -3427,6 +3451,7 @@ FPEnemyTileLayout_F:
 	dc.l	FPEnemyTileLayout_F_Entry48
 	dc.l	FPEnemyTileLayout_F_Entry49
 	dc.l	FPEnemyTileLayout_F_Entry50
+; @ $0004C26A
 FPEnemyTileLayout_G:
 	dc.b	$00, $03, $06, $09, $01, $04, $07, $0A, $02, $05, $08, $0B, $00, $00, $00, $10, $01, $0C, $0E, $11, $02, $0D, $0F, $12, $00, $00, $15, $18, $01, $13, $16, $19 
 	dc.b	$02, $14, $17, $1A, $1B, $1D, $20, $10, $1C, $1E, $21, $23, $00, $1F, $22, $24, $00, $26, $29, $10, $25, $27, $2A, $2C, $00, $28, $2B, $2D 
@@ -3477,6 +3502,7 @@ FPEnemyTileLayout_H_Entry42 equ FPEnemyTileLayout_H_Entry00+$390
 FPEnemyTileLayout_H_Entry43 equ FPEnemyTileLayout_H_Entry00+$3B2
 FPEnemyTileLayout_H_Entry44 equ FPEnemyTileLayout_H_Entry00+$3BA
 FPEnemyTileLayout_H_Entry45 equ FPEnemyTileLayout_H_Entry00+$3DC
+; @ $0004C68E
 FPEnemyTileLayout_H:
 	dc.l	FPEnemyTileLayout_H_Entry00
 	dc.l	FPEnemyTileLayout_H_Entry01
@@ -3524,6 +3550,7 @@ FPEnemyTileLayout_H:
 	dc.l	FPEnemyTileLayout_H_Entry43
 	dc.l	FPEnemyTileLayout_H_Entry44
 	dc.l	FPEnemyTileLayout_H_Entry45
+; @ $0004C746
 FPEnemyTileLayout_I:
 	dc.b	$00, $03, $06, $09, $01, $04, $07, $0A, $02, $05, $08, $0B, $0C, $0E, $11, $14, $0D, $0F, $12, $15, $02, $10, $13, $16, $17, $19, $1C, $1F, $18, $1A, $1D, $20 
 	dc.b	$02, $1B, $1E, $21, $17, $22, $25, $28, $18, $23, $26, $29, $02, $24, $27, $2A, $02, $2D, $30, $1F, $2B, $2E, $31, $33, $2C, $2F, $32, $34, $02, $37, $3A, $28 
@@ -3592,6 +3619,7 @@ FPEnemyTileLayout_J_Entry59 equ FPEnemyTileLayout_J_Entry00+$540
 FPEnemyTileLayout_J_Entry60 equ FPEnemyTileLayout_J_Entry00+$562
 FPEnemyTileLayout_J_Entry61 equ FPEnemyTileLayout_J_Entry00+$578
 FPEnemyTileLayout_J_Entry62 equ FPEnemyTileLayout_J_Entry00+$594
+; @ $0004CD40
 FPEnemyTileLayout_J:
 	dc.l	FPEnemyTileLayout_J_Entry00
 	dc.l	FPEnemyTileLayout_J_Entry01
@@ -3656,6 +3684,7 @@ FPEnemyTileLayout_J:
 	dc.l	FPEnemyTileLayout_J_Entry60
 	dc.l	FPEnemyTileLayout_J_Entry61
 	dc.l	FPEnemyTileLayout_J_Entry62
+; @ $0004CE3C
 FPEnemyTileLayout_K:
 	dc.b	$00, $03, $06, $09, $01, $04, $07, $0A, $02, $05, $08, $0B, $00, $03, $0F, $12, $0C, $0D, $10, $13, $02, $0E, $11, $14, $15, $17, $1A, $1D, $16, $18, $1B, $1E 
 	dc.b	$03, $19, $1C, $1F, $15, $21, $24, $27, $20, $22, $25, $28, $03, $23, $26, $29 
@@ -3702,6 +3731,7 @@ FPEnemyTileLayout_L_Entry38 equ FPEnemyTileLayout_L_Entry00+$368
 FPEnemyTileLayout_L_Entry39 equ FPEnemyTileLayout_L_Entry00+$37A
 FPEnemyTileLayout_L_Entry40 equ FPEnemyTileLayout_L_Entry00+$392
 FPEnemyTileLayout_L_Entry41 equ FPEnemyTileLayout_L_Entry00+$3AE
+; @ $0004D232
 FPEnemyTileLayout_L:
 	dc.l	FPEnemyTileLayout_L_Entry00
 	dc.l	FPEnemyTileLayout_L_Entry01
@@ -3982,6 +4012,7 @@ GfxLoadList_Town_Entry03:
 	dc.l	FPEnemyTileLayout_L_Entry109
 	dc.l	FPEnemyTileLayout_L_Entry110
 	dc.l	FPEnemyTileLayout_L_Entry111
+; @ $0004D9BE
 FPEnemyTileLayout_M:
 	dc.b	$00, $03, $06, $09, $01, $04, $07, $0A, $02, $05, $08, $0B, $0C, $0E, $11, $14, $01, $0F, $12, $15, $0D, $10, $13, $16, $17, $1A, $1D, $20, $18, $1B, $1E, $21 
 	dc.b	$19, $1C, $1F, $22, $23, $26, $29, $2C, $24, $27, $2A, $2D, $25, $28, $2B, $2E, $2F, $32, $35, $38, $30, $33, $36, $39, $31, $34, $37, $3A, $3B, $3E, $41, $44 
@@ -4070,6 +4101,7 @@ FPEnemyTileLayout_N_Entry79 equ FPEnemyTileLayout_N_Entry00+$730
 FPEnemyTileLayout_N_Entry80 equ FPEnemyTileLayout_N_Entry00+$740
 FPEnemyTileLayout_N_Entry81 equ FPEnemyTileLayout_N_Entry00+$74E
 FPEnemyTileLayout_N_Entry82 equ FPEnemyTileLayout_N_Entry00+$76C
+; @ $0004E190
 FPEnemyTileLayout_N:
 	dc.l	FPEnemyTileLayout_N_Entry00
 	dc.l	FPEnemyTileLayout_N_Entry01
@@ -4229,6 +4261,7 @@ GfxLoadList_TownBattle_Entry01:
 	dc.l	FPEnemyTileLayout_N_Entry103
 	dc.l	FPEnemyTileLayout_N_Entry104
 	dc.l	FPEnemyTileLayout_N_Entry105
+; @ $0004E582
 SpriteLayout_4E582:
 	dc.b	$00, $02, $04, $07, $01, $03, $05, $08, $00, $00, $06, $09, $00, $00, $0B, $0E, $01, $0A, $0C, $0F, $00, $00, $0D, $10, $00, $12, $15, $18, $11, $13, $16, $19 
 	dc.b	$00, $14, $17, $1A, $00, $1C, $1F, $22, $1B, $1D, $20, $23, $00, $1E, $21, $24 
@@ -4309,6 +4342,7 @@ SpriteFramePointerTable_4E890_Frame_4E866:
 	dc.b	$02, $EE, $F3, $20, $01, $E0, $DD, $00, $C2, $96, $00, $DE, $DE, $ED, $DC, $CD, $ED, $CC, $CD, $ED, $E5, $55, $55, $55, $50, $00 
 SpriteFramePointerTable_4E890_Frame_4E880:
 	dc.b	$01, $00, $77, $33, $37, $7F, $E0, $EE, $DD, $50, $DE, $50, $EE, $50, $E5, $50 
+; @ $0004E890
 SpriteFramePointerTable_4E890:
 	dc.l	SpriteFramePointerTable_4E890_Frame_4E5B2
 	dc.l	SpriteFramePointerTable_4E890_Frame_4E5B8
@@ -5528,6 +5562,7 @@ SpriteFramePointerTable_51414_Frame_513DA:
 	dc.b	$01, $55, $00, $04, $CC, $33, $22, $23, $52, $12, $23, $34, $59, $99, $34, $45, $59, $BA, $45, $59, $BA, $9B, $BB, $9B, $AA, $00, $05, $00, $00, $00 
 SpriteFramePointerTable_51414_Frame_513F8:
 	dc.b	$02, $55, $02, $46, $40, $88, $00, $00, $00, $33, $37, $35, $44, $4E, $34, $95, $54, $34, $95, $54, $45, $95, $50, $95, $95, $50, $50, $00 
+; @ $00051414
 SpriteFramePointerTable_51414:
 	dc.l	SpriteFramePointerTable_51414_Frame_50CD4
 	dc.l	SpriteFramePointerTable_51414_Frame_50CDA
@@ -5786,6 +5821,7 @@ TalkerSpriteFrameTable_Frame_51CE0:
 	dc.b	$01, $77, $5C, $02, $80, $91, $76, $88, $AD, $87, $DA, $DA, $D7, $76, $AD, $AD, $7A, $DD, $A7, $7A, $67, $D7, $D7, $7D, $A7, $A7, $66, $D7, $D7, $00 
 TalkerSpriteFrameTable_Frame_51CFE:
 	dc.b	$01, $00, $11, $13, $33, $33, $66, $55, $60, $66, $55, $70, $76, $56, $70, $D7, $67, $D7, $67, $D7, $67, $76, $70, $76, $70, $00 
+; @ $00051D18
 TalkerSpriteFrameTable:
 	dc.l	TalkerSpriteFrameTable_Frame_51594
 	dc.l	TalkerSpriteFrameTable_Frame_5159A
@@ -5956,6 +5992,7 @@ TalkerPortraitTileDataPtrs_Entry77 equ TalkerGfxDesc_MapGiver_Entry01+$776
 TalkerPortraitTileDataPtrs_Entry78 equ TalkerGfxDesc_MapGiver_Entry01+$78A
 TalkerPortraitTileDataPtrs_Entry79 equ TalkerGfxDesc_MapGiver_Entry01+$7A4
 TalkerPortraitTileDataPtrs_Entry80 equ TalkerGfxDesc_MapGiver_Entry01+$7C0
+; @ $00052626
 TalkerPortraitTileDataPtrs:
 	dc.l	TalkerPortraitTileDataPtrs_Entry00
 	dc.l	TalkerPortraitTileDataPtrs_Entry01
@@ -6038,6 +6075,7 @@ TalkerPortraitTileDataPtrs:
 	dc.l	TalkerPortraitTileDataPtrs_Entry78
 	dc.l	TalkerPortraitTileDataPtrs_Entry79
 	dc.l	TalkerPortraitTileDataPtrs_Entry80
+; @ $0005276A
 EnemyGfxFrameTable_DragonChild:
 	dc.b	$00, $04, $08, $01, $05, $09, $02, $06, $0A, $03, $07, $0B, $0C, $0E, $12, $0D, $0F, $13, $02, $10, $14, $03, $11, $15, $03, $03, $1A, $01, $17, $1B, $16, $18 
 	dc.b	$1C, $03, $19, $1D, $03, $21, $25, $1E, $22, $26, $1F, $23, $27, $20, $24, $28, $03, $2B, $2F, $1E, $2C, $30, $29, $2D, $31, $2A, $2E, $32, $03, $33, $36, $1E 
@@ -6125,6 +6163,7 @@ EnemyGfxData_DragonChild_Entry77 equ EnemyGfxData_DragonChild_Entry00+$754
 EnemyGfxData_DragonChild_Entry78 equ EnemyGfxData_DragonChild_Entry00+$76A
 EnemyGfxData_DragonChild_Entry79 equ EnemyGfxData_DragonChild_Entry00+$788
 EnemyGfxData_DragonChild_Entry80 equ EnemyGfxData_DragonChild_Entry00+$7AA
+; @ $00052F8A
 EnemyGfxData_DragonChild:
 	dc.l	EnemyGfxData_DragonChild_Entry00
 	dc.l	EnemyGfxData_DragonChild_Entry01
@@ -6207,6 +6246,7 @@ EnemyGfxData_DragonChild:
 	dc.l	EnemyGfxData_DragonChild_Entry78
 	dc.l	EnemyGfxData_DragonChild_Entry79
 	dc.l	EnemyGfxData_DragonChild_Entry80
+; @ $000530CE
 EnemyGfxFrameTable_DragonMain:
 	dc.b	$00, $00, $01, $04, $02, $05, $03, $06, $00, $00, $07, $0A, $08, $0B, $09, $0C, $0D, $10, $0E, $11, $0F, $12, $00, $00, $13, $00, $14, $16, $15, $17, $00, $00 
 	dc.b	$18, $00, $19, $1B, $1A, $1C, $00, $00, $00, $00, $1D, $20, $1E, $21, $1F, $00, $00, $00, $22, $24, $23, $25, $00, $26, $00, $00, $27, $29, $28, $2A, $00, $2B 
@@ -6262,6 +6302,7 @@ EnemyGfxData_DragonMain_Entry46 equ EnemyGfxData_DragonMain_Entry00+$3E6
 EnemyGfxData_DragonMain_Entry47 equ EnemyGfxData_DragonMain_Entry00+$3EE
 EnemyGfxData_DragonMain_Entry48 equ EnemyGfxData_DragonMain_Entry00+$40A
 EnemyGfxData_DragonMain_Entry49 equ EnemyGfxData_DragonMain_Entry00+$41E
+; @ $00053544
 EnemyGfxData_DragonMain:
 	dc.l	EnemyGfxData_DragonMain_Entry00
 	dc.l	EnemyGfxData_DragonMain_Entry01
@@ -6313,6 +6354,7 @@ EnemyGfxData_DragonMain:
 	dc.l	EnemyGfxData_DragonMain_Entry47
 	dc.l	EnemyGfxData_DragonMain_Entry48
 	dc.l	EnemyGfxData_DragonMain_Entry49
+; @ $0005360C
 EnemyGfxFrameTable_QuadrupedChild:
 	dc.b	$00, $03, $07, $01, $04, $08, $02, $05, $09, $00, $06, $0A, $0B, $0D, $11, $0C, $0E, $12, $02, $0F, $13, $00, $10, $14, $00, $16, $1A, $01, $17, $1B, $15, $18 
 	dc.b	$1C, $00, $19, $1D, $00, $20, $24, $1E, $21, $25, $1F, $22, $26, $00, $23, $27, $00, $2A, $2E, $28, $2B, $2F, $29, $2C, $30, $00, $2D, $31, $00, $35, $39, $32 
@@ -6408,6 +6450,7 @@ EnemyGfxData_QuadrupedChild_Entry85 equ EnemyGfxData_QuadrupedChild_Entry00+$764
 EnemyGfxData_QuadrupedChild_Entry86 equ EnemyGfxData_QuadrupedChild_Entry00+$76C
 EnemyGfxData_QuadrupedChild_Entry87 equ EnemyGfxData_QuadrupedChild_Entry00+$77C
 EnemyGfxData_QuadrupedChild_Entry88 equ EnemyGfxData_QuadrupedChild_Entry00+$79A
+; @ $00053E2E
 EnemyGfxData_QuadrupedChild:
 	dc.l	EnemyGfxData_QuadrupedChild_Entry00
 	dc.l	EnemyGfxData_QuadrupedChild_Entry01
@@ -6498,6 +6541,7 @@ EnemyGfxData_QuadrupedChild:
 	dc.l	EnemyGfxData_QuadrupedChild_Entry86
 	dc.l	EnemyGfxData_QuadrupedChild_Entry87
 	dc.l	EnemyGfxData_QuadrupedChild_Entry88
+; @ $00053F92
 EnemyGfxFrameTable_QuadrupedMain:
 	dc.b	$00, $00, $01, $03, $02, $04, $00, $00, $00, $00, $05, $07, $06, $08, $00, $00, $09, $0C, $0A, $0D, $0B, $0E, $00, $00, $00, $00, $0F, $11, $10, $12, $00, $13 
 	dc.b	$00, $00, $14, $17, $15, $18, $16, $00, $00, $00, $19, $1B, $1A, $1C, $00, $00, $00, $00, $1D, $20, $1E, $21, $1F, $22, $23, $00, $24, $27, $25, $28, $26, $29 
@@ -6551,6 +6595,7 @@ EnemyGfxData_QuadrupedMain_Entry44 equ EnemyGfxData_QuadrupedMain_Entry00+$3F4
 EnemyGfxData_QuadrupedMain_Entry45 equ EnemyGfxData_QuadrupedMain_Entry00+$402
 EnemyGfxData_QuadrupedMain_Entry46 equ EnemyGfxData_QuadrupedMain_Entry00+$41A
 EnemyGfxData_QuadrupedMain_Entry47 equ EnemyGfxData_QuadrupedMain_Entry00+$436
+; @ $00054424
 EnemyGfxData_QuadrupedMain:
 	dc.l	EnemyGfxData_QuadrupedMain_Entry00
 	dc.l	EnemyGfxData_QuadrupedMain_Entry01
@@ -6600,6 +6645,7 @@ EnemyGfxData_QuadrupedMain:
 	dc.l	EnemyGfxData_QuadrupedMain_Entry45
 	dc.l	EnemyGfxData_QuadrupedMain_Entry46
 	dc.l	EnemyGfxData_QuadrupedMain_Entry47
+; @ $000544E4
 EnemyGfxFrameTable_OrbMain:
 	dc.b	$00, $03, $07, $01, $04, $08, $02, $05, $09, $00, $06, $0A, $0B, $0E, $12, $0C, $0F, $13, $0D, $10, $14, $00, $11, $15, $16, $1A, $1E, $17, $1B, $1F, $18, $1C 
 	dc.b	$20, $19, $1D, $21, $22, $26, $2A, $23, $27, $2B, $24, $28, $2C, $25, $29, $2D, $2E, $00, $33, $2F, $31, $34, $30, $32, $34, $00, $00, $35, $2E, $00, $33, $2F 
@@ -6659,6 +6705,7 @@ EnemyGfxData_OrbMain_Entry50 equ EnemyGfxData_OrbMain_Entry00+$3AA
 EnemyGfxData_OrbMain_Entry51 equ EnemyGfxData_OrbMain_Entry00+$3BA
 EnemyGfxData_OrbMain_Entry52 equ EnemyGfxData_OrbMain_Entry00+$3CA
 EnemyGfxData_OrbMain_Entry53 equ EnemyGfxData_OrbMain_Entry00+$3D0
+; @ $0005490C
 EnemyGfxData_OrbMain:
 	dc.l	EnemyGfxData_OrbMain_Entry00
 	dc.l	EnemyGfxData_OrbMain_Entry01
@@ -6714,6 +6761,7 @@ EnemyGfxData_OrbMain:
 	dc.l	EnemyGfxData_OrbMain_Entry51
 	dc.l	EnemyGfxData_OrbMain_Entry52
 	dc.l	EnemyGfxData_OrbMain_Entry53
+; @ $000549E4
 EnemyGfxFrameTable_OrbChild:
 	dc.b	$00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $01, $00, $02, $00, $03, $00, $04 
 	dc.b	$00, $07, $05, $08, $06, $09, $00, $00, $00, $00, $0A, $0C, $0B, $0D, $00, $00 
@@ -6732,6 +6780,7 @@ EnemyGfxData_OrbChild_Entry10 equ EnemyGfxData_OrbChild_Entry00+$CC
 EnemyGfxData_OrbChild_Entry11 equ EnemyGfxData_OrbChild_Entry00+$DC
 EnemyGfxData_OrbChild_Entry12 equ EnemyGfxData_OrbChild_Entry00+$EC
 EnemyGfxData_OrbChild_Entry13 equ EnemyGfxData_OrbChild_Entry00+$10C
+; @ $00054B3E
 EnemyGfxData_OrbChild:
 	dc.l	EnemyGfxData_OrbChild_Entry00
 	dc.l	EnemyGfxData_OrbChild_Entry01
@@ -6747,6 +6796,7 @@ EnemyGfxData_OrbChild:
 	dc.l	EnemyGfxData_OrbChild_Entry11
 	dc.l	EnemyGfxData_OrbChild_Entry12
 	dc.l	EnemyGfxData_OrbChild_Entry13
+; @ $00054B76
 EnemyGfxFrameTable_SerpentChild:
 	dc.b	$00, $04, $08, $01, $05, $09, $02, $06, $0A, $03, $07, $0B, $00, $0E, $12, $0C, $0F, $13, $0D, $10, $14, $00, $11, $15, $16, $19, $1D, $17, $1A, $1E, $18, $1B 
 	dc.b	$1F, $03, $1C, $20, $00, $22, $26, $21, $23, $27, $02, $24, $28, $03, $25, $29, $00, $2C, $30, $2A, $2D, $31, $2B, $2E, $32, $00, $2F, $33, $16, $34, $38, $17 
@@ -6843,6 +6893,7 @@ EnemyGfxData_SerpentChild_Entry86 equ EnemyGfxData_SerpentChild_Entry00+$6C6
 EnemyGfxData_SerpentChild_Entry87 equ EnemyGfxData_SerpentChild_Entry00+$6D2
 EnemyGfxData_SerpentChild_Entry88 equ EnemyGfxData_SerpentChild_Entry00+$6F0
 EnemyGfxData_SerpentChild_Entry89 equ EnemyGfxData_SerpentChild_Entry00+$704
+; @ $00055300
 EnemyGfxData_SerpentChild:
 	dc.l	EnemyGfxData_SerpentChild_Entry00
 	dc.l	EnemyGfxData_SerpentChild_Entry01
@@ -6934,6 +6985,7 @@ EnemyGfxData_SerpentChild:
 	dc.l	EnemyGfxData_SerpentChild_Entry87
 	dc.l	EnemyGfxData_SerpentChild_Entry88
 	dc.l	EnemyGfxData_SerpentChild_Entry89
+; @ $00055468
 EnemyGfxFrameTable_SerpentMain:
 	dc.b	$00, $04, $01, $05, $02, $06, $03, $07, $08, $0C, $09, $0D, $0A, $0E, $0B, $0F, $10, $04, $11, $14, $12, $15, $13, $04, $16, $04, $17, $1A, $18, $1B, $19, $07 
 	dc.b	$1C, $20, $1D, $21, $1E, $22, $1F, $23, $04, $04, $24, $27, $25, $28, $26, $04, $04, $2C, $29, $2D, $2A, $2E, $2B, $04, $04, $32, $2F, $33, $30, $34, $31, $07 
@@ -6997,6 +7049,7 @@ EnemyGfxData_SerpentMain_Entry54 equ EnemyGfxData_SerpentMain_Entry00+$394
 EnemyGfxData_SerpentMain_Entry55 equ EnemyGfxData_SerpentMain_Entry00+$3B2
 EnemyGfxData_SerpentMain_Entry56 equ EnemyGfxData_SerpentMain_Entry00+$3BC
 EnemyGfxData_SerpentMain_Entry57 equ EnemyGfxData_SerpentMain_Entry00+$3CA
+; @ $00055888
 EnemyGfxData_SerpentMain:
 	dc.l	EnemyGfxData_SerpentMain_Entry00
 	dc.l	EnemyGfxData_SerpentMain_Entry01
@@ -7056,6 +7109,7 @@ EnemyGfxData_SerpentMain:
 	dc.l	EnemyGfxData_SerpentMain_Entry55
 	dc.l	EnemyGfxData_SerpentMain_Entry56
 	dc.l	EnemyGfxData_SerpentMain_Entry57
+; @ $00055970
 EnemyGfxFrameTable_InsectChild:
 	dc.b	$00, $04, $08, $01, $05, $09, $02, $06, $0A, $03, $07, $0B, $00, $0E, $12, $0C, $0F, $13, $0D, $10, $14, $03, $11, $15, $16, $1A, $1E, $17, $1B, $1F, $18, $1C 
 	dc.b	$20, $19, $1D, $21, $22, $26, $2A, $23, $27, $2B, $24, $28, $2C, $25, $29, $2D, $2E, $31, $35, $2F, $32, $36, $30, $33, $37, $00, $34, $38, $00, $3C, $40, $39 
@@ -7174,6 +7228,7 @@ EnemyGfxData_InsectChild_Entry108 equ EnemyGfxData_InsectChild_Entry00+$9E8
 EnemyGfxData_InsectChild_Entry109 equ EnemyGfxData_InsectChild_Entry00+$9FA
 EnemyGfxData_InsectChild_Entry110 equ EnemyGfxData_InsectChild_Entry00+$A1C
 EnemyGfxData_InsectChild_Entry111 equ EnemyGfxData_InsectChild_Entry00+$A3E
+; @ $00056436
 EnemyGfxData_InsectChild:
 	dc.l	EnemyGfxData_InsectChild_Entry00
 	dc.l	EnemyGfxData_InsectChild_Entry01
@@ -7287,6 +7342,7 @@ EnemyGfxData_InsectChild:
 	dc.l	EnemyGfxData_InsectChild_Entry109
 	dc.l	EnemyGfxData_InsectChild_Entry110
 	dc.l	EnemyGfxData_InsectChild_Entry111
+; @ $000565F6
 EnemyGfxFrameTable_InsectMain:
 	dc.b	$00, $03, $01, $04, $02, $05, $00, $06, $00, $03, $07, $0A, $08, $0B, $09, $06, $00, $03, $0C, $0A, $0D, $0F, $0E, $06, $00, $03, $0C, $0A, $10, $0F, $11, $12 
 	dc.b	$00, $15, $13, $16, $14, $17, $00, $18, $00, $1B, $19, $1C, $1A, $1D, $00, $1E, $00, $22, $1F, $23, $20, $24, $21, $25, $00, $28, $1F, $29, $26, $2A, $27, $2B 
@@ -7348,6 +7404,7 @@ EnemyGfxData_InsectMain_Entry52 equ EnemyGfxData_InsectMain_Entry00+$324
 EnemyGfxData_InsectMain_Entry53 equ EnemyGfxData_InsectMain_Entry00+$332
 EnemyGfxData_InsectMain_Entry54 equ EnemyGfxData_InsectMain_Entry00+$342
 EnemyGfxData_InsectMain_Entry55 equ EnemyGfxData_InsectMain_Entry00+$354
+; @ $000569A6
 EnemyGfxData_InsectMain:
 	dc.l	EnemyGfxData_InsectMain_Entry00
 	dc.l	EnemyGfxData_InsectMain_Entry01
@@ -7405,6 +7462,7 @@ EnemyGfxData_InsectMain:
 	dc.l	EnemyGfxData_InsectMain_Entry53
 	dc.l	EnemyGfxData_InsectMain_Entry54
 	dc.l	EnemyGfxData_InsectMain_Entry55
+; @ $00056A86
 EnemyGfxFrameTable_GolemMain:
 	dc.b	$00, $04, $08, $01, $05, $09, $02, $06, $0A, $03, $07, $0B, $0C, $04, $12, $01, $0F, $13, $0D, $10, $14, $0E, $11, $15, $16, $19, $1D, $01, $1A, $1E, $17, $1B 
 	dc.b	$1F, $18, $1C, $20, $21, $1C, $28, $22, $25, $29, $23, $26, $2A, $24, $27, $2B, $2C, $1C, $32, $2D, $30, $33, $2E, $31, $34, $2F, $27, $35, $36, $1C, $3C, $37 
@@ -7506,6 +7564,7 @@ EnemyGfxData_GolemMain_Entry91 equ EnemyGfxData_GolemMain_Entry00+$8B0
 EnemyGfxData_GolemMain_Entry92 equ EnemyGfxData_GolemMain_Entry00+$8CC
 EnemyGfxData_GolemMain_Entry93 equ EnemyGfxData_GolemMain_Entry00+$8DE
 EnemyGfxData_GolemMain_Entry94 equ EnemyGfxData_GolemMain_Entry00+$8FA
+; @ $00057404
 EnemyGfxData_GolemMain:
 	dc.l	EnemyGfxData_GolemMain_Entry00
 	dc.l	EnemyGfxData_GolemMain_Entry01
@@ -7602,6 +7661,7 @@ EnemyGfxData_GolemMain:
 	dc.l	EnemyGfxData_GolemMain_Entry92
 	dc.l	EnemyGfxData_GolemMain_Entry93
 	dc.l	EnemyGfxData_GolemMain_Entry94
+; @ $00057580
 EnemyGfxFrameTable_GolemChild:
 	dc.b	$00, $04, $08, $01, $05, $09, $02, $06, $0A, $03, $07, $0B, $0C, $10, $14, $0D, $11, $09, $0E, $12, $0A, $0F, $13, $15, $16, $1A, $1E, $17, $1B, $09, $18, $1C 
 	dc.b	$1F, $19, $1D, $20, $21, $25, $29, $22, $26, $2A, $23, $27, $2B, $24, $28, $2C, $2D, $31, $35, $2E, $32, $36, $2F, $33, $37, $30, $34, $38, $39, $3D, $41, $3A 
@@ -7706,6 +7766,7 @@ EnemyGfxData_GolemChild_Entry94 equ EnemyGfxData_GolemChild_Entry00+$916
 EnemyGfxData_GolemChild_Entry95 equ EnemyGfxData_GolemChild_Entry00+$92E
 EnemyGfxData_GolemChild_Entry96 equ EnemyGfxData_GolemChild_Entry00+$948
 EnemyGfxData_GolemChild_Entry97 equ EnemyGfxData_GolemChild_Entry00+$96A
+; @ $00057F74
 EnemyGfxData_GolemChild:
 	dc.l	EnemyGfxData_GolemChild_Entry00
 	dc.l	EnemyGfxData_GolemChild_Entry01
@@ -7805,6 +7866,7 @@ EnemyGfxData_GolemChild:
 	dc.l	EnemyGfxData_GolemChild_Entry95
 	dc.l	EnemyGfxData_GolemChild_Entry96
 	dc.l	EnemyGfxData_GolemChild_Entry97
+; @ $000580FC
 EnemyGfxFrameTable_GargoyleChild:
 	dc.b	$00, $00, $07, $01, $04, $08, $02, $05, $09, $03, $06, $0A, $00, $00, $0F, $0B, $0D, $10, $0C, $0E, $11, $00, $00, $12, $00, $15, $18, $13, $16, $19, $14, $17 
 	dc.b	$1A, $00, $00, $1B, $00, $1E, $22, $1C, $1F, $23, $1D, $20, $24, $00, $21, $25, $00, $28, $2C, $26, $29, $2D, $27, $2A, $2E, $00, $2B, $2F, $00, $32, $36, $30 
@@ -7898,6 +7960,7 @@ EnemyGfxData_GargoyleChild_Entry83 equ EnemyGfxData_GargoyleChild_Entry00+$694
 EnemyGfxData_GargoyleChild_Entry84 equ EnemyGfxData_GargoyleChild_Entry00+$69E
 EnemyGfxData_GargoyleChild_Entry85 equ EnemyGfxData_GargoyleChild_Entry00+$6B2
 EnemyGfxData_GargoyleChild_Entry86 equ EnemyGfxData_GargoyleChild_Entry00+$6D4
+; @ $00058858
 EnemyGfxData_GargoyleChild:
 	dc.l	EnemyGfxData_GargoyleChild_Entry00
 	dc.l	EnemyGfxData_GargoyleChild_Entry01
@@ -7986,6 +8049,7 @@ EnemyGfxData_GargoyleChild:
 	dc.l	EnemyGfxData_GargoyleChild_Entry84
 	dc.l	EnemyGfxData_GargoyleChild_Entry85
 	dc.l	EnemyGfxData_GargoyleChild_Entry86
+; @ $000589B4
 EnemyGfxFrameTable_GargoyleMain:
 	dc.b	$00, $04, $01, $05, $02, $06, $03, $07, $08, $0C, $09, $0D, $0A, $0E, $0B, $0F, $10, $13, $09, $14, $11, $15, $12, $16, $17, $1B, $18, $1C, $19, $1D, $1A, $1E 
 	dc.b	$1F, $23, $20, $24, $21, $1D, $22, $25, $26, $2A, $27, $2B, $28, $2C, $29, $2D, $2E, $32, $2F, $33, $30, $34, $31, $35, $36, $3A, $37, $3B, $38, $3C, $39, $3D 
@@ -8060,6 +8124,7 @@ EnemyGfxData_GargoyleMain_Entry65 equ EnemyGfxData_GargoyleMain_Entry00+$64A
 EnemyGfxData_GargoyleMain_Entry66 equ EnemyGfxData_GargoyleMain_Entry00+$65E
 EnemyGfxData_GargoyleMain_Entry67 equ EnemyGfxData_GargoyleMain_Entry00+$676
 EnemyGfxData_GargoyleMain_Entry68 equ EnemyGfxData_GargoyleMain_Entry00+$68C
+; @ $00059098
 EnemyGfxData_GargoyleMain:
 	dc.l	EnemyGfxData_GargoyleMain_Entry00
 	dc.l	EnemyGfxData_GargoyleMain_Entry01
@@ -8130,6 +8195,7 @@ EnemyGfxData_GargoyleMain:
 	dc.l	EnemyGfxData_GargoyleMain_Entry66
 	dc.l	EnemyGfxData_GargoyleMain_Entry67
 	dc.l	EnemyGfxData_GargoyleMain_Entry68
+; @ $000591AC
 EnemyGfxFrameTable_WorldMapChild:
 	dc.b	$00, $03, $07, $01, $04, $08, $02, $05, $09, $00, $06, $0A, $00, $0D, $11, $0B, $0E, $12, $0C, $0F, $13, $00, $10, $14, $00, $17, $1B, $15, $18, $1C, $16, $19 
 	dc.b	$1D, $00, $1A, $1E, $00, $21, $24, $1F, $22, $25, $20, $23, $26, $00, $06, $27, $00, $2A, $2D, $28, $2B, $2E, $29, $2C, $2F, $00, $06, $30, $00, $33, $37, $31 
@@ -8225,6 +8291,7 @@ EnemyGfxData_WorldMapChild_Entry85 equ EnemyGfxData_WorldMapChild_Entry00+$7C8
 EnemyGfxData_WorldMapChild_Entry86 equ EnemyGfxData_WorldMapChild_Entry00+$7EA
 EnemyGfxData_WorldMapChild_Entry87 equ EnemyGfxData_WorldMapChild_Entry00+$808
 EnemyGfxData_WorldMapChild_Entry88 equ EnemyGfxData_WorldMapChild_Entry00+$820
+; @ $00059A46
 EnemyGfxData_WorldMapChild:
 	dc.l	EnemyGfxData_WorldMapChild_Entry00
 	dc.l	EnemyGfxData_WorldMapChild_Entry01
@@ -8315,6 +8382,7 @@ EnemyGfxData_WorldMapChild:
 	dc.l	EnemyGfxData_WorldMapChild_Entry86
 	dc.l	EnemyGfxData_WorldMapChild_Entry87
 	dc.l	EnemyGfxData_WorldMapChild_Entry88
+; @ $00059BAA
 EnemyGfxFrameTable_WorldMapMain:
 	dc.b	$00, $04, $08, $01, $05, $09, $02, $06, $0A, $03, $07, $0B, $0C, $10, $14, $0D, $11, $15, $0E, $12, $16, $0F, $13, $17, $0C, $1A, $1E, $18, $1B, $1F, $19, $1C 
 	dc.b	$20, $17, $1D, $17, $21, $25, $08, $22, $26, $29, $23, $27, $0A, $24, $28, $0B, $2A, $2E, $14, $2B, $2F, $15, $2C, $30, $16, $2D, $31, $17, $32, $36, $1E, $33 
@@ -8395,6 +8463,7 @@ EnemyGfxData_WorldMapMain_Entry70 equ EnemyGfxData_WorldMapMain_Entry00+$596
 EnemyGfxData_WorldMapMain_Entry71 equ EnemyGfxData_WorldMapMain_Entry00+$5A2
 EnemyGfxData_WorldMapMain_Entry72 equ EnemyGfxData_WorldMapMain_Entry00+$5C4
 EnemyGfxData_WorldMapMain_Entry73 equ EnemyGfxData_WorldMapMain_Entry00+$5E2
+; @ $0005A206
 EnemyGfxData_WorldMapMain:
 	dc.l	EnemyGfxData_WorldMapMain_Entry00
 	dc.l	EnemyGfxData_WorldMapMain_Entry01
@@ -8470,6 +8539,7 @@ EnemyGfxData_WorldMapMain:
 	dc.l	EnemyGfxData_WorldMapMain_Entry71
 	dc.l	EnemyGfxData_WorldMapMain_Entry72
 	dc.l	EnemyGfxData_WorldMapMain_Entry73
+; @ $0005A32E
 MenuTileGfxDescriptor_5A32E:
 	dc.l	LoadMenuTileGfxSet3-3	
 	dc.l	$04050100	
@@ -8509,6 +8579,7 @@ MenuTileGfxPointerTable_5A3AE_Entry05:
 	dc.l	$FFFFF001	
 	dc.l	$88000006	
 	dc.l	$F6088008	
+; @ $0005A3AE
 MenuTileGfxPointerTable_5A3AE:
 	dc.l	MenuTileGfxPointerTable_5A3AE_Entry00-2
 	dc.l	MenuTileGfxPointerTable_5A3AE_Entry01-2
@@ -8516,6 +8587,7 @@ MenuTileGfxPointerTable_5A3AE:
 	dc.l	MenuTileGfxPointerTable_5A3AE_Entry03-2
 	dc.l	MenuTileGfxPointerTable_5A3AE_Entry04
 	dc.l	MenuTileGfxPointerTable_5A3AE_Entry05-2
+; @ $0005A3C6
 EnemyGfxFrameTable_BeastChild:
 	dc.b	$00, $03, $07, $01, $04, $08, $02, $05, $09, $00, $06, $0A, $00, $0D, $11, $0B, $0E, $12, $0C, $0F, $13, $00, $10, $14, $15, $19, $1D, $16, $1A, $1E, $17, $1B 
 	dc.b	$1F, $18, $1C, $20, $00, $23, $27, $21, $24, $28, $22, $25, $29, $00, $26, $2A, $00, $2D, $31, $2B, $2E, $32, $2C, $2F, $33, $00, $30, $34, $35, $39, $3D, $36 
@@ -8617,6 +8689,7 @@ EnemyGfxData_BeastChild_Entry91 equ EnemyGfxData_BeastChild_Entry00+$952
 EnemyGfxData_BeastChild_Entry92 equ EnemyGfxData_BeastChild_Entry00+$966
 EnemyGfxData_BeastChild_Entry93 equ EnemyGfxData_BeastChild_Entry00+$988
 EnemyGfxData_BeastChild_Entry94 equ EnemyGfxData_BeastChild_Entry00+$9AA
+; @ $0005ADF2
 EnemyGfxData_BeastChild:
 	dc.l	EnemyGfxData_BeastChild_Entry00
 	dc.l	EnemyGfxData_BeastChild_Entry01
@@ -8713,6 +8786,7 @@ EnemyGfxData_BeastChild:
 	dc.l	EnemyGfxData_BeastChild_Entry92
 	dc.l	EnemyGfxData_BeastChild_Entry93
 	dc.l	EnemyGfxData_BeastChild_Entry94
+; @ $0005AF6E
 EnemyGfxFrameTable_BeastMain:
 	dc.b	$00, $04, $01, $05, $02, $06, $03, $07, $08, $0C, $09, $0D, $0A, $0E, $0B, $0F, $10, $12, $01, $13, $02, $14, $11, $15, $16, $1A, $17, $1B, $18, $1C, $19, $1D 
 	dc.b	$1E, $22, $1F, $23, $20, $24, $21, $25, $26, $2A, $27, $2B, $28, $2C, $29, $2D, $2E, $32, $2F, $33, $30, $34, $31, $35, $36, $3A, $37, $3B, $38, $3C, $39, $3D 
@@ -8786,6 +8860,7 @@ EnemyGfxData_BeastMain_Entry64 equ EnemyGfxData_BeastMain_Entry00+$64C
 EnemyGfxData_BeastMain_Entry65 equ EnemyGfxData_BeastMain_Entry00+$664
 EnemyGfxData_BeastMain_Entry66 equ EnemyGfxData_BeastMain_Entry00+$686
 EnemyGfxData_BeastMain_Entry67 equ EnemyGfxData_BeastMain_Entry00+$6A8
+; @ $0005B674
 EnemyGfxData_BeastMain:
 	dc.l	EnemyGfxData_BeastMain_Entry00
 	dc.l	EnemyGfxData_BeastMain_Entry01
@@ -8855,6 +8930,7 @@ EnemyGfxData_BeastMain:
 	dc.l	EnemyGfxData_BeastMain_Entry65
 	dc.l	EnemyGfxData_BeastMain_Entry66
 	dc.l	EnemyGfxData_BeastMain_Entry67
+; @ $0005B784
 EnemyGfxFrameTable_SkeletonChild:
 	dc.b	$00, $04, $08, $01, $05, $09, $02, $06, $0A, $03, $07, $0B, $0C, $10, $14, $0D, $11, $15, $0E, $12, $16, $0F, $13, $17, $18, $1C, $20, $19, $1D, $21, $1A, $1E 
 	dc.b	$22, $1B, $1F, $23, $24, $28, $2C, $25, $29, $2D, $26, $2A, $2E, $27, $2B, $2F, $30, $34, $38, $31, $35, $39, $32, $36, $3A, $33, $37, $3B, $3C, $40, $44, $3D 
@@ -8965,6 +9041,7 @@ EnemyGfxData_SkeletonChild_Entry100 equ EnemyGfxData_SkeletonChild_Entry00+$98C
 EnemyGfxData_SkeletonChild_Entry101 equ EnemyGfxData_SkeletonChild_Entry00+$9A6
 EnemyGfxData_SkeletonChild_Entry102 equ EnemyGfxData_SkeletonChild_Entry00+$9C4
 EnemyGfxData_SkeletonChild_Entry103 equ EnemyGfxData_SkeletonChild_Entry00+$9E0
+; @ $0005C1DE
 EnemyGfxData_SkeletonChild:
 	dc.l	EnemyGfxData_SkeletonChild_Entry00
 	dc.l	EnemyGfxData_SkeletonChild_Entry01
@@ -9070,6 +9147,7 @@ EnemyGfxData_SkeletonChild:
 	dc.l	EnemyGfxData_SkeletonChild_Entry101
 	dc.l	EnemyGfxData_SkeletonChild_Entry102
 	dc.l	EnemyGfxData_SkeletonChild_Entry103
+; @ $0005C37E
 EnemyGfxFrameTable_SkeletonMain:
 	dc.b	$00, $04, $01, $05, $02, $06, $03, $07, $08, $0C, $09, $0D, $0A, $0E, $0B, $0F, $10, $14, $11, $15, $12, $16, $13, $17, $18, $1C, $19, $1D, $1A, $1E, $1B, $1F 
 	dc.b	$14, $23, $20, $24, $21, $25, $22, $26, $27, $2B, $28, $2C, $29, $2D, $2A, $2E, $2F, $33, $30, $34, $31, $35, $32, $36, $37, $3B, $38, $3C, $39, $3D, $3A, $3E 
@@ -9146,6 +9224,7 @@ EnemyGfxData_SkeletonMain_Entry67 equ EnemyGfxData_SkeletonMain_Entry00+$566
 EnemyGfxData_SkeletonMain_Entry68 equ EnemyGfxData_SkeletonMain_Entry00+$576
 EnemyGfxData_SkeletonMain_Entry69 equ EnemyGfxData_SkeletonMain_Entry00+$58E
 EnemyGfxData_SkeletonMain_Entry70 equ EnemyGfxData_SkeletonMain_Entry00+$5AA
+; @ $0005C97E
 EnemyGfxData_SkeletonMain:
 	dc.l	EnemyGfxData_SkeletonMain_Entry00
 	dc.l	EnemyGfxData_SkeletonMain_Entry01
@@ -9218,6 +9297,7 @@ EnemyGfxData_SkeletonMain:
 	dc.l	EnemyGfxData_SkeletonMain_Entry68
 	dc.l	EnemyGfxData_SkeletonMain_Entry69
 	dc.l	EnemyGfxData_SkeletonMain_Entry70
+; @ $0005CA9A
 EnemyGfxFrameTable_HumanoidChild:
 	dc.b	$00, $04, $08, $01, $05, $09, $02, $06, $0A, $03, $07, $0B, $0C, $0F, $12, $0D, $10, $13, $0E, $11, $14, $03, $03, $03, $03, $03, $03, $15, $17, $19, $16, $18 
 	dc.b	$1A, $03, $03, $03, $03, $03, $03, $1B, $1D, $1F, $1C, $1E, $20, $03, $03, $03, $03, $03, $00, $21, $23, $26, $22, $24, $27, $03, $25, $28 
@@ -9263,6 +9343,7 @@ EnemyGfxData_HumanoidChild_Entry37 equ EnemyGfxData_HumanoidChild_Entry00+$3A4
 EnemyGfxData_HumanoidChild_Entry38 equ EnemyGfxData_HumanoidChild_Entry00+$3AE
 EnemyGfxData_HumanoidChild_Entry39 equ EnemyGfxData_HumanoidChild_Entry00+$3D0
 EnemyGfxData_HumanoidChild_Entry40 equ EnemyGfxData_HumanoidChild_Entry00+$3F2
+; @ $0005CED4
 EnemyGfxData_HumanoidChild:
 	dc.l	EnemyGfxData_HumanoidChild_Entry00
 	dc.l	EnemyGfxData_HumanoidChild_Entry01
@@ -9305,6 +9386,7 @@ EnemyGfxData_HumanoidChild:
 	dc.l	EnemyGfxData_HumanoidChild_Entry38
 	dc.l	EnemyGfxData_HumanoidChild_Entry39
 	dc.l	EnemyGfxData_HumanoidChild_Entry40
+; @ $0005CF78
 EnemyGfxFrameTable_HumanoidMain:
 	dc.b	$00, $04, $01, $05, $02, $06, $03, $07, $08, $07, $09, $0B, $0A, $0C, $07, $07, $07, $07, $0D, $0F, $0E, $10, $07, $07, $07, $07, $11, $13, $12, $14, $07, $07 
 	dc.b	$07, $07, $15, $17, $16, $18, $07, $07 
@@ -9334,6 +9416,7 @@ EnemyGfxData_HumanoidMain_Entry21 equ EnemyGfxData_HumanoidMain_Entry00+$186
 EnemyGfxData_HumanoidMain_Entry22 equ EnemyGfxData_HumanoidMain_Entry00+$1A0
 EnemyGfxData_HumanoidMain_Entry23 equ EnemyGfxData_HumanoidMain_Entry00+$1C2
 EnemyGfxData_HumanoidMain_Entry24 equ EnemyGfxData_HumanoidMain_Entry00+$1D0
+; @ $0005D180
 EnemyGfxData_HumanoidMain:
 	dc.l	EnemyGfxData_HumanoidMain_Entry00
 	dc.l	EnemyGfxData_HumanoidMain_Entry01
@@ -9381,6 +9464,7 @@ EnemySpriteSet_L_Entry01:
 	dc.l	EnemyGfxData_HumanoidMain_Entry28
 	dc.l	EnemyGfxData_HumanoidMain_Entry29
 	dc.l	EnemyGfxData_HumanoidMain_Entry30
+; @ $0005D29E
 EnemyGfxFrameTable_BossMain:
 	dc.b	$00, $04, $08, $0C, $01, $05, $09, $0D, $02, $06, $0A, $0E, $03, $07, $0B, $0F, $00, $10, $12, $16, $01, $05, $13, $17, $02, $06, $14, $18, $03, $11, $15, $19 
 	dc.b	$00, $1B, $1D, $20, $01, $05, $1E, $21, $02, $06, $0A, $22, $1A, $1C, $1F, $23 
@@ -9421,6 +9505,7 @@ EnemyGfxData_BossMain_Entry32 equ EnemyGfxData_BossMain_Entry00+$394
 EnemyGfxData_BossMain_Entry33 equ EnemyGfxData_BossMain_Entry00+$3AE
 EnemyGfxData_BossMain_Entry34 equ EnemyGfxData_BossMain_Entry00+$3C8
 EnemyGfxData_BossMain_Entry35 equ EnemyGfxData_BossMain_Entry00+$3EA
+; @ $0005D6D4
 EnemyGfxData_BossMain:
 	dc.l	EnemyGfxData_BossMain_Entry00
 	dc.l	EnemyGfxData_BossMain_Entry01
@@ -9710,9 +9795,11 @@ GfxLoadList_OverworldBattle_Entry01:
 	dc.l	EnemyGfxData_BossMain_Entry100
 	dc.l	EnemyGfxData_BossMain_Entry101
 	dc.l	EnemyGfxData_BossMain_Entry102
+; @ $0005DDC2
 SegaLogoScreen_Init_Data:
 	dc.b	$00, $01, $02, $03, $04, $05, $06, $07, $08, $09, $0A, $0B, $0C, $0D, $0E, $0F, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $1A, $1B, $1C, $1D, $1E, $1F 
 	dc.b	$20, $21, $22, $23, $24, $25, $26, $27, $28, $29, $2A, $2B, $1D, $2C, $2D, $2E, $2F, $30, $31, $32, $33, $34, $35, $36, $37, $38, $39, $1D 
+; @ $0005DDFE
 DmaTransferFromPointer_Data:
 	dc.b	$01, $00, $EC, $88, $00, $00, $0F, $0F, $FF, $0F, $FF, $77, $FF, $66, $77, $0F, $F5, $66, $67, $0F, $55, $66, $67, $FF, $55, $56, $66, $F4, $55, $56, $6F, $01 
 	dc.b	$FF, $F0, $00, $07, $80, $88, $89, $99, $AA, $78, $88, $99, $9A, $78, $88, $99, $9A, $77, $88, $89, $99, $77, $78, $88, $99, $77, $78, $88, $99, $01, $FF, $F0 
@@ -9768,6 +9855,7 @@ DmaTransferFromPointer_Data:
 	dc.b	$F5, $66, $44, $F0, $F5, $66, $FF, $F0, $FF, $FF, $00, $00, $00, $00, $01, $FF, $0F, $00, $00, $F0, $77, $88, $89, $9F, $77, $78, $88, $99, $77, $78, $88, $99 
 	dc.b	$67, $77, $88, $89, $67, $77, $88, $89, $00, $00, $00, $00, $00, $AA, $AB, $BF, $00, $AA, $AB, $BF, $00, $9A, $AA, $BF, $F0, $9A, $AA, $BB, $F0, $99, $AA, $AB 
 	dc.b	$F0, $99, $AA, $AB, $F0, $FF, $FF, $FF, $F0, $00, $00, $00, $00, $00 
+; @ $0005E4AC
 LoadTownTileGfxSet1_Data:
 	dc.b	$01, $00, $FF, $FF, $FF, $FF, $01, $00, $FF, $FF, $FC, $88, $02, $22, $22, $22, $22, $02, $22, $22, $01, $00, $FF, $FF, $80, $00, $22, $20, $40, $22, $24, $44 
 	dc.b	$40, $22, $22, $32, $25, $23, $32, $44, $45, $01, $00, $FF, $FF, $10, $40, $04, $45, $55, $50, $50, $05, $50, $54, $55, $05, $54, $55, $55, $50, $01, $00, $FF 
@@ -9879,6 +9967,7 @@ LoadTownTileGfxSet1_Data:
 	dc.b	$57, $87, $70, $45, $55, $78, $77, $45, $55, $57, $77, $33, $56, $47, $77, $33, $34, $55, $77, $33, $33, $45, $55, $23, $33, $55, $54, $01, $00, $FF, $F7, $77 
 	dc.b	$73, $70, $70, $77, $77, $77, $70, $01, $00, $FF, $FF, $FF, $EE, $03, $03, $01, $00, $FF, $FF, $33, $10, $03, $30, $33, $33, $33, $33, $50, $34, $43, $56, $70 
 	dc.b	$01, $00, $33, $33, $33, $33, $EF, $E0, $EF, $E0, $EF, $E0, $EF, $E0, $EF, $E0, $EF, $E0, $DF, $D0, $DF, $D0 
+; @ $0005F262
 LoadTownTileGfxToBuffer_Done_Data:
 	dc.b	$01, $00, $FF, $FF, $FF, $FF, $01, $00, $CE, $EE, $EE, $EE, $02, $22, $22, $22, $02, $02, $02, $02, $02, $01, $22, $FC, $CC, $8C, $88, $23, $32, $23, $44, $33 
 	dc.b	$44, $23, $33, $45, $33, $44, $23, $34, $44, $23, $24, $44, $00, $23, $33, $44, $56, $22, $33, $33, $45, $32, $22, $33, $45, $47, $22, $23, $34, $57, $72, $22 
@@ -10068,6 +10157,7 @@ Z80DrvrData_6000E:
 	dc.b	$34, $43, $33, $44, $54, $32, $33, $44, $54, $32, $34, $45, $54, $32, $43, $55, $44, $32, $43, $45, $43, $22, $45, $54, $43, $22, $45, $55, $43, $22, $02, $23 
 	dc.b	$60, $40, $C0, $C0, $33, $02, $26, $26, $26, $22, $34, $22, $32, $34, $22, $44, $22, $43, $34, $22, $43, $34, $22, $43, $01, $00, $33, $37, $77, $77, $44, $53 
 	dc.b	$44, $50, $34, $50, $45, $45, $45, $45, $45 
+; @ $000607AA
 SpriteGfxData_607AA:
 	dc.b	$01, $AA, $02, $90, $9E, $0F, $B0, $09, $AB, $B0, $AB, $BA, $AB, $A9, $99, $BB, $99, $99, $BB, $BB, $BA, $9A, $99, $A9, $9A, $99, $01, $AA, $05, $08, $4B, $C0 
 	dc.b	$00, $BB, $AB, $AB, $BA, $9A, $A9, $99, $99, $9A, $AB, $B9, $99, $9A, $AB, $BB, $9A, $99, $9A, $99, $99, $AB, $BA, $01, $AA, $02, $18, $96, $00, $00, $9A, $BB 
@@ -10172,6 +10262,7 @@ SpriteGfxData_607AA:
 	dc.b	$CC, $CC, $CC, $CC, $BC, $AC, $AA, $BB, $BB, $BA, $BA, $BA, $AA, $AA, $AA, $AA, $BC, $BB, $DC, $DD, $CC, $CC, $CD, $DE, $00, $CC, $BC, $CB, $CC, $BB, $BB, $BB 
 	dc.b	$BA, $AA, $BB, $AA, $BB, $AA, $AB, $BA, $BA, $BB, $BA, $AB, $AB, $CD, $CC, $DD, $CC, $EE, $DE, $EE, $DD, $EE, $ED, $DD, $DD, $00, $CC, $CC, $CC, $CB, $BB, $BB 
 	dc.b	$BB, $BB, $AA, $BA, $BA, $BA, $AB, $AA, $BA, $AB, $AB, $AB, $AA, $AA, $CA, $BB, $AB, $BB, $CC, $BC, $BC, $BC, $ED, $DD, $DD, $DE 
+; @ $00061484
 LoadTownTileGfxToBuffer_Done4_Data:
 	dc.b	$01, $00, $FF, $FF, $FF, $FF, $01, $00, $99, $9B, $BB, $37, $01, $80, $01, $80, $01, $80, $18, $18, $10, $81, $80, $18, $01, $00, $EE, $EF, $FF, $FF, $01, $01 
 	dc.b	$01, $01, $00, $77, $77, $39, $99, $80, $80, $80, $18, $81, $12, $81, $20, $01, $20, $01, $20, $01, $00, $FF, $FF, $FF, $EE, $01, $11, $01, $00, $9D, $DD, $91 
@@ -10192,6 +10283,7 @@ LoadTownTileGfxToBuffer_Done4_Data:
 	dc.b	$01, $00, $9B, $33, $33, $33, $56, $60, $56, $05, $60, $05, $60, $05, $60, $05, $60, $05, $60, $05, $66, $01, $00, $99, $9D, $DD, $91, $56, $60, $05, $60, $05 
 	dc.b	$66, $56, $56, $56, $0D, $66, $0D, $D6, $60, $01, $00, $EC, $CC, $CC, $CC, $66, $06, $66, $06, $6D, $0D, $66, $DD, $60, $D6, $60, $D6, $60, $66, $60, $01, $00 
 	dc.b	$37, $7F, $FF, $FF, $66, $66, $D0, $D0, $01, $00, $D9, $13, $77, $77, $67, $66, $77, $06, $77, $70, $06, $77, $06, $67, $67, $60 
+; @ $000616DE
 DrawIntroGraphics_Data:
 	dc.b	$00, $00, $01, $02, $03, $04, $00, $05, $06, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $07, $08, $09, $0A, $0B, $0C, $0D, $0E, $0F, $10, $11 
 	dc.b	$00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $12, $13, $14, $15, $16, $17, $18, $19, $1A, $1B, $1C, $1D, $1E, $00, $00, $00, $00, $00, $00, $00, $00, $15 
@@ -10203,6 +10295,7 @@ DrawIntroGraphics_Data:
 	dc.b	$8D, $8E, $8F, $00, $00, $00, $00, $00, $00, $00, $00, $90, $91, $15, $15, $92, $93, $94, $95, $96, $97, $98, $99, $9A, $00, $00, $00, $00, $00, $00, $00, $00 
 	dc.b	$9B, $9C, $9D, $9E, $9F, $A0, $A1, $A2, $00, $00, $00, $00, $00, $00, $00, $00, $A3, $00, $A4, $A5, $A6, $A7, $00, $00, $A8, $A9, $AA, $AB, $00, $00, $00, $00 
 	dc.b	$00, $00, $00, $00, $AC, $AD, $00, $AE, $00, $00, $00, $00, $00, $AF, $B0, $B1, $B2, $B3, $00, $00, $00, $00, $00, $B4, $B5, $00, $B6, $00 
+; @ $0006181A
 DrawIntroBackground_Data:
 	dc.b	$00, $00, $00, $00, $00, $00, $00, $00, $01, $02, $03, $04, $05, $06, $00, $00, $00, $07, $08, $09, $0A, $0B, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 
 	dc.b	$00, $00, $00, $00, $00, $00, $00, $0C, $0D, $0E, $0F, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $1A, $1B, $1C, $1D, $1E, $1F, $20, $21, $00, $00, $00 
@@ -10214,18 +10307,21 @@ DrawIntroBackground_Data:
 	dc.b	$00, $00, $00, $00, $00, $00, $9A, $9B, $9C, $9D, $9E, $9F, $A0, $A1, $A1, $A2, $A3, $A4, $A5, $A6, $A7, $A8, $A9, $AA, $AB, $AC, $AC, $AD, $AE, $AF, $00, $00 
 	dc.b	$00, $00, $00, $00, $00, $00, $B0, $B1, $B2, $B3, $B4, $B5, $B6, $B7, $B8, $B9, $BA, $B6, $BB, $BC, $BD, $BE, $BF, $C0, $C1, $C2, $C3, $C4, $C5, $C6, $00, $00 
 	dc.b	$00, $00, $00, $00, $00, $00, $00, $00, $C7, $C8, $00, $C9, $B6, $B6, $CA, $CB, $CC, $CD, $CE, $CF, $D0, $D1, $D2, $D3, $D4, $D5, $D6, $D7, $D8, $D9, $00, $00 
+; @ $0006195A
 SpriteTileIndexTable_6195A:
 	dc.b	$00, $01, $02, $01, $02, $03, $04, $05, $06, $07, $08, $09, $0A, $09, $0A, $0B, $0C, $0D, $0E, $0D, $0E, $0F, $10, $11, $12, $13, $14, $15, $16, $15, $16, $17 
 	dc.b	$18, $19, $1A, $19, $1A, $1B, $1C, $1D, $1E, $1F, $20, $21, $22, $21, $22, $23, $24, $25, $26, $25, $26, $27, $28, $29, $2A, $2B, $2C, $2D, $2E, $2D, $2E, $2F 
 	dc.b	$30, $31, $32, $31, $32, $33, $34, $35, $36, $37, $38, $39, $3A, $39, $3A, $3B, $3C, $3D, $3E, $3D, $3E, $3F, $40, $41, $42, $43, $44, $45, $46, $45, $46, $47 
 	dc.b	$48, $49, $4A, $49, $4A, $4B, $4C, $4D, $4E, $4F, $50, $51, $52, $51, $52, $53, $54, $55, $56, $55, $56, $57, $58, $59, $5A, $5B, $5C, $5D, $5E, $5D, $5E, $5F 
 	dc.b	$60, $61, $62, $61, $62, $63, $64, $65, $66, $67, $68, $69, $6A, $69, $6A, $6B 
+; @ $000619EA
 SpriteTileIndexTable_619EA:
 	dc.b	$00, $00, $00, $00, $00, $00, $00, $01, $00, $00, $00, $00, $00, $00, $00, $00, $02, $03, $00, $00, $00, $00, $00, $00, $00, $00, $04, $05, $00, $00, $00, $00 
 	dc.b	$00, $00, $00, $06, $07, $08, $09, $00, $00, $00, $00, $00, $00, $0A, $0B, $0C, $0D, $00, $00, $00, $00, $00, $00, $00, $0E, $0F, $10, $11, $00, $00, $12, $13 
 	dc.b	$14, $15, $16, $00, $17, $18, $00, $00, $19, $1A, $1B, $00, $00, $00, $1C, $1D, $00, $1E, $1F, $20, $21, $00, $00, $00, $22, $00, $00, $23, $24, $00, $00, $00 
 	dc.b	$00, $00, $00, $00, $00, $25, $00, $00, $00, $00, $00, $00, $00, $00, $00, $26, $00, $00, $00, $00, $00, $00, $00, $00, $27, $28, $00, $00, $00, $00, $00, $00 
 	dc.b	$00, $00, $29, $00, $00, $00, $00, $00, $00, $00, $00, $00 
+; @ $00061A76
 LoadTownTileGfxToBuffer_Done3_Data:
 	dc.b	$01, $00, $EC, $C8, $89, $98, $08, $08, $81, $81, $13, $08, $13, $88, $08, $15, $80, $81, $18, $81, $18, $81, $15, $80, $01, $00, $60, $08, $CD, $FF, $88, $80 
 	dc.b	$11, $88, $08, $18, $88, $11, $81, $88, $88, $11, $80, $81, $80, $08, $01, $00, $20, $00, $99, $99, $08, $88, $08, $81, $14, $80, $81, $18, $81, $48, $18, $80 
@@ -10332,6 +10428,7 @@ LoadTownTileGfxToBuffer_Done3_Data:
 	dc.b	$FF, $FF, $EE, $ED, $F0, $FF, $FE, $EE, $D0, $0F, $01, $00, $66, $FF, $FF, $FF, $DF, $FF, $FD, $0F, $02, $FF, $FF, $00, $00, $00, $00, $00, $FF, $FF, $FF, $01 
 	dc.b	$00, $08, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $0F, $FF, $FF, $01, $00, $37, $FF, $FF, $FF, $FF, $FF, $F0, $01, $00, $EE, $FF, $FF, $FF, $FF, $0F, $01, $00, $EF 
 	dc.b	$FF, $FF, $FF, $0E, $01, $00, $77, $FF, $FF, $FF, $DD, $E0 
+; @ $00062782
 TitleScreen_ShowPressStart_Loop_Data:
 	dc.b	$00, $01, $02, $03, $04, $05, $06, $07, $08, $09, $0A, $05, $0B, $0C, $0D, $0D, $0D, $0D, $0D, $0D, $0D, $0D, $0D, $0D, $0D, $0D, $0D, $0D, $0D, $0D, $0D, $0D 
 	dc.b	$0D, $0E, $0F, $10, $11, $12, $13, $14, $15, $16, $17, $12, $13, $18, $19, $0D, $0D, $0D, $0D, $0D, $0D, $0D, $0D, $0D, $0D, $0D, $0D, $0D, $0D, $0D, $0D, $0D 
@@ -10346,12 +10443,16 @@ TitleScreen_ShowPressStart_Loop_Data:
 	dc.b	$0D, $0D, $0D, $0D, $0D, $0D, $0D, $0D, $0D, $0D 
 GfxLoadList_IntroSegalogo_Entry00:
 	dc.b	$00, $01, $02, $03 
+; @ $000628D0
 TitleScreen_ShowPressStart_Loop_Data_Entry_628D0:
 	dc.b	$01, $00, $FF, $BF, $FF, $FF, $F0, $00 
+; @ $000628D8
 TitleScreen_ShowPressStart_Loop_Data_Entry_628D8:
 	dc.b	$01, $00, $FB, $3B, $FF, $FF, $10, $01, $11, $10 
+; @ $000628E2
 TitleScreen_ShowPressStart_Loop_Data_Entry_628E2:
 	dc.b	$01, $00, $BB, $1B, $BF, $FF, $10, $10, $11, $11, $10, $10, $10, $00 
+; @ $000628F0
 TitleScreen_ShowPressStart_Loop_Data_Entry_628F0:
 	dc.b	$01, $00, $53, $B3, $5F, $FF, $10, $10, $01, $01, $10, $01, $01, $10, $10, $00 
 GfxLoadList_IntroSegalogo_Entry01:
@@ -10362,6 +10463,7 @@ GfxLoadList_IntroSegalogo_Entry01:
 GfxLoadList_IntroTitle_Entry00:
 	dc.l	LoadMenuTileGfxSet3-3	
 	dc.l	$04050607	
+; @ $00062918
 TitleScreen_ShowPressStart_Loop_Data_Entry_62918:
 	dc.l	OverworldRotateDispatch-2	
 	dc.l	$80038000	
@@ -10372,6 +10474,7 @@ TitleScreen_ShowPressStart_Loop_Data_Entry_62918:
 	dc.l	$02038000	
 	dc.l	$38004444	
 	dc.l	$80000100	
+; @ $0006293C
 TitleScreen_ShowPressStart_Loop_Data_Entry_6293C:
 	dc.l	$8898E88F	
 	dc.l	$04444833	
@@ -10379,6 +10482,7 @@ TitleScreen_ShowPressStart_Loop_Data_Entry_6293C:
 	dc.l	$01111822	
 	dc.l	$33803304	
 	dc.l	$44480100	
+; @ $00062954
 TitleScreen_ShowPressStart_Loop_Data_Entry_62954:
 	dc.l	$0220220F	
 	dc.l	$04444480	
@@ -10387,6 +10491,7 @@ TitleScreen_ShowPressStart_Loop_Data_Entry_62954:
 	dc.l	$18018228	
 	dc.l	$02833803	
 	dc.l	$04444480	
+; @ $00062970
 TitleScreen_ShowPressStart_Loop_Data_Entry_62970:
 	dc.l	$01001160	
 	dc.l	$000F4444	
@@ -10396,6 +10501,7 @@ TitleScreen_ShowPressStart_Loop_Data_Entry_62970:
 	dc.l	$28023803	
 	dc.l	$38334444	
 	dc.l	$48440100	
+; @ $00062990
 TitleScreen_ShowPressStart_Loop_Data_Entry_62990:
 	dc.l	$3211110F	
 	dc.l	$44483338	
@@ -10404,6 +10510,7 @@ TitleScreen_ShowPressStart_Loop_Data_Entry_62990:
 	dc.l	$22808003	
 	dc.l	$38800448	
 	dc.l	$04000180	
+; @ $000629AC
 TitleScreen_ShowPressStart_Loop_Data_Entry_629AC:
 	dc.l	$45544500	
 	dc.l	$44044433	
@@ -10412,6 +10519,7 @@ TitleScreen_ShowPressStart_Loop_Data_Entry_629AC:
 	dc.l	$00333344	
 	dc.l	$48044400	
 	dc.l	NULL_PTR	
+; @ $000629C8
 TitleScreen_ShowPressStart_Loop_Data_Entry_629C8:
 	dc.l	$01004000	
 	dc.l	$204F4844	
@@ -10421,6 +10529,7 @@ TitleScreen_ShowPressStart_Loop_Data_Entry_629C8:
 	dc.l	$11228002	
 	dc.l	$33833803	
 	dc.l	$48444400	
+; @ $000629E8
 TitleScreen_ShowPressStart_Loop_Data_Entry_629E8:
 	dc.l	$01808222	
 	dc.l	$22800444	
@@ -10439,27 +10548,34 @@ GfxLoadList_IntroTitle_Entry01:
 	dc.l	TitleScreen_ShowPressStart_Loop_Data_Entry_629AC-2
 	dc.l	TitleScreen_ShowPressStart_Loop_Data_Entry_629C8
 	dc.l	TitleScreen_ShowPressStart_Loop_Data_Entry_629E8
+; @ $00062A28
 DrawPrologueScene1and2_Data:
 	dc.b	$00, $01, $02, $03, $03, $04, $05, $03, $03, $03, $06, $07, $08, $09, $0A, $0B, $0C, $0D, $0E, $0B, $0B, $0B, $0B, $0B, $0F, $10, $09, $11, $11, $12, $13, $14 
 	dc.b	$11, $11, $11, $11, $11, $11, $10, $09, $11, $11, $15, $16, $17, $18, $19, $11, $1A, $11, $11, $10, $09, $1B, $1B, $1C, $1D, $1E, $1F, $20, $11, $21, $1C, $1D 
 	dc.b	$10, $09, $22, $22, $23, $24, $25, $26, $27, $28, $29, $23, $24, $10, $09, $2A, $2B, $2C, $2D, $2E, $2F, $30, $31, $32, $2C, $2D, $10, $09, $33, $34, $35, $36 
 	dc.b	$37, $38, $39, $3A, $3B, $35, $36, $10, $09, $3C, $3D, $3E, $3F, $40, $41, $42, $43, $44, $3E, $3F, $10, $09, $45, $46, $47, $48, $49, $4A, $4B, $4C, $4D, $47 
 	dc.b	$48, $10 
+; @ $00062AAA
 LoadTitleScreenGraphics_Data:
 	incbin "data/art/tiles/ui/title_screen_1.bin"
 DrawPrologueScene1and2_Data2 equ LoadTitleScreenGraphics_Data+$8AC
+; @ $000633D8
 LoadTitleScreenGraphics_Done_Data:
 	incbin "data/art/tiles/ui/title_screen_2.bin"
 DrawPrologueScene3_Data equ LoadTitleScreenGraphics_Done_Data+$A7E
+; @ $00063ED8
 LoadTitleScreenGraphics_Set2Data:
 	incbin "data/art/tiles/ui/title_screen_3.bin"
 DrawPrologueScene4and5_Data equ LoadTitleScreenGraphics_Set2Data+$9A4
+; @ $000648FE
 LoadTitleScreenGraphics_Done3_Data:
 	incbin "data/art/tiles/ui/title_screen_4.bin"
 DrawPrologueScene4and5_Data2 equ LoadTitleScreenGraphics_Done3_Data+$634
+; @ $00064FB4
 LoadTitleScreenGraphics_Done4_Data:
 	incbin "data/art/tiles/ui/title_screen_5.bin"
 DrawTilemapBlock_15x12_Data equ LoadTitleScreenGraphics_Done4_Data+$7C6
+; @ $0006582E
 LoadTitleScreenTileGfx_Done_Data:
 	dc.b	$00, $EE, $DC, $BD, $EE, $ED, $AA, $AA, $DE, $DA, $75, $57, $AD, $BA, $52, $F5, $AB, $CA, $54, $25, $AC, $DA, $75, $57, $AD, $ED, $AA, $AA, $DE, $EE, $DC, $BD 
 	dc.b	$EE, $01, $AA, $F9, $00, $00, $9F, $DC, $CD, $AD, $CB, $BC, $DA, $AC, $B2, $FB, $CA, $AC, $B2, $2B, $CA, $AD, $CB, $BC, $DA, $DC, $CD, $00, $DC, $DE, $DC, $DE 
@@ -10467,6 +10583,7 @@ LoadTitleScreenTileGfx_Done_Data:
 	dc.b	$FF, $FF, $00, $DE, $DC, $BC, $ED, $CD, $CB, $EE, $DC, $BE, $DC, $BC, $ED, $BE, $ED, $CB, $CE, $BE, $DC, $BC, $ED, $CD, $CB, $EE, $DC, $CE, $DC, $BC, $ED, $CE 
 	dc.b	$ED, $CB, $CE, $00, $DC, $BB, $BC, $CC, $ED, $EE, $ED, $EE, $DC, $DE, $DC, $DE, $CB, $CD, $CB, $CD, $BE, $BC, $BE, $BC, $CE, $CB, $CE, $CB, $ED, $EC, $ED, $EC 
 	dc.b	$DC, $DE, $DC, $DE 
+; @ $000658D2
 InitEndingCreditsScreen_InnerLoop_Data:
 	dc.b	$00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $01, $00, $02, $00, $03, $00, $03, $00, $03, $00, $03, $00, $03, $00, $03 
 	dc.b	$00, $03, $00, $03, $00, $03, $00, $03, $00, $03, $00, $04, $00, $05, $00, $06, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 
@@ -10517,18 +10634,23 @@ InitEndingCreditsScreen_InnerLoop_Data:
 	dc.b	$01, $2C, $01, $2D, $01, $2E, $01, $2F, $01, $30, $01, $31, $01, $32, $01, $33, $01, $34, $01, $35, $01, $36, $01, $37, $00, $03, $00, $03, $00, $03, $00, $03 
 	dc.b	$00, $03, $00, $20, $00, $21, $00, $22, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $2A, $00, $03, $01, $38, $01, $39, $01, $3A, $01, $3A, $01, $3B 
 	dc.b	$01, $3C, $01, $3D, $01, $3E, $01, $3F, $01, $3A, $01, $40, $01, $41, $01, $42, $00, $03, $00, $03, $00, $03, $00, $03, $00, $03, $00, $27, $00, $28, $00, $29 
+; @ $00065EF2
 LoadMenuTileGraphics_Data:
 	incbin "data/art/tiles/ui/menu_gfx_1.bin"
+; @ $00067682
 LoadMenuTileGraphics_Done_Data:
 	incbin "data/art/tiles/ui/menu_gfx_2.bin"
 InitEndingCreditsScreen_Done4_Data equ LoadMenuTileGraphics_Done_Data+$63A
+; @ $00067FB4
 LoadMenuTileGfxSet3_Set2Data:
 	dc.b	$01, $00, $FF, $FF, $FF, $FF, $01, $00, $EC, $EF, $FF, $FF, $10, $01, $31, $10, $01, $00, $FF, $FD, $D8, $DD, $01, $02, $01, $23, $21, $02, $01, $01, $00, $FF 
 	dc.b	$FB, $B1, $BB, $10, $20, $12, $32, $10, $20, $10, $01, $00, $B1, $90, $91, $BF, $04, $07, $05, $07, $86, $80, $45, $6F, $65, $40, $86, $80, $07, $05, $07, $04 
 	dc.b	$01, $00, $B1, $90, $91, $BF, $09, $0C, $0A, $0C, $DB, $D0, $9A, $BE, $BA, $90, $DB, $D0, $0C, $0A, $0C, $09, $01, $00, $B3, $BF, $FF, $FF, $10, $01, $31, $10 
 	dc.b	$01, $00, $FF, $FB, $B1, $BF, $10, $20, $12, $32, $10, $20 
+; @ $00068020
 ClearEndingTextArea_InnerLoop_Data:
 	dc.b	$00, $01, $02, $03, $04, $05, $06, $07, $08, $09, $0A, $0B, $0C, $0D, $0E, $0F, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $1A, $00 
+; @ $0006803C
 LoadMenuTileGfxSet3_Done_Data:
 	dc.b	$03, $00, $8C, $CC, $CC, $CC, $0F, $40, $22, $22, $22, $ED, $01, $11, $11, $11, $FF, $FF, $FE, $01, $00, $00, $77, $77, $77, $FF, $FF, $FF, $FF, $DD, $DD, $DD 
 	dc.b	$DD, $CB, $CB, $CB, $CB, $CB, $CB, $01, $00, $23, $BB, $BF, $FF, $FF, $FF, $FF, $DD, $DB, $DB, $0B, $0B, $01, $ED, $00, $44, $44, $54, $FF, $FF, $F0, $00, $FE 
@@ -10546,6 +10668,7 @@ LoadMenuTileGfxSet3_Done_Data:
 	dc.b	$00, $CC, $CE, $EE, $FF, $FE, $DD, $FE, $DD, $0F, $ED, $FE, $FE, $0F, $02, $00, $66, $66, $66, $66, $0F, $11, $11, $11, $11, $DB, $DB, $DB, $DB, $DB, $EB, $FB 
 	dc.b	$FB, $02, $ED, $88, $88, $88, $80, $00, $33, $33, $33, $00, $CB, $CB, $CB, $CB, $CB, $CB, $DC, $FF, $FF, $BB, $BB, $BB, $BB, $01, $00, $EE, $EE, $C8, $13, $0F 
 	dc.b	$0F, $FE, $FE, $0F, $ED, $0F, $FE, $BB, $FF, $FF, $BB, $BB, $BB, $01, $00, $33, $77, $7F, $FF, $ED, $B0, $ED, $B0, $DB, $DB, $B0 
+; @ $00068236
 LoadOptionsMenuGraphics_Data:
 	dc.b	$01, $00, $FF, $FF, $FF, $FF, $01, $00, $FF, $CC, $C8, $88, $0D, $EF, $DE, $FF, $DE, $FF, $0D, $EF, $FF, $0D, $EF, $FF, $DE, $FF, $FF, $02, $00, $FF, $30, $00 
 	dc.b	$00, $FF, $00, $8E, $FF, $FF, $F0, $F0, $01, $00, $FF, $CC, $40, $00, $01, $11, $01, $22, $FF, $01, $23, $FF, $FF, $E1, $23, $FF, $FE, $D1, $23, $FF, $FE, $D1 
@@ -10590,6 +10713,7 @@ LoadOptionsMenuGraphics_Data:
 	dc.b	$0F, $66, $66, $66, $66, $33, $33, $33, $33, $44, $44, $44, $44, $01, $55, $CC, $C8, $48, $07, $66, $54, $56, $54, $66, $54, $66, $65, $44, $66, $54, $43, $44 
 	dc.b	$43, $33, $54, $44, $44, $44, $65, $01, $33, $EE, $88, $8C, $00, $45, $45, $56, $53, $45, $66, $63, $45, $56, $53, $45, $34, $45, $44, $44, $44, $55, $55, $55 
 	dc.b	$55, $50 
+; @ $00068778
 DrawNameEntryBackground_Data:
 	dc.b	$00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $01, $02, $03, $04, $04, $04, $04, $04, $04, $05, $06, $07, $00, $00, $00, $00, $00, $00, $00, $00, $00 
 	dc.b	$00, $00, $08, $09, $0A, $0A, $0A, $0A, $0A, $0B, $0C, $0D, $0E, $0F, $10, $11, $12, $12, $12, $12, $12, $12, $13, $14, $15, $16, $17, $18, $19, $0A, $0A, $0A 
@@ -10616,6 +10740,7 @@ DrawNameEntryBackground_Data:
 	dc.b	$1E, $1E, $1E, $1E, $1E, $1E, $1E, $1E, $1E, $33, $34, $35, $1E, $1E, $1E, $1E, $1E, $1E, $1E, $1E, $1E, $1E, $1E, $1E, $1E, $1E, $1E, $1E, $1E, $1E, $1E, $1E 
 	dc.b	$1E, $1E, $1E, $1E, $1E, $1E, $1E, $1E, $1E, $1E, $36, $37, $38, $39, $3A, $3A, $3A, $3A, $3A, $3A, $3A, $3A, $3A, $3A, $3A, $3A, $3A, $3A, $3A, $3A, $3A, $3A 
 	dc.b	$3A, $3A, $3A, $3A, $3A, $3A, $3A, $3A, $3A, $3A, $3A, $3A, $3B, $3C 
+; @ $00068A86
 NameEntryCharacterTable:
 	dc.b	$FF, $20, $FF, $FF, $20, $FF, $FF, $20, $FF, $FF, $20, $FF, $FF, $20, $FF, $FF, $20, $FF, $FF, $20, $FF, $FF, $20, $FF, $FF, $20, $FF, $FF, $20, $FF, $20, $41 
 	dc.b	$20, $20, $42, $20, $20, $43, $20, $20, $44, $20, $20, $45, $20, $20, $46, $20, $20, $47, $20, $20, $48, $20, $20, $49, $20, $20, $4A, $20, $FF, $20, $FF, $FF 
@@ -10708,6 +10833,7 @@ TerrainTilemapMetadata_Entry00:
 	dc.b	$A7, $6A, $A6, $A6, $76, $98, $68, $79, $76, $67, $67, $67, $00, $A8, $9A, $76, $A7, $6A, $9A, $8A, $98, $AA, $A6, $87, $A8, $A9, $A8, $AA, $79, $6A, $79, $67 
 	dc.b	$A7, $97, $A7, $76, $76, $76, $78, $67, $76, $76, $67, $67, $67, $02, $76, $B0, $03, $43, $98, $67, $0C, $80, $BC, $27, $66, $66, $77, $66, $87, $68, $66, $77 
 	dc.b	$78, $02, $67, $4D, $85, $21, $90, $76, $02, $52, $40, $67, $77, $86, $87, $77, $87, $66, $68, $77, $66, $68, $66, $00 
+; @ $00069592
 SpriteAnimFrameTable_69592:
 	dc.b	$00, $01, $02, $03, $04, $05, $06, $07, $08, $00, $00, $01, $02, $03, $04, $05, $06, $07, $08, $00, $09, $0A, $0B, $0C, $0D, $0E, $0F, $10, $11, $12, $09, $0A 
 	dc.b	$0B, $0C, $0D, $0E, $0F, $10, $11, $12, $13, $14, $02, $03, $04, $05, $06, $07, $15, $16, $13, $14, $02, $03, $04, $05, $06, $07, $15, $16, $17, $18, $0B, $0C 
@@ -10723,6 +10849,7 @@ SpriteAnimFrameTable_69592:
 	dc.b	$3C, $3B, $3C, $3B, $3C, $3B, $3C, $3B, $3D, $3E, $3D, $3E, $3D, $3E, $3D, $3E, $3D, $3E, $3D, $3D, $3E, $3D, $3E, $3D, $3E, $3D, $3E, $3D, $3F, $40, $3F, $40 
 	dc.b	$3F, $40, $3F, $40, $3F, $40, $3F, $3F, $40, $3F, $40, $3F, $40, $3F, $40, $3F, $41, $42, $41, $42, $41, $42, $41, $42, $41, $42, $41, $41, $42, $41, $42, $41 
 	dc.b	$42, $41, $42, $41, $43, $44, $43, $44, $43, $44, $43, $44, $43, $44, $43, $43, $44, $43, $44, $43, $44, $43, $44, $43 
+; @ $0006974A
 SpriteGfxData_6974A:
 	dc.b	$01, $88, $FF, $FF, $FF, $FF, $01, $88, $CC, $CE, $CC, $CC, $78, $76, $78, $76, $78, $76, $77, $68, $87, $68, $76, $68, $85, $67, $85, $00, $86, $55, $67, $86 
 	dc.b	$86, $54, $56, $86, $87, $54, $56, $86, $87, $65, $56, $86, $77, $75, $66, $87, $77, $76, $67, $88, $67, $88, $88, $88, $56, $88, $66, $67, $00, $55, $54, $56 
@@ -10790,6 +10917,7 @@ SpriteGfxData_6974A:
 	dc.b	$47, $43, $44, $64, $74, $54, $44, $57, $55, $46, $66, $88, $78, $77, $77, $00, $43, $44, $67, $33, $44, $36, $73, $34, $46, $67, $46, $56, $87, $88, $87, $87 
 	dc.b	$43, $34, $45, $48, $35, $45, $56, $84, $44, $66, $68, $43, $78, $87, $87, $88, $00, $33, $34, $68, $43, $45, $45, $74, $34, $65, $57, $64, $56, $87, $77, $77 
 	dc.b	$77, $43, $33, $44, $57, $34, $34, $56, $76, $65, $65, $68, $56, $77, $77, $77, $68, $00 
+; @ $00069F7C
 LoadBattleTileGraphics_Data:
 	dc.b	$00, $4D, $EF, $FE, $D4, $DE, $4B, $44, $ED, $E4, $B7, $BB, $4E, $F4, $B7, $97, $BF, $FB, $77, $7B, $4F, $E4, $BB, $7B, $4E, $DE, $44, $B4, $ED, $4D, $EF, $FE 
 	dc.b	$D4, $00, $33, $34, $4C, $C4, $34, $4C, $CD, $DC, $4D, $CD, $DE, $ED, $CE, $EF, $FF, $FE, $CE, $DE, $EF, $FE, $4D, $CD, $DE, $ED, $34, $4C, $CD, $DC, $33, $34 
@@ -10814,6 +10942,7 @@ LoadBattleTileGraphics_Data:
 	dc.b	$DF, $DF, $D4, $FF, $3F, $D4, $FD, $33, $33, $FD, $4D, $FF, $F4, $FF, $3F, $F4, $DF, $DF, $D4, $3D, $FF, $FD, $02, $3F, $88, $22, $AA, $80, $F4, $45, $54, $45 
 	dc.b	$54, $33, $DF, $3D, $3D, $3D, $D4, $D4, $3D, $3D, $33, $DF, $01, $33, $31, $9F, $99, $02, $FF, $D4, $3D, $FD, $43, $FD, $43, $FF, $43, $FF, $43, $3D, $FD, $43 
 	dc.b	$FF, $FF, $D4, $DF 
+; @ $0006A240
 DrawBattleNametable_Data:
 	dc.b	$00, $01, $02, $02, $02, $02, $02, $02, $02, $03, $00, $04, $00, $01, $02, $02, $02, $02, $02, $02, $02, $03, $00, $01, $02, $02, $02, $02, $02, $02, $02, $02 
 	dc.b	$02, $02, $02, $02, $02, $02, $03, $00, $05, $06, $06, $06, $06, $06, $06, $06, $06, $06, $06, $06, $06, $06, $06, $06, $06, $06, $06, $06, $06, $06, $05, $06 
@@ -10843,6 +10972,7 @@ DrawBattleNametable_Data:
 	dc.b	$07, $06, $06, $06, $06, $06, $06, $06, $06, $06, $06, $06, $06, $06, $06, $06, $06, $06, $06, $06, $06, $06, $07, $0B, $10, $11, $12, $13, $0B, $0B, $0B, $0B 
 	dc.b	$0B, $0B, $0B, $0B, $0B, $0B, $0B, $07, $0A, $06, $06, $06, $06, $06, $06, $06, $06, $06, $06, $06, $06, $06, $06, $06, $06, $06, $06, $06, $06, $06, $0A, $0B 
 	dc.b	$0B, $0B, $0B, $0B, $0B, $0B, $0B, $0B, $0B, $0B, $0B, $0B, $0B, $0B, $0B, $0A 
+; @ $0006A5B0
 DrawBattleStatusBar_Data:
 	dc.b	$04, $01, $02, $02, $02, $02, $02, $02, $02, $03, $04, $00, $04, $01, $02, $02, $02, $02, $02, $02, $02, $03, $04, $01, $02, $02, $02, $02, $02, $02, $02, $02 
 	dc.b	$02, $02, $02, $02, $02, $02, $03, $04, $05, $0B, $0B, $0B, $14, $12, $13, $0B, $0B, $0B, $0B, $0B, $0B, $0B, $0B, $0B, $0B, $0B, $0B, $0B, $0B, $0B, $05, $0B 
@@ -10852,6 +10982,7 @@ DrawBattleStatusBar_Data:
 	dc.b	$0A, $0B, $0B, $0B, $0B, $0B, $0B, $0B, $0B, $0B, $0B, $0B, $15, $0B, $0B, $0B, $0B, $0B, $0B, $0B, $0B, $0B, $0A, $0B, $0B, $0B, $0B, $0B, $0B, $0B, $0B, $0B 
 	dc.b	$0B, $0B, $0B, $0B, $0B, $0B, $0B, $0A, $00, $01, $02, $02, $02, $02, $02, $02, $02, $03, $00, $04, $00, $01, $02, $02, $02, $02, $02, $02, $02, $03, $00, $01 
 	dc.b	$02, $02, $02, $02, $02, $02, $02, $02, $02, $02, $02, $02, $02, $02, $03, $00 
+; @ $0006A6A0
 DrawCompassTiles_Data:
 	dc.b	$00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $01, $02, $03, $04, $05, $06, $07, $00, $00, $00, $00, $0B, $0C, $0D, $0E, $0F, $10, $11, $00, $00, $00 
 	dc.b	$00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $01, $02, $03, $04, $05, $06, $07, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $01 
@@ -10878,6 +11009,7 @@ DrawCompassTiles_Data:
 	dc.b	$26, $27, $28, $29, $2A, $2B, $2C, $2D, $2E, $2F, $30, $31, $32, $33, $34, $35, $36, $37, $25, $26, $27, $28, $34, $38, $29, $2A, $2B, $2C, $2D, $2E, $2F, $30 
 	dc.b	$31, $32, $33, $34, $35, $39, $22, $23, $34, $35, $39, $39, $39, $39, $39, $22, $23, $34, $3B, $37, $25, $26, $27, $2E, $2F, $30, $2B, $33, $34, $35, $22, $29 
 	dc.b	$2A, $2B, $25, $26, $27, $28, $34, $35, $36, $3C, $23, $34, $22, $23, $34, $35, $22, $23, $24, $25, $26, $27, $28, $29, $2A, $2B, $2C, $2D, $2E, $2F, $30, $31 
+; @ $0006A9C0
 LoadBattleUiTileGraphics_Data:
 	dc.b	$01, $FF, $FF, $FF, $FF, $FF, $02, $FF, $80, $08, $CE, $FF, $EE, $04, $67, $30, $00, $DD, $DC, $CC, $FE, $ED, $DD, $FE, $ED, $FE, $01, $EE, $00, $08, $CF, $30 
 	dc.b	$BC, $BB, $BC, $BB, $DC, $CB, $CB, $BC, $DD, $DC, $CC, $CB, $DD, $DD, $DC, $ED, $DD, $FF, $FF, $FF, $FF, $FF, $FF, $01, $DD, $00, $00, $FF, $00, $BA, $BB, $BA 
@@ -10927,6 +11059,7 @@ LoadBattleUiTileGraphics_Data:
 	dc.b	$AB, $AB, $AB, $BA, $BA, $BA, $BA, $01, $DD, $0F, $E0, $01, $00, $DE, $DE, $DE, $DE, $DF, $DC, $DC, $DE, $FF, $CD, $CE, $FF, $FD, $DE, $EF, $FF, $BF, $FF, $FC 
 	dc.b	$FB, $BB, $FF, $FF, $FC, $01, $BB, $00, $FF, $00, $00, $BC, $BC, $BC, $BC, $CB, $CB, $CB, $CB, $AB, $AD, $DC, $CB, $BD, $DE, $DE, $DC, $DE, $EE, $EF, $FF, $ED 
 	dc.b	$DF, $FF, $FE, $01, $FF, $00, $01, $16, $CF, $BC, $BC, $BC, $BC, $CB, $CB, $CB, $CB, $BB, $BB, $BB, $BB, $BB, $BB, $BE, $AB, $EE, $EF, $EE, $FE, $FE, $EF, $00 
+; @ $0006AFC0
 DisplayCompassToVRAM_Data:
 	dc.b	$01, $02, $03, $04, $05, $06, $07, $08, $09, $0A, $0B, $0A, $09, $08, $07, $06, $05, $04, $03, $02, $01, $0C, $0D, $0E, $0F, $10, $11, $12, $13, $14, $15, $16 
 	dc.b	$15, $14, $13, $12, $11, $10, $0F, $0E, $0D, $0C, $17, $18, $19, $1A, $1B, $1C, $1D, $1E, $1F, $20, $21, $20, $1F, $1E, $1D, $1C, $1B, $1A, $19, $18, $17, $22 
@@ -10943,6 +11076,7 @@ DisplayCompassToVRAM_Data:
 ; palette 0, $4AA4 for palette 1); per row: 11 palette-0 tiles then 10
 ; palette-1 tiles. Terminated by $00.
 ; Used by: RenderMapToVRAM_DualPalette_21x13 (dungeon.asm)
+; @ $0006B0D2
 RenderMapToVRAM_DualPalette_21x13_Data:
 	dc.b	$73, $74, $75, $76, $77, $78, $78, $78, $79, $01, $02, $03, $04, $05, $01, $02, $01, $02, $03, $04, $05, $7B, $7C, $7D, $7E, $7F, $80, $81, $0C, $0C, $0C, $82 
 	dc.b	$0C, $0D, $0C, $0C, $0D, $0E, $83, $84, $77, $78, $8A, $8A, $8A, $8A, $8A, $8A, $8B, $8C, $8D, $8E, $8F, $8F, $8F, $8F, $8F, $90, $90, $8A, $8A, $8A, $91, $96 
@@ -10958,6 +11092,7 @@ RenderMapToVRAM_DualPalette_21x13_Data:
 ; Each byte is a tile-index offset; added to base $42A4 (first 11/row) or
 ; $4AA4 (next 10/row) by RenderMapToVRAM_NoPalette. Terminated by $00.
 ; Used by: RenderMapToVRAM_DualPalette_21x20 (dungeon.asm)
+; @ $0006B1E4
 RenderMapToVRAM_DualPalette_21x20_Data:
 	dc.b	$7A, $7A, $7A, $7A, $7A, $7A, $7A, $7A, $7A, $7A, $7A, $7A, $7A, $7A, $7A, $7A, $7A, $7A, $7A, $7A, $7A, $85, $86, $87, $87, $87, $87, $87, $87, $87, $88, $89 
 	dc.b	$88, $87, $87, $87, $87, $87, $87, $87, $86, $85, $92, $92, $92, $92, $91, $91, $91, $91, $93, $94, $95, $94, $93, $91, $91, $91, $91, $92, $92, $92, $92, $96 
@@ -10973,6 +11108,7 @@ RenderMapToVRAM_DualPalette_21x20_Data:
 ; Same format as RenderMapToVRAM_DualPalette_21x13_Data but uses palette
 ; offset $4AA4 as the primary base (D4 = $4AA4). Terminated by $00.
 ; Used by: RenderMapToVRAM_DualPalette_21x13_Alt (dungeon.asm)
+; @ $0006B2F6
 RenderMapToVRAM_DualPalette_21x13_Alt_Data:
 	dc.b	$05, $04, $03, $02, $01, $02, $01, $05, $04, $03, $02, $01, $79, $78, $78, $78, $77, $76, $75, $74, $73, $78, $77, $84, $83, $0E, $0D, $0C, $0C, $0D, $0C, $82 
 	dc.b	$0C, $0C, $0C, $81, $80, $7F, $7E, $7D, $7C, $7B, $91, $8A, $8A, $8A, $90, $90, $8F, $8F, $8F, $8F, $8F, $8E, $8D, $8C, $8B, $8A, $8A, $8A, $8A, $8A, $8A, $97 
@@ -10983,6 +11119,7 @@ RenderMapToVRAM_DualPalette_21x13_Alt_Data:
 	dc.b	$D9, $DA, $D9, $89, $88, $87, $87, $87, $87, $87, $DB, $D9, $DA, $D9, $DA, $D9, $D8, $87, $46, $46, $46, $46, $E1, $C4, $E2, $E2, $DF, $E2, $C9, $DF, $C6, $E1 
 	dc.b	$E1, $46, $E1, $46, $E1, $E0, $DF, $6C, $6B, $6B, $6B, $C5, $E8, $69, $51, $51, $68, $51, $68, $E7, $6C, $6B, $6B, $6B, $6C, $6B, $6B, $E6, $EA, $D2, $D5, $D5 
 	dc.b	$D7, $D7, $6E, $6D, $6D, $6D, $6D, $6D, $57, $56, $55, $56, $55, $57, $56, $55, $D7, $00 
+; @ $0006B408
 LoadWorldMapTileGraphics_Data:
 	incbin "data/art/tiles/overworld/world_map_tiles.bin"
 DisplayKimsToVRAM_Data equ LoadWorldMapTileGraphics_Data+$1ACA
@@ -10991,6 +11128,7 @@ DisplayKimsToVRAM_Data equ LoadWorldMapTileGraphics_Data+$1ACA
 ; Each byte is a tile-index offset added to base $4770 (palette line 0).
 ; Per row: 11 palette-0 tiles then 10 palette-1 tiles (same base $4770).
 ; Used by: DisplayStatsToVRAM_SinglePalette (dungeon.asm, D4=$4770)
+; @ $0006CF7A
 DisplayStatsToVRAM_SinglePalette_Data:
 	dc.b	$00, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $02, $03, $00, $00, $00, $05, $06, $06, $06, $06, $06, $06, $06, $06, $06, $06 
 	dc.b	$06, $06, $06, $06, $07, $05, $05, $05, $05, $05, $08, $09, $09, $09, $09, $09, $09, $09, $09, $09, $09, $09, $0A, $0B, $08, $08, $08, $08, $08, $08, $08, $0C 
@@ -11002,6 +11140,7 @@ DisplayStatsToVRAM_SinglePalette_Data:
 ; Player stats HUD tile layout: 8 rows x 21 columns, no-palette variant.
 ; Each byte is a tile-index offset added to fixed base $4770.
 ; Used by: DisplayStatsToVRAM (dungeon.asm)
+; @ $0006D022
 DisplayStatsToVRAM_Data:
 	dc.b	$00, $00, $00, $39, $3A, $3B, $01, $01, $01, $01, $01, $01, $01, $01, $01, $3B, $3A, $39, $00, $00, $00, $05, $3F, $0E, $40, $06, $06, $06, $06, $06, $06, $06 
 	dc.b	$06, $06, $06, $06, $06, $06, $40, $0E, $3F, $05, $15, $16, $09, $09, $09, $09, $09, $09, $09, $09, $09, $09, $09, $09, $09, $09, $09, $09, $09, $16, $15, $0D 
@@ -11014,6 +11153,7 @@ DisplayStatsToVRAM_Data:
 ; Each byte is a tile-index offset added to base $4F70 (palette line 1).
 ; Per row: 11 palette-0 tiles then 10 palette-1 tiles.
 ; Used by: DisplayStatsToVRAM_AltPalette (dungeon.asm, D4=$4F70)
+; @ $0006D0CA
 DisplayStatsToVRAM_AltPalette_Data:
 	dc.b	$00, $00, $00, $03, $02, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $00, $05, $05, $05, $05, $05, $07, $06, $06, $06, $06, $06 
 	dc.b	$06, $06, $06, $06, $06, $06, $06, $06, $06, $05, $08, $08, $08, $08, $08, $08, $08, $0B, $0A, $09, $09, $09, $09, $09, $09, $09, $09, $09, $09, $09, $08, $11 
@@ -11021,6 +11161,7 @@ DisplayStatsToVRAM_AltPalette_Data:
 	dc.b	$15, $14, $14, $14, $14, $14, $14, $13, $12, $1D, $1D, $1D, $1D, $1D, $24, $23, $22, $21, $20, $1B, $1B, $1B, $1F, $1E, $1D, $1D, $1D, $1D, $1C, $1B, $27, $27 
 	dc.b	$27, $27, $27, $27, $27, $27, $27, $27, $2E, $2D, $2C, $2B, $2A, $29, $28, $27, $27, $26, $25, $35, $35, $35, $35, $35, $35, $35, $35, $35, $35, $35, $35, $35 
 	dc.b	$35, $35, $34, $33, $32, $31, $30, $2F 
+; @ $0006D172
 LoadCaveTileGraphics_Data:
 	incbin "data/art/tiles/dungeon/cave_tiles.bin"
 TerrainTilemapPtrs_Entry01 equ LoadCaveTileGraphics_Data+$EB6
@@ -11064,18 +11205,23 @@ TerrainTilemapMetadata_Entry01:
 BattleGfxData_FakeKing_Entry00:
 	incbin "data/art/tiles/battle/fakeking_gfx.bin"
 DrawBossPortrait_Data equ BattleGfxData_FakeKing_Entry00+$150E
+; @ $0006FC08
 DrawBossAttackGraphic1_Data:
 	dc.b	$00, $03, $04, $00, $00, $00, $00, $0A, $0B, $0C, $0D, $00, $00, $00, $17, $18, $19, $1A, $1B, $00, $00, $26, $27, $28, $29, $2A, $00, $00, $3A, $3B, $3C, $3D 
 	dc.b	$3E, $00, $00, $4F, $50, $51, $52, $53, $54, $00 
+; @ $0006FC32
 DrawDialogTextLine_Alt1_Data:
 	dc.b	$00, $05, $06, $00, $00, $00, $00, $0E, $0F, $10, $11, $12, $00, $00, $1C, $1D, $1E, $1F, $20, $21, $00, $26, $2B, $2C, $2D, $2E, $2F, $00, $3A, $3F, $40, $41 
 	dc.b	$42, $43, $00, $4F, $55, $56, $57, $58, $54, $00 
+; @ $0006FC5C
 DrawDialogTextLine_Alt1_Loop_Data:
 	dc.b	$00, $63, $64, $65, $66, $67, $00, $78, $79, $7A, $7B, $7C, $7D, $7E, $8D, $8E, $8F, $90, $91, $92, $93, $26, $A0, $A1, $A2, $A3, $A4, $00, $3A, $B5, $B6, $B7 
 	dc.b	$B8, $00, $00, $4F, $55, $CB, $CC, $CD, $54, $00 
+; @ $0006FC86
 DrawBossAttackGraphic1_Data2:
 	dc.b	$68, $69, $6A, $6B, $8B, $8C, $00, $7F, $80, $81, $9D, $9E, $9F, $00, $94, $00, $00, $B2, $B3, $B4, $00, $A5, $C6, $C7, $C8, $C9, $CA, $00, $D5, $D6, $D7, $D8 
 	dc.b	$D9, $DA, $00, $DD, $DE, $DF, $E0, $E1, $E2, $00 
+; @ $0006FCB0
 DrawDialogTextLine_Alt1_Loop_Data2:
 	dc.b	$68, $69, $6A, $6B, $6C, $6D, $00, $7F, $80, $81, $82, $83, $84, $00, $94, $00, $00, $95, $96, $97, $00, $A5, $A6, $A7, $A8, $A9, $AA, $00, $B9, $BA, $BB, $BC 
 	dc.b	$BD, $BE, $00, $CE, $CF, $D0, $D1, $00, $00, $00 
@@ -11892,12 +12038,15 @@ BossTileData_FakeKing_Entry10:
 BattleGfxData_StowThief_Entry00:
 	incbin "data/art/tiles/battle/stow_thief_gfx.bin"
 DrawBossNameplate_Data equ BattleGfxData_StowThief_Entry00+$1130
+; @ $00072A12
 BossAttackFlashJumpTable_Loop_Data:
 	dc.b	$2D, $A9, $AA, $AB, $00, $00, $00, $00, $3A, $B0, $B1, $B2, $00, $00, $00, $00, $47, $B8, $B9, $BA, $BB, $BC, $00, $00, $54, $55, $C1, $C2, $C3, $C4, $C5, $00 
 	dc.b	$63, $64, $65, $CA, $CB, $CC, $CD, $00, $73, $74, $75, $D0, $D1, $00, $00, $00, $82, $83, $00, $00, $00, $00, $00, $00 
+; @ $00072A4A
 DrawDialogTextLine_Alt2_Data:
 	dc.b	$2D, $00, $A6, $A7, $A8, $00, $00, $00, $3A, $AC, $AD, $AE, $AF, $00, $00, $00, $B3, $B4, $B5, $B6, $B7, $00, $00, $00, $54, $55, $56, $BD, $BE, $BF, $C0, $00 
 	dc.b	$63, $64, $65, $66, $C6, $C7, $C8, $C9, $73, $74, $75, $00, $CE, $CF, $00, $00, $82, $83, $00, $00, $00, $00, $00, $00 
+; @ $00072A82
 DrawDialogTextLine_Alt2_Loop_Data:
 	dc.b	$2D, $2E, $2F, $30, $31, $00, $00, $00, $3A, $3B, $3C, $3D, $3E, $00, $00, $00, $47, $48, $49, $4A, $4B, $4C, $00, $00, $54, $55, $56, $57, $58, $59, $00, $00 
 	dc.b	$63, $64, $65, $66, $67, $68, $69, $00, $73, $74, $75, $00, $76, $77, $78, $00, $82, $83, $00, $00, $84, $00, $00, $00 
@@ -14333,6 +14482,7 @@ BossTileData_Watling_Entry13:
 	dc.l	DrawDialogTextLine_Alt2_Loop_Data_TileData_77F80
 	dc.l	DrawDialogTextLine_Alt2_Loop_Data_TileData_77F94
 	dc.l	DrawDialogTextLine_Alt2_Loop_Data_TileData_77FA4-2
+; @ $00077FD4
 DrawBossHealthBar_Data:
 	dc.b	$00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $09, $0A, $00, $00, $00, $00, $00, $0B, $0C, $0D, $0E, $0F, $00, $00, $17, $18 
 	dc.b	$00, $00, $00, $00, $00, $19, $1A, $1B, $1C, $1D, $00, $00, $00, $00, $00, $00, $00, $00, $00, $27, $28, $29, $2A, $2B, $00, $00, $00, $00, $00, $00, $00, $00 
@@ -14340,20 +14490,24 @@ DrawBossHealthBar_Data:
 	dc.b	$00, $00, $00, $00, $00, $72, $73, $74, $75, $76, $77, $78, $79, $00, $00, $00, $00, $00, $00, $84, $85, $86, $87, $88, $89, $8A, $8B, $00, $00, $00, $09, $91 
 	dc.b	$92, $93, $94, $00, $00, $00, $95, $96, $97, $00, $00, $00, $A1, $A2, $A3, $A4, $A5, $00, $00, $00, $A6, $A7, $A8, $00, $00, $00, $00, $00, $AD, $AE, $00, $00 
 	dc.b	$00, $00, $00, $AF, $B0, $B1, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $BD, $BE, $BF, $00, $00 
+; @ $0007808A
 SpriteMetaTileTable_7808A:
 	dc.b	$00, $01, $02, $03, $04, $10, $11, $12, $13, $14, $1E, $1F, $20, $21, $22, $2C, $2D, $2E, $2F, $30, $3F, $40, $41, $42, $43, $52, $53, $54, $55, $56 
 BossDirectionTilePtrs_Entry00:
 	dc.b	$00, $01, $02, $05, $06, $10, $11, $12, $13, $15, $1E, $1F, $23, $24, $22, $31, $32, $33, $34, $35, $44, $45, $46, $47, $48, $57, $58, $54, $59, $5A 
+; @ $000780C6
 SpriteMetaTileTable_780C6:
 	dc.b	$00, $01, $02, $07, $08, $10, $11, $12, $13, $16, $1E, $1F, $25, $26, $22, $36, $37, $38, $39, $3A, $49, $4A, $4B, $4C, $4D, $5B, $5C, $5D, $5E, $5F 
 BossBodyUpperTilePtrs_Entry00:
 	dc.b	$67, $68, $69, $6A, $7A, $7B, $7C, $7D, $00, $00, $8C, $8D, $98, $99, $9A, $00 
+; @ $000780F4
 SpriteMetaTileTable_780F4:
 	dc.b	$6B, $6C, $6D, $6E, $7E, $00, $7F, $80, $00, $8E, $8F, $00, $9B, $9C, $9D, $00 
 BossBodyUpperTilePtrs_Entry01:
 	dc.b	$6F, $70, $00, $71, $81, $00, $82, $83, $00, $00, $90, $00, $9E, $9F, $A0, $00 
 BossBodyLowerTilePtrs_Entry00:
 	dc.b	$00, $A9, $AA, $AB, $B2, $B3, $B4, $B5, $00, $C0, $C1, $00 
+; @ $00078120
 SpriteMetaTileTable_78120:
 	dc.b	$00, $A9, $AA, $AB, $B6, $B7, $B8, $B9, $C2, $C3, $C4, $00 
 BossBodyLowerTilePtrs_Entry01:
@@ -14361,300 +14515,441 @@ BossBodyLowerTilePtrs_Entry01:
 BattleGfxData_Excalabria_Entry00:
 	incbin "data/art/tiles/battle/excalabria_gfx.bin"
 BossTileData_Excalabria_Entry00 equ BattleGfxData_Excalabria_Entry00+$132A
+; @ $00079502
 SpriteMetaTileTable_78120_Meta_79502:
 	dc.b	$01, $00, $FF, $FF, $FF, $FF 
+; @ $00079508
 SpriteMetaTileTable_78120_Meta_79508:
 	dc.b	$01, $00, $FF, $FF, $FF, $44, $0C, $DD, $DD, $CC, $DD, $DD 
+; @ $00079514
 SpriteMetaTileTable_78120_Meta_79514:
 	dc.b	$02, $00, $FF, $E9, $20, $00, $DD, $00, $00, $42, $75, $D0, $D0, $0C, $0D, $0E, $DE, $EE, $EC, $EE, $EE, $DE 
+; @ $0007952A
 SpriteMetaTileTable_78120_Meta_7952A:
 	dc.b	$01, $00, $FB, $37, $73, $33, $DD, $EE, $D0, $ED, $EE, $EE, $D0, $DD, $DD, $ED, $DD, $00 
+; @ $0007953C
 SpriteMetaTileTable_78120_Meta_7953C:
 	dc.b	$01, $00, $FE, $CC, $CC, $CC, $DD, $0D, $DE, $0D, $EE, $CD, $ED, $BC, $DC, $CC, $CD, $CD, $DE, $00 
+; @ $00079550
 SpriteMetaTileTable_78120_Meta_79550:
 	dc.b	$01, $DD, $21, $51, $33, $3D, $DC, $C0, $DE, $ED, $CD, $DE, $DE, $EE, $DE, $CD, $EE, $CC, $CE, $CD, $CD, $CC, $DC, $CD 
+; @ $00079568
 SpriteMetaTileTable_78120_Meta_79568:
 	dc.b	$01, $DD, $7B, $B9, $8F, $E7, $EE, $DE, $DE, $ED, $CD, $ED, $DC, $ED, $DE, $CE 
+; @ $00079578
 SpriteMetaTileTable_78120_Meta_79578:
 	dc.b	$01, $DD, $08, $84, $80, $68, $ED, $CD, $00, $00, $CC, $B0, $00, $DB, $B0, $D0, $CD, $0D, $00, $ED, $0D, $D0, $DE, $ED, $0D, $D0, $DE, $D0, $DE, $EE, $D0, $00 
+; @ $00079598
 SpriteMetaTileTable_78120_Meta_79598:
 	dc.b	$00, $00, $00, $DD, $ED, $00, $0D, $DE, $ED, $00, $DC, $DE, $DE, $00, $DB, $CD, $CD, $0C, $DC, $CD, $CC, $0B, $CC, $CD, $CB, $0C, $CC, $CC, $CB, $0C, $CB, $CC 
 	dc.b	$DB, $00 
+; @ $000795BA
 SpriteMetaTileTable_78120_Meta_795BA:
 	dc.b	$00, $ED, $DE, $CC, $DD, $ED, $EE, $DE, $DD, $CC, $DD, $ED, $DE, $BC, $DC, $CC, $CD, $BC, $DC, $CB, $CD, $BC, $DC, $BB, $CD, $BC, $CB, $BB, $CD, $BC, $CB, $BB 
 	dc.b	$CC, $00 
+; @ $000795DC
 SpriteMetaTileTable_78120_Meta_795DC:
 	dc.b	$00, $DC, $DD, $DD, $ED, $EC, $CD, $DE, $ED, $ED, $EE, $DE, $DD, $DE, $DE, $EE, $DE, $CC, $DE, $EE, $ED, $CC, $CD, $EE, $ED, $CB, $BD, $ED, $EC, $BB, $CD, $EC 
 	dc.b	$DC, $00 
+; @ $000795FE
 SpriteMetaTileTable_78120_Meta_795FE:
 	dc.b	$01, $DD, $CE, $80, $48, $00, $ED, $D0, $C0, $DC, $CD, $C0, $EE, $DC, $CC, $C0, $ED, $CD, $00, $CB, $CC, $00, $CD, $CB, $C0, $00, $CC, $D0, $00, $00 
+; @ $0007961C
 SpriteMetaTileTable_78120_Meta_7961C:
 	dc.b	$02, $CB, $45, $61, $40, $00, $00, $00, $00, $88, $CF, $0C, $CC, $DB, $0B, $CC, $0B, $BB, $0B, $CC, $CC, $BB, $BB, $0B, $BB, $BB, $0B, $BB 
+; @ $00079638
 SpriteMetaTileTable_78120_Meta_79638:
 	dc.b	$01, $BB, $A6, $7F, $FF, $F3, $CB, $CC, $CB, $BC, $BC, $00, $0B, $00 
+; @ $00079646
 SpriteMetaTileTable_78120_Meta_79646:
 	dc.b	$02, $BB, $88, $9E, $C8, $2E, $BC, $42, $61, $24, $C0, $CC, $CC, $CC, $CB, $CC, $CB, $DD, $0C, $00 
+; @ $0007965A
 SpriteMetaTileTable_78120_Meta_7965A:
 	dc.b	$01, $00, $77, $77, $77, $FF, $CD, $CD, $CD, $CD, $C0, $C0 
+; @ $00079666
 SpriteMetaTileTable_78120_Meta_79666:
 	dc.b	$01, $00, $FF, $FF, $FF, $FB, $C0, $00 
+; @ $0007966E
 SpriteMetaTileTable_78120_Meta_7966E:
 	dc.b	$01, $00, $FF, $FF, $DC, $82, $0D, $D0, $0C, $DD, $D0, $0D, $0E, $DD, $DD, $00 
+; @ $0007967E
 SpriteMetaTileTable_78120_Meta_7967E:
 	dc.b	$01, $00, $3F, $FB, $F7, $77, $D0, $0C, $D0, $0E, $DD, $E0 
+; @ $0007968A
 SpriteMetaTileTable_78120_Meta_7968A:
 	dc.b	$01, $00, $FE, $CC, $CC, $CC, $DC, $0D, $CC, $0D, $CC, $CD, $CC, $BC, $DC, $CC, $CD, $CD, $DE, $00 
+; @ $0007969E
 SpriteMetaTileTable_78120_Meta_7969E:
 	dc.b	$00, $0C, $C0, $00, $00, $CC, $C0, $0C, $00, $CB, $00, $CC, $0D, $BB, $00, $C0, $0D, $BB, $BC, $C0, $0D, $BB, $BC, $C0, $DD, $CC, $CC, $DD, $DD, $DD, $DD, $CD 
 	dc.b	$DD, $00 
+; @ $000796C0
 SpriteMetaTileTable_78120_Meta_796C0:
 	dc.b	$01, $DD, $53, $B9, $8F, $E7, $0E, $0D, $0D, $DE, $DE, $ED, $CD, $ED, $DC, $ED, $DE, $CE 
+; @ $000796D2
 SpriteMetaTileTable_78120_Meta_796D2:
 	dc.b	$01, $00, $7B, $33, $37, $F3, $E0, $C0, $0D, $D0, $0D, $D0, $DD, $E0, $D0, $D0, $D0, $00 
+; @ $000796E4
 SpriteMetaTileTable_78120_Meta_796E4:
 	dc.b	$01, $CC, $00, $08, $9C, $EA, $0D, $D0, $DD, $ED, $0D, $0D, $DE, $ED, $DD, $DC, $DE, $DE, $CB, $CD, $CD, $DC, $CD, $CD, $CB, $CB, $CB, $DB 
+; @ $00079700
 SpriteMetaTileTable_78120_Meta_79700:
 	dc.b	$01, $CC, $01, $10, $9D, $DC, $DC, $DD, $DD, $ED, $EC, $CD, $DE, $ED, $EE, $DE, $DE, $DE, $EB, $BC, $DC, $CB, $CB, $BB, $BB, $BC 
+; @ $0007971A
 SpriteMetaTileTable_78120_Meta_7971A:
 	dc.b	$01, $00, $33, $77, $59, $B3, $DD, $D0, $CD, $D0, $CC, $CC, $C0, $B0, $0B, $B0, $BB, $CC, $BB, $00 
+; @ $0007972E
 SpriteMetaTileTable_78120_Meta_7972E:
 	dc.b	$02, $CB, $45, $61, $40, $00, $00, $00, $00, $88, $CF, $CC, $CC, $DB, $CC, $CC, $0C, $BB, $0B, $CC, $CC, $BB, $BB, $0B, $BB, $BB, $0B, $BB 
+; @ $0007974A
 SpriteMetaTileTable_78120_Meta_7974A:
 	dc.b	$02, $BB, $2B, $3E, $E9, $3E, $BC, $10, $81, $14, $C0, $CB, $CC, $CC, $CC, $CB, $00, $00 
+; @ $0007975C
 SpriteMetaTileTable_78120_Meta_7975C:
 	dc.b	$02, $BB, $44, $44, $4C, $80, $00, $31, $31, $33, $3F, $CD, $CD, $B0, $CD, $CD, $B0, $CB, $B0, $00 
+; @ $00079770
 SpriteMetaTileTable_78120_Meta_79770:
 	dc.b	$01, $00, $FF, $F9, $99, $BB, $0D, $D0, $DE, $D0, $EE, $D0, $D0, $D0 
+; @ $0007977E
 SpriteMetaTileTable_78120_Meta_7977E:
 	dc.b	$01, $00, $DA, $C8, $88, $88, $B0, $0B, $DC, $0D, $CC, $B0, $0D, $CD, $B0, $CD, $DC, $B0, $BC, $DC, $B0, $CC, $CD, $B0, $CD, $DE 
+; @ $00079798
 SpriteMetaTileTable_78120_Meta_79798:
 	dc.b	$01, $00, $31, $14, $03, $25, $0C, $C0, $CC, $BB, $BC, $CB, $B0, $BB, $BB, $CB, $B0, $BB, $BC, $C0, $B0, $BB, $BC, $CC, $0C, $0B, $DC, $0B 
+; @ $000797B4
 SpriteMetaTileTable_78120_Meta_797B4:
 	dc.b	$01, $00, $FD, $CC, $CC, $CE, $0C, $CC, $0D, $C0, $0D, $C0, $DD, $C0, $DC, $CC, $DC, $BD 
+; @ $000797C6
 SpriteMetaTileTable_78120_Meta_797C6:
 	dc.b	$01, $00, $3B, $33, $33, $11, $0D, $DD, $ED, $D0, $ED, $DE, $DD, $DD, $D0, $BB, $CD, $BB, $DD, $D0, $DB, $DD, $E0, $00 
+; @ $000797DE
 SpriteMetaTileTable_78120_Meta_797DE:
 	dc.b	$02, $DD, $00, $90, $13, $60, $CD, $00, $02, $AC, $8C, $0D, $BB, $DE, $ED, $0D, $0D, $DE, $ED, $DC, $DE, $CC, $CB, $ED, $DC, $ED, $CC, $DE 
+; @ $000797FA
 SpriteMetaTileTable_78120_Meta_797FA:
 	dc.b	$02, $BB, $44, $44, $42, $10, $00, $13, $33, $00, $00, $DC, $B0, $CB, $CB, $CB, $CC, $B0, $0B, $DC, $CB, $0B, $DC, $CB, $BC, $DD, $CB, $BC, $CC, $00 
+; @ $00079818
 SpriteMetaTileTable_78120_Meta_79818:
 	dc.b	$03, $00, $EE, $E0, $00, $00, $BB, $10, $17, $40, $22, $CC, $00, $00, $1D, $D1, $0B, $0B, $BC, $B0, $0B, $CD, $DC, $00 
+; @ $00079830
 SpriteMetaTileTable_78120_Meta_79830:
 	dc.b	$00, $DC, $CE, $E0, $00, $BC, $DD, $EC, $00, $BC, $DD, $EC, $00, $CC, $DC, $DD, $C0, $CD, $CB, $DD, $C0, $DC, $BC, $CD, $C0, $DB, $CC, $CC, $C0, $BB, $CB, $BC 
 	dc.b	$C0, $00 
+; @ $00079852
 SpriteMetaTileTable_78120_Meta_79852:
 	dc.b	$01, $00, $00, $00, $88, $CF, $CD, $DB, $CC, $DB, $CC, $CB, $CC, $CB, $0C, $CB, $CB, $BB, $0B, $CC, $CC, $CB, $CB, $BB, $BB, $0B, $BB, $BB, $0B, $BB 
+; @ $00079870
 SpriteMetaTileTable_78120_Meta_79870:
 	dc.b	$02, $CC, $71, $16, $20, $10, $BB, $02, $68, $04, $83, $CD, $CB, $DB, $BC, $ED, $CB, $BC, $DD, $BC, $CB, $DD, $CB, $BC, $00, $0B 
+; @ $0007988A
 SpriteMetaTileTable_78120_Meta_7988A:
 	dc.b	$01, $BB, $20, $00, $01, $3E, $CD, $DD, $CC, $DE, $EE, $BC, $DD, $CD, $DC, $CC, $DC, $DC, $CC, $DE, $DB, $DD, $DD, $EC, $CB, $DE, $EC, $CB, $CC, $CC, $00, $00 
+; @ $000798AA
 SpriteMetaTileTable_78120_Meta_798AA:
 	dc.b	$01, $00, $01, $11, $33, $3F, $BC, $CC, $CC, $C0, $BB, $BC, $CC, $BB, $CB, $CC, $BC, $CB, $B0, $CB, $BB, $BB, $BB, $BB, $B0, $00 
+; @ $000798C4
 SpriteMetaTileTable_78120_Meta_798C4:
 	dc.b	$01, $00, $FD, $BB, $B9, $89, $C0, $0C, $0B, $0B, $B0, $0C, $BC, $0C, $C0, $BC, $0D, $00 
+; @ $000798D6
 SpriteMetaTileTable_78120_Meta_798D6:
 	dc.b	$01, $00, $FF, $FF, $DA, $B7, $C0, $B0, $C0, $0C, $0C, $00 
+; @ $000798E2
 SpriteMetaTileTable_78120_Meta_798E2:
 	dc.b	$01, $00, $FF, $FF, $FF, $DE, $0C, $BD 
+; @ $000798EA
 SpriteMetaTileTable_78120_Meta_798EA:
 	dc.b	$01, $00, $FF, $FF, $FF, $FB, $D0, $00 
+; @ $000798F2
 SpriteMetaTileTable_78120_Meta_798F2:
 	dc.b	$01, $00, $01, $10, $13, $33, $0C, $B0, $0E, $0C, $0C, $DD, $DE, $CC, $DE, $D0, $CD, $ED, $CC, $C0, $CC, $EC, $C0, $CD, $DC, $BD, $BC, $BC, $BC, $00 
+; @ $00079910
 SpriteMetaTileTable_78120_Meta_79910:
 	dc.b	$01, $00, $EE, $CA, $8A, $88, $0C, $0C, $C0, $C0, $0C, $C0, $0C, $0C, $CC, $BC, $CC, $CC, $CC, $BB, $CB, $BC, $CC, $00 
+; @ $00079928
 SpriteMetaTileTable_78120_Meta_79928:
 	dc.b	$01, $00, $AA, $BD, $F5, $A7, $0D, $BB, $DD, $0B, $0D, $D0, $C0, $0D, $D0, $0D, $C0, $00 
+; @ $0007993A
 SpriteMetaTileTable_78120_Meta_7993A:
 	dc.b	$02, $00, $35, $90, $06, $E4, $C0, $00, $01, $51, $19, $DC, $0E, $0C, $E0, $DD, $EC, $0D, $D0, $DD, $CD, $0D, $DC, $0C 
+; @ $00079952
 SpriteMetaTileTable_78120_Meta_79952:
 	dc.b	$01, $BB, $00, $01, $3B, $72, $CB, $0B, $C0, $00, $BC, $B0, $CC, $C0, $0B, $CC, $00, $B0, $0B, $BC, $CB, $00, $CB, $0B, $0B, $00, $0B, $00 
+; @ $0007996E
 SpriteMetaTileTable_78120_Meta_7996E:
 	dc.b	$01, $BB, $08, $04, $34, $B3, $00, $00, $CC, $CC, $C0, $0B, $C0, $0B, $BC, $0C, $C0, $CC, $BC, $CB, $CB, $BC, $BC, $CB, $BC, $CB, $00, $0B 
+; @ $0007998A
 SpriteMetaTileTable_78120_Meta_7998A:
 	dc.b	$01, $00, $20, $EC, $00, $01, $CD, $D0, $0C, $DD, $0C, $CC, $CD, $DC, $0D, $CB, $CC, $0E, $EC, $CB, $CD, $ED, $DB, $BB, $CC, $CC, $BB, $BB, $BB, $BB, $BB, $00 
+; @ $000799AA
 SpriteMetaTileTable_78120_Meta_799AA:
 	dc.b	$01, $00, $01, $11, $33, $3F, $C0, $0C, $CC, $C0, $CB, $BC, $CC, $CB, $CC, $CC, $BC, $CB, $B0, $CC, $BB, $BB, $BB, $BB, $B0, $00 
+; @ $000799C4
 SpriteMetaTileTable_78120_Meta_799C4:
 	dc.b	$01, $AA, $00, $44, $65, $54, $35, $53, $33, $50, $55, $55, $33, $35, $55, $53, $33, $35, $A5, $53, $35, $A5, $35, $99, $35, $A9, $3A, $A9, $9A, $00 
+; @ $000799E2
 SpriteMetaTileTable_78120_Meta_799E2:
 	dc.b	$01, $00, $F7, $73, $10, $00, $50, $55, $35, $55, $33, $33, $55, $A5, $53, $33, $50, $AA, $55, $53, $55, $AA, $AA, $A5, $35, $00 
+; @ $000799FC
 SpriteMetaTileTable_78120_Meta_799FC:
 	dc.b	$01, $00, $FF, $FF, $FF, $F7, $50, $00 
+; @ $00079A04
 SpriteMetaTileTable_78120_Meta_79A04:
 	dc.b	$01, $AA, $44, $44, $C8, $80, $55, $99, $89, $55, $98, $89, $5A, $98, $88, $5A, $98, $88, $98, $88, $99, $A9, $98, $99, $9A, $99, $A9, $99, $9A, $99 
+; @ $00079A22
 SpriteMetaTileTable_78120_Meta_79A22:
 	dc.b	$03, $AA, $C6, $33, $10, $00, $9A, $08, $44, $63, $10, $99, $00, $80, $04, $67, $A5, $53, $A5, $89, $89, $88, $89, $88 
+; @ $00079A3A
 SpriteMetaTileTable_78120_Meta_79A3A:
 	dc.b	$01, $00, $77, $33, $31, $11, $50, $35, $33, $50, $A3, $35, $A5, $35, $AA, $53, $50, $AA, $53, $50, $9A, $53, $50, $00 
+; @ $00079A52
 SpriteMetaTileTable_78120_Meta_79A52:
 	dc.b	$00, $A9, $99, $9A, $99, $A9, $99, $9A, $98, $99, $89, $9A, $98, $99, $89, $9A, $A9, $98, $89, $9A, $A9, $98, $89, $9A, $A9, $88, $89, $99, $AA, $88, $88, $89 
 	dc.b	$AA, $00 
+; @ $00079A74
 SpriteMetaTileTable_78120_Meta_79A74:
 	dc.b	$02, $99, $54, $60, $45, $18, $98, $22, $01, $98, $80, $88, $88, $89, $88, $88, $88, $9A, $A9, $A9, $AA, $89, $9A, $89, $9A, $A9 
+; @ $00079A8E
 SpriteMetaTileTable_78120_Meta_79A8E:
 	dc.b	$00, $99, $55, $50, $00, $99, $A5, $30, $00, $99, $A5, $35, $00, $99, $A5, $33, $50, $99, $A5, $53, $55, $89, $AA, $55, $35, $88, $9A, $A5, $33, $98, $9A, $AA 
 	dc.b	$53, $00 
+; @ $00079AB0
 SpriteMetaTileTable_78120_Meta_79AB0:
 	dc.b	$01, $00, $FF, $FF, $F7, $77, $50, $50, $35, $00 
+; @ $00079ABA
 SpriteMetaTileTable_78120_Meta_79ABA:
 	dc.b	$02, $88, $CC, $CC, $CC, $00, $99, $22, $22, $22, $EF, $AA, $AA, $AA, $AA, $9A, $9A, $9A 
+; @ $00079ACC
 SpriteMetaTileTable_78120_Meta_79ACC:
 	dc.b	$02, $88, $04, $44, $44, $46, $99, $00, $AA, $80, $88, $98, $89, $9A, $A9, $98, $9A, $A9, $A9, $A9, $89, $AA, $A9, $89, $9A, $89, $AA, $9A 
+; @ $00079AE8
 SpriteMetaTileTable_78120_Meta_79AE8:
 	dc.b	$02, $99, $02, $21, $88, $44, $88, $00, $44, $63, $33, $98, $89, $AA, $A5, $98, $89, $AA, $98, $9A, $98, $89, $89, $89, $A9, $A9 
+; @ $00079B02
 SpriteMetaTileTable_78120_Meta_79B02:
 	dc.b	$00, $33, $50, $00, $00, $53, $35, $50, $00, $A5, $33, $55, $00, $AA, $53, $35, $50, $9A, $A5, $33, $55, $99, $AA, $53, $35, $99, $9A, $A5, $33, $88, $9A, $A5 
 	dc.b	$53, $00 
+; @ $00079B24
 SpriteMetaTileTable_78120_Meta_79B24:
 	dc.b	$01, $00, $FF, $FF, $FF, $C8, $55, $55, $55, $33, $32, $00 
+; @ $00079B30
 SpriteMetaTileTable_78120_Meta_79B30:
 	dc.b	$01, $00, $FF, $FF, $F0, $00, $55, $55, $53, $33, $33, $32, $22, $26, $22, $23, $33, $33 
+; @ $00079B42
 SpriteMetaTileTable_78120_Meta_79B42:
 	dc.b	$01, $00, $FF, $FC, $00, $00, $05, $53, $55, $33, $22, $22, $22, $66, $22, $33, $63, $33, $33, $55, $33, $55, $55, $AA 
+; @ $00079B5A
 SpriteMetaTileTable_78120_Meta_79B5A:
 	dc.b	$01, $AA, $00, $00, $03, $7E, $00, $00, $00, $05, $00, $52, $22, $22, $53, $22, $32, $33, $22, $33, $33, $35, $33, $55, $55, $5A, $55, $5A, $5A, $99 
+; @ $00079B78
 SpriteMetaTileTable_78120_Meta_79B78:
 	dc.b	$01, $AA, $00, $13, $7E, $CC, $55, $32, $22, $33, $32, $22, $35, $55, $26, $35, $55, $35, $55, $5A, $A9, $9A, $A9, $99, $99, $00 
+; @ $00079B92
 SpriteMetaTileTable_78120_Meta_79B92:
 	dc.b	$02, $AA, $07, $FF, $C0, $00, $99, $00, $00, $1F, $F8, $33, $55, $55, $55, $55, $A9, $89, $88, $88 
+; @ $00079BA6
 SpriteMetaTileTable_78120_Meta_79BA6:
 	dc.b	$02, $AA, $3F, $E8, $00, $10, $99, $00, $13, $E9, $C2, $55, $5A, $A9, $88, $9A, $A9, $9A, $88, $89, $9A, $00 
+; @ $00079BBC
 SpriteMetaTileTable_78120_Meta_79BBC:
 	dc.b	$02, $99, $36, $C0, $08, $C7, $88, $00, $3F, $73, $20, $AA, $A9, $9A, $98, $98, $98, $89, $A9, $00 
+; @ $00079BD0
 SpriteMetaTileTable_78120_Meta_79BD0:
 	dc.b	$01, $99, $3E, $89, $94, $2A, $AA, $A9, $9A, $98, $89, $9A, $98, $88, $98, $88, $AA, $98, $89, $AA, $A9, $89, $AA, $89 
+; @ $00079BE8
 SpriteMetaTileTable_78120_Meta_79BE8:
 	dc.b	$02, $AA, $0F, $10, $82, $00, $00, $00, $E7, $31, $02, $99, $99, $99, $99, $A0, $A0, $99, $9A, $99, $9A, $A0, $0A, $89, $9A, $0A 
+; @ $00079C02
 SpriteMetaTileTable_78120_Meta_79C02:
 	dc.b	$01, $88, $26, $33, $10, $00, $98, $89, $99, $99, $89, $A9, $98, $0A, $A9, $00, $AA, $98, $00, $0A, $99, $98, $AA, $0A, $A9, $99, $99, $A0, $0A, $99 
+; @ $00079C20
 SpriteMetaTileTable_78120_Meta_79C20:
 	dc.b	$02, $99, $38, $E6, $23, $11, $88, $00, $08, $4C, $C6, $AA, $9A, $AA, $AA, $AA, $9A, $AA, $89, $AA, $89, $98 
+; @ $00079C36
 SpriteMetaTileTable_78120_Meta_79C36:
 	dc.b	$01, $99, $9C, $98, $A0, $11, $9A, $A9, $A9, $98, $89, $AA, $88, $9A, $A9, $88, $AA, $98, $88, $89, $9A, $98, $88, $89, $98, $88, $88, $00 
+; @ $00079C52
 SpriteMetaTileTable_78120_Meta_79C52:
 	dc.b	$02, $88, $88, $C4, $67, $11, $99, $40, $19, $08, $42, $A0, $0A, $89, $9A, $AA, $89, $89, $98, $89, $AA, $98, $9A, $A9 
+; @ $00079C6A
 SpriteMetaTileTable_78120_Meta_79C6A:
 	dc.b	$02, $99, $D7, $0C, $80, $00, $88, $00, $13, $3F, $FF, $A9, $0A, $AA, $A9, $98, $98, $00 
+; @ $00079C7C
 SpriteMetaTileTable_78120_Meta_79C7C:
 	dc.b	$02, $99, $88, $47, $C8, $88, $88, $77, $98, $00, $00, $98, $AA, $A9, $AA, $00, $00, $A0, $00, $00, $A0, $00, $00, $00 
+; @ $00079C94
 SpriteMetaTileTable_78120_Meta_79C94:
 	dc.b	$02, $55, $F0, $0F, $00, $00, $AA, $00, $00, $FF, $E0, $22, $23, $33, $33, $33, $33, $33, $33, $A9, $99, $99, $99, $99 
+; @ $00079CAC
 SpriteMetaTileTable_78120_Meta_79CAC:
 	dc.b	$02, $55, $87, $0E, $10, $00, $AA, $00, $00, $CF, $20, $00, $00, $00, $35, $33, $33, $33, $35, $33, $A5, $99, $99, $A9, $99, $99, $99, $99 
+; @ $00079CC8
 SpriteMetaTileTable_78120_Meta_79CC8:
 	dc.b	$01, $00, $FF, $10, $00, $00, $55, $55, $50, $33, $33, $35, $55, $55, $55, $55, $53, $AA, $AA, $AA, $A5, $99, $9A, $AA, $AA, $99, $99, $99, $AA, $00 
+; @ $00079CE6
 SpriteMetaTileTable_78120_Meta_79CE6:
 	dc.b	$02, $00, $FF, $F3, $10, $00, $55, $00, $08, $4A, $71, $50, $33, $50, $33, $50, $A5, $AA, $AA, $AA 
+; @ $00079CFA
 SpriteMetaTileTable_78120_Meta_79CFA:
 	dc.b	$02, $99, $F0, $00, $00, $8E, $88, $0F, $FF, $FF, $11, $98, $89, $00 
+; @ $00079D08
 SpriteMetaTileTable_78120_Meta_79D08:
 	dc.b	$01, $88, $0F, $FF, $FF, $E6, $99, $89, $99, $99, $89, $98, $99, $00 
+; @ $00079D16
 SpriteMetaTileTable_78120_Meta_79D16:
 	dc.b	$01, $00, $00, $33, $37, $77, $88, $89, $99, $9A, $88, $89, $9A, $A0, $88, $99, $89, $9A, $99, $AA, $9A, $9A, $9A, $00 
+; @ $00079D2E
 SpriteMetaTileTable_78120_Meta_79D2E:
 	dc.b	$01, $00, $0F, $FF, $FF, $FF, $AA, $AA, $AA, $A0 
+; @ $00079D38
 SpriteMetaTileTable_78120_Meta_79D38:
 	dc.b	$02, $AA, $4A, $11, $00, $60, $00, $04, $C6, $73, $00, $9A, $A9, $99, $99, $0A, $A0, $A0, $9A, $A0, $99, $A0, $99, $99, $99, $A0 
+; @ $00079D52
 SpriteMetaTileTable_78120_Meta_79D52:
 	dc.b	$02, $99, $DF, $10, $00, $00, $00, $00, $02, $FF, $FF, $89, $A9, $9A, $AA, $AA, $A0, $AA 
+; @ $00079D64
 SpriteMetaTileTable_78120_Meta_79D64:
 	dc.b	$01, $00, $77, $7F, $7F, $FF, $A0, $A0, $A0, $A0 
+; @ $00079D6E
 SpriteMetaTileTable_78120_Meta_79D6E:
 	dc.b	$02, $99, $62, $2F, $71, $00, $00, $00, $00, $0C, $CE, $89, $AA, $88, $89, $AA, $88, $89, $9A, $AA, $AA, $0A, $AA, $0A 
+; @ $00079D86
 SpriteMetaTileTable_78120_Meta_79D86:
 	dc.b	$01, $00, $FF, $77, $77, $77, $A0, $A0, $A0, $A0, $A0, $A0 
+; @ $00079D92
 SpriteMetaTileTable_78120_Meta_79D92:
 	dc.b	$00, $05, $55, $00, $55, $35, $33, $53, $53, $53, $23, $33, $55, $52, $63, $55, $44, $32, $23, $54, $AA, $56, $35, $4A, $AA, $52, $34, $AA, $AA, $52, $34, $AA 
 	dc.b	$9A, $00 
+; @ $00079DB4
 SpriteMetaTileTable_78120_Meta_79DB4:
 	dc.b	$00, $55, $33, $33, $00, $33, $33, $33, $55, $55, $55, $55, $33, $44, $44, $44, $A5, $AA, $AA, $AA, $AA, $A9, $99, $9A, $AA, $A9, $88, $89, $99, $A9, $88, $88 
 	dc.b	$89, $00 
+; @ $00079DD6
 SpriteMetaTileTable_78120_Meta_79DD6:
 	dc.b	$02, $00, $FF, $70, $00, $00, $AA, $00, $00, $8E, $71, $53, $A5, $33, $33, $55, $55, $53, $33, $A5, $9A, $99, $99, $99 
+; @ $00079DEE
 SpriteMetaTileTable_78120_Meta_79DEE:
 	dc.b	$01, $00, $FF, $FF, $00, $00, $35, $55, $33, $33, $33, $33, $33, $33, $55, $55, $5A, $AA, $AA, $AA, $AA, $AA 
+; @ $00079E04
 SpriteMetaTileTable_78120_Meta_79E04:
 	dc.b	$00, $53, $54, $AA, $99, $53, $54, $AA, $99, $03, $54, $4A, $99, $03, $34, $4A, $98, $02, $34, $4A, $98, $02, $34, $4A, $98, $32, $34, $4A, $99, $32, $34, $4A 
 	dc.b	$99, $00 
+; @ $00079E26
 SpriteMetaTileTable_78120_Meta_79E26:
 	dc.b	$01, $88, $33, $31, $01, $88, $AA, $98, $9A, $99, $9A, $A9, $89, $AA, $98, $89, $AA, $99, $89, $89, $9A, $A9, $9A, $AA, $98, $99, $AA, $99 
+; @ $00079E42
 SpriteMetaTileTable_78120_Meta_79E42:
 	dc.b	$01, $88, $28, $88, $08, $88, $89, $A9, $9A, $9A, $98, $89, $9A, $A9, $98, $90, $AA, $98, $89, $A0, $0A, $99, $A0, $00, $99, $9A, $00, $A9, $9A, $00, $0A, $00 
+; @ $00079E62
 SpriteMetaTileTable_78120_Meta_79E62:
 	dc.b	$01, $AA, $F8, $00, $44, $02, $99, $89, $99, $9A, $99, $88, $89, $9A, $A9, $98, $88, $89, $98, $88, $99, $99, $88, $98, $9A, $A9, $98, $98, $89, $98 
+; @ $00079E80
 SpriteMetaTileTable_78120_Meta_79E80:
 	dc.b	$00, $32, $34, $4A, $99, $32, $34, $4A, $A9, $32, $34, $AA, $A9, $32, $34, $AA, $99, $32, $34, $AA, $99, $22, $34, $A9, $99, $23, $4A, $A9, $98, $23, $4A, $A9 
 	dc.b	$98, $00 
+; @ $00079EA2
 SpriteMetaTileTable_78120_Meta_79EA2:
 	dc.b	$02, $88, $88, $CC, $CC, $EC, $9A, $22, $01, $11, $11, $89, $A9, $89, $AA, $99, $AA, $99, $89, $89, $89, $00 
+; @ $00079EB8
 SpriteMetaTileTable_78120_Meta_79EB8:
 	dc.b	$01, $99, $44, $0A, $88, $88, $98, $A0, $0A, $98, $AA, $00, $98, $89, $9A, $A0, $89, $A0, $88, $89, $AA, $88, $89, $9A, $98, $88, $89, $88, $88, $89 
+; @ $00079ED6
 SpriteMetaTileTable_78120_Meta_79ED6:
 	dc.b	$02, $98, $44, $44, $44, $44, $88, $00, $02, $33, $32, $A9, $9A, $A9, $09, $99, $AA, $0A, $89, $9A, $0A, $89, $0A, $AA, $9A, $99, $99, $00 
+; @ $00079EF2
 SpriteMetaTileTable_78120_Meta_79EF2:
 	dc.b	$01, $99, $11, $00, $02, $36, $35, $4A, $A9, $54, $4A, $A9, $54, $4A, $A9, $98, $54, $4A, $A9, $88, $54, $AA, $A9, $98, $54, $AA, $89, $4A, $AA, $4A, $00, $00 
+; @ $00079F12
 SpriteMetaTileTable_78120_Meta_79F12:
 	dc.b	$03, $88, $CC, $CE, $C0, $00, $9A, $11, $11, $11, $10, $99, $00, $00, $2E, $E1, $89, $89, $89, $00, $00, $09 
+; @ $00079F28
 SpriteMetaTileTable_78120_Meta_79F28:
 	dc.b	$01, $88, $37, $72, $20, $00, $99, $98, $A9, $A9, $A9, $98, $89, $A9, $98, $99, $A9, $99, $9A, $AA, $AA, $A9, $AA, $00, $9A, $9A, $AA, $A0 
+; @ $00079F44
 SpriteMetaTileTable_78120_Meta_79F44:
 	dc.b	$00, $89, $98, $89, $9A, $88, $88, $99, $AA, $98, $89, $9A, $A0, $98, $8A, $AA, $00, $99, $89, $A0, $00, $A9, $99, $A0, $00, $0A, $99, $AA, $00, $00, $AA, $AA 
 	dc.b	$00, $00 
+; @ $00079F66
 SpriteMetaTileTable_78120_Meta_79F66:
 	dc.b	$01, $00, $FF, $FF, $31, $00, $33, $55, $33, $33, $35, $A3, $33, $33, $35, $AA, $AA, $AA, $33, $00 
+; @ $00079F7A
 SpriteMetaTileTable_78120_Meta_79F7A:
 	dc.b	$01, $00, $FF, $FF, $FF, $73, $50, $35, $55, $00 
+; @ $00079F84
 SpriteMetaTileTable_78120_Meta_79F84:
 	dc.b	$02, $AA, $F7, $31, $00, $00, $88, $00, $08, $CF, $FB, $99, $99, $99, $89, $99, $89, $9A, $99, $00 
+; @ $00079F98
 SpriteMetaTileTable_78120_Meta_79F98:
 	dc.b	$01, $AA, $08, $88, $C2, $10, $A3, $35, $55, $00, $33, $55, $50, $A3, $33, $55, $A5, $53, $33, $55, $53, $99, $9A, $55, $88, $99, $9A, $88, $88, $99, $9A, $00 
+; @ $00079FB8
 SpriteMetaTileTable_78120_Meta_79FB8:
 	dc.b	$01, $00, $FF, $77, $33, $10, $50, $55, $35, $50, $53, $55, $A5, $53, $55, $AA, $53, $33, $50, $00 
+; @ $00079FCC
 SpriteMetaTileTable_78120_Meta_79FCC:
 	dc.b	$00, $88, $89, $98, $88, $98, $88, $99, $99, $99, $88, $88, $9A, $A9, $98, $89, $9A, $9A, $98, $89, $9A, $99, $A9, $89, $A0, $99, $A9, $99, $A0, $A9, $AA, $9A 
 	dc.b	$A0, $00 
+; @ $00079FEE
 SpriteMetaTileTable_78120_Meta_79FEE:
 	dc.b	$02, $99, $03, $B2, $20, $00, $AA, $00, $01, $D1, $31, $88, $88, $89, $9A, $98, $89, $88, $A9, $98, $A0, $0A, $A9, $00, $00, $00, $00, $00 
+; @ $0007A00A
 SpriteMetaTileTable_78120_Meta_7A00A:
 	dc.b	$02, $AA, $C4, $EE, $10, $08, $00, $00, $00, $46, $77, $55, $35, $9A, $A5, $53, $55, $A5, $A0, $0A, $A0, $0A, $A0, $00 
+; @ $0007A022
 SpriteMetaTileTable_78120_Meta_7A022:
 	dc.b	$01, $00, $F7, $73, $31, $18, $50, $35, $53, $50, $A5, $35, $A5, $53, $50, $0A, $A5, $55, $AA, $55, $50, $00 
+; @ $0007A038
 SpriteMetaTileTable_78120_Meta_7A038:
 	dc.b	$02, $00, $11, $11, $11, $9D, $AA, $0A, $AA, $64, $60, $A9, $A9, $9A, $A9, $A9, $A9, $0A, $0A, $A0, $0A, $00 
+; @ $0007A04E
 SpriteMetaTileTable_78120_Meta_7A04E:
 	dc.b	$01, $00, $EF, $FF, $FF, $FF, $0A, $00 
+; @ $0007A056
 SpriteMetaTileTable_78120_Meta_7A056:
 	dc.b	$01, $00, $7F, $FF, $FF, $FF, $A0, $00 
+; @ $0007A05E
 SpriteMetaTileTable_78120_Meta_7A05E:
 	dc.b	$01, $00, $CE, $FF, $FF, $FF, $05, $50, $55, $00 
+; @ $0007A068
 SpriteMetaTileTable_78120_Meta_7A068:
 	dc.b	$01, $AA, $00, $8C, $EE, $FF, $A9, $99, $88, $88, $A9, $99, $88, $88, $99, $98, $88, $A9, $88, $99, $A9, $00 
+; @ $0007A07E
 SpriteMetaTileTable_78120_Meta_7A07E:
 	dc.b	$01, $AA, $22, $11, $11, $9D, $89, $99, $A5, $88, $99, $A5, $88, $89, $9A, $88, $89, $9A, $88, $89, $9A, $99, $99, $99, $99, $9A, $9A, $00 
+; @ $0007A09A
 SpriteMetaTileTable_78120_Meta_7A09A:
 	dc.b	$01, $00, $73, $33, $11, $10, $35, $35, $50, $53, $50, $53, $35, $A5, $35, $50, $AA, $53, $50, $AA, $53, $35, $AA, $A5, $35, $50 
+; @ $0007A0B4
 SpriteMetaTileTable_78120_Meta_7A0B4:
 	dc.b	$01, $AA, $FF, $FF, $FF, $FF 
+; @ $0007A0BA
 SpriteMetaTileTable_78120_Meta_7A0BA:
 	dc.b	$01, $AA, $CC, $CE, $CC, $CC, $9A, $A9, $9A, $A9, $9A, $A9, $99, $A9, $99, $A9, $99, $A9, $99, $99, $99, $00 
+; @ $0007A0D0
 SpriteMetaTileTable_78120_Meta_7A0D0:
 	dc.b	$01, $AA, $8C, $44, $44, $42, $A5, $33, $50, $53, $50, $9A, $53, $50, $9A, $55, $35, $9A, $A5, $35, $99, $A5, $35, $99, $A5, $33, $99, $9A, $53, $00 
+; @ $0007A0EE
 SpriteMetaTileTable_78120_Meta_7A0EE:
 	dc.b	$01, $00, $FF, $FF, $F7, $77, $50, $50, $50, $00 
+; @ $0007A0F8
 SpriteMetaTileTable_78120_Meta_7A0F8:
 	dc.b	$01, $AA, $FF, $FF, $98, $88, $A0, $0A, $00, $00, $0A, $00, $00, $0A, $00, $00, $0A, $00 
+; @ $0007A10A
 SpriteMetaTileTable_78120_Meta_7A10A:
 	dc.b	$02, $AA, $CC, $CC, $88, $99, $99, $33, $11, $00, $44, $9A, $9A, $A9, $A0, $A9, $A9, $A0, $A9, $A0, $A0, $00 
+; @ $0007A120
 SpriteMetaTileTable_78120_Meta_7A120:
 	dc.b	$02, $99, $CC, $C8, $88, $80, $AA, $22, $04, $63, $39, $53, $53, $9A, $53, $9A, $A5, $A5, $A0, $A0, $A0, $0A 
+; @ $0007A136
 SpriteMetaTileTable_78120_Meta_7A136:
 	dc.b	$01, $00, $77, $77, $73, $33, $55, $55, $35, $35, $35, $35, $50, $33, $50, $53, $50, $00 
+; @ $0007A148
 SpriteMetaTileTable_78120_Meta_7A148:
 	dc.b	$01, $00, $67, $FE, $FF, $FF, $AA, $0A, $A0, $0A 
+; @ $0007A152
 SpriteMetaTileTable_78120_Meta_7A152:
 	dc.b	$02, $AA, $88, $0C, $88, $80, $00, $11, $13, $37, $7F, $99, $A0, $9A, $A0, $A9, $9A, $A0, $0A, $00 
+; @ $0007A166
 SpriteMetaTileTable_78120_Meta_7A166:
 	dc.b	$01, $00, $6E, $FF, $FF, $FF, $A0, $AA, $0A, $00 
+; @ $0007A170
 SpriteMetaTileTable_78120_Meta_7A170:
 	dc.b	$02, $50, $44, $44, $44, $40, $00, $33, $33, $33, $3F, $53, $53, $A5, $55, $05, $05, $05 
 BossTileData_Excalabria_Entry01:
@@ -14802,95 +15097,139 @@ BossTileData_Excalabria_Entry01:
 BossTileData_Excalabria_Entry02:
 	dc.b	$00, $03, $06, $01, $04, $07, $02, $05, $08, $00, $0B, $0E, $09, $0C, $0F, $0A, $0D, $10, $11, $14, $08, $12, $15, $17, $13, $16, $08, $08, $08, $1B, $18, $19 
 	dc.b	$1C, $08, $1A, $1D, $1E, $21, $08, $1F, $22, $24, $20, $23, $08, $25, $08, $08, $26, $28, $2A, $27, $29, $2B 
+; @ $0007A3EC
 SpriteMetaTileTable_78120_Meta_7A3EC:
 	dc.b	$01, $00, $FF, $FF, $FF, $DC, $D0, $DD, $DE, $00 
+; @ $0007A3F6
 SpriteMetaTileTable_78120_Meta_7A3F6:
 	dc.b	$01, $00, $FE, $E8, $00, $00, $0D, $DE, $D0, $0C, $EE, $0D, $DD, $DD, $EE, $DE, $EE, $DD, $EC, $EE, $ED, $DD, $DD, $EE, $EE, $DE, $DE, $00 
+; @ $0007A412
 SpriteMetaTileTable_78120_Meta_7A412:
 	dc.b	$01, $00, $33, $33, $33, $11, $D0, $0C, $D0, $DD, $EE, $D0, $ED, $D0, $EE, $D0, $EE, $DD, $DD, $DD, $C0, $ED, $DD, $D0 
+; @ $0007A42A
 SpriteMetaTileTable_78120_Meta_7A42A:
 	dc.b	$01, $00, $C8, $88, $88, $88, $DD, $EE, $0C, $CD, $ED, $0B, $CD, $EE, $0B, $CD, $DD, $0B, $CD, $DC, $0B, $CC, $CC, $0B, $CC, $CB, $0B, $BC, $BB, $00 
+; @ $0007A448
 SpriteMetaTileTable_78120_Meta_7A448:
 	dc.b	$02, $DD, $36, $30, $40, $00, $CD, $01, $0B, $88, $08, $EE, $EE, $DE, $DE, $ED, $ED, $CC, $BD, $DC, $CB, $BD, $BD, $CC, $CB, $BC, $BC, $CB, $CB, $00 
+; @ $0007A466
 SpriteMetaTileTable_78120_Meta_7A466:
 	dc.b	$01, $00, $11, $13, $33, $37, $ED, $CD, $C0, $DD, $CC, $B0, $DC, $CB, $B0, $CC, $CB, $DC, $CB, $CC, $BB, $BB, $B0, $BB 
+; @ $0007A47E
 SpriteMetaTileTable_78120_Meta_7A47E:
 	dc.b	$01, $00, $8C, $EE, $FF, $FF, $0B, $BB, $BB, $BB, $BB, $BB, $0B, $00 
+; @ $0007A48C
 SpriteMetaTileTable_78120_Meta_7A48C:
 	dc.b	$02, $BB, $2E, $DE, $60, $00, $00, $00, $00, $1F, $FF, $BC, $BC, $CB, $CB, $BC, $B0, $0B 
+; @ $0007A49E
 SpriteMetaTileTable_78120_Meta_7A49E:
 	dc.b	$01, $00, $FF, $FF, $FF, $FF 
+; @ $0007A4A4
 SpriteMetaTileTable_78120_Meta_7A4A4:
 	dc.b	$02, $00, $FF, $E8, $10, $00, $DD, $00, $00, $62, $75, $0E, $D0, $0C, $0E, $0D, $DE, $EE, $0C, $EE, $EE, $DE 
+; @ $0007A4BA
 SpriteMetaTileTable_78120_Meta_7A4BA:
 	dc.b	$01, $00, $3B, $33, $33, $11, $D0, $0C, $DD, $EE, $D0, $ED, $D0, $EE, $D0, $EE, $DD, $DD, $DD, $C0, $ED, $DD, $D0, $00 
+; @ $0007A4D2
 SpriteMetaTileTable_78120_Meta_7A4D2:
 	dc.b	$01, $00, $C8, $88, $88, $88, $DC, $EE, $0C, $DD, $CD, $0D, $DE, $CC, $0D, $EE, $DE, $CC, $DD, $ED, $BC, $DC, $CD, $BC, $DC, $CC, $BC, $DC, $BB, $00 
+; @ $0007A4F0
 SpriteMetaTileTable_78120_Meta_7A4F0:
 	dc.b	$01, $DD, $7B, $B1, $04, $00, $EE, $DE, $EE, $ED, $ED, $CD, $EE, $ED, $DC, $ED, $EE, $EC, $CD, $DE, $DE, $ED, $EE, $DC, $CD, $DE, $DE, $00 
+; @ $0007A50C
 SpriteMetaTileTable_78120_Meta_7A50C:
 	dc.b	$00, $ED, $CD, $C0, $00, $DD, $CC, $B0, $00, $DD, $DB, $B0, $D0, $CD, $DD, $0D, $00, $DD, $ED, $0D, $D0, $DE, $ED, $0D, $D0, $DE, $DD, $DD, $D0, $EE, $DE, $EE 
 	dc.b	$D0, $00 
+; @ $0007A52E
 SpriteMetaTileTable_78120_Meta_7A52E:
 	dc.b	$01, $BB, $01, $43, $33, $20, $0C, $BC, $CB, $BC, $0B, $BC, $CB, $0B, $CB, $BC, $0B, $CB, $00, $CC, $00, $CC, $00, $0C, $CC, $00, $00, $00, $BC, $00 
+; @ $0007A54C
 SpriteMetaTileTable_78120_Meta_7A54C:
 	dc.b	$01, $BB, $00, $02, $AA, $E7, $DB, $CD, $CC, $DE, $CB, $CD, $CC, $CD, $CB, $CD, $CB, $BD, $CB, $CC, $CD, $CC, $BC, $BC, $CC, $BC, $0B, $00 
+; @ $0007A568
 SpriteMetaTileTable_78120_Meta_7A568:
 	dc.b	$00, $EE, $ED, $ED, $D0, $EE, $ED, $DD, $C0, $ED, $EC, $CD, $C0, $EC, $DC, $CC, $C0, $CC, $CC, $CD, $00, $BC, $CB, $CC, $00, $BC, $BB, $C0, $00, $B0, $00, $00 
 	dc.b	$00, $00 
+; @ $0007A58A
 SpriteMetaTileTable_78120_Meta_7A58A:
 	dc.b	$01, $00, $FF, $FF, $FE, $EE, $0A, $0A, $AA, $00 
+; @ $0007A594
 SpriteMetaTileTable_78120_Meta_7A594:
 	dc.b	$00, $0A, $98, $89, $9A, $A9, $88, $99, $9A, $A9, $9A, $A8, $9A, $A9, $A0, $08, $99, $A0, $00, $A8, $99, $AA, $0A, $89, $99, $A0, $A9, $90, $99, $00, $0A, $00 
 	dc.b	$A9, $00 
+; @ $0007A5B6
 SpriteMetaTileTable_78120_Meta_7A5B6:
 	dc.b	$02, $00, $31, $11, $11, $11, $50, $02, $22, $22, $22, $55, $23, $A5, $32, $A5, $32, $A5, $32, $A4, $53, $A4, $53, $A4, $53, $AA, $43, $00 
+; @ $0007A5D2
 SpriteMetaTileTable_78120_Meta_7A5D2:
 	dc.b	$01, $00, $ED, $FF, $FF, $FF, $A0, $0A 
+; @ $0007A5DA
 SpriteMetaTileTable_78120_Meta_7A5DA:
 	dc.b	$01, $00, $8C, $CC, $EE, $EE, $0A, $0A, $98, $0A, $98, $0A, $99, $AA, $A9, $A9, $A9, $9A, $A5, $00 
+; @ $0007A5EE
 SpriteMetaTileTable_78120_Meta_7A5EE:
 	dc.b	$01, $44, $00, $02, $26, $66, $AA, $53, $50, $00, $AA, $53, $55, $00, $AA, $43, $54, $00, $AA, $45, $00, $A5, $45, $40, $A5, $40, $54, $40, $54, $40 
+; @ $0007A60C
 SpriteMetaTileTable_78120_Meta_7A60C:
 	dc.b	$01, $00, $EE, $EF, $FF, $FF, $A5, $A4, $04, $00 
+; @ $0007A616
 SpriteMetaTileTable_78120_Meta_7A616:
 	dc.b	$03, $00, $88, $88, $88, $88, $52, $44, $44, $44, $44, $35, $22, $22, $22, $20, $AA, $A9, $AA, $AA, $A9, $AA, $A9, $3A, $AA, $00 
+; @ $0007A630
 SpriteMetaTileTable_78120_Meta_7A630:
 	dc.b	$01, $AA, $00, $32, $23, $33, $00, $52, $5A, $A9, $05, $23, $5A, $A9, $05, $23, $05, $25, $A9, $53, $25, $A9, $53, $25, $53, $25, $53, $25 
+; @ $0007A64C
 SpriteMetaTileTable_78120_Meta_7A64C:
 	dc.b	$01, $88, $77, $73, $73, $33, $99, $98, $99, $99, $98, $99, $A9, $98, $A9, $98, $A9, $98 
+; @ $0007A65E
 SpriteMetaTileTable_78120_Meta_7A65E:
 	dc.b	$01, $00, $EE, $EE, $EF, $FF, $05, $03, $03, $53, $05, $00 
+; @ $0007A66A
 SpriteMetaTileTable_78120_Meta_7A66A:
 	dc.b	$01, $AA, $33, $33, $11, $10, $52, $25, $32, $25, $22, $25, $22, $35, $22, $25, $5A, $32, $23, $55, $52, $23, $35, $02, $35, $55, $5A, $00 
+; @ $0007A686
 SpriteMetaTileTable_78120_Meta_7A686:
 	dc.b	$01, $99, $44, $44, $32, $00, $AA, $98, $88, $A9, $98, $88, $A9, $98, $88, $AA, $98, $89, $AA, $A9, $AA, $AA, $00, $AA, $90, $00, $00, $A0, $00, $00, $00, $00 
+; @ $0007A6A6
 SpriteMetaTileTable_78120_Meta_7A6A6:
 	dc.b	$01, $88, $00, $8C, $FF, $FF, $99, $AA, $99, $98, $89, $9A, $A9, $98, $99, $9A, $A9, $89, $99, $00 
+; @ $0007A6BA
 SpriteMetaTileTable_78120_Meta_7A6BA:
 	dc.b	$02, $88, $FF, $F3, $09, $8C, $99, $00, $0C, $E2, $20, $98, $89, $89, $98, $9A, $A9, $00 
+; @ $0007A6CC
 SpriteMetaTileTable_78120_Meta_7A6CC:
 	dc.b	$02, $99, $04, $E6, $22, $30, $88, $00, $00, $8C, $CE, $89, $90, $00, $00, $89, $00, $00, $00, $89, $00, $89, $90, $90, $89, $00 
+; @ $0007A6E6
 SpriteMetaTileTable_78120_Meta_7A6E6:
 	dc.b	$03, $88, $FF, $50, $00, $00, $99, $00, $0E, $F3, $10, $00, $00, $00, $0C, $EF, $98, $98, $98, $00 
+; @ $0007A6FA
 SpriteMetaTileTable_78120_Meta_7A6FA:
 	dc.b	$02, $88, $C8, $8C, $CC, $00, $99, $22, $02, $02, $0E, $A9, $89, $AA, $89, $9A, $AA, $AA, $89, $AA, $A0, $98, $89, $9A, $A0, $A0 
+; @ $0007A714
 SpriteMetaTileTable_78120_Meta_7A714:
 	dc.b	$02, $99, $F3, $00, $40, $00, $00, $00, $21, $3F, $FF, $AA, $AA, $AA, $A9, $0A, $AA, $A9, $90, $09 
+; @ $0007A728
 SpriteMetaTileTable_78120_Meta_7A728:
 	dc.b	$01, $00, $0F, $FF, $FF, $FF, $09, $9A, $AA, $A0 
+; @ $0007A732
 SpriteMetaTileTable_78120_Meta_7A732:
 	dc.b	$02, $AA, $17, $73, $00, $00, $00, $00, $8C, $EF, $FF, $09, $99, $99, $09, $0A 
+; @ $0007A742
 SpriteMetaTileTable_78120_Meta_7A742:
 	dc.b	$01, $AA, $0F, $FF, $FF, $FF, $99, $99, $99, $99 
+; @ $0007A74C
 SpriteMetaTileTable_78120_Meta_7A74C:
 	dc.b	$02, $99, $95, $31, $00, $00, $AA, $08, $8C, $FF, $FF, $98, $89, $88, $A9, $A9 
+; @ $0007A75C
 SpriteMetaTileTable_78120_Meta_7A75C:
 	dc.b	$01, $AA, $FF, $FF, $FF, $FD, $99, $00 
+; @ $0007A764
 SpriteMetaTileTable_78120_Meta_7A764:
 	dc.b	$01, $AA, $FF, $FF, $FF, $FF 
+; @ $0007A76A
 SpriteMetaTileTable_78120_Meta_7A76A:
 	dc.b	$02, $99, $66, $22, $22, $20, $00, $00, $08, $88, $99, $AA, $AA, $AA, $AA, $0A, $A9, $9A, $A9, $9A, $A9, $9A, $A9, $A0, $A9, $A9, $9A, $00 
+; @ $0007A786
 SpriteMetaTileTable_78120_Meta_7A786:
 	dc.b	$01, $AA, $71, $30, $88, $40, $99, $99, $99, $99, $A9, $99, $A9, $99, $A0, $00, $9A, $A0, $0A, $9A, $A0, $0A, $00, $A0, $00, $00, $0A, $00, $00, $00 
 BossTileData_Excalabria_Entry03:
@@ -14940,58 +15279,85 @@ BossTileData_Excalabria_Entry03:
 	dc.l	SpriteMetaTileTable_78120_Meta_7A786
 BossTileData_Excalabria_Entry04:
 	dc.b	$00, $02, $04, $01, $03, $05, $06, $08, $0A, $07, $09, $0B, $0C, $0E, $0F, $0D, $0D, $10, $11, $13, $15, $12, $14, $16, $17, $19, $1A, $18, $0D, $0D 
+; @ $0007A872
 SpriteMetaTileTable_78120_Meta_7A872:
 	dc.b	$01, $00, $EC, $CC, $CC, $CC, $44, $0A, $44, $0A, $44, $0A, $44, $0A, $45, $0A, $45, $0A, $45, $AA, $45, $00 
+; @ $0007A888
 SpriteMetaTileTable_78120_Meta_7A888:
 	dc.b	$01, $00, $F7, $77, $77, $77, $40, $40, $40, $44, $44, $54, $54, $00 
+; @ $0007A896
 SpriteMetaTileTable_78120_Meta_7A896:
 	dc.b	$01, $00, $CC, $CC, $88, $88, $AA, $45, $A4, $45, $A4, $53, $55, $32, $05, $33, $22, $05, $53, $32, $0A, $55, $53, $0A, $AA, $55 
+; @ $0007A8B0
 SpriteMetaTileTable_78120_Meta_7A8B0:
 	dc.b	$01, $00, $77, $77, $33, $33, $44, $44, $54, $35, $23, $50, $23, $50, $35, $50, $33, $30 
+; @ $0007A8C2
 SpriteMetaTileTable_78120_Meta_7A8C2:
 	dc.b	$01, $00, $88, $88, $88, $88, $09, $9A, $53, $08, $9A, $53, $A9, $9A, $55, $AA, $AA, $A5, $0A, $99, $A5, $0A, $99, $A5, $0A, $99, $AA, $A9, $89, $9A 
+; @ $0007A8E0
 SpriteMetaTileTable_78120_Meta_7A8E0:
 	dc.b	$01, $00, $33, $33, $33, $33, $22, $30, $22, $3A, $32, $3A, $53, $2A, $53, $25, $53, $25, $53, $25, $53, $25 
+; @ $0007A8F6
 SpriteMetaTileTable_78120_Meta_7A8F6:
 	dc.b	$01, $00, $88, $88, $88, $88, $05, $55, $35, $05, $55, $33, $05, $A5, $55, $0A, $A5, $53, $0A, $A5, $33, $09, $A5, $53, $09, $95, $53, $09, $9A, $53 
+; @ $0007A914
 SpriteMetaTileTable_78120_Meta_7A914:
 	dc.b	$01, $00, $77, $77, $77, $77, $50, $50, $50, $50, $55, $35, $33, $33 
+; @ $0007A922
 SpriteMetaTileTable_78120_Meta_7A922:
 	dc.b	$01, $00, $88, $88, $88, $88, $09, $9A, $53, $08, $9A, $53, $08, $9A, $53, $08, $9A, $55, $08, $9A, $35, $08, $99, $A3, $08, $89, $A3, $09, $89, $A3 
+; @ $0007A940
 SpriteMetaTileTable_78120_Meta_7A940:
 	dc.b	$02, $33, $88, $88, $88, $80, $00, $77, $77, $33, $37, $30, $30, $30, $54, $00 
+; @ $0007A950
 SpriteMetaTileTable_78120_Meta_7A950:
 	dc.b	$01, $00, $88, $88, $99, $DF, $08, $99, $A5, $08, $99, $AA, $08, $99, $99, $09, $99, $90, $09, $99, $09, $90, $90, $00 
+; @ $0007A968
 SpriteMetaTileTable_78120_Meta_7A968:
 	dc.b	$01, $00, $7F, $FF, $FF, $FF, $55, $00 
+; @ $0007A970
 SpriteMetaTileTable_78120_Meta_7A970:
 	dc.b	$01, $00, $FF, $FE, $EE, $EE, $03, $03, $03, $33, $32, $00 
+; @ $0007A97C
 SpriteMetaTileTable_78120_Meta_7A97C:
 	dc.b	$01, $00, $FF, $FF, $FF, $FF 
+; @ $0007A982
 SpriteMetaTileTable_78120_Meta_7A982:
 	dc.b	$01, $00, $CC, $CC, $C8, $88, $03, $22, $02, $23, $02, $23, $32, $23, $22, $35, $02, $23, $35, $02, $23, $54, $32, $35, $54, $00 
+; @ $0007A99C
 SpriteMetaTileTable_78120_Meta_7A99C:
 	dc.b	$01, $00, $00, $FF, $FF, $FF, $03, $33, $33, $54, $33, $33, $33, $23 
+; @ $0007A9AA
 SpriteMetaTileTable_78120_Meta_7A9AA:
 	dc.b	$01, $00, $3F, $FF, $FF, $FF, $44, $99 
+; @ $0007A9B2
 SpriteMetaTileTable_78120_Meta_7A9B2:
 	dc.b	$01, $00, $FF, $FF, $FF, $C8, $55, $55, $05, $53, $33, $00 
+; @ $0007A9BE
 SpriteMetaTileTable_78120_Meta_7A9BE:
 	dc.b	$01, $00, $FF, $FF, $FF, $77, $30, $30 
+; @ $0007A9C6
 SpriteMetaTileTable_78120_Meta_7A9C6:
 	dc.b	$01, $00, $8C, $CC, $CE, $EE, $55, $55, $33, $55, $53, $55, $53, $53, $33, $55, $55, $AA, $AA, $0A 
+; @ $0007A9DA
 SpriteMetaTileTable_78120_Meta_7A9DA:
 	dc.b	$01, $00, $77, $73, $33, $33, $33, $33, $33, $53, $30, $53, $30, $55, $33, $A5, $33, $A5, $53, $00 
+; @ $0007A9EE
 SpriteMetaTileTable_78120_Meta_7A9EE:
 	dc.b	$01, $00, $EF, $FF, $FF, $FF, $0A, $00 
+; @ $0007A9F6
 SpriteMetaTileTable_78120_Meta_7A9F6:
 	dc.b	$01, $53, $44, $44, $44, $40, $A5, $00, $00, $AA, $30, $00, $9A, $30, $00, $9A, $30, $00, $99, $33, $00, $AA, $33, $30, $0A, $33, $30, $0A, $55, $33, $33, $00 
+; @ $0007AA16
 SpriteMetaTileTable_78120_Meta_7AA16:
 	dc.b	$01, $00, $FF, $C8, $0C, $CC, $22, $25, $33, $33, $33, $05, $55, $55, $35, $05, $53, $05, $32, $05, $52, $00 
+; @ $0007AA2C
 SpriteMetaTileTable_78120_Meta_7AA2C:
 	dc.b	$01, $00, $FF, $F7, $33, $31, $55, $53, $50, $33, $50, $23, $55, $33, $53, $50 
+; @ $0007AA3C
 SpriteMetaTileTable_78120_Meta_7AA3C:
 	dc.b	$01, $00, $CE, $EE, $EE, $EE, $05, $53, $55, $05, $05, $05, $55, $53, $33, $00 
+; @ $0007AA4C
 SpriteMetaTileTable_78120_Meta_7AA4C:
 	dc.b	$01, $00, $EE, $CC, $CC, $CC, $32, $23, $05, $23, $03, $25, $52, $35, $52, $3A, $22, $5A, $33, $5A 
 BossTileData_Excalabria_Entry05:
@@ -15024,29 +15390,41 @@ BossTileData_Excalabria_Entry05:
 	dc.l	SpriteMetaTileTable_78120_Meta_7AA4C
 BossTileData_Excalabria_Entry06:
 	dc.b	$00, $02, $01, $03, $04, $06, $05, $07, $08, $0A, $09, $0B 
+; @ $0007AAD8
 SpriteMetaTileTable_78120_Meta_7AAD8:
 	dc.b	$01, $00, $FF, $FF, $FE, $CC, $05, $05, $53, $55, $33, $00 
+; @ $0007AAE4
 SpriteMetaTileTable_78120_Meta_7AAE4:
 	dc.b	$01, $00, $FE, $CC, $80, $00, $05, $05, $32, $32, $62, $53, $22, $25, $35, $55, $23, $55, $32, $33, $35, $5A, $22, $33, $55, $AA 
+; @ $0007AAFE
 SpriteMetaTileTable_78120_Meta_7AAFE:
 	dc.b	$01, $00, $CC, $EF, $FF, $FF, $53, $22, $55, $32, $53, $00 
+; @ $0007AB0A
 SpriteMetaTileTable_78120_Meta_7AB0A:
 	dc.b	$01, $AA, $11, $22, $11, $01, $66, $35, $5A, $22, $35, $5A, $33, $55, $A9, $55, $55, $A9, $55, $35, $5A, $05, $23, $5A, $05, $32, $5A, $A9, $05, $53, $55, $00 
+; @ $0007AB2A
 SpriteMetaTileTable_78120_Meta_7AB2A:
 	dc.b	$01, $33, $33, $11, $10, $00, $0A, $A5, $0A, $9A, $0A, $9A, $53, $0A, $9A, $55, $0A, $99, $A5, $00, $99, $A5, $53, $00, $A9, $AA, $53, $00, $A9, $9A, $55, $00 
+; @ $0007AB4A
 SpriteMetaTileTable_78120_Meta_7AB4A:
 	dc.b	$01, $00, $FF, $77, $77, $77, $30, $30, $30, $33, $33, $55 
+; @ $0007AB56
 SpriteMetaTileTable_78120_Meta_7AB56:
 	dc.b	$01, $00, $88, $89, $93, $FF, $A9, $8A, $A5, $A9, $89, $A5, $A8, $89, $AA, $99, $9A, $99, $A0, $0A, $9A, $00 
+; @ $0007AB6C
 SpriteMetaTileTable_78120_Meta_7AB6C:
 	dc.b	$01, $00, $FF, $FF, $FF, $FF 
+; @ $0007AB72
 SpriteMetaTileTable_78120_Meta_7AB72:
 	dc.b	$01, $00, $FF, $FF, $FE, $EE, $05, $03, $53, $00 
+; @ $0007AB7C
 SpriteMetaTileTable_78120_Meta_7AB7C:
 	dc.b	$00, $00, $03, $35, $AA, $00, $52, $35, $AA, $00, $32, $3A, $A9, $05, $23, $AA, $A9, $52, $25, $AA, $A9, $32, $3A, $AA, $99, $22, $4A, $A9, $99, $23, $4A, $A9 
 	dc.b	$99, $00 
+; @ $0007AB9E
 SpriteMetaTileTable_78120_Meta_7AB9E:
 	dc.b	$01, $00, $EC, $CC, $80, $00, $52, $05, $23, $53, $23, $32, $25, $55, $22, $35, $05, $33, $23, $54, $05, $33, $35, $54, $03, $55, $55, $54 
+; @ $0007ABBA
 SpriteMetaTileTable_78120_Meta_7ABBA:
 	dc.b	$01, $99, $11, $00, $22, $33, $34, $4A, $A9, $34, $4A, $A9, $54, $4A, $A9, $98, $54, $AA, $A9, $98, $54, $AA, $98, $4A, $AA, $98, $4A, $AA, $AA, $AA 
 BossTileData_Excalabria_Entry07:
@@ -15064,12 +15442,14 @@ BossTileData_Excalabria_Entry07:
 	dc.l	SpriteMetaTileTable_78120_Meta_7ABBA
 BossTileData_Excalabria_Entry08:
 	dc.l	LoadTownTileGfxToBuffer-4	
+; @ $0007AC0C
 SpriteMetaTileTable_78120_Meta_7AC0C:
 	dc.l	$FFF90088	
 	dc.l	$05550553	
 	dc.l	$33505333	
 	dc.l	$33355333	
 	dc.l	$35053335	
+; @ $0007AC20
 SpriteMetaTileTable_78120_Meta_7AC20:
 	dc.l	$0100FECC	
 	dc.l	$FFFF3353	
@@ -15085,307 +15465,440 @@ BossTileData_Imposter_Entry00:
 	dc.b	$03, $03, $03, $03, $57, $59, $5C, $5F, $58, $5A, $5D, $60, $03, $5B, $5E, $61, $03, $03, $63, $04, $03, $62, $64, $67, $03, $03, $65, $68, $03, $03, $66, $69 
 	dc.b	$03, $6C, $70, $74, $6A, $6D, $71, $75, $6B, $6E, $72, $76, $03, $6F, $73, $69, $03, $03, $34, $7D, $03, $77, $7A, $7E, $03, $78, $7B, $7F, $03, $79, $7C, $80 
 	dc.b	$03, $03, $03, $03, $03, $03, $03, $82, $03, $03, $81, $83, $03, $03, $03, $84 
+; @ $0007AD04
 SpriteMetaTileTable_78120_Meta_7AD04:
 	dc.b	$01, $00, $FF, $FF, $FE, $EE, $04, $03, $05, $00 
+; @ $0007AD0E
 SpriteMetaTileTable_78120_Meta_7AD0E:
 	dc.b	$01, $00, $FF, $F0, $00, $00, $04, $33, $44, $40, $31, $13, $35, $54, $12, $23, $45, $55, $13, $12, $45, $55, $64, $56, $34, $56 
+; @ $0007AD28
 SpriteMetaTileTable_78120_Meta_7AD28:
 	dc.b	$01, $00, $FF, $FF, $F7, $77, $50, $60, $60, $00 
+; @ $0007AD32
 SpriteMetaTileTable_78120_Meta_7AD32:
 	dc.b	$01, $00, $FF, $FF, $FF, $FF 
+; @ $0007AD38
 SpriteMetaTileTable_78120_Meta_7AD38:
 	dc.b	$01, $00, $EE, $EF, $FF, $FF, $05, $03, $03, $00 
+; @ $0007AD42
 SpriteMetaTileTable_78120_Meta_7AD42:
 	dc.b	$00, $63, $55, $64, $56, $55, $35, $43, $56, $46, $44, $66, $56, $32, $45, $65, $66, $06, $56, $55, $06, $42, $45, $66, $66, $04, $30, $45, $66, $00, $04, $63 
 	dc.b	$43, $00 
+; @ $0007AD64
 SpriteMetaTileTable_78120_Meta_7AD64:
 	dc.b	$01, $00, $7F, $71, $00, $00, $60, $65, $65, $55, $60, $66, $65, $55, $66, $66, $65, $54, $46, $03, $44, $46, $6A, $36, $66, $56, $BB, $00 
+; @ $0007AD80
 SpriteMetaTileTable_78120_Meta_7AD80:
 	dc.b	$01, $00, $FF, $FF, $F7, $11, $66, $AB, $BB, $A0, $BC, $CB, $BA, $00 
+; @ $0007AD8E
 SpriteMetaTileTable_78120_Meta_7AD8E:
 	dc.b	$01, $00, $77, $73, $33, $99, $70, $97, $99, $79, $70, $07, $97, $07, $97, $79, $70, $79, $70, $00 
+; @ $0007ADA2
 SpriteMetaTileTable_78120_Meta_7ADA2:
 	dc.b	$01, $00, $8C, $CC, $CC, $99, $04, $66, $13, $64, $23, $56, $62, $46, $42, $36, $06, $36, $04, $02, $35, $03, $56, $00 
+; @ $0007ADBA
 SpriteMetaTileTable_78120_Meta_7ADBA:
 	dc.b	$00, $66, $65, $5A, $C7, $34, $55, $6B, $88, $66, $66, $AC, $87, $33, $45, $B7, $7A, $46, $6A, $C7, $BB, $33, $4A, $C7, $AC, $64, $6A, $CC, $AC, $00, $0A, $CC 
 	dc.b	$AC, $00 
+; @ $0007ADDC
 SpriteMetaTileTable_78120_Meta_7ADDC:
 	dc.b	$00, $77, $CC, $BB, $00, $8B, $AA, $AB, $A0, $AB, $C7, $BB, $A0, $B8, $87, $CB, $AA, $88, $7C, $CB, $BA, $8C, $8C, $AB, $BA, $CC, $8C, $AB, $BA, $C8, $8C, $AB 
 	dc.b	$BA, $00 
+; @ $0007ADFE
 SpriteMetaTileTable_78120_Meta_7ADFE:
 	dc.b	$01, $00, $9D, $CC, $CE, $EE, $07, $97, $97, $79, $70, $09, $90, $07, $97, $77, $AA, $A6 
+; @ $0007AE10
 SpriteMetaTileTable_78120_Meta_7AE10:
 	dc.b	$01, $00, $99, $99, $11, $33, $05, $66, $05, $66, $36, $06, $40, $60, $A0, $50, $60, $A4, $06, $60, $A5, $06, $36, $66 
+; @ $0007AE28
 SpriteMetaTileTable_78120_Meta_7AE28:
 	dc.b	$00, $00, $4A, $CC, $AC, $00, $4A, $BC, $AC, $00, $3A, $BB, $AB, $00, $3A, $BB, $AB, $00, $5A, $BB, $AA, $05, $66, $AB, $BA, $05, $63, $AB, $BA, $05, $66, $6A 
 	dc.b	$BB, $00 
+; @ $0007AE4A
 SpriteMetaTileTable_78120_Meta_7AE4A:
 	dc.b	$01, $BA, $31, $11, $40, $28, $CB, $AA, $CC, $7C, $AB, $CC, $7C, $AB, $BB, $7C, $AB, $BB, $AB, $AA, $BB, $BB, $BB, $A0, $AA, $BB, $A0, $AA, $AA, $00 
+; @ $0007AE68
 SpriteMetaTileTable_78120_Meta_7AE68:
 	dc.b	$01, $00, $FF, $F8, $00, $00, $43, $34, $44, $03, $11, $33, $55, $41, $22, $34, $55, $31, $31, $24, $55, $56, $45, $63, $45, $00 
+; @ $0007AE82
 SpriteMetaTileTable_78120_Meta_7AE82:
 	dc.b	$01, $00, $FF, $FF, $77, $77, $40, $55, $56, $66 
+; @ $0007AE8C
 SpriteMetaTileTable_78120_Meta_7AE8C:
 	dc.b	$01, $00, $FF, $FF, $FF, $77, $70, $97 
+; @ $0007AE94
 SpriteMetaTileTable_78120_Meta_7AE94:
 	dc.b	$00, $56, $35, $56, $45, $35, $53, $54, $35, $34, $64, $46, $65, $03, $24, $56, $56, $00, $65, $65, $50, $04, $24, $56, $66, $00, $43, $44, $56, $00, $46, $66 
 	dc.b	$43, $00 
+; @ $0007AEB6
 SpriteMetaTileTable_78120_Meta_7AEB6:
 	dc.b	$02, $66, $80, $8A, $98, $10, $00, $77, $71, $00, $00, $60, $55, $65, $55, $65, $55, $45, $06, $34, $45, $34, $56, $65, $6B, $00 
+; @ $0007AED0
 SpriteMetaTileTable_78120_Meta_7AED0:
 	dc.b	$01, $00, $FF, $FF, $F7, $11, $66, $AA, $BB, $A0, $BC, $CB, $BA, $00 
+; @ $0007AEDE
 SpriteMetaTileTable_78120_Meta_7AEDE:
 	dc.b	$01, $00, $73, $33, $B9, $99, $99, $79, $70, $09, $90, $07, $97, $99, $79, $70, $09, $90, $07, $97 
+; @ $0007AEF2
 SpriteMetaTileTable_78120_Meta_7AEF2:
 	dc.b	$01, $00, $88, $88, $CC, $99, $46, $65, $62, $05, $65, $32, $05, $65, $65, $04, $46, $53, $36, $06, $36, $04, $02, $35, $03, $56 
+; @ $0007AF0C
 SpriteMetaTileTable_78120_Meta_7AF0C:
 	dc.b	$00, $15, $66, $56, $AC, $24, $55, $66, $B8, $25, $66, $6A, $C8, $33, $45, $5B, $77, $54, $66, $AC, $7B, $33, $44, $AC, $7B, $64, $56, $AC, $CA, $00, $00, $AC 
 	dc.b	$CA, $00 
+; @ $0007AF2E
 SpriteMetaTileTable_78120_Meta_7AF2E:
 	dc.b	$00, $77, $CC, $BB, $00, $8B, $AA, $AA, $A0, $BB, $C7, $BB, $A0, $A8, $87, $CB, $A0, $B8, $7C, $CB, $BA, $C7, $C8, $AB, $BA, $C7, $C7, $AB, $BA, $CC, $87, $BB 
 	dc.b	$BA, $00 
+; @ $0007AF50
 SpriteMetaTileTable_78120_Meta_7AF50:
 	dc.b	$01, $00, $DC, $CC, $EE, $CC, $99, $79, $70, $09, $70, $07, $97, $97, $7A, $0A, $AA, $03, $26, $00 
+; @ $0007AF64
 SpriteMetaTileTable_78120_Meta_7AF64:
 	dc.b	$01, $00, $99, $91, $33, $77, $05, $66, $35, $60, $36, $60, $A3, $50, $60, $A4, $06, $45, $60, $36, $36, $00 
+; @ $0007AF7A
 SpriteMetaTileTable_78120_Meta_7AF7A:
 	dc.b	$00, $00, $05, $AC, $CA, $00, $04, $AB, $CA, $00, $35, $AB, $CA, $00, $46, $AB, $BA, $00, $56, $AB, $BA, $05, $66, $4A, $BB, $05, $65, $6A, $BB, $05, $66, $63 
 	dc.b	$AB, $00 
+; @ $0007AF9C
 SpriteMetaTileTable_78120_Meta_7AF9C:
 	dc.b	$01, $BA, $31, $11, $40, $28, $CC, $AA, $CC, $B7, $AB, $BC, $B7, $AB, $BB, $B7, $AB, $AB, $BB, $AA, $AB, $BB, $BB, $A0, $AA, $BB, $A0, $AA, $AA, $00 
+; @ $0007AFBA
 SpriteMetaTileTable_78120_Meta_7AFBA:
 	dc.b	$01, $00, $F7, $77, $33, $39, $70, $97, $99, $79, $70, $07, $97, $07, $97, $79, $70, $00 
+; @ $0007AFCC
 SpriteMetaTileTable_78120_Meta_7AFCC:
 	dc.b	$01, $00, $8C, $CC, $CC, $DC, $04, $66, $13, $64, $23, $56, $62, $46, $42, $36, $06, $36, $04, $33, $35, $60 
+; @ $0007AFE2
 SpriteMetaTileTable_78120_Meta_7AFE2:
 	dc.b	$01, $00, $99, $DC, $CC, $EC, $79, $70, $07, $97, $97, $79, $70, $09, $70, $07, $7A, $7A, $0A, $A6 
+; @ $0007AFF6
 SpriteMetaTileTable_78120_Meta_7AFF6:
 	dc.b	$01, $00, $C8, $99, $13, $32, $56, $60, $04, $66, $60, $35, $06, $40, $60, $03, $50, $60, $A4, $06, $35, $66, $36, $60, $03, $00 
+; @ $0007B010
 SpriteMetaTileTable_78120_Meta_7B010:
 	dc.b	$00, $00, $4A, $CC, $AC, $00, $4A, $BC, $AC, $03, $5A, $BB, $AB, $03, $5A, $BB, $AB, $45, $5A, $BB, $AA, $46, $66, $AB, $BA, $46, $63, $AB, $BA, $56, $60, $6A 
 	dc.b	$BB, $00 
+; @ $0007B032
 SpriteMetaTileTable_78120_Meta_7B032:
 	dc.b	$00, $63, $55, $64, $56, $55, $35, $43, $56, $46, $44, $66, $56, $32, $45, $65, $66, $06, $56, $55, $66, $42, $45, $06, $66, $04, $30, $64, $56, $00, $00, $63 
 	dc.b	$43, $00 
+; @ $0007B054
 SpriteMetaTileTable_78120_Meta_7B054:
 	dc.b	$01, $00, $7F, $73, $00, $00, $60, $65, $65, $56, $66, $55, $56, $60, $66, $55, $44, $56, $33, $44, $56, $6A, $35, $66, $5A, $BB 
+; @ $0007B06E
 SpriteMetaTileTable_78120_Meta_7B06E:
 	dc.b	$01, $00, $FF, $FF, $F7, $11, $66, $BB, $BA, $A0, $CC, $BB, $BA, $00 
+; @ $0007B07C
 SpriteMetaTileTable_78120_Meta_7B07C:
 	dc.b	$01, $00, $CC, $CC, $CC, $CC, $64, $26, $54, $23, $06, $25, $05, $22, $05, $63, $04, $62, $04, $66, $05, $66 
+; @ $0007B092
 SpriteMetaTileTable_78120_Meta_7B092:
 	dc.b	$00, $66, $55, $AC, $78, $35, $56, $B8, $8B, $66, $6A, $C8, $BA, $33, $5B, $7C, $AC, $56, $AB, $7B, $B8, $33, $AC, $7B, $B8, $50, $AC, $CA, $CC, $00, $AC, $CA 
 	dc.b	$CC, $00 
+; @ $0007B0B4
 SpriteMetaTileTable_78120_Meta_7B0B4:
 	dc.b	$00, $7C, $CB, $BB, $A0, $BA, $AA, $AB, $A0, $CC, $7B, $BB, $A0, $88, $7C, $CB, $AA, $87, $CC, $CB, $BA, $C8, $CA, $BB, $BA, $C8, $CA, $BB, $BA, $88, $CA, $BB 
 	dc.b	$BA, $00 
+; @ $0007B0D6
 SpriteMetaTileTable_78120_Meta_7B0D6:
 	dc.b	$01, $00, $33, $99, $CC, $EE, $79, $70, $07, $97, $79, $70, $07, $97, $79, $70, $07, $97, $79, $07 
+; @ $0007B0EA
 SpriteMetaTileTable_78120_Meta_7B0EA:
 	dc.b	$01, $00, $CC, $CC, $CC, $00, $46, $66, $40, $60, $30, $60, $40, $60, $50, $60, $60, $60, $70, $A4, $66, $62, $97, $A5, $46, $03 
+; @ $0007B104
 SpriteMetaTileTable_78120_Meta_7B104:
 	dc.b	$00, $00, $AC, $CA, $CC, $03, $AB, $BA, $CC, $02, $AB, $BA, $BC, $03, $AB, $BA, $BB, $00, $AA, $BA, $AB, $45, $6A, $BB, $AB, $46, $6A, $BB, $AA, $56, $00, $AB 
 	dc.b	$BA, $00 
+; @ $0007B126
 SpriteMetaTileTable_78120_Meta_7B126:
 	dc.b	$01, $BB, $02, $22, $AE, $C0, $BA, $AB, $AA, $BA, $C7, $CA, $BA, $C7, $CA, $BA, $B7, $CA, $BA, $AA, $AA, $AA, $BA, $A0, $AA, $AA, $AB, $A0 
+; @ $0007B142
 SpriteMetaTileTable_78120_Meta_7B142:
 	dc.b	$01, $00, $FF, $FF, $FF, $F3, $44, $44 
+; @ $0007B14A
 SpriteMetaTileTable_78120_Meta_7B14A:
 	dc.b	$01, $00, $EE, $EC, $88, $CC, $04, $52, $31, $36, $32, $03, $46, $32, $03, $46, $44, $46, $35, $56, $56, $00 
+; @ $0007B160
 SpriteMetaTileTable_78120_Meta_7B160:
 	dc.b	$00, $23, $34, $50, $00, $14, $44, $55, $65, $24, $45, $56, $66, $24, $55, $66, $55, $44, $55, $66, $55, $43, $45, $56, $56, $45, $66, $46, $64, $35, $55, $66 
 	dc.b	$56, $00 
+; @ $0007B182
 SpriteMetaTileTable_78120_Meta_7B182:
 	dc.b	$00, $00, $00, $00, $00, $55, $60, $03, $56, $66, $66, $32, $46, $06, $45, $64, $56, $63, $46, $63, $56, $34, $66, $64, $36, $56, $65, $06, $35, $66, $56, $00 
 	dc.b	$44, $00 
+; @ $0007B1A4
 SpriteMetaTileTable_78120_Meta_7B1A4:
 	dc.b	$01, $00, $FF, $FF, $F1, $10, $60, $0B, $BA, $60, $BC, $CB, $AB, $7B, $AA, $A0 
+; @ $0007B1B4
 SpriteMetaTileTable_78120_Meta_7B1B4:
 	dc.b	$01, $00, $FE, $EC, $CC, $CC, $03, $11, $03, $12, $01, $41, $06, $45, $06, $35, $05, $54 
+; @ $0007B1C6
 SpriteMetaTileTable_78120_Meta_7B1C6:
 	dc.b	$01, $00, $F3, $11, $00, $01, $11, $33, $13, $44, $44, $34, $44, $54, $24, $46, $55, $50, $64, $46, $55, $50, $65, $45, $55, $60, $53, $45, $56, $00 
+; @ $0007B1E4
 SpriteMetaTileTable_78120_Meta_7B1E4:
 	dc.b	$01, $00, $FD, $DD, $CC, $EE, $70, $77, $09, $09, $70, $07, $90, $97, $97, $00 
+; @ $0007B1F4
 SpriteMetaTileTable_78120_Meta_7B1F4:
 	dc.b	$01, $00, $CC, $EE, $EE, $EE, $04, $64, $04, $24, $06, $23, $54, $66, $54, $06 
+; @ $0007B204
 SpriteMetaTileTable_78120_Meta_7B204:
 	dc.b	$00, $45, $66, $66, $00, $56, $56, $60, $00, $64, $56, $66, $00, $45, $06, $65, $50, $56, $66, $55, $66, $42, $60, $24, $44, $23, $55, $65, $AB, $26, $64, $AB 
 	dc.b	$BC, $00 
+; @ $0007B226
 SpriteMetaTileTable_78120_Meta_7B226:
 	dc.b	$01, $00, $FF, $FF, $77, $31, $60, $66, $BB, $AA, $CB, $BB, $A0, $00 
+; @ $0007B234
 SpriteMetaTileTable_78120_Meta_7B234:
 	dc.b	$01, $00, $EE, $EF, $FF, $FF, $79, $09, $07, $00 
+; @ $0007B23E
 SpriteMetaTileTable_78120_Meta_7B23E:
 	dc.b	$01, $00, $E6, $66, $44, $00, $06, $70, $56, $70, $56, $97, $36, $97, $03, $46, $79, $04, $66, $07, $70, $06, $66, $07, $BA, $60, $60, $00 
+; @ $0007B25A
 SpriteMetaTileTable_78120_Meta_7B25A:
 	dc.b	$00, $23, $4A, $C7, $87, $26, $0B, $88, $BB, $23, $AC, $8B, $AC, $62, $B7, $CA, $C8, $6A, $B7, $BB, $88, $0A, $C7, $BB, $8C, $0A, $CC, $AC, $CC, $0A, $CC, $AC 
 	dc.b	$C8, $00 
+; @ $0007B27C
 SpriteMetaTileTable_78120_Meta_7B27C:
 	dc.b	$00, $CC, $BB, $BA, $00, $AA, $AA, $BA, $00, $C7, $BB, $BA, $00, $87, $CC, $BA, $A0, $7C, $CC, $BB, $A0, $8C, $AB, $BB, $A0, $8C, $AB, $BB, $A0, $8C, $AB, $BB 
 	dc.b	$A0, $00 
+; @ $0007B29E
 SpriteMetaTileTable_78120_Meta_7B29E:
 	dc.b	$01, $00, $01, $13, $9D, $FF, $BB, $35, $05, $60, $A6, $46, $56, $03, $66, $60, $05, $3A, $4B, $A0, $B0, $00 
+; @ $0007B2B4
 SpriteMetaTileTable_78120_Meta_7B2B4:
 	dc.b	$01, $BB, $04, $45, $11, $02, $0A, $CC, $AC, $CB, $0A, $AC, $CC, $0A, $AB, $CC, $0A, $AB, $0A, $AB, $AA, $35, $AB, $BA, $55, $AB, $BA, $AB, $35, $6A, $AA, $00 
+; @ $0007B2D4
 SpriteMetaTileTable_78120_Meta_7B2D4:
 	dc.b	$01, $BB, $02, $22, $0C, $C0, $AA, $BA, $AB, $A0, $7C, $AB, $A0, $7C, $AB, $A0, $7C, $AB, $A0, $BA, $AB, $BA, $A0, $BA, $A0, $AA, $00, $AA, $AA, $BA, $00, $00 
+; @ $0007B2F4
 SpriteMetaTileTable_78120_Meta_7B2F4:
 	dc.b	$01, $00, $F8, $CE, $EE, $EE, $0B, $B0, $03, $AB, $B6, $56, $65, $06, $06, $05 
+; @ $0007B304
 SpriteMetaTileTable_78120_Meta_7B304:
 	dc.b	$01, $00, $F7, $30, $02, $26, $20, $33, $20, $63, $68, $88, $03, $54, $AB, $78, $81, $65, $0A, $76, $04, $0A, $06, $04, $05, $00 
+; @ $0007B31E
 SpriteMetaTileTable_78120_Meta_7B31E:
 	dc.b	$00, $00, $00, $00, $00, $03, $11, $33, $00, $11, $13, $44, $44, $12, $34, $44, $54, $41, $24, $46, $55, $45, $64, $46, $55, $35, $65, $45, $55, $54, $53, $45 
 	dc.b	$56, $00 
+; @ $0007B340
 SpriteMetaTileTable_78120_Meta_7B340:
 	dc.b	$01, $00, $FF, $FF, $77, $73, $50, $50, $60, $78, $87, $00 
+; @ $0007B34C
 SpriteMetaTileTable_78120_Meta_7B34C:
 	dc.b	$01, $00, $22, $10, $8E, $FF, $46, $40, $04, $40, $60, $04, $55, $63, $40, $05, $45, $53, $46, $66, $65, $56, $06, $00 
+; @ $0007B364
 SpriteMetaTileTable_78120_Meta_7B364:
 	dc.b	$00, $64, $45, $66, $66, $24, $56, $56, $60, $06, $64, $56, $60, $23, $45, $06, $65, $54, $56, $64, $45, $66, $65, $33, $34, $03, $36, $65, $66, $22, $34, $5A 
 	dc.b	$BB, $00 
+; @ $0007B386
 SpriteMetaTileTable_78120_Meta_7B386:
 	dc.b	$01, $00, $1C, $FF, $77, $33, $07, $88, $77, $07, $70, $60, $46, $66, $60, $BA, $A0, $00 
+; @ $0007B398
 SpriteMetaTileTable_78120_Meta_7B398:
 	dc.b	$00, $26, $0A, $BB, $77, $23, $AC, $78, $CC, $26, $78, $BB, $AA, $2A, $8B, $AC, $C7, $3B, $CA, $C8, $87, $AB, $BB, $88, $7C, $AC, $BB, $8C, $8C, $AC, $AC, $CC 
 	dc.b	$8C, $00 
+; @ $0007B3BA
 SpriteMetaTileTable_78120_Meta_7B3BA:
 	dc.b	$00, $CC, $BA, $00, $00, $BB, $BB, $B0, $00, $AA, $AA, $BA, $00, $CC, $BA, $BA, $00, $7C, $CB, $AB, $A0, $8C, $BB, $AA, $A0, $AB, $BB, $BA, $B0, $AB, $BB, $BA 
 	dc.b	$B0, $00 
+; @ $0007B3DC
 SpriteMetaTileTable_78120_Meta_7B3DC:
 	dc.b	$00, $AC, $AC, $C8, $8C, $AC, $AC, $CB, $AA, $AB, $AC, $CC, $7C, $AB, $AB, $CB, $7C, $AB, $AB, $BB, $7C, $AA, $AA, $BB, $BA, $5A, $BA, $BB, $BB, $3A, $BA, $AB 
 	dc.b	$BB, $00 
+; @ $0007B3FE
 SpriteMetaTileTable_78120_Meta_7B3FE:
 	dc.b	$02, $BB, $40, $44, $44, $C8, $BA, $2A, $22, $22, $02, $AB, $B0, $AB, $B0, $AB, $B0, $AB, $B0, $AB, $B0, $AB, $A0, $AA, $00, $AA, $00, $00 
+; @ $0007B41A
 SpriteMetaTileTable_78120_Meta_7B41A:
 	dc.b	$01, $00, $FF, $FF, $FE, $EE, $03, $01, $06, $00 
+; @ $0007B424
 SpriteMetaTileTable_78120_Meta_7B424:
 	dc.b	$01, $00, $FF, $F0, $00, $00, $03, $11, $33, $40, $11, $13, $44, $44, $12, $34, $44, $54, $41, $24, $46, $55, $45, $64, $46, $55 
+; @ $0007B43E
 SpriteMetaTileTable_78120_Meta_7B43E:
 	dc.b	$01, $00, $EE, $EE, $FF, $FF, $06, $05, $04, $04 
+; @ $0007B448
 SpriteMetaTileTable_78120_Meta_7B448:
 	dc.b	$00, $35, $65, $45, $55, $54, $53, $45, $56, $64, $45, $66, $66, $24, $56, $56, $66, $06, $64, $50, $66, $23, $45, $06, $66, $54, $50, $64, $56, $00, $00, $63 
 	dc.b	$43, $00 
+; @ $0007B46A
 SpriteMetaTileTable_78120_Meta_7B46A:
 	dc.b	$01, $00, $FF, $FF, $11, $10, $AA, $BB, $A0, $BC, $CB, $BA, $77, $CC, $BB, $8B, $AA, $AA, $A0, $00 
+; @ $0007B47E
 SpriteMetaTileTable_78120_Meta_7B47E:
 	dc.b	$01, $00, $FF, $FF, $77, $33, $70, $97, $79, $70, $07, $97 
+; @ $0007B48A
 SpriteMetaTileTable_78120_Meta_7B48A:
 	dc.b	$01, $00, $CC, $CC, $CC, $CC, $64, $26, $54, $23, $06, $25, $05, $22, $04, $63, $05, $62, $06, $66, $56, $06 
+; @ $0007B4A0
 SpriteMetaTileTable_78120_Meta_7B4A0:
 	dc.b	$00, $66, $55, $5A, $C8, $35, $56, $6B, $77, $66, $65, $AC, $7B, $33, $55, $AC, $7B, $56, $66, $AC, $CA, $33, $45, $AC, $CA, $50, $66, $AC, $CA, $00, $00, $AB 
 	dc.b	$CA, $00 
+; @ $0007B4C2
 SpriteMetaTileTable_78120_Meta_7B4C2:
 	dc.b	$01, $BA, $00, $11, $11, $31, $BB, $C7, $BB, $A0, $A8, $87, $CB, $A0, $B8, $7C, $CB, $C7, $C8, $AB, $C7, $C7, $AB, $CC, $87, $BB, $CC, $AA, $CC, $B7, $AB, $00 
+; @ $0007B4E2
 SpriteMetaTileTable_78120_Meta_7B4E2:
 	dc.b	$01, $00, $99, $CC, $EE, $FF, $79, $70, $07, $97, $79, $70, $07, $97, $79, $07 
+; @ $0007B4F2
 SpriteMetaTileTable_78120_Meta_7B4F2:
 	dc.b	$01, $00, $CC, $CC, $01, $00, $46, $06, $30, $66, $40, $60, $50, $60, $70, $A4, $66, $60, $97, $A5, $46, $77, $63, $66, $02, $AA, $34, $A5, $03, $00 
+; @ $0007B510
 SpriteMetaTileTable_78120_Meta_7B510:
 	dc.b	$00, $00, $46, $AB, $CA, $03, $56, $AB, $BA, $02, $56, $AB, $BA, $03, $56, $0A, $BB, $00, $56, $0A, $BB, $45, $66, $66, $AB, $46, $62, $35, $AA, $56, $00, $66 
 	dc.b	$0A, $00 
+; @ $0007B532
 SpriteMetaTileTable_78120_Meta_7B532:
 	dc.b	$01, $AA, $00, $10, $86, $6C, $BC, $B7, $AB, $BA, $BB, $B7, $AB, $BA, $AB, $BA, $BB, $AB, $BB, $BB, $A0, $BB, $BA, $A0, $BA, $00, $BB, $00, $A0, $00 
+; @ $0007B550
 SpriteMetaTileTable_78120_Meta_7B550:
 	dc.b	$01, $00, $FF, $FF, $80, $00, $31, $13, $30, $01, $11, $34, $44, $31, $23, $44, $45, $14, $12, $44, $65, $00 
+; @ $0007B566
 SpriteMetaTileTable_78120_Meta_7B566:
 	dc.b	$01, $00, $FF, $FF, $F7, $77, $40, $40, $55, $00 
+; @ $0007B570
 SpriteMetaTileTable_78120_Meta_7B570:
 	dc.b	$00, $64, $56, $44, $65, $63, $56, $54, $55, $55, $45, $34, $55, $46, $44, $56, $66, $42, $45, $65, $66, $00, $66, $45, $66, $02, $34, $56, $56, $05, $45, $64 
 	dc.b	$32, $00 
+; @ $0007B592
 SpriteMetaTileTable_78120_Meta_7B592:
 	dc.b	$02, $00, $77, $10, $00, $00, $56, $08, $05, $42, $11, $55, $60, $06, $66, $65, $55, $66, $55, $66, $60, $54, $66, $66, $35, $66, $45, $45, $65, $00 
+; @ $0007B5B0
 SpriteMetaTileTable_78120_Meta_7B5B0:
 	dc.b	$01, $00, $F3, $31, $11, $10, $0C, $B0, $66, $CC, $34, $6C, $A0, $45, $6B, $B0, $65, $6A, $BA, $56, $66, $CB, $55, $66, $BB, $A0 
+; @ $0007B5CA
 SpriteMetaTileTable_78120_Meta_7B5CA:
 	dc.b	$01, $00, $88, $88, $8C, $CC, $06, $66, $55, $36, $65, $54, $45, $60, $63, $05, $66, $56, $05, $66, $05, $56, $04, $46, $66, $34, $60, $00 
+; @ $0007B5E6
 SpriteMetaTileTable_78120_Meta_7B5E6:
 	dc.b	$00, $52, $33, $45, $65, $23, $25, $66, $55, $65, $23, $44, $56, $52, $32, $46, $65, $36, $42, $54, $56, $56, $36, $66, $45, $56, $20, $06, $66, $05, $20, $66 
 	dc.b	$66, $00 
+; @ $0007B608
 SpriteMetaTileTable_78120_Meta_7B608:
 	dc.b	$01, $66, $44, $4C, $02, $AA, $65, $AC, $A0, $65, $6C, $A0, $65, $6B, $B0, $6A, $BA, $65, $46, $6A, $BA, $06, $46, $CA, $54, $CA, $55, $BA 
+; @ $0007B624
 SpriteMetaTileTable_78120_Meta_7B624:
 	dc.b	$01, $00, $CC, $CC, $CC, $CC, $45, $60, $04, $60, $04, $60, $03, $60, $43, $60, $35, $60, $35, $62, $45, $63 
+; @ $0007B63A
 SpriteMetaTileTable_78120_Meta_7B63A:
 	dc.b	$01, $66, $33, $31, $06, $12, $00, $46, $03, $56, $02, $56, $03, $56, $06, $00, $56, $00, $63, $45, $35, $46, $62, $35, $56, $00, $06, $00 
+; @ $0007B656
 SpriteMetaTileTable_78120_Meta_7B656:
 	dc.b	$00, $45, $42, $35, $BA, $45, $34, $46, $AA, $45, $63, $45, $AA, $46, $04, $46, $AA, $64, $50, $66, $BA, $32, $46, $06, $B0, $44, $56, $06, $B0, $55, $66, $00 
 	dc.b	$A0, $00 
+; @ $0007B678
 SpriteMetaTileTable_78120_Meta_7B678:
 	dc.b	$01, $00, $FF, $FF, $90, $00, $43, $44, $42, $12, $33, $40, $31, $23, $44, $54, $21, $23, $45, $55 
+; @ $0007B68C
 SpriteMetaTileTable_78120_Meta_7B68C:
 	dc.b	$01, $00, $EE, $EE, $EE, $EE, $03, $02, $06, $05, $06, $34, $45, $56 
+; @ $0007B69A
 SpriteMetaTileTable_78120_Meta_7B69A:
 	dc.b	$01, $66, $11, $51, $10, $42, $12, $34, $45, $23, $13, $45, $54, $54, $63, $56, $44, $46, $44, $56, $53, $45, $65, $06, $65, $40, $05, $65, $34, $43 
+; @ $0007B6B8
 SpriteMetaTileTable_78120_Meta_7B6B8:
 	dc.b	$00, $00, $00, $00, $00, $65, $55, $60, $54, $66, $66, $66, $43, $65, $66, $55, $45, $55, $04, $56, $6A, $52, $36, $66, $AB, $25, $60, $56, $A7, $66, $64, $5A 
 	dc.b	$C7, $00 
+; @ $0007B6DA
 SpriteMetaTileTable_78120_Meta_7B6DA:
 	dc.b	$01, $00, $F7, $71, $11, $00, $50, $56, $6A, $AB, $A0, $AC, $7C, $BA, $77, $CC, $CB, $CB, $AA, $AB, $A0, $BA, $BB, $BA, $A0, $00 
+; @ $0007B6F4
 SpriteMetaTileTable_78120_Meta_7B6F4:
 	dc.b	$00, $66, $66, $44, $56, $56, $65, $52, $32, $46, $00, $63, $46, $46, $00, $36, $25, $55, $60, $03, $34, $06, $60, $05, $63, $05, $60, $00, $45, $04, $60, $00 
 	dc.b	$05, $00 
+; @ $0007B716
 SpriteMetaTileTable_78120_Meta_7B716:
 	dc.b	$00, $63, $35, $6A, $CC, $35, $60, $6B, $CC, $65, $34, $AC, $CB, $23, $56, $AC, $CA, $66, $53, $AC, $CA, $44, $46, $AC, $CA, $66, $55, $AC, $CA, $00, $06, $AB 
 	dc.b	$CA, $00 
+; @ $0007B738
 SpriteMetaTileTable_78120_Meta_7B738:
 	dc.b	$01, $CC, $40, $00, $CC, $88, $AB, $BB, $A0, $AC, $77, $CB, $AA, $BC, $77, $CB, $BA, $BC, $C7, $7A, $BA, $7A, $BA, $BA, $AA, $77, $AB, $AA, $AA, $AA, $BA, $00 
+; @ $0007B758
 SpriteMetaTileTable_78120_Meta_7B758:
 	dc.b	$01, $00, $FF, $FE, $EE, $EE, $03, $23, $54, $63, $56, $00 
+; @ $0007B764
 SpriteMetaTileTable_78120_Meta_7B764:
 	dc.b	$01, $00, $FF, $10, $00, $00, $32, $13, $34, $12, $33, $44, $40, $32, $34, $45, $40, $56, $54, $55, $55, $55, $63, $55, $55, $54, $34, $55, $66, $00 
+; @ $0007B782
 SpriteMetaTileTable_78120_Meta_7B782:
 	dc.b	$01, $00, $FF, $F7, $73, $BB, $07, $07, $07, $80, $87, $87 
+; @ $0007B78E
 SpriteMetaTileTable_78120_Meta_7B78E:
 	dc.b	$01, $00, $EF, $CE, $FA, $FF, $32, $30, $05, $02, $03, $30 
+; @ $0007B79A
 SpriteMetaTileTable_78120_Meta_7B79A:
 	dc.b	$01, $66, $68, $22, $30, $31, $45, $60, $05, $56, $00, $60, $35, $00, $35, $50, $00, $00, $06, $34, $53, $34, $45, $62, $35, $24, $23, $45 
+; @ $0007B7B6
 SpriteMetaTileTable_78120_Meta_7B7B6:
 	dc.b	$01, $00, $FF, $FF, $B1, $13, $34, $56, $44, $50, $66, $55, $60, $66, $45, $00 
+; @ $0007B7C6
 SpriteMetaTileTable_78120_Meta_7B7C6:
 	dc.b	$01, $00, $BB, $BD, $DD, $DF, $7C, $0C, $0C, $70, $C0, $87, $CC, $00 
+; @ $0007B7D4
 SpriteMetaTileTable_78120_Meta_7B7D4:
 	dc.b	$01, $00, $FE, $AE, $EE, $EE, $02, $03, $03, $04, $35, $46, $55, $65 
+; @ $0007B7E2
 SpriteMetaTileTable_78120_Meta_7B7E2:
 	dc.b	$00, $35, $60, $65, $55, $42, $34, $56, $66, $36, $00, $55, $55, $42, $34, $06, $66, $63, $65, $55, $5A, $64, $50, $66, $AB, $60, $55, $66, $A7, $66, $66, $56 
 	dc.b	$C7, $00 
+; @ $0007B804
 SpriteMetaTileTable_78120_Meta_7B804:
 	dc.b	$00, $66, $55, $00, $00, $66, $64, $60, $00, $66, $64, $50, $00, $6A, $AB, $A6, $00, $AC, $7C, $BA, $00, $77, $CC, $CB, $60, $CB, $AA, $AB, $A0, $BA, $BB, $BA 
 	dc.b	$A0, $00 
+; @ $0007B826
 SpriteMetaTileTable_78120_Meta_7B826:
 	dc.b	$01, $00, $8E, $EE, $CC, $CE, $07, $08, $70, $70, $C0, $CA, $0B, $A5, $0B, $55, $0A, $45, $45, $00 
+; @ $0007B83A
 SpriteMetaTileTable_78120_Meta_7B83A:
 	dc.b	$01, $00, $C8, $91, $36, $64, $45, $66, $04, $50, $60, $45, $06, $44, $56, $60, $46, $60, $56, $06, $66, $46, $50, $04, $56, $00 
+; @ $0007B854
 SpriteMetaTileTable_78120_Meta_7B854:
 	dc.b	$00, $60, $00, $6A, $CC, $00, $60, $6B, $CC, $05, $56, $AC, $CB, $04, $60, $AC, $CA, $54, $60, $AC, $CA, $55, $60, $AC, $CA, $65, $66, $66, $CA, $66, $44, $B6 
 	dc.b	$6A, $00 
+; @ $0007B876
 SpriteMetaTileTable_78120_Meta_7B876:
 	dc.b	$01, $00, $FE, $EE, $EE, $EE, $03, $03, $32, $31, $22, $33, $34, $00 
+; @ $0007B884
 SpriteMetaTileTable_78120_Meta_7B884:
 	dc.b	$00, $03, $34, $40, $00, $32, $33, $34, $00, $21, $23, $34, $00, $12, $23, $45, $50, $12, $33, $45, $50, $13, $34, $45, $66, $34, $45, $55, $66, $45, $55, $55 
 	dc.b	$66, $00 
+; @ $0007B8A6
 SpriteMetaTileTable_78120_Meta_7B8A6:
 	dc.b	$01, $00, $FF, $F7, $F7, $30, $60, $60, $66, $60, $64, $45, $60, $60 
+; @ $0007B8B4
 SpriteMetaTileTable_78120_Meta_7B8B4:
 	dc.b	$01, $00, $EA, $DE, $EC, $EE, $06, $60, $05, $06, $06, $03, $60, $45, $56, $64 
+; @ $0007B8C4
 SpriteMetaTileTable_78120_Meta_7B8C4:
 	dc.b	$01, $65, $11, $98, $00, $05, $45, $66, $56, $55, $56, $66, $66, $56, $55, $66, $46, $50, $66, $53, $64, $03, $46, $64, $30, $43, $63, $60, $45, $66, $30, $00 
+; @ $0007B8E4
 SpriteMetaTileTable_78120_Meta_7B8E4:
 	dc.b	$00, $56, $66, $60, $00, $00, $66, $60, $00, $56, $06, $03, $45, $55, $66, $04, $45, $50, $06, $05, $55, $55, $66, $06, $60, $06, $60, $05, $60, $00, $60, $65 
 	dc.b	$00, $00 
+; @ $0007B906
 SpriteMetaTileTable_78120_Meta_7B906:
 	dc.b	$01, $00, $EF, $FD, $FC, $FE, $C0, $07, $0B, $C0, $60, $00 
+; @ $0007B912
 SpriteMetaTileTable_78120_Meta_7B912:
 	dc.b	$01, $00, $EF, $60, $C1, $00, $56, $C0, $56, $BB, $06, $05, $56, $04, $60, $B0, $B0, $44, $60, $60, $45, $60, $60, $45, $65, $60 
+; @ $0007B92C
 SpriteMetaTileTable_78120_Meta_7B92C:
 	dc.b	$01, $66, $40, $4C, $CE, $80, $00, $46, $06, $00, $06, $54, $60, $60, $65, $56, $00, $56, $60, $B0, $00, $60, $65, $00, $60, $06, $45, $00 
+; @ $0007B948
 SpriteMetaTileTable_78120_Meta_7B948:
 	dc.b	$01, $00, $15, $59, $08, $00, $56, $60, $56, $66, $56, $60, $56, $05, $60, $06, $05, $66, $60, $6B, $BA, $60, $06, $BC, $CB, $60, $AB, $7B, $AA, $A0 
+; @ $0007B966
 SpriteMetaTileTable_78120_Meta_7B966:
 	dc.b	$01, $00, $FF, $FF, $CB, $75, $34, $06, $23, $02, $30, $04 
+; @ $0007B972
 SpriteMetaTileTable_78120_Meta_7B972:
 	dc.b	$01, $00, $FE, $EA, $E8, $00, $04, $05, $50, $03, $55, $33, $45, $50, $03, $22, $34, $45, $02, $22, $33, $45 
+; @ $0007B988
 SpriteMetaTileTable_78120_Meta_7B988:
 	dc.b	$01, $00, $3F, $00, $0C, $E6, $50, $05, $03, $23, $44, $50, $23, $45, $65, $46, $06, $64, $46, $65, $05, $46, $54, $66, $05, $00 
+; @ $0007B9A2
 SpriteMetaTileTable_78120_Meta_7B9A2:
 	dc.b	$01, $00, $F7, $B3, $33, $33, $64, $40, $60, $46, $45, $64, $54, $04, $64, $04, $65, $40 
 BossTileData_Imposter_Entry01:
@@ -15529,277 +16042,408 @@ BossTileData_Imposter_Entry02:
 	dc.b	$00, $00, $4B, $4F, $52, $55, $50, $53, $56, $51, $54, $57, $00, $00, $4B, $4F, $52, $55, $58, $53, $56, $59, $54, $57, $00, $00, $4B, $5A, $48, $4C, $5B, $49 
 	dc.b	$4D, $5C, $4A, $4E, $00, $60, $4B, $5D, $61, $4C, $5E, $62, $64, $5F, $63, $65, $66, $00, $4B, $67, $69, $6C, $68, $6A, $6D, $21, $6B, $6E, $6F, $72, $4B, $70 
 	dc.b	$73, $1B, $71, $74, $28, $15, $19, $1D, $75, $79, $7D, $76, $7A, $7E, $77, $7B, $7F, $78, $7C, $80, $00, $00, $03, $00, $00, $81, $00, $00, $82, $00, $00, $06 
+; @ $0007BC88
 SpriteMetaTileTable_78120_Meta_7BC88:
 	dc.b	$01, $00, $FF, $FF, $FF, $FF 
+; @ $0007BC8E
 SpriteMetaTileTable_78120_Meta_7BC8E:
 	dc.b	$01, $00, $FF, $FF, $FF, $F3, $44, $44 
+; @ $0007BC96
 SpriteMetaTileTable_78120_Meta_7BC96:
 	dc.b	$01, $00, $FF, $FF, $FF, $10, $44, $50, $65, $55, $56, $12, $50, $00 
+; @ $0007BCA4
 SpriteMetaTileTable_78120_Meta_7BCA4:
 	dc.b	$01, $00, $EE, $80, $00, $00, $04, $42, $44, $60, $42, $04, $55, $55, $33, $05, $66, $66, $53, $EE, $33, $43, $62, $03, $56, $36, $EE, $0E, $EE, $EE, $EE, $00 
+; @ $0007BCC4
 SpriteMetaTileTable_78120_Meta_7BCC4:
 	dc.b	$00, $22, $33, $40, $66, $13, $44, $45, $66, $34, $44, $55, $64, $32, $35, $55, $44, $45, $44, $56, $66, $56, $63, $66, $EE, $EE, $EE, $EE, $66, $00, $0E, $EE 
 	dc.b	$EE, $00 
+; @ $0007BCE6
 SpriteMetaTileTable_78120_Meta_7BCE6:
 	dc.b	$01, $EE, $00, $01, $00, $BF, $45, $66, $34, $56, $40, $52, $45, $66, $E5, $24, $46, $06, $45, $34, $66, $53, $46, $BC, $BA, $54, $6B, $CA, $BA, $EA 
+; @ $0007BD04
 SpriteMetaTileTable_78120_Meta_7BD04:
 	dc.b	$01, $00, $FF, $77, $33, $3F, $60, $6E, $6E, $EE, $AE, $E0, $EE, $EE 
+; @ $0007BD12
 SpriteMetaTileTable_78120_Meta_7BD12:
 	dc.b	$01, $00, $FF, $FF, $A0, $00, $50, $54, $03, $44, $05, $42, $05, $55, $54, $21, $06, $56, $63, $12 
+; @ $0007BD26
 SpriteMetaTileTable_78120_Meta_7BD26:
 	dc.b	$01, $00, $FF, $FE, $00, $00, $64, $44, $50, $64, $45, $33, $45, $64, $56, $44, $46, $55, $66, $44, $56, $65, $46, $00 
+; @ $0007BD3E
 SpriteMetaTileTable_78120_Meta_7BD3E:
 	dc.b	$01, $00, $F3, $33, $31, $10, $63, $60, $32, $46, $44, $56, $65, $46, $66, $34, $60, $46, $62, $56, $46, $66, $34, $60 
+; @ $0007BD56
 SpriteMetaTileTable_78120_Meta_7BD56:
 	dc.b	$01, $00, $08, $88, $88, $CC, $06, $66, $63, $23, $56, $63, $24, $50, $64, $44, $06, $03, $54, $05, $05, $63, $05, $66, $05, $56, $60, $56, $50, $00 
+; @ $0007BD74
 SpriteMetaTileTable_78120_Meta_7BD74:
 	dc.b	$00, $45, $56, $66, $53, $45, $56, $65, $32, $34, $55, $04, $30, $56, $64, $64, $66, $55, $56, $63, $53, $65, $65, $66, $25, $03, $46, $65, $53, $00, $00, $06 
 	dc.b	$65, $00 
+; @ $0007BD96
 SpriteMetaTileTable_78120_Meta_7BD96:
 	dc.b	$00, $66, $06, $35, $60, $06, $56, $55, $66, $65, $46, $44, $6A, $43, $06, $56, $A7, $50, $66, $6A, $CB, $66, $56, $AC, $CB, $44, $6A, $BC, $BA, $45, $6B, $CB 
 	dc.b	$A7, $00 
+; @ $0007BDB8
 SpriteMetaTileTable_78120_Meta_7BDB8:
 	dc.b	$01, $00, $FF, $33, $33, $33, $BB, $A0, $BB, $B0, $BA, $AA, $AC, $AB, $7C, $BA, $7C, $BA 
+; @ $0007BDCA
 SpriteMetaTileTable_78120_Meta_7BDCA:
 	dc.b	$01, $00, $CC, $80, $00, $8C, $05, $65, $06, $66, $06, $54, $4E, $06, $43, $53, $65, $62, $4E, $24, $E3, $05, $EE, $5E, $E5, $EE, $EE, $EE, $0E, $EE 
+; @ $0007BDE8
 SpriteMetaTileTable_78120_Meta_7BDE8:
 	dc.b	$01, $EE, $00, $11, $3F, $FF, $03, $40, $00, $05, $04, $45, $00, $00, $E5, $66, $5E, $E5, $66, $66, $E5, $66 
+; @ $0007BDFE
 SpriteMetaTileTable_78120_Meta_7BDFE:
 	dc.b	$01, $EE, $00, $00, $8D, $FE, $00, $AB, $BA, $C7, $66, $AC, $BA, $CC, $6A, $BB, $BB, $BB, $6A, $BB, $AB, $BB, $BA, $BA, $EA, $AE, $E0, $00 
+; @ $0007BE1A
 SpriteMetaTileTable_78120_Meta_7BE1A:
 	dc.b	$02, $00, $33, $30, $01, $3F, $EE, $00, $02, $3E, $C0, $CC, $BA, $CC, $BA, $CB, $BA, $BA, $AA, $E0, $AE, $AE 
+; @ $0007BE30
 SpriteMetaTileTable_78120_Meta_7BE30:
 	dc.b	$01, $00, $CC, $CC, $CC, $CC, $45, $66, $44, $66, $04, $66, $05, $66, $06, $63, $06, $24, $06, $34, $06, $62 
+; @ $0007BE46
 SpriteMetaTileTable_78120_Meta_7BE46:
 	dc.b	$00, $56, $56, $56, $66, $06, $34, $65, $44, $06, $55, $45, $60, $00, $06, $34, $43, $50, $65, $43, $56, $54, $06, $52, $44, $66, $40, $64, $25, $66, $54, $64 
 	dc.b	$66, $00 
+; @ $0007BE68
 SpriteMetaTileTable_78120_Meta_7BE68:
 	dc.b	$01, $56, $48, $06, $20, $82, $65, $50, $64, $65, $60, $6A, $66, $55, $65, $6A, $34, $6B, $06, $65, $6B, $33, $45, $65, $A7, $66, $55, $AC, $65, $55, $BC, $00 
+; @ $0007BE88
 SpriteMetaTileTable_78120_Meta_7BE88:
 	dc.b	$01, $A0, $11, $11, $11, $10, $B7, $CB, $BA, $77, $AC, $BB, $7C, $BC, $7B, $7A, $77, $CB, $CA, $77, $CB, $CA, $CC, $CB, $BB, $BB, $CA, $AB, $CB, $CA, $00, $00 
+; @ $0007BEA8
 SpriteMetaTileTable_78120_Meta_7BEA8:
 	dc.b	$01, $00, $CE, $EE, $EE, $EC, $06, $62, $63, $65, $66, $66, $66, $56, $C0, $56 
+; @ $0007BEB8
 SpriteMetaTileTable_78120_Meta_7BEB8:
 	dc.b	$01, $66, $04, $40, $23, $11, $56, $65, $05, $60, $46, $40, $00, $46, $54, $00, $36, $06, $65, $50, $46, $00, $55, $55, $60, $65, $60, $06, $65, $60, $00, $00 
+; @ $0007BED8
 SpriteMetaTileTable_78120_Meta_7BED8:
 	dc.b	$00, $00, $06, $66, $BC, $00, $06, $6A, $BB, $44, $56, $6A, $BB, $45, $66, $6A, $BB, $46, $60, $6A, $BB, $56, $00, $6A, $BA, $65, $60, $05, $AA, $64, $45, $65 
 	dc.b	$AA, $00 
+; @ $0007BEFA
 SpriteMetaTileTable_78120_Meta_7BEFA:
 	dc.b	$02, $AA, $22, $22, $0C, $CC, $00, $11, $11, $11, $13, $AB, $CA, $AB, $BC, $AB, $BC, $AB, $BA, $AB, $BA, $A0, $A0, $A0 
+; @ $0007BF12
 SpriteMetaTileTable_78120_Meta_7BF12:
 	dc.b	$01, $00, $C8, $88, $08, $8E, $B4, $56, $04, $23, $45, $02, $44, $55, $06, $35, $56, $0E, $EA, $AA, $65, $EE, $77, $E5, $0E, $EE, $EE, $EE 
+; @ $0007BF2E
 SpriteMetaTileTable_78120_Meta_7BF2E:
 	dc.b	$01, $EE, $00, $11, $33, $FF, $65, $66, $00, $06, $66, $66, $60, $00, $06, $56, $6E, $53, $45, $6E, $24, $46, $E5, $E6 
+; @ $0007BF46
 SpriteMetaTileTable_78120_Meta_7BF46:
 	dc.b	$01, $EE, $00, $89, $9F, $FE, $60, $66, $55, $AA, $00, $00, $56, $AA, $E5, $56, $EA, $E5, $66, $55, $6E, $00 
+; @ $0007BF5C
 SpriteMetaTileTable_78120_Meta_7BF5C:
 	dc.b	$02, $00, $33, $30, $01, $3F, $EE, $00, $4E, $EE, $C0, $AA, $AA, $AA, $A0, $AA, $E0, $E0 
+; @ $0007BF6E
 SpriteMetaTileTable_78120_Meta_7BF6E:
 	dc.b	$01, $00, $FF, $EE, $CE, $EE, $24, $42, $03, $56, $34, $35, $45, $00 
+; @ $0007BF7C
 SpriteMetaTileTable_78120_Meta_7BF7C:
 	dc.b	$01, $00, $33, $22, $00, $23, $04, $60, $04, $60, $06, $60, $03, $32, $45, $04, $55, $43, $34, $55, $46, $66, $66, $65, $60, $66, $66, $56, $66, $00 
+; @ $0007BF9A
 SpriteMetaTileTable_78120_Meta_7BF9A:
 	dc.b	$00, $55, $66, $AB, $BA, $56, $66, $AB, $BA, $56, $06, $AB, $BA, $66, $06, $AB, $BA, $60, $06, $6A, $BB, $66, $00, $6A, $BB, $45, $65, $5A, $AB, $04, $45, $66 
 	dc.b	$AA, $00 
+; @ $0007BFBC
 SpriteMetaTileTable_78120_Meta_7BFBC:
 	dc.b	$02, $BB, $C8, $86, $44, $00, $AA, $01, $11, $0A, $6E, $BA, $BA, $BC, $AB, $BC, $AB, $AB, $AB, $BA, $A0, $A0, $BA, $00, $00, $00 
+; @ $0007BFD6
 SpriteMetaTileTable_78120_Meta_7BFD6:
 	dc.b	$01, $00, $EE, $EE, $EC, $CD, $04, $03, $07, $08, $87, $08, $97, $09, $70, $89 
+; @ $0007BFE6
 SpriteMetaTileTable_78120_Meta_7BFE6:
 	dc.b	$01, $00, $33, $11, $11, $19, $56, $66, $55, $66, $45, $60, $60, $35, $60, $60, $04, $56, $60, $03, $56, $06, $03, $55, $06, $45, $66, $00 
+; @ $0007C002
 SpriteMetaTileTable_78120_Meta_7C002:
 	dc.b	$02, $00, $CC, $CC, $CC, $CC, $56, $01, $11, $11, $11, $65, $AA, $05, $05, $04, $04, $03, $03, $04 
+; @ $0007C016
 SpriteMetaTileTable_78120_Meta_7C016:
 	dc.b	$01, $00, $13, $FF, $FF, $33, $AA, $AA, $A0, $AA, $A0, $06, $60, $66, $66, $00 
+; @ $0007C026
 SpriteMetaTileTable_78120_Meta_7C026:
 	dc.b	$02, $00, $D9, $9A, $00, $0C, $EE, $00, $00, $0E, $73, $97, $08, $90, $89, $70, $87, $E6, $07, $7E, $E6, $44, $6E, $0E 
+; @ $0007C03E
 SpriteMetaTileTable_78120_Meta_7C03E:
 	dc.b	$01, $EE, $00, $01, $37, $FF, $00, $56, $60, $00, $00, $64, $56, $00, $04, $44, $56, $00, $44, $35, $66, $E2, $56, $46 
+; @ $0007C056
 SpriteMetaTileTable_78120_Meta_7C056:
 	dc.b	$01, $EE, $00, $0E, $CC, $FF, $00, $00, $65, $56, $00, $00, $35, $66, $00, $00, $03, $4E, $E6, $E6, $55, $E5, $E5, $00 
+; @ $0007C06E
 SpriteMetaTileTable_78120_Meta_7C06E:
 	dc.b	$02, $00, $33, $31, $00, $17, $EE, $00, $02, $37, $E8, $66, $66, $66, $66, $65, $56, $65, $5E, $55, $6E, $E5 
+; @ $0007C084
 SpriteMetaTileTable_78120_Meta_7C084:
 	dc.b	$01, $00, $EE, $EF, $FF, $FF, $32, $35, $03, $00 
+; @ $0007C08E
 SpriteMetaTileTable_78120_Meta_7C08E:
 	dc.b	$01, $00, $33, $3B, $FF, $EE, $66, $66, $35, $A0, $55, $BA, $0B, $03, $05, $00 
+; @ $0007C09E
 SpriteMetaTileTable_78120_Meta_7C09E:
 	dc.b	$00, $04, $66, $0A, $AB, $03, $66, $00, $AA, $04, $66, $03, $5A, $46, $60, $34, $66, $46, $62, $35, $60, $46, $65, $66, $60, $34, $63, $45, $60, $56, $00, $56 
 	dc.b	$66, $00 
+; @ $0007C0C0
 SpriteMetaTileTable_78120_Meta_7C0C0:
 	dc.b	$01, $00, $11, $3F, $FF, $FF, $BB, $AA, $AA, $AA, $AA, $A0, $AA, $AA 
+; @ $0007C0CE
 SpriteMetaTileTable_78120_Meta_7C0CE:
 	dc.b	$01, $00, $EE, $EF, $FF, $FF, $03, $04, $04, $00 
+; @ $0007C0D8
 SpriteMetaTileTable_78120_Meta_7C0D8:
 	dc.b	$01, $60, $15, $40, $00, $66, $46, $00, $05, $66, $05, $56, $05, $66, $46, $06, $00, $46, $46, $06, $00, $36, $55, $06, $00, $36, $04, $06, $04, $05 
+; @ $0007C0F6
 SpriteMetaTileTable_78120_Meta_7C0F6:
 	dc.b	$01, $00, $77, $77, $77, $33, $60, $66, $06, $06, $06, $06, $66, $60, $66, $60 
+; @ $0007C106
 SpriteMetaTileTable_78120_Meta_7C106:
 	dc.b	$01, $00, $FF, $FF, $EC, $EF, $0E, $0E, $EE, $EE 
+; @ $0007C110
 SpriteMetaTileTable_78120_Meta_7C110:
 	dc.b	$02, $00, $FF, $F8, $00, $08, $EE, $00, $03, $CC, $F7, $0E, $E2, $33, $3E, $4E 
+; @ $0007C120
 SpriteMetaTileTable_78120_Meta_7C120:
 	dc.b	$01, $EE, $00, $00, $04, $FF, $06, $66, $00, $05, $05, $56, $60, $55, $44, $55, $60, $24, $34, $56, $6E, $24, $56, $6E, $E2, $24, $6E, $E2, $E4, $00 
+; @ $0007C13E
 SpriteMetaTileTable_78120_Meta_7C13E:
 	dc.b	$02, $00, $77, $71, $01, $17, $EE, $00, $04, $EE, $C8, $66, $66, $60, $6E, $E0, $E0, $E0 
+; @ $0007C150
 SpriteMetaTileTable_78120_Meta_7C150:
 	dc.b	$01, $00, $CE, $EF, $FF, $FF, $04, $32, $43, $04 
+; @ $0007C15A
 SpriteMetaTileTable_78120_Meta_7C15A:
 	dc.b	$01, $00, $77, $3B, $FF, $FF, $66, $6A, $5B, $A0, $B0, $00 
+; @ $0007C166
 SpriteMetaTileTable_78120_Meta_7C166:
 	dc.b	$00, $04, $66, $04, $AA, $04, $66, $35, $6A, $03, $66, $46, $60, $04, $63, $56, $00, $04, $64, $66, $00, $45, $23, $60, $00, $46, $45, $60, $00, $66, $33, $60 
 	dc.b	$00, $00 
+; @ $0007C188
 SpriteMetaTileTable_78120_Meta_7C188:
 	dc.b	$01, $00, $19, $99, $99, $88, $06, $55, $60, $56, $60, $56, $66, $45, $66, $46, $06, $36, $06, $36, $66, $60, $36, $66, $60, $00 
+; @ $0007C1A2
 SpriteMetaTileTable_78120_Meta_7C1A2:
 	dc.b	$02, $00, $FF, $FC, $00, $0C, $EE, $00, $02, $6F, $63, $E5, $0E, $E6, $0E, $E4 
+; @ $0007C1B2
 SpriteMetaTileTable_78120_Meta_7C1B2:
 	dc.b	$01, $EE, $00, $01, $13, $3F, $00, $46, $66, $66, $00, $56, $66, $66, $05, $65, $66, $60, $62, $24, $56, $22, $45, $6E, $24, $56, $E4, $6E 
+; @ $0007C1CE
 SpriteMetaTileTable_78120_Meta_7C1CE:
 	dc.b	$02, $00, $FF, $F3, $11, $37, $EE, $00, $08, $EE, $C0, $E0, $E0, $00 
+; @ $0007C1DC
 SpriteMetaTileTable_78120_Meta_7C1DC:
 	dc.b	$01, $00, $CE, $EF, $FF, $FF, $0A, $32, $43, $04 
+; @ $0007C1E6
 SpriteMetaTileTable_78120_Meta_7C1E6:
 	dc.b	$01, $00, $22, $62, $8C, $CC, $33, $60, $03, $53, $50, $34, $35, $35, $0A, $A0, $46, $A0, $03, $56, $33, $66, $55, $66, $33, $66 
+; @ $0007C200
 SpriteMetaTileTable_78120_Meta_7C200:
 	dc.b	$02, $00, $46, $44, $4C, $81, $60, $00, $88, $91, $18, $66, $0A, $AB, $66, $AA, $04, $5A, $04, $66, $05, $46, $03, $36, $05, $56 
+; @ $0007C21A
 SpriteMetaTileTable_78120_Meta_7C21A:
 	dc.b	$01, $00, $CE, $EE, $EF, $FF, $05, $56, $45, $45, $04, $03 
+; @ $0007C226
 SpriteMetaTileTable_78120_Meta_7C226:
 	dc.b	$01, $60, $90, $05, $51, $11, $03, $46, $66, $06, $66, $66, $66, $00, $56, $66, $50, $45, $50, $34, $46, $06, $03, $03, $56, $03, $04, $56, $03, $00 
+; @ $0007C244
 SpriteMetaTileTable_78120_Meta_7C244:
 	dc.b	$01, $00, $FF, $F7, $77, $77, $60, $60, $60, $60, $60, $00 
+; @ $0007C250
 SpriteMetaTileTable_78120_Meta_7C250:
 	dc.b	$02, $00, $FF, $F8, $00, $08, $EE, $00, $02, $CC, $F7, $0E, $E2, $E2, $34, $5E, $5E, $00 
+; @ $0007C262
 SpriteMetaTileTable_78120_Meta_7C262:
 	dc.b	$00, $00, $56, $04, $66, $05, $66, $65, $66, $03, $56, $66, $56, $34, $66, $22, $45, $56, $62, $24, $46, $6E, $E2, $44, $56, $EE, $4E, $5E, $EE, $EE, $EE, $EE 
 	dc.b	$EE, $00 
+; @ $0007C284
 SpriteMetaTileTable_78120_Meta_7C284:
 	dc.b	$02, $00, $77, $71, $01, $13, $EE, $00, $04, $6E, $C8, $60, $60, $60, $66, $E0, $66, $E0, $E0, $E0 
+; @ $0007C298
 SpriteMetaTileTable_78120_Meta_7C298:
 	dc.b	$01, $00, $00, $08, $CC, $CC, $77, $63, $66, $03, $AA, $34, $35, $34, $A0, $45, $45, $34, $04, $33, $46, $55, $66, $23, $56, $45, $66, $05, $66, $00 
+; @ $0007C2B6
 SpriteMetaTileTable_78120_Meta_7C2B6:
 	dc.b	$01, $00, $44, $67, $FE, $EE, $66, $AA, $BB, $66, $0A, $AA, $60, $0A, $60, $04, $03, $05 
+; @ $0007C2C8
 SpriteMetaTileTable_78120_Meta_7C2C8:
 	dc.b	$02, $AA, $CE, $C0, $00, $00, $00, $11, $33, $37, $77, $BA, $46, $60, $56, $60, $56, $35, $56, $00 
+; @ $0007C2DC
 SpriteMetaTileTable_78120_Meta_7C2DC:
 	dc.b	$01, $00, $CC, $CE, $EE, $EE, $04, $56, $03, $46, $03, $40, $36, $36, $36, $46, $56, $00 
+; @ $0007C2EE
 SpriteMetaTileTable_78120_Meta_7C2EE:
 	dc.b	$01, $00, $E6, $77, $77, $77, $02, $60, $06, $60, $60, $06, $06, $06, $66, $00 
+; @ $0007C2FE
 SpriteMetaTileTable_78120_Meta_7C2FE:
 	dc.b	$01, $00, $33, $33, $33, $11, $36, $60, $65, $60, $55, $66, $45, $06, $35, $06, $45, $06, $03, $50, $60, $03, $50, $60 
+; @ $0007C316
 SpriteMetaTileTable_78120_Meta_7C316:
 	dc.b	$01, $00, $FF, $FF, $C8, $CF, $0E, $EE, $0E, $EE, $EE, $EE, $EE, $00 
+; @ $0007C324
 SpriteMetaTileTable_78120_Meta_7C324:
 	dc.b	$02, $00, $EE, $C8, $00, $00, $EE, $00, $04, $81, $FF, $66, $45, $04, $25, $42, $56, $44, $25, $6E, $E4, $E4, $E6, $00 
+; @ $0007C33C
 SpriteMetaTileTable_78120_Meta_7C33C:
 	dc.b	$02, $00, $33, $70, $00, $00, $EE, $00, $0F, $FE, $CF, $66, $60, $66, $60, $56, $24, $E4, $E5, $00 
+; @ $0007C350
 SpriteMetaTileTable_78120_Meta_7C350:
 	dc.b	$02, $00, $31, $11, $00, $03, $EE, $00, $02, $33, $68, $04, $56, $04, $56, $60, $06, $66, $60, $42, $56, $25, $6E, $55, $6E, $6E, $E0, $E0 
+; @ $0007C36C
 SpriteMetaTileTable_78120_Meta_7C36C:
 	dc.b	$01, $00, $FF, $EE, $EE, $EE, $03, $04, $34, $56, $44, $66 
+; @ $0007C378
 SpriteMetaTileTable_78120_Meta_7C378:
 	dc.b	$01, $00, $04, $66, $66, $44, $46, $6A, $AB, $BA, $56, $AA, $AA, $56, $AA, $66, $45, $66, $45, $60, $56, $60, $03, $35, $60, $05, $56, $00 
+; @ $0007C394
 SpriteMetaTileTable_78120_Meta_7C394:
 	dc.b	$01, $00, $11, $37, $77, $FF, $AA, $AB, $A0, $AA, $AA, $A0, $AA, $A0, $60, $60, $60, $00 
+; @ $0007C3A6
 SpriteMetaTileTable_78120_Meta_7C3A6:
 	dc.b	$01, $00, $EE, $EE, $EE, $EE, $56, $46, $46, $35, $05, $04, $04, $04 
+; @ $0007C3B4
 SpriteMetaTileTable_78120_Meta_7C3B4:
 	dc.b	$01, $00, $46, $66, $67, $77, $60, $02, $55, $66, $66, $66, $05, $06, $04, $06, $03, $06, $66, $66 
+; @ $0007C3C8
 SpriteMetaTileTable_78120_Meta_7C3C8:
 	dc.b	$01, $00, $77, $73, $33, $33, $60, $66, $66, $50, $60, $40, $60, $36, $06, $35, $06, $45, $66, $00 
+; @ $0007C3DC
 SpriteMetaTileTable_78120_Meta_7C3DC:
 	dc.b	$02, $00, $EE, $C8, $00, $00, $EE, $00, $04, $89, $FF, $06, $05, $04, $32, $42, $55, $42, $35, $66, $4E, $6E 
+; @ $0007C3F2
 SpriteMetaTileTable_78120_Meta_7C3F2:
 	dc.b	$01, $EE, $00, $03, $EC, $CF, $66, $60, $00, $00, $55, $60, $00, $00, $56, $66, $00, $00, $66, $6E, $42, $E2, $45, $4E, $56, $00 
+; @ $0007C40C
 SpriteMetaTileTable_78120_Meta_7C40C:
 	dc.b	$02, $00, $33, $31, $00, $03, $EE, $00, $02, $37, $E8, $04, $66, $04, $60, $06, $60, $24, $56, $45, $66, $56, $E0, $E0 
+; @ $0007C424
 SpriteMetaTileTable_78120_Meta_7C424:
 	dc.b	$01, $00, $00, $46, $66, $44, $46, $AB, $BA, $AA, $56, $AA, $BB, $BA, $56, $AA, $AA, $66, $AA, $66, $45, $60, $56, $60, $03, $35, $60, $05, $56, $00 
+; @ $0007C442
 SpriteMetaTileTable_78120_Meta_7C442:
 	dc.b	$01, $00, $11, $37, $77, $FF, $AA, $AB, $BA, $AA, $BB, $A0, $AA, $AA, $AA, $60, $60, $00 
+; @ $0007C454
 SpriteMetaTileTable_78120_Meta_7C454:
 	dc.b	$01, $00, $08, $EC, $CC, $CC, $A0, $45, $45, $03, $04, $3A, $34, $34, $33, $46, $55, $66, $23, $56, $45, $66, $05, $66 
+; @ $0007C46C
 SpriteMetaTileTable_78120_Meta_7C46C:
 	dc.b	$01, $00, $77, $77, $FE, $EE, $66, $66, $60, $60, $04, $03, $05, $00 
+; @ $0007C47A
 SpriteMetaTileTable_78120_Meta_7C47A:
 	dc.b	$01, $00, $33, $33, $37, $77, $AA, $AA, $36, $60, $36, $60, $46, $60, $56, $60, $56, $35, $56, $00 
+; @ $0007C48E
 SpriteMetaTileTable_78120_Meta_7C48E:
 	dc.b	$01, $00, $C8, $88, $88, $00, $55, $63, $0B, $54, $54, $0B, $B3, $36, $0A, $A5, $36, $07, $74, $46, $77, $74, $66, $07, $87, $A5, $66, $78, $70, $A5, $66, $00 
+; @ $0007C4AE
 SpriteMetaTileTable_78120_Meta_7C4AE:
 	dc.b	$01, $00, $77, $77, $FF, $FF, $66, $66, $60, $60 
+; @ $0007C4B8
 SpriteMetaTileTable_78120_Meta_7C4B8:
 	dc.b	$02, $60, $44, $44, $44, $04, $00, $33, $33, $33, $33, $45, $35, $35, $04, $04, $45, $34, $56, $56 
+; @ $0007C4CC
 SpriteMetaTileTable_78120_Meta_7C4CC:
 	dc.b	$01, $00, $EE, $EC, $C9, $9B, $07, $09, $79, $07, $90, $79, $70, $07, $97, $79, $70, $87 
+; @ $0007C4DE
 SpriteMetaTileTable_78120_Meta_7C4DE:
 	dc.b	$01, $00, $44, $CE, $EE, $EE, $97, $04, $56, $70, $03, $46, $03, $40, $36, $36, $36, $46, $56, $00 
+; @ $0007C4F2
 SpriteMetaTileTable_78120_Meta_7C4F2:
 	dc.b	$01, $00, $F7, $77, $77, $77, $60, $60, $60, $06, $06, $06, $66, $00 
+; @ $0007C500
 SpriteMetaTileTable_78120_Meta_7C500:
 	dc.b	$01, $00, $33, $33, $33, $33, $34, $56, $65, $66, $05, $50, $04, $56, $04, $56, $04, $56, $03, $56, $03, $56 
+; @ $0007C516
 SpriteMetaTileTable_78120_Meta_7C516:
 	dc.b	$02, $00, $33, $70, $00, $00, $EE, $00, $0F, $FE, $EF, $66, $60, $66, $60, $56, $E4, $E5 
+; @ $0007C528
 SpriteMetaTileTable_78120_Meta_7C528:
 	dc.b	$02, $00, $31, $11, $00, $03, $EE, $00, $02, $33, $28, $04, $56, $04, $56, $60, $06, $66, $60, $34, $56, $35, $56, $55, $6E, $6E, $6E, $E0, $E0, $00 
+; @ $0007C546
 SpriteMetaTileTable_78120_Meta_7C546:
 	dc.b	$01, $00, $FF, $FE, $EF, $EE, $02, $05, $22, $04 
+; @ $0007C550
 SpriteMetaTileTable_78120_Meta_7C550:
 	dc.b	$01, $00, $89, $33, $73, $72, $04, $56, $60, $35, $66, $23, $56, $46, $60, $65, $60, $60, $66, $56, $60, $06 
+; @ $0007C566
 SpriteMetaTileTable_78120_Meta_7C566:
 	dc.b	$01, $00, $CC, $C8, $88, $82, $AC, $BA, $AB, $BA, $AB, $BA, $04, $AB, $B6, $05, $6A, $6A, $45, $66, $0C, $56, $60, $CB, $03, $56, $AA, $00 
+; @ $0007C582
 SpriteMetaTileTable_78120_Meta_7C582:
 	dc.b	$02, $00, $33, $19, $98, $CC, $60, $04, $60, $03, $11, $46, $06, $55, $04, $56, $06, $46, $06, $05, $66, $56 
+; @ $0007C598
 SpriteMetaTileTable_78120_Meta_7C598:
 	dc.b	$01, $00, $2F, $39, $99, $CC, $06, $66, $AA, $03, $35, $56, $60, $05, $66, $05, $56, $55, $60, $05, $56, $00 
+; @ $0007C5AE
 SpriteMetaTileTable_78120_Meta_7C5AE:
 	dc.b	$01, $00, $13, $FF, $FF, $FF, $AA, $AA, $A0, $AA, $A0, $00 
+; @ $0007C5BA
 SpriteMetaTileTable_78120_Meta_7C5BA:
 	dc.b	$01, $EE, $00, $01, $11, $FF, $00, $00, $55, $66, $00, $00, $45, $60, $00, $04, $35, $60, $0E, $E3, $26, $E4, $32, $66, $E5, $5E, $6E, $00 
+; @ $0007C5D6
 SpriteMetaTileTable_78120_Meta_7C5D6:
 	dc.b	$02, $00, $EE, $E0, $00, $00, $EE, $00, $0E, $CC, $EF, $56, $06, $06, $E5, $E5, $42, $E4, $E2, $4E 
+; @ $0007C5EA
 SpriteMetaTileTable_78120_Meta_7C5EA:
 	dc.b	$02, $00, $73, $37, $10, $17, $EE, $00, $00, $66, $68, $60, $65, $40, $56, $50, $46, $56, $56, $E0, $5E, $00 
+; @ $0007C600
 SpriteMetaTileTable_78120_Meta_7C600:
 	dc.b	$01, $00, $EE, $CC, $9F, $F9, $06, $35, $34, $56, $56, $66, $06, $66, $60, $06 
+; @ $0007C610
 SpriteMetaTileTable_78120_Meta_7C610:
 	dc.b	$01, $00, $02, $6B, $EF, $FF, $45, $66, $63, $56, $66, $66, $45, $66, $06, $60, $06, $00 
+; @ $0007C622
 SpriteMetaTileTable_78120_Meta_7C622:
 	dc.b	$00, $66, $63, $56, $00, $56, $66, $60, $0A, $66, $66, $66, $0A, $00, $05, $A6, $0A, $00, $56, $60, $AB, $04, $56, $00, $0A, $35, $60, $60, $0A, $06, $00, $A0 
 	dc.b	$BC, $00 
+; @ $0007C644
 SpriteMetaTileTable_78120_Meta_7C644:
 	dc.b	$01, $00, $FD, $98, $DC, $CE, $60, $06, $05, $06, $65, $06, $66, $06, $50, $06, $65, $66 
+; @ $0007C656
 SpriteMetaTileTable_78120_Meta_7C656:
 	dc.b	$01, $00, $FF, $FE, $77, $7F, $06, $50, $60, $06 
+; @ $0007C660
 SpriteMetaTileTable_78120_Meta_7C660:
 	dc.b	$01, $00, $AC, $26, $00, $28, $B0, $BC, $0A, $BB, $60, $06, $BB, $05, $0A, $66, $06, $0A, $BB, $06, $50, $6A, $BA, $06, $60, $AA, $66, $60, $A6, $00 
+; @ $0007C67E
 SpriteMetaTileTable_78120_Meta_7C67E:
 	dc.b	$01, $00, $F9, $BD, $D4, $88, $70, $0C, $7C, $0C, $BB, $0B, $06, $55, $05, $55, $66, $06, $66, $60 
+; @ $0007C692
 SpriteMetaTileTable_78120_Meta_7C692:
 	dc.b	$00, $32, $22, $33, $45, $32, $23, $33, $44, $33, $33, $33, $44, $03, $33, $34, $45, $04, $44, $44, $45, $56, $44, $45, $55, $66, $05, $55, $56, $00, $00, $66 
 	dc.b	$66, $00 
+; @ $0007C6B4
 SpriteMetaTileTable_78120_Meta_7C6B4:
 	dc.b	$02, $66, $80, $24, $68, $31, $60, $2A, $02, $02, $88, $65, $05, $55, $04, $50, $56, $65, $56, $05, $56, $65, $06, $05, $00, $00, $06, $00 
+; @ $0007C6D0
 SpriteMetaTileTable_78120_Meta_7C6D0:
 	dc.b	$01, $00, $33, $10, $05, $1B, $06, $40, $06, $50, $06, $50, $06, $66, $60, $05, $50, $66, $0C, $05, $60, $66, $56, $60, $05, $66, $C6, $00 
+; @ $0007C6EC
 SpriteMetaTileTable_78120_Meta_7C6EC:
 	dc.b	$01, $00, $E8, $DD, $FF, $FF, $06, $0B, $06, $60, $06, $60 
+; @ $0007C6F8
 SpriteMetaTileTable_78120_Meta_7C6F8:
 	dc.b	$02, $00, $A3, $45, $A6, $CC, $60, $04, $98, $08, $11, $66, $66, $06, $06, $06, $06, $66, $66, $06, $05, $00 
+; @ $0007C70E
 SpriteMetaTileTable_78120_Meta_7C70E:
 	dc.b	$01, $00, $BF, $C1, $01, $0B, $06, $66, $06, $65, $55, $66, $56, $66, $56, $0C, $66, $06, $50, $66, $04, $60, $C0, $46 
+; @ $0007C726
 SpriteMetaTileTable_78120_Meta_7C726:
 	dc.b	$01, $00, $BB, $33, $11, $11, $A0, $60, $06, $CC, $06, $BC, $0C, $7B, $A6, $CC, $CA, $A6, $BB, $B6, $A0, $0B, $AA, $A0 
+; @ $0007C73E
 SpriteMetaTileTable_78120_Meta_7C73E:
 	dc.b	$01, $00, $F9, $CC, $EC, $8E, $06, $60, $65, $55, $06, $66, $0E, $EE, $EE, $0E, $EE, $EE, $0E, $00 
+; @ $0007C752
 SpriteMetaTileTable_78120_Meta_7C752:
 	dc.b	$02, $00, $CE, $E7, $00, $00, $EE, $00, $00, $19, $3F, $05, $66, $64, $55, $55, $66, $56, $E0, $E6, $6E, $E5, $E5, $00 
+; @ $0007C76A
 SpriteMetaTileTable_78120_Meta_7C76A:
 	dc.b	$01, $EE, $00, $00, $8B, $FF, $64, $50, $70, $A0, $55, $60, $00, $0C, $60, $00, $0A, $0B, $00, $00, $66, $C6, $66, $65, $EA, $65 
+; @ $0007C784
 SpriteMetaTileTable_78120_Meta_7C784:
 	dc.b	$01, $00, $21, $11, $01, $3F, $CA, $A6, $A0, $C6, $6B, $B0, $6A, $CA, $0A, $A6, $AE, $AE, $6E, $AB, $AE, $E0, $EE, $EE, $EE, $EE, $EE, $00 
+; @ $0007C7A0
 SpriteMetaTileTable_78120_Meta_7C7A0:
 	dc.b	$01, $00, $FF, $00, $00, $00, $64, $50, $03, $44, $65, $35, $66, $34, $46, $54, $56, $44, $45, $66, $66, $66, $E6, $E6, $EE, $EE, $EE, $EE, $EE, $EE 
+; @ $0007C7BE
 SpriteMetaTileTable_78120_Meta_7C7BE:
 	dc.b	$00, $00, $03, $45, $50, $03, $45, $00, $65, $06, $00, $50, $06, $50, $60, $65, $00, $66, $66, $6A, $AA, $6E, $6A, $6E, $AE, $EE, $E6, $EE, $EE, $EE, $EE, $EE 
 	dc.b	$0E, $00 
@@ -15941,160 +16585,230 @@ BossTileData_Imposter_Entry04:
 	dc.b	$00, $00, $00, $1F, $01, $03, $1D, $20, $02, $1C, $1E, $21, $00, $00, $00, $00, $00, $22, $25, $29, $01, $23, $26, $2A, $02, $24, $27, $2B, $00, $05, $28, $2C 
 	dc.b	$00, $2E, $31, $35, $2D, $2F, $32, $36, $00, $30, $33, $37, $00, $00, $34, $38, $00, $00, $3B, $3F, $00, $39, $3C, $40, $00, $3A, $3D, $41, $00, $00, $3E, $42 
 	dc.b	$00, $00, $00, $43, $00, $00, $00, $44, $00, $00, $00, $45, $00, $00, $00, $05 
+; @ $0007CA7C
 SpriteMetaTileTable_78120_Meta_7CA7C:
 	dc.b	$01, $00, $FF, $FF, $FF, $FF 
+; @ $0007CA82
 SpriteMetaTileTable_78120_Meta_7CA82:
 	dc.b	$00, $00, $00, $03, $33, $00, $03, $33, $34, $00, $33, $33, $44, $00, $55, $33, $44, $05, $66, $63, $34, $05, $66, $66, $33, $56, $66, $56, $66, $56, $64, $54 
 	dc.b	$56, $00 
+; @ $0007CAA4
 SpriteMetaTileTable_78120_Meta_7CAA4:
 	dc.b	$01, $00, $F7, $73, $33, $33, $30, $44, $54, $40, $55, $40, $45, $55, $44, $55, $63, $55 
+; @ $0007CAB6
 SpriteMetaTileTable_78120_Meta_7CAB6:
 	dc.b	$01, $56, $C8, $90, $01, $04, $46, $66, $65, $25, $36, $64, $53, $66, $63, $66, $26, $06, $62, $54, $16, $05, $64, $12, $05, $66, $24, $65, $05, $45, $63, $00 
+; @ $0007CAD6
 SpriteMetaTileTable_78120_Meta_7CAD6:
 	dc.b	$01, $56, $00, $04, $66, $38, $64, $55, $00, $00, $65, $55, $60, $00, $64, $55, $60, $00, $53, $65, $00, $34, $60, $35, $55, $45, $65, $55, $65, $55 
+; @ $0007CAF4
 SpriteMetaTileTable_78120_Meta_7CAF4:
 	dc.b	$01, $00, $FF, $FF, $FF, $77, $60, $60 
+; @ $0007CAFC
 SpriteMetaTileTable_78120_Meta_7CAFC:
 	dc.b	$01, $00, $FF, $FF, $EE, $EE, $05, $05, $04, $04 
+; @ $0007CB06
 SpriteMetaTileTable_78120_Meta_7CB06:
 	dc.b	$01, $56, $60, $89, $00, $28, $04, $54, $66, $45, $66, $45, $45, $65, $45, $65, $63, $66, $45, $34, $55, $66, $45, $65, $65, $66, $35, $63, $53, $46, $53, $00 
+; @ $0007CB26
 SpriteMetaTileTable_78120_Meta_7CB26:
 	dc.b	$00, $56, $56, $45, $65, $65, $54, $45, $45, $55, $54, $55, $44, $54, $55, $54, $34, $45, $64, $64, $34, $46, $45, $66, $34, $56, $35, $65, $33, $56, $46, $65 
 	dc.b	$33, $00 
+; @ $0007CB48
 SpriteMetaTileTable_78120_Meta_7CB48:
 	dc.b	$01, $00, $77, $73, $33, $33, $56, $56, $56, $55, $60, $55, $60, $55, $60, $56, $60, $55, $66, $00 
+; @ $0007CB5C
 SpriteMetaTileTable_78120_Meta_7CB5C:
 	dc.b	$01, $00, $EE, $CC, $C8, $88, $44, $35, $03, $55, $05, $54, $43, $45, $04, $34, $55, $04, $35, $55, $06, $65, $55, $00 
+; @ $0007CB74
 SpriteMetaTileTable_78120_Meta_7CB74:
 	dc.b	$00, $66, $63, $55, $33, $56, $54, $34, $35, $66, $54, $43, $44, $56, $54, $56, $45, $56, $6A, $BB, $AA, $56, $66, $AC, $A6, $66, $65, $B6, $C6, $66, $65, $B6 
 	dc.b	$C6, $00 
+; @ $0007CB96
 SpriteMetaTileTable_78120_Meta_7CB96:
 	dc.b	$00, $56, $56, $64, $55, $44, $56, $65, $35, $54, $55, $64, $34, $56, $A6, $54, $55, $A6, $66, $65, $45, $65, $65, $54, $35, $55, $64, $33, $45, $65, $63, $55 
 	dc.b	$34, $00 
+; @ $0007CBB8
 SpriteMetaTileTable_78120_Meta_7CBB8:
 	dc.b	$01, $00, $33, $33, $77, $77, $55, $66, $55, $60, $55, $60, $55, $60, $55, $56, $50, $50 
+; @ $0007CBCA
 SpriteMetaTileTable_78120_Meta_7CBCA:
 	dc.b	$01, $56, $60, $89, $88, $28, $04, $54, $06, $45, $66, $45, $45, $65, $45, $65, $63, $45, $34, $55, $45, $65, $65, $66, $35, $63, $53, $46, $53, $00 
+; @ $0007CBE8
 SpriteMetaTileTable_78120_Meta_7CBE8:
 	dc.b	$01, $00, $EC, $CC, $88, $00, $05, $04, $45, $53, $34, $66, $53, $04, $36, $64, $33, $35, $65, $02, $34, $15, $65, $33, $56, $35, $65, $00 
+; @ $0007CC04
 SpriteMetaTileTable_78120_Meta_7CC04:
 	dc.b	$00, $66, $63, $55, $33, $66, $54, $34, $35, $66, $54, $43, $44, $56, $54, $56, $45, $56, $6A, $BB, $AA, $56, $66, $AC, $A6, $66, $65, $B6, $C6, $66, $65, $B6 
 	dc.b	$C6, $00 
+; @ $0007CC26
 SpriteMetaTileTable_78120_Meta_7CC26:
 	dc.b	$01, $00, $FF, $FF, $FF, $F5, $40, $20 
+; @ $0007CC2E
 SpriteMetaTileTable_78120_Meta_7CC2E:
 	dc.b	$00, $04, $56, $56, $54, $06, $45, $66, $45, $06, $45, $65, $45, $56, $65, $63, $56, $46, $45, $34, $55, $46, $45, $65, $65, $56, $35, $56, $63, $66, $53, $46 
 	dc.b	$53, $00 
+; @ $0007CC50
 SpriteMetaTileTable_78120_Meta_7CC50:
 	dc.b	$01, $00, $44, $00, $0C, $CC, $20, $43, $64, $41, $04, $36, $52, $02, $55, $56, $52, $52, $53, $46, $04, $52, $44, $66, $06, $66, $06, $65, $06, $65 
+; @ $0007CC6E
 SpriteMetaTileTable_78120_Meta_7CC6E:
 	dc.b	$00, $56, $63, $55, $33, $46, $54, $34, $35, $46, $54, $43, $44, $56, $54, $56, $45, $56, $6A, $BB, $AA, $56, $66, $AC, $A6, $66, $65, $B6, $C6, $66, $65, $B6 
 	dc.b	$C6, $00 
+; @ $0007CC90
 SpriteMetaTileTable_78120_Meta_7CC90:
 	dc.b	$02, $00, $33, $11, $11, $00, $56, $00, $04, $46, $2C, $64, $55, $65, $55, $64, $55, $60, $53, $60, $34, $60, $35, $45, $65, $60, $65, $60 
+; @ $0007CCAC
 SpriteMetaTileTable_78120_Meta_7CCAC:
 	dc.b	$01, $00, $FF, $FF, $FF, $FA, $40, $20 
+; @ $0007CCB4
 SpriteMetaTileTable_78120_Meta_7CCB4:
 	dc.b	$00, $04, $56, $56, $54, $00, $45, $63, $56, $00, $45, $64, $56, $00, $65, $35, $64, $00, $45, $35, $65, $05, $45, $65, $45, $05, $35, $66, $56, $00, $53, $46 
 	dc.b	$64, $00 
+; @ $0007CCD6
 SpriteMetaTileTable_78120_Meta_7CCD6:
 	dc.b	$00, $55, $66, $45, $56, $65, $64, $43, $45, $56, $64, $33, $45, $56, $55, $33, $34, $56, $65, $33, $44, $46, $54, $34, $55, $46, $55, $54, $45, $56, $54, $35 
 	dc.b	$45, $00 
+; @ $0007CCF8
 SpriteMetaTileTable_78120_Meta_7CCF8:
 	dc.b	$01, $00, $AA, $88, $8F, $FF, $20, $43, $41, $04, $52, $02, $55, $52, $52, $53, $04, $52, $44, $00 
+; @ $0007CD0C
 SpriteMetaTileTable_78120_Meta_7CD0C:
 	dc.b	$00, $00, $63, $55, $64, $56, $53, $45, $65, $56, $54, $34, $56, $56, $55, $64, $45, $00, $6A, $BB, $AA, $06, $AC, $CC, $65, $06, $A5, $C6, $66, $06, $A5, $21 
 	dc.b	$13, $00 
+; @ $0007CD2E
 SpriteMetaTileTable_78120_Meta_7CD2E:
 	dc.b	$01, $55, $20, $81, $12, $22, $66, $65, $56, $56, $64, $44, $45, $66, $66, $46, $66, $53, $36, $54, $35, $44, $43, $44, $46, $65, $44, $56, $66, $44, $66, $00 
+; @ $0007CD4E
 SpriteMetaTileTable_78120_Meta_7CD4E:
 	dc.b	$01, $00, $33, $31, $11, $10, $64, $55, $65, $55, $64, $55, $53, $56, $60, $34, $56, $60, $35, $56, $60, $45, $65, $56, $56, $56, $66, $60 
+; @ $0007CD6A
 SpriteMetaTileTable_78120_Meta_7CD6A:
 	dc.b	$01, $00, $88, $88, $88, $80, $56, $56, $54, $05, $63, $56, $05, $64, $56, $64, $55, $64, $64, $45, $65, $66, $45, $45, $65, $45, $56, $06, $64, $64, $54, $00 
+; @ $0007CD8A
 SpriteMetaTileTable_78120_Meta_7CD8A:
 	dc.b	$00, $55, $64, $45, $60, $56, $44, $44, $56, $65, $53, $45, $66, $66, $53, $45, $56, $65, $53, $45, $56, $65, $45, $45, $66, $65, $34, $64, $56, $66, $55, $46 
 	dc.b	$66, $00 
+; @ $0007CDAC
 SpriteMetaTileTable_78120_Meta_7CDAC:
 	dc.b	$01, $00, $EE, $FD, $EE, $FF, $04, $04, $04, $45, $05, $00 
+; @ $0007CDB8
 SpriteMetaTileTable_78120_Meta_7CDB8:
 	dc.b	$00, $06, $64, $56, $64, $46, $65, $46, $66, $46, $55, $56, $43, $62, $11, $25, $53, $12, $42, $34, $63, $62, $52, $24, $64, $42, $22, $56, $64, $44, $55, $66 
 	dc.b	$65, $00 
+; @ $0007CDDA
 SpriteMetaTileTable_78120_Meta_7CDDA:
 	dc.b	$02, $55, $20, $00, $2A, $A8, $56, $01, $11, $04, $46, $64, $33, $66, $65, $65, $45, $33, $33, $65, $43, $44, $46, $45, $45, $66, $66, $66, $66, $00 
+; @ $0007CDF8
 SpriteMetaTileTable_78120_Meta_7CDF8:
 	dc.b	$01, $00, $FF, $FF, $F8, $00, $03, $40, $44, $63, $54, $34, $54, $36, $35, $63, $45, $00 
+; @ $0007CE0A
 SpriteMetaTileTable_78120_Meta_7CE0A:
 	dc.b	$01, $56, $C8, $90, $01, $04, $46, $66, $65, $25, $36, $64, $53, $66, $63, $66, $26, $06, $62, $54, $16, $55, $64, $12, $65, $66, $24, $65, $66, $45, $63, $00 
+; @ $0007CE2A
 SpriteMetaTileTable_78120_Meta_7CE2A:
 	dc.b	$02, $00, $33, $31, $10, $00, $56, $00, $04, $62, $3A, $64, $55, $65, $55, $64, $55, $53, $60, $34, $35, $66, $55, $45, $66, $65, $55, $00 
+; @ $0007CE46
 SpriteMetaTileTable_78120_Meta_7CE46:
 	dc.b	$02, $55, $11, $00, $86, $90, $65, $00, $33, $30, $21, $43, $64, $56, $54, $66, $46, $54, $56, $54, $46, $45, $56, $56, $66, $56, $56, $66 
+; @ $0007CE62
 SpriteMetaTileTable_78120_Meta_7CE62:
 	dc.b	$00, $66, $56, $56, $64, $66, $54, $46, $63, $56, $65, $54, $63, $55, $64, $65, $34, $46, $43, $45, $46, $46, $44, $34, $66, $56, $54, $33, $66, $66, $55, $44 
 	dc.b	$66, $00 
+; @ $0007CE84
 SpriteMetaTileTable_78120_Meta_7CE84:
 	dc.b	$00, $56, $64, $64, $65, $56, $45, $45, $46, $65, $53, $53, $66, $54, $35, $34, $66, $45, $43, $34, $66, $44, $54, $45, $65, $44, $35, $56, $65, $45, $43, $56 
 	dc.b	$65, $00 
+; @ $0007CEA6
 SpriteMetaTileTable_78120_Meta_7CEA6:
 	dc.b	$01, $00, $77, $73, $33, $31, $56, $56, $66, $55, $60, $56, $60, $54, $56, $54, $56, $33, $45, $60 
+; @ $0007CEBA
 SpriteMetaTileTable_78120_Meta_7CEBA:
 	dc.b	$02, $66, $11, $36, $0C, $00, $00, $00, $01, $13, $FF, $55, $65, $55, $55, $56, $56, $55, $55, $56, $55, $56, $60, $00 
+; @ $0007CED2
 SpriteMetaTileTable_78120_Meta_7CED2:
 	dc.b	$00, $56, $65, $44, $65, $46, $55, $65, $65, $46, $66, $56, $54, $06, $55, $56, $55, $06, $6A, $BB, $AB, $00, $66, $6C, $AB, $00, $65, $66, $6C, $00, $66, $65 
 	dc.b	$6C, $00 
+; @ $0007CEF4
 SpriteMetaTileTable_78120_Meta_7CEF4:
 	dc.b	$01, $66, $22, $00, $26, $61, $45, $55, $65, $44, $56, $65, $55, $45, $55, $64, $55, $56, $56, $64, $CB, $AA, $64, $CB, $64, $6B, $65, $6B, $65, $65 
+; @ $0007CF12
 SpriteMetaTileTable_78120_Meta_7CF12:
 	dc.b	$01, $60, $20, $11, $11, $11, $35, $56, $00, $53, $45, $66, $00, $56, $64, $43, $62, $42, $42, $62, $42, $43, $64, $54, $54, $56, $55, $55, $56, $66, $66, $00 
+; @ $0007CF32
 SpriteMetaTileTable_78120_Meta_7CF32:
 	dc.b	$01, $00, $FF, $FF, $F9, $80, $04, $30, $43, $33, $30, $03, $33, $44, $43, $00 
+; @ $0007CF42
 SpriteMetaTileTable_78120_Meta_7CF42:
 	dc.b	$01, $00, $FE, $EE, $EE, $EE, $03, $03, $06, $56, $56, $56, $56, $00 
+; @ $0007CF50
 SpriteMetaTileTable_78120_Meta_7CF50:
 	dc.b	$02, $44, $31, $32, $21, $00, $66, $00, $00, $8C, $ED, $43, $33, $33, $34, $45, $43, $34, $64, $33, $55, $64, $45, $65, $64, $36 
+; @ $0007CF6A
 SpriteMetaTileTable_78120_Meta_7CF6A:
 	dc.b	$01, $00, $73, $33, $33, $10, $33, $44, $30, $54, $40, $55, $55, $55, $55, $45, $55, $44, $56, $66, $44, $56, $55, $50 
+; @ $0007CF82
 SpriteMetaTileTable_78120_Meta_7CF82:
 	dc.b	$01, $00, $EE, $FF, $FF, $FF, $05, $05 
+; @ $0007CF8A
 SpriteMetaTileTable_78120_Meta_7CF8A:
 	dc.b	$01, $66, $DA, $88, $15, $12, $54, $64, $46, $63, $54, $36, $64, $33, $56, $06, $65, $34, $54, $45, $54, $56, $56, $56, $36, $63 
+; @ $0007CFA4
 SpriteMetaTileTable_78120_Meta_7CFA4:
 	dc.b	$01, $65, $2B, $E1, $00, $26, $54, $56, $66, $66, $66, $66, $66, $56, $45, $66, $55, $54, $45, $64, $55, $43, $46, $64, $33, $56, $35, $00 
+; @ $0007CFC0
 SpriteMetaTileTable_78120_Meta_7CFC0:
 	dc.b	$01, $00, $F7, $77, $33, $33, $50, $56, $55, $45, $60, $46, $60, $56, $60, $65, $60, $00 
+; @ $0007CFD2
 SpriteMetaTileTable_78120_Meta_7CFD2:
 	dc.b	$01, $00, $EE, $EC, $CC, $88, $04, $04, $55, $04, $33, $43, $56, $33, $55, $06, $66, $45, $53, $33, $45, $00 
+; @ $0007CFE8
 SpriteMetaTileTable_78120_Meta_7CFE8:
 	dc.b	$02, $66, $20, $10, $C4, $84, $55, $00, $88, $3A, $31, $56, $45, $35, $45, $64, $64, $56, $56, $64, $65, $56, $33, $65, $65, $56, $56, $00 
+; @ $0007D004
 SpriteMetaTileTable_78120_Meta_7D004:
 	dc.b	$00, $64, $56, $65, $56, $43, $45, $65, $53, $45, $45, $65, $43, $55, $64, $46, $36, $64, $66, $66, $66, $45, $56, $64, $45, $55, $66, $53, $45, $66, $63, $34 
 	dc.b	$55, $00 
+; @ $0007D026
 SpriteMetaTileTable_78120_Meta_7D026:
 	dc.b	$01, $00, $33, $33, $33, $33, $45, $66, $55, $66, $55, $66, $55, $66, $56, $66, $55, $60, $66, $60, $56, $60 
+; @ $0007D03C
 SpriteMetaTileTable_78120_Meta_7D03C:
 	dc.b	$02, $00, $FF, $FF, $00, $00, $33, $00, $00, $67, $EC, $04, $34, $43, $44, $34, $45, $00 
+; @ $0007D04E
 SpriteMetaTileTable_78120_Meta_7D04E:
 	dc.b	$01, $00, $FF, $FF, $F7, $33, $30, $33, $40, $54, $44, $00 
+; @ $0007D05A
 SpriteMetaTileTable_78120_Meta_7D05A:
 	dc.b	$01, $00, $EE, $EE, $EE, $EE, $03, $43, $44, $66, $66, $66, $06, $06 
+; @ $0007D068
 SpriteMetaTileTable_78120_Meta_7D068:
 	dc.b	$02, $44, $6E, $85, $20, $00, $66, $00, $00, $8E, $FB, $34, $55, $55, $43, $35, $45, $65, $33, $65, $35, $53, $65, $00 
+; @ $0007D080
 SpriteMetaTileTable_78120_Meta_7D080:
 	dc.b	$02, $55, $CC, $88, $89, $80, $56, $00, $02, $76, $06, $00, $00, $60, $00, $65, $66, $00, $66, $66, $65, $65, $44, $66, $44, $00 
+; @ $0007D09A
 SpriteMetaTileTable_78120_Meta_7D09A:
 	dc.b	$01, $00, $FF, $FF, $77, $77, $60, $40, $56, $45 
+; @ $0007D0A4
 SpriteMetaTileTable_78120_Meta_7D0A4:
 	dc.b	$01, $00, $FF, $FF, $FF, $EE, $05, $04 
+; @ $0007D0AC
 SpriteMetaTileTable_78120_Meta_7D0AC:
 	dc.b	$02, $66, $C4, $00, $55, $75, $56, $30, $43, $20, $80, $06, $54, $55, $55, $64, $46, $55, $65, $55, $55, $55, $46, $65 
+; @ $0007D0C4
 SpriteMetaTileTable_78120_Meta_7D0C4:
 	dc.b	$01, $56, $45, $0A, $80, $40, $66, $55, $45, $65, $54, $65, $66, $54, $64, $66, $46, $65, $64, $44, $66, $65, $64, $44, $65, $54, $45, $55, $66, $64, $65, $00 
+; @ $0007D0E4
 SpriteMetaTileTable_78120_Meta_7D0E4:
 	dc.b	$02, $60, $44, $44, $44, $40, $00, $33, $33, $33, $33, $45, $45, $55, $55, $56, $55, $66, $56, $66 
+; @ $0007D0F8
 SpriteMetaTileTable_78120_Meta_7D0F8:
 	dc.b	$01, $00, $FF, $FF, $EE, $EE, $05, $04, $64, $56 
+; @ $0007D102
 SpriteMetaTileTable_78120_Meta_7D102:
 	dc.b	$01, $33, $37, $7E, $EC, $00, $00, $43, $04, $03, $44, $44, $44, $44, $43, $34, $45, $55, $44, $34, $55, $55 
+; @ $0007D118
 SpriteMetaTileTable_78120_Meta_7D118:
 	dc.b	$01, $00, $73, $11, $00, $00, $34, $33, $40, $34, $35, $40, $33, $33, $54, $43, $43, $54, $40, $54, $34, $55, $44, $54, $34, $55, $44, $54, $56, $66, $44, $00 
 BossTileData_Imposter_Entry05:
@@ -16173,126 +16887,181 @@ BossTileData_Imposter_Entry06:
 	dc.b	$0A, $03, $07, $0B, $0E, $0E, $08, $11, $05, $09, $12, $14, $0A, $13, $15, $0B, $0E, $0E, $08, $16, $05, $09, $17, $18, $0A, $13, $15, $0B, $0E, $0E, $08, $19 
 	dc.b	$05, $09, $1A, $1C, $0A, $1B, $1D, $0B, $1E, $04, $08, $1F, $05, $09, $20, $06, $0A, $21, $22, $0B, $23, $27, $08, $24, $28, $09, $25, $29, $0A, $26, $2A, $0B 
 	dc.b	$2B, $2F, $33, $2C, $30, $34, $2D, $31, $35, $2E, $32, $36 
+; @ $0007D2BC
 SpriteMetaTileTable_78120_Meta_7D2BC:
 	dc.b	$00, $00, $02, $46, $55, $00, $22, $35, $65, $00, $34, $35, $65, $02, $56, $26, $65, $01, $56, $16, $65, $03, $60, $26, $66, $01, $60, $06, $66, $00, $00, $00 
 	dc.b	$66, $00 
+; @ $0007D2DE
 SpriteMetaTileTable_78120_Meta_7D2DE:
 	dc.b	$01, $66, $8C, $C8, $8C, $88, $65, $C6, $B6, $C6, $B6, $B6, $C6, $65, $C6, $C6, $65, $C5, $B5, $55, $B5, $56, $55, $54, $55, $45, $45, $00 
+; @ $0007D2FA
 SpriteMetaTileTable_78120_Meta_7D2FA:
 	dc.b	$00, $56, $65, $45, $63, $66, $32, $34, $64, $63, $21, $35, $64, $15, $62, $35, $65, $66, $53, $46, $66, $55, $13, $56, $65, $51, $35, $66, $65, $56, $66, $66 
 	dc.b	$65, $00 
+; @ $0007D31C
 SpriteMetaTileTable_78120_Meta_7D31C:
 	dc.b	$01, $00, $77, $77, $77, $33, $56, $56, $56, $56, $56, $56, $66, $60, $66, $60 
+; @ $0007D32C
 SpriteMetaTileTable_78120_Meta_7D32C:
 	dc.b	$01, $00, $EF, $FF, $FF, $FF, $66, $00 
+; @ $0007D334
 SpriteMetaTileTable_78120_Meta_7D334:
 	dc.b	$00, $06, $55, $44, $55, $06, $54, $34, $44, $06, $55, $33, $45, $66, $54, $44, $56, $66, $54, $33, $44, $66, $54, $33, $44, $65, $54, $43, $45, $65, $54, $43 
 	dc.b	$55, $00 
+; @ $0007D356
 SpriteMetaTileTable_78120_Meta_7D356:
 	dc.b	$02, $56, $4C, $01, $19, $98, $65, $11, $C4, $40, $04, $46, $66, $66, $66, $66, $55, $55, $55, $64, $66, $44, $64, $45, $45, $44 
+; @ $0007D370
 SpriteMetaTileTable_78120_Meta_7D370:
 	dc.b	$01, $00, $33, $33, $33, $33, $56, $60, $66, $60, $66, $60, $65, $60, $65, $66, $65, $66, $66, $56, $66, $56 
+; @ $0007D386
 SpriteMetaTileTable_78120_Meta_7D386:
 	dc.b	$02, $00, $EE, $EC, $80, $8C, $EE, $00, $00, $26, $63, $06, $06, $05, $06, $56, $0E, $55, $0E, $65, $E6, $00 
+; @ $0007D39C
 SpriteMetaTileTable_78120_Meta_7D39C:
 	dc.b	$01, $55, $20, $81, $28, $12, $65, $45, $54, $65, $34, $44, $44, $33, $34, $45, $65, $54, $45, $53, $33, $56, $53, $33, $44, $44, $44, $44, $33, $34, $56, $00 
+; @ $0007D3BC
 SpriteMetaTileTable_78120_Meta_7D3BC:
 	dc.b	$01, $55, $07, $00, $42, $C0, $56, $65, $54, $45, $56, $56, $54, $45, $44, $56, $66, $65, $54, $65, $44, $54, $56, $66, $54, $54, $44, $66, $6E, $EE, $EE, $00 
+; @ $0007D3DC
 SpriteMetaTileTable_78120_Meta_7D3DC:
 	dc.b	$01, $EE, $00, $00, $13, $2E, $46, $66, $60, $00, $66, $65, $60, $00, $55, $65, $56, $00, $46, $66, $56, $00, $55, $66, $6E, $44, $56, $55, $6E, $E0, $00, $00 
+; @ $0007D3FC
 SpriteMetaTileTable_78120_Meta_7D3FC:
 	dc.b	$01, $00, $00, $0A, $EE, $FF, $15, $66, $46, $65, $35, $66, $06, $65, $03, $50, $06, $66, $40, $66, $66, $66 
+; @ $0007D412
 SpriteMetaTileTable_78120_Meta_7D412:
 	dc.b	$01, $66, $8C, $C8, $8C, $80, $65, $C6, $B6, $C6, $B6, $B6, $C6, $65, $C6, $C6, $65, $C5, $B5, $55, $B5, $56, $55, $54, $06, $55, $45, $45 
+; @ $0007D42E
 SpriteMetaTileTable_78120_Meta_7D42E:
 	dc.b	$01, $00, $FF, $FF, $FF, $FF 
+; @ $0007D434
 SpriteMetaTileTable_78120_Meta_7D434:
 	dc.b	$01, $00, $CC, $EE, $EF, $FF, $06, $66, $06, $66, $66, $66, $66, $00 
+; @ $0007D442
 SpriteMetaTileTable_78120_Meta_7D442:
 	dc.b	$01, $66, $8C, $C8, $84, $00, $65, $C6, $B6, $C6, $B6, $B6, $C6, $65, $C6, $C6, $65, $C5, $B5, $06, $55, $B5, $06, $56, $55, $54, $06, $55, $45, $45 
+; @ $0007D460
 SpriteMetaTileTable_78120_Meta_7D460:
 	dc.b	$01, $06, $88, $88, $88, $88, $A2, $23, $32, $A3, $54, $23, $A6, $25, $34, $A5, $23, $45, $A5, $54, $56, $66, $56, $66, $56, $55, $56, $55, $45, $46 
+; @ $0007D47E
 SpriteMetaTileTable_78120_Meta_7D47E:
 	dc.b	$01, $66, $11, $3B, $BA, $AA, $56, $45, $55, $46, $45, $56, $56, $55, $55, $65, $65, $65, $65, $65, $65, $55 
+; @ $0007D494
 SpriteMetaTileTable_78120_Meta_7D494:
 	dc.b	$01, $00, $77, $77, $77, $77, $60, $60, $60, $60, $66, $66, $66, $66 
+; @ $0007D4A2
 SpriteMetaTileTable_78120_Meta_7D4A2:
 	dc.b	$01, $56, $19, $11, $19, $98, $66, $55, $66, $66, $55, $65, $65, $55, $55, $65, $55, $55, $65, $64, $66, $44, $64, $45, $65, $45, $44, $00 
+; @ $0007D4BE
 SpriteMetaTileTable_78120_Meta_7D4BE:
 	dc.b	$02, $66, $88, $80, $44, $88, $00, $33, $33, $33, $33, $60, $60, $60, $65, $60, $65, $65, $56, $56 
+; @ $0007D4D2
 SpriteMetaTileTable_78120_Meta_7D4D2:
 	dc.b	$00, $05, $A6, $66, $64, $05, $A6, $66, $65, $06, $A5, $66, $65, $06, $A5, $66, $65, $06, $A5, $56, $65, $06, $66, $56, $65, $06, $56, $55, $65, $06, $55, $45 
 	dc.b	$46, $00 
+; @ $0007D4F4
 SpriteMetaTileTable_78120_Meta_7D4F4:
 	dc.b	$02, $66, $66, $54, $28, $04, $56, $11, $8B, $94, $40, $55, $55, $65, $65, $65, $55, $65, $65, $55, $65, $55, $55, $00 
+; @ $0007D50C
 SpriteMetaTileTable_78120_Meta_7D50C:
 	dc.b	$02, $55, $AA, $2A, $80, $00, $56, $11, $11, $19, $98, $66, $65, $65, $65, $65, $65, $64, $66, $44, $64, $45, $65, $45, $44, $00 
+; @ $0007D526
 SpriteMetaTileTable_78120_Meta_7D526:
 	dc.b	$00, $06, $65, $65, $5C, $06, $65, $56, $6B, $05, $65, $55, $BB, $06, $65, $55, $C6, $05, $65, $55, $C6, $06, $56, $55, $B5, $06, $56, $55, $54, $06, $55, $45 
 	dc.b	$45, $00 
+; @ $0007D548
 SpriteMetaTileTable_78120_Meta_7D548:
 	dc.b	$02, $56, $60, $00, $11, $CD, $55, $02, $66, $66, $32, $6B, $66, $6B, $66, $66, $6C, $66, $6C, $66, $6C, $6B 
+; @ $0007D55E
 SpriteMetaTileTable_78120_Meta_7D55E:
 	dc.b	$01, $00, $11, $11, $11, $33, $55, $66, $66, $55, $66, $65, $65, $56, $65, $65, $46, $50, $66, $46, $50, $66, $56, $50, $66, $65, $56, $60 
+; @ $0007D57A
 SpriteMetaTileTable_78120_Meta_7D57A:
 	dc.b	$01, $56, $6D, $11, $19, $98, $46, $55, $55, $65, $65, $65, $55, $65, $55, $55, $65, $64, $66, $44, $64, $45, $65, $45, $44, $00 
+; @ $0007D594
 SpriteMetaTileTable_78120_Meta_7D594:
 	dc.b	$01, $00, $33, $33, $33, $33, $66, $60, $56, $60, $66, $60, $65, $60, $65, $66, $65, $66, $66, $56, $66, $56 
+; @ $0007D5AA
 SpriteMetaTileTable_78120_Meta_7D5AA:
 	dc.b	$00, $00, $66, $53, $45, $00, $25, $65, $35, $02, $23, $56, $55, $02, $43, $66, $56, $24, $63, $66, $56, $25, $03, $66, $56, $26, $60, $06, $66, $36, $00, $06 
 	dc.b	$66, $00 
+; @ $0007D5CC
 SpriteMetaTileTable_78120_Meta_7D5CC:
 	dc.b	$00, $56, $66, $6A, $CA, $56, $60, $6A, $6A, $66, $06, $6B, $6A, $66, $06, $CB, $6B, $60, $66, $C5, $64, $60, $66, $B6, $34, $60, $6C, $56, $26, $06, $6B, $45 
 	dc.b	$66, $00 
+; @ $0007D5EE
 SpriteMetaTileTable_78120_Meta_7D5EE:
 	dc.b	$00, $B6, $44, $44, $45, $65, $56, $54, $45, $62, $45, $64, $45, $32, $34, $66, $55, $21, $33, $66, $55, $24, $23, $66, $56, $16, $24, $66, $56, $26, $35, $66 
 	dc.b	$56, $00 
+; @ $0007D610
 SpriteMetaTileTable_78120_Meta_7D610:
 	dc.b	$01, $00, $33, $77, $77, $77, $56, $60, $56, $60, $66, $66, $66, $66, $66, $66 
+; @ $0007D620
 SpriteMetaTileTable_78120_Meta_7D620:
 	dc.b	$01, $00, $77, $77, $77, $73, $66, $60, $60, $60, $66, $66, $66, $66, $60, $00 
+; @ $0007D630
 SpriteMetaTileTable_78120_Meta_7D630:
 	dc.b	$01, $00, $EE, $EC, $CC, $88, $43, $55, $44, $04, $45, $33, $34, $44, $56, $04, $33, $45, $03, $34, $55, $00 
+; @ $0007D646
 SpriteMetaTileTable_78120_Meta_7D646:
 	dc.b	$01, $66, $4C, $67, $80, $10, $55, $64, $56, $65, $44, $55, $65, $56, $54, $45, $55, $65, $33, $34, $56, $64, $33, $44, $64, $34, $45, $56 
+; @ $0007D662
 SpriteMetaTileTable_78120_Meta_7D662:
 	dc.b	$01, $66, $92, $48, $88, $8A, $56, $44, $44, $56, $45, $56, $44, $45, $64, $44, $45, $64, $55, $55, $44, $44, $55, $56, $54, $55, $65, $45 
+; @ $0007D67E
 SpriteMetaTileTable_78120_Meta_7D67E:
 	dc.b	$02, $66, $44, $44, $4C, $C0, $00, $33, $33, $33, $33, $56, $56, $56, $56, $56, $56, $60 
+; @ $0007D690
 SpriteMetaTileTable_78120_Meta_7D690:
 	dc.b	$01, $00, $88, $89, $99, $99, $43, $34, $56, $66, $53, $46, $04, $44, $65, $02, $33, $43, $64, $26, $63, $36, $04, $30, $60, $00 
+; @ $0007D6AA
 SpriteMetaTileTable_78120_Meta_7D6AA:
 	dc.b	$01, $44, $20, $40, $21, $45, $65, $34, $55, $55, $43, $34, $45, $55, $34, $45, $55, $43, $33, $45, $65, $54, $54, $65, $43, $34, $65, $33, $45, $65, $33, $00 
+; @ $0007D6CA
 SpriteMetaTileTable_78120_Meta_7D6CA:
 	dc.b	$00, $56, $33, $56, $55, $53, $23, $36, $55, $53, $13, $36, $65, $33, $12, $34, $66, $26, $24, $35, $46, $66, $26, $43, $66, $55, $35, $66, $66, $55, $53, $55 
 	dc.b	$55, $00 
+; @ $0007D6EC
 SpriteMetaTileTable_78120_Meta_7D6EC:
 	dc.b	$02, $00, $33, $37, $77, $73, $66, $08, $88, $88, $88, $56, $60, $60, $60, $60 
+; @ $0007D6FC
 SpriteMetaTileTable_78120_Meta_7D6FC:
 	dc.b	$01, $00, $CC, $CC, $CC, $CC, $05, $56, $04, $35, $03, $46, $04, $56, $55, $55, $55, $66, $56, $54, $64, $33 
+; @ $0007D712
 SpriteMetaTileTable_78120_Meta_7D712:
 	dc.b	$01, $66, $00, $CF, $73, $73, $44, $44, $45, $55, $56, $54, $44, $55, $65, $44, $56, $55, $56, $45, $34, $56 
+; @ $0007D728
 SpriteMetaTileTable_78120_Meta_7D728:
 	dc.b	$00, $55, $55, $66, $44, $56, $55, $65, $46, $45, $65, $64, $46, $44, $66, $64, $65, $66, $56, $66, $54, $65, $56, $65, $44, $65, $66, $44, $33, $56, $66, $43 
 	dc.b	$55, $00 
+; @ $0007D74A
 SpriteMetaTileTable_78120_Meta_7D74A:
 	dc.b	$01, $00, $77, $73, $37, $77, $46, $66, $56, $56, $60, $56, $60, $56, $56, $56 
+; @ $0007D75A
 SpriteMetaTileTable_78120_Meta_7D75A:
 	dc.b	$01, $00, $88, $88, $88, $88, $06, $44, $33, $06, $43, $33, $06, $43, $43, $06, $43, $33, $66, $54, $34, $66, $55, $44, $66, $65, $55, $66, $65, $55 
+; @ $0007D778
 SpriteMetaTileTable_78120_Meta_7D778:
 	dc.b	$00, $34, $45, $66, $66, $34, $44, $56, $66, $44, $45, $55, $56, $35, $55, $66, $66, $44, $45, $55, $56, $33, $55, $65, $66, $44, $45, $56, $64, $54, $55, $56 
 	dc.b	$44, $00 
+; @ $0007D79A
 SpriteMetaTileTable_78120_Meta_7D79A:
 	dc.b	$02, $66, $E8, $88, $01, $00, $55, $01, $13, $84, $23, $44, $65, $44, $44, $33, $65, $43, $35, $56, $44, $45, $33, $34, $65, $33, $45, $00 
+; @ $0007D7B6
 SpriteMetaTileTable_78120_Meta_7D7B6:
 	dc.b	$01, $00, $77, $77, $77, $73, $56, $56, $56, $66, $60, $66, $66, $66, $60, $00 
+; @ $0007D7C6
 SpriteMetaTileTable_78120_Meta_7D7C6:
 	dc.b	$01, $00, $88, $88, $80, $8C, $06, $66, $55, $03, $66, $65, $33, $56, $55, $33, $56, $64, $E3, $55, $56, $0E, $E3, $E6, $55, $EE, $EE, $64, $EE, $EE 
+; @ $0007D7E4
 SpriteMetaTileTable_78120_Meta_7D7E4:
 	dc.b	$01, $66, $13, $10, $06, $01, $55, $55, $56, $55, $56, $55, $55, $55, $44, $44, $46, $54, $53, $33, $44, $53, $56, $62, $33, $34, $44, $62, $44, $34, $45, $00 
+; @ $0007D804
 SpriteMetaTileTable_78120_Meta_7D804:
 	dc.b	$00, $44, $55, $56, $56, $56, $65, $56, $65, $44, $56, $56, $55, $32, $44, $65, $55, $32, $24, $46, $55, $52, $52, $44, $66, $E4, $2E, $34, $65, $EE, $5E, $E5 
 	dc.b	$EE, $00 
+; @ $0007D826
 SpriteMetaTileTable_78120_Meta_7D826:
 	dc.b	$02, $00, $33, $11, $00, $01, $EE, $00, $00, $13, $2E, $66, $66, $66, $56, $56, $65, $66, $56, $65, $66, $56, $55, $5E, $66, $46, $45, $6E, $E0, $00 
 BossTileData_Imposter_Entry07:
@@ -16353,12 +17122,14 @@ BossTileData_Imposter_Entry07:
 	dc.l	SpriteMetaTileTable_78120_Meta_7D826
 BossTileData_Imposter_Entry08:
 	dc.l	LoadMenuTileGfxSet2	
+; @ $0007D924
 SpriteMetaTileTable_78120_Meta_7D924:
 	dc.l	$0100FFFF	
 	dc.l	$30001240	
 	dc.l	$65324005	
 	dc.l	$66653343	
 	dc.l	$05654254	
+; @ $0007D938
 SpriteMetaTileTable_78120_Meta_7D938:
 	dc.l	$0100888C	
 	dc.l	$CCCC5313	
@@ -16367,6 +17138,7 @@ SpriteMetaTileTable_78120_Meta_7D938:
 	dc.l	$63666356	
 	dc.l	$64566505	
 	dc.l	$65000100	
+; @ $0007D954
 SpriteMetaTileTable_78120_Meta_7D954:
 	dc.l	$CCCEEFFF	
 	dc.l	$05650565	
@@ -16377,60 +17149,88 @@ BossTileData_Imposter_Entry09:
 	dc.l	SpriteMetaTileTable_78120_Meta_7D954-2
 BossTileData_Imposter_Entry10:
 	dc.b	$00, $02, $01, $03, $04, $06, $05, $07, $08, $0A, $09, $0B, $0C, $0E, $0D, $0F, $10, $12, $11, $13, $14, $16, $15, $17, $18, $1A, $19, $1B 
+; @ $0007D988
 SpriteMetaTileTable_78120_Meta_7D988:
 	dc.b	$02, $00, $BB, $B9, $DD, $CC, $90, $44, $42, $22, $01, $99, $99, $80, $09, $00 
+; @ $0007D998
 SpriteMetaTileTable_78120_Meta_7D998:
 	dc.b	$02, $00, $89, $9B, $BB, $B7, $09, $66, $44, $40, $08, $90, $90, $90, $90, $00 
+; @ $0007D9A8
 SpriteMetaTileTable_78120_Meta_7D9A8:
 	dc.b	$02, $00, $EE, $EC, $CC, $EF, $09, $11, $03, $32, $00, $98, $99, $98 
+; @ $0007D9B6
 SpriteMetaTileTable_78120_Meta_7D9B6:
 	dc.b	$01, $00, $73, $B7, $77, $7F, $09, $09, $90, $90, $99, $90, $99, $80 
+; @ $0007D9C4
 SpriteMetaTileTable_78120_Meta_7D9C4:
 	dc.b	$03, $00, $99, $8C, $44, $46, $90, $44, $00, $89, $99, $09, $22, $03, $22, $20, $99, $99, $99, $99 
+; @ $0007D9D8
 SpriteMetaTileTable_78120_Meta_7D9D8:
 	dc.b	$01, $00, $FE, $09, $BB, $BA, $90, $09, $90, $09, $90, $90, $99, $99, $09, $09, $09, $90 
+; @ $0007D9EA
 SpriteMetaTileTable_78120_Meta_7D9EA:
 	dc.b	$02, $00, $40, $A8, $D0, $3F, $99, $2E, $41, $2D, $00, $90, $90, $98, $98, $09, $90, $90, $09, $90 
+; @ $0007D9FE
 SpriteMetaTileTable_78120_Meta_7D9FE:
 	dc.b	$02, $00, $81, $31, $02, $7F, $90, $50, $8A, $95, $00, $09, $09, $99, $99, $09, $09, $99, $99, $09, $80, $00 
+; @ $0007DA14
 SpriteMetaTileTable_78120_Meta_7DA14:
 	dc.b	$03, $00, $60, $8A, $81, $08, $90, $06, $20, $5E, $00, $99, $01, $45, $20, $E7, $09, $09, $09, $09, $09, $00 
+; @ $0007DA2A
 SpriteMetaTileTable_78120_Meta_7DA2A:
 	dc.b	$02, $90, $80, $22, $02, $91, $00, $5D, $D9, $B1, $48, $09, $99, $99, $99, $99, $09, $99, $09, $99 
+; @ $0007DA3E
 SpriteMetaTileTable_78120_Meta_7DA3E:
 	dc.b	$03, $09, $C8, $64, $10, $20, $00, $20, $88, $84, $4F, $99, $15, $01, $48, $10, $90, $98, $90, $90, $90, $90, $90, $00 
+; @ $0007DA56
 SpriteMetaTileTable_78120_Meta_7DA56:
 	dc.b	$03, $00, $A2, $81, $03, $39, $90, $55, $10, $40, $C2, $99, $08, $46, $B8, $04, $09, $09, $09, $00 
+; @ $0007DA6A
 SpriteMetaTileTable_78120_Meta_7DA6A:
 	dc.b	$01, $00, $FE, $EC, $CC, $CD, $09, $09, $08, $80, $88, $09, $08, $89, $08, $09, $08, $00 
+; @ $0007DA7C
 SpriteMetaTileTable_78120_Meta_7DA7C:
 	dc.b	$01, $00, $FF, $77, $7F, $73, $90, $90, $90, $90, $09, $90 
+; @ $0007DA88
 SpriteMetaTileTable_78120_Meta_7DA88:
 	dc.b	$01, $00, $CC, $CE, $EE, $EF, $08, $80, $08, $88, $08, $08, $89, $09, $99, $08 
+; @ $0007DA98
 SpriteMetaTileTable_78120_Meta_7DA98:
 	dc.b	$01, $00, $B7, $77, $77, $7F, $90, $09, $99, $90, $90, $99, $80, $00 
+; @ $0007DAA6
 SpriteMetaTileTable_78120_Meta_7DAA6:
 	dc.b	$01, $00, $EF, $EE, $CE, $ED, $09, $09, $89, $08, $89, $80, $99, $09 
+; @ $0007DAB4
 SpriteMetaTileTable_78120_Meta_7DAB4:
 	dc.b	$01, $00, $FF, $FF, $77, $7F, $99, $09, $99, $00 
+; @ $0007DABE
 SpriteMetaTileTable_78120_Meta_7DABE:
 	dc.b	$01, $00, $CC, $FE, $EE, $EF, $90, $08, $99, $99, $09, $09, $99, $08 
+; @ $0007DACC
 SpriteMetaTileTable_78120_Meta_7DACC:
 	dc.b	$01, $00, $77, $77, $77, $7F, $80, $08, $98, $90, $90, $99, $80, $00 
+; @ $0007DADA
 SpriteMetaTileTable_78120_Meta_7DADA:
 	dc.b	$01, $00, $FE, $C9, $90, $00, $09, $99, $90, $09, $97, $99, $70, $09, $97, $70, $09, $09, $77, $70, $99, $99, $97, $70, $99, $00 
+; @ $0007DAF4
 SpriteMetaTileTable_78120_Meta_7DAF4:
 	dc.b	$01, $00, $F5, $91, $23, $50, $90, $99, $99, $97, $09, $97, $70, $99, $79, $90, $97, $09, $90, $90, $77, $77, $77, $70 
+; @ $0007DB0C
 SpriteMetaTileTable_78120_Meta_7DB0C:
 	dc.b	$02, $99, $D1, $54, $20, $10, $00, $00, $08, $9C, $EF, $70, $09, $97, $90, $09, $77, $90, $09, $09, $09, $90 
+; @ $0007DB22
 SpriteMetaTileTable_78120_Meta_7DB22:
 	dc.b	$02, $00, $56, $13, $01, $47, $90, $00, $28, $52, $90, $77, $09, $70, $99, $09, $70, $09, $99, $09, $09, $99, $99, $09 
+; @ $0007DB3A
 SpriteMetaTileTable_78120_Meta_7DB3A:
 	dc.b	$01, $00, $FF, $ED, $99, $00, $90, $97, $09, $90, $99, $77, $09, $97, $97, $70, $99, $99, $79, $97 
+; @ $0007DB4E
 SpriteMetaTileTable_78120_Meta_7DB4E:
 	dc.b	$01, $00, $FF, $FF, $B1, $65, $09, $09, $70, $90, $70, $99, $77, $09 
+; @ $0007DB5C
 SpriteMetaTileTable_78120_Meta_7DB5C:
 	dc.b	$01, $00, $00, $99, $DE, $FF, $99, $97, $79, $99, $09, $97, $77, $79, $97, $70, $09, $70, $97, $90 
+; @ $0007DB70
 SpriteMetaTileTable_78120_Meta_7DB70:
 	dc.b	$01, $00, $05, $33, $FF, $FF, $77, $77, $77, $70, $90, $90, $99, $09, $09, $99 
 BossTileData_Imposter_Entry11:
@@ -16469,332 +17269,478 @@ BossTileData_Tsarkon_Entry00:
 	dc.b	$4D, $51, $55, $59, $4E, $52, $56, $5A, $4F, $53, $57, $5B, $50, $54, $58, $5C, $5D, $61, $65, $59, $5E, $62, $66, $5A, $5F, $63, $67, $5B, $60, $64, $68, $69 
 	dc.b	$6A, $6E, $72, $75, $6B, $6F, $73, $76, $6C, $70, $74, $0E, $6D, $71, $0B, $0F, $6A, $7A, $7D, $80, $77, $7B, $7E, $81, $78, $70, $7F, $82, $79, $7C, $0B, $0F 
 	dc.b	$00, $86, $8A, $8E, $83, $87, $8B, $8F, $84, $88, $8C, $90, $85, $89, $8D, $91 
+; @ $0007DCA0
 SpriteMetaTileTable_78120_Meta_7DCA0:
 	dc.b	$01, $00, $FF, $EC, $CC, $CC, $AA, $0A, $98, $AA, $97, $AA, $99, $0A, $A9, $09, $88, $00 
+; @ $0007DCB2
 SpriteMetaTileTable_78120_Meta_7DCB2:
 	dc.b	$01, $AA, $06, $86, $01, $86, $00, $00, $00, $0A, $00, $A9, $98, $8A, $98, $89, $98, $89, $A9, $8A, $98, $8A, $98, $7B, $98, $88, $BB, $9A, $9A, $00 
+; @ $0007DCD0
 SpriteMetaTileTable_78120_Meta_7DCD0:
 	dc.b	$00, $AA, $A0, $00, $00, $88, $9A, $00, $00, $78, $9A, $BA, $A0, $88, $9A, $B8, $9A, $89, $9B, $B8, $9A, $AA, $AA, $AA, $AA, $A9, $88, $77, $78, $98, $77, $99 
 	dc.b	$99, $00 
+; @ $0007DCF2
 SpriteMetaTileTable_78120_Meta_7DCF2:
 	dc.b	$01, $00, $FF, $90, $00, $01, $AA, $AA, $0A, $98, $8A, $A0, $B9, $87, $79, $A0, $A9, $88, $89, $A0, $9A, $88, $9A, $B0, $7A, $B9, $AA, $00 
+; @ $0007DD0E
 SpriteMetaTileTable_78120_Meta_7DD0E:
 	dc.b	$00, $00, $0A, $A9, $99, $0A, $BB, $B9, $99, $0B, $B0, $AA, $AA, $BB, $00, $0A, $98, $B0, $00, $A9, $87, $A0, $00, $A9, $88, $0B, $00, $AA, $AA, $0A, $BB, $A9 
 	dc.b	$88, $00 
+; @ $0007DD30
 SpriteMetaTileTable_78120_Meta_7DD30:
 	dc.b	$00, $9A, $98, $89, $AA, $A9, $87, $89, $AA, $A9, $88, $89, $AB, $A9, $88, $99, $BA, $BA, $AA, $AA, $A9, $8B, $BB, $BB, $A9, $AA, $BB, $BB, $A9, $9A, $BA, $98 
 	dc.b	$BA, $00 
+; @ $0007DD52
 SpriteMetaTileTable_78120_Meta_7DD52:
 	dc.b	$00, $98, $88, $9A, $B9, $98, $89, $9B, $B9, $AA, $AA, $AB, $BB, $98, $89, $9A, $BB, $87, $77, $89, $AB, $88, $87, $89, $AA, $99, $88, $99, $AA, $AA, $99, $9A 
 	dc.b	$AB, $00 
+; @ $0007DD74
 SpriteMetaTileTable_78120_Meta_7DD74:
 	dc.b	$01, $BB, $44, $08, $88, $8C, $97, $BA, $00, $77, $B0, $00, $B8, $7A, $AA, $00, $7B, $89, $A0, $8B, $AA, $A0, $87, $98, $9A, $B8, $87, $9A, $B8, $9A 
+; @ $0007DD92
 SpriteMetaTileTable_78120_Meta_7DD92:
 	dc.b	$01, $00, $88, $88, $88, $CE, $AA, $98, $78, $0A, $AA, $AA, $0A, $98, $89, $A9, $98, $9A, $0A, $9A, $B9, $0A, $AA, $B9, $AB, $B9, $BA, $00 
+; @ $0007DDAE
 SpriteMetaTileTable_78120_Meta_7DDAE:
 	dc.b	$00, $9B, $A9, $87, $8B, $9A, $A9, $87, $89, $AA, $A9, $87, $79, $98, $BA, $AA, $77, $87, $8B, $AB, $B8, $88, $89, $AB, $BB, $88, $99, $AB, $AA, $AA, $AA, $BB 
 	dc.b	$BB, $00 
+; @ $0007DDD0
 SpriteMetaTileTable_78120_Meta_7DDD0:
 	dc.b	$01, $BB, $8F, $30, $0C, $88, $AA, $AA, $AB, $A9, $8B, $BA, $AA, $AA, $BA, $77, $88, $8B, $BA, $88, $89, $A9, $88, $89, $A9, $99, $99, $00 
+; @ $0007DDEC
 SpriteMetaTileTable_78120_Meta_7DDEC:
 	dc.b	$02, $BB, $80, $66, $44, $40, $00, $00, $01, $33, $33, $A9, $89, $AA, $AB, $BA, $AA, $A0, $AB, $B0, $AB, $AA, $AA, $AA, $AA, $B0 
+; @ $0007DE06
 SpriteMetaTileTable_78120_Meta_7DE06:
 	dc.b	$01, $00, $EF, $FF, $FF, $FF, $0B, $00 
+; @ $0007DE0E
 SpriteMetaTileTable_78120_Meta_7DE0E:
 	dc.b	$02, $BB, $FF, $00, $00, $00, $00, $00, $FF, $FF, $FF, $00 
+; @ $0007DE1A
 SpriteMetaTileTable_78120_Meta_7DE1A:
 	dc.b	$01, $00, $08, $CF, $FF, $FF, $BB, $BA, $A9, $9A, $0B, $BB, $BB, $BB, $BB, $00 
+; @ $0007DE2A
 SpriteMetaTileTable_78120_Meta_7DE2A:
 	dc.b	$01, $00, $37, $FF, $FF, $FF, $AB, $B0, $BB, $00 
+; @ $0007DE34
 SpriteMetaTileTable_78120_Meta_7DE34:
 	dc.b	$01, $00, $FE, $CC, $CC, $CC, $99, $09, $78, $98, $77, $98, $77, $98, $88, $09, $99, $09, $88, $00 
+; @ $0007DE48
 SpriteMetaTileTable_78120_Meta_7DE48:
 	dc.b	$01, $88, $30, $44, $47, $28, $00, $00, $9A, $A8, $87, $78, $99, $77, $78, $89, $77, $78, $89, $77, $78, $99, $99, $98, $89, $99, $AA, $99 
+; @ $0007DE64
 SpriteMetaTileTable_78120_Meta_7DE64:
 	dc.b	$00, $9A, $A0, $00, $00, $89, $AA, $00, $00, $89, $9A, $BA, $A0, $89, $AA, $B8, $9A, $99, $AB, $B8, $9A, $9A, $AA, $AA, $AA, $A9, $88, $77, $78, $98, $77, $99 
 	dc.b	$99, $00 
+; @ $0007DE86
 SpriteMetaTileTable_78120_Meta_7DE86:
 	dc.b	$01, $00, $CC, $C0, $44, $40, $A9, $88, $B9, $88, $AA, $98, $0B, $BB, $BA, $99, $0B, $A9, $87, $A0, $A9, $88, $0B, $AA, $AA, $0A, $BB, $A9, $88, $00 
+; @ $0007DEA4
 SpriteMetaTileTable_78120_Meta_7DEA4:
 	dc.b	$01, $99, $54, $44, $C0, $10, $88, $9A, $89, $A9, $88, $88, $A9, $87, $88, $A9, $77, $A9, $87, $89, $78, $9A, $98, $A7, $78, $89, $97, $77, $89, $B9 
+; @ $0007DEC2
 SpriteMetaTileTable_78120_Meta_7DEC2:
 	dc.b	$00, $88, $88, $9A, $B9, $78, $89, $9B, $B9, $77, $89, $9B, $BB, $77, $88, $99, $BB, $77, $88, $99, $AB, $88, $88, $99, $AA, $99, $89, $9A, $AA, $AA, $99, $9A 
 	dc.b	$AB, $00 
+; @ $0007DEE4
 SpriteMetaTileTable_78120_Meta_7DEE4:
 	dc.b	$01, $00, $88, $88, $88, $CE, $AA, $98, $78, $0A, $AA, $AA, $0A, $98, $89, $A9, $98, $9A, $0A, $9A, $B9, $0A, $AA, $B8, $AB, $B8, $B9, $00 
+; @ $0007DF00
 SpriteMetaTileTable_78120_Meta_7DF00:
 	dc.b	$00, $97, $78, $88, $9B, $98, $88, $89, $99, $AA, $99, $99, $79, $98, $BA, $AA, $77, $77, $8B, $AB, $B8, $78, $89, $AB, $BB, $77, $89, $9B, $AA, $88, $89, $9B 
 	dc.b	$BB, $00 
+; @ $0007DF22
 SpriteMetaTileTable_78120_Meta_7DF22:
 	dc.b	$01, $00, $00, $FF, $FF, $FF, $99, $99, $BB, $BB, $BB, $BB, $BB, $BB 
+; @ $0007DF30
 SpriteMetaTileTable_78120_Meta_7DF30:
 	dc.b	$01, $00, $FF, $CC, $88, $88, $0A, $AA, $AA, $98, $0A, $A9, $88, $0A, $A9, $88, $0A, $A8, $87, $0A, $87, $77 
+; @ $0007DF46
 SpriteMetaTileTable_78120_Meta_7DF46:
 	dc.b	$03, $88, $10, $00, $71, $58, $77, $02, $68, $84, $22, $78, $01, $15, $02, $81, $00, $09, $98, $99, $98, $98, $87, $87, $87, $00 
+; @ $0007DF60
 SpriteMetaTileTable_78120_Meta_7DF60:
 	dc.b	$01, $99, $04, $44, $CC, $C8, $88, $9A, $AA, $00, $89, $AA, $A0, $88, $9A, $BA, $88, $AA, $BA, $AB, $BA, $AA, $AA, $88, $77, $98, $77, $B9 
+; @ $0007DF7C
 SpriteMetaTileTable_78120_Meta_7DF7C:
 	dc.b	$01, $00, $88, $88, $88, $88, $0A, $87, $77, $0A, $87, $77, $AA, $87, $77, $A9, $88, $77, $A9, $88, $88, $A9, $98, $88, $A9, $99, $98, $AA, $99, $98 
+; @ $0007DF9A
 SpriteMetaTileTable_78120_Meta_7DF9A:
 	dc.b	$02, $88, $8C, $4F, $20, $08, $77, $22, $10, $CC, $C0, $87, $78, $78, $78, $87, $99, $78, $99, $78, $89, $87, $78, $89 
+; @ $0007DFB2
 SpriteMetaTileTable_78120_Meta_7DFB2:
 	dc.b	$01, $88, $68, $02, $26, $00, $98, $9A, $78, $89, $9B, $77, $77, $89, $9B, $77, $77, $99, $87, $77, $99, $98, $99, $99, $99, $89, $9A, $B9, $AA, $99, $9A, $00 
+; @ $0007DFD2
 SpriteMetaTileTable_78120_Meta_7DFD2:
 	dc.b	$01, $00, $88, $88, $CC, $EF, $0A, $AA, $99, $0A, $AA, $A9, $0A, $AA, $A8, $0A, $AA, $98, $0A, $98, $0A, $A8, $AB, $00 
+; @ $0007DFEA
 SpriteMetaTileTable_78120_Meta_7DFEA:
 	dc.b	$00, $88, $98, $88, $88, $98, $87, $78, $89, $87, $78, $89, $99, $77, $78, $99, $AA, $77, $78, $99, $9B, $77, $88, $AA, $AB, $88, $99, $AA, $BB, $BA, $99, $AA 
 	dc.b	$BB, $00 
+; @ $0007E00C
 SpriteMetaTileTable_78120_Meta_7E00C:
 	dc.b	$01, $BB, $47, $10, $0E, $4C, $9B, $AA, $AA, $99, $79, $A9, $8B, $77, $BA, $AA, $AA, $B8, $77, $88, $8B, $88, $AA, $A9, $88, $A9, $99, $00 
+; @ $0007E028
 SpriteMetaTileTable_78120_Meta_7E028:
 	dc.b	$01, $00, $FF, $FF, $FF, $FF 
+; @ $0007E02E
 SpriteMetaTileTable_78120_Meta_7E02E:
 	dc.b	$01, $00, $08, $FF, $FF, $FF, $0A, $AA, $AB, $BB, $BB, $BB, $BB, $00 
+; @ $0007E03C
 SpriteMetaTileTable_78120_Meta_7E03C:
 	dc.b	$01, $00, $04, $EF, $FF, $FF, $BB, $BB, $BA, $A9, $BB, $0B, $BB, $BB 
+; @ $0007E04A
 SpriteMetaTileTable_78120_Meta_7E04A:
 	dc.b	$02, $00, $FF, $CC, $80, $00, $77, $00, $01, $13, $26, $09, $98, $88, $98, $87, $09, $87, $98, $87, $78, $98, $78, $00 
+; @ $0007E062
 SpriteMetaTileTable_78120_Meta_7E062:
 	dc.b	$03, $88, $7C, $00, $11, $00, $78, $01, $15, $20, $11, $77, $00, $E8, $CE, $66, $00, $87, $87, $87, $87, $00 
+; @ $0007E078
 SpriteMetaTileTable_78120_Meta_7E078:
 	dc.b	$02, $88, $80, $88, $80, $AD, $99, $46, $66, $66, $00, $9A, $A0, $89, $AA, $9A, $9A, $AA, $89, $AA, $98, $8A, $77, $00 
+; @ $0007E090
 SpriteMetaTileTable_78120_Meta_7E090:
 	dc.b	$01, $00, $FF, $90, $00, $01, $AA, $AA, $AA, $98, $8A, $A0, $B9, $87, $79, $A0, $A9, $88, $89, $A0, $9A, $88, $9A, $B0, $7A, $B9, $AA, $00 
+; @ $0007E0AC
 SpriteMetaTileTable_78120_Meta_7E0AC:
 	dc.b	$02, $77, $77, $72, $10, $00, $88, $00, $05, $67, $20, $98, $98, $98, $98, $A9, $A9, $A9, $99, $99, $0A, $A9, $99, $99 
+; @ $0007E0C4
 SpriteMetaTileTable_78120_Meta_7E0C4:
 	dc.b	$02, $77, $77, $38, $C4, $00, $88, $00, $87, $20, $E0, $87, $87, $87, $99, $87, $78, $99, $89, $99, $99, $99, $99, $00 
+; @ $0007E0DC
 SpriteMetaTileTable_78120_Meta_7E0DC:
 	dc.b	$01, $77, $00, $CC, $62, $00, $78, $88, $88, $98, $78, $78, $89, $9B, $89, $9B, $88, $99, $87, $89, $98, $88, $89, $99, $99, $88, $89, $B9, $AA, $99, $99, $00 
+; @ $0007E0FC
 SpriteMetaTileTable_78120_Meta_7E0FC:
 	dc.b	$00, $97, $BB, $BA, $00, $77, $BB, $B0, $00, $B8, $7A, $AA, $00, $BB, $7B, $89, $A0, $BB, $8B, $AA, $A0, $9B, $87, $98, $9A, $9B, $B8, $87, $9A, $9B, $BB, $B8 
 	dc.b	$9A, $00 
+; @ $0007E11E
 SpriteMetaTileTable_78120_Meta_7E11E:
 	dc.b	$00, $0A, $99, $88, $89, $0A, $98, $87, $89, $0A, $98, $87, $78, $0A, $A8, $88, $77, $00, $A9, $98, $88, $00, $0A, $99, $98, $00, $0A, $AA, $A9, $00, $00, $00 
 	dc.b	$AB, $00 
+; @ $0007E140
 SpriteMetaTileTable_78120_Meta_7E140:
 	dc.b	$00, $99, $98, $88, $88, $88, $87, $78, $89, $88, $78, $89, $99, $88, $78, $99, $AA, $77, $78, $99, $9B, $77, $88, $AA, $AB, $98, $99, $AA, $BB, $BA, $99, $AA 
 	dc.b	$BB, $00 
+; @ $0007E162
 SpriteMetaTileTable_78120_Meta_7E162:
 	dc.b	$01, $BB, $47, $10, $0E, $4C, $9B, $AA, $A9, $99, $79, $A9, $8B, $77, $BA, $AA, $AA, $B8, $77, $88, $89, $87, $AA, $A9, $87, $A9, $98, $00 
+; @ $0007E17E
 SpriteMetaTileTable_78120_Meta_7E17E:
 	dc.b	$01, $77, $00, $F9, $CE, $66, $00, $88, $88, $88, $88, $88, $87, $78, $78, $87, $78, $87, $88, $87, $78, $87, $78, $00 
+; @ $0007E196
 SpriteMetaTileTable_78120_Meta_7E196:
 	dc.b	$02, $88, $8C, $44, $40, $AD, $99, $42, $11, $16, $00, $9A, $AA, $AA, $77, $89, $77, $89, $78, $89, $89, $AA, $98, $8A, $77, $00 
+; @ $0007E1B0
 SpriteMetaTileTable_78120_Meta_7E1B0:
 	dc.b	$01, $00, $FF, $40, $00, $00, $A0, $AA, $A0, $AA, $0A, $98, $8A, $AB, $B9, $87, $79, $BB, $A9, $88, $89, $BB, $BA, $88, $9A, $AB, $BA, $B9, $AA, $00 
+; @ $0007E1CE
 SpriteMetaTileTable_78120_Meta_7E1CE:
 	dc.b	$03, $77, $77, $28, $C0, $00, $88, $00, $97, $26, $80, $99, $00, $00, $11, $7E, $87, $87, $87, $87, $9A, $00 
+; @ $0007E1E4
 SpriteMetaTileTable_78120_Meta_7E1E4:
 	dc.b	$00, $78, $88, $88, $98, $78, $78, $89, $9B, $87, $77, $89, $9A, $88, $77, $88, $99, $99, $88, $99, $99, $99, $99, $AA, $AA, $A9, $7A, $AB, $BB, $8A, $77, $BA 
 	dc.b	$9B, $00 
+; @ $0007E206
 SpriteMetaTileTable_78120_Meta_7E206:
 	dc.b	$00, $88, $AA, $AB, $BA, $BA, $87, $AB, $B0, $AA, $B8, $7A, $00, $99, $AB, $7B, $00, $88, $9B, $8B, $90, $78, $AA, $87, $89, $A8, $AA, $97, $77, $BB, $AA, $97 
 	dc.b	$78, $00 
+; @ $0007E228
 SpriteMetaTileTable_78120_Meta_7E228:
 	dc.b	$01, $00, $88, $88, $88, $88, $AA, $AA, $AA, $0A, $88, $AA, $0A, $78, $A8, $0A, $77, $A8, $99, $AA, $A7, $A9, $89, $99, $AA, $98, $87, $0A, $A9, $97 
+; @ $0007E246
 SpriteMetaTileTable_78120_Meta_7E246:
 	dc.b	$00, $87, $AA, $7A, $A7, $A7, $7A, $87, $A7, $A8, $7A, $87, $99, $7A, $AA, $A9, $99, $7A, $A9, $98, $9B, $AA, $A9, $78, $9B, $89, $87, $89, $9B, $78, $99, $99 
 	dc.b	$BB, $00 
+; @ $0007E268
 SpriteMetaTileTable_78120_Meta_7E268:
 	dc.b	$00, $8A, $A9, $99, $A9, $99, $98, $88, $99, $99, $99, $88, $88, $9A, $A9, $88, $88, $AA, $AA, $97, $88, $BA, $AA, $BB, $87, $AA, $BB, $A9, $87, $BB, $BB, $A9 
 	dc.b	$98, $00 
+; @ $0007E28A
 SpriteMetaTileTable_78120_Meta_7E28A:
 	dc.b	$00, $9B, $BB, $A9, $8A, $BB, $AB, $BA, $A0, $89, $99, $AA, $00, $88, $89, $9A, $00, $87, $78, $99, $00, $88, $78, $9A, $00, $77, $78, $AA, $00, $88, $89, $B0 
 	dc.b	$00, $00 
+; @ $0007E2AC
 SpriteMetaTileTable_78120_Meta_7E2AC:
 	dc.b	$01, $00, $CE, $FF, $FF, $FF, $0B, $99, $0A, $00 
+; @ $0007E2B6
 SpriteMetaTileTable_78120_Meta_7E2B6:
 	dc.b	$01, $00, $03, $FF, $FF, $FF, $99, $99, $AB, $B0, $AA, $A0 
+; @ $0007E2C2
 SpriteMetaTileTable_78120_Meta_7E2C2:
 	dc.b	$01, $00, $0C, $EF, $FF, $FF, $0B, $BB, $BA, $A9, $0B, $BB, $BB, $00 
+; @ $0007E2D0
 SpriteMetaTileTable_78120_Meta_7E2D0:
 	dc.b	$01, $00, $13, $7F, $FF, $FF, $9A, $AB, $B0, $BB, $BB, $BB 
+; @ $0007E2DC
 SpriteMetaTileTable_78120_Meta_7E2DC:
 	dc.b	$02, $00, $FE, $C8, $80, $00, $77, $00, $01, $13, $26, $09, $09, $98, $09, $88, $98, $87, $09, $87, $09, $87, $78, $98, $78, $00 
+; @ $0007E2F6
 SpriteMetaTileTable_78120_Meta_7E2F6:
 	dc.b	$01, $77, $00, $F9, $CE, $66, $09, $99, $98, $88, $88, $88, $87, $78, $78, $87, $78, $87, $88, $87, $78, $87, $78, $00 
+; @ $0007E30E
 SpriteMetaTileTable_78120_Meta_7E30E:
 	dc.b	$02, $88, $8C, $44, $40, $AD, $99, $42, $11, $16, $00, $9A, $A0, $AA, $77, $89, $77, $89, $78, $89, $89, $AA, $98, $8A, $77, $00 
+; @ $0007E328
 SpriteMetaTileTable_78120_Meta_7E328:
 	dc.b	$01, $00, $FF, $40, $00, $00, $A0, $AA, $A0, $AA, $0A, $98, $8A, $AB, $B9, $87, $79, $BB, $A9, $99, $89, $BB, $B8, $89, $9A, $88, $87, $77, $A0, $00 
+; @ $0007E346
 SpriteMetaTileTable_78120_Meta_7E346:
 	dc.b	$02, $77, $77, $2A, $C0, $00, $88, $00, $95, $06, $80, $87, $87, $87, $87, $89, $87, $78, $99, $98, $87, $99, $99, $99, $99, $00 
+; @ $0007E360
 SpriteMetaTileTable_78120_Meta_7E360:
 	dc.b	$00, $78, $88, $88, $98, $78, $78, $89, $9B, $77, $77, $89, $99, $77, $77, $88, $99, $77, $78, $99, $99, $99, $79, $AA, $A7, $A9, $7A, $A7, $BA, $8A, $77, $B7 
 	dc.b	$AB, $00 
+; @ $0007E382
 SpriteMetaTileTable_78120_Meta_7E382:
 	dc.b	$01, $AA, $10, $06, $6C, $44, $8B, $BB, $B7, $BA, $9A, $B8, $7A, $99, $9A, $A8, $7A, $99, $79, $9A, $8A, $BA, $88, $78, $BB, $B9, $BB, $BB, $89, $00 
+; @ $0007E3A0
 SpriteMetaTileTable_78120_Meta_7E3A0:
 	dc.b	$01, $00, $88, $88, $CC, $CC, $A8, $A8, $7A, $08, $BA, $77, $07, $8B, $87, $07, $7B, $BB, $0A, $BB, $0A, $8B, $0A, $77, $09, $AA 
+; @ $0007E3BA
 SpriteMetaTileTable_78120_Meta_7E3BA:
 	dc.b	$01, $BB, $00, $BF, $A0, $00, $87, $AA, $7A, $A9, $A8, $7A, $A7, $AA, $8B, $B7, $87, $A8, $B8, $7A, $87, $A8, $7A, $AA, $A9, $A7, $7A, $A9, $98, $00 
+; @ $0007E3D8
 SpriteMetaTileTable_78120_Meta_7E3D8:
 	dc.b	$00, $8B, $A7, $B9, $AB, $7B, $B7, $BB, $BB, $78, $B7, $89, $BB, $B7, $8A, $77, $9B, $A7, $8A, $78, $9B, $B8, $7A, $BB, $9B, $99, $9A, $A9, $88, $9B, $AA, $AA 
 	dc.b	$97, $00 
+; @ $0007E3FA
 SpriteMetaTileTable_78120_Meta_7E3FA:
 	dc.b	$00, $BB, $BB, $A8, $89, $B9, $BB, $BA, $90, $A9, $9B, $BB, $A0, $A9, $9B, $BB, $00, $99, $BB, $AB, $B0, $88, $89, $99, $A0, $88, $88, $89, $9B, $88, $87, $78 
 	dc.b	$9B, $00 
+; @ $0007E41C
 SpriteMetaTileTable_78120_Meta_7E41C:
 	dc.b	$01, $00, $CC, $EE, $FF, $FF, $09, $99, $0A, $A9, $A9, $0B 
+; @ $0007E428
 SpriteMetaTileTable_78120_Meta_7E428:
 	dc.b	$02, $99, $88, $3E, $00, $00, $00, $00, $00, $1F, $FF, $AA, $A9, $88, $89, $88, $89, $98, $88, $AB, $0A, $AA, $A0, $00 
+; @ $0007E440
 SpriteMetaTileTable_78120_Meta_7E440:
 	dc.b	$01, $00, $00, $00, $EF, $FF, $9B, $BA, $AA, $BB, $9B, $AA, $BB, $A9, $BB, $BB, $BB, $A9, $B0, $0B, $BB, $BA, $0B, $00 
+; @ $0007E458
 SpriteMetaTileTable_78120_Meta_7E458:
 	dc.b	$01, $00, $00, $00, $13, $FF, $87, $88, $78, $9B, $87, $77, $78, $AB, $98, $88, $89, $BB, $A9, $9A, $AB, $B0, $BB, $BB, $BB, $BB, $BB, $00 
+; @ $0007E474
 SpriteMetaTileTable_78120_Meta_7E474:
 	dc.b	$02, $00, $FF, $CC, $80, $00, $77, $00, $01, $13, $26, $09, $98, $87, $98, $87, $09, $87, $98, $87, $78, $98, $78, $00 
+; @ $0007E48C
 SpriteMetaTileTable_78120_Meta_7E48C:
 	dc.b	$01, $77, $00, $FF, $EE, $E6, $00, $88, $88, $88, $88, $88, $87, $78, $87, $88, $78, $87, $78, $00 
+; @ $0007E4A0
 SpriteMetaTileTable_78120_Meta_7E4A0:
 	dc.b	$01, $88, $8C, $44, $40, $AD, $99, $9A, $AA, $99, $AA, $77, $89, $9A, $77, $89, $99, $78, $89, $99, $89, $99, $99, $AA, $98, $8A, $77, $00 
+; @ $0007E4BC
 SpriteMetaTileTable_78120_Meta_7E4BC:
 	dc.b	$00, $B0, $00, $00, $00, $BB, $00, $00, $00, $AB, $B0, $AA, $A0, $AA, $BA, $98, $8A, $AB, $B9, $87, $79, $BB, $A9, $99, $89, $BB, $B8, $89, $9A, $88, $87, $77 
 	dc.b	$A0, $00 
+; @ $0007E4DE
 SpriteMetaTileTable_78120_Meta_7E4DE:
 	dc.b	$01, $77, $77, $72, $00, $20, $98, $98, $98, $98, $88, $88, $A9, $88, $99, $99, $A9, $89, $89, $99, $A9, $99, $A8, $0A, $A9, $87, $AA, $00 
+; @ $0007E4FA
 SpriteMetaTileTable_78120_Meta_7E4FA:
 	dc.b	$01, $77, $77, $20, $00, $00, $87, $87, $88, $87, $88, $89, $98, $87, $99, $99, $99, $89, $79, $9A, $97, $A9, $7B, $7A, $A7, $7A, $8B, $87, $AB, $7A, $9B, $00 
+; @ $0007E51A
 SpriteMetaTileTable_78120_Meta_7E51A:
 	dc.b	$00, $78, $88, $88, $98, $78, $78, $89, $9B, $77, $77, $89, $99, $97, $77, $88, $99, $88, $78, $99, $99, $B9, $79, $AA, $A7, $BB, $8A, $A7, $BA, $BA, $9B, $B7 
 	dc.b	$AB, $00 
+; @ $0007E53C
 SpriteMetaTileTable_78120_Meta_7E53C:
 	dc.b	$01, $AA, $10, $06, $6C, $44, $8B, $BB, $B7, $BA, $9A, $B8, $7A, $99, $9A, $A8, $7A, $99, $79, $9A, $8A, $BA, $88, $78, $BB, $B8, $BB, $BB, $B8, $00 
+; @ $0007E55A
 SpriteMetaTileTable_78120_Meta_7E55A:
 	dc.b	$01, $00, $88, $8C, $FF, $EE, $A8, $A7, $7A, $08, $BA, $AB, $07, $8B, $A0, $7B, $B0, $AB, $AB, $00 
+; @ $0007E56E
 SpriteMetaTileTable_78120_Meta_7E56E:
 	dc.b	$01, $BB, $44, $00, $2E, $EC, $8B, $A0, $AB, $0B, $00, $0A, $00, $0B, $00, $00, $0B, $0B, $0B, $00, $0B, $00, $9B, $B9, $B7, $7B, $B7, $00 
+; @ $0007E58A
 SpriteMetaTileTable_78120_Meta_7E58A:
 	dc.b	$01, $BB, $C7, $51, $58, $80, $B9, $AB, $0B, $08, $9B, $B9, $BA, $9B, $AB, $7B, $7B, $87, $9B, $7B, $A7, $88, $8A, $78, $A7, $97 
+; @ $0007E5A4
 SpriteMetaTileTable_78120_Meta_7E5A4:
 	dc.b	$00, $BB, $BB, $A9, $88, $B9, $BB, $BA, $9A, $A9, $9B, $BB, $A9, $A9, $9B, $BB, $A0, $99, $BB, $AB, $00, $88, $89, $99, $B0, $88, $88, $89, $B0, $88, $87, $78 
 	dc.b	$9B, $00 
+; @ $0007E5C6
 SpriteMetaTileTable_78120_Meta_7E5C6:
 	dc.b	$01, $00, $CC, $CC, $CC, $EE, $0A, $BB, $0A, $8B, $0A, $77, $09, $AA, $09, $99, $0A, $A9, $A9, $0B 
+; @ $0007E5DA
 SpriteMetaTileTable_78120_Meta_7E5DA:
 	dc.b	$01, $99, $00, $00, $88, $3E, $BB, $B7, $BB, $87, $A8, $B8, $7A, $87, $A8, $7A, $AA, $A9, $A7, $7A, $A9, $98, $AA, $A9, $88, $89, $88, $89, $98, $88, $AB, $00 
+; @ $0007E5FA
 SpriteMetaTileTable_78120_Meta_7E5FA:
 	dc.b	$00, $A7, $8A, $7B, $BB, $B8, $7A, $BA, $A9, $99, $9A, $AA, $A9, $9B, $AA, $AA, $BA, $9B, $BA, $AB, $BB, $9B, $AA, $BB, $00, $BB, $BB, $BB, $00, $B0, $0B, $B0 
 	dc.b	$00, $00 
+; @ $0007E61C
 SpriteMetaTileTable_78120_Meta_7E61C:
 	dc.b	$01, $00, $00, $00, $13, $FF, $87, $88, $78, $9B, $87, $77, $78, $AA, $98, $88, $89, $B0, $A9, $9A, $AB, $B0, $BB, $BB, $BB, $BB, $BB, $00 
+; @ $0007E638
 SpriteMetaTileTable_78120_Meta_7E638:
 	dc.b	$01, $00, $EC, $88, $80, $00, $08, $88, $77, $08, $87, $77, $08, $77, $77, $87, $77, $77, $09, $87, $78, $87, $08, $87, $88, $88, $09, $98, $99, $99 
+; @ $0007E656
 SpriteMetaTileTable_78120_Meta_7E656:
 	dc.b	$02, $88, $F0, $00, $01, $A7, $77, $08, $FF, $E6, $00, $78, $87, $78, $87, $87, $87, $78, $98, $00 
+; @ $0007E66A
 SpriteMetaTileTable_78120_Meta_7E66A:
 	dc.b	$01, $88, $8C, $44, $40, $AD, $99, $AA, $BB, $99, $AA, $77, $89, $9A, $77, $89, $99, $78, $89, $99, $89, $99, $99, $AA, $98, $8A, $77, $00 
+; @ $0007E686
 SpriteMetaTileTable_78120_Meta_7E686:
 	dc.b	$01, $00, $F7, $00, $00, $00, $BB, $AB, $B0, $AA, $A0, $AA, $BA, $98, $8A, $AB, $B9, $87, $79, $BB, $A9, $99, $89, $BB, $B8, $89, $9A, $88, $87, $77, $AA, $00 
+; @ $0007E6A6
 SpriteMetaTileTable_78120_Meta_7E6A6:
 	dc.b	$01, $00, $00, $08, $89, $CD, $09, $97, $AA, $7A, $0A, $A7, $7A, $7A, $0A, $A8, $7A, $8B, $BA, $7A, $B8, $BB, $9A, $0B, $0B, $BB, $B0, $B0, $B0, $00 
+; @ $0007E6C4
 SpriteMetaTileTable_78120_Meta_7E6C4:
 	dc.b	$00, $A9, $89, $98, $88, $A9, $79, $98, $77, $B9, $7B, $B9, $7B, $BB, $7B, $B9, $7B, $BB, $9B, $BB, $B0, $B0, $AB, $0B, $B0, $0B, $0B, $00, $B0, $00, $00, $00 
 	dc.b	$00, $00 
+; @ $0007E6E6
 SpriteMetaTileTable_78120_Meta_7E6E6:
 	dc.b	$00, $78, $88, $88, $98, $98, $78, $89, $9B, $BB, $77, $89, $99, $BB, $7B, $B8, $99, $BB, $8B, $B9, $99, $0B, $BB, $BB, $A7, $0B, $0B, $AB, $BA, $00, $00, $BB 
 	dc.b	$AB, $00 
+; @ $0007E708
 SpriteMetaTileTable_78120_Meta_7E708:
 	dc.b	$01, $AA, $00, $04, $6C, $44, $8B, $BB, $B7, $A0, $BA, $9A, $B7, $A0, $99, $9A, $A7, $8A, $99, $A8, $7A, $9A, $7A, $BA, $88, $78, $BB, $B8, $BB, $BB, $B8, $00 
+; @ $0007E728
 SpriteMetaTileTable_78120_Meta_7E728:
 	dc.b	$01, $00, $DF, $FF, $FF, $EE, $0B, $AB, $AB, $00 
+; @ $0007E732
 SpriteMetaTileTable_78120_Meta_7E732:
 	dc.b	$01, $00, $FF, $FF, $C4, $00, $B0, $9B, $0B, $BB, $B9, $0B, $B0, $BB, $B7, $BB, $BB, $7B, $B7, $00 
+; @ $0007E746
 SpriteMetaTileTable_78120_Meta_7E746:
 	dc.b	$01, $BB, $03, $51, $58, $80, $00, $00, $B9, $AB, $00, $00, $08, $9B, $B9, $BA, $9B, $AB, $7B, $7B, $87, $9B, $7B, $A7, $88, $8A, $78, $A7, $97, $00 
+; @ $0007E764
 SpriteMetaTileTable_78120_Meta_7E764:
 	dc.b	$00, $BB, $BB, $A9, $88, $B9, $BB, $BA, $9A, $A9, $9B, $BB, $AB, $A9, $9B, $BB, $B0, $99, $BB, $AB, $B0, $88, $89, $99, $A0, $88, $88, $89, $AB, $88, $87, $78 
 	dc.b	$9A, $00 
+; @ $0007E786
 SpriteMetaTileTable_78120_Meta_7E786:
 	dc.b	$01, $00, $00, $00, $13, $FF, $87, $88, $78, $9A, $87, $77, $78, $AA, $98, $88, $89, $B0, $A9, $9A, $AB, $B0, $BB, $BB, $BB, $BB, $BB, $00 
+; @ $0007E7A2
 SpriteMetaTileTable_78120_Meta_7E7A2:
 	dc.b	$01, $00, $FE, $CC, $CC, $CC, $99, $09, $78, $98, $77, $98, $77, $98, $88, $09, $99, $88, $89, $00 
+; @ $0007E7B6
 SpriteMetaTileTable_78120_Meta_7E7B6:
 	dc.b	$01, $77, $26, $66, $60, $00, $00, $07, $88, $98, $88, $97, $88, $87, $88, $88, $89, $99, $87, $78, $89, $99, $98, $89, $9A, $99, $99, $AA, $AA, $00 
+; @ $0007E7D4
 SpriteMetaTileTable_78120_Meta_7E7D4:
 	dc.b	$00, $9A, $A0, $00, $00, $99, $AA, $00, $00, $99, $9A, $BA, $A0, $99, $AA, $B8, $9A, $99, $AB, $B8, $9A, $9A, $AA, $AA, $77, $A9, $88, $77, $78, $98, $77, $99 
 	dc.b	$9B, $00 
+; @ $0007E7F6
 SpriteMetaTileTable_78120_Meta_7E7F6:
 	dc.b	$01, $00, $FF, $90, $00, $01, $AA, $AA, $0A, $98, $8A, $A0, $B9, $87, $79, $A0, $77, $78, $89, $A0, $9A, $87, $9A, $B0, $B9, $97, $7A, $00 
+; @ $0007E812
 SpriteMetaTileTable_78120_Meta_7E812:
 	dc.b	$01, $77, $23, $33, $00, $00, $00, $97, $88, $00, $97, $00, $97, $0B, $98, $0B, $99, $88, $88, $A0, $09, $99, $88, $0B, $00, $AA, $AA, $0A, $BB, $A9, $88, $00 
+; @ $0007E832
 SpriteMetaTileTable_78120_Meta_7E832:
 	dc.b	$02, $99, $54, $44, $48, $00, $77, $00, $11, $31, $15, $88, $9A, $89, $A8, $88, $88, $88, $88, $87, $89, $78, $87, $A7, $78, $87, $97, $88 
+; @ $0007E84E
 SpriteMetaTileTable_78120_Meta_7E84E:
 	dc.b	$01, $88, $C8, $88, $44, $00, $9A, $BB, $89, $9A, $AB, $99, $9B, $AA, $89, $99, $BA, $87, $99, $AB, $77, $99, $AA, $77, $89, $9A, $AA, $78, $99, $9A, $AB, $00 
+; @ $0007E86E
 SpriteMetaTileTable_78120_Meta_7E86E:
 	dc.b	$01, $BB, $88, $80, $88, $8C, $B9, $7A, $00, $B9, $70, $00, $B9, $7A, $00, $AB, $97, $79, $A0, $87, $AA, $A0, $87, $98, $9A, $B8, $87, $9A, $B8, $9A 
+; @ $0007E88C
 SpriteMetaTileTable_78120_Meta_7E88C:
 	dc.b	$01, $00, $88, $88, $88, $CC, $AA, $98, $78, $0A, $AA, $AA, $0A, $99, $89, $A9, $99, $88, $0A, $99, $77, $0A, $98, $78, $A8, $77, $09, $88 
+; @ $0007E8A8
 SpriteMetaTileTable_78120_Meta_7E8A8:
 	dc.b	$00, $97, $78, $88, $88, $98, $88, $89, $99, $AA, $99, $99, $79, $88, $BA, $AA, $77, $88, $8B, $AB, $B8, $87, $89, $AB, $BB, $77, $89, $9B, $AA, $77, $89, $9B 
 	dc.b	$BB, $00 
+; @ $0007E8CA
 SpriteMetaTileTable_78120_Meta_7E8CA:
 	dc.b	$01, $BB, $0F, $30, $0C, $88, $99, $99, $AA, $AB, $A9, $8B, $BA, $AA, $AA, $BA, $77, $88, $8B, $BA, $88, $89, $A9, $88, $89, $A9, $99, $99 
+; @ $0007E8E6
 SpriteMetaTileTable_78120_Meta_7E8E6:
 	dc.b	$01, $00, $CE, $FF, $FF, $FF, $09, $98, $09, $00 
+; @ $0007E8F0
 SpriteMetaTileTable_78120_Meta_7E8F0:
 	dc.b	$01, $00, $00, $FF, $FF, $FF, $89, $99, $BB, $BB, $99, $BB, $BB, $BB 
+; @ $0007E8FE
 SpriteMetaTileTable_78120_Meta_7E8FE:
 	dc.b	$01, $77, $26, $66, $60, $00, $00, $07, $88, $98, $88, $97, $88, $87, $88, $88, $89, $99, $87, $78, $89, $99, $97, $79, $9A, $99, $97, $7A, $AA, $00 
+; @ $0007E91C
 SpriteMetaTileTable_78120_Meta_7E91C:
 	dc.b	$00, $9A, $A0, $00, $00, $99, $AA, $00, $00, $99, $9A, $BA, $A0, $99, $AA, $B8, $9A, $99, $AB, $AA, $AA, $9A, $AA, $AA, $A8, $A9, $88, $87, $77, $98, $77, $77 
 	dc.b	$9B, $00 
+; @ $0007E93E
 SpriteMetaTileTable_78120_Meta_7E93E:
 	dc.b	$01, $00, $FF, $90, $00, $01, $AA, $AA, $0A, $98, $8A, $A0, $B9, $87, $79, $A0, $88, $88, $89, $A0, $77, $77, $7A, $B0, $B9, $98, $87, $00 
+; @ $0007E95A
 SpriteMetaTileTable_78120_Meta_7E95A:
 	dc.b	$01, $77, $23, $33, $00, $00, $00, $97, $88, $00, $97, $00, $97, $0B, $97, $0B, $97, $78, $88, $A0, $07, $79, $88, $0B, $07, $7A, $AA, $0A, $B7, $79, $88, $00 
+; @ $0007E97A
 SpriteMetaTileTable_78120_Meta_7E97A:
 	dc.b	$01, $77, $00, $11, $33, $77, $88, $97, $7A, $99, $89, $97, $A8, $88, $88, $97, $88, $88, $97, $87, $89, $97, $99, $78, $A7, $97 
+; @ $0007E994
 SpriteMetaTileTable_78120_Meta_7E994:
 	dc.b	$01, $BB, $88, $80, $88, $8C, $B9, $88, $70, $B9, $78, $70, $B9, $87, $70, $AB, $97, $89, $A0, $87, $AA, $A0, $87, $98, $9A, $B8, $87, $9A, $B8, $9A 
+; @ $0007E9B2
 SpriteMetaTileTable_78120_Meta_7E9B2:
 	dc.b	$01, $00, $88, $88, $88, $8C, $A7, $98, $77, $07, $AA, $A7, $07, $99, $87, $A7, $99, $87, $07, $99, $77, $07, $B8, $78, $0B, $B8, $77, $B9, $77, $00 
+; @ $0007E9D0
 SpriteMetaTileTable_78120_Meta_7E9D0:
 	dc.b	$00, $97, $78, $77, $77, $98, $88, $87, $77, $AA, $99, $97, $79, $88, $BA, $A7, $77, $88, $8B, $A7, $88, $87, $89, $A7, $8B, $77, $89, $97, $8A, $77, $89, $97 
 	dc.b	$8B, $00 
+; @ $0007E9F2
 SpriteMetaTileTable_78120_Meta_7E9F2:
 	dc.b	$01, $78, $88, $88, $8A, $A8, $99, $AA, $AB, $BB, $BB, $BB, $8B, $BB, $BB, $AA, $AA, $BA, $88, $8B, $BA, $BB, $89, $A9, $89, $A9, $79, $99 
+; @ $0007EA0E
 SpriteMetaTileTable_78120_Meta_7EA0E:
 	dc.b	$01, $00, $CC, $EE, $EF, $FF, $B9, $77, $B0, $77, $79, $79, $90, $00 
+; @ $0007EA1C
 SpriteMetaTileTable_78120_Meta_7EA1C:
 	dc.b	$01, $00, $00, $44, $FF, $FF, $89, $99, $B8, $BB, $9B, $BB, $BB, $BB, $0B, $BB, $B0, $0B, $B0, $B0 
+; @ $0007EA30
 SpriteMetaTileTable_78120_Meta_7EA30:
 	dc.b	$01, $00, $00, $45, $FF, $FF, $78, $BA, $79, $9A, $88, $0B, $7B, $BB, $88, $8B, $BB, $80, $80, $00 
+; @ $0007EA44
 SpriteMetaTileTable_78120_Meta_7EA44:
 	dc.b	$01, $AA, $06, $86, $00, $86, $00, $00, $00, $0A, $00, $A9, $98, $8A, $98, $89, $98, $89, $A9, $8A, $97, $8A, $98, $7B, $87, $98, $88, $87, $9A, $97 
+; @ $0007EA62
 SpriteMetaTileTable_78120_Meta_7EA62:
 	dc.b	$00, $AA, $A0, $00, $00, $88, $9A, $00, $00, $78, $9A, $BA, $A0, $88, $9A, $B8, $9A, $89, $9B, $B8, $9A, $99, $AA, $AA, $AA, $99, $88, $77, $78, $98, $77, $B9 
 	dc.b	$99, $00 
+; @ $0007EA84
 SpriteMetaTileTable_78120_Meta_7EA84:
 	dc.b	$01, $00, $FF, $90, $00, $01, $AA, $AA, $0A, $98, $8A, $A0, $B9, $87, $78, $A0, $A9, $87, $79, $A0, $9A, $87, $78, $B0, $7A, $A8, $7A, $00 
+; @ $0007EAA0
 SpriteMetaTileTable_78120_Meta_7EAA0:
 	dc.b	$01, $00, $88, $88, $8C, $CC, $0A, $A9, $98, $BB, $AB, $98, $0A, $AB, $98, $0A, $0B, $B8, $0A, $0B, $08, $0B, $08, $0B, $AA, $A9, $88, $00 
+; @ $0007EABC
 SpriteMetaTileTable_78120_Meta_7EABC:
 	dc.b	$00, $9A, $98, $89, $A7, $A9, $87, $79, $A7, $A8, $77, $89, $A7, $A8, $77, $99, $B8, $B7, $77, $99, $A8, $87, $77, $AA, $A8, $87, $78, $AB, $A8, $87, $7A, $98 
 	dc.b	$B8, $00 
+; @ $0007EADE
 SpriteMetaTileTable_78120_Meta_7EADE:
 	dc.b	$01, $77, $04, $00, $44, $77, $98, $87, $7A, $B9, $98, $7B, $B7, $7A, $87, $AB, $88, $78, $87, $9A, $79, $87, $89, $79, $88, $78, $79, $98, $98, $00 
+; @ $0007EAFC
 SpriteMetaTileTable_78120_Meta_7EAFC:
 	dc.b	$00, $97, $BA, $7A, $00, $77, $BB, $7B, $00, $88, $7A, $7B, $00, $99, $7B, $8B, $A0, $99, $8B, $AB, $A0, $9B, $87, $98, $9A, $9B, $B8, $87, $9A, $9B, $BB, $B8 
 	dc.b	$9A, $00 
+; @ $0007EB1E
 SpriteMetaTileTable_78120_Meta_7EB1E:
 	dc.b	$01, $00, $C8, $88, $88, $88, $98, $78, $0A, $AA, $7A, $0A, $98, $89, $B9, $97, $8A, $BA, $97, $79, $BB, $A7, $89, $BB, $B7, $89, $0B, $B8, $8A, $00 
+; @ $0007EB3C
 SpriteMetaTileTable_78120_Meta_7EB3C:
 	dc.b	$00, $98, $7A, $87, $8B, $9A, $7A, $77, $89, $AA, $79, $77, $79, $98, $79, $77, $77, $87, $79, $77, $88, $87, $79, $87, $9B, $87, $89, $97, $9A, $87, $8A, $97 
 	dc.b	$BB, $00 
+; @ $0007EB5E
 SpriteMetaTileTable_78120_Meta_7EB5E:
 	dc.b	$00, $B9, $97, $78, $77, $BB, $B7, $78, $97, $A9, $87, $88, $77, $BA, $A7, $8A, $78, $77, $87, $8B, $7A, $BB, $B7, $78, $79, $BB, $A7, $78, $77, $BB, $A7, $79 
 	dc.b	$99, $00 
+; @ $0007EB80
 SpriteMetaTileTable_78120_Meta_7EB80:
 	dc.b	$02, $BB, $00, $66, $44, $40, $00, $00, $01, $33, $33, $9B, $A9, $89, $AA, $9B, $BA, $AA, $A0, $9B, $B0, $8B, $7A, $7A, $7A, $8A, $B0, $00 
+; @ $0007EB9C
 SpriteMetaTileTable_78120_Meta_7EB9C:
 	dc.b	$02, $00, $88, $89, $BB, $BF, $0B, $44, $44, $44, $40, $B0, $8B, $B0, $80, $B0, $80, $B0 
+; @ $0007EBAE
 SpriteMetaTileTable_78120_Meta_7EBAE:
 	dc.b	$01, $00, $00, $02, $22, $AA, $97, $9B, $B8, $BB, $97, $9B, $B9, $BB, $97, $9B, $B0, $BB, $98, $9B, $0B, $08, $B0, $0B, $08, $B0, $0B, $B0, $0B, $B0, $0B, $00 
+; @ $0007EBCE
 SpriteMetaTileTable_78120_Meta_7EBCE:
 	dc.b	$01, $00, $00, $01, $11, $DF, $BB, $BA, $79, $7A, $B0, $AB, $7B, $BB, $B0, $0A, $7B, $BB, $B0, $0A, $7A, $B0, $0A, $70, $B0, $0A, $A0, $A0 
+; @ $0007EBEA
 SpriteMetaTileTable_78120_Meta_7EBEA:
 	dc.b	$01, $00, $37, $FF, $FF, $FF, $8B, $B0, $BB, $00 
 BossTileData_Tsarkon_Entry01:
@@ -16948,159 +17894,230 @@ BossTileData_Tsarkon_Entry02:
 	dc.b	$00, $00, $00, $01, $03, $00, $02, $04, $00, $00, $07, $0A, $05, $08, $0B, $06, $09, $0C, $00, $0F, $12, $0D, $10, $13, $0E, $11, $14, $15, $17, $1A, $16, $18 
 	dc.b	$1B, $00, $19, $1C, $00, $1E, $20, $1D, $1F, $21, $00, $00, $22, $23, $26, $29, $24, $27, $2A, $25, $28, $2B, $2C, $2F, $32, $2D, $30, $33, $2E, $31, $34, $35 
 	dc.b	$38, $3B, $36, $39, $3C, $37, $3A, $3D, $3E, $41, $44, $3F, $42, $45, $40, $43, $46, $00 
+; @ $0007EE8E
 SpriteMetaTileTable_78120_Meta_7EE8E:
 	dc.b	$01, $00, $FF, $FF, $FF, $FF 
+; @ $0007EE94
 SpriteMetaTileTable_78120_Meta_7EE94:
 	dc.b	$01, $00, $FE, $80, $04, $08, $0C, $11, $CC, $CC, $01, $33, $33, $32, $13, $1C, $CC, $32, $31, $C1, $22, $10, $0C, $12, $33, $0C, $12, $33 
+; @ $0007EEB0
 SpriteMetaTileTable_78120_Meta_7EEB0:
 	dc.b	$01, $00, $80, $00, $11, $33, $0C, $DD, $D0, $CC, $C1, $1C, $D0, $13, $32, $21, $D0, $22, $22, $CD, $D0, $21, $1C, $CD, $11, $CD, $D0, $1C, $DD, $3D, $D0, $00 
+; @ $0007EED0
 SpriteMetaTileTable_78120_Meta_7EED0:
 	dc.b	$01, $00, $8C, $CF, $FF, $FF, $0C, $C2, $31, $C2, $31, $02, $30, $00 
+; @ $0007EEDE
 SpriteMetaTileTable_78120_Meta_7EEDE:
 	dc.b	$01, $00, $33, $BB, $BB, $BF, $C3, $D0, $DC, $30, $3D, $CD, $C0, $C0, $C0, $00 
+; @ $0007EEEE
 SpriteMetaTileTable_78120_Meta_7EEEE:
 	dc.b	$01, $00, $FE, $EC, $C8, $80, $0C, $CC, $0C, $C1, $CC, $12, $0C, $11, $22, $13, $33, $31, $01, $33, $12, $31 
+; @ $0007EF04
 SpriteMetaTileTable_78120_Meta_7EF04:
 	dc.b	$01, $00, $80, $00, $11, $37, $0C, $DD, $D0, $CC, $C1, $1C, $D0, $11, $12, $21, $D0, $22, $22, $CD, $D0, $21, $1C, $CD, $11, $CD, $D0, $1C, $DD, $CD 
+; @ $0007EF22
 SpriteMetaTileTable_78120_Meta_7EF22:
 	dc.b	$01, $00, $FF, $FF, $EE, $FF, $13, $CC 
+; @ $0007EF2A
 SpriteMetaTileTable_78120_Meta_7EF2A:
 	dc.b	$00, $03, $CC, $C2, $31, $03, $C0, $C2, $31, $03, $30, $C2, $33, $13, $3C, $C2, $32, $3C, $0C, $12, $32, $C0, $01, $12, $32, $00, $11, $12, $32, $12, $33, $33 
 	dc.b	$32, $00 
+; @ $0007EF4C
 SpriteMetaTileTable_78120_Meta_7EF4C:
 	dc.b	$01, $00, $73, $31, $15, $51, $CD, $D3, $33, $33, $C3, $DD, $0C, $30, $CC, $0C, $3C, $CC, $3C, $1C, $3C, $10, $03, $C0 
+; @ $0007EF64
 SpriteMetaTileTable_78120_Meta_7EF64:
 	dc.b	$01, $00, $EE, $EF, $FF, $FF, $02, $C2, $CC, $00 
+; @ $0007EF6E
 SpriteMetaTileTable_78120_Meta_7EF6E:
 	dc.b	$01, $00, $00, $8F, $FF, $FF, $3C, $C1, $32, $21, $C0, $21, $22, $11, $01, $11, $20, $00 
+; @ $0007EF80
 SpriteMetaTileTable_78120_Meta_7EF80:
 	dc.b	$01, $00, $3F, $FF, $FF, $FF, $10, $0C 
+; @ $0007EF88
 SpriteMetaTileTable_78120_Meta_7EF88:
 	dc.b	$01, $00, $FF, $EC, $C8, $88, $CC, $0C, $C1, $CC, $12, $0C, $C1, $22, $0C, $12, $31, $0C, $12, $31 
+; @ $0007EF9C
 SpriteMetaTileTable_78120_Meta_7EF9C:
 	dc.b	$01, $00, $FF, $33, $33, $37, $CC, $C0, $22, $C0, $21, $CC, $11, $CC, $1C, $C0, $CD, $00 
+; @ $0007EFAE
 SpriteMetaTileTable_78120_Meta_7EFAE:
 	dc.b	$01, $00, $FF, $FE, $CC, $FF, $33, $03, $11, $01, $10, $00 
+; @ $0007EFBA
 SpriteMetaTileTable_78120_Meta_7EFBA:
 	dc.b	$01, $32, $00, $03, $31, $11, $00, $0C, $C2, $33, $00, $00, $C2, $3D, $00, $00, $C2, $31, $33, $0C, $13, $33, $01, $11, $12, $00, $CC, $12, $0C, $C1, $22, $00 
+; @ $0007EFDA
 SpriteMetaTileTable_78120_Meta_7EFDA:
 	dc.b	$01, $00, $77, $73, $77, $77, $3D, $33, $DD, $DD, $D0, $CD, $CD, $CD, $C0, $00 
+; @ $0007EFEA
 SpriteMetaTileTable_78120_Meta_7EFEA:
 	dc.b	$01, $00, $EC, $CC, $EF, $FF, $CC, $01, $23, $02, $23, $03, $22, $11 
+; @ $0007EFF8
 SpriteMetaTileTable_78120_Meta_7EFF8:
 	dc.b	$01, $00, $00, $00, $2C, $CF, $21, $11, $22, $33, $33, $22, $23, $13, $33, $33, $31, $DD, $22, $1C, $CD, $D0, $CC, $CC, $DD, $13, $33, $11, $11, $00 
+; @ $0007F016
 SpriteMetaTileTable_78120_Meta_7F016:
 	dc.b	$01, $00, $77, $33, $33, $7F, $C0, $33, $11, $30, $D1, $30, $13, $30, $31, $10, $10, $00 
+; @ $0007F028
 SpriteMetaTileTable_78120_Meta_7F028:
 	dc.b	$01, $00, $FF, $FF, $FF, $FE, $11, $00 
+; @ $0007F030
 SpriteMetaTileTable_78120_Meta_7F030:
 	dc.b	$01, $00, $FF, $FF, $FF, $F6, $10, $CC 
+; @ $0007F038
 SpriteMetaTileTable_78120_Meta_7F038:
 	dc.b	$01, $00, $E8, $88, $EE, $F3, $33, $13, $01, $3C, $C3, $33, $CC, $0C, $CC, $0C, $0C, $0C, $03, $30 
+; @ $0007F04C
 SpriteMetaTileTable_78120_Meta_7F04C:
 	dc.b	$00, $31, $00, $0C, $1C, $31, $00, $C1, $21, $10, $00, $C2, $22, $30, $0C, $C2, $32, $30, $0C, $12, $32, $C3, $0C, $12, $32, $0C, $3C, $12, $32, $01, $33, $22 
 	dc.b	$32, $00 
+; @ $0007F06E
 SpriteMetaTileTable_78120_Meta_7F06E:
 	dc.b	$01, $00, $F7, $77, $77, $77, $D0, $D0, $D0, $C0, $C0, $C0, $C0, $00 
+; @ $0007F07C
 SpriteMetaTileTable_78120_Meta_7F07C:
 	dc.b	$00, $3C, $C3, $33, $CC, $3C, $1C, $C1, $31, $00, $11, $22, $33, $01, $23, $33, $32, $02, $32, $21, $11, $13, $33, $2C, $CD, $12, $32, $1C, $00, $21, $1C, $00 
 	dc.b	$00, $00 
+; @ $0007F09E
 SpriteMetaTileTable_78120_Meta_7F09E:
 	dc.b	$01, $00, $00, $00, $19, $9B, $C1, $11, $22, $31, $12, $CC, $23, $1C, $21, $C3, $31, $DD, $21, $C3, $DD, $D0, $CC, $D3, $D0, $1D, $30, $0D, $30, $D3 
+; @ $0007F0BC
 SpriteMetaTileTable_78120_Meta_7F0BC:
 	dc.b	$01, $00, $7F, $FF, $FF, $FF, $C0, $00 
+; @ $0007F0C4
 SpriteMetaTileTable_78120_Meta_7F0C4:
 	dc.b	$01, $00, $FF, $FF, $F3, $77, $0C, $C0, $13, $31 
+; @ $0007F0CE
 SpriteMetaTileTable_78120_Meta_7F0CE:
 	dc.b	$01, $00, $EE, $C8, $99, $8E, $0C, $01, $CC, $33, $0C, $13, $11, $C3, $31, $0C, $33, $0C, $CC, $30, $C3, $00 
+; @ $0007F0E4
 SpriteMetaTileTable_78120_Meta_7F0E4:
 	dc.b	$01, $00, $40, $13, $FF, $F9, $31, $01, $10, $31, $11, $13, $10, $33, $33, $11, $11, $11, $C0, $12 
+; @ $0007F0F8
 SpriteMetaTileTable_78120_Meta_7F0F8:
 	dc.b	$01, $00, $C8, $80, $00, $13, $1C, $CC, $11, $C1, $11, $11, $22, $22, $01, $23, $33, $32, $02, $32, $21, $11, $13, $33, $2C, $CD, $12, $32, $1C, $21, $10, $00 
+; @ $0007F118
 SpriteMetaTileTable_78120_Meta_7F118:
 	dc.b	$01, $00, $00, $10, $0C, $FF, $31, $11, $11, $10, $11, $22, $21, $10, $22, $22, $31, $22, $12, $21, $11, $CC, $CC, $C3, $C3, $0C, $CC, $00 
+; @ $0007F134
 SpriteMetaTileTable_78120_Meta_7F134:
 	dc.b	$01, $00, $91, $33, $77, $FF, $33, $30, $0C, $3C, $C0, $13, $C0, $C3, $C0, $3C, $C0, $00 
+; @ $0007F146
 SpriteMetaTileTable_78120_Meta_7F146:
 	dc.b	$01, $00, $FF, $FD, $99, $88, $DD, $0C, $CD, $0C, $CD, $C2, $C0, $0D, $2C, $DD, $DC, $00 
+; @ $0007F158
 SpriteMetaTileTable_78120_Meta_7F158:
 	dc.b	$01, $00, $FF, $FF, $C0, $00, $01, $11, $CC, $D0, $13, $33, $C1, $D1, $31, $11, $CD, $01, $31, $CC 
+; @ $0007F16C
 SpriteMetaTileTable_78120_Meta_7F16C:
 	dc.b	$01, $00, $FF, $FF, $77, $7F, $31, $11, $C0, $00 
+; @ $0007F176
 SpriteMetaTileTable_78120_Meta_7F176:
 	dc.b	$00, $0C, $2D, $D1, $12, $0C, $22, $12, $22, $00, $C2, $22, $1C, $00, $C1, $23, $33, $0D, $C2, $23, $11, $0D, $C2, $32, $12, $0D, $C2, $32, $22, $0D, $C1, $33 
 	dc.b	$21, $00 
+; @ $0007F198
 SpriteMetaTileTable_78120_Meta_7F198:
 	dc.b	$01, $11, $03, $84, $84, $02, $C0, $13, $1C, $00, $C0, $13, $33, $33, $31, $33, $CD, $DD, $CC, $2C, $D0, $31, $2D, $D0, $C3, $31, $DD, $01, $CC, $C3, $33, $00 
+; @ $0007F1B8
 SpriteMetaTileTable_78120_Meta_7F1B8:
 	dc.b	$01, $00, $F7, $77, $F3, $31, $11, $1D, $D0, $D1, $1D, $13, $11, $3D, $33, $10 
+; @ $0007F1C8
 SpriteMetaTileTable_78120_Meta_7F1C8:
 	dc.b	$01, $00, $00, $88, $8C, $FF, $0D, $C1, $23, $21, $0D, $C1, $23, $21, $D1, $23, $32, $01, $23, $23, $01, $22, $22, $CC, $CC, $00 
+; @ $0007F1E2
 SpriteMetaTileTable_78120_Meta_7F1E2:
 	dc.b	$00, $CD, $DD, $33, $31, $CC, $DD, $D0, $D1, $21, $CC, $1C, $11, $31, $11, $22, $1C, $13, $33, $3D, $DC, $CC, $C1, $C3, $DD, $0C, $CC, $DD, $33, $00, $00, $00 
 	dc.b	$D0, $00 
+; @ $0007F204
 SpriteMetaTileTable_78120_Meta_7F204:
 	dc.b	$01, $00, $10, $53, $33, $7F, $DD, $D3, $31, $C0, $0D, $DD, $D0, $C0, $0D, $DD, $3D, $D3, $DD, $33, $D0, $DD 
+; @ $0007F21A
 SpriteMetaTileTable_78120_Meta_7F21A:
 	dc.b	$01, $00, $FF, $FC, $88, $88, $DD, $0D, $0C, $CD, $0D, $0C, $CD, $0D, $C2, $C0, $DD, $2C, $DD, $D1 
+; @ $0007F22E
 SpriteMetaTileTable_78120_Meta_7F22E:
 	dc.b	$00, $00, $DD, $11, $10, $0D, $13, $33, $11, $D3, $31, $DD, $DD, $13, $1D, $D0, $00, $11, $D0, $01, $11, $11, $D0, $13, $33, $31, $D1, $31, $11, $3D, $01, $31 
 	dc.b	$CC, $00 
+; @ $0007F250
 SpriteMetaTileTable_78120_Meta_7F250:
 	dc.b	$01, $00, $FD, $D1, $37, $7F, $03, $31, $03, $31, $11, $31, $10, $11, $C0, $00 
+; @ $0007F260
 SpriteMetaTileTable_78120_Meta_7F260:
 	dc.b	$00, $0C, $2D, $D1, $13, $0C, $22, $13, $33, $00, $C2, $33, $3C, $00, $C3, $21, $D3, $00, $C3, $13, $D1, $0D, $13, $33, $CD, $01, $22, $DD, $DD, $01, $21, $CD 
 	dc.b	$DD, $00 
+; @ $0007F282
 SpriteMetaTileTable_78120_Meta_7F282:
 	dc.b	$00, $30, $13, $1C, $00, $C0, $13, $11, $11, $11, $33, $33, $31, $33, $11, $CD, $DD, $D1, $DD, $DC, $D0, $DC, $11, $2D, $D0, $C1, $31, $DD, $01, $C3, $C3, $11 
 	dc.b	$33, $00 
+; @ $0007F2A4
 SpriteMetaTileTable_78120_Meta_7F2A4:
 	dc.b	$01, $00, $F7, $64, $C0, $00, $11, $1D, $1D, $D0, $0D, $31, $01, $3D, $D1, $1D, $01, $3D, $13, $11, $13, $31, $3D, $33, $13, $1D 
+; @ $0007F2BE
 SpriteMetaTileTable_78120_Meta_7F2BE:
 	dc.b	$01, $00, $00, $00, $88, $CF, $01, $21, $CC, $CC, $01, $21, $1C, $CC, $0D, $22, $11, $C1, $0D, $D2, $21, $11, $DD, $22, $22, $DD, $DD, $DD, $DD, $DD 
+; @ $0007F2DC
 SpriteMetaTileTable_78120_Meta_7F2DC:
 	dc.b	$00, $13, $DD, $33, $31, $13, $DD, $D0, $D1, $23, $CD, $00, $00, $33, $1D, $DD, $00, $13, $33, $3D, $DC, $CC, $C1, $C3, $DD, $0C, $CC, $DD, $33, $00, $00, $00 
 	dc.b	$D0, $00 
+; @ $0007F2FE
 SpriteMetaTileTable_78120_Meta_7F2FE:
 	dc.b	$00, $DD, $D3, $33, $DD, $00, $0D, $DD, $D0, $0D, $11, $1D, $D1, $0D, $33, $11, $13, $D3, $DD, $D3, $3D, $33, $D0, $DD, $3D, $DD, $00, $0D, $D0, $00, $00, $00 
 	dc.b	$00, $00 
+; @ $0007F320
 SpriteMetaTileTable_78120_Meta_7F320:
 	dc.b	$01, $00, $FF, $CC, $88, $99, $01, $13, $11, $3C, $01, $3C, $CC, $01, $CD, $DD, $C2, $CD, $2C, $C0 
+; @ $0007F334
 SpriteMetaTileTable_78120_Meta_7F334:
 	dc.b	$01, $00, $80, $00, $37, $FD, $DD, $11, $10, $0D, $13, $33, $11, $33, $31, $33, $DD, $33, $1D, $D3, $33, $11, $D0, $DD, $CC, $00 
+; @ $0007F34E
 SpriteMetaTileTable_78120_Meta_7F34E:
 	dc.b	$01, $00, $FD, $D1, $00, $CC, $03, $31, $33, $31, $11, $01, $13, $31, $10, $01, $01, $13, $11, $11, $31, $01, $10, $00 
+; @ $0007F366
 SpriteMetaTileTable_78120_Meta_7F366:
 	dc.b	$01, $00, $11, $88, $01, $11, $0C, $2C, $CD, $0C, $22, $CC, $CC, $3C, $D0, $C3, $2C, $D0, $0C, $C3, $CC, $D0, $0C, $1C, $CD, $C1, $CC, $D0, $C1, $CC, $D0, $00 
+; @ $0007F386
 SpriteMetaTileTable_78120_Meta_7F386:
 	dc.b	$00, $00, $0C, $3C, $0D, $00, $C3, $3C, $D1, $00, $3C, $C0, $13, $00, $30, $01, $3D, $0C, $C0, $D3, $DD, $0C, $C0, $13, $DD, $01, $31, $33, $D0, $01, $C3, $11 
 	dc.b	$D0, $00 
+; @ $0007F3A8
 SpriteMetaTileTable_78120_Meta_7F3A8:
 	dc.b	$01, $00, $11, $2C, $CC, $C8, $DD, $DD, $D0, $13, $11, $DD, $DD, $D0, $1D, $0D, $31, $01, $3D, $01, $3D, $01, $31, $01, $13, $1D 
+; @ $0007F3C2
 SpriteMetaTileTable_78120_Meta_7F3C2:
 	dc.b	$00, $C1, $CC, $C0, $00, $C1, $CD, $CC, $DD, $C1, $1C, $DC, $DC, $0D, $11, $CD, $DD, $00, $DC, $CD, $DD, $00, $DC, $CC, $DC, $00, $0C, $CC, $CC, $00, $00, $0C 
 	dc.b	$CD, $00 
+; @ $0007F3E4
 SpriteMetaTileTable_78120_Meta_7F3E4:
 	dc.b	$01, $DD, $88, $8E, $80, $00, $1D, $1D, $00, $1D, $D0, $00, $CD, $00, $00, $00, $C1, $33, $33, $CC, $13, $3C, $CC, $11, $1D, $DC, $0C, $CC, $CC, $C0, $00, $00 
+; @ $0007F404
 SpriteMetaTileTable_78120_Meta_7F404:
 	dc.b	$00, $00, $10, $33, $DD, $00, $1D, $DD, $D0, $0D, $11, $1D, $D1, $0D, $11, $31, $13, $33, $11, $33, $3D, $33, $33, $1D, $3D, $DD, $11, $DD, $D0, $DD, $DD, $00 
 	dc.b	$00, $00 
+; @ $0007F426
 SpriteMetaTileTable_78120_Meta_7F426:
 	dc.b	$01, $00, $FF, $CC, $88, $88, $01, $13, $11, $32, $01, $32, $22, $01, $2D, $DD, $CC, $2D, $D0, $0C, $C2, $D0 
+; @ $0007F43C
 SpriteMetaTileTable_78120_Meta_7F43C:
 	dc.b	$01, $00, $80, $00, $37, $EC, $DD, $11, $10, $0D, $13, $33, $11, $33, $31, $33, $DD, $33, $1D, $D3, $33, $11, $D0, $DD, $C3, $C3, $30, $00 
+; @ $0007F458
 SpriteMetaTileTable_78120_Meta_7F458:
 	dc.b	$01, $00, $FD, $D1, $00, $4C, $03, $31, $33, $31, $11, $01, $13, $31, $10, $01, $01, $13, $11, $30, $11, $31, $01, $10 
+; @ $0007F470
 SpriteMetaTileTable_78120_Meta_7F470:
 	dc.b	$01, $00, $CD, $99, $33, $77, $C2, $D0, $CC, $CC, $3C, $C3, $C0, $0C, $CC, $0C, $D0, $C0, $C0, $00 
+; @ $0007F484
 SpriteMetaTileTable_78120_Meta_7F484:
 	dc.b	$01, $00, $88, $88, $01, $77, $0C, $33, $0D, $C3, $3C, $D1, $3C, $C0, $D3, $30, $11, $13, $0C, $11, $D3, $3D, $0C, $DD, $D0, $0D, $0D, $00 
+; @ $0007F4A0
 SpriteMetaTileTable_78120_Meta_7F4A0:
 	dc.b	$01, $00, $10, $04, $CC, $80, $13, $33, $11, $31, $13, $31, $13, $1D, $DC, $33, $1D, $10, $C3, $31, $CC, $3D, $CC, $3D, $CC, $CC, $11, $C3, $33, $3C, $13, $00 
+; @ $0007F4C0
 SpriteMetaTileTable_78120_Meta_7F4C0:
 	dc.b	$01, $00, $77, $33, $FF, $FF, $C0, $C0, $C1, $10, $0D, $10 
+; @ $0007F4CC
 SpriteMetaTileTable_78120_Meta_7F4CC:
 	dc.b	$01, $00, $AE, $FE, $EE, $DF, $D0, $0C, $0C, $03, $3C, $C0, $0C, $00 
+; @ $0007F4DA
 SpriteMetaTileTable_78120_Meta_7F4DA:
 	dc.b	$00, $3C, $C1, $31, $13, $CC, $01, $33, $D3, $00, $0C, $11, $33, $3D, $C0, $13, $33, $C3, $CC, $33, $3D, $0D, $33, $1D, $3D, $0D, $DD, $DD, $D0, $00, $0D, $00 
 	dc.b	$00, $00 
@@ -17333,6 +18350,7 @@ WallTileGfxPtrs_Entry02:
 	dc.b	$02, $00, $00, $00, $00, $06, $05, $00, $00, $00, $03, $09, $00, $00, $00, $03, $03, $0B, $00, $00, $07, $03, $12, $00, $00, $07, $18, $03, $19, $00, $21, $20 
 	dc.b	$1E, $22, $00, $27, $26, $26, $03, $00, $03, $2B, $07, $07, $2C, $03, $27, $1E, $07, $32, $07, $03, $07, $03, $39, $03, $07, $07, $03, $39, $03, $07, $07, $03 
 	dc.b	$39, $07, $1E, $1E, $07, $41, $1E, $1E, $1E, $1E, $46, $4C, $4B, $4C, $4B, $00, $00, $00, $00, $00, $00, $00 
+; @ $00080EAC
 LoadBattleGroundTileGraphics_Data:
 	incbin "data/art/tiles/battle/ground_tiles.bin"
 GfxLoadList_FirstPerson_Entry00 equ LoadBattleGroundTileGraphics_Data+$8D6
@@ -17484,6 +18502,7 @@ SpriteFramePointerTable_81E28_Frame_81DFC:
 	dc.b	$02, $00, $FF, $FF, $C8, $00, $88, $00, $00, $06, $F7, $0F, $FF, $F8, $08, $00 
 SpriteFramePointerTable_81E28_Frame_81E0C:
 	dc.b	$02, $FE, $33, $06, $81, $00, $88, $00, $00, $00, $EF, $00, $00, $00, $00, $00, $0F, $EE, $EE, $0F, $EF, $EF, $EF, $EE, $FF, $FF, $F8, $8F 
+; @ $00081E28
 SpriteFramePointerTable_81E28:
 	dc.l	SpriteFramePointerTable_81E28_Frame_817FA
 	dc.l	SpriteFramePointerTable_81E28_Frame_81800
@@ -17628,30 +18647,35 @@ GfxLoadList_FirstPerson_Entry03:
 	dc.l	SpriteFramePointerTable_81E28_Frame_81FB4
 	dc.l	SpriteFramePointerTable_81E28_Frame_81FD0
 	dc.l	SpriteFramePointerTable_81E28_Frame_81FEC-2
+; @ $00082030
 DungeonFloorTilemap_82030:
 	dc.b	$00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 
 	dc.b	$00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $27, $28, $29, $2A, $2B, $2C, $2B, $2A, $29 
 	dc.b	$28, $27, $19, $14, $15, $16, $17, $18, $17, $16, $15, $14, $19, $0D, $0E, $0F, $10, $11, $12, $11, $10, $0F, $0E, $0D, $19, $14, $15, $16, $17, $18, $17, $16 
 	dc.b	$15, $14, $19, $0D, $0E, $0F, $10, $11, $12, $11, $10, $0F, $0E, $0D, $19, $14, $15, $16, $17, $18, $17, $16, $15, $14, $19, $0D, $0E, $0F, $10, $11, $12, $11 
 	dc.b	$10, $0F, $0E, $0D, $2D, $14, $15, $16, $17, $18, $17, $16, $15, $14, $2D, $2E, $2F, $30, $31, $32, $33, $32, $31, $30, $2F, $2E 
+; @ $000820CA
 DungeonFloorTilemap_820CA:
 	dc.b	$00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 
 	dc.b	$00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $21, $22, $23, $24, $25, $26, $25, $24, $23, $22, $21, $0D, $0E, $0F, $10, $11, $12, $11, $10, $0F 
 	dc.b	$0E, $0D, $19, $14, $15, $16, $17, $18, $17, $16, $15, $14, $19, $0D, $0E, $0F, $10, $11, $12, $11, $10, $0F, $0E, $0D, $19, $14, $15, $16, $17, $18, $17, $16 
 	dc.b	$15, $14, $19, $0D, $0E, $0F, $10, $11, $12, $11, $10, $0F, $0E, $0D, $19, $14, $15, $16, $17, $18, $17, $16, $15, $14, $19, $0D, $0E, $0F, $10, $11, $12, $11 
 	dc.b	$10, $0F, $0E, $0D, $2D, $14, $15, $16, $17, $18, $17, $16, $15, $14, $2D, $2E, $2F, $30, $31, $32, $33, $32, $31, $30, $2F, $2E 
+; @ $00082164
 DungeonFloorTilemap_82164:
 	dc.b	$00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 
 	dc.b	$00, $1B, $1C, $1D, $1E, $1F, $20, $1F, $1E, $1D, $1C, $1B, $0D, $0E, $0F, $10, $11, $12, $11, $10, $0F, $0E, $0D, $0D, $0E, $0F, $10, $11, $12, $11, $10, $0F 
 	dc.b	$0E, $0D, $19, $14, $15, $16, $17, $18, $17, $16, $15, $14, $19, $0D, $0E, $0F, $10, $11, $12, $11, $10, $0F, $0E, $0D, $19, $14, $15, $16, $17, $18, $17, $16 
 	dc.b	$15, $14, $19, $0D, $0E, $0F, $10, $11, $12, $11, $10, $0F, $0E, $0D, $19, $14, $15, $16, $17, $18, $17, $16, $15, $14, $19, $0D, $0E, $0F, $10, $11, $12, $11 
 	dc.b	$10, $0F, $0E, $0D, $2D, $14, $15, $16, $17, $18, $17, $16, $15, $14, $2D, $2E, $2F, $30, $31, $32, $33, $32, $31, $30, $2F, $2E 
+; @ $000821FE
 DungeonFloorTilemap_821FE:
 	dc.b	$00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $1A, $14, $15, $16, $17, $18, $17, $16, $15, $14 
 	dc.b	$1A, $0D, $0E, $0F, $10, $11, $12, $11, $10, $0F, $0E, $0D, $19, $14, $15, $16, $17, $18, $17, $16, $15, $14, $19, $0D, $0E, $0F, $10, $11, $12, $11, $10, $0F 
 	dc.b	$0E, $0D, $19, $14, $15, $16, $17, $18, $17, $16, $15, $14, $19, $0D, $0E, $0F, $10, $11, $12, $11, $10, $0F, $0E, $0D, $19, $14, $15, $16, $17, $18, $17, $16 
 	dc.b	$15, $14, $19, $0D, $0E, $0F, $10, $11, $12, $11, $10, $0F, $0E, $0D, $19, $14, $15, $16, $17, $18, $17, $16, $15, $14, $19, $0D, $0E, $0F, $10, $11, $12, $11 
 	dc.b	$10, $0F, $0E, $0D, $2D, $14, $15, $16, $17, $18, $17, $16, $15, $14, $2D, $2E, $2F, $30, $31, $32, $33, $32, $31, $30, $2F, $2E 
+; @ $00082298
 DungeonFloorTilemap_82298:
 	dc.b	$00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $07, $08, $09, $0A, $0B, $0C, $0B, $0A, $09, $08 
 	dc.b	$07, $13, $14, $15, $16, $17, $18, $17, $16, $15, $14, $13, $0D, $0E, $0F, $10, $11, $12, $11, $10, $0F, $0E, $0D, $19, $14, $15, $16, $17, $18, $17, $16, $15 
@@ -17659,10 +18683,12 @@ DungeonFloorTilemap_82298:
 	dc.b	$0F, $0E, $0D, $19, $14, $15, $16, $17, $18, $17, $16, $15, $14, $19, $0D, $0E, $0F, $10, $11, $12, $11, $10, $0F, $0E, $0D, $19, $14, $15, $16, $17, $18, $17 
 	dc.b	$16, $15, $14, $19, $0D, $0E, $0F, $10, $11, $12, $11, $10, $0F, $0E, $0D, $19, $14, $15, $16, $17, $18, $17, $16, $15, $14, $19, $0D, $0E, $0F, $10, $11, $12 
 	dc.b	$11, $10, $0F, $0E, $0D, $2D, $14, $15, $16, $17, $18, $17, $16, $15, $14, $2D, $2E, $2F, $30, $31, $32, $33, $32, $31, $30, $2F, $2E, $00 
+; @ $00082354
 DungeonFloorTilemap_82354:
 	dc.b	$01, $02, $03, $04, $05, $0D, $0E, $0F, $10, $11, $19, $14, $15, $16, $17, $0D, $0E, $0F, $10, $11, $19, $14, $15, $16, $17, $0D, $0E, $0F, $10, $11, $19, $14 
 	dc.b	$15, $16, $17, $0D, $0E, $0F, $10, $11, $19, $14, $15, $16, $17, $0D, $0E, $0F, $10, $11, $19, $14, $15, $16, $17, $0D, $0E, $0F, $10, $11, $19, $14, $15, $16 
 	dc.b	$17, $0D, $0E, $0F, $10, $11, $2D, $14, $15, $16, $17, $2E, $2F, $30, $31, $32 
+; @ $000823A4
 DungeonFloorTilemap_823A4:
 	dc.b	$05, $04, $03, $02, $01, $11, $10, $0F, $0E, $0D, $17, $16, $15, $14, $19, $11, $10, $0F, $0E, $0D, $17, $16, $15, $14, $19, $11, $10, $0F, $0E, $0D, $17, $16 
 	dc.b	$15, $14, $19, $11, $10, $0F, $0E, $0D, $17, $16, $15, $14, $19, $11, $10, $0F, $0E, $0D, $17, $16, $15, $14, $19, $11, $10, $0F, $0E, $0D, $17, $16, $15, $14 
@@ -17706,23 +18732,29 @@ WallTileGfxPtrs_Entry05:
 	dc.b	$00, $00, $00, $00, $00, $05, $04, $03, $02, $01, $11, $10, $0F, $0E, $0D, $17, $16, $15, $14, $19, $11, $10, $0F, $0E, $0D, $17, $16, $15, $14, $19, $17, $16 
 	dc.b	$15, $14, $19, $11, $10, $0F, $0E, $0D, $35, $35, $34, $14, $19, $37, $37, $36, $0E, $0D, $37, $37, $38, $14, $19, $37, $37, $3C, $0E, $0D, $37, $37, $38, $14 
 	dc.b	$19, $45, $45, $3C, $0E, $0D, $45, $45, $34, $14, $19, $45, $45, $34, $14, $2D, $53, $53, $52, $2F, $2E, $00 
+; @ $000827C4
 OpenChestMenu_ExitToHud_Loop2_Data:
 	dc.l	OpenChestMenu_ExitToHud_Loop2_Data_Entry_827D4
 	dc.l	OpenChestMenu_ExitToHud_Loop2_Data_Entry_827FE
 	dc.l	OpenChestMenu_ExitToHud_Loop2_Data_Entry_82828
 	dc.l	OpenChestMenu_ExitToHud_Loop2_Data_Entry_82852
+; @ $000827D4
 OpenChestMenu_ExitToHud_Loop2_Data_Entry_827D4:
 	dc.b	$38, $37, $37, $37, $37, $37, $38, $3C, $37, $37, $37, $37, $37, $3C, $38, $37, $37, $37, $37, $37, $38, $36, $45, $45, $45, $45, $45, $36, $55, $53, $53, $53 
 	dc.b	$53, $53, $55, $52, $56, $56, $56, $56, $56, $52 
+; @ $000827FE
 OpenChestMenu_ExitToHud_Loop2_Data_Entry_827FE:
 	dc.b	$38, $37, $37, $37, $37, $37, $38, $3C, $37, $37, $37, $37, $37, $3C, $34, $45, $45, $45, $45, $45, $34, $54, $53, $53, $53, $53, $53, $54, $55, $56, $56, $56 
 	dc.b	$56, $56, $55, $52, $56, $56, $56, $56, $56, $52 
+; @ $00082828
 OpenChestMenu_ExitToHud_Loop2_Data_Entry_82828:
 	dc.b	$38, $37, $37, $37, $37, $37, $38, $36, $45, $45, $45, $45, $45, $36, $55, $53, $53, $53, $53, $53, $55, $36, $56, $56, $56, $56, $56, $36, $34, $56, $56, $56 
 	dc.b	$56, $56, $34, $52, $56, $56, $56, $56, $56, $52 
+; @ $00082852
 OpenChestMenu_ExitToHud_Loop2_Data_Entry_82852:
 	dc.b	$34, $45, $45, $45, $45, $45, $34, $54, $53, $53, $53, $53, $53, $54, $55, $56, $56, $56, $56, $56, $55, $36, $56, $56, $56, $56, $56, $36, $34, $56, $56, $56 
 	dc.b	$56, $56, $34, $52, $56, $56, $56, $56, $56, $52 
+; @ $0008287C
 SpriteGfxData_8287C:
 	dc.b	$01, $00, $FF, $FF, $FF, $FF, $01, $00, $FF, $FF, $C8, $00, $43, $33, $57, $54, $44, $05, $55, $65, $55, $66, $65, $66, $66, $01, $00, $FF, $FF, $00, $00, $45 
 	dc.b	$65, $34, $54, $55, $63, $23, $45, $55, $63, $34, $45, $66, $64, $44, $45, $01, $00, $FF, $FF, $00, $00, $33, $44, $44, $45, $44, $44, $44, $53, $55, $44, $45 
@@ -17793,10 +18825,12 @@ SpriteGfxData_8287C:
 	dc.b	$FF, $84, $68, $84, $68, $00, $22, $33, $54, $77, $23, $33, $45, $77, $33, $44, $44, $77, $44, $44, $45, $77, $55, $55, $53, $77, $33, $34, $54, $88, $44, $44 
 	dc.b	$45, $88, $66, $55, $55, $88, $01, $44, $00, $02, $6E, $40, $63, $33, $33, $77, $32, $22, $23, $77, $22, $33, $33, $77, $23, $34, $77, $33, $77, $88, $55, $45 
 	dc.b	$88, $33, $55, $53, $88, $01, $88, $FF, $FF, $FF, $FF, $00 
+; @ $00083108
 SpriteMetaTileTable_83108:
 	dc.b	$00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $11, $14, $17, $12, $15, $18, $13, $16, $19, $00, $00, $00, $3E, $41, $44, $3F, $42 
 	dc.b	$45, $40, $43, $46, $00, $01, $05, $00, $02, $06, $00, $03, $07, $00, $04, $08, $1A, $1E, $22, $1B, $1F, $23, $1C, $20, $24, $1D, $21, $25, $05, $47, $4B, $06 
 	dc.b	$48, $4C, $07, $49, $4D, $08, $4A, $4E 
+; @ $00083150
 SpriteMetaTileTable_83150:
 	dc.b	$00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $26, $2A, $2E, $27, $2B, $2F, $28, $2C, $30, $29, $2D, $31, $00, $09, $0D, $00, $0A, $0E, $00, $0B 
 	dc.b	$0F, $00, $0C, $10, $32, $36, $3A, $33, $37, $3B, $34, $38, $3C, $35, $39, $3D 
@@ -18057,6 +19091,7 @@ FPDungeonSpriteFrameTable_Frame_83D62:
 	dc.b	$01, $88, $00, $00, $01, $FF, $33, $53, $77, $84, $23, $35, $77, $84, $44, $55, $77, $84, $44, $52, $77, $84, $55, $33, $77, $84, $55, $54, $77, $00 
 FPDungeonSpriteFrameTable_Frame_83D80:
 	dc.b	$03, $58, $AA, $AA, $AA, $00, $84, $55, $55, $51, $00, $88, $00, $00, $04, $FF 
+; @ $00083D90
 FPDungeonSpriteFrameTable:
 	dc.l	FPDungeonSpriteFrameTable_Frame_831F8
 	dc.l	FPDungeonSpriteFrameTable_Frame_831FE
@@ -18159,6 +19194,7 @@ FPDungeonSpriteFrameTable:
 	dc.l	FPDungeonSpriteFrameTable_Frame_83D4E
 	dc.l	FPDungeonSpriteFrameTable_Frame_83D62
 	dc.l	FPDungeonSpriteFrameTable_Frame_83D80
+; @ $00083F24
 SpriteLayout_83F24:
 	dc.b	$00, $01, $03, $00, $02, $04, $05, $07, $09, $06, $08, $0A 
 GfxLoadList_FirstPersonBattle_Entry02:
@@ -18201,6 +19237,7 @@ FPEnemySpriteFrameTable_15_Frame_84092:
 FPEnemySpriteFrameTable_15_Frame_840B4:
 	dc.b	$00, $56, $73, $25, $35, $58, $72, $25, $54, $56, $74, $52, $56, $58, $75, $42, $66, $58, $75, $44, $46, $58, $75, $53, $88, $58, $71, $88, $80, $88, $88, $80 
 	dc.b	$00, $00 
+; @ $000840D6
 FPEnemySpriteFrameTable_15:
 	dc.l	FPEnemySpriteFrameTable_15_Frame_83F3C
 	dc.l	FPEnemySpriteFrameTable_15_Frame_83F42
@@ -18258,6 +19295,7 @@ WallTileGfxPtrs_Entry08:
 	dc.b	$00, $00, $00, $00, $00, $02, $01, $00, $00, $00, $08, $07, $06, $00, $00, $16, $15, $14, $13, $12, $10, $0F, $0E, $0D, $0C, $1B, $1B, $1A, $19, $18, $1B, $1B 
 	dc.b	$1A, $19, $20, $26, $25, $24, $23, $20, $37, $2E, $2D, $2C, $2C, $37, $35, $34, $33, $33, $37, $35, $34, $33, $33, $37, $45, $2D, $2C, $43, $4B, $4B, $34, $33 
 	dc.b	$49, $37, $35, $34, $33, $33, $37, $35, $3E, $3D, $33, $00 
+; @ $000844CA
 LoadBattleStatusTileGraphics_Data:
 	incbin "data/art/tiles/battle/status_tiles.bin"
 GfxLoadList_FirstPerson_Entry04 equ LoadBattleStatusTileGraphics_Data+$906
@@ -18436,6 +19474,7 @@ SpriteFramePointerTable_855C0_Frame_85582:
 	dc.b	$01, $88, $00, $00, $0F, $70, $45, $55, $55, $33, $34, $45, $55, $22, $54, $45, $55, $33, $66, $66, $65, $44, $86, $66, $66, $55, $08, $00, $00, $00, $08, $00 
 SpriteFramePointerTable_855C0_Frame_855A2:
 	dc.b	$01, $88, $00, $00, $00, $FF, $33, $33, $34, $56, $23, $33, $34, $56, $32, $34, $45, $57, $44, $44, $45, $57, $55, $54, $55, $57, $66, $66, $66, $67 
+; @ $000855C0
 SpriteFramePointerTable_855C0:
 	dc.l	SpriteFramePointerTable_855C0_Frame_84E48
 	dc.l	SpriteFramePointerTable_855C0_Frame_84E4E
@@ -18639,6 +19678,7 @@ WallTileGfxPtrs_Entry11:
 	dc.b	$05, $04, $06, $05, $04, $08, $07, $09, $08, $07, $0E, $0D, $0C, $0B, $0A, $12, $12, $11, $10, $0F, $13, $13, $11, $10, $0F, $13, $13, $11, $10, $0F, $13, $13 
 	dc.b	$11, $10, $0F, $13, $13, $11, $10, $0F, $29, $28, $11, $10, $0F, $13, $13, $11, $10, $0F, $32, $31, $11, $10, $0F, $00, $36, $11, $10, $0F, $00, $36, $11, $10 
 	dc.b	$0F, $00, $36, $11, $10, $0F, $00, $36, $11, $10, $0F, $00, $36, $11, $10, $0F, $00, $4A, $4F, $4E, $4D, $00 
+; @ $00085BE8
 LoadBattlePlayerTileGraphics_Data:
 	incbin "data/art/tiles/battle/player_tiles.bin"
 GfxLoadList_FirstPerson_Entry08 equ LoadBattlePlayerTileGraphics_Data+$8AE
@@ -18823,6 +19863,7 @@ SpriteFramePointerTable_86CB8_Frame_86C74:
 SpriteFramePointerTable_86CB8_Frame_86C96:
 	dc.b	$00, $43, $65, $32, $25, $03, $66, $32, $25, $34, $56, $42, $25, $34, $66, $42, $25, $34, $66, $42, $25, $43, $88, $32, $28, $88, $00, $88, $80, $00, $00, $00 
 	dc.b	$00, $00 
+; @ $00086CB8
 SpriteFramePointerTable_86CB8:
 	dc.l	SpriteFramePointerTable_86CB8_Frame_8650E
 	dc.l	SpriteFramePointerTable_86CB8_Frame_86514
@@ -19017,6 +20058,7 @@ WallTileGfxPtrs_Entry17:
 	dc.b	$47, $46, $45, $44, $00, $1D, $1C, $49, $48, $00, $00, $13, $0E, $00, $00, $00, $13, $0E, $00, $00, $1D, $1C, $0E, $00, $00, $00, $13, $0E, $00, $00, $00, $13 
 	dc.b	$0E, $00, $00, $1D, $1C, $0E, $00, $00, $00, $13, $0E, $00, $00, $00, $13, $0E, $00, $00, $1D, $1C, $0E, $00, $00, $00, $5D, $59, $00, $00, $00, $00, $00, $00 
 	dc.b	$00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 
+; @ $000876DE
 LoadCaveItemTileGraphics_Data:
 	incbin "data/art/tiles/dungeon/cave_item_tiles.bin"
 GfxLoadList_FirstPersonBattle_Entry03 equ LoadCaveItemTileGraphics_Data+$73A
@@ -19095,6 +20137,7 @@ SpriteFramePointerTable_880F8_Frame_880DA:
 	dc.b	$01, $00, $07, $77, $FF, $FF, $51, $11, $11, $11, $50, $50, $50, $00 
 SpriteFramePointerTable_880F8_Frame_880E8:
 	dc.b	$01, $00, $FF, $FF, $FF, $FB, $70, $00, $01, $00, $7F, $FF, $FF, $FF, $E7, $00 
+; @ $000880F8
 SpriteFramePointerTable_880F8:
 	dc.l	SpriteFramePointerTable_880F8_Frame_87E90
 	dc.l	SpriteFramePointerTable_880F8_Frame_87E96
@@ -19238,6 +20281,7 @@ SpriteFramePointerTable_88528_Frame_884EA:
 	dc.b	$05, $00 
 SpriteFramePointerTable_88528_Frame_8850C:
 	dc.b	$02, $66, $F0, $00, $F0, $00, $88, $00, $00, $0F, $F0, $67, $77, $77, $77, $44, $44, $44, $44, $33, $33, $33, $33, $55, $55, $55, $55, $00 
+; @ $00088528
 SpriteFramePointerTable_88528:
 	dc.l	SpriteFramePointerTable_88528_Frame_8829E
 	dc.l	SpriteFramePointerTable_88528_Frame_882A4
@@ -19297,8 +20341,10 @@ GfxLoadList_FirstPersonBattle_Entry10:
 	dc.l	SpriteFramePointerTable_88528_Frame_885EE
 	dc.l	SpriteFramePointerTable_88528_Frame_885FA
 	dc.l	SpriteFramePointerTable_88528_Frame_8860E
+; @ $0008863E
 TownTileSet_A_Mappings:
 	incbin "data/art/tiles/town/tileset_a_mappings.bin"
+; @ $0008A34A
 TownTileSet_A_Gfx:
 	incbin "data/art/tiles/town/tileset_a_gfx.bin"
 TownTilesetPtrs_Entry00:
@@ -19350,8 +20396,10 @@ TownTilesetPtrs_Entry00:
 	dc.b	$01, $89, $01, $8A, $01, $8B, $01, $8C, $01, $8D, $01, $8E, $00, $00, $00, $00, $01, $8F, $01, $90, $00, $00, $00, $00, $00, $00, $01, $91, $00, $00, $00, $00 
 	dc.b	$01, $92, $00, $00, $00, $00, $00, $00, $00, $9E, $00, $9B, $00, $9E, $01, $93, $00, $9E, $00, $9B, $00, $9E, $01, $94, $01, $95, $00, $0F, $00, $07, $00, $11 
 	dc.b	$00, $00, $00, $21, $01, $96, $00, $23, $00, $35, $00, $36, $00, $31, $01, $97 
+; @ $0008B97A
 TownTileSet_B_Mappings:
 	incbin "data/art/tiles/town/tileset_b_mappings.bin"
+; @ $0008D48C
 TownTileSet_B_Gfx:
 	incbin "data/art/tiles/town/tileset_b_gfx.bin"
 TownTilesetPtrs_Entry01:
@@ -19403,6 +20451,7 @@ TownTilesetPtrs_Entry01:
 	dc.b	$00, $FC, $00, $FC, $01, $23, $01, $23, $00, $FC, $00, $FC, $00, $00, $00, $00, $00, $01, $01, $24, $00, $00, $00, $00, $00, $41, $00, $01, $01, $24, $00, $42 
 	dc.b	$00, $42, $01, $25, $00, $43, $00, $41, $01, $26, $00, $43, $01, $27, $01, $28, $01, $29, $01, $2A, $01, $2B, $01, $2C, $01, $2D, $01, $2E, $01, $2F, $01, $30 
 	dc.b	$00, $4A, $00, $4A, $01, $30, $01, $31, $00, $4A, $00, $4A, $01, $32, $01, $33, $01, $34, $01, $35, $01, $36, $01, $37, $01, $38, $01, $39 
+; @ $0008E0C8
 SpriteGfxData_8E0C8:
 	dc.b	$01, $00, $FF, $FF, $FF, $FF, $00, $00, $00, $00, $00, $00, $ED, $EE, $E0, $0E, $CC, $CC, $EE, $CC, $CC, $EE, $CE, $CE, $EE, $21, $1C, $EC, $DD, $33, $23, $EE 
 	dc.b	$DD, $33, $33, $EC, $EE, $CC, $CC, $01, $00, $FF, $73, $10, $00, $EE, $EE, $E0, $EC, $CE, $E0, $12, $CE, $CE, $EE, $12, $2C, $CE, $EE, $33, $33, $3E, $CE, $00 
@@ -19614,6 +20663,7 @@ SpriteGfxData_8E0C8:
 	dc.b	$64, $5D, $45, $64, $5D, $01, $00, $FF, $FF, $98, $CC, $0D, $40, $D0, $D4, $D0, $0D, $44, $0D, $65, $01, $00, $FF, $FF, $EC, $CC, $DD, $0D, $DD, $D6, $56, $DD 
 	dc.b	$55, $01, $00, $FF, $FF, $FF, $77, $D0, $D0, $00, $00, $0D, $D5, $DD, $00, $0D, $55, $5D, $00, $D5, $45, $DD, $00, $D5, $55, $6D, $00, $D4, $55, $DD, $0D, $D4 
 	dc.b	$5D, $6D, $0D, $54, $5D, $D0, $DD, $5D, $55, $DD, $01, $00, $7F, $CC, $89, $13, $D0, $05, $55, $54, $4D, $D4, $54, $D0, $D5, $6D, $D4, $55, $60, $44, $66, $00 
+; @ $0008FB08
 SpriteGfxData_8FB08:
 	dc.b	$01, $00, $F3, $10, $EF, $FF, $55, $D0, $4D, $D5, $50, $D0, $0D, $D5, $D0, $D0, $00, $66, $66, $66, $D5, $D6, $6E, $EE, $66, $6E, $EE, $CE, $E6, $EC, $CC, $EC 
 	dc.b	$EE, $CC, $C1, $11, $CE, $C2, $22, $22, $23, $12, $22, $22, $23, $33, $33, $33, $33, $00, $1E, $13, $11, $11, $2E, $23, $12, $22, $22, $E3, $12, $22, $CC, $33 
