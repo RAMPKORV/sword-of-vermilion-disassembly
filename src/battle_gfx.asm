@@ -1451,6 +1451,20 @@ LoadBattleTerrainGraphics_LoadTiles:
 ;
 ; Scratch:  A0, A2, D5
 ; Output:   Tiles decompressed; A2 advanced past last tile
+;
+; NOTE (DRY-004): ~20 Load*TileGraphics functions below use an inline copy of
+; this three-instruction loop (BSR.w DecompressTileGraphics / LEA $20(A2),A2 /
+; DBF D5,<local_label>) rather than calling DecompressTileLoop.  The outer
+; pattern — setup src/dst/count, run loop, LEA DmaCmd, BSR ExecuteVdpDmaFromRam
+; — is also identical across all of them except for the data pointer, count,
+; and DMA command label.
+;
+; A macro or shared subroutine CAN'T be used: each inline loop encodes 14 bytes
+; of instructions whereas a BSR.w DecompressTileLoop call encodes only 6 bytes,
+; changing the binary.  This is the fundamental bit-perfect constraint.
+; DecompressTileLoop IS used by a subset of callers (LoadBattleTerrainGraphics)
+; that were assembled after this function existed; the earlier functions were
+; assembled with inline loops and cannot be altered.
 ; ---------------------------------------------------------------------------
 DecompressTileLoop:
 	BSR.w	DecompressTileGraphics

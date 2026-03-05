@@ -524,7 +524,9 @@
           "file": "src/battle_gfx.asm",
           "priority": "medium",
           "effort": "large",
-          "status": "todo"
+          "status": "done",
+          "notes": "Inline loops encode 14 bytes vs 6 bytes for BSR.w DecompressTileLoop call — cannot replace without breaking bit-perfect. Pattern documented in detail on DecompressTileLoop comment block. Build verified bit-perfect.",
+          "completed_at": "2026-03-05"
         },
         {
           "id": "DRY-005",
