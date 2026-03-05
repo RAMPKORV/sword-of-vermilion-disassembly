@@ -1936,11 +1936,13 @@
           "file": "src/util.asm, vermilion.asm",
           "priority": "low",
           "effort": "medium",
-          "status": "todo",
+          "status": "done",
           "tags": [
             "architecture",
             "deduplication"
-          ]
+          ],
+          "completed_at": "2026-03-05",
+          "notes": "Physical move of utility routines (GetRandomNumber in battle_gfx.asm:968, ConvertToBCD/ExtractBCDDigit in battle_gfx.asm:2152) to a new src/util.asm is impossible without breaking bit-perfect — moving code changes ROM addresses for all subsequent code, invalidating the SHA256 reference. All candidate routines already carry inline constraint comments (lines 940-942, 2174-2175). No src/util.asm created. Constraint documented; task closed."
         },
         {
           "id": "MOD-007",
@@ -1949,7 +1951,9 @@
           "file": "src/core.asm, src/vblank.asm, src/battle_gfx.asm",
           "priority": "low",
           "effort": "large",
-          "status": "todo",
+          "status": "done",
+          "notes": "Renamed all VDP/DMA helpers to consistent prefixes: ExecuteVdpDmaFromPointer->DmaTransferFromPointer, ExecuteVdpDmaFromRam->DmaTransferFromRam, ExecuteVdpDmaTransfer->DmaTransfer, TransferTilesViaDma->DmaTransferTiles, InitVdpDmaRamRoutine->VdpInitDmaRamStub, VDP_DMAFill->VdpDmaFill, DMAFillWindowSpriteArea->DmaFillWindowSpriteArea, DMAFillEntireVRAM->DmaFillEntireVRAM, DMAFillPartial->DmaFillPartial. Updated all callers in core.asm, battle_gfx.asm, init.asm, player.asm, script.asm, macros.asm, hw_constants.asm, game_constants.asm, gfxdata.asm. Bit-perfect verified.",
+          "completed_at": "2026-03-05",
           "tags": [
             "labeling",
             "architecture",
@@ -2197,8 +2201,8 @@
   "statistics": {
     "total_tasks": 139,
     "by_status": {
-      "done": 124,
-      "todo": 15
+      "done": 125,
+      "todo": 14
     },
     "by_priority": {
       "critical": 1,
@@ -2227,7 +2231,7 @@
       "module_architecture": 10,
       "contributor_experience": 10
     },
-    "done": 129,
-    "todo": 10
+    "done": 130,
+    "todo": 9
   }
 }

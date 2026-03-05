@@ -215,15 +215,15 @@ TownMovement_AnimTick_2Btn:
 	BRA.b	TownMovement_AnimTick_FrameSelect
 TownMovement_UpdateWalkAnim_Loop:
 	ANDI.w	#7, D0	
-	BNE.b	TownMovement_UpdateWalkAnim_Loop4	
+	BNE.b	TownMovement_SkipAnimUpdate	
 	BSR.w	UpdatePlayerAnimation	
-TownMovement_UpdateWalkAnim_Loop4:
+TownMovement_SkipAnimUpdate:
 	ASR.w	#2, D0	
 TownMovement_AnimTick_FrameSelect:
 	TST.b	Player_walk_anim_toggle.w
-	BEQ.b	TownMovement_UpdateWalkAnim_Loop5
+	BEQ.b	TownMovement_SelectFrame
 	ADDQ.w	#2, D0
-TownMovement_UpdateWalkAnim_Loop5:
+TownMovement_SelectFrame:
 	ADD.w	D1, D0
 	LEA	OverworldMapSector_D9E8, A0
 	MOVE.b	(A0,D0.w), obj_sprite_frame(A5)
@@ -467,7 +467,7 @@ SetupVdpDmaCommand:
 	MOVE.w	#$9700, D1
 	MOVE.b	D0, D1
 	stopZ80
-	JSR	InitVdpDmaRamRoutine
+	JSR	VdpInitDmaRamStub
 	MOVE.w	#2, D4
 	ORI.w	#$8F00, D4
 	MOVE.w	D4, VDP_control_port
