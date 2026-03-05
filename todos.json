@@ -518,7 +518,7 @@
           "file": "tools/randomizer/enemy_randomizer.js",
           "priority": "high",
           "effort": "large",
-          "status": "todo"
+          "status": "done"
         },
         {
           "id": "RANDO-003",
@@ -527,7 +527,7 @@
           "file": "tools/randomizer/shop_randomizer.js",
           "priority": "high",
           "effort": "medium",
-          "status": "todo"
+          "status": "done"
         },
         {
           "id": "RANDO-004",
@@ -537,7 +537,7 @@
           "priority": "high",
           "effort": "large",
           "depends_on": "TOOLB-004",
-          "status": "todo"
+          "status": "done"
         },
         {
           "id": "RANDO-005",
@@ -546,7 +546,7 @@
           "file": "tools/randomizer/encounter_randomizer.js",
           "priority": "medium",
           "effort": "medium",
-          "status": "todo"
+          "status": "done"
         },
         {
           "id": "RANDO-006",
@@ -555,7 +555,7 @@
           "file": "tools/randomizer/stats_randomizer.js",
           "priority": "medium",
           "effort": "medium",
-          "status": "todo"
+          "status": "done"
         },
         {
           "id": "RANDO-007",
@@ -572,7 +572,7 @@
             "RANDO-006",
             "TOOLB-004"
           ],
-          "status": "todo"
+          "status": "done"
         },
         {
           "id": "RANDO-008",
@@ -582,7 +582,7 @@
           "priority": "low",
           "effort": "small",
           "depends_on": "RANDO-007",
-          "status": "todo"
+          "status": "done"
         }
       ]
     },
