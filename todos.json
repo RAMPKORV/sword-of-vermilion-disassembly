@@ -504,7 +504,9 @@
           "file": "src/dungeon.asm",
           "priority": "medium",
           "effort": "medium",
-          "status": "todo"
+          "status": "done",
+          "notes": "Physically merging breaks bit-perfect: BGE vs BEQ+BGT encoding differs despite identical observable behavior for D4=0. Both functions thoroughly cross-documented with explanation. Build verified bit-perfect.",
+          "completed_at": "2026-03-05"
         },
         {
           "id": "DRY-003",

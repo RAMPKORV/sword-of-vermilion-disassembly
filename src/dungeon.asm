@@ -1809,6 +1809,14 @@ ClearObjectGfxIndex:
 	MOVE.w	#0, obj_tile_index(A6)
 	RTS
 
+; MapTileToTypeIndex
+; Map an overworld tile type byte to a dungeon terrain index.
+; Input:  D4.b = raw overworld tile type
+; Output: D4.b = terrain type index used by dungeon renderer
+; Trashes: A6 byte at obj_direction offset (cleared on entry)
+;
+; NOTE (DRY-002): Near-duplicate of ValidateDungeonTileType below.
+; See comment on ValidateDungeonTileType for why these cannot be physically merged.
 MapTileToTypeIndex:
 	CLR.b	obj_direction(A6)
 	TST.b	D4
@@ -1842,9 +1850,20 @@ MapTileToTypeIndex_Loop3:
 	RTS
 
 ; ValidateDungeonTileType
-; Validate and normalize map tile type for first-person dungeon rendering
-; Input: D4.b = Raw tile type value
-; Output: D4.b = Validated/normalized tile type
+; Validate and normalize map tile type for first-person dungeon rendering.
+; Input:  D4.b = raw tile type value
+; Output: D4.b = validated/normalized tile type
+; Trashes: A6 byte at obj_direction offset (cleared on entry)
+;
+; NOTE (DRY-002): Near-duplicate of MapTileToTypeIndex above. The two functions
+; share identical logic for all inputs except D4 = 0:
+;   MapTileToTypeIndex  : D4=0 → BGE takes the ≥0 branch → CLR.w D4 → RTS (D4=0 out)
+;   ValidateDungeonTileType: D4=0 → BEQ exits immediately              (D4=0 out)
+; Behaviorally equivalent for all reachable inputs, but the different branch
+; encoding (BGE vs BEQ+BGT) prevents physical merging without altering the
+; assembled binary. Callers use BSR.w so address proximity is not a constraint;
+; the issue is pure byte-level encoding. Left as two functions to maintain
+; bit-perfect output.
 ValidateDungeonTileType:
 	CLR.b	obj_direction(A6)
 	TST.b	D4
