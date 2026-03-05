@@ -2160,23 +2160,28 @@ SetTileset_Carthahena:
 	MOVE.w	#TOWN_TILESET_VILLAGE_B, Town_tileset_index.w
 	RTS
 
-TownSpawnPositionTable: ; suspected town spawning location + camera?
-	dc.w	$00D8, $02B8, $0003, $001F
-	dc.w	$01E8, $0268, $0014, $001A
-	dc.w	$0138, $0218, $0009, $0015
-	dc.w	$0128, $0268, $0008, $001A
-	dc.w	$0128, $0208, $0008, $0014
-	dc.w	$0128, $0208, $0008, $0014
-	dc.w	$0118, $01E8, $0008, $0012
-	dc.w	$01E8, $0268, $0014, $001A
-	dc.w	$00E8, $0268, $0005, $001A
-	dc.w	$0138, $01D8, $0009, $0011
-	dc.w	$0168, $02B8, $000C, $001F
-	dc.w	$0118, $01B8, $0007, $000F
-	dc.w	$0118, $01C8, $0007, $0010
-	dc.w	$01E8, $01F8, $0015, $0013
-	dc.w	$0118, $0198, $0008, $000D 
-	dc.w	$0108, $0218, $0007, $0015
+; TownSpawnPositionTable
+; Indexed by Current_town (0-$0F), stride 8 bytes (4 words).
+; Each entry sets player spawn and initial camera position on town entry.
+; Format: spawn_x, spawn_tile_y, camera_tile_x, camera_tile_y
+; Loaded into: Town_spawn_x / Player_spawn_tile_y_buffer / Town_camera_initial_x / Town_default_camera_y
+TownSpawnPositionTable:
+	dc.w	$00D8, $02B8, $0003, $001F	; $00 Wyclif
+	dc.w	$01E8, $0268, $0014, $001A	; $01 Parma
+	dc.w	$0138, $0218, $0009, $0015	; $02 Watling
+	dc.w	$0128, $0268, $0008, $001A	; $03 Deepdale
+	dc.w	$0128, $0208, $0008, $0014	; $04 Stow1
+	dc.w	$0128, $0208, $0008, $0014	; $05 Stow2
+	dc.w	$0118, $01E8, $0008, $0012	; $06 Keltwick
+	dc.w	$01E8, $0268, $0014, $001A	; $07 Malaga
+	dc.w	$00E8, $0268, $0005, $001A	; $08 Barrow
+	dc.w	$0138, $01D8, $0009, $0011	; $09 Tadcaster
+	dc.w	$0168, $02B8, $000C, $001F	; $0A Helwig
+	dc.w	$0118, $01B8, $0007, $000F	; $0B Swaffham
+	dc.w	$0118, $01C8, $0007, $0010	; $0C Excalabria
+	dc.w	$01E8, $01F8, $0015, $0013	; $0D Hastings1
+	dc.w	$0118, $0198, $0008, $000D	; $0E Hastings2
+	dc.w	$0108, $0218, $0007, $0015	; $0F Carthahena
 TownNpcDataLookupJumpTable: ; suspected: Town NPCs?
 	BRA.w	LoadNpcData_Wyclif
 	BRA.w	LoadNpcData_Parma
@@ -2258,23 +2263,73 @@ LoadNpcData_Carthahena:
 	LEA	NpcDataTable_Carthahena, A1
 	RTS
 	
+; AreaMusicIdByRoom
+; Indexed by Current_town_room (.w, lower byte used) via LoadAndPlayAreaMusic.
+; Value is the SOUND_* ID to queue for that area's background music.
+; Rooms $00-$0F: town interiors (one entry per TOWN_* constant).
+;   Room $04 (Stow1) and $0B (Swaffham) are special-cased in code to
+;   override this table value based on story flags.
+; Rooms $10+: castle / dungeon inner rooms, ordered by TownStateConfig Room IDs.
 AreaMusicIdByRoom:
-	dc.b	$87, $8F, $8B, $8F, $8F, $8F, $8F, $8F, $8B, $8F, $8B, $8F, $83, $8B, $87 
-	dc.b	$9A
-	dc.b	$96
-	dc.b	$96, $96 
-	dc.b	$96
-	dc.b	$96
-	dc.b	$96, $96 
-	dc.b	$96
-	dc.b	$96 
-	dc.b	$96
-	dc.b	$96 
-	dc.b	$96
-	dc.b	$96, $96, $96, $96, $95, $95, $95, $95, $95, $91, $95, $95, $87, $95, $95 
-	dc.b	$91
-	dc.b	$91, $91, $8C, $8C, $8C, $8C, $8C, $8C, $8C 
-	dc.b	$8C
+	; Towns ($00-$0F) — SOUND_ERIAS_MUSIC ($8F), SOUND_VILLAGE_A_MUSIC ($8B),
+	;   SOUND_STOW_MUSIC_GIRL_LEFT ($87), SOUND_SWAFFHAM_RUINED_MUSIC ($83)
+	dc.b	$87	; $00 Wyclif          — SOUND_STOW_MUSIC_GIRL_LEFT
+	dc.b	$8F	; $01 Parma            — SOUND_ERIAS_MUSIC
+	dc.b	$8B	; $02 Watling          — SOUND_VILLAGE_A_MUSIC
+	dc.b	$8F	; $03 Deepdale         — SOUND_ERIAS_MUSIC
+	dc.b	$8F	; $04 Stow1            — SOUND_ERIAS_MUSIC (overridden by code)
+	dc.b	$8F	; $05 Stow2            — SOUND_ERIAS_MUSIC
+	dc.b	$8F	; $06 Keltwick         — SOUND_ERIAS_MUSIC
+	dc.b	$8F	; $07 Malaga           — SOUND_ERIAS_MUSIC
+	dc.b	$8B	; $08 Barrow           — SOUND_VILLAGE_A_MUSIC
+	dc.b	$8F	; $09 Tadcaster        — SOUND_ERIAS_MUSIC
+	dc.b	$8B	; $0A Helwig           — SOUND_VILLAGE_A_MUSIC
+	dc.b	$8F	; $0B Swaffham         — SOUND_ERIAS_MUSIC (overridden when ruined)
+	dc.b	$83	; $0C Excalabria       — SOUND_SWAFFHAM_RUINED_MUSIC
+	dc.b	$8B	; $0D Hastings1        — SOUND_VILLAGE_A_MUSIC
+	dc.b	$87	; $0E Hastings2        — SOUND_STOW_MUSIC_GIRL_LEFT
+	dc.b	$9A	; $0F Carthahena       — SOUND_ENEMY_APPEAR_JINGLE
+	; Castle rooms ($10+) — SOUND_CASTLE_MUSIC ($96)
+	dc.b	$96	; $10 (castle room)    — SOUND_CASTLE_MUSIC
+	dc.b	$96	; $11 (castle room)    — SOUND_CASTLE_MUSIC
+	dc.b	$96	; $12 (castle room)    — SOUND_CASTLE_MUSIC
+	dc.b	$96	; $13 (castle room)    — SOUND_CASTLE_MUSIC
+	dc.b	$96	; $14 (castle room)    — SOUND_CASTLE_MUSIC
+	dc.b	$96	; $15 (castle room)    — SOUND_CASTLE_MUSIC
+	dc.b	$96	; $16 (castle room)    — SOUND_CASTLE_MUSIC
+	dc.b	$96	; $17 (castle room)    — SOUND_CASTLE_MUSIC
+	dc.b	$96	; $18 (castle room)    — SOUND_CASTLE_MUSIC
+	dc.b	$96	; $19 (castle room)    — SOUND_CASTLE_MUSIC
+	dc.b	$96	; $1A (castle room)    — SOUND_CASTLE_MUSIC
+	dc.b	$96	; $1B (castle room)    — SOUND_CASTLE_MUSIC
+	dc.b	$96	; $1C (castle room)    — SOUND_CASTLE_MUSIC
+	dc.b	$96	; $1D (castle room)    — SOUND_CASTLE_MUSIC
+	dc.b	$96	; $1E (castle room)    — SOUND_CASTLE_MUSIC
+	dc.b	$96	; $1F (castle room)    — SOUND_CASTLE_MUSIC
+	; Mixed rooms ($20+) — SOUND_SHOP_VILLAGE_MUSIC ($95), SOUND_CHURCH_MUSIC ($91)
+	dc.b	$95	; $20                  — SOUND_SHOP_VILLAGE_MUSIC
+	dc.b	$95	; $21                  — SOUND_SHOP_VILLAGE_MUSIC
+	dc.b	$95	; $22                  — SOUND_SHOP_VILLAGE_MUSIC
+	dc.b	$95	; $23                  — SOUND_SHOP_VILLAGE_MUSIC
+	dc.b	$95	; $24                  — SOUND_SHOP_VILLAGE_MUSIC
+	dc.b	$91	; $25                  — SOUND_CHURCH_MUSIC
+	dc.b	$95	; $26                  — SOUND_SHOP_VILLAGE_MUSIC
+	dc.b	$95	; $27                  — SOUND_SHOP_VILLAGE_MUSIC
+	dc.b	$87	; $28                  — SOUND_STOW_MUSIC_GIRL_LEFT
+	dc.b	$95	; $29                  — SOUND_SHOP_VILLAGE_MUSIC
+	dc.b	$95	; $2A                  — SOUND_SHOP_VILLAGE_MUSIC
+	dc.b	$91	; $2B                  — SOUND_CHURCH_MUSIC
+	; City shop rooms ($2C-$35) — SOUND_SHOP_CITY_MUSIC ($8C)
+	dc.b	$91	; $2C                  — SOUND_CHURCH_MUSIC
+	dc.b	$91	; $2D                  — SOUND_CHURCH_MUSIC
+	dc.b	$8C	; $2E                  — SOUND_SHOP_CITY_MUSIC
+	dc.b	$8C	; $2F                  — SOUND_SHOP_CITY_MUSIC
+	dc.b	$8C	; $30                  — SOUND_SHOP_CITY_MUSIC
+	dc.b	$8C	; $31                  — SOUND_SHOP_CITY_MUSIC
+	dc.b	$8C	; $32                  — SOUND_SHOP_CITY_MUSIC
+	dc.b	$8C	; $33                  — SOUND_SHOP_CITY_MUSIC
+	dc.b	$8C	; $34                  — SOUND_SHOP_CITY_MUSIC
+	dc.b	$8C	; $35                  — SOUND_SHOP_CITY_MUSIC
 TownNpcSetupJumpTable: ; Town NPC setup scripts
 	BRA.w	SetupTownNpcs_Wyclif
 	BRA.w	SetupTownNpcs_Parma

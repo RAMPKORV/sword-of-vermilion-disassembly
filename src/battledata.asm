@@ -151,38 +151,46 @@ SineTable:
 	dc.b	$5A, $5C, $5E, $60, $62, $64, $66, $68, $6A, $6C, $6D, $6F, $70, $72, $73, $75, $76, $77, $78, $79, $7A, $7B, $7C, $7C, $7D, $7E, $7E, $7F, $7F, $7F, $7F, $7F 
 	dc.b	$7F, $7F, $7F, $7F, $7F, $7F, $7E, $7E, $7D, $7C, $7C, $7B, $7A, $79, $78, $77, $76, $75, $73, $72, $70, $6F, $6D, $6C, $6A, $68, $66, $64, $62, $60, $5E, $5C 
 	dc.b	$5A, $58, $55, $53, $51, $4E, $4C, $49, $47, $44, $41, $3F, $3C, $39, $36, $33, $30, $2E, $2B, $28, $25, $22, $1F, $1C, $18, $15, $12, $0F, $0C, $09, $06, $03 
+; BattleSpriteIndexTableA
+; Maps controller input nibble (1-$F, index = value-1) to player direction/sprite bank.
+; Used in battle movement: BattleSpriteIndexTableA[(input&$F)-1] → Player_direction
+; 15 entries (word each). Values are even direction indices (0/2/4/6/8/A/C/E for 8 dirs).
 BattleSpriteIndexTableA:
-	dc.w	$0
-	dc.w	$4
-	dc.w	$4 
-	dc.w	$2
-	dc.w	$1
-	dc.w	$3
-	dc.w	$3 
-	dc.w	$6
-	dc.w	$7
-	dc.w	$5
-	dc.w	$5
-	dc.w	$5
-	dc.w	$5
-	dc.w	$5
-	dc.w	$5 
+	dc.w	$0	; input $1
+	dc.w	$4	; input $2
+	dc.w	$4	; input $3
+	dc.w	$2	; input $4
+	dc.w	$1	; input $5 (diagonal up-right)
+	dc.w	$3	; input $6 (diagonal down-right)
+	dc.w	$3	; input $7
+	dc.w	$6	; input $8
+	dc.w	$7	; input $9 (diagonal down-left)
+	dc.w	$5	; input $A (diagonal up-left)
+	dc.w	$5	; input $B
+	dc.w	$5	; input $C
+	dc.w	$5	; input $D
+	dc.w	$5	; input $E
+	dc.w	$5	; input $F
+; BattleSpriteIndexTableB
+; Maps controller input nibble (1-$F, index = value-1) to movement direction.
+; Used in town movement: BattleSpriteIndexTableB[(input&$F)-1] → Player_direction (& $E)
+; 15 entries (word each).
 BattleSpriteIndexTableB:
-	dc.w	$0
-	dc.w	$4
-	dc.w	$4 
-	dc.w	$2
-	dc.w	$0
-	dc.w	$4
-	dc.w	$4 
-	dc.w	$6
-	dc.w	$0
-	dc.w	$4
-	dc.w	$5
-	dc.w	$5
-	dc.w	$5
-	dc.w	$5
-	dc.w	$5 
+	dc.w	$0	; input $1
+	dc.w	$4	; input $2
+	dc.w	$4	; input $3
+	dc.w	$2	; input $4
+	dc.w	$0	; input $5 (diagonal → prefer left/right)
+	dc.w	$4	; input $6
+	dc.w	$4	; input $7
+	dc.w	$6	; input $8
+	dc.w	$0	; input $9
+	dc.w	$4	; input $A
+	dc.w	$5	; input $B
+	dc.w	$5	; input $C
+	dc.w	$5	; input $D
+	dc.w	$5	; input $E
+	dc.w	$5	; input $F
 BattleSpriteDMACommands:
 	; Each entry: 16 bytes — DMA length (words), source always $FFA000, VRAM destination
 	; Indexed by Vdp_dma_slot_index via ASL.w #4, D0.  See dmaCmd macro in macros.asm.

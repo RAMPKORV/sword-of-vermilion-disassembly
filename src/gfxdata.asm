@@ -10451,9 +10451,9 @@ DrawPrologueScene1and2_Data2 equ LoadTitleScreenGraphics_Data+$8AC
 LoadTitleScreenGraphics_Done_Data:
 	incbin "data/art/tiles/ui/title_screen_2.bin"
 DrawPrologueScene3_Data equ LoadTitleScreenGraphics_Done_Data+$A7E
-LoadTitleScreenGraphics_Done2_Data:
+LoadTitleScreenGraphics_Set2Data:
 	incbin "data/art/tiles/ui/title_screen_3.bin"
-DrawPrologueScene4and5_Data equ LoadTitleScreenGraphics_Done2_Data+$9A4
+DrawPrologueScene4and5_Data equ LoadTitleScreenGraphics_Set2Data+$9A4
 LoadTitleScreenGraphics_Done3_Data:
 	incbin "data/art/tiles/ui/title_screen_4.bin"
 DrawPrologueScene4and5_Data2 equ LoadTitleScreenGraphics_Done3_Data+$634
@@ -10467,7 +10467,7 @@ LoadTitleScreenTileGfx_Done_Data:
 	dc.b	$FF, $FF, $00, $DE, $DC, $BC, $ED, $CD, $CB, $EE, $DC, $BE, $DC, $BC, $ED, $BE, $ED, $CB, $CE, $BE, $DC, $BC, $ED, $CD, $CB, $EE, $DC, $CE, $DC, $BC, $ED, $CE 
 	dc.b	$ED, $CB, $CE, $00, $DC, $BB, $BC, $CC, $ED, $EE, $ED, $EE, $DC, $DE, $DC, $DE, $CB, $CD, $CB, $CD, $BE, $BC, $BE, $BC, $CE, $CB, $CE, $CB, $ED, $EC, $ED, $EC 
 	dc.b	$DC, $DE, $DC, $DE 
-InitEndingCreditsScreen_Done2_Data:
+InitEndingCreditsScreen_InnerLoop_Data:
 	dc.b	$00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $01, $00, $02, $00, $03, $00, $03, $00, $03, $00, $03, $00, $03, $00, $03 
 	dc.b	$00, $03, $00, $03, $00, $03, $00, $03, $00, $03, $00, $04, $00, $05, $00, $06, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 
 	dc.b	$00, $00, $00, $00, $00, $00, $00, $07, $00, $08, $00, $03, $00, $03, $00, $03, $00, $03, $00, $03, $00, $03, $00, $03, $00, $03, $00, $03, $00, $03, $00, $03 
@@ -10522,12 +10522,12 @@ LoadMenuTileGraphics_Data:
 LoadMenuTileGraphics_Done_Data:
 	incbin "data/art/tiles/ui/menu_gfx_2.bin"
 InitEndingCreditsScreen_Done4_Data equ LoadMenuTileGraphics_Done_Data+$63A
-LoadMenuTileGfxSet3_Done2_Data:
+LoadMenuTileGfxSet3_Set2Data:
 	dc.b	$01, $00, $FF, $FF, $FF, $FF, $01, $00, $EC, $EF, $FF, $FF, $10, $01, $31, $10, $01, $00, $FF, $FD, $D8, $DD, $01, $02, $01, $23, $21, $02, $01, $01, $00, $FF 
 	dc.b	$FB, $B1, $BB, $10, $20, $12, $32, $10, $20, $10, $01, $00, $B1, $90, $91, $BF, $04, $07, $05, $07, $86, $80, $45, $6F, $65, $40, $86, $80, $07, $05, $07, $04 
 	dc.b	$01, $00, $B1, $90, $91, $BF, $09, $0C, $0A, $0C, $DB, $D0, $9A, $BE, $BA, $90, $DB, $D0, $0C, $0A, $0C, $09, $01, $00, $B3, $BF, $FF, $FF, $10, $01, $31, $10 
 	dc.b	$01, $00, $FF, $FB, $B1, $BF, $10, $20, $12, $32, $10, $20 
-ClearEndingTextArea_Done2_Data:
+ClearEndingTextArea_InnerLoop_Data:
 	dc.b	$00, $01, $02, $03, $04, $05, $06, $07, $08, $09, $0A, $0B, $0C, $0D, $0E, $0F, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $1A, $00 
 LoadMenuTileGfxSet3_Done_Data:
 	dc.b	$03, $00, $8C, $CC, $CC, $CC, $0F, $40, $22, $22, $22, $ED, $01, $11, $11, $11, $FF, $FF, $FE, $01, $00, $00, $77, $77, $77, $FF, $FF, $FF, $FF, $DD, $DD, $DD 
@@ -10937,6 +10937,12 @@ DisplayCompassToVRAM_Data:
 	dc.b	$5E, $5D, $5D, $5F, $60, $61, $61, $61, $61, $61, $60, $5F, $5D, $5D, $5E, $5D, $5C, $5B, $62, $41, $41, $63, $41, $64, $65, $66, $67, $66, $67, $66, $67, $66 
 	dc.b	$65, $64, $41, $63, $41, $41, $62, $51, $51, $68, $51, $51, $69, $6A, $6B, $6C, $6B, $6C, $6B, $6C, $6B, $6A, $69, $51, $51, $68, $51, $51, $6D, $6D, $6D, $6D 
 	dc.b	$6D, $6E, $6F, $70, $71, $58, $72, $58, $71, $70, $6F, $6E, $6D, $6D, $6D, $6D, $6D, $00 
+; RenderMapToVRAM_DualPalette_21x13_Data
+; Dungeon mini-map tile layout: 13 rows x 21 columns, dual-palette.
+; Each byte is a tile-index offset added to the VRAM base address ($42A4 for
+; palette 0, $4AA4 for palette 1); per row: 11 palette-0 tiles then 10
+; palette-1 tiles. Terminated by $00.
+; Used by: RenderMapToVRAM_DualPalette_21x13 (dungeon.asm)
 RenderMapToVRAM_DualPalette_21x13_Data:
 	dc.b	$73, $74, $75, $76, $77, $78, $78, $78, $79, $01, $02, $03, $04, $05, $01, $02, $01, $02, $03, $04, $05, $7B, $7C, $7D, $7E, $7F, $80, $81, $0C, $0C, $0C, $82 
 	dc.b	$0C, $0D, $0C, $0C, $0D, $0E, $83, $84, $77, $78, $8A, $8A, $8A, $8A, $8A, $8A, $8B, $8C, $8D, $8E, $8F, $8F, $8F, $8F, $8F, $90, $90, $8A, $8A, $8A, $91, $96 
@@ -10947,6 +10953,11 @@ RenderMapToVRAM_DualPalette_21x13_Data:
 	dc.b	$DA, $D9, $DA, $D9, $DB, $87, $87, $87, $87, $87, $88, $89, $D9, $DA, $D9, $DA, $DB, $89, $DF, $E0, $E1, $46, $E1, $46, $E1, $E1, $C6, $DF, $C9, $E2, $DF, $E2 
 	dc.b	$E2, $C4, $E1, $46, $46, $46, $46, $E6, $6B, $6B, $6C, $6B, $6B, $6B, $6C, $E7, $68, $51, $68, $51, $51, $69, $E8, $C5, $6B, $6B, $6B, $6C, $D7, $55, $56, $57 
 	dc.b	$55, $56, $55, $56, $57, $6D, $6D, $6D, $6D, $6D, $6E, $D7, $D7, $D5, $D5, $D2, $EA, $00 
+; RenderMapToVRAM_DualPalette_21x20_Data
+; Dungeon mini-map tile layout: 20 rows x 21 columns, no-palette variant.
+; Each byte is a tile-index offset; added to base $42A4 (first 11/row) or
+; $4AA4 (next 10/row) by RenderMapToVRAM_NoPalette. Terminated by $00.
+; Used by: RenderMapToVRAM_DualPalette_21x20 (dungeon.asm)
 RenderMapToVRAM_DualPalette_21x20_Data:
 	dc.b	$7A, $7A, $7A, $7A, $7A, $7A, $7A, $7A, $7A, $7A, $7A, $7A, $7A, $7A, $7A, $7A, $7A, $7A, $7A, $7A, $7A, $85, $86, $87, $87, $87, $87, $87, $87, $87, $88, $89 
 	dc.b	$88, $87, $87, $87, $87, $87, $87, $87, $86, $85, $92, $92, $92, $92, $91, $91, $91, $91, $93, $94, $95, $94, $93, $91, $91, $91, $91, $92, $92, $92, $92, $96 
@@ -10957,6 +10968,11 @@ RenderMapToVRAM_DualPalette_21x20_Data:
 	dc.b	$88, $88, $88, $88, $89, $DD, $D9, $DE, $D9, $DD, $89, $88, $88, $88, $88, $87, $87, $DC, $C6, $E3, $E4, $C9, $C9, $C9, $C9, $C9, $C3, $E5, $46, $E5, $C3, $C9 
 	dc.b	$C9, $C9, $C9, $C9, $E4, $E3, $C6, $D5, $E9, $E6, $E9, $E6, $68, $51, $51, $69, $69, $EA, $69, $69, $51, $51, $68, $E6, $E9, $E6, $E9, $D5, $D5, $D5, $D2, $EA 
 	dc.b	$D5, $6D, $6D, $6D, $6E, $6E, $CD, $6E, $6E, $6D, $6D, $6D, $D5, $EA, $D2, $D5, $D5, $00 
+; RenderMapToVRAM_DualPalette_21x13_Alt_Data
+; Alternate dungeon mini-map tile layout: 13 rows x 21 columns, dual-palette.
+; Same format as RenderMapToVRAM_DualPalette_21x13_Data but uses palette
+; offset $4AA4 as the primary base (D4 = $4AA4). Terminated by $00.
+; Used by: RenderMapToVRAM_DualPalette_21x13_Alt (dungeon.asm)
 RenderMapToVRAM_DualPalette_21x13_Alt_Data:
 	dc.b	$05, $04, $03, $02, $01, $02, $01, $05, $04, $03, $02, $01, $79, $78, $78, $78, $77, $76, $75, $74, $73, $78, $77, $84, $83, $0E, $0D, $0C, $0C, $0D, $0C, $82 
 	dc.b	$0C, $0C, $0C, $81, $80, $7F, $7E, $7D, $7C, $7B, $91, $8A, $8A, $8A, $90, $90, $8F, $8F, $8F, $8F, $8F, $8E, $8D, $8C, $8B, $8A, $8A, $8A, $8A, $8A, $8A, $97 
@@ -10970,6 +10986,11 @@ RenderMapToVRAM_DualPalette_21x13_Alt_Data:
 LoadWorldMapTileGraphics_Data:
 	incbin "data/art/tiles/overworld/world_map_tiles.bin"
 DisplayKimsToVRAM_Data equ LoadWorldMapTileGraphics_Data+$1ACA
+; DisplayStatsToVRAM_SinglePalette_Data
+; Player stats HUD tile layout: 8 rows x 21 columns, single-palette variant.
+; Each byte is a tile-index offset added to base $4770 (palette line 0).
+; Per row: 11 palette-0 tiles then 10 palette-1 tiles (same base $4770).
+; Used by: DisplayStatsToVRAM_SinglePalette (dungeon.asm, D4=$4770)
 DisplayStatsToVRAM_SinglePalette_Data:
 	dc.b	$00, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $02, $03, $00, $00, $00, $05, $06, $06, $06, $06, $06, $06, $06, $06, $06, $06 
 	dc.b	$06, $06, $06, $06, $07, $05, $05, $05, $05, $05, $08, $09, $09, $09, $09, $09, $09, $09, $09, $09, $09, $09, $0A, $0B, $08, $08, $08, $08, $08, $08, $08, $0C 
@@ -10977,6 +10998,10 @@ DisplayStatsToVRAM_SinglePalette_Data:
 	dc.b	$12, $17, $12, $12, $18, $19, $1A, $14, $14, $1B, $1C, $1D, $1D, $1D, $1D, $1E, $1F, $1B, $1B, $1B, $20, $21, $22, $23, $24, $1D, $1D, $1D, $1D, $1D, $25, $26 
 	dc.b	$27, $27, $28, $29, $2A, $2B, $2C, $2D, $2E, $27, $27, $27, $27, $27, $27, $27, $27, $27, $27, $2F, $30, $31, $32, $33, $34, $35, $35, $35, $35, $35, $35, $35 
 	dc.b	$35, $35, $35, $35, $35, $35, $35, $35 
+; DisplayStatsToVRAM_Data
+; Player stats HUD tile layout: 8 rows x 21 columns, no-palette variant.
+; Each byte is a tile-index offset added to fixed base $4770.
+; Used by: DisplayStatsToVRAM (dungeon.asm)
 DisplayStatsToVRAM_Data:
 	dc.b	$00, $00, $00, $39, $3A, $3B, $01, $01, $01, $01, $01, $01, $01, $01, $01, $3B, $3A, $39, $00, $00, $00, $05, $3F, $0E, $40, $06, $06, $06, $06, $06, $06, $06 
 	dc.b	$06, $06, $06, $06, $06, $06, $40, $0E, $3F, $05, $15, $16, $09, $09, $09, $09, $09, $09, $09, $09, $09, $09, $09, $09, $09, $09, $09, $09, $09, $16, $15, $0D 
@@ -10984,6 +11009,11 @@ DisplayStatsToVRAM_Data:
 	dc.b	$12, $12, $4E, $4D, $4C, $4B, $14, $14, $14, $54, $55, $56, $1B, $57, $58, $59, $5A, $5B, $5C, $5C, $5C, $5B, $5A, $59, $58, $57, $1B, $56, $55, $54, $64, $65 
 	dc.b	$57, $58, $66, $67, $68, $68, $69, $6A, $6B, $6A, $69, $68, $68, $67, $66, $58, $57, $65, $64, $72, $73, $73, $73, $73, $74, $74, $75, $75, $75, $75, $75, $75 
 	dc.b	$75, $74, $74, $73, $73, $73, $73, $72 
+; DisplayStatsToVRAM_AltPalette_Data
+; Player stats HUD tile layout: 8 rows x 21 columns, alternate-palette variant.
+; Each byte is a tile-index offset added to base $4F70 (palette line 1).
+; Per row: 11 palette-0 tiles then 10 palette-1 tiles.
+; Used by: DisplayStatsToVRAM_AltPalette (dungeon.asm, D4=$4F70)
 DisplayStatsToVRAM_AltPalette_Data:
 	dc.b	$00, $00, $00, $03, $02, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $00, $05, $05, $05, $05, $05, $07, $06, $06, $06, $06, $06 
 	dc.b	$06, $06, $06, $06, $06, $06, $06, $06, $06, $05, $08, $08, $08, $08, $08, $08, $08, $0B, $0A, $09, $09, $09, $09, $09, $09, $09, $09, $09, $09, $09, $08, $11 
