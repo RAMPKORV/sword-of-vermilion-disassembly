@@ -914,6 +914,10 @@ GetRandomNumber_Loop:
 ; effectively removing the element at index D0. The array length (in entries)
 ; is D2; the caller is responsible for decrementing the length after the call.
 ;
+; MOVE-002 NOTE: This is a generic array utility; it belongs in core.asm.
+; Callers: combat.asm, npc.asm, boss.asm, items.asm, magic.asm.
+; Physical move would change all JSR/BSR displacements and break bit-perfect.
+;
 ; Input:
 ;   D0.w  index of element to remove (0-based)
 ;   D2.w  current array length (number of entries)
@@ -2057,6 +2061,10 @@ Z80SoundDriver_Data_10480:
 ; Extracts digits by successive division and accumulates them into D3 as
 ; packed BCD (each nibble = one decimal digit, MSD in the highest nibble).
 ;
+; MOVE-003 NOTE: This is a numeric conversion utility; it belongs in core.asm.
+; Called 23+ times from script.asm and items.asm.
+; Physical move would change all JSR/BSR displacements and break bit-perfect.
+;
 ; Input:
 ;   D0.w  binary value (0–99999; upper word ignored)
 ;
@@ -2085,6 +2093,9 @@ ConvertToBCD:
 ; digit, ORs it into D3 as a nibble (LSB), then shifts D3 left by 4 for
 ; the next digit.  The remainder is kept in D0 for the next call.
 ;
+; MOVE-003 NOTE: Helper for ConvertToBCD; both belong in core.asm.
+; Physical move would change all BSR displacements and break bit-perfect.
+;
 ; Input:
 ;   D0.w  current value
 ;   D1.w  divisor (place value)
@@ -2109,6 +2120,11 @@ ExtractBCDDigit:
 ; (type 2) tiles via CountTerrainTileType.  If water tiles outnumber forest,
 ; sets Terrain_tileset_index to TERRAIN_TILESET_FIELD (0); otherwise leaves
 ; the index at 0 (the caller pre-clears it).
+;
+; MOVE-005 NOTE: Terrain/map logic; belongs in gameplay.asm.
+; Also called internally via BSR.w from battle_gfx.asm:953 — moving it would
+; require changing that call to JSR and all other site displacements, breaking
+; bit-perfect.
 ;
 ; Input:   (via RAM)
 ;   Player_position_x_outside_town.w, Player_position_y_outside_town.w

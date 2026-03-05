@@ -34,6 +34,14 @@
 ; Tile index lookup tables and Z80 sound driver binary data
 ; embedded at fixed ROM addresses. Not directly executed by
 ; the 68000; the Z80 driver data is copied to Z80 RAM at init.
+;
+; MOVE-006 NOTE: TownTilesetPtrs_Gfx_8FEE6 and
+; TownTilesetPtrs_Gfx_9239A below are town tileset index
+; lookup tables and belong logically in gfxdata.asm alongside
+; other graphics data. They are stranded here because the
+; disassembler placed them at these ROM addresses inside the
+; sound driver region. Physical relocation would change all
+; downstream ROM offsets and break bit-perfect output.
 ;==============================================================
 TownTilesetPtrs_Gfx_8FEE6:
 	dc.b	$00, $00 
