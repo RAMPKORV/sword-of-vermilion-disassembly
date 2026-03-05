@@ -1622,7 +1622,7 @@
           "file": "src/script.asm, src/states.asm",
           "priority": "low",
           "effort": "medium",
-          "status": "todo",
+          "status": "done",
           "tags": [
             "script-vm",
             "documentation",
@@ -2219,7 +2219,7 @@
       "module_architecture": 10,
       "contributor_experience": 10
     },
-    "done": 128,
-    "todo": 11
+    "done": 129,
+    "todo": 10
   }
 }

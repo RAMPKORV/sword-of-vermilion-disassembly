@@ -899,10 +899,34 @@ DrawTownListWindow_Loop2:
 ; TILEMAP / TEXT RENDERING
 ;==============================================================
 
-; RenderTextToTilemap
-; Render a single character from A0 directly to the VDP tilemap.
-; Inputs: A0 = source byte pointer, D0/D1 = tile offset, D2/D3 = col/row
-; Tile index formula: char + $04C0 | $8000
+; ---------------------------------------------------------------------------
+; RenderTextToTilemap — render a text string directly to VDP Plane B VRAM
+;
+; Iterates over a (Window_tilemap_draw_width+1) × (Window_tilemap_draw_height+1)
+; grid, reading one byte per cell from A0 and writing it as a tile entry to
+; VDP Plane B.  The VDP VRAM address for each cell is computed as:
+;
+;   col_abs  = (D2 + scroll_x_tiles + Window_tilemap_draw_x) & $3F
+;   row_abs  = (D3 + scroll_y_tiles + Window_tilemap_draw_y) & $3F
+;   vram_cmd = $40000003 | ((row_abs<<7 + col_abs<<1) << 16)
+;
+; The tile word written is:  (char_byte + $04C0) | $8000 | Script_tile_attrs
+;   $04C0 — font tile base index in VRAM
+;   $8000 — palette bit (palette 0, priority 0)
+;
+; Interrupts are disabled around each VDP write (ORI/$ANDI on SR).
+;
+; Input:   A0    = pointer to source byte stream (advanced in-place)
+;          (state via RAM)
+;   Window_tilemap_draw_x.w    — left tile column of target region
+;   Window_tilemap_draw_y.w    — top tile row of target region
+;   Window_tilemap_draw_width.w  — number of tile columns − 1 (BLE loop)
+;   Window_tilemap_draw_height.w — number of tile rows   − 1 (BLE loop)
+;   Script_tile_attrs.w        — extra tile attribute bits ORed into every entry
+;
+; Scratch: D0-D5, A0
+; Output:  tiles written directly to VDP VRAM (Plane B)
+; ---------------------------------------------------------------------------
 RenderTextToTilemap:
 	JSR	GetScrollOffsetInTiles
 	CLR.w	D3
@@ -3146,10 +3170,6 @@ DrawInventorySelectionMarkers_Loop:
 ; Scratch:  D0-D2, D6, D7, A0
 ; Output:   Window_tilemap_buffer filled
 ; ---------------------------------------------------------------------------
-; DrawWindowBorder
-; Draw window border/frame tiles
-; Fills window tilemap buffer with border tiles (corners, edges)
-; Uses tile $E0 + offsets for different border parts
 DrawWindowBorder:
 	LEA	Window_tilemap_buffer.w, A0
 	MOVE.w	Window_height.w, D7
@@ -3182,27 +3202,62 @@ DrawWindowBorder_Loop3:
 	DBF	D7, DrawWindowBorder_Done
 	RTS
 
-; RenderTextToWindowAtPosition
-; Render text from Window_text_scratch to the window at a packed (x<<5|y) position. Inputs: D0 = packed position.
+; ---------------------------------------------------------------------------
+; RenderTextToWindowAtPosition — render Window_text_scratch at a packed position
+;
+; Convenience wrapper: loads A0 = Window_text_scratch, decodes D0 as a packed
+; (x<<5 | y) tile offset within the window tilemap buffer, then falls through
+; to RenderTextAtOffset.
+;
+; Input:   D0 = packed position word (bits 9-5 = x tile, bits 4-0 = y tile)
+; ---------------------------------------------------------------------------
 RenderTextToWindowAtPosition:
 	LEA	Window_text_scratch.w, A0
 	BRA.w	RenderTextAtOffset
-; RenderFormattedTextToWindow
-; Render formatted text from Window_text_scratch to the current window position.
+; ---------------------------------------------------------------------------
+; RenderFormattedTextToWindow — render Window_text_scratch at current cursor
+;
+; Convenience wrapper: loads A0 = Window_text_scratch, then falls through to
+; RenderTextToWindow (uses Window_text_x/y for the starting offset).
+; ---------------------------------------------------------------------------
 RenderFormattedTextToWindow:
 	LEA	Window_text_scratch.w, A0
-; RenderTextToWindow
-; Render text string to window tilemap buffer
-; Input: A0 = Text string pointer
-; Processes text codes: $FF=end, $FE=newline, $20→$E4, etc.
+; ---------------------------------------------------------------------------
+; RenderTextToWindow — render a text string to the window tilemap buffer
+;
+; Computes the tile offset from the current cursor position:
+;   offset = Window_text_y * (Window_width + 1) + Window_text_x
+; then falls through to RenderTextAtOffset.
+;
+; Input:   A0    = pointer to null-terminated text string
+;          (state via RAM)
+;   Window_text_x.w / Window_text_y.w — cursor tile position within window
+;   Window_width.w                    — inner window width (stride = width+1)
+; ---------------------------------------------------------------------------
 RenderTextToWindow:
 	MOVE.w	Window_width.w, D0
 	ADDQ.w	#1, D0
 	MOVE.w	Window_text_y.w, D1
 	MULU.w	D1, D0
 	ADD.w	Window_text_x.w, D0
-; RenderTextAtOffset
-; Render text string to the window tilemap buffer at a given tile offset. Inputs: A0 = text, D0 = tile offset.
+; ---------------------------------------------------------------------------
+; RenderTextAtOffset — render a text string to the window tilemap buffer
+;
+; Writes character bytes into Window_tilemap_buffer starting at tile offset D0.
+; Special byte handling:
+;   SCRIPT_END    ($FF) — stop; return via RTS
+;   SCRIPT_NEWLINE($FE) — advance A1 by (Window_width+1)*2 bytes to next row
+;   $20 (space)         — remapped to $E4 (blank tile index)
+;   SCRIPT_WIDE_CHAR_LO/HI — wide-char marker stored at negative offset in row
+;   all other bytes     — stored as-is to (A2)+
+;
+; Input:   A0    = pointer to text string
+;          D0.w  = tile offset into Window_tilemap_buffer
+;          (state via RAM)
+;   Window_width.w  — stride: (width+1) bytes per row in buffer
+; Scratch: D0, D6, A1, A2
+; Output:  Window_tilemap_buffer updated
+; ---------------------------------------------------------------------------
 RenderTextAtOffset:
 	LEA	Window_tilemap_buffer.w, A1
 	LEA	(A1,D0.w), A1
@@ -3231,8 +3286,19 @@ WindowTextDecode_Next_Loop:
 	ADD.w	D0, D0
 	LEA	(A1,D0.w), A1
 	BRA.b	RenderTextAtOffset_Done
-; WindowTextDecode_Special
-; Handle special (wide/double-width) character codes during window text decoding.
+; ---------------------------------------------------------------------------
+; WindowTextDecode_Special — handle wide/double-width character codes
+;
+; Called when a SCRIPT_WIDE_CHAR_LO or SCRIPT_WIDE_CHAR_HI byte is decoded.
+; Stores the wide-char marker at the end of the current row
+; (offset −1 from start-of-row pointer A1) so the renderer can place the
+; full-width glyph correctly, then resumes normal decoding.
+;
+; Input:   D6.b = wide-char byte (SCRIPT_WIDE_CHAR_LO or SCRIPT_WIDE_CHAR_HI)
+;          A1   = current row base pointer in Window_tilemap_buffer
+;          A2   = current write pointer in current row
+; Scratch: D0, A2
+; ---------------------------------------------------------------------------
 WindowTextDecode_Special:
 	MOVE.w	Window_width.w, D0	
 	ADDQ.w	#1, D0	
@@ -3242,8 +3308,33 @@ WindowTextDecode_Special:
 WindowTextDecode_Special_Loop:
 	RTS
 	
-; DrawWindowTilemapFull
-; Write the entire window tilemap buffer to VRAM (all rows and columns).
+; ---------------------------------------------------------------------------
+; DrawWindowTilemapFull — write entire window tilemap buffer to VDP VRAM
+;
+; Iterates over (Window_width+1) × (Window_height+1) cells, computing a fresh
+; VDP VRAM write command for each cell:
+;
+;   col_abs = (D2 + scroll_x_tiles + Window_tilemap_x) & $3F
+;   row_abs = (D3 + scroll_y_tiles + Window_tilemap_y) & $3F
+;   vram_cmd = $40000003 | ((row_abs<<7 + col_abs<<1) << 16)
+;
+; Tile word written: (buffer_byte + $04C0) | $8000 | Window_tile_attrs
+;   $04C0 — font tile base index
+;   $8000 — palette/priority bit
+;
+; Unlike RenderTextToTilemap, interrupts are NOT disabled here; this routine
+; is only called from non-interrupt context.
+;
+; On completion, clears Window_tilemap_draw_pending.
+;
+; Input:   (all state via RAM)
+;   Window_tilemap_x.w / Window_tilemap_y.w — top-left tile of window in plane
+;   Window_width.w / Window_height.w        — inner dimensions (loop limits)
+;   Window_tilemap_buffer                   — source byte array
+;   Window_tile_attrs.w                     — extra attribute bits for tiles
+; Scratch: D0-D5, A0
+; Output:  tiles written to VDP VRAM; Window_tilemap_draw_pending cleared
+; ---------------------------------------------------------------------------
 DrawWindowTilemapFull:
 	LEA	Window_tilemap_buffer.w, A0
 	JSR	GetScrollOffsetInTiles
@@ -3281,8 +3372,31 @@ DrawWindowTilemapFull_Done2:
 	CLR.b	Window_tilemap_draw_pending.w
 	RTS
 
-; DrawWindowTilemapRow
-; Write one row of the window tilemap buffer to VRAM, incrementing Window_draw_row each call.
+; ---------------------------------------------------------------------------
+; DrawWindowTilemapRow — stream one row of the window tilemap to VDP per call
+;
+; Called once per VBlank (via Window_tilemap_draw_active) to trickle the
+; window tilemap buffer to VRAM one row at a time, avoiding long VDP bursts
+; that could cause display glitches.
+;
+; On each call:
+;   1. If Window_draw_row >= Window_height → clear Window_tilemap_draw_active, RTS
+;   2. Seek A0 to the content row in buffer:  A0 += Window_draw_row*(width+1)
+;   3. Call WriteWindowRowToVDP for the content row
+;   4. Seek A0 to the corresponding border row (last row of buffer, same index
+;      but offset by full buffer height) and call WriteWindowRowToVDP again
+;      for the bottom-border row
+;   5. Increment Window_draw_row
+;
+; Input:   (all state via RAM)
+;   Window_draw_row.w   — next row to write (0-based)
+;   Window_height.w     — total row count (stop when draw_row >= height)
+;   Window_width.w      — row width (stride = width+1 bytes)
+;   Window_tilemap_x.w / Window_tilemap_y.w — plane position
+;   Window_tilemap_buffer — source byte array
+; Scratch: D0-D2, D4-D5, A0
+; Output:  one pair of rows written to VDP VRAM; Window_draw_row incremented
+; ---------------------------------------------------------------------------
 DrawWindowTilemapRow:
 	LEA	Window_tilemap_buffer.w, A0
 	MOVE.w	Window_width.w, D2
@@ -3318,8 +3432,31 @@ DrawWindowTilemapRow_Loop:
 	CLR.b	Window_tilemap_draw_active.w
 	RTS
 
-; WriteWindowRowToVDP
-; Low-level: write a single row of tile data from buffer to VDP VRAM.
+; ---------------------------------------------------------------------------
+; WriteWindowRowToVDP — write one row of tile data from buffer to VDP VRAM
+;
+; Low-level helper called by DrawWindowTilemapRow.  Writes (Window_width+1)
+; tile entries starting at A0, computing a separate VDP VRAM write command
+; for each tile column:
+;
+;   col_abs  = (D2 + D0 + Window_tilemap_x) & $3F   (D0 = pre-computed x scroll)
+;   vram_cmd = $40000003 | ((D1 + col_abs<<1) << 16) (D1 = pre-computed row offset)
+;
+; Tile word written: (buffer_byte + $84C0) | Window_tile_attrs
+;   $84C0 = $8000 (palette bit) | $04C0 (font tile base)
+;
+; Input:   A0    = pointer to first byte of row in Window_tilemap_buffer
+;          D0.w  = horizontal scroll offset (x_tile from GetScrollOffsetInTiles
+;                  already ANDed/shifted by caller)
+;          D1.w  = pre-computed VDP row offset:
+;                  (scroll_y_tiles + Window_tilemap_y + row) & $3F, then <<7
+;          (state via RAM)
+;   Window_tilemap_x.w  — left tile column of window in plane
+;   Window_width.w      — number of tile columns − 1 (BLE loop limit)
+;   Window_tile_attrs.w — extra attribute bits ORed into every tile
+; Scratch: D2, D4, D5
+; Output:  one full row written to VDP VRAM
+; ---------------------------------------------------------------------------
 WriteWindowRowToVDP:
 	CLR.w	D2
 WriteWindowRowToVDP_Done:
