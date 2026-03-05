@@ -439,7 +439,7 @@
           "file": "tools/palette_viewer.js",
           "priority": "medium",
           "effort": "medium",
-          "status": "todo"
+          "status": "done"
         },
         {
           "id": "TOOLB-003",
