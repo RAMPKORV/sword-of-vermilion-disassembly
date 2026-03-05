@@ -941,7 +941,7 @@
           "file": "src/townbuild.asm",
           "priority": "medium",
           "effort": "large",
-          "status": "todo"
+          "status": "done"
         },
         {
           "id": "STR-002",
@@ -2180,8 +2180,8 @@
   "statistics": {
     "total_tasks": 139,
     "by_status": {
-      "done": 118,
-      "todo": 21
+      "done": 119,
+      "todo": 20
     },
     "by_priority": {
       "critical": 1,

@@ -14,7 +14,544 @@
 ; Towns in order: Default/Parma, Deepdale, Stow, Malaga,
 ;   Keltwick, Helwig, Tadcaster, Wyclif, Parma (town),
 ;   Swaffham, Excalabria, and final area.
+;
+; NOTE: Wyclif town (L1985) and Hastings town (L5815) contain no
+;   dialogue strings of their own — they reuse strings defined in the
+;   Carthahena Castle section (L1681) via shared pointer tables.
 ; ======================================================================
+; ===========================================================================
+; DIALOGUE STRING CATALOG  (STR-001)
+; ===========================================================================
+; 471 *Str: labels total, grouped below by source section.
+; All strings use script_cmd_* macro sequences (see macros.asm, script.asm).
+; Labels are referenced by TownDialogTable_* pointer arrays in each section
+; and by CastleDialogTable_* arrays for castle NPCs.
+;
+; Wyclif strings (FatherCallingStr, BladeDyingStr, GoodPersonStr, etc.) are
+; physically located in the CARTHAHENA CASTLE section (L1681) but are shared
+; across the whole game via pointer tables. See TownDialogTable_Wyclif_State*.
+;
+; === DEFAULT / PARMA CASTLE — TOWN STATE CONFIG + DIALOG (srcline 720, 25 strings)
+;     L 785: RingOfferStr
+;     L 800: FindTreasureStr
+;     L 804: TreasureReturnedStr
+;     L 813: NoChoiceStr
+;     L 818: OffYouGoStr
+;     L 820: NicePlaceStr
+;     L 825: NeedPermanentSolutionStr
+;     L 834: CartahenaBeastStr
+;     L 845: RingOfSkyGiftStr
+;     L 857: GotRingStr
+;     L 859: DecideToLiveHereStr
+;     L 862: ReallyLiveHereStr
+;     L 866: TalkKingStr
+;     L 869: NotHaveKnownStr
+;     L 871: SuspicionsRightStr
+;     L 874: DeliverMealStr
+;     L 877: KingEatsMoreStr
+;     L 881: KingMonsterStr
+;     L 884: TrueKingBackStr
+;     L 888: KingPersonalityChangeStr
+;     L 892: KingImposterStr
+;     L 895: CannotPassStr
+;     L 898: SavedCountryStr
+;     L 900: NoEnterRoomStr
+;     L 904: ShowNoMercyStr
+;
+; === DEEPDALE CASTLE — TOWN STATE CONFIG + DIALOG (srcline 968, 12 strings)
+;     L 996: KingDisguiseMasterStr
+;     L 999: SeeThroughDisguiseStr
+;     L1003: KingPeaceProsperityStr
+;     L1007: KingLikesTrufflesStr
+;     L1020: BremensCaveNorthwestStr
+;     L1023: KingThinksOfPeopleStr
+;     L1026: KingDisguiseOrdinaryStr
+;     L1033: MeetKingStr
+;     L1035: KingNotHereStr
+;     L1039: KingNotSureReturnStr
+;     L1042: KingNotSeeingVisitorsStr
+;     L1047: KingInTownStr
+;
+; === STOW CASTLE — TOWN STATE CONFIG + DIALOG (srcline 1085, 17 strings)
+;     L1134: KingKnowsRingsStr
+;     L1136: YoureTheThiefStr
+;     L1138: AttackedWithoutWarningStr
+;     L1141: TrueHeroStr
+;     L1143: HonestLookingFellowStr
+;     L1146: FaceOfCriminalStr
+;     L1150: MonsterTooPowerfulStr
+;     L1154: KingOverjoyedStr
+;     L1157: BusyNowStr
+;     L1159: HeardOfYouStr
+;     L1176: ReturnWhenInnocentStr
+;     L1179: MonsterLittleGirlStr
+;     L1193: RingsAreSafeStr
+;     L1216: BookSanguiaEffortsStr
+;     L1230: DiscardBookSpellsStr
+;     L1234: HopesWithYouStr
+;     L1237: BringDoctorHereStr
+;
+; === MALAGA CASTLE — TOWN STATE CONFIG + DIALOG (srcline 1276, 8 strings)
+;     L1335: DontForgetFaceStr
+;     L1339: BrunoNotRightStr
+;     L1346: MeetAgainStr
+;     L1351: BrunoLoyalServantStr
+;     L1367: BarrowNortheastStr
+;     L1415: HopeReturnSafelyStr
+;     L1430: KeepRingOfWaterStr
+;     L1438: ReturnAfterTaskStr
+;
+; === TADCASTER CASTLE — TOWN STATE CONFIG + DIALOG (srcline 1489, 7 strings)
+;     L1515: WhyAreYouHereStr
+;     L1517: DoNotJudgeKingStr
+;     L1521: GreetingsHighnessStr
+;     L1529: KnowImposterStr
+;     L1533: SavedMyLandStr
+;     L1539: DontTormentHusbandStr
+;     L1542: BegDontTormentHusbandStr
+;
+; === SWAFFHAM CASTLE — TOWN STATE CONFIG + DIALOG (srcline 1549, 11 strings)
+;     L1595: KingWorryingCartahenansStr
+;     L1598: BoredJobStr
+;     L1600: DullJobLousyWagesStr
+;     L1603: LookingForJobStr
+;     L1607: RingOfEarthQuestStr
+;     L1626: GiveWhiteCrystalStr
+;     L1643: RedCrystalTaskStr
+;     L1657: ThreeCrystalsStr
+;     L1669: BackSoSoonStr
+;     L1672: BegoneNothingMoreStr
+;     L1675: CantGiveKeyStr
+;
+; === CARTHAHENA CASTLE — TOWN STATE CONFIG + DIALOG (srcline 1681, 56 strings)
+; NOTE: This section also contains all Wyclif-area strings (father/blade arc).
+;     L1707: WelcomeFoolStr
+;     L1715: BestedMeStr
+;     L1721: ErikProudStr
+;     L1730: UseRingsStr
+;     L1736: BanishEvilsStr
+;     L1742: UniteRingsStr
+;     L1748: CreateWorldStr
+;     L1755: GoodPersonStr
+;     L1758: KingRingStr
+;     L1761: FatherCallingStr
+;     L1764: RingInCaveStr
+;     L1778: SurprisedAliveStr
+;     L1781: BuyGearStr
+;     L1785: QuestBeginsStr
+;     L1795: SorryAboutBladeStr
+;     L1798: EvilRoamsStr
+;     L1802: DontLoiterStr
+;     L1805: ValuableItemsStr
+;     L1812: FatherNearingDeathStr
+;     L1816: BladeMissedStr
+;     L1819: FoundRingStr
+;     L1822: FatherFailingStr
+;     L1825: ShareSorrowStr
+;     L1828: BladeDyingStr
+;     L1830: HaveMapStr
+;     L1834: GainMoneyStr
+;     L1837: RushToFatherStr
+;     L1840: VisitChurchesStr
+;     L1844: RunHomeStr
+;     L1847: FatherRestsStr
+;     L1850: BewareWorldStr
+;     L1853: EvilSoldiersStr
+;     L1859: RingPropertyStr
+;     L1864: FortunetellerAdviceStr
+;     L1867: BladeWoundsStr
+;     L1871: PeopleSayStr
+;     L1877: BladeDeadStr
+;     L1879: FatherProudStr
+;     L1882: BladeHealthStr
+;     L1886: FindRingStr
+;     L1888: FatherGraveStr
+;     L1892: IAmNotYourRealFatherStr
+;     L1930: NoAnswerStr
+;     L1932: RingOfWisdomStr
+;     L1942: OnlyYouCanSaveUsStr
+;     L1946: EquipWeaponStr
+;     L1949: FineWeaponStr
+;     L1952: EnterCaveWithoutCandlesStr
+;     L1956: BetterThanCandlesStr
+;     L1960: DangerousPathStr
+;     L1963: RingInParmaStr
+;     L1966: GreatManStr
+;     L1969: MissFatherStr
+;     L1972: CastAsideGriefStr
+;     L1977: GrieveFatherStr
+;     L1981: GoodManStr
+;
+; === WYCLIF TOWN — NPC DATA, DIALOG TABLES, TILEMAP DATA (srcline 1985, 0 strings)
+; NOTE: Wyclif dialogue strings are defined in the CARTHAHENA CASTLE section
+;   above. TownDialogTable_Wyclif_State0–15 (L2062–2146) reference those
+;   shared strings. NPC dispatch tables are in src/towndata.asm (L908–961).
+;
+; === PARMA TOWN — NPC DATA, DIALOG TABLES, TILEMAP DATA (srcline 2305, 47 strings)
+;     L2504: WelcomeParmaStr
+;     L2506: CannotLeaveStr
+;     L2509: CaveTroyEastStr
+;     L2512: GiveUpQuestStr
+;     L2515: VillageWatlingEastStr
+;     L2519: KingHasRingStr
+;     L2522: ArmWellStr
+;     L2525: StrangeWatlingStr
+;     L2532: WealthWestStr
+;     L2541: UseMapStr
+;     L2543: MonstersEastStr
+;     L2547: BeCarefulOutThereStr
+;     L2549: BraveManHereStr
+;     L2553: SearchAdventureStr
+;     L2556: KingBehavingOddlyStr
+;     L2559: CarefulInCaveStr
+;     L2563: NoDangerTownStr
+;     L2566: InYourDebtStr
+;     L2569: AskKingAboutRingStr
+;     L2572: DontAngerKingStr
+;     L2575: StayHereStr
+;     L2578: VeryBraveStr
+;     L2581: BewareSlanderingKingStr
+;     L2584: GnostanEvilStr
+;     L2588: WelcomeBackStr
+;     L2591: BooksOfSpellsStr
+;     L2595: GoodThingsCostStr
+;     L2598: NotReallyPeopleStr
+;     L2601: LanternCostStr
+;     L2605: ManyCandlesStr
+;     L2609: ExploringCavesStr
+;     L2613: GoWestStr
+;     L2616: GnostanDonationsStr
+;     L2618: GoodToBeFreeStr
+;     L2621: ConvertToGnostanStr
+;     L2625: BelieveInGoodStr
+;     L2629: KingForcesGnostanStr
+;     L2632: ThanksForFreeingUsStr
+;     L2635: ConvertForMoneyStr
+;     L2641: SavedFromEvilStr
+;     L2644: AdviceForQuestionsStr
+;     L2647: CaveOfTroyMapStr
+;     L2658: WatlingMapStr
+;     L2753: TalkToEveryoneStr
+;     L2757: CrystalBallMonsterStr
+;     L2763: PrepareKingsMealsStr
+;     L2770: NotOurKingStr
+;
+; === WATLING TOWN — NPC DATA, DIALOG TABLES, TILEMAP DATA (srcline 2790, 22 strings)
+;     L2851: WhatIsThisStr
+;     L2853: HelpMapRegionStr
+;     L2865: ThankYouStrangerStr
+;     L2867: BecomeYoungerStr
+;     L2870: SearchingForRingsStr
+;     L2874: GoSouthwestDeepdaleStr
+;     L2877: HowAreYouStr
+;     L2881: OldStillStr
+;     L2885: RingsGoodEvilStr
+;     L2889: NightmareStr
+;     L2892: DeepdaleClosestTownStr
+;     L2895: SixteenRingsTotalStr
+;     L2899: NoYoungPeopleStr
+;     L2927: ThankYouHelpStr
+;     L2933: KnowledgeablePeopleStr
+;     L2936: GoNorthVerlinsCaveStr
+;     L2939: CustomerStayHereStr
+;     L2946: StayingForFreeStr
+;     L2952: PayOrWorkStr
+;     L2954: MoveAlongStr
+;     L2956: DontPullOnMeStr
+;     L2959: StoleYouthStr
+;
+; === DEEPDALE TOWN — NPC DATA, DIALOG TABLES, TILEMAP DATA (srcline 3039, 19 strings)
+;     L3120: EnjoyStayDeepdaleStr
+;     L3123: AmazinglyPeacefulStr
+;     L3126: MapToStowStr
+;     L3144: RoadToStowDangerousStr
+;     L3147: RingOfWindStr
+;     L3150: VisitStowFirstStr
+;     L3156: CartahenaNotInvadedStr
+;     L3159: KingNotEasyMeetStr
+;     L3162: CaveToStowStr
+;     L3166: CheckCastleStr
+;     L3170: KindKingStr
+;     L3172: BringingTrufflesStr
+;     L3175: SwellGuyStr
+;     L3177: KingInCastleStr
+;     L3180: VisitorToTownStr
+;     L3184: RingOfWindRewardStr
+;     L3200: KeptSecretStr
+;     L3203: LikedItHereStr
+;     L3207: TellPriestsStr
+;
+; === STOW TOWN — NPC DATA, DIALOG TABLES, TILEMAP DATA (srcline 3316, 49 strings)
+;     L3432: ThisIsStowStr
+;     L3434: HappenInStowStr
+;     L3437: LookingForButtonStr
+;     L3440: BookOfSpellsWhereStr
+;     L3443: ReallyInnocentStr
+;     L3445: ThankHeavensStr
+;     L3448: FeelBetterStr
+;     L3451: RingOfFireFoundStr
+;     L3454: ProveInnocenceStr
+;     L3457: MonsterDidntAttackStr
+;     L3460: EveryoneBetterStr
+;     L3463: TooBusyTalkStr
+;     L3465: BetGuiltyStr
+;     L3468: ReallyInnocentConfirmedStr
+;     L3471: DeedsRememberedStr
+;     L3474: KingGoodManStr
+;     L3477: FindBookSellerStr
+;     L3481: PleaseHelpUsStr
+;     L3483: DoctorHealedAllStr
+;     L3486: LookForBookSellerStr
+;     L3490: KingThanksHeroismStr
+;     L3493: SawShadowCastleStr
+;     L3497: MonsterTwoHeadsStr
+;     L3499: PlayAGameStr
+;     L3502: MakeMonsterGoAwayStr
+;     L3505: MonsterKillUsStr
+;     L3508: DontHearWellStr
+;     L3514: ThankYouLivesStr
+;     L3517: DozedOffStr
+;     L3520: AfraidMonsterStr
+;     L3524: AtoneCowardiceStr
+;     L3527: PrettyGirlMonsterStr
+;     L3530: KeltwickShopsStr
+;     L3536: WelcomeEatStr
+;     L3540: MapAstiCaveStr
+;     L3550: GetRingsStr
+;     L3552: LandSafeStr
+;     L3555: PleaseRescueUsStr
+;     L3557: GoodMorningStr
+;     L3561: MetAcolytesStr
+;     L3565: BuyBookSanguiosStr
+;     L3571: BuyItStr
+;     L3574: MoreNeatStuffStr
+;     L3584: TurnDownBargainStr
+;     L3600: NoRoomMoreBooksStr
+;     L3604: NothingForYouStr
+;     L3607: DidntStealBookStr
+;     L3615: JustBorrowedBookStr
+;     L3620: SorryForStealingStr
+;
+; === KELTWICK TOWN — NPC DATA, DIALOG TABLES, TILEMAP DATA (srcline 3752, 39 strings)
+;     L3859: ThisIsKeltwickStr
+;     L3861: ExploreKeltwickStr
+;     L3864: BasilFineDoctorStr
+;     L3867: MapToMalagaStr
+;     L3878: MalagaNortheastStr
+;     L3881: BasilNappingStr
+;     L3884: BearwulfWantsToSeeYouStr
+;     L3887: BearwulfLivesWithSonStr
+;     L3890: BasilLaziestDoctorStr
+;     L3893: MalagaNoNewKingStr
+;     L3897: NewKingChosenStr
+;     L3900: LookingForBasilStr
+;     L3904: MapToBlazonsCaveStr
+;     L3912: GoWestBlazonsCaveStr
+;     L3915: DontBotherMeStr
+;     L3917: TroubleAtStowStr
+;     L3920: TalkToEveryoneMalagaStr
+;     L3923: EveryoneKnowsSomethingStr
+;     L3927: BearwulfWaitingStr
+;     L3930: BearwulfIsBackStr
+;     L3934: WhatsYourNameStr
+;     L3936: PoorAnselmStr
+;     L3939: HasFatherReturnedStr
+;     L3942: GreetingsYoungManStr
+;     L3945: AnselmIntroductionStr
+;     L3953: ThankYouForFindingHimStr
+;     L3956: IntroduceMeToSomeoneStr
+;     L3960: ShowSketchStr
+;     L3966: LoneTreeTreasureStr
+;     L3973: WaitingForLetterStr
+;     L3976: ComeBackLessGearStr
+;     L3979: FindPoisonShieldStr
+;     L3982: MalagaNorthKeyStr
+;     L3989: LostKeyStr
+;     L3993: TroubleWakingUpStr
+;     L3996: WhatsWrongStowStr
+;     L4004: ReadyToLeaveStowStr
+;     L4007: GettingReadyForBedStr
+;     L4011: BearwulfIntroductionStr
+;
+; === MALAGA TOWN — NPC DATA, DIALOG TABLES, TILEMAP DATA (srcline 4099, 48 strings)
+;     L4233: WelcomeMalagaStr
+;     L4236: SoldierOfTharStr
+;     L4239: SecretlyHatedTharStr
+;     L4243: LongLiveLutherStr
+;     L4247: LutherFooledUsStr
+;     L4251: SplitIntoFactionsStr
+;     L4255: TownUnitedAgainStr
+;     L4261: BrunoComingBackStr
+;     L4263: TharLutherWantKingStr
+;     L4267: KingMustHaveRingOfWaterStr
+;     L4270: LongLiveKingAndPrincessStr
+;     L4273: WaitForReturnStr
+;     L4276: WoeToMalagaStr
+;     L4279: RelievedTharNotKingStr
+;     L4282: RuinLandStr
+;     L4285: GladLutherNotKingStr
+;     L4288: KingDiedYearsAgoStr
+;     L4292: TharLutherHateYouStr
+;     L4294: VillageOfBarrowStr
+;     L4297: KingWorriedPrincessStr
+;     L4301: NewKingQuestionStr
+;     L4303: HopeYouSucceedStr
+;     L4305: FoodPriceBestStr
+;     L4308: ComeHereOftenStr
+;     L4311: AbsolutelyDeliciousStr
+;     L4313: TavernReputationStr
+;     L4317: BusyPlaceStr
+;     L4321: BotheringWhileEatingStr
+;     L4324: GrabSomeFoodStr
+;     L4327: LookingForRingStr
+;     L4331: GoodFoodSpiritsStr
+;     L4334: StopLookingAtFoodStr
+;     L4336: TavernTooPopularStr
+;     L4339: BestTavernStr
+;     L4342: OnlyTavernStr
+;     L4345: WonderWhyTsarkonEvilStr
+;     L4349: EverythingFreeStr
+;     L4352: LikeAnythingFreeStr
+;     L4355: ErikAndTsarkonFriendsStr
+;     L4359: WhatElseToEatStr
+;     L4362: WhyTsarkonKillFriendStr
+;     L4366: ShopOwnerVisionStr
+;     L4373: TharOrLutherEndMalagaStr
+;     L4377: EverythingOnHouseStr
+;     L4380: WaitingForPlayerNameStr
+;     L4392: HaveYouGivenUpStr
+;     L4395: NeverExpectedSucceedStr
+;     L4406: ReturnToMalagaStr
+;
+; === BARROW TOWN — NPC DATA, DIALOG TABLES, TILEMAP DATA (srcline 4432, 18 strings)
+;     L4477: WelcomeToBarrowStr
+;     L4479: UncleTiborStr
+;     L4483: TadcasterDangerStr
+;     L4486: UncleTiborForestStr
+;     L4489: MapToTadcasterStr
+;     L4502: ReachTadcasterStr
+;     L4505: HeadTowardTadcasterStr
+;     L4508: HiddenRoadForestStr
+;     L4514: TreasureLegendStr
+;     L4530: TreasureInCaveStr
+;     L4534: ShareTreasureStr
+;     L4543: DontSpendAllWealthStr
+;     L4546: GoAwayStr
+;     L4548: BuyPassToCartahenaStr
+;     L4553: WhyHereStr
+;     L4555: BoughtFromMeStr
+;     L4563: CantAffordPassStr
+;     L4570: TooMuchGearStr
+;
+; === TADCASTER TOWN — NPC DATA, DIALOG TABLES, TILEMAP DATA (srcline 4684, 2 strings)
+; NOTE: Most Tadcaster NPC dialogue is inline raw dc.b text (not *Str labels).
+;   Only 2 named string labels here; most dialogue not yet extracted.
+;     L4783: PleaseDontTormentStr
+;     L4806: ImposterDarmonsCaveStr
+;
+; === HELWIG TOWN — NPC DATA, DIALOG TABLES, TILEMAP DATA (srcline 5037, 40 strings)
+;     L5115: YouAreInHelwigStr
+;     L5118: OnlyWomenRemainStr
+;     L5121: JourneyWestToSwaffhamMapStr
+;     L5134: JourneyWestToSwaffhamStr
+;     L5136: HusbandCapturedStr
+;     L5140: HusbandReturnedStr
+;     L5143: VillageMenSlaveLaborStr
+;     L5147: ThankYouRescueMenStr
+;     L5150: ToBeMarriedNextWeekStr
+;     L5153: NeverRepayYouStr
+;     L5155: MethuenCaveMapStr
+;     L5168: CountOnYouStr
+;     L5170: RingOfEarthSwaffhamStr
+;     L5173: GoldMinedMethuenCaveStr
+;     L5181: WarBetweenCartahenaAndExcalabriaStr
+;     L5185: FindSomeoneForMeStr
+;     L5194: FoundSomeoneForMeStr
+;     L5197: WriteLetterGiftDragonShieldStr
+;     L5205: GiftDragonShieldStr
+;     L5212: GetAlongFineStr
+;     L5219: FriendGiftDragonShieldStr
+;     L5225: NeverSeeDaddyAgainStr
+;     L5228: DaddyBackStr
+;     L5231: OweYouMyLifeStr
+;     L5234: WelcomeAtWeddingStr
+;     L5237: DaughterGratefulStr
+;     L5240: KeyFromCaveStr
+;     L5248: RememberedAsHeroStr
+;     L5252: CantCarryMoreItemsStr
+;     L5256: DragonShieldVillageStr
+;     L5263: GetBackToHelwigStr
+;     L5266: KingOfSwaffhamStingyStr
+;     L5269: MinisterTrickedSoldiersStr
+;     L5273: SleepInSoftBedStr
+;     L5281: LazySlugStr
+;     L5291: HurryBringBackHusbandsStr
+;     L5295: AppreciateYouStr
+;     L5299: StopByForFoodStr
+;     L5303: WhatsWrongHereStr
+;     L5307: FreeAtLastStr
+;
+; === SWAFFHAM TOWN — NPC DATA, DIALOG TABLES, TILEMAP DATA (srcline 5434, 20 strings)
+;     L5486: MapsHardToFindStr
+;     L5490: YoureInSwaffhamStr
+;     L5493: AskKingForGoldStr
+;     L5497: KingGaveRingStr
+;     L5501: KingVeryGreedyStr
+;     L5504: CartahenaInvadeSwaffhamStr
+;     L5508: OldTownRuinsStr
+;     L5512: TreasureNearbyCaveStr
+;     L5516: TaxesHighStr
+;     L5520: StingyKingPeaceStr
+;     L5524: KingNoQueenStr
+;     L5528: MinistersQuitStr
+;     L5532: KingWantsJewelStr
+;     L5536: FearCartahenaStr
+;     L5540: TownDestroyedLongAgoStr
+;     L5544: TerribleMonsterCaveStr
+;     L5548: ThreeCavesToRuinsStr
+;     L5552: ExcalabriaDestroyedStr
+;     L5556: CartahenaDestroyedSwaffhamStr
+;     L5568: SomethingStrangeHappenStr
+;
+; === EXCALABRIA TOWN — NPC DATA, DIALOG TABLES, TILEMAP DATA (srcline 5684, 4 strings)
+;     L5699: WaitingExcalabriaStr
+;     L5707: LongWaitedForYouStr
+;     L5718: TerribleNewsStr
+;     L5733: GetAllRingsStr
+;
+; === HASTINGS TOWN — NPC DATA, DIALOG TABLES, TILEMAP DATA (srcline 5815, 0 strings)
+; NOTE: Hastings has no local *Str labels. Its NPCs use generic or inline
+;   dialogue. The NPC dialog pointer table is at L5852.
+;
+; === CARTHAHENA TOWN (srcline 6192, 27 strings)
+;     L6263: SheNeverAnsweredStr
+;     L6265: CannotEnterWithoutPassStr
+;     L6268: PassGrantsAdmittanceStr
+;     L6272: ThankYouForBeatingStr
+;     L6275: TsarkonDeadStr
+;     L6278: ChangedIntoMonsterStr
+;     L6282: ToysForTsarkonStr
+;     L6285: WorldWaitedLongEnoughStr
+;     L6289: MotherAwaitsStr
+;     L6292: ServantsAwaitStr
+;     L6296: FreedUsAllStr
+;     L6298: MenTurnedIntoMonstersStr
+;     L6305: TsarkonFledEastStr
+;     L6314: TsarkonFledEastwardStr
+;     L6317: MustHaveAllRingsStr
+;     L6325: FailedToKillTsarkonStr
+;     L6329: WishPoisonKilledStr
+;     L6334: DieLaughStr
+;     L6339: TharRevengeStr
+;     L6348: LutherDevastatedSwaffhamStr
+;     L6355: StepfatherRingsStr
+;     L6362: ChaosReignStr
+;     L6367: BreakMothersHeartStr
+;     L6373: OneOfUsWillDieStr
+;     L6377: FreedAtLastStr
+;     L6395: FeelChillsStr
+;     L6402: EvilDiedWithTsarkonStr
+; ===========================================================================
 ; ===========================================================================
 ; TOWN TILEMAP FORMAT
 ; ===========================================================================
