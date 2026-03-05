@@ -44,35 +44,35 @@ Boss1_DeathFall:
 Boss1_DeathFall_Loop:
 	MOVEA.l	Object_slot_02_ptr.w, A6
 	TST.l	obj_vel_y(A6)
-	BLE.b	Boss1_DeathFall_Loop2
+	BLE.b	Boss1_DeathFall_Slot2
 	ADDI.l	#$4000, obj_vel_y(A6)
 	MOVE.w	#1, D0
-Boss1_DeathFall_Loop2:
+Boss1_DeathFall_Slot2:
 	MOVEA.l	Object_slot_03_ptr.w, A6
 	TST.l	obj_vel_y(A6)
-	BLE.b	Boss1_DeathFall_Loop3
+	BLE.b	Boss1_DeathFall_Slot3
 	ADDI.l	#$4000, obj_vel_y(A6)
 	MOVE.w	#1, D0
-Boss1_DeathFall_Loop3:
+Boss1_DeathFall_Slot3:
 	MOVEA.l	Object_slot_04_ptr.w, A6
 	TST.l	obj_vel_y(A6)
-	BLE.b	Boss1_DeathFall_Loop4
+	BLE.b	Boss1_DeathFall_Slot4
 	ADDI.l	#$4000, obj_vel_y(A6)
 	MOVE.w	#1, D0
-Boss1_DeathFall_Loop4:
+Boss1_DeathFall_Slot4:
 	MOVEA.l	Object_slot_05_ptr.w, A6
 	TST.l	obj_vel_y(A6)
-	BLE.b	Boss1_DeathFall_Loop5
+	BLE.b	Boss1_DeathFall_Slot5
 	ADDI.l	#$4000, obj_vel_y(A6)
 	MOVE.w	#1, D0
-Boss1_DeathFall_Loop5:
+Boss1_DeathFall_Slot5:
 	TST.w	D0                              ; D0 nonzero = at least one segment still moving
-	BNE.b	Boss1_DeathFall_Loop6
+	BNE.b	Boss1_DeathFall_CheckDone
 	MOVE.l	#Boss1_VictoryPauseWait, obj_tick_fn(A5) ; all segments landed — begin victory
 	CLR.w	Dialog_timer.w                  ; reset general-purpose frame counter
 	CLR.w	Dialog_phase.w                  ; reset flash phase counter
 	MOVE.b	#BOSS_VICTORY_PAUSE, obj_invuln_timer(A5) ; set initial pause duration
-Boss1_DeathFall_Loop6:
+Boss1_DeathFall_CheckDone:
 	BSR.w	UpdateSpritePositionAndRender
 	RTS
 
@@ -586,9 +586,9 @@ InitTwoHeadedDragon_Common_Done:
 	MOVE.w	#$0087, obj_world_y(A6)
 	MOVE.l	#TwoHeadedDragon_BodyTick, obj_tick_fn(A6)
 	MOVE.w	#0, D7
-InitTwoHeadedDragon_Common_Done2:
+InitTwoHeadedDragon_BodySlotLoop:
 	BSR.w	InitNextSpriteSlot
-	DBF	D7, InitTwoHeadedDragon_Common_Done2
+	DBF	D7, InitTwoHeadedDragon_BodySlotLoop
 	MOVEA.l	Object_slot_02_ptr.w, A6
 	BSET.b	#7, (A6)
 	CLR.b	obj_move_counter(A6)
@@ -612,9 +612,9 @@ InitTwoHeadedDragon_Common_Done2:
 	MOVE.w	(A1), obj_world_y(A6)
 	MOVE.l	#TwoHeadedDragon_HeadTickA, obj_tick_fn(A6)
 	MOVE.w	#2, D7
-InitTwoHeadedDragon_Common_Done3:
+InitTwoHeadedDragon_HeadASlotLoop:
 	BSR.w	InitNextSpriteSlot
-	DBF	D7, InitTwoHeadedDragon_Common_Done3
+	DBF	D7, InitTwoHeadedDragon_HeadASlotLoop
 	MOVEA.l	Object_slot_03_ptr.w, A6
 	BSET.b	#7, (A6)
 	CLR.b	obj_move_counter(A6)
@@ -634,9 +634,9 @@ InitTwoHeadedDragon_Common_Done3:
 	MOVE.w	(A1), obj_world_y(A6)
 	MOVE.l	#TwoHeadedDragon_HeadTickB, obj_tick_fn(A6)
 	MOVE.w	#2, D7
-InitTwoHeadedDragon_Common_Done4:
+InitTwoHeadedDragon_HeadBSlotLoop:
 	BSR.w	InitNextSpriteSlot
-	DBF	D7, InitTwoHeadedDragon_Common_Done4
+	DBF	D7, InitTwoHeadedDragon_HeadBSlotLoop
 	MOVEA.l	Object_slot_04_ptr.w, A6
 	BSET.b	#7, (A6)
 	MOVE.b	#$F8, obj_hitbox_x_neg(A6)
@@ -682,7 +682,7 @@ TwoHeadedDragon_FireballTickB:
 	MOVEA.l	Object_slot_03_ptr.w, A6
 TwoHeadedDragon_FireballTickB_Loop:
 	TST.b	obj_npc_busy_flag(A6)
-	BNE.b	TwoHeadedDragon_FireballTickB_Loop2
+	BNE.b	TwoHeadedDragon_FireballTickB_ActiveBranch
 	MOVE.b	obj_move_counter(A5), D0
 	ANDI.w	#$0038, D0
 	MOVE.b	#SPRITE_SIZE_2x2, obj_sprite_size(A5)
@@ -701,30 +701,30 @@ TwoHeadedDragon_FireballTickB_Loop:
 	SUBQ.w	#1, D0
 	MOVE.w	D0, obj_sort_key(A5)
 	BRA.w	BossFireball_RenderDone
-TwoHeadedDragon_FireballTickB_Loop2:
+TwoHeadedDragon_FireballTickB_ActiveBranch:
 	TST.b	obj_hit_flag(A5)
-	BEQ.b	TwoHeadedDragon_FireballTickB_Loop3
+	BEQ.b	TwoHeadedDragon_FireballTickB_Flying
 	TST.w	obj_knockback_timer(A5)
-	BEQ.b	TwoHeadedDragon_FireballTickB_Loop4
+	BEQ.b	TwoHeadedDragon_FireballTickB_InitKnockback
 	SUBQ.w	#1, obj_knockback_timer(A5)
-	BLE.b	TwoHeadedDragon_FireballTickB_Loop5
+	BLE.b	TwoHeadedDragon_FireballTickB_KnockbackDone
 	MOVE.w	obj_knockback_timer(A5), D0
 	CMPI.b	#$0A, D0
 	BGE.w	BossFireball_RenderDone
 	MOVE.w	#VRAM_TILE_DRAGON_FIREBALL_A, obj_tile_index(A5)
 	BRA.w	BossFireball_RenderDone
-TwoHeadedDragon_FireballTickB_Loop5:
+TwoHeadedDragon_FireballTickB_KnockbackDone:
 	CLR.w	obj_knockback_timer(A5)
 	CLR.b	obj_hit_flag(A5)
 	CLR.b	obj_move_counter(A5)
 	CLR.b	obj_npc_busy_flag(A6)
 	BRA.b	BossFireball_RenderDone
-TwoHeadedDragon_FireballTickB_Loop4:
+TwoHeadedDragon_FireballTickB_InitKnockback:
 	CLR.l	obj_vel_x(A5)
 	MOVE.w	#VRAM_TILE_DRAGON_FIREBALL_B, obj_tile_index(A5)
 	MOVE.w	#$0014, obj_knockback_timer(A5)
 	BRA.b	BossFireball_RenderDone
-TwoHeadedDragon_FireballTickB_Loop3:
+TwoHeadedDragon_FireballTickB_Flying:
 	MOVE.b	obj_move_counter(A5), D0
 	ANDI.w	#8, D0                          ; alternate between two tile frames every 8 ticks
 	ASR.w	#2, D0
@@ -733,10 +733,10 @@ TwoHeadedDragon_FireballTickB_Loop3:
 	MOVE.l	obj_vel_x(A5), D0
 	ADD.l	D0, obj_world_x(A5)
 	CMPI.w	#PROJ_OFFSCREEN_X_LEFT, obj_world_x(A5) ; gone off the left edge?
-	BGE.b	TwoHeadedDragon_FireballTickB_Loop6
+	BGE.b	TwoHeadedDragon_FireballTickB_OffscreenCheck
 	CLR.b	obj_npc_busy_flag(A6)           ; deactivate fireball on head
 	CLR.b	obj_move_counter(A5)
-TwoHeadedDragon_FireballTickB_Loop6:
+TwoHeadedDragon_FireballTickB_OffscreenCheck:
 	MOVE.w	#SORT_KEY_BOSS_PROJ, obj_sort_key(A5)
 BossFireball_RenderDone:
 	BSR.w	CheckEntityPlayerCollisionAndDamage
@@ -761,7 +761,7 @@ TwoHeadedDragon_MainTick:
 	TST.b	Boss_defeated_flag.w
 	BEQ.b	TwoHeadedDragon_MainTick_Loop
 	TST.b	Boss_death_anim_done.w
-	BNE.w	TwoHeadedDragon_MainTick_Loop2
+	BNE.w	TwoHeadedDragon_MainTick_DeathTransition
 TwoHeadedDragon_MainTick_Loop:
 	LEA	BossSpriteLayoutData_B, A0
 	BSR.w	AnimateSpriteFromTable
@@ -791,12 +791,12 @@ TwoHeadedDragon_MainTick_Loop:
 	BSR.w	CheckPlayerDamageAndKnockback
 	RTS
 
-; TwoHeadedDragon_MainTick_Loop2 (death transition)
+; TwoHeadedDragon_MainTick_DeathTransition (death transition)
 ; Entered once Boss_defeated_flag is set and Boss_death_anim_done is clear.
 ; Freezes all body/head/wing objects on their last frame, fires the
 ; victory event, resets dialog counters, and hands off to
 ; TwoHeadedDragon_DeathDelayTick via obj_tick_fn.
-TwoHeadedDragon_MainTick_Loop2:
+TwoHeadedDragon_MainTick_DeathTransition:
 	MOVE.w	#$00B6, Palette_line_1_index.w
 	MOVE.w	#$0064, obj_knockback_timer(A5)
 	MOVEA.l	Enemy_list_ptr.w, A6
@@ -890,7 +890,7 @@ TwoHeadedDragon_HeadTickA_Loop:
 	JSR	LoadPalettesFromTable
 	MOVE.w	Player_str.w, D0
 	SUB.w	D0, obj_hp(A5)
-	BCC.b	TwoHeadedDragon_HeadTickA_Loop2
+	BCC.b	TwoHeadedDragon_HeadTickA_SetHitStun
 	BSR.w	UpdateEncounterPalette
 	MOVE.l	#TwoHeadedDragon_DeadHeadTick, obj_tick_fn(A5)
 	LEA	EnemySpriteLayoutPtrsA, A0
@@ -919,7 +919,7 @@ TwoHeadedDragon_HeadTickA_Loop_Done:
 	MOVE.b	#FLAG_TRUE, Boss_defeated_flag.w
 	RTS
 
-TwoHeadedDragon_HeadTickA_Loop2:
+TwoHeadedDragon_HeadTickA_SetHitStun:
 	MOVE.w	#BOSS_HIT_STUN_FRAMES, obj_knockback_timer(A5)
 
 ; DragonHeadA_IdleTick
@@ -1008,7 +1008,7 @@ TwoHeadedDragon_HeadTickB_Loop:
 	JSR	LoadPalettesFromTable
 	MOVE.w	Player_str.w, D0
 	SUB.w	D0, obj_hp(A5)
-	BCC.w	TwoHeadedDragon_HeadTickB_Loop2
+	BCC.w	TwoHeadedDragon_HeadTickB_SetHitStun
 	MOVE.l	#TwoHeadedDragon_DeadHeadTick, obj_tick_fn(A5)
 	LEA	EnemySpriteLayoutPtrsB, A0
 	LEA	EnemySpritePositionPtrsB, A1
@@ -1035,7 +1035,7 @@ TwoHeadedDragon_HeadTickB_Loop_Done:
 	MOVE.b	#FLAG_TRUE, Boss_death_anim_done.w
 	RTS
 
-TwoHeadedDragon_HeadTickB_Loop2:
+TwoHeadedDragon_HeadTickB_SetHitStun:
 	MOVE.w	#BOSS_HIT_STUN_FRAMES, obj_knockback_timer(A5)
 
 ; DragonHeadB_IdleTick
@@ -1166,20 +1166,20 @@ CheckEntityPlayerCollisionAndDamage:
 	MOVE.l	obj_vel_x(A5), D0
 	BGT.b	CheckEntityPlayerCollisionAndDamage_Loop
 	CMPI.l	#$FFFF8000, D0
-	BLE.b	CheckEntityPlayerCollisionAndDamage_Loop2
+	BLE.b	CheckEntityPlayerCollisionAndDamage_ClampNegLow
 	MOVE.l	#$FFFF8000, D0
 	BRA.b	CheckEntityCollision_ClampVelocity
-CheckEntityPlayerCollisionAndDamage_Loop2:
+CheckEntityPlayerCollisionAndDamage_ClampNegLow:
 	CMPI.l	#$FFFE0000, D0
 	BGE.b	CheckEntityCollision_ClampVelocity
 	MOVE.l	#$FFFE0000, D0
 	BRA.b	CheckEntityCollision_ClampVelocity
 CheckEntityPlayerCollisionAndDamage_Loop:
 	CMPI.l	#$8000, D0
-	BGE.b	CheckEntityPlayerCollisionAndDamage_Loop3
+	BGE.b	CheckEntityPlayerCollisionAndDamage_ClampPosHigh
 	MOVE.l	#$8000, D0
 	BRA.b	CheckEntityCollision_ClampVelocity
-CheckEntityPlayerCollisionAndDamage_Loop3:
+CheckEntityPlayerCollisionAndDamage_ClampPosHigh:
 	CMPI.l	#$00020000, D0	
 	BLE.b	CheckEntityCollision_ClampVelocity	
 	MOVE.l	#$00020000, D0	
@@ -1236,12 +1236,12 @@ ProcessBattleDamageAndPalette_Loop:
 	PlaySound	SOUND_HEAL
 	MOVE.w	Player_str.w, D0
 	SUB.w	D0, obj_hp(A6)
-	BCC.b	ProcessBattleDamageAndPalette_Loop2
+	BCC.b	ProcessBattleDamageAndPalette_SetHitStun
 	MOVE.l	#Boss1_DeathSequence, obj_tick_fn(A6)
 	BSR.w	ProcessBattleVictoryEvent
 	RTS
 
-ProcessBattleDamageAndPalette_Loop2:
+ProcessBattleDamageAndPalette_SetHitStun:
 	MOVE.w	#BOSS_HIT_STUN_FRAMES, obj_knockback_timer(A6)
 ProcessBattleDamage_Return:
 	CLR.b	obj_hit_flag(A6)
@@ -1286,12 +1286,12 @@ DrawBossPortrait:
 DrawBossPortrait_Done:
 	MOVE.l	D5, VDP_control_port            ; set VRAM write address for this row
 	MOVE.w	#$000B, D6                      ; 12 tiles per row (DBF: 11 down to 0)
-DrawBossPortrait_Done2:
+DrawBossPortrait_TileLoop:
 	CLR.w	D0
 	MOVE.b	(A0)+, D0
 	ADDI.w	#$2200, D0                      ; add palette 1 attribute bits
 	MOVE.w	D0, VDP_data_port
-	DBF	D6, DrawBossPortrait_Done2
+	DBF	D6, DrawBossPortrait_TileLoop
 	ADDI.l	#$00800000, D5                  ; advance to next nametable row
 	DBF	D7, DrawBossPortrait_Done
 	ANDI	#$F8FF, SR                          ; re-enable interrupts
@@ -1308,12 +1308,12 @@ DrawBossNameplate:
 DrawBossNameplate_Done:
 	MOVE.l	D5, VDP_control_port
 	MOVE.w	#$000C, D6                      ; 13 tiles per row
-DrawBossNameplate_Done2:
+DrawBossNameplate_TileLoop:
 	CLR.w	D0
 	MOVE.b	(A0)+, D0
 	ADDI.w	#$2200, D0                      ; palette 1 attribute
 	MOVE.w	D0, VDP_data_port
-	DBF	D6, DrawBossNameplate_Done2
+	DBF	D6, DrawBossNameplate_TileLoop
 	ADDI.l	#$00800000, D5
 	DBF	D7, DrawBossNameplate_Done
 	ANDI	#$F8FF, SR                          ; re-enable interrupts
@@ -1331,28 +1331,28 @@ DrawBossHealthBar:
 DrawBossHealthBar_Done:
 	MOVE.l	D5, VDP_control_port
 	MOVE.w	#$000D, D6                      ; 14 tiles per row
-DrawBossHealthBar_Done2:
+DrawBossHealthBar_TileLoop:
 	CLR.w	D0
 	MOVE.b	(A0)+, D0
 	ADDI.w	#$A200, D0                      ; palette 2 attribute bits
 	MOVE.w	D0, VDP_data_port
-	DBF	D6, DrawBossHealthBar_Done2
+	DBF	D6, DrawBossHealthBar_TileLoop
 	ADDI.l	#$00800000, D5
 	DBF	D7, DrawBossHealthBar_Done
 	MOVE.l	#$40080003, D5                  ; start of HP gauge overlay area
 	LEA	SpriteMetaTileTable_7808A, A0
 	MOVE.w	#5, D7                          ; 6 rows of gauge tiles
-DrawBossHealthBar_Done3:
+DrawBossHealthBar_GaugeRowLoop:
 	MOVE.l	D5, VDP_control_port
 	MOVE.w	#4, D6                          ; 5 tiles per row
-DrawBossHealthBar_Done4:
+DrawBossHealthBar_GaugeTileLoop:
 	CLR.w	D0
 	MOVE.b	(A0)+, D0
 	ADDI.w	#$A200, D0                      ; palette 2 attribute bits
 	MOVE.w	D0, VDP_data_port
-	DBF	D6, DrawBossHealthBar_Done4
+	DBF	D6, DrawBossHealthBar_GaugeTileLoop
 	ADDI.l	#$00800000, D5
-	DBF	D7, DrawBossHealthBar_Done3
+	DBF	D7, DrawBossHealthBar_GaugeRowLoop
 	ANDI	#$F8FF, SR                          ; re-enable interrupts
 	RTS
 
@@ -1434,12 +1434,12 @@ WriteTextToVRAM:
 WriteTextToVRAM_Done:
 	MOVE.l	D5, VDP_control_port
 	MOVE.w	#6, D6                          ; 7 tiles per row (DBF: 6 down to 0)
-WriteTextToVRAM_Done2:
+WriteTextToVRAM_TileLoop:
 	CLR.w	D0
 	MOVE.b	(A0)+, D0
 	ADDI.w	#$2200, D0                      ; palette 1 attribute
 	MOVE.w	D0, VDP_data_port
-	DBF	D6, WriteTextToVRAM_Done2
+	DBF	D6, WriteTextToVRAM_TileLoop
 	ADDI.l	#$00800000, D5                  ; next nametable row
 	DBF	D7, WriteTextToVRAM_Done
 	ANDI	#$F8FF, SR                          ; re-enable interrupts
@@ -1507,12 +1507,12 @@ Write7x8TilesToVRAM:
 Write7x8TilesToVRAM_Done:
 	MOVE.l	D5, VDP_control_port
 	MOVE.w	#7, D6                          ; 8 tiles per row (DBF: 7 down to 0)
-Write7x8TilesToVRAM_Done2:
+Write7x8TilesToVRAM_TileLoop:
 	CLR.w	D0
 	MOVE.b	(A0)+, D0
 	ADDI.w	#$2200, D0                      ; palette 1 attribute
 	MOVE.w	D0, VDP_data_port
-	DBF	D6, Write7x8TilesToVRAM_Done2
+	DBF	D6, Write7x8TilesToVRAM_TileLoop
 	ADDI.l	#$00800000, D5                  ; next nametable row
 	DBF	D7, Write7x8TilesToVRAM_Done
 	ANDI	#$F8FF, SR                          ; re-enable interrupts
@@ -1554,11 +1554,11 @@ ClearDialogPlane_Done:
 	ADD.l	D0, D5
 	MOVE.w	#$01FF, D7                  ; $0200 tiles to clear
 	ORI	#$0700, SR
-ClearDialogPlane_Done2:
+ClearDialogPlane_PlaneATileLoop:
 	MOVE.l	D5, VDP_control_port
 	MOVE.w	#0, VDP_data_port
 	ADDI.l	#$00100000, D5
-	DBF	D7, ClearDialogPlane_Done2
+	DBF	D7, ClearDialogPlane_PlaneATileLoop
 	ANDI	#$F8FF, SR
 	ADDQ.w	#1, Dialog_phase.w          ; advance to next column strip next call
 	RTS
@@ -1728,9 +1728,9 @@ BossVictoryEvent_Tsarkon:
 	SUBQ.w	#1, D7
 BossVictoryEvent_Tsarkon_Done:
 	SUBQ.w	#1, (A1)
-	BGE.b	BossVictoryEvent_Tsarkon_Loop2
+	BGE.b	BossVictoryEvent_Tsarkon_ClampCount
 	CLR.w	(A1)	
-BossVictoryEvent_Tsarkon_Loop2:
+BossVictoryEvent_Tsarkon_ClampCount:
 	MOVE.w	D7, D0
 	LEA	Possessed_items_list.w, A0
 	MOVE.w	#8, D2
@@ -1953,7 +1953,7 @@ InitDemonBoss_Common_Done:
 	MOVEA.l	Enemy_list_ptr.w, A4
 	MOVEA.l	Object_slot_07_ptr.w, A6
 	MOVE.w	#3, D7
-InitDemonBoss_Common_Done2:
+InitDemonBoss_HeadSlotLoop:
 	CLR.w	obj_knockback_timer(A6)
 	CLR.b	obj_move_counter(A6)
 	MOVE.b	#NPC_ATTR_PAL1, obj_sprite_flags(A6)
@@ -1968,7 +1968,7 @@ InitDemonBoss_Common_Done2:
 	CLR.w	D0
 	MOVE.b	obj_next_offset(A6), D0
 	LEA	(A6,D0.w), A6
-	DBF	D7, InitDemonBoss_Common_Done2
+	DBF	D7, InitDemonBoss_HeadSlotLoop
 	RTS
 
 ;==============================================================
@@ -2065,7 +2065,7 @@ DemonBossState_Move_Loop:
 	MOVE.l	obj_pos_x_fixed(A5), D0
 	ADD.l	D0, obj_world_x(A5)
 	CMPI.w	#8, obj_vel_y(A5)
-	BNE.b	DemonBossState_Move_Loop2
+	BNE.b	DemonBossState_Move_WingAnim
 	ADDQ.b	#1, demon_wing_anim(A5)
 	MOVE.b	demon_wing_anim(A5), D0
 	ANDI.w	#1, D0
@@ -2074,7 +2074,7 @@ DemonBossState_Move_Loop:
 	LEA	DemonBossWingFrameData, A0
 	MOVE.w	(A0,D0.w), demon_seg4_y(A5)
 	MOVE.w	$2(A0,D0.w), demon_seg5_y(A5)
-DemonBossState_Move_Loop2:
+DemonBossState_Move_WingAnim:
 	SUBQ.w	#1, obj_vel_y(A5)
 	BGT.b	DemonBossState_Move_Return
 	CMPI.w	#DEMON_BOSS_X_LEFT_BOUND, obj_world_x(A5)
@@ -2128,17 +2128,17 @@ DemonBoss_SetFireFlag_Loop:
 	MOVE.w	obj_world_x(A5), D2
 	ADDI.w	#$0046, D2
 	SUB.w	D2, D1
-	BGE.b	DemonBoss_SetFireFlag_Loop2
+	BGE.b	DemonBoss_SetFireFlag_AbsVelocity
 	NEG.w	D1
-DemonBoss_SetFireFlag_Loop2:
+DemonBoss_SetFireFlag_AbsVelocity:
 	SWAP	D1
 	CLR.w	D1
 	ASR.l	#4, D1
 	CMPI.l	#$000CE000, D1
-	BLE.b	DemonBoss_SetFireFlag_Loop3
+	BLE.b	DemonBoss_SetFireFlag_ClampLow
 	MOVE.l	#$000CE000, D1
 	BRA.b	DemonBoss_LaunchProjectile
-DemonBoss_SetFireFlag_Loop3:
+DemonBoss_SetFireFlag_ClampLow:
 	CMPI.l	#$0005E000, D1
 	BGE.b	DemonBoss_LaunchProjectile
 	MOVE.l	#$0005E000, D1	
@@ -2234,14 +2234,14 @@ SetEntityCoordFromDirection:
 	ANDI.w	#3, D0                              ; clamp to 0-3
 	ADD.w	D0, D0                              ; × 2 for word offset
 	MOVE.w	(A0,D0.w), demon_seg3_y(A5)
-	BRA.b	SetEntityCoordFromDirection_Loop2
+	BRA.b	SetEntityCoordFromDirection_UseXOffset
 SetEntityCoordFromDirection_Loop:
 	LEA	EntityDirectionXOffsets, A0
 	MOVE.b	demon_fire_dir(A5), D0
 	ANDI.w	#3, D0
 	ADD.w	D0, D0
 	MOVE.w	(A0,D0.w), demon_seg2_y(A5)
-SetEntityCoordFromDirection_Loop2:
+SetEntityCoordFromDirection_UseXOffset:
 	RTS
 
 ;==============================================================
@@ -2300,12 +2300,12 @@ UpdateBossFlashAndDamage_Loop:
 	PlaySound	SOUND_HEAL
 	MOVE.w	Player_str.w, D0
 	SUB.w	D0, obj_hp(A5)
-	BCC.b	UpdateBossFlashAndDamage_Loop2      ; still alive
+	BCC.b	UpdateBossFlashAndDamage_SetHitStun      ; still alive
 	MOVE.l	#DemonBoss_DeathInit, obj_tick_fn(A5)   ; killing blow
 	PlaySound_b	SOUND_MAGIC_EFFECT
 	RTS
 
-UpdateBossFlashAndDamage_Loop2:
+UpdateBossFlashAndDamage_SetHitStun:
 	CMPI.b	#4, demon_ai_state(A5)
 	BGE.w	BossTick_AbilityCheck_Done
 	MOVE.w	Boss_max_hp.w, D0
@@ -2320,11 +2320,11 @@ UpdateBossFlashAndDamage_Loop2:
 	PlaySound_b	SOUND_MAGIC_EFFECT
 	JSR	GetRandomNumber(PC)
 	BTST.l	#4, D0
-	BEQ.b	UpdateBossFlashAndDamage_Loop3
+	BEQ.b	UpdateBossFlashAndDamage_DisableWingB
 	BCLR.b	#0, demon_wing_flags(A5)
 	MOVE.w	#$0046, demon_seg2_y(A5)
 	BRA.b	BossTick_AbilityCheck_Done
-UpdateBossFlashAndDamage_Loop3:
+UpdateBossFlashAndDamage_DisableWingB:
 	BCLR.b	#1, demon_wing_flags(A5)
 	MOVE.w	#$006E, demon_seg3_y(A5)
 BossTick_AbilityCheck_Done:
@@ -2356,13 +2356,13 @@ DemonBoss_DeathSequence:
 	ANDI.w	#7, D0
 	BNE.b	DemonBoss_DeathSequence_Loop
 	CMPI.w	#BOSS_VICTORY_FADE_PHASES, Dialog_phase.w
-	BLT.b	DemonBoss_DeathSequence_Loop2
+	BLT.b	DemonBoss_DeathSequence_ClearPlane
 	JSR	ProcessBattleVictoryEvent
 	MOVE.l	#BossCommon_VictoryRewardSequence, obj_tick_fn(A5)
 	MOVE.w	#BOSS_VICTORY_DELAY_FRAMES, Dialog_timer.w
 	RTS
 
-DemonBoss_DeathSequence_Loop2:
+DemonBoss_DeathSequence_ClearPlane:
 	JSR	ClearDialogPlane
 DemonBoss_DeathSequence_Loop:
 	RTS
@@ -2491,9 +2491,9 @@ DemonBoss_ProjectileHeadTick_Loop:
 	MOVEA.l	Enemy_list_ptr.w, A6
 	LEA	EncounterSpriteList_Hydra, A1
 	BTST.b	#2, demon_wing_flags(A6)
-	BNE.b	DemonBoss_ProjectileHeadTick_Loop2
+	BNE.b	DemonBoss_ProjectileHeadTick_GetFireDir
 	ADDA.w	#$001E, A1
-DemonBoss_ProjectileHeadTick_Loop2:
+DemonBoss_ProjectileHeadTick_GetFireDir:
 	MOVEQ	#0, D0
 	MOVE.b	demon_fire_dir(A6), D0
 	ADD.w	D0, D0
@@ -2547,37 +2547,37 @@ DemonBoss_ProjectileSegmentTick:
 	CMPI.w	#DEMON_BOSS_PROJ_Y_FLOOR, obj_world_y(A5)
 	BLT.b	DemonBoss_ProjectileSegmentTick_Loop
 	SUBQ.w	#1, obj_attack_timer(A5)
-	BGT.b	DemonBoss_ProjectileSegmentTick_Loop2
+	BGT.b	DemonBoss_ProjectileSegmentTick_AnimTimer
 	CLR.b	obj_move_counter(A5)
 	BCLR.b	#7, (A5)
-	BRA.w	DemonBoss_ProjectileSegmentTick_Loop3
-DemonBoss_ProjectileSegmentTick_Loop2:
+	BRA.w	DemonBoss_ProjectileSegmentTick_Render
+DemonBoss_ProjectileSegmentTick_AnimTimer:
 	MOVE.w	obj_attack_timer(A5), D0
 	ASR.w	#1, D0
 	ANDI.w	#$000E, D0
 	LEA	DemonBossProjectileTileFrames, A0
 	MOVE.w	(A0,D0.w), obj_knockback_timer(A5)
-	BRA.w	DemonBoss_ProjectileSegmentTick_Loop4
+	BRA.w	DemonBoss_ProjectileSegmentTick_RenderAndReturn
 DemonBoss_ProjectileSegmentTick_Loop:
 	CMPI.w	#DEMON_BOSS_SEG_ANIM_FRAMES, obj_attack_timer(A5)
-	BEQ.b	DemonBoss_ProjectileSegmentTick_Loop5
+	BEQ.b	DemonBoss_ProjectileSegmentTick_RisingAnim
 	ADDQ.w	#1, obj_attack_timer(A5)
 	MOVE.w	obj_attack_timer(A5), D0
 	ASR.w	#1, D0
 	ANDI.w	#$000E, D0
 	LEA	DemonBossProjectileTileFrames, A0
 	MOVE.w	(A0,D0.w), obj_knockback_timer(A5)
-DemonBoss_ProjectileSegmentTick_Loop5:
+DemonBoss_ProjectileSegmentTick_RisingAnim:
 	MOVE.l	obj_vel_x(A5), D0
 	ADD.l	D0, obj_world_x(A5)
 	MOVE.l	obj_vel_y(A5), D0
 	ADD.l	D0, obj_world_y(A5)
 	JSR	CheckEntityPlayerCollisionAndDamage(PC)
-DemonBoss_ProjectileSegmentTick_Loop4:
+DemonBoss_ProjectileSegmentTick_RenderAndReturn:
 	MOVE.w	obj_world_x(A5), obj_screen_x(A5)
 	MOVE.w	obj_world_y(A5), obj_screen_y(A5)
 	JSR	AddSpriteToDisplayList(PC)
-DemonBoss_ProjectileSegmentTick_Loop3:
+DemonBoss_ProjectileSegmentTick_Render:
 	RTS
 
 ; DemonBossProjectileTileFrames
@@ -2640,10 +2640,10 @@ OrbitBoss_MainTick:
 	MOVE.b	obj_move_counter(A5), D0
 	ANDI.w	#$00E0, D0
 	CMPI.w	#$00C0, D0
-	BLT.b	OrbitBoss_MainTick_Loop2
+	BLT.b	OrbitBoss_MainTick_DrawPhase
 	RTS
 	
-OrbitBoss_MainTick_Loop2:
+OrbitBoss_MainTick_DrawPhase:
 	ASR.w	#5, D0
 	BSR.w	WriteTilesToVRAM
 	RTS
@@ -2715,7 +2715,7 @@ OrbitBoss_InitParts_Done:
 	MOVE.w	#$0032, D4
 	MOVE.w	D4, D2
 	MOVE.w	#3, D7
-OrbitBoss_InitParts_Done2:
+OrbitBoss_InitParts_OuterRingSlotLoop:
 	CLR.w	D0
 	MOVE.b	obj_next_offset(A6), D0
 	LEA	(A6,D0.w), A6
@@ -2741,7 +2741,7 @@ OrbitBoss_InitParts_Done2:
 	MOVE.b	D6, obj_move_counter(A6)
 	MOVE.l	#OrbitBoss_SatelliteAnimate, obj_tick_fn(A6)
 	ADD.w	D4, D2
-	DBF	D7, OrbitBoss_InitParts_Done2
+	DBF	D7, OrbitBoss_InitParts_OuterRingSlotLoop
 	MOVE.l	#OrbitBoss_InnerCheckVictory, obj_tick_fn(A5)
 	RTS
 	
@@ -2835,12 +2835,12 @@ OrbitBoss_InnerSelectTarget_Done:
 	MOVE.b	Boss_ai_state.w, D7
 	SUBQ.w	#2, D7
 	BLT.b	OrbitBoss_InnerSelectTarget_Loop
-OrbitBoss_InnerSelectTarget_Done2:
+OrbitBoss_InnerSelectTarget_InactivateLoop:
 	CLR.w	D0
 	MOVE.b	obj_next_offset(A6), D0
 	LEA	(A6,D0.w), A6
 	MOVE.l	#OrbitBoss_SatelliteOrbitInactive, obj_tick_fn(A6)
-	DBF	D7, OrbitBoss_InnerSelectTarget_Done2
+	DBF	D7, OrbitBoss_InnerSelectTarget_InactivateLoop
 OrbitBoss_InnerSelectTarget_Loop:
 	MOVE.l	#OrbitBoss_InnerApproach, obj_tick_fn(A5)
 	MOVE.w	#ORBIT_BOSS_APPROACH_TICKS, obj_attack_timer(A5)
@@ -3074,12 +3074,12 @@ OrbitBoss_OuterSelectTarget_Done:
 	MOVE.b	Boss_part_count.w, D7
 	SUBQ.w	#2, D7
 	BLT.b	OrbitBoss_OuterSelectTarget_Loop
-OrbitBoss_OuterSelectTarget_Done2:
+OrbitBoss_OuterSelectTarget_InactivateLoop:
 	CLR.w	D0
 	MOVE.b	obj_next_offset(A6), D0
 	LEA	(A6,D0.w), A6
 	MOVE.l	#OrbitBoss_SatelliteOrbitInactive, obj_tick_fn(A6)
-	DBF	D7, OrbitBoss_OuterSelectTarget_Done2
+	DBF	D7, OrbitBoss_OuterSelectTarget_InactivateLoop
 OrbitBoss_OuterSelectTarget_Loop:
 	MOVE.l	#OrbitBoss_OuterApproach, obj_tick_fn(A5)
 	MOVE.w	#ORBIT_BOSS_APPROACH_TICKS, obj_attack_timer(A5)
@@ -3298,11 +3298,11 @@ OrbitBossProjectileFallTick_Loop:
 	MOVE.l	obj_vel_y(A5), D0
 	ADD.l	D0, obj_world_y(A5)
 	CMPI.w	#ORBIT_PROJ_Y_FLOOR, obj_world_y(A5)
-	BLE.b	OrbitBossProjectileFallTick_Loop2
+	BLE.b	OrbitBossProjectileFallTick_RenderAndReturn
 	MOVE.w	#ORBIT_PROJ_Y_FLOOR, obj_world_y(A5)
 	CLR.b	obj_move_counter(A5)
 	MOVE.l	#OrbitBoss_ProjectileExplode, obj_tick_fn(A5)
-OrbitBossProjectileFallTick_Loop2:
+OrbitBossProjectileFallTick_RenderAndReturn:
 	MOVE.w	obj_world_x(A5), obj_screen_x(A5)
 	MOVE.w	obj_world_y(A5), obj_screen_y(A5)
 	JSR	CheckEntityPlayerCollisionAndDamage
@@ -3353,13 +3353,13 @@ ProcessPlayerStrengthCheck_Loop:
 	JSR	LoadPalettesFromTable
 	MOVE.w	Player_str.w, D0
 	SUB.w	D0, obj_hp(A5)
-	BGT.b	ProcessPlayerStrengthCheck_Loop2
+	BGT.b	ProcessPlayerStrengthCheck_SetHitStun
 	PlaySound	SOUND_MAGIC_EFFECT
 	CLR.b	obj_move_counter(A5)
 	MOVE.l	#OrbitBoss_InnerPartDeath, obj_tick_fn(A5)
 	RTS
 
-ProcessPlayerStrengthCheck_Loop2:
+ProcessPlayerStrengthCheck_SetHitStun:
 	PlaySound	SOUND_HEAL
 	MOVE.w	#BOSS_HIT_STUN_FRAMES, obj_knockback_timer(A5)
 OrbitBoss_InnerPartHit_Return:
@@ -3392,9 +3392,9 @@ OrbitBoss_InnerPartDeath_Done:
 	MOVE.w	#BOSS_HP_ORBIT_PART, obj_hp(A5)
 	MOVE.l	#OrbitBoss_InnerSelectTarget, obj_tick_fn(A5)
 	SUBQ.b	#1, Boss_ai_state.w
-	BGT.b	OrbitBoss_InnerPartDeath_Loop2
+	BGT.b	OrbitBoss_InnerPartDeath_RingDefeated
 	MOVE.l	#OrbitBoss_InnerRingDefeated, obj_tick_fn(A5)
-OrbitBoss_InnerPartDeath_Loop2:
+OrbitBoss_InnerPartDeath_RingDefeated:
 	RTS
 
 OrbitBoss_InnerPartDeath_Loop:
@@ -3426,13 +3426,13 @@ ProcessBossFightDamage_Loop:
 	JSR	LoadPalettesFromTable
 	MOVE.w	Player_str.w, D0
 	SUB.w	D0, obj_hp(A5)
-	BGT.b	ProcessBossFightDamage_Loop2
+	BGT.b	ProcessBossFightDamage_SetHitStun
 	PlaySound	SOUND_MAGIC_EFFECT
 	CLR.b	obj_move_counter(A5)
 	MOVE.l	#OrbitBoss_OuterPartDeath, obj_tick_fn(A5)
 	RTS
 
-ProcessBossFightDamage_Loop2:
+ProcessBossFightDamage_SetHitStun:
 	PlaySound	SOUND_HEAL
 	MOVE.w	#BOSS_HIT_STUN_FRAMES, obj_knockback_timer(A5)
 OrbitBoss_OuterPartHit_Return:
@@ -3464,9 +3464,9 @@ OrbitBoss_OuterPartDeath_Done:
 	MOVE.w	#BOSS_HP_ORBIT_PART, obj_hp(A5)
 	MOVE.l	#OrbitBoss_OuterSelectTarget, obj_tick_fn(A5)
 	SUBQ.b	#1, Boss_part_count.w
-	BGT.b	OrbitBoss_OuterPartDeath_Loop2
+	BGT.b	OrbitBoss_OuterPartDeath_RingDefeated
 	MOVE.l	#OrbitBoss_OuterRingDefeated, obj_tick_fn(A5)
-OrbitBoss_OuterPartDeath_Loop2:
+OrbitBoss_OuterPartDeath_RingDefeated:
 	RTS
 
 OrbitBoss_OuterPartDeath_Loop:
@@ -3747,12 +3747,12 @@ HydraBoss_PartIdleTick_Loop:
 	ADDI.w	#$0014, obj_world_x(A5)
 	MOVE.w	Player_str.w, D0
 	SUB.w	D0, obj_hp(A5)
-	BCC.b	HydraBoss_PartIdleTick_Loop2
+	BCC.b	HydraBoss_PartIdleTick_SetHitStun
 	MOVE.l	#HydraBoss_PartDeathAnim, obj_tick_fn(A5)
 	PlaySound	SOUND_MAGIC_EFFECT
 	CLR.b	obj_move_counter(A5)
 	BRA.w	HydraBoss_PartIdleTick_UpdatePos
-HydraBoss_PartIdleTick_Loop2:
+HydraBoss_PartIdleTick_SetHitStun:
 	PlaySound	SOUND_HYDRA_BITE
 	MOVE.w	#BOSS_HIT_STUN_FRAMES, obj_knockback_timer(A5)
 HydraBoss_PartIdleTick_Check:
@@ -3776,7 +3776,7 @@ HydraBoss_PartIdleTick_Check_Loop:
 	ANDI.w	#$001C, D0
 	ASL.w	#1, D0
 	CMPI.w	#$0038, D0
-	BGE.b	HydraBoss_PartIdleTick_Check_Loop2
+	BGE.b	HydraBoss_PartIdleTick_AnimComplete
 	LEA	HydraBoss_AttackAnimFrames, A0
 	LEA	(A0,D0.w), A0
 	MOVE.w	(A0)+, obj_tile_index(A5)
@@ -3784,7 +3784,7 @@ HydraBoss_PartIdleTick_Check_Loop:
 	MOVE.b	(A0)+, obj_hitbox_x_neg(A5)
 	MOVE.b	(A0), obj_hitbox_x_pos(A5)
 	BRA.w	HydraBoss_PartIdleTick_UpdatePos
-HydraBoss_PartIdleTick_Check_Loop2:
+HydraBoss_PartIdleTick_AnimComplete:
 	CLR.b	obj_move_counter(A5)
 	CLR.b	obj_npc_busy_flag(A5)
 	BRA.w	HydraBoss_PartIdleTick_UpdatePos
@@ -3867,12 +3867,12 @@ HydraBoss_MainTick_Loop:
 	BEQ.b	HydraBoss_MainTick_Animate
 	MOVE.w	Player_str.w, D0
 	SUB.w	D0, obj_hp(A5)
-	BCC.b	HydraBoss_MainTick_Loop2
+	BCC.b	HydraBoss_MainTick_SetHitStun
 	MOVE.l	#HydraBoss_MainDeathAnim, obj_tick_fn(A5)
 	PlaySound	SOUND_MAGIC_EFFECT
 	CLR.b	obj_move_counter(A5)
 	BRA.w	HydraBoss_MainTick_SpriteUpdate
-HydraBoss_MainTick_Loop2:
+HydraBoss_MainTick_SetHitStun:
 	PlaySound	SOUND_HEAL
 	MOVE.w	#BOSS_HIT_STUN_FRAMES, obj_knockback_timer(A5)
 HydraBoss_MainTick_Animate:
@@ -3991,13 +3991,13 @@ HydraBoss_DeathClearScreen:
 	ANDI.w	#7, D0
 	BNE.b	HydraBoss_DeathClearScreen_Loop
 	CMPI.w	#BOSS_VICTORY_FADE_PHASES, Dialog_phase.w
-	BLT.b	HydraBoss_DeathClearScreen_Loop2
+	BLT.b	HydraBoss_DeathClearScreen_ClearPlane
 	MOVE.l	#HydraBoss_VictoryCheck, obj_tick_fn(A5)
 	MOVE.b	#BOSS_VICTORY_PAUSE, obj_invuln_timer(A5)
 	BSR.w	DeactivateBossBodyParts
 	RTS
 	
-HydraBoss_DeathClearScreen_Loop2:
+HydraBoss_DeathClearScreen_ClearPlane:
 	JSR	ClearDialogPlane
 HydraBoss_DeathClearScreen_Loop:
 	JSR	AddSpriteToDisplayList
@@ -4012,12 +4012,12 @@ HydraBoss_VictoryCheck:
 	BNE.b	HydraBoss_VictoryCheck_Loop
 	BSR.w	ProcessBattleVictoryEvent
 	TST.b	Swaffham_miniboss_defeated.w
-	BNE.b	HydraBoss_VictoryCheck_Loop2
+	BNE.b	HydraBoss_VictoryCheck_StartNextBattle
 	MOVE.l	#BossCommon_VictoryRewardSequence, obj_tick_fn(A5)
 	MOVE.w	#BOSS_VICTORY_DELAY_FRAMES, Dialog_timer.w
 	RTS
 	
-HydraBoss_VictoryCheck_Loop2:
+HydraBoss_VictoryCheck_StartNextBattle:
 	MOVE.l	#HydraBoss_StartNextBattle, obj_tick_fn(A5)
 HydraBoss_VictoryCheck_Loop:
 	RTS
@@ -4257,7 +4257,7 @@ InitRingGuardian_Common_Done:
 	MOVEA.l	Object_slot_03_ptr.w, A6
 	LEA	(A6), A4
 	MOVE.w	#1, D7
-InitRingGuardian_Common_Done2:
+InitRingGuardian_GroupBSlotLoop:
 	BSET.b	#7, (A4)
 	MOVE.b	#NPC_ATTR_PAL1, obj_sprite_flags(A4)
 	BCLR.b	#7, obj_sprite_flags(A4)
@@ -4267,7 +4267,7 @@ InitRingGuardian_Common_Done2:
 	CLR.w	D0
 	MOVE.b	obj_next_offset(A4), D0
 	LEA	(A4,D0.w), A4
-	DBF	D7, InitRingGuardian_Common_Done2
+	DBF	D7, InitRingGuardian_GroupBSlotLoop
 	CLR.b	obj_move_counter(A6)
 	MOVE.l	#RingGuardian_BodyGroupBTick, obj_tick_fn(A6)
 	RTS
@@ -4427,23 +4427,23 @@ RingGuardianState_Descend:
 	BLT.b	RingGuardianState_Descend_Loop
 	MOVE.w	#$00D0, D0
 	SUB.w	obj_world_x(A5), D0
-	BGE.b	RingGuardianState_Descend_Loop2
+	BGE.b	RingGuardianState_Descend_CheckY
 	MOVE.w	#8, D1	
 	SUB.w	obj_world_y(A5), D1	
 	BRA.b	RingGuardianState_Patrol_GetDir	
-RingGuardianState_Descend_Loop2:
+RingGuardianState_Descend_CheckY:
 	MOVE.w	#8, D1
 	SUB.w	obj_world_y(A5), D1
 	BLT.b	RingGuardianState_Patrol_GetDir
 RingGuardianState_Descend_Loop:
 	TST.w	obj_hp(A5)
-	BGT.b	RingGuardianState_Descend_Loop3
+	BGT.b	RingGuardianState_Descend_PatrolDir
 	MOVE.b	#FLAG_TRUE, Boss_defeated_flag.w
 	MOVE.l	#RingGuardian_DeathFall, obj_tick_fn(A5)
 	MOVE.l	#$8000, obj_vel_y(A5)
 	RTS
 	
-RingGuardianState_Descend_Loop3:
+RingGuardianState_Descend_PatrolDir:
 	MOVE.w	#BOSS1_STATE_MOVE_DOWN, Boss_ai_state.w
 	MOVE.l	#$400, obj_pos_x_fixed(A5)
 	RTS
@@ -4533,14 +4533,14 @@ RingGuardianState_ApplyVelocity:
 	MOVE.w	#RING_GUARDIAN_X_LEFT, obj_world_x(A5)
 RingGuardianState_ApplyVelocity_Loop:
 	CMPI.w	#RING_GUARDIAN_X_RIGHT, obj_world_x(A5)
-	BLE.b	RingGuardianState_ApplyVelocity_Loop2
+	BLE.b	RingGuardianState_ApplyVelocity_ClampXRight
 	MOVE.w	#RING_GUARDIAN_X_RIGHT, obj_world_x(A5)	
 	CLR.l	obj_vel_x(A5)	
-RingGuardianState_ApplyVelocity_Loop2:
+RingGuardianState_ApplyVelocity_ClampXRight:
 	SUB.l	D3, obj_world_y(A5)
-	BGE.b	RingGuardianState_ApplyVelocity_Loop3
+	BGE.b	RingGuardianState_ApplyVelocity_ClampYTop
 	CLR.w	obj_world_y(A5)
-RingGuardianState_ApplyVelocity_Loop3:
+RingGuardianState_ApplyVelocity_ClampYTop:
 	CMPI.w	#RING_GUARDIAN_HEAD_Y, obj_world_y(A5)
 	BLE.b	BossMoveTick_Clamped
 	MOVE.w	#RING_GUARDIAN_HEAD_Y, obj_world_y(A5)
@@ -4675,18 +4675,18 @@ RingGuardian_ProjectileSpawner:
 	ADDQ.w	#1, obj_attack_timer(A5)
 	MOVE.w	obj_attack_timer(A5), D0
 	CMPI.w	#4, D0
-	BLE.b	RingGuardian_ProjectileSpawner_Loop2
+	BLE.b	RingGuardian_ProjectileSpawner_FireProjectile
 	MOVE.l	#RingGuardian_WaitChildrenDone, obj_tick_fn(A5)
 	RTS
 	
-RingGuardian_ProjectileSpawner_Loop2:
+RingGuardian_ProjectileSpawner_FireProjectile:
 	LEA	(A5), A6
 	SUBQ.w	#1, D0
-RingGuardian_ProjectileSpawner_Loop2_Done:
+RingGuardian_ProjectileSpawner_WalkChain:
 	CLR.w	D1
 	MOVE.b	obj_next_offset(A6), D1
 	LEA	(A6,D1.w), A6
-	DBF	D0, RingGuardian_ProjectileSpawner_Loop2_Done
+	DBF	D0, RingGuardian_ProjectileSpawner_WalkChain
 	BSET.b	#7, (A6)
 	MOVE.b	#NPC_ATTR_PAL1, obj_sprite_flags(A6)
 	BCLR.b	#7, obj_sprite_flags(A6)
@@ -4757,11 +4757,11 @@ RingGuardian_ChildProjectileTick_Loop:
 	MOVE.l	obj_vel_y(A5), D0
 	ADD.l	D0, obj_world_y(A5)
 	CMPI.w	#ORBIT_PROJ_Y_FLOOR, obj_world_y(A5)
-	BLT.b	RingGuardian_ChildProjectileTick_Loop2
+	BLT.b	RingGuardian_ChildProjectileTick_RenderAndReturn
 	MOVE.w	#ORBIT_PROJ_Y_FLOOR, obj_world_y(A5)
 	MOVE.l	#RingGuardian_ChildGroundImpact, obj_tick_fn(A5)
 	CLR.b	obj_move_counter(A5)
-RingGuardian_ChildProjectileTick_Loop2:
+RingGuardian_ChildProjectileTick_RenderAndReturn:
 	MOVE.w	obj_world_x(A5), obj_screen_x(A5)
 	MOVE.w	obj_world_y(A5), obj_screen_y(A5)
 	JSR	AddSpriteToDisplayList
@@ -4816,27 +4816,27 @@ UpdateBossBodyTiles:
 UpdateBossBodyTiles_Done:
 	MOVE.l	D5, VDP_control_port
 	MOVE.w	#3, D6
-UpdateBossBodyTiles_Done2:
+UpdateBossBodyTiles_UpperTileLoop:
 	CLR.w	D0
 	MOVE.b	(A0)+, D0
 	ADDI.w	#$A200, D0
 	MOVE.w	D0, VDP_data_port
-	DBF	D6, UpdateBossBodyTiles_Done2
+	DBF	D6, UpdateBossBodyTiles_UpperTileLoop
 	ADDI.l	#$00800000, D5
 	DBF	D7, UpdateBossBodyTiles_Done
 	MOVE.l	#$41800003, D5
 	MOVE.w	#2, D7
-UpdateBossBodyTiles_Done3:
+UpdateBossBodyTiles_LowerRowLoop:
 	MOVE.l	D5, VDP_control_port
 	MOVE.w	#3, D6
-UpdateBossBodyTiles_Done4:
+UpdateBossBodyTiles_LowerTileLoop:
 	CLR.w	D0
 	MOVE.b	(A1)+, D0
 	ADDI.w	#$A200, D0
 	MOVE.w	D0, VDP_data_port
-	DBF	D6, UpdateBossBodyTiles_Done4
+	DBF	D6, UpdateBossBodyTiles_LowerTileLoop
 	ADDI.l	#$00800000, D5
-	DBF	D7, UpdateBossBodyTiles_Done3
+	DBF	D7, UpdateBossBodyTiles_LowerRowLoop
 	ANDI	#$F8FF, SR
 	RTS
 	
