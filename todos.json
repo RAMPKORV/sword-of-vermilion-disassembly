@@ -1053,7 +1053,7 @@
           "description": "Map how towns and dungeons connect to each other and what gates access (items, story flags). Essential for logic-based randomization.",
           "priority": "medium",
           "effort": "large",
-          "status": "todo"
+          "status": "done"
         },
         {
           "id": "RAND-010",
@@ -2181,8 +2181,8 @@
   "statistics": {
     "total_tasks": 139,
     "by_status": {
-      "done": 120,
-      "todo": 19
+      "done": 121,
+      "todo": 18
     },
     "by_priority": {
       "critical": 1,

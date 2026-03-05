@@ -1749,6 +1749,163 @@ TownPlayerPositionData:
 	dc.w	$20, $20, $1B, $E
 	dc.w	$1B, $E, $20, $12
 	dc.w	$20, $12, $20, $12 
+; -----------------------------------------------------------------------
+; RAND-009: Town / Dungeon Connectivity Graph
+; -----------------------------------------------------------------------
+; This documents every town, its overworld sector coordinates, its
+; associated cave dungeon (if any), and all story-flag gates that block
+; progression.  Intended as a single authoritative reference for
+; randomizer logic.
+;
+; Sector coordinates are (sector_x, sector_y) as stored in
+; TownTeleportLocationData below.  All flag names are symbolic constants
+; defined in constants.asm.
+;
+; FORMAT
+;   Town ID  [sector_x, sector_y]  Town name
+;     Dungeon: cave room ID(s) — dungeon name
+;     Gate IN:  <flag> — description of what blocks arrival
+;     Gate OUT: <flag> — description of what must be set to leave / progress
+;     Notes: ...
+;
+; -----------------------------------------------------------------------
+; TOWN_WYCLIF ($00)  [sector $0,$6]  Wyclif
+;   Dungeon: none
+;   Gate IN:  none (starting town)
+;   Gate OUT: none
+;   Notes:    Starting town.  Blade NPC killed here early in prologue.
+;             Blade_is_dead ($FFFFC720) set after his fight.
+;
+; TOWN_PARMA ($01)  [sector $1,$4]  Parma
+;   Dungeon: cave rooms $01–$03 (Parma dungeon / Treasure of Troy)
+;   Gate IN:  none (free from Wyclif)
+;   Gate OUT: Fake_king_killed ($FFFFC723) must be set before real-king
+;             questline continues.  Sent_to_malaga ($FFFFC733) is set by
+;             the Parma king conclusion dialogue, opening Malaga questline.
+;   Notes:    Treasure_of_troy_found ($FFFFC726) acquired in cave room $02.
+;             Treasure_of_troy_given_to_king ($FFFFC724) enables clue NPC.
+;             Talked_to_real_king ($FFFFC725) starts Troy quest.
+;
+; TOWN_WATLING ($02)  [sector $6,$5]  Watling
+;   Dungeon: cave room $04 (Watling cave)
+;   Gate IN:  none (free from Parma after Fake_king_killed)
+;   Gate OUT: none
+;   Notes:    Side-area; no mandatory story flag.
+;
+; TOWN_DEEPDALE ($03)  [sector $4,$7]  Deepdale
+;   Dungeon: cave room $06 (Deepdale / Truffle cave)
+;   Gate IN:  none
+;   Gate OUT: none
+;   Notes:    Truffle_collected ($FFFFC72B) acquired here; delivered to
+;             a Deepdale NPC for a side-quest reward.
+;
+; TOWN_STOW1 / TOWN_STOW2 ($04/$05)  [sector $B,$7]  Stow
+;   Dungeon: cave room $08 (Stow cave)
+;   Gate IN:  Malaga_king_crowned ($FFFFC73B) — Stow route is sealed
+;             until the Malaga coronation event completes.
+;   Gate OUT: none
+;   Notes:    Two town IDs share the same sector; $04 = Stow exterior,
+;             $05 = Stow church / secondary entrance.
+;
+; TOWN_KELTWICK ($06)  [sector $E,$4]  Keltwick
+;   Dungeon: none
+;   Gate IN:  Sent_to_malaga ($FFFFC733) — an NPC physically blocks the
+;             path until the flag is set (npc.asm NPCTick_Keltwick_WaitForPlayer).
+;   Gate OUT: none
+;   Notes:    Waypoint town on the route to Malaga.
+;
+; TOWN_MALAGA ($07)  [sector $C,$2]  Malaga
+;   Dungeon: cave room $0D (Malaga dungeon)
+;   Gate IN:  Sent_to_malaga ($FFFFC733) (same gate as Keltwick)
+;   Gate OUT: Malaga_king_crowned ($FFFFC73B) — must complete coronation
+;             event before Barrow / Stow routes open.
+;   Notes:    CaveImposterBoss fight in cave room $0D sets Imposter_killed
+;             ($FFFFC73D).
+;
+; TOWN_BARROW ($08)  [sector $E,$0]  Barrow
+;   Dungeon: cave rooms $00, $0B, $0C (Barrow dungeon / Imposter lair)
+;   Gate IN:  Malaga_king_crowned ($FFFFC73B) — route north to Barrow
+;             requires Malaga coronation.
+;   Gate OUT (castle interior): Imposter_killed ($FFFFC73D) AND
+;             Barrow_map_received ($FFFFC740) required for castle-interior
+;             NPC to step aside (npc.asm NPCTick_Barrow_QuestGuard).
+;   Notes:    Ring_of_earth_obtained ($FFFFC749) and
+;             Ring_of_wind_received ($FFFFC74B) both acquired in Barrow
+;             dungeon event chain.  Bearwulf_met ($FFFFC734) and
+;             Bearwulf_returned_home ($FFFFC735) are Barrow-area side flags.
+;
+; TOWN_TADCASTER ($09)  [sector $9,$1]  Tadcaster
+;   Dungeon: cave rooms $11, $13 (Tadcaster dungeon)
+;   Gate IN:  Barrow_map_received ($FFFFC740) — map from Barrow quest
+;             required; Tadcaster pass sold by NPC in Tadcaster.
+;   Gate OUT: Pass_to_carthahena_purchased ($FFFFC754) — must buy pass
+;             from the Tadcaster pass-seller NPC to unlock Carthahena
+;             border guards (npc.asm NPCTick_Tadcaster_PassSeller).
+;   Notes:    Helwig_men_rescued ($FFFFC744) flag originates from
+;             cave room $13.
+;
+; TOWN_HELWIG ($0A)  [sector $6,$0]  Helwig
+;   Dungeon: cave room $14 (Helwig cave / Stow prisoner cave)
+;   Gate IN:  none (reachable after Barrow map)
+;   Gate OUT: none mandatory
+;   Notes:    Helwig_men_rescued ($FFFFC744) set by freeing prisoners in
+;             cave room $14 (npc.asm FreePrisoners dialogue completion).
+;             Post-rescue inn-wakeup event activates.
+;
+; TOWN_SWAFFHAM ($0B)  [sector $1,$0]  Swaffham
+;   Dungeon: cave room $1E (Swaffham cave)
+;   Gate IN:  none (reachable once northwest is open)
+;   Gate OUT: none
+;   Notes:    Late-game optional area; contains useful items and NPCs.
+;
+; TOWN_EXCALABRIA ($0C)  [sector $5,$2]  Excalabria
+;   Dungeon: cave rooms $16, $24, $29 (Excalabria / blacksmith dungeon)
+;   Gate IN:  none (geographically accessible from Tadcaster area)
+;   Gate OUT: Sword_retrieved_from_blacksmith ($FFFFC756) — blacksmith
+;             steals sword (Sword_stolen_by_blacksmith, $FFFFC755);
+;             player must recover it before acquiring
+;             Player_has_sword_of_vermilion ($FFFFC757).
+;   Notes:    The Sword of Vermilion is the endgame key item.
+;
+; TOWN_HASTINGS1 / TOWN_HASTINGS2 ($0D/$0E)  [sector $9,$2]  Hastings
+;   Dungeon: none identified
+;   Gate IN:  none
+;   Gate OUT: none
+;   Notes:    Two town IDs share the same sector coordinates (duplicate
+;             entry, same as TOWN_STOW1/2 pattern).
+;
+; TOWN_CARTHAHENA ($0F)  [sector $A,$5]  Carthahena
+;   Dungeon: cave room $20 (Tsarkon final dungeon)
+;   Gate IN:  Pass_to_carthahena_purchased ($FFFFC754) — border guards
+;             block entry without the pass (townbuild.asm shop dialogue
+;             sets the flag; npc.asm guard NPC reads it).
+;   Gate OUT: Player_has_sword_of_vermilion ($FFFFC757) required to
+;             trigger endgame fight with Tsarkon.
+;   Notes:    Tsarkon_is_dead ($FFFFC758) set on final boss defeat.
+;             Crown_received ($FFFFC75B) acquired here; triggers ending.
+;             Soldier_fight_event_trigger ($FFFFC816) fires in Carthahena.
+;
+; -----------------------------------------------------------------------
+; CRITICAL PATH SUMMARY (linear order):
+;   Wyclif → Parma (Fake_king_killed → Sent_to_malaga)
+;     → Deepdale/Watling (optional)
+;     → Keltwick → Malaga (Malaga_king_crowned)
+;     → Stow (optional, opens after Malaga)
+;     → Barrow (Imposter_killed → Barrow_map_received)
+;     → Tadcaster → Helwig (optional) → Swaffham (optional)
+;     → Excalabria (sword retrieval)
+;     → Carthahena (Pass_to_carthahena_purchased)
+;     → Tsarkon fight → Crown_received → ENDING
+;
+; RANDOMIZER NOTES:
+;   - Flags that physically gate movement (NPC blockers / border guards):
+;       Sent_to_malaga, Malaga_king_crowned, Imposter_killed,
+;       Barrow_map_received, Pass_to_carthahena_purchased
+;   - Dungeon access is always free once the town sector is reachable
+;     (no dungeon-specific gate flags)
+;   - Four rings/crystals are required before the endgame sword fight;
+;     a randomizer must guarantee all four are obtainable.
+; -----------------------------------------------------------------------
 TownTeleportLocationData: ; town teleport locations
 	; format:
 	; dc.w (x_in_sector), (y_in_sector), (sector_x), (sector_y)
