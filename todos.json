@@ -1232,7 +1232,9 @@
           "priority": "low",
           "effort": "small",
           "note": "Currently at 99.99% named (1 loc_ remains)",
-          "status": "todo"
+          "status": "done",
+          "notes": "Created tools/label_coverage.js: scans all build .asm files, reports named vs loc_ label count and percentage. Current: 10471/10471 (100%) named.",
+          "completed_at": "2026-03-05"
         },
         {
           "id": "BUILD-003",
@@ -1739,12 +1741,14 @@
           "file": "tools/run_checks.js, tools/run_checks.cmd",
           "priority": "medium",
           "effort": "small",
-          "status": "todo",
+          "status": "done",
           "tags": [
             "tooling",
             "lint",
             "build"
-          ]
+          ],
+          "notes": "Created tools/run_checks.js: runs all 5 lint scripts in sequence, prints pass/fail summary, exits 1 if any fail.",
+          "completed_at": "2026-03-05"
         },
         {
           "id": "TOOL-009",
@@ -1816,11 +1820,13 @@
           "file": "docs/module_boundaries.md",
           "priority": "medium",
           "effort": "small",
-          "status": "todo",
+          "status": "done",
           "tags": [
             "documentation",
             "architecture"
-          ]
+          ],
+          "notes": "Created docs/module_boundaries.md: all 28 src/*.asm files documented with responsibility, what they may call, RAM regions owned, and misplaced-code notes.",
+          "completed_at": "2026-03-05"
         },
         {
           "id": "MOD-002",
@@ -1962,11 +1968,13 @@
           "file": "docs/contributing.md",
           "priority": "medium",
           "effort": "small",
-          "status": "todo",
+          "status": "done",
           "tags": [
             "documentation",
             "contributor-experience"
-          ]
+          ],
+          "notes": "Created docs/contributing.md covering build/verify workflow, code style, linters, constants, macros, and links to other docs.",
+          "completed_at": "2026-03-05"
         },
         {
           "id": "CONTRIB-002",
@@ -1975,12 +1983,14 @@
           "file": "docs/debugging_verify_failures.md",
           "priority": "medium",
           "effort": "small",
-          "status": "todo",
+          "status": "done",
           "tags": [
             "documentation",
             "contributor-experience",
             "debugging"
-          ]
+          ],
+          "notes": "Created docs/debugging_verify_failures.md with step-by-step playbook: find first diff byte, locate in .lst, fix hex/decimal, off-by-one, label renames, macro byte count, auto-extend range.",
+          "completed_at": "2026-03-05"
         },
         {
           "id": "CONTRIB-003",
@@ -2015,12 +2025,14 @@
           "file": "docs/asm68k_quirks.md",
           "priority": "medium",
           "effort": "small",
-          "status": "todo",
+          "status": "done",
           "tags": [
             "documentation",
             "contributor-experience",
             "build"
-          ]
+          ],
+          "notes": "Created docs/asm68k_quirks.md documenting: decimal vs hex in dc.*, /o ae- auto-extend, named macro args lowercased, positional args with suffix, local label @, forward references, = vs equ, signed 32-bit expressions, include paths, lst format.",
+          "completed_at": "2026-03-05"
         },
         {
           "id": "CONTRIB-006",
@@ -2069,12 +2081,14 @@
           "file": "docs/build_workflow.md",
           "priority": "medium",
           "effort": "small",
-          "status": "todo",
+          "status": "done",
           "tags": [
             "documentation",
             "contributor-experience",
             "build"
-          ]
+          ],
+          "notes": "Created docs/build_workflow.md covering full build pipeline, asm68k flags, outputs, verify.bat, lst file usage, commit workflow, gitignore policy.",
+          "completed_at": "2026-03-05"
         },
         {
           "id": "CONTRIB-010",
