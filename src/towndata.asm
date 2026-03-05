@@ -68,19 +68,19 @@ WriteChestAnimationToVRAM:
 WriteChestAnimationToVRAM_Done:
 	MOVE.l	D5, VDP_control_port
 	MOVE.w	#3, D6
-WriteChestAnimationToVRAM_Done2:
+WriteChestAnimationToVRAM_TileRowA:
 	CLR.w	D0
 	MOVE.b	(A0)+, D0
 	ADDI.w	#$A44C, D0
 	MOVE.w	D0, VDP_data_port
-	DBF	D6, WriteChestAnimationToVRAM_Done2
+	DBF	D6, WriteChestAnimationToVRAM_TileRowA
 	MOVE.w	#2, D6
-WriteChestAnimationToVRAM_Done3:
+WriteChestAnimationToVRAM_TileRowB:
 	CLR.w	D0
 	MOVE.b	(A0)+, D0
 	ADDI.w	#$AC4C, D0
 	MOVE.w	D0, VDP_data_port
-	DBF	D6, WriteChestAnimationToVRAM_Done3
+	DBF	D6, WriteChestAnimationToVRAM_TileRowB
 	ADDI.l	#$00800000, D5
 	DBF	D7, WriteChestAnimationToVRAM_Done
 	ANDI	#$F8FF, SR
@@ -133,38 +133,38 @@ DialogSelectionStateMachine:
 DialogSelectionStateJumpTable:
 	BRA.w	DialogSelectionStateJumpTable_Loop
 	BRA.w	DialogSelection_Increment_Loop
-	BRA.w	DialogSelection_Increment_Loop2
+	BRA.w	DialogSelection_Increment_WaitForInput
 	BRA.w	DialogClose_RestoreHud_Loop
 DialogSelectionStateJumpTable_Loop:
 	MOVE.w	Main_menu_selection.w, Menu_cursor_index.w
 	JSR	DrawMenuCursor
 	TST.b	Player_in_first_person_mode.w
-	BNE.w	DialogSelectionStateJumpTable_Loop2
+	BNE.w	DialogSelectionStateJumpTable_FirstPersonMode
 	BSR.w	CheckIfTileIsEmpty
 	BNE.w	DialogSelection_Increment
 	MOVE.w	#3, Dialog_selection.w
 	RTS
 	
-DialogSelectionStateJumpTable_Loop2:
+DialogSelectionStateJumpTable_FirstPersonMode:
 	TST.b	Reward_script_active.w
-	BNE.w	DialogSelectionStateJumpTable_Loop3
+	BNE.w	DialogSelectionStateJumpTable_RewardActive
 	TST.b	Herbs_available.w
-	BNE.w	DialogSelectionStateJumpTable_Loop4
+	BNE.w	DialogSelectionStateJumpTable_HerbsAvailable
 	TST.b	Truffles_available.w
-	BNE.w	DialogSelectionStateJumpTable_Loop5
+	BNE.w	DialogSelectionStateJumpTable_TrufflesAvailable
 	TST.b	Talker_present_flag.w
-	BNE.w	DialogSelectionStateJumpTable_Loop6
+	BNE.w	DialogSelectionStateJumpTable_TalkerPresent
 	BRA.w	DialogSelection_Increment
-DialogSelectionStateJumpTable_Loop6:
+DialogSelectionStateJumpTable_TalkerPresent:
 	PRINT 	SomeoneStandingStr
 	BRA.w	DialogSelect_ShowLookMessage
-DialogSelectionStateJumpTable_Loop3:
+DialogSelectionStateJumpTable_RewardActive:
 	PRINT 	TreasureChestStr
 	BRA.w	DialogSelect_ShowLookMessage
-DialogSelectionStateJumpTable_Loop4:
+DialogSelectionStateJumpTable_HerbsAvailable:
 	PRINT 	HerbsStillThereStr	
 	BRA.w	DialogSelect_ShowLookMessage	
-DialogSelectionStateJumpTable_Loop5:
+DialogSelectionStateJumpTable_TrufflesAvailable:
 	PRINT 	TrufflesStillThereStr	
 DialogSelect_ShowLookMessage:
 	JSR	SaveStatusBarToBuffer
@@ -183,9 +183,9 @@ DialogSelection_Increment_Loop:
 	ADDQ.w	#1, Dialog_selection.w
 	RTS
 	
-DialogSelection_Increment_Loop2:
+DialogSelection_Increment_WaitForInput:
 	TST.b	Script_text_complete.w
-	BEQ.w	DialogClose_RestoreHud_Loop2
+	BEQ.w	DialogClose_RestoreHud_ProcessText
 	CheckButton BUTTON_BIT_C
 	BNE.w	DialogClose_RestoreHud
 	CheckButton BUTTON_BIT_B
@@ -198,7 +198,7 @@ DialogClose_RestoreHud:
 	TriggerWindowRedraw WINDOW_DRAW_MSG_SPEED_ALT
 	RTS
 	
-DialogClose_RestoreHud_Loop2:
+DialogClose_RestoreHud_ProcessText:
 	JSR	ProcessScriptText
 	RTS
 	
@@ -260,13 +260,13 @@ SeekHandler_TitaniasMirror:
 	MOVE.w	#((ITEM_TYPE_DISCARDABLE<<8)|ITEM_TITANIAS_MIRROR), (A0,D0.w)
 	MOVE.b	#FLAG_TRUE, Titanias_mirror_acquired.w	
 	PlaySound SOUND_ATTACK	
-	BRA.w	SeekHandler_TitaniasMirror_Loop2	
+	BRA.w	SeekHandler_TitaniasMirror_DisplayAndReturn	
 SeekHandler_TitaniasMirror_Loop:
 	LEA	TitaniasMirrorStr, A2	
 	BSR.w	DisplayFoundItemMessage	
 	BSR.w	DisplayInventoryFullMessage	
-SeekHandler_TitaniasMirror_Loop2:
-	BRA.w	SeekHandler_DisplayAndReturn	
+SeekHandler_TitaniasMirror_DisplayAndReturn:
+	BRA.w	SeekHandler_DisplayAndReturn
 SeekHandler_SetSelection1:
 	MOVE.w	#1, Dialog_selection.w
 	RTS
@@ -275,7 +275,7 @@ SeekHandler_MegaBlast:
 	TST.b	Mega_blast_acquired.w
 	BNE.w	SeekHandler_MegaBlast_Loop
 	JSR	CheckInventoryFull
-	BGE.w	SeekHandler_MegaBlast_Loop2
+	BGE.w	SeekHandler_MegaBlast_InventoryFull
 	LEA	MegaBlastStr, A2
 	BSR.w	DisplayFoundItemMessage
 	BSR.w	DisplayFoundItemWithName
@@ -283,12 +283,12 @@ SeekHandler_MegaBlast:
 	MOVE.w	#((ITEM_TYPE_DISCARDABLE<<8)|ITEM_MEGA_BLAST), (A0,D0.w)
 	MOVE.b	#FLAG_TRUE, Mega_blast_acquired.w
 	PlaySound SOUND_ATTACK
-	BRA.w	SeekHandler_MegaBlast_Loop3
-SeekHandler_MegaBlast_Loop2:
+	BRA.w	SeekHandler_MegaBlast_AcquireMegaBlast
+SeekHandler_MegaBlast_InventoryFull:
 	LEA	MegaBlastStr, A2
 	BSR.w	DisplayFoundItemMessage
 	BSR.w	DisplayInventoryFullMessage
-SeekHandler_MegaBlast_Loop3:
+SeekHandler_MegaBlast_AcquireMegaBlast:
 	BRA.w	SeekHandler_DisplayAndReturn
 SeekHandler_MegaBlast_Loop:
 	MOVE.w	#1, Dialog_selection.w
@@ -297,7 +297,7 @@ SeekHandler_RafaelsStick:
 	TST.b	Rafaels_stick_acquired.w
 	BNE.w	SeekHandler_RafaelsStick_Loop
 	JSR	CheckInventoryFull
-	BGE.w	SeekHandler_RafaelsStick_Loop2
+	BGE.w	SeekHandler_RafaelsStick_InventoryFull
 	LEA	RafaelsStickStr, A2
 	BSR.w	DisplayFoundItemMessage
 	BSR.w	DisplayFoundItemWithName
@@ -305,12 +305,12 @@ SeekHandler_RafaelsStick:
 	MOVE.w	#((ITEM_TYPE_DISCARDABLE<<8)|ITEM_RAFAELS_STICK), (A0,D0.w)
 	MOVE.b	#FLAG_TRUE, Rafaels_stick_acquired.w
 	PlaySound SOUND_ATTACK
-	BRA.w	SeekHandler_RafaelsStick_Loop3
-SeekHandler_RafaelsStick_Loop2:
+	BRA.w	SeekHandler_RafaelsStick_AcquireStick
+SeekHandler_RafaelsStick_InventoryFull:
 	LEA	RafaelsStickStr, A2	
 	BSR.w	DisplayFoundItemMessage	
 	BSR.w	DisplayInventoryFullMessage	
-SeekHandler_RafaelsStick_Loop3:
+SeekHandler_RafaelsStick_AcquireStick:
 	BRA.w	SeekHandler_DisplayAndReturn
 SeekHandler_RafaelsStick_Loop:
 	MOVE.w	#1, Dialog_selection.w	
@@ -325,12 +325,12 @@ SeekHandler_Herbs:
 	JSR	AddItemToInventoryList	
 	MOVE.w	#0, (A0,D0.w)	
 	PlaySound SOUND_ATTACK	
-	BRA.w	SeekHandler_Herbs_Loop2	
+	BRA.w	SeekHandler_Herbs_AcquireHerbs
 SeekHandler_Herbs_Loop:
 	LEA	HerbsStr, A2	
 	BSR.w	DisplayFoundItemMessage	
 	BSR.w	DisplayInventoryFullMessage	
-SeekHandler_Herbs_Loop2:
+SeekHandler_Herbs_AcquireHerbs:
 	BRA.w	SeekHandler_DisplayAndReturn	
 
 SeekHandler_FindOneKim: ; Find 1kim
@@ -457,23 +457,23 @@ TakeItemStateMachine:
 	
 TakeItemStateJumpTable:
 	BRA.w	TakeItemStateJumpTable_Loop
-	BRA.w	TakeItemStateJumpTable_Loop2
+	BRA.w	TakeItemStateJumpTable_CheckFirstPersonMode
 	BRA.w	TakeItemState_SetState2_Loop
-	BRA.w	TakeItemState_SetState2_Loop2
+	BRA.w	TakeItemState_SetState2_WaitForInput
 	BRA.w	TakeItem_RestoreHud_Loop
-	BRA.w	TakeItem_FinalizeTake_Loop
-	BRA.w	TakeItem_FinalizeTake_Loop2
-	BRA.w	TakeItem_DontWantMessage_Loop
-	BRA.w	TakeItem_InitEquipCursor_Loop
-	BRA.w	TakeItem_InitEquipCursor_Loop2
-	BRA.w	TakeItem_InitEquipCursor_Loop3
+	BRA.w	TakeItem_FinalizeTake_WaitForScript
+	BRA.w	TakeItem_FinalizeTake_ConfirmYesNo
+	BRA.w	TakeItem_DontWantMessage_WaitForScript
+	BRA.w	TakeItem_InitEquipCursor_CancelToFullMsg
+	BRA.w	TakeItem_InitEquipCursor_ConfirmDiscard
+	BRA.w	TakeItem_InitEquipCursor_WaitForFinalize
 TakeItemStateJumpTable_Loop:
 	MOVE.w	Main_menu_selection.w, Menu_cursor_index.w
 	JSR	DrawMenuCursor
 	ADDQ.w	#1, Take_item_state.w
 	RTS
 	
-TakeItemStateJumpTable_Loop2:
+TakeItemStateJumpTable_CheckFirstPersonMode:
 	TST.b	Player_in_first_person_mode.w
 	BEQ.w	TakeItemState_SetState2
 	TST.b	Dialog_active_flag.w
@@ -499,9 +499,9 @@ TakeItemState_SetState2_Loop:
 	ADDQ.w	#1, Take_item_state.w
 	RTS
 	
-TakeItemState_SetState2_Loop2:
+TakeItemState_SetState2_WaitForInput:
 	TST.b	Script_text_complete.w
-	BEQ.w	TakeItem_RestoreHud_Loop2
+	BEQ.w	TakeItem_RestoreHud_ProcessText
 	CheckButton BUTTON_BIT_C
 	BNE.w	TakeItem_RestoreHud
 	CheckButton BUTTON_BIT_B
@@ -514,7 +514,7 @@ TakeItem_RestoreHud:
 	TriggerWindowRedraw WINDOW_DRAW_MSG_SPEED_ALT
 	RTS
 	
-TakeItem_RestoreHud_Loop2:
+TakeItem_RestoreHud_ProcessText:
 	JSR	ProcessScriptText
 	RTS
 	
@@ -524,18 +524,18 @@ TakeItem_RestoreHud_Loop:
 	TST.b	Truffles_available.w
 	BNE.w	TakeItemState_BuildReward
 	TST.b	Chest_opened_flag.w
-	BEQ.w	TakeItemState_BuildReward_Loop
+	BEQ.w	TakeItemState_BuildReward_NothingToTake
 	TST.b	Reward_script_available.w
 	BNE.w	TakeItemState_BuildReward
 	PRINT 	NothingToTakeStr	
-	BRA.w	TakeItemState_BuildReward_Loop2	
+	BRA.w	TakeItemState_BuildReward_PrintAndReset	
 TakeItemState_BuildReward:
 	BSR.w	BuildRewardItemMessage
 	RTS
 	
-TakeItemState_BuildReward_Loop:
+TakeItemState_BuildReward_NothingToTake:
 	PRINT 	CantTakeBoxStr
-TakeItemState_BuildReward_Loop2:
+TakeItemState_BuildReward_PrintAndReset:
 	JSR	SaveStatusBarToBuffer
 	JSR	ResetScriptAndInitDialogue
 	MOVE.w	#TAKE_ITEM_STATE_MSG_WAIT, Take_item_state.w
@@ -549,18 +549,18 @@ BuildRewardItemMessage:
 	LEA	ShopCategoryNameTables, A0
 	MOVE.w	Reward_script_type.w, D0
 	CMPI.w	#REWARD_TYPE_RING, D0
-	BEQ.w	BuildRewardItemMessage_Loop
+	BEQ.w	BuildRewardItemMessage_RewardRing
 	CMPI.w	#REWARD_TYPE_MONEY, D0
-	BEQ.w	BuildRewardItemMessage_Loop2
+	BEQ.w	BuildRewardItemMessage_RewardMoney
 	CMPI.w	#REWARD_TYPE_MAP, D0
-	BEQ.w	BuildRewardItemMessage_Loop3
+	BEQ.w	BuildRewardItemMessage_RewardMap
 	ASL.w	#3, D0
 	MOVEA.l	$4(A0,D0.w), A2
 	MOVEA.l	(A0,D0.w), A0
 	MOVE.w	Reward_script_value.w, D1
 	MOVE.w	(A2), D0
 	CMPI.w	#8, D0
-	BGE.w	TakeItem_FinalizeTake_Loop3
+	BGE.w	TakeItem_FinalizeTake_InventoryFull
 	ADDQ.w	#1, (A2)
 	ADD.w	D0, D0
 	MOVE.w	Reward_script_value.w, D1
@@ -571,7 +571,7 @@ BuildRewardItemMessage:
 	MOVEA.l	(A0,D1.w), A0
 	JSR	CopyStringUntilFF
 	BRA.w	TakeItem_FinalizeTake
-BuildRewardItemMessage_Loop3:
+BuildRewardItemMessage_RewardMap:
 	LEA	Map_trigger_flags.w, A0
 	MOVE.w	Reward_script_value.w, D0
 	MOVE.b	#$FF, (A0,D0.w)
@@ -580,7 +580,7 @@ BuildRewardItemMessage_Loop3:
 	MOVEA.l	#AreaMapStr, A0
 	JSR	CopyStringUntilFF
 	BRA.w	TakeItem_FinalizeTake
-BuildRewardItemMessage_Loop:
+BuildRewardItemMessage_RewardRing:
 	LEA	RingNames, A0
 	MOVE.w	Reward_script_value.w, D0
 	ANDI.w	#$00FF, D0
@@ -589,7 +589,7 @@ BuildRewardItemMessage_Loop:
 	MOVEA.l	(A0,D0.w), A0
 	JSR	CopyStringUntilFF
 	BRA.w	TakeItem_FinalizeTake
-BuildRewardItemMessage_Loop2:
+BuildRewardItemMessage_RewardMoney:
 	MOVEQ	#0, D0
 	MOVE.w	Reward_script_value.w, D0
 	MOVE.l	D0, Transaction_amount.w
@@ -616,31 +616,31 @@ TakeItem_FinalizeTake:
 	CLR.b	Reward_script_available.w
 	RTS
 	
-TakeItem_FinalizeTake_Loop3:
+TakeItem_FinalizeTake_InventoryFull:
 	JSR	SaveStatusBarToBuffer
 	JSR	ResetScriptAndInitDialogue
 	PRINT 	CantCarryMoreStr
 	MOVE.w	#TAKE_ITEM_STATE_FULL_MSG, Take_item_state.w
 	RTS
 	
-TakeItem_FinalizeTake_Loop:
+TakeItem_FinalizeTake_WaitForScript:
 	TST.b	Script_text_complete.w
-	BEQ.w	TakeItem_FinalizeTake_Loop4
+	BEQ.w	TakeItem_FinalizeTake_ProcessText
 	CLR.w	Dialog_selection.w
 	JSR	SaveRightMenuAreaToBuffer
 	JSR	DrawYesNoDialog
 	MOVE.w	#TAKE_ITEM_STATE_CONFIRM, Take_item_state.w
 	RTS
 	
-TakeItem_FinalizeTake_Loop4:
-	JSR	ProcessScriptText
+TakeItem_FinalizeTake_ProcessText:
+	JSR	ProcessScriptText	
 	RTS
 	
-TakeItem_FinalizeTake_Loop2:
+TakeItem_FinalizeTake_ConfirmYesNo:
 	CheckButton BUTTON_BIT_B
 	BNE.w	TakeItem_DontWantMessage
 	CheckButton BUTTON_BIT_C
-	BEQ.w	TakeItem_DontWantMessage_Loop2
+	BEQ.w	TakeItem_DontWantMessage_MoveCursor
 	PlaySound SOUND_MENU_SELECT
 	TST.w	Dialog_selection.w
 	BNE.w	TakeItem_DontWantMessage
@@ -672,33 +672,33 @@ TakeItem_DontWantMessage:
 	PRINT 	Text_build_buffer
 	RTS
 	
-TakeItem_DontWantMessage_Loop2:
+TakeItem_DontWantMessage_MoveCursor:
 	MOVE.w	Dialog_selection.w, Menu_cursor_index.w
 	MOVE.w	#VDP_ATTR_SCRIPT, Script_tile_attrs.w
 	JSR	HandleMenuInput
 	MOVE.w	Menu_cursor_index.w, Dialog_selection.w
 	RTS
 	
-TakeItem_DontWantMessage_Loop:
+TakeItem_DontWantMessage_WaitForScript:
 	TST.b	Script_text_complete.w
-	BEQ.w	TakeItem_InitEquipCursor_Loop4
+	BEQ.w	TakeItem_InitEquipCursor_ProcessText
 	JSR	SaveCenterDialogAreaToBuffer
 	MOVE.w	Reward_script_type.w, D0
-	BEQ.w	TakeItem_DontWantMessage_Loop3
+	BEQ.w	TakeItem_DontWantMessage_DrawItemList
 	CMPI.w	#REWARD_TYPE_EQUIPMENT, D0
-	BEQ.w	TakeItem_DontWantMessage_Loop4
+	BEQ.w	TakeItem_DontWantMessage_DrawEquipList
 	JSR	DrawMagicListBorders
 	JSR	DrawMagicListWithMP
 	MOVE.l	#Possessed_magics_list, Active_inventory_list_ptr.w
 	MOVE.w	Possessed_magics_length.w, D0
 	BRA.w	TakeItem_InitEquipCursor
-TakeItem_DontWantMessage_Loop3:
+TakeItem_DontWantMessage_DrawItemList:
 	JSR	DrawItemListBorders
 	JSR	DrawItemListNames
 	MOVE.l	#Possessed_items_list, Active_inventory_list_ptr.w
 	MOVE.w	Possessed_items_length.w, D0
 	BRA.w	TakeItem_InitEquipCursor
-TakeItem_DontWantMessage_Loop4:
+TakeItem_DontWantMessage_DrawEquipList:
 	JSR	DrawEquipmentListWindow
 	JSR	DrawPossessedEquipmentList
 	MOVE.l	#Possessed_equipment_list, Active_inventory_list_ptr.w
@@ -708,13 +708,13 @@ TakeItem_InitEquipCursor:
 	MOVE.w	#TAKE_ITEM_STATE_ITEM_CURSOR, Take_item_state.w
 	RTS
 	
-TakeItem_InitEquipCursor_Loop4:
+TakeItem_InitEquipCursor_ProcessText:
 	JSR	ProcessScriptText	
 	RTS
 	
-TakeItem_InitEquipCursor_Loop:
+TakeItem_InitEquipCursor_CancelToFullMsg:
 	CheckButton BUTTON_BIT_B
-	BEQ.w	TakeItem_InitEquipCursor_Loop5
+	BEQ.w	TakeItem_InitEquipCursor_NavigateItemList
 	PlaySound SOUND_MENU_CANCEL
 	JSR	DrawCenterMenuWindow
 	JSR	ResetScriptAndInitDialogue
@@ -722,9 +722,9 @@ TakeItem_InitEquipCursor_Loop:
 	MOVE.w	#TAKE_ITEM_STATE_FULL_MSG, Take_item_state.w
 	RTS
 	
-TakeItem_InitEquipCursor_Loop5:
+TakeItem_InitEquipCursor_NavigateItemList:
 	CheckButton BUTTON_BIT_C
-	BEQ.w	TakeItem_InitEquipCursor_Loop6
+	BEQ.w	TakeItem_InitEquipCursor_ScrollItemList
 	JSR	DrawMenuCursor
 	PlaySound SOUND_MENU_SELECT
 	JSR	SaveRightMenuAreaToBuffer
@@ -732,22 +732,22 @@ TakeItem_InitEquipCursor_Loop5:
 	MOVE.w	#TAKE_ITEM_STATE_DISCARD_CONFIRM, Take_item_state.w
 	RTS
 	
-TakeItem_InitEquipCursor_Loop6:
+TakeItem_InitEquipCursor_ScrollItemList:
 	MOVE.w	Selected_item_index.w, Menu_cursor_index.w
 	MOVE.w	#VDP_ATTR_SCRIPT, Script_tile_attrs.w
 	JSR	HandleMenuInput
 	MOVE.w	Menu_cursor_index.w, Selected_item_index.w
 	RTS
 	
-TakeItem_InitEquipCursor_Loop2:
+TakeItem_InitEquipCursor_ConfirmDiscard:
 	CheckButton BUTTON_BIT_B
-	BNE.w	TakeItem_InitEquipCursor_Loop7
+	BNE.w	TakeItem_InitEquipCursor_CancelDiscard
 	CheckButton BUTTON_BIT_C
-	BEQ.w	TakeItem_InitEquipCursor_Loop8
+	BEQ.w	TakeItem_InitEquipCursor_MoveCursorYN
 	PlaySound SOUND_MENU_SELECT
 	TST.w	Dialog_selection.w
-	BEQ.w	TakeItem_InitEquipCursor_Loop9
-TakeItem_InitEquipCursor_Loop7:
+	BEQ.w	TakeItem_InitEquipCursor_DiscardItem
+TakeItem_InitEquipCursor_CancelDiscard:
 	PlaySound SOUND_MENU_CANCEL	
 	JSR	DrawLeftMenuWindow	
 	MOVEA.l	Active_inventory_list_ptr.w, A0	
@@ -756,7 +756,7 @@ TakeItem_InitEquipCursor_Loop7:
 	MOVE.w	#TAKE_ITEM_STATE_ITEM_CURSOR, Take_item_state.w	
 	RTS
 	
-TakeItem_InitEquipCursor_Loop9: ; Discard item
+TakeItem_InitEquipCursor_DiscardItem: ; Discard item
 	JSR	DrawLeftMenuWindow
 	JSR	DrawCenterMenuWindow
 	JSR	ResetScriptAndInitDialogue
@@ -765,10 +765,10 @@ TakeItem_InitEquipCursor_Loop9: ; Discard item
 	ADD.w	D0, D0
 	MOVE.w	(A2,D0.w), D0
 	ANDI.w	#(ITEM_TYPE_NON_DISCARDABLE<<8), D0
-	BEQ.w	TakeItem_InitEquipCursor_Loop10
+	BEQ.w	TakeItem_InitEquipCursor_DiscardOk
 	PRINT 	CantPutDownStr
-	BRA.w	TakeItem_InitEquipCursor_Loop11
-TakeItem_InitEquipCursor_Loop10:
+	BRA.w	TakeItem_InitEquipCursor_NonDiscardable
+TakeItem_InitEquipCursor_DiscardOk:
 	PlaySound SOUND_ERROR
 	LEA	Text_build_buffer.w, A1
 	LEA	PutStr, A0
@@ -818,18 +818,18 @@ TakeItem_InitEquipCursor_Loop10:
 	MOVE.w	#TAKE_ITEM_STATE_FINALIZE, Take_item_state.w
 	RTS
 	
-TakeItem_InitEquipCursor_Loop11:
+TakeItem_InitEquipCursor_NonDiscardable:
 	MOVE.w	#TAKE_ITEM_STATE_MSG_WAIT, Take_item_state.w
 	RTS
 	
-TakeItem_InitEquipCursor_Loop8:
+TakeItem_InitEquipCursor_MoveCursorYN:
 	MOVE.w	Dialog_selection.w, Menu_cursor_index.w
 	MOVE.w	#VDP_ATTR_SCRIPT, Script_tile_attrs.w
 	JSR	HandleMenuInput
 	MOVE.w	Menu_cursor_index.w, Dialog_selection.w
 	RTS
 	
-TakeItem_InitEquipCursor_Loop3:
+TakeItem_InitEquipCursor_WaitForFinalize:
 	TST.b	Script_text_complete.w
 	BEQ.w	TakeItem_RestoreHudWithMusic_Loop
 	CheckButton BUTTON_BIT_C
@@ -2867,9 +2867,9 @@ OverworldChest_CrimsonArmor:
 	MOVE.l	#Crimson_armor_chest_opened, Reward_script_flag.w
 	MOVEA.l	Reward_script_flag.w, A0
 	TST.b	(A0)
-	BNE.b	OverworldChest_CrimsonArmor_Loop2
+	BNE.b	OverworldChest_CrimsonArmor_AlreadyOpened
 	MOVE.b	#FLAG_TRUE, Reward_script_available.w
-OverworldChest_CrimsonArmor_Loop2:
+OverworldChest_CrimsonArmor_AlreadyOpened:
 	MOVE.b	#FLAG_TRUE, Reward_script_active.w
 	BSR.w	InitTalkerWithGfxDescriptor_1F782
 	MOVE.l	#NoOneHereStr, Script_talk_source.w
@@ -3800,7 +3800,7 @@ CaveEvent_TsarkonFinalEncounter:
 	BNE.w	CaveEvent_TsarkonFinalEncounter_Loop
 	MOVE.w	#7, D7
 	JSR	CheckRingsCollected
-	BNE.w	CaveEvent_TsarkonFinalEncounter_Loop2
+	BNE.w	CaveEvent_TsarkonFinalEncounter_RingsNotAllCollected
 	MOVE.b	#FLAG_TRUE, Talker_present_flag.w
 	BSR.w	InitDialogMode
 	MOVE.l	#PortraitInit_TsarkonFinal, obj_tick_fn(A6)
@@ -3814,7 +3814,7 @@ CaveEvent_TsarkonFinalEncounter:
 	BNE.b	CaveEvent_Tsarkon_Return
 	MOVE.l	#StepfatherRingsStr, Script_talk_source.w
 	BRA.b	CaveEvent_Tsarkon_Return
-CaveEvent_TsarkonFinalEncounter_Loop2:
+CaveEvent_TsarkonFinalEncounter_RingsNotAllCollected:
 	MOVE.l	#FeelChillsStr, Script_talk_source.w	
 	BRA.b	CaveEvent_Tsarkon_Return	
 CaveEvent_TsarkonFinalEncounter_Loop:
