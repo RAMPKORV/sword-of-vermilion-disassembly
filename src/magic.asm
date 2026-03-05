@@ -1,175 +1,303 @@
 ; ======================================================================
 ; src/magic.asm
-; Magic/spell system, spellbook menu, Aries map
+; NAMING NOTE: Despite the filename, this file contains a mix of systems
+; due to ROM layout constraints from the original binary. Contents are:
+;
+;   1. ENDING CREDITS / OUTRO RENDERING (lines ~1-170)
+;      VDP tilemap rendering for the post-game credits scroll, credits
+;      cursor blink animation, epilogue text rendering helpers. These
+;      routines logically belong in cutscene.asm or states.asm but are
+;      stranded here by ROM layout.
+;
+;   2. EPILOGUE DIALOGUE STRINGS + STAFF CREDIT STRINGS (lines ~190-510)
+;      Outro monologue text (Outro1Str - Outro5Str), full staff credit
+;      strings (director, programmers, designers, etc.), and the
+;      CreditsTextPtrTable pointer table that sequences the credits roll.
+;
+;   3. SPELLBOOK MENU STATE MACHINE (lines ~511-1040)
+;      Multi-state menu for viewing, equipping, discarding, and casting
+;      spells. State dispatch via SpellbookMenuStateJumpTable.
+;
+;   4. FIELD MAGIC CASTING + SPELL IMPLEMENTATIONS (lines ~1040-end)
+;      CastFieldMagicMap dispatch, all field-usable spells (Aries,
+;      Extrios, Inaudios, Luminos, Sangua/Sanguia/Sanguio, Toxios),
+;      and CastBattleMagicMap dispatch with projectile update code.
+;
+; VDP TILE ATTRIBUTE VALUES USED IN THIS FILE
+; --------------------------------------------
+; $A080 : palette 2, priority 1, base tile $080 (credits background fill)
+; $84C0 : palette 2, priority 0, base tile $0C0 (border pattern tile)
+; $84E0 : palette 2, priority 0, base tile $0E0 (ending border tile)
+; $601D : palette 1, priority 1, base tile $01D + offset (credits sprite row)
+; $41CD : palette 0, priority 1, base tile $1CD + offset (staff name glyph)
+; $4002 : palette 0, priority 0, base tile $002 + offset (dialog area fill)
+;
+; The ADDI.l #$00800000, Dx pattern advances the VDP nametable write
+; address by one row (64 tiles * 2 bytes = 128 = $80 bytes = $00800000
+; in the upper half of the VDP command longword).
+;
+; ORI #$0700, SR / ANDI #$F8FF, SR pairs disable/re-enable interrupts
+; around VDP writes to prevent the VBlank handler from interleaving.
+;
+; The first two instructions at the top of this file (ANDI + RTS) are a
+; fragment of the interrupt-enable epilogue that is entered via a branch
+; from the previous module — they are NOT a standalone function.
 ; ======================================================================
-	ANDI	#$F8FF, SR
+
+	; NOTE: These two instructions are branched to from the tail of the
+	; preceding module (end of InitVDPPlanesForEnding in cutscene.asm).
+	; They complete the ORI/ANDI interrupt-enable pattern started there.
+	ANDI	#$F8FF, SR	; re-enable interrupts (epilogue of prior function)
 	RTS
+
+; ======================================================================
+; SECTION 1: ENDING CREDITS / OUTRO SCREEN RENDERING
+; ======================================================================
+
+; ----------------------------------------------------------------------
+; ClearEndingTextArea
+; Clear the VDP nametable area used for scrolling credits text.
+; Writes blank tiles in three phases:
+;   Phase 1: 3 rows of 26 ($0019+1) blank tiles (tile 0)
+;   Phase 2: 3 rows of 9 ($0008+1) tiles loaded from inline data + $4002
+;   Phase 3: 15 ($000E+1) rows of 25 ($0018+1) blank tiles
+; In:  D5.l = VDP VRAM write command longword for starting row
+; Out: D5.l advanced past all written rows; VDP nametable updated
+; Uses: A0, D0, D3 (inner data pointer), D4, D5, D6, D7
+; ----------------------------------------------------------------------
 
 ClearEndingTextArea:
 	MOVE.l	D5, D4
 	CLR.w	D0
-	ANDI.l	#$5FFF0003, D4
-	ORI.l	#$40000003, D4
-	MOVE.w	#2, D7
+	ANDI.l	#$5FFF0003, D4	; strip VRAM address bits (keep command type)
+	ORI.l	#$40000003, D4	; set VRAM write command: plane A write
+	MOVE.w	#2, D7		; 3 rows (D7 = count - 1)
 ClearEndingTextArea_Done:
 	MOVE.l	D4, VDP_control_port
-	MOVE.w	#$0019, D6
-ClearEndingTextArea_Done2:
-	MOVE.w	D0, VDP_data_port
-	DBF	D6, ClearEndingTextArea_Done2
-	ADDI.l	#$00800000, D4
+	MOVE.w	#$0019, D6	; 26 tiles per row ($0019 + 1)
+ClearEndingTextArea_TileWriteLoop:
+	MOVE.w	D0, VDP_data_port	; write blank tile
+	DBF	D6, ClearEndingTextArea_TileWriteLoop
+	ADDI.l	#$00800000, D4	; advance to next nametable row
 	ANDI.l	#$5FFF0003, D4
 	ORI.l	#$40000003, D4
 	DBF	D7, ClearEndingTextArea_Done
+	; Phase 2: skip ahead 14 rows ($000E), then write 3 rows with tile data
 	ADDI.l	#$000E0000, D5
 	ANDI.l	#$5FFF0003, D5
 	ORI.l	#$40000003, D5
 	LEA	ClearEndingTextArea_InnerLoop_Data, A0
-	MOVE.w	#2, D7
-ClearEndingTextArea_Done3:
+	MOVE.w	#2, D7		; 3 rows
+ClearEndingTextArea_Phase2RowLoop:
 	MOVE.l	D5, VDP_control_port
-	MOVE.w	#8, D6
-ClearEndingTextArea_Done4:
+	MOVE.w	#8, D6		; 9 tiles per row
+ClearEndingTextArea_Phase2TileLoop:
 	CLR.w	D0
 	MOVE.b	(A0)+, D0
-	ADDI.w	#$4002, D0
+	ADDI.w	#$4002, D0	; tile attribute base: palette 0, no priority, tile $002 + offset
 	MOVE.w	D0, VDP_data_port
-	DBF	D6, ClearEndingTextArea_Done4
-	ADDI.l	#$00800000, D5
+	DBF	D6, ClearEndingTextArea_Phase2TileLoop
+	ADDI.l	#$00800000, D5	; next row
 	ANDI.l	#$5FFF0003, D5
 	ORI.l	#$40000003, D5
-	DBF	D7, ClearEndingTextArea_Done3
+	DBF	D7, ClearEndingTextArea_Phase2RowLoop
+	; Phase 3: rewind 14 rows and clear 15 rows of 25 tiles
 	SUBI.l	#$000E0000, D5
 	ANDI.l	#$5FFF0003, D5
 	ORI.l	#$40000003, D5
-	MOVE.w	#$000E, D7
+	MOVE.w	#$000E, D7	; 15 rows
 ClearEndingTextArea_Done5:
 	MOVE.l	D5, VDP_control_port
-	MOVE.w	#$0018, D6
+	MOVE.w	#$0018, D6	; 25 tiles per row
 ClearEndingTextArea_Done6:
 	CLR.w	D0
 	MOVE.w	D0, VDP_data_port
 	DBF	D6, ClearEndingTextArea_Done6
-	ADDI.l	#$00800000, D5
+	ADDI.l	#$00800000, D5	; next row
 	ANDI.l	#$5FFF0003, D5
 	ORI.l	#$40000003, D5
 	DBF	D7, ClearEndingTextArea_Done5
 	RTS
 
+; ----------------------------------------------------------------------
+; InitEndingCreditsScreen
+; Initialize the VDP nametable for the ending credits display.
+; Three phases:
+;   Phase 1: Fill 64 rows ($003F+1) of 64 tiles with $A080 (credits bg)
+;   Phase 2: Write 26 ($0019+1) rows of 28 ($001B+1) tiles from data
+;            table + $A080 (palette 2, priority 1, base $080)
+;   Phase 3: Write 28 ($001B+1) rows of 40 ($0027+1) tiles from data
+;            + $601D (palette 1, priority 1, base $01D)
+; Interrupts are disabled during VDP writes.
+; In:  (none)
+; Out: VDP nametable initialized for credits display
+; Uses: A0, D0, D4, D5, D6, D7
+; ----------------------------------------------------------------------
 InitEndingCreditsScreen:
-	ORI	#$0700, SR
-	MOVE.l	#$40000003, D5
-	MOVE.w	#$A080, D4
-	MOVE.w	#$003F, D7
+	ORI	#$0700, SR	; disable interrupts during VDP writes
+	MOVE.l	#$40000003, D5	; VDP write command: plane A, address $0000
+	MOVE.w	#$A080, D4	; tile attr: palette 2, priority 1, tile $080
+	MOVE.w	#$003F, D7	; 64 rows (full nametable height)
 InitEndingCreditsScreen_Done:
 	MOVE.l	D5, VDP_control_port
-	MOVE.w	#$003F, D6
-InitEndingCreditsScreen_Done2:
-	MOVE.w	D4, VDP_data_port
-	DBF	D6, InitEndingCreditsScreen_Done2
-	ADDI.l	#$00800000, D5
+	MOVE.w	#$003F, D6	; 64 tiles per row (full width)
+InitEndingCreditsScreen_TileWriteLoop:
+	MOVE.w	D4, VDP_data_port	; fill with $A080 background tile
+	DBF	D6, InitEndingCreditsScreen_TileWriteLoop
+	ADDI.l	#$00800000, D5	; advance to next row
 	DBF	D7, InitEndingCreditsScreen_Done
-	MOVE.l	#$40040003, D5
+	; Phase 2: write text area rows using tile offsets from data table
+	MOVE.l	#$40040003, D5	; VDP write: plane A, address $0004 (column 2)
 	LEA	InitEndingCreditsScreen_InnerLoop_Data, A0
-	MOVE.w	#$0019, D7
-InitEndingCreditsScreen_Done3:
+	MOVE.w	#$0019, D7	; 26 rows
+InitEndingCreditsScreen_SecondPhaseRowLoop:
 	MOVE.l	D5, VDP_control_port
-	MOVE.w	#$001B, D6
-InitEndingCreditsScreen_Done4:
+	MOVE.w	#$001B, D6	; 28 tiles per row
+InitEndingCreditsScreen_SecondPhaseTileLoop:
 	MOVE.w	(A0)+, D0
-	ADDI.w	#$A080, D0
+	ADDI.w	#$A080, D0	; add tile attribute base $A080
 	MOVE.w	D0, VDP_data_port
-	DBF	D6, InitEndingCreditsScreen_Done4
-	ADDI.l	#$00800000, D5
-	DBF	D7, InitEndingCreditsScreen_Done3
-	MOVE.l	#$60000003, D5
+	DBF	D6, InitEndingCreditsScreen_SecondPhaseTileLoop
+	ADDI.l	#$00800000, D5	; next row
+	DBF	D7, InitEndingCreditsScreen_SecondPhaseRowLoop
+	; Phase 3: write sprite/credits name rows
+	MOVE.l	#$60000003, D5	; VDP write: plane B, address $0000
 	LEA	InitEndingCreditsScreen_Done4_Data, A0
-	MOVE.w	#$001B, D7
+	MOVE.w	#$001B, D7	; 28 rows
 InitEndingCreditsScreen_Done5:
 	MOVE.l	D5, VDP_control_port
-	MOVE.w	#$0027, D6
+	MOVE.w	#$0027, D6	; 40 tiles per row
 InitEndingCreditsScreen_Done6:
 	CLR.w	D0
 	MOVE.b	(A0)+, D0
-	ADDI.w	#$601D, D0
+	ADDI.w	#$601D, D0	; tile attr: palette 1, priority 1, tile $01D + offset
 	MOVE.w	D0, VDP_data_port
 	DBF	D6, InitEndingCreditsScreen_Done6
-	ADDI.l	#$00800000, D5
+	ADDI.l	#$00800000, D5	; next row
 	DBF	D7, InitEndingCreditsScreen_Done5
-	ANDI	#$F8FF, SR
+	ANDI	#$F8FF, SR	; re-enable interrupts
 	RTS
 
+; ----------------------------------------------------------------------
+; DrawCreditsStaffNames
+; Render 4 rows of staff name glyphs to the credits nametable area.
+; Reads tile offsets from SpriteTileIndexTable_6195A, adds base $41CD
+; (palette 0, priority 1, tile $1CD), and writes 9 rows of 16 tiles each
+; via a column-then-row pattern.
+; In:  D4.l = VDP write command longword for starting position
+; Out: VDP nametable updated with staff name glyphs
+; Uses: A0, D0, D3, D4, D5, D6, D7
+; ----------------------------------------------------------------------
 DrawCreditsStaffNames:
-	ORI	#$0700, SR
-	MOVE.l	#$69800003, D4
-	MOVE.w	#3, D7
+	ORI	#$0700, SR	; disable interrupts
+	MOVE.l	#$69800003, D4	; VDP write command: initial staff name row
+	MOVE.w	#3, D7		; 4 staff name groups (rows of names)
 DrawCreditsStaffNames_Done:
 	LEA	SpriteTileIndexTable_6195A, A0
-	MOVE.w	#8, D6
+	MOVE.w	#8, D6		; 9 columns per name row
 	MOVE.l	D4, D3
-DrawCreditsStaffNames_Done2:
-	MOVE.w	#$000F, D5
+DrawCreditsStaffNames_ColumnLoop:
+	MOVE.w	#$000F, D5	; 16 tiles per column
 	MOVE.l	D3, VDP_control_port
-DrawCreditsStaffNames_Done3:
+DrawCreditsStaffNames_TileLoop:
 	CLR.w	D0
 	MOVE.b	(A0)+, D0
-	ADDI.w	#$41CD, D0
+	ADDI.w	#$41CD, D0	; tile attr: palette 0, priority 1, glyph $1CD + offset
 	MOVE.w	D0, VDP_data_port
-	DBF	D5, DrawCreditsStaffNames_Done3
-	ADDI.l	#$00800000, D3
-	DBF	D6, DrawCreditsStaffNames_Done2
-	ADDI.l	#$00200000, D4
+	DBF	D5, DrawCreditsStaffNames_TileLoop
+	ADDI.l	#$00800000, D3	; next nametable row
+	DBF	D6, DrawCreditsStaffNames_ColumnLoop
+	ADDI.l	#$00200000, D4	; advance to next staff group position
 	DBF	D7, DrawCreditsStaffNames_Done
-	ANDI	#$F8FF, SR
+	ANDI	#$F8FF, SR	; re-enable interrupts
 	RTS
 
+; ----------------------------------------------------------------------
+; DrawEndingBorderPattern
+; Draw a 6-row horizontal border using tile $84E0 (palette 2, priority 0)
+; repeated 24 times per row ($0017+1) at VDP address $66940003.
+; Interrupts are disabled during the write.
+; In:  (none)
+; Out: VDP nametable rows $6694-$6699 filled with border pattern
+; Uses: D4, D5, D6, D7
+; ----------------------------------------------------------------------
 DrawEndingBorderPattern:
-	MOVE.l	#$66940003, D5
-	MOVE.w	#$84E0, D4
-	MOVE.w	#5, D7
-	ORI	#$0700, SR
+	MOVE.l	#$66940003, D5	; VDP write: plane A, row 26 area
+	MOVE.w	#$84E0, D4	; tile attr: palette 2, priority 0, tile $0E0 (border)
+	MOVE.w	#5, D7		; 6 rows
+	ORI	#$0700, SR	; disable interrupts
 DrawEndingBorderPattern_Done:
-	MOVE.w	#$0017, D6
+	MOVE.w	#$0017, D6	; 24 tiles per row
 	MOVE.l	D5, VDP_control_port
-DrawEndingBorderPattern_Done2:
+DrawEndingBorderPattern_TileLoop:
 	MOVE.w	D4, VDP_data_port
-	DBF	D6, DrawEndingBorderPattern_Done2
-	ADDI.l	#$00800000, D5
+	DBF	D6, DrawEndingBorderPattern_TileLoop
+	ADDI.l	#$00800000, D5	; next row
 	DBF	D7, DrawEndingBorderPattern_Done
-	ANDI	#$F8FF, SR
+	ANDI	#$F8FF, SR	; re-enable interrupts
 	RTS
 
+; ----------------------------------------------------------------------
+; FillDialogAreaWithPattern
+; Fill 26 ($0019+1) nametable rows of 21 ($0014+1) tiles with $A080
+; (palette 2, priority 1, tile $080) at VDP address $40BC0003.
+; Used to prepare the dialog area before drawing credits text.
+; In:  (none)
+; Out: VDP nametable dialog area filled with background tile
+; Uses: D5, D6, D7
+; ----------------------------------------------------------------------
 FillDialogAreaWithPattern:
-	MOVE.l	#$40BC0003, D5
-	MOVE.w	#$0019, D7
+	MOVE.l	#$40BC0003, D5	; VDP write: plane A, dialog area start
+	MOVE.w	#$0019, D7	; 26 rows
 FillDialogAreaWithPattern_Done:
-	MOVE.w	#$0014, D6
+	MOVE.w	#$0014, D6	; 21 tiles per row
 	MOVE.l	D5, VDP_control_port
-FillDialogAreaWithPattern_Done2:
-	MOVE.w	#$A080, VDP_data_port
-	DBF	D6, FillDialogAreaWithPattern_Done2
-	ADDI.l	#$00800000, D5
+FillDialogAreaWithPattern_TileLoop:
+	MOVE.w	#$A080, VDP_data_port	; tile attr: palette 2, priority 1, tile $080
+	DBF	D6, FillDialogAreaWithPattern_TileLoop
+	ADDI.l	#$00800000, D5		; next row
 	DBF	D7, FillDialogAreaWithPattern_Done
 	RTS
 
+; ----------------------------------------------------------------------
+; ClearDialogSprites
+; Clear $028F+1 = 656 sprite attribute entries in VDP sprite RAM,
+; starting at the offset determined by Dialog_phase (used to phase/
+; double-buffer the sprite clearing across multiple frames).
+; Increments Dialog_phase after each call.
+; In:  Dialog_phase.w = current phase index
+; Out: 656 sprite words zeroed in VDP; Dialog_phase incremented
+; Uses: D0, D5, D7
+; ----------------------------------------------------------------------
 ClearDialogSprites:
-	MOVE.l	#$50000000, D5
+	MOVE.l	#$50000000, D5	; VDP write command base: sprite attr table
 	MOVEQ	#0, D0
 	MOVE.w	Dialog_phase.w, D0
-	ADD.w	D0, D0
-	SWAP	D0
-	ADD.l	D0, D5
-	MOVE.w	#$028F, D7
-	ORI	#$0700, SR
+	ADD.w	D0, D0		; * 2 for word-size offset
+	SWAP	D0		; move to upper word of D0 (VDP address field)
+	ADD.l	D0, D5		; add phase offset to VDP write command
+	MOVE.w	#$028F, D7	; 656 sprite entries
+	ORI	#$0700, SR	; disable interrupts
 ClearDialogSprites_Done:
 	MOVE.l	D5, VDP_control_port
-	MOVE.w	#0, VDP_data_port
-	ADDI.l	#$00100000, D5
+	MOVE.w	#0, VDP_data_port	; zero sprite entry
+	ADDI.l	#$00100000, D5		; advance by 1 sprite word ($0010 in VDP address)
 	DBF	D7, ClearDialogSprites_Done
-	ANDI	#$F8FF, SR
+	ANDI	#$F8FF, SR	; re-enable interrupts
 	ADDQ.w	#1, Dialog_phase.w
 	RTS
 
+; ----------------------------------------------------------------------
+; UpdateEndingCursorBlink
+; Animate the cursor blink on the ending/credits screen by cycling the
+; palette index for palette line 3 between PALETTE_IDX_ENDING_CURSOR_MIN
+; and PALETTE_IDX_ENDING_CURSOR_MAX. The blink triggers when bit 3
+; transitions (every 8 frames) in the timer XOR trick.
+; In:  Cursor_blink_timer.w = running frame counter
+;      Palette_line_3_index.w = current palette index
+; Out: Palette_line_3_index updated and loaded if blink triggered
+; Uses: D0, D1
+; ----------------------------------------------------------------------
 UpdateEndingCursorBlink:
 	ADDQ.w	#1, Cursor_blink_timer.w
 	MOVE.w	Cursor_blink_timer.w, D0
@@ -180,13 +308,18 @@ UpdateEndingCursorBlink:
 	BEQ.b	UpdateEndingCursorBlink_Loop
 	ADDQ.w	#1, Palette_line_3_index.w
 	CMPI.w	#PALETTE_IDX_ENDING_CURSOR_MAX, Palette_line_3_index.w
-	BLE.b	UpdateEndingCursorBlink_Loop2
+	BLE.b	UpdateEndingCursorBlink_ClampAndLoad
 	MOVE.w	#PALETTE_IDX_ENDING_CURSOR_MIN, Palette_line_3_index.w
-UpdateEndingCursorBlink_Loop2:
+UpdateEndingCursorBlink_ClampAndLoad:
 	JSR	LoadPalettesFromTable
 UpdateEndingCursorBlink_Loop:
 	RTS
 
+; ======================================================================
+; SECTION 2: EPILOGUE DIALOGUE STRINGS AND STAFF CREDIT TEXT
+; All strings use the game's script encoding: $FE = line break,
+; $FF = end-of-page (wait for input), $00 = end-of-string.
+; ======================================================================
 Outro1Str:
 	dc.b	"Mother, let's go back to", $FE
 	dc.b	"the village where", $FE
@@ -336,6 +469,11 @@ EmptyTextStr:
 	dc.b	$00, $00
 CreditsTextListTerminator:
 	dc.b	$FE, $00
+; CreditsTextPtrTable
+; Pointer table for the scrolling staff credits display.
+; Each entry points to a string from the credit strings above.
+; EmptyTextStr entries insert blank lines between credit categories.
+; The table is terminated by CreditsTextListTerminator ($FE, $00).
 CreditsTextPtrTable:
 	dc.l	EmptyTextStr
 	dc.l	StaffTextStr
@@ -508,6 +646,20 @@ CreditsTextPtrTable:
 	dc.l	EmptyTextStr
 	dc.l	EmptyTextStr
 	dc.l	CreditsTextListTerminator
+; ======================================================================
+; SECTION 3: SPELLBOOK MENU STATE MACHINE
+; SpellbookMenuStateMachine dispatches to a phase handler via
+; SpellbookMenuStateJumpTable. The state index is stored in
+; Spellbook_menu_state.w (masked to 5 bits = 32 states).
+; ======================================================================
+
+; ----------------------------------------------------------------------
+; SpellbookMenuStateMachine
+; Main dispatcher for the spellbook/magic menu.
+; In:  Spellbook_menu_state.w = current state (0-15 used, masked to $1F)
+; Out: Dispatches to appropriate phase handler
+; Uses: A0, D0
+; ----------------------------------------------------------------------
 SpellbookMenuStateMachine:
 	MOVE.w	Spellbook_menu_state.w, D0
 	ANDI.w	#$001F, D0
@@ -983,6 +1135,16 @@ AriesMapMenu_HandleInput:
 	MOVE.w	Menu_cursor_index.w, Aries_selected_town.w
 	RTS
 
+; ----------------------------------------------------------------------
+; CheckAnyMagicReady
+; Check if any spell in the possessed magics list has its "ready" flag
+; set (bit 9 of the magic entry word).
+; In:  Possessed_magics_length.w = count of possessed spells
+;      Possessed_magics_list.w = array of magic entry words
+; Out: Z flag clear if any magic is ready; Z set if none ready
+;      D0 = last-tested magic entry word (0 if none ready)
+; Uses: A0, D0, D1, D7
+; ----------------------------------------------------------------------
 CheckAnyMagicReady:
 	MOVE.w	Possessed_magics_length.w, D7
 	SUBQ.w	#1, D7
@@ -999,6 +1161,14 @@ CheckAnyMagicReady_Loop:
 	CLR.w	D0	
 	RTS
 	
+; ----------------------------------------------------------------------
+; ClearMagicReadyFlags
+; Clear the "ready" flag (bit 15) from all entries in Possessed_magics_list.
+; Called before setting a new readied magic to ensure only one is active.
+; In:  Possessed_magics_length.w = count
+; Out: All magic entries have bit 15 cleared; D0 = 0
+; Uses: A0, D0, D1, D7
+; ----------------------------------------------------------------------
 ClearMagicReadyFlags:
 	MOVE.w	Possessed_magics_length.w, D7
 	SUBQ.w	#1, D7
@@ -1012,6 +1182,11 @@ ClearMagicReadyFlags_Done:
 	CLR.w	D0
 	RTS
 
+; CastFieldMagicMap
+; Dispatch table for casting spells from the overworld/field.
+; Entries 0-13 are battle-only spells → all branch to CastFieldMagicNotAllowed.
+; Entries 14+ are field-usable spells (Aries=14, Extrios=15, Inaudios=16, etc.)
+; Indexed by magic ID * 4; each entry is a BRA.w instruction (4 bytes).
 CastFieldMagicMap:
 	BRA.w	CastFieldMagicNotAllowed	
 	BRA.w	CastFieldMagicNotAllowed	
@@ -1220,7 +1395,21 @@ SpellMenu_CursedError:
 	MOVE.w	#SPELLBOOK_STATE_CAST_WAIT, Spellbook_menu_state.w
 	RTS
 
-TownOverworldCoords: ; Town locations. Without duplicates.
+; ======================================================================
+; SECTION 4: FIELD MAGIC CASTING AND SPELL IMPLEMENTATIONS
+; CastFieldMagicMap dispatches field-usable spells (0-13 = battle only,
+; 14+ = field-castable). CastBattleMagicMap dispatches battle spells.
+; DeductMagicMP / CheckCursedAndConsumeReadiedMagicMp validate resources.
+; ======================================================================
+
+; ----------------------------------------------------------------------
+; TownOverworldCoords
+; Table of overworld tile coordinates for each town, used by Aries spell
+; to teleport the player to a visited town's entrance.
+; Format per entry: dc.w x_in_sector, y_in_sector, sector_x, sector_y
+; Indexed by town ID (0-13), 8 bytes per entry.
+; ----------------------------------------------------------------------
+TownOverworldCoords:
 	; format:
 	; dc.w (x_in_sector), (y_in_sector), (sector_x), (sector_y)
 	dc.w	$8, $D, $0, $6 ; TOWN_WYCLIF
@@ -1238,6 +1427,12 @@ TownOverworldCoords: ; Town locations. Without duplicates.
 	dc.w	$5, $4, $9, $2 ; TOWN_HASTINGS
 	dc.w	$8, $8, $A, $5 ; TOWN_CARTHAHENA
 
+; CastBattleMagicMap
+; Dispatch table for casting spells during battle.
+; Indexed by magic ID (0-based); each entry is a BRA.w instruction (4 bytes).
+; Magic IDs: 0=Aero, 1=Aerios, 2=Volti, 3=Voltio, 4=Voltios, 5=Ferros,
+;            6=Copperos, 7=Mercusios, 8=Argentos, 9-10=Hydro(x2),
+;            11=Chronos, 12=Chronios, 13=Terrafissi
 CastBattleMagicMap:
 	BRA.w	CastAero
 	BRA.w	CastAerios
@@ -1254,6 +1449,17 @@ CastBattleMagicMap:
 	BRA.w	CastChronios
 	BRA.w	CastTerrafissi
 
+; ----------------------------------------------------------------------
+; CastAero
+; Cast the Aero (wind blade) projectile spell.
+; Launches a single directional projectile from the player's position
+; using Object_slot_02 as the projectile object. Uses a sine table to
+; compute velocity based on player direction.
+; In:  A5 = player object pointer
+;      Player_direction.w = player facing (0-7)
+; Out: Object_slot_02 activated as Aero projectile; damage flags set
+; Uses: A0, A6, D0-D3, D7
+; ----------------------------------------------------------------------
 CastAero:
 	MOVEA.l	Object_slot_02_ptr.w, A6
 	BTST.b	#7, (A6)
@@ -1337,6 +1543,15 @@ DeactivateProjectile:
 	BCLR.b	#7, (A5)
 	RTS
 
+; ----------------------------------------------------------------------
+; CastAerios
+; Cast the Aerios (multi-homing wind) spell: spawns 8 homing projectiles
+; from Object_slot_02 onward. Each seeks the nearest enemy.
+; In:  A5 = player object pointer
+; Out: 8 homing projectile objects initialized; lead projectile tick fn
+;      set to UpdateAeriosLeadProjectile
+; Uses: A3, A6, D0, D1, D7
+; ----------------------------------------------------------------------
 CastAerios:
 	MOVEA.l	Object_slot_02_ptr.w, A6
 	BTST.b	#7, (A6)
