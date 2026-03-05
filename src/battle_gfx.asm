@@ -1008,12 +1008,20 @@ DecompressTileGraphics_UnmaskedPixels:
 	RTS
 	
 ; ---------------------------------------------------------------------------
+; ---------------------------------------------------------------------------
 ; WriteMaskedTileRow — write 32 pixels using a mask bitfield
 ;
 ; Iterates 32 pixels (one tile row of 4bpp data, 4 bits per pixel = 32 nibbles
 ; packed into 16 bytes).  For each pixel position, tests the corresponding bit
 ; in D1; if set, writes D2 to (A1) (color index byte); if clear, leaves it.
 ; Advances A1 one byte per pixel regardless.
+;
+; DRY-010 NOTE: WriteTileRowFromBitfield (below) is byte-for-byte identical to
+; this function.  The only difference is the set of intermediate labels.
+; Replacing WriteTileRowFromBitfield with a BRA.w here would save 14 bytes
+; but changes the binary encoding of the branch and breaks bit-perfect output.
+; Cross-reference: see WriteTileRowFromBitfield at the note below for the
+; corresponding documentation.
 ;
 ; Input:
 ;   D1.l  mask bitfield (bit 31 = pixel 0, left-shifted each iteration)
@@ -1119,8 +1127,13 @@ DecompressFontTile_Loop_Done:
 ; ---------------------------------------------------------------------------
 ; WriteTileRowFromBitfield — write 32 pixels using a mask bitfield (font)
 ;
-; Same as WriteMaskedTileRow but used by DecompressFontTile.  Iterates 32
-; pixel positions; for each bit set in D1, writes D2 to (A1).
+; Byte-for-byte identical to WriteMaskedTileRow (above).  Used exclusively
+; by DecompressFontTile; WriteMaskedTileRow is used by DecompressTileGraphics.
+; They were kept separate in the original ROM — consolidating them into a
+; shared entry point (BRA.w WriteMaskedTileRow) would change the BSR.w
+; displacement and break bit-perfect output.
+;
+; DRY-010 NOTE: See WriteMaskedTileRow for the full explanation.
 ;
 ; Input:
 ;   D1.l  mask bitfield

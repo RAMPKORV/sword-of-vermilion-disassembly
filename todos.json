@@ -590,7 +590,9 @@
           "file": "src/battle_gfx.asm",
           "priority": "medium",
           "effort": "small",
-          "status": "todo"
+          "status": "done",
+          "notes": "Bit-perfect constraint: WriteTileRowFromBitfield is byte-for-byte identical to WriteMaskedTileRow. Replacing it with BRA.w WriteMaskedTileRow would change the BSR offset and break bit-perfect. Added cross-reference DRY-010 constraint notes on both function headers.",
+          "completed_at": "2026-03-05T00:37:21.352Z"
         }
       ]
     },
