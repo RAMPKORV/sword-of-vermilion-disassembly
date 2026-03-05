@@ -314,7 +314,7 @@
           "priority": "low",
           "effort": "small",
           "depends_on": "MAGICB-001",
-          "status": "todo"
+          "status": "done"
         },
         {
           "id": "NEWMAC-002",

@@ -792,3 +792,23 @@ dmaCmd macro len_words,vram_addr
     dc.l    $40000080|((vram_addr&$3FFF)<<16)|((vram_addr>>14)&3)
     dc.w    $0000
     ENDM
+
+; ============================================================
+; VdpRowAdvance Macro
+; ============================================================
+; Advance a VDP nametable write-address register by one row.
+; One nametable row = 64 tiles × 2 bytes = 128 bytes = $80,
+; which in VDP command-word format is VDP_VRAM_ROW_STRIDE ($00800000).
+;
+; reg : data register holding the current VDP write-address command
+;       (typically D3, D4, or D5)
+;
+; Usage:
+;   VdpRowAdvance D5    ; move write address down by one row
+;
+; Expands to a single ADDI.l instruction — byte-identical to the
+; explicit ADDI.l #VDP_VRAM_ROW_STRIDE, Dn form.
+;
+VdpRowAdvance macro reg
+    ADDI.l  #VDP_VRAM_ROW_STRIDE, \reg
+    ENDM
