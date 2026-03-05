@@ -669,7 +669,7 @@
           "file": "src/gameplay.asm",
           "priority": "medium",
           "effort": "large",
-          "status": "todo"
+          "status": "done"
         },
         {
           "id": "DOC-010",

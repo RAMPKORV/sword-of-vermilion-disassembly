@@ -89,6 +89,16 @@ GameState_InitTownEntry:
 GameState_InitTownEntry_Loop:
 	RTS
 
+; --- GameState_LoadTown ($01) ---
+; Second half of town-load sequence.  Waits for fade, disables display, then:
+;   - Loads town tileset, graphics, and tilemaps
+;   - Marks town as visited in Towns_visited array
+;   - Sets spawn coordinates from TownSpawnPositionTable
+;   - Loads town NPCs and area music
+;   - Sets Carthahena dark palette if Tsarkon is alive
+;   - Starts fade-in to state $1F, with Saved_game_state = $02
+; Special cases: Carthahena ($0C) and Keltwick ($06) are skipped in the
+; Towns_visited index because they share indices with other towns.
 GameState_LoadTown:
 	TST.b	Fade_out_lines_mask.w
 	BNE.w	GameState_InitTownEntry_NormalPalette_Loop
@@ -168,6 +178,9 @@ GameState_InitTownEntry_NormalPalette_Loop2:
 GameState_InitTownEntry_NormalPalette_Loop:
 	RTS
 
+; --- GameState_FadeInComplete ($1F) ---
+; Generic fade-in wait state.  Spins until Fade_in_lines_mask clears, then
+; restores the gameplay state saved in Saved_game_state.
 GameState_FadeInComplete:
 	TST.b	Fade_in_lines_mask.w
 	BNE.b	GameState_FadeInComplete_Loop
@@ -175,6 +188,15 @@ GameState_FadeInComplete:
 GameState_FadeInComplete_Loop:
 	RTS
 
+; ======================================================================
+; Town / Building Walk State Handlers ($02-$08)
+; ======================================================================
+
+; --- GameState_TownExploration ($02) ---
+; Main per-frame handler while walking in town.  Checks for Carthahenian
+; soldier fight trigger, boss event trigger, then reads the tile type under
+; the player to dispatch transitions (castle, exit, building entrance).
+; Falls through to HandleOverworldMenuInput if no transition is needed.
 GameState_TownExploration:
 	TST.b	Soldier_fight_event_trigger.w
 	BEQ.b	GameState_TownExploration_Loop
@@ -235,6 +257,9 @@ GameState_TownExploration_Loop6:
 	MOVE.w	D0, Town_default_camera_y.w
 	RTS
 
+; --- SavePlayerTownPosition ---
+; Saves the player's current world position and camera tile offsets into
+; the town spawn variables so re-entering town restores the same spot.
 SavePlayerTownPosition:
 	MOVEA.l	Player_entity_ptr.w, A6
 	MOVE.w	obj_world_x(A6), Town_spawn_x.w
@@ -243,6 +268,10 @@ SavePlayerTownPosition:
 	MOVE.w	Town_camera_tile_y.w, Town_default_camera_y.w
 	RTS
 
+; --- GameState_InitBuildingEntry ($03) ---
+; Loads building interior resources: HUD graphics, battle tile graphics,
+; NPC data (via SearchTownNPCData if first entry), and area music.
+; Sets Saved_game_state = $04 (BUILDING_INTERIOR) and calls InitTownDisplay.
 GameState_InitBuildingEntry:
 	TST.b	Fade_out_lines_mask.w
 	BNE.b	GameState_InitBuildingEntry_Loop
@@ -267,6 +296,12 @@ GameState_InitBuildingEntry_Loop2:
 GameState_InitBuildingEntry_Loop:
 	RTS
 
+; --- GameState_BuildingInterior ($04) ---
+; Per-frame handler for building interiors.  Checks for:
+;   - Inn awakening (Helwig only): triggers frying-pan event
+;   - Boss event trigger: saves position, transitions to boss battle
+;   - Tile-type transitions: exit (back to town) or entrance (next floor)
+; Falls through to HandleOverworldMenuInput otherwise.
 GameState_BuildingInterior:
 	TST.b	Player_awakening_flag.w
 	BNE.w	GameState_BuildingInterior_NoBossEvent_Loop
@@ -343,6 +378,14 @@ GameState_AwakeningMessage_SetState:
 	MOVE.w	#GAMEPLAY_STATE_READ_AWAKENING_MESSAGE, Gameplay_state.w
 	RTS
 
+; ======================================================================
+; Inn Awakening / Frying Pan Event States ($28-$2A)
+; ======================================================================
+
+; --- GameState_ReadAwakeningMessage ($28) ---
+; Displays the inn wakeup text.  Waits for the script to finish, then
+; waits for B or C press to dismiss.  Handles multi-page continuation.
+; On dismiss: clears awakening/banshee flags and returns to BUILDING_INTERIOR.
 GameState_ReadAwakeningMessage:
 	TST.b	Script_text_complete.w
 	BEQ.b	GameState_ReadAwakening_Dismiss_Loop
@@ -373,6 +416,13 @@ GameState_ReadAwakening_Dismiss_Loop2:
 GameState_ReadAwakening_Dismiss_Loop3:
 	RTS
 
+; --- GameState_FryingPanDelay ($29) ---
+; Helwig inn special event: the woman hits the player with a frying pan.
+; Waits for fade, counts down Sleep_delay_timer, then halves player HP.
+; If HP reaches 0, triggers full stat reset (resets level/stats to 0,
+; re-applies equipment bonuses, calls UpgradeLevelStats) and routes
+; to resurrection.  Otherwise prints "afraid killed" and advances to
+; READ_FRYING_PAN_MESSAGE.
 ;GameState_FryingPanDelay:
 GameState_FryingPanDelay: ; Woman hitting player with frying pan
 	TST.b	Fade_out_lines_mask.w
@@ -434,6 +484,9 @@ GameState_FryingPanDelay_Return_Loop4:
 	JSR	UpgradeLevelStats	
 	RTS
 	
+; --- GameState_ReadFryingPanMessage ($2A) ---
+; Displays the frying-pan dialog text.  Waits for B or C to dismiss,
+; then redraws the status HUD and returns to BUILDING_INTERIOR.
 GameState_ReadFryingPanMessage:
 	TST.b	Script_text_complete.w
 	BEQ.b	GameState_ReadFryingPan_Dismiss_Loop
@@ -461,6 +514,14 @@ GameState_ReadFryingPan_Dismiss_Loop:
 GameState_ReadFryingPan_Dismiss_Loop3:
 	RTS
 
+; ======================================================================
+; Floor / Room Transition State Handlers ($05-$0E)
+; ======================================================================
+
+; --- GameState_TransitionToSecondFloor ($05) ---
+; Loads the second floor tilemap for the current building.  Waits for
+; fade, disables display, sets spawn position from saved room data,
+; and calls InitTownDisplay with Saved_game_state = SECOND_FLOOR_ACTIVE.
 GameState_TransitionToSecondFloor:
 	TST.b	Fade_out_lines_mask.w
 	BNE.b	GameState_TransitionToSecondFloor_Loop
@@ -477,6 +538,10 @@ GameState_TransitionToSecondFloor:
 GameState_TransitionToSecondFloor_Loop:
 	RTS
 
+; --- GameState_SecondFloorActive ($06) ---
+; Per-frame handler for the second floor.  Checks tile type for exit
+; (back to first floor via INIT_BUILDING_ENTRY) or entrance (to third
+; floor).  Falls through to HandleOverworldMenuInput otherwise.
 GameState_SecondFloorActive:
 	BSR.w	GetCurrentTileType
 	CMPI.w	#TILE_TYPE_EXIT, Current_tile_type.w
@@ -516,6 +581,9 @@ GameState_SecondFloorActive_Loop2:
 	MOVE.w	D0, Saved_player_y_room1.w
 	RTS
 
+; --- GameState_TransitionToThirdFloor ($07) ---
+; Loads the third floor tilemap.  Same pattern as TransitionToSecondFloor
+; but uses room 3 saved data.  Saved_game_state = THIRD_FLOOR_ACTIVE.
 GameState_TransitionToThirdFloor:
 	TST.b	Fade_out_lines_mask.w
 	BNE.b	GameState_TransitionToThirdFloor_Loop
@@ -532,6 +600,10 @@ GameState_TransitionToThirdFloor:
 GameState_TransitionToThirdFloor_Loop:
 	RTS
 
+; --- InitTownDisplay ---
+; Shared subroutine for room/floor transitions.  Loads tilemaps, spawns
+; NPCs, sets fade-in palette targets, and enables the display.  Used by
+; floor transitions, castle room loads, and building entry.
 InitTownDisplay:
 	JSR	LoadTownTilemaps
 	MOVE.w	#TOWN_TILEMAP_VRAM_BASE_ALT, Town_tilemap_vram_base.w
@@ -549,6 +621,9 @@ InitTownDisplay:
 	JSR	EnableDisplay
 	RTS
 
+; --- GameState_ThirdFloorActive ($08) ---
+; Per-frame handler for the third floor.  Only checks for exit tile
+; (back to second floor).  Falls through to HandleOverworldMenuInput.
 GameState_ThirdFloorActive:
 	BSR.w	GetCurrentTileType
 	CMPI.w	#TILE_TYPE_EXIT, Current_tile_type.w
@@ -564,6 +639,10 @@ GameState_ThirdFloorActive_Loop:
 	MOVE.w	#DIRECTION_DOWN, Player_direction.w
 	RTS
 
+; --- GameState_TransitionToCastleMain ($09) ---
+; Loads the castle main room.  Similar to InitBuildingEntry but loads
+; world battle graphics instead of town battle graphics.  Uses
+; LoadTownStateData if first entry.  Saved_game_state = CASTLE_ROOM1_ACTIVE.
 GameState_TransitionToCastleMain:
 	TST.b	Fade_out_lines_mask.w
 	BNE.b	GameState_TransitionToCastleMain_Loop
@@ -588,6 +667,10 @@ GameState_TransitionToCastleMain_Loop2:
 GameState_TransitionToCastleMain_Loop:
 	RTS
 
+; --- GameState_CastleRoom1Active ($0A) ---
+; Per-frame handler for castle room 1.  Checks boss trigger (saves
+; position and transitions to boss battle), exit tile (back to town),
+; or entrance tile (to castle room 2).
 GameState_CastleRoom1Active:
 	TST.b	Boss_event_trigger.w
 	BEQ.b	GameState_CastleRoom1Active_Loop
@@ -632,6 +715,9 @@ GameState_CastleRoom1Active_Loop3:
 	MOVE.w	Town_camera_tile_y.w, Saved_camera_tile_y_room1.w
 	RTS
 
+; --- GameState_LoadCastleRoom2 ($0B) ---
+; Loads castle room 2 tilemap and NPCs.  Sets spawn from saved room 2
+; data.  Saved_game_state = CASTLE_ROOM2_ACTIVE.
 GameState_LoadCastleRoom2:
 	TST.b	Fade_out_lines_mask.w
 	BNE.b	GameState_LoadCastleRoom2_Loop
@@ -648,6 +734,9 @@ GameState_LoadCastleRoom2:
 GameState_LoadCastleRoom2_Loop:
 	RTS
 
+; --- GameState_CastleRoom2Active ($0C) ---
+; Per-frame handler for castle room 2.  Exit tile returns to castle main,
+; entrance tile advances to room 3.
 GameState_CastleRoom2Active:
 	BSR.w	GetCurrentTileType
 	CMPI.w	#TILE_TYPE_EXIT, Current_tile_type.w
@@ -681,6 +770,9 @@ GameState_CastleRoom2Active_Loop2:
 	MOVE.w	D0, Saved_player_y_room1.w	
 	RTS
 	
+; --- GameState_LoadCastleRoom3 ($0D) ---
+; Loads castle room 3 tilemap and NPCs.  Sets spawn from saved room 3
+; data.  Saved_game_state = CAVE_ENTRANCE.
 GameState_LoadCastleRoom3:
 	TST.b	Fade_out_lines_mask.w	
 	BNE.b	GameState_LoadCastleRoom3_Loop	
@@ -697,6 +789,10 @@ GameState_LoadCastleRoom3:
 GameState_LoadCastleRoom3_Loop:
 	RTS
 	
+; --- GameState_CaveEntrance ($0E) ---
+; Per-frame handler for the castle room leading to a cave.  Exit tile
+; returns to castle room 2.  Falls through to HandleOverworldMenuInput
+; otherwise.
 GameState_CaveEntrance:
 	BSR.w	GetCurrentTileType	
 	CMPI.w	#TILE_TYPE_EXIT, Current_tile_type.w	
@@ -710,6 +806,15 @@ GameState_CaveEntrance:
 	MOVE.w	#DIRECTION_DOWN, Player_direction.w	
 	RTS
 	
+; ======================================================================
+; Field Battle State Handlers ($0F-$11)
+; ======================================================================
+
+; --- GameState_BattleInitialize ($0F) ---
+; Sets up a field battle: clears VRAM, loads battle tiles/terrain/graphics,
+; draws the terrain tilemap and status bar, positions the player entity,
+; initializes the encounter with enemy groups, loads magic graphics if
+; readied, and enables the display with a battle start sound.
 GameState_BattleInitialize:
 	TST.b	Fade_out_lines_mask.w
 	BNE.w	GameState_BattleInitialize_Loop
@@ -762,6 +867,10 @@ GameState_BattleInitialize_Loop2:
 GameState_BattleInitialize_Loop:
 	RTS
 
+; --- GameState_BattleActive ($10) ---
+; Per-frame field battle tick.  Refreshes HP/MP display.  If HP <= 0,
+; plays death sound and transitions to BEGIN_RESURRECTION (with special
+; handling for the Bully first-fight flag).
 GameState_BattleActive:
 	JSR	DisplayPlayerHpMp
 	TST.w	Player_hp.w
@@ -778,6 +887,11 @@ GameState_BattleActive_Loop2:
 GameState_BattleActive_Loop:
 	RTS
 
+; --- GameState_BattleExit ($11) ---
+; Post-battle cleanup.  Re-checks death (same logic as BattleActive).
+; On alive: restores player direction, routes to overworld or cave reload
+; depending on Is_in_cave.  Special case: if Soldier_fight_event_trigger,
+; marks fight won and routes through ReturnFromBossBattle instead.
 GameState_BattleExit:
 	TST.w	Player_hp.w
 	BGT.b	GameState_BattleExit_Loop
@@ -817,6 +931,13 @@ GameState_BattleExit_Loop5:
 GameState_BeginResurrection_Return:
 	RTS
 
+; ======================================================================
+; Carthahenian Soldier Event States ($2B-$2C)
+; ======================================================================
+
+; --- GameState_SoldierTaunt ($2B) ---
+; Displays the Carthahenian soldier's taunt dialog before battle.
+; Blocks input and prints "You have not won yet!" text.
 GameState_SoldierTaunt:
 	JSR	ClearScrollData
 	MOVE.b	#FLAG_TRUE, Player_input_blocked.w
@@ -825,6 +946,9 @@ GameState_SoldierTaunt:
 	MOVE.w	#GAMEPLAY_STATE_READ_SOLDIER_TAUNT, Gameplay_state.w
 	RTS
 
+; --- GameState_ReadSoldierTaunt ($2C) ---
+; Waits for soldier taunt text to finish, then waits for C or B press.
+; On dismiss: transitions to BATTLE_EXIT with fade-out and transition sound.
 GameState_ReadSoldierTaunt:
 	TST.b	Script_text_complete.w
 	BEQ.b	GameState_ReadSoldierTaunt_Dismiss_Loop
@@ -845,6 +969,15 @@ GameState_ReadSoldierTaunt_Dismiss_Loop:
 	JSR	ProcessScriptText
 	RTS
 
+; ======================================================================
+; Overworld / Cave Exploration State Handlers ($12-$17)
+; ======================================================================
+
+; --- GameState_OverworldReload ($12) ---
+; Reloads the first-person overworld view after a battle.  Initializes
+; the battle display framework, loads all overworld tile graphics, updates
+; the compass, loads first-person renderer, sets overworld palettes, clears
+; cave state, and checks for pending level-up.
 GameState_OverworldReload:
 	TST.b	Fade_out_lines_mask.w
 	BNE.w	GameState_OverworldReload_Loop
@@ -869,8 +1002,15 @@ GameState_OverworldReload:
 GameState_OverworldReload_Loop:
 	RTS
 
+; --- GameState_OverworldActive ($13) ---
+; Alias state: immediately branches to GameState_CaveExploration.
+; Overworld and cave share the same per-frame tick logic.
 GameState_OverworldActive:
 	BRA.w	GameState_CaveExploration
+
+; --- GameState_TownFadeInComplete ($14) ---
+; Post-town-exit fade completion.  Clears first-person mode and
+; transitions back to INIT_TOWN_ENTRY to re-enter the town.
 GameState_TownFadeInComplete:
 	TST.b	Fade_out_lines_mask.w
 	BNE.b	GameState_TownFadeInComplete_Loop
@@ -880,6 +1020,10 @@ GameState_TownFadeInComplete:
 GameState_TownFadeInComplete_Loop:
 	RTS
 
+; --- GameState_EnteringCave ($15) ---
+; Loads cave-specific graphics and palettes.  Sets cave encounter rate,
+; applies lit palette if Cave_light_active, enables display, then checks
+; for pending level-up.
 GameState_EnteringCave:
 	TST.b	Fade_out_lines_mask.w
 	BNE.w	GameState_EnteringCave_Loop
@@ -901,6 +1045,12 @@ GameState_EnteringCave_Loop2:
 GameState_EnteringCave_Loop:
 	RTS
 
+; --- InitBattleDisplay ---
+; Shared initialization for the first-person view (overworld and caves).
+; Disables display, clears VRAM planes, resets scroll, clears enemy entities,
+; initializes battle objects, loads world map tiles, draws the nametable,
+; sets the player object to InitOverworldPlayerObject, increments state,
+; clears all dialog/interaction flags, and loads palettes.
 InitBattleDisplay:
 	JSR	DisableVDPDisplay
 	JSR	ClearVRAMPlaneA
@@ -935,6 +1085,12 @@ InitBattleDisplay:
 	JSR	LoadPalettesFromTable
 	RTS
 
+; --- CheckLevelUpAndRestoreMusic ---
+; Checks if the player has enough experience for a level-up.  If so,
+; saves current state, increments level, upgrades stats, displays the
+; level-up banner, and transitions to LEVEL_UP_BANNER_DISPLAY.
+; If no level-up, restores overworld or cave music and clears input block.
+; Always refreshes the HP/MP/Kims/Experience/Magic HUD displays.
 ;CheckLevelUpAndRestoreMusic:
 CheckLevelUpAndRestoreMusic: ; level up
 	CMPI.w	#MAX_PLAYER_LEVEL, Player_level.w
@@ -970,6 +1126,12 @@ GameState_LevelUpComplete_Check_Loop:
 	JSR	DisplayReadiedMagicName
 	RTS
 
+; --- GameState_CaveExploration ($16) ---
+; Main per-frame tick for first-person overworld and cave exploration.
+; Checks poison notification, player death, boss triggers, then processes
+; movement (forward/backward/rotate).  If stationary, checks cave or
+; overworld interactions, processes found-item rewards, dispatches the
+; overworld menu, and finally checks for random encounters.
 GameState_CaveExploration:
 	TST.w	Player_poisoned.w
 	BEQ.b	GameState_CaveExploration_CheckDeath
@@ -1042,6 +1204,9 @@ OverworldMovementTick_TriggerEncounter:
 	MOVE.b	#FLAG_TRUE, Encounter_triggered.w
 	RTS
 
+; --- GameState_CaveFadeOutComplete ($17) ---
+; After exiting a cave, clears cave state flags and transitions to
+; OVERWORLD_RELOAD to restore the surface overworld view.
 GameState_CaveFadeOutComplete:
 	TST.b	Fade_out_lines_mask.w
 	BNE.b	GameState_CaveFadeOutComplete_Loop
@@ -1053,6 +1218,16 @@ GameState_CaveFadeOutComplete:
 GameState_CaveFadeOutComplete_Loop:
 	RTS
 
+; ======================================================================
+; Encounter Chain State Handlers ($18-$1A)
+; ======================================================================
+
+; --- GameState_EncounterInitialize ($18) ---
+; Selects the enemy group from EnemyEncounterTypesByMapSector (overworld)
+; or EnemyEncounterTypesByCaveRoom (cave).  Picks a random variant (0-3),
+; loads the encounter portrait graphics, DMA-fills the portrait VRAM area,
+; sets up the encounter portrait object, and transitions to
+; ENCOUNTER_GRAPHICS_FADE_IN.
 GameState_EncounterInitialize:
 	TST.b	Is_in_cave.w
 	BNE.b	GameState_EncounterInitialize_Loop
@@ -1086,6 +1261,11 @@ GameState_EncounterInitialize_Loop2:
 	PlaySound SOUND_ENCOUNTER_START
 	RTS
 
+; --- GameState_EncounterGraphicsFadeIn ($19) ---
+; Slides the enemy portrait in column-by-column.  Timing varies by
+; region: PAL (bit 6 of IO_version set) updates every 4 frames, NTSC
+; every 8 frames.  After all ENCOUNTER_FADE_PHASES columns are drawn,
+; flushes the tile buffer and advances to ENCOUNTER_PAUSE_BEFORE_BATTLE.
 GameState_EncounterGraphicsFadeIn:
 	ADDQ.w	#1, Dialog_timer.w
 	MOVE.w	Dialog_timer.w, D0
@@ -1108,6 +1288,9 @@ GameState_EncounterGraphicsFadeIn_Loop3:
 GameState_EncounterGraphicsFadeIn_Return:
 	RTS
 
+; --- GameState_EncounterPauseBeforeBattle ($1A) ---
+; Brief pause (ENCOUNTER_PAUSE_FRAMES) after the portrait finishes,
+; then transitions to BATTLE_INITIALIZE with a fade-out.
 GameState_EncounterPauseBeforeBattle:
 	ADDQ.w	#1, Dialog_timer.w
 	CMPI.w	#ENCOUNTER_PAUSE_FRAMES, Dialog_timer.w
@@ -1117,6 +1300,14 @@ GameState_EncounterPauseBeforeBattle:
 GameState_EncounterPauseBeforeBattle_Loop:
 	RTS
 
+; ======================================================================
+; Level-Up State Handlers ($1B-$1D)
+; ======================================================================
+
+; --- GameState_LevelUpBannerDisplay ($1B) ---
+; Counts down Level_up_timer (100 frames).  When it expires, saves the
+; dialog area, draws the character stats window, and advances to
+; LEVEL_UP_STATS_WAIT_INPUT.
 GameState_LevelUpBannerDisplay:
 	SUBQ.w	#1, Level_up_timer.w
 	BGT.b	GameState_LevelUpBannerDisplay_Loop
@@ -1126,6 +1317,9 @@ GameState_LevelUpBannerDisplay:
 GameState_LevelUpBannerDisplay_Loop:
 	RTS
 
+; --- GameState_LevelUpStatsWaitInput ($1C) ---
+; Displays the new stats screen and waits for A, B, or C button press
+; to dismiss.  While Window_tilemap_draw_active, input is ignored.
 GameState_LevelUpStatsWaitInput:
 	TST.b	Window_tilemap_draw_active.w
 	BNE.b	GameState_LevelUpStats_Dismiss_Loop
@@ -1143,6 +1337,10 @@ GameState_LevelUpStats_Dismiss:
 GameState_LevelUpStats_Dismiss_Loop:
 	RTS
 
+; --- GameState_LevelUpComplete ($1D) ---
+; Checks if another level-up is pending (multi-level-up support).
+; If so, loops back to LEVEL_UP_BANNER_DISPLAY.  Otherwise restores
+; Saved_game_state and resumes overworld or cave music.
 GameState_LevelUpComplete:
 	TST.b	Window_tilemap_row_draw_pending.w
 	BNE.w	GameState_LevelUpComplete_Exit_Loop
@@ -1489,6 +1687,11 @@ GameState_ShowPoisonNotification:
 	MOVE.b	#FLAG_TRUE, Poison_notified.w
 	RTS
 
+; --- GameState_WaitForNotificationDismiss ($27) ---
+; Generic notification dismiss handler.  Waits for the window draw to
+; finish and script text to complete, then waits for C or B button.
+; On dismiss: redraws the status HUD, returns to OVERWORLD_ACTIVE,
+; and clears the input block.
 GameState_WaitForNotificationDismiss:
 	TST.b	Window_tilemap_draw_pending.w
 	BNE.b	GameState_WaitNotification_Dismiss_Loop
@@ -1509,6 +1712,13 @@ GameState_WaitNotification_Dismiss_Loop2:
 GameState_WaitNotification_Dismiss_Loop:
 	RTS
 
+; ======================================================================
+; Town Spawn / Position Data Tables
+; ======================================================================
+
+; TownSpawnPositionData — 16 entries, 8 bytes each (4 words):
+;   dc.w  spawn_x, spawn_y, camera_x, camera_y
+; Indexed by town ID.  Used by GameState_LoadTown and InitializeTownMode.
 TownSpawnPositionData:
 	dc.w	$0208, $0138, $0016, $000B
 	dc.w	$0278, $0228, $001C, $001A
@@ -1526,6 +1736,10 @@ TownSpawnPositionData:
 	dc.w	$0208, $0138, $0017, $000B
 	dc.w	$0208, $0138, $0017, $000B 
 	dc.w	$0208, $0138, $0017, $000B 
+; TownPlayerPositionData — 8 entries, 4 bytes each (2 words):
+;   dc.w  player_x_in_town, player_y_in_town
+; Used by InitializeTownMode to set Player_position_x/y_in_town after
+; resurrection or teleport.
 TownPlayerPositionData:
 	dc.w	$20, $12, $27, $21 
 	dc.w	$D, $B, $1C, $E 
@@ -1554,6 +1768,10 @@ TownTeleportLocationData: ; town teleport locations
 	dc.w	$5, $4, $9, $2 ; TOWN_HASTINGS1
 	dc.w	$5, $4, $9, $2 ; TOWN_HASTINGS2
 	dc.w	$8, $8, $A, $5 ; TOWN_CARTHAHENA
+; TownSavedPositionData — 16 entries, 4 bytes each (2 words):
+;   dc.w  saved_x, saved_y
+; Used by InitializeTownMode to set Saved_player_x_in_town and
+; Town_player_spawn_y for the church building the player warps to.
 TownSavedPositionData:
 	dc.w	$D8, $68 
 	dc.w	$58, $68
@@ -1572,6 +1790,14 @@ TownSavedPositionData:
 	dc.w	$D8, $68
 	dc.w	$D8, $68 
 
+; ======================================================================
+; Utility Functions
+; ======================================================================
+
+; --- CheckPlayerDeath ---
+; Tests Player_hp.  If HP <= 0: plays death sound, sets state to
+; BEGIN_RESURRECTION, starts fade-out, clears HP, returns D0 = $FFFF.
+; If HP > 0: returns D0 = 0.  Caller tests with BEQ (alive) / BNE (dead).
 CheckPlayerDeath:
 	TST.w	Player_hp.w
 	BGT.b	CheckPlayerDeath_Loop
@@ -1586,6 +1812,12 @@ CheckPlayerDeath_Loop:
 	CLR.w	D0
 	RTS
 
+; --- UpdateDialogTileColumn ---
+; Copies one column of tiles from Tile_gfx_buffer to VRAM for the
+; portrait slide-in animation.  Each column is 103 ($67) tiles tall,
+; spaced $A bytes apart in the buffer.  Tile index is shifted left 4
+; to form VRAM tile ID.  Increments Dialog_phase after each column.
+; Used by both EncounterGraphicsFadeIn and DialogDisplay.
 UpdateDialogTileColumn:
 	LEA	Tile_gfx_buffer.w, A0
 	MOVE.l	#$45600002, D5
@@ -1609,6 +1841,10 @@ UpdateDialogTileColumn_Done:
 	ADDQ.w	#1, Dialog_phase.w
 	RTS
 
+; --- FlushDialogTileBuffer ---
+; Writes the entire Tile_gfx_buffer (512 words) to VRAM in one burst.
+; Clears Dialog_timer afterward.  Called after all portrait columns have
+; been drawn to ensure the full portrait is displayed cleanly.
 FlushDialogTileBuffer:
 	ORI	#$0700, SR
 	LEA	Tile_gfx_buffer.w, A0
@@ -1623,6 +1859,11 @@ FlushDialogTileBuffer_Done:
 	CLR.w	Dialog_timer.w
 	RTS
 
+; --- DrawTerrainTilemap ---
+; Writes the battle terrain tilemap to VDP plane B (VRAM $E000).
+; Draws two halves: first at column 0 ($60000003), then at column 20
+; ($60280003).  Each half is 22 rows x 20 columns.  Tile indices come
+; from TerrainTilemapPtrs indexed by Terrain_tileset_index.
 DrawTerrainTilemap:
 	MOVE.l	#$60000003, D5
 	BSR.b	DrawTerrainTilemapHelper
@@ -1650,6 +1891,10 @@ DrawTerrainTilemapHelper_Done2:
 	ANDI	#$F8FF, SR
 	RTS
 
+; --- DrawBattleStatusBar ---
+; Writes the battle status bar tilemap to VDP plane B.  6 rows x 40
+; columns starting at VRAM command $6B000003.  Tile indices from
+; DrawBattleStatusBar_Data are offset by $83CC (palette 2, high priority).
 DrawBattleStatusBar:
 	ORI	#$0700, SR
 	MOVE.l	#$6B000003, D5
@@ -1669,6 +1914,10 @@ DrawBattleStatusBar_Done2:
 	ANDI	#$F8FF, SR
 	RTS
 
+; --- DrawBattleNametable ---
+; Writes the first-person view nametable to VDP plane A (VRAM $C000).
+; 28 rows x 40 columns.  Tile indices from DrawBattleNametable_Data
+; are OR'd with $8000 (high priority) and offset by $03CC.
 DrawBattleNametable:
 	ORI	#$0700, SR
 	MOVE.l	#$40000003, D5
@@ -1690,6 +1939,16 @@ DrawBattleNametable_Done2:
 	ANDI	#$F8FF, SR
 	RTS
 
+; ======================================================================
+; Overworld Menu Input System
+; ======================================================================
+
+; --- HandleOverworldMenuInput ---
+; Entry point for the overworld menu system.  Checks Start (message speed
+; menu) and C (options menu) button presses to open menus.  If a menu is
+; open (Overworld_menu_state != 0), dispatches to the active menu handler
+; via OverworldMenuStateJumpTable.  Blocks player input while a menu is
+; active.
 HandleOverworldMenuInput:
 	TST.w	Overworld_menu_state.w
 	BNE.b	HandleOverworldMenuInput_DispatchMenu
@@ -1722,6 +1981,13 @@ HandleOverworldMenuInput_Dispatch:
 HandleOverworldMenuInput_Return:
 	RTS
 
+; OverworldMenuStateJumpTable — BRA.w dispatch table for menu states 0-5:
+;   0: Close menu (clear input block)
+;   1: Message speed menu init
+;   2: Message speed menu input
+;   3: Options menu init
+;   4: Options menu input
+;   5: Execute selected option action
 OverworldMenuStateJumpTable:
 	BRA.w	OverworldMenuStateJumpTable_Loop
 	BRA.w	OverworldMenuState0_Return_Loop	
@@ -1787,6 +2053,10 @@ OverworldMenuState0_Return_Loop3:
 	BSR.w	InitMenuCursorDefaults
 	RTS
 
+; --- InitMenuCursorDefaults ---
+; Sets up default cursor parameters for the 8-option main menu:
+; 3-item column break, 7 max index, column positions, and clears all
+; sub-menu state machines (dialogue, item, equip, spellbook, etc.).
 InitMenuCursorDefaults:
 	MOVE.w	#3, Menu_cursor_column_break.w
 	MOVE.w	#7, Menu_cursor_last_index.w
@@ -1840,6 +2110,11 @@ InitMenuCursorDefaults_Loop2:
 	JSR	(A0)
 	RTS
 
+; OverworldMenuActionPtrs — Pointer table for the 8 main menu options:
+;   0: Dialogue (Talk)      4: Spellbook (Magic)
+;   1: Item                 5: Ready Equipment
+;   2: Equip List           6: Dialog Selection
+;   3: Chest (Open)         7: Take Item
 OverworldMenuActionPtrs:
 	dc.l	DialogueStateMachine
 	dc.l	ItemMenuStateMachine
@@ -1850,6 +2125,11 @@ OverworldMenuActionPtrs:
 	dc.l	DialogSelectionStateMachine
 	dc.l	TakeItemStateMachine
 
+; --- GetCurrentTileType ---
+; Reads the tile under the player from Tilemap_buffer_plane_b at
+; Player_tilemap_offset, masks the upper 4 bits ($F000) to extract
+; the tile type, and stores it in Current_tile_type.
+; Tile types: TILE_TYPE_CASTLE, TILE_TYPE_EXIT, TILE_TYPE_ENTRANCE, etc.
 GetCurrentTileType:
 	CLR.w	Current_tile_type.w
 	LEA	Tilemap_buffer_plane_b, A0
@@ -1859,6 +2139,11 @@ GetCurrentTileType:
 	MOVE.w	D0, Current_tile_type.w
 	RTS
 
+; --- DecrementTimerBCD ---
+; Decrements a BCD countdown timer.  Each frame, decrements
+; Timer_frame_counter.  When it reaches 0, resets from
+; Timer_frames_per_second and performs a BCD subtract on
+; Timer_seconds_bcd.  Returns D0 = -1 if time remains, D0 = 0 if expired.
 DecrementTimerBCD:
 	SUBQ.w	#1, Timer_frame_counter.w
 	BGE.b	DecrementTimerBCD_Loop
@@ -1937,6 +2222,10 @@ FindTownStateEntry_NextEntry:
 FindTownStateEntry_NextEntry_Loop:
 	RTS                                  ; No match found
 	
+; --- LoadTownStateData ---
+; Loads town state data for the current town by calling
+; TownStateDataJumpTableStart to get the data pointer, then falls
+; through to LoadTownStateData_Store to populate saved room variables.
 LoadTownStateData:
 	LEA	TownStateDataJumpTableStart, A0
 	MOVE.w	Current_town.w, D0
@@ -1963,6 +2252,11 @@ LoadTownStateData_Store:
 	MOVE.l	(A0), Saved_npc_data_ptr_room3.w     ; +$24: NPC ptr 3
 	RTS
 
+; --- LoadAndPlayAreaMusic ---
+; Looks up the music ID for Current_town_room from AreaMusicIdByRoom.
+; Special cases: Stow (room 4) plays different music depending on
+; story flags; Swaffham (room $B) plays ruined music if destroyed.
+; Queues the sound and saves it to Current_area_music.
 LoadAndPlayAreaMusic:
 	LEA	AreaMusicIdByRoom, A0
 	MOVE.w	Current_town_room.w, D0
@@ -1993,16 +2287,24 @@ LoadAndPlayAreaMusic_Queue:
 	JSR	QueueSoundEffect
 	RTS
 
+; --- UpdateAndDisplayCompass ---
+; Wrapper: updates compass direction then displays it to VRAM.
 UpdateAndDisplayCompass:
 	JSR	UpdateCompassDisplay
 	JSR	DisplayCompassToVRAM
 	RTS
 
+; --- DisplayKimsAndCompass ---
+; Wrapper: displays kims (gold) and compass to VRAM.
 DisplayKimsAndCompass:
 	JSR	DisplayKimsToVRAM
 	JSR	DisplayCompassToVRAM
 	RTS
 
+; --- CheckForEncounter ---
+; RNG-based random encounter check.  Sets Checked_for_encounter flag,
+; generates a random number, ANDs with Encounter_rate.  If result is 0,
+; returns D0 = 1 (encounter triggered); otherwise returns D0 = 0.
 CheckForEncounter:
 	MOVE.b	#1, Checked_for_encounter.w
 	JSR	GetRandomNumber
@@ -2099,6 +2401,13 @@ CheckCaveInteractions_end:
 	MOVE.l	#NoOneHereStr, Script_talk_source.w  ; Default message
 	RTS
 
+; --- InitializeTownMode ---
+; Full town mode reset used after resurrection or teleport.  Clears all
+; enemy entities, resets player object, loads graphics, clears VRAM,
+; and sets spawn position from town data tables.  Special redirects:
+;   - Excalabria -> Swaffham (if not ruined) or Helwig (if ruined)
+;   - Carthahena -> Hastings
+; Then calls SearchTownNPCData to load building data for the church.
 InitializeTownMode:
 	BSR.w	ClearAllEnemyEntities
 	JSR	InitMenuObjects
@@ -2171,6 +2480,10 @@ InitializeTownMode_spawn_setup:
 	MOVE.w	$2(A0,D0.w), Town_player_spawn_y.w
 	RTS
 
+; --- UpdatePlayerOverworldPosition ---
+; Adjusts the player's overworld X/Y position by the offset corresponding
+; to their current facing direction, using DirectionOffsets_GateEntry.
+; Called after battles and cave exits to step the player forward.
 UpdatePlayerOverworldPosition:
 	LEA	DirectionOffsets_GateEntry, A0
 	MOVE.w	Player_direction.w, D0
@@ -2182,11 +2495,16 @@ UpdatePlayerOverworldPosition:
 	ADD.w	D1, Player_position_y_outside_town.w
 	RTS
 
+; DirectionOffsets_GateEntry — 4 entries of (dx, dy) word pairs.
+; Used by UpdatePlayerOverworldPosition.  Offsets are +-2 tiles.
 DirectionOffsets_GateEntry: ; Going through gates or entering caves?
 	dc.w	  0,  -2		; Up
 	dc.w	 -2,   0		; Left
 	dc.w	  0,   2		; Down
 	dc.w	  2,   0		; Right
+; DirectionOffsets_16Pixel — 4 entries of (dx, dy) word pairs.
+; Used by floor transition exit handlers to offset player position
+; by 16 pixels in the current direction.
 DirectionOffsets_16Pixel:
 	dc.w	  0,  16		; Up
 	dc.w	 16,   0		; Left
