@@ -430,7 +430,7 @@
           "file": "tools/map_viewer.js",
           "priority": "high",
           "effort": "large",
-          "status": "todo"
+          "status": "done"
         },
         {
           "id": "TOOLB-002",
