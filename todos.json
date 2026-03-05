@@ -1024,7 +1024,8 @@
           "file": "src/battle_gfx.asm",
           "priority": "medium",
           "effort": "large",
-          "status": "todo"
+          "status": "done",
+          "completed": "2026-03-05"
         },
         {
           "id": "RAND-007",
@@ -2187,8 +2188,8 @@
   "statistics": {
     "total_tasks": 139,
     "by_status": {
-      "done": 123,
-      "todo": 16
+      "done": 124,
+      "todo": 15
     },
     "by_priority": {
       "critical": 1,

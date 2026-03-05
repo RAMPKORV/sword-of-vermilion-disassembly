@@ -468,15 +468,73 @@ QueueSpriteOAM_Return_Loop3_Done:
 ; LoadEncounterGraphics — load all tile sets for a random encounter battle
 ;
 ; Loads four GFX groups:
-;   1. EncounterTileData_Entry    — base encounter tiles (player + HUD)
+;   1. EncounterTileData_Entry     — base encounter tiles (player + HUD)
 ;   2. GfxLoadList_OverworldBattle — overworld battle background tiles
-;   3. EnemyGfxDataTable          — enemy sprite tiles (front + back banks)
+;   3. EnemyGfxDataTable           — enemy sprite tiles (front + back banks)
 ;   4. Optional 3rd enemy tile set (if source pointer is non-null)
 ; Each group is decompressed into Tile_gfx_buffer and DMA'd to VRAM.
 ;
 ; Input:   (via RAM)  Current_encounter_type.w
 ; Scratch:  D0, D5, A2, A3, A4, A6
 ; Output:   VRAM loaded with encounter tile sets
+;
+; ---------------------------------------------------------------------------
+; RAND-006: Enemy Graphics Swapping — Feasibility Analysis
+; ---------------------------------------------------------------------------
+; Enemy graphics are stored in 13 EnemySpriteSet groups (A–M), each a list
+; of 10-byte records (4-byte frame table ptr + 4-byte GFX data ptr + 1-byte
+; $00 + 1-byte tile_count), terminated by a NULL_PTR ($00000000).
+; Most groups have 2 records; sets H, I, L, M have a 3rd record for ALT tiles.
+;
+; VRAM slots used during battles (see DMA_SLOT_* in constants.asm):
+;   DMA_SLOT_ENEMY_FRONT = $0035  →  VRAM $3640  (96 tiles = 3072 bytes)
+;   DMA_SLOT_ENEMY_BACK  = $0036  →  VRAM $0640  (96 tiles = 3072 bytes)
+;   DMA_SLOT_ENEMY_ALT   = $003C  →  VRAM $6640  (80 tiles = 2560 bytes)
+;   DMA_SLOT_MAGIC_SPELL = $0043  →  VRAM $9140  (93 tiles = 2976 bytes)
+;
+; Tile-count values seen in sprite sets (byte at record+$09):
+;   $6B = 107,  $77 = 119,  $4F = 79,  $47 = 71,  $3B = 59,
+;   $2F = 47,   $27 = 39,   $05 = 5
+; All observed counts fit within their respective DMA slot maximums.
+;
+; Palette assignment:
+;   Each enemy's palette lines are encoded in EnemyAppearance_* at offset
+;   +$14 (eagfx_vfx): packed $PPQQSSTT — PP/QQ = palette hi/lo indices,
+;   SS = sprite size code, TT = tile ID / palette bank.
+;   Standard overworld enemies: PP=$0D, QQ=$0E (shared palette lines).
+;   Boss-exclusive enemies:     PP=$0F, QQ=$00 (dedicated boss palette).
+;
+; Randomizer swapping rules:
+;   SAFE (unconditional):
+;     — Two enemies sharing the same EnemySpriteSet_* label can always swap;
+;       tile counts, VRAM slots, and record counts are identical.
+;
+;   SAFE (conditional — same tile-count tier):
+;     — Enemies from different sets but with matching tile counts per record
+;       can swap if both use the same number of records (both 2-record or
+;       both 3-record). Tile data will fill the slot exactly.
+;
+;   UNSAFE — mismatched record count (2-record vs 3-record sets):
+;     — Swapping a 2-record enemy (no ALT) into a 3-record slot (or vice
+;       versa) leaves the ALT VRAM region stale or unloaded. If the game
+;       reads the ALT slot for that enemy type the display will corrupt.
+;     — Sets with 3 records: H, I, L, M.
+;
+;   UNSAFE — mismatched tile count across records:
+;     — If the replacement enemy's record has a larger tile_count than the
+;       slot maximum, tiles will overflow into adjacent VRAM regions.
+;     — If smaller, the upper portion of the slot retains stale tiles from
+;       the previous battle; visible corruption may or may not occur.
+;
+;   UNSAFE — incompatible palette:
+;     — Swapping a boss-palette enemy ($0F/$00) into a standard slot will
+;       render with wrong colours unless the palette is also patched.
+;       Swapping two standard-palette enemies ($0D/$0E) is always safe.
+;
+; Recommended swap groupings for a randomizer:
+;   Group 1 — same EnemySpriteSet label          : free swap, zero risk
+;   Group 2 — same tile-count tier, same rec count: swap with palette check
+;   Group 3 — boss enemies (3-record or $0F pal) : swap only within group
 ; ---------------------------------------------------------------------------
 LoadEncounterGraphics:
 	LEA	EncounterTileData_Entry-2, A6
