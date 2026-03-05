@@ -2367,11 +2367,26 @@ SaveReadyEquipmentMenuToBuffer:
 	BSR.w	ReadWindowToBuffer
 	RTS
 	
-; ReadWindowToBuffer
-; Read window tiles from VDP into buffer (save background)
-; Input: A0 = Destination buffer
-;        $FFFFC224 = X offset, $FFFFC226 = Y offset
-;        $FFFFC22C = Width, $FFFFC22E = Height
+; ---------------------------------------------------------------------------
+; ReadWindowToBuffer — copy a rectangular tile region from VDP VRAM to RAM
+;
+; Called by ~20 thin Save* wrapper functions above, each of which loads a
+; unique (buffer, x, y, w, h) combination before jumping here.
+;
+; DRY-006 NOTE: The wrappers cannot be merged into a single parameterized
+; function without changing every BSR.w call offset, which would break
+; bit-perfect output.  The established pattern in this project is to leave
+; the wrappers in place and document the constraint here.  Each wrapper is
+; already fully commented with its region dimensions.
+;
+; Input:   A0  = destination RAM buffer (word-per-tile, row-major)
+;          Window_tile_x.w   = nametable X origin (tiles)
+;          Window_tile_y.w   = nametable Y origin (tiles)
+;          Window_tile_width.w  = region width  (tiles, inclusive)
+;          Window_tile_height.w = region height (tiles, inclusive)
+; Scratch: D0-D5, A0
+; Output:  buffer filled; A0 advanced past last written word
+; ---------------------------------------------------------------------------
 ReadWindowToBuffer:
 	JSR	GetScrollOffsetInTiles
 	CLR.w	D3
@@ -2546,11 +2561,24 @@ RestoreLeftMenuFromBuffer:
 	BSR.w	DrawWindowFromBuffer
 	RTS
 	
-; DrawWindowFromBuffer
-; Draw window from tile buffer to VDP
-; Input: A0 = Source tile buffer
-;        $FFFFC224 = X offset, $FFFFC226 = Y offset
-;        $FFFFC22C = Width, $FFFFC22E = Height
+; ---------------------------------------------------------------------------
+; DrawWindowFromBuffer — write a rectangular tile region from RAM back to VDP
+;
+; Called by ~10 thin Restore*/Draw* wrapper functions above, each of which
+; loads a unique (buffer, x, y, w, h) combination before jumping here.
+;
+; DRY-006 NOTE: Same bit-perfect constraint as ReadWindowToBuffer — see that
+; function's header for the full explanation.  Wrappers are intentionally
+; left as-is; each is individually commented.
+;
+; Input:   A0  = source RAM buffer (word-per-tile, row-major)
+;          Window_tile_x.w   = nametable X origin (tiles)
+;          Window_tile_y.w   = nametable Y origin (tiles)
+;          Window_tile_width.w  = region width  (tiles, inclusive)
+;          Window_tile_height.w = region height (tiles, inclusive)
+; Scratch: D0-D5, A0
+; Output:  VDP nametable updated; A0 advanced past last read word
+; ---------------------------------------------------------------------------
 DrawWindowFromBuffer:
 	JSR	GetScrollOffsetInTiles
 	CLR.w	D3

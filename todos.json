@@ -546,7 +546,9 @@
           "file": "src/script.asm",
           "priority": "medium",
           "effort": "medium",
-          "status": "todo"
+          "status": "done",
+          "notes": "Bit-perfect constraint: ~20 Save* and ~10 Restore*/Draw* thin wrappers each set unique (buffer,x,y,w,h) args before BSR to ReadWindowToBuffer/DrawWindowFromBuffer. Merging into a parameterized function would change BSR offsets, breaking bit-perfect. Added comprehensive DRY-006 constraint comments to ReadWindowToBuffer and DrawWindowFromBuffer headers instead.",
+          "completed_at": "2026-03-05T00:30:32.005Z"
         },
         {
           "id": "DRY-007",
