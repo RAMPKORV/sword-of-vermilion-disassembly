@@ -220,7 +220,7 @@
             }
           ],
           "note": "The vdpCmd macro must produce byte-identical output. Test with one instance first, verify, then batch per file.",
-          "status": "todo"
+          "status": "done"
         },
         {
           "id": "MAGICB-004",
