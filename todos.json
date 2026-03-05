@@ -605,7 +605,7 @@
           "file": "tools/editor/enemy_editor.js",
           "priority": "medium",
           "effort": "large",
-          "status": "todo"
+          "status": "done"
         },
         {
           "id": "EDITOR-003",
@@ -614,7 +614,7 @@
           "file": "tools/editor/shop_editor.js",
           "priority": "medium",
           "effort": "medium",
-          "status": "todo"
+          "status": "done"
         },
         {
           "id": "EDITOR-004",
@@ -623,7 +623,7 @@
           "file": "tools/editor/text_editor.js",
           "priority": "medium",
           "effort": "large",
-          "status": "todo"
+          "status": "done"
         },
         {
           "id": "EDITOR-005",
@@ -632,7 +632,7 @@
           "file": "tools/editor/stats_editor.js",
           "priority": "medium",
           "effort": "medium",
-          "status": "todo"
+          "status": "done"
         },
         {
           "id": "EDITOR-006",
