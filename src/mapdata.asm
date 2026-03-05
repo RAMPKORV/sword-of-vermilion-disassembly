@@ -104,10 +104,10 @@ OverworldMaps: ; 128
 	dc.l	OverworldMaps_Map_3EA62
 	dc.l	OverworldMaps_Map_3EBEE
 	dc.l	OverworldMaps_Map_3EE1C
-	dc.l	SpriteFrameData_3F134
+	dc.l	OverworldMaps_Map_3F134
 	dc.l	OverworldMaps_Map_3F250
-	dc.l	SpriteFrameData_3F402
-	dc.l	SpriteFrameData_3F64E
+	dc.l	OverworldMaps_Map_3F402
+	dc.l	OverworldMaps_Map_3F64E
 	dc.l	OverworldMaps_Map_3F85A
 	dc.l	OverworldMaps_Map_3FAF0
 	dc.l	OverworldMaps_Map_3FD42
@@ -120,11 +120,11 @@ OverworldMaps: ; 128
 	dc.l	OverworldMaps_Map_3EA6A
 	dc.l	OverworldMaps_Map_3EBFC
 	dc.l	OverworldMaps_Map_3EE30
-	dc.l	SpriteFrameData_3F134
+	dc.l	OverworldMaps_Map_3F134
 	dc.l	OverworldMaps_Map_3F2CE
 	dc.l	OverworldMaps_Map_3F438
-	dc.l	SpriteFrameData_3F6DC
-	dc.l	SpriteFrameData_3F880
+	dc.l	OverworldMaps_Map_3F6DC
+	dc.l	OverworldMaps_Map_3F880
 	dc.l	OverworldMaps_Map_3FB28
 	dc.l	OverworldMaps_Map_3FD8A
 	dc.l	OverworldMapSector_FFA0
@@ -139,8 +139,8 @@ OverworldMaps: ; 128
 	dc.l	OverworldMaps_Map_3F188
 	dc.l	OverworldMaps_Map_3F304
 	dc.l	OverworldMaps_Map_3F486
-	dc.l	SpriteFrameData_3F6DC
-	dc.l	SpriteFrameData_3F880
+	dc.l	OverworldMaps_Map_3F6DC
+	dc.l	OverworldMaps_Map_3F880
 	dc.l	OverworldMaps_Map_3FB70
 	dc.l	OverworldMaps_Map_3FE08
 	dc.l	OverworldMapSector_FFA0
@@ -156,7 +156,7 @@ OverworldMaps: ; 128
 	dc.l	OverworldMapSector_F33E
 	dc.l	OverworldMaps_Map_3F4DA
 	dc.l	OverworldMapSector_F70A
-	dc.l	SpriteFrameData_3F8F8
+	dc.l	OverworldMaps_Map_3F8F8
 	dc.l	OverworldMaps_Map_3FBD2
 	dc.l	OverworldMaps_Map_3FE5E
 	dc.l	OverworldMaps_Map_3FFD6
@@ -172,7 +172,7 @@ OverworldMaps: ; 128
 	dc.l	OverworldMapSector_F33E
 	dc.l	OverworldMaps_Map_3F574
 	dc.l	OverworldMapSector_F70A
-	dc.l	SpriteFrameData_3F8F8
+	dc.l	OverworldMaps_Map_3F8F8
 	dc.l	OverworldMaps_Map_3FC1C
 	dc.l	OverworldMaps_Map_3FE6C
 	dc.l	OverworldMapSector_40028
@@ -196,15 +196,15 @@ OverworldMaps: ; 128
 	dc.l	OverworldMaps_Map_3E35C
 	dc.l	OverworldMapSector_E5FC
 	dc.l	OverworldMaps_Map_3E784
-	dc.l	SpriteFrameData_3EA04
-	dc.l	SpriteFrameData_3EBA4
+	dc.l	OverworldMaps_Map_3EA04
+	dc.l	OverworldMaps_Map_3EBA4
 	dc.l	OverworldMaps_Map_3ED68
 	dc.l	OverworldMaps_Map_3F05A
 	dc.l	OverworldMapSector_F1AC
 	dc.l	OverworldMaps_Map_3F388
 	dc.l	OverworldMaps_Map_3F61E
 	dc.l	OverworldMaps_Map_3F76E
-	dc.l	SpriteFrameData_3FA54
+	dc.l	OverworldMaps_Map_3FA54
 	dc.l	OverworldMaps_Map_3FCB2
 	dc.l	OverworldMaps_Map_3FF24
 	dc.l	OverworldMapSector_Empty
@@ -212,15 +212,15 @@ OverworldMaps: ; 128
 	dc.l	OverworldMaps_Map_3E3B8
 	dc.l	OverworldMapSector_E5FC
 	dc.l	OverworldMaps_Map_3E7CA
-	dc.l	SpriteFrameData_3EA04
-	dc.l	SpriteFrameData_3EBA4
+	dc.l	OverworldMaps_Map_3EA04
+	dc.l	OverworldMaps_Map_3EBA4
 	dc.l	OverworldMaps_Map_3EDC8
 	dc.l	OverworldMaps_Map_3F0D8
 	dc.l	OverworldMaps_Map_3F20C
-	dc.l	SpriteFrameData_3F402
-	dc.l	SpriteFrameData_3F64E
+	dc.l	OverworldMaps_Map_3F402
+	dc.l	OverworldMaps_Map_3F64E
 	dc.l	OverworldMaps_Map_3F7CE
-	dc.l	SpriteFrameData_3FA54
+	dc.l	OverworldMaps_Map_3FA54
 	dc.l	OverworldMaps_Map_3FD10
 	dc.l	OverworldMapSector_FF68
 	dc.l	OverworldMapSector_Empty	
@@ -280,7 +280,7 @@ OverworldMaps_Map_3E97A:
 	incbin "data/maps/overworld/sector_3_4.bin"
 OverworldMaps_Map_3E9C0:
 	incbin "data/maps/overworld/sector_3_5.bin"
-SpriteFrameData_3EA04:
+OverworldMaps_Map_3EA04:
 	incbin "data/maps/overworld/sector_3_6.bin"
 OverworldMaps_Map_3EA62:
 	incbin "data/maps/overworld/sector_4_0.bin"
@@ -292,7 +292,7 @@ OverworldMaps_Map_3EB22:
 	incbin "data/maps/overworld/sector_4_4.bin"
 OverworldMaps_Map_3EB4E:
 	incbin "data/maps/overworld/sector_4_5.bin"
-SpriteFrameData_3EBA4:
+OverworldMaps_Map_3EBA4:
 	incbin "data/maps/overworld/sector_4_6.bin"
 OverworldMaps_Map_3EBEE:
 	incbin "data/maps/overworld/sector_5_0.bin"
@@ -326,7 +326,7 @@ OverworldMaps_Map_3F05A:
 	incbin "data/maps/overworld/sector_6_6.bin"
 OverworldMaps_Map_3F0D8:
 	incbin "data/maps/overworld/sector_6_7.bin"
-SpriteFrameData_3F134:
+OverworldMaps_Map_3F134:
 	incbin "data/maps/overworld/sector_7_0.bin"
 OverworldMaps_Map_3F188:
 	incbin "data/maps/overworld/sector_7_2.bin"
@@ -344,7 +344,7 @@ OverworldMapSector_F33E:
 	incbin "data/maps/overworld/sector_8_3.bin"
 OverworldMaps_Map_3F388:
 	incbin "data/maps/overworld/sector_8_6.bin"
-SpriteFrameData_3F402:
+OverworldMaps_Map_3F402:
 	incbin "data/maps/overworld/sector_9_0.bin"
 OverworldMaps_Map_3F438:
 	incbin "data/maps/overworld/sector_9_1.bin"
@@ -358,9 +358,9 @@ OverworldMaps_Map_3F5DC:
 	incbin "data/maps/overworld/sector_9_5.bin"
 OverworldMaps_Map_3F61E:
 	incbin "data/maps/overworld/sector_9_6.bin"
-SpriteFrameData_3F64E:
+OverworldMaps_Map_3F64E:
 	incbin "data/maps/overworld/sector_10_0.bin"
-SpriteFrameData_3F6DC:
+OverworldMaps_Map_3F6DC:
 	incbin "data/maps/overworld/sector_10_1.bin"
 OverworldMapSector_F70A:
 	incbin "data/maps/overworld/sector_10_3.bin"
@@ -370,13 +370,13 @@ OverworldMaps_Map_3F7CE:
 	incbin "data/maps/overworld/sector_10_7.bin"
 OverworldMaps_Map_3F85A:
 	incbin "data/maps/overworld/sector_11_0.bin"
-SpriteFrameData_3F880:
+OverworldMaps_Map_3F880:
 	incbin "data/maps/overworld/sector_11_1.bin"
-SpriteFrameData_3F8F8:
+OverworldMaps_Map_3F8F8:
 	incbin "data/maps/overworld/sector_11_3.bin"
 OverworldMaps_Map_3F992:
 	incbin "data/maps/overworld/sector_11_5.bin"
-SpriteFrameData_3FA54:
+OverworldMaps_Map_3FA54:
 	incbin "data/maps/overworld/sector_11_6.bin"
 OverworldMaps_Map_3FAF0:
 	incbin "data/maps/overworld/sector_12_0.bin"

@@ -909,7 +909,7 @@
             "src/gfxdata.asm",
             "src/mapdata.asm"
           ],
-          "status": "todo"
+          "status": "done"
         },
         {
           "id": "DATA-003",
@@ -2180,8 +2180,8 @@
   "statistics": {
     "total_tasks": 139,
     "by_status": {
-      "done": 117,
-      "todo": 22
+      "done": 118,
+      "todo": 21
     },
     "by_priority": {
       "critical": 1,
