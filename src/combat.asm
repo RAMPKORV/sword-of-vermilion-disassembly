@@ -1884,21 +1884,20 @@ CoordsOutOfBounds:
 ; (low nibble) as an index into ItemMenuStateJumpTable.
 ;
 ; State table (BRA entries, 6 bytes each):
-;   $0  ItemMenuStateJumpTable_Loop     - Init: draw Use/Discard menu
-;   $1  ItemMenuStateJumpTable_Loop2    - Wait for input, handle B/C
-;   $2  ItemMenuUseOrDiscard_Done_Loop  - Close menus / "nothing to use"
-;   $3  ItemMenu_ScriptDone_Loop        - Script running after discard
-;   $4  ItemMenu_ItemUsed_Return_Loop   - Show item discard menu
-;   $5  ItemMenu_ItemUsed_Return_Loop2  - Confirm discard yes/no
-;   $6  ItemMenu_ItemUsed_Return_Loop3  - After discard confirm
-;   $7  ItemMenu_ItemUsed_Return_Loop4  - Post-discard cleanup
-;   $8  ItemMenu_ScriptDone2_Loop       - Show item use menu
-;   $9  ItemMenu_ScriptDone2_Loop2      - Wait for use menu input
-;   $A  UseItemDescription_Build_Loop   - Use item: build description
-;   $B  UseItemDescription_Build_Loop2  - Light up cave (continued)
-;   $C  ItemMenu_ScriptDoneCheckCave_Loop - Light up cave / Candle / Lantern
-;   $D  ItemMenu_ScriptDoneCheckCave_Loop2 - Teleport / Griffin Wing
-;   $E  UseExtrios_Warp_Loop            - Exit cave / Gnome Stone
+;   $0  ItemMenuStateJumpTable_Loop          - Init: draw Use/Discard menu
+;   $1  ItemMenuStateJumpTable_WaitInput     - Wait for input, handle B/C
+;   $2  ItemMenuUseOrDiscard_Done_Loop       - Close menus / "nothing to use"
+;   $3  ItemMenu_ScriptDone_Loop             - Script running after discard
+;   $4  ItemMenu_ItemUsed_Return_Loop        - Show item discard menu
+;   $5  ItemMenu_ItemUsed_Return_DiscardWait  - Confirm discard yes/no
+;   $6  ItemMenu_ItemUsed_Return_DiscardExec  - After discard confirm
+;   $7  ItemMenu_ItemUsed_Return_ScriptWait   - Post-discard cleanup
+;   $9  ItemMenu_ScriptDone2_UseWait          - Wait for use menu input
+;   $A  UseItemDescription_Build_Loop        - Use item: build description
+;   $B  UseItemDescription_Build_CheckContinue - Light up cave (continued)
+;   $C  ItemMenu_ScriptDoneCheckCave_Loop    - Light up cave / Candle / Lantern
+;   $D  ItemMenu_ScriptDoneCheckCave_WaitConfirm - Teleport / Griffin Wing
+;   $E  UseExtrios_Warp_Loop                 - Exit cave / Gnome Stone
 ; ----------------------------------------------------------------------
 ItemMenuStateMachine:
 	MOVE.w	Item_menu_state.w, D0
@@ -1911,19 +1910,19 @@ ItemMenuStateMachine:
 
 ItemMenuStateJumpTable: ; Item effect routines map
 	BRA.w	ItemMenuStateJumpTable_Loop
-	BRA.w	ItemMenuStateJumpTable_Loop2
+	BRA.w	ItemMenuStateJumpTable_WaitInput
 	BRA.w	ItemMenuUseOrDiscard_Done_Loop ; Close menus / "You have nothing to use"
 	BRA.w	ItemMenu_ScriptDone_Loop
 	BRA.w	ItemMenu_ItemUsed_Return_Loop ; Show item discard menu
-	BRA.w	ItemMenu_ItemUsed_Return_Loop2
-	BRA.w	ItemMenu_ItemUsed_Return_Loop3
-	BRA.w	ItemMenu_ItemUsed_Return_Loop4
+	BRA.w	ItemMenu_ItemUsed_Return_DiscardWait
+	BRA.w	ItemMenu_ItemUsed_Return_DiscardExec
+	BRA.w	ItemMenu_ItemUsed_Return_ScriptWait
 	BRA.w	ItemMenu_ScriptDone2_Loop ; Show item use menu
-	BRA.w	ItemMenu_ScriptDone2_Loop2
+	BRA.w	ItemMenu_ScriptDone2_UseWait
 	BRA.w	UseItemDescription_Build_Loop
-	BRA.w	UseItemDescription_Build_Loop2 ; Light up cave, continued
+	BRA.w	UseItemDescription_Build_CheckContinue ; Light up cave, continued
 	BRA.w	ItemMenu_ScriptDoneCheckCave_Loop ; Light up cave / Candle / Lantern
-	BRA.w	ItemMenu_ScriptDoneCheckCave_Loop2 ; Teleport to last town / Griffin Wing
+	BRA.w	ItemMenu_ScriptDoneCheckCave_WaitConfirm ; Teleport to last town / Griffin Wing
 	BRA.w	UseExtrios_Warp_Loop ; Exit cave / Gnome Stone
 ItemMenuStateJumpTable_Loop:
 	MOVE.w	Main_menu_selection.w, Menu_cursor_index.w
@@ -1934,11 +1933,11 @@ ItemMenuStateJumpTable_Loop:
 	ADDQ.w	#1, Item_menu_state.w
 	RTS
 
-ItemMenuStateJumpTable_Loop2:
+ItemMenuStateJumpTable_WaitInput:
 	TST.b	Window_tilemap_draw_active.w
 	BNE.w	ItemMenuUseOrDiscard_Done
 	CheckButton BUTTON_BIT_B
-	BEQ.b	ItemMenuStateJumpTable_Loop3
+	BEQ.b	ItemMenuStateJumpTable_CheckConfirm
 	MOVE.w	#WINDOW_DRAW_ITEM_LIST_SHORT, Window_draw_type.w
 	PlaySound	SOUND_MENU_CANCEL
 	CLR.w	Window_text_row.w
@@ -1947,32 +1946,32 @@ ItemMenuStateJumpTable_Loop2:
 	JSR	InitMenuCursorDefaults
 	RTS
 
-ItemMenuStateJumpTable_Loop3:
+ItemMenuStateJumpTable_CheckConfirm:
 	CheckButton BUTTON_BIT_C
-	BEQ.w	ItemMenuUseOrDiscard_Done_Loop2
+	BEQ.w	ItemMenuUseOrDiscard_HandleCursor
 	MOVE.w	Item_menu_action_mode.w, Menu_cursor_index.w
 	JSR	DrawMenuCursor
 	PlaySound	SOUND_MENU_SELECT
 	JSR	SaveStatusBarToBuffer
 	JSR	ResetScriptAndInitDialogue
 	TST.w	Possessed_items_length.w
-	BNE.b	ItemMenuStateJumpTable_Loop4
+	BNE.b	ItemMenuStateJumpTable_CheckHaveItems
 	PRINT 	YouHaveNothingToUseStr
 	MOVE.w	#ITEM_MENU_STATE_CLOSE, Item_menu_state.w
 	BRA.b	ItemMenuUseOrDiscard_Done
-ItemMenuStateJumpTable_Loop4:
+ItemMenuStateJumpTable_CheckHaveItems:
 	TST.w	Item_menu_action_mode.w
-	BEQ.b	ItemMenuStateJumpTable_Loop5
+	BEQ.b	ItemMenuStateJumpTable_CheckUseOrDiscard
 	PRINT 	DiscardWhichItemStr
 	MOVE.w	#ITEM_MENU_STATE_DISCARD_INIT, Item_menu_state.w
 	BRA.b	ItemMenuUseOrDiscard_Done
-ItemMenuStateJumpTable_Loop5:
+ItemMenuStateJumpTable_CheckUseOrDiscard:
 	PRINT 	UseWhichItemStr
 	MOVE.w	#ITEM_MENU_STATE_USE_INIT, Item_menu_state.w
 ItemMenuUseOrDiscard_Done:
 	RTS
 
-ItemMenuUseOrDiscard_Done_Loop2:
+ItemMenuUseOrDiscard_HandleCursor:
 	MOVE.w	Item_menu_action_mode.w, Menu_cursor_index.w
 	MOVE.w	#VDP_ATTR_SCRIPT, Script_tile_attrs.w
 	JSR	HandleMenuInput
@@ -1981,7 +1980,7 @@ ItemMenuUseOrDiscard_Done_Loop2:
 
 ItemMenuUseOrDiscard_Done_Loop:
 	TST.b	Script_text_complete.w
-	BEQ.w	ItemMenu_ScriptDone_Loop2
+	BEQ.w	ItemMenu_ScriptDone_ProcessText
 	CheckButton BUTTON_BIT_C
 	BNE.b	ItemMenu_ScriptDone
 	CheckButton BUTTON_BIT_B
@@ -2005,7 +2004,7 @@ ItemMenu_ScriptDone:
 	MOVE.b	#FLAG_TRUE, Window_tilemap_row_draw_pending.w
 	RTS
 
-ItemMenu_ScriptDone_Loop2:
+ItemMenu_ScriptDone_ProcessText:
 	JSR	ProcessScriptText
 	RTS
 
@@ -2024,7 +2023,7 @@ ItemMenu_ItemUsed_Return:
 
 ItemMenu_ItemUsed_Return_Loop:
 	TST.b	Script_text_complete.w
-	BEQ.b	ItemMenu_ItemUsed_Return_Loop5
+	BEQ.b	ItemMenu_ItemUsed_Return_ProcessText
 	JSR	SaveCenterDialogAreaToBuffer
 	JSR	DrawItemListBorders
 	JSR	DrawItemListNames
@@ -2034,13 +2033,13 @@ ItemMenu_ItemUsed_Return_Loop:
 	JSR	InitMenuCursorForList
 	RTS
 
-ItemMenu_ItemUsed_Return_Loop5:
+ItemMenu_ItemUsed_Return_ProcessText:
 	JSR	ProcessScriptText
 	RTS
 
-ItemMenu_ItemUsed_Return_Loop2:
+ItemMenu_ItemUsed_Return_DiscardWait:
 	CheckButton BUTTON_BIT_B
-	BEQ.b	ItemMenu_ItemUsed_Return_Loop6
+	BEQ.b	ItemMenu_ItemUsed_Return_CheckConfirm
 	PlaySound	SOUND_MENU_CANCEL
 	JSR	DrawCenterMenuWindow
 	JSR	DrawStatusHudWindow
@@ -2048,9 +2047,9 @@ ItemMenu_ItemUsed_Return_Loop2:
 	JSR	InitItemMenuCursor
 	RTS
 
-ItemMenu_ItemUsed_Return_Loop6:
+ItemMenu_ItemUsed_Return_CheckConfirm:
 	CheckButton BUTTON_BIT_C
-	BEQ.b	ItemMenu_ItemUsed_Return_Loop7
+	BEQ.b	ItemMenu_ItemUsed_Return_HandleCursor
 	MOVE.w	Selected_item_index.w, Menu_cursor_index.w
 	JSR	DrawMenuCursor
 	PlaySound	SOUND_MENU_SELECT
@@ -2059,21 +2058,21 @@ ItemMenu_ItemUsed_Return_Loop6:
 	MOVE.w	#ITEM_MENU_STATE_DISCARD_EXEC, Item_menu_state.w
 	RTS
 
-ItemMenu_ItemUsed_Return_Loop7:
+ItemMenu_ItemUsed_Return_HandleCursor:
 	MOVE.w	Selected_item_index.w, Menu_cursor_index.w
 	MOVE.w	#VDP_ATTR_SCRIPT, Script_tile_attrs.w
 	JSR	HandleMenuInput
 	MOVE.w	Menu_cursor_index.w, Selected_item_index.w
 	RTS
 
-ItemMenu_ItemUsed_Return_Loop3:
+ItemMenu_ItemUsed_Return_DiscardExec:
 	CheckButton BUTTON_BIT_B
-	BNE.b	ItemMenu_ItemUsed_Return_Loop8
+	BNE.b	ItemMenu_ItemUsed_Return_CancelDiscard
 	CheckButton BUTTON_BIT_C
-	BEQ.w	ItemMenu_ItemUsed_Return_Loop9
+	BEQ.w	ItemMenu_ItemUsed_Return_HandleYesNo
 	PlaySound	SOUND_MENU_SELECT
 	TST.w	Dialog_selection.w
-	BEQ.b	ItemMenu_ItemUsed_Return_Loop10
+	BEQ.b	ItemMenu_ItemUsed_Return_ConfirmDiscard
 	JSR	DrawLeftMenuWindow
 	JSR	DrawCenterMenuWindow
 	JSR	DrawStatusHudWindow
@@ -2081,7 +2080,7 @@ ItemMenu_ItemUsed_Return_Loop3:
 	JSR	InitItemMenuCursor
 	RTS
 
-ItemMenu_ItemUsed_Return_Loop8:
+ItemMenu_ItemUsed_Return_CancelDiscard:
 	PlaySound	SOUND_MENU_CANCEL	
 	JSR	DrawLeftMenuWindow	
 	CLR.w	Selected_item_index.w	
@@ -2090,7 +2089,7 @@ ItemMenu_ItemUsed_Return_Loop8:
 	JSR	InitMenuCursorForList	
 	RTS
 	
-ItemMenu_ItemUsed_Return_Loop10:
+ItemMenu_ItemUsed_Return_ConfirmDiscard:
 	JSR	DrawLeftMenuWindow
 	JSR	DrawCenterMenuWindow
 	JSR	ResetScriptAndInitDialogue
@@ -2100,10 +2099,10 @@ ItemMenu_ItemUsed_Return_Loop10:
 	ADD.w	D0, D0
 	MOVE.w	(A2,D0.w), D0
 	ANDI.w	#(ITEM_TYPE_NON_DISCARDABLE<<8), D0 ; Check if we can discard item
-	BEQ.b	ItemMenu_ItemUsed_Return_Loop11
+	BEQ.b	ItemMenu_ItemUsed_Return_BuildDiscardMsg
 	PRINT 	CantPutDownStr
-	BRA.w	ItemMenu_ItemUsed_Return_Loop12
-ItemMenu_ItemUsed_Return_Loop11:
+	BRA.w	ItemMenu_ItemUsed_Return_DiscardDone
+ItemMenu_ItemUsed_Return_BuildDiscardMsg:
 	JSR	CopyPlayerNameToTextBuffer
 	LEA	DiscardsTheStr, A0
 	JSR	CopyStringUntilFF
@@ -2126,20 +2125,20 @@ ItemMenu_ItemUsed_Return_Loop11:
 	MOVE.w	Selected_item_index.w, D0
 	MOVE.w	#9, D2
 	JSR	RemoveItemFromArray
-ItemMenu_ItemUsed_Return_Loop12:
+ItemMenu_ItemUsed_Return_DiscardDone:
 	ADDQ.w	#1, Item_menu_state.w
 	RTS
 
-ItemMenu_ItemUsed_Return_Loop9:
+ItemMenu_ItemUsed_Return_HandleYesNo:
 	MOVE.w	Dialog_selection.w, Menu_cursor_index.w
 	MOVE.w	#VDP_ATTR_SCRIPT, Script_tile_attrs.w
 	JSR	HandleMenuInput
 	MOVE.w	Menu_cursor_index.w, Dialog_selection.w
 	RTS
 
-ItemMenu_ItemUsed_Return_Loop4:
+ItemMenu_ItemUsed_Return_ScriptWait:
 	TST.b	Script_text_complete.w
-	BEQ.w	ItemMenu_ScriptDone2_Loop3
+	BEQ.w	ItemMenu_ScriptDone2_ProcessText
 	CheckButton BUTTON_BIT_B
 	BNE.b	ItemMenu_ScriptDone2
 	CheckButton BUTTON_BIT_C
@@ -2154,13 +2153,13 @@ ItemMenu_ScriptDone2:
 	MOVE.w	#ITEM_MENU_STATE_SCRIPT_DONE, Item_menu_state.w
 	RTS
 
-ItemMenu_ScriptDone2_Loop3:
+ItemMenu_ScriptDone2_ProcessText:
 	JSR	ProcessScriptText
 	RTS
 
 ItemMenu_ScriptDone2_Loop:
 	TST.b	Script_text_complete.w
-	BEQ.b	ItemMenu_ScriptDone2_Loop4
+	BEQ.b	ItemMenu_ScriptDone2_WaitScroll
 	JSR	SaveCenterDialogAreaToBuffer
 	JSR	DrawItemListBorders
 	JSR	DrawItemListNames
@@ -2170,13 +2169,13 @@ ItemMenu_ScriptDone2_Loop:
 	JSR	InitMenuCursorForList
 	RTS
 
-ItemMenu_ScriptDone2_Loop4:
+ItemMenu_ScriptDone2_WaitScroll:
 	JSR	ProcessScriptText
 	RTS
 
-ItemMenu_ScriptDone2_Loop2:
+ItemMenu_ScriptDone2_UseWait:
 	CheckButton BUTTON_BIT_B
-	BEQ.b	ItemMenu_ScriptDone2_Loop5
+	BEQ.b	ItemMenu_ScriptDone2_CheckConfirm
 	PlaySound	SOUND_MENU_CANCEL
 	JSR	DrawCenterMenuWindow
 	JSR	DrawStatusHudWindow
@@ -2184,9 +2183,9 @@ ItemMenu_ScriptDone2_Loop2:
 	JSR	InitItemMenuCursor
 	RTS
 
-ItemMenu_ScriptDone2_Loop5:
+ItemMenu_ScriptDone2_CheckConfirm:
 	CheckButton BUTTON_BIT_C
-	BEQ.w	UseItemDescription_Build_Loop3
+	BEQ.w	UseItemDescription_Build_HandleCursor
 	MOVE.w	Selected_item_index.w, Menu_cursor_index.w
 	JSR	DrawMenuCursor
 	PlaySound	SOUND_MENU_SELECT
@@ -2227,7 +2226,7 @@ UseItemDescription_Build:
 	ADDQ.w	#1, Item_menu_state.w
 	RTS
 
-UseItemDescription_Build_Loop3:
+UseItemDescription_Build_HandleCursor:
 	MOVE.w	Selected_item_index.w, Menu_cursor_index.w
 	MOVE.w	#VDP_ATTR_SCRIPT, Script_tile_attrs.w
 	JSR	HandleMenuInput
@@ -2236,20 +2235,20 @@ UseItemDescription_Build_Loop3:
 
 UseItemDescription_Build_Loop:
 	TST.b	Script_has_continuation.w
-	BNE.w	UseItemDescription_Build_Loop4
+	BNE.w	UseItemDescription_Build_WaitContinue
 	TST.b	Script_text_complete.w
-	BEQ.b	UseItemDescription_Build_Loop5
+	BEQ.b	UseItemDescription_Build_ProcessText
 	JSR	ResetScriptOutputVars
-	BRA.w	UseItemDescription_Build_Loop6
-UseItemDescription_Build_Loop5:
+	BRA.w	UseItemDescription_Build_DispatchEffect
+UseItemDescription_Build_ProcessText:
 	JSR	ProcessScriptText
 	RTS
 
-UseItemDescription_Build_Loop4:
+UseItemDescription_Build_WaitContinue:
 	CheckButton BUTTON_BIT_C
-	BEQ.b	UseItemDescription_Build_Loop7
+	BEQ.b	UseItemDescription_Build_Return
 	JSR	ResetScriptAndInitDialogue
-UseItemDescription_Build_Loop6:
+UseItemDescription_Build_DispatchEffect:
 	ADDQ.w	#1, Item_menu_state.w
 	LEA	Possessed_items_list.w, A0
 	MOVE.w	Selected_item_index.w, D0
@@ -2260,14 +2259,14 @@ UseItemDescription_Build_Loop6:
 	ADD.w	D0, D0
 	ADD.w	D0, D0
 	JSR	(A0,D0.w)
-UseItemDescription_Build_Loop7:
+UseItemDescription_Build_Return:
 	RTS
 
-UseItemDescription_Build_Loop2:
+UseItemDescription_Build_CheckContinue:
 	TST.b	Script_text_complete.w
-	BEQ.w	ItemMenu_ScriptDoneCheckCave_Loop3
+	BEQ.w	ItemMenu_ScriptDoneCheckCave_ProcessText
 	TST.b	Script_has_continuation.w
-	BNE.w	ItemMenu_ScriptDoneCheckCave_Loop4
+	BNE.w	ItemMenu_ScriptDoneCheckCave_WaitContinue
 	CheckButton BUTTON_BIT_C
 	BNE.b	ItemMenu_ScriptDoneCheckCave
 	CheckButton BUTTON_BIT_B
@@ -2277,40 +2276,40 @@ UseItemDescription_Build_Loop2:
 ItemMenu_ScriptDoneCheckCave:
 	JSR	DrawStatusHudWindow
 	TST.b	Player_in_first_person_mode.w
-	BEQ.b	ItemMenu_ScriptDoneCheckCave_Loop5
+	BEQ.b	ItemMenu_ScriptDoneCheckCave_DrawWindow
 	TST.b	Banshee_powder_active.w
-	BEQ.b	ItemMenu_ScriptDoneCheckCave_Loop6
+	BEQ.b	ItemMenu_ScriptDoneCheckCave_CheckPoison
 	CLR.w	Player_hp.w
-ItemMenu_ScriptDoneCheckCave_Loop6:
+ItemMenu_ScriptDoneCheckCave_CheckPoison:
 	JSR	DisplayPlayerHpMp
-ItemMenu_ScriptDoneCheckCave_Loop5:
+ItemMenu_ScriptDoneCheckCave_DrawWindow:
 	MOVE.w	#WINDOW_DRAW_ITEM_LIST_SHORT, Window_draw_type.w
 	CLR.w	Window_text_row.w
 	MOVE.b	#FLAG_TRUE, Window_tilemap_row_draw_pending.w
 	MOVE.w	#ITEM_MENU_STATE_SCRIPT_DONE, Item_menu_state.w
 	RTS
 
-ItemMenu_ScriptDoneCheckCave_Loop3:
+ItemMenu_ScriptDoneCheckCave_ProcessText:
 	JSR	ProcessScriptText
 	RTS
 
-ItemMenu_ScriptDoneCheckCave_Loop4:
+ItemMenu_ScriptDoneCheckCave_WaitContinue:
 	CheckButton BUTTON_BIT_C
-	BEQ.b	ItemMenu_ScriptDoneCheckCave_Loop7
+	BEQ.b	ItemMenu_ScriptDoneCheckCave_Return
 	JSR	InitDialogueWindow
-ItemMenu_ScriptDoneCheckCave_Loop7:
+ItemMenu_ScriptDoneCheckCave_Return:
 	RTS
 
 ItemMenu_ScriptDoneCheckCave_Loop:
 	TST.b	Fade_in_lines_mask.w
-	BNE.b	ItemMenu_ScriptDoneCheckCave_Loop8
+	BNE.b	ItemMenu_ScriptDoneCheckCave_WaitFade
 	PRINT 	AreaBrightStr
 	JSR	UpdateAreaVisibility
 	MOVE.w	#ITEM_MENU_STATE_USE_CAVE, Item_menu_state.w
-ItemMenu_ScriptDoneCheckCave_Loop8:
+ItemMenu_ScriptDoneCheckCave_WaitFade:
 	RTS
 
-ItemMenu_ScriptDoneCheckCave_Loop2:
+ItemMenu_ScriptDoneCheckCave_WaitConfirm:
 	CheckButton BUTTON_BIT_C
 	BNE.b	UseExtrios_Warp
 	CheckButton BUTTON_BIT_B
@@ -2321,13 +2320,13 @@ UseExtrios_Warp:
 	LEA	TownOverworldCoords, A0
 	MOVE.w	Current_town.w, D0
 	CMPI.w	#TOWN_STOW1, D0
-	BLE.b	UseExtrios_Warp_Loop2
+	BLE.b	UseExtrios_Warp_ApplyCoords
 	CMPI.w	#TOWN_HASTINGS2, D0
-	BLE.b	UseExtrios_Warp_Loop3
+	BLE.b	UseExtrios_Warp_AdjustTown
 	SUBQ.w	#1, D0	
-UseExtrios_Warp_Loop3:
+UseExtrios_Warp_AdjustTown:
 	SUBQ.w	#1, D0
-UseExtrios_Warp_Loop2:
+UseExtrios_Warp_ApplyCoords:
 	ANDI.w	#$F, D0
 	ASL.w	#3, D0
 	MOVE.w	(A0,D0.w), Player_position_x_outside_town.w
@@ -2411,30 +2410,30 @@ UseItemMap:
 
 UseRubyBrooch:
 	TST.b	Is_in_cave.w
-	BNE.b	UseRubyBrooch_Loop
+	BNE.b	UseRubyBrooch_NotInTown
 	TST.b	Player_in_first_person_mode.w
-	BNE.b	UseRubyBrooch_Loop2
-UseRubyBrooch_Loop:
+	BNE.b	UseRubyBrooch_ApplyEffect
+UseRubyBrooch_NotInTown:
 	PRINT 	NotWorkHereStr	
-	BRA.b	UseRubyBrooch_Loop3	
-UseRubyBrooch_Loop2:
+	BRA.b	UseRubyBrooch_Return	
+UseRubyBrooch_ApplyEffect:
 	CLR.b	Steps_since_last_encounter.w
 	MOVE.w	#ENCOUNTER_RATE_BROOCH, Encounter_rate.w
 	PRINT 	MonstersHardTimeStr
 	BSR.w	RemoveSelectedItemFromList
-UseRubyBrooch_Loop3:
+UseRubyBrooch_Return:
 	RTS
 
 UseBansheePowder:
 	TST.b	Player_in_first_person_mode.w
-	BNE.b	UseBansheePowder_Loop
+	BNE.b	UseBansheePowder_ApplyEffect
 	PRINT 	TownUseWarningStr	
-	BRA.b	UseBansheePowder_Loop2	
-UseBansheePowder_Loop:
+	BRA.b	UseBansheePowder_Return	
+UseBansheePowder_ApplyEffect:
 	MOVE.b	#FLAG_TRUE, Banshee_powder_active.w
 	PRINT 	PowderSpillsStr
 	BSR.w	RemoveSelectedItemFromList
-UseBansheePowder_Loop2:
+UseBansheePowder_Return:
 	RTS
 
 UseKulmsVase:
@@ -2473,19 +2472,19 @@ UseBookOfKiel_Loop:
 UseDanegeldWater:
 	ADDQ.w	#8, Player_mmp.w	
 	CMPI.w	#MAX_PLAYER_MMP, Player_mmp.w	
-	BLE.b	UseDanegeldWater_Loop	
+	BLE.b	UseDanegeldWater_PrintSweet	
 	MOVE.w	#MAX_PLAYER_MMP, Player_mmp.w	
-UseDanegeldWater_Loop:
+UseDanegeldWater_PrintSweet:
 	PRINT 	SweetTasteStr	
 	JSR	GetRandomNumber	
 	ANDI.w	#3, D0	
-	BNE.b	UseDanegeldWater_Loop2	
+	BNE.b	UseDanegeldWater_RemoveItem	
 	SUBQ.w	#8, Player_mhp.w	
-	BGE.b	UseDanegeldWater_Loop3	
+	BGE.b	UseDanegeldWater_PrintBitter	
 	CLR.w	Player_mhp.w	
-UseDanegeldWater_Loop3:
+UseDanegeldWater_PrintBitter:
 	PRINT 	BitterTasteStr	
-UseDanegeldWater_Loop2:
+UseDanegeldWater_RemoveItem:
 	BSR.w	RemoveSelectedItemFromList	
 	PlaySound	SOUND_ITEM_PICKUP	
 	RTS
@@ -2530,7 +2529,7 @@ UseTopazJewel:
 	ANDI.w	#$000F, D0	
 	ADD.w	D0, D1	
 	ADD.w	D1, Player_mp.w	
-	BRA.w	UseAgateJewel_Loop	
+	BRA.w	UseAgateJewel_PrintRestored	
 
 UseAgateJewel:
 	MOVE.w	#10, D1
@@ -2538,32 +2537,33 @@ UseAgateJewel:
 	ANDI.w	#7, D0
 	ADD.w	D0, D1
 	ADD.w	D1, Player_mp.w
-UseAgateJewel_Loop:
+UseAgateJewel_PrintRestored:
 	PRINT 	MagicRestoredStr
 	MOVE.w	Player_mp.w, D0
 	CMP.w	Player_mmp.w, D0
-	BLE.b	UseAgateJewel_Loop2
+	BLE.b	UseAgateJewel_RemoveItem
 	MOVE.w	Player_mmp.w, Player_mp.w	
+UseAgateJewel_CapMp:
 	PRINT 	AllMagicRestoredStr	
-UseAgateJewel_Loop2:
+UseAgateJewel_RemoveItem:
 	BSR.w	RemoveSelectedItemFromList
 	PlaySound	SOUND_ITEM_PICKUP
 	RTS
 
 UseMedicine:
 	ADDI.w	#100, Player_hp.w	
-	BRA.w	UseHerbs_Loop	
+	BRA.w	UseHerbs_PrintPartial	
 
 UseHerbs:
 	ADDI.w	#40, Player_hp.w
-UseHerbs_Loop:
+UseHerbs_PrintPartial:
 	PRINT 	PartialHitPointsStr
 	MOVE.w	Player_hp.w, D0
 	CMP.w	Player_mhp.w, D0
-	BLE.b	UseHerbs_Loop2
+	BLE.b	UseHerbs_RemoveItem
 	MOVE.w	Player_mhp.w, Player_hp.w
 	PRINT 	AllHitPointsStr
-UseHerbs_Loop2:
+UseHerbs_RemoveItem:
 	BSR.w	RemoveSelectedItemFromList
 	PlaySound	SOUND_ITEM_PICKUP
 	RTS
@@ -2621,18 +2621,18 @@ UseGnomeStone_Loop:
 
 UsePoisonBalm:
 	TST.w	Player_poisoned.w
-	BEQ.b	UsePoisonBalm_Loop
+	BEQ.b	UsePoisonBalm_NotPoisoned
 	TST.b	Player_greatly_poisoned.w
-	BNE.b	UsePoisonBalm_Loop2
+	BNE.b	UsePoisonBalm_TooStrong
 	CLR.b	Poison_notified.w
 	CLR.w	Player_poisoned.w
 	PRINT 	PoisonPurgedStr
 	PlaySound	SOUND_ITEM_PICKUP
 	BRA.b	UseHerbs_Done
-UsePoisonBalm_Loop:
+UsePoisonBalm_NotPoisoned:
 	PRINT 	NotPoisonousStr
 	BRA.b	UseHerbs_Done
-UsePoisonBalm_Loop2:
+UsePoisonBalm_TooStrong:
 	PRINT 	PoisonTooStrongStr	
 UseHerbs_Done:
 	BSR.w	RemoveSelectedItemFromList
