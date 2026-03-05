@@ -1,0 +1,3130 @@
+{
+  "_meta": {
+    "generated_by": "tools/extract_game_data.js",
+    "source": "src/battledata.asm",
+    "description": "Enemy stats, encounter groups, and zone tables",
+    "enemy_count": 85
+  },
+  "enemies": [
+    {
+      "gfx_index": 0,
+      "appearance_label": "EnemyAppearance_GreenSlime",
+      "data_label": "EnemyData_GreenSlime",
+      "sprite_set_label": "EnemySpriteSet_C",
+      "stats": {
+        "name": "GreenSlime",
+        "ai_fn": "InitEnemy_Bouncing",
+        "tile_id": 90,
+        "reward_type": 0,
+        "reward_value": 0,
+        "extra_obj_slots": 0,
+        "max_spawn": 7,
+        "hp": 28,
+        "damage_per_hit": 4,
+        "xp_reward": 1,
+        "kim_reward": 2,
+        "speed": 336,
+        "sprite_frame": 0,
+        "behavior_flag": 2
+      }
+    },
+    {
+      "gfx_index": 1,
+      "appearance_label": "EnemyAppearance_BlueJelly",
+      "data_label": "EnemyData_BlueJelly",
+      "sprite_set_label": "EnemySpriteSet_C",
+      "stats": {
+        "name": "BlueJelly",
+        "ai_fn": "InitEnemy_Bouncing",
+        "tile_id": 105,
+        "reward_type": 0,
+        "reward_value": 0,
+        "extra_obj_slots": 0,
+        "max_spawn": 7,
+        "hp": 28,
+        "damage_per_hit": 5,
+        "xp_reward": 2,
+        "kim_reward": 2,
+        "speed": 368,
+        "sprite_frame": 0,
+        "behavior_flag": 2
+      }
+    },
+    {
+      "gfx_index": 2,
+      "appearance_label": "EnemyAppearance_RedGlunk",
+      "data_label": "EnemyData_RedGlunk",
+      "sprite_set_label": "EnemySpriteSet_C",
+      "stats": {
+        "name": "RedGlunk",
+        "ai_fn": "InitEnemy_Bouncing",
+        "tile_id": 106,
+        "reward_type": 0,
+        "reward_value": 31,
+        "extra_obj_slots": 0,
+        "max_spawn": 7,
+        "hp": 100,
+        "damage_per_hit": 30,
+        "xp_reward": 101,
+        "kim_reward": 48,
+        "speed": 576,
+        "sprite_frame": 0,
+        "behavior_flag": 2
+      }
+    },
+    {
+      "gfx_index": 3,
+      "appearance_label": "EnemyAppearance_GoldPudding",
+      "data_label": "EnemyData_GoldPudding",
+      "sprite_set_label": "EnemySpriteSet_C",
+      "stats": {
+        "name": "GoldPudding",
+        "ai_fn": "InitEnemy_Bouncing",
+        "tile_id": 107,
+        "reward_type": 0,
+        "reward_value": 38,
+        "extra_obj_slots": 0,
+        "max_spawn": 7,
+        "hp": 8000,
+        "damage_per_hit": 110,
+        "xp_reward": 918,
+        "kim_reward": 256,
+        "speed": 1360,
+        "sprite_frame": 0,
+        "behavior_flag": 14
+      }
+    },
+    {
+      "gfx_index": 4,
+      "appearance_label": "EnemyAppearance_BlackGlop",
+      "data_label": "EnemyData_BlackGlop",
+      "sprite_set_label": "EnemySpriteSet_C",
+      "stats": {
+        "name": "BlackGlop",
+        "ai_fn": "InitEnemy_Bouncing",
+        "tile_id": 172,
+        "reward_type": 0,
+        "reward_value": 33,
+        "extra_obj_slots": 0,
+        "max_spawn": 7,
+        "hp": 250,
+        "damage_per_hit": 82,
+        "xp_reward": 384,
+        "kim_reward": 112,
+        "speed": 640,
+        "sprite_frame": 0,
+        "behavior_flag": 2
+      }
+    },
+    {
+      "gfx_index": 5,
+      "appearance_label": "EnemyAppearance_GrayOoze",
+      "data_label": "EnemyData_GrayOoze",
+      "sprite_set_label": "EnemySpriteSet_C",
+      "stats": {
+        "name": "GrayOoze",
+        "ai_fn": "InitEnemy_Bouncing",
+        "tile_id": 173,
+        "reward_type": 0,
+        "reward_value": 3,
+        "extra_obj_slots": 0,
+        "max_spawn": 7,
+        "hp": 89,
+        "damage_per_hit": 23,
+        "xp_reward": 57,
+        "kim_reward": 16,
+        "speed": 528,
+        "sprite_frame": 0,
+        "behavior_flag": 2
+      }
+    },
+    {
+      "gfx_index": 6,
+      "appearance_label": "EnemyAppearance_Skeleton",
+      "data_label": "EnemyData_Skeleton",
+      "sprite_set_label": "EnemySpriteSet_A",
+      "stats": {
+        "name": "Skeleton",
+        "ai_fn": "InitEnemy_StalkPause",
+        "tile_id": 78,
+        "reward_type": 0,
+        "reward_value": 1,
+        "extra_obj_slots": 0,
+        "max_spawn": 7,
+        "hp": 150,
+        "damage_per_hit": 6,
+        "xp_reward": 8,
+        "kim_reward": 22,
+        "speed": 384,
+        "sprite_frame": 0,
+        "behavior_flag": 2
+      }
+    },
+    {
+      "gfx_index": 7,
+      "appearance_label": "EnemyAppearance_Zombie",
+      "data_label": "EnemyData_Zombie",
+      "sprite_set_label": "EnemySpriteSet_A",
+      "stats": {
+        "name": "Zombie",
+        "ai_fn": "InitEnemy_StalkPause",
+        "tile_id": 123,
+        "reward_type": 1,
+        "reward_value": 1550,
+        "extra_obj_slots": 0,
+        "max_spawn": 7,
+        "hp": 1200,
+        "damage_per_hit": 60,
+        "xp_reward": 528,
+        "kim_reward": 1808,
+        "speed": 512,
+        "sprite_frame": 0,
+        "behavior_flag": 2
+      }
+    },
+    {
+      "gfx_index": 8,
+      "appearance_label": "EnemyAppearance_Ghoul",
+      "data_label": "EnemyData_Ghoul",
+      "sprite_set_label": "EnemySpriteSet_A",
+      "stats": {
+        "name": "Ghoul",
+        "ai_fn": "InitEnemy_StalkPause",
+        "tile_id": 124,
+        "reward_type": 1,
+        "reward_value": 4150,
+        "extra_obj_slots": 0,
+        "max_spawn": 7,
+        "hp": 1500,
+        "damage_per_hit": 78,
+        "xp_reward": 631,
+        "kim_reward": 277,
+        "speed": 608,
+        "sprite_frame": 0,
+        "behavior_flag": 2
+      }
+    },
+    {
+      "gfx_index": 9,
+      "appearance_label": "EnemyAppearance_Cryptmaster",
+      "data_label": "EnemyData_Cryptmaster",
+      "sprite_set_label": "EnemySpriteSet_A",
+      "stats": {
+        "name": "Cryptmaster",
+        "ai_fn": "InitEnemy_StalkPause",
+        "tile_id": 125,
+        "reward_type": 1,
+        "reward_value": 1040,
+        "extra_obj_slots": 0,
+        "max_spawn": 7,
+        "hp": 2200,
+        "damage_per_hit": 99,
+        "xp_reward": 1089,
+        "kim_reward": 353,
+        "speed": 300,
+        "sprite_frame": 0,
+        "behavior_flag": 2
+      }
+    },
+    {
+      "gfx_index": 10,
+      "appearance_label": "EnemyAppearance_DogKobold",
+      "data_label": "EnemyData_DogKobold",
+      "sprite_set_label": "EnemySpriteSet_B",
+      "stats": {
+        "name": "DogKobold",
+        "ai_fn": "InitEnemy_StandardMelee",
+        "tile_id": 77,
+        "reward_type": 1,
+        "reward_value": 4136,
+        "extra_obj_slots": 0,
+        "max_spawn": 7,
+        "hp": 88,
+        "damage_per_hit": 6,
+        "xp_reward": 4,
+        "kim_reward": 5,
+        "speed": 336,
+        "sprite_frame": 0,
+        "behavior_flag": 2
+      }
+    },
+    {
+      "gfx_index": 11,
+      "appearance_label": "EnemyAppearance_CoyoteKobold",
+      "data_label": "EnemyData_CoyoteKobold",
+      "sprite_set_label": "EnemySpriteSet_B",
+      "stats": {
+        "name": "CoyoteKobold",
+        "ai_fn": "InitEnemy_StandardMelee",
+        "tile_id": 108,
+        "reward_type": 1,
+        "reward_value": 2070,
+        "extra_obj_slots": 0,
+        "max_spawn": 7,
+        "hp": 399,
+        "damage_per_hit": 30,
+        "xp_reward": 66,
+        "kim_reward": 32,
+        "speed": 357,
+        "sprite_frame": 0,
+        "behavior_flag": 2
+      }
+    },
+    {
+      "gfx_index": 12,
+      "appearance_label": "EnemyAppearance_HyenaKobold",
+      "data_label": "EnemyData_HyenaKobold",
+      "sprite_set_label": "EnemySpriteSet_B",
+      "stats": {
+        "name": "HyenaKobold",
+        "ai_fn": "InitEnemy_StandardMelee",
+        "tile_id": 109,
+        "reward_type": 1,
+        "reward_value": 4138,
+        "extra_obj_slots": 0,
+        "max_spawn": 7,
+        "hp": 600,
+        "damage_per_hit": 54,
+        "xp_reward": 518,
+        "kim_reward": 104,
+        "speed": 384,
+        "sprite_frame": 0,
+        "behavior_flag": 2
+      }
+    },
+    {
+      "gfx_index": 13,
+      "appearance_label": "EnemyAppearance_WolfKobold",
+      "data_label": "EnemyData_WolfKobold",
+      "sprite_set_label": "EnemySpriteSet_B",
+      "stats": {
+        "name": "WolfKobold",
+        "ai_fn": "InitEnemy_StandardMelee",
+        "tile_id": 110,
+        "reward_type": 1,
+        "reward_value": 4146,
+        "extra_obj_slots": 0,
+        "max_spawn": 7,
+        "hp": 1530,
+        "damage_per_hit": 98,
+        "xp_reward": 644,
+        "kim_reward": 265,
+        "speed": 405,
+        "sprite_frame": 0,
+        "behavior_flag": 2
+      }
+    },
+    {
+      "gfx_index": 14,
+      "appearance_label": "EnemyAppearance_FruitBat",
+      "data_label": "EnemyData_FruitBat",
+      "sprite_set_label": "EnemySpriteSet_D",
+      "stats": {
+        "name": "FruitBat",
+        "ai_fn": "InitEnemy_FleeChase",
+        "tile_id": 91,
+        "reward_type": 65535,
+        "reward_value": 0,
+        "extra_obj_slots": 0,
+        "max_spawn": 7,
+        "hp": 100,
+        "damage_per_hit": 12,
+        "xp_reward": 16,
+        "kim_reward": 9,
+        "speed": 512,
+        "sprite_frame": 0,
+        "behavior_flag": 2
+      }
+    },
+    {
+      "gfx_index": 15,
+      "appearance_label": "EnemyAppearance_CaveBat",
+      "data_label": "EnemyData_CaveBat",
+      "sprite_set_label": "EnemySpriteSet_D",
+      "stats": {
+        "name": "CaveBat",
+        "ai_fn": "InitEnemy_FleeChase",
+        "tile_id": 111,
+        "reward_type": 0,
+        "reward_value": 0,
+        "extra_obj_slots": 0,
+        "max_spawn": 7,
+        "hp": 170,
+        "damage_per_hit": 39,
+        "xp_reward": 119,
+        "kim_reward": 39,
+        "speed": 544,
+        "sprite_frame": 0,
+        "behavior_flag": 2
+      }
+    },
+    {
+      "gfx_index": 16,
+      "appearance_label": "EnemyAppearance_KillerBat",
+      "data_label": "EnemyData_KillerBat",
+      "sprite_set_label": "EnemySpriteSet_D",
+      "stats": {
+        "name": "KillerBat",
+        "ai_fn": "InitEnemy_FleeChase",
+        "tile_id": 112,
+        "reward_type": 0,
+        "reward_value": 27,
+        "extra_obj_slots": 0,
+        "max_spawn": 7,
+        "hp": 740,
+        "damage_per_hit": 70,
+        "xp_reward": 530,
+        "kim_reward": 305,
+        "speed": 608,
+        "sprite_frame": 0,
+        "behavior_flag": 2
+      }
+    },
+    {
+      "gfx_index": 17,
+      "appearance_label": "EnemyAppearance_VampireBat",
+      "data_label": "EnemyData_VampireBat",
+      "sprite_set_label": "EnemySpriteSet_D",
+      "stats": {
+        "name": "VampireBat",
+        "ai_fn": "InitEnemy_FleeChase",
+        "tile_id": 113,
+        "reward_type": 0,
+        "reward_value": 36,
+        "extra_obj_slots": 0,
+        "max_spawn": 7,
+        "hp": 1100,
+        "damage_per_hit": 120,
+        "xp_reward": 790,
+        "kim_reward": 384,
+        "speed": 768,
+        "sprite_frame": 0,
+        "behavior_flag": 2
+      }
+    },
+    {
+      "gfx_index": 18,
+      "appearance_label": "EnemyAppearance_63",
+      "data_label": "EnemyData_Eyeball",
+      "sprite_set_label": "EnemySpriteSet_H",
+      "stats": {
+        "name": "Eyeball",
+        "ai_fn": "InitEnemy_ProjectileFire",
+        "tile_id": 99,
+        "reward_type": 65535,
+        "reward_value": 0,
+        "extra_obj_slots": 0,
+        "max_spawn": 7,
+        "hp": 58,
+        "damage_per_hit": 29,
+        "xp_reward": 23,
+        "kim_reward": 17,
+        "speed": 400,
+        "sprite_frame": 0,
+        "behavior_flag": 10
+      }
+    },
+    {
+      "gfx_index": 19,
+      "appearance_label": "EnemyAppearance_A4",
+      "data_label": "EnemyData_RedEye",
+      "sprite_set_label": "EnemySpriteSet_H",
+      "stats": {
+        "name": "RedEye",
+        "ai_fn": "InitEnemy_ProjectileFire",
+        "tile_id": 164,
+        "reward_type": 0,
+        "reward_value": 27,
+        "extra_obj_slots": 0,
+        "max_spawn": 7,
+        "hp": 210,
+        "damage_per_hit": 50,
+        "xp_reward": 338,
+        "kim_reward": 35,
+        "speed": 560,
+        "sprite_frame": 0,
+        "behavior_flag": 10
+      }
+    },
+    {
+      "gfx_index": 20,
+      "appearance_label": "EnemyAppearance_A5",
+      "data_label": "EnemyData_ZapEye",
+      "sprite_set_label": "EnemySpriteSet_H",
+      "stats": {
+        "name": "ZapEye",
+        "ai_fn": "InitEnemy_ProjectileFire",
+        "tile_id": 165,
+        "reward_type": 0,
+        "reward_value": 28,
+        "extra_obj_slots": 0,
+        "max_spawn": 7,
+        "hp": 490,
+        "damage_per_hit": 60,
+        "xp_reward": 585,
+        "kim_reward": 104,
+        "speed": 592,
+        "sprite_frame": 0,
+        "behavior_flag": 10
+      }
+    },
+    {
+      "gfx_index": 21,
+      "appearance_label": "EnemyAppearance_A6",
+      "data_label": "EnemyData_KillerEye",
+      "sprite_set_label": "EnemySpriteSet_H",
+      "stats": {
+        "name": "KillerEye",
+        "ai_fn": "InitEnemy_ProjectileFire",
+        "tile_id": 166,
+        "reward_type": 0,
+        "reward_value": 41,
+        "extra_obj_slots": 0,
+        "max_spawn": 7,
+        "hp": 1230,
+        "damage_per_hit": 94,
+        "xp_reward": 809,
+        "kim_reward": 583,
+        "speed": 768,
+        "sprite_frame": 0,
+        "behavior_flag": 10
+      }
+    },
+    {
+      "gfx_index": 22,
+      "appearance_label": "EnemyAppearance_Needler",
+      "data_label": "EnemyData_Needler",
+      "sprite_set_label": "EnemySpriteSet_E",
+      "stats": {
+        "name": "Needler",
+        "ai_fn": "InitEnemy_ProximityChase",
+        "tile_id": 92,
+        "reward_type": 65535,
+        "reward_value": 0,
+        "extra_obj_slots": 0,
+        "max_spawn": 7,
+        "hp": 100,
+        "damage_per_hit": 36,
+        "xp_reward": 49,
+        "kim_reward": 21,
+        "speed": 512,
+        "sprite_frame": 0,
+        "behavior_flag": 6
+      }
+    },
+    {
+      "gfx_index": 23,
+      "appearance_label": "EnemyAppearance_Stinger",
+      "data_label": "EnemyData_Stinger",
+      "sprite_set_label": "EnemySpriteSet_E",
+      "stats": {
+        "name": "Stinger",
+        "ai_fn": "InitEnemy_ProximityChase",
+        "tile_id": 158,
+        "reward_type": 0,
+        "reward_value": 27,
+        "extra_obj_slots": 0,
+        "max_spawn": 7,
+        "hp": 450,
+        "damage_per_hit": 109,
+        "xp_reward": 579,
+        "kim_reward": 263,
+        "speed": 544,
+        "sprite_frame": 0,
+        "behavior_flag": 6
+      }
+    },
+    {
+      "gfx_index": 24,
+      "appearance_label": "EnemyAppearance_Injector",
+      "data_label": "EnemyData_Injector",
+      "sprite_set_label": "EnemySpriteSet_E",
+      "stats": {
+        "name": "Injector",
+        "ai_fn": "InitEnemy_ProximityChase",
+        "tile_id": 159,
+        "reward_type": 0,
+        "reward_value": 39,
+        "extra_obj_slots": 0,
+        "max_spawn": 7,
+        "hp": 630,
+        "damage_per_hit": 244,
+        "xp_reward": 1058,
+        "kim_reward": 340,
+        "speed": 576,
+        "sprite_frame": 0,
+        "behavior_flag": 6
+      }
+    },
+    {
+      "gfx_index": 25,
+      "appearance_label": "EnemyAppearance_Poisoner",
+      "data_label": "EnemyData_Poisoner",
+      "sprite_set_label": "EnemySpriteSet_E",
+      "stats": {
+        "name": "Poisoner",
+        "ai_fn": "InitEnemy_ProximityChase",
+        "tile_id": 160,
+        "reward_type": 0,
+        "reward_value": 32,
+        "extra_obj_slots": 0,
+        "max_spawn": 7,
+        "hp": 790,
+        "damage_per_hit": 180,
+        "xp_reward": 1109,
+        "kim_reward": 630,
+        "speed": 640,
+        "sprite_frame": 0,
+        "behavior_flag": 6
+      }
+    },
+    {
+      "gfx_index": 26,
+      "appearance_label": "EnemyAppearance_Basher",
+      "data_label": "EnemyData_Basher",
+      "sprite_set_label": "EnemySpriteSet_F",
+      "stats": {
+        "name": "Basher",
+        "ai_fn": "InitEnemy_StandardMeleeAlt",
+        "tile_id": 93,
+        "reward_type": 65535,
+        "reward_value": 0,
+        "extra_obj_slots": 0,
+        "max_spawn": 7,
+        "hp": 370,
+        "damage_per_hit": 66,
+        "xp_reward": 133,
+        "kim_reward": 64,
+        "speed": 384,
+        "sprite_frame": 0,
+        "behavior_flag": 2
+      }
+    },
+    {
+      "gfx_index": 27,
+      "appearance_label": "EnemyAppearance_Smasher",
+      "data_label": "EnemyData_Smasher",
+      "sprite_set_label": "EnemySpriteSet_F",
+      "stats": {
+        "name": "Smasher",
+        "ai_fn": "InitEnemy_StandardMeleeAlt",
+        "tile_id": 161,
+        "reward_type": 1,
+        "reward_value": 1026,
+        "extra_obj_slots": 0,
+        "max_spawn": 7,
+        "hp": 840,
+        "damage_per_hit": 82,
+        "xp_reward": 371,
+        "kim_reward": 101,
+        "speed": 400,
+        "sprite_frame": 0,
+        "behavior_flag": 2
+      }
+    },
+    {
+      "gfx_index": 28,
+      "appearance_label": "EnemyAppearance_Crusher",
+      "data_label": "EnemyData_Crusher",
+      "sprite_set_label": "EnemySpriteSet_F",
+      "stats": {
+        "name": "Crusher",
+        "ai_fn": "InitEnemy_StandardMeleeAlt",
+        "tile_id": 162,
+        "reward_type": 0,
+        "reward_value": 3,
+        "extra_obj_slots": 0,
+        "max_spawn": 7,
+        "hp": 900,
+        "damage_per_hit": 82,
+        "xp_reward": 564,
+        "kim_reward": 261,
+        "speed": 512,
+        "sprite_frame": 0,
+        "behavior_flag": 2
+      }
+    },
+    {
+      "gfx_index": 29,
+      "appearance_label": "EnemyAppearance_Obliterator",
+      "data_label": "EnemyData_Obliterator",
+      "sprite_set_label": "EnemySpriteSet_F",
+      "stats": {
+        "name": "Obliterator",
+        "ai_fn": "InitEnemy_StandardMeleeAlt",
+        "tile_id": 163,
+        "reward_type": 1,
+        "reward_value": 2073,
+        "extra_obj_slots": 0,
+        "max_spawn": 7,
+        "hp": 1480,
+        "damage_per_hit": 173,
+        "xp_reward": 1079,
+        "kim_reward": 864,
+        "speed": 528,
+        "sprite_frame": 0,
+        "behavior_flag": 6
+      }
+    },
+    {
+      "gfx_index": 30,
+      "appearance_label": "EnemyAppearance_64",
+      "data_label": "EnemyData_Puffball",
+      "sprite_set_label": "EnemySpriteSet_I",
+      "stats": {
+        "name": "Puffball",
+        "ai_fn": "InitEnemy_StalkPauseAlt",
+        "tile_id": 100,
+        "reward_type": 0,
+        "reward_value": 27,
+        "extra_obj_slots": 0,
+        "max_spawn": 7,
+        "hp": 541,
+        "damage_per_hit": 38,
+        "xp_reward": 548,
+        "kim_reward": 55,
+        "speed": 128,
+        "sprite_frame": 1,
+        "behavior_flag": 2
+      }
+    },
+    {
+      "gfx_index": 31,
+      "appearance_label": "EnemyAppearance_B9",
+      "data_label": "EnemyData_Toadstool",
+      "sprite_set_label": "EnemySpriteSet_I",
+      "stats": {
+        "name": "Toadstool",
+        "ai_fn": "InitEnemy_StalkPauseAlt",
+        "tile_id": 185,
+        "reward_type": 0,
+        "reward_value": 31,
+        "extra_obj_slots": 0,
+        "max_spawn": 7,
+        "hp": 1360,
+        "damage_per_hit": 57,
+        "xp_reward": 792,
+        "kim_reward": 103,
+        "speed": 288,
+        "sprite_frame": 1,
+        "behavior_flag": 2
+      }
+    },
+    {
+      "gfx_index": 32,
+      "appearance_label": "EnemyAppearance_BA",
+      "data_label": "EnemyData_Fungo",
+      "sprite_set_label": "EnemySpriteSet_I",
+      "stats": {
+        "name": "Fungo",
+        "ai_fn": "InitEnemy_StalkPauseAlt",
+        "tile_id": 186,
+        "reward_type": 0,
+        "reward_value": 28,
+        "extra_obj_slots": 0,
+        "max_spawn": 7,
+        "hp": 2220,
+        "damage_per_hit": 86,
+        "xp_reward": 849,
+        "kim_reward": 153,
+        "speed": 320,
+        "sprite_frame": 1,
+        "behavior_flag": 2
+      }
+    },
+    {
+      "gfx_index": 33,
+      "appearance_label": "EnemyAppearance_BB",
+      "data_label": "EnemyData_Morel",
+      "sprite_set_label": "EnemySpriteSet_I",
+      "stats": {
+        "name": "Morel",
+        "ai_fn": "InitEnemy_StalkPauseAlt",
+        "tile_id": 187,
+        "reward_type": 0,
+        "reward_value": 42,
+        "extra_obj_slots": 0,
+        "max_spawn": 7,
+        "hp": 3380,
+        "damage_per_hit": 106,
+        "xp_reward": 1079,
+        "kim_reward": 304,
+        "speed": 352,
+        "sprite_frame": 1,
+        "behavior_flag": 6
+      }
+    },
+    {
+      "gfx_index": 34,
+      "appearance_label": "EnemyAppearance_Neophyte",
+      "data_label": "EnemyData_Neophyte",
+      "sprite_set_label": "EnemySpriteSet_J",
+      "stats": {
+        "name": "Neophyte",
+        "ai_fn": "InitEnemy_IntermittentChase_Random",
+        "tile_id": 101,
+        "reward_type": 1,
+        "reward_value": 4136,
+        "extra_obj_slots": 0,
+        "max_spawn": 7,
+        "hp": 1500,
+        "damage_per_hit": 92,
+        "xp_reward": 361,
+        "kim_reward": 99,
+        "speed": 272,
+        "sprite_frame": 0,
+        "behavior_flag": 2
+      }
+    },
+    {
+      "gfx_index": 35,
+      "appearance_label": "EnemyAppearance_Conjurer",
+      "data_label": "EnemyData_Conjurer",
+      "sprite_set_label": "EnemySpriteSet_J",
+      "stats": {
+        "name": "Conjurer",
+        "ai_fn": "InitEnemy_IntermittentChase_Random",
+        "tile_id": 167,
+        "reward_type": 1,
+        "reward_value": 4138,
+        "extra_obj_slots": 0,
+        "max_spawn": 7,
+        "hp": 2600,
+        "damage_per_hit": 141,
+        "xp_reward": 1112,
+        "kim_reward": 272,
+        "speed": 336,
+        "sprite_frame": 0,
+        "behavior_flag": 2
+      }
+    },
+    {
+      "gfx_index": 36,
+      "appearance_label": "EnemyAppearance_Mage",
+      "data_label": "EnemyData_Mage",
+      "sprite_set_label": "EnemySpriteSet_J",
+      "stats": {
+        "name": "Mage",
+        "ai_fn": "InitEnemy_IntermittentChase_Homing",
+        "tile_id": 168,
+        "reward_type": 1,
+        "reward_value": 2078,
+        "extra_obj_slots": 0,
+        "max_spawn": 7,
+        "hp": 3600,
+        "damage_per_hit": 160,
+        "xp_reward": 1281,
+        "kim_reward": 309,
+        "speed": 368,
+        "sprite_frame": 0,
+        "behavior_flag": 14
+      }
+    },
+    {
+      "gfx_index": 37,
+      "appearance_label": "EnemyAppearance_Wizard",
+      "data_label": "EnemyData_Wizard",
+      "sprite_set_label": "EnemySpriteSet_J",
+      "stats": {
+        "name": "Wizard",
+        "ai_fn": "InitEnemy_IntermittentChase_Homing",
+        "tile_id": 169,
+        "reward_type": 1,
+        "reward_value": 42,
+        "extra_obj_slots": 0,
+        "max_spawn": 7,
+        "hp": 4000,
+        "damage_per_hit": 180,
+        "xp_reward": 1536,
+        "kim_reward": 592,
+        "speed": 768,
+        "sprite_frame": 0,
+        "behavior_flag": 2
+      }
+    },
+    {
+      "gfx_index": 38,
+      "appearance_label": "EnemyAppearance_66",
+      "data_label": "EnemyData_Neophyte_Ranged",
+      "sprite_set_label": "EnemySpriteSet_K",
+      "stats": {
+        "name": "Neophyte_Ranged",
+        "ai_fn": "InitEnemy_RandomShooter",
+        "tile_id": 102,
+        "reward_type": 65535,
+        "reward_value": 0,
+        "extra_obj_slots": 0,
+        "max_spawn": 7,
+        "hp": 291,
+        "damage_per_hit": 30,
+        "xp_reward": 37,
+        "kim_reward": 19,
+        "speed": 384,
+        "sprite_frame": 0,
+        "behavior_flag": 8
+      }
+    },
+    {
+      "gfx_index": 39,
+      "appearance_label": "EnemyAppearance_AA",
+      "data_label": "EnemyData_Conjurer_Ranged",
+      "sprite_set_label": "EnemySpriteSet_K",
+      "stats": {
+        "name": "Conjurer_Ranged",
+        "ai_fn": "InitEnemy_RandomShooter",
+        "tile_id": 170,
+        "reward_type": 0,
+        "reward_value": 2,
+        "extra_obj_slots": 0,
+        "max_spawn": 7,
+        "hp": 600,
+        "damage_per_hit": 64,
+        "xp_reward": 515,
+        "kim_reward": 112,
+        "speed": 512,
+        "sprite_frame": 0,
+        "behavior_flag": 12
+      }
+    },
+    {
+      "gfx_index": 40,
+      "appearance_label": "EnemyAppearance_AB",
+      "data_label": "EnemyData_Mage_Ranged",
+      "sprite_set_label": "EnemySpriteSet_K",
+      "stats": {
+        "name": "Mage_Ranged",
+        "ai_fn": "InitEnemy_RandomShooter",
+        "tile_id": 171,
+        "reward_type": 0,
+        "reward_value": 2,
+        "extra_obj_slots": 0,
+        "max_spawn": 7,
+        "hp": 860,
+        "damage_per_hit": 99,
+        "xp_reward": 563,
+        "kim_reward": 153,
+        "speed": 544,
+        "sprite_frame": 0,
+        "behavior_flag": 12
+      }
+    },
+    {
+      "gfx_index": 41,
+      "appearance_label": "EnemyAppearance_BC",
+      "data_label": "EnemyData_Wizard_Ranged",
+      "sprite_set_label": "EnemySpriteSet_K",
+      "stats": {
+        "name": "Wizard_Ranged",
+        "ai_fn": "InitEnemy_RandomShooter",
+        "tile_id": 188,
+        "reward_type": 2,
+        "reward_value": 519,
+        "extra_obj_slots": 0,
+        "max_spawn": 7,
+        "hp": 1180,
+        "damage_per_hit": 151,
+        "xp_reward": 769,
+        "kim_reward": 320,
+        "speed": 576,
+        "sprite_frame": 0,
+        "behavior_flag": 12
+      }
+    },
+    {
+      "gfx_index": 42,
+      "appearance_label": "EnemyAppearance_Gargoyle",
+      "data_label": "EnemyData_Gargoyle",
+      "sprite_set_label": "EnemySpriteSet_G",
+      "stats": {
+        "name": "Gargoyle",
+        "ai_fn": "InitEnemy_StandardMeleeFast",
+        "tile_id": 97,
+        "reward_type": 1,
+        "reward_value": 4140,
+        "extra_obj_slots": 0,
+        "max_spawn": 7,
+        "hp": 1200,
+        "damage_per_hit": 24,
+        "xp_reward": 144,
+        "kim_reward": 51,
+        "speed": 288,
+        "sprite_frame": 1,
+        "behavior_flag": 2
+      }
+    },
+    {
+      "gfx_index": 43,
+      "appearance_label": "EnemyAppearance_Gargoyle_BD",
+      "data_label": "EnemyData_Gargoyle_BD",
+      "sprite_set_label": "EnemySpriteSet_G",
+      "stats": {
+        "name": "Gargoyle_BD",
+        "ai_fn": "InitEnemy_StandardMeleeFast",
+        "tile_id": 189,
+        "reward_type": 1,
+        "reward_value": 4141,
+        "extra_obj_slots": 0,
+        "max_spawn": 7,
+        "hp": 2200,
+        "damage_per_hit": 49,
+        "xp_reward": 520,
+        "kim_reward": 104,
+        "speed": 352,
+        "sprite_frame": 1,
+        "behavior_flag": 2
+      }
+    },
+    {
+      "gfx_index": 44,
+      "appearance_label": "EnemyAppearance_Gargoyle_BE",
+      "data_label": "EnemyData_Gargoyle_BE",
+      "sprite_set_label": "EnemySpriteSet_G",
+      "stats": {
+        "name": "Gargoyle_BE",
+        "ai_fn": "InitEnemy_StandardMeleeFast",
+        "tile_id": 190,
+        "reward_type": 1,
+        "reward_value": 40,
+        "extra_obj_slots": 0,
+        "max_spawn": 7,
+        "hp": 3000,
+        "damage_per_hit": 97,
+        "xp_reward": 870,
+        "kim_reward": 325,
+        "speed": 512,
+        "sprite_frame": 1,
+        "behavior_flag": 2
+      }
+    },
+    {
+      "gfx_index": 45,
+      "appearance_label": "EnemyAppearance_Gargoyle_BF",
+      "data_label": "EnemyData_Gargoyle_BF",
+      "sprite_set_label": "EnemySpriteSet_G",
+      "stats": {
+        "name": "Gargoyle_BF",
+        "ai_fn": "InitEnemy_StandardMeleeFast",
+        "tile_id": 191,
+        "reward_type": 1,
+        "reward_value": 43,
+        "extra_obj_slots": 0,
+        "max_spawn": 7,
+        "hp": 4600,
+        "damage_per_hit": 147,
+        "xp_reward": 1106,
+        "kim_reward": 521,
+        "speed": 544,
+        "sprite_frame": 1,
+        "behavior_flag": 2
+      }
+    },
+    {
+      "gfx_index": 46,
+      "appearance_label": "EnemyAppearance_75",
+      "data_label": "EnemyData_OrbShield_75",
+      "sprite_set_label": "EnemySpriteSet_M",
+      "stats": {
+        "name": "OrbShield_75",
+        "ai_fn": "InitBoss_OrbShield",
+        "tile_id": 117,
+        "reward_type": 0,
+        "reward_value": 27,
+        "extra_obj_slots": 1,
+        "max_spawn": 3,
+        "hp": 112,
+        "damage_per_hit": 30,
+        "xp_reward": 118,
+        "kim_reward": 56,
+        "speed": 352,
+        "sprite_frame": 0,
+        "behavior_flag": 2
+      }
+    },
+    {
+      "gfx_index": 47,
+      "appearance_label": "EnemyAppearance_C0",
+      "data_label": "EnemyData_OrbShield_C0",
+      "sprite_set_label": "EnemySpriteSet_M",
+      "stats": {
+        "name": "OrbShield_C0",
+        "ai_fn": "InitBoss_OrbShield",
+        "tile_id": 192,
+        "reward_type": 0,
+        "reward_value": 27,
+        "extra_obj_slots": 3,
+        "max_spawn": 1,
+        "hp": 370,
+        "damage_per_hit": 82,
+        "xp_reward": 402,
+        "kim_reward": 104,
+        "speed": 384,
+        "sprite_frame": 0,
+        "behavior_flag": 2
+      }
+    },
+    {
+      "gfx_index": 48,
+      "appearance_label": "EnemyAppearance_C1",
+      "data_label": "EnemyData_OrbShield_C1",
+      "sprite_set_label": "EnemySpriteSet_M",
+      "stats": {
+        "name": "OrbShield_C1",
+        "ai_fn": "InitBoss_OrbShield",
+        "tile_id": 193,
+        "reward_type": 0,
+        "reward_value": 28,
+        "extra_obj_slots": 3,
+        "max_spawn": 1,
+        "hp": 1530,
+        "damage_per_hit": 108,
+        "xp_reward": 770,
+        "kim_reward": 310,
+        "speed": 512,
+        "sprite_frame": 0,
+        "behavior_flag": 2
+      }
+    },
+    {
+      "gfx_index": 49,
+      "appearance_label": "EnemyAppearance_C2",
+      "data_label": "EnemyData_OrbShield_C2",
+      "sprite_set_label": "EnemySpriteSet_M",
+      "stats": {
+        "name": "OrbShield_C2",
+        "ai_fn": "InitBoss_OrbShield",
+        "tile_id": 194,
+        "reward_type": 0,
+        "reward_value": 32,
+        "extra_obj_slots": 3,
+        "max_spawn": 1,
+        "hp": 2200,
+        "damage_per_hit": 140,
+        "xp_reward": 2341,
+        "kim_reward": 370,
+        "speed": 544,
+        "sprite_frame": 0,
+        "behavior_flag": 2
+      }
+    },
+    {
+      "gfx_index": 50,
+      "appearance_label": "EnemyAppearance_63",
+      "data_label": "EnemyData_Eyeball_BurstFire",
+      "sprite_set_label": "EnemySpriteSet_H",
+      "stats": {
+        "name": "Eyeball_BurstFire",
+        "ai_fn": "InitEnemy_BurstFire",
+        "tile_id": 99,
+        "reward_type": 0,
+        "reward_value": 0,
+        "extra_obj_slots": 3,
+        "max_spawn": 1,
+        "hp": 150,
+        "damage_per_hit": 73,
+        "xp_reward": 87,
+        "kim_reward": 38,
+        "speed": 512,
+        "sprite_frame": 0,
+        "behavior_flag": 10
+      }
+    },
+    {
+      "gfx_index": 51,
+      "appearance_label": "EnemyAppearance_A4",
+      "data_label": "EnemyData_RedEye_BurstFire",
+      "sprite_set_label": "EnemySpriteSet_H",
+      "stats": {
+        "name": "RedEye_BurstFire",
+        "ai_fn": "InitEnemy_BurstFire",
+        "tile_id": 164,
+        "reward_type": 0,
+        "reward_value": 29,
+        "extra_obj_slots": 3,
+        "max_spawn": 1,
+        "hp": 370,
+        "damage_per_hit": 107,
+        "xp_reward": 531,
+        "kim_reward": 114,
+        "speed": 544,
+        "sprite_frame": 0,
+        "behavior_flag": 10
+      }
+    },
+    {
+      "gfx_index": 52,
+      "appearance_label": "EnemyAppearance_A5",
+      "data_label": "EnemyData_ZapEye_BurstFire",
+      "sprite_set_label": "EnemySpriteSet_H",
+      "stats": {
+        "name": "ZapEye_BurstFire",
+        "ai_fn": "InitEnemy_BurstFire",
+        "tile_id": 165,
+        "reward_type": 3,
+        "reward_value": 12288,
+        "extra_obj_slots": 3,
+        "max_spawn": 1,
+        "hp": 600,
+        "damage_per_hit": 156,
+        "xp_reward": 793,
+        "kim_reward": 338,
+        "speed": 576,
+        "sprite_frame": 0,
+        "behavior_flag": 10
+      }
+    },
+    {
+      "gfx_index": 53,
+      "appearance_label": "EnemyAppearance_A6",
+      "data_label": "EnemyData_KillerEye_BurstFire",
+      "sprite_set_label": "EnemySpriteSet_H",
+      "stats": {
+        "name": "KillerEye_BurstFire",
+        "ai_fn": "InitEnemy_BurstFire",
+        "tile_id": 166,
+        "reward_type": 65535,
+        "reward_value": 2,
+        "extra_obj_slots": 3,
+        "max_spawn": 1,
+        "hp": 1700,
+        "damage_per_hit": 177,
+        "xp_reward": 1138,
+        "kim_reward": 518,
+        "speed": 608,
+        "sprite_frame": 0,
+        "behavior_flag": 10
+      }
+    },
+    {
+      "gfx_index": 54,
+      "appearance_label": "EnemyAppearance_64",
+      "data_label": "EnemyData_Rattler",
+      "sprite_set_label": "EnemySpriteSet_I",
+      "stats": {
+        "name": "Rattler",
+        "ai_fn": "InitEnemy_StationaryShooter",
+        "tile_id": 100,
+        "reward_type": 0,
+        "reward_value": 27,
+        "extra_obj_slots": 0,
+        "max_spawn": 7,
+        "hp": 480,
+        "damage_per_hit": 57,
+        "xp_reward": 819,
+        "kim_reward": 57,
+        "speed": 384,
+        "sprite_frame": 1,
+        "behavior_flag": 2
+      }
+    },
+    {
+      "gfx_index": 55,
+      "appearance_label": "EnemyAppearance_B9",
+      "data_label": "EnemyData_Python",
+      "sprite_set_label": "EnemySpriteSet_I",
+      "stats": {
+        "name": "Python",
+        "ai_fn": "InitEnemy_StationaryShooter",
+        "tile_id": 185,
+        "reward_type": 0,
+        "reward_value": 3,
+        "extra_obj_slots": 0,
+        "max_spawn": 7,
+        "hp": 840,
+        "damage_per_hit": 77,
+        "xp_reward": 1046,
+        "kim_reward": 112,
+        "speed": 512,
+        "sprite_frame": 1,
+        "behavior_flag": 2
+      }
+    },
+    {
+      "gfx_index": 56,
+      "appearance_label": "EnemyAppearance_BA",
+      "data_label": "EnemyData_Cobra",
+      "sprite_set_label": "EnemySpriteSet_I",
+      "stats": {
+        "name": "Cobra",
+        "ai_fn": "InitEnemy_StationaryShooter",
+        "tile_id": 186,
+        "reward_type": 0,
+        "reward_value": 28,
+        "extra_obj_slots": 0,
+        "max_spawn": 7,
+        "hp": 1020,
+        "damage_per_hit": 108,
+        "xp_reward": 1138,
+        "kim_reward": 275,
+        "speed": 544,
+        "sprite_frame": 1,
+        "behavior_flag": 2
+      }
+    },
+    {
+      "gfx_index": 57,
+      "appearance_label": "EnemyAppearance_BB",
+      "data_label": "EnemyData_Anaconda",
+      "sprite_set_label": "EnemySpriteSet_I",
+      "stats": {
+        "name": "Anaconda",
+        "ai_fn": "InitEnemy_StationaryShooter",
+        "tile_id": 187,
+        "reward_type": 3,
+        "reward_value": 12288,
+        "extra_obj_slots": 0,
+        "max_spawn": 7,
+        "hp": 1270,
+        "damage_per_hit": 151,
+        "xp_reward": 1560,
+        "kim_reward": 323,
+        "speed": 576,
+        "sprite_frame": 1,
+        "behavior_flag": 2
+      }
+    },
+    {
+      "gfx_index": 58,
+      "appearance_label": "EnemyAppearance_64",
+      "data_label": "EnemyData_Flamer",
+      "sprite_set_label": "EnemySpriteSet_I",
+      "stats": {
+        "name": "Flamer",
+        "ai_fn": "InitEnemy_FastBurstShooter",
+        "tile_id": 100,
+        "reward_type": 3,
+        "reward_value": 1280,
+        "extra_obj_slots": 3,
+        "max_spawn": 1,
+        "hp": 920,
+        "damage_per_hit": 57,
+        "xp_reward": 615,
+        "kim_reward": 82,
+        "speed": 384,
+        "sprite_frame": 1,
+        "behavior_flag": 2
+      }
+    },
+    {
+      "gfx_index": 59,
+      "appearance_label": "EnemyAppearance_B9",
+      "data_label": "EnemyData_Melter",
+      "sprite_set_label": "EnemySpriteSet_I",
+      "stats": {
+        "name": "Melter",
+        "ai_fn": "InitEnemy_FastBurstShooter",
+        "tile_id": 185,
+        "reward_type": 0,
+        "reward_value": 28,
+        "extra_obj_slots": 3,
+        "max_spawn": 1,
+        "hp": 1400,
+        "damage_per_hit": 72,
+        "xp_reward": 801,
+        "kim_reward": 149,
+        "speed": 384,
+        "sprite_frame": 1,
+        "behavior_flag": 2
+      }
+    },
+    {
+      "gfx_index": 60,
+      "appearance_label": "EnemyAppearance_BA",
+      "data_label": "EnemyData_Scorcher",
+      "sprite_set_label": "EnemySpriteSet_I",
+      "stats": {
+        "name": "Scorcher",
+        "ai_fn": "InitEnemy_FastBurstShooter",
+        "tile_id": 186,
+        "reward_type": 0,
+        "reward_value": 43,
+        "extra_obj_slots": 3,
+        "max_spawn": 1,
+        "hp": 1795,
+        "damage_per_hit": 92,
+        "xp_reward": 1044,
+        "kim_reward": 297,
+        "speed": 384,
+        "sprite_frame": 1,
+        "behavior_flag": 2
+      }
+    },
+    {
+      "gfx_index": 61,
+      "appearance_label": "EnemyAppearance_BB",
+      "data_label": "EnemyData_Incinerator",
+      "sprite_set_label": "EnemySpriteSet_I",
+      "stats": {
+        "name": "Incinerator",
+        "ai_fn": "InitEnemy_FastBurstShooter",
+        "tile_id": 187,
+        "reward_type": 0,
+        "reward_value": 32,
+        "extra_obj_slots": 3,
+        "max_spawn": 1,
+        "hp": 2700,
+        "damage_per_hit": 117,
+        "xp_reward": 1348,
+        "kim_reward": 386,
+        "speed": 384,
+        "sprite_frame": 1,
+        "behavior_flag": 2
+      }
+    },
+    {
+      "gfx_index": 62,
+      "appearance_label": "EnemyAppearance_64",
+      "data_label": "EnemyData_Creeper",
+      "sprite_set_label": "EnemySpriteSet_I",
+      "stats": {
+        "name": "Creeper",
+        "ai_fn": "InitEnemy_HomingShooter",
+        "tile_id": 100,
+        "reward_type": 0,
+        "reward_value": 27,
+        "extra_obj_slots": 3,
+        "max_spawn": 1,
+        "hp": 920,
+        "damage_per_hit": 58,
+        "xp_reward": 917,
+        "kim_reward": 112,
+        "speed": 384,
+        "sprite_frame": 1,
+        "behavior_flag": 2
+      }
+    },
+    {
+      "gfx_index": 63,
+      "appearance_label": "EnemyAppearance_B9",
+      "data_label": "EnemyData_Oozer",
+      "sprite_set_label": "EnemySpriteSet_I",
+      "stats": {
+        "name": "Oozer",
+        "ai_fn": "InitEnemy_HomingShooter",
+        "tile_id": 185,
+        "reward_type": 0,
+        "reward_value": 33,
+        "extra_obj_slots": 3,
+        "max_spawn": 1,
+        "hp": 1100,
+        "damage_per_hit": 74,
+        "xp_reward": 1089,
+        "kim_reward": 147,
+        "speed": 544,
+        "sprite_frame": 1,
+        "behavior_flag": 2
+      }
+    },
+    {
+      "gfx_index": 64,
+      "appearance_label": "EnemyAppearance_BA",
+      "data_label": "EnemyData_Slimer",
+      "sprite_set_label": "EnemySpriteSet_I",
+      "stats": {
+        "name": "Slimer",
+        "ai_fn": "InitEnemy_HomingShooter",
+        "tile_id": 186,
+        "reward_type": 0,
+        "reward_value": 28,
+        "extra_obj_slots": 3,
+        "max_spawn": 1,
+        "hp": 1600,
+        "damage_per_hit": 99,
+        "xp_reward": 1316,
+        "kim_reward": 342,
+        "speed": 608,
+        "sprite_frame": 1,
+        "behavior_flag": 2
+      }
+    },
+    {
+      "gfx_index": 65,
+      "appearance_label": "EnemyAppearance_BB",
+      "data_label": "EnemyData_Slurper",
+      "sprite_set_label": "EnemySpriteSet_I",
+      "stats": {
+        "name": "Slurper",
+        "ai_fn": "InitEnemy_HomingShooter",
+        "tile_id": 187,
+        "reward_type": 0,
+        "reward_value": 38,
+        "extra_obj_slots": 3,
+        "max_spawn": 1,
+        "hp": 1900,
+        "damage_per_hit": 121,
+        "xp_reward": 1623,
+        "kim_reward": 1545,
+        "speed": 768,
+        "sprite_frame": 1,
+        "behavior_flag": 2
+      }
+    },
+    {
+      "gfx_index": 66,
+      "appearance_label": "EnemyAppearance_66",
+      "data_label": "EnemyData_Neophyte_Tele",
+      "sprite_set_label": "EnemySpriteSet_K",
+      "stats": {
+        "name": "Neophyte_Tele",
+        "ai_fn": "InitEnemy_Teleporter",
+        "tile_id": 102,
+        "reward_type": 0,
+        "reward_value": 1,
+        "extra_obj_slots": 0,
+        "max_spawn": 7,
+        "hp": 222,
+        "damage_per_hit": 41,
+        "xp_reward": 148,
+        "kim_reward": 67,
+        "speed": 592,
+        "sprite_frame": 0,
+        "behavior_flag": 8
+      }
+    },
+    {
+      "gfx_index": 67,
+      "appearance_label": "EnemyAppearance_AA",
+      "data_label": "EnemyData_Conjurer_Tele",
+      "sprite_set_label": "EnemySpriteSet_K",
+      "stats": {
+        "name": "Conjurer_Tele",
+        "ai_fn": "InitEnemy_Teleporter",
+        "tile_id": 170,
+        "reward_type": 65535,
+        "reward_value": 0,
+        "extra_obj_slots": 0,
+        "max_spawn": 7,
+        "hp": 390,
+        "damage_per_hit": 104,
+        "xp_reward": 533,
+        "kim_reward": 144,
+        "speed": 768,
+        "sprite_frame": 0,
+        "behavior_flag": 12
+      }
+    },
+    {
+      "gfx_index": 68,
+      "appearance_label": "EnemyAppearance_AB",
+      "data_label": "EnemyData_Mage_Tele",
+      "sprite_set_label": "EnemySpriteSet_K",
+      "stats": {
+        "name": "Mage_Tele",
+        "ai_fn": "InitEnemy_Teleporter",
+        "tile_id": 171,
+        "reward_type": 3,
+        "reward_value": 4096,
+        "extra_obj_slots": 0,
+        "max_spawn": 7,
+        "hp": 510,
+        "damage_per_hit": 128,
+        "xp_reward": 608,
+        "kim_reward": 288,
+        "speed": 848,
+        "sprite_frame": 0,
+        "behavior_flag": 12
+      }
+    },
+    {
+      "gfx_index": 69,
+      "appearance_label": "EnemyAppearance_BC",
+      "data_label": "EnemyData_Wizard_Tele",
+      "sprite_set_label": "EnemySpriteSet_K",
+      "stats": {
+        "name": "Wizard_Tele",
+        "ai_fn": "InitEnemy_Teleporter",
+        "tile_id": 188,
+        "reward_type": 2,
+        "reward_value": 517,
+        "extra_obj_slots": 0,
+        "max_spawn": 7,
+        "hp": 630,
+        "damage_per_hit": 187,
+        "xp_reward": 1042,
+        "kim_reward": 370,
+        "speed": 1024,
+        "sprite_frame": 0,
+        "behavior_flag": 12
+      }
+    },
+    {
+      "gfx_index": 70,
+      "appearance_label": "EnemyAppearance_66",
+      "data_label": "EnemyData_Neophyte_SeqFire",
+      "sprite_set_label": "EnemySpriteSet_L",
+      "stats": {
+        "name": "Neophyte_SeqFire",
+        "ai_fn": "InitEnemy_SequentialFire",
+        "tile_id": 102,
+        "reward_type": 0,
+        "reward_value": 1,
+        "extra_obj_slots": 3,
+        "max_spawn": 1,
+        "hp": 850,
+        "damage_per_hit": 62,
+        "xp_reward": 387,
+        "kim_reward": 103,
+        "speed": 352,
+        "sprite_frame": 0,
+        "behavior_flag": 8
+      }
+    },
+    {
+      "gfx_index": 71,
+      "appearance_label": "EnemyAppearance_AA",
+      "data_label": "EnemyData_Conjurer_SeqFire",
+      "sprite_set_label": "EnemySpriteSet_L",
+      "stats": {
+        "name": "Conjurer_SeqFire",
+        "ai_fn": "InitEnemy_SequentialFire",
+        "tile_id": 170,
+        "reward_type": 0,
+        "reward_value": 1,
+        "extra_obj_slots": 3,
+        "max_spawn": 1,
+        "hp": 1100,
+        "damage_per_hit": 74,
+        "xp_reward": 535,
+        "kim_reward": 256,
+        "speed": 384,
+        "sprite_frame": 0,
+        "behavior_flag": 12
+      }
+    },
+    {
+      "gfx_index": 72,
+      "appearance_label": "EnemyAppearance_AB",
+      "data_label": "EnemyData_Mage_SeqFire",
+      "sprite_set_label": "EnemySpriteSet_L",
+      "stats": {
+        "name": "Mage_SeqFire",
+        "ai_fn": "InitEnemy_SequentialFire",
+        "tile_id": 171,
+        "reward_type": 0,
+        "reward_value": 2,
+        "extra_obj_slots": 3,
+        "max_spawn": 1,
+        "hp": 1530,
+        "damage_per_hit": 108,
+        "xp_reward": 659,
+        "kim_reward": 307,
+        "speed": 512,
+        "sprite_frame": 0,
+        "behavior_flag": 12
+      }
+    },
+    {
+      "gfx_index": 73,
+      "appearance_label": "EnemyAppearance_BC",
+      "data_label": "EnemyData_Wizard_SeqFire",
+      "sprite_set_label": "EnemySpriteSet_L",
+      "stats": {
+        "name": "Wizard_SeqFire",
+        "ai_fn": "InitEnemy_SequentialFire",
+        "tile_id": 188,
+        "reward_type": 3,
+        "reward_value": 4096,
+        "extra_obj_slots": 3,
+        "max_spawn": 1,
+        "hp": 1720,
+        "damage_per_hit": 200,
+        "xp_reward": 1560,
+        "kim_reward": 544,
+        "speed": 544,
+        "sprite_frame": 0,
+        "behavior_flag": 4
+      }
+    },
+    {
+      "gfx_index": 74,
+      "appearance_label": "EnemyAppearance_75",
+      "data_label": "EnemyData_MultiOrb_75",
+      "sprite_set_label": "EnemySpriteSet_M",
+      "stats": {
+        "name": "MultiOrb_75",
+        "ai_fn": "InitBoss_MultiOrb",
+        "tile_id": 117,
+        "reward_type": 0,
+        "reward_value": 0,
+        "extra_obj_slots": 3,
+        "max_spawn": 1,
+        "hp": 700,
+        "damage_per_hit": 36,
+        "xp_reward": 260,
+        "kim_reward": 69,
+        "speed": 384,
+        "sprite_frame": 0,
+        "behavior_flag": 2
+      }
+    },
+    {
+      "gfx_index": 75,
+      "appearance_label": "EnemyAppearance_C0",
+      "data_label": "EnemyData_MultiOrb_C0",
+      "sprite_set_label": "EnemySpriteSet_M",
+      "stats": {
+        "name": "MultiOrb_C0",
+        "ai_fn": "InitBoss_MultiOrb",
+        "tile_id": 192,
+        "reward_type": 0,
+        "reward_value": 28,
+        "extra_obj_slots": 3,
+        "max_spawn": 1,
+        "hp": 1200,
+        "damage_per_hit": 84,
+        "xp_reward": 537,
+        "kim_reward": 147,
+        "speed": 389,
+        "sprite_frame": 0,
+        "behavior_flag": 2
+      }
+    },
+    {
+      "gfx_index": 76,
+      "appearance_label": "EnemyAppearance_C1",
+      "data_label": "EnemyData_MultiOrb_C1",
+      "sprite_set_label": "EnemySpriteSet_M",
+      "stats": {
+        "name": "MultiOrb_C1",
+        "ai_fn": "InitBoss_MultiOrb",
+        "tile_id": 193,
+        "reward_type": 0,
+        "reward_value": 27,
+        "extra_obj_slots": 3,
+        "max_spawn": 1,
+        "hp": 1700,
+        "damage_per_hit": 130,
+        "xp_reward": 865,
+        "kim_reward": 344,
+        "speed": 400,
+        "sprite_frame": 0,
+        "behavior_flag": 2
+      }
+    },
+    {
+      "gfx_index": 77,
+      "appearance_label": "EnemyAppearance_C2",
+      "data_label": "EnemyData_MultiOrb_C2",
+      "sprite_set_label": "EnemySpriteSet_M",
+      "stats": {
+        "name": "MultiOrb_C2",
+        "ai_fn": "InitBoss_MultiOrb",
+        "tile_id": 194,
+        "reward_type": 0,
+        "reward_value": 28,
+        "extra_obj_slots": 3,
+        "max_spawn": 1,
+        "hp": 2300,
+        "damage_per_hit": 141,
+        "xp_reward": 1105,
+        "kim_reward": 407,
+        "speed": 405,
+        "sprite_frame": 0,
+        "behavior_flag": 6
+      }
+    },
+    {
+      "gfx_index": 78,
+      "appearance_label": "EnemyAppearance_75",
+      "data_label": "EnemyData_OrbRing_75",
+      "sprite_set_label": "EnemySpriteSet_M",
+      "stats": {
+        "name": "OrbRing_75",
+        "ai_fn": "InitBoss_OrbRing",
+        "tile_id": 117,
+        "reward_type": 0,
+        "reward_value": 27,
+        "extra_obj_slots": 3,
+        "max_spawn": 1,
+        "hp": 780,
+        "damage_per_hit": 47,
+        "xp_reward": 321,
+        "kim_reward": 80,
+        "speed": 384,
+        "sprite_frame": 0,
+        "behavior_flag": 2
+      }
+    },
+    {
+      "gfx_index": 79,
+      "appearance_label": "EnemyAppearance_C0",
+      "data_label": "EnemyData_OrbRing_C0",
+      "sprite_set_label": "EnemySpriteSet_M",
+      "stats": {
+        "name": "OrbRing_C0",
+        "ai_fn": "InitBoss_OrbRing",
+        "tile_id": 192,
+        "reward_type": 0,
+        "reward_value": 28,
+        "extra_obj_slots": 3,
+        "max_spawn": 1,
+        "hp": 1500,
+        "damage_per_hit": 98,
+        "xp_reward": 617,
+        "kim_reward": 291,
+        "speed": 512,
+        "sprite_frame": 0,
+        "behavior_flag": 2
+      }
+    },
+    {
+      "gfx_index": 80,
+      "appearance_label": "EnemyAppearance_C1",
+      "data_label": "EnemyData_OrbRing_C1",
+      "sprite_set_label": "EnemySpriteSet_M",
+      "stats": {
+        "name": "OrbRing_C1",
+        "ai_fn": "InitBoss_OrbRing",
+        "tile_id": 193,
+        "reward_type": 3,
+        "reward_value": 20480,
+        "extra_obj_slots": 3,
+        "max_spawn": 1,
+        "hp": 2440,
+        "damage_per_hit": 114,
+        "xp_reward": 884,
+        "kim_reward": 360,
+        "speed": 544,
+        "sprite_frame": 0,
+        "behavior_flag": 2
+      }
+    },
+    {
+      "gfx_index": 81,
+      "appearance_label": "EnemyAppearance_C2",
+      "data_label": "EnemyData_OrbRing_C2",
+      "sprite_set_label": "EnemySpriteSet_M",
+      "stats": {
+        "name": "OrbRing_C2",
+        "ai_fn": "InitBoss_OrbRing",
+        "tile_id": 194,
+        "reward_type": 0,
+        "reward_value": 39,
+        "extra_obj_slots": 3,
+        "max_spawn": 1,
+        "hp": 2700,
+        "damage_per_hit": 168,
+        "xp_reward": 1298,
+        "kim_reward": 912,
+        "speed": 576,
+        "sprite_frame": 0,
+        "behavior_flag": 10
+      }
+    },
+    {
+      "gfx_index": 82,
+      "appearance_label": "EnemyAppearance_A6",
+      "data_label": "EnemyData_KillerEye_SpiralBurst_A",
+      "sprite_set_label": "EnemySpriteSet_H",
+      "stats": {
+        "name": "KillerEye_SpiralBurst_A",
+        "ai_fn": "InitEnemy_SpiralBurst",
+        "tile_id": 166,
+        "reward_type": 0,
+        "reward_value": 41,
+        "extra_obj_slots": 1,
+        "max_spawn": 3,
+        "hp": 1700,
+        "damage_per_hit": 157,
+        "xp_reward": 1138,
+        "kim_reward": 518,
+        "speed": 608,
+        "sprite_frame": 0,
+        "behavior_flag": 10
+      }
+    },
+    {
+      "gfx_index": 83,
+      "appearance_label": "EnemyAppearance_A6",
+      "data_label": "EnemyData_KillerEye_SpiralBurst_B",
+      "sprite_set_label": "EnemySpriteSet_H",
+      "stats": {
+        "name": "KillerEye_SpiralBurst_B",
+        "ai_fn": "InitEnemy_SpiralBurst",
+        "tile_id": 166,
+        "reward_type": 0,
+        "reward_value": 32,
+        "extra_obj_slots": 1,
+        "max_spawn": 0,
+        "hp": 1700,
+        "damage_per_hit": 200,
+        "xp_reward": 1138,
+        "kim_reward": 518,
+        "speed": 864,
+        "sprite_frame": 0,
+        "behavior_flag": 14
+      }
+    },
+    {
+      "gfx_index": 84,
+      "appearance_label": "EnemyAppearance_Zombie",
+      "data_label": "EnemyData_Zombie_Last",
+      "sprite_set_label": "EnemySpriteSet_A",
+      "stats": {
+        "name": "Zombie_Last",
+        "ai_fn": "InitEnemy_StalkPause",
+        "tile_id": 123,
+        "reward_type": 3,
+        "reward_value": 12288,
+        "extra_obj_slots": 0,
+        "max_spawn": 4,
+        "hp": 1200,
+        "damage_per_hit": 100,
+        "xp_reward": 0,
+        "kim_reward": 4608,
+        "speed": 400,
+        "sprite_frame": 0,
+        "behavior_flag": 14
+      }
+    }
+  ],
+  "encounter_groups": {
+    "0": {
+      "group_index": 0,
+      "enemy_gfx_indices": [
+        0,
+        0,
+        10,
+        1
+      ],
+      "enemy_names": [
+        "GreenSlime",
+        "GreenSlime",
+        "DogKobold",
+        "BlueJelly"
+      ]
+    },
+    "1": {
+      "group_index": 1,
+      "enemy_gfx_indices": [
+        6,
+        10,
+        1,
+        1
+      ],
+      "enemy_names": [
+        "Skeleton",
+        "DogKobold",
+        "BlueJelly",
+        "BlueJelly"
+      ]
+    },
+    "2": {
+      "group_index": 2,
+      "enemy_gfx_indices": [
+        10,
+        10,
+        1,
+        0
+      ],
+      "enemy_names": [
+        "DogKobold",
+        "DogKobold",
+        "BlueJelly",
+        "GreenSlime"
+      ]
+    },
+    "3": {
+      "group_index": 3,
+      "enemy_gfx_indices": [
+        14,
+        10,
+        1,
+        10
+      ],
+      "enemy_names": [
+        "FruitBat",
+        "DogKobold",
+        "BlueJelly",
+        "DogKobold"
+      ]
+    },
+    "4": {
+      "group_index": 4,
+      "enemy_gfx_indices": [
+        14,
+        18,
+        10,
+        1
+      ],
+      "enemy_names": [
+        "FruitBat",
+        "Eyeball",
+        "DogKobold",
+        "BlueJelly"
+      ]
+    },
+    "5": {
+      "group_index": 5,
+      "enemy_gfx_indices": [
+        14,
+        38,
+        18,
+        10
+      ],
+      "enemy_names": [
+        "FruitBat",
+        "Neophyte_Ranged",
+        "Eyeball",
+        "DogKobold"
+      ]
+    },
+    "6": {
+      "group_index": 6,
+      "enemy_gfx_indices": [
+        14,
+        6,
+        6,
+        22
+      ],
+      "enemy_names": [
+        "FruitBat",
+        "Skeleton",
+        "Skeleton",
+        "Needler"
+      ]
+    },
+    "7": {
+      "group_index": 7,
+      "enemy_gfx_indices": [
+        5,
+        18,
+        14,
+        22
+      ],
+      "enemy_names": [
+        "GrayOoze",
+        "Eyeball",
+        "FruitBat",
+        "Needler"
+      ]
+    },
+    "8": {
+      "group_index": 8,
+      "enemy_gfx_indices": [
+        11,
+        10,
+        18,
+        5
+      ],
+      "enemy_names": [
+        "CoyoteKobold",
+        "DogKobold",
+        "Eyeball",
+        "GrayOoze"
+      ]
+    },
+    "9": {
+      "group_index": 9,
+      "enemy_gfx_indices": [
+        50,
+        11,
+        18,
+        22
+      ],
+      "enemy_names": [
+        "Eyeball_BurstFire",
+        "CoyoteKobold",
+        "Eyeball",
+        "Needler"
+      ]
+    },
+    "10": {
+      "group_index": 10,
+      "enemy_gfx_indices": [
+        42,
+        50,
+        5,
+        11
+      ],
+      "enemy_names": [
+        "Gargoyle",
+        "Eyeball_BurstFire",
+        "GrayOoze",
+        "CoyoteKobold"
+      ]
+    },
+    "11": {
+      "group_index": 11,
+      "enemy_gfx_indices": [
+        15,
+        5,
+        42,
+        50
+      ],
+      "enemy_names": [
+        "CaveBat",
+        "GrayOoze",
+        "Gargoyle",
+        "Eyeball_BurstFire"
+      ]
+    },
+    "12": {
+      "group_index": 12,
+      "enemy_gfx_indices": [
+        46,
+        6,
+        22,
+        2
+      ],
+      "enemy_names": [
+        "OrbShield_75",
+        "Skeleton",
+        "Needler",
+        "RedGlunk"
+      ]
+    },
+    "13": {
+      "group_index": 13,
+      "enemy_gfx_indices": [
+        26,
+        42,
+        50,
+        15
+      ],
+      "enemy_names": [
+        "Basher",
+        "Gargoyle",
+        "Eyeball_BurstFire",
+        "CaveBat"
+      ]
+    },
+    "14": {
+      "group_index": 14,
+      "enemy_gfx_indices": [
+        66,
+        46,
+        26,
+        42
+      ],
+      "enemy_names": [
+        "Neophyte_Tele",
+        "OrbShield_75",
+        "Basher",
+        "Gargoyle"
+      ]
+    },
+    "15": {
+      "group_index": 15,
+      "enemy_gfx_indices": [
+        74,
+        46,
+        26,
+        66
+      ],
+      "enemy_names": [
+        "MultiOrb_75",
+        "OrbShield_75",
+        "Basher",
+        "Neophyte_Tele"
+      ]
+    },
+    "16": {
+      "group_index": 16,
+      "enemy_gfx_indices": [
+        30,
+        6,
+        74,
+        2
+      ],
+      "enemy_names": [
+        "Puffball",
+        "Skeleton",
+        "MultiOrb_75",
+        "RedGlunk"
+      ]
+    },
+    "17": {
+      "group_index": 17,
+      "enemy_gfx_indices": [
+        78,
+        74,
+        26,
+        66
+      ],
+      "enemy_names": [
+        "OrbRing_75",
+        "MultiOrb_75",
+        "Basher",
+        "Neophyte_Tele"
+      ]
+    },
+    "18": {
+      "group_index": 18,
+      "enemy_gfx_indices": [
+        19,
+        78,
+        26,
+        66
+      ],
+      "enemy_names": [
+        "RedEye",
+        "OrbRing_75",
+        "Basher",
+        "Neophyte_Tele"
+      ]
+    },
+    "19": {
+      "group_index": 19,
+      "enemy_gfx_indices": [
+        34,
+        58,
+        54,
+        30
+      ],
+      "enemy_names": [
+        "Neophyte",
+        "Flamer",
+        "Rattler",
+        "Puffball"
+      ]
+    },
+    "20": {
+      "group_index": 20,
+      "enemy_gfx_indices": [
+        27,
+        4,
+        78,
+        19
+      ],
+      "enemy_names": [
+        "Smasher",
+        "BlackGlop",
+        "OrbRing_75",
+        "RedEye"
+      ]
+    },
+    "21": {
+      "group_index": 21,
+      "enemy_gfx_indices": [
+        70,
+        50,
+        27,
+        4
+      ],
+      "enemy_names": [
+        "Neophyte_SeqFire",
+        "Eyeball_BurstFire",
+        "Smasher",
+        "BlackGlop"
+      ]
+    },
+    "22": {
+      "group_index": 22,
+      "enemy_gfx_indices": [
+        47,
+        34,
+        42,
+        70
+      ],
+      "enemy_names": [
+        "OrbShield_C0",
+        "Neophyte",
+        "Gargoyle",
+        "Neophyte_SeqFire"
+      ]
+    },
+    "23": {
+      "group_index": 23,
+      "enemy_gfx_indices": [
+        39,
+        12,
+        70,
+        78
+      ],
+      "enemy_names": [
+        "Conjurer_Ranged",
+        "HyenaKobold",
+        "Neophyte_SeqFire",
+        "OrbRing_75"
+      ]
+    },
+    "24": {
+      "group_index": 24,
+      "enemy_gfx_indices": [
+        43,
+        34,
+        27,
+        26
+      ],
+      "enemy_names": [
+        "Gargoyle_BD",
+        "Neophyte",
+        "Smasher",
+        "Basher"
+      ]
+    },
+    "25": {
+      "group_index": 25,
+      "enemy_gfx_indices": [
+        31,
+        62,
+        16,
+        7
+      ],
+      "enemy_names": [
+        "Toadstool",
+        "Creeper",
+        "KillerBat",
+        "Zombie"
+      ]
+    },
+    "26": {
+      "group_index": 26,
+      "enemy_gfx_indices": [
+        51,
+        34,
+        27,
+        47
+      ],
+      "enemy_names": [
+        "RedEye_BurstFire",
+        "Neophyte",
+        "Smasher",
+        "OrbShield_C0"
+      ]
+    },
+    "27": {
+      "group_index": 27,
+      "enemy_gfx_indices": [
+        67,
+        51,
+        16,
+        34
+      ],
+      "enemy_names": [
+        "Conjurer_Tele",
+        "RedEye_BurstFire",
+        "KillerBat",
+        "Neophyte"
+      ]
+    },
+    "28": {
+      "group_index": 28,
+      "enemy_gfx_indices": [
+        75,
+        71,
+        51,
+        4
+      ],
+      "enemy_names": [
+        "MultiOrb_C0",
+        "Conjurer_SeqFire",
+        "RedEye_BurstFire",
+        "BlackGlop"
+      ]
+    },
+    "29": {
+      "group_index": 29,
+      "enemy_gfx_indices": [
+        59,
+        75,
+        71,
+        34
+      ],
+      "enemy_names": [
+        "Melter",
+        "MultiOrb_C0",
+        "Conjurer_SeqFire",
+        "Neophyte"
+      ]
+    },
+    "30": {
+      "group_index": 30,
+      "enemy_gfx_indices": [
+        28,
+        40,
+        71,
+        51
+      ],
+      "enemy_names": [
+        "Crusher",
+        "Mage_Ranged",
+        "Conjurer_SeqFire",
+        "RedEye_BurstFire"
+      ]
+    },
+    "31": {
+      "group_index": 31,
+      "enemy_gfx_indices": [
+        63,
+        23,
+        7,
+        28
+      ],
+      "enemy_names": [
+        "Oozer",
+        "Stinger",
+        "Zombie",
+        "Crusher"
+      ]
+    },
+    "32": {
+      "group_index": 32,
+      "enemy_gfx_indices": [
+        35,
+        28,
+        20,
+        75
+      ],
+      "enemy_names": [
+        "Conjurer",
+        "Crusher",
+        "ZapEye",
+        "MultiOrb_C0"
+      ]
+    },
+    "33": {
+      "group_index": 33,
+      "enemy_gfx_indices": [
+        20,
+        35,
+        28,
+        51
+      ],
+      "enemy_names": [
+        "ZapEye",
+        "Conjurer",
+        "Crusher",
+        "RedEye_BurstFire"
+      ]
+    },
+    "34": {
+      "group_index": 34,
+      "enemy_gfx_indices": [
+        32,
+        28,
+        8,
+        20
+      ],
+      "enemy_names": [
+        "Fungo",
+        "Crusher",
+        "Ghoul",
+        "ZapEye"
+      ]
+    },
+    "35": {
+      "group_index": 35,
+      "enemy_gfx_indices": [
+        68,
+        79,
+        20,
+        35
+      ],
+      "enemy_names": [
+        "Mage_Tele",
+        "OrbRing_C0",
+        "ZapEye",
+        "Conjurer"
+      ]
+    },
+    "36": {
+      "group_index": 36,
+      "enemy_gfx_indices": [
+        13,
+        68,
+        79,
+        28
+      ],
+      "enemy_names": [
+        "WolfKobold",
+        "Mage_Tele",
+        "OrbRing_C0",
+        "Crusher"
+      ]
+    },
+    "37": {
+      "group_index": 37,
+      "enemy_gfx_indices": [
+        72,
+        48,
+        35,
+        28
+      ],
+      "enemy_names": [
+        "Mage_SeqFire",
+        "OrbShield_C1",
+        "Conjurer",
+        "Crusher"
+      ]
+    },
+    "38": {
+      "group_index": 38,
+      "enemy_gfx_indices": [
+        60,
+        8,
+        7,
+        72
+      ],
+      "enemy_names": [
+        "Scorcher",
+        "Ghoul",
+        "Zombie",
+        "Mage_SeqFire"
+      ]
+    },
+    "39": {
+      "group_index": 39,
+      "enemy_gfx_indices": [
+        17,
+        13,
+        68,
+        72
+      ],
+      "enemy_names": [
+        "VampireBat",
+        "WolfKobold",
+        "Mage_Tele",
+        "Mage_SeqFire"
+      ]
+    },
+    "40": {
+      "group_index": 40,
+      "enemy_gfx_indices": [
+        52,
+        44,
+        13,
+        17
+      ],
+      "enemy_names": [
+        "ZapEye_BurstFire",
+        "Gargoyle_BE",
+        "WolfKobold",
+        "VampireBat"
+      ]
+    },
+    "41": {
+      "group_index": 41,
+      "enemy_gfx_indices": [
+        64,
+        17,
+        8,
+        48
+      ],
+      "enemy_names": [
+        "Slimer",
+        "VampireBat",
+        "Ghoul",
+        "OrbShield_C1"
+      ]
+    },
+    "42": {
+      "group_index": 42,
+      "enemy_gfx_indices": [
+        41,
+        48,
+        72,
+        35
+      ],
+      "enemy_names": [
+        "Wizard_Ranged",
+        "OrbShield_C1",
+        "Mage_SeqFire",
+        "Conjurer"
+      ]
+    },
+    "43": {
+      "group_index": 43,
+      "enemy_gfx_indices": [
+        33,
+        76,
+        41,
+        64
+      ],
+      "enemy_names": [
+        "Morel",
+        "MultiOrb_C1",
+        "Wizard_Ranged",
+        "Slimer"
+      ]
+    },
+    "44": {
+      "group_index": 44,
+      "enemy_gfx_indices": [
+        36,
+        41,
+        17,
+        4
+      ],
+      "enemy_names": [
+        "Mage",
+        "Wizard_Ranged",
+        "VampireBat",
+        "BlackGlop"
+      ]
+    },
+    "45": {
+      "group_index": 45,
+      "enemy_gfx_indices": [
+        21,
+        36,
+        52,
+        76
+      ],
+      "enemy_names": [
+        "KillerEye",
+        "Mage",
+        "ZapEye_BurstFire",
+        "MultiOrb_C1"
+      ]
+    },
+    "46": {
+      "group_index": 46,
+      "enemy_gfx_indices": [
+        80,
+        36,
+        21,
+        41
+      ],
+      "enemy_names": [
+        "OrbRing_C1",
+        "Mage",
+        "KillerEye",
+        "Wizard_Ranged"
+      ]
+    },
+    "47": {
+      "group_index": 47,
+      "enemy_gfx_indices": [
+        69,
+        57,
+        36,
+        17
+      ],
+      "enemy_names": [
+        "Wizard_Tele",
+        "Anaconda",
+        "Mage",
+        "VampireBat"
+      ]
+    },
+    "48": {
+      "group_index": 48,
+      "enemy_gfx_indices": [
+        24,
+        69,
+        57,
+        21
+      ],
+      "enemy_names": [
+        "Injector",
+        "Wizard_Tele",
+        "Anaconda",
+        "KillerEye"
+      ]
+    },
+    "49": {
+      "group_index": 49,
+      "enemy_gfx_indices": [
+        24,
+        69,
+        80,
+        57
+      ],
+      "enemy_names": [
+        "Injector",
+        "Wizard_Tele",
+        "OrbRing_C1",
+        "Anaconda"
+      ]
+    },
+    "50": {
+      "group_index": 50,
+      "enemy_gfx_indices": [
+        49,
+        24,
+        80,
+        69
+      ],
+      "enemy_names": [
+        "OrbShield_C2",
+        "Injector",
+        "OrbRing_C1",
+        "Wizard_Tele"
+      ]
+    },
+    "51": {
+      "group_index": 51,
+      "enemy_gfx_indices": [
+        83,
+        80,
+        24,
+        69
+      ],
+      "enemy_names": [
+        "KillerEye_SpiralBurst_B",
+        "OrbRing_C1",
+        "Injector",
+        "Wizard_Tele"
+      ]
+    },
+    "52": {
+      "group_index": 52,
+      "enemy_gfx_indices": [
+        29,
+        49,
+        36,
+        69
+      ],
+      "enemy_names": [
+        "Obliterator",
+        "OrbShield_C2",
+        "Mage",
+        "Wizard_Tele"
+      ]
+    },
+    "53": {
+      "group_index": 53,
+      "enemy_gfx_indices": [
+        9,
+        61,
+        24,
+        80
+      ],
+      "enemy_names": [
+        "Cryptmaster",
+        "Incinerator",
+        "Injector",
+        "OrbRing_C1"
+      ]
+    },
+    "54": {
+      "group_index": 54,
+      "enemy_gfx_indices": [
+        45,
+        29,
+        49,
+        80
+      ],
+      "enemy_names": [
+        "Gargoyle_BF",
+        "Obliterator",
+        "OrbShield_C2",
+        "OrbRing_C1"
+      ]
+    },
+    "55": {
+      "group_index": 55,
+      "enemy_gfx_indices": [
+        77,
+        45,
+        29,
+        4
+      ],
+      "enemy_names": [
+        "MultiOrb_C2",
+        "Gargoyle_BF",
+        "Obliterator",
+        "BlackGlop"
+      ]
+    },
+    "56": {
+      "group_index": 56,
+      "enemy_gfx_indices": [
+        25,
+        65,
+        77,
+        9
+      ],
+      "enemy_names": [
+        "Poisoner",
+        "Slurper",
+        "MultiOrb_C2",
+        "Cryptmaster"
+      ]
+    },
+    "57": {
+      "group_index": 57,
+      "enemy_gfx_indices": [
+        77,
+        25,
+        45,
+        29
+      ],
+      "enemy_names": [
+        "MultiOrb_C2",
+        "Poisoner",
+        "Gargoyle_BF",
+        "Obliterator"
+      ]
+    },
+    "58": {
+      "group_index": 58,
+      "enemy_gfx_indices": [
+        53,
+        45,
+        77,
+        36
+      ],
+      "enemy_names": [
+        "KillerEye_BurstFire",
+        "Gargoyle_BF",
+        "MultiOrb_C2",
+        "Mage"
+      ]
+    },
+    "59": {
+      "group_index": 59,
+      "enemy_gfx_indices": [
+        73,
+        77,
+        53,
+        17
+      ],
+      "enemy_names": [
+        "Wizard_SeqFire",
+        "MultiOrb_C2",
+        "KillerEye_BurstFire",
+        "VampireBat"
+      ]
+    },
+    "60": {
+      "group_index": 60,
+      "enemy_gfx_indices": [
+        37,
+        73,
+        53,
+        25
+      ],
+      "enemy_names": [
+        "Wizard",
+        "Wizard_SeqFire",
+        "KillerEye_BurstFire",
+        "Poisoner"
+      ]
+    },
+    "61": {
+      "group_index": 61,
+      "enemy_gfx_indices": [
+        37,
+        73,
+        53,
+        77
+      ],
+      "enemy_names": [
+        "Wizard",
+        "Wizard_SeqFire",
+        "KillerEye_BurstFire",
+        "MultiOrb_C2"
+      ]
+    },
+    "62": {
+      "group_index": 62,
+      "enemy_gfx_indices": [
+        81,
+        37,
+        73,
+        82
+      ],
+      "enemy_names": [
+        "OrbRing_C2",
+        "Wizard",
+        "Wizard_SeqFire",
+        "KillerEye_SpiralBurst_A"
+      ]
+    },
+    "63": {
+      "group_index": 63,
+      "enemy_gfx_indices": [
+        3,
+        80,
+        80,
+        69
+      ],
+      "enemy_names": [
+        "GoldPudding",
+        "OrbRing_C1",
+        "OrbRing_C1",
+        "Wizard_Tele"
+      ]
+    },
+    "64": {
+      "group_index": 64,
+      "enemy_gfx_indices": [
+        62,
+        7,
+        58,
+        34
+      ],
+      "enemy_names": [
+        "Creeper",
+        "Zombie",
+        "Flamer",
+        "Neophyte"
+      ]
+    },
+    "65": {
+      "group_index": 65,
+      "enemy_gfx_indices": [
+        40,
+        71,
+        34,
+        75
+      ],
+      "enemy_names": [
+        "Mage_Ranged",
+        "Conjurer_SeqFire",
+        "Neophyte",
+        "MultiOrb_C0"
+      ]
+    },
+    "66": {
+      "group_index": 66,
+      "enemy_gfx_indices": [
+        56,
+        8,
+        4,
+        35
+      ],
+      "enemy_names": [
+        "Cobra",
+        "Ghoul",
+        "BlackGlop",
+        "Conjurer"
+      ]
+    },
+    "67": {
+      "group_index": 67,
+      "enemy_gfx_indices": [
+        30,
+        54,
+        22,
+        2
+      ],
+      "enemy_names": [
+        "Puffball",
+        "Rattler",
+        "Needler",
+        "RedGlunk"
+      ]
+    },
+    "68": {
+      "group_index": 68,
+      "enemy_gfx_indices": [
+        55,
+        71,
+        7,
+        58
+      ],
+      "enemy_names": [
+        "Python",
+        "Conjurer_SeqFire",
+        "Zombie",
+        "Flamer"
+      ]
+    },
+    "69": {
+      "group_index": 69,
+      "enemy_gfx_indices": [
+        33,
+        31,
+        30,
+        76
+      ],
+      "enemy_names": [
+        "Morel",
+        "Toadstool",
+        "Puffball",
+        "MultiOrb_C1"
+      ]
+    }
+  },
+  "overworld_encounter_map": {
+    "description": "8 rows × 16 columns — index = row*16+col; 0 = no encounter; 1–$45 = group index",
+    "rows": [
+      [
+        40,
+        40,
+        40,
+        39,
+        39,
+        39,
+        36,
+        0,
+        33,
+        35,
+        32,
+        32,
+        30,
+        30,
+        65,
+        0
+      ],
+      [
+        42,
+        42,
+        44,
+        46,
+        37,
+        37,
+        36,
+        36,
+        33,
+        33,
+        0,
+        0,
+        30,
+        65,
+        0,
+        0
+      ],
+      [
+        0,
+        45,
+        45,
+        45,
+        46,
+        46,
+        52,
+        54,
+        54,
+        54,
+        55,
+        55,
+        27,
+        28,
+        28,
+        0
+      ],
+      [
+        0,
+        50,
+        50,
+        63,
+        30,
+        46,
+        11,
+        0,
+        0,
+        57,
+        0,
+        0,
+        27,
+        27,
+        26,
+        28
+      ],
+      [
+        3,
+        2,
+        5,
+        5,
+        8,
+        8,
+        10,
+        0,
+        0,
+        57,
+        0,
+        61,
+        24,
+        24,
+        23,
+        0
+      ],
+      [
+        4,
+        2,
+        7,
+        7,
+        8,
+        8,
+        9,
+        0,
+        58,
+        58,
+        59,
+        60,
+        22,
+        23,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        15,
+        0,
+        0,
+        13,
+        17,
+        17,
+        18,
+        18,
+        20,
+        0,
+        22,
+        23,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        14,
+        14,
+        13,
+        15,
+        15,
+        17,
+        0,
+        18,
+        21,
+        20,
+        22,
+        0,
+        0,
+        0
+      ]
+    ]
+  },
+  "cave_room_encounter_table": {
+    "description": "42 bytes — indexed by cave room ID $00–$29; value = group index",
+    "rooms": [
+      1,
+      6,
+      6,
+      12,
+      12,
+      16,
+      67,
+      19,
+      19,
+      64,
+      64,
+      25,
+      25,
+      29,
+      29,
+      31,
+      31,
+      31,
+      34,
+      66,
+      38,
+      38,
+      41,
+      47,
+      47,
+      48,
+      49,
+      49,
+      53,
+      53,
+      56,
+      56,
+      62,
+      62,
+      62,
+      41,
+      43,
+      45,
+      69,
+      45,
+      43,
+      45,
+      51,
+      68
+    ]
+  }
+}

@@ -1120,7 +1120,9 @@
           "priority": "medium",
           "effort": "large",
           "note": "Use Node.js per project convention (no Python)",
-          "status": "todo"
+          "status": "done",
+          "notes": "tools/extract_game_data.js extracts: 85 enemy types + 70 encounter groups + overworld/cave encounter maps (battledata.asm); 16-town shop assortments + prices + service prices + resale maps (shopdata.asm); 23 magic entries with MP costs / damage / element (shopdata.asm); 31 level-up stat gain rows + 57 equipment stat modifiers (playerstats.asm). Outputs to tools/data/: enemies.json, shops.json, service_prices.json, magic_tables.json, player_stats.json.",
+          "completed_at": "2026-03-05"
         },
         {
           "id": "EDIT-007",
@@ -2185,8 +2187,8 @@
   "statistics": {
     "total_tasks": 139,
     "by_status": {
-      "done": 122,
-      "todo": 17
+      "done": 123,
+      "todo": 16
     },
     "by_priority": {
       "critical": 1,

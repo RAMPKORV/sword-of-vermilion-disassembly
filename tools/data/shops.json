@@ -1,0 +1,3025 @@
+{
+  "_meta": {
+    "generated_by": "tools/extract_game_data.js",
+    "source": "src/shopdata.asm",
+    "description": "Town shop assortments, prices, and service prices"
+  },
+  "town_shops": [
+    {
+      "town_id": 0,
+      "town_name": "WYCLIF",
+      "shops": {
+        "item": {
+          "assortment_label": "WyclifItemShopAssortment",
+          "assortment": {
+            "label": "WyclifItemShopAssortment",
+            "shop_type": "item",
+            "item_count": 2,
+            "items": [
+              {
+                "item_type": "item",
+                "item_constant": "ITEM_HERBS",
+                "item_id": 0,
+                "item_name": "HERBS"
+              },
+              {
+                "item_type": "item",
+                "item_constant": "ITEM_CANDLE",
+                "item_id": 1,
+                "item_name": "CANDLE"
+              }
+            ]
+          },
+          "price_label": "WyclifItemShopPrices",
+          "prices": [
+            32,
+            16
+          ]
+        },
+        "equipment": {
+          "assortment_label": "WyclifEquipmentShopAssortment",
+          "assortment": {
+            "label": "WyclifEquipmentShopAssortment",
+            "shop_type": "equipment",
+            "item_count": 5,
+            "items": [
+              {
+                "item_type": "equipment",
+                "equip_type_constant": "EQUIPMENT_TYPE_SWORD",
+                "equip_type": 4,
+                "equip_id_constant": "EQUIPMENT_SWORD_BRONZE",
+                "equip_id": 0,
+                "item_name": "SWORD_BRONZE"
+              },
+              {
+                "item_type": "equipment",
+                "equip_type_constant": "EQUIPMENT_TYPE_SHIELD",
+                "equip_type": 8,
+                "equip_id_constant": "EQUIPMENT_SHIELD_LEATHER",
+                "equip_id": 20,
+                "item_name": "SHIELD_LEATHER"
+              },
+              {
+                "item_type": "equipment",
+                "equip_type_constant": "EQUIPMENT_TYPE_SHIELD",
+                "equip_type": 8,
+                "equip_id_constant": "EQUIPMENT_SHIELD_SMALL",
+                "equip_id": 21,
+                "item_name": "SHIELD_SMALL"
+              },
+              {
+                "item_type": "equipment",
+                "equip_type_constant": "EQUIPMENT_TYPE_ARMOR",
+                "equip_type": 16,
+                "equip_id_constant": "EQUIPMENT_ARMOR_LEATHER",
+                "equip_id": 40,
+                "item_name": "ARMOR_LEATHER"
+              },
+              {
+                "item_type": "equipment",
+                "equip_type_constant": "EQUIPMENT_TYPE_ARMOR",
+                "equip_type": 16,
+                "equip_id_constant": "EQUIPMENT_ARMOR_BRONZE",
+                "equip_id": 41,
+                "item_name": "ARMOR_BRONZE"
+              }
+            ]
+          },
+          "price_label": "WyclifEquipmentShopPrices",
+          "prices": [
+            256,
+            80,
+            128,
+            512,
+            1024
+          ]
+        },
+        "magic_buy": {
+          "assortment_label": "ParmaMagicShopAssortment",
+          "assortment": {
+            "label": "ParmaMagicShopAssortment",
+            "shop_type": "magic",
+            "item_count": 2,
+            "items": [
+              {
+                "item_type": "magic",
+                "magic_type_constant": "MAGIC_TYPE_BATTLE",
+                "magic_type": 2,
+                "magic_id_constant": "MAGIC_FERROS",
+                "magic_id": 5,
+                "item_name": "FERROS"
+              },
+              {
+                "item_type": "magic",
+                "magic_type_constant": "MAGIC_TYPE_FIELD",
+                "magic_type": 0,
+                "magic_id_constant": "MAGIC_SANGUA",
+                "magic_id": 18,
+                "item_name": "SANGUA"
+              }
+            ]
+          },
+          "price_label": "ParmaMagicShopPrices",
+          "prices": [
+            1280,
+            2048
+          ]
+        },
+        "magic_sell": {
+          "assortment_label": "ParmaMagicShopAssortment",
+          "assortment": {
+            "label": "ParmaMagicShopAssortment",
+            "shop_type": "magic",
+            "item_count": 2,
+            "items": [
+              {
+                "item_type": "magic",
+                "magic_type_constant": "MAGIC_TYPE_BATTLE",
+                "magic_type": 2,
+                "magic_id_constant": "MAGIC_FERROS",
+                "magic_id": 5,
+                "item_name": "FERROS"
+              },
+              {
+                "item_type": "magic",
+                "magic_type_constant": "MAGIC_TYPE_FIELD",
+                "magic_type": 0,
+                "magic_id_constant": "MAGIC_SANGUA",
+                "magic_id": 18,
+                "item_name": "SANGUA"
+              }
+            ]
+          },
+          "price_label": "ParmaMagicShopPrices",
+          "prices": [
+            1280,
+            2048
+          ]
+        }
+      }
+    },
+    {
+      "town_id": 1,
+      "town_name": "PARMA",
+      "shops": {
+        "item": {
+          "assortment_label": "ParmaItemShopAssortment",
+          "assortment": {
+            "label": "ParmaItemShopAssortment",
+            "shop_type": "item",
+            "item_count": 5,
+            "items": [
+              {
+                "item_type": "item",
+                "item_constant": "ITEM_CANDLE",
+                "item_id": 1,
+                "item_name": "CANDLE"
+              },
+              {
+                "item_type": "item",
+                "item_constant": "ITEM_HERBS",
+                "item_id": 0,
+                "item_name": "HERBS"
+              },
+              {
+                "item_type": "item",
+                "item_constant": "ITEM_POISON_BALM",
+                "item_id": 3,
+                "item_name": "POISON_BALM"
+              },
+              {
+                "item_type": "item",
+                "item_constant": "ITEM_LANTERN",
+                "item_id": 2,
+                "item_name": "LANTERN"
+              },
+              {
+                "item_type": "item",
+                "item_constant": "ITEM_GNOME_STONE",
+                "item_id": 31,
+                "item_name": "GNOME_STONE"
+              }
+            ]
+          },
+          "price_label": "ParmaItemShopPrices",
+          "prices": [
+            21,
+            37,
+            64,
+            101,
+            768
+          ]
+        },
+        "equipment": {
+          "assortment_label": "ParmaEquipmentShopAssortment",
+          "assortment": {
+            "label": "ParmaEquipmentShopAssortment",
+            "shop_type": "equipment",
+            "item_count": 6,
+            "items": [
+              {
+                "item_type": "equipment",
+                "equip_type_constant": "EQUIPMENT_TYPE_SWORD",
+                "equip_type": 4,
+                "equip_id_constant": "EQUIPMENT_SWORD_IRON",
+                "equip_id": 1,
+                "item_name": "SWORD_IRON"
+              },
+              {
+                "item_type": "equipment",
+                "equip_type_constant": "EQUIPMENT_TYPE_SWORD",
+                "equip_type": 4,
+                "equip_id_constant": "EQUIPMENT_SWORD_SHARP",
+                "equip_id": 2,
+                "item_name": "SWORD_SHARP"
+              },
+              {
+                "item_type": "equipment",
+                "equip_type_constant": "EQUIPMENT_TYPE_SHIELD",
+                "equip_type": 8,
+                "equip_id_constant": "EQUIPMENT_SHIELD_LARGE",
+                "equip_id": 22,
+                "item_name": "SHIELD_LARGE"
+              },
+              {
+                "item_type": "equipment",
+                "equip_type_constant": "EQUIPMENT_TYPE_SHIELD",
+                "equip_type": 8,
+                "equip_id_constant": "EQUIPMENT_SHIELD_SILVER",
+                "equip_id": 23,
+                "item_name": "SHIELD_SILVER"
+              },
+              {
+                "item_type": "equipment",
+                "equip_type_constant": "EQUIPMENT_TYPE_ARMOR",
+                "equip_type": 16,
+                "equip_id_constant": "EQUIPMENT_ARMOR_METAL",
+                "equip_id": 42,
+                "item_name": "ARMOR_METAL"
+              },
+              {
+                "item_type": "equipment",
+                "equip_type_constant": "EQUIPMENT_TYPE_ARMOR",
+                "equip_type": 16,
+                "equip_id_constant": "EQUIPMENT_ARMOR_SCALE",
+                "equip_id": 43,
+                "item_name": "ARMOR_SCALE"
+              }
+            ]
+          },
+          "price_label": "ParmaEquipmentShopPrices",
+          "prices": [
+            1024,
+            2048,
+            592,
+            1280,
+            2304,
+            4352
+          ]
+        },
+        "magic_buy": {
+          "assortment_label": "ParmaMagicShopAssortment",
+          "assortment": {
+            "label": "ParmaMagicShopAssortment",
+            "shop_type": "magic",
+            "item_count": 2,
+            "items": [
+              {
+                "item_type": "magic",
+                "magic_type_constant": "MAGIC_TYPE_BATTLE",
+                "magic_type": 2,
+                "magic_id_constant": "MAGIC_FERROS",
+                "magic_id": 5,
+                "item_name": "FERROS"
+              },
+              {
+                "item_type": "magic",
+                "magic_type_constant": "MAGIC_TYPE_FIELD",
+                "magic_type": 0,
+                "magic_id_constant": "MAGIC_SANGUA",
+                "magic_id": 18,
+                "item_name": "SANGUA"
+              }
+            ]
+          },
+          "price_label": "ParmaMagicShopPrices",
+          "prices": [
+            1280,
+            2048
+          ]
+        },
+        "magic_sell": {
+          "assortment_label": "ParmaMagicShopAssortment",
+          "assortment": {
+            "label": "ParmaMagicShopAssortment",
+            "shop_type": "magic",
+            "item_count": 2,
+            "items": [
+              {
+                "item_type": "magic",
+                "magic_type_constant": "MAGIC_TYPE_BATTLE",
+                "magic_type": 2,
+                "magic_id_constant": "MAGIC_FERROS",
+                "magic_id": 5,
+                "item_name": "FERROS"
+              },
+              {
+                "item_type": "magic",
+                "magic_type_constant": "MAGIC_TYPE_FIELD",
+                "magic_type": 0,
+                "magic_id_constant": "MAGIC_SANGUA",
+                "magic_id": 18,
+                "item_name": "SANGUA"
+              }
+            ]
+          },
+          "price_label": "ParmaMagicShopPrices",
+          "prices": [
+            1280,
+            2048
+          ]
+        }
+      }
+    },
+    {
+      "town_id": 2,
+      "town_name": "WATLING",
+      "shops": {
+        "item": {
+          "assortment_label": "DeepdaleItemShopAssortment",
+          "assortment": {
+            "label": "DeepdaleItemShopAssortment",
+            "shop_type": "item",
+            "item_count": 5,
+            "items": [
+              {
+                "item_type": "item",
+                "item_constant": "ITEM_HERBS",
+                "item_id": 0,
+                "item_name": "HERBS"
+              },
+              {
+                "item_type": "item",
+                "item_constant": "ITEM_MEDICINE",
+                "item_id": 27,
+                "item_name": "MEDICINE"
+              },
+              {
+                "item_type": "item",
+                "item_constant": "ITEM_POISON_BALM",
+                "item_id": 3,
+                "item_name": "POISON_BALM"
+              },
+              {
+                "item_type": "item",
+                "item_constant": "ITEM_LANTERN",
+                "item_id": 2,
+                "item_name": "LANTERN"
+              },
+              {
+                "item_type": "item",
+                "item_constant": "ITEM_GNOME_STONE",
+                "item_id": 31,
+                "item_name": "GNOME_STONE"
+              }
+            ]
+          },
+          "price_label": "DeepdaleItemShopPrices",
+          "prices": [
+            48,
+            288,
+            96,
+            112,
+            848
+          ]
+        },
+        "equipment": {
+          "assortment_label": "DeepdaleEquipmentShopAssortment",
+          "assortment": {
+            "label": "DeepdaleEquipmentShopAssortment",
+            "shop_type": "equipment",
+            "item_count": 6,
+            "items": [
+              {
+                "item_type": "equipment",
+                "equip_type_constant": "EQUIPMENT_TYPE_SWORD",
+                "equip_type": 4,
+                "equip_id_constant": "EQUIPMENT_SWORD_LONG",
+                "equip_id": 3,
+                "item_name": "SWORD_LONG"
+              },
+              {
+                "item_type": "equipment",
+                "equip_type_constant": "EQUIPMENT_TYPE_SWORD",
+                "equip_type": 4,
+                "equip_id_constant": "EQUIPMENT_SWORD_SILVER",
+                "equip_id": 4,
+                "item_name": "SWORD_SILVER"
+              },
+              {
+                "item_type": "equipment",
+                "equip_type_constant": "EQUIPMENT_TYPE_SHIELD",
+                "equip_type": 8,
+                "equip_id_constant": "EQUIPMENT_SHIELD_GOLD",
+                "equip_id": 24,
+                "item_name": "SHIELD_GOLD"
+              },
+              {
+                "item_type": "equipment",
+                "equip_type_constant": "EQUIPMENT_TYPE_SHIELD",
+                "equip_type": 8,
+                "equip_id_constant": "EQUIPMENT_SHIELD_PLATINUM",
+                "equip_id": 25,
+                "item_name": "SHIELD_PLATINUM"
+              },
+              {
+                "item_type": "equipment",
+                "equip_type_constant": "EQUIPMENT_TYPE_ARMOR",
+                "equip_type": 16,
+                "equip_id_constant": "EQUIPMENT_ARMOR_PLATE",
+                "equip_id": 44,
+                "item_name": "ARMOR_PLATE"
+              },
+              {
+                "item_type": "equipment",
+                "equip_type_constant": "EQUIPMENT_TYPE_ARMOR",
+                "equip_type": 16,
+                "equip_id_constant": "EQUIPMENT_ARMOR_CRYSTAL",
+                "equip_id": 47,
+                "item_name": "ARMOR_CRYSTAL"
+              }
+            ]
+          },
+          "price_label": "DeepdaleEquipmentShopPrices",
+          "prices": [
+            6144,
+            14080,
+            5376,
+            12800,
+            10240,
+            17664
+          ]
+        },
+        "magic_buy": {
+          "assortment_label": "DeepdaleMagicShopAssortment",
+          "assortment": {
+            "label": "DeepdaleMagicShopAssortment",
+            "shop_type": "magic",
+            "item_count": 2,
+            "items": [
+              {
+                "item_type": "magic",
+                "magic_type_constant": "MAGIC_TYPE_BATTLE",
+                "magic_type": 2,
+                "magic_id_constant": "MAGIC_VOLTI",
+                "magic_id": 2,
+                "item_name": "VOLTI"
+              },
+              {
+                "item_type": "magic",
+                "magic_type_constant": "MAGIC_TYPE_FIELD",
+                "magic_type": 0,
+                "magic_id_constant": "MAGIC_SANGUA",
+                "magic_id": 18,
+                "item_name": "SANGUA"
+              }
+            ]
+          },
+          "price_label": "DeepdaleMagicShopPrices",
+          "prices": [
+            4608,
+            2304
+          ]
+        },
+        "magic_sell": {
+          "assortment_label": "ParmaMagicShopAssortment",
+          "assortment": {
+            "label": "ParmaMagicShopAssortment",
+            "shop_type": "magic",
+            "item_count": 2,
+            "items": [
+              {
+                "item_type": "magic",
+                "magic_type_constant": "MAGIC_TYPE_BATTLE",
+                "magic_type": 2,
+                "magic_id_constant": "MAGIC_FERROS",
+                "magic_id": 5,
+                "item_name": "FERROS"
+              },
+              {
+                "item_type": "magic",
+                "magic_type_constant": "MAGIC_TYPE_FIELD",
+                "magic_type": 0,
+                "magic_id_constant": "MAGIC_SANGUA",
+                "magic_id": 18,
+                "item_name": "SANGUA"
+              }
+            ]
+          },
+          "price_label": "ParmaMagicShopPrices",
+          "prices": [
+            1280,
+            2048
+          ]
+        }
+      }
+    },
+    {
+      "town_id": 3,
+      "town_name": "DEEPDALE",
+      "shops": {
+        "item": {
+          "assortment_label": "DeepdaleItemShopAssortment",
+          "assortment": {
+            "label": "DeepdaleItemShopAssortment",
+            "shop_type": "item",
+            "item_count": 5,
+            "items": [
+              {
+                "item_type": "item",
+                "item_constant": "ITEM_HERBS",
+                "item_id": 0,
+                "item_name": "HERBS"
+              },
+              {
+                "item_type": "item",
+                "item_constant": "ITEM_MEDICINE",
+                "item_id": 27,
+                "item_name": "MEDICINE"
+              },
+              {
+                "item_type": "item",
+                "item_constant": "ITEM_POISON_BALM",
+                "item_id": 3,
+                "item_name": "POISON_BALM"
+              },
+              {
+                "item_type": "item",
+                "item_constant": "ITEM_LANTERN",
+                "item_id": 2,
+                "item_name": "LANTERN"
+              },
+              {
+                "item_type": "item",
+                "item_constant": "ITEM_GNOME_STONE",
+                "item_id": 31,
+                "item_name": "GNOME_STONE"
+              }
+            ]
+          },
+          "price_label": "DeepdaleItemShopPrices",
+          "prices": [
+            48,
+            288,
+            96,
+            112,
+            848
+          ]
+        },
+        "equipment": {
+          "assortment_label": "DeepdaleEquipmentShopAssortment",
+          "assortment": {
+            "label": "DeepdaleEquipmentShopAssortment",
+            "shop_type": "equipment",
+            "item_count": 6,
+            "items": [
+              {
+                "item_type": "equipment",
+                "equip_type_constant": "EQUIPMENT_TYPE_SWORD",
+                "equip_type": 4,
+                "equip_id_constant": "EQUIPMENT_SWORD_LONG",
+                "equip_id": 3,
+                "item_name": "SWORD_LONG"
+              },
+              {
+                "item_type": "equipment",
+                "equip_type_constant": "EQUIPMENT_TYPE_SWORD",
+                "equip_type": 4,
+                "equip_id_constant": "EQUIPMENT_SWORD_SILVER",
+                "equip_id": 4,
+                "item_name": "SWORD_SILVER"
+              },
+              {
+                "item_type": "equipment",
+                "equip_type_constant": "EQUIPMENT_TYPE_SHIELD",
+                "equip_type": 8,
+                "equip_id_constant": "EQUIPMENT_SHIELD_GOLD",
+                "equip_id": 24,
+                "item_name": "SHIELD_GOLD"
+              },
+              {
+                "item_type": "equipment",
+                "equip_type_constant": "EQUIPMENT_TYPE_SHIELD",
+                "equip_type": 8,
+                "equip_id_constant": "EQUIPMENT_SHIELD_PLATINUM",
+                "equip_id": 25,
+                "item_name": "SHIELD_PLATINUM"
+              },
+              {
+                "item_type": "equipment",
+                "equip_type_constant": "EQUIPMENT_TYPE_ARMOR",
+                "equip_type": 16,
+                "equip_id_constant": "EQUIPMENT_ARMOR_PLATE",
+                "equip_id": 44,
+                "item_name": "ARMOR_PLATE"
+              },
+              {
+                "item_type": "equipment",
+                "equip_type_constant": "EQUIPMENT_TYPE_ARMOR",
+                "equip_type": 16,
+                "equip_id_constant": "EQUIPMENT_ARMOR_CRYSTAL",
+                "equip_id": 47,
+                "item_name": "ARMOR_CRYSTAL"
+              }
+            ]
+          },
+          "price_label": "DeepdaleEquipmentShopPrices",
+          "prices": [
+            6144,
+            14080,
+            5376,
+            12800,
+            10240,
+            17664
+          ]
+        },
+        "magic_buy": {
+          "assortment_label": "DeepdaleMagicShopAssortment",
+          "assortment": {
+            "label": "DeepdaleMagicShopAssortment",
+            "shop_type": "magic",
+            "item_count": 2,
+            "items": [
+              {
+                "item_type": "magic",
+                "magic_type_constant": "MAGIC_TYPE_BATTLE",
+                "magic_type": 2,
+                "magic_id_constant": "MAGIC_VOLTI",
+                "magic_id": 2,
+                "item_name": "VOLTI"
+              },
+              {
+                "item_type": "magic",
+                "magic_type_constant": "MAGIC_TYPE_FIELD",
+                "magic_type": 0,
+                "magic_id_constant": "MAGIC_SANGUA",
+                "magic_id": 18,
+                "item_name": "SANGUA"
+              }
+            ]
+          },
+          "price_label": "DeepdaleMagicShopPrices",
+          "prices": [
+            4608,
+            2304
+          ]
+        },
+        "magic_sell": {
+          "assortment_label": "ParmaMagicShopAssortment",
+          "assortment": {
+            "label": "ParmaMagicShopAssortment",
+            "shop_type": "magic",
+            "item_count": 2,
+            "items": [
+              {
+                "item_type": "magic",
+                "magic_type_constant": "MAGIC_TYPE_BATTLE",
+                "magic_type": 2,
+                "magic_id_constant": "MAGIC_FERROS",
+                "magic_id": 5,
+                "item_name": "FERROS"
+              },
+              {
+                "item_type": "magic",
+                "magic_type_constant": "MAGIC_TYPE_FIELD",
+                "magic_type": 0,
+                "magic_id_constant": "MAGIC_SANGUA",
+                "magic_id": 18,
+                "item_name": "SANGUA"
+              }
+            ]
+          },
+          "price_label": "ParmaMagicShopPrices",
+          "prices": [
+            1280,
+            2048
+          ]
+        }
+      }
+    },
+    {
+      "town_id": 4,
+      "town_name": "STOW1",
+      "shops": {
+        "item": {
+          "assortment_label": "StowItemShopAssortment",
+          "assortment": {
+            "label": "StowItemShopAssortment",
+            "shop_type": "item",
+            "item_count": 6,
+            "items": [
+              {
+                "item_type": "item",
+                "item_constant": "ITEM_HERBS",
+                "item_id": 0,
+                "item_name": "HERBS"
+              },
+              {
+                "item_type": "item",
+                "item_constant": "ITEM_MEDICINE",
+                "item_id": 27,
+                "item_name": "MEDICINE"
+              },
+              {
+                "item_type": "item",
+                "item_constant": "ITEM_POISON_BALM",
+                "item_id": 3,
+                "item_name": "POISON_BALM"
+              },
+              {
+                "item_type": "item",
+                "item_constant": "ITEM_LANTERN",
+                "item_id": 2,
+                "item_name": "LANTERN"
+              },
+              {
+                "item_type": "item",
+                "item_constant": "ITEM_GNOME_STONE",
+                "item_id": 31,
+                "item_name": "GNOME_STONE"
+              },
+              {
+                "item_type": "item",
+                "item_constant": "ITEM_GRIFFIN_WING",
+                "item_id": 29,
+                "item_name": "GRIFFIN_WING"
+              }
+            ]
+          },
+          "price_label": "StowItemShopPrices",
+          "prices": [
+            48,
+            293,
+            101,
+            112,
+            885,
+            2080
+          ]
+        },
+        "equipment": {
+          "assortment_label": "MalagaEquipmentShopAssortment",
+          "assortment": {
+            "label": "MalagaEquipmentShopAssortment",
+            "shop_type": "equipment",
+            "item_count": 5,
+            "items": [
+              {
+                "item_type": "equipment",
+                "equip_type_constant": "EQUIPMENT_TYPE_SWORD",
+                "equip_type": 4,
+                "equip_id_constant": "EQUIPMENT_SWORD_PRIME",
+                "equip_id": 5,
+                "item_name": "SWORD_PRIME"
+              },
+              {
+                "item_type": "equipment",
+                "equip_type_constant": "EQUIPMENT_TYPE_SWORD",
+                "equip_type": 4,
+                "equip_id_constant": "EQUIPMENT_SWORD_GOLDEN",
+                "equip_id": 6,
+                "item_name": "SWORD_GOLDEN"
+              },
+              {
+                "item_type": "equipment",
+                "equip_type_constant": "EQUIPMENT_TYPE_SHIELD",
+                "equip_type": 8,
+                "equip_id_constant": "EQUIPMENT_SHIELD_DIAMOND",
+                "equip_id": 28,
+                "item_name": "SHIELD_DIAMOND"
+              },
+              {
+                "item_type": "equipment",
+                "equip_type_constant": "EQUIPMENT_TYPE_ARMOR",
+                "equip_type": 16,
+                "equip_id_constant": "EQUIPMENT_ARMOR_SILVER",
+                "equip_id": 45,
+                "item_name": "ARMOR_SILVER"
+              },
+              {
+                "item_type": "equipment",
+                "equip_type_constant": "EQUIPMENT_TYPE_ARMOR",
+                "equip_type": 16,
+                "equip_id_constant": "EQUIPMENT_ARMOR_KNIGHT",
+                "equip_id": 50,
+                "item_name": "ARMOR_KNIGHT"
+              }
+            ]
+          },
+          "price_label": "MalagaEquipmentShopPrices",
+          "prices": [
+            20736,
+            33280,
+            16640,
+            28672,
+            37376
+          ]
+        },
+        "magic_buy": {
+          "assortment_label": "StowMagicShopAssortment",
+          "assortment": {
+            "label": "StowMagicShopAssortment",
+            "shop_type": "magic",
+            "item_count": 3,
+            "items": [
+              {
+                "item_type": "magic",
+                "magic_type_constant": "MAGIC_TYPE_BATTLE",
+                "magic_type": 2,
+                "magic_id_constant": "MAGIC_COPPEROS",
+                "magic_id": 6,
+                "item_name": "COPPEROS"
+              },
+              {
+                "item_type": "magic",
+                "magic_type_constant": "MAGIC_TYPE_BATTLE",
+                "magic_type": 2,
+                "magic_id_constant": "MAGIC_AERO",
+                "magic_id": 0,
+                "item_name": "AERO"
+              },
+              {
+                "item_type": "magic",
+                "magic_type_constant": "MAGIC_TYPE_BATTLE",
+                "magic_type": 2,
+                "magic_id_constant": "MAGIC_VOLTI",
+                "magic_id": 2,
+                "item_name": "VOLTI"
+              }
+            ]
+          },
+          "price_label": "StowMagicShopPrices",
+          "prices": [
+            14080,
+            12800,
+            5120
+          ]
+        },
+        "magic_sell": {
+          "assortment_label": "ParmaMagicShopAssortment",
+          "assortment": {
+            "label": "ParmaMagicShopAssortment",
+            "shop_type": "magic",
+            "item_count": 2,
+            "items": [
+              {
+                "item_type": "magic",
+                "magic_type_constant": "MAGIC_TYPE_BATTLE",
+                "magic_type": 2,
+                "magic_id_constant": "MAGIC_FERROS",
+                "magic_id": 5,
+                "item_name": "FERROS"
+              },
+              {
+                "item_type": "magic",
+                "magic_type_constant": "MAGIC_TYPE_FIELD",
+                "magic_type": 0,
+                "magic_id_constant": "MAGIC_SANGUA",
+                "magic_id": 18,
+                "item_name": "SANGUA"
+              }
+            ]
+          },
+          "price_label": "ParmaMagicShopPrices",
+          "prices": [
+            1280,
+            2048
+          ]
+        }
+      }
+    },
+    {
+      "town_id": 5,
+      "town_name": "STOW2",
+      "shops": {
+        "item": {
+          "assortment_label": "KeltwickItemShopAssortment",
+          "assortment": {
+            "label": "KeltwickItemShopAssortment",
+            "shop_type": "item",
+            "item_count": 5,
+            "items": [
+              {
+                "item_type": "item",
+                "item_constant": "ITEM_MEDICINE",
+                "item_id": 27,
+                "item_name": "MEDICINE"
+              },
+              {
+                "item_type": "item",
+                "item_constant": "ITEM_POISON_BALM",
+                "item_id": 3,
+                "item_name": "POISON_BALM"
+              },
+              {
+                "item_type": "item",
+                "item_constant": "ITEM_LANTERN",
+                "item_id": 2,
+                "item_name": "LANTERN"
+              },
+              {
+                "item_type": "item",
+                "item_constant": "ITEM_GRIFFIN_WING",
+                "item_id": 29,
+                "item_name": "GRIFFIN_WING"
+              },
+              {
+                "item_type": "item",
+                "item_constant": "ITEM_ALARM_CLOCK",
+                "item_id": 4,
+                "item_name": "ALARM_CLOCK"
+              }
+            ]
+          },
+          "price_label": "KeltwickItemShopPrices",
+          "prices": [
+            304,
+            112,
+            117,
+            2320,
+            8192
+          ]
+        },
+        "equipment": {
+          "assortment_label": "MalagaEquipmentShopAssortment",
+          "assortment": {
+            "label": "MalagaEquipmentShopAssortment",
+            "shop_type": "equipment",
+            "item_count": 5,
+            "items": [
+              {
+                "item_type": "equipment",
+                "equip_type_constant": "EQUIPMENT_TYPE_SWORD",
+                "equip_type": 4,
+                "equip_id_constant": "EQUIPMENT_SWORD_PRIME",
+                "equip_id": 5,
+                "item_name": "SWORD_PRIME"
+              },
+              {
+                "item_type": "equipment",
+                "equip_type_constant": "EQUIPMENT_TYPE_SWORD",
+                "equip_type": 4,
+                "equip_id_constant": "EQUIPMENT_SWORD_GOLDEN",
+                "equip_id": 6,
+                "item_name": "SWORD_GOLDEN"
+              },
+              {
+                "item_type": "equipment",
+                "equip_type_constant": "EQUIPMENT_TYPE_SHIELD",
+                "equip_type": 8,
+                "equip_id_constant": "EQUIPMENT_SHIELD_DIAMOND",
+                "equip_id": 28,
+                "item_name": "SHIELD_DIAMOND"
+              },
+              {
+                "item_type": "equipment",
+                "equip_type_constant": "EQUIPMENT_TYPE_ARMOR",
+                "equip_type": 16,
+                "equip_id_constant": "EQUIPMENT_ARMOR_SILVER",
+                "equip_id": 45,
+                "item_name": "ARMOR_SILVER"
+              },
+              {
+                "item_type": "equipment",
+                "equip_type_constant": "EQUIPMENT_TYPE_ARMOR",
+                "equip_type": 16,
+                "equip_id_constant": "EQUIPMENT_ARMOR_KNIGHT",
+                "equip_id": 50,
+                "item_name": "ARMOR_KNIGHT"
+              }
+            ]
+          },
+          "price_label": "MalagaEquipmentShopPrices",
+          "prices": [
+            20736,
+            33280,
+            16640,
+            28672,
+            37376
+          ]
+        },
+        "magic_buy": {
+          "assortment_label": "KeltwickMagicShopAssortment",
+          "assortment": {
+            "label": "KeltwickMagicShopAssortment",
+            "shop_type": "magic",
+            "item_count": 5,
+            "items": [
+              {
+                "item_type": "magic",
+                "magic_type_constant": "MAGIC_TYPE_BATTLE",
+                "magic_type": 2,
+                "magic_id_constant": "MAGIC_AERO",
+                "magic_id": 0,
+                "item_name": "AERO"
+              },
+              {
+                "item_type": "magic",
+                "magic_type_constant": "MAGIC_TYPE_FIELD",
+                "magic_type": 0,
+                "magic_id_constant": "MAGIC_LUMINOS",
+                "magic_id": 17,
+                "item_name": "LUMINOS"
+              },
+              {
+                "item_type": "magic",
+                "magic_type_constant": "MAGIC_TYPE_BATTLE",
+                "magic_type": 2,
+                "magic_id_constant": "MAGIC_HYDRO",
+                "magic_id": 9,
+                "item_name": "HYDRO"
+              },
+              {
+                "item_type": "magic",
+                "magic_type_constant": "MAGIC_TYPE_BATTLE",
+                "magic_type": 2,
+                "magic_id_constant": "MAGIC_CHRONO",
+                "magic_id": 11,
+                "item_name": "CHRONO"
+              },
+              {
+                "item_type": "magic",
+                "magic_type_constant": "MAGIC_TYPE_FIELD",
+                "magic_type": 0,
+                "magic_id_constant": "MAGIC_TOXIOS",
+                "magic_id": 21,
+                "item_name": "TOXIOS"
+              }
+            ]
+          },
+          "price_label": "KeltwickMagicShopPrices",
+          "prices": [
+            13312,
+            20992,
+            17664,
+            22272,
+            34048
+          ]
+        },
+        "magic_sell": {
+          "assortment_label": "ParmaMagicShopAssortment",
+          "assortment": {
+            "label": "ParmaMagicShopAssortment",
+            "shop_type": "magic",
+            "item_count": 2,
+            "items": [
+              {
+                "item_type": "magic",
+                "magic_type_constant": "MAGIC_TYPE_BATTLE",
+                "magic_type": 2,
+                "magic_id_constant": "MAGIC_FERROS",
+                "magic_id": 5,
+                "item_name": "FERROS"
+              },
+              {
+                "item_type": "magic",
+                "magic_type_constant": "MAGIC_TYPE_FIELD",
+                "magic_type": 0,
+                "magic_id_constant": "MAGIC_SANGUA",
+                "magic_id": 18,
+                "item_name": "SANGUA"
+              }
+            ]
+          },
+          "price_label": "ParmaMagicShopPrices",
+          "prices": [
+            1280,
+            2048
+          ]
+        }
+      }
+    },
+    {
+      "town_id": 6,
+      "town_name": "KELTWICK",
+      "shops": {
+        "item": {
+          "assortment_label": "KeltwickItemShopAssortment",
+          "assortment": {
+            "label": "KeltwickItemShopAssortment",
+            "shop_type": "item",
+            "item_count": 5,
+            "items": [
+              {
+                "item_type": "item",
+                "item_constant": "ITEM_MEDICINE",
+                "item_id": 27,
+                "item_name": "MEDICINE"
+              },
+              {
+                "item_type": "item",
+                "item_constant": "ITEM_POISON_BALM",
+                "item_id": 3,
+                "item_name": "POISON_BALM"
+              },
+              {
+                "item_type": "item",
+                "item_constant": "ITEM_LANTERN",
+                "item_id": 2,
+                "item_name": "LANTERN"
+              },
+              {
+                "item_type": "item",
+                "item_constant": "ITEM_GRIFFIN_WING",
+                "item_id": 29,
+                "item_name": "GRIFFIN_WING"
+              },
+              {
+                "item_type": "item",
+                "item_constant": "ITEM_ALARM_CLOCK",
+                "item_id": 4,
+                "item_name": "ALARM_CLOCK"
+              }
+            ]
+          },
+          "price_label": "KeltwickItemShopPrices",
+          "prices": [
+            304,
+            112,
+            117,
+            2320,
+            8192
+          ]
+        },
+        "equipment": {
+          "assortment_label": "MalagaEquipmentShopAssortment",
+          "assortment": {
+            "label": "MalagaEquipmentShopAssortment",
+            "shop_type": "equipment",
+            "item_count": 5,
+            "items": [
+              {
+                "item_type": "equipment",
+                "equip_type_constant": "EQUIPMENT_TYPE_SWORD",
+                "equip_type": 4,
+                "equip_id_constant": "EQUIPMENT_SWORD_PRIME",
+                "equip_id": 5,
+                "item_name": "SWORD_PRIME"
+              },
+              {
+                "item_type": "equipment",
+                "equip_type_constant": "EQUIPMENT_TYPE_SWORD",
+                "equip_type": 4,
+                "equip_id_constant": "EQUIPMENT_SWORD_GOLDEN",
+                "equip_id": 6,
+                "item_name": "SWORD_GOLDEN"
+              },
+              {
+                "item_type": "equipment",
+                "equip_type_constant": "EQUIPMENT_TYPE_SHIELD",
+                "equip_type": 8,
+                "equip_id_constant": "EQUIPMENT_SHIELD_DIAMOND",
+                "equip_id": 28,
+                "item_name": "SHIELD_DIAMOND"
+              },
+              {
+                "item_type": "equipment",
+                "equip_type_constant": "EQUIPMENT_TYPE_ARMOR",
+                "equip_type": 16,
+                "equip_id_constant": "EQUIPMENT_ARMOR_SILVER",
+                "equip_id": 45,
+                "item_name": "ARMOR_SILVER"
+              },
+              {
+                "item_type": "equipment",
+                "equip_type_constant": "EQUIPMENT_TYPE_ARMOR",
+                "equip_type": 16,
+                "equip_id_constant": "EQUIPMENT_ARMOR_KNIGHT",
+                "equip_id": 50,
+                "item_name": "ARMOR_KNIGHT"
+              }
+            ]
+          },
+          "price_label": "MalagaEquipmentShopPrices",
+          "prices": [
+            20736,
+            33280,
+            16640,
+            28672,
+            37376
+          ]
+        },
+        "magic_buy": {
+          "assortment_label": "KeltwickMagicShopAssortment",
+          "assortment": {
+            "label": "KeltwickMagicShopAssortment",
+            "shop_type": "magic",
+            "item_count": 5,
+            "items": [
+              {
+                "item_type": "magic",
+                "magic_type_constant": "MAGIC_TYPE_BATTLE",
+                "magic_type": 2,
+                "magic_id_constant": "MAGIC_AERO",
+                "magic_id": 0,
+                "item_name": "AERO"
+              },
+              {
+                "item_type": "magic",
+                "magic_type_constant": "MAGIC_TYPE_FIELD",
+                "magic_type": 0,
+                "magic_id_constant": "MAGIC_LUMINOS",
+                "magic_id": 17,
+                "item_name": "LUMINOS"
+              },
+              {
+                "item_type": "magic",
+                "magic_type_constant": "MAGIC_TYPE_BATTLE",
+                "magic_type": 2,
+                "magic_id_constant": "MAGIC_HYDRO",
+                "magic_id": 9,
+                "item_name": "HYDRO"
+              },
+              {
+                "item_type": "magic",
+                "magic_type_constant": "MAGIC_TYPE_BATTLE",
+                "magic_type": 2,
+                "magic_id_constant": "MAGIC_CHRONO",
+                "magic_id": 11,
+                "item_name": "CHRONO"
+              },
+              {
+                "item_type": "magic",
+                "magic_type_constant": "MAGIC_TYPE_FIELD",
+                "magic_type": 0,
+                "magic_id_constant": "MAGIC_TOXIOS",
+                "magic_id": 21,
+                "item_name": "TOXIOS"
+              }
+            ]
+          },
+          "price_label": "KeltwickMagicShopPrices",
+          "prices": [
+            13312,
+            20992,
+            17664,
+            22272,
+            34048
+          ]
+        },
+        "magic_sell": {
+          "assortment_label": "ParmaMagicShopAssortment",
+          "assortment": {
+            "label": "ParmaMagicShopAssortment",
+            "shop_type": "magic",
+            "item_count": 2,
+            "items": [
+              {
+                "item_type": "magic",
+                "magic_type_constant": "MAGIC_TYPE_BATTLE",
+                "magic_type": 2,
+                "magic_id_constant": "MAGIC_FERROS",
+                "magic_id": 5,
+                "item_name": "FERROS"
+              },
+              {
+                "item_type": "magic",
+                "magic_type_constant": "MAGIC_TYPE_FIELD",
+                "magic_type": 0,
+                "magic_id_constant": "MAGIC_SANGUA",
+                "magic_id": 18,
+                "item_name": "SANGUA"
+              }
+            ]
+          },
+          "price_label": "ParmaMagicShopPrices",
+          "prices": [
+            1280,
+            2048
+          ]
+        }
+      }
+    },
+    {
+      "town_id": 7,
+      "town_name": "MALAGA",
+      "shops": {
+        "item": {
+          "assortment_label": "MalagaItemShopAssortment",
+          "assortment": {
+            "label": "MalagaItemShopAssortment",
+            "shop_type": "item",
+            "item_count": 3,
+            "items": [
+              {
+                "item_type": "item",
+                "item_constant": "ITEM_VASE",
+                "item_id": 5,
+                "item_name": "VASE"
+              },
+              {
+                "item_type": "item",
+                "item_constant": "ITEM_JOKE_BOOK",
+                "item_id": 6,
+                "item_name": "JOKE_BOOK"
+              },
+              {
+                "item_type": "item",
+                "item_constant": "ITEM_SMALL_BOMB",
+                "item_id": 7,
+                "item_name": "SMALL_BOMB"
+              }
+            ]
+          },
+          "price_label": "MalagaItemShopPrices",
+          "prices": [
+            16,
+            16,
+            16
+          ]
+        },
+        "equipment": {
+          "assortment_label": "MalagaEquipmentShopAssortment",
+          "assortment": {
+            "label": "MalagaEquipmentShopAssortment",
+            "shop_type": "equipment",
+            "item_count": 5,
+            "items": [
+              {
+                "item_type": "equipment",
+                "equip_type_constant": "EQUIPMENT_TYPE_SWORD",
+                "equip_type": 4,
+                "equip_id_constant": "EQUIPMENT_SWORD_PRIME",
+                "equip_id": 5,
+                "item_name": "SWORD_PRIME"
+              },
+              {
+                "item_type": "equipment",
+                "equip_type_constant": "EQUIPMENT_TYPE_SWORD",
+                "equip_type": 4,
+                "equip_id_constant": "EQUIPMENT_SWORD_GOLDEN",
+                "equip_id": 6,
+                "item_name": "SWORD_GOLDEN"
+              },
+              {
+                "item_type": "equipment",
+                "equip_type_constant": "EQUIPMENT_TYPE_SHIELD",
+                "equip_type": 8,
+                "equip_id_constant": "EQUIPMENT_SHIELD_DIAMOND",
+                "equip_id": 28,
+                "item_name": "SHIELD_DIAMOND"
+              },
+              {
+                "item_type": "equipment",
+                "equip_type_constant": "EQUIPMENT_TYPE_ARMOR",
+                "equip_type": 16,
+                "equip_id_constant": "EQUIPMENT_ARMOR_SILVER",
+                "equip_id": 45,
+                "item_name": "ARMOR_SILVER"
+              },
+              {
+                "item_type": "equipment",
+                "equip_type_constant": "EQUIPMENT_TYPE_ARMOR",
+                "equip_type": 16,
+                "equip_id_constant": "EQUIPMENT_ARMOR_KNIGHT",
+                "equip_id": 50,
+                "item_name": "ARMOR_KNIGHT"
+              }
+            ]
+          },
+          "price_label": "MalagaEquipmentShopPrices",
+          "prices": [
+            20736,
+            33280,
+            16640,
+            28672,
+            37376
+          ]
+        },
+        "magic_buy": {
+          "assortment_label": "MalagaMagicShopAssortment",
+          "assortment": {
+            "label": "MalagaMagicShopAssortment",
+            "shop_type": "magic",
+            "item_count": 5,
+            "items": [
+              {
+                "item_type": "magic",
+                "magic_type_constant": "MAGIC_TYPE_FIELD",
+                "magic_type": 0,
+                "magic_id_constant": "MAGIC_ARIES",
+                "magic_id": 14,
+                "item_name": "ARIES"
+              },
+              {
+                "item_type": "magic",
+                "magic_type_constant": "MAGIC_TYPE_BATTLE",
+                "magic_type": 2,
+                "magic_id_constant": "MAGIC_VOLTIO",
+                "magic_id": 3,
+                "item_name": "VOLTIO"
+              },
+              {
+                "item_type": "magic",
+                "magic_type_constant": "MAGIC_TYPE_FIELD",
+                "magic_type": 0,
+                "magic_id_constant": "MAGIC_SANGUIA",
+                "magic_id": 19,
+                "item_name": "SANGUIA"
+              },
+              {
+                "item_type": "magic",
+                "magic_type_constant": "MAGIC_TYPE_BATTLE",
+                "magic_type": 2,
+                "magic_id_constant": "MAGIC_AERIOS",
+                "magic_id": 1,
+                "item_name": "AERIOS"
+              },
+              {
+                "item_type": "magic",
+                "magic_type_constant": "MAGIC_TYPE_FIELD",
+                "magic_type": 0,
+                "magic_id_constant": "MAGIC_TOXIOS",
+                "magic_id": 21,
+                "item_name": "TOXIOS"
+              }
+            ]
+          },
+          "price_label": "MalagaMagicShopPrices",
+          "prices": [
+            36864,
+            69632,
+            18432,
+            71424,
+            37120
+          ]
+        },
+        "magic_sell": {
+          "assortment_label": "ParmaMagicShopAssortment",
+          "assortment": {
+            "label": "ParmaMagicShopAssortment",
+            "shop_type": "magic",
+            "item_count": 2,
+            "items": [
+              {
+                "item_type": "magic",
+                "magic_type_constant": "MAGIC_TYPE_BATTLE",
+                "magic_type": 2,
+                "magic_id_constant": "MAGIC_FERROS",
+                "magic_id": 5,
+                "item_name": "FERROS"
+              },
+              {
+                "item_type": "magic",
+                "magic_type_constant": "MAGIC_TYPE_FIELD",
+                "magic_type": 0,
+                "magic_id_constant": "MAGIC_SANGUA",
+                "magic_id": 18,
+                "item_name": "SANGUA"
+              }
+            ]
+          },
+          "price_label": "ParmaMagicShopPrices",
+          "prices": [
+            1280,
+            2048
+          ]
+        }
+      }
+    },
+    {
+      "town_id": 8,
+      "town_name": "BARROW",
+      "shops": {
+        "item": {
+          "assortment_label": "BarrowItemShopAssortment",
+          "assortment": {
+            "label": "BarrowItemShopAssortment",
+            "shop_type": "item",
+            "item_count": 6,
+            "items": [
+              {
+                "item_type": "item",
+                "item_constant": "ITEM_MEDICINE",
+                "item_id": 27,
+                "item_name": "MEDICINE"
+              },
+              {
+                "item_type": "item",
+                "item_constant": "ITEM_LANTERN",
+                "item_id": 2,
+                "item_name": "LANTERN"
+              },
+              {
+                "item_type": "item",
+                "item_constant": "ITEM_GRIFFIN_WING",
+                "item_id": 29,
+                "item_name": "GRIFFIN_WING"
+              },
+              {
+                "item_type": "item",
+                "item_constant": "ITEM_AGATE_JEWEL",
+                "item_id": 28,
+                "item_name": "AGATE_JEWEL"
+              },
+              {
+                "item_type": "item",
+                "item_constant": "ITEM_GNOME_STONE",
+                "item_id": 31,
+                "item_name": "GNOME_STONE"
+              },
+              {
+                "item_type": "item",
+                "item_constant": "ITEM_BANSHEE_POWDER",
+                "item_id": 33,
+                "item_name": "BANSHEE_POWDER"
+              }
+            ]
+          },
+          "price_label": "BarrowItemShopPrices",
+          "prices": [
+            322,
+            128,
+            2448,
+            12800,
+            1024,
+            8704
+          ]
+        },
+        "equipment": {
+          "assortment_label": "TadcasterEquipmentShopAssortment",
+          "assortment": {
+            "label": "TadcasterEquipmentShopAssortment",
+            "shop_type": "equipment",
+            "item_count": 5,
+            "items": [
+              {
+                "item_type": "equipment",
+                "equip_type_constant": "EQUIPMENT_TYPE_SWORD",
+                "equip_type": 4,
+                "equip_id_constant": "EQUIPMENT_SWORD_DIAMOND",
+                "equip_id": 9,
+                "item_name": "SWORD_DIAMOND"
+              },
+              {
+                "item_type": "equipment",
+                "equip_type_constant": "EQUIPMENT_TYPE_SWORD",
+                "equip_type": 4,
+                "equip_id_constant": "EQUIPMENT_SWORD_PLATINUM",
+                "equip_id": 8,
+                "item_name": "SWORD_PLATINUM"
+              },
+              {
+                "item_type": "equipment",
+                "equip_type_constant": "EQUIPMENT_TYPE_SHIELD",
+                "equip_type": 8,
+                "equip_id_constant": "EQUIPMENT_SHIELD_KNIGHT",
+                "equip_id": 36,
+                "item_name": "SHIELD_KNIGHT"
+              },
+              {
+                "item_type": "equipment",
+                "equip_type_constant": "EQUIPMENT_TYPE_ARMOR",
+                "equip_type": 16,
+                "equip_id_constant": "EQUIPMENT_ARMOR_GOLD",
+                "equip_id": 46,
+                "item_name": "ARMOR_GOLD"
+              },
+              {
+                "item_type": "equipment",
+                "equip_type_constant": "EQUIPMENT_TYPE_ARMOR",
+                "equip_type": 16,
+                "equip_id_constant": "EQUIPMENT_ARMOR_ULTIMATE",
+                "equip_id": 51,
+                "item_name": "ARMOR_ULTIMATE"
+              }
+            ]
+          },
+          "price_label": "TadcasterEquipmentShopPrices",
+          "prices": [
+            135168,
+            83968,
+            25344,
+            86016,
+            147456
+          ]
+        },
+        "magic_buy": {
+          "assortment_label": "HelwigMagicShopAssortment",
+          "assortment": {
+            "label": "HelwigMagicShopAssortment",
+            "shop_type": "magic",
+            "item_count": 5,
+            "items": [
+              {
+                "item_type": "magic",
+                "magic_type_constant": "MAGIC_TYPE_FIELD",
+                "magic_type": 0,
+                "magic_id_constant": "MAGIC_ARIES",
+                "magic_id": 14,
+                "item_name": "ARIES"
+              },
+              {
+                "item_type": "magic",
+                "magic_type_constant": "MAGIC_TYPE_FIELD",
+                "magic_type": 0,
+                "magic_id_constant": "MAGIC_SANGUIA",
+                "magic_id": 19,
+                "item_name": "SANGUIA"
+              },
+              {
+                "item_type": "magic",
+                "magic_type_constant": "MAGIC_TYPE_BATTLE",
+                "magic_type": 2,
+                "magic_id_constant": "MAGIC_MERCURIOS",
+                "magic_id": 7,
+                "item_name": "MERCURIOS"
+              },
+              {
+                "item_type": "magic",
+                "magic_type_constant": "MAGIC_TYPE_FIELD",
+                "magic_type": 0,
+                "magic_id_constant": "MAGIC_INAUDIOS",
+                "magic_id": 16,
+                "item_name": "INAUDIOS"
+              },
+              {
+                "item_type": "magic",
+                "magic_type_constant": "MAGIC_TYPE_FIELD",
+                "magic_type": 0,
+                "magic_id_constant": "MAGIC_EXTRIOS",
+                "magic_id": 15,
+                "item_name": "EXTRIOS"
+              }
+            ]
+          },
+          "price_label": "HelwigMagicShopPrices",
+          "prices": [
+            73728,
+            20736,
+            34560,
+            12288,
+            25088
+          ]
+        },
+        "magic_sell": {
+          "assortment_label": "ParmaMagicShopAssortment",
+          "assortment": {
+            "label": "ParmaMagicShopAssortment",
+            "shop_type": "magic",
+            "item_count": 2,
+            "items": [
+              {
+                "item_type": "magic",
+                "magic_type_constant": "MAGIC_TYPE_BATTLE",
+                "magic_type": 2,
+                "magic_id_constant": "MAGIC_FERROS",
+                "magic_id": 5,
+                "item_name": "FERROS"
+              },
+              {
+                "item_type": "magic",
+                "magic_type_constant": "MAGIC_TYPE_FIELD",
+                "magic_type": 0,
+                "magic_id_constant": "MAGIC_SANGUA",
+                "magic_id": 18,
+                "item_name": "SANGUA"
+              }
+            ]
+          },
+          "price_label": "ParmaMagicShopPrices",
+          "prices": [
+            1280,
+            2048
+          ]
+        }
+      }
+    },
+    {
+      "town_id": 9,
+      "town_name": "TADCASTER",
+      "shops": {
+        "item": {
+          "assortment_label": "HelwigItemShopAssortment",
+          "assortment": {
+            "label": "HelwigItemShopAssortment",
+            "shop_type": "item",
+            "item_count": 6,
+            "items": [
+              {
+                "item_type": "item",
+                "item_constant": "ITEM_MEDICINE",
+                "item_id": 27,
+                "item_name": "MEDICINE"
+              },
+              {
+                "item_type": "item",
+                "item_constant": "ITEM_GRIFFIN_WING",
+                "item_id": 29,
+                "item_name": "GRIFFIN_WING"
+              },
+              {
+                "item_type": "item",
+                "item_constant": "ITEM_LANTERN",
+                "item_id": 2,
+                "item_name": "LANTERN"
+              },
+              {
+                "item_type": "item",
+                "item_constant": "ITEM_AGATE_JEWEL",
+                "item_id": 28,
+                "item_name": "AGATE_JEWEL"
+              },
+              {
+                "item_type": "item",
+                "item_constant": "ITEM_GNOME_STONE",
+                "item_id": 31,
+                "item_name": "GNOME_STONE"
+              },
+              {
+                "item_type": "item",
+                "item_constant": "ITEM_POISON_BALM",
+                "item_id": 3,
+                "item_name": "POISON_BALM"
+              }
+            ]
+          },
+          "price_label": "HelwigItemShopPrices",
+          "prices": [
+            341,
+            4128,
+            146,
+            14208,
+            1056,
+            144
+          ]
+        },
+        "equipment": {
+          "assortment_label": "TadcasterEquipmentShopAssortment",
+          "assortment": {
+            "label": "TadcasterEquipmentShopAssortment",
+            "shop_type": "equipment",
+            "item_count": 5,
+            "items": [
+              {
+                "item_type": "equipment",
+                "equip_type_constant": "EQUIPMENT_TYPE_SWORD",
+                "equip_type": 4,
+                "equip_id_constant": "EQUIPMENT_SWORD_DIAMOND",
+                "equip_id": 9,
+                "item_name": "SWORD_DIAMOND"
+              },
+              {
+                "item_type": "equipment",
+                "equip_type_constant": "EQUIPMENT_TYPE_SWORD",
+                "equip_type": 4,
+                "equip_id_constant": "EQUIPMENT_SWORD_PLATINUM",
+                "equip_id": 8,
+                "item_name": "SWORD_PLATINUM"
+              },
+              {
+                "item_type": "equipment",
+                "equip_type_constant": "EQUIPMENT_TYPE_SHIELD",
+                "equip_type": 8,
+                "equip_id_constant": "EQUIPMENT_SHIELD_KNIGHT",
+                "equip_id": 36,
+                "item_name": "SHIELD_KNIGHT"
+              },
+              {
+                "item_type": "equipment",
+                "equip_type_constant": "EQUIPMENT_TYPE_ARMOR",
+                "equip_type": 16,
+                "equip_id_constant": "EQUIPMENT_ARMOR_GOLD",
+                "equip_id": 46,
+                "item_name": "ARMOR_GOLD"
+              },
+              {
+                "item_type": "equipment",
+                "equip_type_constant": "EQUIPMENT_TYPE_ARMOR",
+                "equip_type": 16,
+                "equip_id_constant": "EQUIPMENT_ARMOR_ULTIMATE",
+                "equip_id": 51,
+                "item_name": "ARMOR_ULTIMATE"
+              }
+            ]
+          },
+          "price_label": "TadcasterEquipmentShopPrices",
+          "prices": [
+            135168,
+            83968,
+            25344,
+            86016,
+            147456
+          ]
+        },
+        "magic_buy": {
+          "assortment_label": "HelwigMagicShopAssortment",
+          "assortment": {
+            "label": "HelwigMagicShopAssortment",
+            "shop_type": "magic",
+            "item_count": 5,
+            "items": [
+              {
+                "item_type": "magic",
+                "magic_type_constant": "MAGIC_TYPE_FIELD",
+                "magic_type": 0,
+                "magic_id_constant": "MAGIC_ARIES",
+                "magic_id": 14,
+                "item_name": "ARIES"
+              },
+              {
+                "item_type": "magic",
+                "magic_type_constant": "MAGIC_TYPE_FIELD",
+                "magic_type": 0,
+                "magic_id_constant": "MAGIC_SANGUIA",
+                "magic_id": 19,
+                "item_name": "SANGUIA"
+              },
+              {
+                "item_type": "magic",
+                "magic_type_constant": "MAGIC_TYPE_BATTLE",
+                "magic_type": 2,
+                "magic_id_constant": "MAGIC_MERCURIOS",
+                "magic_id": 7,
+                "item_name": "MERCURIOS"
+              },
+              {
+                "item_type": "magic",
+                "magic_type_constant": "MAGIC_TYPE_FIELD",
+                "magic_type": 0,
+                "magic_id_constant": "MAGIC_INAUDIOS",
+                "magic_id": 16,
+                "item_name": "INAUDIOS"
+              },
+              {
+                "item_type": "magic",
+                "magic_type_constant": "MAGIC_TYPE_FIELD",
+                "magic_type": 0,
+                "magic_id_constant": "MAGIC_EXTRIOS",
+                "magic_id": 15,
+                "item_name": "EXTRIOS"
+              }
+            ]
+          },
+          "price_label": "HelwigMagicShopPrices",
+          "prices": [
+            73728,
+            20736,
+            34560,
+            12288,
+            25088
+          ]
+        },
+        "magic_sell": {
+          "assortment_label": "ParmaMagicShopAssortment",
+          "assortment": {
+            "label": "ParmaMagicShopAssortment",
+            "shop_type": "magic",
+            "item_count": 2,
+            "items": [
+              {
+                "item_type": "magic",
+                "magic_type_constant": "MAGIC_TYPE_BATTLE",
+                "magic_type": 2,
+                "magic_id_constant": "MAGIC_FERROS",
+                "magic_id": 5,
+                "item_name": "FERROS"
+              },
+              {
+                "item_type": "magic",
+                "magic_type_constant": "MAGIC_TYPE_FIELD",
+                "magic_type": 0,
+                "magic_id_constant": "MAGIC_SANGUA",
+                "magic_id": 18,
+                "item_name": "SANGUA"
+              }
+            ]
+          },
+          "price_label": "ParmaMagicShopPrices",
+          "prices": [
+            1280,
+            2048
+          ]
+        }
+      }
+    },
+    {
+      "town_id": 10,
+      "town_name": "HELWIG",
+      "shops": {
+        "item": {
+          "assortment_label": "HelwigItemShopAssortment",
+          "assortment": {
+            "label": "HelwigItemShopAssortment",
+            "shop_type": "item",
+            "item_count": 6,
+            "items": [
+              {
+                "item_type": "item",
+                "item_constant": "ITEM_MEDICINE",
+                "item_id": 27,
+                "item_name": "MEDICINE"
+              },
+              {
+                "item_type": "item",
+                "item_constant": "ITEM_GRIFFIN_WING",
+                "item_id": 29,
+                "item_name": "GRIFFIN_WING"
+              },
+              {
+                "item_type": "item",
+                "item_constant": "ITEM_LANTERN",
+                "item_id": 2,
+                "item_name": "LANTERN"
+              },
+              {
+                "item_type": "item",
+                "item_constant": "ITEM_AGATE_JEWEL",
+                "item_id": 28,
+                "item_name": "AGATE_JEWEL"
+              },
+              {
+                "item_type": "item",
+                "item_constant": "ITEM_GNOME_STONE",
+                "item_id": 31,
+                "item_name": "GNOME_STONE"
+              },
+              {
+                "item_type": "item",
+                "item_constant": "ITEM_POISON_BALM",
+                "item_id": 3,
+                "item_name": "POISON_BALM"
+              }
+            ]
+          },
+          "price_label": "HelwigItemShopPrices",
+          "prices": [
+            341,
+            4128,
+            146,
+            14208,
+            1056,
+            144
+          ]
+        },
+        "equipment": {
+          "assortment_label": "SwaffhamEquipmentShopAssortment",
+          "assortment": {
+            "label": "SwaffhamEquipmentShopAssortment",
+            "shop_type": "equipment",
+            "item_count": 5,
+            "items": [
+              {
+                "item_type": "equipment",
+                "equip_type_constant": "EQUIPMENT_TYPE_SWORD",
+                "equip_type": 4,
+                "equip_id_constant": "EQUIPMENT_SWORD_ULTIMATE",
+                "equip_id": 12,
+                "item_name": "SWORD_ULTIMATE"
+              },
+              {
+                "item_type": "equipment",
+                "equip_type_constant": "EQUIPMENT_TYPE_SWORD",
+                "equip_type": 4,
+                "equip_id_constant": "EQUIPMENT_SWORD_ROYAL",
+                "equip_id": 11,
+                "item_name": "SWORD_ROYAL"
+              },
+              {
+                "item_type": "equipment",
+                "equip_type_constant": "EQUIPMENT_TYPE_SHIELD",
+                "equip_type": 8,
+                "equip_id_constant": "EQUIPMENT_SHIELD_CARMINE1",
+                "equip_id": 33,
+                "item_name": "SHIELD_CARMINE1"
+              },
+              {
+                "item_type": "equipment",
+                "equip_type_constant": "EQUIPMENT_TYPE_ARMOR",
+                "equip_type": 16,
+                "equip_id_constant": "EQUIPMENT_ARMOR_ODIN",
+                "equip_id": 52,
+                "item_name": "ARMOR_ODIN"
+              },
+              {
+                "item_type": "equipment",
+                "equip_type_constant": "EQUIPMENT_TYPE_ARMOR",
+                "equip_type": 16,
+                "equip_id_constant": "EQUIPMENT_ARMOR_DIAMOND",
+                "equip_id": 49,
+                "item_name": "ARMOR_DIAMOND"
+              }
+            ]
+          },
+          "price_label": "SwaffhamEquipmentShopPrices",
+          "prices": [
+            270336,
+            214528,
+            75520,
+            229376,
+            327680
+          ]
+        },
+        "magic_buy": {
+          "assortment_label": "HelwigMagicShopAssortment",
+          "assortment": {
+            "label": "HelwigMagicShopAssortment",
+            "shop_type": "magic",
+            "item_count": 5,
+            "items": [
+              {
+                "item_type": "magic",
+                "magic_type_constant": "MAGIC_TYPE_FIELD",
+                "magic_type": 0,
+                "magic_id_constant": "MAGIC_ARIES",
+                "magic_id": 14,
+                "item_name": "ARIES"
+              },
+              {
+                "item_type": "magic",
+                "magic_type_constant": "MAGIC_TYPE_FIELD",
+                "magic_type": 0,
+                "magic_id_constant": "MAGIC_SANGUIA",
+                "magic_id": 19,
+                "item_name": "SANGUIA"
+              },
+              {
+                "item_type": "magic",
+                "magic_type_constant": "MAGIC_TYPE_BATTLE",
+                "magic_type": 2,
+                "magic_id_constant": "MAGIC_MERCURIOS",
+                "magic_id": 7,
+                "item_name": "MERCURIOS"
+              },
+              {
+                "item_type": "magic",
+                "magic_type_constant": "MAGIC_TYPE_FIELD",
+                "magic_type": 0,
+                "magic_id_constant": "MAGIC_INAUDIOS",
+                "magic_id": 16,
+                "item_name": "INAUDIOS"
+              },
+              {
+                "item_type": "magic",
+                "magic_type_constant": "MAGIC_TYPE_FIELD",
+                "magic_type": 0,
+                "magic_id_constant": "MAGIC_EXTRIOS",
+                "magic_id": 15,
+                "item_name": "EXTRIOS"
+              }
+            ]
+          },
+          "price_label": "HelwigMagicShopPrices",
+          "prices": [
+            73728,
+            20736,
+            34560,
+            12288,
+            25088
+          ]
+        },
+        "magic_sell": {
+          "assortment_label": "ParmaMagicShopAssortment",
+          "assortment": {
+            "label": "ParmaMagicShopAssortment",
+            "shop_type": "magic",
+            "item_count": 2,
+            "items": [
+              {
+                "item_type": "magic",
+                "magic_type_constant": "MAGIC_TYPE_BATTLE",
+                "magic_type": 2,
+                "magic_id_constant": "MAGIC_FERROS",
+                "magic_id": 5,
+                "item_name": "FERROS"
+              },
+              {
+                "item_type": "magic",
+                "magic_type_constant": "MAGIC_TYPE_FIELD",
+                "magic_type": 0,
+                "magic_id_constant": "MAGIC_SANGUA",
+                "magic_id": 18,
+                "item_name": "SANGUA"
+              }
+            ]
+          },
+          "price_label": "ParmaMagicShopPrices",
+          "prices": [
+            1280,
+            2048
+          ]
+        }
+      }
+    },
+    {
+      "town_id": 11,
+      "town_name": "SWAFFHAM",
+      "shops": {
+        "item": {
+          "assortment_label": "SwaffhamItemShopAssortment",
+          "assortment": {
+            "label": "SwaffhamItemShopAssortment",
+            "shop_type": "item",
+            "item_count": 5,
+            "items": [
+              {
+                "item_type": "item",
+                "item_constant": "ITEM_MEDICINE",
+                "item_id": 27,
+                "item_name": "MEDICINE"
+              },
+              {
+                "item_type": "item",
+                "item_constant": "ITEM_POISON_BALM",
+                "item_id": 3,
+                "item_name": "POISON_BALM"
+              },
+              {
+                "item_type": "item",
+                "item_constant": "ITEM_LANTERN",
+                "item_id": 2,
+                "item_name": "LANTERN"
+              },
+              {
+                "item_type": "item",
+                "item_constant": "ITEM_GRIFFIN_WING",
+                "item_id": 29,
+                "item_name": "GRIFFIN_WING"
+              },
+              {
+                "item_type": "item",
+                "item_constant": "ITEM_AGATE_JEWEL",
+                "item_id": 28,
+                "item_name": "AGATE_JEWEL"
+              }
+            ]
+          },
+          "price_label": "SwaffhamItemShopPrices",
+          "prices": [
+            369,
+            264,
+            258,
+            4176,
+            16672
+          ]
+        },
+        "equipment": {
+          "assortment_label": "SwaffhamEquipmentShopAssortment",
+          "assortment": {
+            "label": "SwaffhamEquipmentShopAssortment",
+            "shop_type": "equipment",
+            "item_count": 5,
+            "items": [
+              {
+                "item_type": "equipment",
+                "equip_type_constant": "EQUIPMENT_TYPE_SWORD",
+                "equip_type": 4,
+                "equip_id_constant": "EQUIPMENT_SWORD_ULTIMATE",
+                "equip_id": 12,
+                "item_name": "SWORD_ULTIMATE"
+              },
+              {
+                "item_type": "equipment",
+                "equip_type_constant": "EQUIPMENT_TYPE_SWORD",
+                "equip_type": 4,
+                "equip_id_constant": "EQUIPMENT_SWORD_ROYAL",
+                "equip_id": 11,
+                "item_name": "SWORD_ROYAL"
+              },
+              {
+                "item_type": "equipment",
+                "equip_type_constant": "EQUIPMENT_TYPE_SHIELD",
+                "equip_type": 8,
+                "equip_id_constant": "EQUIPMENT_SHIELD_CARMINE1",
+                "equip_id": 33,
+                "item_name": "SHIELD_CARMINE1"
+              },
+              {
+                "item_type": "equipment",
+                "equip_type_constant": "EQUIPMENT_TYPE_ARMOR",
+                "equip_type": 16,
+                "equip_id_constant": "EQUIPMENT_ARMOR_ODIN",
+                "equip_id": 52,
+                "item_name": "ARMOR_ODIN"
+              },
+              {
+                "item_type": "equipment",
+                "equip_type_constant": "EQUIPMENT_TYPE_ARMOR",
+                "equip_type": 16,
+                "equip_id_constant": "EQUIPMENT_ARMOR_DIAMOND",
+                "equip_id": 49,
+                "item_name": "ARMOR_DIAMOND"
+              }
+            ]
+          },
+          "price_label": "SwaffhamEquipmentShopPrices",
+          "prices": [
+            270336,
+            214528,
+            75520,
+            229376,
+            327680
+          ]
+        },
+        "magic_buy": {
+          "assortment_label": "SwaffhamMagicShopAssortment",
+          "assortment": {
+            "label": "SwaffhamMagicShopAssortment",
+            "shop_type": "magic",
+            "item_count": 3,
+            "items": [
+              {
+                "item_type": "magic",
+                "magic_type_constant": "MAGIC_TYPE_BATTLE",
+                "magic_type": 2,
+                "magic_id_constant": "MAGIC_HYDRIOS",
+                "magic_id": 10,
+                "item_name": "HYDRIOS"
+              },
+              {
+                "item_type": "magic",
+                "magic_type_constant": "MAGIC_TYPE_BATTLE",
+                "magic_type": 2,
+                "magic_id_constant": "MAGIC_ARGENTOS",
+                "magic_id": 8,
+                "item_name": "ARGENTOS"
+              },
+              {
+                "item_type": "magic",
+                "magic_type_constant": "MAGIC_TYPE_BATTLE",
+                "magic_type": 2,
+                "magic_id_constant": "MAGIC_VOLTIO",
+                "magic_id": 3,
+                "item_name": "VOLTIO"
+              }
+            ]
+          },
+          "price_label": "SwaffhamMagicShopPrices",
+          "prices": [
+            131072,
+            262144,
+            217088
+          ]
+        },
+        "magic_sell": {
+          "assortment_label": "ParmaMagicShopAssortment",
+          "assortment": {
+            "label": "ParmaMagicShopAssortment",
+            "shop_type": "magic",
+            "item_count": 2,
+            "items": [
+              {
+                "item_type": "magic",
+                "magic_type_constant": "MAGIC_TYPE_BATTLE",
+                "magic_type": 2,
+                "magic_id_constant": "MAGIC_FERROS",
+                "magic_id": 5,
+                "item_name": "FERROS"
+              },
+              {
+                "item_type": "magic",
+                "magic_type_constant": "MAGIC_TYPE_FIELD",
+                "magic_type": 0,
+                "magic_id_constant": "MAGIC_SANGUA",
+                "magic_id": 18,
+                "item_name": "SANGUA"
+              }
+            ]
+          },
+          "price_label": "ParmaMagicShopPrices",
+          "prices": [
+            1280,
+            2048
+          ]
+        }
+      }
+    },
+    {
+      "town_id": 12,
+      "town_name": "EXCALABRIA",
+      "shops": {
+        "item": {
+          "assortment_label": "HastingsItemShopAssortment",
+          "assortment": {
+            "label": "HastingsItemShopAssortment",
+            "shop_type": "item",
+            "item_count": 5,
+            "items": [
+              {
+                "item_type": "item",
+                "item_constant": "ITEM_MEDICINE",
+                "item_id": 27,
+                "item_name": "MEDICINE"
+              },
+              {
+                "item_type": "item",
+                "item_constant": "ITEM_POISON_BALM",
+                "item_id": 3,
+                "item_name": "POISON_BALM"
+              },
+              {
+                "item_type": "item",
+                "item_constant": "ITEM_TOPAZ_JEWEL",
+                "item_id": 32,
+                "item_name": "TOPAZ_JEWEL"
+              },
+              {
+                "item_type": "item",
+                "item_constant": "ITEM_LANTERN",
+                "item_id": 2,
+                "item_name": "LANTERN"
+              },
+              {
+                "item_type": "item",
+                "item_constant": "ITEM_BANSHEE_POWDER",
+                "item_id": 33,
+                "item_name": "BANSHEE_POWDER"
+              }
+            ]
+          },
+          "price_label": "HastingsItemShopPrices",
+          "prices": [
+            400,
+            290,
+            37120,
+            277,
+            14160
+          ]
+        },
+        "equipment": {
+          "assortment_label": "SwaffhamEquipmentShopAssortment",
+          "assortment": {
+            "label": "SwaffhamEquipmentShopAssortment",
+            "shop_type": "equipment",
+            "item_count": 5,
+            "items": [
+              {
+                "item_type": "equipment",
+                "equip_type_constant": "EQUIPMENT_TYPE_SWORD",
+                "equip_type": 4,
+                "equip_id_constant": "EQUIPMENT_SWORD_ULTIMATE",
+                "equip_id": 12,
+                "item_name": "SWORD_ULTIMATE"
+              },
+              {
+                "item_type": "equipment",
+                "equip_type_constant": "EQUIPMENT_TYPE_SWORD",
+                "equip_type": 4,
+                "equip_id_constant": "EQUIPMENT_SWORD_ROYAL",
+                "equip_id": 11,
+                "item_name": "SWORD_ROYAL"
+              },
+              {
+                "item_type": "equipment",
+                "equip_type_constant": "EQUIPMENT_TYPE_SHIELD",
+                "equip_type": 8,
+                "equip_id_constant": "EQUIPMENT_SHIELD_CARMINE1",
+                "equip_id": 33,
+                "item_name": "SHIELD_CARMINE1"
+              },
+              {
+                "item_type": "equipment",
+                "equip_type_constant": "EQUIPMENT_TYPE_ARMOR",
+                "equip_type": 16,
+                "equip_id_constant": "EQUIPMENT_ARMOR_ODIN",
+                "equip_id": 52,
+                "item_name": "ARMOR_ODIN"
+              },
+              {
+                "item_type": "equipment",
+                "equip_type_constant": "EQUIPMENT_TYPE_ARMOR",
+                "equip_type": 16,
+                "equip_id_constant": "EQUIPMENT_ARMOR_DIAMOND",
+                "equip_id": 49,
+                "item_name": "ARMOR_DIAMOND"
+              }
+            ]
+          },
+          "price_label": "SwaffhamEquipmentShopPrices",
+          "prices": [
+            270336,
+            214528,
+            75520,
+            229376,
+            327680
+          ]
+        },
+        "magic_buy": {
+          "assortment_label": "HastingsMagicShopAssortment",
+          "assortment": {
+            "label": "HastingsMagicShopAssortment",
+            "shop_type": "magic",
+            "item_count": 4,
+            "items": [
+              {
+                "item_type": "magic",
+                "magic_type_constant": "MAGIC_TYPE_BATTLE",
+                "magic_type": 2,
+                "magic_id_constant": "MAGIC_CHRONIOS",
+                "magic_id": 12,
+                "item_name": "CHRONIOS"
+              },
+              {
+                "item_type": "magic",
+                "magic_type_constant": "MAGIC_TYPE_BATTLE",
+                "magic_type": 2,
+                "magic_id_constant": "MAGIC_VOLTIOS",
+                "magic_id": 4,
+                "item_name": "VOLTIOS"
+              },
+              {
+                "item_type": "magic",
+                "magic_type_constant": "MAGIC_TYPE_FIELD",
+                "magic_type": 0,
+                "magic_id_constant": "MAGIC_SANGUIO",
+                "magic_id": 20,
+                "item_name": "SANGUIO"
+              },
+              {
+                "item_type": "magic",
+                "magic_type_constant": "MAGIC_TYPE_BATTLE",
+                "magic_type": 2,
+                "magic_id_constant": "MAGIC_TERRAFISSI",
+                "magic_id": 13,
+                "item_name": "TERRAFISSI"
+              }
+            ]
+          },
+          "price_label": "HastingsMagicShopPrices",
+          "prices": [
+            131072,
+            290816,
+            163840,
+            458752
+          ]
+        },
+        "magic_sell": {
+          "assortment_label": "ParmaMagicShopAssortment",
+          "assortment": {
+            "label": "ParmaMagicShopAssortment",
+            "shop_type": "magic",
+            "item_count": 2,
+            "items": [
+              {
+                "item_type": "magic",
+                "magic_type_constant": "MAGIC_TYPE_BATTLE",
+                "magic_type": 2,
+                "magic_id_constant": "MAGIC_FERROS",
+                "magic_id": 5,
+                "item_name": "FERROS"
+              },
+              {
+                "item_type": "magic",
+                "magic_type_constant": "MAGIC_TYPE_FIELD",
+                "magic_type": 0,
+                "magic_id_constant": "MAGIC_SANGUA",
+                "magic_id": 18,
+                "item_name": "SANGUA"
+              }
+            ]
+          },
+          "price_label": "ParmaMagicShopPrices",
+          "prices": [
+            1280,
+            2048
+          ]
+        }
+      }
+    },
+    {
+      "town_id": 13,
+      "town_name": "HASTINGS1",
+      "shops": {
+        "item": {
+          "assortment_label": "HastingsItemShopAssortment",
+          "assortment": {
+            "label": "HastingsItemShopAssortment",
+            "shop_type": "item",
+            "item_count": 5,
+            "items": [
+              {
+                "item_type": "item",
+                "item_constant": "ITEM_MEDICINE",
+                "item_id": 27,
+                "item_name": "MEDICINE"
+              },
+              {
+                "item_type": "item",
+                "item_constant": "ITEM_POISON_BALM",
+                "item_id": 3,
+                "item_name": "POISON_BALM"
+              },
+              {
+                "item_type": "item",
+                "item_constant": "ITEM_TOPAZ_JEWEL",
+                "item_id": 32,
+                "item_name": "TOPAZ_JEWEL"
+              },
+              {
+                "item_type": "item",
+                "item_constant": "ITEM_LANTERN",
+                "item_id": 2,
+                "item_name": "LANTERN"
+              },
+              {
+                "item_type": "item",
+                "item_constant": "ITEM_BANSHEE_POWDER",
+                "item_id": 33,
+                "item_name": "BANSHEE_POWDER"
+              }
+            ]
+          },
+          "price_label": "HastingsItemShopPrices",
+          "prices": [
+            400,
+            290,
+            37120,
+            277,
+            14160
+          ]
+        },
+        "equipment": {
+          "assortment_label": "SwaffhamEquipmentShopAssortment",
+          "assortment": {
+            "label": "SwaffhamEquipmentShopAssortment",
+            "shop_type": "equipment",
+            "item_count": 5,
+            "items": [
+              {
+                "item_type": "equipment",
+                "equip_type_constant": "EQUIPMENT_TYPE_SWORD",
+                "equip_type": 4,
+                "equip_id_constant": "EQUIPMENT_SWORD_ULTIMATE",
+                "equip_id": 12,
+                "item_name": "SWORD_ULTIMATE"
+              },
+              {
+                "item_type": "equipment",
+                "equip_type_constant": "EQUIPMENT_TYPE_SWORD",
+                "equip_type": 4,
+                "equip_id_constant": "EQUIPMENT_SWORD_ROYAL",
+                "equip_id": 11,
+                "item_name": "SWORD_ROYAL"
+              },
+              {
+                "item_type": "equipment",
+                "equip_type_constant": "EQUIPMENT_TYPE_SHIELD",
+                "equip_type": 8,
+                "equip_id_constant": "EQUIPMENT_SHIELD_CARMINE1",
+                "equip_id": 33,
+                "item_name": "SHIELD_CARMINE1"
+              },
+              {
+                "item_type": "equipment",
+                "equip_type_constant": "EQUIPMENT_TYPE_ARMOR",
+                "equip_type": 16,
+                "equip_id_constant": "EQUIPMENT_ARMOR_ODIN",
+                "equip_id": 52,
+                "item_name": "ARMOR_ODIN"
+              },
+              {
+                "item_type": "equipment",
+                "equip_type_constant": "EQUIPMENT_TYPE_ARMOR",
+                "equip_type": 16,
+                "equip_id_constant": "EQUIPMENT_ARMOR_DIAMOND",
+                "equip_id": 49,
+                "item_name": "ARMOR_DIAMOND"
+              }
+            ]
+          },
+          "price_label": "SwaffhamEquipmentShopPrices",
+          "prices": [
+            270336,
+            214528,
+            75520,
+            229376,
+            327680
+          ]
+        },
+        "magic_buy": {
+          "assortment_label": "HastingsMagicShopAssortment",
+          "assortment": {
+            "label": "HastingsMagicShopAssortment",
+            "shop_type": "magic",
+            "item_count": 4,
+            "items": [
+              {
+                "item_type": "magic",
+                "magic_type_constant": "MAGIC_TYPE_BATTLE",
+                "magic_type": 2,
+                "magic_id_constant": "MAGIC_CHRONIOS",
+                "magic_id": 12,
+                "item_name": "CHRONIOS"
+              },
+              {
+                "item_type": "magic",
+                "magic_type_constant": "MAGIC_TYPE_BATTLE",
+                "magic_type": 2,
+                "magic_id_constant": "MAGIC_VOLTIOS",
+                "magic_id": 4,
+                "item_name": "VOLTIOS"
+              },
+              {
+                "item_type": "magic",
+                "magic_type_constant": "MAGIC_TYPE_FIELD",
+                "magic_type": 0,
+                "magic_id_constant": "MAGIC_SANGUIO",
+                "magic_id": 20,
+                "item_name": "SANGUIO"
+              },
+              {
+                "item_type": "magic",
+                "magic_type_constant": "MAGIC_TYPE_BATTLE",
+                "magic_type": 2,
+                "magic_id_constant": "MAGIC_TERRAFISSI",
+                "magic_id": 13,
+                "item_name": "TERRAFISSI"
+              }
+            ]
+          },
+          "price_label": "HastingsMagicShopPrices",
+          "prices": [
+            131072,
+            290816,
+            163840,
+            458752
+          ]
+        },
+        "magic_sell": {
+          "assortment_label": "ParmaMagicShopAssortment",
+          "assortment": {
+            "label": "ParmaMagicShopAssortment",
+            "shop_type": "magic",
+            "item_count": 2,
+            "items": [
+              {
+                "item_type": "magic",
+                "magic_type_constant": "MAGIC_TYPE_BATTLE",
+                "magic_type": 2,
+                "magic_id_constant": "MAGIC_FERROS",
+                "magic_id": 5,
+                "item_name": "FERROS"
+              },
+              {
+                "item_type": "magic",
+                "magic_type_constant": "MAGIC_TYPE_FIELD",
+                "magic_type": 0,
+                "magic_id_constant": "MAGIC_SANGUA",
+                "magic_id": 18,
+                "item_name": "SANGUA"
+              }
+            ]
+          },
+          "price_label": "ParmaMagicShopPrices",
+          "prices": [
+            1280,
+            2048
+          ]
+        }
+      }
+    },
+    {
+      "town_id": 14,
+      "town_name": "HASTINGS2",
+      "shops": {
+        "item": {
+          "assortment_label": "ParmaMagicShopAssortment",
+          "assortment": {
+            "label": "ParmaMagicShopAssortment",
+            "shop_type": "magic",
+            "item_count": 2,
+            "items": [
+              {
+                "item_type": "magic",
+                "magic_type_constant": "MAGIC_TYPE_BATTLE",
+                "magic_type": 2,
+                "magic_id_constant": "MAGIC_FERROS",
+                "magic_id": 5,
+                "item_name": "FERROS"
+              },
+              {
+                "item_type": "magic",
+                "magic_type_constant": "MAGIC_TYPE_FIELD",
+                "magic_type": 0,
+                "magic_id_constant": "MAGIC_SANGUA",
+                "magic_id": 18,
+                "item_name": "SANGUA"
+              }
+            ]
+          },
+          "price_label": "ParmaMagicShopAssortment",
+          "prices": []
+        },
+        "equipment": {
+          "assortment_label": "SwaffhamEquipmentShopAssortment",
+          "assortment": {
+            "label": "SwaffhamEquipmentShopAssortment",
+            "shop_type": "equipment",
+            "item_count": 5,
+            "items": [
+              {
+                "item_type": "equipment",
+                "equip_type_constant": "EQUIPMENT_TYPE_SWORD",
+                "equip_type": 4,
+                "equip_id_constant": "EQUIPMENT_SWORD_ULTIMATE",
+                "equip_id": 12,
+                "item_name": "SWORD_ULTIMATE"
+              },
+              {
+                "item_type": "equipment",
+                "equip_type_constant": "EQUIPMENT_TYPE_SWORD",
+                "equip_type": 4,
+                "equip_id_constant": "EQUIPMENT_SWORD_ROYAL",
+                "equip_id": 11,
+                "item_name": "SWORD_ROYAL"
+              },
+              {
+                "item_type": "equipment",
+                "equip_type_constant": "EQUIPMENT_TYPE_SHIELD",
+                "equip_type": 8,
+                "equip_id_constant": "EQUIPMENT_SHIELD_CARMINE1",
+                "equip_id": 33,
+                "item_name": "SHIELD_CARMINE1"
+              },
+              {
+                "item_type": "equipment",
+                "equip_type_constant": "EQUIPMENT_TYPE_ARMOR",
+                "equip_type": 16,
+                "equip_id_constant": "EQUIPMENT_ARMOR_ODIN",
+                "equip_id": 52,
+                "item_name": "ARMOR_ODIN"
+              },
+              {
+                "item_type": "equipment",
+                "equip_type_constant": "EQUIPMENT_TYPE_ARMOR",
+                "equip_type": 16,
+                "equip_id_constant": "EQUIPMENT_ARMOR_DIAMOND",
+                "equip_id": 49,
+                "item_name": "ARMOR_DIAMOND"
+              }
+            ]
+          },
+          "price_label": "SwaffhamEquipmentShopPrices",
+          "prices": [
+            270336,
+            214528,
+            75520,
+            229376,
+            327680
+          ]
+        },
+        "magic_buy": {
+          "assortment_label": "HastingsMagicShopAssortment",
+          "assortment": {
+            "label": "HastingsMagicShopAssortment",
+            "shop_type": "magic",
+            "item_count": 4,
+            "items": [
+              {
+                "item_type": "magic",
+                "magic_type_constant": "MAGIC_TYPE_BATTLE",
+                "magic_type": 2,
+                "magic_id_constant": "MAGIC_CHRONIOS",
+                "magic_id": 12,
+                "item_name": "CHRONIOS"
+              },
+              {
+                "item_type": "magic",
+                "magic_type_constant": "MAGIC_TYPE_BATTLE",
+                "magic_type": 2,
+                "magic_id_constant": "MAGIC_VOLTIOS",
+                "magic_id": 4,
+                "item_name": "VOLTIOS"
+              },
+              {
+                "item_type": "magic",
+                "magic_type_constant": "MAGIC_TYPE_FIELD",
+                "magic_type": 0,
+                "magic_id_constant": "MAGIC_SANGUIO",
+                "magic_id": 20,
+                "item_name": "SANGUIO"
+              },
+              {
+                "item_type": "magic",
+                "magic_type_constant": "MAGIC_TYPE_BATTLE",
+                "magic_type": 2,
+                "magic_id_constant": "MAGIC_TERRAFISSI",
+                "magic_id": 13,
+                "item_name": "TERRAFISSI"
+              }
+            ]
+          },
+          "price_label": "HastingsMagicShopPrices",
+          "prices": [
+            131072,
+            290816,
+            163840,
+            458752
+          ]
+        },
+        "magic_sell": {
+          "assortment_label": "ParmaMagicShopAssortment",
+          "assortment": {
+            "label": "ParmaMagicShopAssortment",
+            "shop_type": "magic",
+            "item_count": 2,
+            "items": [
+              {
+                "item_type": "magic",
+                "magic_type_constant": "MAGIC_TYPE_BATTLE",
+                "magic_type": 2,
+                "magic_id_constant": "MAGIC_FERROS",
+                "magic_id": 5,
+                "item_name": "FERROS"
+              },
+              {
+                "item_type": "magic",
+                "magic_type_constant": "MAGIC_TYPE_FIELD",
+                "magic_type": 0,
+                "magic_id_constant": "MAGIC_SANGUA",
+                "magic_id": 18,
+                "item_name": "SANGUA"
+              }
+            ]
+          },
+          "price_label": "ParmaMagicShopPrices",
+          "prices": [
+            1280,
+            2048
+          ]
+        }
+      }
+    },
+    {
+      "town_id": 15,
+      "town_name": "CARTHAHENA",
+      "shops": {
+        "item": {
+          "assortment_label": "ParmaMagicShopAssortment",
+          "assortment": {
+            "label": "ParmaMagicShopAssortment",
+            "shop_type": "magic",
+            "item_count": 2,
+            "items": [
+              {
+                "item_type": "magic",
+                "magic_type_constant": "MAGIC_TYPE_BATTLE",
+                "magic_type": 2,
+                "magic_id_constant": "MAGIC_FERROS",
+                "magic_id": 5,
+                "item_name": "FERROS"
+              },
+              {
+                "item_type": "magic",
+                "magic_type_constant": "MAGIC_TYPE_FIELD",
+                "magic_type": 0,
+                "magic_id_constant": "MAGIC_SANGUA",
+                "magic_id": 18,
+                "item_name": "SANGUA"
+              }
+            ]
+          },
+          "price_label": "ParmaMagicShopAssortment",
+          "prices": []
+        },
+        "equipment": {
+          "assortment_label": "SwaffhamEquipmentShopAssortment",
+          "assortment": {
+            "label": "SwaffhamEquipmentShopAssortment",
+            "shop_type": "equipment",
+            "item_count": 5,
+            "items": [
+              {
+                "item_type": "equipment",
+                "equip_type_constant": "EQUIPMENT_TYPE_SWORD",
+                "equip_type": 4,
+                "equip_id_constant": "EQUIPMENT_SWORD_ULTIMATE",
+                "equip_id": 12,
+                "item_name": "SWORD_ULTIMATE"
+              },
+              {
+                "item_type": "equipment",
+                "equip_type_constant": "EQUIPMENT_TYPE_SWORD",
+                "equip_type": 4,
+                "equip_id_constant": "EQUIPMENT_SWORD_ROYAL",
+                "equip_id": 11,
+                "item_name": "SWORD_ROYAL"
+              },
+              {
+                "item_type": "equipment",
+                "equip_type_constant": "EQUIPMENT_TYPE_SHIELD",
+                "equip_type": 8,
+                "equip_id_constant": "EQUIPMENT_SHIELD_CARMINE1",
+                "equip_id": 33,
+                "item_name": "SHIELD_CARMINE1"
+              },
+              {
+                "item_type": "equipment",
+                "equip_type_constant": "EQUIPMENT_TYPE_ARMOR",
+                "equip_type": 16,
+                "equip_id_constant": "EQUIPMENT_ARMOR_ODIN",
+                "equip_id": 52,
+                "item_name": "ARMOR_ODIN"
+              },
+              {
+                "item_type": "equipment",
+                "equip_type_constant": "EQUIPMENT_TYPE_ARMOR",
+                "equip_type": 16,
+                "equip_id_constant": "EQUIPMENT_ARMOR_DIAMOND",
+                "equip_id": 49,
+                "item_name": "ARMOR_DIAMOND"
+              }
+            ]
+          },
+          "price_label": "SwaffhamEquipmentShopPrices",
+          "prices": [
+            270336,
+            214528,
+            75520,
+            229376,
+            327680
+          ]
+        },
+        "magic_buy": {
+          "assortment_label": "HastingsMagicShopAssortment",
+          "assortment": {
+            "label": "HastingsMagicShopAssortment",
+            "shop_type": "magic",
+            "item_count": 4,
+            "items": [
+              {
+                "item_type": "magic",
+                "magic_type_constant": "MAGIC_TYPE_BATTLE",
+                "magic_type": 2,
+                "magic_id_constant": "MAGIC_CHRONIOS",
+                "magic_id": 12,
+                "item_name": "CHRONIOS"
+              },
+              {
+                "item_type": "magic",
+                "magic_type_constant": "MAGIC_TYPE_BATTLE",
+                "magic_type": 2,
+                "magic_id_constant": "MAGIC_VOLTIOS",
+                "magic_id": 4,
+                "item_name": "VOLTIOS"
+              },
+              {
+                "item_type": "magic",
+                "magic_type_constant": "MAGIC_TYPE_FIELD",
+                "magic_type": 0,
+                "magic_id_constant": "MAGIC_SANGUIO",
+                "magic_id": 20,
+                "item_name": "SANGUIO"
+              },
+              {
+                "item_type": "magic",
+                "magic_type_constant": "MAGIC_TYPE_BATTLE",
+                "magic_type": 2,
+                "magic_id_constant": "MAGIC_TERRAFISSI",
+                "magic_id": 13,
+                "item_name": "TERRAFISSI"
+              }
+            ]
+          },
+          "price_label": "HastingsMagicShopPrices",
+          "prices": [
+            131072,
+            290816,
+            163840,
+            458752
+          ]
+        },
+        "magic_sell": {
+          "assortment_label": "ParmaMagicShopAssortment",
+          "assortment": {
+            "label": "ParmaMagicShopAssortment",
+            "shop_type": "magic",
+            "item_count": 2,
+            "items": [
+              {
+                "item_type": "magic",
+                "magic_type_constant": "MAGIC_TYPE_BATTLE",
+                "magic_type": 2,
+                "magic_id_constant": "MAGIC_FERROS",
+                "magic_id": 5,
+                "item_name": "FERROS"
+              },
+              {
+                "item_type": "magic",
+                "magic_type_constant": "MAGIC_TYPE_FIELD",
+                "magic_type": 0,
+                "magic_id_constant": "MAGIC_SANGUA",
+                "magic_id": 18,
+                "item_name": "SANGUA"
+              }
+            ]
+          },
+          "price_label": "ParmaMagicShopPrices",
+          "prices": [
+            1280,
+            2048
+          ]
+        }
+      }
+    }
+  ]
+}

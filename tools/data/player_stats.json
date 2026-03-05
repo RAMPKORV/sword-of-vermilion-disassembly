@@ -1,0 +1,695 @@
+{
+  "_meta": {
+    "generated_by": "tools/extract_game_data.js",
+    "source": "src/playerstats.asm",
+    "description": "Level-up stat gain tables and equipment stat modifiers"
+  },
+  "level_count": 31,
+  "level_ups": [
+    {
+      "level": 1,
+      "mmp_gain": 0,
+      "mhp_gain": 33,
+      "str_gain": 1,
+      "ac_gain": 8,
+      "int_gain": 7,
+      "dex_gain": 100,
+      "luk_gain": 5,
+      "xp_to_next": 144
+    },
+    {
+      "level": 2,
+      "mmp_gain": 17,
+      "mhp_gain": 27,
+      "str_gain": 7,
+      "ac_gain": 3,
+      "int_gain": 11,
+      "dex_gain": 82,
+      "luk_gain": 5,
+      "xp_to_next": 800
+    },
+    {
+      "level": 3,
+      "mmp_gain": 3,
+      "mhp_gain": 27,
+      "str_gain": 7,
+      "ac_gain": 11,
+      "int_gain": 12,
+      "dex_gain": 48,
+      "luk_gain": 7,
+      "xp_to_next": 1632
+    },
+    {
+      "level": 4,
+      "mmp_gain": 4,
+      "mhp_gain": 38,
+      "str_gain": 9,
+      "ac_gain": 12,
+      "int_gain": 12,
+      "dex_gain": 34,
+      "luk_gain": 8,
+      "xp_to_next": 5440
+    },
+    {
+      "level": 5,
+      "mmp_gain": 6,
+      "mhp_gain": 29,
+      "str_gain": 12,
+      "ac_gain": 15,
+      "int_gain": 9,
+      "dex_gain": 44,
+      "luk_gain": 7,
+      "xp_to_next": 12288
+    },
+    {
+      "level": 6,
+      "mmp_gain": 5,
+      "mhp_gain": 29,
+      "str_gain": 12,
+      "ac_gain": 13,
+      "int_gain": 13,
+      "dex_gain": 68,
+      "luk_gain": 6,
+      "xp_to_next": 25344
+    },
+    {
+      "level": 7,
+      "mmp_gain": 6,
+      "mhp_gain": 32,
+      "str_gain": 13,
+      "ac_gain": 14,
+      "int_gain": 10,
+      "dex_gain": 59,
+      "luk_gain": 6,
+      "xp_to_next": 69632
+    },
+    {
+      "level": 8,
+      "mmp_gain": 6,
+      "mhp_gain": 33,
+      "str_gain": 14,
+      "ac_gain": 15,
+      "int_gain": 11,
+      "dex_gain": 63,
+      "luk_gain": 6,
+      "xp_to_next": 98304
+    },
+    {
+      "level": 9,
+      "mmp_gain": 14,
+      "mhp_gain": 32,
+      "str_gain": 15,
+      "ac_gain": 16,
+      "int_gain": 8,
+      "dex_gain": 43,
+      "luk_gain": 3,
+      "xp_to_next": 163840
+    },
+    {
+      "level": 10,
+      "mmp_gain": 7,
+      "mhp_gain": 26,
+      "str_gain": 16,
+      "ac_gain": 17,
+      "int_gain": 11,
+      "dex_gain": 64,
+      "luk_gain": 5,
+      "xp_to_next": 262144
+    },
+    {
+      "level": 11,
+      "mmp_gain": 8,
+      "mhp_gain": 37,
+      "str_gain": 17,
+      "ac_gain": 18,
+      "int_gain": 13,
+      "dex_gain": 65,
+      "luk_gain": 8,
+      "xp_to_next": 352256
+    },
+    {
+      "level": 12,
+      "mmp_gain": 8,
+      "mhp_gain": 35,
+      "str_gain": 18,
+      "ac_gain": 19,
+      "int_gain": 11,
+      "dex_gain": 54,
+      "luk_gain": 7,
+      "xp_to_next": 487424
+    },
+    {
+      "level": 13,
+      "mmp_gain": 8,
+      "mhp_gain": 26,
+      "str_gain": 19,
+      "ac_gain": 21,
+      "int_gain": 8,
+      "dex_gain": 104,
+      "luk_gain": 5,
+      "xp_to_next": 1048576
+    },
+    {
+      "level": 14,
+      "mmp_gain": 8,
+      "mhp_gain": 29,
+      "str_gain": 21,
+      "ac_gain": 21,
+      "int_gain": 12,
+      "dex_gain": 66,
+      "luk_gain": 6,
+      "xp_to_next": 1310720
+    },
+    {
+      "level": 15,
+      "mmp_gain": 9,
+      "mhp_gain": 39,
+      "str_gain": 21,
+      "ac_gain": 21,
+      "int_gain": 13,
+      "dex_gain": 54,
+      "luk_gain": 5,
+      "xp_to_next": 1572864
+    },
+    {
+      "level": 16,
+      "mmp_gain": 10,
+      "mhp_gain": 29,
+      "str_gain": 21,
+      "ac_gain": 21,
+      "int_gain": 12,
+      "dex_gain": 54,
+      "luk_gain": 8,
+      "xp_to_next": 2359296
+    },
+    {
+      "level": 17,
+      "mmp_gain": 10,
+      "mhp_gain": 34,
+      "str_gain": 21,
+      "ac_gain": 22,
+      "int_gain": 12,
+      "dex_gain": 45,
+      "luk_gain": 21,
+      "xp_to_next": 3145728
+    },
+    {
+      "level": 18,
+      "mmp_gain": 10,
+      "mhp_gain": 36,
+      "str_gain": 22,
+      "ac_gain": 23,
+      "int_gain": 12,
+      "dex_gain": 45,
+      "luk_gain": 11,
+      "xp_to_next": 3473408
+    },
+    {
+      "level": 19,
+      "mmp_gain": 11,
+      "mhp_gain": 36,
+      "str_gain": 23,
+      "ac_gain": 13,
+      "int_gain": 12,
+      "dex_gain": 35,
+      "luk_gain": 12,
+      "xp_to_next": 4194304
+    },
+    {
+      "level": 20,
+      "mmp_gain": 11,
+      "mhp_gain": 32,
+      "str_gain": 13,
+      "ac_gain": 23,
+      "int_gain": 13,
+      "dex_gain": 38,
+      "luk_gain": 8,
+      "xp_to_next": 4587520
+    },
+    {
+      "level": 21,
+      "mmp_gain": 11,
+      "mhp_gain": 43,
+      "str_gain": 23,
+      "ac_gain": 33,
+      "int_gain": 15,
+      "dex_gain": 31,
+      "luk_gain": 31,
+      "xp_to_next": 5373952
+    },
+    {
+      "level": 22,
+      "mmp_gain": 12,
+      "mhp_gain": 32,
+      "str_gain": 33,
+      "ac_gain": 23,
+      "int_gain": 10,
+      "dex_gain": 36,
+      "luk_gain": 36,
+      "xp_to_next": 5722112
+    },
+    {
+      "level": 23,
+      "mmp_gain": 12,
+      "mhp_gain": 33,
+      "str_gain": 23,
+      "ac_gain": 24,
+      "int_gain": 11,
+      "dex_gain": 25,
+      "luk_gain": 25,
+      "xp_to_next": 6488064
+    },
+    {
+      "level": 24,
+      "mmp_gain": 13,
+      "mhp_gain": 33,
+      "str_gain": 24,
+      "ac_gain": 25,
+      "int_gain": 14,
+      "dex_gain": 35,
+      "luk_gain": 35,
+      "xp_to_next": 6840320
+    },
+    {
+      "level": 25,
+      "mmp_gain": 13,
+      "mhp_gain": 28,
+      "str_gain": 25,
+      "ac_gain": 59,
+      "int_gain": 14,
+      "dex_gain": 27,
+      "luk_gain": 27,
+      "xp_to_next": 7610368
+    },
+    {
+      "level": 26,
+      "mmp_gain": 14,
+      "mhp_gain": 31,
+      "str_gain": 59,
+      "ac_gain": 40,
+      "int_gain": 12,
+      "dex_gain": 26,
+      "luk_gain": 26,
+      "xp_to_next": 8388608
+    },
+    {
+      "level": 27,
+      "mmp_gain": 16,
+      "mhp_gain": 43,
+      "str_gain": 40,
+      "ac_gain": 41,
+      "int_gain": 14,
+      "dex_gain": 36,
+      "luk_gain": 36,
+      "xp_to_next": 8732672
+    },
+    {
+      "level": 28,
+      "mmp_gain": 30,
+      "mhp_gain": 34,
+      "str_gain": 41,
+      "ac_gain": 42,
+      "int_gain": 12,
+      "dex_gain": 16,
+      "luk_gain": 16,
+      "xp_to_next": 9502720
+    },
+    {
+      "level": 29,
+      "mmp_gain": 38,
+      "mhp_gain": 31,
+      "str_gain": 42,
+      "ac_gain": 43,
+      "int_gain": 13,
+      "dex_gain": 23,
+      "luk_gain": 23,
+      "xp_to_next": 9904128
+    },
+    {
+      "level": 30,
+      "mmp_gain": 87,
+      "mhp_gain": 28,
+      "str_gain": 43,
+      "ac_gain": 44,
+      "int_gain": 12,
+      "dex_gain": 18,
+      "luk_gain": 18,
+      "xp_to_next": 10066329
+    },
+    {
+      "level": 31,
+      "mmp_gain": 102,
+      "mhp_gain": 29,
+      "str_gain": 44,
+      "ac_gain": 0,
+      "int_gain": 11,
+      "dex_gain": 25,
+      "luk_gain": 74,
+      "xp_to_next": 16777215
+    }
+  ],
+  "equipment_stat_modifiers": [
+    {
+      "id": 0,
+      "name": "SWORD_BRONZE",
+      "stat_bonus": 28,
+      "bonus_type": "str"
+    },
+    {
+      "id": 1,
+      "name": "SWORD_IRON",
+      "stat_bonus": 41,
+      "bonus_type": "str"
+    },
+    {
+      "id": 2,
+      "name": "SWORD_SHARP",
+      "stat_bonus": 49,
+      "bonus_type": "str"
+    },
+    {
+      "id": 3,
+      "name": "SWORD_LONG",
+      "stat_bonus": 82,
+      "bonus_type": "str"
+    },
+    {
+      "id": 4,
+      "name": "SWORD_SILVER",
+      "stat_bonus": 103,
+      "bonus_type": "str"
+    },
+    {
+      "id": 5,
+      "name": "SWORD_PRIME",
+      "stat_bonus": 133,
+      "bonus_type": "str"
+    },
+    {
+      "id": 6,
+      "name": "SWORD_GOLDEN",
+      "stat_bonus": 156,
+      "bonus_type": "str"
+    },
+    {
+      "id": 7,
+      "name": "SWORD_MIRAGE",
+      "stat_bonus": 123,
+      "bonus_type": "str"
+    },
+    {
+      "id": 8,
+      "name": "SWORD_PLATINUM",
+      "stat_bonus": 189,
+      "bonus_type": "str"
+    },
+    {
+      "id": 9,
+      "name": "SWORD_DIAMOND",
+      "stat_bonus": 210,
+      "bonus_type": "str"
+    },
+    {
+      "id": 10,
+      "name": "SWORD_GRAPHITE",
+      "stat_bonus": 172,
+      "bonus_type": "str"
+    },
+    {
+      "id": 11,
+      "name": "SWORD_ROYAL",
+      "stat_bonus": 256,
+      "bonus_type": "str"
+    },
+    {
+      "id": 12,
+      "name": "SWORD_ULTIMATE",
+      "stat_bonus": 271,
+      "bonus_type": "str"
+    },
+    {
+      "id": 13,
+      "name": "SWORD_OF_VERMILION",
+      "stat_bonus": 300,
+      "bonus_type": "str"
+    },
+    {
+      "id": 14,
+      "name": "SWORD_DARK1",
+      "stat_bonus": 61,
+      "bonus_type": "str"
+    },
+    {
+      "id": 15,
+      "name": "SWORD_DEATH",
+      "stat_bonus": 340,
+      "bonus_type": "str"
+    },
+    {
+      "id": 16,
+      "name": "SWORD_BARBARIAN",
+      "stat_bonus": 235,
+      "bonus_type": "str"
+    },
+    {
+      "id": 17,
+      "name": "SWORD_CRITICAL",
+      "stat_bonus": 280,
+      "bonus_type": "str"
+    },
+    {
+      "id": 18,
+      "name": "SWORD_DARK2",
+      "stat_bonus": 0,
+      "bonus_type": "str"
+    },
+    {
+      "id": 19,
+      "name": "SWORD_DARK3",
+      "stat_bonus": 0,
+      "bonus_type": "str"
+    },
+    {
+      "id": 20,
+      "name": "SHIELD_LEATHER",
+      "stat_bonus": 8,
+      "bonus_type": "ac"
+    },
+    {
+      "id": 21,
+      "name": "SHIELD_SMALL",
+      "stat_bonus": 13,
+      "bonus_type": "ac"
+    },
+    {
+      "id": 22,
+      "name": "SHIELD_LARGE",
+      "stat_bonus": 26,
+      "bonus_type": "ac"
+    },
+    {
+      "id": 23,
+      "name": "SHIELD_SILVER",
+      "stat_bonus": 39,
+      "bonus_type": "ac"
+    },
+    {
+      "id": 24,
+      "name": "SHIELD_GOLD",
+      "stat_bonus": 66,
+      "bonus_type": "ac"
+    },
+    {
+      "id": 25,
+      "name": "SHIELD_PLATINUM",
+      "stat_bonus": 77,
+      "bonus_type": "ac"
+    },
+    {
+      "id": 26,
+      "name": "SHIELD_GEM",
+      "stat_bonus": 57,
+      "bonus_type": "ac"
+    },
+    {
+      "id": 27,
+      "name": "SHIELD_SAPPHIRE",
+      "stat_bonus": 61,
+      "bonus_type": "ac"
+    },
+    {
+      "id": 28,
+      "name": "SHIELD_DIAMOND",
+      "stat_bonus": 100,
+      "bonus_type": "ac"
+    },
+    {
+      "id": 29,
+      "name": "SHIELD_DRAGON",
+      "stat_bonus": 125,
+      "bonus_type": "ac"
+    },
+    {
+      "id": 30,
+      "name": "SHIELD_MAGIC",
+      "stat_bonus": 70,
+      "bonus_type": "ac"
+    },
+    {
+      "id": 31,
+      "name": "SHIELD_PHANTOM",
+      "stat_bonus": 97,
+      "bonus_type": "ac"
+    },
+    {
+      "id": 32,
+      "name": "SHIELD_GRIZZLY",
+      "stat_bonus": 108,
+      "bonus_type": "ac"
+    },
+    {
+      "id": 33,
+      "name": "SHIELD_CARMINE1",
+      "stat_bonus": 132,
+      "bonus_type": "ac"
+    },
+    {
+      "id": 34,
+      "name": "SHIELD_ROYAL",
+      "stat_bonus": 82,
+      "bonus_type": "ac"
+    },
+    {
+      "id": 35,
+      "name": "SHIELD_POISON",
+      "stat_bonus": 89,
+      "bonus_type": "ac"
+    },
+    {
+      "id": 36,
+      "name": "SHIELD_KNIGHT",
+      "stat_bonus": 109,
+      "bonus_type": "ac"
+    },
+    {
+      "id": 37,
+      "name": "SHIELD_CARMINE2",
+      "stat_bonus": 0,
+      "bonus_type": "ac"
+    },
+    {
+      "id": 38,
+      "name": "SHIELD_CARMINE3",
+      "stat_bonus": 0,
+      "bonus_type": "ac"
+    },
+    {
+      "id": 39,
+      "name": "SHIELD_CARMINE4",
+      "stat_bonus": 0,
+      "bonus_type": "ac"
+    },
+    {
+      "id": 40,
+      "name": "ARMOR_LEATHER",
+      "stat_bonus": 11,
+      "bonus_type": "ac"
+    },
+    {
+      "id": 41,
+      "name": "ARMOR_BRONZE",
+      "stat_bonus": 29,
+      "bonus_type": "ac"
+    },
+    {
+      "id": 42,
+      "name": "ARMOR_METAL",
+      "stat_bonus": 35,
+      "bonus_type": "ac"
+    },
+    {
+      "id": 43,
+      "name": "ARMOR_SCALE",
+      "stat_bonus": 38,
+      "bonus_type": "ac"
+    },
+    {
+      "id": 44,
+      "name": "ARMOR_PLATE",
+      "stat_bonus": 47,
+      "bonus_type": "ac"
+    },
+    {
+      "id": 45,
+      "name": "ARMOR_SILVER",
+      "stat_bonus": 100,
+      "bonus_type": "ac"
+    },
+    {
+      "id": 46,
+      "name": "ARMOR_GOLD",
+      "stat_bonus": 139,
+      "bonus_type": "ac"
+    },
+    {
+      "id": 47,
+      "name": "ARMOR_CRYSTAL",
+      "stat_bonus": 55,
+      "bonus_type": "ac"
+    },
+    {
+      "id": 48,
+      "name": "ARMOR_EMERALD",
+      "stat_bonus": 71,
+      "bonus_type": "ac"
+    },
+    {
+      "id": 49,
+      "name": "ARMOR_DIAMOND",
+      "stat_bonus": 174,
+      "bonus_type": "ac"
+    },
+    {
+      "id": 50,
+      "name": "ARMOR_KNIGHT",
+      "stat_bonus": 111,
+      "bonus_type": "ac"
+    },
+    {
+      "id": 51,
+      "name": "ARMOR_ULTIMATE",
+      "stat_bonus": 150,
+      "bonus_type": "ac"
+    },
+    {
+      "id": 52,
+      "name": "ARMOR_ODIN",
+      "stat_bonus": 167,
+      "bonus_type": "ac"
+    },
+    {
+      "id": 53,
+      "name": "ARMOR_SECRET",
+      "stat_bonus": 200,
+      "bonus_type": "ac"
+    },
+    {
+      "id": 54,
+      "name": "ARMOR_SKELETON",
+      "stat_bonus": 69,
+      "bonus_type": "ac"
+    },
+    {
+      "id": 55,
+      "name": "ARMOR_CRIMSON",
+      "stat_bonus": 120,
+      "bonus_type": "ac"
+    },
+    {
+      "id": 56,
+      "name": "ARMOR_OLD_NICK",
+      "stat_bonus": 195,
+      "bonus_type": "ac"
+    }
+  ]
+}

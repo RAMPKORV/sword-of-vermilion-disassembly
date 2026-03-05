@@ -1,0 +1,852 @@
+{
+  "_meta": {
+    "generated_by": "tools/extract_game_data.js",
+    "source": "src/shopdata.asm"
+  },
+  "service_prices": {
+    "inn_fortune_teller": [
+      {
+        "town_id": 0,
+        "town_name": "WYCLIF",
+        "price": 16
+      },
+      {
+        "town_id": 1,
+        "town_name": "PARMA",
+        "price": 19
+      },
+      {
+        "town_id": 2,
+        "town_name": "WATLING",
+        "price": 24
+      },
+      {
+        "town_id": 3,
+        "town_name": "DEEPDALE",
+        "price": 40
+      },
+      {
+        "town_id": 4,
+        "town_name": "STOW1",
+        "price": 80
+      },
+      {
+        "town_id": 5,
+        "town_name": "STOW2",
+        "price": 100
+      },
+      {
+        "town_id": 6,
+        "town_name": "KELTWICK",
+        "price": 150
+      },
+      {
+        "town_id": 7,
+        "town_name": "MALAGA",
+        "price": 292
+      },
+      {
+        "town_id": 8,
+        "town_name": "BARROW",
+        "price": 328
+      },
+      {
+        "town_id": 9,
+        "town_name": "TADCASTER",
+        "price": 342
+      },
+      {
+        "town_id": 10,
+        "town_name": "HELWIG",
+        "price": 370
+      },
+      {
+        "town_id": 11,
+        "town_name": "SWAFFHAM",
+        "price": 400
+      },
+      {
+        "town_id": 12,
+        "town_name": "EXCALABRIA",
+        "price": 548
+      },
+      {
+        "town_id": 13,
+        "town_name": "HASTINGS1",
+        "price": 592
+      }
+    ],
+    "church_curse_removal": [
+      {
+        "town_id": 0,
+        "town_name": "WYCLIF",
+        "price": 256
+      },
+      {
+        "town_id": 1,
+        "town_name": "PARMA",
+        "price": 272
+      },
+      {
+        "town_id": 2,
+        "town_name": "WATLING",
+        "price": 288
+      },
+      {
+        "town_id": 3,
+        "town_name": "DEEPDALE",
+        "price": 304
+      },
+      {
+        "town_id": 4,
+        "town_name": "STOW1",
+        "price": 320
+      },
+      {
+        "town_id": 5,
+        "town_name": "STOW2",
+        "price": 336
+      },
+      {
+        "town_id": 6,
+        "town_name": "KELTWICK",
+        "price": 352
+      },
+      {
+        "town_id": 7,
+        "town_name": "MALAGA",
+        "price": 368
+      },
+      {
+        "town_id": 8,
+        "town_name": "BARROW",
+        "price": 384
+      },
+      {
+        "town_id": 9,
+        "town_name": "TADCASTER",
+        "price": 400
+      },
+      {
+        "town_id": 10,
+        "town_name": "HELWIG",
+        "price": 512
+      },
+      {
+        "town_id": 11,
+        "town_name": "SWAFFHAM",
+        "price": 528
+      },
+      {
+        "town_id": 12,
+        "town_name": "EXCALABRIA",
+        "price": 544
+      },
+      {
+        "town_id": 13,
+        "town_name": "HASTINGS1",
+        "price": 560
+      }
+    ],
+    "church_poison_cure": [
+      {
+        "town_id": 0,
+        "town_name": "WYCLIF",
+        "price": 2
+      },
+      {
+        "town_id": 1,
+        "town_name": "PARMA",
+        "price": 4
+      },
+      {
+        "town_id": 2,
+        "town_name": "WATLING",
+        "price": 6
+      },
+      {
+        "town_id": 3,
+        "town_name": "DEEPDALE",
+        "price": 8
+      },
+      {
+        "town_id": 4,
+        "town_name": "STOW1",
+        "price": 16
+      },
+      {
+        "town_id": 5,
+        "town_name": "STOW2",
+        "price": 18
+      },
+      {
+        "town_id": 6,
+        "town_name": "KELTWICK",
+        "price": 20
+      },
+      {
+        "town_id": 7,
+        "town_name": "MALAGA",
+        "price": 22
+      },
+      {
+        "town_id": 8,
+        "town_name": "BARROW",
+        "price": 24
+      },
+      {
+        "town_id": 9,
+        "town_name": "TADCASTER",
+        "price": 32
+      },
+      {
+        "town_id": 10,
+        "town_name": "HELWIG",
+        "price": 34
+      },
+      {
+        "town_id": 11,
+        "town_name": "SWAFFHAM",
+        "price": 36
+      },
+      {
+        "town_id": 12,
+        "town_name": "EXCALABRIA",
+        "price": 38
+      },
+      {
+        "town_id": 13,
+        "town_name": "HASTINGS1",
+        "price": 40
+      }
+    ]
+  },
+  "resale_maps": {
+    "items": [
+      {
+        "id": 0,
+        "name": "HERBS",
+        "resale_value": 8
+      },
+      {
+        "id": 1,
+        "name": "CANDLE",
+        "resale_value": 4
+      },
+      {
+        "id": 2,
+        "name": "LANTERN",
+        "resale_value": 48
+      },
+      {
+        "id": 3,
+        "name": "POISON_BALM",
+        "resale_value": 21
+      },
+      {
+        "id": 4,
+        "name": "ALARM_CLOCK",
+        "resale_value": 4096
+      },
+      {
+        "id": 5,
+        "name": "VASE",
+        "resale_value": 65536
+      },
+      {
+        "id": 6,
+        "name": "JOKE_BOOK",
+        "resale_value": 4352
+      },
+      {
+        "id": 7,
+        "name": "SMALL_BOMB",
+        "resale_value": 5
+      },
+      {
+        "id": 8,
+        "name": "OLD_WOMANS_SKETCH",
+        "resale_value": 0
+      },
+      {
+        "id": 9,
+        "name": "OLD_MANS_SKETCH",
+        "resale_value": 0
+      },
+      {
+        "id": 10,
+        "name": "PASS_TO_CARTHAHENA",
+        "resale_value": 0
+      },
+      {
+        "id": 11,
+        "name": "TRUFFLE",
+        "resale_value": 0
+      },
+      {
+        "id": 12,
+        "name": "DIGOT_PLANT",
+        "resale_value": 0
+      },
+      {
+        "id": 13,
+        "name": "TREASURE_OF_TROY",
+        "resale_value": 0
+      },
+      {
+        "id": 14,
+        "name": "WHITE_CRYSTAL",
+        "resale_value": 0
+      },
+      {
+        "id": 15,
+        "name": "RED_CRYSTAL",
+        "resale_value": 0
+      },
+      {
+        "id": 16,
+        "name": "BLUE_CRYSTAL",
+        "resale_value": 0
+      },
+      {
+        "id": 17,
+        "name": "WHITE_KEY",
+        "resale_value": 0
+      },
+      {
+        "id": 18,
+        "name": "RED_KEY",
+        "resale_value": 0
+      },
+      {
+        "id": 19,
+        "name": "BLUE_KEY",
+        "resale_value": 0
+      },
+      {
+        "id": 20,
+        "name": "CROWN",
+        "resale_value": 0
+      },
+      {
+        "id": 21,
+        "name": "SIXTEEN_RINGS",
+        "resale_value": 0
+      },
+      {
+        "id": 22,
+        "name": "BRONZE_KEY",
+        "resale_value": 0
+      },
+      {
+        "id": 23,
+        "name": "SILVER_KEY",
+        "resale_value": 0
+      },
+      {
+        "id": 24,
+        "name": "GOLD_KEY",
+        "resale_value": 0
+      },
+      {
+        "id": 25,
+        "name": "THULE_KEY",
+        "resale_value": 0
+      },
+      {
+        "id": 26,
+        "name": "SECRET_KEY",
+        "resale_value": 896
+      },
+      {
+        "id": 27,
+        "name": "MEDICINE",
+        "resale_value": 80
+      },
+      {
+        "id": 28,
+        "name": "AGATE_JEWEL",
+        "resale_value": 4608
+      },
+      {
+        "id": 29,
+        "name": "GRIFFIN_WING",
+        "resale_value": 1024
+      },
+      {
+        "id": 30,
+        "name": "TITANIAS_MIRROR",
+        "resale_value": 77824
+      },
+      {
+        "id": 31,
+        "name": "GNOME_STONE",
+        "resale_value": 292
+      },
+      {
+        "id": 32,
+        "name": "TOPAZ_JEWEL",
+        "resale_value": 16896
+      },
+      {
+        "id": 33,
+        "name": "BANSHEE_POWDER",
+        "resale_value": 4656
+      },
+      {
+        "id": 34,
+        "name": "RAFAELS_STICK",
+        "resale_value": 131072
+      },
+      {
+        "id": 35,
+        "name": "MIRROR_OF_ATLAS",
+        "resale_value": 327680
+      },
+      {
+        "id": 36,
+        "name": "RUBY_BROOCH",
+        "resale_value": 10576
+      },
+      {
+        "id": 37,
+        "name": "DUNGEON_KEY",
+        "resale_value": 4096
+      },
+      {
+        "id": 38,
+        "name": "KULMS_VASE",
+        "resale_value": 8192
+      },
+      {
+        "id": 39,
+        "name": "KASANS_CHISEL",
+        "resale_value": 4096
+      },
+      {
+        "id": 40,
+        "name": "BOOK_OF_KIEL",
+        "resale_value": 8192
+      },
+      {
+        "id": 41,
+        "name": "DANEGELD_WATER",
+        "resale_value": 1792
+      },
+      {
+        "id": 42,
+        "name": "MINERAL_BAR",
+        "resale_value": 12288
+      },
+      {
+        "id": 43,
+        "name": "MEGA_BLAST",
+        "resale_value": 12288
+      }
+    ],
+    "equipment": [
+      {
+        "id": 0,
+        "name": "SWORD_BRONZE",
+        "resale_value": 48
+      },
+      {
+        "id": 1,
+        "name": "SWORD_IRON",
+        "resale_value": 336
+      },
+      {
+        "id": 2,
+        "name": "SWORD_SHARP",
+        "resale_value": 848
+      },
+      {
+        "id": 3,
+        "name": "SWORD_LONG",
+        "resale_value": 2048
+      },
+      {
+        "id": 4,
+        "name": "SWORD_SILVER",
+        "resale_value": 8192
+      },
+      {
+        "id": 5,
+        "name": "SWORD_PRIME",
+        "resale_value": 8192
+      },
+      {
+        "id": 6,
+        "name": "SWORD_GOLDEN",
+        "resale_value": 28672
+      },
+      {
+        "id": 7,
+        "name": "SWORD_MIRAGE",
+        "resale_value": 407
+      },
+      {
+        "id": 8,
+        "name": "SWORD_PLATINUM",
+        "resale_value": 73728
+      },
+      {
+        "id": 9,
+        "name": "SWORD_DIAMOND",
+        "resale_value": 98304
+      },
+      {
+        "id": 10,
+        "name": "SWORD_GRAPHITE",
+        "resale_value": 5015
+      },
+      {
+        "id": 11,
+        "name": "SWORD_ROYAL",
+        "resale_value": 65536
+      },
+      {
+        "id": 12,
+        "name": "SWORD_ULTIMATE",
+        "resale_value": 131072
+      },
+      {
+        "id": 13,
+        "name": "SWORD_OF_VERMILION",
+        "resale_value": 1
+      },
+      {
+        "id": 14,
+        "name": "SWORD_DARK1",
+        "resale_value": 3
+      },
+      {
+        "id": 15,
+        "name": "SWORD_DEATH",
+        "resale_value": 262144
+      },
+      {
+        "id": 16,
+        "name": "SWORD_BARBARIAN",
+        "resale_value": 83
+      },
+      {
+        "id": 17,
+        "name": "SWORD_CRITICAL",
+        "resale_value": 37376
+      },
+      {
+        "id": 18,
+        "name": "SWORD_DARK2",
+        "resale_value": 0
+      },
+      {
+        "id": 19,
+        "name": "SWORD_DARK3",
+        "resale_value": 0
+      },
+      {
+        "id": 20,
+        "name": "SHIELD_LEATHER",
+        "resale_value": 32
+      },
+      {
+        "id": 21,
+        "name": "SHIELD_SMALL",
+        "resale_value": 48
+      },
+      {
+        "id": 22,
+        "name": "SHIELD_LARGE",
+        "resale_value": 256
+      },
+      {
+        "id": 23,
+        "name": "SHIELD_SILVER",
+        "resale_value": 560
+      },
+      {
+        "id": 24,
+        "name": "SHIELD_GOLD",
+        "resale_value": 2048
+      },
+      {
+        "id": 25,
+        "name": "SHIELD_PLATINUM",
+        "resale_value": 9472
+      },
+      {
+        "id": 26,
+        "name": "SHIELD_GEM",
+        "resale_value": 19
+      },
+      {
+        "id": 27,
+        "name": "SHIELD_SAPPHIRE",
+        "resale_value": 8192
+      },
+      {
+        "id": 28,
+        "name": "SHIELD_DIAMOND",
+        "resale_value": 13568
+      },
+      {
+        "id": 29,
+        "name": "SHIELD_DRAGON",
+        "resale_value": 2450
+      },
+      {
+        "id": 30,
+        "name": "SHIELD_MAGIC",
+        "resale_value": 882
+      },
+      {
+        "id": 31,
+        "name": "SHIELD_PHANTOM",
+        "resale_value": 1666
+      },
+      {
+        "id": 32,
+        "name": "SHIELD_GRIZZLY",
+        "resale_value": 1828
+      },
+      {
+        "id": 33,
+        "name": "SHIELD_CARMINE1",
+        "resale_value": 20480
+      },
+      {
+        "id": 34,
+        "name": "SHIELD_ROYAL",
+        "resale_value": 1025
+      },
+      {
+        "id": 35,
+        "name": "SHIELD_POISON",
+        "resale_value": 4176
+      },
+      {
+        "id": 36,
+        "name": "SHIELD_KNIGHT",
+        "resale_value": 12288
+      },
+      {
+        "id": 37,
+        "name": "SHIELD_CARMINE2",
+        "resale_value": 0
+      },
+      {
+        "id": 38,
+        "name": "SHIELD_CARMINE3",
+        "resale_value": 0
+      },
+      {
+        "id": 39,
+        "name": "SHIELD_CARMINE4",
+        "resale_value": 0
+      },
+      {
+        "id": 40,
+        "name": "ARMOR_LEATHER",
+        "resale_value": 128
+      },
+      {
+        "id": 41,
+        "name": "ARMOR_BRONZE",
+        "resale_value": 368
+      },
+      {
+        "id": 42,
+        "name": "ARMOR_METAL",
+        "resale_value": 768
+      },
+      {
+        "id": 43,
+        "name": "ARMOR_SCALE",
+        "resale_value": 1104
+      },
+      {
+        "id": 44,
+        "name": "ARMOR_PLATE",
+        "resale_value": 4144
+      },
+      {
+        "id": 45,
+        "name": "ARMOR_SILVER",
+        "resale_value": 20480
+      },
+      {
+        "id": 46,
+        "name": "ARMOR_GOLD",
+        "resale_value": 73728
+      },
+      {
+        "id": 47,
+        "name": "ARMOR_CRYSTAL",
+        "resale_value": 6144
+      },
+      {
+        "id": 48,
+        "name": "ARMOR_EMERALD",
+        "resale_value": 28672
+      },
+      {
+        "id": 49,
+        "name": "ARMOR_DIAMOND",
+        "resale_value": 262144
+      },
+      {
+        "id": 50,
+        "name": "ARMOR_KNIGHT",
+        "resale_value": 547
+      },
+      {
+        "id": 51,
+        "name": "ARMOR_ULTIMATE",
+        "resale_value": 8192
+      },
+      {
+        "id": 52,
+        "name": "ARMOR_ODIN",
+        "resale_value": 86016
+      },
+      {
+        "id": 53,
+        "name": "ARMOR_SECRET",
+        "resale_value": 131072
+      },
+      {
+        "id": 54,
+        "name": "ARMOR_SKELETON",
+        "resale_value": 1296
+      },
+      {
+        "id": 55,
+        "name": "ARMOR_CRIMSON",
+        "resale_value": 2
+      },
+      {
+        "id": 56,
+        "name": "ARMOR_OLD_NICK",
+        "resale_value": 196608
+      }
+    ],
+    "magic": [
+      {
+        "id": 0,
+        "name": "AERO",
+        "resale_value": 5376
+      },
+      {
+        "id": 1,
+        "name": "AERIOS",
+        "resale_value": 21760
+      },
+      {
+        "id": 2,
+        "name": "VOLTI",
+        "resale_value": 1312
+      },
+      {
+        "id": 3,
+        "name": "VOLTIO",
+        "resale_value": 21504
+      },
+      {
+        "id": 4,
+        "name": "VOLTIOS",
+        "resale_value": 143360
+      },
+      {
+        "id": 5,
+        "name": "FERROS",
+        "resale_value": 512
+      },
+      {
+        "id": 6,
+        "name": "COPPEROS",
+        "resale_value": 5120
+      },
+      {
+        "id": 7,
+        "name": "MERCURIOS",
+        "resale_value": 17152
+      },
+      {
+        "id": 8,
+        "name": "ARGENTOS",
+        "resale_value": 8192
+      },
+      {
+        "id": 9,
+        "name": "HYDRO",
+        "resale_value": 8960
+      },
+      {
+        "id": 10,
+        "name": "HYDRIOS",
+        "resale_value": 39168
+      },
+      {
+        "id": 11,
+        "name": "CHRONO",
+        "resale_value": 9808
+      },
+      {
+        "id": 12,
+        "name": "CHRONIOS",
+        "resale_value": 32768
+      },
+      {
+        "id": 13,
+        "name": "TERRAFISSI",
+        "resale_value": 151552
+      },
+      {
+        "id": 14,
+        "name": "ARIES",
+        "resale_value": 17408
+      },
+      {
+        "id": 15,
+        "name": "EXTRIOS",
+        "resale_value": 12288
+      },
+      {
+        "id": 16,
+        "name": "INAUDIOS",
+        "resale_value": 8192
+      },
+      {
+        "id": 17,
+        "name": "LUMINOS",
+        "resale_value": 9728
+      },
+      {
+        "id": 18,
+        "name": "SANGUA",
+        "resale_value": 768
+      },
+      {
+        "id": 19,
+        "name": "SANGUIA",
+        "resale_value": 8448
+      },
+      {
+        "id": 20,
+        "name": "SANGUIO",
+        "resale_value": 83200
+      },
+      {
+        "id": 21,
+        "name": "TOXIOS",
+        "resale_value": 17408
+      },
+      {
+        "id": 22,
+        "name": "SANGUIOS",
+        "resale_value": 0
+      }
+    ]
+  }
+}

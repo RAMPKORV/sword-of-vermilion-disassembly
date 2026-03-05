@@ -1,0 +1,193 @@
+{
+  "_meta": {
+    "generated_by": "tools/extract_game_data.js",
+    "source": "src/shopdata.asm"
+  },
+  "magic_count": 23,
+  "magic": [
+    {
+      "id": 0,
+      "name": "AERO",
+      "mp_cost": 3,
+      "damage_tier": 4,
+      "damage_base": 176,
+      "element": "neutral"
+    },
+    {
+      "id": 1,
+      "name": "AERIOS",
+      "mp_cost": 9,
+      "damage_tier": 6,
+      "damage_base": 164,
+      "element": "neutral"
+    },
+    {
+      "id": 2,
+      "name": "VOLTI",
+      "mp_cost": 2,
+      "damage_tier": 3,
+      "damage_base": 87,
+      "element": "thunder"
+    },
+    {
+      "id": 3,
+      "name": "VOLTIO",
+      "mp_cost": 12,
+      "damage_tier": 0,
+      "damage_base": 50,
+      "element": "thunder"
+    },
+    {
+      "id": 4,
+      "name": "VOLTIOS",
+      "mp_cost": 16,
+      "damage_tier": 15,
+      "damage_base": 30,
+      "element": "thunder"
+    },
+    {
+      "id": 5,
+      "name": "FERROS",
+      "mp_cost": 1,
+      "damage_tier": 2,
+      "damage_base": 100,
+      "element": "fire"
+    },
+    {
+      "id": 6,
+      "name": "COPPEROS",
+      "mp_cost": 4,
+      "damage_tier": 0,
+      "damage_base": 80,
+      "element": "fire"
+    },
+    {
+      "id": 7,
+      "name": "MERCURIOS",
+      "mp_cost": 7,
+      "damage_tier": 1,
+      "damage_base": 182,
+      "element": "fire"
+    },
+    {
+      "id": 8,
+      "name": "ARGENTOS",
+      "mp_cost": 10,
+      "damage_tier": 0,
+      "damage_base": 30,
+      "element": "fire"
+    },
+    {
+      "id": 9,
+      "name": "HYDRO",
+      "mp_cost": 4,
+      "damage_tier": 0,
+      "damage_base": 160,
+      "element": "water"
+    },
+    {
+      "id": 10,
+      "name": "HYDRIOS",
+      "mp_cost": 8,
+      "damage_tier": 1,
+      "damage_base": 74,
+      "element": "water"
+    },
+    {
+      "id": 11,
+      "name": "CHRONO",
+      "mp_cost": 5,
+      "damage_tier": 0,
+      "damage_base": 0,
+      "element": "neutral"
+    },
+    {
+      "id": 12,
+      "name": "CHRONIOS",
+      "mp_cost": 10,
+      "damage_tier": 0,
+      "damage_base": 0,
+      "element": "neutral"
+    },
+    {
+      "id": 13,
+      "name": "TERRAFISSI",
+      "mp_cost": 25,
+      "damage_tier": null,
+      "damage_base": null,
+      "element": "neutral"
+    },
+    {
+      "id": 14,
+      "name": "ARIES",
+      "mp_cost": 13,
+      "damage_tier": null,
+      "damage_base": null,
+      "element": null
+    },
+    {
+      "id": 15,
+      "name": "EXTRIOS",
+      "mp_cost": 5,
+      "damage_tier": null,
+      "damage_base": null,
+      "element": null
+    },
+    {
+      "id": 16,
+      "name": "INAUDIOS",
+      "mp_cost": 8,
+      "damage_tier": null,
+      "damage_base": null,
+      "element": null
+    },
+    {
+      "id": 17,
+      "name": "LUMINOS",
+      "mp_cost": 5,
+      "damage_tier": null,
+      "damage_base": null,
+      "element": null
+    },
+    {
+      "id": 18,
+      "name": "SANGUA",
+      "mp_cost": 6,
+      "damage_tier": null,
+      "damage_base": null,
+      "element": null
+    },
+    {
+      "id": 19,
+      "name": "SANGUIA",
+      "mp_cost": 12,
+      "damage_tier": null,
+      "damage_base": null,
+      "element": null
+    },
+    {
+      "id": 20,
+      "name": "SANGUIO",
+      "mp_cost": 31,
+      "damage_tier": null,
+      "damage_base": null,
+      "element": null
+    },
+    {
+      "id": 21,
+      "name": "TOXIOS",
+      "mp_cost": 6,
+      "damage_tier": null,
+      "damage_base": null,
+      "element": null
+    },
+    {
+      "id": 22,
+      "name": "SANGUIOS",
+      "mp_cost": 2,
+      "damage_tier": null,
+      "damage_base": null,
+      "element": null
+    }
+  ]
+}
