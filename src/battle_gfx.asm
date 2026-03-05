@@ -34,17 +34,17 @@ WriteDirectionTilesForBoss:
 	MOVEA.l	(A0,D0.w), A0
 	MOVE.l	#$40080003, D5
 	MOVE.w	#5, D7
-WriteDirectionTilesForBoss_Done:
+WriteDirectionTilesForBoss_RowLoop:
 	MOVE.l	D5, VDP_control_port
 	MOVE.w	#4, D6
-WriteDirectionTilesForBoss_Done2:
+WriteDirectionTilesForBoss_TileLoop:
 	CLR.w	D0
 	MOVE.b	(A0)+, D0
 	ADDI.w	#$A200, D0
 	MOVE.w	D0, VDP_data_port
-	DBF	D6, WriteDirectionTilesForBoss_Done2
+	DBF	D6, WriteDirectionTilesForBoss_TileLoop
 	ADDI.l	#$00800000, D5
-	DBF	D7, WriteDirectionTilesForBoss_Done
+	DBF	D7, WriteDirectionTilesForBoss_RowLoop
 	ANDI	#$F8FF, SR
 	RTS
 	
@@ -88,27 +88,27 @@ CalculateDirectionToPlayer:
 GetDirectionFromDeltas:
 	CLR.w	D2
 	TST.w	D0
-	BGE.b	GetDirectionFromDeltas_Loop
+	BGE.b	GetDirectionFromDeltas_CheckNegX
 	NEG.w	D0
 	MOVE.w	#8, D2
-GetDirectionFromDeltas_Loop:
+GetDirectionFromDeltas_CheckNegX:
 	TST.w	D1
-	BGE.b	GetDirectionFromDeltas_Loop2
+	BGE.b	GetDirectionFromDeltas_CheckXY
 	NEG.w	D1
 	ORI.w	#4, D2
-GetDirectionFromDeltas_Loop2:
+GetDirectionFromDeltas_CheckXY:
 	CMP.w	D1, D0
-	BGE.b	GetDirectionFromDeltas_Loop3
+	BGE.b	GetDirectionFromDeltas_ShiftMajorAxis
 	ORI.w	#2, D2
 	ASR.w	#1, D1
-	BGE.b	GetDirectionFromDeltas_Loop4
-GetDirectionFromDeltas_Loop3:
+	BGE.b	GetDirectionFromDeltas_CheckDiagonal
+GetDirectionFromDeltas_ShiftMajorAxis:
 	ASR.w	#1, D0
-GetDirectionFromDeltas_Loop4:
+GetDirectionFromDeltas_CheckDiagonal:
 	CMP.w	D1, D0
-	BGE.b	GetDirectionFromDeltas_Loop5
+	BGE.b	GetDirectionFromDeltas_CheckDiagonal2
 	ORI.w	#1, D2
-GetDirectionFromDeltas_Loop5:
+GetDirectionFromDeltas_CheckDiagonal2:
 	ADDA.w	D2, A1
 	CLR.w	D0
 	MOVE.b	(A1), D0
@@ -116,25 +116,25 @@ GetDirectionFromDeltas_Loop5:
 	MOVE.b	obj_direction(A5), D2
 	MOVE.w	D2, D3
 	SUB.w	D0, D3
-	BNE.b	GetDirectionFromDeltas_Loop6
+	BNE.b	GetDirectionFromDeltas_AdjustAngle
 	MOVE.b	D0, obj_direction(A5)
 	BRA.w	BossBody_AngleReturn
-GetDirectionFromDeltas_Loop6:
-	BGT.w	GetDirectionFromDeltas_Loop7
+GetDirectionFromDeltas_AdjustAngle:
+	BGT.w	GetDirectionFromDeltas_CheckCCW
 	NEG.w	D3
 	MOVE.w	#$0100, D4
 	SUB.w	D0, D4
 	ADD.w	D2, D4
 	CMP.w	D3, D4
 	BLE.w	BossBody_AngleDecrease
-	BRA.w	GetDirectionFromDeltas_Loop8
-GetDirectionFromDeltas_Loop7:
+	BRA.w	GetDirectionFromDeltas_IncrementAngle
+GetDirectionFromDeltas_CheckCCW:
 	MOVE.w	#$0100, D4
 	SUB.w	D2, D4
 	ADD.w	D0, D4
 	CMP.w	D3, D4
 	BGE.w	BossBody_AngleDecrease
-GetDirectionFromDeltas_Loop8:
+GetDirectionFromDeltas_IncrementAngle:
 	ADDQ.b	#1, obj_direction(A5)
 	BRA.w	BossBody_AngleReturn
 BossBody_AngleDecrease:
@@ -183,17 +183,17 @@ WriteTilesToVRAM:
 	MOVE.w	(A0)+, D7
 	MOVE.l	(A0)+, D5
 	ORI	#$0700, SR
-WriteTilesToVRAM_Done:
+WriteTilesToVRAM_RowLoop:
 	MOVE.l	D5, VDP_control_port
 	MOVE.w	D6, D4
-WriteTilesToVRAM_Done2:
+WriteTilesToVRAM_TileLoop:
 	CLR.w	D0
 	MOVE.b	(A1)+, D0
 	ADDI.w	#$2200, D0
 	MOVE.w	D0, VDP_data_port
-	DBF	D4, WriteTilesToVRAM_Done2
+	DBF	D4, WriteTilesToVRAM_TileLoop
 	ADDI.l	#$00800000, D5
-	DBF	D7, WriteTilesToVRAM_Done
+	DBF	D7, WriteTilesToVRAM_RowLoop
 	ANDI	#$F8FF, SR
 	RTS
 	
@@ -269,13 +269,13 @@ AddSpriteToDisplayList:
 	SUB.w	D0, D7
 	ASL.w	#4, D7
 	ADDA.w	D7, A0
-AddSpriteToDisplayList_Done:
+AddSpriteToDisplayList_FindSlot:
 	CMPI.b	#$0F, (A0)
-	BLT.b	AddSpriteToDisplayList_Loop
+	BLT.b	AddSpriteToDisplayList_InsertSprite
 	LEA	$10(A0), A0
-	DBF	D0, AddSpriteToDisplayList_Done
+	DBF	D0, AddSpriteToDisplayList_FindSlot
 	BRA.b	AddSpriteToDisplayList_Return	
-AddSpriteToDisplayList_Loop:
+AddSpriteToDisplayList_InsertSprite:
 	ADDQ.b	#1, (A0)
 	MOVE.b	(A0), D0
 	ANDI.w	#$000F, D0
@@ -301,15 +301,15 @@ FlushSpriteAttributesToVDP:
 	MOVE.l	#VDP_CMD_VRAM_WRITE_SAT, VDP_control_port
 	MOVE.w	Sprite_attr_count.w, D0
 	SUBQ.w	#1, D0
-	BLT.b	FlushSpriteAttributesToVDP_Loop
+	BLT.b	FlushSpriteAttributesToVDP_WriteTerminator
 	LEA	Sprite_attr_buffer.w, A2
-FlushSpriteAttributesToVDP_Done:
+FlushSpriteAttributesToVDP_WriteLoop:
 	MOVE.w	(A2)+, VDP_data_port
 	MOVE.w	(A2)+, VDP_data_port
 	MOVE.w	(A2)+, VDP_data_port
 	MOVE.w	(A2)+, VDP_data_port
-	DBF	D0, FlushSpriteAttributesToVDP_Done
-FlushSpriteAttributesToVDP_Loop:
+	DBF	D0, FlushSpriteAttributesToVDP_WriteLoop
+FlushSpriteAttributesToVDP_WriteTerminator:
 	MOVE.w	#0, VDP_data_port
 	MOVE.w	#0, VDP_data_port
 	MOVE.w	#0, VDP_data_port
@@ -390,23 +390,23 @@ QueueSpriteOAM_Return:
 SortAndUploadSpriteOAM:
 	ORI	#$0700, SR
 	TST.w	Sprite_attr_count.w
-	BLE.w	QueueSpriteOAM_Return_Loop
+	BLE.w	SortAndUploadSpriteOAM_Return
 	LEA	Sprite_sort_temp_buffer.w, A1
 	LEA	Sprite_attr_buffer.w, A4
 	LEA	Sprite_sort_buffer.w, A2
 	CLR.w	D1
 	MOVE.w	#$0010, D5
 	MOVE.w	#$00FF, D0
-QueueSpriteOAM_Return_Done:
+SortAndUploadSpriteOAM_BucketLoop:
 	ADDA.w	D5, A1
 	TST.b	(A1)
-	BEQ.w	QueueSpriteOAM_Return_Loop2
+	BEQ.w	SortAndUploadSpriteOAM_BucketEmpty
 	CLR.w	D6
 	MOVE.b	(A1), D6
 	ANDI.w	#$000F, D6
 	SUBQ.w	#1, D6
-	BLT.w	QueueSpriteOAM_Return_Loop3
-QueueSpriteOAM_Return_Done2:
+	BLT.w	SortAndUploadSpriteOAM_ErrorTrap
+SortAndUploadSpriteOAM_CopyEntry:
 	MOVE.b	$1(A1,D6.w), D4
 	ANDI.w	#$007F, D4
 	ASL.w	#3, D4
@@ -418,15 +418,15 @@ QueueSpriteOAM_Return_Done2:
 	MOVE.w	D2, (A4)+
 	MOVE.w	(A3)+, (A4)+
 	MOVE.w	(A3), (A4)+
-	DBF	D6, QueueSpriteOAM_Return_Done2
+	DBF	D6, SortAndUploadSpriteOAM_CopyEntry
 	CLR.b	(A1)
-QueueSpriteOAM_Return_Loop2:
-	DBF	D0, QueueSpriteOAM_Return_Done
-QueueSpriteOAM_Return_Loop:
+SortAndUploadSpriteOAM_BucketEmpty:
+	DBF	D0, SortAndUploadSpriteOAM_BucketLoop
+SortAndUploadSpriteOAM_Return:
 	ANDI	#$F8FF, SR
 	RTS
 	
-QueueSpriteOAM_Return_Loop3:
+SortAndUploadSpriteOAM_ErrorTrap:
 	RTE	
 ; ---------------------------------------------------------------------------
 ; SortAndUploadSpriteOAM_Alt — clear all priority-bucket slot counters
@@ -443,7 +443,7 @@ QueueSpriteOAM_Return_Loop3:
 SortAndUploadSpriteOAM_Alt:
 	MOVE.w	#$001F, D7
 	LEA	Sprite_priority_slots.w, A0
-QueueSpriteOAM_Return_Loop3_Done:
+ClearSpritePrioritySlots_Loop:
 	CLR.b	(A0)
 	LEA	$10(A0), A0
 	CLR.b	(A0)
@@ -460,7 +460,7 @@ QueueSpriteOAM_Return_Loop3_Done:
 	LEA	$10(A0), A0
 	CLR.b	(A0)
 	LEA	$10(A0), A0
-	DBF	D7, QueueSpriteOAM_Return_Loop3_Done
+	DBF	D7, ClearSpritePrioritySlots_Loop
 	ANDI	#$F8FF, SR
 	RTS
 	
@@ -1034,14 +1034,14 @@ RemoveItemFromArray_Loop:
 ; ---------------------------------------------------------------------------
 DecompressTileGraphics:
 	CLR.l	D3
-DecompressTileGraphics_ReadByte:
+DecompressTileGraphics_ReadGroupCount:
 	CLR.w	D0
 	MOVE.b	(A0)+, D0
-	BEQ.w	DecompressTileGraphics_Loop
+	BEQ.w	DecompressTileGraphics_UnmaskedTile
 	SUBQ.w	#1, D0
-DecompressTileGraphics_Done:
+DecompressTileGraphics_MaskGroupLoop:
 	CLR.w	D2
-DecompressTileGraphics_ReadMask:
+DecompressTileGraphics_ReadMaskGroup:
 	MOVE.b	(A0)+, D2
 	MOVE.b	(A0)+, D1
 	ASL.l	#8, D1
@@ -1052,41 +1052,41 @@ DecompressTileGraphics_ReadMask:
 	MOVE.b	(A0)+, D1
 	OR.l	D1, D3
 	BSR.w	WriteMaskedTileRow
-	DBF	D0, DecompressTileGraphics_Done
+	DBF	D0, DecompressTileGraphics_MaskGroupLoop
 	LEA	(A2), A1
 	MOVEQ	#$00000020, D0
 	MOVE.l	D3, D1
-DecompressTileGraphics_Done2:
+DecompressTileGraphics_CheckAllMasked:
 	CMPI.l	#$FFFFFFFF, D3
-DecompressTileGraphics_CheckFull:
-	BEQ.b	DecompressTileGraphics_Loop2
-DecompressTileGraphics_Done3:
+DecompressTileGraphics_CheckMaskFull:
+	BEQ.b	DecompressTileGraphics_AllMaskedDone
+DecompressTileGraphics_PixelFillLoop:
 	ROL.l	#1, D1
-DecompressTileGraphics_PixelLoop:
+DecompressTileGraphics_ScanPixelBit:
 	SUBQ.w	#1, D0
 	BTST.l	#0, D1
-	BNE.b	DecompressTileGraphics_Loop3
+	BNE.b	DecompressTileGraphics_SkipMaskedPixel
 	MOVE.b	(A0)+, (A1)+
 	BSET.l	D0, D3
-	BRA.b	DecompressTileGraphics_Done2
-DecompressTileGraphics_Loop3:
+	BRA.b	DecompressTileGraphics_CheckAllMasked
+DecompressTileGraphics_SkipMaskedPixel:
 	LEA	$1(A1), A1
-DecompressTileGraphics_PixelSkip:
-	BRA.b	DecompressTileGraphics_Done3
-DecompressTileGraphics_Loop2:
+DecompressTileGraphics_MaskedPixelSkip:
+	BRA.b	DecompressTileGraphics_PixelFillLoop
+DecompressTileGraphics_AllMaskedDone:
 	RTS
 	
-DecompressTileGraphics_Loop:
+DecompressTileGraphics_UnmaskedTile:
 	LEA	(A2), A1
-DecompressTileGraphics_UnmaskedEntry:
+DecompressTileGraphics_UnmaskedTileStart:
 	MOVEQ	#7, D0
-DecompressTileGraphics_Loop_Done:
+DecompressTileGraphics_UnmaskedTileLoop:
 	MOVE.b	(A0)+, (A1)+
 DecompressTileGraphics_UnmaskedPixels:
 	MOVE.b	(A0)+, (A1)+
 	MOVE.b	(A0)+, (A1)+
 	MOVE.b	(A0)+, (A1)+
-	DBF	D0, DecompressTileGraphics_Loop_Done
+	DBF	D0, DecompressTileGraphics_UnmaskedTileLoop
 	RTS
 	
 ; ---------------------------------------------------------------------------
@@ -1115,18 +1115,18 @@ DecompressTileGraphics_UnmaskedPixels:
 ; ---------------------------------------------------------------------------
 WriteMaskedTileRow:
 	LEA	(A2), A1
-WriteMaskedTileRow_PixelLoop:
+WriteMaskedTileRow_InitCounter:
 	MOVEQ	#$0000001F, D4
-WriteMaskedTileRow_Done:
+WriteMaskedTileRow_PixelLoop:
 	ROL.l	#1, D1
-WriteMaskedTileRow_TestPixel:
+WriteMaskedTileRow_TestBit:
 	BTST.l	#0, D1
-	BEQ.b	WriteMaskedTileRow_Loop
+	BEQ.b	WriteMaskedTileRow_SkipWrite
 	MOVE.b	D2, (A1)
-WriteMaskedTileRow_Loop:
+WriteMaskedTileRow_SkipWrite:
 	LEA	$1(A1), A1
-WriteMaskedTileRow_NextPixel:
-	DBF	D4, WriteMaskedTileRow_Done
+WriteMaskedTileRow_AdvancePtr:
+	DBF	D4, WriteMaskedTileRow_PixelLoop
 	RTS
 	
 ; ---------------------------------------------------------------------------
@@ -1147,9 +1147,9 @@ DecompressFontTile:
 	CLR.l	D3
 	CLR.w	D0
 	MOVE.b	(A0)+, D0
-	BEQ.w	DecompressFontTile_Loop
+	BEQ.w	DecompressFontTile_UnmaskedTile
 	SUBQ.w	#1, D0
-DecompressFontTile_Done:
+DecompressFontTile_MaskGroupLoop:
 	CLR.w	D2
 	MOVE.b	(A0)+, D2
 	MOVE.b	(A0)+, D1
@@ -1164,33 +1164,33 @@ DecompressFontTile_Done:
 	BSR.w	ClampTileCoordinates
 	MOVE.b	D6, D2
 	BSR.w	WriteTileRowFromBitfield
-	DBF	D0, DecompressFontTile_Done
+	DBF	D0, DecompressFontTile_MaskGroupLoop
 	LEA	(A2), A1
 	MOVEQ	#$00000020, D0
 	MOVE.l	D3, D1
-DecompressFontTile_Done2:
+DecompressFontTile_CheckAllMasked:
 	CMPI.l	#$FFFFFFFF, D3
-	BEQ.b	DecompressFontTile_Loop2
-DecompressFontTile_Done3:
+	BEQ.b	DecompressFontTile_AllMaskedDone
+DecompressFontTile_PixelFillLoop:
 	ROL.l	#1, D1
 	SUBQ.w	#1, D0
 	BTST.l	#0, D1
-	BNE.b	DecompressFontTile_Loop3
+	BNE.b	DecompressFontTile_SkipMaskedPixel
 	MOVE.b	(A0)+, D6
 	BSR.w	ClampTileCoordinates
 	MOVE.b	D6, (A1)+
 	BSET.l	D0, D3
-	BRA.b	DecompressFontTile_Done2
-DecompressFontTile_Loop3:
+	BRA.b	DecompressFontTile_CheckAllMasked
+DecompressFontTile_SkipMaskedPixel:
 	LEA	$1(A1), A1
-	BRA.b	DecompressFontTile_Done3
-DecompressFontTile_Loop2:
+	BRA.b	DecompressFontTile_PixelFillLoop
+DecompressFontTile_AllMaskedDone:
 	RTS
 	
-DecompressFontTile_Loop:
+DecompressFontTile_UnmaskedTile:
 	LEA	(A2), A1
 	MOVEQ	#7, D0
-DecompressFontTile_Loop_Done:
+DecompressFontTile_UnmaskedTileLoop:
 	MOVE.b	(A0)+, D6
 	BSR.w	ClampTileCoordinates
 	MOVE.b	D6, (A1)+
@@ -1203,7 +1203,7 @@ DecompressFontTile_Loop_Done:
 	MOVE.b	(A0)+, D6
 	BSR.w	ClampTileCoordinates
 	MOVE.b	D6, (A1)+
-	DBF	D0, DecompressFontTile_Loop_Done
+	DBF	D0, DecompressFontTile_UnmaskedTileLoop
 	RTS
 	
 ; ---------------------------------------------------------------------------
@@ -1228,14 +1228,14 @@ DecompressFontTile_Loop_Done:
 WriteTileRowFromBitfield:
 	LEA	(A2), A1
 	MOVEQ	#$0000001F, D4
-WriteTileRowFromBitfield_Done:
+WriteTileRowFromBitfield_PixelLoop:
 	ROL.l	#1, D1
 	BTST.l	#0, D1
-	BEQ.b	WriteTileRowFromBitfield_Loop
+	BEQ.b	WriteTileRowFromBitfield_SkipWrite
 	MOVE.b	D2, (A1)
-WriteTileRowFromBitfield_Loop:
+WriteTileRowFromBitfield_SkipWrite:
 	LEA	$1(A1), A1
-	DBF	D4, WriteTileRowFromBitfield_Done
+	DBF	D4, WriteTileRowFromBitfield_PixelLoop
 	RTS
 	
 ; ---------------------------------------------------------------------------
@@ -1256,15 +1256,15 @@ ClampTileCoordinates:
 	MOVE.b	D6, D7
 	ANDI.w	#$00F0, D7
 	CMPI.w	#$0030, D7
-	BNE.b	ClampTileCoordinates_Loop
+	BNE.b	ClampTileCoordinates_CheckHighNibbleDone
 	ANDI.b	#$0F, D6
-ClampTileCoordinates_Loop:
+ClampTileCoordinates_CheckHighNibbleDone:
 	MOVE.b	D6, D7
 	ANDI.w	#$000F, D7
 	CMPI.w	#3, D7
-	BNE.b	ClampTileCoordinates_Loop2
+	BNE.b	ClampTileCoordinates_CheckLowNibble
 	ANDI.b	#$F0, D6
-ClampTileCoordinates_Loop2:
+ClampTileCoordinates_CheckLowNibble:
 	RTS
 
 ; ---------------------------------------------------------------------------
@@ -1282,10 +1282,10 @@ LoadAndDecompressTileGfx:
 	LEA	Tile_gfx_buffer.w, A2
 	LEA	CompressedFontTileData, A0
 	MOVE.w	#$00FF, D5
-ClampTileCoordinates_Loop2_Done:
+LoadAndDecompressTileGfx_TileLoop:
 	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
-	DBF	D5, ClampTileCoordinates_Loop2_Done
+	DBF	D5, LoadAndDecompressTileGfx_TileLoop
 	BSR.w	TransferTilesViaDma
 	RTS
 
@@ -1304,10 +1304,10 @@ InitFontTiles:
 	LEA	Tile_gfx_buffer.w, A2
 	LEA	CompressedFontTileData, A0
 	MOVE.w	#$00FF, D5
-InitFontTiles_Done:
+InitFontTiles_TileLoop:
 	BSR.w	DecompressFontTile
 	LEA	$20(A2), A2
-	DBF	D5, InitFontTiles_Done
+	DBF	D5, InitFontTiles_TileLoop
 	BSR.w	TransferTilesViaDma
 	RTS
 
@@ -1361,7 +1361,7 @@ LoadTownTileGraphics:
 	CMPI.w	#TOWN_SWAFFHAM, Current_town.w
 	BNE.b	LoadTownTileGfx_LookupTable
 	MOVEA.l	LoadTownTileGraphics_Data, A0
-	BRA.b	LoadTownTileGfx_LookupTable_Loop
+	BRA.b	LoadTownTileGfx_UseTownTable
 LoadTownTileGfx_LookupTable:
 	LEA	TownTileGfxTable, A1
 	MOVE.w	Current_town.w, D0 
@@ -1370,12 +1370,12 @@ LoadTownTileGfx_LookupTable:
 	ASL.w	#3, D0 
 	ADD.w	D1, D0
 	MOVEA.l	(A1,D0.w), A0 ; Multiply current town by 10
-LoadTownTileGfx_LookupTable_Loop:
+LoadTownTileGfx_UseTownTable:
 	MOVE.w	#$00FF, D5
-LoadTownTileGfx_LookupTable_Loop_Done:
+LoadTownTileGfx_DecompressLoop:
 	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
-	DBF	D5, LoadTownTileGfx_LookupTable_Loop_Done
+	DBF	D5, LoadTownTileGfx_DecompressLoop
 	LEA	DmaCmd_TownTileset_Wyclif, A0
 	BSR.w	ExecuteVdpDmaFromPointer
 	LEA	Tile_gfx_buffer.w, A2
@@ -1385,7 +1385,7 @@ LoadTownTileGfx_LookupTable_Loop_Done:
 	BNE.b	LoadTownObjectGfx_LookupTable
 	MOVEA.l	LoadTownTileGfx_LookupTable_Loop_Done_Data, A0
 	MOVE.w	LoadTownTileGfx_LookupTable_Loop_Done_Data2, D5
-	BRA.b	LoadTownObjectGfx_DecompressLoop
+	BRA.b	LoadTownObjectGfx_TileLoop
 LoadTownObjectGfx_LookupTable:
 	LEA	TownTileGfxTable, A1
 	MOVE.w	Current_town.w, D0
@@ -1395,10 +1395,10 @@ LoadTownObjectGfx_LookupTable:
 	ADD.w	D1, D0
 	MOVEA.l	$4(A1,D0.w), A0
 	MOVE.w	$8(A1,D0.w), D5
-LoadTownObjectGfx_DecompressLoop:
+LoadTownObjectGfx_TileLoop:
 	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
-	DBF	D5, LoadTownObjectGfx_DecompressLoop
+	DBF	D5, LoadTownObjectGfx_TileLoop
 	LEA	DmaCmd_TownTileset_Parma, A0
 	BSR.w	ExecuteVdpDmaFromPointer
 	RTS
@@ -1418,19 +1418,19 @@ LoadBattleHudGraphics:
 	LEA	Tile_gfx_buffer.w, A2
 	LEA	LoadBattleHudGraphics_Data, A0
 	MOVE.w	#$00FF, D5
-LoadBattleHudGraphics_Done:
+LoadBattleHudGraphics_TileLoop1:
 	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
-	DBF	D5, LoadBattleHudGraphics_Done
+	DBF	D5, LoadBattleHudGraphics_TileLoop1
 	LEA	DmaCmd_TownTileset_Wyclif, A0
 	BSR.w	ExecuteVdpDmaFromPointer
 	LEA	Tile_gfx_buffer.w, A2
 	LEA	LoadBattleHudGraphics_Done_Data, A0
 	MOVE.w	#$0039, D5
-LoadBattleHudGraphics_Done2:
+LoadBattleHudGraphics_TileLoop2:
 	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
-	DBF	D5, LoadBattleHudGraphics_Done2
+	DBF	D5, LoadBattleHudGraphics_TileLoop2
 	LEA	DmaCmd_TownTileset_Parma, A0
 	BSR.w	ExecuteVdpDmaFromPointer
 	RTS
@@ -1477,10 +1477,10 @@ ExecuteVdpDmaFromPointer_Setup:
 	LEA	ExecuteVdpDmaFromPointer_Data, A0
 	LEA	Tile_gfx_buffer.w, A2
 	MOVE.w	#$0039, D5
-ExecuteVdpDmaFromPointer_Done:
+LoadOverworldStatusTiles_TileLoop:
 	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
-	DBF	D5, ExecuteVdpDmaFromPointer_Done
+	DBF	D5, LoadOverworldStatusTiles_TileLoop
 	LEA	DmaCmd_OverworldStatusTiles, A0
 	BSR.w	ExecuteVdpDmaFromRam
 	RTS
@@ -1499,20 +1499,20 @@ ExecuteVdpDmaFromPointer_Done:
 ; ---------------------------------------------------------------------------
 LoadBattleTerrainGraphics:
 	TST.b	Is_boss_battle.w
-	BEQ.b	LoadBattleTerrainGraphics_Loop
+	BEQ.b	LoadBattleTerrainGraphics_CheckCave
 	MOVE.w	#TERRAIN_TILESET_BOSS, Terrain_tileset_index.w
 	BRA.b	LoadBattleTerrainGraphics_LoadTiles
-LoadBattleTerrainGraphics_Loop:
+LoadBattleTerrainGraphics_CheckCave:
 	TST.b	Is_in_cave.w
-	BEQ.b	LoadBattleTerrainGraphics_Loop2
+	BEQ.b	LoadBattleTerrainGraphics_CheckSoldier
 	MOVE.w	#TERRAIN_TILESET_CAVE, Terrain_tileset_index.w
 	BRA.b	LoadBattleTerrainGraphics_LoadTiles
-LoadBattleTerrainGraphics_Loop2:
+LoadBattleTerrainGraphics_CheckSoldier:
 	TST.b	Soldier_fight_event_trigger.w
-	BEQ.b	LoadBattleTerrainGraphics_Loop3
+	BEQ.b	LoadBattleTerrainGraphics_CheckOverworld
 	MOVE.w	#TERRAIN_TILESET_SOLDIER, Terrain_tileset_index.w
 	BRA.b	LoadBattleTerrainGraphics_LoadTiles
-LoadBattleTerrainGraphics_Loop3:
+LoadBattleTerrainGraphics_CheckOverworld:
 	BSR.w	DetermineTerrainTileset
 LoadBattleTerrainGraphics_LoadTiles:
 	MOVE.w	Terrain_tileset_index.w, D0
@@ -1581,10 +1581,10 @@ LoadBattleTileGraphics:
 	LEA	LoadBattleTileGraphics_Data, A0
 	LEA	Tile_gfx_buffer.w, A2
 	MOVE.w	#$001A, D5
-LoadBattleTileGraphics_Done:
+LoadBattleTileGraphics_TileLoop:
 	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
-	DBF	D5, LoadBattleTileGraphics_Done
+	DBF	D5, LoadBattleTileGraphics_TileLoop
 	LEA	DmaCmd_BattleTiles, A0
 	BSR.w	ExecuteVdpDmaFromRam
 	RTS
@@ -1603,10 +1603,10 @@ LoadBattleUiTileGraphics:
 	LEA	LoadBattleUiTileGraphics_Data, A0
 	LEA	Tile_gfx_buffer.w, A2
 	MOVE.w	#$003C, D5
-LoadBattleUiTileGraphics_Done:
+LoadBattleUiTileGraphics_TileLoop:
 	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
-	DBF	D5, LoadBattleUiTileGraphics_Done
+	DBF	D5, LoadBattleUiTileGraphics_TileLoop
 	LEA	DmaCmd_BattleUiTiles, A0
 	BSR.w	ExecuteVdpDmaFromRam
 	RTS
@@ -1627,10 +1627,10 @@ LoadWorldMapTileGraphics:
 	LEA	LoadWorldMapTileGraphics_Data, A0
 	LEA	Tile_gfx_buffer.w, A2
 	MOVE.w	#$00EA, D5
-LoadWorldMapTileGraphics_Done:
+LoadWorldMapTileGraphics_TileLoop:
 	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
-	DBF	D5, LoadWorldMapTileGraphics_Done
+	DBF	D5, LoadWorldMapTileGraphics_TileLoop
 ExecuteWorldMapDma:
 	LEA	DmaCmd_WorldMapTiles, A0
 	BSR.w	ExecuteVdpDmaFromRam
@@ -1656,13 +1656,13 @@ LoadCaveTileGraphics:
 LoadCaveTileGfxToBuffer:
 	LEA	Tile_gfx_buffer.w, A2
 	MOVE.w	#$0075, D5
-LoadCaveTileGfxToBuffer_Done:
+LoadCaveTileGfxToBuffer_TileLoop:
 	BSR.w	DecompressTileGraphics
-LoadCaveTileGfxToBuffer_NextTile:
+LoadCaveTileGfxToBuffer_AdvancePtr:
 	LEA	$20(A2), A2
-LoadCaveTileGfxToBuffer_Loop:
-	DBF	D5, LoadCaveTileGfxToBuffer_Done
-LoadCaveTileGfxToBuffer_DmaTransfer:
+LoadCaveTileGfxToBuffer_TileLoopEnd:
+	DBF	D5, LoadCaveTileGfxToBuffer_TileLoop
+LoadCaveTileGfxToBuffer_DoDma:
 	LEA	DmaCmd_CaveTiles, A0
 	BSR.w	ExecuteVdpDmaFromRam
 	RTS
@@ -1679,10 +1679,10 @@ LoadBattleGroundTileGraphics:
 	LEA	LoadBattleGroundTileGraphics_Data, A0
 	LEA	Tile_gfx_buffer.w, A2
 	MOVE.w	#$0064, D5
-LoadBattleGroundTileGraphics_Done:
+LoadBattleGroundTileGraphics_TileLoop:
 	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
-	DBF	D5, LoadBattleGroundTileGraphics_Done
+	DBF	D5, LoadBattleGroundTileGraphics_TileLoop
 	LEA	DmaCmd_BattleGroundGfx, A0
 	BSR.w	ExecuteVdpDmaFromRam
 	RTS
@@ -1699,10 +1699,10 @@ LoadBattleEnemyTileGraphics:
 	LEA	SpriteGfxData_8287C, A0
 	LEA	Tile_gfx_buffer.w, A2
 	MOVE.w	#$0056, D5
-LoadBattleEnemyTileGraphics_Done:
+LoadBattleEnemyTileGraphics_TileLoop:
 	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
-	DBF	D5, LoadBattleEnemyTileGraphics_Done
+	DBF	D5, LoadBattleEnemyTileGraphics_TileLoop
 	LEA	DmaCmd_BattleEnemyGfx, A0
 	BSR.w	ExecuteVdpDmaFromRam
 	RTS
@@ -1719,10 +1719,10 @@ LoadBattleStatusTileGraphics:
 	LEA	LoadBattleStatusTileGraphics_Data, A0
 	LEA	Tile_gfx_buffer.w, A2
 	MOVE.w	#$0058, D5
-LoadBattleStatusTileGraphics_Done:
+LoadBattleStatusTileGraphics_TileLoop:
 	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
-	DBF	D5, LoadBattleStatusTileGraphics_Done
+	DBF	D5, LoadBattleStatusTileGraphics_TileLoop
 	LEA	DmaCmd_BattleStatusGfx, A0
 	BSR.w	ExecuteVdpDmaFromRam
 	RTS
@@ -1740,10 +1740,10 @@ LoadCaveEnemyTileGraphics:
 	LEA	SpriteGfxData_8287C, A0
 	LEA	Tile_gfx_buffer.w, A2
 	MOVE.w	#$0056, D5
-LoadCaveEnemyTileGraphics_Done:
+LoadCaveEnemyTileGraphics_TileLoop:
 	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
-	DBF	D5, LoadCaveEnemyTileGraphics_Done
+	DBF	D5, LoadCaveEnemyTileGraphics_TileLoop
 	LEA	DmaCmd_CaveEnemyGfx, A0
 	BSR.w	ExecuteVdpDmaFromRam
 	RTS
@@ -1760,10 +1760,10 @@ LoadCaveItemTileGraphics:
 	LEA	LoadCaveItemTileGraphics_Data, A0
 	LEA	Tile_gfx_buffer.w, A2
 	MOVE.w	#$005D, D5
-LoadCaveItemTileGraphics_Done:
+LoadCaveItemTileGraphics_TileLoop:
 	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
-	DBF	D5, LoadCaveItemTileGraphics_Done
+	DBF	D5, LoadCaveItemTileGraphics_TileLoop
 	LEA	DmaCmd_CaveItemGfx, A0
 	BSR.w	ExecuteVdpDmaFromRam
 	RTS
@@ -1780,10 +1780,10 @@ LoadBattlePlayerTileGraphics:
 	LEA	LoadBattlePlayerTileGraphics_Data, A0
 	LEA	Tile_gfx_buffer.w, A2
 	MOVE.w	#$004F, D5
-LoadBattlePlayerTileGraphics_Done:
+LoadBattlePlayerTileGraphics_TileLoop:
 	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
-	DBF	D5, LoadBattlePlayerTileGraphics_Done
+	DBF	D5, LoadBattlePlayerTileGraphics_TileLoop
 	LEA	DmaCmd_BattlePlayerGfx, A0
 	BSR.w	ExecuteVdpDmaFromRam
 	RTS
@@ -1807,46 +1807,46 @@ LoadTownTileGfxSet1:
 LoadTownTileGfxToBuffer:
 	LEA	Tile_gfx_buffer.w, A2
 	MOVE.w	#$00B6, D5
-LoadTownTileGfxToBuffer_Done:
+LoadTownTileGfxToBuffer_TileLoop1:
 	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
-	DBF	D5, LoadTownTileGfxToBuffer_Done
+	DBF	D5, LoadTownTileGfxToBuffer_TileLoop1
 	LEA	DmaCmd_TownTileGfxSet1_A, A0
 	BSR.w	ExecuteVdpDmaFromRam
 	LEA	Tile_gfx_buffer.w, A2
 	LEA	LoadTownTileGfxToBuffer_Done_Data, A0
 	MOVE.w	#$00D9, D5
-LoadTownTileGfxToBuffer_Done2:
+LoadTownTileGfxToBuffer_TileLoop2:
 	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
-	DBF	D5, LoadTownTileGfxToBuffer_Done2
+	DBF	D5, LoadTownTileGfxToBuffer_TileLoop2
 	LEA	DmaCmd_TownTileGfxSet1_B, A0
 	BSR.w	ExecuteVdpDmaFromRam
 	LEA	Tile_gfx_buffer.w, A2
 	LEA	SpriteGfxData_607AA, A0
 	MOVE.w	#$006B, D5
-LoadTownTileGfxToBuffer_Done3:
+LoadTownTileGfxToBuffer_TileLoop3:
 	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
-	DBF	D5, LoadTownTileGfxToBuffer_Done3
+	DBF	D5, LoadTownTileGfxToBuffer_TileLoop3
 	LEA	DmaCmd_TownNpcGfx, A0
 	BSR.w	ExecuteVdpDmaFromRam
 	LEA	Tile_gfx_buffer.w, A2
 	LEA	LoadTownTileGfxToBuffer_Done3_Data, A0
 	MOVE.w	#$009D, D5
-LoadTownTileGfxToBuffer_Done4:
+LoadTownTileGfxToBuffer_TileLoop4:
 	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
-	DBF	D5, LoadTownTileGfxToBuffer_Done4
+	DBF	D5, LoadTownTileGfxToBuffer_TileLoop4
 	LEA	DmaCmd_TownTileGfxSet1_D, A0
 	BSR.w	ExecuteVdpDmaFromRam
 	LEA	Tile_gfx_buffer.w, A2
 	LEA	LoadTownTileGfxToBuffer_Done4_Data, A0
 	MOVE.w	#$0029, D5
-LoadTownTileGfxToBuffer_Done5:
+LoadTownTileGfxToBuffer_TileLoop5:
 	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
-	DBF	D5, LoadTownTileGfxToBuffer_Done5
+	DBF	D5, LoadTownTileGfxToBuffer_TileLoop5
 	LEA	DmaCmd_TownTileGfxSet1_E, A0
 	BSR.w	ExecuteVdpDmaFromRam
 	RTS
@@ -1869,19 +1869,19 @@ LoadMenuTileGraphics:
 	LEA	Tile_gfx_buffer.w, A2
 	LEA	LoadMenuTileGraphics_Data, A0
 	MOVE.w	#$00FF, D5
-LoadMenuTileGraphics_Done:
+LoadMenuTileGraphics_TileLoop1:
 	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
-	DBF	D5, LoadMenuTileGraphics_Done
+	DBF	D5, LoadMenuTileGraphics_TileLoop1
 	LEA	DmaCmd_MenuTilesA, A0
 	BSR.w	ExecuteVdpDmaFromRam
 	LEA	Tile_gfx_buffer.w, A2
 	LEA	LoadMenuTileGraphics_Done_Data, A0
 	MOVE.w	#$00FF, D5
-LoadMenuTileGraphics_Done2:
+LoadMenuTileGraphics_TileLoop2:
 	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
-	DBF	D5, LoadMenuTileGraphics_Done2
+	DBF	D5, LoadMenuTileGraphics_TileLoop2
 	LEA	DmaCmd_MenuTilesB, A0
 	BSR.w	ExecuteVdpDmaFromRam
 	LEA	Tile_gfx_buffer.w, A2
@@ -1889,28 +1889,28 @@ LoadMenuTileGfxSet2:
 	LEA	SpriteGfxData_607AA, A0
 LoadMenuTileGfxSet3:
 	MOVE.w	#$006B, D5
-LoadMenuTileGfxSet3_Done:
+LoadMenuTileGfxSet3_TileLoop1:
 	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
-	DBF	D5, LoadMenuTileGfxSet3_Done
+	DBF	D5, LoadMenuTileGfxSet3_TileLoop1
 	LEA	DmaCmd_TownNpcGfx, A0
 	BSR.w	ExecuteVdpDmaFromRam
 	LEA	Tile_gfx_buffer.w, A2
 	LEA	LoadMenuTileGfxSet3_Done_Data, A0
 	MOVE.w	#$001A, D5
-LoadMenuTileGfxSet3_Set2Loop:
+LoadMenuTileGfxSet3_TileLoop2:
 	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
-	DBF	D5, LoadMenuTileGfxSet3_Set2Loop
+	DBF	D5, LoadMenuTileGfxSet3_TileLoop2
 	LEA	DmaCmd_MenuMiscTilesA, A0
 	BSR.w	ExecuteVdpDmaFromRam
 	LEA	Tile_gfx_buffer.w, A2
 	LEA	LoadMenuTileGfxSet3_Set2Data, A0
 	MOVE.w	#7, D5
-LoadMenuTileGfxSet3_Done3:
+LoadMenuTileGfxSet3_TileLoop3:
 	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
-	DBF	D5, LoadMenuTileGfxSet3_Done3
+	DBF	D5, LoadMenuTileGfxSet3_TileLoop3
 	LEA	DmaCmd_MenuMiscTilesB, A0
 	BSR.w	ExecuteVdpDmaFromRam
 	RTS
@@ -1933,56 +1933,56 @@ LoadTitleScreenGraphics:
 	LEA	LoadTitleScreenGraphics_Data, A0
 	LEA	Tile_gfx_buffer.w, A2
 	MOVE.w	#$004D, D5
-LoadTitleScreenGraphics_Done:
+LoadTitleScreenGraphics_TileLoop1:
 	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
-	DBF	D5, LoadTitleScreenGraphics_Done
+	DBF	D5, LoadTitleScreenGraphics_TileLoop1
 	LEA	DmaCmd_TitleScreenTilesA, A0
 	BSR.w	ExecuteVdpDmaFromRam
 	LEA	LoadTitleScreenGraphics_Done_Data, A0
 	LEA	Tile_gfx_buffer.w, A2
 	MOVE.w	#$006C, D5
-LoadTitleScreenGraphics_Set2Loop:
+LoadTitleScreenGraphics_TileLoop2:
 	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
-	DBF	D5, LoadTitleScreenGraphics_Set2Loop
+	DBF	D5, LoadTitleScreenGraphics_TileLoop2
 	LEA	DmaCmd_TitleScreenTilesB, A0
 	BSR.w	ExecuteVdpDmaFromRam
 	LEA	LoadTitleScreenGraphics_Set2Data, A0
 	LEA	Tile_gfx_buffer.w, A2
 	MOVE.w	#$0062, D5
-LoadTitleScreenGraphics_Done3:
+LoadTitleScreenGraphics_TileLoop3:
 	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
-	DBF	D5, LoadTitleScreenGraphics_Done3
+	DBF	D5, LoadTitleScreenGraphics_TileLoop3
 	LEA	DmaCmd_TitleScreenTilesC, A0
 	BSR.w	ExecuteVdpDmaFromRam
 	LEA	LoadTitleScreenGraphics_Done3_Data, A0
 	LEA	Tile_gfx_buffer.w, A2
 	MOVE.w	#$004F, D5
-LoadTitleScreenGraphics_Done4:
+LoadTitleScreenGraphics_TileLoop4:
 	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
-	DBF	D5, LoadTitleScreenGraphics_Done4
+	DBF	D5, LoadTitleScreenGraphics_TileLoop4
 	LEA	DmaCmd_TitleScreenTilesD, A0
 	BSR.w	ExecuteVdpDmaFromRam
 	LEA	LoadTitleScreenGraphics_Done4_Data, A0
 LoadTitleScreenTileGfx:
 	LEA	Tile_gfx_buffer.w, A2
 	MOVE.w	#$0051, D5
-LoadTitleScreenTileGfx_Done:
+LoadTitleScreenTileGfx_TileLoop1:
 	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
-	DBF	D5, LoadTitleScreenTileGfx_Done
+	DBF	D5, LoadTitleScreenTileGfx_TileLoop1
 	LEA	DmaCmd_TitleScreenTilesE, A0
 	BSR.w	ExecuteVdpDmaFromRam
 	LEA	LoadTitleScreenTileGfx_Done_Data, A0
 	LEA	Tile_gfx_buffer.w, A2
 	MOVE.w	#5, D5
-LoadTitleScreenTileGfx_Done2:
+LoadTitleScreenTileGfx_TileLoop2:
 	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
-	DBF	D5, LoadTitleScreenTileGfx_Done2
+	DBF	D5, LoadTitleScreenTileGfx_TileLoop2
 	LEA	DmaCmd_TitleScreenTilesF, A0
 	BSR.w	ExecuteVdpDmaFromRam
 	RTS
@@ -1999,10 +1999,10 @@ LoadOptionsMenuGraphics:
 	LEA	LoadOptionsMenuGraphics_Data, A0
 	LEA	Tile_gfx_buffer.w, A2
 	MOVE.w	#$003C, D5
-LoadOptionsMenuGraphics_Done:
+LoadOptionsMenuGraphics_TileLoop:
 	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
-	DBF	D5, LoadOptionsMenuGraphics_Done
+	DBF	D5, LoadOptionsMenuGraphics_TileLoop
 	LEA	DmaCmd_OptionsMenuTiles, A0
 	BSR.w	ExecuteVdpDmaFromRam
 	RTS
@@ -2120,10 +2120,10 @@ VDP_DMAFill:
 	MOVE.w	Vdp_dma_cmd.w, VDP_control_port	; Write DMA command (low word first)
 	MOVE.w	Vdp_dma_cmd_hi.w, VDP_control_port	; Write DMA command (high word triggers DMA)
 	MOVE.b	D5, VDP_data_port		; Fill value byte
-VDP_DMAFill_Done:
+VDP_DMAFill_WaitBusy:
 	MOVE.w	VDP_control_port, D4		; Read VDP status
 	BTST.l	#1, D4				; Check DMA busy bit
-	BNE.b	VDP_DMAFill_Done		; Wait until DMA completes
+	BNE.b	VDP_DMAFill_WaitBusy		; Wait until DMA completes
 	MOVE.w	VDP_Reg1_cache.w, D4
 	BCLR.l	#4, D4				; Clear DMA enable bit
 	MOVE.w	D4, VDP_control_port		; Restore reg 1
@@ -2223,18 +2223,18 @@ DetermineTerrainTileset:
 	CLR.w	D1
 	CLR.w	D2
 	MOVEQ	#2, D7
-DetermineTerrainTileset_Done:
+DetermineTerrainTileset_RowLoop:
 	MOVEQ	#2, D6
-DetermineTerrainTileset_Done2:
+DetermineTerrainTileset_ColLoop:
 	MOVE.b	(A2)+, D0
 	BSR.w	CountTerrainTileType
-	DBF	D6, DetermineTerrainTileset_Done2
+	DBF	D6, DetermineTerrainTileset_ColLoop
 	LEA	$2D(A2), A2
-	DBF	D7, DetermineTerrainTileset_Done
+	DBF	D7, DetermineTerrainTileset_RowLoop
 	CMP.w	D2, D1
-	BGE.b	DetermineTerrainTileset_Loop
+	BGE.b	DetermineTerrainTileset_SetField
 	MOVE.w	#TERRAIN_TILESET_FIELD, Terrain_tileset_index.w
-DetermineTerrainTileset_Loop:
+DetermineTerrainTileset_SetField:
 	RTS
 	
 ; ---------------------------------------------------------------------------
@@ -2253,14 +2253,14 @@ DetermineTerrainTileset_Loop:
 ; ---------------------------------------------------------------------------
 CountTerrainTileType:
 	CMPI.b	#1, D0
-	BNE.b	CountTerrainTileType_Loop
+	BNE.b	CountTerrainTileType_CheckWater
 	ADDQ.w	#1, D1
-	BRA.b	CountDialogBytes_Return
-CountTerrainTileType_Loop:
+	BRA.b	CountTerrainTileType_Return
+CountTerrainTileType_CheckWater:
 	CMPI.b	#2, D0
-	BNE.b	CountDialogBytes_Return
+	BNE.b	CountTerrainTileType_Return
 	ADDQ.w	#1, D2
-CountDialogBytes_Return:
+CountTerrainTileType_Return:
 	RTS
 	
 ; ---------------------------------------------------------------------------
@@ -2307,9 +2307,9 @@ LoadBattleTilesToVram:
 	ADD.w	D0, D0
 	ADD.w	D0, D0
 	MOVEA.l	(A6,D0.w), A6
-LoadBattleTilesToVram_Done:
+LoadBattleTilesToVram_EntryLoop:
 	MOVE.w	(A6)+, D0
-	BLT.b	LoadBattleTilesToVram_Loop
+	BLT.b	LoadBattleTilesToVram_Return
 	MOVE.w	D0, Vdp_dma_slot_index.w
 	LEA	Tile_gfx_buffer.w, A2
 	MOVEA.l	(A6)+, A4
@@ -2317,8 +2317,8 @@ LoadBattleTilesToVram_Done:
 	MOVE.w	(A6)+, D5
 	BSR.w	LoadMultipleTilesFromTable
 	BSR.w	ExecuteVdpDmaTransfer
-	BRA.b	LoadBattleTilesToVram_Done
-LoadBattleTilesToVram_Loop:
+	BRA.b	LoadBattleTilesToVram_EntryLoop
+LoadBattleTilesToVram_Return:
 	RTS
 	
 ; ---------------------------------------------------------------------------
@@ -2342,16 +2342,16 @@ LoadBattleGraphics:
 	ADD.w	D0, D0
 	MOVEA.l	(A6,D0.w), A6
 	TST.l	(A6)
-	BEQ.b	LoadBattleGraphics_Loop
+	BEQ.b	LoadBattleGraphics_Return
 	MOVEA.l	(A6)+, A0
 	LEA	Tile_gfx_buffer.w, A2
 	MOVE.w	(A6)+, D5
-LoadBattleGraphics_Done:
+LoadBattleGraphics_TileLoop:
 	BSR.w	DecompressTileGraphics
 	LEA	$20(A2), A2
-	DBF	D5, LoadBattleGraphics_Done
+	DBF	D5, LoadBattleGraphics_TileLoop
 	MOVEA.l	(A6), A0
 	BSR.w	ExecuteVdpDmaFromRam
-LoadBattleGraphics_Loop:
+LoadBattleGraphics_Return:
 	RTS
 	
