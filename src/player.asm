@@ -467,7 +467,7 @@ SetupVdpDmaCommand:
 	MOVE.w	#$9700, D1
 	MOVE.b	D0, D1
 	stopZ80
-	JSR	VdpInitDmaRamStub
+	JSR	InitVdpDmaRamRoutine
 	MOVE.w	#2, D4
 	ORI.w	#$8F00, D4
 	MOVE.w	D4, VDP_control_port

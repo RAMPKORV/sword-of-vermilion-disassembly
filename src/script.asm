@@ -3756,7 +3756,7 @@ UpdatePaletteBuffer:
 	BCLR.b	#7, Palette_buffer_dirty.w
 	BEQ.w	UpdatePaletteBuffer_Loop
 	stopZ80
-	JSR	VdpInitDmaRamStub
+	JSR	InitVdpDmaRamRoutine
 	MOVE.w	#2, D4
 	ORI.w	#$8F00, D4
 	MOVE.w	D4, VDP_control_port
@@ -3859,7 +3859,7 @@ LoadPalettesFromTable_Return_Loop4:
 ; DMA-transfer the current palette buffer to CRAM (fade-out flush).
 FadeOutPalette_WriteVDP:
 	stopZ80
-	JSR	VdpInitDmaRamStub
+	JSR	InitVdpDmaRamRoutine
 	MOVE.w	#2, D4
 	ORI.w	#$8F00, D4
 	MOVE.w	D4, VDP_control_port
@@ -3911,7 +3911,7 @@ BuildFadeTable_Store_Loop2:
 	MOVE.l	#0, (A0)+
 	MOVE.l	#0, (A0)+
 	stopZ80
-	JSR	VdpInitDmaRamStub
+	JSR	InitVdpDmaRamRoutine
 	MOVE.w	#2, D4
 	ORI.w	#$8F00, D4
 	MOVE.w	D4, VDP_control_port
@@ -3971,7 +3971,7 @@ FadeInPalette_WriteVDP:
 FadeInPalette_WriteVDP_Done:
 	BTST.b	#0, Z80_bus_request
 	BNE.b	FadeInPalette_WriteVDP_Done
-	JSR	VdpInitDmaRamStub
+	JSR	InitVdpDmaRamRoutine
 	MOVE.w	#2, D4
 	ORI.w	#$8F00, D4
 	MOVE.w	D4, VDP_control_port
@@ -4054,7 +4054,7 @@ BuildFadeInTable_Store_Loop6:
 BuildFadeInTable_Store_Loop6_Done:
 	BTST.b	#0, Z80_bus_request
 	BNE.b	BuildFadeInTable_Store_Loop6_Done
-	JSR	VdpInitDmaRamStub
+	JSR	InitVdpDmaRamRoutine
 	MOVE.w	#2, D4
 	ORI.w	#$8F00, D4
 	MOVE.w	D4, VDP_control_port
@@ -4130,7 +4130,7 @@ FadePaletteLine3_WriteVDP:
 FadePaletteLine3_WriteVDP_Done:
 	BTST.b	#0, Z80_bus_request
 	BNE.b	FadePaletteLine3_WriteVDP_Done
-	JSR	VdpInitDmaRamStub
+	JSR	InitVdpDmaRamRoutine
 	MOVE.w	#2, D4
 	ORI.w	#$8F00, D4
 	MOVE.w	D4, VDP_control_port
@@ -4242,7 +4242,7 @@ FadePaletteTowardsTarget_NextEntry_Loop5:
 FadePaletteTowardsTarget_NextEntry_Loop5_Done:
 	BTST.b	#0, Z80_bus_request
 	BNE.b	FadePaletteTowardsTarget_NextEntry_Loop5_Done
-	JSR	VdpInitDmaRamStub
+	JSR	InitVdpDmaRamRoutine
 	MOVE.w	#2, D4
 	ORI.w	#$8F00, D4
 	MOVE.w	D4, VDP_control_port

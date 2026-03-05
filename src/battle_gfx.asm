@@ -1465,7 +1465,8 @@ ExecuteVdpDmaFromPointer:
 ; ---------------------------------------------------------------------------
 ; ExecuteVdpDmaFromPointer_Setup — decompress overworld status tiles and DMA
 ;
-; Decompresses 58 ($3A) tiles from ExecuteVdpDmaFromPointer_Data into
+; Decompresses 58 ($3A) tiles from DmaTransferFromPointer_Data into
+
 ; Tile_gfx_buffer and DMA's them to VRAM via ExecuteVdpDmaFromRam using
 ; the DmaCmd_OverworldStatusTiles command.
 ;
@@ -1474,7 +1475,7 @@ ExecuteVdpDmaFromPointer:
 ; Output:   VRAM overworld status tile area loaded
 ; ---------------------------------------------------------------------------
 ExecuteVdpDmaFromPointer_Setup:
-	LEA	ExecuteVdpDmaFromPointer_Data, A0
+	LEA	DmaTransferFromPointer_Data, A0
 	LEA	Tile_gfx_buffer.w, A2
 	MOVE.w	#$0039, D5
 LoadOverworldStatusTiles_TileLoop:

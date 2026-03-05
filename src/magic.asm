@@ -24,7 +24,7 @@ ClearEndingTextArea_Done2:
 	ADDI.l	#$000E0000, D5
 	ANDI.l	#$5FFF0003, D5
 	ORI.l	#$40000003, D5
-	LEA	ClearEndingTextArea_Done2_Data, A0
+	LEA	ClearEndingTextArea_InnerLoop_Data, A0
 	MOVE.w	#2, D7
 ClearEndingTextArea_Done3:
 	MOVE.l	D5, VDP_control_port
@@ -70,7 +70,7 @@ InitEndingCreditsScreen_Done2:
 	ADDI.l	#$00800000, D5
 	DBF	D7, InitEndingCreditsScreen_Done
 	MOVE.l	#$40040003, D5
-	LEA	InitEndingCreditsScreen_Done2_Data, A0
+	LEA	InitEndingCreditsScreen_InnerLoop_Data, A0
 	MOVE.w	#$0019, D7
 InitEndingCreditsScreen_Done3:
 	MOVE.l	D5, VDP_control_port
