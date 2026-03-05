@@ -1581,7 +1581,9 @@
           "file": "tools/index/strings.js",
           "priority": "medium",
           "effort": "large",
-          "status": "todo",
+          "status": "done",
+          "notes": "Created tools/index/strings.js. Decodes all 863 *Str labels from out.bin: TEXT runs, NEWLINE, CONTINUE, PLAYER_NAME, WIDE_HI/LO, QUESTION, YES_NO, CHOICE, TRIGGERS, ACTIONS, END. Emits tools/index/strings.json with { label, address, text, raw_ops, byte_length }. 72,594 total bytes decoded, avg 84.1 bytes/string.",
+          "completed_at": "2026-03-05",
           "tags": [
             "script-vm",
             "text",
@@ -2183,8 +2185,8 @@
   "statistics": {
     "total_tasks": 139,
     "by_status": {
-      "done": 121,
-      "todo": 18
+      "done": 122,
+      "todo": 17
     },
     "by_priority": {
       "critical": 1,
