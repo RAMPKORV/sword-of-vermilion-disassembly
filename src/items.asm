@@ -1,19 +1,95 @@
 ; ======================================================================
 ; src/items.asm
-; Item use, shop, sell dialog, chest animations
+; Item use, shop, dialogue state machine, equipment menus, chest system
 ; ======================================================================
+;
+; Contents
+; --------
+;  Item Use Handlers (lines ~5-290)
+;    UseVase, UseJokeBook, UseSmallBomb      — flavour-text items
+;    UseOldWomansSketch / UseOldMansSketch   — proximity/direction checks
+;    UseDigotPlant                           — poison cure
+;    UseGeneric                              — key/chest tile dispatch
+;    UsePassToCarthahena, UseCrown, etc.     — quest-item stubs
+;    UseSixteenRings                         — throne placement check
+;    RemoveSelectedItemFromList              — inventory slot removal
+;
+;  Dialogue State Machine (lines ~300-953)
+;    DialogueStateMachine                   — master dispatcher (6-bit state)
+;    DialogueStateHandlerMap                — 46-entry BRA.w jump table
+;    DialogState_Init                       — tile detection & NPC talk
+;    DialogState_WaitScript*                — script + button wait helpers
+;    DialogState_DrawYesNo / ProcessYesNo   — yes/no choice handling
+;
+;  Shop System (lines ~955-1586)
+;    ShopInit_LoadAssortment                — populate Shop_item_list[]
+;    MalagaShop states (39-45)             — sword-trade special shop
+;    Standard shop buy/sell states (6-23)   — buy menu, sell menu, inventory sell
+;    DialogState_WaitScriptWithYesNoOrContinue — multi-branch continuation
+;
+;  Service Menus (lines ~1587-2143)
+;    Fortune Teller states (24-26)          — per-town greetings + readings
+;    Inn states (27-31)                     — Watling credit / pay / sleep
+;    Church states (32-36)                  — curse removal, poison cure, save
+;    Save Menu states (37-38)              — SRAM write from church
+;
+;  Equipment Helpers (lines ~2145-2820)
+;    CheckIfCursed / RemoveCursedEquipment  — curse scan & stat rollback
+;    CheckPlayerTalkToNPC                   — NPC proximity + script load
+;    FormatShopItemPrice                    — BCD sell-price builder
+;    FormatKimsAmount                       — BCD → ASCII digit formatter
+;    NpcFacingDirectionLookup               — player dir → NPC facing byte
+;    FortuneTellerGreetingsByTown           — per-town greeting fn ptrs
+;    FortuneTellerReadingsByTown            — per-town reading fn ptrs
+;
+;  Ready Equipment State Machine (lines ~2336-2643)
+;    ReadyEquipmentStateMachine             — equip/unequip menu (5 states)
+;    BuildEquipmentListForCategory          — filter equipment by slot
+;    GetCurrentEquippedItemID               — read Equipped_sword/shield/armor
+;    GetSelectedEquipmentID / EquipSelectedItem
+;    ClearEquipmentCursedFlag / UnequipItemByID
+;    EquipStatAddJumpTable / EquipStatRemoveJumpTable
+;
+;  Equip List Menu State Machine (lines ~2824-3065)
+;    EquipListMenuStateMachine              — character-sheet page browser
+;    14-state BRA jump table               — stats, gear, combat, magic,
+;                                            items, rings, status pages
+;
+;  Level-Up Stat Upgrade (lines ~3073-3151)
+;    UpgradeLevelStats                      — apply randomised stat gains on level
+;
+;  Chest/Door Opening State Machine (lines ~3162-3339)
+;    ChestOpeningStateMachine               — 7-state chest/door opener
+;
+; ANDI.l #$00FFFFFF — appears in 6 places to mask Player_kims to 24 bits
+;   (the high byte is unused; masking prevents overflow comparisons from
+;    seeing garbage in the high byte of the 32-bit RAM word).
+;
+; ======================================================================
+
+; ---------------------------------------------------------------------------
+; Item Use Handlers
+; ---------------------------------------------------------------------------
+; Each Use* function is called by the item menu when the player activates the
+; matching item. They print a message, optionally play a sound, optionally
+; remove the item from inventory (RemoveSelectedItemFromList), and return.
+; ---------------------------------------------------------------------------
+
+; UseVase: Flavour-text item. Prints "slipped from hand" message and removes.
 UseVase:
 	PRINT 	SlippedHandStr	
 	BSR.w	RemoveSelectedItemFromList	
 	RTS
 	
 
+; UseJokeBook: Flavour-text item. Prints "knock knock jokes" message and removes.
 UseJokeBook:
 	PRINT 	KnockJokesStr	
 	BSR.w	RemoveSelectedItemFromList	
 	RTS
 	
 
+; UseSmallBomb: Prints "loud roar" message, plays SOUND_BOMB, and removes.
 UseSmallBomb:
 	PRINT 	LoudRoarStr
 	BSR.w	RemoveSelectedItemFromList
@@ -133,10 +209,12 @@ OldWomanSketchPositionData:
 	dc.w	OLD_WOMAN_POSITION_Y-1
 	dc.w	DIRECTION_DOWN
 
+; UseTreasureOfTroy: Quest item stub — prints flavour text, does not remove.
 UseTreasureOfTroy:
 	PRINT 	IncredibleTreasureStr	
 	RTS
 	
+; UseTruffle: Quest item stub — prints flavour text, does not remove.
 UseTruffle:
 	PRINT 	RoastDuckStr	
 	RTS
@@ -157,10 +235,12 @@ UseDigotPlant_RemoveItem:
 	BSR.w	RemoveSelectedItemFromList
 	RTS
 
+; UsePassToCarthahena: Quest item stub — prints power-surge flavour text.
 UsePassToCarthahena:
 	PRINT 	PowerSurgeStr	
 	RTS
 	
+; UseCrown: Quest item stub — prints power-surge flavour text.
 UseCrown:
 	PRINT 	PowerSurgeStr	
 	RTS
@@ -191,22 +271,47 @@ UseSixteenRings_WrongCondition:
 	PRINT 	RingsFirmamentStr
 	RTS
 
+; UseWhiteCrystal: Quest item stub — prints flavour text, does not remove.
 UseWhiteCrystal:
 	PRINT 	WhiteBeautifulStr	
 	RTS
 	
+; UseRedCrystal: Quest item stub — prints flavour text, does not remove.
 UseRedCrystal:
 	PRINT 	DeepRedStr	
 	RTS
 	
+; UseBlueCrystal: Quest item stub — prints flavour text, does not remove.
 UseBlueCrystal:
 	PRINT 	BrightBlue	
 	RTS
 	
-; UseGeneric: Handle key/generic item use.
-; In town mode, checks for a chest tile in front of the player.
-; In overworld first-person mode, checks the map tile ahead for a locked door
-; (tile type 6), then scans LockedDoorDataTable to match room/position/key.
+; ---------------------------------------------------------------------------
+; UseGeneric: Handle generic item use (keys, etc.).
+;
+; In top-down town mode (Player_in_first_person_mode = 0):
+;   Gets the tile in front of the player. If it is a chest tile
+;   (TOWN_TILE_CHEST), jumps to UseKey_NoDoor_Loop (prints futile message).
+;   Otherwise falls through to UseKey_NoDoor.
+;
+; In first-person dungeon mode:
+;   Gets the map tile one step ahead. If tile type != 6 (locked door),
+;   prints NoDoorStr. Otherwise scans LockedDoorDataTable for a matching
+;   (room, x, y, key_id) record. On match: plays SOUND_ATTACK, sets
+;   Door_unlocked_flag, prints KeyUnlockedStr. On mismatch: KeyDoesntFitStr.
+;
+; LockedDoorDataTable record layout (8 bytes each):
+;   Word 0: room ID       (negative = end-of-table sentinel)
+;   Word 1: tile X
+;   Word 2: tile Y
+;   Word 3: required key item ID (low byte compared against selected item)
+;
+; Input:  (all state via RAM)
+;   Player_in_first_person_mode.w
+;   Selected_item_index.w, Possessed_items_list[].w
+;   Player_position_x/y_outside_town.w, Player_direction.w
+; Scratch: D0, D1, D3, D4, A0, A1, A2
+; ---------------------------------------------------------------------------
 UseGeneric:
 	TST.b	Player_in_first_person_mode.w
 	BNE.b	UseGeneric_Loop
@@ -377,6 +482,27 @@ DialogueStateHandlerMap:
 
 ; State 0 - Init: Save status bar, run opening script, detect tile type to
 ; determine which service (shop/inn/fortune teller/church) to enter.
+; ---------------------------------------------------------------------------
+; DialogState_Init: Entry point for all dialogue/service interactions.
+;
+; Called when the player presses C to talk. Saves the status bar, resets the
+; script engine, increments Dialogue_state by 1, then dispatches based on the
+; tile in front of the player (GetTileInFrontOfPlayer → D0):
+;
+;   TOWN_TILE_SHOP           → FortuneTeller_EnterState_Loop (load shop assortment)
+;   TOWN_TILE_FORTUNE_TELLER → FortuneTeller_EnterState_FeePrompt (build fee msg)
+;   TOWN_TILE_INN            → DialogState_Init_InnEntry (Watling credit check)
+;   TOWN_TILE_FORTUNE_TELLER_2 → DialogState_Init_FortuneTeller2Entry (per-town greeting)
+;   TOWN_TILE_CHURCH         → DialogState_Init_ChurchEntry (set church state)
+;   anything else            → ShopInit_LoadAssortment_TalkToNPC (NPC scan)
+;
+; If the player is in first-person mode, skips tile check and goes straight to
+; ShopInit_LoadAssortment_Loop (load NPC script from Script_talk_source).
+;
+; Input:  Player_in_first_person_mode.w, GetTileInFrontOfPlayer → D0
+; Output: Dialogue_state.w updated; script / shop assortment loaded
+; Scratch: D0
+; ---------------------------------------------------------------------------
 DialogState_Init:
 	MOVE.w	Main_menu_selection.w, Menu_cursor_index.w
 	JSR	DrawMenuCursor
@@ -432,7 +558,7 @@ DialogState_Init_WatlingFreeStay:
 	JSR	CopyStringUntilFF
 	MOVE.b	#SCRIPT_NEWLINE, (A1)+
 	MOVE.w	Watling_inn_unpaid_nights.w, D0
-	MULU.w	#$0190, D0
+	MULU.w	#$0190, D0          ; 0x190 = 400 kims per night (BCD)
 	ADDI.w	#$0190, D0
 	JSR	ConvertToBCD
 	BSR.w	FormatKimsAmount
@@ -509,6 +635,19 @@ FortuneTeller_EnterState_CheckEquipShop:
 	ANDI.w	#$0400, D0
 	BEQ.b	ShopInit_LoadAssortment
 	MOVE.w	#SHOP_TYPE_MAGIC, Current_shop_type.w
+; ---------------------------------------------------------------------------
+; ShopInit_LoadAssortment: Populate Shop_item_list[] from the per-town,
+; per-shop-type assortment table (ShopAssortmentByTownAndShopType).
+;
+; Also loads the shop greeting script into Script_source_base.
+;
+; Shop type is read from Current_shop_type.w:
+;   0 = item shop, 1 = equipment shop, 2 = magic shop
+;
+; Input:  Current_town.w, Current_shop_type.w
+; Output: Shop_item_list[], Shop_item_count.w, Script_source_base.w
+; Scratch: D0, D1, D7, A0, A1, A2
+; ---------------------------------------------------------------------------
 ShopInit_LoadAssortment:
 	LEA	ShopDialog_Welcome, A0
 	MOVE.w	Current_shop_type.w, D0
@@ -537,6 +676,26 @@ ShopInit_LoadAssortment_Loop:
 	MOVE.l	Script_talk_source.w, Script_source_base.w
 	RTS
 
+; ---------------------------------------------------------------------------
+; ShopInit_LoadAssortment_MalagaShop: Malaga blacksmith shop entry handler.
+;
+; Picks the correct next dialogue state and greeting index (D2) based on
+; story-progress flags (most recent event wins, checked in reverse order):
+;
+;   Player_has_received_sword_of_vermilion → greeting 3, state WAIT_SCRIPT_THEN_GO_TO_OVERWORLD
+;   Sword_retrieved_from_blacksmith         → greeting 2, state MALAGE_SHOP_GIVE_VERMILION_SWORD
+;   Sword_stolen_by_blacksmith              → greeting 1, state WAIT_SCRIPT_THEN_GO_TO_OVERWORLD
+;   (none)                                  → greeting 0, state MALAGE_WAIT_SCRIPT_THEN_OPEN_SELL_LIST
+;
+; Falls through to MalagaShop_LoadAssortment, which loads the per-town shop
+; assortment for Malaga (ShopAssortmentByTownAndShopType) and loads the
+; selected greeting script (ShopGreetingStrPtrs[D2]).
+;
+; Input:  Player_has_received_sword_of_vermilion.w, Sword_retrieved_from_blacksmith.w,
+;         Sword_stolen_by_blacksmith.w, Current_town.w, Current_shop_type.w
+; Output: Dialogue_state.w set; Script_source_base.w loaded; Shop_item_list[] populated
+; Scratch: D0, D1, D2, D7, A0, A1, A2
+; ---------------------------------------------------------------------------
 ShopInit_LoadAssortment_MalagaShop:
 	LEA	ShopGreetingStrPtrs, A0
 	CLR.w	D2
@@ -806,6 +965,21 @@ ShopBuy_CancelReturn_ProcessText:
 	JSR	ProcessScriptText
 	RTS
 
+; ---------------------------------------------------------------------------
+; DialogState_MalageShopGiveVermilionSword: Award the Sword of Vermilion (state 42).
+;
+; Checks if the player's equipment inventory is full (≥ 8 items):
+;   Full   → prints ComeBackWithLessStr, stays in current state.
+;   Room   → appends EQUIPMENT_SWORD_OF_VERMILION to Possessed_equipment_list,
+;             sets Player_has_received_sword_of_vermilion flag.
+;
+; In both cases: transitions to DIALOG_STATE_WAIT_SCRIPT_THEN_ADVANCE.
+;
+; Input:  Possessed_equipment_length.w, Possessed_equipment_list.w
+; Output: Sword added to inventory (if not full); story flag set;
+;         Dialogue_state.w = DIALOG_STATE_WAIT_SCRIPT_THEN_ADVANCE
+; Scratch: D0, A0
+; ---------------------------------------------------------------------------
 DialogState_MalageShopGiveVermilionSword:
 	LEA	Possessed_equipment_length.w, A0
 	MOVE.w	(A0), D0
@@ -1152,7 +1326,7 @@ DialogState_ShopBuyConfirmAndPurchase:
 	MOVE.l	(A0,D0.w), Shop_selected_price.w
 	MOVE.l	(A0,D0.w), D0
 	MOVE.l	Player_kims.w, D1
-	ANDI.l	#$00FFFFFF, D1
+	ANDI.l	#$00FFFFFF, D1          ; mask high byte — Player_kims is 24-bit BCD
 	CMP.l	D0, D1
 	BLT.b	DialogState_ShopBuyConfirmAndPurchase_InsufficientFunds
 	LEA	ShopCategoryNameTables, A0
@@ -1432,6 +1606,27 @@ DialogState_WaitScriptThenDrawSellItemYesNo:
 
 DialogState_WaitScriptThenDrawSellItemYesNo_Loop:
 	JMP	ProcessScriptText
+; ---------------------------------------------------------------------------
+; DialogState_SellInventoryConfirmAndSell: Sell-confirmation yes/no handler.
+;
+; On confirm-yes:
+;   - Adds Shop_sell_price to Player_kims (AddPaymentAmount) and refreshes display.
+;   - If equipment: checks bit 10 (sword) or AC flag to determine stat rollback
+;     (subtract EquipmentToStatModifierMap entry from Player_str or Player_ac).
+;   - Decrements the possession-list length counter (ShopCategoryNameTables+$4).
+;   - Removes item from the active inventory list via RemoveItemFromArray.
+;   - Redraws menus, loads "thank you" script, sets
+;     DIALOG_STATE_WAIT_SCRIPT_THEN_DRAW_SELL_CONFIRM.
+;
+; On cancel (B or no in yes/no): restores left menu, redraws shop menu,
+;   resets to DIALOG_STATE_SELL_INVENTORY_ITEM_SELECT_INPUT.
+;
+; Input:  Dialog_selection.w, Shop_sell_price.w, Shop_selected_index.w,
+;         Active_inventory_list_ptr.w, Current_shop_type.w
+; Output: Player_kims updated; item removed from possession list;
+;         Dialogue_state.w updated
+; Scratch: D0, D1, D2, A0, A2, A3
+; ---------------------------------------------------------------------------
 DialogState_SellInventoryConfirmAndSell:
 	CheckButton BUTTON_BIT_B
 	BNE.w	ShopEquip_DrawAndSetState
@@ -1565,6 +1760,20 @@ ShopSell_RestoreAndInit:
 
 ShopSell_RestoreAndInit_Loop:
 	JMP	ProcessScriptText
+; ---------------------------------------------------------------------------
+; DialogState_WaitScriptWithYesNoOrContinue: Multi-branch script wait (state 5).
+;
+; Used for fortune teller fee prompt and similar scripts that may have either
+; a yes/no decision or a multi-page continuation:
+;
+;   Script still running         → ProcessScriptText
+;   Script complete + continuation present → wait for C, then InitDialogueWindow
+;   Script complete + no continuation   → SaveRightMenuAreaToBuffer,
+;                                          DrawYesNoDialog, advance state
+;
+; Input:  Script_text_complete.w, Script_has_continuation.w
+; Output: Dialogue_state.w advanced (no continuation) or held for page-turn
+; ---------------------------------------------------------------------------
 DialogState_WaitScriptWithYesNoOrContinue:
 	TST.b	Script_text_complete.w
 	BEQ.b	DialogState_WaitScriptWithYesNoOrContinue_ProcessText
@@ -1608,7 +1817,7 @@ DialogState_FortuneTellerPayAndRead:
 	LEA	InnAndFortuneTellerPricesByTown, A0
 	MOVE.l	(A0,D0.w), D0
 	MOVE.l	Player_kims.w, D1
-	ANDI.l	#$00FFFFFF, D1
+	ANDI.l	#$00FFFFFF, D1          ; mask high byte — Player_kims is 24-bit BCD
 	CMP.l	D0, D1
 	BLT.w	DialogState_FortuneTellerPayAndRead_Loop
 	MOVE.l	D0, Transaction_amount.w
@@ -1700,6 +1909,30 @@ DialogState_DrawInnMoneyWindow:
 	ADDQ.w	#1, Dialogue_state.w
 	RTS
 
+; ---------------------------------------------------------------------------
+; DialogState_InnPayAndSleep: Inn payment / credit handler (state 29).
+;
+; For Watling inn WITHOUT free-stay used: pressing B or C credits one more
+; night of debt (InnWatling_CreditNight), paying off as many nights as possible
+; from current kims and setting the broke-penalty flag if funds run out.
+;
+; For all other inns (and Watling with free-stay used): shows the yes/no
+; confirmation dialog. On confirm-yes: deducts the per-town inn price from
+; Player_kims, prints "Rest well", then transitions to
+; DIALOG_STATE_WAIT_SCRIPT_THEN_START_SLEEP_FADE.
+;
+; On cancel / insufficient funds: prints the appropriate refusal string and
+; transitions to DIALOG_STATE_WAIT_FORTUNE_TELLER_SCRIPT_THEN_CLOSE.
+;
+; InnWatling_CreditNight: Iterates Watling_inn_unpaid_nights times, each
+;   iteration paying $400 kims (400 BCD) until funds run dry. Sets
+;   Watling_inn_broke_penalty flag if payment cannot be completed.
+;
+; Input:  Current_town.w, Watling_inn_free_stay_used.w, Player_kims.w
+;         InnAndFortuneTellerPricesByTown, Watling_inn_unpaid_nights.w
+; Output: Player_kims updated; Dialogue_state.w set
+; Scratch: D0, D1, D7, A0
+; ---------------------------------------------------------------------------
 DialogState_InnPayAndSleep:
 	MOVE.w	Current_town.w, D0
 	CMPI.w	#TOWN_WATLING, D0
@@ -1720,8 +1953,8 @@ InnWatling_CreditNight:
 	SUBQ.w	#1, D7
 InnWatling_CreditNight_Done:
 	MOVE.l	Player_kims.w, D1
-	ANDI.l	#$00FFFFFF, D1
-	CMPI.l	#$400, D1
+	ANDI.l	#$00FFFFFF, D1          ; mask high byte — Player_kims is 24-bit BCD
+	CMPI.l	#$400, D1               ; $400 = 400 kims per night (BCD)
 	BLT.b	InnWatling_CreditNight_Broke
 	MOVE.l	#$400, Transaction_amount.w
 	JSR	DeductPaymentAmount
@@ -1789,6 +2022,32 @@ DialogState_WaitScriptThenStartSleepFade:
 	JMP	QueueSoundEffect
 DialogState_WaitScriptThenStartSleepFade_Loop:
 	JMP	ProcessScriptText
+; ---------------------------------------------------------------------------
+; DialogState_SleepFadeAndRestore: Sleep fade-out and HP/MP restore (state 31).
+;
+; Waits for the fade-out (Fade_out_lines_mask) to complete, then counts down
+; Sleep_delay_timer. When both finish:
+;
+;   Broke penalty (Watling_inn_broke_penalty set):
+;     - HP  → halved (LSR.w #1), minimum 1
+;     - MP  → halved
+;     - Clears Watling_inn_broke_penalty
+;
+;   Normal sleep:
+;     - HP  → Player_mhp (full restore)
+;     - MP  → Player_mmp (full restore)
+;
+; After restore: loads town palettes, resets script, prints morning message,
+; and transitions to DIALOG_STATE_WAIT_FORTUNE_TELLER_SCRIPT_THEN_CLOSE.
+;
+; For Watling with youth-not-yet-restored: prints "Move along" (credits still
+; owed); for youth-restored: prints "Don't pull on me" and marks free stay used.
+;
+; Input:  Fade_out_lines_mask.w, Sleep_delay_timer.w,
+;         Watling_inn_broke_penalty.w, Watling_inn_free_stay_used.w
+; Output: Player_hp.w, Player_mp.w restored; palettes reloaded
+; Scratch: D0
+; ---------------------------------------------------------------------------
 DialogState_SleepFadeAndRestore:
 	TST.b	Fade_out_lines_mask.w
 	BNE.w	ChurchDialog_SetState_Return
@@ -1855,6 +2114,26 @@ DialogState_WaitScriptThenOpenChurchMenu:
 
 DialogState_WaitScriptThenOpenChurchMenu_Loop:
 	JMP	ProcessScriptText
+; ---------------------------------------------------------------------------
+; DialogState_ChurchMenuInput: Church service selection menu handler (state 33).
+;
+; Waits for any pending window draws, then dispatches on Church_service_selection:
+;   0 = Remove Curse  → CheckIfCursed; if cursed: build donation+price message
+;                        and set DIALOG_STATE_WAIT_SCRIPT_THEN_DRAW_CURSE_YES_NO;
+;                        if not cursed: print NoCurseStr, close.
+;   1 = Cure Poison   → Check Player_poisoned; if poisoned: build donation+price
+;                        message and set DIALOG_STATE_WAIT_SCRIPT_THEN_DRAW_POISON_YES_NO;
+;                        if not poisoned: print NotPoisonedStr, close.
+;   2 = Save Game     → Print slot prompt, set DIALOG_STATE_WAIT_SCRIPT_THEN_OPEN_SAVE_MENU.
+;   3 = Leave         → Print farewell, set DIALOG_STATE_WAIT_SCRIPT_THEN_CLOSE_CHURCH_TO_HUD.
+;
+; All confirmed paths call ResetScriptAndInitDialogue (via ChurchService_InitDialogue).
+; Cursor navigation uses Church_service_selection via HandleMenuInput.
+;
+; Input:  Church_service_selection.w, Player_poisoned.w, Equipped_items.w
+; Output: Dialogue_state.w updated; script loaded or message printed
+; Scratch: D0, A0, A1
+; ---------------------------------------------------------------------------
 DialogState_ChurchMenuInput:
 	TST.b	Window_tilemap_draw_active.w
 	BNE.w	ChurchMenu_HandleInput_Return
@@ -1983,6 +2262,22 @@ DialogState_DrawCurseRemovalMoneyWindow:
 DialogState_DrawCurseRemovalMoneyWindow_Loop:
 	RTS
 
+; ---------------------------------------------------------------------------
+; DialogState_CurseRemovalPayAndCure: Church curse-removal payment (state 35).
+;
+; Presents yes/no dialog. On confirm-yes:
+;   - Loads ChurchCurseRemovalPricesByTown[Current_town] into D0.
+;   - Masks Player_kims to 24 bits and compares with price.
+;   - If sufficient: deducts payment, calls RemoveCursedEquipment, prints
+;     CurseRemovedStr, transitions to DIALOG_STATE_WAIT_SCRIPT_THEN_CLOSE_CHURCH_TO_HUD.
+;   - If insufficient: prints NoTakeBackStr, transitions to close.
+;
+; On cancel (B button): prints NoTakeBackStr, transitions to close.
+;
+; Input:  Dialog_selection.w, Player_kims.w, ChurchCurseRemovalPricesByTown
+; Output: Player_kims updated; cursed equipment removed; Dialogue_state.w set
+; Scratch: D0, D1, A0
+; ---------------------------------------------------------------------------
 DialogState_CurseRemovalPayAndCure:
 	CheckButton BUTTON_BIT_B
 	BNE.w	ShopNoTakeBack_Sell
@@ -2047,6 +2342,27 @@ DialogState_DrawPoisonCureMoneyWindow:
 	ADDQ.w	#1, Dialogue_state.w
 	RTS
 
+; ---------------------------------------------------------------------------
+; DialogState_PoisonCurePayAndCure: Church poison-cure payment (state 36+1).
+;
+; Presents yes/no dialog. On confirm-yes:
+;   - Loads ChurchPoisonCurePricesByTown[Current_town] into D0.
+;   - Masks Player_kims to 24 bits and compares with price.
+;   - If sufficient: deducts payment.
+;       - If Player_greatly_poisoned is set: prints CantCureStr (serious poison
+;         cannot be cured by the church — requires a specific item).
+;       - Otherwise: clears Player_poisoned and Poison_notified, prints
+;         PoisonPurgedStr.
+;   - If insufficient: prints NoTakeBackStr, transitions to close.
+;
+; On cancel (B button): prints NoTakeBackStr, transitions to close.
+;
+; Input:  Dialog_selection.w, Player_kims.w, Player_greatly_poisoned.w
+;         ChurchPoisonCurePricesByTown
+; Output: Player_kims updated; Player_poisoned cleared (if curable);
+;         Dialogue_state.w set to DIALOG_STATE_WAIT_SCRIPT_THEN_CLOSE_CHURCH_TO_HUD
+; Scratch: D0, D1, A0
+; ---------------------------------------------------------------------------
 DialogState_PoisonCurePayAndCure:
 	CheckButton BUTTON_BIT_B
 	BNE.w	ShopNoTakeBack_Giveaway
@@ -2113,6 +2429,20 @@ DialogState_WaitScriptThenOpenSaveMenu:
 
 DialogState_WaitScriptThenOpenSaveMenu_Loop:
 	JMP	ProcessScriptText
+; ---------------------------------------------------------------------------
+; DialogState_SaveMenuInput: Save-slot selection and SRAM write (state 38).
+;
+; Waits for window draw to finish, then:
+;   B button → restore submenu, redraw church menu, reset Church_service_selection
+;              and state to DIALOG_STATE_CHURCH_MENU_INPUT (back to church menu).
+;   C button → call SaveGameToSram, restore submenu, print "Game saved" message,
+;              set DIALOG_STATE_WAIT_SCRIPT_THEN_CLOSE_CHURCH_TO_HUD.
+;   neither  → HandleMenuInput on Dialog_selection (cursor navigation).
+;
+; Input:  Window_tilemap_draw_active.w, Dialog_selection.w
+; Output: Save game written to SRAM on confirm; Dialogue_state.w updated
+; Scratch: D0
+; ---------------------------------------------------------------------------
 DialogState_SaveMenuInput:
 	TST.b	Window_tilemap_draw_active.w
 	BNE.b	DialogState_SaveMenuInput_Return
@@ -2142,8 +2472,18 @@ DialogState_SaveMenuInput_HandleCursor:
 DialogState_SaveMenuInput_Return:
 	RTS
 
-; CheckIfCursed: Scan equipped items (weapon + armor) for a cursed flag.
-; Sets D3 to the item ID if cursed; called before church curse-removal.
+; ---------------------------------------------------------------------------
+; CheckIfCursed: Scan weapon + armor slots for any cursed item.
+;
+; Iterates Equipped_items (Equipped_sword, Equipped_shield, Equipped_armor —
+; 3 entries × 1 word each) and tests bit 9 of each entry (the curse flag).
+; Returns immediately on the first cursed item found.
+;
+; Input:  Equipped_items.w (3-entry word array)
+; Output: D0 = $FFFF if a cursed item found, 0 if none
+;         D3 = item word of the cursed item (if found)
+; Scratch: D7, A0
+; ---------------------------------------------------------------------------
 CheckIfCursed:
 	MOVE.w	#2, D7
 	LEA	Equipped_items.w, A0
@@ -2161,6 +2501,24 @@ ScanInventory_NotFound:
 ScanInventory_NotFound_Loop:
 	RTS
 
+; ---------------------------------------------------------------------------
+; RemoveCursedEquipment: Clear all cursed items from the equipped slots and
+; roll back the associated stat bonuses.
+;
+; Pass 1: Scan Equipped_items (3 words). For each item with bit 9 (curse) set:
+;   - Set the equipped slot to $FFFF (empty).
+;   - Look up stat modifier in EquipmentToStatModifierMap (indexed by low byte).
+;   - If bit 10 set (sword type): subtract modifier from Player_str.
+;   - Otherwise: subtract modifier from Player_ac.
+;
+; Pass 2: Scan Possessed_equipment_list for the same cursed item and clear its
+;   bit 9 in the list entry (so it can be sold or re-equipped later).
+;
+; Input:  Equipped_items.w, Possessed_equipment_list.w
+; Output: Equipped_items updated; Player_str or Player_ac decremented;
+;         curse bit cleared in Possessed_equipment_list entry
+; Scratch: D0, D1, D3, D7, A0, A1, A4
+; ---------------------------------------------------------------------------
 RemoveCursedEquipment:
 	MOVE.w	#2, D7
 	LEA	Equipped_items.w, A0
@@ -2197,8 +2555,26 @@ RecalcArmorClass_NextItem_Loop:
 	DBF	D7, RecalcArmorClass_NextItem_Done
 	RTS
 
-; CheckPlayerTalkToNPC: Check if an NPC is standing in the tile the player
-; is facing. If found, initiates dialogue with that NPC.
+; ---------------------------------------------------------------------------
+; CheckPlayerTalkToNPC: Search NPC/enemy object list for an NPC occupying
+; the tile directly in front of the player, and initiate dialogue.
+;
+; Computes the target tile (player position + facing delta from
+; TalkDirectionDeltaTable), then scans up to 30 live object slots
+; (Enemy_list_ptr; bit 7 of first byte = active flag).
+;
+; For each active slot: converts obj_world_x/y (sub-pixel, >>4 = tile) and
+; compares with the target tile. On match:
+;   - Writes the appropriate NPC facing direction via NpcFacingDirectionLookup.
+;   - Loads obj_npc_str_ptr into Script_source_base.
+;   - Sets obj_vel_x to $FF (signals NPC is being talked to).
+;   - Returns.
+; If no matching NPC found: prints NoOneHereStr.
+;
+; Input:  Player_position_x/y_in_town.w, Player_direction.w, Enemy_list_ptr.w
+; Output: Script_source_base.w loaded (on success); NPC object updated
+; Scratch: D0, D1, D2, D7, A0, A1, A6
+; ---------------------------------------------------------------------------
 CheckPlayerTalkToNPC:
 	MOVE.w	Player_direction.w, D2
 	BCLR.l	#0, D2
@@ -2238,8 +2614,20 @@ FindNpcByScript_NextEntry_Loop:
 	PRINT 	NoOneHereStr
 	RTS
 
-; FormatShopItemPrice: Build the BCD price string for the currently
-; highlighted shop item and write it into Text_build_buffer.
+; ---------------------------------------------------------------------------
+; FormatShopItemPrice: Build the BCD sell-price string for the currently
+; highlighted sell-list item and write it into Text_build_buffer via A1.
+;
+; Uses Current_shop_type to pick ShopResaleValueMapPtrs (BCD price table)
+; and ShopPossessionListPtrs (which possession list to index). The selected
+; item's low byte is the item ID used as the price table index.
+;
+; Writes the ASCII price digits (via FormatKimsAmount) followed by SCRIPT_NEWLINE.
+;
+; Input:  Shop_selected_index.w, Current_shop_type.w, A1 = output ptr
+; Output: Shop_sell_price.w = BCD price; A1 advanced; digits written to buffer
+; Scratch: D0, A0, A2
+; ---------------------------------------------------------------------------
 FormatShopItemPrice:
 	LEA	ShopResaleValueMapPtrs, A0
 	LEA	ShopPossessionListPtrs, A2
@@ -2260,8 +2648,19 @@ FormatShopItemPrice:
 	MOVE.b	#SCRIPT_NEWLINE, (A1)+
 	RTS
 
-; FormatKimsAmount: Convert a BCD kims value in D0 into ASCII decimal digits
-; (suppressing leading zeros) and append them to A1 (Text_build_buffer ptr).
+; ---------------------------------------------------------------------------
+; FormatKimsAmount: Convert a packed BCD kims value in D0 into ASCII decimal
+; digits (leading-zero suppressed) and append them + " kims" to A1.
+;
+; D0 holds up to 6 BCD digits packed into 3 bytes (e.g. $012345 = 12,345 kims).
+; The function rotates through 6 half-byte nibbles, skipping leading zeros,
+; then writes each digit as ASCII ($30 + nibble), followed by " kims".
+;
+; Input:  D0 = BCD kims amount (24-bit, 6 BCD digits)
+;         A1 = destination pointer into Text_build_buffer
+; Output: A1 advanced past the written digits and " kims" suffix
+; Scratch: D0, D1, D6, D7
+; ---------------------------------------------------------------------------
 FormatKimsAmount:
 	MOVEQ	#0, D7
 	ROL.l	#8, D0
@@ -2335,6 +2734,27 @@ FortuneTellerReadingsByTown:
 
 ; ---------------------------------------------------------------------------
 ; Ready Equipment State Machine
+; ---------------------------------------------------------------------------
+; Dispatches on Ready_equipment_state.w (low 5 bits), jumping through
+; ReadyEquipmentStateJumpTable (BRA.w entries, 4 bytes each).
+;
+; State map:
+;   0 = Init          — draw equipment menu, reset cursor
+;   1 = WaitInput     — handle B/C on weapon/shield/armor choice
+;   2 = ShowList      — wait for window, handle select/cancel for unequip
+;   3 = WaitListInput — wait script, handle equip list selection
+;   4 = ShowCatA      — unequip flow for weapon slot
+;   5 = ShowCatB      — unequip flow (shared handler ShowCategory)
+;   6 = WaitDraw      — wait for window then exit
+;   7 = ShowCatC      — equip flow (shared handler ShowCategory)
+;
+; Register conventions inside the state handlers:
+;   D0 = state index / item ID / scratch
+;   D1 = equipment ID / stat modifier index
+;   D2 = old equipped item ID / scratch
+;   D6 = saved old equipment ID (for swap)
+;   A0 = jump table / equipment name table / stat modifier table
+;   A2 = Equipped_items / Possessed_equipment_list pointer
 ; ---------------------------------------------------------------------------
 ReadyEquipmentStateMachine:
 	MOVE.w	Ready_equipment_state.w, D0
@@ -2465,6 +2885,32 @@ ReadyEquipmentMenu_Done_CancelAndRestore:
 	MOVE.w	#READY_EQUIP_STATE_WAIT, Ready_equipment_state.w
 	RTS
 
+; ---------------------------------------------------------------------------
+; ReadyEquipmentMenu_Done_ConfirmEquip: Process equip confirmation (C button).
+;
+; Called when the player presses C on a highlighted equipment item. Behavior:
+;
+;   No item currently equipped in slot (GetCurrentEquippedItemID returns < 0):
+;     - EquipSelectedItem, apply stat bonus (EquipStatAddJumpTable),
+;       print "readied <name>" message. → READY_EQUIP_STATE_RESULT_MSG
+;
+;   Slot already has a different item (GetCurrentEquippedItemID returns ≥ 0):
+;     - Print "already readied" message.
+;     - If existing item is cursed (bit 9): print ExchangeCursedStr → can't swap.
+;     - Otherwise: call ClearEquipmentCursedFlag, remove old stat
+;       (EquipStatRemoveJumpTable), add new stat (EquipStatAddJumpTable),
+;       print "removed <old> and readied <new>" message, EquipSelectedItem.
+;
+;   Same item already equipped: go to ReadyEquipmentMenu_Done_DoEquip (re-equip).
+;
+; In all cases: restores the equip menu buffer and sets READY_EQUIP_STATE_RESULT_MSG.
+;
+; Input:  Ready_equipment_cursor_index.w, Ready_equipment_category.w,
+;         Equipped_sword/shield/armor.w
+; Output: Equipment slot updated; stats adjusted; Text_build_buffer built;
+;         Ready_equipment_state.w = READY_EQUIP_STATE_RESULT_MSG
+; Scratch: D0, D1, D2, D6, A0, A1
+; ---------------------------------------------------------------------------
 ReadyEquipmentMenu_Done_ConfirmEquip:
 	MOVE.w	Ready_equipment_cursor_index.w, Menu_cursor_index.w
 	JSR	DrawMenuCursor
@@ -2641,6 +3087,16 @@ ReadyEquip_ExitToHud_ProcessText:
 	JSR	ProcessScriptText
 	RTS
 
+; ---------------------------------------------------------------------------
+; EquipStatAddJumpTable: Apply stat bonus for the selected equipment category.
+;   Entry 0 (offset 0): sword   — add modifier to Player_str
+;   Entry 1 (offset 4): shield  — add modifier to Player_ac
+;   Entry 2 (offset 8): armor   — add modifier to Player_ac (shared)
+;   Entry 3 (offset C): ring    — add modifier to Player_ac (shared)
+;
+; Input:  D1 = equipment item word (low byte = item ID for modifier lookup)
+;         Ready_equipment_category.w selects the entry (0-3)
+; ---------------------------------------------------------------------------
 EquipStatAddJumpTable:
 	BRA.w	EquipStatAddJumpTable_AddStrBonus
 	BRA.w	EquipStatAddJumpTable_AddAcBonus
@@ -2676,6 +3132,17 @@ EquipItem_AddAcBonus:
 	MOVE.w	D0, Player_ac.w
 	RTS
 
+; ---------------------------------------------------------------------------
+; EquipStatRemoveJumpTable: Reverse the stat bonus for the previously equipped
+; item when swapping or unequipping. Mirror of EquipStatAddJumpTable.
+;   Entry 0: sword  — subtract modifier from Player_str
+;   Entry 1: shield — subtract modifier from Player_ac
+;   Entry 2: armor  — subtract modifier from Player_ac (shared)
+;   Entry 3: ring   — subtract modifier from Player_ac (shared)
+;
+; Input:  D6 = old equipment item word (low byte = item ID)
+;         Ready_equipment_category.w selects the entry (0-3)
+; ---------------------------------------------------------------------------
 EquipStatRemoveJumpTable:
 	BRA.w	EquipStatRemoveJumpTable_SubStrBonus
 	BRA.w	EquipStatRemoveJumpTable_SubAcBonus
@@ -2711,6 +3178,14 @@ UnequipItem_SubAcBonus:
 	MOVE.w	D0, Player_ac.w
 	RTS
 
+; ---------------------------------------------------------------------------
+; UnequipItemByID: Find item D0 in Possessed_equipment_list and clear bit 15
+; (equipped marker) on the matching entry, marking it as unequipped.
+;
+; Input:  D0 = item ID (low byte comparison)
+; Output: Matching Possessed_equipment_list entry has bit 15 cleared
+; Scratch: D1, D7, A1
+; ---------------------------------------------------------------------------
 UnequipItemByID:
 	LEA	Possessed_equipment_length.w, A1
 	MOVE.w	(A1)+, D7
@@ -2728,6 +3203,19 @@ FindEquipSlot_Done:
 FindEquipSlot_Done_Loop:
 	RTS
 
+; ---------------------------------------------------------------------------
+; BuildEquipmentListForCategory: Filter Possessed_equipment_list into
+; Ready_equipment_list keeping only items that match the selected equip slot.
+;
+; The category bit tested is (Ready_equipment_category + 10): bit 10 = sword,
+; bit 11 = shield, bit 12 = armor. Each possessed equipment word has the
+; corresponding bit set by the item type.
+;
+; Input:  Ready_equipment_category.w (0=sword, 1=shield, 2=armor)
+;         Possessed_equipment_list.w / Possessed_equipment_length.w
+; Output: Ready_equipment_list.w filled; Ready_equipment_list_length.w updated
+; Scratch: D0, D1, D2, D7, A1, A2
+; ---------------------------------------------------------------------------
 BuildEquipmentListForCategory:
 	MOVE.w	Ready_equipment_category.w, D0
 	ADDI.w	#$000A, D0
@@ -2749,6 +3237,13 @@ BuildEquipmentListForCategory_StoreLength:
 	MOVE.w	D2, Ready_equipment_list_length.w
 	RTS
 
+; ---------------------------------------------------------------------------
+; GetCurrentEquippedItemID: Read the item word currently in the equipped slot
+; for the active category (sword / shield / armor).
+;
+; Input:  Ready_equipment_category.w (0=sword, 1=shield, 2=armor)
+; Output: D0 = word at Equipped_items + (category*2); $FFFF if slot empty
+; ---------------------------------------------------------------------------
 GetCurrentEquippedItemID:
 	MOVE.w	Ready_equipment_category.w, D0
 	ADD.w	D0, D0
@@ -2756,6 +3251,13 @@ GetCurrentEquippedItemID:
 	MOVE.w	(A2,D0.w), D0
 	RTS
 
+; ---------------------------------------------------------------------------
+; GetSelectedEquipmentID: Return the item word for the currently highlighted
+; entry in Ready_equipment_list, with bit 15 (equipped marker) cleared.
+;
+; Input:  Ready_equipment_cursor_index.w
+; Output: D1 = item word & $7FFF
+; ---------------------------------------------------------------------------
 GetSelectedEquipmentID:
 	MOVE.w	Ready_equipment_cursor_index.w, D1
 	ADD.w	D1, D1
@@ -2764,6 +3266,15 @@ GetSelectedEquipmentID:
 	ANDI.w	#$7FFF, D1
 	RTS
 
+; ---------------------------------------------------------------------------
+; EquipSelectedItem: Write the selected item into the equipped slot and set
+; bit 15 (equipped marker) in the Possessed_equipment_list entry.
+;
+; Calls GetSelectedEquipmentID internally to get D1.
+; Input:  Ready_equipment_category.w, Ready_equipment_cursor_index.w
+; Output: Equipped_items slot updated; equipped marker set in possession list
+; Scratch: D1, D2, D3, D7, A2
+; ---------------------------------------------------------------------------
 EquipSelectedItem:
 	BSR.b	GetSelectedEquipmentID
 	MOVE.w	Ready_equipment_category.w, D2
@@ -2784,6 +3295,15 @@ EquipSelectedItem_NextSlot:
 EquipSelectedItem_Return:
 	RTS
 
+; ---------------------------------------------------------------------------
+; ClearEquipmentCursedFlag: Find the currently equipped item (D0 = item ID)
+; in Possessed_equipment_list and clear bit 9 (curse flag), leaving bit 15
+; (equipped marker) intact, so the item can be re-examined or re-equipped.
+;
+; Input:  D0 = item ID to find (low byte compared against list entries)
+; Output: Matching list entry has bit 9 cleared
+; Scratch: D3, D4, D7, A0
+; ---------------------------------------------------------------------------
 ClearEquipmentCursedFlag:
 	LEA	Possessed_equipment_list.w, A0
 	MOVE.w	Possessed_equipment_length.w, D7
@@ -2802,6 +3322,13 @@ FindUnequipSlot_Done:
 FindUnequipSlot_Done_Loop:
 	RTS
 
+; ---------------------------------------------------------------------------
+; CopyPlayerNameToTextBuffer: Copy the null-terminated player name string
+; from Player_name into Text_build_buffer (via A1), appending a space.
+;
+; Input:  Player_name.w (null-terminated ASCII)
+; Output: A1 advanced; name + ' ' written to Text_build_buffer
+; ---------------------------------------------------------------------------
 CopyPlayerNameToTextBuffer:
 	LEA	Player_name.w, A0
 	LEA	Text_build_buffer.w, A1
@@ -2809,6 +3336,14 @@ CopyPlayerNameToTextBuffer:
 	MOVE.b	#$20, (A1)+
 	RTS
 
+; ---------------------------------------------------------------------------
+; CopyEquipmentNameToTextBuffer: Copy the name string for equipment item D2
+; (low byte = item ID) from EquipmentNames pointer table into Text_build_buffer
+; starting at A1.
+;
+; Input:  D2 = equipment item word (low byte = item ID); A1 = output ptr
+; Output: A1 advanced past the copied name
+; ---------------------------------------------------------------------------
 CopyEquipmentNameToTextBuffer:
 	LEA	EquipmentNames, A2
 	ANDI.w	#$00FF, D2
@@ -2820,6 +3355,29 @@ CopyEquipmentNameToTextBuffer:
 
 ; ---------------------------------------------------------------------------
 ; Equip List Menu State Machine
+; ---------------------------------------------------------------------------
+; Dispatches on Equip_list_menu_state.w (low 4 bits), jumping through
+; EquipListMenuStateJumpTable (BRA.w entries, 4 bytes each).
+;
+; This machine drives the multi-page character sheet (C button cycles forward
+; through pages; B button goes back one page or exits):
+;
+;   State  0 = Init         — draw stats window, advance cursor
+;   State  1 = StatsWait    — wait draw, handle B (exit) / C (next)
+;   State  2 = GearPage     — show equipped gear window
+;   State  3 = CombatPage   — show combat stats window
+;   State  4 = MagicPage    — show magic list window
+;   State  5 = ItemsPage    — show items window
+;   State  6 = RingsPage    — show rings window
+;   State  7 = StatusPage   — auto-cycles back to exit (no input)
+;   State  8 = WindowWait   — wait for window draw then restore menu cursor
+;   State  9 = CursorItem   — restore item-page window redraw
+;   State 10 = CursorMagic  — restore magic-page window redraw
+;   State 11 = CursorEquip  — restore equip-list window redraw
+;   State 12 = CursorFull   — restore full-menu window redraw
+;   State 13 = ExitScript   — trigger WINDOW_DRAW_SCRIPT and exit
+;
+; Register conventions: same as ReadyEquipmentStateMachine above.
 ; ---------------------------------------------------------------------------
 EquipListMenuStateMachine:
 	MOVE.w	Equip_list_menu_state.w, D0
@@ -3067,9 +3625,24 @@ EquipListMenu_CursorReady_Return_WaitScript:
 ; ---------------------------------------------------------------------------
 ; Level-Up Stat Upgrade
 ; ---------------------------------------------------------------------------
-; UpgradeLevelStats: Apply stat increases on level-up. Looks up the player's
-; current level in PlayerLevelToStrMap to get the stat-gain table, then
-; applies randomised increments to STR, AGI, HP, etc.
+; ---------------------------------------------------------------------------
+; UpgradeLevelStats: Apply randomised stat gains on level-up.
+;
+; Looks up the player's current level (Player_level) in each per-stat level
+; table (PlayerLevelToStrMap, LukMap, DexMap, AcMap, IntMap, MmpMap, MhpMap)
+; to get a base increment. Adds a random 0–3 bonus (GetRandomNumber & 3) to
+; each stat. Caps each stat at its corresponding MAX_PLAYER_* constant.
+;
+; Stat sequence: STR → LUK → DEX → AC → INT → MMP (sets Player_mp) →
+;                MHP (sets Player_hp) → experience threshold update.
+;
+; Also looks up PlayerLevelToNextLevelExperienceMap to set the XP threshold
+; for the new level.
+;
+; Input:  Player_level.w, PlayerLevel*Map tables, GetRandomNumber
+; Output: Player_str/luk/dex/ac/int/mmp/mhp/hp/mp updated; XP threshold set
+; Scratch: D0, D1, D7, A0
+; ---------------------------------------------------------------------------
 UpgradeLevelStats:
 	MOVE.w	Player_level.w, D7
 	ADD.w	D7, D7
@@ -3154,10 +3727,25 @@ UpgradeLevelStats_CapMhp:
 ; Chest/Door Opening State Machine
 ; ============================================================================
 ; Handles player interaction with treasure chests and doors via Open command.
-; Uses a multi-state system to manage detection, animation, and rewards.
+; Uses a multi-state system to manage detection, animation, and reward display.
 ;
-; States: 0=Detect, 1=Message wait, 2=Close window, 3=Animation,
-;         4=Tile delay, 5=Open delay, 6=Display contents
+; Dispatched via ChestOpenStateJumpTable (7 BRA.w entries):
+;   State 0: ChestOpenStateJumpTable_FirstPersonCheck / TopDownOpen
+;              — GetTileInFrontOfPlayer, look up in chest data table
+;   State 1: OpenMenu_ShowMessage_Init — show locked/empty/already-open message
+;   State 2: OpenChestMenu_ExitToHud  — close window and return to HUD
+;   State 3: ChestAnimation_Return    — run the tile-flip chest-open animation
+;   State 4: ChestAnimation_Return_WaitDelay — frame delay before opening
+;   State 5: ChestAnimation_Return_OpenDelay — delay after lid opens
+;   State 6: ChestAnimation_Return_ShowContents — display item/gold reward
+;
+; In first-person mode (Player_in_first_person_mode ≠ 0): drops through to
+; ChestOpeningStateMachine_Loop (no-op, cannot open chests in first person).
+;
+; Input:  Open_menu_state.w (4-bit state index), Player_in_first_person_mode.w
+; Output: Chest tile flipped to opened; item/gold reward added to inventory;
+;         Open_menu_state.w advanced through states
+; Scratch: D0, D7, A0
 ; ============================================================================
 ChestOpeningStateMachine:
 	TST.b	Player_in_first_person_mode.w

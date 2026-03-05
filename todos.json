@@ -67,7 +67,6 @@
         {
           "id": "COMMENT-003",
           "title": "Document bossbattle.asm (3.7% comment density)",
-          "title": "Document bossbattle.asm (3.7% comment density)",
           "description": "bossbattle.asm has only 29 comment lines in 780 lines. Contains wall tile offset tables, FP sprite positions, boss battle player initialization, and cave map code. Add function headers, document data table formats, annotate raw VDP longwords ($40AE0003, $60AE0003) and raw immediates ($0090, $85B7).",
           "file": "src/bossbattle.asm",
           "priority": "high",
@@ -85,7 +84,7 @@
           "effort": "large",
           "current_comment_ratio": "4.6%",
           "target_comment_ratio": "15%+",
-          "status": "todo"
+          "status": "done"
         },
         {
           "id": "COMMENT-005",
