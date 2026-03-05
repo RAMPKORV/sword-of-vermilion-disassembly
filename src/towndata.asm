@@ -2520,6 +2520,188 @@ LoadTownStateData_Carthahena:
 LoadTownStateData_Carthahena_Loop:
 	RTS
 	
+; ============================================================================
+; RAND-008: Treasure Chest Catalog
+; ============================================================================
+; All treasure chests in the game, grouped by location. Each entry lists:
+;   handler label, contents, opened-flag RAM symbol
+;
+; Chest handlers are dispatched via two tables:
+;   OverworldSectorInteractionPtrs (sectors 0-15, overworld chests)
+;   CaveRoomInteractionPtrs        (rooms $00-$2B, dungeon/cave chests)
+;
+; Contents macros:
+;   ItemChest   value=ITEM_*,              flag=*_opened
+;   EquipChest  type=EQUIPMENT_TYPE_*,     id=EQUIPMENT_{TYPE}_{NAME}, flag, [cursed]
+;   MoneyChest  value=kims (hex),          flag=*_opened
+;   RingChest   type=REWARD_TYPE_RING (4), value=ring_id, flag=*_opened
+;
+; ─────────────────────────────────────────────────────────────────────────────
+; OVERWORLD CHESTS  (OverworldSectorInteractionPtrs, sectors 0–15)
+; ─────────────────────────────────────────────────────────────────────────────
+; Sector 0  (Wyclif area)
+;   OverworldChest_Money256          Money $0100 (256 kims)      Money_chest_256_opened
+;   OverworldChest_Herbs             Item  ITEM_HERBS             Herbs_chest_opened
+;   OverworldChest_Herbs2            Item  ITEM_HERBS             Herbs_chest_2_opened
+;   OverworldChest_Candle3           Item  ITEM_CANDLE            Candle_chest_3_opened
+;   OverworldChest_Money80_Wyclif    Money $0050 (80 kims)       Wyclif_outskirts_chest_opened
+;
+; Sector 2  (Parma / Wyclif outskirts)
+;   OverworldChest_DarkSword         Equip SWORD DARK1 (cursed)  Dark_sword_chest_opened
+;   OverworldChest_Money768B         Money $0300 (768 kims)      Money_chest_768_b_opened
+;   OverworldChest_Herbs5            Item  ITEM_HERBS             Herbs_chest_5_opened
+;
+; Sector 3  (Deepdale area)
+;   OverworldChest_SapphireShield    Equip SHIELD SAPPHIRE       Chest_sapphire_shield_opened
+;   OverworldChest_Money512          Money $0200 (512 kims)      Money_chest_512_opened
+;   OverworldChest_Money1280         Money $0500 (1280 kims)     Money_chest_1280_opened
+;   OverworldChest_Money1792B        Money $0700 (1792 kims)     Money_chest_1792_b_opened
+;
+; Sector 4  (Stow area)
+;   OverworldChest_Money768_Stow     Money $0300 (768 kims)      Money_chest_768_stow_opened
+;
+; Sector 5  (mid-world crossroads)
+;   OverworldChest_GemShield         Equip SHIELD GEM            Chest_gem_shield_opened
+;
+; Sector 6  (Stow / Helwig route)
+;   OverworldChest_Medicine          Item  ITEM_MEDICINE          Medicine_chest_opened
+;   OverworldChest_Lantern2          Item  ITEM_LANTERN           Lantern_chest_2_opened
+;   OverworldChest_Herbs6            Item  ITEM_HERBS             Herbs_chest_6_opened
+;
+; Sector 8  (Tadcaster / Malaga area)
+;   OverworldChest_Money9999         Money $9999 (39321 kims)    Chest_9999_kims_opened
+;   OverworldChest_GnomeStone        Item  ITEM_GNOME_STONE       Chest_gnome_stone_opened
+;
+; Sector 9  (Carthahena approach)
+;   OverworldChest_Money20480        Money $5000 (20480 kims)    Money_chest_20480_opened
+;
+; Sector 10 (northern wilds)
+;   OverworldChest_Money864          Money $0360 (864 kims)      Money_chest_864_opened
+;
+; Sector 11 (far north)
+;   OverworldChest_BansheePowder     Item  ITEM_BANSHEE_POWDER    Banshee_powder_chest_opened
+;
+; Sector 12 (northeast)
+;   OverworldChest_Money5888         Money $1700 (5888 kims)     Chest_5888_kims_opened
+;   OverworldChest_RubyBrooch        Item  ITEM_RUBY_BROOCH       Ruby_brooch_chest_opened
+;
+; Sector 15 (Tsarkon / final area)
+;   OverworldChest_CrimsonArmor      Equip ARMOR CRIMSON         Crimson_armor_chest_opened
+;                                    (conditional: Crimson_armor_reward_enabled must be set)
+;
+; ─────────────────────────────────────────────────────────────────────────────
+; CAVE / DUNGEON CHESTS  (CaveRoomInteractionPtrs, rooms $00-$2B)
+; ─────────────────────────────────────────────────────────────────────────────
+; Room $00  (Barrow dungeon — Ring of Wisdom chamber)
+;   CaveChest_Money256               Money $0100 (256 kims)      Chest_256_kims_opened
+;   CaveChest_Herbs3                 Item  ITEM_HERBS             Herbs_chest_3_opened
+;   CaveChest_Candle                 Item  ITEM_CANDLE            Candle_chest_opened
+;
+; Room $01  (Parma dungeon, level 1)
+;   CaveChest_Herbs4                 Item  ITEM_HERBS             Herbs_chest_4_opened
+;   CaveChest_Candle_Parma           Item  ITEM_CANDLE            Candle_chest_parma_opened
+;
+; Room $02  (Parma dungeon — Treasure of Troy chamber)
+;   CaveChest_ScaleArmor             Equip ARMOR SCALE           Scale_armor_chest_opened
+;   CaveChest_Money768               Money $0300 (768 kims)      Money_chest_768_opened
+;
+; Room $03  (Parma dungeon, level 2)
+;   CaveChest_Money1536              Money $0600 (1536 kims)     Money_chest_1536_opened
+;   CaveChest_Candle2                Item  ITEM_CANDLE            Candle_chest_2_opened
+;
+; Room $04  (Watling dungeon — monster chamber)
+;   CaveChest_Herbs_Watling          Item  ITEM_HERBS             Herbs_chest_watling_opened
+;
+; Room $05  (mid-game dungeon)
+;   CaveChest_LargeShield            Equip SHIELD LARGE          Large_shield_chest_opened
+;   CaveChest_Money1792              Money $0700 (1792 kims)     Money_chest_1792_opened
+;
+; Room $06  (Truffle cave / Deepdale)
+;   CaveChest_MagicShield            Equip SHIELD MAGIC          Magic_shield_chest_opened
+;   CaveChest_MetalArmor             Equip ARMOR METAL           Metal_armor_chest_opened
+;
+; Room $07  (mid-game dungeon)
+;   CaveChest_Money2128              Money $0850 (2128 kims)     Money_chest_2128_opened
+;   CaveChest_Lantern                Item  ITEM_LANTERN           Lantern_chest_opened
+;
+; Room $08  (Stow dungeon — thief encounter)
+;   CaveChest_SkeletonArmor          Equip ARMOR SKELETON        Skeleton_armor_chest_opened
+;
+; Room $09  (late-game dungeon)
+;   CaveChest_SkeletonArmor          Equip ARMOR SKELETON        Skeleton_armor_chest_opened
+;                                    NOTE: shares opened-flag with room $08 entry
+;   CaveChest_RoyalShield            Equip SHIELD ROYAL          Royal_shield_chest_opened
+;
+; Room $0B  (Barrow dungeon — Bearwulf meeting)
+;   CaveChest_EmeraldArmor           Equip ARMOR EMERALD         Chest_emerald_armor_opened
+;
+; Room $0C  (Barrow dungeon — Bearwulf weapon room)
+;   CaveChest_Money4096 (x3)         Money $1000 (4096 kims) x3  Chest_4096_kims_opened
+;                                    NOTE: all 3 share the same opened-flag
+;   CaveChest_MirageSword            Equip SWORD MIRAGE          Chest_mirage_sword_opened
+;
+; Room $0D  (Malaga dungeon — prisoner + crown reward)
+;   (no chests — NPC events only)
+;
+; Room $0E  (late-game dungeon)
+;   CaveChest_PhantomShield          Equip SHIELD PHANTOM        Chest_phantom_shield_opened
+;
+; Room $0F  (late-game dungeon)
+;   CaveChest_Money8192              Money $2000 (8192 kims)     Money_chest_8192_opened
+;
+; Room $10  (late-game dungeon)
+;   CaveChest_Money12288             Money $3000 (12288 kims)    Money_chest_12288_opened
+;
+; Room $11  (Tadcaster dungeon)
+;   CaveChest_GraphiteSword          Equip SWORD GRAPHITE        Chest_graphite_sword_opened
+;   CaveChest_Money8192B             Money $2000 (8192 kims)     Money_chest_8192_b_opened
+;   CaveChest_Money12288             Money $3000 (12288 kims)    Money_chest_12288_opened
+;                                    NOTE: shares opened-flag with room $10 entry
+;   CaveChest_Money8192 (x2)         Money $2000 (8192 kims) x2  Money_chest_8192_opened
+;                                    NOTE: shares opened-flag with room $0F entry
+;
+; Room $12  (mid-game dungeon)
+;   CaveChest_GrizzlyShield          Equip SHIELD GRIZZLY        Chest_grizzly_shield_opened
+;
+; Room $13  (Tadcaster dungeon — bully encounter)
+;   CaveChest_BarbarianSword         Equip SWORD BARBARIAN       Chest_barbarian_sword_opened
+;
+; Room $1E  (Swaffham dungeon — Digot Plant)
+;   CaveChest_OldNickArmor           Equip ARMOR OLD_NICK (curs) Chest_old_nick_armor_opened
+;
+; Room $20  (Tsarkon final dungeon — Swaffham spy + soldiers)
+;   CaveChest_RingSoldier1           Ring  type=4, ring_id=5     Carthahena_soldier_1_defeated
+;   CaveChest_RingSoldier2           Ring  type=4, ring_id=6     Carthahena_soldier_2_defeated
+;   CaveChest_RingSoldier3           Ring  type=4, ring_id=7     Carthahena_soldier_3_defeated
+;
+; Room $22  (late-game dungeon — secret vault)
+;   CaveChest_SecretArmor            Equip ARMOR SECRET          Chest_secret_armor_opened
+;   CaveChest_MirrorOfAtlas          Item  ITEM_MIRROR_OF_ATLAS   Chest_mirror_of_atlas_opened
+;
+; Room $27  (late-game dungeon)
+;   CaveChest_CriticalSword          Equip SWORD CRITICAL        Chest_critical_sword_opened
+;
+; Room $2A  (final dungeon)
+;   CaveChest_DeathSword             Equip SWORD DEATH (cursed)  Chest_death_sword_opened
+;
+; ─────────────────────────────────────────────────────────────────────────────
+; NOTES FOR RANDOMIZER
+; ─────────────────────────────────────────────────────────────────────────────
+; - Total distinct chests: ~60 (some opened-flags are shared between identical
+;   duplicate chests; see room $09 SkeletonArmor, rooms $10/$11 Money12288,
+;   rooms $0F/$11 Money8192).
+; - OverworldChest_CrimsonArmor is conditional on Crimson_armor_reward_enabled;
+;   it appears only after a specific story trigger fires.
+; - CaveChest_RingSoldier1/2/3 use RingChest with type=REWARD_TYPE_RING (4);
+;   ring IDs 5, 6, 7 index into RingNames.
+; - The Tadcaster treasure chest (room $11, CaveEvent_TadcasterTreasureChest)
+;   is a special event, not a standard chest handler.
+; - Each chest handler function is called from its interaction table entry.
+;   The macro sets Reward_script_flag to the opened-flag address, then calls
+;   SetupItemTreasure / SetupEquipmentTreasure / InitMoneyTreasure /
+;   SetupChestReward, which check the flag and set Reward_script_available.
+; ============================================================================
+
 OverworldSectorInteractionPtrs:
 	dc.l	OverworldInteractions_Sector0
 	dc.l	OverworldInteractions_Sector1
