@@ -11,16 +11,16 @@
 ; label ChestAnimation_Return (items.asm line 3283). items.asm ends
 ; without an RTS at line 3325, falling directly into this file.
 ;
-; Code below (starting at BEQ ChestAnimation_Return_Loop8) is the
+; Code below (starting at BEQ ChestAnimation_Return_FindRing) is the
 ; reward-type dispatch within ChestAnimation_Return: it reads
 ; Reward_script_type and branches to the appropriate handler for each
 ; chest reward category (ring, money, map, or item/spell lookup).
 ;
-	BEQ.w	ChestAnimation_Return_Loop8
+	BEQ.w	ChestAnimation_Return_FindRing
 	CMPI.w	#REWARD_TYPE_MONEY, D0
-	BEQ.w	ChestAnimation_Return_Loop9
+	BEQ.w	ChestAnimation_Return_FindMoney
 	CMPI.w	#REWARD_TYPE_MAP, D0
-	BEQ.w	ChestAnimation_Return_Loop10
+	BEQ.w	ChestAnimation_Return_FindMap
 	ASL.w	#3, D0
 	MOVEA.l	(A0,D0.w), A0
 	MOVE.w	Reward_script_value.w, D0
@@ -34,7 +34,7 @@
 	MOVE.b	#$FF, (A1)
 	PRINT 	Text_build_buffer
 	BRA.w	ChestReward_Display
-ChestAnimation_Return_Loop8:
+ChestAnimation_Return_FindRing:
 	LEA	RingNames, A0
 	MOVE.w	Reward_script_value.w, D0
 	ANDI.w	#$00FF, D0
@@ -47,10 +47,10 @@ ChestAnimation_Return_Loop8:
 	MOVE.b	#$FF, (A1)
 	PRINT 	Text_build_buffer
 	BRA.w	ChestReward_Display
-ChestAnimation_Return_Loop10:
+ChestAnimation_Return_FindMap:
 	print	MapInsideStr
 	BRA.w	ChestReward_Display
-ChestAnimation_Return_Loop9:
+ChestAnimation_Return_FindMoney:
 	PRINT 	MoneyInsideStr
 ChestReward_Display:
 	JSR	ResetScriptOutputVars

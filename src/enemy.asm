@@ -256,9 +256,9 @@ CalculateAngleToObjectCentered_Loop:
 	MOVE.w	obj_world_y(A6), D1
 	ASR.w	#1, D1
 	CMP.w	obj_world_y(A6), D2
-	BLE.w	CalculateAngleToObjectCentered_Loop2
+	BLE.w	CalculateAngleToObjectCentered_OffsetY
 	ADD.w	D2, D1
-CalculateAngleToObjectCentered_Loop2:
+CalculateAngleToObjectCentered_OffsetY:
 	SUB.w	obj_world_x(A5), D0
 	SUB.w	obj_world_y(A5), D1
 	BRA.w	CalculateAngleBetweenObjects_common
@@ -279,22 +279,22 @@ CalculateAngleBetweenObjects_common:
 	MOVE.w	#8, D2
 CalculateAngleBetweenObjects_common_Loop:
 	TST.w	D1
-	BGE.w	CalculateAngleBetweenObjects_common_Loop2
+	BGE.w	CalculateAngleBetweenObjects_common_NegateY
 	NEG.w	D1
 	ORI.w	#4, D2
-CalculateAngleBetweenObjects_common_Loop2:
+CalculateAngleBetweenObjects_common_NegateY:
 	CMP.w	D1, D0
-	BGE.w	CalculateAngleBetweenObjects_common_Loop3
+	BGE.w	CalculateAngleBetweenObjects_common_SwapAxes
 	ORI.w	#2, D2
 	ASR.w	#1, D1
-	BGE.w	CalculateAngleBetweenObjects_common_Loop4
-CalculateAngleBetweenObjects_common_Loop3:
+	BGE.w	CalculateAngleBetweenObjects_common_HalvedX
+CalculateAngleBetweenObjects_common_SwapAxes:
 	ASR.w	#1, D0
-CalculateAngleBetweenObjects_common_Loop4:
+CalculateAngleBetweenObjects_common_HalvedX:
 	CMP.w	D1, D0
-	BGE.w	CalculateAngleBetweenObjects_common_Loop5
+	BGE.w	CalculateAngleBetweenObjects_common_SetOctantBit
 	ORI.w	#1, D2
-CalculateAngleBetweenObjects_common_Loop5:
+CalculateAngleBetweenObjects_common_SetOctantBit:
 	LEA	EnemyDirectionAnimTable, A1
 	ADDA.w	D2, A1
 	MOVE.b	(A1), D0
@@ -331,11 +331,11 @@ CheckEnemyCollision_Done:
 	BEQ.w	EnemyCollision_NextEnemy
 	BTST.b	#7, (A6)
 	BEQ.w	EnemyCollision_NextEnemy
-CheckEnemyCollision_Done2:
+CheckEnemyCollision_SkipInactive:
 	BTST.b	#6, (A6)
 	BNE.w	CheckEnemyCollision_Loop
 	ADDA.w	D6, A6
-	BRA.b	CheckEnemyCollision_Done2
+	BRA.b	CheckEnemyCollision_SkipInactive
 CheckEnemyCollision_Loop:
 	MOVE.w	obj_world_x(A6), D1
 	ADD.w	obj_hitbox_half_w(A6), D1
@@ -495,16 +495,16 @@ InitEnemy_StandardMeleeFast:
 
 EnemyTick_StandardMelee:
 	BSR.w	ProcessEnemyDamage
-	BGT.w	EnemyTick_StandardMelee_Loop
+	BGT.w	EnemyTick_StandardMelee_Alive
 	MOVE.l	#EnemyDeathReward_TwoSprites, obj_tick_fn(A5)
 	RTS
 
-EnemyTick_StandardMelee_Loop:
+EnemyTick_StandardMelee_Alive:
 	CLR.b	obj_hit_flag(A5)
 	TST.b	Encounter_behavior_flag.w
 	BNE.w	EnemyTick_UpdateSprite
 	TST.w	obj_knockback_timer(A5)
-	BEQ.w	EnemyTick_StandardMelee_Loop2
+	BEQ.w	EnemyTick_StandardMelee_CheckAttackTimer
 	SUBQ.w	#1, obj_knockback_timer(A5)
 	MOVEA.l	Player_entity_ptr.w, A6
 	BSR.w	CalculateAngleBetweenObjects
@@ -512,28 +512,28 @@ EnemyTick_StandardMelee_Loop:
 	ANDI.b	#7, D0
 	MOVE.b	D0, obj_direction(A5)
 	BRA.w	EnemyMovementTick_UpdateVelocity
-EnemyTick_StandardMelee_Loop2:
+EnemyTick_StandardMelee_CheckAttackTimer:
 	TST.w	obj_attack_timer(A5)
-	BEQ.w	EnemyTick_StandardMelee_Loop3
+	BEQ.w	EnemyTick_StandardMelee_ChooseDirection
 	SUBQ.w	#1, obj_attack_timer(A5)
 	JSR	GetRandomNumber
 	ANDI.b	#7, D0
 	BNE.w	EnemyMovementTick_UpdateVelocity
 	BTST.l	#4, D0
-	BEQ.w	EnemyTick_StandardMelee_Loop4
+	BEQ.w	EnemyTick_StandardMelee_TurnRight
 	ADDQ.b	#1, obj_direction(A5)	
-	BRA.w	EnemyTick_StandardMelee_Loop5	
-EnemyTick_StandardMelee_Loop4:
+	BRA.w	EnemyTick_StandardMelee_ApplyTurn	
+EnemyTick_StandardMelee_TurnRight:
 	SUBQ.b	#1, obj_direction(A5)
-EnemyTick_StandardMelee_Loop5:
+EnemyTick_StandardMelee_ApplyTurn:
 	ANDI.b	#7, obj_direction(A5)
 	BRA.w	EnemyMovementTick_UpdateVelocity
-EnemyTick_StandardMelee_Loop3:
+EnemyTick_StandardMelee_ChooseDirection:
 	JSR	GetRandomNumber
 	ANDI.w	#$00FF, D0
-	BNE.w	EnemyTick_StandardMelee_Loop6
+	BNE.w	EnemyTick_StandardMelee_RandomWander
 	MOVE.w	#$00F0, obj_attack_timer(A5)
-EnemyTick_StandardMelee_Loop6:
+EnemyTick_StandardMelee_RandomWander:
 	MOVEA.l	Player_entity_ptr.w, A6
 	BSR.w	CalculateAngleBetweenObjects
 	MOVE.b	D0, obj_direction(A5)
@@ -544,9 +544,9 @@ EnemyMovementTick_UpdateVelocity:
 	BSR.w	CheckObjectOnScreen
 	MOVE.l	obj_vel_x(A5), D0
 	OR.l	obj_vel_y(A5), D0
-	BEQ.w	EnemyMovementTick_UpdateVelocity_Loop
+	BEQ.w	EnemyMovementTick_UpdateVelocity_CheckMoving
 	ADDQ.b	#1, obj_move_counter(A5)
-EnemyMovementTick_UpdateVelocity_Loop:
+EnemyMovementTick_UpdateVelocity_CheckMoving:
 	CLR.w	D0
 	MOVE.b	obj_next_offset(A5), D0
 	LEA	(A5,D0.w), A6
@@ -558,9 +558,9 @@ EnemyMovementTick_UpdateVelocity_Loop:
 	CLR.w	D1
 	MOVE.b	obj_direction(A5), D1
 	CMPI.b	#4, D1
-	BLE.w	EnemyMovementTick_UpdateVelocity_Loop2
+	BLE.w	EnemyMovementTick_UpdateVelocity_SetFlip
 	BSET.b	#3, obj_sprite_flags(A5)
-EnemyMovementTick_UpdateVelocity_Loop2:
+EnemyMovementTick_UpdateVelocity_SetFlip:
 	ASL.w	#3, D1
 	ADD.w	D0, D1
 	MOVEA.l	Enemy_anim_table_main.w, A0
@@ -568,10 +568,10 @@ EnemyMovementTick_UpdateVelocity_Loop2:
 	MOVE.w	(A0,D1.w), obj_tile_index(A5)
 	MOVE.w	(A1,D1.w), obj_tile_index(A6)
 	TST.b	Enemy_pair_offset_flag.w
-	BNE.w	EnemyMovementTick_UpdateVelocity_Loop3
+	BNE.w	EnemyMovementTick_UpdateVelocity_OffsetChild
 	BSR.w	CopyPositionToLinkedSprite
 	BRA.w	EnemyTick_UpdateSprite
-EnemyMovementTick_UpdateVelocity_Loop3:
+EnemyMovementTick_UpdateVelocity_OffsetChild:
 	BSR.w	CopyEnemyPositionToChildObject
 EnemyTick_UpdateSprite:
 	JSR	AddSpriteToDisplayList
@@ -614,53 +614,53 @@ InitEnemy_StalkPauseAlt:
 
 EnemyTick_StalkPause:
 	BSR.w	ProcessEnemyDamage
-	BGT.w	EnemyTick_StalkPause_Loop
+	BGT.w	EnemyTick_StalkPause_Alive
 	MOVE.l	#EnemyDeathReward_TwoSprites, obj_tick_fn(A5)
 	RTS
 
-EnemyTick_StalkPause_Loop:
+EnemyTick_StalkPause_Alive:
 	CLR.b	obj_hit_flag(A5)
 	TST.b	Encounter_behavior_flag.w
-	BNE.w	EnemyTick_StalkPause_Loop2
+	BNE.w	EnemyTick_StalkPause_AddToDisplay
 	TST.w	obj_knockback_timer(A5)
-	BEQ.w	EnemyTick_StalkPause_Loop3
+	BEQ.w	EnemyTick_StalkPause_CheckPauseTimer
 	SUBQ.w	#1, obj_knockback_timer(A5)
 	MOVEA.l	Player_entity_ptr.w, A6
 	BSR.w	CalculateAngleBetweenObjects
 	ADDQ.b	#4, D0
 	ANDI.b	#7, D0
 	MOVE.b	D0, obj_direction(A5)
-	BRA.w	EnemyTick_StalkPause_Loop4
-EnemyTick_StalkPause_Loop3:
+	BRA.w	EnemyTick_StalkPause_MoveToPlayer
+EnemyTick_StalkPause_CheckPauseTimer:
 	TST.w	obj_attack_timer(A5)
-	BEQ.w	EnemyTick_StalkPause_Loop5
+	BEQ.w	EnemyTick_StalkPause_CheckStalkTimer
 	SUBQ.w	#1, obj_attack_timer(A5)
 	MOVEA.l	Player_entity_ptr.w, A6
 	BSR.w	CalculateAngleBetweenObjects
 	MOVE.b	D0, obj_direction(A5)
 	CLR.l	obj_vel_x(A5)
 	CLR.l	obj_vel_y(A5)
-	BRA.w	EnemyTick_StalkPause_Loop6
-EnemyTick_StalkPause_Loop5:
+	BRA.w	EnemyTick_StalkPause_HandleDamage
+EnemyTick_StalkPause_CheckStalkTimer:
 	JSR	GetRandomNumber
 	ANDI.w	#$007F, D0
-	BNE.w	EnemyTick_StalkPause_Loop7
+	BNE.w	EnemyTick_StalkPause_RollPauseTimer
 	MOVE.w	#ENEMY_STALK_RECHECK_DELAY, obj_attack_timer(A5)
-EnemyTick_StalkPause_Loop7:
+EnemyTick_StalkPause_RollPauseTimer:
 	MOVEA.l	Player_entity_ptr.w, A6
 	BSR.w	CalculateAngleBetweenObjects
 	MOVE.b	D0, obj_direction(A5)
-EnemyTick_StalkPause_Loop4:
+EnemyTick_StalkPause_MoveToPlayer:
 	BSR.w	CalculateVelocityFromAngle
 	BSR.w	CheckEnemyCollision
-EnemyTick_StalkPause_Loop6:
+EnemyTick_StalkPause_HandleDamage:
 	BSR.w	HandlePlayerTakeDamage
 	BSR.w	CheckObjectOnScreen
 	MOVE.l	obj_vel_x(A5), D0
 	OR.l	obj_vel_y(A5), D0
-	BEQ.w	EnemyTick_StalkPause_Loop8
+	BEQ.w	EnemyTick_StalkPause_CheckMoving
 	ADDQ.b	#1, obj_move_counter(A5)
-EnemyTick_StalkPause_Loop8:
+EnemyTick_StalkPause_CheckMoving:
 	CLR.w	D0
 	MOVE.b	obj_next_offset(A5), D0
 	LEA	(A5,D0.w), A6
@@ -672,9 +672,9 @@ EnemyTick_StalkPause_Loop8:
 	CLR.w	D1
 	MOVE.b	obj_direction(A5), D1
 	CMPI.b	#4, D1
-	BLE.w	EnemyTick_StalkPause_Loop9
+	BLE.w	EnemyTick_StalkPause_SetFlip
 	BSET.b	#3, obj_sprite_flags(A5)
-EnemyTick_StalkPause_Loop9:
+EnemyTick_StalkPause_SetFlip:
 	ASL.w	#3, D1
 	ADD.w	D0, D1
 	MOVEA.l	Enemy_anim_table_main.w, A0
@@ -682,7 +682,7 @@ EnemyTick_StalkPause_Loop9:
 	MOVE.w	(A0,D1.w), obj_tile_index(A5)
 	MOVE.w	(A1,D1.w), obj_tile_index(A6)
 	BSR.w	CopyPositionToLinkedSprite
-EnemyTick_StalkPause_Loop2:
+EnemyTick_StalkPause_AddToDisplay:
 	JSR	AddSpriteToDisplayList
 	RTS
 
@@ -707,61 +707,61 @@ InitEnemy_ProximityChase:
 
 EnemyTick_ProximityChase:
 	BSR.w	ProcessEnemyDamage
-	BGT.w	EnemyTick_ProximityChase_Loop
+	BGT.w	EnemyTick_ProximityChase_Alive
 	MOVE.l	#EnemyDeathReward_TwoSprites, obj_tick_fn(A5)
 	RTS
 
-EnemyTick_ProximityChase_Loop:
+EnemyTick_ProximityChase_Alive:
 	CLR.b	obj_hit_flag(A5)
 	TST.b	Encounter_behavior_flag.w
-	BNE.w	EnemyTick_ProximityChase_Loop2
+	BNE.w	EnemyTick_ProximityChase_AddToDisplay
 	TST.w	obj_knockback_timer(A5)
-	BEQ.w	EnemyTick_ProximityChase_Loop3
+	BEQ.w	EnemyTick_ProximityChase_CheckProximity
 	SUBQ.w	#1, obj_knockback_timer(A5)
 	MOVEA.l	Player_entity_ptr.w, A6
 	BSR.w	CalculateAngleBetweenObjects
 	ADDQ.b	#4, D0
 	ANDI.b	#7, D0
 	MOVE.b	D0, obj_direction(A5)
-	BRA.w	EnemyTick_ProximityChase_Loop4
-EnemyTick_ProximityChase_Loop3:
+	BRA.w	EnemyTick_ProximityChase_Chase
+EnemyTick_ProximityChase_CheckProximity:
 	MOVEA.l	Player_entity_ptr.w, A6
 	MOVE.w	obj_world_x(A6), D0
 	SUB.w	obj_world_x(A5), D0
-	BGE.w	EnemyTick_ProximityChase_Loop5
+	BGE.w	EnemyTick_ProximityChase_AbsX
 	NEG.w	D0
-EnemyTick_ProximityChase_Loop5:
+EnemyTick_ProximityChase_AbsX:
 	CMPI.w	#ENEMY_CHASE_PROXIMITY, D0
-	BGT.w	EnemyTick_ProximityChase_Loop6
+	BGT.w	EnemyTick_ProximityChase_StandStill
 	MOVE.w	obj_world_y(A6), D0
 	SUB.w	obj_world_y(A5), D0
-	BGE.w	EnemyTick_ProximityChase_Loop7
+	BGE.w	EnemyTick_ProximityChase_AbsY
 	NEG.w	D0
-EnemyTick_ProximityChase_Loop7:
+EnemyTick_ProximityChase_AbsY:
 	CMPI.w	#ENEMY_CHASE_PROXIMITY, D0
-	BLE.w	EnemyTick_ProximityChase_Loop8
-EnemyTick_ProximityChase_Loop6:
+	BLE.w	EnemyTick_ProximityChase_ChasePlayer
+EnemyTick_ProximityChase_StandStill:
 	MOVEA.l	Player_entity_ptr.w, A6
 	BSR.w	CalculateAngleBetweenObjects
 	MOVE.b	D0, obj_direction(A5)
 	CLR.l	obj_vel_x(A5)
 	CLR.l	obj_vel_y(A5)
-	BRA.w	EnemyTick_ProximityChase_Loop9
-EnemyTick_ProximityChase_Loop8:
+	BRA.w	EnemyTick_ProximityChase_HandleDamage
+EnemyTick_ProximityChase_ChasePlayer:
 	MOVEA.l	Player_entity_ptr.w, A6
 	BSR.w	CalculateAngleBetweenObjects
 	MOVE.b	D0, obj_direction(A5)
-EnemyTick_ProximityChase_Loop4:
+EnemyTick_ProximityChase_Chase:
 	BSR.w	CalculateVelocityFromAngle
 	BSR.w	CheckEnemyCollision
-EnemyTick_ProximityChase_Loop9:
+EnemyTick_ProximityChase_HandleDamage:
 	BSR.w	HandlePlayerTakeDamage
 	BSR.w	CheckObjectOnScreen
 	MOVE.l	obj_vel_x(A5), D0
 	OR.l	obj_vel_y(A5), D0
-	BEQ.w	EnemyTick_ProximityChase_Loop10
+	BEQ.w	EnemyTick_ProximityChase_CheckMoving
 	ADDQ.b	#1, obj_move_counter(A5)
-EnemyTick_ProximityChase_Loop10:
+EnemyTick_ProximityChase_CheckMoving:
 	CLR.w	D0
 	MOVE.b	obj_next_offset(A5), D0
 	LEA	(A5,D0.w), A6
@@ -772,9 +772,9 @@ EnemyTick_ProximityChase_Loop10:
 	CLR.w	D1
 	MOVE.b	obj_direction(A5), D1
 	CMPI.b	#4, D1
-	BLE.w	EnemyTick_ProximityChase_Loop11
+	BLE.w	EnemyTick_ProximityChase_SetFlip
 	BSET.b	#3, obj_sprite_flags(A5)
-EnemyTick_ProximityChase_Loop11:
+EnemyTick_ProximityChase_SetFlip:
 	ASL.w	#3, D1
 	ADD.w	D0, D1
 	LEA	EnemyTick_ProximityChase_Loop11_Data, A0
@@ -782,7 +782,7 @@ EnemyTick_ProximityChase_Loop11:
 	MOVE.w	(A0,D1.w), obj_tile_index(A5)
 	MOVE.w	(A1,D1.w), obj_tile_index(A6)
 	BSR.w	CopyPositionToLinkedSprite
-EnemyTick_ProximityChase_Loop2:
+EnemyTick_ProximityChase_AddToDisplay:
 	JSR	AddSpriteToDisplayList
 	RTS
 
@@ -807,46 +807,46 @@ InitEnemy_FleeChase:
 
 EnemyTick_FleeChase:
 	BSR.w	ProcessEnemyDamage
-	BGT.w	EnemyTick_FleeChase_Loop
+	BGT.w	EnemyTick_FleeChase_Alive
 	MOVE.l	#EnemyDeathReward_TwoSprites, obj_tick_fn(A5)
 	RTS
 
-EnemyTick_FleeChase_Loop:
+EnemyTick_FleeChase_Alive:
 	CLR.b	obj_hit_flag(A5)
 	TST.b	Encounter_behavior_flag.w
-	BNE.w	EnemyTick_FleeChase_Loop2
+	BNE.w	EnemyTick_FleeChase_AddToDisplay
 	TST.w	obj_knockback_timer(A5)
-	BEQ.w	EnemyTick_FleeChase_Loop3
+	BEQ.w	EnemyTick_FleeChase_CheckFlee
 	SUBQ.w	#1, obj_knockback_timer(A5)
 	MOVEA.l	Player_entity_ptr.w, A6
 	BSR.w	CalculateAngleBetweenObjects
 	ADDQ.b	#4, D0
 	ANDI.b	#7, D0
 	MOVE.b	D0, obj_direction(A5)
-	BRA.w	EnemyTick_FleeChase_Loop4
-EnemyTick_FleeChase_Loop3:
+	BRA.w	EnemyTick_FleeChase_Chase
+EnemyTick_FleeChase_CheckFlee:
 	JSR	GetRandomNumber
 	MOVE.w	D0, D1
 	ANDI.w	#$00FF, D0
-	BNE.w	EnemyTick_FleeChase_Loop5
+	BNE.w	EnemyTick_FleeChase_SetFleeDir
 	ASR.w	#8, D1
 	ANDI.w	#$00FF, D1
 	ADDI.w	#$0078, D1
 	MOVE.w	D1, obj_knockback_timer(A5)
-EnemyTick_FleeChase_Loop5:
+EnemyTick_FleeChase_SetFleeDir:
 	MOVEA.l	Player_entity_ptr.w, A6
 	BSR.w	CalculateAngleBetweenObjects
 	MOVE.b	D0, obj_direction(A5)
-EnemyTick_FleeChase_Loop4:
+EnemyTick_FleeChase_Chase:
 	BSR.w	CalculateVelocityFromAngle
 	BSR.w	CheckEnemyCollision
 	BSR.w	HandlePlayerTakeDamage
 	BSR.w	CheckObjectOnScreen
 	MOVE.l	obj_vel_x(A5), D0
 	OR.l	obj_vel_y(A5), D0
-	BEQ.w	EnemyTick_FleeChase_Loop6
+	BEQ.w	EnemyTick_FleeChase_CheckMoving
 	ADDQ.b	#1, obj_move_counter(A5)
-EnemyTick_FleeChase_Loop6:
+EnemyTick_FleeChase_CheckMoving:
 	CLR.w	D0
 	MOVE.b	obj_next_offset(A5), D0
 	LEA	(A5,D0.w), A6
@@ -857,9 +857,9 @@ EnemyTick_FleeChase_Loop6:
 	CLR.w	D1
 	MOVE.b	obj_direction(A5), D1
 	CMPI.b	#4, D1
-	BLE.w	EnemyTick_FleeChase_Loop7
+	BLE.w	EnemyTick_FleeChase_SetFlip
 	BSET.b	#3, obj_sprite_flags(A5)
-EnemyTick_FleeChase_Loop7:
+EnemyTick_FleeChase_SetFlip:
 	ASL.w	#3, D1
 	ADD.w	D0, D1
 	LEA	EnemyAnimFrames_MeleeA_Main, A0
@@ -867,7 +867,7 @@ EnemyTick_FleeChase_Loop7:
 	MOVE.w	(A0,D1.w), obj_tile_index(A5)
 	MOVE.w	(A1,D1.w), obj_tile_index(A6)
 	BSR.w	CopyPositionToLinkedSprite
-EnemyTick_FleeChase_Loop2:
+EnemyTick_FleeChase_AddToDisplay:
 	JSR	AddSpriteToDisplayList
 	RTS
 
@@ -892,46 +892,46 @@ InitEnemy_Bouncing:
 
 EnemyTick_Bouncing:
 	BSR.w	ProcessEnemyDamage
-	BGT.w	EnemyTick_Bouncing_Loop
+	BGT.w	EnemyTick_Bouncing_Alive
 	MOVE.l	#EnemyDeathReward_TwoSprites, obj_tick_fn(A5)
 	RTS
 
-EnemyTick_Bouncing_Loop:
+EnemyTick_Bouncing_Alive:
 	CLR.b	obj_hit_flag(A5)
 	TST.b	Encounter_behavior_flag.w
-	BNE.w	EnemyTick_Bouncing_Loop2
+	BNE.w	EnemyTick_Bouncing_AddToDisplay
 	TST.w	obj_knockback_timer(A5)
-	BEQ.w	EnemyTick_Bouncing_Loop3
+	BEQ.w	EnemyTick_Bouncing_CheckPauseTimer
 	SUBQ.w	#1, obj_knockback_timer(A5)	
 	MOVEA.l	Player_entity_ptr.w, A6	
 	BSR.w	CalculateAngleBetweenObjects	
 	ADDQ.b	#4, D0	
 	ANDI.b	#7, D0	
 	MOVE.b	D0, obj_direction(A5)	
-	BRA.w	EnemyTick_Bouncing_Loop4	
-EnemyTick_Bouncing_Loop3:
+	BRA.w	EnemyTick_Bouncing_Chase	
+EnemyTick_Bouncing_CheckPauseTimer:
 	TST.w	obj_attack_timer(A5)
-	BEQ.w	EnemyTick_Bouncing_Loop5
+	BEQ.w	EnemyTick_Bouncing_CheckStalkTimer
 	SUBQ.w	#1, obj_attack_timer(A5)
 	MOVEA.l	Player_entity_ptr.w, A6
 	BSR.w	CalculateAngleBetweenObjects
 	MOVE.b	D0, obj_direction(A5)
 	CLR.l	obj_vel_x(A5)
 	CLR.l	obj_vel_y(A5)
-	BRA.w	EnemyTick_Bouncing_Loop6
-EnemyTick_Bouncing_Loop5:
+	BRA.w	EnemyTick_Bouncing_UpdateBounceAnim
+EnemyTick_Bouncing_CheckStalkTimer:
 	JSR	GetRandomNumber
 	ANDI.w	#$007F, D0
-	BNE.w	EnemyTick_Bouncing_Loop7
+	BNE.w	EnemyTick_Bouncing_RollPauseTimer
 	MOVE.w	#ENEMY_STALK_RECHECK_DELAY, obj_attack_timer(A5)
-EnemyTick_Bouncing_Loop7:
+EnemyTick_Bouncing_RollPauseTimer:
 	MOVEA.l	Player_entity_ptr.w, A6
 	BSR.w	CalculateAngleBetweenObjects
 	MOVE.b	D0, obj_direction(A5)
-EnemyTick_Bouncing_Loop4:
+EnemyTick_Bouncing_Chase:
 	BSR.w	CalculateVelocityFromAngle
 	BSR.w	CheckEnemyCollision
-EnemyTick_Bouncing_Loop6:
+EnemyTick_Bouncing_UpdateBounceAnim:
 	BSR.w	HandlePlayerTakeDamage
 	BSR.w	CheckObjectOnScreen
 	CLR.w	D0
@@ -951,7 +951,7 @@ EnemyTick_Bouncing_Loop6:
 	SUBI.w	#$0018, D0
 	MOVE.w	D0, obj_screen_y(A6)
 	MOVE.w	obj_sort_key(A5), obj_sort_key(A6)
-EnemyTick_Bouncing_Loop2:
+EnemyTick_Bouncing_AddToDisplay:
 	JSR	AddSpriteToDisplayList
 	RTS
 
@@ -973,14 +973,14 @@ InitEnemy_ProjectileFire:
 
 EnemyTick_ProjectileFire:
 	BSR.w	ProcessEnemyDamage
-	BGT.w	EnemyTick_ProjectileFire_Loop
+	BGT.w	EnemyTick_ProjectileFire_Alive
 	MOVE.l	#EnemyDeathReward_TwoSprites, obj_tick_fn(A5)
 	RTS
 
-EnemyTick_ProjectileFire_Loop:
+EnemyTick_ProjectileFire_Alive:
 	CLR.b	obj_hit_flag(A5)
 	TST.w	obj_knockback_timer(A5)
-	BEQ.w	EnemyTick_ProjectileFire_Loop2
+	BEQ.w	EnemyTick_ProjectileFire_CheckAttackTimer
 	SUBQ.w	#1, obj_knockback_timer(A5)
 	MOVEA.l	Player_entity_ptr.w, A6
 	BSR.w	CalculateAngleBetweenObjects
@@ -988,43 +988,43 @@ EnemyTick_ProjectileFire_Loop:
 	ANDI.b	#7, D0
 	MOVE.b	D0, obj_direction(A5)
 	BRA.w	EnemyTick_ProjectileFire_Move
-EnemyTick_ProjectileFire_Loop2:
+EnemyTick_ProjectileFire_CheckAttackTimer:
 	TST.w	obj_attack_timer(A5)
-	BEQ.w	EnemyTick_ProjectileFire_Loop3
+	BEQ.w	EnemyTick_ProjectileFire_ChooseDirection
 	SUBQ.w	#1, obj_attack_timer(A5)
 	BRA.w	EnemyTick_ProjectileFire_Move
-EnemyTick_ProjectileFire_Loop3:
+EnemyTick_ProjectileFire_ChooseDirection:
 	JSR	GetRandomNumber
 	ANDI.b	#7, D0
-	BNE.w	EnemyTick_ProjectileFire_Loop4
+	BNE.w	EnemyTick_ProjectileFire_TrackPlayer
 	BTST.l	#4, D0
-	BEQ.w	EnemyTick_ProjectileFire_Loop5
+	BEQ.w	EnemyTick_ProjectileFire_TurnRight
 	ADDQ.b	#1, obj_direction(A5)	
-	BRA.w	EnemyTick_ProjectileFire_Loop6	
-EnemyTick_ProjectileFire_Loop5:
+	BRA.w	EnemyTick_ProjectileFire_ApplyTurn	
+EnemyTick_ProjectileFire_TurnRight:
 	SUBQ.b	#1, obj_direction(A5)
-EnemyTick_ProjectileFire_Loop6:
+EnemyTick_ProjectileFire_ApplyTurn:
 	ANDI.b	#7, obj_direction(A5)
 	MOVE.w	#$0078, obj_attack_timer(A5)
 	BRA.w	EnemyTick_ProjectileFire_Move
-EnemyTick_ProjectileFire_Loop4:
+EnemyTick_ProjectileFire_TrackPlayer:
 	MOVEA.l	Player_entity_ptr.w, A6
 	BSR.w	CalculateAngleBetweenObjects
 	MOVE.b	D0, obj_direction(A5)
 	CLR.l	obj_vel_x(A5)
 	CLR.l	obj_vel_y(A5)
-	BRA.w	EnemyTick_ProjectileFire_Move_Loop
+	BRA.w	EnemyTick_ProjectileFire_Move_HandleDamage
 EnemyTick_ProjectileFire_Move:
 	BSR.w	CalculateVelocityFromAngle
 	BSR.w	CheckEnemyCollision
-EnemyTick_ProjectileFire_Move_Loop:
+EnemyTick_ProjectileFire_Move_HandleDamage:
 	BSR.w	HandlePlayerTakeDamage
 	BSR.w	CheckObjectOnScreen
 	MOVE.l	obj_vel_x(A5), D0
 	OR.l	obj_vel_y(A5), D0
-	BEQ.w	EnemyTick_ProjectileFire_Move_Loop2
+	BEQ.w	EnemyTick_ProjectileFire_Move_CheckMoving
 	ADDQ.b	#1, obj_move_counter(A5)
-EnemyTick_ProjectileFire_Move_Loop2:
+EnemyTick_ProjectileFire_Move_CheckMoving:
 	CLR.w	D0
 	MOVE.b	obj_next_offset(A5), D0
 	LEA	(A5,D0.w), A6
@@ -1192,9 +1192,9 @@ EnemyHoming_UpdateSprite:
 	CLR.w	D1
 	MOVE.b	obj_direction(A5), D1
 	CMPI.b	#4, D1
-	BLE.w	EnemyHoming_UpdateSprite_Loop
+	BLE.w	EnemyHoming_UpdateSprite_SetFlip
 	BSET.b	#3, obj_sprite_flags(A5)
-EnemyHoming_UpdateSprite_Loop:
+EnemyHoming_UpdateSprite_SetFlip:
 	ASL.w	#3, D1
 	ADD.w	D0, D1
 	LEA	EnemyAnimFrames_MeleeA_Main, A0
@@ -1216,33 +1216,33 @@ EnemyHoming_UpdateSprite_Loop:
 ; ticks using a change-in-timer XOR trick.
 ProjectileTick_HomingAlt:
 	TST.w	obj_attack_timer(A5)
-	BNE.w	ProjectileTick_HomingAlt_Loop
+	BNE.w	ProjectileTick_HomingAlt_Active
 	BCLR.b	#7, (A5)
 	CLR.b	obj_npc_busy_flag(A5)
 	CLR.l	obj_vel_x(A5)
 	CLR.l	obj_vel_y(A5)
-	BRA.w	ProjectileTick_HomingAlt_Loop2
-ProjectileTick_HomingAlt_Loop:
+	BRA.w	ProjectileTick_HomingAlt_HandleDamage
+ProjectileTick_HomingAlt_Active:
 	SUBQ.w	#1, obj_attack_timer(A5)
 	MOVE.w	obj_attack_timer(A5), D0
 	MOVE.w	D0, D1
 	SUBQ.w	#1, D1
 	EOR.w	D0, D1
 	BTST.l	#4, D1
-	BEQ.w	ProjectileTick_HomingAlt_Loop3
+	BEQ.w	ProjectileTick_HomingAlt_Retarget
 	MOVEA.l	Player_entity_ptr.w, A6
 	BSR.w	CalculateAngleBetweenObjects
 	MOVE.b	D0, obj_direction(A5)
-ProjectileTick_HomingAlt_Loop3:
+ProjectileTick_HomingAlt_Retarget:
 	BSR.w	CalculateVelocityFromAngle
 	BSR.w	UpdateObjectScreenPosition
-ProjectileTick_HomingAlt_Loop2:
+ProjectileTick_HomingAlt_HandleDamage:
 	BSR.w	HandlePlayerTakeDamage
 	MOVE.l	obj_vel_x(A5), D0
 	OR.l	obj_vel_y(A5), D0
-	BEQ.w	ProjectileTick_HomingAlt_Loop4
+	BEQ.w	ProjectileTick_HomingAlt_CheckMoving
 	ADDQ.b	#1, obj_move_counter(A5)
-ProjectileTick_HomingAlt_Loop4:
+ProjectileTick_HomingAlt_CheckMoving:
 	MOVE.b	obj_move_counter(A5), D0
 	ANDI.w	#$0018, D0
 	ASR.w	#2, D0
@@ -1285,16 +1285,16 @@ InitEnemy_IntermittentChase_Homing:
 ; Direction chosen randomly or by angle based on Enemy_direction_flag.
 EnemyTick_IntermittentChase:
 	BSR.w	ProcessEnemyDamage
-	BGT.w	EnemyTick_IntermittentChase_Loop
+	BGT.w	EnemyTick_IntermittentChase_Alive
 	MOVE.l	#EnemyDeathReward_TwoSprites, obj_tick_fn(A5)
 	RTS
 
-EnemyTick_IntermittentChase_Loop:
+EnemyTick_IntermittentChase_Alive:
 	CLR.b	obj_hit_flag(A5)
 	TST.b	Encounter_behavior_flag.w
-	BNE.w	EnemyCharge_UpdateSprite_Loop
+	BNE.w	EnemyCharge_UpdateSprite_AddToDisplay
 	TST.w	obj_knockback_timer(A5)
-	BEQ.w	EnemyTick_IntermittentChase_Loop2
+	BEQ.w	EnemyTick_IntermittentChase_CheckMoveTimer
 	SUBQ.w	#1, obj_knockback_timer(A5)
 	MOVEA.l	Player_entity_ptr.w, A6
 	BSR.w	CalculateAngleBetweenObjects
@@ -1302,28 +1302,28 @@ EnemyTick_IntermittentChase_Loop:
 	ANDI.b	#7, D0
 	MOVE.b	D0, obj_direction(A5)
 	BRA.w	EnemyTick_IntermittentChase_Move
-EnemyTick_IntermittentChase_Loop2:
+EnemyTick_IntermittentChase_CheckMoveTimer:
 	TST.w	obj_attack_timer(A5)
-	BEQ.w	EnemyTick_IntermittentChase_Loop3
+	BEQ.w	EnemyTick_IntermittentChase_ChooseMove
 	SUBQ.w	#1, obj_attack_timer(A5)
 	BRA.w	EnemyTick_IntermittentChase_Move
-EnemyTick_IntermittentChase_Loop3:
+EnemyTick_IntermittentChase_ChooseMove:
 	JSR	GetRandomNumber
 	ANDI.w	#$003F, D0
-	BNE.w	EnemyTick_IntermittentChase_Loop4
+	BNE.w	EnemyTick_IntermittentChase_TrackPlayer
 	TST.b	Enemy_direction_flag.w
-	BNE.w	EnemyTick_IntermittentChase_Loop5
+	BNE.w	EnemyTick_IntermittentChase_HomingDir
 	JSR	GetRandomNumber
 	ANDI.b	#7, D0
-	BRA.w	EnemyTick_IntermittentChase_Loop6
-EnemyTick_IntermittentChase_Loop5:
+	BRA.w	EnemyTick_IntermittentChase_ApplyDirection
+EnemyTick_IntermittentChase_HomingDir:
 	MOVEA.l	Player_entity_ptr.w, A6
 	BSR.w	CalculateAngleBetweenObjects
-EnemyTick_IntermittentChase_Loop6:
+EnemyTick_IntermittentChase_ApplyDirection:
 	MOVE.b	D0, obj_direction(A5)
 	MOVE.w	#$0046, obj_attack_timer(A5)
 	BRA.w	EnemyTick_IntermittentChase_Move
-EnemyTick_IntermittentChase_Loop4:
+EnemyTick_IntermittentChase_TrackPlayer:
 	MOVEA.l	Player_entity_ptr.w, A6
 	BSR.w	CalculateAngleBetweenObjects
 	MOVE.b	D0, obj_direction(A5)
@@ -1354,9 +1354,9 @@ EnemyCharge_UpdateSprite:
 	CLR.w	D1
 	MOVE.b	obj_direction(A5), D1
 	CMPI.b	#4, D1
-	BLE.w	EnemyCharge_UpdateSprite_Loop2
+	BLE.w	EnemyCharge_UpdateSprite_SetFlip
 	BSET.b	#3, obj_sprite_flags(A5)
-EnemyCharge_UpdateSprite_Loop2:
+EnemyCharge_UpdateSprite_SetFlip:
 	ASL.w	#3, D1
 	ADD.w	D0, D1
 	LEA	EnemyAnimFrames_MeleeA_Main, A0
@@ -1364,7 +1364,7 @@ EnemyCharge_UpdateSprite_Loop2:
 	MOVE.w	(A0,D1.w), obj_tile_index(A5)
 	MOVE.w	(A1,D1.w), obj_tile_index(A6)
 	BSR.w	CopyPositionToLinkedSprite
-EnemyCharge_UpdateSprite_Loop:
+EnemyCharge_UpdateSprite_AddToDisplay:
 	JSR	AddSpriteToDisplayList
 	RTS
 	
@@ -1386,16 +1386,16 @@ InitEnemy_RandomShooter:
 	
 EnemyTick_RandomShooter:
 	BSR.w	ProcessEnemyDamage
-	BGT.w	EnemyTick_RandomShooter_Loop
+	BGT.w	EnemyTick_RandomShooter_Alive
 	MOVE.l	#EnemyDeathReward_TwoSprites, obj_tick_fn(A5)
 	RTS
 	
-EnemyTick_RandomShooter_Loop:
+EnemyTick_RandomShooter_Alive:
 	CLR.b	obj_hit_flag(A5)
 	TST.b	Encounter_behavior_flag.w
-	BNE.w	EnemyTick_RandomShooter_Move_Loop
+	BNE.w	EnemyTick_RandomShooter_Move_AddToDisplay
 	TST.w	obj_knockback_timer(A5)
-	BEQ.w	EnemyTick_RandomShooter_Loop2
+	BEQ.w	EnemyTick_RandomShooter_CheckAttackTimer
 	SUBQ.w	#1, obj_knockback_timer(A5)
 	MOVEA.l	Player_entity_ptr.w, A6
 	BSR.w	CalculateAngleBetweenObjects
@@ -1403,31 +1403,31 @@ EnemyTick_RandomShooter_Loop:
 	ANDI.b	#7, D0
 	MOVE.b	D0, obj_direction(A5)
 	BRA.w	EnemyTick_RandomShooter_Move
-EnemyTick_RandomShooter_Loop2:
+EnemyTick_RandomShooter_CheckAttackTimer:
 	TST.w	obj_attack_timer(A5)
-	BEQ.w	EnemyTick_RandomShooter_Loop3
+	BEQ.w	EnemyTick_RandomShooter_RollShoot
 	SUBQ.w	#1, obj_attack_timer(A5)
 	BRA.w	EnemyTick_RandomShooter_Move
-EnemyTick_RandomShooter_Loop3:
+EnemyTick_RandomShooter_RollShoot:
 	JSR	GetRandomNumber
 	ANDI.w	#$001F, D0
-	BNE.w	EnemyTick_RandomShooter_Loop4
+	BNE.w	EnemyTick_RandomShooter_TrackPlayer
 	JSR	GetRandomNumber
 	ANDI.b	#7, D0
 	MOVE.b	D0, obj_direction(A5)
 	MOVE.w	#$0050, obj_attack_timer(A5)
 	BRA.w	EnemyTick_RandomShooter_Move
-EnemyTick_RandomShooter_Loop4:
+EnemyTick_RandomShooter_TrackPlayer:
 	MOVEA.l	Player_entity_ptr.w, A6
 	BSR.w	CalculateAngleBetweenObjects
 	MOVE.b	D0, obj_direction(A5)
 	CLR.l	obj_vel_x(A5)
 	CLR.l	obj_vel_y(A5)
-	BRA.w	EnemyTick_RandomShooter_Move_Loop2
+	BRA.w	EnemyTick_RandomShooter_Move_HandleDamage
 EnemyTick_RandomShooter_Move:
 	BSR.w	CalculateVelocityFromAngle
 	BSR.w	CheckEnemyCollision
-EnemyTick_RandomShooter_Move_Loop2:
+EnemyTick_RandomShooter_Move_HandleDamage:
 	BSR.w	HandlePlayerTakeDamage
 	BSR.w	CheckObjectOnScreen
 	ADDQ.b	#1, obj_move_counter(A5)
@@ -1435,10 +1435,10 @@ EnemyTick_RandomShooter_Move_Loop2:
 	ANDI.w	#$0038, D0
 	ASR.w	#2, D0
 	CMPI.w	#8, D0
-	BLE.w	EnemyTick_RandomShooter_Move_Loop3
+	BLE.w	EnemyTick_RandomShooter_Move_UpdateAnim
 	CLR.b	obj_move_counter(A5)
 	CLR.w	D0
-EnemyTick_RandomShooter_Move_Loop3:
+EnemyTick_RandomShooter_Move_UpdateAnim:
 	LEA	EnemyAnimFrames_Fireball_B, A0
 	LEA	EnemyAnimFrames_Fireball_C, A1
 	CLR.w	D1
@@ -1447,7 +1447,7 @@ EnemyTick_RandomShooter_Move_Loop3:
 	MOVE.w	(A0,D0.w), obj_tile_index(A5)
 	MOVE.w	(A1,D0.w), obj_tile_index(A6)
 	BSR.w	CopyPositionToLinkedSprite
-EnemyTick_RandomShooter_Move_Loop:
+EnemyTick_RandomShooter_Move_AddToDisplay:
 	JSR	AddSpriteToDisplayList
 	RTS
 	
@@ -1470,7 +1470,7 @@ InitEnemy_Teleporter:
 	
 EnemyTick_Teleporter:	
 	TST.w	obj_knockback_timer(A5)
-	BNE.w	EnemyTick_Teleporter_Loop
+	BNE.w	EnemyTick_Teleporter_Countdown
 	CLR.w	D0
 	JSR	GetRandomNumber
 	ORI.w	#$0060, D0
@@ -1482,13 +1482,13 @@ EnemyTick_Teleporter:
 	BSR.w	SetRandomEnemyPosition
 	CLR.l	obj_vel_x(A5)
 	CLR.l	obj_vel_y(A5)
-EnemyTick_Teleporter_Loop:
+EnemyTick_Teleporter_Countdown:
 	BSR.w	CheckAndUpdateBattleTimer
-	BGT.w	EnemyTick_Teleporter_Loop2
+	BGT.w	EnemyTick_Teleporter_Alive
 	MOVE.l	#EnemyDeathReward_TwoSprites, obj_tick_fn(A5)
 	RTS
 	
-EnemyTick_Teleporter_Loop2:
+EnemyTick_Teleporter_Alive:
 	CLR.b	obj_hit_flag(A5)
 	SUBQ.w	#1, obj_knockback_timer(A5)
 	BSR.w	CheckEnemyCollision
@@ -1499,10 +1499,10 @@ EnemyTick_Teleporter_Loop2:
 	ANDI.w	#$0038, D0
 	ASR.w	#2, D0
 	CMPI.w	#8, D0
-	BLE.w	EnemyTick_Teleporter_Loop3
+	BLE.w	EnemyTick_Teleporter_UpdateAnim
 	CLR.b	obj_move_counter(A5)
 	CLR.w	D0
-EnemyTick_Teleporter_Loop3:
+EnemyTick_Teleporter_UpdateAnim:
 	LEA	EnemyAnimFrames_Fireball_B, A0
 	LEA	EnemyAnimFrames_Fireball_C, A1
 	CLR.w	D1
@@ -1512,8 +1512,8 @@ EnemyTick_Teleporter_Loop3:
 	MOVE.w	(A1,D0.w), obj_tile_index(A6)
 	BSR.w	CopyPositionToLinkedSprite
 	JSR	AddSpriteToDisplayList
-	BRA.w	EnemyTick_Teleporter_Loop4
-EnemyTick_Teleporter_Loop4:
+	BRA.w	EnemyTick_Teleporter_Return
+EnemyTick_Teleporter_Return:
 	RTS
 	
 
@@ -1556,7 +1556,7 @@ EnemyAiChasePauseJumpTable:
 	BRA.w	EnemyAiChasePause_Tick_Loop2
 EnemyAiChasePause_Tick:
 	TST.w	obj_knockback_timer(A5)
-	BEQ.w	EnemyAiChasePause_Tick_Loop3
+	BEQ.w	EnemyAiChasePause_Tick_AdvancePhase
 	SUBQ.w	#1, obj_knockback_timer(A5)
 	MOVEA.l	Player_entity_ptr.w, A6
 	BSR.w	CalculateAngleBetweenObjects
@@ -1564,18 +1564,18 @@ EnemyAiChasePause_Tick:
 	CLR.l	obj_vel_x(A5)
 	CLR.l	obj_vel_y(A5)
 	BRA.w	EnemyAiChasePause_HandleDamage
-EnemyAiChasePause_Tick_Loop3:
+EnemyAiChasePause_Tick_AdvancePhase:
 	ADDQ.w	#1, obj_attack_timer(A5)
 	MOVE.w	#ENEMY_KNOCKBACK_DURATION, obj_knockback_timer(A5)
 	BRA.w	EnemyAiChasePause_HandleDamage
 EnemyAiChasePause_Tick_Loop:
 	SUBQ.w	#1, obj_knockback_timer(A5)
-	BLE.w	EnemyAiChasePause_Tick_Loop4
+	BLE.w	EnemyAiChasePause_Tick_ChaseAdvance
 	MOVEA.l	Player_entity_ptr.w, A6
 	JSR	CalculateAngleToObjectCentered(PC)
 	MOVE.b	D0, obj_direction(A5)
 	BRA.w	EnemyAiChasePause_Move
-EnemyAiChasePause_Tick_Loop4:
+EnemyAiChasePause_Tick_ChaseAdvance:
 	ADDQ.w	#1, obj_attack_timer(A5)
 	MOVE.w	#ENEMY_KNOCKBACK_DURATION, obj_knockback_timer(A5)
 	BRA.w	EnemyAiChasePause_Move
@@ -1614,9 +1614,9 @@ EnemyAiChasePause_HandleDamage:
 	BSR.w	CheckObjectOnScreen
 	MOVE.l	obj_vel_x(A5), D0
 	OR.l	obj_vel_y(A5), D0
-	BEQ.w	EnemyAiChasePause_HandleDamage_Loop
+	BEQ.w	EnemyAiChasePause_HandleDamage_CheckMoving
 	ADDQ.b	#1, obj_move_counter(A5)
-EnemyAiChasePause_HandleDamage_Loop:
+EnemyAiChasePause_HandleDamage_CheckMoving:
 	CLR.w	D0
 	MOVE.b	obj_next_offset(A5), D0
 	LEA	(A5,D0.w), A6
@@ -1627,9 +1627,9 @@ EnemyAiChasePause_HandleDamage_Loop:
 	CLR.w	D1
 	MOVE.b	obj_direction(A5), D1
 	CMPI.b	#4, D1
-	BLE.w	EnemyAiChasePause_HandleDamage_Loop2
+	BLE.w	EnemyAiChasePause_HandleDamage_SetFlip
 	BSET.b	#3, obj_sprite_flags(A5)
-EnemyAiChasePause_HandleDamage_Loop2:
+EnemyAiChasePause_HandleDamage_SetFlip:
 	ASL.w	#3, D1
 	ADD.w	D0, D1
 	LEA	EnemyAnimFrames_MeleeB_Main, A0
@@ -1652,7 +1652,7 @@ ProjectileTick_Straight:
 	JSR	CalculateVelocityFromAngle(PC)
 	JSR	ClampProjectileToScreenBounds(PC)
 	BTST.b	#7, (A5)
-	BEQ.b	ProjectileTick_Straight_Loop
+	BEQ.b	ProjectileTick_Straight_Return
 	JSR	HandlePlayerTakeDamage(PC)
 	ADDQ.b	#1, obj_move_counter(A5)
 	MOVE.b	obj_move_counter(A5), D0
@@ -1661,7 +1661,7 @@ ProjectileTick_Straight:
 	LEA	EnemyAnimFrames_Fireball, A2
 	MOVE.w	(A2,D0.w), obj_tile_index(A5)
 	JSR	AddSpriteToDisplayList(PC)
-ProjectileTick_Straight_Loop:
+ProjectileTick_Straight_Return:
 	RTS
 	
 
@@ -1684,11 +1684,11 @@ InitEnemy_HomingShooter:
 	
 EnemyTick_HomingShooter:
 	BSR.w	CheckAndUpdateBattleTimer
-	BGT.w	EnemyTick_HomingShooter_Loop
+	BGT.w	EnemyTick_HomingShooter_Alive
 	MOVE.l	#EnemyDeathReward_OneSprite, obj_tick_fn(A5)
 	RTS
 	
-EnemyTick_HomingShooter_Loop:
+EnemyTick_HomingShooter_Alive:
 	CLR.b	obj_hit_flag(A5)
 	MOVE.b	obj_next_offset(A5), D0
 	LEA	(A5,D0.w), A6
@@ -1702,12 +1702,12 @@ EnemyTick_HomingShooter_Loop:
 	JSR	GetRandomNumber
 	MOVE.w	D0, D1
 	ANDI.w	#$007F, D0
-	BEQ.w	EnemyTick_HomingShooter_Loop2
+	BEQ.w	EnemyTick_HomingShooter_SpawnProjectiles
 	CLR.b	obj_npc_busy_flag(A4)
 	CLR.l	obj_vel_x(A4)
 	CLR.l	obj_vel_y(A4)
 	BRA.w	EnemyMultiProjectile_UpdateSprite
-EnemyTick_HomingShooter_Loop2:
+EnemyTick_HomingShooter_SpawnProjectiles:
 	MOVE.l	obj_world_x(A5), D1
 	MOVE.l	obj_world_y(A5), D2
 	MOVE.l	#$180, D3
@@ -1718,7 +1718,7 @@ EnemyTick_HomingShooter_Loop2:
 	CLR.w	D0
 	MOVE.b	obj_next_offset(A5), D0
 	LEA	(A5,D0.w), A6
-EnemyTick_HomingShooter_Loop2_Done:
+EnemyTick_HomingShooter_SpawnNext:
 	MOVE.b	obj_next_offset(A6), D0
 	LEA	(A6,D0.w), A6
 	BSET.b	#7, (A6)
@@ -1732,7 +1732,7 @@ EnemyTick_HomingShooter_Loop2_Done:
 	MOVE.w	#$003C, obj_attack_timer(A6)
 	MOVE.w	#$00B4, obj_knockback_timer(A6)
 	MOVE.l	#ProjectileTick_Homing, obj_tick_fn(A6)
-	DBF	D7, EnemyTick_HomingShooter_Loop2_Done
+	DBF	D7, EnemyTick_HomingShooter_SpawnNext
 EnemyMultiProjectile_UpdateSprite:
 	BSR.w	HandlePlayerTakeDamage
 	BSR.w	CheckObjectOnScreen
@@ -1747,9 +1747,9 @@ EnemyMultiProjectile_UpdateSprite:
 	CLR.w	D1
 	MOVE.b	obj_direction(A5), D1
 	CMPI.b	#4, D1
-	BLE.w	EnemyMultiProjectile_UpdateSprite_Loop
+	BLE.w	EnemyMultiProjectile_UpdateSprite_SetFlip
 	BSET.b	#3, obj_sprite_flags(A5)
-EnemyMultiProjectile_UpdateSprite_Loop:
+EnemyMultiProjectile_UpdateSprite_SetFlip:
 	ASL.w	#3, D1
 	ADD.w	D0, D1
 	LEA	EnemyAnimFrames_MeleeA_Main, A0
@@ -1776,16 +1776,16 @@ EnemyMultiProjectile_UpdateSprite_Loop:
 ; obj_knockback_timer is the total lifetime.
 ProjectileTick_Homing:
 	TST.w	obj_knockback_timer(A5)
-	BNE.w	ProjectileTick_Homing_Loop
+	BNE.w	ProjectileTick_Homing_Active
 	BCLR.b	#7, (A5)
 	CLR.b	obj_npc_busy_flag(A5)
 	CLR.l	obj_vel_x(A5)
 	CLR.l	obj_vel_y(A5)
-	BRA.w	EnemyChase_Move_Loop
-ProjectileTick_Homing_Loop:
+	BRA.w	EnemyChase_Move_HandleDamage
+ProjectileTick_Homing_Active:
 	SUBQ.w	#1, obj_knockback_timer(A5)
 	TST.w	obj_attack_timer(A5)
-	BNE.w	ProjectileTick_Homing_Loop2
+	BNE.w	ProjectileTick_Homing_ArmingDelay
 	MOVE.w	obj_knockback_timer(A5), D0
 	MOVE.w	D0, D1
 	SUBQ.w	#1, D1
@@ -1796,18 +1796,18 @@ ProjectileTick_Homing_Loop:
 	BSR.w	CalculateAngleBetweenObjects
 	MOVE.b	D0, obj_direction(A5)
 	BRA.w	EnemyChase_Move
-ProjectileTick_Homing_Loop2:
+ProjectileTick_Homing_ArmingDelay:
 	SUBQ.w	#1, obj_attack_timer(A5)
 EnemyChase_Move:
 	BSR.w	CalculateVelocityFromAngle
 	BSR.w	UpdateObjectScreenPosition
-EnemyChase_Move_Loop:
+EnemyChase_Move_HandleDamage:
 	BSR.w	HandlePlayerTakeDamage
 	MOVE.l	obj_vel_x(A5), D0
 	OR.l	obj_vel_y(A5), D0
-	BEQ.w	EnemyChase_Move_Loop2
+	BEQ.w	EnemyChase_Move_UpdateAnim
 	ADDQ.b	#1, obj_move_counter(A5)
-EnemyChase_Move_Loop2:
+EnemyChase_Move_UpdateAnim:
 	MOVE.b	obj_move_counter(A5), D0
 	ANDI.w	#$000C, D0
 	ASR.w	#1, D0
@@ -1873,11 +1873,11 @@ InitEnemy_FastBurstShooter:
 	
 EnemyTick_FastBurstShooter:
 	BSR.w	CheckAndUpdateBattleTimer
-	BGT.w	EnemyTick_FastBurstShooter_Loop
+	BGT.w	EnemyTick_FastBurstShooter_Alive
 	MOVE.l	#BossDeathReward_MultiSprite, obj_tick_fn(A5)
 	RTS
 	
-EnemyTick_FastBurstShooter_Loop:
+EnemyTick_FastBurstShooter_Alive:
 	CLR.b	obj_hit_flag(A5)
 	MOVE.b	obj_next_offset(A5), D0
 	LEA	(A5,D0.w), A6
@@ -1891,12 +1891,12 @@ EnemyTick_FastBurstShooter_Loop:
 	JSR	GetRandomNumber
 	MOVE.w	D0, D1
 	ANDI.w	#$007F, D0
-	BEQ.w	EnemyTick_FastBurstShooter_Loop2
+	BEQ.w	EnemyTick_FastBurstShooter_SpawnProjectiles
 	CLR.b	obj_npc_busy_flag(A4)
 	CLR.l	obj_vel_x(A4)
 	CLR.l	obj_vel_y(A4)
 	BRA.w	EnemySpreadShot_UpdateSprite
-EnemyTick_FastBurstShooter_Loop2:
+EnemyTick_FastBurstShooter_SpawnProjectiles:
 	MOVE.l	obj_world_x(A5), D1
 	MOVE.l	obj_world_y(A5), D2
 	MOVE.l	#$380, D3
@@ -1907,7 +1907,7 @@ EnemyTick_FastBurstShooter_Loop2:
 	CLR.w	D0
 	MOVE.b	obj_next_offset(A5), D0
 	LEA	(A5,D0.w), A6
-EnemyTick_FastBurstShooter_Loop2_Done:
+EnemyTick_FastBurstShooter_SpawnNext:
 	MOVE.b	obj_next_offset(A6), D0
 	LEA	(A6,D0.w), A6
 	BSET.b	#7, (A6)
@@ -1919,7 +1919,7 @@ EnemyTick_FastBurstShooter_Loop2_Done:
 	MOVE.b	D6, obj_sprite_flags(A6)
 	MOVE.b	D7, obj_direction(A6)
 	MOVE.l	#ProjectileTick_Straight, obj_tick_fn(A6)
-	DBF	D7, EnemyTick_FastBurstShooter_Loop2_Done
+	DBF	D7, EnemyTick_FastBurstShooter_SpawnNext
 EnemySpreadShot_UpdateSprite:
 	BSR.w	HandlePlayerTakeDamage
 	BSR.w	CheckObjectOnScreen
@@ -1934,9 +1934,9 @@ EnemySpreadShot_UpdateSprite:
 	CLR.w	D1
 	MOVE.b	obj_direction(A5), D1
 	CMPI.b	#4, D1
-	BLE.w	EnemySpreadShot_UpdateSprite_Loop
+	BLE.w	EnemySpreadShot_UpdateSprite_SetFlip
 	BSET.b	#3, obj_sprite_flags(A5)
-EnemySpreadShot_UpdateSprite_Loop:
+EnemySpreadShot_UpdateSprite_SetFlip:
 	ASL.w	#3, D1
 	ADD.w	D0, D1
 	LEA	EnemyAnimFrames_MeleeA_Main, A0
@@ -1978,11 +1978,11 @@ InitEnemy_SequentialFire:
 	
 EnemyTick_SequentialFire:
 	BSR.w	CheckAndUpdateBattleTimer
-	BGT.w	EnemyTick_SequentialFire_Loop
+	BGT.w	EnemyTick_SequentialFire_Alive
 	MOVE.l	#EnemyDeathReward_OneSprite, obj_tick_fn(A5)
 	RTS
 	
-EnemyTick_SequentialFire_Loop:
+EnemyTick_SequentialFire_Alive:
 	CLR.b	obj_hit_flag(A5)
 	MOVE.b	obj_attack_timer(A5), D0
 	ANDI.w	#7, D0
@@ -1991,36 +1991,36 @@ EnemyTick_SequentialFire_Loop:
 	LEA	EnemyAiChaseFireJumpTable, A0
 	JMP	(A0,D0.w)
 EnemyAiChaseFireJumpTable:
-	BRA.w	EnemyAiChaseFireJumpTable_Loop
+	BRA.w	EnemyAiChaseFireJumpTable_ChasePhase
 	BRA.w	ProjectileTick_Phase1
 	BRA.w	ProjectileTick_Phase2
 	BRA.w	ProjectileTick_Phase3
-	BRA.w	EnemyAiChaseFireJumpTable_Loop2
+	BRA.w	EnemyAiChaseFireJumpTable_RetargetPhase
 	BRA.w	ProjectileTick_Phase1	
 	BRA.w	ProjectileTick_Phase2	
 	BRA.w	ProjectileTick_Phase3	
-EnemyAiChaseFireJumpTable_Loop:
+EnemyAiChaseFireJumpTable_ChasePhase:
 	SUBQ.w	#1, obj_knockback_timer(A5)
-	BLE.w	EnemyAiChaseFireJumpTable_Loop3
+	BLE.w	EnemyAiChaseFireJumpTable_ChaseStop
 	MOVEA.l	Player_entity_ptr.w, A6
 	JSR	CalculateAngleToObjectCentered(PC)
 	MOVE.b	D0, obj_direction(A5)
 	BRA.w	ProjectileTick_Move
-EnemyAiChaseFireJumpTable_Loop3:
+EnemyAiChaseFireJumpTable_ChaseStop:
 	CLR.l	obj_vel_x(A5)
 	CLR.l	obj_vel_y(A5)
 	ADDQ.b	#1, obj_attack_timer(A5)
 	MOVE.w	#ENEMY_KNOCKBACK_DURATION, obj_knockback_timer(A5)
 	BRA.w	ProjectileTick_PostCollision
-EnemyAiChaseFireJumpTable_Loop2:
+EnemyAiChaseFireJumpTable_RetargetPhase:
 	TST.w	obj_knockback_timer(A5)
-	BEQ.w	EnemyAiChaseFireJumpTable_Loop4
+	BEQ.w	EnemyAiChaseFireJumpTable_RetargetStop
 	SUBQ.w	#1, obj_knockback_timer(A5)
 	MOVEA.l	Player_entity_ptr.w, A6
 	BSR.w	CalculateAngleBetweenObjects
 	MOVE.b	D0, obj_direction(A5)
 	BRA.w	ProjectileTick_Move
-EnemyAiChaseFireJumpTable_Loop4:
+EnemyAiChaseFireJumpTable_RetargetStop:
 	CLR.l	obj_vel_x(A5)	
 	CLR.l	obj_vel_y(A5)	
 	ADDQ.b	#1, obj_attack_timer(A5)	
@@ -2041,10 +2041,10 @@ ProjectileTick_Phase2:
 	MOVE.b	obj_sub_timer(A5), D7
 	CLR.w	D0
 	LEA	(A5), A6
-ProjectileTick_Phase2_Done:
+ProjectileTick_Phase2_SpawnNext:
 	MOVE.b	obj_next_offset(A6), D0
 	LEA	(A6,D0.w), A6
-	DBF	D7, ProjectileTick_Phase2_Done
+	DBF	D7, ProjectileTick_Phase2_SpawnNext
 	BSET.b	#7, (A6)
 	MOVE.w	obj_world_x(A5), obj_pos_x_fixed(A6)
 	MOVE.w	obj_world_y(A5), D1
@@ -2086,9 +2086,9 @@ ProjectileTick_PostCollision:
 	BCLR.b	#3, obj_sprite_flags(A5)
 	ADDQ.b	#1, obj_move_counter(A5)
 	CMPI.b	#4, obj_direction(A5)
-	BLE.b	ProjectileTick_PostCollision_Loop
+	BLE.b	ProjectileTick_PostCollision_SetFlip
 	BSET.b	#3, obj_sprite_flags(A5)
-ProjectileTick_PostCollision_Loop:
+ProjectileTick_PostCollision_SetFlip:
 	MOVE.b	obj_attack_timer(A5), D0
 	ANDI.w	#3, D0
 	CMPI.b	#2, D0
@@ -2098,14 +2098,14 @@ ProjectileTick_PostCollision_Loop:
 	MOVE.b	obj_move_counter(A5), D0
 	ANDI.w	#$0018, D0
 	ASR.w	#2, D0
-	BRA.b	ProjectileTick_PostCollision_Loop3
+	BRA.b	ProjectileTick_PostCollision_DrawSprite
 ProjectileTick_PostCollision_Loop2:
 	LEA	ProjectileTick_PostCollision_Loop2_Data, A0
 	LEA	ProjectileTick_PostCollision_Loop2_Data2, A1
 	MOVE.b	obj_move_counter(A5), D0
 	ANDI.w	#$000C, D0
 	ASR.w	#1, D0
-ProjectileTick_PostCollision_Loop3:
+ProjectileTick_PostCollision_DrawSprite:
 	MOVE.w	(A0,D0.w), obj_tile_index(A5)
 	MOVE.w	(A1,D0.w), obj_tile_index(A6)
 	JSR	CopyPositionToLinkedSprite(PC)
@@ -2148,11 +2148,11 @@ ProjectileTick_Spiral:
 	CMPI.w	#BATTLE_PROJ_Y_TOP, obj_world_y(A5)
 	BLE.w	ProjectileTick_Spiral_OutOfBounds
 	CMPI.w	#BATTLE_FIELD_BOTTOM, obj_world_y(A5)
-	BLE.w	ProjectileTick_Spiral_OutOfBounds_Loop
+	BLE.w	ProjectileTick_Spiral_OutOfBounds_Render
 ProjectileTick_Spiral_OutOfBounds:
 	BCLR.b	#7, (A5)
-	BRA.w	ProjectileTick_Spiral_OutOfBounds_Loop2
-ProjectileTick_Spiral_OutOfBounds_Loop:
+	BRA.w	ProjectileTick_Spiral_OutOfBounds_Return
+ProjectileTick_Spiral_OutOfBounds_Render:
 	MOVE.w	obj_world_x(A5), obj_screen_x(A5)
 	MOVE.w	obj_world_y(A5), obj_screen_y(A5)
 	MOVE.w	obj_screen_y(A5), obj_sort_key(A5)
@@ -2164,7 +2164,7 @@ ProjectileTick_Spiral_OutOfBounds_Loop:
 	LEA	EnemyAnimFrames_Fireball, A2
 	MOVE.w	(A2,D0.w), obj_tile_index(A5)
 	JSR	AddSpriteToDisplayList(PC)
-ProjectileTick_Spiral_OutOfBounds_Loop2:
+ProjectileTick_Spiral_OutOfBounds_Return:
 	RTS
 	
 
@@ -2191,11 +2191,11 @@ InitEnemy_SpiralBurst:
 	
 EnemyTick_SpiralBurst:
 	BSR.w	CheckAndUpdateBattleTimer
-	BGT.w	EnemyTick_SpiralBurst_Loop
+	BGT.w	EnemyTick_SpiralBurst_Alive
 	MOVE.l	#EnemyDeathReward_OneSprite, obj_tick_fn(A5)	
 	RTS
 	
-EnemyTick_SpiralBurst_Loop:
+EnemyTick_SpiralBurst_Alive:
 	CLR.b	obj_hit_flag(A5)
 	MOVE.w	obj_attack_timer(A5), D0
 	ANDI.w	#7, D0
@@ -2204,36 +2204,36 @@ EnemyTick_SpiralBurst_Loop:
 	LEA	EnemyAiSpiralJumpTable, A0
 	JMP	(A0,D0.w)
 EnemyAiSpiralJumpTable:
-	BRA.w	EnemyAiSpiralJumpTable_Loop
+	BRA.w	EnemyAiSpiralJumpTable_ChasePhase
 	BRA.w	ProjectileTick2_Phase1
 	BRA.w	ProjectileTick2_Phase2
 	BRA.w	ProjectileTick2_Phase3
-	BRA.w	EnemyAiSpiralJumpTable_Loop2	
+	BRA.w	EnemyAiSpiralJumpTable_RetargetPhase	
 	BRA.w	ProjectileTick2_Phase1	
 	BRA.w	ProjectileTick2_Phase2	
 	BRA.w	ProjectileTick2_Phase3	
-EnemyAiSpiralJumpTable_Loop:
+EnemyAiSpiralJumpTable_ChasePhase:
 	SUBQ.w	#1, obj_knockback_timer(A5)
-	BLE.w	EnemyAiSpiralJumpTable_Loop3
+	BLE.w	EnemyAiSpiralJumpTable_ChaseStop
 	MOVEA.l	Player_entity_ptr.w, A6
 	JSR	CalculateAngleToObjectCentered(PC)
 	MOVE.b	D0, obj_direction(A5)
 	BRA.w	ProjectileTick2_Move
-EnemyAiSpiralJumpTable_Loop3:
+EnemyAiSpiralJumpTable_ChaseStop:
 	CLR.l	obj_vel_x(A5)
 	CLR.l	obj_vel_y(A5)
 	ADDQ.w	#1, obj_attack_timer(A5)
 	MOVE.w	#ENEMY_KNOCKBACK_DURATION, obj_knockback_timer(A5)
 	BRA.w	ProjectileTick2_PostCollision
-EnemyAiSpiralJumpTable_Loop2:
+EnemyAiSpiralJumpTable_RetargetPhase:
 	TST.w	obj_knockback_timer(A5)	
-	BEQ.w	EnemyAiSpiralJumpTable_Loop4	
+	BEQ.w	EnemyAiSpiralJumpTable_RetargetStop	
 	SUBQ.w	#1, obj_knockback_timer(A5)	
 	MOVEA.l	Player_entity_ptr.w, A6	
 	BSR.w	CalculateAngleBetweenObjects	
 	MOVE.b	D0, obj_direction(A5)	
 	BRA.w	ProjectileTick2_Move	
-EnemyAiSpiralJumpTable_Loop4:
+EnemyAiSpiralJumpTable_RetargetStop:
 	CLR.l	obj_vel_x(A5)	
 	CLR.l	obj_vel_y(A5)	
 	ADDQ.b	#1, obj_attack_timer(A5)	
@@ -2241,13 +2241,13 @@ EnemyAiSpiralJumpTable_Loop4:
 	BRA.w	ProjectileTick2_PostCollision	
 ProjectileTick2_Phase1:
 	TST.w	obj_knockback_timer(A5)
-	BEQ.w	ProjectileTick2_Phase1_Loop
+	BEQ.w	ProjectileTick2_Phase1_Advance
 	SUBQ.w	#1, obj_knockback_timer(A5)
 	MOVEA.l	Player_entity_ptr.w, A6
 	JSR	CalculateAngleBetweenObjects(PC)
 	MOVE.b	D0, obj_direction(A5)
 	BRA.w	ProjectileTick2_PostCollision
-ProjectileTick2_Phase1_Loop:
+ProjectileTick2_Phase1_Advance:
 	ADDQ.w	#1, obj_attack_timer(A5)
 	BRA.w	ProjectileTick2_PostCollision
 ProjectileTick2_Phase2:
@@ -2255,7 +2255,7 @@ ProjectileTick2_Phase2:
 	CLR.w	D0
 	MOVE.b	obj_next_offset(A5), D0
 	LEA	(A5,D0.w), A6
-ProjectileTick2_Phase2_Done:
+ProjectileTick2_Phase2_SpawnNext:
 	MOVE.b	obj_next_offset(A6), D0
 	LEA	(A6,D0.w), A6
 	BSET.b	#7, (A6)
@@ -2274,7 +2274,7 @@ ProjectileTick2_Phase2_Done:
 	ASL.w	#6, D1
 	MOVE.b	D1, obj_orbit_angle(A6)
 	MOVE.l	#ProjectileTick_OrbitingSpiral, obj_tick_fn(A6)
-	DBF	D7, ProjectileTick2_Phase2_Done
+	DBF	D7, ProjectileTick2_Phase2_SpawnNext
 	ADDQ.w	#1, obj_attack_timer(A5)
 	MOVE.w	#$0078, obj_knockback_timer(A5)
 	BRA.w	ProjectileTick2_PostCollision
@@ -2295,9 +2295,9 @@ ProjectileTick2_PostCollision:
 	BSR.w	CheckObjectOnScreen
 	MOVE.l	obj_vel_x(A5), D0
 	OR.l	obj_vel_y(A5), D0
-	BEQ.w	ProjectileTick2_PostCollision_Loop
+	BEQ.w	ProjectileTick2_PostCollision_CheckMoving
 	ADDQ.b	#1, obj_move_counter(A5)
-ProjectileTick2_PostCollision_Loop:
+ProjectileTick2_PostCollision_CheckMoving:
 	CLR.w	D0
 	MOVE.b	obj_next_offset(A5), D0
 	LEA	(A5,D0.w), A6
@@ -2308,9 +2308,9 @@ ProjectileTick2_PostCollision_Loop:
 	CLR.w	D1
 	MOVE.b	obj_direction(A5), D1
 	CMPI.b	#4, D1
-	BLE.w	ProjectileTick2_PostCollision_Loop2
+	BLE.w	ProjectileTick2_PostCollision_SetFlip
 	BSET.b	#3, obj_sprite_flags(A5)
-ProjectileTick2_PostCollision_Loop2:
+ProjectileTick2_PostCollision_SetFlip:
 	ASL.w	#3, D1
 	ADD.w	D0, D1
 	LEA	EnemyAnimFrames_MeleeB_Main, A0
@@ -2332,16 +2332,16 @@ ProjectileTick2_PostCollision_Loop2:
 ; then transitions to straight outward movement.
 ProjectileTick_OrbitingSpiral:
 	CMPI.w	#ORBITING_SPIRAL_ORBIT_COUNT, obj_xp_reward(A5)
-	BLT.w	ProjectileTick_OrbitingSpiral_Loop
+	BLT.w	ProjectileTick_OrbitingSpiral_Orbiting
 	JSR	CalculateVelocityFromAngle(PC)
 	MOVE.l	obj_vel_x(A5), D0
 	SUB.l	D0, obj_orbit_center_x(A5)
 	MOVE.l	obj_vel_y(A5), D0
 	SUB.l	D0, obj_attack_timer(A5)
-	BRA.w	ProjectileTick_OrbitingSpiral_Loop2
-ProjectileTick_OrbitingSpiral_Loop:
+	BRA.w	ProjectileTick_OrbitingSpiral_UpdatePos
+ProjectileTick_OrbitingSpiral_Orbiting:
 	ADDQ.w	#1, obj_xp_reward(A5)
-ProjectileTick_OrbitingSpiral_Loop2:
+ProjectileTick_OrbitingSpiral_UpdatePos:
 	MOVE.w	obj_xp_reward(A5), D0
 	ASR.w	#2, D0
 	MOVE.w	D0, D1
@@ -2369,11 +2369,11 @@ ProjectileTick_OrbitingSpiral_Loop2:
 	CMPI.w	#BATTLE_PROJ_Y_TOP, obj_world_y(A5)
 	BLE.w	ProjectileTick_OrbitingSpiral_OutOfBounds
 	CMPI.w	#BATTLE_FIELD_BOTTOM, obj_world_y(A5)
-	BLE.w	ProjectileTick_OrbitingSpiral_OutOfBounds_Loop
+	BLE.w	ProjectileTick_OrbitingSpiral_OutOfBounds_Render
 ProjectileTick_OrbitingSpiral_OutOfBounds:
 	BCLR.b	#7, (A5)
-	BRA.w	ProjectileTick_OrbitingSpiral_OutOfBounds_Loop2
-ProjectileTick_OrbitingSpiral_OutOfBounds_Loop:
+	BRA.w	ProjectileTick_OrbitingSpiral_OutOfBounds_Return
+ProjectileTick_OrbitingSpiral_OutOfBounds_Render:
 	MOVE.w	obj_world_x(A5), obj_screen_x(A5)
 	MOVE.w	obj_world_y(A5), obj_screen_y(A5)
 	MOVE.w	obj_screen_y(A5), obj_sort_key(A5)
@@ -2385,7 +2385,7 @@ ProjectileTick_OrbitingSpiral_OutOfBounds_Loop:
 	LEA	EnemyAnimFrames_Fireball, A2
 	MOVE.w	(A2,D0.w), obj_tile_index(A5)
 	JSR	AddSpriteToDisplayList(PC)
-ProjectileTick_OrbitingSpiral_OutOfBounds_Loop2:
+ProjectileTick_OrbitingSpiral_OutOfBounds_Return:
 	RTS
 	
 
@@ -2452,22 +2452,22 @@ BossTick_OrbShield_Loop:
 	MOVE.b	#PLAYER_HIT_INVULN_FRAMES, obj_invuln_timer(A5)	
 EnemyTakeDamage2_CheckDeath:
 	TST.w	obj_hp(A5)
-	BGT.w	EnemyTakeDamage2_CheckDeath_Loop
+	BGT.w	EnemyTakeDamage2_CheckDeath_Alive
 	MOVE.l	#EnemyDeathReward_TwoSprites, obj_tick_fn(A5)
 	RTS
 	
-EnemyTakeDamage2_CheckDeath_Loop:
+EnemyTakeDamage2_CheckDeath_Alive:
 	CLR.b	obj_hit_flag(A5)
 	CLR.l	obj_vel_x(A5)
 	CLR.l	obj_vel_y(A5)
 	CMPI.b	#DEATH_SCATTER_ANGLE_COUNT, obj_attack_timer(A5)
-	BCS.b	EnemyTakeDamage2_CheckDeath_Loop2
+	BCS.b	EnemyTakeDamage2_CheckDeath_AnglePhase
 	JSR	GetRandomNumber
 	ANDI.w	#$00FF, D0
 	CMPI.w	#RANDOM_HALF_THRESHOLD, D0
-	BLE.b	EnemyTakeDamage2_CheckDeath_Loop3
+	BLE.b	EnemyTakeDamage2_CheckDeath_ResetAngle
 	CLR.b	obj_attack_timer(A5)
-EnemyTakeDamage2_CheckDeath_Loop2:
+EnemyTakeDamage2_CheckDeath_AnglePhase:
 	ADDQ.b	#1, obj_attack_timer(A5)
 	MOVEA.l	Player_entity_ptr.w, A6
 	BSR.w	CalculateAngleBetweenObjects
@@ -2488,7 +2488,7 @@ EnemyTakeDamage2_CheckDeath_Loop2:
 	ASL.w	#8, D0
 	EXT.l	D0
 	MOVE.l	D0, obj_vel_y(A5)
-EnemyTakeDamage2_CheckDeath_Loop3:
+EnemyTakeDamage2_CheckDeath_ResetAngle:
 	BSR.w	CheckEnemyCollision
 	BSR.w	HandlePlayerTakeDamage
 	BSR.w	CheckObjectOnScreen
@@ -2502,14 +2502,14 @@ EnemyTakeDamage2_CheckDeath_Loop3:
 	CLR.l	D2
 	MOVE.b	obj_sub_timer(A6), D2
 	CMPI.w	#$0040, D2
-	BLE.b	EnemyTakeDamage2_CheckDeath_Loop4
+	BLE.b	EnemyTakeDamage2_CheckDeath_ClampRadius
 	MOVE.w	#$FFFC, D1
-EnemyTakeDamage2_CheckDeath_Loop4:
+EnemyTakeDamage2_CheckDeath_ClampRadius:
 	TST.w	D2
-	BGT.b	EnemyTakeDamage2_CheckDeath_Loop5
+	BGT.b	EnemyTakeDamage2_CheckDeath_CheckRadiusSign
 	CLR.w	D2
 	MOVE.w	#4, D1
-EnemyTakeDamage2_CheckDeath_Loop5:
+EnemyTakeDamage2_CheckDeath_CheckRadiusSign:
 	MOVE.b	D1, obj_knockback_timer(A6)
 	ADD.w	D1, D2
 	MOVE.b	D2, obj_sub_timer(A6)
@@ -2610,24 +2610,24 @@ BossTick_MultiOrb_Loop:
 	MOVE.b	#PLAYER_HIT_INVULN_FRAMES, obj_invuln_timer(A5)	
 BossTakeDamage_CheckDeath:
 	TST.w	obj_hp(A5)
-	BGT.w	BossTakeDamage_CheckDeath_Loop
+	BGT.w	BossTakeDamage_CheckDeath_Alive
 	MOVE.l	#BossDeathReward_MultiSprite, obj_tick_fn(A5)	
 	RTS
 	
-BossTakeDamage_CheckDeath_Loop:
+BossTakeDamage_CheckDeath_Alive:
 	CLR.b	obj_hit_flag(A5)
 	CLR.l	obj_vel_x(A5)
 	CLR.l	obj_vel_y(A5)
 	TST.b	obj_sub_timer(A5)
-	BNE.w	BossTakeDamage_CheckDeath_Loop2
+	BNE.w	BossTakeDamage_CheckDeath_StaticPhase
 	CMPI.b	#DEATH_SCATTER_ANGLE_COUNT, obj_attack_timer(A5)
-	BCS.b	BossTakeDamage_CheckDeath_Loop3
+	BCS.b	BossTakeDamage_CheckDeath_AnglePhase
 	JSR	GetRandomNumber
 	ANDI.w	#$00FF, D0
 	CMPI.w	#RANDOM_HALF_THRESHOLD, D0
-	BLE.b	BossTakeDamage_CheckDeath_Loop4
+	BLE.b	BossTakeDamage_CheckDeath_ResetAngle
 	CLR.b	obj_attack_timer(A5)
-BossTakeDamage_CheckDeath_Loop3:
+BossTakeDamage_CheckDeath_AnglePhase:
 	ADDQ.b	#1, obj_attack_timer(A5)
 	MOVEA.l	Player_entity_ptr.w, A6
 	BSR.w	CalculateAngleBetweenObjects
@@ -2653,7 +2653,7 @@ BossTakeDamage_CheckDeath_Loop3:
 	BSR.w	CheckObjectOnScreen
 	MOVE.w	#8, D7
 	LEA	(A5), A4
-BossTakeDamage_CheckDeath_Loop3_Done:
+BossTakeDamage_CheckDeath_ResetOrbPositions:
 	CLR.w	D0
 	MOVE.b	obj_next_offset(A4), D0
 	LEA	(A4,D0.w), A4
@@ -2661,9 +2661,9 @@ BossTakeDamage_CheckDeath_Loop3_Done:
 	MOVE.l	obj_world_y(A5), D0
 	SUBI.l	#$00080000, D0
 	MOVE.l	D0, obj_world_y(A4)
-	DBF	D7, BossTakeDamage_CheckDeath_Loop3_Done
-	BRA.w	BossTakeDamage_CheckDeath_Loop5
-BossTakeDamage_CheckDeath_Loop4:
+	DBF	D7, BossTakeDamage_CheckDeath_ResetOrbPositions
+	BRA.w	BossTakeDamage_CheckDeath_WobblePhase
+BossTakeDamage_CheckDeath_ResetAngle:
 	MOVE.b	#$21, obj_sub_timer(A5)
 	MOVEA.l	Player_entity_ptr.w, A6
 	BSR.w	CalculateAngleBetweenObjects
@@ -2671,7 +2671,7 @@ BossTakeDamage_CheckDeath_Loop4:
 	ANDI.w	#7, D0
 	ASL.w	#5, D0
 	MOVE.w	D0, obj_knockback_timer(A5)
-BossTakeDamage_CheckDeath_Loop2:
+BossTakeDamage_CheckDeath_StaticPhase:
 	LEA	(A5), A0
 	SUBQ.b	#1, obj_sub_timer(A5)
 	MOVE.w	#8, D7
@@ -2679,16 +2679,16 @@ BossTakeDamage_CheckDeath_Loop2:
 	MOVE.b	obj_sub_timer(A5), D0
 	ASR.w	#1, D0
 	SUBQ.w	#8, D0
-	BGE.b	BossTakeDamage_CheckDeath_Loop6
+	BGE.b	BossTakeDamage_CheckDeath_AbsWobble
 	NEG.w	D0
-BossTakeDamage_CheckDeath_Loop6:
+BossTakeDamage_CheckDeath_AbsWobble:
 	MOVE.w	obj_knockback_timer(A5), D5
 	MOVEQ	#8, D6
 	SUB.w	D0, D6
 	ADD.w	D6, D6
 	MOVE.w	D6, D3
 	LEA	(A5), A6
-BossTakeDamage_CheckDeath_Loop6_Done:
+BossTakeDamage_CheckDeath_UpdateOrbPositions:
 	LEA	(A6), A4
 	MOVE.w	D6, D1
 	CLR.w	D0
@@ -2713,12 +2713,12 @@ BossTakeDamage_CheckDeath_Loop6_Done:
 	SUBI.l	#$00080000, D0
 	MOVE.l	D0, obj_world_y(A6)
 	ADD.w	D3, D6
-	DBF	D7, BossTakeDamage_CheckDeath_Loop6_Done
+	DBF	D7, BossTakeDamage_CheckDeath_UpdateOrbPositions
 	LEA	(A0), A5
 	BSR.w	CheckEnemyCollision
 	BSR.w	HandlePlayerTakeDamage
 	BSR.w	CheckObjectOnScreen
-BossTakeDamage_CheckDeath_Loop5:
+BossTakeDamage_CheckDeath_WobblePhase:
 	ADDQ.b	#1, obj_move_counter(A5)
 	MOVE.b	obj_move_counter(A5), D1
 	ANDI.w	#$000C, D1
@@ -2817,22 +2817,22 @@ BossTick_OrbRing_Loop:
 	MOVE.b	#PLAYER_HIT_INVULN_FRAMES, obj_invuln_timer(A5)	
 BossTakeDamage2_CheckDeath:
 	TST.w	obj_hp(A5)
-	BGT.w	BossTakeDamage2_CheckDeath_Loop
+	BGT.w	BossTakeDamage2_CheckDeath_Alive
 	MOVE.l	#BossDeathReward_MultiSprite, obj_tick_fn(A5)
 	RTS
 	
-BossTakeDamage2_CheckDeath_Loop:
+BossTakeDamage2_CheckDeath_Alive:
 	CLR.b	obj_hit_flag(A5)
 	CLR.l	obj_vel_x(A5)
 	CLR.l	obj_vel_y(A5)
 	CMPI.b	#DEATH_SCATTER_ANGLE_COUNT, obj_knockback_timer(A5)
-	BCS.b	BossTakeDamage2_CheckDeath_Loop2
+	BCS.b	BossTakeDamage2_CheckDeath_AnglePhase
 	JSR	GetRandomNumber
 	ANDI.w	#$00FF, D0
 	CMPI.w	#RANDOM_HALF_THRESHOLD, D0
-	BLE.b	BossTakeDamage2_CheckDeath_Loop3
+	BLE.b	BossTakeDamage2_CheckDeath_ResetAngle
 	CLR.b	obj_knockback_timer(A5)
-BossTakeDamage2_CheckDeath_Loop2:
+BossTakeDamage2_CheckDeath_AnglePhase:
 	ADDQ.b	#1, obj_knockback_timer(A5)
 	MOVEA.l	Player_entity_ptr.w, A6
 	BSR.w	CalculateAngleBetweenObjects
@@ -2853,7 +2853,7 @@ BossTakeDamage2_CheckDeath_Loop2:
 	ASL.w	#8, D0
 	EXT.l	D0
 	MOVE.l	D0, obj_vel_y(A5)
-BossTakeDamage2_CheckDeath_Loop3:
+BossTakeDamage2_CheckDeath_ResetAngle:
 	BSR.w	CheckEnemyCollision
 	BSR.w	HandlePlayerTakeDamage
 	BSR.w	CheckObjectOnScreen
@@ -2874,11 +2874,11 @@ BossTakeDamage2_CheckDeath_Loop3:
 	BSET.b	#7, (A6)
 	CLR.w	D6
 	MOVE.w	#7, D7
-BossTakeDamage2_CheckDeath_Loop3_Done:
+BossTakeDamage2_CheckDeath_RotateOrbs:
 	MOVE.b	$1B(A0), D0
 	ANDI.b	#7, D0
 	CMPI.b	#6, D0
-	BLT.b	BossTakeDamage2_CheckDeath_Loop4
+	BLT.b	BossTakeDamage2_CheckDeath_SkipLaunch
 	LEA	(A6), A4
 	LEA	(A4), A5
 	MOVEA.l	Player_entity_ptr.w, A6
@@ -2895,21 +2895,21 @@ BossTakeDamage2_CheckDeath_Loop3_Done:
 	ANDI.w	#$00FF, D1
 	MOVE.w	#1, D2
 	SUB.w	D1, D0
-	BGE.b	BossTakeDamage2_CheckDeath_Loop5
+	BGE.b	BossTakeDamage2_CheckDeath_CheckAngleDir
 	NEG.w	D0
 	NEG.w	D2
-BossTakeDamage2_CheckDeath_Loop5:
+BossTakeDamage2_CheckDeath_CheckAngleDir:
 	CMPI.w	#$0080, D0
-	BLE.b	BossTakeDamage2_CheckDeath_Loop6
+	BLE.b	BossTakeDamage2_CheckDeath_CheckAngleRange
 	NEG.w	D2
-BossTakeDamage2_CheckDeath_Loop6:
+BossTakeDamage2_CheckDeath_CheckAngleRange:
 	ADD.w	D2, D1
 	ADD.w	D2, D6
 	MOVE.b	D1, obj_attack_timer(A6)
-BossTakeDamage2_CheckDeath_Loop4:
+BossTakeDamage2_CheckDeath_SkipLaunch:
 	JSR	CalculateCircularPosition(PC)
 	BSET.b	#7, (A6)
-	DBF	D7, BossTakeDamage2_CheckDeath_Loop3_Done
+	DBF	D7, BossTakeDamage2_CheckDeath_RotateOrbs
 	LEA	(A0), A5
 	JSR	AddSpriteToDisplayList(PC)
 	RTS
@@ -3027,13 +3027,13 @@ ApplyDamageToPlayer:
 	MOVE.w	Player_ac.w, D0
 	ASR.w	#3, D0
 	SUB.w	D0, D1
-	BGT.w	ApplyDamageToPlayer_Loop
+	BGT.w	ApplyDamageToPlayer_ClampMin
 	MOVEQ	#1, D1
-ApplyDamageToPlayer_Loop:
+ApplyDamageToPlayer_ClampMin:
 	SUB.w	D1, Player_hp.w
-	BGE.w	ApplyDamageToPlayer_Loop2
+	BGE.w	ApplyDamageToPlayer_ClampZero
 	CLR.w	Player_hp.w
-ApplyDamageToPlayer_Loop2:
+ApplyDamageToPlayer_ClampZero:
 	RTS
 
 SetRandomEnemyPosition:
@@ -3041,13 +3041,13 @@ SetRandomEnemyPosition:
 	JSR	GetRandomNumber
 	ANDI.w	#$01FF, D0
 	CMPI.w	#1, D0
-	BGT.w	SetRandomEnemyPosition_Loop
+	BGT.w	SetRandomEnemyPosition_WrapX
 	MOVE.w	#1, D1
 	SUB.w	D0, D1
 	MOVE.w	#SPAWN_ZONE_X_MAX, D0
 	SUB.w	D1, D0
 	BRA.w	SetRandomEnemyPosition_SetX
-SetRandomEnemyPosition_Loop:
+SetRandomEnemyPosition_WrapX:
 	CMPI.w	#SPAWN_ZONE_X_MAX, D0
 	BLT.w	SetRandomEnemyPosition_SetX
 	SUBI.w	#SPAWN_ZONE_X_MAX, D0
@@ -3058,18 +3058,18 @@ SetRandomEnemyPosition_SetX:
 	JSR	GetRandomNumber
 	ANDI.w	#$00FF, D0
 	CMPI.w	#SPAWN_ZONE_Y_MIN, D0
-	BGT.w	SetRandomEnemyPosition_SetX_Loop
+	BGT.w	SetRandomEnemyPosition_WrapY
 	MOVE.w	#SPAWN_ZONE_Y_MIN, D1
 	SUB.w	D0, D1
 	MOVE.w	#SPAWN_ZONE_Y_MAX, D0
 	SUB.w	D1, D0
-	BRA.w	SetRandomEnemyPosition_SetX_Loop2
-SetRandomEnemyPosition_SetX_Loop:
+	BRA.w	SetRandomEnemyPosition_SetY
+SetRandomEnemyPosition_WrapY:
 	CMPI.w	#SPAWN_ZONE_Y_MAX, D0
 	BLT.b	SetRandomEnemyPosition_SetX
 	SUBI.w	#SPAWN_ZONE_Y_MAX, D0
 	ADDI.w	#SPAWN_ZONE_Y_MIN, D0
-SetRandomEnemyPosition_SetX_Loop2:
+SetRandomEnemyPosition_SetY:
 	MOVE.w	D0, obj_world_y(A5)
 	MOVE.w	obj_world_x(A5), D0
 	CMPI.w	#SPAWN_SAFE_X_MIN, D0
@@ -3326,9 +3326,9 @@ InitBoss1_Common_Done:
 	MOVE.w	#$006C, obj_world_y(A6)
 	MOVE.l	#Boss1_NeckTick, obj_tick_fn(A6)
 	MOVE.w	#1, D7
-InitBoss1_Common_Done2:
+InitBoss1_Common_NeckLoop:
 	BSR.w	InitNextSpriteSlot
-	DBF	D7, InitBoss1_Common_Done2
+	DBF	D7, InitBoss1_Common_NeckLoop
 	MOVEA.l	Object_slot_03_ptr.w, A6
 	LEA	EnemySpriteFrameDataA_08, A0
 	BSET.b	#7, (A6)
@@ -3349,9 +3349,9 @@ InitBoss1_Common_Done2:
 	MOVE.b	#SOUND_LEVEL_UP, obj_hitbox_y_neg(A6)
 	MOVE.b	#0, obj_hitbox_y_pos(A6)
 	MOVE.w	#0, D7
-InitBoss1_Common_Done3:
+InitBoss1_Common_UpperBodyLoop:
 	BSR.w	InitNextSpriteSlot
-	DBF	D7, InitBoss1_Common_Done3
+	DBF	D7, InitBoss1_Common_UpperBodyLoop
 	MOVEA.l	Object_slot_04_ptr.w, A6
 	LEA	EnemySpriteFrameDataA_09, A0
 	BSET.b	#7, (A6)
@@ -3372,9 +3372,9 @@ InitBoss1_Common_Done3:
 	MOVE.b	#SOUND_LEVEL_UP, obj_hitbox_y_neg(A6)
 	MOVE.b	#0, obj_hitbox_y_pos(A6)
 	MOVE.w	#0, D7
-InitBoss1_Common_Done4:
+InitBoss1_Common_MidBodyLoop:
 	BSR.w	InitNextSpriteSlot
-	DBF	D7, InitBoss1_Common_Done4
+	DBF	D7, InitBoss1_Common_MidBodyLoop
 	MOVEA.l	Object_slot_05_ptr.w, A6
 	LEA	EnemySpriteFrameDataA_0A, A0
 	BSET.b	#7, (A6)
@@ -3391,14 +3391,14 @@ InitBoss1_Common_Done4:
 	MOVE.w	#$0070, obj_world_y(A6)
 	MOVE.l	#Boss1_TailTick, obj_tick_fn(A6)
 	MOVE.w	#0, D7
-InitBoss1_Common_Done5:
+InitBoss1_Common_TailLoop:
 	BSR.w	InitNextSpriteSlot
-	DBF	D7, InitBoss1_Common_Done5
+	DBF	D7, InitBoss1_Common_TailLoop
 	MOVEA.l	Object_slot_06_ptr.w, A6
 	LEA	EnemySpriteFrameDataA_06, A0
 	LEA	EnemySpriteFrameDataA_07, A1
 	MOVE.w	#2, D7
-InitBoss1_Common_Done6:
+InitBoss1_Common_WingLoop:
 	BSET.b	#7, (A6)
 	MOVE.b	#NPC_ATTR_PAL1, obj_sprite_flags(A6)
 	BCLR.b	#7, obj_sprite_flags(A6)
@@ -3415,7 +3415,7 @@ InitBoss1_Common_Done6:
 	CLR.w	D0
 	MOVE.b	obj_next_offset(A6), D0
 	LEA	(A6,D0.w), A6
-	DBF	D7, InitBoss1_Common_Done6
+	DBF	D7, InitBoss1_Common_WingLoop
 	BSR.w	DrawBossPortrait
 	BSR.w	DrawBossAttackGraphic1
 	RTS
@@ -3522,20 +3522,20 @@ Boss1State_HeadRetract_Loop:
 	
 Boss1State_AttackWait:
 	SUBQ.b	#1, obj_invuln_timer(A5)
-	BGE.b	Boss1State_AttackWait_Loop
+	BGE.b	Boss1State_AttackWait_CheckLunge
 	MOVE.b	#BOSS1_HEAD_PAUSE_TICKS, obj_invuln_timer(A5)
 	MOVE.w	#BOSS1_STATE_HEAD_RETRACT, Boss_ai_state.w
 	RTS
 	
-Boss1State_AttackWait_Loop:
+Boss1State_AttackWait_CheckLunge:
 	BSR.w	CheckPlayerLeftOfScreen
-	BEQ.b	Boss1State_AttackWait_Loop2
+	BEQ.b	Boss1State_AttackWait_Return
 	MOVE.w	#BOSS1_STATE_LUNGE_LEFT, Boss_ai_state.w
 	MOVE.l	#$FFFE0000, obj_vel_x(A5)
 	MOVE.l	#0, obj_vel_y(A5)
 	RTS
 	
-Boss1State_AttackWait_Loop2:
+Boss1State_AttackWait_Return:
 	RTS
 	
 Boss1State_LungeLeft:
