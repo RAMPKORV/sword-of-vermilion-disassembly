@@ -28,6 +28,10 @@
 
 'use strict';
 
+const { buildVanillaPlacements, buildWorld } = require('./randomizer/map_graph');
+const { floodFill, toIndex } = require('./randomizer/pathfinder');
+const { isWalkableTile, MAP_WIDTH } = require('./randomizer/map_utils');
+
 const args = process.argv.slice(2);
 const VERBOSE = args.includes('--verbose');
 const SHOW_ITEMS = args.includes('--items') || args.includes('--verbose');
@@ -472,7 +476,53 @@ function validate() {
     }
   }
 
-  return { results, doorResults, failed, summary: { stages: STAGES.length, failed } };
+  const spatial = validateSpatialStages();
+  if (!spatial.ok) failed = true;
+  return { results, doorResults, spatial, failed, summary: { stages: STAGES.length, failed } };
+}
+
+function validateSpatialStages() {
+  const placements = buildVanillaPlacements();
+  const { worldTiles, specialNodes } = buildWorld(placements);
+  const start = specialNodes.find((node) => node.key === 'town:0');
+  if (!start) {
+    return { ok: false, failedStage: 'START', failedKeys: ['town:0'], stages: [] };
+  }
+
+  const width = 16 * MAP_WIDTH;
+  const fill = floodFill({
+    width,
+    height: 8 * 16,
+    startIndices: [toIndex(start.worldX, start.worldY, width)],
+    canVisit(index) {
+      return isWalkableTile(worldTiles[index]);
+    },
+  });
+
+  const stageRequirements = [
+    { id: 'START', required: ['town:0'] },
+    { id: 'PARMA', required: ['town:1', 'cave:0'] },
+    { id: 'WATLING_ROUTE', required: ['town:2', 'cave:1', 'cave:3'] },
+    { id: 'MALAGA_ROUTE', required: ['town:7', 'town:6', 'cave:5', 'cave:9'] },
+    { id: 'BARROW_ROUTE', required: ['town:8', 'town:9', 'town:10', 'town:11'] },
+    { id: 'LATE_GAME', required: ['town:12', 'town:13', 'cave:11', 'cave:15'] },
+  ];
+
+  const stages = [];
+  for (const stage of stageRequirements) {
+    const missing = stage.required.filter((key) => {
+      const node = specialNodes.find((entry) => entry.key === key);
+      if (!node) return true;
+      return !fill.visited[toIndex(node.worldX, node.worldY, width)];
+    });
+    const result = { id: stage.id, required: stage.required, missing, ok: missing.length === 0 };
+    stages.push(result);
+    if (missing.length > 0) {
+      return { ok: false, failedStage: stage.id, failedKeys: missing, stages };
+    }
+  }
+
+  return { ok: true, failedStage: null, failedKeys: [], stages };
 }
 
 // ---------------------------------------------------------------------------
@@ -505,6 +555,14 @@ function printResults({ results, doorResults, failed }) {
   for (const d of doorResults) {
     const icon = d.reachable ? '✓' : '✗';
     console.log(`  ${icon} ${d.desc.padEnd(35)} cave=${d.cave}  key=${d.key}${d.reachable ? '' : '  [UNREACHABLE]'}`);
+  }
+
+  console.log('\n' + hr);
+  console.log('SPATIAL STAGE CHECKS:');
+  console.log(hr);
+  for (const stage of arguments[0].spatial.stages) {
+    const icon = stage.ok ? '✓' : '✗';
+    console.log(`  ${icon} ${stage.id.padEnd(18)} required=${stage.required.join(', ')}${stage.ok ? '' : `  missing=${stage.missing.join(', ')}`}`);
   }
 
   console.log('\n' + hr);

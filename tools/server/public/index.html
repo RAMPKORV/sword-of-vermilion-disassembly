@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Vermilion Tools UI</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <div class="brand">
+        <h1>Vermilion Tools</h1>
+        <p>Project dashboard</p>
+      </div>
+      <button class="sidebar-toggle" id="sidebar-toggle" type="button">Menu</button>
+      <div class="global-search-wrap">
+        <input id="global-search" type="search" placeholder="Search enemies, towns, symbols...">
+      </div>
+      <nav class="nav-groups" id="nav-groups"></nav>
+    </aside>
+
+    <main class="main-content">
+      <header class="topbar">
+        <div>
+          <div class="breadcrumbs" id="breadcrumbs">Home</div>
+          <h2 id="panel-title">Build &amp; Verify</h2>
+          <div class="panel-subtitle" id="panel-subtitle">Tooling hub for build checks, editors, analysis, and guided randomizer workflows.</div>
+        </div>
+        <div class="topbar-actions">
+          <span class="status-pill" id="server-state">Server: connecting</span>
+          <span class="status-pill" id="build-state">Verify: unknown</span>
+        </div>
+      </header>
+
+      <section class="panel-host" id="panel-host"></section>
+    </main>
+  </div>
+
+  <section class="activity-drawer" id="activity-drawer">
+    <div class="section-header">
+      <h3>Activity Log</h3>
+      <button id="clear-activity" type="button">Clear</button>
+    </div>
+    <div id="activity-log" class="terminal-output compact"></div>
+  </section>
+
+  <template id="terminal-template">
+    <section class="terminal-card">
+      <div class="section-header">
+        <h3>Output</h3>
+      </div>
+      <pre class="terminal-output"></pre>
+    </section>
+  </template>
+
+  <script src="/app.js"></script>
+</body>
+</html>

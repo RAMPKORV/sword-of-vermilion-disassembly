@@ -1,0 +1,421 @@
+Random Maps Roadmap
+===================
+
+Context
+-------
+Extend the current HTML tools UI and randomizer so the project can generate
+randomized world maps while preserving a completable game. The system may
+shuffle overworld sectors, towns, caves, and connector regions, but the final
+layout must always keep a valid critical path from game start to final dungeon.
+
+Goals
+-----
+- Allow seeded random map generation from the tools UI and CLI.
+- Preserve all critical progression requirements: towns, quest items, keys,
+  story flags, locked doors, dungeon access, and final-game routing.
+- Guarantee spatial connectivity, not just abstract progression logic.
+- Support dry-run preview, failure diagnostics, and repeatable seeds.
+- Keep ROM/map data injection safe and compatible with existing build checks.
+
+Quality Gates
+-------------
+- Every generated seed must pass both progression validation and spatial path
+  validation.
+- Dry-run generation must never modify ASM or map binaries.
+- Applied map changes must still allow `cmd //c verify.bat` to pass after the
+  final integration path is implemented.
+- Generator output must be deterministic for the same seed and options.
+- Failure output must explain which constraint blocked generation.
+
+Phase 1 - Discovery and Constraint Inventory
+--------------------------------------------
+
+[todo][critical][RM-001] Build a complete world-progression inventory
+Describe every critical location, town, cave, dungeon, quest trigger, key item,
+locked door, and boss gate that participates in game completion.
+Files: `tools/progression_validator.js`, `notes.txt`, `src/towndata.asm`,
+`src/mapdata.asm`, `src/dungeon.asm`
+Acceptance:
+- A single source of truth lists all critical nodes and unlock conditions.
+- Each node is tagged as required, optional, or cosmetic.
+
+[todo][critical][RM-002] Inventory overworld and cave transition points
+Catalogue all sector exits, cave entrances, town entrances, dungeon entrances,
+stairs, one-way exits, and return points used by the game.
+Files: `data/maps/`, `tools/map_viewer.js`, `tools/editor/map_editor.js`
+Acceptance:
+- Every transition has a stable identifier and source/target definition.
+- One-way and special-case transitions are explicitly marked.
+
+[todo][critical][RM-003] Define passability and traversal rules by tile type
+Document which tiles are walkable, blocked, conditional, bridge-like, water,
+mountain, indoor-only, or script-gated so pathfinding matches game behavior.
+Files: `tools/map_viewer.js`, `tools/editor/map_editor.js`, `src/player.asm`,
+`src/dungeon.asm`
+Acceptance:
+- A reusable rules module can answer whether a tile is traversable.
+- Any assumptions that differ from live game logic are documented.
+
+[todo][high][RM-004] Identify map randomization scope presets
+Define supported modes such as sector shuffle only, critical-path-preserving
+shuffle, entrance shuffle, and full generated layout with optional safeguards.
+Files: `tools/randomizer/randomize.js`, `tool-ui-plan.json`
+Acceptance:
+- Presets are named, documented, and ordered from safest to wildest.
+- Each preset lists exactly what may move and what must stay fixed.
+
+[todo][high][RM-005] Record technical constraints for binary-safe map output
+Determine which map assets can change freely, which require same-size RLE
+output, and where direct binary replacement vs remap tables are safer.
+Files: `tools/editor/map_editor.js`, `src/mapdata.asm`, `tools/inject_game_data.js`
+Acceptance:
+- The implementation path avoids accidental data shifts.
+- The todo list names which assets can be patched in-place vs regenerated.
+
+Phase 2 - Data Model and Validation Core
+----------------------------------------
+
+[done][critical][RM-006] Create a canonical map graph model
+Represent the world as nodes and edges covering overworld sectors, interiors,
+towns, caves, door locks, story gates, and entrance warps.
+Files: `tools/randomizer/map_graph.js` (new), `tools/progression_validator.js`
+Acceptance:
+- Graph data can be loaded from current assets without manual edits.
+- Critical path nodes are addressable by stable IDs.
+
+[done][critical][RM-007] Extend progression validation with spatial reachability
+Upgrade the validator so it checks not only abstract stage order, but whether
+the player can physically walk from reachable nodes to newly unlocked nodes.
+Files: `tools/progression_validator.js`, `tools/randomizer/map_graph.js`
+Acceptance:
+- Validator fails if items/story logic pass but map routing is blocked.
+- Output explains the first unreachable required milestone.
+Note: Current implementation adds stage-aware overworld reachability milestones.
+It still needs full cave/event/door-state modeling for complete quest accuracy.
+
+[done][critical][RM-008] Build tile-level pathfinding helpers
+Implement BFS/A* helpers that can evaluate passability inside sectors/rooms and
+across entrance links to measure true traversable routes.
+Files: `tools/randomizer/pathfinder.js` (new), `tools/map_viewer.js`
+Acceptance:
+- Helper can prove a path between two coordinates when one exists.
+- Helper distinguishes unreachable, one-way, and gated paths.
+
+[todo][high][RM-009] Add stage-aware world validation fixtures
+Create fixtures for early, mid, and late-game states so the validator can test
+movement using different item/flag sets.
+Files: `tools/randomizer/testdata/` (new), `tools/progression_validator.js`
+Acceptance:
+- Fixtures cover at least start, Parma/Deepdale, Malaga/Stow, and endgame.
+- Validation tests can run without editing live game assets.
+
+[todo][high][RM-010] Create failure-reporting primitives for generation
+Standardize error objects for disconnected graph, blocked entrance, impossible
+door chain, unreachable key item, and seed exhaustion.
+Files: `tools/randomizer/randomize.js`, `tools/randomizer/map_graph.js`
+Acceptance:
+- Generator failures produce machine-readable codes and human-readable messages.
+
+Phase 3 - Randomization Design
+------------------------------
+
+[todo][critical][RM-011] Design the critical-path backbone algorithm
+Define how required regions are ordered and connected before optional sectors
+are placed, so the generator always builds a solvable backbone first.
+Files: `tools/randomizer/` design docs, `tools/progression_validator.js`
+Acceptance:
+- The design guarantees a start-to-finish chain for all required milestones.
+- Optional content cannot disconnect the backbone.
+
+[todo][critical][RM-012] Design sector-edge compatibility rules
+Specify which sector edges may connect based on terrain seams, bridges, town
+entry placement, dungeon entrances, and intended traversal direction.
+Files: `tools/randomizer/map_constraints.js` (new), `data/maps/`
+Acceptance:
+- Illegal edge pairings are rejected before placement.
+- Rules allow enough valid combinations for generation to succeed often.
+
+[todo][critical][RM-013] Design entrance and exit remapping strategy
+Plan how towns, caves, and dungeon entrances will be remapped when sectors or
+rooms move, including paired return points and script-sensitive entrances.
+Files: `tools/randomizer/map_warps.js` (new), `src/towndata.asm`, `src/dungeon.asm`
+Acceptance:
+- Every moved entrance has a valid target and return mapping.
+- Scripted entrances with special behavior are preserved or excluded.
+
+[todo][high][RM-014] Decide how much terrain may be synthesized vs shuffled
+Choose when to reuse existing sectors verbatim, when to rotate/mirror, and when
+to generate connector tiles or bridge/path repairs.
+Files: `tools/randomizer/`, `data/maps/`
+Acceptance:
+- The policy is explicit for each randomization preset.
+- Any synthetic editing stays compatible with binary constraints.
+
+[todo][high][RM-015] Define optional-content attachment rules
+Place side caves, shops, dead ends, treasure routes, and non-critical flavor
+areas as branches that never block or replace mandatory progression.
+Files: `tools/randomizer/map_constraints.js` (new)
+Acceptance:
+- Optional placements enrich the map without consuming required slots.
+
+Phase 4 - Generator Implementation
+----------------------------------
+
+[todo][critical][RM-016] Implement a seedable map RNG module
+Add deterministic random helpers dedicated to map generation, separate from the
+existing module randomizers so retries and previews stay reproducible.
+Files: `tools/randomizer/map_rng.js` (new), `tools/randomizer/randomize.js`
+Acceptance:
+- Same seed and options always produce identical placements.
+- Retry logic derives deterministically from the main seed.
+
+[todo][critical][RM-017] Implement backbone-first sector placement
+Place required sectors/regions first using the designed progression chain, then
+fill remaining slots with optional or cosmetic sectors.
+Files: `tools/randomizer/map_randomizer.js` (new)
+Acceptance:
+- Required milestones are placed before branch content.
+- Placement fails fast when constraints cannot be satisfied.
+
+[done][critical][RM-018] Implement connectivity-preserving shuffle mode
+Create the first shippable mode that shuffles sectors around while preserving
+all required connections and a valid playthrough.
+Files: `tools/randomizer/map_randomizer.js` (new)
+Acceptance:
+- Sectors can move to new coordinates.
+- Generated layouts remain completable under validator checks.
+Note: MVP implementation shuffles only overworld sectors without special tiles
+and preserves reachability by matching boundary connectivity signatures against
+the vanilla layout.
+
+[done][critical][RM-019] Implement entrance remap generation
+Generate the actual entrance/exit tables needed to keep towns, caves, and
+dungeons aligned with their shuffled sector positions.
+Files: `tools/randomizer/map_warps.js` (new), `tools/inject_game_data.js`
+Acceptance:
+- Entering and exiting moved locations leads to the correct destinations.
+- Return warps cannot strand the player.
+Note: MVP exports remapped town teleport / Aries coordinates alongside moved
+special-sector positions. Direct ASM injection for these runtime tables remains
+to be wired.
+
+[todo][high][RM-020] Implement connector repair rules
+Where shuffled sectors create broken roads or impassable seams, apply minimal
+tile edits to reconnect routes without redesigning the whole map.
+Files: `tools/randomizer/map_patcher.js` (new), `tools/editor/map_editor.js`
+Acceptance:
+- Repairs are minimal, deterministic, and validated by pathfinding.
+
+[todo][high][RM-021] Support exclusion lists for fragile locations
+Allow especially script-heavy or mechanically fragile sectors/rooms to stay
+fixed until their relocation behavior is fully understood.
+Files: `tools/randomizer/map_randomizer.js` (new), `tools/randomizer/randomize.js`
+Acceptance:
+- Exclusions are configurable by preset and visible in dry-run output.
+
+[todo][medium][RM-022] Add controlled rotation/mirroring if viable
+Evaluate whether safe sector transforms can increase variety without breaking
+entrance coordinates, scripts, or passability assumptions.
+Files: `tools/randomizer/map_randomizer.js` (new), `tools/randomizer/pathfinder.js`
+Acceptance:
+- Transforms are enabled only where validation proves them safe.
+
+Phase 5 - ROM/Data Integration
+------------------------------
+
+[todo][critical][RM-023] Define map randomizer output format
+Write a JSON schema or equivalent structure for placements, remaps, tile patch
+operations, validation summaries, and metadata.
+Files: `tools/data/random_maps.schema.json` (new), `tools/randomizer/`
+Acceptance:
+- Dry-run and applied runs both emit the same core structure.
+
+[done][critical][RM-024] Implement asset export for randomized layouts
+Serialize generated sector placements, entrance remaps, and tile patches to a
+stable intermediate file that other tools and the UI can consume.
+Files: `tools/randomizer/map_randomizer.js` (new), `tools/data/`
+Acceptance:
+- Output is seed-stable and diff-friendly.
+Note: MVP now exports both a JSON manifest and generated sector binary assets
+for overworld filler sectors.
+
+[todo][critical][RM-025] Implement safe map injection path
+Apply approved randomized map data back into the project without corrupting map
+assets, warp data, or build output.
+Files: `tools/inject_game_data.js`, `tools/randomizer/map_randomizer.js` (new)
+Acceptance:
+- Apply step updates only intended files.
+- Resulting project still builds and verifies when integration is complete.
+
+[todo][high][RM-026] Add rollback-friendly staging for applied maps
+Write generated outputs to predictable files so a developer can inspect diffs,
+reapply a seed, or discard generated artifacts cleanly.
+Files: `tools/randomizer/`, `tools/data/`
+Acceptance:
+- Generated artifacts are easy to review before injection.
+
+Phase 6 - CLI and Automation
+----------------------------
+
+[done][critical][RM-027] Add `maps` as a first-class randomizer module
+Extend the unified randomizer CLI with a map flag, module wiring, seed string
+support, dry-run behavior, and validation hooks.
+Files: `tools/randomizer/randomize.js`
+Acceptance:
+- `maps` can be toggled independently or with presets.
+- Seed strings encode whether map randomization was enabled.
+
+[todo][critical][RM-028] Add map-specific CLI options
+Expose preset, shuffle depth, repair policy, exclusions, retry budget, and
+preview/export paths through CLI flags.
+Files: `tools/randomizer/randomize.js`
+Acceptance:
+- Help text clearly documents map generation options.
+
+[todo][high][RM-029] Add standalone map-randomizer dry-run command
+Create a dedicated entry point for rapid iteration and debugging without running
+every other randomizer module.
+Files: `tools/randomizer/map_randomizer.js` (new)
+Acceptance:
+- Developers can preview layouts and diagnostics in one command.
+
+[todo][high][RM-030] Add batch seed smoke-test automation
+Run many seeds in dry-run mode and report pass/fail rates, common failure
+reasons, and generation performance.
+Files: `tools/randomizer/map_seed_audit.js` (new)
+Acceptance:
+- Batch runs identify unstable constraints before release.
+
+Phase 7 - Tools UI Expansion
+----------------------------
+
+[done][critical][RM-031] Expand the Randomizer UI for map generation
+Add controls for map module enablement, preset selection, retry count, repair
+policy, exclusions, and spatial validation level.
+Files: `tools/server/public/app.js`, `tools/server/public/index.html`
+Acceptance:
+- UI can configure all safe public map-randomizer options.
+
+[done][critical][RM-032] Add API endpoints for map dry-run and apply flows
+Expose backend routes that run map generation, stream logs, and return generated
+layout metadata to the browser.
+Files: `tools/server/server.js`, `tools/server/tool-runner.js`
+Acceptance:
+- Frontend can request dry-run preview and applied generation separately.
+Note: The implemented API covers preview/dry-run plus unified randomizer wiring.
+Map asset injection is still pending.
+
+[done][critical][RM-033] Add visual map preview to the HTML UI
+Render the generated overworld layout, critical nodes, entrances, and major
+connections so users can inspect a seed before applying it.
+Files: `tools/server/public/app.js`, `tools/server/public/style.css`
+Acceptance:
+- Preview clearly shows sector placement and critical-path route.
+- Mobile and desktop layouts both remain usable.
+
+[todo][high][RM-034] Add progression graph overlay in the UI
+Show reachable vs blocked critical nodes, key-item unlock points, and the first
+failure edge when a generated map is invalid.
+Files: `tools/server/public/app.js`, `tools/progression_validator.js`
+Acceptance:
+- UI explains why a bad seed failed, not just that it failed.
+
+[todo][high][RM-035] Add command-preview support for map options
+Keep showing the exact CLI command that corresponds to the current UI state,
+including map-specific flags.
+Files: `tools/server/public/app.js`
+Acceptance:
+- Users can copy the equivalent CLI invocation from the UI.
+
+[todo][medium][RM-036] Add seed history and favorite layouts
+Let the UI keep recent successful map seeds with their presets, validation
+status, and quick re-run actions.
+Files: `tools/server/public/app.js`, `tools/server/server.js`
+Acceptance:
+- Recent seed history improves iteration without manual note-taking.
+
+Phase 8 - Validation, Balancing, and Safety Nets
+------------------------------------------------
+
+[todo][critical][RM-037] Fuzz test completable seeds at scale
+Run large seed batches to prove the generator consistently creates completable
+maps and to measure failure/retry rates.
+Files: `tools/randomizer/map_seed_audit.js` (new)
+Acceptance:
+- Reports include completion rate, retry rate, and top failure categories.
+
+[todo][critical][RM-038] Add regression seeds for known-good layouts
+Check in a small corpus of stable seeds covering safe, medium, and aggressive
+map presets so future changes can be verified quickly.
+Files: `tools/randomizer/testdata/` (new)
+Acceptance:
+- Regression seeds stay deterministic across code changes.
+
+[todo][high][RM-039] Add performance budgets for generation and validation
+Measure how long map generation, pathfinding, and validation take so the UI can
+stay responsive and batch seed tests remain practical.
+Files: `tools/randomizer/`, `tools/server/public/app.js`
+Acceptance:
+- Target budgets are documented and enforced in smoke tests.
+
+[todo][high][RM-040] Add softlock and strand-state checks
+Detect states where the player can enter a region, spend a required key, or use
+an exit in a way that leaves no route back to progression.
+Files: `tools/progression_validator.js`, `tools/randomizer/pathfinder.js`
+Acceptance:
+- Validator catches trap states beyond simple reachability.
+
+[todo][high][RM-041] Verify shop/service/town support remains sane after moves
+Ensure relocated towns still have accessible services, shops, and required NPCs
+at the correct points in progression.
+Files: `tools/progression_validator.js`, `tools/server/public/app.js`
+Acceptance:
+- Critical services are reachable when the game expects them.
+
+Phase 9 - Documentation and Release Readiness
+---------------------------------------------
+
+[todo][medium][RM-042] Write developer documentation for map randomization
+Document the graph model, generator strategy, safe presets, failure modes, and
+how to debug invalid seeds.
+Files: `docs/` (new or existing), `tools/randomizer/`
+Acceptance:
+- A new contributor can understand how map generation works.
+
+[todo][medium][RM-043] Write user-facing random map guide for the UI
+Explain presets, preview workflow, risk levels, and what it means for a seed to
+pass critical-path and spatial validation.
+Files: `docs/` (new or existing), `tools/server/public/app.js`
+Acceptance:
+- UI help text links to the guide.
+
+[todo][medium][RM-044] Add implementation checklist for future advanced modes
+Capture follow-up ideas like biome-aware synthesis, dungeon room shuffles,
+script-aware quest relocation, and spoiler log generation.
+Files: `random-maps.todos`
+Acceptance:
+- Future work is separated from MVP and clearly marked non-blocking.
+
+Suggested Delivery Order
+------------------------
+1. RM-001 through RM-008: build the real map/progression model.
+2. RM-011 through RM-019: implement a safe sector-shuffle MVP.
+3. RM-023 through RM-035: wire outputs into CLI and HTML UI.
+4. RM-037 through RM-041: harden with fuzzing and softlock detection.
+5. RM-042 through RM-044: finish docs and backlog capture.
+
+Minimum Viable Version
+----------------------
+- Shuffle overworld sectors only.
+- Keep fragile/script-heavy interiors fixed if needed.
+- Validate critical path with both item/story logic and spatial reachability.
+- Show seed preview and failure reason in the HTML UI.
+- Allow apply only after a passing dry-run.
+
+Future Ideas (Non-Blocking)
+---------------------------
+- Biome-aware generation instead of pure shuffling.
+- Dungeon-room randomization with room templates.
+- Spoiler log export showing critical path and item dependencies.
+- Difficulty-aware encounter remix tied to generated geography.
+- Visual path replay showing the validated route through the world.

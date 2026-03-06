@@ -97,6 +97,7 @@ if (!seedArg && !DRY_RUN) {
   process.exit(1);
 }
 const SEED = seedArg ? (parseInt(seedArg, 10) >>> 0) : 0;
+const OUTPUT_PATH = path.resolve(__dirname, '..', getArg('--output', path.join('data', 'enemies.json')));
 
 // ---------------------------------------------------------------------------
 // Tier classification for encounter group indices
@@ -215,5 +216,5 @@ if (DRY_RUN || !seedArg) {
   if (DRY_RUN) process.exit(0);
 }
 
-fs.writeFileSync(DATA_PATH, JSON.stringify(modified, null, 2) + '\n', 'utf8');
-console.log(`Encounter randomizer: updated overworld map and cave rooms in ${DATA_PATH}`);
+fs.writeFileSync(OUTPUT_PATH, JSON.stringify(modified, null, 2) + '\n', 'utf8');
+console.log(`Encounter randomizer: updated overworld map and cave rooms in ${OUTPUT_PATH}`);

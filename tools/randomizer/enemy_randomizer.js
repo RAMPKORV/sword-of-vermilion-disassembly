@@ -88,6 +88,7 @@ if (!seedArg && !DRY_RUN) {
 }
 const SEED     = seedArg ? (parseInt(seedArg, 10) >>> 0) : 0;
 const VARIANCE = parseFloat(getArg('--variance', '0.5'));
+const OUTPUT_PATH = path.resolve(__dirname, '..', getArg('--output', path.join('data', 'enemies.json')));
 
 // ---------------------------------------------------------------------------
 // Load data
@@ -202,5 +203,5 @@ if (DRY_RUN || !seedArg) {
 
 // Write modified data
 const out = { ...data, enemies: modifiedEnemies };
-fs.writeFileSync(DATA_PATH, JSON.stringify(out, null, 2) + '\n', 'utf8');
-console.log(`Enemy randomizer: wrote ${modifiedEnemies.length} enemy entries to ${DATA_PATH}`);
+fs.writeFileSync(OUTPUT_PATH, JSON.stringify(out, null, 2) + '\n', 'utf8');
+console.log(`Enemy randomizer: wrote ${modifiedEnemies.length} enemy entries to ${OUTPUT_PATH}`);

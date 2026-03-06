@@ -1,3 +1,7 @@
 savestates
 out.bin
 vermilion.lst
+tools/server/node_modules/
+tools/server/tmp/
+tools/server/uploads/
+tools/tmp/

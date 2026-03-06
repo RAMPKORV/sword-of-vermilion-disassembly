@@ -9,7 +9,8 @@
 // XP thresholds are intentionally NOT randomized — they affect game pacing in
 // ways that can make the game unfinishable if set too high.
 //
-// Writes modified data back to tools/data/player_stats.json.
+// Writes modified data back to tools/data/player_stats.json unless an
+// alternate output path is provided.
 // After writing, use inject_game_data.js --player-stats to patch playerstats.asm.
 //
 // Usage:
@@ -86,6 +87,7 @@ if (!seedArg && !DRY_RUN) {
 }
 const SEED     = seedArg ? (parseInt(seedArg, 10) >>> 0) : 0;
 const VARIANCE = parseFloat(getArg('--variance', '0.4'));
+const OUTPUT_PATH = path.resolve(__dirname, '..', getArg('--output', path.join('data', 'player_stats.json')));
 
 // ---------------------------------------------------------------------------
 // Stat limits (safe ranges for each gain field)
@@ -163,5 +165,5 @@ if (DRY_RUN || !seedArg) {
   if (DRY_RUN) process.exit(0);
 }
 
-fs.writeFileSync(DATA_PATH, JSON.stringify(modified, null, 2) + '\n', 'utf8');
-console.log(`Stats randomizer: wrote ${modified.level_ups.length} level-up entries to ${DATA_PATH}`);
+fs.writeFileSync(OUTPUT_PATH, JSON.stringify(modified, null, 2) + '\n', 'utf8');
+console.log(`Stats randomizer: wrote ${modified.level_ups.length} level-up entries to ${OUTPUT_PATH}`);

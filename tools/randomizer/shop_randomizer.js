@@ -7,7 +7,8 @@
 //   - Equipment shops shuffle within their category (weapons stay weapons)
 //   - Item tiers are defined by base price from shops.json
 //
-// Writes modified data back to tools/data/shops.json.
+// Writes modified data back to tools/data/shops.json unless an alternate
+// output path is provided.
 //
 // Usage:
 //   node tools/randomizer/shop_randomizer.js --seed N [--dry-run] [--json]
@@ -70,6 +71,7 @@ if (!seedArg && !DRY_RUN) {
   process.exit(1);
 }
 const SEED = seedArg ? (parseInt(seedArg, 10) >>> 0) : 0;
+const OUTPUT_PATH = path.resolve(__dirname, '..', getArg('--output', path.join('data', 'shops.json')));
 
 // ---------------------------------------------------------------------------
 // Load data
@@ -87,6 +89,7 @@ const shops = data.town_shops; // array of 16 town shops
 
 function itemTier(item) {
   const id = item.item_id || 0;
+  if (item.item_type !== 'item') return -1;
   if (id <= 3) return 0;
   if (id <= 9) return 1;
   return 2;
@@ -102,10 +105,23 @@ function collectItemSlots(shops) {
     if (!town.shops || !town.shops.item) return;
     const items = town.shops.item.assortment.items;
     items.forEach((item, slotIdx) => {
+      if (item.item_type !== 'item') return;
       slots.push({ shopIdx, slotIdx, item });
     });
   });
   return slots;
+}
+
+function normalizeItemShopEntries(shopsOut, shopsIn) {
+  shopsOut.forEach((town, shopIdx) => {
+    if (!town.shops || !town.shops.item) return;
+    const originalItems = (shopsIn[shopIdx]?.shops?.item?.assortment?.items || []).filter((item) => item.item_type === 'item');
+    const fallbackPool = originalItems.length > 0 ? originalItems : [{ item_type: 'item', item_constant: 'ITEM_HERBS', item_id: 0, item_name: 'HERBS' }];
+    town.shops.item.assortment.items = town.shops.item.assortment.items.map((item, index) => {
+      if (item.item_type === 'item') return item;
+      return { ...fallbackPool[index % fallbackPool.length] };
+    });
+  });
 }
 
 function fisherYates(arr, rng) {
@@ -129,6 +145,7 @@ function randomizeShops(seed, shopsIn) {
   const byTier   = {};
   allSlots.forEach(s => {
     const t = itemTier(s.item);
+    if (t < 0) return;
     if (!byTier[t]) byTier[t] = [];
     byTier[t].push(s);
   });
@@ -160,6 +177,8 @@ function randomizeShops(seed, shopsIn) {
     }
   }
 
+  normalizeItemShopEntries(out, shopsIn);
+
   return out;
 }
 
@@ -190,5 +209,5 @@ if (DRY_RUN || !seedArg) {
 }
 
 const out = { ...data, town_shops: modifiedShops };
-fs.writeFileSync(DATA_PATH, JSON.stringify(out, null, 2) + '\n', 'utf8');
-console.log(`Shop randomizer: wrote ${modifiedShops.length} town shop entries to ${DATA_PATH}`);
+fs.writeFileSync(OUTPUT_PATH, JSON.stringify(out, null, 2) + '\n', 'utf8');
+console.log(`Shop randomizer: wrote ${modifiedShops.length} town shop entries to ${OUTPUT_PATH}`);

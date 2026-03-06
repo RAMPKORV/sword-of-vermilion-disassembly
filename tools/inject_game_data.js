@@ -499,33 +499,22 @@ function injectPlayerStats() {
 // ---------------------------------------------------------------------------
 
 function patchShopMacroLine(origLine, item) {
-  // Match: (indent)(macroName)(whitespace)(arg1)(comma+spaces)(arg2)(comment?)
-  // or:    (indent)(macroName)(whitespace)(arg1)(comment?)
-  const m2 = origLine.match(/^(\s*)(shop(?:Magic|Equip|Item))\s+(\S+)(,\s*)(\S+)(.*)?$/i);
-  const m1 = origLine.match(/^(\s*)(shop(?:Magic|Equip|Item))\s+(\S+)()()(.*)?$/i);
+  const indent = (origLine.match(/^(\s*)/) || ['', '\t'])[1];
+  const comment = (origLine.match(/(\s*;.*)$/) || ['', ''])[1];
+  const commaSpacing = (origLine.match(/,(\s*)\S+/) || ['', ''])[1];
+  const gap = commaSpacing ? `,${commaSpacing}` : ', ';
 
   if (item.item_type === 'item') {
-    if (m2 && m2[2].toLowerCase() === 'shopitem') {
-      return `${m2[1]}${m2[2]} ${item.item_constant}${m2[6] || ''}`;
-    }
-    if (m1) {
-      return `${m1[1]}${m1[2]} ${item.item_constant}${m1[6] || ''}`;
-    }
-  } else if (item.item_type === 'equipment') {
-    if (m2 && m2[2].toLowerCase() === 'shopequip') {
-      return `${m2[1]}${m2[2]} ${item.equip_type_constant}${m2[4]}${item.equip_id_constant}${m2[6] || ''}`;
-    }
-  } else if (item.item_type === 'magic') {
-    if (m2 && m2[2].toLowerCase() === 'shopmagic') {
-      return `${m2[1]}${m2[2]} ${item.magic_type_constant}${m2[4]}${item.magic_id_constant}${m2[6] || ''}`;
-    }
+    return `${indent}shopItem ${item.item_constant}${comment}`;
   }
-  // Fallback: rebuild from scratch
-  console.warn(`  WARN: could not parse macro line for in-place patch: ${origLine}`);
-  const ind = (origLine.match(/^(\s*)/) || ['', '\t'])[1];
-  if (item.item_type === 'item')      return `${ind}shopItem ${item.item_constant}`;
-  if (item.item_type === 'equipment') return `${ind}shopEquip ${item.equip_type_constant},${item.equip_id_constant}`;
-  if (item.item_type === 'magic')     return `${ind}shopMagic ${item.magic_type_constant},${item.magic_id_constant}`;
+  if (item.item_type === 'equipment') {
+    return `${indent}shopEquip ${item.equip_type_constant}${gap}${item.equip_id_constant}${comment}`;
+  }
+  if (item.item_type === 'magic') {
+    return `${indent}shopMagic ${item.magic_type_constant}${gap}${item.magic_id_constant}${comment}`;
+  }
+
+  console.warn(`  WARN: unknown shop item_type for line patch: ${origLine}`);
   return origLine;
 }
 
