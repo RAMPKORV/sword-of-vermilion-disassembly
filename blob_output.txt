@@ -1,0 +1,603 @@
+loc_003C6E8:
+	TST.b	$C08E.w	; $3C6E8
+	BNE.b	loc_003C6E8	; $3C6EC
+	MOVE.b	#$00, D0	; $3C6EE
+	JSR	QueueSoundEffect	; $3C6F2
+	JSR	DisableVDPDisplay	; $3C6F8
+	JSR	loc_000010D8	; $3C6FE
+	MOVE.w	$C3F6.w, D0	; $3C704
+	ANDI.w	#$FFF8, D0	; $3C708
+	MOVE.w	D0, $00C00004.l	; $3C70C
+	MOVE.w	#$0000, $C104.w	; $3C712
+	MOVE.w	#$0000, $C106.w	; $3C718
+	MOVE.w	#$004F, $C080.w	; $3C71E
+	MOVE.w	#$0053, $C082.w	; $3C724
+	MOVE.w	#$0054, $C084.w	; $3C72A
+	MOVE.w	#$0001, $C086.w	; $3C730
+	JSR	LoadPalettesFromTable	; $3C736
+	JSR	EnableDisplay	; $3C73C
+	MOVE.l	#$44040003, D5	; $3C742
+	MOVE.l	D5, $C346.w	; $3C748
+	CLR.w	$C344.w	; $3C74C
+	CLR.w	$C342.w	; $3C750
+	JSR	loc_00000396	; $3C754
+	LEA	loc_0003D1BC, A0	; $3C75A
+	JSR	BossParallaxEntry_Start	; $3C760
+	LEA	loc_0003D1D0, A0	; $3C766
+	JSR	BossParallaxEntry_Start	; $3C76C
+	LEA	loc_0003D1E4, A0	; $3C772
+	JSR	BossParallaxEntry_Start	; $3C778
+	LEA	loc_0003D1F8, A0	; $3C77E
+	JSR	BossParallaxEntry_Start	; $3C784
+	LEA	loc_0003D204, A0	; $3C78A
+	JSR	BossParallaxEntry_Start	; $3C790
+loc_0003C796:
+	JSR	WaitForVBlank	; $3C796
+	MOVE.b	#$00, D0	; $3C79C
+	JSR	QueueSoundEffect	; $3C7A0
+	BSR.w	loc_0003D024	; $3C7A6
+	MOVE.w	#$0006, D2	; $3C7AA
+	JSR	CheckButtonPress	; $3C7AE
+	BEQ.b	loc_0003C796	; $3C7B4
+	MOVE.w	$C344.w, D0	; $3C7B6
+	CMPI.w	#$0004, D0	; $3C7BA
+	BGT.w	loc_0003D014	; $3C7BE
+	BRA.w	loc_0003C7C8	; $3C7C2
+	BRA.b	loc_0003C796	; $3C7C6
+loc_0003C7C8:
+	ADD.w	D0, D0	; $3C7C8
+	ADD.w	D0, D0	; $3C7CA
+	dc.w	$4EBB ; ???	; $3C7CC
+	dc.w	$0006 ; ???	; $3C7CE
+	BRA.w	loc_003C6E8	; $3C7D0
+	BRA.w	loc_0003C7E8	; $3C7D4
+	BRA.w	loc_0003C9A0	; $3C7D8
+	BRA.w	loc_0003CF02	; $3C7DC
+	BRA.w	loc_0003D012	; $3C7E0
+	BRA.w	loc_0003D014	; $3C7E4
+loc_0003C7E8:
+	JSR	loc_000010D8	; $3C7E8
+	MOVE.w	#$004F, $C080.w	; $3C7EE
+	MOVE.w	#$0053, $C082.w	; $3C7F4
+	MOVE.w	#$0054, $C084.w	; $3C7FA
+	JSR	LoadPalettesFromTable	; $3C800
+	JSR	loc_00000396	; $3C806
+	LEA	loc_0003D22C, A0	; $3C80C
+	JSR	BossParallaxEntry_Start	; $3C812
+	LEA	loc_0003D236, A0	; $3C818
+	JSR	BossParallaxEntry_Start	; $3C81E
+	LEA	loc_0003D242, A0	; $3C824
+	JSR	BossParallaxEntry_Start	; $3C82A
+	LEA	loc_0003D24E, A0	; $3C830
+	JSR	BossParallaxEntry_Start	; $3C836
+	LEA	loc_0003D25C, A0	; $3C83C
+	JSR	BossParallaxEntry_Start	; $3C842
+	LEA	loc_0003D266, A0	; $3C848
+	JSR	BossParallaxEntry_Start	; $3C84E
+	LEA	loc_0003D270, A0	; $3C854
+	JSR	BossParallaxEntry_Start	; $3C85A
+	LEA	loc_0003D27A, A0	; $3C860
+	JSR	BossParallaxEntry_Start	; $3C866
+	LEA	loc_0003D288, A0	; $3C86C
+	JSR	BossParallaxEntry_Start	; $3C872
+loc_0003C878:
+	JSR	ReadControllers	; $3C878
+	CLR.w	D2	; $3C87E
+	MOVE.b	$C408.w, D2	; $3C880
+	MOVE.l	#$45960003, D0	; $3C884
+	MOVE.l	#$000004DE, D1	; $3C88A
+	BTST	#0, D2	; $3C890
+	BSR.w	loc_0003C95C	; $3C894
+	MOVE.l	#$48960003, D0	; $3C898
+	MOVE.l	#$000004DF, D1	; $3C89E
+	BTST	#1, D2	; $3C8A4
+	BSR.w	loc_0003C95C	; $3C8A8
+	MOVE.l	#$47100003, D0	; $3C8AC
+	MOVE.l	#$000004DD, D1	; $3C8B2
+	BTST	#2, D2	; $3C8B8
+	BSR.w	loc_0003C95C	; $3C8BC
+	MOVE.l	#$471C0003, D0	; $3C8C0
+	MOVE.l	#$000004DC, D1	; $3C8C6
+	BTST	#3, D2	; $3C8CC
+	BSR.w	loc_0003C95C	; $3C8D0
+	MOVE.l	#$4B320003, D0	; $3C8D4
+	BTST	#6, D2	; $3C8DA
+	BSR.w	loc_0003C918	; $3C8DE
+	MOVE.l	#$49B80003, D0	; $3C8E2
+	BTST	#4, D2	; $3C8E8
+	BSR.w	loc_0003C918	; $3C8EC
+	MOVE.l	#$483E0003, D0	; $3C8F0
+	BTST	#5, D2	; $3C8F6
+	BSR.w	loc_0003C918	; $3C8FA
+	MOVE.l	#$443C0003, D0	; $3C8FE
+	BTST	#7, D2	; $3C904
+	BSR.w	loc_0003C918	; $3C908
+	BSR.w	loc_0003C980	; $3C90C
+	TST.w	D3	; $3C910
+	BEQ.w	loc_0003C878	; $3C912
+	RTS	; $3C916
+loc_0003C918:
+	BNE.w	loc_0003C93C	; $3C918
+	MOVE.l	D0, $00C00004.l	; $3C91C
+	MOVE.w	#$250F, $00C00000.l	; $3C922
+	MOVE.w	#$2506, $00C00000.l	; $3C92A
+	MOVE.w	#$2506, $00C00000.l	; $3C932
+	RTS	; $3C93A
+loc_0003C93C:
+	MOVE.l	D0, $00C00004.l	; $3C93C
+	MOVE.w	#$450F, $00C00000.l	; $3C942
+	MOVE.w	#$450E, $00C00000.l	; $3C94A
+	MOVE.w	#$44C0, $00C00000.l	; $3C952
+	RTS	; $3C95A
+loc_0003C95C:
+	BNE.w	loc_0003C96E	; $3C95C
+	MOVE.l	D0, $00C00004.l	; $3C960
+	MOVE.w	D1, $00C00000.l	; $3C966
+	RTS	; $3C96C
+loc_0003C96E:
+	ADDI.w	#$4000, D1	; $3C96E
+	MOVE.l	D0, $00C00004.l	; $3C972
+	MOVE.w	D1, $00C00000.l	; $3C978
+	RTS	; $3C97E
+loc_0003C980:
+	CLR.w	D3	; $3C980
+	BTST	#6, D2	; $3C982
+	BEQ.b	loc_0003C99E	; $3C986
+	BTST	#4, D2	; $3C988
+	BEQ.b	loc_0003C99E	; $3C98C
+	BTST	#5, D2	; $3C98E
+	BEQ.b	loc_0003C99E	; $3C992
+	BTST	#7, D2	; $3C994
+	BEQ.b	loc_0003C99E	; $3C998
+	MOVE.w	#$0001, D3	; $3C99A
+loc_0003C99E:
+	RTS	; $3C99E
+loc_0003C9A0:
+	JSR	QueueSoundEffect	; $3C9A0
+	JSR	DisableVDPDisplay	; $3C9A6
+	JSR	loc_000010D8	; $3C9AC
+	JSR	EnableDisplay	; $3C9B2
+	MOVE.l	#$44040003, D5	; $3C9B8
+	MOVE.l	D5, $C346.w	; $3C9BE
+	CLR.w	$C344.w	; $3C9C2
+	CLR.w	$C342.w	; $3C9C6
+	JSR	loc_00000396	; $3C9CA
+	LEA	loc_0003D29A, A0	; $3C9D0
+	JSR	BossParallaxEntry_Start	; $3C9D6
+	LEA	loc_0003D2AA, A0	; $3C9DC
+	JSR	BossParallaxEntry_Start	; $3C9E2
+	LEA	loc_0003D2BC, A0	; $3C9E8
+	JSR	BossParallaxEntry_Start	; $3C9EE
+	LEA	loc_0003D2CE, A0	; $3C9F4
+	JSR	BossParallaxEntry_Start	; $3C9FA
+	LEA	loc_0003D1F8, A0	; $3CA00
+	JSR	BossParallaxEntry_Start	; $3CA06
+	LEA	loc_0003D204, A0	; $3CA0C
+	JSR	BossParallaxEntry_Start	; $3CA12
+loc_0003CA18:
+	JSR	WaitForVBlank	; $3CA18
+	MOVE.b	#$00, D0	; $3CA1E
+	JSR	QueueSoundEffect	; $3CA22
+	BSR.w	loc_0003D024	; $3CA28
+	MOVE.w	#$0006, D2	; $3CA2C
+	JSR	CheckButtonPress	; $3CA30
+	BEQ.b	loc_0003CA18	; $3CA36
+	MOVE.w	$C344.w, D0	; $3CA38
+	CMPI.w	#$0004, D0	; $3CA3C
+	BGE.w	loc_0003CA50	; $3CA40
+	MOVE.w	D0, $C358.w	; $3CA44
+	BSR.w	loc_0003CA52	; $3CA48
+	BRA.w	loc_0003C9A0	; $3CA4C
+loc_0003CA50:
+	RTS	; $3CA50
+loc_0003CA52:
+	JSR	loc_000010D8	; $3CA52
+	MOVE.b	#$01, $C341.w	; $3CA58
+	MOVE.l	#$42040003, D5	; $3CA5E
+	MOVE.l	D5, $C346.w	; $3CA64
+	CLR.w	$C34A.w	; $3CA68
+	CLR.w	$C342.w	; $3CA6C
+	JSR	loc_00000396	; $3CA70
+	MOVE.w	$C358.w, D0	; $3CA76
+	ADD.w	D0, D0	; $3CA7A
+	ADD.w	D0, D0	; $3CA7C
+	dc.w	$4EBB ; ???	; $3CA7E
+	dc.w	$004A ; ???	; $3CA80
+loc_0003CA82:
+	JSR	WaitForVBlank	; $3CA82
+	BSR.w	loc_0003D024	; $3CA88
+	MOVE.w	#$0006, D2	; $3CA8C
+	JSR	CheckButtonPress	; $3CA90
+	BEQ.b	loc_0003CA82	; $3CA96
+	MOVE.w	$C34A.w, D1	; $3CA98
+	CMPI.w	#$0013, D1	; $3CA9C
+	BGE.w	loc_0003CAC4	; $3CAA0
+	LEA	loc_0003D880, A0	; $3CAA4
+	MOVE.w	$C358.w, D0	; $3CAAA
+	ADD.w	D0, D0	; $3CAAE
+	ADD.w	D0, D0	; $3CAB0
+	MOVE.l	+0(A0,D0.w), A1	; $3CAB2
+	ADD.w	D1, D1	; $3CAB6
+	MOVE.w	+0(A1,D1.w), D0	; $3CAB8
+	JSR	QueueSoundEffect	; $3CABC
+	BRA.b	loc_0003CA82	; $3CAC2
+loc_0003CAC4:
+	CLR.b	$C341.w	; $3CAC4
+	RTS	; $3CAC8
+	BRA.w	loc_0003CADA	; $3CACA
+	BRA.w	loc_0003CBE4	; $3CACE
+	BRA.w	loc_0003CCEE	; $3CAD2
+	BRA.w	loc_0003CDF8	; $3CAD6
+loc_0003CADA:
+	LEA	loc_0003D2DE, A0	; $3CADA
+	JSR	BossParallaxEntry_Start	; $3CAE0
+	LEA	loc_0003D2F0, A0	; $3CAE6
+	JSR	BossParallaxEntry_Start	; $3CAEC
+	LEA	loc_0003D300, A0	; $3CAF2
+	JSR	BossParallaxEntry_Start	; $3CAF8
+	LEA	loc_0003D314, A0	; $3CAFE
+	JSR	BossParallaxEntry_Start	; $3CB04
+	LEA	loc_0003D324, A0	; $3CB0A
+	JSR	BossParallaxEntry_Start	; $3CB10
+	LEA	loc_0003D334, A0	; $3CB16
+	JSR	BossParallaxEntry_Start	; $3CB1C
+	LEA	loc_0003D348, A0	; $3CB22
+	JSR	BossParallaxEntry_Start	; $3CB28
+	LEA	loc_0003D35A, A0	; $3CB2E
+	JSR	BossParallaxEntry_Start	; $3CB34
+	LEA	loc_0003D370, A0	; $3CB3A
+	JSR	BossParallaxEntry_Start	; $3CB40
+	LEA	loc_0003D388, A0	; $3CB46
+	JSR	BossParallaxEntry_Start	; $3CB4C
+	LEA	loc_0003D39A, A0	; $3CB52
+	JSR	BossParallaxEntry_Start	; $3CB58
+	LEA	loc_0003D3AC, A0	; $3CB5E
+	JSR	BossParallaxEntry_Start	; $3CB64
+	LEA	loc_0003D3C0, A0	; $3CB6A
+	JSR	BossParallaxEntry_Start	; $3CB70
+	LEA	loc_0003D3D2, A0	; $3CB76
+	JSR	BossParallaxEntry_Start	; $3CB7C
+	LEA	loc_0003D3E4, A0	; $3CB82
+	JSR	BossParallaxEntry_Start	; $3CB88
+	LEA	loc_0003D3F6, A0	; $3CB8E
+	JSR	BossParallaxEntry_Start	; $3CB94
+	LEA	loc_0003D408, A0	; $3CB9A
+	JSR	BossParallaxEntry_Start	; $3CBA0
+	LEA	loc_0003D41A, A0	; $3CBA6
+	JSR	BossParallaxEntry_Start	; $3CBAC
+	LEA	loc_0003D430, A0	; $3CBB2
+	JSR	BossParallaxEntry_Start	; $3CBB8
+	LEA	loc_0003D446, A0	; $3CBBE
+	JSR	BossParallaxEntry_Start	; $3CBC4
+	LEA	loc_0003D456, A0	; $3CBCA
+	JSR	BossParallaxEntry_Start	; $3CBD0
+	LEA	loc_0003D204, A0	; $3CBD6
+	JSR	BossParallaxEntry_Start	; $3CBDC
+	RTS	; $3CBE2
+loc_0003CBE4:
+	LEA	loc_0003D468, A0	; $3CBE4
+	JSR	BossParallaxEntry_Start	; $3CBEA
+	LEA	loc_0003D47E, A0	; $3CBF0
+	JSR	BossParallaxEntry_Start	; $3CBF6
+	LEA	loc_0003D494, A0	; $3CBFC
+	JSR	BossParallaxEntry_Start	; $3CC02
+	LEA	loc_0003D4AC, A0	; $3CC08
+	JSR	BossParallaxEntry_Start	; $3CC0E
+	LEA	loc_0003D4C4, A0	; $3CC14
+	JSR	BossParallaxEntry_Start	; $3CC1A
+	LEA	loc_0003D4D6, A0	; $3CC20
+	JSR	BossParallaxEntry_Start	; $3CC26
+	LEA	loc_0003D4EA, A0	; $3CC2C
+	JSR	BossParallaxEntry_Start	; $3CC32
+	LEA	loc_0003D4F8, A0	; $3CC38
+	JSR	BossParallaxEntry_Start	; $3CC3E
+	LEA	loc_0003D506, A0	; $3CC44
+	JSR	BossParallaxEntry_Start	; $3CC4A
+	LEA	loc_0003D51C, A0	; $3CC50
+	JSR	BossParallaxEntry_Start	; $3CC56
+	LEA	loc_0003D530, A0	; $3CC5C
+	JSR	BossParallaxEntry_Start	; $3CC62
+	LEA	loc_0003D546, A0	; $3CC68
+	JSR	BossParallaxEntry_Start	; $3CC6E
+	LEA	loc_0003D556, A0	; $3CC74
+	JSR	BossParallaxEntry_Start	; $3CC7A
+	LEA	loc_0003D568, A0	; $3CC80
+	JSR	BossParallaxEntry_Start	; $3CC86
+	LEA	loc_0003D578, A0	; $3CC8C
+	JSR	BossParallaxEntry_Start	; $3CC92
+	LEA	loc_0003D58A, A0	; $3CC98
+	JSR	BossParallaxEntry_Start	; $3CC9E
+	LEA	loc_0003D59C, A0	; $3CCA4
+	JSR	BossParallaxEntry_Start	; $3CCAA
+	LEA	loc_0003D5B0, A0	; $3CCB0
+	JSR	BossParallaxEntry_Start	; $3CCB6
+	LEA	loc_0003D5C2, A0	; $3CCBC
+	JSR	BossParallaxEntry_Start	; $3CCC2
+	LEA	loc_0003D446, A0	; $3CCC8
+	JSR	BossParallaxEntry_Start	; $3CCCE
+	LEA	loc_0003D456, A0	; $3CCD4
+	JSR	BossParallaxEntry_Start	; $3CCDA
+	LEA	loc_0003D204, A0	; $3CCE0
+	JSR	BossParallaxEntry_Start	; $3CCE6
+	RTS	; $3CCEC
+loc_0003CCEE:
+	LEA	loc_0003D5D2, A0	; $3CCEE
+	JSR	BossParallaxEntry_Start	; $3CCF4
+	LEA	loc_0003D5E8, A0	; $3CCFA
+	JSR	BossParallaxEntry_Start	; $3CD00
+	LEA	loc_0003D5F6, A0	; $3CD06
+	JSR	BossParallaxEntry_Start	; $3CD0C
+	LEA	loc_0003D608, A0	; $3CD12
+	JSR	BossParallaxEntry_Start	; $3CD18
+	LEA	loc_0003D616, A0	; $3CD1E
+	JSR	BossParallaxEntry_Start	; $3CD24
+	LEA	loc_0003D628, A0	; $3CD2A
+	JSR	BossParallaxEntry_Start	; $3CD30
+	LEA	loc_0003D63C, A0	; $3CD36
+	JSR	BossParallaxEntry_Start	; $3CD3C
+	LEA	loc_0003D652, A0	; $3CD42
+	JSR	BossParallaxEntry_Start	; $3CD48
+	LEA	loc_0003D666, A0	; $3CD4E
+	JSR	BossParallaxEntry_Start	; $3CD54
+	LEA	loc_0003D676, A0	; $3CD5A
+	JSR	BossParallaxEntry_Start	; $3CD60
+	LEA	loc_0003D68A, A0	; $3CD66
+	JSR	BossParallaxEntry_Start	; $3CD6C
+	LEA	loc_0003D6A0, A0	; $3CD72
+	JSR	BossParallaxEntry_Start	; $3CD78
+	LEA	loc_0003D6B4, A0	; $3CD7E
+	JSR	BossParallaxEntry_Start	; $3CD84
+	LEA	loc_0003D6CA, A0	; $3CD8A
+	JSR	BossParallaxEntry_Start	; $3CD90
+	LEA	loc_0003D6DE, A0	; $3CD96
+	JSR	BossParallaxEntry_Start	; $3CD9C
+	LEA	loc_0003D6EA, A0	; $3CDA2
+	JSR	BossParallaxEntry_Start	; $3CDA8
+	LEA	loc_0003D6F6, A0	; $3CDAE
+	JSR	BossParallaxEntry_Start	; $3CDB4
+	LEA	loc_0003D702, A0	; $3CDBA
+	JSR	BossParallaxEntry_Start	; $3CDC0
+	LEA	loc_0003D70E, A0	; $3CDC6
+	JSR	BossParallaxEntry_Start	; $3CDCC
+	LEA	loc_0003D446, A0	; $3CDD2
+	JSR	BossParallaxEntry_Start	; $3CDD8
+	LEA	loc_0003D456, A0	; $3CDDE
+	JSR	BossParallaxEntry_Start	; $3CDE4
+	LEA	loc_0003D204, A0	; $3CDEA
+	JSR	BossParallaxEntry_Start	; $3CDF0
+	RTS	; $3CDF6
+loc_0003CDF8:
+	LEA	loc_0003D71A, A0	; $3CDF8
+	JSR	BossParallaxEntry_Start	; $3CDFE
+	LEA	loc_0003D730, A0	; $3CE04
+	JSR	BossParallaxEntry_Start	; $3CE0A
+	LEA	loc_0003D744, A0	; $3CE10
+	JSR	BossParallaxEntry_Start	; $3CE16
+	LEA	loc_0003D75A, A0	; $3CE1C
+	JSR	BossParallaxEntry_Start	; $3CE22
+	LEA	loc_0003D76E, A0	; $3CE28
+	JSR	BossParallaxEntry_Start	; $3CE2E
+	LEA	loc_0003D786, A0	; $3CE34
+	JSR	BossParallaxEntry_Start	; $3CE3A
+	LEA	loc_0003D79C, A0	; $3CE40
+	JSR	BossParallaxEntry_Start	; $3CE46
+	LEA	loc_0003D7AE, A0	; $3CE4C
+	JSR	BossParallaxEntry_Start	; $3CE52
+	LEA	loc_0003D7C0, A0	; $3CE58
+	JSR	BossParallaxEntry_Start	; $3CE5E
+	LEA	loc_0003D7D2, A0	; $3CE64
+	JSR	BossParallaxEntry_Start	; $3CE6A
+	LEA	loc_0003D7E4, A0	; $3CE70
+	JSR	BossParallaxEntry_Start	; $3CE76
+	LEA	loc_0003D7F0, A0	; $3CE7C
+	JSR	BossParallaxEntry_Start	; $3CE82
+	LEA	loc_0003D7FC, A0	; $3CE88
+	JSR	BossParallaxEntry_Start	; $3CE8E
+	LEA	loc_0003D808, A0	; $3CE94
+	JSR	BossParallaxEntry_Start	; $3CE9A
+	LEA	loc_0003D814, A0	; $3CEA0
+	JSR	BossParallaxEntry_Start	; $3CEA6
+	LEA	loc_0003D820, A0	; $3CEAC
+	JSR	BossParallaxEntry_Start	; $3CEB2
+	LEA	loc_0003D82C, A0	; $3CEB8
+	JSR	BossParallaxEntry_Start	; $3CEBE
+	LEA	loc_0003D838, A0	; $3CEC4
+	JSR	BossParallaxEntry_Start	; $3CECA
+	LEA	loc_0003D844, A0	; $3CED0
+	JSR	BossParallaxEntry_Start	; $3CED6
+	LEA	loc_0003D446, A0	; $3CEDC
+	JSR	BossParallaxEntry_Start	; $3CEE2
+	LEA	loc_0003D456, A0	; $3CEE8
+	JSR	BossParallaxEntry_Start	; $3CEEE
+	LEA	loc_0003D204, A0	; $3CEF4
+	JSR	BossParallaxEntry_Start	; $3CEFA
+	RTS	; $3CF00
+loc_0003CF02:
+	JSR	loc_000010D8	; $3CF02
+	JSR	loc_00000396	; $3CF08
+	LEA	loc_0003D850, A0	; $3CF0E
+	JSR	BossParallaxEntry_Start	; $3CF14
+	LEA	loc_0003D862, A0	; $3CF1A
+	JSR	BossParallaxEntry_Start	; $3CF20
+	BSR.w	loc_0003CF66	; $3CF26
+	MOVE.w	#$0055, $C080.w	; $3CF2A
+	MOVE.w	#$0056, $C082.w	; $3CF30
+	MOVE.w	#$0057, $C084.w	; $3CF36
+	MOVE.w	#$0058, $C086.w	; $3CF3C
+	JSR	LoadPalettesFromTable	; $3CF42
+	BSR.w	loc_0003CF9A	; $3CF48
+	BSR.w	loc_0003CFAA	; $3CF4C
+	BSR.w	loc_0003CFBA	; $3CF50
+	BSR.w	loc_0003CFCA	; $3CF54
+loc_0003CF58:
+	MOVE.w	#$0005, D2	; $3CF58
+	JSR	CheckButtonPress	; $3CF5C
+	BEQ.b	loc_0003CF58	; $3CF62
+	RTS	; $3CF64
+loc_0003CF66:
+	CLR.w	D0	; $3CF66
+	MOVE.w	#$1111, D0	; $3CF68
+	ORI	#$0700, SR	; $3CF6C
+	MOVE.l	#$4F400001, $00C00004.l	; $3CF70
+	MOVE.w	#$0007, D2	; $3CF7A
+loc_0003CF7E:
+	MOVE.w	#$000F, D1	; $3CF7E
+loc_0003CF82:
+	MOVE.w	D0, $00C00000.l	; $3CF82
+	DBF	D1, loc_0003CF82	; $3CF88
+	ADDI.w	#$1111, D0	; $3CF8C
+	DBF	D2, loc_0003CF7E	; $3CF90
+	ANDI	#$F8FF, SR	; $3CF94
+	RTS	; $3CF98
+loc_0003CF9A:
+	MOVE.l	#$63100003, D5	; $3CF9A
+	MOVE.w	#$827A, D4	; $3CFA0
+	BSR.w	loc_0003CFDA	; $3CFA4
+	RTS	; $3CFA8
+loc_0003CFAA:
+	MOVE.l	#$65100003, D5	; $3CFAA
+	MOVE.w	#$A27A, D4	; $3CFB0
+	BSR.w	loc_0003CFDA	; $3CFB4
+	RTS	; $3CFB8
+loc_0003CFBA:
+	MOVE.l	#$67100003, D5	; $3CFBA
+	MOVE.w	#$C27A, D4	; $3CFC0
+	BSR.w	loc_0003CFDA	; $3CFC4
+	RTS	; $3CFC8
+loc_0003CFCA:
+	MOVE.l	#$69100003, D5	; $3CFCA
+	MOVE.w	#$E27A, D4	; $3CFD0
+	BSR.w	loc_0003CFDA	; $3CFD4
+	RTS	; $3CFD8
+loc_0003CFDA:
+	ORI	#$0700, SR	; $3CFDA
+	MOVE.w	#$0002, D3	; $3CFDE
+loc_0003CFE2:
+	MOVE.l	D5, $00C00004.l	; $3CFE2
+	MOVE.w	D4, D0	; $3CFE8
+	MOVE.w	#$0007, D2	; $3CFEA
+loc_0003CFEE:
+	MOVE.w	#$0002, D1	; $3CFEE
+loc_0003CFF2:
+	MOVE.w	D0, $00C00000.l	; $3CFF2
+	DBF	D1, loc_0003CFF2	; $3CFF8
+	ADDQ.w	#1, D0	; $3CFFC
+	DBF	D2, loc_0003CFEE	; $3CFFE
+	ADDI.l	#$800000, D5	; $3D002
+	DBF	D3, loc_0003CFE2	; $3D008
+	ANDI	#$F8FF, SR	; $3D00C
+	RTS	; $3D010
+loc_0003D012:
+	RTS	; $3D012
+loc_0003D014:
+	JSR	WaitForVBlank	; $3D014
+	CLR.b	$C340.w	; $3D01A
+	JMP	EntryPoint	; $3D01E
+loc_0003D024:
+	MOVE.l	$C346.w, D5	; $3D024
+	MOVEQ	#0, D0	; $3D028
+	BTST	#0, $C409.w	; $3D02A
+	BEQ.b	loc_0003D036	; $3D030
+	MOVEQ	#-1, D0	; $3D032
+	BRA.b	loc_0003D040	; $3D034
+loc_0003D036:
+	BTST	#1, $C409.w	; $3D036
+	BEQ.b	loc_0003D040	; $3D03C
+	MOVEQ	#1, D0	; $3D03E
+loc_0003D040:
+	ADD.w	D0, $C342.w	; $3D040
+	MOVE.w	$C342.w, D1	; $3D044
+	CMPI.w	#$0008, D1	; $3D048
+	BGT.w	loc_0003D06C	; $3D04C
+	CMPI.w	#$FFF8, D1	; $3D050
+	BLT.w	loc_0003D118	; $3D054
+	MOVE.l	D5, $00C00004.l	; $3D058
+	MOVE.w	#$04DC, $00C00000.l	; $3D05E
+	MOVE.l	D5, $C346.w	; $3D066
+	RTS	; $3D06A
+loc_0003D06C:
+	TST.b	$C341.w	; $3D06C
+	BNE.w	loc_0003D0C6	; $3D070
+	MOVE.l	D5, $00C00004.l	; $3D074
+	MOVE.w	#$0000, $00C00000.l	; $3D07A
+	SUBQ.w	#0, $C342.w	; $3D082
+	ADDI.l	#$1000000, D5	; $3D086
+	ADDQ.w	#1, $C344.w	; $3D08C
+	CMPI.w	#$0004, $C344.w	; $3D090
+	BNE.b	loc_0003D0A0	; $3D096
+	MOVE.l	#$4A040003, D5	; $3D098
+	BRA.b	loc_0003D0B2	; $3D09E
+loc_0003D0A0:
+	CMPI.w	#$0004, $C344.w	; $3D0A0
+	BCS.b	loc_0003D0B2	; $3D0A6
+	MOVE.l	#$44040003, D5	; $3D0A8
+	CLR.w	$C344.w	; $3D0AE
+loc_0003D0B2:
+	MOVE.l	D5, $00C00004.l	; $3D0B2
+	MOVE.w	#$04DC, $00C00000.l	; $3D0B8
+	MOVE.l	D5, $C346.w	; $3D0C0
+	RTS	; $3D0C4
+loc_0003D0C6:
+	MOVE.l	D5, $00C00004.l	; $3D0C6
+	MOVE.w	#$0000, $00C00000.l	; $3D0CC
+	SUBQ.w	#0, $C342.w	; $3D0D4
+	ADDI.l	#$1000000, D5	; $3D0D8
+	ADDQ.w	#1, $C34A.w	; $3D0DE
+	CMPI.w	#$0014, $C34A.w	; $3D0E2
+	BCS.b	loc_0003D0F6	; $3D0E8
+	MOVE.l	#$42040003, D5	; $3D0EA
+	CLR.w	$C34A.w	; $3D0F0
+	BRA.b	loc_0003D104	; $3D0F4
+loc_0003D0F6:
+	CMPI.w	#$000A, $C34A.w	; $3D0F6
+	BNE.b	loc_0003D104	; $3D0FC
+	MOVE.l	#$422C0003, D5	; $3D0FE
+loc_0003D104:
+	MOVE.l	D5, $00C00004.l	; $3D104
+	MOVE.w	#$04DC, $00C00000.l	; $3D10A
+	MOVE.l	D5, $C346.w	; $3D112
+	RTS	; $3D116
+loc_0003D118:
+	TST.b	$C341.w	; $3D118
+	BNE.w	loc_0003D16E	; $3D11C
+	MOVE.l	D5, $00C00004.l	; $3D120
+	MOVE.w	#$0000, $00C00000.l	; $3D126
+	ADDQ.w	#0, $C342.w	; $3D12E
+	SUBI.l	#$1000000, D5	; $3D132
+	SUBQ.w	#1, $C344.w	; $3D138
+	BCC.b	loc_0003D14C	; $3D13C
+	MOVE.l	#$4A040003, D5	; $3D13E
+	MOVE.w	#$0004, $C344.w	; $3D144
+	BRA.b	loc_0003D15A	; $3D14A
+loc_0003D14C:
+	CMPI.w	#$0003, $C344.w	; $3D14C
+	BNE.b	loc_0003D15A	; $3D152
+	MOVE.l	#$47040003, D5	; $3D154
+loc_0003D15A:
+	MOVE.l	D5, $00C00004.l	; $3D15A
+	MOVE.w	#$04DC, $00C00000.l	; $3D160
+	MOVE.l	D5, $C346.w	; $3D168
+	RTS	; $3D16C
+loc_0003D16E:
+	MOVE.l	D5, $00C00004.l	; $3D16E
+	MOVE.w	#$0000, $00C00000.l	; $3D174
+	ADDQ.w	#0, $C342.w	; $3D17C
+	SUBI.l	#$1000000, D5	; $3D180
+	SUBQ.w	#1, $C34A.w	; $3D186
+	BCC.b	loc_0003D19A	; $3D18A
+	MOVE.l	#$4B2C0003, D5	; $3D18C
+	MOVE.w	#$0013, $C34A.w	; $3D192
+	BRA.b	loc_0003D1A8	; $3D198
+loc_0003D19A:
+	CMPI.w	#$0009, $C34A.w	; $3D19A
+	BNE.b	loc_0003D1A8	; $3D1A0
+	MOVE.l	#$4B040003, D5	; $3D1A2
+loc_0003D1A8:
+	MOVE.l	D5, $00C00004.l	; $3D1A8
+	MOVE.w	#$04DC, $00C00000.l	; $3D1AE
+	MOVE.l	D5, $C346.w	; $3D1B6
+	RTS	; $3D1BA
+	NEG.b	A0	; $3D1BC
+	dc.w	$0003 ; ???	; $3D1BE
+	dc.w	$000B ; ???	; $3D1C0
+	ORundefined	D0, D2	; $3D1C2

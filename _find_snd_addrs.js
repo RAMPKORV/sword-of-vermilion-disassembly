@@ -1,0 +1,10 @@
+const fs = require('fs');
+const text = fs.readFileSync('src/sound.asm', 'utf8');
+const matches = new Set();
+const dollar = String.fromCharCode(36);
+const re = new RegExp('\\' + dollar + '00FFF[0-9A-Fa-f]{3}', 'g');
+let m;
+while ((m = re.exec(text)) !== null) matches.add(m[0]);
+const sorted = [...matches].sort();
+console.log(sorted.join('\n'));
+console.log('Total unique:', sorted.length);

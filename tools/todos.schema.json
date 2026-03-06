@@ -1,0 +1,122 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "vermilion-todos",
+  "title": "Sword of Vermilion Disassembly — todos.json schema",
+  "type": "object",
+  "required": ["schema_version", "task_defaults", "quality_gates", "categories"],
+  "additionalProperties": true,
+  "properties": {
+    "schema_version": { "type": "integer", "minimum": 1 },
+    "_meta": {
+      "type": "object",
+      "properties": {
+        "project":        { "type": "string" },
+        "description":    { "type": "string" },
+        "created":        { "type": "string" },
+        "label_progress": { "type": "string" },
+        "total_commits":  { "type": "integer" }
+      }
+    },
+    "task_defaults": {
+      "type": "object",
+      "required": ["verify_steps", "acceptance"],
+      "properties": {
+        "verify_steps": { "type": "array", "items": { "type": "string" } },
+        "acceptance":   { "type": "array", "items": { "type": "string" } },
+        "editing_rules":{ "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "quality_gates": {
+      "type": "object",
+      "properties": {
+        "always":           { "type": "array", "items": { "type": "string" } },
+        "before_refactors": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "categories": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/definitions/category"
+      }
+    },
+    "priority_order": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "statistics": {
+      "type": "object",
+      "properties": {
+        "total_tasks":   { "type": "integer", "minimum": 0 },
+        "by_status":     { "type": "object", "additionalProperties": { "type": "integer" } },
+        "by_priority":   { "type": "object", "additionalProperties": { "type": "integer" } },
+        "by_category":   { "type": "object", "additionalProperties": { "type": "integer" } }
+      }
+    }
+  },
+  "definitions": {
+    "category": {
+      "type": "object",
+      "required": ["description", "tasks"],
+      "properties": {
+        "description": { "type": "string" },
+        "tasks": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/task" }
+        }
+      }
+    },
+    "task": {
+      "type": "object",
+      "required": ["id", "title", "description", "priority", "effort", "status"],
+      "additionalProperties": true,
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Z]+-[0-9]+$",
+          "description": "Unique task identifier, e.g. CONST-001"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 5
+        },
+        "description": {
+          "type": "string",
+          "minLength": 10
+        },
+        "priority": {
+          "type": "string",
+          "enum": ["critical", "high", "medium", "low"]
+        },
+        "effort": {
+          "type": "string",
+          "enum": ["small", "medium", "large", "very_large"]
+        },
+        "status": {
+          "type": "string",
+          "enum": ["todo", "in_progress", "done", "blocked", "cancelled"]
+        },
+        "file": { "type": "string" },
+        "files": {
+          "oneOf": [
+            { "type": "array", "items": { "type": "string" } },
+            { "type": "array", "items": { "type": "object" } }
+          ]
+        },
+        "depends_on": {
+          "oneOf": [
+            { "type": "string" },
+            { "type": "array", "items": { "type": "string" } }
+          ]
+        },
+        "note":         { "type": "string" },
+        "notes":        { "type": "string" },
+        "completed_at": { "type": "string" },
+        "completed":    { "type": "string" },
+        "tags": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    }
+  }
+}

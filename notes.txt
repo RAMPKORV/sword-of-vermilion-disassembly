@@ -1,17 +1,32 @@
+; notes.txt — Sword of Vermilion reverse-engineering scratch notes
+;
+; NOTE: Most information here has been formalized into symbolic constants.
+; Canonical locations:
+;   RAM addresses  -> constants.asm / ram_addresses.asm / game_constants.asm
+;   Item IDs       -> constants.asm (ITEM_* constants, ~line 2010)
+;   Map format     -> src/mapdata.asm (header comment, full RLE spec)
+;   Object struct  -> constants.asm (obj_* field offsets)
+;   Script opcodes -> src/script.asm
+;
+; This file is kept for historical context and quick human lookup.
+; ---------------------------------------------------------------------------
+
 RAM location suspicions:
 
 
 This contains the current map sector + a neighborhood
-Current_map_sector_data = $FFFF9000
+Current_map_sector_data = $FFFF9000     ; Map_sector_top_left (constants.asm / ram_addresses.asm)
 
 Map format:
-Map data is RLE encoded in a peculiar way. 
+; NOTE: Canonical documentation is in src/mapdata.asm header (full overworld/cave/town breakdown).
+Map data is RLE encoded.
 
 You read a byte (A)
 If < $80, output it as is
-If > $80, read another byte and output it $80 - A number of times.
+If >= $80, read another byte and output it ($80 - A) times.
 Repeat
 
+Tile values:
 $00 => Ground
 $01 => Tree
 $02 => Rock
@@ -22,88 +37,64 @@ $8x => Entrance to town nr x
 $1x => Entrance to cave nr x or lower level of cave
 $FF => Cave exit
 
-Cursor_selected_option  = $FFFFC23E
+Cursor_selected_option  = $FFFFC23E     ; Menu_cursor_index (constants.asm / game_constants.asm)
 
 
 These are initialized to $FFFF during startup:
 
-$FFFFC4D0.w: ?
-$FFFFC4D2.w: ?
-$FFFFC4D4.w: ?
-$FFFFC4D6.w: ?
-$FFFFC4D8.w: ?
+$FFFFC4D0.w: Equipped_items / Equipped_sword   ; (constants.asm / game_constants.asm)
+$FFFFC4D2.w: Equipped_shield                   ; (constants.asm / game_constants.asm)
+$FFFFC4D4.w: Equipped_armor                    ; (constants.asm / game_constants.asm)
+$FFFFC4D6.w: Readied_magic                     ; (constants.asm / game_constants.asm)
+$FFFFC4D8.w: Equipped_unused                   ; (constants.asm / game_constants.asm)
 
 
-$FFFFC444: Possessed items array on 2-byte format: first byte is a modifier. If set to 0x01 the item can't be discarded. Second is one of
-00 Herbs   
-01 Candle          
-02 Lantern           
-03 Poison Balm       
-04 Alarm Clock 
-05 Vase   
-06 Joke Book         
-07 Small Bomb           
-08 Old Woman's Sketch  
-09 Old Man's Sketch    
-0A Pass to Cartahena   
-0B Truffle            
-0C Digot Plant         
-0D Treasure of Troy   
-0E White Crystal        
-0F Red Crystal         
-10 Blue Crystal        
-11 White Key          
-12 Red Key             
-13 Blue Key             
-14 Crown            
-15 Sixteen Rings       
-16 Bronze Key          
-17 Silver Key          
-18 Gold Key            
-19 Thule Key           
-1A Secret Key          
-1B Medicine            
-1C Agate Jewel          
-1D Griffin Wing       
-1E Titania's Mirror    
-1F Gnome Stone         
-20 Topaz Jewel         
-21 Banshee Powder     
-22 Rafael's Stick     
-23 Mirror of Atlas     
-24 Ruby Brooch        
-25 Dungeon Key        
-26 Kulm Vase            
-27 Kasan's Chisel     
-28 Book of Kiel
-29 Danegeld Water
-2A Mineral Bar
-2B Mega Blast 
+$FFFFC444: Possessed_items_list (constants.asm / game_constants.asm)
+  Array on 2-byte format: first byte is item flags (ITEM_TYPE_DISCARDABLE/$00 or
+  ITEM_TYPE_NON_DISCARDABLE/$01). Second byte is item ID.
+  ; NOTE: Full ITEM_* constant list is in constants.asm ~line 2010 / game_constants.asm ~line 1775.
+  ; Quick reference (IDs $00-$2B, 44 items total):
+00/ITEM_HERBS           01/ITEM_CANDLE          02/ITEM_LANTERN
+03/ITEM_POISON_BALM     04/ITEM_ALARM_CLOCK     05/ITEM_VASE
+06/ITEM_JOKE_BOOK       07/ITEM_SMALL_BOMB      08/ITEM_OLD_WOMANS_SKETCH
+09/ITEM_OLD_MANS_SKETCH 0A/ITEM_PASS_TO_CARTHAHENA  0B/ITEM_TRUFFLE
+0C/ITEM_DIGOT_PLANT     0D/ITEM_TREASURE_OF_TROY    0E/ITEM_WHITE_CRYSTAL
+0F/ITEM_RED_CRYSTAL     10/ITEM_BLUE_CRYSTAL    11/ITEM_WHITE_KEY
+12/ITEM_RED_KEY         13/ITEM_BLUE_KEY        14/ITEM_CROWN
+15/ITEM_SIXTEEN_RINGS   16/ITEM_BRONZE_KEY      17/ITEM_SILVER_KEY
+18/ITEM_GOLD_KEY        19/ITEM_THULE_KEY       1A/ITEM_SECRET_KEY
+1B/ITEM_MEDICINE        1C/ITEM_AGATE_JEWEL     1D/ITEM_GRIFFIN_WING
+1E/ITEM_TITANIAS_MIRROR 1F/ITEM_GNOME_STONE     20/ITEM_TOPAZ_JEWEL
+21/ITEM_BANSHEE_POWDER  22/ITEM_RAFAELS_STICK   23/ITEM_MIRROR_OF_ATLAS
+24/ITEM_RUBY_BROOCH     25/ITEM_DUNGEON_KEY     26/ITEM_KULMS_VASE
+27/ITEM_KASANS_CHISEL   28/ITEM_BOOK_OF_KIEL    29/ITEM_DANEGELD_WATER
+2A/ITEM_MINERAL_BAR     2B/ITEM_MEGA_BLAST
 
-C880: If != 0, we have map around Wyclif
-Maps might start at C818?
+$FFFFC880: If != 0, we have map around Wyclif    ; (no symbolic constant defined — beyond named block)
+Maps might start at $FFFFC818?                   ; Rings_collected (constants.asm / game_constants.asm)
 
 
 
 
-C55F.b if FF => has map of current sector
-C560.b if 01 => cave is lit
-C551.b if FF => is in cave?
+$FFFFC55F.b: Area_map_revealed — if FF => has map of current sector    ; (constants.asm / game_constants.asm)
+$FFFFC560.b: Cave_light_active — if 01 => cave is lit                  ; (constants.asm / game_constants.asm)
+$FFFFC551.b: Is_in_cave — if FF => is in cave                          ; (constants.asm / game_constants.asm)
 
-C101.b = if 1 => enqueue camera pan up
-         if 2 => enqueue camera pan down
-         if 3 => enqueue camera pan left
-         if 4 => enqueue camera pan left
+$FFFFC101.b: (high byte of Town_camera_move_state at $FFFFC100.w)      ; (constants.asm / game_constants.asm)
+  if 1 => enqueue camera pan up
+  if 2 => enqueue camera pan down
+  if 3 => enqueue camera pan left
+  if 4 => enqueue camera pan right
 
-Similarly for C100.b
+Similarly for $FFFFC100.b: Town_camera_move_state (low byte)            ; (constants.asm / game_constants.asm)
 
 Dungeon crawling mode:
 
-C662.w X position within current map in dungeon crawl mode
-C664.w Y position within current map in dungeon crawl mode
-C666.w overworld X map portion of 
-C668.w overworld Y map portion of 
+$FFFFC662.w: Player_position_x_outside_town — X position within current map in dungeon crawl mode  ; (constants.asm / game_constants.asm)
+$FFFFC664.w: Player_position_y_outside_town — Y position within current map in dungeon crawl mode  ; (constants.asm / game_constants.asm)
+$FFFFC666.w: Player_map_sector_x — overworld X map portion of          ; (constants.asm / game_constants.asm)
+$FFFFC668.w: Player_map_sector_y — overworld Y map portion of          ; (constants.asm / game_constants.asm)
 
-$FFFFC60E.b: If != 0, move player one step in the direction faced
-C542: If != 0, rotate player counter-clockwise in dungeon crawling mode
-C543: If != 0, rotate player clockwise in dungeon crawling mode
+$FFFFC60E.b: Player_is_moving — If != 0, move player one step in the direction faced   ; (constants.asm / game_constants.asm)
+$FFFFC542.b: Player_rotate_counter_clockwise_in_overworld — If != 0, rotate player CCW ; (constants.asm / game_constants.asm)
+$FFFFC543.b: Player_rotate_clockwise_in_overworld — If != 0, rotate player CW          ; (constants.asm / game_constants.asm)

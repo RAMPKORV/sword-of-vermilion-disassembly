@@ -1,0 +1,207 @@
+{
+  "build_order": [
+    "vermilion.asm",
+    "header.asm",
+    "macros.asm",
+    "constants.asm",
+    "src/core.asm",
+    "src/vblank.asm",
+    "src/init.asm",
+    "src/states.asm",
+    "src/gameplay.asm",
+    "src/player.asm",
+    "src/dungeon.asm",
+    "src/bossbattle.asm",
+    "src/npc.asm",
+    "src/enemy.asm",
+    "src/boss.asm",
+    "src/battle_gfx.asm",
+    "src/sram.asm",
+    "src/script.asm",
+    "src/cutscene.asm",
+    "src/magic.asm",
+    "src/combat.asm",
+    "src/items.asm",
+    "src/towndata.asm",
+    "src/strings.asm",
+    "src/shopdata.asm",
+    "src/battledata.asm",
+    "src/playerstats.asm",
+    "src/gamestrings.asm",
+    "src/townbuild.asm",
+    "src/miscdata.asm",
+    "src/mapdata.asm",
+    "src/gfxdata.asm",
+    "src/sound.asm"
+  ],
+  "nodes": {
+    "macros.asm": {
+      "includes": [],
+      "depth": 2
+    },
+    "constants.asm": {
+      "includes": [],
+      "depth": 2
+    },
+    "header.asm": {
+      "includes": [
+        "macros.asm",
+        "constants.asm"
+      ],
+      "depth": 1
+    },
+    "src/core.asm": {
+      "includes": [],
+      "depth": 1
+    },
+    "src/init.asm": {
+      "includes": [],
+      "depth": 2,
+      "error": "file not found"
+    },
+    "src/vblank.asm": {
+      "includes": [
+        "src/init.asm"
+      ],
+      "depth": 1
+    },
+    "src/states.asm": {
+      "includes": [],
+      "depth": 1
+    },
+    "src/gameplay.asm": {
+      "includes": [],
+      "depth": 1
+    },
+    "src/player.asm": {
+      "includes": [],
+      "depth": 1
+    },
+    "src/dungeon.asm": {
+      "includes": [],
+      "depth": 1
+    },
+    "src/bossbattle.asm": {
+      "includes": [],
+      "depth": 1
+    },
+    "src/npc.asm": {
+      "includes": [],
+      "depth": 1
+    },
+    "src/enemy.asm": {
+      "includes": [],
+      "depth": 1
+    },
+    "src/boss.asm": {
+      "includes": [],
+      "depth": 1
+    },
+    "src/battle_gfx.asm": {
+      "includes": [],
+      "depth": 1
+    },
+    "src/sram.asm": {
+      "includes": [],
+      "depth": 1
+    },
+    "src/script.asm": {
+      "includes": [],
+      "depth": 1
+    },
+    "src/cutscene.asm": {
+      "includes": [],
+      "depth": 1
+    },
+    "src/magic.asm": {
+      "includes": [],
+      "depth": 1
+    },
+    "src/combat.asm": {
+      "includes": [],
+      "depth": 1
+    },
+    "src/items.asm": {
+      "includes": [],
+      "depth": 1
+    },
+    "src/towndata.asm": {
+      "includes": [],
+      "depth": 1
+    },
+    "src/strings.asm": {
+      "includes": [],
+      "depth": 1
+    },
+    "src/shopdata.asm": {
+      "includes": [],
+      "depth": 1
+    },
+    "src/battledata.asm": {
+      "includes": [],
+      "depth": 1
+    },
+    "src/playerstats.asm": {
+      "includes": [],
+      "depth": 1
+    },
+    "src/gamestrings.asm": {
+      "includes": [],
+      "depth": 1
+    },
+    "src/townbuild.asm": {
+      "includes": [],
+      "depth": 1
+    },
+    "src/miscdata.asm": {
+      "includes": [],
+      "depth": 1
+    },
+    "src/mapdata.asm": {
+      "includes": [],
+      "depth": 1
+    },
+    "src/gfxdata.asm": {
+      "includes": [],
+      "depth": 1
+    },
+    "src/sound.asm": {
+      "includes": [],
+      "depth": 1
+    },
+    "vermilion.asm": {
+      "includes": [
+        "header.asm",
+        "src/core.asm",
+        "src/vblank.asm",
+        "src/states.asm",
+        "src/gameplay.asm",
+        "src/player.asm",
+        "src/dungeon.asm",
+        "src/bossbattle.asm",
+        "src/npc.asm",
+        "src/enemy.asm",
+        "src/boss.asm",
+        "src/battle_gfx.asm",
+        "src/sram.asm",
+        "src/script.asm",
+        "src/cutscene.asm",
+        "src/magic.asm",
+        "src/combat.asm",
+        "src/items.asm",
+        "src/towndata.asm",
+        "src/strings.asm",
+        "src/shopdata.asm",
+        "src/battledata.asm",
+        "src/playerstats.asm",
+        "src/gamestrings.asm",
+        "src/townbuild.asm",
+        "src/miscdata.asm",
+        "src/mapdata.asm",
+        "src/gfxdata.asm",
+        "src/sound.asm"
+      ],
+      "depth": 0
+    }
+  }
+}

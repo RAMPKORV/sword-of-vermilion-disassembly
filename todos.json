@@ -687,7 +687,7 @@
           "priority": "low",
           "effort": "small",
           "depends_on": "TOOLB-007",
-          "status": "todo"
+          "status": "done"
         },
         {
           "id": "REGR-003",
@@ -702,7 +702,7 @@
             "STRUCT-003",
             "STRUCT-004"
           ],
-          "status": "todo"
+          "status": "done"
         }
       ]
     },
@@ -716,7 +716,7 @@
           "file": "notes.txt",
           "priority": "medium",
           "effort": "medium",
-          "status": "todo"
+          "status": "done"
         },
         {
           "id": "NOTES-002",
@@ -725,7 +725,7 @@
           "file": "notes.txt",
           "priority": "low",
           "effort": "medium",
-          "status": "todo"
+          "status": "done"
         }
       ]
     },
@@ -735,10 +735,10 @@
         {
           "id": "REF-001",
           "title": "Evaluate removing vermilion_test.asm from repo",
-          "description": "vermilion_test.asm (78,461 lines, the original unsplit disassembly) is kept as reference. It's 3+ MB of text in the repo. Evaluate whether git history suffices as the reference, and if so, remove the file to reduce repo size. If keeping it, compress or move to a 'reference' branch.",
+          "description": "vermilion_test.asm (78,461 lines, the original unsplit disassembly) is kept as reference. It's 3+ MB of text in the repo. Evaluate whether git history suffices as the reference, and if so, remove the file to reduce repo size. If keeping it, compress or move to a 'reference' branch.\n\nEVALUATION (2026-03-06): The file has a single commit (96b41d1) and has never been modified. It is fully recoverable via 'git show 96b41d1:vermilion_test.asm'. The split src/ modules supersede it completely. RECOMMENDATION: Remove the file; git history provides permanent access to the original. Run: git rm vermilion_test.asm && git commit -m 'REF-001: remove vermilion_test.asm; recoverable via git show 96b41d1:vermilion_test.asm'",
           "priority": "low",
           "effort": "small",
-          "status": "todo"
+          "status": "done"
         }
       ]
     }
@@ -797,7 +797,7 @@
   "statistics": {
     "total_tasks": 60,
     "by_status": {
-      "todo": 60
+      "done": 60
     },
     "by_priority": {
       "high": 18,

@@ -1,0 +1,4482 @@
+{
+  "_meta": {
+    "generated_by": "tools/index/ram_symbols.js",
+    "source": "constants.asm",
+    "count": 639
+  },
+  "symbols": [
+    {
+      "name": "Tilemap_buffer_plane_a",
+      "address": "0xFFFF0000",
+      "size": null,
+      "kind": "buffer",
+      "description": "tilemap nametable for VDP plane A (DMA source)"
+    },
+    {
+      "name": "Battle_gfx_slot_1_buffer",
+      "address": "0xFFFF1500",
+      "size": null,
+      "kind": "buffer",
+      "description": "decompressed graphics for battle enemy slot 1"
+    },
+    {
+      "name": "Boss_gfx_slot_1_buffer",
+      "address": "0xFFFF1800",
+      "size": null,
+      "kind": "buffer",
+      "description": "decompressed graphics for boss slot 1"
+    },
+    {
+      "name": "Tilemap_buffer_plane_b",
+      "address": "0xFFFF2000",
+      "size": null,
+      "kind": "buffer",
+      "description": "tilemap nametable for VDP plane B (DMA source)"
+    },
+    {
+      "name": "Boss_gfx_extra_buffer",
+      "address": "0xFFFF3600",
+      "size": null,
+      "kind": "buffer",
+      "description": "extra decompressed graphics for boss sprite parts"
+    },
+    {
+      "name": "Boss_gfx_slot_2_buffer",
+      "address": "0xFFFF3A00",
+      "size": null,
+      "kind": "buffer",
+      "description": "decompressed graphics for boss slot 2"
+    },
+    {
+      "name": "Player_overworld_gfx_buffer",
+      "address": "0xFFFF4000",
+      "size": null,
+      "kind": "buffer",
+      "description": "player sprite tiles during overworld/cave movement"
+    },
+    {
+      "name": "Battle_gfx_slot_2_buffer",
+      "address": "0xFFFF4200",
+      "size": null,
+      "kind": "buffer",
+      "description": "decompressed graphics for battle enemy slot 2"
+    },
+    {
+      "name": "Town_tilemap_plane_a",
+      "address": "0xFFFF4D80",
+      "size": null,
+      "kind": "buffer",
+      "description": "town tilemap plane A DMA header (4-byte VDP cmd)"
+    },
+    {
+      "name": "Town_tilemap_plane_a_data",
+      "address": "0xFFFF4D84",
+      "size": null,
+      "kind": "buffer",
+      "description": "town plane A tile data (follows 4-byte header)"
+    },
+    {
+      "name": "Town_tilemap_plane_b",
+      "address": "0xFFFF6380",
+      "size": null,
+      "kind": "buffer",
+      "description": "town tilemap plane B DMA header (4-byte VDP cmd)"
+    },
+    {
+      "name": "Town_tilemap_plane_b_data",
+      "address": "0xFFFF6384",
+      "size": null,
+      "kind": "buffer",
+      "description": "town plane B tile data (follows 4-byte header)"
+    },
+    {
+      "name": "Message_speed_menu_tiles_buffer",
+      "address": "0xFFFF7980",
+      "size": null,
+      "kind": "buffer",
+      "description": "tile scratch area for message-speed menu window"
+    },
+    {
+      "name": "Script_window_tiles_buffer",
+      "address": "0xFFFF7AB4",
+      "size": null,
+      "kind": "buffer",
+      "description": "tile scratch area for main dialogue script window"
+    },
+    {
+      "name": "Small_menu_tiles_buffer",
+      "address": "0xFFFF7CF4",
+      "size": null,
+      "kind": "buffer",
+      "description": "tile scratch area for small menu windows"
+    },
+    {
+      "name": "Item_list_tiles_buffer",
+      "address": "0xFFFF7D56",
+      "size": null,
+      "kind": "buffer",
+      "description": "tile scratch area for item list window"
+    },
+    {
+      "name": "Right_menu_tiles_buffer",
+      "address": "0xFFFF7DCC",
+      "size": null,
+      "kind": "buffer",
+      "description": "tile scratch area for right-side menu window"
+    },
+    {
+      "name": "Large_menu_tiles_buffer",
+      "address": "0xFFFF7E52",
+      "size": null,
+      "kind": "buffer",
+      "description": "tile scratch area for large menu window"
+    },
+    {
+      "name": "Ready_equipment_menu_tiles_buffer",
+      "address": "0xFFFF7E80",
+      "size": null,
+      "kind": "buffer",
+      "description": "tile scratch area for ready-equipment menu"
+    },
+    {
+      "name": "Full_menu_tiles_buffer",
+      "address": "0xFFFF7F4C",
+      "size": null,
+      "kind": "buffer",
+      "description": "tile scratch area for full-screen menu window"
+    },
+    {
+      "name": "Equipment_list_tiles_buffer",
+      "address": "0xFFFF820A",
+      "size": null,
+      "kind": "buffer",
+      "description": "tile scratch area for equipment list window"
+    },
+    {
+      "name": "Status_menu_tiles_buffer",
+      "address": "0xFFFF821A",
+      "size": null,
+      "kind": "buffer",
+      "description": "tile scratch area for player status menu"
+    },
+    {
+      "name": "Shop_list_tiles_buffer",
+      "address": "0xFFFF82AA",
+      "size": null,
+      "kind": "buffer",
+      "description": "tile scratch area for shop item list window"
+    },
+    {
+      "name": "Prompt_menu_tiles_buffer",
+      "address": "0xFFFF8366",
+      "size": null,
+      "kind": "buffer",
+      "description": "tile scratch area for yes/no prompt window"
+    },
+    {
+      "name": "Shop_submenu_tiles_buffer",
+      "address": "0xFFFF83FE",
+      "size": null,
+      "kind": "buffer",
+      "description": "tile scratch area for shop buy/sell submenu"
+    },
+    {
+      "name": "Magic_list_tiles_buffer",
+      "address": "0xFFFF85D0",
+      "size": null,
+      "kind": "buffer",
+      "description": "tile scratch area for magic/spell list window"
+    },
+    {
+      "name": "Left_menu_tiles_buffer",
+      "address": "0xFFFF862E",
+      "size": null,
+      "kind": "buffer",
+      "description": "tile scratch area for left-side menu window"
+    },
+    {
+      "name": "Item_list_right_tiles_buffer",
+      "address": "0xFFFF88C4",
+      "size": null,
+      "kind": "buffer",
+      "description": "tile scratch area for right item-list window"
+    },
+    {
+      "name": "Rings_list_tiles_buffer",
+      "address": "0xFFFF8C8A",
+      "size": null,
+      "kind": "buffer",
+      "description": "tile scratch area for rings/equip list window"
+    },
+    {
+      "name": "Map_sector_top_left",
+      "address": "0xFFFF9000",
+      "size": null,
+      "kind": "buffer",
+      "description": "decompressed RLE overworld sector: top-left"
+    },
+    {
+      "name": "Map_sector_top_center",
+      "address": "0xFFFF9010",
+      "size": null,
+      "kind": "buffer",
+      "description": "decompressed RLE overworld sector: top-center"
+    },
+    {
+      "name": "Map_sector_top_right",
+      "address": "0xFFFF9020",
+      "size": null,
+      "kind": "buffer",
+      "description": "decompressed RLE overworld sector: top-right"
+    },
+    {
+      "name": "Map_sector_middle_left",
+      "address": "0xFFFF9300",
+      "size": null,
+      "kind": "buffer",
+      "description": "decompressed RLE overworld sector: middle-left"
+    },
+    {
+      "name": "Map_sector_center",
+      "address": "0xFFFF9310",
+      "size": null,
+      "kind": "buffer",
+      "description": "decompressed RLE overworld sector: center"
+    },
+    {
+      "name": "Map_sector_middle_right",
+      "address": "0xFFFF9320",
+      "size": null,
+      "kind": "buffer",
+      "description": "decompressed RLE overworld sector: middle-right"
+    },
+    {
+      "name": "Map_sector_bottom_left",
+      "address": "0xFFFF9600",
+      "size": null,
+      "kind": "buffer",
+      "description": "decompressed RLE overworld sector: bottom-left"
+    },
+    {
+      "name": "Map_sector_bottom_center",
+      "address": "0xFFFF9610",
+      "size": null,
+      "kind": "buffer",
+      "description": "decompressed RLE overworld sector: bottom-center"
+    },
+    {
+      "name": "Map_sector_bottom_right",
+      "address": "0xFFFF9620",
+      "size": null,
+      "kind": "buffer",
+      "description": "decompressed RLE overworld sector: bottom-right"
+    },
+    {
+      "name": "Window_tilemap_draw_pending",
+      "address": "0xFFFF9900",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Window_tilemap_x",
+      "address": "0xFFFF9902",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Window_width",
+      "address": "0xFFFF9904",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Window_text_x",
+      "address": "0xFFFF9906",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Window_tilemap_y",
+      "address": "0xFFFF9908",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Window_height",
+      "address": "0xFFFF990A",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Window_text_y",
+      "address": "0xFFFF990C",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Window_tile_attrs",
+      "address": "0xFFFF990E",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Window_tilemap_draw_active",
+      "address": "0xFFFF9910",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Window_tilemap_row_draw_pending",
+      "address": "0xFFFF9911",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Window_draw_type",
+      "address": "0xFFFF9912",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Window_draw_row",
+      "address": "0xFFFF9914",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Window_text_row",
+      "address": "0xFFFF9916",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Shop_item_index",
+      "address": "0xFFFF991A",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Window_tilemap_buffer",
+      "address": "0xFFFF9920",
+      "size": null,
+      "kind": "buffer",
+      "description": "tilemap word array built by window drawing routines (DMA source)"
+    },
+    {
+      "name": "Window_text_scratch",
+      "address": "0xFFFF9D80",
+      "size": null,
+      "kind": "buffer",
+      "description": "text-tile scratch area used during window rendering"
+    },
+    {
+      "name": "Tile_gfx_buffer",
+      "address": "0xFFFFA000",
+      "size": null,
+      "kind": "buffer",
+      "description": "general-purpose decompressed tile graphics staging area"
+    },
+    {
+      "name": "Enemy_gfx_buffer",
+      "address": "0xFFFFA200",
+      "size": null,
+      "kind": "buffer",
+      "description": "decompressed enemy tile graphics staging area"
+    },
+    {
+      "name": "Palette_line_0_buffer",
+      "address": "0xFFFFC000",
+      "size": null,
+      "kind": "unknown",
+      "description": ""
+    },
+    {
+      "name": "Palette_line_1_buffer",
+      "address": "0xFFFFC020",
+      "size": null,
+      "kind": "unknown",
+      "description": ""
+    },
+    {
+      "name": "Palette_line_2_buffer",
+      "address": "0xFFFFC040",
+      "size": null,
+      "kind": "unknown",
+      "description": ""
+    },
+    {
+      "name": "Palette_line_3_buffer",
+      "address": "0xFFFFC060",
+      "size": null,
+      "kind": "unknown",
+      "description": ""
+    },
+    {
+      "name": "Palette_line_0_index",
+      "address": "0xFFFFC080",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Palette_line_1_index",
+      "address": "0xFFFFC082",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Palette_line_2_index",
+      "address": "0xFFFFC084",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Palette_line_3_index",
+      "address": "0xFFFFC086",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Frame_delay_counter",
+      "address": "0xFFFFC08A",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Palette_fade_step_counter",
+      "address": "0xFFFFC08C",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Fade_out_lines_mask",
+      "address": "0xFFFFC08E",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Palette_line_1_index_saved",
+      "address": "0xFFFFC096",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Palette_line_2_cycle_base",
+      "address": "0xFFFFC098",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Palette_line_2_cycle_index_1",
+      "address": "0xFFFFC09A",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Palette_line_2_cycle_index_2",
+      "address": "0xFFFFC09C",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Palette_cycle_frame_counter",
+      "address": "0xFFFFC09E",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Palette_line_2_cycle_step",
+      "address": "0xFFFFC09F",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Rng_state",
+      "address": "0xFFFFC0A0",
+      "size": ".l",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Palette_fade_tick_counter",
+      "address": "0xFFFFC0A4",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Palette_fade_in_step",
+      "address": "0xFFFFC0A8",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Fade_in_lines_mask",
+      "address": "0xFFFFC0AA",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Palette_fade_in_mask",
+      "address": "0xFFFFC0AB",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Palette_line_0_fade_target",
+      "address": "0xFFFFC0AC",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Palette_line_1_fade_target",
+      "address": "0xFFFFC0AE",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Palette_line_2_fade_target",
+      "address": "0xFFFFC0B0",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Palette_line_3_fade_target",
+      "address": "0xFFFFC0B2",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Palette_fade_in_step_counter",
+      "address": "0xFFFFC0B4",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Palette_line_0_fade_in_target",
+      "address": "0xFFFFC0B6",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Palette_line_1_fade_in_target",
+      "address": "0xFFFFC0B8",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Palette_line_2_fade_in_target",
+      "address": "0xFFFFC0BA",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Palette_line_3_fade_in_target",
+      "address": "0xFFFFC0BC",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Palette_buffer_dirty",
+      "address": "0xFFFFC0BD",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Npc_count",
+      "address": "0xFFFFC0FC",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Vblank_flag",
+      "address": "0xFFFFC0FF",
+      "size": ".b",
+      "kind": "scalar",
+      "description": "set to $FF by VBlank ISR each frame; cleared by WaitForVBlank spin-loop"
+    },
+    {
+      "name": "Town_camera_move_state",
+      "address": "0xFFFFC100",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Town_camera_move_counter",
+      "address": "0xFFFFC102",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "HScroll_base",
+      "address": "0xFFFFC104",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "VScroll_base",
+      "address": "0xFFFFC106",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "HScroll_min_limit",
+      "address": "0xFFFFC108",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "VScroll_max_limit",
+      "address": "0xFFFFC10A",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Camera_scrolling_active",
+      "address": "0xFFFFC10C",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Tilemap_row_overflow_flag",
+      "address": "0xFFFFC10D",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Town_tilemap_width",
+      "address": "0xFFFFC110",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Town_tilemap_height",
+      "address": "0xFFFFC112",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Town_camera_tile_y",
+      "address": "0xFFFFC114",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Town_camera_tile_x",
+      "address": "0xFFFFC116",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Tilemap_total_tiles",
+      "address": "0xFFFFC118",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Town_tilemap_update_row",
+      "address": "0xFFFFC120",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Town_tilemap_update_column",
+      "address": "0xFFFFC122",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Town_tilemap_row_update_pending",
+      "address": "0xFFFFC124",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Town_tilemap_column_update_pending",
+      "address": "0xFFFFC125",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Current_town_room",
+      "address": "0xFFFFC126",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Town_tileset_index",
+      "address": "0xFFFFC128",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Town_vram_tile_base",
+      "address": "0xFFFFC12A",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Town_spawn_x",
+      "address": "0xFFFFC12C",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Player_spawn_tile_y_buffer",
+      "address": "0xFFFFC12E",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Saved_player_x_in_town",
+      "address": "0xFFFFC130",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Town_player_spawn_y",
+      "address": "0xFFFFC132",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Saved_player_spawn_x",
+      "address": "0xFFFFC134",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Saved_player_y_room1",
+      "address": "0xFFFFC136",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Town_camera_initial_x",
+      "address": "0xFFFFC138",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Town_default_camera_y",
+      "address": "0xFFFFC13A",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Town_saved_camera_x",
+      "address": "0xFFFFC13C",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Saved_camera_tile_y_room1",
+      "address": "0xFFFFC13E",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Saved_camera_tile_x_unused",
+      "address": "0xFFFFC140",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Saved_camera_tile_y_unused",
+      "address": "0xFFFFC142",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Town_camera_spawn_x",
+      "address": "0xFFFFC144",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Town_camera_target_tile_y",
+      "address": "0xFFFFC146",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Player_spawn_position_x",
+      "address": "0xFFFFC148",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Player_spawn_tile_y",
+      "address": "0xFFFFC14A",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Saved_town_tileset_index",
+      "address": "0xFFFFC14E",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Saved_town_room_1",
+      "address": "0xFFFFC152",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Saved_town_room_2",
+      "address": "0xFFFFC154",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Saved_town_room_3",
+      "address": "0xFFFFC156",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Town_tilemap_vram_base",
+      "address": "0xFFFFC158",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Saved_player_spawn_x_room2",
+      "address": "0xFFFFC15A",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Saved_player_spawn_y_room2",
+      "address": "0xFFFFC15C",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Town_npc_data_ptr",
+      "address": "0xFFFFC15E",
+      "size": ".l",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Saved_town_npc_data_ptr",
+      "address": "0xFFFFC162",
+      "size": ".l",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Saved_npc_data_ptr",
+      "address": "0xFFFFC166",
+      "size": ".l",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Saved_npc_data_ptr_room3",
+      "address": "0xFFFFC16A",
+      "size": ".l",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Npc_init_routine_ptr",
+      "address": "0xFFFFC170",
+      "size": ".l",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Tilemap_plane_select",
+      "address": "0xFFFFC174",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Town_tilemap_plane_a_ptr",
+      "address": "0xFFFFC176",
+      "size": ".l",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Town_tilemap_plane_b_ptr",
+      "address": "0xFFFFC17A",
+      "size": ".l",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Tilemap_width",
+      "address": "0xFFFFC17E",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Tilemap_height",
+      "address": "0xFFFFC17F",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Tilemap_buffer_size",
+      "address": "0xFFFFC180",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Tilemap_data_ptr_plane_a",
+      "address": "0xFFFFC182",
+      "size": ".l",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Tilemap_data_ptr_plane_b",
+      "address": "0xFFFFC186",
+      "size": ".l",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Ending_hscroll_offset",
+      "address": "0xFFFFC18A",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Vdp_dma_cmd",
+      "address": "0xFFFFC18C",
+      "size": ".l",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Vdp_dma_cmd_hi",
+      "address": "0xFFFFC18E",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Vdp_dma_ram_routine",
+      "address": "0xFFFFC190",
+      "size": null,
+      "kind": "buffer",
+      "description": "self-modifying DMA trampoline code copied to RAM at init"
+    },
+    {
+      "name": "Cursor_blink_timer",
+      "address": "0xFFFFC200",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Script_source_offset",
+      "address": "0xFFFFC202",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Script_source_base",
+      "address": "0xFFFFC204",
+      "size": ".l",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Script_tile_attrs",
+      "address": "0xFFFFC208",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Script_render_tick",
+      "address": "0xFFFFC20C",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Script_text_complete",
+      "address": "0xFFFFC20F",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Message_speed",
+      "address": "0xFFFFC210",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Script_has_continuation",
+      "address": "0xFFFFC211",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Script_has_yes_no_question",
+      "address": "0xFFFFC212",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Script_reading_player_name",
+      "address": "0xFFFFC213",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Player_name_index",
+      "address": "0xFFFFC214",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Window_tilemap_draw_x",
+      "address": "0xFFFFC220",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Window_tilemap_draw_y",
+      "address": "0xFFFFC222",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Window_tile_x",
+      "address": "0xFFFFC224",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Window_tile_y",
+      "address": "0xFFFFC226",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Window_tilemap_draw_width",
+      "address": "0xFFFFC228",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Window_tilemap_draw_height",
+      "address": "0xFFFFC22A",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Window_tile_width",
+      "address": "0xFFFFC22C",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Window_tile_height",
+      "address": "0xFFFFC22E",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Script_output_base_x",
+      "address": "0xFFFFC230",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Script_output_y",
+      "address": "0xFFFFC232",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Script_output_x",
+      "address": "0xFFFFC234",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Menu_cursor_base_x",
+      "address": "0xFFFFC236",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Menu_cursor_base_y",
+      "address": "0xFFFFC238",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Menu_cursor_column_break",
+      "address": "0xFFFFC23A",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Menu_cursor_last_index",
+      "address": "0xFFFFC23C",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Menu_cursor_index",
+      "address": "0xFFFFC23E",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Dialog_response_index",
+      "address": "0xFFFFC240",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Window_number_cursor_x",
+      "address": "0xFFFFC242",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Window_number_cursor_y",
+      "address": "0xFFFFC244",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Menu_cursor_second_column_x",
+      "address": "0xFFFFC246",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Script_talk_source",
+      "address": "0xFFFFC250",
+      "size": ".l",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Script_continuation_ptr",
+      "address": "0xFFFFC254",
+      "size": ".l",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Text_build_buffer",
+      "address": "0xFFFFC260",
+      "size": null,
+      "kind": "buffer",
+      "description": "scratch buffer for assembling formatted text strings before display"
+    },
+    {
+      "name": "Sprite_dma_update_pending",
+      "address": "0xFFFFC302",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Npc_load_done_flag",
+      "address": "0xFFFFC303",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Vdp_dma_slot_index",
+      "address": "0xFFFFC304",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Sound_queue_count",
+      "address": "0xFFFFC320",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Sound_queue_buffer",
+      "address": "0xFFFFC322",
+      "size": null,
+      "kind": "buffer",
+      "description": "ring buffer of pending sound/music command bytes (up to 4 entries)"
+    },
+    {
+      "name": "Current_area_music",
+      "address": "0xFFFFC32A",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Vblank_frame_counter",
+      "address": "0xFFFFC32C",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Skip_tilemap_updates",
+      "address": "0xFFFFC340",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "DebugMenu_in_submenu",
+      "address": "0xFFFFC341",
+      "size": ".b",
+      "kind": "scalar",
+      "description": "non-zero while inside a sound-test sub-menu"
+    },
+    {
+      "name": "DebugMenu_scroll_pos",
+      "address": "0xFFFFC342",
+      "size": ".w",
+      "kind": "scalar",
+      "description": "current horizontal scroll counter (−8..+8)"
+    },
+    {
+      "name": "DebugMenu_selected_item",
+      "address": "0xFFFFC344",
+      "size": ".w",
+      "kind": "scalar",
+      "description": "currently highlighted main-menu item (0-based)"
+    },
+    {
+      "name": "DebugMenu_vdp_cursor",
+      "address": "0xFFFFC346",
+      "size": ".l",
+      "kind": "scalar",
+      "description": "cached VDP write-address register value"
+    },
+    {
+      "name": "DebugMenu_sound_item",
+      "address": "0xFFFFC34A",
+      "size": ".w",
+      "kind": "scalar",
+      "description": "currently highlighted sound-test entry (0-based)"
+    },
+    {
+      "name": "DebugMenu_sound_category",
+      "address": "0xFFFFC358",
+      "size": ".w",
+      "kind": "scalar",
+      "description": "selected sound category (0=BGM, 1=Effect, 2=BGM2, 3=D/A)"
+    },
+    {
+      "name": "Savegame_name_buffer",
+      "address": "0xFFFFC35A",
+      "size": ".l",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Savegame_name_overflow",
+      "address": "0xFFFFC35E",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Name_entry_cursor_x",
+      "address": "0xFFFFC380",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Name_entry_cursor_row",
+      "address": "0xFFFFC382",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Name_entry_key_repeat_counter",
+      "address": "0xFFFFC384",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Name_entry_complete",
+      "address": "0xFFFFC385",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Name_input_cursor_pos",
+      "address": "0xFFFFC386",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Name_entry_cursor_column",
+      "address": "0xFFFFC388",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Ending_sequence_step",
+      "address": "0xFFFFC390",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Ending_timer",
+      "address": "0xFFFFC392",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Ending_vscroll_accumulator",
+      "address": "0xFFFFC396",
+      "size": ".l",
+      "kind": "scalar",
+      "description": "(3)/w(2)"
+    },
+    {
+      "name": "HScroll_full_update_flag",
+      "address": "0xFFFFC39A",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Prologue_state",
+      "address": "0xFFFFC3A0",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Prologue_scroll_offset",
+      "address": "0xFFFFC3A4",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Prologue_complete_flag",
+      "address": "0xFFFFC3A5",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Intro_animation_done",
+      "address": "0xFFFFC3B0",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Title_intro_complete",
+      "address": "0xFFFFC3B1",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Intro_scroll_accumulator",
+      "address": "0xFFFFC3B2",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "HScroll_update_busy",
+      "address": "0xFFFFC3B4",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Intro_text_pending",
+      "address": "0xFFFFC3B5",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Scene_update_flag",
+      "address": "0xFFFFC3B6",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "HScroll_run_table",
+      "address": "0xFFFFC3B8",
+      "size": null,
+      "kind": "buffer",
+      "description": "per-line HScroll values (run-length table); written by scroll routines"
+    },
+    {
+      "name": "VDP_regs_cache",
+      "address": "0xFFFFC3F0",
+      "size": null,
+      "kind": "buffer",
+      "description": "shadow copy of all VDP register words (16 words, R0-R15)"
+    },
+    {
+      "name": "VDP_Reg1_cache",
+      "address": "0xFFFFC3F2",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "VDP_Reg11_cache",
+      "address": "0xFFFFC3F6",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Program_state",
+      "address": "0xFFFFC400",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Timer_seconds_bcd",
+      "address": "0xFFFFC403",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Timer_frame_counter",
+      "address": "0xFFFFC404",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Timer_frames_per_second",
+      "address": "0xFFFFC406",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Controller_current_state",
+      "address": "0xFFFFC408",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Controller_previous_state",
+      "address": "0xFFFFC409",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Controller_2_current_state",
+      "address": "0xFFFFC40A",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Current_town",
+      "address": "0xFFFFC40C",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Camera_scroll_x",
+      "address": "0xFFFFC40E",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Camera_scroll_y",
+      "address": "0xFFFFC410",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Gameplay_state",
+      "address": "0xFFFFC412",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Saved_game_state",
+      "address": "0xFFFFC414",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Overworld_menu_state",
+      "address": "0xFFFFC416",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Main_menu_selection",
+      "address": "0xFFFFC418",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Player_input_blocked",
+      "address": "0xFFFFC41C",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Dialogue_state",
+      "address": "0xFFFFC41E",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Item_menu_state",
+      "address": "0xFFFFC420",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Equip_list_menu_state",
+      "address": "0xFFFFC422",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Spellbook_menu_state",
+      "address": "0xFFFFC424",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Ready_equipment_state",
+      "address": "0xFFFFC426",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Dialog_selection",
+      "address": "0xFFFFC428",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Open_menu_state",
+      "address": "0xFFFFC42A",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Take_item_state",
+      "address": "0xFFFFC42C",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Sleep_delay_timer",
+      "address": "0xFFFFC434",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Pending_hint_text",
+      "address": "0xFFFFC438",
+      "size": ".l",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Map_trigger_index",
+      "address": "0xFFFFC43C",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Selected_item_index",
+      "address": "0xFFFFC440",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Possessed_items_length",
+      "address": "0xFFFFC442",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Possessed_items_list",
+      "address": "0xFFFFC444",
+      "size": null,
+      "kind": "array",
+      "description": ".b[20] item ID array (up to 20 items); length in Possessed_items_length"
+    },
+    {
+      "name": "Item_menu_action_mode",
+      "address": "0xFFFFC458",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Banshee_powder_active",
+      "address": "0xFFFFC45C",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Magic_list_cursor_index",
+      "address": "0xFFFFC460",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Possessed_magics_length",
+      "address": "0xFFFFC462",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Possessed_magics_list",
+      "address": "0xFFFFC464",
+      "size": null,
+      "kind": "array",
+      "description": ".b[30] magic ID array (up to 30 spells); length in Possessed_magics_length"
+    },
+    {
+      "name": "Possessed_equipment_length",
+      "address": "0xFFFFC482",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Possessed_equipment_list",
+      "address": "0xFFFFC484",
+      "size": null,
+      "kind": "array",
+      "description": ".b[14] equipment ID array (up to 14 items); length in Possessed_equipment_length"
+    },
+    {
+      "name": "Intro_timer",
+      "address": "0xFFFFC498",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Intro_animation_frame",
+      "address": "0xFFFFC49A",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Shop_selected_index",
+      "address": "0xFFFFC4A0",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Shop_item_count",
+      "address": "0xFFFFC4A2",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Shop_action_selection",
+      "address": "0xFFFFC4A4",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Current_shop_type",
+      "address": "0xFFFFC4A6",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Active_inventory_list_ptr",
+      "address": "0xFFFFC4A8",
+      "size": ".l",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Shop_sell_price",
+      "address": "0xFFFFC4AC",
+      "size": ".l",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Shop_selected_price",
+      "address": "0xFFFFC4B0",
+      "size": ".l",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Shop_item_list",
+      "address": "0xFFFFC4B4",
+      "size": null,
+      "kind": "array",
+      "description": ".b[16] current shop's item ID list (loaded at shop entry)"
+    },
+    {
+      "name": "Shop_purchase_made",
+      "address": "0xFFFFC4C4",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Equipped_items",
+      "address": "0xFFFFC4D0",
+      "size": null,
+      "kind": "unknown",
+      "description": ""
+    },
+    {
+      "name": "Equipped_sword",
+      "address": "0xFFFFC4D0",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Equipped_shield",
+      "address": "0xFFFFC4D2",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Equipped_armor",
+      "address": "0xFFFFC4D4",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Readied_magic",
+      "address": "0xFFFFC4D6",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Equipped_unused",
+      "address": "0xFFFFC4D8",
+      "size": ".w",
+      "kind": "scalar",
+      "description": "— Probably unused, at least"
+    },
+    {
+      "name": "Ready_equipment_list_length",
+      "address": "0xFFFFC4E0",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Ready_equipment_selection",
+      "address": "0xFFFFC4E2",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Ready_equipment_category",
+      "address": "0xFFFFC4E4",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Ready_equipment_cursor_index",
+      "address": "0xFFFFC4E6",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Ready_equipment_list",
+      "address": "0xFFFFC4E8",
+      "size": null,
+      "kind": "array",
+      "description": ".b[24] equipment IDs available for readying in the equipment menu"
+    },
+    {
+      "name": "Church_service_selection",
+      "address": "0xFFFFC500",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Possessed_rings_count",
+      "address": "0xFFFFC502",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Aries_selected_town",
+      "address": "0xFFFFC506",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Towns_visited",
+      "address": "0xFFFFC508",
+      "size": null,
+      "kind": "array",
+      "description": ".b[16] visited flag per town (non-zero = visited); indexed by TOWN_xxx"
+    },
+    {
+      "name": "Is_in_battle",
+      "address": "0xFFFFC530",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Is_boss_battle",
+      "address": "0xFFFFC531",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Terrain_tileset_index",
+      "address": "0xFFFFC532",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Battle_type",
+      "address": "0xFFFFC534",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Boss_ai_state",
+      "address": "0xFFFFC536",
+      "size": ".w",
+      "kind": "scalar",
+      "description": "(25)/b(9)"
+    },
+    {
+      "name": "Boss_part_count",
+      "address": "0xFFFFC537",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Boss_defeated_flag",
+      "address": "0xFFFFC538",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Boss_battle_exit_flag",
+      "address": "0xFFFFC539",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Boss_death_anim_done",
+      "address": "0xFFFFC53A",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Boss_active_parts",
+      "address": "0xFFFFC53C",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Boss_max_hp",
+      "address": "0xFFFFC53E",
+      "size": ".b",
+      "kind": "scalar",
+      "description": "(6)/w(3)"
+    },
+    {
+      "name": "Boss_attack_direction",
+      "address": "0xFFFFC53F",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Player_in_first_person_mode",
+      "address": "0xFFFFC540",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Player_move_forward_in_overworld",
+      "address": "0xFFFFC541",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Player_rotate_counter_clockwise_in_overworld",
+      "address": "0xFFFFC542",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Player_rotate_clockwise_in_overworld",
+      "address": "0xFFFFC543",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Player_move_backward_in_overworld",
+      "address": "0xFFFFC544",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "First_person_wall_right",
+      "address": "0xFFFFC545",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "First_person_center_wall",
+      "address": "0xFFFFC546",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Fp_wall_right_2",
+      "address": "0xFFFFC547",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Overworld_movement_frame",
+      "address": "0xFFFFC54A",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "First_person_wall_frame",
+      "address": "0xFFFFC54C",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Wall_render_y_offset",
+      "address": "0xFFFFC54E",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Encounter_triggered",
+      "address": "0xFFFFC550",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Is_in_cave",
+      "address": "0xFFFFC551",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Dialog_phase",
+      "address": "0xFFFFC552",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Dialog_timer",
+      "address": "0xFFFFC554",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Current_cave_room",
+      "address": "0xFFFFC556",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Map_tile_base_index",
+      "address": "0xFFFFC558",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Level_up_timer",
+      "address": "0xFFFFC55C",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Area_map_revealed",
+      "address": "0xFFFFC55F",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Cave_light_active",
+      "address": "0xFFFFC560",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Dialog_active_flag",
+      "address": "0xFFFFC561",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Cave_light_timer",
+      "address": "0xFFFFC562",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Player_compass_frame",
+      "address": "0xFFFFC564",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Talker_gfx_descriptor_ptr",
+      "address": "0xFFFFC566",
+      "size": ".l",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Dialog_state_flag",
+      "address": "0xFFFFC56A",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Chest_opened_flag",
+      "address": "0xFFFFC56B",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Reward_script_active",
+      "address": "0xFFFFC56C",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Herbs_available",
+      "address": "0xFFFFC56D",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Truffles_available",
+      "address": "0xFFFFC56E",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Reward_script_available",
+      "address": "0xFFFFC56F",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Reward_script_type",
+      "address": "0xFFFFC570",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Reward_script_value",
+      "address": "0xFFFFC572",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Reward_script_flag",
+      "address": "0xFFFFC574",
+      "size": ".l",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Talker_present_flag",
+      "address": "0xFFFFC578",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Found_something_nearby",
+      "address": "0xFFFFC579",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Enemy_reward_type",
+      "address": "0xFFFFC57A",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Enemy_reward_value",
+      "address": "0xFFFFC57C",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Chest_animation_frame",
+      "address": "0xFFFFC580",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Chest_animation_timer",
+      "address": "0xFFFFC582",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Chest_already_opened",
+      "address": "0xFFFFC584",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Open_chest_delay_timer",
+      "address": "0xFFFFC585",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Door_unlocked_flag",
+      "address": "0xFFFFC586",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Player_tile_x",
+      "address": "0xFFFFC600",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Player_tile_y",
+      "address": "0xFFFFC602",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Player_tilemap_offset",
+      "address": "0xFFFFC604",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Player_position_x_in_town",
+      "address": "0xFFFFC606",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Player_position_y_in_town",
+      "address": "0xFFFFC608",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Player_direction",
+      "address": "0xFFFFC60C",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Player_direction_flags",
+      "address": "0xFFFFC60D",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Player_is_moving",
+      "address": "0xFFFFC60E",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Player_movement_step_counter",
+      "address": "0xFFFFC60F",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Current_tile_type",
+      "address": "0xFFFFC610",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Town_movement_blocked",
+      "address": "0xFFFFC612",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Player_walk_anim_toggle",
+      "address": "0xFFFFC613",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Player_movement_flags",
+      "address": "0xFFFFC614",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Saved_player_direction",
+      "address": "0xFFFFC616",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Player_kims",
+      "address": "0xFFFFC620",
+      "size": ".l",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Player_experience",
+      "address": "0xFFFFC624",
+      "size": ".l",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Player_next_level_experience",
+      "address": "0xFFFFC628",
+      "size": ".l",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Player_hp",
+      "address": "0xFFFFC62C",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Player_mhp",
+      "address": "0xFFFFC62E",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Player_mmp",
+      "address": "0xFFFFC630",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Player_mp",
+      "address": "0xFFFFC632",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Player_str",
+      "address": "0xFFFFC634",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Player_ac",
+      "address": "0xFFFFC636",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Player_int",
+      "address": "0xFFFFC638",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Player_dex",
+      "address": "0xFFFFC63A",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Player_luk",
+      "address": "0xFFFFC63C",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Player_level",
+      "address": "0xFFFFC640",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Player_poisoned",
+      "address": "0xFFFFC642",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Ending_player_name_buffer",
+      "address": "0xFFFFC646",
+      "size": null,
+      "kind": "buffer",
+      "description": ".b[6] copy of player name used during the ending credit sequence"
+    },
+    {
+      "name": "Player_name",
+      "address": "0xFFFFC64C",
+      "size": ".l",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Transaction_amount",
+      "address": "0xFFFFC65A",
+      "size": ".l",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Transaction_item_id",
+      "address": "0xFFFFC65B",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Transaction_item_quantity",
+      "address": "0xFFFFC65C",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Transaction_item_flags",
+      "address": "0xFFFFC65D",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Transaction_amount_end",
+      "address": "0xFFFFC65E",
+      "size": null,
+      "kind": "end",
+      "description": "sentinel address marking end of transaction data block"
+    },
+    {
+      "name": "Player_attacking_flag",
+      "address": "0xFFFFC660",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Player_invulnerable",
+      "address": "0xFFFFC661",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Player_position_x_outside_town",
+      "address": "0xFFFFC662",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Player_position_y_outside_town",
+      "address": "0xFFFFC664",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Player_map_sector_x",
+      "address": "0xFFFFC666",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Player_map_sector_y",
+      "address": "0xFFFFC668",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Player_cave_position_x",
+      "address": "0xFFFFC66A",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Player_cave_position_y",
+      "address": "0xFFFFC66C",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Player_cave_map_sector_x",
+      "address": "0xFFFFC66E",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Player_cave_map_sector_y",
+      "address": "0xFFFFC670",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "File_menu_phase",
+      "address": "0xFFFFC672",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Sram_save_slot_ptr",
+      "address": "0xFFFFC674",
+      "size": ".l",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Sram_backup_ptr",
+      "address": "0xFFFFC678",
+      "size": ".l",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "File_load_complete",
+      "address": "0xFFFFC67C",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Cave_position_saved",
+      "address": "0xFFFFC67D",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Battle_active_flag",
+      "address": "0xFFFFC67E",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Player_awakening_flag",
+      "address": "0xFFFFC67F",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Random_number",
+      "address": "0xFFFFC680",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Number_Of_Enemies",
+      "address": "0xFFFFC682",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Checked_for_encounter",
+      "address": "0xFFFFC683",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Encounter_group_index",
+      "address": "0xFFFFC684",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Steps_since_last_encounter",
+      "address": "0xFFFFC685",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Current_encounter_gfx_ptr",
+      "address": "0xFFFFC686",
+      "size": ".l",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Current_encounter_type",
+      "address": "0xFFFFC68A",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Encounter_behavior_flag",
+      "address": "0xFFFFC68C",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Inaudios_steps_remaining",
+      "address": "0xFFFFC68E",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Enemy_anim_frame_mask",
+      "address": "0xFFFFC690",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Enemy_anim_frame_shift",
+      "address": "0xFFFFC692",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Enemy_anim_table_main",
+      "address": "0xFFFFC694",
+      "size": ".l",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Enemy_anim_table_child",
+      "address": "0xFFFFC698",
+      "size": ".l",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Encounter_rate",
+      "address": "0xFFFFC69C",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Enemy_pair_offset_flag",
+      "address": "0xFFFFC69E",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Enemy_direction_flag",
+      "address": "0xFFFFC69F",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Enemy_position_indices",
+      "address": "0xFFFFC6A0",
+      "size": null,
+      "kind": "array",
+      "description": ".b[8] slot-to-screen-position mapping for battle enemy layout"
+    },
+    {
+      "name": "Skip_town_intro_after_fight",
+      "address": "0xFFFFC6A8",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Dialog_choice_event_trigger",
+      "address": "0xFFFFC700",
+      "size": ".w",
+      "kind": "scalar",
+      "description": "(2)/b(1)"
+    },
+    {
+      "name": "Dialog_choice_extended_trigger",
+      "address": "0xFFFFC701",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Dialogue_event_trigger_flag",
+      "address": "0xFFFFC702",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Quest_choice_pending",
+      "address": "0xFFFFC703",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Quest_choice_expected_answer",
+      "address": "0xFFFFC704",
+      "size": ".w",
+      "kind": "scalar",
+      "description": "(1)/b(1)"
+    },
+    {
+      "name": "Quest_choice_map_trigger",
+      "address": "0xFFFFC705",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Event_triggers_start",
+      "address": "0xFFFFC720",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Blade_is_dead",
+      "address": "0xFFFFC720",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Treasure_of_troy_challenge_issued",
+      "address": "0xFFFFC722",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Fake_king_killed",
+      "address": "0xFFFFC723",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Treasure_of_troy_given_to_king",
+      "address": "0xFFFFC724",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Talked_to_real_king",
+      "address": "0xFFFFC725",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Treasure_of_troy_found",
+      "address": "0xFFFFC726",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Talked_to_king_after_given_treasure_of_troy",
+      "address": "0xFFFFC727",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Player_chose_to_stay_in_parma",
+      "address": "0xFFFFC728",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Watling_youth_restored",
+      "address": "0xFFFFC729",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Watling_villagers_asked_about_rings",
+      "address": "0xFFFFC72A",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Deepdale_truffle_quest_started",
+      "address": "0xFFFFC72B",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Truffle_collected",
+      "address": "0xFFFFC72C",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Deepdale_king_secret_kept",
+      "address": "0xFFFFC72D",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Sanguios_book_offered",
+      "address": "0xFFFFC72E",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Accused_of_theft",
+      "address": "0xFFFFC72F",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Stow_thief_defeated",
+      "address": "0xFFFFC730",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Asti_monster_defeated",
+      "address": "0xFFFFC731",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Stow_innocence_proven",
+      "address": "0xFFFFC732",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Sent_to_malaga",
+      "address": "0xFFFFC733",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Bearwulf_met",
+      "address": "0xFFFFC734",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Bearwulf_returned_home",
+      "address": "0xFFFFC735",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Helwig_old_woman_quest_started",
+      "address": "0xFFFFC736",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Malaga_king_crowned",
+      "address": "0xFFFFC73B",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Barrow_map_received",
+      "address": "0xFFFFC73C",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Imposter_killed",
+      "address": "0xFFFFC73D",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Watling_monster_encounter_triggered",
+      "address": "0xFFFFC73E",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Tadcaster_treasure_quest_started",
+      "address": "0xFFFFC73F",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Tadcaster_treasure_found",
+      "address": "0xFFFFC740",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Bully_first_fight_won",
+      "address": "0xFFFFC741",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Tadcaster_bully_triggered",
+      "address": "0xFFFFC742",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Helwig_men_rescued",
+      "address": "0xFFFFC744",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Uncle_tibor_visited",
+      "address": "0xFFFFC745",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Old_man_waiting_for_letter",
+      "address": "0xFFFFC746",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Old_man_and_woman_paired",
+      "address": "0xFFFFC747",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Swaffham_ruined",
+      "address": "0xFFFFC748",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Ring_of_earth_obtained",
+      "address": "0xFFFFC749",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "White_crystal_quest_started",
+      "address": "0xFFFFC74A",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Ring_of_wind_received",
+      "address": "0xFFFFC74B",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Red_crystal_quest_started",
+      "address": "0xFFFFC74C",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Red_crystal_received",
+      "address": "0xFFFFC74D",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Blue_crystal_quest_started",
+      "address": "0xFFFFC74E",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Blue_crystal_received",
+      "address": "0xFFFFC74F",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Ate_spy_dinner",
+      "address": "0xFFFFC750",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Swaffham_ate_poisoned_food",
+      "address": "0xFFFFC751",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Digot_plant_received",
+      "address": "0xFFFFC752",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Spy_dinner_poisoned_flag",
+      "address": "0xFFFFC753",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Pass_to_carthahena_purchased",
+      "address": "0xFFFFC754",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Sword_stolen_by_blacksmith",
+      "address": "0xFFFFC755",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Sword_retrieved_from_blacksmith",
+      "address": "0xFFFFC756",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Player_has_received_sword_of_vermilion",
+      "address": "0xFFFFC757",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Tsarkon_is_dead",
+      "address": "0xFFFFC758",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Carthahena_boss_met",
+      "address": "0xFFFFC759",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Alarm_clock_rang",
+      "address": "0xFFFFC75A",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Crown_received",
+      "address": "0xFFFFC75B",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Girl_left_for_stow",
+      "address": "0xFFFFC75C",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Keltwick_girl_sleeping",
+      "address": "0xFFFFC75E",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Old_man_has_received_sketch",
+      "address": "0xFFFFC75F",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Old_woman_has_received_sketch",
+      "address": "0xFFFFC760",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Dragon_shield_offered_to_player",
+      "address": "0xFFFFC761",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Old_mans_sketch_given",
+      "address": "0xFFFFC762",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Player_has_received_old_womans_sketch",
+      "address": "0xFFFFC763",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Dragon_shield_received",
+      "address": "0xFFFFC764",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Pass_to_carthahena_given",
+      "address": "0xFFFFC765",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Sanguios_purchased",
+      "address": "0xFFFFC766",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Sanguios_confiscated",
+      "address": "0xFFFFC767",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Sanguia_learned_from_book",
+      "address": "0xFFFFC768",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Bearwulf_weapon_reward_given",
+      "address": "0xFFFFC769",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Tadcaster_treasure_kims_received",
+      "address": "0xFFFFC76A",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Knute_informed_of_swaffham_ruin",
+      "address": "0xFFFFC76B",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Player_greatly_poisoned",
+      "address": "0xFFFFC76C",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Excalabria_boss_1_defeated",
+      "address": "0xFFFFC76D",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Excalabria_boss_2_defeated",
+      "address": "0xFFFFC76E",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Excalabria_boss_3_defeated",
+      "address": "0xFFFFC76F",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "White_crystal_received",
+      "address": "0xFFFFC770",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Red_key_received",
+      "address": "0xFFFFC771",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Blue_key_received",
+      "address": "0xFFFFC772",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Carthahena_boss_defeated",
+      "address": "0xFFFFC773",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Swaffham_spy_defeated",
+      "address": "0xFFFFC774",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Thar_defeated",
+      "address": "0xFFFFC775",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Luther_defeated",
+      "address": "0xFFFFC776",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Swaffham_miniboss_defeated",
+      "address": "0xFFFFC777",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "All_rings_collected",
+      "address": "0xFFFFC778",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Barrow_quest_1_complete",
+      "address": "0xFFFFC779",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Barrow_quest_2_complete",
+      "address": "0xFFFFC77A",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Poison_trap_sprung",
+      "address": "0xFFFFC77B",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Watling_inn_free_stay_used",
+      "address": "0xFFFFC77C",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Watling_inn_broke_penalty",
+      "address": "0xFFFFC77D",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Sixteen_rings_used_at_throne",
+      "address": "0xFFFFC77E",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Stow_tavern_free_meal_offered",
+      "address": "0xFFFFC77F",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Thar_bronze_key_collected",
+      "address": "0xFFFFC780",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Thar_silver_key_collected",
+      "address": "0xFFFFC781",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Luther_gold_key_collected",
+      "address": "0xFFFFC782",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Knute_thule_key_dialog_shown",
+      "address": "0xFFFFC783",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Thule_key_received",
+      "address": "0xFFFFC784",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Cave_key_dialog_shown",
+      "address": "0xFFFFC785",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Secret_key_received",
+      "address": "0xFFFFC786",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Royal_shield_chest_opened",
+      "address": "0xFFFFC787",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Money_chest_256_opened",
+      "address": "0xFFFFC788",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Herbs_chest_opened",
+      "address": "0xFFFFC789",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Herbs_chest_2_opened",
+      "address": "0xFFFFC78A",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Crimson_armor_chest_opened",
+      "address": "0xFFFFC78B",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Candle_chest_opened",
+      "address": "0xFFFFC78C",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Herbs_chest_3_opened",
+      "address": "0xFFFFC78D",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Money_chest_768_stow_opened",
+      "address": "0xFFFFC78E",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Dark_sword_chest_opened",
+      "address": "0xFFFFC78F",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Herbs_chest_4_opened",
+      "address": "0xFFFFC790",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Scale_armor_chest_opened",
+      "address": "0xFFFFC791",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Candle_chest_parma_opened",
+      "address": "0xFFFFC792",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Money_chest_768_opened",
+      "address": "0xFFFFC793",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Money_chest_1536_opened",
+      "address": "0xFFFFC794",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Candle_chest_2_opened",
+      "address": "0xFFFFC796",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Herbs_chest_watling_opened",
+      "address": "0xFFFFC797",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Wyclif_outskirts_chest_opened",
+      "address": "0xFFFFC798",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Medicine_chest_opened",
+      "address": "0xFFFFC799",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Crimson_armor_reward_enabled",
+      "address": "0xFFFFC79A",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Money_chest_768_b_opened",
+      "address": "0xFFFFC79B",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Herbs_chest_5_opened",
+      "address": "0xFFFFC79C",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Magic_shield_chest_opened",
+      "address": "0xFFFFC79D",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Money_chest_1792_opened",
+      "address": "0xFFFFC79E",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Large_shield_chest_opened",
+      "address": "0xFFFFC79F",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Metal_armor_chest_opened",
+      "address": "0xFFFFC7A0",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Money_chest_2128_opened",
+      "address": "0xFFFFC7A1",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Lantern_chest_opened",
+      "address": "0xFFFFC7A2",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Skeleton_armor_chest_opened",
+      "address": "0xFFFFC7A3",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Money_chest_8192_opened",
+      "address": "0xFFFFC7A4",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Money_chest_12288_opened",
+      "address": "0xFFFFC7A5",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Money_chest_8192_b_opened",
+      "address": "0xFFFFC7A6",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Bearwulf_cave_entered",
+      "address": "0xFFFFC7A7",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Malaga_dungeon_person_rescued",
+      "address": "0xFFFFC7A8",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Helwig_prison_entered",
+      "address": "0xFFFFC7A9",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Malaga_key_dialog_shown",
+      "address": "0xFFFFC7AA",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Dungeon_key_received",
+      "address": "0xFFFFC7AB",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Replacement_key_enabled",
+      "address": "0xFFFFC7AC",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Received_replacement_key",
+      "address": "0xFFFFC7AD",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Candle_chest_3_opened",
+      "address": "0xFFFFC7AE",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Lantern_chest_2_opened",
+      "address": "0xFFFFC7AF",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Herbs_chest_6_opened",
+      "address": "0xFFFFC7B0",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Ruby_brooch_chest_opened",
+      "address": "0xFFFFC7B2",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Banshee_powder_chest_opened",
+      "address": "0xFFFFC7B3",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Money_chest_512_opened",
+      "address": "0xFFFFC7B4",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Money_chest_1280_opened",
+      "address": "0xFFFFC7B5",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Money_chest_1792_b_opened",
+      "address": "0xFFFFC7B6",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Money_chest_20480_opened",
+      "address": "0xFFFFC7B9",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Chest_5888_kims_opened",
+      "address": "0xFFFFC7BA",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Money_chest_864_opened",
+      "address": "0xFFFFC7BB",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Chest_9999_kims_opened",
+      "address": "0xFFFFC7BC",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Chest_sapphire_shield_opened",
+      "address": "0xFFFFC7BD",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Chest_gnome_stone_opened",
+      "address": "0xFFFFC7BE",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Chest_gem_shield_opened",
+      "address": "0xFFFFC7BF",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Deepdale_medicine_removed",
+      "address": "0xFFFFC7C0",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Stepfather_ring_dialog_shown",
+      "address": "0xFFFFC7C1",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Titanias_mirror_quest_prereq",
+      "address": "0xFFFFC7C2",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Titanias_mirror_acquired",
+      "address": "0xFFFFC7C3",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Mega_blast_acquired",
+      "address": "0xFFFFC7C4",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Rafaels_stick_acquired",
+      "address": "0xFFFFC7C5",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Poison_notified",
+      "address": "0xFFFFC7C6",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Chest_256_kims_opened",
+      "address": "0xFFFFC7E0",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Chest_graphite_sword_opened",
+      "address": "0xFFFFC7E1",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Chest_grizzly_shield_opened",
+      "address": "0xFFFFC7E2",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Chest_critical_sword_opened",
+      "address": "0xFFFFC7E3",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Chest_emerald_armor_opened",
+      "address": "0xFFFFC7E4",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Chest_secret_armor_opened",
+      "address": "0xFFFFC7E6",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Chest_old_nick_armor_opened",
+      "address": "0xFFFFC7E7",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Chest_mirage_sword_opened",
+      "address": "0xFFFFC7E8",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Chest_phantom_shield_opened",
+      "address": "0xFFFFC7E9",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Chest_death_sword_opened",
+      "address": "0xFFFFC7EA",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Chest_4096_kims_opened",
+      "address": "0xFFFFC7EC",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Malaga_quest_progress",
+      "address": "0xFFFFC7ED",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Chest_mirror_of_atlas_opened",
+      "address": "0xFFFFC7EE",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Chest_barbarian_sword_opened",
+      "address": "0xFFFFC7EF",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Helwig_frypan_hit_count",
+      "address": "0xFFFFC7F0",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Helwig_inn_wakeup_trigger",
+      "address": "0xFFFFC7F2",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Frying_pan_knockout_flag",
+      "address": "0xFFFFC7F3",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Map_triggers_backup",
+      "address": "0xFFFFC7F4",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Watling_inn_unpaid_nights",
+      "address": "0xFFFFC7F6",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Boss_battle_flags",
+      "address": "0xFFFFC800",
+      "size": null,
+      "kind": "buffer",
+      "description": ".b[32] boss-fight state flags; indices below"
+    },
+    {
+      "name": "Imposter_boss_trigger",
+      "address": "0xFFFFC804",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Ring_guardian_1_boss_trigger",
+      "address": "0xFFFFC805",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Ring_guardian_2_boss_trigger",
+      "address": "0xFFFFC806",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Ring_guardian_3_boss_trigger",
+      "address": "0xFFFFC807",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Boss_battle_type_marker",
+      "address": "0xFFFFC80D",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Soldier_fight_event_trigger",
+      "address": "0xFFFFC816",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Boss_event_trigger",
+      "address": "0xFFFFC817",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Rings_collected",
+      "address": "0xFFFFC818",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Asti_monster_battle_complete",
+      "address": "0xFFFFC81B",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Carthahena_soldier_1_defeated",
+      "address": "0xFFFFC81D",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Carthahena_soldier_2_defeated",
+      "address": "0xFFFFC81E",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Carthahena_soldier_3_defeated",
+      "address": "0xFFFFC81F",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Map_trigger_flags",
+      "address": "0xFFFFC820",
+      "size": null,
+      "kind": "array",
+      "description": ".b[~60] transient map/cutscene event trigger flags (not saved to SRAM)"
+    },
+    {
+      "name": "VBlank_object_ptr",
+      "address": "0xFFFFCC00",
+      "size": ".l",
+      "kind": "scalar",
+      "description": "pointer to the VBlank object update routine (called each VBlank)"
+    },
+    {
+      "name": "HBlank_object_ptr",
+      "address": "0xFFFFCC04",
+      "size": ".l",
+      "kind": "scalar",
+      "description": "pointer to the HBlank object update routine (called each HBlank)"
+    },
+    {
+      "name": "Player_entity_ptr",
+      "address": "0xFFFFCC08",
+      "size": ".l",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Battle_entity_slot_1_ptr",
+      "address": "0xFFFFCC0C",
+      "size": ".l",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Battle_entity_slot_2_ptr",
+      "address": "0xFFFFCC10",
+      "size": ".l",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Enemy_list_ptr",
+      "address": "0xFFFFCC14",
+      "size": ".l",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Object_slot_01_ptr",
+      "address": "0xFFFFCC18",
+      "size": ".l",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Object_slot_02_ptr",
+      "address": "0xFFFFCC1C",
+      "size": ".l",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Object_slot_03_ptr",
+      "address": "0xFFFFCC20",
+      "size": ".l",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Object_slot_04_ptr",
+      "address": "0xFFFFCC24",
+      "size": ".l",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Object_slot_05_ptr",
+      "address": "0xFFFFCC28",
+      "size": ".l",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Object_slot_06_ptr",
+      "address": "0xFFFFCC2C",
+      "size": ".l",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Object_slot_07_ptr",
+      "address": "0xFFFFCC30",
+      "size": ".l",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Object_slot_08_ptr",
+      "address": "0xFFFFCC34",
+      "size": ".l",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Object_slot_09_ptr",
+      "address": "0xFFFFCC38",
+      "size": ".l",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Object_slot_0A_ptr",
+      "address": "0xFFFFCC3C",
+      "size": ".l",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Object_slot_0B_ptr",
+      "address": "0xFFFFCC40",
+      "size": ".l",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Object_slot_0C_ptr",
+      "address": "0xFFFFCC44",
+      "size": ".l",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Object_slot_0D_ptr",
+      "address": "0xFFFFCC48",
+      "size": ".l",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Object_slot_0E_ptr",
+      "address": "0xFFFFCC4C",
+      "size": ".l",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Map_indicator_entity_ptr",
+      "address": "0xFFFFCC50",
+      "size": ".l",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Current_actor_ptr",
+      "address": "0xFFFFCC54",
+      "size": ".l",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Menu_object_ptr",
+      "address": "0xFFFFCC74",
+      "size": ".l",
+      "kind": "scalar",
+      "description": "pointer to the active menu/UI object update routine"
+    },
+    {
+      "name": "Object_slot_base",
+      "address": "0xFFFFD000",
+      "size": null,
+      "kind": "buffer",
+      "description": "object/entity slot pool base (14 slots × $E0 bytes each)"
+    },
+    {
+      "name": "Object_table_base",
+      "address": "0xFFFFD0E0",
+      "size": null,
+      "kind": "buffer",
+      "description": "object table array base (entries reference slot pool)"
+    },
+    {
+      "name": "Sprite_attr_count",
+      "address": "0xFFFFE000",
+      "size": ".w",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Sprite_update_pending",
+      "address": "0xFFFFE002",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Sprite_attr_buffer",
+      "address": "0xFFFFE004",
+      "size": null,
+      "kind": "buffer",
+      "description": "unsorted OAM entries; each entry is 8 bytes (Y, size/link, tile, X)"
+    },
+    {
+      "name": "Sprite_sort_buffer",
+      "address": "0xFFFFE200",
+      "size": null,
+      "kind": "buffer",
+      "description": "intermediate sort workspace used by SortAndUploadSpriteOAM"
+    },
+    {
+      "name": "Sprite_sort_temp_buffer",
+      "address": "0xFFFFE3F0",
+      "size": null,
+      "kind": "buffer",
+      "description": "final sorted OAM list written by SortAndUploadSpriteOAM"
+    },
+    {
+      "name": "Sprite_priority_slots",
+      "address": "0xFFFFE400",
+      "size": null,
+      "kind": "array",
+      "description": "256 priority buckets × 16 bytes; used to sort sprites by draw order"
+    },
+    {
+      "name": "Sound_driver_play",
+      "address": "0xFFFFF404",
+      "size": ".b",
+      "kind": "scalar",
+      "description": ""
+    },
+    {
+      "name": "Ram_clear_end",
+      "address": "0xFFFFFD00",
+      "size": null,
+      "kind": "end",
+      "description": "sentinel: top of general RAM clear region (before stack gap at $FFFFFE00)"
+    },
+    {
+      "name": "Stack_base",
+      "address": "0xFFFFFE00",
+      "size": null,
+      "kind": "unknown",
+      "description": ""
+    }
+  ]
+}

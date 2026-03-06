@@ -15,6 +15,7 @@ const path = require('path');
 const TOOLS_DIR = __dirname;
 const NODE = process.execPath;
 
+// Hard-fail checks: any failure blocks the commit.
 const CHECKS = [
   {
     id:     'lint_loc_labels',
@@ -43,6 +44,23 @@ const CHECKS = [
   },
 ];
 
+// Warning-only checks: displayed but do not cause a non-zero exit.
+// REGR-002: comment density regression warning
+// REGR-003: raw struct offset ($NN(Ax)) regression warning
+const WARNINGS = [
+  {
+    id:     'comment_density',
+    script: path.join(TOOLS_DIR, 'comment_density.js'),
+    desc:   'Comment density ≥10% per file (warning only)',
+    args:   ['--threshold', '10'],
+  },
+  {
+    id:     'lint_raw_obj_offsets',
+    script: path.join(TOOLS_DIR, 'lint_raw_obj_offsets.js'),
+    desc:   'No new raw $NN(Ax) struct offsets (warning only)',
+  },
+];
+
 const WIDTH = 40;
 let allPassed = true;
 const results = [];
@@ -58,7 +76,19 @@ for (const check of CHECKS) {
     passed = false;
   }
   if (!passed) allPassed = false;
-  results.push({ check, passed, output: output.trim() });
+  results.push({ check, passed, output: output.trim(), isWarning: false });
+}
+
+const warnResults = [];
+for (const check of WARNINGS) {
+  let output = '';
+  const args = check.args ? [check.script, ...check.args] : [check.script];
+  try {
+    output = execFileSync(NODE, args, { encoding: 'utf8', stderr: 'pipe' });
+  } catch (err) {
+    output = (err.stdout || '') + (err.stderr || '');
+  }
+  warnResults.push({ check, output: output.trim() });
 }
 
 // Print summary
@@ -71,8 +101,19 @@ for (const { check, passed, output } of results) {
   const label  = check.id.padEnd(WIDTH);
   console.log(`  [${status}] ${label} ${check.desc}`);
   if (!passed && output) {
-    // Indent failure output
     output.split('\n').forEach(line => console.log('         ' + line));
+  }
+}
+
+if (warnResults.length > 0) {
+  console.log('-'.repeat(60));
+  console.log('  Warnings (informational — do not block commit):');
+  for (const { check, output } of warnResults) {
+    const label = check.id.padEnd(WIDTH);
+    console.log(`  [WARN] ${label} ${check.desc}`);
+    if (output) {
+      output.split('\n').slice(0, 6).forEach(line => console.log('         ' + line));
+    }
   }
 }
 
@@ -86,3 +127,4 @@ if (allPassed) {
 console.log('='.repeat(60) + '\n');
 
 process.exit(allPassed ? 0 : 1);
+
