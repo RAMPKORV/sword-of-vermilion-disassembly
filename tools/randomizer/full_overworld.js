@@ -7,9 +7,11 @@ const {
   MAP_HEIGHT,
   MAP_WIDTH,
   compressRLE,
+  decompressRLE,
   getSpecials,
   isWalkableTile,
   loadOverworldSectors,
+  PROJECT_ROOT,
 } = require('./map_utils');
 const { buildWorld } = require('./map_graph');
 const { floodFill, shortestPath, toIndex } = require('./pathfinder');
@@ -35,6 +37,9 @@ const TILE_DECOR = [0x01, 0x02];
 const TOWN_TEMPLATE_RADIUS_X = 3;
 const TOWN_TEMPLATE_RADIUS_Y_TOP = 3;
 const TOWN_TEMPLATE_RADIUS_Y_BOTTOM = 4;
+const SPECIAL_TEMPLATE_RADIUS_X = 4;
+const SPECIAL_TEMPLATE_RADIUS_Y = 4;
+const TEST_MODE_SWORD = 'EQUIPMENT_SWORD_OF_VERMILION';
 
 // Stock town layout: 2x4 block of house ($0F) tiles above the entrance,
 // terrain flanking the entrance row, ground path extending south.
@@ -83,6 +88,187 @@ function buildTownTemplateMap() {
 }
 
 const TOWN_TEMPLATE_BY_ID = buildTownTemplateMap();
+
+function buildCaveTemplateMap() {
+  const templates = new Map();
+  for (const sector of loadOverworldSectors()) {
+    for (const special of sector.specials) {
+      if (special.kind !== 'cave' || templates.has(special.id)) continue;
+      const entries = [];
+      for (let dy = -SPECIAL_TEMPLATE_RADIUS_Y; dy <= SPECIAL_TEMPLATE_RADIUS_Y; dy += 1) {
+        for (let dx = -SPECIAL_TEMPLATE_RADIUS_X; dx <= SPECIAL_TEMPLATE_RADIUS_X; dx += 1) {
+          if (dx === 0 && dy === 0) continue;
+          const x = special.col + dx;
+          const y = special.row + dy;
+          if (x < 0 || x >= MAP_WIDTH || y < 0 || y >= MAP_HEIGHT) continue;
+          const tile = sector.tiles[y * MAP_WIDTH + x];
+          if ((tile >= 0x10 && tile < 0x20) || (tile >= 0x80 && tile < 0x90) || tile === 0xFF) continue;
+          entries.push({ dx, dy, tile });
+        }
+      }
+      templates.set(special.id, entries);
+    }
+  }
+  return templates;
+}
+
+const CAVE_TEMPLATE_BY_ID = buildCaveTemplateMap();
+
+function buildCaveExitPositionMap() {
+  const exits = new Map();
+  for (const caveId of CAVE_TEMPLATE_BY_ID.keys()) {
+    const filePath = path.join(PROJECT_ROOT, 'data', 'maps', 'cave', `room_${String(caveId).padStart(2, '0')}.bin`);
+    if (!fs.existsSync(filePath)) continue;
+    const tiles = decompressRLE(fs.readFileSync(filePath));
+    let exit = null;
+    for (let index = 0; index < tiles.length; index += 1) {
+      if (tiles[index] !== 0xFF) continue;
+      if (exit) {
+        exit = null;
+        break;
+      }
+      exit = {
+        x: index % MAP_WIDTH,
+        y: Math.floor(index / MAP_WIDTH),
+      };
+    }
+    if (exit) exits.set(caveId, exit);
+  }
+  return exits;
+}
+
+const CAVE_EXIT_POSITION_BY_ID = buildCaveExitPositionMap();
+
+function buildSpecialApproachTemplateMap() {
+  const templates = new Map();
+  for (const sector of loadOverworldSectors()) {
+    for (const special of sector.specials) {
+      if ((special.kind !== 'town' && special.kind !== 'cave') || templates.has(special.key)) continue;
+      const entries = [];
+      for (let dy = -SPECIAL_TEMPLATE_RADIUS_Y; dy <= SPECIAL_TEMPLATE_RADIUS_Y; dy += 1) {
+        for (let dx = -SPECIAL_TEMPLATE_RADIUS_X; dx <= SPECIAL_TEMPLATE_RADIUS_X; dx += 1) {
+          if (dx === 0 && dy === 0) continue;
+          const x = special.col + dx;
+          const y = special.row + dy;
+          if (x < 0 || x >= MAP_WIDTH || y < 0 || y >= MAP_HEIGHT) continue;
+          const tile = sector.tiles[y * MAP_WIDTH + x];
+          if ((tile >= 0x10 && tile < 0x20) || (tile >= 0x80 && tile < 0x90) || tile === 0xFF) continue;
+          entries.push({ dx, dy, tile });
+        }
+      }
+      templates.set(special.key, entries);
+    }
+  }
+  return templates;
+}
+
+const SPECIAL_APPROACH_TEMPLATE_BY_KEY = buildSpecialApproachTemplateMap();
+
+function buildSpecialApproachDirectionMap() {
+  const directions = new Map();
+  for (const [key, entries] of SPECIAL_APPROACH_TEMPLATE_BY_KEY.entries()) {
+    const adjacent = entries
+      .filter((entry) => Math.abs(entry.dx) + Math.abs(entry.dy) === 1)
+      .filter((entry) => isWalkableTile(entry.tile));
+    if (adjacent.length === 1) directions.set(key, adjacent[0]);
+  }
+  return directions;
+}
+
+const SPECIAL_APPROACH_DIRECTION_BY_KEY = buildSpecialApproachDirectionMap();
+
+function isImportantInteractionHandler(handler) {
+  return /^OverworldChest_/.test(handler)
+    || /^OverworldNpc_/.test(handler)
+    || /^SetupNoOneTalker$/.test(handler);
+}
+
+function countWalkableNeighbors(tiles, x, y) {
+  let count = 0;
+  const offsets = [
+    [0, -1],
+    [0, 1],
+    [-1, 0],
+    [1, 0],
+  ];
+  for (const [dx, dy] of offsets) {
+    const nx = x + dx;
+    const ny = y + dy;
+    if (nx < 0 || nx >= MAP_WIDTH || ny < 0 || ny >= MAP_HEIGHT) continue;
+    if (isWalkableTile(tiles[ny * MAP_WIDTH + nx])) count += 1;
+  }
+  return count;
+}
+
+function findDeadEndTiles(tiles, reserved = new Set()) {
+  const points = [];
+  for (let y = 1; y < MAP_HEIGHT - 1; y += 1) {
+    for (let x = 1; x < MAP_WIDTH - 1; x += 1) {
+      const key = `${x},${y}`;
+      if (reserved.has(key)) continue;
+      const tile = tiles[y * MAP_WIDTH + x];
+      if (!isWalkableTile(tile)) continue;
+      if (countWalkableNeighbors(tiles, x, y) !== 1) continue;
+      points.push({ x, y });
+    }
+  }
+  return points;
+}
+
+function findWalkableFallbackTiles(tiles, reserved = new Set()) {
+  const points = [];
+  for (let y = 1; y < MAP_HEIGHT - 1; y += 1) {
+    for (let x = 1; x < MAP_WIDTH - 1; x += 1) {
+      const key = `${x},${y}`;
+      if (reserved.has(key)) continue;
+      const tile = tiles[y * MAP_WIDTH + x];
+      if (!isWalkableTile(tile)) continue;
+      points.push({ x, y, degree: countWalkableNeighbors(tiles, x, y) });
+    }
+  }
+  points.sort((a, b) => a.degree - b.degree || a.y - b.y || a.x - b.x);
+  return points;
+}
+
+function buildReservedInteractionTiles(placement) {
+  const reserved = new Set();
+  for (const special of placement.sector.specials) {
+    reserved.add(`${special.col},${special.row}`);
+    const approach = SPECIAL_APPROACH_DIRECTION_BY_KEY.get(special.key);
+    if (approach) reserved.add(`${special.col + approach.dx},${special.row + approach.dy}`);
+  }
+  return reserved;
+}
+
+function repackInteractionsForPlacement(placement, entries) {
+  if (!placement.sector.generated || !entries.length) return entries;
+  const reserved = buildReservedInteractionTiles(placement);
+  const deadEnds = findDeadEndTiles(placement.sector.tiles, reserved);
+  const fallback = findWalkableFallbackTiles(placement.sector.tiles, reserved);
+  const used = new Set();
+
+  function takePoint(pool) {
+    while (pool.length > 0) {
+      const point = pool.shift();
+      const key = `${point.x},${point.y}`;
+      if (used.has(key)) continue;
+      used.add(key);
+      return point;
+    }
+    return null;
+  }
+
+  return entries.map((entry) => {
+    if (!isImportantInteractionHandler(entry.handler)) return entry;
+    const point = takePoint(deadEnds) || takePoint(fallback);
+    if (!point) return entry;
+    return {
+      ...entry,
+      x: point.x,
+      y: point.y,
+    };
+  });
+}
 
 function makePrng(seed) {
   let state = (seed >>> 0) || 1;
@@ -178,44 +364,112 @@ function carveLine(tiles, x0, y0, x1, y1, tile = TILE_ROAD) {
   tiles[y * MAP_WIDTH + x] = tile;
 }
 
+function edgeAnchor(edge) {
+  switch (edge) {
+    case 'north': return { anchor: { x: 8, y: 0 }, ingress: { x: 8, y: 1 } };
+    case 'south': return { anchor: { x: 8, y: MAP_HEIGHT - 1 }, ingress: { x: 8, y: MAP_HEIGHT - 2 } };
+    case 'west': return { anchor: { x: 0, y: 8 }, ingress: { x: 1, y: 8 } };
+    case 'east': return { anchor: { x: MAP_WIDTH - 1, y: 8 }, ingress: { x: MAP_WIDTH - 2, y: 8 } };
+    default: throw new Error(`unknown edge: ${edge}`);
+  }
+}
+
+function carveFromEdge(tiles, edge, target, tile = TILE_ROAD) {
+  const { anchor } = edgeAnchor(edge);
+  if (edge === 'north' || edge === 'south') {
+    carveLine(tiles, anchor.x, anchor.y, anchor.x, target.y, tile);
+    carveLine(tiles, anchor.x, target.y, target.x, target.y, tile);
+    return;
+  }
+  carveLine(tiles, anchor.x, anchor.y, target.x, anchor.y, tile);
+  carveLine(tiles, target.x, anchor.y, target.x, target.y, tile);
+}
+
 function decorateTerrain(tiles, rng) {
-  for (let y = 1; y < MAP_HEIGHT - 1; y += 1) {
-    for (let x = 1; x < MAP_WIDTH - 1; x += 1) {
-      const index = y * MAP_WIDTH + x;
-      if (tiles[index] === TILE_ROAD) continue;
-      const roll = rng.int(0, 99);
-      if (roll < 48) tiles[index] = TILE_FOREST;
-      else if (roll < 92) tiles[index] = TILE_MOUNTAIN;
-      else tiles[index] = TILE_PLAIN;
+  const primaryTerrain = rng.int(0, 99) < 65 ? TILE_FOREST : TILE_MOUNTAIN;
+  const secondaryTerrain = primaryTerrain === TILE_FOREST ? TILE_MOUNTAIN : TILE_FOREST;
+
+  for (let i = 0; i < tiles.length; i += 1) {
+    if (tiles[i] !== TILE_ROAD) tiles[i] = primaryTerrain;
+  }
+
+  const paintBlob = (tile, attempts, minRadius, maxRadius) => {
+    for (let i = 0; i < attempts; i += 1) {
+      const cx = rng.int(1, MAP_WIDTH - 2);
+      const cy = rng.int(1, MAP_HEIGHT - 2);
+      const rx = rng.int(minRadius, maxRadius);
+      const ry = rng.int(minRadius, maxRadius);
+      for (let y = Math.max(1, cy - ry - 1); y <= Math.min(MAP_HEIGHT - 2, cy + ry + 1); y += 1) {
+        for (let x = Math.max(1, cx - rx - 1); x <= Math.min(MAP_WIDTH - 2, cx + rx + 1); x += 1) {
+          const index = y * MAP_WIDTH + x;
+          if (tiles[index] === TILE_ROAD) continue;
+          const dx = (x - cx) / Math.max(1, rx);
+          const dy = (y - cy) / Math.max(1, ry);
+          const dist = (dx * dx) + (dy * dy);
+          const threshold = 1.0 + (rng.int(0, 25) / 100);
+          if (dist <= threshold) tiles[index] = tile;
+        }
+      }
     }
+  };
+
+  paintBlob(secondaryTerrain, rng.int(3, 5), 2, 4);
+  if (rng.int(0, 99) < 35) {
+    paintBlob(primaryTerrain, 1, 2, 3);
+  }
+
+  for (let pass = 0; pass < 2; pass += 1) {
+    const next = tiles.slice();
+    for (let y = 1; y < MAP_HEIGHT - 1; y += 1) {
+      for (let x = 1; x < MAP_WIDTH - 1; x += 1) {
+        const index = y * MAP_WIDTH + x;
+        if (tiles[index] === TILE_ROAD) continue;
+        let forest = 0;
+        let mountain = 0;
+        for (let ny = y - 1; ny <= y + 1; ny += 1) {
+          for (let nx = x - 1; nx <= x + 1; nx += 1) {
+            if (nx === x && ny === y) continue;
+            const tile = tiles[ny * MAP_WIDTH + nx];
+            if (tile === TILE_FOREST) forest += 1;
+            else if (tile === TILE_MOUNTAIN) mountain += 1;
+          }
+        }
+        if (forest >= 5 && forest > mountain) next[index] = TILE_FOREST;
+        else if (mountain >= 5 && mountain > forest) next[index] = TILE_MOUNTAIN;
+        else next[index] = tiles[index];
+      }
+    }
+    tiles.set(next);
   }
 }
 
 function openBoundaries(tiles, rng, edges) {
   const center = { x: rng.int(5, 10), y: rng.int(5, 10) };
-  if (edges.north) carveLine(tiles, 8, 0, center.x, center.y);
-  if (edges.south) carveLine(tiles, 8, MAP_HEIGHT - 1, center.x, center.y);
-  if (edges.west) carveLine(tiles, 0, 8, center.x, center.y);
-  if (edges.east) carveLine(tiles, MAP_WIDTH - 1, 8, center.x, center.y);
+  if (edges.north) carveFromEdge(tiles, 'north', center);
+  if (edges.south) carveFromEdge(tiles, 'south', center);
+  if (edges.west) carveFromEdge(tiles, 'west', center);
+  if (edges.east) carveFromEdge(tiles, 'east', center);
   return center;
 }
 
 function reconnectSectorEdges(tiles, center, edges) {
-  if (edges.north) carveLine(tiles, 8, 0, center.x, center.y);
-  if (edges.south) carveLine(tiles, 8, MAP_HEIGHT - 1, center.x, center.y);
-  if (edges.west) carveLine(tiles, 0, 8, center.x, center.y);
-  if (edges.east) carveLine(tiles, MAP_WIDTH - 1, 8, center.x, center.y);
+  if (edges.north) carveFromEdge(tiles, 'north', center);
+  if (edges.south) carveFromEdge(tiles, 'south', center);
+  if (edges.west) carveFromEdge(tiles, 'west', center);
+  if (edges.east) carveFromEdge(tiles, 'east', center);
 }
 
 function reconnectSectorEdgesAroundTown(tiles, connectors, edges, protectedTiles) {
   const anchors = [];
-  if (edges.north) anchors.push({ x: 8, y: 0 });
-  if (edges.south) anchors.push({ x: 8, y: MAP_HEIGHT - 1 });
-  if (edges.west) anchors.push({ x: 0, y: 8 });
-  if (edges.east) anchors.push({ x: MAP_WIDTH - 1, y: 8 });
+  if (edges.north) anchors.push({ edge: 'north', ...edgeAnchor('north') });
+  if (edges.south) anchors.push({ edge: 'south', ...edgeAnchor('south') });
+  if (edges.west) anchors.push({ edge: 'west', ...edgeAnchor('west') });
+  if (edges.east) anchors.push({ edge: 'east', ...edgeAnchor('east') });
 
   for (const anchor of anchors) {
-    const startIndex = toIndex(anchor.x, anchor.y, MAP_WIDTH);
+    tiles[anchor.anchor.y * MAP_WIDTH + anchor.anchor.x] = TILE_ROAD;
+    tiles[anchor.ingress.y * MAP_WIDTH + anchor.ingress.x] = TILE_ROAD;
+    const startIndex = toIndex(anchor.ingress.x, anchor.ingress.y, MAP_WIDTH);
     let bestPath = null;
     for (const connector of connectors) {
       const goalIndex = toIndex(connector.x, connector.y, MAP_WIDTH);
@@ -228,6 +482,8 @@ function reconnectSectorEdgesAroundTown(tiles, connectors, edges, protectedTiles
           const x = index % MAP_WIDTH;
           const y = Math.floor(index / MAP_WIDTH);
           if (x === connector.x && y === connector.y) return true;
+          if (x === anchor.ingress.x && y === anchor.ingress.y) return true;
+          if (x === 0 || x === MAP_WIDTH - 1 || y === 0 || y === MAP_HEIGHT - 1) return false;
           return !protectedTiles || !protectedTiles.has(`${x},${y}`);
         },
       });
@@ -240,6 +496,42 @@ function reconnectSectorEdgesAroundTown(tiles, connectors, edges, protectedTiles
       const y = Math.floor(index / MAP_WIDTH);
       const isConnector = connectors.some((entry) => entry.x === x && entry.y === y);
       if (protectedTiles && protectedTiles.has(`${x},${y}`) && !isConnector) continue;
+      tiles[index] = TILE_ROAD;
+    }
+  }
+}
+
+function reconnectSectorEdgesToApproach(tiles, approach, edges, protectedTiles) {
+  const anchors = [];
+  if (edges.north) anchors.push({ edge: 'north', ...edgeAnchor('north') });
+  if (edges.south) anchors.push({ edge: 'south', ...edgeAnchor('south') });
+  if (edges.west) anchors.push({ edge: 'west', ...edgeAnchor('west') });
+  if (edges.east) anchors.push({ edge: 'east', ...edgeAnchor('east') });
+
+  for (const anchor of anchors) {
+    tiles[anchor.anchor.y * MAP_WIDTH + anchor.anchor.x] = TILE_ROAD;
+    tiles[anchor.ingress.y * MAP_WIDTH + anchor.ingress.x] = TILE_ROAD;
+    const startIndex = toIndex(anchor.ingress.x, anchor.ingress.y, MAP_WIDTH);
+    const goalIndex = toIndex(approach.x, approach.y, MAP_WIDTH);
+    const path = shortestPath({
+      width: MAP_WIDTH,
+      height: MAP_HEIGHT,
+      startIndex,
+      goalIndex,
+      canVisit(index) {
+        const x = index % MAP_WIDTH;
+        const y = Math.floor(index / MAP_WIDTH);
+        if (x === approach.x && y === approach.y) return true;
+        if (x === anchor.ingress.x && y === anchor.ingress.y) return true;
+        if (x === 0 || x === MAP_WIDTH - 1 || y === 0 || y === MAP_HEIGHT - 1) return false;
+        return !protectedTiles || !protectedTiles.has(`${x},${y}`);
+      },
+    });
+    if (!path) continue;
+    for (const index of path) {
+      const x = index % MAP_WIDTH;
+      const y = Math.floor(index / MAP_WIDTH);
+      if (protectedTiles && protectedTiles.has(`${x},${y}`) && !(x === approach.x && y === approach.y)) continue;
       tiles[index] = TILE_ROAD;
     }
   }
@@ -297,6 +589,25 @@ function stampTownTemplate(tiles, center, specialTile) {
   };
 }
 
+function stampCaveTemplate(tiles, center, specialTile) {
+  const caveId = specialTile & 0x0F;
+  const template = CAVE_TEMPLATE_BY_ID.get(caveId) || [];
+  const protectedTiles = new Set([`${center.x},${center.y}`]);
+  for (const entry of template) {
+    const x = center.x + entry.dx;
+    const y = center.y + entry.dy;
+    if (x < 0 || x >= MAP_WIDTH || y < 0 || y >= MAP_HEIGHT) continue;
+    tiles[y * MAP_WIDTH + x] = entry.tile;
+    protectedTiles.add(`${x},${y}`);
+  }
+  tiles[center.y * MAP_WIDTH + center.x] = specialTile;
+  const approach = SPECIAL_APPROACH_DIRECTION_BY_KEY.get(`cave:${caveId}`);
+  const connector = approach
+    ? { x: center.x + approach.dx, y: center.y + approach.dy }
+    : { x: center.x, y: Math.min(center.y + 1, MAP_HEIGHT - 1) };
+  return { protectedTiles, connector };
+}
+
 function carveNarrowRoad(tiles, start, end, rng) {
   let x = start.x;
   let y = start.y;
@@ -331,6 +642,41 @@ function widenRoadCorners(tiles) {
   }
 }
 
+function repairRoadPinches(tiles) {
+  for (let y = 1; y < MAP_HEIGHT - 1; y += 1) {
+    for (let x = 1; x < MAP_WIDTH - 1; x += 1) {
+      const index = y * MAP_WIDTH + x;
+      if (tiles[index] !== TILE_ROAD) continue;
+      const north = tiles[(y - 1) * MAP_WIDTH + x] === TILE_ROAD;
+      const south = tiles[(y + 1) * MAP_WIDTH + x] === TILE_ROAD;
+      const west = tiles[y * MAP_WIDTH + (x - 1)] === TILE_ROAD;
+      const east = tiles[y * MAP_WIDTH + (x + 1)] === TILE_ROAD;
+
+      if (north && south && !west && !east) {
+        const leftIndex = y * MAP_WIDTH + (x - 1);
+        const rightIndex = y * MAP_WIDTH + (x + 1);
+        if (tiles[leftIndex] === TILE_PLAIN && tiles[rightIndex] === TILE_PLAIN) {
+          const openLeft = tiles[(y - 1) * MAP_WIDTH + (x - 1)] === TILE_ROAD || tiles[(y + 1) * MAP_WIDTH + (x - 1)] === TILE_ROAD;
+          const openRight = tiles[(y - 1) * MAP_WIDTH + (x + 1)] === TILE_ROAD || tiles[(y + 1) * MAP_WIDTH + (x + 1)] === TILE_ROAD;
+          if (openLeft) tiles[leftIndex] = TILE_ROAD;
+          else if (openRight) tiles[rightIndex] = TILE_ROAD;
+        }
+      }
+
+      if (west && east && !north && !south) {
+        const upIndex = (y - 1) * MAP_WIDTH + x;
+        const downIndex = (y + 1) * MAP_WIDTH + x;
+        if (tiles[upIndex] === TILE_PLAIN && tiles[downIndex] === TILE_PLAIN) {
+          const openUp = tiles[(y - 1) * MAP_WIDTH + (x - 1)] === TILE_ROAD || tiles[(y - 1) * MAP_WIDTH + (x + 1)] === TILE_ROAD;
+          const openDown = tiles[(y + 1) * MAP_WIDTH + (x - 1)] === TILE_ROAD || tiles[(y + 1) * MAP_WIDTH + (x + 1)] === TILE_ROAD;
+          if (openUp) tiles[upIndex] = TILE_ROAD;
+          else if (openDown) tiles[downIndex] = TILE_ROAD;
+        }
+      }
+    }
+  }
+}
+
 function addBoundaryPressure(tiles, edges) {
   for (let x = 0; x < MAP_WIDTH; x += 1) {
     if (!edges.north && tiles[x] !== TILE_ROAD) tiles[x] = TILE_MOUNTAIN;
@@ -353,7 +699,21 @@ function generateSector(seed, slotX, slotY, specialTile, edges) {
   const rng = makePrng(seed ^ ((slotX + 1) << 8) ^ ((slotY + 1) << 16));
   const tiles = buildEmptySector(TILE_FOREST);
   const center = openBoundaries(tiles, rng, edges);
+  let specialCenter = center;
   const branchTargets = [];
+
+  if (specialTile !== null) {
+    if (specialTile >= 0x80 && specialTile < 0x90) {
+      center.x = Math.max(2, Math.min(MAP_WIDTH - 3, 8));
+      center.y = Math.max(3, Math.min(MAP_HEIGHT - 4, edges.north ? 5 : (edges.south ? 9 : center.y)));
+      specialCenter = center;
+    } else {
+      const caveId = specialTile & 0x0F;
+      const exit = CAVE_EXIT_POSITION_BY_ID.get(caveId);
+      if (exit) specialCenter = { x: exit.x, y: exit.y };
+    }
+    reconnectSectorEdges(tiles, center, edges);
+  }
 
   const branches = rng.int(1, 2);
   for (let i = 0; i < branches; i += 1) {
@@ -371,14 +731,10 @@ function generateSector(seed, slotX, slotY, specialTile, edges) {
 
   decorateTerrain(tiles, rng);
   if (specialTile !== null && !(specialTile >= 0x80 && specialTile < 0x90)) {
-    placeSpecial(tiles, center, specialTile);
-    // For non-town specials, ensure walkable surroundings
-    if (center.y > 0) tiles[(center.y - 1) * MAP_WIDTH + center.x] = TILE_ROAD;
-    if (center.y + 1 < MAP_HEIGHT) tiles[(center.y + 1) * MAP_WIDTH + center.x] = TILE_PLAIN;
-    if (center.x > 0) tiles[center.y * MAP_WIDTH + (center.x - 1)] = TILE_FOREST;
-    if (center.x + 1 < MAP_WIDTH) tiles[center.y * MAP_WIDTH + (center.x + 1)] = TILE_FOREST;
+    const caveTemplate = stampCaveTemplate(tiles, specialCenter, specialTile);
+    reconnectSectorEdgesToApproach(tiles, caveTemplate.connector, edges, caveTemplate.protectedTiles);
   }
-  widenRoadCorners(tiles);
+  repairRoadPinches(tiles);
   addBoundaryPressure(tiles, edges);
   restoreBoundaryAnchors(tiles, edges);
   let protectedTownTiles = null;
@@ -387,11 +743,11 @@ function generateSector(seed, slotX, slotY, specialTile, edges) {
   // impassable $0F tiles.  The hub is 2 rows below the entrance, safely
   // clear of the house block (which occupies rows center.y-2 to center.y-1).
   if (specialTile !== null && specialTile >= 0x80 && specialTile < 0x90) {
-    const townTemplate = stampTownTemplate(tiles, center, specialTile);
+    const townTemplate = stampTownTemplate(tiles, specialCenter, specialTile);
     protectedTownTiles = townTemplate.protectedTiles;
     reconnectSectorEdgesAroundTown(tiles, townTemplate.connectors, edges, protectedTownTiles);
   }
-  tiles[center.y * MAP_WIDTH + center.x] = specialTile !== null ? specialTile : TILE_ROAD;
+  tiles[specialCenter.y * MAP_WIDTH + specialCenter.x] = specialTile !== null ? specialTile : TILE_ROAD;
   const isTownSector = specialTile !== null && specialTile >= 0x80 && specialTile < 0x90;
   for (const target of branchTargets) {
     if (isTownSector && protectedTownTiles && protectedTownTiles.has(`${target.x},${target.y}`)) continue;
@@ -493,24 +849,42 @@ function buildPlacements(seed) {
       if (specials.has(key)) {
         const special = sector.specials[0];
         if (special) {
-          const isTown = special.kind === 'town';
-          const exits = isTown
-            ? [
-                // For towns, only ensure the immediate exit tile south of the entrance.
-                // The wider local footprint is stamped from stock-derived templates.
-                [special.col, special.row + 1],
-              ]
-            : [
-                [special.col + 1, special.row],
-                [special.col - 1, special.row],
-                [special.col, special.row + 1],
-                [special.col, special.row - 1],
+          const edges = edgePlan(backboneSet, x, y);
+          if (special.kind === 'town') {
+            const townTemplate = stampTownTemplate(sector.tiles, { x: special.col, y: special.row }, special.tile);
+            reconnectSectorEdgesAroundTown(sector.tiles, townTemplate.connectors, edges, townTemplate.protectedTiles);
+          } else {
+            const approachTemplate = SPECIAL_APPROACH_TEMPLATE_BY_KEY.get(special.key) || [];
+            for (const entry of approachTemplate) {
+              const ex = special.col + entry.dx;
+              const ey = special.row + entry.dy;
+              if (ex >= 0 && ex < MAP_WIDTH && ey >= 0 && ey < MAP_HEIGHT) {
+                sector.tiles[ey * MAP_WIDTH + ex] = entry.tile;
+              }
+            }
+
+            const approachDir = SPECIAL_APPROACH_DIRECTION_BY_KEY.get(special.key);
+            if (approachDir) {
+              const protectedTiles = new Set([`${special.col},${special.row}`]);
+              const adjacentOffsets = [
+                { dx: 0, dy: -1 },
+                { dx: 0, dy: 1 },
+                { dx: -1, dy: 0 },
+                { dx: 1, dy: 0 },
               ];
-          for (const [ex, ey] of exits) {
-            if (ex >= 0 && ex < MAP_WIDTH && ey >= 0 && ey < MAP_HEIGHT) {
-              sector.tiles[ey * MAP_WIDTH + ex] = TILE_ROAD;
+              for (const offset of adjacentOffsets) {
+                if (offset.dx === approachDir.dx && offset.dy === approachDir.dy) continue;
+                protectedTiles.add(`${special.col + offset.dx},${special.row + offset.dy}`);
+              }
+              reconnectSectorEdgesToApproach(
+                sector.tiles,
+                { x: special.col + approachDir.dx, y: special.row + approachDir.dy },
+                edges,
+                protectedTiles,
+              );
             }
           }
+          sector.tiles[special.row * MAP_WIDTH + special.col] = special.tile;
           sector.rawBuffer = compressRLE(sector.tiles);
           sector.compressedSize = sector.rawBuffer.length;
           sector.specials = getSpecials(sector.tiles);
@@ -547,6 +921,19 @@ function validatePlacements(placements) {
   for (const key of REQUIRED_KEYS) {
     const node = specialNodes.find((entry) => entry.key === key);
     if (!node || !fill.visited[toIndex(node.worldX, node.worldY, width)]) missing.push(key);
+  }
+  for (const placement of placements) {
+    for (const special of placement.sector.specials) {
+      if (special.kind !== 'cave') continue;
+      const exit = CAVE_EXIT_POSITION_BY_ID.get(special.id);
+      if (!exit) {
+        missing.push(`${special.key}:missing-exit-data`);
+        continue;
+      }
+      if (special.col !== exit.x || special.row !== exit.y) {
+        missing.push(`${special.key}:entry-at-${special.col},${special.row}-expected-${exit.x},${exit.y}`);
+      }
+    }
   }
   return missing.length === 0 ? true : missing;
 }
@@ -592,7 +979,7 @@ function buildRandomizedInteractionLists(placements, interactionMap) {
   const byColumn = Array.from({ length: 16 }, () => []);
   for (const placement of placements) {
     const key = `${placement.slotX},${placement.slotY}`;
-    const entries = interactionMap.get(key) || [];
+    const entries = repackInteractionsForPlacement(placement, interactionMap.get(key) || []);
     for (const entry of entries) {
       byColumn[placement.slotX].push({
         sectorY: placement.slotY,
@@ -648,6 +1035,10 @@ function patchInitialOverworldStart(text, entry) {
     .replace(/\tMOVE\.w\t#6, Player_map_sector_y\.w/, `\tMOVE.w\t#${hexWord(entry.slotY)}, Player_map_sector_y.w`);
 }
 
+function patchCoreForTestMode(text) {
+  return text;
+}
+
 function patchTowndataInteractionPtrs(text) {
   const start = text.indexOf(INTERACTION_START);
   if (start < 0) throw new Error('interaction pointer table not found');
@@ -689,13 +1080,13 @@ function buildGeneratedOverworldAsm(placements) {
 }
 
 function patchSoundAsm(text) {
-  const includeLine = '\tinclude "tools/generated_overworld.asm"';
-  if (text.includes(includeLine)) return text;
-  const anchor = 'EndOfRom:';
-  if (!text.includes(anchor)) {
-    throw new Error('could not find EndOfRom anchor in sound.asm');
-  }
-  return text.replace(anchor, `${includeLine}\n${anchor}`);
+	const includeLine = '	include "tools/generated_overworld.asm"';
+	if (text.includes(includeLine)) return text;
+	const anchor = 'EndOfRom:';
+	if (!text.includes(anchor)) {
+		throw new Error('could not find EndOfRom anchor in sound.asm');
+	}
+	return text.replace(anchor, `${includeLine}\n${anchor}`);
 }
 
 function writeGeneratedAssets(workspace, placements) {
@@ -706,14 +1097,16 @@ function writeGeneratedAssets(workspace, placements) {
   }
 }
 
-function applyFullRandomizedWorld(workspace, world) {
+function applyFullRandomizedWorld(workspace, world, options = {}) {
   const { placements, interactionMap } = world;
+  const testMode = options.testMode !== false;
   writeGeneratedAssets(workspace, placements);
   const mapdataPath = path.join(workspace, 'src', 'mapdata.asm');
   const gameplayPath = path.join(workspace, 'src', 'gameplay.asm');
   const magicPath = path.join(workspace, 'src', 'magic.asm');
   const statesPath = path.join(workspace, 'src', 'states.asm');
-  const soundPath = path.join(workspace, 'src', 'sound.asm');
+  const corePath = path.join(workspace, 'src', 'core.asm');
+	const soundPath = path.join(workspace, 'src', 'sound.asm');
   const towndataPath = path.join(workspace, 'src', 'towndata.asm');
   const generatedAsmPath = path.join(workspace, 'tools', 'generated_overworld.asm');
   const townTables = buildTownTables(placements);
@@ -721,13 +1114,17 @@ function applyFullRandomizedWorld(workspace, world) {
   fs.writeFileSync(gameplayPath, patchGameplayTable(fs.readFileSync(gameplayPath, 'utf8'), 'TownTeleportLocationData:', townTables.teleport), 'utf8');
   fs.writeFileSync(magicPath, patchGameplayTable(fs.readFileSync(magicPath, 'utf8'), 'TownOverworldCoords:', townTables.magic), 'utf8');
   fs.writeFileSync(statesPath, patchInitialOverworldStart(fs.readFileSync(statesPath, 'utf8'), townTables.teleport[0]), 'utf8');
+  if (testMode) {
+    fs.writeFileSync(corePath, patchCoreForTestMode(fs.readFileSync(corePath, 'utf8')), 'utf8');
+  }
   fs.writeFileSync(towndataPath, patchTowndataInteractionPtrs(fs.readFileSync(towndataPath, 'utf8')), 'utf8');
-  fs.writeFileSync(soundPath, patchSoundAsm(fs.readFileSync(soundPath, 'utf8')), 'utf8');
+	fs.writeFileSync(soundPath, patchSoundAsm(fs.readFileSync(soundPath, 'utf8')), 'utf8');
   fs.writeFileSync(generatedAsmPath, `${buildGeneratedOverworldAsm(placements)}\n${buildGeneratedInteractionAsm(placements, interactionMap)}`, 'utf8');
 }
 
 module.exports = {
   applyFullRandomizedWorld,
+  buildRandomizedInteractionLists,
   buildPlacements,
   buildFullRandomizedWorld,
   buildTownTables,
